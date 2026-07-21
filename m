@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8501647127B;
-	Tue, 21 Jul 2026 18:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BAEF47126F;
+	Tue, 21 Jul 2026 18:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657069; cv=none; b=Q2cZksBKaC+KQBy1ZUIp1GdqXQOzVFgBPOQTSIiWhD1oAtD311bI4N2JzW4TWtH9hb/VOTkvC9unS7A0WTjeEYqdhglZDP4FhzXX4s4QRNTmv9bOXGGGPASlbLhyn4A7lOAhMMXqz9GOXySrovJEhgWezEkLfUDiQFh9Ug1/qW4=
+	t=1784657072; cv=none; b=EtSYeY2lC/DHDkKZ178IGq4n+roM9XTO3hUAMsNB5IPVbwD1i+H75mmMrmQewa8hk6Z2wnlKCjd3WjuegibHISm7CupIH2/Xhnyt4J2ZgWiysAE+NU9Y5sb49eXl+WDZ0tZix/L9utT/f5wOdE3MqrA0nEhou6MbGdbjBVhHIGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657069; c=relaxed/simple;
-	bh=PCGrmi0Cj6QIqiHZGfiXySkn0U+oucXYPt7iSsjljq4=;
+	s=arc-20240116; t=1784657072; c=relaxed/simple;
+	bh=wvBcRYclFlvtxN4IA98NAb8uLjbsRf4KkPpsB7Mnwdw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qDQk2me9Cm3/OeWFF02fxc3qFehMVOLoVLPYx9ffi2Fes6FJx9+P9aZFiHOKhjxO3D0NxrZ5pDpJ3Vx77z5Kot9/Ko/W46JsAOnCcyiRyHc4xPMZPYiUD4pMUrTteg6JBPRj8SVt1/EZUYz4Nx9NsfbIQe+VAcICNB1UdXeZIXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qr4Ox9l3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N7HsoduHaxOBW2z+bipGvSEfulk5LEbNahRsb6CnR7JK9aX0Tv9uGsWOdz2MjEx5x1DMLMjrGqcdhoXPW62m98lBXZbKE2GFuo7QxtHjI1jztH9WhoTlWQpUZM+bD/Yuik2Lx/eVefbmoJbLPAU4p+M6iZC+JWkHT6bBFzpP8x4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqIZMFTN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qr4Ox9l3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1C01F000E9;
-	Tue, 21 Jul 2026 18:04:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqIZMFTN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E921F000E9;
+	Tue, 21 Jul 2026 18:04:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657068;
-	bh=GNsD3jtBgqvJoErCYt+wwXPSnxd3ojfTvRCg2lgHQn8=;
+	s=korg; t=1784657071;
+	bh=6xPOmGjfuEht+R3MJ8OJ7/eAh5oQFJPx6agKl8LnnWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qr4Ox9l3I7CK/AJVkPlVGnzunS/nhF4ldknjiqHaTKgxHqDEs5SCUnGkOz6jvv+YC
-	 qNHgNdqoyLqyNUs7pwAXFrcUaBlHf0BOkx23Hd7P+h5XJ+9JUkESZrmhU73YT6nVda
-	 PIgLctfYvtyOKwKyI18Bi3gi8nzoX4nPr7qfuB5w=
+	b=yqIZMFTNjqqg66o3U+rN6UbXde7/+YEHUMprFbRBUI2dryg0lblyOZ61rTrGqZATg
+	 1ncko5wkLKG8n1JTA1mBHHL7PgUTVv7IWflGf/RuXfkrjUP4AZMz9PjThH8g+2JWit
+	 ZP4W6MYLxCi4QdGL1AV4aTj8Tpea5LKU0oZcfJGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Conte <aldocontelk@gmail.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0625/1611] iio: tcs3472: power down chip on probe failure
-Date: Tue, 21 Jul 2026 17:12:21 +0200
-Message-ID: <20260721152529.447441711@linuxfoundation.org>
+Subject: [PATCH 6.18 0626/1611] clk: at91: keep securam node alive while mapping it
+Date: Tue, 21 Jul 2026 17:12:22 +0200
+Message-ID: <20260721152529.469332827@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,95 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Conte <aldocontelk@gmail.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit b39f3bb9f5580d19bc0c10dea9224d75fed45f1d ]
+[ Upstream commit 22fa1c39ba6fe726b547c877c924379b7fee260a ]
 
-If tcs3472_probe() fails after enabling the chip (by writing PON | AEN
-to the ENABLE register), the error paths return without powering down
-the device.
+pmc_register_ops() gets an owned reference to the
+"atmel,sama5d2-securam" node with of_find_compatible_node().  The
+success path dropped that reference before passing the node to
+of_iomap(), leaving of_iomap() to consume a node pointer after the caller
+had released its reference.
 
-Add an 'error_powerdown' label at the end of the cleanup chain that
-calls tcs3472_powerdown() to power down the chip. The existing label
-cascade is rerouted to fall through to the new label.
+Move of_node_put() after of_iomap() so the node remains referenced for
+the mapping operation.  The unavailable-node error path already releases
+the reference.
 
-Move tcs3472_powerdown() above tcs3472_probe() so the probe can call
-it without a forward declaration.
-
-Found by code inspection while reviewing the probe error paths in
-preparation for the devm_ conversion.
-
-Fixes: eb869ade30a6 ("iio: Add tcs3472 color light sensor driver")
-Signed-off-by: Aldo Conte <aldocontelk@gmail.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fixes: 4d21be864092 ("clk: at91: pmc: execute suspend/resume only for backup mode")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://patch.msgid.link/20260529042051.1626978-1-dbgh9129@gmail.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/tcs3472.c | 38 +++++++++++++++++++------------------
- 1 file changed, 20 insertions(+), 18 deletions(-)
+ drivers/clk/at91/pmc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/light/tcs3472.c b/drivers/iio/light/tcs3472.c
-index 12429a3261b38e..849ca7885d7193 100644
---- a/drivers/iio/light/tcs3472.c
-+++ b/drivers/iio/light/tcs3472.c
-@@ -440,6 +440,23 @@ static const struct iio_info tcs3472_info = {
- 	.attrs = &tcs3472_attribute_group,
- };
+diff --git a/drivers/clk/at91/pmc.c b/drivers/clk/at91/pmc.c
+index acf780a8158900..4ef4f7b9d0bd16 100644
+--- a/drivers/clk/at91/pmc.c
++++ b/drivers/clk/at91/pmc.c
+@@ -177,9 +177,9 @@ static int __init pmc_register_ops(void)
+ 		of_node_put(np);
+ 		return -ENODEV;
+ 	}
+-	of_node_put(np);
  
-+static int tcs3472_powerdown(struct tcs3472_data *data)
-+{
-+	int ret;
-+	u8 enable_mask = TCS3472_ENABLE_AEN | TCS3472_ENABLE_PON;
-+
-+	mutex_lock(&data->lock);
-+
-+	ret = i2c_smbus_write_byte_data(data->client, TCS3472_ENABLE,
-+					data->enable & ~enable_mask);
-+	if (!ret)
-+		data->enable &= ~enable_mask;
-+
-+	mutex_unlock(&data->lock);
-+
-+	return ret;
-+}
-+
- static int tcs3472_probe(struct i2c_client *client)
- {
- 	struct tcs3472_data *data;
-@@ -513,7 +530,7 @@ static int tcs3472_probe(struct i2c_client *client)
- 	ret = iio_triggered_buffer_setup(indio_dev, NULL,
- 		tcs3472_trigger_handler, NULL);
- 	if (ret < 0)
--		return ret;
-+		goto error_powerdown;
- 
- 	if (client->irq) {
- 		ret = request_threaded_irq(client->irq, NULL,
-@@ -536,23 +553,8 @@ static int tcs3472_probe(struct i2c_client *client)
- 		free_irq(client->irq, indio_dev);
- buffer_cleanup:
- 	iio_triggered_buffer_cleanup(indio_dev);
--	return ret;
--}
--
--static int tcs3472_powerdown(struct tcs3472_data *data)
--{
--	int ret;
--	u8 enable_mask = TCS3472_ENABLE_AEN | TCS3472_ENABLE_PON;
--
--	mutex_lock(&data->lock);
--
--	ret = i2c_smbus_write_byte_data(data->client, TCS3472_ENABLE,
--		data->enable & ~enable_mask);
--	if (!ret)
--		data->enable &= ~enable_mask;
--
--	mutex_unlock(&data->lock);
--
-+error_powerdown:
-+	tcs3472_powerdown(data);
- 	return ret;
- }
- 
+ 	at91_pmc_backup_suspend = of_iomap(np, 0);
++	of_node_put(np);
+ 	if (!at91_pmc_backup_suspend) {
+ 		pr_warn("%s(): unable to map securam\n", __func__);
+ 		return -ENOMEM;
 -- 
 2.53.0
 
