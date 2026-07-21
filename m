@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF52146D0B7;
-	Tue, 21 Jul 2026 17:48:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F5546D0B9;
+	Tue, 21 Jul 2026 17:48:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656103; cv=none; b=ha3ET67t02sv3BcIU+ykCQkBSGuGcx7hbbX+FqJY6/bP6FHQ4S3tWCx53Ds6+NRK5cQbfzn1R7yk11Zft8jwF84HEWtfFAwdG2vzmPkcjKgvoJAcqTj66DnJPEty/Q6h5QaZmdZUtSJokBzON7RYG9GZAy70u8FDICU4Q2irdpM=
+	t=1784656105; cv=none; b=tJH7EfKP6+beklStlR0w52c1i7bHlQdyaGiQKToMBAcu/Hh0DP+VjN6c00EDsFNGLC9lnGvVq7PmL6hgs5DnxqOehHVutGpPwoveXxETXRTsji1vG0AR8YHDIBqjmQ/o6U6kKa6GgBYIiR5N/j8KcceB5O3HNlc5CGHxxMytF94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656103; c=relaxed/simple;
-	bh=uUx/yJlvuyNpaaFosDzk3gBeSk8KeN5jLMu7i6zHK9w=;
+	s=arc-20240116; t=1784656105; c=relaxed/simple;
+	bh=YRhPgJ/WyReaUzAiHdiaWKCpSPArubSxIZEpXSySmrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZUItU+EFgHi+APGZFs+wCkt1t2DLVuywJ9h8Dd3RqnICDaF1AinGAuoh7hhH7D1ABqzEiJchQUhu2hg+dqI5mW7BsBE+3chvelGd08FCIQ9kH+zDjS8pKvipUdvTqDmc64GBus/zoP06CM3VXoNtjATf8EalAb3v8Z5r2s7A8h0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJCdq0ke; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VlAwxIC0cmHQXwuwzJBeN+g8XUnSfz208q2SVkZ2Zz8fpF9F19X0vR7bPKmVhhkh1MQ8KKZrjCNbrtf6tznVNZgmdw6CAzICWtopVXMKspI6LZYzLXTvATllxa0fkUbwgVr/jTd58bSgWtCN50yT+SLbXXxLJ4t8uHLOl5P92P0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HXcdCeFS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJCdq0ke"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B01A1F000E9;
-	Tue, 21 Jul 2026 17:48:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HXcdCeFS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B331F000E9;
+	Tue, 21 Jul 2026 17:48:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656101;
-	bh=yxPdOLrzoj2yuPvBx8bB8gbZvLJI6i3yXxrV0HumMZM=;
+	s=korg; t=1784656104;
+	bh=zefSBhS812vmbvVeU/7/fNlG4kVtVo0AJbk+UNlyOJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mJCdq0keyInL8/39vs+LXVWq8kFCKN64nMEfxJChGzvbsp7AEOdnE9LLvzKfMrR8V
-	 dk7XfFfEMbftEAxJVeWWWCdv9jqgLl00oGjQGPQ/h8f5wzzWEuKynaH9wLli1oacfw
-	 0Tlx6LVGsQux0dWkl4S+wCysvH/0/3URImqC3sJY=
+	b=HXcdCeFSVCoIw0cX6XgCHUXeOYLJ664pDRYx4V1U6PGeQu0PyxQU91oLt4YPokDs/
+	 /5vbtPzf9Q9qeY9Hf2B0KeL0pCXOLPho1wCXXOraGMAgHI5ElJercOE200psKlsYwQ
+	 j6a4DHD8s0Q2WaqAw7Vf3r4fHfUDckwKwTbaSj3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhengYuan Huang <gality369@gmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Heming Zhao <heming.zhao@suse.com>,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
 	Junxiao Bi <junxiao.bi@oracle.com>,
 	Changwei Ge <gechangwei@live.cn>,
 	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0260/1611] ocfs2: dont BUG_ON an invalid journal dinode
-Date: Tue, 21 Jul 2026 17:06:16 +0200
-Message-ID: <20260721152520.893200848@linuxfoundation.org>
+Subject: [PATCH 6.18 0261/1611] ocfs2: kill osb->system_file_mutex lock
+Date: Tue, 21 Jul 2026 17:06:17 +0200
+Message-ID: <20260721152520.914780376@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -58,85 +58,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhengYuan Huang <gality369@gmail.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit c0438198c28b1d22c272751af5e717c11d9fa8dd ]
+[ Upstream commit f5b1910e23f1233c8d4185268b2e659df2bc5dbf ]
 
-[BUG]
-A fuzzed OCFS2 image can corrupt the current slot journal dinode while
-mount is still in progress. The mount path first reports the invalid
-journal block and then crashes in shutdown:
+Commit 43b10a20372d ("ocfs2: avoid system inode ref confusion by adding
+mutex lock") tried to avoid a refcount leak caused by allowing multiple
+threads to call igrab(inode).  But addition of osb->system_file_mutex made
+locking dependency complicated and is causing lockdep to warn about
+possibility of AB-BA deadlock.
 
-kernel BUG at fs/ocfs2/journal.c:1034!
-Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-RIP: 0010:ocfs2_journal_toggle_dirty+0x2d6/0x340 fs/ocfs2/journal.c:1034
-Call Trace:
- ocfs2_journal_shutdown+0x414/0xc30 fs/ocfs2/journal.c:1116
- ocfs2_mount_volume fs/ocfs2/super.c:1785 [inline]
- ocfs2_fill_super+0x30a9/0x3cd0 fs/ocfs2/super.c:1083
- get_tree_bdev_flags+0x38b/0x640 fs/super.c:1698
- get_tree_bdev+0x24/0x40 fs/super.c:1721
- ocfs2_get_tree+0x21/0x30 fs/ocfs2/super.c:1184
- vfs_get_tree+0x9a/0x370 fs/super.c:1758
- fc_mount fs/namespace.c:1199 [inline]
- do_new_mount_fc fs/namespace.c:3642 [inline]
- do_new_mount fs/namespace.c:3718 [inline]
- path_mount+0x5b8/0x1ea0 fs/namespace.c:4028
- do_mount fs/namespace.c:4041 [inline]
- __do_sys_mount fs/namespace.c:4229 [inline]
- __se_sys_mount fs/namespace.c:4206 [inline]
- __x64_sys_mount+0x282/0x320 fs/namespace.c:4206
- ...
+Since _ocfs2_get_system_file_inode() returns the same inode for the same
+input arguments, we don't need to serialize
+_ocfs2_get_system_file_inode().  What we need to make sure is that
+igrab(inode) is called for only once().  Therefore, replace
+osb->system_file_mutex with cmpxchg()-based locking.
 
-[CAUSE]
-ocfs2_journal_toggle_dirty() used to return -EIO when journal->j_bh no
-longer contained a valid dinode, because the startup and shutdown paths
-already handled that failure. Commit 10995aa2451a
-("ocfs2: Morph the haphazard OCFS2_IS_VALID_DINODE() checks.") changed
-the check to a BUG_ON() under the assumption that the journal dinode had
-already been validated. That turns an unexpected invalid journal dinode
-during mount teardown into a kernel crash instead of a normal mount
-failure.
-
-[FIX]
-Replace the BUG_ON() with WARN_ON() and return -EIO. This keeps the
-invariant warning for debugging, but restores the original behavior of
-failing startup or shutdown cleanly instead of panicking the kernel.
-
-Link: https://lore.kernel.org/20260512024115.4036371-1-gality369@gmail.com
-Fixes: 10995aa2451a ("ocfs2: Morph the haphazard OCFS2_IS_VALID_DINODE() checks.")
-Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Link: https://lore.kernel.org/fea8d1fd-afb0-4302-a560-c202e2ef7afd@I-love.SAKURA.ne.jp
+Fixes: 43b10a20372d ("ocfs2: avoid system inode ref confusion by adding mutex lock")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Acked-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
 Cc: Junxiao Bi <junxiao.bi@oracle.com>
 Cc: Changwei Ge <gechangwei@live.cn>
 Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/journal.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ fs/ocfs2/ocfs2.h   | 2 --
+ fs/ocfs2/super.c   | 2 --
+ fs/ocfs2/sysfile.c | 9 +++------
+ 3 files changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/fs/ocfs2/journal.c b/fs/ocfs2/journal.c
-index e5f58ff2175f41..bbfa41d37ec907 100644
---- a/fs/ocfs2/journal.c
-+++ b/fs/ocfs2/journal.c
-@@ -1027,11 +1027,8 @@ static int ocfs2_journal_toggle_dirty(struct ocfs2_super *osb,
- 	struct ocfs2_dinode *fe;
+diff --git a/fs/ocfs2/ocfs2.h b/fs/ocfs2/ocfs2.h
+index 6aaa94c554c12a..8bdeea60742af7 100644
+--- a/fs/ocfs2/ocfs2.h
++++ b/fs/ocfs2/ocfs2.h
+@@ -494,8 +494,6 @@ struct ocfs2_super
+ 	struct rb_root	osb_rf_lock_tree;
+ 	struct ocfs2_refcount_tree *osb_ref_tree_lru;
  
- 	fe = (struct ocfs2_dinode *)bh->b_data;
+-	struct mutex system_file_mutex;
 -
--	/* The journal bh on the osb always comes from ocfs2_journal_init()
--	 * and was validated there inside ocfs2_inode_lock_full().  It's a
--	 * code bug if we mess it up. */
--	BUG_ON(!OCFS2_IS_VALID_DINODE(fe));
-+	if (WARN_ON(!OCFS2_IS_VALID_DINODE(fe)))
-+		return -EIO;
+ 	/*
+ 	 * OCFS2 needs to schedule several different types of work which
+ 	 * require cluster locking, disk I/O, recovery waits, etc. Since these
+diff --git a/fs/ocfs2/super.c b/fs/ocfs2/super.c
+index 53daa448240638..a4f5a868bec10f 100644
+--- a/fs/ocfs2/super.c
++++ b/fs/ocfs2/super.c
+@@ -1997,8 +1997,6 @@ static int ocfs2_initialize_super(struct super_block *sb,
+ 	spin_lock_init(&osb->osb_xattr_lock);
+ 	ocfs2_init_steal_slots(osb);
  
- 	flags = le32_to_cpu(fe->id1.journal1.ij_flags);
- 	if (dirty)
+-	mutex_init(&osb->system_file_mutex);
+-
+ 	atomic_set(&osb->alloc_stats.moves, 0);
+ 	atomic_set(&osb->alloc_stats.local_data, 0);
+ 	atomic_set(&osb->alloc_stats.bitmap_data, 0);
+diff --git a/fs/ocfs2/sysfile.c b/fs/ocfs2/sysfile.c
+index d53a6cc866bef6..67e492f4b828b6 100644
+--- a/fs/ocfs2/sysfile.c
++++ b/fs/ocfs2/sysfile.c
+@@ -98,11 +98,9 @@ struct inode *ocfs2_get_system_file_inode(struct ocfs2_super *osb,
+ 	} else
+ 		arr = get_local_system_inode(osb, type, slot);
+ 
+-	mutex_lock(&osb->system_file_mutex);
+ 	if (arr && ((inode = *arr) != NULL)) {
+ 		/* get a ref in addition to the array ref */
+ 		inode = igrab(inode);
+-		mutex_unlock(&osb->system_file_mutex);
+ 		BUG_ON(!inode);
+ 
+ 		return inode;
+@@ -112,11 +110,10 @@ struct inode *ocfs2_get_system_file_inode(struct ocfs2_super *osb,
+ 	inode = _ocfs2_get_system_file_inode(osb, type, slot);
+ 
+ 	/* add one more if putting into array for first time */
+-	if (arr && inode) {
+-		*arr = igrab(inode);
+-		BUG_ON(!*arr);
++	if (inode && arr && !*arr && !cmpxchg(&(*arr), NULL, inode)) {
++		inode = igrab(inode);
++		BUG_ON(!inode);
+ 	}
+-	mutex_unlock(&osb->system_file_mutex);
+ 	return inode;
+ }
+ 
 -- 
 2.53.0
 
