@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CD634B1A6;
-	Tue, 21 Jul 2026 22:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF67408617;
+	Tue, 21 Jul 2026 22:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672017; cv=none; b=MZVyntStNWuPnS9tZNJ9KweJ+HYkxLz4DqwlvYJgmhonXt4DbMRqt7IUL2/roEXpsJ9Y3Xo2hgWmVs6in/LZ/S7prBArd/65y2k5hu+KaBUz/y7YZ3JoCTOk8Go+PxR+PevRkX02ADg3z7/ga6rnIRKdzE7R+kH2SiFn+OjzBMI=
+	t=1784672019; cv=none; b=Pu0gnZdsyaHJcr8BYzoV+Pa63EMJOHifwLDJb0GGB0i3SuASbCjL5YiPghmY/I+smVfREwxiRWYOvayDDSlDo6uNp2uWqf02O8YhY8KFL4N2dlGYfvV2LPEcJFooc7ai4JOf65rl0qNaHRHnvwzyMXeT9B3xRPPWApo66rADPZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672017; c=relaxed/simple;
-	bh=8Us0TWz09azUTrNvL9OfdYmxkG9PdBNc5OXOrr6KfJI=;
+	s=arc-20240116; t=1784672019; c=relaxed/simple;
+	bh=qNkUbo9QlLxb2rm7g7ocqQx5sYYVDcrNnzAwUYJKuw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LeFtJ3nn1niiIIKQhI41IBKo2/ZLyoT9zRBE6cy1bEznPmEUgAL5KMQwoRSfPaqzKZLGvWfaIQ3A5DJe0t1kj+ovEFrQKOUpoU2kLkalkTZaIN60jKR1kJyd6dgopKB4as8u7vH0DLK2z4nrNrvtix1UjWZtY1xQcFaVBC7dV1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0eR/dwK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dkArbbF1u2WIvz7yb1CMdEpfc1FZLeTkRmNYpyB9n41gtRIXl9DomSuUhNHq1Phiq8cRGgPe41nspj5QQNoIzRC3IbyyhVxWXX53Zz08Bg1zzwkCm1Fxw1/QDyzncZRsGoTirCVsnn3/kf3Bdv726P7Sh3Iefg3SGr8OoPGLNBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8yL3yuA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0eR/dwK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AACC1F000E9;
-	Tue, 21 Jul 2026 22:13:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8yL3yuA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31D71F000E9;
+	Tue, 21 Jul 2026 22:13:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672015;
-	bh=r5FHfGzq2nUd/LeJV+Ml90XAUby68qiBoguiSVnIsQQ=;
+	s=korg; t=1784672018;
+	bh=d9JBi7CfbLFKJ6z3wRO8neFpttg+Qd6udehUCKN/xOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p0eR/dwKeyqfEFtXDCjPHBHR3AGmVEzEYKQM1MXRDnwIq8vft2dGHDmhpuj1/cPLT
-	 RoeyUZ2weMhjK58AaDR2nsAEs3deqKwYIx4Vy9VT674+JyB35dFfKQKwCpsCwU4hVo
-	 9etaQBceLshHVXTaJoLL0SuDh+yEsgOwuvwdk/T8=
+	b=I8yL3yuAi216yn/OY/EOplrizwfxR60s/+6bSMZZmfZy1piTpAcq/nFNY4OCWIg+n
+	 JG6ArJJGZpmtVl7JluZDBEa/QZyvNz1/Jvnc2zmYV7DQor7joBGD6DzDadDTzANMjn
+	 61KCBHyrRGcb/MombmAV9972orgYY9IwNsUlh+oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+346474e3bf0b26bd3090@syzkaller.appspotmail.com,
+	Aleksandr Nogikh <nogikh@google.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 466/843] ipv4: fib: Dont ignore error route in local/main tables.
-Date: Tue, 21 Jul 2026 17:21:41 +0200
-Message-ID: <20260721152416.519992107@linuxfoundation.org>
+Subject: [PATCH 5.15 449/843] ieee802154: fix kernel-infoleak in dgram_recvmsg()
+Date: Tue, 21 Jul 2026 17:21:24 +0200
+Message-ID: <20260721152416.129636223@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,77 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Aleksandr Nogikh <nogikh@google.com>
 
-[ Upstream commit b72f0db64205d9ce462038ba995d5d31eff32dc1 ]
+[ Upstream commit 4db86f8ab11b5a41bfc36680be837e6ac1375ec6 ]
 
-When CONFIG_IP_MULTIPLE_TABLES is enabled but no rule is added,
-fib_lookup() performs route lookup directly on two tables.
+KMSAN reported a kernel-infoleak in move_addr_to_user():
 
-Since the first lookup does not properly bail out, the result
-of an error route in the merged local/main table could be
-overwritten by another route in the default table:
+BUG: KMSAN: kernel-infoleak in instrument_copy_to_user
+include/linux/instrumented.h:131 [inline]
+BUG: KMSAN: kernel-infoleak in _inline_copy_to_user
+include/linux/uaccess.h:205 [inline]
+BUG: KMSAN: kernel-infoleak in _copy_to_user+0xcc/0x120
+lib/usercopy.c:26
+ instrument_copy_to_user include/linux/instrumented.h:131 [inline]
+ _inline_copy_to_user include/linux/uaccess.h:205 [inline]
+ _copy_to_user+0xcc/0x120 lib/usercopy.c:26
+ copy_to_user include/linux/uaccess.h:236 [inline]
+ move_addr_to_user+0x2e7/0x440 net/socket.c:302
+ ____sys_recvmsg+0x232/0x610 net/socket.c:2925
+ ...
+ Uninit was stored to memory at:
+ ieee802154_addr_to_sa include/net/ieee802154_netdev.h:369 [inline]
+ dgram_recvmsg+0xa09/0xbe0 net/ieee802154/socket.c:739
 
-  # unshare -n
-  # ip link set lo up
-  # ip route add 192.168.0.0/24 dev lo table 253
-  # ip route add unreachable 192.168.0.0/24
-  # ip route get 192.168.0.1
-  192.168.0.1 dev lo table default uid 0
-      cache <local>
+The issue occurs because the `pan_id` field of `struct ieee802154_addr`
+is left uninitialized when the address mode is `IEEE802154_ADDR_NONE`.
+The execution flow is as follows:
 
-Once a random rule is added, the error route is respected:
+1. `__ieee802154_rx_handle_packet()` declares a local `struct
+ieee802154_hdr hdr` on the stack.
+2. `ieee802154_hdr_pull()` calls `ieee802154_hdr_get_addr()` to parse
+the source and destination addresses into this structure.
+3. If the address mode is `IEEE802154_ADDR_NONE`,
+`ieee802154_hdr_get_addr()` previously only set the `mode` field,
+leaving the `pan_id` field containing uninitialized stack memory.
+4. This uninitialized `pan_id` is later copied into a `struct
+sockaddr_ieee802154` in `dgram_recvmsg()` via `ieee802154_addr_to_sa()`.
+5. Finally, `move_addr_to_user()` copies the socket address structure to
+user space, leaking the uninitialized bytes.
 
-  # ip rule add table 0
-  # ip rule del table 0
-  # ip route get 192.168.0.1
-  RTNETLINK answers: No route to host
+Fix this by using `memset` to zero out the address structure in
+`ieee802154_hdr_get_addr()` when the mode is `IEEE802154_ADDR_NONE`.
 
-Let's fix the inconsistent behaviour.
-
-Fixes: f4530fa574df ("ipv4: Avoid overhead when no custom FIB rules are installed.")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260619212753.3367244-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 94b4f6c21cf5 ("ieee802154: add header structs with endiannes and operations")
+Assisted-by: Gemini:gemini-3.1-pro-preview Gemini:gemini-3-flash-preview syzbot
+Reported-by: syzbot+346474e3bf0b26bd3090@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=346474e3bf0b26bd3090
+Link: https://syzkaller.appspot.com/ai_job?id=a507a109-d683-4a2c-bc03-93394f491b17
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/62795fd9-fc0c-48eb-bb82-05ffc5a57104@mail.kernel.org
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_fib.h | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ net/ieee802154/header_ops.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/ip_fib.h b/include/net/ip_fib.h
-index 9f6e2a476dc280..718b9799d77d78 100644
---- a/include/net/ip_fib.h
-+++ b/include/net/ip_fib.h
-@@ -366,7 +366,7 @@ static inline int fib_lookup(struct net *net, struct flowi4 *flp,
- 			     struct fib_result *res, unsigned int flags)
+diff --git a/net/ieee802154/header_ops.c b/net/ieee802154/header_ops.c
+index af337cf627643e..0687a4bded50c9 100644
+--- a/net/ieee802154/header_ops.c
++++ b/net/ieee802154/header_ops.c
+@@ -126,10 +126,13 @@ ieee802154_hdr_get_addr(const u8 *buf, int mode, bool omit_pan,
  {
- 	struct fib_table *tb;
--	int err = -ENETUNREACH;
-+	int err = -EAGAIN;
+ 	int pos = 0;
  
- 	flags |= FIB_LOOKUP_NOREF;
- 	if (net->ipv4.fib_has_custom_rules)
-@@ -380,17 +380,16 @@ static inline int fib_lookup(struct net *net, struct flowi4 *flp,
- 	if (tb)
- 		err = fib_table_lookup(tb, flp, res, flags);
- 
--	if (!err)
-+	if (err != -EAGAIN)
- 		goto out;
- 
- 	tb = rcu_dereference_rtnl(net->ipv4.fib_default);
- 	if (tb)
- 		err = fib_table_lookup(tb, flp, res, flags);
- 
--out:
- 	if (err == -EAGAIN)
- 		err = -ENETUNREACH;
+-	addr->mode = mode;
 -
-+out:
- 	rcu_read_unlock();
+-	if (mode == IEEE802154_ADDR_NONE)
++	if (mode == IEEE802154_ADDR_NONE) {
++		memset(addr, 0, sizeof(*addr));
++		addr->mode = IEEE802154_ADDR_NONE;
+ 		return 0;
++	}
++
++	addr->mode = mode;
  
- 	return err;
+ 	if (!omit_pan) {
+ 		memcpy(&addr->pan_id, buf + pos, 2);
 -- 
 2.53.0
 
