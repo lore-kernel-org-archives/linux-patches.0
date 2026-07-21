@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8747542CAF1;
-	Tue, 21 Jul 2026 19:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87D93A874B;
+	Tue, 21 Jul 2026 19:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662374; cv=none; b=rcIrkOB//whJio5aISsT4JsSidOWDQFp+FYeXRM4jtiZFh5LV4IE8VUEk9yMop8oFls1U13kj9g9k0WJRsbKuu7cv5H5pitRPpJXe/Nu6ooAAy7hXgmo28it62wwY3+p9sB+XlyTYRvXTYr3fATuPtTiRs6A6HLkGVYzaSScXoY=
+	t=1784662377; cv=none; b=V2QIm/odj38LczO5FJ5chnrbwaBJsT6yyEwd9yocyVt2Y9093byC1MDI6/ZlzH3+klsqNHiTluye6eVxUBHWzL4FukndDWQqTUsuGVxJoL/COAubI859lBsxY1LixzgbVdryWIg6V/6yBuHbKQb6BadeJCqYIK7hD4fa3VpNPDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662374; c=relaxed/simple;
-	bh=SgfpCspOpnUt2jcYAEMG+cmr0oK9baZ3JtATWWcaUSE=;
+	s=arc-20240116; t=1784662377; c=relaxed/simple;
+	bh=g6SNexJgEOc0KtoySRKsl+xcP4imKv23JoKbxWsPXFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NqpCAkpU0uUFr3z7BctMnfJzl/Q4HXX1nKTPpZ+qf8/sLLMTgd30FuCfivvyIPSdTylYzgtV1aqNVBIvj9nYd6iHdP+IfYp/X3z++Mfcj098czdbrDv3foRW9w5pwbQ9W7cfaOl9G0cLaktE7O0G+K4QHT9U5vJvOMcWuGTT/cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Po1TajeF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Clnou5JV6GI0A0JReEbS+gAlbUiS3OBhtMICqVRDv4O7po4SAaS9nweYi52VczqQl5kF8OqmWekjO+lSzxZGzD+hln3T/COLNDFshMlXPr/t3MAxXOOUnVX3ABbnL+zqHcFLHQhYP4a/Vh+FxlCmQ4rQAkwAT7G+LERsszoMZ34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QOFKFLv0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Po1TajeF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70E51F000E9;
-	Tue, 21 Jul 2026 19:32:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QOFKFLv0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2396B1F000E9;
+	Tue, 21 Jul 2026 19:32:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662373;
-	bh=2iv4MkNtTuznfP1DuNjT2L+fWfIj0l+pCYfxZWdsliE=;
+	s=korg; t=1784662375;
+	bh=4wK0P/V2c92gfWJOZ2MHnPQiOUg9PXqxjIqquaORA1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Po1TajeFfUb/8NDkOhQ89B9XgqRbyJbUW/SKAy40mWcPMmHL7MNCJ+laUPVeYhX5t
-	 Z41f7WgHwtFj4dCBSOwhYYVDY14Mrez+xEDzaxiYFCztB9ye4/VKEc6sOHHZoTdlK1
-	 olExvu7+bB6CddZjUzFJxZ9xxz+KayD3JXciToCM=
+	b=QOFKFLv0JSuzFjtheT4mcLjwo43R0D/3m0uLxqBtqO5iFMyYc2zp71xQH9/M9Jdp5
+	 XMfa7bVn48CA7zZZwet3kZlhkVxVMDKHYXi1yfWt+DW+UeIxh+UZhY3/JtD5McEU51
+	 d2gWfwfcFisGkbIUORly1f//wBBO2Ay/GaD4FXqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Ivan Vecera <ivecera@redhat.com>,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Zecheng Li <zli94@ncsu.edu>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0366/1276] dpll: Support dynamic pin index allocation
-Date: Tue, 21 Jul 2026 17:13:29 +0200
-Message-ID: <20260721152454.297967787@linuxfoundation.org>
+Subject: [PATCH 6.12 0414/1276] perf debuginfo: Fix libdw API contract violations
+Date: Tue, 21 Jul 2026 17:14:17 +0200
+Message-ID: <20260721152455.362998375@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,148 +59,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 711696b3e168cea4165e7b7f051f3f442a347430 ]
+[ Upstream commit 31088ccf0312b1a547046f1f69890ede07834a30 ]
 
-Allow drivers to register DPLL pins without manually specifying a pin
-index.
+Check return value of `dwfl_report_end` during offline initialization.
+Validate `dwfl_module_relocation_info` result before passing to `strcmp`
+to avoid potential segmentation faults.
 
-Currently, drivers must provide a unique pin index when calling
-dpll_pin_get(). This works well for hardware-mapped pins but creates
-friction for drivers handling virtual pins or those without a strict
-hardware indexing scheme.
+Additionally:
+ - Fix a file descriptor leak in `debuginfo__init_offline_dwarf()` when
+   `dwfl_report_offline()` or subsequent setup calls fail.
 
-Introduce DPLL_PIN_IDX_UNSPEC (U32_MAX). When a driver passes this
-value as the pin index:
-1. The core allocates a unique index using an IDA
-2. The allocated index is mapped to a range starting above `INT_MAX`
-
-This separation ensures that dynamically allocated indices never collide
-with standard driver-provided hardware indices, which are assumed to be
-within the `0` to `INT_MAX` range. The index is automatically freed when
-the pin is released in dpll_pin_put().
-
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
-Link: https://patch.msgid.link/20260203174002.705176-5-ivecera@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 32239d600236 ("dpll: fix stale iteration in dpll_pin_on_pin_unregister()")
+Fixes: 6f1b6291cf73cb32 ("perf tools: Add util/debuginfo.[ch] files")
+Assisted-by: Gemini-CLI:Google Gemini 3
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Zecheng Li <zli94@ncsu.edu>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dpll/dpll_core.c | 48 ++++++++++++++++++++++++++++++++++++++--
- include/linux/dpll.h     |  2 ++
- 2 files changed, 48 insertions(+), 2 deletions(-)
+ tools/perf/util/debuginfo.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
-index b05fe2ba46d910..59081cf2c73ae0 100644
---- a/drivers/dpll/dpll_core.c
-+++ b/drivers/dpll/dpll_core.c
-@@ -10,6 +10,7 @@
- 
- #include <linux/device.h>
- #include <linux/err.h>
-+#include <linux/idr.h>
- #include <linux/property.h>
- #include <linux/slab.h>
- #include <linux/string.h>
-@@ -24,6 +25,7 @@ DEFINE_XARRAY_FLAGS(dpll_device_xa, XA_FLAGS_ALLOC);
- DEFINE_XARRAY_FLAGS(dpll_pin_xa, XA_FLAGS_ALLOC);
- 
- static RAW_NOTIFIER_HEAD(dpll_notifier_chain);
-+static DEFINE_IDA(dpll_pin_idx_ida);
- 
- static u32 dpll_device_xa_id;
- static u32 dpll_pin_xa_id;
-@@ -464,6 +466,36 @@ void dpll_device_unregister(struct dpll_device *dpll,
- }
- EXPORT_SYMBOL_GPL(dpll_device_unregister);
- 
-+static int dpll_pin_idx_alloc(u32 *pin_idx)
-+{
-+	int ret;
-+
-+	if (!pin_idx)
-+		return -EINVAL;
-+
-+	/* Alloc unique number from IDA. Number belongs to <0, INT_MAX> range */
-+	ret = ida_alloc(&dpll_pin_idx_ida, GFP_KERNEL);
-+	if (ret < 0)
-+		return ret;
-+
-+	/* Map the value to dynamic pin index range <INT_MAX+1, U32_MAX> */
-+	*pin_idx = (u32)ret + INT_MAX + 1;
-+
-+	return 0;
-+}
-+
-+static void dpll_pin_idx_free(u32 pin_idx)
-+{
-+	if (pin_idx <= INT_MAX)
-+		return; /* Not a dynamic pin index */
-+
-+	/* Map the index value from dynamic pin index range to IDA range and
-+	 * free it.
-+	 */
-+	pin_idx -= (u32)INT_MAX + 1;
-+	ida_free(&dpll_pin_idx_ida, pin_idx);
-+}
-+
- static void dpll_pin_prop_free(struct dpll_pin_properties *prop)
+diff --git a/tools/perf/util/debuginfo.c b/tools/perf/util/debuginfo.c
+index 19acf4775d3587..f5af3b4408b950 100644
+--- a/tools/perf/util/debuginfo.c
++++ b/tools/perf/util/debuginfo.c
+@@ -42,6 +42,7 @@ static int debuginfo__init_offline_dwarf(struct debuginfo *dbg,
  {
- 	kfree(prop->package_label);
-@@ -521,9 +553,18 @@ dpll_pin_alloc(u64 clock_id, u32 pin_idx, struct module *module,
- 	struct dpll_pin *pin;
- 	int ret;
+ 	GElf_Addr dummy;
+ 	int fd;
++	bool fd_consumed = false;
  
-+	if (pin_idx == DPLL_PIN_IDX_UNSPEC) {
-+		ret = dpll_pin_idx_alloc(&pin_idx);
-+		if (ret)
-+			return ERR_PTR(ret);
-+	} else if (pin_idx > INT_MAX) {
-+		return ERR_PTR(-EINVAL);
-+	}
- 	pin = kzalloc(sizeof(*pin), GFP_KERNEL);
--	if (!pin)
--		return ERR_PTR(-ENOMEM);
-+	if (!pin) {
-+		ret = -ENOMEM;
-+		goto err_pin_alloc;
-+	}
- 	pin->pin_idx = pin_idx;
- 	pin->clock_id = clock_id;
- 	pin->module = module;
-@@ -551,6 +592,8 @@ dpll_pin_alloc(u64 clock_id, u32 pin_idx, struct module *module,
- 	dpll_pin_prop_free(&pin->prop);
- err_pin_prop:
- 	kfree(pin);
-+err_pin_alloc:
-+	dpll_pin_idx_free(pin_idx);
- 	return ERR_PTR(ret);
- }
+ 	fd = open(path, O_RDONLY);
+ 	if (fd < 0)
+@@ -55,6 +56,7 @@ static int debuginfo__init_offline_dwarf(struct debuginfo *dbg,
+ 	dbg->mod = dwfl_report_offline(dbg->dwfl, "", "", fd);
+ 	if (!dbg->mod)
+ 		goto error;
++	fd_consumed = true;
  
-@@ -654,6 +697,7 @@ void dpll_pin_put(struct dpll_pin *pin)
- 		xa_destroy(&pin->ref_sync_pins);
- 		dpll_pin_prop_free(&pin->prop);
- 		fwnode_handle_put(pin->fwnode);
-+		dpll_pin_idx_free(pin->pin_idx);
- 		kfree_rcu(pin, rcu);
- 	}
- 	mutex_unlock(&dpll_lock);
-diff --git a/include/linux/dpll.h b/include/linux/dpll.h
-index 627c8524c58830..3c03b19d939070 100644
---- a/include/linux/dpll.h
-+++ b/include/linux/dpll.h
-@@ -216,6 +216,8 @@ int dpll_device_register(struct dpll_device *dpll, enum dpll_type type,
- void dpll_device_unregister(struct dpll_device *dpll,
- 			    const struct dpll_device_ops *ops, void *priv);
+ 	dbg->dbg = dwfl_module_getdwarf(dbg->mod, &dbg->bias);
+ 	if (!dbg->dbg)
+@@ -62,13 +64,14 @@ static int debuginfo__init_offline_dwarf(struct debuginfo *dbg,
  
-+#define DPLL_PIN_IDX_UNSPEC	U32_MAX
-+
- struct dpll_pin *
- dpll_pin_get(u64 clock_id, u32 dev_driver_id, struct module *module,
- 	     const struct dpll_pin_properties *prop);
+ 	dwfl_module_build_id(dbg->mod, &dbg->build_id, &dummy);
+ 
+-	dwfl_report_end(dbg->dwfl, NULL, NULL);
++	if (dwfl_report_end(dbg->dwfl, NULL, NULL) != 0)
++		goto error;
+ 
+ 	return 0;
+ error:
+ 	if (dbg->dwfl)
+ 		dwfl_end(dbg->dwfl);
+-	else
++	if (!fd_consumed)
+ 		close(fd);
+ 	memset(dbg, 0, sizeof(*dbg));
+ 
+@@ -160,7 +163,7 @@ int debuginfo__get_text_offset(struct debuginfo *dbg, Dwarf_Addr *offs,
+ 	/* Search the relocation related .text section */
+ 	for (i = 0; i < n; i++) {
+ 		p = dwfl_module_relocation_info(dbg->mod, i, &shndx);
+-		if (strcmp(p, ".text") == 0) {
++		if (p && strcmp(p, ".text") == 0) {
+ 			/* OK, get the section header */
+ 			scn = elf_getscn(elf, shndx);
+ 			if (!scn)
 -- 
 2.53.0
 
