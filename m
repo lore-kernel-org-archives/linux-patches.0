@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F370A46F48F;
-	Tue, 21 Jul 2026 17:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9095046D0A1;
+	Tue, 21 Jul 2026 17:34:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655268; cv=none; b=HkQPrwLEOuevIccz6IuZaHiMI1yKCwVrOW3Usgro6p47d4/L0XkQ0a/q4Sep5ZDBb/DcUs1I7d8mefyktKNgICvNq723VahYg+flD7sT0CdLSf0d1zlj2etWhnjWn9Fhg9ey10PMuhhlOoNT8DAvUXLpr9xoJ9x8W+JWJHHpUHw=
+	t=1784655270; cv=none; b=V/AhcIbIGF99sq2+d8lPzZQRq7ujhzMsw+FNi/FNVfY6dxrniE+px6UcTM9n9fE8GPwYY6iHKwOLtqeAHY/6Ln7Abm+ASmZ53UhHW1xowJ2SIrxWWFXC2p6H1G9NadCmJVwVZii2568Wzt60jlLQapxBcLGGe3H5jGien5+KVPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655268; c=relaxed/simple;
-	bh=YSFA9Y6up4IgOdit0xpMJ2uJp8dyb6vpFOlyCZZshBA=;
+	s=arc-20240116; t=1784655270; c=relaxed/simple;
+	bh=c0lqODmb9YE2gmQgeIC6IMr/Md6MNp95PW5Lz5Kb2Cw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GGjVM+0gYh5qLqKzCqgVohcBP2lMuDL1qi3kaVXFUznLLdYmICvMj1NQh2adEdR8rDyp/q50W79Bw8+hnFMdsjtq8V7sGIAoZU+KLJt/Z+OXfDxOGqYP6TyEEhY6HOTZdLJhDfg+cfE8WaOxitlzQlQajCDsWZ6o8hctK7ii4wE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUDsWisl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fvD+znwdWaWahn5yHs4aafrwqktr4axSmXzE+NANa5GECYLj2dg6DURCKhKRc4MGEEC5K4uOD29BbYWgRFYxbuzROaAgmy/BgmOKlAj/6j932grA+yEzXEa8+H5Nm6dDIZVXXCH8aevNrJ09keQ/iA4DCjlJFEyxMqGylWf6bPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGIEOUaL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUDsWisl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B90F1F000E9;
-	Tue, 21 Jul 2026 17:34:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGIEOUaL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CE01F000E9;
+	Tue, 21 Jul 2026 17:34:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655266;
-	bh=CKPNGFSugpZPMAf8KjbHsBH3Uf1A0HPejkMddd55BTM=;
+	s=korg; t=1784655269;
+	bh=96ong9l3mFr4J/L1Lh36WsYCAXyIs8hfgYLccFV08wE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QUDsWislu7/2DFIIwNLtbLaLKrprD/4iLt/FcqdlZa9BHN66QLFjFLWAfFB51ySSz
-	 a4EdtySg1Xl/oYh/ihjCdeNa22omckRGKzLc/p2meT5WZE6mXfu7rUVBs4502RIeT7
-	 gjELqhUOIU0ej5HBJS6hmSl0qJRjvGdFr8oMdf8g=
+	b=VGIEOUaLdfXEnOSnxx1snc/38XSeBxbjB3ufQtdqnXNUxR+wHE9PRfqLfTl9RP7So
+	 JbN+bYIoUSqJeJWJQGwq3cor++4o8YxPM2E5HvaZdCW4UKav472O+NeZnlyzXfIprW
+	 rONzSH/rEJAUcxredF3/c1XbQZgV4D3wRYeWGJx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Zhao Dongdong <zhaodongdong@kylinos.cn>,
 	Philipp Zabel <p.zabel@pengutronix.de>,
-	Robby Cai <robby.cai@nxp.com>,
-	Guoniu Zhou <guoniu.zhou@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 7.1 2018/2077] reset: imx7: Correct polarity of MIPI CSI resets on i.MX8MQ
-Date: Tue, 21 Jul 2026 17:28:11 +0200
-Message-ID: <20260721152640.298993921@linuxfoundation.org>
+	Jernej Skrabec <jernej.skrabec@gmail.com>
+Subject: [PATCH 7.1 2019/2077] reset: sunxi: fix memory region leak on ioremap failure
+Date: Tue, 21 Jul 2026 17:28:12 +0200
+Message-ID: <20260721152640.322248933@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,48 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robby Cai <robby.cai@nxp.com>
+From: Zhao Dongdong <zhaodongdong@kylinos.cn>
 
-commit 71827776667f4e4677a4fa806bcfb24d4b8dd9d7 upstream.
+commit 1a8c89f8c112c75e84ff9a140f969e372aed0c9a upstream.
 
-On i.MX8MQ, the MIPI CSI reset lines are active-low and not self-clearing.
-Writing '0' asserts reset and it remains asserted until explicitly
-deasserted by software.
+In sunxi_reset_init(), when ioremap() fails, the memory region obtained
+via request_mem_region() is not released, leading to a resource leak.
 
-This driver previously treated the MIPI CSI reset signals as active-high,
-which led to incorrect reset assert/deassert sequencing. This issue was
-exposed by commit 6d79bb8fd2aa ("media: imx8mq-mipi-csi2: Explicitly
-release reset").
+Add an err_mem_region label to properly release the memory region before
+freeing the data structure.
 
-Fix this by reflecting the correct reset polarity and ensuring proper
-reset handling.
-
-Fixes: c979dbf59987 ("reset: imx7: Add support for i.MX8MQ IP block variant")
-Cc: stable@vger.kernel.org # 6d79bb8fd2aa: media: imx8mq-mipi-csi2: Explicitly release reset
+Fixes: 8f1ae77f4666 ("reset: Add Allwinner SoCs Reset Controller Driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
 Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Signed-off-by: Robby Cai <robby.cai@nxp.com>
-Reviewed-by: Guoniu Zhou <guoniu.zhou@oss.nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/reset/reset-imx7.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/reset/reset-sunxi.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/reset/reset-imx7.c
-+++ b/drivers/reset/reset-imx7.c
-@@ -236,6 +236,12 @@ static int imx8mq_reset_set(struct reset
+--- a/drivers/reset/reset-sunxi.c
++++ b/drivers/reset/reset-sunxi.c
+@@ -44,7 +44,7 @@ static int sunxi_reset_init(struct devic
+ 	data->membase = ioremap(res.start, size);
+ 	if (!data->membase) {
+ 		ret = -ENOMEM;
+-		goto err_alloc;
++		goto err_mem_region;
+ 	}
  
- 	case IMX8MQ_RESET_PCIE_CTRL_APPS_EN:
- 	case IMX8MQ_RESET_PCIE2_CTRL_APPS_EN:
-+	case IMX8MQ_RESET_MIPI_CSI1_CORE_RESET:
-+	case IMX8MQ_RESET_MIPI_CSI1_PHY_REF_RESET:
-+	case IMX8MQ_RESET_MIPI_CSI1_ESC_RESET:
-+	case IMX8MQ_RESET_MIPI_CSI2_CORE_RESET:
-+	case IMX8MQ_RESET_MIPI_CSI2_PHY_REF_RESET:
-+	case IMX8MQ_RESET_MIPI_CSI2_ESC_RESET:
- 	case IMX8MQ_RESET_MIPI_DSI_PCLK_RESET_N:
- 	case IMX8MQ_RESET_MIPI_DSI_ESC_RESET_N:
- 	case IMX8MQ_RESET_MIPI_DSI_DPI_RESET_N:
+ 	spin_lock_init(&data->lock);
+@@ -57,6 +57,8 @@ static int sunxi_reset_init(struct devic
+ 
+ 	return reset_controller_register(&data->rcdev);
+ 
++err_mem_region:
++	release_mem_region(res.start, size);
+ err_alloc:
+ 	kfree(data);
+ 	return ret;
 
 
