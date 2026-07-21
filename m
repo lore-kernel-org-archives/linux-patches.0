@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D9143B4A2;
-	Tue, 21 Jul 2026 22:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D923B9930;
+	Tue, 21 Jul 2026 22:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671486; cv=none; b=h4Ruteo8vXpWZpgV+mV+Cf9710w9ZxDjVTIhq1UkXRQG+E2cnzBtwhrSHHcCzR66uUAhibuIb7478FquOqhC5PxphJEnBewF3Wd67JwXOCp1Eonkub92FAEA22fn9ZT7dRhHnR9n26Tp2lvu5Tejj0vctaRNVLx/Kv4bK7gHcCg=
+	t=1784671489; cv=none; b=tush2tNmMQLBV2SwhD5ZSlVcExEGkzaUI7JKfVL1s1SlBGcRygsMyHC/0t05UYrPi+Uk5rzwH6YMWmu0wwUVZpdJXhQ8WmNm+Dkpc2hkV+3czpTyxepSc7z3OC2Xk8D0m9Ef+baAqw0H/oSbSlaM+0QP6co5wsmO/avg3Ywnh4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671486; c=relaxed/simple;
-	bh=3yj636CWhHYbqcudylQc1AQE9b5OdVp+E/xRuNCz0lM=;
+	s=arc-20240116; t=1784671489; c=relaxed/simple;
+	bh=MRzWV19l2wClbPMFRxsqPdsTb4XUY9KaUK7bwjMIJdw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U3wBaHP08crGsA/MXX1Uk/8L9WvaMnalUs10G39MeeiiBXki2hEJf/pQ1db4CFdlA21tYhYBv7CEpJli4107cKo4eB4YBN+UK7Cd+/L6A9Ebun3C47uQCzV69xWeVP8L5x8ejrZ85jHUmsGxh9MX05zXEOjbFwZJkxv2E/MGENE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qm02vsUh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=AQiBh222LwbtxIII2VlWHInrCol7stIgKl4vP575iaWTDTUccHxYN5JC4RRYxyxd0/PuVtWysTzyEyFflf3KJzCktWnS9xCj7n0QivGgmsN8UVDfQeao02CScchu4NHNOR9JGZyIcQMEf9VsAmuxLeaiQQJNz1w4ggJstlegJbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTJ778Jy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qm02vsUh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64011F000E9;
-	Tue, 21 Jul 2026 22:04:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTJ778Jy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 910D71F000E9;
+	Tue, 21 Jul 2026 22:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671485;
-	bh=iGbSAVDh5jviphVCVfmVuGd06NaA2AWVELnVaXB0D58=;
+	s=korg; t=1784671488;
+	bh=jks99vpFs5NlLZedBXmpopj1fzdHvtz0NnL6fc0hQHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qm02vsUhlYfBD7tG9RToEbxK7vxRh6u2i3cCngwvqsHYY63HxAOrM+TLlJNaFRV20
-	 Dm8QTi3cMIy4PCZOumF1lnBkWHH5MRshffLaLr6WPJ46IkbEEhMl1qvHDzlaci20wx
-	 /UdICmUj07Og3uLWnHrHMMJr0stzX+dhFE8Jf668=
+	b=dTJ778Jyt/TxkVZFqVEK7ApMELTYO4oOYNGTpNvgVuARsTK2SKfNVpefrQNmgAW0c
+	 OH0a/fWP34ucjN7GJQ1NbQDdqe9b+qeKI150e8i3qyzYgMzwLQoftAaZvFl2MmMjcR
+	 TlVi5yd5bif9/Q7MIgaltHvVxkpbeluQasQrA5vY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Rosen Penev <rosenp@gmail.com>,
-	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 262/843] mips: ralink: mt7621: add missing __iomem
-Date: Tue, 21 Jul 2026 17:18:17 +0200
-Message-ID: <20260721152411.918896431@linuxfoundation.org>
+Subject: [PATCH 5.15 222/843] wifi: ath9k: fix OOB access from firmware tx status queue ID
+Date: Tue, 21 Jul 2026 17:17:37 +0200
+Message-ID: <20260721152411.009009724@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -47,42 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 4ddaf88aadd3bd09c2eb3734c53d2864af6b144e ]
+[ Upstream commit 7ce2f118a2389e8f0a64068c6fe7cc7d40639be0 ]
 
-raw_readl and writel calls expect pointers annotated with __iomem.
+ath_tx_edma_tasklet() accesses sc->tx.txq[ts.qid] where ts.qid is a
+4-bit hardware field (0-15), but the txq array only has
+ATH9K_NUM_TX_QUEUES (10) entries. A qid >= 10 causes an OOB array
+access.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild/202211060456.cnV6IK6G-lkp@intel.com/
-Fixes: cc19db8b312a ("MIPS: ralink: mt7621: do memory detection on KSEG1")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Add a bounds check on ts.qid before using it as an array index.
+
+Fixes: fce041beb03f ("ath9k: unify edma and non-edma tx code, improve tx fifo handling")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Link: https://patch.msgid.link/20260415222343.1540564-1-tristmd@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/ralink/mt7621.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath9k/xmit.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/mips/ralink/mt7621.c b/arch/mips/ralink/mt7621.c
-index 0db23bcf2a970f..9638464fdc9d54 100644
---- a/arch/mips/ralink/mt7621.c
-+++ b/arch/mips/ralink/mt7621.c
-@@ -32,7 +32,7 @@ phys_addr_t mips_cpc_default_phys_base(void)
+diff --git a/drivers/net/wireless/ath/ath9k/xmit.c b/drivers/net/wireless/ath/ath9k/xmit.c
+index 84c68aefc171a7..cd175d9e729df3 100644
+--- a/drivers/net/wireless/ath/ath9k/xmit.c
++++ b/drivers/net/wireless/ath/ath9k/xmit.c
+@@ -2695,6 +2695,11 @@ void ath_tx_edma_tasklet(struct ath_softc *sc)
+ 			continue;
+ 		}
  
- static bool __init mt7621_addr_wraparound_test(phys_addr_t size)
- {
--	void *dm = (void *)KSEG1ADDR(&detect_magic);
-+	void __iomem *dm = (void __iomem *)KSEG1ADDR(&detect_magic);
++		if (ts.qid >= ATH9K_NUM_TX_QUEUES) {
++			ath_dbg(common, XMIT, "invalid qid %d\n", ts.qid);
++			continue;
++		}
++
+ 		txq = &sc->tx.txq[ts.qid];
  
- 	if (CPHYSADDR(dm + size) >= MT7621_LOWMEM_MAX_SIZE)
- 		return true;
+ 		ath_txq_lock(sc, txq);
 -- 
 2.53.0
 
