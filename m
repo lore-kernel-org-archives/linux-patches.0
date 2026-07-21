@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16184439325;
-	Tue, 21 Jul 2026 21:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE2742DFEC;
+	Tue, 21 Jul 2026 21:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670962; cv=none; b=OPGj+X7LfrySm3H3UaTQHoY04YXwbB3fEBNqvoi7fnc+Lw2ij4ane+aycK5zjP17ogCPbTgzfEnM/uj48QyjlZTKOvQJeRpOABSmXmj54/guQD2cqrzzitfPh2duE7mhQZd+jbp0iiW9CMqY2eQCQ0Pex7Tkp++uspsuHPZUO44=
+	t=1784670964; cv=none; b=qpRNaC8YY9J4NT/vG4oX6+caDB8JgfEgvE8qEDgPCFY77Z/cDZ3ZDNiOBFzA/hmsXm5/hUdIEokD1Bw1NkeWS1ZipN4v7VvgcicESOBuaTdzxwpaGVDGiyk8x6+hGkunJEisRpBIewKi3dZ4ImScDtEWuhTH7zZ4wX/Bg23gYuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670962; c=relaxed/simple;
-	bh=o00N3nhaRT/C2ktahEZo9pDVVSyHXF2mElEShrhv1JY=;
+	s=arc-20240116; t=1784670964; c=relaxed/simple;
+	bh=+ecbKAsFHrNHO5OcPk8Oeem4yxMyywZOa8fa1MjzFGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i1LkBjHI/FNWuT1EeV1a07UcQN1oOrkDQGbm9ZQDQdNTq5uHNAuQxbO9+gplorAuD9k1slfaKpgCgjor2jRdwNWQhLUAmmSbQ8U9MzTx50H9DrazwK9ESdlGhRpSx7C+901Mn+9JJNXYPz5ctr87/YIY6w59GiUiARGL8Ttpe4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0SPabVur; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GeuC32sh9sYWPo9lXmsdFsdbL79nMzFk91ySdMYTHzTQabBC792YjtDNd+U5CBo3XBCW8uLLMu6H52mbtJ52kReAn/qvYzbdiLesyJIkrl8VlEw/6WB8VddCMxDZm1sOcnxKJUY/z+ZfIBWZYVyJpUmRxbYZZFWmToR6wuIR73Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=odGG2a3p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0SPabVur"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A14EB1F00A3A;
-	Tue, 21 Jul 2026 21:56:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="odGG2a3p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260881F000E9;
+	Tue, 21 Jul 2026 21:56:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670961;
-	bh=NTrTY4qzJsJ7hFHmaX60scedfVFbC6ZVMxzH02Q9FLo=;
+	s=korg; t=1784670963;
+	bh=/tPKjCXwOpufzVhXK40NV0+rmnIrRI6AniQhW9zgS8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0SPabVurqr1tps6fVfrsPgEmOYbbbon6GrSRW0sxxcf8HSUa82akyDq973bxlwYrf
-	 jypjIwWj0mM7InIR5RAKDUhRgQJctolmaDFxdqxgP7TWelwd8Du6FGsM/Tuvw06E8h
-	 knelwFXY16GKNpoLsR56akdYgF5JUXVhVvsWDWj4=
+	b=odGG2a3pkfWdJsYd6QqjQ0gt6W0wllHMXRdYQPlTiO6QdnpGF+3QN6O4pERIA224i
+	 4DDFvo0VhfYLcWf8Hvu74NCXBupYuzgtMAYndc5ONcsMDbx5WTxKrrtqguWHGg9wA+
+	 SX2c5qWr04yATVHEpgqbfTMOAJGVHoUuAnT1VCHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liviu Stan <liviu.stan@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 5.15 065/843] iio: temperature: ltc2983: Fix reinit_completion() called after conversion start
-Date: Tue, 21 Jul 2026 17:15:00 +0200
-Message-ID: <20260721152407.451039770@linuxfoundation.org>
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 066/843] ALSA: virtio: Add missing 384 kHz PCM rate mapping
+Date: Tue, 21 Jul 2026 17:15:01 +0200
+Message-ID: <20260721152407.472706350@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -45,47 +44,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Liviu Stan <liviu.stan@analog.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 5cb9fdb446bfc3ae0524496f53fb68e67051701b upstream.
+commit 83fbbcb7935ec6d2c8ba3bc133e8a0ead2ab0b2d upstream.
 
-reinit_completion() was called after regmap_write() initiated the hardware
-conversion, creating a race window where the interrupt could fire and call
-complete() before reinit_completion() reset the completion.
+The VirtIO sound UAPI defines VIRTIO_SND_PCM_RATE_384000, and ALSA
+has SNDRV_PCM_RATE_384000. However, virtio-snd's rate conversion
+tables stop at 192 kHz.
 
-Move reinit_completion() before the regmap_write() to close the race.
-ltc2983_eeprom_cmd() already does it in the correct order.
+A device advertising only 384 kHz is rejected as having no supported
+PCM frame rates. A device advertising 384 kHz together with lower rates
+does not expose 384 kHz through the ALSA hardware constraints. The
+selected ALSA rate also needs a reverse mapping for SET_PARAMS.
 
-Fixes: f110f3188e56 ("iio: temperature: Add support for LTC2983")
-Signed-off-by: Liviu Stan <liviu.stan@analog.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Add the missing 384 kHz entries to both conversion tables.
+
+Fixes: 29b96bf50ba9 ("ALSA: virtio: build PCM devices and substream hardware descriptors")
+Fixes: da76e9f3e43a ("ALSA: virtio: PCM substream operators")
+Cc: stable@vger.kernel.org
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260515-alsa-virtio-384k-rate-v1-1-35ecb5df835c@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/temperature/ltc2983.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/virtio/virtio_pcm.c     |    3 ++-
+ sound/virtio/virtio_pcm_ops.c |    3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/temperature/ltc2983.c
-+++ b/drivers/iio/temperature/ltc2983.c
-@@ -1147,12 +1147,11 @@ static int ltc2983_chan_read(struct ltc2
- 	start_conversion |= LTC2983_STATUS_CHAN_SEL(sensor->chan);
- 	dev_dbg(&st->spi->dev, "Start conversion on chan:%d, status:%02X\n",
- 		sensor->chan, start_conversion);
-+	reinit_completion(&st->completion);
- 	/* start conversion */
- 	ret = regmap_write(st->regmap, LTC2983_STATUS_REG, start_conversion);
- 	if (ret)
- 		return ret;
--
--	reinit_completion(&st->completion);
- 	/*
- 	 * wait for conversion to complete.
- 	 * 300 ms should be more than enough to complete the conversion.
+--- a/sound/virtio/virtio_pcm.c
++++ b/sound/virtio/virtio_pcm.c
+@@ -77,7 +77,8 @@ static const struct virtsnd_v2a_rate g_v
+ 	[VIRTIO_SND_PCM_RATE_88200] = { SNDRV_PCM_RATE_88200, 88200 },
+ 	[VIRTIO_SND_PCM_RATE_96000] = { SNDRV_PCM_RATE_96000, 96000 },
+ 	[VIRTIO_SND_PCM_RATE_176400] = { SNDRV_PCM_RATE_176400, 176400 },
+-	[VIRTIO_SND_PCM_RATE_192000] = { SNDRV_PCM_RATE_192000, 192000 }
++	[VIRTIO_SND_PCM_RATE_192000] = { SNDRV_PCM_RATE_192000, 192000 },
++	[VIRTIO_SND_PCM_RATE_384000] = { SNDRV_PCM_RATE_384000, 384000 }
+ };
+ 
+ /**
+--- a/sound/virtio/virtio_pcm_ops.c
++++ b/sound/virtio/virtio_pcm_ops.c
+@@ -90,7 +90,8 @@ static const struct virtsnd_a2v_rate g_a
+ 	{ 88200, VIRTIO_SND_PCM_RATE_88200 },
+ 	{ 96000, VIRTIO_SND_PCM_RATE_96000 },
+ 	{ 176400, VIRTIO_SND_PCM_RATE_176400 },
+-	{ 192000, VIRTIO_SND_PCM_RATE_192000 }
++	{ 192000, VIRTIO_SND_PCM_RATE_192000 },
++	{ 384000, VIRTIO_SND_PCM_RATE_384000 }
+ };
+ 
+ static int virtsnd_pcm_sync_stop(struct snd_pcm_substream *substream);
 
 
