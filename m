@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9847470438;
-	Tue, 21 Jul 2026 17:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219DB46D0A9;
+	Tue, 21 Jul 2026 17:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656070; cv=none; b=thyMsc9CGWKMg2Q7ggzHzqYvkeJDEaN57/DBuMb88NeMZotGJisAktDt44JLZjKWH5M5Swi+63h3dlsfyEQzR0s7uiVCNsxVFmOGTF082mJe1E8oBXVtxJjCkmf0AKW9sakix/Bzdk4NdCYUc7FCK4MqscD88FVZdkZWpBwN1jE=
+	t=1784656074; cv=none; b=U++5v/seJSkqFFb0UjeXmGr+E4LdlA2NBl75PUZx20RQ+8mN9M5pdRzNqQSh1Li1PUAZxDcSQ95hzYAn6APgccVA91Rk/GBJVD8JpLkxGpVkpiVlB7qL9xdgqR7oLeki8DgX9rUaA0niZVZV+27BOXVwpAxUxaNSXiPe5g10SWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656070; c=relaxed/simple;
-	bh=C7SaKqO74h0bQDFIiDRVxP8lcpUixm+vyD+W1y3l2JE=;
+	s=arc-20240116; t=1784656074; c=relaxed/simple;
+	bh=T+GkngDELFnK8QiTZehlpidjW+2iVYcwIwhWncVt87s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SwBrm+Z4oYOlQ4A7qYn3P6VldY22WaQPQDQhpb+MnwE29IeU3I0LGJgEVVzTvYLQjCIor2snSbWt1XctfDWaDBNMdfCvrJRKujunhxcshuEElQNZjU6DdEOxYFdnCoSUdZgdcuhS0M00nkUqYIeH3ANCth99Y4CFOd5lg/cgI/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2L/qO5z7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fVHvkx6IQs3TvyTXM0j6so/B48yEpK/qHV9H04cm+ES3YVW4/FgEQR3mAUpR+QwHTtQnekftivGtUlea2pAGUNW8c086DpHoVXAcpfwOKMcPCvrGGAzfr/Moon65c96FcJvMONKpy2wUtQ+E99mrQOHI9UZyVmP1ZTQBJS5t75M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8vz9KR+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2L/qO5z7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398461F000E9;
-	Tue, 21 Jul 2026 17:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8vz9KR+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A0B1F00A3A;
+	Tue, 21 Jul 2026 17:47:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656067;
-	bh=WDVoEMw0y/stLeyGGTYruKXZ6mzp2rjWvWPP6j32aVQ=;
+	s=korg; t=1784656070;
+	bh=EBkBKfewD2i1gLBwLAlSbYOAydl6AyWNx45j0X1PAuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2L/qO5z72Ghso/M2hxafxHOlaFzc/KA7Uixjn9YX2olRsEYjNAuiA1c43rGuEVKYr
-	 ZtwfSyHAWT9hLQMk2C5OXaJJ5yoHMpAZWoKB7j7tQc9j54yJ5Mvmd6dKqaAQJ5MYkE
-	 dB2SwIfA/BPJ5qaGi6OXahzZlAJD6kDHoHHOUkFQ=
+	b=S8vz9KR+f/FY0gi6VZqESBmHi72fJ1FL3hZbQ3s8LwlMGacmavi4hIUfqgT9J4oYm
+	 nsp4jwvL9mKoMKIzVdbDHiheDrqfjcpEYHpaDhzZNF66IVkCCFAhnS7vKPdg6evpnf
+	 CAHZ0LZUdVJuGRmSN6eLg+BqXxvGdQhG1+nDyJQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Kling <webgeek1234@gmail.com>,
+	Felix Gu <ustc.gu@gmail.com>,
 	Mikko Perttunen <mperttunen@nvidia.com>,
 	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0248/1611] gpu: host1x: Allow entries in BO caches to be freed
-Date: Tue, 21 Jul 2026 17:06:04 +0200
-Message-ID: <20260721152520.606881776@linuxfoundation.org>
+Subject: [PATCH 6.18 0249/1611] drm/tegra: dc: Fix device node reference leak in tegra_dc_has_output()
+Date: Tue, 21 Jul 2026 17:06:05 +0200
+Message-ID: <20260721152520.632589207@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,237 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 3cbf5e3c46e66d9b3b6b91099bb720c6cb1be3bc ]
+[ Upstream commit 63a3998d792ab5c45304bf879e385a31fa923b61 ]
 
-When a buffer object is pinned via host1x_bo_pin() with a cache, the
-resulting mapping is kept in the cache so it can be reused on subsequent
-pins. Each mapping held a reference to the underlying host1x_bo (taken
-in tegra_bo_pin / gather_bo_pin), so as long as a mapping was cached,
-the bo itself could not be freed.
+The of_for_each_phandle() macro increments the reference count of the
+device node it iterates over. If the loop exits early, the reference must
+be released manually.
 
-However, the only way to remove the cached mapping was through the free
-path of the buffer object. This meant that if a bo got cached, it could
-never get freed again.
+In tegra_dc_has_output(), the function returns true immediately when a
+match is found, failing to release the current node's reference.
 
-Resolve the circularity by holding a weak reference to the bo from the
-cache side. This is done by having the .pin callbacks not bump the bo's
-refcount -- instead the common Host1x bo code does so, except for the
-cache reference.
+Fix this by adding a call to of_node_put() before returning from the loop.
 
-Also move the remove-cache-mapping-on-free code into a common function
-inside Host1x code. This is only called from the TegraDRM GEM buffers
-since those are the only ones that can be cached at the moment.
-
-Reported-by: Aaron Kling <webgeek1234@gmail.com>
-Fixes: 1f39b1dfa53c ("drm/tegra: Implement buffer object cache")
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Tested-by: Aaron Kling <webgeek1234@gmail.com>
+Fixes: c57997bce423 ("drm/tegra: sor: Add Tegra186 support")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Acked-by: Mikko Perttunen <mperttunen@nvidia.com>
 Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260515-host1x-bocache-leak-v1-1-a0375f68aeab@nvidia.com
+Link: https://patch.msgid.link/20260128-dc-v1-1-a88205826301@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tegra/gem.c    | 13 ++------
- drivers/gpu/drm/tegra/submit.c |  3 +-
- drivers/gpu/host1x/bus.c       | 60 +++++++++++++++++++++++++++++++++-
- include/linux/host1x.h         |  7 ++++
- 4 files changed, 69 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/tegra/dc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/tegra/gem.c b/drivers/gpu/drm/tegra/gem.c
-index 8ede07fb7a21d6..fab3edbe33a6cb 100644
---- a/drivers/gpu/drm/tegra/gem.c
-+++ b/drivers/gpu/drm/tegra/gem.c
-@@ -68,7 +68,7 @@ static struct host1x_bo_mapping *tegra_bo_pin(struct device *dev, struct host1x_
- 		return ERR_PTR(-ENOMEM);
+diff --git a/drivers/gpu/drm/tegra/dc.c b/drivers/gpu/drm/tegra/dc.c
+index 6c84bd69b11ff4..dc69c88736934a 100644
+--- a/drivers/gpu/drm/tegra/dc.c
++++ b/drivers/gpu/drm/tegra/dc.c
+@@ -100,8 +100,10 @@ bool tegra_dc_has_output(struct tegra_dc *dc, struct device *dev)
+ 	int err;
  
- 	kref_init(&map->ref);
--	map->bo = host1x_bo_get(bo);
-+	map->bo = bo;
- 	map->direction = direction;
- 	map->dev = dev;
+ 	of_for_each_phandle(&it, err, np, "nvidia,outputs", NULL, 0)
+-		if (it.node == dev->of_node)
++		if (it.node == dev->of_node) {
++			of_node_put(it.node);
+ 			return true;
++		}
  
-@@ -169,7 +169,6 @@ static void tegra_bo_unpin(struct host1x_bo_mapping *map)
- 		kfree(map->sgt);
- 	}
- 
--	host1x_bo_put(map->bo);
- 	kfree(map);
+ 	return false;
  }
- 
-@@ -508,17 +507,9 @@ static struct tegra_bo *tegra_bo_import(struct drm_device *drm,
- void tegra_bo_free_object(struct drm_gem_object *gem)
- {
- 	struct tegra_drm *tegra = gem->dev->dev_private;
--	struct host1x_bo_mapping *mapping, *tmp;
- 	struct tegra_bo *bo = to_tegra_bo(gem);
- 
--	/* remove all mappings of this buffer object from any caches */
--	list_for_each_entry_safe(mapping, tmp, &bo->base.mappings, list) {
--		if (mapping->cache)
--			host1x_bo_unpin(mapping);
--		else
--			dev_err(gem->dev->dev, "mapping %p stale for device %s\n", mapping,
--				dev_name(mapping->dev));
--	}
-+	host1x_bo_clear_cached_mappings(&bo->base);
- 
- 	if (tegra->domain) {
- 		tegra_bo_iommu_unmap(tegra, bo);
-diff --git a/drivers/gpu/drm/tegra/submit.c b/drivers/gpu/drm/tegra/submit.c
-index 2430fcc97448da..705382035f5f66 100644
---- a/drivers/gpu/drm/tegra/submit.c
-+++ b/drivers/gpu/drm/tegra/submit.c
-@@ -76,7 +76,7 @@ gather_bo_pin(struct device *dev, struct host1x_bo *bo, enum dma_data_direction
- 		return ERR_PTR(-ENOMEM);
- 
- 	kref_init(&map->ref);
--	map->bo = host1x_bo_get(bo);
-+	map->bo = bo;
- 	map->direction = direction;
- 	map->dev = dev;
- 
-@@ -117,7 +117,6 @@ static void gather_bo_unpin(struct host1x_bo_mapping *map)
- 	dma_unmap_sgtable(map->dev, map->sgt, map->direction, 0);
- 	sg_free_table(map->sgt);
- 	kfree(map->sgt);
--	host1x_bo_put(map->bo);
- 
- 	kfree(map);
- }
-diff --git a/drivers/gpu/host1x/bus.c b/drivers/gpu/host1x/bus.c
-index 344cc9e741c135..8564b6aa30b032 100644
---- a/drivers/gpu/host1x/bus.c
-+++ b/drivers/gpu/host1x/bus.c
-@@ -876,6 +876,20 @@ int host1x_client_resume(struct host1x_client *client)
- }
- EXPORT_SYMBOL(host1x_client_resume);
- 
-+/**
-+ * host1x_bo_pin() - Create a DMA mapping for the buffer object
-+ * @dev: Device onto which DMA map to
-+ * @bo: Buffer object to map
-+ * @dir: DMA direction
-+ * @cache: Cache in which to store mapping, or NULL
-+ *
-+ * Creates a DMA mapping pointing to @bo for @dev. The refcount of @bo is incremented
-+ * until host1x_bo_unpin is called.
-+ *
-+ * If @cache is specified, the mapping is also stored in the cache and not released
-+ * until @bo is freed (refcount drops to zero). This improves performance when a buffer
-+ * is pinned and unpinned frequently as in the case of display use.
-+ */
- struct host1x_bo_mapping *host1x_bo_pin(struct device *dev, struct host1x_bo *bo,
- 					enum dma_data_direction dir,
- 					struct host1x_bo_cache *cache)
-@@ -888,6 +902,7 @@ struct host1x_bo_mapping *host1x_bo_pin(struct device *dev, struct host1x_bo *bo
- 		list_for_each_entry(mapping, &cache->mappings, entry) {
- 			if (mapping->bo == bo && mapping->direction == dir) {
- 				kref_get(&mapping->ref);
-+				host1x_bo_get(bo);
- 				goto unlock;
- 			}
- 		}
-@@ -897,6 +912,8 @@ struct host1x_bo_mapping *host1x_bo_pin(struct device *dev, struct host1x_bo *bo
- 	if (IS_ERR(mapping))
- 		goto unlock;
- 
-+	host1x_bo_get(bo);
-+
- 	spin_lock(&mapping->bo->lock);
- 	list_add_tail(&mapping->list, &bo->mappings);
- 	spin_unlock(&mapping->bo->lock);
-@@ -907,7 +924,12 @@ struct host1x_bo_mapping *host1x_bo_pin(struct device *dev, struct host1x_bo *bo
- 
- 		list_add_tail(&mapping->entry, &cache->mappings);
- 
--		/* bump reference count to track the copy in the cache */
-+		/*
-+		 * Bump the mapping reference count to track the mapping in the cache,
-+		 * but do not bump the BO's refcount. This allows the BO to still get freed,
-+		 * triggering the release of the cache mapping through
-+		 * host1x_bo_clear_cached_mappings.
-+		 */
- 		kref_get(&mapping->ref);
- 	}
- 
-@@ -937,9 +959,17 @@ static void __host1x_bo_unpin(struct kref *ref)
- 	mapping->bo->ops->unpin(mapping);
- }
- 
-+/**
-+ * host1x_bo_unpin() - Release an established DMA mapping of a buffer object
-+ * @mapping: Mapping to release
-+ *
-+ * Unmaps the given @mapping, unless it is cached. Decreases the refcount on
-+ * the underlying buffer object.
-+ */
- void host1x_bo_unpin(struct host1x_bo_mapping *mapping)
- {
- 	struct host1x_bo_cache *cache = mapping->cache;
-+	struct host1x_bo *bo = mapping->bo;
- 
- 	if (cache)
- 		mutex_lock(&cache->lock);
-@@ -948,5 +978,33 @@ void host1x_bo_unpin(struct host1x_bo_mapping *mapping)
- 
- 	if (cache)
- 		mutex_unlock(&cache->lock);
-+
-+	host1x_bo_put(bo);
- }
- EXPORT_SYMBOL(host1x_bo_unpin);
-+
-+/**
-+ * host1x_bo_clear_cached_mappings() - Remove all cached mappings pointing at a bo
-+ * @bo: Buffer object to release mappings of
-+ *
-+ * Drops references to any mappings pointing to @bo left in any caches. This must
-+ * be called by any host1x_bo implementers that may be pinned with caching enabled
-+ * before freeing the bo.
-+ */
-+void host1x_bo_clear_cached_mappings(struct host1x_bo *bo)
-+{
-+	struct host1x_bo_mapping *mapping, *tmp;
-+	struct host1x_bo_cache *cache;
-+
-+	list_for_each_entry_safe(mapping, tmp, &bo->mappings, list) {
-+		cache = mapping->cache;
-+		if (WARN_ON(!cache))
-+			continue;
-+
-+		mutex_lock(&mapping->cache->lock);
-+		WARN_ON(kref_read(&mapping->ref) != 1);
-+		__host1x_bo_unpin(&mapping->ref);
-+		mutex_unlock(&mapping->cache->lock);
-+	}
-+}
-+EXPORT_SYMBOL(host1x_bo_clear_cached_mappings);
-diff --git a/include/linux/host1x.h b/include/linux/host1x.h
-index 9fa9c30a34e65e..42ca410594e8de 100644
---- a/include/linux/host1x.h
-+++ b/include/linux/host1x.h
-@@ -143,6 +143,12 @@ static inline struct host1x_bo_mapping *to_host1x_bo_mapping(struct kref *ref)
- 	return container_of(ref, struct host1x_bo_mapping, ref);
- }
- 
-+/**
-+ * struct host1x_bo_ops - operations implemented by a host1x_bo provider
-+ *
-+ * @pin: create a DMA mapping. Implementation must not touch the bo's refcount.
-+ * @unpin: destroy a DMA mapping. Implementation must not touch the bo's refcount.
-+ */
- struct host1x_bo_ops {
- 	struct host1x_bo *(*get)(struct host1x_bo *bo);
- 	void (*put)(struct host1x_bo *bo);
-@@ -181,6 +187,7 @@ struct host1x_bo_mapping *host1x_bo_pin(struct device *dev, struct host1x_bo *bo
- 					enum dma_data_direction dir,
- 					struct host1x_bo_cache *cache);
- void host1x_bo_unpin(struct host1x_bo_mapping *map);
-+void host1x_bo_clear_cached_mappings(struct host1x_bo *bo);
- 
- static inline void *host1x_bo_mmap(struct host1x_bo *bo)
- {
 -- 
 2.53.0
 
