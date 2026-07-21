@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8FF3C276E;
-	Tue, 21 Jul 2026 17:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61EF73E7141;
+	Tue, 21 Jul 2026 17:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655020; cv=none; b=hpEDbJ+SS338K0H8n18yYmxi1scLAtepDcHHu2rGjLOm+6EDOaw3r6siBZQf9d0KqctN4fmmUSLvi3UuXfGO/zwVlgxduVPL3Pb2MbXyAkmojQE3zl6NujD/R5yWbaKvV2qW4sPZa24Tj43VcJk1UXNDvk3MdPc83HAh12C6TA4=
+	t=1784655022; cv=none; b=tD951q5GMaG9jORldnP13SsirKscR0WazvE5hStXrjHa5wSgUjTIvRz7nSuZxenDxCtaB2u0YId+p/st1bgggX2WjQWpukH15EyYudqYnkhf2K9cXrZ7imR/3uLerZ/x6S7Kou3ohzhCeqB1Ddjk9hmzxg7CJUr/lKcnT3Wb5Vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655020; c=relaxed/simple;
-	bh=k9Sza0tJSCh0fRrn0XXA4px34n3fonImVcV70gT/dZ0=;
+	s=arc-20240116; t=1784655022; c=relaxed/simple;
+	bh=MxE4t/vLc/FFFmD68zQSNatbATmcje2Le3DWuX5Lx40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lowsmUuL0h+7BGN/9HeP2Fj3kdsmJSJi6lye3mwZGTkYHOzGylsFX+FSg2ab6M5tXrmNo7wSE6v7U9PQ5H6cdxqD209+KrlmA07N89P2SIerNNOJoIaNmAOjoSr7LaY5bRQRbGL9Hf2Xy83ZikhFpgt3UfwGGFs/9gwms1Hdk54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E/HK0TB4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mcM4O0ZKnzwqHUafxrWot+8BpUwFyVCgHMO8gfv9uLNkhg63rX0GT0UXyUq4K1kmeE7vwcORoK8czsk5OZcPtxr6jIkhaTE9bgqWeIk50aTD6CoJO/BsnPgd8F/yxuVT4D5ZUV0sXAX+NqbYYi934fLAg0SpmCF6z8b267DRKvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVRXOoBP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E/HK0TB4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 284841F000E9;
-	Tue, 21 Jul 2026 17:30:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVRXOoBP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C739B1F000E9;
+	Tue, 21 Jul 2026 17:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655018;
-	bh=UQDhGTlwEJYFY8D/HSYm4kKNoMaPOa7Qa1XxTcUs2e8=;
+	s=korg; t=1784655021;
+	bh=CfDy9bvz0KZZrL+X6ZHLHpqoaGGolhkuQg8ny4afMrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E/HK0TB4mfjDHX5+ZMJbqdCDTsNVV4x+tDr7dtLYv1WmHf1u8lXeasZAhFZsqTYII
-	 btkFZnU4bUP0YkxMFQhvCEgqWtPoXMpR8RJMIExMyN0piZXirBUnu/PNf5/xARTcCi
-	 LaA/h63ndicgwxpFZti+/SzNsy7sFiSTiSAtxnUs=
+	b=AVRXOoBPzYzmdA6oQAD0jiVrnm/67B8xBjuppXV57SNvP+kwVnXyIjWpbK+bOW/B1
+	 Nfe1kZDI4T7n+Mz+nX6E8kqX+tUuNxJZe0vddqdMuLpbkWwkkInx4TWpfU++AMovQ7
+	 Z1Fh7unD/TW7hwO4VVE5eAhNY7xgrquRj3YHaPR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Simon Horman <horms@kernel.org>,
 	Stefan Schmidt <stefan@datenfreihafen.org>
-Subject: [PATCH 7.1 1924/2077] ieee802154: ca8210: fix cas_ctl leak on spi_async failure
-Date: Tue, 21 Jul 2026 17:26:37 +0200
-Message-ID: <20260721152638.092700106@linuxfoundation.org>
+Subject: [PATCH 7.1 1925/2077] ieee802154: ca8210: fix pointer truncation in kfifo on 64-bit
+Date: Tue, 21 Jul 2026 17:26:38 +0200
+Message-ID: <20260721152638.116144282@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,53 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Shitalkumar Gandhi <shital.gandhi45@gmail.com>
 
-commit e09390e439bd7cca30dd10893b1f64802961667a upstream.
+commit 6d7f7bcf225b2d566176bf6229dbd1252940cb3c upstream.
 
-ca8210_spi_transfer() allocates cas_ctl with kzalloc_obj(GFP_ATOMIC)
-and relies entirely on the SPI completion callback
-ca8210_spi_transfer_complete() to free it.
+ca8210_test_int_driver_write() and ca8210_test_int_user_read() exchange
+a kmalloc'd buffer pointer through a struct kfifo, but pass a literal
+'4' as the byte count to kfifo_in()/kfifo_out().
 
-The spi_async() API only invokes the completion callback on successful
-submission.  On failure it returns a negative error code without ever
-queuing the callback, which leaves cas_ctl and its embedded spi_message
-and spi_transfer orphaned.  Every kfree(cas_ctl) in the driver is
-inside the completion callback, so there is no other reclamation path.
+This is correct on 32-bit (pointer = 4 bytes), but on 64-bit only the
+low 4 bytes of the 8-byte pointer are written into the FIFO. The reader
+then reads back 4 bytes into an 8-byte local pointer variable, leaving
+the upper 4 bytes uninitialized stack data. The first dereference of
+the reconstructed pointer (fifo_buffer[1]) accesses an arbitrary kernel
+address and generally results in an oops.
 
-ca8210_spi_transfer() is called from ca8210_spi_exchange(), the
-interrupt handler ca8210_interrupt_handler(), and from the retry path
-inside the completion callback itself.  The exchange and interrupt
-handler paths loop on -EBUSY, so under sustained SPI bus contention
-every retry iteration leaks a fresh cas_ctl (~600 bytes per
-occurrence).
+Use sizeof(fifo_buffer) so the byte count matches pointer width on every
+architecture.
 
-Fix it by freeing cas_ctl on the spi_async() error path.  While here,
-correct the misleading error string: the function calls spi_async(),
-not spi_sync().
+The driver has no architecture restriction in Kconfig, so any 64-bit
+build with CONFIG_IEEE802154_CA8210_DEBUGFS=y is exposed. Issue has
+been latent since the driver was added in 2017 because it is most
+commonly deployed on 32-bit MCUs.
+
+Found via a custom Coccinelle semantic patch hunting for short-byte
+kfifo I/O on byte-mode kfifos used to shuttle pointers.
 
 Fixes: ded845a781a5 ("ieee802154: Add CA8210 IEEE 802.15.4 device driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/20260421073259.2259783-1-shitalkumar.gandhi@cambiumnetworks.com
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/20260520105750.30144-1-shitalkumar.gandhi@cambiumnetworks.com
 Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ieee802154/ca8210.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ieee802154/ca8210.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 --- a/drivers/net/ieee802154/ca8210.c
 +++ b/drivers/net/ieee802154/ca8210.c
-@@ -919,9 +919,10 @@ static int ca8210_spi_transfer(
- 	if (status < 0) {
- 		dev_crit(
- 			&spi->dev,
--			"status %d from spi_sync in write\n",
-+			"status %d from spi_async in write\n",
- 			status
+@@ -595,7 +595,7 @@ static int ca8210_test_int_driver_write(
+ 	fifo_buffer = kmemdup(buf, len, GFP_KERNEL);
+ 	if (!fifo_buffer)
+ 		return -ENOMEM;
+-	kfifo_in(&test->up_fifo, &fifo_buffer, 4);
++	kfifo_in(&test->up_fifo, &fifo_buffer, sizeof(fifo_buffer));
+ 	wake_up_interruptible(&priv->test.readq);
+ 
+ 	return 0;
+@@ -2526,6 +2526,7 @@ static ssize_t ca8210_test_int_user_read
+ 	struct ca8210_priv *priv = filp->private_data;
+ 	unsigned char *fifo_buffer;
+ 	unsigned long bytes_not_copied;
++	unsigned int copied;
+ 
+ 	if (filp->f_flags & O_NONBLOCK) {
+ 		/* Non-blocking mode */
+@@ -2539,7 +2540,8 @@ static ssize_t ca8210_test_int_user_read
  		);
-+		kfree(cas_ctl);
  	}
  
- 	return status;
+-	if (kfifo_out(&priv->test.up_fifo, &fifo_buffer, 4) != 4) {
++	copied = kfifo_out(&priv->test.up_fifo, &fifo_buffer, sizeof(fifo_buffer));
++	if (copied != sizeof(fifo_buffer)) {
+ 		dev_err(
+ 			&priv->spi->dev,
+ 			"test_interface: Wrong number of elements popped from upstream fifo\n"
 
 
