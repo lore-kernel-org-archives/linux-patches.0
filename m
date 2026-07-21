@@ -1,39 +1,111 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AAC24582DB;
-	Tue, 21 Jul 2026 21:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2ABD470422;
+	Tue, 21 Jul 2026 21:02:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667767; cv=none; b=Z4FtJhDzUmFAlMJnMEQZfXbKGP+FH8r6bv+CBedVHdTbnsB2wybsn0sSlw8aHjSfhkKaPqD5DFqPBB69jnLtliLINlpJ2J0FylOeqjg1A7Jgfa07AFlx0lfFrmNq8uGl5VwCSy14w84MvHwjjT1u3oD4PkBD8X+ZPjLOQYxvVZU=
+	t=1784667772; cv=none; b=tddZleb9yF/HMLbdW1E0JdkVv6l8thCrg1870w73xVzw2eX52FbGXrJRw2R2nVo5yDBwVtt0wiJ7A9zGX6drAMCfQUxGBBHXruCxCLpJmtOvyS7aq37K10vHI3WC5UUknTgD6iRlDvRPrhNR9d2rhuD2qz+JAvxSqo+1DLm5BEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667767; c=relaxed/simple;
-	bh=ZNrGbFPJVeldcugJtFB4RyKksMAXrbcJB8Nb6UAeLxs=;
+	s=arc-20240116; t=1784667772; c=relaxed/simple;
+	bh=nttywRwr7W13s7a/Vq8CXmwdVpk/kG+Nl2kXMwmIEDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yni7Rm7ptZDPVn9ilylqNF+2+sOcMuDgvr6a+x72wggjpTZq8QRr2Yl9ggZAr0v6l3PWmQLjXngOL8iw9xxtUnKXm2jvLfybQtIKRTuq1zll8xO02KTI6kK1G0/hYmbqBGdj/+rXJJZ8ejRg7whb1XfBgByG6ZGrj9nzrETGcj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TlVYSne5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Q1b0UVCyNErJjtjozmLcwYViRCjlu2diMjiVUquTUB5dCeF4ppXBxzGfzKOwV55JvpN9dT54o3lMjrrqgXkl7rubEKK5IBThKt98a3rx7R5PLo2H7wruXy6qqEyUZ/L/2P6+acdbporFG1T6GSKDljHlxgehLESBNSY5SJWiW2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEAJuR+f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlVYSne5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A541F000E9;
-	Tue, 21 Jul 2026 21:02:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEAJuR+f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FC71F00A3A;
+	Tue, 21 Jul 2026 21:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667760;
-	bh=xpRxZaK+WX2hqdDIBIw3sSvtJZhvYQXELmscmxUiBhQ=;
+	s=korg; t=1784667763;
+	bh=kL4rz7MnYD0gJzMu3qHLpC3/b2hcZ47iK7orHjiM2iQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TlVYSne5t0UBkPq+nRlru71uf80Dp3KrGNBZPNeIR0rSoYeIprYS38808KkZFOF4E
-	 3l8Eb/hfrIaDxf3NAhzfU2CnhVL+Jq6KKbIDt93bIEjQa803hWGmmTdICXsX5bttNT
-	 S9Wbe2gzxaC3IUOvWbr+bwrJHs4qX7og7ob1P51U=
+	b=WEAJuR+fGw9SjE1Ud0c/WIUowelnHe6O2mZU+/RmmcPL3yXnvjjKjwpBaiZZzwyEu
+	 R1W3OisO1DMPg803WpMtev5Md0hgVe8IJ1q2SEOdozKUUsS73RW88JSx3Xib/uEosp
+	 gFUGqXDZwNVbS0SII6MYKY0pYRD0jleURcWqJBTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siwei Zhang <oss@fourdim.xyz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Marco Elver <elver@google.com>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Christian Brauner <brauner@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Chuck Lever <cel@kernel.org>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Dave Chinner <david@fromorbit.com>,
+	Joel Fernandes <joel@joelfernandes.org>,
+	Kirill Tkhai <tkhai@ya.ru>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Steven Price <steven.price@arm.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Alasdair Kergon <agk@redhat.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Alyssa Rosenzweig <alyssa.rosenzweig@collabora.com>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Anna Schumaker <anna@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Bob Peterson <rpeterso@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Carlos Llamas <cmllamas@google.com>,
+	Chandan Babu R <chandan.babu@oracle.com>,
+	Chao Yu <chao@kernel.org>,
+	Chris Mason <clm@fb.com>,
+	Coly Li <colyli@suse.de>,
+	Dai Ngo <Dai.Ngo@oracle.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	David Airlie <airlied@gmail.com>,
+	David Hildenbrand <david@redhat.com>,
+	David Sterba <dsterba@suse.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Huang Rui <ray.huang@amd.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Jan Kara <jack@suse.cz>,
+	Jason Wang <jasowang@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Jeffle Xu <jefflexu@linux.alibaba.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Juergen Gross <jgross@suse.com>,
+	Kent Overstreet <kent.overstreet@gmail.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Minchan Kim <minchan@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Nadav Amit <namit@vmware.com>,
+	Neil Brown <neilb@suse.de>,
+	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+	Olga Kornievskaia <kolga@netapp.com>,
+	Richard Weinberger <richard@nod.at>,
+	Rob Clark <robdclark@gmail.com>,
+	Rob Herring <robh@kernel.org>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sean Paul <sean@poorly.run>,
+	Song Liu <song@kernel.org>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Tomeu Vizoso <tomeu.vizoso@collabora.com>,
+	Tom Talpey <tom@talpey.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Yue Hu <huyue2@coolpad.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1182/1266] Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref
-Date: Tue, 21 Jul 2026 17:26:59 +0200
-Message-ID: <20260721152508.242467731@linuxfoundation.org>
+Subject: [PATCH 6.6 1183/1266] mm: shrinker: remove redundant shrinker_rwsem in debugfs operations
+Date: Tue, 21 Jul 2026 17:27:00 +0200
+Message-ID: <20260721152508.264935702@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -46,249 +118,163 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Qi Zheng <zhengqi.arch@bytedance.com>
 
-[ Upstream commit b66774b48dd98f07254951f74ea6f513efe7ff8b ]
+[ Upstream commit 1dd49e58f966b1eecd935dc28458a8369ae94ad1 ]
 
-l2cap_chan_timeout() runs asynchronously and accesses chan->conn. If
-the connection is torn down while the timer is running or pending,
-chan->conn can be freed, leading to a use-after-free when the timer
-worker attempts to lock conn->lock:
+debugfs_remove_recursive() will wait for debugfs_file_put() to return, so
+the shrinker will not be freed when doing debugfs operations (such as
+shrinker_debugfs_count_show() and shrinker_debugfs_scan_write()), so there
+is no need to hold shrinker_rwsem during debugfs operations.
 
-| BUG: KASAN: slab-use-after-free in instrument_atomic_read_write include/linux/instrumented.h:112 [inline]
-| BUG: KASAN: slab-use-after-free in atomic_long_try_cmpxchg_acquire include/linux/atomic/atomic-instrumented.h:4456 [inline]
-| BUG: KASAN: slab-use-after-free in __mutex_trylock_fast kernel/locking/mutex.c:161 [inline]
-| BUG: KASAN: slab-use-after-free in mutex_lock+0x4f/0xa0 kernel/locking/mutex.c:318
-| Write of size 8 at addr ffff8881298d9550 by task kworker/2:1/83
-|
-| CPU: 2 UID: 0 PID: 83 Comm: kworker/2:1 Not tainted 7.1.0-rc6-next-20260601-dirty #6 PREEMPT(full)
-| Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-| Workqueue: events l2cap_chan_timeout
-| Call Trace:
-|  <TASK>
-|  instrument_atomic_read_write include/linux/instrumented.h:112 [inline]
-|  atomic_long_try_cmpxchg_acquire include/linux/atomic/atomic-instrumented.h:4456 [inline]
-|  __mutex_trylock_fast kernel/locking/mutex.c:161 [inline]
-|  mutex_lock+0x4f/0xa0 kernel/locking/mutex.c:318
-|  l2cap_chan_timeout+0x5d/0x1b0 net/bluetooth/l2cap_core.c:422
-|  process_one_work kernel/workqueue.c:3326 [inline]
-|  process_scheduled_works+0x7c8/0xfb0 kernel/workqueue.c:3409
-|  worker_thread+0x8a9/0xcf0 kernel/workqueue.c:3490
-|  kthread+0x346/0x430 kernel/kthread.c:436
-|  ret_from_fork+0x1a3/0x470 arch/x86/kernel/process.c:158
-|  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-|  </TASK>
-|
-| Allocated by task 320:
-|  l2cap_conn_add+0xa7/0x820 net/bluetooth/l2cap_core.c:7075
-|  l2cap_connect_cfm+0xdb/0xd70 net/bluetooth/l2cap_core.c:7452
-|  hci_connect_cfm include/net/bluetooth/hci_core.h:2139 [inline]
-|  hci_remote_features_evt+0x52f/0x9f0 net/bluetooth/hci_event.c:3760
-|  hci_event_func net/bluetooth/hci_event.c:7796 [inline]
-|  hci_event_packet+0x561/0xa70 net/bluetooth/hci_event.c:7847
-|  hci_rx_work+0x370/0x890 net/bluetooth/hci_core.c:4040
-|  process_one_work kernel/workqueue.c:3326 [inline]
-|  process_scheduled_works+0x7c8/0xfb0 kernel/workqueue.c:3409
-|  worker_thread+0x8a9/0xcf0 kernel/workqueue.c:3490
-|  kthread+0x346/0x430 kernel/kthread.c:436
-|  ret_from_fork+0x1a3/0x470 arch/x86/kernel/process.c:158
-|  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-|
-| Freed by task 322:
-|  hci_disconn_cfm include/net/bluetooth/hci_core.h:2154 [inline]
-|  hci_conn_hash_flush+0x101/0x1f0 net/bluetooth/hci_conn.c:2736
-|  hci_dev_close_sync+0x889/0xde0 net/bluetooth/hci_sync.c:5405
-|  hci_dev_do_close net/bluetooth/hci_core.c:502 [inline]
-|  hci_unregister_dev+0x1f7/0x370 net/bluetooth/hci_core.c:2679
-|  vhci_release+0x12a/0x180 drivers/bluetooth/hci_vhci.c:690
-|  __fput+0x369/0x890 fs/file_table.c:510
-|  task_work_run+0x160/0x1d0 kernel/task_work.c:233
-|  get_signal+0xf5b/0x1120 kernel/signal.c:2810
-|  arch_do_signal_or_restart+0x4d/0x600 arch/x86/kernel/signal.c:337
-|  __exit_to_user_mode_loop kernel/entry/common.c:64 [inline]
-|  exit_to_user_mode_loop+0x85/0x510 kernel/entry/common.c:98
-|  do_syscall_64+0x263/0x3d0 arch/x86/entry/syscall_64.c:100
-|  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-|
-| The buggy address belongs to the object at ffff8881298d9400
-|  which belongs to the cache kmalloc-512 of size 512
-| The buggy address is located 336 bytes inside of
-|  freed 512-byte region [ffff8881298d9400, ffff8881298d9600)
-
-Fix it by having chan->conn hold a reference to l2cap_conn (via
-l2cap_conn_get) when the channel is added to the connection, and
-releasing it in the channel destructor. This ensures the l2cap_conn
-remains alive as long as the channel exists.
-
-A new FLAG_DEL channel flag is introduced to indicate that the channel
-has been deleted from its connection. l2cap_chan_del() atomically sets
-this flag using test_and_set_bit() instead of setting chan->conn to
-NULL. All asynchronous workers (l2cap_chan_timeout, l2cap_ack_timeout,
-l2cap_monitor_timeout, l2cap_retrans_timeout) and l2cap_chan_send()
-check FLAG_DEL to determine whether the channel has been torn down,
-rather than testing chan->conn for NULL.
-
-Fixes: 8c8e620467a7 ("Bluetooth: L2CAP: use chan timer to close channels in cleanup_listen()")
-Cc: <stable@vger.kernel.org>
-Cc: Siwei Zhang <oss@fourdim.xyz>
-Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Assisted-by: Gemini:gemini-3.1-pro-preview
-Reported-by: https://sashiko.dev/#/patchset/20260521021249.3258069-1-oss%40fourdim.xyz
-Signed-off-by: Marco Elver <elver@google.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://lkml.kernel.org/r/20230911092517.64141-4-zhengqi.arch@bytedance.com
+Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Chuck Lever <cel@kernel.org>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Darrick J. Wong <djwong@kernel.org>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Joel Fernandes <joel@joelfernandes.org>
+Cc: Kirill Tkhai <tkhai@ya.ru>
+Cc: Paul E. McKenney <paulmck@kernel.org>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Steven Price <steven.price@arm.com>
+Cc: Theodore Ts'o <tytso@mit.edu>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Alasdair Kergon <agk@redhat.com>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Alyssa Rosenzweig <alyssa.rosenzweig@collabora.com>
+Cc: Andreas Dilger <adilger.kernel@dilger.ca>
+Cc: Andreas Gruenbacher <agruenba@redhat.com>
+Cc: Anna Schumaker <anna@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Bob Peterson <rpeterso@redhat.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Carlos Llamas <cmllamas@google.com>
+Cc: Chandan Babu R <chandan.babu@oracle.com>
+Cc: Chao Yu <chao@kernel.org>
+Cc: Chris Mason <clm@fb.com>
+Cc: Coly Li <colyli@suse.de>
+Cc: Dai Ngo <Dai.Ngo@oracle.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: David Airlie <airlied@gmail.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: David Sterba <dsterba@suse.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Gao Xiang <hsiangkao@linux.alibaba.com>
+Cc: Huang Rui <ray.huang@amd.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jaegeuk Kim <jaegeuk@kernel.org>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Jason Wang <jasowang@redhat.com>
+Cc: Jeff Layton <jlayton@kernel.org>
+Cc: Jeffle Xu <jefflexu@linux.alibaba.com>
+Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Josef Bacik <josef@toxicpanda.com>
+Cc: Juergen Gross <jgross@suse.com>
+Cc: Kent Overstreet <kent.overstreet@gmail.com>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Mike Snitzer <snitzer@kernel.org>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Nadav Amit <namit@vmware.com>
+Cc: Neil Brown <neilb@suse.de>
+Cc: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
+Cc: Olga Kornievskaia <kolga@netapp.com>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Rob Herring <robh@kernel.org>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Sean Paul <sean@poorly.run>
+Cc: Song Liu <song@kernel.org>
+Cc: Stefano Stabellini <sstabellini@kernel.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Tomeu Vizoso <tomeu.vizoso@collabora.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Trond Myklebust <trond.myklebust@hammerspace.com>
+Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Cc: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Cc: Yue Hu <huyue2@coolpad.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: b902890c62d2 ("mm/shrinker: do not hold RCU lock in shrinker_debugfs_count_show()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/l2cap.h |    1 +
- net/bluetooth/l2cap_core.c    |   34 ++++++++++++++++++++--------------
- 2 files changed, 21 insertions(+), 14 deletions(-)
+ mm/shrinker_debug.c |   16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
 
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -742,6 +742,7 @@ enum {
- 	FLAG_ECRED_CONN_REQ_SENT,
- 	FLAG_PENDING_SECURITY,
- 	FLAG_HOLD_HCI_CONN,
-+	FLAG_DEL,
- };
+--- a/mm/shrinker_debug.c
++++ b/mm/shrinker_debug.c
+@@ -49,17 +49,12 @@ static int shrinker_debugfs_count_show(s
+ 	struct mem_cgroup *memcg;
+ 	unsigned long total;
+ 	bool memcg_aware;
+-	int ret, nid;
++	int ret = 0, nid;
  
- /* Lock nesting levels for L2CAP channels. We need these because lockdep
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -411,7 +411,7 @@ static void l2cap_chan_timeout(struct wo
+ 	count_per_node = kcalloc(nr_node_ids, sizeof(unsigned long), GFP_KERNEL);
+ 	if (!count_per_node)
+ 		return -ENOMEM;
  
- 	BT_DBG("chan %p state %s", chan, state_to_string(chan->state));
+-	ret = down_read_killable(&shrinker_rwsem);
+-	if (ret) {
+-		kfree(count_per_node);
+-		return ret;
+-	}
+ 	rcu_read_lock();
  
--	if (!conn) {
-+	if (test_bit(FLAG_DEL, &chan->flags)) {
- 		l2cap_chan_put(chan);
- 		return;
- 	}
-@@ -422,6 +422,9 @@ static void l2cap_chan_timeout(struct wo
- 	 */
- 	l2cap_chan_lock(chan);
+ 	memcg_aware = shrinker->flags & SHRINKER_MEMCG_AWARE;
+@@ -92,7 +87,6 @@ static int shrinker_debugfs_count_show(s
+ 	} while ((memcg = mem_cgroup_iter(NULL, memcg, NULL)) != NULL);
  
-+	if (test_bit(FLAG_DEL, &chan->flags))
-+		goto unlock;
-+
- 	if (chan->state == BT_CONNECTED || chan->state == BT_CONFIG)
- 		reason = ECONNREFUSED;
- 	else if (chan->state == BT_CONNECT &&
-@@ -434,10 +437,10 @@ static void l2cap_chan_timeout(struct wo
+ 	rcu_read_unlock();
+-	up_read(&shrinker_rwsem);
  
- 	chan->ops->close(chan);
+ 	kfree(count_per_node);
+ 	return ret;
+@@ -117,7 +111,6 @@ static ssize_t shrinker_debugfs_scan_wri
+ 	struct mem_cgroup *memcg = NULL;
+ 	int nid;
+ 	char kbuf[72];
+-	ssize_t ret;
  
-+unlock:
- 	l2cap_chan_unlock(chan);
--	l2cap_chan_put(chan);
--
- 	mutex_unlock(&conn->lock);
-+	l2cap_chan_put(chan);
- }
- 
- struct l2cap_chan *l2cap_chan_create(void)
-@@ -490,6 +493,9 @@ static void l2cap_chan_destroy(struct kr
- 	list_del(&chan->global_l);
- 	write_unlock(&chan_list_lock);
- 
-+	if (chan->conn)
-+		l2cap_conn_put(chan->conn);
-+
- 	kfree(chan);
- }
- 
-@@ -593,7 +599,7 @@ void __l2cap_chan_add(struct l2cap_conn
- 
- 	conn->disc_reason = HCI_ERROR_REMOTE_USER_TERM;
- 
--	chan->conn = conn;
-+	chan->conn = l2cap_conn_get(conn);
- 
- 	switch (chan->chan_type) {
- 	case L2CAP_CHAN_CONN_ORIENTED:
-@@ -648,30 +654,26 @@ void l2cap_chan_add(struct l2cap_conn *c
- 
- void l2cap_chan_del(struct l2cap_chan *chan, int err)
- {
--	struct l2cap_conn *conn = chan->conn;
--
- 	__clear_chan_timer(chan);
- 
--	BT_DBG("chan %p, conn %p, err %d, state %s", chan, conn, err,
-+	BT_DBG("chan %p, err %d, state %s", chan, err,
- 	       state_to_string(chan->state));
- 
- 	chan->ops->teardown(chan, err);
- 
--	if (conn) {
-+	if (!test_and_set_bit(FLAG_DEL, &chan->flags)) {
- 		/* Delete from channel list */
- 		list_del(&chan->list);
- 
- 		l2cap_chan_put(chan);
- 
--		chan->conn = NULL;
--
- 		/* Reference was only held for non-fixed channels or
- 		 * fixed channels that explicitly requested it using the
- 		 * FLAG_HOLD_HCI_CONN flag.
- 		 */
- 		if (chan->chan_type != L2CAP_CHAN_FIXED ||
- 		    test_bit(FLAG_HOLD_HCI_CONN, &chan->flags))
--			hci_conn_drop(conn->hcon);
-+			hci_conn_drop(chan->conn->hcon);
+ 	read_len = size < (sizeof(kbuf) - 1) ? size : (sizeof(kbuf) - 1);
+ 	if (copy_from_user(kbuf, buf, read_len))
+@@ -146,12 +139,6 @@ static ssize_t shrinker_debugfs_scan_wri
+ 		return -EINVAL;
  	}
  
- 	if (test_bit(CONF_NOT_COMPLETE, &chan->conf_state))
-@@ -1888,7 +1890,7 @@ static void l2cap_monitor_timeout(struct
+-	ret = down_read_killable(&shrinker_rwsem);
+-	if (ret) {
+-		mem_cgroup_put(memcg);
+-		return ret;
+-	}
+-
+ 	sc.nid = nid;
+ 	sc.memcg = memcg;
+ 	sc.nr_to_scan = nr_to_scan;
+@@ -159,7 +146,6 @@ static ssize_t shrinker_debugfs_scan_wri
  
- 	l2cap_chan_lock(chan);
+ 	shrinker->scan_objects(shrinker, &sc);
  
--	if (!chan->conn) {
-+	if (test_bit(FLAG_DEL, &chan->flags)) {
- 		l2cap_chan_unlock(chan);
- 		l2cap_chan_put(chan);
- 		return;
-@@ -1909,7 +1911,7 @@ static void l2cap_retrans_timeout(struct
+-	up_read(&shrinker_rwsem);
+ 	mem_cgroup_put(memcg);
  
- 	l2cap_chan_lock(chan);
- 
--	if (!chan->conn) {
-+	if (test_bit(FLAG_DEL, &chan->flags)) {
- 		l2cap_chan_unlock(chan);
- 		l2cap_chan_put(chan);
- 		return;
-@@ -2524,7 +2526,7 @@ int l2cap_chan_send(struct l2cap_chan *c
- 	int err;
- 	struct sk_buff_head seg_queue;
- 
--	if (!chan->conn)
-+	if (test_bit(FLAG_DEL, &chan->flags))
- 		return -ENOTCONN;
- 
- 	/* Connectionless channel */
-@@ -3121,12 +3123,16 @@ static void l2cap_ack_timeout(struct wor
- 
- 	l2cap_chan_lock(chan);
- 
-+	if (test_bit(FLAG_DEL, &chan->flags))
-+		goto unlock;
-+
- 	frames_to_ack = __seq_offset(chan, chan->buffer_seq,
- 				     chan->last_acked_seq);
- 
- 	if (frames_to_ack)
- 		l2cap_send_rr_or_rnr(chan, 0);
- 
-+unlock:
- 	l2cap_chan_unlock(chan);
- 	l2cap_chan_put(chan);
- }
+ 	return size;
 
 
