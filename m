@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3A846D094;
-	Tue, 21 Jul 2026 17:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8323D46D081;
+	Tue, 21 Jul 2026 17:53:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656391; cv=none; b=X8hYp84qaYC03kt4UV9vTdzRK4ycoQw8KIPRi8boV3T7ImNy7GO2b3DYvauYCPRevHv7bFmXpq5vZZarkjIh+nJtIVLKVpQH1a5b9zsPzqaiJ211eAm1NqeMWgCfKFyD9yXDXKriiTXyqUjDpfilnRjP7ycqTWirIPNyATvsb3w=
+	t=1784656393; cv=none; b=XFIH4p9g6Bvxsod5lkGbFxXdJ/eOUKsjZw8TSCtef31s8b0WT9ZpojVd7pZkIB+dlVKMK6BiLatmdw7sNGfXuygmbmZZEsbePDobGBs9EuP/G39zkEn96yJcXVboC4gPpSYj3vsBmIOmjLgxUpNrad2E3o16f2gvbJgJBJr7MCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656391; c=relaxed/simple;
-	bh=ZPfjt7Jf1Li1u6xIT0xaPf5r88KpWJ6mBfmpBm94ecA=;
+	s=arc-20240116; t=1784656393; c=relaxed/simple;
+	bh=VnowQi0NQCbuKQa/H1wrzG9dE3FOPRrIr39M0cbbV24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bXLH75HfFxuoUpapjdRcQogl01iMArTNTLCph9+pJh2ttc0Bp215abDrJCNCSs2S/m87vqx8UgGtdg3kv4y94lUUFJ7mBT93eesbFSiHSTNDlAMHGdECg3slw3UCq+87bmZEycMNFndmKvkVqSu77EFlHijTxHN9X4AkzEUxMvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxVibaTg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JGbn0DrSNbKshMRGvjgJ850E6R0IpCeFXexwg4As1XMywvugNl8JGUlowlRNYHzwHFefwRTtPSqFKFPjWz4vzOXn0SEXNX+eTJu4LwgWnL5ZmqRPSLNWFzAakV1jvxeeV5D6FiXUQgyudsuQ/7diY4ZWsJf8akqGvt9r9t4w0XY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TYZ9CHJ6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxVibaTg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB401F00AC4;
-	Tue, 21 Jul 2026 17:53:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TYZ9CHJ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD101F00A3D;
+	Tue, 21 Jul 2026 17:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656389;
-	bh=Qs3WFRqo5nEcm9zBoPY469wd4wMOyLAsS3iSYEjqUUQ=;
+	s=korg; t=1784656392;
+	bh=IH5GFNZ3SKvFQjmMMbUyXLJwpLcj5aI4DGYF46ddVTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zxVibaTg43CbmapOyLSC82nd6ZK0tdKxPy3RzprydjKpkIPZv8JKzsD7P2lnDdOd9
-	 VYlzttIw+SKOABw6+Zor1SXJA+ehe6WPb5jxpD/S4ymF5eLqhCJFuoVTS3/5z/xAM2
-	 /aIBYYDPHxe9upwpehcJOGS35iGbu/RE9hapsteg=
+	b=TYZ9CHJ6zu0t+Ggjky0cq0sbl1W5fLn2Jr4e+WKxqEn8PP1kKw9Wieq+AKCwF7OBI
+	 dZc3KtJU2oXwRDqhTebfkajidGYX/bCWEZFPoWoNZfo59f5MM3i4WFsblovkIMXwzr
+	 yKB4TD9Tz+8PFEUIZ7kRNiu4WV8NDt6nVqhvas+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0367/1611] wifi: wcn36xx: fix OOB read from short trigger BA firmware response
-Date: Tue, 21 Jul 2026 17:08:03 +0200
-Message-ID: <20260721152523.421341895@linuxfoundation.org>
+Subject: [PATCH 6.18 0368/1611] ALSA: seq: Fix partial userptr event expansion
+Date: Tue, 21 Jul 2026 17:08:04 +0200
+Message-ID: <20260721152523.449071018@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,41 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit b5e6f21923ca89d90256e7346301056f6502691e ]
+[ Upstream commit 2b7bd6f548292aec92a386deebe62324d21d62a9 ]
 
-The firmware response length is only checked against sizeof(*rsp) (20
-bytes), but when candidate_cnt >= 1, a 22-byte candidate struct is read
-at buf + 20 without verifying the response contains it. This causes an
-out-of-bounds read of stale heap data, corrupting the BA session state.
+snd_seq_expand_var_event_at() clamps the number of bytes to copy to the
+remaining variable-event length, but passes the original buffer size to
+expand_var_event().
 
-Add validation that the response includes the candidate data.
+For SNDRV_SEQ_EXT_USRPTR events, expand_var_event() copies exactly the
+size argument from userspace.  On the final chunk, when the remaining
+event data is shorter than the caller's buffer, this can read past the
+declared event data and can spuriously fail with -EFAULT if the extra
+bytes cross an unmapped page.
 
-Fixes: 16be1ac55944 ("wcn36xx: Parse trigger_ba response properly")
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260421135018.352774-4-tristmd@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Pass the clamped length instead.  The chained and kernel-backed paths
+already reclamp in dump_var_event(), but the user-pointer path handles
+the size directly.
+
+Fixes: ea46f79709b6 ("ALSA: seq: Add snd_seq_expand_var_event_at() helper")
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260606040913.230213-1-sammiee5311@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/wcn36xx/smd.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/core/seq/seq_memory.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/wcn36xx/smd.c b/drivers/net/wireless/ath/wcn36xx/smd.c
-index 0cea465edf327d..f7457dcd8980cc 100644
---- a/drivers/net/wireless/ath/wcn36xx/smd.c
-+++ b/drivers/net/wireless/ath/wcn36xx/smd.c
-@@ -2659,6 +2659,9 @@ static int wcn36xx_smd_trigger_ba_rsp(void *buf, int len, struct add_ba_info *ba
- 	if (rsp->candidate_cnt < 1)
- 		return rsp->status ? rsp->status : -EINVAL;
- 
-+	if (len < sizeof(*rsp) + sizeof(*candidate))
-+		return -EINVAL;
-+
- 	candidate = (struct wcn36xx_hal_trigger_ba_rsp_candidate *)(buf + sizeof(*rsp));
- 
- 	for (i = 0; i < STACFG_MAX_TC; i++) {
+diff --git a/sound/core/seq/seq_memory.c b/sound/core/seq/seq_memory.c
+index e7edea10027f3f..60afe351bbca81 100644
+--- a/sound/core/seq/seq_memory.c
++++ b/sound/core/seq/seq_memory.c
+@@ -211,7 +211,7 @@ int snd_seq_expand_var_event_at(const struct snd_seq_event *event, int count,
+ 	len -= offset;
+ 	if (len > count)
+ 		len = count;
+-	err = expand_var_event(event, offset, count, buf, true);
++	err = expand_var_event(event, offset, len, buf, true);
+ 	if (err < 0)
+ 		return err;
+ 	return len;
 -- 
 2.53.0
 
