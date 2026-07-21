@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2014E46A5FD;
-	Tue, 21 Jul 2026 15:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7A545BD4E;
+	Tue, 21 Jul 2026 15:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648811; cv=none; b=JDZejse4nElc7Xuy1KLwHWVqmYXadeIV2O+AAUXM2hUBnzr7chcS8rU48qkb8oRRYDZUp9QgRaw+e1C3ep/V5DCvFaH0W0iqS9oQs4VCH0D9LQu/WlOoFkS0oHgPeU2eZTiPdoQbVl0MLsiVF1Qv6reBseOIs2Cgk/cq2PbXqmI=
+	t=1784648813; cv=none; b=oU13bm6ByjjaOxocVfCsDMyhv6bl81lKrQCh9PagYYjFt51Oy2sW4URGkNru+sZyLe57Lbv/G6AyBiJS2qLaVyfrM5AyqSdlCVj7qYzvq5/rOuWkqQeh4i/zfOPZCE5Hsi6f7GY9ymF2w2fiC7MrlurPlbl0Qw76xJ4XSAUeyGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648811; c=relaxed/simple;
-	bh=9cWJgdxjuHFVIq9drvGa3an9Ql9WQQ9SgFOdcax9faQ=;
+	s=arc-20240116; t=1784648813; c=relaxed/simple;
+	bh=Ev7xXxjUYQ7fX8eRLFigsGJlJQdGfzmCkhTDhND/+RQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m5UKtByoQDLXVW6MjlEuEEOumKlpdrSZpM0yL7ri9p+Dbbkm21/sf/WcRBgwpP8rxizpWErQZ5R4ypY2lf35T2VlxeGaDkfyinXya9Gqox3Hqv2ZouVwEwFvCksqLh6Ouo+tPSJC5Z4GHdNw9Y6hZq7mZsKKLEn1A3CRobagZSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVDE3U/K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ucvYRW9nCKUiAJQGGrp4jOfmEPCVtNvQnjTf9caM2df+Di5iMVAjLVCCwukBHwW7N78ShgSvx+KWS49Hp5pSJTArEb9q5QC320TOLwtchSrZREHfB3efgU2tBJc9z+yywzAKhpyztQI+5Vq9ZQRaHZ8G5WAYmmxY8Ps0+BKvAPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DXU1ivmP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVDE3U/K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80DF61F000E9;
-	Tue, 21 Jul 2026 15:46:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXU1ivmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F9271F000E9;
+	Tue, 21 Jul 2026 15:46:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648810;
-	bh=i89QdANV+6y1S8BJ1TaHkr6+Q86QFYbIf+8zkhfD4I8=;
+	s=korg; t=1784648812;
+	bh=0lunfYwj3wmRaItierXNZqPVj/UV08v0MRjDFOAXxfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pVDE3U/KDXGHLjH0C9YEzVDDu8L8KX6NHGlECH/heoiKNOvq/YLEnxWGITyxlwLad
-	 9ux9ml1aWXrGNuNaHqsFw8gL0xyQrSRTOJxiaK9wK8hxXTdsFR2h88H4YSiowy78as
-	 R6qdmNjOcHAZdjJVciEqs07EqQ9nDmudJQr7Q9Zs=
+	b=DXU1ivmPseht3ZF42DmwPKUanFS/j4KQu/YVhksqIexFTK44AhhO/9Ynusz1JC0MU
+	 WKME5u3GhDyI5Y+6G6qEBN81hkt5FbtQiRz08doirvQx+PAPJ9ZxSgWOKUKAm/3LFn
+	 Q/ZsCen2iPO5C+3AfD/SlPvXtU9GyWm8zZqHECsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Tomas Glozar <tglozar@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0340/2077] dt-bindings: vendor-prefixes: Add Verbatim Corporation
-Date: Tue, 21 Jul 2026 17:00:13 +0200
-Message-ID: <20260721152600.703915484@linuxfoundation.org>
+Subject: [PATCH 7.1 0341/2077] rtla/actions: Restore continue flag in actions_perform()
+Date: Tue, 21 Jul 2026 17:00:14 +0200
+Message-ID: <20260721152600.727900681@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,34 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Tomas Glozar <tglozar@redhat.com>
 
-[ Upstream commit 4b8c63c6a2811c23995c5d8cc8bb63d26caab299 ]
+[ Upstream commit dd520daffbc901f10d49a51a58313547d417b506 ]
 
-Verbatim Corporation has manufactured a few electronics items
-over the years.
+Currently, actions_perform() only ever sets the continue flag (when
+performing the continue action), but never resets it. That leads to
+RTLA continuing tracing even if the continue action was not performed in
+the current iteration.
 
-Link: https://en.wikipedia.org/wiki/Verbatim_(company)
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+For example, the following command:
+
+$ rtla timerlat hist -T 100 --on-threshold shell,command='
+    echo Spike!
+    if [ -f /tmp/a ]
+    then
+      exit 1
+    else
+      touch /tmp/a
+    fi' --on-threshold continue
+
+should print Spike! at most once, because after hitting the threshold
+for the first time, /tmp/a exists, the shell action will fail, and the
+continue action is not performed. However, unless /tmp/a exists before
+the measurement, it will print Spike! until stopped, as the continue
+flag stays set.
+
+Set the continue flag to false in the beginning of actions_perform() to
+make RTLA continue only if the action was actually performed.
+
+Fixes: 8d933d5c89e8 ("rtla/timerlat: Add continue action")
+Link: https://lore.kernel.org/r/20260526102523.2662391-1-tglozar@redhat.com
+[ correct Fixes tag to include 12 characters of hash ]
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ tools/tracing/rtla/src/actions.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index 11c55b5df0e4ca..ac83310259a914 100644
---- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-+++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -1785,6 +1785,8 @@ patternProperties:
-     description: Variscite Ltd.
-   "^vdl,.*":
-     description: Van der Laan b.v.
-+  "^verbatim,.*":
-+    description: Verbatim Corporation
-   "^verisilicon,.*":
-     description: VeriSilicon Microelectronics (Shanghai) Co., Ltd.
-   "^vertexcom,.*":
+diff --git a/tools/tracing/rtla/src/actions.c b/tools/tracing/rtla/src/actions.c
+index b0d68b5de08db2..bf13d9d68f1694 100644
+--- a/tools/tracing/rtla/src/actions.c
++++ b/tools/tracing/rtla/src/actions.c
+@@ -247,6 +247,8 @@ actions_perform(struct actions *self)
+ 	int pid, retval;
+ 	const struct action *action;
+ 
++	self->continue_flag = false;
++
+ 	for_each_action(self, action) {
+ 		switch (action->type) {
+ 		case ACTION_TRACE_OUTPUT:
 -- 
 2.53.0
 
