@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3333AFAEC;
-	Tue, 21 Jul 2026 20:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0343130D3FF;
+	Tue, 21 Jul 2026 20:52:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667167; cv=none; b=jSD4AQ0/baKh69HGaZ68VynYqvNH8S7dB7zqI/pxg4bBLDoXbmluBDT4h0rLIBeLMpWXZ437qDXmapid9/OqlCqgxSApwWPGzDwPfV0b5oCnTLxEvfhpkRI8bzlo9CVX8SK/8IbIAtyWpiPwy8OPe5uvQbnz6JqD/c0a1OvOx30=
+	t=1784667169; cv=none; b=VCzhKag1Ga5X7x7zwWpcw4vfe66FpG3/uu3nrZUlFEls6HGRt0IBEupYyPnQ5tmq8YVEXhini8ePF1r+CEOGWh13ySS57fklaJLX+3zdR6Q1G0VBOPfIMCx3IPe4w0ZTfILdUzoqZ4pCVHh12KRTErLm50yfJzmb18Zi1Ku9D2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667167; c=relaxed/simple;
-	bh=q5qeYh7yQYuVZetoOFuMwnGbz2f/0JBZtiTjORpYuEg=;
+	s=arc-20240116; t=1784667169; c=relaxed/simple;
+	bh=Rx4+LSzEhzYa/eC5uAmrpzSpVmD+fOFtsiBPQnhfvvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g0H7ikBgkLJL9iD61u9t9Leh2cJXT8KYS88Pux54ZTJ13VMXJH5HRym0O5wQLEqF5HS8bVy6ECqmZRQ+iAwo0AXAt8ozud22FBI2sBz+eynYiD97++YQ+LgJ3+6zDX2+SMM0DCGjS/ZZeWseTsninbPLzB8BgKTTn8XjNYWmYeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CuCWaEkr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jLgvLQZgm/+VrS1YqKQL2iqsTn8WZu067i3i9kUSDmsB5R/6sgcJ12Oi7gTsT3U+sqWNNilazkBzr5aLFGbjIM2VkeihCge87QoF2QyEg+Pr+nN8mvt3acfjmIncttpSX1j76/Vy3Ezfh7qI3F6rHkLbeUu/cThA+09tlpoBgjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c0tZA4a2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CuCWaEkr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4ADC1F000E9;
-	Tue, 21 Jul 2026 20:52:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c0tZA4a2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 693D41F000E9;
+	Tue, 21 Jul 2026 20:52:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667165;
-	bh=Gf4BgzD/tWJh3mTaPdc7Nnb8n7QvjO1lvcT/UEp1zhw=;
+	s=korg; t=1784667167;
+	bh=3MrCk1PkQ10M1f5nJY2CJuGx5utMzfPfFCPaVM12Lx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CuCWaEkrRDkplcaOEl59xTdJlKb5RfyMZ/liGtLNcWUtBvAjiPx4g2Lex8M/NiK56
-	 BcZzbAyiYSjZDGKxGcU/vlgYK5As1lS3G7vTLZUdI6NMdy4y7szdQxF5d6ya1De756
-	 HQ32OjrpW1AoThHmzYnM7QdcQcnkE2+C7fSqoaek=
+	b=c0tZA4a2eHFa02fI1BplwjIzZ6ecYnbYupgLMfS2dvwYWRL3GULZxthUo6wdBaaHI
+	 JtyZwy5BkX+8fYxx2rU5nKcAq64CdoTr1R8ORGyxrth1Jo4zkJh4Iu6/9w8JL9zCk+
+	 TEuq8uiZF45SvYBflL8UgKhd24y06xbrft8ujXFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.6 0957/1266] mfd: tps6586x: Fix OF node refcount
-Date: Tue, 21 Jul 2026 17:23:14 +0200
-Message-ID: <20260721152503.243444834@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.6 0958/1266] HID: playstation: validate num_touch_reports in DualShock 4 reports
+Date: Tue, 21 Jul 2026 17:23:15 +0200
+Message-ID: <20260721152503.265554508@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -44,44 +44,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Benoît Sevens <bsevens@google.com>
 
-commit 3001ed2b4e06da2276c42ace6551617065a5b1f9 upstream.
+commit 82a4fc46330910b4c1d9b189561439d468e3ff11 upstream.
 
-Platform devices created with platform_device_alloc() call
-platform_device_release() when the last reference to the device's
-kobject is dropped. This function calls of_node_put() unconditionally.
-This works fine for devices created with platform_device_register_full()
-but users of the split approach (platform_device_alloc() +
-platform_device_add()) must bump the reference of the of_node they
-assign manually. Add the missing call to of_node_get().
+The DualShock 4 HID driver fails to validate the num_touch_reports field
+received from the device in both USB and Bluetooth input reports.
+A malicious device could set this field to a value larger than the
+allocated size of the touch_reports array (3 for USB, 4 for Bluetooth),
+leading to an out-of-bounds read in dualshock4_parse_report().
 
-Cc: stable@vger.kernel.org
-Fixes: 62f6b0879304 ("tps6586x: Add device tree support")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260521-pdev-fwnode-ref-v1-1-88c324a1b8d2@oss.qualcomm.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+This can result in kernel memory disclosure when processing malicious
+HID reports.
+
+Validate num_touch_reports against the array size for the respective
+connection types before processing the touch data.
+
+Signed-off-by: Benoît Sevens <bsevens@google.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/tps6586x.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-playstation.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/mfd/tps6586x.c
-+++ b/drivers/mfd/tps6586x.c
-@@ -395,7 +395,7 @@ static int tps6586x_add_subdevs(struct t
+--- a/drivers/hid/hid-playstation.c
++++ b/drivers/hid/hid-playstation.c
+@@ -2199,6 +2199,12 @@ static int dualshock4_parse_report(struc
+ 			size == DS4_INPUT_REPORT_USB_SIZE) {
+ 		struct dualshock4_input_report_usb *usb = (struct dualshock4_input_report_usb *)data;
  
- 		pdev->dev.parent = tps6586x->dev;
- 		pdev->dev.platform_data = subdev->platform_data;
--		pdev->dev.of_node = subdev->of_node;
-+		pdev->dev.of_node = of_node_get(subdev->of_node);
++		if (usb->num_touch_reports > ARRAY_SIZE(usb->touch_reports)) {
++			hid_err(hdev, "DualShock4 USB input report has invalid num_touch_reports=%d\n",
++				usb->num_touch_reports);
++			return -EINVAL;
++		}
++
+ 		ds4_report = &usb->common;
+ 		num_touch_reports = min_t(u8, usb->num_touch_reports,
+ 					  ARRAY_SIZE(usb->touch_reports));
+@@ -2214,6 +2220,12 @@ static int dualshock4_parse_report(struc
+ 			return -EILSEQ;
+ 		}
  
- 		ret = platform_device_add(pdev);
- 		if (ret) {
++		if (bt->num_touch_reports > ARRAY_SIZE(bt->touch_reports)) {
++			hid_err(hdev, "DualShock4 BT input report has invalid num_touch_reports=%d\n",
++				bt->num_touch_reports);
++			return -EINVAL;
++		}
++
+ 		ds4_report = &bt->common;
+ 		num_touch_reports = min_t(u8, bt->num_touch_reports,
+ 					  ARRAY_SIZE(bt->touch_reports));
 
 
