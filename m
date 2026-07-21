@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFDC46E005;
-	Tue, 21 Jul 2026 19:48:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6938C46D08C;
+	Tue, 21 Jul 2026 19:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663295; cv=none; b=MJaqa9+hsrAIsRRAQhVP+mtd6iou+PhlLyjRWd9yo7zN1EA06ZO8PbMMl+6jZdoOaiPSF9NTYnq2H8ky2NwR5wCQx8ZdqcZnRWDjYfN5mvO+ooahZvPVngegl8n+KOFHpNKLo4N12UL7XRwNZ2JGbSdZSTNc+O/rtZFkDfs9eYQ=
+	t=1784663295; cv=none; b=nhdqqK2SehSWePQzrn7NBeEDBSF5j+caSFwXNZc0WksypRy79o6JZGtkNPk9te4LuzIcpVva42F3pIHya56wEl/XtksRsJn0sFEwMCXQtFUWosvI2Yv4t7Z8Adrg5NxmKjBnLnDyMipFH6WwQKg6hU4GCQf6m0C6MK9qxfc1E3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784663295; c=relaxed/simple;
-	bh=TconcYdGEkRLrYQl0cE/qz0lt9CqnZbHe5fNzbzi7po=;
+	bh=jMsxGcZiJ2gmRKIuoFiGt3oRqb6KzQ807oXUn8TFzRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t88NuOSGF2wHMgIdHR4Jo+KkQSqI92aXnvcm4VoUJlI8vl08qfRV+BGRCS0osAnyo5al3OIMEuED3Ti977sU1C+KOF07YLTAJOqLfNtQauvbvDluXgLQ51TtSlqhn2o40+qjeoZAXxTsyT8dcCXGW3bY8JUgCG+pAioGot+hzuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmpNUhS4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oEtYpNsj+4+w3oABr4lqGU0OEr51GuNLw03XkN5F7w4QpDCXkVb92cVbRZ41Rkz+LsQQgIo/f2kF+T1PbFcafTVqDNBMw2wgN/hC7kc+1J+giOKT2Tw4l1uPHPAY8jhA60SQ+1aml9tHjMk3KWGEyMzVNV4Xrs9Nmn4noadrAAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iT75lPMb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmpNUhS4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8CE1F00A3A;
-	Tue, 21 Jul 2026 19:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iT75lPMb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2BFE1F000E9;
+	Tue, 21 Jul 2026 19:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663289;
-	bh=4nNefw1vWQO9qmYGvcOTp3gcpLMcnhCpzMrITJSJOu0=;
+	s=korg; t=1784663287;
+	bh=3TqYh0Hqr2EpG8inuFbfWcr+3bms5Y+92/gfFGRV0pY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gmpNUhS4Q2gwNzKA8SZ3AEsFRF9m5e4pXBxDpn1yz5JhIySksql6ZYTFXWYB3BEcq
-	 a0Djr6Cjg5dJPZeeX8FY3E/tf9d1amCmJYCuyWQ9oYywMLNSQ3QOjiiq5uzQGuuxP0
-	 9RmRxUZVZSg8AP5gj0tV+1DDkBFvTtGCm/Xfd+u0=
+	b=iT75lPMbrdz9i7MYsVULVFkPbyIEnNMuagn+P8fBfiA1m6e+lYmQJ6t65dJZfbYeb
+	 tgPs9a+y1/b2I6rtEWZnooKMoUeWmxub6FNHElHIPf1iSwRe0gMeWSmrjRawzYj9iq
+	 Fh1+dEDpG/CTLCYOrFD1RcBawBx/Kt68nhQYVRes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Liu <feliu@nvidia.com>,
-	Eran Ben Elisha <eranbe@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0766/1276] net/mlx5e: Fix HV VHCA stats zero-sized buffer allocation
-Date: Tue, 21 Jul 2026 17:20:09 +0200
-Message-ID: <20260721152503.216490333@linuxfoundation.org>
+Subject: [PATCH 6.12 0739/1276] afs: Fix missing NULL pointer check in afs_break_some_callbacks()
+Date: Tue, 21 Jul 2026 17:19:42 +0200
+Message-ID: <20260721152502.618554124@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,102 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Liu <feliu@nvidia.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 25f6b929c7e379cbea7cb8caa67b49b2d1efae17 ]
+[ Upstream commit 794a01110390c1b76f59ece773fb0fbfd89c6f5c ]
 
-mlx5e_hv_vhca_stats_create() is called from mlx5e_nic_enable(),
-before mlx5e_open(). At that point priv->stats_nch is still zero,
-because it is only ever incremented in mlx5e_channel_stats_alloc(),
-which is reached only from mlx5e_open_channel().
+Fix afs_break_some_callbacks() to check to see if afs_lookup_volume_rcu()
+returned NULL (e.g. the specified volume is unknown).
 
-mlx5e_hv_vhca_stats_buf_size() therefore returns 0, and
-kvzalloc(0, GFP_KERNEL) returns ZERO_SIZE_PTR ((void *)16) rather
-than NULL. The "if (!buf)" guard does not catch this, and
-mlx5e_hv_vhca_stats_create() completes "successfully" with
-priv->stats_agent.buf set to ZERO_SIZE_PTR.
-
-Once channels are opened (priv->stats_nch > 0) and the hypervisor
-enables stats reporting, mlx5e_hv_vhca_stats_work() recomputes
-buf_len using the new non-zero stats_nch and calls
-memset(buf, 0, buf_len) on ZERO_SIZE_PTR, faulting at address 0x10.
-
-Allocate the buffer based on priv->max_nch, which is set in
-mlx5e_priv_init() and is the upper bound on stats_nch:
-
-  - Add a separate helper mlx5e_hv_vhca_stats_buf_max_size() that
-    returns sizeof(per_ring_stats) * max(max_nch, stats_nch), and
-    use it for the kvzalloc() in mlx5e_hv_vhca_stats_create().
-  - Keep mlx5e_hv_vhca_stats_buf_size() (which returns based on
-    stats_nch) for the worker's active payload size, so the wire
-    format (block->rings = stats_nch) and the amount of data filled
-    by mlx5e_hv_vhca_fill_stats() are unchanged.
-
-The max(max_nch, stats_nch) guard handles the rare case where
-mlx5e_attach_netdev() recomputes max_nch downward across a
-detach/resume cycle while priv->stats_nch persists (mlx5e_detach_netdev
-does not call mlx5e_priv_cleanup, so stats_nch is only reset when
-the netdev is destroyed). Without the guard, the worker could compute
-buf_len from stats_nch and overrun the smaller buffer allocated based
-on the reduced max_nch.
-
-Allocating a non-zero buffer also makes the kvzalloc() failure path in
-mlx5e_hv_vhca_stats_create() reachable for the first time: it returns
-early without (re)creating the agent. Clear
-priv->stats_agent.{agent,buf} in mlx5e_hv_vhca_stats_destroy() after
-freeing them, so that if a later create() bails out on this path, a
-subsequent teardown does not double-free the stale agent/buffer left
-from a previous enable/disable cycle.
-
-This mirrors the existing mlx5e pattern of preallocating arrays of
-size max_nch (e.g. priv->channel_stats) and lazily populating
-entries up to stats_nch on demand.
-
-Fixes: fa691d0c9c08 ("net/mlx5e: Allocate per-channel stats dynamically at first usage")
-Signed-off-by: Feng Liu <feliu@nvidia.com>
-Reviewed-by: Eran Ben Elisha <eranbe@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260630115151.729219-2-tariqt@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 8230fd8217b7 ("afs: Make callback processing more efficient.")
+Closes: https://sashiko.dev/#/patchset/20260609081738.770127-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260622090856.2746629-16-dhowells@redhat.com
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/afs/callback.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c b/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c
-index b4f3bd7d346e43..41a662d47be6f4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c
-@@ -54,6 +54,12 @@ static int mlx5e_hv_vhca_stats_buf_size(struct mlx5e_priv *priv)
- 		priv->stats_nch);
- }
+diff --git a/fs/afs/callback.c b/fs/afs/callback.c
+index 462b10fa46e1aa..4ddc2d666dfb0b 100644
+--- a/fs/afs/callback.c
++++ b/fs/afs/callback.c
+@@ -220,7 +220,11 @@ static void afs_break_some_callbacks(struct afs_server *server,
  
-+static int mlx5e_hv_vhca_stats_buf_max_size(struct mlx5e_priv *priv)
-+{
-+	return (sizeof(struct mlx5e_hv_vhca_per_ring_stats) *
-+		max(priv->max_nch, priv->stats_nch));
-+}
-+
- static void mlx5e_hv_vhca_stats_work(struct work_struct *work)
- {
- 	struct mlx5e_hv_vhca_stats_agent *sagent;
-@@ -122,7 +128,7 @@ static void mlx5e_hv_vhca_stats_cleanup(struct mlx5_hv_vhca_agent *agent)
- 
- void mlx5e_hv_vhca_stats_create(struct mlx5e_priv *priv)
- {
--	int buf_len = mlx5e_hv_vhca_stats_buf_size(priv);
-+	int buf_len = mlx5e_hv_vhca_stats_buf_max_size(priv);
- 	struct mlx5_hv_vhca_agent *agent;
- 
- 	priv->stats_agent.buf = kvzalloc(buf_len, GFP_KERNEL);
-@@ -155,5 +161,7 @@ void mlx5e_hv_vhca_stats_destroy(struct mlx5e_priv *priv)
- 		return;
- 
- 	mlx5_hv_vhca_agent_destroy(priv->stats_agent.agent);
-+	priv->stats_agent.agent = NULL;
- 	kvfree(priv->stats_agent.buf);
-+	priv->stats_agent.buf = NULL;
- }
+ 	rcu_read_lock();
+ 	volume = afs_lookup_volume_rcu(server->cell, vid);
+-	if (cbb->fid.vnode == 0 && cbb->fid.unique == 0) {
++	if (!volume) {
++		/* Ignore breaks on unknown volumes. */
++		rcu_read_unlock();
++		*_count = 0;
++	} else if (cbb->fid.vnode == 0 && cbb->fid.unique == 0) {
+ 		afs_break_volume_callback(server, volume);
+ 		*_count -= 1;
+ 		if (*_count)
 -- 
 2.53.0
 
