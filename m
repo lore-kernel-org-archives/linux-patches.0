@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B864B22B8DF;
-	Tue, 21 Jul 2026 18:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C35047127D;
+	Tue, 21 Jul 2026 18:18:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657924; cv=none; b=ozwtMsoPWwKZrJNqxnyKBDAcU3jdlrXCpapZZnevlF78vAp7pheCom5xePSvXRqBKN/MtNSPm1Ex/0gjgmmwqYgBwW/NQq9Gx4BT8k0D9/JiXQ2PPqfYg5a1WMJYWyOnh8C6G1ksNRDYoRZknq2q8XmjKLFoTuC56P781Ps+ZEI=
+	t=1784657927; cv=none; b=atosRuucaU2ly0Iog+jccTTCwjbytuxzIM2OmJH0+0ctLS12VQBvTUaCsn25S1SBIFBCxcnc7xvjHCezcKTVzqeVnYjOk4Q66hATNHerkJrJFr8lJ89sIeXOHD81H5z5bmo52a4lRtiC9ODS8BTnS3Z0xkKWXvjErdOjjF13vwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657924; c=relaxed/simple;
-	bh=AnFWESZW7f+SPghJhIvWtsTnaXrT3ss3AwpywnHdNuQ=;
+	s=arc-20240116; t=1784657927; c=relaxed/simple;
+	bh=ZYH7e1GDfE3G/rGcU4/f6rTm2ie+qXqyhzZTwB/p9GY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=plYm9GWASm5+8XE4TjDcMIr/D0Bre9ghQEzHMkXCXqkv/dL4Le5dHwfBwrNNGYI8g/lUapggtoz2KlIWUHgpUVeKgVE6IrUNn3QyPe7751ENXWtPBW2lL0NPDW08XXLP1KNgolmA7GF5RsI48N3YM8Sz3TQz1K78jjWh55l/XZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rsk1qa81; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SV/IvU8QHNQc+Rqg2JWTKpBw4F2ijy5/kl89Z09gs7keFV3+tq9Fuuhl/nSqWxlMaOVGdeK+ToOwugYC1X1kdzeWaGNWmv+z5PrMeq9dOJdA+cR321eZeZJrcH4szW2WPEmpAZEglQiFN4QanKlFZCVRhk/Vu9uoYHX52FPwhkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ezfVV7tV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rsk1qa81"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAAB61F000E9;
-	Tue, 21 Jul 2026 18:18:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ezfVV7tV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E4D1F000E9;
+	Tue, 21 Jul 2026 18:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657923;
-	bh=l35mG1/sv3YCy31g2c9hx1KVvOcihFCGUY2+b7631+8=;
+	s=korg; t=1784657926;
+	bh=UXr0dzDs6jYV/kVbh9ZUFdK6TBnwwQeE4XwdJCJ8Mpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rsk1qa81aztMgFOH3Gm9z1U9kTHqPUeVEYNH6t/kB5ohKOgQRZS9zPYMywjNZGnD0
-	 L4QR3U44xiYe6OtZPJN9LEIMui1CxA5XMfEZ33CizyKt3HnEipJpW75qiyvPlJ3QwL
-	 sPnHRxnNQ181zSfj+x7991mFl1jF/NpPCKMXtbZI=
+	b=ezfVV7tVW+QSEKu+iUnUb+YCVaahSwXKgIctzxQCl1B+lzZxVCMOV80yOsTEyNdw/
+	 zHYRvMsLxzEKW+QAjP3fl+rqBTM26a44AXen/s5SPmmJfKIGh9JJKnqXH8gaKBLrov
+	 MoYrt4w1nuYqVRO2zbqyzVtgl9EYfzaeaJiex3HI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Yicong Yang <yang.yicong@picoheart.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0949/1611] spi: sh-msiof: abort transfers when reset times out
-Date: Tue, 21 Jul 2026 17:17:45 +0200
-Message-ID: <20260721152536.736607003@linuxfoundation.org>
+Subject: [PATCH 6.18 0950/1611] ACPI: RIMT: Only defer the IOMMU configuration in init stage
+Date: Tue, 21 Jul 2026 17:17:46 +0200
+Message-ID: <20260721152536.759148815@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,62 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Yicong Yang <yang.yicong@picoheart.com>
 
-[ Upstream commit 6dbaa4d288432c697cea47028480481b8b29bd6a ]
+[ Upstream commit b8f62414fa05144924257db283c5c35f74d21121 ]
 
-sh_msiof_spi_reset_regs() asserts TX/RX reset and polls until the reset
-bits clear, but the poll result is ignored. sh_msiof_transfer_one() can
-therefore continue programming a transfer after the controller did not
-leave reset.
+The IOMMU configuration will be deferred if the IOMMU driver
+isn't probed by the time. Make this deferral only in the
+initialization stage with driver_deferred_probe_check_state().
+Otherwise the devices depends on IOMMU will be deferred forever
+in case the IOMMU device probe failed or it doesn't appear in
+the ACPI namespace.
 
-Return the reset poll result from the helper and abort the transfer on
-timeout, matching the existing transfer path's error-return style.
-
-Fixes: fedd6940682a ("spi: sh-msiof: Add reset of registers before starting transfer")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260623135834.55442-1-pengpeng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 8f7729552582 ("ACPI: RISC-V: Add support for RIMT")
+Signed-off-by: Yicong Yang <yang.yicong@picoheart.com>
+Link: https://patch.msgid.link/20260625094702.11558-1-yang.yicong@picoheart.com
+[pjw@kernel.org: added Fixes line]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sh-msiof.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/acpi/riscv/rimt.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
-index 7f4135a3bda23c..a4ae96290aa240 100644
---- a/drivers/spi/spi-sh-msiof.c
-+++ b/drivers/spi/spi-sh-msiof.c
-@@ -114,7 +114,7 @@ static irqreturn_t sh_msiof_spi_irq(int irq, void *data)
- 	return IRQ_HANDLED;
- }
+diff --git a/drivers/acpi/riscv/rimt.c b/drivers/acpi/riscv/rimt.c
+index 8eaa8731bddd6c..4c0962e68c94ca 100644
+--- a/drivers/acpi/riscv/rimt.c
++++ b/drivers/acpi/riscv/rimt.c
+@@ -9,6 +9,7 @@
  
--static void sh_msiof_spi_reset_regs(struct sh_msiof_spi_priv *p)
-+static int sh_msiof_spi_reset_regs(struct sh_msiof_spi_priv *p)
- {
- 	u32 mask = SICTR_TXRST | SICTR_RXRST;
- 	u32 data;
-@@ -123,8 +123,8 @@ static void sh_msiof_spi_reset_regs(struct sh_msiof_spi_priv *p)
- 	data |= mask;
- 	sh_msiof_write(p, SICTR, data);
+ #include <linux/acpi.h>
+ #include <linux/acpi_rimt.h>
++#include <linux/device/driver.h>
+ #include <linux/iommu.h>
+ #include <linux/list.h>
+ #include <linux/pci.h>
+@@ -257,11 +258,11 @@ static int rimt_iommu_xlate(struct device *dev, struct acpi_rimt_node *node, u32
+ 	rimt_fwnode = rimt_get_fwnode(node);
  
--	readl_poll_timeout_atomic(p->mapbase + SICTR, data, !(data & mask), 1,
--				  100);
-+	return readl_poll_timeout_atomic(p->mapbase + SICTR, data,
-+					 !(data & mask), 1, 100);
- }
+ 	/*
+-	 * The IOMMU drivers may not be probed yet.
+-	 * Defer the IOMMU configuration
++	 * The IOMMU drivers may not be probed yet. Defer the IOMMU
++	 * configuration if it's still in initialization stage.
+ 	 */
+ 	if (!rimt_fwnode)
+-		return -EPROBE_DEFER;
++		return driver_deferred_probe_check_state(dev);
  
- static void sh_msiof_spi_set_clk_regs(struct sh_msiof_spi_priv *p,
-@@ -834,7 +834,9 @@ static int sh_msiof_transfer_one(struct spi_controller *ctlr,
- 	int ret;
- 
- 	/* reset registers */
--	sh_msiof_spi_reset_regs(p);
-+	ret = sh_msiof_spi_reset_regs(p);
-+	if (ret)
-+		return ret;
- 
- 	/* setup clocks (clock already enabled in chipselect()) */
- 	if (!spi_controller_is_target(p->ctlr))
+ 	/*
+ 	 * EPROBE_DEFER ensures IOMMU is probed before the devices that
 -- 
 2.53.0
 
