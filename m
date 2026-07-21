@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CFC43B48C;
-	Tue, 21 Jul 2026 22:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDE03E49F5;
+	Tue, 21 Jul 2026 22:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674341; cv=none; b=U6AcyxJbnwhzCWRfdXQC5w2/irwEgA8pH4Tt/CsEk7TgAf4nCG/3hlyfWGbuCHSEMbv45OBezfUeS07LkGL1roex9Lr8murnxs6VnuBMasn+JqewXfzXqJ6xF9/V+nd8Hxs83kfBjMmWBB4LUqJADHf/OvpYkhyXy+i5V59bMe8=
+	t=1784674343; cv=none; b=i9RuATE1iwJWLaLRcgc6ZelrOKz8qBDd4jj8kEg0Eu7m5uVgff+p767/XLGRYdkj4nvX+mQFAmGrG6gkJ+J0yeol5IoXZOWAWIy7tO4vfG2Xye49dGSGN9QPLi23PQca1BSoCjqWQf3bi+syMdNOXVALvaPYJcgzFFuKEWdHHu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674341; c=relaxed/simple;
-	bh=swBlEhIct1eyRW2UnxNGQCb0fHppgwmR41rhWaSM9jg=;
+	s=arc-20240116; t=1784674343; c=relaxed/simple;
+	bh=/srt9/3rMNss00/T0PdzmaPZOs/kM9vV+D4Zf1HJKV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mL82ISQuaZOH2iXGhMuL6y4ZXxAnH6p5JRivb5EMWTEIwOhQ+SNkONZ9EoP3Z+xXNZJgvfNSNsWPgyD9g4zu27CrDeLQ2S5bCTzR1iZMCrWUWxukA0gi/d1r1hGS2Zaleq1l50+9nZhUpdiaxzVx1RjY+ikP7aHUQx4JmaOaxpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKuYo1Ge; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o64+vk8GwGOdBoNX+j3xj1HSpdJjS1fwNbRAZgeGtThNKt19yoaa9pT/LWHXJS8InG1OLGnMrs/LEy/pk8F6yfdWUnGVb0cp8LIbdLEC7Tg42FxOp3oI0qsBs9e6fWs9RWYZr7gAEFvsjgCTtsKegex8V1o0qICRJJLKDPtBR+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=12HHW2r5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKuYo1Ge"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE7F1F000E9;
-	Tue, 21 Jul 2026 22:52:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="12HHW2r5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A0191F000E9;
+	Tue, 21 Jul 2026 22:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674339;
-	bh=xWveeECUA4n9D+k+jGi1xFtPPSl7nXPpHtU16DZvVZ4=;
+	s=korg; t=1784674342;
+	bh=rLcGLFuyzoQJ93Nd34u8vnh/xTW2DVq2GjT6wkV2P0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yKuYo1GeZdx/zyqYNsWiFRn8uqc7JMsBmhpYC3wInqTmKXTavOgNNF7uVNnoh7KsO
-	 IWxTdVEh0nrmWUFGWzbN0jjDV00iuXuieZrBMIKV06zun9giHvQJY8tGWv+768jZxu
-	 GLHSNYV3wqCtPQfZcqVQd4f4A/8wc0CdxpwqDIHg=
+	b=12HHW2r5f8EY2K4LN0TJYhPhwTOEc9OIM2avMrAh0fWOR1CVvvXMt/hd6ERM+G1ax
+	 g3mKKSUB3PqlZbStecMxKJvCGPxoxeKEcm9fpjWBw5YP9ePZph2x9i0FMxv9HUZzSX
+	 +FN25zSO2pJiVODAsTKE0repd3pjnquqJxJmvNQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-reviews@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 505/699] can: bcm: add missing rcu list annotations and operations
-Date: Tue, 21 Jul 2026 17:24:24 +0200
-Message-ID: <20260721152407.087390506@linuxfoundation.org>
+	Genjian Zhang <zhanggenjian@kylinos.cn>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 5.10 506/699] dm thin metadata: fix superblock refcount leak on snapshot shadow failure
+Date: Tue, 21 Jul 2026 17:24:25 +0200
+Message-ID: <20260721152407.109062082@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,122 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Genjian Zhang <zhanggenjian@kylinos.cn>
 
-commit 7b2c3eabc4dafc062a25e10711154f2107526a78 upstream.
+commit 4b22d0801fadfcae2e106e6ba32e49439c7c7ebf upstream.
 
-sashiko-bot remarked the missing use of list_add_rcu() in
-bcm_[rx|tx]_setup() to have a proper initialized bcm_op structure
-when bcm_proc_show() traverses the bcm_op's under rcu_read_lock().
+__reserve_metadata_snap() increments THIN_SUPERBLOCK_LOCATION in the
+metadata space map before shadowing it. When dm_tm_shadow_block()
+fails, a reference is leaked in the metadata space map.
 
-To cover all initial settings of the bcm_op's the list_add_rcu() calls
-are moved to the end of the setup code.
+Fix by adding the missing dm_sm_dec_block().
 
-While at it, also fix the mirroring removal side: bcm_release() called
-bcm_remove_op() - which frees the op via call_rcu() - on ops that were
-still linked in bo->tx_ops/bo->rx_ops, without list_del_rcu() first.
-Unlink each op with list_del_rcu() before handing it to bcm_remove_op(),
-matching the existing pattern in bcm_delete_tx_op()/bcm_delete_rx_op().
-
-Reported-by: sashiko-reviews@lists.linux.dev
-Closes: https://lore.kernel.org/linux-can/20260610094654.A1FFE1F00893@smtp.kernel.org/
-Fixes: dac5e6249159 ("can: bcm: add missing rcu read protection for procfs content")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260714-bcm_fixes-v15-5-562f7e3e42da@hartkopp.net
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: cc8394d86f04 ("dm thin: provide userspace access to pool metadata")
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/bcm.c |   25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ drivers/md/dm-thin-metadata.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -244,7 +244,7 @@ static int bcm_proc_show(struct seq_file
- 			   (reduction == 100) ? "near " : "", reduction);
- 	}
- 
--	list_for_each_entry(op, &bo->tx_ops, list) {
-+	list_for_each_entry_rcu(op, &bo->tx_ops, list) {
- 
- 		seq_printf(m, "tx_op: %03X %s ", op->can_id,
- 			   bcm_proc_getifname(net, ifname, op->ifindex));
-@@ -877,6 +877,7 @@ static int bcm_tx_setup(struct bcm_msg_h
- 	struct bcm_sock *bo = bcm_sk(sk);
- 	struct bcm_op *op;
- 	struct canfd_frame *cf;
-+	bool add_op_to_list = false;
- 	unsigned int i;
- 	int err;
- 
-@@ -1018,8 +1019,7 @@ static int bcm_tx_setup(struct bcm_msg_h
- 		hrtimer_init(&op->thrtimer, CLOCK_MONOTONIC,
- 			     HRTIMER_MODE_REL_SOFT);
- 
--		/* add this bcm_op to the list of the tx_ops */
--		list_add(&op->list, &bo->tx_ops);
-+		add_op_to_list = true;
- 
- 	} /* if ((op = bcm_find_op(&bo->tx_ops, msg_head->can_id, ifindex))) */
- 
-@@ -1041,6 +1041,10 @@ static int bcm_tx_setup(struct bcm_msg_h
- 		op->flags |= TX_ANNOUNCE;
- 	}
- 
-+	/* add this bcm_op to the list of the tx_ops? */
-+	if (add_op_to_list)
-+		list_add_rcu(&op->list, &bo->tx_ops);
-+
- 	if (op->flags & TX_ANNOUNCE)
- 		bcm_can_tx(op);
- 
-@@ -1183,9 +1187,6 @@ static int bcm_rx_setup(struct bcm_msg_h
- 			     HRTIMER_MODE_REL_SOFT);
- 		op->thrtimer.function = bcm_rx_thr_handler;
- 
--		/* add this bcm_op to the list of the rx_ops */
--		list_add(&op->list, &bo->rx_ops);
--
- 		/* call can_rx_register() */
- 		do_rx_register = 1;
- 
-@@ -1264,10 +1265,12 @@ static int bcm_rx_setup(struct bcm_msg_h
- 					      bcm_rx_handler, op, "bcm", sk);
- 		if (err) {
- 			/* this bcm rx op is broken -> remove it */
--			list_del_rcu(&op->list);
- 			bcm_remove_op(op);
- 			return err;
- 		}
-+
-+		/* add this bcm_op to the list of the rx_ops */
-+		list_add_rcu(&op->list, &bo->rx_ops);
- 	}
- 
- 	return msg_head->nframes * op->cfsiz + MHSIZ;
-@@ -1597,8 +1600,10 @@ static int bcm_release(struct socket *so
- 		remove_proc_entry(bo->procname, net->can.bcmproc_dir);
- #endif /* CONFIG_PROC_FS */
- 
--	list_for_each_entry_safe(op, next, &bo->tx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->tx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
+--- a/drivers/md/dm-thin-metadata.c
++++ b/drivers/md/dm-thin-metadata.c
+@@ -1308,8 +1308,10 @@ static int __reserve_metadata_snap(struc
+ 	dm_sm_inc_block(pmd->metadata_sm, THIN_SUPERBLOCK_LOCATION);
+ 	r = dm_tm_shadow_block(pmd->tm, THIN_SUPERBLOCK_LOCATION,
+ 			       &sb_validator, &copy, &inc);
+-	if (r)
++	if (r) {
++		dm_sm_dec_block(pmd->metadata_sm, THIN_SUPERBLOCK_LOCATION);
+ 		return r;
 +	}
  
- 	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
- 		/*
-@@ -1629,8 +1634,10 @@ static int bcm_release(struct socket *so
+ 	BUG_ON(!inc);
  
- 	synchronize_rcu();
- 
--	list_for_each_entry_safe(op, next, &bo->rx_ops, list)
-+	list_for_each_entry_safe(op, next, &bo->rx_ops, list) {
-+		list_del_rcu(&op->list);
- 		bcm_remove_op(op);
-+	}
- 
- 	/* remove device reference */
- 	if (bo->bound) {
 
 
