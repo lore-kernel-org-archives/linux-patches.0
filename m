@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D3A415F0E;
-	Tue, 21 Jul 2026 19:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BE917A2F6;
+	Tue, 21 Jul 2026 19:17:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661458; cv=none; b=SIsOEW7IqdTs1j6UPF3oPpodo4IKOlBOb9FjI9iyf4QPL2Nq3JBbkyMHs42de4MqPQ354IPp8Zht3wXeVlL/G0l9N/csN7XWvzuNY2YkTkS9peNOAZuiJDVlHeeW00CRwVO6Ua9K77VxxP1a6jiapkQuG/DoLkFIuJaWXd/h2x8=
+	t=1784661461; cv=none; b=JQ5PVMaVdOTCk3Upff+xlSJT2mXu+islEvUV14M1tiwqZFCp26HrncOAchqRPgYaZz8hz+81UVTN2dzlqUAROZGuCasn7Yf/zPag96Szkl9tSnQBL8Pt3STbJh/mTFaungFo1W336KCLsEhYI2MBIDrUoQw99RtYS4hqc4YenR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661458; c=relaxed/simple;
-	bh=IXzLoEiYjz5JdoBf0GFjpAY+84FwNtgW0H6WThSkI4c=;
+	s=arc-20240116; t=1784661461; c=relaxed/simple;
+	bh=K6myNvMN7NTCKISqZfhPyVS9iDYf9fERUMJlCs6UU/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dUbpycRML6lzVLjlf76qrI0AEgFPr4KsPfmgqkVX6NCY1ydjgkvVHYSwrGzAuBPip6HBUdEBPsbmxMl6gFnjlfHuks9dGYQ9VdkprAvvX3+2ShD/sRRtAFl1cMDptUJbOZv9SIFZkXnIA/tgWnR0RPLzKAFzf6HmtzpMwg0xX2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EaxhZN65; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=prWiJ9fZfuZIyTZjNVcEV5uHD/M3k1QzcHfyF5vgPLScxb7oo42haSO3gWcT+GVw64mbkpbiTWBg551Tv7qVo6uwrqvCPAOr+bUebUrAZilHNfIDdz2PbC7itK1t+k3dip4QIcu50cxWkF48ZbHGQzYa8Q+AW9mzdCJzEFsHRxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3827YDN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EaxhZN65"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14D7C1F000E9;
-	Tue, 21 Jul 2026 19:17:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3827YDN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48921F000E9;
+	Tue, 21 Jul 2026 19:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661457;
-	bh=zQZNNYRN4HREL1oO8V/gMXCCpjBncDsbpM9m73IKirA=;
+	s=korg; t=1784661460;
+	bh=ViV3TP4S06V/QdAyBdwpMAWf4YMOmNof0r49e8eCPKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EaxhZN65XMVwwZIbSVIQm5rKCHg9Wg0AyE694BtDQ9frRSycBnDEwkoeen9pEtCuZ
-	 h/OoJUOEqTeElgGYE0Sm0ho8sO45SMTGNBooRyJQGp5SDQqWkA8bMKCSJima588tGH
-	 ne5tBGKnKtE4u9PtHAbk1IlEmgrBlQPKICnlf1pQ=
+	b=G3827YDNbatwxI9X1Zk5Rv1Xsj2xwHOalcmCKP1akdINNWHovyv54UAb4qRcuT8zu
+	 UNrOJaB2kIK2x0ot0u//XpiU5HQdNdgCSL0y6M9nqEF6oaeDfT6+ISuGIIusFP63w+
+	 cFBuPku5hmIi2JuAwNqNCwQ+gjdxRfEjKKKqBIkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis Kotze <loukot@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0073/1276] wifi: cfg80211: fix grammar in MLO group key error message
-Date: Tue, 21 Jul 2026 17:08:36 +0200
-Message-ID: <20260721152447.727205932@linuxfoundation.org>
+Subject: [PATCH 6.12 0074/1276] arm64: tegra: Fix Tegra234 MGBE PTP clock
+Date: Tue, 21 Jul 2026 17:08:37 +0200
+Message-ID: <20260721152447.751198991@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,47 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Louis Kotze <loukot@gmail.com>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit 9dcc1af3bbf5441f71a1e51b8d81bdf38a249607 ]
+[ Upstream commit 8f0cc929a4bad534c5a860a53d88912cf16d9c9c ]
 
-The error message emitted by nl80211_validate_key_link_id() when a group
-key install on an MLO wdev is missing the link ID reads "link ID must
-for MLO group key", which is missing the words "be set". This makes the
-error harder to grep and parse in userspace logs, and is reported
-verbatim by wpa_supplicant via its nl80211 extack relay, e.g.:
+The Tegra MGBE PTP clock is incorrectly named as 'ptp-ref' and not
+'ptp_ref' and this causing the initialisation of the PTP clock to fail.
+The device-tree binding doc for the device and the Tegra MGBE driver
+have been updated to use the correct name and so update the device-tree
+for Tegra234 as well.
 
-  wpa_supplicant: nl80211: kernel reports: link ID must for MLO group key
-
-The sibling error strings in the same helper already use grammatical
-phrasing ("link ID not allowed for pairwise key", "invalid link ID for
-MLO group key", "link ID not allowed for non-MLO group key"). Fix this
-one to match.
-
-No functional change.
-
-Fixes: e7a7b84e3317 ("wifi: cfg80211: Add link_id parameter to various key operations for MLO")
-Signed-off-by: Louis Kotze <loukot@gmail.com>
-Link: https://patch.msgid.link/20260414122728.92234-1-loukot@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 610cdf3186bc ("arm64: tegra: Add MGBE nodes on Tegra234")
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/nvidia/tegra234.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index dc862ca02e4367..15a8237f79bffa 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -4571,7 +4571,7 @@ static int nl80211_validate_key_link_id(struct genl_info *info,
- 	if (wdev->valid_links) {
- 		if (link_id == -1) {
- 			GENL_SET_ERR_MSG(info,
--					 "link ID must for MLO group key");
-+					 "link ID must be set for MLO group key");
- 			return -EINVAL;
- 		}
- 		if (!(wdev->valid_links & BIT(link_id))) {
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234.dtsi b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+index 2601b43b2d8cad..75428e70a69252 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+@@ -3529,7 +3529,7 @@ ethernet@6800000 {
+ 				 <&bpmp TEGRA234_CLK_MGBE0_RX_PCS_M>,
+ 				 <&bpmp TEGRA234_CLK_MGBE0_RX_PCS>,
+ 				 <&bpmp TEGRA234_CLK_MGBE0_TX_PCS>;
+-			clock-names = "mgbe", "mac", "mac-divider", "ptp-ref", "rx-input-m",
++			clock-names = "mgbe", "mac", "mac-divider", "ptp_ref", "rx-input-m",
+ 				      "rx-input", "tx", "eee-pcs", "rx-pcs-input", "rx-pcs-m",
+ 				      "rx-pcs", "tx-pcs";
+ 			resets = <&bpmp TEGRA234_RESET_MGBE0_MAC>,
+@@ -3571,7 +3571,7 @@ ethernet@6900000 {
+ 				 <&bpmp TEGRA234_CLK_MGBE1_RX_PCS_M>,
+ 				 <&bpmp TEGRA234_CLK_MGBE1_RX_PCS>,
+ 				 <&bpmp TEGRA234_CLK_MGBE1_TX_PCS>;
+-			clock-names = "mgbe", "mac", "mac-divider", "ptp-ref", "rx-input-m",
++			clock-names = "mgbe", "mac", "mac-divider", "ptp_ref", "rx-input-m",
+ 				      "rx-input", "tx", "eee-pcs", "rx-pcs-input", "rx-pcs-m",
+ 				      "rx-pcs", "tx-pcs";
+ 			resets = <&bpmp TEGRA234_RESET_MGBE1_MAC>,
+@@ -3613,7 +3613,7 @@ ethernet@6a00000 {
+ 				 <&bpmp TEGRA234_CLK_MGBE2_RX_PCS_M>,
+ 				 <&bpmp TEGRA234_CLK_MGBE2_RX_PCS>,
+ 				 <&bpmp TEGRA234_CLK_MGBE2_TX_PCS>;
+-			clock-names = "mgbe", "mac", "mac-divider", "ptp-ref", "rx-input-m",
++			clock-names = "mgbe", "mac", "mac-divider", "ptp_ref", "rx-input-m",
+ 				      "rx-input", "tx", "eee-pcs", "rx-pcs-input", "rx-pcs-m",
+ 				      "rx-pcs", "tx-pcs";
+ 			resets = <&bpmp TEGRA234_RESET_MGBE2_MAC>,
+@@ -3655,7 +3655,7 @@ ethernet@6b00000 {
+ 				 <&bpmp TEGRA234_CLK_MGBE3_RX_PCS_M>,
+ 				 <&bpmp TEGRA234_CLK_MGBE3_RX_PCS>,
+ 				 <&bpmp TEGRA234_CLK_MGBE3_TX_PCS>;
+-			clock-names = "mgbe", "mac", "mac-divider", "ptp-ref", "rx-input-m",
++			clock-names = "mgbe", "mac", "mac-divider", "ptp_ref", "rx-input-m",
+ 				      "rx-input", "tx", "eee-pcs", "rx-pcs-input", "rx-pcs-m",
+ 				      "rx-pcs", "tx-pcs";
+ 			resets = <&bpmp TEGRA234_RESET_MGBE3_MAC>,
 -- 
 2.53.0
 
