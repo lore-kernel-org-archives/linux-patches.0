@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8C9356A12;
-	Tue, 21 Jul 2026 19:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64BF46EF73;
+	Tue, 21 Jul 2026 19:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661485; cv=none; b=f97hYu43FLYB/WZ6Rp5+68Y6Y+1sQqH5PXCANiCu4HjzDP/bnuJe73V8IquLSa0PNFsfUd8G/4P1feCcnjxWvQf8PyABEr/RhYKcqat0H+D8tXpLnvtsJUH+93Ny88EbE5nWxBgxTwUcjqAVgxVEb+oTaHZ1JTFkOqRau3pNn2I=
+	t=1784661488; cv=none; b=Vhb8voJrif4S4thckIjxb+ApNRrt07bw2i2okkzOX7qGVJnH6kI34Inx2aTPwMdV86FV4jjaG9wevvz1ixPANbTNt6FAsr3fDWdZg5BhmN70CbKWbCLM+a6jqc14OXqu+/EUEB5RjET62crG2KVOUXgiKA/gX6s70Quh2xVyY2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661485; c=relaxed/simple;
-	bh=tcslv5Baljadg38vCykAEi3Uh2V7+OG8WriJX5xGD10=;
+	s=arc-20240116; t=1784661488; c=relaxed/simple;
+	bh=G8ru5+/hJwXSJrRYlGiLwoHetilxD1WGrDtdNCd5Ank=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fLL380LEOP5ZggeLzjq51TpKkm4KUltKkcmKedHl3GBQrvps6krlJ+xQb8sUAR5InZT1zV28s6UQhSjxsjnLm+CuL3BO7G8ASRKI8vAiZbWA/YFz0Sax0V9JlwD7lOFAKrsDBPtPujp3KfFe3VgMdAHIH80gpvfiD3oNir6cdzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jadu4jIK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JdgadxnnPn2qmMFyWmncjdWn+W5n+Rek++IUvZ2bXsXYfwk7TIHbyu+D5fJI0W8PLbVI90IeHp1T03WEhO9RKoKQUOHDqDW7ztFkh+DbICO2N7I43Wae57YmBCcqNJiNBec+712095phovwcGyBh7kF5ICCkvzI1WdjLtUDDZV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NukqjIj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jadu4jIK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73EF21F000E9;
-	Tue, 21 Jul 2026 19:18:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NukqjIj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DDAF1F000E9;
+	Tue, 21 Jul 2026 19:18:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661484;
-	bh=nPvu5VdM2U59f+I3XKnZTWqirmEazcOQ5i0U34XU3jQ=;
+	s=korg; t=1784661486;
+	bh=5ZCJvB7QCfmWj6MfmdTvKSZXg5gj93vHgAp4dgAoEJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jadu4jIK9pKe2wBwBXPlBSDCtlDdvLAb/yMi1TVEm6ouOi77Zri0iu1z6S2SQSraD
-	 4aFyMMXyxj3JN/seSnsUhkP3aPXiz1ZevIJ2U7ZCxe0vZImQQkcE3CBZJlhZ7iFW0X
-	 phGOiLqolZntWmSgRkHS518WajEOZ1F80p2t+HUs=
+	b=2NukqjIjR1XERcpGmdMX+YmjJiSb0guF9f9MCFW+cvXspqsa+qt7qZubjOSQNKIa5
+	 p5uyJFSQJtF4H+IcrLQ74h+SXmxWV99oKShbO6Nefrj2IXy8I50EbrUjcBjERVyC0h
+	 uiTnNYj2bKLrp5kxci+ffa8OVY72NhmNy/xXOjRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
+	"Kevin Hilman (TI)" <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0082/1276] wifi: ath9k: fix OOB access from firmware tx status queue ID
-Date: Tue, 21 Jul 2026 17:08:45 +0200
-Message-ID: <20260721152447.929030013@linuxfoundation.org>
+Subject: [PATCH 6.12 0083/1276] ARM: dts: am335x-sl50: Fix audio bitclock and frame master endpoint
+Date: Tue, 21 Jul 2026 17:08:46 +0200
+Message-ID: <20260721152447.952952055@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -46,50 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
 
-[ Upstream commit 7ce2f118a2389e8f0a64068c6fe7cc7d40639be0 ]
+[ Upstream commit 2bc564f46b00dc4f4331fc337277ff3f5fac8a4e ]
 
-ath_tx_edma_tasklet() accesses sc->tx.txq[ts.qid] where ts.qid is a
-4-bit hardware field (0-15), but the txq array only has
-ATH9K_NUM_TX_QUEUES (10) entries. A qid >= 10 causes an OOB array
-access.
+The cpu_endpoint in mcasp0 specifies the TLV320AIC3106 codec as the
+bitclock and frame master, but the phandles point to the codec's port
+node (codec_port) rather than its endpoint node (codec_endpoint).
 
-Add a bounds check on ts.qid before using it as an array index.
+audio-graph-card calls simple_util_parse_daifmt() with ep_codec set to
+the endpoint node (codec_endpoint). The function resolves the
+bitclock-master phandle and checks whether it equals ep_codec. Since
+codec_port is the parent of codec_endpoint, not the endpoint itself, the
+comparison always evaluates to false. This causes the mcasp0 CPU side to
+be silently configured as bitclock and frame master instead of the codec,
+which is the opposite of the intended configuration.
 
-Fixes: fce041beb03f ("ath9k: unify edma and non-edma tx code, improve tx fifo handling")
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20260415222343.1540564-1-tristmd@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fix by pointing bitclock-master and frame-master to codec_endpoint.
+
+Fixes: e5f89dbdebc5 ("ARM: dts: am335x-sl50: use audio-graph-card for sound")
+Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+Link: https://patch.msgid.link/20260325223411.123666-1-jihed.chaibi.dev@gmail.com
+Signed-off-by: Kevin Hilman (TI) <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/xmit.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm/boot/dts/ti/omap/am335x-sl50.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/xmit.c b/drivers/net/wireless/ath/ath9k/xmit.c
-index 35aa47a9db90b3..26faccc98dd82d 100644
---- a/drivers/net/wireless/ath/ath9k/xmit.c
-+++ b/drivers/net/wireless/ath/ath9k/xmit.c
-@@ -2759,6 +2759,11 @@ void ath_tx_edma_tasklet(struct ath_softc *sc)
- 			continue;
- 		}
+diff --git a/arch/arm/boot/dts/ti/omap/am335x-sl50.dts b/arch/arm/boot/dts/ti/omap/am335x-sl50.dts
+index 757ebd96b3f0b5..ccbde00d719c7c 100644
+--- a/arch/arm/boot/dts/ti/omap/am335x-sl50.dts
++++ b/arch/arm/boot/dts/ti/omap/am335x-sl50.dts
+@@ -558,8 +558,8 @@ cpu_endpoint: endpoint {
+ 			remote-endpoint = <&codec_endpoint>;
  
-+		if (ts.qid >= ATH9K_NUM_TX_QUEUES) {
-+			ath_dbg(common, XMIT, "invalid qid %d\n", ts.qid);
-+			continue;
-+		}
-+
- 		txq = &sc->tx.txq[ts.qid];
- 
- 		ath_txq_lock(sc, txq);
+ 			dai-format = "dsp_b";
+-			bitclock-master = <&codec_port>;
+-			frame-master = <&codec_port>;
++			bitclock-master = <&codec_endpoint>;
++			frame-master = <&codec_endpoint>;
+ 			bitclock-inversion;
+ 			clocks = <&audio_mclk>;
+ 		};
 -- 
 2.53.0
 
