@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB0C346A0C;
-	Tue, 21 Jul 2026 20:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A44346A0C;
+	Tue, 21 Jul 2026 20:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666574; cv=none; b=CXKqAAD9nakrcPrQ6t/JHzKVPhDenIiB4Mj7+KpamyUcWeiBPsi0TQlnktwOuJLnGMsEsO2RFexZKGOxTx2+wV+WtMujktVxslZ3oZF1hjPue3SBPqfrbO4+NlYx1chWZm8d7qnKqAI7ZsiO9N5vvu99E1tU8Q0Q/tVfsuz98Fw=
+	t=1784666576; cv=none; b=UjEg/cnzzQK/E3/T4XwHs0zUzHGIUOFtpayNsQYV7p0Fmt/j6L1ibMsHynn8RLqLny5vgYe9gaDZVXj4syda6DbgCI94XY0P6uDhK+VSYE3zpcp60861TiZe9WRWhrkkt6nL1tl9CtzifGQCdwAWU8z6s21t713OokchWzLNia4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666574; c=relaxed/simple;
-	bh=Gjutc8SnRN2JX8YAYWchryGRg9KZOqlziJWgOa6agH4=;
+	s=arc-20240116; t=1784666576; c=relaxed/simple;
+	bh=SehewDKFjvrCo/9bNPDTiPJ1zp/669hEHMRtnxC5ir4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k7jMU4XVtTLmlSO7cAtmOziZEWmVF1JchEbASC++2XmD52OQ5CQIavW7VltCvQN5xTYaQqaTRzn+MW0QNlWxgVQkgmYwnbnIRz81rgYMeimK8/oNx8J7PJadhpDBjn8QKu1QoEQnaFxpkhuoAt7G1dfUlZE6CoWPkkcezsY0b44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gyrpvJcw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BK8tpDEOatM4HqFhi13FZ8Zb850TA2pUoEtGJHS3+PmtGWlhRF0lI4TFI85RolS87fezDa9VKQeBECVRKtZI6LvIIzaeaXwc3ahOkPAsXZXfDRwG+TJNoLHRGwL3nTrzE81Dobq1Clu8TW646wn1daQ0quXIfN+cW2HS0OC/jhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWeWDfr7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gyrpvJcw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EF611F000E9;
-	Tue, 21 Jul 2026 20:42:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWeWDfr7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58531F000E9;
+	Tue, 21 Jul 2026 20:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666572;
-	bh=a1Zxc/V50hPmco6KiD9d+Rwc073G5SWYYhSRsiB5VeY=;
+	s=korg; t=1784666575;
+	bh=po27viZGhvRn1pD1SYW/ZY4RGNe+SAklf72t10pGiJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gyrpvJcw/V7fKJ5DjAB2ehhV8GyMkEl1v88NmmhwV6BTXiY4M7Xvkk6DV1YHQ7N2A
-	 gCyfNv3FjTjxmt3f9mxFtiSiAAkey9w9KmNbEUVPjaW0O1gUp7uDGsCVA6C+k9FeWf
-	 7ML51vzYD3EHvH7jslkGQkSTZIiyqUSZCbAsltw4=
+	b=ZWeWDfr72g3AeH/h8zi28Kzw6tqlWqkP1KYXxhgDUDxgl8beJWu2EfVAEstOqUylw
+	 FlCJ9TThzV1Ovt7WqJmEHK0stRPS3xz/9i88hdsguKRVhQL/icN8ulJ7xhkOwrIjFE
+	 12SiWFSIgi0smkmfbA3ETdwHnWURVOIXpXajQNNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fa2f5b1fb06147be5e16@syzkaller.appspotmail.com,
-	Yun Zhou <yun.zhou@windriver.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0732/1266] flow_dissector: check device type before reading ETH_ADDRS
-Date: Tue, 21 Jul 2026 17:19:29 +0200
-Message-ID: <20260721152458.252605272@linuxfoundation.org>
+Subject: [PATCH 6.6 0733/1266] ALSA: usb-audio: Kill MIDI 2.0 URBs before freeing endpoints
+Date: Tue, 21 Jul 2026 17:19:30 +0200
+Message-ID: <20260721152458.276469027@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,89 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit bf6e8af2c8be77489bedeae9f8a9654cb710e500 ]
+[ Upstream commit f199c8a8bdd54296d3458777e70fe82a78bd9817 ]
 
-__skb_flow_dissect() unconditionally reads 12 bytes from eth_hdr(skb)
-when FLOW_DISSECTOR_KEY_ETH_ADDRS is requested. This assumes the skb
-has a valid Ethernet header at mac_header, which is not always the case.
+MIDI 2.0 input URBs are started during snd_usb_midi_v2_create(). A
+later setup failure can still jump to snd_usb_midi_v2_free(), which
+currently frees each endpoint and its coherent URB buffers without first
+stopping the submitted URBs. A completion can then dereference the
+embedded URB context and endpoint state after they have been freed, or
+try to resubmit from the stale endpoint.
 
-The problem can be triggered by:
- 1. Creating a TUN device in L3 mode (IFF_TUN, hard_header_len=0)
- 2. Attaching a multiq qdisc with a flower filter matching on eth_src
- 3. Sending a packet through AF_PACKET
+This was observed as a KASAN slab-use-after-free in
+input_urb_complete().
 
-Since TUN in L3 mode has no link-layer header, mac_header points to
-the L3 data area. The flow dissector reads 12 bytes of uninitialized
-skb memory, which then propagates through fl_set_masked_key() and is
-used as a rhashtable lookup key in __fl_lookup(), as reported by KMSAN.
+The buggy scenario involves two paths, with each column showing the order
+within that path:
 
-Rejecting the filter in the control path (at tc filter add time) is
-not feasible because TC filter blocks can be shared between arbitrary
-devices -- a filter installed on an Ethernet device may later classify
-packets on a headerless device through a shared block. The device
-association is not fixed at filter creation time.
+probe error path:                         USB completion path:
+1. start_input_streams() submits          1. The HCD still owns a
+   input URBs.                               submitted input URB.
+2. A later setup helper returns           2. input_urb_complete() runs
+   an error.                                 with urb->context in ep.
+3. snd_usb_midi_v2_free() frees           3. The completion reads ep
+   endpoint storage and URB buffers.         state and can requeue URBs.
 
-Fix this by gating the memcpy on dev->type == ARPHRD_ETHER, which
-ensures only true Ethernet-framed packets have their addresses read.
-This is more precise than the previous hard_header_len >= 12 check,
-which would incorrectly pass for non-Ethernet link types like IPoIB
-(ARPHRD_INFINIBAND, hard_header_len=24) and FDDI (hard_header_len=21)
-whose L2 headers are not in Ethernet format. Additionally check
-skb_mac_header_was_set() to guard against the pathological case where
-mac_header is the unset sentinel (~0U), which would cause eth_hdr() to
-return a wild pointer.
+Make the endpoint destructor follow the same teardown ordering used for
+disconnect when the endpoint has not already been disconnected: publish
+ep->disconnected, kill the URBs synchronously, and drain the endpoint
+before freeing URB buffers and endpoint storage. The guard avoids
+repeating the stop sequence after the normal
+snd_usb_midi_v2_disconnect_all() path, while still synchronizing the
+direct MIDI 2.0 create-error free path.
 
-For the act_mirred redirect case (Ethernet packet redirected to a
-non-Ethernet device sharing a TC block), zeroing the key is the correct
-behavior: the packet is now being classified on the target device, where
-Ethernet address matching is not semantically meaningful.
+Validation reproduced this kernel report:
+BUG: KASAN: slab-use-after-free in input_urb_complete+0x37/0x1b0
+Workqueue: usb_hub_wq hub_event
+RIP: 0010:_raw_spin_unlock_irq+0x2e/0x50
+Read of size 8
+Call trace:
+  dump_stack_lvl+0x77/0xb0
+  print_report+0xce/0x5f0
+  input_urb_complete+0x37/0x1b0 (sound/usb/midi2.c:186)
+  srso_alias_return_thunk+0x5/0xfbef5
+  __virt_addr_valid+0x19f/0x330
+  kasan_report+0xe0/0x110
+  __usb_hcd_giveback_urb+0x112/0x1d0
+  dummy_timer+0xaaa/0x19a0
+  lock_is_held_type+0x9a/0x110
+  __lock_acquire+0x467/0x28b0
+  mark_held_locks+0x40/0x70
+  _raw_spin_unlock_irqrestore+0x44/0x60
+  lockdep_hardirqs_on_prepare+0xbb/0x1a0
+  __hrtimer_run_queues+0x101/0x520
+  hrtimer_run_softirq+0xd0/0x130
+  handle_softirqs+0x15b/0x670
+  __irq_exit_rcu+0xd0/0x170
+  irq_exit_rcu+0xe/0x20
+  sysvec_apic_timer_interrupt+0x6c/0x80
+  asm_sysvec_apic_timer_interrupt+0x1a/0x20
 
-Note: on non-Ethernet devices, the zeroed key will match a filter
-configured with all-zero MAC addresses. This is an improvement over the
-previous behavior where uninitialized memory could randomly match any
-filter.
-
-Reported-by: syzbot+fa2f5b1fb06147be5e16@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fa2f5b1fb06147be5e16
-Fixes: 67a900cc0436 ("flow_dissector: introduce support for Ethernet addresses")
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Link: https://patch.msgid.link/20260616123057.482154-1-yun.zhou@windriver.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d9c99876868c ("ALSA: usb-audio: Create UMP blocks from USB MIDI GTBs")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/20260618170010.191433-1-zzzccc427@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/flow_dissector.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ sound/usb/midi2.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
-index 9432e5362b44f1..5ac4cd4f3c6832 100644
---- a/net/core/flow_dissector.c
-+++ b/net/core/flow_dissector.c
-@@ -1149,13 +1149,21 @@ bool __skb_flow_dissect(const struct net *net,
- 
- 	if (dissector_uses_key(flow_dissector,
- 			       FLOW_DISSECTOR_KEY_ETH_ADDRS)) {
--		struct ethhdr *eth = eth_hdr(skb);
- 		struct flow_dissector_key_eth_addrs *key_eth_addrs;
- 
- 		key_eth_addrs = skb_flow_dissector_target(flow_dissector,
- 							  FLOW_DISSECTOR_KEY_ETH_ADDRS,
- 							  target_container);
--		memcpy(key_eth_addrs, eth, sizeof(*key_eth_addrs));
-+		/* TC filter blocks can be shared across devices with
-+		 * different link types, so we cannot validate this
-+		 * when the filter is installed -- check at dissect time.
-+		 */
-+		if (skb && skb->dev &&
-+		    skb->dev->type == ARPHRD_ETHER &&
-+		    skb_mac_header_was_set(skb))
-+			memcpy(key_eth_addrs, eth_hdr(skb), sizeof(*key_eth_addrs));
-+		else
-+			memset(key_eth_addrs, 0, sizeof(*key_eth_addrs));
- 	}
- 
- 	if (dissector_uses_key(flow_dissector,
+diff --git a/sound/usb/midi2.c b/sound/usb/midi2.c
+index 42a82aad8a3be8..925399e2cbbc07 100644
+--- a/sound/usb/midi2.c
++++ b/sound/usb/midi2.c
+@@ -478,6 +478,11 @@ static int create_midi2_endpoint(struct snd_usb_midi2_interface *umidi,
+ static void free_midi2_endpoint(struct snd_usb_midi2_endpoint *ep)
+ {
+ 	list_del(&ep->list);
++	if (!ep->disconnected) {
++		ep->disconnected = 1;
++		kill_midi_urbs(ep, false);
++		drain_urb_queue(ep);
++	}
+ 	free_midi_urbs(ep);
+ 	kfree(ep);
+ }
 -- 
 2.53.0
 
