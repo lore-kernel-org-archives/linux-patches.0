@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50CF4071E3;
-	Tue, 21 Jul 2026 19:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9103E49C4;
+	Tue, 21 Jul 2026 19:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660410; cv=none; b=a2Q62Wp3LRhr9vBJ+vpSWiUiAgS4Vs9khU0twXGrhw46mAj8xjF4Uq6175wO/RPUyCkSyAptIRmNm+25TKPIDWBtkcfjamYlC19YeYFhR73zUFlQ5Dmcymd1oqeVQEpRr+GSk9Rm0tWkMvNE3LBGOqAbb+RiqNeOTp9BmNk6xhE=
+	t=1784660413; cv=none; b=Ps6GK3rc7KDYZ4p0XD+BwxurwFY8QTZWWOCfnhsu7v9c0NdZp96HUgJMQqNZvxCZ9swd4z2Mk9/HPwze/gme/CPhRmYe6DaObKoQC/AW5pI5/3KYWw1VKjO/XPKWIHGlpE1ixqVS2o6sI6OZws9VDBFdJC7KfKA/nlHTvM/fnso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660410; c=relaxed/simple;
-	bh=JX5mXPKMSOyE9vvI2qTHcLSToNYrkGICCrMgYP9OR80=;
+	s=arc-20240116; t=1784660413; c=relaxed/simple;
+	bh=pkrgLKQ1SZxlZFBDqO84E1N9BkSx3/h++5zepXQnwBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lTwXgHsQ29DcviDosMZ1e6S2tWBJMSaE4520ek+UM8jIU1FELPYyuVPd+00j/+OkCoh4GbV80/Dsvkm/2EyOVtX3jgwX8ZFuFyj3HeZ/xFWlIIKCx7Hw4Zl8s0+h2PMsLsOZ7cXOMyvf4wrXtl7rJTZjAU5P1VVoik5iyma9vm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZV/3UaKH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eqINa7DuIa5IfjS5QXfIOFH/z2eeEJEUq4lZVtksnycFz5EHv9pvtisx4luZXrctLh/SmuyFPpUp9K6t6rjyoBZOx3DGxM5uj7Stbag40RBPr8u18kY0dMX/HKr2x+urbAD7a+u2Vm5rSsgrZhoa9LP+neOVQvAPRV7d5vzeNtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xdQiG0E2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZV/3UaKH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A5E1F000E9;
-	Tue, 21 Jul 2026 19:00:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xdQiG0E2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D401F000E9;
+	Tue, 21 Jul 2026 19:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660409;
-	bh=i5x1DdSCdI2F2MwfypzHvvshfE1br7CTqQ6Vw6Wlr80=;
+	s=korg; t=1784660412;
+	bh=DZHmbTszUMpzHuPrlXNzn41kluJsLiOnZnKi7WQVsqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZV/3UaKHpjNpQrKw9OuvS0C7AVdkQlkeXVilxSLQT9dx7chd//baSQ3o6r3/fpl1F
-	 kWTBuUH2H6sj0pn72mkBUN9KfVaIwN41ilQg/dH1JV1FEt28Klxufhjg654Hn1yVyu
-	 BKIPMwzDWDvdj0UooeYd7S2Lt+EM3OD/9MHu5pX8=
+	b=xdQiG0E2o6CojkjstG5LGA7sWUdABgTz9OgI4B5M6zI19CkACotaHofL06pWrA+Oc
+	 dbcIksj0xYks3b1fu+Rwbfb5UMhCao3hOV6BwOTLoMpJSXaLs3fWcg0kipAiu1uyvO
+	 G+4tWhxzVRHqFCCMn1qYpZXCG21CaDLKTdFZsiq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Akhil R <akhilrajeev@nvidia.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Thierry Reding <treding@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0925/2077] dmaengine: imx-sdma: Refine spba bus searching in probe
-Date: Tue, 21 Jul 2026 17:09:58 +0200
-Message-ID: <20260721152614.630068217@linuxfoundation.org>
+Subject: [PATCH 7.1 0926/2077] dt-bindings: dma: nvidia,tegra186-gpc-dma: Make reset optional
+Date: Tue, 21 Jul 2026 17:09:59 +0200
+Message-ID: <20260721152614.653582298@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,45 +54,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Akhil R <akhilrajeev@nvidia.com>
 
-[ Upstream commit d52d42e2e5d9f13166e81ac837ebb023d1306e61 ]
+[ Upstream commit cc6049bd3fa8501ee27042df469a19ed69cf406d ]
 
-There are multi spba-busses for i.MX8M* platforms, if only search for
-the first spba-bus in DT, the found spba-bus may not the real bus of
-audio devices, which cause issue for sdma p2p case, as the sdma p2p
-script presently does not deal with the transactions involving two devices
-connected to the AIPS bus.
+On Tegra264, GPCDMA reset control is not exposed to Linux and is handled
+by the boot firmware.
 
-Search the SDMA parent node first, which should be the AIPS bus, then
-search the child node whose compatible string is spba-bus under that AIPS
-bus for the above multi spba-busses case.
+Although reset was not exposed in Tegra234 as well, the firmware supported
+a dummy reset which just returns success on reset without doing an actual
+reset. This is also not supported in Tegra264 BPMP. Therefore mark 'reset'
+and 'reset-names' properties as required only for devices prior to
+Tegra264.
 
-Fixes: 8391ecf465ec ("dmaengine: imx-sdma: Add device to device support")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260407032755.2758049-1-shengjiu.wang@nxp.com
+This also necessitates that the Tegra264 compatible be standalone and
+cannot have the fallback compatible of Tegra186. Since there is no
+functional impact, we keep reset as required for Tegra234 to avoid
+breaking the ABI.
+
+Fixes: bb8c97571db5 ("dt-bindings: dma: Add Tegra264 compatible string")
+Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260331102303.33181-2-akhilrajeev@nvidia.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/imx-sdma.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../bindings/dma/nvidia,tegra186-gpc-dma.yaml | 23 +++++++++++++------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index 3d527883776b40..36368835a845c9 100644
---- a/drivers/dma/imx-sdma.c
-+++ b/drivers/dma/imx-sdma.c
-@@ -2364,7 +2364,9 @@ static int sdma_probe(struct platform_device *pdev)
- 			return dev_err_probe(&pdev->dev, ret,
- 					     "failed to register controller\n");
+diff --git a/Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml b/Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml
+index 0dabe9bbb219ba..64f1e9d9896df3 100644
+--- a/Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml
++++ b/Documentation/devicetree/bindings/dma/nvidia,tegra186-gpc-dma.yaml
+@@ -15,16 +15,14 @@ maintainers:
+   - Jon Hunter <jonathanh@nvidia.com>
+   - Rajesh Gumasta <rgumasta@nvidia.com>
  
--		spba_bus = of_find_compatible_node(NULL, NULL, "fsl,spba-bus");
-+		struct device_node *sdma_parent_np __free(device_node) = of_get_parent(np);
+-allOf:
+-  - $ref: dma-controller.yaml#
+-
+ properties:
+   compatible:
+     oneOf:
+-      - const: nvidia,tegra186-gpcdma
++      - enum:
++          - nvidia,tegra264-gpcdma
++          - nvidia,tegra186-gpcdma
+       - items:
+           - enum:
+-              - nvidia,tegra264-gpcdma
+               - nvidia,tegra234-gpcdma
+               - nvidia,tegra194-gpcdma
+           - const: nvidia,tegra186-gpcdma
+@@ -60,12 +58,23 @@ required:
+   - compatible
+   - reg
+   - interrupts
+-  - resets
+-  - reset-names
+   - "#dma-cells"
+   - iommus
+   - dma-channel-mask
+ 
++allOf:
++  - $ref: dma-controller.yaml#
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - nvidia,tegra186-gpcdma
++    then:
++      required:
++        - resets
++        - reset-names
 +
-+		spba_bus = of_get_compatible_child(sdma_parent_np, "fsl,spba-bus");
- 		ret = of_address_to_resource(spba_bus, 0, &spba_res);
- 		if (!ret) {
- 			sdma->spba_start_addr = spba_res.start;
+ additionalProperties: false
+ 
+ examples:
 -- 
 2.53.0
 
