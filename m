@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58568471257;
-	Tue, 21 Jul 2026 18:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D08471260;
+	Tue, 21 Jul 2026 18:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657469; cv=none; b=RG8j9numD4m+JJBO3lNEbLDLoSK80TD2QkRc4EnMU4VIYqN3MWEviNbZO5SA9IhHqhykkQQq3lgW8QtGUb57V3m8oD+rgF9PcXokbzjlMxZmlnnbZ25HHmXImp+VGj6ysJtCSIK+v90GSI8ouVpurSDlP7O8hqB/uVprVEzZygU=
+	t=1784657472; cv=none; b=m8bxhAj2NK9dgAozEub6+kaXMHP86dw1KDIRqQ37U2vDMQYJ0f7Sy7UQ+a0mDKTmYjR86vmFblpmtvC650ZPrYQJ3tXKXj7SOJOt7nT08p1xp65bV2ILToorM3GBaMaFuf7/b+RhM40Gno++jbVaa6Vu14TM7GQpnCb9ibPD2AE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657469; c=relaxed/simple;
-	bh=VqKw6R+H+XMo/LH0DQ0N6IRIR0nUGK5HqRQ3ZDfu0cw=;
+	s=arc-20240116; t=1784657472; c=relaxed/simple;
+	bh=ty5cqc0DT+2izWvbcWxcgNGb0iGLJJ8sf1+5fHaR0NY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FDh7hUL22vG4N2Oa8haZa/kuNKf5fvGx+pGNvVJrANbHUEiN20g0OyJRgx2jtF54MSm3R4BUdc4PaUoWILtncd4lSku5z6vebZ1BPZAdpn7GbU0/oEMf9c0f72w/ie1O1+6hcmAIKjqHL/+L87SUAKajC/SG5ingv48gWDORPuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CqImbr1w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rEj4VpsyUYCNrFnagM8ihf6NCKvZ0OffZgdC7V715Gw70jkB1UjC274PllWKK9uJWMA9QGIqB1kgrDVlnPs0NXvtvoN9fa6Xn8yqUxtp/jZLTowe58WmPg8WEj92VBZSx8VxYRWkieZB/m9HgDKGpenzdU8t0j0/pJJ+pwibtgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jO1yxLZn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CqImbr1w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED5E1F000E9;
-	Tue, 21 Jul 2026 18:11:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jO1yxLZn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F971F000E9;
+	Tue, 21 Jul 2026 18:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657468;
-	bh=xmKG7YHkjeKMJ4zv0SQ52qoZmF4xDukGLl0LJMFMmPs=;
+	s=korg; t=1784657470;
+	bh=p/Xs8/LjhV62kHBbNfnZmFiQ3jAaqFIaFbXVekQH+o8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CqImbr1wDl3gOmCSAO9dYMRX/F01ui/IoPQbk+1gePyTediPPeEmJi7TOwgUHjwbV
-	 iwlsrS95If5cP5d11etT4GqE98XJ1cZI0INow3BjVagAB9qA+WRCdpMk8CZEvM0Rhm
-	 W9auYrs2CzkJ6ILauxfUJoJAYX4Wq1m5gyrrh8Lc=
+	b=jO1yxLZn6NVtFQbcdMhW/TA42nIw6XDspFayqK1JoDywAsEHI83aI/QEubc7rYjOd
+	 mXO6CKkq+jWvoMIAPCijZjYdw64tp68QLugwz/MVW8VZkuk0fYm9zWddnfAFwmCft0
+	 V36naOpocDmof76VX4Ikiwq1aPZrFXznTEonLJe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0775/1611] perf dso: Fix heap overflow in dso__get_filename() on decompressed path
-Date: Tue, 21 Jul 2026 17:14:51 +0200
-Message-ID: <20260721152532.818413853@linuxfoundation.org>
+Subject: [PATCH 6.18 0776/1611] perf dso: Set error code when open() fails on uncompressed fallback path
+Date: Tue, 21 Jul 2026 17:14:52 +0200
+Message-ID: <20260721152532.841359200@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -47,6 +46,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
@@ -55,50 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit f973e52a99776fcc473488984828d1fce56d5382 ]
+[ Upstream commit d2c6069d68ee9d53b05fe38bc2049cc4286fbb16 ]
 
-dso__get_filename() allocates name with malloc(PATH_MAX), but the
-dso__filename_with_chroot() path replaces name with an asprintf'd
-exact-size string (e.g. 8 bytes for "/a/b.ko").  When the DSO needs
-decompression, dso__decompress_kmodule_path() writes the temp path
-("/tmp/perf-kmod-XXXXXX", 22 bytes) into newpath, and strcpy(name,
-newpath) overflows the smaller allocation.
+filename__decompress() has an early return for files that are not
+actually compressed, where it calls open() directly.  When open()
+fails, the function returns -1 but never sets *err.  The caller chain
+(decompress_kmodule → dso__decompress_kmodule_path → dso__get_filename)
+then reads *dso__load_errno(dso) to set errno, but that field was never
+populated, so errno gets a stale or zero value.
 
-Replace the strcpy with strdup(newpath) + free(name) so the buffer
-is always correctly sized for its content.
+With errno=0, __open_dso() computes fd = -errno = 0, which is non-
+negative, so callers treat fd 0 (stdin) as a valid DSO file descriptor.
+
+Set *err = errno when open() fails on the uncompressed path, matching
+the error handling on the compressed path at line 354.
 
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Fixes: 1d6b3c9ba756a513 ("perf tools: Decompress kernel module when reading DSO data")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
+Fixes: 8b42b7e5e8b5692b ("perf tools: Add is_compressed callback to compressions array")
+Cc: Jiri Olsa <jolsa@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dso.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ tools/perf/util/dso.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
-index 1205224e110375..cfbad2d0496e89 100644
+index cfbad2d0496e89..5b88b19f9d8e3c 100644
 --- a/tools/perf/util/dso.c
 +++ b/tools/perf/util/dso.c
-@@ -605,8 +605,15 @@ static char *dso__get_filename(struct dso *dso, const char *root_dir,
- 
- 		/* empty pathname means file wasn't actually compressed */
- 		if (newpath[0] != '\0') {
-+			char *tmp = strdup(newpath);
-+
-+			if (!tmp) {
-+				unlink(newpath);
-+				goto out;
-+			}
-+			free(name);
-+			name = tmp;
- 			*decomp = true;
--			strcpy(name, newpath);
- 		}
+@@ -343,9 +343,12 @@ int filename__decompress(const char *name, char *pathname,
+ 	 * descriptor to the uncompressed file.
+ 	 */
+ 	if (!compressions[comp].is_compressed(name)) {
++		fd = open(name, O_RDONLY | O_CLOEXEC);
++		if (fd < 0)
++			*err = errno;
+ 		if (pathname && len > 0)
+ 			pathname[0] = '\0';
+-		return open(name, O_RDONLY | O_CLOEXEC);
++		return fd;
  	}
- 	return name;
+ 
+ 	fd = mkstemp(tmpbuf);
 -- 
 2.53.0
 
