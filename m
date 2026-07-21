@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F96414A1C;
-	Tue, 21 Jul 2026 19:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8EB3B8BB9;
+	Tue, 21 Jul 2026 19:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660496; cv=none; b=SmeR7//OX6mNQAdZhPsFxUjT9LK6RshquTU8MPo7EvmX1hJOJ0/nLa28j+bq7O6pziAGONtjwLjC/IycjBWNPyPCKw/u8udUaVqPybgHTxyCO8zuBOaVWHv7rngWqVp4yE17lqdNWgzfs+C6hSq/23LR0ckOGvf83cENrkaScNU=
+	t=1784660496; cv=none; b=qXjSJT31Z+lYVxrTqhmoFDC3aAavP1hGdqZ2mfYK2K3x8j4tn/FF+X4h1rXyZM1q5HERtL/nz5Rj0jAro+O1pimQcky1Wxq7baLztuN/A/jLmkgpTZYwxhPC1oHaGcVBmln0I9ejycFuvAN/YZgQ6V4rD7hA+/ddYboXkq3u9Kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784660496; c=relaxed/simple;
-	bh=+4Sabo7UfyVDOj7QIROtXF+nnAa2Wpar7hfNkeebJGE=;
+	bh=Tu7FdCsllJZKTw1Kj+zityW/j4Stz1ZVSY+ZyG55gLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ivcIh8GFVNMiavuk/zXXFoFCxLJuGP6uBJ0X0mudViZRbj9jseQHXYS/YkDcf901tqRltHTB/EdETBetb1Y2yAD34FaHHGqUV4AE1zyQaDtBmoIm+LyNj+wNB2b0uVR/EXkMkGMJ+GfGaHsz08GGj1Enr7j1dYQ1EajxOum9JLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjpkLZAt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DBZiwrCytRNVMoup6AFZhYR9O3YlDXpL47dlLfGKK75pKMyudvh+UW02dXugLgrc+9jFF33I493lNBvJW6voqc/CmHQJ4ylRTaSURwbVW7uzvfa3hxNFlvY9Ndk/RbqB+qjHHgE59LHHKKzsAqaeS+GAdb/wpXjHddr/v4otPdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NOnBXgFO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjpkLZAt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 644F91F01566;
-	Tue, 21 Jul 2026 19:01:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NOnBXgFO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915A91F00A3F;
+	Tue, 21 Jul 2026 19:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660488;
-	bh=lQtIiihDKOMMuJaIHCmQFtuX0OMovbFVV0yj50CmGP0=;
+	s=korg; t=1784660457;
+	bh=ZPbNil/VMwrJLIbkm9+0E0NtyyJCv/CuKptl7/tfWxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TjpkLZAtmnQk7l77QVMJeuRTyrNj8fDYdMt2RZVOus2pBplCD2Vh3DCjQMJGgxT91
-	 X/Bm+96PQ8RSZ/JIk6RgjBLC9jcrzDYWQhpsjNFUUGY6EuwH7unqxz6XlDlWMgdU5r
-	 fq+3u7Q3fqER0IvgjF2Z7qCtbzhTqHSdFpUioQZY=
+	b=NOnBXgFOMeculBD+blMoMlh1DsGwCCsNMqhdYJQOLAPtpOwHM7NumXHrDcdygT9X3
+	 aId0ZWtpiQyxwS5N2F5i0mJGt16MyoNUmmdPJ8el0COxb7tpyWsdr61ihC5S7k+OSW
+	 DFBRKd3y4lTpgR+6Ay0MOhHQBY7PHYwatT6zrzwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0998/2077] xprtrdma: Sanitize the reply credit grant after parsing
-Date: Tue, 21 Jul 2026 17:11:11 +0200
-Message-ID: <20260721152616.357756686@linuxfoundation.org>
+Subject: [PATCH 7.1 0987/2077] perf sched: Fix idle-hist callchain display using wrong rb_first variant
+Date: Tue, 21 Jul 2026 17:11:00 +0200
+Message-ID: <20260721152616.097792526@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,69 +48,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit c3a628aab2dc8f5fd7bff86ceaeae64de590e60a ]
+[ Upstream commit d9b99dc8148e0c1f5da3942131b47e0d21187a32 ]
 
-The out_norqst exit in rpcrdma_reply_handler() branches away before
-the credit clamp, so a reply that matches no pending request reaches
-out_post carrying the raw credit value parsed from the wire.
-rpcrdma_post_recvs() does not bound its @needed argument: the refill
-loop allocates and chains Receive WRs until the count is satisfied or
-allocation fails. A peer that sends a well-formed reply carrying an
-unknown XID and an inflated credit grant therefore drives rep
-allocation and Receive posting past re_max_requests on every such
-reply.
+timehist_print_idlehist_callchain() calls rb_first_cached() on
+sorted_root, but the sort function (callchain_param.sort) populates it
+via rb_insert_color() on the plain rb_root member — not the cached
+variant.  This means rb_leftmost is never set, so rb_first_cached()
+always returns NULL and the entire callchain summary is silently
+dropped from --idle-hist output.
 
-Move the clamp to immediately after the credit field is parsed,
-ahead of the first branch that can reach out_post, so every later
-consumer sees a sanitized value. The cwnd update stays on the
-matched-request path.
+The original code in ba957ebb54893aca ("perf sched timehist: Show
+callchains for idle stat") was correct — it used struct rb_root and
+rb_first().  The bug was introduced when sorted_root was converted to
+rb_root_cached without converting the sort insertion path to use
+rb_insert_color_cached().
 
-Fixes: 704f3f640f72 ("xprtrdma: Post receive buffers after RPC completion")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Use rb_first(&root->rb_root) to match how the tree was populated.
+
+Fixes: cb4c13a5137766c3 ("perf sched: Use cached rbtrees")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Acked-by: Ian Rogers <irogers@google.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/rpc_rdma.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ tools/perf/builtin-sched.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
-index 912d5de60abe81..9255d44960cca5 100644
---- a/net/sunrpc/xprtrdma/rpc_rdma.c
-+++ b/net/sunrpc/xprtrdma/rpc_rdma.c
-@@ -1468,6 +1468,14 @@ void rpcrdma_reply_handler(struct rpcrdma_rep *rep)
- 	credits = be32_to_cpu(*p++);
- 	rep->rr_proc = *p++;
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index 6cf034f60c6667..2ccda1e382930a 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -3133,7 +3133,8 @@ static size_t timehist_print_idlehist_callchain(struct rb_root_cached *root)
+ 	size_t ret = 0;
+ 	FILE *fp = stdout;
+ 	struct callchain_node *chain;
+-	struct rb_node *rb_node = rb_first_cached(root);
++	/* sort() uses rb_insert_color() on rb_root, not rb_root_cached */
++	struct rb_node *rb_node = rb_first(&root->rb_root);
  
-+	/* The credit grant from the wire is not trustworthy;
-+	 * sanitize it before any code path consumes it.
-+	 */
-+	if (credits == 0)
-+		credits = 1;	/* don't deadlock */
-+	else if (credits > r_xprt->rx_ep->re_max_requests)
-+		credits = r_xprt->rx_ep->re_max_requests;
-+
- 	if (rep->rr_vers != rpcrdma_version)
- 		goto out_badversion;
- 
-@@ -1484,10 +1492,6 @@ void rpcrdma_reply_handler(struct rpcrdma_rep *rep)
- 	xprt_pin_rqst(rqst);
- 	spin_unlock(&xprt->queue_lock);
- 
--	if (credits == 0)
--		credits = 1;	/* don't deadlock */
--	else if (credits > r_xprt->rx_ep->re_max_requests)
--		credits = r_xprt->rx_ep->re_max_requests;
- 	if (buf->rb_credits != credits)
- 		rpcrdma_update_cwnd(r_xprt, credits);
- 
+ 	printf("  %16s  %8s  %s\n", "Idle time (msec)", "Count", "Callchains");
+ 	printf("  %.16s  %.8s  %.50s\n", graph_dotted_line, graph_dotted_line,
 -- 
 2.53.0
 
