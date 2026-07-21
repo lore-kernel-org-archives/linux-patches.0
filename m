@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E34846A603;
-	Tue, 21 Jul 2026 15:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161C846D567;
+	Tue, 21 Jul 2026 15:53:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649216; cv=none; b=a6yqJDNiBr8ciNEdrstJu7rv+OZMOoHeeyVnejZOilR+vGOXNxpaLkAD3B27HeIn1l9+jciO6mhwMwl+gGb4DxSqVx0LtPuKQTFz4ub0es3oxUqg5ItMqY/G446h3DZB3QmdPmEnj2aQt+oJM4iHIL98DIJYCoFXcxwi8+d4IV4=
+	t=1784649219; cv=none; b=geiUhZcd/BYp4nd11s+c6vnK2QOqsw29LDl5eAo7AyAmh2iSLPukJB9KgDIMGoQ74cpmTtAaY8APdLQWImBCnZ0XEybWzm9NoxEAvo/l7kzIjFpfNWb30dGRdr0GstRtV/eJdGs0ZmawLWuJ6blzL/gKCMCi5ZMwepU20WBxO2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649216; c=relaxed/simple;
-	bh=oW+NxAsB+/8F0G2z4IXrLK2arhCNx39V+6EyNI2XPmc=;
+	s=arc-20240116; t=1784649219; c=relaxed/simple;
+	bh=vq6TKwezdyh+pQ/sPh4dsEPR/CoO2UnBYCv8pSe4ViI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zxo0NStVxBRfvePoCWeTCj8C50N9Ejiqrni6ZRXgIsqvKZzFhK3kiIaREaoerVR8O07s0Otmex53kLTO5D6SndNr/b6V32HsJU+QiP4+hI1IxENIQy9TCuxi3HHfM462lDS6Czi3L4HYgH0V5ZJ/ZJ4u2tgdBpAP9p0I9tbPuUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpyGgYm1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fKg5Be2FRCxXgVTnopRkKLjJ7f+rxPtuetQUB1n3PqyCVMkR4ZCycsI6AVPEf/2cjPZXyZKyzME4P1OTvOPHBbKk5wY3vJwjcmZNQphUoWc8QS3RDnDjc1siL3rStHlITGC5EtCkPazIwnxDpJtIxShfmktKc5PHhuoc8IzvNes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kXGWl31S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpyGgYm1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54951F000E9;
-	Tue, 21 Jul 2026 15:53:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kXGWl31S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A9A61F000E9;
+	Tue, 21 Jul 2026 15:53:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649215;
-	bh=k3ZssowYqlyvKZnJg9dMO/oiF9yaP/IXUocVndkiuQU=;
+	s=korg; t=1784649218;
+	bh=oSqgfTq0Yf1jYRSHSylbBX+Ze5fX9+pEJAw5Ml0i7IE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rpyGgYm1P2c+YHm3KeaMXv4IljUsMPDKBUoUHzprOvxdv2QoS3wyRaUAfCcWPDRnX
-	 8/dHrEhPpCHIoTveJYbFILqCI9aoSLJ/2J/sAzpDXcBese2Xncj4NeUIT9eUhkDTKa
-	 0VCIptBu4hRVl2GdAAKpbtohCd+74MkEW4bRJODY=
+	b=kXGWl31SOy1hXG/Nm5CcEo3/6mmhUul9PMNInDBqeeFsJEKGqZJkwuqn6I8EnOb9z
+	 6YPeohYqvWk/or76NmY+ZP5VpE6ALxDPVxB5/n3LZqtRct+/TFyYBuoVucFe6NLfdC
+	 oldNemzzJOfeGKGVNcC13nxeJRPqUXsUdIJJ/oJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxiao Chang <junxiao.chang@intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Nikolay Borisov <nik.borisov@suse.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0493/2077] x86/cpu: Remove obsolete aperfmperf_get_khz() declaration
-Date: Tue, 21 Jul 2026 17:02:46 +0200
-Message-ID: <20260721152604.439368348@linuxfoundation.org>
+Subject: [PATCH 7.1 0458/2077] mm: preserve PG_dropbehind flag during folio split
+Date: Tue, 21 Jul 2026 17:02:11 +0200
+Message-ID: <20260721152603.590415119@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,36 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxiao Chang <junxiao.chang@intel.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit a5f28da54f36f1a8b289d9bdd3e780b2ede0da6f ]
+[ Upstream commit 0ad186cf167fdbeb6b29a8005c71973781036bd3 ]
 
-aperfmperf_get_khz() was replaced by arch_freq_get_on_cpu().
-The remaining declaration in the header file is no longer used
-and should be removed.
+__split_folio_to_order() copies page flags from the original folio to
+newly created sub-folios using an explicit allowlist, but PG_dropbehind
+is not included. When a large folio with PG_dropbehind set is split,
+only the head sub-folio retains the flag; all tail sub-folios silently
+lose it and will not be reclaimed eagerly after writeback completes.
 
-Fixes: f3eca381bd49 ("x86/aperfmperf: Replace arch_freq_get_on_cpu()")
-Signed-off-by: Junxiao Chang <junxiao.chang@intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
-Link: https://patch.msgid.link/20260606021514.1433619-1-junxiao.chang@intel.com
+Add PG_dropbehind to the flag copy mask so that the drop-behind hint
+is preserved across folio splits.
+
+Fixes: a323281cdfec ("mm: add PG_dropbehind folio flag")
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260511-dontcache-v7-1-2848ddce8090@kernel.org
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/cpu.h | 1 -
- 1 file changed, 1 deletion(-)
+ mm/huge_memory.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/kernel/cpu/cpu.h b/arch/x86/kernel/cpu/cpu.h
-index 5c7a3a71191a14..dca2d5845e4276 100644
---- a/arch/x86/kernel/cpu/cpu.h
-+++ b/arch/x86/kernel/cpu/cpu.h
-@@ -75,7 +75,6 @@ static inline struct amd_northbridge *amd_init_l3_cache(int index)
- }
+diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+index b118bcd392cb35..d29e85495091d4 100644
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -3644,6 +3644,7 @@ static void __split_folio_to_order(struct folio *folio, int old_order,
+ 				 (1L << PG_arch_3) |
  #endif
+ 				 (1L << PG_dirty) |
++				 (1L << PG_dropbehind) |
+ 				 LRU_GEN_MASK | LRU_REFS_MASK));
  
--unsigned int aperfmperf_get_khz(int cpu);
- void cpu_select_mitigations(void);
- 
- extern void x86_spec_ctrl_setup_ap(void);
+ 		if (handle_hwpoison &&
 -- 
 2.53.0
 
