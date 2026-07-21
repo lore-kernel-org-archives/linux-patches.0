@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA77547010A;
-	Tue, 21 Jul 2026 18:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71805470120;
+	Tue, 21 Jul 2026 18:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657024; cv=none; b=G3cHKPR7+nVYRc3wN8GOnWDCfOq9MLDHAL97ZNCZyoe7Sg6CSGKeBO4tCF0MXfQuLzwHhMh9kYcIJuE8O1J69yiKg4urgN+vO88miZ0aKqMfr94MRbjC1zyrO8nY8Q9p7GzKcVV3T5ebQPUa9fvnmB/Yeu0kz/kTDc8bLVSgKMI=
+	t=1784657027; cv=none; b=aTMF/YvKgme4P1BE08ky3UlF5ytQ85kZd+D4YS+6r8DEZ64Ro2fkRKN5v7NemzT4b7jqSFnMWNuue4HlKesR48x1WsXyvmdfYfxYEzxgLMtjdAEpzVg0Jm0ecLjJgqJJCoifFs1MM4mxZazU02cslEClQlspY9Q+v2r30zncX0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657024; c=relaxed/simple;
-	bh=rJ+3hAzkyAQz5+KzeOCv6SBQ8Gun5zgq/8ZOiYHLOns=;
+	s=arc-20240116; t=1784657027; c=relaxed/simple;
+	bh=1eR53WbTuvQErwrI9POVW++mg79THPN+VI9MwzOxQnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W0gubk8Ton1L1p2sB44PAAf6lmk/YORMa/QaWdGdaCEF+LOLRWx2LPuNhVJNMuqbyvT34p0SH2mn6EFsJRKBmy/Tca6sW2wuVIosdecogV8V6V76ZWgsaNUMdvGkyMbGkYsDZU/h6fv5Lk3fDtuTMKvr/PrrpVYtzuEdJJfO/Xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbfWp92E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s1k0Zz+NqBKIW8Midx38lsTtoIgxEBaGWhnu3YJHXRz/gKFajRUkBy8Pm/tidKehf62LMtSdMXj6cpbZAJ5r1z2j3E0P1bYy9A0a9plqFznS6fyI5+T7EAcO+bryBsT3UT6un6z0vGYCFKFM3LZ3oQTMo/Lo2JAGdYFBCRMJHH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=He5wqujy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbfWp92E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 265B81F000E9;
-	Tue, 21 Jul 2026 18:03:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="He5wqujy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA5571F00A3A;
+	Tue, 21 Jul 2026 18:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657023;
-	bh=kMR86d0fol0W1P34RZ6IQXyQDM+eIOakx856wj7NofA=;
+	s=korg; t=1784657026;
+	bh=hjAPi66d16LR3vkcB6yQsLoSImwoKJX3QUGnQLTzfaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jbfWp92EuD5WO7VRj0RIB/uRspZaFPHHPhyz9u8pX1Nmwfl+Nqgkmu8vdDhH4QoH+
-	 w4YYVavU3ugLsXWcjI3A1fMa3ZHiAb1D5yxlw5d3HdCG19od9zDe6h4j2t+PnvK0xD
-	 doEETO6zpBHoccmDP6vVT61WlVR4tyFwkIB12mfc=
+	b=He5wqujyfsegurlHjvegTadlbKxoTTDi+GcVJikUC/g+g5GU1hhe2Bz8owS9Ip8Eh
+	 Ihhp/zRov/LE9EK+0t41g9IdmGC4ViaxFhNK/1nmvmdcN8TikOrBs7aECxfpcy0rMW
+	 g019luDcrB3xqlxPr4EJ/aMP5xiJilRv7yxnyXLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight.linux@gmail.com>,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Hongling Zeng <zenghongling@kylinos.cn>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
 	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0565/1611] 9p: avoid returning ERR_PTR(0) from mkdir operations
-Date: Tue, 21 Jul 2026 17:11:21 +0200
-Message-ID: <20260721152528.089571690@linuxfoundation.org>
+Subject: [PATCH 6.18 0566/1611] net/9p: fix race condition on rdma->state in trans_rdma.c
+Date: Tue, 21 Jul 2026 17:11:22 +0200
+Message-ID: <20260721152528.110762155@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,97 +56,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit 314b58c01a9047567fd19446ca5fd46c473b89ff ]
+[ Upstream commit 7d54894a1ee265a72d70f7cae1da6cc774cccc71 ]
 
-When mkdir succeeds, v9fs_vfs_mkdir_dotl() and v9fs_vfs_mkdir() return
-ERR_PTR(0) which is incorrect. They should return NULL instead for
-success and ERR_PTR() only with negative error codes for failure.
+The rdma->state field is modified without holding req_lock in both
+recv_done() and p9_cm_event_handler(), while rdma_request() accesses
+the same field under the req_lock spinlock. This inconsistent locking
+creates a race condition:
 
-Return NULL instead of passing to ERR_PTR while err is zero
-Fixes smatch warnings:
-  fs/9p/vfs_inode_dotl.c:420 v9fs_vfs_mkdir_dotl() warn: passing zero to 'ERR_PTR'
-  fs/9p/vfs_inode.c:695 v9fs_vfs_mkdir() warn: passing zero to 'ERR_PTR'
+- recv_done() running in softirq completion context sets
+  rdma->state = P9_RDMA_FLUSHING without acquiring req_lock
 
-The v9fs_vfs_mkdir() code was further simplified because v9fs_create()
-can never return NULL, so we do not need to check for fid being set
-separately, and the error path can be a simple return immediately after
-v9fs_create() failure.
-There is no intended functional change.
+- p9_cm_event_handler() modifies rdma->state at multiple points
+  (ADDR_RESOLVED, ROUTE_RESOLVED, ESTABLISHED, CLOSED) without
+  req_lock
 
-Fixes: 88d5baf69082 ("Change inode_operations.mkdir to return struct dentry *")
-Suggested-by: David Laight <david.laight.linux@gmail.com>
-Acked-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Message-ID: <20260520022650.14217-1-zenghongling@kylinos.cn>
+- rdma_request() uses spin_lock_irqsave(&rdma->req_lock, flags) to
+  protect the read-modify-write of rdma->state
+
+The race can cause lost state transitions: recv_done() or the CM
+event handler could set state to FLUSHING/CLOSED while rdma_request()
+is concurrently checking or modifying state under the lock, leading to
+the FLUSHING transition being silently overwritten by CLOSING. This
+corrupts the connection state machine and can cause use-after-free on
+RDMA request objects during teardown.
+
+Fix by adding req_lock protection to all rdma->state modifications in
+recv_done() and p9_cm_event_handler(), matching the pattern already
+used in rdma_request(). Use spin_lock_irqsave/spin_unlock_irqrestore
+in the CM event handler since it can race with recv_done() which runs
+in softirq context.
+
+Tested with a kernel module that races two threads (simulating
+rdma_request and recv_done/CM handler) on rdma->state with proper
+locking: 5.5M+ FLUSHING writes over 27M iterations with 0 lost
+transitions.
+
+Fixes: 473c7dd1d7b5 ("9p/rdma: remove useless check in cm_event_handler")
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: GLM:GLM-5.1
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Message-ID: <20260529073933.77315-1-zhaoyz24@mails.tsinghua.edu.cn>
 Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_inode.c      | 19 ++++++-------------
- fs/9p/vfs_inode_dotl.c |  4 ++--
- 2 files changed, 8 insertions(+), 15 deletions(-)
+ net/9p/trans_rdma.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
-index 0f3189a0a516af..e2225bfa55035b 100644
---- a/fs/9p/vfs_inode.c
-+++ b/fs/9p/vfs_inode.c
-@@ -672,27 +672,20 @@ v9fs_vfs_create(struct mnt_idmap *idmap, struct inode *dir,
- static struct dentry *v9fs_vfs_mkdir(struct mnt_idmap *idmap, struct inode *dir,
- 				     struct dentry *dentry, umode_t mode)
+diff --git a/net/9p/trans_rdma.c b/net/9p/trans_rdma.c
+index b84748baf9cbe3..d9f53f1da2c21a 100644
+--- a/net/9p/trans_rdma.c
++++ b/net/9p/trans_rdma.c
+@@ -240,25 +240,36 @@ p9_cm_event_handler(struct rdma_cm_id *id, struct rdma_cm_event *event)
  {
--	int err;
- 	u32 perm;
- 	struct p9_fid *fid;
- 	struct v9fs_session_info *v9ses;
+ 	struct p9_client *c = id->context;
+ 	struct p9_trans_rdma *rdma = c->trans;
++	unsigned long flags;
++
+ 	switch (event->event) {
+ 	case RDMA_CM_EVENT_ADDR_RESOLVED:
++		spin_lock_irqsave(&rdma->req_lock, flags);
+ 		BUG_ON(rdma->state != P9_RDMA_INIT);
+ 		rdma->state = P9_RDMA_ADDR_RESOLVED;
++		spin_unlock_irqrestore(&rdma->req_lock, flags);
+ 		break;
  
- 	p9_debug(P9_DEBUG_VFS, "name %pd\n", dentry);
--	err = 0;
- 	v9ses = v9fs_inode2v9ses(dir);
- 	perm = unixmode2p9mode(v9ses, mode | S_IFDIR);
- 	fid = v9fs_create(v9ses, dir, dentry, NULL, perm, P9_OREAD);
--	if (IS_ERR(fid)) {
--		err = PTR_ERR(fid);
--		fid = NULL;
--	} else {
--		inc_nlink(dir);
--		v9fs_invalidate_inode_attr(dir);
--	}
--
--	if (fid)
--		p9_fid_put(fid);
--	return ERR_PTR(err);
-+	if (IS_ERR(fid))
-+		return ERR_CAST(fid);
-+	inc_nlink(dir);
-+	v9fs_invalidate_inode_attr(dir);
-+	p9_fid_put(fid);
-+	return NULL;
+ 	case RDMA_CM_EVENT_ROUTE_RESOLVED:
++		spin_lock_irqsave(&rdma->req_lock, flags);
+ 		BUG_ON(rdma->state != P9_RDMA_ADDR_RESOLVED);
+ 		rdma->state = P9_RDMA_ROUTE_RESOLVED;
++		spin_unlock_irqrestore(&rdma->req_lock, flags);
+ 		break;
+ 
+ 	case RDMA_CM_EVENT_ESTABLISHED:
++		spin_lock_irqsave(&rdma->req_lock, flags);
+ 		BUG_ON(rdma->state != P9_RDMA_ROUTE_RESOLVED);
+ 		rdma->state = P9_RDMA_CONNECTED;
++		spin_unlock_irqrestore(&rdma->req_lock, flags);
+ 		break;
+ 
+ 	case RDMA_CM_EVENT_DISCONNECTED:
+-		if (rdma)
++		if (rdma) {
++			spin_lock_irqsave(&rdma->req_lock, flags);
+ 			rdma->state = P9_RDMA_CLOSED;
++			spin_unlock_irqrestore(&rdma->req_lock, flags);
++		}
+ 		c->status = Disconnected;
+ 		break;
+ 
+@@ -296,6 +307,7 @@ recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 	struct p9_req_t *req;
+ 	int err = 0;
+ 	int16_t tag;
++	unsigned long flags;
+ 
+ 	req = NULL;
+ 	ib_dma_unmap_single(rdma->cm_id->device, c->busa, client->msize,
+@@ -332,7 +344,10 @@ recv_done(struct ib_cq *cq, struct ib_wc *wc)
+  err_out:
+ 	p9_debug(P9_DEBUG_ERROR, "req %p err %d status %d\n",
+ 			req, err, wc->status);
+-	rdma->state = P9_RDMA_FLUSHING;
++	spin_lock_irqsave(&rdma->req_lock, flags);
++	if (rdma->state < P9_RDMA_FLUSHING)
++		rdma->state = P9_RDMA_FLUSHING;
++	spin_unlock_irqrestore(&rdma->req_lock, flags);
+ 	client->status = Disconnected;
+ 	goto out;
  }
- 
- /**
-diff --git a/fs/9p/vfs_inode_dotl.c b/fs/9p/vfs_inode_dotl.c
-index 6312b3590f7438..cbc72a17b01a87 100644
---- a/fs/9p/vfs_inode_dotl.c
-+++ b/fs/9p/vfs_inode_dotl.c
-@@ -349,7 +349,7 @@ static struct dentry *v9fs_vfs_mkdir_dotl(struct mnt_idmap *idmap,
- 					  struct inode *dir, struct dentry *dentry,
- 					  umode_t omode)
- {
--	int err;
-+	int err = 0;
- 	struct v9fs_session_info *v9ses;
- 	struct p9_fid *fid = NULL, *dfid = NULL;
- 	kgid_t gid;
-@@ -412,7 +412,7 @@ static struct dentry *v9fs_vfs_mkdir_dotl(struct mnt_idmap *idmap,
- 	p9_fid_put(fid);
- 	v9fs_put_acl(dacl, pacl);
- 	p9_fid_put(dfid);
--	return ERR_PTR(err);
-+	return err ? ERR_PTR(err) : NULL;
- }
- 
- static int
 -- 
 2.53.0
 
