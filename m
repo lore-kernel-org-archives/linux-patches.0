@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973E633A9FC;
-	Tue, 21 Jul 2026 20:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA379346A0C;
+	Tue, 21 Jul 2026 20:41:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666497; cv=none; b=TZhYarbHn41+lA0/PkRtKMFPj2sDOuz8hDiFjM9AZOUc1g7KDSFn2mj26BCIE5qNF6ix1r2iHsyxVd/HJfG293P657nlKofijXmP+oo9lKgK/swM4jx4eL+XiDzCz4W+fmGzruEx0zpCuKCEDw477wsdEkeAwdUR2RWzJHG+kks=
+	t=1784666499; cv=none; b=TUZJz6SwfAjsPsmFPlYGsVHO1iDYoTvX6t8nj4XBHbeAB74cHFlcModmBYS0kev+AVMdUpujwCqaF28EUM74oNAwzZoriv9Td+kXPiyJ7Of8oZDEwyQfKHVrQYMzaOV1ytumVdOMhAtitquWnk8QtZyYe3hjZpBCVyvzKBDWYos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666497; c=relaxed/simple;
-	bh=/j/+xkQVhnzCUGNxookD9BAlIKE24Sh4m55Bmc4/HMQ=;
+	s=arc-20240116; t=1784666499; c=relaxed/simple;
+	bh=rUS45huvkBVDAdIGler0dYsvbH455wLXribhCTWt6XQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXGZZCurgZmasopWEIoCGqFmzkOvlxauZdVrRRFftlldyozWWFfEYyki8WOl9IPuwUsVpZ/tY8/H3nCA5ehNG0/H6Ko/R3mNiTAjRttIp+t38gPwq2023Ed/o9ihWJSQAsFgiRpP6H3bjRjKwwT7V2zZT66FfjjioVnQSBGXNs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J1IqoozM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ecwtV2p21eCzJm49cJ4L11KjwaxwPEop63d78LcMa6Lb/dNYKuEqcqiBV/ez4nj8n3cZiiX0693CACsINzcgmTF6CQnqf5CKzypUyzLxWM4MJfHbOdWbUfwuHfEKsH1wZ9jdrJi0o0+pUpgBOboIxCB4xhDLtLoySQXDKYvNQyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z46CI5Ub; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J1IqoozM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90EE1F000E9;
-	Tue, 21 Jul 2026 20:41:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z46CI5Ub"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C9751F000E9;
+	Tue, 21 Jul 2026 20:41:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666496;
-	bh=TygbO+e3paBPfeXNfK9/XbEMtTOlqQcLN4hEmNzrvt0=;
+	s=korg; t=1784666498;
+	bh=gzwum7MfHWF06vbruj2WdViYbppoAa3+9EMJACRdFQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J1IqoozMkW3vScvoJxs9ZAKiS4hIC9Hjox0nj3OXhBK0bXBLZwh+JcAnMNTEBYdtu
-	 Wz4wWE24xxOyxnL/yr58UI5KLoIS5hoHL7fhEUZr6Nc6X9f2TPUI1AnwSbYCbnyYVd
-	 r/tROgLo5MtAtI29NiRA4qk4YBcDqRKywQW5kzDI=
+	b=z46CI5UbdCp/XROOFhhfI8W5xfT+2ZGkFm3TAF4n+tMk5C4ZrvtKLS24xGhvKRIXy
+	 tEpaTTeWlybJLiBllJTkum7m5UE9pjDVZDPlx0C7SwuFBGQYoS+nCOh8Zz8F0gtf+5
+	 +e5tYNdXG0Fs6jyslkdow3aCCzprnEDWoUETwh6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Larsson <andreas@gaisler.com>,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0706/1266] sparc: led: avoid trimming a newline from empty writes
-Date: Tue, 21 Jul 2026 17:19:03 +0200
-Message-ID: <20260721152457.661081742@linuxfoundation.org>
+Subject: [PATCH 6.6 0707/1266] perf symbols: Break infinite loop on zero-filled notes in sysfs__read_build_id()
+Date: Tue, 21 Jul 2026 17:19:04 +0200
+Message-ID: <20260721152457.683244986@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -45,48 +46,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 7eb475e8a738ee6fd1260aa59ddccb610fdd4300 ]
+[ Upstream commit 063c647b24f640657d6d9e2e90d620ea3ee19ae6 ]
 
-led_proc_write() duplicates up to LED_MAX_LENGTH bytes with
-memdup_user_nul() and then unconditionally inspects buf[count - 1] to
-strip a trailing newline. A zero-length write therefore reads one byte
-before the duplicated buffer.
+sysfs__read_build_id() iterates ELF note headers from sysfs files in a
+while(1) loop.  If the file contains a zero-filled note header (both
+n_namesz and n_descsz are 0), the code computes n = namesz + descsz = 0
+and calls read(fd, bf, 0).  read() with count 0 returns 0, which
+matches the expected (ssize_t)n value, so the error check passes and
+the loop repeats — reading the same zero bytes and spinning forever.
 
-The previous version rejected empty writes, but empty input already falls
-through to the existing default case and turns the LED off like any other
-unrecognized string. Preserve that behavior and only skip the newline
-trim when there is no input byte to inspect.
+This can happen with corrupted or zero-padded sysfs pseudo-files.
 
-Fixes: ee1858d3122d ("[SPARC]: Add sun4m LED driver.")
-Suggested-by: Andreas Larsson <andreas@gaisler.com>
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+Add a check for n == 0 before the read, since no valid ELF note has
+both name and description of zero length.
+
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Fixes: f1617b40596cb341 ("perf symbols: Record the build_ids of kernel modules too")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sparc/kernel/led.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/symbol-elf.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/sparc/kernel/led.c b/arch/sparc/kernel/led.c
-index ab657b359789ea..36d851c7454ac6 100644
---- a/arch/sparc/kernel/led.c
-+++ b/arch/sparc/kernel/led.c
-@@ -78,7 +78,7 @@ static ssize_t led_proc_write(struct file *file, const char __user *buffer,
- 		return PTR_ERR(buf);
- 
- 	/* work around \n when echo'ing into proc */
--	if (buf[count - 1] == '\n')
-+	if (count > 0 && buf[count - 1] == '\n')
- 		buf[count - 1] = '\0';
- 
- 	/* before we change anything we want to stop any running timers,
+diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
+index 96bb84a8c5c2ed..1729efd11ac5cf 100644
+--- a/tools/perf/util/symbol-elf.c
++++ b/tools/perf/util/symbol-elf.c
+@@ -1091,6 +1091,9 @@ int sysfs__read_build_id(const char *filename, struct build_id *bid)
+ 			} else {
+ 				n = namesz + descsz;
+ 			}
++			/* no valid note has both namesz and descsz zero */
++			if (n == 0)
++				break;
+ 			if (read(fd, bf, n) != (ssize_t)n)
+ 				break;
+ 		}
 -- 
 2.53.0
 
