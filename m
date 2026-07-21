@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D314302F8;
-	Tue, 21 Jul 2026 19:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A934302F8;
+	Tue, 21 Jul 2026 19:35:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662516; cv=none; b=eVI6z1g2pv/yk0qZYAYMvhUsDQJZmqYc7ueO7DHimnZBSJ3hIitNm2QdbLtV/Qhd2cX7Xm6H8j8KNnRFQKl7G8A04dF7JizufckqV7jiec7aDs8vJnaVqKn0jQCpXwVdPRt6r75TN3HnJkg9W0uv52sV9oM9b2dYAJUEqVpOHgI=
+	t=1784662518; cv=none; b=PVmcxTZJ+Dk9ZH1a0HZNZck5LtV08Z5z9gx7EEvrFUKNtLG3gOCdKI9t8g8OgjcJeZYN/lTWAEHyWglgek+lWJv0P9IxaHWZaCS9x/Tm6Jd4YdjHIvvm5bnyTDQmWA/vMH1sVw26Rd4LIDsp8a09yoJesIZArqga6hiOpG+xzY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662516; c=relaxed/simple;
-	bh=LkglLgHU16FtIP2bw9RrtgzGy7NZC4zydLbJ5hGjxR4=;
+	s=arc-20240116; t=1784662518; c=relaxed/simple;
+	bh=aizgJQxU+NILWO2/o1QXiQ5sJOug+qwdqIDpGXwsawY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bNg9y6Lcit9zodpx/UKmF9Ev79UXItGy3UGWaiMgMqfEii2GWHG066W/34g9Dj+9FUme8Cz07aGJhBfxZBpRXhogB6KULkHUiqI+7rka7DicKjzHWMXEgo4BPQbLhWbmbAc0aoW37CllOWKC+6dyCCt0iur2ntgZa35rQGxti9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2sueTght; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eWMgFlrMMLypIq3zXH9Cfoz5LgK2J1yxtHxpgDy8kS0GLBxCvSvJ8MV36+MxLbgR9LcoqY083XgP0qpVFDxSgte2pZdMQR8L86HgRIMVHQ3he7bLlmqQ/R2fn/mDlh8MnCTK3d2APCLVjcdUn9iklsZta465CK2qX0kGe8wOq4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+wWOOjP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2sueTght"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7859A1F000E9;
-	Tue, 21 Jul 2026 19:35:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+wWOOjP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218C31F00A3D;
+	Tue, 21 Jul 2026 19:35:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662515;
-	bh=qu9gY+7+kMy6HGQVxvY75UNsqkRiw1UbYzrFu9sswJQ=;
+	s=korg; t=1784662517;
+	bh=hqHu2z92Nsux7c6FrmM7TjCqZ+H8508evSJkkC8br00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2sueTghtvs2ANq5GRCsHWs+v4yoA/CClhIJGXrzt3Chd7UVgODMkagTQenuGJLBsR
-	 0QX+HlO1hE+An07gRab0HwjTFHWCzD259dSzG8N/taqcyeS3eDptS8QIPGl2vNPTbK
-	 b68hwSTo4BGRbrfQJ/4wHNppblmFK7T6jc9tPeLA=
+	b=f+wWOOjPjscFt9PJjwInQ/lPOql/HXVEILTSTBI/pRcgx47c4wob3ONBRQpFTia8n
+	 QJXd0kaw7jyt7L0mvKqYUipXDUNZNIKMdxXehIigPNbDL7ux9DDUYrKBP0WwalQkXf
+	 x22jGE1WSGffax34LPqNNLJJay4y8NidnXs4E7f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
+	Stanislav Fomichev <stfomichev@yandex-team.ru>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0475/1276] perf c2c: Fix use-after-free in he__get_c2c_hists() error path
-Date: Tue, 21 Jul 2026 17:15:18 +0200
-Message-ID: <20260721152456.733616878@linuxfoundation.org>
+Subject: [PATCH 6.12 0476/1276] perf timechart: Fix cpu2y() OOB read on untrusted CPU index
+Date: Tue, 21 Jul 2026 17:15:19 +0200
+Message-ID: <20260721152456.755182446@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -54,39 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 5e5e6196d737c5be03d20647428316b36621608d ]
+[ Upstream commit e2496db45bfd8dfb6154ec415798fee330f1cc0a ]
 
-he__get_c2c_hists() assigns c2c_he->hists before calling
-c2c_hists__init().  If init fails, the error path calls free(hists)
-but leaves c2c_he->hists pointing to freed memory.  On teardown,
-c2c_he_free() finds the non-NULL pointer and calls
-hists__delete_entries() on it, causing a use-after-free.
+cpu2y() indexes topology_map[cpu] without bounds checking.  The array
+is allocated with nr_cpus entries (from env->nr_cpus_online), but
+callers pass sample CPU values from perf.data which can exceed that
+size with cross-machine recordings.
 
-Set c2c_he->hists to NULL before freeing so teardown skips the
-already-freed allocation.
+Track the topology_map allocation size and bounds-check the CPU
+argument in cpu2y() before indexing.  Out-of-bounds CPUs fall back
+to the identity mapping (cpu2slot(cpu)), which is the same behavior
+as when no topology is available.
 
-Fixes: b2252ae67b687d2b ("perf c2c report: Decode c2c_stats for hist entries")
+Fixes: c507999790438cde ("perf timechart: Add support for topology")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Stanislav Fomichev <stfomichev@yandex-team.ru>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-c2c.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/util/svghelper.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/builtin-c2c.c b/tools/perf/builtin-c2c.c
-index 9b1482786d81cd..b02b41059730f9 100644
---- a/tools/perf/builtin-c2c.c
-+++ b/tools/perf/builtin-c2c.c
-@@ -216,6 +216,7 @@ he__get_c2c_hists(struct hist_entry *he,
+diff --git a/tools/perf/util/svghelper.c b/tools/perf/util/svghelper.c
+index 2b04f47f4db0f0..d553a40f2c6add 100644
+--- a/tools/perf/util/svghelper.c
++++ b/tools/perf/util/svghelper.c
+@@ -46,13 +46,13 @@ static double cpu2slot(int cpu)
+ }
  
- 	ret = c2c_hists__init(hists, sort, nr_header_lines);
- 	if (ret) {
-+		c2c_he->hists = NULL;
- 		free(hists);
- 		return NULL;
+ static int *topology_map;
++static int topology_map_size;
+ 
+ static double cpu2y(int cpu)
+ {
+-	if (topology_map)
++	if (topology_map && cpu >= 0 && cpu < topology_map_size)
+ 		return cpu2slot(topology_map[cpu]) * SLOT_MULT;
+-	else
+-		return cpu2slot(cpu) * SLOT_MULT;
++	return cpu2slot(cpu) * SLOT_MULT;
+ }
+ 
+ static double time2pixels(u64 __time)
+@@ -734,7 +734,8 @@ static int str_to_bitmap(char *s, cpumask_t *b, int nr_cpus)
+ 		return -1;
+ 
+ 	perf_cpu_map__for_each_cpu(cpu, idx, map) {
+-		if (cpu.cpu >= nr_cpus) {
++		/* perf_cpu_map__new("") returns cpu.cpu == -1 */
++		if (cpu.cpu < 0 || cpu.cpu >= nr_cpus) {
+ 			ret = -1;
+ 			break;
+ 		}
+@@ -792,6 +793,7 @@ int svg_build_topology_map(struct perf_env *env)
+ 		fprintf(stderr, "topology: no memory\n");
+ 		goto exit;
  	}
++	topology_map_size = nr_cpus;
+ 
+ 	for (i = 0; i < nr_cpus; i++)
+ 		topology_map[i] = -1;
 -- 
 2.53.0
 
