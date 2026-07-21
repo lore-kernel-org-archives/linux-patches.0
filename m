@@ -1,38 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999BF402453;
-	Tue, 21 Jul 2026 17:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECDA40315F;
+	Tue, 21 Jul 2026 17:19:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654342; cv=none; b=m2BYHhxownBywYB5v7Wbs3ts6awyXDLVNE4XBfjOPPIsgMyTHNGGdzsmh4Ncu357ovMcWv0ClBYkIeNRrHahkaxKl6Y5ntqdQn/F/lwwymqvxhQV5eJJtAUCCEhORiAocRugUq2KrY3u6D09ynbYVIYKii5qUTiNAN8mxhvDH9E=
+	t=1784654345; cv=none; b=mzEAJEKwhJdtdsyKRUZzqT5I6k1SGJMHcH+/og5FqdkuhXJQrEOT+Cni+wNg3hvdADBLIdqjqAMGJ+QH/yax+5VUkELWfT6IBmi+mLcAre7xPO9CDSQFf5DcLPpRHTMD79yeADAijPnNvuDNEyf7CZuiPLYR9nMYN+bnp4GcaVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654342; c=relaxed/simple;
-	bh=m4THy4cDQWWJ22FQPirdBvCmNkJ11PTJ2BUDhYM0L8k=;
+	s=arc-20240116; t=1784654345; c=relaxed/simple;
+	bh=ZidBhrI814+9ahJathURXh4B3P6o/gBCERg9x88xC3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tqY7wFezySPgMR9YXEYdp8JiQ8zrqO91y4Heh1WTQtaIayfknTum5rW1y88eWNmbB5p1midHkENBO2pwMRws5IPzherMVLjxO7DyGGj6zHQvJO//IqamOl7jSghymeK+kdPzJcTh6cPQWqvHeMfu8oPeiAb4MZzsO2y2EvHngbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3oMvc9t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VzCLsIN6Utsn+68TQf4kQe35rxEmUEP0pBtuH6CtvGSNzjb+yOEbf2Wuqsf+hmcYddXFMLjUEogC0lmRAcFuMN0IOOcTQlknl69EvA1ss6IY/zRH3tdV5Wul9YkeHJt/skO5CJnwgiTblWaLLMZNAXA2/OFTO+Z+77uA6efhWqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6nfyQ/c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3oMvc9t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 068631F00AC4;
-	Tue, 21 Jul 2026 17:18:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6nfyQ/c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0D11F00A3E;
+	Tue, 21 Jul 2026 17:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654338;
-	bh=mgbgvLZ4NPIVLFIvgjSDgdqNuM/oidhX1J01B8iOYRQ=;
+	s=korg; t=1784654341;
+	bh=gas2Q6wwtxXMLqDD+VNh+kch3MG8YR5PFpAkM1AXMks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R3oMvc9tp8U/F1g7BgGScyXsD6lp/HyWAxRTE3KwL0Tub/jxvuUAjihEHmCLn5el+
-	 Csg173zoZ6jablD5HhZrfe2KQNEnyrY1076VvbGaTPSm6GVH9pLQxdz4R4gu5bcghP
-	 P9PiOTji4KumtoQE2V+EXyaBdj4x9P3H5PyZgAJ8=
+	b=d6nfyQ/cLTUU8Lvbj2LFpZNFF6RmDAd9J/hnyPAZMTLSG8jqGKCWd7Myu6/Ru854u
+	 0ktaGHHQkabUs5/obwoO1iMN+e8L4JsNuILhMzqyz14si7Or1gewEP0CUAkMmUKI1l
+	 pJ7G2h4YAuENrgCphCk/uLSv3WkYONtwB1VwxBUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 7.1 1660/2077] pinctrl: renesas: rzg2l: Use -ENOTSUPP instead of -EOPNOTSUPP
-Date: Tue, 21 Jul 2026 17:22:13 +0200
-Message-ID: <20260721152631.899314967@linuxfoundation.org>
+	Muchun Song <songmuchun@bytedance.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Michal Hocko <mhocko@suse.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.1 1669/2077] mm/sparse-vmemmap: fix vmemmap accounting underflow
+Date: Tue, 21 Jul 2026 17:22:22 +0200
+Message-ID: <20260721152632.109693569@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,74 +63,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Muchun Song <songmuchun@bytedance.com>
 
-commit c1492da3939c89372929e062d731f328f7693f1e upstream.
+commit c373f7f98e6ad591c85d40548cf8b6443be69311 upstream.
 
-The pinctrl and GPIO core code make exceptions for the -ENOTSUPP error
-code.  One such example is gpio_set_config_with_argument_optional(),
-which returns success when gpio_set_config_with_argument() returns
--ENOTSUPP, but reports failure for all other error codes.
+Patch series "mm: Fix vmemmap optimization accounting and initialization",
+v8.
 
-Returning -EOPNOTSUPP from the pinctrl driver on the unsupported pinctrl
-operation may lead to boot failures when pinctrl drivers implements
-struct gpio_chip::set_config, the system uses GPIO hogs, and the
-struct gpio_chip::set_config implementation returns -EOPNOTSUPP for the
-unsupported operations.
+The series fixes several bugs in vmemmap optimization, mainly around
+incorrect page accounting and memmap initialization in DAX and memory
+hotplug paths.  It also fixes pageblock migratetype initialization and
+struct page initialization for ZONE_DEVICE compound pages.
 
-Return -ENOTSUPP for the unsupported pinctrl operation.
+Patches 1-4 fix vmemmap accounting issues.  Patch 1 fixes an accounting
+underflow in the section activation failure path by moving vmemmap page
+accounting into the lower-level allocation and freeing helpers.  Patch 2
+fixes incorrect altmap passing in the memory hotplug error path.  Patch 3
+passes pgmap through memory deactivation paths so the teardown side can
+determine whether vmemmap optimization was in effect.  Patch 4 uses that
+information to account the optimized DAX vmemmap size correctly.
 
-Fixes: 560c633d378a ("pinctrl: renesas: rzg2l: Drop oen_read and oen_write callbacks")
-Fixes: c4c4637eb57f ("pinctrl: renesas: Add RZ/G2L pin and gpio controller driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260515124008.2947838-2-claudiu.beznea@kernel.org
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Patches 5-6 fix initialization issues in mm/mm_init.  One makes sure all
+pageblocks in ZONE_DEVICE compound pages get their migratetype
+initialized.  The other fixes a case where DAX memory hotplug reuses an
+unoptimized early-section memmap while compound_nr_pages() still assumes
+vmemmap optimization, leaving tail struct pages uninitialized.
+
+
+This patch (of 6):
+
+In section_activate(), if populate_section_memmap() fails, the error
+handling path calls section_deactivate() to roll back the state.  This
+causes a vmemmap accounting imbalance.
+
+Since commit c3576889d87b ("mm: fix accounting of memmap pages"), memmap
+pages are accounted for only after populate_section_memmap() succeeds.
+However, the failure path unconditionally calls section_deactivate(),
+which decreases the vmemmap count.  Consequently, a failure in
+populate_section_memmap() leads to an accounting underflow, incorrectly
+reducing the system's tracked vmemmap usage.
+
+Fix this more thoroughly by moving all accounting calls into the lower
+level functions that actually perform the vmemmap allocation and freeing:
+
+  - populate_section_memmap() accounts for newly allocated vmemmap pages -
+depopulate_section_memmap() unaccounts when vmemmap is freed
+
+This ensures proper accounting in all code paths, including error handling
+and early section cases.
+
+Link: https://lore.kernel.org/20260428081855.1249045-1-songmuchun@bytedance.com
+Link: https://lore.kernel.org/20260428081855.1249045-2-songmuchun@bytedance.com
+Fixes: c3576889d87b ("mm: fix accounting of memmap pages")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Liam R. Howlett <liam@infradead.org>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzg2l.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ mm/sparse-vmemmap.c |   20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
---- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-@@ -1103,7 +1103,7 @@ static int rzg2l_read_oen(struct rzg2l_p
- 	int bit;
+--- a/mm/sparse-vmemmap.c
++++ b/mm/sparse-vmemmap.c
+@@ -656,7 +656,12 @@ static struct page * __meminit populate_
+ 		unsigned long nr_pages, int nid, struct vmem_altmap *altmap,
+ 		struct dev_pagemap *pgmap)
+ {
+-	return __populate_section_memmap(pfn, nr_pages, nid, altmap, pgmap);
++	struct page *page = __populate_section_memmap(pfn, nr_pages, nid, altmap,
++						      pgmap);
++
++	memmap_pages_add(DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE));
++
++	return page;
+ }
  
- 	if (!pctrl->data->pin_to_oen_bit)
--		return -EOPNOTSUPP;
-+		return -ENOTSUPP;
+ static void depopulate_section_memmap(unsigned long pfn, unsigned long nr_pages,
+@@ -665,13 +670,17 @@ static void depopulate_section_memmap(un
+ 	unsigned long start = (unsigned long) pfn_to_page(pfn);
+ 	unsigned long end = start + nr_pages * sizeof(struct page);
  
- 	bit = pctrl->data->pin_to_oen_bit(pctrl, _pin);
- 	if (bit < 0)
-@@ -1145,7 +1145,7 @@ static int rzg2l_write_oen(struct rzg2l_
- 	u8 val;
++	memmap_pages_add(-1L * (DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE)));
+ 	vmemmap_free(start, end, altmap);
+ }
++
+ static void free_map_bootmem(struct page *memmap)
+ {
+ 	unsigned long start = (unsigned long)memmap;
+ 	unsigned long end = (unsigned long)(memmap + PAGES_PER_SECTION);
  
- 	if (!pctrl->data->pin_to_oen_bit)
--		return -EOPNOTSUPP;
-+		return -ENOTSUPP;
++	memmap_boot_pages_add(-1L * (DIV_ROUND_UP(PAGES_PER_SECTION * sizeof(struct page),
++						  PAGE_SIZE)));
+ 	vmemmap_free(start, end, NULL);
+ }
  
- 	bit = pctrl->data->pin_to_oen_bit(pctrl, _pin);
- 	if (bit < 0)
-@@ -1576,7 +1576,7 @@ static int rzg2l_pinctrl_pinconf_set(str
- 			break;
+@@ -774,14 +783,10 @@ static void section_deactivate(unsigned
+ 	 * The memmap of early sections is always fully populated. See
+ 	 * section_activate() and pfn_valid() .
+ 	 */
+-	if (!section_is_early) {
+-		memmap_pages_add(-1L * (DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE)));
++	if (!section_is_early)
+ 		depopulate_section_memmap(pfn, nr_pages, altmap);
+-	} else if (memmap) {
+-		memmap_boot_pages_add(-1L * (DIV_ROUND_UP(nr_pages * sizeof(struct page),
+-							  PAGE_SIZE)));
++	else if (memmap)
+ 		free_map_bootmem(memmap);
+-	}
  
- 		default:
--			return -EOPNOTSUPP;
-+			return -ENOTSUPP;
- 		}
+ 	if (empty)
+ 		ms->section_mem_map = (unsigned long)NULL;
+@@ -826,7 +831,6 @@ static struct page * __meminit section_a
+ 		section_deactivate(pfn, nr_pages, altmap);
+ 		return ERR_PTR(-ENOMEM);
  	}
+-	memmap_pages_add(DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE));
  
-@@ -1658,7 +1658,7 @@ static int rzg2l_pinctrl_pinconf_group_g
- 
- 		/* Check config matching between to pin  */
- 		if (i && prev_config != *config)
--			return -EOPNOTSUPP;
-+			return -ENOTSUPP;
- 
- 		prev_config = *config;
- 	}
+ 	return memmap;
+ }
 
 
