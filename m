@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74BBC43E4AC;
-	Tue, 21 Jul 2026 21:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D63143D4EE;
+	Tue, 21 Jul 2026 21:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671136; cv=none; b=fLjnVYEmufjO8VtlTKCPjL1eqsOcteOZo6oumf+xhFPilK2+jQhiFDsAS9G6dwqehSDVyIPDc9fFOoNPd9H2/RIzSvOr6ggDezTRzaneBprtR4dbd1AvI+S7IMtXK97hMyKNmnJj03y4NncGZxvyzrNzFr2I2ZZotvqRMbjf6gg=
+	t=1784671139; cv=none; b=JNHVBe8g+fsW6hCXYwRJmE9S3wgsWXxq/4YgvtjwTuYf0erM6qghPz+WgiS0vUQEN/I2OZSvkr96xRarhcedqgNmA2LcqXPw8Noq2yjdioX31tbKGIVVexbtFusanrdHG1/+0IrO+RCD4zXxk7o7UCAawDNdzXYyCCyMuZGY3aE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671136; c=relaxed/simple;
-	bh=xai8/H/31jwKqYFsgdo41nlvxcLkis4sPYn8hnYd2k8=;
+	s=arc-20240116; t=1784671139; c=relaxed/simple;
+	bh=4HGvdIvhydCI+OFz5NJZcn0UQcdwTvGqkC86TVEpYO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q3pMneOFfgee0C7TzUKC9KsUlG5hyG94qMQxNZ/j27hQs4R3laRvjG0y15FNmGb6K6tdRGvv6h5aXDUDD0HFwUhtqZYX6H/cSfJgrRabLOhBHwYUPmCZINVRlGV0QXnzFC5ulqZFfxuIqrbDtQJDF+Oh2b2feqxwkjCb8448ye0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11wnVpvU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VsV4y5+D9cJDAONBH6R+xRcrwYIH8c80UBWbGP48+IWmUbKATlhNSU5r1P9ZXDeG5CoRLoZPUtxF9LO1XQThIB9kgrIep4YD1UjLKQiFIvoKL/84hWa3Hny1xabuF9tM4V2pv+k2frdpKjfB99VPWQ6+Mjovrrx6o3yEx9jwbfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dPnEaVQL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11wnVpvU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8F291F000E9;
-	Tue, 21 Jul 2026 21:58:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPnEaVQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E8581F000E9;
+	Tue, 21 Jul 2026 21:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671135;
-	bh=xxplWPVWFx2+9rZyK/a215G8tf1nQTCu+el3cq9UQGc=;
+	s=korg; t=1784671138;
+	bh=Ll4BUBI5k1nvZpAzRWLHy70vGT7nCEvnB4QFkSERAJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=11wnVpvU+4IUgHLhVFNvsPmOzjk55XDf+sUL4lEbj3ayKhCbDO58lBpvk4y1zCifa
-	 A91k17luZ4YfzQ1lD3Q/A1yk/uOjsbWqDMqDq+S5h5alzkpZy0TyrBIIJB/EKhKpKU
-	 sqt9/G1iVkyKkD7Jb5eq7Tw08DXXX3iP2Gv8gDS4=
+	b=dPnEaVQLoMfUEdalLMk/4rfIicTnjcbuZDqY1PpRjh8vDDcwgkuo6pK0fzyRAjFpe
+	 coQkKnaZXUpmMPSP1N714R9CIht4AlMIHthuREU8YxwU9nsFzJeNPtD6PsuGPmpRgm
+	 CZk/KAfUBH+3tBJ1R1PCWjkXw36xLnjycgrwkraM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rajat Jain <rajatja@google.com>,
-	Johan Hovold <johan@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.15 078/843] Bluetooth: btusb: fix wakeup source leak on probe failure
-Date: Tue, 21 Jul 2026 17:15:13 +0200
-Message-ID: <20260721152407.753390068@linuxfoundation.org>
+	Alexey Nepomnyashih <sdl@nppct.ru>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Allison Henderson <achender@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 5.15 126/843] xfs: fix unreachable BIGTIME check in dquot flush validation
+Date: Tue, 21 Jul 2026 17:16:01 +0200
+Message-ID: <20260721152408.844227206@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,78 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Alexey Nepomnyashih <sdl@nppct.ru>
 
-commit 3d93e1bb0fb881fe3ef961d1120556658e9cac4d upstream.
+commit 03866d130ed33ab68cc7faaf4bf2c4abef96d42e upstream.
 
-Make sure to disable wakeup on probe failure to avoid leaking the wakeup
-source.
+The dqp->q_id == 0 check inside the XFS_DQTYPE_BIGTIME block is
+unreachable because root dquots return successfully earlier. Reject root
+dquots with XFS_DQTYPE_BIGTIME before that early return, preserving the
+intended validation and removing the unreachable condition.
 
-Fixes: fd913ef7ce61 ("Bluetooth: btusb: Add out-of-band wakeup support")
-Cc: stable@vger.kernel.org	# 4.11
-Cc: Rajat Jain <rajatja@google.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 4ea1ff3b4968 ("xfs: widen ondisk quota expiration timestamps to handle y2038+")
+Cc: stable@vger.kernel.org # v5.10+
+Signed-off-by: Alexey Nepomnyashih <sdl@nppct.ru>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ fs/xfs/xfs_dquot.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3196,6 +3196,11 @@ static int marvell_config_oob_wake(struc
+--- a/fs/xfs/xfs_dquot.c
++++ b/fs/xfs/xfs_dquot.c
+@@ -1202,6 +1202,14 @@ xfs_qm_dqflush_check(
+ 	    type != XFS_DQTYPE_PROJ)
+ 		return __this_address;
  
- 	return 0;
- }
-+#else
-+static inline int marvell_config_oob_wake(struct hci_dev *hdev)
-+{
-+	return 0;
-+}
- #endif
- 
- static int btusb_set_bdaddr_marvell(struct hci_dev *hdev,
-@@ -3725,6 +3730,11 @@ static int btusb_config_oob_wake(struct
- 	bt_dev_info(hdev, "OOB Wake-on-BT configured at IRQ %u", irq);
- 	return 0;
- }
-+#else
-+static inline int btusb_config_oob_wake(struct hci_dev *hdev)
-+{
-+	return 0;
-+}
- #endif
- 
- static void btusb_check_needs_reset_resume(struct usb_interface *intf)
-@@ -3900,7 +3910,6 @@ static int btusb_probe(struct usb_interf
- 	hdev->notify = btusb_notify;
- 	hdev->prevent_wake = btusb_prevent_wake;
- 
--#ifdef CONFIG_PM
- 	err = btusb_config_oob_wake(hdev);
- 	if (err)
- 		goto out_free_dev;
-@@ -3909,9 +3918,9 @@ static int btusb_probe(struct usb_interf
- 	if (id->driver_info & BTUSB_MARVELL && data->oob_wake_irq) {
- 		err = marvell_config_oob_wake(hdev);
- 		if (err)
--			goto out_free_dev;
-+			goto err_disable_wakeup;
- 	}
--#endif
++	/* bigtime flag should never be set on root dquots */
++	if (dqp->q_type & XFS_DQTYPE_BIGTIME) {
++		if (!xfs_has_bigtime(dqp->q_mount))
++			return __this_address;
++		if (dqp->q_id == 0)
++			return __this_address;
++	}
 +
- 	if (id->driver_info & BTUSB_CW6622)
- 		set_bit(HCI_QUIRK_BROKEN_STORED_LINK_KEY, &hdev->quirks);
+ 	if (dqp->q_id == 0)
+ 		return NULL;
  
-@@ -4125,6 +4134,9 @@ err_release_siblings:
- 	}
- err_kill_tx_urbs:
- 	usb_kill_anchored_urbs(&data->tx_anchor);
-+err_disable_wakeup:
-+	if (data->oob_wake_irq)
-+		device_init_wakeup(&data->udev->dev, false);
- out_free_dev:
- 	if (data->reset_gpio)
- 		gpiod_put(data->reset_gpio);
+@@ -1217,14 +1225,6 @@ xfs_qm_dqflush_check(
+ 	    !dqp->q_rtb.timer)
+ 		return __this_address;
+ 
+-	/* bigtime flag should never be set on root dquots */
+-	if (dqp->q_type & XFS_DQTYPE_BIGTIME) {
+-		if (!xfs_has_bigtime(dqp->q_mount))
+-			return __this_address;
+-		if (dqp->q_id == 0)
+-			return __this_address;
+-	}
+-
+ 	return NULL;
+ }
+ 
 
 
