@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC368402B8F;
-	Tue, 21 Jul 2026 17:58:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2248546DFFF;
+	Tue, 21 Jul 2026 17:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656708; cv=none; b=bF+Z44wDIHLieo81ijEmnP2/2cESpcjfj27pNFzpIt24nFJ7X8+SvlPCGfJZG4MfUrtkabzHOWgpjKaEHYtkMqwatShyF1Y0uSwWQ8zOPdJrQEBJjI3JE2UVMuAPkDBqAV9UeR6fgGvEeuk51Y6mcJbpebezoWHAKCyan9/vtJ0=
+	t=1784656709; cv=none; b=DEqkO0gzpASL2EfbfhfZ7+s2WmY5S6/A4Lo5Lyd4b8vhECzzh/AVxJuRvzEYKxS3PRNEbJKC8b48fjSmBbAbG7WeiVNy/GiAnhOZ+9N2v8jMBqobfz8Da0WOhwHJFV+IRvUJstUvOZS0rtzTu939M+Vwky9Ndim1FAc6RG8D1Hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656708; c=relaxed/simple;
-	bh=7jw+ESf5CK8Yxcsqe6+Vrn9Z/2J2ecX3p9B4XZ6ndck=;
+	s=arc-20240116; t=1784656709; c=relaxed/simple;
+	bh=S4696BtM7shgoQcThqCSfhAd/tA29/ydi2eVtKMjkpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TZKFAVKj+qP+ALM3JBxf3gR/RBunOc7Wcxyx2Xf0nXjKON1KFZ8EcXVdvU8xrJ0UZIOX8NcW7wFGDl6W324CgvXXaYOgmkoCjl0e8JXxfpU/3GLH35Igi678HxtfiUeBAxQsTQL8DQtny2lUBpr5M92LpnwopX/DlqhLhwjrT4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bsyAlLJt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c+JIUPoINDJSS/Rz4LG3fwEfY4xbNsxzrG0l0cC9dItuVZeF6Y2lxPh/cHVisihT+XuJMv+cX1MOYflstiDsPANA9DxEDXyKjFjTubEsSbge2bJwrHzHtHlzHA0TtYqFMNS6Dz5fi/nGVTD41WKvnjzZ+49QYB+c+KibafPIiHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1h1M/m4X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bsyAlLJt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE82D1F000E9;
-	Tue, 21 Jul 2026 17:58:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1h1M/m4X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886E71F00A3A;
+	Tue, 21 Jul 2026 17:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656705;
-	bh=+eB2vae5YCLFhg68fKd9atHEzXouTOeUsXFnbduyltc=;
+	s=korg; t=1784656708;
+	bh=v/LzkLeayI7rZrou+TFyTZG9vSFQhAv1B/LtzZzBx54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bsyAlLJtrPGi1ap5p6uMBsGomNTSkdnIyfy5Kn9R5kGxke86lP46VPS2o2ymf7uJ/
-	 ajo1YVgYzj1v2I1jMJghKRQe780e6rGJftLp6UiTRtRcHrA6ZVUogo11YzT9r1Kr+w
-	 Gp6LX4YQaaX2GDkJpEbjf0CInFLGQvor95Mt4P4M=
+	b=1h1M/m4XUeqmE6HmZPZO3CksbWjhNFCLiUIQP9r6UJ3EYQMoyzU3BC7kYrzr2ABsu
+	 Ou3pJs84wtVgxCsy9Ty5a33Jk1Xxg9Gq+HPtE6ncQtwpOC8kyFtzsh3hU/lp0BHmrh
+	 gTZiTn8hi4Wq9+0oWzggUH/xCakH2CfkryhWUG5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tung Nguyen <tung.quang.nguyen@est.tech>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0488/1611] tipc: require net admin for TIPCv2 netlink mutators
-Date: Tue, 21 Jul 2026 17:10:04 +0200
-Message-ID: <20260721152526.310987029@linuxfoundation.org>
+Subject: [PATCH 6.18 0489/1611] tipc: prevent snt_unacked underflow on CONN_ACK
+Date: Tue, 21 Jul 2026 17:10:05 +0200
+Message-ID: <20260721152526.334397914@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,132 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 86b0c540e2ea397cde021eecd24145f7c16a3d4e ]
+[ Upstream commit ab3e10b44ba5411779aac7afd2477917dd77750f ]
 
-TIPCv2 registers mutating generic-netlink operations without admin
-permission flags. Generic netlink only checks CAP_NET_ADMIN when an
-operation sets GENL_ADMIN_PERM or GENL_UNS_ADMIN_PERM, so a local
-unprivileged process can currently change TIPC state through commands
-such as TIPC_NL_NET_SET, TIPC_NL_KEY_SET, TIPC_NL_KEY_FLUSH, and
-bearer enable/disable.
+tipc_sk_conn_proto_rcv() subtracts the peer-supplied connection ack count
+from the unsigned 16-bit send counter snt_unacked without checking that it
+does not exceed the number of messages actually outstanding:
 
-The legacy TIPC netlink API already checks netlink_net_capable(...,
-CAP_NET_ADMIN) for administrative commands. Give the TIPCv2 mutators
-the equivalent generic-netlink gate. Use GENL_UNS_ADMIN_PERM, which
-maps to the same namespace-aware CAP_NET_ADMIN check that
-netlink_net_capable() performs, so the behaviour matches the legacy
-path and keeps working for CAP_NET_ADMIN holders in a non-initial user
-namespace (containers).
+	tsk->snt_unacked -= msg_conn_ack(hdr);
 
-A QEMU/KASAN repro run as uid/gid 65534 with zero effective
-capabilities previously succeeded in changing the network id and node
-identity, setting and flushing key material, and enabling/disabling a
-UDP bearer. With this patch applied the same operations fail with
--EPERM.
+msg_conn_ack() is read straight from a received CONN_MANAGER/CONN_ACK
+message. If the ack count is larger than snt_unacked, the subtraction
+wraps to a near-maximum value, leaving tsk_conn_cong() permanently true
+and starving the connection of further transmits.
 
-Fixes: 0655f6a8635b ("tipc: add bearer disable/enable to new netlink api")
-Link: https://lore.kernel.org/all/20260604163102.2658553-1-dominik.czarnota@trailofbits.com/
+Validate the ACK count at the start of the CONN_ACK block and drop the
+message if it acknowledges more messages than are outstanding. A peer (or,
+for a local connection, the connected peer socket) can otherwise wedge a
+TIPC connection's send side by sending an oversized connection ack.
+
+Fixes: 10724cc7bb78 ("tipc: redesign connection-level flow control")
 Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260610124003.3831170-2-michael.bommarito@gmail.com
+Link: https://patch.msgid.link/20260610124003.3831170-3-michael.bommarito@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/netlink.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/tipc/socket.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/tipc/netlink.c b/net/tipc/netlink.c
-index 1a9a5bdaccf4fc..8336a9664703fe 100644
---- a/net/tipc/netlink.c
-+++ b/net/tipc/netlink.c
-@@ -152,11 +152,13 @@ static const struct genl_ops tipc_genl_v2_ops[] = {
- 	{
- 		.cmd	= TIPC_NL_BEARER_DISABLE,
- 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
-+		.flags	= GENL_UNS_ADMIN_PERM,
- 		.doit	= tipc_nl_bearer_disable,
- 	},
- 	{
- 		.cmd	= TIPC_NL_BEARER_ENABLE,
- 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
-+		.flags	= GENL_UNS_ADMIN_PERM,
- 		.doit	= tipc_nl_bearer_enable,
- 	},
- 	{
-@@ -168,11 +170,13 @@ static const struct genl_ops tipc_genl_v2_ops[] = {
- 	{
- 		.cmd	= TIPC_NL_BEARER_ADD,
- 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
-+		.flags	= GENL_UNS_ADMIN_PERM,
- 		.doit	= tipc_nl_bearer_add,
- 	},
- 	{
- 		.cmd	= TIPC_NL_BEARER_SET,
- 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
-+		.flags	= GENL_UNS_ADMIN_PERM,
- 		.doit	= tipc_nl_bearer_set,
- 	},
- 	{
-@@ -197,11 +201,13 @@ static const struct genl_ops tipc_genl_v2_ops[] = {
- 	{
- 		.cmd	= TIPC_NL_LINK_SET,
- 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
-+		.flags	= GENL_UNS_ADMIN_PERM,
- 		.doit	= tipc_nl_node_set_link,
- 	},
- 	{
- 		.cmd	= TIPC_NL_LINK_RESET_STATS,
- 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
-+		.flags	= GENL_UNS_ADMIN_PERM,
- 		.doit   = tipc_nl_node_reset_link_stats,
- 	},
- 	{
-@@ -213,6 +219,7 @@ static const struct genl_ops tipc_genl_v2_ops[] = {
- 	{
- 		.cmd	= TIPC_NL_MEDIA_SET,
- 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
-+		.flags	= GENL_UNS_ADMIN_PERM,
- 		.doit	= tipc_nl_media_set,
- 	},
- 	{
-@@ -228,6 +235,7 @@ static const struct genl_ops tipc_genl_v2_ops[] = {
- 	{
- 		.cmd	= TIPC_NL_NET_SET,
- 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
-+		.flags	= GENL_UNS_ADMIN_PERM,
- 		.doit	= tipc_nl_net_set,
- 	},
- 	{
-@@ -238,6 +246,7 @@ static const struct genl_ops tipc_genl_v2_ops[] = {
- 	{
- 		.cmd	= TIPC_NL_MON_SET,
- 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
-+		.flags	= GENL_UNS_ADMIN_PERM,
- 		.doit	= tipc_nl_node_set_monitor,
- 	},
- 	{
-@@ -255,6 +264,7 @@ static const struct genl_ops tipc_genl_v2_ops[] = {
- 	{
- 		.cmd	= TIPC_NL_PEER_REMOVE,
- 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
-+		.flags	= GENL_UNS_ADMIN_PERM,
- 		.doit	= tipc_nl_peer_rm,
- 	},
- #ifdef CONFIG_TIPC_MEDIA_UDP
-@@ -269,11 +279,13 @@ static const struct genl_ops tipc_genl_v2_ops[] = {
- 	{
- 		.cmd	= TIPC_NL_KEY_SET,
- 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
-+		.flags	= GENL_UNS_ADMIN_PERM,
- 		.doit	= tipc_nl_node_set_key,
- 	},
- 	{
- 		.cmd	= TIPC_NL_KEY_FLUSH,
- 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
-+		.flags	= GENL_UNS_ADMIN_PERM,
- 		.doit	= tipc_nl_node_flush_key,
- 	},
- #endif
+diff --git a/net/tipc/socket.c b/net/tipc/socket.c
+index 3d5de693a22271..edaf44b512190c 100644
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -1362,6 +1362,9 @@ static void tipc_sk_conn_proto_rcv(struct tipc_sock *tsk, struct sk_buff *skb,
+ 			__skb_queue_tail(xmitq, skb);
+ 		return;
+ 	} else if (mtyp == CONN_ACK) {
++		if (tsk->snt_unacked < msg_conn_ack(hdr))
++			goto exit;
++
+ 		was_cong = tsk_conn_cong(tsk);
+ 		tipc_sk_push_backlog(tsk, msg_nagle_ack(hdr));
+ 		tsk->snt_unacked -= msg_conn_ack(hdr);
 -- 
 2.53.0
 
