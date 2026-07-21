@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107C2395D8E;
-	Tue, 21 Jul 2026 19:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A750B395D8E;
+	Tue, 21 Jul 2026 19:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660773; cv=none; b=a7sPwHGRpeuiOOzbZZnnRisugqVW2Bpd2azurb0xaXYwZDtkOJ/pv3hQ8nwLjvm7vSnTO16hqn14TpWtAo6IcWSb3C3K6T/8SGAvjbVhBv8YDYlpwLj4X5QfbMegh+W1FvXsofeGmexugv2+w+GuDHnPAmpcPea0RjvsiUj7Z5A=
+	t=1784660775; cv=none; b=b6kschyfJeolxjKi8fCmOG4rqvRefeDicFGpE6odUke94Cy0uSkBuX8yytQt9n+inAgqTeRyBDt15l+YImGi3v/P9hnDHmc7w2iVWaRUn2P/YOiYV7Lcwusqbb4v1GADqetMOm9D9pAePRUL6VX4EYQ9gw0DjHJgUcZVmwMDCuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660773; c=relaxed/simple;
-	bh=5GqEL+QtoafGyAAfJCxsYS3sWPxT/3C0swg+jSXuPgY=;
+	s=arc-20240116; t=1784660775; c=relaxed/simple;
+	bh=U3LRxuwh8D9maQEuegat88IQC9YzRHm28BdRFkwnBg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DOxOSEuIy9iv8B2lvPpkjLUlCJF6xxDP0+tKS4slGOgQioa9i84U2rtTygYlYDszEONs3whIJHPfxkGoMUfETw0gz/W9laif5404c1iu2bjUDINP2zse6mHBsp6Wi3md5NOxL+TSwIp9mIwbcAnqFpPB/tlHGOedschLvraMzOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+ZC34IK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JPgQUvbRYPlSCbFj9Bb7IIm4/aKTKkBgAQcT5S1PH1Awo8W3opkSwMz0NW6XRpxWKgfD7lFnCBTtRr7MyZ63FXakI/kYBrik0JmMK+E0WGXCGrpII09gKJZnTty1sC33ZiRfGMRGpx8MsPhQM9h7ML9G2PRrT4l1XqeDS2+ZBww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3t02W7/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+ZC34IK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7701E1F000E9;
-	Tue, 21 Jul 2026 19:06:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3t02W7/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A26F1F000E9;
+	Tue, 21 Jul 2026 19:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660772;
-	bh=tmESfUWwaWsikPxE/N1HYx3TuuD1KHYeNAocFBAo4Is=;
+	s=korg; t=1784660774;
+	bh=EVLiIH9pLUJeGUyWt3lltYJ4iYzIPrOJMxW3mbYJKfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N+ZC34IKYgQC3phGUieLPYEdMk47wRE4anlwgwGXwezcHy5G9ufYQNb1F0YX9Gjnf
-	 9UBFmfTZbXmNG9fJUnTSzUs5OXr4mBGeQ8WI+0bBKK8HtdNMpF7iIL6U9s0xepeSdI
-	 EoNDDCavAClZhRwxT8leMSox/ktu1fPU6Eeuee40=
+	b=E3t02W7/8B2kISyKOJB8R3LCyh/NjRfFimBa98qJsg+uvZsb3j1Hn8wdYeKoQIQZG
+	 /IUhDYCsF/tfIuSamsCRDjCt1pzeA4kx7J21LGgCbbhPCthN9P+fSS/9HeUAj5MGd2
+	 4ilpvLpRtNbmNZIdByihOldYI7EVlO3NHOnzzXWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1063/2077] i3c: mipi-i3c-hci: Fix race in i3c_hci_addr_to_dev()
-Date: Tue, 21 Jul 2026 17:12:16 +0200
-Message-ID: <20260721152617.891398059@linuxfoundation.org>
+Subject: [PATCH 7.1 1064/2077] i3c: master: Prevent reuse of dynamic address on device add failure
+Date: Tue, 21 Jul 2026 17:12:17 +0200
+Message-ID: <20260721152617.915719691@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,207 +54,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 650716f23eac488c6696babdc7805f6a6b7427ad ]
+[ Upstream commit b3ba8383da4d0cff15810e32ea785eceb0a80813 ]
 
-i3c_hci_addr_to_dev() walks bus->devs.i3c, which is protected by
-bus.lock (rwsem).  However, it is invoked from the MIPI I3C HCI IRQ
-handler, which cannot take bus.lock.  This allows concurrent device
-addition/removal in the I3C core to modify the list while it is being
-traversed, potentially leading to use-after-free or crashes.
+i3c_master_add_i3c_dev_locked() is called after a device has already
+been assigned a dynamic address.  If the function fails, the address
+remains marked as free and may be reallocated to another device,
+leading to address conflicts on the bus.
 
-Remove the dependency on the bus device list and introduce a dedicated
-lookup table.  Add an ibi_devs[] array indexed by DAT entry, maintained
-under hci->lock.  Update the array when IBIs are enabled or disabled,
-so that it always reflects the set of devices allowed to generate IBIs.
-Also update when IBIs are freed, to cover the corner case when an IBI is
-freed without first being disabled (e.g. oldedev in
-i3c_master_add_i3c_dev_locked()).
+Ensure the address is not marked as free on failure, by updating the
+address slot state to prevent the address from being re-used.
 
-Move i3c_hci_addr_to_dev() into core.c, reimplement it using the new
-array, and add a lockdep assertion to enforce that hci->lock is held
-by callers.
+Emit an error message to inform of the failure.
 
-Demote a message in PIO and DMA IBI handling, from an error to a debug
-message, because there is a race window when the condition can arise
-normally.
+Opportunistically remove the !master check because it is impossible.
 
-Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
+Note, directly resetting the device's dynamic address is no longer
+an option, since Direct RSTDAA was deprecated from I3C starting from
+version 1.1 and v1.1 (or later) target devices are meant to NACK it.
+
+Fixes: 3a379bbcea0af ("i3c: Add core I3C infrastructure")
 Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260612080107.11606-2-adrian.hunter@intel.com
+Link: https://patch.msgid.link/20260612080107.11606-4-adrian.hunter@intel.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/core.c | 37 ++++++++++++++++++++++++--
- drivers/i3c/master/mipi-i3c-hci/dma.c  |  7 +++--
- drivers/i3c/master/mipi-i3c-hci/hci.h  |  1 +
- drivers/i3c/master/mipi-i3c-hci/ibi.h  | 13 +--------
- drivers/i3c/master/mipi-i3c-hci/pio.c  |  7 +++--
- 5 files changed, 47 insertions(+), 18 deletions(-)
+ drivers/i3c/master.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/core.c b/drivers/i3c/master/mipi-i3c-hci/core.c
-index afb0764b5e1fbb..388a42f4d2ec75 100644
---- a/drivers/i3c/master/mipi-i3c-hci/core.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/core.c
-@@ -22,6 +22,7 @@
- #include "ext_caps.h"
- #include "cmd.h"
- #include "dat.h"
-+#include "ibi.h"
- 
- /*
-  * Host Controller Capabilities and Operation Registers
-@@ -124,6 +125,7 @@ static void i3c_hci_set_master_dyn_addr(struct i3c_hci *hci)
- static int i3c_hci_bus_init(struct i3c_master_controller *m)
- {
- 	struct i3c_hci *hci = to_i3c_hci(m);
-+	struct device *dev = hci->master.dev.parent;
- 	struct i3c_device_info info;
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index c9685379e86867..7952a38ebc3787 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -2324,12 +2324,11 @@ int i3c_master_add_i3c_dev_locked(struct i3c_master_controller *master,
+ 	bool enable_ibi = false;
  	int ret;
  
-@@ -144,6 +146,10 @@ static int i3c_hci_bus_init(struct i3c_master_controller *m)
- 	if (ret)
- 		return ret;
- 
-+	hci->ibi_devs = devm_kcalloc(dev, hci->DAT_entries, sizeof(*hci->ibi_devs), GFP_KERNEL);
-+	if (!hci->ibi_devs)
-+		return -ENOMEM;
-+
- 	ret = hci->io->init(hci);
- 	if (ret)
- 		return ret;
-@@ -556,14 +562,40 @@ static int i3c_hci_request_ibi(struct i3c_dev_desc *dev,
- 	return hci->io->request_ibi(hci, dev, req);
- }
- 
-+static void __i3c_hci_disable_ibi(struct i3c_hci *hci, struct i3c_dev_desc *dev)
-+{
-+	struct i3c_hci_dev_data *dev_data = i3c_dev_get_master_data(dev);
-+
-+	mipi_i3c_hci_dat_v1.set_flags(hci, dev_data->dat_idx, DAT_0_SIR_REJECT, 0);
-+	scoped_guard(spinlock_irqsave, &hci->lock)
-+		hci->ibi_devs[dev_data->dat_idx] = NULL;
-+}
-+
- static void i3c_hci_free_ibi(struct i3c_dev_desc *dev)
- {
- 	struct i3c_master_controller *m = i3c_dev_get_master(dev);
- 	struct i3c_hci *hci = to_i3c_hci(m);
- 
-+	/* Must ensure the IBI has been disabled */
-+	__i3c_hci_disable_ibi(hci, dev);
- 	hci->io->free_ibi(hci, dev);
- }
- 
-+struct i3c_dev_desc *i3c_hci_addr_to_dev(struct i3c_hci *hci, unsigned int addr)
-+{
-+	int dat_idx;
-+
-+	lockdep_assert_held(&hci->lock);
-+
-+	for (dat_idx = 0; dat_idx < hci->DAT_entries; dat_idx++) {
-+		struct i3c_dev_desc *dev = hci->ibi_devs[dat_idx];
-+
-+		if (dev && dev->info.dyn_addr == addr)
-+			return dev;
-+	}
-+	return NULL;
-+}
-+
- static int i3c_hci_enable_ibi(struct i3c_dev_desc *dev)
- {
- 	struct i3c_master_controller *m = i3c_dev_get_master(dev);
-@@ -571,6 +603,8 @@ static int i3c_hci_enable_ibi(struct i3c_dev_desc *dev)
- 	struct i3c_hci_dev_data *dev_data = i3c_dev_get_master_data(dev);
- 
- 	mipi_i3c_hci_dat_v1.clear_flags(hci, dev_data->dat_idx, DAT_0_SIR_REJECT, 0);
-+	scoped_guard(spinlock_irqsave, &hci->lock)
-+		hci->ibi_devs[dev_data->dat_idx] = dev;
- 	return i3c_master_enec_locked(m, dev->info.dyn_addr, I3C_CCC_EVENT_SIR);
- }
- 
-@@ -578,9 +612,8 @@ static int i3c_hci_disable_ibi(struct i3c_dev_desc *dev)
- {
- 	struct i3c_master_controller *m = i3c_dev_get_master(dev);
- 	struct i3c_hci *hci = to_i3c_hci(m);
--	struct i3c_hci_dev_data *dev_data = i3c_dev_get_master_data(dev);
- 
--	mipi_i3c_hci_dat_v1.set_flags(hci, dev_data->dat_idx, DAT_0_SIR_REJECT, 0);
-+	__i3c_hci_disable_ibi(hci, dev);
- 	return i3c_master_disec_locked(m, dev->info.dyn_addr, I3C_CCC_EVENT_SIR);
- }
- 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
-index bdffdd8b892368..8517d2c14e8bfb 100644
---- a/drivers/i3c/master/mipi-i3c-hci/dma.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -783,8 +783,11 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
- 	/* determine who this is for */
- 	dev = i3c_hci_addr_to_dev(hci, ibi_addr);
- 	if (!dev) {
--		dev_err(&hci->master.dev,
--			"IBI for unknown device %#x\n", ibi_addr);
-+		/*
-+		 * Either an IBI received just before IBI's were disabled, or
-+		 * the controller is broken. Assume the former.
-+		 */
-+		dev_dbg(&hci->master.dev, "IBI when not enabled at address %#x\n", ibi_addr);
- 		goto done;
- 	}
- 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/hci.h b/drivers/i3c/master/mipi-i3c-hci/hci.h
-index f17f43494c1b52..b623e4c22c6c9b 100644
---- a/drivers/i3c/master/mipi-i3c-hci/hci.h
-+++ b/drivers/i3c/master/mipi-i3c-hci/hci.h
-@@ -60,6 +60,7 @@ struct i3c_hci {
- 	unsigned int DAT_entry_size;
- 	void *DAT_data;
- 	struct dat_words *DAT;
-+	struct i3c_dev_desc **ibi_devs;
- 	unsigned int DCT_entries;
- 	unsigned int DCT_entry_size;
- 	u8 version_major;
-diff --git a/drivers/i3c/master/mipi-i3c-hci/ibi.h b/drivers/i3c/master/mipi-i3c-hci/ibi.h
-index e1f98e264da0eb..073ca67b7d04d1 100644
---- a/drivers/i3c/master/mipi-i3c-hci/ibi.h
-+++ b/drivers/i3c/master/mipi-i3c-hci/ibi.h
-@@ -26,17 +26,6 @@
- #define IBI_DATA_LENGTH			GENMASK(7, 0)
- 
- /*  handy helpers */
--static inline struct i3c_dev_desc *
--i3c_hci_addr_to_dev(struct i3c_hci *hci, unsigned int addr)
--{
--	struct i3c_bus *bus = i3c_master_get_bus(&hci->master);
--	struct i3c_dev_desc *dev;
+-	if (!master)
+-		return -EINVAL;
 -
--	i3c_bus_for_each_i3cdev(bus, dev) {
--		if (dev->info.dyn_addr == addr)
--			return dev;
--	}
--	return NULL;
--}
-+struct i3c_dev_desc *i3c_hci_addr_to_dev(struct i3c_hci *hci, unsigned int addr);
+ 	newdev = i3c_master_alloc_i3c_dev(master, &info);
+-	if (IS_ERR(newdev))
+-		return PTR_ERR(newdev);
++	if (IS_ERR(newdev)) {
++		ret = PTR_ERR(newdev);
++		goto err_prevent_addr_reuse;
++	}
  
- #endif
-diff --git a/drivers/i3c/master/mipi-i3c-hci/pio.c b/drivers/i3c/master/mipi-i3c-hci/pio.c
-index 8f48a81e65abe8..c99c85693214c3 100644
---- a/drivers/i3c/master/mipi-i3c-hci/pio.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/pio.c
-@@ -863,8 +863,11 @@ static bool hci_pio_prep_new_ibi(struct i3c_hci *hci, struct hci_pio_data *pio)
+ 	ret = i3c_master_attach_i3c_dev(master, newdev);
+ 	if (ret)
+@@ -2451,6 +2450,16 @@ int i3c_master_add_i3c_dev_locked(struct i3c_master_controller *master,
+ err_free_dev:
+ 	i3c_master_free_i3c_dev(newdev);
  
- 	dev = i3c_hci_addr_to_dev(hci, ibi->addr);
- 	if (!dev) {
--		dev_err(&hci->master.dev,
--			"IBI for unknown device %#x\n", ibi->addr);
-+		/*
-+		 * Either an IBI received just before IBI's were disabled, or
-+		 * the controller is broken. Assume the former.
-+		 */
-+		dev_dbg(&hci->master.dev, "IBI when not enabled at address %#x\n", ibi->addr);
- 		return true;
- 	}
- 
++err_prevent_addr_reuse:
++	/*
++	 * Although the device has not been added, the address has been
++	 * assigned. Prevent the address from being used again.
++	 */
++	if (i3c_bus_get_addr_slot_status(&master->bus, addr) == I3C_ADDR_SLOT_FREE)
++		i3c_bus_set_addr_slot_status(&master->bus, addr, I3C_ADDR_SLOT_I3C_DEV);
++
++	dev_err(&master->dev, "Failed to add I3C device at address %u, error %d\n", addr, ret);
++
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(i3c_master_add_i3c_dev_locked);
 -- 
 2.53.0
 
