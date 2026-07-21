@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9942A2F25E4;
-	Tue, 21 Jul 2026 20:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EAA1D7E5C;
+	Tue, 21 Jul 2026 20:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664974; cv=none; b=Jsq34hwNEj2NnA9CxlAcnjQhZ+wHoZFjBdRz901OS4tolU8mVeZoK3xRyRIi/Sms/imWa997fqRCq//lIo14sjjht4M3QPNwrfaIeaLtGFTOYw3r2Dz7xfd90ksjXlrWRcvUwVLmJIXx5udGUoTd2+rt/Idp6kvNGHd9qTZyWls=
+	t=1784664977; cv=none; b=L1TymCpOy4rFUnTTpdXcQ//zO9D+VuuntiltMBpOlnrcXpUwuPEmhWL6Y7C85FzIDsdtNUy+CdjF6F2oW1+i+W8+K+y6XjaneWim6XY/3a1oXJ2vYFISWMFjS0Cg2dfhKOVHZGJkpgxXLlWwBY9fNy57LbteTR0gRsAL5CLWSbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664974; c=relaxed/simple;
-	bh=/XqbI2yUJsrJrtuQrTQ/gkhIOcnqIJyQ67e4UspM78c=;
+	s=arc-20240116; t=1784664977; c=relaxed/simple;
+	bh=WenJyzUazwM3CJAWzLrtZrzbCufySAdT791yIcaCers=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gqtmxR48HhTarI4wBG/S7SeWayI6/w6GbYlNnLE964MxgtM59eA58jbnC4WPWylJjkzaZA7BpQ+dnUQFejQj4oCTlXm3jifKwx5lex6m+5b6rm9dl3PF7Tf53EdvILEzf40mqCBMaflzS65ZLQsA0ofs0PBBpTIA6QZ3EPLO0V0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6TbV1pI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BBFBkq1dzKCY0/b5HnF8u/YAa6mAzZPG+x4oVoG68hxZCDAEwL1Oyj2P5WbVzHRnXiFwfMhOa6ZLBQr1jXV/tVIz+lhxPYMeWUDpJmzLu2GOWIIf1P9APZrj/E6ff74rOqeHgWGFdGBkP7My2m1cXuAvivjyEiMa+uMC5QG7MOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s91sAiv1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6TbV1pI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A5D41F00A3A;
-	Tue, 21 Jul 2026 20:16:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s91sAiv1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B321F000E9;
+	Tue, 21 Jul 2026 20:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664973;
-	bh=JQQHIYWxGviY0+4ie/yngCIzdR5B9Ite5Teh3WiJ4HM=;
+	s=korg; t=1784664976;
+	bh=jSn1VgyvuL3MQRfodtOZQWhN+YAfEr/HIcQ4nRC4kkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y6TbV1pIAUA/Mfl8WkWjmQI7vRtRuD6H2XktDmYRBqsuuHImomZ6kam+gX5magF4m
-	 +Q6C1LYhBerVqHj/EswJdk86ow0svzkEzvJU1RZ6FtJS5HNTuQ6yHgRd9/d3sUGrPK
-	 yQ0FYqQVPdWyOk8I4uiHLJTl/5zdDLcWfxOLvnwE=
+	b=s91sAiv1KT709F7tIqufmcuz/zadeP5StxcT+8YdaAtrEZRBeaTLafzQ5cHad+hbf
+	 2+a9dX/r7o6ExsmhwXbQcY1pwFeQ4+1QS/hPMIYZLHsMXE3PxwZ983QRzyWpUAJjrQ
+	 GCDDtjj1G+9DdiN8nrMd8vPkTtRBtgvjv7FwjzKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 6.6 0127/1266] binder: fix UAF in binder_free_transaction()
-Date: Tue, 21 Jul 2026 17:09:24 +0200
-Message-ID: <20260721152444.645557087@linuxfoundation.org>
+	Lianqin Hu <hulianqin@vivo.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.6 0128/1266] usb: xhci: Fix sleep in atomic context in xhci_free_streams()
+Date: Tue, 21 Jul 2026 17:09:25 +0200
+Message-ID: <20260721152444.668540351@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -45,101 +45,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: 胡连勤 <hulianqin@vivo.com>
 
-commit f223d27a546c1e1f48d38fd67760e78f068fe8c4 upstream.
+commit 42c37c4b75d38b51d84f31a8e29427f5e06a7c2a upstream.
 
-In binder_free_transaction(), the t->to_proc is read under the t->lock.
-However, once the t->lock is dropped, the to_proc can die in parallel.
-This leads to a use-after-free error when we attempt to acquire its
-inner lock right afterwards:
+When a USB device with active stream endpoints is disconnected,
+xhci_free_streams() is called from the hub_event workqueue to
+free the stream resources.  It calls xhci_free_stream_info()
+while holding xhci->lock with irqs disabled.
 
-  ==================================================================
-  BUG: KASAN: slab-use-after-free in _raw_spin_lock+0xe4/0x1a0
-  Write of size 4 at addr ffff00001125da70 by task B/672
+xhci_free_stream_info() invokes xhci_free_stream_ctx(), which
+calls dma_free_coherent() for large stream context arrays.
 
-  CPU: 20 UID: 0 PID: 672 Comm: B Not tainted 7.1.0-rc6-00284-g8e65320d91cd #4 PREEMPT
-  Hardware name: linux,dummy-virt (DT)
-  Call trace:
-   _raw_spin_lock+0xe4/0x1a0
-   binder_free_transaction+0x8c/0x320
-   binder_send_failed_reply+0x21c/0x2f8
-   binder_thread_release+0x488/0x7e0
-   binder_ioctl+0x12c0/0x29a0
-  [...]
+dma_free_coherent() can sleep (e.g. via vunmap), triggering
+a BUG when called from atomic context.
 
-  Allocated by task 675:
-   __kmalloc_cache_noprof+0x174/0x444
-   binder_open+0x118/0xb70
-   do_dentry_open+0x374/0x1040
-   vfs_open+0x58/0x3bc
-  [...]
+Call trace:
+ dma_free_attrs+0x174/0x220
+ xhci_free_stream_info+0xd0/0x11c
+ xhci_free_streams+0x278/0x37c
+ usb_free_streams+0x98/0xc0
+ usb_unbind_interface+0x1b8/0x2f8
+ device_release_driver_internal+0x1d4/0x2cc
+ device_release_driver+0x18/0x28
+ bus_remove_device+0x160/0x1a4
+ device_del+0x1ec/0x350
+ usb_disable_device+0x98/0x214
+ usb_disconnect+0xf0/0x35c
+ hub_event+0xab4/0x19ec
+ process_one_work+0x278/0x63c
 
-  Freed by task 212:
-   __kasan_slab_free+0x58/0x80
-   kfree+0x1a0/0x4a4
-   binder_proc_dec_tmpref+0x32c/0x5e0
-   binder_deferred_func+0xc48/0x104c
-   process_one_work+0x53c/0xbc0
-  [...]
-  ==================================================================
+Fix this by saving the stream_info pointers and clearing the
+ep references under the lock, then calling xhci_free_stream_info()
+outside the lock where sleeping is allowed.
 
-To prevent this, pin the target thread (t->to_thread) to guarantee the
-target process remains alive. Undelivered transactions without a target
-thread are already safe, as the target process can only be the current
-context in those paths.
-
+Fixes: 8df75f42f8e6 ("USB: xhci: Add memory allocation for USB3 bulk streams.")
 Cc: stable <stable@kernel.org>
-Reported-by: Alice Ryhl <aliceryhl@google.com>
-Closes: https://lore.kernel.org/all/aikJKVuny_eOivwN@google.com/
-Fixes: a370003cc301 ("binder: fix possible UAF when freeing buffer")
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260619185233.2194678-2-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20260703144033.483286-3-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/usb/host/xhci.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -1567,10 +1567,19 @@ static void binder_txn_latency_free(stru
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -3577,6 +3577,7 @@ static int xhci_free_streams(struct usb_
+ 	struct xhci_virt_device *vdev;
+ 	struct xhci_command *command;
+ 	struct xhci_input_control_ctx *ctrl_ctx;
++	struct xhci_stream_info *stream_info[EP_CTX_PER_DEV];
+ 	unsigned int ep_index;
+ 	unsigned long flags;
+ 	u32 changed_ep_bitmask;
+@@ -3637,10 +3638,15 @@ static int xhci_free_streams(struct usb_
+ 	if (ret < 0)
+ 		return ret;
  
- static void binder_free_transaction(struct binder_transaction *t)
- {
-+	struct binder_thread *target_thread;
- 	struct binder_proc *target_proc;
- 
- 	spin_lock(&t->lock);
- 	target_proc = t->to_proc;
-+	target_thread = t->to_thread;
 +	/*
-+	 * Pin target_thread to keep target_proc alive. Undelivered
-+	 * transactions with !target_thread are safe, as target_proc
-+	 * can only be the current context there.
++	 * dma_free_coherent() called by xhci_free_stream_info() may sleep,
++	 * so save stream_info pointers and clear references under lock,
++	 * then free the memory outside lock.
 +	 */
-+	if (target_thread)
-+		atomic_inc(&target_thread->tmp_ref);
- 	spin_unlock(&t->lock);
- 
- 	if (target_proc) {
-@@ -1585,6 +1594,10 @@ static void binder_free_transaction(stru
- 			t->buffer->transaction = NULL;
- 		binder_inner_proc_unlock(target_proc);
+ 	spin_lock_irqsave(&xhci->lock, flags);
+ 	for (i = 0; i < num_eps; i++) {
+ 		ep_index = xhci_get_endpoint_index(&eps[i]->desc);
+-		xhci_free_stream_info(xhci, vdev->eps[ep_index].stream_info);
++		stream_info[i] = vdev->eps[ep_index].stream_info;
+ 		vdev->eps[ep_index].stream_info = NULL;
+ 		/* FIXME Unset maxPstreams in endpoint context and
+ 		 * update deq ptr to point to normal string ring.
+@@ -3650,6 +3656,9 @@ static int xhci_free_streams(struct usb_
  	}
+ 	spin_unlock_irqrestore(&xhci->lock, flags);
+ 
++	for (i = 0; i < num_eps; i++)
++		xhci_free_stream_info(xhci, stream_info[i]);
 +
-+	if (target_thread)
-+		binder_thread_dec_tmpref(target_thread);
-+
- 	if (trace_binder_txn_latency_free_enabled())
- 		binder_txn_latency_free(t);
- 	/*
+ 	return 0;
+ }
+ 
 
 
