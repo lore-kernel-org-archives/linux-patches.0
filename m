@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9324D3F2101;
-	Tue, 21 Jul 2026 18:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308C346D0B2;
+	Tue, 21 Jul 2026 18:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659373; cv=none; b=ErgJBGx8SQ/QDoZzmoysxAxvyJrWv2FJCjBgpeSRy2JMWZQXumWqIXnIxCYCnWLi84HFN16tDNtUx9FUXff7eLC2V+RceCQsuwSwLPDSUBmHauvLQGkyRrdS/L7jNyVYhP9f04DW1OOQgD8fx+kdDf7hxAYx1ItsyyIJWXZRFDw=
+	t=1784659376; cv=none; b=PjA0ztsHSnk8QQqYp1zn6TXBbbm16p6tEXwrEsfaQ771EgOIvMLFO10UjbmDgIfw6UjVT+IlO17slIYYQ0Nu1ZZ8y03fJWgRDxLGJNcbXnQ1o0xn1YkRdwiU57KwhlJsHysnkIxOfLAz8hOltDeH/h7Hn3fvWA1LRvHGXl9/wFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659373; c=relaxed/simple;
-	bh=/KHcrS58xs9gF/3BdBFqOzCwvLwvj23GRK6Z4QcG1wY=;
+	s=arc-20240116; t=1784659376; c=relaxed/simple;
+	bh=aU2pCL0RPGN4eLBmVtIDUDYhn5a6n4sLepwODCboJ08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=psyOCZuqszRacs2UKYguVuDU3785k6vKG92C0SWOKfDp8DiLqEPFnHKxj4vKdevCos0tJSn0mobYcUP9Q0be6LOuAdmPiDK3/HpNkAGp3knWOCKymgs25qclbU8OLQ5eHXncl46k7y2b1IH7sBAea76+wAyltd8Ipw+kncRu+vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIvXMsKv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hQFavFSwmaOasvBbNs0C333y/lr4tcrQJy5IlCM8YuH7EUoq2SUBc7Bcl0zNhZXCliC54PlOCoJyGw5Z0yPaXMAf9slgf3in2WOAun0XxJ93AEw070P2ajN1vg12Sw3p2fUHfHurip1ajxDfhH92wh2Jd9304DgYWfJnybrNpO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWR+GV+S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIvXMsKv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D3D1F000E9;
-	Tue, 21 Jul 2026 18:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWR+GV+S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FF841F000E9;
+	Tue, 21 Jul 2026 18:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659372;
-	bh=CqMoThfVHBRmLI3USo2HJg+sUC0/xObDmCB05tHYVrc=;
+	s=korg; t=1784659375;
+	bh=fn/l7I9lwJElYlCNG83DJ1ztVUVbb8cfhyxN55O2p3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qIvXMsKv/a9DOcy16kUblpnZL5vy8eGu0u8Ox5efFXpEcf9E8RY93p7Q+TPfXRX41
-	 tfz9CTCLq3Z/CEuDxJvkpRm5l88jmQ2uXQ7uaJ7EvL9GK6bKLaQH/pnFORZCXkg9e2
-	 IFN0jyYL0nGMo2Yp5lc2HWDVW3iVaIgfskUXZoSw=
+	b=eWR+GV+SRfe5X83bi0RKjwuZH7faZQ4NKu1C2KByYHDUbhvdVeE8mQlgLhV5IfX+o
+	 0ffjOQrl1R5xozSAv3Qez6p/Piqd2cS1ua1PXPUAHWfcZmaADOtnYyr3S4Opb/XdXZ
+	 2TLC7qfJ/W9bWKxwJNLqKuL2Qr9n2l5W6MWL9vR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Zhiling Zou <roxy520tt@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 1497/1611] wifi: ieee80211: validate MLE common info length
-Date: Tue, 21 Jul 2026 17:26:53 +0200
-Message-ID: <20260721152549.113853506@linuxfoundation.org>
+Subject: [PATCH 6.18 1498/1611] wifi: mac80211: free ack status frame on TX header build failure
+Date: Tue, 21 Jul 2026 17:26:54 +0200
+Message-ID: <20260721152549.136291142@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,85 +55,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Zhiling Zou <roxy520tt@gmail.com>
 
-commit 293baeae9b2434a3e432629d7720b5603db2d77e upstream.
+commit 2c51457d930f723e5f2903af90f5847f7df53f42 upstream.
 
-ieee80211_mle_common_size() uses the first common-info octet as the
-common information length for all known MLE types. However,
-ieee80211_mle_size_ok() only validates that octet for Basic, Probe
-Request, and TDLS MLEs.
+ieee80211_build_hdr() stores an ACK status frame before it has
+finished all validation and header construction. If a later error path
+is taken, the transmit skb is freed but the stored ACK status frame
+remains in local->ack_status_frames.
 
-Reconfiguration MLEs also skipped the length octet when calculating the
-minimum common size, and Priority Access MLEs skipped validation of the
-advertised common information length.
+This can happen for control port frames when the requested MLO link ID
+does not match the link selected for a non-MLO station. Repeated
+failures can fill the ACK status IDR and leave pending ACK frames until
+hardware teardown.
 
-Account for the Reconfiguration common-info length octet and validate
-the advertised common information length for all known MLE types. Keep
-unknown-type handling unchanged.
+Remove any stored ACK status frame before returning an error after it
+has been inserted into the IDR.
 
-Fixes: 0f48b8b88aa9 ("wifi: ieee80211: add definitions for multi-link element")
+Fixes: a729cff8ad51 ("mac80211: implement wifi TX status")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260611173506.36838-2-enderaoelyther@gmail.com
-[remove now misleading comment]
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Link: https://patch.msgid.link/9de0423da840e92084915b8f92e66a421245c4b8.1782462409.git.roxy520tt@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/ieee80211-eht.h |   12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ net/mac80211/tx.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
---- a/include/linux/ieee80211-eht.h
-+++ b/include/linux/ieee80211-eht.h
-@@ -833,7 +833,7 @@ static inline bool ieee80211_mle_size_ok
- 	const struct ieee80211_multi_link_elem *mle = (const void *)data;
- 	u8 fixed = sizeof(*mle);
- 	u8 common = 0;
--	bool check_common_len = false;
-+	u8 common_len;
- 	u16 control;
- 
- 	if (!data || len < fixed)
-@@ -844,7 +844,6 @@ static inline bool ieee80211_mle_size_ok
- 	switch (u16_get_bits(control, IEEE80211_ML_CONTROL_TYPE)) {
- 	case IEEE80211_ML_CONTROL_TYPE_BASIC:
- 		common += sizeof(struct ieee80211_mle_basic_common_info);
--		check_common_len = true;
- 		if (control & IEEE80211_MLC_BASIC_PRES_LINK_ID)
- 			common += 1;
- 		if (control & IEEE80211_MLC_BASIC_PRES_BSS_PARAM_CH_CNT)
-@@ -864,9 +863,9 @@ static inline bool ieee80211_mle_size_ok
- 		common += sizeof(struct ieee80211_mle_preq_common_info);
- 		if (control & IEEE80211_MLC_PREQ_PRES_MLD_ID)
- 			common += 1;
--		check_common_len = true;
- 		break;
- 	case IEEE80211_ML_CONTROL_TYPE_RECONF:
-+		common += 1;
- 		if (control & IEEE80211_MLC_RECONF_PRES_MLD_MAC_ADDR)
- 			common += ETH_ALEN;
- 		if (control & IEEE80211_MLC_RECONF_PRES_EML_CAPA)
-@@ -878,7 +877,6 @@ static inline bool ieee80211_mle_size_ok
- 		break;
- 	case IEEE80211_ML_CONTROL_TYPE_TDLS:
- 		common += sizeof(struct ieee80211_mle_tdls_common_info);
--		check_common_len = true;
- 		break;
- 	case IEEE80211_ML_CONTROL_TYPE_PRIO_ACCESS:
- 		common = ETH_ALEN + 1;
-@@ -891,11 +889,9 @@ static inline bool ieee80211_mle_size_ok
- 	if (len < fixed + common)
- 		return false;
- 
--	if (!check_common_len)
--		return true;
-+	common_len = mle->variable[0];
- 
--	/* if present, common length is the first octet there */
--	return mle->variable[0] >= common;
-+	return common_len >= common && common_len <= len - fixed;
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -2578,6 +2578,18 @@ static u16 ieee80211_store_ack_skb(struc
+ 	return info_id;
  }
  
++static void ieee80211_remove_ack_skb(struct ieee80211_local *local, u16 info_id)
++{
++	struct sk_buff *ack_skb;
++	unsigned long flags;
++
++	spin_lock_irqsave(&local->ack_status_lock, flags);
++	ack_skb = idr_remove(&local->ack_status_frames, info_id);
++	spin_unlock_irqrestore(&local->ack_status_lock, flags);
++
++	kfree_skb(ack_skb);
++}
++
  /**
+  * ieee80211_build_hdr - build 802.11 header in the given frame
+  * @sdata: virtual interface to build the header for
+@@ -2934,7 +2946,8 @@ static struct sk_buff *ieee80211_build_h
+ 		if (ieee80211_skb_resize(sdata, skb, head_need, ENCRYPT_DATA)) {
+ 			ieee80211_free_txskb(&local->hw, skb);
+ 			skb = NULL;
+-			return ERR_PTR(-ENOMEM);
++			ret = -ENOMEM;
++			goto free;
+ 		}
+ 	}
+ 
+@@ -3002,6 +3015,8 @@ static struct sk_buff *ieee80211_build_h
+ 
+ 	return skb;
+  free:
++	if (info_id)
++		ieee80211_remove_ack_skb(local, info_id);
+ 	kfree_skb(skb);
+ 	return ERR_PTR(ret);
+ }
 
 
