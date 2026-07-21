@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90CF256C84;
-	Tue, 21 Jul 2026 15:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6DE449B0B;
+	Tue, 21 Jul 2026 15:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649414; cv=none; b=JTnfG1ZufJxceciToEIocgWYXJoNcJOA1/CUcUHnW2utfLRCUNQRlQGYZwiY0oyzCkGuXTJ8icBvJwhIYGkZiiPd1/ocRIdShITfbAW9X0qmSYv+GAY0eNlrYw/HJU3p0/d2GUNasqVyTuLecmCFWtSkBe/LItgEfLQS9JAQ/xY=
+	t=1784649417; cv=none; b=DrUge5tgY+VsrXvLdmdBpv8jv/S4Gk8d+NiBj+Oss1dyiaNPCZHdgtDcnuGBMQPytVLAi3zE5dYqjSNUu9NBfr6nJt3XlCCIRQ6/x+jn2BtD/FwNY28MtAN2bGtkbTTS1CCyJ6BmLFmsf64WTsED/Vk46bdc+Gccf2GkEMEg1WQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649414; c=relaxed/simple;
-	bh=eIVg3mheZg8mW+U7xvsxbovmogUHUv7Rkf/mDmzaZHg=;
+	s=arc-20240116; t=1784649417; c=relaxed/simple;
+	bh=jxHxajqhDWDzP/Eb6Msmz+eLmGhmgitU723C1BmcYNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r3/mHMEN4X0bcIgVoq/hDiA40MuYmZ4H0/dWqQMOZAUYRRG/7TpC8FdImkWz9WCCYrbYVsHDhS12SIMvw+9sDV8XZds3nmg9f6Q5InLKL1ZRGCkW9np46PMAm9FtqfMjqQc49hqGE7sVEwwV1VKtBHH77eU85wJRa2Y3w1k5XMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPSx1VCf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KUbxzaXWjEow7Rs5nVbmLubH+XdrX/bDuML2mgEJmH3iyeq/Np02c0qbkYusVSnPXmz/k2vPvkyfZaoXw+Vh0QcYGDAL60Aql5T6zd6BbjFdK36F2EU8XVLNNRLEP+SvTA90SPkwJ3m5lkDtf0kqp/LpcSgAY5aiNLcwXTdtcaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sInJowGB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPSx1VCf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F85B1F00A3D;
-	Tue, 21 Jul 2026 15:56:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sInJowGB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B646F1F00A3A;
+	Tue, 21 Jul 2026 15:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649413;
-	bh=HJay47GhelGTuN8mIo0cZQXybVQMYKNy0O7av5q/UrQ=;
+	s=korg; t=1784649416;
+	bh=QtWhOBAWwueJpdiJRTAAYaGytR4AIc7bZqBymugCOFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xPSx1VCfu9k0t2sPey73iGCXuq4Ce77x7IhTCenqqWM7g1w3BPlhkmwoaBS3I1SPW
-	 FCSPaY1AUcryw3W0p06yZ6PqLCzHuGCGafLPq7fbdfOdnJQ/qx2O0z0jQuuU0MGUSk
-	 opQi2OatH2FYLqGtoOpfgWObXlTR0r22/KF4uYAk=
+	b=sInJowGBkZTkc6z9qXKwdKcOGFkx3QOK3noY0TPohwyrgp7cCI1rp9JIp50xZbo0H
+	 I6MpD62bB7kWXxi17wtRRNrIAmmPUBobiiPaequJE6OcqLm6bZpeXdE2O9Hs3hmtVo
+	 UrrxC4/JZyI2NseW2bfbhue7BoJMMUFoMTYkkNys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ankit Soni <Ankit.Soni@amd.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0569/2077] iommufd: Take dma_resv lock before dma_buf_unpin() in release path
-Date: Tue, 21 Jul 2026 17:04:02 +0200
-Message-ID: <20260721152606.230162824@linuxfoundation.org>
+Subject: [PATCH 7.1 0570/2077] iommufd: Destroy the pages content after detaching from dmabuf
+Date: Tue, 21 Jul 2026 17:04:03 +0200
+Message-ID: <20260721152606.253068391@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,68 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ankit Soni <Ankit.Soni@amd.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit e745cd2c749e557c14a15ac931761c3f58c24489 ]
+[ Upstream commit f2d70dbd3dcefa8e3c380beff9c31f5f033a4221 ]
 
-dma_buf_unpin() requires the caller to hold the exporter's dma_resv
-lock:
+Sashiko points out this has gotten out of order, the mutex could still be
+in use through the dmabuf invalidation callbacks. Don't destroy any of the
+pages content until the dmabuf is fully detached.
 
-  void dma_buf_unpin(struct dma_buf_attachment *attach)
-  {
-          ...
-          dma_resv_assert_held(dmabuf->resv);
-          ...
-  }
-
-iopt_release_pages() calls dma_buf_unpin() without taking that lock,
-so every iommufd_ioas_destroy()/iommufd_ioas_unmap() that releases
-the last reference on a DMABUF-backed iopt_pages triggers a WARN.
-This was hit while running tools/testing/selftests/iommu/iommufd:
-
-  WARNING: drivers/dma-buf/dma-buf.c:1137 at dma_buf_unpin+0x62/0x70
-  RIP: 0010:dma_buf_unpin+0x62/0x70
-  Call Trace:
-   <TASK>
-   dma_buf_unpin+0x62/0x70
-   iopt_release_pages+0xe4/0x190
-   iopt_unmap_iova_range+0x1c7/0x290
-   iopt_unmap_all+0x1a/0x30
-   iommufd_ioas_destroy+0x1d/0x50
-   iommufd_fops_release+0x93/0x150
-   __fput+0xfc/0x2c0
-   __x64_sys_close+0x3d/0x80
-   do_syscall_64+0x65/0x180
-   </TASK>
-
-Take the dma_resv lock around dma_buf_unpin() in iopt_release_pages(),
-matching the iopt_map_dmabuf() convention. dma_buf_detach() acquires the
-reservation lock internally, so it must remain outside the locked region.
-
-Fixes: 8c5f9645c389 ("iommufd: Add dma_buf_pin()")
-Link: https://patch.msgid.link/r/20260526111034.4079-1-Ankit.Soni@amd.com
-Reported-by: Ankit Soni <Ankit.Soni@amd.com>
-Signed-off-by: Ankit Soni <Ankit.Soni@amd.com>
+Fixes: 71db84a092c3 ("iommufd: Add DMABUF to iopt_pages")
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/pages.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iommu/iommufd/pages.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/iommu/iommufd/pages.c b/drivers/iommu/iommufd/pages.c
-index 9bdb2945afe1eb..7b64002e54b9a2 100644
+index 7b64002e54b9a2..03c8379bbc347e 100644
 --- a/drivers/iommu/iommufd/pages.c
 +++ b/drivers/iommu/iommufd/pages.c
-@@ -1663,7 +1663,9 @@ void iopt_release_pages(struct kref *kref)
+@@ -1656,10 +1656,6 @@ void iopt_release_pages(struct kref *kref)
+ 	WARN_ON(!RB_EMPTY_ROOT(&pages->domains_itree.rb_root));
+ 	WARN_ON(pages->npinned);
+ 	WARN_ON(!xa_empty(&pages->pinned_pfns));
+-	mmdrop(pages->source_mm);
+-	mutex_destroy(&pages->mutex);
+-	put_task_struct(pages->source_task);
+-	free_uid(pages->source_user);
  	if (iopt_is_dmabuf(pages) && pages->dmabuf.attach) {
  		struct dma_buf *dmabuf = pages->dmabuf.attach->dmabuf;
  
-+		dma_resv_lock(dmabuf->resv, NULL);
- 		dma_buf_unpin(pages->dmabuf.attach);
-+		dma_resv_unlock(dmabuf->resv);
- 		dma_buf_detach(dmabuf, pages->dmabuf.attach);
- 		dma_buf_put(dmabuf);
- 		WARN_ON(!list_empty(&pages->dmabuf.tracker));
+@@ -1672,6 +1668,10 @@ void iopt_release_pages(struct kref *kref)
+ 	} else if (pages->type == IOPT_ADDRESS_FILE) {
+ 		fput(pages->file);
+ 	}
++	mmdrop(pages->source_mm);
++	mutex_destroy(&pages->mutex);
++	put_task_struct(pages->source_task);
++	free_uid(pages->source_user);
+ 	kfree(pages);
+ }
+ 
 -- 
 2.53.0
 
