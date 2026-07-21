@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF7543B6E1;
-	Tue, 21 Jul 2026 22:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D019539733E;
+	Tue, 21 Jul 2026 22:59:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674778; cv=none; b=ZW2S6aCuaZZ35RVxlLJuJRPfjkpCiDenc0SrjjWVtUKz8tQJqQ29UmdgHJK3rZ3lDrLygaK7Eoidh8TMkDOH+JXXax2ZJvF+5LEuWBrhp6v6QwO10+X+7Puxpb3tUwSrcjAwpr6ICNq5tU/0emlfqp+nZ/Hb1KVxpKLfVMFfEdM=
+	t=1784674780; cv=none; b=njIcC33xYPcbl2zJozlVVuPDGVWPdXeamvhPS1wGo7ZXvHdWkgb130xTEZdZzUjwm/OPbqHhJBJHv79e+kz+e4pgrQ1MgekCHSFFfREHVn3CF5Ra0pBFBE2p+C0tT3FQIJFRw0mf9Cwh7IZVGNT+8RKIPK5FoqRIBoBuViWzWBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674778; c=relaxed/simple;
-	bh=ZUCHn8X1VlCTqPfUQAqy1Yaw9KgWDP1vA7RiJxS580s=;
+	s=arc-20240116; t=1784674780; c=relaxed/simple;
+	bh=foPxvene37htrOkqH3y1IpEiPvczOxDHYp/CGzXCuA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YSiwhVghIavt1pXQSA+goc759Eg3kUXmHqyLTKr0eCzp6owbvvjuiDWzlntFo4UuOtsXOxWQuCaIQbLFvKdArDUb2lRrTmEIfpn7GaSxAI3NgMGXkENKhrzmTwg3FESaeVE4yv8Kyceq9eD7NSzY8AWkX8yJ/5K+EGTpiSZbOvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o3fRcDvo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=kRWpc8IYltYfI6fGswn2AjVeChDIzBQx4h0bDvyxaI3dM3BmOdKMIHnDsgaFsSVQ/QYdd1cHWlqc4Ey0LRFPLZZAwtcFSL4rHxISDLS9gsUO7EYBDiLJCq3b1vRq0VF2/rWEp05Ty0oFHz9L5agMJWJumDZKlQKVRhy7mWvQdNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EYvEdTlS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o3fRcDvo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E9C91F000E9;
-	Tue, 21 Jul 2026 22:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EYvEdTlS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410201F000E9;
+	Tue, 21 Jul 2026 22:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674777;
-	bh=x70axlcFRn3/Eq2MW+L9+Rm/5lxi4e7UE2rdzHpRqdA=;
+	s=korg; t=1784674779;
+	bh=vRDug223fL6TVTpKWes5AR1wqFe9CjPP03ieMMUek9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o3fRcDvo0g8XBryjTZgyM69JpObiFXlqSqZ89J8f6KR6iwKBdXa9KLT40IPj4o3JU
-	 GkqRUfLdAAukiIIqZKx3X0b9X7RrDRG4Ktg94xTfs/S2e+ykMdgEWMZ29xGdbFZgjL
-	 l3ZbULRv7ek1WpjmEX2gvOANfL9+fD4uMOoMgW74=
+	b=EYvEdTlS6WFcABy9H9wXkHoceEJ5BA2YOrJxT4WhNz5ZcCT/gMKI2Gfmush/kidg6
+	 vBOR5yvHrYZ0o7AnK3A3LwyMUMrUjRhWIlKIGuLe6w1lPEb6CtbDc96RORM9nAzvc2
+	 Cfvl9BtNeGrlcKtCLSigyOdTQ318RZzOdeUGTkMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Pavel Machek <pavel@ucw.cz>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 668/699] drm/i2c/sil164: Drop no-op remove function
-Date: Tue, 21 Jul 2026 17:27:07 +0200
-Message-ID: <20260721152410.832512583@linuxfoundation.org>
+Subject: [PATCH 5.10 669/699] leds: lm3697: Remove duplicated error reporting in .remove()
+Date: Tue, 21 Jul 2026 17:27:08 +0200
+Message-ID: <20260721152410.855673614@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -54,42 +55,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit eb09882d64807c24228ed1d005dbbae70860ca3f ]
+[ Upstream commit af89fa11fae1cee4e07453f780e6e5573ef0f477 ]
 
-A remove callback that just returns 0 is equivalent to no callback at all
-as can be seen in i2c_device_remove(). So simplify accordingly.
+Returning an error value from an i2c remove callback results in an error
+message being emitted by the i2c core, but otherwise it doesn't make a
+difference. The device goes away anyhow and the devm cleanups are
+called.
 
+As lm3697_remove() already emits an error message on failure and the
+additional error message by the i2c core doesn't add any useful
+information, don't pass the error value up the stack. Instead continue
+to clean up and return 0.
+
+This patch is a preparation for making i2c remove callbacks return void.
+
+Acked-by: Pavel Machek <pavel@ucw.cz>
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Stable-dep-of: 1f0bdc2884b6 ("usb: typec: ucsi: ccg: Fix use-after-free of ucsi on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i2c/sil164_drv.c |    7 -------
- 1 file changed, 7 deletions(-)
+ drivers/leds/leds-lm3697.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/i2c/sil164_drv.c
-+++ b/drivers/gpu/drm/i2c/sil164_drv.c
-@@ -370,12 +370,6 @@ sil164_probe(struct i2c_client *client,
- 	return 0;
- }
+--- a/drivers/leds/leds-lm3697.c
++++ b/drivers/leds/leds-lm3697.c
+@@ -337,10 +337,8 @@ static int lm3697_remove(struct i2c_clie
  
--static int
--sil164_remove(struct i2c_client *client)
--{
--	return 0;
--}
--
- static struct i2c_client *
- sil164_detect_slave(struct i2c_client *client)
- {
-@@ -427,7 +421,6 @@ MODULE_DEVICE_TABLE(i2c, sil164_ids);
- static struct drm_i2c_encoder_driver sil164_driver = {
- 	.i2c_driver = {
- 		.probe = sil164_probe,
--		.remove = sil164_remove,
- 		.driver = {
- 			.name = "sil164",
- 		},
+ 	ret = regmap_update_bits(led->regmap, LM3697_CTRL_ENABLE,
+ 				 LM3697_CTRL_A_B_EN, 0);
+-	if (ret) {
++	if (ret)
+ 		dev_err(dev, "Failed to disable the device\n");
+-		return ret;
+-	}
+ 
+ 	if (led->enable_gpio)
+ 		gpiod_direction_output(led->enable_gpio, 0);
 
 
