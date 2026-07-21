@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BB82E736D;
-	Tue, 21 Jul 2026 17:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F30145B27;
+	Tue, 21 Jul 2026 17:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654642; cv=none; b=DnV/wY8mAurJiGy80HKTglTtPysQiifderCj1fSqm6arBcVTCgmeW0ataNZNLXmnmT+fMsKp0FZ6NzmAP0dQlKF0KajAmatjycE85L4eUNuuXhpgHuHSf49zP1YppjUJf3vXPMH3Sacp3LkAKV5Y+3kyGlZ71l2aRmA4DyZeoYQ=
+	t=1784654645; cv=none; b=kbfTZtK5tcLko5BEnYWAuApedyS2UD5TB9v9buPmQ0sJsPlzfsOABIxX0kmJEfgloDmHMUjbaXXaEOFJvYAj3+Ga2bX3ocvXM+9ZeYqbZIvcQLqNfz1kjoT2WB70v+sqAZ5190QUQusXmbghNbOQzzkqhxHMpYXGNtRjQHoa5vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654642; c=relaxed/simple;
-	bh=I5IPrMF+yW+xoVoO7CjlxEnvaJeMBa9Tc967eBmewgs=;
+	s=arc-20240116; t=1784654645; c=relaxed/simple;
+	bh=joJDFQPD5gFcDPiK+z5GJzKfY47USzCo3WQvyWPVnFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RaN1H38IJbG84Rck05U6ZvCzmpjXmQpaqtvjrUIF3D+ZX4+cbMr37LZrsb93YcIYPcIZsBKzgcyCqzQPYuDFJ8AxKov+unBnetZUsTWM7nqlqeMhfE5UxXjHsXrx82qHQbKjtMM5kJMHm2jySalYXMWem9kiAnJ7kZ2zkE898l8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdmBvW5z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=MFLLtwYUptrjN1PR0guR1+arM8UHhN+U6dAMI28jEKtJInpWgip81+DbgUynC+RBvZXF7hh7LdTxSNsg4JMy6JKvCNw+vnXTXwg9VxEGq0nopW72QlpxAmQia0p7H9WIRYkqBFN6J2H+q1z6Zch0WW5wCmrMovWOXC96ShExuOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FCrsmQGy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdmBvW5z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31501F000E9;
-	Tue, 21 Jul 2026 17:24:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FCrsmQGy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B131F000E9;
+	Tue, 21 Jul 2026 17:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654641;
-	bh=6n11YX7DEI4RriDcpHhcWu4FoRVuh2GgjbgnqRIgvdo=;
+	s=korg; t=1784654643;
+	bh=y377k/8gNgSekltRHpvb/9wKG0tSNVtCu+9/7Ll7CSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fdmBvW5zXZ6vfIHj0jlGvANajaNNBKzAJjLMjGHbzHO+m753UukbhfuvqoI9j0Zrn
-	 EW8Tk5H27C1ovM4+jgTwHSdIoqmbVDvWCe+P0NuYmHqqwGw5MgEuXmRddGiRAV7QC0
-	 sX6SqPmvCdaPPlQML8QsRWGysIB2H6cXZGqV/nXc=
+	b=FCrsmQGyl5qaZ+oTk0nddTeaF4+K/LmtmYaRZ7pZVG0bV+CX9b7GsjgG2g3MxxNG2
+	 /VJO6oUQ9bbW+fFSFGI0nW+jmX2Frw52j+Fq8/SMpKCVwCsX+lUJocGOzHzzaojnHS
+	 JIO8bDEtr/K+/z2H4mxyKNnn+6to/helU9sUpyeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alberto=20Esca=C3=B1o?= <alberto_e_88@yahoo.es>,
+	=?UTF-8?q?Ahmet=20=C3=96zt=C3=BCrk?= <sivasli-ahmet@gmx.de>,
 	Krishna Chomal <krishna.chomal108@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 7.1 1781/2077] platform/x86: hp-wmi: Add support for Omen 16-ap0xxx (8D26)
-Date: Tue, 21 Jul 2026 17:24:14 +0200
-Message-ID: <20260721152634.755290878@linuxfoundation.org>
+Subject: [PATCH 7.1 1782/2077] platform/x86: hp-wmi: Add support for Omen 16-ap0xxx (8E35)
+Date: Tue, 21 Jul 2026 17:24:15 +0200
+Message-ID: <20260721152634.778514412@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,24 +54,24 @@ Content-Transfer-Encoding: 8bit
 
 From: Krishna Chomal <krishna.chomal108@gmail.com>
 
-commit 0aab31d47c2e857ca05028d718d1e0d239e683ad upstream.
+commit 56b7981c6f21670c0a1a62e6d2f9afb380e2596d upstream.
 
-The HP Omen 16-ap0xxx (board ID: 8D26) has the same WMI interface as
+The HP Omen 16-ap0xxx (board ID: 8E35) has the same WMI interface as
 other Victus S boards, but requires quirks for correctly switching
 thermal profile.
 
 Add the DMI board name to victus_s_thermal_profile_boards[] table and
 map it to omen_v1_legacy_thermal_params.
 
-Testing on board 8D26 confirmed that platform profile is registered
+Testing on board 8E35 confirmed that platform profile is registered
 successfully and fan RPMs are readable and controllable.
 
-Tested-by: Alberto Escaño <alberto_e_88@yahoo.es>
-Reported-by: Alberto Escaño <alberto_e_88@yahoo.es>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221514
+Tested-by: Ahmet Öztürk <sivasli-ahmet@gmx.de>
+Reported-by: Ahmet Öztürk <sivasli-ahmet@gmx.de>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221523
 Cc: stable@vger.kernel.org # v6.18+
 Signed-off-by: Krishna Chomal <krishna.chomal108@gmail.com>
-Link: https://patch.msgid.link/20260525102226.56300-1-krishna.chomal108@gmail.com
+Link: https://patch.msgid.link/20260608134255.36280-1-krishna.chomal108@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -81,16 +81,16 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/platform/x86/hp/hp-wmi.c
 +++ b/drivers/platform/x86/hp/hp-wmi.c
-@@ -250,6 +250,10 @@ static const struct dmi_system_id victus
- 		.driver_data = (void *)&victus_s_thermal_params,
- 	},
- 	{
-+		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8D26") },
-+		.driver_data = (void *)&omen_v1_legacy_thermal_params,
-+	},
-+	{
- 		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8D41") },
+@@ -261,6 +261,10 @@ static const struct dmi_system_id victus
+ 		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8D87") },
  		.driver_data = (void *)&omen_v1_no_ec_thermal_params,
  	},
++	{
++		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8E35") },
++		.driver_data = (void *)&omen_v1_legacy_thermal_params,
++	},
+ 	{},
+ };
+ 
 
 
