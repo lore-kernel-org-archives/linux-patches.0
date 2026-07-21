@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD553FE67B;
-	Tue, 21 Jul 2026 17:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28A83FE67B;
+	Tue, 21 Jul 2026 17:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655104; cv=none; b=s8xo9zCrPsC7YKsgcKcqGL7rCkTmsEz0Q20vYsnTOCBMK3EWEh8Qozoqqs8eNkxYRh3DrcRupqjwgnd4mkqrch4R4FsskFDZsYxJR0NXyiIqpITI0EX6E0f8WmE7BXSN5CXq8ibXrMvg0mUipl8wDpwQiw6ozrWx5k5xaeLJGXI=
+	t=1784655106; cv=none; b=rhb1rNxUHAZrtQ0n+0eCm4Ada2TolZhdXr+pUHzNshFc/0pEmLy09r6WqPRrp+Um00/wYZerZ0Lhxoq33nOu0mGXJsZ11JsEWG9nF8SKaC3AEmnRPUJAgUrVlBfB+ccIqQPuGKj7sjMuwvHy2dixA6OVtVqwwHxqoGGtGzyhqsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655104; c=relaxed/simple;
-	bh=WofCAD3ejaic+uh/2976CCY+9ioddaxWTJodrPo325g=;
+	s=arc-20240116; t=1784655106; c=relaxed/simple;
+	bh=STX95yzDJrl58x3z/0LPeVq8HnJKt3Jbdv5z9xKCsr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bbPhckwW15xq9kZgqdycYtX01cs3iE569LM1GZnzIs36aavFyRsdHsOghCc6oPNWUPkKgcx4Y5d8+GZ7ha554SdU5uLEbnWvRYiV+3zK/38Vi9h01vstGB8ISFhCoBnN7cB/cdl4Iqg0RR6blVvJ4W1AESgwY/cw/f8ff/JK6HA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGh+7Ebd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eCtKTVybct1p/rMJtZrwsXUQQ9b/fNtEIxenvB4IDCKS3Dq5MnoZDTM3OQUgkrdX5ahcd4zdeygaUdtVB5gJy4KQdT3cVyv49L+Tfwt5hrLuLNqD0A5fHLLzvFbhlTZhnoJu28QLG4cvnEMlZsf7HbOcH08m17ho9Q3/O9G6dwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b7Qi6c2G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGh+7Ebd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1C41F000E9;
-	Tue, 21 Jul 2026 17:31:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b7Qi6c2G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45EFE1F000E9;
+	Tue, 21 Jul 2026 17:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655103;
-	bh=ej0zxtmUZPeYkcXLJS0vffRaxH9IAeNy4F4DdiogWhc=;
+	s=korg; t=1784655105;
+	bh=E+2zUsqccs4bfudoUlT1ukTyW/CDfbNipg6ggTpZJw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fGh+7EbduLetVEoizUX+Qpy4dGE01N5JE4kDqG21AqoruXw51t98SNPkblrEu4/iB
-	 RpWmlAr0YnyGPN/kqMqaGlxB5W/e5JrlqZuPVeenILbegvSZQ6fdvDC2W+hFRzTkCD
-	 IydxbAqm8aO9i5ToGYuCrW8hXzyMsoGDjYETbIg8=
+	b=b7Qi6c2GPu0N9CY6Z1Cpe1bmmPoCGFNGEwlRCblUx9CyD5j1q/UmVS5m7CdzuXiRu
+	 DMqaDYdO++k0VzaRt23W/Y+u41HQVZbN0BuUe6j2KE1LOQrV+FokG8wl2Jn9BEY9qH
+	 dVNke2gfNJ57XpVRVVKwqnr1+Ly9QeafSS5ifyW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 7.1 1957/2077] hwmon: (max1619) add missing select REGMAP to Kconfig
-Date: Tue, 21 Jul 2026 17:27:10 +0200
-Message-ID: <20260721152638.869003712@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 7.1 1958/2077] tracing/probes: Fix double addition of offset for @+FOFFSET
+Date: Tue, 21 Jul 2026 17:27:11 +0200
+Message-ID: <20260721152638.891883080@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,33 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Crofts <joshua.crofts1@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 943a749bdffdd2132fab9240db890e07d93e1fcf upstream.
+commit 9a667b7750dda88cbf1cca96a53a2163b2ee71f7 upstream.
 
-The Kconfig entry for the MAX1619 sensor doesn't contain a
-`select REGMAP` parameter, causing build failures if regmap
-isn't selected previously during the build process.
+Since commit 533059281ee5 ("tracing: probeevent: Introduce new argument
+ fetching code") wrongly use @offset local variable during the parsing,
+the offset value is added twice when dereferencing.
+Reset the @offset after setting it in FETCH_OP_FOFFS.
 
-Fixes: f8016132ce49 ("hwmon: (max1619) Convert to use regmap")
+Link: https://lore.kernel.org/all/178217905962.643090.1978577464942171332.stgit@devnote2/
+
+Fixes: 533059281ee5 ("tracing: probeevent: Introduce new argument fetching code")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Link: https://lore.kernel.org/r/20260629-add-kconfig-deps-v1-1-8104df929b1a@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/Kconfig |    1 +
+ kernel/trace/trace_probe.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/hwmon/Kconfig
-+++ b/drivers/hwmon/Kconfig
-@@ -1215,6 +1215,7 @@ config SENSORS_MAX16065
- config SENSORS_MAX1619
- 	tristate "Maxim MAX1619 sensor chip"
- 	depends on I2C
-+	select REGMAP
- 	help
- 	  If you say yes here you get support for MAX1619 sensor chip.
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -1248,6 +1248,7 @@ parse_probe_arg(char *arg, const struct
  
+ 			code->op = FETCH_OP_FOFFS;
+ 			code->immediate = (unsigned long)offset;  // imm64?
++			offset = 0;
+ 		} else {
+ 			/* uprobes don't support symbols */
+ 			if (!(ctx->flags & TPARG_FL_KERNEL)) {
 
 
