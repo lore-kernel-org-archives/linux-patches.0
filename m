@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5BA3E7141;
-	Tue, 21 Jul 2026 17:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7301B3E7141;
+	Tue, 21 Jul 2026 17:31:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655118; cv=none; b=EjkKhtVJBHPzXYVxVjX+42YL5d6pzXW7CHOs7A66l77eHC0OYwJ6gW3v2wSbzWG7gpVlJ2kw7jziQM6a3gZ7/tJofhLHT9tzIc/yieAflciS+2KXDgj3lrXy+uBpnLO/dFoJPSLiibYkFCeoK5auKGEKfDrr1r5BBjXYg/trLWs=
+	t=1784655120; cv=none; b=pBYd19ql8Aj2aGvQpZDPUukSyrsqi0brRJmmBWdG4zrirLuf0PTjV1XpLLrjmw0CXlxoQawBN1XETpuoA/DXCU/MIHpGo48FKm8A0XgSlG+fMzY94FL6ITAd+hKjiXW787lJ7laMam+oSkGkAvg50pZrxBHRzS5XJKwlmukXzAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655118; c=relaxed/simple;
-	bh=zALWvvKpXv/t//BhoBQmmfvK/RzEsVjwnPa0Mj9HE0M=;
+	s=arc-20240116; t=1784655120; c=relaxed/simple;
+	bh=P2eC+1SuOgzFE8YL74s7i72XB9wXeWj+pPuei5H/vc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PR4M7rQdJWmrK6EUJoq0Vy8MTHKh+bhhQYIF8LBcNAK07nPThLNIrEToEjA6qAkUiMVFjz9CFkl4RbDpWCbhQpENE4dFcLhcgT7iqHpAaOdlraW9WdowQL49wJuimzLu4oMyRG2aEiacpGeAsI+6s0y+g686su7baL9u7Fp+Nz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SqIqKRwo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r/plNZrqPQIC0b09PjunoaS4Tgu7v3pQS9gi/U06epHP73mVD65DmEfvTDjwVHMdg+Z/hh9TmOk06ggQ2AZPp8B4//anDPNX//nWz1M3UEdzvMaSd8qghz4ue+nYZahlhU+J953FGYI/GnRXbygrZzbX4dvQl+XNxzw+klDUmPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdM09gLC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SqIqKRwo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF0B1F000E9;
-	Tue, 21 Jul 2026 17:31:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdM09gLC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C871F00A3A;
+	Tue, 21 Jul 2026 17:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655116;
-	bh=WruLPIxLgyUuL5R9HK23CnCI2jrFcuWJ4X9vcgv51rQ=;
+	s=korg; t=1784655119;
+	bh=Qe6fP1ojUoP7gnDfM9TkHC3J8NQgfCLMdp1z8lybzgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SqIqKRwoKxL3ZRJvr+yd8VhXdkkejT9O4cZ/6+NdkWt8r6UHr0N8EgIS8dZu3pw2i
-	 H5f3LC4Ol+NJam/v27jvVlUK8yfK02IWHfLue/0i62BVkIVgi4BLv7nuNsu0j5y8a/
-	 FutEfacf0lDxMFBfTCOPDafI6iOLT4kE3BNHMOXc=
+	b=jdM09gLCGp7pWUceYPM05Z2q/1lELkREgGAEhbxddCGuXl2bMfeI8LUwmIB6OCW0h
+	 esXF1hQ/x5WFJdVzKEtQsw9D3/RsN0QmPu+BA7wIcjV8Vrn+Uy5lodw9Dl4PEnsTW2
+	 C6hhxWfR//sNQKse/cfPeOLiTe+/glihnGGn4c/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 7.1 1962/2077] ata: pata_pxa: Fix DMA channel leak on probe error
-Date: Tue, 21 Jul 2026 17:27:15 +0200
-Message-ID: <20260721152638.984309608@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 7.1 1963/2077] ata: libata-core: Reject an invalid concurrent positioning ranges count
+Date: Tue, 21 Jul 2026 17:27:16 +0200
+Message-ID: <20260721152639.007433403@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,38 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit fcaf242e7fc406e78f444a35441e3b58f5e28781 upstream.
+commit 533a0b940f901c15e5cbbd4b5d66e871c209e8ce upstream.
 
-When dmaengine_slave_config() fails, the DMA channel acquired by
-dma_request_chan() is not released before returning the error,
-leaking the channel reference.
+ata_dev_config_cpr() takes the number of range descriptors from buf[0]
+of the concurrent positioning ranges log (up to 255), which the device
+reports independently of the log size in the GPL directory. The count is
+then walked at a fixed 32-byte stride in two places with no bound: the
+log read here, and the INQUIRY VPD page B9h emitter, which writes one
+descriptor per range into the fixed 2048-byte ata_scsi_rbuf. A device
+reporting a count larger than its own log overflows the read buffer (up
+to 7704 bytes past a 512-byte slab), and a count above 62 overflows the
+response buffer on the emit side.
 
-Fix by adding dma_release_channel() in the error path.
+Bound the count once, on probe, against both the log the device returned
+and the number of descriptors the VPD B9h response buffer can hold
+(ATA_DEV_MAX_CPR, derived from the rbuf size). Reject an out-of-range
+count with a warning; this keeps the emitter in bounds with no separate
+change there.
 
-The ata_host_activate() error path already correctly releases the
-DMA channel.
-
+Suggested-by: Damien Le Moal <dlemoal@kernel.org>
+Fixes: fe22e1c2f705 ("libata: support concurrent positioning ranges log")
+Fixes: c745dfc541e7 ("libata: fix reading concurrent positioning ranges log")
 Cc: stable@vger.kernel.org
-Fixes: 88622d80af82 ("ata: pata_pxa: dmaengine conversion")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
 Reviewed-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/pata_pxa.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/ata/libata-core.c |   18 ++++++++++++++++++
+ drivers/ata/libata-scsi.c |    2 --
+ drivers/ata/libata.h      |    9 +++++++++
+ 3 files changed, 27 insertions(+), 2 deletions(-)
 
---- a/drivers/ata/pata_pxa.c
-+++ b/drivers/ata/pata_pxa.c
-@@ -286,6 +286,7 @@ static int pxa_ata_probe(struct platform
- 	ret = dmaengine_slave_config(data->dma_chan, &config);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "dma configuration failed: %d\n", ret);
-+		dma_release_channel(data->dma_chan);
- 		return ret;
- 	}
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -2847,6 +2847,24 @@ static void ata_dev_config_cpr(struct at
+ 	if (!nr_cpr)
+ 		goto out;
  
++	/*
++	 * The device reports the number of CPR descriptors independently of the
++	 * log size, and that count is also used to emit VPD page B9h into the
++	 * fixed-size rbuf. Reject a count larger than what that buffer can hold
++	 * (ATA_DEV_MAX_CPR) or larger than the log the device actually returned.
++	 */
++	if (nr_cpr > ATA_DEV_MAX_CPR) {
++		ata_dev_warn(dev,
++			     "Too many concurrent positioning ranges\n");
++		goto out;
++	}
++
++	if (buf_len < 64 + (size_t)nr_cpr * 32) {
++		ata_dev_warn(dev,
++			     "Invalid number of concurrent positioning ranges\n");
++		goto out;
++	}
++
+ 	cpr_log = kzalloc_flex(*cpr_log, cpr, nr_cpr);
+ 	if (!cpr_log)
+ 		goto out;
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -37,8 +37,6 @@
+ #include "libata.h"
+ #include "libata-transport.h"
+ 
+-#define ATA_SCSI_RBUF_SIZE	2048
+-
+ static DEFINE_SPINLOCK(ata_scsi_rbuf_lock);
+ static u8 ata_scsi_rbuf[ATA_SCSI_RBUF_SIZE];
+ 
+--- a/drivers/ata/libata.h
++++ b/drivers/ata/libata.h
+@@ -148,6 +148,15 @@ static inline bool ata_acpi_dev_manage_r
+ #endif
+ 
+ /* libata-scsi.c */
++#define ATA_SCSI_RBUF_SIZE	2048
++
++/*
++ * Maximum number of concurrent positioning ranges (CPR) supported. The ACS
++ * specifications allow up to 255, but we limit this to the number of CPR
++ * descriptors that fit in the rbuf buffer used to emit VPD page B9h.
++ */
++#define ATA_DEV_MAX_CPR		min(255, ((ATA_SCSI_RBUF_SIZE - 64) / 32))
++
+ extern struct ata_device *ata_scsi_find_dev(struct ata_port *ap,
+ 					    const struct scsi_device *scsidev);
+ extern int ata_scsi_add_hosts(struct ata_host *host,
 
 
