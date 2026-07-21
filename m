@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6931E175A81;
-	Tue, 21 Jul 2026 23:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB235379960;
+	Tue, 21 Jul 2026 23:00:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674821; cv=none; b=PQAoVW6GQeDGMAso4rJmyovYSSybJ3LIneckvmaeRWk7bHSsDCyfHAcKPyOpsTR4AW9I27D3KakaHdK/eLwjYDgxk+NExtrE0UsGXtqr90nzbtJ4/fcfjo8BJiRnxJ+gwEczQGh+R0Xk0eETbWVth+CKEUxotd7+wZNYlnMh+8o=
+	t=1784674822; cv=none; b=ttHFjdwBVd2cNj+dVjuw79zWZPPPJHMTQiCc1Any4xv39A0KfhnNS+RbHYgL8e8+ndABx2tV8avzRUeWayvi3FRdXkr4EjSEn8wx4pQC96QMvXm8zBsjCQhODd592Nhys5qeTEfAk4MxeZV0+MpyQyN+E0rIFZUGTW+cJ5wn+R4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674821; c=relaxed/simple;
-	bh=HbRmSdTrnC/ncLqAlDIOvKcseT7GwDjE8xAF3l2oy+o=;
+	s=arc-20240116; t=1784674822; c=relaxed/simple;
+	bh=ydF5wdO62hbYdqsQdSQJzFvp2GUyMDhGmwR6mBadhjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N3zwgXeg62U8PS4a1F4LtAENedlzPWaoT4OJF36lfv4BNnvGAnQ3Po7wB7YxNobnLK/S49O5w8UXY8zVbeawFnkxRFoxrw28z3guAYMEBj6/T5eL7wTyvheJhxLrhwF/o7gDoTcvy1DCSJRFchtlWrMMl9r4eiY68sbQTb4QQF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQqPtlCx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kCAMSyEwq8fmgCY8nyL2sVYUi9WnLxPGHBSMXzfFj2AUNO2reX/66Fy9xSvB680O2kBb4gFsPIPNGV0MGvFLzm1R+zO5LuyRHkJpvXMtqz/hHwkLdgmij+zbmKrlxe7bedq4iraGBTJiJomMBT1dYo6tRcEU0F84mlLwPu8pcs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yabRRjpv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQqPtlCx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F891F00A3A;
-	Tue, 21 Jul 2026 23:00:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yabRRjpv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DAD91F000E9;
+	Tue, 21 Jul 2026 23:00:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674820;
-	bh=TjAlSt3szADMOfbpNQJ8W9luwL2vm59/aIgcRcX5oIY=;
+	s=korg; t=1784674817;
+	bh=f2LQ3h5iK9W90s7lNW6L8D/xN1ZMyeOUB9TOo8iWjww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EQqPtlCxma8nYI4s4czZuWDtlGawVr/cVAGHj9BR8YfhW+zRjlWIMpCD0mUGvNdTh
-	 wGillSeMXP+4h9w9DmSEXDp0euGQqWRIClfFccyraJFQiIF/EgZcM7dDGyMVSou91Y
-	 LCos2/5LXpZY7NWWJMuwxQXGyPpWXaOVHr/ng028=
+	b=yabRRjpvIQokAwxxOn/NepHQ18Yb8nhEPnu7addPuknSTp7zRi/uDeXVfN6FpwbvS
+	 W/ryP8rELumzOApqLmIsVJHjpHcrJb0wKKaJvCIyOi5dDkXVuTMqQf13IgQv0JR0cu
+	 DY4wXghkNGSL5zew4SRP0Ws5kLfb89DEtSmY4hks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Richter <Simon.Richter@hogyros.de>,
-	=?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 632/699] PCI: Fix restoring BARs on BAR resize rollback path
-Date: Tue, 21 Jul 2026 17:26:31 +0200
-Message-ID: <20260721152410.003818834@linuxfoundation.org>
+Subject: [PATCH 5.10 641/699] Bluetooth: L2CAP: cancel pending_rx_work before taking conn->lock
+Date: Tue, 21 Jul 2026 17:26:40 +0200
+Message-ID: <20260721152410.210806620@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -48,339 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 337b1b566db087347194e4543ddfdfa5645275cc ]
+[ Upstream commit 2641a9e0a1dd4af2e21995470a21d55dd35e5203 ]
 
-BAR resize operation is implemented in the pci_resize_resource() and
-pbus_reassign_bridge_resources() functions. pci_resize_resource() can be
-called either from __resource_resize_store() from sysfs or directly by the
-driver for the Endpoint Device.
+l2cap_conn_del() takes conn->lock and then calls cancel_work_sync() for
+pending_rx_work.  process_pending_rx() takes the same mutex, so teardown
+can deadlock against the worker it is flushing.
 
-The pci_resize_resource() requires that caller has released the device
-resources that share the bridge window with the BAR to be resized as
-otherwise the bridge window is pinned in place and cannot be changed.
+This issue was found by our static analysis tool and then manually
+reviewed against the current tree.
 
-pbus_reassign_bridge_resources() rolls back resources if the resize
-operation fails, but rollback is performed only for the bridge windows.
-Because releasing the device resources are done by the caller of the BAR
-resize interface, these functions performing the BAR resize do not have
-access to the device resources as they were before the resize.
+The grounded PoC kept the l2cap_conn_ready() -> queue_work(...,
+&conn->pending_rx_work) submit path, the l2cap_conn_del() ->
+cancel_work_sync(&conn->pending_rx_work) teardown path, and the
+process_pending_rx() -> mutex_lock(&conn->lock) worker edge.  Lockdep
+reported:
 
-pbus_reassign_bridge_resources() could try __pci_bridge_assign_resources()
-after rolling back the bridge windows as they were, however, it will not
-guarantee the resource are assigned due to differences in how FW and the
-kernel assign the resources (alignment of the start address and tail).
+  WARNING: possible circular locking dependency detected
+  process_pending_rx+0x21/0x2a [vuln_msv]
+  l2cap_conn_del.constprop.0+0x3f/0x4e [vuln_msv]
+  *** DEADLOCK ***
 
-To perform rollback robustly, the BAR resize interface has to be altered to
-also release the device resources that share the bridge window with the BAR
-to be resized.
+Cancel pending_rx_work before taking conn->lock, matching the existing
+lock-before-drain ordering used for the two delayed works in the same
+teardown path.  The pending_rx queue is still purged after the work has
+been cancelled and conn->lock has been acquired.
 
-Also, remove restoring from the entries failed list as saved list should
-now contain both the bridge windows and device resources so the extra
-restore is duplicated work.
-
-Some drivers (currently only amdgpu) want to prevent releasing some
-resources. Add exclude_bars param to pci_resize_resource() and make amdgpu
-pass its register BAR (BAR 2 or 5), which should never be released during
-resize operation. Normally 64-bit prefetchable resources do not share a
-bridge window with the 32-bit only register BAR, but there are various
-fallbacks in the resource assignment logic which may make the resources
-share the bridge window in rare cases.
-
-This change (together with the driver side changes) is to counter the
-resource releases that had to be done to prevent resource tree corruption
-in the ("PCI: Release assigned resource before restoring them") change. As
-such, it likely restores functionality in cases where device resources were
-released to avoid resource tree conflicts which appeared to be "working"
-when such conflicts were not correctly detected by the kernel.
-
-Reported-by: Simon Richter <Simon.Richter@hogyros.de>
-Link: https://lore.kernel.org/linux-pci/f9a8c975-f5d3-4dd2-988e-4371a1433a60@hogyros.de/
-Reported-by: Alex Bennée <alex.bennee@linaro.org>
-Link: https://lore.kernel.org/linux-pci/874irqop6b.fsf@draig.linaro.org/
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-[bhelgaas: squash amdgpu BAR selection from
-https: //lore.kernel.org/r/20251114103053.13778-1-ilpo.jarvinen@linux.intel.com]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Alex Bennée <alex.bennee@linaro.org> # AVA, AMD GPU
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patch.msgid.link/20251113162628.5946-7-ilpo.jarvinen@linux.intel.com
-Stable-dep-of: ee7471fe968d ("PCI: Skip Resizable BAR restore on read error")
+Fixes: 7ab56c3a6ecc ("Bluetooth: Fix deadlock in l2cap_conn_del()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    4 -
- drivers/pci/pci.h                          |    3 
- drivers/pci/setup-bus.c                    |   97 +++++++++++++++++++----------
- drivers/pci/setup-res.c                    |   19 +----
- include/linux/pci.h                        |    4 -
- 5 files changed, 79 insertions(+), 48 deletions(-)
+ net/bluetooth/l2cap_core.c |   10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -1141,7 +1141,9 @@ int amdgpu_device_resize_fb_bar(struct a
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -1901,17 +1901,11 @@ static void l2cap_conn_del(struct hci_co
+ 	cancel_delayed_work_sync(&conn->info_timer);
+ 	cancel_work_sync(&conn->id_addr_update_work);
  
- 	pci_release_resource(adev->pdev, 0);
- 
--	r = pci_resize_resource(adev->pdev, 0, rbar_size);
-+	r = pci_resize_resource(adev->pdev, 0, rbar_size,
-+				(adev->asic_type >= CHIP_BONAIRE) ? 1 << 5
-+								  : 1 << 2);
- 	if (r == -ENOSPC)
- 		DRM_INFO("Not enough PCI address space for a large BAR.");
- 	else if (r && r != -ENOTSUPP)
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -284,6 +284,9 @@ enum pci_bar_type {
- struct device *pci_get_host_bridge_device(struct pci_dev *dev);
- void pci_put_host_bridge_device(struct device *dev);
- 
-+int pci_do_resource_release_and_resize(struct pci_dev *dev, int resno, int size,
-+				       int exclude_bars);
++	cancel_work_sync(&conn->pending_rx_work);
 +
- int pci_configure_extended_tags(struct pci_dev *dev, void *ign);
- bool pci_bus_read_dev_vendor_id(struct pci_bus *bus, int devfn, u32 *pl,
- 				int crs_timeout);
---- a/drivers/pci/setup-bus.c
-+++ b/drivers/pci/setup-bus.c
-@@ -2166,18 +2166,16 @@ enable_all:
- }
- EXPORT_SYMBOL_GPL(pci_assign_unassigned_bridge_resources);
+ 	kfree_skb(conn->rx_skb);
  
--int pci_reassign_bridge_resources(struct pci_dev *bridge, unsigned long type)
-+static int pci_reassign_bridge_resources(struct pci_dev *bridge, unsigned long type,
-+					 struct list_head *saved)
- {
- 	struct pci_dev_resource *dev_res;
- 	struct pci_dev *next;
--	LIST_HEAD(saved);
- 	LIST_HEAD(added);
- 	LIST_HEAD(failed);
- 	unsigned int i;
- 	int ret;
- 
--	down_read(&pci_bus_sem);
+ 	skb_queue_purge(&conn->pending_rx);
 -
- 	/* Walk to the root hub, releasing bridge BARs when possible */
- 	next = bridge;
- 	do {
-@@ -2193,9 +2191,9 @@ int pci_reassign_bridge_resources(struct
- 			if (res->child)
- 				continue;
- 
--			ret = add_to_list(&saved, bridge, res, 0, 0);
-+			ret = add_to_list(saved, bridge, res, 0, 0);
- 			if (ret)
--				goto cleanup;
-+				return ret;
- 
- 			pci_info(bridge, "BAR %d: releasing %pR\n",
- 				 i, res);
-@@ -2212,67 +2210,104 @@ int pci_reassign_bridge_resources(struct
- 		next = bridge->bus ? bridge->bus->self : NULL;
- 	} while (next);
- 
--	if (list_empty(&saved)) {
--		up_read(&pci_bus_sem);
-+	if (list_empty(saved))
- 		return -ENOENT;
--	}
- 
- 	__pci_bus_size_bridges(bridge->subordinate, &added);
- 	__pci_bridge_assign_resources(bridge, &added, &failed);
- 	BUG_ON(!list_empty(&added));
- 
- 	if (!list_empty(&failed)) {
--		ret = -ENOSPC;
--		goto cleanup;
-+		free_list(&failed);
-+		return -ENOSPC;
- 	}
- 
--	list_for_each_entry(dev_res, &saved, list) {
-+	list_for_each_entry(dev_res, saved, list) {
- 		/* Skip the bridge we just assigned resources for */
- 		if (bridge == dev_res->dev)
- 			continue;
- 
-+		if (!dev_res->dev->subordinate)
-+			continue;
-+
- 		bridge = dev_res->dev;
- 		pci_setup_bridge(bridge->subordinate);
- 	}
- 
--	free_list(&saved);
--	up_read(&pci_bus_sem);
- 	return 0;
-+}
- 
--cleanup:
--	/* Restore size and flags */
--	list_for_each_entry(dev_res, &failed, list) {
--		struct resource *res = dev_res->res;
-+int pci_do_resource_release_and_resize(struct pci_dev *pdev, int resno, int size,
-+				       int exclude_bars)
-+{
-+	struct resource *res = pdev->resource + resno;
-+	unsigned long flags = res->flags;
-+	struct pci_dev_resource *dev_res;
-+	struct pci_bus *bus = pdev->bus;
-+	LIST_HEAD(saved);
-+	unsigned int i;
-+	int ret = 0;
- 
--		res->start = dev_res->start;
--		res->end = dev_res->end;
--		res->flags = dev_res->flags;
-+	down_read(&pci_bus_sem);
-+
-+	for (i = 0; i < PCI_BRIDGE_RESOURCES; i++) {
-+		struct resource *r = &pdev->resource[i];
-+
-+		if (exclude_bars & BIT(i))
-+			continue;
-+
-+		if (!pci_resource_len(pdev, i) || r->flags != flags)
-+			continue;
-+
-+		ret = add_to_list(&saved, pdev, r, 0, 0);
-+		if (ret)
-+			goto restore;
-+		pci_release_resource(pdev, i);
- 	}
--	free_list(&failed);
- 
-+	res->end = res->start + pci_rebar_size_to_bytes(size) - 1;
-+
-+	if (!bus->self)
-+		goto out;
-+
-+	ret = pci_reassign_bridge_resources(bus->self, res->flags, &saved);
-+	if (ret)
-+		goto restore;
-+
-+out:
-+	up_read(&pci_bus_sem);
-+	free_list(&saved);
-+	return ret;
-+
-+restore:
- 	/* Revert to the old configuration */
- 	list_for_each_entry(dev_res, &saved, list) {
- 		struct resource *res = dev_res->res;
-+		struct pci_dev *dev = dev_res->dev;
- 
--		bridge = dev_res->dev;
--		i = res - bridge->resource;
-+		i = res - dev->resource;
- 
- 		if (res->parent) {
- 			release_child_resources(res);
--			pci_release_resource(bridge, i);
-+			pci_release_resource(dev, i);
- 		}
- 
- 		res->start = dev_res->start;
- 		res->end = dev_res->end;
- 		res->flags = dev_res->flags;
- 
--		pci_claim_resource(bridge, i);
--		pci_setup_bridge(bridge->subordinate);
--	}
--	up_read(&pci_bus_sem);
--	free_list(&saved);
-+		if (pci_claim_resource(dev, i))
-+			continue;
- 
--	return ret;
-+		if (i < PCI_BRIDGE_RESOURCES) {
-+			pci_update_resource(dev, i);
-+			pci_info(dev, "BAR %d: old value restored %pR\n",
-+				 i, res);
-+		}
-+		if (dev->subordinate)
-+			pci_setup_bridge(dev->subordinate);
-+	}
-+	goto out;
- }
- 
- void pci_assign_unassigned_bus_resources(struct pci_bus *bus)
---- a/drivers/pci/setup-res.c
-+++ b/drivers/pci/setup-res.c
-@@ -422,9 +422,9 @@ void pci_release_resource(struct pci_dev
- }
- EXPORT_SYMBOL(pci_release_resource);
- 
--int pci_resize_resource(struct pci_dev *dev, int resno, int size)
-+int pci_resize_resource(struct pci_dev *dev, int resno, int size,
-+			int exclude_bars)
- {
--	struct resource *res = dev->resource + resno;
- 	struct pci_host_bridge *host;
- 	int old, ret;
- 	u32 sizes;
-@@ -435,10 +435,6 @@ int pci_resize_resource(struct pci_dev *
- 	if (host->preserve_config)
- 		return -ENOTSUPP;
- 
--	/* Make sure the resource isn't assigned before resizing it. */
--	if (!(res->flags & IORESOURCE_UNSET))
--		return -EBUSY;
+-	/* We can not call flush_work(&conn->pending_rx_work) here since we
+-	 * might block if we are running on a worker from the same workqueue
+-	 * pending_rx_work is waiting on.
+-	 */
+-	if (work_pending(&conn->pending_rx_work))
+-		cancel_work_sync(&conn->pending_rx_work);
 -
- 	pci_read_config_word(dev, PCI_COMMAND, &cmd);
- 	if (cmd & PCI_COMMAND_MEMORY)
- 		return -EBUSY;
-@@ -458,19 +454,14 @@ int pci_resize_resource(struct pci_dev *
- 	if (ret)
- 		return ret;
+ 	ida_destroy(&conn->tx_ida);
  
--	res->end = res->start + pci_rebar_size_to_bytes(size) - 1;
-+	ret = pci_do_resource_release_and_resize(dev, resno, size, exclude_bars);
-+	if (ret)
-+		goto error_resize;
- 
--	/* Check if the new config works by trying to assign everything. */
--	if (dev->bus->self) {
--		ret = pci_reassign_bridge_resources(dev->bus->self, res->flags);
--		if (ret)
--			goto error_resize;
--	}
- 	return 0;
- 
- error_resize:
- 	pci_rebar_set_size(dev, resno, old);
--	res->end = res->start + pci_rebar_size_to_bytes(old) - 1;
- 	return ret;
- }
- EXPORT_SYMBOL(pci_resize_resource);
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -1257,7 +1257,8 @@ void pci_update_resource(struct pci_dev
- int __must_check pci_assign_resource(struct pci_dev *dev, int i);
- int __must_check pci_reassign_resource(struct pci_dev *dev, int i, resource_size_t add_size, resource_size_t align);
- void pci_release_resource(struct pci_dev *dev, int resno);
--int __must_check pci_resize_resource(struct pci_dev *dev, int i, int size);
-+int __must_check pci_resize_resource(struct pci_dev *dev, int i, int size,
-+				     int exclude_bars);
- int pci_select_bars(struct pci_dev *dev, unsigned long flags);
- bool pci_device_is_present(struct pci_dev *pdev);
- void pci_ignore_hotplug(struct pci_dev *dev);
-@@ -1332,7 +1333,6 @@ void pci_assign_unassigned_resources(voi
- void pci_assign_unassigned_bridge_resources(struct pci_dev *bridge);
- void pci_assign_unassigned_bus_resources(struct pci_bus *bus);
- void pci_assign_unassigned_root_bus_resources(struct pci_bus *bus);
--int pci_reassign_bridge_resources(struct pci_dev *bridge, unsigned long type);
- void pdev_enable_device(struct pci_dev *);
- int pci_enable_resources(struct pci_dev *, int mask);
- void pci_assign_irq(struct pci_dev *dev);
+ 	l2cap_unregister_all_users(conn);
 
 
