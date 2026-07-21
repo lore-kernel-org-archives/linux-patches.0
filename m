@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C1D386C1C;
-	Tue, 21 Jul 2026 20:50:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D9D3B1EFC;
+	Tue, 21 Jul 2026 20:50:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667011; cv=none; b=muoFpQHyas4zQp4Z99RSPrDs7TG4re9viiA/e3onCOi54XnsrTLfD0h0CfZj8Ui5ixUXyfKiocsUJU4BDu805Qt/1HY5acNnco50Z8otJGw8WiolVFgnVfGxZ0RzUuOwnezo+BTqUs+no7WIk9YdC+ojgqMF07ih6lbyNDFLD/E=
+	t=1784667014; cv=none; b=FIndrmdHajom0GZ6rtkxnlGWvoMT1zFLfId9FksHZymJbwGPCoQ/KIhAw9MYH4QNMl+wOW83HvwcsXc1bzBnN3SdKcizR1tOOtcTHexgPKwcBcrtjz9Xpa+hkcdDoYfVq+z9q8G4caLG+gOpQbYPawJJcekEaFg+SH06V2fj/qc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667011; c=relaxed/simple;
-	bh=EybIVHfCWzJwLl/3/MHne8VoosrZMYZcdzBSymK8ORE=;
+	s=arc-20240116; t=1784667014; c=relaxed/simple;
+	bh=TzgIMbNPH5LeB40XjRc5/WeCZXqat1QeocTJfWCgKX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XPYUgeCzxGvaqLvwSW3gEjion4HkYUZ+J8N5BPbGLnrn1+/UsFrwciNsYE3sbh/mxVTztYcU9G14eim7ObsbGAKBGjYIArHz0FXAcM5/QQexL4YwI8W3n1Eztm6v5rahSK48kPGxTXuVUkWswmyPBFXNZ3J96TihGXL41vWITJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eu/TMPtC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S9PjB0VU835dtNhEmPB+FZxWTNskBxuKAgUAUpIyS2lSwsvTgIKJBxMcNXsXu7ZGgqXENoMkjmA4SDA6MCHAxEPB3GgwvQkS9nglIO03r/IKnIFZ2pe4hC6wch3E/FCaRumP0nw7r+cFT0TSp4p4tl0dsPzZ5enWjIfK8K340ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w16qNoi5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eu/TMPtC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 196ED1F000E9;
-	Tue, 21 Jul 2026 20:50:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w16qNoi5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8821F000E9;
+	Tue, 21 Jul 2026 20:50:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667009;
-	bh=dlLtBoo6v/4IGfCc/TrNN721aaoD6jJY+t9VjawIsYY=;
+	s=korg; t=1784667012;
+	bh=i9JeRyhSXK1252/XaGSGNUsaKNFrbxWJ5BWnZ5DencQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eu/TMPtC5UcTaWlka5J233O3HBvLFMhBuwDbE50FWPzZPmPG72XLJBtIp/Xuftyx5
-	 FrC31DxIsKsnoTD7ZyD69N8shHi3UOz7l9QlE5o5STcwhpgDFS2tn24ZzlKKy+NJMU
-	 CM4gKeRvjfQbYmPqiCdjewHjggrm1AepQ2CWp0lk=
+	b=w16qNoi5ouBni87dJ1cWhTnwOjCBQ68D31UMqJV8HVA4GGl1AvNtpjSs93qFjafwa
+	 dqf+lhH0IvJAb05qvo17cGA3F+4TmpRmFHoqdUeRjNyrszhlmTgI9MY6iq3+cxlXBq
+	 GvfD+BONCdh1I7bT4DZTS1fWYx16i6KR1dYYgtn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Fuad Tabba <tabba@google.com>,
-	James Morse <james.morse@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Oliver Upton <oupton@kernel.org>,
-	Vladimir Murzin <vladimir.murzin@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.6 0899/1266] arm64: fpsimd: Fix type mismatch in sve_{save,load}_state()
-Date: Tue, 21 Jul 2026 17:22:16 +0200
-Message-ID: <20260721152501.965253910@linuxfoundation.org>
+	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Nickolay Goppen <setotau@mainlining.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.6 0900/1266] arm64: dts: qcom: sdm630: describe adsp_mem region properly
+Date: Tue, 21 Jul 2026 17:22:17 +0200
+Message-ID: <20260721152501.987016403@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -57,76 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Nickolay Goppen <setotau@mainlining.org>
 
-commit ae24f6b06e90681ec36b9c21c3f5c09618350f5a upstream.
+commit ce414263e9ebe5080381a50cbdf9065c29816202 upstream.
 
-The sve_save_state() and sve_load_state() functions take a 32-bit int
-argument that describes whether to save/restore the FFR. Their assembly
-implementations consume the entire 64-bit register containing this
-32-bit value, and will attempt to save/restore the FFR if any bit of
-that 64-bit register is non-zero.
+Downstream [1] this region is marked as shared, reusable and dynamic so
+describe it that way.
 
-Per the AAPCS64 parameter passing rules, the callee is responsible for
-any necessary widening, and the upper 32-bits are permitted to contain
-arbitrary values. If the upper 32 bits are non-zero, this could result
-in an unexpected attempt to save/restore the FFR, and consequently could
-lead to unexpected traps/undefs/faults.
+[1]: https://github.com/xiaomi-sdm660/android_kernel_xiaomi_sdm660/blob/11-EAS/arch/arm/boot/dts/qcom/sdm660.dtsi#L448
 
-In practice compilers are very unlikely to generate code where the upper
-32-bits would be non-zero, but they are permitted to do so.
-
-Fix this by only consuming the low 32 bits of the register, and update
-comments accordingly.
-
-The hyp code __sve_save_state() and __sve_restore_state() functions
-don't have the same latent bug as they override the full 64-bit register
-containing the argument.
-
-Fixes: 9f5848665788 ("arm64/sve: Make access to FFR optional")
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Fuad Tabba <tabba@google.com>
-Cc: James Morse <james.morse@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Oliver Upton <oupton@kernel.org>
-Cc: Vladimir Murzin <vladimir.murzin@arm.com>
-Cc: Will Deacon <will@kernel.org>
+Fixes: b190fb010664 ("arm64: dts: qcom: sdm630: Add sdm630 dts file")
 Cc: stable@vger.kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
+Link: https://lore.kernel.org/r/20260429-qcom-sdm660-cdsp-adsp-fastrpc-dts-fix-v5-4-16bc82e622ad@mainlining.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/entry-fpsimd.S |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm630.dtsi |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/kernel/entry-fpsimd.S
-+++ b/arch/arm64/kernel/entry-fpsimd.S
-@@ -38,10 +38,10 @@ SYM_FUNC_END(fpsimd_load_state)
-  *
-  * x0 - pointer to buffer for state
-  * x1 - pointer to storage for FPSR
-- * x2 - Save FFR if non-zero
-+ * w2 - Save FFR if non-zero
-  */
- SYM_FUNC_START(sve_save_state)
--	sve_save 0, x1, x2, 3
-+	sve_save 0, x1, w2, 3
- 	ret
- SYM_FUNC_END(sve_save_state)
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -491,9 +491,12 @@
+ 			no-map;
+ 		};
  
-@@ -50,10 +50,10 @@ SYM_FUNC_END(sve_save_state)
-  *
-  * x0 - pointer to buffer for state
-  * x1 - pointer to storage for FPSR
-- * x2 - Restore FFR if non-zero
-+ * w2 - Restore FFR if non-zero
-  */
- SYM_FUNC_START(sve_load_state)
--	sve_load 0, x1, x2, 4
-+	sve_load 0, x1, w2, 4
- 	ret
- SYM_FUNC_END(sve_load_state)
+-		adsp_mem: adsp-region@f6000000 {
+-			reg = <0x0 0xf6000000 0x0 0x800000>;
+-			no-map;
++		adsp_mem: adsp-region {
++			compatible = "shared-dma-pool";
++			alloc-ranges = <0x0 0x80000000 0x0 0x80000000>;
++			alignment = <0x0 0x400000>;
++			size = <0x0 0x800000>;
++			reusable;
+ 		};
  
+ 		qseecom_mem: qseecom-region@f6800000 {
 
 
