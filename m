@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AAC946EC73;
-	Tue, 21 Jul 2026 21:08:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA19744470F;
+	Tue, 21 Jul 2026 21:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668096; cv=none; b=eCuI43+Y0txAkfEQZICULoHrl1z8JSvpCl9E3g1I6NWdVZtyZMhfcRC0cjIXwZepHQJxjeM0/7vGF5Nh2xXXQOSgmI/AsKXji8Y5PS09s4RbVLwzgki/zdmOJktizS7GDsjS1epKDQAMkc4gp812rzOq8DsFi2/ue3kxYwIQ+HY=
+	t=1784668098; cv=none; b=fOau06BX9XytDbDwZpWThu40kuoQbiAwxPXP8Nc8jzXbKg/9K0/3mMfGwTkbodnAzCV80KL0otI50Yb7oSTyVlZQvijH7FPecQHdXexSRPZ3Mk3NyteGvc+w36Q0NtgLFNU9Ga+4Sfsa9SaaiUgxTpReqZlijJvEwKM1lWbZgyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668096; c=relaxed/simple;
-	bh=MvblPWgWGhL4tFC+0D4AWnTfbOmGZtRNdw7rRnvUUNU=;
+	s=arc-20240116; t=1784668098; c=relaxed/simple;
+	bh=3MnhKa5cEhA8IZtBcc7FX2yzqn3miJlcRMqhwqB9fvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pxo6IsVT2vZIX28mDkZyuFmytQyqTkG6y1KLp9yHwHbI71qUvpfF2Kj5OzVvqOVU0nUJ00/87vbqTyUCoJZOloAt2u7wE6zx3zJy7d1kefTLQqHt0Nsqx3XWHqHCfW0wMr9v6zOKFP461VzcArfZzJj7v4Ym1ex8SfiiTOLMeT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJFmStkj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CTy2CBZ1Y5ssvooHH1CeXee01IWP8LkCj9q4ZOzM6emG+umRZQ9wrQdQxxc0qaxa1I47uAzAczyV1COdTRKr0CdLxnce90Z/x5v+DBFUO79/1Hc5lteT2xtM2KQUp/bMiv78lQs7F67/JLeMWd5r7AqwQhC/L+hlqkLfRAuNCN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7Wg6KQh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJFmStkj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701E01F000E9;
-	Tue, 21 Jul 2026 21:08:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7Wg6KQh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF1E1F000E9;
+	Tue, 21 Jul 2026 21:08:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668094;
-	bh=vQd+xqe3iWf5Ixostwt5pVbHjsoC+o2ATVank8T7gec=;
+	s=korg; t=1784668097;
+	bh=aEeUlMOBovjMas/SPky5Xah1XjkncjrSV4tfHhIEhjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iJFmStkjJIIerk92iC5NSgapp8rg7+JXApxrAH0FiE6On4E2+8Mi4Gi4s9FIXsXTx
-	 SzsSuTmrU9PuS4SuPB662kNAhXD72WNrnyRXUzKbfh+zoZbWh9FGd4aUD57GwhjaYE
-	 qics1AV4WA7E5wvqnThMyZJqM3QDMeVYMsWIYuUU=
+	b=G7Wg6KQh/5Cd7LuTtJovK4ToOjolr60tKy1km4nEev3x551lDc9fOfNnitOcP872F
+	 AcJDEwZsQGeztC2imtTGdEXrvri2gRaJQCCYrO11v0Vfr9IRPdKNdmhOo14C1OJAqa
+	 bpmSRcjJQDFxruULpQFRetuOxGZPt5y2iCULFs0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	carnil@debian.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0009/1067] slimbus: qcom-ngd-ctrl: Fix probe error path ordering
-Date: Tue, 21 Jul 2026 17:10:10 +0200
-Message-ID: <20260721152424.741188222@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Wentao Guan <guanwentao@uniontech.com>
+Subject: [PATCH 6.1 0045/1067] eventpoll: move epi_fget() up
+Date: Tue, 21 Jul 2026 17:10:46 +0200
+Message-ID: <20260721152425.568030744@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,61 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 2c22ff152d380ec3d3af099fa05d0ac5ca9b4c1e ]
+[ Upstream commit 86e87059e6d1fd5115a31949726450ed03c1073b ]
 
-qcom_slim_ngd_ctrl_probe() first registers the SSR callback then
-allocates the PDR context, as such the error path needs to come in
-opposite order to allow us to unroll each step.
+We'll need it when removing files so move it up. No functional change.
 
-Fixes: 16f14551d0df ("slimbus: qcom-ngd: cleanup in probe error path")
-Cc: stable@vger.kernel.org
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204421.116824-4-srini@kernel.org
+Link: https://patch.msgid.link/20260423-work-epoll-uaf-v1-5-2470f9eec0f5@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Stable-dep-of: a6dc643c6931 ("eventpoll: fix ep_remove struct eventpoll / struct file UAF")
+[file_ref_get(&file->f_ref) from original commit left as
+ atomic_long_inc_not_zero(&file->f_count) due to v6.12.y missing commit
+ 90ee6ed776c0 ("fs: port files to file_ref") and its dependent commit
+ 08ef26ea9ab3 ("fs: add file_ref")]
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/slimbus/qcom-ngd-ctrl.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ fs/eventpoll.c |   56 ++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 28 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-index a43daa48484f1e..62b0615a62c68f 100644
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1590,22 +1590,21 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
- 	if (IS_ERR(ctrl->pdr)) {
- 		ret = dev_err_probe(dev, PTR_ERR(ctrl->pdr),
- 				    "Failed to init PDR handle\n");
--		goto err_pdr_alloc;
-+		goto err_unregister_ssr;
- 	}
- 
- 	pds = pdr_add_lookup(ctrl->pdr, "avs/audio", "msm/adsp/audio_pd");
- 	if (IS_ERR(pds) && PTR_ERR(pds) != -EALREADY) {
- 		ret = dev_err_probe(dev, PTR_ERR(pds), "pdr add lookup failed\n");
--		goto err_pdr_lookup;
-+		goto err_pdr_release;
- 	}
- 
- 	return of_qcom_slim_ngd_register(dev, ctrl);
- 
--err_pdr_alloc:
--	qcom_unregister_ssr_notifier(ctrl->notifier, &ctrl->nb);
--
--err_pdr_lookup:
-+err_pdr_release:
- 	pdr_handle_release(ctrl->pdr);
-+err_unregister_ssr:
-+	qcom_unregister_ssr_notifier(ctrl->notifier, &ctrl->nb);
- 
- 	return ret;
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -716,6 +716,34 @@ static void ep_free(struct eventpoll *ep
  }
--- 
-2.53.0
-
+ 
+ /*
++ * The ffd.file pointer may be in the process of being torn down due to
++ * being closed, but we may not have finished eventpoll_release() yet.
++ *
++ * Normally, even with the atomic_long_inc_not_zero, the file may have
++ * been free'd and then gotten re-allocated to something else (since
++ * files are not RCU-delayed, they are SLAB_TYPESAFE_BY_RCU).
++ *
++ * But for epoll, users hold the ep->mtx mutex, and as such any file in
++ * the process of being free'd will block in eventpoll_release_file()
++ * and thus the underlying file allocation will not be free'd, and the
++ * file re-use cannot happen.
++ *
++ * For the same reason we can avoid a rcu_read_lock() around the
++ * operation - 'ffd.file' cannot go away even if the refcount has
++ * reached zero (but we must still not call out to ->poll() functions
++ * etc).
++ */
++static struct file *epi_fget(const struct epitem *epi)
++{
++	struct file *file;
++
++	file = epi->ffd.file;
++	if (!atomic_long_inc_not_zero(&file->f_count))
++		file = NULL;
++	return file;
++}
++
++/*
+  * Called with &file->f_lock held,
+  * returns with it released
+  */
+@@ -887,34 +915,6 @@ static __poll_t __ep_eventpoll_poll(stru
+ }
+ 
+ /*
+- * The ffd.file pointer may be in the process of being torn down due to
+- * being closed, but we may not have finished eventpoll_release() yet.
+- *
+- * Normally, even with the atomic_long_inc_not_zero, the file may have
+- * been free'd and then gotten re-allocated to something else (since
+- * files are not RCU-delayed, they are SLAB_TYPESAFE_BY_RCU).
+- *
+- * But for epoll, users hold the ep->mtx mutex, and as such any file in
+- * the process of being free'd will block in eventpoll_release_file()
+- * and thus the underlying file allocation will not be free'd, and the
+- * file re-use cannot happen.
+- *
+- * For the same reason we can avoid a rcu_read_lock() around the
+- * operation - 'ffd.file' cannot go away even if the refcount has
+- * reached zero (but we must still not call out to ->poll() functions
+- * etc).
+- */
+-static struct file *epi_fget(const struct epitem *epi)
+-{
+-	struct file *file;
+-
+-	file = epi->ffd.file;
+-	if (!atomic_long_inc_not_zero(&file->f_count))
+-		file = NULL;
+-	return file;
+-}
+-
+-/*
+  * Differs from ep_eventpoll_poll() in that internal callers already have
+  * the ep->mtx so we need to start from depth=1, such that mutex_lock_nested()
+  * is correctly annotated.
 
 
