@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091B317A2F6;
-	Tue, 21 Jul 2026 19:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A023D356A12;
+	Tue, 21 Jul 2026 19:15:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661326; cv=none; b=Z5ETHfJdsC3C2nqKQ8l25f48yqFgEdDlyTmGoqv2ua3lGXj70p7fH+MyCnPkEC/6JvHfA+N/UM+/hS3ZjT9yk19zHUo2coSoAx2Hymq7FhbKcC/7eXjyqYg6J+peWtLRCXo9IKN1fW+vopArgieOL+cQF3Vxi4Awi1JARVupJsw=
+	t=1784661328; cv=none; b=mQY5ytI+7ieYJxCEcYDcfXrF6WCx8V+Zc5gT8LkcaO5oWyK09Yl0RwK7nTuhAgEXxEjKcqgThf0Y0O/e5bLsPleS6Rv39SGD9qyJmlW2vkGsk9VkyPwwkZJ+gPGl9UzlklnK7vuxdO10AqBeYa+EXfA7u/1arSFYiqP89rR2EKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661326; c=relaxed/simple;
-	bh=nEeVIve03UqPCzxU/jL62iBk/77bypV1bycaAztptfc=;
+	s=arc-20240116; t=1784661328; c=relaxed/simple;
+	bh=ZpXvHTX/zyD+1eO0JFL3juYig7zu5AgUJW3gyNMjIn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cxpoopHCVUdpzzxHmYPHVdjutPV10cqB7KBPqPCMGzwBVKvOM5ICSmEXfFWaa35SFvqwZOBOOsiwZRMb+TG/1mDJaUBzUuKaPdpj75lpTjpHJLvXH9p+W3xWJMjIzn88FGhG0cIlwlrxsEWA226GzAa7Y+fxByMlYilWoDZPjl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q6F4HVBN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=maWx6vFVq7Se98wS16wu81eVYnsEtyog8SqyHya3RLr38TPW8J742wbdftkIUbHtkdX5/lrVDXaYgOmJqxDGwNv4Stt5muHRoVrvOpiVw5tkW7O8TdfHPq6Zw8skS73vsedQAfGDyltfR7hihoImTbJigHNiX5QNRu72klFg8ts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VDBaXmn1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q6F4HVBN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74DC11F00A3A;
-	Tue, 21 Jul 2026 19:15:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VDBaXmn1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1383C1F000E9;
+	Tue, 21 Jul 2026 19:15:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661324;
-	bh=jxsQcYx0rSOBF5q3bVKcvdn1QSzE3QZVN8/1WgecoCE=;
+	s=korg; t=1784661327;
+	bh=0QaQuDzrKAx+zdykKlEv/9b+WdPBpHdeOUb5ftl1n9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q6F4HVBN/nlIRD7+7wylzmb3f6YtFmpbQnWDVA88HuWtd3CTRnPh/VPDFm/sjNUuS
-	 Ozoj8vUvFz710I2gm+JWM0gRuj8esKca1G9WNtbPy3KEK2OSosru+9U/Vm9iysn8BS
-	 AHvL8kwcn+1mg1CYJRc4WpS84FIQ5rjQw4W7mVGM=
+	b=VDBaXmn1SUfcewIn/jhfpsDPE4vJ3Vsg+4Vzl38a/u3oe8i2ab0QsIBbk3wdGuHT8
+	 rQSGXt9GdnY4W9D7QP2at6Tfq3BzF01WR2BLWaGPh0INI4emAV/PZGFNZXdRy53py9
+	 cYSgrdqYyg6MyWL4JOfu00C+7qXleKB5bRKUy8rA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Petkov <bp@alien8.de>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>,
-	Liam Merwick <liam.merwick@oracle.com>,
+	Dave Hansen <dave.hansen@intel.com>,
+	Seth Forshee <sforshee@kernel.org>,
+	Eric Hagberg <ehagberg@janestreet.com>,
+	Stephen Dolan <sdolan@janestreet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0024/1276] iommu/amd: Use maximum PPR log buffer size when SNP is enabled on Family 0x19
-Date: Tue, 21 Jul 2026 17:07:47 +0200
-Message-ID: <20260721152446.622904037@linuxfoundation.org>
+Subject: [PATCH 6.12 0025/1276] x86/mm: Fix check/use ordering in switch_mm_irqs_off()
+Date: Tue, 21 Jul 2026 17:07:48 +0200
+Message-ID: <20260721152446.645026330@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -55,159 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: Stephen Dolan <sdolan@janestreet.com>
 
-commit 1f44aab79bac31f459422dfb213e907bb386509c upstream.
+This is a stable-specific fix. There is no single upstream commit to
+cherry-pick; the equivalent mainline fix is commit 83b0177a6c48
+("x86/mm: Fix SMP ordering in switch_mm_irqs_off()"), which is in
+v6.18 but does not apply to these trees because the surrounding code
+was refactored.
 
-Due to CVE-2023-20585, the PPR log buffer must use the maximum supported
-size (512K) on Genoa (Family 0x19, model >= 0x10) systems when SNP is
-enabled, to mitigate a potential security vulnerability. Note that Family
-0x19 models below 0x10 (Milan) do not support PPR when SNP is enabled.
-Hence the PPR log size increase is only applied for model >= 0x10.
-All other systems continue to use the default PPR log buffer size (8K).
+The backports of commit fea4e317f9e7 ("x86/mm: Eliminate window where
+TLB flushes may be inadvertently skipped") -- the fix for
+CVE-2025-37964 -- to the 6.1, 6.6 and 6.12 trees ended up with two
+code blocks in the wrong order relative to mainline. The fix depends
+on setting cpu_tlbstate.loaded_mm to LOADED_MM_SWITCHING *before*
+reading tlb_gen, so that a concurrent TLB shootdown either sees
+LOADED_MM_SWITCHING and sends the IPI, or the switching CPU sees the
+updated tlb_gen. In the stable trees the write of LOADED_MM_SWITCHING
+was placed after the tlb_gen read, so the race window fea4e317f9e7 was
+meant to close is still open and CVE-2025-37964 is unfixed there:
+a process can be left running with stale TLB entries, which typically
+manifests as rare, hard-to-bisect memory corruption or segfaults.
 
-Apply the errata fix by making the following changes:
+This has been confirmed by several independent parties:
 
-- Introduce global new variable (amd_iommu_pprlog_size) to have PPR log buffer
-  size. Adjust variable size for Genoa family.
+  - reproduced on 6.1.y/6.6.y/6.12.y with the test program in [1],
+    and confirmed fixed by this patch
+  - Seth Forshee saw segfaults on 6.12.y within ~30 minutes of running
+    a test workload; with this patch it ran 18 hours cleanly [2]
+  - Greg Thelen reports 6.6.y- and 6.12.y-based test failures fixed by
+    this patch [3]
 
-- Extend 'amd_iommu_apply_erratum_snp()' to also set the PPR log buffer
-  size to maximum for Family 0x19 model >= 0x10 when SNP is enabled.
+Dave Hansen acked the patch [4] and has no objection to it going into
+stable [5].
 
-- Rename PPR_* macros to make it more readable.
+The patch below is against 6.12.y; the identical change applies to
+6.1.y and 6.6.y. (The cpumask_test_cpu()/smp_mb() portion of the
+mainline fix is not needed here because commit 209954cbc7d0
+("x86/mm/tlb: Update mm_cpumask lazily") was never backported to these
+trees.)
 
-Link: https://www.amd.com/en/resources/product-security/bulletin/amd-sb-3016.html
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Cc: Joerg Roedel <joerg.roedel@amd.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Tested-by: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
-(cherry picked from commit 1f44aab79bac31f459422dfb213e907bb386509c)
-[ Modify amd_iommu_free_ppr_log() due to different iommu_free_pages() API. ]
-Signed-off-by: Liam Merwick <liam.merwick@oracle.com>
+[1] https://lore.kernel.org/lkml/CAHDw0oGd0B4=uuv8NGqbUQ_ZVmSheU2bN70e4QhFXWvuAZdt2w@mail.gmail.com/
+[2] https://lore.kernel.org/lkml/aZYWXe739XUJrBld@do-x1carbon/
+[3] https://lore.kernel.org/lkml/CAHH2K0brx9omC9QYyB6Lio3t_1Lf8v=VaFoiaG23UgQ-aec89Q@mail.gmail.com/
+[4] https://lore.kernel.org/lkml/281e8018-5506-4a79-8775-e0de7e58b95f@intel.com/
+[5] https://lore.kernel.org/lkml/86421ee5-5332-46c2-bb48-d40310b818be@intel.com/
+
+Fixes: fea4e317f9e7 ("x86/mm: Eliminate window where TLB flushes may be inadvertently skipped")  # 6.1.y/6.6.y/6.12.y backports
+Acked-by: Dave Hansen <dave.hansen@intel.com>
+Tested-by: Seth Forshee <sforshee@kernel.org>
+Tested-by: Eric Hagberg <ehagberg@janestreet.com>
+Signed-off-by: Stephen Dolan <sdolan@janestreet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/amd_iommu.h       |  1 +
- drivers/iommu/amd/amd_iommu_types.h | 11 ++++++-----
- drivers/iommu/amd/init.c            | 13 ++++++++++++-
- drivers/iommu/amd/ppr.c             | 10 ++++++----
- 4 files changed, 25 insertions(+), 10 deletions(-)
+ arch/x86/mm/tlb.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/iommu/amd/amd_iommu.h b/drivers/iommu/amd/amd_iommu.h
-index 36cd610104e3f8..8be6b4514dd51a 100644
---- a/drivers/iommu/amd/amd_iommu.h
-+++ b/drivers/iommu/amd/amd_iommu.h
-@@ -12,6 +12,7 @@
- #include "amd_iommu_types.h"
+diff --git a/arch/x86/mm/tlb.c b/arch/x86/mm/tlb.c
+index 8629d90fdcd922..ed182831063c27 100644
+--- a/arch/x86/mm/tlb.c
++++ b/arch/x86/mm/tlb.c
+@@ -606,6 +606,14 @@ void switch_mm_irqs_off(struct mm_struct *unused, struct mm_struct *next,
+ 		 */
+ 		cond_mitigation(tsk);
  
- extern int amd_iommu_evtlog_size;
-+extern int amd_iommu_pprlog_size;
- 
- irqreturn_t amd_iommu_int_thread(int irq, void *data);
- irqreturn_t amd_iommu_int_thread_evtlog(int irq, void *data);
-diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
-index d622fa0091a5a3..09131d067a8a54 100644
---- a/drivers/iommu/amd/amd_iommu_types.h
-+++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -248,11 +248,12 @@
- #define EVTLOG_LEN_MASK_MAX	(0xFULL << EVTLOG_SIZE_SHIFT)
- 
- /* Constants for PPR Log handling */
--#define PPR_LOG_ENTRIES		512
--#define PPR_LOG_SIZE_SHIFT	56
--#define PPR_LOG_SIZE_512	(0x9ULL << PPR_LOG_SIZE_SHIFT)
--#define PPR_ENTRY_SIZE		16
--#define PPR_LOG_SIZE		(PPR_ENTRY_SIZE * PPR_LOG_ENTRIES)
-+#define PPRLOG_ENTRY_SIZE	0x10
-+#define PPRLOG_SIZE_SHIFT	56
-+#define PPRLOG_SIZE_DEF		SZ_8K	/* 512 entries */
-+#define PPRLOG_LEN_MASK_DEF	(0x9ULL << PPRLOG_SIZE_SHIFT)
-+#define PPRLOG_SIZE_MAX		SZ_512K	/* 32K entries */
-+#define PPRLOG_LEN_MASK_MAX	(0xFULL << PPRLOG_SIZE_SHIFT)
- 
- /* PAGE_SERVICE_REQUEST PPR Log Buffer Entry flags */
- #define PPR_FLAG_EXEC		0x002	/* Execute permission requested */
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 570471e1058655..7fa340281b9fb2 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -134,6 +134,7 @@ struct ivhd_entry {
- } __attribute__((packed));
- 
- int amd_iommu_evtlog_size = EVTLOG_SIZE_DEF;
-+int amd_iommu_pprlog_size = PPRLOG_SIZE_DEF;
- 
- /*
-  * An AMD IOMMU memory definition structure. It defines things like exclusion
-@@ -3265,6 +3266,16 @@ static void amd_iommu_apply_erratum_snp(void)
- 	amd_iommu_evtlog_size = EVTLOG_SIZE_MAX;
- 	pr_info("Applying erratum: Increase Event log size to 0x%x\n",
- 		amd_iommu_evtlog_size);
++		/*
++		 * Indicate that CR3 is about to change. nmi_uaccess_okay()
++		 * and others are sensitive to the window where mm_cpumask(),
++		 * CR3 and cpu_tlbstate.loaded_mm are not all in sync.
++		 */
++		this_cpu_write(cpu_tlbstate.loaded_mm, LOADED_MM_SWITCHING);
++		barrier();
 +
-+	/*
-+	 * Set PPR log buffer size to max.
-+	 * (Family 0x19, model < 0x10 doesn't support PPR when SNP is enabled).
-+	 */
-+	if (boot_cpu_data.x86_model >= 0x10) {
-+		amd_iommu_pprlog_size = PPRLOG_SIZE_MAX;
-+		pr_info("Applying erratum: Increase PPR log size to 0x%x\n",
-+			amd_iommu_pprlog_size);
-+	}
- #endif
- }
+ 		/*
+ 		 * Stop remote flushes for the previous mm.
+ 		 * Skip kernel threads; we never send init_mm TLB flushing IPIs,
+@@ -623,14 +631,6 @@ void switch_mm_irqs_off(struct mm_struct *unused, struct mm_struct *next,
+ 		next_tlb_gen = atomic64_read(&next->context.tlb_gen);
  
-@@ -3906,7 +3917,7 @@ int amd_iommu_snp_disable(void)
- 		if (ret)
- 			return ret;
+ 		choose_new_asid(next, next_tlb_gen, &new_asid, &need_flush);
+-
+-		/*
+-		 * Indicate that CR3 is about to change. nmi_uaccess_okay()
+-		 * and others are sensitive to the window where mm_cpumask(),
+-		 * CR3 and cpu_tlbstate.loaded_mm are not all in sync.
+- 		 */
+-		this_cpu_write(cpu_tlbstate.loaded_mm, LOADED_MM_SWITCHING);
+-		barrier();
+ 	}
  
--		ret = iommu_make_shared(iommu->ppr_log, PPR_LOG_SIZE);
-+		ret = iommu_make_shared(iommu->ppr_log, amd_iommu_pprlog_size);
- 		if (ret)
- 			return ret;
- 
-diff --git a/drivers/iommu/amd/ppr.c b/drivers/iommu/amd/ppr.c
-index 7c67d69f0b8cad..42d895bd1c44f7 100644
---- a/drivers/iommu/amd/ppr.c
-+++ b/drivers/iommu/amd/ppr.c
-@@ -20,7 +20,7 @@
- int __init amd_iommu_alloc_ppr_log(struct amd_iommu *iommu)
- {
- 	iommu->ppr_log = iommu_alloc_4k_pages(iommu, GFP_KERNEL | __GFP_ZERO,
--					      PPR_LOG_SIZE);
-+					      amd_iommu_pprlog_size);
- 	return iommu->ppr_log ? 0 : -ENOMEM;
- }
- 
-@@ -33,7 +33,9 @@ void amd_iommu_enable_ppr_log(struct amd_iommu *iommu)
- 
- 	iommu_feature_enable(iommu, CONTROL_PPR_EN);
- 
--	entry = iommu_virt_to_phys(iommu->ppr_log) | PPR_LOG_SIZE_512;
-+	entry = iommu_virt_to_phys(iommu->ppr_log);
-+	entry |= (amd_iommu_pprlog_size == PPRLOG_SIZE_DEF) ?
-+			PPRLOG_LEN_MASK_DEF : PPRLOG_LEN_MASK_MAX;
- 
- 	memcpy_toio(iommu->mmio_base + MMIO_PPR_LOG_OFFSET,
- 		    &entry, sizeof(entry));
-@@ -48,7 +50,7 @@ void amd_iommu_enable_ppr_log(struct amd_iommu *iommu)
- 
- void __init amd_iommu_free_ppr_log(struct amd_iommu *iommu)
- {
--	iommu_free_pages(iommu->ppr_log, get_order(PPR_LOG_SIZE));
-+	iommu_free_pages(iommu->ppr_log, get_order(amd_iommu_pprlog_size));
- }
- 
- /*
-@@ -201,7 +203,7 @@ void amd_iommu_poll_ppr_log(struct amd_iommu *iommu)
- 			raw[0] = raw[1] = 0UL;
- 
- 		/* Update head pointer of hardware ring-buffer */
--		head = (head + PPR_ENTRY_SIZE) % PPR_LOG_SIZE;
-+		head = (head + PPRLOG_ENTRY_SIZE) % amd_iommu_pprlog_size;
- 		writel(head, iommu->mmio_base + MMIO_PPR_HEAD_OFFSET);
- 
- 		/* Handle PPR entry */
+ 	new_lam = mm_lam_cr3_mask(next);
 -- 
 2.53.0
 
