@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E34314D34;
-	Tue, 21 Jul 2026 17:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF84376A06;
+	Tue, 21 Jul 2026 17:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653482; cv=none; b=VH7NakQkR5VY/Oxb49N5IUzIMMMwbGsBQEdmIrpS0gVQqgbKfc7gktxJ/scx4YIoLI3NPcrsboBk3WOAx9Gy7p8oiNIms0hQC7DhMrk29Bl8YFDowmlUFOCPWO4VE0jcXTda7aSr8osVrFfxX19Ht26ROsteKhxuGCCEFpS2Uzg=
+	t=1784653484; cv=none; b=TxZg7V5C4iCJdnUuqd/ft8mFUwgBfZgXsNmP5ZTjVr6eeqgSihqYhoH3Npv7xYAuXOZCEYcOZDerPxe7Cw8Mgn9eagV2FWTaw2g1kxsxyr/9nrlv8lU+knynOtOSsKceV4tN8//sVS6dqpm33ymfO9b8QzrUyj8O4mh1iBLa1KY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653482; c=relaxed/simple;
-	bh=eJ0CGU+RGhdB+pHBBWvEyOjdm6p+KRlXFQT4qm2dgjc=;
+	s=arc-20240116; t=1784653484; c=relaxed/simple;
+	bh=dcNNBeAzRqnUnTYhWwUjOwlUFRiwOxDORffofYZX+SA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mij2J0aKwqyVbY73CaH+aFI+jHVX5L+iL5xiNKqOvtZjNUi+v9i26l/UtpfT5U2apVwrU+RSPT5p8lT9jF9ldMR/ts+JqrX1iBG75c5G4L3xpLg98h90/14KlQ6rZApaYaaq7PJwkTNZB8ZcOU1psM3viLO2jHCI4ikwVewKUn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuYup0JE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lxCrQ7zM6uWX1NsTi+mJgQ+sqjdGYDMGoDjlPQ7UsJBWsL3womofsB2ItfF7l0oDSdSB4HyunBgi2DJO/aywb11uwKquqwNbkiezEdsWL6TZE6ikMg3FsTwAbAfi9jTLOjRh7MHDowU0kZi9oRpAnTA9EGpwUy6BDo8V1t9KlfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V7SIZIOO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuYup0JE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA061F00A3A;
-	Tue, 21 Jul 2026 17:04:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V7SIZIOO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62711F000E9;
+	Tue, 21 Jul 2026 17:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653480;
-	bh=VT7/axNim891pBj/nU5i2cxyJ+PeO3Xq7yPN/EfJWYc=;
+	s=korg; t=1784653483;
+	bh=7OoM3KkfusXAfietACa/GRQi3/cQWrFagPsTP1B1ueg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xuYup0JEHtv0YGQ9w4aJGwd4IAiPGHnhH22/nK5844cBr6OwpQhqWo9lz2C1Zse5C
-	 F+M9w52ymKFxUDNytfLv3y+gHeIqk2uTr6LlQEQUQ/XQzMJmyDSV/vcWnyuoEkFsDu
-	 JEtkH46dR4Ptk8D4Wv7nplgpIMMVGfVGsASk5p5M=
+	b=V7SIZIOOamDfxOg1tfMJNRHCEs96qyj2xfMrAyuYmCZf+hgewKFRIRSP9lHWGKx7e
+	 mXQ+ZvF38IlnkxR0rvWf0G5P/nf5bhkIAAGsASKRumnfWTaN+50MguV5oeVaAuSb8T
+	 quwMht3po+DRiWpcWDa0oNSUlyAgokai0RQFPxoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Viacheslav Bocharov <v@baodeep.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1336/2077] gpio: shared-proxy: always serialize with a sleeping mutex
-Date: Tue, 21 Jul 2026 17:16:49 +0200
-Message-ID: <20260721152624.327057994@linuxfoundation.org>
+Subject: [PATCH 7.1 1345/2077] drm/panthor: Fix panthor_pwr_unplug()
+Date: Tue, 21 Jul 2026 17:16:58 +0200
+Message-ID: <20260721152624.541913663@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,345 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Bocharov <v@baodeep.com>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-[ Upstream commit efecde8a254d1f207b75c5ebcfba2c51f4c771d9 ]
+[ Upstream commit e62179fd3e23ecfaedf7101e19ec0d3e4f51de76 ]
 
-The shared GPIO descriptor used either a mutex or a spinlock, chosen at
-runtime from the underlying chip's can_sleep:
+We can't call panthor_pwr_irq_suspend() if the device is suspended,
+or this leads to a hang when the IOMEM region is accessed while the
+clks are disabled. Do what other sub-components do and conditionally
+call panthor_pwr_irq_suspend() if we know the PWR regbank block is
+accessible.
 
-	shared_desc->can_sleep = gpiod_cansleep(shared_desc->desc);
-	... if (can_sleep) mutex_lock(); else spin_lock_irqsave();
-
-can_sleep describes only the value path (->get/->set). Under the same
-lock, however, the proxy may call gpiod_set_config() and
-gpiod_direction_*(), which can reach pinctrl paths that take a mutex
-(e.g. gpiod_set_config() -> gpiochip_generic_config() ->
-pinctrl_gpio_set_config()), independent of can_sleep. On a controller
-with non-sleeping MMIO value ops the descriptor lock was a spinlock, so
-the sleeping pinctrl call ran from atomic context. Reproduced on an
-Amlogic A113X board with the workaround from commit 28f240683871
-("pinctrl: meson: mark the GPIO controller as sleeping") reverted; the
-original Khadas VIM3 report hit the same path:
-
-	BUG: sleeping function called from invalid context
-	  __mutex_lock
-	  pinctrl_get_device_gpio_range
-	  pinctrl_gpio_set_config
-	  gpiochip_generic_config
-	  gpiod_set_config
-	  gpio_shared_proxy_set_config   <- voting spinlock held
-	  ...
-	  mmc_pwrseq_simple_probe
-
-The spinlock existed to take the value vote from atomic context, but the
-vote and the (possibly sleeping) control operations share the same state
-and lock, so this scheme cannot serialize config under a mutex and still
-offer atomic value access. Always serialize the shared descriptor with a
-mutex instead and mark the proxy a sleeping gpiochip, driving the
-underlying GPIO through the cansleep value accessors: those are valid
-for both sleeping and non-sleeping chips, so value access keeps working
-on fast controllers, at the cost of no longer being atomic.
-
-With every vote edge now driven through the cansleep value setter,
-gpio_shared_proxy_set_unlocked() no longer needs a per-call setter: drop
-its set_func callback and call gpiod_set_value_cansleep() directly. The
-shared direction_output path reaches it only once the line is already an
-output, so driving the value there is equivalent to re-issuing
-gpiod_direction_output(), without the redundant per-edge re-assertion of
-drive config and bias.
-
-This is observable: consumers gating on gpiod_cansleep() take their
-sleeping branch on a proxied GPIO (mmc-pwrseq-emmc skips its
-emergency-restart reset handler; its normal reset is unaffected), and
-consumers that reject sleeping GPIOs (pwm-gpio, ps2-gpio, ...) would
-fail to probe. Such atomic users do not share a pin through the proxy,
-whose purpose is voting on shared reset/enable lines. The same narrowing
-already applies on Amlogic since that workaround, and rockchip
-addressed the identical splat per-driver in commit 7ca497be0016 ("gpio:
-rockchip: Stop calling pinctrl for set_direction"); fixing the proxy
-addresses the locking error once, for every controller.
-
-The lock type was added by commit a060b8c511ab ("gpiolib: implement
-low-level, shared GPIO support"); the sleeping call under it arrived with
-the proxy driver.
-
-Fixes: e992d54c6f97 ("gpio: shared-proxy: implement the shared GPIO proxy driver")
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Closes: https://lore.kernel.org/all/00107523-7737-4b92-a785-14ce4e93b8cb@samsung.com/
-Signed-off-by: Viacheslav Bocharov <v@baodeep.com>
-Link: https://patch.msgid.link/20260630101545.800625-2-v@baodeep.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: c27787f2b77f ("drm/panthor: Introduce panthor_pwr API and power control framework")
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260625-panthor-misc-fixes-v1-7-b67ed973fea6@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-shared-proxy.c | 76 ++++++++++++--------------------
- drivers/gpio/gpiolib-shared.c    |  9 +---
- drivers/gpio/gpiolib-shared.h    | 28 +-----------
- 3 files changed, 32 insertions(+), 81 deletions(-)
+ drivers/gpu/drm/panthor/panthor_pwr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-shared-proxy.c b/drivers/gpio/gpio-shared-proxy.c
-index 6941e4be6cf187..10ca2ef77ef341 100644
---- a/drivers/gpio/gpio-shared-proxy.c
-+++ b/drivers/gpio/gpio-shared-proxy.c
-@@ -9,8 +9,10 @@
- #include <linux/err.h>
- #include <linux/gpio/consumer.h>
- #include <linux/gpio/driver.h>
-+#include <linux/lockdep.h>
- #include <linux/mod_devicetable.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/string_choices.h>
- #include <linux/types.h>
+diff --git a/drivers/gpu/drm/panthor/panthor_pwr.c b/drivers/gpu/drm/panthor/panthor_pwr.c
+index 52fc46239e6b69..dda5159a5271bb 100644
+--- a/drivers/gpu/drm/panthor/panthor_pwr.c
++++ b/drivers/gpu/drm/panthor/panthor_pwr.c
+@@ -435,7 +435,8 @@ void panthor_pwr_unplug(struct panthor_device *ptdev)
+ 		return;
  
-@@ -24,15 +26,13 @@ struct gpio_shared_proxy_data {
- };
+ 	/* Make sure the IRQ handler is not running after that point. */
+-	panthor_pwr_irq_suspend(&ptdev->pwr->irq);
++	if (!IS_ENABLED(CONFIG_PM) || pm_runtime_active(ptdev->base.dev))
++		panthor_pwr_irq_suspend(&ptdev->pwr->irq);
  
- static int
--gpio_shared_proxy_set_unlocked(struct gpio_shared_proxy_data *proxy,
--			       int (*set_func)(struct gpio_desc *desc, int value),
--			       int value)
-+gpio_shared_proxy_set_unlocked(struct gpio_shared_proxy_data *proxy, int value)
- {
- 	struct gpio_shared_desc *shared_desc = proxy->shared_desc;
- 	struct gpio_desc *desc = shared_desc->desc;
- 	int ret = 0;
- 
--	gpio_shared_lockdep_assert(shared_desc);
-+	lockdep_assert_held(&shared_desc->mutex);
- 
- 	if (value) {
- 	       /* User wants to set value to high. */
-@@ -46,7 +46,7 @@ gpio_shared_proxy_set_unlocked(struct gpio_shared_proxy_data *proxy,
- 			 * Current value is low, need to actually set value
- 			 * to high.
- 			 */
--			ret = set_func(desc, 1);
-+			ret = gpiod_set_value_cansleep(desc, 1);
- 			if (ret)
- 				goto out;
- 		}
-@@ -65,7 +65,7 @@ gpio_shared_proxy_set_unlocked(struct gpio_shared_proxy_data *proxy,
- 	/* We previously voted for high. */
- 	if (shared_desc->highcnt == 1) {
- 		/* This is the last remaining vote for high, set value  to low. */
--		ret = set_func(desc, 0);
-+		ret = gpiod_set_value_cansleep(desc, 0);
- 		if (ret)
- 			goto out;
- 	}
-@@ -89,7 +89,7 @@ static int gpio_shared_proxy_request(struct gpio_chip *gc, unsigned int offset)
- 	struct gpio_shared_proxy_data *proxy = gpiochip_get_data(gc);
- 	struct gpio_shared_desc *shared_desc = proxy->shared_desc;
- 
--	guard(gpio_shared_desc_lock)(shared_desc);
-+	guard(mutex)(&shared_desc->mutex);
- 
- 	proxy->shared_desc->usecnt++;
- 
-@@ -105,11 +105,10 @@ static void gpio_shared_proxy_free(struct gpio_chip *gc, unsigned int offset)
- 	struct gpio_shared_desc *shared_desc = proxy->shared_desc;
- 	int ret;
- 
--	guard(gpio_shared_desc_lock)(shared_desc);
-+	guard(mutex)(&shared_desc->mutex);
- 
- 	if (proxy->voted_high) {
--		ret = gpio_shared_proxy_set_unlocked(proxy,
--			shared_desc->can_sleep ? gpiod_set_value_cansleep : gpiod_set_value, 0);
-+		ret = gpio_shared_proxy_set_unlocked(proxy, 0);
- 		if (ret)
- 			dev_err(proxy->dev,
- 				"Failed to unset the shared GPIO value on release: %d\n", ret);
-@@ -129,7 +128,7 @@ static int gpio_shared_proxy_set_config(struct gpio_chip *gc,
- 	struct gpio_desc *desc = shared_desc->desc;
- 	int ret;
- 
--	guard(gpio_shared_desc_lock)(shared_desc);
-+	guard(mutex)(&shared_desc->mutex);
- 
- 	if (shared_desc->usecnt > 1) {
- 		if (shared_desc->cfg != cfg) {
-@@ -157,7 +156,7 @@ static int gpio_shared_proxy_direction_input(struct gpio_chip *gc,
- 	struct gpio_desc *desc = shared_desc->desc;
- 	int dir;
- 
--	guard(gpio_shared_desc_lock)(shared_desc);
-+	guard(mutex)(&shared_desc->mutex);
- 
- 	if (shared_desc->usecnt == 1) {
- 		dev_dbg(proxy->dev,
-@@ -187,7 +186,7 @@ static int gpio_shared_proxy_direction_output(struct gpio_chip *gc,
- 	struct gpio_desc *desc = shared_desc->desc;
- 	int ret, dir;
- 
--	guard(gpio_shared_desc_lock)(shared_desc);
-+	guard(mutex)(&shared_desc->mutex);
- 
- 	if (shared_desc->usecnt == 1) {
- 		dev_dbg(proxy->dev,
-@@ -219,14 +218,7 @@ static int gpio_shared_proxy_direction_output(struct gpio_chip *gc,
- 		return -EPERM;
- 	}
- 
--	return gpio_shared_proxy_set_unlocked(proxy, gpiod_direction_output, value);
--}
--
--static int gpio_shared_proxy_get(struct gpio_chip *gc, unsigned int offset)
--{
--	struct gpio_shared_proxy_data *proxy = gpiochip_get_data(gc);
--
--	return gpiod_get_value(proxy->shared_desc->desc);
-+	return gpio_shared_proxy_set_unlocked(proxy, value);
- }
- 
- static int gpio_shared_proxy_get_cansleep(struct gpio_chip *gc,
-@@ -237,29 +229,14 @@ static int gpio_shared_proxy_get_cansleep(struct gpio_chip *gc,
- 	return gpiod_get_value_cansleep(proxy->shared_desc->desc);
- }
- 
--static int gpio_shared_proxy_do_set(struct gpio_shared_proxy_data *proxy,
--				    int (*set_func)(struct gpio_desc *desc, int value),
--				    int value)
--{
--	guard(gpio_shared_desc_lock)(proxy->shared_desc);
--
--	return gpio_shared_proxy_set_unlocked(proxy, set_func, value);
--}
--
--static int gpio_shared_proxy_set(struct gpio_chip *gc, unsigned int offset,
--				 int value)
--{
--	struct gpio_shared_proxy_data *proxy = gpiochip_get_data(gc);
--
--	return gpio_shared_proxy_do_set(proxy, gpiod_set_value, value);
--}
--
- static int gpio_shared_proxy_set_cansleep(struct gpio_chip *gc,
- 					  unsigned int offset, int value)
- {
- 	struct gpio_shared_proxy_data *proxy = gpiochip_get_data(gc);
- 
--	return gpio_shared_proxy_do_set(proxy, gpiod_set_value_cansleep, value);
-+	guard(mutex)(&proxy->shared_desc->mutex);
-+
-+	return gpio_shared_proxy_set_unlocked(proxy, value);
- }
- 
- static int gpio_shared_proxy_get_direction(struct gpio_chip *gc,
-@@ -302,20 +279,25 @@ static int gpio_shared_proxy_probe(struct auxiliary_device *adev,
- 	gc->label = dev_name(dev);
- 	gc->parent = dev;
- 	gc->owner = THIS_MODULE;
--	gc->can_sleep = shared_desc->can_sleep;
-+	/*
-+	 * Under the descriptor mutex the proxy may call
-+	 * gpiod_set_config()/gpiod_direction_*(), which can reach pinctrl
-+	 * paths that take a mutex (e.g. gpiod_set_config() ->
-+	 * gpiochip_generic_config() -> pinctrl_gpio_set_config()), independent
-+	 * of the underlying chip's can_sleep. So the descriptor lock must be a
-+	 * mutex and the proxy gpiochip is therefore always sleeping; drive the
-+	 * underlying GPIO through the cansleep value accessors, which are valid
-+	 * for both sleeping and non-sleeping chips.
-+	 */
-+	gc->can_sleep = true;
- 
- 	gc->request = gpio_shared_proxy_request;
- 	gc->free = gpio_shared_proxy_free;
- 	gc->set_config = gpio_shared_proxy_set_config;
- 	gc->direction_input = gpio_shared_proxy_direction_input;
- 	gc->direction_output = gpio_shared_proxy_direction_output;
--	if (gc->can_sleep) {
--		gc->set = gpio_shared_proxy_set_cansleep;
--		gc->get = gpio_shared_proxy_get_cansleep;
--	} else {
--		gc->set = gpio_shared_proxy_set;
--		gc->get = gpio_shared_proxy_get;
--	}
-+	gc->set = gpio_shared_proxy_set_cansleep;
-+	gc->get = gpio_shared_proxy_get_cansleep;
- 	gc->get_direction = gpio_shared_proxy_get_direction;
- 	gc->to_irq = gpio_shared_proxy_to_irq;
- 
-diff --git a/drivers/gpio/gpiolib-shared.c b/drivers/gpio/gpiolib-shared.c
-index de72776fb154f1..495bd3d0ddf02c 100644
---- a/drivers/gpio/gpiolib-shared.c
-+++ b/drivers/gpio/gpiolib-shared.c
-@@ -627,8 +627,7 @@ static void gpio_shared_release(struct kref *kref)
- 
- 	shared_desc = entry->shared_desc;
- 	gpio_device_put(shared_desc->desc->gdev);
--	if (shared_desc->can_sleep)
--		mutex_destroy(&shared_desc->mutex);
-+	mutex_destroy(&shared_desc->mutex);
- 	kfree(shared_desc);
- 	entry->shared_desc = NULL;
- }
-@@ -659,11 +658,7 @@ gpiod_shared_desc_create(struct gpio_shared_entry *entry)
- 	}
- 
- 	shared_desc->desc = &gdev->descs[entry->offset];
--	shared_desc->can_sleep = gpiod_cansleep(shared_desc->desc);
--	if (shared_desc->can_sleep)
--		mutex_init(&shared_desc->mutex);
--	else
--		spin_lock_init(&shared_desc->spinlock);
-+	mutex_init(&shared_desc->mutex);
- 
- 	return shared_desc;
- }
-diff --git a/drivers/gpio/gpiolib-shared.h b/drivers/gpio/gpiolib-shared.h
-index 15e72a8dcdb138..bbdc0ab7b647a4 100644
---- a/drivers/gpio/gpiolib-shared.h
-+++ b/drivers/gpio/gpiolib-shared.h
-@@ -3,10 +3,7 @@
- #ifndef __LINUX_GPIO_SHARED_H
- #define __LINUX_GPIO_SHARED_H
- 
--#include <linux/cleanup.h>
--#include <linux/lockdep.h>
- #include <linux/mutex.h>
--#include <linux/spinlock.h>
- 
- struct gpio_device;
- struct gpio_desc;
-@@ -42,35 +39,12 @@ static inline int gpio_shared_add_proxy_lookup(struct device *consumer,
- 
- struct gpio_shared_desc {
- 	struct gpio_desc *desc;
--	bool can_sleep;
- 	unsigned long cfg;
- 	unsigned int usecnt;
- 	unsigned int highcnt;
--	union {
--		struct mutex mutex;
--		spinlock_t spinlock;
--	};
-+	struct mutex mutex; /* serializes all proxy operations on this descriptor */
- };
- 
- struct gpio_shared_desc *devm_gpiod_shared_get(struct device *dev);
- 
--DEFINE_LOCK_GUARD_1(gpio_shared_desc_lock, struct gpio_shared_desc,
--	if (_T->lock->can_sleep)
--		mutex_lock(&_T->lock->mutex);
--	else
--		spin_lock_irqsave(&_T->lock->spinlock, _T->flags),
--	if (_T->lock->can_sleep)
--		mutex_unlock(&_T->lock->mutex);
--	else
--		spin_unlock_irqrestore(&_T->lock->spinlock, _T->flags),
--	unsigned long flags)
--
--static inline void gpio_shared_lockdep_assert(struct gpio_shared_desc *shared_desc)
--{
--	if (shared_desc->can_sleep)
--		lockdep_assert_held(&shared_desc->mutex);
--	else
--		lockdep_assert_held(&shared_desc->spinlock);
--}
--
- #endif /* __LINUX_GPIO_SHARED_H */
+ 	/* Wake-up all waiters. */
+ 	spin_lock_irqsave(&ptdev->pwr->reqs_lock, flags);
 -- 
 2.53.0
 
