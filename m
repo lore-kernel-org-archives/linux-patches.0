@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E53D3EEAC7;
-	Tue, 21 Jul 2026 19:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1342146F4A3;
+	Tue, 21 Jul 2026 19:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661539; cv=none; b=PpuRnRfZ/zdTRQmhN5qZhjbVZUANCZZWA9zWXc/+2lstEQBwg6hXrEQJoUVtz7uFhnA1TVKlO1unpPnCTzzRa4oDYwszAiRCB5Uen0VtOhcgG33egFmG677rK5oA/5GlEq5gTXi7cHAFBjnESmLAxtKIlI8lcCkUvpL2N/JfHiw=
+	t=1784661541; cv=none; b=MVvQrp7RqpR5mujCv+UO1agbatoHlka8o/p0xsXcz5eFHMQxmZdCXtH/iOa5idaRw1fSoluS+VNUzFLJr0m3K5aJIT/CDO8u3/olAMQhdQHFjaGSPdGdaUlRViArKi/X/cyvMTTFlaibMEZXxwPMEOZu9O1SrQVZyoObobXpPa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661539; c=relaxed/simple;
-	bh=Zc5/2pkPNuCcSnLA4vUnTdnqHZLYlbovgQaOhQz3z0g=;
+	s=arc-20240116; t=1784661541; c=relaxed/simple;
+	bh=PPFjGbv3RXPB8hP6KEUAFZmN8kZe0oTWWM/K4WBLdjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YoU8XweRtix3oYD75c+Cxe0KwcJW7A34tvQHemboydDD+mC5aM+g1hkAMJNDgvUwFIAbcFwX7h8fG9ngFj7ErJfvGAGyZ0LhMSSNgymd9CaUKWxuO2HZmEeWSf1RgJRzkSjSkqqzgUBCYYPBVPZpyRvjXS1b+8XDd4lJEEC+0gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4C2pevU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hWVIPbjzGvecrKdwaa1qLg/m9oUn9PTNyezV64TKzcv7SxB6oEruULZPCe1GCvP0TapXbWG235ffxzetuVbncfH7ioF8IaMb4SJLvhG9j/2Tmr6RddGU9MK5WtoLXVAvU9Hbp/YKS8mPummFXI5F3bO10G8QkadUYo1GXOrIgeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gIfZ90Ka; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4C2pevU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A40001F00A3A;
-	Tue, 21 Jul 2026 19:18:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gIfZ90Ka"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D6E91F000E9;
+	Tue, 21 Jul 2026 19:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661537;
-	bh=UnmS77gCh8f55gmj7ifSm2SOZsbgXJYngtz9MscUI9U=;
+	s=korg; t=1784661539;
+	bh=m4QxPpESIYf/BVXRhG+W9hbdLj3ppMP/Y1aW26YFCCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k4C2pevU70MD2l2/0+T5LxrQ9wPaHtGjP5EPU75PIG5v48yf6q3Wnp6Cz5TQyVnhs
-	 7ULgO4mC9CI4t5WZ+NnkdlEwZKt3cJsGM8c0X8N20jV38PR99bso1W4WSmTPGEITkL
-	 9katX8vr6kU0bGLErKelGCip8qDyc2/m4I9GaGl8=
+	b=gIfZ90Kayo8/fKkmnTVDj1jvM/9O4FkXLrNA3VQDe8hTNLj4z7ZSMfoe0YIEo7cid
+	 5DdTd1UzDadHtPUNeNrGVRv1gXCdoaLaUvq9/diCLINj3sEU+cDzwTgdY/vhgPYio9
+	 jQD7YXLbjzAfHdE0tcWLrYLKrviKANGTZXNTduA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Hsiu Che Yu <yu.whisper.personal@gmail.com>,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0105/1276] arm64: dts: mediatek: mt8192-asurada: Move PCIe DMA bounce buffer to host
-Date: Tue, 21 Jul 2026 17:09:08 +0200
-Message-ID: <20260721152448.446950660@linuxfoundation.org>
+Subject: [PATCH 6.12 0106/1276] rust: alloc: fix `Vec::extend_with` SAFETY comment
+Date: Tue, 21 Jul 2026 17:09:09 +0200
+Message-ID: <20260721152448.470380114@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,44 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Hsiu Che Yu <yu.whisper.personal@gmail.com>
 
-[ Upstream commit 533275a4b5240a2bf2c592bd4536560388306d26 ]
+[ Upstream commit f497aae6ded43f91b1dbf29a35d7062823635640 ]
 
-The DMA bounce buffer is attached to the PCIe host controller, i.e. all
-PCIe DMA transfers should use it.
+Fix an incorrect operator in the SAFETY comment, changing `<` to `<=`,
+since `Vec::reserve` guarantees capacity for exactly n additional elements,
+so the equal case should be included.
 
-Move it from the PCIe (WiFi) device node down to the PCIe host
-controller node.
-
-Fixes: 0dca9f0b3e63 ("arm64: dts: mediatek: asurada: Enable PCIe and add WiFi")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Hsiu Che Yu <yu.whisper.personal@gmail.com>
+Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
+Fixes: 2aac4cd7dae3d ("rust: alloc: implement kernel `Vec` type")
+Link: https://patch.msgid.link/18fc8eee2f057a6bfbcadae156d1d0b7c40d0077.1777111268.git.yu.whisper.personal@gmail.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi | 2 +-
+ rust/kernel/alloc/kvec.rs | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
-index ad52c1d6e4eef7..aa12a14aabf611 100644
---- a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
-@@ -515,6 +515,7 @@ flash@0 {
- &pcie {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pcie_pins>;
-+	memory-region = <&wifi_restricted_dma_region>;
+diff --git a/rust/kernel/alloc/kvec.rs b/rust/kernel/alloc/kvec.rs
+index f62204fe563f58..28dc9ee02cb07f 100644
+--- a/rust/kernel/alloc/kvec.rs
++++ b/rust/kernel/alloc/kvec.rs
+@@ -479,7 +479,7 @@ impl<T: Clone, A: Allocator> Vec<T, A> {
+         spare[n - 1].write(value);
  
- 	pcie0: pcie@0,0 {
- 		device_type = "pci";
-@@ -529,7 +530,6 @@ pcie0: pcie@0,0 {
- 		wifi: wifi@0,0 {
- 			reg = <0x10000 0 0 0 0x100000>,
- 			      <0x10000 0 0x100000 0 0x100000>;
--			memory-region = <&wifi_restricted_dma_region>;
- 		};
- 	};
- };
+         // SAFETY:
+-        // - `self.len() + n < self.capacity()` due to the call to reserve above,
++        // - `self.len() + n <= self.capacity()` due to the call to reserve above,
+         // - the loop and the line above initialized the next `n` elements.
+         unsafe { self.set_len(self.len() + n) };
+ 
 -- 
 2.53.0
 
