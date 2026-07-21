@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45BA43849F;
-	Tue, 21 Jul 2026 21:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6942E434E4F;
+	Tue, 21 Jul 2026 21:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668119; cv=none; b=filVJafqpwxyMRYqeIIhdwhfCNE7vQFZG4Z36I8I9CMtPmGSaps71g1Fdk/6a6qDGqvdAvYBgBHd/Gj3odqTckr7VQIL7BfNrgcyiyJH8hm/1hT4gE3orq9nUwD9Ps+rXo0nTS4WbHwaTAFm2CrJQi6YfRkZGJmBDuuiiMbUfY0=
+	t=1784668122; cv=none; b=g6bEcxrwLiBFxfrIemI/Lcus8KUzdYJWGHsWXPvWHA2dQEoaVNWIuHQ+N3k2o3rAVxl/vpi39n4ib19MTqWl4EHQUrhYg4rxDkx7iZ/TmciHY+duDzhYMDouTXrUXaQJmR6FbWrKiin0RglOtrJOG7oxDQPj1WfZbmJqHBm4vCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668119; c=relaxed/simple;
-	bh=5ePl88GiOWlTAmL6gaDY2TrP6Hk9S/PJ2Co2HWiAF68=;
+	s=arc-20240116; t=1784668122; c=relaxed/simple;
+	bh=44Y0VzBjAy3uT5ymYwE44WkBkdzRk8uRPqZjWgXwoT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ezaonh9YFfQQSMG/TnexWpOYwdHACws4x7VnyjQDpTzML7quq6WSUFMNhF3bgr3mWCXftuUBIJ/W48nwc/jYoqkNBiy6PKKF4G0bT+frhMc8kIUxvxFUMyuJiOfftB4xE0ZinZpn9vn7cZRjM/rFSo0Bqm3D5Vp98GS2J27AL88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KfvGGYHL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cMwVRek2fTLhWlqOw2zSBnICve2lHJGoHpHnKA5p2mMBEDs4NGq38Ej9PxkCqUymDhntPzepSyNz57Na+a7Pu2DXLOaoIm4cKDZxqIOeRQIWr1Zu2mOaWSPTT3atV9zBBaXU3gh/LYwZ/GB0c2ScWeQCgdXYIzIEPm/m9Tu8tSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sd4xLaK0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfvGGYHL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351891F000E9;
-	Tue, 21 Jul 2026 21:08:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sd4xLaK0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF35D1F000E9;
+	Tue, 21 Jul 2026 21:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668118;
-	bh=+czYycC2/X+QU/eqewy9/NTdscaVNl0qgFYCZLfJiVI=;
+	s=korg; t=1784668121;
+	bh=sv/z4samLJGfq7s8Fg5cKb6l4PM/xWokbe93Ndjtjt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KfvGGYHLuKmhK3sbuQBkn2jd8PDMx8Z3nNTV2q3phtmChYYP0Fs8EFdYxv4m/Rahg
-	 0y0gPQN+gPRRfm5LsWsFtTcxYNtWeXUTaw8ZLWu34fUtqNBF/ZKQpksx1UHyqSoNjB
-	 Jx5gPKhDDsrfoxoJIkHMOfT2sIBxugO0dPnhYWsg=
+	b=sd4xLaK0XjbuHDmS6j9ZPYpmJwRi/KuN2v7UDaIDLJlmAlAiVF/RzEyy/k3gJVLMT
+	 Giw3mjw3kwCLjb8CPk1pRdqcKctdsfKELreY3RpRKbx/ylynJm1gLTT9DRqDbpbtr+
+	 Ed113KXiQJp2abZ/yHKulvJWD2GEAa6/FLZjFoNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>,
+	Xiao Liang <shaw.leon@gmail.com>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0012/1067] slimbus: qcom-ngd-ctrl: Register callbacks after creating the ngd
-Date: Tue, 21 Jul 2026 17:10:13 +0200
-Message-ID: <20260721152424.806469642@linuxfoundation.org>
+Subject: [PATCH 6.1 0013/1067] net: ip_gre: require CAP_NET_ADMIN in the device netns for changelink
+Date: Tue, 21 Jul 2026 17:10:14 +0200
+Message-ID: <20260721152424.827576862@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,137 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-[ Upstream commit 2a9d50e9ea406e0c8735938484adc20515ef1b47 ]
+[ Upstream commit 8165f7ff57d9667d2bb477ef6af83ede7fed4ad7 ]
 
-When the remoteproc starts in parallel with the NGD driver being probed,
-or the remoteproc is already up when the PDR lookup is being registered,
-or in the theoretical event that we get an interrupt from the hardware,
-these callbacks will operate on uninitialized data. This result in
-issues to boot the affected boards.
+A tunnel changelink() operates on at most two netns, dev_net(dev) and
+the tunnel link netns t->net. They differ once the device is created in
+or moved to a netns other than the one the request runs in. The rtnl
+changelink path checks CAP_NET_ADMIN only against dev_net(dev), so a
+caller privileged there but not in t->net can rewrite a tunnel that
+lives in t->net.
 
-One such example can be seen in the following fault, where
-qcom_slim_ngd_ssr_pdr_notify() schedules work on the NULL ngd_up_work.
+Add rtnl_dev_link_net_capable() next to rtnl_get_net_ns_capable() in
+net/core/rtnetlink.c. It requires CAP_NET_ADMIN in the link netns and is
+skipped when the link netns is dev_net(dev), where the rtnl path already
+checked it. The other patches in this series use the same helper.
 
-[   21.858578] ------------[ cut here ]------------
-[   21.858745] WARNING: kernel/workqueue.c:2338 at __queue_work+0x5e0/0x790, CPU#2: kworker/2:2/116
-...
-[   21.859251] Call trace:
-[   21.859255]  __queue_work+0x5e0/0x790 (P)
-[   21.859265]  queue_work_on+0x6c/0xf0
-[   21.859273]  qcom_slim_ngd_ssr_pdr_notify+0x110/0x150 [slim_qcom_ngd_ctrl]
-[   21.859304]  qcom_slim_ngd_ssr_notify+0x24/0x40 [slim_qcom_ngd_ctrl]
-[   21.859318]  notifier_call_chain+0xa4/0x230
-[   21.859329]  srcu_notifier_call_chain+0x64/0xb8
-[   21.859338]  ssr_notify_start+0x40/0x78 [qcom_common]
-[   21.859355]  rproc_start+0x130/0x230
-[   21.859367]  rproc_boot+0x3d4/0x518
-...
+Gate ipgre_changelink() and erspan_changelink() with it, at the top of
+the op before any attribute is parsed, because the parsers update live
+tunnel fields first. ipgre_netlink_parms() sets t->collect_md before
+ip_tunnel_changelink() runs.
 
-Move the enablement of interrupts, and the registration of SSR and PDR
-until after the NGD device has been registered.
+Commit 8b484efd5cb4 ("ip6: vti: Use ip6_tnl.net in
+vti6_siocdevprivate().") added the same check on the ioctl path. This
+adds it on RTM_NEWLINK.
 
-This could be further refined by moving initialization to the control
-driver probe and by removing the platform driver model from the picture.
-
-Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+Reported-by: Xiao Liang <shaw.leon@gmail.com>
+Closes: https://lore.kernel.org/netdev/CABAhCOSzP1vaThGV35_VnsRCb=87_CPjPVsTHbq905k8A+BuUg@mail.gmail.com/
+Fixes: b57708add314 ("gre: add x-netns support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204421.116824-6-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260612085941.3158249-2-maoyixie.tju@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/slimbus/qcom-ngd-ctrl.c | 45 +++++++++++++++++++--------------
- 1 file changed, 26 insertions(+), 19 deletions(-)
+ include/net/rtnetlink.h |    2 ++
+ net/core/rtnetlink.c    |    8 ++++++++
+ net/ipv4/ip_gre.c       |    6 ++++++
+ 3 files changed, 16 insertions(+)
 
-diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-index bf2007dc3cd043..76cd7d187dd2e2 100644
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1537,6 +1537,7 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 	struct qcom_slim_ngd_ctrl *ctrl;
-+	int irq;
- 	int ret;
- 	struct pdr_service *pds;
+--- a/include/net/rtnetlink.h
++++ b/include/net/rtnetlink.h
+@@ -210,6 +210,8 @@ int rtnl_configure_link(struct net_devic
+ int rtnl_nla_parse_ifinfomsg(struct nlattr **tb, const struct nlattr *nla_peer,
+ 			     struct netlink_ext_ack *exterr);
+ struct net *rtnl_get_net_ns_capable(struct sock *sk, int netnsid);
++bool rtnl_dev_link_net_capable(const struct net_device *dev,
++			       const struct net *link_net);
  
-@@ -1550,20 +1551,16 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
- 	if (IS_ERR(ctrl->base))
- 		return PTR_ERR(ctrl->base);
+ #define MODULE_ALIAS_RTNL_LINK(kind) MODULE_ALIAS("rtnl-link-" kind)
  
--	ret = platform_get_irq(pdev, 0);
--	if (ret < 0)
--		return ret;
-+	irq = platform_get_irq(pdev, 0);
-+	if (irq < 0)
-+		return irq;
- 
--	ret = devm_request_irq(dev, ret, qcom_slim_ngd_interrupt,
--			       IRQF_TRIGGER_HIGH, "slim-ngd", ctrl);
-+	ret = devm_request_irq(dev, irq, qcom_slim_ngd_interrupt,
-+			       IRQF_TRIGGER_HIGH | IRQF_NO_AUTOEN,
-+			       "slim-ngd", ctrl);
- 	if (ret)
- 		return dev_err_probe(&pdev->dev, ret, "request IRQ failed\n");
- 
--	ctrl->nb.notifier_call = qcom_slim_ngd_ssr_notify;
--	ctrl->notifier = qcom_register_ssr_notifier("lpass", &ctrl->nb);
--	if (IS_ERR(ctrl->notifier))
--		return PTR_ERR(ctrl->notifier);
--
- 	ctrl->dev = dev;
- 	ctrl->framer.rootfreq = SLIM_ROOT_FREQ >> 3;
- 	ctrl->framer.superfreq =
-@@ -1585,24 +1582,34 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
- 	init_completion(&ctrl->qmi_up);
- 
- 	ctrl->pdr = pdr_handle_alloc(slim_pd_status, ctrl);
--	if (IS_ERR(ctrl->pdr)) {
--		ret = dev_err_probe(dev, PTR_ERR(ctrl->pdr),
--				    "Failed to init PDR handle\n");
--		goto err_unregister_ssr;
--	}
-+	if (IS_ERR(ctrl->pdr))
-+		return dev_err_probe(dev, PTR_ERR(ctrl->pdr), "Failed to init PDR handle\n");
-+
-+	ret = of_qcom_slim_ngd_register(dev, ctrl);
-+	if (ret)
-+		goto err_pdr_release;
- 
- 	pds = pdr_add_lookup(ctrl->pdr, "avs/audio", "msm/adsp/audio_pd");
- 	if (IS_ERR(pds) && PTR_ERR(pds) != -EALREADY) {
- 		ret = dev_err_probe(dev, PTR_ERR(pds), "pdr add lookup failed\n");
--		goto err_pdr_release;
-+		goto err_unregister_ngd;
-+	}
-+
-+	ctrl->nb.notifier_call = qcom_slim_ngd_ssr_notify;
-+	ctrl->notifier = qcom_register_ssr_notifier("lpass", &ctrl->nb);
-+	if (IS_ERR(ctrl->notifier)) {
-+		ret = PTR_ERR(ctrl->notifier);
-+		goto err_unregister_ngd;
- 	}
- 
--	return of_qcom_slim_ngd_register(dev, ctrl);
-+	enable_irq(irq);
- 
-+	return 0;
-+
-+err_unregister_ngd:
-+	qcom_slim_ngd_unregister(ctrl);
- err_pdr_release:
- 	pdr_handle_release(ctrl->pdr);
--err_unregister_ssr:
--	qcom_unregister_ssr_notifier(ctrl->notifier, &ctrl->nb);
- 
- 	return ret;
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -2110,6 +2110,14 @@ struct net *rtnl_get_net_ns_capable(stru
  }
--- 
-2.53.0
-
+ EXPORT_SYMBOL_GPL(rtnl_get_net_ns_capable);
+ 
++bool rtnl_dev_link_net_capable(const struct net_device *dev,
++			       const struct net *link_net)
++{
++	return net_eq(link_net, dev_net(dev)) ||
++	       ns_capable(link_net->user_ns, CAP_NET_ADMIN);
++}
++EXPORT_SYMBOL_GPL(rtnl_dev_link_net_capable);
++
+ static int rtnl_valid_dump_ifinfo_req(const struct nlmsghdr *nlh,
+ 				      bool strict_check, struct nlattr **tb,
+ 				      struct netlink_ext_ack *extack)
+--- a/net/ipv4/ip_gre.c
++++ b/net/ipv4/ip_gre.c
+@@ -1406,6 +1406,9 @@ static int ipgre_changelink(struct net_d
+ 	struct ip_tunnel_parm p;
+ 	int err;
+ 
++	if (!rtnl_dev_link_net_capable(dev, t->net))
++		return -EPERM;
++
+ 	err = ipgre_newlink_encap_setup(dev, data);
+ 	if (err)
+ 		return err;
+@@ -1435,6 +1438,9 @@ static int erspan_changelink(struct net_
+ 	struct ip_tunnel_parm p;
+ 	int err;
+ 
++	if (!rtnl_dev_link_net_capable(dev, t->net))
++		return -EPERM;
++
+ 	err = ipgre_newlink_encap_setup(dev, data);
+ 	if (err)
+ 		return err;
 
 
