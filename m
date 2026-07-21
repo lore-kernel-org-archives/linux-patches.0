@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B6646EF61;
-	Tue, 21 Jul 2026 19:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0494643031D;
+	Tue, 21 Jul 2026 19:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662062; cv=none; b=RI8y5BpdyyzDHTtOeG1+OOS0gj4gPSndpEviVo1u5704cy0RE+cPItTKex0ApFHYymNs9PBU/TLwYS8o5Eaok49lltCeSgUaNCjDbAI1L7tb0l+MO0+++N/BezJUWUp9sdV6BuxDqIPilb7YT4CjYPgY2P/AHQfnSTg+Iy1HH00=
+	t=1784662065; cv=none; b=iKE2SIITSubIPxsv7ftnzBjie+lG2mQbUTnVCVj0UCdavnbUvf1ZcMbNFLE5TDDBKTsDcnhAwOaxDcxMaViPRPch+PGPkGipfNAQNalrx3EuIHxw9byeDZIEhKyafDmaldyo7nWCCY3RbJSxBjWQvAoQSd/F80Sy5j/q4Piu7Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662062; c=relaxed/simple;
-	bh=sIdZOCZyRbf5+U7FQqg3vTB/SARWNk7YVMi1e1zUUe8=;
+	s=arc-20240116; t=1784662065; c=relaxed/simple;
+	bh=aX7FsY5iW/PFvJsqft/IOY1ThiX+iJHtY4i5vro9Rpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RbO/WMes4EvGxTEiUDDsNZVEW0AH0E/xq4pGQoUfdYp+TZIJygV06rn75hD7guaWCMOG9/7AcNOIxCdhib6kcevvz4AxNXfa9DvP2BnRvBL0+Ds5MDbozRKBspmQ7bSVWDRymCPjEH02/MZKx2xjBegPt1kQV0cBctP8vyjuPv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sA/pTTDu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ax/tQuMgCL/6H1hOQf/xzZGN1fsukhknP/h0cCkE7k+J2GbxUCWe5q8hhTqh8E9WRgomMbpuFC5MEAI1PXP6BhBE29OjsYTzLV9y7WGJWbbuZUDjThqx7KbWZ52bUyx6DqLvH2CtmbeybJHUeZUzN3rN61QFye9xlkCDmipLzag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqoaTrDN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sA/pTTDu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBDB1F000E9;
-	Tue, 21 Jul 2026 19:27:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqoaTrDN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6151F000E9;
+	Tue, 21 Jul 2026 19:27:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662061;
-	bh=VF00HwCz78y6feuqu/IJJEIMkApp7PffkNl/gvEDY8E=;
+	s=korg; t=1784662063;
+	bh=78nzSKh8sQg4AJD2kI3Udaijq+3Tua1IdkK8k/49OE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sA/pTTDuK3uRXcVhTwqjQaa2uQJppsi8MbDjYu82blKyecMVOjcuxDLKs2MkUqQK+
-	 E6DB8eNgNVxreQeLmzHuMvYHfo+VEiOEVbm134ohl1utySootb59Ury5CXHGSe7nPB
-	 SDZkWw6HfF7SHD7RRtqaRU+y/aOS5FCc8bL9BqUY=
+	b=kqoaTrDN3dGHPdH7u5R48wtyNKEBFGUrZC/bHYvsBdEarxB45rBDb0ahoL2FzPvQM
+	 t6vWLOIg7F+46hVWghGfi9CdlQNSzG2c0EV1qtI7w5A1FNMCnBMPt1Og3nYOS1qaJ/
+	 6ZDMoWf6JtPCueZsIJTFiyDvRurSpXWHKuHgeU5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Ming <a0yami@mailbox.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Luca Leonardo Scorcia <l.scorcia@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0302/1276] vhost/net: complete zerocopy ubufs only once
-Date: Tue, 21 Jul 2026 17:12:25 +0200
-Message-ID: <20260721152452.853627423@linuxfoundation.org>
+Subject: [PATCH 6.12 0276/1276] pinctrl: mediatek: mt8167: Fix Schmitt trigger register offset of pins 34-39
+Date: Tue, 21 Jul 2026 17:11:59 +0200
+Message-ID: <20260721152452.254855611@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,81 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Ming <a0yami@mailbox.org>
+From: Luca Leonardo Scorcia <l.scorcia@gmail.com>
 
-[ Upstream commit 8f6898fe80794f2d7c3d38c1158c806e4074a1c4 ]
+[ Upstream commit 439bc91d20188901dac698bed4921caac76d9074 ]
 
-vhost-net initializes one ubuf_info per outstanding zerocopy TX
-descriptor and hands it to the backend socket.  The networking stack may
-then clone a zerocopy skb before all skb references are released.  For
-example, batman-adv fragmentation reaches skb_split(), which calls
-skb_zerocopy_clone() and increments the same ubuf_info refcount.
+The correct Schmitt trigger register offset for pins 34-39 is 0xA00. Value
+was verified with SoC data sheet.
 
-vhost_zerocopy_complete() currently treats every ubuf callback as a
-completed vhost descriptor.  It dereferences ubuf->ctx, writes the
-descriptor completion state, and drops the vhost_net_ubuf_ref even when
-the callback only releases a cloned skb reference.  A backend reset can
-therefore wait for and free the vhost_net_ubuf_ref while another cloned
-skb still carries the same ubuf_info.  A later completion then
-dereferences the freed ubufs pointer.
-
-KASAN reports the stale completion as:
-
-  BUG: KASAN: slab-use-after-free in vhost_zerocopy_complete+0x1d7/0x1f0
-  BUG: KASAN: slab-use-after-free in vhost_zerocopy_complete+0x101/0x1f0
-  vhost_zerocopy_complete
-  skb_copy_ubufs
-  __dev_forward_skb2
-  veth_xmit
-
-The freed object was allocated from vhost_net_ioctl() while setting the
-backend and freed through kfree_rcu()/kvfree_rcu_bulk after backend
-removal, while delayed skb completion still reached
-vhost_zerocopy_complete().
-
-Honor the generic ubuf_info refcount before touching vhost state, and run
-the vhost descriptor completion only for the final ubuf reference.  This
-matches the msg_zerocopy_complete() ownership rule for cloned zerocopy
-skbs.
-
-Fixes: bab632d69ee4 ("vhost: vhost TX zero-copy support")
-Signed-off-by: Qing Ming <a0yami@mailbox.org>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260601104300.197210-1-a0yami@mailbox.org>
+Signed-off-by: Luca Leonardo Scorcia <l.scorcia@gmail.com>
+Fixes: 82d70627e94a ("pinctrl: mediatek: Add MT8167 Pinctrl driver")
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/net.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-mt8167.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/vhost/net.c b/drivers/vhost/net.c
-index 3ad1a6f4ef9652..c4c01396054791 100644
---- a/drivers/vhost/net.c
-+++ b/drivers/vhost/net.c
-@@ -388,13 +388,20 @@ static void vhost_zerocopy_signal_used(struct vhost_net *net,
- static void vhost_zerocopy_complete(struct sk_buff *skb,
- 				    struct ubuf_info *ubuf_base, bool success)
- {
--	struct ubuf_info_msgzc *ubuf = uarg_to_msgzc(ubuf_base);
--	struct vhost_net_ubuf_ref *ubufs = ubuf->ctx;
--	struct vhost_virtqueue *vq = ubufs->vq;
-+	struct ubuf_info_msgzc *ubuf;
-+	struct vhost_net_ubuf_ref *ubufs;
-+	struct vhost_virtqueue *vq;
- 	int cnt;
- 
--	rcu_read_lock_bh();
-+	/* Only the final cloned skb reference completes the vhost descriptor. */
-+	if (!refcount_dec_and_test(&ubuf_base->refcnt))
-+		return;
-+
-+	ubuf = uarg_to_msgzc(ubuf_base);
-+	ubufs = ubuf->ctx;
-+	vq = ubufs->vq;
- 
-+	rcu_read_lock_bh();
- 	/* set len to mark this desc buffers done DMA */
- 	vq->heads[ubuf->desc].len = success ?
- 		VHOST_DMA_DONE_LEN : VHOST_DMA_FAILED_LEN;
+diff --git a/drivers/pinctrl/mediatek/pinctrl-mt8167.c b/drivers/pinctrl/mediatek/pinctrl-mt8167.c
+index 143c2662227252..c812d614e9d453 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-mt8167.c
++++ b/drivers/pinctrl/mediatek/pinctrl-mt8167.c
+@@ -244,7 +244,7 @@ static const struct mtk_pin_ies_smt_set mt8167_smt_set[] = {
+ 	MTK_PIN_IES_SMT_SPEC(24, 25, 0xA00, 12),
+ 	MTK_PIN_IES_SMT_SPEC(26, 30, 0xA00, 0),
+ 	MTK_PIN_IES_SMT_SPEC(31, 33, 0xA00, 1),
+-	MTK_PIN_IES_SMT_SPEC(34, 39, 0xA900, 2),
++	MTK_PIN_IES_SMT_SPEC(34, 39, 0xA00, 2),
+ 	MTK_PIN_IES_SMT_SPEC(40, 40, 0xA10, 11),
+ 	MTK_PIN_IES_SMT_SPEC(41, 43, 0xA00, 10),
+ 	MTK_PIN_IES_SMT_SPEC(44, 47, 0xA00, 11),
 -- 
 2.53.0
 
