@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57728367B63;
-	Tue, 21 Jul 2026 22:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180EA35C694;
+	Tue, 21 Jul 2026 22:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673130; cv=none; b=ir4zqbTrZ6wDVKCpArFHgShFjt4CB3rpV9OP2IEOYNA9EScAkCB66po3UqkfpKPNEAkIJRP4RcVlsoba5CHYwL72i/2Uonp6nfTWzn2C4OolQgMxzgT3WyIpWRGL6vlq8SnUg32tKWK32mY0J3iX3c8IXGjlynkEQZ2MK/EmOLA=
+	t=1784673133; cv=none; b=Pi51T/0tljjEOxh9FOy9RqFrUECXWKEhGDAelpiNrfmLoFW/+qMPVcyPaBDsCmBPsYvyNB1n8kl5QLPLuR6nqHR7bDiUaac9VT/G//dJqZ1t0ONrQq0Y6qSp7YlESGXV1ahzD4zgxztVMixB9zmStoOxZVlnflgFzV/jrzzsAWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673130; c=relaxed/simple;
-	bh=wRBL5V6saEtjEUFlTYQtdpECUPQJLsdVxKsrHPIywjA=;
+	s=arc-20240116; t=1784673133; c=relaxed/simple;
+	bh=ZDrkj6Aoi43uZRBHqmVfI/L5YK+g7BNqxK+tUyG1ubk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IowKUVmMZ8UIu1aOZWHGqlQGx7UfX0P3xxf8SRcHhZRc2SnYoInYZ6OXdNSRyOkd6wJksQH9Gb7mM/qv2kmaaY1xaKsCgjzS2v6+M3BYRx5xfRlPi82kyOqGuKlnbERhHe7irbM/rlXqzqkV7q58pxUsC0Lxgg0zkhYXxUHIJIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kHFYEer6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HtboXFw5U3AcxbElOk8FOaRSlGgajjF2l5FfHL/yp65EZIybEe4mLIg5sBWzU+upyKM0BwPd01HRu3QpRkRgLhimI0Ab0cnwDl23VBEF4vqACLdLsCd6XIHuodlVaVwImzV5EgM7ZaMr44PrS9Nuoo3GW4l6G0MCm1oML2F9wW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cH5ZJ8QO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kHFYEer6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2811F000E9;
-	Tue, 21 Jul 2026 22:32:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cH5ZJ8QO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7853F1F000E9;
+	Tue, 21 Jul 2026 22:32:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673129;
-	bh=69pt1ZNmE9CEkOfjflamnbJrucGXStXYSYWfJwjoaSc=;
+	s=korg; t=1784673132;
+	bh=UKfmJ1Uq28ISHEyQWomB15Pi2u9vWp8hS6JSUMcEQSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kHFYEer6SUFfgLH7pC6X1fIdh2Wrm/cY4ix6PTVKflileBxoXY4uLfZhE4CzsbvdF
-	 IVlgwSa2e3p4ZYKG5wrz9uhisdP+/3DEVmWOS30Dm6+mKgHsSV1e5t5T+CjUh66pHS
-	 B0Vz//MskkXWAmgOgatSeUBVgzuSfZoUevsk9pKE=
+	b=cH5ZJ8QO1Mjvbl+Zy2IixoQ3XYNkZwDXQ9mdiCny5m8Ds1pxAwE3N67edj/ySzE6Q
+	 SABKfmjOtdFsaXNGstG2A3A5D3gadvY2Oa9MErNTpYCNK2m0nUUPHSs0MzdrIobs3N
+	 rM0BnDEvdEk0h6V0Kk878dvunMX3wJTHw7SZwotk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 5.10 047/699] iio: light: opt3001: fix missing state reset on timeout
-Date: Tue, 21 Jul 2026 17:16:46 +0200
-Message-ID: <20260721152356.771556558@linuxfoundation.org>
+Subject: [PATCH 5.10 048/699] iio: light: veml6030: fix channel type when pushing events
+Date: Tue, 21 Jul 2026 17:16:47 +0200
+Message-ID: <20260721152356.793606923@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,44 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Crofts <joshua.crofts1@gmail.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit c123ca6ee26ad98f70a866ff428b08145c5a24fe upstream.
+commit c52bb33b641ebaae3e209f97714cb1758206f7d9 upstream.
 
-Currently in the function opt3001_get_processed(), there is a check
-that directly returns -ETIMEDOUT if the conversion IRQ times out,
-completely bypassing the err label, leaving ok_to_ignore_lock
-permanently true, potentially breaking the device's falling threshold
-interrupt detection.
+The events are registered for IIO_LIGHT and not for IIO_INTENSITY.
+Use the correct channel type.
 
-Assign -ETIMEDOUT to the return variable and jump to the error label
-to ensure ok_to_ignore_lock is properly reset.
+When at it, fix minor checkpatch code style warning (alignment).
 
-Fixes: 26d90b559057 ("iio: light: opt3001: Fixed timeout error when 0 lux")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260525-opt3001-cleanup-v4-0-65b36a174f78%40gmail.com?part=1
-Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
 Cc: stable@vger.kernel.org
+Fixes: 7b779f573c48 ("iio: light: add driver for veml6030 ambient light sensor")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/opt3001.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/iio/light/veml6030.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/iio/light/opt3001.c
-+++ b/drivers/iio/light/opt3001.c
-@@ -280,8 +280,10 @@ static int opt3001_get_lux(struct opt300
- 		ret = wait_event_timeout(opt->result_ready_queue,
- 				opt->result_ready,
- 				msecs_to_jiffies(OPT3001_RESULT_READY_LONG));
--		if (ret == 0)
--			return -ETIMEDOUT;
-+		if (ret == 0) {
-+			ret = -ETIMEDOUT;
-+			goto err;
-+		}
- 	} else {
- 		/* Sleep for result ready time */
- 		timeout = (opt->int_time == OPT3001_INT_TIME_SHORT) ?
+--- a/drivers/iio/light/veml6030.c
++++ b/drivers/iio/light/veml6030.c
+@@ -710,9 +710,11 @@ static irqreturn_t veml6030_event_handle
+ 	else
+ 		evtdir = IIO_EV_DIR_FALLING;
+ 
+-	iio_push_event(indio_dev, IIO_UNMOD_EVENT_CODE(IIO_INTENSITY,
+-					0, IIO_EV_TYPE_THRESH, evtdir),
+-					iio_get_time_ns(indio_dev));
++	iio_push_event(indio_dev, IIO_UNMOD_EVENT_CODE(IIO_LIGHT,
++						       0,
++						       IIO_EV_TYPE_THRESH,
++						       evtdir),
++		       iio_get_time_ns(indio_dev));
+ 
+ 	return IRQ_HANDLED;
+ }
 
 
