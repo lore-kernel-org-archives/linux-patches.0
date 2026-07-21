@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7667947143C;
-	Tue, 21 Jul 2026 20:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF921472538;
+	Tue, 21 Jul 2026 20:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665201; cv=none; b=kUNk83VK1yj996O1JO4Mn+1mWoEzsCA7wm9b5+nYkWM2YlcGY19b7YC3gLG1hzD5UgYgRZl7JGYxaAdTgnLg7OCM1WIFO5NxnFBmis5qkg65OHBBb+/Ti7PQ0QqNtyRjr4MTcL2IClbDPU+0siy/4tmn83qa4Wn6aS0ogNLfP40=
+	t=1784665203; cv=none; b=n25FaQyuVH8eqzNnwagefsgmIgX600J0XWaPe1oeJ4nTjE5L1+C+Y/hkvLDkoL0kgUonui3BcGjKgbyG5EnG2j+Z26Iy7xKNYSWBgciiwTGdgoDd10h3FWLiOdBR5p9pmQDcrbZURoru0e3chPmI9HMsnBdCSXCyR/lZ3+ksZZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665201; c=relaxed/simple;
-	bh=++GuvhL0OQf1zhSB5v5zM6K+npEXjfu9fOxHCs/vLuw=;
+	s=arc-20240116; t=1784665203; c=relaxed/simple;
+	bh=XuUh9jFNSnEVP+MDq6XCXXsRDEQD4pRzlYKJXKFetLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UwiMopPBdFHoOR62SrkyCu8NP04Syn0PCBrDf4zbAX4quTZNwankXxs0XFTECdYl9WUIQ9Y6hfNPiiHXJv5KpMlZ5XA2ySpvE5XTQWMJw0aSjVXDh1oOauNrteyt+JxoBSTxlzVjSz0EJ3IVY4+wyMA4RUr/f+owSdrCB7S8Uas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjlPBXBd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ljMyYqlyKRmhXCZ7bKlt57iwpCru3H86zz/N4GEfJ74sv/vXwzLs0j6QzymDXL2QKJDcKULD5nOVblQS9nSstwF5eW0oWgNz3zKmwIlVJBm+6oOzezaQCDgjAHFzRP0+GLHoKVEId5voHU1oloyGymhqPsn/z9iE5OV8AuoRbXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gB/L38Yn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjlPBXBd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC411F00A3A;
-	Tue, 21 Jul 2026 20:19:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gB/L38Yn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 346EF1F000E9;
+	Tue, 21 Jul 2026 20:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665199;
-	bh=+W0wsI2e8Z2/gPj9wn4CwBhebax78ZQkUNbDBpG4h4w=;
+	s=korg; t=1784665201;
+	bh=l6ojsFTH/0a6QvrD7NsIK2OlHIQHLO/e2P5E4KSCHgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EjlPBXBd87MSwQ4aU/nqW4L3DkZBQqNTcbpTWeA1G2a/dGn/QAmCa/WEIUBZlZXMW
-	 1Ye/zkVegaZMx/9civBrB0wCZK8G+p4H0Q073RpmPTEARh975wSuljPyLmPdp9VdcI
-	 cma3mcy/mEpH6mH+hGI5rDc0thQg4m7eVCyCb+gE=
+	b=gB/L38YnFLHOh2ZAZB2O7lMx710kAjghqf+8sCNi5chEr/BhXS1joCtYCnSnzKtF3
+	 q/nbzFqYJby4JQR4bnZ4kit51adKEMTwsd9MgTpG6FKQL6+mVmT9cPbt44Pnz+tm+a
+	 gYQUa11CDQtkKURBqwQgqI4u88v+UpbvhpNsMQz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Manish Khadka <maskmemanish@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.6 0213/1266] HID: wacom: stop hardware after post-start probe failures
-Date: Tue, 21 Jul 2026 17:10:50 +0200
-Message-ID: <20260721152446.583773082@linuxfoundation.org>
+Subject: [PATCH 6.6 0214/1266] HID: letsketch: fix UAF on inrange_timer at driver unbind
+Date: Tue, 21 Jul 2026 17:10:51 +0200
+Message-ID: <20260721152446.605957938@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,80 +50,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Manish Khadka <maskmemanish@gmail.com>
 
-commit ec2612b8ad9e642596db011dd8b6568ef1edeaa1 upstream.
+commit 46c8beeccd8ab2c863827254a85ea877654a3534 upstream.
 
-wacom_parse_and_register() starts HID hardware before registering inputs
-and initializing pad LEDs/remotes. Those later steps can fail, but their
-error paths currently release Wacom resources without stopping the HID
-hardware.
+letsketch_driver does not provide a .remove callback, but
+letsketch_probe() arms a per-device timer:
 
-Route post-hid_hw_start() failures through hid_hw_stop() before
-releasing driver resources.
+    timer_setup(&data->inrange_timer, letsketch_inrange_timeout, 0);
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+The timer is re-armed from letsketch_raw_event() with a 100 ms
+timeout on every pen-in-range report, and its callback dereferences
+data->input_tablet to deliver a synthetic BTN_TOOL_PEN release.
 
-Fixes: c1d6708bf0d3 ("HID: wacom: Do not register input devices until after hid_hw_start")
+letsketch_data is allocated with devm_kzalloc(), and its input_dev
+fields are devm-allocated via letsketch_setup_input_tablet().  On
+device unbind (USB unplug or rmmod), the HID core runs its default
+teardown and devm cleanup frees both letsketch_data and the input
+devices.  Because no .remove callback exists, nothing drains the
+timer first: if raw_event armed it within ~100 ms of the unbind,
+the pending timer fires on freed memory.  This is a UAF read of
+data and of data->input_tablet, followed by input_report_key() /
+input_sync() into the freed input_dev.
+
+The same problem can occur on the probe error path: if
+hid_hw_start() enabled I/O on an always-poll-quirk device and then
+failed, raw_event may have armed the timer before devm releases
+data.
+
+Fix by adding a .remove callback that calls hid_hw_stop() first.
+hid_hw_stop() synchronously kills the URBs that deliver raw_event(),
+so once it returns no path can re-arm the timer.  timer_shutdown_sync()
+then drains any in-flight callback and permanently disables further
+mod_timer() calls.  Apply the same timer_shutdown_sync() in the probe
+error path so the timer is guaranteed not to outlive data.
+
+Fixes: 33a5c2793451 ("HID: Add new Letsketch tablet driver")
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Manish Khadka <maskmemanish@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_sys.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/hid/hid-letsketch.c |   36 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 3 deletions(-)
 
---- a/drivers/hid/wacom_sys.c
-+++ b/drivers/hid/wacom_sys.c
-@@ -2422,16 +2422,16 @@ static int wacom_parse_and_register(stru
+--- a/drivers/hid/hid-letsketch.c
++++ b/drivers/hid/hid-letsketch.c
+@@ -295,13 +295,42 @@ static int letsketch_probe(struct hid_de
  
- 	error = wacom_register_inputs(wacom);
- 	if (error)
--		goto fail;
-+		goto fail_hw_stop;
+ 	ret = letsketch_setup_input_tablet(data);
+ 	if (ret)
+-		return ret;
++		goto err_shutdown_timer;
  
- 	if (wacom->wacom_wac.features.device_type & WACOM_DEVICETYPE_PAD) {
- 		error = wacom_initialize_leds(wacom);
- 		if (error)
--			goto fail;
-+			goto fail_hw_stop;
+ 	ret = letsketch_setup_input_tablet_pad(data);
+ 	if (ret)
+-		return ret;
++		goto err_shutdown_timer;
  
- 		error = wacom_initialize_remotes(wacom);
- 		if (error)
--			goto fail;
-+			goto fail_hw_stop;
- 	}
+-	return hid_hw_start(hdev, HID_CONNECT_HIDRAW);
++	ret = hid_hw_start(hdev, HID_CONNECT_HIDRAW);
++	if (ret)
++		goto err_shutdown_timer;
++
++	return 0;
++
++err_shutdown_timer:
++	/*
++	 * Drain any pending callback and permanently disable the timer
++	 * before devm releases data: if hid_hw_start() enabled I/O on an
++	 * always-poll-quirk device and then failed, raw_event may have
++	 * armed the timer already.
++	 */
++	timer_shutdown_sync(&data->inrange_timer);
++	return ret;
++}
++
++static void letsketch_remove(struct hid_device *hdev)
++{
++	struct letsketch_data *data = hid_get_drvdata(hdev);
++
++	/*
++	 * hid_hw_stop() synchronously kills the URBs that deliver
++	 * raw_event(), so once it returns no path can re-arm
++	 * inrange_timer.  timer_shutdown_sync() then drains any
++	 * in-flight callback and permanently disables further
++	 * mod_timer() calls before devm releases data.
++	 */
++	hid_hw_stop(hdev);
++	timer_shutdown_sync(&data->inrange_timer);
+ }
  
- 	if (!wireless) {
-@@ -2445,14 +2445,14 @@ static int wacom_parse_and_register(stru
- 		cancel_delayed_work_sync(&wacom->init_work);
- 		_wacom_query_tablet_data(wacom);
- 		error = -ENODEV;
--		goto fail_quirks;
-+		goto fail_hw_stop;
- 	}
- 
- 	if (features->device_type & WACOM_DEVICETYPE_WL_MONITOR) {
- 		error = hid_hw_open(hdev);
- 		if (error) {
- 			hid_err(hdev, "hw open failed\n");
--			goto fail_quirks;
-+			goto fail_hw_stop;
- 		}
- 	}
- 
-@@ -2461,7 +2461,7 @@ static int wacom_parse_and_register(stru
- 
- 	return 0;
- 
--fail_quirks:
-+fail_hw_stop:
- 	hid_hw_stop(hdev);
- fail:
- 	wacom_release_resources(wacom);
+ static const struct hid_device_id letsketch_devices[] = {
+@@ -314,6 +343,7 @@ static struct hid_driver letsketch_drive
+ 	.name = "letsketch",
+ 	.id_table = letsketch_devices,
+ 	.probe = letsketch_probe,
++	.remove = letsketch_remove,
+ 	.raw_event = letsketch_raw_event,
+ };
+ module_hid_driver(letsketch_driver);
 
 
