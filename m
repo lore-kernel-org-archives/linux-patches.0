@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECDC46D542;
-	Tue, 21 Jul 2026 15:44:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0426546D558;
+	Tue, 21 Jul 2026 15:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648657; cv=none; b=jHPgFkBIkWkiMZAAccFqvDr18X4DiMJYrdVm3g7QrPNc5Tyo1LmDdUjwa1L5zCFU7fF4W/0XT/ovGM+iLiPGcW0vkIavBjS/SOVYLTOor2tFpIrLrZkw/50cBUkO9FX35Eo9CHHFl1nYvKLqtXGT2uYnCVN/l8tgdzfxLVDZcg8=
+	t=1784648660; cv=none; b=LRUMUvkVwSY6RCXocLYGbmLfJo0zDDrnV0GoZfy1M1q7b/e5KJCHalLMjDspbc5WKRnitlViy8lgwzcBQGj306BzcT6JGecsnAVWkwGMll/8EGihhyLo+++6dxEmx+pfBD7+up/mXsU8+B+Lwiuypmw8SbIPBdfDk2/cv+3sgeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648657; c=relaxed/simple;
-	bh=RLy59UfzuK2Q+g+SUTgXuW+SWtWlbpIcTjoDFlChiiI=;
+	s=arc-20240116; t=1784648660; c=relaxed/simple;
+	bh=vzegVaTgB4YZNWixCvLCEBuVBF1igisyHXUhzcCjMDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A7tmGWufoY4sKYOYK17+a84A9s+knyw4bcJ73p09ZO1i8kRjJvhvm26xBZZtgWvANFOQVJXzNIVEBwJjNoWEodF9hg7TPqXzDE6OBuKZBr9FRFEJfcw3hUYA9K5/l9DST6jflvbu/rtfnb0udDDcGc0263bipdM1h0lw9K7q0Bs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvYH14J9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PrhGwp1PI2wjDwE4nGDI7n/iIRq5R7djfCHfbNuoR+53o4bWnkD01KEyAopAdJGsbxJvsTMGaod0w4WJZijDupHrIt78puTOVAetad70D5BzZ6bY5Jn0Ii7/+2rX3al+0reA0sooPLxVgwzddqB/WEexrYZqx4wYCJZa7ECN7FE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PrUpQzn+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvYH14J9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A01C51F000E9;
-	Tue, 21 Jul 2026 15:44:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PrUpQzn+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD261F000E9;
+	Tue, 21 Jul 2026 15:44:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648656;
-	bh=xFoMt1kd3hsRw87paNKlCD1k1D8I/RgK1JZKO3rU/3M=;
+	s=korg; t=1784648658;
+	bh=C2EpL36B8iFOWc4ty7cb7NXXU3KKDGGajTwVv4T/IXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cvYH14J9QreGgPNJ1w9um8o4Mb99lFEnXaOKsv9H188zKKMIxXvpE63nNB32TJTh7
-	 etOh0cgFWzob85OpWfw5X2o1xLf7kCgiz7ps/rStL6aGbyXsFKd/XVSsy8UTAQM8l7
-	 nNzHxAgvASk3eD3VUQKVE739YfLcdvqUj4SFq+y8=
+	b=PrUpQzn+snvJKUQWYzOtYPj8uh8H8kAbpiZrOs8jUHq8wmUkGD3p2LTlYyMR8gwH8
+	 xqPoheF8+UpKeviojRTODtExOBxv2G17amoGaf7TTTNHPLKt4WLbPb0BdbCfNIGQQL
+	 6ctg7NOQKbRDuHdy9sDZJf8HL8lLJS4xz9y/kS/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Larsson <benjamin.larsson@genexis.eu>,
-	Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0283/2077] crypto: eip93 - fix reset ring register definition
-Date: Tue, 21 Jul 2026 16:59:16 +0200
-Message-ID: <20260721152559.356050641@linuxfoundation.org>
+Subject: [PATCH 7.1 0284/2077] ASoC: mediatek: mt8189: Fix probe resource cleanup
+Date: Tue, 21 Jul 2026 16:59:17 +0200
+Message-ID: <20260721152559.380751181@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,41 +45,147 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 09e6b79b8ce388993aec9ac91b1cb2c181c27bd9 ]
+[ Upstream commit 5404599c3292a12dfc6a3b604cebb5d51064f553 ]
 
-This patch fixes a descriptor ring reset. This causes a hang in the
-driver's unload/load sequence.
+The MT8189 AFE probe assigns reserved memory with
+of_reserved_mem_device_init(), but only releases that assignment from
+.remove().  If probe fails after the reserved memory has been assigned,
+the assignment record is left behind.
 
-Fixes: 9739f5f93b78 ("crypto: eip93 - Add Inside Secure SafeXcel EIP-93 crypto engine support")
-Suggested-by: Benjamin Larsson <benjamin.larsson@genexis.eu>
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+The probe path also uses pm_runtime_get_sync() without checking its
+return value.  If runtime resume fails, pm_runtime_get_sync() leaves the
+usage count incremented and the driver continues initialization without
+the device being resumed.  Use pm_runtime_resume_and_get() so resume
+errors abort probe without leaking a PM usage count.
+
+Finally, component registration failure currently jumps to a label that
+drops a runtime PM reference even though the temporary probe reference
+was already released.  Return the component registration error directly,
+and do not drop an unmatched PM reference from .remove().
+
+Fixes: 7eb153585598 ("ASoC: mediatek: mt8189: add platform driver")
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260514-asoc-mt8189-probe-cleanup-v1-1-ded733363281@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/inside-secure/eip93/eip93-regs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/mediatek/mt8189/mt8189-afe-pcm.c | 38 ++++++++++++++++------
+ 1 file changed, 28 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/crypto/inside-secure/eip93/eip93-regs.h b/drivers/crypto/inside-secure/eip93/eip93-regs.h
-index 96285ca6fbbe89..96d28c6651bdb7 100644
---- a/drivers/crypto/inside-secure/eip93/eip93-regs.h
-+++ b/drivers/crypto/inside-secure/eip93/eip93-regs.h
-@@ -103,7 +103,7 @@
- #define   EIP93_PE_TARGET_COMMAND_NO_RDR_MODE	FIELD_PREP(EIP93_PE_CONFIG_PE_MODE, 0x2)
- #define   EIP93_PE_TARGET_COMMAND_WITH_RDR_MODE	FIELD_PREP(EIP93_PE_CONFIG_PE_MODE, 0x1)
- #define   EIP93_PE_DIRECT_HOST_MODE		FIELD_PREP(EIP93_PE_CONFIG_PE_MODE, 0x0)
--#define   EIP93_PE_CONFIG_RST_RING		BIT(2)
-+#define   EIP93_PE_CONFIG_RST_RING		BIT(1)
- #define   EIP93_PE_CONFIG_RST_PE		BIT(0)
- #define EIP93_REG_PE_STATUS			0x104
- #define EIP93_REG_PE_BUF_THRESH			0x10c
+diff --git a/sound/soc/mediatek/mt8189/mt8189-afe-pcm.c b/sound/soc/mediatek/mt8189/mt8189-afe-pcm.c
+index 24b0c78815f61f..77cf2b604f6ce8 100644
+--- a/sound/soc/mediatek/mt8189/mt8189-afe-pcm.c
++++ b/sound/soc/mediatek/mt8189/mt8189-afe-pcm.c
+@@ -2351,9 +2351,13 @@ static int mt8189_afe_runtime_resume(struct device *dev)
+ static int mt8189_afe_component_probe(struct snd_soc_component *component)
+ {
+ 	struct mtk_base_afe *afe = snd_soc_component_get_drvdata(component);
++	int ret;
+ 
+ 	/* enable clock for regcache get default value from hw */
+-	pm_runtime_get_sync(afe->dev);
++	ret = pm_runtime_resume_and_get(afe->dev);
++	if (ret)
++		return dev_err_probe(afe->dev, ret, "failed to resume device\n");
++
+ 	mtk_afe_add_sub_dai_control(component);
+ 	pm_runtime_put_sync(afe->dev);
+ 
+@@ -2417,6 +2421,11 @@ static const struct reg_sequence mt8189_cg_patch[] = {
+ 	{ AUDIO_TOP_CON4, 0x361c },
+ };
+ 
++static void mt8189_afe_release_reserved_mem(void *data)
++{
++	of_reserved_mem_device_release(data);
++}
++
+ static int mt8189_afe_pcm_dev_probe(struct platform_device *pdev)
+ {
+ 	int ret, i;
+@@ -2431,8 +2440,15 @@ static int mt8189_afe_pcm_dev_probe(struct platform_device *pdev)
+ 		return ret;
+ 
+ 	ret = of_reserved_mem_device_init(dev);
+-	if (ret)
++	if (ret) {
+ 		dev_warn(dev, "failed to assign memory region: %d\n", ret);
++	} else {
++		ret = devm_add_action_or_reset(dev,
++					       mt8189_afe_release_reserved_mem,
++					       dev);
++		if (ret)
++			return ret;
++	}
+ 
+ 	afe = devm_kzalloc(dev, sizeof(*afe), GFP_KERNEL);
+ 	if (!afe)
+@@ -2533,18 +2549,22 @@ static int mt8189_afe_pcm_dev_probe(struct platform_device *pdev)
+ 	dev_pm_syscore_device(dev, true);
+ 
+ 	/* enable clock for regcache get default value from hw */
+-	pm_runtime_get_sync(dev);
++	ret = pm_runtime_resume_and_get(dev);
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to resume device\n");
+ 
+ 	afe->regmap = devm_regmap_init_mmio(dev, afe->base_addr,
+ 					    &mt8189_afe_regmap_config);
+-	if (IS_ERR(afe->regmap))
+-		return PTR_ERR(afe->regmap);
++	if (IS_ERR(afe->regmap)) {
++		ret = PTR_ERR(afe->regmap);
++		goto err_pm_put;
++	}
+ 
+ 	ret = regmap_register_patch(afe->regmap, mt8189_cg_patch,
+ 				    ARRAY_SIZE(mt8189_cg_patch));
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to apply cg patch\n");
+-		goto err_pm_disable;
++		goto err_pm_put;
+ 	}
+ 
+ 	regmap_read(afe->regmap, AFE_IRQ_MCU_EN, &tmp_reg);
+@@ -2563,12 +2583,12 @@ static int mt8189_afe_pcm_dev_probe(struct platform_device *pdev)
+ 					      afe->num_dai_drivers);
+ 	if (ret) {
+ 		dev_err(dev, "afe component err: %d\n", ret);
+-		goto err_pm_disable;
++		return ret;
+ 	}
+ 
+ 	return 0;
+ 
+-err_pm_disable:
++err_pm_put:
+ 	pm_runtime_put_sync(dev);
+ 	return ret;
+ }
+@@ -2578,14 +2598,12 @@ static void mt8189_afe_pcm_dev_remove(struct platform_device *pdev)
+ 	struct mtk_base_afe *afe = platform_get_drvdata(pdev);
+ 	struct device *dev = &pdev->dev;
+ 
+-	pm_runtime_put_sync(dev);
+ 	if (!pm_runtime_status_suspended(dev))
+ 		mt8189_afe_runtime_suspend(dev);
+ 
+ 	mt8189_afe_disable_main_clock(afe);
+ 	/* disable afe clock */
+ 	mt8189_afe_disable_reg_rw_clk(afe);
+-	of_reserved_mem_device_release(dev);
+ }
+ 
+ static const struct of_device_id mt8189_afe_pcm_dt_match[] = {
 -- 
 2.53.0
 
