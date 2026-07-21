@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4525C3C09F3;
-	Tue, 21 Jul 2026 21:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F5D3BE156;
+	Tue, 21 Jul 2026 21:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669583; cv=none; b=U9mtoal1aohc3z5N/nUCjzcFf0qC2t2QWRVpWGgSv41gAqbmU53R2R/zGKsF8ud3Yj2NzLMkuc3ShpjRdQH/oHSYkKQK2WIA/b6buqeMnHVQzcwMzyfEvlb54chCpXt50V4wH0Ldbd2qblu2boQa6LfZziYnl5f3qXfrMiwCplY=
+	t=1784669586; cv=none; b=mtTDYXc9+4fi0piBnE6uGWx+JozPxExjrKGdCCQWN+HgY4E5alyBdQPXpEuflFt10aQuA6DJU4yh62UHElEhgcvc4s3yjDz3wW2CesWIViUwxp5Bg3aZMEFfAdTqbKue/ZkR9e4jsqg7WR/aE+v98RoAKD4K/7d0/rT2/95YMYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669583; c=relaxed/simple;
-	bh=zOukW06fahGseOky3XqVIDNyanmu71seDtNZZZur0y8=;
+	s=arc-20240116; t=1784669586; c=relaxed/simple;
+	bh=wgQBUsUBg6sc7laE0a2NYEmes3PkDgXTbYWab6ly9Wo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R/urY4lKpTY5KYlQ5IAGAx7wv7+AVk63JQVdbOE3SREHLL0ObUX0jzpetv0qQm2TGvcOyjwXpmr+2tAOSOblD8MfR8CFrDf8AHzKdT21w8jaatpcRPqKkkz9si0cZPQ9GAf7enKw8+yLnR3tz2K4gLcwfXvnr2NjypWoERM08Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2gKBrwy/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RXuSRyaYhU6FPXLHd5OW3EYYQsiF5htEC7vGDfMbu8iU8HjLDqtPu/8PZKJkF4UXYey6UiB86AeAvhamVz1SYpAARYWB0wcHJXlPlfHK+3s3fOa78tqzcxEPSa4Ze4yS9NkTwlA5ZD6VDgpL+wYFVHBbeRe7NT5C9J2Y3bYakq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qnAeS2On; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2gKBrwy/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FD51F000E9;
-	Tue, 21 Jul 2026 21:33:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qnAeS2On"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BAC11F000E9;
+	Tue, 21 Jul 2026 21:33:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669581;
-	bh=5aVuKDFINyWLA34I3PFdTVD7aqOeK1WI14tp9fB3at4=;
+	s=korg; t=1784669584;
+	bh=rKbgV+dI/URbncWOmjgbZTlxbK3lOPiwfi8a9nTnLXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2gKBrwy/RDh4DxzkMJbvHmsQRhCNuV8ounCcCsiF74XRstK5nFArWVuvHHfl9NeNk
-	 p9nZddP3vfmIL/cvGAc6EVBTYFcV71pJ11d+R4NMrzlNEtMd1lVvjF//U4wjMMAkC6
-	 MzEkvmasHDMAlPEI8GS3PVLa4gabGVZka4hlC1Bk=
+	b=qnAeS2OnWomE9oAWIh3Q9ItevRwOXj4PeE3bQcUZtl1tvhro1AE09HJzl8qrYCjyI
+	 g1pujyVbL9kYHO8NimJSpyJhRHcRYCqLDgu95Oygn/FVoiTClcylwfgbgWhhH1Yct6
+	 t6A3I5K7qpidBGT5vMynayknUWOg3A3AdFLK8mcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Raed Salem <raeds@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0566/1067] spi: dw: fix wrong BAUDR setting after resume
-Date: Tue, 21 Jul 2026 17:19:27 +0200
-Message-ID: <20260721152437.264681322@linuxfoundation.org>
+Subject: [PATCH 6.1 0567/1067] xfrm: add new packet offload flag
+Date: Tue, 21 Jul 2026 17:19:28 +0200
+Message-ID: <20260721152437.287472658@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,46 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 66b6605bcea7af7aca3d1d858b9c5f14903f9f9a ]
+[ Upstream commit d14f28b8c1de668bab863bf5892a49c824cb110d ]
 
-After resuming from suspend to ram, spi transfer stops working. Further
-debugging shows that the BAUDR register isn't correctly set, this is
-due to dws->current_freq doesn't match the HW BAUDR setting,
-specifically, the dws->current_freq equals to speed_hz, but BAUDR is 0.
-so the dw_spi_set_clk() in below code won't be called:
+In the next patches, the xfrm core code will be extended to support
+new type of offload - packet offload. In that mode, both policy and state
+should be specially configured in order to perform whole offloaded data
+path.
 
-        if (dws->current_freq != speed_hz) {
-                dw_spi_set_clk(dws, clk_div);
-                dws->current_freq = speed_hz;
-        }
+Full offload takes care of encryption, decryption, encapsulation and
+other operations with headers.
 
-The mismatch comes from dw_spi_shutdown_chip() when suspending.
-Fix this mismatch by setting dws->current_freq to 0 as well when
-clearing BAUDR reg in dw_spi_shutdown_chip().
+As this mode is new for XFRM policy flow, we can "start fresh" with flag
+bits and release first and second bit for future use.
 
-Fixes: e24c74527207 ("spi: controller driver for Designware SPI core")
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Link: https://patch.msgid.link/20260612002835.5240-1-jszhang@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Raed Salem <raeds@nvidia.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Stable-dep-of: 68de007d5ac9 ("xfrm: annotate data-races around xfrm_policy_count[] and xfrm_policy_default[]")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-dw.h | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/xfrm.h        | 7 +++++++
+ include/uapi/linux/xfrm.h | 6 ++++++
+ net/xfrm/xfrm_device.c    | 3 +++
+ net/xfrm/xfrm_user.c      | 2 ++
+ 4 files changed, 18 insertions(+)
 
-diff --git a/drivers/spi/spi-dw.h b/drivers/spi/spi-dw.h
-index 9e8eb2b52d5c79..62f82024a706ec 100644
---- a/drivers/spi/spi-dw.h
-+++ b/drivers/spi/spi-dw.h
-@@ -281,6 +281,7 @@ static inline void dw_spi_shutdown_chip(struct dw_spi *dws)
- {
- 	dw_spi_enable_chip(dws, 0);
- 	dw_spi_set_clk(dws, 0);
-+	dws->current_freq = 0;
- }
+diff --git a/include/net/xfrm.h b/include/net/xfrm.h
+index e36a63f5ae069e..dfae35ff762542 100644
+--- a/include/net/xfrm.h
++++ b/include/net/xfrm.h
+@@ -131,12 +131,19 @@ enum {
+ 	XFRM_DEV_OFFLOAD_OUT,
+ };
  
- extern void dw_spi_set_cs(struct spi_device *spi, bool enable);
++enum {
++	XFRM_DEV_OFFLOAD_UNSPECIFIED,
++	XFRM_DEV_OFFLOAD_CRYPTO,
++	XFRM_DEV_OFFLOAD_PACKET,
++};
++
+ struct xfrm_dev_offload {
+ 	struct net_device	*dev;
+ 	netdevice_tracker	dev_tracker;
+ 	struct net_device	*real_dev;
+ 	unsigned long		offload_handle;
+ 	u8			dir : 2;
++	u8			type : 2;
+ };
+ 
+ struct xfrm_mode {
+diff --git a/include/uapi/linux/xfrm.h b/include/uapi/linux/xfrm.h
+index 4f84ea7ee14c90..23543c33fee823 100644
+--- a/include/uapi/linux/xfrm.h
++++ b/include/uapi/linux/xfrm.h
+@@ -519,6 +519,12 @@ struct xfrm_user_offload {
+  */
+ #define XFRM_OFFLOAD_IPV6	1
+ #define XFRM_OFFLOAD_INBOUND	2
++/* Two bits above are relevant for state path only, while
++ * offload is used for both policy and state flows.
++ *
++ * In policy offload mode, they are free and can be safely reused.
++ */
++#define XFRM_OFFLOAD_PACKET	4
+ 
+ struct xfrm_userpolicy_default {
+ #define XFRM_USERPOLICY_UNSPEC	0
+diff --git a/net/xfrm/xfrm_device.c b/net/xfrm/xfrm_device.c
+index 2535ee034a5c83..313c0eb3381f37 100644
+--- a/net/xfrm/xfrm_device.c
++++ b/net/xfrm/xfrm_device.c
+@@ -296,12 +296,15 @@ int xfrm_dev_state_add(struct net *net, struct xfrm_state *x,
+ 	else
+ 		xso->dir = XFRM_DEV_OFFLOAD_OUT;
+ 
++	xso->type = XFRM_DEV_OFFLOAD_CRYPTO;
++
+ 	err = dev->xfrmdev_ops->xdo_dev_state_add(x);
+ 	if (err) {
+ 		xso->dev = NULL;
+ 		xso->dir = 0;
+ 		xso->real_dev = NULL;
+ 		netdev_put(dev, &xso->dev_tracker);
++		xso->type = XFRM_DEV_OFFLOAD_UNSPECIFIED;
+ 
+ 		if (err != -EOPNOTSUPP) {
+ 			NL_SET_ERR_MSG(extack, "Device failed to offload this state");
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index d77511d7e832b4..2a6afca79bd3a7 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -947,6 +947,8 @@ static int copy_user_offload(struct xfrm_dev_offload *xso, struct sk_buff *skb)
+ 	xuo->ifindex = xso->dev->ifindex;
+ 	if (xso->dir == XFRM_DEV_OFFLOAD_IN)
+ 		xuo->flags = XFRM_OFFLOAD_INBOUND;
++	if (xso->type == XFRM_DEV_OFFLOAD_PACKET)
++		xuo->flags |= XFRM_OFFLOAD_PACKET;
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
