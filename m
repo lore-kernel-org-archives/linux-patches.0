@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECB2386C39;
-	Tue, 21 Jul 2026 19:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56BDC46EF60;
+	Tue, 21 Jul 2026 19:43:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662983; cv=none; b=GXRWW6X7o3cjEIv6nDZtPHEJV0/8JZFWJBVkAoA46ukgHjuO6gFdb13bi5h9CNwr9s24XasPvlw0OUPbfE/T/ij9l/GMYT67wbFNvyEzuniB1Li3y39R6h6WVhbrSbBbG0z1U/25YhrNCb2ld2tz8FEei8um8o/MPxNXl0PdLMY=
+	t=1784662986; cv=none; b=l4Uw0mrBRqXnOv0K1Ybfyk9H88YskgJytW1CxLC36O8ku5ZV4lKe6knMQVBtbQsfISzx+dzxk5BLTer409aq2I8h1arxy920hhbuhaLryAeDu1xGOJPbJqslMnq3epNPgwDSXbTHtfpVJOAOzObFEWN9VtcXLCDbghorpdZEMMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662983; c=relaxed/simple;
-	bh=QDZzBPKjfjxW5LKLKo1i1HoVxqaBrWY3kbvov3VsmnA=;
+	s=arc-20240116; t=1784662986; c=relaxed/simple;
+	bh=uKZSKfY2/hW0HbKa1N/lr2JvevOCPnmMowviWlDpk9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GoQV/DjPSQ1OV1dYuyuHSG0ISaHhlZM0KOVGaZXwsNQBjPpK63qyFkoWsxDXRKZlCW6B2N1S8DKOwdftl3d3aDirJCUTrijO4zpfkLWry8lVsTwijPwGG6DfAZQNNU8Q9V0wCTG2WBosywy7cXan4ENgxkjrDt9bmW6P+C4Y7Dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMKeq0tn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ksRBwqkbW/GkIVP/xUjwBnYwZPEloWmQlIdnAIV41YLBbP1ekIS09ul8PEFlBvIlWXHDIUn0sZoBkwp/5zcp2Dco/er4xbWHZG+/yBVuyUL1RC+3iLZ4ETR1OwRu6bw3tQv9HNMy2K2K68ay0LufZLWTFpmV4PDRI0K3QYpfneQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UqsVlbP9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMKeq0tn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B1B61F000E9;
-	Tue, 21 Jul 2026 19:43:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UqsVlbP9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA71F1F000E9;
+	Tue, 21 Jul 2026 19:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662982;
-	bh=ym68IkLrd2/mLntuI9zKbmOTliSTx3Svr9MwIIN8P10=;
+	s=korg; t=1784662985;
+	bh=y0dcn50Ft/iKrbwyXcxui7p7krmwQOUjS2W3iNrPYRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UMKeq0tnlAP2DvSkRbX62MzbrcsRz4TZcae4ub/IH/yKOABcNZbm+oenkliCSrgge
-	 BDBygtKc6NH7aRcX5K5XAu0uquVqJh6nLTtDVCpuXNGcw5drQE7Pizp5ccAKu6O7ZX
-	 Iw4N3Vf4kWW7ragfi0LkBLL0LYNKlg1D81zkf5Q4=
+	b=UqsVlbP9EMwpOWxRZqL2/ALaXyutLONkwt+pUlPkaEIZgnvF4PieZMp6qf346P0HT
+	 HV77XIhveYwH7LiKU6n+Q4DSBk6UJnerd7vVkHuS7ajgTNC0prmZCp7FsD0edDA29Q
+	 S8xPVXa2Qjybl0aChlTP8A7C10aEOs+PeusRhUP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alejandro Olivan Alvarez <alejandro.olivan.alvarez@gmail.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0644/1276] netfilter: nf_conncount: prevent connlimit drops for early confirmed ct
-Date: Tue, 21 Jul 2026 17:18:07 +0200
-Message-ID: <20260721152500.521769440@linuxfoundation.org>
+Subject: [PATCH 6.12 0653/1276] net, bpf: check master for NULL in xdp_master_redirect()
+Date: Tue, 21 Jul 2026 17:18:16 +0200
+Message-ID: <20260721152500.722534633@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,76 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit c8b6f36f766991e3ebebec6596daee4b04dcbc49 ]
+[ Upstream commit e82d8cc4321c373dc46e741cd2dfdaa7921fddb7 ]
 
-Commit 69894e5b4c5e ("netfilter: nft_connlimit: update the count if add
-was skipped") introduced a regression where packets for valid
-connections are dropped when using connlimit for soft-limiting
-scenarios.
+xdp_master_redirect() dereferences the result of
+netdev_master_upper_dev_get_rcu() without a NULL check, but that helper
+returns NULL when the receiving device has no upper-master adjacency.
 
-The issue occurs when a new connection reuses a socket currently in
-the TIME_WAIT state. In this scenario, the connection tracking entry
-is evaluated as already confirmed. Previously, __nf_conncount_add()
-assumed that if a connection was confirmed and did not originate from
-the loopback interface, it should skip the addition and return -EEXIST.
+The reach guard only checks netif_is_bond_slave(). On bond slave release
+bond_upper_dev_unlink() drops the upper-master adjacency before clearing
+IFF_SLAVE, so an XDP_TX reaching xdp_master_redirect() in that window
+still passes netif_is_bond_slave() while master is already NULL, and
+faults on master->flags at offset 0xb0:
 
-Skipping the addition triggers a garbage collection run that cleans up
-the TIME_WAIT connection. Consequently, the active connection count
-drops to 0, which xt_connlimit mishandles, leading to the false rejection
-of the perfectly valid new connection.
+  BUG: kernel NULL pointer dereference, address: 00000000000000b0
+  RIP: 0010:xdp_master_redirect (net/core/filter.c:4432)
+  Call Trace:
+   xdp_master_redirect (net/core/filter.c:4432)
+   bpf_prog_run_generic_xdp (include/net/xdp.h:700)
+   do_xdp_generic (net/core/dev.c:5608)
+   __netif_receive_skb_one_core (net/core/dev.c:6204)
+   process_backlog (net/core/dev.c:6319)
+   __napi_poll (net/core/dev.c:7729)
+   net_rx_action (net/core/dev.c:7792)
+   handle_softirqs (kernel/softirq.c:622)
+   __dev_queue_xmit (include/linux/bottom_half.h:33)
+   packet_sendmsg (net/packet/af_packet.c:3082)
+   __sys_sendto (net/socket.c:2252)
+  Kernel panic - not syncing: Fatal exception in interrupt
 
-Fix this by replacing the interface check with protocol-agnostic state
-checks. We now skip the tree insertion and preserve the lockless garbage
-collection optimization only if the connection is IPS_ASSURED. This
-allows early-confirmed setup packets (such as reused TIME_WAIT sockets
-or locally generated SYN-ACKs) to be properly evaluated and counted
-without falsely dropping. The goto check_connections path is maintained
-to ensure these setup packets are deduplicated correctly.
+The missing check dates back to the original code; commit 1921f91298d1
+("net, bpf: fix null-ptr-deref in xdp_master_redirect() for down master")
+later added the master->flags read where the fault now lands but kept the
+unconditional deref. Check master for NULL before use; a NULL master is
+treated the same as one that is not up.
 
-This has been tested with slowhttptest and HTTP server configured
-locally to ensure we are not breaking soft-limiting scenarios for local
-or external connections. In addition, it was tested with a OVS zone
-limit too.
-
-Fixes: 69894e5b4c5e ("netfilter: nft_connlimit: update the count if add was skipped")
-Reported-by: Alejandro Olivan Alvarez <alejandro.olivan.alvarez@gmail.com>
-Closes: https://lore.kernel.org/netfilter-devel/177349610461.3071718.4083978280323144323@eldamar.lan/
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 879af96ffd72 ("net, core: Add support for XDP redirection to slave device")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260620201531.180123-1-xmei5@asu.edu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conncount.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ net/core/filter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
-index e880e4b3cd82d4..6b985afa4981eb 100644
---- a/net/netfilter/nf_conncount.c
-+++ b/net/netfilter/nf_conncount.c
-@@ -179,17 +179,16 @@ static int __nf_conncount_add(struct net *net,
- 		return -ENOENT;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 6450aa2ea44efc..f54e7152d68798 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -4427,7 +4427,7 @@ u32 xdp_master_redirect(struct xdp_buff *xdp)
+ 	struct net_device *master, *slave;
  
- 	if (ct && nf_ct_is_confirmed(ct)) {
--		/* local connections are confirmed in postrouting so confirmation
--		 * might have happened before hitting connlimit
-+		/* Connection is confirmed but might still be in the setup phase.
-+		 * Only skip the tracking if it is fully assured. This guarantees
-+		 * that setup packets or retransmissions are properly counted and
-+		 * deduplicated.
- 		 */
--		if (skb->skb_iif != LOOPBACK_IFINDEX) {
-+		if (test_bit(IPS_ASSURED_BIT, &ct->status)) {
- 			err = -EEXIST;
- 			goto out_put;
- 		}
- 
--		/* this is likely a local connection, skip optimization to avoid
--		 * adding duplicates from a 'packet train'
--		 */
- 		goto check_connections;
- 	}
- 
+ 	master = netdev_master_upper_dev_get_rcu(xdp->rxq->dev);
+-	if (unlikely(!(master->flags & IFF_UP)))
++	if (unlikely(!master || !(master->flags & IFF_UP)))
+ 		return XDP_ABORTED;
+ 	slave = master->netdev_ops->ndo_xdp_get_xmit_slave(master, xdp);
+ 	if (slave && slave != xdp->rxq->dev) {
 -- 
 2.53.0
 
