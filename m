@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0143375D5;
-	Tue, 21 Jul 2026 22:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DFB3E49F5;
+	Tue, 21 Jul 2026 22:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674443; cv=none; b=jvQT6j1YMJsdL8Mk2vU01G/v2wSlgPACq3QheTRT7wDU+UUolJD0rLop/P+C7KPmuYz7hXML4jQ/BFthnzuoZJmOnrV2TGo2dX/ZDJ9AyjO/gGztetVFc5ooWim3JqlBhxlr5Pgwqai7X8eJnErwqw94BVE85eZ3VZzwj08eNCw=
+	t=1784674447; cv=none; b=O3miGXedsxnnbtkIaXzvfxz9QTjY1koyhOVRWLlMSJDQRkWnoyOrn+xNgOOZv5Nt0vtQDrmb9umDzkiaTagn3vRln3QnCwaaji/UFNzEjdJdVusdtbZ1dnUDozoy38QjgW0vHHWtjGSgbF1vGMpc3AKQphoNb7SimOMH1QkymC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674443; c=relaxed/simple;
-	bh=yRAmbvkg19SD6tzuhRiK9z2oz6bhuQqy02c4A3XP0xU=;
+	s=arc-20240116; t=1784674447; c=relaxed/simple;
+	bh=ZmzSl1JJxZoRdBX9GnDhX6PZL+JWPZ4Ayci3t+8MeJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tzpV5g1wqwCclCIULbeww1KPXZoJDRKjEqGT9UaMK/qsZnS22GIcVSnDR28GjNpdhb8ZcnTE4bd84NYrxKVTGdLhP7dM/F6KQsFTJ+VkUDdyZIYJkVBuD2U34l/7l/7BshjjFA4bqRZjCSopMjDUL7wJ2DUwzOx7bTqvoeK07W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPv6sEwl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qhJo0N5Wt0d0v3ERNYezkfxt8eSCO+ls7gKh4g9CGxKsE207QYFvlaIycHhXvfR25/1fYw5TcUW1+/3xYyZJSjmi8/MBtn6Vdg7Av/k1vb97KWdTYIW/La4D15dt8mNdwmkgNtgqAZhUJtxYtjUAioRYoSRbTyJajJHx3809uGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ci3fH95o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPv6sEwl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ED571F000E9;
-	Tue, 21 Jul 2026 22:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ci3fH95o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB5621F000E9;
+	Tue, 21 Jul 2026 22:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674442;
-	bh=IdFiP4LDVRoEmNQ4SzmWD0Yy+2YBWf/NSDciJ3nns0o=;
+	s=korg; t=1784674445;
+	bh=/8qz19Xp2EA9uhv6F7cHvE14LvBmiVDl11vQeIrVE+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TPv6sEwlIuZ+cGL3hUuPk/jNYgRuFKXMmbWuXm3ujEjgCha9EYWvnvegMdRehu/VX
-	 rFDglNt5cRR5kkGYmbbeaW/6GJVo1KcTz3lSZSRD0q1PS5SrzP4A2XK91SA5vPY4Kf
-	 C1/TM5eVrLBJV11O5YqLG1Ll7/nq5KfPBQ932m/Q=
+	b=Ci3fH95oEfeMAxf/YjlEd+PfQsQ/Ju83fFlNk6OXKnasjudm8+tWo+t15dKQCG1Ui
+	 qu/VR3PCqxXsi/XAlbF/tpOGqh+ODbVKzdlmSSvYd9l9WkLoyW9QrmRY16D3DZcaCp
+	 ieTnYNn8oADZO3MPGegrt0wgISRuMJuLDXodwoys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sangyun Kim <sangyun.kim@snu.ac.kr>,
-	Kyungwook Boo <bookyungwook@gmail.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 500/699] spi: uniphier: Fix completion initialization order before devm_request_irq()
-Date: Tue, 21 Jul 2026 17:24:19 +0200
-Message-ID: <20260721152406.974026813@linuxfoundation.org>
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.10 501/699] sctp: validate STALE_COOKIE cause length before reading staleness
+Date: Tue, 21 Jul 2026 17:24:20 +0200
+Message-ID: <20260721152406.997749016@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -53,52 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit f3ad1c87d8201e54b66bd6072442f0b5d5a308ee upstream.
+commit 1cd23ca80784223fa2204e16203f754da4e821f8 upstream.
 
-The driver calls devm_request_irq() before initializing the completion
-used by the interrupt handler. Because the interrupt may occur immediately
-after devm_request_irq(), the handler may execute before init_completion().
+When an ERROR chunk with a STALE_COOKIE cause is received in the
+COOKIE_ECHOED state, sctp_sf_do_5_2_6_stale() reads the 4-byte Measure
+of Staleness that follows the cause header:
 
-This may result in calling complete() on an uninitialized completion,
-causing undefined behavior. This has been observed with KASAN.
+	err   = (struct sctp_errhdr *)(chunk->skb->data);
+	stale = ntohl(*(__be32 *)((u8 *)err + sizeof(*err)));
 
-Fix this by initializing the completion before registering the IRQ.
+err is the first cause in the chunk, not the STALE_COOKIE cause that
+caused the dispatch, and nothing guarantees the staleness field is
+present. sctp_walk_errors() only requires a cause to be as long as the
+4-byte header, so for a STALE_COOKIE cause of length 4 the read runs
+past the cause, and for a minimal ERROR chunk past skb->tail. The value
+is echoed to the peer in the Cookie Preservative of the reply INIT,
+leaking uninitialized memory.
 
-Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
-Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
-Fixes: 5ba155a4d4cc ("spi: add SPI controller driver for UniPhier SoC")
+sctp_sf_cookie_echoed_err() already walks to the STALE_COOKIE cause, so
+check its length there and pass it to sctp_sf_do_5_2_6_stale(), which
+reads that cause instead of the first one. A STALE_COOKIE cause too
+short to hold the staleness field is discarded.
+
+The read is reachable by any peer that can drive an association into
+COOKIE_ECHOED, including an unprivileged process using a raw SCTP socket
+in a user and network namespace.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Link: https://patch.msgid.link/20260616011223.201357-1-hayashi.kunihiko@socionext.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260704033545.2438373-2-bestswngs@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-uniphier.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sctp/sm_statefuns.c |   23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
---- a/drivers/spi/spi-uniphier.c
-+++ b/drivers/spi/spi-uniphier.c
-@@ -659,6 +659,8 @@ static int uniphier_spi_probe(struct pla
- 	priv->master = master;
- 	priv->is_save_param = false;
- 
-+	init_completion(&priv->xfer_done);
-+
- 	priv->base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
- 	if (IS_ERR(priv->base)) {
- 		ret = PTR_ERR(priv->base);
-@@ -690,8 +692,6 @@ static int uniphier_spi_probe(struct pla
- 		goto out_disable_clk;
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -73,7 +73,8 @@ static enum sctp_disposition sctp_sf_do_
+ 					const struct sctp_association *asoc,
+ 					const union sctp_subtype type,
+ 					void *arg,
+-					struct sctp_cmd_seq *commands);
++					struct sctp_cmd_seq *commands,
++					struct sctp_errhdr *err);
+ static enum sctp_disposition sctp_sf_shut_8_4_5(
+ 					struct net *net,
+ 					const struct sctp_endpoint *ep,
+@@ -2419,9 +2420,15 @@ enum sctp_disposition sctp_sf_cookie_ech
+ 	 * errors.
+ 	 */
+ 	sctp_walk_errors(err, chunk->chunk_hdr) {
+-		if (SCTP_ERROR_STALE_COOKIE == err->cause)
+-			return sctp_sf_do_5_2_6_stale(net, ep, asoc, type,
+-							arg, commands);
++		if (err->cause != SCTP_ERROR_STALE_COOKIE)
++			continue;
++		/* The staleness is only meaningful if the cause is long
++		 * enough to hold it; a shorter one is malformed.
++		 */
++		if (ntohs(err->length) < sizeof(*err) + sizeof(__be32))
++			break;
++		return sctp_sf_do_5_2_6_stale(net, ep, asoc, type,
++					      arg, commands, err);
  	}
  
--	init_completion(&priv->xfer_done);
--
- 	clk_rate = clk_get_rate(priv->clk);
+ 	/* It is possible to have malformed error causes, and that
+@@ -2463,13 +2470,13 @@ static enum sctp_disposition sctp_sf_do_
+ 					const struct sctp_association *asoc,
+ 					const union sctp_subtype type,
+ 					void *arg,
+-					struct sctp_cmd_seq *commands)
++					struct sctp_cmd_seq *commands,
++					struct sctp_errhdr *err)
+ {
+ 	int attempts = asoc->init_err_counter + 1;
+-	struct sctp_chunk *chunk = arg, *reply;
+ 	struct sctp_cookie_preserve_param bht;
+ 	struct sctp_bind_addr *bp;
+-	struct sctp_errhdr *err;
++	struct sctp_chunk *reply;
+ 	u32 stale;
  
- 	master->max_speed_hz = DIV_ROUND_UP(clk_rate, SSI_MIN_CLK_DIVIDER);
+ 	if (attempts > asoc->max_init_attempts) {
+@@ -2480,8 +2487,6 @@ static enum sctp_disposition sctp_sf_do_
+ 		return SCTP_DISPOSITION_DELETE_TCB;
+ 	}
+ 
+-	err = (struct sctp_errhdr *)(chunk->skb->data);
+-
+ 	/* When calculating the time extension, an implementation
+ 	 * SHOULD use the RTT information measured based on the
+ 	 * previous COOKIE ECHO / ERROR exchange, and should add no
 
 
