@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F223E46D091;
-	Tue, 21 Jul 2026 18:05:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DED446D090;
+	Tue, 21 Jul 2026 18:05:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657130; cv=none; b=hbD8RQodP3mQ2Vcb+LHY+NoTBqZykq22bo4A1jblFac1IBsb32/niEoH3z8RfPf/H5ohcNSH6VjZmjriQSjBNnd5HueQVB3UMhI2fBpGDY0VOi3hh0FV2VHT1sVupBKByVF+WP1cpWnYngzu5+jZTI8R23MtdJ4Xq+/T9mDncM0=
+	t=1784657132; cv=none; b=HVfchJid17377GAyGJHZ69TPSCTcYUhNX9piQNW0kjhnWG5ZHQG3Vs57dOf2NLzvk4AFrN26Q4k6OwVOm8JANef9WRnwZCAgE3Hum7BthGO5nK04TKp/GAPgkQycIPWePnGfxYifdxGZ0Wda9xljIVj8eNpFx0xxZagFPwGadQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657130; c=relaxed/simple;
-	bh=DFcX3i0ByencA3GjoXVNPXOzbkIcdK+nnVz4uaw58Eg=;
+	s=arc-20240116; t=1784657132; c=relaxed/simple;
+	bh=bZxp+5jdKUf0Gbjyuk3wfZoyZwWlEPUUjgt1OfiqteU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QbskDxbIqhZMTEIPTI+dp6N7SWMGoK8KQlqqfLWHkEqg3zfsOTQZvwR1JUMyNhnkMPJT9fcTOIApPHif2sHXjdDpYemi4OJDZBhr8j1YYrLOki8/2yzSxGPnHhrKr2epZlEjE6ONgjN+jdDc1O2w1DX09V5w6V0PiTClRqjBUGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zdoVrNgN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UFydilSKjzylHB/vztMjPKYsd4aef8FsTjF5iHke8cDTv+pbQFOiRFmo9IABvXtb7KRlYOaUgLbfNYJ1LGEoddCK6+EvtqvF/3MtW5nCayX4KrOilk8PtGipQXdLkS1DBwuFAgcXcXyx38UG7FXah/bOajC/gIDyafl2O+ZTauI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jPrItkrs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zdoVrNgN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 195691F00A3A;
-	Tue, 21 Jul 2026 18:05:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jPrItkrs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B448A1F000E9;
+	Tue, 21 Jul 2026 18:05:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657128;
-	bh=QVqhC2Q+S6h7iwLRKwDBiTCRlmj9Eb02spdbYNkRWxo=;
+	s=korg; t=1784657131;
+	bh=4Wx1shxQNRlYRYTQy5LCNmSDVFSREjSvsO0Zarxj7Gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zdoVrNgNUaiI/c4NuPQjvjUXqW2U6q5uN1/GiMTCOwhZb5vCV7y6oBGu/px3Msrd7
-	 BReAArLh1fjl66gBq+ZLomNBcYfqqE67MiKFMhmWlGO6t8T6GHApUDDQETwJq7F4Np
-	 k4oaRyst4tX/Vpn/uhJ5VZvPwVqP2EWMpDmZu2oU=
+	b=jPrItkrsTOc+HcDQZV8orvMYARq7GPDH99F8WRb+ED8yh2dBinygilKxzx3P/8M4Q
+	 QxQDMxunhKj4qoUAnfwLzaAhTSHlK0NfNb9Oq2+1B91WUpNZllCC3+zoFghwPA6/EH
+	 Pvc88cDlJ6kjIDLpRnA57AgQzXt6x6LjG9zLciSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
+	David Ahern <dsahern@gmail.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0646/1611] perf c2c: Bounds-check CPU IDs in setup_nodes() topology loop
-Date: Tue, 21 Jul 2026 17:12:42 +0200
-Message-ID: <20260721152529.922202319@linuxfoundation.org>
+Subject: [PATCH 6.18 0647/1611] perf sched: Clean up idle_threads entry on init failure
+Date: Tue, 21 Jul 2026 17:12:43 +0200
+Message-ID: <20260721152529.944184031@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -55,45 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 5fb2e6ad8c5d6b3b380f94c7456595511f3731be ]
+[ Upstream commit cda5a94ad9181cd60cbf04be11d524201bf489a2 ]
 
-setup_nodes() iterates CPU maps from the perf.data topology header and
-uses cpu.cpu directly as an array index into cpu2node[] (allocated with
-c2c.cpus_cnt = env->nr_cpus_avail entries) and __set_bit(cpu.cpu, set)
-(bitmap also sized to c2c.cpus_cnt).
+get_idle_thread() allocates a thread via thread__new() and stores it in
+idle_threads[cpu], then calls init_idle_thread() to set up the private
+data.  If init_idle_thread() fails (e.g. OOM for the idle_thread_runtime
+struct), the function returns NULL but leaves the partially initialized
+thread in idle_threads[cpu].
 
-A crafted perf.data with topology CPU IDs exceeding nr_cpus_avail causes
-out-of-bounds heap writes into both the cpu2node array and the per-node
-bitmap.
+On subsequent calls for the same CPU, get_idle_thread() finds a non-NULL
+idle_threads[cpu], skips allocation, and returns thread__get() on a
+thread that has no priv data.  Callers then get a thread whose
+thread__priv() returns NULL, leading to unexpected behavior.
 
-Add a bounds check to skip CPU IDs that fall outside the valid range.
+Release the thread and reset the slot to NULL on init failure so the
+entry doesn't persist in a corrupted state.
 
-Fixes: 1e181b92a2da ("perf c2c report: Add 'node' sort key")
+Fixes: 49394a2a24c7 ("perf sched timehist: Introduce timehist command")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: David Ahern <dsahern@gmail.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-c2c.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/perf/builtin-sched.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-c2c.c b/tools/perf/builtin-c2c.c
-index f67645aa8c1e4a..7efba102996439 100644
---- a/tools/perf/builtin-c2c.c
-+++ b/tools/perf/builtin-c2c.c
-@@ -2327,6 +2327,10 @@ static int setup_nodes(struct perf_session *session)
- 		nodes[node] = set;
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index 0b245e8240f6ec..34e974ef49891b 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -2507,8 +2507,11 @@ static struct thread *get_idle_thread(int cpu)
+ 		idle_threads[cpu] = thread__new(0, 0);
  
- 		perf_cpu_map__for_each_cpu_skip_any(cpu, idx, map) {
-+			/* topology CPU IDs from perf.data may exceed nr_cpus_avail */
-+			if (cpu.cpu < 0 || cpu.cpu >= c2c.cpus_cnt)
-+				continue;
-+
- 			__set_bit(cpu.cpu, set);
+ 		if (idle_threads[cpu]) {
+-			if (init_idle_thread(idle_threads[cpu]) < 0)
++			if (init_idle_thread(idle_threads[cpu]) < 0) {
++				/* clean up so next call doesn't find a half-initialized thread */
++				thread__zput(idle_threads[cpu]);
+ 				return NULL;
++			}
+ 		}
+ 	}
  
- 			if (WARN_ONCE(cpu2node[cpu.cpu] != -1, "node/cpu topology bug"))
 -- 
 2.53.0
 
