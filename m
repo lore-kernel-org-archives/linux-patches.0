@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487983B2FC0;
-	Tue, 21 Jul 2026 20:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED8E2D8376;
+	Tue, 21 Jul 2026 20:40:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666415; cv=none; b=PHQAU29cna5wBeJeOcRzmMDYAzYsJQqKD9iKcd9g65nTuuKhbo1+aNItjudChVCBL7jFs8sBfLYm761LxMEPbP2sR/MqJsvXeMjkNFAsjcPrnE7a1g9tmv9HmFA0yy2Nn8TfyzexUD4wrbBL6tDBB61iprwRjMqHKq1gRXA7EJc=
+	t=1784666418; cv=none; b=uTgBQSsgS28/hnGlQCoPkoHQxpM+eWDa3B5zuVNshhUXeuMKofqUHOfRCMDZgno7/f9Rt5hms7ztIHaI1WNb4fB/FinP2VNHeTnHELbc+YMQYHViidATD5+cpA3k0oVpTbSdcn8C/P4fu2KSttM4oYQKkb3wxxQjIhs4qqa+LFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666415; c=relaxed/simple;
-	bh=NEk7SuQ1rWsX0kniePhzNk1sC9mqp6zcnwl8T+B0FxQ=;
+	s=arc-20240116; t=1784666418; c=relaxed/simple;
+	bh=kOMS5M78Ud9DWPBBIHyTAlM1jmLrjUTvOc99P9FDrUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=phHMSZZh6Etpe+v3kW5GP94lEheuYbm6v4Xqcu5jmLs1z/Uk/0kL8jiH9JqOf5xrUsloLWi0tBIte+uXd5mbQybWAKeQl9zi+P6cf5fQ4ozHq9MzEwQwi8YTQj5xn+vghJ74zA+HqAQKZ23ALb29UOWPEHnLCdMowN0llnvyRi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOZf6VSO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F08/XFDwlg5E93WR2nQkM/M9nuja2K+la+zxscUNta5a1DcIqR0tqD+tLlt16OiP/5TR73bwbFQU3nLZSxEH5/GmQW+0MoZHiUdv/dexRebBU9kRjJW5sgif/E97M91g67KbfS30ZzBsepYxdJsm+F3+T0VsPIaRGKgcgDtvQ3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c3WIZlyj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOZf6VSO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADEF51F000E9;
-	Tue, 21 Jul 2026 20:40:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c3WIZlyj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512551F000E9;
+	Tue, 21 Jul 2026 20:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666414;
-	bh=0cnRTOzkryOW/DsQ2Rbk9AZXuBR/j2NCz4sME5pH6hw=;
+	s=korg; t=1784666416;
+	bh=VfD0eO3nKJeEx1Rpyg4qXxSc6WtLawjaKLjlJYxbsps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uOZf6VSOTnLWTGJuBCbYU3KEARWofJWlkAmtKsDpJZj9gv98sls58skfwwjRIgObZ
-	 sOfjDFacQzOOq0t65c2aJ9as//gLLNXIc8IQmePU+dyG4fJw5BRhPBmmchyD2/cX0m
-	 YHP4BQc+GQZ5ptyg2NRh+V+to/+qciZCrbgqhJL8=
+	b=c3WIZlyjkzUmGzQ68sb4dMdWCZwNDgTUpXjs3DcOJ4Zke2qOWICIGFGPOG4XqjIiA
+	 ZgNF/JmOquTpLlqR4wL0mMigva9zDb4B3kZqD+zbBu7tMbhMBddhwh897wIpbJVg31
+	 fRtLz5rmVyRw5PIMfduTSE9FeibtSjmFJHfpyOWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0673/1266] xprtrdma: Fix bcall rep leak and unbounded peek
-Date: Tue, 21 Jul 2026 17:18:30 +0200
-Message-ID: <20260721152456.918963694@linuxfoundation.org>
+Subject: [PATCH 6.6 0674/1266] xprtrdma: Sanitize the reply credit grant after parsing
+Date: Tue, 21 Jul 2026 17:18:31 +0200
+Message-ID: <20260721152456.940993758@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,92 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit c7653d5cebc8492c77ec0415b5e9c0fb3e644bc6 ]
+[ Upstream commit c3a628aab2dc8f5fd7bff86ceaeae64de590e60a ]
 
-rpcrdma_is_bcall() decodes a reply's first words to decide whether
-the frame is a backchannel call. Two issues in that decode path
-let a short or malformed reply leak the receive buffer and drain
-the Receive queue.
+The out_norqst exit in rpcrdma_reply_handler() branches away before
+the credit clamp, so a reply that matches no pending request reaches
+out_post carrying the raw credit value parsed from the wire.
+rpcrdma_post_recvs() does not bound its @needed argument: the refill
+loop allocates and chains Receive WRs until the count is satisfied or
+allocation fails. A peer that sends a well-formed reply carrying an
+unknown XID and an inflated credit grant therefore drives rep
+allocation and Receive posting past re_max_requests on every such
+reply.
 
-First, the speculative peek
+Move the clamp to immediately after the credit field is parsed,
+ahead of the first branch that can reach out_post, so every later
+consumer sees a sanitized value. The cwnd update stays on the
+matched-request path.
 
-    p = xdr_inline_decode(xdr, 0);
-    /* five p++ reads follow */
-
-asks xdr_inline_decode() for zero bytes, which returns xdr->p
-without consulting xdr->end. The five subsequent __be32 reads can
-then walk up to 20 bytes past the wire payload into stale regbuf
-contents and misclassify the reply as a backchannel call.
-
-Second, after the post-peek
-
-    p = xdr_inline_decode(xdr, 3 * sizeof(*p));
-    if (unlikely(!p))
-            return true;
-
-the short-header arm returns true without calling
-rpcrdma_bc_receive_call(). The contract with the caller is that a
-true return transfers ownership of rep to the backchannel path:
-
-    rpcrdma_reply_handler()
-      if (rpcrdma_is_bcall(r_xprt, rep))
-              return;        /* bare return, skips out_post */
-      ...
-    out_post:
-      rpcrdma_post_recvs(r_xprt, credits + ...);
-
-Because rpcrdma_bc_receive_call() never ran, no one took rep, but
-rpcrdma_reply_handler still bare-returns past rpcrdma_rep_put()
-and rpcrdma_post_recvs(). The rep, with its persistently
-DMA-mapped receive buffer, is orphaned on rb_all_reps and freed
-only at transport teardown. This completion reposts nothing, so
-its slot is reclaimed only when a later forward-channel reply
-reaches out_post and rpcrdma_post_recvs() allocates a fresh rep to
-backfill; absent that traffic the Receive queue drains and the
-peer's Sends draw RNR NAKs.
-
-Fix by consulting xdr->end after the zero-length peek so the five
-__be32 reads cannot run unless 20 bytes of wire payload remain. A
-byte-precise comparison against xdr->end is required because a
-non-4-aligned receive rounds the stream's word count up past the
-true payload. Also return false from the short-header arm so the
-reply falls through the normal out_norqst cleanup chain
-(rpcrdma_rep_put() plus rpcrdma_post_recvs()).
-
-Fixes: 41c8f70f5a3d ("xprtrdma: Harden backchannel call decoding")
-Assisted-by: kres:claude-opus-4-7
-Signed-off-by: Chris Mason <clm@meta.com>
+Fixes: 704f3f640f72 ("xprtrdma: Post receive buffers after RPC completion")
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/rpc_rdma.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sunrpc/xprtrdma/rpc_rdma.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
-index 0473d920f71c1b..51e70c767dace2 100644
+index 51e70c767dace2..34ef05ebf5fd49 100644
 --- a/net/sunrpc/xprtrdma/rpc_rdma.c
 +++ b/net/sunrpc/xprtrdma/rpc_rdma.c
-@@ -1133,6 +1133,8 @@ rpcrdma_is_bcall(struct rpcrdma_xprt *r_xprt, struct rpcrdma_rep *rep)
+@@ -1517,6 +1517,14 @@ void rpcrdma_reply_handler(struct rpcrdma_rep *rep)
+ 	credits = be32_to_cpu(*p++);
+ 	rep->rr_proc = *p++;
  
- 	/* Peek at stream contents without advancing. */
- 	p = xdr_inline_decode(xdr, 0);
-+	if ((char *)xdr->end - (char *)p < 5 * XDR_UNIT)
-+		return false;
++	/* The credit grant from the wire is not trustworthy;
++	 * sanitize it before any code path consumes it.
++	 */
++	if (credits == 0)
++		credits = 1;	/* don't deadlock */
++	else if (credits > r_xprt->rx_ep->re_max_requests)
++		credits = r_xprt->rx_ep->re_max_requests;
++
+ 	if (rep->rr_vers != rpcrdma_version)
+ 		goto out_badversion;
  
- 	/* Chunk lists */
- 	if (xdr_item_is_present(p++))
-@@ -1157,7 +1159,7 @@ rpcrdma_is_bcall(struct rpcrdma_xprt *r_xprt, struct rpcrdma_rep *rep)
- 	 */
- 	p = xdr_inline_decode(xdr, 3 * sizeof(*p));
- 	if (unlikely(!p))
--		return true;
-+		return false;
+@@ -1533,10 +1541,6 @@ void rpcrdma_reply_handler(struct rpcrdma_rep *rep)
+ 	xprt_pin_rqst(rqst);
+ 	spin_unlock(&xprt->queue_lock);
  
- 	rpcrdma_bc_receive_call(r_xprt, rep);
- 	return true;
+-	if (credits == 0)
+-		credits = 1;	/* don't deadlock */
+-	else if (credits > r_xprt->rx_ep->re_max_requests)
+-		credits = r_xprt->rx_ep->re_max_requests;
+ 	if (buf->rb_credits != credits)
+ 		rpcrdma_update_cwnd(r_xprt, credits);
+ 
 -- 
 2.53.0
 
