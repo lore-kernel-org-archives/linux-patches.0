@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8A7223708;
-	Tue, 21 Jul 2026 17:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA79A223708;
+	Tue, 21 Jul 2026 17:27:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654832; cv=none; b=CN+wTCwwRurnah9O4xiLeyCGuQ3D9qrFFVaJDJbV0HtT7wQdAJMLHCxY+s04CMBAmNzObEUgn4xAy/+XQ3XqiAI8kbi010p5+4xXMa1jQF3Avk6RqF2xSFjIO8xAa+KiqPwpkZXMl540exV39y/EKx46j9GeF+4/0jEMjHhnxgc=
+	t=1784654834; cv=none; b=fQN2leaUDJ+8p7FN4S0cmq4Yjn+tP70E2RUxBMt7H/swp2fRBYwWtUTUHDtRDanCI2gIdNzV2TbAEi/7uboLRQCgjKebrZsWXnfuiCejcFMW6eqrxfMG9bAWvnVxW8heo64lC3nSTmPwX5KQrZOje7EZAF69BFcEyUJOOIZKJCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654832; c=relaxed/simple;
-	bh=cuX2gREko0v2O3k0aovxaXqOlPi422RtEEzwAVIcieg=;
+	s=arc-20240116; t=1784654834; c=relaxed/simple;
+	bh=BzGBAXM4bfvRLZ0igW746pTKxP6WHEJLcUJsPx2WhDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PiXeJ9yWCKFA3PETpr9h9rYLaBN5itZWlRpZdDI8p9BWPbuRGOlflkRC7tBrnc41IuHlSuKSUUntGobvSVkMwyOsaytdTTFASs2BXI0Lu2cTrVSmntO2m4li+bpeHUclfkvpY/DdYsHhx1q5/jczFE9P+wnkQRI2+dB+JhcZla4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AskY+ZC3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gU2h92sqH7pSI9SZGHQIyIHDlZ2Yil1r846rfzcVC6XTtvQjr0od+Ck2/zdqkXl19M7HVpeH4/FyjmaLKYjh/3iSRPKOBYMT6CFOozwJf53Y9MslPWpINsB4q2U+z/vDrFAxRrR/HroaBTxsB8YE4U/MUSqyq2r1y2XHbvaVNRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ORiC3QEw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AskY+ZC3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2F01F000E9;
-	Tue, 21 Jul 2026 17:27:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ORiC3QEw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1691F000E9;
+	Tue, 21 Jul 2026 17:27:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654831;
-	bh=7MudAlhAbqXJqJ3nSLucv82GeumEAD3w97GA5n39wd0=;
+	s=korg; t=1784654833;
+	bh=0kSV6xu6ACaA+MTiZXwESmCT+LDopXDhw0R3Mn7fLIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AskY+ZC3+u+1h2hDo8cRM72xRdWBqhYc9wlgf+Fxd1ZU0RTvmHZ9oBjgCuOR7Ng/P
-	 Df04faah5yHwAkceaebQaZfHhf6YopIc5b/rKt+JuV00p/XQp0QcslraIPIIFs2F6R
-	 cekVXayy1GjELD3S+3E9PLAAJI/pSWhSIcgyG+Uc=
+	b=ORiC3QEwqhEk5zwBkTym3Rm1FeR7ctHRPw5c4XWsprdY64C0r18OhiodEJp/RMQ67
+	 wue2kRfwYBFzZehUvR4lrZ6diM/ulXAQS4fzO4TXy2AJ615NdVv6IcXD/BwzNDeAm+
+	 vgM0veePmh9JwfSzYb0V3YygLyLJ74+8kOYPwXcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.1 1855/2077] dm-integrity: fix a bug if the bio is out of limits
-Date: Tue, 21 Jul 2026 17:25:28 +0200
-Message-ID: <20260721152636.487071204@linuxfoundation.org>
+Subject: [PATCH 7.1 1856/2077] dm-integrity: dont increment hash_offset twice
+Date: Tue, 21 Jul 2026 17:25:29 +0200
+Message-ID: <20260721152636.511239896@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,44 +51,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 5a266764fadaff8b5c1fe37a186ebf9b09cb953e upstream.
+commit edf025f083854f80032b73a1aad69a3c90db236f upstream.
 
-If dm_integrity_check_limits fails, the code would exit with
-DM_MAPIO_KILL. However, the range would be already locked at this point,
-and it wouldn't be unlocked, resulting in a deadlock. Let's move the
-limit check up, so that when it exits, no resources are leaked.
+hash_offset is already incremented in the loop "for (i = 0; i < to_copy;
+i++, ts--)". Do not increment it again.
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Assisted-by: Claude:claude-opus-4.6
-Fixes: fb0987682c62 ("dm-integrity: introduce the Inline mode")
+Fixes: 84597a44a9d8 ("dm-integrity: dm integrity: add optional discard support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/md/dm-integrity.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
 --- a/drivers/md/dm-integrity.c
 +++ b/drivers/md/dm-integrity.c
-@@ -2523,6 +2523,9 @@ static int dm_integrity_map_inline(struc
- 	if (unlikely((bio->bi_opf & REQ_PREFLUSH) != 0))
- 		return DM_MAPIO_REMAPPED;
+@@ -1480,9 +1480,6 @@ thorough_test:
+ 			*metadata_offset = 0;
+ 		}
  
-+	if (unlikely(!dm_integrity_check_limits(ic, bio->bi_iter.bi_sector, bio)))
-+		return DM_MAPIO_KILL;
-+
- retry:
- 	if (!dio->integrity_payload) {
- 		unsigned digest_size, extra_size;
-@@ -2587,10 +2590,6 @@ skip_spinlock:
- 
- 	dio->bio_details.bi_iter = bio->bi_iter;
- 
--	if (unlikely(!dm_integrity_check_limits(ic, bio->bi_iter.bi_sector, bio))) {
--		return DM_MAPIO_KILL;
--	}
+-		if (unlikely(!is_power_of_2(ic->tag_size)))
+-			hash_offset = (hash_offset + to_copy) % ic->tag_size;
 -
- 	bio->bi_iter.bi_sector += ic->start + SB_SECTORS;
+ 		total_size -= to_copy;
+ 	} while (unlikely(total_size));
  
- 	bip = bio_integrity_alloc(bio, GFP_NOIO, 1);
 
 
