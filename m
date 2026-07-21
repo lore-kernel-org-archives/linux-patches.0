@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4120B47010D;
-	Tue, 21 Jul 2026 20:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8615346EF9C;
+	Tue, 21 Jul 2026 20:04:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664244; cv=none; b=TuUVUi8sYK/9RTLThcSN4E2H0WKXgvpBVrXZnzFrbfrxAAXQecVaIsQMTvC0K2kj3CZTHKnA1DmGbflZmqBTWfEZyaGXQ1Ovu/zuTkF/65t5NjlEgRNrxk/b/5IGAvaNis7jKY7WSuu5bIpFGEaKLjCe9VVvaG4A/SOPVPEt6rQ=
+	t=1784664245; cv=none; b=psx43GonCowu8GDfuFK0ToSFsjfTQErts5uHGdEi/s/LcheGRUjrzGQbVEV2jRcpqZ+nuevNUMw1zLBAed97wGFl5dlx+UlMqJ8T8ANKEc8BBOTp+h8qF1UR1NUDI/9FIQrqzyyASCLWxCKTqhlNhPdBaJgca99QS/Myg6FjbwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664244; c=relaxed/simple;
-	bh=gWYVIppROggCZ9GSJ38Xcf88E7514qSqH79vwGVEtt0=;
+	s=arc-20240116; t=1784664245; c=relaxed/simple;
+	bh=bK2i7pzEhK1xqn1htrAtm8nN7gXDCGF1pOq1BqraGRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ohYipgNPOuhhwu6zoj1QrUcY7Rc5F2/x3zaLALi+d2yiyCdt/wYdlTTQCgzkEvMNEyJvw4v9kmKUqQgIRegM6aQiq92J+E2Ru6ty9GRJGdFBhsHZeb3XEZmBqeT4skajwI3WOCjRYyfifbMIGArUD5uobV7CfMNwKXenzR8mPQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ab8zW94J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gVlXpU5T/q+vpN7j+6Fh4YOxLEX4+zYzHTerMU8ejm00rahj3UTfiZZxrqDtofYpK8zBFT3kA3vmGZrdzEhVFRavrtnlK4D//QA1q1GXcYk2o/r70ugHYJUbr2JvXpX+guBAtDYberJkkcwyobL8Y5FKMRlb4nOpeUbqvZztjW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=caqz3GEh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ab8zW94J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A47E81F000E9;
-	Tue, 21 Jul 2026 20:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="caqz3GEh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF221F00A3A;
+	Tue, 21 Jul 2026 20:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664239;
-	bh=IJVXTBk8bzD6+Koocg5nTAxVfBNpHxCKM+4pJmeqgJ8=;
+	s=korg; t=1784664244;
+	bh=nW5CR+YFloW6LR0MsNP8+m2nVUZNCAJhr5kcF2RXI9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ab8zW94JanXC1pgUKwFDwbvqzILgfe6Zmrd6N5UyUOBPgKBgL+ACC4hcE0GcnkWdw
-	 ZJRAnUq3iTvBK/aL5u9gu6buBzuYJUlHLtZ/lzba5zWk+7hLT9KIi8DVtN4Zx+wf1L
-	 jGpDoTeYZcOo+MHAP4BT1wUxudxPPoGIXDt53sa8=
+	b=caqz3GEhIgo1x5VHWD2/rnkCDKITJCWajvamSnUXyfRFxQMtEPrn0XX40Mj6Y7MrY
+	 izSHikwvcM61gOEEsLALhgavOdb7TdlT67Wo5GLTkV17HA0ys+kFnW84bQq6QiQiPv
+	 hdXL2ZdDeI3pQvTThE2lbEKH3ovP0kqP7PfhgC3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Beims <rafael.beims@toradex.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 1108/1276] wifi: mwifiex: fix roaming to different channel in host_mlme mode
-Date: Tue, 21 Jul 2026 17:25:51 +0200
-Message-ID: <20260721152510.785622378@linuxfoundation.org>
+	Vladimir Zapolskiy <vz@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.12 1127/1276] mtd: rawnand: lpc32xx_mlc: fail DMA transfers on timeout
+Date: Tue, 21 Jul 2026 17:26:10 +0200
+Message-ID: <20260721152511.213454896@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,70 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael Beims <rafael.beims@toradex.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit a707e4127c0f893c7a7703500ab56297a5bd2d51 upstream.
+commit dbf590b662695b16fbf5917ef129697be4410ea9 upstream.
 
-When host MLME is enabled, mwifiex_cfg80211_authenticate() transmits the
-authentication frame on a remain-on-channel (ROC) reservation so that the
-frame is sent on the target BSS's channel. The ROC is only configured
-when priv->auth_flag is zero.
+lpc32xx_xmit_dma() starts a DMA transfer and waits up to one second
+for its completion, but it ignores the wait result and returns success
+after unmapping the buffer.
 
-priv->auth_flag is set to HOST_MLME_AUTH_PENDING when the auth frame is
-queued and advances to HOST_MLME_AUTH_DONE once authentication
-completes. It is only cleared back to zero on a disconnect, deauth or
-timeout path; nothing clears it when an association succeeds. It therefore
-stays at HOST_MLME_AUTH_DONE for the whole connected session.
+A timed out read can therefore return success with incomplete data, and
+a timed out write can continue the NAND operation without proof that the
+DMA payload reached the controller.
 
-When the station later roams to a BSS on a different channel, the next
-authentication finds auth_flag != 0, skips the ROC setup, and the auth
-frame is transmitted on the currently-associated channel instead of the
-target's channel. Authentication times out on the new AP and the device
-stays connected to the original AP.
+Terminate the DMA channel on timeout, unmap the scatterlist through the
+existing cleanup path, and return -ETIMEDOUT to the NAND read/write
+callers. Initialize the shared cleanup-path result before using it for
+dmaengine_prep_slave_sg() failures.
 
-Gate the ROC setup on HOST_MLME_AUTH_PENDING instead of on auth_flag
-being completely clear. This re-arms the remain-on-channel for every new
-authentication attempt, while still suppressing a redundant ROC during
-the multi-frame SAE exchange, where auth_flag stays PENDING between the
-commit and confirm frames.
-
-This change was tested in 3 different devices:
-Verdin AM62 (IW412 SD-UART) - (16.92.21.p142)
-Verdin iMX8MM (W8997 SD-SD) - (16.68.1.p197)
-Verdin iMX8MP (W8997 SD-UART) - (16.92.21.p137)
-
-There following loop tests were performed:
-1) force roaming between two AP's, one 5GHz and one 2.4GHz, same
-SSID. Use wpa_cli to trigger the roaming behavior, sleep 2s
-between iterations.
-2) force a disconnection to AP 1 and a connection to AP 2, test
-scan. Use wpa_cli to trigger the connection changes, sleep 2s
-between iterations.
-
-Each test ran in each device for at least 3 hours.
-
-Fixes: 36995892c271 ("wifi: mwifiex: add host mlme for client mode")
+Fixes: 70f7cb78ec53 ("mtd: add LPC32xx MLC NAND driver")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Rafael Beims <rafael.beims@toradex.com>
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://patch.msgid.link/20260610150021.1018611-1-rafael@beims.me
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Vladimir Zapolskiy <vz@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/cfg80211.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/nand/raw/lpc32xx_mlc.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-+++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-@@ -4333,7 +4333,7 @@ mwifiex_cfg80211_authenticate(struct wip
- 		return -EOPNOTSUPP;
+--- a/drivers/mtd/nand/raw/lpc32xx_mlc.c
++++ b/drivers/mtd/nand/raw/lpc32xx_mlc.c
+@@ -396,6 +396,7 @@ static int lpc32xx_xmit_dma(struct mtd_i
+ 	struct lpc32xx_nand_host *host = nand_get_controller_data(chip);
+ 	struct dma_async_tx_descriptor *desc;
+ 	int flags = DMA_CTRL_ACK | DMA_PREP_INTERRUPT;
++	unsigned long time_left;
+ 	int res;
+ 
+ 	sg_init_one(&host->sgl, mem, len);
+@@ -410,6 +411,7 @@ static int lpc32xx_xmit_dma(struct mtd_i
+ 				       flags);
+ 	if (!desc) {
+ 		dev_err(mtd->dev.parent, "Failed to prepare slave sg\n");
++		res = -ENXIO;
+ 		goto out1;
  	}
  
--	if (!priv->auth_flag) {
-+	if (!(priv->auth_flag & HOST_MLME_AUTH_PENDING)) {
- 		ret = mwifiex_remain_on_chan_cfg(priv, HostCmd_ACT_GEN_SET,
- 						 req->bss->channel,
- 						 AUTH_TX_DEFAULT_WAIT_TIME);
+@@ -420,7 +422,13 @@ static int lpc32xx_xmit_dma(struct mtd_i
+ 	dmaengine_submit(desc);
+ 	dma_async_issue_pending(host->dma_chan);
+ 
+-	wait_for_completion_timeout(&host->comp_dma, msecs_to_jiffies(1000));
++	time_left = wait_for_completion_timeout(&host->comp_dma,
++						msecs_to_jiffies(1000));
++	if (!time_left) {
++		dmaengine_terminate_sync(host->dma_chan);
++		res = -ETIMEDOUT;
++		goto out1;
++	}
+ 
+ 	dma_unmap_sg(host->dma_chan->device->dev, &host->sgl, 1,
+ 		     DMA_BIDIRECTIONAL);
+@@ -428,7 +436,7 @@ static int lpc32xx_xmit_dma(struct mtd_i
+ out1:
+ 	dma_unmap_sg(host->dma_chan->device->dev, &host->sgl, 1,
+ 		     DMA_BIDIRECTIONAL);
+-	return -ENXIO;
++	return res;
+ }
+ 
+ static int lpc32xx_read_page(struct nand_chip *chip, uint8_t *buf,
 
 
