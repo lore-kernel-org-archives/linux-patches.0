@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7499934F279;
-	Tue, 21 Jul 2026 18:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193B840803D;
+	Tue, 21 Jul 2026 18:01:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656876; cv=none; b=haTRcRLeD0/czk7hVLihMio1FS+5WzGq/0hHqygC2dywNqeehXODffejv65ZhWuNigChpqZ5U0EDwphpHekyNrIbcOaxkPdtEv83NRfkZgLihfp8Me/Y3Bq8bbXJR96Q/6PSqdYxxZNgBWrzbxqVeuLcHnPqyZzphJL/9a+x+EA=
+	t=1784656879; cv=none; b=gQcXzQzrcNwwm+Olp4XtsweB0ehmSbXfwMbncjCjeWBBPH4v5zedjOPu6l4v0PiMGdWt8pwARWeK8D6smwh2Ff04NngiXx2DASSgqk8lG2n48Hg7jCndvPht8Z7c+09CF9POkE6ZYch1+uGgXL0gN78RtqpxLnLycOBiIZOAf5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656876; c=relaxed/simple;
-	bh=LsvgQ0QMa5EEtM0G/zw0SoZYSx4JCOE3pzeZ5cFw7hE=;
+	s=arc-20240116; t=1784656879; c=relaxed/simple;
+	bh=l2rydaHCVAVqz1OvtyKcrMVg4qalK/Do8kL1cpc4I8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EUJ3tCoVBgUgMq1MmTthFGucRzFEgtatN4y/V5wGSmbR9hAyk5i4ckDxQRh8lulcz/TmJG68ub0xCSfKSavlhm1s+kN2+47CDQXIjpP579lN4bO8ev3AUfCxGosGdpMiesJCvIuLF0rplXQ3LWtYzuBOVNr2BGF/vKvACp6ckXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJ+TO6O8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hhCf4zr4gZsoAHWJOWnozitW+kuo/4v7cSQfZvituojAKS3j75XxCUXIQ3CG2CApl/Y+RXULmlu0dPfIjJ9m3b1GDm2KM+X66v9F4N91Z8QYnd9yQGbfugMjgbay+QPuqVrPHhRZDM4udJuh56pbXhR1fcfBl/LHRaBWw4OdVXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dM7OZKdO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJ+TO6O8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65241F00A3D;
-	Tue, 21 Jul 2026 18:01:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dM7OZKdO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE641F000E9;
+	Tue, 21 Jul 2026 18:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656875;
-	bh=QbgyKMDnjvzkUnrPpUTBnnNeDBUOGsduQgwbmS/x3Tw=;
+	s=korg; t=1784656878;
+	bh=gLBB0pvqkQHrEnGJPN3gbrFpvqoSFJBrn4snChmbV/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KJ+TO6O8ChDvJt7ztYfHkZ2zrXJNp7Ui/I/Eh2aiKV8NJCYCjnK/iHGJoAFrifVj9
-	 HZtUgd8DR/Z+Rfk+1JsIeHHU61NtzYhBNOVezj0VBYs7Vyi+fhpqJlJukCju/ee5V8
-	 B5N9br/Wa+GrUB5ng2gPXaQOgHDsGhiri47qKZb0=
+	b=dM7OZKdOWB4ZDKli+6sj544bRLd9j8tIKnNVv7ppSG7jB5mQxiMZRAEWY4PIjAxTF
+	 lWxXj3vRK07To5NaOUPDMGNpzoE9ZN1Cwi8ozNEaXObS+mvlrs6MF5K6SIx1gj7icq
+	 9wFCARZsk17+yChiVCE7dhDdBYd5VJxj0lyC1h0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	syzbot+ebdb22d461c904fc3cb2@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0515/1611] bpf: Fix setting retval to -EPERM for cgroup hooks not returning errno
-Date: Tue, 21 Jul 2026 17:10:31 +0200
-Message-ID: <20260721152526.930296467@linuxfoundation.org>
+Subject: [PATCH 6.18 0551/1611] tcp: ipv6: clamp default adverting MSS to avoid GSO_BY_FRAGS (0xFFFF)
+Date: Tue, 21 Jul 2026 17:11:07 +0200
+Message-ID: <20260721152527.772401553@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,172 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Kuohai <xukuohai@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4c71303c837449158815c521fcee4ec3b8721dbd ]
+[ Upstream commit 2bf43d0e2e6a27d52a7d624e2d6b9116972e8a22 ]
 
-When a cgroup BPF program exits with 0, bpf_prog_run_array_cg() sets
-the hook return value to -EPERM if it is not a valid errno. This is
-correct for errno-based hooks, which return 0 on success and negative
-errno on failure, but wrong for boolean and void LSM hooks. Boolean
-LSM hooks should only return true or false, and void LSM hooks have
-no return value at all.
+When MTU is large, ip6_default_advmss() can return IPV6_MAXPLEN (65535).
+This is interpreted by TCP as mss_clamp, allowing the MSS to reach 65535.
 
-Fix it by skipping setting -EPERM for hooks not returning errno.
+However, 0xFFFF is also used as a magic value GSO_BY_FRAGS in the kernel.
+If a TCP packet with gso_size=0xFFFF is passed to skb_segment(), it will
+be mistakenly treated as GSO_BY_FRAGS, leading to a NULL pointer
+dereference because local TCP packets do not use frag_list.
 
-Fixes: 69fd337a975c ("bpf: per-cgroup lsm flavor")
-Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
-Link: https://lore.kernel.org/r/20260610201724.733943-2-xukuohai@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fix this by returning min(IPV6_MAXPLEN, GSO_BY_FRAGS - 1) (65534) from
+ip6_default_advmss() when MTU is large.
+
+Also update the stale comment in ip6_default_advmss() which suggested
+that IPV6_MAXPLEN is returned to mean "any MSS".
+
+Fixes: 3953c46c3ac7 ("sk_buff: allow segmenting based on frag sizes")
+Reported-by: syzbot+ebdb22d461c904fc3cb2@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a2c3193.8812e0fc.3c3fa4.0001.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260612162517.83394-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf_lsm.h |  6 ++++++
- kernel/bpf/bpf_lsm.c    | 20 ++++++++++++++++++
- kernel/bpf/cgroup.c     | 47 +++++++++++++++++++++++++++++------------
- 3 files changed, 60 insertions(+), 13 deletions(-)
+ net/ipv6/route.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/bpf_lsm.h b/include/linux/bpf_lsm.h
-index 643809cc78c33e..143775a27a2a0b 100644
---- a/include/linux/bpf_lsm.h
-+++ b/include/linux/bpf_lsm.h
-@@ -52,6 +52,7 @@ int bpf_set_dentry_xattr_locked(struct dentry *dentry, const char *name__str,
- 				const struct bpf_dynptr *value_p, int flags);
- int bpf_remove_dentry_xattr_locked(struct dentry *dentry, const char *name__str);
- bool bpf_lsm_has_d_inode_locked(const struct bpf_prog *prog);
-+bool bpf_lsm_hook_returns_errno(u32 btf_id);
- 
- #else /* !CONFIG_BPF_LSM */
- 
-@@ -104,6 +105,11 @@ static inline bool bpf_lsm_has_d_inode_locked(const struct bpf_prog *prog)
- {
- 	return false;
- }
-+
-+static inline bool bpf_lsm_hook_returns_errno(u32 btf_id)
-+{
-+	return true;
-+}
- #endif /* CONFIG_BPF_LSM */
- 
- #endif /* _LINUX_BPF_LSM_H */
-diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
-index 2eead789b898ba..554985ce9025ac 100644
---- a/kernel/bpf/bpf_lsm.c
-+++ b/kernel/bpf/bpf_lsm.c
-@@ -421,6 +421,26 @@ BTF_ID(func, bpf_lsm_audit_rule_known)
- BTF_ID(func, bpf_lsm_inode_xattr_skipcap)
- BTF_SET_END(bool_lsm_hooks)
- 
-+/* hooks returning void */
-+#define LSM_HOOK_void(DEFAULT, NAME, ...) BTF_ID(func, bpf_lsm_##NAME)
-+#define LSM_HOOK_int(DEFAULT, NAME, ...)  /* nothing */
-+#define LSM_HOOK(RET, DEFAULT, NAME, ...) LSM_HOOK_##RET(DEFAULT, NAME, __VA_ARGS__)
-+BTF_SET_START(void_lsm_hooks)
-+#include <linux/lsm_hook_defs.h>
-+#undef LSM_HOOK
-+#undef LSM_HOOK_void
-+#undef LSM_HOOK_int
-+BTF_SET_END(void_lsm_hooks)
-+
-+bool bpf_lsm_hook_returns_errno(u32 btf_id)
-+{
-+	if (btf_id_set_contains(&bool_lsm_hooks, btf_id))
-+		return false;
-+	if (btf_id_set_contains(&void_lsm_hooks, btf_id))
-+		return false;
-+	return true;
-+}
-+
- int bpf_lsm_get_retval_range(const struct bpf_prog *prog,
- 			     struct bpf_retval_range *retval_range)
- {
-diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-index 008b3a9be0c418..c00e440fb36b64 100644
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -55,6 +55,28 @@ void __init cgroup_bpf_lifetime_notifier_init(void)
- 						&cgroup_bpf_lifetime_nb));
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index f89220929c4e24..b34f6a3e705192 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -3268,11 +3268,11 @@ static unsigned int ip6_default_advmss(const struct dst_entry *dst)
+ 	/*
+ 	 * Maximal non-jumbo IPv6 payload is IPV6_MAXPLEN and
+ 	 * corresponding MSS is IPV6_MAXPLEN - tcp_header_size.
+-	 * IPV6_MAXPLEN is also valid and means: "any MSS,
+-	 * rely only on pmtu discovery"
++	 * Limit the default MSS to GSO_BY_FRAGS - 1 to avoid
++	 * collision with the GSO_BY_FRAGS magic value (0xFFFF).
+ 	 */
+ 	if (mtu > IPV6_MAXPLEN - sizeof(struct tcphdr))
+-		mtu = IPV6_MAXPLEN;
++		mtu = min_t(unsigned int, IPV6_MAXPLEN, GSO_BY_FRAGS - 1);
+ 	return mtu;
  }
  
-+#ifdef CONFIG_BPF_LSM
-+struct cgroup_lsm_atype {
-+	u32 attach_btf_id;
-+	int refcnt;
-+	bool returns_errno;
-+};
-+
-+static struct cgroup_lsm_atype cgroup_lsm_atype[CGROUP_LSM_NUM];
-+
-+static bool cgroup_bpf_hook_returns_errno(enum cgroup_bpf_attach_type atype)
-+{
-+	if (atype >= CGROUP_LSM_START && atype <= CGROUP_LSM_END)
-+		return READ_ONCE(cgroup_lsm_atype[atype - CGROUP_LSM_START].returns_errno);
-+	return true;
-+}
-+#else
-+static bool cgroup_bpf_hook_returns_errno(enum cgroup_bpf_attach_type atype)
-+{
-+	return true;
-+}
-+#endif
-+
- /* __always_inline is necessary to prevent indirect call through run_prog
-  * function pointer.
-  */
-@@ -83,7 +105,8 @@ bpf_prog_run_array_cg(const struct cgroup_bpf *cgrp,
- 			*(ret_flags) |= (func_ret >> 1);
- 			func_ret &= 1;
- 		}
--		if (!func_ret && !IS_ERR_VALUE((long)run_ctx.retval))
-+		if (!func_ret && cgroup_bpf_hook_returns_errno(atype) &&
-+		    !IS_ERR_VALUE((long)run_ctx.retval))
- 			run_ctx.retval = -EPERM;
- 		item++;
- 	}
-@@ -156,13 +179,6 @@ unsigned int __cgroup_bpf_run_lsm_current(const void *ctx,
- }
- 
- #ifdef CONFIG_BPF_LSM
--struct cgroup_lsm_atype {
--	u32 attach_btf_id;
--	int refcnt;
--};
--
--static struct cgroup_lsm_atype cgroup_lsm_atype[CGROUP_LSM_NUM];
--
- static enum cgroup_bpf_attach_type
- bpf_cgroup_atype_find(enum bpf_attach_type attach_type, u32 attach_btf_id)
- {
-@@ -191,10 +207,13 @@ void bpf_cgroup_atype_get(u32 attach_btf_id, int cgroup_atype)
- 
- 	lockdep_assert_held(&cgroup_mutex);
- 
--	WARN_ON_ONCE(cgroup_lsm_atype[i].attach_btf_id &&
--		     cgroup_lsm_atype[i].attach_btf_id != attach_btf_id);
--
--	cgroup_lsm_atype[i].attach_btf_id = attach_btf_id;
-+	if (!cgroup_lsm_atype[i].attach_btf_id) {
-+		cgroup_lsm_atype[i].attach_btf_id = attach_btf_id;
-+		WRITE_ONCE(cgroup_lsm_atype[i].returns_errno,
-+			   bpf_lsm_hook_returns_errno(attach_btf_id));
-+	} else {
-+		WARN_ON_ONCE(cgroup_lsm_atype[i].attach_btf_id != attach_btf_id);
-+	}
- 	cgroup_lsm_atype[i].refcnt++;
- }
- 
-@@ -203,8 +222,10 @@ void bpf_cgroup_atype_put(int cgroup_atype)
- 	int i = cgroup_atype - CGROUP_LSM_START;
- 
- 	cgroup_lock();
--	if (--cgroup_lsm_atype[i].refcnt <= 0)
-+	if (--cgroup_lsm_atype[i].refcnt <= 0) {
-+		WRITE_ONCE(cgroup_lsm_atype[i].returns_errno, true);
- 		cgroup_lsm_atype[i].attach_btf_id = 0;
-+	}
- 	WARN_ON_ONCE(cgroup_lsm_atype[i].refcnt < 0);
- 	cgroup_unlock();
- }
 -- 
 2.53.0
 
