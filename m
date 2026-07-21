@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C132A44AB9F;
-	Tue, 21 Jul 2026 21:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B49544AB76;
+	Tue, 21 Jul 2026 21:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668691; cv=none; b=Ku81T+p8mnuDyxCby9/Li/Q3zCnPoylNeh4mzRxkT7wDlHeZu/0Ej7ktn7dqE3FwqBOGy3TNX/9sJOo/+wcNx9TsO9I/k9sVIuSQzF9sG0em0GPCqqdqLbaURa/8vgzcr6qMOqRenTrVnPnfogvsVybBUZrGENN58oxlDFtQrfM=
+	t=1784668693; cv=none; b=nQhVt/XDpEY5unOfOWzxyhSJgmLtnnHiKAGe03qQvjQ4AjZl6UdBi32Kx1Z6vghXsWX9ezOF1TRKN8AE7oBUsXth9eyLSi1UC5HI+9Y2wavsLutXwR83kHHxW1QFZAy6kJMepUiRM+6hqu6PpC1mA+/r8l1e48CJenweacyYugM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668691; c=relaxed/simple;
-	bh=WfRWgdkNJHD8iJGPnmO0foKKXHOcT/804qiAgv+iJYo=;
+	s=arc-20240116; t=1784668693; c=relaxed/simple;
+	bh=NyA7MfDVz0D238l/kO1NZn9lPvXQRFmD6CI/E/yg5XQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E1Q66GpMS/MyKnb5XrQBuEtDPjsDDGjDr+w9FbWDsWz3R+Tg1BI8620zrg5o67qyu2hOtnI9dgbKwSqwmgsLNlnUguvckE3nVE1wl6V7K/h/qKjvrye0ghqm/JI/E7rZajqqk79DStZ9oJ7QHyew58eJk42CPHUSFXrzg8Pnxfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dOp0eTYa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XkaMQemRoUTMoCLT2qcUb5EB/iVS1h2hmxpeqUKV6GEjZmSygjP3D9LdV7EeeT0/M9M+I/h/JHYI40e9g15wMQjlDRg9QJCXUDTMvK5lJQNboAejZEJu5J/e/2H1madgCgKshY9+9Q8PN0Gy5TzvbJW5xomvpc+LIzaKLqrw5OI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xpd6w2vu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dOp0eTYa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 152AA1F000E9;
-	Tue, 21 Jul 2026 21:18:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xpd6w2vu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0FFC1F000E9;
+	Tue, 21 Jul 2026 21:18:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668689;
-	bh=cb7YVsnGCMf1HzPJiaio5w0Sbl0Aq0Te7uRosl5vEMQ=;
+	s=korg; t=1784668692;
+	bh=cLStSyoJt6ErXuLRMK086eOWjQcsXjFGjvCO+lq2CJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dOp0eTYaDG6xANydWW7kTiEXW4XJj+l0iSN7Y5zAArDpTTgQirz8tlfb+1hblJsFv
-	 cO3uUeZ1OCU/W0v1u3sAIwYXlaaUTi/f0EY/TpVUyidMwVdNbjyPFTtulV/AtxoERA
-	 7Ig/WK9xPzJSiWiaiiok7YMXaYXsYO9tWEVE5L/8=
+	b=Xpd6w2vuwQElr/u9LCyoXh0mEijVQ6b4WSDM9Ue1FvYlkxoy5QIZrAzehygin00w7
+	 kx9FUKPQjSlAo6oDbOU1USlyaUQqjvkVX4voYgLf/HYEK1rUjMSSkgXiRHFdUWecdD
+	 BKfn07aPaSa8iAlt58MmWbQpygan2YUc8vaanQAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wens@kernel.org>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 0270/1067] dt-bindings: media: sun4i-a10-video-engine: Add interconnect properties
-Date: Tue, 21 Jul 2026 17:14:31 +0200
-Message-ID: <20260721152430.633116233@linuxfoundation.org>
+	Guoniu Zhou <guoniu.zhou@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.1 0271/1067] dt-bindings: power: imx93: Add MIPI PHY power domain
+Date: Tue, 21 Jul 2026 17:14:32 +0200
+Message-ID: <20260721152430.657659047@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,45 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wens@kernel.org>
+From: Guoniu Zhou <guoniu.zhou@oss.nxp.com>
 
-commit 018f2dc3a42098d3b04edd1480adc51d268adb14 upstream.
+commit 6aa38ef0eab32df5409b72d62509de6ba09cea50 upstream.
 
-The Allwinner video engine sits behind the MBUS that is represented as
-an interconnect.
+Add MIPI PHY power domain for shared PHY resources used by both
+MIPI DSI and CSI blocks.
 
-Make sure that the interconnect properties are valid in the binding.
-
-Fixes: d41662e52a03 ("media: dt-bindings: media: allwinner,sun4i-a10-video-engine: Add R40 compatible")
+Signed-off-by: Guoniu Zhou <guoniu.zhou@oss.nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Fixes: e9aa77d413c9 ("soc: imx: add i.MX93 media blk ctrl driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ include/dt-bindings/power/fsl,imx93-power.h | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml
-+++ b/Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml
-@@ -63,6 +63,16 @@ properties:
-       CMA pool to use for buffers allocation instead of the default
-       CMA pool.
+diff --git a/include/dt-bindings/power/fsl,imx93-power.h b/include/dt-bindings/power/fsl,imx93-power.h
+index 17f9f015bf7d..071221fe5c57 100644
+--- a/include/dt-bindings/power/fsl,imx93-power.h
++++ b/include/dt-bindings/power/fsl,imx93-power.h
+@@ -11,5 +11,6 @@
+ #define IMX93_MEDIABLK_PD_PXP			2
+ #define IMX93_MEDIABLK_PD_LCDIF			3
+ #define IMX93_MEDIABLK_PD_ISI			4
++#define IMX93_MEDIABLK_PD_MIPI_PHY		5
  
-+  # FIXME: This should be made required eventually once every SoC will
-+  # have the MBUS declared.
-+  interconnects:
-+    maxItems: 1
-+
-+  # FIXME: This should be made required eventually once every SoC will
-+  # have the MBUS declared.
-+  interconnect-names:
-+    const: dma-mem
-+
- required:
-   - compatible
-   - reg
+ #endif
+-- 
+2.55.0
+
 
 
