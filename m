@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81AF2408039;
-	Tue, 21 Jul 2026 19:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71CDC408039;
+	Tue, 21 Jul 2026 19:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662025; cv=none; b=mufiqelhSSpFuxUWIy7DPEDvKVvdvA2NwHaTgIONYA5DtN8c9q2vN3AyZ6505GlYsU4dNYoGkQwM7DUIip/NWL5cjFvGAmcjjs3W4bY0egC14aaROgNvnKNLlSdK5DtaZRnFhaCMRVk2kTe5KJCNlWYTvL+xH//d0TkJLSf+kVs=
+	t=1784662028; cv=none; b=WziiBMF62yc9DG03WveLxpEYs0m8OJNiTVzlZrqGSFy6DwF0Us3VI8TpL2Ld67sPN5FhqgvjZOnW8FEGNBAeu6LoSNRyta+Ge4TJyPoTtpnWYqDlAF3zdA367KIrnr089jOBeNuVqE6gqOLB9NVNTmMB7yfT3KdS3UQDRtgL25s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662025; c=relaxed/simple;
-	bh=759uH0RC8XzRAjqXJlALaQ86n3ogPyOEB1nk0ekK1So=;
+	s=arc-20240116; t=1784662028; c=relaxed/simple;
+	bh=ptOf3Kzz+4JRqG0n6vlurL2+URMZXld03mhuthN4IiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uH5modYvPe9fVy4ZrrvQ1/jAwwaTK/DhvsVEXxPTW/3yUsXccEwcmwPs8YhPLSxC1bSsUgw+cH6tLYE4M0Y5QTIzRaBVhcFyJ+ZwZ6LvFjV/SBVrdXhvn2vVzdvgKFHxsY7K4aFx+v/J1AgyOiDW6h3bXvfF3qc7EXsvrgXA4qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vnFko6b5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wsmf3JM+otKDkFlyaXUuI7LggVogQXV47EF5wmRQMFVKNP0JzFzufln68BToMhkhY8QIs2EOquetHW1JWIKXfz5qeJ2B5yJNX2+q73ptLsuGa4CPbeW1Ra3OtOl+n4YArkrXEbEj8hBxua2w9OJ66t/OrmMtDbEzBEe/A7d8pvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TqB0+uUI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vnFko6b5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58A61F000E9;
-	Tue, 21 Jul 2026 19:27:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TqB0+uUI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B901F000E9;
+	Tue, 21 Jul 2026 19:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662024;
-	bh=8qZl77h90GM1v7nUrhvkSY+y8jL09/LG0zJj8RcKitM=;
+	s=korg; t=1784662027;
+	bh=hKESCMf8o0x8VtBQ6JoNET9DWvDQgCstMUUwqJAuiL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vnFko6b5HRywa7qaSP/DJSjBL873iiX9z/9yOReSf5xejmgCaRvfzPzI1TONmLOg8
-	 wjIg3RcRA8uipdJMv6WdWaAkvniCEUK2mrXenhz7n8QihoXZzY/ZHl3Ss8GjMZVggF
-	 YYNJsnPaxzL5f9jOq6cVJMvfxmVKkKUgsLwAD9xU=
+	b=TqB0+uUIa41p5sARK31FG4ZrcpbOsZUO3nKQHwblD7oAa6MatE+K7QapXyQYbxQlJ
+	 2sOvInEtvJj+TPw0IlSKFu4PpgHmne/UnD+1NY/qWWNmFv0nfNH2b5iRgeWMZ8C95B
+	 FbzU+fYtf/4G2rF0wojJD0i/aWTMkyVGa/DeZ+qg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	David Laight <david.laight.linux@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0289/1276] btrfs: fix invalid pointer dereference in __btrfs_run_delayed_refs()
-Date: Tue, 21 Jul 2026 17:12:12 +0200
-Message-ID: <20260721152452.550387791@linuxfoundation.org>
+Subject: [PATCH 6.12 0290/1276] fbdev: sm501fb: Fix buffer errors in OF binding code
+Date: Tue, 21 Jul 2026 17:12:13 +0200
+Message-ID: <20260721152452.574735162@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -54,66 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: David Laight <david.laight.linux@gmail.com>
 
-[ Upstream commit 486f8298b6188ff11ef1f4be7f1d5d2e4d1b1fae ]
+[ Upstream commit d8421e09382cfe0bd2a044c8b0a822f64855dd4e ]
 
-In the beginning of the loop, we try to obtain a locked delayed ref head,
-if 'locked_ref' is currently NULL, by calling btrfs_select_ref_head(),
-which can return an error pointer. If the error pointer is -EAGAIN we do
-a continue and go back to the beginning of the loop, which will not try
-again to call btrfs_select_ref_head() since 'locked_ref' is no longer
-NULL but it's ERR_PTR(-EAGAIN), and then we do:
+The code that gets the frame buffer mode from OF has 'use after free',
+'buffer overrun' and memory leaks.
 
-   spin_lock(&locked_ref->lock);
+info->edid_data isn't free if the probe functions fail or if
+pd->def_mode is set.
 
-against a ERR_PTR(-EAGAIN) value, generating an invalid pointer
-dereference.
+If both the CRT and PANEL are enabled info->edid_data is used after
+being freed and is freed twice.
 
-Fix this by ensuring that 'locked_ref' is set to NULL when
-btrfs_select_ref_head() returns ERR_PTR(-EAGAIN) and incrementing 'count'
-as well, to prevent infinite looping. We do this by doing a goto to the
-bottom of the loop that already sets 'locked_ref' to NULL and does a
-cond_resched(), with an increment to 'count' right before the goto.
-These measures were in place before the refactoring in commit 0110a4c43451
-("btrfs: refactor __btrfs_run_delayed_refs loop") but were unintentionally
-lost afterwards.
+The string returned by of_get_property(np, "mode", &len) is just
+written over either the static "640x480-16@60" or the module parameter
+string without any regard for the length (which is most likely longer).
 
-Reported-by: Dan Carpenter <error27@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/ag8ARRwykv8bpJ87@stanley.mountain/
-Fixes: 0110a4c43451 ("btrfs: refactor __btrfs_run_delayed_refs loop")
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Use kstrump() for the OF mode and free everything before freeing 'info.
+
+Fixes: 4295f9bf74a88 ("video, sm501: add OF binding to support SM501")
+Signed-off-by: David Laight <david.laight.linux@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent-tree.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/sm501fb.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index e2defa21b6c7af..28dca13fb9b099 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -2075,7 +2075,8 @@ static noinline int __btrfs_run_delayed_refs(struct btrfs_trans_handle *trans,
- 			locked_ref = btrfs_obtain_ref_head(trans);
- 			if (IS_ERR_OR_NULL(locked_ref)) {
- 				if (PTR_ERR(locked_ref) == -EAGAIN) {
--					continue;
-+					count++;
-+					goto again;
- 				} else {
- 					break;
- 				}
-@@ -2123,7 +2124,7 @@ static noinline int __btrfs_run_delayed_refs(struct btrfs_trans_handle *trans,
- 		 * Either success case or btrfs_run_delayed_refs_for_head
- 		 * returned -EAGAIN, meaning we need to select another head
- 		 */
--
-+again:
- 		locked_ref = NULL;
- 		cond_resched();
- 	} while ((min_bytes != U64_MAX && bytes_processed < min_bytes) ||
+diff --git a/drivers/video/fbdev/sm501fb.c b/drivers/video/fbdev/sm501fb.c
+index 2eb27ebf822e80..571530bacbd913 100644
+--- a/drivers/video/fbdev/sm501fb.c
++++ b/drivers/video/fbdev/sm501fb.c
+@@ -95,6 +95,7 @@ struct sm501fb_info {
+ 	void __iomem		*fbmem;		/* remapped framebuffer */
+ 	size_t			 fbmem_len;	/* length of remapped region */
+ 	u8 *edid_data;
++	char *fb_mode;
+ };
+ 
+ /* per-framebuffer private data */
+@@ -1792,12 +1793,11 @@ static int sm501fb_init_fb(struct fb_info *fb, enum sm501_controller head,
+ 			fb->var.yres_virtual = fb->var.yres;
+ 		} else {
+ 			if (info->edid_data) {
+-				ret = fb_find_mode(&fb->var, fb, fb_mode,
++				ret = fb_find_mode(&fb->var, fb,
++					info->fb_mode ?: fb_mode,
+ 					fb->monspecs.modedb,
+ 					fb->monspecs.modedb_len,
+ 					&sm501_default_mode, default_bpp);
+-				/* edid_data is no longer needed, free it */
+-				kfree(info->edid_data);
+ 			} else {
+ 				ret = fb_find_mode(&fb->var, fb,
+ 					   NULL, NULL, 0, NULL, 8);
+@@ -1973,7 +1973,7 @@ static int sm501fb_probe(struct platform_device *pdev)
+ 			/* Get EDID */
+ 			cp = of_get_property(np, "mode", &len);
+ 			if (cp)
+-				strcpy(fb_mode, cp);
++				info->fb_mode = kstrdup(cp, GFP_KERNEL);
+ 			prop = of_get_property(np, "edid", &len);
+ 			if (prop && len == EDID_LENGTH) {
+ 				info->edid_data = kmemdup(prop, EDID_LENGTH,
+@@ -2030,6 +2030,12 @@ static int sm501fb_probe(struct platform_device *pdev)
+ 		goto err_started_crt;
+ 	}
+ 
++	/* These aren't needed any more */
++	kfree(info->edid_data);
++	kfree(info->fb_mode);
++	info->edid_data = NULL;
++	info->fb_mode = NULL;
++
+ 	/* we registered, return ok */
+ 	return 0;
+ 
+@@ -2047,6 +2053,8 @@ static int sm501fb_probe(struct platform_device *pdev)
+ 	framebuffer_release(info->fb[HEAD_CRT]);
+ 
+ err_alloc:
++	kfree(info->edid_data);
++	kfree(info->fb_mode);
+ 	kfree(info);
+ 
+ 	return ret;
 -- 
 2.53.0
 
