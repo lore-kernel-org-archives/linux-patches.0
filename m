@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993A643551C;
-	Tue, 21 Jul 2026 15:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E4E3ED3B2;
+	Tue, 21 Jul 2026 15:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649348; cv=none; b=WnnzwHOV8CscA+UpPYHyWP4IeonGBkMz12jcOFbR/DLwODE25ky/X8fbCiLpKpqcCNhpbHDjoKlDlSzDsDartPOLMW24wp3k4v5MZdYdmo13OlNQdruSIcFI4HNuyCYRZs9ecum5RUDxVzGCJqLWr+edEC/+PHciTYSvU6RCxF0=
+	t=1784649351; cv=none; b=ibYK5Ji5j5/brA86U+Ei7tVOVL5BE4Mz1mAwdlG1qUDpusWULMKWxmMo9RUPWQVbPp6tLFuypnU1G+QriSWnDwWQ86rEFtNMyktlghCrqtvhFw2bZCiFpwqojAzuJnVG4VN4jNSKMOEsvAtVvPvwmlatI2fjhotNxPzTNEiXLVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649348; c=relaxed/simple;
-	bh=JcetWXieKALcwl3JPeuxPvJqT1t2b+aM/uP/zx3oOdw=;
+	s=arc-20240116; t=1784649351; c=relaxed/simple;
+	bh=xyaL2q6SMLdpWInyT9uQwBy5fuj2tGSWILu6AZjhwhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GzQjv2+iB09LUjaoAmJ/rAu/gn+jzOT6tCAh/saBc9XVWcXqPtH/2O3tK8ZAsyfvGAc/7FIp+I+N65tLxUfzgRqKLg9ig7RgvwyzD3rZz6YR5SfeohAEtjov8wpS82za6puGCOD7GKH9sCld/T2DxtG3ANnSLdCk1OMzzwCaR6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2vSAczW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mj+d/rYUoTHrCyPsj8DSTDx7H8QCMSDvGO6n/yRV+a7c+0L6XRiMvokj3ywCJgi+Y13wkSPYkJcNnth0ke2TKoW4suXgV1gFsOmsUZt+BqG5lOD6rjtWsuF8Nq+naLYi3S9CB1d23o3EmHX7MHQwry5sBfK4QMm2M1bWFijllyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJZDWFrN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2vSAczW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A94C1F000E9;
-	Tue, 21 Jul 2026 15:55:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJZDWFrN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85FE1F00A3A;
+	Tue, 21 Jul 2026 15:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649347;
-	bh=YNkZgxjHAqVh0w1lp0hNJ2dsHbiQXeb9PL/V5P7LIeU=;
+	s=korg; t=1784649350;
+	bh=V3mARM5MPERPACq7g4bD8AzwklWhMX4x7goqgaQhiY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g2vSAczW0DIWlAfH/XZzRY3vZsF3U4owGXNG4DaBbx+YKlsKt/SFEecGp879zVTTH
-	 MY+rQQb5XfCxLFFNaNxot0Ni/JNVe5T/BXthrsRjiGFXC/RGmg4dfEgwGqmCsMVw23
-	 IDFMXQo+s5IitjOi25s+tpgFPHeu1tKZDhjaxorA=
+	b=UJZDWFrNB7vkGbHK380PYWLDsRVbmO8lMjnWF1M3k55qhnXYk3BtBur+Ra1fWWZ6w
+	 zsH19sfPhk+XAai3Kqmgva3kVJ4v8lnNSgS+6LMV17KCdAW6vPK9rKiYtviLCsz7yj
+	 QMG5t9gB34niYyBMteA/Vd1DdBAEhivQ23PXf/9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengjie Zhang <zhangpengjie2@huawei.com>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Samuel Moelius <sam.moelius@trailofbits.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0542/2077] cpufreq: Documentation: fix conservative governor freq_step description
-Date: Tue, 21 Jul 2026 17:03:35 +0200
-Message-ID: <20260721152605.593351573@linuxfoundation.org>
+Subject: [PATCH 7.1 0543/2077] thermal: testing: reject missing command arguments
+Date: Tue, 21 Jul 2026 17:03:36 +0200
+Message-ID: <20260721152605.616442419@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,44 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengjie Zhang <zhangpengjie2@huawei.com>
+From: Samuel Moelius <sam.moelius@trailofbits.com>
 
-[ Upstream commit 03120e1425262c7d11f93362a88e579a1720390b ]
+[ Upstream commit ef3e98b0aa4b348f44065d7130251273c83bd204 ]
 
-The conservative governor documentation incorrectly states that setting
-freq_step to 0 will use the default 5% frequency step. In reality, since
-at least commit 8e677ce83bf4 ("[CPUFREQ] conservative: fixup governor to
-function more like ondemand logic"), freq_step=0 has always caused the
-governor to skip frequency updates entirely.
+The thermal testing debugfs command parser splits commands at ':' and
+passes the right-hand side to the command implementation. Commands such
+as deltz, tzaddtrip, tzreg, and tzunreg require a zone id, but writing
+one of those command names without ':' leaves the argument pointer NULL.
 
-Correct the documentation to reflect the actual behavior: freq_step=0
-disables frequency changes by the governor entirely.
+The command implementations parse the id with sscanf(arg, "%d", ...), so
+the missing-argument form dereferences a NULL pointer from the debugfs
+write path.
 
-Fixes: 2a0e49279850 ("cpufreq: User/admin documentation update and consolidation")
-Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-[ rjw: Subject adjustment ]
-Link: https://patch.msgid.link/20260603055635.1549943-1-zhangpengjie2@huawei.com
+Reject missing arguments in tt_command_exec() before calling handlers
+that require an id.
+
+Fixes: f6a034f2df42 ("thermal: Introduce a debugfs-based testing facility")
+Assisted-by: Codex:gpt-5.5-cyber-preview
+Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
+Link: https://patch.msgid.link/20260605185212.2491144-1-sam.moelius@trailofbits.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/pm/cpufreq.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/thermal/testing/command.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/Documentation/admin-guide/pm/cpufreq.rst b/Documentation/admin-guide/pm/cpufreq.rst
-index fdca59c955dcc9..8831cface58552 100644
---- a/Documentation/admin-guide/pm/cpufreq.rst
-+++ b/Documentation/admin-guide/pm/cpufreq.rst
-@@ -586,8 +586,8 @@ This governor exposes the following tunables:
- 	100 (5 by default).
+diff --git a/drivers/thermal/testing/command.c b/drivers/thermal/testing/command.c
+index 1159ecea57e7cf..fbf7ab9729b5a5 100644
+--- a/drivers/thermal/testing/command.c
++++ b/drivers/thermal/testing/command.c
+@@ -116,18 +116,30 @@ static int tt_command_exec(int index, const char *arg)
+ 		break;
  
- 	This is how much the frequency is allowed to change in one go.  Setting
--	it to 0 will cause the default frequency step (5 percent) to be used
--	and setting it to 100 effectively causes the governor to periodically
-+	it to 0 disables frequency changes by the governor entirely and setting
-+	it to 100 effectively causes the governor to periodically
- 	switch the frequency between the ``scaling_min_freq`` and
- 	``scaling_max_freq`` policy limits.
+ 	case TT_CMD_DELTZ:
++		if (!arg || !*arg)
++			return -EINVAL;
++
+ 		ret = tt_del_tz(arg);
+ 		break;
+ 
+ 	case TT_CMD_TZADDTRIP:
++		if (!arg || !*arg)
++			return -EINVAL;
++
+ 		ret = tt_zone_add_trip(arg);
+ 		break;
+ 
+ 	case TT_CMD_TZREG:
++		if (!arg || !*arg)
++			return -EINVAL;
++
+ 		ret = tt_zone_reg(arg);
+ 		break;
+ 
+ 	case TT_CMD_TZUNREG:
++		if (!arg || !*arg)
++			return -EINVAL;
++
+ 		ret = tt_zone_unreg(arg);
+ 		break;
  
 -- 
 2.53.0
