@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A853E49CF;
-	Tue, 21 Jul 2026 22:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96CB3E49CF;
+	Tue, 21 Jul 2026 22:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672683; cv=none; b=QCadBlCUnMws8I38sdFBiAofHyJK/3G6tE0SyPPp/QKLL6cqzpRPQPFLWFv6dZI32R0yC1VogeaM5ubFSKy6EStVmXVNoP0//k9kvLqmdSJ2/2DfXZGJ+LGJfg8ShhdLaVWJT8RdrpXGSJYdT2RC+ZRMGlpq7+TVTqLizwUPW4g=
+	t=1784672685; cv=none; b=L9uUcshEZRHloFj+0YQcopAL38bQ0d/jGUoAw68e6LDwU7NeTHoP4U+fjmMXVcDsyu38WUYZcxYk1nPWVAYbn31kAUO3Lrq565QfmNcWj0YqdeG73MV1kJcFqtHKux6q5j2aGtpAciUqFxfZ7YFIcj0NVsyqbsReT9AexbH0Z7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672683; c=relaxed/simple;
-	bh=zJRE50JRpfCNoX/p578JToX9LkxrYl0EBKYoQjLqwrk=;
+	s=arc-20240116; t=1784672685; c=relaxed/simple;
+	bh=ODh4yajihv1qe8O1bS4FLBY3QXXZI3HG3H/T4Rb0ueM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RHRBZ7FmDuQ0JH3NQNOtX/Lpxv20m1U0LRecwFeU9oG66WtZa4awRCIxtE9pRIr3Ktz5YAg+x+TpeKbLjYLUvuRJfD76DZ/MoM03gR6Jgzx3pvv4nw0g7WPW1tCOhUfzNwln7chNjSljtqA9DO8mEg45E/q77w0Fn6AdlPLKxMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kF66jhV+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qxFrFqxO2pR5uGagYaxVAUkzHdkchhiR4E5J/D9kqr45i42xyvv488aLtCVNU9OnAzO9n4izLC5j6a+Z81OFVYun/SvkLDrY0yDi7wWYzB02baUNAaLCpptmRAg2vF/E/5Lx7Jt7OuzcJREvDNRpiR6Q6QbZhvB7rKrGm3NW76Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFlSXSXF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kF66jhV+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A72B1F000E9;
-	Tue, 21 Jul 2026 22:24:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFlSXSXF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C4E21F000E9;
+	Tue, 21 Jul 2026 22:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672682;
-	bh=QzKKr+uBpH6GwUX7Mb1CxZW51ovB4usavmv+ekk4eGs=;
+	s=korg; t=1784672684;
+	bh=3+M/RS3TYo1TRoS+ABDSaILreH6lVfu+pKKWcYCgMYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kF66jhV+9i4ENUdL993W6tZZfaN/UBaYALTOJ7LBuDV0LvzTtp0JVPprDPe6B7HS/
-	 MP+g7jY8LBghBewYgAFgCbBoqGgwEyazBjSatAWUGs06Px9jH+EcnGEq0Ek61xj74S
-	 RZWFC2au8cZiK++p2M5zLZH8U6c99c+7s9iqMrww=
+	b=EFlSXSXFVP+NkH3Z15MlPRYB0qtY8DB8RgTUw0hyn0Tsvp2uJfyLOvGn49n68fuUZ
+	 yzLLcXFHr7b8jL9RWmxqw1JSMDEwehrVSUb+YpfZY50bzlwptRiucyi6rckPNorCbC
+	 kjAIeXqtSriEm8GdRXEkHn4AWhJ9cl1sX7ls2YkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Raphael Tiovalen <jamestiotio@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 716/843] macsec: fix promiscuity refcount leak in macsec_dev_open()
-Date: Tue, 21 Jul 2026 17:25:51 +0200
-Message-ID: <20260721152422.154761367@linuxfoundation.org>
+	Xiao Liang <shaw.leon@gmail.com>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 681/843] net: ip6_vti: require CAP_NET_ADMIN in the device netns for changelink
+Date: Tue, 21 Jul 2026 17:25:16 +0200
+Message-ID: <20260721152421.376764832@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,61 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Raphael Tiovalen <jamestiotio@gmail.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit 7410d11460eb90d6c9281162ccc6a128534d897d upstream.
+commit e2ac3b242c37dff323a964962e43854f4b1a2b79 upstream.
 
-When a MACsec interface with IFF_PROMISC set is brought up on top of a
-device that has hardware offload enabled, macsec_dev_open() first calls
-dev_set_promiscuity(real_dev, 1) and then propagates the open to the
-offload device. If that propagation fails, the error path jumps to the
-clear_allmulti label, which only reverts allmulti and the unicast
-address. The promiscuity taken on the lower device is never dropped, so
-real_dev is left permanently stuck in promiscuous mode. Its promiscuity
-count can no longer be balanced from software.
+vti6_changelink() operates on at most two netns, dev_net(dev) and the
+tunnel link netns t->net. They differ once the device is created in or
+moved to a netns other than the one the request runs in. The rtnl
+changelink path checks CAP_NET_ADMIN only against dev_net(dev), so a
+caller privileged there but not in t->net can rewrite a tunnel that
+lives in t->net.
 
-Add a clear_promisc label that drops the promiscuity reference and
-route the two offload failure paths to it. The dev_set_promiscuity()
-failure itself still jumps to clear_allmulti, since on that failure the
-count was not incremented.
+Gate vti6_changelink() on rtnl_dev_link_net_capable() at its top,
+before any attribute is parsed.
 
-Fixes: 3cf3227a21d1 ("net: macsec: hardware offloading infrastructure")
+Reported-by: Xiao Liang <shaw.leon@gmail.com>
+Closes: https://lore.kernel.org/netdev/CABAhCOSzP1vaThGV35_VnsRCb=87_CPjPVsTHbq905k8A+BuUg@mail.gmail.com/
+Fixes: 61220ab34948 ("vti6: Enable namespace changing")
 Cc: stable@vger.kernel.org
-Signed-off-by: James Raphael Tiovalen <jamestiotio@gmail.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20260705113629.187490-1-jamestiotio@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260612085941.3158249-7-maoyixie.tju@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/macsec.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/ipv6/ip6_vti.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -3556,19 +3556,22 @@ static int macsec_dev_open(struct net_de
- 		ops = macsec_get_ops(netdev_priv(dev), &ctx);
- 		if (!ops) {
- 			err = -EOPNOTSUPP;
--			goto clear_allmulti;
-+			goto clear_promisc;
- 		}
+--- a/net/ipv6/ip6_vti.c
++++ b/net/ipv6/ip6_vti.c
+@@ -1052,6 +1052,9 @@ static int vti6_changelink(struct net_de
+ 	struct __ip6_tnl_parm p;
+ 	struct vti6_net *ip6n;
  
- 		ctx.secy = &macsec->secy;
- 		err = macsec_offload(ops->mdo_dev_open, &ctx);
- 		if (err)
--			goto clear_allmulti;
-+			goto clear_promisc;
- 	}
- 
- 	if (netif_carrier_ok(real_dev))
- 		netif_carrier_on(dev);
- 
- 	return 0;
-+clear_promisc:
-+	if (dev->flags & IFF_PROMISC)
-+		dev_set_promiscuity(real_dev, -1);
- clear_allmulti:
- 	if (dev->flags & IFF_ALLMULTI)
- 		dev_set_allmulti(real_dev, -1);
++	if (!rtnl_dev_link_net_capable(dev, net))
++		return -EPERM;
++
+ 	ip6n = net_generic(net, vti6_net_id);
+ 	if (dev == ip6n->fb_tnl_dev)
+ 		return -EINVAL;
 
 
