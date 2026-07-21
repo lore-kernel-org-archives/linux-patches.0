@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769CE43F8DE;
-	Tue, 21 Jul 2026 20:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33AF73FE356;
+	Tue, 21 Jul 2026 20:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667568; cv=none; b=F7b/C/9R9DJxI1lu3dyytEVg3DpKo/ZPq2VFynUKh+OPHjRWf/JKQQZD7OfQI4qVquoj1oz2Akd0BFjduEsGtVBkIUjODln8wsT6Xc8FNYU0R6AB5m/81fzX36fqSc5bQPk834MkjuQgXKBKtPjXTYTdVvugXzDyob22hpj2YmA=
+	t=1784667571; cv=none; b=hVb5OqeuZcRoLa6gaXwBRMH/TsWqil5WmQmG93fm+qH5qmFanrdRqdLObkzknxS9jHd9ZZPT86SRrY13XEPom5+/MFGI05tNeVBXQdo0QphXLwYkWUwoaBMztM6M8IQazeof7c9IYWq4oIW+jKbaOPlieALbrErnBiQ9l93S6X8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667568; c=relaxed/simple;
-	bh=AJHz4DM6HhIi4teuT/VpcGPcySCxGMlV/6JJbos8WaY=;
+	s=arc-20240116; t=1784667571; c=relaxed/simple;
+	bh=ls39EXYaeJutC2NHj8Ewu9N1M8qQnwxV9pz1B4QIzhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QefJV95QzvL95wXw4eomdi+f2KXbHzyw/p4Nt5JqkFPLlhno87hd6na6rW3vY2NOClzJOKP12XSyY3K6MqLbPCIINm2xNNJXSFIHev82mHzj46lZmNBQal/s5BnIV5rHsnR02xQHP59L3fJzu/dfQDGvxpAEq1uWmQSHPd9G+2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DoRo5CV9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AsYYvUgPdsso1W1nktEaGYtFNkxgGDG0FYRE2/4kIzYiHkhWCpHnNtIh/D0Hq8tVf5zjb3kyd9liR0sCVjkaGUpV7XTqxzanOQzEH9FDSwHs4UFeCEH8b++zVUKEXt1+KBFmGtfb0TGrdLAuy+xq5fPfI1Fz/fzVCFRqzlob3cI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAzvF+Fe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DoRo5CV9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE32C1F000E9;
-	Tue, 21 Jul 2026 20:59:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAzvF+Fe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 580121F000E9;
+	Tue, 21 Jul 2026 20:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667567;
-	bh=drVaXDq4SZVwsEG//qewz4wgDsTE8/pYOT9VpJ51LpY=;
+	s=korg; t=1784667569;
+	bh=6hZuylBTUCXrqw8m1hnqxVNpbDQlNLoQz4JewHw04E0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DoRo5CV9ytdM73LTvZVm25MUQ/NRlNgejGn18pEDqSYxuG2olmBaJHAtGuxWQ+rzB
-	 KTaNaVXZ607RBqR7qi4dYLP+iQjI8pxZwMpdBdMr6kHVc2bK8JEBjSHq+7PAJxZPyg
-	 aTLMEQ2M05H2DPdx1Ru3QMCZoQ0RbGJFn14LT9uo=
+	b=jAzvF+FeTAEfn/x9fdUWPMLCSEY1OpAYJC+uthgHeUFzAYGI15rCmFj1LlAqcRXb0
+	 NNwNdEo6Oc95x2himBkUyuaw7bG2vJlztkErvnZpQCueaDN5WYFgvBS9UlRWNqhwgj
+	 L/8IPANz7FWIdjsphz378+N5vdl1+Vra9SCnkBeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 1058/1266] scsi: sg: Report request-table problems when any status is set
-Date: Tue, 21 Jul 2026 17:24:55 +0200
-Message-ID: <20260721152505.495157626@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.6 1104/1266] hwmon: (occ) unregister sysfs devices outside occ lock
+Date: Tue, 21 Jul 2026 17:25:41 +0200
+Message-ID: <20260721152506.508026333@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,49 +50,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 1d3a742afeb761eaead774691bde1ced699e9a5d upstream.
+commit e31408734332b8cc611342cdaaab6ba492180156 upstream.
 
-SG_GET_REQUEST_TABLE reports per-request diagnostic state through
-sg_req_info::problem. The field is meant to indicate whether there is an
-error to report for a completed request.
+occ_active(false) and occ_shutdown() unregister sysfs-backed devices while
+occ->lock is held.  hwmon_device_unregister() and sysfs_remove_group() can
+wait for active sysfs callbacks to drain, and those callbacks can enter the
+OCC update path and try to take occ->lock again.  That gives the unregister
+paths the lock ordering occ->lock -> sysfs callback drain, while a callback
+has the opposite edge sysfs callback -> occ->lock.
 
-sg_fill_request_table() currently combines masked_status, host_status
-and driver_status with bitwise AND. This only reports a problem when all
-three status fields are non-zero at the same time. A normal target check
-condition, for example, has masked_status set while host_status and
-driver_status may both be zero, so the request is incorrectly reported
-as clean.
+This issue was found by our static analysis tool and then manually
+reviewed against the current tree.
 
-Use the same condition as sg_new_read(), which sets SG_INFO_CHECK when
-any of the three status fields is non-zero.
+The grounded PoC kept the real unregister and callback carrier:
 
+  occ_shutdown()
+  hwmon_device_unregister()
+  occ_show_temp_1()
+  occ_update_response()
+
+Lockdep reported the circular dependency with occ_shutdown() already
+holding the OCC mutex and hwmon_device_unregister() waiting on the sysfs
+side:
+
+  WARNING: possible circular locking dependency detected
+  ... (sysfs_lock) ... at: hwmon_device_unregister+0x12/0x30 [vuln_msv]
+  ... (&test_occ.lock) ... at: occ_shutdown.constprop.0+0xe/0x40 [vuln_msv]
+  occ_update_response.isra.0+0xb/0x20 [vuln_msv]
+  occ_show_temp_1.constprop.0.isra.0+0x23/0x40 [vuln_msv]
+  *** DEADLOCK ***
+
+Serialize hwmon registration and removal with a separate hwmon_lock.
+Under that lock, detach occ->hwmon and update occ->active while occ->lock
+is held so concurrent OCC state changes still see a stable state, then
+drop occ->lock before calling hwmon_device_unregister().  Remove the
+driver sysfs group before taking occ->lock in occ_shutdown(), so draining
+the driver attributes cannot wait while the OCC mutex is held.  Also make
+OCC update callbacks return -ENODEV after deactivation, so callbacks that
+already passed sysfs active protection do not poll the hardware after
+teardown has detached the hwmon device.
+
+Fixes: 849b0156d996 ("hwmon: (occ) Delay hwmon registration until user request")
+Fixes: ac6888ac5a11 ("hwmon: (occ) Lock mutex in shutdown to prevent race with occ_active")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/54B60C19F7DB8889+20260707030845.970018-1-raoxu@uniontech.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://lore.kernel.org/r/20260619015938.494464-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sg.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/hwmon/occ/common.c |   34 ++++++++++++++++++++++++++++------
+ drivers/hwmon/occ/common.h |    1 +
+ 2 files changed, 29 insertions(+), 6 deletions(-)
 
---- a/drivers/scsi/sg.c
-+++ b/drivers/scsi/sg.c
-@@ -862,10 +862,9 @@ sg_fill_request_table(Sg_fd *sfp, sg_req
- 		if (val >= SG_MAX_QUEUE)
- 			break;
- 		rinfo[val].req_state = srp->done + 1;
--		rinfo[val].problem =
--			srp->header.masked_status &
--			srp->header.host_status &
--			srp->header.driver_status;
-+		rinfo[val].problem = srp->header.masked_status ||
-+					     srp->header.host_status ||
-+					     srp->header.driver_status;
- 		if (srp->done)
- 			rinfo[val].duration =
- 				srp->header.duration;
+--- a/drivers/hwmon/occ/common.c
++++ b/drivers/hwmon/occ/common.c
+@@ -214,6 +214,11 @@ int occ_update_response(struct occ *occ)
+ 	if (rc)
+ 		return rc;
+ 
++	if (!occ->active) {
++		rc = -ENODEV;
++		goto unlock;
++	}
++
+ 	/* limit the maximum rate of polling the OCC */
+ 	if (time_after(jiffies, occ->next_update)) {
+ 		rc = occ_poll(occ);
+@@ -222,6 +227,7 @@ int occ_update_response(struct occ *occ)
+ 		rc = occ->last_error;
+ 	}
+ 
++unlock:
+ 	mutex_unlock(&occ->lock);
+ 	return rc;
+ }
+@@ -1105,11 +1111,16 @@ static void occ_parse_poll_response(stru
+ 
+ int occ_active(struct occ *occ, bool active)
+ {
+-	int rc = mutex_lock_interruptible(&occ->lock);
++	struct device *hwmon = NULL;
++	int rc = mutex_lock_interruptible(&occ->hwmon_lock);
+ 
+ 	if (rc)
+ 		return rc;
+ 
++	rc = mutex_lock_interruptible(&occ->lock);
++	if (rc)
++		goto unlock_hwmon;
++
+ 	if (active) {
+ 		if (occ->active) {
+ 			rc = -EALREADY;
+@@ -1154,14 +1165,17 @@ int occ_active(struct occ *occ, bool act
+ 			goto unlock;
+ 		}
+ 
+-		if (occ->hwmon)
+-			hwmon_device_unregister(occ->hwmon);
++		hwmon = occ->hwmon;
+ 		occ->active = false;
+ 		occ->hwmon = NULL;
+ 	}
+ 
+ unlock:
+ 	mutex_unlock(&occ->lock);
++	if (hwmon)
++		hwmon_device_unregister(hwmon);
++unlock_hwmon:
++	mutex_unlock(&occ->hwmon_lock);
+ 	return rc;
+ }
+ 
+@@ -1170,6 +1184,7 @@ int occ_setup(struct occ *occ)
+ 	int rc;
+ 
+ 	mutex_init(&occ->lock);
++	mutex_init(&occ->hwmon_lock);
+ 	occ->groups[0] = &occ->group;
+ 
+ 	rc = occ_setup_sysfs(occ);
+@@ -1190,15 +1205,22 @@ EXPORT_SYMBOL_GPL(occ_setup);
+ 
+ void occ_shutdown(struct occ *occ)
+ {
+-	mutex_lock(&occ->lock);
++	struct device *hwmon;
+ 
+ 	occ_shutdown_sysfs(occ);
+ 
+-	if (occ->hwmon)
+-		hwmon_device_unregister(occ->hwmon);
++	mutex_lock(&occ->hwmon_lock);
++	mutex_lock(&occ->lock);
++
++	hwmon = occ->hwmon;
++	occ->active = false;
+ 	occ->hwmon = NULL;
+ 
+ 	mutex_unlock(&occ->lock);
++
++	if (hwmon)
++		hwmon_device_unregister(hwmon);
++	mutex_unlock(&occ->hwmon_lock);
+ }
+ EXPORT_SYMBOL_GPL(occ_shutdown);
+ 
+--- a/drivers/hwmon/occ/common.h
++++ b/drivers/hwmon/occ/common.h
+@@ -101,6 +101,7 @@ struct occ {
+ 
+ 	unsigned long next_update;
+ 	struct mutex lock;		/* lock OCC access */
++	struct mutex hwmon_lock;		/* serialize hwmon registration/removal */
+ 
+ 	struct device *hwmon;
+ 	struct occ_attribute *attrs;
 
 
