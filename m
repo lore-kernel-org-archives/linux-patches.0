@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859CF3B8407;
-	Tue, 21 Jul 2026 21:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6175544AB62;
+	Tue, 21 Jul 2026 21:50:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670622; cv=none; b=MoTbXltRK2sLLz9r1rQbjoplaSynnXG9QMhv4pkiDL8yilhKnTMwwXtC/SvpnLlya7APXBdxLYJMd4WeZULGW0/3TPmowqhb3hpd2p2OX1482P2D5HGC46uKgJ9GUwcTkRkpmEIxew+kUXDcHOkej6mb0AAzcYqk1blJAvc7+ic=
+	t=1784670625; cv=none; b=k+BAzur5lQWTeyeetqQ2TjVHYdE8d6hm/pX/HnpgTfqoL4y6MrtrJ+INqkt2mXmnthokORKO+LzhA8WKOvszgRbVWnOKRb4cmk3nmNzNNPiesWmKowxQ3Y3T/04ycUpFi7UbmFaEBgM03WRcll52qQrEGYeOYYOUdU2pbJroyXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670622; c=relaxed/simple;
-	bh=nuZqHuhrO7ms/5aXflUr2LXY+w7PlbTKMWmNY8II71g=;
+	s=arc-20240116; t=1784670625; c=relaxed/simple;
+	bh=i+8NtfSJDdkcxmKDmX9hv12m30DxIoTJ4VuwVxyhhHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SDX4EQsjXGu+orNNrctLzGCysTBkYV9Ndlc/frVpIynZzcmuGA9gEvRFF7Evv5Gt8qotX/hc50rnmoXrBUH+nBvxfioAczSGIWMHg//D7gxQceVY4385ys1ZGthrzZlbRpC1tW9VKzBhSKII87jnen89U53psnWmWovPcajRtTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sx9HczWN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PKWVKVKM2NwZqghPnyjr5QWNx79Jp7P8IjlSAuUw6OmZNg+XHYXnWwgJ3McG7Ez5nugT2A7BAh6cxmf4xRWkfgGLlQnRU5xDsWWIDB/jDh82vADXHRPmY/mEMoTEvkm1rYKR55v9f1fe3ex4rOkd9xOAJnJoMKtieCPobuGWSxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u63eInAm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sx9HczWN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F12831F000E9;
-	Tue, 21 Jul 2026 21:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u63eInAm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C78D1F000E9;
+	Tue, 21 Jul 2026 21:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670621;
-	bh=AMyRR6M+v6akCDBS36BXXTXGcNTHRRE/6LwOUJM/NPc=;
+	s=korg; t=1784670624;
+	bh=fXxFWh3wvjUSbyKu/UV/IN5cK4+GocRclWktOAue9H4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sx9HczWNn77O3k8E94H1gulFDUzsySvDhqSlNMbbvYEYmn02+MJTrEYNXHmInKYII
-	 FXzMtBA0//wzaqEW2BAmWkgEPynJj0lzaUsPXXuIJp1W6fhnNVp5R/xzSQXxt6dce9
-	 S+ayU6jN/8QdErMa9S4AW7PCijjLOUBQlbLf5zUI=
+	b=u63eInAmvCsVs8+85us84WKBUa4NPvVRPDsUM4eh0OYFWNn1SdPhNPLO3rJFN4tMc
+	 fcZF2+DRTxS7Fes43v87Ejs5lSqWGQuumGPxlPyrpRvBs/6I9Pm0UQYcHPu5nqzory
+	 XtT+WU/4CM/0u2oheOJLTmVqeI7cODgBEw1C7Bng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	DaeMyung Kang <charsyam@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <smfrench@gmail.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
-	stable@kernel.org,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1002/1067] ksmbd: fix mechToken leak when SPNEGO decode fails after token alloc
-Date: Tue, 21 Jul 2026 17:26:43 +0200
-Message-ID: <20260721152446.979670107@linuxfoundation.org>
+Subject: [PATCH 6.1 1003/1067] ksmbd: destroy async_ida in ksmbd_conn_free()
+Date: Tue, 21 Jul 2026 17:26:44 +0200
+Message-ID: <20260721152447.004182795@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -56,46 +52,25 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: DaeMyung Kang <charsyam@gmail.com>
 
-[ Upstream commit ad0057fb91218914d6c98268718ceb9d59b388e1 ]
+[ Upstream commit b32c8db48212a34998c36d0bbc05b29d5c407ef5 ]
 
-The kernel ASN.1 BER decoder calls action callbacks incrementally as it
-walks the input.  When ksmbd_decode_negTokenInit() reaches the mechToken
-[2] OCTET STRING element, ksmbd_neg_token_alloc() allocates
-conn->mechToken immediately via kmemdup_nul().  If a later element in
-the same blob is malformed, then the decoder will return nonzero after
-the allocation is already live.  This could happen if mechListMIC [3]
-overrunse the enclosing SEQUENCE.
+When per-connection async_ida was converted from a dynamically
+allocated ksmbd_ida to an embedded struct ida, ksmbd_ida_free() was
+removed from the connection teardown path but no matching
+ida_destroy() was added.  The connection is therefore freed with the
+IDA's backing xarray still intact.
 
-decode_negotiation_token() then sets conn->use_spnego = false because
-both the negTokenInit and negTokenTarg grammars failed.  The cleanup at
-the bottom of smb2_sess_setup() is gated on use_spnego:
+The kernel IDA API expects ida_init() and ida_destroy() to be paired
+over an object's lifetime, so add the missing cleanup before the
+connection is freed.
 
-	if (conn->use_spnego && conn->mechToken) {
-		kfree(conn->mechToken);
-		conn->mechToken = NULL;
-	}
+No leak has been observed in testing; this is a pairing fix to match
+the IDA lifetime rules, not a response to a reproduced regression.
 
-so the kfree is skipped, causing the mechToken to never be freed.
-
-This codepath is reachable pre-authentication, so untrusted clients can
-cause slow memory leaks on a server without even being properly
-authenticated.
-
-Fix this up by not checking check for use_spnego, as it's not required,
-so the memory will always be properly freed.  At the same time, always
-free the memory in ksmbd_conn_free() incase some other failure path
-forgot to free it.
-
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Steve French <smfrench@gmail.com>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: <stable@kernel.org>
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d40012a83f87 ("cifsd: declare ida statically")
+Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Stable-dep-of: c1016dd1d8b2 ("ksmbd: track the connection owning a byte-range lock")
@@ -103,29 +78,17 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  fs/smb/server/connection.c |    1 +
- fs/smb/server/smb2pdu.c    |    2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ 1 file changed, 1 insertion(+)
 
 --- a/fs/smb/server/connection.c
 +++ b/fs/smb/server/connection.c
-@@ -39,6 +39,7 @@ void ksmbd_conn_free(struct ksmbd_conn *
- 	xa_destroy(&conn->sessions);
+@@ -40,6 +40,7 @@ void ksmbd_conn_free(struct ksmbd_conn *
  	kvfree(conn->request_buf);
  	kfree(conn->preauth_info);
-+	kfree(conn->mechToken);
+ 	kfree(conn->mechToken);
++	ida_destroy(&conn->async_ida);
  	kfree(conn);
  }
  
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1909,7 +1909,7 @@ out_err:
- 	else if (rc)
- 		rsp->hdr.Status = STATUS_LOGON_FAILURE;
- 
--	if (conn->use_spnego && conn->mechToken) {
-+	if (conn->mechToken) {
- 		kfree(conn->mechToken);
- 		conn->mechToken = NULL;
- 	}
 
 
