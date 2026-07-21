@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965793F825C;
-	Tue, 21 Jul 2026 17:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334043F825C;
+	Tue, 21 Jul 2026 17:25:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654718; cv=none; b=bkRZzrnGCvFEWyKERHLiyeLNCJXa9ICrXiAe4FTIhg/jbuZjFkcyAUpcjtvWDuNl4/SFwJAuZXL/ddhy5uHUUjnRiE4cf6d8aQbkQCVCPXG3MUXNLRHj2uFDrlrSn/ERXYHF/aYYje56VEvdMSAZoMOp0WE2KPWvl4fx4grRioo=
+	t=1784654721; cv=none; b=u+fAlb3EsQXP/HK10th5nakTxLi23ho1w4QnewiGjar8Dxp8uuXKNOGtCkBnsLnJy8NAX/C7cg+IgG5aH7+Dm1PgSaOat2dtKd7lX6V9995HBx1KtCtqufIHPZhvulN83kLIHHLQuy+rtiw4ovwcBIyNgO8mmrpeH0+282k1tuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654718; c=relaxed/simple;
-	bh=Yv62bP5i5F3BJ88ap7rykinmGK+87YnEgizrLrHywxg=;
+	s=arc-20240116; t=1784654721; c=relaxed/simple;
+	bh=vbjosK66EC6nQn22LXP6ZLCKWjUz5vuNuG97n8U38is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=la/ToATEbEfUA0KBnZsp8XGklgB6SbnkGZqXZGkrtYIIRu280j/6G2Z3fQb6zMtoIzitDV/RussWPGkKk8VrprP35/HBwz/TBnnAxts5nZxP5d9lZbXl0vhiPe/MI4wJudt0LCybERKIny9q+ELEZafjpfHzDM/5GKT20/icjRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hkREeL8X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j0FOmz0YXKMaRmOpUPj8SEWHzmcFKW1pMbbmxNUwmXEKNErAWpw0/7ovMFiOUy0t5m1Dw+a4VIwl2PwOMunwW5TmuxrHYYwagb3OhC47edkrVEHDu5ATxZCF1lqdDyi3+CKpp8wadfFZM2TNGrHF/sVRwtfauWuZCC1Ox8Oh5JA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e209G2Dd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hkREeL8X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0159A1F000E9;
-	Tue, 21 Jul 2026 17:25:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e209G2Dd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F851F000E9;
+	Tue, 21 Jul 2026 17:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654717;
-	bh=H2PVxswkFEWIy4IFpNO+OM2N3Z//RJJec0AW/6eieDw=;
+	s=korg; t=1784654720;
+	bh=0aLMLeJqbbBm5tlzVF0NjN7PrCOnv1tUjMBC8/sSOBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hkREeL8XyhqSdKPPVFcOKiQTNEfrw9i6ciXcI+expWc8iMnvgkKPDSDX/cumZLf/V
-	 5Z2sLSVjijydRr2BXNhupdERrESA1+wSnnpInwW6df9hgwQxOhUjjn2Wy6+nb6FzXv
-	 59ql3SH3FSh2Erz3+i+sktXfDOTQOgje1T6fvLeU=
+	b=e209G2Dd63F/xhsABtNbyr57bIDVJMS7trg5pJpfGnYwQmiXCsLRjsJuGL+rc35pa
+	 QehzgFhyDzGuYeIYTc/4ObH+AuO4L+t2AXFTOfg4WNzPOjZg1PfZ4OGVvDCOHCEJTi
+	 1s+uOzi+LYXfiGd/ygxmxDOIBx7TNJWFKQ8zPbxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@hammerspace.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
-	Claude Sonnet 5 <noreply@anthropic.com>
-Subject: [PATCH 7.1 1812/2077] NFS: Charge unstable writes by request size, not folio size
-Date: Tue, 21 Jul 2026 17:24:45 +0200
-Message-ID: <20260721152635.483219222@linuxfoundation.org>
+	Sven Peter <sven@kernel.org>,
+	Nick Chan <towinchenmi@gmail.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 7.1 1813/2077] nvme-apple: Prevent shared tags across queues on Apple A11
+Date: Tue, 21 Jul 2026 17:24:46 +0200
+Message-ID: <20260721152635.509183267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,129 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <ben.coddington@hammerspace.com>
+From: Nick Chan <towinchenmi@gmail.com>
 
-commit 27934d02cbeb8a957dd11c985a579e58d30c5270 upstream.
+commit 6fe0687245e8406bf26143bd45eb16441bbe5280 upstream.
 
-nfs_folio_mark_unstable() and nfs_folio_clear_commit() charge and
-uncharge NR_WRITEBACK/WB_WRITEBACK by folio_nr_pages(folio) once per
-*request* added to or removed from a commit list. This is correct only
-when a folio has a single associated request. When pg_test splits a
-folio into N sub-folio requests (e.g. pNFS flexfiles striping with a
-stripe unit smaller than the folio size, or plain wsize-limited
-splitting), each of the N requests independently charges the whole
-folio's page count, inflating the accounting by a factor of N per
-folio. With large folios and small stripe units this reaches multiple
-orders of magnitude: a 2 MiB folio split into 512 4 KiB requests can
-charge up to 512x its real size, pushing global dirty+writeback
-accounting past the system's dirty threshold and forcing every
-buffered writer on the host into the hard-throttle path, including
-unrelated in-kernel NFS server threads sharing the box.
+On Apple A11, tags of pending commands must be unique across the admin
+and IO queues, else the firmware crashes with
+"duplicate tag error for tag N", with N being the tag.
 
-Charge each request only for the pages it actually covers.
+Apply the existing workaround for M1 of reserving two tags for the admin
+queue to A11.
 
-Fixes: 0c493b5cf16e ("NFS: Convert buffered writes to use folios")
 Cc: stable@vger.kernel.org
-Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
-Assisted-By: Claude Sonnet 5 <noreply@anthropic.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Fixes: 04d8ecf37b5e ("nvme: apple: Add Apple A11 support")
+Reviewed-by: Sven Peter <sven@kernel.org>
+Signed-off-by: Nick Chan <towinchenmi@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/internal.h |   12 +++++++-----
- fs/nfs/pnfs_nfs.c |    2 +-
- fs/nfs/write.c    |   14 ++++++++------
- 3 files changed, 16 insertions(+), 12 deletions(-)
+ drivers/nvme/host/apple.c |   12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -847,17 +847,19 @@ void nfs_super_set_maxbytes(struct super
- }
- 
- /*
-- * Record the page as unstable (an extra writeback period) and mark its
-- * inode as dirty.
-+ * Record the request's range as unstable (an extra writeback period) and
-+ * mark its inode as dirty.
-  */
--static inline void nfs_folio_mark_unstable(struct folio *folio,
-+static inline void nfs_folio_mark_unstable(struct nfs_page *req,
- 					   struct nfs_commit_info *cinfo)
+--- a/drivers/nvme/host/apple.c
++++ b/drivers/nvme/host/apple.c
+@@ -225,7 +225,7 @@ static unsigned int apple_nvme_queue_dep
  {
-+	struct folio *folio = nfs_page_to_folio(req);
-+
- 	if (folio && !cinfo->dreq) {
- 		struct inode *inode = folio->mapping->host;
--		long nr = folio_nr_pages(folio);
-+		long nr = DIV_ROUND_UP(req->wb_bytes, PAGE_SIZE);
+ 	struct apple_nvme *anv = queue_to_apple_nvme(q);
  
--		/* This page is really still in write-back - just that the
-+		/* This range is really still in write-back - just that the
- 		 * writeback is happening on the server now.
- 		 */
- 		node_stat_mod_folio(folio, NR_WRITEBACK, nr);
---- a/fs/nfs/pnfs_nfs.c
-+++ b/fs/nfs/pnfs_nfs.c
-@@ -1199,7 +1199,7 @@ pnfs_layout_mark_request_commit(struct n
+-	if (q->is_adminq && anv->hw->has_lsq_nvmmu)
++	if (q->is_adminq)
+ 		return APPLE_NVME_AQ_DEPTH;
  
- 	nfs_request_add_commit_list_locked(req, list, cinfo);
- 	mutex_unlock(&NFS_I(cinfo->inode)->commit_mutex);
--	nfs_folio_mark_unstable(nfs_page_to_folio(req), cinfo);
-+	nfs_folio_mark_unstable(req, cinfo);
- 	return;
- out_resched:
- 	mutex_unlock(&NFS_I(cinfo->inode)->commit_mutex);
---- a/fs/nfs/write.c
-+++ b/fs/nfs/write.c
-@@ -807,7 +807,7 @@ nfs_request_add_commit_list(struct nfs_p
- 	mutex_lock(&NFS_I(cinfo->inode)->commit_mutex);
- 	nfs_request_add_commit_list_locked(req, &cinfo->mds->list, cinfo);
- 	mutex_unlock(&NFS_I(cinfo->inode)->commit_mutex);
--	nfs_folio_mark_unstable(nfs_page_to_folio(req), cinfo);
-+	nfs_folio_mark_unstable(req, cinfo);
- }
- EXPORT_SYMBOL_GPL(nfs_request_add_commit_list);
+ 	return anv->hw->max_queue_depth;
+@@ -303,7 +303,7 @@ static void apple_nvme_submit_cmd_t8015(
+ 		memcpy((void *)q->sqes + (q->sq_tail << APPLE_NVME_IOSQES),
+ 			cmd, sizeof(*cmd));
  
-@@ -866,10 +866,12 @@ nfs_mark_request_commit(struct nfs_page
- 	nfs_request_add_commit_list(req, cinfo);
- }
+-	if (++q->sq_tail == anv->hw->max_queue_depth)
++	if (++q->sq_tail == apple_nvme_queue_depth(q))
+ 		q->sq_tail = 0;
  
--static void nfs_folio_clear_commit(struct folio *folio)
-+static void nfs_folio_clear_commit(struct nfs_page *req)
- {
-+	struct folio *folio = nfs_page_to_folio(req);
-+
- 	if (folio) {
--		long nr = folio_nr_pages(folio);
-+		long nr = DIV_ROUND_UP(req->wb_bytes, PAGE_SIZE);
- 
- 		node_stat_mod_folio(folio, NR_WRITEBACK, -nr);
- 		bdi_wb_stat_mod(folio->mapping->host, WB_WRITEBACK, -nr);
-@@ -889,7 +891,7 @@ static void nfs_clear_request_commit(str
- 			nfs_request_remove_commit_list(req, cinfo);
- 		}
- 		mutex_unlock(&NFS_I(inode)->commit_mutex);
--		nfs_folio_clear_commit(nfs_page_to_folio(req));
-+		nfs_folio_clear_commit(req);
+ 	writel(q->sq_tail, q->sq_db);
+@@ -1139,10 +1139,7 @@ static void apple_nvme_reset_work(struct
  	}
- }
  
-@@ -1741,7 +1743,7 @@ void nfs_retry_commit(struct list_head *
- 		req = nfs_list_entry(page_list->next);
- 		nfs_list_remove_request(req);
- 		nfs_mark_request_commit(req, lseg, cinfo, ds_commit_idx);
--		nfs_folio_clear_commit(nfs_page_to_folio(req));
-+		nfs_folio_clear_commit(req);
- 		nfs_unlock_and_release_request(req);
- 	}
- }
-@@ -1813,7 +1815,7 @@ static void nfs_commit_release_pages(str
- 		req = nfs_list_entry(data->pages.next);
- 		nfs_list_remove_request(req);
- 		folio = nfs_page_to_folio(req);
--		nfs_folio_clear_commit(folio);
-+		nfs_folio_clear_commit(req);
- 
- 		dprintk("NFS:       commit (%s/%llu %d@%lld)",
- 			nfs_req_openctx(req)->dentry->d_sb->s_id,
+ 	/* Setup the admin queue */
+-	if (anv->hw->has_lsq_nvmmu)
+-		aqa = APPLE_NVME_AQ_DEPTH - 1;
+-	else
+-		aqa = anv->hw->max_queue_depth - 1;
++	aqa = APPLE_NVME_AQ_DEPTH - 1;
+ 	aqa |= aqa << 16;
+ 	writel(aqa, anv->mmio_nvme + NVME_REG_AQA);
+ 	writeq(anv->adminq.sq_dma_addr, anv->mmio_nvme + NVME_REG_ASQ);
+@@ -1325,8 +1322,7 @@ static int apple_nvme_alloc_tagsets(stru
+ 	 * both queues. The admin queue gets the first APPLE_NVME_AQ_DEPTH which
+ 	 * must be marked as reserved in the IO queue.
+ 	 */
+-	if (anv->hw->has_lsq_nvmmu)
+-		anv->tagset.reserved_tags = APPLE_NVME_AQ_DEPTH;
++	anv->tagset.reserved_tags = APPLE_NVME_AQ_DEPTH;
+ 	anv->tagset.queue_depth = anv->hw->max_queue_depth - 1;
+ 	anv->tagset.timeout = NVME_IO_TIMEOUT;
+ 	anv->tagset.numa_node = NUMA_NO_NODE;
 
 
