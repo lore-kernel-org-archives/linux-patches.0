@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E18143CEE4;
-	Tue, 21 Jul 2026 22:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7BA43CEE4;
+	Tue, 21 Jul 2026 22:39:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673555; cv=none; b=DSZ3SjkHGHOk8LpgfyYqVVoxq8J+b2CuFY8Bn5hvkx0xyIuA3Nz8gFzD8nAaSHTTBqOXyRqGyLdRApsjq0NUnRg4ZTlHvBeyURE1w3p908kQZ8HnDEzea5hmKucSN0AsuQjdVgpi9szvqOBeFUxsHEJeLzwjqTBQLkPWbihXse0=
+	t=1784673557; cv=none; b=gGBib3Lm7a6y+9q4sSaNToSTO7h9E6NWu0UUYW8fQHro9NroO+lHI8kdsyc5Np8YCE3ZW6rp8S64eAu9SJ7FogU9rYZmkf/HbTqT9TWeMxjkN7bjS7HzhaNRlP3mPQk+Nudx/rbxLkXUHiiznBjJv7MoRbdSYY2kfdxGFfnNQEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673555; c=relaxed/simple;
-	bh=f5VI9nnPAmB3BOqV7qymZXTCnQIIMS4BXEtZcd+YM4M=;
+	s=arc-20240116; t=1784673557; c=relaxed/simple;
+	bh=s07MqfgSRXtwrcXRr67/2nH1PvbkQmq3DQZK3Q68hJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k0lxL9CKWrhTr65fFqLuq3wuLa5admbi4hp5dVzsCFIoz7/axMO40JljRa1EWcwQEdw4CdDvKQWEdAyyEp4oBxR4j0ky2RPhHqTQ5j+h8IpU//sBJrQtp68sorr2LHTTuFmg/U8WCRxlM4ENgKh7QkkxEif5h01U2Y+pSqNBQgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Guqhe89C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X2W0wFJVUNYa1HjGjB1Fz/EQOfwbKFX4rnRm+nfVA4OCGBhcSBWeNTToS8Bk4bJJU+b3QClwMJHb7x9lNAANHMcHIpvAD3OK7JcJ1ApkuhtThGf/OawskzARQcCYiACqG4tBrp0mCO8aL0K3LhGYnd41sGO9x8MmT9Sh82HQfPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xfhqlVbm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Guqhe89C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A395A1F000E9;
-	Tue, 21 Jul 2026 22:39:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xfhqlVbm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B81F1F000E9;
+	Tue, 21 Jul 2026 22:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673554;
-	bh=a7NH1n6bHSya11NnLIUrJ3oueZ+YeO4Ba8PqkLi09g0=;
+	s=korg; t=1784673556;
+	bh=Slv/3rMywYkZi20nJflggXGGeDWzZEqlhrOWy9CkEbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Guqhe89CM/Kg/3J6OeUX7O9Y4KButwWHLSn/4aVYm/i9nphbxpOqDYghH3j9Idfn2
-	 G1lJ3PSTluBvGCW3GOQZ5U7Yu74l3LlS7qdTbtkMALcKSy1PPyqYun5X34QYiVzXaX
-	 9sYVRmTXLVnIrC9a6Tyl6v9yHPrOih3OKWiY7faY=
+	b=xfhqlVbmdrG/dXLzLIsZY6oVNi48S4lQK2DN7/SN+r/Y+uKdx5uRqBqlAdjqS+rBM
+	 dyyQvIs/iPnSeS0Oz5lgvcDMcNKHxiSqb8TVnezMQxBG/TrYOsnqZwaTUb8UCWO0K9
+	 smbjNyNf09FnIIzlWf/WPHMfg9NFCUxYr22kdXws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Pratyush Yadav <pratyush@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 205/699] MIPS: DEC: Remove do_IRQ() call indirection
-Date: Tue, 21 Jul 2026 17:19:24 +0200
-Message-ID: <20260721152400.320547324@linuxfoundation.org>
+Subject: [PATCH 5.10 206/699] mtd: spi-nor: Drop duplicate Kconfig dependency
+Date: Tue, 21 Jul 2026 17:19:25 +0200
+Message-ID: <20260721152400.344289446@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,60 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 35554eadc1b127bb5294504a4ac8f3a5dd9e299d ]
+[ Upstream commit a6470e2162e9c3779a4bd6ff3bed1b81d796e46e ]
 
-As from commit 8f99a1626535 ("MIPS: Tracing: Add IRQENTRY_EXIT section
-for MIPS") do_IRQ() is not a macro anymore and can be invoked directly
-from assembly code, as a tail call.  Remove the dec_irq_dispatch() stub
-then and the indirection previously introduced with commit 187933f23679
-("[MIPS] do_IRQ cleanup"), improving performance by reducing the number
-of control flow changes and the overall instruction count, while fixing
-a compiler's complaint about a missing prototype for said stub:
+I do not think the MTD dependency is needed twice. This is likely a
+duplicate coming from a former rebase when the spi-nor core got cleaned
+up a while ago. Remove the extra line.
 
-arch/mips/dec/setup.c:780:25: warning: no previous prototype for 'dec_irq_dispatch' [-Wmissing-prototypes]
-  780 | asmlinkage unsigned int dec_irq_dispatch(unsigned int irq)
-      |                         ^~~~~~~~~~~~~~~~
-
-(which gets promoted to a compilation error with CONFIG_WERROR).
-
-Fixes: 8f99a1626535 ("MIPS: Tracing: Add IRQENTRY_EXIT section for MIPS")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: b35b9a10362d ("mtd: spi-nor: Move m25p80 code in spi-nor.c")
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Michael Walle <mwalle@kernel.org>
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/dec/int-handler.S | 2 +-
- arch/mips/dec/setup.c       | 6 ------
- 2 files changed, 1 insertion(+), 7 deletions(-)
+ drivers/mtd/spi-nor/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/mips/dec/int-handler.S b/arch/mips/dec/int-handler.S
-index 011d1d678840aa..a0b439c90488fc 100644
---- a/arch/mips/dec/int-handler.S
-+++ b/arch/mips/dec/int-handler.S
-@@ -277,7 +277,7 @@
- 		 srlv	t3,t1,t2
- 
- handle_it:
--		j	dec_irq_dispatch
-+		j	do_IRQ
- 		 nop
- 
- #if defined(CONFIG_32BIT) && defined(CONFIG_MIPS_FP_SUPPORT)
-diff --git a/arch/mips/dec/setup.c b/arch/mips/dec/setup.c
-index 99b9b29750db3c..ec0aa4ef2778a6 100644
---- a/arch/mips/dec/setup.c
-+++ b/arch/mips/dec/setup.c
-@@ -776,9 +776,3 @@ void __init arch_init_irq(void)
- 			pr_err("Failed to register halt interrupt\n");
- 	}
- }
--
--asmlinkage unsigned int dec_irq_dispatch(unsigned int irq)
--{
--	do_IRQ(irq);
--	return 0;
--}
+diff --git a/drivers/mtd/spi-nor/Kconfig b/drivers/mtd/spi-nor/Kconfig
+index ffc4b380f2b16d..665ec75f81ed00 100644
+--- a/drivers/mtd/spi-nor/Kconfig
++++ b/drivers/mtd/spi-nor/Kconfig
+@@ -1,7 +1,6 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ menuconfig MTD_SPI_NOR
+ 	tristate "SPI NOR device support"
+-	depends on MTD
+ 	depends on MTD && SPI_MASTER
+ 	select SPI_MEM
+ 	help
 -- 
 2.53.0
 
