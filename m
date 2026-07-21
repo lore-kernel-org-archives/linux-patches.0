@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC427256C84;
-	Tue, 21 Jul 2026 15:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E56146A609;
+	Tue, 21 Jul 2026 15:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649332; cv=none; b=lbNP5997qJHawsHUTY9MGRidoPhC6q4erM/xHsY0NdUnE+EoWYL/Q0j4MsF0G5OrysXLn7ydLFoeS1qNfevVLPOA0EJoY6EPzzR3n0TzH0YonZo83gWlyUY5xblPUBdpctMfvfIjV8xI03vut7WRfuKUAVoVjQm/v8+XwBDeWhU=
+	t=1784649335; cv=none; b=kBni1k9BhDVODnio9FYSMQance5qscfKrGc1l6UnAV+JOTyT4sUV+QfxqtTlqeeMtbaBs01ky/wIi4tu1A4LiuplNWFWW758enWq4sCId3/1LM7VaZmftOLLh9kB2a7aqVS7GyxlWNjtFNycUF5vK8k160g6+xdljWUgzVNa3kE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649332; c=relaxed/simple;
-	bh=tBlu7yyYvVb6sWq6Ryg6U3s3+4p9yei7gAciKxQT6cM=;
+	s=arc-20240116; t=1784649335; c=relaxed/simple;
+	bh=FIkKwE/U85UNY8kn9YhxK0hr4oW/FLIRqx41g9rf4u0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bwggg+5elhjsUAGIv6RHC0n1Tu5nTHMrRUSdNRKPdRA07b93sKn0RMRZ72zKDDhgVtoQGUt5NMdg6MXnStqw6lxHisjkugZiZhLU6GXNEL0G0KRLlB4u5p7lV6bisB4Xra/T6wDfSIwyyAInlSUEiUt4ACMtbyRp7gV0cVjTGTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DgYPSQr6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HuWpysJB6SiCWlzY7xJ53XjUbcbSlb4GDfJ0C3tYX0KAO2W1CImcltrogrZ4Q4DyQ7n/2GdOEERR6iQJYm+jCwh2LnE8i8ha4bTLkDFNqinRJcaw5YlhKoMYnig4a2bp2A8WaiC6eTwVrGpldzdLEkSAPNAyuKSlVmCaDndEbjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k369D/FY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgYPSQr6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC691F000E9;
-	Tue, 21 Jul 2026 15:55:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k369D/FY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B673D1F000E9;
+	Tue, 21 Jul 2026 15:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649331;
-	bh=fw6VLZtesa2jyYMnSZv1wQ28ZbMlbKkc8Oq/o42XJms=;
+	s=korg; t=1784649334;
+	bh=LvL15PtpHDdBrnTzar2pffX//jIJWl02Smg4GKuhY1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DgYPSQr6kgsmLNI8Nk31IWVHLsIWc8nSU4Ud+nm4vqogMF8dSrzeOMvdYQetz+iP1
-	 4jtCaWrabCiaMH7JIVUkaIXqRwuYlTFoCliKQxw3LP2W/J70U0zfios5cHF00N93/o
-	 EtzqeDXkaeBqzMloCSYPHEFWP9ZLMkg9rRCkvTws=
+	b=k369D/FY5k+iqbTuTWfh8Xat24xDoqdEnTrm2LW3oauOw67X5Y6ifQSgittOEJmKo
+	 VDQ2g8rRvv+ba/gfT3lWvj12KLpciIezsPdKt8G2JpTHvI8ShBpz+n7WufZWkzzbbM
+	 tWzfj/eLT5e78psCNbS6NkbH0UarYzoZjjRrkiUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Christophe Leroy <chleroy@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0537/2077] wifi: mac80211: bound S1G TIM PVB walk to the TIM element
-Date: Tue, 21 Jul 2026 17:03:30 +0200
-Message-ID: <20260721152605.473976003@linuxfoundation.org>
+Subject: [PATCH 7.1 0538/2077] powerpc/8xx: implement get_direction() in cpm1
+Date: Tue, 21 Jul 2026 17:03:31 +0200
+Message-ID: <20260721152605.498391766@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,50 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-[ Upstream commit b224d18b1e5d1cddfc67f63f41d80023b2ec8889 ]
+[ Upstream commit 052f67a1ae6ffa6e43c82193bf2e6c0dfd2e6d8f ]
 
-ieee80211_s1g_check_tim() parses the S1G Partial Virtual Bitmap (PVB) of a
-received TIM element. The TIM is handed in as the element payload:
-ieee802_11_parse_elems_full() stores elems->tim = elem->data and
-elems->tim_len = elem->datalen (net/mac80211/parse.c), so the valid bytes
-are [tim, tim + tim_len).
+The lack of get_direction() callbacks in this driver causes GPIOLIB to
+emit a warning. Implement them for 16- and 32-bit variants.
 
-When walking the encoded blocks the function passes the walker an end
-sentinel of (const u8 *)tim + tim_len + 2, i.e. two bytes past the end of
-the element. ieee80211_s1g_find_target_block() loops while (ptr + 1 <= end)
-and dereferences ptr (and the per-mode ieee80211_s1g_len_*() helpers read
-*ptr), so it can read up to two bytes beyond the TIM element -- an
-out-of-bounds read of adjacent skb/heap data when the TIM is the last
-element in the frame. The +2 appears to account for the element id/len
-header, but tim already points past that header at the element payload, so
-the addend is wrong.
-
-Pass the correct element end, (const u8 *)tim + tim_len.
-
-Fixes: e0c47c6229c2 ("wifi: mac80211: support parsing S1G TIM PVB")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260606074341.49135-1-hexlabsecurity@proton.me
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reported-by: Christophe Leroy <chleroy@kernel.org>
+Closes: https://lore.kernel.org/all/63487206f6e5a93eaf9f41784317fe99d394312f.1780399750.git.chleroy@kernel.org/
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: e623c4303ed1 ("gpiolib: sanitize the return value of gpio_chip::get_direction()")
+Tested-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+[Maddy: Fixed the Fixes tag]
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260603-powerpc-8xx-cpm1-get-dir-v1-1-2ae1c9a5b992@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ieee80211-s1g.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/platforms/8xx/cpm1.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/include/linux/ieee80211-s1g.h b/include/linux/ieee80211-s1g.h
-index 22dde4cbc1b05a..3f9626ad3d97c7 100644
---- a/include/linux/ieee80211-s1g.h
-+++ b/include/linux/ieee80211-s1g.h
-@@ -556,7 +556,7 @@ static inline bool ieee80211_s1g_check_tim(const struct ieee80211_tim_ie *tim,
- 	 */
- 	err = ieee80211_s1g_find_target_block(&enc_blk, &target_aid,
- 					      tim->virtual_map,
--					      (const u8 *)tim + tim_len + 2);
-+					      (const u8 *)tim + tim_len);
- 	if (err)
- 		return false;
+diff --git a/arch/powerpc/platforms/8xx/cpm1.c b/arch/powerpc/platforms/8xx/cpm1.c
+index f00734f0590cf7..b31376bf677880 100644
+--- a/arch/powerpc/platforms/8xx/cpm1.c
++++ b/arch/powerpc/platforms/8xx/cpm1.c
+@@ -472,6 +472,18 @@ static int cpm1_gpio16_dir_in(struct gpio_chip *gc, unsigned int gpio)
+ 	return 0;
+ }
  
++static int cpm1_gpio16_get_direction(struct gpio_chip *gc, unsigned int gpio)
++{
++	struct cpm1_gpio16_chip *cpm1_gc = gpiochip_get_data(gc);
++	struct cpm_ioport16 __iomem *iop = cpm1_gc->regs;
++	u16 pin_mask = 1 << (15 - gpio);
++
++	if (in_be16(&iop->dir) & pin_mask)
++		return GPIO_LINE_DIRECTION_OUT;
++
++	return GPIO_LINE_DIRECTION_IN;
++}
++
+ int cpm1_gpiochip_add16(struct device *dev)
+ {
+ 	struct device_node *np = dev->of_node;
+@@ -498,6 +510,7 @@ int cpm1_gpiochip_add16(struct device *dev)
+ 	gc->ngpio = 16;
+ 	gc->direction_input = cpm1_gpio16_dir_in;
+ 	gc->direction_output = cpm1_gpio16_dir_out;
++	gc->get_direction = cpm1_gpio16_get_direction;
+ 	gc->get = cpm1_gpio16_get;
+ 	gc->set = cpm1_gpio16_set;
+ 	gc->to_irq = cpm1_gpio16_to_irq;
+@@ -604,6 +617,18 @@ static int cpm1_gpio32_dir_in(struct gpio_chip *gc, unsigned int gpio)
+ 	return 0;
+ }
+ 
++static int cpm1_gpio32_get_direction(struct gpio_chip *gc, unsigned int gpio)
++{
++	struct cpm1_gpio32_chip *cpm1_gc = gpiochip_get_data(gc);
++	struct cpm_ioport32b __iomem *iop = cpm1_gc->regs;
++	u32 pin_mask = 1 << (31 - gpio);
++
++	if (in_be32(&iop->dir) & pin_mask)
++		return GPIO_LINE_DIRECTION_OUT;
++
++	return GPIO_LINE_DIRECTION_IN;
++}
++
+ int cpm1_gpiochip_add32(struct device *dev)
+ {
+ 	struct device_node *np = dev->of_node;
+@@ -621,6 +646,7 @@ int cpm1_gpiochip_add32(struct device *dev)
+ 	gc->ngpio = 32;
+ 	gc->direction_input = cpm1_gpio32_dir_in;
+ 	gc->direction_output = cpm1_gpio32_dir_out;
++	gc->get_direction = cpm1_gpio32_get_direction;
+ 	gc->get = cpm1_gpio32_get;
+ 	gc->set = cpm1_gpio32_set;
+ 	gc->parent = dev;
 -- 
 2.53.0
 
