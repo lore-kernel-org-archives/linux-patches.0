@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA471400E17;
-	Tue, 21 Jul 2026 18:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC8A400E17;
+	Tue, 21 Jul 2026 18:22:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658175; cv=none; b=hlQc71a+8RVQ102y0VETQv8Tu7IcEIrO3c7GSzC3GJ0mPuibpOEmhNBM9GgjICxk6K32Bc0My7gIyrCsMCDDtHSAZkszZ3H1MA1B2f+HFecZqPY+fAtfX7V+9GQdrZfL3PVsQCfch0CAttWYpoDp/qrbg/MXzezyYgH3MHN+LvE=
+	t=1784658179; cv=none; b=qPpPCtKqs91X2Rhilrz9kgat1oOXqzVDqtD85wYN2lYqg9BgqiKppf+DHkblxsxoI74CozohGtH6TfnkSumEefDx9N0N78ORGMsg+HjxFqg62rbfMbd+AZtTjvLgxajn8E+TlgqAv04qfTWdyISaEK4U0Ksg6yIThYs8psCH6VA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658175; c=relaxed/simple;
-	bh=DhIoVUfnZpC5c56MkHsmEbctaj/0nOrS+LQSrSyp1G8=;
+	s=arc-20240116; t=1784658179; c=relaxed/simple;
+	bh=H2PhrQ2ME5x2iX1U+5WwbZobfRXj1dOUD9ndra4figo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dzNffbaXoyaAUjsTw+l/8H7djltNsbCVAaxKXXuSbIgAC8lfCJgcPX2NHxRFQ17KEo9xRm+eE6n0MqfqNZnhTd+fpBPtXhY58CCdSTbBf29ZCLRGq0lWTc4gzvcCOH8Oi8CBRHuRZ3G+liPppJas9YWQFX1ir+uYkPXUeqcNSoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UvCewpmR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pbFBbqQxbC0eITd3eHg7xpqJwMPK8MjIBLpOzCzYdnsFa1IOpesfP97W93kLCcszzFpHZ2B39wyuYldsSDeAyAvw/ezbAWtukHIeCcjbO7D+EnvC1Lj2+DAmi/J34zVx6n3JGZ3VklRpRsm19qhpCAzUYB/zb1unuaowKoomky8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQ8i2uqZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UvCewpmR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 164761F000E9;
-	Tue, 21 Jul 2026 18:22:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQ8i2uqZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36421F000E9;
+	Tue, 21 Jul 2026 18:22:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658174;
-	bh=fa1ijduKapHkbrpvz15HNxu2Q3AtDUjEP+LkWc6cpbg=;
+	s=korg; t=1784658177;
+	bh=XlzkbUyoPN8Wl/ZhN4IE9SiWJABh8cxjZnzsN6irv9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UvCewpmRHPyUaPSf/wMrhx2MUy7vd2+KsTBFk/jQ/0r94F8yHYnCz9cNvlpspp/BH
-	 UiKN9f9bQSOI4zMOG0iyxHZB43bNfhFye94ig3StOS7aZf4nQkjaqR/PWsDZRg47po
-	 emOeI2MIEMT+3OLHqF8P0T/RS7OuCZsX/Gzbz98k=
+	b=aQ8i2uqZClwftkx5/374DObM6vX4TgUqOsxhLQsdWoqnDdAdLWD727DLkRVGPaHqb
+	 XMQVL2NOiG2FVqJbvRYUDm3P92g6V0woMCCC43U29fsoCq8mnwW8XhUEdPBdJTpysF
+	 0W0c1rG7my5n56W5Ns1wt4UOu8Sm0ceCdNH3kYOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1044/1611] net/mlx5e: Fix HV VHCA stats zero-sized buffer allocation
-Date: Tue, 21 Jul 2026 17:19:20 +0200
-Message-ID: <20260721152538.884461900@linuxfoundation.org>
+Subject: [PATCH 6.18 1045/1611] net/mlx5e: Fix HV VHCA stats agent registration race
+Date: Tue, 21 Jul 2026 17:19:21 +0200
+Message-ID: <20260721152538.910447598@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -55,99 +55,187 @@ Content-Transfer-Encoding: 8bit
 
 From: Feng Liu <feliu@nvidia.com>
 
-[ Upstream commit 25f6b929c7e379cbea7cb8caa67b49b2d1efae17 ]
+[ Upstream commit 89b25b5f46f488ea3b29b3444864c76944c9075b ]
 
-mlx5e_hv_vhca_stats_create() is called from mlx5e_nic_enable(),
-before mlx5e_open(). At that point priv->stats_nch is still zero,
-because it is only ever incremented in mlx5e_channel_stats_alloc(),
-which is reached only from mlx5e_open_channel().
+mlx5e_hv_vhca_stats_create() registers the stats agent through
+mlx5_hv_vhca_agent_create(). The helper publishes the agent in
+hv_vhca->agents[type] under agents_lock and immediately schedules an
+asynchronous control invalidation on the HV VHCA workqueue before
+returning to mlx5e.
 
-mlx5e_hv_vhca_stats_buf_size() therefore returns 0, and
-kvzalloc(0, GFP_KERNEL) returns ZERO_SIZE_PTR ((void *)16) rather
-than NULL. The "if (!buf)" guard does not catch this, and
-mlx5e_hv_vhca_stats_create() completes "successfully" with
-priv->stats_agent.buf set to ZERO_SIZE_PTR.
+The asynchronous invalidation invokes the control agent's invalidate
+callback, which reads the hypervisor control block and forwards the
+command to mlx5e_hv_vhca_stats_control(). That callback may either:
 
-Once channels are opened (priv->stats_nch > 0) and the hypervisor
-enables stats reporting, mlx5e_hv_vhca_stats_work() recomputes
-buf_len using the new non-zero stats_nch and calls
-memset(buf, 0, buf_len) on ZERO_SIZE_PTR, faulting at address 0x10.
+  - call cancel_delayed_work_sync(&priv->stats_agent.work), or
+  - call queue_delayed_work(priv->wq, &sagent->work, sagent->delay).
 
-Allocate the buffer based on priv->max_nch, which is set in
-mlx5e_priv_init() and is the upper bound on stats_nch:
+However, the delayed_work and priv->stats_agent.agent are only
+initialized after mlx5_hv_vhca_agent_create() returns to mlx5e:
 
-  - Add a separate helper mlx5e_hv_vhca_stats_buf_max_size() that
-    returns sizeof(per_ring_stats) * max(max_nch, stats_nch), and
-    use it for the kvzalloc() in mlx5e_hv_vhca_stats_create().
-  - Keep mlx5e_hv_vhca_stats_buf_size() (which returns based on
-    stats_nch) for the worker's active payload size, so the wire
-    format (block->rings = stats_nch) and the amount of data filled
-    by mlx5e_hv_vhca_fill_stats() are unchanged.
+    agent = mlx5_hv_vhca_agent_create(...);   /* publish + invalidate */
+    ...
+    priv->stats_agent.agent = agent;          /* too late */
+    INIT_DELAYED_WORK(&priv->stats_agent.work, ...); /* too late */
 
-The max(max_nch, stats_nch) guard handles the rare case where
-mlx5e_attach_netdev() recomputes max_nch downward across a
-detach/resume cycle while priv->stats_nch persists (mlx5e_detach_netdev
-does not call mlx5e_priv_cleanup, so stats_nch is only reset when
-the netdev is destroyed). Without the guard, the worker could compute
-buf_len from stats_nch and overrun the smaller buffer allocated based
-on the reduced max_nch.
+If the asynchronous control path runs before the two assignments
+above, it can:
 
-Allocating a non-zero buffer also makes the kvzalloc() failure path in
-mlx5e_hv_vhca_stats_create() reachable for the first time: it returns
-early without (re)creating the agent. Clear
-priv->stats_agent.{agent,buf} in mlx5e_hv_vhca_stats_destroy() after
-freeing them, so that if a later create() bails out on this path, a
-subsequent teardown does not double-free the stale agent/buffer left
-from a previous enable/disable cycle.
+  - Operate on an uninitialized delayed_work whose timer.function is
+    NULL. queue_delayed_work() calls add_timer() unconditionally, so
+    when the timer expires the timer softirq invokes a NULL function
+    pointer.
+  - Re-initialize the timer later through INIT_DELAYED_WORK() while
+    the timer is already enqueued in the timer wheel, corrupting the
+    hlist (entry.pprev cleared while the previous bucket node still
+    points at this entry).
+  - When the worker eventually runs, mlx5e_hv_vhca_stats_work() reads
+    sagent->agent (NULL) and dereferences it inside
+    mlx5_hv_vhca_agent_write().
 
-This mirrors the existing mlx5e pattern of preallocating arrays of
-size max_nch (e.g. priv->channel_stats) and lazily populating
-entries up to stats_nch on demand.
+Fix this by:
 
-Fixes: fa691d0c9c08 ("net/mlx5e: Allocate per-channel stats dynamically at first usage")
+  - Initializing priv->stats_agent.work before invoking
+    mlx5_hv_vhca_agent_create(), so the work is always in a valid
+    state when the control callback observes it.
+  - Adding a struct mlx5_hv_vhca_agent **ctx_update out-parameter
+    to mlx5_hv_vhca_agent_create(). The helper writes the agent
+    pointer to *ctx_update before publishing into hv_vhca->agents[]
+    and triggering the agents_update flow, so any callback
+    subsequently invoked from that flow already sees a valid
+    priv->stats_agent.agent. This avoids having the control
+    callback participate in agent initialization.
+
+While at it, access priv->stats_agent.agent with
+READ_ONCE()/WRITE_ONCE() for the cross-CPU access with the worker, and
+clear priv->stats_agent.buf on the agent_create() failure path.
+
+Fixes: cef35af34d6d ("net/mlx5e: Add mlx5e HV VHCA stats agent")
 Signed-off-by: Feng Liu <feliu@nvidia.com>
 Reviewed-by: Eran Ben Elisha <eranbe@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260630115151.729219-2-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260630115151.729219-3-tariqt@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ .../mellanox/mlx5/core/en/hv_vhca_stats.c     | 21 +++++++++++--------
+ .../ethernet/mellanox/mlx5/core/lib/hv_vhca.c |  8 +++++--
+ .../ethernet/mellanox/mlx5/core/lib/hv_vhca.h |  6 ++++--
+ 3 files changed, 22 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c b/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c
-index 195863b2c013e2..72f3ca4dd076bb 100644
+index 72f3ca4dd076bb..cdaf77650164b9 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c
-@@ -54,6 +54,12 @@ static int mlx5e_hv_vhca_stats_buf_size(struct mlx5e_priv *priv)
- 		priv->stats_nch);
- }
+@@ -73,7 +73,7 @@ static void mlx5e_hv_vhca_stats_work(struct work_struct *work)
+ 	sagent = container_of(dwork, struct mlx5e_hv_vhca_stats_agent, work);
+ 	priv = container_of(sagent, struct mlx5e_priv, stats_agent);
+ 	buf_len = mlx5e_hv_vhca_stats_buf_size(priv);
+-	agent = sagent->agent;
++	agent = READ_ONCE(sagent->agent);
+ 	buf = sagent->buf;
  
-+static int mlx5e_hv_vhca_stats_buf_max_size(struct mlx5e_priv *priv)
-+{
-+	return (sizeof(struct mlx5e_hv_vhca_per_ring_stats) *
-+		max(priv->max_nch, priv->stats_nch));
-+}
-+
- static void mlx5e_hv_vhca_stats_work(struct work_struct *work)
- {
- 	struct mlx5e_hv_vhca_stats_agent *sagent;
-@@ -122,7 +128,7 @@ static void mlx5e_hv_vhca_stats_cleanup(struct mlx5_hv_vhca_agent *agent)
- 
- void mlx5e_hv_vhca_stats_create(struct mlx5e_priv *priv)
- {
--	int buf_len = mlx5e_hv_vhca_stats_buf_size(priv);
-+	int buf_len = mlx5e_hv_vhca_stats_buf_max_size(priv);
- 	struct mlx5_hv_vhca_agent *agent;
- 
- 	priv->stats_agent.buf = kvzalloc(buf_len, GFP_KERNEL);
-@@ -155,5 +161,7 @@ void mlx5e_hv_vhca_stats_destroy(struct mlx5e_priv *priv)
+ 	memset(buf, 0, buf_len);
+@@ -135,11 +135,14 @@ void mlx5e_hv_vhca_stats_create(struct mlx5e_priv *priv)
+ 	if (!priv->stats_agent.buf)
  		return;
  
- 	mlx5_hv_vhca_agent_destroy(priv->stats_agent.agent);
-+	priv->stats_agent.agent = NULL;
++	INIT_DELAYED_WORK(&priv->stats_agent.work, mlx5e_hv_vhca_stats_work);
++
+ 	agent = mlx5_hv_vhca_agent_create(priv->mdev->hv_vhca,
+ 					  MLX5_HV_VHCA_AGENT_STATS,
+ 					  mlx5e_hv_vhca_stats_control, NULL,
+ 					  mlx5e_hv_vhca_stats_cleanup,
+-					  priv);
++					  priv,
++					  &priv->stats_agent.agent);
+ 
+ 	if (IS_ERR_OR_NULL(agent)) {
+ 		if (IS_ERR(agent))
+@@ -148,20 +151,20 @@ void mlx5e_hv_vhca_stats_create(struct mlx5e_priv *priv)
+ 				    agent);
+ 
+ 		kvfree(priv->stats_agent.buf);
+-		return;
++		priv->stats_agent.buf = NULL;
+ 	}
+-
+-	priv->stats_agent.agent = agent;
+-	INIT_DELAYED_WORK(&priv->stats_agent.work, mlx5e_hv_vhca_stats_work);
+ }
+ 
+ void mlx5e_hv_vhca_stats_destroy(struct mlx5e_priv *priv)
+ {
+-	if (IS_ERR_OR_NULL(priv->stats_agent.agent))
++	struct mlx5_hv_vhca_agent *agent;
++
++	agent = READ_ONCE(priv->stats_agent.agent);
++	if (IS_ERR_OR_NULL(agent))
+ 		return;
+ 
+-	mlx5_hv_vhca_agent_destroy(priv->stats_agent.agent);
+-	priv->stats_agent.agent = NULL;
++	mlx5_hv_vhca_agent_destroy(agent);
++	WRITE_ONCE(priv->stats_agent.agent, NULL);
  	kvfree(priv->stats_agent.buf);
-+	priv->stats_agent.buf = NULL;
+ 	priv->stats_agent.buf = NULL;
+ }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/hv_vhca.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/hv_vhca.c
+index 30564d9b00e9f7..779342ebc843e0 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/hv_vhca.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/hv_vhca.c
+@@ -190,7 +190,7 @@ mlx5_hv_vhca_control_agent_create(struct mlx5_hv_vhca *hv_vhca)
+ 	return mlx5_hv_vhca_agent_create(hv_vhca, MLX5_HV_VHCA_AGENT_CONTROL,
+ 					 NULL,
+ 					 mlx5_hv_vhca_control_agent_invalidate,
+-					 NULL, NULL);
++					 NULL, NULL, NULL);
+ }
+ 
+ static void mlx5_hv_vhca_control_agent_destroy(struct mlx5_hv_vhca_agent *agent)
+@@ -256,7 +256,8 @@ mlx5_hv_vhca_agent_create(struct mlx5_hv_vhca *hv_vhca,
+ 			  void (*invalidate)(struct mlx5_hv_vhca_agent*,
+ 					     u64 block_mask),
+ 			  void (*cleaup)(struct mlx5_hv_vhca_agent *agent),
+-			  void *priv)
++			  void *priv,
++			  struct mlx5_hv_vhca_agent **ctx_update)
+ {
+ 	struct mlx5_hv_vhca_agent *agent;
+ 
+@@ -284,6 +285,9 @@ mlx5_hv_vhca_agent_create(struct mlx5_hv_vhca *hv_vhca,
+ 	agent->invalidate = invalidate;
+ 	agent->cleanup   = cleaup;
+ 
++	if (ctx_update)
++		WRITE_ONCE(*ctx_update, agent);
++
+ 	mutex_lock(&hv_vhca->agents_lock);
+ 	hv_vhca->agents[type] = agent;
+ 	mutex_unlock(&hv_vhca->agents_lock);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/hv_vhca.h b/drivers/net/ethernet/mellanox/mlx5/core/lib/hv_vhca.h
+index f240ffe5116c5b..8b3974cf0ee49a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/hv_vhca.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/hv_vhca.h
+@@ -43,7 +43,8 @@ mlx5_hv_vhca_agent_create(struct mlx5_hv_vhca *hv_vhca,
+ 			  void (*invalidate)(struct mlx5_hv_vhca_agent*,
+ 					     u64 block_mask),
+ 			  void (*cleanup)(struct mlx5_hv_vhca_agent *agent),
+-			  void *context);
++			  void *context,
++			  struct mlx5_hv_vhca_agent **ctx_update);
+ 
+ void mlx5_hv_vhca_agent_destroy(struct mlx5_hv_vhca_agent *agent);
+ int mlx5_hv_vhca_agent_write(struct mlx5_hv_vhca_agent *agent,
+@@ -84,7 +85,8 @@ mlx5_hv_vhca_agent_create(struct mlx5_hv_vhca *hv_vhca,
+ 			  void (*invalidate)(struct mlx5_hv_vhca_agent*,
+ 					     u64 block_mask),
+ 			  void (*cleanup)(struct mlx5_hv_vhca_agent *agent),
+-			  void *context)
++			  void *context,
++			  struct mlx5_hv_vhca_agent **ctx_update)
+ {
+ 	return NULL;
  }
 -- 
 2.53.0
