@@ -1,50 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6F53B47DF;
-	Tue, 21 Jul 2026 20:54:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828A53368A5;
+	Tue, 21 Jul 2026 20:54:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667259; cv=none; b=cRx8jb0bknVGWPqUCoAd5yliIEdy98iRY5TuIu3XcWcxC2oa5O+xJVQMONKVH+Y1WWm7O8tN1OPZOhiTKrSug+qE6936iQpe+MPvNrP3QS94TYgPt96fet0Ei7DXxDvoZL2qFj5r0fFyCtknOsPpfm0AJHpXqCzqrY2DJlPmqvY=
+	t=1784667261; cv=none; b=j9GQA0ekgISc0PG4YBMTG2R/EIoxdAYFxRrMuDRtC+jXFjIYnWylMFeVQPJOMUtiaM4vqxpXToIskUPwKAuRvyQ1ZdkqgwemwbrcdbdFnVhUOIAHVTlt+PO4LX0at9xbCdANTEl6jM4Fch0/Z/kVTGIC+Puvvo/MJ7mrK2Quhis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667259; c=relaxed/simple;
-	bh=9mcxlXnYEPKo3auXnB/QNfSR7gpzosrLjN/gyh8GPBE=;
+	s=arc-20240116; t=1784667261; c=relaxed/simple;
+	bh=yPxkViJ5HGIdwDPlI7e3/wri5Ik632rdzc1aKPhccqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WalT7XTcZ1GDMEhc3C7AaGaSR31u+tcSsrTMTwndxxNgxQ1VzCLPMWeWRq63NelX0+Hh5tBSP4VHPbVjT+QIqne4kLn8pE8Ij0UxoQvj/MQDdA06CsnZdJi757JptndyeytF2Cv/UDUQ/k/uc5Ka+ry+qWIpdNbBswt6ar54448=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDhUfnf4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YP5lT6iZ+WYIqfYi7tp0sVDHIFhy+Xa5q+2mt2QfX6hdeK7kcc18kiWax/w5XYato6dfkL/+rUu3KtlWnVRj8GibPLCU0LbA4vjJSNilS4hWB7jZXoqICQ0ZNoxxkARUOu90aYOkYXs1ecHST6PjAYx9uMGz3dz1Z1T3IZ1mP/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJZqbuHV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDhUfnf4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26ECA1F000E9;
-	Tue, 21 Jul 2026 20:54:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJZqbuHV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C921F000E9;
+	Tue, 21 Jul 2026 20:54:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667257;
-	bh=k+AVQGbYKyYwvVIygGiBJ3qoEQIoAO1Vv5euEkIyFEk=;
+	s=korg; t=1784667260;
+	bh=MFv+Di8rUqyqYY6es0iBZxAbWRXxCRltIKcSkJ1ZMDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xDhUfnf4JzIFywe0/UlsKxsE9LAkk/ygcHJPXOfyggc5TaRXPAlj1Q55noqWY/ZIh
-	 nmL4IJurULf4RHT0woNFWS4n3SWKY8mq0P9vWKIOKSzTzfDN5jdthDEkLe+upKOP59
-	 x/q8I+o9fcPyQm+MTf8Rra1A8FZhl/oUEvlND8hk=
+	b=gJZqbuHVZecYysj1Tmi5b44BEXAfk0VqUadI1r26FkfR3h+xCBz3HL74/5tY6/9vY
+	 N5xKCg7Dpz6WPctyvP0qzujGSshH10h0cDhOBuGQKjEs2fHAG1a1bLeywrkREysZHq
+	 CEDFY2ZOkeQUDTJLs7Ry5IJwT8KKgOxuOR5pQfuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <songmuchun@bytedance.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Michal Hocko <mhocko@suse.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 0993/1266] mm/mm_init: fix uninitialized struct pages for ZONE_DEVICE
-Date: Tue, 21 Jul 2026 17:23:50 +0200
-Message-ID: <20260721152504.053394788@linuxfoundation.org>
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.6 0994/1266] mtd: slram: remove failed entries from the device list
+Date: Tue, 21 Jul 2026 17:23:51 +0200
+Message-ID: <20260721152504.075231282@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -63,73 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-commit cd681403a87085562499d60325b7b45d3be11217 upstream.
+commit 36f1648644d769c496a8e47e53603e863e358d73 upstream.
 
-If DAX memory is hotplugged into an unoccupied subsection of an early
-section, section_activate() reuses the unoptimized boot memmap.  However,
-compound_nr_pages() still assumes that vmemmap optimization is in effect
-and initializes only the reduced number of struct pages.  As a result, the
-remaining tail struct pages are left uninitialized, which can later lead
-to unexpected behavior or crashes.
+register_device() links a new slram_mtdlist entry before allocating all
+of the state needed by the entry. If a later allocation, memremap(), or
+mtd_device_register() fails, the partially initialized entry remains on
+the global list. A later cleanup can then dereference or free invalid
+state from that failed entry.
 
-Fix this by treating early sections as unoptimized when calculating how
-many struct pages to initialize.
+Unwind the partially initialized entry and clear the list tail on each
+failure path after the entry has been linked.
 
-Link: https://lore.kernel.org/20260428081855.1249045-7-songmuchun@bytedance.com
-Fixes: 6fd3620b3428 ("mm/page_alloc: reuse tail struct pages for compound devmaps")
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Acked-by: Liam R. Howlett <liam@infradead.org>
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
-Cc: Joao Martins <joao.m.martins@oracle.com>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mm_init.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/mtd/devices/slram.c |   22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
---- a/mm/mm_init.c
-+++ b/mm/mm_init.c
-@@ -1024,10 +1024,17 @@ static void __ref __init_zone_device_pag
-  * of how the sparse_vmemmap internals handle compound pages in the lack
-  * of an altmap. See vmemmap_populate_compound_pages().
-  */
--static inline unsigned long compound_nr_pages(struct vmem_altmap *altmap,
-+static inline unsigned long compound_nr_pages(unsigned long pfn,
-+					      struct vmem_altmap *altmap,
- 					      struct dev_pagemap *pgmap)
+--- a/drivers/mtd/devices/slram.c
++++ b/drivers/mtd/devices/slram.c
+@@ -129,6 +129,7 @@ static int slram_write(struct mtd_info *
+ static int register_device(char *name, unsigned long start, unsigned long length)
  {
--	if (!vmemmap_can_optimize(altmap, pgmap))
-+	/*
-+	 * If DAX memory is hot-plugged into an unoccupied subsection
-+	 * of an early section, the unoptimized boot memmap is reused.
-+	 * See section_activate().
-+	 */
-+	if (early_section(__pfn_to_section(pfn)) ||
-+	    !vmemmap_can_optimize(altmap, pgmap))
- 		return pgmap_vmemmap_nr(pgmap);
+ 	slram_mtd_list_t **curmtd;
++	int ret = -ENOMEM;
  
- 	return VMEMMAP_RESERVE_NR * (PAGE_SIZE / sizeof(struct page));
-@@ -1095,7 +1102,7 @@ void __ref memmap_init_zone_device(struc
- 			continue;
+ 	curmtd = &slram_mtdlist;
+ 	while (*curmtd) {
+@@ -155,14 +156,15 @@ static int register_device(char *name, u
  
- 		memmap_init_compound(page, pfn, zone_idx, nid, pgmap,
--				     compound_nr_pages(altmap, pgmap));
-+				     compound_nr_pages(pfn, altmap, pgmap));
+ 	if (!(*curmtd)->mtdinfo) {
+ 		E("slram: Cannot allocate new MTD device.\n");
+-		return(-ENOMEM);
++		goto err_free_list;
  	}
  
- 	pr_debug("%s initialised %lu pages in %ums\n", __func__,
+ 	if (!(((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start =
+ 		memremap(start, length,
+ 			 MEMREMAP_WB | MEMREMAP_WT | MEMREMAP_WC))) {
+ 		E("slram: memremap failed\n");
+-		return -EIO;
++		ret = -EIO;
++		goto err_free_priv;
+ 	}
+ 	((slram_priv_t *)(*curmtd)->mtdinfo->priv)->end =
+ 		((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start + length;
+@@ -183,10 +185,8 @@ static int register_device(char *name, u
+ 
+ 	if (mtd_device_register((*curmtd)->mtdinfo, NULL, 0))	{
+ 		E("slram: Failed to register new device\n");
+-		memunmap(((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start);
+-		kfree((*curmtd)->mtdinfo->priv);
+-		kfree((*curmtd)->mtdinfo);
+-		return(-EAGAIN);
++		ret = -EAGAIN;
++		goto err_unmap;
+ 	}
+ 	T("slram: Registered device %s from %luKiB to %luKiB\n", name,
+ 			(start / 1024), ((start + length) / 1024));
+@@ -194,6 +194,16 @@ static int register_device(char *name, u
+ 			((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start,
+ 			((slram_priv_t *)(*curmtd)->mtdinfo->priv)->end);
+ 	return(0);
++
++err_unmap:
++	memunmap(((slram_priv_t *)(*curmtd)->mtdinfo->priv)->start);
++err_free_priv:
++	kfree((*curmtd)->mtdinfo->priv);
++err_free_list:
++	kfree((*curmtd)->mtdinfo);
++	kfree(*curmtd);
++	*curmtd = NULL;
++	return ret;
+ }
+ 
+ static void unregister_devices(void)
 
 
