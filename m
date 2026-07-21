@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CBD46E012;
-	Tue, 21 Jul 2026 18:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5729A46EF78;
+	Tue, 21 Jul 2026 18:36:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659012; cv=none; b=S3h1glLYnm6hoUG5LE8vBb3nH2zxL8Uz6BFNKEkBlaY/FyvSoNjVzIJeb91raE1wTh6XWO2Zc5sgzo3OCDBIllPDIUwW3MVCZuDeOl8PIXjjBc1vno21HQvV8DQ+yLucoGnmRfJAPsrroYQMaIG1agNfIjnNJ+MBkg4TqVM4Aio=
+	t=1784659015; cv=none; b=NeteosSDVoi9lzhDxA36zMrBqyHH0lscz5qzBUUiPOXUxNJnzbfBjtqMVrOf/qrS7VD4oKhbdXJGQleEOr2UxttOyLxpbjIQkiyp/WPYzpwWDE7Fg0+20Efeya3maotWaS2VSEEIjeN00z2L1pBE0rN/PxLNfvFFRjoy1iyNM8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659012; c=relaxed/simple;
-	bh=6Wi9I0DSLKFXySb47KxL7881VwXCqGGxkFwMcWzxjK4=;
+	s=arc-20240116; t=1784659015; c=relaxed/simple;
+	bh=HJupQvxQt3EgOzqXyTABa+9/Z79kOmgWJjZ+mPyNEYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cyihNlwb4q9we3PmqIkLUfEFxlbrZg9zVA6djQ2Jt3wQ29a8nWtD2WH2ti9912DUkj9GxyGOcmDq4n+CqBrhgauwYcNXyRPe1mZaP/TS5SK/AbSS1x9mAq+6g919o9IRY9mfHV45BXV+YYrnCJuTFvLCe9SU4bEEc9790YC3lHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L8YcjBUu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZObU4+pwfV3iv/VTUKRkCMPAiQIvJyLinZZt5kCIoNhaq59TltOPL4LrEnfgmAle/VxuxFj0IqAcgvYksNq6e3/A7juu4NxJ5DMAbsk5Tubi/Nj3jDLcyLGWgkCf76eI7pcjJRvziWBhBAORWboCdIHb+jx8pspzPlLmNGtosOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xoyCSZXb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L8YcjBUu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F251F000E9;
-	Tue, 21 Jul 2026 18:36:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xoyCSZXb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA6D31F000E9;
+	Tue, 21 Jul 2026 18:36:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659011;
-	bh=SPb7rPxnkJNiYwV9lQNthFPzgX16DkDWZMfU0RDuLtg=;
+	s=korg; t=1784659014;
+	bh=hKOYAXOSSPJJk0BHWkb0/aTY8M3H0TXLsKunapxuDYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L8YcjBUuV3er2hSQlCpzWtxXvbHPnXZdaPTuexW3Gm/11MMuaxfdvMp1txv9OzsZf
-	 jatLKjlZ6Y65Tqw+onnegWP19rQV01vyGzGj2bImssBMy0bXWni9leUom4jlkvnmPp
-	 IRil2TGkI9sTwKhBNaubWtY/9OdbM3CFM5znhP+E=
+	b=xoyCSZXbXo/h5KJUAbtY3YjXeJcRuTZ9+aQCZQuH4O667FsJ9ljSwxcTbSclkivoH
+	 epzxVbOA4gKvhbmXJLxnYtHNeuT6+ZjoJSYqDnOloT7IkJXTuP72SrYCNTAb7ugwov
+	 z0SEZmiD2uVpt7nyfYb1FcvHanWiaq4X5SlMbhV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.18 1361/1611] dm-verity: make error counter atomic
-Date: Tue, 21 Jul 2026 17:24:37 +0200
-Message-ID: <20260721152546.067085883@linuxfoundation.org>
+	Baineng Shou <shoubaineng@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
+Subject: [PATCH 6.18 1362/1611] dma-fence: Make dma_fence_dedup_array() robust against 0-count input
+Date: Tue, 21 Jul 2026 17:24:38 +0200
+Message-ID: <20260721152546.088984961@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -43,73 +44,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Baineng Shou <shoubaineng@gmail.com>
 
-commit 8ec4d9c5a5cf4b61fc087f871465b1f79b393325 upstream.
+commit 77a9298741f8f9e8b963c977f5582ab21c6d3427 upstream.
 
-The error counter "v->corrupted_errs" was not atomic, thus it could be
-subject to race conditions. The call to
-dm_audit_log_target("max-corrupted-errors") may be skipped due to the
-races.
+dma_fence_dedup_array() returns 1 when called with num_fences == 0:
+the for-loop body never executes, j stays at 0, and the final
+`return ++j` yields 1. This contradicts both the kernel-doc ("Return:
+Number of unique fences remaining in the array") and the natural
+expectation that 0 input gives 0 output.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-4.6
-Fixes: 65ff5b7ddf05 ("dm verity: add error handling modes for corrupted blocks")
+The caller __dma_fence_unwrap_merge() bails out via the
+`if (count == 0 || count == 1)` fast path and so is save.
+
+But amdgpu_userq_wait_*() could reach the dedup call with a zero local
+count and dereference an uninitialized fence slot in the array.
+
+Make the contract match the documentation by returning 0 early. This
+also skips an unnecessary sort() call on an empty array.
+
 Cc: stable@vger.kernel.org
+Signed-off-by: Baineng Shou <shoubaineng@gmail.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Fixes: 575ec9b0c2f1 ("dma-fence: Add helper to sort and deduplicate dma_fence arrays")
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20260629031346.3875683-1-shoubaineng@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-verity-target.c |   12 +++++++-----
- drivers/md/dm-verity.h        |    2 +-
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ drivers/dma-buf/dma-fence-unwrap.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/md/dm-verity-target.c
-+++ b/drivers/md/dm-verity-target.c
-@@ -165,14 +165,16 @@ static int verity_handle_err(struct dm_v
- 	char *envp[] = { verity_env, NULL };
- 	const char *type_str = "";
- 	struct mapped_device *md = dm_table_get_md(v->ti->table);
-+	int ce;
+--- a/drivers/dma-buf/dma-fence-unwrap.c
++++ b/drivers/dma-buf/dma-fence-unwrap.c
+@@ -97,6 +97,9 @@ int dma_fence_dedup_array(struct dma_fen
+ {
+ 	int i, j;
  
- 	/* Corruption should be visible in device status in all modes */
- 	v->hash_failed = true;
++	if (!num_fences)
++		return 0;
++
+ 	sort(fences, num_fences, sizeof(*fences), fence_cmp, NULL);
  
--	if (v->corrupted_errs >= DM_VERITY_MAX_CORRUPTED_ERRS)
--		goto out;
--
--	v->corrupted_errs++;
-+	ce = atomic_read(&v->corrupted_errs);
-+	do {
-+		if (ce >= DM_VERITY_MAX_CORRUPTED_ERRS)
-+			goto out;
-+	} while (!atomic_try_cmpxchg(&v->corrupted_errs, &ce, ce + 1));
- 
- 	switch (type) {
- 	case DM_VERITY_BLOCK_TYPE_DATA:
-@@ -188,7 +190,7 @@ static int verity_handle_err(struct dm_v
- 	DMERR_LIMIT("%s: %s block %llu is corrupted", v->data_dev->name,
- 		    type_str, block);
- 
--	if (v->corrupted_errs == DM_VERITY_MAX_CORRUPTED_ERRS) {
-+	if (ce + 1 == DM_VERITY_MAX_CORRUPTED_ERRS) {
- 		DMERR("%s: reached maximum errors", v->data_dev->name);
- 		dm_audit_log_target(DM_MSG_PREFIX, "max-corrupted-errors", v->ti, 0);
- 	}
---- a/drivers/md/dm-verity.h
-+++ b/drivers/md/dm-verity.h
-@@ -62,7 +62,7 @@ struct dm_verity {
- 	unsigned int digest_size;	/* digest size for the current hash algorithm */
- 	enum verity_mode mode;	/* mode for handling verification errors */
- 	enum verity_mode error_mode;/* mode for handling I/O errors */
--	unsigned int corrupted_errs;/* Number of errors for corrupted blocks */
-+	atomic_t corrupted_errs;/* Number of errors for corrupted blocks */
- 
- 	struct workqueue_struct *verify_wq;
- 
+ 	/*
 
 
