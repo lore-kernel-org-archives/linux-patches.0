@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2076446D08F;
-	Tue, 21 Jul 2026 19:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6D246EF88;
+	Tue, 21 Jul 2026 19:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662824; cv=none; b=TLGgR73+NN/NfatTaemWqsmAiYMoqtGoOzAtDVLPSaGRPGohDyfkKAZ6a0b+vqwcTkd9J6OLCpiATUzDEhH7n2pv2TbMUOnpnd+xLAXw9XsGD2EgzBAaHiEUSzuPc1ozZsdpwNDVMBMVQuTUSUdWXhXZAmYKcVWNA9MbEPQ/qk4=
+	t=1784662825; cv=none; b=iZLnQXwLQ2WhnNR/vKjnpdtRE7nLE5tSILMSpIZF2eIdQvibJ2CsX9nkl7ikdCzkJfhLN+J/uAOWZekvOq0QZiGbXNmBFjgBJwIepBoxpsfuGZFYMOqnMqXGzCLvNqWBjEkVR+fn8ddc7y3czYpRkCzMOuc4eFG2cGeczr/FOkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662824; c=relaxed/simple;
-	bh=g4rdiL1Z/R+Cie7bl3WMn80ncDjVPaUvccOA7H3CpCg=;
+	s=arc-20240116; t=1784662825; c=relaxed/simple;
+	bh=Tvp5n1ipOJqk4r2z1k/Rh92gFTwHxKUK+I27+5GtUZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/DpkLLlmoCEu/4nemxxMJWgi6AfliZvQkmTv+zlQlahuuKUb/ATz8xnOOH32dpagn9RiVaY4/axzlhD7dqd1sgLDOlMomssHZ/+w16UtlFyHv9yREN1UeCIx+ex601sRdBZME5m+KOCqYOD8gpHw5QLX//ij+JK0X3yap3VV+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A805oKWy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iTlgTuTYYAh24UBs8Ajkz+RfhPyAR/sWAEQtc/kt7KAe6eU1AR+5Y1h0xByyKlsPEZ1jOKA/1lPjt+HkKfjvZLrKjD4TjfyvamrVhnKRe8agfPq/FsheB8OYbw/kANbNqZlpBmd6iVxESxnSBQ9BvjyD5xQDdpKvD/CvLwP/YA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbapzoG2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A805oKWy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852791F000E9;
-	Tue, 21 Jul 2026 19:40:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbapzoG2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B44F1F00A3A;
+	Tue, 21 Jul 2026 19:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662822;
-	bh=rCh1futwvpSI4QED9sAw1B1s/4rcKv6GPZiuDPiU0vw=;
+	s=korg; t=1784662824;
+	bh=lhYsGTw2L8PJRzv/87EoFdUSg69tq4QqELf9XY9c78k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A805oKWyGkn2E+zpPxRQr7ZyWo5D9PQO3qJ8/wms79hJsaa6Wgur1quU0boI1Rjh6
-	 VQcyiYlJn/Gox0YgSsAU6JTQxk9kUAOwpKHhUprrxt3wIT45jMcYvK3/Ad+H2j7+Gq
-	 7cuPGHCW0NwFaEnLZTYGSGPQkcaV7bLsbVIW81Pc=
+	b=cbapzoG2gGlmnvUQMsIvfI69odVyMN68rZObqgTkqxCNznAtLVaZY84YwUYg7egLm
+	 uFE2t3DxoziqRhuhDVcs4Lt/TXi4IIzcQ/5k8wAV7ojGQokhp2TKfaEwlYwOjWCNH7
+	 AduxgpnBKE3Gb/pLYVYKeUqRcKSpuX1gJlv9IA14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+346474e3bf0b26bd3090@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
+	Robertus Diawan Chris <robertusdchris@gmail.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0589/1276] ieee802154: fix kernel-infoleak in dgram_recvmsg()
-Date: Tue, 21 Jul 2026 17:17:12 +0200
-Message-ID: <20260721152459.295621830@linuxfoundation.org>
+Subject: [PATCH 6.12 0590/1276] mac802154: Prevent overwrite return code in mac802154_perform_association()
+Date: Tue, 21 Jul 2026 17:17:13 +0200
+Message-ID: <20260721152459.317412916@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,83 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Robertus Diawan Chris <robertusdchris@gmail.com>
 
-[ Upstream commit 4db86f8ab11b5a41bfc36680be837e6ac1375ec6 ]
+[ Upstream commit 649147cb3f8b3c0c9aeba5d89d69a6ef221c12c2 ]
 
-KMSAN reported a kernel-infoleak in move_addr_to_user():
+When assoc_status not equal to IEEE802154_ASSOCIATION_SUCCESSFUL, the
+return value assigned to either "-ERANGE" or "-EPERM" but this return
+value will be overwritten to 0 after exiting the conditional scope.
+So, jump to clear_assoc label to preserve the return value when
+assoc_status not equal to IEEE802154_ASSOCIATION_SUCCESSFUL.
 
-BUG: KMSAN: kernel-infoleak in instrument_copy_to_user
-include/linux/instrumented.h:131 [inline]
-BUG: KMSAN: kernel-infoleak in _inline_copy_to_user
-include/linux/uaccess.h:205 [inline]
-BUG: KMSAN: kernel-infoleak in _copy_to_user+0xcc/0x120
-lib/usercopy.c:26
- instrument_copy_to_user include/linux/instrumented.h:131 [inline]
- _inline_copy_to_user include/linux/uaccess.h:205 [inline]
- _copy_to_user+0xcc/0x120 lib/usercopy.c:26
- copy_to_user include/linux/uaccess.h:236 [inline]
- move_addr_to_user+0x2e7/0x440 net/socket.c:302
- ____sys_recvmsg+0x232/0x610 net/socket.c:2925
- ...
- Uninit was stored to memory at:
- ieee802154_addr_to_sa include/net/ieee802154_netdev.h:369 [inline]
- dgram_recvmsg+0xa09/0xbe0 net/ieee802154/socket.c:739
+This is reported by Coverity Scan as "Unused value".
 
-The issue occurs because the `pan_id` field of `struct ieee802154_addr`
-is left uninitialized when the address mode is `IEEE802154_ADDR_NONE`.
-The execution flow is as follows:
-
-1. `__ieee802154_rx_handle_packet()` declares a local `struct
-ieee802154_hdr hdr` on the stack.
-2. `ieee802154_hdr_pull()` calls `ieee802154_hdr_get_addr()` to parse
-the source and destination addresses into this structure.
-3. If the address mode is `IEEE802154_ADDR_NONE`,
-`ieee802154_hdr_get_addr()` previously only set the `mode` field,
-leaving the `pan_id` field containing uninitialized stack memory.
-4. This uninitialized `pan_id` is later copied into a `struct
-sockaddr_ieee802154` in `dgram_recvmsg()` via `ieee802154_addr_to_sa()`.
-5. Finally, `move_addr_to_user()` copies the socket address structure to
-user space, leaking the uninitialized bytes.
-
-Fix this by using `memset` to zero out the address structure in
-`ieee802154_hdr_get_addr()` when the mode is `IEEE802154_ADDR_NONE`.
-
-Fixes: 94b4f6c21cf5 ("ieee802154: add header structs with endiannes and operations")
-Assisted-by: Gemini:gemini-3.1-pro-preview Gemini:gemini-3-flash-preview syzbot
-Reported-by: syzbot+346474e3bf0b26bd3090@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=346474e3bf0b26bd3090
-Link: https://syzkaller.appspot.com/ai_job?id=a507a109-d683-4a2c-bc03-93394f491b17
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Fixes: fefd19807fe9 ("mac802154: Handle associating")
+Signed-off-by: Robertus Diawan Chris <robertusdchris@gmail.com>
 Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/62795fd9-fc0c-48eb-bb82-05ffc5a57104@mail.kernel.org
+Link: https://lore.kernel.org/20260602054133.470293-1-robertusdchris@gmail.com
 Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ieee802154/header_ops.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/mac802154/scan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ieee802154/header_ops.c b/net/ieee802154/header_ops.c
-index 41a556be101790..a9f0c8df5ae4ac 100644
---- a/net/ieee802154/header_ops.c
-+++ b/net/ieee802154/header_ops.c
-@@ -173,10 +173,13 @@ ieee802154_hdr_get_addr(const u8 *buf, int mode, bool omit_pan,
- {
- 	int pos = 0;
+diff --git a/net/mac802154/scan.c b/net/mac802154/scan.c
+index a6dab3cc3ad858..0eef3b4f5b9b39 100644
+--- a/net/mac802154/scan.c
++++ b/net/mac802154/scan.c
+@@ -594,6 +594,7 @@ int mac802154_perform_association(struct ieee802154_sub_if_data *sdata,
+ 			 "Negative ASSOC RESP received from %8phC: %s\n", &ceaddr,
+ 			 local->assoc_status == IEEE802154_PAN_AT_CAPACITY ?
+ 			 "PAN at capacity" : "access denied");
++		goto clear_assoc;
+ 	}
  
--	addr->mode = mode;
--
--	if (mode == IEEE802154_ADDR_NONE)
-+	if (mode == IEEE802154_ADDR_NONE) {
-+		memset(addr, 0, sizeof(*addr));
-+		addr->mode = IEEE802154_ADDR_NONE;
- 		return 0;
-+	}
-+
-+	addr->mode = mode;
- 
- 	if (!omit_pan) {
- 		memcpy(&addr->pan_id, buf + pos, 2);
+ 	ret = 0;
 -- 
 2.53.0
 
