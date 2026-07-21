@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CFCE471265;
-	Tue, 21 Jul 2026 20:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17DF046D56D;
+	Tue, 21 Jul 2026 20:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664332; cv=none; b=NBx6FENIB8mF+CNP7FyEWXu/iajE5EEOYLWMKLpRa9z8nbDyHVl0f52TUV50cHTBu9TIK9Z+f6atI0KS+2V7aEsv1cJgWFW/xXWS016h72LC8reWLe9TFkt/3jdZuCRJJvXDWoYCxbYslvXLIPTFZMvwstdczNNPHjw/GiXRv0Q=
+	t=1784664335; cv=none; b=KGRJJhnxus6g1bEEhxbbk5Ww8sgfvKhO4yxykD6T8zPib4rsS4ektkeFg7bXllnL28iAJCFEtqLE6BrdbchTUYg2Pe7D+4wJOENqEzlZf3NbYx+nc7W7WnrMNGRGDgO6/AwfALi7bncfauW4bXF8iBB10W8zp8SrrdprtIB3bVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664332; c=relaxed/simple;
-	bh=duktj0rWroZVOvyLfMTVEtCxIoHpmKSh005Dbdd6G7k=;
+	s=arc-20240116; t=1784664335; c=relaxed/simple;
+	bh=oyit0uYcOvwbQvZpEi5V19g3+95ETxs8BsWokOBu35U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s7ghwmIJJwIz4a1GjzjqYxQnwNMlhjQ03E/84OCoSsQ+d0MEdTECQ8K8CFMUdkM+JVBHkwxh0ifYtsFuzxSRHP23PUVy7aRZdjN0V89v7sMnjO9+mcIMckZKNQ2a3VE0MX57PQ3DHMYuARg+rirgooCSRQyUaRBoHRT3hhMe998=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SbJrMptc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W5NV8YhJnOESBvp7MdYUjVrsy0nReTkdNbw1lBCBivmtT+qrhkMg0Z2ZLbwbEhs5ZxS2rfqnRlZF563SgXt+tpd8YlPtQjD+juQJFF52j2ggfLzV9najE2OYP9f4L/zi3T54EtL3aEqtVTkbdHki0cpe1QdhYBM9kctKSIoj4PM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N5BVAi5m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SbJrMptc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34E11F000E9;
-	Tue, 21 Jul 2026 20:05:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5BVAi5m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CAD91F000E9;
+	Tue, 21 Jul 2026 20:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664331;
-	bh=G+6Gszkb7gb3YaX70uwz0M5wdqMX/pyyE0ebEYKhNUU=;
+	s=korg; t=1784664334;
+	bh=iruQ88MIW5bTKp7qrGPktFDKvSeaYZpmrqTPoDYihZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SbJrMptchUI1EL33WK0ihcL8rNqS9fBPbvgEa7eN2ZRROKs8Zup4zNMOUb3/K3/ep
-	 cfIfnwZgDSAOZ27m3ltr0t1oBHrp3dAMAzLhliWfJ2ckxW+ygpnI0qj7EG+mcuor7O
-	 2WCbleawOOy80dUrrYSbYP4duDRU7ydcQ+LD3ZL0=
+	b=N5BVAi5msUkAHTH85xyiRKLU5WF2eoAyXNIr7oSEt3PU+e6E4RENgu++FFxaXUSjy
+	 R/BVuUkp2IiWNOr3sutdVWuszorP6tMVxxdRLucnz0/4JZrmLtx4pkqKmbD6353jNK
+	 h/DBte+6NgZUuSCWvG4tn62hv3PhiEGagxePjl/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Richter <Simon.Richter@hogyros.de>,
-	=?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Siwei Zhang <oss@fourdim.xyz>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Marco Elver <elver@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1153/1276] PCI: Prevent resource tree corruption when BAR resize fails
-Date: Tue, 21 Jul 2026 17:26:36 +0200
-Message-ID: <20260721152511.813152387@linuxfoundation.org>
+Subject: [PATCH 6.12 1162/1276] Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref
+Date: Tue, 21 Jul 2026 17:26:45 +0200
+Message-ID: <20260721152512.022919873@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -47,75 +46,249 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Marco Elver <elver@google.com>
 
-[ Upstream commit 91c4c89db41499eea1b29c56655f79c3bae66e93 ]
+[ Upstream commit b66774b48dd98f07254951f74ea6f513efe7ff8b ]
 
-pbus_reassign_bridge_resources() saves bridge windows into the saved
-list before attempting to adjust resource assignments to perform a BAR
-resize operation. If resource adjustments cannot be completed fully,
-rollback is attempted by restoring the resource from the saved list.
+l2cap_chan_timeout() runs asynchronously and accesses chan->conn. If
+the connection is torn down while the timer is running or pending,
+chan->conn can be freed, leading to a use-after-free when the timer
+worker attempts to lock conn->lock:
 
-The rollback, however, does not check whether the resources it restores were
-assigned by the partial resize attempt. If restore changes addresses of the
-resource, it can result in corrupting the resource tree.
+| BUG: KASAN: slab-use-after-free in instrument_atomic_read_write include/linux/instrumented.h:112 [inline]
+| BUG: KASAN: slab-use-after-free in atomic_long_try_cmpxchg_acquire include/linux/atomic/atomic-instrumented.h:4456 [inline]
+| BUG: KASAN: slab-use-after-free in __mutex_trylock_fast kernel/locking/mutex.c:161 [inline]
+| BUG: KASAN: slab-use-after-free in mutex_lock+0x4f/0xa0 kernel/locking/mutex.c:318
+| Write of size 8 at addr ffff8881298d9550 by task kworker/2:1/83
+|
+| CPU: 2 UID: 0 PID: 83 Comm: kworker/2:1 Not tainted 7.1.0-rc6-next-20260601-dirty #6 PREEMPT(full)
+| Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+| Workqueue: events l2cap_chan_timeout
+| Call Trace:
+|  <TASK>
+|  instrument_atomic_read_write include/linux/instrumented.h:112 [inline]
+|  atomic_long_try_cmpxchg_acquire include/linux/atomic/atomic-instrumented.h:4456 [inline]
+|  __mutex_trylock_fast kernel/locking/mutex.c:161 [inline]
+|  mutex_lock+0x4f/0xa0 kernel/locking/mutex.c:318
+|  l2cap_chan_timeout+0x5d/0x1b0 net/bluetooth/l2cap_core.c:422
+|  process_one_work kernel/workqueue.c:3326 [inline]
+|  process_scheduled_works+0x7c8/0xfb0 kernel/workqueue.c:3409
+|  worker_thread+0x8a9/0xcf0 kernel/workqueue.c:3490
+|  kthread+0x346/0x430 kernel/kthread.c:436
+|  ret_from_fork+0x1a3/0x470 arch/x86/kernel/process.c:158
+|  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+|  </TASK>
+|
+| Allocated by task 320:
+|  l2cap_conn_add+0xa7/0x820 net/bluetooth/l2cap_core.c:7075
+|  l2cap_connect_cfm+0xdb/0xd70 net/bluetooth/l2cap_core.c:7452
+|  hci_connect_cfm include/net/bluetooth/hci_core.h:2139 [inline]
+|  hci_remote_features_evt+0x52f/0x9f0 net/bluetooth/hci_event.c:3760
+|  hci_event_func net/bluetooth/hci_event.c:7796 [inline]
+|  hci_event_packet+0x561/0xa70 net/bluetooth/hci_event.c:7847
+|  hci_rx_work+0x370/0x890 net/bluetooth/hci_core.c:4040
+|  process_one_work kernel/workqueue.c:3326 [inline]
+|  process_scheduled_works+0x7c8/0xfb0 kernel/workqueue.c:3409
+|  worker_thread+0x8a9/0xcf0 kernel/workqueue.c:3490
+|  kthread+0x346/0x430 kernel/kthread.c:436
+|  ret_from_fork+0x1a3/0x470 arch/x86/kernel/process.c:158
+|  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+|
+| Freed by task 322:
+|  hci_disconn_cfm include/net/bluetooth/hci_core.h:2154 [inline]
+|  hci_conn_hash_flush+0x101/0x1f0 net/bluetooth/hci_conn.c:2736
+|  hci_dev_close_sync+0x889/0xde0 net/bluetooth/hci_sync.c:5405
+|  hci_dev_do_close net/bluetooth/hci_core.c:502 [inline]
+|  hci_unregister_dev+0x1f7/0x370 net/bluetooth/hci_core.c:2679
+|  vhci_release+0x12a/0x180 drivers/bluetooth/hci_vhci.c:690
+|  __fput+0x369/0x890 fs/file_table.c:510
+|  task_work_run+0x160/0x1d0 kernel/task_work.c:233
+|  get_signal+0xf5b/0x1120 kernel/signal.c:2810
+|  arch_do_signal_or_restart+0x4d/0x600 arch/x86/kernel/signal.c:337
+|  __exit_to_user_mode_loop kernel/entry/common.c:64 [inline]
+|  exit_to_user_mode_loop+0x85/0x510 kernel/entry/common.c:98
+|  do_syscall_64+0x263/0x3d0 arch/x86/entry/syscall_64.c:100
+|  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+|
+| The buggy address belongs to the object at ffff8881298d9400
+|  which belongs to the cache kmalloc-512 of size 512
+| The buggy address is located 336 bytes inside of
+|  freed 512-byte region [ffff8881298d9400, ffff8881298d9600)
 
-An example of a corrupted resource tree with overlapping addresses:
+Fix it by having chan->conn hold a reference to l2cap_conn (via
+l2cap_conn_get) when the channel is added to the connection, and
+releasing it in the channel destructor. This ensures the l2cap_conn
+remains alive as long as the channel exists.
 
-  6200000000000-6203fbfffffff : pciex@620c3c0000000
-    6200000000000-6203fbff0ffff : PCI Bus 0030:01
-      6200020000000-62000207fffff : 0030:01:00.0
-      6200000000000-6203fbff0ffff : PCI Bus 0030:02
+A new FLAG_DEL channel flag is introduced to indicate that the channel
+has been deleted from its connection. l2cap_chan_del() atomically sets
+this flag using test_and_set_bit() instead of setting chan->conn to
+NULL. All asynchronous workers (l2cap_chan_timeout, l2cap_ack_timeout,
+l2cap_monitor_timeout, l2cap_retrans_timeout) and l2cap_chan_send()
+check FLAG_DEL to determine whether the channel has been torn down,
+rather than testing chan->conn for NULL.
 
-A resource that are assigned into the resource tree must remain
-unchanged. Thus, release such a resource before attempting to restore
-and claim it back.
-
-For simplicity, always do the release and claim back for the resource
-even in the cases where it is restored to the same address range.
-
-Note: this fix may "break" some cases where devices "worked" because
-the resource tree corruption allowed address space double counting to
-fit more resource than what can now be assigned without double
-counting. The upcoming changes to BAR resizing should address those
-scenarios (to the extent possible).
-
-Fixes: 8bb705e3e79d ("PCI: Add pci_resize_resource() for resizing BARs")
-Reported-by: Simon Richter <Simon.Richter@hogyros.de>
-Link: https://lore.kernel.org/linux-pci/67840a16-99b4-4d8c-9b5c-4721ab0970a2@hogyros.de/
-Reported-by: Alex Bennée <alex.bennee@linaro.org>
-Link: https://lore.kernel.org/linux-pci/874irqop6b.fsf@draig.linaro.org/
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Alex Bennée <alex.bennee@linaro.org> # AVA, AMD GPU
-Link: https://patch.msgid.link/20251113162628.5946-2-ilpo.jarvinen@linux.intel.com
-Stable-dep-of: ee7471fe968d ("PCI: Skip Resizable BAR restore on read error")
+Fixes: 8c8e620467a7 ("Bluetooth: L2CAP: use chan timer to close channels in cleanup_listen()")
+Cc: <stable@vger.kernel.org>
+Cc: Siwei Zhang <oss@fourdim.xyz>
+Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Assisted-by: Gemini:gemini-3.1-pro-preview
+Reported-by: https://sashiko.dev/#/patchset/20260521021249.3258069-1-oss%40fourdim.xyz
+Signed-off-by: Marco Elver <elver@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/setup-bus.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ include/net/bluetooth/l2cap.h |    1 +
+ net/bluetooth/l2cap_core.c    |   34 ++++++++++++++++++++--------------
+ 2 files changed, 21 insertions(+), 14 deletions(-)
 
---- a/drivers/pci/setup-bus.c
-+++ b/drivers/pci/setup-bus.c
-@@ -2388,6 +2388,11 @@ cleanup:
- 		bridge = dev_res->dev;
- 		i = res - bridge->resource;
+--- a/include/net/bluetooth/l2cap.h
++++ b/include/net/bluetooth/l2cap.h
+@@ -748,6 +748,7 @@ enum {
+ 	FLAG_ECRED_CONN_REQ_SENT,
+ 	FLAG_PENDING_SECURITY,
+ 	FLAG_HOLD_HCI_CONN,
++	FLAG_DEL,
+ };
  
-+		if (res->parent) {
-+			release_child_resources(res);
-+			pci_release_resource(bridge, i);
-+		}
+ /* Lock nesting levels for L2CAP channels. We need these because lockdep
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -411,7 +411,7 @@ static void l2cap_chan_timeout(struct wo
+ 
+ 	BT_DBG("chan %p state %s", chan, state_to_string(chan->state));
+ 
+-	if (!conn) {
++	if (test_bit(FLAG_DEL, &chan->flags)) {
+ 		l2cap_chan_put(chan);
+ 		return;
+ 	}
+@@ -422,6 +422,9 @@ static void l2cap_chan_timeout(struct wo
+ 	 */
+ 	l2cap_chan_lock(chan);
+ 
++	if (test_bit(FLAG_DEL, &chan->flags))
++		goto unlock;
 +
- 		res->start = dev_res->start;
- 		res->end = dev_res->end;
- 		res->flags = dev_res->flags;
+ 	if (chan->state == BT_CONNECTED || chan->state == BT_CONFIG)
+ 		reason = ECONNREFUSED;
+ 	else if (chan->state == BT_CONNECT &&
+@@ -434,10 +437,10 @@ static void l2cap_chan_timeout(struct wo
+ 
+ 	chan->ops->close(chan);
+ 
++unlock:
+ 	l2cap_chan_unlock(chan);
+-	l2cap_chan_put(chan);
+-
+ 	mutex_unlock(&conn->lock);
++	l2cap_chan_put(chan);
+ }
+ 
+ struct l2cap_chan *l2cap_chan_create(void)
+@@ -490,6 +493,9 @@ static void l2cap_chan_destroy(struct kr
+ 	list_del(&chan->global_l);
+ 	write_unlock(&chan_list_lock);
+ 
++	if (chan->conn)
++		l2cap_conn_put(chan->conn);
++
+ 	kfree(chan);
+ }
+ 
+@@ -593,7 +599,7 @@ void __l2cap_chan_add(struct l2cap_conn
+ 
+ 	conn->disc_reason = HCI_ERROR_REMOTE_USER_TERM;
+ 
+-	chan->conn = conn;
++	chan->conn = l2cap_conn_get(conn);
+ 
+ 	switch (chan->chan_type) {
+ 	case L2CAP_CHAN_CONN_ORIENTED:
+@@ -648,30 +654,26 @@ void l2cap_chan_add(struct l2cap_conn *c
+ 
+ void l2cap_chan_del(struct l2cap_chan *chan, int err)
+ {
+-	struct l2cap_conn *conn = chan->conn;
+-
+ 	__clear_chan_timer(chan);
+ 
+-	BT_DBG("chan %p, conn %p, err %d, state %s", chan, conn, err,
++	BT_DBG("chan %p, err %d, state %s", chan, err,
+ 	       state_to_string(chan->state));
+ 
+ 	chan->ops->teardown(chan, err);
+ 
+-	if (conn) {
++	if (!test_and_set_bit(FLAG_DEL, &chan->flags)) {
+ 		/* Delete from channel list */
+ 		list_del(&chan->list);
+ 
+ 		l2cap_chan_put(chan);
+ 
+-		chan->conn = NULL;
+-
+ 		/* Reference was only held for non-fixed channels or
+ 		 * fixed channels that explicitly requested it using the
+ 		 * FLAG_HOLD_HCI_CONN flag.
+ 		 */
+ 		if (chan->chan_type != L2CAP_CHAN_FIXED ||
+ 		    test_bit(FLAG_HOLD_HCI_CONN, &chan->flags))
+-			hci_conn_drop(conn->hcon);
++			hci_conn_drop(chan->conn->hcon);
+ 	}
+ 
+ 	if (test_bit(CONF_NOT_COMPLETE, &chan->conf_state))
+@@ -1886,7 +1888,7 @@ static void l2cap_monitor_timeout(struct
+ 
+ 	l2cap_chan_lock(chan);
+ 
+-	if (!chan->conn) {
++	if (test_bit(FLAG_DEL, &chan->flags)) {
+ 		l2cap_chan_unlock(chan);
+ 		l2cap_chan_put(chan);
+ 		return;
+@@ -1907,7 +1909,7 @@ static void l2cap_retrans_timeout(struct
+ 
+ 	l2cap_chan_lock(chan);
+ 
+-	if (!chan->conn) {
++	if (test_bit(FLAG_DEL, &chan->flags)) {
+ 		l2cap_chan_unlock(chan);
+ 		l2cap_chan_put(chan);
+ 		return;
+@@ -2522,7 +2524,7 @@ int l2cap_chan_send(struct l2cap_chan *c
+ 	int err;
+ 	struct sk_buff_head seg_queue;
+ 
+-	if (!chan->conn)
++	if (test_bit(FLAG_DEL, &chan->flags))
+ 		return -ENOTCONN;
+ 
+ 	/* Connectionless channel */
+@@ -3119,12 +3121,16 @@ static void l2cap_ack_timeout(struct wor
+ 
+ 	l2cap_chan_lock(chan);
+ 
++	if (test_bit(FLAG_DEL, &chan->flags))
++		goto unlock;
++
+ 	frames_to_ack = __seq_offset(chan, chan->buffer_seq,
+ 				     chan->last_acked_seq);
+ 
+ 	if (frames_to_ack)
+ 		l2cap_send_rr_or_rnr(chan, 0);
+ 
++unlock:
+ 	l2cap_chan_unlock(chan);
+ 	l2cap_chan_put(chan);
+ }
 
 
