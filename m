@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D36339A7FD;
-	Tue, 21 Jul 2026 19:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246E6386C39;
+	Tue, 21 Jul 2026 19:09:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660956; cv=none; b=GLHHHOxQdfyj+ihM+oV9ad5gdPLLhI2xnBAO3SJx2yjXUJIMyEhiDXbvrLRDEus8YaGb8UR6O+GXvLI4O0xYQJbE/TOhorRlceOv3dLbO9vW808JiX9mXhW3dN8bkjbHgOXa8DO4UukhGxynFMyq9z9RsylFEnCoFv605NwjIF4=
+	t=1784660959; cv=none; b=G2ESowHsblwipA6L7sZPsG6CoX2cfOLTlnqvCD8pm9jJnjb4kbES39WqbW6LlVg0I3V2uM2lZk0gMZArQx3w1DdkQgfQ1zbbRTDaKBTg180XKoDB8E+JvBlcUJ/Fye8z03/ZpCdfBC3iV4vSz4xL+JRbBrE5RLJKCNU1H8HHmR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660956; c=relaxed/simple;
-	bh=BxrKBVTfU8Ohx5Cmh5MqWZmBQMjtTQzqAmdd6t51bkg=;
+	s=arc-20240116; t=1784660959; c=relaxed/simple;
+	bh=rDNEvgx90NpQCALwSXoUEA35hqD9DEiSLIfhg3U05eY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O1JSxBOuL6jr5pJHgIEt6hCl2ltAlgPt6hdk6xai9ZfHpsYly9Z40rVWS+Xpij1OksLxxSXelwK+Q0/BziLytYdVZ8bnn62Aqv/HpwjNLjdEFFivOoukwjKxaY7xSSo7BLJ1OwrEpwK5qfYHqBeOJ9q0kw4+1jlx8M+gozPl2lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxWnPzfp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t47mTuyoZKU5ej4Q1/df3ZFZo56D4cH5EtHJDqHTxD20UZA8Pvdve4omWxSlNmIlJTGWG7lmlzUn42CdJSIsti3DcLOf/qrkKPoeNRJKQZUhKtCivEeMj2rigo22b0nCxwVqEBHFPj+M4Xe0RTEp0bTUA0Q/lC4bGTK9mXoVrCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCc9Zxp/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxWnPzfp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DEC11F000E9;
-	Tue, 21 Jul 2026 19:09:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCc9Zxp/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FFFC1F00A3A;
+	Tue, 21 Jul 2026 19:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660955;
-	bh=rXu478BZ2YUv9iFu7c6FllOn/1nzWAwihDaRYc5mego=;
+	s=korg; t=1784660957;
+	bh=canXRkDkL0pPAJEpAZPkXREpXfK/b12bvYPYmOHe0XA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zxWnPzfpvbn0+VXvfXDNqjqYujRWpIVXkSkA4/Fk96AieMFDmCu3VEDNO7TVHt9+y
-	 9zvoDeQRftOy2WcZbmO7zFjWKQUn75CaQn81pNxNZTDdnu7C/FApwy8mRWiejQktIi
-	 bFrOC1scvlb/lziBJOFtUFHabIdRKl4qntWPkcXI=
+	b=eCc9Zxp/2V1owxWhlPPkhQAUeQb16kKvurO7hub93smsOvEVX0gXdhpirWx9cSDpe
+	 EOnJhvVRR+XYKsod618v+ydH2W30nG42url1u8n1leoOZE7ya2a6YQ/PtXU9RNJoc9
+	 aX3dghGrN7zJbZdx80lFYxOoX6F4WoWvQMkya9Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Johan Thomsen <write@ownrisk.dk>,
+	Ilya Maximets <i.maximets@ovn.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1176/2077] tipc: fix use-after-free of the discoverer in tipc_disc_rcv()
-Date: Tue, 21 Jul 2026 17:14:09 +0200
-Message-ID: <20260721152620.555583399@linuxfoundation.org>
+Subject: [PATCH 7.1 1177/2077] net: dst_metadata: fix false-positive memcpy overflow in tun_dst_unclone
+Date: Tue, 21 Jul 2026 17:14:10 +0200
+Message-ID: <20260721152620.579957630@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,121 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit 1579342d71133da7f00daa02c75cebec7372097b ]
+[ Upstream commit 4c6d43db2a4d2cef3921e885cf34798f790d34ea ]
 
-bearer_disable() frees b->disc with tipc_disc_delete()'s plain kfree(),
-but tipc_disc_rcv() still dereferences b->disc in RX softirq under
-rcu_read_lock() (tipc_udp_recv -> tipc_rcv -> tipc_disc_rcv).
+kmalloc_flex() in metadata_dst_alloc() sets __counted_by for the
+structure to the options_len, which is then initialized to zero.
+Later, we're initializing the structure by copying the tunnel info
+together with the options, and this triggers a warning for a potential
+memcpy overflow, since the compiler estimates that the options can't
+fit into the structure, even though the memory for them is actually
+allocated.
 
-L2 bearers are safe thanks to the synchronize_net() in
-tipc_disable_l2_media(), but the UDP bearer defers that call to the
-cleanup_bearer() workqueue, so the discoverer is freed with no grace
-period:
+ memcpy: detected buffer overflow: 104 byte write of buffer size 96
+ WARNING: CPU: X PID: Y at lib/string_helpers.c:1036 __fortify_report
+  skb_tunnel_info_unclone+0x179/0x190
+  geneve_xmit+0x7fe/0xe00
 
- BUG: KASAN: slab-use-after-free in tipc_disc_rcv (net/tipc/discover.c:149)
- Read of size 8 at addr ffff88802348b728 by task poc_tipc/184
- <IRQ>
-  tipc_disc_rcv (net/tipc/discover.c:149)
-  tipc_rcv (net/tipc/node.c:2126)
-  tipc_udp_recv (net/tipc/udp_media.c:391)
-  udp_rcv (net/ipv4/udp.c:2643)
-  ip_local_deliver_finish (net/ipv4/ip_input.c:241)
- </IRQ>
- Freed by task 181:
-  kfree (mm/slub.c:6565)
-  bearer_disable (net/tipc/bearer.c:418)
-  tipc_nl_bearer_disable (net/tipc/bearer.c:1001)
+The issue is triggered when built with clang and source fortification.
 
-The bearer is freed with kfree_rcu(); free the discoverer the same way.
-Add an rcu_head to struct tipc_discoverer and free it and its skb from an
-RCU callback.
+Fix that by doing the copy in two stages: first - the main data with
+the options_len, then the options.  This way the correct length should
+be known at the time of the copy.
 
-Because the RCU callback (tipc_disc_free_rcu) lives in module text, a
-call_rcu() that is still pending when the tipc module is unloaded would
-invoke a freed function. Add an rcu_barrier() to tipc_exit() after the
-bearer subsystem has been torn down, so all pending discoverer callbacks
-have run before the module text goes away.
+It would be better if the options_len never changed after allocation,
+but the allocation code is a little separate from the initialization
+and it would be awkward and potentially dangerous to return a struct
+with options_len set to a non-zero value from the metadata_dst_alloc().
 
-Reachable from an unprivileged user namespace: the TIPCv2 genl family is
-netnsok and its bearer commands have no GENL_ADMIN_PERM. Needs CONFIG_TIPC
-and CONFIG_TIPC_MEDIA_UDP.
+Another option would be to use ip_tunnel_info_opts_set(), but it is
+doing too many unnecessary operations for the use case here.
 
-Fixes: 25b0b9c4e835 ("tipc: handle collisions of 32-bit node address hash values")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260617135744.3383175-3-bestswngs@gmail.com
+Fixes: 69050f8d6d07 ("treewide: Replace kmalloc with kmalloc_obj for non-scalar types")
+Reported-by: Johan Thomsen <write@ownrisk.dk>
+Closes: https://lore.kernel.org/netdev/CAKv6aAM8_EWgXScnKmKYm_4SwGDVBK++dzfP+Y6msUXbp99QUw@mail.gmail.com/
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/20260616100332.1308294-1-i.maximets@ovn.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/core.c     |  5 +++++
- net/tipc/discover.c | 14 ++++++++++++--
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ include/net/dst_metadata.h | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/tipc/core.c b/net/tipc/core.c
-index 434e70eabe0812..1ddecea1df6e91 100644
---- a/net/tipc/core.c
-+++ b/net/tipc/core.c
-@@ -218,6 +218,11 @@ static void __exit tipc_exit(void)
- 	unregister_pernet_device(&tipc_net_ops);
- 	tipc_unregister_sysctl();
+diff --git a/include/net/dst_metadata.h b/include/net/dst_metadata.h
+index 1fc2fb03ce3f9a..f45d1e3163f007 100644
+--- a/include/net/dst_metadata.h
++++ b/include/net/dst_metadata.h
+@@ -164,8 +164,11 @@ static inline struct metadata_dst *tun_dst_unclone(struct sk_buff *skb)
+ 	if (!new_md)
+ 		return ERR_PTR(-ENOMEM);
  
-+	/* TODO: Wait for all timers that called call_rcu() to finish before
-+	 * calling rcu_barrier().
-+	 */
-+	rcu_barrier();
+-	memcpy(&new_md->u.tun_info, &md_dst->u.tun_info,
+-	       sizeof(struct ip_tunnel_info) + md_size);
++	/* Copy in two stages to keep the __counted_by happy. */
++	new_md->u.tun_info = md_dst->u.tun_info;
++	memcpy(ip_tunnel_info_opts(&new_md->u.tun_info),
++	       ip_tunnel_info_opts(&md_dst->u.tun_info), md_size);
 +
- 	pr_info("Deactivated\n");
- }
- 
-diff --git a/net/tipc/discover.c b/net/tipc/discover.c
-index 3e54d2df5683a7..b9d06595b06730 100644
---- a/net/tipc/discover.c
-+++ b/net/tipc/discover.c
-@@ -58,6 +58,7 @@
-  * @skb: request message to be (repeatedly) sent
-  * @timer: timer governing period between requests
-  * @timer_intv: current interval between requests (in ms)
-+ * @rcu: RCU head for deferred freeing
-  */
- struct tipc_discoverer {
- 	u32 bearer_id;
-@@ -69,6 +70,7 @@ struct tipc_discoverer {
- 	struct sk_buff *skb;
- 	struct timer_list timer;
- 	unsigned long timer_intv;
-+	struct rcu_head rcu;
- };
- 
- /**
-@@ -382,6 +384,15 @@ int tipc_disc_create(struct net *net, struct tipc_bearer *b,
- 	return 0;
- }
- 
-+static void tipc_disc_free_rcu(struct rcu_head *rp)
-+{
-+	struct tipc_discoverer *d = container_of(rp, struct tipc_discoverer,
-+						 rcu);
-+
-+	kfree_skb(d->skb);
-+	kfree(d);
-+}
-+
- /**
-  * tipc_disc_delete - destroy object sending periodic link setup requests
-  * @d: ptr to link dest structure
-@@ -389,8 +400,7 @@ int tipc_disc_create(struct net *net, struct tipc_bearer *b,
- void tipc_disc_delete(struct tipc_discoverer *d)
- {
- 	timer_shutdown_sync(&d->timer);
--	kfree_skb(d->skb);
--	kfree(d);
-+	call_rcu(&d->rcu, tipc_disc_free_rcu);
- }
- 
- /**
+ #ifdef CONFIG_DST_CACHE
+ 	/* Unclone the dst cache if there is one */
+ 	if (new_md->u.tun_info.dst_cache.cache) {
 -- 
 2.53.0
 
