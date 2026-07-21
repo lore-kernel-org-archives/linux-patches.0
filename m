@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6F1199920;
-	Tue, 21 Jul 2026 20:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E4C237180;
+	Tue, 21 Jul 2026 20:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665907; cv=none; b=kq8S8KdD/7jxuwXj/I9x7ao1Asy2lLQhCUvgx00PuICNDwwY9TTEFoW+mERq1XeBgLtKec/HwhLdTp0xSLyLVr4stwRUIRd4CCEOx9/YnJTwQX8uGbrWdS0y2jRGnpQNaD+etOkZVNJ8i9lGHpOX+C2XVSD1Apzbj+VG5n3EI6M=
+	t=1784665910; cv=none; b=ea+XFM5DEbUchAHlatt+7fyJi+IkBoLecog9y0okfeUKBz3GmB89hndijHjgDrDJ6uDWBL3tG4l+VaRUOg94x3iWggl0keAObQh3tm2AJDBZeFr2R6sryMwUc8vlTUkLGuiH77itDgjZ6MbDPBzFLOKzmyxWc5hoiA+8MGSqnRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665907; c=relaxed/simple;
-	bh=lddt8yOt5t6Lb5Z6SPvZMQJpEhtK4T6Uczsf9TDYEkU=;
+	s=arc-20240116; t=1784665910; c=relaxed/simple;
+	bh=IFRGG6PEsXPG62FofY42ZQb/s7u291LOS1wjsuea830=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NyWdUnZGUhd9johWSwxYI+b3bsC3PX8CGLHznYIJ0mIW84ELb6r/d34JrHh9q18/ucgIuhg21FukzKMs6oFcgv+qmIMSOA3hui/ex60tyVQPPmkFORi+mTmpqnVg3AdSA1SXbRieoPl4ZZtWuUzesVKOiMNRWwTDiQgkfcux8qY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GOxU4FQh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DtoyrHM6oyI8RXMi5qEghf2J61FdSAy2lfZpWlTujcOP7jiiv3mZhdRXOAAv6uXYxdJ/gEj4vIM1LfEoXpuUraAWF5NHMoWw2mfjTi3aYmmtGk6tTiGuwJxoKNw3IZy+eNtaJ5F8srtnoh1+5rgzDEGYlDNGt0MKKwpz/pIVnic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3QwgiPq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GOxU4FQh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A4C1F000E9;
-	Tue, 21 Jul 2026 20:31:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3QwgiPq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882001F000E9;
+	Tue, 21 Jul 2026 20:31:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665906;
-	bh=1DCagdvTqQw6/n5OqRBZLA+OxieEtZ/ovLl5Gn8gd1Y=;
+	s=korg; t=1784665909;
+	bh=70ksj1ckYcPE7bdBb2E7IlBX1cW6nlgQMmi8hsYxxzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GOxU4FQhyZA4623RVF5iwl3AtkDYabK2CJugGsarAwnVIL3mWVEOhS8xbAqMpNZZj
-	 ERUkTxD2SjKt1YnHZwxywYc/tSyqz0MzMeKRKDFytRwJs4UKZa1EnZUo2po9LJsu+k
-	 7e3FydkL2ovKTvswiEL2hqkBGFnHr+ZqUtJ59UIo=
+	b=j3QwgiPqxp50FJTz2gfZBiVkhU7RbkFBQ8OsXSdISV0/geFQyw9Gd82r9mOO0tqio
+	 M4n3XPGwzSkd8iqi4TO33pvvpF+0Z6uPpWVknspSdejyGk0hgBHLje8coxQCm2nruP
+	 nWb5862mU1Ufy/A1dJcUvZmIUCXaMuyU+Tj4s1NM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danila Chernetsov <listdansp@mail.ru>,
-	Jan Kara <jack@suse.cz>,
+	"Qiaoting.Lin" <linqiaoting@xiaomi.com>,
+	"Guanyou.Chen" <chenguanyou@xiaomi.com>,
+	"Chunhui.Li" <chunhui.li@mediatek.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0481/1266] ext2: fix ignored return value of generic_write_sync()
-Date: Tue, 21 Jul 2026 17:15:18 +0200
-Message-ID: <20260721152452.602510434@linuxfoundation.org>
+Subject: [PATCH 6.6 0482/1266] sched: restore timer_slack_ns when resetting RT policy on fork
+Date: Tue, 21 Jul 2026 17:15:19 +0200
+Message-ID: <20260721152452.625497294@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,56 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danila Chernetsov <listdansp@mail.ru>
+From: Guanyou.Chen <chenguanyou9338@gmail.com>
 
-[ Upstream commit a4659be0bc7cb1856ffb15b67f903229ae8891ec ]
+[ Upstream commit 63c1a12bc0e09af7dee919c4fb4a300a719d5125 ]
 
-Fix ext2_dio_write_iter() to propagate the error returned by
-generic_write_sync() instead of silently discarding it, which could
-cause write(2) to return success to userspace on O_SYNC/O_DSYNC files
-even when the sync failed.
+Commit ed4fb6d7ef68 ("hrtimer: Use and report correct timerslack values
+for realtime tasks") sets timer_slack_ns to 0 for RT tasks in
+__setscheduler_params(). However, when an RT task with SCHED_RESET_ON_FORK
+creates child threads, the children inherit timer_slack_ns=0 from the
+parent. sched_fork() resets the child's policy to SCHED_NORMAL but does
+not restore timer_slack_ns, leaving the child permanently running with
+zero slack.
 
-The correct pattern, already used in ext2_dax_write_iter() in the same
-file and in ext4, xfs, f2fs among others, is:
-    if (ret > 0)
-        ret = generic_write_sync(iocb, ret);
+Fix this by restoring timer_slack_ns from default_timer_slack_ns in
+sched_fork() when resetting from RT/DL to NORMAL policy, matching the
+existing behavior in __setscheduler_params().
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Note: this fix alone requires a correct default_timer_slack_ns to be
+effective. See the following patch for that fix.
 
-[JK: Reflect also filemap_write_and_wait() return value]
-
-Fixes: fb5de4358e1a ("ext2: Move direct-io to use iomap")
-Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
-Link: https://patch.msgid.link/20260530122311.136803-1-listdansp@mail.ru
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: ed4fb6d7ef68 ("hrtimer: Use and report correct timerslack values for realtime tasks")
+Reported-by: Qiaoting.Lin <linqiaoting@xiaomi.com>
+Signed-off-by: Guanyou.Chen <chenguanyou@xiaomi.com>
+Signed-off-by: Chunhui.Li <chunhui.li@mediatek.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260522131000.1664983-2-chenguanyou@xiaomi.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext2/file.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ kernel/sched/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ext2/file.c b/fs/ext2/file.c
-index 4ddc36f4dbd407..a6913e4eb523e1 100644
---- a/fs/ext2/file.c
-+++ b/fs/ext2/file.c
-@@ -262,12 +262,15 @@ static ssize_t ext2_dio_write_iter(struct kiocb *iocb, struct iov_iter *from)
- 		endbyte = pos + status - 1;
- 		ret2 = filemap_write_and_wait_range(inode->i_mapping, pos,
- 						    endbyte);
--		if (!ret2)
-+		if (!ret2) {
- 			invalidate_mapping_pages(inode->i_mapping,
- 						 pos >> PAGE_SHIFT,
- 						 endbyte >> PAGE_SHIFT);
--		if (ret > 0)
--			generic_write_sync(iocb, ret);
-+			if (ret > 0)
-+				ret = generic_write_sync(iocb, ret);
-+		} else {
-+			ret = ret2;
-+		}
- 	}
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index d558e43aedcf2a..797b81dcf69ab6 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -4751,6 +4751,7 @@ int sched_fork(unsigned long clone_flags, struct task_struct *p)
+ 			p->policy = SCHED_NORMAL;
+ 			p->static_prio = NICE_TO_PRIO(0);
+ 			p->rt_priority = 0;
++			p->timer_slack_ns = p->default_timer_slack_ns;
+ 		} else if (PRIO_TO_NICE(p->static_prio) < 0)
+ 			p->static_prio = NICE_TO_PRIO(0);
  
- out_unlock:
 -- 
 2.53.0
 
