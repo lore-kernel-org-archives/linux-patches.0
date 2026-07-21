@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71ABD3E49FD;
-	Tue, 21 Jul 2026 22:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60386435532;
+	Tue, 21 Jul 2026 22:10:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671805; cv=none; b=ugHxm+8Eo3vyf1Ee6UXYjpdfOk/d0FPCEoCOWRBFVKFUynyr4CCsPRAuDYMjCz+asxiH+Nxszz3QQyvYpjWZAtbTMTs3tLe4wIfVxsg+87hb96MFNzBjo9mNJeJ1lDQus1CsMiDlBJ6KaxA37Oe5bWW3O4j2r1lqzPMXGXQjMjk=
+	t=1784671808; cv=none; b=Aq9rQkxylFJM5VbVzS1zNz/muSEUcG0p57jUtBJU4rxejtAezKDonxyoaYDGJmqM9vCPzKX7Wcq6jGg06ccdGzUFPXNtFDdpiNyLZ+CcG+pRf4pDcV4RmeyaZZZD0vVaIHsuHhhIgYLYMzweSxZh6kxLTly2T8SrNGG2uzxLhxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671805; c=relaxed/simple;
-	bh=Vx0B1n4Vt0H4G71JSLSwVXyNB63yFlFcg3OV7qH+1qo=;
+	s=arc-20240116; t=1784671808; c=relaxed/simple;
+	bh=OrvbZeBW4CZ/CtWHjekAAJr6UImrS3crwqO8RyzO7hw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZCm87QioP/aB/8jh4IVXRS9FQT7XjSxRNMkk6NijXdCRdy77nV8UrEzMSar6QvkTA6qIAwXsY3F34FcE0ItDvpdPflyxYe+K+scWT6uusfccdtRT+Yh3T4jKzIl02eTGoevjIv18rOdoabfItNCX4Il4aslEPIYyzmGDWDDe+wU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lB2Mmhbw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gab/CU048eJ4GcmnSRDmHhf1TWr8U7wZkrxGsw6SQ+tpmlTyziS1Ql/nCCGokSRYpyuv9/px2SFTJZOU9QC7+gEG6KT8OBtD6LkMvn7TcScPC65jmd4P5LSi4BGzlBeDzTMev7XcOZDXrccoQwBGFtQfnTPZrjr87S9lDmC12zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMtSP1h8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lB2Mmhbw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2CEE1F000E9;
-	Tue, 21 Jul 2026 22:10:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMtSP1h8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7516C1F000E9;
+	Tue, 21 Jul 2026 22:10:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671804;
-	bh=uKj3+2KphTXvW04Gqvj7EAEJT6SU2qdswvwt7oKJRDo=;
+	s=korg; t=1784671807;
+	bh=2Z+skCLmerUGb746NHDlj2VcWhsUEO7OAala7TOsaiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lB2MmhbwDpiGJ5Ju426tnL4O32iXUSyWAnRXEMeqg7vk79HVzijMZ8ZOyxLmU9kVy
-	 +OKJrTwiwlXjARXRVJr6q7+5p29tlaSXQGX9CAQ0q3boOZErW3akHKXMB7TYRlwxIm
-	 4LglUyEexj65qar/R2Fa1i+xsFGon357zk7AXcc4=
+	b=hMtSP1h8sMYNlJAQUj0BQziQtJXy8sGtmE1+DE0PKyxpBnR6ccHSRgaD0dK3RWfyU
+	 hIe9oz5vm98dYOqW+n7nVgEMzpGZV6d7SVLfgjM4y9CoRPcpWqNZBD0+c6dqIM8i3w
+	 Ofzs9O6xWFrvVtEbdIjRebVlptZWdB9v2zJWYHmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 358/843] kcm: use WRITE_ONCE() when changing lower socket callbacks
-Date: Tue, 21 Jul 2026 17:19:53 +0200
-Message-ID: <20260721152414.085487493@linuxfoundation.org>
+Subject: [PATCH 5.15 385/843] iio: light: si1133: reset counter to prevent race condition
+Date: Tue, 21 Jul 2026 17:20:20 +0200
+Message-ID: <20260721152414.698142630@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,59 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Joshua Crofts <joshua.crofts1@gmail.com>
 
-[ Upstream commit 47186409c092cd7dd70350999186c700233e854d ]
+[ Upstream commit 0a5f45ed2342aabae1e32c72558d15be28940a95 ]
 
-kcm_attach() replaces a live lower TCP socket's sk_data_ready and
-sk_write_space callbacks with KCM handlers, and kcm_unattach() restores
-them later. Those callback-pointer updates are still plain stores even
-though the same fields can be read and invoked concurrently on other
-CPUs.
+Sashiko reported a potential race condition happening when the driver
+returns an errno after a timeout in the si1133_command() function. The
+premature exit causes the hardware and software counters to become out
+of sync by not updating data->rsp_seq, therefore the internal hardware
+counter keeps incrementing.
 
-If another CPU observes an older callback snapshot after the live field
-has already been restored, callback execution can run with a mismatched
-target and sk_user_data state, leading to stale or misdirected wakeups.
+Fix this by adding a call to si1133_cmd_reset_counter() before returning
+from timeout.
 
-Use WRITE_ONCE() for the callback replacement and restore operations so
-these shared callback fields follow the same visibility contract already
-established by the earlier 4022 fixes.
-
-Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260611053543.2429462-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: e01e7eaf37d8 ("iio: light: introduce si1133")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/message/20260428-si1133-checkup-v2-5-70ad14bfefe2%40gmail.com
+Assisted-by: gemini:gemini-3.1-pro-preview
+Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/kcm/kcmsock.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iio/light/si1133.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index a3b281f7a99bc4..a0533400af808c 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -1404,8 +1404,8 @@ static int kcm_attach(struct socket *sock, struct socket *csock,
- 	psock->save_write_space = csk->sk_write_space;
- 	psock->save_state_change = csk->sk_state_change;
- 	csk->sk_user_data = psock;
--	csk->sk_data_ready = psock_data_ready;
--	csk->sk_write_space = psock_write_space;
-+	WRITE_ONCE(csk->sk_data_ready, psock_data_ready);
-+	WRITE_ONCE(csk->sk_write_space, psock_write_space);
- 	csk->sk_state_change = psock_state_change;
- 
- 	write_unlock_bh(&csk->sk_callback_lock);
-@@ -1481,8 +1481,8 @@ static void kcm_unattach(struct kcm_psock *psock)
- 	 */
- 	write_lock_bh(&csk->sk_callback_lock);
- 	csk->sk_user_data = NULL;
--	csk->sk_data_ready = psock->save_data_ready;
--	csk->sk_write_space = psock->save_write_space;
-+	WRITE_ONCE(csk->sk_data_ready, psock->save_data_ready);
-+	WRITE_ONCE(csk->sk_write_space, psock->save_write_space);
- 	csk->sk_state_change = psock->save_state_change;
- 	strp_stop(&psock->strp);
- 
+diff --git a/drivers/iio/light/si1133.c b/drivers/iio/light/si1133.c
+index f8c9b2cc322e8d..17ee203d16a274 100644
+--- a/drivers/iio/light/si1133.c
++++ b/drivers/iio/light/si1133.c
+@@ -427,6 +427,11 @@ static int si1133_command(struct si1133_data *data, u8 cmd)
+ 			dev_warn(dev,
+ 				 "Failed to read command 0x%02x, ret=%d\n",
+ 				 cmd, err);
++			/*
++			 * Reset counter on err to prevent software and hardware
++			 * counters being out of sync.
++			 */
++			si1133_cmd_reset_counter(data);
+ 			goto out;
+ 		}
+ 	}
 -- 
 2.53.0
 
