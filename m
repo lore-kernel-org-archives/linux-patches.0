@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936E346A5FF;
-	Tue, 21 Jul 2026 15:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252E646D543;
+	Tue, 21 Jul 2026 15:48:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648911; cv=none; b=Wp0/BZdGYB6hHovFSpRkfjaMecKURtOXN3Z7q//W7YCVn/JiWSLMZg6d4ltiEtm48qnr8di9rthJAyD7OYopsF7jwWRwMJjiKeBshihMTUjxFFx0AQ8OKcfB70IP+2ZU/jODzG8ANko9XFjWm5zx/7vO9FlDVGl0A1e2cNvePPk=
+	t=1784648914; cv=none; b=poDCzyjhY6l8DM+kCfKMzlNNN0jMQXUSA8XyTZl1vc3Fr7uhhCJ8uEX/eADKrF9fl2RDlHbDWN2EwjjDZBwELWujPp4CZxzKF7ciKqvIChlm+Ai3Cc2B9dTSEEUGupvAyBpBEo6DmXKJJybVaxGS4SG2XmwjXyhG12O34mWHB4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648911; c=relaxed/simple;
-	bh=Nz1aujF9RQt6vvCbu4u+IXW6a9qfniAhrGVE6gZD0Jw=;
+	s=arc-20240116; t=1784648914; c=relaxed/simple;
+	bh=dL+8tJmdERbgQDYogOXbhwqgJuAe9wNSNWNFt8I0DMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mcVwwldCKeyALUb3eVncvAjr4VXr0p47xI/4qh/arS+zANZqceWKmHO/OAwG9zDSgkjHijv9915dSuTU4Qq1YGsCNkv2/fxOXFEqqYPUeZ6XJ8L3RNjBnIApvCbmVgxN2JRQjNC9VnKM26nbKPam5KcaNkzVg59VY5SLJmytiYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOqQy72c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lu9PVm2MZKdjF5Awh+BuIBeETzp/Q0O784SgbWXVaAMKCUNlc6nn4z/mr0aKG8iE0oGZKmO2Xkj2v3R/QdTZ42bveq5nJH4z5QiZ3ZROi3bsQqiWXZjKvBXHY5WeP8KVXs5xHjFs/lI7qF3Be58Q2sAPSk+J8OamIo4k2xWl47A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JchYX5o1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOqQy72c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8361F000E9;
-	Tue, 21 Jul 2026 15:48:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JchYX5o1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618DB1F000E9;
+	Tue, 21 Jul 2026 15:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648910;
-	bh=lm28tb2daByJ/+abuPGrs3v7XT1B73NeWh66Iv197D0=;
+	s=korg; t=1784648912;
+	bh=5LGz+DXBBXQYLS79DPJlG8SBnEw8CWgs632bX6Vl68A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nOqQy72ci8wqMOUIzEF1ad9zIZGJPtNaG8M5YcN8XwNDuf+6/co0yW5rwaSFzDy++
-	 IDbkUaNYmKMR4TFKROxUsHxXKnZCNgNXcEUf1YWQUGCNB7on9stDJnQqKNi0uNXbU0
-	 33NYtDpX5OG3EY0C+Tq2OUCIUWncb+Xf9xR3uamw=
+	b=JchYX5o1URQsAbx3xHF3JcQbq1QgFTb30RVBvl7BEwcr49YOG60jkHs39GVnQW2xy
+	 BUf0aAk8wGmNZy4ayWVqePKnCOlMLz4g6MmHlhUZ2mZ/0/33gDuZJN4UANE/aLexju
+	 VL+J9YvGgXeMMqLa02vO38LD5ElmEYbcYNLmNwfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhoumin <teczm@foxmail.com>,
-	Tony Luck <tony.luck@intel.com>,
+	Marek Vasut <marex@nabladev.com>,
+	Olivier Moysan <olivier.moysan@foss.st.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0379/2077] EDAC/{skx_common,skx}: Fix UBSAN shift-out-of-bounds in skx_get_dimm_info
-Date: Tue, 21 Jul 2026 17:00:52 +0200
-Message-ID: <20260721152601.631797653@linuxfoundation.org>
+Subject: [PATCH 7.1 0380/2077] arm64: dts: st: Fix SAI addresses on stm32mp251
+Date: Tue, 21 Jul 2026 17:00:53 +0200
+Message-ID: <20260721152601.657010762@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,45 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zhoumin <teczm@foxmail.com>
+From: Marek Vasut <marex@nabladev.com>
 
-[ Upstream commit c63ed6e1f5fe648a4a099b6717f679999be482ef ]
+[ Upstream commit fba4a31a7f3b6b29b01c83180f83e7ed4c398738 ]
 
-When the skx_get_dimm_attr() helper returns -EINVAL,
-skx_get_dimm_info() does not validate these return values before using
-them in a shift operation:
+The second field of SAI register addresses should be within 0x3f0 bytes
+from the start of the SAI register addresses, the second field describes
+the ID registers which are at that addrses. Currently, the second field
+does not match RM, fix it.
 
-    size = ((1ull << (rows + cols + ranks)) * banks) >> (20 - 3);
-
-If all three values are -22, the shift exponent becomes -66, triggering
-a UBSAN shift-out-of-bounds error:
-
-    UBSAN: shift-out-of-bounds in drivers/edac/skx_common.c
-    shift exponent -66 is negative
-
-Fixes: 88a242c98740 ("EDAC, skx_common: Separate common code out from skx_edac")
-Signed-off-by: zhoumin <teczm@foxmail.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://patch.msgid.link/tencent_2A0CC835A18366643CBD2865B169948AB409@qq.com
+Fixes: bf26d75a95f1 ("arm64: dts: st: add sai support on stm32mp251")
+Signed-off-by: Marek Vasut <marex@nabladev.com>
+Reviewed-by: Olivier Moysan <olivier.moysan@foss.st.com>
+Link: https://lore.kernel.org/r/20260411130300.19603-1-marex@nabladev.com
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/skx_common.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/st/stm32mp251.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
-index a9557c8344bc13..f15de0ea96c87e 100644
---- a/drivers/edac/skx_common.c
-+++ b/drivers/edac/skx_common.c
-@@ -466,6 +466,9 @@ int skx_get_dimm_info(u32 mtr, u32 mcmtr, u32 amap, struct dimm_info *dimm,
- 	rows = numrow(mtr);
- 	cols = imc->hbm_mc ? 6 : numcol(mtr);
+diff --git a/arch/arm64/boot/dts/st/stm32mp251.dtsi b/arch/arm64/boot/dts/st/stm32mp251.dtsi
+index 673fbc5632e69f..9c63fdb5a885af 100644
+--- a/arch/arm64/boot/dts/st/stm32mp251.dtsi
++++ b/arch/arm64/boot/dts/st/stm32mp251.dtsi
+@@ -1202,7 +1202,7 @@ spi5: spi@40280000 {
  
-+	if (ranks < 0 || rows < 0 || cols < 0)
-+		return 0;
-+
- 	if (imc->hbm_mc) {
- 		banks = 32;
- 		mtype = MEM_HBM2;
+ 			sai1: sai@40290000 {
+ 				compatible = "st,stm32mp25-sai";
+-				reg = <0x40290000 0x4>, <0x4029a3f0 0x10>;
++				reg = <0x40290000 0x4>, <0x402903f0 0x10>;
+ 				ranges = <0 0x40290000 0x400>;
+ 				#address-cells = <1>;
+ 				#size-cells = <1>;
+@@ -1236,7 +1236,7 @@ sai1b: audio-controller@40290024 {
+ 
+ 			sai2: sai@402a0000 {
+ 				compatible = "st,stm32mp25-sai";
+-				reg = <0x402a0000 0x4>, <0x402aa3f0 0x10>;
++				reg = <0x402a0000 0x4>, <0x402a03f0 0x10>;
+ 				ranges = <0 0x402a0000 0x400>;
+ 				#address-cells = <1>;
+ 				#size-cells = <1>;
+@@ -1270,7 +1270,7 @@ sai2b: audio-controller@402a0024 {
+ 
+ 			sai3: sai@402b0000 {
+ 				compatible = "st,stm32mp25-sai";
+-				reg = <0x402b0000 0x4>, <0x402ba3f0 0x10>;
++				reg = <0x402b0000 0x4>, <0x402b03f0 0x10>;
+ 				ranges = <0 0x402b0000 0x400>;
+ 				#address-cells = <1>;
+ 				#size-cells = <1>;
+@@ -1362,7 +1362,7 @@ usart1: serial@40330000 {
+ 
+ 			sai4: sai@40340000 {
+ 				compatible = "st,stm32mp25-sai";
+-				reg = <0x40340000 0x4>, <0x4034a3f0 0x10>;
++				reg = <0x40340000 0x4>, <0x403403f0 0x10>;
+ 				ranges = <0 0x40340000 0x400>;
+ 				#address-cells = <1>;
+ 				#size-cells = <1>;
 -- 
 2.53.0
 
