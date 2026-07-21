@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421A746EC8A;
-	Tue, 21 Jul 2026 18:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEAB746D566;
+	Tue, 21 Jul 2026 18:38:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659111; cv=none; b=ULhp3YDTQTT5goTYagIMX0dt4gvLUkNnokH/EzrmBFhXV0Kxy7/YnwVKQgx9W1x32QDCAPvqJQEmRq5vqOoyeuSOIGkNOZy6X5G7LstNfjKnWMdgk+KcxV/nD282DeTo6CrOXCkND5LgvXMDRnJ+m6sCChj3Sjr/+2Yk4QHWLuw=
+	t=1784659114; cv=none; b=NiFdhH6scfmOuWv1FIlqZFyMXtyFbxACx4X+rkIoVcNIRtULSOCIN5m7xoWjVck9NWYOJwJbzD0RUqRwKz4OHJ5cE0c6yN0MLxS257DzZ/nGk4ixI/8j+uhz1Zu5LA/8t4JXTYaeUM3vWx4fIwR4+OXVU9Xlef/REpih/VgRetU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659111; c=relaxed/simple;
-	bh=cw1NCQcWpiKBml7MhGRCNbshYBaesHtI2OBhtUbD5DA=;
+	s=arc-20240116; t=1784659114; c=relaxed/simple;
+	bh=aTdD2ZCj6q2bVoHC8V96qemYD3SJ+hUE7rPoWF4Pxjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JfsqSOn17DYHZpcrplCIQVuEFFuC/Is5h2HIUWeU6pjOpQN4bFXpZd9etIc8u3mrF/5kdNnrLUwGTFKVw9/10xKYi2/iejHAZxhC516EBt8csmLFOP5kmWJz4A2Ksj1dDkGpEHrPz+gNEUeS7oRJUA94FUhixgoPPoVbLvF+N/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oy1Tsi7U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZtA3IwbKWEBY7RrSTWooWusyYEeKM+AshhlUB+A87DATsWXCOlnB6kOWpdbJ5NhM94+7G8mqwpz3awyHkd3756nBTk6O6HqCyeT+KI1p9Lwmnp7oI8QGvRBO4zGb13PJz5bRGX89xzJxy/DnJowbUJL+yn8ltshh45iPvweYpnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mc1j0yp4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oy1Tsi7U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F5E71F00AC4;
-	Tue, 21 Jul 2026 18:38:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mc1j0yp4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E461F00A3F;
+	Tue, 21 Jul 2026 18:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659109;
-	bh=ETuuHXN/851qGp10ODLMlMAaLYdeh0p9x6TyTjTkP1Q=;
+	s=korg; t=1784659112;
+	bh=IDC/YjyE2onqvph3BzP+kZawf8QoeMKHKBDQQzpz2oM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Oy1Tsi7U/iK8OxUuhMR8Sk4y3CFQf5+wnRwmsePawV2oSTLUiWZHAJI2cBERQR80I
-	 nrLIc1N2g9wJSgeRyJMX7gJ+5vG4u+yiqeoHa02/YvsMLQodXb5Zat0JlW7KBo+ajE
-	 96hT5sCSvPU56kq/LO7zWeJD5TbKzAdEBWt7cxCU=
+	b=Mc1j0yp4ftqE3DpCdHjg67CrV8cvsuh9sd/Xr027qbJPDxKIBV1kjS9XRzkKU+oEh
+	 Oi2c7aw4reQWfvIkM1s4G0vOH1Zjp7S8FoDDpjH2YvHsJbLnMq1OI55D2nwiEHrgtr
+	 leVjClmEdc5l5jbLJqAz1zIWooZT6X2rqYtvC5/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yitang Yang <yi1tang.yang@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 1343/1611] block: fix IORING_URING_CMD_REISSUE flags check in blkdev_uring_cmd
-Date: Tue, 21 Jul 2026 17:24:19 +0200
-Message-ID: <20260721152545.661997761@linuxfoundation.org>
+	Bradley Morgan <include@grrlz.net>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.18 1391/1611] cpu: hotplug: Preserve per instance callback errors
+Date: Tue, 21 Jul 2026 17:25:07 +0200
+Message-ID: <20260721152546.730186246@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,41 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yitang Yang <yi1tang.yang@gmail.com>
+From: Bradley Morgan <include@grrlz.net>
 
-commit 4f919141be38ea2b1314e3a531b7b998eb64e8bc upstream.
+commit 673db10729fb121ea1b16fe57791a0cb9eac1eb5 upstream.
 
-blkdev_uring_cmd() checks IORING_URING_CMD_REISSUE to determine whether
-this is the first issue. However, this flag lives in cmd->flags instead
-of issue_flags.
+cpuhp_invoke_callback() unwinds earlier callbacks for the same
+hotplug state when one instance fails. The rollback path currently
+reuses ret, so a successful rollback can hide the original error and
+make the failed transition look successful.
 
-Coincidentally, IO_URING_F_NONBLOCK shares bit 31 with
-IORING_URING_CMD_REISSUE. As a result, the SQE read was never performed,
-bic->len remained zero, and every BLOCK_URING_CMD_DISCARD failed with
--EINVAL.
+Keep the rollback result separate from the original error.
 
-Fix it by checking cmd->flags as intended.
-
+Fixes: 724a86881d03 ("smp/hotplug: Callback vs state-machine consistency")
+Signed-off-by: Bradley Morgan <include@grrlz.net>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: 212ec34e4e72 ("block: only read from sqe on initial invocation of blkdev_uring_cmd")
-Signed-off-by: Yitang Yang <yi1tang.yang@gmail.com>
-Link: https://patch.msgid.link/20260616155129.406057-1-yi1tang.yang@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://patch.msgid.link/20260619163719.12103-1-include@grrlz.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/ioctl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/cpu.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/block/ioctl.c
-+++ b/block/ioctl.c
-@@ -857,7 +857,7 @@ int blkdev_uring_cmd(struct io_uring_cmd
- 	u32 cmd_op = cmd->cmd_op;
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -175,7 +175,7 @@ static int cpuhp_invoke_callback(unsigne
+ 	struct cpuhp_step *step = cpuhp_get_step(state);
+ 	int (*cbm)(unsigned int cpu, struct hlist_node *node);
+ 	int (*cb)(unsigned int cpu);
+-	int ret, cnt;
++	int ret, cnt, rollback_ret;
  
- 	/* Read what we need from the SQE on the first issue */
--	if (!(issue_flags & IORING_URING_CMD_REISSUE)) {
-+	if (!(cmd->flags & IORING_URING_CMD_REISSUE)) {
- 		const struct io_uring_sqe *sqe = cmd->sqe;
+ 	if (st->fail == state) {
+ 		st->fail = CPUHP_INVALID;
+@@ -239,12 +239,12 @@ err:
+ 			break;
  
- 		if (unlikely(sqe->ioprio || sqe->__pad1 || sqe->len ||
+ 		trace_cpuhp_multi_enter(cpu, st->target, state, cbm, node);
+-		ret = cbm(cpu, node);
+-		trace_cpuhp_exit(cpu, st->state, state, ret);
++		rollback_ret = cbm(cpu, node);
++		trace_cpuhp_exit(cpu, st->state, state, rollback_ret);
+ 		/*
+ 		 * Rollback must not fail,
+ 		 */
+-		WARN_ON_ONCE(ret);
++		WARN_ON_ONCE(rollback_ret);
+ 	}
+ 	return ret;
+ }
 
 
