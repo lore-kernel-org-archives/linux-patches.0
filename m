@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C6D472F8D;
-	Tue, 21 Jul 2026 21:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170A9476061;
+	Tue, 21 Jul 2026 21:01:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667677; cv=none; b=fCQwrLIWLbE//2LOn062mEadbwD7FmNxHvZA1xdQ0kQERrsQrv3YMEZvt9tIivVa3eN/WzDW9g293Pi4+GZNNS4Whz7xzXneQig/SnlauRkQZbbr6vDDqJMhfZe+fj4OmrU939xMYiHC9MOifpseRolkDuw30ASpyDQrF1IpmFE=
+	t=1784667680; cv=none; b=s5nm9qP9RmBSaHlPzpqgsVdeRHmes4gNsyfG5ECJuYcKCa5pRS9JSGuazzADnHBYAEX/VYXZZYVwG2391ea6Kbt0uouK5CD/H5BPXq7rJLuW6t6LXuNZHI1IGCKvVXCIQNA/9EwM7gO8LLW/tw4u71kOZpfQ/ca8N2lR3T2EIVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667677; c=relaxed/simple;
-	bh=x0D83Lv56GjdnaVuoT6HD5vy4HpN5VGsjnqGP8YAo3U=;
+	s=arc-20240116; t=1784667680; c=relaxed/simple;
+	bh=ovJsvNaoa+ycqj0fyj1JHuQIlSoQoiNUt5m0pGrvihU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UTiF7WB9mUOMZZKmDc1BaWPsAntdm8ELX2abjPaehrNKRSC6Vw30am8wGHNco027FOBOQzmKfYXpgTcgqbhtMcODPPg53tYskqWJEse7bJRZKg2eSmDm3eFsY4nHlixLTi8IGrWccWqYZftkd+EYxTnIZvo7xTnvFYXroXokO6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XJWRc/xb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lBj2S1ziu0EYPlgV9AdtVpUkSCz44GeeQe63a1pccrtXaRZiiqU6KwOv1w0J2xVipuvFKEjaeR7LTlcAMUY4o4cUlAtISOPmJ8DT/2BRq0w92S/U4pNWc9fluwZXD5Tc6jXRhf5tIRnW1v/W7ACzvDx6Gf9yO3tEREpFBoCwct8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHDCH3qm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XJWRc/xb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B121F000E9;
-	Tue, 21 Jul 2026 21:01:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHDCH3qm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 773EB1F000E9;
+	Tue, 21 Jul 2026 21:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667676;
-	bh=TDAKQuXOYlcP/pE/PPqzl5ifRpZp1m1wJ0qOvCLBsnA=;
+	s=korg; t=1784667679;
+	bh=UzZr0Msw2V+mdoDdIFpfIisgvx94VAGoZkiCYfjV4fA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XJWRc/xbA0MMsntpSRlGae3aZFgKoZpi2Mx5/C+wR8DU7nwa0pNIoDAdlVddPozMM
-	 bWKFDBX9KODKJ8U5HO/ADFKtzVlPQFgm14Er/wlW/1iFshBluIVrnbBEHBTSfCo8Nn
-	 Ou+GVkwqJDhpU7Rul3LCSc6y5ViA6rCVAjSkX6rM=
+	b=oHDCH3qmtDspuy8+7pGtraMa8xHwH6UW86ZS7CrgsK+z+TY9mdCsTn+3LHy2mKxMS
+	 qhGnb6GSYvu02j99QPujm8ROVSw4vGBu7QOS2XhiLy/jh/z5r1d6p06c1wcm7PIho8
+	 hzI2/dJ9+Yd2sUTzPTOI7l8J/DYvAe8llOVgqH1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 1108/1266] net/sched: sch_taprio: Replace direct dequeue call with peek and qdisc_dequeue_peeked
-Date: Tue, 21 Jul 2026 17:25:45 +0200
-Message-ID: <20260721152506.596239510@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.6 1109/1266] tracing/probes: Fix double addition of offset for @+FOFFSET
+Date: Tue, 21 Jul 2026 17:25:46 +0200
+Message-ID: <20260721152506.618929325@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,45 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit e056e1dfcddca877dd46d704e8ec9860cfc9ec44 upstream.
+commit 9a667b7750dda88cbf1cca96a53a2163b2ee71f7 upstream.
 
-When taprio's software path peeks a non-work-conserving child qdisc, the
-child stashes the peeked skb in its gso_skb; taprio_dequeue_from_txq()
-then takes the packet with a direct child ->dequeue() call, which ignores
-that stash, orphans the peeked skb and desyncs the child's qlen/backlog.
-With a qfq child this re-enters the child on an emptied list and
-dereferences NULL, panicking the kernel from softirq on ordinary egress.
+Since commit 533059281ee5 ("tracing: probeevent: Introduce new argument
+ fetching code") wrongly use @offset local variable during the parsing,
+the offset value is added twice when dereferencing.
+Reset the @offset after setting it in FETCH_OP_FOFFS.
 
-Take the packet through qdisc_dequeue_peeked(), as sch_red and sch_sfb
-now do. The helper returns the child's stashed skb first and is a no-op
-when there is none, so a work-conserving child is unaffected and the
-gated path now consumes the skb whose length was charged to the budget.
+Link: https://lore.kernel.org/all/178217905962.643090.1978577464942171332.stgit@devnote2/
 
-Fixes: 5a781ccbd19e ("tc: Add support for configuring the taprio scheduler")
+Fixes: 533059281ee5 ("tracing: probeevent: Introduce new argument fetching code")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Cc: stable@vger.kernel.org
-Cc: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260625-b4-disp-31bcb279-v1-1-85c40b83c529@proton.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_taprio.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_probe.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -759,7 +759,7 @@ static struct sk_buff *taprio_dequeue_fr
- 		return NULL;
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -1104,6 +1104,7 @@ parse_probe_arg(char *arg, const struct
  
- skip_peek_checks:
--	skb = child->ops->dequeue(child);
-+	skb = qdisc_dequeue_peeked(child);
- 	if (unlikely(!skb))
- 		return NULL;
- 
+ 			code->op = FETCH_OP_FOFFS;
+ 			code->immediate = (unsigned long)offset;  // imm64?
++			offset = 0;
+ 		} else {
+ 			/* uprobes don't support symbols */
+ 			if (!(ctx->flags & TPARG_FL_KERNEL)) {
 
 
