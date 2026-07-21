@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8284043B48C;
-	Tue, 21 Jul 2026 22:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4D13C10AB;
+	Tue, 21 Jul 2026 22:48:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674120; cv=none; b=QnoxCGfalXAiA4aFfWcyENxvezlK3gcftP2pH42QqKTGJcaYiPgDvEjrnpIvR7dHsQW23sjSKR2Ux4APawcBJyjdWQlsjh8oV6Hl6D5SbYG+mHNaTY89kYhIvNvagb5lJhYXLpRXbLwt2+6gjimchZiJpHtnxdrZIaiBj+r5sxQ=
+	t=1784674121; cv=none; b=QiouEN5GhJWX0Z8Jml0wH8nU5HQzsQnMQV6Slj3iEaEuYLdCqtGgzDg+RbXvTwNWoGGlhGzAf1kdrrFPtHYDtIzS2u2MYYSPIMVFJGr9tUuPlKtnx8QMa655NCT6S1MWwisDufm9MUMtiLHMdnwctC9VNy8b+oPNp9p/y9rZzoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674120; c=relaxed/simple;
-	bh=btdiy1ut88v32Q7ST8jYrw5z5vp8Op+QR7m5kraFxMA=;
+	s=arc-20240116; t=1784674121; c=relaxed/simple;
+	bh=FR7ji6Wu5WKJUbGCWKpikh0dltCGL94t8YUwv0Vlr5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A2+DBgmIknlcnU3IAwng1Ssc5PfQWBQliMIix1Q8jHSS64uy9Vizhd27ir6InAQf19iu9C1Mo2XPwcF4cvt4geALJrJxtLQ+6zvY4nZB3lKC9iO5vzDBzSqXgUaps2ll6/cLyyrW6n+/viEtc3efk3agM5lhh4uy9FSTBOjBMKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNyf2S3k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ErTEexL+xwtO+LJH6c4rUN1tIfgF+IpE5dCBQ0/gcHz4sChwB8sxxvDro7HZKCvNgp22jIDvBD/zGq78asDuFo+Kvx+k57T/j+t2zLEKZXPLHpAWYFouIDBiUZknWQe9SZb0ZnsZPbDAJaCEZdGxekSr+CTMzxDsGBCAkR7zRCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEn4iucu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNyf2S3k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 498571F000E9;
-	Tue, 21 Jul 2026 22:48:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEn4iucu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 291DF1F00A3A;
+	Tue, 21 Jul 2026 22:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674112;
-	bh=iHyxJguT4zfQnTcfw4CYLw4AcOH95uslqDdHjEm1Qp4=;
+	s=korg; t=1784674120;
+	bh=r3611gKwA/H/EqTMMvY7nLzez+jmEB02cEdv0Q7nsHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UNyf2S3kCzmOPyXvclMMG64HWjvWP2dYSuvIomARp8jXQG4SvG9NOb0qbf+ukY59U
-	 CnvQth12nOOiuqNoWOof3ZPXw+7Nm79y4yRKzBoYEBzfN64/s45afoRTWfiDSMADLU
-	 0YemGVCyQP/i3T6RV/HQB6scJZz9yA9rJ0p69H4Q=
+	b=OEn4iucuDQ5byefyNyessys6hPBRtgKuG4nbKT6ke9HrI2J5Ce/Eh+Kj1qGVZllf+
+	 N899I1uRBmFrq2zgg8zbTuh4oYYTUCdM6wy8LguAPeE45yH88CmBfHTFBoYWoh8qhk
+	 yEJNqCFva35IWgs/o9iUn5efPJy1gBeI/zw9cBhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Julian Anastasov <ja@ssi.bg>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 419/699] ipv6: mcast: Fix potential UAF in MLD delayed work
-Date: Tue, 21 Jul 2026 17:22:58 +0200
-Message-ID: <20260721152405.146315983@linuxfoundation.org>
+Subject: [PATCH 5.10 422/699] ipvs: fix PMTU for GUE/GRE tunnel ICMP errors
+Date: Tue, 21 Jul 2026 17:23:01 +0200
+Message-ID: <20260721152405.212827839@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,156 +57,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit 9b26518b6896a16b809b1e42986f4ebac7bccc1e ]
+[ Upstream commit 6b335af0d0d1ff44ac579d106953bf19299e5233 ]
 
-A race condition exists between device teardown and incoming MLD query
-processing, leading to a Use-After-Free in the MLD delayed work.
+When an ICMP Fragmentation Needed error is received for a tunneled IPVS
+connection, ip_vs_in_icmp() recomputes the MTU that the original packet
+can use by subtracting the tunnel overhead from the reported next-hop
+MTU.
 
-During device destruction, the primary reference to inet6_dev is dropped,
-which can drop its refcount to 0. The actual freeing of inet6_dev memory
-is deferred via RCU.
+The current code always subtracts sizeof(struct iphdr), which is only
+the IPIP overhead. For GUE and GRE tunnels, ipvs_udp_decap() and
+ipvs_gre_decap() already compute the additional tunnel header length,
+but that value is scoped to the decapsulation block and is lost before
+the ICMP_FRAG_NEEDED handling. As a result, the ICMP error sent back to
+the client advertises an MTU that is too large, so PMTUD can fail to
+converge for GUE/GRE-tunneled real servers.
 
-Concurrently, the packet receive path runs under RCU read lock and obtains
-the inet6_dev pointer. Because the memory is RCU-protected, CPU-0 can
-safely dereference inet6_dev even if its refcount has hit 0.
+With a reported next-hop MTU of 1400, a GUE tunnel currently returns
+1380 to the client. The correct value is 1368:
 
-However, if CPU-0 calls igmp6_event_query() and schedules delayed work, it
-attempts to acquire a reference using in6_dev_hold(). This increments the
-refcount from 0 to 1, triggering a "refcount_t: addition on 0" warning.
-Since the inet6_dev memory is still scheduled to be freed after the RCU
-grace period, the device is freed while the work is still scheduled.
-When the work runs, it accesses the freed memory, causing a kernel panic.
+  1400 - sizeof(struct iphdr) - sizeof(struct udphdr) -
+  sizeof(struct guehdr)
 
-Fix this by using refcount_inc_not_zero() (via a new helper
-in6_dev_hold_safe()) to prevent acquiring a reference if the device is
-already being destroyed. If the refcount is 0, we do not schedule the work.
+Hoist the tunnel header length into the main ip_vs_in_icmp() scope and
+subtract sizeof(struct iphdr) + ulen in the Fragmentation Needed path.
+The IPIP path keeps ulen as 0, so its existing 1400 - 20 = 1380 result
+is unchanged.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260705181756.963063-3-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 508f744c0de3 ("ipvs: strip udp tunnel headers from icmp errors")
+Cc: stable@vger.kernel.org
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: Claude-Code:GLM-5.2
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: 3f7a535ff0fa ("ipvs: ensure inner headers in ICMP errors are in headroom")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/addrconf.h |  5 +++++
- net/ipv6/mcast.c       | 40 ++++++++++++++++++++++++++++------------
- 2 files changed, 33 insertions(+), 12 deletions(-)
+ net/netfilter/ipvs/ip_vs_core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/addrconf.h b/include/net/addrconf.h
-index 0d6a20841d3ac8..54979ebf9981c9 100644
---- a/include/net/addrconf.h
-+++ b/include/net/addrconf.h
-@@ -411,6 +411,11 @@ static inline void in6_dev_hold(struct inet6_dev *idev)
- 	refcount_inc(&idev->refcnt);
- }
+diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
+index 9d9af5a754a955..3a338f20fb6c07 100644
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -1653,6 +1653,7 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 	bool tunnel, new_cp = false;
+ 	union nf_inet_addr *raddr;
+ 	char *outer_proto = "IPIP";
++	int ulen = 0;
  
-+static inline bool in6_dev_hold_safe(struct inet6_dev *idev)
-+{
-+	return refcount_inc_not_zero(&idev->refcnt);
-+}
-+
- /* called with rcu_read_lock held */
- static inline bool ip6_ignore_linkdown(const struct net_device *dev)
- {
-diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
-index d4217bf93986cb..13be720abcd16d 100644
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -1061,8 +1061,10 @@ static void mld_gq_start_work(struct inet6_dev *idev)
- 	mc_assert_locked(idev);
+ 	*related = 1;
  
- 	idev->mc_gq_running = 1;
--	if (!mod_delayed_work(mld_wq, &idev->mc_gq_work, tv + 2))
--		in6_dev_hold(idev);
-+	if (in6_dev_hold_safe(idev)) {
-+		if (mod_delayed_work(mld_wq, &idev->mc_gq_work, tv + 2))
-+			in6_dev_put(idev);
-+	}
- }
+@@ -1717,7 +1718,6 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 		   /* Error for our tunnel must arrive at LOCAL_IN */
+ 		   (skb_rtable(skb)->rt_flags & RTCF_LOCAL)) {
+ 		__u8 iproto;
+-		int ulen;
  
- static void mld_gq_stop_work(struct inet6_dev *idev)
-@@ -1080,8 +1082,10 @@ static void mld_ifc_start_work(struct inet6_dev *idev, unsigned long delay)
- 
- 	mc_assert_locked(idev);
- 
--	if (!mod_delayed_work(mld_wq, &idev->mc_ifc_work, tv + 2))
--		in6_dev_hold(idev);
-+	if (in6_dev_hold_safe(idev)) {
-+		if (mod_delayed_work(mld_wq, &idev->mc_ifc_work, tv + 2))
-+			in6_dev_put(idev);
-+	}
- }
- 
- static void mld_ifc_stop_work(struct inet6_dev *idev)
-@@ -1099,8 +1103,10 @@ static void mld_dad_start_work(struct inet6_dev *idev, unsigned long delay)
- 
- 	mc_assert_locked(idev);
- 
--	if (!mod_delayed_work(mld_wq, &idev->mc_dad_work, tv + 2))
--		in6_dev_hold(idev);
-+	if (in6_dev_hold_safe(idev)) {
-+		if (mod_delayed_work(mld_wq, &idev->mc_dad_work, tv + 2))
-+			in6_dev_put(idev);
-+	}
- }
- 
- static void mld_dad_stop_work(struct inet6_dev *idev)
-@@ -1386,18 +1392,23 @@ static int mld_process_v2(struct inet6_dev *idev, struct mld2_query *mld,
- void igmp6_event_query(struct sk_buff *skb)
- {
- 	struct inet6_dev *idev = __in6_dev_get(skb->dev);
-+	bool put = false;
- 
- 	if (!idev || idev->dead)
- 		goto out;
- 
- 	spin_lock_bh(&idev->mc_query_lock);
--	if (skb_queue_len(&idev->mc_query_queue) < MLD_MAX_SKBS) {
-+	if (skb_queue_len(&idev->mc_query_queue) < MLD_MAX_SKBS &&
-+	    in6_dev_hold_safe(idev)) {
- 		__skb_queue_tail(&idev->mc_query_queue, skb);
--		if (!mod_delayed_work(mld_wq, &idev->mc_query_work, 0))
--			in6_dev_hold(idev);
-+		if (mod_delayed_work(mld_wq, &idev->mc_query_work, 0))
-+			put = true;
- 		skb = NULL;
- 	}
- 	spin_unlock_bh(&idev->mc_query_lock);
-+
-+	if (put)
-+		in6_dev_put(idev);
- out:
- 	kfree_skb(skb);
- }
-@@ -1555,18 +1566,23 @@ static void mld_query_work(struct work_struct *work)
- void igmp6_event_report(struct sk_buff *skb)
- {
- 	struct inet6_dev *idev = __in6_dev_get(skb->dev);
-+	bool put = false;
- 
- 	if (!idev || idev->dead)
- 		goto out;
- 
- 	spin_lock_bh(&idev->mc_report_lock);
--	if (skb_queue_len(&idev->mc_report_queue) < MLD_MAX_SKBS) {
-+	if (skb_queue_len(&idev->mc_report_queue) < MLD_MAX_SKBS &&
-+	    in6_dev_hold_safe(idev)) {
- 		__skb_queue_tail(&idev->mc_report_queue, skb);
--		if (!mod_delayed_work(mld_wq, &idev->mc_report_work, 0))
--			in6_dev_hold(idev);
-+		if (mod_delayed_work(mld_wq, &idev->mc_report_work, 0))
-+			put = true;
- 		skb = NULL;
- 	}
- 	spin_unlock_bh(&idev->mc_report_lock);
-+
-+	if (put)
-+		in6_dev_put(idev);
- out:
- 	kfree_skb(skb);
- }
+ 		/* Non-first fragment has no UDP/GRE header */
+ 		if (unlikely(cih->frag_off & htons(IP_OFFSET)))
+@@ -1822,8 +1822,8 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 				if (dest_dst)
+ 					mtu = dst_mtu(dest_dst->dst_cache);
+ 			}
+-			if (mtu > 68 + sizeof(struct iphdr))
+-				mtu -= sizeof(struct iphdr);
++			if (mtu > 68 + sizeof(struct iphdr) + ulen)
++				mtu -= sizeof(struct iphdr) + ulen;
+ 			info = htonl(mtu);
+ 		}
+ 		/* Strip outer IP, ICMP and IPIP/UDP/GRE, go to IP header of
 -- 
 2.53.0
 
