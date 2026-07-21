@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7441737E310;
-	Tue, 21 Jul 2026 22:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7641135C6AC;
+	Tue, 21 Jul 2026 22:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673122; cv=none; b=O5BocfquKmJEYthi21eYagb3ZOJRKeHVe5cfo0INj5RnaTcrntrGKyDtB+QC7gEwlOCE3CSVRJyV5bZ8AlmMgjTzNATPymgH+3BNVB2DMHt19s3yIPIY+Mqiwjt17JZA2JzsdGXfd9NQS66ffNxNZss0uRctegqSqphSlSW98uo=
+	t=1784673125; cv=none; b=f3fWbvXZuN44v9NKSH1qSmRkyBX7i/4Oe44TcWHp2FzKg7Xlj0rQLJ2he45X9BdoF24UJVQpSrJVmCdlfQOclmPj9x9xPOOUmX3/F+WJP81zkKQAWlZBtdZNljmQJdskdWcGwQuLUfdTAiavXxhORvHkRs9TRPKUZ0WI7nybqv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673122; c=relaxed/simple;
-	bh=i52AQnAq+GJpQgiRoBt+xsc7Jn7PlH6mToCNpQWOnQE=;
+	s=arc-20240116; t=1784673125; c=relaxed/simple;
+	bh=xlQrVy0gBZ//OTbNBqeu10B4TQZ0DDnOHphdK8biY0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oicTFmsRgtv90qDBUvrKWiZaCT4lG8HNj6SFp1bIBqLT4akQQDPPXGrzfPwKPx31uWKp80Cy5g2jzRC7iau6MO50R34zTT83YHQc/vbNIWWnGxkYzfM70o3bJh/t3imhm7mlr1uu6pvTOmeCZTy0WcDTDlbsw98myIeyWNWc0fE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deLq02A6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IHoYXTJo9W42fpB5v4EQI87kNNfl/SsXWh/kKaiHLrgQqLdayq6vUuLoWmKrzuqBfWet9pVAr3DiUNXw06qiOvlH3/ir0AoU1iygOhwhADO3Q1Tj6sonqcFTCwgbRIDfHgnR6CXGtUO+fWVTBdrRBVF5oPxg8U6oev+aG0xI+SA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c6gsWKXu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deLq02A6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD8F1F000E9;
-	Tue, 21 Jul 2026 22:32:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6gsWKXu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846CB1F000E9;
+	Tue, 21 Jul 2026 22:32:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673121;
-	bh=iXvWrezPkbb8OsDUEZICKcCJkajRM7xNrhDYJ7VXyg4=;
+	s=korg; t=1784673124;
+	bh=lxW12hXpGwCYwaw8Imq0P9QP8L3umqZumGJMTWuBHHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=deLq02A6kYJzG4CSYInh8klQ/8+rmOPCXG6aXNI227EFDWMTcEObH0YDD5QEcL15n
-	 EauV3vY0CZps5AyCYykVlc/S5vtMLFOik0ToFWvcuUP3i7ua9yKqUEoBJnct59RKjE
-	 51dLOJ56t1l1yiJl3yKZwXL7LTp0FEMz04O8hjwQ=
+	b=c6gsWKXuYP0vDFTMnRXn3VG/aEnL0pdyrj9Q30cFoSSllY4rPILo0HuyvtoWlx7FQ
+	 r63jeNJIQAP4cyUtY0R6craSAN9y75rF786CVmwK6MwxMttdHAIQbG5zsvCgFKEIID
+	 g56qyrv6T+Mj1SFDbh3AFMIKEUBCNncEf7tEqPaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kempe <andreas.kempe@actia.se>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Vidhu Sarwal <vidhu.linux@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 5.10 044/699] iio: imu: st_lsm6dsx: deselect shub page before reading whoami
-Date: Tue, 21 Jul 2026 17:16:43 +0200
-Message-ID: <20260721152356.703124782@linuxfoundation.org>
+Subject: [PATCH 5.10 045/699] iio: light: al3010: fix incorrect scale for the highest gain range
+Date: Tue, 21 Jul 2026 17:16:44 +0200
+Message-ID: <20260721152356.726334786@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,85 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Kempe <andreas.kempe@actia.se>
+From: Vidhu Sarwal <vidhu.linux@gmail.com>
 
-commit aede83625ff5d9539508582036df30c809d51058 upstream.
+commit aa411adc6ce40ad1a55ebc965f255a4cfc0005f8 upstream.
 
-As part of driver initialization, e.g. st_lsm6dsx_init_shub() selects
-the shub register page using st_lsm6dsx_set_page(). Selecting the shub
-register page shadows the regular register space so whoami, among other
-registers, is no longer accessible.
+al3010_scales[] encodes the highest gain range as {0, 1187200}.
+For IIO_VAL_INT_PLUS_MICRO, the fractional part must be less than
+1000000, so the scale 1.1872 should instead be represented as
+{ 1, 187200 }.
 
-In applications where the IMU is permanently powered separately from the
-processor, there is a window where a reset of the CPU leaves the IMU in
-the shub register page. Once this occurs, any subsequent probe attempt
-fails because of the register shadowing.
+Since write_raw() compares the value from userspace against this
+table, writing the advertised 1.1872 scale never matches the malformed
+entry and returns -EINVAL. As a result, the highest gain range cannot
+be selected. Reading the scale in that state also reports the malformed
+value.
 
-Using the ism330dlc, the error typically looks like
-
-    st_lsm6dsx_i2c 3-006a: unsupported whoami [10]
-
-with the unknown whoami read from a reserved register in the shub page.
-
-The reset register is also shadowed by the page select, preventing a
-reset from recovering the chip.
-
-Unconditionally clear the shub page before the whoami readout to ensure
-normal register access and allow the initialization to proceed.
-
-Place the fix in st_lsm6dsx_check_whoami() before the whoami check
-because hw->settings, which st_lsm6dsx_set_page() relies on, is first
-assigned in that function.
-
-Placing the fix in a more logical place than the whoami check would
-require a bigger restructuring of the code.
-
-Fixes: c91c1c844ebd ("iio: imu: st_lsm6dsx: add i2c embedded controller support")
-Signed-off-by: Andreas Kempe <andreas.kempe@actia.se>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Fixes: c36b5195ab70 ("iio: light: add Dyna-Image AL3010 driver")
+Signed-off-by: Vidhu Sarwal <vidhu.linux@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c |   21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/iio/light/al3010.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
-+++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
-@@ -1389,6 +1389,26 @@ static int st_lsm6dsx_check_whoami(struc
- 		return -ENODEV;
- 	}
+--- a/drivers/iio/light/al3010.c
++++ b/drivers/iio/light/al3010.c
+@@ -43,7 +43,7 @@ enum al3xxxx_range {
+ };
  
-+	hw->settings = &st_lsm6dsx_sensor_settings[i];
-+
-+	if (hw->settings->shub_settings.page_mux.addr) {
-+		/*
-+		 * If the IMU has the shub page selected on init, for example
-+		 * after a CPU watchdog reset while the page is selected, the
-+		 * regular register space is shadowed. While the regular
-+		 * register space is shadowed, the registers needed for
-+		 * initializing the IMU are not available.
-+		 *
-+		 * Unconditionally clear the shub page selection to ensure
-+		 * normal register access.
-+		 */
-+		err = st_lsm6dsx_set_page(hw, false);
-+		if (err < 0) {
-+			dev_err(hw->dev, "failed to clear shub page\n");
-+			return err;
-+		}
-+	}
-+
- 	err = regmap_read(hw->regmap, ST_LSM6DSX_REG_WHOAMI_ADDR, &data);
- 	if (err < 0) {
- 		dev_err(hw->dev, "failed to read whoami register\n");
-@@ -1401,7 +1421,6 @@ static int st_lsm6dsx_check_whoami(struc
- 	}
+ static const int al3010_scales[][2] = {
+-	{0, 1187200}, {0, 296800}, {0, 74200}, {0, 18600}
++	{ 1, 187200 }, { 0, 296800 }, { 0, 74200 }, { 0, 18600 },
+ };
  
- 	*name = st_lsm6dsx_sensor_settings[i].id[j].name;
--	hw->settings = &st_lsm6dsx_sensor_settings[i];
- 
- 	return 0;
- }
+ struct al3010_data {
 
 
