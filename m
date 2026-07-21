@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F584195C9;
-	Tue, 21 Jul 2026 20:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783081D7E5C;
+	Tue, 21 Jul 2026 20:27:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665654; cv=none; b=RNuO9YVIvoFZ3zKqBH1fY03NPBDUjlaL1WTrySn0W0D8myRABAB9ZJD5FzAnlSoMq24Nn+J1mlBcV68R2jSimkb0pSubV2NEMtOCpEQgy6CmT0BZqRO0QS6mgmMUORvthxTIf2BPQ6dYqZgRvEpLhT3DRole1hj7XsfM4b5Fb1w=
+	t=1784665657; cv=none; b=lcyIBa6067fQDRiYzOkUgNJcajvnPv3CQ7HJo7M+XJUyN2fCwMRItSdAxql1tik+wp8zw0mWzTQbKnT5ZzLuPsjYgBsPxYEbjozv5JA2N8cVlR00HVeaZ5RigmOq/zEFmg1ghfNOzQPsBswOl/ZO0+3UPKpGc63eJct9ahugPP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665654; c=relaxed/simple;
-	bh=cAdgMKyPinFJXZoilIVKrYUbHIDdpBZrUEI7mSOnou8=;
+	s=arc-20240116; t=1784665657; c=relaxed/simple;
+	bh=ZOx+tlnM+jx7hZOBxU6a3A/A7pa6c+SJdL5HGYZ9Yng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AsqlnelWGeFSnJAbCBiIoAk+w8ohJIe5ipbqq2tOTXwo1oNFpxmp9JTrao5fsOS36/r5bMDO/FoPnvr0imhgby9fgCSkBNPNpxaY1JnYBhMog9Qy9FJRdr2eMf0iFRYCjizAqGs+8IuQMCy7pBPzPqsSKUd7kCh+ZkmHLLUTRb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2Vpia6Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DEQRws7vrD1yGbv1tGh1EmHOtylfLuXJLRHDvknG5abzHIOhGnvCsUV93IdWMN990hCEDE066M7ES/v5FcVvyzawjZ/caH2dNyrOBqgv7n/3a8Zz4BXRY3xYnWLq+eIXhydDQ0BOZ/WLPxZQ4AS0YKeUowg3fk7DqV2lT2GmjN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8kQ9QcH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2Vpia6Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB39B1F000E9;
-	Tue, 21 Jul 2026 20:27:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8kQ9QcH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922901F000E9;
+	Tue, 21 Jul 2026 20:27:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665652;
-	bh=IPJDUkCao3rBXHy3I37yhuGyLV+RAg0bByUhT4xs2xQ=;
+	s=korg; t=1784665655;
+	bh=cGFT/MgzHBL/ZSu2LYbpFAn0bVBAPVPlyBIzWR63/+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S2Vpia6QJHCg7Bmx8o60M4TqkxnzDbPnzlw9IhfCrKSxc7IS5+Lk9NOfHfZYVSJRM
-	 eZumG4Aq3pxNLl/2+aVmiQVgkUoQU+eaQZRMSOJMTQcKdI2P366S6GdsBagpxgIERH
-	 2Ytw0j7WPAvr4J00dv0aFim9OhwJ2Zs2i57wSaHU=
+	b=z8kQ9QcH4JJ6pe3GzlM/5qUlLED3zIdxBMQ7vk72RHgS/Fo5mBTIXXHinRtH1YGpt
+	 LpZ1QsfAVl+h8ughHKHQu9IQQcmVd8uumHuBr8KnL5YhlHLjYA80Pg4yuqCb+DQVoO
+	 ZGONF1BOfXA5+Uq/kh+bXj4TCvMP5V8Ai6bvzeX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0385/1266] arm64: dts: imx8x-colibri: Correct SODIMM PAD settings
-Date: Tue, 21 Jul 2026 17:13:42 +0200
-Message-ID: <20260721152450.440357520@linuxfoundation.org>
+Subject: [PATCH 6.6 0386/1266] vxlan: Fix potential null-ptr-deref in vxlan_gro_prepare_receive().
+Date: Tue, 21 Jul 2026 17:13:43 +0200
+Message-ID: <20260721152450.461466022@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,41 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 0a03ee38a262cab0d9754e9947d565e089a9f7a5 ]
+[ Upstream commit 30a45c0bffdd62350261e2f2689fdba426a33578 ]
 
-SION is BIT(30), not BIT(26). Correct it.
+udp_tunnel_sock_release() could set sk->sk_user_data to NULL
+while vxlan_gro_prepare_receive() is running.
 
-Fixes: 7ece3cbc8b1ef ("arm64: dts: colibri-imx8x: Add atmel pinctrl groups")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Let's check if rcu_dereference_sk_user_data() is NULL after
+skb_gro_remcsum_init().
+
+Fixes: 5602c48cf875 ("vxlan: change vxlan to use UDP socket GRO")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260502031401.3557229-7-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8x-colibri.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/vxlan/vxlan_core.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8x-colibri.dtsi b/arch/arm64/boot/dts/freescale/imx8x-colibri.dtsi
-index 49d105eb476919..b7986605119efb 100644
---- a/arch/arm64/boot/dts/freescale/imx8x-colibri.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8x-colibri.dtsi
-@@ -383,12 +383,12 @@ pinctrl_adc0: adc0grp {
- 	 */
- 	pinctrl_atmel_adap: atmeladaptergrp {
- 		fsl,pins = <IMX8QXP_UART1_RX_LSIO_GPIO0_IO22			0x21>,		/* SODIMM  30 */
--			   <IMX8QXP_UART1_TX_LSIO_GPIO0_IO21			0x4000021>;	/* SODIMM  28 */
-+			   <IMX8QXP_UART1_TX_LSIO_GPIO0_IO21			0x40000021>;	/* SODIMM  28 */
- 	};
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index 958d3be4f99086..1a3a00476a9368 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -680,14 +680,18 @@ static struct vxlanhdr *vxlan_gro_prepare_receive(struct sock *sk,
+ 						  struct sk_buff *skb,
+ 						  struct gro_remcsum *grc)
+ {
+-	struct sk_buff *p;
+ 	struct vxlanhdr *vh, *vh2;
+ 	unsigned int hlen, off_vx;
+-	struct vxlan_sock *vs = rcu_dereference_sk_user_data(sk);
++	struct vxlan_sock *vs;
++	struct sk_buff *p;
+ 	__be32 flags;
  
- 	/* Atmel MXT touchsceen + boards with built-in Capacitive Touch Connector */
- 	pinctrl_atmel_conn: atmelconnectorgrp {
--		fsl,pins = <IMX8QXP_QSPI0B_DATA2_LSIO_GPIO3_IO20		0x4000021>,	/* SODIMM 107 */
-+		fsl,pins = <IMX8QXP_QSPI0B_DATA2_LSIO_GPIO3_IO20		0x40000021>,	/* SODIMM 107 */
- 			   <IMX8QXP_QSPI0B_SS1_B_LSIO_GPIO3_IO24		0x21>;		/* SODIMM 106 */
- 	};
+ 	skb_gro_remcsum_init(grc);
  
++	vs = rcu_dereference_sk_user_data(sk);
++	if (!vs)
++		return NULL;
++
+ 	off_vx = skb_gro_offset(skb);
+ 	hlen = off_vx + sizeof(*vh);
+ 	vh = skb_gro_header(skb, hlen, off_vx);
 -- 
 2.53.0
 
