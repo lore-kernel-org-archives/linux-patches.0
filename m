@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC2543B6E0;
-	Tue, 21 Jul 2026 21:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640ED43E075;
+	Tue, 21 Jul 2026 21:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669806; cv=none; b=XZDqxeEjU0JvD0rsRsXdK2WQqMNcuyKbgNjE785BaRtroRV6WnNka32M6AXhxN+X/mZYmRr2KuyGiFzeSF0Zx3ZeEu2wlxnXa3+IWfMEi9PJZi7uWKWJF/WPxtT/J+WCDX7QSUzhpSr2BKMhD1QcDzq77flQFqbt3LI2HBAv6w8=
+	t=1784669808; cv=none; b=dTtvh2IFqshYa8JGQrd1f3ZQK2KqFLITB6lJHkpfnagwr3xR0ftC5YzuR7bXLh044l5qVbWn2lHFTKGOqK8W1dv3d1qmcbcxsKo9ISrH3kUAf/yJFstZm5hNVZYRdeZUfJwTdrSf3lVyhWB7jNJqarPVhhJZe7okBsUcbJjDq/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669806; c=relaxed/simple;
-	bh=RUqKfqHx3W3VzEyNancXWD6ISaIVRG0SEOFmbO3XzOE=;
+	s=arc-20240116; t=1784669808; c=relaxed/simple;
+	bh=jSxVpFF7o2m63XWTMl98M27ci+fuIqHzro9Hbnkm7nM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m1icQv6RWs5AWw/kigEuB8ZmeODE3vuSXlogfenWNidxQGTtobMrQoEHyyixIRC4Dri8mznd1vr0gC+SnfsEDvtCupROTQG2QPmO0PcMAk/fxfuBvFdx+sbMdbcgqDFMSuuS1RpPnIi/7HsAQGcaBfd/gVMfNH6RbInGa2pdrMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1PUgi53; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oKi9jkXnJiZ0D6cq+aQwJiD7/Oj5+ihL1X8bHta4AyZ6k5Yx5MZ5FELLJug6Iso6hBqs18t86CLAvMXexSy5YSN6xyl9M2tz4bsgPpopG0DJEtcwNeOZDchvERtqBXlJiEZVSnI1mTEiXQTzeJPZbWoKzIPqc90K3goSUARK+Pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1Yfa2HB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1PUgi53"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01041F000E9;
-	Tue, 21 Jul 2026 21:36:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1Yfa2HB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856DB1F00A3A;
+	Tue, 21 Jul 2026 21:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669804;
-	bh=pFZ8GF518oSLattF00MuJFeznh/rfCG7rGYTy1MKhgc=;
+	s=korg; t=1784669807;
+	bh=IKMODs0Yw58Sea4n51h3/5sYhVj4zFgIZPkN+kudcAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n1PUgi53Lc7WVpqWYyzt7IFJUEAG62/Sckz6OoCY9xPRedCMCwywJBc/ZSOpUwaYe
-	 q40KVMJxsXlY/Fyb8Jz5ZkwRAfiVHlOmYP3VOg1aLFqflUAa/tSTFKlInWw+pPHVCA
-	 EG6ixWk7EfaRlRs5yjrLewHFQMapNsAyWejUcbI4=
+	b=u1Yfa2HBBo9G52siCdGcQu0XJ4Q7Sxi7HHaWxL2cKnrI9lWavMCf4u52b3marhTIM
+	 S7+6Lbf3Ou6Agp16JUEKLDjyeBjJzy/rDgJW92Bd6v0+0aLe5r4WQeFmjRjnHcQog1
+	 GScUvSRiflC//ddbV9evEiJRvj3AMWI7D0eihymc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
+	Rosen Penev <rosenp@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0692/1067] net/smc: fix UAF in smc_cdc_rx_handler() by pinning the socket
-Date: Tue, 21 Jul 2026 17:21:33 +0200
-Message-ID: <20260721152440.077073088@linuxfoundation.org>
+Subject: [PATCH 6.1 0657/1067] net: gianfar: dispose irq mappings on probe failure and device removal
+Date: Tue, 21 Jul 2026 17:20:58 +0200
+Message-ID: <20260721152439.291696222@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,98 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 9d160b35cc34a2ba8229d07651468a7848325135 ]
+[ Upstream commit dbf803bc4a8b0522c9a12560c20905a5952d1cb9 ]
 
-smc_cdc_rx_handler() looks up the connection by token under the link
-group's conns_lock, drops the lock, and then dereferences conn and the
-smc_sock derived from it, ending in sock_hold(&smc->sk) inside
-smc_cdc_msg_recv(). No reference is held across the lock release.
+irq_of_parse_and_map() creates irqdomain mappings that should be
+balanced with irq_dispose_mapping(). The driver never called
+irq_dispose_mapping(), leaking mappings on probe failure and
+device removal.
 
-The only reference pinning the socket while the connection is
-discoverable in the link group is taken in smc_lgr_register_conn()
-(sock_hold) and dropped in __smc_lgr_unregister_conn() (sock_put), both
-under conns_lock. Once the handler drops conns_lock, a concurrent
-close() -> smc_release() -> smc_conn_free() -> smc_lgr_unregister_conn()
-can drop that reference and free the smc_sock, so the handler's later
-sock_hold() runs on freed memory:
+Fix by adding irq_dispose_mapping() in free_gfar_dev() and
+expanding its loop from priv->num_grps to MAXGROUPS so the
+error path also catches partially-initialized groups. All
+irqinfo pointers are pre-initialized to NULL in gfar_of_init(),
+making the NULL-guarded walk in free_gfar_dev() safe for every
+scenario.
 
-  WARNING: lib/refcount.c:25 at refcount_warn_saturate
-  Workqueue: rxe_wq do_work
-   refcount_warn_saturate (lib/refcount.c:25)
-   smc_cdc_msg_recv (net/smc/smc_cdc.c:430)
-   smc_cdc_rx_handler (net/smc/smc_cdc.c:502)
-   smc_wr_rx_tasklet_fn (net/smc/smc_wr.c:445)
-   tasklet_action_common (kernel/softirq.c:938)
-   handle_softirqs (kernel/softirq.c:622)
-  Kernel panic - not syncing: panic_on_warn set
+gfar_parse_group() itself is left as a simple parse function
+with no resource management; cleanup is centralized in the
+caller's error path.
 
-Only SMC-R is affected. The SMC-D receive tasklet is stopped by
-tasklet_kill(&conn->rx_tsklet) in smc_conn_free() before the connection
-is unregistered, so it cannot run concurrently with the free.
-
-Take the socket reference while still holding conns_lock, so the
-registration reference can no longer be the last one, and drop it once
-the handler is done.
-
-Fixes: d7b0e37c1ac1 ("net/smc: restructure CDC message reception")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260630183227.2044998-1-xmei5@asu.edu
+Assisted-by: opencode:big-pickle
+Fixes: b31a1d8b4151 ("gianfar: Convert gianfar to an of_platform_driver")
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Link: https://patch.msgid.link/20260626225228.427392-1-rosenp@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_cdc.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/freescale/gianfar.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/net/smc/smc_cdc.c b/net/smc/smc_cdc.c
-index 3c06625ceb200e..65d6d388adf891 100644
---- a/net/smc/smc_cdc.c
-+++ b/net/smc/smc_cdc.c
-@@ -438,9 +438,9 @@ static void smc_cdc_rx_handler(struct ib_wc *wc, void *buf)
+diff --git a/drivers/net/ethernet/freescale/gianfar.c b/drivers/net/ethernet/freescale/gianfar.c
+index b2def295523ab5..26faf77d06b1a8 100644
+--- a/drivers/net/ethernet/freescale/gianfar.c
++++ b/drivers/net/ethernet/freescale/gianfar.c
+@@ -470,10 +470,13 @@ static void free_gfar_dev(struct gfar_private *priv)
  {
- 	struct smc_link *link = (struct smc_link *)wc->qp->qp_context;
- 	struct smc_cdc_msg *cdc = buf;
-+	struct smc_sock *smc = NULL;
- 	struct smc_connection *conn;
- 	struct smc_link_group *lgr;
--	struct smc_sock *smc;
+ 	int i, j;
  
- 	if (wc->byte_len < offsetof(struct smc_cdc_msg, reserved))
- 		return; /* short message */
-@@ -451,21 +451,26 @@ static void smc_cdc_rx_handler(struct ib_wc *wc, void *buf)
- 	lgr = smc_get_lgr(link);
- 	read_lock_bh(&lgr->conns_lock);
- 	conn = smc_lgr_find_conn(ntohl(cdc->token), lgr);
--	read_unlock_bh(&lgr->conns_lock);
--	if (!conn || conn->out_of_sync)
-+	if (!conn || conn->out_of_sync) {
-+		read_unlock_bh(&lgr->conns_lock);
- 		return;
+-	for (i = 0; i < priv->num_grps; i++)
++	for (i = 0; i < MAXGROUPS; i++)
+ 		for (j = 0; j < GFAR_NUM_IRQS; j++) {
+-			kfree(priv->gfargrp[i].irqinfo[j]);
+-			priv->gfargrp[i].irqinfo[j] = NULL;
++			if (priv->gfargrp[i].irqinfo[j]) {
++				irq_dispose_mapping(priv->gfargrp[i].irqinfo[j]->irq);
++				kfree(priv->gfargrp[i].irqinfo[j]);
++				priv->gfargrp[i].irqinfo[j] = NULL;
++			}
+ 		}
+ 
+ 	free_netdev(priv->ndev);
+@@ -630,7 +633,7 @@ static phy_interface_t gfar_get_interface(struct net_device *dev)
+ static int gfar_of_init(struct platform_device *ofdev, struct net_device **pdev)
+ {
+ 	const char *model;
+-	int err = 0, i;
++	int err = 0, i, j;
+ 	phy_interface_t interface;
+ 	struct net_device *dev = NULL;
+ 	struct gfar_private *priv = NULL;
+@@ -714,8 +717,11 @@ static int gfar_of_init(struct platform_device *ofdev, struct net_device **pdev)
+ 	priv->rx_list.count = 0;
+ 	mutex_init(&priv->rx_queue_access);
+ 
+-	for (i = 0; i < MAXGROUPS; i++)
++	for (i = 0; i < MAXGROUPS; i++) {
+ 		priv->gfargrp[i].regs = NULL;
++		for (j = 0; j < GFAR_NUM_IRQS; j++)
++			priv->gfargrp[i].irqinfo[j] = NULL;
 +	}
- 	smc = container_of(conn, struct smc_sock, conn);
-+	sock_hold(&smc->sk);
-+	read_unlock_bh(&lgr->conns_lock);
  
- 	if (cdc->prod_flags.failover_validation) {
- 		smc_cdc_msg_validate(smc, cdc, link);
--		return;
-+		goto out;
- 	}
- 	if (smc_cdc_before(ntohs(cdc->seqno),
- 			   conn->local_rx_ctrl.seqno))
- 		/* received seqno is old */
--		return;
-+		goto out;
- 
- 	smc_cdc_msg_recv(smc, cdc);
-+out:
-+	sock_put(&smc->sk);
- }
- 
- static struct smc_wr_rx_handler smc_cdc_rx_handlers[] = {
+ 	/* Parse and initialize group specific information */
+ 	if (priv->mode == MQ_MG_MODE) {
 -- 
 2.53.0
 
