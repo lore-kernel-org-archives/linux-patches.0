@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCCB44AB7B;
-	Tue, 21 Jul 2026 22:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577E1305E3B;
+	Tue, 21 Jul 2026 22:07:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671657; cv=none; b=apnsteM7fBsa9ZT+Q+zzujieiJVdkwuqskpKIRhutze+X5PXYlE9SOsHr41rJzk97jacYMlmxU5+2cpowWvx5D2BOXP6XmhC1qHo4NWnG27Sm2LV4umDVptNNV/UWO6dhHHEJ9uCeQr2KdidVDVHqu3OVvo3CBImHdAvMl9WtCw=
+	t=1784671660; cv=none; b=MtXQSQEnC5+w5OCk0OC0pZUdkrd5/TrxdeKaUjhvBIxDf0FKfzZAZzsllmoMYWSVtctHOoL23zWiLcttXkOOs3q722Ot6Sq8NDaGBx3zoZqCVYjJEor0CWReBPTJKbTbRr46Y+69hj8oy4VM7joC74SmhpQS4FYOhZ0YxSpYjoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671657; c=relaxed/simple;
-	bh=pnI63PWzUdPPFnJqTxz8c4peYcLPG3M+OdbQdbyw1sw=;
+	s=arc-20240116; t=1784671660; c=relaxed/simple;
+	bh=Dbkg2Aw7CJWXm6wUQuLlw7NVyYn0VDGSS+9cEOvDN3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jqs4ibcUMeY3wl5tBhPZR85KdJiVJBdsADtSTV+qPN5OOCLofUASZh84Y6AQ+KCcqxK3/vyOvtaAvuZhJqVJcJuFSrNRhlZaXW5N4XvSQW5H0CrmrdBFm5GWj1C2yAGs4z/+rci085cCVkpv9Y6pi0FE8GtS1gvWFCE9JsIzwgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YkbNKIGk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gpb8z9FtLNNHM+L8hLg67803/sy8oCPx3M6H/417jCV7aq9XQnJI+YuvPUolCwWtq66lj1C7AnVh1nqyaTIGpE63Yfrz4sdIQxZdLzVqYoQdfH+Um3hqqRZVnrkzYytnn7ot9zhpWaaJrnCnF9znVytvPGzpctrdB/UimZ/8SbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E81A/LNe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YkbNKIGk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2813A1F000E9;
-	Tue, 21 Jul 2026 22:07:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E81A/LNe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCB361F000E9;
+	Tue, 21 Jul 2026 22:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671656;
-	bh=8wdoO8fEQsrwKA3RlIE8SW9Uuzbwdl6jV1bF1ccZcRU=;
+	s=korg; t=1784671659;
+	bh=7yNp0yh7zrwW3TxpG/sqXk+dUemLe3ML3J/w1Drzr4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YkbNKIGklT+GdLyAb5yAsOVwJZS3aEaVVZkiIELmKZr0o8vwaLNVtZLkaEViM/LNp
-	 7eJUvv4Nm/9sbS1sGnndBLwxLKm1CqJBGmapFhShrTg8Z7okfZaML0UbC01wcqRrrR
-	 HqbIUPjGOXPQ6Y3xDACe8bqnoOZlbbgve0lPaFVg=
+	b=E81A/LNeqEqtvSXD+L01ifFtzHe5lEdImqzAXcQ8TmOpl/wvqVE8EiCuXOa5v8PGN
+	 muVkidKsVG7smuLQNNFXB3qp/LQl3NgodiCMb0rNCDaGjmqBsJNPl95UcTUysCvWar
+	 VIQxd3vgnmUtZapYpamyjc3Tia0M7AQxMf+mZw5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	longlong yan <yanlonglong@kylinos.cn>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
-	Xie Yongji <xieyongji@bytedance.com>,
-	Zhang Tianci <zhangtianci.1997@bytedance.com>,
-	Jason Wang <jasowang@redhat.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 329/843] vduse: Requeue failed read to send_list head
-Date: Tue, 21 Jul 2026 17:19:24 +0200
-Message-ID: <20260721152413.419401641@linuxfoundation.org>
+Subject: [PATCH 5.15 330/843] tools/virtio: check mmap return value in vringh_test
+Date: Tue, 21 Jul 2026 17:19:25 +0200
+Message-ID: <20260721152413.442713858@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -48,62 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Tianci <zhangtianci.1997@bytedance.com>
+From: longlong yan <yanlonglong@kylinos.cn>
 
-[ Upstream commit 373ec43ded742b2f3aecf14731ffe1a57f438f38 ]
+[ Upstream commit ec6177dfe98b9be1c3ede6c0dfe4394ea2a76959 ]
 
-When copy_to_iter() fails in vduse_dev_read_iter(), put the message back
-at the head of send_list to preserve FIFO ordering and retry the oldest
-pending request first.
+In parallel_test(), the return values of mmap() for both host_map and
+guest_map are not checked against MAP_FAILED. If mmap() fails, the
+subsequent code will dereference the invalid pointer, leading to a
+segmentation fault.
 
-Fixes: c8a6153b6c59 ("vduse: Introduce VDUSE - vDPA Device in Userspace")
-Reported-by: Michael S. Tsirkin <mst@redhat.com>
-Suggested-by: Xie Yongji <xieyongji@bytedance.com>
-Signed-off-by: Zhang Tianci <zhangtianci.1997@bytedance.com>
-Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Add MAP_FAILED checks after both mmap() calls, using err() to report
+the error and exit, consistent with the existing error handling style
+in this file (e.g., the open() call on line 149).
+
+Fixes: 1515c5ce26ae ("tools/virtio: add vring_test.")
+Signed-off-by: longlong yan <yanlonglong@kylinos.cn>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260226115550.1814-2-zhangtianci.1997@bytedance.com>
+Message-ID: <20260605021446.1611-1-yanlonglong@kylinos.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_user/vduse_dev.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/virtio/vringh_test.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
-index bd5d78fd926db5..1e9f15608c5c7e 100644
---- a/drivers/vdpa/vdpa_user/vduse_dev.c
-+++ b/drivers/vdpa/vdpa_user/vduse_dev.c
-@@ -171,6 +171,12 @@ static void vduse_enqueue_msg(struct list_head *head,
- 	list_add_tail(&msg->list, head);
- }
+diff --git a/tools/virtio/vringh_test.c b/tools/virtio/vringh_test.c
+index 98ff808d6f0c2d..16f3723b467129 100644
+--- a/tools/virtio/vringh_test.c
++++ b/tools/virtio/vringh_test.c
+@@ -159,7 +159,12 @@ static int parallel_test(u64 features,
  
-+static void vduse_enqueue_msg_head(struct list_head *head,
-+				   struct vduse_dev_msg *msg)
-+{
-+	list_add(&msg->list, head);
-+}
+ 	/* Parent and child use separate addresses, to check our mapping logic! */
+ 	host_map = mmap(NULL, mapsize, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
++	if (host_map == MAP_FAILED)
++		err(1, "mmap host_map");
 +
- static void vduse_dev_broken(struct vduse_dev *dev)
- {
- 	struct vduse_dev_msg *msg, *tmp;
-@@ -331,7 +337,7 @@ static ssize_t vduse_dev_read_iter(struct kiocb *iocb, struct iov_iter *to)
- 	spin_lock(&dev->msg_lock);
- 	if (ret != size) {
- 		ret = -EFAULT;
--		vduse_enqueue_msg(&dev->send_list, msg);
-+		vduse_enqueue_msg_head(&dev->send_list, msg);
- 		goto unlock;
- 	}
- 	vduse_enqueue_msg(&dev->recv_list, msg);
+ 	guest_map = mmap(NULL, mapsize, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
++	if (guest_map == MAP_FAILED)
++		err(1, "mmap guest_map");
+ 
+ 	pipe(to_guest);
+ 	pipe(to_host);
 -- 
 2.53.0
 
