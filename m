@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CCF476CFB;
-	Tue, 21 Jul 2026 21:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CBD476CF2;
+	Tue, 21 Jul 2026 21:01:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667714; cv=none; b=tXky3+jmnzXGOr8vEtbpWqEoGuUAg3e7JuBEaQrAk99KdIKwZssJWvy/StStPAVMF+dWcCTsUPS5gWZwm33Dm8Jp4Ab4Clw/KzbOwSVptZIChuYEDrBMK94PyPFCvQWxfygzCF8dAmxIQzXgxI//m6O8/YNhJASaIm3jTcHeuyM=
+	t=1784667717; cv=none; b=UeMu1xc2zqvsb3TcJK1+si4jBUuNFWaXcUYadcqcZC9CEKoWiuXVwZuAi1TZWJlX0A2H2VHcFODTWbfnZxhKBKS4XDE2UULsgA93o5MpytazS3xp/N4R5LYm18eU8SFsYTZt3rXov2GX6gl28ZO9sNvzEqKMpppEEJ/1UmkCJZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667714; c=relaxed/simple;
-	bh=agzdV2KlDOGbo+YncDNUq6USZ0aPrmNVkl7CJ2UdmwI=;
+	s=arc-20240116; t=1784667717; c=relaxed/simple;
+	bh=VkyYh4m6SY1BSY+T1S7tvyJpDKiF0119E8hgfzjzsN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W+gY1FGJMRAeoxXMlxe/pj4S21yi4gy04JP0BOFtlh6y0WQ5/CGWHTca6gW6iP4cQE3oZW8+vDXYq1FA7TQDWV/IZY5fKYvFlr8A90j51ebQNTiczplsiMDChsZ4UMeCtYzV6DzBhZRAVo/rso75MbVviRXUISk7VW/3CT39Z1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gr9L4Ja7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=exjh2kr2ikS92YnmXzfN4oI4f0x3AXHq9eBqZaaClIBlplSR0T/B1jAYXjQqHR5xR3Wh5bFmsN/qO/VxQA2yue6H4Qnv6OJHtrgQ9dRvJ3WkDbZ8QdnLpKIEEetFQbi7v18YGJXANUxNzgZA+9aX59+6lUD3o7cfoamhwzswLEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWXg3ixR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gr9L4Ja7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C80F81F000E9;
-	Tue, 21 Jul 2026 21:01:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWXg3ixR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF391F000E9;
+	Tue, 21 Jul 2026 21:01:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667713;
-	bh=ejChnuwwTn+jOMFviVYiGD0hF9VY8huce//5KqMglRo=;
+	s=korg; t=1784667715;
+	bh=LvNZWVS/+K3Wtkdc05ciRvwRvpJHZHJxhaJW9R5l+Dg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gr9L4Ja7BU+wUqb9x05esmp4ubcdhqG7VJr1ZUDXlHHa2YIolE8qJ57vIY5L+0o0e
-	 nBHRhGvN+/dZejrXPH6qpFss4FpVTctZQu1RPzqTfRkTBeqxHKeR6QVz3yEwY0E+tG
-	 9TOcd1xpk1zDMQCCGiXV1Fij/qvC5gbL+c5XiJoo=
+	b=LWXg3ixRlCWeZV5OmZuiQy0h0a9byXGsJ9K7dRo0Bjx0PkboNs+kXb4+vQ76e+Jvk
+	 OkiDdDMsGLmQNBYuktaVtMmgNe3DFYV1ktRojOQkX7SFOCTQXRxWyPOHdBIu4rF3nf
+	 4xAGjU+auz/gIcX9CBGUg3XwyDa7rNmNL/v8wqIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Alex Williamson <alex.williamson@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Alex Williamson <alex@shazbot.org>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1166/1266] vfio/mlx5: Fix racy bitfields and tighten struct layout
-Date: Tue, 21 Jul 2026 17:26:43 +0200
-Message-ID: <20260721152507.876079688@linuxfoundation.org>
+Subject: [PATCH 6.6 1167/1266] PCI: imx6: Fix IMX6SX_GPR12_PCIE_TEST_POWERDOWN handling
+Date: Tue, 21 Jul 2026 17:26:44 +0200
+Message-ID: <20260721152507.899055471@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,89 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Williamson <alex.williamson@nvidia.com>
+From: Richard Zhu <hongxing.zhu@nxp.com>
 
-[ Upstream commit f2365a63b02ddea32e7db78b742c2503ec7b81f1 ]
+[ Upstream commit aad953fb4eed0df5486cd54ccad80ac197678e01 ]
 
-Bitfield operations are not atomic, they use a read-modify-write
-pattern, therefore we should be careful not to pack bitfields that
-can be concurrently updated into the same storage unit.
+The IMX6SX_GPR12_PCIE_TEST_POWERDOWN bit does not control the PCIe
+reference clock on i.MX6SX. Instead, it is part of i.MX6SX PCIe core
+reset sequence.
 
-This split takes a binary approach: flags that are only modified
-pre/post open/close remain bitfields, flags modified from user
-action, including actions that reach across to another device (ex.
-reset) use dedicated storage units.
+Move the IMX6SX_GPR12_PCIE_TEST_POWERDOWN assertion/deassertion into
+the core reset functions to properly reflect its purpose. Remove the
+.enable_ref_clk() callback for i.MX6SX since it was incorrectly
+manipulating this bit.
 
-Note mlx5_vhca_page_tracker.status is relocated to fill the alignment
-hole this split exposes.
-
-Bitfield justifications:
-
-  migrate_cap: written only in mlx5vf_cmd_set_migratable() at probe
-  chunk_mode: written only in mlx5vf_cmd_set_migratable() at probe
-  mig_state_cap: written only in mlx5vf_cmd_set_migratable() at probe
-
-Dedicated storage units:
-
-  mdev_detach: written in the VF attach/detach event notifier
-               mlx5fv_vf_event() at runtime
-  log_active: written in mlx5vf_start_page_tracker()/
-              mlx5vf_stop_page_tracker() during runtime dirty tracking
-  deferred_reset: written in mlx5vf_state_mutex_unlock()/
-                  mlx5vf_pci_aer_reset_done() during runtime reset handling
-  is_err: set by tracker error handling and dirty-log polling at runtime
-  object_changed: set by tracker event handling and cleared by dirty-log
-                  polling at runtime
-
-Fixes: 61a2f1460fd0 ("vfio/mlx5: Manage the VF attach/detach callback from the PF")
-Fixes: 79c3cf279926 ("vfio/mlx5: Init QP based resources for dirty tracking")
-Fixes: f886473071d6 ("vfio/mlx5: Add support for tracker object change event")
-Cc: Yishai Hadas <yishaih@nvidia.com>
+Fixes: e3c06cd063d6 ("PCI: imx6: Add initial imx6sx support")
+Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20260615191241.688297-5-alex.williamson@nvidia.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+Link: https://patch.msgid.link/20260319090844.444987-1-hongxing.zhu@nxp.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/pci/mlx5/cmd.h |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/pci/controller/dwc/pci-imx6.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/vfio/pci/mlx5/cmd.h
-+++ b/drivers/vfio/pci/mlx5/cmd.h
-@@ -147,23 +147,26 @@ struct mlx5_vhca_qp {
- struct mlx5_vhca_page_tracker {
- 	u32 id;
- 	u32 pdn;
--	u8 is_err:1;
-+	/* Flags modified at runtime - dedicated storage unit */
-+	u8 is_err;
-+	int status;
- 	struct mlx5_uars_page *uar;
- 	struct mlx5_vhca_cq cq;
- 	struct mlx5_vhca_qp *host_qp;
- 	struct mlx5_vhca_qp *fw_qp;
- 	struct mlx5_nb nb;
--	int status;
- };
+--- a/drivers/pci/controller/dwc/pci-imx6.c
++++ b/drivers/pci/controller/dwc/pci-imx6.c
+@@ -560,8 +560,6 @@ static int imx6_pcie_enable_ref_clk(stru
  
- struct mlx5vf_pci_core_device {
- 	struct vfio_pci_core_device core_device;
- 	int vf_id;
- 	u16 vhca_id;
-+	/* Flags only modified on setup/release - bitfield ok */
- 	u8 migrate_cap:1;
--	u8 deferred_reset:1;
--	u8 mdev_detach:1;
--	u8 log_active:1;
-+	/* Flags modified at runtime - dedicated storage unit */
-+	u8 mdev_detach;
-+	u8 log_active;
-+	u8 deferred_reset;
- 	struct completion tracker_comp;
- 	/* protect migration state */
- 	struct mutex state_mutex;
+ 	switch (imx6_pcie->drvdata->variant) {
+ 	case IMX6SX:
+-		regmap_update_bits(imx6_pcie->iomuxc_gpr, IOMUXC_GPR12,
+-				   IMX6SX_GPR12_PCIE_TEST_POWERDOWN, 0);
+ 		break;
+ 	case IMX6QP:
+ 	case IMX6Q:
+@@ -733,6 +731,8 @@ static int imx6_pcie_deassert_core_reset
+ 		imx7d_pcie_wait_for_phy_pll_lock(imx6_pcie);
+ 		break;
+ 	case IMX6SX:
++		regmap_clear_bits(imx6_pcie->iomuxc_gpr, IOMUXC_GPR12,
++				  IMX6SX_GPR12_PCIE_TEST_POWERDOWN);
+ 		regmap_update_bits(imx6_pcie->iomuxc_gpr, IOMUXC_GPR5,
+ 				   IMX6SX_GPR5_PCIE_BTNRST_RESET, 0);
+ 		break;
 
 
