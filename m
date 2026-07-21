@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0881A434E2C;
-	Tue, 21 Jul 2026 20:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3DC434E2C;
+	Tue, 21 Jul 2026 20:07:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664436; cv=none; b=MBRrt5WuV33/OJUyuQ+mXgyyy9SvmX3lh5lvFmCo1FzAEdGUlMesZDCz1OBP6nSKPFVv9qn/GXKzH2snHpmRaoxXXyAL+B7DveeAzzsZyeHX0ze6YcV1o3G49BllgmE2D0EY5hmqEIkbQls9bk0Aq47z1wqpqU62Km+y4wcfsGM=
+	t=1784664438; cv=none; b=l3RIotEb0YKLlSByw28HM4iuVWbGlaYC7WqW5bmp0LEkVvITuXbPWxo1oQraW6OE0pMbEWw9fh9iDqNAeMi+64K6RZpLLDLzNRetrb6HLXceTAjhMEQmFSrjqsvFAwecAcTHkI2owCm1K7psHr+lG0t6XWcj+vMg88mkyQi8Tq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664436; c=relaxed/simple;
-	bh=Uccwq1vkoaf1zb63KKC/BuTH3rtobdOdaB/T+Qr7Wng=;
+	s=arc-20240116; t=1784664438; c=relaxed/simple;
+	bh=wgfFzryfr3czG83kSLfR+8ifsxNJyeW8jgbZYkWqSdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QePtm/WqYEmUcmh0XI402d6VIYALybV4SMR6uft+wGInboP++p08xXxdKQCMRwiEEE/mYnHFZtMeBvaWooC7IsV6KZj6PS00iH7oxw0fSX2KLb8BXIp3GX5UfAl9DYBL5HYyTeEGSabMu9GqiSDLGkjIzkYRD2bdHlDKdFsby8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=odx1XLSr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CiFWZobjExnImanS12C8sT2v2Yw8LVs9r5a0g8ZO+ingXI5AZl2riA+IFbOxCYPSMFs9ik+K3SYubJTxOXJf7ifOAbjnSOt2Lm0hezn/atzPYt8xSJdZvdYFaZwUYybhRDQIBEXtpQQW9LHQ0iTWic+oYG3G3LaBfoEhKgCkrA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9LRQprD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="odx1XLSr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D96E1F000E9;
-	Tue, 21 Jul 2026 20:07:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9LRQprD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3121F000E9;
+	Tue, 21 Jul 2026 20:07:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664434;
-	bh=FFvk7ut2eKGY5iA7ytZcUi4xX9xU8OUvUCTijy26RIA=;
+	s=korg; t=1784664437;
+	bh=8SIG2qHA1MBkxymSRZGcbgofOrS6inN6gKVjbnyZrJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=odx1XLSrVL2zUbo8Dy47VChmhr0cv2JyzdBeCf41+Z4bIpS9dOypyM3QEPeQGJDyc
-	 E9DpCHzC8XzpW1Qte8/Y+X5b+DK/ZV//HeKN8iYTkFEVVMsLY3A3GR//x9oWNGCTV4
-	 DGjFF33K3bGTu9wtRPG+yniA9Cwt5cUfx38wHTLw=
+	b=H9LRQprDkpekYVFT0dPg2VBbz06f3u5PQyGUpyze699x7fqD0FONFBAz99I+K2qRS
+	 Q79pxqi5S6dGD0IY0Ij/KkhJddWG+mOnqGY7zlNj8adpJ8ZDf+Lvx+W+BS7O9La7Zt
+	 trAGaL4H+OKk+vdK+VlxgQBNqtII7dzF4bKT+CEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Marco Nenciarini <mnencia@kcore.it>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1197/1276] HID: pidff: Add missing spaces
-Date: Tue, 21 Jul 2026 17:27:20 +0200
-Message-ID: <20260721152512.844045590@linuxfoundation.org>
+Subject: [PATCH 6.12 1157/1276] PCI: Skip Resizable BAR restore on read error
+Date: Tue, 21 Jul 2026 17:26:40 +0200
+Message-ID: <20260721152511.908269320@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -45,68 +45,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+From: Marco Nenciarini <mnencia@kcore.it>
 
-[ Upstream commit 61ea33ded9327a07d9ef85a6933cb6316e2f185f ]
+[ Upstream commit ee7471fe968d210939be9046089a924cd23c8c3b ]
 
-Fixes checkpatch.pl errors
+pci_restore_rebar_state() uses the Resizable BAR Control register to decide
+how many BARs to restore (nbars) and which BAR each iteration addresses
+(bar_idx).
 
-Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Stable-dep-of: b251598b8bf3 ("HID: pidff: Use correct effect type in effect update")
+When a device does not respond, config reads typically return
+PCI_ERROR_RESPONSE (~0).  Both fields are 3 bits wide, so nbars and bar_idx
+both evaluate to 7, past the spec's valid ranges for both fields.
+pci_resource_n() then returns an unrelated resource slot, whose size is
+used to derive a nonsensical value written back to the Resizable BAR
+Control register.
+
+Bail out if any Resizable BAR Control read returns PCI_ERROR_RESPONSE. No
+further BARs are touched, which is safe because a config read that returns
+PCI_ERROR_RESPONSE indicates the device is unreachable and restoration is
+pointless.
+
+Fixes: d3252ace0bc6 ("PCI: Restore resized BAR state on resume")
+Signed-off-by: Marco Nenciarini <mnencia@kcore.it>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/666cac19b5daa0ab0e0ab64454e76b4d24465dbd.1776429882.git.mnencia@kcore.it
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/usbhid/hid-pidff.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/pci/rebar.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/hid/usbhid/hid-pidff.c
-+++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -251,9 +251,9 @@ static u32 pidff_rescale_time(u16 time,
- 	int exponent = field->unit_exponent;
+--- a/drivers/pci/rebar.c
++++ b/drivers/pci/rebar.c
+@@ -130,6 +130,9 @@ void pci_restore_rebar_state(struct pci_
+ 		return;
  
- 	pr_debug("time field exponent: %d\n", exponent);
--	for (;exponent < FF_TIME_EXPONENT; exponent++)
-+	for (; exponent < FF_TIME_EXPONENT; exponent++)
- 		scaled_time *= 10;
--	for (;exponent > FF_TIME_EXPONENT; exponent--)
-+	for (; exponent > FF_TIME_EXPONENT; exponent--)
- 		scaled_time /= 10;
+ 	pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
++	if (PCI_POSSIBLE_ERROR(ctrl))
++		return;
++
+ 	nbars = FIELD_GET(PCI_REBAR_CTRL_NBAR_MASK, ctrl);
  
- 	pr_debug("time calculated from %d to %d\n", time, scaled_time);
-@@ -587,7 +587,7 @@ static void pidff_set_device_control(str
- 		hid_dbg(pidff->hid, "DEVICE_CONTROL is a bitmask\n");
+ 	for (i = 0; i < nbars; i++, pos += 8) {
+@@ -137,6 +140,9 @@ void pci_restore_rebar_state(struct pci_
+ 		int bar_idx, size;
  
- 		/* Clear current bitmask */
--		for(i = 0; i < sizeof(pidff_device_control); i++) {
-+		for (i = 0; i < sizeof(pidff_device_control); i++) {
- 			index = pidff->control_id[i];
- 			if (index < 1)
- 				continue;
-@@ -638,7 +638,7 @@ static void pidff_fetch_pool(struct pidf
- 	struct hid_device *hid = pidff->hid;
- 
- 	/* Repeat if PID_SIMULTANEOUS_MAX < 2 to make sure it's correct */
--	for(i = 0; i < 20; i++) {
-+	for (i = 0; i < 20; i++) {
- 		hid_hw_request(hid, pidff->reports[PID_POOL], HID_REQ_GET_REPORT);
- 		hid_hw_wait(hid);
- 
-@@ -869,7 +869,7 @@ static int pidff_upload_effect(struct in
- 	case FF_INERTIA:
- 	case FF_FRICTION:
- 		if (!old) {
--			switch(effect->type) {
-+			switch (effect->type) {
- 			case FF_SPRING:
- 				type_id = PID_SPRING;
- 				break;
+ 		pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
++		if (PCI_POSSIBLE_ERROR(ctrl))
++			return;
++
+ 		bar_idx = ctrl & PCI_REBAR_CTRL_BAR_IDX;
+ 		res = pci_resource_n(pdev, bar_idx);
+ 		size = pci_rebar_bytes_to_size(resource_size(res));
 
 
