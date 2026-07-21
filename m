@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6ED3B8412;
-	Tue, 21 Jul 2026 20:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22082EBB8D;
+	Tue, 21 Jul 2026 20:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667388; cv=none; b=AMaocA+uwzVMxBR8oeBq/3G775/Yjq1bKDqq7kAZINmKxq43ck4OxNpojzJ+/16LYMSjm8tZaviyJyoc2aUzM5jXwHX5TfqYwApiR/iHM3RNeDGuKbNfvaljXtL3aORfcgGBoVB6bFaaJPRpOmLxcFhV16Bj1zDk8SZAR9DRPww=
+	t=1784667391; cv=none; b=UMJi0o41GQcPdb3Ax9AZcSAxG8G7KpZzFAzPe+S5LVESx6sRISINFw0ckJH2/BWejQY7i7PV5F1XBJffYfIYGrYX/nubntAo8WYwKWGNOd2J43An3HXdxx5Nd54rT2VTTwElscM6sTE2lP3MfhPEp3EcjXi6sIRsqfQO0g+X+VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667388; c=relaxed/simple;
-	bh=uctFUMAvkZF023I9iq7xRUgbmbH/SO8zw2ugFKDSwoE=;
+	s=arc-20240116; t=1784667391; c=relaxed/simple;
+	bh=w038d6VlzT0lqxQpsTfVmbrjPAK2HcfsOhs1o6+r4XA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V06TPNF38vB5q4eOuMMWqULD7WTWDQHvZs6TH6+Ddy5/ZGTEBh501QHhnrQumDUwx+UE9QhphvQunRP8OAXnq3XU7dYIHVSgaN4g5/D3POkFwRrMVjY9/I17i78kTijmvZSyiBQmJAEeUu84NuGHoDiTBx5wIhTMqcNBdThWn/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQAdhDEq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k4GmwXVkh3SrYhOIesRvujxa1bLRWCp0mhp01bI81AgdwW1QVGVmBBz3RJeLPeHs3EefKAx3X5tY5bmDzOpnnFk+Za8rZE705WepX0mNDTr0umYmfxNTmRJ9GPBPq1qWPHSzoc/Us4bDlemJhDqlc7ZTLWY2RzbPuPO632IsYg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SnUjH5mA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQAdhDEq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9542E1F000E9;
-	Tue, 21 Jul 2026 20:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnUjH5mA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDA31F000E9;
+	Tue, 21 Jul 2026 20:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667387;
-	bh=GFJLdoKJsgJPL6vJRfdNwvt0uIT0XtN5Hl090M0Azwo=;
+	s=korg; t=1784667389;
+	bh=OKkaFuJmNV8yWDLNYzh0WkSc9+rl/Or0D7akQEDjwzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RQAdhDEqpjThZa9+MwSy9dhzQL+GAnaNznLj32+3yspHBg3oJVAqoYWOqFUZRAF1w
-	 DFxded9emu8PvKB2wpGFLxuuWFTdtctsXBhQ/7eBQMtlWYcLgB1wbJryD/dFq9KOxZ
-	 FjRgbotGsOAvKF427J/4RsZ9YNUmBOaL3zZWA1E4=
+	b=SnUjH5mAPux9ZnQ9uR3zI4NoHr6ocSyRzZL0Nr7hM+3qPwoFERPKzPaFXiF7Er4P0
+	 mHBex0XcubJOP3Unrf7Qe661o/w32UE56ztSYbwDTvIwl5hVNwEGFE92uRQJ9w1Rnh
+	 URRBFSw5ddgF4MxP8SWZgtguJ6E9/kXZGt4zJGsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.6 1015/1266] tpm: tpm_tis_spi: Use wait_woken() in wait_for_tmp_stat()
-Date: Tue, 21 Jul 2026 17:24:12 +0200
-Message-ID: <20260721152504.540445462@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.6 1042/1266] bpf: Add missing access_ok call to copy_user_syms
+Date: Tue, 21 Jul 2026 17:24:39 +0200
+Message-ID: <20260721152505.136689162@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,95 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko@kernel.org>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit c0c9cfb3b75def8bf200a2d4db09015806acfeaf upstream.
+commit d5dc200c3a3f217de072af269dd90adddf90e48d upstream.
 
-wait_event_interruptible_timeout() evaluates its condition after setting
-the current task state to TASK_INTERRUPTIBLE.
+As reported by sashiko we use __get_user without prior access_ok call on the
+user space pointer. Adding the missing call for the whole pointer array.
 
-With CONFIG_DEBUG_ATOMIC_SLEEP this triggers a warning when the IRQ wait
-path is used:
+Plus removing the err check in the error path, because it's not needed and
+also we can return -ENOMEM directly from the first kvmalloc_array fail path.
 
-    tpm_tis_status()
-      tpm_tis_spi_read_bytes()
-        tpm_tis_spi_transfer_full()
-          spi_bus_lock()
-            mutex_lock()
-
-Address this with the following measures:
-
-1. Call wait_tpm_stat_cond() only while tasking is running.
-2. Use wait_woken() to wait for changes.
-
-Cc: stable@vger.kernel.org # v4.19+
-Cc: Linus Walleij <linusw@kernel.org>
-Reported-by: Stefan Wahren <wahrenst@gmx.net>
-Closes: https://lore.kernel.org/linux-integrity/6964bec7-3dbb-453b-89ef-9b990217a8b9@gmx.net/
-Fixes: 1a339b658d9d ("tpm_tis_spi: Pass the SPI IRQ down to the driver")
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Tested-by: Stefan Wahren <wahrenst@gmx.net>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: stable@vger.kernel.org
+[1] https://lore.kernel.org/bpf/20260611115503.AC16D1F00893@smtp.kernel.org/
+Fixes: 0236fec57a15 ("bpf: Resolve symbols with ftrace_lookup_symbols for kprobe multi link")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/bpf/20260611115503.AC16D1F00893@smtp.kernel.org/
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/r/20260616083056.405652-1-jolsa@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm_tis_core.c |   35 +++++++++++++++++++++--------------
- 1 file changed, 21 insertions(+), 14 deletions(-)
+ kernel/trace/bpf_trace.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -66,8 +66,8 @@ static int wait_for_tpm_stat(struct tpm_
- 		bool check_cancel)
- {
- 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
-+	DEFINE_WAIT_FUNC(wait, woken_wake_function);
- 	unsigned long stop;
--	long rc;
- 	u8 status;
- 	bool canceled = false;
- 	u8 sts_mask;
-@@ -87,23 +87,30 @@ static int wait_for_tpm_stat(struct tpm_
- 	/* process status changes with irq support */
- 	if (sts_mask) {
- 		ret = -ETIME;
-+		add_wait_queue(queue, &wait);
- again:
-+		if (wait_for_tpm_stat_cond(chip, sts_mask, check_cancel,
-+					   &canceled)) {
-+			ret = canceled ? -ECANCELED : 0;
-+			goto out;
-+		}
-+
- 		timeout = stop - jiffies;
- 		if ((long)timeout <= 0)
--			return -ETIME;
--		rc = wait_event_interruptible_timeout(*queue,
--			wait_for_tpm_stat_cond(chip, sts_mask, check_cancel,
--					       &canceled),
--			timeout);
--		if (rc > 0) {
--			if (canceled)
--				return -ECANCELED;
--			ret = 0;
--		}
--		if (rc == -ERESTARTSYS && freezing(current)) {
--			clear_thread_flag(TIF_SIGPENDING);
--			goto again;
-+			goto out;
-+
-+		if (signal_pending(current)) {
-+			if (freezing(current)) {
-+				clear_thread_flag(TIF_SIGPENDING);
-+				goto again;
-+			}
-+			goto out;
- 		}
-+
-+		wait_woken(&wait, TASK_INTERRUPTIBLE, timeout);
-+		goto again;
-+out:
-+		remove_wait_queue(queue, &wait);
- 	}
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -2549,9 +2549,12 @@ static int copy_user_syms(struct user_sy
+ 	int err = -ENOMEM;
+ 	unsigned int i;
  
- 	if (ret)
++	if (!access_ok(usyms, cnt * sizeof(*usyms)))
++		return -EFAULT;
++
+ 	syms = kvmalloc_array(cnt, sizeof(*syms), GFP_KERNEL);
+ 	if (!syms)
+-		goto error;
++		return -ENOMEM;
+ 
+ 	buf = kvmalloc_array(cnt, KSYM_NAME_LEN, GFP_KERNEL);
+ 	if (!buf)
+@@ -2576,10 +2579,8 @@ static int copy_user_syms(struct user_sy
+ 	return 0;
+ 
+ error:
+-	if (err) {
+-		kvfree(syms);
+-		kvfree(buf);
+-	}
++	kvfree(syms);
++	kvfree(buf);
+ 	return err;
+ }
+ 
 
 
