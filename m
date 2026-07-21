@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EFF37B40C;
-	Tue, 21 Jul 2026 17:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2110419049B;
+	Tue, 21 Jul 2026 17:27:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654821; cv=none; b=ZyUeKIhfxV1uji3JuJIRdhn21mMXHIcqh27vu5M6IAnGbEfs+8C3UsTOUnazWv1x/76JiWKzXj7zPJTEeyhDBXKZADybPx9BndtbFMgOfemGe7JMr3y75zUkE4wlsikjHJxhiHDOT9765T9Pz3NYdMvxnOQdDP5TYSJXz/36CUA=
+	t=1784654824; cv=none; b=V0Ily5YweZxkqfMaC/5U0NTwI1+FU3mvsVrH415VB8H3whYbAO+Ugu4zvmtfSltJP9hIoAuTBwzqzOJHOM/x0QbvyCbrHWrXPb+gYpb7vomvN8G0xLHRhbDyXpcbzUX9roAf10D4VRGuroRXjNReb/QrDG4/7HK8d2j6SEsgIFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654821; c=relaxed/simple;
-	bh=aJDZtX46h7k7ctw/2faLyuZ9MaV64q1Jb6x5smnckOY=;
+	s=arc-20240116; t=1784654824; c=relaxed/simple;
+	bh=iHn7Aio6/eydJTbgzCcQ3kH+W+zJEbRhOtqm/RDBlBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FiJgIHTRGXTjf7H7eJTNYJ794k5kch9MM0t/Mt1UqoCV6N/+46ZfQN5iZxhVqN4vVuKahf9Kfi9zkJo7MmFn/p+lKlBo8ReyLXz2ZN1flrBxBK4Hxy/fhnpxaXHezBx8G4PEGHz6UdVSosreuDyMZJ0W1VyQpW652DsY4KWFjaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERTGGoEu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QCiyCNZpbvIgAxd/Eu6W4wwaOKRNHmDjFES5cf14Cz0g///76nFX/EftCFgFHsnx1vK2bYQYDAZ6tTz//wKqsbKubzzMRzqbKXHkg1ORryQXCDEJptZNMtR1/tXYNBcbKswByMCAr0/nU+fpPVDIThcgeciMR25dBJFJZ9GFvBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cxCwvpSh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERTGGoEu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70F31F000E9;
-	Tue, 21 Jul 2026 17:26:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cxCwvpSh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86ECE1F000E9;
+	Tue, 21 Jul 2026 17:27:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654820;
-	bh=1i5362EdR3W+038KrO/NpPkx2H4E9Dd845hIfl5x9Rs=;
+	s=korg; t=1784654823;
+	bh=1fQRRRnX51Gf31GP6EXhwm+DZ3bwii4Ge94cSwBtkso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ERTGGoEuoDdmYYhg0KdBrX1qAhE9fdaEZZ+Ifnzxr/3KlggJTJXLWOExR7hYADm6V
-	 +w/teFktkUO/hAnZqgv0cYqo/bXFnDm1zjB8qB1wR6bvXq2nGWweATpERTP/wEf9IJ
-	 m1Hdiem55CeKoKRkF7iJuCWd629gtDmvv/dJRpYQ=
+	b=cxCwvpSh8iAHCr4vPWaa2KnG6cAbjLVCzygwuuK7/ffmpespEsJTgoQiZFQViMcdQ
+	 yBZuqy4JFzaGvjau8F0AhgBmF8vIA0j5h+TUXSlRU32u5fRJW9tm3lKuK9CtKxHKkl
+	 bxgssne74o1zMkcVL8ll/aMoBNJrImmuHuG6QBxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 7.1 1797/2077] i2c: spacemit: fix spurious IRQ handling returning IRQ_HANDLED
-Date: Tue, 21 Jul 2026 17:24:30 +0200
-Message-ID: <20260721152635.132887223@linuxfoundation.org>
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 7.1 1844/2077] dm thin metadata: fix metadata snapshot consistency on commit failure
+Date: Tue, 21 Jul 2026 17:25:17 +0200
+Message-ID: <20260721152636.232092312@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,39 +50,235 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Ming-Hung Tsai <mtsai@redhat.com>
 
-commit 9db20d23aac7916ff49be409a4bfd48fe7cbbfb4 upstream.
+commit 5bcd4d3058ebaf46ad2e163829d87dd4870c7a45 upstream.
 
-When the interrupt status register reads zero, the handler should
-return IRQ_NONE instead of IRQ_HANDLED. What the return value
-actually feeds into is the spurious interrupt accounting in
-note_interrupt(): falsely claiming IRQ_HANDLED defeats the "irq XX:
-nobody cared" detection, so a stuck interrupt source would never be
-caught.
+__reserve_metadata_snap() and __release_metadata_snap() modify the
+superblock's held_root directly in the block_manager's buffer. If the
+subsequent metadata commit fails, the held_root gets flushed to disk
+through the abort_transaction path, resulting in inconsistent metadata.
 
-Fixes: 5ea558473fa3 ("i2c: spacemit: add support for SpacemiT K1 SoC")
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Cc: <stable@vger.kernel.org> # v6.15+
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Reviewed-by: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/ef8b623f45d4e430721e46572c2598d882044aed.1783667875.git.xiaopei01@kylinos.cn
+Reproducer 1: __reserve_metadata_snap()
+
+1. Create a 2 MiB metadata device and make the region after the 14th
+   block inaccessible, to trigger metadata commit failure in the
+   subsequent reserve_metadata_snap operation. The 14th block will be
+   the shadow destination for the index block.
+
+dmsetup create tmeta --table "0 112 linear /dev/sdc 0
+112 3984 error"
+
+2. Create a 16 MiB thin-pool
+
+dmsetup create tdata --table "0 32768 zero"
+dd if=/dev/zero of=/dev/mapper/tmeta bs=4k count=1
+dmsetup create tpool --table "0 32768 thin-pool /dev/mapper/tmeta \
+/dev/mapper/tdata 128 0 1 skip_block_zeroing"
+
+3. Take a metadata snapshot to trigger metadata commit failure and
+   transaction abort. However, the held_root is written to disk,
+   breaking metadata consistency.
+
+dmsetup message tpool 0 "reserve_metadata_snap"
+
+thin_check v1.2.2 result:
+
+Bad reference count for metadata block 6.  Expected 2, but space map contains 1.
+Bad reference count for metadata block 7.  Expected 2, but space map contains 1.
+Bad reference count for metadata block 13.  Expected 1, but space map contains 0.
+
+Reproducer 2: __release_metadata_snap()
+
+1. Create a 2 MiB metadata device and make the region after the 16th
+   block inaccessible, to trigger metadata commit failure in the
+   subsequent release_metadata_snap operation. The 16th block will be
+   the shadow destination for the index block.
+
+dmsetup create tmeta --table "0 128 linear /dev/sdc 0
+128 3968 error"
+
+2. Create a 16 MiB thin-pool
+
+dmsetup create tdata --table "0 32768 zero"
+dd if=/dev/zero of=/dev/mapper/tmeta bs=4k count=1
+dmsetup create tpool --table "0 32768 thin-pool /dev/mapper/tmeta \
+/dev/mapper/tdata 128 0 1 skip_block_zeroing"
+
+3. Reserve then release the metadata snapshot, to trigger metadata
+   commit failure and transaction abort. The held_root gets removed
+   from the on-disk superblock, causing inconsistent metadata.
+
+dmsetup message tpool 0 "reserve_metadata_snap"
+dmsetup message tpool 0 "release_metadata_snap"
+
+thin_check v1.2.2 result:
+
+Bad reference count for metadata block 6.  Expected 1, but space map contains 2.
+Bad reference count for metadata block 7.  Expected 1, but space map contains 2.
+1 metadata blocks have leaked.
+
+Fix by deferring the held_root update to commit time.
+
+Additionally, move the existing-snapshot check in __reserve_metadata_snap
+before the shadow operation to avoid unnecessary work. In
+__release_metadata_snap, clear pmd->held_root before btree deletion so
+partial failure leaks blocks rather than leaving a stale reference, and
+unlock the snapshot block before decrementing its refcount.
+
+Fixes: 991d9fa02da0 ("dm: add thin provisioning target")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-k1.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-thin-metadata.c |   63 ++++++++++++------------------------------
+ 1 file changed, 18 insertions(+), 45 deletions(-)
 
---- a/drivers/i2c/busses/i2c-k1.c
-+++ b/drivers/i2c/busses/i2c-k1.c
-@@ -596,7 +596,7 @@ static irqreturn_t spacemit_i2c_irq_hand
+--- a/drivers/md/dm-thin-metadata.c
++++ b/drivers/md/dm-thin-metadata.c
+@@ -186,6 +186,7 @@ struct dm_pool_metadata {
+ 	uint32_t time;
+ 	dm_block_t root;
+ 	dm_block_t details_root;
++	dm_block_t held_root;
+ 	struct list_head thin_devices;
+ 	uint64_t trans_id;
+ 	unsigned long flags;
+@@ -748,6 +749,7 @@ static int __open_metadata(struct dm_poo
+ 	 */
+ 	pmd->root = le64_to_cpu(disk_super->data_mapping_root);
+ 	pmd->details_root = le64_to_cpu(disk_super->device_details_root);
++	pmd->held_root = le64_to_cpu(disk_super->held_root);
  
- 	status = readl(i2c->base + SPACEMIT_ISR);
- 	if (!status)
--		return IRQ_HANDLED;
-+		return IRQ_NONE;
+ 	__setup_btree_details(pmd);
+ 	dm_bm_unlock(sblock);
+@@ -838,6 +840,7 @@ static int __begin_transaction(struct dm
+ 	pmd->time = le32_to_cpu(disk_super->time);
+ 	pmd->root = le64_to_cpu(disk_super->data_mapping_root);
+ 	pmd->details_root = le64_to_cpu(disk_super->device_details_root);
++	pmd->held_root = le64_to_cpu(disk_super->held_root);
+ 	pmd->trans_id = le64_to_cpu(disk_super->trans_id);
+ 	pmd->flags = le32_to_cpu(disk_super->flags);
+ 	pmd->data_block_size = le32_to_cpu(disk_super->data_block_size);
+@@ -928,6 +931,7 @@ static int __commit_transaction(struct d
+ 	disk_super->time = cpu_to_le32(pmd->time);
+ 	disk_super->data_mapping_root = cpu_to_le64(pmd->root);
+ 	disk_super->device_details_root = cpu_to_le64(pmd->details_root);
++	disk_super->held_root = cpu_to_le64(pmd->held_root);
+ 	disk_super->trans_id = cpu_to_le64(pmd->trans_id);
+ 	disk_super->flags = cpu_to_le32(pmd->flags);
  
- 	i2c->status = status;
+@@ -1333,9 +1337,14 @@ static int __reserve_metadata_snap(struc
+ {
+ 	int r, inc;
+ 	struct thin_disk_superblock *disk_super;
+-	struct dm_block *copy, *sblock;
++	struct dm_block *copy;
+ 	dm_block_t held_root;
  
++	if (pmd->held_root) {
++		DMWARN("Pool metadata snapshot already exists: release this before taking another.");
++		return -EBUSY;
++	}
++
+ 	/*
+ 	 * We commit to ensure the btree roots which we increment in a
+ 	 * moment are up to date.
+@@ -1363,14 +1372,6 @@ static int __reserve_metadata_snap(struc
+ 	held_root = dm_block_location(copy);
+ 	disk_super = dm_block_data(copy);
+ 
+-	if (le64_to_cpu(disk_super->held_root)) {
+-		DMWARN("Pool metadata snapshot already exists: release this before taking another.");
+-
+-		dm_tm_dec(pmd->tm, held_root);
+-		dm_tm_unlock(pmd->tm, copy);
+-		return -EBUSY;
+-	}
+-
+ 	/*
+ 	 * Wipe the spacemap since we're not publishing this.
+ 	 */
+@@ -1386,18 +1387,8 @@ static int __reserve_metadata_snap(struc
+ 	dm_tm_inc(pmd->tm, le64_to_cpu(disk_super->device_details_root));
+ 	dm_tm_unlock(pmd->tm, copy);
+ 
+-	/*
+-	 * Write the held root into the superblock.
+-	 */
+-	r = superblock_lock(pmd, &sblock);
+-	if (r) {
+-		dm_tm_dec(pmd->tm, held_root);
+-		return r;
+-	}
++	pmd->held_root = held_root;
+ 
+-	disk_super = dm_block_data(sblock);
+-	disk_super->held_root = cpu_to_le64(held_root);
+-	dm_bm_unlock(sblock);
+ 	return 0;
+ }
+ 
+@@ -1417,18 +1408,10 @@ static int __release_metadata_snap(struc
+ {
+ 	int r;
+ 	struct thin_disk_superblock *disk_super;
+-	struct dm_block *sblock, *copy;
++	struct dm_block *copy;
+ 	dm_block_t held_root;
+ 
+-	r = superblock_lock(pmd, &sblock);
+-	if (r)
+-		return r;
+-
+-	disk_super = dm_block_data(sblock);
+-	held_root = le64_to_cpu(disk_super->held_root);
+-	disk_super->held_root = cpu_to_le64(0);
+-
+-	dm_bm_unlock(sblock);
++	held_root = pmd->held_root;
+ 
+ 	if (!held_root) {
+ 		DMWARN("No pool metadata snapshot found: nothing to release.");
+@@ -1439,13 +1422,15 @@ static int __release_metadata_snap(struc
+ 	if (r)
+ 		return r;
+ 
++	pmd->held_root = 0;
++
+ 	disk_super = dm_block_data(copy);
+ 	dm_btree_del(&pmd->info, le64_to_cpu(disk_super->data_mapping_root));
+ 	dm_btree_del(&pmd->details_info, le64_to_cpu(disk_super->device_details_root));
+-	dm_sm_dec_block(pmd->metadata_sm, held_root);
+-
+ 	dm_tm_unlock(pmd->tm, copy);
+ 
++	dm_sm_dec_block(pmd->metadata_sm, held_root);
++
+ 	return 0;
+ }
+ 
+@@ -1464,19 +1449,7 @@ int dm_pool_release_metadata_snap(struct
+ static int __get_metadata_snap(struct dm_pool_metadata *pmd,
+ 			       dm_block_t *result)
+ {
+-	int r;
+-	struct thin_disk_superblock *disk_super;
+-	struct dm_block *sblock;
+-
+-	r = dm_bm_read_lock(pmd->bm, THIN_SUPERBLOCK_LOCATION,
+-			    &sb_validator, &sblock);
+-	if (r)
+-		return r;
+-
+-	disk_super = dm_block_data(sblock);
+-	*result = le64_to_cpu(disk_super->held_root);
+-
+-	dm_bm_unlock(sblock);
++	*result = pmd->held_root;
+ 
+ 	return 0;
+ }
 
 
