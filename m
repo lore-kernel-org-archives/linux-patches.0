@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D4C44AB68;
-	Tue, 21 Jul 2026 21:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E6344AB71;
+	Tue, 21 Jul 2026 21:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668437; cv=none; b=RbqhDwHBi+tNv6k8j49TQ8tS5y3Vk2AXzpgxfP3Pihyaj+SbG0ubPNEnOMwo4rbKNmAf8+vLigda74Rc5J6Dm+9VfCjCHsnF4krORvfsXzfy+trXZpqFt5wln7SdengtfiRhRtw3ireIzTGsbVXmSTCF3SzNzPvi2VU3Ih9ldkU=
+	t=1784668440; cv=none; b=h8G3GsNVEJr3KLJMpAaN+4zu5Xp3EH9diw+uRTAHBPxW3tcPTpcHRnhZCmp6Irfg71KiHccEqKPC6Zn1OKrcbdwdWTEQUhi7X7U5MNXSXJbqF09f0K6yQLab3ZBXrPQ5Qbi+cbcjsJJ3cnlo02fXTfPu1OAjU5vngjaZfnXxBgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668437; c=relaxed/simple;
-	bh=CKU6Mg01Nak9TSqQzQANqSEiKoltzcR/YU97OV0+oCM=;
+	s=arc-20240116; t=1784668440; c=relaxed/simple;
+	bh=Iqyzhw19YFxnDtVexpZM2fHYv+fptmirEbEBejGx+a4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vu5OscNhlaR9W4w4Olzollx80MbW88H5yIkEEiDOkYfnOGhiB6/baPFdlsENHgioadJNSJdVgDA1SAjxItgSPL98BtBAmXFIwVcpsCsIbT7zADRWO0Sragyi1qkIkSSgxhmj6+emDwUYtUxufY/rqh3LdaerGvsscu8jxbriNcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=abU0UcMK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FPmZjp4gYfM8NvrKPQbBvD2Onyeo75nB8WVZBzLlTWLZtyN6+f+M6toaQFOqTbXtyzZmyGvv8OnOeAgxJ6ozlYyCASXJDN9suZEYfWLIcYsc4U079kpxrtsMZQC6eSDmtJOYhsC0vAHv+ImpHCA7xTiqz2EpvqjR5WMWOikWZ8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JyujVugE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="abU0UcMK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B817E1F000E9;
-	Tue, 21 Jul 2026 21:13:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JyujVugE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A6AD1F000E9;
+	Tue, 21 Jul 2026 21:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668436;
-	bh=0qvRrdZurlb8ivXl/aZi/ZjW20b78B7gHVolQqQjGT0=;
+	s=korg; t=1784668438;
+	bh=gUPViJpg9+GSbGjSu/3wI1FdwomA2Pl+w10YMGZr1m4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=abU0UcMKdQ7MKrdgthQPdkwae8cY0q+TF4lxhKx/gFxQ3VoBhjR2hG5oWK1j3WR2m
-	 YyT0LFLVg2tK9w45eStG6djScsTPw3VW3s7NNn4GCjNHVrMiQVO1wymA/Oj+Zjzarj
-	 XlOxtfZ9ziu/CWAIX2b/PIw/WzRw3uBkY9jlo2Ao=
+	b=JyujVugE10aFzbeZkRbl8skOzVsM5k3IBauC6pOcChoJuiaCoxrvn+/RL5nqagYzm
+	 XJzvuYn8Ueq0wZ/fibzjrwRYUVZ/ikonldRSwBKgtasPp6zFzilvXkgE06SiFD4yzF
+	 uJuEvFuLsBrh+JOSdWsTKGJ2AHSZhQZXJ85MsQgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Fushuai Wang <wangfushuai@baidu.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 0148/1067] cpufreq: intel_pstate: Sync policy->cur during CPU offline
-Date: Tue, 21 Jul 2026 17:12:29 +0200
-Message-ID: <20260721152427.905518196@linuxfoundation.org>
+	"Erich E. Hoover" <erich.e.hoover@gmail.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.1 0175/1067] USB: quirks: add NO_LPM for the Samsung T5 EVO Portable SSD
+Date: Tue, 21 Jul 2026 17:12:56 +0200
+Message-ID: <20260721152428.507017409@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,51 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fushuai Wang <wangfushuai@baidu.com>
+From: Erich E. Hoover <erich.e.hoover@gmail.com>
 
-commit bcbdaa1086c25a8a5d48e04e1b82fdfb0682b681 upstream.
+commit fc591787785b9709a0bb65a7df3ba2537d611c47 upstream.
 
-When a CPU goes offline with HWP disabled, intel_pstate_set_min_pstate()
-sets the MSR_IA32_PERF_CTL to minimum frequency to prevent SMT siblings
-from being restricted. However, the policy->cur value was not updated,
-leaving it at the previous value.
+The Samsung T5 EVO Portable SSD (04e8:6200) exhibit two forms of
+link instability when USB Link Power Management is enabled:
 
-When the CPU comes back online, governor->limits() checks if target_freq
-equals policy->cur and skips the frequency adjustment if they match. Since
-policy->cur still holds the previous value, the governor does not call
-cpufreq_driver->target to update MSR_IA32_PERF_CTL.
+  1. The units fail to initialize properly on first detection,
+  resulting in a lockup in the drive where it must be power cycled
+  or the kernel will not recognize the presence of the device.
 
-Fix this by synchronizing policy->cur with the hardware state when setting
-minimum pstate during CPU offline.
+  2. If used for sustained operations (small amounts of continuous
+  data are transferred to the unit) then the unit will "hiccup"
+  after roughly 8 hours of use and will disconnect and reconnect.
+  This has a certain probability of triggering the first issue,
+  but also causes mount points to become invalid since the device
+  gets issued a new letter.
 
-Fixes: bb18008f8086 ("intel_pstate: Set core to min P state during core offline")
-Cc: stable@vger.kernel.org # 3.15+
-Suggested-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
-[ rjw: Subject refinement ]
-Link: https://patch.msgid.link/20260520032119.30615-1-fushuai.wang@linux.dev
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Erich E. Hoover <erich.e.hoover@gmail.com>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20260602204508.48856-1-erich.e.hoover@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/intel_pstate.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/core/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -2631,10 +2631,12 @@ static int intel_cpufreq_cpu_offline(str
- 	 * from getting to lower performance levels, so force the minimum
- 	 * performance on CPU offline to prevent that from happening.
- 	 */
--	if (hwp_active)
-+	if (hwp_active) {
- 		intel_pstate_hwp_offline(cpu);
--	else
-+	} else {
- 		intel_pstate_set_min_pstate(cpu);
-+		policy->cur = cpu->pstate.min_freq;
-+	}
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -297,6 +297,9 @@ static const struct usb_device_id usb_qu
+ 	/* CarrolTouch 4500U */
+ 	{ USB_DEVICE(0x04e7, 0x0030), .driver_info = USB_QUIRK_RESET_RESUME },
  
- 	intel_pstate_exit_perf_limits(policy);
- 
++	/* Samsung T5 EVO Portable SSD */
++	{ USB_DEVICE(0x04e8, 0x6200), .driver_info = USB_QUIRK_NO_LPM },
++
+ 	/* Samsung Android phone modem - ID conflict with SPH-I500 */
+ 	{ USB_DEVICE(0x04e8, 0x6601), .driver_info =
+ 			USB_QUIRK_CONFIG_INTF_STRINGS },
 
 
