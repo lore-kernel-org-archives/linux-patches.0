@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6300544AB91;
-	Tue, 21 Jul 2026 22:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB091347BC6;
+	Tue, 21 Jul 2026 22:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674198; cv=none; b=eTzQ/haa+fsyAIA4S4GUkt5XLcKxvvoD5HtCE8D4nMq5R82/OQayWk6Ur+RfZ55TSW4PkqpHpZ0UZzGNtbD51GJKg8IsoTKEjPjFEH7878ijUoNxSVt9NDtKZolUe+pDpvInz1lLarv80v5GfyG5hhROgXiPIjLNBaRNG3CakUI=
+	t=1784674199; cv=none; b=f3sMSQg9dYrAQ3HAnuht/ZC47zTM4mIGX/986FLaIgd6B1wT5Z7Q2Cr6efkPUnSUP8I1kf/qQqtCnjGwoIhy5muB+d20ijJjbTj36wLYoMs9IeIKzQEZViP2myv5WpNijd292gkCnjEeIw3VobrPBMKAi6lw218EEL4CY9tqd88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674198; c=relaxed/simple;
-	bh=kwUwU3O+H2RjUnmVzBOtz2p/ZMYQ+z+T8O2IqJRTC/0=;
+	s=arc-20240116; t=1784674199; c=relaxed/simple;
+	bh=1Zupt2nLeM+KlOSLM06Oc8Q/IOFrpxVsYd+gIlpC1HI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZcGmK2Rus3PJ3Y6jI9IlLHfBZ9FLl1gLbAzloawip0Ec+/YeSo7jORajjaDCqSfOFitYfUXt5llqFbOJDUmCeFFf7x4W1gtwc3G4odgahGrhEXhVNEmytJblsACmvMBEnYFNiGOgpPEeQ22tJ/HN0qzWLcbYAVBNbQXQ52Z9g+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACBYCJkt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CnBYxF/x6aJz3xh9Q72RpICyVObOoVa+7zmGrz4k5DOfagRqsL6+bmtnrFX5HodEtHdaLqYfdzlAZVICes/T6HoOB1tikJC2fMdXQJfcZcYjvdLiQdjj1LB1m7kOo+TUYIKRgnjv8Ud7ZV+ZM2zayp9RmbaJb+3mmUH6wfwhIqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PH735xiY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACBYCJkt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85DE1F00A3A;
-	Tue, 21 Jul 2026 22:49:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PH735xiY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08EA81F000E9;
+	Tue, 21 Jul 2026 22:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674197;
-	bh=BxPxfnDelFNLzwipJlUU+fQOZWJeRn3/oZWV5io2tZU=;
+	s=korg; t=1784674194;
+	bh=/KccKJ0TuUNfBESkdMrkqyUTZ+ob2Ct8Ff51dsYMNXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ACBYCJktW1lmz6jiQg22XrxhCL0A4QWhkUxK5Bo4M00IfuIYOUoKlcNt5w0fInN2Z
-	 6pHJ0g/XKexqTUlHCC+raSMUwaht0shGgH8cITFRX6ENKEY8rzQ9HThD3gd534tYQu
-	 vRc3KpC+4R2AUPZgyax508RW23A//lprlXFTO/u8=
+	b=PH735xiYBMba7FgxwDdfnLAhavZys7pWV0k9KtHuOrwqWDAe6pglrI/AbAOz6YxmV
+	 6KLo73ygSk7+1lMYn02uepkYV0k3PLLu/l4prIXwTFKSbSDgsjLGEGJzSrL322ebIM
+	 MI6G2TgDlgT8fuaxJ2HBKKGECdIS1w8MTB5V+tdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
 	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 5.10 448/699] netfilter: nf_conntrack_reasm: guard mac_header adjustment after IPv6 defrag
-Date: Tue, 21 Jul 2026 17:23:27 +0200
-Message-ID: <20260721152405.805754925@linuxfoundation.org>
+Subject: [PATCH 5.10 447/699] netfilter: nf_nat_sip: reload possible stale data pointer
+Date: Tue, 21 Jul 2026 17:23:26 +0200
+Message-ID: <20260721152405.784025151@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,50 +49,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Florian Westphal <fw@strlen.de>
 
-commit 3b08fed5b7e0d5e3a25d73ef3ba09cd33ade16c9 upstream.
+commit 77e43bcb7ec177e293a5c3f1b91a2c5aebfb6c68 upstream.
 
-nf_ct_frag6_reasm() slides the packet head forward to drop the IPv6
-fragment header and then unconditionally advances skb->mac_header:
+quoting sashiko:
+ ------------------------------------------------------------------------
+ [..] noticed a potential memory bug and header corruption involving the
+ SIP NAT helper.
 
-	skb->mac_header += sizeof(struct frag_hdr);
+ In net/netfilter/nf_nat_sip.c:nf_nat_sip():
+	if (skb_ensure_writable(skb, skb->len)) {
+		nf_ct_helper_log(skb, ct, "cannot mangle packet");
+		return NF_DROP;
+	}
+	uh = (void *)skb->data + protoff;
+	uh->dest = ct_sip_info->forced_dport;
+	if (!nf_nat_mangle_udp_packet(skb, ct, ctinfo, protoff,
+				      0, 0, NULL, 0)) {
 
-On the NF_INET_LOCAL_OUT defrag path the skb has no link-layer header
-yet, so skb->mac_header is still the "not set" sentinel (u16)~0U. Adding
-sizeof(struct frag_hdr) wraps it to a small value (0xffff + 8 == 7),
-after which skb_mac_header_was_set() wrongly reports a MAC header is
-present and skb_mac_header() points into the headroom.
+ If a cloned or fragmented SKB is reallocated by skb_ensure_writable(), the
+ old data buffer is freed. However, nf_nat_sip() fails to update *dptr to
+ point to the new buffer.
 
-The reassembler has done this unconditional add since it was introduced;
-it was harmless while mac_header was a bare pointer, but wrong once
-mac_header became a u16 offset whose unset state is the ~0U sentinel
-tested by skb_mac_header_was_set(). The sibling net/ipv6/reassembly.c
-does the same relocation and does guard the adjustment; mirror the
-guard here.
+ It also appears to use nf_nat_mangle_udp_packet() on what could be a TCP
+ packet, which would overwrite the sequence number with a checksum update.
+ ------------------------------------------------------------------------
 
-Fixes: 9fb9cbb1082d ("[NETFILTER]: Add nf_conntrack subsystem.")
+nf_conntrack_sip linerizes skbs, hence no fragmented skb can be seen.
+But clones are possible, so rebuild dptr.
+
+Disable nf_nat_mangle_udp_packet() branch for TCP streams.
+It doesn't look like this can ever happen, else we should have received
+bug reports about this, so just check the conntrack is UDP and drop
+otherwise.
+
+The calling conntrack_sip set ->forced_dport for SIP_HDR_VIA_UDP messages,
+so I don't think this is ever expected to be true for a TCP stream.
+
+Fixes: 7266507d8999 ("netfilter: nf_ct_sip: support Cisco 7941/7945 IP phones")
 Cc: stable@vger.kernel.org
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-sonnet-4-6
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/netfilter/nf_conntrack_reasm.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/nf_nat_sip.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/net/ipv6/netfilter/nf_conntrack_reasm.c
-+++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
-@@ -344,7 +344,8 @@ static int nf_ct_frag6_reasm(struct frag
- 	skb_network_header(skb)[fq->nhoffset] = skb_transport_header(skb)[0];
- 	memmove(skb->head + sizeof(struct frag_hdr), skb->head,
- 		(skb->data - skb->head) - sizeof(struct frag_hdr));
--	skb->mac_header += sizeof(struct frag_hdr);
-+	if (skb_mac_header_was_set(skb))
-+		skb->mac_header += sizeof(struct frag_hdr);
- 	skb->network_header += sizeof(struct frag_hdr);
+--- a/net/netfilter/nf_nat_sip.c
++++ b/net/netfilter/nf_nat_sip.c
+@@ -283,13 +283,22 @@ next:
  
- 	skb_reset_transport_header(skb);
+ 	/* Mangle destination port for Cisco phones, then fix up checksums */
+ 	if (dir == IP_CT_DIR_REPLY && ct_sip_info->forced_dport) {
++		int doff = *dptr - (const char *)skb->data;
+ 		struct udphdr *uh;
+ 
++		if (doff <= 0)
++			return NF_DROP;
++
++		/* ct_sip_info->forced_dport only expected with UDP */
++		if (nf_ct_protonum(ct) != IPPROTO_UDP)
++			return NF_DROP;
++
+ 		if (skb_ensure_writable(skb, skb->len)) {
+ 			nf_ct_helper_log(skb, ct, "cannot mangle packet");
+ 			return NF_DROP;
+ 		}
+ 
++		*dptr = skb->data + doff;
+ 		uh = (void *)skb->data + protoff;
+ 		uh->dest = ct_sip_info->forced_dport;
+ 
 
 
