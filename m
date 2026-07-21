@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072B74343F1;
-	Tue, 21 Jul 2026 19:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DC84343F1;
+	Tue, 21 Jul 2026 19:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663381; cv=none; b=EFMFYVYP3BumxfWf1BPEah02+2GPOad+h+skg++LuuN7YshcfG7d4VYt8sjyk1go5PxxxHA4rfv0GuDMOdEYm2jkkIIr5GfOixSwwFs+BIp4I4RtDsscg9NgCOMUUN2R+gmxUH0y9hz9QJhO3UrsnSQ0ttzRkQJBwCuYjF0vRvw=
+	t=1784663383; cv=none; b=RHXqHj9g2WQlSlcK9pRSonZoB3z7KsJ7Hs6Pw1RDr/Z68xK0wjcSQpG6rlaT+05Wvo6/0Mk7bdA+BJ4iQYAkwaYUEmO5Wi7ty/RqqDjAh7YEjqeQ/uX9QW/6dO/2EodWSOq4kNNxw9WS4cNy8r0iyOBLpi3FWPC9Xer/Ie3gEwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663381; c=relaxed/simple;
-	bh=TOgTNzuBPg9IL0E0hj4QjEhGplkRBdMk3wltAFjJZts=;
+	s=arc-20240116; t=1784663383; c=relaxed/simple;
+	bh=tphEhsrN2ZttD9ofmo7Weu3jeClzkdvTwDpm/mx5qNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y15mnp2/z1bxxHjCJpD246GCPBxt68AiVXr45Ql71dFXUX+NZNIDYmMR3km6BWo7UtAQMpumsVyHZImOc2+ak3FS6/5xY605bYnAYU6sm3sRMe/V8hjdr71kzmnw3ifDkPXrF3bR/YPNlcFqwocITT6cJher6dCCrFLF8VoJDjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sh/9+Twb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=owbeYtDt+uJ1gfas7lnRvKzo8fQbG/CUF7CZY0REbw6KUaeINj6Ml85p/I5NL/l0bV7K2wmVHoBkOB8uiDctiT+KHia2R8pXg6T9KkMZ5ENxA03Q4G1FiMgqtwb+oNiSKef/oQITy0PlmrFUTb0ChdQCZer35oOZZt7I6aNRg8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nxFbSXGi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sh/9+Twb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B801F000E9;
-	Tue, 21 Jul 2026 19:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxFbSXGi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 073291F000E9;
+	Tue, 21 Jul 2026 19:49:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663379;
-	bh=J73+8gekRJFcK6d9xjCpaAVXimkOOdc2LqaCAKRkR8I=;
+	s=korg; t=1784663382;
+	bh=NOgRU1vaBMxALI/hDjxJaBj8qquAFPxghYCRPiiVlXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sh/9+TwbIvdPQNDaUcwamrdJZuAmGm8TtU9BxTsg5rX2oyEYbQ7evVDXHPnrIkWi2
-	 TZ3Zlhza12U15ztZBnwh0QL1WvI9eeXeP3Cr6BlqVltfA79UVTgikW1x/qYRUm6RcV
-	 NzK9r9MMp4n0ChyL5VWz2KN084XoDD5dpE2Aokmk=
+	b=nxFbSXGiUGWduQOxQ+iJliyy3tzA/daLGQKwi0daXYhMEBGRVQS1eH9sRDGiQJckh
+	 L/fK5geGxeMjsPKdqlT4Ec0gK2eyQBAGuEEsvDaLKv0ltP+H6OVgwGprxcrVe0tQoI
+	 b1TY1nf6wHn0wxLl6IwvdIkt2ewjsngZhGfb0Ppc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Ghosh <sumang@marvell.com>,
-	Nitin Shetty J <nshettyj@marvell.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	Simon Horman <horms@kernel.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0784/1276] octeontx2-pf: check DMAC extraction support before filtering
-Date: Tue, 21 Jul 2026 17:20:27 +0200
-Message-ID: <20260721152503.624414990@linuxfoundation.org>
+Subject: [PATCH 6.12 0802/1276] net/mlx5: Fix L3 tunnel entropy refcount leak
+Date: Tue, 21 Jul 2026 17:20:45 +0200
+Message-ID: <20260721152504.018744994@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,98 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suman Ghosh <sumang@marvell.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 235acadd310533ba386ae61ad155b72bee381559 ]
+[ Upstream commit c914307e1d41c2cb7bcdcbfde4cd2f214f6aa027 ]
 
-Currently, configuring a VF MAC address via the PF (e.g., 'ip link
-set <pf> vf 0 mac <mac>') blindly attempts to install a DMAC-based
-hardware filter. However, the hardware parser profile might not
-support DMAC extraction.
+mlx5_tun_entropy_refcount_inc() counts both VXLAN and L2-to-L3
+tunnel reformat entries as entropy-enabling users. The matching
+decrement path only handled VXLAN, leaving L2-to-L3 tunnel entries
+counted after release.
 
-Check if the hardware parsing profile supports DMAC extraction
-before adding the filter. Additionally, emit a warning message
-to inform the operator if the MAC filter installation fails due
-to missing DMAC extraction support. Update config->mac only
-after hardware programming succeeds in otx2_set_vf_mac().
+Handle MLX5_REFORMAT_TYPE_L2_TO_L3_TUNNEL in
+mlx5_tun_entropy_refcount_dec() as well so the enabling entry
+refcount remains balanced.
 
-Fixes: f0c2982aaf98 ("octeontx2-pf: Add support for SR-IOV management functions")
-Signed-off-by: Suman Ghosh <sumang@marvell.com>
-Signed-off-by: Nitin Shetty J <nshettyj@marvell.com>
-Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Link: https://patch.msgid.link/20260702033451.2969880-1-nshettyj@marvell.com
+Fixes: f828ca6a2fb6 ("net/mlx5e: Add support for hw encapsulation of MPLS over UDP")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260703141423.1723-1-lirongqing@baidu.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeontx2/nic/otx2_pf.c  | 43 ++++++++++++++++---
- 1 file changed, 37 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-index dc4909149fdb85..b0b0b4929e8ce2 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -2365,10 +2365,42 @@ EXPORT_SYMBOL(otx2_ioctl);
- 
- static int otx2_do_set_vf_mac(struct otx2_nic *pf, int vf, const u8 *mac)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c
+index 4571c56ec3c9b2..97f6097d4c705f 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c
+@@ -176,7 +176,8 @@ void mlx5_tun_entropy_refcount_dec(struct mlx5_tun_entropy *tun_entropy,
+ 				   int reformat_type)
  {
-+	struct npc_get_field_status_req *freq;
-+	struct npc_get_field_status_rsp *frsp;
- 	struct npc_install_flow_req *req;
- 	int err;
- 
- 	mutex_lock(&pf->mbox.lock);
-+
-+	/* Skip installing the DMAC filter if the hardware parser profile
-+	 * does not support DMAC extraction.
-+	 */
-+	freq = otx2_mbox_alloc_msg_npc_get_field_status(&pf->mbox);
-+	if (!freq) {
-+		err = -ENOMEM;
-+		goto out;
-+	}
-+
-+	freq->field = NPC_DMAC;
-+	err = otx2_sync_mbox_msg(&pf->mbox);
-+	if (err)
-+		goto out;
-+
-+	frsp = (struct npc_get_field_status_rsp *)otx2_mbox_get_rsp
-+	       (&pf->mbox.mbox, 0, &freq->hdr);
-+	if (IS_ERR(frsp)) {
-+		err = PTR_ERR(frsp);
-+		goto out;
-+	}
-+
-+	if (!frsp->enable) {
-+		netdev_warn(pf->netdev,
-+			    "VF %d MAC filter not installed: DMAC extraction not supported by parser profile\n",
-+			    vf);
-+		err = -EOPNOTSUPP;
-+		goto out;
-+	}
-+
- 	req = otx2_mbox_alloc_msg_npc_install_flow(&pf->mbox);
- 	if (!req) {
- 		err = -ENOMEM;
-@@ -2407,13 +2439,12 @@ static int otx2_set_vf_mac(struct net_device *netdev, int vf, u8 *mac)
- 	if (!is_valid_ether_addr(mac))
- 		return -EINVAL;
- 
--	config = &pf->vf_configs[vf];
--	ether_addr_copy(config->mac, mac);
--
- 	ret = otx2_do_set_vf_mac(pf, vf, mac);
--	if (ret == 0)
--		dev_info(&pdev->dev,
--			 "Load/Reload VF driver\n");
-+	if (ret == 0) {
-+		config = &pf->vf_configs[vf];
-+		ether_addr_copy(config->mac, mac);
-+		dev_info(&pdev->dev, "Load/Reload VF driver\n");
-+	}
- 
- 	return ret;
- }
+ 	mutex_lock(&tun_entropy->lock);
+-	if (reformat_type == MLX5_REFORMAT_TYPE_L2_TO_VXLAN)
++	if (reformat_type == MLX5_REFORMAT_TYPE_L2_TO_VXLAN ||
++	    reformat_type == MLX5_REFORMAT_TYPE_L2_TO_L3_TUNNEL)
+ 		tun_entropy->num_enabling_entries--;
+ 	else if (reformat_type == MLX5_REFORMAT_TYPE_L2_TO_NVGRE &&
+ 		 --tun_entropy->num_disabling_entries == 0)
 -- 
 2.53.0
 
