@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2557F1D7E5C;
-	Tue, 21 Jul 2026 20:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242F0403B13;
+	Tue, 21 Jul 2026 20:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665749; cv=none; b=nB04aryjVYYAja9fmoLM/RXNpMaeobYZVh6AKk1N7MWSQTzBzplTi0wQk0jK3j1HVk/xKacpENpprrJWcdJqRxIrLJ2TuVumpnLl5b3RfoebxkTnwT4PDr8JdICNEUkbcvHi9xTtru7UDhx7odz1ZQ5Qdz6OCwCFhE8+2bj8o8Y=
+	t=1784665752; cv=none; b=A5b5I3GaHTD4tAYGDPc5DGRPJl0SdbGPlctEYkNXIBU/s+771h403thggJr48LEpD99ICvA1Mc7KOG+qEAuZXoK1gn0TSzi+0EiH1g276F4+Bgj49x/GAwOI7jGKBMMWQCR/Zc9eG71KPRfrFMhOS5Ue9Ifev4tr1iHhP3/AXcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665749; c=relaxed/simple;
-	bh=oJZGCzJYtebs05PWUkSFnq95EBed2qUqrY9U3+TYaAA=;
+	s=arc-20240116; t=1784665752; c=relaxed/simple;
+	bh=wKpLfY9rTIFzWo9V20cLcG2bomrRy4FFAwGMj29HChA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNOoUE/Jm04JZYPA8mVyEIQ7qFKwH2A17E62YH6Bojxbm4AkEKQDa4Mo+meEqAwfciWAPJAJ1W43RkxZdGmAbUUKnM+wq3id1r5NEfYixi93UFWpxegRUWYgXpuQyNqWMssyeGNNfvn+swYWO02H25U5G/Nl9lsfWAmEq7g66BI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKz/vkMn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L2IxaucQuX1JsbnbtI8JR3bCbLpcbmV23po7GeryLKOq9kXo4uEEU9NTG8xQ6hziMT4HbJmvJWUI7Uy9xAHsPCwBSHdd9EY0znjn1p6yRQq5Hj7JoTm1qKp3zS1rs4klc/4SuRmQICxl5XRuTyYK3CwUbfFNVs6opah3bFSaseo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1KKF88tG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKz/vkMn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA0A1F000E9;
-	Tue, 21 Jul 2026 20:29:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1KKF88tG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D2F1F000E9;
+	Tue, 21 Jul 2026 20:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665748;
-	bh=pwV/UUpnU6VvPNaPLMWOSR19nBfszHZIDhLt7lPkTPI=;
+	s=korg; t=1784665750;
+	bh=o2SyCZ8D+82l7Sr+lL65aq5hqqcNx+mJg5DT67Pe5ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RKz/vkMnk6Th6C8/m//2j4nc6srPzLxvRCd/Ys/TpOmCsweMDHHmmu3KG5G/AtNiN
-	 QsP5h45T2aIXNjTXRx159O745rdf4tTwCdLGZULdYeLsvAMKP5ivSSC9zQ+Cv6dFby
-	 c3/Cito/x950L80IIzcKGt+fFERuCS4zcR24W07E=
+	b=1KKF88tGYRYdSoyGGRkzfYTNBRGyYXYHJ9H5pCCtK2XQ03XWy9m+TpMuW5vFz0xOJ
+	 KCeGYuXV1YC6Fh23W5hCXzduk6XX6U0TKRwM6CTqSYOIlAbfsQ1jAwuJMkKlLU2jSv
+	 Nafz9Q8noGWKrBowqXnGRO8L51QgjNKyJ2sMCcYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yuwei <zhangyuwei20@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0422/1266] driver core: Use mod_delayed_work to prevent lost deferred probe work
-Date: Tue, 21 Jul 2026 17:14:19 +0200
-Message-ID: <20260721152451.282910458@linuxfoundation.org>
+	Herve Codina <herve.codina@bootlin.com>,
+	Saravana Kannan <saravanak@google.com>,
+	Mark Brown <broonie@kernel.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>
+Subject: [PATCH 6.6 0423/1266] Revert "treewide: Fix probing of devices in DT overlays"
+Date: Tue, 21 Jul 2026 17:14:20 +0200
+Message-ID: <20260721152451.306029916@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,67 +54,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yuwei <zhangyuwei20@huawei.com>
+From: Saravana Kannan <saravanak@google.com>
 
-[ Upstream commit 1137838865bfc9a7cd5869c1dc5c22aa45ec12c8 ]
+[ Upstream commit aaf08c52df9a19148731d4a3cfd85d98455db901 ]
 
-The deferred_probe_timeout_work may be permanently and unexpectedly
-canceled when deferred_probe_extend_timeout() executes concurrently.
-Starting with deferred_probe_timeout_work pending, the problem can
-occur after the following sequence:
+This reverts commit 1a50d9403fb90cbe4dea0ec9fd0351d2ecbd8924.
 
-  CPU0                                 CPU1
-deferred_probe_extend_timeout
-  -> cancel_delayed_work() => true
-                                   deferred_probe_extend_timeout
-                                     -> cancel_delayed_work()
-                                       -> __cancel_work()
-                                         -> try_grab_pending()
-  -> schedule_delayed_work()
-    -> queue_delayed_work_on()
-(Since the pending bit is grabbed,
- it just returns without queuing)
-                                         -> set_work_pool_and_clear_pending()
-                                  (This __cancel_work() returns false and
-                                     the work will never be queued again)
+While the commit fixed fw_devlink overlay handling for one case, it
+broke it for another case. So revert it and redo the fix in a separate
+patch.
 
-The root cause is that the WORK_STRUCT_PENDING_BIT of the work_struct
-is set temporarily in __cancel_work() (via try_grab_pending()). This
-transient state prevents the work_struct from being successfully queued
-by another CPU.
+Fixes: 1a50d9403fb9 ("treewide: Fix probing of devices in DT overlays")
+Reported-by: Herve Codina <herve.codina@bootlin.com>
+Closes: https://lore.kernel.org/lkml/CAMuHMdXEnSD4rRJ-o90x4OprUacN_rJgyo8x6=9F9rZ+-KzjOg@mail.gmail.com/
+Closes: https://lore.kernel.org/all/20240221095137.616d2aaa@bootlin.com/
+Closes: https://lore.kernel.org/lkml/20240312151835.29ef62a0@bootlin.com/
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+Link: https://lore.kernel.org/lkml/20240411235623.1260061-2-saravanak@google.com/
 
-To fix this, replace the original non-atomic cancel and schedule
-mechanism with mod_delayed_work(). This ensures the modification is
-handled atomically and guarantees that the work is not lost.
+[Herve: Fix conflicts due to f72e77c33e4b ("device property: Make
+modifications of fwnode "flags" thread safe")]
 
-Fixes: 2b28a1a84a0e ("driver core: Extend deferred probe timeout on driver registration")
-Signed-off-by: Zhang Yuwei <zhangyuwei20@huawei.com>
-Link: https://patch.msgid.link/20260410024448.387231-1-zhangyuwei20@huawei.com
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Acked-by: Mark Brown <broonie@kernel.org>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Acked-by: Wolfram Sang <wsa+renesas@sang-engineering.com> # for I2C
+Link: https://patch.msgid.link/20260511155755.34428-2-herve.codina@bootlin.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/dd.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/bus/imx-weim.c    | 6 ------
+ drivers/i2c/i2c-core-of.c | 5 -----
+ drivers/of/dynamic.c      | 1 -
+ drivers/of/platform.c     | 5 -----
+ drivers/spi/spi.c         | 5 -----
+ 5 files changed, 22 deletions(-)
 
-diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-index 44f9d0a06d5b70..115b24d5e73d1c 100644
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -326,12 +326,10 @@ void deferred_probe_extend_timeout(void)
- 	 * If the work hasn't been queued yet or if the work expired, don't
- 	 * start a new one.
- 	 */
--	if (cancel_delayed_work(&deferred_probe_timeout_work)) {
--		schedule_delayed_work(&deferred_probe_timeout_work,
--				driver_deferred_probe_timeout * HZ);
-+	if (mod_delayed_work(system_wq, &deferred_probe_timeout_work,
-+						 driver_deferred_probe_timeout))
- 		pr_debug("Extended deferred probe timeout by %d secs\n",
- 					driver_deferred_probe_timeout);
--	}
- }
+diff --git a/drivers/bus/imx-weim.c b/drivers/bus/imx-weim.c
+index 5244013d328fcc..378734724a4f54 100644
+--- a/drivers/bus/imx-weim.c
++++ b/drivers/bus/imx-weim.c
+@@ -330,12 +330,6 @@ static int of_weim_notify(struct notifier_block *nb, unsigned long action,
+ 				 "Failed to setup timing for '%pOF'\n", rd->dn);
  
- /**
+ 		if (!of_node_check_flag(rd->dn, OF_POPULATED)) {
+-			/*
+-			 * Clear the flag before adding the device so that
+-			 * fw_devlink doesn't skip adding consumers to this
+-			 * device.
+-			 */
+-			fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 			if (!of_platform_device_create(rd->dn, NULL, &pdev->dev)) {
+ 				dev_err(&pdev->dev,
+ 					"Failed to create child device '%pOF'\n",
+diff --git a/drivers/i2c/i2c-core-of.c b/drivers/i2c/i2c-core-of.c
+index 50e97e2ed2cff4..a250921bbce094 100644
+--- a/drivers/i2c/i2c-core-of.c
++++ b/drivers/i2c/i2c-core-of.c
+@@ -178,11 +178,6 @@ static int of_i2c_notify(struct notifier_block *nb, unsigned long action,
+ 			return NOTIFY_OK;
+ 		}
+ 
+-		/*
+-		 * Clear the flag before adding the device so that fw_devlink
+-		 * doesn't skip adding consumers to this device.
+-		 */
+-		fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 		client = of_i2c_register_device(adap, rd->dn);
+ 		if (IS_ERR(client)) {
+ 			dev_err(&adap->dev, "failed to create client for '%pOF'\n",
+diff --git a/drivers/of/dynamic.c b/drivers/of/dynamic.c
+index ab109bb92cf424..9cc0f4ffb81427 100644
+--- a/drivers/of/dynamic.c
++++ b/drivers/of/dynamic.c
+@@ -224,7 +224,6 @@ static void __of_attach_node(struct device_node *np)
+ 	np->sibling = np->parent->child;
+ 	np->parent->child = np;
+ 	of_node_clear_flag(np, OF_DETACHED);
+-	fwnode_set_flag(&np->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 
+ 	raw_spin_unlock_irqrestore(&devtree_lock, flags);
+ 
+diff --git a/drivers/of/platform.c b/drivers/of/platform.c
+index 18b72f891c5b5a..d1dfd857f2cd06 100644
+--- a/drivers/of/platform.c
++++ b/drivers/of/platform.c
+@@ -770,11 +770,6 @@ static int of_platform_notify(struct notifier_block *nb,
+ 		if (of_node_check_flag(rd->dn, OF_POPULATED))
+ 			return NOTIFY_OK;
+ 
+-		/*
+-		 * Clear the flag before adding the device so that fw_devlink
+-		 * doesn't skip adding consumers to this device.
+-		 */
+-		fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 		/* pdev_parent may be NULL when no bus platform device */
+ 		pdev_parent = of_find_device_by_node(rd->dn->parent);
+ 		pdev = of_platform_device_create(rd->dn, NULL,
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index bb7e5e56f6dca6..da2ef6b1f7c894 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -4541,11 +4541,6 @@ static int of_spi_notify(struct notifier_block *nb, unsigned long action,
+ 			return NOTIFY_OK;
+ 		}
+ 
+-		/*
+-		 * Clear the flag before adding the device so that fw_devlink
+-		 * doesn't skip adding consumers to this device.
+-		 */
+-		fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 		spi = of_register_spi_device(ctlr, rd->dn);
+ 		put_device(&ctlr->dev);
+ 
 -- 
 2.53.0
 
