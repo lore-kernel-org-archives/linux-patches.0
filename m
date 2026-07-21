@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC39E40803D;
-	Tue, 21 Jul 2026 20:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7876A40803D;
+	Tue, 21 Jul 2026 20:12:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664757; cv=none; b=ThxDkNurZe0ix5+YOZUYcLvQsMJC7pP59+0nOmVbmZ53rx9Tg+Z2IbJD7GKzaYlQO/gBcGp8jNusSmD94wn7XoVkPzMf9Ex/vStfMI7NGfmtBlkV0GqCz3TMrDfw13jCCWzuzSOEzPPqqZnXA7EXtkiKjhnVnchp954OT6LYFTE=
+	t=1784664760; cv=none; b=MYLRLuhjkL+vqitmwLirDltxgaNktT/HYpAxBnAt5CaZfZ9lCxCbo7DRnPgGmyiArG3KUwg8VC2XwIPwCALE7DZoouqes3Y5ayQ+Htec3t6PHq/sbB+ter35RJfBoOeXjScEwTj/iZBv2v6AAJcU45B4W0BpHpNARjP47cHuKT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664757; c=relaxed/simple;
-	bh=BYEfmCUAOA5NrzxVADdhytzRFx55okYeB85DPIfxz0E=;
+	s=arc-20240116; t=1784664760; c=relaxed/simple;
+	bh=o/a7JaP/VF42QRN7+8YDZ9oRj/CQmru/EphoyAlbo3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Gtb7n/ek7+vT9d8rxVrlWUfoi4ysONBGEbUvyUz3FnqOdnsIMQJVY5xzRUp4vN/zjbqoGve7iuvI6NvgCqXDekvJIp+9b8xLzfq7pr5qTYmuaTcU2quvhwsakuj+JOkrmS91/R366BXd9xBN0501rV/UjRlztcClltGRydmdwuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BDwvfuJ8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fUjyTKvI+6to9Q2o24ZjdmuiOufesPw7IWZVxfP9UtitPWtfumMtz4ZLW+jYLiJxCiwHge63VbtqANA2kkiNyKAUeTYTFk89ohYl7UdHDzAyUB063NVIVabp9o5ha1OxSzPtQQAeOILwygCDoZyuKFXFtUWTHSByj+3rPbKpRsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/Yz3yvC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BDwvfuJ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3AA1F000E9;
-	Tue, 21 Jul 2026 20:12:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/Yz3yvC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA1C1F000E9;
+	Tue, 21 Jul 2026 20:12:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664756;
-	bh=c9CTXh1mAJhvP/wcr1cc77Ddr+S22AjjppHO7z3Rsi8=;
+	s=korg; t=1784664759;
+	bh=mYyKSMcEY3i/1YAx7BpiaYHHAuvDb9HWlOI0E+oHVN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BDwvfuJ85YrSls6WxE56uziuE5mHOvn2FyTClNGuRIdwA7Lietvvf+wB0WKJpP2ue
-	 f15jt0TACzLXsjYSbqB2SfpVNDF7lAUroeZD1gvx7wUHCmAcE23lK0UeIRjF7kUNnK
-	 mu2rndSvItxiC2YoDdZqOdYDOSSKYXnhhvl3rCX0=
+	b=S/Yz3yvC5JpdWkx6D1M84w6IoHdwFRQzsyYLPU2hkkX3UVy6yiPpG5Y/7eTnYvVkf
+	 1IT4Rkjj6dC8IfFWlwgJX58BBnesJPkDmaRBBP7DhNRhF42bQZaNTuTvpN0ORE5ESS
+	 6lrybU8nGnzoGfkkohGmZOHL16odze55qI+H2iew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
+	NeilBrown <neil@brown.name>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
-	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0003/1266] nfsd: reset write verifier on deferred writeback errors
-Date: Tue, 21 Jul 2026 17:07:20 +0200
-Message-ID: <20260721152441.869713222@linuxfoundation.org>
+Subject: [PATCH 6.6 0041/1266] nfsd: move name lookup out of nfsd4_list_rec_dir()
+Date: Tue, 21 Jul 2026 17:07:58 +0200
+Message-ID: <20260721152442.723194202@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -47,77 +46,158 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: NeilBrown <neilb@ownmail.net>
 
-commit 2090b05803faab8a9fa62fbff871007862cac1b7 upstream.
+[ Upstream commit 89bd77cf436bf25e448817a662ebf76515f22863 ]
 
-nfsd_vfs_write() and nfsd_commit() both call filemap_check_wb_err() to
-detect deferred writeback errors, but neither rotates the server's write
-verifier (nn->writeverf) when this check fails. Every other
-durable-storage-failure path in these functions calls
-commit_reset_write_verifier() before returning an error.
+nfsd4_list_rec_dir() is called with two different callbacks.
+One of the callbacks uses vfs_rmdir() to remove the directory.
+The other doesn't use the dentry at all, just the name.
 
-The missing rotation means clients holding UNSTABLE write data under the
-current verifier will COMMIT, receive the unchanged verifier back, and
-conclude their data is durable — silently dropping data that failed
-writeback. This violates the UNSTABLE+COMMIT durability contract
-(RFC 1813 §3.3.7, RFC 8881 §18.32).
+As only one callback needs the dentry, this patch moves the lookup into
+that callback.  This prepares of changes to how directory operations
+are locked.
 
-Add commit_reset_write_verifier() calls at both filemap_check_wb_err()
-error sites, matching the pattern used by adjacent error paths in the
-same functions. The helper already filters -EAGAIN and -ESTALE
-internally, so the calls are unconditionally safe.
-
-Reported-by: Chris Mason <clm@meta.com>
-Fixes: 555dbf1a9aac ("nfsd: Replace use of rwsem with errseq_t")
-Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-6
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: NeilBrown <neil@brown.name>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ cel: 6.6.y predates the commit_reset_write_verifier() helper (v6.7);
-  open-coded nfsd_reset_write_verifier() and the reset tracepoint at
-  both sites, matching the other reset paths in these functions ]
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Stable-dep-of: 4552f4e3f2c9 ("nfsd: change nfs4_client_to_reclaim() to allocate data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/vfs.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4recover.c | 55 ++++++++++++++++++++++---------------------
+ 1 file changed, 28 insertions(+), 27 deletions(-)
 
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index ae1f43eb515a81..6658c92340f20b 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -1185,8 +1185,11 @@ nfsd_vfs_write(struct svc_rqst *rqstp, struct svc_fh *fhp, struct nfsd_file *nf,
- 	nfsd_stats_io_write_add(nn, exp, *cnt);
- 	fsnotify_modify(file);
- 	host_err = filemap_check_wb_err(file->f_mapping, since);
--	if (host_err < 0)
-+	if (host_err < 0) {
-+		nfsd_reset_write_verifier(nn);
-+		trace_nfsd_writeverf_reset(nn, rqstp, host_err);
- 		goto out_nfserr;
-+	}
+diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
+index 017044c27d381d..8b8d7e0131fd1f 100644
+--- a/fs/nfsd/nfs4recover.c
++++ b/fs/nfsd/nfs4recover.c
+@@ -254,7 +254,7 @@ nfsd4_create_clid_dir(struct nfs4_client *clp)
+ 	nfs4_reset_creds(original_cred);
+ }
  
- 	if (stable && use_wgather) {
- 		host_err = wait_for_concurrent_writes(file);
-@@ -1330,6 +1333,10 @@ nfsd_commit(struct svc_rqst *rqstp, struct svc_fh *fhp, struct nfsd_file *nf,
- 			nfsd_copy_write_verifier(verf, nn);
- 			err2 = filemap_check_wb_err(nf->nf_file->f_mapping,
- 						    since);
-+			if (err2 < 0) {
-+				nfsd_reset_write_verifier(nn);
-+				trace_nfsd_writeverf_reset(nn, rqstp, err2);
-+			}
- 			err = nfserrno(err2);
- 			break;
- 		case -EINVAL:
+-typedef int (recdir_func)(struct dentry *, struct dentry *, struct nfsd_net *);
++typedef int (recdir_func)(struct dentry *, char *, struct nfsd_net *);
+ 
+ struct name_list {
+ 	char name[HEXDIR_LEN];
+@@ -308,23 +308,14 @@ nfsd4_list_rec_dir(recdir_func *f, struct nfsd_net *nn)
+ 	}
+ 
+ 	status = iterate_dir(nn->rec_file, &ctx.ctx);
+-	inode_lock_nested(d_inode(dir), I_MUTEX_PARENT);
+ 
+ 	list_for_each_entry_safe(entry, tmp, &ctx.names, list) {
+-		if (!status) {
+-			struct dentry *dentry;
+-			dentry = lookup_one_len(entry->name, dir, HEXDIR_LEN-1);
+-			if (IS_ERR(dentry)) {
+-				status = PTR_ERR(dentry);
+-				break;
+-			}
+-			status = f(dir, dentry, nn);
+-			dput(dentry);
+-		}
++		if (!status)
++			status = f(dir, entry->name, nn);
++
+ 		list_del(&entry->list);
+ 		kfree(entry);
+ 	}
+-	inode_unlock(d_inode(dir));
+ 	nfs4_reset_creds(original_cred);
+ 
+ 	list_for_each_entry_safe(entry, tmp, &ctx.names, list) {
+@@ -422,18 +413,19 @@ nfsd4_remove_clid_dir(struct nfs4_client *clp)
+ }
+ 
+ static int
+-purge_old(struct dentry *parent, struct dentry *child, struct nfsd_net *nn)
++purge_old(struct dentry *parent, char *cname, struct nfsd_net *nn)
+ {
+ 	int status;
++	struct dentry *child;
+ 	struct xdr_netobj name;
+ 
+-	if (child->d_name.len != HEXDIR_LEN - 1) {
+-		printk("%s: illegal name %pd in recovery directory\n",
+-				__func__, child);
++	if (strlen(cname) != HEXDIR_LEN - 1) {
++		printk("%s: illegal name %s in recovery directory\n",
++				__func__, cname);
+ 		/* Keep trying; maybe the others are OK: */
+ 		return 0;
+ 	}
+-	name.data = kmemdup_nul(child->d_name.name, child->d_name.len, GFP_KERNEL);
++	name.data = kstrdup(cname, GFP_KERNEL);
+ 	if (!name.data) {
+ 		dprintk("%s: failed to allocate memory for name.data!\n",
+ 			__func__);
+@@ -443,10 +435,17 @@ purge_old(struct dentry *parent, struct dentry *child, struct nfsd_net *nn)
+ 	if (nfs4_has_reclaimed_state(name, nn))
+ 		goto out_free;
+ 
+-	status = vfs_rmdir(&nop_mnt_idmap, d_inode(parent), child);
+-	if (status)
+-		printk("failed to remove client recovery directory %pd\n",
+-				child);
++	inode_lock_nested(d_inode(parent), I_MUTEX_PARENT);
++	child = lookup_one_len(cname, parent, HEXDIR_LEN-1);
++	if (!IS_ERR(child)) {
++		status = vfs_rmdir(&nop_mnt_idmap, d_inode(parent), child);
++		if (status)
++			printk("failed to remove client recovery directory %pd\n",
++			       child);
++		dput(child);
++	}
++	inode_unlock(d_inode(parent));
++
+ out_free:
+ 	kfree(name.data);
+ out:
+@@ -477,18 +476,18 @@ nfsd4_recdir_purge_old(struct nfsd_net *nn)
+ }
+ 
+ static int
+-load_recdir(struct dentry *parent, struct dentry *child, struct nfsd_net *nn)
++load_recdir(struct dentry *parent, char *cname, struct nfsd_net *nn)
+ {
+ 	struct xdr_netobj name;
+ 	struct xdr_netobj princhash = { .len = 0, .data = NULL };
+ 
+-	if (child->d_name.len != HEXDIR_LEN - 1) {
+-		printk("%s: illegal name %pd in recovery directory\n",
+-				__func__, child);
++	if (strlen(cname) != HEXDIR_LEN - 1) {
++		printk("%s: illegal name %s in recovery directory\n",
++				__func__, cname);
+ 		/* Keep trying; maybe the others are OK: */
+ 		return 0;
+ 	}
+-	name.data = kmemdup_nul(child->d_name.name, child->d_name.len, GFP_KERNEL);
++	name.data = kstrdup(cname, GFP_KERNEL);
+ 	if (!name.data) {
+ 		dprintk("%s: failed to allocate memory for name.data!\n",
+ 			__func__);
+@@ -843,11 +842,13 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
+ 				return PTR_ERR(name.data);
+ 			name.len = namelen;
+ 		}
++#ifdef CONFIG_NFSD_V4
+ 		if (name.len > 5 && memcmp(name.data, "hash:", 5) == 0) {
+ 			name.len = name.len - 5;
+ 			memmove(name.data, name.data + 5, name.len);
+ 			cn->cn_has_legacy = true;
+ 		}
++#endif
+ 		if (!nfs4_client_to_reclaim(name, princhash, nn)) {
+ 			kfree(name.data);
+ 			kfree(princhash.data);
 -- 
 2.53.0
 
