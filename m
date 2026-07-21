@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BAA282F31;
-	Tue, 21 Jul 2026 21:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E7544AB82;
+	Tue, 21 Jul 2026 21:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668677; cv=none; b=Py0pj6gU9wLAh7NLsQi2t4zH7yqq2TRdnMfaplU4lzLRv8lIz2klVvYG5vlu4i1WpPqGLyx+1X81WVcy/FYNgxxBwx7CNiXbwBIfyW1SNVYlMzeEcS1WL/kI5R77vT2r5E9UuAu/lMYBG0TXMlSj7EnoVpWOd0+0vWjr756607k=
+	t=1784668680; cv=none; b=cv7JHdBRr/CU5L7svibTIHy7g5OR4iVZKbPwQcCaVzDlEAHJ7N4z1jP6njpF4GO3pLBKaNFv91584VqVnAwpbwp4EMGlFr3c1dBpMGLFRESPHcfbqXfXzMfxH3oLzhy36KEkD4KQ5wq4cXtGHeUqtoFgyeC48kBDlgvcqLdwAMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668677; c=relaxed/simple;
-	bh=Nw4bUU075cvOwI9c8UUOQOqqIfZ+5FJNFvT6S+kkn+Q=;
+	s=arc-20240116; t=1784668680; c=relaxed/simple;
+	bh=xXBjPcJjHuycNhbKHIjeVvLlpYR6djCU+/lut1fXXNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EsVJIJ6XB1hqZwwSxnoe8uNETczQhJFK9jVNLghrpt6WRnauHVCKPvz42xhBaGriOLzmFLzIu/HWqmhvcn9Gti7zHEdIMLndUmjrXR+cvuj4j2lOC9TDSJmfo3xjDvO5N9OBrfXo1LY7A0p0Mlj66UJzVZJI1jbnKpKYSNT1Uic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FaMLWSZi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lfMzKThT92CU2TYzebfMDUuKNotQ7csbUUVh+J6gj2/mmvPkYrRrRA9/nwZfYeD9uXr+G11nBDD+yV2otAGE+H5Zpq5TBaV1s6c0nv8vQfOeTNDMGqGAQGtlxDmhY5yghTmwmI0qc60dMprSrIIxuU9tXECyWc4eN2V25aYsZGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khNcaSNS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FaMLWSZi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C004C1F00A3A;
-	Tue, 21 Jul 2026 21:17:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khNcaSNS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D2B1F000E9;
+	Tue, 21 Jul 2026 21:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668676;
-	bh=/+QdDXID52btZitbnZmFG2vMm3uUH0cHfeEs52aMMXQ=;
+	s=korg; t=1784668678;
+	bh=byU69kRsSMzNf6p35HHk5TBJcZDpwUY2pa3ZxHYx0Zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FaMLWSZi41M9G+VOmSb341naIG0OVZN3wWwb+KaMrAKpwyEQ/UqaO4NuNBqucGJPb
-	 ipjYkDI4p2DJyL+sTWxRmA3N2clJ3Lf6BCLW76R9tezmCBwi9aEJRj6irR5JB2y+dH
-	 2TWEk6jkgFp1R0ORhoUbU+8Wm+9UxYxufH9dIGIU=
+	b=khNcaSNSUadK28IRo1qTbsHDo7BwTki5G9BQ0kojRU28iZdn14SA/gfzuFaYaoTaw
+	 k2hjG+bDeSpBIy2DfUu6aURmxE7ZmhN2WUpDGlRIjfDjWMN5EHF0LA+ta9ey1IQKU4
+	 qdryezS8Owa5Tas+7qTyXgNpukCEjt7VnbpSlYIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taeyang Lee <0wn@theori.io>,
-	Feng Ning <feng@innora.ai>,
-	Demi Marie Obenour <demiobenour@gmail.com>,
 	Eric Biggers <ebiggers@kernel.org>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0266/1067] crypto: af_alg - Remove zero-copy support from skcipher and aead
-Date: Tue, 21 Jul 2026 17:14:27 +0200
-Message-ID: <20260721152430.544385269@linuxfoundation.org>
+Subject: [PATCH 6.1 0267/1067] crypto: hisi-trng - Remove crypto_rng interface
+Date: Tue, 21 Jul 2026 17:14:28 +0200
+Message-ID: <20260721152430.566731538@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -56,119 +53,409 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@kernel.org>
 
-commit ffdd2bc378953b525aca61902534e753f1f8e734 upstream.
+commit 216a7795ec210bdabd5dad42323eee70bbfc8d90 upstream.
 
-The zero-copy support is one of the riskiest aspects of AF_ALG.  It
-allows userspace to request cryptographic operations directly on
-pagecache pages of files like the 'su' binary.  It also allows userspace
-to concurrently modify the memory which is being operated on, a recipe
-for TOCTOU vulnerabilities.
+drivers/crypto/hisilicon/trng/trng.c exposes the same hardware through
+two completely separate interfaces, crypto_rng and hwrng.  However, the
+implementation of this is buggy because it permits generation operations
+from these interfaces to run concurrently with each other, accessing the
+same registers.  That is, hisi_trng_generate() synchronizes with itself
+but not with hisi_trng_read().  This results in potential repetition of
+output from the RNG, output of non-random values, etc.
 
-While zero-copy support is more valuable in other areas of the kernel
-like the frequently used networking and file I/O code, it has far less
-value in AF_ALG, which is a niche UAPI.  AF_ALG primarily just exists
-for backwards compatibility with a small set of userspace programs such
-as 'iwd' that haven't yet been fixed to use userspace crypto code.
+Fortunately, there's actually no point in hardware RNG drivers
+implementing the crypto_rng interface.  It's not actually used by
+anything besides the "rng" algorithm type of AF_ALG, which in turn is
+not actually used in practice.  Other crypto_rng hardware drivers are
+likewise being phased out, leaving just the hwrng support.
 
-Originally AF_ALG was intended to be used to access hardware crypto
-accelerators.  However, it isn't an efficient interface for that anyway,
-and it turned out to be rarely used in this way in practice.
+Thus, remove it to simplify the code and avoid conflict (and confusion)
+with the hwrng interface which is the one that actually matters.
 
-Thus, the risks of the zero-copy support in AF_ALG vastly outweigh its
-benefits.  Let's just remove it.
-
-This commit removes it from the "skcipher" and "aead" algorithm types.
-"hash" will be handled separately.
-
-This is a soft break, not a hard break.  Even after this commit, it
-still works to use splice() or sendfile() to transfer data to an AF_ALG
-request socket from a pipe or any file, respectively.  What changes is
-just that the kernel now makes an internal, stable copy of the data
-before doing the crypto operation.  So performance is slightly reduced,
-but the UAPI isn't broken.  And, very importantly, it's much safer.
-
-Tested with libkcapi/test.sh.  All its test cases still pass.  I also
-verified that this would have prevented the copy.fail exploit as well.
-I also used a custom test program to verify that sendfile() still works.
-
-Fixes: 8ff590903d5f ("crypto: algif_skcipher - User-space interface for skcipher operations")
-Fixes: 400c40cf78da ("crypto: algif - add AEAD support")
-Reported-by: Taeyang Lee <0wn@theori.io>
-Link: https://copy.fail/
-Reported-by: Feng Ning <feng@innora.ai>
-Closes: https://lore.kernel.org/r/afYcc-tZFwvZZo76@ans-MacBook-Pro.local
-Reviewed-by: Demi Marie Obenour <demiobenour@gmail.com>
+Fixes: e4d9d10ef4be ("crypto: hisilicon/trng - add support for PRNG")
 Cc: stable@vger.kernel.org
 Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-[Backport-notes: this actually does nothing on 6.1, since zero-copy
- support was already removed from skcipher and aead accidentally on 6.1.
- Namely, a commit that changed af_alg_sendpage() to use MSG_SPLICE_PAGES
- was backported, but the actual implementation of MSG_SPLICE_PAGES
- wasn't backported.  I'm including this commit anyway since people might
- think this is missing on 6.1 if it's the only LTS kernel without this.]
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/crypto/userspace-if.rst | 31 ++++-----------------------
- crypto/af_alg.c                       |  2 +-
- 2 files changed, 5 insertions(+), 28 deletions(-)
+ drivers/crypto/hisilicon/Kconfig     |   1 -
+ drivers/crypto/hisilicon/trng/trng.c | 298 +--------------------------
+ 2 files changed, 2 insertions(+), 297 deletions(-)
 
-diff --git a/Documentation/crypto/userspace-if.rst b/Documentation/crypto/userspace-if.rst
-index b45dabbf69d685..90dbbd56c4e355 100644
---- a/Documentation/crypto/userspace-if.rst
-+++ b/Documentation/crypto/userspace-if.rst
-@@ -328,33 +328,10 @@ CRYPTO_USER_API_RNG_CAVP option:
- Zero-Copy Interface
- -------------------
+diff --git a/drivers/crypto/hisilicon/Kconfig b/drivers/crypto/hisilicon/Kconfig
+index 743ce4fc3158c6..861c71a876e51d 100644
+--- a/drivers/crypto/hisilicon/Kconfig
++++ b/drivers/crypto/hisilicon/Kconfig
+@@ -79,6 +79,5 @@ config CRYPTO_DEV_HISI_TRNG
+ 	tristate "Support for HISI TRNG Driver"
+ 	depends on ARM64 && ACPI
+ 	select HW_RANDOM
+-	select CRYPTO_RNG
+ 	help
+ 	  Support for HiSilicon TRNG Driver.
+diff --git a/drivers/crypto/hisilicon/trng/trng.c b/drivers/crypto/hisilicon/trng/trng.c
+index b2d9b5310b784c..6584ed051e0997 100644
+--- a/drivers/crypto/hisilicon/trng/trng.c
++++ b/drivers/crypto/hisilicon/trng/trng.c
+@@ -1,234 +1,27 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /* Copyright (c) 2019 HiSilicon Limited. */
  
--In addition to the send/write/read/recv system call family, the AF_ALG
--interface can be accessed with the zero-copy interface of
--splice/vmsplice. As the name indicates, the kernel tries to avoid a copy
--operation into kernel space.
--
--The zero-copy operation requires data to be aligned at the page
--boundary. Non-aligned data can be used as well, but may require more
--operations of the kernel which would defeat the speed gains obtained
--from the zero-copy interface.
--
--The system-inherent limit for the size of one zero-copy operation is 16
--pages. If more data is to be sent to AF_ALG, user space must slice the
--input into segments with a maximum size of 16 pages.
--
--Zero-copy can be used with the following code example (a complete
--working example is provided with libkcapi):
--
--::
--
--    int pipes[2];
--
--    pipe(pipes);
--    /* input data in iov */
--    vmsplice(pipes[1], iov, iovlen, SPLICE_F_GIFT);
--    /* opfd is the file descriptor returned from accept() system call */
--    splice(pipes[0], NULL, opfd, NULL, ret, 0);
--    read(opfd, out, outlen);
-+AF_ALG used to have zero-copy support, but it was removed due to it being a
-+frequent source of vulnerabilities.  For backwards compatibility the splice()
-+and sendfile() system calls are still supported, but the kernel will make an
-+internal copy of the data before passing it to the crypto code.
+-#include <crypto/internal/rng.h>
+ #include <linux/acpi.h>
+-#include <linux/crypto.h>
+ #include <linux/err.h>
+ #include <linux/hw_random.h>
+ #include <linux/io.h>
+ #include <linux/iopoll.h>
+ #include <linux/kernel.h>
+-#include <linux/list.h>
+ #include <linux/module.h>
+-#include <linux/mutex.h>
+ #include <linux/platform_device.h>
+ #include <linux/random.h>
  
+ #define HISI_TRNG_REG		0x00F0
+ #define HISI_TRNG_BYTES		4
+ #define HISI_TRNG_QUALITY	512
+-#define HISI_TRNG_VERSION	0x01B8
+-#define HISI_TRNG_VER_V1	GENMASK(31, 0)
+ #define SLEEP_US		10
+ #define TIMEOUT_US		10000
+-#define SW_DRBG_NUM_SHIFT	2
+-#define SW_DRBG_KEY_BASE	0x082C
+-#define SW_DRBG_SEED(n)         (SW_DRBG_KEY_BASE - ((n) << SW_DRBG_NUM_SHIFT))
+-#define SW_DRBG_SEED_REGS_NUM	12
+-#define SW_DRBG_SEED_SIZE	48
+-#define SW_DRBG_BLOCKS		0x0830
+-#define SW_DRBG_INIT		0x0834
+-#define SW_DRBG_GEN		0x083c
+-#define SW_DRBG_STATUS		0x0840
+-#define SW_DRBG_BLOCKS_NUM	4095
+-#define SW_DRBG_DATA_BASE	0x0850
+-#define SW_DRBG_DATA_NUM	4
+-#define SW_DRBG_DATA(n)		(SW_DRBG_DATA_BASE - ((n) << SW_DRBG_NUM_SHIFT))
+-#define SW_DRBG_BYTES		16
+-#define SW_DRBG_ENABLE_SHIFT	12
+-#define SEED_SHIFT_24		24
+-#define SEED_SHIFT_16		16
+-#define SEED_SHIFT_8		8
+-#define SW_MAX_RANDOM_BYTES	65520
+-
+-struct hisi_trng_list {
+-	struct mutex lock;
+-	struct list_head list;
+-	bool is_init;
+-};
  
- Setsockopt Interface
-diff --git a/crypto/af_alg.c b/crypto/af_alg.c
-index ca54f29270636f..80a8d3a4a3cf73 100644
---- a/crypto/af_alg.c
-+++ b/crypto/af_alg.c
-@@ -977,7 +977,7 @@ ssize_t af_alg_sendpage(struct socket *sock, struct page *page,
+ struct hisi_trng {
+ 	void __iomem *base;
+-	struct hisi_trng_list *trng_list;
+-	struct list_head list;
+ 	struct hwrng rng;
+-	u32 ver;
+-	u32 ctx_num;
+-	/* The bytes of the random number generated since the last seeding. */
+-	u32 random_bytes;
+-	struct mutex lock;
+-};
+-
+-struct hisi_trng_ctx {
+-	struct hisi_trng *trng;
+ };
+ 
+-static atomic_t trng_active_devs;
+-static struct hisi_trng_list trng_devices;
+-static int hisi_trng_read(struct hwrng *rng, void *buf, size_t max, bool wait);
+-
+-static int hisi_trng_set_seed(struct hisi_trng *trng, const u8 *seed)
+-{
+-	u32 val, seed_reg, i;
+-	int ret;
+-
+-	writel(0x0, trng->base + SW_DRBG_BLOCKS);
+-
+-	for (i = 0; i < SW_DRBG_SEED_SIZE;
+-	     i += SW_DRBG_SEED_SIZE / SW_DRBG_SEED_REGS_NUM) {
+-		val = seed[i] << SEED_SHIFT_24;
+-		val |= seed[i + 1UL] << SEED_SHIFT_16;
+-		val |= seed[i + 2UL] << SEED_SHIFT_8;
+-		val |= seed[i + 3UL];
+-
+-		seed_reg = (i >> SW_DRBG_NUM_SHIFT) % SW_DRBG_SEED_REGS_NUM;
+-		writel(val, trng->base + SW_DRBG_SEED(seed_reg));
+-	}
+-
+-	writel(SW_DRBG_BLOCKS_NUM | (0x1 << SW_DRBG_ENABLE_SHIFT),
+-	       trng->base + SW_DRBG_BLOCKS);
+-	writel(0x1, trng->base + SW_DRBG_INIT);
+-	ret = readl_relaxed_poll_timeout(trng->base + SW_DRBG_STATUS,
+-					 val, val & BIT(0), SLEEP_US, TIMEOUT_US);
+-	if (ret) {
+-		pr_err("failed to init trng(%d)\n", ret);
+-		return -EIO;
+-	}
+-
+-	trng->random_bytes = 0;
+-
+-	return 0;
+-}
+-
+-static int hisi_trng_seed(struct crypto_rng *tfm, const u8 *seed,
+-			  unsigned int slen)
+-{
+-	struct hisi_trng_ctx *ctx = crypto_rng_ctx(tfm);
+-	struct hisi_trng *trng = ctx->trng;
+-	int ret;
+-
+-	if (slen < SW_DRBG_SEED_SIZE) {
+-		pr_err("slen(%u) is not matched with trng(%d)\n", slen,
+-			SW_DRBG_SEED_SIZE);
+-		return -EINVAL;
+-	}
+-
+-	mutex_lock(&trng->lock);
+-	ret = hisi_trng_set_seed(trng, seed);
+-	mutex_unlock(&trng->lock);
+-
+-	return ret;
+-}
+-
+-static int hisi_trng_reseed(struct hisi_trng *trng)
+-{
+-	u8 seed[SW_DRBG_SEED_SIZE];
+-	int size;
+-
+-	if (!trng->random_bytes)
+-		return 0;
+-
+-	size = hisi_trng_read(&trng->rng, seed, SW_DRBG_SEED_SIZE, false);
+-	if (size != SW_DRBG_SEED_SIZE)
+-		return -EIO;
+-
+-	return hisi_trng_set_seed(trng, seed);
+-}
+-
+-static int hisi_trng_get_bytes(struct hisi_trng *trng, u8 *dstn, unsigned int dlen)
+-{
+-	u32 data[SW_DRBG_DATA_NUM];
+-	u32 currsize = 0;
+-	u32 val = 0;
+-	int ret;
+-	u32 i;
+-
+-	ret = hisi_trng_reseed(trng);
+-	if (ret)
+-		return ret;
+-
+-	do {
+-		ret = readl_relaxed_poll_timeout(trng->base + SW_DRBG_STATUS,
+-						 val, val & BIT(1), SLEEP_US, TIMEOUT_US);
+-		if (ret) {
+-			pr_err("failed to generate random number(%d)!\n", ret);
+-			break;
+-		}
+-
+-		for (i = 0; i < SW_DRBG_DATA_NUM; i++)
+-			data[i] = readl(trng->base + SW_DRBG_DATA(i));
+-
+-		if (dlen - currsize >= SW_DRBG_BYTES) {
+-			memcpy(dstn + currsize, data, SW_DRBG_BYTES);
+-			currsize += SW_DRBG_BYTES;
+-		} else {
+-			memcpy(dstn + currsize, data, dlen - currsize);
+-			currsize = dlen;
+-		}
+-
+-		trng->random_bytes += SW_DRBG_BYTES;
+-		writel(0x1, trng->base + SW_DRBG_GEN);
+-	} while (currsize < dlen);
+-
+-	return ret;
+-}
+-
+-static int hisi_trng_generate(struct crypto_rng *tfm, const u8 *src,
+-			      unsigned int slen, u8 *dstn, unsigned int dlen)
+-{
+-	struct hisi_trng_ctx *ctx = crypto_rng_ctx(tfm);
+-	struct hisi_trng *trng = ctx->trng;
+-	unsigned int currsize = 0;
+-	unsigned int block_size;
+-	int ret;
+-
+-	if (!dstn || !dlen) {
+-		pr_err("output is error, dlen %u!\n", dlen);
+-		return -EINVAL;
+-	}
+-
+-	do {
+-		block_size = min_t(unsigned int, dlen - currsize, SW_MAX_RANDOM_BYTES);
+-		mutex_lock(&trng->lock);
+-		ret = hisi_trng_get_bytes(trng, dstn + currsize, block_size);
+-		mutex_unlock(&trng->lock);
+-		if (ret)
+-			return ret;
+-		currsize += block_size;
+-	} while (currsize < dlen);
+-
+-	return 0;
+-}
+-
+-static int hisi_trng_init(struct crypto_tfm *tfm)
+-{
+-	struct hisi_trng_ctx *ctx = crypto_tfm_ctx(tfm);
+-	struct hisi_trng *trng;
+-	u32 ctx_num = ~0;
+-
+-	mutex_lock(&trng_devices.lock);
+-	list_for_each_entry(trng, &trng_devices.list, list) {
+-		if (trng->ctx_num < ctx_num) {
+-			ctx_num = trng->ctx_num;
+-			ctx->trng = trng;
+-		}
+-	}
+-	ctx->trng->ctx_num++;
+-	mutex_unlock(&trng_devices.lock);
+-
+-	return 0;
+-}
+-
+-static void hisi_trng_exit(struct crypto_tfm *tfm)
+-{
+-	struct hisi_trng_ctx *ctx = crypto_tfm_ctx(tfm);
+-
+-	mutex_lock(&trng_devices.lock);
+-	ctx->trng->ctx_num--;
+-	mutex_unlock(&trng_devices.lock);
+-}
+-
+ static int hisi_trng_read(struct hwrng *rng, void *buf, size_t max, bool wait)
  {
- 	struct bio_vec bvec;
- 	struct msghdr msg = {
--		.msg_flags = flags | MSG_SPLICE_PAGES,
-+		.msg_flags = flags,
- 	};
+ 	struct hisi_trng *trng;
+@@ -260,42 +53,6 @@ static int hisi_trng_read(struct hwrng *rng, void *buf, size_t max, bool wait)
+ 	return currsize;
+ }
  
- 	if (flags & MSG_SENDPAGE_NOTLAST)
+-static struct rng_alg hisi_trng_alg = {
+-	.generate = hisi_trng_generate,
+-	.seed =	hisi_trng_seed,
+-	.seedsize = SW_DRBG_SEED_SIZE,
+-	.base = {
+-		.cra_name = "stdrng",
+-		.cra_driver_name = "hisi_stdrng",
+-		.cra_priority = 300,
+-		.cra_ctxsize = sizeof(struct hisi_trng_ctx),
+-		.cra_module = THIS_MODULE,
+-		.cra_init = hisi_trng_init,
+-		.cra_exit = hisi_trng_exit,
+-	},
+-};
+-
+-static void hisi_trng_add_to_list(struct hisi_trng *trng)
+-{
+-	mutex_lock(&trng_devices.lock);
+-	list_add_tail(&trng->list, &trng_devices.list);
+-	mutex_unlock(&trng_devices.lock);
+-}
+-
+-static int hisi_trng_del_from_list(struct hisi_trng *trng)
+-{
+-	int ret = -EBUSY;
+-
+-	mutex_lock(&trng_devices.lock);
+-	if (!trng->ctx_num) {
+-		list_del(&trng->list);
+-		ret = 0;
+-	}
+-	mutex_unlock(&trng_devices.lock);
+-
+-	return ret;
+-}
+-
+ static int hisi_trng_probe(struct platform_device *pdev)
+ {
+ 	struct hisi_trng *trng;
+@@ -305,70 +62,20 @@ static int hisi_trng_probe(struct platform_device *pdev)
+ 	if (!trng)
+ 		return -ENOMEM;
+ 
+-	platform_set_drvdata(pdev, trng);
+-
+ 	trng->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(trng->base))
+ 		return PTR_ERR(trng->base);
+ 
+-	trng->ctx_num = 0;
+-	trng->random_bytes = SW_MAX_RANDOM_BYTES;
+-	mutex_init(&trng->lock);
+-	trng->ver = readl(trng->base + HISI_TRNG_VERSION);
+-	if (!trng_devices.is_init) {
+-		INIT_LIST_HEAD(&trng_devices.list);
+-		mutex_init(&trng_devices.lock);
+-		trng_devices.is_init = true;
+-	}
+-
+-	hisi_trng_add_to_list(trng);
+-	if (trng->ver != HISI_TRNG_VER_V1 &&
+-	    atomic_inc_return(&trng_active_devs) == 1) {
+-		ret = crypto_register_rng(&hisi_trng_alg);
+-		if (ret) {
+-			dev_err(&pdev->dev,
+-				"failed to register crypto(%d)\n", ret);
+-			atomic_dec_return(&trng_active_devs);
+-			goto err_remove_from_list;
+-		}
+-	}
+-
+ 	trng->rng.name = pdev->name;
+ 	trng->rng.read = hisi_trng_read;
+ 	trng->rng.quality = HISI_TRNG_QUALITY;
++
+ 	ret = devm_hwrng_register(&pdev->dev, &trng->rng);
+-	if (ret) {
++	if (ret)
+ 		dev_err(&pdev->dev, "failed to register hwrng: %d!\n", ret);
+-		goto err_crypto_unregister;
+-	}
+-
+-	return ret;
+-
+-err_crypto_unregister:
+-	if (trng->ver != HISI_TRNG_VER_V1 &&
+-	    atomic_dec_return(&trng_active_devs) == 0)
+-		crypto_unregister_rng(&hisi_trng_alg);
+-
+-err_remove_from_list:
+-	hisi_trng_del_from_list(trng);
+ 	return ret;
+ }
+ 
+-static int hisi_trng_remove(struct platform_device *pdev)
+-{
+-	struct hisi_trng *trng = platform_get_drvdata(pdev);
+-
+-	/* Wait until the task is finished */
+-	while (hisi_trng_del_from_list(trng))
+-		;
+-
+-	if (trng->ver != HISI_TRNG_VER_V1 &&
+-	    atomic_dec_return(&trng_active_devs) == 0)
+-		crypto_unregister_rng(&hisi_trng_alg);
+-
+-	return 0;
+-}
+-
+ static const struct acpi_device_id hisi_trng_acpi_match[] = {
+ 	{ "HISI02B3", 0 },
+ 	{ }
+@@ -377,7 +84,6 @@ MODULE_DEVICE_TABLE(acpi, hisi_trng_acpi_match);
+ 
+ static struct platform_driver hisi_trng_driver = {
+ 	.probe		= hisi_trng_probe,
+-	.remove         = hisi_trng_remove,
+ 	.driver		= {
+ 		.name	= "hisi-trng-v2",
+ 		.acpi_match_table = ACPI_PTR(hisi_trng_acpi_match),
 -- 
 2.53.0
 
