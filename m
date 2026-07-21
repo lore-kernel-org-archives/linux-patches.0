@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308C346D0B2;
-	Tue, 21 Jul 2026 18:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D7D436344;
+	Tue, 21 Jul 2026 18:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659376; cv=none; b=PjA0ztsHSnk8QQqYp1zn6TXBbbm16p6tEXwrEsfaQ771EgOIvMLFO10UjbmDgIfw6UjVT+IlO17slIYYQ0Nu1ZZ8y03fJWgRDxLGJNcbXnQ1o0xn1YkRdwiU57KwhlJsHysnkIxOfLAz8hOltDeH/h7Hn3fvWA1LRvHGXl9/wFk=
+	t=1784659379; cv=none; b=keadJ6trnBzMvjFflgGOUoYB6J2fbzU8RDeJE9iyPVuPECSzZQd1TSr23JhkG27K4H2WeW+5slIN9EWWK8U/Cfk6DhZUJeEet8MB9HwHJAAhoQznGWeJInXRz9ZyPaUVjLip++ofZIbuFWQEwZAER0mJYwepFnQTyrTFWsOYgfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659376; c=relaxed/simple;
-	bh=aU2pCL0RPGN4eLBmVtIDUDYhn5a6n4sLepwODCboJ08=;
+	s=arc-20240116; t=1784659379; c=relaxed/simple;
+	bh=F74yFG/HIx+ie8xFzj2T+iBysgXSD4n6h6bt5MGCagM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hQFavFSwmaOasvBbNs0C333y/lr4tcrQJy5IlCM8YuH7EUoq2SUBc7Bcl0zNhZXCliC54PlOCoJyGw5Z0yPaXMAf9slgf3in2WOAun0XxJ93AEw070P2ajN1vg12Sw3p2fUHfHurip1ajxDfhH92wh2Jd9304DgYWfJnybrNpO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWR+GV+S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kCJijTB5y/Ll4rO9HKyQZw8YeRwLQjvK63tW8VsS/VQN/ZUken0xVcO3Yfzj01wFRHkgVQTnwKy59Kx3XbTUEjYiELR+h6SbVSo9m/A/32wpD8tVRynGBXQA/z0tyjsFtcv3AzjrCjPmt8IGIpbDU2RoW+xiVQTBp5bqusX0jQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0OZTFNWc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWR+GV+S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FF841F000E9;
-	Tue, 21 Jul 2026 18:42:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0OZTFNWc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB791F000E9;
+	Tue, 21 Jul 2026 18:42:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659375;
-	bh=fn/l7I9lwJElYlCNG83DJ1ztVUVbb8cfhyxN55O2p3I=;
+	s=korg; t=1784659377;
+	bh=HSTEcq69K96N+rkCOEuhQdpQZf+xi3zg+t/Drpg1rE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eWR+GV+SRfe5X83bi0RKjwuZH7faZQ4NKu1C2KByYHDUbhvdVeE8mQlgLhV5IfX+o
-	 0ffjOQrl1R5xozSAv3Qez6p/Piqd2cS1ua1PXPUAHWfcZmaADOtnYyr3S4Opb/XdXZ
-	 2TLC7qfJ/W9bWKxwJNLqKuL2Qr9n2l5W6MWL9vR8=
+	b=0OZTFNWc3C4r4uNUy3h/R4sMOtZr1hRZW3jW7XAwDZsVLBFEypcnQxOR3EsciQHDE
+	 Z4qHwrKEhEYvUuxQVAzP92xqhY5jlZ1IiA4+JDr+Xq0o7G7fj9gG/pQ5SvBVXAsKJV
+	 lLqr07rzSHZA/Lavltq2gq6QXW5rUeqRvxcwp65U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Zhiling Zou <roxy520tt@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
+	Rafael Beims <rafael.beims@toradex.com>,
+	Jeff Chen <jeff.chen_1@nxp.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 1498/1611] wifi: mac80211: free ack status frame on TX header build failure
-Date: Tue, 21 Jul 2026 17:26:54 +0200
-Message-ID: <20260721152549.136291142@linuxfoundation.org>
+Subject: [PATCH 6.18 1499/1611] wifi: mwifiex: fix permanently busy scans after multiple roam iterations
+Date: Tue, 21 Jul 2026 17:26:55 +0200
+Message-ID: <20260721152549.159210641@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -55,78 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <roxy520tt@gmail.com>
+From: Rafael Beims <rafael.beims@toradex.com>
 
-commit 2c51457d930f723e5f2903af90f5847f7df53f42 upstream.
+commit d78a407bad6f500884a8606aea1a5a9207be4030 upstream.
 
-ieee80211_build_hdr() stores an ACK status frame before it has
-finished all validation and header construction. If a later error path
-is taken, the transmit skb is freed but the stored ACK status frame
-remains in local->ack_status_frames.
+In order for the firmware to sleep, the driver has to confirm a
+previously received sleep request. The normal sequence of evets goes
+like this:
+EVENT_SLEEP -> adapter->ps_state = PS_STATE_PRE_SLEEP -> sleep-confirm
+-> SLEEP -> EVENT_AWAKE -> AWAKE.
+Before sending the sleep-confirm command, the driver must make sure
+there are no commands either running or waiting to be completed.
 
-This can happen for control port frames when the requested MLO link ID
-does not match the link selected for a non-MLO station. Repeated
-failures can fill the ACK status IDR and leave pending ACK frames until
-hardware teardown.
+mwifiex_ret_802_11_associate() unconditionally sets
+ps_state = PS_STATE_AWAKE when it processes the association command
+response, outside of the normal powersave management flow. If
+EVENT_SLEEP arrives while the association command is in flight,
+ps_state is PRE_SLEEP when the association command response is parsed,
+and the forced AWAKE overwrites it. The deferred sleep-confirm is
+never sent.
 
-Remove any stored ACK status frame before returning an error after it
-has been inserted into the IDR.
+A subsequent scan_start command is correctly acknowledged, but the
+firmware doesn't generate scan_result events. The scan request never
+finishes, and additional requests from userspace fail with -EBUSY.
 
-Fixes: a729cff8ad51 ("mac80211: implement wifi TX status")
+After testing on both IW412 and W8997, I could only trigger the bug on
+the IW412 and observed the firmwares behave differently. On the IW412
+the firmware still sends EVENT_SLEEP while the authentication /
+association process is ongoing. A W8997 under the same
+conditions seems to suppress power-save for the duration of the
+association, so PRE_SLEEP never coincided with the association response
+even after extended periods of testing using the loops
+described below (>12hours).
+
+On the IW412, the delay between commands that triggers an EVENT_SLEEP
+was empirically determined to be ~20ms. This delay can naturally occur
+when the driver is outputting debugging information
+(debug_mask = 0x00000037), in which situation the busy scans issue is
+repeatable while running "test 1)" as described below. If the delay
+between commands is less than ~20ms, the firmware stays awake and
+the issue was not reproducible running the same test.
+
+The host_mlme=false path also behaves differently. In this case, the
+entire authentication / association transaction is executed by one
+command (HostCmd_CMD_802_11_ASSOCIATE), and the firmware doesn't emit
+EVENT_SLEEP while the command is running.
+
+Remove the assignment so the ps_state is only manipulated in the paths
+that are related to powersave event handling and on the main workqueue
+for correct sleep confirmation.
+
+The following loop tests were performed (with debugging output enabled):
+1) force roaming between two AP's, one 5GHz and one 2.4GHz, same
+SSID. Use wpa_cli to trigger the roaming behavior, sleep 2s
+between iterations.
+2) force a disconnection to AP 1 and a connection to AP 2, test
+scan. Use wpa_cli to trigger the connection changes, sleep 2s
+between iterations.
+
+Each test ran in each device for at least 3 hours.
+
+Fixes: 5e6e3a92b9a4 ("wireless: mwifiex: initial commit for Marvell mwifiex driver")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/9de0423da840e92084915b8f92e66a421245c4b8.1782462409.git.roxy520tt@gmail.com
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Rafael Beims <rafael.beims@toradex.com>
+Reviewed-by: Jeff Chen <jeff.chen_1@nxp.com>
+Link: https://patch.msgid.link/20260612122547.1586872-2-rafael@beims.me
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/tx.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/net/wireless/marvell/mwifiex/join.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -2578,6 +2578,18 @@ static u16 ieee80211_store_ack_skb(struc
- 	return info_id;
- }
+--- a/drivers/net/wireless/marvell/mwifiex/join.c
++++ b/drivers/net/wireless/marvell/mwifiex/join.c
+@@ -736,7 +736,6 @@ int mwifiex_ret_802_11_associate(struct
+ 	/* Send a Media Connected event, according to the Spec */
+ 	priv->media_connected = true;
  
-+static void ieee80211_remove_ack_skb(struct ieee80211_local *local, u16 info_id)
-+{
-+	struct sk_buff *ack_skb;
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&local->ack_status_lock, flags);
-+	ack_skb = idr_remove(&local->ack_status_frames, info_id);
-+	spin_unlock_irqrestore(&local->ack_status_lock, flags);
-+
-+	kfree_skb(ack_skb);
-+}
-+
- /**
-  * ieee80211_build_hdr - build 802.11 header in the given frame
-  * @sdata: virtual interface to build the header for
-@@ -2934,7 +2946,8 @@ static struct sk_buff *ieee80211_build_h
- 		if (ieee80211_skb_resize(sdata, skb, head_need, ENCRYPT_DATA)) {
- 			ieee80211_free_txskb(&local->hw, skb);
- 			skb = NULL;
--			return ERR_PTR(-ENOMEM);
-+			ret = -ENOMEM;
-+			goto free;
- 		}
- 	}
+-	priv->adapter->ps_state = PS_STATE_AWAKE;
+ 	priv->adapter->pps_uapsd_mode = false;
+ 	priv->adapter->tx_lock_flag = false;
  
-@@ -3002,6 +3015,8 @@ static struct sk_buff *ieee80211_build_h
- 
- 	return skb;
-  free:
-+	if (info_id)
-+		ieee80211_remove_ack_skb(local, info_id);
- 	kfree_skb(skb);
- 	return ERR_PTR(ret);
- }
 
 
