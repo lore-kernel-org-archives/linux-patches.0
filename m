@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCB54418F5;
-	Tue, 21 Jul 2026 22:20:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB42943F4BA;
+	Tue, 21 Jul 2026 22:20:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672419; cv=none; b=OGBOQle11y82z34IYXpwolaLfToxV5J+P/gsEDDHzUobjQwYh1EfEer2663cQLkX133OJ9BpjmpFd/12w5v9RcSNMVWLWDKiHnkNvIkBJXbC6asQ2sAwdVANPEBWOqBaGBoYHuH/6Umc0hJjfltGxu6/BlYVoSvrYTiAb0dPqyo=
+	t=1784672421; cv=none; b=LL1aZkWJLyWpaOn40FyAXm2bnGHb/IIq3WRcVz/H9wJ/kcvj5mZ7oQCJC34RJG+i4bmcxEBZ44d4w9DrPyg5ZwTr5BD8dPzZZpKsEEt1XZkqkolsgas5N8BmfDCHVmTelSiCrp0zdCyQ9kuFFRLgEMphDXeWPnM06Y/rIW/r3iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672419; c=relaxed/simple;
-	bh=qHwYe5qt6WbzJvj3+x8Updl24uxD0ct03TJxKqaQVoE=;
+	s=arc-20240116; t=1784672421; c=relaxed/simple;
+	bh=fHqtBLA7Nq4KP0by076BXDXAfroNuaoEKqPuo/d9jcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BwkkNpeWC+xxTG47SIAbz6OXObpPBg0afN9iuoblGZHUjvCLgD80gzJLrqwkPO4lJTL/ZYsBf4wKviS0djlfr3GiYsUf2q2M7N15IanqakJpc38+NUOaEt4Il7Ixq43XVyjyf7h8R/OrtE2OXoAErh8aiqOLFjcQgx+2gEIJiQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HOeChsB9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rMivNdQV8EPP01E2y0JXHUAJd+Pp1c1H/5qONYiSCag92uwLyew3dR1m53HiCeE2B6D+Ltab0YDKoyvCoOe79a03DGwz5FW4kp9kXw/gGv4kbxvLLeb4KlW8aBC8O+6XgrTKlKxnn2u5tHlQyBvXw/z/o4w8Vd0LxghTVtpnB9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iU8VluvJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOeChsB9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5D61F000E9;
-	Tue, 21 Jul 2026 22:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iU8VluvJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17AE31F000E9;
+	Tue, 21 Jul 2026 22:20:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672417;
-	bh=OHLSj0i0sl5qL3TQfZUDefVwnOCYF3/On2U3wKSkuHU=;
+	s=korg; t=1784672420;
+	bh=l7k2Q8oiH0hmXtB7ScSrmF2CjfBVZ9wNde2NtMGkfEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HOeChsB9+bN6unN2Ktv4si3x1h90xlRgDjvzDvq5rK4K52wN2yDUp1UIMezmh8eEc
-	 +aBDpk7P/eskaxOC00YJuYqXF5yrxvr3vLQU3tvraGzgcOBxw1/r9Qn+rtXvcP5boA
-	 +Qw7RBhk0ETfjcLHSM69lEJmvGZYSnrKvd66IsHw=
+	b=iU8VluvJPZgt0AbCdIApK9wa3bj5/4ooOhwtbUGuOgWGYS6hSvYvwf51bKaN+pp6+
+	 U6SY6JlNnpvKT2fM17EJRYPGBXuh9rqnkPD7Ghp68LejB0iPwyUZmal0i29PKwW7qQ
+	 g8GwWBk/sEqQaZ88bZFC6yyUpHEMlavdjS4J8194=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 5.15 616/843] ntfs3: cap RESTART_TABLE free-chain walker at rt->used
-Date: Tue, 21 Jul 2026 17:24:11 +0200
-Message-ID: <20260721152419.914434965@linuxfoundation.org>
+Subject: [PATCH 5.15 617/843] ntfs3: bound to_move in indx_insert_into_root before hdr_insert_head
+Date: Tue, 21 Jul 2026 17:24:12 +0200
+Message-ID: <20260721152419.939219932@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,86 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 9611f644302c07d21bc8af97e3e06a3d30064253 upstream.
+commit 9b6926ac9c970ae0b2c2fe6289b16e9aa10b6a67 upstream.
 
-A crafted NTFS3 disk image triggers an in-kernel infinite loop at
-mount time, hanging the mounting thread and firing the soft-lockup
-watchdog within ~22s on multi-CPU hosts (panic with
-kernel.softlockup_panic=1).  The bug is reachable from desktop USB
-auto-mount on distributions where udisks2 routes the NTFS signature
-to the in-tree ntfs3 driver (Arch family and an increasing fraction
-of Fedora / openSUSE / RHEL deployments); CAP_SYS_ADMIN-class manual
-mount elsewhere.
+indx_insert_into_root() promotes a full resident $INDEX_ROOT into
+$INDEX_ALLOCATION and copies all non-last resident root entries into
+a newly allocated INDEX_BUFFER via hdr_insert_head(). The source
+byte count 'to_move' is summed from the on-disk resident entry sizes
+and is independent of the destination buffer size, which comes from
+root->index_block_size (via indx->index_bits).
 
-check_rstbl()'s second walker iterates the free-entry singly-linked
-list headed by rt->first_free with no upper bound on iteration count:
+A crafted NTFS image that keeps a valid, full resident root but
+shrinks root->index_block_size down to 512 after the root has been
+populated makes hdr_insert_head() memcpy attacker-controlled resident
+entry bytes past the end of the kmalloc(1u << indx->index_bits)
+allocation returned by indx_new(). For a 512-byte destination and a
+resident root whose non-last entries total 560 bytes, the memcpy
+overruns by 120 bytes and a following memmove extends the highest
+written offset to 136 bytes past the allocation. The overflow bytes
+are a direct copy of on-disk entries (via kmemdup), so they are
+fully attacker-controlled.
 
-  for (off = ff; off;) {
-      if (off == RESTART_ENTRY_ALLOCATED)
-          return false;
-      off = le32_to_cpu(*(__le32 *)Add2Ptr(rt, off));
-      if (off > ts - sizeof(__le32))
-          return false;
-  }
+The write is reachable from unprivileged open(O_CREAT) on a mounted
+crafted NTFS image: a single sufficiently long create in a directory
+whose resident root is already full forces root promotion and
+triggers the copy.
 
-The existing guards cover three exits: end-of-list (off == 0), the
-in-use marker (off == RESTART_ENTRY_ALLOCATED), and out-of-bounds
-(off > ts - sizeof(__le32)).  None of the three prevents an
-in-bounds cycle.
+This is a controlled out-of-bounds write of 120-136 bytes past a
+kmalloc(index_block_size) allocation, with attacker-controlled
+content. It is a bounded adjacent-heap corruption primitive; it is
+not an arbitrary-address write. Successful exploitation into a named
+victim object depends on the surrounding slab layout.
 
-A crafted on-disk RESTART_TABLE whose free chain contains a
-self-loop or A->B->A cycle whose offsets satisfy:
+Reject the copy at the sink. The destination's INDEX_HDR already
+reports hdr_total (the payload capacity of the new buffer) and
+hdr_used (the bytes already consumed by the terminal END entry
+installed by indx_new()); require that to_move fits in the remaining
+payload before calling hdr_insert_head(). On mismatch, fail with
+-EINVAL and mark the filesystem as having a detected on-disk
+inconsistency, which is the same behaviour as the surrounding
+validation in this function.
 
-  - in range [sizeof(struct RESTART_TABLE), ts - sizeof(__le32)]
-  - (off - sizeof(struct RESTART_TABLE)) % rsize == 0
-
-passes all existing guards and spins the mount-time thread forever.
-Reproduced in UML by hand-forging a 2 MB NTFS3 image whose journal
-RESTART_TABLE first_free = 0x18 and whose entry at offset 0x18
-stores 0x18 as its next pointer; mount of the forged image with
-the in-tree ntfs3 driver never returns.
-
-Bound the walker by rt->used.  Each entry on a legitimate free
-chain is unique, and the total slot count is ne = le16_to_cpu
-(rt->used).  A traversal that visits more than ne slots is by
-construction malformed; reject it as a corrupt RESTART_TABLE.
-
-After this patch, mount of the forged image returns with -EINVAL
-and a log_replay failure message, and mkntfs-produced legitimate
-images mount cleanly (verified in the same UML harness).
-
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ fs/ntfs3/index.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -764,8 +764,19 @@ static bool check_rstbl(const struct RES
- 	/*
- 	 * Walk through the list headed by the first entry to make
- 	 * sure none of the entries are currently being used.
-+	 *
-+	 * Bound traversal by ne (rt->used) to defeat a crafted on-disk
-+	 * cycle in the free chain.  Each entry in a legitimate free
-+	 * list is unique, so a chain that visits more than ne slots
-+	 * is malformed.  Without this guard, an attacker-controlled
-+	 * RESTART_TABLE with a self-loop or A->B->A cycle whose
-+	 * offsets satisfy the existing alignment + in-bounds guards
-+	 * spins forever at mount time.
- 	 */
--	for (off = ff; off;) {
-+	for (off = ff, i = 0; off; i++) {
-+		if (i > ne)
-+			return false;
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -1737,6 +1737,22 @@ static int indx_insert_into_root(struct
+ 	hdr_used = le32_to_cpu(hdr->used);
+ 	hdr_total = le32_to_cpu(hdr->total);
+ 
++	/*
++	 * The destination INDEX_BUFFER has 'hdr_total' bytes of payload
++	 * available after the header, of which 'hdr_used' are already
++	 * consumed by the single terminal END entry installed by
++	 * indx_new(). A crafted image can present a resident root whose
++	 * non-last entries (summing to 'to_move') exceed what fits in
++	 * this buffer; copying them unchecked would overrun the
++	 * kmalloc(1u << indx->index_bits) allocation backing the new
++	 * buffer. Reject the copy in that case.
++	 */
++	if (to_move > hdr_total - hdr_used) {
++		err = -EINVAL;
++		ntfs_set_state(sbi, NTFS_DIRTY_ERROR);
++		goto out_put_n;
++	}
 +
- 		if (off == RESTART_ENTRY_ALLOCATED)
- 			return false;
+ 	/* Copy root entries into new buffer. */
+ 	hdr_insert_head(hdr, re, to_move);
  
 
 
