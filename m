@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D9246D091;
-	Tue, 21 Jul 2026 17:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D933E49F0;
+	Tue, 21 Jul 2026 17:36:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655397; cv=none; b=ggpD0KPN0CoVo/DES5yd/7uN0bnC0OcOvWe901k35yeZ10jwSXqzLC1Z72i+DqnUZ9g6RpMokRPMigDD98RULFefkIK1tUXSp7xmeB1HpYRWE4rjqUO3kPz/VcvEUxMxCrAYzWguxcWYuC1tMLQ0gne0wbFtuy2FTDAI6x5gCZo=
+	t=1784655399; cv=none; b=KECVhIr3b0LYxkObBrGGUXSi5/YsZ5vWRsSvNy90DkpcLg2Q4HrqkHbkCApqjycUx/ZvisB+fMGEoxJ90R7Jig2HjfkOPjqFO14HGi+4Id53toTodB8Ev3KsLes6fbFnbGZov1L9teyJjbi7lzlNdO0rAjuFp81e8w2fMPwivnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655397; c=relaxed/simple;
-	bh=LrWRDbse1k51vuTIQimDP/x5gkyIfMS7KNcu3mA/nSk=;
+	s=arc-20240116; t=1784655399; c=relaxed/simple;
+	bh=ozYXv/1PK6iEnQbONvy4olFRZbHmYjDKwFeCDvp88EE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VKgvn5OB07J2SjAcoCbKV+IBdKM7YfLBpRYAQkVRze20PcBNff9b5oTt4hS9VyEWKaSJTQPKkQWNEi6pTfxJtlS1tgfnGIykQCWON1dgz1j1cdyf+jOWZ919ZYrizOiF7eij/qoIiYTDA4LX+5it518e7FLMVW7U4EMRu+E+GD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUpu2pdg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=npUDnu7aOcpvDYJqw4H63PTlUJMmah9Fv9oJiCQezNrMbhhL+ZLw85cfHD7tZ8eJfLuGTHKCfI9HcOrE9VJ4fH77bivqycxmlcNYW6nCSQQqac1dxk7MMDtRf1b4SjmL+zoeJUXufpHTJ+JX0dMei0SBroEVobnJJlxo1Js5wqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Gak+Aus; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUpu2pdg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27431F000E9;
-	Tue, 21 Jul 2026 17:36:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Gak+Aus"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456601F000E9;
+	Tue, 21 Jul 2026 17:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655396;
-	bh=+sEgvkj7Rzfpr+gr6+EkeUeRYIZkfuSkcwjJt3B/5QY=;
+	s=korg; t=1784655398;
+	bh=qXEZTeq5cq322THJ6z+5z082RauNeCLv/sxuU9ImxwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wUpu2pdgY11zYSx5XDHVcCjgEEZS0m8oI2hcJGN8/rrSRh4iXwyJ9VfZGHp8ZbNAu
-	 WABM44r7wPFmbP/a90Kvik6+iVmW1f6d0UKZwFOIEIpOBaKvukCy2khISG+GYd2TyH
-	 wrB7jkO/dhILZEZqVjlImBM76YuGJaXv8uuUvMR4=
+	b=0Gak+Auslxh5UY+dnwLSU5+CypIqnKBQtSZUz+lTHCQUkCTNoueW2OU1/zf4BQoWp
+	 JwsYaApZfDw2N9JLTle1745Cshf/A3TE56PhyAStq6+5sJCU0JNBeoxN7f0WpvrgKM
+	 lChhzXNaJzeAd8tJeH7WjCc4QrUunb7G8TLSOdwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	syzbot+ce1e5a1b4e086b43e56d@syzkaller.appspotmail.com,
-	syzbot+306212936b13e520679d@syzkaller.appspotmail.com,
-	syzbot+457452d30bcdda75ead2@syzkaller.appspotmail.com,
-	Mauricio Faria de Oliveira <mfo@igalia.com>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Sasha Levin <sashal@kernel.org>,
-	Andrey Tsygunka <aitsygunka@yandex.ru>
-Subject: [PATCH 7.1 2067/2077] usb: atm: ueagle-atm: wait for pre-firmware load in .disconnect()
-Date: Tue, 21 Jul 2026 17:29:00 +0200
-Message-ID: <20260721152641.453922775@linuxfoundation.org>
+	Vladimir Zapolskiy <vz@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 7.1 2032/2077] mtd: rawnand: lpc32xx_mlc: fail DMA transfers on timeout
+Date: Tue, 21 Jul 2026 17:28:25 +0200
+Message-ID: <20260721152640.626959511@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -56,172 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauricio Faria de Oliveira <mfo@igalia.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit e2674dfbed8a30d57e2bc872c4bfa6c3eec918bf ]
+commit dbf590b662695b16fbf5917ef129697be4410ea9 upstream.
 
-ueagle-atm uses the asynchronous request_firmware_nowait() in .probe(),
-but does not wait for its completion, not even in .disconnect(); so, if the
-device is unplugged meanwhile, its teardown runs concurrently with that.
+lpc32xx_xmit_dma() starts a DMA transfer and waits up to one second
+for its completion, but it ignores the wait result and returns success
+after unmapping the buffer.
 
-Even though this inconsistency is worth addressing on its own, it has also
-triggered several bug reports in syzbot over the years (some auto-closed)
-where the firmware sysfs fallback mechanism (CONFIG_FW_LOADER_USER_HELPER)
-creates a firmware subdirectory in the device directory during its removal,
-which might hit unexpected conditions in kernfs, apparently, depending at
-which point the add and remove operations raced. (See links.)
+A timed out read can therefore return success with incomplete data, and
+a timed out write can continue the NAND operation without proof that the
+DMA payload reached the controller.
 
-The pattern is:
+Terminate the DMA channel on timeout, unmap the scatterlist through the
+existing cleanup path, and return -ETIMEDOUT to the NAND read/write
+callers. Initialize the shared cleanup-path result before using it for
+dmaengine_prep_slave_sg() failures.
 
-usb ?-?: Direct firmware load for ueagle-atm/eagle?.fw failed with error -2
-usb ?-?: Falling back to sysfs fallback for: ueagle-atm/eagle?.fw
-<ERROR>
-Call trace:
- ...
- kernfs_create_dir_ns
- sysfs_create_dir_ns
- create_dir
- kobject_add_internal
- kobject_add_varg
- kobject_add
- class_dir_create_and_add
- get_device_parent
- device_add
- fw_load_sysfs_fallback
- fw_load_from_user_helper
- firmware_fallback_sysfs
- _request_firmware
- request_firmware_work_func
- ...
-
-(Some variations are observed, after fw_load_sysfs_fallback(), e.g., [1].)
-
-While the kernfs side is being looked at, the ueagle-atm side can be fixed
-by waiting for the pre-firmware load in the .disconnect() handler.
-
-This change has a similar approach to previous work by Andrey Tsygunka [2]
-(wait_for_completion() in .disconnect()), but it is relatively different in
-design/implementation; using the Originally-by tag for credit assignment.
-
-This has been tested with:
-- synthetic reproducer to check the error path;
-- USB gadget (virtual device) to check the firmware upload path;
-- QEMU device emulator to check the device ID re-enumeration path;
-(The latter two were written by Claude; no other code/text in this commit.)
-
-Links (year first reported):
- 2025 https://syzbot.org/bug?extid=ce1e5a1b4e086b43e56d
- 2025 https://syzbot.org/bug?extid=9af8471255ac36e34fd4
- 2024 https://syzbot.org/bug?extid=306212936b13e520679d
- 2023 https://syzkaller.appspot.com/bug?extid=457452d30bcdda75ead2
- 2022 https://syzbot.org/bug?extid=782984d6f1701b526edb
- 2021 https://syzbot.org/bug?id=f3f221579f4ef7e9691281f3c6f56c05f83e8490
- 2021 https://syzbot.org/bug?id=84d86f0d71394829df6fc53daf6642c045983881
- 2021 https://syzbot.org/bug?id=3302dc1c0e2b9c94f2e8edb404eabc9267bc6f90
-
-[1] https://syzkaller.appspot.com/bug?extid=457452d30bcdda75ead2
-[2] https://lore.kernel.org/lkml/20250410093146.3776801-2-aitsygunka@yandex.ru/
-
-Cc: stable <stable@kernel.org>
-Reported-by: syzbot+ce1e5a1b4e086b43e56d@syzkaller.appspotmail.com
-Closes: https://syzbot.org/bug?extid=ce1e5a1b4e086b43e56d
-Reported-by: syzbot+306212936b13e520679d@syzkaller.appspotmail.com
-Closes: https://syzbot.org/bug?extid=306212936b13e520679d
-Reported-by: syzbot+457452d30bcdda75ead2@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=457452d30bcdda75ead2
-Originally-by: Andrey Tsygunka <aitsygunka@yandex.ru>
-Fixes: b72458a80c75 ("[PATCH] USB: Eagle and ADI 930 usb adsl modem driver")
-Assisted-by: Claude:claude-opus-4.7 # usb gadget & qemu device for testing
-Signed-off-by: Mauricio Faria de Oliveira <mfo@igalia.com>
-Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Link: https://patch.msgid.link/20260526-ueagle-atm_req-fw-sync-v3-1-93c01961daaf@igalia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 70f7cb78ec53 ("mtd: add LPC32xx MLC NAND driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Vladimir Zapolskiy <vz@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/atm/ueagle-atm.c |   36 +++++++++++++++++++++++++++++++-----
- 1 file changed, 31 insertions(+), 5 deletions(-)
+ drivers/mtd/nand/raw/lpc32xx_mlc.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/atm/ueagle-atm.c
-+++ b/drivers/usb/atm/ueagle-atm.c
-@@ -594,7 +594,9 @@ static int uea_send_modem_cmd(struct usb
- static void uea_upload_pre_firmware(const struct firmware *fw_entry,
- 								void *context)
- {
--	struct usb_device *usb = context;
-+	struct usb_interface *intf = context;
-+	struct usb_device *usb = interface_to_usbdev(intf);
-+	struct completion *fw_done = usb_get_intfdata(intf);
- 	const u8 *pfw;
- 	u8 value;
- 	u32 crc = 0;
-@@ -663,15 +665,17 @@ err_fw_corrupted:
- 	uea_err(usb, "firmware is corrupted\n");
- err:
- 	release_firmware(fw_entry);
-+	complete(fw_done);
- }
+--- a/drivers/mtd/nand/raw/lpc32xx_mlc.c
++++ b/drivers/mtd/nand/raw/lpc32xx_mlc.c
+@@ -396,6 +396,7 @@ static int lpc32xx_xmit_dma(struct mtd_i
+ 	struct lpc32xx_nand_host *host = nand_get_controller_data(chip);
+ 	struct dma_async_tx_descriptor *desc;
+ 	int flags = DMA_CTRL_ACK | DMA_PREP_INTERRUPT;
++	unsigned long time_left;
+ 	int res;
  
- /*
-  * uea_load_firmware - Load usb firmware for pre-firmware devices.
-  */
--static int uea_load_firmware(struct usb_device *usb, unsigned int ver)
-+static int uea_load_firmware(struct usb_interface *intf, unsigned int ver)
- {
- 	int ret;
- 	char *fw_name = EAGLE_FIRMWARE;
-+	struct usb_device *usb = interface_to_usbdev(intf);
- 
- 	uea_info(usb, "pre-firmware device, uploading firmware\n");
- 
-@@ -694,7 +698,7 @@ static int uea_load_firmware(struct usb_
+ 	sg_init_one(&host->sgl, mem, len);
+@@ -410,6 +411,7 @@ static int lpc32xx_xmit_dma(struct mtd_i
+ 				       flags);
+ 	if (!desc) {
+ 		dev_err(mtd->dev.parent, "Failed to prepare slave sg\n");
++		res = -ENXIO;
+ 		goto out1;
  	}
  
- 	ret = request_firmware_nowait(THIS_MODULE, 1, fw_name, &usb->dev,
--					GFP_KERNEL, usb,
-+					GFP_KERNEL, intf,
- 					uea_upload_pre_firmware);
- 	if (ret)
- 		uea_err(usb, "firmware %s is not available\n", fw_name);
-@@ -2557,8 +2561,23 @@ static int uea_probe(struct usb_interfac
+@@ -420,7 +422,13 @@ static int lpc32xx_xmit_dma(struct mtd_i
+ 	dmaengine_submit(desc);
+ 	dma_async_issue_pending(host->dma_chan);
  
- 	usb_reset_device(usb);
- 
--	if (UEA_IS_PREFIRM(id))
--		return uea_load_firmware(usb, UEA_CHIP_VERSION(id));
-+	if (UEA_IS_PREFIRM(id)) {
-+		struct completion *fw_done;
-+
-+		/* Wait for the firmware load to be done, in .disconnect() */
-+		fw_done = kzalloc_obj(*fw_done);
-+		if (!fw_done)
-+			return -ENOMEM;
-+
-+		init_completion(fw_done);
-+		usb_set_intfdata(intf, fw_done);
-+
-+		ret = uea_load_firmware(intf, UEA_CHIP_VERSION(id));
-+		if (ret)
-+			kfree(fw_done);
-+
-+		return ret;
+-	wait_for_completion_timeout(&host->comp_dma, msecs_to_jiffies(1000));
++	time_left = wait_for_completion_timeout(&host->comp_dma,
++						msecs_to_jiffies(1000));
++	if (!time_left) {
++		dmaengine_terminate_sync(host->dma_chan);
++		res = -ETIMEDOUT;
++		goto out1;
 +	}
  
- 	ret = usbatm_usb_probe(intf, id, &uea_usbatm_driver);
- 	if (ret == 0) {
-@@ -2588,6 +2607,13 @@ static void uea_disconnect(struct usb_in
- 		usbatm_usb_disconnect(intf);
- 		mutex_unlock(&uea_mutex);
- 		uea_info(usb, "ADSL device removed\n");
-+	} else if (usb->config->desc.bNumInterfaces == 1) {
-+		struct completion *fw_done = usb_get_intfdata(intf);
-+
-+		uea_dbg(usb, "pre-firmware device, waiting firmware upload\n");
-+		wait_for_completion(fw_done);
-+		uea_dbg(usb, "pre-firmware device, finished waiting\n");
-+		kfree(fw_done);
- 	}
+ 	dma_unmap_sg(host->dma_chan->device->dev, &host->sgl, 1,
+ 		     DMA_BIDIRECTIONAL);
+@@ -428,7 +436,7 @@ static int lpc32xx_xmit_dma(struct mtd_i
+ out1:
+ 	dma_unmap_sg(host->dma_chan->device->dev, &host->sgl, 1,
+ 		     DMA_BIDIRECTIONAL);
+-	return -ENXIO;
++	return res;
  }
  
+ static int lpc32xx_read_page(struct nand_chip *chip, uint8_t *buf,
 
 
