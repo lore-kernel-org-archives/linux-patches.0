@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D18E473C9C;
-	Tue, 21 Jul 2026 21:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483B5473C9F;
+	Tue, 21 Jul 2026 21:04:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667875; cv=none; b=br/qlnAZWzCJ4kQ07lqM8qxiRaH+3bY7J9yIxY5DfSE7il+2/A16Fjww5Wbd6kW901rPXgi2ijtdU5Nsp+SM0Zn09lYifOGyldyVJKjY3sQP16WwYir9CPBXkdtjM3rkMGgssi4oYj8YLGZ+l5TsdZ+Tc+u6F31v0N7zmrsqPtI=
+	t=1784667879; cv=none; b=hBzD9OIY8PcMK4qbXEpxTLllC2dpyFnI7bfdM8wURUZ89ThyMLPJ9SzRmaH1SNxPxatzyPBNj2tugzKW1pdDbMIvlUqWSKE427rzUi3S0iMYAn2/oPT9jHkGjcT8JhifhLiOhTkGD10B5oW7v+dvkd4tsKdQNOnCnP6j8hr7L38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667875; c=relaxed/simple;
-	bh=6AwbrpY1MjEOSPPyCvbI6M0/me0rjjyhLpX8ytOorVA=;
+	s=arc-20240116; t=1784667879; c=relaxed/simple;
+	bh=TKGnyL5LxEqZOUxPjLB3G4WJ2QPBo9bIrr/YttNI7qI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P/NfUzXo/YHQj0T8H+/Vk0tDgzn9HAqxGZWZs5TaMzJE+DA7Fqxi1oSZVGWUn6/G357G/4PnTC9Ah4RpwNlpaaVzxmt6d1rMlLHLipGIs0lRBQkQWontDnOkc2Yi2qkhmTPd6bpEVfxKzikpf56WFibGW4eZaj+K1Ti7dIKFPN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aEJnb4M0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gbxftXnkR5jnBIC27sMZZR9Yob6ICidaJ1MxDb1KzaMTVKswWfQo45GUZr9Cktf8s8/DKtrsIac2+x1a2Kjc38YiAgelljsqSQ5Sb+U77fB+oGXN0mMTVOX6q+pM1W6JETA0R90/p3/bIwOUgStRCrPrHmUcTd14xqsZRMQbYZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RijFjXZW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEJnb4M0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E649B1F00A3A;
-	Tue, 21 Jul 2026 21:04:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RijFjXZW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF331F000E9;
+	Tue, 21 Jul 2026 21:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667872;
-	bh=gc2Kh+kup8JNtuvUocVsEF/9zp+GF4hjgUsAWhmV3GA=;
+	s=korg; t=1784667875;
+	bh=JL+m0AHKZ/2F2AB8nugZgcEEYkgvpdKVqZrOQqsoGzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aEJnb4M0vqirSfrReeZYeNndbyUtBW8a+cT6vzBH7Qu5ssuoYp0Jet5Sp6glK/+Ap
-	 K3Quszc3gD1ChZp3U5FCSf3xABoWC2xvK8qewD3sYvNY8zQ5Kda6exOuod2hFC1SGU
-	 6ybrw+hM0PbnobQIN/3/6rL0D3OfU21tk9EswwTI=
+	b=RijFjXZWigEVrKUseNiRWwDsqMf2PdF62sNwKXRk2uivAaT980d9DwVLETBUolp58
+	 hQx4SAUeVqxVsHKxbd7ytBMR6lIbSXWhgOa8RHLf+HDkysKeg5s9kZ2MCrKryEsIPW
+	 4sKS1OfhZvyYI4NcqHEGa7rcecws3th07wJF0pDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Andy Yan <andyshrk@163.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1224/1266] usb: typec: tcpm: Fix VDM type for Enter Mode commands
-Date: Tue, 21 Jul 2026 17:27:41 +0200
-Message-ID: <20260721152509.194669559@linuxfoundation.org>
+Subject: [PATCH 6.6 1225/1266] crypto: atmel - Drop explicit initialization of struct i2c_device_id::driver_data to 0
+Date: Tue, 21 Jul 2026 17:27:42 +0200
+Message-ID: <20260721152509.217127736@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -46,42 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Yan <andyshrk@163.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 9cff680e47632b7723cb19f9c5e63669063c3417 ]
+[ Upstream commit d86ad3911a5d4549297ed810ee450e5772fd665f ]
 
-VDO() second parameter is VDM type (bit 15): 1 for SVDM, 0 for UVDM.
-Using 'vdo ? 2 : 1' corrupts SVID low bit when vdo is non-NULL
-(2 << 15 = BIT(16)). Enter Mode is always SVDM, hardcode to 1.
+These drivers don't use the driver_data member of struct i2c_device_id,
+so don't explicitly initialize this member.
 
-Fixes: 8face9aa57c8 ("usb: typec: Add parameter for the VDO to typec_altmode_enter()")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Andy Yan <andyshrk@163.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260604105059.18750-1-andyshrk@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This prepares putting driver_data in an anonymous union which requires
+either no initialization or named designators. But it's also a nice
+cleanup on its own.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: ea5e57cc9718 ("crypto: atmel-sha204a - drop hwrng quality reduction for ATSHA204A")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/atmel-ecc.c     |    2 +-
+ drivers/crypto/atmel-sha204a.c |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -2237,7 +2237,7 @@ static int tcpm_altmode_enter(struct typ
- 	if (svdm_version < 0)
- 		return svdm_version;
+--- a/drivers/crypto/atmel-ecc.c
++++ b/drivers/crypto/atmel-ecc.c
+@@ -380,7 +380,7 @@ MODULE_DEVICE_TABLE(of, atmel_ecc_dt_ids
+ #endif
  
--	header = VDO(altmode->svid, vdo ? 2 : 1, svdm_version, CMD_ENTER_MODE);
-+	header = VDO(altmode->svid, 1, svdm_version, CMD_ENTER_MODE);
- 	header |= VDO_OPOS(altmode->mode);
+ static const struct i2c_device_id atmel_ecc_id[] = {
+-	{ "atecc508a", 0 },
++	{ "atecc508a" },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(i2c, atmel_ecc_id);
+--- a/drivers/crypto/atmel-sha204a.c
++++ b/drivers/crypto/atmel-sha204a.c
+@@ -139,8 +139,8 @@ static const struct of_device_id atmel_s
+ MODULE_DEVICE_TABLE(of, atmel_sha204a_dt_ids);
  
- 	tcpm_queue_vdm_unlocked(port, header, vdo, vdo ? 1 : 0);
+ static const struct i2c_device_id atmel_sha204a_id[] = {
+-	{ "atsha204", 0 },
+-	{ "atsha204a", 0 },
++	{ "atsha204" },
++	{ "atsha204a" },
+ 	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(i2c, atmel_sha204a_id);
 
 
