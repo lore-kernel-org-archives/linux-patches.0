@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDCC039EF16;
-	Tue, 21 Jul 2026 15:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9279F25228D;
+	Tue, 21 Jul 2026 15:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648730; cv=none; b=d7UaC8b4IqGeeucJoKFAtYte3TOkZPscRMDavWGi9aHSUpSdAvu4CxxXcE40jnlOa7vQD2BCOBHop/5RCivZqF4pxIuBFhWexjXKDQJsEyOiGpZk9vSSD8enqkaGt2QzEYyzTlnroEY/StH/4Vtd/++HOl6//l1PBsQ8ApNWU48=
+	t=1784648731; cv=none; b=eGuxDgI3SXTDZh/a9iNXdKludEyiUk2VS2XTaI5G0xa+xrQWLZ2NoV0MvnRVLpgf4XzmF/7r6v3xFf0+tOFzNCHWD8EEebgmVmHn5NF9IGTPQzu9wSeoypRIcEWrYWST0pLi0sM+/iEJwdZfQi28jsxTTPEaX26zAu88r4PBaCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648730; c=relaxed/simple;
-	bh=z435Fd573FWjw6lHVg9Cp4ZLZNmPLHHFOHCW885UQlw=;
+	s=arc-20240116; t=1784648731; c=relaxed/simple;
+	bh=wJs33Kq0YTbrJ/u2bHJbPw7jTsdG4zEEl5GKsn+1tQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WnW/fnEAD9vvXz1qNdwhIkUvzCCsF5Lc+zxyZZsiPKDZ5HRf1CYjiSU+fW3Z1aFVAFrN+V8xzIFrPP/L/ZN8If+o92bqhrzDyqs0nJ42sm1/iPMcUbJ3usmxK4kJJYohWs74+YsEtDXOONAGp9kh8bwc/C86UGEiBGwd5M1lOx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyMa88L7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lk+Xo26eu4tGOYqa5egAV5aNQhKf6mQhtviACMDRfmvC/+ER4C0OAXq3jQ4ODz1dj1EXJqqLK4cmVNUr676lq3OsSF7h5mFfoxivK9lfDfnpdGC1Aqkd9D7HlKURr5oLsH/U1Dap3pFdAGAsnK1ntj3btHw8HRzIQ7IZR59e2P4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFOIo/XW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyMa88L7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F0EE1F00A3A;
-	Tue, 21 Jul 2026 15:45:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFOIo/XW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 049141F000E9;
+	Tue, 21 Jul 2026 15:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648727;
-	bh=QhFJZvSLNts/UQEAUwy78GbVEyjOnR+ZENmZNnBOiSY=;
+	s=korg; t=1784648730;
+	bh=mRai6Rs82yTjHwz9riaALdyBjGkUbiBO52vJgNXMhVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WyMa88L7D2BqFFLGMGYmL/9i+EVbCnfFhud8dWcJ9Re5kXghmoW4BjoAqJxYlepNi
-	 obLXNoKz/QwCWrsn3pTnMmBMWoUIoV6MTEShm0KJHXO0/nLPRTb83d4Xehx5HsrwHN
-	 pOqOmw7Ur/fxf1DWePUPlVxrUkH8c81JsqcHagW0=
+	b=QFOIo/XWzh8NyGnjvMo9fz29HLx5XmzUfuDiAIpafP/A/IcjlfcKmL1mZEhlD0tuM
+	 ymCHkAuslaa5ejh+2IFIO+mZQLtNLzNMOxo0MXuHFdz+RMYlL3p3EBKfc40i6X6FP7
+	 xAymgdsb8spRFH7D9JIUuyAgG6ojjdJCiNGu08/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
-	Harshal Dev <harshal.dev@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Xianwei Zhao <xianwei.zhao@amlogic.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0272/2077] arm64: dts: qcom: sm8750: Add power-domain and iface clk for ice node
-Date: Tue, 21 Jul 2026 16:59:05 +0200
-Message-ID: <20260721152559.094361273@linuxfoundation.org>
+Subject: [PATCH 7.1 0308/2077] pinctrl: meson: amlogic-a4: fix gpio output glitch
+Date: Tue, 21 Jul 2026 16:59:41 +0200
+Message-ID: <20260721152559.945022604@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,47 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshal Dev <harshal.dev@oss.qualcomm.com>
+From: Xianwei Zhao <xianwei.zhao@amlogic.com>
 
-[ Upstream commit 081ac792f0ea6d27a4b130c70cfd7544efee8137 ]
+[ Upstream commit 45ad4de324cb1bba88e568b5bef633a79d926aed ]
 
-Qualcomm in-line crypto engine (ICE) platform driver specifies and votes
-for its own resources. Before accessing ICE hardware during probe, to
-avoid potential unclocked register access issues (when clk_ignore_unused
-is not passed on the kernel command line), in addition to the 'core' clock
-the 'iface' clock should also be turned on by the driver. This can only be
-done if the GCC_UFS_PHY_GDSC power domain is enabled. Specify both the
-GCC_UFS_PHY_GDSC power domain and the 'iface' clock in the ICE node for
-sm8750.
+When the system transitions from bootloader to kernel, the GPIO is
+expected to keep driving high.
 
-Fixes: b1dac789c650a ("arm64: dts: qcom: sm8750: Add ICE nodes")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260416-qcom_ice_power_and_clk_vote-v5-11-5ccf5d7e2846@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+However, the Linux kernel first configures the pin direction and then
+sets the output value. This may cause a brief low-level glitch on the
+GPIO line, which can be problematic for regulator control.
+
+By configuring the output value before switching the pin direction to
+output, the glitch can be avoided.
+
+This commit fixes the issue by swapping the configuration order.
+
+Fixes: 6e9be3abb78c ("pinctrl: Add driver support for Amlogic SoCs")
+Signed-off-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8750.dtsi | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/pinctrl/meson/pinctrl-amlogic-a4.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-index 320aec62e462d2..2d2f029c2d6fe8 100644
---- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-@@ -2086,7 +2086,11 @@ ice: crypto@1d88000 {
- 				     "qcom,inline-crypto-engine";
- 			reg = <0x0 0x01d88000 0x0 0x18000>;
+diff --git a/drivers/pinctrl/meson/pinctrl-amlogic-a4.c b/drivers/pinctrl/meson/pinctrl-amlogic-a4.c
+index 35d27626a336b7..1bd58fbbd26ac6 100644
+--- a/drivers/pinctrl/meson/pinctrl-amlogic-a4.c
++++ b/drivers/pinctrl/meson/pinctrl-amlogic-a4.c
+@@ -548,11 +548,11 @@ static int aml_pinconf_set_output_drive(struct aml_pinctrl *info,
+ {
+ 	int ret;
  
--			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-+			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>,
-+				 <&gcc GCC_UFS_PHY_AHB_CLK>;
-+			clock-names = "core",
-+				      "iface";
-+			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
- 		};
+-	ret = aml_pinconf_set_output(info, pin, true);
++	ret = aml_pinconf_set_drive(info, pin, high);
+ 	if (ret)
+ 		return ret;
  
- 		cryptobam: dma-controller@1dc4000 {
+-	return aml_pinconf_set_drive(info, pin, high);
++	return aml_pinconf_set_output(info, pin, true);
+ }
+ 
+ static int aml_pinconf_set(struct pinctrl_dev *pcdev, unsigned int pin,
+@@ -921,15 +921,14 @@ static int aml_gpio_direction_output(struct gpio_chip *chip, unsigned int gpio,
+ 	unsigned int bit, reg;
+ 	int ret;
+ 
+-	aml_gpio_calc_reg_and_bit(bank, AML_REG_DIR, gpio, &reg, &bit);
+-	ret = regmap_update_bits(bank->reg_gpio, reg, BIT(bit), 0);
++	aml_gpio_calc_reg_and_bit(bank, AML_REG_OUT, gpio, &reg, &bit);
++	ret = regmap_update_bits(bank->reg_gpio, reg, BIT(bit),
++				 value ? BIT(bit) : 0);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	aml_gpio_calc_reg_and_bit(bank, AML_REG_OUT, gpio, &reg, &bit);
+-
+-	return regmap_update_bits(bank->reg_gpio, reg, BIT(bit),
+-				  value ? BIT(bit) : 0);
++	aml_gpio_calc_reg_and_bit(bank, AML_REG_DIR, gpio, &reg, &bit);
++	return regmap_update_bits(bank->reg_gpio, reg, BIT(bit), 0);
+ }
+ 
+ static int aml_gpio_set(struct gpio_chip *chip, unsigned int gpio, int value)
 -- 
 2.53.0
 
