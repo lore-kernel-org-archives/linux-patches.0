@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1F447253D;
-	Tue, 21 Jul 2026 19:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C6C472533;
+	Tue, 21 Jul 2026 19:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663433; cv=none; b=p/LFBqazF+oqlwQ2bGrnuoTQwbLyrlFKh3oonWlg4E7y6drGwBV2kqcnHwi51qRknTkWb/E+OlYU+4n9cQUM92LffBbNvlgfQTJuAfycQkReR14aNq69suJgO9n/lA8rpekOc3i68tN8UBGtHmqex9L32DlOkAZtXO56J5fPTCw=
+	t=1784663436; cv=none; b=eZ1eJ2I0gciIAcyypsCsdubgKfZqE+QEhV7YiD3Iu4p1f22bLZhRuYtsPPJ84/9DQ5F5G6ku0JlERmeOqMOtCHqu6u7sNInXK1EfYmtvg4vli2d12y9BRxUiS4fI+jJFbx4jyVmVHAZnIMUsha7OekQBduSTUiyYAWFc6ZSVe5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663433; c=relaxed/simple;
-	bh=djXKPeebXGfKugS2l3ExwiuNpSqnwZFQqAf8PgMEo6E=;
+	s=arc-20240116; t=1784663436; c=relaxed/simple;
+	bh=LWub3RFU4kOGjAfe3l13BHBgVG5iUHML0vo0i3FQEj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=raJxxo1gn8a2E5V/6LkRqS3kjTFZPFTC6iyA2V2qXyAziQMEVosJmymPhBYnO0nwl0Hw8tyMO6+FDiohf6V8Vx/n6v8vcRrbUJk7AVCq9L0Kx6YFiRoIuFTx/2o3pPqiW+8W7dmw3mp1ci7Ym8ktS2RSFflPQputElp+loU4FO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qR8FuegB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a26NTfD58A2m+MXeuXuIcxcVVF9lgikyI7c2PlLvFrMthBF19RCwEa3+1kpGctbiRzlrCgbh0OS6mUz9Xl5tu9lfLrL2+lDiCzD6mbTc8ProFfZo02FfGUKQaKVBhqDK5J+plFpe1XmW9RT3QzyXr3pY3qsY0sF11pCizDI4Q9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swYN5XpW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qR8FuegB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9AE1F000E9;
-	Tue, 21 Jul 2026 19:50:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swYN5XpW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2021F000E9;
+	Tue, 21 Jul 2026 19:50:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663432;
-	bh=EKyjfh+/3FKfN9dio7jAlSJ7FDWzK+KnKsnGvNpGa84=;
+	s=korg; t=1784663435;
+	bh=ynpFT1Cd0Gs2P+o7VKa4Kn0NeglWXwEmq+LKLtaKbfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qR8FuegBSOB/PyH6VyU6r2O8VjQ1OszB58Ou5UKWtfgEb7fUDQK80DRf5jQdJvzMP
-	 XKg97RoE8pPMBM6Yv5MfS7vUChpeXK8TBH8+JEOpozTCtT5hdnvf730/Eo4YfqSKAa
-	 YNgvv7H5IUtqdeEnut6s6uP0CMVZ658tBzQLheng=
+	b=swYN5XpWE+rHtRWRHiragLF2YqI6rmv5m3nEDKOICxzM72BWlz+7sFfaBQmj7+lmG
+	 s/IFDQWb4s1szmZSyJlS1Yo5lLVhlWAW4PnkTZJtim4Xngr0zKIY4f5xHq0ehmUd7C
+	 cl8Wgwwj9wEO4jgXHks+55SolExct7Rgpt4CYOYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	Nishanth Menon <nm@ti.com>
-Subject: [PATCH 6.12 0820/1276] arm64: dts: ti: k3-am62a7-sk: Add bootph-all tag to vqmmc
-Date: Tue, 21 Jul 2026 17:21:03 +0200
-Message-ID: <20260721152504.415619146@linuxfoundation.org>
+	David Jander <david@protonic.nl>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>
+Subject: [PATCH 6.12 0821/1276] ARM: dts: stm32: stm32mp15x-mecio1-io: Enable internal ADC reference
+Date: Tue, 21 Jul 2026 17:21:04 +0200
+Message-ID: <20260721152504.437044173@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,41 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Judith Mendez <jm@ti.com>
+From: David Jander <david@protonic.nl>
 
-commit d8fe8442366ffd8306575028bda92389d0dfb674 upstream.
+commit c84f22405085d91cd5f0c5b967318371c07904ba upstream.
 
-Add bootph-all property to vqmmc voltage regulator node and its
-corresponding pinmux node to make it available during all boot
-phases. This allows to run tuning early in SPL stages of boot.
+Switch the ADC reference supply from the general 3.3V rail to the
+internal 2.5V VREFBUF regulator. The ADC circuits on this board are
+designed for the internal 2.5V reference. Without this change, all ADC
+measurement values are incorrect.
 
-Fixes: 8f023012eb4a ("arm64: dts: ti: k3-am62a: Enable UHS mode support for SD cards")
-Cc: stable@vger.kernel.org
-Signed-off-by: Judith Mendez <jm@ti.com>
-Link: https://patch.msgid.link/20260324140247.1200631-1-jm@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fixes: 8267753c891c ("ARM: dts: stm32: Add MECIO1 and MECT1S board variants")
+Co-developed-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Signed-off-by: David Jander <david@protonic.nl>
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20260318105123.819807-2-o.rempel@pengutronix.de
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62a7-sk.dts |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/boot/dts/st/stm32mp15x-mecio1-io.dtsi |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
-+++ b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
-@@ -134,6 +134,7 @@
- 		gpios = <&main_gpio0 31 GPIO_ACTIVE_HIGH>;
- 		states = <1800000 0x0>,
- 			 <3300000 0x1>;
-+		bootph-all;
- 	};
- 
- 	leds {
-@@ -381,6 +382,7 @@
- 		pinctrl-single,pins = <
- 			AM62AX_MCU_IOPAD(0x000, PIN_INPUT, 7) /* (E11) MCU_GPIO0_0 */
- 		>;
-+		bootph-all;
- 	};
+--- a/arch/arm/boot/dts/st/stm32mp15x-mecio1-io.dtsi
++++ b/arch/arm/boot/dts/st/stm32mp15x-mecio1-io.dtsi
+@@ -95,7 +95,7 @@
+ 	pinctrl-names = "default";
+ 	vdd-supply = <&v3v3>;
+ 	vdda-supply = <&v3v3>;
+-	vref-supply = <&v3v3>;
++	vref-supply = <&vrefbuf>;
+ 	status = "okay";
  };
  
+@@ -362,6 +362,13 @@
+ 	phy-supply = <&v3v3>;
+ };
+ 
++&vrefbuf {
++	regulator-min-microvolt = <2500000>;
++	regulator-max-microvolt = <2500000>;
++	vdda-supply = <&v3v3>;
++	status = "okay";
++};
++
+ &pinctrl {
+ 	adc12_pins_mecsbc: adc12-ain-mecsbc-0 {
+ 		pins {
 
 
