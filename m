@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1514398FB;
-	Tue, 21 Jul 2026 21:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F68F43E4BB;
+	Tue, 21 Jul 2026 21:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669814; cv=none; b=cvAe0yrQCgd9h2ObPKVzYB6G0kFdjMJg5naYpJ4Ugw63iScBTWDgJhhoNXZ7vIH4Iz2z3YiiKeazTJQRTmNXRNxWqmMMqH0zGekETIsb6XhagGQMziVqfWQxYdzz0RHsiXgIEkwpGGb8X2w/z6l+damptgotFX73q6yuvtDxNFE=
+	t=1784669818; cv=none; b=UYOHDldtRhuStxlJMQ8Xl2y07n22mzQYIxuHEltCk1E4n1K7Rxk8U8k0MABFFtEfWJjkpfBBGxhe6wRmRhkYlZwHFLYvikKnMhYK6fKcgyWTEL8eokQWzxVcwLx9R3XMrGEf0e4eb+WoOTsf0vSuqucneQG5OlmbdKsipykoU2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669814; c=relaxed/simple;
-	bh=5Dg7jEGJrwFEono/VSUnNOzyyyDWzG+hPpbgKlpbjIM=;
+	s=arc-20240116; t=1784669818; c=relaxed/simple;
+	bh=9YLuNbMPR1mGoaZFkwHhuOOIRikjwl2M/v0aHYrQRzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gU4asqkoHgSmMPszm+3u3YGKKrcz5A2a4YjPxncohe5yMLowhLhqR/kxl8XQG7LIqNC+GPXtoP0oX1fRxWGvyIYSS5FHePUgSsu1soyQ/JlZxExRbrbotmD8VGnuk/ieZ7bwqu1QvALnOmS9ZcC44obP/TrJeE3KH8Ng1kY5iyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ThHl5vLd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tRG0sDO12Y9qLaKgGZHneTVMmcqd7Nm8zvLcyQfTr3YuvLH9sCRo0UrCn6lAzwXic1/mguxSa9liHePqdo5XVSQPSgvj631hVOqvR9jK5iQMxZ1ElPP1lSjTDs8HawssNWvdIqhjYGiS25ckp2Zn+fgKXyckG6Ljoh7Old75Wf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IwlBhg2v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ThHl5vLd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1E31F00A3A;
-	Tue, 21 Jul 2026 21:36:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IwlBhg2v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627D31F000E9;
+	Tue, 21 Jul 2026 21:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669812;
-	bh=J8uAk7ZXPVwOQIyz5BbaG98W1uU/nD2Tzzt1P2TNq6w=;
+	s=korg; t=1784669814;
+	bh=d4md+Tiw54pEUlg54UNFoWSrsq6lMEj2nYBfEQ+U+/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ThHl5vLdnU3fCZ4Kh8WJ319Qt1Yn9AX39MyXOHM0wIWU1a875BtRnZopfJf76LrPx
-	 86nK6pAiKlitBfu7cipkIyFSBv+NrCvZqkEKi4lswntKP0YBwWxpJOW3nZn1LvIOtp
-	 3N0LSfYHg3h+JM2lp2MWEV6hDED8v1jqSIkbtocc=
+	b=IwlBhg2vE/txrY089DC7Kv5NIPC0CjSIXCRDDdsBHkRBWiOTnRHBiZL01FP0J0+Gy
+	 J+wReIWD5T3UXUZwha38Pjyn5IlbfF1UhYc+KED7MN3wdpB0SxoHDPZ3rOXrtyuLdM
+	 3h6Iw8H3VTOSFvW5HNO5kAb4ZP1EvoPcr+As6l7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0694/1067] Bluetooth: MGMT: Fix adv monitor add failure cleanup
-Date: Tue, 21 Jul 2026 17:21:35 +0200
-Message-ID: <20260721152440.119759065@linuxfoundation.org>
+Subject: [PATCH 6.1 0695/1067] Bluetooth: ISO: exclude RFU bits from ISO_SDU_Length
+Date: Tue, 21 Jul 2026 17:21:36 +0200
+Message-ID: <20260721152440.141456551@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,140 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 384a4b2fef9ffe5e270ee5558975c0504881c5fb ]
+[ Upstream commit fd076d8deeab6f9f18ef13400f89e1f550df665b ]
 
-hci_add_adv_monitor() publishes a new adv_monitor in
-hdev->adv_monitors_idr before the powered MSFT setup step. The MSFT
-offload add path can then fail either locally before the controller add
-command completes, or in the MSFT add callback. In the current queued
-management add flow, hci_cmd_sync_work() still invokes
-mgmt_add_adv_patterns_monitor_complete() with the original pending command
-after msft_add_monitor_pattern() returns.
+slen contains ISO_SDU_Length (12 bits), RFU (2 bits),
+Packet_Status_Flags (2 bits).
 
-The buggy scenario involves two paths, with each column showing the order
-within that path:
+Exclude the RFU bits from hci_iso_data_len. Also add masks to the pack
+macro.
 
-MSFT add handling                  MGMT completion
-1. insert monitor and handle       1. receive sync error
-2. send MSFT add command           2. call add-monitor completion
-3. callback sees bad response      3. load cmd->user_data
-4. callback frees monitor          4. read monitor->handle
-
-Local MSFT setup failures have the other half of the same ownership bug:
-they return an error after the IDR insertion, but no later code removes the
-failed monitor from the IDR.
-
-Keep ownership with the pending management command until its completion.
-For normal management adds, the MSFT add callback now records successful
-controller state and returns errors to its caller. The management
-completion frees the monitor on non-success after copying the response
-handle, while resume/reregister callback-error cleanup remains in the
-MSFT callback. The success path keeps the existing bookkeeping.
-
-Validation reproduced this kernel report:
-BUG: KASAN: slab-use-after-free in mgmt_add_adv_patterns_monitor_complete+0xfb/0x260 [bluetooth]
-
-Call Trace:
- <TASK>
- dump_stack_lvl+0x66/0xa0
- print_report+0xce/0x5f0
- ? mgmt_add_adv_patterns_monitor_complete+0xfb/0x260 [bluetooth]
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? __virt_addr_valid+0x19f/0x330
- ? mgmt_add_adv_patterns_monitor_complete+0xfb/0x260 [bluetooth]
- kasan_report+0xe0/0x110
- ? mgmt_add_adv_patterns_monitor_complete+0xfb/0x260 [bluetooth]
- mgmt_add_adv_patterns_monitor_complete+0xfb/0x260 [bluetooth]
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? 0xffffffffc00d00da
- ? __pfx_mgmt_add_adv_patterns_monitor_complete+0x10/0x10 [bluetooth]
- ? __pfx_mgmt_add_adv_patterns_monitor_complete+0x10/0x10 [bluetooth]
- ? hci_cmd_sync_work+0x1ab/0x210 [bluetooth]
- hci_cmd_sync_work+0x1c0/0x210 [bluetooth]
- ? __pfx_mgmt_add_adv_patterns_monitor_complete+0x10/0x10 [bluetooth]
- process_one_work+0x4fd/0xbc0
- ? __pfx_process_one_work+0x10/0x10
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? __list_add_valid_or_report+0x37/0xf0
- ? __pfx_hci_cmd_sync_work+0x10/0x10 [bluetooth]
- ? srso_alias_return_thunk+0x5/0xfbef5
- worker_thread+0x2d8/0x570
- ? __pfx_worker_thread+0x10/0x10
- kthread+0x1ad/0x1f0
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x3c9/0x540
- ? __pfx_ret_from_fork+0x10/0x10
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? __switch_to+0x2e9/0x730
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-
-Allocated by task 471 on cpu 3 at 285.205389s:
- kasan_save_stack+0x33/0x60
- kasan_save_track+0x17/0x60
- __kasan_kmalloc+0xaa/0xb0
- add_adv_patterns_monitor_rssi+0xd5/0x230 [bluetooth]
- hci_sock_sendmsg+0x96b/0xf80 [bluetooth]
- __sys_sendto+0x2bc/0x2d0
- __x64_sys_sendto+0x76/0x90
- do_syscall_64+0x115/0x6a0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Freed by task 454 on cpu 2 at 285.217112s:
- kasan_save_stack+0x33/0x60
- kasan_save_track+0x17/0x60
- kasan_save_free_info+0x3b/0x60
- __kasan_slab_free+0x5f/0x80
- kfree+0x313/0x590
- msft_add_monitor_sync+0x54a/0x570 [bluetooth]
- hci_add_adv_monitor+0x133/0x180 [bluetooth]
- hci_cmd_sync_work+0x187/0x210 [bluetooth]
- process_one_work+0x4fd/0xbc0
- worker_thread+0x2d8/0x570
- kthread+0x1ad/0x1f0
- ret_from_fork+0x3c9/0x540
- ret_from_fork_asm+0x1a/0x30
-
-Fixes: a2a4dedf88ab ("Bluetooth: advmon offload MSFT add monitor")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Fixes: 4de0fc599eb9 ("Bluetooth: Add definitions for CIS connections")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 2 ++
- net/bluetooth/msft.c | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ include/net/bluetooth/hci.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index cd494f5ebb4dba..5a4a9f716e5de6 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -5343,6 +5343,8 @@ static void mgmt_add_adv_patterns_monitor_complete(struct hci_dev *hdev,
- 		if (monitor->state == ADV_MONITOR_STATE_NOT_REGISTERED)
- 			monitor->state = ADV_MONITOR_STATE_REGISTERED;
- 		hci_update_passive_scan(hdev);
-+	} else {
-+		hci_free_adv_monitor(hdev, monitor);
- 	}
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index 018fc64329fc68..1a05fe12b28f03 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -2969,8 +2969,9 @@ static inline struct hci_sco_hdr *hci_sco_hdr(const struct sk_buff *skb)
+ #define hci_iso_flags_pack(pb, ts)	((pb & 0x03) | ((ts & 0x01) << 2))
  
- 	mgmt_cmd_complete(cmd->sk, cmd->index, cmd->opcode,
-diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
-index 076cf8bce4d9e3..39c7fc8c5a17ed 100644
---- a/net/bluetooth/msft.c
-+++ b/net/bluetooth/msft.c
-@@ -246,7 +246,7 @@ static int msft_le_monitor_advertisement_cb(struct hci_dev *hdev, u16 opcode,
- 	monitor->state = ADV_MONITOR_STATE_OFFLOADED;
+ /* ISO data length and flags pack/unpack */
+-#define hci_iso_data_len_pack(h, f)	((__u16) ((h) | ((f) << 14)))
+-#define hci_iso_data_len(h)		((h) & 0x3fff)
++#define hci_iso_data_len_pack(h, f)	((__u16) (((h) & 0x0fff) | \
++						  (((f) & 0x3) << 14)))
++#define hci_iso_data_len(h)		((h) & 0x0fff)
+ #define hci_iso_data_flags(h)		((h) >> 14)
  
- unlock:
--	if (status)
-+	if (status && msft->resuming)
- 		hci_free_adv_monitor(hdev, monitor);
- 
- 	hci_dev_unlock(hdev);
+ /* codec transport types */
 -- 
 2.53.0
 
