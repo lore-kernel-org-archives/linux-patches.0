@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33DD946F490;
-	Tue, 21 Jul 2026 18:48:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3339B46F48E;
+	Tue, 21 Jul 2026 18:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659683; cv=none; b=kdlCkfXgJ80Q3qCL+tJp/edNg0nkz2DiYMqup9yzk+wXujG5puk8xiAdyYfKPblHodeec6epTxzP2ORJ6WY9UbkPo/gZ4CVrNbhIvIqa5sGvfjE0OM/IGDla/6M+wSUEXP8ilbeXTzqveh8gDZDQWgtxSPZZkAXV0Tact5WirD4=
+	t=1784659685; cv=none; b=tIb0Fk7oF3roKq9A6e6ewFnJ3pyA+J7V9L0+4BwWJveAnDrf8a4xMvD2EN2zBkpTVyEPDSzt1kKLjxacbhBX1IT6Ndsq3E5Ih64HlMWHGHT+yV7LcDDqyEY9KG+O/vstX2QQtef9Zlm/74lYgLoG5igGWmCRsGOstJVV7Nt4A8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659683; c=relaxed/simple;
-	bh=31RUCtM+4ILXb3cXSDwFm2K1Kx8MI9j1rSJ23VKh2Hs=;
+	s=arc-20240116; t=1784659685; c=relaxed/simple;
+	bh=jepx9Szc637yM1A637VbBdrRb/pfBE2p5OM2noZ8J98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O1aQG/tVmcKU4Sx6pl/5nitIl/+tis6FRp5V99gTDrH8Pe3fwDAUW7zDXMmlSt/kkYR0JNIh+oOtcIaWd/gmgHdP2ozCwGhgWTIWKBQavhpuYLed5Umg0X9nGkMq5BAj3fcIHd1HbuUVRYg06Gle1IdlNheNzIY3H9UYmHXFUQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+2MKHLm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H4zmrRBz7uJAuSt+s2zanBWCWZPHjmAce+BZToGy26o+B2NMWCa5FzsWDkbbH33cef7dhbsxN+3aBGruQtSfBUsL8R1y0DdTL8gnilrf8InNsVDlUaae79Nml8cT296o4ox9aomb8t+Nzcv8wVUKxVPVWzxx1+aTEuIGa7/NrFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJclkihx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+2MKHLm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC3A1F00A3D;
-	Tue, 21 Jul 2026 18:47:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJclkihx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4352F1F000E9;
+	Tue, 21 Jul 2026 18:48:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659680;
-	bh=D4rD5bjAWZHcMGJr+rZDdCOc8o8UEP27BXxbsX8lpBo=;
+	s=korg; t=1784659682;
+	bh=JyLNrrugLvD339RfbIi+heOxtHos6iRVNZbt8sckFgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g+2MKHLmMLte9nYwUdIdNFflqi6IbvO1niDtgjRnY1dvHhVJZZFcXVgOAAnYwYcpN
-	 tCrrLPOY8sMvSyOCcEB+Ejbz/erHwz0zvsrWThQRArS2FnfJO9fagtG8o6WcKxz0Li
-	 cPWdSC7tWicbLSyaKS63y0SXq4vGXi8dcQ8GWmT8=
+	b=lJclkihxDcOIYfzpbHuYM33jGW4sMCIk4EyX37PLh/fvTGiDxOqS389VccSrXUKnV
+	 OeQoqhILaQ72lBu07o0/Pz92R0y+o7xWOxNxWRNfoyct5lXMh/iQCVhTbFGfU1oQBd
+	 380jjAG8JUqel8ZIVMIodUjJB44PJRwUm5W+OyNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.18 1611/1611] RDMA/bnxt_re: Avoid repeated requests to allocate WC pages
-Date: Tue, 21 Jul 2026 17:28:47 +0200
-Message-ID: <20260721152551.712581001@linuxfoundation.org>
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 1578/1611] new helper: simple_remove_by_name()
+Date: Tue, 21 Jul 2026 17:28:14 +0200
+Message-ID: <20260721152550.964598006@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -45,120 +45,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit 441baa79043431807115fd030d7d0bb14ed441a0 upstream.
+[ Upstream commit 4051a9115ad24bb9a691774730ca9c1dd56de665 ]
 
-Applications can request multiple WC pages for the same ucontext.
-As of now, only 1 WC page per ucontext is supported. Add a lock to
-avoid concurrent access and a check to fail repeated requests.
-Also, if the mmap entry insert fails for the WC, free the Doorbell
-page index mapped for the WC page.
+simple_recursive_removal(), but instead of victim dentry it takes
+parent + name.
 
-Fixes: eee6268421a2 ("RDMA/bnxt_re: Move the UAPI methods to a dedicated file")
-Fixes: 360da60d6c6e ("RDMA/bnxt_re: Enable low latency push")
-Link: https://patch.msgid.link/r/20260615224751.232802-12-selvin.xavier@broadcom.com
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Used to be open-coded in fs/fuse/control.c, but there's no need to expose
+the guts of that thing there and there are other potential users, so
+let's lift it into libfs...
+
+Acked-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Stable-dep-of: 3137b243c939 ("usb: gadget: f_fs: initialize reset_work at allocation time")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c |    1 
- drivers/infiniband/hw/bnxt_re/ib_verbs.h |    1 
- drivers/infiniband/hw/bnxt_re/uapi.c     |   33 +++++++++++++++++++++++++------
- 3 files changed, 29 insertions(+), 6 deletions(-)
+ fs/fuse/control.c  |    7 +------
+ fs/libfs.c         |   13 +++++++++++++
+ include/linux/fs.h |    2 ++
+ 3 files changed, 16 insertions(+), 6 deletions(-)
 
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -4356,6 +4356,7 @@ int bnxt_re_alloc_ucontext(struct ib_uco
- 		goto fail;
- 	}
- 	spin_lock_init(&uctx->sh_lock);
-+	mutex_init(&uctx->wcdpi_lock);
+--- a/fs/fuse/control.c
++++ b/fs/fuse/control.c
+@@ -290,18 +290,13 @@ static void remove_one(struct dentry *de
+  */
+ void fuse_ctl_remove_conn(struct fuse_conn *fc)
+ {
+-	struct dentry *dentry;
+ 	char name[32];
  
- 	resp.comp_mask = BNXT_RE_UCNTX_CMASK_HAVE_CCTX;
- 	chip_met_rev_num = rdev->chip_ctx->chip_num;
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.h
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.h
-@@ -142,6 +142,7 @@ struct bnxt_re_ucontext {
- 	struct bnxt_re_dev	*rdev;
- 	struct bnxt_qplib_dpi	dpi;
- 	struct bnxt_qplib_dpi   wcdpi;
-+	struct mutex		wcdpi_lock;	/* serialises WC DPI alloc/free */
- 	void			*shpg;
- 	spinlock_t		sh_lock;	/* protect shpg */
- 	struct rdma_user_mmap_entry *shpage_mmap;
---- a/drivers/infiniband/hw/bnxt_re/uapi.c
-+++ b/drivers/infiniband/hw/bnxt_re/uapi.c
-@@ -98,14 +98,23 @@ static int UVERBS_HANDLER(BNXT_RE_METHOD
+ 	if (!fuse_control_sb || fc->no_control)
+ 		return;
  
- 	switch (alloc_type) {
- 	case BNXT_RE_ALLOC_WC_PAGE:
--		if (cctx->modes.db_push)  {
-+		if (cctx->modes.db_push) {
-+			mutex_lock(&uctx->wcdpi_lock);
-+			/* already allocated — one WC page per context */
-+			if (uctx->wcdpi.dbr) {
-+				mutex_unlock(&uctx->wcdpi_lock);
-+				return -EEXIST;
-+			}
- 			if (bnxt_qplib_alloc_dpi(&rdev->qplib_res, &uctx->wcdpi,
--						 uctx, BNXT_QPLIB_DPI_TYPE_WC))
-+						 uctx, BNXT_QPLIB_DPI_TYPE_WC)) {
-+				mutex_unlock(&uctx->wcdpi_lock);
- 				return -ENOMEM;
-+			}
- 			length = PAGE_SIZE;
- 			dpi = uctx->wcdpi.dpi;
- 			addr = (u64)uctx->wcdpi.umdbr;
- 			mmap_flag = BNXT_RE_MMAP_WC_DB;
-+			mutex_unlock(&uctx->wcdpi_lock);
- 		} else {
- 			return -EINVAL;
- 		}
-@@ -132,8 +141,15 @@ static int UVERBS_HANDLER(BNXT_RE_METHOD
- 	}
+ 	sprintf(name, "%u", fc->dev);
+-	dentry = lookup_noperm_positive_unlocked(&QSTR(name), fuse_control_sb->s_root);
+-	if (!IS_ERR(dentry)) {
+-		simple_recursive_removal(dentry, remove_one);
+-		dput(dentry);	// paired with lookup_noperm_positive_unlocked()
+-	}
++	simple_remove_by_name(fuse_control_sb->s_root, name, remove_one);
+ }
  
- 	entry = bnxt_re_mmap_entry_insert(uctx, addr, mmap_flag, &mmap_offset);
--	if (!entry)
-+	if (!entry) {
-+		if (mmap_flag == BNXT_RE_MMAP_WC_DB) {
-+			mutex_lock(&uctx->wcdpi_lock);
-+			bnxt_qplib_dealloc_dpi(&rdev->qplib_res, &uctx->wcdpi);
-+			uctx->wcdpi.dbr = NULL;
-+			mutex_unlock(&uctx->wcdpi_lock);
-+		}
- 		return -ENOMEM;
+ static int fuse_ctl_fill_super(struct super_block *sb, struct fs_context *fsc)
+--- a/fs/libfs.c
++++ b/fs/libfs.c
+@@ -647,6 +647,19 @@ void simple_recursive_removal(struct den
+ }
+ EXPORT_SYMBOL(simple_recursive_removal);
+ 
++void simple_remove_by_name(struct dentry *parent, const char *name,
++                           void (*callback)(struct dentry *))
++{
++	struct dentry *dentry;
++
++	dentry = lookup_noperm_positive_unlocked(&QSTR(name), parent);
++	if (!IS_ERR(dentry)) {
++		simple_recursive_removal(dentry, callback);
++		dput(dentry);	// paired with lookup_noperm_positive_unlocked()
 +	}
- 
- 	uobj->object = entry;
- 	uverbs_finalize_uobj_create(attrs, BNXT_RE_ALLOC_PAGE_HANDLE);
-@@ -164,11 +180,16 @@ static int alloc_page_obj_cleanup(struct
- 
- 	switch (entry->mmap_flag) {
- 	case BNXT_RE_MMAP_WC_DB:
--		if (uctx && uctx->wcdpi.dbr) {
-+		if (uctx) {
- 			struct bnxt_re_dev *rdev = uctx->rdev;
- 
--			bnxt_qplib_dealloc_dpi(&rdev->qplib_res, &uctx->wcdpi);
--			uctx->wcdpi.dbr = NULL;
-+			mutex_lock(&uctx->wcdpi_lock);
-+			if (uctx->wcdpi.dbr) {
-+				bnxt_qplib_dealloc_dpi(&rdev->qplib_res,
-+						       &uctx->wcdpi);
-+				uctx->wcdpi.dbr = NULL;
-+			}
-+			mutex_unlock(&uctx->wcdpi_lock);
- 		}
- 		break;
- 	case BNXT_RE_MMAP_DBR_BAR:
++}
++EXPORT_SYMBOL(simple_remove_by_name);
++
+ /* caller holds parent directory with I_MUTEX_PARENT */
+ void locked_recursive_removal(struct dentry *dentry,
+                               void (*callback)(struct dentry *))
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -3655,6 +3655,8 @@ extern int simple_rename(struct mnt_idma
+ 			 unsigned int);
+ extern void simple_recursive_removal(struct dentry *,
+                               void (*callback)(struct dentry *));
++extern void simple_remove_by_name(struct dentry *, const char *,
++                              void (*callback)(struct dentry *));
+ extern void locked_recursive_removal(struct dentry *,
+                               void (*callback)(struct dentry *));
+ extern int noop_fsync(struct file *, loff_t, loff_t, int);
 
 
