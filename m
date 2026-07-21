@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285893C9ED9;
-	Tue, 21 Jul 2026 18:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9753395266;
+	Tue, 21 Jul 2026 18:41:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659315; cv=none; b=jlrF/WOxyWWEaPw2H13OX12YDrQiQpOD4zKEPM9L21HtjO81DgfO/hykcc4UQ8CFBG9AoLhbbyKu+7q6ICxHwQTGx/eIYAl7eq0x/UrKAsB+7adcS3dH+2l0g5vEV67R62Ug2x0jSc8tTlHuHIbUicqB0geRcdvSO5G7MDLTlFg=
+	t=1784659317; cv=none; b=GCDjyeSKZKiBNHA9QVYywtX5yH5eSJPeKxNg00FVkRXeIl4FQ0aYsR8RImvGjynWY3DCADL3/GJj+wm1lVIObYf/IzzfT+0tw88L94d6ntREBSE1kKvHcshdMFakysi7XWCMNJ0m/o0j5ouvg6LIdckurN6jXDTXagwq64S6eJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659315; c=relaxed/simple;
-	bh=8kA2jOzn8H5Ll+iFYa1oN3kGtZnTGv30jl1kfvutY2k=;
+	s=arc-20240116; t=1784659317; c=relaxed/simple;
+	bh=QiqoKsT1NgGeprOdRqf/qinZKZvBZNaUxB67a/Q//uQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=goFyOT+E0vhwpqUcQxmqq+vhYIExZ96KvA7ZJ/AJ9F+pZ0ckPXViTgM1ybfawn8FPOiklv42kcEXZD513OcX376HLHc1wqgbGv+heR/qp2/zfgk7vOOoBJEz937K1azjP+XL/yCqjGgEo/FdysT0UmwowLzxnE/TAqmH4ruzj2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wl3rYsyn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O6LrAunFlkPeE/F16kEWbA9DgPY/+lityl1+J3g2Om0kMAp0UPH16wz84LXkBZ75cJwlAW2qI5GKB5OpWDjpAHa5aoKTYcP9ap+Jmj/zsCCWKADic03pbM5rTI7gFSOqmP0I1FJxNwmvQsnaJhGucLdZ8MkJGopmu71Tjir8O/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFo47Gef; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wl3rYsyn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D91A1F000E9;
-	Tue, 21 Jul 2026 18:41:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFo47Gef"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38B601F00A3A;
+	Tue, 21 Jul 2026 18:41:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659314;
-	bh=nYz6ginVwCODDBxY6T70kyF0kwd7JUz28YcJbjBXpv4=;
+	s=korg; t=1784659316;
+	bh=Ul8NmfwR2G69TvWSccLN0eFDDbBqPIcBpgqJcW1HRLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wl3rYsyndpbhDLTAmWhiC15hTYHx3ZH67DxY5HX19V1CAN5zv+9uBx3tf+fFAqQal
-	 6D3M7jjT8PCo0BkxQbo7/DnTB85gV6KNKR9fZ3In7oQBPZIALfpL7UdSHsMsnl1+Ta
-	 68tQGMI9d0f0JU5L++WiaBrUXOrYYHfNKKJsLWbA=
+	b=MFo47GefQw3+kKaCF2wFSmVHKJfNO7ME0H4BexOUFOyzaBqLS+Ctz4xBJenzaOC5I
+	 8AVwqRKKzdv0Adxw8MgP1FNblXLa1OPHx/rR5aFv352GlcIV4rCrWawEKYUxtBML+Z
+	 RZbU9U1rxPXcI3/A30FATNST4SgCnOTGjHt3taQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
 	Peng Fan <peng.fan@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 1473/1611] pmdomain: imx: Fix i.MX8MP power notifier
-Date: Tue, 21 Jul 2026 17:26:29 +0200
-Message-ID: <20260721152548.576735543@linuxfoundation.org>
+Subject: [PATCH 6.18 1474/1611] pmdomain: imx: Fix i.MX8MP VC8000E power up sequence
+Date: Tue, 21 Jul 2026 17:26:30 +0200
+Message-ID: <20260721152548.599952328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,60 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Peng Fan <peng.fan@nxp.com>
 
-commit 72422525f641f68bed6ca3389d29ee3f41fdea33 upstream.
+commit 25e252bcf1593b420b12a7231d9dd64b885a2ae2 upstream.
 
-Using imx8mm_vpu_power_notifier() for i.MX8MP is wrong, as it ungates
-the VPU clocks to provide the ADB clock, which is necessary on i.MX8MM,
-but on i.MX8MP there is a separate gate (bit 3) for the NoC. So add
-imx8mp_vpu_power_notifier() for i.MX8MP.
+Per errata[1]:
+ERR050531: VPU_NOC power down handshake may hang during VC8000E/VPUMIX
+power up/down cycling.
+Description: VC8000E reset de-assertion edge and AXI clock may have a
+timing issue.
+Workaround: Set bit2 (vc8000e_clk_en) of BLK_CLK_EN_CSR to 0 to gate off
+both AXI clock and VC8000E clock sent to VC8000E and AXI clock sent to
+VPU_NOC m_v_2 interface during VC8000E power up(VC8000E reset is
+de-asserted by HW)
+
+Add a bool variable is_errata_err050531 in
+'struct imx8m_blk_ctrl_domain_data' to represent whether the workaround
+is needed. If is_errata_err050531 is true, first clear the clk before
+powering up gpc, then enable the clk after powering up gpc.
+
+[1] https://www.nxp.com/webapp/Download?colCode=IMX8MP_1P33A
 
 Fixes: a1a5f15f7f6cb ("soc: imx: imx8m-blk-ctrl: add i.MX8MP VPU blk ctrl")
 Cc: stable@vger.kernel.org
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/imx/imx8m-blk-ctrl.c |   27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ drivers/pmdomain/imx/imx8m-blk-ctrl.c |   19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
 --- a/drivers/pmdomain/imx/imx8m-blk-ctrl.c
 +++ b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
-@@ -514,9 +514,34 @@ static const struct imx8m_blk_ctrl_domai
+@@ -54,6 +54,15 @@ struct imx8m_blk_ctrl_domain_data {
+ 	 * register.
+ 	 */
+ 	u32 mipi_phy_rst_mask;
++
++	/*
++	 * VC8000E reset de-assertion edge and AXI clock may have a timing issue.
++	 * Workaround: Set bit2 (vc8000e_clk_en) of BLK_CLK_EN_CSR to 0 to gate off
++	 * both AXI clock and VC8000E clock sent to VC8000E and AXI clock sent to
++	 * VPU_NOC m_v_2 interface during VC8000E power up(VC8000E reset is
++	 * de-asserted by HW)
++	 */
++	bool is_errata_err050531;
+ };
+ 
+ #define DOMAIN_MAX_CLKS 4
+@@ -108,7 +117,11 @@ static int imx8m_blk_ctrl_power_on(struc
+ 		dev_err(bc->dev, "failed to enable clocks\n");
+ 		goto bus_put;
+ 	}
+-	regmap_set_bits(bc->regmap, BLK_CLK_EN, data->clk_mask);
++
++	if (data->is_errata_err050531)
++		regmap_clear_bits(bc->regmap, BLK_CLK_EN, data->clk_mask);
++	else
++		regmap_set_bits(bc->regmap, BLK_CLK_EN, data->clk_mask);
+ 
+ 	/* power up upstream GPC domain */
+ 	ret = pm_runtime_get_sync(domain->power_dev);
+@@ -117,6 +130,9 @@ static int imx8m_blk_ctrl_power_on(struc
+ 		goto clk_disable;
+ 	}
+ 
++	if (data->is_errata_err050531)
++		regmap_set_bits(bc->regmap, BLK_CLK_EN, data->clk_mask);
++
+ 	/* wait for reset to propagate */
+ 	udelay(5);
+ 
+@@ -511,6 +527,7 @@ static const struct imx8m_blk_ctrl_domai
+ 		.clk_mask = BIT(2),
+ 		.path_names = (const char *[]){"vc8000e"},
+ 		.num_paths = 1,
++		.is_errata_err050531 = true,
  	},
  };
  
-+static int imx8mp_vpu_power_notifier(struct notifier_block *nb,
-+				     unsigned long action, void *data)
-+{
-+	struct imx8m_blk_ctrl *bc = container_of(nb, struct imx8m_blk_ctrl,
-+						 power_nb);
-+
-+	if (action == GENPD_NOTIFY_ON) {
-+		/*
-+		 * On power up we have no software backchannel to the GPC to
-+		 * wait for the ADB handshake to happen, so we just delay for a
-+		 * bit. On power down the GPC driver waits for the handshake.
-+		 */
-+
-+		udelay(5);
-+
-+		/* set "fuse" bits to enable the VPUs */
-+		regmap_set_bits(bc->regmap, 0x8, 0xffffffff);
-+		regmap_set_bits(bc->regmap, 0xc, 0xffffffff);
-+		regmap_set_bits(bc->regmap, 0x10, 0xffffffff);
-+		regmap_set_bits(bc->regmap, 0x14, 0xffffffff);
-+	}
-+
-+	return NOTIFY_OK;
-+}
-+
- static const struct imx8m_blk_ctrl_data imx8mp_vpu_blk_ctl_dev_data = {
- 	.max_reg = 0x18,
--	.power_notifier_fn = imx8mm_vpu_power_notifier,
-+	.power_notifier_fn = imx8mp_vpu_power_notifier,
- 	.domains = imx8mp_vpu_blk_ctl_domain_data,
- 	.num_domains = ARRAY_SIZE(imx8mp_vpu_blk_ctl_domain_data),
- };
 
 
