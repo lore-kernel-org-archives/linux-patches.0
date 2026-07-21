@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC1835C6B3;
-	Tue, 21 Jul 2026 21:51:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087F835C6B3;
+	Tue, 21 Jul 2026 21:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670697; cv=none; b=rnsCQXtEOY5vuwgLe9lq9qL+lKMM3ARJzm8yK5BZHHF5T6mwtzyqDhHre4om8RAaLSaiHdlHmCBi8RyjMqqPOL63ESFFQPZFUKp9y0O0eYMyW1p/F2WWFQT/bZ508/82YbtTVROBjaNxy0mL/aqmBxx3wSCwtwSoDgH1VENqy1w=
+	t=1784670700; cv=none; b=nT1xwDalbiLqi6v9S20qOTY7e3VGe58n5rNw92l5CNKby6E0WLuV4z6M+CQJJEQrorPlX0uC3+DO/R5rEy1MzXPjcowoULtCKgmYWby76Svl+klGLoiADGxJPujEnv1v8A28sMBTgJwRSoz9CSl2d6raWSrxqtbEUWqB0fADoTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670697; c=relaxed/simple;
-	bh=gEYExevumzsmw5XqhFfIU2ulhMvyBGqJ/o/onwC03hY=;
+	s=arc-20240116; t=1784670700; c=relaxed/simple;
+	bh=OwnbB/s+e6LFnaiCpRg4FZ/N3uZRhotarXS730fKqgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Og4Q38OmNKGVpj2A2DPHMCP6Sj0XJsBC8a8YhEtRSpmKlPPPS1yAimz9t8eZ7z17QMfsjiffq9c24weom7wl5t9tS3eQtyAxuSnAP8mrycx8A8+PDkdlzOVUtMSA9h2xlEBhbV4CWmbWeR4D5PoRssTB/474a92WrdmIkG0yp6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NY5Ix+jn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kDf1QjR+JrsteDhInZ+cr4lqH7YGn1vou2MOiZsUkNRKOs6rMKp2lazZ1vEBWCgTa/eLRNJm7I96dcpn91d0Us30dtuCQHgDvqyU0W1675vQDO+SHKBRz9K0fRdYoNsV7F8n4Rq5hW5x9uIZm9b2jzSX5OUNyLYgaUCguVSs5mY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JpxeWx/m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NY5Ix+jn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C327A1F000E9;
-	Tue, 21 Jul 2026 21:51:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpxeWx/m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C56F1F000E9;
+	Tue, 21 Jul 2026 21:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670696;
-	bh=hi/8sOnFhYvVKWwfHVldPx5OINhxRlUw6QmMqn+sRXE=;
+	s=korg; t=1784670698;
+	bh=DJbiS9mOiUvILfdkKORa8HRqt56TZYkIJkthZXhCMrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NY5Ix+jnlMFYkMFDhuJ6sXOpK8+54AGJJ2F24mM1jaMgYr5j9g2R1i4hMeKra5CTi
-	 JGsAuVntmdJSuICU/dbbV2tawz67h6cEu+juXciYWfenEJdNEb98IKRJlhNf0xlL/R
-	 +rvoH2KWOF63ltschwxKF6lKtxT9L8W66EfE9YRE=
+	b=JpxeWx/mTU2LkYON4UrKU2rstLeNOKd0v5w6Y6O5dpn8krrW6FX1UgFNQM0wpRiVg
+	 tTHkhyH7kj3lGTp+ZRVpEmKMUBZzC1KFewYpCMxgReF06mgjDk3QmKViahEs2ljP4W
+	 CXRKCjmfXk4r46kfpeCfzzi9Nay0gXpUmRHvtWW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6df204b70bf3261691c5@syzkaller.appspotmail.com,
-	syzbot+e76bf3d19b85350571ac@syzkaller.appspotmail.com,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1023/1067] hfs/hfsplus: fix u32 overflow in check_and_correct_requested_length
-Date: Tue, 21 Jul 2026 17:27:04 +0200
-Message-ID: <20260721152447.458244446@linuxfoundation.org>
+Subject: [PATCH 6.1 1032/1067] crypto: atmel-sha204a - drop hwrng quality reduction for ATSHA204A
+Date: Tue, 21 Jul 2026 17:27:13 +0200
+Message-ID: <20260721152447.665526364@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,66 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 966cb76fb2857a4242cab6ea2ea17acf818a3da7 ]
+[ Upstream commit ea5e57cc97185329dcc5ebdcaae7e1500bf0ad0b ]
 
-check_and_correct_requested_length() compares (off + len) against
-node_size using u32 arithmetic.  When the caller passes a large len
-value (e.g. from an underflowed subtraction in hfs_brec_remove()),
-off + len can wrap past 2^32 and produce a small result, causing the
-bounds check to pass when it should fail.
+Commit 8006aff15516 ("crypto: atmel-sha204a - Set hwrng quality to
+lowest possible") reduced the hwrng quality to 1 based on a review by
+Bill Cox [1]. However, despite its title, the review only tested the
+ATSHA204, not the ATSHA204A.
 
-For example, with off=14 and len=0xFFFFFFF2 (underflowed from
-data_off - keyoffset - size in hfs_brec_remove), off + len wraps to 6,
-which is less than a typical node_size of 512, so the check passes and
-the subsequent memmove reads ~4GB past the node buffer.
+In the same thread, Atmel engineer Landon Cox wrote "this behavior has
+been eliminated entirely"[2] in the ATSHA204A and "this problem does not
+affect the ATECC108 or the ATECC108A (or the ATSHA204A)"[3].
 
-Fix this by widening the addition to u64 before comparing against
-node_size.  This prevents the u32 wrap while keeping the logic
-straightforward.
+According to the official ATSHA204A datasheet [4], the device contains a
+high-quality hardware RNG that combines its output with an internal seed
+value stored in EEPROM or SRAM to generate random numbers. The device
+also implements all security functions using SHA-256, and the driver
+uses the chip's Random command in seed-update mode.
 
-Reported-by: syzbot+6df204b70bf3261691c5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6df204b70bf3261691c5
-Tested-by: syzbot+6df204b70bf3261691c5@syzkaller.appspotmail.com
-Reported-by: syzbot+e76bf3d19b85350571ac@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e76bf3d19b85350571ac
-Tested-by: syzbot+e76bf3d19b85350571ac@syzkaller.appspotmail.com
-Fixes: a431930c9bac ("hfs: fix slab-out-of-bounds in hfs_bnode_read()")
+Keep 'quality = 1' for ATSHA204, but drop the explicit hwrng quality
+reduction for ATSHA204A and fall back to the hwrng core default.
+
+[1] https://www.metzdowd.com/pipermail/cryptography/2014-December/023858.html
+[2] https://www.metzdowd.com/pipermail/cryptography/2014-December/023852.html
+[3] https://www.metzdowd.com/pipermail/cryptography/2014-December/023886.html
+[4] https://ww1.microchip.com/downloads/en/DeviceDoc/ATSHA204A-Data-Sheet-40002025A.pdf
+
+Fixes: 8006aff15516 ("crypto: atmel-sha204a - Set hwrng quality to lowest possible")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20260505111300.3592757-2-tristmd@gmail.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfs/bnode.c          |    2 +-
- fs/hfsplus/hfsplus_fs.h |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/atmel-sha204a.c |   19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
---- a/fs/hfs/bnode.c
-+++ b/fs/hfs/bnode.c
-@@ -41,7 +41,7 @@ u32 check_and_correct_requested_length(s
+--- a/drivers/crypto/atmel-sha204a.c
++++ b/drivers/crypto/atmel-sha204a.c
+@@ -18,6 +18,12 @@
+ #include <linux/workqueue.h>
+ #include "atmel-i2c.h"
  
- 	node_size = node->tree->node_size;
++/*
++ * According to review by Bill Cox [1], the ATSHA204 has very low entropy.
++ * [1] https://www.metzdowd.com/pipermail/cryptography/2014-December/023858.html
++ */
++static const unsigned short atsha204_quality = 1;
++
+ static void atmel_sha204a_rng_done(struct atmel_i2c_work_data *work_data,
+ 				   void *areq, int status)
+ {
+@@ -96,6 +102,7 @@ static int atmel_sha204a_probe(struct i2
+ 			       const struct i2c_device_id *id)
+ {
+ 	struct atmel_i2c_client_priv *i2c_priv;
++	const unsigned short *quality;
+ 	int ret;
  
--	if ((off + len) > node_size) {
-+	if ((u64)off + len > node_size) {
- 		u32 new_len = node_size - off;
+ 	ret = atmel_i2c_probe(client, id);
+@@ -109,11 +116,9 @@ static int atmel_sha204a_probe(struct i2
+ 	i2c_priv->hwrng.name = dev_name(&client->dev);
+ 	i2c_priv->hwrng.read = atmel_sha204a_rng_read;
  
- 		pr_err("requested length has been corrected: "
---- a/fs/hfsplus/hfsplus_fs.h
-+++ b/fs/hfsplus/hfsplus_fs.h
-@@ -613,7 +613,7 @@ u32 check_and_correct_requested_length(s
+-	/*
+-	 * According to review by Bill Cox [1], this HWRNG has very low entropy.
+-	 * [1] https://www.metzdowd.com/pipermail/cryptography/2014-December/023858.html
+-	 */
+-	i2c_priv->hwrng.quality = 1;
++	quality = i2c_get_match_data(client);
++	if (quality)
++		i2c_priv->hwrng.quality = *quality;
  
- 	node_size = node->tree->node_size;
+ 	ret = devm_hwrng_register(&client->dev, &i2c_priv->hwrng);
+ 	if (ret)
+@@ -133,14 +138,14 @@ static void atmel_sha204a_remove(struct
+ }
  
--	if ((off + len) > node_size) {
-+	if ((u64)off + len > node_size) {
- 		u32 new_len = node_size - off;
+ static const struct of_device_id atmel_sha204a_dt_ids[] __maybe_unused = {
+-	{ .compatible = "atmel,atsha204", },
++	{ .compatible = "atmel,atsha204", .data = &atsha204_quality },
+ 	{ .compatible = "atmel,atsha204a", },
+ 	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, atmel_sha204a_dt_ids);
  
- 		pr_err("requested length has been corrected: "
+ static const struct i2c_device_id atmel_sha204a_id[] = {
+-	{ "atsha204" },
++	{ "atsha204", (kernel_ulong_t)&atsha204_quality },
+ 	{ "atsha204a" },
+ 	{ /* sentinel */ }
+ };
 
 
