@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367D433A9FC;
-	Tue, 21 Jul 2026 20:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD553B0AC6;
+	Tue, 21 Jul 2026 20:45:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666756; cv=none; b=hfdiaPsbLYTSqYekjImicnbvTkqBokA45vKlbecdS/iKJQeRrNUGepT9DNJD4ah9jfIWbgmoNzQNM6jXIqynd2PN1Ta0Vtmw0ovHSzHFAy0SJ8LMtVZHBRx4R6lIDo7YQBE/eFkr1na+7a5hhhCEQynGakvfmaUjdrcNcXu+kg8=
+	t=1784666759; cv=none; b=RGCvkglMteEpSIiPl7HzsXvaR/C5cTqzkzWg3MPQlwklkCDPilO/EuvcKjjUJ4H808mwoE5RUGmUsky4m9HHyB/6ZTF6dPooIPKqBlVZF/pfJ6gKPpqhaP2VMLPtZThQetNLmugWeFoEqyD6dPQEXbpmhGdWsl8guehcRed+8nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666756; c=relaxed/simple;
-	bh=tcfbxwRrwTqiLy2HLO0YOuk/OZjSsY+JntNJniIc/Ss=;
+	s=arc-20240116; t=1784666759; c=relaxed/simple;
+	bh=gyrbgrmAu0u5NOMTexr6lUTm4VL8xjBv5aNQQDL3jlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uRmFm97F0mhU8gFBVss6W+xvSaTmNEyPswcRtNcgAnSlH+3E9EWrNVi8MA1CYSCJS240wxglOlT6W2yaPIUEUuDiXDyYvTK7+Okj6t+xD0lkxPLaN/4m4xudexkj1iiRj2x43UUz8U5zHN7v226tS0g80W9BLEtbn3jykrb799Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rOs/EuKq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WdIMXEnIr2hQd9Kfmtql/8DXOOFDGz2fgHAhYeQz73ekeEqjcEii+U4b3pKXwpjFdfMYJ6AYhL55R8kbN8s8uH1rIdB0rk74oewurFAxd9Cja61OTyJdnTCe/waJiK9v6A8QpavOr2FqaNmxt/4FGro9a7f9f32T3h+B5CwU3LY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZMRDKU6i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rOs/EuKq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD961F000E9;
-	Tue, 21 Jul 2026 20:45:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZMRDKU6i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA8B1F000E9;
+	Tue, 21 Jul 2026 20:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666755;
-	bh=YPyO68/68cPFYKSXDI7Qs2AAHRrztEYn1Ab0K04a2e4=;
+	s=korg; t=1784666757;
+	bh=lVEcY72UzgkTRSm8Pp2Ydk9HwW/Y6PKjfglZDyvn9uY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rOs/EuKqEwmAqAiWlE+jS1Kd2qrTo8TZqZ5CAzNucvlNOEZK+FOAOs61scuRa3gke
-	 H+KxtkifT9nxxhJd5p+1BNVNNS0RKw4ns6qoQHyVAiY+PDZ4G5K8daRWcV/d27Gl7Z
-	 TV+Sio8aYEIrkyV9NsN6cmDajlCvDFzIdcTbfPtM=
+	b=ZMRDKU6iSfF5PC84UX5KQNCLpEjaAbzlQg92UTwPPulIF6sHvOlEVB7rcSdwSzaBO
+	 j4Mae6GMGL0aEWZrWmOhNLf2LLY4QfVuEum9hzYDE7eIMtB+TnJQyCWQnJ7AIXB5fk
+	 Ty6vsUTwoKQaO24cNuZusxcWvbV/H8Ex2brSA33w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Matvey Kovalev <matvey.kovalev@ispras.ru>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0803/1266] seg6: validate SRH length before reading fixed fields
-Date: Tue, 21 Jul 2026 17:20:40 +0200
-Message-ID: <20260721152459.826484591@linuxfoundation.org>
+Subject: [PATCH 6.6 0804/1266] qede: fix out-of-bounds check for cqe->len_list[]
+Date: Tue, 21 Jul 2026 17:20:41 +0200
+Message-ID: <20260721152459.848809668@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,49 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
+From: Matvey Kovalev <matvey.kovalev@ispras.ru>
 
-[ Upstream commit a75d99f46bf21b45965ce39c5cfb3b8bb5ffb1aa ]
+[ Upstream commit f9ba47fce5932c15891c89c60e76dfaca919cb8d ]
 
-seg6_validate_srh() reads fixed SRH fields such as srh->type and
-srh->hdrlen before checking that the supplied length covers the fixed
-struct ipv6_sr_hdr fields.
+Move index check before element access.
 
-The BPF SEG6 encap path reaches this with a BPF program-supplied pointer
-and length: bpf_lwt_push_encap() and the SEG6 local BPF END_B6 and
-END_B6_ENCAP actions call bpf_push_seg6_encap(), which forwards the
-length to seg6_validate_srh() with no minimum-size guard.  A 2-byte SEG6
-encap header can therefore make the validator read srh->type at offset 2
-beyond the caller-supplied buffer.
-
-Reject lengths shorter than the fixed SRH at the top of
-seg6_validate_srh(), before any field is read.  This fixes the BPF helper
-path and keeps the common validator robust.
-
-Fixes: fe94cc290f53 ("bpf: Add IPv6 Segment Routing helpers")
-Signed-off-by: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
-Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Link: https://patch.msgid.link/20260623-f01-17-seg6-srh-len-v2-1-2edc40e9e3e1@mails.tsinghua.edu.cn
+Fixes: 896f1a2493b5 ("net: qlogic/qede: fix potential out-of-bounds read in qede_tpa_cont() and qede_tpa_end()")
+Signed-off-by: Matvey Kovalev <matvey.kovalev@ispras.ru>
+Link: https://patch.msgid.link/20260623144602.3521-1-matvey.kovalev@ispras.ru
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/qlogic/qede/qede_fp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/seg6.c b/net/ipv6/seg6.c
-index a31521e270f785..5a50755ec69f08 100644
---- a/net/ipv6/seg6.c
-+++ b/net/ipv6/seg6.c
-@@ -31,6 +31,9 @@ bool seg6_validate_srh(struct ipv6_sr_hdr *srh, int len, bool reduced)
- 	int max_last_entry;
- 	int trailing;
+diff --git a/drivers/net/ethernet/qlogic/qede/qede_fp.c b/drivers/net/ethernet/qlogic/qede/qede_fp.c
+index 273dae622c4113..1de8611a27f238 100644
+--- a/drivers/net/ethernet/qlogic/qede/qede_fp.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_fp.c
+@@ -961,7 +961,7 @@ static inline void qede_tpa_cont(struct qede_dev *edev,
+ {
+ 	int i;
  
-+	if (len < sizeof(*srh))
-+		return false;
-+
- 	if (srh->type != IPV6_SRCRT_TYPE_4)
- 		return false;
+-	for (i = 0; cqe->len_list[i] && i < ARRAY_SIZE(cqe->len_list); i++)
++	for (i = 0; i < ARRAY_SIZE(cqe->len_list) && cqe->len_list[i]; i++)
+ 		qede_fill_frag_skb(edev, rxq, cqe->tpa_agg_index,
+ 				   le16_to_cpu(cqe->len_list[i]));
  
+@@ -986,7 +986,7 @@ static int qede_tpa_end(struct qede_dev *edev,
+ 		dma_unmap_page(rxq->dev, tpa_info->buffer.mapping,
+ 			       PAGE_SIZE, rxq->data_direction);
+ 
+-	for (i = 0; cqe->len_list[i] && i < ARRAY_SIZE(cqe->len_list); i++)
++	for (i = 0; i < ARRAY_SIZE(cqe->len_list) && cqe->len_list[i]; i++)
+ 		qede_fill_frag_skb(edev, rxq, cqe->tpa_agg_index,
+ 				   le16_to_cpu(cqe->len_list[i]));
+ 	if (unlikely(i > 1))
 -- 
 2.53.0
 
