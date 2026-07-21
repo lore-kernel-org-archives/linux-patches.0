@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC1C3E0C55;
-	Tue, 21 Jul 2026 17:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0693F46D2B3;
+	Tue, 21 Jul 2026 17:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653722; cv=none; b=jqAmB3d1HxxMXg/BLWFov/mHClLzfK9oWXhk8MfZwYskuwZZZ9m9PJkMcotVXLDgR2HGXP4+CDu224N04LLRhID1/VIU7h023urvyr2CVC/CDn/1uvimrD+0c6ncWGEbTWkxSFyK/G/lab/abue2bEfKA2zhKOyO85hmdJb1OTg=
+	t=1784653725; cv=none; b=jIcbRZOjXtMEgKLUiJAzhYCSnHEo1315mq0bpBn3G8hkOITOE5+fnlJOzCfYM2AYGZ+QW/YlLoIIwWfcG5ALbfq2ESuyo+dklt2loQlZwfF4a0xuMyEh70BNxnC2K4/aNsx5A7saUzGzE207V34kUcrWjkDnpZKxevfTWiX8WDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653722; c=relaxed/simple;
-	bh=6UHP+vJU2oZtoSp5FCXhfHkPAoqrVdCMjQlVVhRc+qI=;
+	s=arc-20240116; t=1784653725; c=relaxed/simple;
+	bh=dO/jgrh6aI+GB1986o2T8ROM6kzM99ZjllkjE/4EN2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MS7zKzZ1DcLIghZ2706/+6/7RapaxRAlP/uso7v84Xn+4Rl1qOekOLIATi+FJD84LDeYVAScXByS3sB4Z9BnvdMA0Fgwta/+paZiemQx7cTmHzgwfh7Qq1iO/zFIJLhK09w4WERPPTrci2WxTm/3Kaob6+ToXFfQrQfkFcolPmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfEA8wvT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IugbhqnMJxfPG5szBdaFdjlhW5a3fqCEXax8fHmDsa+6V3e4nD+NTDPTUEHeRIWH/mbDooUalUEm0i6226Qfyj06sf74tYrh6hWA6Yks2d7ZNhjGZzp+cslw7M6U7g0Ri3aCbxsQlKVU74O+uBnhVd6Tqj+ZhV9HTQHlq55aTGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GNoHh9XN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfEA8wvT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C087C1F00A3A;
-	Tue, 21 Jul 2026 17:08:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GNoHh9XN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE3A1F000E9;
+	Tue, 21 Jul 2026 17:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653721;
-	bh=3R78Rs8560uIpgR3QKMXmIs+bAi80HIGQ3EfxTBFcVE=;
+	s=korg; t=1784653723;
+	bh=HJ3tLecn584ky64KaA/q9Cv5q5bCkPF7b6VOUbqNZfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wfEA8wvTNS4MbVV8WX2R9KyVxu8iijaRtAE4mqudH1t+23QSIXIp/0d8E/eHP4+QT
-	 zOpcCNt/EcRHQ/bCvgfDrpinm2ZaaGpJtSG/18j3wFa+iz2yaacF/MFFMtSptPOvFn
-	 ghZAURha3urnBHki9oJOHT2s3QEKN9CW7OtEXqa8=
+	b=GNoHh9XNBSmfS9VMTa/S8oO2HmazABcDF5jW5ubg1xmR7bu7irGqvAbm5tq8P0gFI
+	 /2hrFarQSZbeo1Aa3yfP6bh/SuxB2KJAacOhCAoRJjYnKdgXqi7/+rcvNvsqxl+Q6Z
+	 gUjU7owp0et3CQLz4TXxSRTHJpRozwDN5ma/vfhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Li RongQing <lirongqing@baidu.com>,
-	linux-afs@lists.infradead.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Melbin K Mathew <mlbnkm1@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1381/2077] afs: Use scoped_seqlock_read() rather than manually doing seqlock stuff
-Date: Tue, 21 Jul 2026 17:17:34 +0200
-Message-ID: <20260721152625.388700882@linuxfoundation.org>
+Subject: [PATCH 7.1 1428/2077] netfilter: nft_set_rbtree: get command skips end element with open interval
+Date: Tue, 21 Jul 2026 17:18:21 +0200
+Message-ID: <20260721152626.489679492@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -55,63 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 3b1601471a88f86082fc1f1c2475645cdf59f7d8 ]
+[ Upstream commit d63611cbe8af99dd61b118ee6e5b5e3e518250b2 ]
 
-This is an addendum to the patch to remove the erroneous seq |= 1 in volume
-lookup loop.
+The get command on intervals provide partial matches such as subranges
+for usability reasons. However, an open interval has no closing end
+element. If the closing element matches within the range of the open
+internal, ie. its closest match is the start element of the open range,
+then, return 0 but offer no matching element to userspace through
+netlink as a special case. Userspace provides at least a matching start
+element in this case and the closing end element matching the open
+interal is ignored.
 
-Switch to using scoped_seqlock_read() as suggested by Oleg Nesterov[1].
+Another possibility is to report the matching start element of the open
+interval for this end interval. However, this results in duplicated
+matching being listed in userspace because userspace does not expect a
+start element as response to a end element.
 
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/aifaeKvz3KemfzaS@redhat.com/ [1]
-Link: https://patch.msgid.link/20260622090856.2746629-15-dhowells@redhat.com
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Li RongQing <lirongqing@baidu.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Stable-dep-of: d672c276f685 ("afs: Fix leak of ungot volume")
+Fixes: 2aa34191f06f ("netfilter: nft_set_rbtree: use binary search array in get command")
+Reported-by: Melbin K Mathew <mlbnkm1@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/callback.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ net/netfilter/nf_tables_api.c  | 3 +++
+ net/netfilter/nft_set_rbtree.c | 8 ++++++--
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/fs/afs/callback.c b/fs/afs/callback.c
-index 0a09a9ca3c6b37..74853e0d0435ae 100644
---- a/fs/afs/callback.c
-+++ b/fs/afs/callback.c
-@@ -113,16 +113,12 @@ static struct afs_volume *afs_lookup_volume_rcu(struct afs_cell *cell,
- {
- 	struct afs_volume *volume = NULL;
- 	struct rb_node *p;
--	int seq = 1;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 87387adbca655f..e1db3e678656da 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6559,6 +6559,9 @@ static int nft_get_set_elem(struct nft_ctx *ctx, const struct nft_set *set,
+ 	if (err < 0)
+ 		return err;
  
--	for (;;) {
-+	scoped_seqlock_read(&cell->volume_lock, ss_lock) {
- 		/* Unfortunately, rbtree walking doesn't give reliable results
- 		 * under just the RCU read lock, so we have to check for
- 		 * changes.
- 		 */
--		seq++; /* 2 on the 1st/lockless path, otherwise odd */
--		read_seqbegin_or_lock(&cell->volume_lock, &seq);
--
- 		p = rcu_dereference_raw(cell->volumes.rb_node);
- 		while (p) {
- 			volume = rb_entry(p, struct afs_volume, cell_node);
-@@ -138,11 +134,8 @@ static struct afs_volume *afs_lookup_volume_rcu(struct afs_cell *cell,
++	if (!elem.priv)
++		return 0;
++
+ 	err = -ENOMEM;
+ 	skb = nlmsg_new(NLMSG_GOODSIZE, GFP_ATOMIC);
+ 	if (skb == NULL)
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index 560fbe6e3f7502..b4b67f48ad64e2 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -184,10 +184,14 @@ nft_rbtree_get(const struct net *net, const struct nft_set *set,
+ 	if (!interval || nft_set_elem_expired(interval->from))
+ 		return ERR_PTR(-ENOENT);
  
- 		if (volume && afs_try_get_volume(volume, afs_volume_trace_get_callback))
- 			break;
--		if (!need_seqretry(&cell->volume_lock, seq))
--			break;
- 	}
+-	if (flags & NFT_SET_ELEM_INTERVAL_END)
++	if (flags & NFT_SET_ELEM_INTERVAL_END) {
++		if (!interval->to)
++			return NULL;
++
+ 		rbe = container_of(interval->to, struct nft_rbtree_elem, ext);
+-	else
++	} else {
+ 		rbe = container_of(interval->from, struct nft_rbtree_elem, ext);
++	}
  
--	done_seqretry(&cell->volume_lock, seq);
- 	return volume;
+ 	return &rbe->priv;
  }
- 
 -- 
 2.53.0
 
