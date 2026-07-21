@@ -1,40 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A401B46D0A0;
-	Tue, 21 Jul 2026 17:50:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB6046D0A0;
+	Tue, 21 Jul 2026 17:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656209; cv=none; b=o+sOBDG2qEmofju5NPNjeqRRt3VDSkhrZKXWorVDXo+OeeiiRxuGpZ7ubbSHQiX7xwu/BEjAUxHzDmnSOU1pUV67m+CJxlaq3NJB1bnnvRPcc/Wh2FYwU8oIzqaGu9EBLBFFRI1ql6f9tSTNK1EOaajknIwrXR1oybjM2I7Tppo=
+	t=1784656211; cv=none; b=jXF1lE40Ijwg9Vs7RDFWfjWxhXS5iIxG1z06LOpvliz8ueH4cIdU/S9BD3qm8STwtf91PdeUNL+nxQRYKiFYrj4uKMaFZP54bz1k2EOg3kRKGKfDvj4Mf49ULl7lCwC1ZIKl30hxyrMRGg94x3fWGRZW1P/dylQAFdBBLNaWJD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656209; c=relaxed/simple;
-	bh=wb6GIQ1rUsVUE/K6ktqWXiyHSowbxUh9UnsYCFV77ZY=;
+	s=arc-20240116; t=1784656211; c=relaxed/simple;
+	bh=PnitTvCknQMh3q55d+cf5GMSkffPmhy0q4LIr/aWPi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z4E2ktO9QEyof2lHVQkThe9MnFz8bROUYaVTCQJ+O0m/WMBAiVvOVQvMKFJmwDLDL3dwNNv++N/7QsimC+IJCVSTxF3kCxVcSNjy9IJmqw119bBHunJFsKepCXOR27OTdheUM01UYO38Xy3wUuLUZLU0m4QxdyKc+lBF5St6Is8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WRpaZRsT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kM2UidxfO7Yt7yryMB2NEfGilWvbUjUby3E8RGU9LjxHklPU+TrCkHRT3Ksgxfuy3Yucp3u4kGCWWyodCMEwljv1lilhpPaFlMdKiWb2ZIqHiKLWEFS63+GUzeT2IT8XJv1jGZNzBFvRbNAdJjhH0P3qkT3feY3vxYa9hnJABYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DSjvhnX+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WRpaZRsT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C641F000E9;
-	Tue, 21 Jul 2026 17:50:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DSjvhnX+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8901E1F000E9;
+	Tue, 21 Jul 2026 17:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656207;
-	bh=pKMSYuYcx0bgheIEHHfZPlbzKhwkHOnsESJSutrk4lo=;
+	s=korg; t=1784656210;
+	bh=EYJF+/DkijWEmOd8tUB41R3SGiImqsy6Y8DYvcIgMDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WRpaZRsTEgDdvU1m8K/CIPjcgjz+TgeQbpb1+ThMV7S6UezQZUqFFAC9U+5f0pG0z
-	 QodtZ1kH2G+MW1ZFkZR+LVrbS6fF1JODxHfCvrND1ZFmAEEMWwcjil1RX7ah/YUkxE
-	 wmFxS/Vs6E4HdJ5KfugFeb1tDiik00ziGk1bzIB4=
+	b=DSjvhnX+YFXryBQh8ayv8uKeWh530mIgLYYx91soYx+K2suZ9sMMpIHLj8yWxUNg8
+	 J440Nvy9Xau6i1wBoYArCYEwT61UMlRyy5qfsKRRj/+nP0nRIHhx37EBlS+bW2aIAS
+	 LFVB6PZEMQ9gdOdCkU4j2J08NgrLtU2uuPQPJrjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
-	Vishal Verma <vishal.l.verma@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
+	Martin Wilck <martin.wilck@suse.com>,
+	Don Brace <don.brace@microchip.com>,
+	storagedev@microchip.com,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Sumit Saxena <sumit.saxena@broadcom.com>,
+	mpi3mr-linuxdrv.pdl@broadcom.com,
+	MPT-FusionLinux.pdl@broadcom.com,
+	Yihang Li <liyihang9@h-partners.c>,
+	Christoph Hellwig <hch@lst.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0300/1611] nvdimm/btt: Handle preemption in BTT lane acquisition
-Date: Tue, 21 Jul 2026 17:06:56 +0200
-Message-ID: <20260721152521.822166162@linuxfoundation.org>
+Subject: [PATCH 6.18 0301/1611] scsi: Revert "scsi: Fix sas_user_scan() to handle wildcard and multi-channel scans"
+Date: Tue, 21 Jul 2026 17:06:57 +0200
+Message-ID: <20260721152521.844706011@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,214 +61,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alison Schofield <alison.schofield@intel.com>
+From: Martin Wilck <martin.wilck@suse.com>
 
-[ Upstream commit 8d4b989d9c9afe5f185aa5853b666fc4617afe9e ]
+[ Upstream commit 8c292e89bd831c8a13e92f3429ef66bbe0b83677 ]
 
-BTT lanes serialize access to per-lane metadata and workspace state
-during BTT I/O. The btt-check unit test reports data mismatches during
-BTT writes due to a race in lane acquisition that can lead to silent
-data corruption.
+This reverts commit 37c4e72b0651e7697eb338cd1fb09feef472cc1a.
 
-The existing lane model uses a spinlock together with a per-CPU
-recursion count. That recursion model stopped being valid after BTT
-lanes became preemptible: another task can run on the same CPU,
-observe a non-zero recursion count, bypass locking, and use the same
-lane concurrently.
+Said commit causes excessive resource usage and even system freeze with
+some controllers, e.g. smartpqi and hisi_sas. The justification provided
+by the patch authors [1] was supporting a special mode of the mpi3mr and
+mpt3sas, so-called "Tri-mode", in which NVMe drives are exposed as SCSI
+devices on a separate channel. While that's useful for these drivers, it
+seems wrong to cause major breakage for other drivers for the sake of
+this feature.
 
-BTT lanes are also held across arena_write_bytes() calls. That path
-reaches nsio_rw_bytes(), which flushes writes with nvdimm_flush().
-Some provider flush callbacks can sleep, making a spinlock the wrong
-primitive for the lane lifetime.
+[1] https://lore.kernel.org/linux-scsi/CAFdVvOwjy+2ORJ6uJkspiLTPF05481U7gcS4QohFOFGPqAs8ig@mail.gmail.com/
 
-Replace the spinlock-based recursion model with a dynamically
-allocated per-lane mutex array and take the lane lock
-unconditionally.
-
-Add might_sleep() to catch any future atomic-context caller.
-
-Found with the ndctl unit test btt-check.sh.
-
-Fixes: 36c75ce3bd29 ("nd_btt: Make BTT lanes preemptible")
-Assisted-by: Claude-Sonnet:4.5
-Tested-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Reviewed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Reviewed-by: Vishal Verma <vishal.l.verma@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260528021625.618462-1-alison.schofield@intel.com
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Fixes: 37c4e72b0651 ("scsi: Fix sas_user_scan() to handle wildcard and multi-channel scans")
+Signed-off-by: Martin Wilck <martin.wilck@suse.com>
+Cc: Don Brace <don.brace@microchip.com>
+Cc: storagedev@microchip.com
+Cc: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Cc: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
+Cc: Kashyap Desai <kashyap.desai@broadcom.com>
+Cc: Sumit Saxena <sumit.saxena@broadcom.com>
+Cc: mpi3mr-linuxdrv.pdl@broadcom.com
+Cc: MPT-FusionLinux.pdl@broadcom.com
+Cc: Yihang Li <liyihang9@h-partners.c>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260513174236.430465-3-mwilck@suse.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/driver-api/nvdimm/btt.rst |  5 +-
- drivers/nvdimm/nd.h                     | 11 ++---
- drivers/nvdimm/region_devs.c            | 66 +++++++++----------------
- 3 files changed, 29 insertions(+), 53 deletions(-)
+ drivers/scsi/scsi_scan.c          |  2 +-
+ drivers/scsi/scsi_transport_sas.c | 60 +++++++------------------------
+ 2 files changed, 13 insertions(+), 49 deletions(-)
 
-diff --git a/Documentation/driver-api/nvdimm/btt.rst b/Documentation/driver-api/nvdimm/btt.rst
-index 107395c042ae07..cb1afe9dc3cbb9 100644
---- a/Documentation/driver-api/nvdimm/btt.rst
-+++ b/Documentation/driver-api/nvdimm/btt.rst
-@@ -161,9 +161,8 @@ process::
- 	nlanes = min(nfree, num_cpus)
+diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
+index 05ccd11e56a9be..1b48820a5eb41a 100644
+--- a/drivers/scsi/scsi_scan.c
++++ b/drivers/scsi/scsi_scan.c
+@@ -1897,7 +1897,7 @@ int scsi_scan_host_selected(struct Scsi_Host *shost, unsigned int channel,
  
- A lane number is obtained at the start of any IO, and is used for indexing into
--all the on-disk and in-memory data structures for the duration of the IO. If
--there are more CPUs than the max number of available lanes, than lanes are
--protected by spinlocks.
-+all the on-disk and in-memory data structures for the duration of the IO. Lanes
-+are protected by mutexes.
- 
- 
- d. In-memory data structure: Read Tracking Table (RTT)
-diff --git a/drivers/nvdimm/nd.h b/drivers/nvdimm/nd.h
-index b199eea3260ef6..197e5368c0a46b 100644
---- a/drivers/nvdimm/nd.h
-+++ b/drivers/nvdimm/nd.h
-@@ -365,11 +365,6 @@ unsigned sizeof_namespace_label(struct nvdimm_drvdata *ndd);
- 	for (res = (ndd)->dpa.child, next = res ? res->sibling : NULL; \
- 			res; res = next, next = next ? next->sibling : NULL)
- 
--struct nd_percpu_lane {
--	int count;
--	spinlock_t lock;
--};
--
- enum nd_label_flags {
- 	ND_LABEL_REAP,
- };
-@@ -400,6 +395,10 @@ struct nd_mapping {
- 	struct nvdimm_drvdata *ndd;
- };
- 
-+struct nd_lane {
-+	struct mutex lock; /* serialize lane access */
-+} ____cacheline_aligned_in_smp;
+ 	return 0;
+ }
+-EXPORT_SYMBOL(scsi_scan_host_selected);
 +
- struct nd_region {
- 	struct device dev;
- 	struct ida ns_ida;
-@@ -420,7 +419,7 @@ struct nd_region {
- 	struct kernfs_node *bb_state;
- 	struct badblocks bb;
- 	struct nd_interleave_set *nd_set;
--	struct nd_percpu_lane __percpu *lane;
-+	struct nd_lane *lane;
- 	int (*flush)(struct nd_region *nd_region, struct bio *bio);
- 	struct nd_mapping mapping[] __counted_by(ndr_mappings);
- };
-diff --git a/drivers/nvdimm/region_devs.c b/drivers/nvdimm/region_devs.c
-index a5ceaf5db5950e..5a1c68c701cfc4 100644
---- a/drivers/nvdimm/region_devs.c
-+++ b/drivers/nvdimm/region_devs.c
-@@ -192,7 +192,9 @@ static void nd_region_release(struct device *dev)
- 
- 		put_device(&nvdimm->dev);
- 	}
--	free_percpu(nd_region->lane);
-+	for (i = 0; i < nd_region->num_lanes; i++)
-+		mutex_destroy(&nd_region->lane[i].lock);
-+	kfree(nd_region->lane);
- 	if (!test_bit(ND_REGION_CXL, &nd_region->flags))
- 		memregion_free(nd_region->id);
- 	kfree(nd_region);
-@@ -904,52 +906,30 @@ void nd_region_advance_seeds(struct nd_region *nd_region, struct device *dev)
-  * nd_region_acquire_lane - allocate and lock a lane
-  * @nd_region: region id and number of lanes possible
-  *
-- * A lane correlates to a BLK-data-window and/or a log slot in the BTT.
-- * We optimize for the common case where there are 256 lanes, one
-- * per-cpu.  For larger systems we need to lock to share lanes.  For now
-- * this implementation assumes the cost of maintaining an allocator for
-- * free lanes is on the order of the lock hold time, so it implements a
-- * static lane = cpu % num_lanes mapping.
-+ * A lane correlates to a log slot in the BTT. Lanes are shared across
-+ * CPUs using a static lane = cpu % num_lanes mapping, with a per-lane
-+ * mutex to serialize access.
-  *
-- * In the case of a BTT instance on top of a BLK namespace a lane may be
-- * acquired recursively.  We lock on the first instance.
-- *
-- * In the case of a BTT instance on top of PMEM, we only acquire a lane
-- * for the BTT metadata updates.
-+ * Callers must be in sleepable context. The only in-tree caller is
-+ * BTT's ->submit_bio handler (btt_read_pg / btt_write_pg).
-  */
- unsigned int nd_region_acquire_lane(struct nd_region *nd_region)
-+	__acquires(&nd_region->lane[lane].lock)
+ static void scsi_sysfs_add_devices(struct Scsi_Host *shost)
  {
--	unsigned int cpu, lane;
+ 	struct scsi_device *sdev;
+diff --git a/drivers/scsi/scsi_transport_sas.c b/drivers/scsi/scsi_transport_sas.c
+index 081c1680943740..351b028ef8938e 100644
+--- a/drivers/scsi/scsi_transport_sas.c
++++ b/drivers/scsi/scsi_transport_sas.c
+@@ -40,8 +40,6 @@
+ #include <scsi/scsi_transport_sas.h>
+ 
+ #include "scsi_sas_internal.h"
+-#include "scsi_priv.h"
 -
--	migrate_disable();
--	cpu = smp_processor_id();
--	if (nd_region->num_lanes < nr_cpu_ids) {
--		struct nd_percpu_lane *ndl_lock, *ndl_count;
-+	unsigned int lane;
- 
--		lane = cpu % nd_region->num_lanes;
--		ndl_count = per_cpu_ptr(nd_region->lane, cpu);
--		ndl_lock = per_cpu_ptr(nd_region->lane, lane);
--		if (ndl_count->count++ == 0)
--			spin_lock(&ndl_lock->lock);
--	} else
--		lane = cpu;
-+	might_sleep();
- 
-+	lane = raw_smp_processor_id() % nd_region->num_lanes;
-+	mutex_lock(&nd_region->lane[lane].lock);
- 	return lane;
+ struct sas_host_attrs {
+ 	struct list_head rphy_list;
+ 	struct mutex lock;
+@@ -1685,22 +1683,6 @@ int scsi_is_sas_rphy(const struct device *dev)
  }
- EXPORT_SYMBOL(nd_region_acquire_lane);
+ EXPORT_SYMBOL(scsi_is_sas_rphy);
  
- void nd_region_release_lane(struct nd_region *nd_region, unsigned int lane)
-+	__releases(&nd_region->lane[lane].lock)
+-static void scan_channel_zero(struct Scsi_Host *shost, uint id, u64 lun)
+-{
+-	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
+-	struct sas_rphy *rphy;
+-
+-	list_for_each_entry(rphy, &sas_host->rphy_list, list) {
+-		if (rphy->identify.device_type != SAS_END_DEVICE ||
+-		    rphy->scsi_target_id == -1)
+-			continue;
+-
+-		if (id == SCAN_WILD_CARD || id == rphy->scsi_target_id) {
+-			scsi_scan_target(&rphy->dev, 0, rphy->scsi_target_id,
+-					 lun, SCSI_SCAN_MANUAL);
+-		}
+-	}
+-}
+ 
+ /*
+  * SCSI scan helper
+@@ -1710,41 +1692,23 @@ static int sas_user_scan(struct Scsi_Host *shost, uint channel,
+ 		uint id, u64 lun)
  {
--	if (nd_region->num_lanes < nr_cpu_ids) {
--		unsigned int cpu = smp_processor_id();
--		struct nd_percpu_lane *ndl_lock, *ndl_count;
+ 	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
+-	int res = 0;
+-	int i;
 -
--		ndl_count = per_cpu_ptr(nd_region->lane, cpu);
--		ndl_lock = per_cpu_ptr(nd_region->lane, lane);
--		if (--ndl_count->count == 0)
--			spin_unlock(&ndl_lock->lock);
--	}
--	migrate_enable();
-+	mutex_unlock(&nd_region->lane[lane].lock);
+-	switch (channel) {
+-	case 0:
+-		mutex_lock(&sas_host->lock);
+-		scan_channel_zero(shost, id, lun);
+-		mutex_unlock(&sas_host->lock);
+-		break;
+-
+-	case SCAN_WILD_CARD:
+-		mutex_lock(&sas_host->lock);
+-		scan_channel_zero(shost, id, lun);
+-		mutex_unlock(&sas_host->lock);
++	struct sas_rphy *rphy;
+ 
+-		for (i = 1; i <= shost->max_channel; i++) {
+-			res = scsi_scan_host_selected(shost, i, id, lun,
+-						      SCSI_SCAN_MANUAL);
+-			if (res)
+-				goto exit_scan;
+-		}
+-		break;
++	mutex_lock(&sas_host->lock);
++	list_for_each_entry(rphy, &sas_host->rphy_list, list) {
++		if (rphy->identify.device_type != SAS_END_DEVICE ||
++		    rphy->scsi_target_id == -1)
++			continue;
+ 
+-	default:
+-		if (channel <= shost->max_channel) {
+-			res = scsi_scan_host_selected(shost, channel, id, lun,
+-						      SCSI_SCAN_MANUAL);
+-		} else {
+-			res = -EINVAL;
++		if ((channel == SCAN_WILD_CARD || channel == 0) &&
++		    (id == SCAN_WILD_CARD || id == rphy->scsi_target_id)) {
++			scsi_scan_target(&rphy->dev, 0, rphy->scsi_target_id,
++					 lun, SCSI_SCAN_MANUAL);
+ 		}
+-		break;
+ 	}
++	mutex_unlock(&sas_host->lock);
+ 
+-exit_scan:
+-	return res;
++	return 0;
  }
- EXPORT_SYMBOL(nd_region_release_lane);
  
-@@ -1020,17 +1000,16 @@ static struct nd_region *nd_region_create(struct nvdimm_bus *nvdimm_bus,
- 			goto err_id;
- 	}
  
--	nd_region->lane = alloc_percpu(struct nd_percpu_lane);
-+	nd_region->num_lanes = ndr_desc->num_lanes;
-+	if (!nd_region->num_lanes)
-+		goto err_percpu;
-+	nd_region->lane = kcalloc(nd_region->num_lanes,
-+				  sizeof(*nd_region->lane), GFP_KERNEL);
- 	if (!nd_region->lane)
- 		goto err_percpu;
- 
--        for (i = 0; i < nr_cpu_ids; i++) {
--		struct nd_percpu_lane *ndl;
--
--		ndl = per_cpu_ptr(nd_region->lane, i);
--		spin_lock_init(&ndl->lock);
--		ndl->count = 0;
--	}
-+	for (i = 0; i < nd_region->num_lanes; i++)
-+		mutex_init(&nd_region->lane[i].lock);
- 
- 	for (i = 0; i < ndr_desc->num_mappings; i++) {
- 		struct nd_mapping_desc *mapping = &ndr_desc->mapping[i];
-@@ -1047,7 +1026,6 @@ static struct nd_region *nd_region_create(struct nvdimm_bus *nvdimm_bus,
- 	}
- 	nd_region->provider_data = ndr_desc->provider_data;
- 	nd_region->nd_set = ndr_desc->nd_set;
--	nd_region->num_lanes = ndr_desc->num_lanes;
- 	nd_region->flags = ndr_desc->flags;
- 	nd_region->ro = ro;
- 	nd_region->numa_node = ndr_desc->numa_node;
 -- 
 2.53.0
 
