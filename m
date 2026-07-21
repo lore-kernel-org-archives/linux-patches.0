@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6BF3F12CE;
-	Tue, 21 Jul 2026 17:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01FA375AC3;
+	Tue, 21 Jul 2026 17:25:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654700; cv=none; b=Qnpp1oga8ql24J99dJCwy4lKq869/ISMlcWRJQzjdxk3tw3nCGXBw27LmhzIJ46IQ8Sq00zqhOSsLoDvJwRwCZ0F3hdM5xwAV65XTysNpE46SxrgbkcS4gLlkIaRbaKYlzmqRLY0IiUMrE8IJfq8t8ECB2zpRnwkhitu/d4qCIc=
+	t=1784654702; cv=none; b=q91JizVWHjH4KPvSVnN61X2PC+D/uP0Mg6nSZvg/UAJJJ3baGsRDR854difBdsHCEVi3vJuXp/pBMbcidaTiXA7AlZQ89jHhlEmJAu7hyLvesZcxYqBNxUv4XpSPfeotLXDtn/ikIEaO1UMm/t0Wwd/Sp6unLKJd8qgJ5AT2oWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654700; c=relaxed/simple;
-	bh=lzrs6LrMDeWOLHHpHBjd/hw16s23vXErp+03bITj//U=;
+	s=arc-20240116; t=1784654702; c=relaxed/simple;
+	bh=9olSUilN1wYqzegiUF8pFJgEoIKl9tiiFolfS2y1g64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OJ48qT4T5fRUpZHF0sEXjAaWCPOeKWhG/0Y7wZzYJZ6I5fCKeRpL5ZWcZSD4xb3tE7o22eUq79Rh7V/3zTUL5BnyEhmx2mG6NE9sMo96/8FZNwt9TNbHcsMG1XhVJ/0eUbZPFn/Tb2nUcgZmYdD2GuGyK0Qi0bo0Kxol6D3I534=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HjWn1UNf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=foKpZjONS2pSLaf+CFQc1hkS+E0oRsBIAQ4UevKAOxHmxUaR3TMiiP1HM143pjre+7s5jAaSkdM2LQyXW5A2Pp/AHLTQwQxFtyjKQwmGPjOVXFrzcvwYTHZiVik/UtyYtD+dUUUw2N+XjPSVcbS+lIyz/DcS4yF70YVzjVgrDAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A89YCnep; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HjWn1UNf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7521F000E9;
-	Tue, 21 Jul 2026 17:24:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A89YCnep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9501F000E9;
+	Tue, 21 Jul 2026 17:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654699;
-	bh=8ciIc6sZ5oRQ8G+t8gOfDPf+l5D4Wg8NjR5U0CHNMAw=;
+	s=korg; t=1784654701;
+	bh=UQ67SWuFBXD/jBWNgxNSem2LwBCd+XDjWx/dzRRW9WY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HjWn1UNf1NeWf7godyg1xoAnC0cxaTHv5mIVCEvEoSYyho/u8JwWb19+YkaBDhddM
-	 efdJle8uAiCLC9Mp61YXPWcm6yhNn5ea/BvU4CVnuCK8rwbslEc9tZ+Fzqps076maV
-	 6vZ9rzBJs+ms2Roi6bVGDZ2yhKdjspxNp11BOVEU=
+	b=A89YCnepmJD6XstmYrE1qiEci5c/vc+o94+5/udo+2bPQ2juv79AxDsphdnxwiIMH
+	 9Ue0l0sJ8g/jChAC5A3AuVTs96ci9vfF5ipqL0MJI9S81YmtJWxiFVeMOxWxrMaBBi
+	 wOhm5X6Ii1oIvgm491GMJNzYHYf6ceUJOY/HmDUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Bridges <icb@fastmail.org>,
-	syzbot+be16e33db01e6644db7a@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 1751/2077] ocfs2: fix UBSAN array-index-out-of-bounds in ocfs2_sum_rightmost_rec
-Date: Tue, 21 Jul 2026 17:23:44 +0200
-Message-ID: <20260721152634.045112148@linuxfoundation.org>
+	Paul Greenwalt <paul.greenwalt@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Alexander Nowlin <alexander.nowlin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 7.1 1798/2077] ice: fix ice_init_link() error return preventing probe
+Date: Tue, 21 Jul 2026 17:24:31 +0200
+Message-ID: <20260721152635.156091989@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -58,87 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Paul Greenwalt <paul.greenwalt@intel.com>
 
-commit 452a8467be8143747292218212671deeb186d2ae upstream.
+commit eb509638686b0f8a98a0dd9c809f6a8db4d73a45 upstream.
 
-[BUG]
-On-disk corruption setting l_next_free_rec to 0 in an inode's embedded
-extent list triggers a UBSAN panic on the next write to that file.
+ice_init_link() can return an error status from ice_update_link_info()
+or ice_init_phy_user_cfg(), causing probe to fail.
 
-[CAUSE]
-ocfs2_sum_rightmost_rec() computes
-i = le16_to_cpu(el->l_next_free_rec) - 1
-and accesses el->l_recs[i] without validating i. When l_next_free_rec
-is 0, i becomes -1; when l_next_free_rec exceeds l_count, i falls
-past the end of the array. Either case violates the
-__counted_by_le(l_count) annotation on l_recs[] and triggers UBSAN.
+An incorrect NVM update procedure can result in link/PHY errors, and
+the recommended resolution is to update the NVM using the correct
+procedure. If the driver fails probe due to link errors, the user
+cannot update the NVM to recover. The link/PHY errors logged are
+non-fatal: they are already annotated as 'not a fatal error if this
+fails'.
 
-[FIX]
-Validate the inode's embedded extent list when the inode is read, in
-ocfs2_validate_inode_block(): l_count must be non-zero and no larger
-than the inode block can hold, and l_next_free_rec must not exceed
-l_count. A corrupt list is rejected at read time, before the b-tree
-code can index l_recs[] out of bounds.
+Since none of the errors inside ice_init_link() should prevent probe
+from completing, convert it to void and remove the error check in the
+caller. All failures are already logged; callers have no meaningful
+recovery path for link init errors.
 
-Link: https://lore.kernel.org/ain_780qc0P4ypNd@dev
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Reported-by: syzbot+be16e33db01e6644db7a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=be16e33db01e6644db7a
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 5b246e533d01 ("ice: split probe into smaller functions")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paul Greenwalt <paul.greenwalt@intel.com>
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/inode.c |   32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_main.c |   16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
---- a/fs/ocfs2/inode.c
-+++ b/fs/ocfs2/inode.c
-@@ -1582,6 +1582,38 @@ int ocfs2_validate_inode_block(struct su
- 		goto bail;
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -4789,16 +4789,14 @@ static void ice_init_wakeup(struct ice_p
+ 	device_set_wakeup_enable(ice_pf_to_dev(pf), false);
+ }
+ 
+-static int ice_init_link(struct ice_pf *pf)
++static void ice_init_link(struct ice_pf *pf)
+ {
+ 	struct device *dev = ice_pf_to_dev(pf);
+ 	int err;
+ 
+ 	err = ice_init_link_events(pf->hw.port_info);
+-	if (err) {
++	if (err)
+ 		dev_err(dev, "ice_init_link_events failed: %d\n", err);
+-		return err;
+-	}
+ 
+ 	/* not a fatal error if this fails */
+ 	err = ice_init_nvm_phy_type(pf->hw.port_info);
+@@ -4838,8 +4836,6 @@ static int ice_init_link(struct ice_pf *
+ 	} else {
+ 		set_bit(ICE_FLAG_NO_MEDIA, pf->flags);
  	}
+-
+-	return err;
+ }
  
-+	if (ocfs2_dinode_has_extents(di)) {
-+		struct ocfs2_extent_list *el = &di->id2.i_list;
-+		u16 count = le16_to_cpu(el->l_count);
-+		u16 next_free = le16_to_cpu(el->l_next_free_rec);
-+
-+		if (count == 0) {
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode %llu: extent list l_count is zero\n",
-+					 (unsigned long long)bh->b_blocknr);
-+			goto bail;
-+		}
-+		/*
-+		 * The exact capacity depends on i_xattr_inline_size, another
-+		 * unvalidated on-disk field. Inline xattrs only shrink the
-+		 * list, so the no-xattr maximum is a safe upper bound that a
-+		 * valid l_count never exceeds.
-+		 */
-+		if (count > ocfs2_extent_recs_per_inode(sb)) {
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode %llu: extent list l_count %u exceeds max %u\n",
-+					 (unsigned long long)bh->b_blocknr, count,
-+					 ocfs2_extent_recs_per_inode(sb));
-+			goto bail;
-+		}
-+		if (next_free > count) {
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode %llu: extent list l_next_free_rec %u exceeds l_count %u\n",
-+					 (unsigned long long)bh->b_blocknr, next_free, count);
-+			goto bail;
-+		}
-+	}
-+
- 	rc = 0;
+ static int ice_init_pf_sw(struct ice_pf *pf)
+@@ -4982,13 +4978,11 @@ static int ice_init(struct ice_pf *pf)
  
- bail:
+ 	ice_init_wakeup(pf);
+ 
+-	err = ice_init_link(pf);
+-	if (err)
+-		goto err_init_link;
++	ice_init_link(pf);
+ 
+ 	err = ice_send_version(pf);
+ 	if (err)
+-		goto err_init_link;
++		goto err_deinit_pf_sw;
+ 
+ 	ice_verify_cacheline_size(pf);
+ 
+@@ -5007,7 +5001,7 @@ static int ice_init(struct ice_pf *pf)
+ 
+ 	return 0;
+ 
+-err_init_link:
++err_deinit_pf_sw:
+ 	ice_deinit_pf_sw(pf);
+ err_init_pf_sw:
+ 	ice_dealloc_vsis(pf);
 
 
