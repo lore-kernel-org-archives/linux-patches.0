@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283AE4028F7;
-	Tue, 21 Jul 2026 18:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8E44028F7;
+	Tue, 21 Jul 2026 18:19:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657972; cv=none; b=DZrfaHRdr5kFyyXh5/tnsRUD1OOvtx0PZgs32awYOqMMJ4GpyfdcwO7orQSDf28MWgQyNWEh39l1yc6/R80TBZrk2xnt2EfOrm7/CKgInRYDxvfU6EeM/KKdolI/hxs9wbbb5GuFm5ZNqA0qRnbR2SwGZXf/4P7y2m4vWbvs57A=
+	t=1784657974; cv=none; b=VaRvWGDplnoeeOupXTlJxsfNflHjiEmksYitAITFHJZZjcQdm6+26S29WI6n19uRstRkhPlZkNhFQMrjMUFcjk1TJKMX7LaP2XX8wJ+oUn/Kv7dZJbOS96H9srVgt2U4j1mJasuv8502hg7hquDgr6TaVUDC2GbdMqkzd9OKZDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657972; c=relaxed/simple;
-	bh=eJ4hw6DRC2xcdAXGJFI3TK6X9WZzetO4F9aQCFSy8Bc=;
+	s=arc-20240116; t=1784657974; c=relaxed/simple;
+	bh=5X5FWtGkb+9DBLPbK9E+rLLqIgQuVddb+WYVbTFAJFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GEO9jzDQyGVQ2sXvJI8Lex4QPhit/n0JP0lQ2WqFV6D++XU2CvcE3ZLcZ5zhEyx3cnwxnFJH0764r4hCCw+CQCVN5zicPCwW8q2Q7VNH86JZmUk9WSg1jGprS7Ce+n4Sgns5pQhvwjNtSQgxULuCfsI+2jJkQ6rL9O216zZQI7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+AfyOAs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vs9VpwosrDaDEYck1Rzmdfzb/8FyvJHrsQMT11vKc/PGS39k4xt4rICkiPx3W3qHS5C3zGXA1wZENsj0g4nbaY/bkpCK32nIuxB7N71JQJm5NIwI/3RaMHzjTQjy1yX5V9SiKMD6/ir2G8tXNHMQugLdpMTgl6ALOxIMrbKOnW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CM2jjuX3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+AfyOAs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E6561F000E9;
-	Tue, 21 Jul 2026 18:19:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CM2jjuX3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484431F00A3A;
+	Tue, 21 Jul 2026 18:19:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657971;
-	bh=GXfHT2xveic6L8uy/wkZqcssN0sMky2MyHecjkwFuos=;
+	s=korg; t=1784657973;
+	bh=sU09+7b8zsJ/VXgunYSPQ8+iTbSHiYof+5sxqoVQJ4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b+AfyOAsEwUD5Ci9g3c7D702FxjtInpHbRayFYQdKPB1ap9ISe4mUPssxelqkhRiw
-	 oBm8f1dDxgX5incyrJhZvLcFIz7HIU5eLj4Ci2MMXvR9B2CyW41NSaijWWmOx78Cgy
-	 UzlNLoqvzY3cxQAIj6n/KZYgAuQ/Nutztg8Sl858=
+	b=CM2jjuX3GInHBt1dThjrVZC7oEWpDUDdKvKiqKJptEPJyJ8oMv5gSy3D6W0De2LvV
+	 lsFusV763ieH2b61XxeAQYlJIAEE6+shJhCGwanEO+1GdNEOr2Yb/0werRu2mOhvcB
+	 kUMapxgl2Ndr+/x0nbCDw7zHEtMTb+izXDzSIolY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Billy Tsai <billy_tsai@aspeedtech.com>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jan Klos <honza.klos@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0966/1611] hwmon: (aspeed-g6-pwm-tach) Guard fan RPM calculation against divide-by-zero
-Date: Tue, 21 Jul 2026 17:18:02 +0200
-Message-ID: <20260721152537.124376016@linuxfoundation.org>
+Subject: [PATCH 6.18 0931/1611] net: phy: realtek: Clear MDIO_AN_10GBT_CTRL_ADV10G bit
+Date: Tue, 21 Jul 2026 17:17:27 +0200
+Message-ID: <20260721152536.325730929@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,49 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Jan Klos <honza.klos@gmail.com>
 
-[ Upstream commit fe87b8dc67f1b2c64e76a66e78468c533d3c44ca ]
+[ Upstream commit 510a283f4d12367a3f811f382a2c89202954bbd1 ]
 
-Sashiko reports:
+On RTL8127A connected to a link partner that advertises 10000baseT
+speed cannot be changed to anything other than 10000baseT as 10GbE
+is always advertised regardless of any setting. Fix this by
+clearing MDIO_AN_10GBT_CTRL_ADV10G bit in rtl822x_config_aneg()'s
+call to phy_modify_mmd_changed().
 
-In the aspeed-g6-pwm-tacho driver, the aspeed_tach_val_to_rpm() function
-calculates the fan RPM using the tachometer value. However, it does not
-check if the tachometer value is zero before performing the division.
-
-If the hardware reports a tachometer value of 0 (which can happen due to
-an extremely fast pulse, a stuck edge, or a hardware glitch), the
-calculated tach_div evaluates to 0. The subsequent call to do_div() with
-tach_div as the divisor triggers a divide-by-zero exception, leading to
-a kernel panic.
-
-Check the divisor against zero to fix the problem.
-
-Fixes: 7e1449cd15d1 ("hwmon: (aspeed-g6-pwm-tacho): Support for ASPEED g6 PWM/Fan tach")
-Cc: Billy Tsai <billy_tsai@aspeedtech.com>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 83d962316128 ("net: phy: realtek: add RTL8127-internal PHY")
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Signed-off-by: Jan Klos <honza.klos@gmail.com>
+Link: https://patch.msgid.link/20260620011956.37181-1-honza.klos@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/aspeed-g6-pwm-tach.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/phy/realtek/realtek_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/aspeed-g6-pwm-tach.c b/drivers/hwmon/aspeed-g6-pwm-tach.c
-index d1f7f439748245..3be59654412320 100644
---- a/drivers/hwmon/aspeed-g6-pwm-tach.c
-+++ b/drivers/hwmon/aspeed-g6-pwm-tach.c
-@@ -293,7 +293,10 @@ static int aspeed_tach_val_to_rpm(struct aspeed_pwm_tach_data *priv, u32 tach_va
- 		priv->clk_rate, tach_val, tach_div);
- 
- 	rpm = (u64)priv->clk_rate * 60;
--	do_div(rpm, tach_div);
-+	if (tach_div)
-+		do_div(rpm, tach_div);
-+	else
-+		rpm = 0;
- 
- 	return (int)rpm;
- }
+diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
+index 7c3d277efaf07a..05df1a33b0e203 100644
+--- a/drivers/net/phy/realtek/realtek_main.c
++++ b/drivers/net/phy/realtek/realtek_main.c
+@@ -1330,7 +1330,8 @@ static int rtl822x_config_aneg(struct phy_device *phydev)
+ 		ret = phy_modify_mmd_changed(phydev, MDIO_MMD_VEND2,
+ 					     RTL_MDIO_AN_10GBT_CTRL,
+ 					     MDIO_AN_10GBT_CTRL_ADV2_5G |
+-					     MDIO_AN_10GBT_CTRL_ADV5G, adv);
++					     MDIO_AN_10GBT_CTRL_ADV5G |
++					     MDIO_AN_10GBT_CTRL_ADV10G, adv);
+ 		if (ret < 0)
+ 			return ret;
+ 	}
 -- 
 2.53.0
 
