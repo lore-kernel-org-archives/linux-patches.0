@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50144442139;
-	Tue, 21 Jul 2026 21:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F473B6BEB;
+	Tue, 21 Jul 2026 21:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667619; cv=none; b=r0It2MVtT+pF1orh8ZETiZFqUwLCDq6ijj4sAQI1D4lTK2hj2t3vijoXS183kV/Poxfx/gY+BabVskdrNlRdEaLXsdjNGbM8iZnl2jQK673wUCq6Axytsu8vBprLmI5o0yaYgeYZDtB06tR0jUnkxhEt48J7jiLMq+BY+m7MUg0=
+	t=1784667622; cv=none; b=sU9qFnhAIR0nMw3f16e1mEmxI4X6OiPtHXgvng/U/FtL/JWCe70202T/TgYTUvQBRHzqVGQueMngxaS2rJTvFuIdyazVG1iwPBRs3D8S3g56wKiRn6eDDbTCoytn6J02/pCTSTo9gCJkOWGXOzRGujqfkotfQqme6gyOgsr+Hx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667619; c=relaxed/simple;
-	bh=sOKQ+oP/LSIxK6yBy2MpVB6DjFvwNnPp1MbNWOvw+to=;
+	s=arc-20240116; t=1784667622; c=relaxed/simple;
+	bh=QUXapqdjQBJEl0fK4JrBLxOGw301X14Bk75tkui+RVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GchBI6ukCrLCyAwgg/x6Z0Cpp1THIvSm0fel4b9/qjHtdZ2JG0N3PCFuGYeJNFzSwS2tn1zAv6Va/9dN7IF0d7hwXT3mj9X6OVkt6y4xkkMlNuF+u37K4eCSGaFpJxS+qStExSFgUkol3oK+PwnGJxQkT+SsBh/C1iYan6s/K6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ERcw+uL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nXxSeU2CkAEPUj+2OeUtAiKmaEtbq5ygYPUtM6+o1X0pAdx7wj6H8iC0WbQr4IBThEpZEOJqTswZ6hRhRfhYgfMCS8lKls6L+oyaOULjAtu/zspVBVfzMfmfG6+V+9kKOpJ16rE1Nft5TOKeQtLfLSZtJ0602rbxxr0FrBsBrvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HBXf5uf1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ERcw+uL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC491F00A3A;
-	Tue, 21 Jul 2026 21:00:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HBXf5uf1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255031F000E9;
+	Tue, 21 Jul 2026 21:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667618;
-	bh=PSNeI2bopczb0s/V+Pz4IFdJZ0uw22MICg5nHA0XoPg=;
+	s=korg; t=1784667620;
+	bh=jv5QWlkaVfUVOklVtGhCYTX8b2um55OD8tZmntLjHeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2ERcw+uLwRaemobQrmI0zmH56nJEx9/K6km4SCnsrNRBsGECWaYE+Z2g8ls6SzvYf
-	 bWBVEqxS8XrdrBxpx5l4lfdNsRlxeuZBWYsl6fnIZM3mXc/W+xVTNxNqs6EjM3p692
-	 i5VQVmrrujs2MiPHudsgBEOj7SF0Wny4h3BMkZgc=
+	b=HBXf5uf1KJpJ7FplwQjbc1zyXSRfXR66Ah7YEXkqYHqvP2DhDKBq2A7OXc1ebJGhW
+	 WPkbjKr0eceWU5Q7WylI3t5pKE+zR4oPy+qvB0PKyouK5CP+IfZ0Ox6i2mbaxpE96y
+	 Bs2MTL+aEpFYS7hG6rfW7Ld+EdufgdqU8tSRUxxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 1129/1266] wifi: mac80211: fix memory leak in ieee80211_register_hw()
-Date: Tue, 21 Jul 2026 17:26:06 +0200
-Message-ID: <20260721152507.060191917@linuxfoundation.org>
+	Abhishek Ojha <Abhishek.ojha@savoirfairelinux.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 1130/1266] regulator: ltc3676: Fix incorrect IRQSTAT bit offsets
+Date: Tue, 21 Jul 2026 17:26:07 +0200
+Message-ID: <20260721152507.082340219@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,56 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Abhishek Ojha <Abhishek.ojha@savoirfairelinux.com>
 
-commit 95fc02722edde02946d0d475221f2b2054d3d8ba upstream.
+commit 50dce2e2f84b56d8b4b406d97a1543709e8a87f5 upstream.
 
-If kmemdup() fails while copying supported band structures, the error
-path jumps to fail_rate. This skips rate_control_deinitialize() and
-leaks the initialized local->rate_ctrl.
+The LTC3676_IRQSTAT_* bit definitions do not match the IRQSTAT
+(Interrupt Request Status) register layout documented in Table 15
+of the LTC3676/LTC3676-1 datasheet:
 
-Fix this by adding a fail_band label that shares the rate-control cleanup
-path before falling through to the remaining teardown.
+  bit 0 - Pushbutton Status Active
+  bit 1 - Hard Reset Occurred
+  bit 2 - PGOOD Timeout Occurred
+  bit 3 - Undervoltage Warning
+  bit 4 - Undervoltage Standby (Fault) Occurred
+  bit 5 - Overtemperature Warning
+  bit 6 - Overtemperature Standby (Fault) Occurred
+  bit 7 - Reserved
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still present in
-v7.1-rc7.
+The driver instead defines these starting at bit 3, one bit higher
+than the datasheet specifies, which causes ltc3676_regulator_isr()
+to check the wrong status bits and misreport (or miss) PGOOD
+timeout, undervoltage and thermal warning/fault conditions.
 
-An x86_64 allyesconfig build showed no new warnings. As we do not have a
-suitable mac80211 device/driver combination to test with, no runtime
-testing was able to be performed.
+Fix the bit offsets to match the datasheet.
 
-Fixes: 09b4a4faf9d0 ("mac80211: introduce capability flags for VHT EXT NSS support")
+Fixes: 37b918a034fe ("regulator: Add LTC3676 support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Link: https://patch.msgid.link/20260706143507.146131-1-dawei.feng@seu.edu.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Abhishek Ojha <Abhishek.ojha@savoirfairelinux.com>
+Link: https://patch.msgid.link/20260715170408.295552-1-Abhishek.ojha@savoirfairelinux.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/main.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/regulator/ltc3676.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/net/mac80211/main.c
-+++ b/net/mac80211/main.c
-@@ -1410,7 +1410,7 @@ int ieee80211_register_hw(struct ieee802
- 		sband = kmemdup(sband, sizeof(*sband), GFP_KERNEL);
- 		if (!sband) {
- 			result = -ENOMEM;
--			goto fail_rate;
-+			goto fail_band;
- 		}
+--- a/drivers/regulator/ltc3676.c
++++ b/drivers/regulator/ltc3676.c
+@@ -45,11 +45,11 @@
+ #define LTC3676_DVBxA_REF_SELECT	BIT(5)
+ #define LTC3676_DVBxB_PGOOD_MASK	BIT(5)
  
- 		wiphy_dbg(hw->wiphy, "copying sband (band %d) due to VHT EXT NSS BW flag\n",
-@@ -1475,6 +1475,7 @@ int ieee80211_register_hw(struct ieee802
- #endif
- 	wiphy_unregister(local->hw.wiphy);
-  fail_wiphy_register:
-+ fail_band:
- 	rtnl_lock();
- 	rate_control_deinitialize(local);
- 	ieee80211_remove_interfaces(local);
+-#define LTC3676_IRQSTAT_PGOOD_TIMEOUT	BIT(3)
+-#define LTC3676_IRQSTAT_UNDERVOLT_WARN	BIT(4)
+-#define LTC3676_IRQSTAT_UNDERVOLT_FAULT	BIT(5)
+-#define LTC3676_IRQSTAT_THERMAL_WARN	BIT(6)
+-#define LTC3676_IRQSTAT_THERMAL_FAULT	BIT(7)
++#define LTC3676_IRQSTAT_PGOOD_TIMEOUT	BIT(2)
++#define LTC3676_IRQSTAT_UNDERVOLT_WARN	BIT(3)
++#define LTC3676_IRQSTAT_UNDERVOLT_FAULT	BIT(4)
++#define LTC3676_IRQSTAT_THERMAL_WARN	BIT(5)
++#define LTC3676_IRQSTAT_THERMAL_FAULT	BIT(6)
+ 
+ enum ltc3676_reg {
+ 	LTC3676_SW1,
 
 
