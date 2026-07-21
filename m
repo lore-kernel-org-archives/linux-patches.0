@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D3233A9FC;
-	Tue, 21 Jul 2026 20:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C305635201C;
+	Tue, 21 Jul 2026 20:46:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666772; cv=none; b=YPmdRRieWP4romtB9rJu+LL5i8/ThfE89N+FfJK0lyIQ9CnD3GO1ifT51mrE/nMIjDIkGbdyyLeUUB9Tyt8AuUfWPPsJpe2RnLT7yhOp+gp3OuZYgbPET7M5xi+NTJ3WDZYkukkWS682Q4f5sGP9g/kjK+oIudOHAtQyxE0iOdc=
+	t=1784666774; cv=none; b=Bgu8sAh++j99NfqUyiQ4zFpQFE59s2U3IxaHlz3kArO17b7lTq7urBRDKh9UYJ/SqMNgRDWBCz/4X6B8OFvGItYHg9Da7Rok9ArPwz7xeabNd2SFbW3vjWgCKOsXVwzwqb3AiNYizdJ8Ifm0FiWYEW44gMNGK3d8gkgrN0ks7PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666772; c=relaxed/simple;
-	bh=wSy6Yr6s4yoURR9ltgaBgFKg/z+xjlz/Lcmw8vk7j8Q=;
+	s=arc-20240116; t=1784666774; c=relaxed/simple;
+	bh=XEtvBmsOF6gy5jynPLHk3e/T0p5JhjrijO8vtGUBbWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BoAfu2kQqsNCvWZyH+BxgV+8dk5UontWzYbwMvxWuhol3o+Htp1tGl/0R0P7nyFBNkXRFT1Le/VNvCSvGN+AlYe8hYJLwHFcb0bhceKniCs7xipc4rJUMJG/2H0gxaMrhgaIf5+A0kRUunw49XtsFdBI1+iI/worFvYVPGSlvas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zq2aIwM/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SQ6SdE+W27N+lUb3Pea1WNLBShSoHZwXrFH5DIHTk/HWxvMl0e324VLVQSZNUYSJFguJaM/dpN2ft3QSxDcDGZzjfnUMrN2CawQwvIquTvEnE/tujHIV9Z8S8CMQqWunlWC3wBNDAvs184hfWlkIQj4wa19bqSR23vOoWCB961M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gc9QLb94; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zq2aIwM/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C1E71F000E9;
-	Tue, 21 Jul 2026 20:46:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gc9QLb94"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A1F1F000E9;
+	Tue, 21 Jul 2026 20:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666770;
-	bh=gBOiYKaos/Euf114/g8RIqxWrJI6xSfPwXs1DYxi4KM=;
+	s=korg; t=1784666773;
+	bh=nAQA8ptp2iDHr3nNjnC/S1iKWdwepMMEtPLCN5w8Gc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zq2aIwM/ZOdSHDwP8Np83IYOyccyPsbmBoixOsMeyKSGtUIRxZEJfPTg7FUdb2L2D
-	 AwvR0S42Z5RyH72oehqZ8snn8XwFCu4JMJcnQBpSwM1KAOjgHVK5a8g30BRyYOpPGs
-	 jOW5Vvm6AdVAGqri7jlANLDdc48LRKmBL2TYlGsQ=
+	b=gc9QLb94i1nFsIzXj1GQkqzrZCWCYC8ErNQ9qTrskePTn3Z+jrqMv+V8thZTy5Ew3
+	 nt+QjpfRp1alrc4onfCkvmBN8ar1apEoHHvnh7ZHsTpnPcyANIm5G2nAp0JB9p77Xp
+	 BwFVyn/PvD6+lZLg119go1gbp1BrZB2bAvr4837Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0809/1266] hwmon: (pmbus) Fix passing events to regulator core
-Date: Tue, 21 Jul 2026 17:20:46 +0200
-Message-ID: <20260721152459.962618338@linuxfoundation.org>
+Subject: [PATCH 6.6 0783/1266] net, bpf: check master for NULL in xdp_master_redirect()
+Date: Tue, 21 Jul 2026 17:20:20 +0200
+Message-ID: <20260721152459.383373345@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,67 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 9ef7dacd44216bf5ea05c8aef49eba4d145f4047 ]
+[ Upstream commit e82d8cc4321c373dc46e741cd2dfdaa7921fddb7 ]
 
-Sashiko reports:
+xdp_master_redirect() dereferences the result of
+netdev_master_upper_dev_get_rcu() without a NULL check, but that helper
+returns NULL when the receiving device has no upper-master adjacency.
 
-Commit 754bd2b4a084 ("hwmon: (pmbus/core) Protect regulator operations with
-mutex") introduced a worker to batch regulator events over time using
-atomic_or(). The delayed worker then passes the combined bitmask unmodified
-to regulator_notifier_call_chain().
+The reach guard only checks netif_is_bond_slave(). On bond slave release
+bond_upper_dev_unlink() drops the upper-master adjacency before clearing
+IFF_SLAVE, so an XDP_TX reaching xdp_master_redirect() in that window
+still passes netif_is_bond_slave() while master is already NULL, and
+faults on master->flags at offset 0xb0:
 
-The core regulator subsystem's regulator_handle_critical() function
-evaluates the event parameter using a strict switch statement. If
-multiple distinct faults occur before the worker runs (e.g.,
-REGULATOR_EVENT_UNDER_VOLTAGE | REGULATOR_EVENT_OVER_CURRENT), the combined
-bitmask fails to match any case. This leaves the reason as NULL and
-completely bypasses the critical hw_protection_trigger().
+  BUG: kernel NULL pointer dereference, address: 00000000000000b0
+  RIP: 0010:xdp_master_redirect (net/core/filter.c:4432)
+  Call Trace:
+   xdp_master_redirect (net/core/filter.c:4432)
+   bpf_prog_run_generic_xdp (include/net/xdp.h:700)
+   do_xdp_generic (net/core/dev.c:5608)
+   __netif_receive_skb_one_core (net/core/dev.c:6204)
+   process_backlog (net/core/dev.c:6319)
+   __napi_poll (net/core/dev.c:7729)
+   net_rx_action (net/core/dev.c:7792)
+   handle_softirqs (kernel/softirq.c:622)
+   __dev_queue_xmit (include/linux/bottom_half.h:33)
+   packet_sendmsg (net/packet/af_packet.c:3082)
+   __sys_sendto (net/socket.c:2252)
+  Kernel panic - not syncing: Fatal exception in interrupt
 
-Fix the problem by passing events bit by bit to the regulator event
-handler.
+The missing check dates back to the original code; commit 1921f91298d1
+("net, bpf: fix null-ptr-deref in xdp_master_redirect() for down master")
+later added the master->flags read where the fault now lands but kept the
+unconditional deref. Check master for NULL before use; a NULL master is
+treated the same as one that is not up.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 754bd2b4a084 ("hwmon: (pmbus/core) Protect regulator operations with mutex")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 879af96ffd72 ("net, core: Add support for XDP redirection to slave device")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260620201531.180123-1-xmei5@asu.edu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/pmbus_core.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ net/core/filter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index a61e2fb176da78..eafeabfd93d77c 100644
---- a/drivers/hwmon/pmbus/pmbus_core.c
-+++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -3190,18 +3190,23 @@ static void pmbus_regulator_notify_worker(struct work_struct *work)
- 	int i, j;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 5bbad21c7757c3..62d21a961e5ec2 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -4393,7 +4393,7 @@ u32 xdp_master_redirect(struct xdp_buff *xdp)
+ 	struct bpf_redirect_info *ri = this_cpu_ptr(&bpf_redirect_info);
  
- 	for (i = 0; i < data->info->pages; i++) {
--		int event;
-+		unsigned int event;
- 
- 		event = atomic_xchg(&data->regulator_events[i], 0);
- 		if (!event)
- 			continue;
- 
- 		for (j = 0; j < data->info->num_regulators; j++) {
--			if (i == rdev_get_id(data->rdevs[j])) {
-+			if (i != rdev_get_id(data->rdevs[j]))
-+				continue;
-+			while (event) {
-+				unsigned int _event = BIT(__ffs(event));
-+
- 				regulator_notifier_call_chain(data->rdevs[j],
--							      event, NULL);
--				break;
-+							      _event, NULL);
-+				event &= ~_event;
- 			}
-+			break;
- 		}
- 	}
- }
+ 	master = netdev_master_upper_dev_get_rcu(xdp->rxq->dev);
+-	if (unlikely(!(master->flags & IFF_UP)))
++	if (unlikely(!master || !(master->flags & IFF_UP)))
+ 		return XDP_ABORTED;
+ 	slave = master->netdev_ops->ndo_xdp_get_xmit_slave(master, xdp);
+ 	if (slave && slave != xdp->rxq->dev) {
 -- 
 2.53.0
 
