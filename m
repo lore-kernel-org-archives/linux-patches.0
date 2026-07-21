@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7641408039;
-	Tue, 21 Jul 2026 19:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E61946EC9B;
+	Tue, 21 Jul 2026 19:24:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661848; cv=none; b=ZmrK2hssL0ygRpIP7FznqtLwJO/d5oWXgDXTCDBxb0URLwTCSojpyX+Q5ZQ/pDRTPEBLS5SYstDIqlxbgS4O5ayFVIuGoSLfMLvtBZDsxSAQp+D8MFVHkvuRMOdJffK3iDz3oFEnQmr3xzxQtj6YGbXr914RV3wf3JLLODPkXnU=
+	t=1784661851; cv=none; b=UXc9+Hk0/VAZAgc+z9F4fbHPZ74M/+gXQc6CNvxV08KzAaPKuiNk+XQtfzX6DPBcIneNAFxC3d1nLc+ATYLGi0sqDaSNstNGJh1RGx6wFcCLtBPhQaVIVEYhxhrhaQ1qfeN8DBQo84Sluvcz8OccmDC3REj71yGKqNytu8fzquM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661848; c=relaxed/simple;
-	bh=HmPt/9IRUXzJbxf8MsK772kz0iS1uxNLoSo6Q6pD5Yw=;
+	s=arc-20240116; t=1784661851; c=relaxed/simple;
+	bh=3vk2Q4EJPHixH6feLAxL0c192kraWchWl7A/1pU73C4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eujztR0v4lQmvTcnirRW8Mk5eKASsd7/goqc3M8i5qj6NuzbKW5VyFuFCzi7TDCjuH0ejLz39xqhkwcao61p8T4dD0+CLrfCHW4wrAuO/HSskwzWiOob9ofwJzYxXyMyptXgVdA0qxJKeJlT5UFddwfYrzWPkv6DcAwEZ6z1ikE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rg7VUhVE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TQsIBo1RbeKaPdGMWfLlnXDliwhDn/KyYomwcLVWVh7qiDDn/6lshYHVClxb2jZqhUPlW9KWiDjJmBoTQjH8lmk9JGWZGmFz1Ik4cQtVC6og8tOZ0fGzcaxx5Y5en+VeSzxk0AGMnQoHel+wOTq+Q2ukHtGanto1ttZ2OOG1P3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O5e3wG2h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rg7VUhVE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1669D1F000E9;
-	Tue, 21 Jul 2026 19:24:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O5e3wG2h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41F31F000E9;
+	Tue, 21 Jul 2026 19:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661847;
-	bh=kioXIm+USfxDFzO0KBrKCW4gv109IOjzFtOVUPVcEzQ=;
+	s=korg; t=1784661850;
+	bh=3D7mA9lWzDoLkQ6NLVYfQD4kBw5GHPCYbPjvUCTNOQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rg7VUhVEDuxCcD5eKErscW3q2J7JyaG2M3Nv86CYUJcKBKj10fjF8I9XJw1ErqEkd
-	 P4fSOX+86+uJi2WcwI0sjWK+Gj2OEJnpGqAt0LFTSx9JxYWRO+EdAdikWddVl7w2cz
-	 QG4xezKpCc1mA89qSjyh2dXSEIjbf/2nSVmt1u8o=
+	b=O5e3wG2hhhpD3gSYWpj8WZGqAEZvB9gWgxutLeOfHRcU8w7D7WXrUx0OpBretoxW4
+	 puJfuhGQs79WPmmvn1lb1nb4ZOnfsGlNHV5seWuN3T/SOAaqfZYDnh3PDP1LQmsx9U
+	 4IIX1MfLm2OH8q/awjDsqYRXSo1+54zyTo4rNHpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sang-Heon Jeon <ekffu200098@gmail.com>,
-	Donghyeon Lee <asd142513@gmail.com>,
-	Munhui Chae <mochae@student.42seoul.kr>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Mykyta Yatsenko <yatsenko@meta.com>,
+	Carlos Llamas <cmllamas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0220/1276] mm/fake-numa: fix under-allocation detection in uniform split
-Date: Tue, 21 Jul 2026 17:11:03 +0200
-Message-ID: <20260721152451.011417395@linuxfoundation.org>
+Subject: [PATCH 6.12 0185/1276] libbpf: Fix UAF in strset__add_str()
+Date: Tue, 21 Jul 2026 17:10:28 +0200
+Message-ID: <20260721152450.233096834@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,87 +52,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sang-Heon Jeon <ekffu200098@gmail.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-[ Upstream commit 3a3fc1dfd6a958615ebaab8fb251e89fc2b3f2f2 ]
+[ Upstream commit b23705e6afb6ac4ae6d220dcb35975698667dd76 ]
 
-When splitting NUMA node uniformly, split_nodes_size_interleave_uniform()
-returns the next absolute node ID, not the number of nodes created.
+strset_add_str_mem() might reallocate the strset data buffer in order to
+accommodate the provided string 's'. However, if 's' points to a string
+already present in the buffer, it becomes dangling after the realloc.
+This leads to a use-after-free when attempting to memcpy() the string
+into the new buffer.
 
-The existing under-allocation detection logic compares next absolute node
-ID (ret) and request count (n), which only works when nid starts at 0.
+One scenario that triggers this problematic path is when resolve_btfids
+attempts to patch kfunc prototypes using existing BTF parameter names:
 
-For example, on a system with 2 physical NUMA nodes (node 0: 2GB, node
-1: 128MB) and numa=fake=8U, 8 fake nodes are successfully created from
-node 0 and split_nodes_size_interleave_uniform() returns 8. For node 1,
-fake node nid starts at 8, but only 4 fake nodes are created due to
-current FAKE_NODE_MIN_SIZE being 32MB, and
-split_nodes_size_interleave_uniform() returns 12. By existing
-under-allocation detection logic, "ret < n" (12 < 8) is false, so the
-under-allocation will not be detected.
+ | resolve_btfids: function bpf_list_push_back_impl already exists in BTF
+ | Segmentation fault (core dumped)
 
-Fix under-allocation detection logic to compare the number of actually
-created nodes (ret - nid) against the request count (n). Also skip
-under-allocation detection logic for memoryless physical nodes where no
-fake nodes are created.
+Compiling resolve_btfids with fsanitize=address generates a detailed
+report of the UAF:
 
-Also, fix the outdated comment describing
-split_nodes_size_interleave_uniform() to match the actual return value.
+ | =================================================================
+ | ERROR: AddressSanitizer: heap-use-after-free on address 0x7f4c4a500bd4
+ | ==1507892==ERROR: AddressSanitizer: heap-use-after-free on address 0x7f4c4a500bd4 at pc 0x55d25155a2a8 bp 0x7ffcef879060 sp 0x7ffcef878818
+ | READ of size 5 at 0x7f4c4a500bd4 thread T0
+ |     #0 0x55d25155a2a7 in memcpy (tools/bpf/resolve_btfids/resolve_btfids+0xcf2a7)
+ |     #1 0x55d2515d708e in strset__add_str tools/lib/bpf/strset.c:162:2
+ |     #2 0x55d2515c730b in btf__add_str tools/lib/bpf/btf.c:2109:8
+ |     #3 0x55d2515c9020 in btf__add_func_param tools/lib/bpf/btf.c:3108:14
+ |     #4 0x55d25159f0b5 in process_kfunc_with_implicit_args tools/bpf/resolve_btfids/main.c:1196:9
+ |     #5 0x55d25159e004 in btf2btf tools/bpf/resolve_btfids/main.c:1229:9
+ |     #6 0x55d25159cee7 in main tools/bpf/resolve_btfids/main.c:1535:6
+ |     #7 0x7f4c78e29f76 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+ |     #8 0x7f4c78e2a026 in __libc_start_main csu/../csu/libc-start.c:360:3
+ |     #9 0x55d2514bb860 in _start (tools/bpf/resolve_btfids/resolve_btfids+0x30860)
+ |
+ | 0x7f4c4a500bd4 is located 13268 bytes inside of 2829000-byte region [0x7f4c4a4fd800,0x7f4c4a7b02c8)
+ | freed by thread T0 here:
+ |     #0 0x55d25155b700 in realloc (tools/bpf/resolve_btfids/resolve_btfids+0xd0700)
+ |     #1 0x55d2515c426c in libbpf_reallocarray tools/lib/bpf/./libbpf_internal.h:220:9
+ |     #2 0x55d2515c426c in libbpf_add_mem tools/lib/bpf/btf.c:224:13
+ |
+ | previously allocated by thread T0 here:
+ |     #0 0x55d25155b2e3 in malloc (tools/bpf/resolve_btfids/resolve_btfids+0xd02e3)
+ |     #1 0x55d2515d6e7d in strset__new tools/lib/bpf/strset.c:58:20
 
-Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
-Reported-by: Donghyeon Lee <asd142513@gmail.com>
-Reported-by: Munhui Chae <mochae@student.42seoul.kr>
-Fixes: cc9aec03e58f ("x86/numa_emulation: Introduce uniform split capability") # 4.19
-Link: https://patch.msgid.link/20260417135805.1758378-1-ekffu200098@gmail.com
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+While resolve_btfids could be refactored to avoid this call path, let's
+instead fix this issue at the source in strset__add_str() and avoid
+similar scenarios.
+
+Let's check if set->strs_data was reallocated and whether 's' points to
+an internal string within the old strset buffer. In such case, 's' is
+reconstructed to point to the new buffer.
+
+While already here, also fix strset__find_str() which suffers from the
+same problem by factoring out the common operations into a new helper
+function strset_str_append().
+
+Fixes: 90d76d3ececc ("libbpf: Extract internal set-of-strings datastructure APIs")
+Suggested-by: Andrii Nakryiko <andrii@kernel.org>
+Suggested-by: Mykyta Yatsenko <yatsenko@meta.com>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260523162722.2718940-1-cmllamas@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/numa_emulation.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ tools/lib/bpf/strset.c | 62 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 41 insertions(+), 21 deletions(-)
 
-diff --git a/mm/numa_emulation.c b/mm/numa_emulation.c
-index 9d55679d99ceea..e22eca812b6282 100644
---- a/mm/numa_emulation.c
-+++ b/mm/numa_emulation.c
-@@ -214,7 +214,7 @@ static u64 uniform_size(u64 max_addr, u64 base, u64 hole, int nr_nodes)
-  * Sets up fake nodes of `size' interleaved over physical nodes ranging from
-  * `addr' to `max_addr'.
-  *
-- * Returns zero on success or negative on error.
-+ * Returns node ID of the next node on success or negative error code.
-  */
- static int __init split_nodes_size_interleave_uniform(struct numa_meminfo *ei,
- 					      struct numa_meminfo *pi,
-@@ -398,7 +398,7 @@ void __init numa_emulation(struct numa_meminfo *numa_meminfo, int numa_dist_cnt)
- 	 */
- 	if (strchr(emu_cmdline, 'U')) {
- 		unsigned long n;
--		int nid = 0;
-+		int nid = 0, nr_created;
+diff --git a/tools/lib/bpf/strset.c b/tools/lib/bpf/strset.c
+index 2464bcbd04e037..ace73c6b3d62b4 100644
+--- a/tools/lib/bpf/strset.c
++++ b/tools/lib/bpf/strset.c
+@@ -107,6 +107,41 @@ static void *strset_add_str_mem(struct strset *set, size_t add_sz)
+ 			      set->strs_data_len, set->strs_data_max_len, add_sz);
+ }
  
- 		n = simple_strtoul(emu_cmdline, &emu_cmdline, 0);
- 		ret = -1;
-@@ -416,9 +416,18 @@ void __init numa_emulation(struct numa_meminfo *numa_meminfo, int numa_dist_cnt)
- 					n, &pi.blk[0], nid);
- 			if (ret < 0)
- 				break;
--			if (ret < n) {
++static long strset_str_append(struct strset *set, const char *s)
++{
++	uintptr_t old_data = (uintptr_t)set->strs_data;
++	size_t old_data_len = set->strs_data_len;
++	uintptr_t old_s = (uintptr_t)s;
++	long len = strlen(s) + 1;
++	void *p;
 +
-+			/*
-+			 * If no memory was found for this physical node,
-+			 * skip the under-allocation check.
-+			 */
-+			if (ret == nid)
-+				continue;
++	/*
++	 * Hashmap keys are always offsets within set->strs_data, so to even
++	 * look up some string from the "outside", we need to first append it
++	 * at the end, so that it can be addressed with an offset. Luckily,
++	 * until set->strs_data_len is incremented, that string is just a piece
++	 * of garbage for the rest of the code, so no harm, no foul. On the
++	 * other hand, if the string is unique, it's already appended and
++	 * ready to be used, only a simple set->strs_data_len increment away.
++	 */
++	p = strset_add_str_mem(set, len);
++	if (!p)
++		return -ENOMEM;
 +
-+			nr_created = ret - nid;
-+			if (nr_created < n) {
- 				pr_info("%s: phys: %d only got %d of %ld nodes, failing\n",
--						__func__, i, ret, n);
-+						__func__, i, nr_created, n);
- 				ret = -1;
- 				break;
- 			}
++	/*
++	 * The set->strs_data might have reallocated and if 's' pointed
++	 * to an internal string within the old buffer, then it became
++	 * dangling and needs to be reconstructed before the copy.
++	 */
++	if (old_data && old_data != (uintptr_t)set->strs_data &&
++	    old_s >= old_data && old_s < old_data + old_data_len)
++		s = set->strs_data + (old_s - old_data);
++
++	memcpy(p, s, len);
++
++	return len;
++}
++
+ /* Find string offset that corresponds to a given string *s*.
+  * Returns:
+  *   - >0 offset into string data, if string is found;
+@@ -116,16 +151,12 @@ static void *strset_add_str_mem(struct strset *set, size_t add_sz)
+ int strset__find_str(struct strset *set, const char *s)
+ {
+ 	long old_off, new_off, len;
+-	void *p;
+ 
+-	/* see strset__add_str() for why we do this */
+-	len = strlen(s) + 1;
+-	p = strset_add_str_mem(set, len);
+-	if (!p)
+-		return -ENOMEM;
++	len = strset_str_append(set, s);
++	if (len < 0)
++		return len;
+ 
+ 	new_off = set->strs_data_len;
+-	memcpy(p, s, len);
+ 
+ 	if (hashmap__find(set->strs_hash, new_off, &old_off))
+ 		return old_off;
+@@ -142,24 +173,13 @@ int strset__find_str(struct strset *set, const char *s)
+ int strset__add_str(struct strset *set, const char *s)
+ {
+ 	long old_off, new_off, len;
+-	void *p;
+ 	int err;
+ 
+-	/* Hashmap keys are always offsets within set->strs_data, so to even
+-	 * look up some string from the "outside", we need to first append it
+-	 * at the end, so that it can be addressed with an offset. Luckily,
+-	 * until set->strs_data_len is incremented, that string is just a piece
+-	 * of garbage for the rest of the code, so no harm, no foul. On the
+-	 * other hand, if the string is unique, it's already appended and
+-	 * ready to be used, only a simple set->strs_data_len increment away.
+-	 */
+-	len = strlen(s) + 1;
+-	p = strset_add_str_mem(set, len);
+-	if (!p)
+-		return -ENOMEM;
++	len = strset_str_append(set, s);
++	if (len < 0)
++		return len;
+ 
+ 	new_off = set->strs_data_len;
+-	memcpy(p, s, len);
+ 
+ 	/* Now attempt to add the string, but only if the string with the same
+ 	 * contents doesn't exist already (HASHMAP_ADD strategy). If such
 -- 
 2.53.0
 
