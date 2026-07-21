@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5C64195C9;
-	Tue, 21 Jul 2026 19:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB87412261;
+	Tue, 21 Jul 2026 19:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660460; cv=none; b=dwMbRjcUS5NDHWifSEjEk+XjTMqKpxbImxitZgJqbFCf8/PV46d3m24/GPb6UuN60Rvr8P8K3Aa3/9Ahr6VBr7babYoTrn0nBAyFhYSa2SLrh9QAUU7kMi/a1TCGbQ499NOsqlraI+DfohnVkhX1QwGxCiJ9CyRuBji65svNEg4=
+	t=1784660461; cv=none; b=TQy4TTH+780LOMwjF4LoUf2j3Tdxv4vCQsWe8iuoaVd3+CAHaBm7XqSgNYmtgg1RkX6E5xceTemJm4h1uNDjV3cS21JlRr1MBuIjdHeyfEWwjxmzzFkFMW2rDqCDCbOrPKt+as+ZAN1nCqNwFp2BkjLoB43TycYpki6RXnHN+rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660460; c=relaxed/simple;
-	bh=kHNZ2nNWc/IH+gOYA3hd5q94npz/ZgB5togCgJlEeps=;
+	s=arc-20240116; t=1784660461; c=relaxed/simple;
+	bh=k7D6HNq8no0mOYo5+JuwkOt9Ii7zeFxj52S2XBNTFeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bx4kObyo4p1qeRJUMpxMMRS6ngtpSWnTXqzqzLHn/DuWpvVSwDoDZbxvShcJyfOd0fR4iQpNLcMT2MMqSoUNg2afe4xahr0dKLcApJ4HE4qwNGvREPDS4y11FqSlyFWttwAky+Zbsdp6JcGI3cT570PAG00vkuoCUkBRoQWKuWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gIvalmuX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SXdjgDJoaJmbzR3nJLRdUR8iQgTHf3x9HDK4nEPI2ShiyEu7BSQKvCWf+KMEIkHN2zA6Lt28QV/yiihHGZIMbZaRa4GHZEro6ak5pLI32GJKKaDRVkBeS8oEdqOHIZPEffIHV27W1QnPwlgsVUFn6HiXT+HLp95iiWXzFkb0q54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zm3FORpA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gIvalmuX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FFEC1F00A3E;
-	Tue, 21 Jul 2026 19:00:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zm3FORpA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2E21F00AC4;
+	Tue, 21 Jul 2026 19:00:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660430;
-	bh=/Wyhr8VzLyd4CjdPSW03ug0HGZAkQx6jVQSOnCYUdZg=;
+	s=korg; t=1784660433;
+	bh=dlK6nSx7u3BmRfRA6kgrWb6BQkDDmGZj0xqM4meWXB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gIvalmuXDRQp4pNix80Ov5RJKHENbF3eb1F+pK8w4zagQ09ndaGvY7T5PoRydopzM
-	 SyY5qn9hq4Me651ih0PhJj2jAC/vIgpCU44Lyj1+q50i5fEln0NRI6ui+grzeHQE+9
-	 c7a3yrEW/Z2Pbh6s1P7MqyQjOVMq3zhymqzUP0O8=
+	b=Zm3FORpAhLDXs11E8RhDiOLL5x3JIXxqh72tP3W3UQa5UOKBXic79aHrK0qH+ufmM
+	 thZidsSYFxGhCoE5lX+JQkvfVu6GLhLAIU+DcYaZSfqyE4EXMl2LdLQ/fbTyd4MEhu
+	 HBU+CZsmdNHhfIoqYs9R1+tEnWVqxf2VTmL2kk4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c2cfe997245202e46f10@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
+	Carol L Soto <csoto@nvidia.com>,
+	Jamie Nguyen <jamien@nvidia.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0978/2077] fs/ntfs3: prevent potential lcn remains uninitialized
-Date: Tue, 21 Jul 2026 17:10:51 +0200
-Message-ID: <20260721152615.887217729@linuxfoundation.org>
+Subject: [PATCH 7.1 0979/2077] fs/ntfs3: resize log->one_page_buf when adopting on-disk page size
+Date: Tue, 21 Jul 2026 17:10:52 +0200
+Message-ID: <20260721152615.910012151@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,63 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Jamie Nguyen <jamien@nvidia.com>
 
-[ Upstream commit 57ac2831c8e0f168090d38e3de758c6a59db44db ]
+[ Upstream commit 5a35454179fe1041d9cd286f5d320ce0d448c12a ]
 
-The target VCN being sought was not found within runs[0], causing
-run_lookup() to return false. This causes run_lookup_entry() to return
-false, which in turn results in a len value of 0, and the new parameter
-passed to attr_data_get_block() is NULL. Collectively, these factors
-ultimately cause attr_data_get_block_locked() to exit prematurely without
-initializing lcn, thereby triggering [1].
+log_replay() allocates log->one_page_buf using the page size that was
+chosen from the host PAGE_SIZE:
 
-To prevent [1], the clen check within ni_seek_data_or_hole() has been
-moved to occur before the lcn check.
+	log->one_page_buf = kmalloc(log->page_size, GFP_NOFS);
 
-[1]
-BUG: KMSAN: uninit-value in ni_seek_data_or_hole+0x24f/0x5f0 fs/ntfs3/frecord.c:2862
- ni_seek_data_or_hole+0x24f/0x5f0 fs/ntfs3/frecord.c:2862
- ntfs_llseek+0x22a/0x4a0 fs/ntfs3/file.c:1530
- vfs_llseek fs/read_write.c:391 [inline]
+Later, when a restart area is found, the log page size recorded on disk
+is adopted:
 
-Fixes: c61326967728 ("fs/ntfs3: implement llseek SEEK_DATA/SEEK_HOLE by scanning data runs")
-Reported-by: syzbot+c2cfe997245202e46f10@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c2cfe997245202e46f10
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+	t32 = le32_to_cpu(log->rst_info.r_page->sys_page_size);
+	if (log->page_size != t32) {
+		log->l_size = log->orig_file_size;
+		log->page_size = norm_file_page(t32, &log->l_size,
+						t32 == DefaultLogPageSize);
+	}
+
+If the on-disk page size is larger than the size used for the initial
+allocation, log->page_size grows but one_page_buf is left at its
+original, smaller size. A subsequent unaligned read_log_page() then
+reads log->page_size bytes into the undersized scratch buffer:
+
+	page_buf = page_off ? log->one_page_buf : *buffer;
+	err = ntfs_read_run_nb_ra(ni->mi.sbi, &ni->file.run, page_vbo, page_buf,
+				  log->page_size, NULL, &log->read_ahead);
+
+overflowing the allocation. This is reachable when mounting a dirty
+NTFS volume whose log was formatted with a page size larger than the
+buffer initially allocated on the mounting host (for example a 64K-log
+volume mounted on a host that allocated a 4K scratch buffer).
+
+Grow one_page_buf when the adopted on-disk page size exceeds the size
+used for the initial allocation. On krealloc() failure the original
+buffer is left intact and freed by the existing error path.
+
+Fixes: b46acd6a6a627 ("fs/ntfs3: Add NTFS journal")
+Reported-by: Carol L Soto <csoto@nvidia.com>
+Signed-off-by: Jamie Nguyen <jamien@nvidia.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/frecord.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/ntfs3/fslog.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index bb3348f256d997..974c55ae2c0145 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -2859,6 +2859,11 @@ loff_t ni_seek_data_or_hole(struct ntfs_inode *ni, loff_t offset, bool data)
- 			return err;
- 		}
- 
-+		if (!clen) {
-+			/* Corrupted file. */
-+			return -EINVAL;
-+		}
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 3c320e7a4c12fb..a76d4c3cd3946b 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -3937,9 +3937,28 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)
+ 	 */
+ 	t32 = le32_to_cpu(log->rst_info.r_page->sys_page_size);
+ 	if (log->page_size != t32) {
++		u32 old_page_size = log->page_size;
 +
- 		if (lcn == RESIDENT_LCN) {
- 			/* clen - resident size in bytes. clen == ni->vfs_inode.i_size */
- 			if (offset >= clen) {
-@@ -2909,10 +2914,6 @@ loff_t ni_seek_data_or_hole(struct ntfs_inode *ni, loff_t offset, bool data)
- 			}
- 		}
- 
--		if (!clen) {
--			/* Corrupted file. */
--			return -EINVAL;
--		}
+ 		log->l_size = log->orig_file_size;
+ 		log->page_size = norm_file_page(t32, &log->l_size,
+ 						t32 == DefaultLogPageSize);
++
++		/*
++		 * If the adopted on-disk page size is larger than the size used
++		 * to allocate one_page_buf above, grow the scratch buffer so a
++		 * later read_log_page() cannot overflow it.
++		 */
++		if (log->page_size > old_page_size) {
++			void *buf;
++
++			buf = krealloc(log->one_page_buf, log->page_size,
++				       GFP_NOFS);
++			if (!buf) {
++				err = -ENOMEM;
++				goto out;
++			}
++			log->one_page_buf = buf;
++		}
  	}
- }
  
+ 	if (log->page_size != t32 ||
 -- 
 2.53.0
 
