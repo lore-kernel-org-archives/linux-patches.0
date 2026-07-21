@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16236199920;
-	Tue, 21 Jul 2026 20:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A123B47F6;
+	Tue, 21 Jul 2026 20:31:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665860; cv=none; b=uRfgZYCv/OBm54uGcmJ1VHsLB7/TYMhOTJGiaBjEM7PMFEtn5zqh4F5yGdQnTMN0htfXxceqMbL2oJz8C6k6e7lh+eG/s3nj0Al86Gz1T2VNTy4RJCBFklK4SkHKdFu5jKzlO7rwaZqqc4x+1sS64QFwN2OWpG5i7qRW5aP1ons=
+	t=1784665862; cv=none; b=YL58sR+oqYb9KlpRv33sd1tw5IxwwrI4QLlOyQozl9jZ5WetfqIHr9CSq25osTlKBULigPfYOH9hHmtQSXC52brIvgepupOKxEBG6XCtb4nbqrtkpeWGR/x8UV5eNVPWf+TeZWvcPiG8eDgMLCqjvqwXQmuGnmcGWKblJUHfjew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665860; c=relaxed/simple;
-	bh=AW93imHdmb7GWBM56tO8tVsI6ALePRnfrAdC3mWOIyw=;
+	s=arc-20240116; t=1784665862; c=relaxed/simple;
+	bh=QUmQotcntPwcjwwkhU83bBD1Hfgqf05JvVgEgMOq9MY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LB2d8uvuUsvLUi4hCCITV2kEs22bvf/cgRlDBC4lGFkiM+4OQZkcpdGYvHPhCOVHFKL0+/27+rvak9nEVOChQS7G2oPh9dd+hyMJsLNeGJfSfC/YZ+VN9CQS2E/flZxHsTqemb5YWaKT74d5jYJYXsrDt3wbFInxSsvM98R2fks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uo6koQ/i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qYxfSkgZ5BQAO3t+iCse0bZncphQc56ihAOJMH8YvPcWcrRm4zmbnqXHPZ7KsGFuSd4u4YrvfuseRshfCy/cP3pwEQ4PUTXkDtzUIEotOlkYpLpSvSuaFNYN0vYwGrr4LiRyg8fXscJZ1x7XncdNZNftHe4okuVpSmdTKYqny2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXmbHqpe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uo6koQ/i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76D1E1F000E9;
-	Tue, 21 Jul 2026 20:30:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXmbHqpe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17AFE1F00A3A;
+	Tue, 21 Jul 2026 20:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665858;
-	bh=1PL8hd1jhWK4dELAm8jIgJgiyX/QE/Fmlx2YMcPqR14=;
+	s=korg; t=1784665861;
+	bh=thd7rqVRUAOPMlvwH0BXp9K65ycdJrDFpuYFMGR6wMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uo6koQ/i3oPX40EJsobzsFqyuTHlQIaNFgwts9GG+J7SlcOOGxJLUMFKhlu8iGQZX
-	 V7EU55LghZXiXGWB3pjDE1JXu6baYvF3WRVksfxFjhOqR+BUcXUEDqTgDekWa9EEoT
-	 hS8q1rgw5qHIk5oJcaE/IruHhXRmRAwiAsfMJ4Ec=
+	b=rXmbHqpe8npFbhnmizs5SlrODFeem88LKJ2eMbq3YiCq9yNKke3f9A2yRG0FnLZ3Z
+	 Q1/YWeLR/joMugHaCbZ5P1PSGY+gYdXsLphDexFrPw7Mpc2KuIyKcz+GPZpHhz5SoV
+	 g/Kwr3cVzMlUvGati+J2JU4KXlDeU+fOMSB4TTmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Tom Zanussi <tom.zanussi@linux.intel.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Tom Zanussi <zanussi@kernel.org>,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0420/1266] tracing: Bound synthetic-field strings with seq_buf
-Date: Tue, 21 Jul 2026 17:14:17 +0200
-Message-ID: <20260721152451.238350669@linuxfoundation.org>
+Subject: [PATCH 6.6 0411/1266] media: atomisp: Fix memory leak in atomisp_fixed_pattern_table()
+Date: Tue, 21 Jul 2026 17:14:08 +0200
+Message-ID: <20260721152451.034905517@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -55,125 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit f07883450eb14d1cf020b55d9f3a7ec5683bcd26 ]
+[ Upstream commit 4e8156bd9517fa18c3613ea39c222c7035f0221e ]
 
-The synthetic field helpers build a prefixed synthetic variable name and
-a generated hist command in fixed MAX_FILTER_STR_VAL buffers. The
-current code appends those strings with raw strcat(), so long key lists,
-field names, or saved filters can run past the end of the staging
-buffers.
+atomisp_v4l2_framebuffer_to_css_frame() allocates memory for
+temporary variable raw_black_frame, which must be released via
+ia_css_frame_free() before the function returns. However, if
+sh_css_set_black_frame() fails, the function returns immediately without
+performing this cleanup, leading to a memory leak.
 
-Build both strings with seq_buf and propagate -E2BIG if either the
-synthetic variable name or the generated command exceeds
-MAX_FILTER_STR_VAL. This keeps the existing tracing-side limit while
-using the helper intended for bounded command construction.
+Fix this by assigning the return value of sh_css_set_black_frame() to
+ret. This ensures that the error code is propagated while allowing the
+execution to fall through to the ia_css_frame_free() cleanup call.
 
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Tom Zanussi <tom.zanussi@linux.intel.com>
-Link: https://patch.msgid.link/20260430043350.57928-1-pengpeng@iscas.ac.cn
-Fixes: 02205a6752f2 ("tracing: Add support for 'field variables'")
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Tom Zanussi <zanussi@kernel.org>
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-[ sdr: Moved struct seq_buf *s for upside-down x-mas tree formatting ]
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+The bug was originally detected on v6.13-rc1 using an experimental
+static analysis tool we are developing, and we have verified that the
+issue persists in the latest mainline kernel. The tool is based on the
+LLVM framework and is specifically designed to detect memory management
+issues. It is currently under active development and not yet publicly
+available.
+
+We performed build testing on x86_64 with allyesconfig. Since triggering
+this error path in atomisp requires specific Intel Atom ISP hardware and
+firmware, we were unable to perform runtime testing and instead verified
+the fix according to the code logic.
+
+Fixes: 85b606e02ad7 ("media: atomisp: get rid of a bunch of other wrappers")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 41 ++++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 12 deletions(-)
+ drivers/staging/media/atomisp/pci/atomisp_cmd.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 59115079c79820..f54e3855516fb4 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -8,6 +8,7 @@
- #include <linux/module.h>
- #include <linux/kallsyms.h>
- #include <linux/security.h>
-+#include <linux/seq_buf.h>
- #include <linux/mutex.h>
- #include <linux/slab.h>
- #include <linux/stacktrace.h>
-@@ -2943,13 +2944,22 @@ find_synthetic_field_var(struct hist_trigger_data *target_hist_data,
- {
- 	struct hist_field *event_var;
- 	char *synthetic_name;
-+	struct seq_buf s;
+diff --git a/drivers/staging/media/atomisp/pci/atomisp_cmd.c b/drivers/staging/media/atomisp/pci/atomisp_cmd.c
+index 0803b296e9acc7..96b56f87c42269 100644
+--- a/drivers/staging/media/atomisp/pci/atomisp_cmd.c
++++ b/drivers/staging/media/atomisp/pci/atomisp_cmd.c
+@@ -3486,10 +3486,8 @@ int atomisp_fixed_pattern_table(struct atomisp_sub_device *asd,
+ 	if (ret)
+ 		return ret;
  
- 	synthetic_name = kzalloc(MAX_FILTER_STR_VAL, GFP_KERNEL);
- 	if (!synthetic_name)
- 		return ERR_PTR(-ENOMEM);
- 
--	strcpy(synthetic_name, "synthetic_");
--	strcat(synthetic_name, field_name);
-+	seq_buf_init(&s, synthetic_name, MAX_FILTER_STR_VAL);
-+	seq_buf_printf(&s, "synthetic_%s", field_name);
-+
-+	/* Terminate synthetic_name with a NUL. */
-+	seq_buf_str(&s);
-+
-+	if (seq_buf_has_overflowed(&s)) {
-+		kfree(synthetic_name);
-+		return ERR_PTR(-E2BIG);
-+	}
- 
- 	event_var = find_event_var(target_hist_data, system, event_name, synthetic_name);
- 
-@@ -2995,6 +3005,7 @@ create_field_var_hist(struct hist_trigger_data *target_hist_data,
- 	struct hist_field *key_field;
- 	struct hist_field *event_var;
- 	char *saved_filter;
-+	struct seq_buf s;
- 	char *cmd;
- 	int ret;
- 
-@@ -3039,28 +3050,34 @@ create_field_var_hist(struct hist_trigger_data *target_hist_data,
- 		return ERR_PTR(-ENOMEM);
- 	}
- 
-+	seq_buf_init(&s, cmd, MAX_FILTER_STR_VAL);
-+
- 	/* Use the same keys as the compatible histogram */
--	strcat(cmd, "keys=");
-+	seq_buf_puts(&s, "keys=");
- 
- 	for_each_hist_key_field(i, hist_data) {
- 		key_field = hist_data->fields[i];
- 		if (!first)
--			strcat(cmd, ",");
--		strcat(cmd, key_field->field->name);
-+			seq_buf_putc(&s, ',');
-+		seq_buf_puts(&s, key_field->field->name);
- 		first = false;
- 	}
- 
- 	/* Create the synthetic field variable specification */
--	strcat(cmd, ":synthetic_");
--	strcat(cmd, field_name);
--	strcat(cmd, "=");
--	strcat(cmd, field_name);
-+	seq_buf_printf(&s, ":synthetic_%s=%s", field_name, field_name);
- 
- 	/* Use the same filter as the compatible histogram */
- 	saved_filter = find_trigger_filter(hist_data, file);
--	if (saved_filter) {
--		strcat(cmd, " if ");
--		strcat(cmd, saved_filter);
-+	if (saved_filter)
-+		seq_buf_printf(&s, " if %s", saved_filter);
-+
-+	/* Terminate cmd with a NUL. */
-+	seq_buf_str(&s);
-+
-+	if (seq_buf_has_overflowed(&s)) {
-+		kfree(cmd);
-+		kfree(var_hist);
-+		return ERR_PTR(-E2BIG);
- 	}
- 
- 	var_hist->cmd = kstrdup(cmd, GFP_KERNEL);
+-	if (sh_css_set_black_frame(asd->stream_env[ATOMISP_INPUT_STREAM_GENERAL].stream,
+-				   raw_black_frame) != 0)
+-		return -ENOMEM;
+-
++	ret = sh_css_set_black_frame(asd->stream_env[ATOMISP_INPUT_STREAM_GENERAL].stream,
++				     raw_black_frame);
+ 	ia_css_frame_free(raw_black_frame);
+ 	return ret;
+ }
 -- 
 2.53.0
 
