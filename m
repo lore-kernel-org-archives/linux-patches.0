@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4B9476048;
-	Tue, 21 Jul 2026 17:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519E5476069;
+	Tue, 21 Jul 2026 17:53:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656401; cv=none; b=gWN4KHkwR51K+WHA83MjviTRambNFHKGjn1FJriARuY/VYMIv4vF/vy/CbHb55AOaic4O38pYGSQZBYbJnoyhh5IgQDEKShGcTLx0C0umDSZdEsQH9PEZpI6ChhZ7urHCQjYb2REVVGU4xO5+S1x6s6Ql24YUOo5WoeB9ANVnGQ=
+	t=1784656404; cv=none; b=ofVDRL/iffg9MBECol4jlI5LSr1UOkOd0BnRR552ChgEshmvCLHLsxtgoqYuC/42avE1rNW6cH6n9Li1DpoosULwfOUNdGzYNvYqm5IegOqq1BAut4jzoE9hzBVZmJYXMqG5SLkRvscdBVGKkHbkLJN3gi1iIA/bYMlfFUGmrRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656401; c=relaxed/simple;
-	bh=as1JsX92T8N6rDvGw8/0l2cgZdosGAp16hIMYAQieCE=;
+	s=arc-20240116; t=1784656404; c=relaxed/simple;
+	bh=aE7c5SgnuSHJtPggQK2Y1hEfhHwbkXAQUU4RkGf+Wh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u6SD/9yI0SnhJBK8EuMN5nMaaJo54xNoJfdKNyjdrcF2ztaH1NZAGxn/vxHAzQh8nnzwaAlgyxe+C3xaBU60t25W6WMr2QJe4105M83QLCF2aaiqFbWWlkVH+a/8p7thFbA4Z1L6ABTcIpXg4EbZ5txVikPLytYU/zag2H29mXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=euTTKuUa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h8G7wq12FxeUTFbGcvNCpADJNhziCIbl+7uRz8i93vRp7KX3KZ/IDzhyP2EeNOpLt02DvnxzsZvbmkANZBJF55fYu7FOYSG8ud5msPscvSANUl4jr3D/8lBtfPPgttQTqVZcNcO0PfuzLuLS7cG0mcHhFlLw9tgeuQUfSut4p+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wi5Ofu7/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="euTTKuUa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E4F1F00A3D;
-	Tue, 21 Jul 2026 17:53:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wi5Ofu7/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6963F1F00A3A;
+	Tue, 21 Jul 2026 17:53:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656400;
-	bh=ZfRfaPfyuqO1rbFs8BWqXYLP9bHGWERBCO6MCVXMg1Y=;
+	s=korg; t=1784656402;
+	bh=jtVPcbuV7+V6x2715S8gZpY6LaqTNztDUZ8Z9ebPjc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=euTTKuUaIFn/s0f+qnpHsbse8z2GMNi7qePNixZ6rOZ3D2rRWSuNzs/jDJYJq78tE
-	 hhDzgzLotWFnOgwgjBulicSswuwIPLYssEiGOhPLMbhPd+9osnGWAX9zi94afhlIr0
-	 N7PjeQAHtAEcJfnGYK5InNkq6/BL2yWKCjRln998=
+	b=Wi5Ofu7/WnCc3zPLrTiCAun0PH0t76nEnp9V1e/JWZEE4+3oTDP35hjWkY3I9VjbY
+	 FLTxk9Ps/evxKCzmvqLMLU4+h/0+L7GtVh1TCrq8IoEC3WKTYScdFure7TEkEPMRbs
+	 6Bwi22U12CSPCkR4rxdZyOLE28kKCZdgLutGlEsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Dan Williams <djbw@kernel.org>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0371/1611] ALSA: seq: Clear variable event pointer on read
-Date: Tue, 21 Jul 2026 17:08:07 +0200
-Message-ID: <20260721152523.521138777@linuxfoundation.org>
+Subject: [PATCH 6.18 0331/1611] cxl/fwctl: Fix __fortify_panic
+Date: Tue, 21 Jul 2026 17:07:27 +0200
+Message-ID: <20260721152522.541236179@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,46 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Dan Williams <djbw@kernel.org>
 
-[ Upstream commit 705dd6dcbc0ea87351c660c1a6443f85f1001c76 ]
+[ Upstream commit 6c9d2e87df40d606f1c85143e9acb1ecff463d5e ]
 
-snd_seq_read() copies a queued variable-length event header to userspace
-before expanding the payload. Queued variable-length events use
-SNDRV_SEQ_EXT_CHAINED internally, and data.ext.ptr points at the first
-extension cell.
+Fix a runtime assertion in cxlctl_get_supported_features(). Fortify
+complains that it is potentially overflowing the entries array per
+__counted_by_le(num_entries). Quiet the false positive by initializing
+@num_entries earlier.
 
-The read side strips SNDRV_SEQ_EXT_* bits from data.ext.len before the
-copy, but it leaves data.ext.ptr untouched. A userspace sequencer client
-can therefore write a direct variable event to itself and read back the
-extension-cell kernel address from the returned header.
+ memcpy: detected buffer overflow: 48 byte write of buffer size 0
+ WARNING: lib/string_helpers.c:1036 at __fortify_report+0x4d/0xa0, CPU#7: fwctl/1398
+ RIP: 0010:__fortify_report+0x50/0xa0
+ Call Trace:
+  __fortify_panic+0xd/0xf
+  cxlctl_get_supported_features.cold+0x23/0x35 [cxl_core]
 
-Clear the temporary header pointer before copy_to_user(). The original
-queued event remains unchanged and is still passed to
-snd_seq_expand_var_event(), so payload expansion keeps using the
-internal chain.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Link: https://patch.msgid.link/20260607004129.61345-1-kylebot@openai.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 4d1c09cef2c2 ("cxl: Add support for fwctl RPC command to enable CXL feature commands")
+Signed-off-by: Dan Williams <djbw@kernel.org>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260519221204.1517773-2-djbw@kernel.org
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_clientmgr.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/cxl/core/features.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/core/seq/seq_clientmgr.c b/sound/core/seq/seq_clientmgr.c
-index 46a1ded7eb068b..b8b04fc79f489c 100644
---- a/sound/core/seq/seq_clientmgr.c
-+++ b/sound/core/seq/seq_clientmgr.c
-@@ -441,6 +441,7 @@ static ssize_t snd_seq_read(struct file *file, char __user *buf, size_t count,
+diff --git a/drivers/cxl/core/features.c b/drivers/cxl/core/features.c
+index 4bc484b46f439f..c3cb2060bbeac8 100644
+--- a/drivers/cxl/core/features.c
++++ b/drivers/cxl/core/features.c
+@@ -423,6 +423,7 @@ static void *cxlctl_get_supported_features(struct cxl_features_state *cxlfs,
  
- 			memcpy(&tmpev, &cell->event, aligned_size);
- 			tmpev.data.ext.len &= ~SNDRV_SEQ_EXT_MASK;
-+			tmpev.data.ext.ptr = NULL;
- 			if (copy_to_user(buf, &tmpev, aligned_size)) {
- 				err = -EFAULT;
- 				break;
+ 	rpc_out->size = struct_size(feat_out, ents, requested);
+ 	feat_out = &rpc_out->get_sup_feats_out;
++	feat_out->num_entries = cpu_to_le16(requested);
+ 
+ 	for (i = start, pos = &feat_out->ents[0];
+ 	     i < cxlfs->entries->num_features; i++, pos++) {
+@@ -444,7 +445,6 @@ static void *cxlctl_get_supported_features(struct cxl_features_state *cxlfs,
+ 		}
+ 	}
+ 
+-	feat_out->num_entries = cpu_to_le16(requested);
+ 	feat_out->supported_feats = cpu_to_le16(cxlfs->entries->num_features);
+ 	rpc_out->retval = CXL_MBOX_CMD_RC_SUCCESS;
+ 	*out_len = out_size;
 -- 
 2.53.0
 
