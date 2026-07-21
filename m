@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D083376A0B;
-	Tue, 21 Jul 2026 21:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5753911CE;
+	Tue, 21 Jul 2026 21:17:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668646; cv=none; b=mAoEtohmg1byWi8peCBYzbZB2ccCh+7c8oLXysU5J/KE8WZDIkjLtrbNqAMRKb+uJxG8+7vgAROjDvEL/XMUv3i1nLNoc2LdU8FoinjIWSoIgMEaczlBHhnqN8dzPPSzpcEnfNplYgvGWryh98xRqgWVKBBDAwUoWhzfZM4FAks=
+	t=1784668648; cv=none; b=nfaHFqG690Pw7JrZGX7BTl9xuJtUh8OgsBK1bNJ7QlmuwLAaAeXHIEDMtysbEA6GghB5/RHbVdPiqNYFDZKHta6nMbmSjpdazbHHAiFR3LwlC9BdM9Cd7CHn77yies2C30BRWrOGtEomCFaWWWWJQomdypAGmnDhQcWl6EWci7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668646; c=relaxed/simple;
-	bh=vaOiG1LB+vBc6yQ4f6HoCZlFtbeF0sBVMMfY/MM3ZJQ=;
+	s=arc-20240116; t=1784668648; c=relaxed/simple;
+	bh=O4/bCKurTkc6RCMhSXyZGJ8VGoJRkfFRehZ9kupXhXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h2CZQOZcgISNMUyhAOo8hiyAHjEbf6n9G4rF25rjgYsa1lwE0thMyHJ/wmao7lTM7JkgiIGZUEXpLbqvXDXQAtLggrQ/wmnIhOcf/VEn4w2sO6Sb9k8aKCvrOUuw3Z3/DKE/7a9pPJCGVpNqFsVJ8cP2hCNNKed2eEDGUmtyITQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SefnVLZp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ezPAnm8undOWFOehcXZ1tV5cSYazbYSqw639/byLU2bT5nBlyKS1aVKvsjt/ibsw13oJaI1qTp+OMlZqowwNehUDyTGnJry2PM0QpPj06jQ0IclkQ/5Nd10oTnrW3lcOMIhGFgeFrNRqz7OEqRUMySs4d998QEwaDluLBuFr2mA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b7Lpgly0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SefnVLZp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04EA1F000E9;
-	Tue, 21 Jul 2026 21:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b7Lpgly0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F042D1F00A3D;
+	Tue, 21 Jul 2026 21:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668639;
-	bh=cbWurxHyQwFHlFFSIXQ0BY4Xb8Gsl+1GfnRQeDDAIKg=;
+	s=korg; t=1784668644;
+	bh=FPQTuYRrctqmR67k/80oXg2ENcvz3i+NOAnFGmOAUPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SefnVLZp4sBsM+fVWXG9clKFo3Sh/e3W4jBDToCLq6csIMYMqkoPMpxRTAL7IlOF1
-	 z2/uc3PcyO2VXF/h3o6iDIScWBSiAijY3QGvU4wi/zq3q9PBTc4X3vmNhyR5rNo8m9
-	 fIQP8uHzNyV92TaXBfIhCPYVwP9PKYBgIEYGiLCU=
+	b=b7Lpgly0oc1ffdJ3d4nG33rbAUxYiUgBJOYwPOzf7gBvstE8OmqbpxcWBJ8K83Ibe
+	 IYDub/KLZdranmxPvmo4uxRksixZejTZ8SSO+L2dVCCS0gLRa2RBcPQTRVKy7V1PCo
+	 QILgJ72XxigKLeH3795nmPVK2E+IE7vqji7u8+Eg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	hch@lst.de,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.1 0253/1067] xfs: resample the data fork mapping after cycling ILOCK
-Date: Tue, 21 Jul 2026 17:14:14 +0200
-Message-ID: <20260721152430.255915422@linuxfoundation.org>
+	Adam Li <adamli@os.amperecomputing.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0255/1067] sched/fair: Only update stats for allowed CPUs when looking for dst group
+Date: Tue, 21 Jul 2026 17:14:16 +0200
+Message-ID: <20260721152430.303901379@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,100 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Adam Li <adamli@os.amperecomputing.com>
 
-commit 2f4acd0fcd862e22eab45690ec2c08c80b6ef2e7 upstream.
+[ Upstream commit 82d6e01a0699800efd8b048eb584c907ccb47b7a ]
 
-xfs_reflink_fill_{cow_hole,delalloc} are both presented with an inode,
-a data fork mapping, and a cow fork mapping.  Unfortunately, these two
-helpers cycle the ILOCK to grab a transaction, which means that the
-mappings are stale as soon as we reacquire the ILOCK.  Currently we
-refresh the cow fork mapping by re-calling xfs_find_trim_cow_extent, but
-we don't refresh the data fork mapping beforehand, which means that the
-xfs_bmap_trim_cow in that function queries the refcount btree about the
-wrong physical blocks and returns an inaccurate value in *shared.
+Load imbalance is observed when the workload frequently forks new threads.
+Due to CPU affinity, the workload can run on CPU 0-7 in the first
+group, and only on CPU 8-11 in the second group. CPU 12-15 are always idle.
 
-If *shared is now false, the directio write proceeds with a stale data
-fork mapping.  Fix this by querying the data fork mapping if the
-sequence counter changes across the ILOCK cycle.
+{ 0 1 2 3 4 5 6 7 } {8 9 10 11 12 13 14 15}
+  * * * * * * * *    * * *  *
 
-Cc: hch@lst.de
-Cc: stable@vger.kernel.org # v4.11
-Fixes: 3c68d44a2b49a0 ("xfs: allocate direct I/O COW blocks in iomap_begin")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+When looking for dst group for newly forked threads, in many times
+update_sg_wakeup_stats() reports the second group has more idle CPUs
+than the first group. The scheduler thinks the second group is less
+busy. Then it selects least busy CPUs among CPU 8-11. Therefore CPU 8-11
+can be crowded with newly forked threads, at the same time CPU 0-7
+can be idle.
+
+A task may not use all the CPUs in a schedule group due to CPU affinity.
+Only update schedule group statistics for allowed CPUs.
+
+Signed-off-by: Adam Li <adamli@os.amperecomputing.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_reflink.c |   36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ kernel/sched/fair.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_reflink.c
-+++ b/fs/xfs/xfs_reflink.c
-@@ -389,6 +389,7 @@ xfs_reflink_fill_cow_hole(
- 	struct xfs_trans	*tp;
- 	xfs_filblks_t		resaligned;
- 	xfs_extlen_t		resblks;
-+	unsigned int		seq_before = READ_ONCE(ip->i_df.if_seq);
- 	int			nimaps;
- 	int			error;
- 	bool			found;
-@@ -407,6 +408,22 @@ xfs_reflink_fill_cow_hole(
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 376d835ca7b45e..23972665264655 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -9550,7 +9550,7 @@ static inline void update_sg_wakeup_stats(struct sched_domain *sd,
+ 	if (sd->flags & SD_ASYM_CPUCAPACITY)
+ 		sgs->group_misfit_task_load = 1;
  
- 	*lockmode = XFS_ILOCK_EXCL;
+-	for_each_cpu(i, sched_group_span(group)) {
++	for_each_cpu_and(i, sched_group_span(group), p->cpus_ptr) {
+ 		struct rq *rq = cpu_rq(i);
+ 		unsigned int local;
  
-+	/*
-+	 * The data fork mapping may have changed while we dropped the ILOCK
-+	 * (a racing O_DIRECT writer under IOLOCK_SHARED can complete a full
-+	 * CoW cycle including xfs_reflink_end_cow(), which remaps this offset
-+	 * and drops the refcount of the old shared block).  Re-read it so the
-+	 * shared-status recheck below and the caller's in-place iomap both
-+	 * operate on the current mapping rather than a stale physical block.
-+	 */
-+	if (seq_before != READ_ONCE(ip->i_df.if_seq)) {
-+		nimaps = 1;
-+		error = xfs_bmapi_read(ip, imap->br_startoff,
-+				imap->br_blockcount, imap, &nimaps, 0);
-+		if (error)
-+			goto out_trans_cancel;
-+	}
-+
- 	error = xfs_find_trim_cow_extent(ip, imap, cmap, shared, &found);
- 	if (error || !*shared)
- 		goto out_trans_cancel;
-@@ -455,6 +472,8 @@ xfs_reflink_fill_delalloc(
- 	bool			found;
- 
- 	do {
-+		unsigned int	seq_before = READ_ONCE(ip->i_df.if_seq);
-+
- 		xfs_iunlock(ip, *lockmode);
- 		*lockmode = 0;
- 
-@@ -465,6 +484,23 @@ xfs_reflink_fill_delalloc(
- 
- 		*lockmode = XFS_ILOCK_EXCL;
- 
-+		/*
-+		 * The data fork mapping may have changed while we dropped the
-+		 * ILOCK (a racing O_DIRECT writer under IOLOCK_SHARED can
-+		 * complete a full CoW cycle including xfs_reflink_end_cow(),
-+		 * which remaps this offset and drops the refcount of the old
-+		 * shared block).  Re-read it so the shared-status recheck
-+		 * below and the caller's in-place iomap both operate on the
-+		 * current mapping rather than a stale physical block.
-+		 */
-+		if (seq_before != READ_ONCE(ip->i_df.if_seq)) {
-+			nimaps = 1;
-+			error = xfs_bmapi_read(ip, imap->br_startoff,
-+					imap->br_blockcount, imap, &nimaps, 0);
-+			if (error)
-+				goto out_trans_cancel;
-+		}
-+
- 		error = xfs_find_trim_cow_extent(ip, imap, cmap, shared,
- 				&found);
- 		if (error || !*shared)
+-- 
+2.53.0
+
 
 
