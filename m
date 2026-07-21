@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5B143F8AD;
-	Tue, 21 Jul 2026 22:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E7A407CDA;
+	Tue, 21 Jul 2026 22:38:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673509; cv=none; b=sfpPYFR9J03MzuiXSZnUqRx5ljpKWavVJX9ej+QHFDHVS2s/MlxJ+byqr2apvrh3lVEA1q5gF/kjqNmV17VgOhDQTQe8PIssRqW7DtAIQExMO7JWkNgoFOKTpm0xROTHwtAxTXyaiQNWnWq8PZUmjRwYanRKvbQ3CfNdSSbSdOk=
+	t=1784673509; cv=none; b=sakgcJOmr2eyXMr38gKPS9yJ2ZXLjwFy6KYtmhMaFUBNrTyLzMcw/4BJZp6noJgZy66HHNno2psR3YKSNFwHZpktLIEHyxnbh2nmecCv7cHWqoxuuBuX9IX3AIGSlU/f19AKWNklWzHm7fEdkxD0gq5A1JL4nS17iBN8K3zOxIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784673509; c=relaxed/simple;
-	bh=euYfQt0DiQlrjsOX6EF3f3s+MvXYQVKXJZDMZIubv/4=;
+	bh=QwTkPToA1kwrLK2jsFitJNUUQ+T36K6SkBE1AtMUSj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AkbDsrpW+hzalaUBNJcfqXtHnPBPMpt0zkeGU2sDHZBPRw1yWb1cjZiYCbxh7Iu11jslPEtspnoQgDgl65e36yuNer5FPXBsyooqA5XGaCnTDlHCakulQ8MnP9+yy82OtDyJJdpMI4C+KwrGeb51iLYaecEuhjRVb0gTZuQpYQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8ah8VnS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C4T996Mz+WHB3jLcooX5mjJvw4+bI9RPLans0Rd6+E11jRezqV0gdyVIL8GsXZhVYZgYx7RaamdbiN2veIZZoGwBAcwDsnmLf7pMlFkkdf8QRzJlrVZEe/tdg/u8fny8RXbLJXAbCdjbmsMjyMpNzixTb/PUdu9UlRSX37Ugrck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JD3KO+v1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8ah8VnS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA741F00A3D;
-	Tue, 21 Jul 2026 22:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JD3KO+v1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF9B1F00AC4;
+	Tue, 21 Jul 2026 22:38:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673506;
-	bh=W8o66SyKGUiVsUgZ8nJrQ3prOtjlWFB1AeXkFlp1BfY=;
+	s=korg; t=1784673501;
+	bh=7adf0UptX69QeCvVBHmqay+JkJEMx93WDAiJ39h/3HQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d8ah8VnSnrDYEzU8TOVftKThrq9f5cpduB6Ygl6fo8BiOFRUmK0ujlUh8I9cfGPEj
-	 qvJ1AzrQ91gAzuLPsWJJzLxpFWtQAl0jEJzP2aH1v4Zt4bSGwc5KVa5Gku90fol1ey
-	 DeD5ZlKyFrhs+N9pG6Z/FnQ17inJjOm3W5R7wq+Y=
+	b=JD3KO+v1Ysc79xOq521AP+7a3jtK32DscRXFE6D/lfoAXUYrMtFqH3D4S+PF1tRTB
+	 2vvt5S8ZCVbogpKoFFuA03UkGqEGeqO7pIxleBvA9NSuwMYckc6vZMNmpJupeIk8D8
+	 QQcakpcFDDO5v82RvqILh8gSiw32gZjHpI+REWR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 189/699] RDMA/hns: Fix arithmetic overflow in calc_hem_config()
-Date: Tue, 21 Jul 2026 17:19:08 +0200
-Message-ID: <20260721152359.961106031@linuxfoundation.org>
+Subject: [PATCH 5.10 187/699] net/sched: sch_htb: annotate data-races (I)
+Date: Tue, 21 Jul 2026 17:19:06 +0200
+Message-ID: <20260721152359.917160454@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,52 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit a38e4410af9ad8b7ad2217254da06cd4dc21f0ed ]
+[ Upstream commit e54c33503bf7cebb1c1790251ce90f1252678081 ]
 
-If bt_num is 3 or 2, then the expressions like
-l0_idx * chunk_ba_num + l1_idx are computed in 32-bit
-arithmetic before being assigned to a u64 index field,
-which can lead to overflow.
+htb_dump() runs without holding qdisc spinlock.
 
-Cast the first operand to u64 to ensure the arithmetic
-is performed in 64-bit.
+Add missing READ_ONCE()/WRITE_ONCE() annotations around
+q->overlimits and q->direct_pkts.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 2f49de21f3e9 ("RDMA/hns: Optimize mhop get flow for multi-hop addressing")
-Signed-off-by: Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>
-Link: https://patch.msgid.link/20260413091527.39990-1-Alexander.Chesnokov@kaspersky.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260514095935.3926276-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hem.c | 8 ++++----
+ net/sched/sch_htb.c | 8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
-index 7cb98d09fb9b27..570a1bc24fd5a7 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hem.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
-@@ -346,14 +346,14 @@ static int calc_hem_config(struct hns_roce_dev *hr_dev,
- 	bt_num = hns_roce_get_bt_num(table->type, mhop->hop_num);
- 	switch (bt_num) {
- 	case 3:
--		index->l1 = l0_idx * chunk_ba_num + l1_idx;
-+		index->l1 = (u64)l0_idx * chunk_ba_num + l1_idx;
- 		index->l0 = l0_idx;
--		index->buf = l0_idx * chunk_ba_num * chunk_ba_num +
--			     l1_idx * chunk_ba_num + l2_idx;
-+		index->buf = (u64)l0_idx * chunk_ba_num * chunk_ba_num +
-+					 (u64)l1_idx * chunk_ba_num + l2_idx;
- 		break;
- 	case 2:
- 		index->l0 = l0_idx;
--		index->buf = l0_idx * chunk_ba_num + l1_idx;
-+		index->buf = (u64)l0_idx * chunk_ba_num + l1_idx;
- 		break;
- 	case 1:
- 		index->buf = l0_idx;
+diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
+index b301efa41c1ced..75ca5e5def3fea 100644
+--- a/net/sched/sch_htb.c
++++ b/net/sched/sch_htb.c
+@@ -536,7 +536,7 @@ htb_change_class_mode(struct htb_sched *q, struct htb_class *cl, s64 *diff)
+ 
+ 	if (new_mode == HTB_CANT_SEND) {
+ 		cl->overlimits++;
+-		q->overlimits++;
++		WRITE_ONCE(q->overlimits, q->overlimits + 1);
+ 	}
+ 
+ 	if (cl->prio_activity) {	/* not necessary: speed optimization */
+@@ -592,7 +592,7 @@ static int htb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		/* enqueue to helper queue */
+ 		if (q->direct_queue.qlen < q->direct_qlen) {
+ 			__qdisc_enqueue_tail(skb, &q->direct_queue);
+-			q->direct_pkts++;
++			WRITE_ONCE(q->direct_pkts, q->direct_pkts + 1);
+ 		} else {
+ 			return qdisc_drop(skb, sch, to_free);
+ 		}
+@@ -1050,12 +1050,12 @@ static int htb_dump(struct Qdisc *sch, struct sk_buff *skb)
+ 	struct nlattr *nest;
+ 	struct tc_htb_glob gopt;
+ 
+-	sch->qstats.overlimits = q->overlimits;
++	sch->qstats.overlimits = READ_ONCE(q->overlimits);
+ 	/* Its safe to not acquire qdisc lock. As we hold RTNL,
+ 	 * no change can happen on the qdisc parameters.
+ 	 */
+ 
+-	gopt.direct_pkts = q->direct_pkts;
++	gopt.direct_pkts = READ_ONCE(q->direct_pkts);
+ 	gopt.version = HTB_VER;
+ 	gopt.rate2quantum = q->rate2quantum;
+ 	gopt.defcls = q->defcls;
 -- 
 2.53.0
 
