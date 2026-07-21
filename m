@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09482471258;
-	Tue, 21 Jul 2026 18:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB804471269;
+	Tue, 21 Jul 2026 18:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657059; cv=none; b=RXcy0LhTSBZvH5lFZgcoIdTp5TU6GG64iv6tiraHK9+d9a47X4K/xfzNneyMosYYcV1z35wgReoxwCuZnrym9O/Wj2JUOmd/XtcmM0abk0Y0s3tvkcW3xLze4Zs8k/fFOhtMutHEArTlJNxHwQOyId+F7Pl596xgDSdXGz6ZM3I=
+	t=1784657063; cv=none; b=hi7MNCOj2NnHhQsazcskCPM41tDtf+uYJRFHSh+MPeEMkQ73YGkmkcxeQ1IuDMGQguzCdkzRAsCjEGX5IhUO1sxcEvyXwVMfKfHwthzkUz5quVX4pllFUQCghZIKRVAu0FBhwuet87JNqYaziWxxqXaD8hFbPgzydXCjxkBpj80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657059; c=relaxed/simple;
-	bh=3kw/PMVcLolzE5U6f9oZfhf8toHvhzaU0mDVG1XOfHE=;
+	s=arc-20240116; t=1784657063; c=relaxed/simple;
+	bh=vzxl/OhBMQOCao2hlzJCKIylJFRzal7pid+L3KnvXoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xb2eK4EJ6mcySdguHDoC7J57LMKAAwBlHyQNz2CIKQ+mGOa/QAnLpKWBnPyWGH24ZhAsORp3UfmYcaVZAwLtSpw5YSEynnPJQkqnrABTsWmBxl6usGXPVhb8ybo3wbQguJT/Mk3+ehJqYp0sGOc+IdurUTcUGKNV8ksadG1V+pI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=naivwJjq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aQUsb/G8s9hat2jwTWohErVanEdPq+onwTKWdCM7nPRpuu46RLqRY+y0ilwF/Mb0sSXNx8dF1ppd6slRlxhKvfTjUeGJupCFcnc/wvixDg8QHlahtKXASkQ1IdEMZlKa6K3Jl+7uLTAx/TIfiup/t8m+ZSz3ajIzrvcwl3JY5c4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=epb8zmiw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="naivwJjq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2BE1F00A3A;
-	Tue, 21 Jul 2026 18:04:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="epb8zmiw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E881F000E9;
+	Tue, 21 Jul 2026 18:04:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657057;
-	bh=88mYCc50J2wtmybAAv15x+SeNVFpuAj1sUvMx3X4RZM=;
+	s=korg; t=1784657060;
+	bh=HQVmV+TLS5H/9cnVn3F9EauxGxQezR2f9O/yYVuwXts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=naivwJjqESaH1yCip93AM/2r1Ps2zElNPOQHtXv2DOgLxn3XcOWDE7fDt0mzjkaaM
-	 qIoFOlRRikOrf78iLeX1ZI7KhxN1uGkNzOrxMqduscoddsPsKMfgHR/pPfLzgLsjYd
-	 MvoDeyBscBi+3W2hSplL1j+bBDHDzadtEd7x7m2I=
+	b=epb8zmiwRc1TRbt44aRmrbZo0U5TwD/2aZkX9QNb5EQzP5s/CYqnmKrZwxLWOD4Ji
+	 Yu0uwFG3+xvHGF6yp3N/wqcXUl5zes/ta3ONPne9Pq8NBDSX84RdpDQbgQIp9qLBRn
+	 dlpZIh7l1oLBrAL6RpL+fPrQGL7TZQ3ABGkxsO38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0622/1611] iio: magnetometer: ak8975: fix potential kernel stack memory leak
-Date: Tue, 21 Jul 2026 17:12:18 +0200
-Message-ID: <20260721152529.378029344@linuxfoundation.org>
+Subject: [PATCH 6.18 0605/1611] perf inject: Add --convert-callchain option
+Date: Tue, 21 Jul 2026 17:12:01 +0200
+Message-ID: <20260721152528.996832939@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,77 +57,311 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Crofts <joshua.crofts1@gmail.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit a9a00d727b7bbc5e913a919530a9dd468935bf95 ]
+[ Upstream commit 92ea788d2af4e65ad7a144ccfff50667e9a0d227 ]
 
-Currently in the AK8975 driver there are four instances where potential
-uninitialized kernel stack memory leaks can occur. If
-i2c_smbus_read_i2c_block_data_or_emulated() returns a value less than
-the size of the buffer, uninitialized bytes are retained in the buffer
-and later the buffer is passed on to IIO buffers, potentially leaking
-memory to userspace.
+There are applications not built with frame pointers, so DWARF is needed
+to get the stack traces.
 
-Fix this by adding checks whether the return value of the function is
-equal to the size of the buffer and subsequently if the value is
-lesser than zero to distinguish from a returned error code.
+`perf record --call-graph dwarf` saves the stack and register data for
+each sample to get the stacktrace offline.  But sometimes this data may
+have sensitive information and we don't want to keep them in the file.
 
-Fixes: bc11ca4a0b84 ("iio:magnetometer:ak8975: triggered buffer support")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260513-ak8975-fix-v1-1-104ea605dd54%40gmail.com
-Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+This new 'perf inject --convert-callchain' option creates the callchains
+and discards the stack and register after that.
+
+This saves storage space and processing time for the new data file.
+
+Of course, users should remove the original data file to not keep
+sensitive data around.  :)
+
+The down side is that it cannot handle inlined callchain entries as they
+all have the same IPs.
+
+Maybe we can add an option to 'perf report' to look up inlined functions
+using DWARF - IIUC it doesn't require stack and register data.
+
+This is an example.
+
+  $ perf record --call-graph dwarf -- perf test -w noploop
+
+  $ perf report --stdio --no-children --percent-limit=0 > output-prev
+
+  $ perf inject -i perf.data --convert-callchain -o perf.data.out
+
+  $ perf report --stdio --no-children --percent-limit=0 -i perf.data.out > output-next
+
+  $ diff -u output-prev output-next
+  ...
+        0.23%  perf          ld-linux-x86-64.so.2  [.] _dl_relocate_object_no_relro
+               |
+  -            ---elf_dynamic_do_Rela (inlined)
+  -               _dl_relocate_object_no_relro
+  +            ---_dl_relocate_object_no_relro
+                  _dl_relocate_object
+                  dl_main
+                  _dl_sysdep_start
+  -               _dl_start_final (inlined)
+                  _dl_start
+                  _start
+
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 059e9100d82a ("perf event: Fix size of synthesized sample with branch stacks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/magnetometer/ak8975.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ tools/perf/Documentation/perf-inject.txt |   5 +
+ tools/perf/builtin-inject.c              | 152 +++++++++++++++++++++++
+ 2 files changed, 157 insertions(+)
 
-diff --git a/drivers/iio/magnetometer/ak8975.c b/drivers/iio/magnetometer/ak8975.c
-index cc1fb1e6333390..0e9bb3ead61a73 100644
---- a/drivers/iio/magnetometer/ak8975.c
-+++ b/drivers/iio/magnetometer/ak8975.c
-@@ -495,6 +495,10 @@ static int ak8975_who_i_am(struct i2c_client *client,
- 		dev_err(&client->dev, "Error reading WIA\n");
- 		return ret;
+diff --git a/tools/perf/Documentation/perf-inject.txt b/tools/perf/Documentation/perf-inject.txt
+index c972032f4ca0d2..95dfdf39666efe 100644
+--- a/tools/perf/Documentation/perf-inject.txt
++++ b/tools/perf/Documentation/perf-inject.txt
+@@ -109,6 +109,11 @@ include::itrace.txt[]
+ 	should be used, and also --buildid-all and --switch-events may be
+ 	useful.
+ 
++--convert-callchain::
++	Parse DWARF callchains and convert them to usual callchains.  This also
++	discards stack and register data from the samples.  This will lose
++	inlined callchain entries.
++
+ :GMEXAMPLECMD: inject
+ :GMEXAMPLESUBCMD:
+ include::guestmount.txt[]
+diff --git a/tools/perf/builtin-inject.c b/tools/perf/builtin-inject.c
+index a114b3fa1bea1d..9606b4bf109792 100644
+--- a/tools/perf/builtin-inject.c
++++ b/tools/perf/builtin-inject.c
+@@ -122,6 +122,7 @@ struct perf_inject {
+ 	bool			in_place_update;
+ 	bool			in_place_update_dry_run;
+ 	bool			copy_kcore_dir;
++	bool			convert_callchain;
+ 	const char		*input_name;
+ 	struct perf_data	output;
+ 	u64			bytes_written;
+@@ -133,6 +134,7 @@ struct perf_inject {
+ 	struct guest_session	guest_session;
+ 	struct strlist		*known_build_ids;
+ 	const struct evsel	*mmap_evsel;
++	struct ip_callchain	*raw_callchain;
+ };
+ 
+ struct event_entry {
+@@ -396,6 +398,90 @@ static int perf_event__repipe_sample(const struct perf_tool *tool,
+ 	return perf_event__repipe_synth(tool, event);
+ }
+ 
++static int perf_event__convert_sample_callchain(const struct perf_tool *tool,
++						union perf_event *event,
++						struct perf_sample *sample,
++						struct evsel *evsel,
++						struct machine *machine)
++{
++	struct perf_inject *inject = container_of(tool, struct perf_inject, tool);
++	struct callchain_cursor *cursor = get_tls_callchain_cursor();
++	union perf_event *event_copy = (void *)inject->event_copy;
++	struct callchain_cursor_node *node;
++	struct thread *thread;
++	u64 sample_type = evsel->core.attr.sample_type;
++	u32 sample_size = event->header.size;
++	u64 i, k;
++	int ret;
++
++	if (event_copy == NULL) {
++		inject->event_copy = malloc(PERF_SAMPLE_MAX_SIZE);
++		if (!inject->event_copy)
++			return -ENOMEM;
++
++		event_copy = (void *)inject->event_copy;
++	}
++
++	if (cursor == NULL)
++		return -ENOMEM;
++
++	callchain_cursor_reset(cursor);
++
++	thread = machine__find_thread(machine, sample->tid, sample->pid);
++	if (thread == NULL)
++		goto out;
++
++	/* this will parse DWARF using stack and register data */
++	ret = thread__resolve_callchain(thread, cursor, evsel, sample,
++					/*parent=*/NULL, /*root_al=*/NULL,
++					PERF_MAX_STACK_DEPTH);
++	thread__put(thread);
++	if (ret != 0)
++		goto out;
++
++	/* copy kernel callchain and context entries */
++	for (i = 0; i < sample->callchain->nr; i++) {
++		inject->raw_callchain->ips[i] = sample->callchain->ips[i];
++		if (sample->callchain->ips[i] == PERF_CONTEXT_USER) {
++			i++;
++			break;
++		}
++	}
++	if (i == 0 || inject->raw_callchain->ips[i - 1] != PERF_CONTEXT_USER)
++		inject->raw_callchain->ips[i++] = PERF_CONTEXT_USER;
++
++	node = cursor->first;
++	for (k = 0; k < cursor->nr && i < PERF_MAX_STACK_DEPTH; k++) {
++		if (machine__kernel_ip(machine, node->ip))
++			/* kernel IPs were added already */;
++		else if (node->ms.sym && node->ms.sym->inlined)
++			/* we can't handle inlined callchains */;
++		else
++			inject->raw_callchain->ips[i++] = node->ip;
++
++		node = node->next;
++	}
++
++	inject->raw_callchain->nr = i;
++	sample->callchain = inject->raw_callchain;
++
++out:
++	memcpy(event_copy, event, sizeof(event->header));
++
++	/* adjust sample size for stack and regs */
++	sample_size -= sample->user_stack.size;
++	sample_size -= (hweight64(evsel->core.attr.sample_regs_user) + 1) * sizeof(u64);
++	sample_size += (sample->callchain->nr + 1) * sizeof(u64);
++	event_copy->header.size = sample_size;
++
++	/* remove sample_type {STACK,REGS}_USER for synthesize */
++	sample_type &= ~(PERF_SAMPLE_STACK_USER | PERF_SAMPLE_REGS_USER);
++
++	perf_event__synthesize_sample(event_copy, sample_type,
++				      evsel->core.attr.read_format, sample);
++	return perf_event__repipe_synth(tool, event_copy);
++}
++
+ static struct dso *findnew_dso(int pid, int tid, const char *filename,
+ 			       const struct dso_id *id, struct machine *machine)
+ {
+@@ -2280,6 +2366,15 @@ static int __cmd_inject(struct perf_inject *inject)
+ 		/* Allow space in the header for guest attributes */
+ 		output_data_offset += gs->session->header.data_offset;
+ 		output_data_offset = roundup(output_data_offset, 4096);
++	} else if (inject->convert_callchain) {
++		inject->tool.sample	= perf_event__convert_sample_callchain;
++		inject->tool.fork	= perf_event__repipe_fork;
++		inject->tool.comm	= perf_event__repipe_comm;
++		inject->tool.exit	= perf_event__repipe_exit;
++		inject->tool.mmap	= perf_event__repipe_mmap;
++		inject->tool.mmap2	= perf_event__repipe_mmap2;
++		inject->tool.ordered_events = true;
++		inject->tool.ordering_requires_timestamps = true;
  	}
-+	if (ret != sizeof(wia_val)) {
-+		dev_err(&client->dev, "Error reading WIA\n");
-+		return -EIO;
-+	}
  
- 	if (wia_val[0] != AK8975_DEVICE_ID)
- 		return -ENODEV;
-@@ -619,6 +623,10 @@ static int ak8975_setup(struct i2c_client *client)
- 		dev_err(&client->dev, "Not able to read asa data\n");
- 		return ret;
+ 	if (!inject->itrace_synth_opts.set)
+@@ -2332,6 +2427,23 @@ static int __cmd_inject(struct perf_inject *inject)
+ 				perf_header__set_feat(&session->header,
+ 						      HEADER_BRANCH_STACK);
+ 		}
++
++		/*
++		 * The converted data file won't have stack and registers.
++		 * Update the perf_event_attr to remove them before writing.
++		 */
++		if (inject->convert_callchain) {
++			struct evsel *evsel;
++
++			evlist__for_each_entry(session->evlist, evsel) {
++				evsel__reset_sample_bit(evsel, REGS_USER);
++				evsel__reset_sample_bit(evsel, STACK_USER);
++				evsel->core.attr.sample_regs_user = 0;
++				evsel->core.attr.sample_stack_user = 0;
++				evsel->core.attr.exclude_callchain_user = 0;
++			}
++		}
++
+ 		session->header.data_offset = output_data_offset;
+ 		session->header.data_size = inject->bytes_written;
+ 		perf_session__inject_header(session, session->evlist, fd, &inj_fc.fc,
+@@ -2356,6 +2468,18 @@ static int __cmd_inject(struct perf_inject *inject)
+ 	return ret;
+ }
+ 
++static bool evsel__has_dwarf_callchain(struct evsel *evsel)
++{
++	struct perf_event_attr *attr = &evsel->core.attr;
++	const u64 dwarf_callchain_flags =
++		PERF_SAMPLE_STACK_USER | PERF_SAMPLE_REGS_USER | PERF_SAMPLE_CALLCHAIN;
++
++	if (!attr->exclude_callchain_user)
++		return false;
++
++	return (attr->sample_type & dwarf_callchain_flags) == dwarf_callchain_flags;
++}
++
+ int cmd_inject(int argc, const char **argv)
+ {
+ 	struct perf_inject inject = {
+@@ -2424,6 +2548,8 @@ int cmd_inject(int argc, const char **argv)
+ 		OPT_STRING(0, "guestmount", &symbol_conf.guestmount, "directory",
+ 			   "guest mount directory under which every guest os"
+ 			   " instance has a subdir"),
++		OPT_BOOLEAN(0, "convert-callchain", &inject.convert_callchain,
++			    "Generate callchains using DWARF and drop register/stack data"),
+ 		OPT_END()
+ 	};
+ 	const char * const inject_usage[] = {
+@@ -2439,6 +2565,9 @@ int cmd_inject(int argc, const char **argv)
+ 
+ #ifndef HAVE_JITDUMP
+ 	set_option_nobuild(options, 'j', "jit", "NO_LIBELF=1", true);
++#endif
++#ifndef HAVE_LIBDW_SUPPORT
++	set_option_nobuild(options, 0, "convert-callchain", "NO_LIBDW=1", true);
+ #endif
+ 	argc = parse_options(argc, argv, options, inject_usage, 0);
+ 
+@@ -2597,6 +2726,28 @@ int cmd_inject(int argc, const char **argv)
+ 		}
  	}
-+	if (ret != sizeof(data->asa)) {
-+		dev_err(&client->dev, "Error reading asa data\n");
-+		return -EIO;
+ 
++	if (inject.convert_callchain) {
++		struct evsel *evsel;
++
++		if (inject.output.is_pipe || inject.session->data->is_pipe) {
++			pr_err("--convert-callchain cannot work with pipe\n");
++			goto out_delete;
++		}
++
++		evlist__for_each_entry(inject.session->evlist, evsel) {
++			if (!evsel__has_dwarf_callchain(evsel)) {
++				pr_err("--convert-callchain requires DWARF call graph.\n");
++				goto out_delete;
++			}
++		}
++
++		inject.raw_callchain = calloc(PERF_MAX_STACK_DEPTH, sizeof(u64));
++		if (inject.raw_callchain == NULL) {
++			pr_err("callchain allocation failed\n");
++			goto out_delete;
++		}
 +	}
- 
- 	/* After reading fuse ROM data set power-down mode */
- 	ret = ak8975_set_mode(data, POWER_DOWN);
-@@ -758,6 +766,10 @@ static int ak8975_read_axis(struct iio_dev *indio_dev, int index, int *val)
- 			sizeof(rval), (u8*)&rval);
- 	if (ret < 0)
- 		goto exit;
-+	if (ret != sizeof(rval)) {
-+		ret = -EIO;
-+		goto exit;
-+	}
- 
- 	/* Read out ST2 for release lock on measurment data. */
- 	ret = i2c_smbus_read_byte_data(client, data->def->ctrl_regs[ST2]);
-@@ -874,6 +886,8 @@ static void ak8975_fill_buffer(struct iio_dev *indio_dev)
- 							(u8 *)fval);
- 	if (ret < 0)
- 		goto unlock;
-+	if (ret != sizeof(fval))
-+		goto unlock;
- 
- 	mutex_unlock(&data->lock);
- 
++
+ #ifdef HAVE_JITDUMP
+ 	if (inject.jit_mode) {
+ 		inject.tool.mmap2	   = perf_event__repipe_mmap2;
+@@ -2627,5 +2778,6 @@ int cmd_inject(int argc, const char **argv)
+ 	free(inject.itrace_synth_opts.vm_tm_corr_args);
+ 	free(inject.event_copy);
+ 	free(inject.guest_session.ev.event_buf);
++	free(inject.raw_callchain);
+ 	return ret;
+ }
 -- 
 2.53.0
 
