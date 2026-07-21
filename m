@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673FA433BC7;
-	Tue, 21 Jul 2026 19:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D33385D67;
+	Tue, 21 Jul 2026 19:42:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662947; cv=none; b=klS1lGRt1FhF9BoeIrHL9ILF8QukJbwDlMZO2IftIusAaFxBMLm6QTMZarItu3uW3L5G3lNu3squBh7jyx5juoa4e/RTejpJ/ru19Ltac4L85ZP3LgVJE3drqz11be2SwUMIH9zEn//yTwEaA9htVLbeZ9FamDGGHPKvgp0SlC0=
+	t=1784662950; cv=none; b=FwldHT+ZSl5T1evorZHKYawwtQ/8wa5ZZBttGxJhCWNezH8BL5KZ2OCwkJm8l1nJSNZ9crtopufOb/SW6lh6t29v23kw9V7lAuBjTMjiDkLvZKv1zAXJpfC0N2ce/pghZsOfcKLm9tGY/jpG6DB6Rwdr9K/PMJbG8jytKCu26e0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662947; c=relaxed/simple;
-	bh=rj4Av1NU5Zmn+AX5mz0fwrY1RlwtE9P3KbueKa+5C1U=;
+	s=arc-20240116; t=1784662950; c=relaxed/simple;
+	bh=Qr152qvGLREvDRv3DdLSNhN3fUhh3Sj4Aq8QfW8zDFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OajHwIoXwqMPwH9DGvVJTQVHGCyeBUcLgIWlZDgWe9UZCAadfz0ztcAgQi35qPuEGZEywTvaQbzghraBZZSe7M+Gfk4w4rZ6/t0q8v9RIUyUoVdZ6/BlzzAphUhzpfQBSFhnHwPKABEPRAiIStXj+zcdPqd4mhrcQQTQGXqI9h4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HR6MBcTN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cGmirvuj/r2Qr4oKujFw1cpfZ0HK+s+DIzKvE6N3KF1zO0aBgypbqRZ4mZFvDrm7FH6jWJWMGdsY5/hfLLFqD2UBzR+fYP1jp+MS1JU0HD8LuuqkPavgXjFInmRU+Njo7YC788Up3KRcHeutYk+ZAarKUZLbD1xZpGpQGjECDTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVlqdG00; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HR6MBcTN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58481F000E9;
-	Tue, 21 Jul 2026 19:42:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVlqdG00"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D171F000E9;
+	Tue, 21 Jul 2026 19:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662946;
-	bh=CXxmLUNzqzJB69fDLzTcD5ZNpzhDKwAXs1I3J73D9e8=;
+	s=korg; t=1784662948;
+	bh=8PPcJSC22leZINrUbPqbK/Sqk7kjrjb+6FCafwmjc/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HR6MBcTNfBDzyl8YIrD7sUKnFuXBBtAnH6SLuOzKaqKcjHBX5vk13ydfYHUsy7tNv
-	 5qfVy+4QNnY93Ho6pR9Y07hz7hmNJgTpoN4hBZV6huvOGWDQszhbeMgRnz+GzoN1cf
-	 rovDrkbS9EZWmvM/QipdSZnZYvXEQmR0u4TTtHCY=
+	b=PVlqdG005EqJO1aomZUcFs422PuVh5FNv44s5SiHbMrNXKRKfZObc1HRTfDK06F2E
+	 QDXHzclUu0/dHtcKver/q5CtMmNIe1QY8oBp42KudsI+Y91z4qgoxRVCYTymQoDJ+3
+	 ORSgnSxthSjbA7mLvByOnPKtrEdAfPg25nQABmSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sayali Patil <sayalip@linux.ibm.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	David Hildenbrand <david@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Michal Hocko <mhocko@kernel.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0636/1276] eth: bnxt: gather and report HW-GRO stats
-Date: Tue, 21 Jul 2026 17:17:59 +0200
-Message-ID: <20260721152500.343931047@linuxfoundation.org>
+Subject: [PATCH 6.12 0601/1276] selftests/mm: restore default nr_hugepages value via exit trap in charge_reserved_hugetlb.sh
+Date: Tue, 21 Jul 2026 17:17:24 +0200
+Message-ID: <20260721152459.562517797@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,113 +61,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Sayali Patil <sayalip@linux.ibm.com>
 
-[ Upstream commit a7fc1a488f09f0fbf727fe3ca5b017e7657f152d ]
+[ Upstream commit a3f66e9b6e4dad38444656ffc28c28c33a4d4e1f ]
 
-Count and report HW-GRO stats as seen by the kernel.
-The device stats for GRO seem to not reflect the reality,
-perhaps they count sessions which did not actually result
-in any aggregation. Also they count wire packets, so we
-have to count super-frames, anyway.
+Patch series "selftests/mm: fix failures and robustness improvements", v7.
 
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20260207003509.3927744-2-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 40529e58629b ("eth: bnxt: improve the timing of stats")
+Powerpc systems with a 64K base page size exposed several issues while
+running mm selftests. Some tests assume specific hugetlb configurations,
+use incorrect interfaces, or fail instead of skipping when the required
+kernel features are not available.
+
+This series fixes these issues and improves test robustness.
+
+This patch (of 13):
+
+cleanup() resets nr_hugepages to 0 on every invocation, while the test
+reconfigures it again in the next iteration.  This leads to repeated
+allocation and freeing of large numbers of hugepages, especially when the
+original value is high.
+
+Additionally, with set -e, failures in earlier cleanup steps (e.g., rmdir
+or umount returning EBUSY while background activity is still ongoing) can
+cause the script to exit before restoring the original value, leaving the
+system in a modified state.
+
+Introduce a trap on EXIT, INT, and TERM to restore the original
+nr_hugepages value once at script termination.  This avoids unnecessary
+allocation churn and ensures the original value is reliably restored on
+all exit paths.
+
+Link: https://lore.kernel.org/cover.1779296493.git.sayalip@linux.ibm.com
+Link: https://lore.kernel.org/5b8fbb29cd6ceffe6752e0af104f60cec072aa10.1779296493.git.sayalip@linux.ibm.com
+Fixes: 7d695b1c3695 ("selftests/mm: save and restore nr_hugepages value")
+Signed-off-by: Sayali Patil <sayalip@linux.ibm.com>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 15 +++++++++++++--
- drivers/net/ethernet/broadcom/bnxt/bnxt.h |  6 ++++++
- 2 files changed, 19 insertions(+), 2 deletions(-)
+ tools/testing/selftests/mm/charge_reserved_hugetlb.sh | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index cff92020b381f8..b0a89a5df73777 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -1733,7 +1733,8 @@ static inline struct sk_buff *bnxt_gro_skb(struct bnxt *bp,
- 					   struct bnxt_tpa_info *tpa_info,
- 					   struct rx_tpa_end_cmp *tpa_end,
- 					   struct rx_tpa_end_cmp_ext *tpa_end1,
--					   struct sk_buff *skb)
-+					   struct sk_buff *skb,
-+					   struct bnxt_rx_sw_stats *rx_stats)
- {
- #ifdef CONFIG_INET
- 	int payload_off;
-@@ -1743,6 +1744,9 @@ static inline struct sk_buff *bnxt_gro_skb(struct bnxt *bp,
- 	if (segs == 1)
- 		return skb;
+diff --git a/tools/testing/selftests/mm/charge_reserved_hugetlb.sh b/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
+index fa6713892d82d8..2b24d703e7ada9 100755
+--- a/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
++++ b/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
+@@ -12,6 +12,7 @@ if [[ $(id -u) -ne 0 ]]; then
+ fi
  
-+	rx_stats->rx_hw_gro_packets++;
-+	rx_stats->rx_hw_gro_wire_packets += segs;
-+
- 	NAPI_GRO_CB(skb)->count = segs;
- 	skb_shinfo(skb)->gso_size =
- 		le32_to_cpu(tpa_end1->rx_tpa_end_cmp_seg_len);
-@@ -1915,7 +1919,8 @@ static inline struct sk_buff *bnxt_tpa_end(struct bnxt *bp,
- 	}
+ nr_hugepgs=$(cat /proc/sys/vm/nr_hugepages)
++trap 'echo "$nr_hugepgs" > /proc/sys/vm/nr_hugepages' EXIT INT TERM
  
- 	if (gro)
--		skb = bnxt_gro_skb(bp, tpa_info, tpa_end, tpa_end1, skb);
-+		skb = bnxt_gro_skb(bp, tpa_info, tpa_end, tpa_end1, skb,
-+				   &cpr->sw_stats->rx);
- 
- 	return skb;
- }
-@@ -12816,6 +12821,8 @@ static void bnxt_get_one_ring_err_stats(struct bnxt *bp,
- 	stats->rx_total_netpoll_discards += sw_stats->rx.rx_netpoll_discards;
- 	stats->rx_total_ring_discards +=
- 		BNXT_GET_RING_STATS64(hw_stats, rx_discard_pkts);
-+	stats->rx_total_hw_gro_packets += sw_stats->rx.rx_hw_gro_packets;
-+	stats->rx_total_hw_gro_wire_packets += sw_stats->rx.rx_hw_gro_wire_packets;
- 	stats->tx_total_resets += sw_stats->tx.tx_resets;
- 	stats->tx_total_ring_discards +=
- 		BNXT_GET_RING_STATS64(hw_stats, tx_discard_pkts);
-@@ -15224,6 +15231,8 @@ static void bnxt_get_queue_stats_rx(struct net_device *dev, int i,
- 	stats->bytes += BNXT_GET_RING_STATS64(sw, rx_bcast_bytes);
- 
- 	stats->alloc_fail = cpr->sw_stats->rx.rx_oom_discards;
-+	stats->hw_gro_packets = cpr->sw_stats->rx.rx_hw_gro_packets;
-+	stats->hw_gro_wire_packets = cpr->sw_stats->rx.rx_hw_gro_wire_packets;
+ fault_limit_file=limit_in_bytes
+ reservation_limit_file=rsvd.limit_in_bytes
+@@ -65,7 +66,6 @@ function cleanup() {
+   if [[ -e $cgroup_path/hugetlb_cgroup_test2 ]]; then
+     rmdir $cgroup_path/hugetlb_cgroup_test2
+   fi
+-  echo 0 >/proc/sys/vm/nr_hugepages
+   echo CLEANUP DONE
  }
  
- static void bnxt_get_queue_stats_tx(struct net_device *dev, int i,
-@@ -15259,6 +15268,8 @@ static void bnxt_get_base_stats(struct net_device *dev,
- 	rx->packets = bp->net_stats_prev.rx_packets;
- 	rx->bytes = bp->net_stats_prev.rx_bytes;
- 	rx->alloc_fail = bp->ring_err_stats_prev.rx_total_oom_discards;
-+	rx->hw_gro_packets = bp->ring_err_stats_prev.rx_total_hw_gro_packets;
-+	rx->hw_gro_wire_packets = bp->ring_err_stats_prev.rx_total_hw_gro_wire_packets;
+@@ -585,4 +585,3 @@ if [[ $do_umount ]]; then
+   rmdir $cgroup_path
+ fi
  
- 	tx->packets = bp->net_stats_prev.tx_packets;
- 	tx->bytes = bp->net_stats_prev.tx_bytes;
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index 38690fdc3c46cf..1e673df55c5edf 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -1113,8 +1113,11 @@ struct bnxt_rx_sw_stats {
- 	u64			rx_l4_csum_errors;
- 	u64			rx_resets;
- 	u64			rx_buf_errors;
-+	/* end of ethtool -S stats */
- 	u64			rx_oom_discards;
- 	u64			rx_netpoll_discards;
-+	u64			rx_hw_gro_packets;
-+	u64			rx_hw_gro_wire_packets;
- };
- 
- struct bnxt_tx_sw_stats {
-@@ -1141,6 +1144,9 @@ struct bnxt_total_ring_err_stats {
- 	u64			tx_total_resets;
- 	u64			tx_total_ring_discards;
- 	u64			total_missed_irqs;
-+	/* end of ethtool -S stats */
-+	u64			rx_total_hw_gro_packets;
-+	u64			rx_total_hw_gro_wire_packets;
- };
- 
- struct bnxt_stats_mem {
+-echo "$nr_hugepgs" > /proc/sys/vm/nr_hugepages
 -- 
 2.53.0
 
