@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B39347125D;
-	Tue, 21 Jul 2026 18:10:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3ED47125D;
+	Tue, 21 Jul 2026 18:10:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657432; cv=none; b=uR5C6bdg2BKccKA4tNcFkZu8POJ/EY6VoCkocnZ5cQl0FWXEoCZMXmVENNLPMCh5HseNwzozzpIL/e0LWHuxDeUKjtYoTQUIHYBudh8i969i4RXAmCWX/JA/XfjJTnBnBO8ZC6vNX4mEc0n9Vf+TwZiPPD9YsQSQjkMBVQvZVOU=
+	t=1784657434; cv=none; b=BnxljKgdhF7QPrzHr8GwCXMDE3Nbof+58x4KQPDsMPjGrUQAImFiEaT+LLu257fjZOHHdavtbQ+jcuJLO7unoWhlKOmII8kR1wztLgqEB2lkpScxp+6pVb6NJ//odmY7Kc8Wk3GksalN+9CE6h7pHQ5pPPujTNsVK11PGIHgzrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657432; c=relaxed/simple;
-	bh=XunErslkIXyEm0ZgpiOac94yg6/OW3vHRZnbrZs1ru4=;
+	s=arc-20240116; t=1784657434; c=relaxed/simple;
+	bh=hw9DY3eXJcMT/bWSYLDwiQ6g9a5peVmPVfnG2SoNm+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KX/SN6JyzSJI8UQDsDk7Z5WhXhbyLf+UuzPA6746KvjLgCGi2Oe8yKWSUPLHND27OjvQbA4GVWMdC5xcH/GsaVhJwuHMuVhzn1tQY78Xo0zSqXv3TENq6mfjn7jABpaT1PQfV54NMDz5DkcLjZjKuBs8VABIFpsGxCUy8JjuLS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOKz/sB/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f89Pj2b8gzgTEeS4+7YqmpPK1l/i4/ZeNLQUY4l3dz34iextAD0FyRKnaa8V7xqA8ZBEDIvr/0p1nbBrbI2k0lOOTKRYIpU0Hgd11h0wahFSPxiav7sc3RXn3CqdmjV7DSB+A7G8/gkSaane4k10GuRNOX09np0/ya5IUVA1Lg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eL5xsbZF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOKz/sB/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6466B1F000E9;
-	Tue, 21 Jul 2026 18:10:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eL5xsbZF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103501F000E9;
+	Tue, 21 Jul 2026 18:10:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657430;
-	bh=M7jJZwyP7jBWbrCx8mPqF//uyLTRWbTORhE/RS/WRgg=;
+	s=korg; t=1784657433;
+	bh=HoKImfvV/N3E+sVe2bi2Kizvoa7XVw340pQXM1OCEMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jOKz/sB/OT+kFNTRygXa15Yod+r73ptwVDxaeGrKCFfDHWEIYRC/A16kXC4R236fX
-	 ipWQZ1KqNEMsS9I76pglMDDkb2A46F8egZlbxK55qT+RgQkzsHLNX+nedOld1H2faO
-	 zVPBC/CfTZlgjhbRgUQZFQXO2DZ83xGmQl4IE3NE=
+	b=eL5xsbZFggKiyAlqDG4noq8wERL1dAhg3o8J8HUt/6vgSuj3t3lItaMMfOVNoK1L8
+	 D63iUF9hfMFWGKQhm2sTKrZVVZLrLqyiwTwS1Llg+gHRgggvwhCyIcI1dxdcblgeZr
+	 +Vc/YY1UNA8RsuEA76wELzSal74xWC+ot/Xy/AL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0762/1611] i3c: master: Ensure Hot-Join operations are stopped on shutdown
-Date: Tue, 21 Jul 2026 17:14:38 +0200
-Message-ID: <20260721152532.517619930@linuxfoundation.org>
+Subject: [PATCH 6.18 0763/1611] i3c: master: Defer new-device registration out of DAA caller context
+Date: Tue, 21 Jul 2026 17:14:39 +0200
+Message-ID: <20260721152532.541663334@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,168 +54,140 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 8323e783dc3904839e64cb08cfcc7571ef9212c4 ]
+[ Upstream commit 3f79dac3ea1c30516fcc791770af034387c7f917 ]
 
-System shutdown invokes each device's bus shutdown callback to quiesce
-hardware, but the I3C bus type does not currently implement one.  As a
-result, on shutdown the controller's Hot-Join work and any in-flight
-i3c_master_do_daa() can keep running (or be newly triggered) while the
-rest of the system is being torn down.
+Master drivers may invoke i3c_master_do_daa_ext() during resume to
+re-run Dynamic Address Assignment.  As well as assigning addresses to
+any newly arrived devices, this restores the dynamic address of devices
+that lost it across system suspend, so it has to run as part of the
+controller's resume path.
 
-A similar window exists at i3c_master_unregister() time: cancel_work_sync()
-on hj_work prevents queued work from completing, but does not stop a
-fresh Hot-Join IBI from re-queueing the worker, nor a concurrent sysfs
-writer from toggling Hot-Join via i3c_set_hotjoin().
+A side effect of i3c_master_do_daa_ext() today is that it also
+registers any newly discovered I3C devices with the driver model
+inline, via i3c_master_register_new_i3c_devs().  Doing that from the
+resume path is problematic: a hot-join-capable device may join the bus
+during this same DAA, and registering it immediately would push driver
+model work (probing, sysfs, etc.) into the controller's resume context,
+where the rest of the system is not yet fully resumed and the
+controller driver is still partway through its own resume sequence.
 
-Introduce a single "shutting down" gate in the I3C core, set under the
-bus maintenance lock so it is observed by any in-progress DAA path
-before pending work is cancelled.  Install an i3c_bus_type shutdown
-callback that engages this gate for master devices during system
-shutdown, and use the same gate in i3c_master_unregister() so both
-paths get identical guarantees.
+Decouple discovery from registration: add a reg_work work item to
+struct i3c_master_controller and have i3c_master_do_daa_ext() queue it
+on master->wq (the freezable workqueue) instead of calling
+i3c_master_register_new_i3c_devs() directly.  The worker performs the
+registration only when the controller is not shutting_down, and is
+cancelled alongside hj_work in i3c_master_shutdown().  Because wq is
+freezable, any newly observed devices end up being registered after
+the system has finished resuming.
 
-Once the gate is engaged, the Hot-Join worker, i3c_master_do_daa_ext()
-and i3c_set_hotjoin() all bail out cleanly, so Hot-Join IBIs that race
-with shutdown become no-ops, direct DAA callers see -ENODEV, and sysfs
-writers can no longer re-enable Hot-Join through ops->enable_hotjoin()
-while the controller is going away.
-
-No functional change for the steady-state runtime path; the new checks
-only take effect once the controller has been marked as shutting down.
-
-Note, this patch depends on patch "i3c: master: Consolidate Hot-Join DAA
-work in the core".
+i3c_master_register() also routes its initial post-bus-init registration
+through reg_work, using flush_work() to keep probe-time behavior
+synchronous.  This keeps a single registration code path and ensures the
+worker is the only writer of desc->dev.
 
 Fixes: 3a379bbcea0af ("i3c: Add core I3C infrastructure")
 Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260608054312.10604-5-adrian.hunter@intel.com
+Link: https://patch.msgid.link/20260608054312.10604-7-adrian.hunter@intel.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Stable-dep-of: 3f79dac3ea1c ("i3c: master: Defer new-device registration out of DAA caller context")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c       | 52 +++++++++++++++++++++++++++-----------
- include/linux/i3c/master.h |  2 ++
- 2 files changed, 39 insertions(+), 15 deletions(-)
+ drivers/i3c/master.c       | 27 ++++++++++++++++++++-------
+ include/linux/i3c/master.h |  6 ++++++
+ 2 files changed, 26 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 4ca2d77fb552b3..e537e89ffc2dbb 100644
+index e537e89ffc2dbb..9cb1376e74a955 100644
 --- a/drivers/i3c/master.c
 +++ b/drivers/i3c/master.c
-@@ -370,14 +370,6 @@ static void i3c_device_remove(struct device *dev)
- 	i3c_device_free_ibi(i3cdev);
- }
- 
--const struct bus_type i3c_bus_type = {
--	.name = "i3c",
--	.match = i3c_device_match,
--	.probe = i3c_device_probe,
--	.remove = i3c_device_remove,
--};
--EXPORT_SYMBOL_GPL(i3c_bus_type);
--
- static enum i3c_addr_slot_status
- i3c_bus_get_addr_slot_status_mask(struct i3c_bus *bus, u16 addr, u32 mask)
- {
-@@ -639,7 +631,8 @@ static void i3c_master_hj_work_fn(struct work_struct *work)
- {
- 	struct i3c_master_controller *master = container_of(work, typeof(*master), hj_work);
- 
--	i3c_master_do_daa(master);
-+	if (!master->shutting_down)
-+		i3c_master_do_daa(master);
- }
- 
- static int i3c_set_hotjoin(struct i3c_master_controller *master, bool enable)
-@@ -660,7 +653,9 @@ static int i3c_set_hotjoin(struct i3c_master_controller *master, bool enable)
- 
- 	i3c_bus_normaluse_lock(&master->bus);
- 
--	if (enable)
-+	if (master->shutting_down)
-+		ret = -ENODEV;
-+	else if (enable)
- 		ret = master->ops->enable_hotjoin(master);
- 	else
- 		ret = master->ops->disable_hotjoin(master);
-@@ -812,6 +807,30 @@ static const struct device_type i3c_masterdev_type = {
- 	.groups	= i3c_masterdev_groups,
- };
- 
-+static void i3c_master_shutdown(struct i3c_master_controller *master)
-+{
-+	i3c_bus_maintenance_lock(&master->bus);
-+	master->shutting_down = true;
-+	i3c_bus_maintenance_unlock(&master->bus);
-+
-+	cancel_work_sync(&master->hj_work);
-+}
-+
-+static void i3c_device_shutdown(struct device *dev)
-+{
-+	if (dev->type == &i3c_masterdev_type)
-+		i3c_master_shutdown(dev_to_i3cmaster(dev));
-+}
-+
-+const struct bus_type i3c_bus_type = {
-+	.name = "i3c",
-+	.match = i3c_device_match,
-+	.probe = i3c_device_probe,
-+	.remove = i3c_device_remove,
-+	.shutdown = i3c_device_shutdown,
-+};
-+EXPORT_SYMBOL_GPL(i3c_bus_type);
-+
- static int i3c_bus_set_mode(struct i3c_bus *i3cbus, enum i3c_bus_mode mode,
- 			    unsigned long max_i2c_scl_rate)
- {
-@@ -1819,10 +1838,13 @@ int i3c_master_do_daa_ext(struct i3c_master_controller *master, bool rstdaa)
- 
- 	i3c_bus_maintenance_lock(&master->bus);
- 
--	if (rstdaa)
--		rstret = i3c_master_rstdaa_locked(master, I3C_BROADCAST_ADDR);
--
--	ret = master->ops->do_daa(master);
-+	if (master->shutting_down) {
-+		ret = -ENODEV;
-+	} else {
-+		if (rstdaa)
-+			rstret = i3c_master_rstdaa_locked(master, I3C_BROADCAST_ADDR);
-+		ret = master->ops->do_daa(master);
-+	}
- 
+@@ -814,6 +814,7 @@ static void i3c_master_shutdown(struct i3c_master_controller *master)
  	i3c_bus_maintenance_unlock(&master->bus);
  
-@@ -3146,7 +3168,7 @@ EXPORT_SYMBOL_GPL(i3c_master_register);
- void i3c_master_unregister(struct i3c_master_controller *master)
- {
- 	i3c_bus_notify(&master->bus, I3C_NOTIFY_BUS_REMOVE);
--	cancel_work_sync(&master->hj_work);
-+	i3c_master_shutdown(master);
+ 	cancel_work_sync(&master->hj_work);
++	cancel_work_sync(&master->reg_work);
+ }
+ 
+ static void i3c_device_shutdown(struct device *dev)
+@@ -1811,6 +1812,16 @@ i3c_master_register_new_i3c_devs(struct i3c_master_controller *master)
+ 	}
+ }
+ 
++static void i3c_master_reg_work_fn(struct work_struct *work)
++{
++	struct i3c_master_controller *master = container_of(work, typeof(*master), reg_work);
++
++	i3c_bus_normaluse_lock(&master->bus);
++	if (!master->shutting_down)
++		i3c_master_register_new_i3c_devs(master);
++	i3c_bus_normaluse_unlock(&master->bus);
++}
++
+ /**
+  * i3c_master_do_daa_ext() - Dynamic Address Assignment (extended version)
+  * @master: controller
+@@ -1851,9 +1862,7 @@ int i3c_master_do_daa_ext(struct i3c_master_controller *master, bool rstdaa)
+ 	if (ret)
+ 		goto out;
+ 
+-	i3c_bus_normaluse_lock(&master->bus);
+-	i3c_master_register_new_i3c_devs(master);
+-	i3c_bus_normaluse_unlock(&master->bus);
++	queue_work(master->wq, &master->reg_work);
+ out:
+ 	i3c_master_rpm_put(master);
+ 
+@@ -3106,6 +3115,7 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 		goto err_put_dev;
+ 	}
+ 	INIT_WORK(&master->hj_work, i3c_master_hj_work_fn);
++	INIT_WORK(&master->reg_work, i3c_master_reg_work_fn);
+ 
+ 	ret = i3c_master_bus_init(master);
+ 	if (ret)
+@@ -3131,12 +3141,15 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 
+ 	/*
+ 	 * We're done initializing the bus and the controller, we can now
+-	 * register I3C devices discovered during the initial DAA.
++	 * register I3C devices discovered during the initial DAA. Device
++	 * registration is done via reg_work because that keeps a single
++	 * registration code path and ensures the worker is the only writer
++	 * of desc->dev. Flush the work to preserve synchronous probe-time
++	 * behavior.
+ 	 */
+ 	master->init_done = true;
+-	i3c_bus_normaluse_lock(&master->bus);
+-	i3c_master_register_new_i3c_devs(master);
+-	i3c_bus_normaluse_unlock(&master->bus);
++	queue_work(master->wq, &master->reg_work);
++	flush_work(&master->reg_work);
  
  	if (master->ops->set_dev_nack_retry)
- 		device_remove_file(&master->dev, &dev_attr_dev_nack_retry_count);
+ 		device_create_file(&master->dev, &dev_attr_dev_nack_retry_count);
 diff --git a/include/linux/i3c/master.h b/include/linux/i3c/master.h
-index fc146bbb304fa0..056f4f25ccfbc5 100644
+index 056f4f25ccfbc5..1aa1efd835b861 100644
 --- a/include/linux/i3c/master.h
 +++ b/include/linux/i3c/master.h
-@@ -511,6 +511,7 @@ struct i3c_master_controller_ops {
-  * @hotjoin: true if the master support hotjoin
-  * @rpm_allowed: true if Runtime PM allowed
-  * @rpm_ibi_allowed: true if IBI and Hot-Join allowed while runtime suspended
-+ * @shutting_down: set to true when master begins shutdown or unregister
-  * @boardinfo.i3c: list of I3C  boardinfo objects
-  * @boardinfo.i2c: list of I2C boardinfo objects
-  * @boardinfo: board-level information attached to devices connected on the bus
-@@ -539,6 +540,7 @@ struct i3c_master_controller {
- 	unsigned int hotjoin: 1;
- 	unsigned int rpm_allowed: 1;
- 	unsigned int rpm_ibi_allowed: 1;
-+	bool shutting_down;
- 	struct {
- 		struct list_head i3c;
- 		struct list_head i2c;
+@@ -523,6 +523,11 @@ struct i3c_master_controller_ops {
+  *	be done from a sleep-able context
+  * @hj_work: work item used to run DAA after a Hot-Join event is detected.
+  *           Queued to @wq by i3c_master_queue_hotjoin()
++ * @reg_work: work item used to register newly discovered I3C devices with
++ *            the driver model. Queued to @wq by i3c_master_do_daa_ext() so
++ *            that device registration is deferred out of the DAA caller's
++ *            context (notably the resume path), and is skipped if the
++ *            controller is shutting down
+  * @dev_nack_retry_count: retry count when slave device nack
+  *
+  * A &struct i3c_master_controller has to be registered to the I3C subsystem
+@@ -548,6 +553,7 @@ struct i3c_master_controller {
+ 	struct i3c_bus bus;
+ 	struct workqueue_struct *wq;
+ 	struct work_struct hj_work;
++	struct work_struct reg_work;
+ 	unsigned int dev_nack_retry_count;
+ };
+ 
 -- 
 2.53.0
 
