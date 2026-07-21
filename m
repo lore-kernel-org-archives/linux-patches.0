@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4DF415F1C;
-	Tue, 21 Jul 2026 21:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377863ACEFE;
+	Tue, 21 Jul 2026 21:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670323; cv=none; b=K673jNLryXzVcsjQC4hz0F7h2flaSq6kLWNYLmS2LJGeKmMBsWTlYx8QZYDSnOIkUyEYwmbRaN+b24kAhEcriwMC3M+Snm1s8Om5qVGG7BnNbHhK/C3CC+WAIqJDPoq0VQakf9onJRzDiAXGzwmh8geaI3f2m/dPJWwdflyB8FU=
+	t=1784670326; cv=none; b=aOud5397T/2RoPCUiKkcd04GIo3fnntLTUpQi+ThV7n3gyvQw6p15mKQ1PECBb2pMWtkAEza+lJJyl+WM5ijsgEzGOsOWk5750QYgDHYvWvigaDKoh/l8b/6o5H5bwbHvUmLrbOS2XH80SXW6HasfO68sG6BH50SBlYwQr/YYP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670323; c=relaxed/simple;
-	bh=V4oXvxKZqTVbrozPQCnZDFdPHeUGlP2wHpKAPTwc94s=;
+	s=arc-20240116; t=1784670326; c=relaxed/simple;
+	bh=iqxsWv+kSLk/3ZBJOm5QSWyri4hSwg3YX5S7ZpDPrYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ke7HNqO0/Vu9eMq0kHae41SNWBN8oPGRZXL0OLraiuuIS+kOzvpREaHCkSJnbZiuiMhlC2fy3rkuBzGOWHbLrhxNJFz1EAfx0cLvrXb6XcFrzCg6Ta3ypS4lNjlJclxkXhNmr2EU+kxGnRcR2KdDZo+a6Xlv5Q3i/ajlmBCobxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKDI+VqC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pzzleYJ3YUvJ5nc5rICvrQmTrywj3O+cgEdhZAPIOlgyV9cs5pA/lS6wzFX+JStbGV5b2JFRKaxKeJB27G3cYNJY5zqX4+yiuaP0Q1+IzsgfLNjQGWVr37jmAXfFyBf0Gwo0/eB5KUN2iEDBiXZrBN1GihgEcUl17p6AaHA+2wI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DMADSNU6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKDI+VqC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 009C41F000E9;
-	Tue, 21 Jul 2026 21:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMADSNU6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CD6C1F000E9;
+	Tue, 21 Jul 2026 21:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670322;
-	bh=bMlnVMy74jERL4fM5JEprFDuQDbaDfIvik7dwUQYfUg=;
+	s=korg; t=1784670325;
+	bh=9p0TxIRdojP8aQ63X7baKA6A5EYqPqZnrvWxYsfqY0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pKDI+VqCahqxDO8FPqdq4fC8nPDyqzkIFBOGFgu0SKWrYXX4M7pT0vfnmnPPw3EoI
-	 6Px4HmXlLclxVs2bqbZK6mmxc/SumlZXSpPjujRLu1KzDSDoefkrNX/l+bBAZAj0D9
-	 iQoiOPjb4JxXh7KEpv2eTjBaYo8gZSFks4I5nSR8=
+	b=DMADSNU6NCrSkR1rw5xvmYwHdBVpveuAXL98JqwMe7CeRCF7yAyFYhIhWx6ikRBUT
+	 gOEPuf3n9S2/HhQ+h408pzUzC6g1654WCOx39i4K85vlVJKANOatHxZwwIiA/+o0yI
+	 eikduSGmEidispqEx3+DPuObUd+gR/30RKqj7bMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Marzinski <bmarzins@redhat.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.1 0846/1067] dm-log: fix a bitset_size overflow on 32bit machines
-Date: Tue, 21 Jul 2026 17:24:07 +0200
-Message-ID: <20260721152443.474042235@linuxfoundation.org>
+Subject: [PATCH 6.1 0847/1067] dm-stats: fix dm_jiffies_to_msec64
+Date: Tue, 21 Jul 2026 17:24:08 +0200
+Message-ID: <20260721152443.495375724@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,45 +49,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Marzinski <bmarzins@redhat.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 9743132a41f4d9d0e54c5f2adcb821b04796bab1 upstream.
+commit 386df1a57b631c456d14f857cb0c0c2e11c16bef upstream.
 
-Commit c20e36b7631d ("dm log: fix out-of-bounds write due to
-region_count overflow") made sure that region_count could fit in an
-unsigned int. But the bitmap memory isn't allocated based on
-region_count. It uses bitset_size (a size_t variable). The first step of
-calculating bitset_size is to set it to region_count, rounded up to a
-multiple of BITS_PER_LONG. If region_size is less than BITS_PER_LONG
-smaller than UINT_MAX, it will get rounded up to 2^32. On a 32bit
-architecture, this will make bitset_size wrap around to 0 and fail,
-despite region_count being valid.
+There were wrong calculations in dm_jiffies_to_msec64 that produced
+incorrect output when HZ was different from 1000. This commit fixes them.
 
-Since bitset_size gets divided by 8, it can hold any valid region_count.
-It just needs a special case to handle the rollover. If it is 0, the
-value rolled over, and bitset size should be set to the number of bytes
-needed to hold 2^32 bits.
-
-Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Fixes: c20e36b7631d ("dm log: fix out-of-bounds write due to region_count overflow")
+Assisted-by: Claude:claude-opus-4-6
+Fixes: fd2ed4d25270 ("dm: add statistics support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-log.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/md/dm-stats.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-log.c
-+++ b/drivers/md/dm-log.c
-@@ -418,6 +418,9 @@ static int create_log_context(struct dm_
- 	 */
- 	bitset_size = dm_round_up(region_count, BITS_PER_LONG);
- 	bitset_size >>= BYTE_SHIFT;
-+	/* Handle dm_round_up rollover on 32-bit systems */
-+	if (!bitset_size)
-+		bitset_size = 1UL << (BITS_PER_LONG - BYTE_SHIFT);
+--- a/drivers/md/dm-stats.c
++++ b/drivers/md/dm-stats.c
+@@ -826,10 +826,10 @@ static unsigned long long dm_jiffies_to_
+ 		result = jiffies_to_msecs(j & 0x3fffff);
+ 	if (j >= 1 << 22) {
+ 		mult = jiffies_to_msecs(1 << 22);
+-		result += (unsigned long long)mult * (unsigned long long)jiffies_to_msecs((j >> 22) & 0x3fffff);
++		result += (unsigned long long)mult * ((j >> 22) & 0x3fffff);
+ 	}
+ 	if (j >= 1ULL << 44)
+-		result += (unsigned long long)mult * (unsigned long long)mult * (unsigned long long)jiffies_to_msecs(j >> 44);
++		result += (unsigned long long)mult * (unsigned long long)(1 << 22) * (j >> 44);
  
- 	lc->bitset_uint32_count = bitset_size / sizeof(*lc->clean_bits);
- 
+ 	return result;
+ }
 
 
