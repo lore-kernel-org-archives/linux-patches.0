@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB9D37473A;
-	Tue, 21 Jul 2026 21:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1BE937473A;
+	Tue, 21 Jul 2026 21:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670991; cv=none; b=dSCKzS3UJ0jK9Cefnv19omlPqVn8FlYq/Ih6wRANE8a7JaPbf/lRqat56Jpy4pthaGIk3qZJgNq75P8wjeoTXorEULOyz/JugRaknDiM/QjR3jU3e4sclBMiMf6QVMSNw6XAxBooqpOqbPqIpXzBySUWwWl6Njce3X/TTYECY20=
+	t=1784670993; cv=none; b=MKiB2mixXiFo57K5fzDoe7Za7VqFW+yyMyqHNCsafBBTyVky2IabURHSSr6iFNnP6zf45476j4a4dhLOWqC2rFhVPDfYcYBrtriEAUbiXSdyXGdtbiiY57Wqto8rYHr6rPk9PHx+QE0h9mjlUJUE9S3tLz584OzGfJTmxqQDjgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670991; c=relaxed/simple;
-	bh=xMb3PmMlbSrSLK9A3VJubPGK3Sq3E/CVbz5ogTl3gFE=;
+	s=arc-20240116; t=1784670993; c=relaxed/simple;
+	bh=mi/KP2fp0M68tp52TKPiT54mqX1Vqeyh3mmsiwVPv00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gBeA7nDDzEiCL1BmxR31HmB3RStyzI9q/Djb6Kvbxe/6T759hVqTCH/l5DBM87xodDf8IW+o9uO+YKQ7RwOXTKWckOqTlakH73C8D0U+SVxqRf0/x53oA18ZTPFZ4KW0LDtLJNmaH0WxjSX+mPfuz/kvN+opEeOXXvrlKXulkQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zbFo7AaR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U3fn0gnnyQzyHtpyFlLA5qy4XzswmTolWCk5SAESdzC5CpJ1XZW4eWa5yZIaQLxWR5hyfchcw9yXIH0Ng8QXWZF2sCaOed/anSCFkAKJd99+5gDdQSyHEwo5eD8gKCUe/rtkfA1scQ00yNdeLym731XjJZloqMlfqOcqTH3iQyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TzxNMAjb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zbFo7AaR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 529EE1F000E9;
-	Tue, 21 Jul 2026 21:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TzxNMAjb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8581F000E9;
+	Tue, 21 Jul 2026 21:56:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670989;
-	bh=bTBJgtG9dsVFL+l2kuODq3wXQ3eQ8KlY6p/mbYQvvp8=;
+	s=korg; t=1784670992;
+	bh=oLyeW4WyAVGfyFbq8ARz13VqZhZD2SQq0VNJtq5PjBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zbFo7AaRNmfm28METXGPf7F/SHOiHtpF0HljLYFQvqGupdIpE/4KEsrMb28XQYY01
-	 InmtMEA9Rv2tprTrdFJBJvOJRAKoWIP3YENWnoP1W7q8v+pGleksLoQ6NcmBXJRX5O
-	 ejUMr2hkyjWVbOpDLjfS5+8xOJnGQtpEHnOp1xpo=
+	b=TzxNMAjbiUlNsmuG7svPCNF1AKhEKU2wES01rXheR4xV9P/NcUmJKKoTpHgFKIDRO
+	 J7UOUHmW7SgBxDmwJWswg4MG8M1xB7Lj+ycpiH+WG8wuVTatEeLYF4rC1akKxSjqWl
+	 ZXWJEUdcM6nxZXcz8+97WlqVP7O746n+dSYdAORs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 075/843] ALSA: usb-audio: Update US-16x08 EQ/comp shadow state after successful writes
-Date: Tue, 21 Jul 2026 17:15:10 +0200
-Message-ID: <20260721152407.680074847@linuxfoundation.org>
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Johan Hovold <johan@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.15 076/843] Bluetooth: btusb: fix use-after-free on registration failure
+Date: Tue, 21 Jul 2026 17:15:11 +0200
+Message-ID: <20260721152407.702756068@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -44,160 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit a440c17869ecd71da0f295b62868fc742d09a8ba upstream.
+commit eedc6867ebad73edbfaf9a0a65fbef7115cc4753 upstream.
 
-snd_us16x08_comp_put() and snd_us16x08_eq_put() update their
-software stores before sending the USB write. If the transfer
-fails, later get callbacks report a value the hardware never
-accepted.
+Make sure to release the sibling interfaces in case controller
+registration fails to avoid use-after-free and double-free when they are
+eventually disconnected.
 
-Build the outgoing message from the current store plus the
-pending value, then commit the store only after a successful
-write.
+This issue was reported by Sashiko while reviewing a fix for a wakeup
+source leak in the btusb probe errors paths.
 
-Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260419-usb-write-error-propagation-v1-4-5a3bd4a673ae@gmail.com
+Link: https://sashiko.dev/#/patchset/20260402092704.2346710-1-johan%40kernel.org
+Fixes: 9bfa35fe422c ("[Bluetooth] Add SCO support to btusb driver")
+Fixes: 9d08f50401ac ("Bluetooth: btusb: Add support for Broadcom LM_DIAG interface")
+Cc: stable@vger.kernel.org	# 2.6.27
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_us16x08.c |   78 ++++++++++++++++++++++++++++++----------------
- 1 file changed, 52 insertions(+), 26 deletions(-)
+ drivers/bluetooth/btusb.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/sound/usb/mixer_us16x08.c
-+++ b/sound/usb/mixer_us16x08.c
-@@ -436,6 +436,7 @@ static int snd_us16x08_comp_put(struct s
- 	int index = ucontrol->id.index;
- 	char buf[sizeof(comp_msg)];
- 	int val_idx, val;
-+	int threshold, ratio, attack, release, gain, switch_on;
- 	int err;
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -4108,12 +4108,21 @@ static int btusb_probe(struct usb_interf
  
- 	val = ucontrol->value.integer.value[0];
-@@ -448,36 +449,61 @@ static int snd_us16x08_comp_put(struct s
- 	/* new control value incl. bias*/
- 	val_idx = elem->head.id - SND_US16X08_ID_COMP_BASE;
+ 	err = hci_register_dev(hdev);
+ 	if (err < 0)
+-		goto out_free_dev;
++		goto err_release_siblings;
  
--	store->val[val_idx][index] = ucontrol->value.integer.value[0];
-+	threshold = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_THRESHOLD)]
-+		[index];
-+	ratio = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_RATIO)][index];
-+	attack = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_ATTACK)][index];
-+	release = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_RELEASE)]
-+		[index];
-+	gain = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_GAIN)][index];
-+	switch_on = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_SWITCH)]
-+		[index];
-+
-+	switch (val_idx) {
-+	case COMP_STORE_IDX(SND_US16X08_ID_COMP_THRESHOLD):
-+		threshold = val;
-+		break;
-+	case COMP_STORE_IDX(SND_US16X08_ID_COMP_RATIO):
-+		ratio = val;
-+		break;
-+	case COMP_STORE_IDX(SND_US16X08_ID_COMP_ATTACK):
-+		attack = val;
-+		break;
-+	case COMP_STORE_IDX(SND_US16X08_ID_COMP_RELEASE):
-+		release = val;
-+		break;
-+	case COMP_STORE_IDX(SND_US16X08_ID_COMP_GAIN):
-+		gain = val;
-+		break;
-+	case COMP_STORE_IDX(SND_US16X08_ID_COMP_SWITCH):
-+		switch_on = val;
-+		break;
+ 	usb_set_intfdata(intf, data);
+ 
+ 	return 0;
+ 
++err_release_siblings:
++	if (data->diag) {
++		usb_set_intfdata(data->diag, NULL);
++		usb_driver_release_interface(&btusb_driver, data->diag);
 +	}
- 
- 	/* prepare compressor URB message from template  */
- 	memcpy(buf, comp_msg, sizeof(comp_msg));
- 
- 	/* place comp values in message buffer watch bias! */
--	buf[8] = store->val[
--		COMP_STORE_IDX(SND_US16X08_ID_COMP_THRESHOLD)][index]
--		- SND_US16X08_COMP_THRESHOLD_BIAS;
--	buf[11] = ratio_map[store->val[
--		COMP_STORE_IDX(SND_US16X08_ID_COMP_RATIO)][index]];
--	buf[14] = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_ATTACK)][index]
--		+ SND_US16X08_COMP_ATTACK_BIAS;
--	buf[17] = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_RELEASE)][index]
--		+ SND_US16X08_COMP_RELEASE_BIAS;
--	buf[20] = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_GAIN)][index];
--	buf[26] = store->val[COMP_STORE_IDX(SND_US16X08_ID_COMP_SWITCH)][index];
-+	buf[8] = threshold - SND_US16X08_COMP_THRESHOLD_BIAS;
-+	buf[11] = ratio_map[ratio];
-+	buf[14] = attack + SND_US16X08_COMP_ATTACK_BIAS;
-+	buf[17] = release + SND_US16X08_COMP_RELEASE_BIAS;
-+	buf[20] = gain;
-+	buf[26] = switch_on;
- 
- 	/* place channel selector in message buffer */
- 	buf[5] = index + 1;
- 
- 	err = snd_us16x08_send_urb(chip, buf, sizeof(comp_msg));
- 
--	if (err > 0) {
--		elem->cached |= 1 << index;
--		elem->cache_val[index] = val;
--	} else {
-+	if (err < 0) {
- 		usb_audio_dbg(chip, "Failed to set compressor, err:%d\n", err);
-+		return err;
- 	}
- 
-+	store->val[val_idx][index] = val;
-+	elem->cached |= 1 << index;
-+	elem->cache_val[index] = val;
- 	return 1;
- }
- 
-@@ -579,11 +605,10 @@ static int snd_us16x08_eq_put(struct snd
- 	/* copy URB buffer from EQ template */
- 	memcpy(buf, eqs_msq, sizeof(eqs_msq));
- 
--	store->val[b_idx][p_idx][index] = val;
--	buf[20] = store->val[b_idx][3][index];
--	buf[17] = store->val[b_idx][2][index];
--	buf[14] = store->val[b_idx][1][index];
--	buf[11] = store->val[b_idx][0][index];
-+	buf[20] = p_idx == 3 ? val : store->val[b_idx][3][index];
-+	buf[17] = p_idx == 2 ? val : store->val[b_idx][2][index];
-+	buf[14] = p_idx == 1 ? val : store->val[b_idx][1][index];
-+	buf[11] = p_idx == 0 ? val : store->val[b_idx][0][index];
- 
- 	/* place channel index in URB buffer */
- 	buf[5] = index + 1;
-@@ -593,14 +618,15 @@ static int snd_us16x08_eq_put(struct snd
- 
- 	err = snd_us16x08_send_urb(chip, buf, sizeof(eqs_msq));
- 
--	if (err > 0) {
--		/* store new value in EQ band cache */
--		elem->cached |= 1 << index;
--		elem->cache_val[index] = val;
--	} else {
-+	if (err < 0) {
- 		usb_audio_dbg(chip, "Failed to set eq param, err:%d\n", err);
-+		return err;
- 	}
- 
-+	store->val[b_idx][p_idx][index] = val;
-+	/* store new value in EQ band cache */
-+	elem->cached |= 1 << index;
-+	elem->cache_val[index] = val;
- 	return 1;
- }
- 
++	if (data->isoc) {
++		usb_set_intfdata(data->isoc, NULL);
++		usb_driver_release_interface(&btusb_driver, data->isoc);
++	}
+ out_free_dev:
+ 	if (data->reset_gpio)
+ 		gpiod_put(data->reset_gpio);
 
 
