@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7BA43CEE4;
-	Tue, 21 Jul 2026 22:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757253B8120;
+	Tue, 21 Jul 2026 22:39:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673557; cv=none; b=gGBib3Lm7a6y+9q4sSaNToSTO7h9E6NWu0UUYW8fQHro9NroO+lHI8kdsyc5Np8YCE3ZW6rp8S64eAu9SJ7FogU9rYZmkf/HbTqT9TWeMxjkN7bjS7HzhaNRlP3mPQk+Nudx/rbxLkXUHiiznBjJv7MoRbdSYY2kfdxGFfnNQEQ=
+	t=1784673560; cv=none; b=tDj9ifmBFuFWbKZqYdEV8k8dACNS+a3/Kn5uIpjqp2io0CfDHfLteCry7OVB+0c2tFsOlJHQm+Lh/tasdE9gwCOgT0Kv5gkRQsTwcCLOLoUyiXuoI/tpllL1BN5EFfIDM7bvUiPmZ82Y/RchjLsrANVregsHleQ5F5F9+IQ9oNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673557; c=relaxed/simple;
-	bh=s07MqfgSRXtwrcXRr67/2nH1PvbkQmq3DQZK3Q68hJU=;
+	s=arc-20240116; t=1784673560; c=relaxed/simple;
+	bh=nHLzXMl84TqWIn/YXmbOXJkqNBiv4yx3d26f58cVejU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X2W0wFJVUNYa1HjGjB1Fz/EQOfwbKFX4rnRm+nfVA4OCGBhcSBWeNTToS8Bk4bJJU+b3QClwMJHb7x9lNAANHMcHIpvAD3OK7JcJ1ApkuhtThGf/OawskzARQcCYiACqG4tBrp0mCO8aL0K3LhGYnd41sGO9x8MmT9Sh82HQfPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xfhqlVbm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SsUHgO+4yb7are83cE10e4iBl6Cy+q22KE5Kaon4zUjwvbtLSxzl4pdrquhSHCE2GPnLjyRtwdHqPHAwnnNDLtN4I4EBx9PQxbtqgM/V8igHOQ88ypN51CaGRVywYCN6sKO9Pv/I0iMMlTiDr7SggnDhHCG6dFynVhGY7w8K5Io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXVPn4bq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xfhqlVbm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B81F1F000E9;
-	Tue, 21 Jul 2026 22:39:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXVPn4bq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E146A1F000E9;
+	Tue, 21 Jul 2026 22:39:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673556;
-	bh=Slv/3rMywYkZi20nJflggXGGeDWzZEqlhrOWy9CkEbA=;
+	s=korg; t=1784673559;
+	bh=IafxxwiT6G2Tm67VoXMKw0rwtIoNmZ7WAJKcblLzASk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xfhqlVbmdrG/dXLzLIsZY6oVNi48S4lQK2DN7/SN+r/Y+uKdx5uRqBqlAdjqS+rBM
-	 dyyQvIs/iPnSeS0Oz5lgvcDMcNKHxiSqb8TVnezMQxBG/TrYOsnqZwaTUb8UCWO0K9
-	 smbjNyNf09FnIIzlWf/WPHMfg9NFCUxYr22kdXws=
+	b=QXVPn4bqRvdwsm9HfVK2oXmv/0M5Bl40QWLfb/FYCuzISu4rTO/iqX2YGWjNxiDh+
+	 iHKuCmjlFrN20PnJa85lQ6RIgQ+ohax7peUA7GonydtD6Z7DX4up30GOTGQFmDFbPg
+	 KVk2XT+haV14dk7Rp6UWJ+TOLgWTacNc2gs7IIxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Pratyush Yadav <pratyush@kernel.org>,
+	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	John Garry <john.g.garry@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 206/699] mtd: spi-nor: Drop duplicate Kconfig dependency
-Date: Tue, 21 Jul 2026 17:19:25 +0200
-Message-ID: <20260721152400.344289446@linuxfoundation.org>
+Subject: [PATCH 5.10 207/699] nvme-multipath: fix flex array size in struct nvme_ns_head
+Date: Tue, 21 Jul 2026 17:19:26 +0200
+Message-ID: <20260721152400.366519471@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,35 +55,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Nilay Shroff <nilay@linux.ibm.com>
 
-[ Upstream commit a6470e2162e9c3779a4bd6ff3bed1b81d796e46e ]
+[ Upstream commit 001e57554de81aa79c25c18fd53911d8a415c304 ]
 
-I do not think the MTD dependency is needed twice. This is likely a
-duplicate coming from a former rebase when the spi-nor core got cleaned
-up a while ago. Remove the extra line.
+struct nvme_ns_head contains a flexible array member, current_path[],
+which is indexed using the NUMA node ID:
+head->current_path[numa_node_id()]
 
-Fixes: b35b9a10362d ("mtd: spi-nor: Move m25p80 code in spi-nor.c")
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Michael Walle <mwalle@kernel.org>
-Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
+The structure is currently allocated as:
+size = sizeof(struct nvme_ns_head) +
+       (num_possible_nodes() * sizeof(struct nvme_ns *));
+head = kzalloc(size, GFP_KERNEL);
+
+This allocation assumes that NUMA node IDs are sequential and densely
+packed from 0 .. num_possible_nodes() - 1. While this assumption holds
+on many systems, it is not always true on some architectures such as
+powerpc.
+
+On some powerpc systems, NUMA node IDs can be sparse. For example:
+NUMA:
+  NUMA node(s):              6
+  NUMA node0 CPU(s):         80-159
+  NUMA node8 CPU(s):         0-79
+  NUMA node252 CPU(s):
+  NUMA node253 CPU(s):
+  NUMA node254 CPU(s):
+  NUMA node255 CPU(s):
+
+That is, the possible/online NUMA node IDs are: 0, 8, 252, 253, 254, 255
+In this case: num_possible_nodes() = 6
+
+So memory is allocated for only 6 entries in current_path[]. However,
+the array is later indexed using the actual NUMA node ID. As a result,
+accesses such as:
+head->current_path[8] or
+head->current_path[252]
+goes out of bounds, leading to the following KASAN splat:
+
+==================================================================
+BUG: KASAN: slab-out-of-bounds in nvme_mpath_revalidate_paths+0x22c/0x290 [nvme_core]
+Write of size 8 at addr c00020003bda35b8 by task kworker/u641:2/1997
+
+CPU: 1 UID: 0 PID: 1997 Comm: kworker/u641:2 Not tainted 7.1.0-rc5-dirty #14 PREEMPT(lazy)
+Hardware name: 8335-GTH POWER9 0x4e1202 opal:skiboot-v6.5.3-35-g1851b2a06 PowerNV
+Workqueue: async async_run_entry_fn
+Call Trace:
+[c000200037fa7510] [c0000000021c23d4] dump_stack_lvl+0x88/0xdc (unreliable)
+[c000200037fa7540] [c0000000009fda90] print_report+0x22c/0x67c
+[c000200037fa7630] [c0000000009fd508] kasan_report+0x108/0x220
+[c000200037fa7740] [c0000000009fff48] __asan_store8+0xe8/0x120
+[c000200037fa7760] [c008000018e76474] nvme_mpath_revalidate_paths+0x22c/0x290 [nvme_core]
+[c000200037fa7800] [c008000018e6556c] nvme_update_ns_info+0x4a4/0x5e0 [nvme_core]
+[c000200037fa7a50] [c008000018e66270] nvme_alloc_ns+0x6d8/0x1a70 [nvme_core]
+[c000200037fa7c20] [c008000018e679fc] nvme_scan_ns+0x3f4/0x630 [nvme_core]
+[c000200037fa7d10] [c00000000031f22c] async_run_entry_fn+0x9c/0x3a0
+[c000200037fa7db0] [c0000000002fa544] process_one_work+0x414/0xa10
+[c000200037fa7ec0] [c0000000002fbf00] worker_thread+0x320/0x640
+[c000200037fa7f80] [c00000000030d0f8] kthread+0x278/0x290
+[c000200037fa7fe0] [c00000000000ded8] start_kernel_thread+0x14/0x18
+
+Allocated by task 1997 on cpu 1 at 35.928317s:
+
+The buggy address belongs to the object at c00020003bda3000
+ which belongs to the cache kmalloc-rnd-15-2k of size 2048
+The buggy address is located 16 bytes to the right of
+ allocated 1448-byte region [c00020003bda3000, c00020003bda35a8)
+
+The buggy address belongs to the physical page:
+
+Memory state around the buggy address:
+ c00020003bda3480: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ c00020003bda3500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>c00020003bda3580: 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc fc
+                                        ^
+ c00020003bda3600: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ c00020003bda3680: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+==================================================================
+
+Fix this by allocating the flexible array using nr_node_ids instead
+of num_possible_nodes(). Since nr_node_ids represents the maximum
+possible NUMA node IDs, indexing current_path[] using numa_node_id()
+becomes safe even on systems with sparse node IDs.
+
+Fixes: f333444708f8 ("nvme: take node locality into account when selecting a path")
+Tested-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/nvme/host/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/spi-nor/Kconfig b/drivers/mtd/spi-nor/Kconfig
-index ffc4b380f2b16d..665ec75f81ed00 100644
---- a/drivers/mtd/spi-nor/Kconfig
-+++ b/drivers/mtd/spi-nor/Kconfig
-@@ -1,7 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0-only
- menuconfig MTD_SPI_NOR
- 	tristate "SPI NOR device support"
--	depends on MTD
- 	depends on MTD && SPI_MASTER
- 	select SPI_MEM
- 	help
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index cb9b38e142edd5..56913db1f44588 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3806,7 +3806,7 @@ static struct nvme_ns_head *nvme_alloc_ns_head(struct nvme_ctrl *ctrl,
+ 	int ret = -ENOMEM;
+ 
+ #ifdef CONFIG_NVME_MULTIPATH
+-	size += num_possible_nodes() * sizeof(struct nvme_ns *);
++	size += nr_node_ids * sizeof(struct nvme_ns *);
+ #endif
+ 
+ 	head = kzalloc(size, GFP_KERNEL);
 -- 
 2.53.0
 
