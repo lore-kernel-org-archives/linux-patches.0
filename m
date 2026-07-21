@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C054646EF86;
-	Tue, 21 Jul 2026 19:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7656B46EF8F;
+	Tue, 21 Jul 2026 19:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660543; cv=none; b=Oi2JPtoXercBRm+gP0mP1rOgT1sHqa9789xNdxkjQRi1oomfKxWnC+nbzdDyfDeKmUTrdHAC6YGw5pSkP/44dolHJUBBzNhrpFUK7aWW+owHzCs194wleQgTWyn4TI3eMILTLMikrzo3y3Qe904UA6IKankqT3kRBt2sPA+AL0M=
+	t=1784660545; cv=none; b=kRZQxZhVsg99CILqkyGV0oJzRv8LwI8heKBVHSlkM9Fr6nIjdu3tbrGWmGb6iNXW+zBkCyqRvAozSvu+/ciX/j+GxdeK6GAJMLZqcfWPv05TSIQEHVBxDlUcchZc8LhpsXXfPLbmEpbAKFxDQKfFO86ZGETzkcruGLMb7HZ/uKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660543; c=relaxed/simple;
-	bh=J0ahfTPlbKnmaiMSUFxKk3Uwkz0zsvsgzRUSXEC5lcA=;
+	s=arc-20240116; t=1784660545; c=relaxed/simple;
+	bh=i+eAFnx43036vMqMrt2HMknjjwc6diIulQqfSGSJBUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OKJ2t+El9Ur/V1bDZxCQEilKWnZze5WPaLTVICQ8m+pZ1ED1Hn2HqRKlaIp5oARFWHJssJbJhrTO6SFma/1pz3NSsspIrizH1wb2hy9AtwgVFV+0rg+1fYtI8zYYoLO2RrTA1W7XXfuuwHkox+4Vp5sgxAOTgCuZ6264NhwYWd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DdZwd8s6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jn4Hegu+BM9H5Wspz3+tGxn56T4lfNtIUXowtBcwAkUceNzPTv3CuZmI5VfN0Ctyisa5BCymA2nelXjOoCriHlD59k6YR6lwaOCuofWcnXsIdMYG4mnYtOvCyRYNIsfIvfJZ06+itXu6z4pE9j8GGAvA0Frdr45cwJdVhbvUqr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3/CtBSt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DdZwd8s6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54781F000E9;
-	Tue, 21 Jul 2026 19:02:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3/CtBSt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB8C1F00A3A;
+	Tue, 21 Jul 2026 19:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660539;
-	bh=XUc11RNtbO9DUBZrEg7FsAHXIB6hX6cP/Sda4DVG9Mk=;
+	s=korg; t=1784660541;
+	bh=/l6v8ddifhEiS6MyLhcN1+49sCl0q6CRpQP2tQbGDM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DdZwd8s6V1zFW7OXUXP6tASY7gYZaV5si2qKnuZHgT6UckX1LoTxu5FhClEagqbSG
-	 1DoGSNdlmn8qnqsdArrNjVfi/O9+9WPGWo2eYNpBLOibhjU//o1z4CYOtzhPqd/NcV
-	 NdjAbmsrc8Wb7Ih2qv1b5Y8kxZbrTodQdAl24fK4=
+	b=E3/CtBStFaJBQyoMFxdNfqrfgfWG0/R5GJTcMGT9TIhS/FlrkQOC9SrN2RsxABV/K
+	 u7Fsyx0Fs5pCVEHJ5wJlGMjKW6ugzDkk/hJffQ/LqvnHw/qGrA6cgjJY3Lrb5mETQI
+	 SH7E5cVBaq7MK4MdPHzYVfEV6PXHmKifG9Y/psE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1011/2077] perf tools: Fix thread__set_comm_from_proc() on empty comm file
-Date: Tue, 21 Jul 2026 17:11:24 +0200
-Message-ID: <20260721152616.662082307@linuxfoundation.org>
+Subject: [PATCH 7.1 1020/2077] tools lib api: Fix mount_overload() snprintf truncation and toupper range
+Date: Tue, 21 Jul 2026 17:11:33 +0200
+Message-ID: <20260721152616.880437133@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
@@ -54,48 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 31d596054550f793508abe7dd593853ece47d428 ]
+[ Upstream commit fd1f70776add263f8ef38a87ae593c75303f1dcd ]
 
-thread__set_comm_from_proc() calls procfs__read_str() then strips
-the trailing newline via comm[sz - 1] = '\0'.  procfs__read_str()
-allocates the buffer before reading, so on an empty /proc/pid/comm
-(reachable during late exit teardown) it returns success with sz = 0
-and an unterminated heap buffer.
+mount_overload() builds an environment variable name like
+"PERF_SYSFS_ENVIRONMENT" from fs->name.  Two bugs:
 
-The sz - 1 underflow was the original sashiko finding: it writes a
-null byte before the allocation.  But even with a sz > 0 guard on
-the newline strip, the unterminated buffer would still be passed to
-thread__set_comm() which calls strlen() — an unbounded heap read.
+1) snprintf() uses name_len as the buffer size instead of sizeof(upper_name).
+   For fs->name = "sysfs" (len=5), the output is truncated to "PERF" (4
+   chars + null), so getenv() never finds the intended variable.
 
-Fix by treating sz == 0 as failure: free the buffer and return -1.
-This is consistent with pmu.c's perf_pmu__parse_scale/unit which
-already treat len == 0 from filename__read_str as an error.
+2) mem_toupper() only uppercases name_len bytes, converting just the "PERF"
+   prefix rather than the full string including the filesystem name portion.
 
-Fixes: 2f3027ac28bf6bc3 ("perf thread: Introduce method to set comm from /proc/pid/self")
+Fix by using sizeof(upper_name) for snprintf and strlen(upper_name) for
+mem_toupper, so the full "PERF_SYSFS_ENVIRONMENT" string is correctly
+formatted and uppercased.
+
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Fixes: 73ca85ad364769ff ("tools lib api fs: Add FSTYPE__mount() method")
+Cc: Jiri Olsa <jolsa@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/thread.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/lib/api/fs/fs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/thread.c b/tools/perf/util/thread.c
-index 22be77225bb0cc..2faa258f9c15f4 100644
---- a/tools/perf/util/thread.c
-+++ b/tools/perf/util/thread.c
-@@ -294,6 +294,11 @@ int thread__set_comm_from_proc(struct thread *thread)
- 	if (!(snprintf(path, sizeof(path), "%d/task/%d/comm",
- 		       thread__pid(thread), thread__tid(thread)) >= (int)sizeof(path)) &&
- 	    procfs__read_str(path, &comm, &sz) == 0) {
-+		/* sz==0: read got nothing, e.g. race during exit teardown */
-+		if (sz == 0) {
-+			free(comm);
-+			return -1;
-+		}
- 		comm[sz - 1] = '\0';
- 		err = thread__set_comm(thread, comm, 0);
- 	}
+diff --git a/tools/lib/api/fs/fs.c b/tools/lib/api/fs/fs.c
+index d16911818d4d35..cbd8eab0d1df0c 100644
+--- a/tools/lib/api/fs/fs.c
++++ b/tools/lib/api/fs/fs.c
+@@ -261,8 +261,8 @@ static const char *mount_overload(struct fs *fs)
+ 	/* "PERF_" + name + "_ENVIRONMENT" + '\0' */
+ 	char upper_name[5 + name_len + 12 + 1];
+ 
+-	snprintf(upper_name, name_len, "PERF_%s_ENVIRONMENT", fs->name);
+-	mem_toupper(upper_name, name_len);
++	snprintf(upper_name, sizeof(upper_name), "PERF_%s_ENVIRONMENT", fs->name);
++	mem_toupper(upper_name, strlen(upper_name));
+ 
+ 	return getenv(upper_name) ?: *fs->mounts;
+ }
 -- 
 2.53.0
 
