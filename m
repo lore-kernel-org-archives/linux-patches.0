@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB5A3DD870;
-	Tue, 21 Jul 2026 18:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1ACD46D2CB;
+	Tue, 21 Jul 2026 18:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658396; cv=none; b=NiVYwephbwyO/k2IHnHAHm7Q7QwpjT62BrzmzrDHtak+ghvtXYS5233BSMSZfB395PN7OdVWIrEW/0ifclqJP1/W4RLUbZC90E7CqXd3x8YFqSkzvPMdYtjIj3L7s2p8fwcsVivnc5DkGta041KOUsI2gG0c+3l6ADWYXHB47tc=
+	t=1784658398; cv=none; b=TJaHF3VgZzTyJrqipKgd+9OzMRq6eCKbo54Ea0r3SlEv/D9aEZBd0RcJJfiHfiXOU8dbdmknlEdRhUB/ZW+P9FZvXCBQXzzIL/fyVjRRybOPh80QRlfsxfeisVagSNH3sv/NhKfyBL6xPrOZj27k9uz+/FL+pfxlyDZq3/9i104=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658396; c=relaxed/simple;
-	bh=cqCARHdMLw8SIorRoZ5+8/9zE2BdbAirzQUdms0QRs4=;
+	s=arc-20240116; t=1784658398; c=relaxed/simple;
+	bh=8po1Lp2PNQ791/E4sJ9N9pbRbB8X1i+ZxYsRNJOjC04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ODYMGma4fYSKUtaAqGtMB+w7bI5KVee2OFyAbkoJwHCnLjFJxawKl98xPW8irIcRKZnbYTSYvixG2Hmcrt/tzpCigS1VVmUjSYAs4rRw4+rrh1Yedq3Z9692a5br+K5FmJ2qSFmSOMcaFGvAHjJMxKdULbQOBjxaoDVflbp0sK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=14jP5b1v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t9VnXHZWLDKT+rtqRvuawhSaXfG4lQ1L50t0AcNwtppuCuTsZ/nBNH8Ug20nvdRHyKOFnaI4Vweg9FZbuws0EgIWjYexOw8Jq26tqQjHZOEwNp5Ys2HX7l7EqRdAoM6f/zrwdZSKLvqIlooRHN03ohvUQ7M1ZplVIRcswGuPOs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JnY8AEAe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="14jP5b1v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B191F00A3A;
-	Tue, 21 Jul 2026 18:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JnY8AEAe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4089F1F000E9;
+	Tue, 21 Jul 2026 18:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658394;
-	bh=seESMGKqm/P5rySNhqGWug5eLAGFz/F7nHLH501lDwc=;
+	s=korg; t=1784658396;
+	bh=Jo8oMaxx3cJkEHQhXdhGb0LS2Y3IGv9MSK5a8rx0Flc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=14jP5b1vicXAatCnMl7aAWorwygBDLQs9IsO/m9jqCAaru1cFH8/38lZoj/DlL1gD
-	 eF2UPcMAdi/cCOA/hvILj54whBd/ZXjjFwueO79/MKbgZb4HY1nGTLcbv9Wixe5Ph7
-	 qipTiNGNoCSzoJKFk+SPFu/6/q2lCygR1D6eo6Vw=
+	b=JnY8AEAe8yBoYxzhJcGa+mdA33SrJ9uQGpasAp3rHPJf81Blac7OxcOR0ZVLWZ0vy
+	 4OZ5JzRuQDHHrIvV56vTLLZ7x8N/26nD6QPIP6SLzHqBjPCEw2iBc6dgbis+04fSIh
+	 jbmHSGBr0cEDTFkjb4GLddrRK6SFJJeyAR0Q3NCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Amit Machhiwal <amachhiw@linux.ibm.com>,
-	Harsh Prateek Bora <harshpb@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Gautam Menghani <gautam@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.18 1128/1611] powerpc/pseries/Kconfig: Enable CONFIG_VPA_PMU to be used with KVM
-Date: Tue, 21 Jul 2026 17:20:44 +0200
-Message-ID: <20260721152540.793812808@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: [PATCH 6.18 1129/1611] KVM: s390: pci: Fix GISC refcount leak on AIF enable failure
+Date: Tue, 21 Jul 2026 17:20:45 +0200
+Message-ID: <20260721152540.817488901@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,40 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gautam Menghani <gautam@linux.ibm.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit fe179677b6dcb4b658586038a811f87265e97777 upstream.
+commit 7b69729046a4c58f4cb457184e5ac4aaa179bff4 upstream.
 
-Currently, CONFIG_VPA_PMU is not enabled by default, and consequently
-cannot be used for KVM guests at all, unless explicitly enabled on
-host kernel.
+kvm_s390_gisc_register() registers the guest ISC before pinning
+the guest interrupt forwarding pages and allocating the AISB bit.
+If any of the later setup steps fails, the function unwinds the
+pinned pages and other local state, but does not unregister the
+GISC reference. Add the missing kvm_s390_gisc_unregister() to the
+error unwind path.
 
-Mark CONFIG_VPA_PMU as "default m" to ensure it is available when KVM is
-being used.
-
-Cc: stable@vger.kernel.org # v6.13+
-Suggested-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
-[Maddy: Changed tag order]
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260615091120.84169-1-gautam@linux.ibm.com
+Fixes: 3c5a1b6f0a18 ("KVM: s390: pci: provide routines for enabling/disabling interrupt forwarding")
+Cc: stable@vger.kernel.org
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Acked-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Message-ID: <20260624061910.2794734-1-haoxiang_li2024@163.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/Kconfig |    1 +
+ arch/s390/kvm/pci.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/arch/powerpc/platforms/pseries/Kconfig
-+++ b/arch/powerpc/platforms/pseries/Kconfig
-@@ -154,6 +154,7 @@ config HV_PERF_CTRS
- config VPA_PMU
- 	tristate "VPA PMU events"
- 	depends on KVM_BOOK3S_64_HV && HV_PERF_CTRS
-+	default m
- 	help
- 	  Enable access to the VPA PMU counters via perf. This enables
- 	  code that support measurement for KVM on PowerVM(KoP) feature.
+--- a/arch/s390/kvm/pci.c
++++ b/arch/s390/kvm/pci.c
+@@ -329,6 +329,7 @@ unpin2:
+ unpin1:
+ 	unpin_user_page(aibv_page);
+ out:
++	kvm_s390_gisc_unregister(kvm, fib->fmt0.isc);
+ 	return rc;
+ }
+ 
 
 
