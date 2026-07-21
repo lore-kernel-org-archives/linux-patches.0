@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8B83B8BA4;
-	Tue, 21 Jul 2026 20:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC603B8BA4;
+	Tue, 21 Jul 2026 20:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667544; cv=none; b=CmYLEuvTHJSqF5RO015QPcg7j/t9SI/rUQ+SJOonY0e00D1NdoWumAN5fed86N1L1YNqVKOhzSLtaSfmC/bnffSOez2agpo619JCkrBc8mRCI8WWxdhjLz3VkoMzdvwT074xZLxSJKsQdEq4Iar/QF6i+0fIN5X2pNX7Ie0mVwI=
+	t=1784667548; cv=none; b=LceeCFf8SI5eav2rgkvOEn5zrzE+3uVcIujHee/w7XHHxjbFosm0gdZ117mi7CS4iBVJqhg7kl9qAgU0hmzQ5uI7Lh2XKFPoDSR+TE6jQtuZ8HRk2VPuxH5w7reM4eZKhKzA2sQZt+pEpHc6aYi9I4YmgBQQtciuV0A0ciA69FE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667544; c=relaxed/simple;
-	bh=Z2siLCnShAIfi9UmW2S+wPgMsxzUn5qAviKC1VWWeis=;
+	s=arc-20240116; t=1784667548; c=relaxed/simple;
+	bh=gCUTgluiT3rPyJnSkjmHkWukfz9v4X2nzl3PG4WNues=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dlrEGJxwpeJcmAXenwBOLi95iUxwnIuXEaWaLewzwTLrr5tHbPsm69jzNHUIHcEMi7B94OIjQMOe3nJ3WIFkTC9eSyJ7YJvXD7vgi2S+N43okKlDi8na+BwITUlek2l+RT71OaqSMVUoT1SkRVAjzpQqwHD/fOeNb09SKw7PFl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQUsEu5M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O3lyt++coCwsREm1JyMxMwc80c6qbL/m3MUaE6dyiPRskyt9jasV5xsNngaxg3FlrgdZcwkIh4d4q3h5MUAvlQgwH4zi48bQYZgmwtaJja3o9m1K54yzCrmIFrgERxETgosNRC3xO8aO24KhD1CqwdQjZoHCrAp8CF2Keozzs/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+Y8Ezo/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQUsEu5M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 300351F00A3A;
-	Tue, 21 Jul 2026 20:59:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+Y8Ezo/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00FB1F000E9;
+	Tue, 21 Jul 2026 20:59:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667543;
-	bh=lzCt+II6el5D5GZ/8l7t9cvs2WB3k6MJZ3dIQGpdT6c=;
+	s=korg; t=1784667546;
+	bh=dzMl7lyN3ScY4blHPOAw3F9CelNzI0WxeUiGF2cjV4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LQUsEu5MLQ2b3dLBBj7TdrED7ibtJarbKYd2Fn2jWUZXRIc3ZIIPUhMr6DC9GzwBw
-	 GkvuMKfReMW1q/hZBvQ2YI/YuLhaDmK4P+d1ny617JXE1a72EPz3xsdE29RlFFl4HT
-	 kXJklV7EkkUrd49qdb200bcvXNlMt11Yb4hDi6qo=
+	b=D+Y8Ezo/NM9wc+pazhDdMUp8AZtHGIojVFGPgEWLDHnDetJETScs0kjUjCEyl08FO
+	 ViuNznqGv456R93FSa7VtLdyqVCRtSR67pswWMYKNofAT+PaiyRVS4lUi2oTEy4NJo
+	 YtxxlRmr1zxU6NFys7ceSiCdNk1bsisRWem7VJ1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 1099/1266] bnx2x: fix potential memory leak in bnx2x_alloc_mem_bp()
-Date: Tue, 21 Jul 2026 17:25:36 +0200
-Message-ID: <20260721152506.394445785@linuxfoundation.org>
+	Conor Dooley <conor.dooley@microchip.com>,
+	Valentina Fernandez <valentina.fernandezalanis@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.6 1100/1266] rtc: mpfs: fix counter upload completion condition
+Date: Tue, 21 Jul 2026 17:25:37 +0200
+Message-ID: <20260721152506.416283641@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,43 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-commit a986fde914d88af47eb78fd29c5d1af7952c3500 upstream.
+commit 9792ff8afa9017fe14f436f3ef3cd75f41f9f145 upstream.
 
-If the allocation of fp[i].tpa_info fails, the error path will not free
-the struct bnx2x_fastpath allocated earlier, as it is not linked to the
-bp structure yet. Fix that by linking it immediately after allocation.
+The condition that needs to be checked for upload completion is the
+UPLOAD bit in the completion register going low. The original iterations
+of this driver used a do-while and this was converted to a
+read_poll_timeout() during upstreaming without the condition being
+inverted as it should have been.
 
-Cc: stable@vger.kernel.org
-Fixes: 15192a8cf8a8 ("bnx2x: Split the FP structure")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260620062402.89549-1-nihaal@cse.iitm.ac.in
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+I suspect that this went unnoticed until now because a) the first read
+was done when the bit was still set, immediately completing the
+read_poll_timeout() and b) because the RTC doesn't hold time when power
+is removed from the SoC reducing its utility (I for one keep it
+disabled). If my first suspicion was true when the driver was
+upstreamed, it's not true any longer though, hence the detection of the
+problem.
+
+Fixes: 0b31d703598dc ("rtc: Add driver for Microchip PolarFire SoC")
+CC: stable@vger.kernel.org
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Tested-by: Valentina Fernandez <valentina.fernandezalanis@microchip.com>
+Link: https://patch.msgid.link/20260513-panhandle-ashy-70c6abf84d59@spud
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/rtc/rtc-mpfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-@@ -4752,6 +4752,7 @@ int bnx2x_alloc_mem_bp(struct bnx2x *bp)
- 	fp = kcalloc(bp->fp_array_size, sizeof(*fp), GFP_KERNEL);
- 	if (!fp)
- 		goto alloc_err;
-+	bp->fp = fp;
- 	for (i = 0; i < bp->fp_array_size; i++) {
- 		fp[i].tpa_info =
- 			kcalloc(ETH_MAX_AGGREGATION_QUEUES_E1H_E2,
-@@ -4760,8 +4761,6 @@ int bnx2x_alloc_mem_bp(struct bnx2x *bp)
- 			goto alloc_err;
- 	}
+--- a/drivers/rtc/rtc-mpfs.c
++++ b/drivers/rtc/rtc-mpfs.c
+@@ -112,7 +112,7 @@ static int mpfs_rtc_settime(struct devic
+ 	ctrl |= CONTROL_UPLOAD_BIT;
+ 	writel(ctrl, rtcdev->base + CONTROL_REG);
  
--	bp->fp = fp;
--
- 	/* allocate sp objs */
- 	bp->sp_objs = kcalloc(bp->fp_array_size, sizeof(struct bnx2x_sp_objs),
- 			      GFP_KERNEL);
+-	ret = read_poll_timeout(readl, prog, prog & CONTROL_UPLOAD_BIT, 0, UPLOAD_TIMEOUT_US,
++	ret = read_poll_timeout(readl, prog, !(prog & CONTROL_UPLOAD_BIT), 0, UPLOAD_TIMEOUT_US,
+ 				false, rtcdev->base + CONTROL_REG);
+ 	if (ret) {
+ 		dev_err(dev, "timed out uploading time to rtc");
 
 
