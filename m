@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0964D434E4F;
-	Tue, 21 Jul 2026 21:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA41434E4F;
+	Tue, 21 Jul 2026 21:07:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668059; cv=none; b=jmLVwGMyeqfPj2p4YoAs7T4IeJH//MTZzoWwvJWoYaUnc/m6BiFNumj2t9UOjENxKGRGL7g225FbyAxtey5T75WUkcDBXQsNPjhh2PS1WUbHrwcCJOOUFYTLcCsZuvYfa48ZyUHYkEGsm399SEtJdtWiBSVHAFe86tDAHN44MXw=
+	t=1784668061; cv=none; b=JDxVZXr5ZUJt79zNCqR+YNlC+xtQyn+aTFycv4VTqsu+ULITnb/IjKTH+pFrkko6RSIWYBJWz5bLv+HFaSGj6r2lqDVyJtpGTLrjix4/y2fm4bV2jzeJqprwLz9AHPVYCamw6HzcPuz/9jczAUConrZTb1M+xhcGQLWHDusOWhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668059; c=relaxed/simple;
-	bh=4EgXiygfl87/mbTLh8Mpoe+N9DcVUfldN9zKvA7oxk0=;
+	s=arc-20240116; t=1784668061; c=relaxed/simple;
+	bh=9dTLqX5GYpNLwZMkfMZm/WtZ4HNlknrD4JnfigDBDYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L+j7MK8FA5VbVA316aShzWDsKDV7Dfi2/Qksvif7hSiDf4ZfvjAJ+rTygXv06xD87fHSWJcd3pCzmQa+Wgpj/k3ENjjwIa+LZUMmX1DMaP0RuHpwrOxHvCr695Ygv1OmHC8/POp9nfWbdekZcKyne8y22uNPoEDb9s0ciROyvHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4FigMYC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rn0nyar4AleV3dwxFaTBn1heOYWCAI/9GLlMt5ZyZWNw7EYYdUxZb64N84+Te8WdpmAT5b/0Z9rWkODixmQcBClF5LSDpRK2jMgKMpuOHQFM5h9FRstlzDp1nbVYwzlYQ7nZjBriDIk1UrbQzFMSVu7ylZwM02O+a4JFqV8sghA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yutgg9cJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4FigMYC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DEAF1F000E9;
-	Tue, 21 Jul 2026 21:07:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yutgg9cJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 126811F000E9;
+	Tue, 21 Jul 2026 21:07:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668057;
-	bh=fbhtkU4tXm5jIkNmNdK/ztFZfa7tk5HTWOOwvfMm9KA=;
+	s=korg; t=1784668060;
+	bh=HeFDaLOkUT/KQyrGUkH84R7/n/QUazu5JDA9/pM1pvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W4FigMYC0OjLg9sVOzLWGuhZbQUtwj9wXTnroW5sRBatPgTcJWx7eE7DoSL9Vgg3q
-	 V+xR5RldiIKgSOzeQjqyf2BjLJtU/S1tzvpIlnfu+/NlOVxZI+Dw8/nb+tLLZLIIaR
-	 xynpgPr5vhw/nF0pF6eRfxhJeMwubXQUckja8isk=
+	b=yutgg9cJRvjFRML/yS+HBz/th4C1cbMdHorweeFIA4nK/oVgA3Chij8lMUAG4XjZ9
+	 7jALfHFlTdKOEfdGKB3bxDG0qLg5LQHS35EjQprX2W2Jp4s3+gLCjExb/rKyV1fmNd
+	 b/XpAfzDcgJMw9V1hViwmM5I3GEWsLoUeH3oK2mU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Johansen <john.johansen@canonical.com>,
+	NeilBrown <neil@brown.name>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0032/1067] apparmor: advertise the tcp fast open fix is applied
-Date: Tue, 21 Jul 2026 17:10:33 +0200
-Message-ID: <20260721152425.268496180@linuxfoundation.org>
+Subject: [PATCH 6.1 0033/1067] nfsd: move name lookup out of nfsd4_list_rec_dir()
+Date: Tue, 21 Jul 2026 17:10:34 +0200
+Message-ID: <20260721152425.291275248@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,33 +52,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: NeilBrown <neilb@ownmail.net>
 
-[ Upstream commit 2f6701a5ce6257ae7a64ddc6d89d0a08d2a034f8 ]
+[ Upstream commit 89bd77cf436bf25e448817a662ebf76515f22863 ]
 
-The fix for tcp-fast-open ensures that the connect permission is being
-mediated correctly but it didn't add an artifact to the feature set to
-advertise the fix is available. Add an artifact so that the test suite
-can identify if the fix has not been properly applied or a new
-unexpected regression has occurred.
+nfsd4_list_rec_dir() is called with two different callbacks.
+One of the callbacks uses vfs_rmdir() to remove the directory.
+The other doesn't use the dentry at all, just the name.
 
-Fixes: 4d587cd8a7215 ("apparmor: mediate the implicit connect of TCP fast open sendmsg")
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+As only one callback needs the dentry, this patch moves the lookup into
+that callback.  This prepares of changes to how directory operations
+are locked.
+
+Signed-off-by: NeilBrown <neil@brown.name>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: 4552f4e3f2c9 ("nfsd: change nfs4_client_to_reclaim() to allocate data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/net.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/nfsd/nfs4recover.c | 55 ++++++++++++++++++++++---------------------
+ 1 file changed, 28 insertions(+), 27 deletions(-)
 
---- a/security/apparmor/net.c
-+++ b/security/apparmor/net.c
-@@ -21,6 +21,7 @@
+diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
+index d2505f817d78be..3ad9da783eb686 100644
+--- a/fs/nfsd/nfs4recover.c
++++ b/fs/nfsd/nfs4recover.c
+@@ -254,7 +254,7 @@ nfsd4_create_clid_dir(struct nfs4_client *clp)
+ 	nfs4_reset_creds(original_cred);
+ }
  
- struct aa_sfs_entry aa_sfs_entry_network[] = {
- 	AA_SFS_FILE_STRING("af_mask",	AA_SFS_AF_MASK),
-+	AA_SFS_FILE_BOOLEAN("tcp-fast-open",		1),
- 	{ }
- };
+-typedef int (recdir_func)(struct dentry *, struct dentry *, struct nfsd_net *);
++typedef int (recdir_func)(struct dentry *, char *, struct nfsd_net *);
  
+ struct name_list {
+ 	char name[HEXDIR_LEN];
+@@ -308,23 +308,14 @@ nfsd4_list_rec_dir(recdir_func *f, struct nfsd_net *nn)
+ 	}
+ 
+ 	status = iterate_dir(nn->rec_file, &ctx.ctx);
+-	inode_lock_nested(d_inode(dir), I_MUTEX_PARENT);
+ 
+ 	list_for_each_entry_safe(entry, tmp, &ctx.names, list) {
+-		if (!status) {
+-			struct dentry *dentry;
+-			dentry = lookup_one_len(entry->name, dir, HEXDIR_LEN-1);
+-			if (IS_ERR(dentry)) {
+-				status = PTR_ERR(dentry);
+-				break;
+-			}
+-			status = f(dir, dentry, nn);
+-			dput(dentry);
+-		}
++		if (!status)
++			status = f(dir, entry->name, nn);
++
+ 		list_del(&entry->list);
+ 		kfree(entry);
+ 	}
+-	inode_unlock(d_inode(dir));
+ 	nfs4_reset_creds(original_cred);
+ 
+ 	list_for_each_entry_safe(entry, tmp, &ctx.names, list) {
+@@ -422,18 +413,19 @@ nfsd4_remove_clid_dir(struct nfs4_client *clp)
+ }
+ 
+ static int
+-purge_old(struct dentry *parent, struct dentry *child, struct nfsd_net *nn)
++purge_old(struct dentry *parent, char *cname, struct nfsd_net *nn)
+ {
+ 	int status;
++	struct dentry *child;
+ 	struct xdr_netobj name;
+ 
+-	if (child->d_name.len != HEXDIR_LEN - 1) {
+-		printk("%s: illegal name %pd in recovery directory\n",
+-				__func__, child);
++	if (strlen(cname) != HEXDIR_LEN - 1) {
++		printk("%s: illegal name %s in recovery directory\n",
++				__func__, cname);
+ 		/* Keep trying; maybe the others are OK: */
+ 		return 0;
+ 	}
+-	name.data = kmemdup_nul(child->d_name.name, child->d_name.len, GFP_KERNEL);
++	name.data = kstrdup(cname, GFP_KERNEL);
+ 	if (!name.data) {
+ 		dprintk("%s: failed to allocate memory for name.data!\n",
+ 			__func__);
+@@ -443,10 +435,17 @@ purge_old(struct dentry *parent, struct dentry *child, struct nfsd_net *nn)
+ 	if (nfs4_has_reclaimed_state(name, nn))
+ 		goto out_free;
+ 
+-	status = vfs_rmdir(&init_user_ns, d_inode(parent), child);
+-	if (status)
+-		printk("failed to remove client recovery directory %pd\n",
+-				child);
++	inode_lock_nested(d_inode(parent), I_MUTEX_PARENT);
++	child = lookup_one_len(cname, parent, HEXDIR_LEN - 1);
++	if (!IS_ERR(child)) {
++		status = vfs_rmdir(&init_user_ns, d_inode(parent), child);
++		if (status)
++			printk("failed to remove client recovery directory %pd\n",
++			       child);
++		dput(child);
++	}
++	inode_unlock(d_inode(parent));
++
+ out_free:
+ 	kfree(name.data);
+ out:
+@@ -477,18 +476,18 @@ nfsd4_recdir_purge_old(struct nfsd_net *nn)
+ }
+ 
+ static int
+-load_recdir(struct dentry *parent, struct dentry *child, struct nfsd_net *nn)
++load_recdir(struct dentry *parent, char *cname, struct nfsd_net *nn)
+ {
+ 	struct xdr_netobj name;
+ 	struct xdr_netobj princhash = { .len = 0, .data = NULL };
+ 
+-	if (child->d_name.len != HEXDIR_LEN - 1) {
+-		printk("%s: illegal name %pd in recovery directory\n",
+-				__func__, child);
++	if (strlen(cname) != HEXDIR_LEN - 1) {
++		printk("%s: illegal name %s in recovery directory\n",
++				__func__, cname);
+ 		/* Keep trying; maybe the others are OK: */
+ 		return 0;
+ 	}
+-	name.data = kmemdup_nul(child->d_name.name, child->d_name.len, GFP_KERNEL);
++	name.data = kstrdup(cname, GFP_KERNEL);
+ 	if (!name.data) {
+ 		dprintk("%s: failed to allocate memory for name.data!\n",
+ 			__func__);
+@@ -843,11 +842,13 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
+ 				return PTR_ERR(name.data);
+ 			name.len = namelen;
+ 		}
++#ifdef CONFIG_NFSD_V4
+ 		if (name.len > 5 && memcmp(name.data, "hash:", 5) == 0) {
+ 			name.len = name.len - 5;
+ 			memmove(name.data, name.data + 5, name.len);
+ 			cn->cn_has_legacy = true;
+ 		}
++#endif
+ 		if (!nfs4_client_to_reclaim(name, princhash, nn)) {
+ 			kfree(name.data);
+ 			kfree(princhash.data);
+-- 
+2.53.0
+
 
 
