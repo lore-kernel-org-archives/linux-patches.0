@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B694269D18;
-	Tue, 21 Jul 2026 18:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDA2231829;
+	Tue, 21 Jul 2026 18:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660083; cv=none; b=nvhLAcKHPqUPlGAxulB/q1IfVyPoIf3fb2sP+c/siLt2mBOFQyDkuu664qsS6Bvxv+Q5UtcbaSwxW+/8Y41+7HqpAvswRaQXiAATh9SCOpfOD+EC0w997sWyidG+45p1zmUKPXyX9hPzZ1ZQvwTFGqBx07mOPuLLjvDm7Z22fQE=
+	t=1784660086; cv=none; b=RwVmHgkoGUmHNaFN3xw5AQzp/fWg8a+s4gwDYauBbzt2oC5AVxkj+wzhS0tQeEaroW1BYzDtRu1i36W9CkN9Po1pS3PiqOjN4ZFqSoEEhmpGot619/01uK3DtodoNKCs2sHjD711CzeN/1ITxcPYV3W/WkUkCKbejgd3VMuDYdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660083; c=relaxed/simple;
-	bh=9V66dMarWmmmk3CXUmbzMsZfnZs14IYoJ3k7CrFdY7k=;
+	s=arc-20240116; t=1784660086; c=relaxed/simple;
+	bh=O7SsSBdUw5UllqX4qwdudQZ+izWJKbzHdmOKK808ODY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NCtn057ljn6qmKXV38PVNj+T06k+gqb1gyFI+1dTJuxKuFrytfYqK1lxBourZc9ppETQ8HpncFOLhty/F0Z0Bb8K4kRsdYdT8VZRR0iavv3fL+HI9X75VACBheB39BEEeruKIshBFzXaETMVjcRWPuCZTOf9rDB3q+lFc7e667A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ocCdLj4/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K5kN1O8G27jtuy+6Jd/xAe+mSM69MEsH5tKlvfpVkR9+CYiMuhhhdwpSEYNOWM6vkXy9KAENORubC9H9ggXZua6sC0dfFhA4HrgYyJvOVVXFpw33wcO32IjvClV9EuPZGPjYpx2HZDi4cP5trRpbpw69coYzGoDeFWbdqdy74NA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1GAYrfGp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ocCdLj4/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0B2A1F00A3A;
-	Tue, 21 Jul 2026 18:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GAYrfGp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CC41F000E9;
+	Tue, 21 Jul 2026 18:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660082;
-	bh=KEP7ydDu/dhglAn012KGHIQOKcdgukxSNHaW5DgI9QM=;
+	s=korg; t=1784660084;
+	bh=T0EMmlxmjEOn2EReUSjDxP6BSUPCRNCn4zlifhXknXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ocCdLj4/UjpFcaEPFRVbm8lRHHir45p+/cMEksv5RKik/Y0CB7b3RpPIZKDEHZdw1
-	 qaUGEr1vLhoc42yxtjPv1q34fyXkmR1RaLgVrqjTsOKDSaWWHXBwbFD8ncDcRQG3EX
-	 GK2ELLkzeAgEDrbYzysOOydyJAFYAHfq0nMrqSxs=
+	b=1GAYrfGpPASP8eC40+e4WwbzVTQ9zmeRRoL7vbgJzMzqh+6LGh3pmeQJTUW8LcLhx
+	 iV6P2lEg9hPNNFljfZVhJzHxMq1JbuDgNp+pYfQ7eFijIhGeeYxr2DhEPYWhVyYLqa
+	 0EXdDAQwMqZvFt//X+SF4E96Zko/PMy3jaPclZvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michiel van Tol <michiel.vantol@arm.com>,
+	James Clark <james.clark@linaro.org>,
 	Leo Yan <leo.yan@arm.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0845/2077] coresight: tmc: Fix overflow when calculating is bigger than 2GiB
-Date: Tue, 21 Jul 2026 17:08:38 +0200
-Message-ID: <20260721152612.722389328@linuxfoundation.org>
+Subject: [PATCH 7.1 0846/2077] coresight: ete: Always save state on power down
+Date: Tue, 21 Jul 2026 17:08:39 +0200
+Message-ID: <20260721152612.746582737@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,58 +52,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit f195d54deef1bc6dd3326394975baff02c7ae487 ]
+[ Upstream commit 2ab4645fe4206c142a5f1491e191c906279686cf ]
 
-When specifying a 2GB AUX buffer, the ETR driver ends up allocating only
-a 1MB buffer instead:
+System register ETMs and ETE are unlikely to be preserved on CPU power
+down. The ETE DT binding also never documented
+"arm,coresight-loses-context-with-cpu" so nobody would have legitimately
+been able to use that binding to fix it and ACPI has no such binding at
+all.
 
-  # echo 'file coresight-tmc-etr.c +p' > \
-	/sys/kernel/debug/dynamic_debug/control
-  # perf record -e cs_etm/@tmc_etr0,timestamp=0/u -C 0 -m ,2G -- test
-  coresight tmc_etr0: allocated buffer of size 1024KB in mode 0
+Fix it by hard coding the setting for sysreg ETMs (ETE is always sysreg)
+or ACPI boots. Use a local variable when setting up save_state so that
+it's immune to concurrent probing when devices have different
+configurations which is an issue with modifying the global.
 
-The page index is an 'int' type, and shifting it by PAGE_SHIFT overflows
-when the resulting value exceeds 2GB.  This produces a negative value,
-causing the driver to fall back to the minimum buffer size (1MB).
+This fixes the following error when using Coresight with ACPI on the FVP
+which supports CPU PM:
 
-Cast the page index to a wider type to accommodate large buffer sizes.
-Also fix a similar issue in the buffer offset calculation.
+  coresight ete0: External agent took claim tag
+  WARNING: drivers/hwtracing/coresight/coresight-core.c:248 at coresight_disclaim_device_unlocked+0xe0/0xe8, CPU#0: perf/117
 
-Reported-by: Michiel van Tol <michiel.vantol@arm.com>
-Fixes: 99443ea19e8b ("coresight: Add generic TMC sg table framework")
-Fixes: eebe8dbd8630 ("coresight: tmc: Decouple the perf buffer allocation from sysfs mode")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
+Fixes: 35e1c9163e02 ("coresight: ete: Add support for ETE tracing")
+Signed-off-by: James Clark <james.clark@linaro.org>
+Reviewed-by: Leo Yan <leo.yan@arm.com>
 Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260217-arm_coresight_fix_big_buffer_size-v1-1-774e893d8e3f@arm.com
+Link: https://lore.kernel.org/r/20260505-james-cs-ete-pm_save_enable-v3-1-485d21dd79b8@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-tmc-etr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../coresight/coresight-etm4x-core.c          | 48 +++++++++++++------
+ 1 file changed, 34 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-index 4dc1defe27a5f7..361a433e6f0c55 100644
---- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
-+++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-@@ -154,7 +154,7 @@ tmc_pages_get_offset(struct tmc_pages *tmc_pages, dma_addr_t addr)
- 	for (i = 0; i < tmc_pages->nr_pages; i++) {
- 		page_start = tmc_pages->daddrs[i];
- 		if (addr >= page_start && addr < (page_start + PAGE_SIZE))
--			return i * PAGE_SIZE + (addr - page_start);
-+			return (long)i * PAGE_SIZE + (addr - page_start);
- 	}
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index d565a73f0042e3..591dfe0bc63505 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -56,10 +56,14 @@ MODULE_PARM_DESC(boot_enable, "Enable tracing on boot");
+ #define PARAM_PM_SAVE_NEVER	  1 /* never save any state */
+ #define PARAM_PM_SAVE_SELF_HOSTED 2 /* save self-hosted state only */
  
- 	return -EINVAL;
-@@ -1379,7 +1379,7 @@ alloc_etr_buf(struct tmc_drvdata *drvdata, struct perf_event *event,
- 	node = (event->cpu == -1) ? NUMA_NO_NODE : cpu_to_node(event->cpu);
++/*
++ * Save option for ETM4. ETE, sysreg ETM4s and ACPI boots ignore this option and
++ * will always save.
++ */
+ static int pm_save_enable = PARAM_PM_SAVE_FIRMWARE;
+ module_param(pm_save_enable, int, 0444);
+ MODULE_PARM_DESC(pm_save_enable,
+-	"Save/restore state on power down: 1 = never, 2 = self-hosted");
++	"Save/restore state on power down: 1 = never, 2 = self-hosted. MMIO and DT only.");
  
- 	/* Use the minimum limit if the required size is smaller */
--	size = nr_pages << PAGE_SHIFT;
-+	size = (ssize_t)nr_pages << PAGE_SHIFT;
- 	size = max_t(ssize_t, size, TMC_ETR_PERF_MIN_BUF_SIZE);
+ static struct etmv4_drvdata *etmdrvdata[NR_CPUS];
+ static void etm4_set_default_config(struct etmv4_config *config);
+@@ -2012,7 +2016,7 @@ static int etm4_cpu_save(struct etmv4_drvdata *drvdata)
+ {
+ 	int ret = 0;
+ 
+-	if (pm_save_enable != PARAM_PM_SAVE_SELF_HOSTED)
++	if (!drvdata->save_state)
+ 		return 0;
  
  	/*
+@@ -2127,7 +2131,7 @@ static void __etm4_cpu_restore(struct etmv4_drvdata *drvdata)
+ 
+ static void etm4_cpu_restore(struct etmv4_drvdata *drvdata)
+ {
+-	if (pm_save_enable != PARAM_PM_SAVE_SELF_HOSTED)
++	if (!drvdata->save_state)
+ 		return;
+ 
+ 	if (coresight_get_mode(drvdata->csdev))
+@@ -2212,6 +2216,17 @@ static void etm4_pm_clear(void)
+ 	}
+ }
+ 
++static bool etm4x_always_pm_save(struct device *dev, struct csdev_access *csa)
++{
++	/*
++	 * Only IO mem ETM devices will benefit from skipping PM save and only
++	 * DT has the option to control it, not ACPI. Otherwise system register
++	 * based ETMs and ETEs will always lose context on CPU power down, so
++	 * always save.
++	 */
++	return !csa->io_mem || is_acpi_device_node(dev_fwnode(dev));
++}
++
+ static int etm4_add_coresight_dev(struct etm4_init_arg *init_arg)
+ {
+ 	int ret;
+@@ -2221,6 +2236,7 @@ static int etm4_add_coresight_dev(struct etm4_init_arg *init_arg)
+ 	struct coresight_desc desc = { 0 };
+ 	u8 major, minor;
+ 	char *type_name;
++	bool pm_save;
+ 
+ 	if (!drvdata)
+ 		return -EINVAL;
+@@ -2248,6 +2264,21 @@ static int etm4_add_coresight_dev(struct etm4_init_arg *init_arg)
+ 
+ 	etm4_set_default(&drvdata->config);
+ 
++	if (etm4x_always_pm_save(dev, init_arg->csa))
++		pm_save = true;
++	else if (pm_save_enable == PARAM_PM_SAVE_FIRMWARE)
++		pm_save = coresight_loses_context_with_cpu(dev);
++	else
++		pm_save = pm_save_enable != PARAM_PM_SAVE_NEVER;
++
++	if (pm_save) {
++		drvdata->save_state = devm_kmalloc(dev,
++						   sizeof(struct etmv4_save_state),
++						   GFP_KERNEL);
++		if (!drvdata->save_state)
++			return -ENOMEM;
++	}
++
+ 	pdata = coresight_get_platform_data(dev);
+ 	if (IS_ERR(pdata))
+ 		return PTR_ERR(pdata);
+@@ -2305,17 +2336,6 @@ static int etm4_probe(struct device *dev)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (pm_save_enable == PARAM_PM_SAVE_FIRMWARE)
+-		pm_save_enable = coresight_loses_context_with_cpu(dev) ?
+-			       PARAM_PM_SAVE_SELF_HOSTED : PARAM_PM_SAVE_NEVER;
+-
+-	if (pm_save_enable != PARAM_PM_SAVE_NEVER) {
+-		drvdata->save_state = devm_kmalloc(dev,
+-				sizeof(struct etmv4_save_state), GFP_KERNEL);
+-		if (!drvdata->save_state)
+-			return -ENOMEM;
+-	}
+-
+ 	raw_spin_lock_init(&drvdata->spinlock);
+ 
+ 	drvdata->cpu = coresight_get_cpu(dev);
 -- 
 2.53.0
 
