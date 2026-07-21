@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869E82F6931;
-	Tue, 21 Jul 2026 20:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE3F46EF8C;
+	Tue, 21 Jul 2026 20:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664118; cv=none; b=N5+kz0nK5Axpyu0RXVfr0igL2y3voxCrZg5XEIRC6nM2CsJB1Poa78Y3shsPsXSIGF79vYy0Ek5S6bXahwbXj4NLorwuPt+k3651Mbbn3dkE37Vl85wBgLt+L6TY6nbHCN2hw07C+hbm9Ll5OHEyoj2qjfYXysmJgkEUo79clyA=
+	t=1784664121; cv=none; b=okHyhkpgVddCupjjPAdHcT1cCQulwzq1PnKe+zkYYXpmMQls4PAS+vw7d2vlooR2FfDwRA2tO3UP+kVw1OPL8yrwB+spl+ha3iFjrC3TQkbg1FeT/LqhqheKQgTCoPU3gEXLhL35yv1AFaF0TZovPXPq0LpU5OJSyY5UsA/tgpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664118; c=relaxed/simple;
-	bh=nEEZkvO48qKzk5YB3MY9HVTQddPMQ+CQEoAF1yeeKqs=;
+	s=arc-20240116; t=1784664121; c=relaxed/simple;
+	bh=unsyA6oHTsPcUpSCAH9Wrh6AJ9P+sFORVnr+09PSElQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=InxweMSzY3x5XNk64Ytp4DbI1o6uK52FDDNnzjeSBOcvtna+rA7t1jddn07O6ZB6Q6Si8Zfk6yv+Aypej8BzmedgHVIfsM1+Yi0C7JBIR1T1vPerGHiymL9TyKj+Hiep9SLlk329uS8PkYIbCMWxHLszVbyzhmHvkr4fAgxMr+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HsmLLFjl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SBm36z0qQpVM9DPtj4hHF8go5shI++eiaEDh9YPH4E6Wm6eqhvbo8JWqEfuIVpyrEzIZq/HVIcfuEPfMxxsse+j2x7WuiH0LN4AEqnXpqlczISPlT+9QxtwVvc3i8Rf80O3XXlw1vk4tNwgiRoQMYwpQcrPjgUEzo6cH8UtbjWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yDwMUOJy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HsmLLFjl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6C71F000E9;
-	Tue, 21 Jul 2026 20:01:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yDwMUOJy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 967681F000E9;
+	Tue, 21 Jul 2026 20:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664117;
-	bh=wzrzS7EU8/MSw/YZO8aWHEFaw+aEFlDyRzDzApGVEms=;
+	s=korg; t=1784664120;
+	bh=vkjzV4fln35PBBIGpMHoO5xaZzPZCdl5PsksP0uNf64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HsmLLFjluiuxh00WvRUGfqivGSdqsr6Hj65LC1bLTeZN6TfjUx8HPIE1jW5XuapOc
-	 MjkTZzl6AsPLVY4pKIhm0A9/SrXmbGO+JpcVNCNdepaHjFdzqrsMQ9CUfwCH3g4yF9
-	 FvijRfSqPPzeKpO3pw3Vsj73lyqE03Dm+O3XKx2s=
+	b=yDwMUOJyruH1gdx/xMzWGmcNn47jt4V+6UWoADMhO/ZQnGkqwBY7T4wlZhkQhg9VX
+	 vHl7du/+wE1oIBIjtF1pgnAPRucfJg9PLl53YU7UGhxMhMnEyXyBv6j8GG/r8CEk0t
+	 FSP8I8oNh+cywyw0mMcW84m6ajf+G9ofgiPrkKIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sven Eckelmann <sven@narfation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1062/1276] batman-adv: retrieve ethhdr after potential skb realloc on RX
-Date: Tue, 21 Jul 2026 17:25:05 +0200
-Message-ID: <20260721152509.752824517@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.12 1080/1276] tracing/probes: Fix double addition of offset for @+FOFFSET
+Date: Tue, 21 Jul 2026 17:25:23 +0200
+Message-ID: <20260721152510.155135674@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,42 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 035e1fed892d3d06002a73ff73668f618a514644 upstream.
+commit 9a667b7750dda88cbf1cca96a53a2163b2ee71f7 upstream.
 
-pskb_may_pull() in batadv_interface_rx() could reallocate the buffer behind
-the skb. Variables which were pointing to the old buffer need to be
-reassigned to avoid an use-after-free.
+Since commit 533059281ee5 ("tracing: probeevent: Introduce new argument
+ fetching code") wrongly use @offset local variable during the parsing,
+the offset value is added twice when dereferencing.
+Reset the @offset after setting it in FETCH_OP_FOFFS.
 
-This was done correctly for the VLAN header but missed for the ethernet
-header which is later used for the TT and AP isolation handling.
+Link: https://lore.kernel.org/all/178217905962.643090.1978577464942171332.stgit@devnote2/
 
+Fixes: 533059281ee5 ("tracing: probeevent: Introduce new argument fetching code")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
-Fixes: c78296665c3d ("batman-adv: Check skb size before using encapsulated ETH+VLAN header")
-[ move from mesh- to soft-interface.c ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/soft-interface.c | 1 +
+ kernel/trace/trace_probe.c |    1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/net/batman-adv/soft-interface.c b/net/batman-adv/soft-interface.c
-index f46064333f3343..42ad04d356904f 100644
---- a/net/batman-adv/soft-interface.c
-+++ b/net/batman-adv/soft-interface.c
-@@ -445,6 +445,7 @@ void batadv_interface_rx(struct net_device *soft_iface,
- 		if (!pskb_may_pull(skb, VLAN_ETH_HLEN))
- 			goto dropped;
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -1105,6 +1105,7 @@ parse_probe_arg(char *arg, const struct
  
-+		ethhdr = eth_hdr(skb);
- 		vhdr = skb_vlan_eth_hdr(skb);
- 
- 		/* drop batman-in-batman packets to prevent loops */
--- 
-2.53.0
-
+ 			code->op = FETCH_OP_FOFFS;
+ 			code->immediate = (unsigned long)offset;  // imm64?
++			offset = 0;
+ 		} else {
+ 			/* uprobes don't support symbols */
+ 			if (!(ctx->flags & TPARG_FL_KERNEL)) {
 
 
