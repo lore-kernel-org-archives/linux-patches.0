@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D798546EC8E;
-	Tue, 21 Jul 2026 19:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B88E415F1A;
+	Tue, 21 Jul 2026 19:38:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662705; cv=none; b=gjZ1L6bxeB/HGR9G4ysrmWSjmGFnmAG87inzmi4UrzUuHj4CT1XNvuI1q/lwLwEIlf4jcoGRXmDTYry+Uos3AYMQV8DUQL3+7s3LNR5jGMD5NEdEnZRRxZFotRID5kWfjpRs5iE5jeb1Cnr49EVi3oHznV4RvN/fCHKQ3xb789g=
+	t=1784662706; cv=none; b=DsUOuuG0NJ08/93oVtP48AtJwTLtllqj1wX3SNxLc0PZeP6jtuWFYxwNzIK6yH0h/KoaN+lyp6slKX+35eESLwbawRF0Brp3zXa0n4FZLqXAT49+PHGCai7vMhBpJRWdk/7coNM9tkbZ4OpU/NhvQLS3GYTuPoaVeR4S9baLmCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662705; c=relaxed/simple;
-	bh=o1rG7SrCeRKl8WKvlBHOoneqo4qGvEVeBkDwrXbRtCE=;
+	s=arc-20240116; t=1784662706; c=relaxed/simple;
+	bh=oygVAL/t/iAmDZU/Rouu7gjWJHs0YllCj5+NrDuEDhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ATLTpMombFnId/hoowyJM7AoCuJaNY2qvYjKCkMT5U3Tha9aZJyjw/P7tqNHoyIRjc1naY9YfnS9a8SYoG8W5f1aDrH8lNbfkzgAwzts8CIiKHTYki4issdDWNPWodJm2PqSXubK534E1NaI+e7FxQSrCyugAWsu8i1tHSNarxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vMkRSWaA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o82MR7bGgQ8e46hI/VgpCrTKlKvc8cV3THTeMjDj7fpavLbWXRlJN4Twcx625j/Z/X1WpCioAilXne9eePv08eSExF0K6q3p3EVPfj12Hk/miV7I7Ag4+WZ1NaXy03Patp1gcdEtSNnTyCu4Nfnd4HyKrxLZLPa4+Y5IfLU9Uvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHDqSKEX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vMkRSWaA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869A01F00A3D;
-	Tue, 21 Jul 2026 19:38:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHDqSKEX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D8A1F000E9;
+	Tue, 21 Jul 2026 19:38:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662695;
-	bh=E8QVBN/meEOVYoAkPBT1R1vFwI8cgCAsnP2Ruj5e7BE=;
+	s=korg; t=1784662700;
+	bh=SFOBui828588mPX0D1R/X2dKyGAtTp3E5blb8tjAlaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vMkRSWaAqEM/SgGLNhNFd7RKKi/tfFOxzf5towZ01MQX65inRsFw4nZMQ1bxlKuyI
-	 ws0ADkR3tEjxGd6KXuokMDgZ0vEZyk7jEo/aV0Sjnsp60xG7o+9I1TNy9odx3Bj5Xj
-	 EdVRBWB8YbMEiVK+q6rdoNpvqecg2Prkwa4Aj5A8=
+	b=iHDqSKEXTNgGXoa4gTYyXfNfZniBlHmFrUH5D6JQKfOE0CkCExzyW7eEHXSHoS4yA
+	 f7HRrx7ot/dA1YA6oMfMCUkOPeMZ1WZVtF13nMIb6AptxmUZdtdLzx+LD2ZolUuoQH
+	 FztK48Z1bHjS6ZG+Qrd7th/Ov2iRPMYJDoXUTp34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	=?UTF-8?q?Maxime=20B=C3=A9lair?= <maxime.belair@canonical.com>,
+	Tyler Hicks <code@thicks.com>,
+	Ryan Lee <ryan.lee@canonical.com>,
+	Zygmunt Krynicki <me@zygoon.pl>,
 	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0541/1276] apparmor: fix potential UAF in aa_replace_profiles
-Date: Tue, 21 Jul 2026 17:16:24 +0200
-Message-ID: <20260721152458.228501307@linuxfoundation.org>
+Subject: [PATCH 6.12 0543/1276] apparmor: aa_getprocattr free procattr leak on format failure
+Date: Tue, 21 Jul 2026 17:16:26 +0200
+Message-ID: <20260721152458.271153354@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -46,53 +47,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Bélair <maxime.belair@canonical.com>
+From: Zygmunt Krynicki <me@zygoon.pl>
 
-[ Upstream commit 7b42f95813dc9ceb6bda35afcf914630909a19f9 ]
+[ Upstream commit fea23bf73f0cae8ccb1d0684e4a3003874771f41 ]
 
-The function aa_replace_profiles was accessing udata->size after calling
-aa_put_loaddata(udata), causing a potential UAF.
+aa_getprocattr() allocates the output string before rendering the label
+into it. If the second aa_label_snxprint() call fails, the function
+returned without freeing that allocation.
 
-Fixed this by saving the size to a local variable before dropping the
-reference.
+Free and clear the output pointer on the uncommon formatting failure path
+before dropping the namespace reference.
 
-Fixes: 5ac8c355ae001 ("apparmor: allow introspecting the loaded policy pre internal transform")
-Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
-Signed-off-by: Maxime Bélair <maxime.belair@canonical.com>
+Fixes: 76a1d263aba3 ("apparmor: switch getprocattr to using label_print fns()")
+Reviewed-by: Tyler Hicks <code@thicks.com>
+Reviewed-by: Ryan Lee <ryan.lee@canonical.com>
+Signed-off-by: Zygmunt Krynicki <me@zygoon.pl>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ security/apparmor/procattr.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
-index 9140b613c0cf22..7fa1d2a08913af 100644
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -1327,13 +1327,15 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
- 	mutex_unlock(&ns->lock);
- 
- out:
-+	ssize_t udata_sz = udata->size;
-+
- 	aa_put_ns(ns);
- 	aa_put_profile_loaddata(udata);
- 	kfree(ns_name);
- 
- 	if (error)
- 		return error;
--	return udata->size;
-+	return udata_sz;
- 
- fail_lock:
- 	mutex_unlock(&ns->lock);
+diff --git a/security/apparmor/procattr.c b/security/apparmor/procattr.c
+index e3857e3d7c6c26..7ed6e4fe3f55ac 100644
+--- a/security/apparmor/procattr.c
++++ b/security/apparmor/procattr.c
+@@ -54,6 +54,8 @@ int aa_getprocattr(struct aa_label *label, char **string, bool newline)
+ 				FLAG_SHOW_MODE | FLAG_VIEW_SUBNS |
+ 				FLAG_HIDDEN_UNCONFINED);
+ 	if (len < 0) {
++		kfree(*string);
++		*string = NULL;
+ 		aa_put_ns(current_ns);
+ 		return len;
+ 	}
 -- 
 2.53.0
 
