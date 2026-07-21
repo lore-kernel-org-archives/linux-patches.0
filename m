@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEDA394783;
-	Tue, 21 Jul 2026 20:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418852F25E4;
+	Tue, 21 Jul 2026 20:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665104; cv=none; b=GiF//h4/vtf/+W7zgBwQAClQzlDPjZ5PDN6bGMICwU7ex1LLd14OH6MOHJdgthXcamZSg3EB231m1QfjZjaYgqUspmI2KlYoJgXUI5yaHT9GfULCD5sJezQk0peI1zl/z8yKibDMCPyjBKm1qpDkm8hohDy4dQQuFtnihq2DbrQ=
+	t=1784665107; cv=none; b=hYucNmtQkihUX+Ltw9Qq8MZkLjSrsQX/0EJGw21JFfFtirsAoWMvCfy4MGMxZcOmpZQcRDftWxRkBz51fbRnabBrJFnElmd4jX0lqASrejTXqdZPhj6i3yDo/OpoPgmwQKFsOdcju2hPj/Gd2tNFetA1sCRVxzI7zDvi4tr9xQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665104; c=relaxed/simple;
-	bh=szfEjglFzBxVeGN7viCipBfj+gI51r9bFGowJmNDioc=;
+	s=arc-20240116; t=1784665107; c=relaxed/simple;
+	bh=8qpwZR3JemzhDwKWn0pQpLIkZdvL69V4/k5+mRpwcxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t+ULMxYON4iiBerYi8Qy508BYAPeR+g6VYfUU0cgf5KjUgQYbjlAc+fSrd4NpsRtE/r1z8jkO92T3sZ6sNLoPv9bKCtaLFrO8vTTQZP2mbTHYXnP0/dKKlysYz1GF/IcRFYroAgjE3BtzJhpTZGrTrQ3KOzyb9eBlQGtYhzK7bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJKWfVoe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M9jAN2WLA4ENHLq0fN7BxQSKQw50YwaX9O+A66CePvnSr1cs8R5yCm6LbVy/6CnGeEBCivAbDjL6gAJZwQTK6k+y7E2qDBtE8kJ1Arhfu1H1XTDFD8uQ7MGVg6cb3ZaIG/UF2abbIpRimO70g5Bo5HHkEfdS0DsP23t3qvE7kRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2WS4JMx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJKWfVoe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E3B01F000E9;
-	Tue, 21 Jul 2026 20:18:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2WS4JMx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3D591F00A3A;
+	Tue, 21 Jul 2026 20:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665103;
-	bh=bpJX99Cn+phsPia/wxssOFLFq5S2RhIKoTnPzEe43hw=;
+	s=korg; t=1784665106;
+	bh=A3UykVgalPs86JqDjG7FXwHxc0wxk0Qhg2PK4atouEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GJKWfVoefDGA71kACZoq+Xo3r/9z6E5Dln0bQ/zX+gm/asYvHPO64ftomQ4K4qPSm
-	 3Jm92zRSSsTHp2rtQRCrSTyIeP1FRgm1AwWwLrE91UYRDxK/wugg7Whp7VurY924Ew
-	 Q6qWpn3tXRCLT0NaS9+dwLgfgc46hBLYrzKDlF9Q=
+	b=x2WS4JMxy+v+vX1y5YlqwYnnBYV3xvw2OWxGFyUDlJPgn0Vgy+DE/25+3nFcT6zBQ
+	 W5buH123ZwDgfOkLdOicywUyQ9gTVuoB8pPGM2e6ALL3u0ojp0d1Si26fubsNK450J
+	 P+5tMBs+5VOtdlQAwlVz1nMaUKBSD5DTNZQWYBvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0176/1266] fs/ntfs3: handle attr_set_size() errors when truncating files
-Date: Tue, 21 Jul 2026 17:10:13 +0200
-Message-ID: <20260721152445.745047715@linuxfoundation.org>
+Subject: [PATCH 6.6 0177/1266] fs/ntfs3: zero-fill folios beyond i_valid in ntfs_read_folio()
+Date: Tue, 21 Jul 2026 17:10:14 +0200
+Message-ID: <20260721152445.767897389@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,64 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 576248a34b927e93b2fd3fff7df735ba73ad7d01 ]
+[ Upstream commit 356fa248168be90109b66f32a61b8eaedc98424a ]
 
-If attr_set_size() fails while truncating down, the error is silently
-ignored and the inode may be left in an inconsistent state.
+Handle ntfs_read_folio() early when the folio offset is beyond i_valid
+by zero-filling the folio and marking it uptodate. This avoids needless
+I/O and locking, improves read performance.
 
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Stable-dep-of: d7ea8495fd30 ("fs/ntfs3: fix missing run load for vcn0 in attr_data_get_block_locked()")
+[ sashal: dropped the is_bad_ni() guard, 6.6 lacks 519b078998ce6e
+  ("fs/ntfs3: Exclude call make_bad_inode for live nodes.") which
+  introduces that helper; pre-patch 6.6 had no such check either ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/file.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ fs/ntfs3/inode.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index 89e35825c5c49d..3eee810c69e2f7 100644
---- a/fs/ntfs3/file.c
-+++ b/fs/ntfs3/file.c
-@@ -371,8 +371,8 @@ static int ntfs_truncate(struct inode *inode, loff_t new_size)
- {
- 	struct super_block *sb = inode->i_sb;
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 787e15ba0ca406..fff604cd952793 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -715,6 +715,14 @@ static int ntfs_read_folio(struct file *file, struct folio *folio)
+ 	struct address_space *mapping = page->mapping;
+ 	struct inode *inode = mapping->host;
  	struct ntfs_inode *ni = ntfs_i(inode);
--	int err, dirty = 0;
- 	u64 new_valid;
-+	int err;
++	loff_t vbo = folio_pos(folio);
++
++	if (ni->i_valid <= vbo) {
++		folio_zero_range(folio, 0, folio_size(folio));
++		folio_mark_uptodate(folio);
++		folio_unlock(folio);
++		return 0;
++	}
  
- 	if (!S_ISREG(inode->i_mode))
- 		return 0;
-@@ -388,7 +388,6 @@ static int ntfs_truncate(struct inode *inode, loff_t new_size)
- 	}
- 
- 	new_valid = ntfs_up_block(sb, min_t(u64, ni->i_valid, new_size));
--
- 	truncate_setsize(inode, new_size);
- 
- 	ni_lock(ni);
-@@ -402,20 +401,19 @@ static int ntfs_truncate(struct inode *inode, loff_t new_size)
- 		ni->i_valid = new_valid;
- 
- 	ni_unlock(ni);
-+	if (unlikely(err))
-+		return err;
- 
- 	ni->std_fa |= FILE_ATTRIBUTE_ARCHIVE;
- 	inode->i_mtime = inode_set_ctime_current(inode);
- 	if (!IS_DIRSYNC(inode)) {
--		dirty = 1;
-+		mark_inode_dirty(inode);
- 	} else {
- 		err = ntfs_sync_inode(inode);
- 		if (err)
- 			return err;
- 	}
- 
--	if (dirty)
--		mark_inode_dirty(inode);
--
- 	/*ntfs_flush_inodes(inode->i_sb, inode, NULL);*/
- 
- 	return 0;
+ 	if (is_resident(ni)) {
+ 		ni_lock(ni);
 -- 
 2.53.0
 
