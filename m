@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E7E3B52E7;
-	Tue, 21 Jul 2026 22:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C99044AB91;
+	Tue, 21 Jul 2026 22:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673070; cv=none; b=AvO+YW/JyxfRkiUVx4JudX0el9v360dTijmkoFjf1oKQU4t4gepQolb/AM9bMcraWU0OLXgDgGT+RDF7una8FlU72j3BoqK8MFa6t+k0z2MTFbNrwNx/fHoUwsNJG2tWDZlxo/f9GGkAWruQTINpG6fviD0VZ9507ivDHu77ugo=
+	t=1784673072; cv=none; b=Ao1KCBwMwRa9bF50KF3NIhZ4TfiinMsZDMiDVP/w++vJnKsKbK2BvpKi9x52923AGc1kAQuc3ibUxFvKyA86vpn9iAUYwSlXNvOE094PoCLVQQ+yTURs5Yoj30PQl0ATZCsssUjwRH2kT2dhtCZSHSGrgXsGgRf682y6NrXtSsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673070; c=relaxed/simple;
-	bh=fVFjsZHfxHQi6OKb5uAzJOOKD4fs6bu4u3VVGgDMJMM=;
+	s=arc-20240116; t=1784673072; c=relaxed/simple;
+	bh=a1CsziUt41MciTjFgV5quzHwiXegIpsrC1Uh1oVQuh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZsRfpLP9xn71aqBptXJPJFZd+1eDai3sevFtgLZza0grCFgwZOaLg2YCpjIsZbUZWIwFm+3xIyfcY0EnS1r6mvuNZFikDjTFmLiAy2pVhc3heupmhUdyS4hXr7fmetOe9x1Ne2ZIYEsOLZaHa92Yd5U5/VsdPhTkLHoBq7aBfjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rMyRB7oW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=agNT1fk+IKGfFDrbFUHSAxf/OZmRLS1WyjBWHTkQlKD/6+4wFItFitxVZVeUKwa0UIxq6Xj6B5QE1uHgWdEDfV/JIylrjnx6NkswcqTjIUYnb2hNJbo1z+5Hnk8Dxg9NjIMaRgTPE0xzTuGbndL+XrNPUgHdJGS9AZSiidDPe2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cyGNFeg3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rMyRB7oW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544D21F000E9;
-	Tue, 21 Jul 2026 22:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cyGNFeg3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1DFA1F000E9;
+	Tue, 21 Jul 2026 22:31:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673068;
-	bh=qA//i+rGDGguaZYhr/WQE7w6i2I2Y+qy4vbiuxmaiJI=;
+	s=korg; t=1784673071;
+	bh=3D04c/Igvef5mE1nokEH7pXt5e2rTXFCBC0nVRzoCXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rMyRB7oWKrhYhAasEHWZwPpXFLJbcJ5c2tauuVBbj3CTOdxlJNbOGyroFJh6SB0f1
-	 pn6SOQpB2xC6G2qfbcxgauEFXNv3MHlexHGzbS2S82dlbEVZcDwkLmg1FmCoZsRXe/
-	 FmRQQx4OQ6N9usOZKFuDSNaVrzVnB5CWIp46x8BQ=
+	b=cyGNFeg3N+KvW2wIZx26+2JTjHosvx89Q8prtliWPLoK6CvuaJ/6GRF5gJPoeRbQ/
+	 SIbi/7fo7AdyXN3Lv7HHzRXLyspXDoT2C3i8X9WuFxIupvQnopB0bpTH/04iihQIIn
+	 b908qPJV73E7oxSFPo2u8+W4Hd00iBCankZRM44c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neil@brown.name>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 006/699] nfsd: move name lookup out of nfsd4_list_rec_dir()
-Date: Tue, 21 Jul 2026 17:16:05 +0200
-Message-ID: <20260721152355.821862131@linuxfoundation.org>
+Subject: [PATCH 5.10 024/699] NFSv4/flexfiles: reject zero filehandle version count
+Date: Tue, 21 Jul 2026 17:16:23 +0200
+Message-ID: <20260721152356.241359796@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,154 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@ownmail.net>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 89bd77cf436bf25e448817a662ebf76515f22863 ]
+[ Upstream commit 2c6bb3c40bc24f6aa8dfbe6fe98c3ad6389203f2 ]
 
-nfsd4_list_rec_dir() is called with two different callbacks.
-One of the callbacks uses vfs_rmdir() to remove the directory.
-The other doesn't use the dentry at all, just the name.
+ff_layout_alloc_lseg() decodes the filehandle-version array count
+from the flexfiles layout body. The value is used as the count for
+kzalloc_objs(), and the current code only rejects NULL.
 
-As only one callback needs the dentry, this patch moves the lookup into
-that callback.  This prepares of changes to how directory operations
-are locked.
+A zero count yields ZERO_SIZE_PTR, which can be stored in
+dss_info->fh_versions even though later flexfiles paths assume that at
+least one filehandle version exists.
 
-Signed-off-by: NeilBrown <neil@brown.name>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Stable-dep-of: 4552f4e3f2c9 ("nfsd: change nfs4_client_to_reclaim() to allocate data")
+Reject fh_count == 0 before the allocation, matching the existing zero
+version_count validation in the flexfiles GETDEVICEINFO parser.
+
+A QEMU/KASAN run with a malformed flexfiles layout hit:
+
+  KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+  RIP: 0010:ff_layout_encode_ff_layoutupdate.isra.0+0x15f/0x750
+  ff_layout_encode_layoutreturn+0x683/0x970
+  nfs4_xdr_enc_layoutreturn+0x278/0x3a0
+  Kernel panic - not syncing: Fatal exception
+
+The patched kernel rejects the malformed layout without KASAN/oops/panic,
+and a valid fh_count=1 regression still opens, reads, and unmounts cleanly.
+
+Cc: stable@vger.kernel.org
+Fixes: d67ae825a59d ("pnfs/flexfiles: Add the FlexFile Layout Driver")
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4recover.c | 55 ++++++++++++++++++++++---------------------
- 1 file changed, 28 insertions(+), 27 deletions(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
-index 8ea55b2621ee41..c74c4023770694 100644
---- a/fs/nfsd/nfs4recover.c
-+++ b/fs/nfsd/nfs4recover.c
-@@ -254,7 +254,7 @@ nfsd4_create_clid_dir(struct nfs4_client *clp)
- 	nfs4_reset_creds(original_cred);
- }
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -454,6 +454,10 @@ ff_layout_alloc_lseg(struct pnfs_layout_
+ 		if (!p)
+ 			goto out_err_free;
+ 		fh_count = be32_to_cpup(p);
++		if (fh_count == 0) {
++			rc = -EINVAL;
++			goto out_err_free;
++		}
  
--typedef int (recdir_func)(struct dentry *, struct dentry *, struct nfsd_net *);
-+typedef int (recdir_func)(struct dentry *, char *, struct nfsd_net *);
- 
- struct name_list {
- 	char name[HEXDIR_LEN];
-@@ -308,23 +308,14 @@ nfsd4_list_rec_dir(recdir_func *f, struct nfsd_net *nn)
- 	}
- 
- 	status = iterate_dir(nn->rec_file, &ctx.ctx);
--	inode_lock_nested(d_inode(dir), I_MUTEX_PARENT);
- 
- 	list_for_each_entry_safe(entry, tmp, &ctx.names, list) {
--		if (!status) {
--			struct dentry *dentry;
--			dentry = lookup_one_len(entry->name, dir, HEXDIR_LEN-1);
--			if (IS_ERR(dentry)) {
--				status = PTR_ERR(dentry);
--				break;
--			}
--			status = f(dir, dentry, nn);
--			dput(dentry);
--		}
-+		if (!status)
-+			status = f(dir, entry->name, nn);
-+
- 		list_del(&entry->list);
- 		kfree(entry);
- 	}
--	inode_unlock(d_inode(dir));
- 	nfs4_reset_creds(original_cred);
- 
- 	list_for_each_entry_safe(entry, tmp, &ctx.names, list) {
-@@ -422,18 +413,19 @@ nfsd4_remove_clid_dir(struct nfs4_client *clp)
- }
- 
- static int
--purge_old(struct dentry *parent, struct dentry *child, struct nfsd_net *nn)
-+purge_old(struct dentry *parent, char *cname, struct nfsd_net *nn)
- {
- 	int status;
-+	struct dentry *child;
- 	struct xdr_netobj name;
- 
--	if (child->d_name.len != HEXDIR_LEN - 1) {
--		printk("%s: illegal name %pd in recovery directory\n",
--				__func__, child);
-+	if (strlen(cname) != HEXDIR_LEN - 1) {
-+		printk("%s: illegal name %s in recovery directory\n",
-+				__func__, cname);
- 		/* Keep trying; maybe the others are OK: */
- 		return 0;
- 	}
--	name.data = kmemdup_nul(child->d_name.name, child->d_name.len, GFP_KERNEL);
-+	name.data = kstrdup(cname, GFP_KERNEL);
- 	if (!name.data) {
- 		dprintk("%s: failed to allocate memory for name.data!\n",
- 			__func__);
-@@ -443,10 +435,17 @@ purge_old(struct dentry *parent, struct dentry *child, struct nfsd_net *nn)
- 	if (nfs4_has_reclaimed_state(name, nn))
- 		goto out_free;
- 
--	status = vfs_rmdir(d_inode(parent), child);
--	if (status)
--		printk("failed to remove client recovery directory %pd\n",
--				child);
-+	inode_lock_nested(d_inode(parent), I_MUTEX_PARENT);
-+	child = lookup_one_len(cname, parent, HEXDIR_LEN - 1);
-+	if (!IS_ERR(child)) {
-+		status = vfs_rmdir(d_inode(parent), child);
-+		if (status)
-+			printk("failed to remove client recovery directory %pd\n",
-+			       child);
-+		dput(child);
-+	}
-+	inode_unlock(d_inode(parent));
-+
- out_free:
- 	kfree(name.data);
- out:
-@@ -477,18 +476,18 @@ nfsd4_recdir_purge_old(struct nfsd_net *nn)
- }
- 
- static int
--load_recdir(struct dentry *parent, struct dentry *child, struct nfsd_net *nn)
-+load_recdir(struct dentry *parent, char *cname, struct nfsd_net *nn)
- {
- 	struct xdr_netobj name;
- 	struct xdr_netobj princhash = { .len = 0, .data = NULL };
- 
--	if (child->d_name.len != HEXDIR_LEN - 1) {
--		printk("%s: illegal name %pd in recovery directory\n",
--				__func__, child);
-+	if (strlen(cname) != HEXDIR_LEN - 1) {
-+		printk("%s: illegal name %s in recovery directory\n",
-+				__func__, cname);
- 		/* Keep trying; maybe the others are OK: */
- 		return 0;
- 	}
--	name.data = kmemdup_nul(child->d_name.name, child->d_name.len, GFP_KERNEL);
-+	name.data = kstrdup(cname, GFP_KERNEL);
- 	if (!name.data) {
- 		dprintk("%s: failed to allocate memory for name.data!\n",
- 			__func__);
-@@ -843,11 +842,13 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
- 				return PTR_ERR(name.data);
- 			name.len = namelen;
- 		}
-+#ifdef CONFIG_NFSD_V4
- 		if (name.len > 5 && memcmp(name.data, "hash:", 5) == 0) {
- 			name.len = name.len - 5;
- 			memmove(name.data, name.data + 5, name.len);
- 			cn->cn_has_legacy = true;
- 		}
-+#endif
- 		if (!nfs4_client_to_reclaim(name, princhash, nn)) {
- 			kfree(name.data);
- 			kfree(princhash.data);
--- 
-2.53.0
-
+ 		fls->mirror_array[i]->fh_versions =
+ 			kcalloc(fh_count, sizeof(struct nfs_fh),
 
 
