@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A4244AB68;
-	Tue, 21 Jul 2026 21:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AAC44AB62;
+	Tue, 21 Jul 2026 21:24:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669088; cv=none; b=OUsCisNikQ48fQEKZV0U3Cw/dbfqWKsXAS0pyaEOZoCST+FkJYmqUygPOYqzhwhxKDTzO6S79xqL089EDre7rWTQfZw/XnGyV7RY0Pv0tGYdi66sE5pN3y+C/qs/MLoY6TAKylWoZpv5VV05zXaRfxKnaZKx9fZFtY+UGlWRe7I=
+	t=1784669091; cv=none; b=cf2aWPqAqcMM1RA/dujFXBjMgYiGXWVetpbURrPfX6cr0Xb+aPO3qJgzFHU55cQwlFa44O6h8Obnr1G2zQZPG2RG91J1CRt5YV6RH/w+CmfHJ3DxOmgNXDhZzxIfPmYYx9exZbUbfRQ1B4YiAOg88ejpzeTeHT/6ZdWmeUwqvO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669088; c=relaxed/simple;
-	bh=JlsV3+VlY9e372Z4lAsXsYad8iLbByeStDXkFjlXyv8=;
+	s=arc-20240116; t=1784669091; c=relaxed/simple;
+	bh=+AZcSVHnu40MQ6/rJYulKAWCDHRWL0LPTHbVhvzToLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mDp4an6+KxHcnptVLFpD7LzlV4awWDCAN7WoMA6ALMO3BxqDSWbX3elI1vs0Glc+huRSngQOgGZYtMduK7R+SNCYNFjOpzGrfKxuaMS7QTq8QWznDyWDMYF89eSRyKcL0bojnh4IyvYYDCjR6CtRSHyXLfXMvDbgxPXkFkH8Ass=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ygphq7dA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vz8ZLC0OzhD1IlO2PhVDVW0u9anPR5farjc1pIu5m8f/Ct93Gn8TcsvxgNiyRZHaicj6Sfm0AwcGCwuMzEV20FDyIRcJdYGdbTUFKUAajNECUJRQa5k7nUREbERBwcP5D/cbc7o+SnG18l0QwnaT2WdbrwwqlSEhfPap9ofsZqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWZ6v+3S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ygphq7dA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5DA81F000E9;
-	Tue, 21 Jul 2026 21:24:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWZ6v+3S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6F31F000E9;
+	Tue, 21 Jul 2026 21:24:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669087;
-	bh=ewnS+Wps5EwBjL/31nkFOou4UwIunVR2kdhKgB6+k3I=;
+	s=korg; t=1784669089;
+	bh=0JMROPqAPX9K9jJgEKnTm6I8LKDEQ/xARYMux9FksWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ygphq7dAIFjiZMId0lEsVGKwBq49qgmrJmCFUs3bgZpMc6Hzrxq4XFAN2E0UyS08M
-	 hmEFAoRFcsfYUNRJANCUv3v9p/yurtG+ojsySDsdjxazKEChkYBc+t0G9sn9u7eoMw
-	 qXF3ZtQS6KiSUtTfPlD4gp9ncVZUg/M4fzyS3su0=
+	b=HWZ6v+3SPE84sHsVUOFm8rHO0+saJ+FJt8UpCYn6o7+js/y56zO3hZ5OO0x4A2tLc
+	 ul80UNOnBPKQaMHCxTfEtQJTCZH2c7GokQHNCqYUqvjW9i7S1l5NX9m9AhtaTLoTpQ
+	 7CTBh+ujUwoxSONzMxqlTfofZnbv6H9bYXKQSVIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Lin Ma <malin89@huawei.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0420/1067] cxl/test: Fix integer overflow in mock LSA bounds checks
-Date: Tue, 21 Jul 2026 17:17:01 +0200
-Message-ID: <20260721152434.016778941@linuxfoundation.org>
+Subject: [PATCH 6.1 0421/1067] bpf: Tighten cgroup storage cookie checks for prog arrays
+Date: Tue, 21 Jul 2026 17:17:02 +0200
+Message-ID: <20260721152434.040001074@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,54 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 81eafcada109b653977c4dfbd2b6a72470025a01 ]
+[ Upstream commit 10627ddc0167aab5c1c390a10ef461e9937aba08 ]
 
-Pre-existing issue discovered by sashiko-bot.
+The fix in commit abad3d0bad72 ("bpf: Fix oob access in cgroup local
+storage") is still incomplete. The prog-array compatibility check
+treats a program with no cgroup storage as compatible with any stored
+storage cookie. This allows a storage-less program to bridge a tail
+call chain between an entry program and a storage-using callee even
+though cgroup local storage at runtime still follows the caller's
+context, that is, A -> B(no storage) -> C(storage) path.
 
-mock_get_lsa() and mock_set_lsa() validate the requested LSA range with
-"offset + length > LSA_SIZE". Both offset and length are u32 and, in
-mock_get_lsa(), both are taken directly from the user-supplied payload.
-The addition is evaluated modulo 2^32, so a large offset combined with a
-small length wraps around and passes the check.
+Requiring exact cookie equality would break the legitimate case of a
+storage-less leaf program being tail called from a storage-using one.
+Instead, only accept a zero storage cookie if the program cannot
+perform tail calls itself. This keeps A -> B(no storage) working
+while rejecting the A -> B(no storage) -> C(storage) bridge.
 
-Rewrite the checks to first bound offset, then compare length against the
-remaining LSA size.
-
-Suggested-by: sashiko-bot
-Fixes: 7d3eb23c4ccf ("tools/testing/cxl: Introduce a mock memory device + driver")
-Link: https://lore.kernel.org/linux-cxl/20260605143748.235271F00893@smtp.kernel.org/
-Assisted-by: Claude:claude-opus-4-8
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: abad3d0bad72 ("bpf: Fix oob access in cgroup local storage")
+Reported-by: Lin Ma <malin89@huawei.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20260610105539.705887-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/cxl/test/mem.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/cxl/test/mem.c b/tools/testing/cxl/test/mem.c
-index 6e9a89f54d94f5..e171a2f48719a5 100644
---- a/tools/testing/cxl/test/mem.c
-+++ b/tools/testing/cxl/test/mem.c
-@@ -148,7 +148,7 @@ static int mock_get_lsa(struct cxl_dev_state *cxlds, struct cxl_mbox_cmd *cmd)
- 		return -EINVAL;
- 	offset = le32_to_cpu(get_lsa->offset);
- 	length = le32_to_cpu(get_lsa->length);
--	if (offset + length > LSA_SIZE)
-+	if (offset > LSA_SIZE || length > LSA_SIZE - offset)
- 		return -EINVAL;
- 	if (length > cmd->size_out)
- 		return -EINVAL;
-@@ -167,7 +167,7 @@ static int mock_set_lsa(struct cxl_dev_state *cxlds, struct cxl_mbox_cmd *cmd)
- 		return -EINVAL;
- 	offset = le32_to_cpu(set_lsa->offset);
- 	length = cmd->size_in - sizeof(*set_lsa);
--	if (offset + length > LSA_SIZE)
-+	if (offset > LSA_SIZE || length > LSA_SIZE - offset)
- 		return -EINVAL;
- 
- 	memcpy(lsa + offset, &set_lsa->data[0], length);
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 6924f86a8a3ff1..77044d4a80cc16 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -2159,7 +2159,7 @@ bool bpf_prog_map_compatible(struct bpf_map *map,
+ 			cookie = aux->cgroup_storage[i] ?
+ 				 aux->cgroup_storage[i]->cookie : 0;
+ 			ret = map->owner->storage_cookie[i] == cookie ||
+-			      !cookie;
++			      (!cookie && !aux->tail_call_reachable);
+ 		}
+ 		if (ret &&
+ 		    map->owner->attach_func_proto != aux->attach_func_proto) {
 -- 
 2.53.0
 
