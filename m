@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E91E46F48B;
-	Tue, 21 Jul 2026 19:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27448471257;
+	Tue, 21 Jul 2026 19:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663007; cv=none; b=SkSVRyqLEd3zo2wEaF8Zz85iaes7K1J16SYpS3jrQAzIo3MH7GwtEmCgn/DyjuY9FM5IhLjeauZWcsuW5/SFJOpwUH2sH+9byBwdHQjFgaM++9kjoDhjvD6w0MJPH7RbKkc/m7dmIYfpzReGDGF1kMmu94Q4IpqXk3kZIiqzlo0=
+	t=1784663010; cv=none; b=XD+H4p/A+3jxGH04HnzXQTUyTAT8HU5vLyjmAU7HhHnG7f53tJ6hjAfDpSayN143SkWT6shAFP+Q2FNBUwKTMim+dIveS9SF1Mv2ZgZfnvBdnJ3t6Oshjj3IvV9PGwCKMPKt87ItNuVmK8sjPCyNIOuSdSvfQCpOV0bIgu/iwsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663007; c=relaxed/simple;
-	bh=9GXISyiCNyjdWSXz0YqBrHl83X5/7U7eln0CXfOSbbI=;
+	s=arc-20240116; t=1784663010; c=relaxed/simple;
+	bh=xnmhJZPha+WIrh8dHdsKcpOtMvZ62Y3W3jcMnCya/mk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ND+qv6Pwf4PdAaMyGUQxnIVNnH3HeWhIOxSwwJkY9QFBUww7Vg7HBavuig32rxHYDEjq/MA0khVVHkVkknIHylvhqwpPRyGHfEqfiO/QDPD5BmxVrl9d2hPZZDeq2DvGuFhEgJReANGPT43L++MEcQn1prPLuYRbyCAQZBJHr1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xiOO3hLk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=josZ5qeYPMtgfCPbW0t8pYmmQWKqBjAeb/GdeY+4gsKc4DPqTCUdCKPlFoAiPfZWw9mPD1Yvl+BzXDVFeEtHjhEROJda0ZE6yz/fifHjksJbMsdc3XWa5+P0/Umuq5lj97JWo27ZhcnCdOEQ8zico3cyKkKB1RoL05QrvoNiFy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMGs/bqB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xiOO3hLk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E50491F000E9;
-	Tue, 21 Jul 2026 19:43:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMGs/bqB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCAC1F000E9;
+	Tue, 21 Jul 2026 19:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663006;
-	bh=gZumLV07qvg4j7VtJvXjCCHehm07US+qe6J5purDnow=;
+	s=korg; t=1784663009;
+	bh=VyOdfw0lnlsYII1kOop/fmK7kTzwxK9whPKeU+hRXVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xiOO3hLkTcQpCeVsZ8R55SJgiXtj0f9IzWfpfY8HN92Jcxnue4MNVVUB9OUFzfgzP
-	 3EW8MBNrOxxsCTKbl+yUfFy1uMvY5t47Tx0cFm/SQ64KaJpMReeDddIqEyPsZxjoMb
-	 6w1ADLkGuOwwbmo2CZib4wAV5YiaqE/8DMJur0gA=
+	b=pMGs/bqB8MfazQ/q3yUx6pvqA3eseqIkAXKBR9rM0IOWbIv5sJrujP8aqG0/Pj9RT
+	 tFPab9/hxC0Yo+kxpVdRMKXXt/21P5492CKbsVdNBuXx+6qIckgDKVf9qVQTSjQ9xo
+	 eoDd91XOidkQKpET1v8tbPayfnlnLs0Z2AoqWQM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0661/1276] rtnetlink: Add per-netns RTNL.
-Date: Tue, 21 Jul 2026 17:18:24 +0200
-Message-ID: <20260721152500.898462711@linuxfoundation.org>
+Subject: [PATCH 6.12 0662/1276] rtnetlink: Add assertion helpers for per-netns RTNL.
+Date: Tue, 21 Jul 2026 17:18:25 +0200
+Message-ID: <20260721152500.921028429@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -54,28 +54,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 76aed95319da25d6884dff01d5f0149e4b542f96 ]
+[ Upstream commit 844e5e7e656d3a7a904fd5607f8491d6fd01db8e ]
 
-The goal is to break RTNL down into per-netns mutex.
+Once an RTNL scope is converted with rtnl_net_lock(), we will replace
+RTNL helper functions inside the scope with the following per-netns
+alternatives:
 
-This patch adds per-netns mutex and its helper functions, rtnl_net_lock()
-and rtnl_net_unlock().
+  ASSERT_RTNL()           -> ASSERT_RTNL_NET(net)
+  rcu_dereference_rtnl(p) -> rcu_dereference_rtnl_net(net, p)
 
-rtnl_net_lock() acquires the global RTNL and per-netns RTNL mutex, and
-rtnl_net_unlock() releases them.
-
-We will replace 800+ rtnl_lock() with rtnl_net_lock() and finally removes
-rtnl_lock() in rtnl_net_lock().
-
-When we need to nest per-netns RTNL mutex, we will use __rtnl_net_lock(),
-and its locking order is defined by rtnl_net_lock_cmp_fn() as follows:
-
-  1. init_net is first
-  2. netns address ascending order
-
-Note that the conversion will be done under CONFIG_DEBUG_NET_SMALL_RTNL
-with LOCKDEP so that we can carefully add the extra mutex without slowing
-down RTNL operations during conversion.
+Note that the per-netns helpers are equivalent to the conventional
+helpers unless CONFIG_DEBUG_NET_SMALL_RTNL is enabled.
 
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
@@ -83,169 +72,110 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 17dc3b245de4 ("ipv6: fix missing notification for ignore_routes_with_linkdown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rtnetlink.h   | 21 ++++++++++++++
- include/net/net_namespace.h |  4 +++
- net/Kconfig.debug           | 15 ++++++++++
- net/core/net_namespace.c    |  6 ++++
- net/core/rtnetlink.c        | 58 +++++++++++++++++++++++++++++++++++++
- 5 files changed, 104 insertions(+)
+ include/linux/rtnetlink.h | 45 +++++++++++++++++++++++++++++++++++----
+ net/core/rtnetlink.c      | 12 +++++++++++
+ 2 files changed, 53 insertions(+), 4 deletions(-)
 
 diff --git a/include/linux/rtnetlink.h b/include/linux/rtnetlink.h
-index a7da7dfc06a2a4..067098030ad2c6 100644
+index 067098030ad2c6..465ea34c9210de 100644
 --- a/include/linux/rtnetlink.h
 +++ b/include/linux/rtnetlink.h
-@@ -95,6 +95,27 @@ static inline bool lockdep_rtnl_is_held(void)
- #define rcu_replace_pointer_rtnl(rp, p)			\
- 	rcu_replace_pointer(rp, p, lockdep_rtnl_is_held())
+@@ -54,6 +54,10 @@ extern atomic_t dev_unreg_count;
+ extern struct rw_semaphore pernet_ops_rwsem;
+ extern struct rw_semaphore net_rwsem;
  
-+#ifdef CONFIG_DEBUG_NET_SMALL_RTNL
-+void __rtnl_net_lock(struct net *net);
-+void __rtnl_net_unlock(struct net *net);
-+void rtnl_net_lock(struct net *net);
-+void rtnl_net_unlock(struct net *net);
-+int rtnl_net_lock_cmp_fn(const struct lockdep_map *a, const struct lockdep_map *b);
-+#else
-+static inline void __rtnl_net_lock(struct net *net) {}
-+static inline void __rtnl_net_unlock(struct net *net) {}
++#define ASSERT_RTNL() \
++	WARN_ONCE(!rtnl_is_locked(), \
++		  "RTNL: assertion failed at %s (%d)\n", __FILE__,  __LINE__)
 +
-+static inline void rtnl_net_lock(struct net *net)
-+{
-+	rtnl_lock();
-+}
+ #ifdef CONFIG_PROVE_LOCKING
+ extern bool lockdep_rtnl_is_held(void);
+ #else
+@@ -101,6 +105,22 @@ void __rtnl_net_unlock(struct net *net);
+ void rtnl_net_lock(struct net *net);
+ void rtnl_net_unlock(struct net *net);
+ int rtnl_net_lock_cmp_fn(const struct lockdep_map *a, const struct lockdep_map *b);
 +
-+static inline void rtnl_net_unlock(struct net *net)
-+{
-+	rtnl_unlock();
-+}
-+#endif
++bool rtnl_net_is_locked(struct net *net);
 +
- static inline struct netdev_queue *dev_ingress_queue(struct net_device *dev)
++#define ASSERT_RTNL_NET(net)						\
++	WARN_ONCE(!rtnl_net_is_locked(net),				\
++		  "RTNL_NET: assertion failed at %s (%d)\n",		\
++		  __FILE__,  __LINE__)
++
++bool lockdep_rtnl_net_is_held(struct net *net);
++
++#define rcu_dereference_rtnl_net(net, p)				\
++	rcu_dereference_check(p, lockdep_rtnl_net_is_held(net))
++#define rtnl_net_dereference(net, p)					\
++	rcu_dereference_protected(p, lockdep_rtnl_net_is_held(net))
++#define rcu_replace_pointer_rtnl_net(net, rp, p)			\
++	rcu_replace_pointer(rp, p, lockdep_rtnl_net_is_held(net))
+ #else
+ static inline void __rtnl_net_lock(struct net *net) {}
+ static inline void __rtnl_net_unlock(struct net *net) {}
+@@ -114,6 +134,27 @@ static inline void rtnl_net_unlock(struct net *net)
  {
- 	return rtnl_dereference(dev->ingress_queue);
-diff --git a/include/net/net_namespace.h b/include/net/net_namespace.h
-index 022ee2fc627cff..47181fd749b256 100644
---- a/include/net/net_namespace.h
-+++ b/include/net/net_namespace.h
-@@ -189,6 +189,10 @@ struct net {
- #if IS_ENABLED(CONFIG_SMC)
- 	struct netns_smc	smc;
- #endif
-+#ifdef CONFIG_DEBUG_NET_SMALL_RTNL
-+	/* Move to a better place when the config guard is removed. */
-+	struct mutex		rtnl_mutex;
-+#endif
- } __randomize_layout;
- 
- #include <linux/seq_file_net.h>
-diff --git a/net/Kconfig.debug b/net/Kconfig.debug
-index 5e3fffe707ddce..277fab8c4d77ca 100644
---- a/net/Kconfig.debug
-+++ b/net/Kconfig.debug
-@@ -24,3 +24,18 @@ config DEBUG_NET
- 	help
- 	  Enable extra sanity checks in networking.
- 	  This is mostly used by fuzzers, but is safe to select.
-+
-+config DEBUG_NET_SMALL_RTNL
-+	bool "Add extra per-netns mutex inside RTNL"
-+	depends on DEBUG_KERNEL && NET && LOCK_DEBUGGING_SUPPORT
-+	select PROVE_LOCKING
-+	default n
-+	help
-+	  rtnl_lock() is being replaced with rtnl_net_lock() that
-+	  acquires the global RTNL and a small per-netns RTNL mutex.
-+
-+	  During the conversion, rtnl_net_lock() just adds an extra
-+	  mutex in every RTNL scope and slows down the operations.
-+
-+	  Once the conversion completes, rtnl_lock() will be removed
-+	  and rtnetlink will gain per-netns scalability.
-diff --git a/net/core/net_namespace.c b/net/core/net_namespace.c
-index bb4ae3864ad256..cc03e3fd85fcdb 100644
---- a/net/core/net_namespace.c
-+++ b/net/core/net_namespace.c
-@@ -334,6 +334,12 @@ static __net_init void preinit_net(struct net *net, struct user_namespace *user_
- 	idr_init(&net->netns_ids);
- 	spin_lock_init(&net->nsid_lock);
- 	mutex_init(&net->ipv4.ra_mutex);
-+
-+#ifdef CONFIG_DEBUG_NET_SMALL_RTNL
-+	mutex_init(&net->rtnl_mutex);
-+	lock_set_cmp_fn(&net->rtnl_mutex, rtnl_net_lock_cmp_fn, NULL);
-+#endif
-+
- 	preinit_net_sysctl(net);
+ 	rtnl_unlock();
  }
++
++static inline void ASSERT_RTNL_NET(struct net *net)
++{
++	ASSERT_RTNL();
++}
++
++static inline void *rcu_dereference_rtnl_net(struct net *net, void *p)
++{
++	return rcu_dereference_rtnl(p);
++}
++
++static inline void *rtnl_net_dereference(struct net *net, void *p)
++{
++	return rtnl_dereference(p);
++}
++
++static inline void *rcu_replace_pointer_rtnl_net(struct net *net,
++						 void *rp, void *p)
++{
++	return rcu_replace_pointer_rtnl(rp, p);
++}
+ #endif
  
+ static inline struct netdev_queue *dev_ingress_queue(struct net_device *dev)
+@@ -143,10 +184,6 @@ void rtnetlink_init(void);
+ void __rtnl_unlock(void);
+ void rtnl_kfree_skbs(struct sk_buff *head, struct sk_buff *tail);
+ 
+-#define ASSERT_RTNL() \
+-	WARN_ONCE(!rtnl_is_locked(), \
+-		  "RTNL: assertion failed at %s (%d)\n", __FILE__,  __LINE__)
+-
+ extern int ndo_dflt_fdb_dump(struct sk_buff *skb,
+ 			     struct netlink_callback *cb,
+ 			     struct net_device *dev,
 diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 118612325ce9e1..5b29f6ce12bc4a 100644
+index 5b29f6ce12bc4a..4df35e2d988f53 100644
 --- a/net/core/rtnetlink.c
 +++ b/net/core/rtnetlink.c
-@@ -179,6 +179,64 @@ bool lockdep_rtnl_is_held(void)
- EXPORT_SYMBOL(lockdep_rtnl_is_held);
- #endif /* #ifdef CONFIG_PROVE_LOCKING */
+@@ -235,6 +235,18 @@ int rtnl_net_lock_cmp_fn(const struct lockdep_map *a, const struct lockdep_map *
  
-+#ifdef CONFIG_DEBUG_NET_SMALL_RTNL
-+void __rtnl_net_lock(struct net *net)
+ 	return rtnl_net_cmp_locks(net_a, net_b);
+ }
++
++bool rtnl_net_is_locked(struct net *net)
 +{
-+	ASSERT_RTNL();
-+
-+	mutex_lock(&net->rtnl_mutex);
++	return rtnl_is_locked() && mutex_is_locked(&net->rtnl_mutex);
 +}
-+EXPORT_SYMBOL(__rtnl_net_lock);
++EXPORT_SYMBOL(rtnl_net_is_locked);
 +
-+void __rtnl_net_unlock(struct net *net)
++bool lockdep_rtnl_net_is_held(struct net *net)
 +{
-+	ASSERT_RTNL();
-+
-+	mutex_unlock(&net->rtnl_mutex);
++	return lockdep_rtnl_is_held() && lockdep_is_held(&net->rtnl_mutex);
 +}
-+EXPORT_SYMBOL(__rtnl_net_unlock);
-+
-+void rtnl_net_lock(struct net *net)
-+{
-+	rtnl_lock();
-+	__rtnl_net_lock(net);
-+}
-+EXPORT_SYMBOL(rtnl_net_lock);
-+
-+void rtnl_net_unlock(struct net *net)
-+{
-+	__rtnl_net_unlock(net);
-+	rtnl_unlock();
-+}
-+EXPORT_SYMBOL(rtnl_net_unlock);
-+
-+static int rtnl_net_cmp_locks(const struct net *net_a, const struct net *net_b)
-+{
-+	if (net_eq(net_a, net_b))
-+		return 0;
-+
-+	/* always init_net first */
-+	if (net_eq(net_a, &init_net))
-+		return -1;
-+
-+	if (net_eq(net_b, &init_net))
-+		return 1;
-+
-+	/* otherwise lock in ascending order */
-+	return net_a < net_b ? -1 : 1;
-+}
-+
-+int rtnl_net_lock_cmp_fn(const struct lockdep_map *a, const struct lockdep_map *b)
-+{
-+	const struct net *net_a, *net_b;
-+
-+	net_a = container_of(a, struct net, rtnl_mutex.dep_map);
-+	net_b = container_of(b, struct net, rtnl_mutex.dep_map);
-+
-+	return rtnl_net_cmp_locks(net_a, net_b);
-+}
-+#endif
-+
++EXPORT_SYMBOL(lockdep_rtnl_net_is_held);
+ #endif
+ 
  static struct rtnl_link __rcu *__rcu *rtnl_msg_handlers[RTNL_FAMILY_MAX + 1];
- 
- static inline int rtm_msgindex(int msgtype)
 -- 
 2.53.0
 
