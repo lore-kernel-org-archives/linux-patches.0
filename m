@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51C4433BCA;
-	Tue, 21 Jul 2026 22:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5BA44AB62;
+	Tue, 21 Jul 2026 22:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671380; cv=none; b=fXrelKTf3LZRQVXw08gxQoO9GoA0AwsnOSKrSipHvnCGNWHpgwpcpSwI1g+T0UCCqVZ19DFbjVEjcswYiuMdVfDylrEFy+iqk775v5hhKsfUEgCXypvKKJeFfsWq2YwLdVgCLo+g+wkmU6Wfvd1EmZg55lcZDBOz63hZMAlgPiU=
+	t=1784671383; cv=none; b=qT5jHTpWuNmOLc44jqjQlxeLFUNMtQSizw5nrHtqVpZnVXjWPZCxZrfzsKEVgF7Ka8z8gdMhTMNgRgAdZt1Rix/FRN9yMdJk7UZqy1tgL0y8ddYI806fwHhLCCdpxahhT+jpnA97QxAxjvtwNuGoa0EQNQx6Sjp1XEdy+ic2Yrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671380; c=relaxed/simple;
-	bh=N65rQSy0M8AaBwJLoUWA73MLTjziV78QMeW/QkUYV3Q=;
+	s=arc-20240116; t=1784671383; c=relaxed/simple;
+	bh=WLuey3zJaR+89e74RbDB7q6pSURjcV5xDj7X5qY16tw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EN2OJwRPHXmnuHkf+dBLHvnmafnmuzG5uZiXO2F6bZpNWqW1XWEcQrXyiuiiTt0jXIhf2+St2oktD8F51TSHJM+d6lLcP5OhqAMrE828Vo3IHUtaAHibb8MN1RmX8Z4k/FHeU68grL0g8dgwCMJaep16p+ajdF9jNhMyhUGmPBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RhzboRZU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b9VcMyf+3bKbDDjQJ1afhFQuOy5uAIL0/zk97Nb2SX6b+XSMjI0gaCuKdfAs68enlMLlx74iS45nnrbn6BBMqaubMpQ+Yr2GmYMcYwL5bvPWrNDYvve8NHGp9rN4RhRRH1+XNG/5asr8OI8Mte276TMcm4rE+EvjZhCeae1hW5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqv3qxcF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RhzboRZU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A1C1F000E9;
-	Tue, 21 Jul 2026 22:02:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqv3qxcF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B31371F000E9;
+	Tue, 21 Jul 2026 22:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671379;
-	bh=9hyw6fP0taoyw4e/A0Y9Y1XTYv6u6XsgoD1Zo/LAPJk=;
+	s=korg; t=1784671382;
+	bh=YFM+NGpQMezgCjmUFyy+NaLfirtJSO4uwUt30BmcuWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RhzboRZUl9DfC/6RTcS71o1RgTG4W8op3DGvtIQzIGnEqrdO55DTgIJNCj2PIItwZ
-	 iyjU9JADoiSWkCi03/YBiOJxuQYxw7+70fwAInoghKDT0q1pY9AZXqigygI+Qo6ewL
-	 0pwrBcGksWG91E5sMJ7+2jYw9+Tj2RZa61Sh5h2s=
+	b=nqv3qxcFW5wJlmurtiz/t4Wx8V4r8zuq7L1V85ibHT7DUeaPmclxOzdqKLTDbjbVP
+	 g2MB2dHFh7txwcgVR9XnvldmvHFBRmbQrzypFJxiG5mls8to8+7SCz14hhLOhbD/UD
+	 YWQicwKvtdlOu7x2H46LgQIshCU/ZZj82nj/IQ8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 171/843] spi: fsl-lpspi: replace dmaengine_terminate_all() with dmaengine_terminate_sync()
-Date: Tue, 21 Jul 2026 17:16:46 +0200
-Message-ID: <20260721152409.865451556@linuxfoundation.org>
+	Yuho Choi <dbgh9129@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 218/843] drm/radeon: fix memory leak in radeon_ring_restore() on lock failure
+Date: Tue, 21 Jul 2026 17:17:33 +0200
+Message-ID: <20260721152410.922486702@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,77 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Song <carlos.song@nxp.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-commit e703ce47691b967fe9b4057fb1d062273211afa9 upstream.
+[ Upstream commit 82f1d6042611d45b8b9de423bbcb4e0ced9ec62b ]
 
-dmaengine_terminate_all() has been deprecated, so replace it with
-dmaengine_terminate_sync().
+radeon_ring_restore() takes ownership of the data buffer allocated by
+radeon_ring_backup(). The caller (radeon_gpu_reset()) only frees it in
+the non-restore branch; in the restore branch it relies on
+radeon_ring_restore() to free it.
 
-Fixes: 09c04466ce7e ("spi: lpspi: add dma mode support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Link: https://patch.msgid.link/20260525062357.3191349-2-carlos.song@oss.nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+If radeon_ring_lock() fails, the function returned early without calling
+kvfree(data), leaking the ring backup buffer on every GPU reset that
+fails at the lock stage. During repeated GPU resets this causes
+cumulative kernel memory exhaustion.
+
+Free data before returning the error.
+
+Fixes: 55d7c22192be ("drm/radeon: implement ring saving on reset v4")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-lpspi.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/radeon/radeon_ring.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -577,7 +577,7 @@ static int fsl_lpspi_dma_transfer(struct
- 				tx->sgl, tx->nents, DMA_MEM_TO_DEV,
- 				DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
- 	if (!desc_tx) {
--		dmaengine_terminate_all(controller->dma_tx);
-+		dmaengine_terminate_sync(controller->dma_tx);
- 		return -EINVAL;
- 	}
+diff --git a/drivers/gpu/drm/radeon/radeon_ring.c b/drivers/gpu/drm/radeon/radeon_ring.c
+index 7e207276df374f..e009ee1559c8ed 100644
+--- a/drivers/gpu/drm/radeon/radeon_ring.c
++++ b/drivers/gpu/drm/radeon/radeon_ring.c
+@@ -354,8 +354,10 @@ int radeon_ring_restore(struct radeon_device *rdev, struct radeon_ring *ring,
  
-@@ -598,8 +598,8 @@ static int fsl_lpspi_dma_transfer(struct
- 						      transfer_timeout);
- 		if (!timeout) {
- 			dev_err(fsl_lpspi->dev, "I/O Error in DMA TX\n");
--			dmaengine_terminate_all(controller->dma_tx);
--			dmaengine_terminate_all(controller->dma_rx);
-+			dmaengine_terminate_sync(controller->dma_tx);
-+			dmaengine_terminate_sync(controller->dma_rx);
- 			fsl_lpspi_reset(fsl_lpspi);
- 			return -ETIMEDOUT;
- 		}
-@@ -608,8 +608,8 @@ static int fsl_lpspi_dma_transfer(struct
- 						      transfer_timeout);
- 		if (!timeout) {
- 			dev_err(fsl_lpspi->dev, "I/O Error in DMA RX\n");
--			dmaengine_terminate_all(controller->dma_tx);
--			dmaengine_terminate_all(controller->dma_rx);
-+			dmaengine_terminate_sync(controller->dma_tx);
-+			dmaengine_terminate_sync(controller->dma_rx);
- 			fsl_lpspi_reset(fsl_lpspi);
- 			return -ETIMEDOUT;
- 		}
-@@ -618,8 +618,8 @@ static int fsl_lpspi_dma_transfer(struct
- 			fsl_lpspi->slave_aborted) {
- 			dev_dbg(fsl_lpspi->dev,
- 				"I/O Error in DMA TX interrupted\n");
--			dmaengine_terminate_all(controller->dma_tx);
--			dmaengine_terminate_all(controller->dma_rx);
-+			dmaengine_terminate_sync(controller->dma_tx);
-+			dmaengine_terminate_sync(controller->dma_rx);
- 			fsl_lpspi_reset(fsl_lpspi);
- 			return -EINTR;
- 		}
-@@ -628,8 +628,8 @@ static int fsl_lpspi_dma_transfer(struct
- 			fsl_lpspi->slave_aborted) {
- 			dev_dbg(fsl_lpspi->dev,
- 				"I/O Error in DMA RX interrupted\n");
--			dmaengine_terminate_all(controller->dma_tx);
--			dmaengine_terminate_all(controller->dma_rx);
-+			dmaengine_terminate_sync(controller->dma_tx);
-+			dmaengine_terminate_sync(controller->dma_rx);
- 			fsl_lpspi_reset(fsl_lpspi);
- 			return -EINTR;
- 		}
+ 	/* restore the saved ring content */
+ 	r = radeon_ring_lock(rdev, ring, size);
+-	if (r)
++	if (r) {
++		kvfree(data);
+ 		return r;
++	}
+ 
+ 	for (i = 0; i < size; ++i) {
+ 		radeon_ring_write(ring, data[i]);
+-- 
+2.53.0
+
 
 
