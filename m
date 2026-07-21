@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D9E2EBB8D;
-	Tue, 21 Jul 2026 20:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90BF33A9FC;
+	Tue, 21 Jul 2026 20:43:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666624; cv=none; b=gARH2TonSgdizIWFdft30Gxk8xke80TlOnQURWAdHE22AsBypPMYI4JKahuceaGacKqtaCqyhxOCNJ2dQu9TAoiJb+dIqsspFQ+XG4/SGS5Nl3qTnj8qJi8JAB3uT/1AkfYO/SYXPmf0O8D31HfsBykfOtORM+pXAHQllEoyUCc=
+	t=1784666626; cv=none; b=awYW9UJMC3Tj7jrJOgcJK9loaw7hsZs5GUxm+8M8xziZqogv0jWRqwjApAIeUcaLnMlWajr4fkiHsx4FavjYQjAIKzIOiktnwJG1AnVU0sL9ZVLBbPG550EAhNilcqvY4Dgy8Q4RcpDlPSXTMJ+EOP5Eaeowh3Vtyk49QgKWbLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666624; c=relaxed/simple;
-	bh=G9S4rBR9Du8wh2kmKN0gkTWxheVnG/mgTG23iou26Ig=;
+	s=arc-20240116; t=1784666626; c=relaxed/simple;
+	bh=E5xMU3xF7tfBLXFvLMtvah9/llEDjEv5Cc3S9+4wVoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=taWxybavUOVoByv0uMq2Q7rRK/EWKvkOflXNDfrq7/iR+doO0AzE45EWqrVOfFuNhK/U+bXZWPiNjl4+6I5kgf+Di0NSlMIxuZWYd81NmuWaweeS8gup41RUC60+kBeG4J0KRrEv6oI1aMIW7SdRI0pQR2kyYUGirG1ueUWkv44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOf+pxT4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=keI9KMlFBr9xLHv+M0OSRMjQ7aEci/ME7H8S4JvIXf+IOpmHd8eAn4m8Ef1qBvVsNZxBKIWR5TaCdA0G4xagdLxpegnPn7aJLuHxtEWoPskfJFEIJnIGKkYdBivOSwdRbCOxJxv2h/wA+LmfUSy5eTuEUQ1Vo1p0Wh2J44x3qUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ru/8/3U1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOf+pxT4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 975E81F000E9;
-	Tue, 21 Jul 2026 20:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ru/8/3U1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B3061F000E9;
+	Tue, 21 Jul 2026 20:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666623;
-	bh=HjuKoGTlTkY7UrQ3PhUqnIWdCyrNoZ8a6fAvzFWwPbw=;
+	s=korg; t=1784666625;
+	bh=48O7RoB/uDMZTCkxMq9Z3e+vi8nFWLQUymmanJotbGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eOf+pxT4eCPzq7eQHgKMufyAhx692kjnGuRHwGbvF5n5ETPlhyZWb9k1FNamdTbkL
-	 IvAHi1LgQX+BrbzTGsDjx6fxrXtnIv3lH+5VNboJBd/ExFc9EPMDjVGnjj9CGJXYl8
-	 VMiT1tsjLjrEdbIvhEC+W52u2cd2Ep+q/q++kZAU=
+	b=Ru/8/3U185ze1DwrOm0EFUbzqBzA1RpmYlwGrEO4ZobvwFsOxS3yzBRLZvvE0IVhE
+	 hNBWi0K6xxn4l9S/t04pftQVliV1fi9RANI1OkACAiTmkkHlMqVOB+7uw1vB2cVoN9
+	 qPLNVof9W5dtr/f562jPvt8+09b4TnhQ/FLS6Z/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0736/1266] ACPI: resource: Amend kernel-doc style
-Date: Tue, 21 Jul 2026 17:19:33 +0200
-Message-ID: <20260721152458.342807924@linuxfoundation.org>
+Subject: [PATCH 6.6 0754/1266] octeontx2-af: mcs: Fix unsupported secy stats read
+Date: Tue, 21 Jul 2026 17:19:51 +0200
+Message-ID: <20260721152458.742195134@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,54 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Geetha sowjanya <gakula@marvell.com>
 
-[ Upstream commit 78ad5c7722b7bed9d35ffc5b45eb0f12e2c22fee ]
+[ Upstream commit d4b7440f7316e76f013f57d8b6da069a1b9c34e7 ]
 
-The functions are referred as func() in the kernel-doc. The % (percent)
-character makes the rendering for constants as described in the respective
-documentation. Amend all these.
+Secy control stats counter doesn't exist for CNF10KB platform.
+Skip reading this respective register for CNF10KB silicon while
+fetching secy stats.
 
-Fixes: 8e345c991c8c ("ACPI: Centralized processing of ACPI device resources")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260617090555.2648709-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 9312150af8da ("octeontx2-af: cn10k: mcs: Support for stats collection")
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Link: https://patch.msgid.link/1781636420-19816-1-git-send-email-sbhatta@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/resource.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/mcs.c         | 6 +++---
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c | 3 ++-
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index 531684a69c645d..672ccad447ccda 100644
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -839,7 +839,7 @@ bool acpi_dev_resource_interrupt(struct acpi_resource *ares, int index,
- EXPORT_SYMBOL_GPL(acpi_dev_resource_interrupt);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mcs.c b/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
+index c1775bd01c2b48..a07e0b3d8d0006 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
+@@ -120,13 +120,13 @@ void mcs_get_rx_secy_stats(struct mcs *mcs, struct mcs_secy_stats *stats, int id
+ 	reg = MCSX_CSE_RX_MEM_SLAVE_INPKTSSECYUNTAGGEDX(id);
+ 	stats->pkt_untaged_cnt = mcs_reg_read(mcs, reg);
  
- /**
-- * acpi_dev_free_resource_list - Free resource from %acpi_dev_get_resources().
-+ * acpi_dev_free_resource_list - Free resource from acpi_dev_get_resources().
-  * @list: The head of the resource list to free.
-  */
- void acpi_dev_free_resource_list(struct list_head *list)
-@@ -959,7 +959,7 @@ static int __acpi_dev_get_resources(struct acpi_device *adev,
-  *
-  * The resultant struct resource objects are put on the list pointed to by
-  * @list, that must be empty initially, as members of struct resource_entry
-- * objects.  Callers of this routine should use %acpi_dev_free_resource_list() to
-+ * objects.  Callers of this routine should use acpi_dev_free_resource_list() to
-  * free that list.
-  *
-  * The number of resources in the output list is returned on success, an error
-@@ -1000,7 +1000,7 @@ static int is_memory(struct acpi_resource *ares, void *not_used)
-  * The resultant struct resource objects are put on the list pointed to
-  * by @list, that must be empty initially, as members of struct
-  * resource_entry objects.  Callers of this routine should use
-- * %acpi_dev_free_resource_list() to free that list.
-+ * acpi_dev_free_resource_list() to free that list.
-  *
-  * The number of resources in the output list is returned on success,
-  * an error code reflecting the error condition is returned otherwise.
+-	reg = MCSX_CSE_RX_MEM_SLAVE_INPKTSSECYCTLX(id);
+-	stats->pkt_ctl_cnt = mcs_reg_read(mcs, reg);
+-
+ 	if (mcs->hw->mcs_blks > 1) {
+ 		reg = MCSX_CSE_RX_MEM_SLAVE_INPKTSSECYNOTAGX(id);
+ 		stats->pkt_notag_cnt = mcs_reg_read(mcs, reg);
++		return;
+ 	}
++	reg = MCSX_CSE_RX_MEM_SLAVE_INPKTSSECYCTLX(id);
++	stats->pkt_ctl_cnt = mcs_reg_read(mcs, reg);
+ }
+ 
+ void mcs_get_flowid_stats(struct mcs *mcs, struct mcs_flowid_stats *stats,
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+index 56dab11833b533..285ae29396342a 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+@@ -505,10 +505,11 @@ static int rvu_dbg_mcs_rx_secy_stats_display(struct seq_file *filp, void *unused
+ 		seq_printf(filp, "secy%d: Tagged ctrl pkts: %lld\n", secy_id,
+ 			   stats.pkt_tagged_ctl_cnt);
+ 		seq_printf(filp, "secy%d: Untaged pkts: %lld\n", secy_id, stats.pkt_untaged_cnt);
+-		seq_printf(filp, "secy%d: Ctrl pkts: %lld\n", secy_id, stats.pkt_ctl_cnt);
+ 		if (mcs->hw->mcs_blks > 1)
+ 			seq_printf(filp, "secy%d: pkts notag: %lld\n", secy_id,
+ 				   stats.pkt_notag_cnt);
++		else
++			seq_printf(filp, "secy%d: Ctrl pkts: %lld\n", secy_id, stats.pkt_ctl_cnt);
+ 	}
+ 	mutex_unlock(&mcs->stats_lock);
+ 	return 0;
 -- 
 2.53.0
 
