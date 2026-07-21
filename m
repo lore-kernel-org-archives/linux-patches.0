@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DBD3F825F;
-	Tue, 21 Jul 2026 19:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BEAC408624;
+	Tue, 21 Jul 2026 19:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661334; cv=none; b=HLC/wwCLz0OoJ7m17i5KglllAfg2Uy1PQH2ygGaOODJYgQr5BNxf3eaMy72XehAvr/97JK3G69n8hF/1LnQS4StHyA2kChSNTJey/GqsZr7knifr+6hrNDU9P+RTTGu1V3L4T6lA/RvcqE81y3D3jyLFY09SIR9JBisJeQHnnbk=
+	t=1784661336; cv=none; b=CWr0lGreOv7v9+Zxl1gDIHlmMDJlN4MJRKW1h3s5oaJRwaoYBAa5LuIo+JVUC4un+p+iC/7pj4oMaRkZWZvi7XBRRqSeFBpigqktvdywjKASk3K9WKFfHFGEfS1OSmPFq83oWBsaqd0xg4w2knnHpWdezzVedZMpcQdeb7Nv7K4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661334; c=relaxed/simple;
-	bh=imD6kNzh0vVbIYu6+i8qkgSjWqX1fwt5OmZ5ydDYoqk=;
+	s=arc-20240116; t=1784661336; c=relaxed/simple;
+	bh=3aO+hX6KyKNVutJPb0kpJpjkdD2TAusGNnNdW6W1NlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XYG7++Z/nflzLWdUAo7QHihWAYqSix0QW79AJNzfPdxAADTo0rLbXOJNv4abhUMHfiY1bRcCJGqH1t2xXVPoTaTGIPsiXnQWNOHGSkNIklXyysbzYLsemX8x0ACOYXUkbnbxO6uSyQ/QUYdr4kFYgJc50RPpzvH+26tj1ktG6B0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MW8FwAG9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iKoPfQAw34u/6F0B2K5DBg7xCehXm+Bxos1vjT2+vlmeDXo8YGAL3kJyfNZ9U4XTS4TeXv8cxr7b+MsV7WAbUVWhVQR9JPeShnlao/2iS1lb5Y8fLUGQuX4vNqaVfxmOeIp5Tn4XKyHebO6WBfMCSr9pZnteI3uwV+q8RAcfNic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FRrjMrtg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MW8FwAG9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DEB1F000E9;
-	Tue, 21 Jul 2026 19:15:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRrjMrtg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15A41F000E9;
+	Tue, 21 Jul 2026 19:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661332;
-	bh=BO3rvGx85eAvfyTnvnRqgusfHS5szA/Ad3zib2zP6tM=;
+	s=korg; t=1784661335;
+	bh=oHeVqaEk050lwpzjKuyyGwThAuXyPJt3L7HdYTDSnyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MW8FwAG9E5KebrE1/95fd2qItH8IWiBn5zMOmH19IXhEjOWyeKuuJab9s+YU9OMy2
-	 wbskOQ2YwR6vtEC8AgQhCpgcq9aQuATplKoAGhOOpnq2yEyKfAQvqjLOnG3A5tVA81
-	 bOtC26JBgU1Mg3hXftQC39qvNYZpO2L8pwrADpME=
+	b=FRrjMrtgQhUSIWfM39oVSnzshMSgVcomBY4hoE0xZ5FeyxUCDRi9X7oi4seyr/VHR
+	 j8+CW9rvsBfAjMyOIW5gLoBicD3/OT0bMZ7FDBHyev4K1lnrzFemrqUIoRplO6OWFp
+	 SYY2njVGfiDPo7MTCPhcb48+HdAZKhiWUb8c9iiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Heiko Stuebner <heiko.stuebner@cherry.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0027/1276] af_unix: Set drop reason in unix_release_sock().
-Date: Tue, 21 Jul 2026 17:07:50 +0200
-Message-ID: <20260721152446.691468983@linuxfoundation.org>
+Subject: [PATCH 6.12 0028/1276] af_unix: Set drop reason in manage_oob().
+Date: Tue, 21 Jul 2026 17:07:51 +0200
+Message-ID: <20260721152446.711915262@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -54,79 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit c32f0bd7d4838982c6724fca0da92353f27c6f88 ]
+[ Upstream commit 533643b091dd6e246d57caf81e6892fa9cbb1cc9 ]
 
-unix_release_sock() is called when the last refcnt of struct file
-is released.
+AF_UNIX SOCK_STREAM socket supports MSG_OOB.
 
-Let's define a new drop reason SKB_DROP_REASON_SOCKET_CLOSE and
-set it for kfree_skb() in unix_release_sock().
+When OOB data is sent to a socket, recv() will break at that point.
+
+If the next recv() does not have MSG_OOB, the normal data following
+the OOB data is returned.
+
+Then, the OOB skb is dropped.
+
+Let's define a new drop reason for that case in manage_oob().
 
   # echo 1 > /sys/kernel/tracing/events/skb/kfree_skb/enable
 
   # python3
   >>> from socket import *
   >>> s1, s2 = socketpair(AF_UNIX)
-  >>> s1.send(b'hello world')
-  >>> s2.close()
+  >>> s1.send(b'a', MSG_OOB)
+  >>> s1.send(b'b')
+  >>> s2.recv(2)
+  b'b'
 
   # cat /sys/kernel/tracing/trace_pipe
   ...
-     python3-280 ... kfree_skb: ... protocol=0 location=unix_release_sock+0x260/0x420 reason: SOCKET_CLOSE
-
-To be precise, unix_release_sock() is also called for a new child
-socket in unix_stream_connect() when something fails, but the new
-sk does not have skb in the recv queue then and no event is logged.
-
-Note that only tcp_inbound_ao_hash() uses a similar drop reason,
-SKB_DROP_REASON_TCP_CLOSE, and this can be generalised later.
+     python3-223 ... kfree_skb: ... location=unix_stream_read_generic+0x59e/0xc20 reason: UNIX_SKIP_OOB
 
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250116053441.5758-3-kuniyu@amazon.com
+Link: https://patch.msgid.link/20250116053441.5758-6-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Heiko Stuebner <heiko.stuebner@cherry.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/dropreason-core.h | 3 +++
- net/unix/af_unix.c            | 4 ++--
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ include/net/dropreason-core.h | 6 ++++++
+ net/unix/af_unix.c            | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/include/net/dropreason-core.h b/include/net/dropreason-core.h
-index 76311b3ebfc890..06912797712a69 100644
+index 06912797712a69..07826c85d31ca0 100644
 --- a/include/net/dropreason-core.h
 +++ b/include/net/dropreason-core.h
-@@ -6,6 +6,7 @@
- #define DEFINE_DROP_REASON(FN, FNe)	\
- 	FN(NOT_SPECIFIED)		\
- 	FN(NO_SOCKET)			\
-+	FN(SOCKET_CLOSE)		\
+@@ -9,6 +9,7 @@
+ 	FN(SOCKET_CLOSE)		\
  	FN(SOCKET_FILTER)		\
  	FN(SOCKET_RCVBUFF)		\
++	FN(UNIX_SKIP_OOB)		\
  	FN(PKT_TOO_SMALL)		\
-@@ -124,6 +125,8 @@ enum skb_drop_reason {
- 	 * 3) no valid child socket during 3WHS process
- 	 */
- 	SKB_DROP_REASON_NO_SOCKET,
-+	/** @SKB_DROP_REASON_SOCKET_CLOSE: socket is close()d */
-+	SKB_DROP_REASON_SOCKET_CLOSE,
- 	/** @SKB_DROP_REASON_SOCKET_FILTER: dropped by socket filter */
+ 	FN(TCP_CSUM)			\
+ 	FN(UDP_CSUM)			\
+@@ -131,6 +132,11 @@ enum skb_drop_reason {
  	SKB_DROP_REASON_SOCKET_FILTER,
  	/** @SKB_DROP_REASON_SOCKET_RCVBUFF: socket receive buff is full */
+ 	SKB_DROP_REASON_SOCKET_RCVBUFF,
++	/**
++	 * @SKB_DROP_REASON_UNIX_SKIP_OOB: Out-Of-Band data is skipped by
++	 * recv() without MSG_OOB so dropped.
++	 */
++	SKB_DROP_REASON_UNIX_SKIP_OOB,
+ 	/** @SKB_DROP_REASON_PKT_TOO_SMALL: packet size is too small */
+ 	SKB_DROP_REASON_PKT_TOO_SMALL,
+ 	/** @SKB_DROP_REASON_TCP_CSUM: TCP checksum error */
 diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 4682cc59b7a7aa..4caff11068c380 100644
+index 4caff11068c380..e0f5a93821490a 100644
 --- a/net/unix/af_unix.c
 +++ b/net/unix/af_unix.c
-@@ -731,8 +731,8 @@ static void unix_release_sock(struct sock *sk, int embrion)
- 		if (state == TCP_LISTEN)
- 			unix_release_sock(skb->sk, 1);
+@@ -2714,7 +2714,7 @@ static struct sk_buff *manage_oob(struct sk_buff *skb, struct sock *sk,
+ 	spin_unlock(&sk->sk_receive_queue.lock);
  
--		/* passed fds are erased in the kfree_skb hook	      */
--		kfree_skb(skb);
-+		/* passed fds are erased in the kfree_skb hook */
-+		kfree_skb_reason(skb, SKB_DROP_REASON_SOCKET_CLOSE);
- 	}
+ 	consume_skb(read_skb);
+-	kfree_skb(unread_skb);
++	kfree_skb_reason(unread_skb, SKB_DROP_REASON_UNIX_SKIP_OOB);
  
- 	if (path.dentry)
+ 	return skb;
+ }
 -- 
 2.53.0
 
