@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559953A4F4B;
-	Tue, 21 Jul 2026 19:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECBBD3A4F4B;
+	Tue, 21 Jul 2026 19:45:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663157; cv=none; b=QCX4GKVH0MyX/ieQlcUH9uNoBgwNWplH6KZaN+KKbSgPhL+0tY24lN5O9EjzbZa1KAkwvEdhHO1MqfHHClz7s2stpR1syOhFv6AqIc8lF7RigX8UaEUHsfBfGbobv6+/ABkyAtc6XEpIa3jJ0Tcb5l+RSPuyug4eiq/8TtOS2LE=
+	t=1784663160; cv=none; b=U3vVqSvQZnXOEeEFWaW++kE1PgjIRhVNHpMaLwgJe3uqJLygHt6TLmttx5WZuUXKLTjnMQIcXBvI7dXmaE/i4c499t/IQ2xh2O6eItaPTmJrZdOQhyXER9WZmLDX5jG7EBHVBy2UaAW5nKAs9zhfVssB4x0+3Asf1LQuTyed6SE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663157; c=relaxed/simple;
-	bh=6cEPdSu3QfJog1/iLixoSZ6Qghc6gExJWVzbhHwEj4E=;
+	s=arc-20240116; t=1784663160; c=relaxed/simple;
+	bh=WcrpU38owkFniegfy+SAYvEv736T5KNFLAyxRoOiw/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fw0zSX3+XDbEh9khe5bl6I1IrCsigRBvXhHYg4u0uPHGKDxJdUX7S/HoCDTtF8irYKRI2fUNkEWUFLbhcuSME5uHMOS8+1Uj+QWPdeCbFwMZCcjuYFfIrm2tiH31EevSIbBvFpHv501A6rUTrUuNR8fdzmTBoVF6oL2hC0/yTdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kBh0Jk4+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WUKiYUgO6HGLSkzLy6lWWbLDkFXeI3ttUohUlnEsxNLhJjzIxGIfRPy9H2bTRrkWV5RoCEYR82Hbh+18LwEH3b3DK+T2xY4bBh+td7wByZBEVnadkVrvs9OUhsokqp3BMZUrreVWUPc7GbeaqGYmmbBUQ9ZMYun5pjrthI2W26g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GTvSN95A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBh0Jk4+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 825B61F000E9;
-	Tue, 21 Jul 2026 19:45:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GTvSN95A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287ED1F00A3A;
+	Tue, 21 Jul 2026 19:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663155;
-	bh=67NOcNX3cJZGPq76hccn8bOK7+rUai6uBBDp3SASgSY=;
+	s=korg; t=1784663157;
+	bh=DM6pvlJz9fe8G9bYGUxu/8RFp1lGzA3pymtfCM6dFck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kBh0Jk4+wncqdM+gaSfBhJ0BZFWJoh9dT7oYMNNy+KEJByeDgIAi+K/spNco1SNQC
-	 qNWFbR3P7vagf3LCKL9DhYGeFXzMvgrp+BQpDW/MBMhrgdBhSE6RWOtJumlK8YTqrc
-	 10XuVAy1ZLtN38rpUhEimD+3bQhwnEqSC1wkbN3M=
+	b=GTvSN95A/fuLY9HXhMSDWnhUxqaITJZ7m2YQKuGwyxb9fmQoRgjY6Ni9+ITXjucFm
+	 0bml0V1eOIw5AU77xRe+4Yb8EMP/6HVwKjabSqYD/39+zRQtOc9ScYpMdOgkw1++tG
+	 sAFDzuBF1HXdkxS3frIgKwnBUuwA+LRRAlfgnNdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
+	Qingshuang Fu <fuqingshuang@kylinos.cn>,
 	Thomas Gleixner <tglx@kernel.org>,
-	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0716/1276] irqchip/gic-v3-its: Fix OF node reference leak
-Date: Tue, 21 Jul 2026 17:19:19 +0200
-Message-ID: <20260721152502.115430962@linuxfoundation.org>
+Subject: [PATCH 6.12 0717/1276] irqchip/ts4800: Fix missing chained handler cleanup on remove
+Date: Tue, 21 Jul 2026 17:19:20 +0200
+Message-ID: <20260721152502.137088498@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,46 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Qingshuang Fu <fuqingshuang@kylinos.cn>
 
-[ Upstream commit 2e1368a9d61bdf5502ddade004f223a5831c5b8c ]
+[ Upstream commit 98bf7e54cec07d514b3575c11896a8b12d50ecc4 ]
 
-of_get_cpu_node() returns a referenced device node. In
-its_cpu_init_collection(), the Cavium 23144 workaround only uses the
-node to compare the CPU NUMA node, but the reference is never dropped.
+The driver installs a chained handler for the parent interrupt during probe
+using irq_set_chained_handler_and_data(), but the remove function does not
+clear this handler. This leaves a dangling handler that may be called when
+the parent interrupt fires after the driver has been removed, potentially
+accessing freed memory and causing a kernel crash.
 
-Use the device_node cleanup helper for the CPU node reference so it is
-released when leaving the workaround block, including the NUMA mismatch
-return path.
+Additionally, the parent_irq obtained via irq_of_parse_and_map() is not
+stored, making it inaccessible in the remove function. Moreover, interrupt
+mappings created during probe are not properly disposed.
 
-Fixes: fbf8f40e1658 ("irqchip/gicv3-its: numa: Enable workaround for Cavium thunderx erratum 23144")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Fix this by:
+
+   - Saving parent_irq in probe
+   - Clearing the chained handler with NULL in ts4800_ic_remove()
+   - Disposing all IRQ mappings before domain removal to prevent resource
+     leaks
+
+Fixes: d01f8633d52e ("irqchip/ts4800: Add TS-4800 interrupt controller")
+Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
-Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://patch.msgid.link/20260623015211.109382-1-fffsqian@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/irqchip/irq-ts4800.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index b0eb6646a998cf..95d337978c75f2 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -3209,11 +3209,9 @@ static void its_cpu_init_collection(struct its_node *its)
+diff --git a/drivers/irqchip/irq-ts4800.c b/drivers/irqchip/irq-ts4800.c
+index b5dddb3c1568ea..a978db71ac3210 100644
+--- a/drivers/irqchip/irq-ts4800.c
++++ b/drivers/irqchip/irq-ts4800.c
+@@ -28,6 +28,7 @@ struct ts4800_irq_data {
+ 	void __iomem            *base;
+ 	struct platform_device	*pdev;
+ 	struct irq_domain       *domain;
++	unsigned int            parent_irq;
+ };
  
- 	/* avoid cross node collections and its mapping */
- 	if (its->flags & ITS_FLAGS_WORKAROUND_CAVIUM_23144) {
--		struct device_node *cpu_node;
-+		struct device_node *cpu_node __free(device_node) = of_get_cpu_node(cpu, NULL);
+ static void ts4800_irq_mask(struct irq_data *d)
+@@ -134,6 +135,7 @@ static int ts4800_ic_probe(struct platform_device *pdev)
+ 	irq_set_chained_handler_and_data(parent_irq,
+ 					 ts4800_ic_chained_handle_irq, data);
  
--		cpu_node = of_get_cpu_node(cpu, NULL);
--		if (its->numa_node != NUMA_NO_NODE &&
--			its->numa_node != of_node_to_nid(cpu_node))
-+		if (its->numa_node != NUMA_NO_NODE && its->numa_node != of_node_to_nid(cpu_node))
- 			return;
- 	}
++	data->parent_irq = parent_irq;
+ 	platform_set_drvdata(pdev, data);
  
+ 	return 0;
+@@ -142,6 +144,14 @@ static int ts4800_ic_probe(struct platform_device *pdev)
+ static void ts4800_ic_remove(struct platform_device *pdev)
+ {
+ 	struct ts4800_irq_data *data = platform_get_drvdata(pdev);
++	unsigned int hwirq;
++
++	irq_set_chained_handler_and_data(data->parent_irq, NULL, NULL);
++
++	for (hwirq = 0; hwirq < 8; hwirq++)
++		irq_dispose_mapping(irq_find_mapping(data->domain, hwirq));
++
++	irq_dispose_mapping(data->parent_irq);
+ 
+ 	irq_domain_remove(data->domain);
+ }
 -- 
 2.53.0
 
