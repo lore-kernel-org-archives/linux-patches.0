@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45730376A0B;
-	Tue, 21 Jul 2026 21:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8503B47DF;
+	Tue, 21 Jul 2026 21:30:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669443; cv=none; b=Wp7+5yAxF7lEVexbz/AxNkfGHXH6jYl6p8VWiFsIULD3iuGEmiRc2eWVicMvIi3TqBOOJeVq9dPS7bry0v3CpnrejX0CKqN4D40eXYV/3XnB+vuYkYGhb4Ygapw1YeyGHPEvf5P9H+J0rKGhEhRvD75hn8oBpLQ5mskdmnkefoU=
+	t=1784669445; cv=none; b=jr0cUApYZnEs+vDghlhDUhoS7NP2X69K1+jVR4kctm2Jag92y6Hc6YYKHO22lKDqpSCk75neHktHYkhimD2R1MB4rCESfTqFsorGr5Utu3/mDEYxVbJh8AZwwRXYrmyO5jTpkwsdhs2dKA0rersRHYVeMehswOUNBK1GhBNoNW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669443; c=relaxed/simple;
-	bh=YM6UyNl7cOj62JWli1wmO1OzJHS0tU7A7/QKoLNZubM=;
+	s=arc-20240116; t=1784669445; c=relaxed/simple;
+	bh=tIZPxr9SU7c+8fMwmfVYao45pnhQZQqu6tOILiMclfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hsXjxB2Duz/tIj/rP+BFtkpVyaxD8i5iDxVBgd3sbAWqVZ6DwO9Wkj63aootXUz+O5vYWvOoafu2ISchIWdRjF7DQPWkKmlaIfAWyeX3TYfMk6BNHFMvI1e5cLt/r2813wHLTgNMzB5M4zPqfpMTtPjaKUjJlWAfP7lI8wjY+3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSc5Wzzt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ELI3F1KPIGtG3Sdb2WGH3gU6axS4pP/Qcpt6Y+CG5kySgg0fEAdwok0F8M/K6fhSzFOsSTSJvl6FJmoWUcXJy2+48n30i4V7pxqD6+wUF6w5CeTiBNxqqRzk5L2OuArhQJ7SLX0XndqTRdVPndvUWOLicFe92DQx26een36yB+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/j2N0VO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSc5Wzzt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FC41F000E9;
-	Tue, 21 Jul 2026 21:30:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/j2N0VO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AEDE1F00A3A;
+	Tue, 21 Jul 2026 21:30:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669441;
-	bh=Jy/goGY5pbZgZMmYOCnkk4XMmOO5MTV6V2mEAYPk4IY=;
+	s=korg; t=1784669443;
+	bh=y+U8EvZPOZF9MkGjidDLkdfjrU6w1VXz+EBXV8re7JA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pSc5WzztqmU+415XqTJxOAD91Ydxw0VWREaJRF2b8VppJ9Ty8hCm/cNKQU4KQCsrc
-	 octDGwwlEOK8CxPE9CI2yGI/nW/VPuqx4HOrZAslB06HyqqSEUmwOQ8AcAOubxxM0h
-	 +Ionr/dEk75m/c8uQsFubNz8LZfeCoGec2APnKW4=
+	b=y/j2N0VObrkxVynKFidUlt3b78j3svdTW8YT+AO++9IZA9YQfmOwkUBHjwVgW8bhw
+	 44SNGVbk7sIjrMj6cvya7ICNZG0FN6LFNgTFuDN8BkmpB7v9uaOUN2AJ8elBPyTRBz
+	 e3Kl6bIMAUlPY1o1QIosrnp8xkxl/kq0dYKLO3OM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
+	Ryan Lee <ryan.lee@canonical.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0519/1067] NFSv4/pnfs: defer return_range callbacks until after inode unlock
-Date: Tue, 21 Jul 2026 17:18:40 +0200
-Message-ID: <20260721152436.221377793@linuxfoundation.org>
+Subject: [PATCH 6.1 0555/1067] apparmor: grab ns lock and refresh when looking up changehat child profiles
+Date: Tue, 21 Jul 2026 17:19:16 +0200
+Message-ID: <20260721152437.023029060@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,122 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Ryan Lee <ryan.lee@canonical.com>
 
-[ Upstream commit 77b160b2d863d37f36b6c38e80a7d259ce939e69 ]
+[ Upstream commit 32e92764d6f8d251c1bca62be33793287b453a81 ]
 
-Sometimes unmounting an NFS filesystem mounted with pNFS SCSI
-layouts triggers the following warning:
+There was a race condition involving change_hat and profile replacement in
+which replacement of the parent profile during a changehat operation could
+result in the list of children becoming empty and the changehat operation
+failing. To prevent this:
+ - grab the namespace lock until we've built the hat transition, and
+ - use aa_get_newest_profile to avoid using stale profile objects.
 
-     BUG: scheduling while atomic: umount.nfs4/...
-
-    __schedule_bug+0xbd/0x100
-     schedule_debug.constprop.0+0x19f/0x220
-     __schedule+0x10d/0x10a0
-     schedule+0x74/0x190
-     schedule_timeout+0xf5/0x220
-     io_schedule_timeout+0xd5/0x160
-     __wait_for_common+0x186/0x4b0
-     blk_execute_rq+0x2ef/0x3a0
-     scsi_execute_cmd+0x1ff/0x700
-     sd_pr_out_command.isra.0+0x242/0x380 [sd_mod]
-     bl_unregister_scsi.constprop.0+0x109/0x3c0 [blocklayoutdriver]
-     bl_unregister_dev+0x175/0x1c0 [blocklayoutdriver]
-     bl_free_device+0x1f/0x1b0 [blocklayoutdriver]
-     bl_free_deviceid_node+0x12/0x30 [blocklayoutdriver]
-     nfs4_put_deviceid_node+0x171/0x360 [nfsv4]
-     ext_tree_remove+0x11c/0x1d0 [blocklayoutdriver]
-     _pnfs_return_layout+0x416/0x900 [nfsv4]
-     nfs4_evict_inode+0x108/0x130 [nfsv4]
-     evict+0x316/0x750
-     dispose_list+0xf1/0x1a0
-     evict_inodes+0x33f/0x440
-     generic_shutdown_super+0xc9/0x4e0
-     kill_anon_super+0x3a/0x90
-     nfs_kill_super+0x44/0x60 [nfs]
-     deactivate_locked_super+0xb8/0x1b0
-     cleanup_mnt+0x25a/0x380
-     task_work_run+0x13e/0x210
-     exit_to_user_mode_loop+0x169/0x400
-     do_syscall_64+0x467/0x1550
-     entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-The warning occurs because the block layout driver unregisters the SCSI
-device while the inode lock is still held. Device unregistration issues
-a SCSI PR command, which may sleep, resulting in a "scheduling while
-atomic" warning.
-
-During layout return, ext_tree_remove() invokes the layout driver's
-return_range callback while holding the inode lock. For block layouts,
-this callback eventually calls bl_unregister_scsi(), which may block in
-scsi_execute_cmd() while issuing PR commands to the device.
-
-Fix this by deferring the return_range callbacks until after the inode
-lock has been released. The layout header reference count is incremented
-before invoking return_range(), ensuring that the layout header remains
-valid while the layout driver removes extents from the extent tree.
-
-Fixes: c88953d87f5c8 ("pnfs: add return_range method")
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Link: https://bugs.launchpad.net/bugs/2139664
+Fixes: 89dbf1962aa63 ("apparmor: move change_hat mediation to using labels")
+Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
+Signed-off-by: Ryan Lee <ryan.lee@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/callback_proc.c | 9 +++++----
- fs/nfs/pnfs.c          | 4 ++--
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ security/apparmor/domain.c | 33 +++++++++++++++++++++++++++++++--
+ 1 file changed, 31 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfs/callback_proc.c b/fs/nfs/callback_proc.c
-index c1eda73254e16f..25ba728d8eedd7 100644
---- a/fs/nfs/callback_proc.c
-+++ b/fs/nfs/callback_proc.c
-@@ -248,6 +248,7 @@ static u32 initiate_file_draining(struct nfs_client *clp,
- 	struct pnfs_layout_hdr *lo;
- 	u32 rv = NFS4ERR_NOMATCHING_LAYOUT;
- 	LIST_HEAD(free_me_list);
-+	bool return_range = false;
+diff --git a/security/apparmor/domain.c b/security/apparmor/domain.c
+index b4fa5abd60667c..a6308d103f7649 100644
+--- a/security/apparmor/domain.c
++++ b/security/apparmor/domain.c
+@@ -13,6 +13,7 @@
+ #include <linux/fs.h>
+ #include <linux/file.h>
+ #include <linux/mount.h>
++#include <linux/mutex.h>
+ #include <linux/syscalls.h>
+ #include <linux/personality.h>
+ #include <linux/xattr.h>
+@@ -1036,6 +1037,7 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
+ 				   int count, int flags)
+ {
+ 	struct aa_profile *profile, *root, *hat = NULL;
++	struct aa_ns *ns, *new_ns;
+ 	struct aa_label *new;
+ 	struct label_it it;
+ 	bool sibling = false;
+@@ -1046,6 +1048,32 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
+ 	AA_BUG(!hats);
+ 	AA_BUG(count < 1);
  
- 	ino = nfs_layout_find_inode(clp, &args->cbl_fh, &args->cbl_stateid);
- 	if (IS_ERR(ino)) {
-@@ -292,13 +293,13 @@ static u32 initiate_file_draining(struct nfs_client *clp,
- 		/* Embrace your forgetfulness! */
- 		rv = NFS4ERR_NOMATCHING_LAYOUT;
++	/*
++	 * Acquire the newest label and then hold the lock until we choose a
++	 * hat, so that profile replacement doesn't atomically truncate the
++	 * list of potential hats. Because we are getting the namespaces from
++	 * the profiles and label, we can rely on the namespaces being live
++	 * and avoid incrementing their refcounts while grabbing the lock.
++	 */
++	label = aa_get_label(label);
++	ns = labels_ns(label);
++
++retry:
++	mutex_lock_nested(&ns->lock, ns->level);
++	if (label_is_stale(label)) {
++		new = aa_get_newest_label(label);
++		new_ns = labels_ns(new);
++		if (new_ns != ns) {
++			aa_put_label(new);
++			mutex_unlock(&ns->lock);
++			ns = new_ns;
++			label = new;
++			goto retry;
++		}
++		aa_put_label(label);
++		label = new;
++	}
++
+ 	if (PROFILE_IS_HAT(labels_profile(label)))
+ 		sibling = true;
  
--		if (NFS_SERVER(ino)->pnfs_curr_ld->return_range) {
--			NFS_SERVER(ino)->pnfs_curr_ld->return_range(lo,
--				&args->cbl_range);
--		}
-+		return_range = true;
+@@ -1054,7 +1082,7 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
+ 		name = hats[i];
+ 		label_for_each_in_ns(it, labels_ns(label), label, profile) {
+ 			if (sibling && PROFILE_IS_HAT(profile)) {
+-				root = aa_get_profile_rcu(&profile->parent);
++				root = aa_get_profile(profile->parent);
+ 			} else if (!sibling && !PROFILE_IS_HAT(profile)) {
+ 				root = aa_get_profile(profile);
+ 			} else {	/* conflicting change type */
+@@ -1113,6 +1141,7 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
+ 				      GLOBAL_ROOT_UID, info, error);
+ 		}
  	}
- unlock:
- 	spin_unlock(&ino->i_lock);
-+	if (return_range && NFS_SERVER(ino)->pnfs_curr_ld->return_range)
-+		NFS_SERVER(ino)->pnfs_curr_ld->return_range(lo,
-+			&args->cbl_range);
- 	pnfs_free_lseg_list(&free_me_list);
- 	/* Free all lsegs that are attached to commit buckets */
- 	nfs_commit_inode(ino, 0);
-diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
-index fa310bf1ed9abc..0eddfd74577846 100644
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -1375,8 +1375,6 @@ _pnfs_return_layout(struct inode *ino)
- 	pnfs_clear_layoutcommit(ino, &tmp_list);
- 	pnfs_mark_matching_lsegs_return(lo, &tmp_list, &range, 0);
++	mutex_unlock(&ns->lock);
+ 	return ERR_PTR(error);
  
--	if (NFS_SERVER(ino)->pnfs_curr_ld->return_range)
--		NFS_SERVER(ino)->pnfs_curr_ld->return_range(lo, &range);
+ build:
+@@ -1124,7 +1153,7 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
+ 		error = -ENOMEM;
+ 		goto fail;
+ 	} /* else if (IS_ERR) build_change_hat has logged error so return new */
+-
++	mutex_unlock(&ns->lock);
+ 	return new;
+ }
  
- 	/* Don't send a LAYOUTRETURN if list was initially empty */
- 	if (!test_bit(NFS_LAYOUT_RETURN_REQUESTED, &lo->plh_flags) ||
-@@ -1388,6 +1386,8 @@ _pnfs_return_layout(struct inode *ino)
- 
- 	send = pnfs_prepare_layoutreturn(lo, &stateid, &cred, NULL);
- 	spin_unlock(&ino->i_lock);
-+	if (NFS_SERVER(ino)->pnfs_curr_ld->return_range)
-+		NFS_SERVER(ino)->pnfs_curr_ld->return_range(lo, &range);
- 	if (send)
- 		status = pnfs_send_layoutreturn(lo, &stateid, &cred, IOMODE_ANY, true);
- out_wait_layoutreturn:
 -- 
 2.53.0
 
