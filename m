@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B05653C1F2B;
-	Tue, 21 Jul 2026 17:42:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54548369D71;
+	Tue, 21 Jul 2026 17:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655758; cv=none; b=HGW1U+tktl301h0Dlo36BSfxgIjX4/XkWNawnQ/sXT4NErVLj6Pc5X/Vx/8++qGSRRsAtpUp9PoaYlzbZd0ygFrl68kfa3vVKF9UFCOGs7ehfo/UgEEnVKhSRZGC5lDfkBoUOYRpg/KGkaV1kS6lqYQRojn3occegfUOQdeLBNw=
+	t=1784655761; cv=none; b=t6RWuYBjCCUPLd04KKNuM2HhKqta6t9l9PO2N+DyOKcqVN/VH5wuQb8NxOdLERobV0AMVEuUa0Nqv6O+G2t5xmN5DcD88TlO8ChyadtFaqIbCqvEZGkUaHOwMA5CMthSFPxgtGfhTiAJncl54q02yPrhi06s1t+KyvfuQ4PpbBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655758; c=relaxed/simple;
-	bh=SEW8FH8PYaX2uLHLWAUELjN815xRGJB/2pZ20sEc18g=;
+	s=arc-20240116; t=1784655761; c=relaxed/simple;
+	bh=h0g4QBg+ndv0Qcr5cicVMmpZtsS8uWNb1ejG5JliuUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mg9Uc0w07FJfxFJitHrwAk1XgnGM2CQVzGmTCer7zCE/k7me8mNQkSIkBaNRBHDfBB8qgOCSCClETSlAcz8lfHEUns0+301nJ7DKuh4hKr/mnWYFDM+4UALqYmti1t+ynx6tBjcAi/pE8uP5K140t90Y2slrz08XI7G6FNIKYJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQHEtgjN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JHSXAPM8Nk8MnY0iC8h21zjaEvoPkiEs5eGuXD5jC8C/TxR+P+wEPg4Gnr0/T5BnLfJCdHBYYnbXhDZc2RFDofmqATpFnx+zv1vy2HQnNQc+BztAbcJ8/YfX6Rd7NvS0lVnoPbJ3CL6BviiM8JgKlfsngiWdhQ1DV7ezhM5JP9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z84IM6Z8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQHEtgjN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB3E1F00A3D;
-	Tue, 21 Jul 2026 17:42:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z84IM6Z8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA1081F00A3D;
+	Tue, 21 Jul 2026 17:42:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655757;
-	bh=/2AddMWt0LB7omnFmjRspszEV5scpP9dvOZHHZRhmpM=;
+	s=korg; t=1784655760;
+	bh=gcX7LgdZ3SCjAY+9TjKV0DKuJh7HePeGRRfLG9Pim/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hQHEtgjNdaJskTH5tQCwJYTcUcqtJ9NISs/TGF0HRgfVtbZa1RA9rsBHPqIEtjje2
-	 P/bUY/G7nldk++ti1TCpojYdeQOC3AbhJJ+SGTZHhWe61FA/g1T7bDrO0DFUhZFApl
-	 z7gSyrl7KyvJctc7Bv+b1CF3WjFgdqGG71eFjGtg=
+	b=z84IM6Z8pgl8tPh7pyTdXwhNPFPz7KqVMV6ot3KYdTSiohyoPNz88NeT5X/x/6dBc
+	 80TAoq9t0PaX0I6qlm1ZrTBh3ZiKK6uxoNR33dlGpB0SDVh5UghOWbovLvUeCpqKGY
+	 uJrbQraTgsqyhVvYerWPjBvrLYq9sW8SPnML84Gw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0129/1611] media: iris: scale MMCX power domain on SM8250
-Date: Tue, 21 Jul 2026 17:04:05 +0200
-Message-ID: <20260721152517.773059876@linuxfoundation.org>
+Subject: [PATCH 6.18 0130/1611] media: venus: scale MMCX power domain on SM8250
+Date: Tue, 21 Jul 2026 17:04:06 +0200
+Message-ID: <20260721152517.796888348@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,50 +55,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 4170e2f25ce40b69f3827fcdabf395380095e136 ]
+[ Upstream commit f45fd3dbb5f6d60a8b31d5cc4affaf1ef40163b3 ]
 
 On SM8250 most of the video clocks are powered by the MMCX domain, while
 the PLL is powered on by the MX domain. Extend the driver to support
 scaling both power domains, while keeping compatibility with the
 existing DTs, which define only the MX domain.
 
-Fixes: 79865252acb6 ("media: iris: enable video driver probe of SM8250 SoC")
+Fixes: 0aeabfa29a9c ("media: venus: core: add sm8250 DT compatible and resource data")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/iris/iris_platform_sm8250.c | 2 +-
- drivers/media/platform/qcom/iris/iris_probe.c           | 7 +++++++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ drivers/media/platform/qcom/venus/core.c       | 7 ++++++-
+ drivers/media/platform/qcom/venus/core.h       | 1 +
+ drivers/media/platform/qcom/venus/pm_helpers.c | 8 +++++++-
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
-index 16486284f8accc..af841f6cd9d2a0 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
-+++ b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
-@@ -265,7 +265,7 @@ static const struct bw_info sm8250_bw_table_dec[] = {
+diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+index abf959b8f3a679..66a750ed160968 100644
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -882,6 +882,7 @@ static const struct venus_resources sdm845_res_v2 = {
+ 	.vcodec_pmdomains = (const char *[]) { "venus", "vcodec0", "vcodec1" },
+ 	.vcodec_pmdomains_num = 3,
+ 	.opp_pmdomain = (const char *[]) { "cx" },
++	.opp_pmdomain_num = 1,
+ 	.vcodec_num = 2,
+ 	.max_load = 3110400,	/* 4096x2160@90 */
+ 	.hfi_version = HFI_VERSION_4XX,
+@@ -933,6 +934,7 @@ static const struct venus_resources sc7180_res = {
+ 	.vcodec_pmdomains = (const char *[]) { "venus", "vcodec0" },
+ 	.vcodec_pmdomains_num = 2,
+ 	.opp_pmdomain = (const char *[]) { "cx" },
++	.opp_pmdomain_num = 1,
+ 	.vcodec_num = 1,
+ 	.hfi_version = HFI_VERSION_4XX,
+ 	.vpu_version = VPU_VERSION_AR50,
+@@ -991,7 +993,8 @@ static const struct venus_resources sm8250_res = {
+ 	.vcodec_clks_num = 1,
+ 	.vcodec_pmdomains = (const char *[]) { "venus", "vcodec0" },
+ 	.vcodec_pmdomains_num = 2,
+-	.opp_pmdomain = (const char *[]) { "mx" },
++	.opp_pmdomain = (const char *[]) { "mx", "mmcx" },
++	.opp_pmdomain_num = 2,
+ 	.vcodec_num = 1,
+ 	.max_load = 7833600,
+ 	.hfi_version = HFI_VERSION_6XX,
+@@ -1053,6 +1056,7 @@ static const struct venus_resources sc7280_res = {
+ 	.vcodec_pmdomains = (const char *[]) { "venus", "vcodec0" },
+ 	.vcodec_pmdomains_num = 2,
+ 	.opp_pmdomain = (const char *[]) { "cx" },
++	.opp_pmdomain_num = 1,
+ 	.vcodec_num = 1,
+ 	.hfi_version = HFI_VERSION_6XX,
+ 	.vpu_version = VPU_VERSION_IRIS2_1,
+@@ -1100,6 +1104,7 @@ static const struct venus_resources qcm2290_res = {
+ 	.vcodec_pmdomains = (const char *[]) { "venus", "vcodec0" },
+ 	.vcodec_pmdomains_num = 2,
+ 	.opp_pmdomain = (const char *[]) { "cx" },
++	.opp_pmdomain_num = 1,
+ 	.vcodec_num = 1,
+ 	.hfi_version = HFI_VERSION_4XX,
+ 	.vpu_version = VPU_VERSION_AR50_LITE,
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index 7506f5d0f609ac..70e7b40affa938 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -83,6 +83,7 @@ struct venus_resources {
+ 	const char **vcodec_pmdomains;
+ 	unsigned int vcodec_pmdomains_num;
+ 	const char **opp_pmdomain;
++	unsigned int opp_pmdomain_num;
+ 	unsigned int vcodec_num;
+ 	const char * const resets[VIDC_RESETS_NUM_MAX];
+ 	unsigned int resets_num;
+diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+index f0269524ac70eb..14a4e8311a6431 100644
+--- a/drivers/media/platform/qcom/venus/pm_helpers.c
++++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+@@ -887,7 +887,7 @@ static int vcodec_domains_get(struct venus_core *core)
+ 	};
+ 	struct dev_pm_domain_attach_data opp_pd_data = {
+ 		.pd_names = res->opp_pmdomain,
+-		.num_pd_names = 1,
++		.num_pd_names = res->opp_pmdomain_num,
+ 		.pd_flags = PD_FLAG_DEV_LINK_ON | PD_FLAG_REQUIRED_OPP,
+ 	};
  
- static const char * const sm8250_pmdomain_table[] = { "venus", "vcodec0" };
+@@ -904,6 +904,12 @@ static int vcodec_domains_get(struct venus_core *core)
  
--static const char * const sm8250_opp_pd_table[] = { "mx" };
-+static const char * const sm8250_opp_pd_table[] = { "mx", "mmcx" };
- 
- static const struct platform_clk_data sm8250_clk_table[] = {
- 	{IRIS_AXI_CLK,  "iface"        },
-diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
-index 00e99be16e087c..a197833bac6183 100644
---- a/drivers/media/platform/qcom/iris/iris_probe.c
-+++ b/drivers/media/platform/qcom/iris/iris_probe.c
-@@ -61,6 +61,13 @@ static int iris_init_power_domains(struct iris_core *core)
- 		return ret;
- 
- 	ret =  devm_pm_domain_attach_list(core->dev, &iris_opp_pd_data, &core->opp_pmdomain_tbl);
+ 	/* Attach the power domain for setting performance state */
+ 	ret = devm_pm_domain_attach_list(dev, &opp_pd_data, &core->opp_pmdomain);
 +	/* backwards compatibility for incomplete ABI SM8250 */
 +	if (ret == -ENODEV &&
-+	    of_device_is_compatible(core->dev->of_node, "qcom,sm8250-venus")) {
-+		iris_opp_pd_data.num_pd_names--;
-+		ret = devm_pm_domain_attach_list(core->dev, &iris_opp_pd_data,
-+						 &core->opp_pmdomain_tbl);
++	    of_device_is_compatible(dev->of_node, "qcom,sm8250-venus")) {
++		opp_pd_data.num_pd_names--;
++		ret = devm_pm_domain_attach_list(dev, &opp_pd_data, &core->opp_pmdomain);
 +	}
  	if (ret < 0)
  		return ret;
