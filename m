@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997AF3BE641;
-	Tue, 21 Jul 2026 21:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2E63B71A0;
+	Tue, 21 Jul 2026 21:47:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670445; cv=none; b=cu02qm8TkLpNEIZlvcZqa9d41I9JMH/nW3uQ2jWHe7YaBhKKWcKWyEZwMUmvMeBljIqtimp1W3CxzTsPj/eoIgdq4SQFiKGLcn6vo8HjG/7EGWPsW2YyUgrT3JlpRkYMCVsQQ4PEgt9wF3BoPHBtViasHThX6yjqyOB9KvN6KOk=
+	t=1784670448; cv=none; b=EKYNsJUoalOPNefJX4LjMv0gNIx+yqLsF8GXL+oJoZzk18FHXSQNb45AAdPZdbfeqM8tHBA+s2s0UNLe5i9lb4zIXGozXvGRQKU0QGmaeBJTTutOQjSuERxDRel6TKQ0iG7wfeqjKWS0Td0azJ+ur3o+rG8q/uBcdWXqY8KurLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670445; c=relaxed/simple;
-	bh=CIIfnAhbdRIQNpMmx996Jb4EQ9fyDJVhlb8qSr5mjU0=;
+	s=arc-20240116; t=1784670448; c=relaxed/simple;
+	bh=C1eUQaAwVv3pWuqKuCziCb09yZbUa01lgrfD/Fk4N3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oefOUdH74yh9NiUFX+7rhWq+XvhoRnmC7DScl1y9Yc+uUz7eH5bcdGH4HUEd3IhAj+fEBLm30dvpGqV8oDdINTtJEqFuN5sapfQ3Mpn/oShWqlvE/GPhV3M6aIpfmZ+VaVAAGugaJyfQ1pgEtl4AKAklEbv3BJSbvyGY4VAUvHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgMmzGQC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FMwVghq07RfrJ12lu1a1yju5dfceZvaGbgUAVTKnFqP28MUFXoq7tiAliXjZ4IgPJzq5xxzidT8VDAgPab1LIpYbgx0of1ATWUstnk5G/ockJ3L4wAFtiCXi+L6h+Xpt8jZq3+Yt8kxZhAsSIwsScFRQP9GUR79XT3Qk6ckmHQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i37YbHtx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgMmzGQC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3AB1F00A3D;
-	Tue, 21 Jul 2026 21:47:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i37YbHtx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A296F1F000E9;
+	Tue, 21 Jul 2026 21:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670444;
-	bh=XflKVaqYPD+LX4+IqEX9qex3Iy37cjGO8ZUAxFPaUrg=;
+	s=korg; t=1784670447;
+	bh=L/a7QKJxPFxHZ513lGu/3p2lRvW88KD3zTTRhMd3XqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bgMmzGQCEz0d/0hQtW2naIe1MEaWl2mob+oSv+UWoKHIXpk2I2Gry3Lw3AXCmiyPz
-	 YRJbAoUpakUsqRoXExFcosuQYoyVgEvjHod39l7IQk/zayjRdle17rCES/FpuwJzHJ
-	 271whMdrkIAshCDLtJ4K6PGBev2s+ZshIZhdZUDs=
+	b=i37YbHtxjcYViq71WvMl1dNffZIfuLKoPl5kxyu8H2S0hT8AIWVLfm4u1yQyXU4za
+	 71ZP+kE5bvVpVKTkaAk3THoJm8mbTXqxtJggkXgLk9iYH4NbpTpPSQJbMgKKxTsiln
+	 K3GC12xUaEQZ/KbWMHR7+sQICk8tRBT55Bj2Vvg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0891/1067] batman-adv: ensure minimal ethernet header on TX
-Date: Tue, 21 Jul 2026 17:24:52 +0200
-Message-ID: <20260721152444.464507227@linuxfoundation.org>
+Subject: [PATCH 6.1 0892/1067] batman-adv: clean untagged VLAN on netdev registration failure
+Date: Tue, 21 Jul 2026 17:24:53 +0200
+Message-ID: <20260721152444.486210561@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,42 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 49df66b7993c80b80c7eb9a84ba5b3410c8296a0 upstream.
+commit 8669a550c752d86baebc5fdc83b8ff35c4372c0e upstream.
 
-As documented in commit 8bd67ebb50c0 ("net: bridge: xmit: make sure we have
-at least eth header len bytes"), it is possible by for a local user with
-eBPF TC hook access to attach a tc filter which truncates the packet and
-redirects to an batadv interface. But the code assumes that at least
-ETH_HLEN bytes are available and thus might read outside of the available
-buffer.
+When an mesh interface is registered, it creates an untagged struct
+batadv_meshif_vlan on top of it via the NETDEV_REGISTER notifier. But in
+this process, another receiver of this notification can veto the
+registration. The netdev registration will be aborted because of this veto.
 
-The batadv_interface_tx() must therefore always check itself if enough data
-is available for the ethernet header and don't rely on min_header_len.
+The register_netdevice() call will try to clean up the net_device using
+unregister_netdevice_queue() - which only uses the .priv_destructor to
+free private resources. In this situation, .dellink will not be called.
+
+The cleanup of the untagged batadv_meshif_vlan must thefore be done in the
+destructor to avoid a leak of this object.
 
 Cc: stable@vger.kernel.org
-Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-[ move from mesh- to soft-interface.c ]
+Fixes: 5d2c05b21337 ("batman-adv: add per VLAN interface attribute framework")
+[ switch to old "mesh_iface" name "soft_iface" ]
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/soft-interface.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/batman-adv/main.c           |  8 ++++++++
+ net/batman-adv/soft-interface.c | 13 ++-----------
+ net/batman-adv/soft-interface.h |  2 ++
+ 3 files changed, 12 insertions(+), 11 deletions(-)
 
+diff --git a/net/batman-adv/main.c b/net/batman-adv/main.c
+index 28f616b8891a12..417de98c39a7be 100644
+--- a/net/batman-adv/main.c
++++ b/net/batman-adv/main.c
+@@ -258,6 +258,7 @@ int batadv_mesh_init(struct net_device *soft_iface)
+ void batadv_mesh_free(struct net_device *soft_iface)
+ {
+ 	struct batadv_priv *bat_priv = netdev_priv(soft_iface);
++	struct batadv_softif_vlan *vlan;
+ 
+ 	atomic_set(&bat_priv->mesh_state, BATADV_MESH_DEACTIVATING);
+ 
+@@ -273,6 +274,13 @@ void batadv_mesh_free(struct net_device *soft_iface)
+ 
+ 	batadv_mcast_free(bat_priv);
+ 
++	/* destroy the "untagged" VLAN */
++	vlan = batadv_softif_vlan_get(bat_priv, BATADV_NO_FLAGS);
++	if (vlan) {
++		batadv_softif_destroy_vlan(bat_priv, vlan);
++		batadv_softif_vlan_put(vlan);
++	}
++
+ 	/* Free the TT and the originator tables only after having terminated
+ 	 * all the other depending components which may use these structures for
+ 	 * their purposes.
 diff --git a/net/batman-adv/soft-interface.c b/net/batman-adv/soft-interface.c
-index 40354da5c5b555..a8239902b4428c 100644
+index a8239902b4428c..57962ed4285b3f 100644
 --- a/net/batman-adv/soft-interface.c
 +++ b/net/batman-adv/soft-interface.c
-@@ -208,6 +208,9 @@ static netdev_tx_t batadv_interface_tx(struct sk_buff *skb,
- 	if (atomic_read(&bat_priv->mesh_state) != BATADV_MESH_ACTIVE)
- 		goto dropped;
+@@ -605,8 +605,8 @@ int batadv_softif_create_vlan(struct batadv_priv *bat_priv, unsigned short vid)
+  * @bat_priv: the bat priv with all the soft interface information
+  * @vlan: the object to remove
+  */
+-static void batadv_softif_destroy_vlan(struct batadv_priv *bat_priv,
+-				       struct batadv_softif_vlan *vlan)
++void batadv_softif_destroy_vlan(struct batadv_priv *bat_priv,
++				struct batadv_softif_vlan *vlan)
+ {
+ 	/* explicitly remove the associated TT local entry because it is marked
+ 	 * with the NOPURGE flag
+@@ -1088,22 +1088,13 @@ static int batadv_softif_newlink(struct net *src_net, struct net_device *dev,
+ static void batadv_softif_destroy_netlink(struct net_device *soft_iface,
+ 					  struct list_head *head)
+ {
+-	struct batadv_priv *bat_priv = netdev_priv(soft_iface);
+ 	struct batadv_hard_iface *hard_iface;
+-	struct batadv_softif_vlan *vlan;
  
-+	if (!pskb_may_pull(skb, ETH_HLEN))
-+		goto dropped;
-+
- 	/* reset control block to avoid left overs from previous users */
- 	memset(skb->cb, 0, sizeof(struct batadv_skb_cb));
+ 	list_for_each_entry(hard_iface, &batadv_hardif_list, list) {
+ 		if (hard_iface->soft_iface == soft_iface)
+ 			batadv_hardif_disable_interface(hard_iface);
+ 	}
  
+-	/* destroy the "untagged" VLAN */
+-	vlan = batadv_softif_vlan_get(bat_priv, BATADV_NO_FLAGS);
+-	if (vlan) {
+-		batadv_softif_destroy_vlan(bat_priv, vlan);
+-		batadv_softif_vlan_put(vlan);
+-	}
+-
+ 	unregister_netdevice_queue(soft_iface, head);
+ }
+ 
+diff --git a/net/batman-adv/soft-interface.h b/net/batman-adv/soft-interface.h
+index 9f2003f1a4972e..13709a5d23e3bf 100644
+--- a/net/batman-adv/soft-interface.h
++++ b/net/batman-adv/soft-interface.h
+@@ -22,6 +22,8 @@ void batadv_interface_rx(struct net_device *soft_iface,
+ bool batadv_softif_is_valid(const struct net_device *net_dev);
+ extern struct rtnl_link_ops batadv_link_ops;
+ int batadv_softif_create_vlan(struct batadv_priv *bat_priv, unsigned short vid);
++void batadv_softif_destroy_vlan(struct batadv_priv *bat_priv,
++				struct batadv_softif_vlan *vlan);
+ void batadv_softif_vlan_release(struct kref *ref);
+ struct batadv_softif_vlan *batadv_softif_vlan_get(struct batadv_priv *bat_priv,
+ 						  unsigned short vid);
 -- 
 2.53.0
 
