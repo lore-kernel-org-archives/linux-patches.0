@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66B135C682;
-	Tue, 21 Jul 2026 22:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FC03BD63B;
+	Tue, 21 Jul 2026 22:06:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671604; cv=none; b=uWMXnqbwfzFZT3wZ7C+w5EHyz1NQyrQIpdUxVleZ4Py/QifEVi4JHNz6SvGT7qhaZbhfebjXBYry98zFCzNxLw+6qtauhcORjc5inljO0zi44MS7Tlb9eB9ELJNyxdoPHvsWojbobkcKeDzRJdWKgeLiyFZW/y91wv64SelmhyI=
+	t=1784671608; cv=none; b=uIjrwFUbc5gw2kVKDtiZZCSnbhQpvPi7DVRQepd4jlXagtT0keR8Ke7FdIZARojwYU6yHC+5H8UTFSzATmjkx05giltrQKdQHORrNxeJJ93GMGQOVb4KzfyKVGgpXkZrLwZgh+l8ty7AXPPb6O9F3d5Pl2jECxMgEFyn2nXvrp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671604; c=relaxed/simple;
-	bh=XHb8l2fRaophKp4gVJzO6VGPByJFYAGpfMp/sVGdX5A=;
+	s=arc-20240116; t=1784671608; c=relaxed/simple;
+	bh=aW1lGMg5KZ8a+5p5955ELNGNBalINMUzkCspoOg1KDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a0ciHRR2D+ZEpvPViqNNt2aipoR/PXfu5kFWpR2DUMM5PGF/idkj5erUaBtm4bJHgVLyPdO+W78UN6Orq96phwRkBqxJz5AKbRN3+O94TvKLCONKHdqFMHUOGS7RwsYT6K0rBZ2EziM3cxs9z89FOMs7K9UdmChRdsFdjnR4Gvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HOqYehRN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZLNzQz7Ne5vfCIeCUG4CAI6jKSxvEG9g0e98O17HST9eikS6zTPLg9lFTYbvTQzAGdbJYc4w0tq8GhUWWIzcHjvySvxDpU+oXLpoQRM4eKTJyxnWV8r8ecbUX+oPLKPxaEZOvqXGZ2QQS0xEpCRbCC+SubiUagj+dthxcRGR49E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NrxXBvjP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOqYehRN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188B51F000E9;
-	Tue, 21 Jul 2026 22:06:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NrxXBvjP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C59861F000E9;
+	Tue, 21 Jul 2026 22:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671603;
-	bh=EXHICJhQeSDQB3+vuU5SQUN5OeumlpPYfqkrMmf3lD4=;
+	s=korg; t=1784671606;
+	bh=Uj4N9Bf6MnfC1XLZnjqB7emXyoeeKMCs/OnIIUerQVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HOqYehRNjclO02d59KT6i+liUlTMugxfVnr14Q7dz9CsaiUCZ3GLWZjpAQTUOCWPJ
-	 C+T2io+i+CEsrfHmQVpJfINj1HpmxYGINoTa/kd/fNystNquiM8HAKi8qR0cI+N9GD
-	 Beb3Rx8IZY0yUA+F3XS+f9bU1Wr4YAw9rwR8MGsk=
+	b=NrxXBvjPNyfzntjhfjmK/wbzkyjR6mQTYGC/TYGgLpUpR1gvE6iIweMiM8xuq9gRl
+	 F6vqzRSm+RfEXGaqTXuS5ju75LrnD9O2vnKsGemh9yisnJPjXHaH479WxU/rcr+EWk
+	 8/LZC+NrqwpgatN6YqHexI7gOraszIhqYToUEreY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Rui Qi <qirui.001@bytedance.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 307/843] wifi: wcn36xx: fix OOB read from firmware count in PRINT_REG_INFO indication
-Date: Tue, 21 Jul 2026 17:19:02 +0200
-Message-ID: <20260721152412.933297477@linuxfoundation.org>
+Subject: [PATCH 5.15 308/843] riscv: stacktrace: Remove bogus -0x4 offset in non-FP walk_stackframe
+Date: Tue, 21 Jul 2026 17:19:03 +0200
+Message-ID: <20260721152412.955513961@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,44 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Rui Qi <qirui.001@bytedance.com>
 
-[ Upstream commit df2187acfca6c6cca372c5d35f42394d9c270b09 ]
+[ Upstream commit 8ac35bac70e7e581d673b76878f7691cdadc33b8 ]
 
-The firmware-controlled rsp->count field is used as the loop bound for
-indexing into the flexible rsp->regs[] array without validation against
-the message length. A count exceeding the actual data causes out-of-
-bounds reads from the heap-allocated message buffer.
+In the non-frame-pointer version of walk_stackframe, each value read
+from the stack is treated as a potential return address and has 0x4
+subtracted before being used as the program counter. This was intended
+to convert the return address (the instruction after a call) back to
+the call site, but it is incorrect:
 
-Add a check that count fits within the received message.
+1. RISC-V has variable-length instructions due to the RVC (compressed
+   instruction) extension. A call instruction can be either 4 bytes
+   (regular) or 2 bytes (compressed, e.g. c.jal). Subtracting a fixed
+   0x4 assumes all call instructions are 4 bytes, which is wrong for
+   compressed instructions.
 
-Fixes: 43efa3c0f241 ("wcn36xx: Implement print_reg indication")
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260421135018.352774-3-tristmd@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+2. Stack traces conventionally report return addresses, not call sites.
+   Other architectures (ARM64, x86, ARM) do not subtract instruction
+   size from return addresses in their stack unwinding code.
+
+3. The frame-pointer version of walk_stackframe already dropped the
+   -0x4 offset. Commit b785ec129bd9 ("riscv/ftrace: Add
+   HAVE_FUNCTION_GRAPH_RET_ADDR_PTR support") replaced "pc =
+   frame->ra - 0x4" with ftrace_graph_ret_addr(), and the commit
+   message explicitly noted that "the original calculation, pc =
+   frame->ra - 4, is buggy when the instruction at the return address
+   happened to be a compressed inst." The non-FP version was simply
+   overlooked.
+
+Remove the bogus -0x4 offset to match the FP version and the
+conventions used by other architectures.
+
+Fixes: 5d8544e2d007 ("RISC-V: Generic library routines and assembly")
+Signed-off-by: Rui Qi <qirui.001@bytedance.com>
+Link: https://patch.msgid.link/20260603115329.791603-2-qirui.001@bytedance.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/wcn36xx/smd.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/riscv/kernel/stacktrace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/wcn36xx/smd.c b/drivers/net/wireless/ath/wcn36xx/smd.c
-index c056fae1d64183..a778e3e0599ee7 100644
---- a/drivers/net/wireless/ath/wcn36xx/smd.c
-+++ b/drivers/net/wireless/ath/wcn36xx/smd.c
-@@ -2769,6 +2769,12 @@ static int wcn36xx_smd_print_reg_info_ind(struct wcn36xx *wcn,
- 		return -EIO;
+diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
+index 7c35af666d425b..d435dba3576929 100644
+--- a/arch/riscv/kernel/stacktrace.c
++++ b/arch/riscv/kernel/stacktrace.c
+@@ -112,7 +112,7 @@ void notrace walk_stackframe(struct task_struct *task,
+ 	while (!kstack_end(ksp)) {
+ 		if (__kernel_text_address(pc) && unlikely(!fn(arg, pc)))
+ 			break;
+-		pc = READ_ONCE_NOCHECK(*ksp++) - 0x4;
++		pc = READ_ONCE_NOCHECK(*ksp++);
  	}
+ }
  
-+	if (rsp->count > (len - sizeof(*rsp)) / sizeof(rsp->regs[0])) {
-+		wcn36xx_warn("Truncated print reg info indication: count %u, len %zu\n",
-+			     rsp->count, len);
-+		return -EIO;
-+	}
-+
- 	wcn36xx_dbg(WCN36XX_DBG_HAL,
- 		    "reginfo indication, scenario: 0x%x reason: 0x%x\n",
- 		    rsp->scenario, rsp->reason);
 -- 
 2.53.0
 
