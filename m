@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7137415F0A;
-	Tue, 21 Jul 2026 18:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61944415F20;
+	Tue, 21 Jul 2026 18:07:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657242; cv=none; b=HhhEc+XkNqPggnG0NqEkBlQdz1Dpq5GbDgLFjCevpR5KWP92mzKNWjHLk8ie78QONWGbxvDHi2VUwxu34TrJf+edPD42gqrs5VI9vcWXkMl5Viszx2mt+3J593uRa03zNoHSRQ3kOAeYf59Rsu3jjsEOS90Q3XkQMFbOyRJuwIE=
+	t=1784657243; cv=none; b=M3YirmJRXU50uF6fmo5T4vsfFJmO40Ouo7c5MhSZEHR9YQ93oTUl8Q+2ZE8qkzCJytT0bEO+AkdHQKneAjWUmFQ8wW8k5MhuMGx5kP3YL3Qb7lStmOJt3l6k+JywdDqfIOJzB2JX5opaGVxtdf8Q6TYrZAw9QwG1HTmhQjGBRSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657242; c=relaxed/simple;
-	bh=vZO+HgQjskLvBHxLmjd4jfLMaAstdERdTeBx0Ol+OTM=;
+	s=arc-20240116; t=1784657243; c=relaxed/simple;
+	bh=UxstyDary3iMGRSdqUH5aA0gyUOTTlAqcb5b/VhlkYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O22amQtoTkYeMUnfioRUocwdEg83pmr6xOoYZmbRqRJEBIf3Ojn2jFGMSGQjNWPXEhw6LuS1yjAFx4iCesuU3SNwtcvgDCHcOfwTXkWQur6JCzPTGDhu5ZB8H1lTIryXdx3NPAGG/yZJHPxohur0rM92gGyv1PKmDeOMh2mu9xI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nwk2L7MK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZdXzCmA6i1X/IQNiRXEef/keIrAdGo3GyPhzeb7LL6Ty5SIgiZS9LLua0HIa3HKAk6AZpz8rNj8wp0ANigaspwpPH5gMEv9c2heHYsE+Jjzn1Borsg/GdiEH/JKVcVxsyx08jtN0XnKZrOGaOYAVUx2JTkRuAwmi7Zr5cXRXZX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkC8+Mro; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nwk2L7MK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5EF1F00A3A;
-	Tue, 21 Jul 2026 18:07:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkC8+Mro"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7BDB1F000E9;
+	Tue, 21 Jul 2026 18:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657239;
-	bh=wvF3L8FDTentCR+yKAuMFtQ64f0CjCq40dUIP+jCUMg=;
+	s=korg; t=1784657242;
+	bh=J8C47prDHC/UhTWE7IbS8ifx1gi6ACwQpldt9YcLdHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nwk2L7MKpvBIJyiA7dRP1KockTizEQ0JGdi4COv9xgS6KmHGzVzNKr2jJyOUw4Cuf
-	 VkmAr0UsoZmQpK9cFm6ckMmd39UWBCtIk1ZSXO6vWzrJgJ+OZ5THkEQRSVUa+AmHVo
-	 glhA3+Zbarz03z1GE1TzXZefXZXunLbQ1nH9y/+k=
+	b=qkC8+Mro9snXBHstQrvE+BIpioK/UqIBt/lTPqhxRviyHm04Bly+MCA9lQZHuuMlv
+	 vKMqfD6q/Q1Jbe4/QziH2yc1P0NGKxT2bfC+Tiw0v6wqz/YeLmQvLSDc33oT6LAvaB
+	 TkxoIZz1cKSmYJp2G7IUJpygbMFimMyLXnJrC6bQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Stanislav Fomichev <stfomichev@yandex-team.ru>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0653/1611] perf timechart: Fix cpu2y() OOB read on untrusted CPU index
-Date: Tue, 21 Jul 2026 17:12:49 +0200
-Message-ID: <20260721152530.075481905@linuxfoundation.org>
+Subject: [PATCH 6.18 0689/1611] perf tools: Use scnprintf() in cpu_map__snprint() to prevent overflow
+Date: Tue, 21 Jul 2026 17:13:25 +0200
+Message-ID: <20260721152530.878143166@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,67 +55,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit e2496db45bfd8dfb6154ec415798fee330f1cc0a ]
+[ Upstream commit 7953a3a9b8e02e98c6e6958f291d0ae22393e46a ]
 
-cpu2y() indexes topology_map[cpu] without bounds checking.  The array
-is allocated with nr_cpus entries (from env->nr_cpus_online), but
-callers pass sample CPU values from perf.data which can exceed that
-size with cross-machine recordings.
+cpu_map__snprint() accumulates snprintf() return values in ret.
+snprintf() returns the number of characters that *would have been
+written* on truncation, not the actual count.  When a fragmented CPU
+list exceeds the buffer, ret grows past size, causing `size - ret` to
+underflow (both are size_t), and subsequent snprintf() calls write
+past the end of the caller's stack buffer.
 
-Track the topology_map allocation size and bounds-check the CPU
-argument in cpu2y() before indexing.  Out-of-bounds CPUs fall back
-to the identity mapping (cpu2slot(cpu)), which is the same behavior
-as when no topology is available.
+Switch to scnprintf() which returns the actual number of characters
+written, making ret accumulation safe by construction.
 
-Fixes: c507999790438cde ("perf timechart: Add support for topology")
+Fixes: a24020e6b7cf6eb8 ("perf tools: Change cpu_map__fprintf output")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Stanislav Fomichev <stfomichev@yandex-team.ru>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Ian Rogers <irogers@google.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/svghelper.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ tools/perf/util/cpumap.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/tools/perf/util/svghelper.c b/tools/perf/util/svghelper.c
-index b1d259f590e985..7c862c33321ec4 100644
---- a/tools/perf/util/svghelper.c
-+++ b/tools/perf/util/svghelper.c
-@@ -47,13 +47,13 @@ static double cpu2slot(int cpu)
- }
+diff --git a/tools/perf/util/cpumap.c b/tools/perf/util/cpumap.c
+index bbf959b443ab1f..d243eee1154276 100644
+--- a/tools/perf/util/cpumap.c
++++ b/tools/perf/util/cpumap.c
+@@ -664,21 +664,21 @@ size_t cpu_map__snprint(struct perf_cpu_map *map, char *buf, size_t size)
+ 		if (start == -1) {
+ 			start = i;
+ 			if (last) {
+-				ret += snprintf(buf + ret, size - ret,
+-						"%s%d", COMMA,
+-						perf_cpu_map__cpu(map, i).cpu);
++				ret += scnprintf(buf + ret, size - ret,
++						 "%s%d", COMMA,
++						 perf_cpu_map__cpu(map, i).cpu);
+ 			}
+ 		} else if (((i - start) != (cpu.cpu - perf_cpu_map__cpu(map, start).cpu)) || last) {
+ 			int end = i - 1;
  
- static int *topology_map;
-+static int topology_map_size;
- 
- static double cpu2y(int cpu)
- {
--	if (topology_map)
-+	if (topology_map && cpu >= 0 && cpu < topology_map_size)
- 		return cpu2slot(topology_map[cpu]) * SLOT_MULT;
--	else
--		return cpu2slot(cpu) * SLOT_MULT;
-+	return cpu2slot(cpu) * SLOT_MULT;
- }
- 
- static double time2pixels(u64 __time)
-@@ -735,7 +735,8 @@ static int str_to_bitmap(char *s, cpumask_t *b, int nr_cpus)
- 		return -1;
- 
- 	perf_cpu_map__for_each_cpu(cpu, idx, map) {
--		if (cpu.cpu >= nr_cpus) {
-+		/* perf_cpu_map__new("") returns cpu.cpu == -1 */
-+		if (cpu.cpu < 0 || cpu.cpu >= nr_cpus) {
- 			ret = -1;
- 			break;
- 		}
-@@ -793,6 +794,7 @@ int svg_build_topology_map(struct perf_env *env)
- 		fprintf(stderr, "topology: no memory\n");
- 		goto exit;
- 	}
-+	topology_map_size = nr_cpus;
- 
- 	for (i = 0; i < nr_cpus; i++)
- 		topology_map[i] = -1;
+ 			if (start == end) {
+-				ret += snprintf(buf + ret, size - ret,
+-						"%s%d", COMMA,
+-						perf_cpu_map__cpu(map, start).cpu);
++				ret += scnprintf(buf + ret, size - ret,
++						 "%s%d", COMMA,
++						 perf_cpu_map__cpu(map, start).cpu);
+ 			} else {
+-				ret += snprintf(buf + ret, size - ret,
+-						"%s%d-%d", COMMA,
+-						perf_cpu_map__cpu(map, start).cpu, perf_cpu_map__cpu(map, end).cpu);
++				ret += scnprintf(buf + ret, size - ret,
++						 "%s%d-%d", COMMA,
++						 perf_cpu_map__cpu(map, start).cpu, perf_cpu_map__cpu(map, end).cpu);
+ 			}
+ 			first = false;
+ 			start = i;
 -- 
 2.53.0
 
