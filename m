@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF99946D549;
-	Tue, 21 Jul 2026 17:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C4A946D555;
+	Tue, 21 Jul 2026 17:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655986; cv=none; b=rffXiK7+7YPtkdB8htOUikQdwZ5dlxc/Y3fVJi8yC6OeXijNDQ24febaOXp0SWsm3P89V7F+qe6Sz7eEJfsv2J2/tJ9WQrZfyiIuhrDBeRTDpYYIEjruU5Qnj25AiAsQ1jSIT14J+2Z9aJCYHIUOg73119AbVq2A6ds7AdB9WQw=
+	t=1784655989; cv=none; b=PowZmsfcjDhe7kMZNEJLrsNG5SuYPipRaTaHAzq/xhCU5NWMU2RyG7mtR6Yoe4wesRgJyWZ5rdCY/PXstIdsyZBks6ks6fjvJQaDvcGMFNVGoHOlFkbJqsAbTkPiRp8t8Jgm69+iwSFf0CSAKTO5+WoHvEfa0cBgUqN+S2HrILM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655986; c=relaxed/simple;
-	bh=23fwUBMOor8M1zkTDjz/5D4wiHWl9X14Cis+MYZgWXA=;
+	s=arc-20240116; t=1784655989; c=relaxed/simple;
+	bh=OshC+O0rOHY/gJnu5pyhLmc69/ilhZf3bFqZqOXIMhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ivuz1jThJ0knmcZCPZarNyBUCHjxw5pDpbVPYf6UiHr6R8arTIv099bmSi3BXeTVL1UTDrhCnM7h4RyUYT1YRYIf5i2t8Og4L/A6AZKEYS7cmOLV6kwCNEhuuXgAfGFMZ1T2pu2R1veK5jfLWOFzGtP6DTfI7WUjucEVw81iqqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kIml3KZm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QNfK4e8r0WhEzhKzFQyXapHGiILtxtULUe9gHYzRO2n0wAUSYgsDRi/Z2DDBAxk6Yzfgck4rft7aVwYezDVQ3+l53mW+7ypgm+sq6EMCI80AO+CAZwXsUuTEnD7v8U+gzrG/cSM014hbsAOgDlmuMSMlDNEq2k7qVBhU9IhGfMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=we/bBpCK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kIml3KZm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02FC1F000E9;
-	Tue, 21 Jul 2026 17:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="we/bBpCK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C981F00A3A;
+	Tue, 21 Jul 2026 17:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655985;
-	bh=dc0T7emLlHRhT+o6wp5w3BDaLq2Ri33Lqj8vmsqxf/U=;
+	s=korg; t=1784655988;
+	bh=dwy+7sagsqBhcSgbwRJQxQOd23Y2Em19cLzkKvhjYNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kIml3KZmfBP0YdqsZtveIrd0u30922ZmsdTB4437MdTQ9BCNISdGoFSWJDRj4rKku
-	 nBUMmMt8YKK8bwZVJ1+6xN7NcD02todWPrxle4V5/UDhDFSkHtMCiKOxxM8BWBSI05
-	 vv9CzL8cZQAB2vOggWlxV4M+0qa6XKMNd4gNVKJs=
+	b=we/bBpCKwt+TwdzZNH0H77+77M6uweA6Vg/ZkAR+ZoMFH2ta/WI3W3YDRpDi2NuCE
+	 2TLLLdDy8uTvcnPTtoP+iZa329VHybfdoszj80XRpWeIIYe0XysBP2CvujKayrlOlI
+	 fUAoO5MRoLYSaohMbOPx5sF9YxNc0NhpzGz5m89s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Cui <cuitao@kylinos.cn>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Xianwei Zhao <xianwei.zhao@amlogic.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0216/1611] RDMA/counter: Fix incorrect port index in rdma_counter_init() error cleanup
-Date: Tue, 21 Jul 2026 17:05:32 +0200
-Message-ID: <20260721152519.847966513@linuxfoundation.org>
+Subject: [PATCH 6.18 0217/1611] pinctrl: meson: amlogic-a4: fix gpio output glitch
+Date: Tue, 21 Jul 2026 17:05:33 +0200
+Message-ID: <20260721152519.871967744@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,37 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Cui <cuitao@kylinos.cn>
+From: Xianwei Zhao <xianwei.zhao@amlogic.com>
 
-[ Upstream commit b86fd95805a7bd4c5b9465c9e7f75e45bbe7eb6f ]
+[ Upstream commit 45ad4de324cb1bba88e568b5bef633a79d926aed ]
 
-The error cleanup loop in rdma_counter_init() iterates with variable
-'i' but accesses dev->port_data[port] instead of dev->port_data[i].
-This causes the failed port's hstats to be freed multiple times while
-leaking hstats of previously initialized ports.
+When the system transitions from bootloader to kernel, the GPIO is
+expected to keep driving high.
 
-Fixes: 56594ae1d250 ("RDMA/core: Annotate destroy of mutex to ensure that it is released as unlocked")
-Link: https://patch.msgid.link/r/20260520104546.1776253-3-cuitao@kylinos.cn
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+However, the Linux kernel first configures the pin direction and then
+sets the output value. This may cause a brief low-level glitch on the
+GPIO line, which can be problematic for regulator control.
+
+By configuring the output value before switching the pin direction to
+output, the glitch can be avoided.
+
+This commit fixes the issue by swapping the configuration order.
+
+Fixes: 6e9be3abb78c ("pinctrl: Add driver support for Amlogic SoCs")
+Signed-off-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/counters.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/meson/pinctrl-amlogic-a4.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/infiniband/core/counters.c b/drivers/infiniband/core/counters.c
-index c3aa6d7fc66b6e..5dad5d77ce2747 100644
---- a/drivers/infiniband/core/counters.c
-+++ b/drivers/infiniband/core/counters.c
-@@ -661,7 +661,7 @@ void rdma_counter_init(struct ib_device *dev)
+diff --git a/drivers/pinctrl/meson/pinctrl-amlogic-a4.c b/drivers/pinctrl/meson/pinctrl-amlogic-a4.c
+index 35d27626a336b7..1bd58fbbd26ac6 100644
+--- a/drivers/pinctrl/meson/pinctrl-amlogic-a4.c
++++ b/drivers/pinctrl/meson/pinctrl-amlogic-a4.c
+@@ -548,11 +548,11 @@ static int aml_pinconf_set_output_drive(struct aml_pinctrl *info,
+ {
+ 	int ret;
  
- fail:
- 	for (i = port; i >= rdma_start_port(dev); i--) {
--		port_counter = &dev->port_data[port].port_counter;
-+		port_counter = &dev->port_data[i].port_counter;
- 		rdma_free_hw_stats_struct(port_counter->hstats);
- 		port_counter->hstats = NULL;
- 		mutex_destroy(&port_counter->lock);
+-	ret = aml_pinconf_set_output(info, pin, true);
++	ret = aml_pinconf_set_drive(info, pin, high);
+ 	if (ret)
+ 		return ret;
+ 
+-	return aml_pinconf_set_drive(info, pin, high);
++	return aml_pinconf_set_output(info, pin, true);
+ }
+ 
+ static int aml_pinconf_set(struct pinctrl_dev *pcdev, unsigned int pin,
+@@ -921,15 +921,14 @@ static int aml_gpio_direction_output(struct gpio_chip *chip, unsigned int gpio,
+ 	unsigned int bit, reg;
+ 	int ret;
+ 
+-	aml_gpio_calc_reg_and_bit(bank, AML_REG_DIR, gpio, &reg, &bit);
+-	ret = regmap_update_bits(bank->reg_gpio, reg, BIT(bit), 0);
++	aml_gpio_calc_reg_and_bit(bank, AML_REG_OUT, gpio, &reg, &bit);
++	ret = regmap_update_bits(bank->reg_gpio, reg, BIT(bit),
++				 value ? BIT(bit) : 0);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	aml_gpio_calc_reg_and_bit(bank, AML_REG_OUT, gpio, &reg, &bit);
+-
+-	return regmap_update_bits(bank->reg_gpio, reg, BIT(bit),
+-				  value ? BIT(bit) : 0);
++	aml_gpio_calc_reg_and_bit(bank, AML_REG_DIR, gpio, &reg, &bit);
++	return regmap_update_bits(bank->reg_gpio, reg, BIT(bit), 0);
+ }
+ 
+ static int aml_gpio_set(struct gpio_chip *chip, unsigned int gpio, int value)
 -- 
 2.53.0
 
