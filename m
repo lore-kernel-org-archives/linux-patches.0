@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32B946AA74;
-	Tue, 21 Jul 2026 15:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E51B46AA70;
+	Tue, 21 Jul 2026 15:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648037; cv=none; b=fFmRUuZMZDg8EnrvNwa/Lw5AvvuStLUv8zNOrNlYVAe+V1vUrZAK6SLD+AxWlvF+8MOpT4rHKO+nFpOWkgNeRPYRl76Scc821mcOSGGMxzPuR922IQBsdfiAM+XL3IKfTp4J9ik5H5oy0yPewe1RVo2YAqD4dzDqQBSCtwOgI7I=
+	t=1784648040; cv=none; b=WN/mYD00g6eqR3NPUmYjl4XoFg5ZcTTnGx+e7Rib60j8yZNmtQLCMcwdTqWsVEUJDF9l0KJLopjL1ryxlwQJ1MULwTyi8UtfOKpHgZSK9RzWHix+Cb2RoIdL8NZYMtZDZvvTxQmTWd0MomXlbG+O+NifJbb+V+oy6any1i3iFkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648037; c=relaxed/simple;
-	bh=jaL7HylwWgwy2ulj+N+/1n7amlGiMBjWWjzwC3GcfyI=;
+	s=arc-20240116; t=1784648040; c=relaxed/simple;
+	bh=Zb/dz9pkQvJJPAknxAMpqctXOh1KkVP+I/0kIaAoyrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j8odKGYa6v/MB2opwURHOjoCpGe8i20DnLyQOUwy7vWw6OiPzae+exFM5aS8S47kbwn7feQRTU+N0WX38aU9evBkeDOb/KcI8RfTwsNdk2tV9A2qr6fw4uOJUs1bxwK/eFrOP/F6egpFLjQalMtE/k6EHXUvoKsk4D60OP6Q0eY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDo28lEi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KwYtg7SkusmXeSFyF1zgkvGtuU1HKjmmqPiw1aeW7zWmPon3wu3Kws5xgNFBk986xV1duC+2MKG7Z9PXR1k1u5KSc+VTorACCHRvTinf94ns5bxUv7C/JOnWzXZ9wm331onOE9KowShM8ZZThDpFeu25frPVbhS3wzkDNu6PruI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eFcmCAlJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDo28lEi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2D51F000E9;
-	Tue, 21 Jul 2026 15:33:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eFcmCAlJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A53841F000E9;
+	Tue, 21 Jul 2026 15:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648036;
-	bh=TV0rPgdEhWjYHiPOkodYNADAl40UUTx5NQdeAOX1Uss=;
+	s=korg; t=1784648039;
+	bh=ck79/kJb+VMm7RIZ2j7cqqNrp3WtjUUo22jfPxrTKv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wDo28lEifXKv2gK+VBVdsykm+VkN57kvBwavaYbZ6/s0TgMSF5gCOhYcOummihJgE
-	 Dv36+FgghS+/ha22H8CLmsseIW4/DTmrJy7CmsVUnAm0M7urqwlxug9dbfPAQLOxlf
-	 /d/igxDB2iBoMjBwzJ19zioI1/brHY2JbEj8IiZc=
+	b=eFcmCAlJJJMAl+DGRgvDCTKJw/KMTnRT15TgMrPIVh/WfREQHwHSREmVglhpkWo8m
+	 GtI+Ra/FvMXJwZc/DhI1pLpQ6p9AlZnZaAF9EeoG1aGH+UnO91HW6wVStnSeqyxobz
+	 LjUPVwQQMvlGC74+HPx8vmJZbvORyT518eW/YLKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0049/2077] drm/tidss: Drop extra drm_mode_config_reset() call
-Date: Tue, 21 Jul 2026 16:55:22 +0200
-Message-ID: <20260721152553.846729540@linuxfoundation.org>
+Subject: [PATCH 7.1 0050/2077] drm/gpusvm: Reject VMAs with VM_IO or VM_PFNMAP when creating SVM ranges
+Date: Tue, 21 Jul 2026 16:55:23 +0200
+Message-ID: <20260721152553.870814106@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,42 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-[ Upstream commit f468fef38716f667e805e0fa2c497c6b9c325bb9 ]
+[ Upstream commit b82a225e57a334335a21462b75ee2223bc6efe6d ]
 
-We are calling drm_mode_config_reset() twice at probe time. There's no
-reason for this and the second call can be removed, reducing work at
-probe time slightly.
+VMAs marked with VM_IO or VM_PFNMAP are not backed by struct page
+objects, which GPUSVM requires in order to operate correctly. In
+particular, get_pages() relies on hmm_range_fault() to resolve struct
+pages for the target range.
 
-Fixes: 32a1795f57ee ("drm/tidss: New driver for TI Keystone platform Display SubSystem")
-Acked-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patch.msgid.link/20260311-tidss-minor-fixes-v2-1-cb4479784458@ideasonboard.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Attempting to create an SVM range on such VMAs results in repeated
+get_pages() failures and can lead to an infinite loop inside a driver’s
+page‑fault handler. Prevent this by rejecting ranges on VM_IO or
+VM_PFNMAP VMAs and returning -EIO.
+
+Fixes: 99624bdff867 ("drm/gpusvm: Add support for GPU Shared Virtual Memory")
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Link: https://patch.msgid.link/20260325231608.25581-1-matthew.brost@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tidss/tidss_kms.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/drm_gpusvm.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/tidss/tidss_kms.c b/drivers/gpu/drm/tidss/tidss_kms.c
-index 8bb93194e5ac68..b4779c09a1bfa5 100644
---- a/drivers/gpu/drm/tidss/tidss_kms.c
-+++ b/drivers/gpu/drm/tidss/tidss_kms.c
-@@ -287,8 +287,6 @@ int tidss_modeset_init(struct tidss_device *tidss)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/gpu/drm/drm_gpusvm.c b/drivers/gpu/drm/drm_gpusvm.c
+index 4b928fda5b127f..7993e85c05661f 100644
+--- a/drivers/gpu/drm/drm_gpusvm.c
++++ b/drivers/gpu/drm/drm_gpusvm.c
+@@ -1065,6 +1065,11 @@ drm_gpusvm_range_find_or_insert(struct drm_gpusvm *gpusvm,
+ 		goto err_notifier_remove;
+ 	}
  
--	drm_mode_config_reset(ddev);
--
- 	dev_dbg(tidss->dev, "%s done\n", __func__);
- 
- 	return 0;
++	if (vas->vm_flags & (VM_IO | VM_PFNMAP)) {
++		err = -EIO;
++		goto err_notifier_remove;
++	}
++
+ 	range = drm_gpusvm_range_find(notifier, fault_addr, fault_addr + 1);
+ 	if (range)
+ 		goto out_mmunlock;
 -- 
 2.53.0
 
