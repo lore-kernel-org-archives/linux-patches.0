@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B253538910F;
-	Tue, 21 Jul 2026 18:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F23A46DFF5;
+	Tue, 21 Jul 2026 18:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659843; cv=none; b=g35LZ7knfObauUe5IDgjQSqtM+MiBNatKYSsxngkkBx6dXsE2XhSIP57K8CCnfmCzoupzsMkcmoK+oAYlqcI3TSWP7l2TjmBO7f9GYrgkGUYtoox74m5gTpwKnHDrTO74kpe5hAQ+WW0L8ghfYTECsr/0aPupiJTaeum0lMlusI=
+	t=1784659845; cv=none; b=fsxAqmiQIN2GmQp+7KTOphzmyLLy2upzAfA9ndHckY2Q79LLzi40GVpP0i83InH/LqiOJ7UwSd+6h4nMbQ5BCk7qI8EZUpf9g5w8WgPtiy2+CmO/e7HdT9eoGE+1C7Sh2TxXvgeIrp/U2z06K8J3EIV1niEjSGTQGu0VlYuOoz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659843; c=relaxed/simple;
-	bh=jm3wjnk16Dtu+93BbIx1OIkOVw0qXZOKrPhJupHxYDk=;
+	s=arc-20240116; t=1784659845; c=relaxed/simple;
+	bh=fC/sAYyVOn/XBG4JAUDwV4VC8/G+lqmQOmQ9BxLBKSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ANOZIpGCX9bqvb/rckDtGbTZ/ZX+eA2dzNMRvtfJENuTEZDJ4rc7eDNsYbpYHZN//8LnNkHBYA0o37otnzDV99ONJjRkWjtoVYIM3jdC7QEfUsGecFX+aeg5Dl2De3y+TTf+RfZ7e/yhB6BBiMasfnDRkfvrEvHXfQ9Rk3uVzb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJnj7aHk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aa9uNW67dbxStZmz8/2gehJt4zuAANRHISXHtpcE3T1vm3RROjRH+UmbTBgTCo1J8IxAj18lWSuwxM+tzPX5XoEjAauWvmIa2Buaurj/RorjEMMQyiSzTPblQe5C7qThWj+CjPi+sUCuSc35xxb2MQP1+zfVfeNHY8Ic0g5VTLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zc9idSLS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJnj7aHk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E8A1F000E9;
-	Tue, 21 Jul 2026 18:50:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zc9idSLS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6D81F000E9;
+	Tue, 21 Jul 2026 18:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659841;
-	bh=ujFU3WuSgbgEuLxQlT8hYZZ3r5iAD0xJFwpuYQqso3I=;
+	s=korg; t=1784659844;
+	bh=Fw8ZGEz0nsh1Ms4E+spXpiLCEKqUSD6/CEbMxVxsmtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sJnj7aHkVFc0MlIAcZXTLV69KctfyBVfP9a7kOStLoflH6j/vgZiwOkCk308xB1cP
-	 xlZsWIwXiC4YXFCdi0BLcXC/1GTgER8lgO6Fjos25qfztTi+1ApFjwpY/HtxOifeoV
-	 SNlcXVBIPc54DYuiGLHAxJ7aA7Kq0Kpbx6ZgcRzE=
+	b=Zc9idSLST/wUmE+iSjCIHxWfPuDv2nDx6xaDUJ0bXMUKKQKnQn6Ox02LFoGElo0ax
+	 67G9Z1hGaQZ7XSBdBBitjUOsCjoURRRcuW959CbPCHocNq+V3GwWbcwLtzUVTfabMh
+	 93otLoCyvg6wYacRHs1CdMqyr8yplghy0i7+VDPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0754/2077] bpf: Fix setting retval to -EPERM for cgroup hooks not returning errno
-Date: Tue, 21 Jul 2026 17:07:07 +0200
-Message-ID: <20260721152610.572773969@linuxfoundation.org>
+Subject: [PATCH 7.1 0755/2077] octeontx2-af: npc: Fix size of entry2cntr_map
+Date: Tue, 21 Jul 2026 17:07:08 +0200
+Message-ID: <20260721152610.595594019@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,172 +52,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Kuohai <xukuohai@huawei.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 4c71303c837449158815c521fcee4ec3b8721dbd ]
+[ Upstream commit f9cd6fabe0e7c7f6fc30c6c192c7ed72aba37232 ]
 
-When a cgroup BPF program exits with 0, bpf_prog_run_array_cg() sets
-the hook return value to -EPERM if it is not a valid errno. This is
-correct for errno-based hooks, which return 0 on success and negative
-errno on failure, but wrong for boolean and void LSM hooks. Boolean
-LSM hooks should only return true or false, and void LSM hooks have
-no return value at all.
+KASAN prints below splat. This is caused by allocating counter for
+reserved mcam entry for cpt 2nd pass entry. But mcam->entry2cntr_map
+is not allocated for reserved entries.
 
-Fix it by skipping setting -EPERM for hooks not returning errno.
+BUG: KASAN: slab-out-of-bounds in npc_map_mcam_entry_and_cntr+0xb0/0x1a0
+Write of size 2 at addr ffff0001033e7ffe by task kworker/0:1/14
 
-Fixes: 69fd337a975c ("bpf: per-cgroup lsm flavor")
-Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
-Link: https://lore.kernel.org/r/20260610201724.733943-2-xukuohai@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+CPU: 0 PID: 14 Comm: kworker/0:1 Not tainted 6.1.67 #1
+Hardware name: Marvell CN106XX board (DT)
+Workqueue: events work_for_cpu_fn
+Call trace:
+ dump_backtrace.part.0+0xe4/0xf0
+ show_stack+0x18/0x30
+ dump_stack_lvl+0x88/0xb4
+ print_report+0x154/0x458
+ kasan_report+0xb8/0x194
+ __asan_store2+0x7c/0xa0
+ npc_map_mcam_entry_and_cntr+0xb0/0x1a0
+ rvu_mbox_handler_npc_mcam_write_entry+0x268/0x280
+ npc_install_flow+0x840/0xfe0
+ rvu_npc_install_cpt_pass2_entry+0x138/0x190
+ rvu_nix_init+0x148c/0x2880
+ rvu_probe+0x1800/0x30b0
+ local_pci_probe+0x78/0xe0
+ work_for_cpu_fn+0x30/0x50
+ process_one_work+0x4cc/0x97c
+ worker_thread+0x360/0x630
+ kthread+0x1a0/0x1b0
+ ret_from_fork+0x10/0x20
+
+Fixes: 55307fcb9258 ("octeontx2-af: Add mbox messages to install and delete MCAM rules")
+Cc: Subbaraya Sundeep <sbhatta@marvell.com>
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Link: https://patch.msgid.link/20260610022344.969774-1-rkannoth@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf_lsm.h |  6 ++++++
- kernel/bpf/bpf_lsm.c    | 20 ++++++++++++++++++
- kernel/bpf/cgroup.c     | 47 +++++++++++++++++++++++++++++------------
- 3 files changed, 60 insertions(+), 13 deletions(-)
+ .../ethernet/marvell/octeontx2/af/rvu_npc.c   | 40 +++++++------------
+ 1 file changed, 15 insertions(+), 25 deletions(-)
 
-diff --git a/include/linux/bpf_lsm.h b/include/linux/bpf_lsm.h
-index e4593b4a123824..dda272d78f013f 100644
---- a/include/linux/bpf_lsm.h
-+++ b/include/linux/bpf_lsm.h
-@@ -54,6 +54,7 @@ int bpf_set_dentry_xattr_locked(struct dentry *dentry, const char *name__str,
- 				const struct bpf_dynptr *value_p, int flags);
- int bpf_remove_dentry_xattr_locked(struct dentry *dentry, const char *name__str);
- bool bpf_lsm_has_d_inode_locked(const struct bpf_prog *prog);
-+bool bpf_lsm_hook_returns_errno(u32 btf_id);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+index d301a3f0f87a86..4994385a822b72 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+@@ -2181,7 +2181,7 @@ int npc_mcam_rsrcs_init(struct rvu *rvu, int blkaddr)
+ 	/* Alloc memory for MCAM entry to counter mapping and for tracking
+ 	 * counter's reference count.
+ 	 */
+-	mcam->entry2cntr_map = kcalloc(mcam->bmap_entries, sizeof(u16),
++	mcam->entry2cntr_map = kcalloc(mcam->total_entries, sizeof(u16),
+ 				       GFP_KERNEL);
+ 	if (!mcam->entry2cntr_map)
+ 		goto free_cntr_map;
+@@ -2197,10 +2197,11 @@ int npc_mcam_rsrcs_init(struct rvu *rvu, int blkaddr)
+ 	if (!mcam->entry2target_pffunc)
+ 		goto free_cntr_refcnt;
  
- #else /* !CONFIG_BPF_LSM */
+-	for (index = 0; index < mcam->bmap_entries; index++) {
++	for (index = 0; index < mcam->bmap_entries; index++)
+ 		mcam->entry2pfvf_map[index] = NPC_MCAM_INVALID_MAP;
++
++	for (index = 0; index < mcam->total_entries; index++)
+ 		mcam->entry2cntr_map[index] = NPC_MCAM_INVALID_MAP;
+-	}
  
-@@ -108,6 +109,11 @@ static inline bool bpf_lsm_has_d_inode_locked(const struct bpf_prog *prog)
+ 	for (cntr = 0; cntr < mcam->counters.max; cntr++)
+ 		mcam->cntr2pfvf_map[cntr] = NPC_MCAM_INVALID_MAP;
+@@ -3531,7 +3532,7 @@ static int __npc_mcam_free_counter(struct rvu *rvu,
+ 				   struct msg_rsp *rsp)
  {
- 	return false;
- }
-+
-+static inline bool bpf_lsm_hook_returns_errno(u32 btf_id)
-+{
-+	return true;
-+}
- #endif /* CONFIG_BPF_LSM */
+ 	struct npc_mcam *mcam = &rvu->hw->mcam;
+-	u16 index, entry = 0;
++	u16 index;
+ 	int blkaddr, err;
  
- #endif /* _LINUX_BPF_LSM_H */
-diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
-index c5c925f0020216..564071a92d7d20 100644
---- a/kernel/bpf/bpf_lsm.c
-+++ b/kernel/bpf/bpf_lsm.c
-@@ -427,6 +427,26 @@ BTF_ID(func, bpf_lsm_audit_rule_known)
- BTF_ID(func, bpf_lsm_inode_xattr_skipcap)
- BTF_SET_END(bool_lsm_hooks)
+ 	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
+@@ -3547,20 +3548,16 @@ static int __npc_mcam_free_counter(struct rvu *rvu,
+ 	mcam->cntr2pfvf_map[req->cntr] = NPC_MCAM_INVALID_MAP;
+ 	rvu_free_rsrc(&mcam->counters, req->cntr);
  
-+/* hooks returning void */
-+#define LSM_HOOK_void(DEFAULT, NAME, ...) BTF_ID(func, bpf_lsm_##NAME)
-+#define LSM_HOOK_int(DEFAULT, NAME, ...)  /* nothing */
-+#define LSM_HOOK(RET, DEFAULT, NAME, ...) LSM_HOOK_##RET(DEFAULT, NAME, __VA_ARGS__)
-+BTF_SET_START(void_lsm_hooks)
-+#include <linux/lsm_hook_defs.h>
-+#undef LSM_HOOK
-+#undef LSM_HOOK_void
-+#undef LSM_HOOK_int
-+BTF_SET_END(void_lsm_hooks)
-+
-+bool bpf_lsm_hook_returns_errno(u32 btf_id)
-+{
-+	if (btf_id_set_contains(&bool_lsm_hooks, btf_id))
-+		return false;
-+	if (btf_id_set_contains(&void_lsm_hooks, btf_id))
-+		return false;
-+	return true;
-+}
-+
- int bpf_lsm_get_retval_range(const struct bpf_prog *prog,
- 			     struct bpf_retval_range *retval_range)
- {
-diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-index 89ea605457906e..90921459e2c433 100644
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -55,6 +55,28 @@ void __init cgroup_bpf_lifetime_notifier_init(void)
- 						&cgroup_bpf_lifetime_nb));
- }
- 
-+#ifdef CONFIG_BPF_LSM
-+struct cgroup_lsm_atype {
-+	u32 attach_btf_id;
-+	int refcnt;
-+	bool returns_errno;
-+};
-+
-+static struct cgroup_lsm_atype cgroup_lsm_atype[CGROUP_LSM_NUM];
-+
-+static bool cgroup_bpf_hook_returns_errno(enum cgroup_bpf_attach_type atype)
-+{
-+	if (atype >= CGROUP_LSM_START && atype <= CGROUP_LSM_END)
-+		return READ_ONCE(cgroup_lsm_atype[atype - CGROUP_LSM_START].returns_errno);
-+	return true;
-+}
-+#else
-+static bool cgroup_bpf_hook_returns_errno(enum cgroup_bpf_attach_type atype)
-+{
-+	return true;
-+}
-+#endif
-+
- /* __always_inline is necessary to prevent indirect call through run_prog
-  * function pointer.
-  */
-@@ -83,7 +105,8 @@ bpf_prog_run_array_cg(const struct cgroup_bpf *cgrp,
- 			*(ret_flags) |= (func_ret >> 1);
- 			func_ret &= 1;
- 		}
--		if (!func_ret && !IS_ERR_VALUE((long)run_ctx.retval))
-+		if (!func_ret && cgroup_bpf_hook_returns_errno(atype) &&
-+		    !IS_ERR_VALUE((long)run_ctx.retval))
- 			run_ctx.retval = -EPERM;
- 		item++;
+-	/* Disable all MCAM entry's stats which are using this counter */
+-	while (entry < mcam->bmap_entries) {
++	/* Disable all MCAM entry's stats which are using this counter.
++	 * Scan the full MCAM index range: AF-reserved rules (e.g. CPT pass-2)
++	 */
++	for (index = 0; index < mcam->total_entries; index++) {
+ 		if (!mcam->cntr_refcnt[req->cntr])
+ 			break;
+-
+-		index = find_next_bit(mcam->bmap, mcam->bmap_entries, entry);
+-		if (index >= mcam->bmap_entries)
+-			break;
+-		entry = index + 1;
+ 		if (mcam->entry2cntr_map[index] != req->cntr)
+ 			continue;
+-
+-		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr,
+-					      index, req->cntr);
++		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr, index,
++					      req->cntr);
  	}
-@@ -156,13 +179,6 @@ unsigned int __cgroup_bpf_run_lsm_current(const void *ctx,
- }
  
- #ifdef CONFIG_BPF_LSM
--struct cgroup_lsm_atype {
--	u32 attach_btf_id;
--	int refcnt;
--};
--
--static struct cgroup_lsm_atype cgroup_lsm_atype[CGROUP_LSM_NUM];
--
- static enum cgroup_bpf_attach_type
- bpf_cgroup_atype_find(enum bpf_attach_type attach_type, u32 attach_btf_id)
+ 	return 0;
+@@ -3631,7 +3628,7 @@ int rvu_mbox_handler_npc_mcam_unmap_counter(struct rvu *rvu,
+ 		struct npc_mcam_unmap_counter_req *req, struct msg_rsp *rsp)
  {
-@@ -191,10 +207,13 @@ void bpf_cgroup_atype_get(u32 attach_btf_id, int cgroup_atype)
+ 	struct npc_mcam *mcam = &rvu->hw->mcam;
+-	u16 index, entry = 0;
++	u16 index;
+ 	int blkaddr, rc;
  
- 	lockdep_assert_held(&cgroup_mutex);
+ 	/* Counter is not supported for CN20K */
+@@ -3658,20 +3655,13 @@ int rvu_mbox_handler_npc_mcam_unmap_counter(struct rvu *rvu,
+ 	}
  
--	WARN_ON_ONCE(cgroup_lsm_atype[i].attach_btf_id &&
--		     cgroup_lsm_atype[i].attach_btf_id != attach_btf_id);
+ 	/* Disable all MCAM entry's stats which are using this counter */
+-	while (entry < mcam->bmap_entries) {
++	for (index = 0; index < mcam->total_entries; index++) {
+ 		if (!mcam->cntr_refcnt[req->cntr])
+ 			break;
 -
--	cgroup_lsm_atype[i].attach_btf_id = attach_btf_id;
-+	if (!cgroup_lsm_atype[i].attach_btf_id) {
-+		cgroup_lsm_atype[i].attach_btf_id = attach_btf_id;
-+		WRITE_ONCE(cgroup_lsm_atype[i].returns_errno,
-+			   bpf_lsm_hook_returns_errno(attach_btf_id));
-+	} else {
-+		WARN_ON_ONCE(cgroup_lsm_atype[i].attach_btf_id != attach_btf_id);
-+	}
- 	cgroup_lsm_atype[i].refcnt++;
- }
- 
-@@ -203,8 +222,10 @@ void bpf_cgroup_atype_put(int cgroup_atype)
- 	int i = cgroup_atype - CGROUP_LSM_START;
- 
- 	cgroup_lock();
--	if (--cgroup_lsm_atype[i].refcnt <= 0)
-+	if (--cgroup_lsm_atype[i].refcnt <= 0) {
-+		WRITE_ONCE(cgroup_lsm_atype[i].returns_errno, true);
- 		cgroup_lsm_atype[i].attach_btf_id = 0;
-+	}
- 	WARN_ON_ONCE(cgroup_lsm_atype[i].refcnt < 0);
- 	cgroup_unlock();
- }
+-		index = find_next_bit(mcam->bmap, mcam->bmap_entries, entry);
+-		if (index >= mcam->bmap_entries)
+-			break;
+-		entry = index + 1;
+-
+ 		if (mcam->entry2cntr_map[index] != req->cntr)
+ 			continue;
+-
+-		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr,
+-					      index, req->cntr);
++		npc_unmap_mcam_entry_and_cntr(rvu, mcam, blkaddr, index,
++					      req->cntr);
+ 	}
+ exit:
+ 	mutex_unlock(&mcam->lock);
 -- 
 2.53.0
 
