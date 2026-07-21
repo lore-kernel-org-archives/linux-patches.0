@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35093415F2C;
-	Tue, 21 Jul 2026 18:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60421403E9B;
+	Tue, 21 Jul 2026 18:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658528; cv=none; b=WDCPnMhVIz71KeC3p2f70MsRGPBGXjSABBM5gV0cQn/P8EWbAcmlThsgmFTZfS6jz0ot40z0RCBU4PuQHBJRjbETjsGCE4Ur/QVZUbvsjUEiRT/3Dl9Qy8DDcm9B3A/w1qEsNTQoEQ7prhZBeK+oLHNhrcJEZVas/aNc6JgNQfU=
+	t=1784658530; cv=none; b=a/D6Qs5sKvZzv0E4D+nC5gRjib7rhdqkPfOUkjDDrLpkM2gknxQtngePipJaFg6/Ax6wPlKEzSHZaGsTm/1Lls22u+QfuCxNUqMDBK1FchJN71aEmZH3tYSeAZIiwUKaTfODPFrprEWXZ7BtSjxBsjJR+xrKvGMP9j4uT58m2L8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658528; c=relaxed/simple;
-	bh=FnMY+HVLo29ir41SOQNIcb4Knm7XOpnPD/UzwWOr0os=;
+	s=arc-20240116; t=1784658530; c=relaxed/simple;
+	bh=ZJ7Pw9F64RmEgJ/D/zTK9n/oPqx8YCthwFfmlYoNbAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q/Jhnn3A9xO2jgGLPynk7Yp10JrKmfPNc59oCQKlVAiuudZbwuI54P5VqG7lJFw6B8hTaxFrjme1dJ8IFTUGaXrILt4LVlRlYTU2pjFy6xCy5b0TpHHAduA0LriN9/53S4ks0hdznyC/fKsKU/KpWcf+NmF0aV1ESMUwkfEEibM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XDkyqYTD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VS66fvVnEQ8Ob97Sr1iopMj1mA7FIr15uOn5qPPG345IhRQwVVVMwHiUEjA9Fsn3nACEfdOzkuEmBtz8dqjXkZtOVT+zcB5pawsr1Js/jDzqHGjSH1WPVOvJMzQqGmMl9gUeMsbO2Y1I/Y7rJ1wJSbINFX5XObZjQB5tpvyDDKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bo9MX5kn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDkyqYTD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 306AB1F000E9;
-	Tue, 21 Jul 2026 18:28:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bo9MX5kn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73B61F000E9;
+	Tue, 21 Jul 2026 18:28:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658526;
-	bh=lwm5RAgjwLW0uL/lRB2B7doqe/CVsAqw2My3YciKe5E=;
+	s=korg; t=1784658529;
+	bh=SYJtDGU1/rF6SPacau0wsituwhUXZRPIY5k8LIIQ+/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XDkyqYTDFZWv3t1ZJRR+8agBN97bUUAU1srxRlyLg7HpHxzmM772f/E4IA+4pu/zk
-	 VMCFcR7yukK6QIn2BYcQL9dxPsHrieKaEXKHD/V2Xyx/DPhvBlqrnAvnVecYer9aP8
-	 gfBFmbvjpplY7Q+5GIWpKCcov9oN28mojAEZEjhI=
+	b=bo9MX5knjvP5EfAg11fRjw1tlZ64L0pJa2b5xfQqAt6+mUNyqxC69FH6DnvAEWQq0
+	 vXInO6iBpmOQeYteTZw+n02xDJJe9oiZiAd6FxPDFVLRPM52G3OiqnfkXNByE/3KJ9
+	 QdC789HgwHw+b9TjdkdnxY52hKCKOF45DwfXpz5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 1160/1611] ASoC: mediatek: mt8192: Check runtime resume during probe
-Date: Tue, 21 Jul 2026 17:21:16 +0200
-Message-ID: <20260721152541.515722504@linuxfoundation.org>
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Hari Prasath Gujulan Elango <gehariprasath@ti.com>,
+	Nishanth Menon <nm@ti.com>
+Subject: [PATCH 6.18 1178/1611] soc: ti: k3-ringacc: Fix access mode for k3_ringacc_ring_pop_tail_io/proxy
+Date: Tue, 21 Jul 2026 17:21:34 +0200
+Message-ID: <20260721152541.929200060@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -44,65 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-commit e24d5dde56a50946020b134fa8448869093db76a upstream.
+commit b920352cfd2b0fcd1249ff006618c939b64fc8f7 upstream.
 
-The MT8192 AFE probe enables runtime PM temporarily while reinitializing
-the regmap cache from hardware, but it uses pm_runtime_get_sync()
-without checking the return value. If runtime resume fails, probe keeps
-going without the device necessarily being accessible, and
-pm_runtime_get_sync() may leave the PM usage count incremented.
+k3_ringacc_ring_pop_tail_io() and k3_ringacc_ring_pop_tail_proxy()
+incorrectly use K3_RINGACC_ACCESS_MODE_POP_HEAD instead of
+K3_RINGACC_ACCESS_MODE_POP_TAIL. This will result in ring elements being
+popped in the reverse order of that which the caller expects. Fix this.
 
-The regmap_reinit_cache() failure path also returns before dropping the
-temporary PM reference and before clearing pm_runtime_bypass_reg_ctl.
-
-Use pm_runtime_resume_and_get() so resume failures do not leak a usage
-count, and clear the temporary bypass flag after dropping the probe PM
-reference on all regmap_reinit_cache() outcomes.
-
-Fixes: 125ab5d588b0 ("ASoC: mediatek: mt8192: add platform driver")
+Fixes: 3277e8aa2504 ("soc: ti: k3: add navss ringacc driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260527-asoc-mt8192-probe-cleanup-v1-2-1bb834d05b72@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Reviewed-by: Hari Prasath Gujulan Elango <gehariprasath@ti.com>
+Link: https://patch.msgid.link/20260501124129.362192-1-s-vadapalli@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-afe-pcm.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/soc/ti/k3-ringacc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/soc/mediatek/mt8192/mt8192-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-afe-pcm.c
-@@ -2218,15 +2218,19 @@ static int mt8192_afe_pcm_dev_probe(stru
+--- a/drivers/soc/ti/k3-ringacc.c
++++ b/drivers/soc/ti/k3-ringacc.c
+@@ -1012,7 +1012,7 @@ static int k3_ringacc_ring_pop_head_prox
+ static int k3_ringacc_ring_pop_tail_proxy(struct k3_ring *ring, void *elem)
+ {
+ 	return k3_ringacc_ring_access_proxy(ring, elem,
+-					    K3_RINGACC_ACCESS_MODE_POP_HEAD);
++					    K3_RINGACC_ACCESS_MODE_POP_TAIL);
+ }
  
- 	/* enable clock for regcache get default value from hw */
- 	afe_priv->pm_runtime_bypass_reg_ctl = true;
--	pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret) {
-+		afe_priv->pm_runtime_bypass_reg_ctl = false;
-+		return dev_err_probe(dev, ret, "failed to resume device\n");
-+	}
+ static int k3_ringacc_ring_access_io(struct k3_ring *ring, void *elem,
+@@ -1083,7 +1083,7 @@ static int k3_ringacc_ring_pop_io(struct
+ static int k3_ringacc_ring_pop_tail_io(struct k3_ring *ring, void *elem)
+ {
+ 	return k3_ringacc_ring_access_io(ring, elem,
+-					 K3_RINGACC_ACCESS_MODE_POP_HEAD);
++					 K3_RINGACC_ACCESS_MODE_POP_TAIL);
+ }
  
- 	ret = regmap_reinit_cache(afe->regmap, &mt8192_afe_regmap_config);
--	if (ret)
--		return dev_err_probe(dev, ret, "regmap_reinit_cache fail\n");
--
- 	pm_runtime_put_sync(dev);
- 	afe_priv->pm_runtime_bypass_reg_ctl = false;
- 
-+	if (ret)
-+		return dev_err_probe(dev, ret, "regmap_reinit_cache fail\n");
-+
- 	regcache_cache_only(afe->regmap, true);
- 	regcache_mark_dirty(afe->regmap);
- 
+ /*
 
 
