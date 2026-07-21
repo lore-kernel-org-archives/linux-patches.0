@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40BDA25B0AB;
-	Tue, 21 Jul 2026 22:20:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3B825B0AB;
+	Tue, 21 Jul 2026 22:20:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672403; cv=none; b=G7NZeaE8IextQ3z2uS3h9ipS61YeDBsPDfncyPcQWxI4KF/FpWhIEGSpfsBuo21jUNIcl0vkx5AB1HqTY8V9v/0nP5o7bc1NhK9hzF9K2GnTZZ01TweZmcTeFISCrDJqWAoFPdjO2jpHwnhG1ZjAdek+YAUlYQHalQ0h8S84DTA=
+	t=1784672406; cv=none; b=rTV4RqEw5yZ1cYkZwe8sR2ruGIQBxOGOwN5Dv6+b0Mcbj1TEPLEQQbW6a5y9E8QgMHVUHrBNER60BSqN/F0P2fGoqeo4gXvRix4z7FeUfG/uDfwh8cc7/mwRAipOfcYrycc1LZtfy1vxN460B5b99/p3TXseyfISJ9fbcoNl1/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672403; c=relaxed/simple;
-	bh=wCQQ+BY3gAy7CrBW4al/HdmOrDBpwVNaJn3O188my2s=;
+	s=arc-20240116; t=1784672406; c=relaxed/simple;
+	bh=E+uh6EE6PFKB4WA+VUqGEk1Xlz0sRtTAQ6eZ5bdAlKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AlGZZV+FHRjflsf7H1ibj1Wc+oAdos2YGEeEOeRlukeAKrtElPesQhZSb9f9st3Hy+ZMwqlfUBrrW7UPvY6ez2FTU68m6Y037+nT81wT/0B1EqRpd9L5CUL9/HUvPYG70/eVF/s0UMq8JH+nfGHrBtQNvOgxapkFB2+oyz7Gsy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Vbn31Bw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UhkNHPihnahdf/DCyq16jFydbXEaEVWzIr8hhjrFIwJ0T4g4n5TPI5lmNJ9oQLJM03BY6CcUULF5tp02k6A9m338EERLL5O5PJZZn/5govRCRAnZu/jystE8hbd0He387oSIbLgLEBblRl9xiYg95oRrypxrGiBfKwxqFhh6r2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQ+on03v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Vbn31Bw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6720F1F000E9;
-	Tue, 21 Jul 2026 22:20:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQ+on03v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1330A1F000E9;
+	Tue, 21 Jul 2026 22:20:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672401;
-	bh=qR4hejXiqSBNmJvo3s4ABgJ0utMujvIVP61ssnm5LsQ=;
+	s=korg; t=1784672404;
+	bh=4P1Ieh1rC/DSmcpEk7rnjbHCAYmO+02OLMNIMjKk7SY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Vbn31Bw1nXI5ikg3yd05wTyblccsB9F6x6t5snW6sDRTSKtuEKoVH9LvBEvShON3
-	 sB/PZJqHx/EeOgSEKQ2yQxBdJ3Yc+Du4RI5WfO5o8YrnafiL80xE5tsXj2if3pNNJY
-	 JMXtcln9NzpMawn1vHOnI7Y7dYc411WRNlYUTd1w=
+	b=QQ+on03vyXm7P7IIsr8yNS21llQ284kA3PCguX/cDkB6E2XTwXUmERtOHM//sYd7V
+	 mg1qPhBECVjl2l66oqJu7m5w1fv4jL8TUy0SFsO/SiNOHJX6vqXBFi4OXuiBTWjZWG
+	 pjkyA4HtDnoTYJcBw1+PQBHZSoAPL7mgEo1qlo84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 5.15 611/843] fs/ntfs3: bound DeleteIndexEntryAllocation memmove length
-Date: Tue, 21 Jul 2026 17:24:06 +0200
-Message-ID: <20260721152419.797307316@linuxfoundation.org>
+Subject: [PATCH 5.15 612/843] fs/ntfs3: bound attr_off in UpdateResidentValue against data_off
+Date: Tue, 21 Jul 2026 17:24:07 +0200
+Message-ID: <20260721152419.821310110@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,34 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit fc4626bb3656362de8b0ecd56605d47a19ec3518 upstream.
+commit d1570c48f49a693974d000251030370ee2e83539 upstream.
 
-In do_action()'s DeleteIndexEntryAllocation case, e->size comes
-from an on-disk INDEX_BUFFER entry.  When e->size makes
-e + e->size point past hdr + hdr->used,
-PtrOffset(e1, Add2Ptr(hdr, used)) returns a negative ptrdiff_t
-that is silently cast to a quasi-infinite size_t when passed
-to memmove().  The memmove then walks past the destination
-buffer.
+In do_action()'s UpdateResidentValue case (fslog.c:3307),
+lrh->attr_off and lrh->redo_len come from the on-disk LRH.
+When they satisfy aoff + dlen < attr->res.data_off, the
+assignment
 
-The sibling DeleteIndexEntryRoot case at fslog.c:3540-3543
-already carries the corresponding guard:
+	attr->res.data_size = cpu_to_le32(aoff + dlen - data_off);
 
-	if (PtrOffset(e1, Add2Ptr(hdr, used)) < esize ||
-	    Add2Ptr(e, esize) > Add2Ptr(lrh, rec_len) ||
-	    used + esize > le32_to_cpu(hdr->total)) {
-		goto dirty_vol;
-	}
+underflows to ~4 GiB (e.g. 0xFFFFFFF9 when aoff=0x10, dlen=1,
+data_off=0x18).  Subsequent code that reads attr->res.data_size
+to walk the resident attribute payload would then read up to
+4 GiB past the 1024-byte MFT record allocation.
 
-Apply the same shape to the allocation-path case.  Also reject
-esize == 0: memmove(e, e, ...) is a no-op and leaves
-hdr->used unchanged, hiding a malformed entry from the
-existing check_index_header() walk.
+The existing mi_enum_attr() defense in fs/ntfs3/record.c:287
+catches the corrupted data_size on the next attribute walk
+and fails the mount, but only on the path that walks all
+attributes.  A read site that picks an attribute by name and
+reads its data_size without re-validating is not covered.
+Validate aoff against data_off and asize at the source.
 
-Reproduced under UML+KASAN on mainline 8d90b09e6741 by
-mounting a crafted NTFS image: the unguarded memmove takes a
-length of 0xffffffffffffff00 and the kernel oopses in
-memmove+0x81/0x1a0 on the do_action+0x36a2 frame.
+Reproduced under UML+KASAN on mainline 8d90b09e6741 via
+pr_warn-only probe: with aoff=0x10 and data_off=0x18, the
+post-assignment data_size is 0xfffffff9 (mount then fails
+at -22 from mi_enum_attr).
 
 Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
 Cc: stable@vger.kernel.org
@@ -89,35 +86,28 @@ Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ fs/ntfs3/fslog.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 --- a/fs/ntfs3/fslog.c
 +++ b/fs/ntfs3/fslog.c
-@@ -3574,9 +3574,23 @@ move_data:
- 		}
- 
- 		e1 = Add2Ptr(e, esize);
--		nsize = esize;
- 		used = le32_to_cpu(hdr->used);
+@@ -3316,6 +3316,17 @@ skip_load_parent:
+ 		nsize = ALIGN(nsize, 8);
+ 		data_off = le16_to_cpu(attr->res.data_off);
  
 +		/*
-+		 * Reject crafted entries whose e->size makes e + esize
-+		 * point past the INDEX_HDR's used boundary.  Without this,
-+		 * PtrOffset(e1, hdr + used) underflows to a quasi-infinite
-+		 * size_t when fed to the memmove() below.
-+		 *
-+		 * Also reject esize == 0: memmove(e, e, ...) is a no-op and
-+		 * leaves hdr->used unchanged, masking the crafted entry.
++		 * aoff comes from the on-disk lrh->attr_off.  Forbid
++		 * writes that begin below the resident attribute's
++		 * data_off (which would overwrite the resident header),
++		 * and forbid aoff + dlen < data_off, which would make
++		 * the data_size assignment below underflow to ~4 GiB.
 +		 */
-+		if (!esize || Add2Ptr(e, esize) > Add2Ptr(hdr, used) ||
-+		    PtrOffset(e1, Add2Ptr(hdr, used)) < esize)
++		if (aoff < data_off || aoff + dlen < data_off ||
++		    aoff + dlen > asize)
 +			goto dirty_vol;
 +
-+		nsize = esize;
-+
- 		memmove(e, e1, PtrOffset(e1, Add2Ptr(hdr, used)));
- 
- 		hdr->used = cpu_to_le32(used - nsize);
+ 		if (nsize < asize) {
+ 			memmove(Add2Ptr(attr, aoff), data, dlen);
+ 			data = NULL; // To skip below memmove().
 
 
