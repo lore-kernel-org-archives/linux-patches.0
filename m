@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB8444AB6A;
-	Tue, 21 Jul 2026 22:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23026375F81;
+	Tue, 21 Jul 2026 22:33:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673212; cv=none; b=jjYdM0jD6hVFZd7uU1fbcExfejVJZhprtLASIBU9fNMxD32LmHIZHTKQZ2qiebIChnvvdKYnS3i3o294rx6zwyZvZ8agyror0jbgsLF1mgEamjbw0VOAe2HAJJz+qDDjZQZbf/5KDHcfm9KXzNhYrrn8MOJLmxBLE7itDXUgKKc=
+	t=1784673215; cv=none; b=Qq9eY5W9mxEGNseW6JkXM5nkDYyWGQDdVYkbz+vFTuf/MfmljyUs/JKKA0Y5jOwet1szxvzkBtdJUaDabJa7M40KZJsXyIes0gHTvKWZBBPZfSxxgh0J5C7XEme5MhlCj/nsIAIszHHwXRSyWjt0EsMdkUA8+Vd8NMEEMvpS39c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673212; c=relaxed/simple;
-	bh=SDv1Om68Wk2GObHvfpV6RKbNwjNPbrKu13P0CNHUjtQ=;
+	s=arc-20240116; t=1784673215; c=relaxed/simple;
+	bh=DtlQ571hUWz9YISBn4MUI2TkMy7Or6tWR1da6VEjyNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DSxM35WQr82iVi99/tbF45dwFe4kHIXnK4/X6pgRkesi7TttjfWIt34l7zNVqrGSW2HMtSXQ1PLWWUF3P46m1RvSbpOd5+9eiwIDl9OCmKhSPIjab2A9EVq6dojlLtEYEk9pNBo8Wp9TiNppGCxc5RdvnHnNlXl4rb4oZtYqIxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WxBFyWOT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dwah1JDuExGq6Z5D3WZKdMTHQEoIeXoFteYreX4oSQml0SOIuOIelnQFiWUzAZh/BVfDXZoIQ+7DAnmn8aKaAqE8fJWwhCkozrQAgfgaPIj+0gEwqfQ6Mi1EuBdcBpw04U4VFwNFltaU51s8/YwJdtXutolwo9dnvjrcnG+G03s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agWU6wQ1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WxBFyWOT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2DCA1F000E9;
-	Tue, 21 Jul 2026 22:33:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agWU6wQ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D951F000E9;
+	Tue, 21 Jul 2026 22:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673211;
-	bh=AI1/WxkXo/C4gGLQ+4Pvx2bmYpX63Q2ijHd2sdOw/9Y=;
+	s=korg; t=1784673214;
+	bh=vcKlhRfzot11+ckssz4qAxjN7K00/wy5cm9Bg737jdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WxBFyWOTjwZBfyieN6fvMy9uCuMTv/5TmWiUJkViAVHY1jbaOlwiCG/Py/zUYahjA
-	 99ydCsKnkyhB3f90H07ReGK5lJuDXUnoQ5DxHzzOQ1Z36vKY+IXWX2YFIStP5Ccs0W
-	 6uMB1/x6GvLYvm8azlpeWM7WVVeLovrctO3o/BxE=
+	b=agWU6wQ17fEUpm4Wasnruhh67QNiRYIfEIKLNErZIxT8aL5lDF8oA9n8898m2MM/L
+	 hpyU1wlQR0oM5TprqH5OXWk9vdQo2QW8ZS8p6g8pE9pPl6Xexw5tC3E+V6hk1NjQvw
+	 XbxWrcFc8qQR8hRWTfzBgA+iW52WB0XVy2QEoOmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5e8dda76ca21dae314b6@syzkaller.appspotmail.com,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 5.10 075/699] debugobjects: Plug race against a concurrent OOM disable
-Date: Tue, 21 Jul 2026 17:17:14 +0200
-Message-ID: <20260721152357.397620097@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 5.10 076/699] gpio: eic-sprd: use raw_spinlock_t in the irq startup path
+Date: Tue, 21 Jul 2026 17:17:15 +0200
+Message-ID: <20260721152357.420305815@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,111 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@kernel.org>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit b81dde13cc163450dcb402dcc915ef13ba241e01 upstream.
+commit 90f0109019e6817eb40a486671b7722d1544ae29 upstream.
 
-syzbot reported a puzzling splat:
+sprd_eic_irq_unmask() enables the GPIO IRQ and then updates controller
+state through sprd_eic_update(), which takes sprd_eic->lock with
+spin_lock_irqsave().  The callback can be reached from irq_startup()
+while setting up a requested IRQ.  That path is not sleepable, but on
+PREEMPT_RT a regular spinlock_t becomes a sleeping lock.
 
-   WARNING: kernel/time/hrtimer.c:443 at stub_timer+0xa/0x20
+This issue was found by our static analysis tool and then manually
+reviewed against the current tree.
 
-stub_timer() is installed as timer callback function in
-hrtimer_fixup_assert_init(), which is invoked when
-debug_object_assert_init() can't find a shadow object. In that case debug
-objects emits a warning about it before invoking the fixup.
+The grounded PoC kept the request_threaded_irq() -> __setup_irq() ->
+irq_startup() -> sprd_eic_irq_unmask() -> sprd_eic_update() carrier and
+used the original spin_lock_irqsave(&sprd_eic->lock) edge.  Lockdep
+reported:
 
-Though the provided console log lacks this warning and instead has the
-following a few seconds before the splat:
+  BUG: sleeping function called from invalid context
+  hardirqs last disabled at ... __setup_irq.constprop.0 ... [vuln_msv]
+  sprd_rt_spin_lock_irqsave+0x1c/0x30 [vuln_msv]
+  sprd_eic_update.constprop.0+0x48/0x90 [vuln_msv]
+  sprd_eic_irq_unmask.constprop.0+0x35/0x50 [vuln_msv]
+  __setup_irq.constprop.0+0xd/0x30 [vuln_msv]
 
-     ODEBUG: Out of memory. ODEBUG disabled
+Convert the Spreadtrum EIC controller lock to raw_spinlock_t.  The
+locked section only serializes MMIO register updates and does not contain
+sleepable operations, so keeping it non-sleeping is appropriate for the
+irqchip callbacks.
 
-So the object was looked up in debug_object_assert_init() and the lookup
-failed due a concurrent out of memory situation which disabled debug
-objects and freed the shadow objects:
-
-debug_object_assert_init()
-        if (!debug_objects_enabled)
-        	return;                         obj = alloc();
-                				if (!obj) {
-							// Out of memory
-                                                	debug_objects_enabled = false;
-                                                        free_objects();
-        obj = lookup_or_alloc();
-
-        // The lookup failed because the other side
-        // removed the objects, so this returns
-        // an error code as the object in question
-        // is not statically initialized
-
-	if (!IS_ERR_OR_NULL(obj))
-        	return;
-        if (!obj) {
-        	debug_oom();
-                return;
-        }
-
-        print(...)
-           if (!debug_objects_enabled)
-                return;
-
-        fixup(...)
-
-The debug object splat is skipped because debug_objects_enabled is false,
-but the fixup callback is invoked unconditionally, which makes the timer
-disfunctional.
-
-This is only a problem in debug_object_assert_init() and
-debug_object_activate() as both have to handle statically initialized
-objects and therefore must handle the error pointer return case
-gracefully. All other places only handle the found/not found case and the
-NULL pointer return is a signal for OOM. Otherwise they get a valid shadow
-object.
-
-Plug the hole by checking whether debug objects are still enabled before
-invoking the print and fixup function in those two places.
-
-Fixes: b84d435cc228 ("debugobjects: Extend to assert that an object is initialized")
-Reported-by: syzbot+5e8dda76ca21dae314b6@syzkaller.appspotmail.com
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Fixes: 25518e024e3a ("gpio: Add Spreadtrum EIC driver support")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/874iiwlzlb.ffs@fw13
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/20260617154035.1199948-3-runyu.xiao@seu.edu.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/debugobjects.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/gpio/gpio-eic-sprd.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -722,6 +722,14 @@ int debug_object_activate(void *addr, co
- 	}
+--- a/drivers/gpio/gpio-eic-sprd.c
++++ b/drivers/gpio/gpio-eic-sprd.c
+@@ -94,7 +94,7 @@ struct sprd_eic {
+ 	struct irq_chip intc;
+ 	void __iomem *base[SPRD_EIC_MAX_BANK];
+ 	enum sprd_eic_type type;
+-	spinlock_t lock;
++	raw_spinlock_t lock;
+ 	int irq;
+ };
  
- 	raw_spin_unlock_irqrestore(&db->lock, flags);
-+
-+	/*
-+	 * lookup_object_or_alloc() might have raced with a concurrent
-+	 * allocation failure which disabled debug objects.
-+	 */
-+	if (!debug_objects_enabled)
-+		return 0;
-+
- 	debug_print_object(&o, "activate");
+@@ -146,7 +146,7 @@ static void sprd_eic_update(struct gpio_
+ 	unsigned long flags;
+ 	u32 tmp;
  
- 	switch (o.state) {
-@@ -899,6 +907,15 @@ void debug_object_assert_init(void *addr
- 		return;
- 	}
+-	spin_lock_irqsave(&sprd_eic->lock, flags);
++	raw_spin_lock_irqsave(&sprd_eic->lock, flags);
+ 	tmp = readl_relaxed(base + reg);
  
-+	/*
-+	 * lookup_object_or_alloc() might have raced with a concurrent
-+	 * allocation failure which disabled debug objects. Don't run the fixup
-+	 * as it might turn a valid object useless. See for example
-+	 * hrtimer_fixup_assert_init().
-+	 */
-+	if (!debug_objects_enabled)
-+		return;
-+
- 	/* Object is neither tracked nor static. It's not initialized. */
- 	debug_print_object(&o, "assert_init");
- 	debug_object_fixup(descr->fixup_assert_init, addr, ODEBUG_STATE_NOTAVAILABLE);
+ 	if (val)
+@@ -155,7 +155,7 @@ static void sprd_eic_update(struct gpio_
+ 		tmp &= ~BIT(SPRD_EIC_BIT(offset));
+ 
+ 	writel_relaxed(tmp, base + reg);
+-	spin_unlock_irqrestore(&sprd_eic->lock, flags);
++	raw_spin_unlock_irqrestore(&sprd_eic->lock, flags);
+ }
+ 
+ static int sprd_eic_read(struct gpio_chip *chip, unsigned int offset, u16 reg)
+@@ -606,7 +606,7 @@ static int sprd_eic_probe(struct platfor
+ 	if (!sprd_eic)
+ 		return -ENOMEM;
+ 
+-	spin_lock_init(&sprd_eic->lock);
++	raw_spin_lock_init(&sprd_eic->lock);
+ 	sprd_eic->type = pdata->type;
+ 
+ 	sprd_eic->irq = platform_get_irq(pdev, 0);
 
 
