@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43EE46C4CE;
-	Tue, 21 Jul 2026 15:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 642284D90D6;
+	Tue, 21 Jul 2026 15:52:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649125; cv=none; b=mCmOgA4ps7eIOCYYtQSiya6tAQs5T415st4wbf2cmKXBkqqpN1AEMkia9+j2OYvsazwXke6IfzKA1EOvLduvy38uy4oSvHydkGhly/My0oImM8FtlpfJLO9h5wDJWXWE941GEVbrOPHi6PZvnBOjwWgdsexuswwCL8wtu09Jiz4=
+	t=1784649127; cv=none; b=DzK2QfqT03GcMbSf8t/n85sypImDybMbDprUJ7rxgr8+x8hb2ic/ksnIywjNtxO63LG6MJCVVc5EOm+8YosGzI9+WSUUKISDkmvJvZvMghgb54MeoQwqnygoHli2LMzuLcE4X0WOK6sUambv4lcEiP6qb81gNmgqcdz42tvDvEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649125; c=relaxed/simple;
-	bh=ofw1gZp600bNP/6FiklDt1k6xR8kPYsSrH2nfj77EHI=;
+	s=arc-20240116; t=1784649127; c=relaxed/simple;
+	bh=57l3EEtfyslBOeNBhiY8nzOTsi9/x0xGepqreu06d/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UBGfpAowuXrcZdyt2njlLBH6dcCNbLH4GNeksKN0ZEwef64zq03+erq3a0g8REovo2M9jEg0HWZIn28WQWD8y41//HXz1LmocMwcLcRPLoBXk0HbJgRCLVXApmONi0e3pnbE2WlixP3IajtH3fnJhOLIN7RA5/bCzVXQAIG4SHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmMGdRUH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mBoGFgWPNPUP5SLZ+ppqlMa1r1Ciqr9sW5Ou4Fm8aPBl/95/rsrvd2x+FF4qTHGM5+4QfGda9epladcB3CiqjT10DEmlS4oI2b9FmHQIJFOblCHkPy2v0mZ68i2L1bjGlCqML29zgygT67kL3E+BBEZCkkgKSU2+yqo1lwHxZi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CvFb056; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmMGdRUH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3360C1F00A3D;
-	Tue, 21 Jul 2026 15:52:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CvFb056"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0281F000E9;
+	Tue, 21 Jul 2026 15:52:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649123;
-	bh=1n+cGFCm15DIFMSsPfZgzPDXsc8F9HO/BcQ4shvEqWQ=;
+	s=korg; t=1784649126;
+	bh=rf5G+qyDwIJrkN7Y4pqT6NFhb/v+UKv0SqG8kA/JMDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tmMGdRUHmc5O+PMJ8guOMwpXMVyReVO/i6PW0H0K3NVOwXSxUgnNbsA3jDyOTEij6
-	 DuzmLEu3WHg2FMl0SyXEfY/uCM9kV5XD448F/aEuZeBcNR8Q7UQqq4Uv5/Tc5boG8Q
-	 JKd0tnskqBA46LFcqyKt+7BBYAiK/oF+zXe9Oszo=
+	b=1CvFb056CVQvfGQoCOA7xGJksjtlqGNbJgDt/QVaMj8lZ9EZnIXjgFBV+vXd8Wqbc
+	 QeTm2TIfLRZhEbqlzHlDzRIzDjh+jlnbHMhcpgRGpOBPCYIQKgczaTLZjbo4w9RAzw
+	 XRrWFukkfch6P6Gi9ppkurpNPTiPnGDZGf92W5RM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0415/2077] NFSD: Fix delegation reference leak in nfsd4_revoke_states
-Date: Tue, 21 Jul 2026 17:01:28 +0200
-Message-ID: <20260721152602.523844140@linuxfoundation.org>
+Subject: [PATCH 7.1 0416/2077] ARM: imx3: Fix CCM node reference leak
+Date: Tue, 21 Jul 2026 17:01:29 +0200
+Message-ID: <20260721152602.547043789@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,63 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 625981c8f3da0cc2d236d7b46c39dd75554b8276 ]
+[ Upstream commit 36d46348eb5fc4bc505cd2290ddd70c25fbe6bb3 ]
 
-When revoking delegation state, nfsd4_revoke_states() takes an extra
-reference on the stid before calling unhash_delegation_locked(). If
-unhash_delegation_locked() returns false (the delegation was already
-unhashed by a concurrent path), dp is set to NULL and
-revoke_delegation() is skipped, but the extra reference is never
-released. Each occurrence permanently pins the stid in memory. The
-leaked reference also prevents nfs4_put_stid() from decrementing
-cl_admin_revoked, leaving the counter permanently inflated.
+of_find_compatible_node() returns a referenced device node. The i.MX31
+and i.MX35 early init paths use the node to map the CCM registers with
+of_iomap(), but never drop the node reference.
 
-Drop the extra reference in the failure path.
+Release the node after the mapping is created.
 
-Fixes: 8dd91e8d31fe ("nfsd: fix race between laundromat and free_stateid")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 2cf98d12958c ("ARM: imx3: Retrieve the CCM base address from devicetree")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/arm/mach-imx/mm-imx3.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index d875e98d4dcbd0..2696a9fef0291c 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -1376,7 +1376,8 @@ static void destroy_delegation(struct nfs4_delegation *dp)
-  * stateid or it's called from a laundromat thread (nfsd4_landromat()) that
-  * determined that this specific state has expired and needs to be revoked
-  * (both mark state with the appropriate stid sc_status mode). It is also
-- * assumed that a reference was taken on the @dp state.
-+ * assumed that a reference was taken on the @dp state. This function
-+ * consumes that reference.
-  *
-  * If this function finds that the @dp state is SC_STATUS_FREED it means
-  * that a FREE_STATEID operation for this stateid has been processed and
-@@ -1839,6 +1840,10 @@ void nfsd4_revoke_states(struct nfsd_net *nn, struct super_block *sb)
- 					mutex_unlock(&stp->st_mutex);
- 					break;
- 				case SC_TYPE_DELEG:
-+					/* Extra reference guards against concurrent
-+					 * FREE_STATEID; revoke_delegation() consumes
-+					 * it, otherwise release it directly.
-+					 */
- 					refcount_inc(&stid->sc_count);
- 					dp = delegstateid(stid);
- 					spin_lock(&nn->deleg_lock);
-@@ -1848,6 +1853,8 @@ void nfsd4_revoke_states(struct nfsd_net *nn, struct super_block *sb)
- 					spin_unlock(&nn->deleg_lock);
- 					if (dp)
- 						revoke_delegation(dp);
-+					else
-+						nfs4_put_stid(stid);
- 					break;
- 				case SC_TYPE_LAYOUT:
- 					ls = layoutstateid(stid);
+diff --git a/arch/arm/mach-imx/mm-imx3.c b/arch/arm/mach-imx/mm-imx3.c
+index 0788c5cc7f9e64..9b0b014d7fe276 100644
+--- a/arch/arm/mach-imx/mm-imx3.c
++++ b/arch/arm/mach-imx/mm-imx3.c
+@@ -106,6 +106,7 @@ void __init imx31_init_early(void)
+ 	arm_pm_idle = imx31_idle;
+ 	np = of_find_compatible_node(NULL, NULL, "fsl,imx31-ccm");
+ 	mx3_ccm_base = of_iomap(np, 0);
++	of_node_put(np);
+ 	BUG_ON(!mx3_ccm_base);
+ }
+ #endif /* ifdef CONFIG_SOC_IMX31 */
+@@ -143,6 +144,7 @@ void __init imx35_init_early(void)
+ 	arch_ioremap_caller = imx3_ioremap_caller;
+ 	np = of_find_compatible_node(NULL, NULL, "fsl,imx35-ccm");
+ 	mx3_ccm_base = of_iomap(np, 0);
++	of_node_put(np);
+ 	BUG_ON(!mx3_ccm_base);
+ }
+ #endif /* ifdef CONFIG_SOC_IMX35 */
 -- 
 2.53.0
 
