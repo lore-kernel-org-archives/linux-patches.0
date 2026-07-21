@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF02415F16;
-	Tue, 21 Jul 2026 21:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934CF415F23;
+	Tue, 21 Jul 2026 21:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669678; cv=none; b=eeykkPIfo7vo13uOmg97VOs2y1WMFTiho6fi0IwfEEzG6DZVEtCDi7Tp2o5InyaK5cMXTlTaQ/q9hpHNGkcjp2qofdFi+vyfPHHsx3pDx/5Az7+jbhNSllZ+gn4R4eLDuuJsk6zoEwZuX+/SJTe+axo/pHLwYmGfhIzYEUoLNs0=
+	t=1784669681; cv=none; b=r2nH/4Xg8QkK8wqlxSdysXe1y3D0cs4qm0QiZ3r/8J45/WlI/uGXTN3vQOXIFRRzl66Ese/GyZImXoMjcMtGySu8m/4tGezQDqjvaguTfhs4ryOJIniyME2ZEAmzO8Y7K0pDtAJH/yWzky90+K50/T/F729SidAi0LsIlP/NFiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669678; c=relaxed/simple;
-	bh=KnllwIv1JhE6NIKh0FvizU/TpTDU2gEHqZXHQIrRaco=;
+	s=arc-20240116; t=1784669681; c=relaxed/simple;
+	bh=C9NREAG3hKkN+t4xUzREGoPM4h3a6JmmO8qpsZxXCu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H/XpXNnpTHzyKEPQHYNeY9eeieR6ZD8AssyDhqvjwZ08cWHoR8PIUwJiZ5Hzl0kiMEZED9LrnhcbkXk05IGO8wzldrwNtyGTlPSfzrIU+46AAzSFIgMZzVtQ3baO2cRD3ons+1u700MGpPwztm5rq5ZHiSeUrEV8mJFukf/y/W8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBvMnL99; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hL7DII6DmiLu7KmvOwarOeQtkYBUgT8eu+OFEI1zU33CvTory/evFxTWOb8MolJe9DTxnTQK2OpnCb2XxZRRxXqIIO5W5TMeHoRi86lYsJ6VvPuILiQMv/TapbswTMI3e5FE5sWmDnSjzEVa92vowHaOpw864Vc9E9eOPG8MZb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKR8eYP6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBvMnL99"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF061F00A3A;
-	Tue, 21 Jul 2026 21:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKR8eYP6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA2F1F00A3A;
+	Tue, 21 Jul 2026 21:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669676;
-	bh=zMDuT+4iIcd6lqLhjJpxoF2tFacfkf8YOhXq0e1EJxA=;
+	s=korg; t=1784669679;
+	bh=yKjbhUvNQvuhl0TTss4UGmUNv9lr3sXjKYyFCZFKrkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aBvMnL99d3qFeUfk7+v85KxrXqtbNlLBpc9zVCSUe+wcSPMKgiFyVXPg7bjCB2Qgl
-	 l2ImM+RUIxNsPvHJnEc1qinNCxx8K9MKm7zUQpHlteAvR5XWFdp0EvVF/jWmP04KV0
-	 WpwwOvkWuDIcqg06i6VZfs6gA3KPDKfunYUybZ30=
+	b=NKR8eYP6lSupEej65RGpXxAM5lG3TyiHdJ6h/9p3uxrTXCFQ9Nl29koVi5eBXdPuN
+	 jLkv/nXec7v5MPyM7bz5dGczGususZoRfa/Yp9fiOKQxM9Svicrq6Wf1mPcdCbXAE/
+	 M6puH19Gn1rBygQqF3CYG2ZCXxE+02aPDYNaLVOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0644/1067] net: sungem: fix probe error cleanup
-Date: Tue, 21 Jul 2026 17:20:45 +0200
-Message-ID: <20260721152439.000493666@linuxfoundation.org>
+Subject: [PATCH 6.1 0645/1067] ASoC: fsl_asrc_dma: fix eDMA maxburst misalignment with channel count
+Date: Tue, 21 Jul 2026 17:20:46 +0200
+Message-ID: <20260721152439.022243420@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,70 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 36dea2f639249460d13f6ca66b2a9064187cd34d ]
+[ Upstream commit cf6f56990ea21172e085f0588e5bbf2089ce8f58 ]
 
-gem_init_one() calls gem_remove_one() when register_netdev() fails.
-gem_remove_one() unregisters and frees resources owned by the net_device,
-including the DMA block, MMIO mapping, PCI regions, and the net_device
-itself. gem_init_one() then falls through to its own cleanup labels and
-frees the same resources again.
+The back-end consumes data in units of the number of channels. When the
+maxburst value is not evenly divisible by the channel count, the DMA
+transfer length does not align with the FIFO frame boundary, causing
+wrong data to be copied and audible noise at the end of the stream.
 
-Keep the register_netdev() error path in gem_init_one(): clear drvdata so
-PM/remove paths do not see a half-registered device, remove the NAPI
-instance added during probe, and let the existing cleanup labels release
-the resources once.
+This is specific to eDMA: eDMA only responds to DMA requests from the
+back-end, whereas SDMA handles requests from both the front-end and the
+back-end and is not affected.
 
-The issue was found by a local static-analysis checker for probe error
-paths. The reported path was manually inspected before sending this fix.
+For eDMA, when the back-end maxburst is not evenly divisible by the
+channel count, align it to the nearest valid boundary:
+- If maxburst >= channel count, override to the channel count so each
+  transfer corresponds to exactly one audio frame.
+- If maxburst < channel count, override to 1 to avoid partial-frame
+  transfers.
 
-Compile-tested with CONFIG_SUNGEM=y. Runtime testing was not performed
-because no sungem hardware is available.
+Retain the original maxburst for SDMA or when it already aligns with
+the channel count.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260623025759.3468566-1-ruoyuw560@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c05f10f28ef6 ("ASoC: fsl_asrc: Add support for imx8qm & imx8qxp")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20260625102416.424911-1-shengjiu.wang@oss.nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sun/sungem.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ sound/soc/fsl/fsl_asrc_dma.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/net/ethernet/sun/sungem.c b/drivers/net/ethernet/sun/sungem.c
-index 940e45bf7a2ebf..ebaa203d07f668 100644
---- a/drivers/net/ethernet/sun/sungem.c
-+++ b/drivers/net/ethernet/sun/sungem.c
-@@ -2985,10 +2985,10 @@ static int gem_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	dev->max_mtu = GEM_MAX_MTU;
+diff --git a/sound/soc/fsl/fsl_asrc_dma.c b/sound/soc/fsl/fsl_asrc_dma.c
+index 05a7d1588d204b..91dd85153e83e1 100644
+--- a/sound/soc/fsl/fsl_asrc_dma.c
++++ b/sound/soc/fsl/fsl_asrc_dma.c
+@@ -275,6 +275,26 @@ static int fsl_asrc_dma_hw_params(struct snd_soc_component *component,
+ 	config_be.dst_addr_width = buswidth;
+ 	config_be.dst_maxburst = dma_params_be->maxburst;
  
- 	/* Register with kernel */
--	if (register_netdev(dev)) {
-+	err = register_netdev(dev);
-+	if (err) {
- 		pr_err("Cannot register net device, aborting\n");
--		err = -ENOMEM;
--		goto err_out_free_consistent;
-+		goto err_out_clear_drvdata;
- 	}
- 
- 	/* Undo the get_cell with appropriate locking (we could use
-@@ -3002,8 +3002,13 @@ static int gem_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 		    dev->dev_addr);
- 	return 0;
- 
-+err_out_clear_drvdata:
-+	pci_set_drvdata(pdev, NULL);
-+	netif_napi_del(&gp->napi);
++	/*
++	 * For eDMA, the back-end may report a maxburst size that is not evenly
++	 * divisible by the channel count. This causes the DMA transfer length
++	 * to misalign with the FIFO boundary, resulting in wrong data and
++	 * audible noise. Align maxburst to the nearest valid boundary:
++	 * - If maxburst >= channel count, override to the channel count so
++	 *   each transfer equals exactly one audio frame.
++	 * - If maxburst < channel count, override to 1 to avoid partial-frame
++	 *   transfers.
++	 */
++	if (asrc->use_edma && (dma_params_be->maxburst % params_channels(params))) {
++		if (dma_params_be->maxburst >= params_channels(params)) {
++			config_be.src_maxburst = params_channels(params);
++			config_be.dst_maxburst = params_channels(params);
++		} else {
++			config_be.src_maxburst = 1;
++			config_be.dst_maxburst = 1;
++		}
++	}
 +
- err_out_free_consistent:
--	gem_remove_one(pdev);
-+	dma_free_coherent(&pdev->dev, sizeof(struct gem_init_block),
-+			  gp->init_block, gp->gblock_dvma);
- err_out_iounmap:
- 	gem_put_cell(gp);
- 	iounmap(gp->regs);
+ 	memset(&audio_config, 0, sizeof(audio_config));
+ 	config_be.peripheral_config = &audio_config;
+ 	config_be.peripheral_size  = sizeof(audio_config);
 -- 
 2.53.0
 
