@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF703C4B93;
-	Tue, 21 Jul 2026 21:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77CC418A48;
+	Tue, 21 Jul 2026 21:37:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669858; cv=none; b=YlQfuOhYe2COhiiqfPYx2jJwCt8Pozgs3S1cb3n/wVG7jpB8pLByVFTMB1ux01DmlM95r8JpYtcIey4V8aFPH0wH54uGUANOb/4bi0BGVEHxiDQ2zCEAUjWR+GoMqFUhtmOBU+InID/VMVE8vh3+U2H3VH4faDaTjk+38JuoU3w=
+	t=1784669861; cv=none; b=XbqMlp9AAWppCP6yzWkJtW0aI68XEbNGhJ5t1D6GETUNOz1v0/ZiYmBLU+EZmSBynEg5nTk2uBEJ3nMSxyQnjZBlSMZf+SJ4Kc4B6LCrbOMQh3YKaNKRgYTwu9HLQ55wYqxg5rlO1m6gFPQEdOHu9nZe1b34KdtHTnIEOVK9eVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669858; c=relaxed/simple;
-	bh=HmUZStnMDBzYxrtGK8KldyWJR2RpVEqtFCWWy0AHRTM=;
+	s=arc-20240116; t=1784669861; c=relaxed/simple;
+	bh=ttPE9XNXdjpZELjEUpiPca6ZotjkiHFOx0TYfsOuZ3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nFMzixSVO4rkvbm4wom5kZhaRE+jIyQRZEupIOYRsP0yo3/ECY49RdH647Y7buTiEYE3Lb4h3458uYYACxnmZXEb6s/NLHwfjWkcx0W2bpYeYLqnK0f5ak3Ptk0k7v7OkpltYx1KsZ6y4GGjh0Uq/nMDcZMHMvY7ZX/ot0QERIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9r+omUP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fCCdDZp1dT4gyR1wcJSu7wFtzmYY9m64bXLiFax3ng5u7jxes90mtk6RBUcUWVYr2a5/IwKsmrkQ3VzWp85zVO6EnhQJh20EkM7HUgBXsABetrW7WNkEwP5qn1Z8tTFWklUx9rg4mPaXF7FMhH0mvyT3S2c+7Gghj7FnRejbZVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QwfYsC2v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9r+omUP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE54A1F000E9;
-	Tue, 21 Jul 2026 21:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QwfYsC2v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C9C1F000E9;
+	Tue, 21 Jul 2026 21:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669857;
-	bh=8ZXsILMZoPu0fgUF7sukqC5DK0q0UtyebtLVVPJCHug=;
+	s=korg; t=1784669859;
+	bh=A72B7wptv249z7B06bwPX6altUb55utIVTq1TO7g2RI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k9r+omUPwyVLlzjQzfdzsAx19/+0B3tRehp4vxe3VqJSelcPJ6WICzcL8KWL9qbd+
-	 tL8Lxkpk0SBW9YxoLAeIF0NUl7Gw0Wwr3MlNC2Hl9cbgIWskzXobqIU/ukAiPBiRNv
-	 9ghrAX6eCRf2paamqfOetfYMNLv2BESfvNc6wzDc=
+	b=QwfYsC2vHPqS+LNUSoZhs8r9X0xhmQpb7VZfoJms++MIlvGT/dWxX5rSCWQTgpMBg
+	 vMiLGT+t8b5T0N1cRJC8cMPEQ8bIOHq/RYjRSGkzH9ssJHjNmHih9hU/GO9JH9uTzm
+	 R8UGzdN1L0/9SyFxvOmsFE/G0bwrUAoLhXh1prH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0714/1067] smb: client: fix overflow in passthrough ioctl bounds check
-Date: Tue, 21 Jul 2026 17:21:55 +0200
-Message-ID: <20260721152440.562053716@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 0715/1067] mlxsw: fix refcount leak in mlxsw_sp_vrs_lpm_tree_replace()
+Date: Tue, 21 Jul 2026 17:21:56 +0200
+Message-ID: <20260721152440.584016510@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,50 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit a4f27ad055392fa164f5649e89a3637b033c5fcc ]
+commit 21cf8dc478a49e8de039c2739b1646a774cb1944 upstream.
 
-smb2_ioctl_query_info() validates the PASSTHRU_FSCTL response payload
-before copying it to userspace.
+When mlxsw_sp_vrs_lpm_tree_replace() fails after replacing some VRs,
+the error rollback loop does not correctly revert the preceding
+replacements. The loop decrements the index but fails to update the
+vr pointer, which still points to the VR that caused the failure. As
+a result, the condition and the rollback call always operate on the
+same VR, potentially calling mlxsw_sp_vr_lpm_tree_replace() multiple
+times on it while never rolling back the earlier VRs. Those VRs
+continue to hold a reference to new_tree acquired via
+mlxsw_sp_lpm_tree_hold(), leaking the reference count of new_tree.
 
-The payload offset and length both come from 32-bit fields. The bounds
-check currently adds OutputOffset and qi.input_buffer_length directly, so
-the addition can wrap in 32-bit arithmetic before the result is compared
-against the response buffer length.
+Fix by reinitializing vr inside the error loop with the updated index:
 
-A malicious server can use a large OutputOffset and a small OutputCount
-to make the wrapped sum pass the bounds check. The later copy_to_user()
-then reads from io_rsp + OutputOffset, outside the response buffer.
+	vr = &mlxsw_sp->router->vrs[i];
 
-Use size_add() for the offset plus length check so overflow is treated as
-out of bounds.
+so that the loop correctly iterates over all VRs that were actually
+replaced.
 
-Fixes: 2b1116bbe898 ("CIFS: Use common error handling code in smb2_ioctl_query_info()")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: fc922bb0dd94 ("mlxsw: spectrum_router: Use one LPM tree for all virtual routers")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260609084730.215732-1-vulab@iscas.ac.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 65a6bd18a604b3..a256a3ede7542e 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -1690,8 +1690,8 @@ smb2_ioctl_query_info(const unsigned int xid,
- 		if (le32_to_cpu(io_rsp->OutputCount) < qi.input_buffer_length)
- 			qi.input_buffer_length = le32_to_cpu(io_rsp->OutputCount);
- 		if (qi.input_buffer_length > 0 &&
--		    le32_to_cpu(io_rsp->OutputOffset) + qi.input_buffer_length
--		    > rsp_iov[1].iov_len) {
-+		     size_add(le32_to_cpu(io_rsp->OutputOffset),
-+			     qi.input_buffer_length) > rsp_iov[1].iov_len) {
- 			rc = -EFAULT;
- 			goto out;
- 		}
--- 
-2.53.0
-
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_router.c
+@@ -986,6 +986,7 @@ static int mlxsw_sp_vrs_lpm_tree_replace
+ 
+ err_tree_replace:
+ 	for (i--; i >= 0; i--) {
++		vr = &mlxsw_sp->router->vrs[i];
+ 		if (!mlxsw_sp_vr_lpm_tree_should_replace(vr, proto, new_id))
+ 			continue;
+ 		mlxsw_sp_vr_lpm_tree_replace(mlxsw_sp,
 
 
