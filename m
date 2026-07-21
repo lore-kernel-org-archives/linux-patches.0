@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C35F46AA91;
-	Tue, 21 Jul 2026 15:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510DB46C4A5;
+	Tue, 21 Jul 2026 15:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649552; cv=none; b=rv5BGEzh5OgXwzQyDlwb+Rzphzl1vAMC72PNnPRCX5gTU7YKTVjS+9mWhVxyfriU6yXnmGJNuC1NqIOLoyNYetiKo/gU2Ie6WnLQ7e2WM5VnBNzizHTEKYNuIQMdUz9BSN6SKaiyhN2hfKzyGxXtDNF9cEE1wtIiSqPEQg56I5Y=
+	t=1784649555; cv=none; b=sVv9o8sBRLE3ASzBQUhpzTyzIrGw8lh1YFaZYLoau7jRL2XYp80o/5dlc9oQlFXvkIPYYzTXmcJimrWT7usHiV8lXJGHLrMz9Fa2PnlM3bFvIgVOuxbOjiLgqWAT4EwMgi0DHFj2is9FV0smnmVU33HIQ7hGqtOGUZ2/WW7qmfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649552; c=relaxed/simple;
-	bh=ZX7R0bs0vdD5/NJEpX5drmerZqNi2FUvLnxsRENxrEw=;
+	s=arc-20240116; t=1784649555; c=relaxed/simple;
+	bh=uPPWsM0fdWz8CNxBOQ915/rzsLqzwwF3MD50AiIAM7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y5pYY/yTx0zCzsC88dYOmiGlbtTZ7Op7GIQJL0uUlRRK0+rQqjHLHRc6A17huYzYo1sYBDZh9557lmDqnPzPvZ7TnYVqsexJiMOdS7omP16qvJEvKrnxxaUfWFH9UenZXX2ihor9WCh7xJD2uKIhJIr3o+f45HbITpOjkLB8dVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CjwGbvo4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jcmZ5HeNgF6dSWwndD7wnBauNVpVRWCxxDBiSeXdtc7ereBTuy5y9qHN3pdzfi8nkm1d/48lyLMD8fqY+YKTHMuAefJ8S2uTXeddYPHkhcJTPudogzkOsSRF8D0C9OKqY2u77YMrGSzolzmrcTOBN9PyYtpblqVnlhH+0QK+TAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9GWlC7X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjwGbvo4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD2AD1F000E9;
-	Tue, 21 Jul 2026 15:59:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9GWlC7X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E961F000E9;
+	Tue, 21 Jul 2026 15:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649551;
-	bh=7LOVn3SudGSAM8pbGg9tcFsh5LEK9wWj5dI7RrOmGq0=;
+	s=korg; t=1784649554;
+	bh=uGRkNkFU//IoWHoA67BB/afeTrwWAFPk0yLI1u5a3Ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CjwGbvo4JXSqb2JWU7kfWNX80hnpk/w2J63wxBmn7M0HwIGZpfvK24MvMGqHA5wVm
-	 L4PlkGocjiSoT7y7JtZsGEwSGtatOzRsDmYFQabvASy2WGqSYQ5oGtgg1fKnO0F/KB
-	 cJiAhKRJglZeSoM4sP+rc/0eI6s5GplSR1RmjvTg=
+	b=L9GWlC7XHKpRoqcNpT8xcqYv5yOyjON6jPzmqN/3UKARHF0w02BDQILNs2V8dQhUf
+	 jwgUOE/kRbP/BzNumjwb9yyNL08ENttXPKslqZ8n6+p/P9wBDyMmxJDzAD2ZrezBC2
+	 x0JR+cgeTjkCwieS8reDWpNAQjext3YQSjXK1v6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0621/2077] lockd: Translate nlm__int__deadlock in __nlm4svc_proc_lock_msg()
-Date: Tue, 21 Jul 2026 17:04:54 +0200
-Message-ID: <20260721152607.450705106@linuxfoundation.org>
+Subject: [PATCH 7.1 0622/2077] lockd: Do not monitor when looking up the LOCK_MSG callback host
+Date: Tue, 21 Jul 2026 17:04:55 +0200
+Message-ID: <20260721152607.475657364@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,44 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 2175ca75882e346c9d8741a2196693d70f635340 ]
+[ Upstream commit b3d200166a35305ac77941845dcab99bb6badd76 ]
 
-When nlmsvc_lock() detects a deadlock it returns the internal
-sentinel nlm__int__deadlock (30001), which version-specific
-handlers must translate to a wire-valid status before the reply
-is encoded.  The xdrgen LOCK_MSG handler stores the sentinel
-unmodified in resp->status; the LOCK_RES callback then places
-30001 on the v4 wire, where the client rejects the reply.
+A LOCK_MSG handler that fails to obtain a host returns
+rpc_system_err, which causes the dispatcher to send an RPC-level
+error rather than an NLM LOCK_RES denial. Before the xdrgen
+conversion, the outer host lookup was unmonitored, so an NSM
+upcall failure was reported back to the client through LOCK_RES
+with status nlm_lck_denied_nolocks generated by the inner helper.
 
-Commit 9e0d0c619407 ("lockd: Introduce nlm__int__deadlock")
-established the translation boundary and updated the synchronous
-v4 path nlm4svc_do_lock(), but the xdrgen LOCK_MSG handler added
-later in commit b2be4e28c23a ("lockd: Use xdrgen XDR functions
-for the NLMv4 LOCK_MSG procedure") missed the corresponding
-remap.  Apply the same translation in __nlm4svc_proc_lock_msg()
-so deadlock results are reported as nlm4_deadlock on LOCK_RES.
+The xdrgen conversion replaced the unmonitored lookup with
+nlm4svc_lookup_host(..., true). When nsm_monitor() fails, the
+outer lookup now returns NULL, so the procedure short-circuits to
+rpc_system_err and __nlm4svc_proc_lock_msg() never runs. The
+client therefore receives no LOCK_RES, regressing the legacy
+behavior.
+
+The inner helper still performs a monitored lookup while building
+the LOCK_RES, so the outer call only needs an unmonitored host
+reference for the callback path. Pass false here to restore the
+previous semantics.
 
 Fixes: b2be4e28c23a ("lockd: Use xdrgen XDR functions for the NLMv4 LOCK_MSG procedure")
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/lockd/svc4proc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/lockd/svc4proc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/lockd/svc4proc.c b/fs/lockd/svc4proc.c
-index 41cab858de5782..74070e33cb3e2d 100644
+index 74070e33cb3e2d..ca1d165e0d8606 100644
 --- a/fs/lockd/svc4proc.c
 +++ b/fs/lockd/svc4proc.c
-@@ -669,6 +669,8 @@ __nlm4svc_proc_lock_msg(struct svc_rqst *rqstp, struct nlm_res *resp)
- 	resp->status = nlmsvc_lock(rqstp, file, host, &argp->lock,
- 				   argp->xdrgen.block, &resp->cookie,
- 				   argp->xdrgen.reclaim);
-+	if (resp->status == nlm__int__deadlock)
-+		resp->status = nlm4_deadlock;
- 	nlmsvc_release_lockowner(&argp->lock);
+@@ -699,7 +699,7 @@ static __be32 nlm4svc_proc_lock_msg(struct svc_rqst *rqstp)
+ 	struct nlm4_lockargs_wrapper *argp = rqstp->rq_argp;
+ 	struct nlm_host *host;
  
- out:
+-	host = nlm4svc_lookup_host(rqstp, argp->xdrgen.alock.caller_name, true);
++	host = nlm4svc_lookup_host(rqstp, argp->xdrgen.alock.caller_name, false);
+ 	if (!host)
+ 		return rpc_system_err;
+ 
 -- 
 2.53.0
 
