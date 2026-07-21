@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB2B43E4B9;
-	Tue, 21 Jul 2026 22:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC9C4418EC;
+	Tue, 21 Jul 2026 22:20:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672413; cv=none; b=qXpbYfVLB77LUIQEeNbhES/zh4Cx9bgjJVvsyJDk34eFKGjk+5ixHOq3us18pztyV4/mqXTik9N+61ditasku0IuTm05FQJ3RC2ZQcEbL6idpQ53EX4JCIQzapen0zNbgN0niKS/k4wftSdoXowoQmtz7eaP3xeuJIhZ+z0q3O8=
+	t=1784672416; cv=none; b=DTSFW3BGR9m9EdCsezMppGVoQ7KjyhHiog+pvXPEGHFlPt5Ce3diWesCWoKm3+3fCUoI+geVEHUpHPATpmfqpEbr11svt27C2nRr18QXGL5UgyWjom/b7XpYtQf1Rb9hVPpMFm2gFtxi1AaQUfLYRIgC0EYCfAxImGeXnEDxXYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672413; c=relaxed/simple;
-	bh=mgmXSNBQn47Zp+Wmmlo4GsNB0kpjMsvo7gQ7FmiwCEA=;
+	s=arc-20240116; t=1784672416; c=relaxed/simple;
+	bh=fmc0IGtUhCA+o/WO/JuyyScsgmNJV4n0Zc6ourRN7dY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Is1j6829MgTYOV0deoMyAk1+SxqQvONPxZYyVUbVJLCAnkOX1otMPdP/ZSMGNn2UIGs0pvYWV17vW+ODaVWrUgHaXIgo9TNZT+VuZlSf8ORnvNpIsuikjn7WFONZ/fcONZSQ4PpYgvY3w/TpM8Zn3tRDuMNVh+aKvwsrwAz588w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JhfhDpWA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ACG6tsNf/uXwD2EBIEcV72FsgZa7j7I6RnS2w0fzn0CjIeiJTsJpsEkjo/rj0+hbsR4lAA4iihnwP4IYOIyVtVOlH0ZABoPmsZMBkJ98c02kBgeEouO1/k7a3B1Lh/8aezWhasSw4jN72XZBisgZMUHqR/0LBNDSvvT1vk1g42I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvPww80G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JhfhDpWA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 020F81F000E9;
-	Tue, 21 Jul 2026 22:20:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvPww80G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF03F1F000E9;
+	Tue, 21 Jul 2026 22:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672412;
-	bh=VAQP84tsyskPqoyNPrdBhndENbyAVaHqeZBJYd2Hl5M=;
+	s=korg; t=1784672415;
+	bh=e+B2tytJubSI14fk56GMkVhdVp+pmi6ApKEjC6vPNzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JhfhDpWAHOqs337vXJiOiRNyzzwD/gqQfD29nBPFWjfI1AW8ai4jPUNn9543jhIEo
-	 M+ucMZAWTVlwIaEqV31ukDfGqcQiv9wQSkGzMR8usQDLFnW1KHnPRt5vV2zf/rFlQR
-	 emxohnL/FpZp7l+Xt3mS/UwN75Yj+D59qkwzRcis=
+	b=dvPww80GPPuLbEdmflv1x2q4XDfb2xYB/1zh3AKpRJQ+qgtncIWB7UUEF8qhXSl55
+	 Z9JUrERjMfz8hKOCOFsMM+DmzRv3EuPJQhbRk6AjyzL+AeIKQssmvjYHL3FbLzuCpH
+	 8rTLftymTaBjj31qiti36f5STn8Kki95OL8GjIM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Pavitra Jha <jhapavitra98@gmail.com>,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 5.15 614/843] fs/ntfs3: add depth limit to indx_find_buffer to prevent stack overflow
-Date: Tue, 21 Jul 2026 17:24:09 +0200
-Message-ID: <20260721152419.866810560@linuxfoundation.org>
+Subject: [PATCH 5.15 615/843] fs/ntfs3: bound NTFS_DE view.data_off in UpdateRecordData{Root,Allocation}
+Date: Tue, 21 Jul 2026 17:24:10 +0200
+Message-ID: <20260721152419.888781295@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,79 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 1ebd684b8f627f75bc3e03f8b2ad8400fd1f02cd upstream.
+commit 3e127829e57f5190f612412ece4541cb96d5ec7a upstream.
 
-indx_find_buffer() recursively descends the B+ tree index with no depth
-limit.  A crafted NTFS image with circular index node references causes
-unbounded recursion, overflowing the kernel stack and panicking the
-system.
+In do_action()'s UpdateRecordDataRoot (fslog.c:3489) and
+UpdateRecordDataAllocation (fslog.c:3697) cases, the memmove
+destination is `Add2Ptr(e, le16_to_cpu(e->view.data_off))`,
+where e->view.data_off comes from an on-disk NTFS_DE inside
+an INDEX_ROOT or INDEX_BUFFER.  Neither case validates
+view.data_off + dlen against e->size; the existing
+check_if_index_root / check_if_alloc_index helpers walk the
+entry chain and validate the entry's offset, but not its
+internal view fields.
 
-This is reachable by mounting a malicious NTFS filesystem (e.g. from a
-USB drive via desktop automount) and deleting a file whose index entry
-triggers the rebalancing fallback path in indx_delete_entry().
+The neighbouring read sites (e.g., fs/ntfs3/index.c when
+iterating view entries) check view.data_off + view.data_size
+<= e->size.  Apply the same bound at the two memmove sites.
 
-Add a depth parameter and bail out with -EINVAL when it reaches the
-fnd->nodes array bound, matching the constraint already enforced by
-fnd_push() in indx_find().
+Reproduced under UML+KASAN on mainline 8d90b09e6741 via
+pr_warn-only probe instrumentation: with view.data_off forced
+to 0xFFFC, the memmove writes 32 bytes past the end of the
+NTFS_DE.
 
-The related function indx_find() was previously patched for a similar
-infinite-loop issue (commit 1732053c8a6b), but indx_find_buffer() was
-missed.
+This is similar in shape to Pavitra Jha's 2026-05-02 patch
+"fs/ntfs3: prevent oob in case UpdateRecordDataRoot"
+(<20260502105008.21827-1-jhapavitra98@gmail.com>) which
+proposes calling ntfs3_bad_de_range(); that helper does not
+exist in mainline.  This patch uses inline checks.
 
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
+Reported-by: Pavitra Jha <jhapavitra98@gmail.com>
+Closes: https://lore.kernel.org/ntfs3/20260502105008.21827-1-jhapavitra98@gmail.com/
+Assisted-by: Claude:claude-opus-4-7
 Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/index.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ fs/ntfs3/fslog.c |   18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -1998,13 +1998,21 @@ out1:
- static struct indx_node *indx_find_buffer(struct ntfs_index *indx,
- 					  struct ntfs_inode *ni,
- 					  const struct INDEX_ROOT *root,
--					  __le64 vbn, struct indx_node *n)
-+					  __le64 vbn, struct indx_node *n,
-+					  int depth)
- {
- 	int err;
- 	const struct NTFS_DE *e;
- 	struct indx_node *r;
- 	const struct INDEX_HDR *hdr = n ? &n->index->ihdr : &root->ihdr;
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -3512,6 +3512,18 @@ move_data:
  
-+	/*
-+	 * Limit recursion depth to prevent stack overflow from crafted
-+	 * images.  Use the same bound as the fnd->nodes array (20).
-+	 */
-+	if (depth > ARRAY_SIZE(((struct ntfs_fnd *)NULL)->nodes))
-+		return ERR_PTR(-EINVAL);
+ 		e = Add2Ptr(attr, le16_to_cpu(lrh->attr_off));
+ 
++		/*
++		 * e->view.data_off and dlen come from the on-disk
++		 * INDEX_ROOT entry / LRH.  The neighbouring read sites
++		 * (e.g. fs/ntfs3/index.c) check that
++		 * view.data_off + view.data_size <= e->size; mirror that
++		 * bound here so the memmove cannot reach past the entry.
++		 */
++		if (le16_to_cpu(e->view.data_off) > le16_to_cpu(e->size) ||
++		    le16_to_cpu(e->view.data_off) + dlen >
++			    le16_to_cpu(e->size))
++			goto dirty_vol;
 +
- 	/* Step 1: Scan one level. */
- 	for (e = hdr_first_de(hdr);; e = hdr_next_de(hdr, e)) {
- 		if (!e)
-@@ -2025,7 +2033,8 @@ static struct indx_node *indx_find_buffe
- 			if (err)
- 				return ERR_PTR(err);
+ 		memmove(Add2Ptr(e, le16_to_cpu(e->view.data_off)), data, dlen);
  
--			r = indx_find_buffer(indx, ni, root, vbn, n);
-+			r = indx_find_buffer(indx, ni, root, vbn, n,
-+					     depth + 1);
- 			if (r)
- 				return r;
+ 		mi->dirty = true;
+@@ -3720,6 +3732,12 @@ move_data:
+ 			goto dirty_vol;
  		}
-@@ -2426,7 +2435,7 @@ int indx_delete_entry(struct ntfs_index
  
- 		fnd_clear(fnd);
++		/* See UpdateRecordDataRoot for the rationale. */
++		if (le16_to_cpu(e->view.data_off) > le16_to_cpu(e->size) ||
++		    le16_to_cpu(e->view.data_off) + dlen >
++			    le16_to_cpu(e->size))
++			goto dirty_vol;
++
+ 		memmove(Add2Ptr(e, le16_to_cpu(e->view.data_off)), data, dlen);
  
--		in = indx_find_buffer(indx, ni, root, sub_vbn, NULL);
-+		in = indx_find_buffer(indx, ni, root, sub_vbn, NULL, 0);
- 		if (IS_ERR(in)) {
- 			err = PTR_ERR(in);
- 			goto out;
+ 		a_dirty = true;
 
 
