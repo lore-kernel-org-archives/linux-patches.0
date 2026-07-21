@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B7E415F14;
-	Tue, 21 Jul 2026 19:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077E13ED3B2;
+	Tue, 21 Jul 2026 19:22:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661769; cv=none; b=dS0IkbLsQOYEGJoE8nUdDmyqhR2+06H5rnOshf8OWTbJgNom5tlfx2422xlo574KSIosS4m45s74d6WRlkfEVViXGNDSZKZChH7/l5ZaKsNUJxnW3Xw/uM8yNjGUVVkU3KBXJtvMHCE8wzLhAgtLZDzii6R6/ikeb25mASD3iow=
+	t=1784661772; cv=none; b=uSw9UYRt1lXT2halYSKJjGHxCq1epNL1p1vKamHpllOc66rDmP0ZfXHl8wut4VNEzGk4ZW2jOr29sDLfufBo3FWSqEbfKpcQjJZJ7GDAwPZ/+RM+ub5HGVXIt2cFpcvQ8Odx3Wu/DcUco3N5P68VfR2Fek7BrDK1dQAE7lEVr1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661769; c=relaxed/simple;
-	bh=fJ8I0yDiFi+BWQVr+jN8PwJYUAOnmg+XkxXPlqBiE74=;
+	s=arc-20240116; t=1784661772; c=relaxed/simple;
+	bh=dklvtB6xbwnMws+Ht4lG2lYvCrKBCo6CMeQuXYQWUNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YzRZjl91ULFVZBJbJ6fV0kkUYX6HcxbVTye9qpUlTc3J2sDBkdM6UcWfX0nmT72yIfs2tIOIrFBWrxFNarURmGN/FTaV4lyu6VpkSyM1L00OeUOYCyu3GP/zbMIP2473Vw9snhWrlkinm6hgFt54F5ttViSxRerQwRjuQzp+S1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SIFD3zF7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BOnZtMVmpeGjHTD2/A8LqtOaCvqTrBn73OU2QaxqTgs8YQ+fDL7IjtzKlAjFAV5tCqb10ahrlkENXZN7onFGaG0yjhw5QQRRkgtcYtqwmA+ESeDCiL91FygB0PkhEusugCiM4NlpbyZl+g9xWpUtWyPOrrB+uvHhyX4wl2ZYREU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v+3aFuHO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SIFD3zF7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB361F000E9;
-	Tue, 21 Jul 2026 19:22:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+3aFuHO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6471F000E9;
+	Tue, 21 Jul 2026 19:22:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661768;
-	bh=zTgDP5m88NscBCRP4HmDsX9SCUboDMizvMHLbm1n54c=;
+	s=korg; t=1784661770;
+	bh=NxWlVBVfz/wzV/KmjorlAbvLxu9fRH1dNQjItdz6wcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SIFD3zF7GAn4EzgVrdn6+i/D0JyrKiXHusjtmjGSDh3WAunlWn2MsJlMO5mZ4DWZV
-	 T3d+6UsFSb0izJQCM+KlqS/b0YY3/dx6CZdSw2uVCcVAHvPkf7fTFs2cpk4sSK7aTz
-	 C3sDSwD5UbvEyJWA3CwhYQ4BQRenSw81/QgIoZFQ=
+	b=v+3aFuHO6iIA+ClqBY32jPm1PkAT+WTig9LBrhDPaFf3+13Eny2zJNnt6Rm6FSyyw
+	 QBQf6vd1Xxrmvz/V2nWj3XI1pF1tMz/PrdoViWm52wRoF7LScUbpyE/Ux+kNvAUDg4
+	 cUuDJPpvQlAFkO09beRY//k6WC3iJyEPaKYfmgcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladislav Dronov <vdronov@redhat.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Yuri Andriaccio <yurand2000@gmail.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Valentin Schneider <vschneid@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0192/1276] crypto: tegra - Return ENOMEM when input buffer allocation fails for ccm
-Date: Tue, 21 Jul 2026 17:10:35 +0200
-Message-ID: <20260721152450.383277531@linuxfoundation.org>
+Subject: [PATCH 6.12 0193/1276] sched/deadline: Always stop dl-server before changing parameters
+Date: Tue, 21 Jul 2026 17:10:36 +0200
+Message-ID: <20260721152450.406064571@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,46 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Juri Lelli <juri.lelli@redhat.com>
 
-[ Upstream commit 690a5f9e5c972a580565ce544ed1627ccf1e84de ]
+[ Upstream commit bb4700adc3abec34c0a38b64f66258e4e233fc16 ]
 
-Ensure the ENOMEM error value is set when the input buffer allocation
-fails in tegra_ccm_do_one_req.
+Commit cccb45d7c4295 ("sched/deadline: Less agressive dl_server
+handling") reduced dl-server overhead by delaying disabling servers only
+after there are no fair task around for a whole period, which means that
+deadline entities are not dequeued right away on a server stop event.
+However, the delay opens up a window in which a request for changing
+server parameters can break per-runqueue running_bw tracking, as
+reported by Yuri.
 
-Fixes: 1e245948ca0c ("crypto: tegra - finalize crypto req on error")
-Reported-by: Vladislav Dronov <vdronov@redhat.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Reviewed-by: Vladislav Dronov <vdronov@redhat.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Close the problematic window by unconditionally calling dl_server_stop()
+before applying the new parameters (ensuring deadline entities go
+through an actual dequeue).
+
+Fixes: cccb45d7c4295 ("sched/deadline: Less agressive dl_server handling")
+Reported-by: Yuri Andriaccio <yurand2000@gmail.com>
+Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Valentin Schneider <vschneid@redhat.com>
+Link: https://lore.kernel.org/r/20250721-upstream-fix-dlserver-lessaggressive-b4-v1-1-4ebc10c87e40@redhat.com
+Stable-dep-of: 4043f5498416 ("sched/deadline: Reject debugfs dl_server writes for offline CPUs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/tegra/tegra-se-aes.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ kernel/sched/debug.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/crypto/tegra/tegra-se-aes.c b/drivers/crypto/tegra/tegra-se-aes.c
-index 5086e7f140c303..9094c03e991f65 100644
---- a/drivers/crypto/tegra/tegra-se-aes.c
-+++ b/drivers/crypto/tegra/tegra-se-aes.c
-@@ -1215,16 +1215,15 @@ static int tegra_ccm_do_one_req(struct crypto_engine *engine, void *areq)
- 	rctx->inbuf.size = bufsize;
- 	rctx->inbuf.buf = dma_alloc_coherent(ctx->se->dev, bufsize,
- 					     &rctx->inbuf.addr, GFP_KERNEL);
-+	ret = -ENOMEM;
- 	if (!rctx->inbuf.buf)
- 		goto out_finalize;
+diff --git a/kernel/sched/debug.c b/kernel/sched/debug.c
+index 7d14e9fa53ac3b..564ea17ae405e3 100644
+--- a/kernel/sched/debug.c
++++ b/kernel/sched/debug.c
+@@ -378,10 +378,8 @@ static ssize_t sched_fair_server_write(struct file *filp, const char __user *ubu
+ 			return  -EINVAL;
+ 		}
  
- 	rctx->outbuf.size = bufsize;
- 	rctx->outbuf.buf = dma_alloc_coherent(ctx->se->dev, bufsize,
- 					      &rctx->outbuf.addr, GFP_KERNEL);
--	if (!rctx->outbuf.buf) {
--		ret = -ENOMEM;
-+	if (!rctx->outbuf.buf)
- 		goto out_free_inbuf;
--	}
+-		if (rq->cfs.h_nr_queued) {
+-			update_rq_clock(rq);
+-			dl_server_stop(&rq->fair_server);
+-		}
++		update_rq_clock(rq);
++		dl_server_stop(&rq->fair_server);
  
- 	if (!ctx->key_id) {
- 		ret = tegra_key_submit_reserved_aes(ctx->se, ctx->key,
+ 		retval = dl_server_apply_params(&rq->fair_server, runtime, period, 0);
+ 
 -- 
 2.53.0
 
