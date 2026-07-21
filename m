@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87DAD3B9930;
-	Tue, 21 Jul 2026 21:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF5A35C6B3;
+	Tue, 21 Jul 2026 21:50:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670601; cv=none; b=BMfGZnAo56yFb1oPjY/JgelUGZuzgzthYpn7ZW4POz2MHVlv3bSsDpHBGIvpmbdtkv8j9bH26f29QIJXE8S5cGQZrp0vodQXIJNBu5ccl9kEeT8UIMuJq7C08kKNP47rqOdMcotsALjgcQ3ZwF1HsoAbWpf+oZ4F12nRmzZpBkk=
+	t=1784670604; cv=none; b=gs2f6Z26jRFNXdHDvhbQZBSi/T68yS2x/ICtbmltjfHsQGLiqOGob/EE8kWaEof0IlolDfTuUNU/BWLXtb+Sb6dWGmuLEeaO1gAiQ7CKnsMuhG/k84O9XuHVLM0QcdlxsChiKtMZ02ttQkhKC87nFI9gECXWCELdjdQ/OtDa1W0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670601; c=relaxed/simple;
-	bh=zHajqg1gMPYlpKnAIuuHSIRHtjLsW6wzhwmTrhr8wto=;
+	s=arc-20240116; t=1784670604; c=relaxed/simple;
+	bh=uc5cz1nk1d4i1eB8bCbbq4HIzWEDVqmF/5GlRYICFbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CRLACSUSXsRLzIhVYy0aav8TOut1/mXrrnw/yaH+FOVk8V3vdwOYetJasgvy2It4ANu8AqYjSbls/GQ4nKIl0LyNsAUye0cKnGnDzhmt+PGtVC7nhm1hfkZREckcgx1xD2tLRIbujgbMN4nfUblI3O63RwkVDyhos24so1B2Tu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pxq9700/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kj53iy4EBmS/PwLSVdX3vXDy+doawd06f+sAPt+RuYD/FCBNw7oFWPAI86JaaZU+Z8gQ9fZWy05Raas7nl9QZx4ttltsuGb/2R8pO99uuaeA0Y4wSMahrHiOQv/mawnxXKB4CU8nCCFdjTN6JdFhFHwOmd4a7TLpfBUM8ZN0BJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=db3OR26v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pxq9700/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE891F000E9;
-	Tue, 21 Jul 2026 21:49:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="db3OR26v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB191F000E9;
+	Tue, 21 Jul 2026 21:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670600;
-	bh=ZW+Tj22bpLhRDFVUrowL8mqQhdOwBpOiYpGOu5vaSlw=;
+	s=korg; t=1784670603;
+	bh=GYfMWWOuZhKGpaCzLl3XM+MHwgJqh7MfUZsI5kSHAZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pxq9700/Ov2BHp84zxbwAjSWTxw4d1Fy5IotOy+m9AhvuuTUrJ74VWhEgk4SgL6/+
-	 tV+KCLpEjNU1eWPVBJ6HRzfyRV0embHbLB/oV0CTwKSUz0uVNBGWoGtth7IZoY/iEf
-	 /2qd3PFxCAPhqoyD6Hqnvj2tqz+uvPIxREy59pBE=
+	b=db3OR26vUAnablpMStr/2meaX54BPJJXiYD/OkCN+yDET7uQMKNPFbskOACq59tAk
+	 HyYbEkDt1Eu+dbQHVa18PVGgyScd5b+JuGok32bGyj4XlLyWA3Za4ZSCuPZ/r2kh43
+	 Qo/6r8pYF7spNDGYgGfdEoOfjIIchi2srXQe9VKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	linux-cifs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	James Clark <james.clark@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0995/1067] cifs: Fix reacquisition of volume cookie on still-live connection
-Date: Tue, 21 Jul 2026 17:26:36 +0200
-Message-ID: <20260721152446.818937021@linuxfoundation.org>
+Subject: [PATCH 6.1 0978/1067] coresight: etb10: restore atomic_t for shared reading state
+Date: Tue, 21 Jul 2026 17:26:19 +0200
+Message-ID: <20260721152446.430460086@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -55,112 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit dad80c6bff770d25f67ec25fe011730e4a463008 ]
+[ Upstream commit fa09f08ede3db3050ae16ae1ed92c902d0cada23 ]
 
-During mount, cifs_mount_get_tcon() gets a tcon resource connection record
-and then attaches an fscache volume cookie to it.  However, it does this
-irrespective of whether or not the tcon returned from cifs_get_tcon() is a
-new record or one that's already in use.  This leads to a warning about a
-volume cookie collision and a leaked volume cookie because tcon->fscache
-gets reset.
+The etb10 miscdevice uses drvdata->reading as a shared exclusivity gate
+for userspace buffer access. etb_open() claims that gate with
+local_cmpxchg(), and etb_release() clears it with local_set().
 
-Fix this be adding a mutex and a "we've already tried this" flag and only
-doing it once for the lifetime of the tcon.
+That gate is shared per-device state rather than CPU-local state. A
+running system can reach it whenever /dev/<etb> is opened, closed, and
+reopened by different tasks while the device remains registered, so the
+same drvdata->reading variable may be claimed on one CPU and later
+cleared on another.
 
-[!] Note: Looking at cifs_mount_get_tcon(), a more general solution may
-actually be required.  Reacquiring the volume cookie isn't the only thing
-that function does: it also partially reinitialises the tcon record without
-any locking - which may cause live filesystem ops already using the tcon
-through a previous mount to malfunction.
+This code used to use atomic_t for the same gate, but commit
+27b10da8fff2 ("coresight: etb10: moving to local atomic operations")
+changed it to local_t even though the access pattern remained cross-task
+and cross-CPU. Restore atomic_t together with atomic_cmpxchg() and
+atomic_set() so the exclusivity gate again uses a primitive intended
+for shared state.
 
-This can be reproduced simply by something like:
+The issue was found on Linux v6.18.21 by our static analysis tool while
+scanning surviving local_t-on-shared-state sites, and then manually
+reviewed against the live etb10 file-op path.
 
-    mount //example.com/test /xfstest.test -o user=shares,pass=xxx,fsc
-    mount //example.com/test /mnt -o user=shares,pass=xxx,fsc
+It was runtime-validated with a reproducible QEMU no-device KCSAN PoC
+that kept the same report-local contract:
 
-Fixes: 70431bfd825d ("cifs: Support fscache indexing rewrite")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-cc: Shyam Prasad N <sprasad@microsoft.com>
-cc: linux-cifs@vger.kernel.org
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: ec457f9afe5a ("smb: client: resolve SWN tcon from live registrations")
+  1. use one shared struct etb_drvdata carrier and its
+     drvdata->reading gate;
+  2. call etb_open() and etb_release() sequentially on that gate to
+     confirm the original claim/clear path;
+  3. bind the open side to CPU0 and the release side to CPU1 for the
+     same gate to show cross-CPU ownership;
+  4. run bound workers that repeatedly race etb_open() and
+     etb_release() on the same gate until KCSAN reports a target hit.
+
+The harness recorded:
+
+  L1 passed open=1 release=1
+  reading_after_open=1 reading_after_release=0
+  L2 passed open_cpu=0 release_cpu=1
+  cross_cpu_release=1 reading_after=0 open_ret=0
+
+Representative KCSAN excerpt from the no-device validation run:
+
+  BUG: KCSAN: data-race in etb_open.constprop.0.isra.0 [vuln_msv]
+
+  write to 0xffffffffc0003810 of 4 bytes by task 216 on cpu 1:
+   etb_open.constprop.0.isra.0+0x38/0x80 [vuln_msv]
+   l3_worker_thread_fn+0x4f/0xf0 [vuln_msv]
+   kthread+0x17e/0x1c0
+   ret_from_fork+0x22/0x30
+
+  read to 0xffffffffc0003810 of 4 bytes by task 215 on cpu 0:
+   etb_open.constprop.0.isra.0+0x18/0x80 [vuln_msv]
+   l3_worker_thread_fn+0x4f/0xf0 [vuln_msv]
+   kthread+0x17e/0x1c0
+   ret_from_fork+0x22/0x30
+
+  value changed: 0x00000000 -> 0x00000001
+
+  Reported by Kernel Concurrency Sanitizer on:
+  CPU: 0 PID: 215 Comm: etb10_l3_a Tainted: G           O       6.1.66 #2
+
+This no-device harness is not a real ETB10 hardware end-to-end run, but
+it preserves the same shared drvdata->reading gate and the same
+etb_open()/etb_release() claim/clear contract. No real ETB10 hardware
+was available for runtime testing.
+
+Build-tested with:
+  make olddefconfig
+  make -j"$(nproc)" drivers/hwtracing/coresight/coresight-etb10.o
+
+Fixes: 27b10da8fff2 ("coresight: etb10: moving to local atomic operations")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260528165201.319452-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsglob.h |    2 ++
- fs/smb/client/fscache.c  |   13 +++++++++++++
- fs/smb/client/misc.c     |    3 +++
- 3 files changed, 18 insertions(+)
+ drivers/hwtracing/coresight/coresight-etb10.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -1205,7 +1205,9 @@ struct cifs_tcon {
- 	__u32 max_bytes_copy;
- #ifdef CONFIG_CIFS_FSCACHE
- 	u64 resource_id;		/* server resource id */
-+	bool fscache_acquired;		/* T if we've tried acquiring a cookie */
- 	struct fscache_volume *fscache;	/* cookie for share */
-+	struct mutex fscache_lock;	/* Prevent regetting a cookie */
- #endif
- 	struct list_head pending_opens;	/* list of incomplete opens */
- 	struct cached_fids *cfids;
---- a/fs/smb/client/fscache.c
-+++ b/fs/smb/client/fscache.c
-@@ -43,12 +43,23 @@ int cifs_fscache_get_super_cookie(struct
- 	char *key;
- 	int ret = -ENOMEM;
+--- a/drivers/hwtracing/coresight/coresight-etb10.c
++++ b/drivers/hwtracing/coresight/coresight-etb10.c
+@@ -86,7 +86,7 @@ struct etb_drvdata {
+ 	struct coresight_device	*csdev;
+ 	struct miscdevice	miscdev;
+ 	spinlock_t		spinlock;
+-	local_t			reading;
++	atomic_t		reading;
+ 	pid_t			pid;
+ 	u8			*buf;
+ 	u32			mode;
+@@ -603,7 +603,7 @@ static int etb_open(struct inode *inode,
+ 	struct etb_drvdata *drvdata = container_of(file->private_data,
+ 						   struct etb_drvdata, miscdev);
  
-+	if (tcon->fscache_acquired)
-+		return 0;
-+
-+	mutex_lock(&tcon->fscache_lock);
-+	if (tcon->fscache_acquired) {
-+		mutex_unlock(&tcon->fscache_lock);
-+		return 0;
-+	}
-+	tcon->fscache_acquired = true;
-+
- 	tcon->fscache = NULL;
- 	switch (sa->sa_family) {
- 	case AF_INET:
- 	case AF_INET6:
- 		break;
- 	default:
-+		mutex_unlock(&tcon->fscache_lock);
- 		cifs_dbg(VFS, "Unknown network family '%d'\n", sa->sa_family);
- 		return -EINVAL;
- 	}
-@@ -57,6 +68,7 @@ int cifs_fscache_get_super_cookie(struct
+-	if (local_cmpxchg(&drvdata->reading, 0, 1))
++	if (atomic_cmpxchg(&drvdata->reading, 0, 1))
+ 		return -EBUSY;
  
- 	sharename = extract_sharename(tcon->tree_name);
- 	if (IS_ERR(sharename)) {
-+		mutex_unlock(&tcon->fscache_lock);
- 		cifs_dbg(FYI, "%s: couldn't extract sharename\n", __func__);
- 		return PTR_ERR(sharename);
- 	}
-@@ -90,6 +102,7 @@ out_2:
- 	kfree(key);
- out:
- 	kfree(sharename);
-+	mutex_unlock(&tcon->fscache_lock);
- 	return ret;
- }
+ 	dev_dbg(&drvdata->csdev->dev, "%s: successfully opened\n", __func__);
+@@ -641,7 +641,7 @@ static int etb_release(struct inode *ino
+ {
+ 	struct etb_drvdata *drvdata = container_of(file->private_data,
+ 						   struct etb_drvdata, miscdev);
+-	local_set(&drvdata->reading, 0);
++	atomic_set(&drvdata->reading, 0);
  
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -139,6 +139,9 @@ tconInfoAlloc(void)
- 	spin_lock_init(&ret_buf->stat_lock);
- 	atomic_set(&ret_buf->num_local_opens, 0);
- 	atomic_set(&ret_buf->num_remote_opens, 0);
-+#ifdef CONFIG_CIFS_FSCACHE
-+	mutex_init(&ret_buf->fscache_lock);
-+#endif
- 
- 	return ret_buf;
- }
+ 	dev_dbg(&drvdata->csdev->dev, "%s: released\n", __func__);
+ 	return 0;
 
 
