@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CFF399015;
-	Tue, 21 Jul 2026 22:53:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06982399015;
+	Tue, 21 Jul 2026 22:53:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674431; cv=none; b=oTtDq4UX5bOgkXYAuYYMaP0AmE6q+RQU76UFtj+b9FVDWOgR79YKuKYiQVRmDsC7s+vQLLC1iXgRR1WwzrTWpdorSYYZPANIkd7LgkooTQi4bgPbgrvfztcVI01snHl225WpnUE8fd6B3vIaUbXXgzXOx51EYsy/gukBGF7kmTo=
+	t=1784674433; cv=none; b=IULDt9iq1A7Zaup3Pv1qJyczkbBl6ZYVaXUjEV/S08QqoIT9Na+F7oYqBTLLXj1vcYrusITpivWGD2N5EnPwqEfqROT1SwDpuRwAj//3jk8siCwgzn4zSpGMFJrsIY5qAidXtD/JzhD6PIJxvhwo/QVb/mUJN8P7ViHbLd2yMf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674431; c=relaxed/simple;
-	bh=MurggVCtwziLxPYFF4wXpJkk0Yo2g+7ikqhkY7f26Ro=;
+	s=arc-20240116; t=1784674433; c=relaxed/simple;
+	bh=LWF0CCnJUj5mN25n+nETCgRHb2AzgZ6WgKAvVAd5hRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J+9p1/2djUMwrYOIHbnvthW0deeld9PSt0jkitg9M0OLs9S5rAsEskOQQD8oG2C9nYgqm9eU94repDmVfDfRC7uzrwZRbRKlIrw3EWJ4vLr5PWi2H2leDf3B2qlIs62dXTUfiGF5m9jOdwFJ5zBMXvuhG5EY7voZNGr1M+u7Ors=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZaxZfx9K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NKfbTZ+P5pVHQiNbjn4WarVg8ZS4luI0fk+tOAMvQZi0VwcFJe/BMJM3hCPM7x7JWe+i2O7CkYvu4u7BB5AUkv6WhsJxV+yGTjn6ThU3adbl+w+Sg93bO0xQERc1G9i3BFTvC01LYxhhn6RkgtCFzHq6cQfhH+D1Ez6BEcPqERQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gx/s3aqg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZaxZfx9K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF001F000E9;
-	Tue, 21 Jul 2026 22:53:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gx/s3aqg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63A721F00A3A;
+	Tue, 21 Jul 2026 22:53:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674429;
-	bh=27ky9UJq8zGGBPaSZOqMYkjCtSt6B68QYhnUTrcF46c=;
+	s=korg; t=1784674431;
+	bh=6e5VwdarFYM4SVGHfwE+NpCTGbRkhbLFdTq4pRH2AU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZaxZfx9KdDVKdBeBGNispyY6zaj/K+VdrXp3026F6q7v8+jtY3+lRnlzbAAqI/pO8
-	 FOR0kOn529YfRaZrGYWeHiFmIFAmnx7Zu2hMWmbmIrbaJym6dFYw/WCCA0Nx2e02Xo
-	 GOxpLmRYcA73Rfy1L9pyJtDMWjOZ20gzljdoDaRY=
+	b=Gx/s3aqgK1C86Vi3TchoaZLkpifQS6QV4T0S/7K9EA0pR6MHKR/FWQn+qWiBNH44w
+	 MmDwLTc1MdUWAhuMDoS0qNjwMQ+ypQxudn5KpiDr+zMLAkR9HtLNLoSFRNTyAyM3pM
+	 J0CmcqZgvnf4XF/GsjUx7mbO8Y3KL2/0Rgxv9mNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>,
-	Simon Horman <horms@kernel.org>,
-	Stefan Schmidt <stefan@datenfreihafen.org>
-Subject: [PATCH 5.10 536/699] ieee802154: ca8210: fix pointer truncation in kfifo on 64-bit
-Date: Tue, 21 Jul 2026 17:24:55 +0200
-Message-ID: <20260721152407.790294213@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Shivam Kumar <kumar.shivam43666@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 537/699] nvmet-tcp: check INIT_FAILED before nvmet_req_uninit in digest error path
+Date: Tue, 21 Jul 2026 17:24:56 +0200
+Message-ID: <20260721152407.812011909@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,71 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shitalkumar Gandhi <shital.gandhi45@gmail.com>
+From: Shivam Kumar <kumar.shivam43666@gmail.com>
 
-commit 6d7f7bcf225b2d566176bf6229dbd1252940cb3c upstream.
+commit 4606467a75cfc16721937272ed29462a750b60c8 upstream.
 
-ca8210_test_int_driver_write() and ca8210_test_int_user_read() exchange
-a kmalloc'd buffer pointer through a struct kfifo, but pass a literal
-'4' as the byte count to kfifo_in()/kfifo_out().
+In nvmet_tcp_try_recv_ddgst(), when a data digest mismatch is detected,
+nvmet_req_uninit() is called unconditionally. However, if the command
+arrived via the nvmet_tcp_handle_req_failure() path, nvmet_req_init()
+had returned false and percpu_ref_tryget_live() was never executed. The
+unconditional percpu_ref_put() inside nvmet_req_uninit() then causes a
+refcount underflow, leading to a WARNING in
+percpu_ref_switch_to_atomic_rcu, a use-after-free diagnostic, and
+eventually a permanent workqueue deadlock.
 
-This is correct on 32-bit (pointer = 4 bytes), but on 64-bit only the
-low 4 bytes of the 8-byte pointer are written into the FIFO. The reader
-then reads back 4 bytes into an 8-byte local pointer variable, leaving
-the upper 4 bytes uninitialized stack data. The first dereference of
-the reconstructed pointer (fifo_buffer[1]) accesses an arbitrary kernel
-address and generally results in an oops.
+Check cmd->flags & NVMET_TCP_F_INIT_FAILED before calling
+nvmet_req_uninit(), matching the existing pattern in
+nvmet_tcp_execute_request().
 
-Use sizeof(fifo_buffer) so the byte count matches pointer width on every
-architecture.
-
-The driver has no architecture restriction in Kconfig, so any 64-bit
-build with CONFIG_IEEE802154_CA8210_DEBUGFS=y is exposed. Issue has
-been latent since the driver was added in 2017 because it is most
-commonly deployed on 32-bit MCUs.
-
-Found via a custom Coccinelle semantic patch hunting for short-byte
-kfifo I/O on byte-mode kfifos used to shuttle pointers.
-
-Fixes: ded845a781a5 ("ieee802154: Add CA8210 IEEE 802.15.4 device driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/20260520105750.30144-1-shitalkumar.gandhi@cambiumnetworks.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Shivam Kumar <kumar.shivam43666@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+[shivam: inlined nvmet_tcp_finish_cmd() at the fix site for 5.10.y]
+Signed-off-by: Shivam Kumar <kumar.shivam43666@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ieee802154/ca8210.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/nvme/target/tcp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ieee802154/ca8210.c
-+++ b/drivers/net/ieee802154/ca8210.c
-@@ -638,7 +638,7 @@ static int ca8210_test_int_driver_write(
- 	fifo_buffer = kmemdup(buf, len, GFP_KERNEL);
- 	if (!fifo_buffer)
- 		return -ENOMEM;
--	kfifo_in(&test->up_fifo, &fifo_buffer, 4);
-+	kfifo_in(&test->up_fifo, &fifo_buffer, sizeof(fifo_buffer));
- 	wake_up_interruptible(&priv->test.readq);
- 
- 	return 0;
-@@ -2571,6 +2571,7 @@ static ssize_t ca8210_test_int_user_read
- 	struct ca8210_priv *priv = filp->private_data;
- 	unsigned char *fifo_buffer;
- 	unsigned long bytes_not_copied;
-+	unsigned int copied;
- 
- 	if (filp->f_flags & O_NONBLOCK) {
- 		/* Non-blocking mode */
-@@ -2584,7 +2585,8 @@ static ssize_t ca8210_test_int_user_read
- 		);
- 	}
- 
--	if (kfifo_out(&priv->test.up_fifo, &fifo_buffer, 4) != 4) {
-+	copied = kfifo_out(&priv->test.up_fifo, &fifo_buffer, sizeof(fifo_buffer));
-+	if (copied != sizeof(fifo_buffer)) {
- 		dev_err(
- 			&priv->spi->dev,
- 			"test_interface: Wrong number of elements popped from upstream fifo\n"
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 4bd82e9b113ff5..3d9a830950ef26 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -1227,7 +1227,9 @@ static int nvmet_tcp_try_recv_ddgst(struct nvmet_tcp_queue *queue)
+ 			queue->idx, cmd->req.cmd->common.command_id,
+ 			queue->pdu.cmd.hdr.type, le32_to_cpu(cmd->recv_ddgst),
+ 			le32_to_cpu(cmd->exp_ddgst));
+-		nvmet_tcp_finish_cmd(cmd);
++		if (!(cmd->flags & NVMET_TCP_F_INIT_FAILED))
++			nvmet_req_uninit(&cmd->req);
++		nvmet_tcp_free_cmd_buffers(cmd);
+ 		nvmet_tcp_fatal_error(queue);
+ 		ret = -EPROTO;
+ 		goto out;
+-- 
+2.53.0
+
 
 
