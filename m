@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374AC44AB61;
-	Tue, 21 Jul 2026 21:23:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9544729CE9;
+	Tue, 21 Jul 2026 21:23:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669001; cv=none; b=P43jGlkXi/kctn6io4/0K9QKOEAoTZPTAcz1EjKSudvUcNhtW3+ae0AY1hs5UnsAzViBw/sX9733LXeXbJ1wwKCojaYpY0o9c5qMVjK0nsbmn5CG8FcyLuHOQ0oXhfs1RltEk98pn8oDm6gk0sX7IUUDlseCF35tEz5cPBYn0qo=
+	t=1784669002; cv=none; b=EDVbp+WtElPJoq1cmbRVkYyadoCnIqtEHJSvcR/TzXiD+R4NWpjc55RJPhER1DVUBILSYQ5zIb5CR06RAZebcmEsOS4Ap0uh2aR5S9pYRHPX7ePDkGKF7cWqFEXnXcoCo/n+Ly59ysusZyrvL3/JOfSSJzDqbTrPcej45OBCRMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669001; c=relaxed/simple;
-	bh=g8Lq7fmxedPt0UO5IIqM1cnlZtHdh/W30YbFUMZ9+JI=;
+	s=arc-20240116; t=1784669002; c=relaxed/simple;
+	bh=00tO5qBLN0ugL0N1cs3nNZe9Wvi42YpxNYbPDCNoOB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lX3gWwQYNtvQc3ccfL0P8UCJXBuh/jBBvyK9WgPP6kndScvCpL1Bk1SbZy8d/dRwJjSWoCYagYJlvEK51KNrE0EEp6xDIOyzcTCCHOwUgpAkH+xzh0fvjZtNcrWvoew4DSDwhh4L41zyCjNjqXNpPkoSVKLeprZfCU3JS4YqSDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gRcmGm5E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iLl25QVjtZindlIxuAQZOKBMuVRw7eHbBtJdPIOTJzTR4DKV7MU3k43fg2deMmpEZNehrp/YWLhRIzESj2RvkT/4eyW/ff8fvTeC4TWoR0NfbzSBedgYGK5vGAFkuculWtWs00H4D6Gb5Qn6RUYke+rzyjJDK3wC12sWvORRNdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EN8oHeBk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gRcmGm5E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E3751F00A3A;
-	Tue, 21 Jul 2026 21:23:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EN8oHeBk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06FFD1F000E9;
+	Tue, 21 Jul 2026 21:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669000;
-	bh=93oZ34r+7Q1wBBM4uF2qpNXWc0nkzWv3el8L9EizaR0=;
+	s=korg; t=1784668997;
+	bh=OG32pdrIf9ywz8c7fDvtfSugh6aymydra5bxzjsLGAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gRcmGm5EtDVRP5pltRjPsgp8hD8joRbS9D6IIDxNazWaRwIl4qFv4KcspapYwNref
-	 V0FssteACX5KjefD7pOOf9atLpR4WPMQpVoqtsGaqhWKRMCedutOkI76vqCMrjPYzR
-	 rWqKNuHYx0BC5Aa1/gfkn0T6vLkcv1Br2qVbvae8=
+	b=EN8oHeBkqkSS5AZ2zXCalWFNCrRDsB1VCp4b8ZWod+kKJc16MZXzgk5uTOLqiaF6J
+	 u087SabTx4x+4q3RrT7eBP3mi5nxdT9IW1ZYVSZOUqY6FWeDjMSe8xwxz6+w1llAhm
+	 RHU3n467mkyFNWvXeSJx3vJCxSwd2/e26oLWV2cA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Loic Poulain <loic.poulain@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0390/1067] wifi: wcn36xx: fix OOB read from short trigger BA firmware response
-Date: Tue, 21 Jul 2026 17:16:31 +0200
-Message-ID: <20260721152433.357852709@linuxfoundation.org>
+Subject: [PATCH 6.1 0389/1067] wifi: wcn36xx: fix OOB read from firmware count in PRINT_REG_INFO indication
+Date: Tue, 21 Jul 2026 17:16:30 +0200
+Message-ID: <20260721152433.331540631@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -54,39 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit b5e6f21923ca89d90256e7346301056f6502691e ]
+[ Upstream commit df2187acfca6c6cca372c5d35f42394d9c270b09 ]
 
-The firmware response length is only checked against sizeof(*rsp) (20
-bytes), but when candidate_cnt >= 1, a 22-byte candidate struct is read
-at buf + 20 without verifying the response contains it. This causes an
-out-of-bounds read of stale heap data, corrupting the BA session state.
+The firmware-controlled rsp->count field is used as the loop bound for
+indexing into the flexible rsp->regs[] array without validation against
+the message length. A count exceeding the actual data causes out-of-
+bounds reads from the heap-allocated message buffer.
 
-Add validation that the response includes the candidate data.
+Add a check that count fits within the received message.
 
-Fixes: 16be1ac55944 ("wcn36xx: Parse trigger_ba response properly")
+Fixes: 43efa3c0f241 ("wcn36xx: Implement print_reg indication")
 Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
 Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260421135018.352774-4-tristmd@gmail.com
+Link: https://patch.msgid.link/20260421135018.352774-3-tristmd@gmail.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/wcn36xx/smd.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/ath/wcn36xx/smd.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/drivers/net/wireless/ath/wcn36xx/smd.c b/drivers/net/wireless/ath/wcn36xx/smd.c
-index ad329252a7ceb8..79f0ed675a838b 100644
+index bd51abef3a5be7..ad329252a7ceb8 100644
 --- a/drivers/net/wireless/ath/wcn36xx/smd.c
 +++ b/drivers/net/wireless/ath/wcn36xx/smd.c
-@@ -2659,6 +2659,9 @@ static int wcn36xx_smd_trigger_ba_rsp(void *buf, int len, struct add_ba_info *ba
- 	if (rsp->candidate_cnt < 1)
- 		return rsp->status ? rsp->status : -EINVAL;
+@@ -2865,6 +2865,12 @@ static int wcn36xx_smd_print_reg_info_ind(struct wcn36xx *wcn,
+ 		return -EIO;
+ 	}
  
-+	if (len < sizeof(*rsp) + sizeof(*candidate))
-+		return -EINVAL;
++	if (rsp->count > (len - sizeof(*rsp)) / sizeof(rsp->regs[0])) {
++		wcn36xx_warn("Truncated print reg info indication: count %u, len %zu\n",
++			     rsp->count, len);
++		return -EIO;
++	}
 +
- 	candidate = (struct wcn36xx_hal_trigger_ba_rsp_candidate *)(buf + sizeof(*rsp));
- 
- 	for (i = 0; i < STACFG_MAX_TC; i++) {
+ 	wcn36xx_dbg(WCN36XX_DBG_HAL,
+ 		    "reginfo indication, scenario: 0x%x reason: 0x%x\n",
+ 		    rsp->scenario, rsp->reason);
 -- 
 2.53.0
 
