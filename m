@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE6A3B9DA8;
-	Tue, 21 Jul 2026 22:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB0B3B9DA8;
+	Tue, 21 Jul 2026 22:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673271; cv=none; b=U0AgPta/bkoZ0fhuGYe6vx/9pv0tOWjLxYlRT9C62iQQOZIwVXxGsel1WLtWIoJmu+no1beCbqKTbnLexf6e3vM4CGxMOZ5XRxCYPqoLwT1U+4U9ZRwr3VlAyXDletPUYPGf1RVwUWU01Ann9dNrRzYYq9EP1Gx/17FLfmw1rQU=
+	t=1784673273; cv=none; b=V0nNS0BJKiEnpcRjCZPJo/uS+n4DNHClLTzi36R+vdLoQl4WNbJOZz7Kaq0np0c9yRCbOLa2t9m/JjDviSB0QpAaemJz+ySwwE8/H6eZnJY8OfEfkUxancYYRs0dLecT91S9CTUQ1SXMSofXMveQWycl4sqgpGgvnCn4Ly8tQLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673271; c=relaxed/simple;
-	bh=cuHGWAKfLwC743zHwDkoZxtswmLcBhM7Bzcxqnwn4E8=;
+	s=arc-20240116; t=1784673273; c=relaxed/simple;
+	bh=NG1kii7FGWdPbMDU4AU936nZl7qKI1KCvoL2U+bJB1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n6L69MhXxIbDNyYm00hflBBqm5qQf7l/FNwkwjMpDj7112L4u+TkQ2KNnpGI39iDQlhRisyUDWg9voDvlPXcFcAnXW1IfVI9fFLyu9RK3Xb9Aaz8ECsiWzXIGwcgJMCF+UWaB3j8u2Oa2qAPmhw1fnL8pe4SsHleMbZOZ9JKPa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vk+5CR/y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NWiwWcS1qfTtcKivKFb5IKMmcRejKSYeDXY1AkMxzxAB+r5MPQpOkeYrQF6LueoByRqoanzw4NxKv3pLW12y1/IOxbSks/xUJrU/i3IBIUTT85rYDEdNhL8mdAKgWNdQObqBTbtzols5kZrZ0uI7/AzhoQ8zzVOfnG2QdBVZmhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ntNion31; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vk+5CR/y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3CFB1F000E9;
-	Tue, 21 Jul 2026 22:34:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ntNion31"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 960C41F000E9;
+	Tue, 21 Jul 2026 22:34:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673269;
-	bh=tW9dpekNvq3JdEKTqDRmgEvFP4VG+ShmUn7YV+3OgyM=;
+	s=korg; t=1784673272;
+	bh=56sUeiZaY2wx0afwQaCMOu1X2JYDjIB9EvfRw9iBU0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vk+5CR/y5xNKwE009fVzWzq6ICo6Emt5UCpvhvs2/cMrc9mdtGrVHDPuTwMZYJuuB
-	 K+QyJFMZ1lHDUhbQgRQt4TpAcrxfF4N4PiNxTyaueg7xriAlwYjAtBOuuQ6ABjERpW
-	 ZU41bmcIy1yXSwhhNEI5vvHdd7ShUTY6ifMsYNoc=
+	b=ntNion31yZ/M8wP4AKJmTwOTxw7nkyGmVgtZHgFY6V8PVZdPgAbcnmfYoY4Fjscju
+	 exZ9Iwu7GfrgNTJb3cdYXV2WzswZti1ENmFWNT/5C+hoz9XVCZ3Q7dZtQNmw1iCQmB
+	 ZDISNQsV5pXVBuwfKz8jx6d7oEzHwpQquQ0WXQjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 5.10 082/699] netfilter: ebtables: terminate table name before find_table_lock()
-Date: Tue, 21 Jul 2026 17:17:21 +0200
-Message-ID: <20260721152357.554532011@linuxfoundation.org>
+	Oliver Neukum <oliver@neukum.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 100/699] USB: idmouse: fix use-after-free on disconnect race
+Date: Tue, 21 Jul 2026 17:17:39 +0200
+Message-ID: <20260721152357.956961255@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,77 +50,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Johan Hovold <johan@kernel.org>
 
-commit a622d2e9608c9dff47fc2e5759ac7aa3a836b45d upstream.
+commit ff002c153f9722caece3983cc23dc4d9d4652cb4 upstream.
 
-update_counters() and compat_update_counters() forward a user-supplied
-32-byte table name to find_table_lock() without NUL-terminating it. On a
-lookup miss, find_inlist_lock() calls try_then_request_module(..., "%s%s",
-"ebtable_", name), and vsnprintf() reads past the name field and the
-stack object until it hits a zero byte.
+mutex_unlock() may access the mutex structure after releasing the lock
+and therefore cannot be used to manage lifetime of objects directly
+(unlike spinlocks and refcounts). [1][2]
 
-  BUG: KASAN: stack-out-of-bounds in string (lib/vsprintf.c:648 lib/vsprintf.c:730)
-  Read of size 1 at addr ffff8880119dfb20 by task exploit/147
-  Call Trace:
-  ...
-   string (lib/vsprintf.c:648 lib/vsprintf.c:730)
-   vsnprintf (lib/vsprintf.c:2945)
-   __request_module (kernel/module/kmod.c:150)
-   do_update_counters.isra.0 (net/bridge/netfilter/ebtables.c:371 net/bridge/netfilter/ebtables.c:380)
-   update_counters (net/bridge/netfilter/ebtables.c:1440)
-   do_ebt_set_ctl (net/bridge/netfilter/ebtables.c:2573)
-   nf_setsockopt (net/netfilter/nf_sockopt.c:101)
-   ip_setsockopt (net/ipv4/ip_sockglue.c:1424)
-   raw_setsockopt (net/ipv4/raw.c:847)
-   __sys_setsockopt (net/socket.c:2393)
-  ...
+Use a kref to release the driver data to avoid use-after-free in
+mutex_unlock() when release() races with disconnect().
 
-compat_do_replace() shares the same unterminated name via
-compat_copy_ebt_replace_from_user(); terminate it there too so all
-find_table_lock() callers behave alike. The other callers already
-terminate the name after the copy.
+[1] a51749ab34d9 ("locking/mutex: Document that mutex_unlock() is
+                   non-atomic")
+[2] 2b9d9e0a9ba0 ("locking/mutex: Clarify that mutex_unlock(), and most
+                   other sleeping locks, can still use the lock object
+                   after it's unlocked")
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Fixes: 81e675c227ec ("netfilter: ebtables: add CONFIG_COMPAT support")
-Cc: stable@vger.kernel.org
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 54d2bc068fd2 ("USB: fix locking in idmouse")
+Cc: stable@vger.kernel.org	# 2.6.24
+Cc: Oliver Neukum <oliver@neukum.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260622152612.116422-3-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/netfilter/ebtables.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/misc/idmouse.c |   45 ++++++++++++++++++++++-----------------------
+ 1 file changed, 22 insertions(+), 23 deletions(-)
 
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -1319,6 +1319,8 @@ static int update_counters(struct net *n
- 	if (copy_from_sockptr(&hlp, arg, sizeof(hlp)))
- 		return -EFAULT;
+--- a/drivers/usb/misc/idmouse.c
++++ b/drivers/usb/misc/idmouse.c
+@@ -63,6 +63,7 @@ MODULE_DEVICE_TABLE(usb, idmouse_table);
  
-+	hlp.name[sizeof(hlp.name) - 1] = '\0';
+ /* structure to hold all of our device specific stuff */
+ struct usb_idmouse {
++	struct kref kref;
+ 
+ 	struct usb_device *udev; /* save off the usb device pointer */
+ 	struct usb_interface *interface; /* the interface for this device */
+@@ -209,8 +210,10 @@ static int idmouse_resume(struct usb_int
+ 	return 0;
+ }
+ 
+-static inline void idmouse_delete(struct usb_idmouse *dev)
++static inline void idmouse_delete(struct kref *kref)
+ {
++	struct usb_idmouse *dev = container_of(kref, struct usb_idmouse, kref);
 +
- 	if (len != sizeof(hlp) + hlp.num_counters * sizeof(struct ebt_counter))
- 		return -EINVAL;
+ 	kfree(dev->bulk_in_buffer);
+ 	kfree(dev);
+ }
+@@ -254,6 +257,8 @@ static int idmouse_open(struct inode *in
+ 		/* increment our usage count for the driver */
+ 		++dev->open;
  
-@@ -2158,6 +2160,8 @@ static int compat_copy_ebt_replace_from_
- 
- 	memcpy(repl, &tmp, offsetof(struct ebt_replace, hook_entry));
- 
-+	repl->name[sizeof(repl->name) - 1] = '\0';
++		kref_get(&dev->kref);
 +
- 	/* starting with hook_entry, 32 vs. 64 bit structures are different */
- 	for (i = 0; i < NF_BR_NUMHOOKS; i++)
- 		repl->hook_entry[i] = compat_ptr(tmp.hook_entry[i]);
-@@ -2280,6 +2284,8 @@ static int compat_update_counters(struct
- 	if (copy_from_sockptr(&hlp, arg, sizeof(hlp)))
- 		return -EFAULT;
+ 		/* save our object in the file's private structure */
+ 		file->private_data = dev;
  
-+	hlp.name[sizeof(hlp.name) - 1] = '\0';
+@@ -277,16 +282,11 @@ static int idmouse_release(struct inode
+ 
+ 	/* lock our device */
+ 	mutex_lock(&dev->lock);
+-
+ 	--dev->open;
++	mutex_unlock(&dev->lock);
 +
- 	/* try real handler in case userland supplied needed padding */
- 	if (len != sizeof(hlp) + hlp.num_counters * sizeof(struct ebt_counter))
- 		return update_counters(net, arg, len);
++	kref_put(&dev->kref, idmouse_delete);
+ 
+-	if (!dev->present) {
+-		/* the device was unplugged before the file was released */
+-		mutex_unlock(&dev->lock);
+-		idmouse_delete(dev);
+-	} else {
+-		mutex_unlock(&dev->lock);
+-	}
+ 	return 0;
+ }
+ 
+@@ -334,6 +334,7 @@ static int idmouse_probe(struct usb_inte
+ 	if (dev == NULL)
+ 		return -ENOMEM;
+ 
++	kref_init(&dev->kref);
+ 	mutex_init(&dev->lock);
+ 	dev->udev = udev;
+ 	dev->interface = interface;
+@@ -342,8 +343,7 @@ static int idmouse_probe(struct usb_inte
+ 	result = usb_find_bulk_in_endpoint(iface_desc, &endpoint);
+ 	if (result) {
+ 		dev_err(&interface->dev, "Unable to find bulk-in endpoint.\n");
+-		idmouse_delete(dev);
+-		return result;
++		goto err_put_kref;
+ 	}
+ 
+ 	dev->orig_bi_size = usb_endpoint_maxp(endpoint);
+@@ -351,8 +351,8 @@ static int idmouse_probe(struct usb_inte
+ 	dev->bulk_in_endpointAddr = endpoint->bEndpointAddress;
+ 	dev->bulk_in_buffer = kmalloc(IMGSIZE + dev->bulk_in_size, GFP_KERNEL);
+ 	if (!dev->bulk_in_buffer) {
+-		idmouse_delete(dev);
+-		return -ENOMEM;
++		result = -ENOMEM;
++		goto err_put_kref;
+ 	}
+ 
+ 	/* allow device read, write and ioctl */
+@@ -364,14 +364,18 @@ static int idmouse_probe(struct usb_inte
+ 	if (result) {
+ 		/* something prevented us from registering this device */
+ 		dev_err(&interface->dev, "Unable to allocate minor number.\n");
+-		idmouse_delete(dev);
+-		return result;
++		goto err_put_kref;
+ 	}
+ 
+ 	/* be noisy */
+ 	dev_info(&interface->dev,"%s now attached\n",DRIVER_DESC);
+ 
+ 	return 0;
++
++err_put_kref:
++	kref_put(&dev->kref, idmouse_delete);
++
++	return result;
+ }
+ 
+ static void idmouse_disconnect(struct usb_interface *interface)
+@@ -387,14 +391,9 @@ static void idmouse_disconnect(struct us
+ 	/* prevent device read, write and ioctl */
+ 	dev->present = 0;
+ 
+-	/* if the device is opened, idmouse_release will clean this up */
+-	if (!dev->open) {
+-		mutex_unlock(&dev->lock);
+-		idmouse_delete(dev);
+-	} else {
+-		/* unlock */
+-		mutex_unlock(&dev->lock);
+-	}
++	mutex_unlock(&dev->lock);
++
++	kref_put(&dev->kref, idmouse_delete);
+ 
+ 	dev_info(&interface->dev, "disconnected\n");
+ }
 
 
