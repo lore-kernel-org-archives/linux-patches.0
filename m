@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58EF746EC8C;
-	Tue, 21 Jul 2026 18:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1036446EF6B;
+	Tue, 21 Jul 2026 18:32:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658722; cv=none; b=ehmJUJPjkxq3egRtKd4rLEM8ubMCvSzP8Yy+fFDxai2AwupbBD+D79P+XZbxoUhTcbWTm412oDqE+cvbyvriMoTabHLu71U5dBoG89HBV+Rv3+K4F/srLTr73JgsENrByq6cNYa3Ti3myO5GtnwjMb6uJ9ycr3jshZbcFCU3czk=
+	t=1784658725; cv=none; b=qlbfI1gySpXc6/ijgN3iWi3eRL1TzIh3JbbvbrEBRHBFTslNSQci3+cwsXgxerGoEA/wtqT7WsRrNFqloZvJYkM0McuvV52hYmkkvcMZG6lrsuOyryH8npb8B0UeVh+qporosuAAvY9QYaC21M4dkWT/2FEnvZjv+OycWhj0Rmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658722; c=relaxed/simple;
-	bh=BVc1Fccq0SI8xIsz31uMoMT3Lc4i2/WLfDzMsUcuuTo=;
+	s=arc-20240116; t=1784658725; c=relaxed/simple;
+	bh=l4oEDuAMMbg473YtOZjg8VtYwRQ1z/4NeA193gxQEJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OICxkIhyaqWcmz3PT9ADC+MUAoaLRGyjUao6Rd5ZiWf5UzfVhrC0dAkHX+nHUEUMrHk02Gv+YQFV91pKs4DIXF02ph5XAstb1Cn+cxboSPwUQ4TfQ19I2RGo5Jwfh7aXvBteTQbFeKDLW9par22gqI49P95lv2o3gte9rckoXK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v98RluOM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Of5nRKn1F4O9LTMj+6D4WkkFXbKV08TW1VF7rX9Oj64gumlhQ+AeQzhZLTlXkBOjyiZ2ZMzHu7cZXPBto/2cigoh7g6+ukb8TInYl7/nMFp9Zv+yHJ1U69PuRAssGlV8sgqMQ51GkVQo1rpusc7PFvh3Oc41fHd/FbTyYIJ6ZNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N7HtTqps; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v98RluOM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3CC01F000E9;
-	Tue, 21 Jul 2026 18:32:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N7HtTqps"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3078B1F000E9;
+	Tue, 21 Jul 2026 18:32:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658721;
-	bh=Sr9z2bUk/yymJH9kcyJn8BhfulTh8hPB9IJ7vyW69LE=;
+	s=korg; t=1784658723;
+	bh=sWJV5SjxCoOKBzfKoIT0xzDwaPl8yWP2fplYxH+ngbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v98RluOM9HMqJgvbDLKRX1yrMzZNPIXfusHmLE1JH7UG19+m5EK9fIamQlZ3aVT1+
-	 BPAeEqtgE9lRRJy8LZDxrnlxcscA0IKuvIvkVaS2TvwyXDOY0CuBqVGhMT6dSkduIj
-	 JH/FQJc6BaN0eE/BwpX7Tet2okvXt7bHdCkpHDxA=
+	b=N7HtTqpsCaBhcTp7bC4XTJOSG6atKYTXohvXJsB+gcEBaQ48MEm5FCTUTwcsVW7XT
+	 rv9Sb+VRqHWtS9GW8XhGMC2pl2xaQiSa4KUtRAlXUc+6d40ck2hMvX8YriPx6/LQiK
+	 h1Kq5WZ526GEze7IZ7fcltfeDvgxWgk+WT6MiJk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.18 1248/1611] mips: sched: Fix CPUMASK_OFFSTACK memory corruption
-Date: Tue, 21 Jul 2026 17:22:44 +0200
-Message-ID: <20260721152543.514662733@linuxfoundation.org>
+	Zishun Yi <vulab@iscas.ac.cn>,
+	Paul Walmsley <pjw@kernel.org>
+Subject: [PATCH 6.18 1249/1611] riscv: cacheinfo: Fix node reference leak in populate_cache_leaves
+Date: Tue, 21 Jul 2026 17:22:45 +0200
+Message-ID: <20260721152543.537375512@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,94 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Tomlin <atomlin@atomlin.com>
+From: Zishun Yi <vulab@iscas.ac.cn>
 
-commit 98e37db4a34d3af3fb2f4648295c25b5e40b20e3 upstream.
+commit bf4a195f063b0a0805c1417f6aad1dd32ea48f0f upstream.
 
-This patch addresses a critical memory management flaw. When
-CONFIG_CPUMASK_OFFSTACK is enabled, cpumask_var_t is a pointer.
-Consequently, sizeof(new_mask) evaluates to the pointer size, causing
-copy_from_user() to clobber the mask pointer. Furthermore, the old
-logic performed copy_from_user() before allocating the mask.
+Currently, the while loop drops the reference to prev in each iteration.
+If the loop terminates early due to a break, the final of_node_put(np)
+correctly drops the reference to the current node.
 
-Fix this by allocating new_mask first. To handle variable-sized user
-masks correctly, use cpumask_size() to truncate overly large user masks
-or pad undersized masks with zeros before copying the data directly into
-the allocated buffer.
+However, if the loop terminates naturally because np == NULL, calling
+of_node_put(np) is a no-op. This leaves the last valid node stored in
+prev without its reference dropped, resulting in a node reference leak.
 
-Fixes: 295cbf6d63165 ("[MIPS] Move FPU affinity code into separate file.")
+Fix this by changing the final `of_node_put(np)` to `of_node_put(prev)`.
+
+Fixes: 94f9bf118f1e ("RISC-V: Fix of_node_* refcount")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aaron Tomlin <atomlin@atomlin.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Assisted-by: Gemini:gemini-3.1-pro
+Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260509074040.1747800-1-vulab@iscas.ac.cn
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/kernel/mips-mt-fpaff.c |   28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ arch/riscv/kernel/cacheinfo.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/mips/kernel/mips-mt-fpaff.c
-+++ b/arch/mips/kernel/mips-mt-fpaff.c
-@@ -71,11 +71,16 @@ asmlinkage long mipsmt_sys_sched_setaffi
- 	struct task_struct *p;
- 	int retval;
+--- a/arch/riscv/kernel/cacheinfo.c
++++ b/arch/riscv/kernel/cacheinfo.c
+@@ -133,7 +133,7 @@ int populate_cache_leaves(unsigned int c
+ 			ci_leaf_init(this_leaf++, CACHE_TYPE_DATA, level);
+ 		levels = level;
+ 	}
+-	of_node_put(np);
++	of_node_put(prev);
  
--	if (len < sizeof(new_mask))
--		return -EINVAL;
--
--	if (copy_from_user(&new_mask, user_mask_ptr, sizeof(new_mask)))
--		return -EFAULT;
-+	if (!alloc_cpumask_var(&new_mask, GFP_KERNEL))
-+		return -ENOMEM;
-+	if (len < cpumask_size())
-+		cpumask_clear(new_mask);
-+	else if (len > cpumask_size())
-+		len = cpumask_size();
-+	if (copy_from_user(new_mask, user_mask_ptr, len)) {
-+		retval = -EFAULT;
-+		goto out_free_new_mask;
-+	}
- 
- 	cpus_read_lock();
- 	rcu_read_lock();
-@@ -84,7 +89,8 @@ asmlinkage long mipsmt_sys_sched_setaffi
- 	if (!p) {
- 		rcu_read_unlock();
- 		cpus_read_unlock();
--		return -ESRCH;
-+		retval = -ESRCH;
-+		goto out_free_new_mask;
- 	}
- 
- 	/* Prevent p going away */
-@@ -95,13 +101,9 @@ asmlinkage long mipsmt_sys_sched_setaffi
- 		retval = -ENOMEM;
- 		goto out_put_task;
- 	}
--	if (!alloc_cpumask_var(&new_mask, GFP_KERNEL)) {
--		retval = -ENOMEM;
--		goto out_free_cpus_allowed;
--	}
- 	if (!alloc_cpumask_var(&effective_mask, GFP_KERNEL)) {
- 		retval = -ENOMEM;
--		goto out_free_new_mask;
-+		goto out_free_cpus_allowed;
- 	}
- 	if (!check_same_owner(p) && !capable(CAP_SYS_NICE)) {
- 		retval = -EPERM;
-@@ -142,13 +144,13 @@ asmlinkage long mipsmt_sys_sched_setaffi
- 	}
- out_unlock:
- 	free_cpumask_var(effective_mask);
--out_free_new_mask:
--	free_cpumask_var(new_mask);
- out_free_cpus_allowed:
- 	free_cpumask_var(cpus_allowed);
- out_put_task:
- 	put_task_struct(p);
- 	cpus_read_unlock();
-+out_free_new_mask:
-+	free_cpumask_var(new_mask);
- 	return retval;
+ 	return 0;
  }
- 
 
 
