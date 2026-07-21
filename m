@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201884DB566;
-	Tue, 21 Jul 2026 15:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0677446A61F;
+	Tue, 21 Jul 2026 15:51:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649102; cv=none; b=ZGggbaYIWNo1ke10n+3MNC9RyqRSgPd2rcXofcHOXZ3jWSNOIs3lSKCicGWIZSzu8216Jq3nTjamdpXQ7SKiVE4224Rb8XdgvsuGSBOYLK0nj8NyHZGkYaRswjy0/V7VTy8MZTEdr9U1XTEJkk3abhHRcfXVOfgoI/7ZeAT/BPs=
+	t=1784649106; cv=none; b=aLvc+adWN1siMh+yJdTJuCLA+Ur9DketOFMZQ53yFCHlGxyEKOwjMIloz7qw95oQQeDr9dywPpkFiFgt9b6xQnaQNjS87qYlPScnOL4R7SUt3/ZU7Ne9cV63C9F72JtMR7bUpqd01VqMd6W4hRU9kr5Q+MxMg7gG32s02GcEqXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649102; c=relaxed/simple;
-	bh=8/vSysLe888arzcg2ixFuhQ7/kmnZfUnpfaBCyO40A4=;
+	s=arc-20240116; t=1784649106; c=relaxed/simple;
+	bh=cAbtJlEV7G+0JKKgd1rjVOV3qgiAf4Cafe7/7fybVdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UcyY5I02ZDCdDWzhEz1Tbqv+JhmirvkGNTfbOqjvmHHbc1uhDSikZaeSwdUBH5l/E03qMfK/mhXWkGtv5dWggwVo0I9BrTqth0AYAsWLYmj5X8mn2efRZCDnKfbEdsgR5ocOHygjmlEcThwHTsTDMhAwwviD8yngSUq/happXY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQIV26z4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DVVRclurtDUHLR+F/d8GUXzScpjmN7zAlLVEoQm7NNozUMUUCdioxJIUluYwoS2w2LSjdJz5YkX8cJ5Kdwo76tqWkoq4KZkDYX61vaHh5nlMxd7oUGYuLEM0/4EobfQv8UvhJ0uKSCAUNbeU+SyZVc6B1kgqKipfPbIiHQX6Pe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1XpEnb+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQIV26z4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855FC1F00A3A;
-	Tue, 21 Jul 2026 15:51:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1XpEnb+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E9371F000E9;
+	Tue, 21 Jul 2026 15:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649100;
-	bh=NlfMAWCbd3xL2CR7SpB1LLWEG2/RaS1ujpvGxlHJg/E=;
+	s=korg; t=1784649102;
+	bh=mFamx6/7PR/ru5VwOzLeAKB+G2hJhbBgc/MF8UDI9Zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VQIV26z4rSH3dmR6bPRvydaSlfu9qz9Z2WQwtvAUzwXF9tHgdSYRcSckW5ZJjzt9Y
-	 Baot1vUptHTrGFR1+QYGR6WLBDW4lCrmExeaVt9UmLrXWisXvTbdyluq16FwMmXr3g
-	 tcClOOqMd1AJOnd1LRTXmaNiiqkl2krfOa3x5qC4=
+	b=U1XpEnb+QwTStlVngF20giMDS7bekCQNMukmleAMW7mnB5oGghD5qEpSKp0I8wCpn
+	 W3uSKQuhVcHFvsicTr9k7xVJGJLWuHz9WLJomHH02IeoSGHLtohvE1+NgG3fHsZJUE
+	 EC6nQJg0elvNNWYFBCObUyNNWhbxl43k2pQ2XGR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Sashiko AI review <sashiko-bot@kernel.org>,
+	Li Chen <chenl311@chinatelecom.cn>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0448/2077] lockdep/selftests: Restore sched_rt_mutex state on PREEMPT_RT
-Date: Tue, 21 Jul 2026 17:02:01 +0200
-Message-ID: <20260721152603.341740063@linuxfoundation.org>
+Subject: [PATCH 7.1 0449/2077] ext4: fix fast commit wait/wake bit mapping on 64-bit
+Date: Tue, 21 Jul 2026 17:02:02 +0200
+Message-ID: <20260721152603.368292601@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,61 +55,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Li Chen <me@linux.beauty>
 
-[ Upstream commit 06961d60a0e410bf8df69ccff7eb1bd824912b8f ]
+[ Upstream commit 8b3bc93fee6771775243665a0cf31857d6659775 ]
 
-The WW-mutex selftests deliberately exercise failing lock paths. On
-PREEMPT_RT, some of those paths enter the RT-mutex scheduler helpers.
+On 64-bit, ext4 dynamic inode states live in the upper half of i_flags,
+and ext4_test_inode_state() applies the corresponding +32 offset.
 
-The change referenced by the Fixes tag made those helpers track RT-mutex
-scheduling state in current->sched_rt_mutex. The bit is normally cleared by
-the matching post-schedule helper, but some WW-mutex selftests disable
-the runtime debug_locks flag before that happens. With debug_locks cleared,
-lockdep_assert() does not evaluate the expression that clears the bit,
-leaving stale state for the next testcase.
+The fast-commit wait and wake paths open-coded the wait key with the raw
+EXT4_STATE_* value. Add small helpers for the state wait word and bit,
+and use them for the FC_COMMITTING and FC_FLUSHING_DATA waits so the wait
+key follows the same mapping as the state helpers.
 
-With CONFIG_PREEMPT_RT=y and CONFIG_DEBUG_LOCKING_API_SELFTESTS=y, that
-stale state produces warnings such as:
-
-  WARNING: kernel/sched/core.c:7557 at rt_mutex_pre_schedule+0x26/0x2d
-  RIP: 0010:rt_mutex_pre_schedule+0x26/0x2d
-
-Save and restore current->sched_rt_mutex around each testcase, matching the
-existing PREEMPT_RT cleanup for task-local migration and RCU state.
-
-Fixes: d14f9e930b90 ("locking/rtmutex: Use rt_mutex specific scheduler helpers")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20260523185123.17482-3-kmehltretter@gmail.com
+Fixes: 857d32f26181 ("ext4: rework fast commit commit path")
+Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
+Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
+Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260513085818.552432-1-me@linux.beauty
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/locking-selftest.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/ext4/ext4.h        | 20 +++++++++++++++++
+ fs/ext4/fast_commit.c | 50 ++++++++++++++++---------------------------
+ 2 files changed, 38 insertions(+), 32 deletions(-)
 
-diff --git a/lib/locking-selftest.c b/lib/locking-selftest.c
-index cb806b628352b9..bfafe1204c7b6f 100644
---- a/lib/locking-selftest.c
-+++ b/lib/locking-selftest.c
-@@ -1433,6 +1433,7 @@ static void dotest(void (*testcase_fn)(void), int expected, int lockclass_mask)
- #ifdef CONFIG_PREEMPT_RT
- 	int saved_mgd_count = current->migration_disabled;
- 	int saved_rcu_count = current->rcu_read_lock_nesting;
-+	int saved_sched_rt_mutex = current->sched_rt_mutex;
+diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
+index 94283a991e5c4f..6569d1d575a01a 100644
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -2000,6 +2000,8 @@ EXT4_INODE_BIT_FNS(flag, flags, 0)
+ static inline int ext4_test_inode_state(struct inode *inode, int bit);
+ static inline void ext4_set_inode_state(struct inode *inode, int bit);
+ static inline void ext4_clear_inode_state(struct inode *inode, int bit);
++static inline unsigned long *ext4_inode_state_wait_word(struct inode *inode);
++static inline int ext4_inode_state_wait_bit(int bit);
+ #if (BITS_PER_LONG < 64)
+ EXT4_INODE_BIT_FNS(state, state_flags, 0)
+ 
+@@ -2015,6 +2017,24 @@ static inline void ext4_clear_state_flags(struct ext4_inode_info *ei)
+ 	/* We depend on the fact that callers will set i_flags */
+ }
  #endif
- 
- 	WARN_ON(irqs_disabled());
-@@ -1469,6 +1470,8 @@ static void dotest(void (*testcase_fn)(void), int expected, int lockclass_mask)
- 	preempt_count_set(saved_preempt_count);
- 
- #ifdef CONFIG_PREEMPT_RT
-+	current->sched_rt_mutex = saved_sched_rt_mutex;
 +
- 	while (current->migration_disabled > saved_mgd_count)
- 		migrate_enable();
++static inline unsigned long *ext4_inode_state_wait_word(struct inode *inode)
++{
++#if (BITS_PER_LONG < 64)
++	return &EXT4_I(inode)->i_state_flags;
++#else
++	return &EXT4_I(inode)->i_flags;
++#endif
++}
++
++static inline int ext4_inode_state_wait_bit(int bit)
++{
++#if (BITS_PER_LONG < 64)
++	return bit;
++#else
++	return bit + 32;
++#endif
++}
+ #else
+ /* Assume that user mode programs are passing in an ext4fs superblock, not
+  * a kernel struct super_block.  This will allow us to call the feature-test
+diff --git a/fs/ext4/fast_commit.c b/fs/ext4/fast_commit.c
+index b3c22636251dde..1775bce9649a93 100644
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -239,6 +239,8 @@ void ext4_fc_del(struct inode *inode)
+ 	struct ext4_inode_info *ei = EXT4_I(inode);
+ 	struct ext4_fc_dentry_update *fc_dentry;
+ 	wait_queue_head_t *wq;
++	unsigned long *wait_word = ext4_inode_state_wait_word(inode);
++	int wait_bit = ext4_inode_state_wait_bit(EXT4_STATE_FC_FLUSHING_DATA);
+ 	int alloc_ctx;
  
+ 	if (ext4_fc_disabled(inode->i_sb))
+@@ -268,17 +270,9 @@ void ext4_fc_del(struct inode *inode)
+ 	WARN_ON(ext4_test_inode_state(inode, EXT4_STATE_FC_COMMITTING)
+ 		&& !ext4_test_mount_flag(inode->i_sb, EXT4_MF_FC_INELIGIBLE));
+ 	while (ext4_test_inode_state(inode, EXT4_STATE_FC_FLUSHING_DATA)) {
+-#if (BITS_PER_LONG < 64)
+-		DEFINE_WAIT_BIT(wait, &ei->i_state_flags,
+-				EXT4_STATE_FC_FLUSHING_DATA);
+-		wq = bit_waitqueue(&ei->i_state_flags,
+-				   EXT4_STATE_FC_FLUSHING_DATA);
+-#else
+-		DEFINE_WAIT_BIT(wait, &ei->i_flags,
+-				EXT4_STATE_FC_FLUSHING_DATA);
+-		wq = bit_waitqueue(&ei->i_flags,
+-				   EXT4_STATE_FC_FLUSHING_DATA);
+-#endif
++		DEFINE_WAIT_BIT(wait, wait_word, wait_bit);
++
++		wq = bit_waitqueue(wait_word, wait_bit);
+ 		prepare_to_wait(wq, &wait.wq_entry, TASK_UNINTERRUPTIBLE);
+ 		if (ext4_test_inode_state(inode, EXT4_STATE_FC_FLUSHING_DATA)) {
+ 			ext4_fc_unlock(inode->i_sb, alloc_ctx);
+@@ -542,6 +536,8 @@ void ext4_fc_track_inode(handle_t *handle, struct inode *inode)
+ {
+ 	struct ext4_inode_info *ei = EXT4_I(inode);
+ 	wait_queue_head_t *wq;
++	unsigned long *wait_word = ext4_inode_state_wait_word(inode);
++	int wait_bit = ext4_inode_state_wait_bit(EXT4_STATE_FC_COMMITTING);
+ 	int ret;
+ 
+ 	if (S_ISDIR(inode->i_mode))
+@@ -564,17 +560,9 @@ void ext4_fc_track_inode(handle_t *handle, struct inode *inode)
+ 	lockdep_assert_not_held(&ei->i_data_sem);
+ 
+ 	while (ext4_test_inode_state(inode, EXT4_STATE_FC_COMMITTING)) {
+-#if (BITS_PER_LONG < 64)
+-		DEFINE_WAIT_BIT(wait, &ei->i_state_flags,
+-				EXT4_STATE_FC_COMMITTING);
+-		wq = bit_waitqueue(&ei->i_state_flags,
+-				   EXT4_STATE_FC_COMMITTING);
+-#else
+-		DEFINE_WAIT_BIT(wait, &ei->i_flags,
+-				EXT4_STATE_FC_COMMITTING);
+-		wq = bit_waitqueue(&ei->i_flags,
+-				   EXT4_STATE_FC_COMMITTING);
+-#endif
++		DEFINE_WAIT_BIT(wait, wait_word, wait_bit);
++
++		wq = bit_waitqueue(wait_word, wait_bit);
+ 		prepare_to_wait(wq, &wait.wq_entry, TASK_UNINTERRUPTIBLE);
+ 		if (ext4_test_inode_state(inode, EXT4_STATE_FC_COMMITTING))
+ 			schedule();
+@@ -1034,6 +1022,8 @@ static int ext4_fc_perform_commit(journal_t *journal)
+ 	int ret = 0;
+ 	u32 crc = 0;
+ 	int alloc_ctx;
++	int flushing_wait_bit =
++		ext4_inode_state_wait_bit(EXT4_STATE_FC_FLUSHING_DATA);
+ 
+ 	/*
+ 	 * Step 1: Mark all inodes on s_fc_q[MAIN] with
+@@ -1059,11 +1049,8 @@ static int ext4_fc_perform_commit(journal_t *journal)
+ 	list_for_each_entry(iter, &sbi->s_fc_q[FC_Q_MAIN], i_fc_list) {
+ 		ext4_clear_inode_state(&iter->vfs_inode,
+ 				       EXT4_STATE_FC_FLUSHING_DATA);
+-#if (BITS_PER_LONG < 64)
+-		wake_up_bit(&iter->i_state_flags, EXT4_STATE_FC_FLUSHING_DATA);
+-#else
+-		wake_up_bit(&iter->i_flags, EXT4_STATE_FC_FLUSHING_DATA);
+-#endif
++		wake_up_bit(ext4_inode_state_wait_word(&iter->vfs_inode),
++			    flushing_wait_bit);
+ 	}
+ 
+ 	/*
+@@ -1279,6 +1266,8 @@ static void ext4_fc_cleanup(journal_t *journal, int full, tid_t tid)
+ 	struct ext4_inode_info *ei;
+ 	struct ext4_fc_dentry_update *fc_dentry;
+ 	int alloc_ctx;
++	int committing_wait_bit =
++		ext4_inode_state_wait_bit(EXT4_STATE_FC_COMMITTING);
+ 
+ 	if (full && sbi->s_fc_bh)
+ 		sbi->s_fc_bh = NULL;
+@@ -1315,11 +1304,8 @@ static void ext4_fc_cleanup(journal_t *journal, int full, tid_t tid)
+ 		 * barrier in prepare_to_wait() in ext4_fc_track_inode().
+ 		 */
+ 		smp_mb();
+-#if (BITS_PER_LONG < 64)
+-		wake_up_bit(&ei->i_state_flags, EXT4_STATE_FC_COMMITTING);
+-#else
+-		wake_up_bit(&ei->i_flags, EXT4_STATE_FC_COMMITTING);
+-#endif
++		wake_up_bit(ext4_inode_state_wait_word(&ei->vfs_inode),
++			    committing_wait_bit);
+ 	}
+ 
+ 	while (!list_empty(&sbi->s_fc_dentry_q[FC_Q_MAIN])) {
 -- 
 2.53.0
 
