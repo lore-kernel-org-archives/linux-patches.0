@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952313EEAC7;
-	Tue, 21 Jul 2026 19:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB613F825F;
+	Tue, 21 Jul 2026 19:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661413; cv=none; b=BlNy064brLcCNktGmlgA114Z1VQ/9cx3t/iqRFyTwqRw512c3KdqtScc764nTA0CJmo7aZDiTMLjfP8CYUpYCSxiYyqDhhZ2R0OHiS62Hobgqetmyi8b0wmi56wCbyho1ug5n9hyQHtcBaciXkX1cjLO9oV5OgtgAIwhU9r2ijE=
+	t=1784661416; cv=none; b=IwyKifqvBpJZb1dWpmgIM5qo+T9RNHwzOPmIK6Tbo2atugGtYmnAOaZwiaZyorlrBnhDGTlppDwXlCQUS5a9FkvAaQXZiIoHkL/yQ2MmjSJojrLN1x2s3ZthjC+hrxChkN6d71IUbaPedI/9W+4Go0WyvndB4Bjls9MuiFg8ASI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661413; c=relaxed/simple;
-	bh=5BvU8D8HJw/b4z3AxvQw35SofNl3+Uy8lqQhqnbilcQ=;
+	s=arc-20240116; t=1784661416; c=relaxed/simple;
+	bh=NAuNPgC+kUC3+RLPLhjADMjKEEx2+UIeHt/okuqSjGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lPgyIO+3aIi1JvZIMT6dYvK7QqhkXXdAdFGxV6rhf0HUEIzOsuOfmBXeD8/yBGGAgoj4XCeDTUBMirNjrI+ov8DsuXNSeANz9tSqNvTN0Htpd1UaAWLWPCXE+aroTCO7CaQb3wrmDUmfSrCI700orpaAd53h/HpQgtkhEG1a+qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LgWvpV7E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VY6+yJ4F+UaDRIoqyANlqAt/9WiTUJK858nuLHnIuiH3L2ba1yA1FoXTPhCRC+6TmLmWtKtusB7LzAdJvXi9LIfLAebwGdldn8iVd/A69YwblrLwEhqCf2T+Sod7t4L7b0oroNv+0OkiQXaMqks+pnxPTvMjJ30RP6EKC6liR0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1ub1NGw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LgWvpV7E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFFD51F000E9;
-	Tue, 21 Jul 2026 19:16:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1ub1NGw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C5A31F000E9;
+	Tue, 21 Jul 2026 19:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661412;
-	bh=sGy4nuZ+SE41+QyRchlhu8DH64adHvT5VB/1M6Rsm2I=;
+	s=korg; t=1784661415;
+	bh=Q/kU09kCJP9HuucSaTnPcPEjwknPeB+ZRmwbLppqKFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LgWvpV7E7CI/hXCVoRaJ8SOY9iMeMMXaMuJHqqH56xdLy3mY//QMqZALz9SUcrBid
-	 nbt3CqFZOrI04REOsa8ZTYt0ZmvN6hFKC/yNDVLIRz1KHkNbQyi+0SnAqGA058F4lA
-	 MyhlEpoOZaGPIMyVqPGOZOitVbvm//aiogZI4T10=
+	b=l1ub1NGwHBXt7iiOQeC6AKaYOP6QVE2uQ+hI+139x+vUYH5E8myx6yZp6b0CdgIGB
+	 KcgM4EpQmM4FQBWWZ9zSktHKpGhdOqbbpe41Ha3U6Uqhfa1fDH9VRAkKdoPVa6xuhC
+	 gnYLPrKDbFmR8YZupn/trsYKqJBLbTqGyqguo+sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Sandy Huang <hjc@rock-chips.com>,
+	=?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	linux-rockchip@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0058/1276] clocksource/drivers/sun5i: Handle error returns from devm_reset_control_get_optional_exclusive()
-Date: Tue, 21 Jul 2026 17:08:21 +0200
-Message-ID: <20260721152447.381350127@linuxfoundation.org>
+Subject: [PATCH 6.12 0059/1276] drm/rockchip: Test for imported buffers with drm_gem_is_imported()
+Date: Tue, 21 Jul 2026 17:08:22 +0200
+Message-ID: <20260721152447.404714983@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -46,48 +48,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit fed9f727cc3f91dde8278961269419083502b40e ]
+[ Upstream commit 9fc0da81916250f343599a4dd259f097196bf0fb ]
 
-The devm_reset_control_get_optional_exclusive() function may return an
-ERR_PTR in case of genuine reset control acquisition errors, not just
-NULL which indicates the legitimate absence of an optional reset.
+Instead of testing import_attach for imported GEM buffers, invoke
+drm_gem_is_imported() to do the test. The test itself does not change.
 
-Add an IS_ERR() check after the call in sun5i_timer_probe(). On error,
-return the error code to ensure proper failure handling rather than
-proceeding with invalid pointers.
-
-Fixes: 7e5bac610d2f ("clocksource/drivers/sun5i: Convert to platform device driver")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Acked-by: Chen-Yu Tsai <wens@kernel.org>
-Link: https://patch.msgid.link/20260205084037.3661261-1-nichen@iscas.ac.cn
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Sandy Huang <hjc@rock-chips.com>
+Cc: Heiko Stübner <heiko@sntech.de>
+Cc: Andy Yan <andy.yan@rock-chips.com>
+Cc: linux-rockchip@lists.infradead.org
+Fixes: b57aa47d39e9 ("drm/gem: Test for imported GEM buffers with helper")
+Closes: https://lore.kernel.org/dri-devel/38d09d34.4354.196379aa560.Coremail.andyshrk@163.com/
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20260227133113.235940-11-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-sun5i.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/rockchip/rockchip_drm_gem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clocksource/timer-sun5i.c b/drivers/clocksource/timer-sun5i.c
-index 0d229a9058dad8..706a12a5759829 100644
---- a/drivers/clocksource/timer-sun5i.c
-+++ b/drivers/clocksource/timer-sun5i.c
-@@ -284,6 +284,9 @@ static int sun5i_timer_probe(struct platform_device *pdev)
- 	}
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+index 93ed841f5dceae..04879e23797fb7 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+@@ -332,7 +332,7 @@ void rockchip_gem_free_object(struct drm_gem_object *obj)
+ 	struct rockchip_drm_private *private = drm->dev_private;
+ 	struct rockchip_gem_object *rk_obj = to_rockchip_obj(obj);
  
- 	rstc = devm_reset_control_get_optional_exclusive(dev, NULL);
-+	if (IS_ERR(rstc))
-+		return dev_err_probe(dev, PTR_ERR(rstc),
-+				     "failed to get reset\n");
- 	if (rstc)
- 		reset_control_deassert(rstc);
- 
+-	if (obj->import_attach) {
++	if (drm_gem_is_imported(obj)) {
+ 		if (private->domain) {
+ 			rockchip_gem_iommu_unmap(rk_obj);
+ 		} else {
 -- 
 2.53.0
 
