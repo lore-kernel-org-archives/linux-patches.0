@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1D5476078;
-	Tue, 21 Jul 2026 20:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1482D7DF1;
+	Tue, 21 Jul 2026 20:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664840; cv=none; b=T3X44VoTyS4cudZzAYGsZix+8GmdIkcjMl5190+sN2uqrmDQXo2U5eqQLsJ323WkklvARPHJy+Z3ztVNParOCb1oszXlzsnKgC4PS/djI7y9fr6y4lkDYBfH5/I5Hiji+CYtbRrW71q9VgekBwonDmEWkF2TtPu2As0OBtKjfjQ=
+	t=1784664842; cv=none; b=pX3XzVTt8wFdEtdTdM8MaycpA2QONANzYyk//FSQxYslcniY/5S0xw1S3tP23AiMO675FDk9/NNC0DsXXmtPsmbAu4rFQ2jxT/Avt5uIBfJTRZz1E2mFtFEKx+Y8fHaZx8J4naJmdmpU1E/crLt89nbC2+dfDwepZT+prAasK2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664840; c=relaxed/simple;
-	bh=82r9p1VHtWpJAZQ7M9/7qAx/KeKNMF2W6eEGg9XxbVk=;
+	s=arc-20240116; t=1784664842; c=relaxed/simple;
+	bh=umsmb3/wMXbo4v90jDNmL/8EPc1Dbpw6uNpzlOciO+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TCmmVodwTBUBg/G22XUNZIHcvZ4oGwz2jzwUQyBR/yXLS/419cP6QfQ9yl/r9HRMvW19DHTuwLES3jCwWS+87/xw2pDjcr+B47rCQDiNMyjvDF/b7ICoAmLscxr89BTgkceSQolysEsy7FtxiYomVeZNNCzSt6cHy7fqO43kCk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpU4UcRl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iBUrlKGsXQ95RP5gR++NcHOiT/wU8tvJ5ZZj2JDI+9PVuWZ55WIkSvH5m/p6CVWFBqtyFJVkgzaYdtMHji0290h30h/a+/4adHHw+LBPtMGFoXLOOYMfobXJC+GcmeQQW7JoD3/Am2HTtCEkhsMbqM6WWeJdF1mezlGxPufI+XE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8/VcEVJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpU4UcRl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B171F000E9;
-	Tue, 21 Jul 2026 20:13:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8/VcEVJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D481F000E9;
+	Tue, 21 Jul 2026 20:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664838;
-	bh=lNrsutXYkVHI/HH3qHmpFIiJPWv1ImXta2awT3T0h18=;
+	s=korg; t=1784664840;
+	bh=DOlb2eug/3w9XmXDK/whuHvX9R/OXVWSS0uIGxkGkf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QpU4UcRlJSaysNbkWVDCV1JcY3gvTlB7SCFs0O6At1WdDdG5s65zaNucAJsHvpGqV
-	 Au+MRfxNlbSHWu3b/BgmW3WwC6IZ19SD2dF/4+tNNa1O/eGERgF0gOwwqZn3JOCSbL
-	 sWxNCav/5yDGONrVGFa4Ctt9Xluw0maWiIGzDz3w=
+	b=Y8/VcEVJmL+ARaKmIG/3XqJMpYlzugKrlZS39pSdEj5TsGlLrOwD8hzL47CniPtaD
+	 J/c1dEgUTmLy0PZFHM9OdQYg9GDYn2PONVBJ6m8ukkMHeZXjI1+QLMedysGIZkGtpT
+	 NhjPsKl4ZjXKkWLAJRQQixJwPLHPoP3Cll2AyoFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philo Lu <lulie@linux.alibaba.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	Joe Damato <jdamato@fastly.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Hyokyung Kim <pulpannie@gmail.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0077/1266] virtio_net: Support dynamic rss indirection table size
-Date: Tue, 21 Jul 2026 17:08:34 +0200
-Message-ID: <20260721152443.523498157@linuxfoundation.org>
+Subject: [PATCH 6.6 0078/1266] LoongArch: Add PIO for early access before ACPI PCI root register
+Date: Tue, 21 Jul 2026 17:08:35 +0200
+Message-ID: <20260721152443.545064386@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -55,152 +50,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philo Lu <lulie@linux.alibaba.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 86a48a00efdf61197b6658e52c6140463eb313dc upstream.
+commit 6061e65f95713b01f4313cda6637dfe3aa5412b4 upstream.
 
-When reading/writing virtio_net_ctrl_rss, the indirection table size is
-obtained from vi->rss_indir_table_size, initialized during virtnet_probe().
-However, the indirection_table was statically sized as
-VIRTIO_NET_RSS_MAX_TABLE_LEN=128, potentially causing issues when
-vi->rss_indir_table_size exceeds this limit.
+For ACPI system we suppose the ISA/LPC PIO range is registered together
+with PCI root bridge. But the fact is there may be some early access to
+the ISA/LPC PIO range before ACPI PCI root register (most of them are
+due to abnormal BIOS). Unconditionally register the ISA/LPC PIO range
+usually causes ACPI PCI root register fail because of the address range
+confliction. So we add a pair of helpers: acpi_add_early_pio() to add
+PIO for early access, and acpi_remove_early_pio() to remove PIO before
+PCI root register. Since acpi_remove_early_pio() may be called multiple
+times, we add an acpi_pio flag to ensure PIO be removed only once.
 
-This patch implements dynamic allocation for the indirection table,
-allocated alongside vi->rss after vi->rss_indir_table_size is initialized,
-and freed in virtnet_remove().
-
-In virtnet_commit_rss_command(), scatter-gather lists for RSS are
-initialized differently based on hash_report presence, so indirection_table
-is unused when !vi->has_rss. Therefore, allocation is unnecessary for
-hash_report-only scenarios.
-
-Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
-Signed-off-by: Philo Lu <lulie@linux.alibaba.com>
-Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Acked-by: Joe Damato <jdamato@fastly.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ Hyokyung Kim: 6.6.y predates the refactor that moved the RSS config into
-  struct virtnet_info, so struct virtio_net_ctrl_rss is still embedded in
-  struct control_buf and reached through the heap-allocated vi->ctrl. Every
-  adaptation below follows from that single difference:
-  - the new allocation and all indirection_table accesses use vi->ctrl->rss
-    in place of upstream's vi->rss;
-  - because vi->ctrl is allocated in virtnet_alloc_queues() (via init_vqs())
-    and freed in virtnet_free_queues(), the table is allocated and freed there
-    too, not in virtnet_probe()/virtnet_remove(), so its lifetime tracks
-    vi->ctrl across the probe error-unwind and freeze/restore paths;
-  - since freeing the table now dereferences vi->ctrl, vi->ctrl is set to NULL
-    after each kfree so a re-entered virtnet_free_queues() cannot dereference
-    or free a stale pointer;
-  - the table is allocated with kcalloc() so it is zero-filled when
-    reallocated on the restore path (upstream never reallocates it). ]
-Signed-off-by: Hyokyung Kim <pulpannie@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 43 +++++++++++++++++++++++++++++++++++-----
- 1 file changed, 38 insertions(+), 5 deletions(-)
+ arch/loongarch/include/asm/acpi.h |  2 ++
+ arch/loongarch/kernel/acpi.c      | 28 ++++++++++++++++++++++++++++
+ arch/loongarch/kernel/setup.c     |  2 ++
+ arch/loongarch/pci/acpi.c         |  2 ++
+ 4 files changed, 34 insertions(+)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 33f61922c13994..5bcd1296851c6c 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -208,15 +208,16 @@ struct receive_queue {
-  * because table sizes may be differ according to the device configuration.
-  */
- #define VIRTIO_NET_RSS_MAX_KEY_SIZE     40
--#define VIRTIO_NET_RSS_MAX_TABLE_LEN    128
- struct virtio_net_ctrl_rss {
- 	u32 hash_types;
- 	u16 indirection_table_mask;
- 	u16 unclassified_queue;
--	u16 indirection_table[VIRTIO_NET_RSS_MAX_TABLE_LEN];
-+	u16 hash_cfg_reserved; /* for HASH_CONFIG (see virtio_net_hash_config for details) */
- 	u16 max_tx_vq;
- 	u8 hash_key_length;
- 	u8 key[VIRTIO_NET_RSS_MAX_KEY_SIZE];
-+
-+	u16 *indirection_table;
- };
+diff --git a/arch/loongarch/include/asm/acpi.h b/arch/loongarch/include/asm/acpi.h
+index 49e29b29996f0f..4f31109714c0ab 100644
+--- a/arch/loongarch/include/asm/acpi.h
++++ b/arch/loongarch/include/asm/acpi.h
+@@ -37,6 +37,8 @@ static inline bool acpi_has_cpu_in_madt(void)
+ extern struct list_head acpi_wakeup_device_list;
+ extern struct acpi_madt_core_pic acpi_core_pic[MAX_CORE_PIC];
  
- /* Control VQ buffers: protected by the rtnl lock */
-@@ -3011,6 +3012,25 @@ static int virtnet_set_ringparam(struct net_device *dev,
- 	return 0;
++extern void acpi_add_early_pio(void);
++extern void acpi_remove_early_pio(void);
+ extern int __init parse_acpi_topology(void);
+ 
+ static inline u32 get_acpi_id_for_cpu(unsigned int cpu)
+diff --git a/arch/loongarch/kernel/acpi.c b/arch/loongarch/kernel/acpi.c
+index 1f529b13490b3b..34101b753eaac3 100644
+--- a/arch/loongarch/kernel/acpi.c
++++ b/arch/loongarch/kernel/acpi.c
+@@ -14,6 +14,7 @@
+ #include <linux/memblock.h>
+ #include <linux/of_fdt.h>
+ #include <linux/serial_core.h>
++#include <linux/vmalloc.h>
+ #include <asm/io.h>
+ #include <asm/numa.h>
+ #include <asm/loongson.h>
+@@ -57,6 +58,33 @@ void __iomem *acpi_os_ioremap(acpi_physical_address phys, acpi_size size)
+ 		return ioremap_cache(phys, size);
  }
  
-+static int rss_indirection_table_alloc(struct virtio_net_ctrl_rss *rss, u16 indir_table_size)
++#define PIO_BASE (unsigned long)PCI_IOBASE
++#define PIO_SIZE ALIGN(ISA_IOSIZE, PAGE_SIZE)
++
++static bool acpi_pio;
++
++/* Add PIO for early access */
++void acpi_add_early_pio(void)
 +{
-+	if (!indir_table_size) {
-+		rss->indirection_table = NULL;
-+		return 0;
++	if (!acpi_disabled) {
++		acpi_pio = true;
++		ioremap_page_range(PIO_BASE, PIO_BASE + PIO_SIZE,
++				LOONGSON_LIO_BASE, pgprot_device(PAGE_KERNEL));
 +	}
-+
-+	rss->indirection_table = kcalloc(indir_table_size, sizeof(u16), GFP_KERNEL);
-+	if (!rss->indirection_table)
-+		return -ENOMEM;
-+
-+	return 0;
 +}
 +
-+static void rss_indirection_table_free(struct virtio_net_ctrl_rss *rss)
++/* Remove PIO for PCI register */
++void acpi_remove_early_pio(void)
 +{
-+	kfree(rss->indirection_table);
++	if (!acpi_pio)
++		return;
++
++	if (!acpi_disabled) {
++		acpi_pio = false;
++		vunmap_range(PIO_BASE, PIO_BASE + PIO_SIZE);
++	}
 +}
 +
- static bool virtnet_commit_rss_command(struct virtnet_info *vi)
+ #ifdef CONFIG_SMP
+ static int set_processor_mask(u32 id, u32 flags)
  {
- 	struct net_device *dev = vi->dev;
-@@ -3020,11 +3040,15 @@ static bool virtnet_commit_rss_command(struct virtnet_info *vi)
- 	/* prepare sgs */
- 	sg_init_table(sgs, 4);
+diff --git a/arch/loongarch/kernel/setup.c b/arch/loongarch/kernel/setup.c
+index 2e34ece474eece..729b0660b61c1a 100644
+--- a/arch/loongarch/kernel/setup.c
++++ b/arch/loongarch/kernel/setup.c
+@@ -530,6 +530,8 @@ static __init int arch_reserve_pio_range(void)
+ {
+ 	struct device_node *np;
  
--	sg_buf_size = offsetof(struct virtio_net_ctrl_rss, indirection_table);
-+	sg_buf_size = offsetof(struct virtio_net_ctrl_rss, hash_cfg_reserved);
- 	sg_set_buf(&sgs[0], &vi->ctrl->rss, sg_buf_size);
++	acpi_add_early_pio();
++
+ 	for_each_node_by_name(np, "isa") {
+ 		struct of_range range;
+ 		struct of_range_parser parser;
+diff --git a/arch/loongarch/pci/acpi.c b/arch/loongarch/pci/acpi.c
+index 2d584a59a2a049..b53dae9d57c899 100644
+--- a/arch/loongarch/pci/acpi.c
++++ b/arch/loongarch/pci/acpi.c
+@@ -65,6 +65,8 @@ static int acpi_prepare_root_resources(struct acpi_pci_root_info *ci)
+ 	struct resource_entry *entry, *tmp;
+ 	struct acpi_device *device = ci->bridge;
  
--	sg_buf_size = sizeof(uint16_t) * (vi->ctrl->rss.indirection_table_mask + 1);
--	sg_set_buf(&sgs[1], vi->ctrl->rss.indirection_table, sg_buf_size);
-+	if (vi->has_rss) {
-+		sg_buf_size = sizeof(uint16_t) * vi->rss_indir_table_size;
-+		sg_set_buf(&sgs[1], vi->ctrl->rss.indirection_table, sg_buf_size);
-+	} else {
-+		sg_set_buf(&sgs[1], &vi->ctrl->rss.hash_cfg_reserved, sizeof(uint16_t));
-+	}
- 
- 	sg_buf_size = offsetof(struct virtio_net_ctrl_rss, key)
- 			- offsetof(struct virtio_net_ctrl_rss, max_tx_vq);
-@@ -4080,7 +4104,10 @@ static void virtnet_free_queues(struct virtnet_info *vi)
- 
- 	kfree(vi->rq);
- 	kfree(vi->sq);
-+	if (vi->ctrl)
-+		rss_indirection_table_free(&vi->ctrl->rss);
- 	kfree(vi->ctrl);
-+	vi->ctrl = NULL;
- }
- 
- static void _free_receive_bufs(struct virtnet_info *vi)
-@@ -4266,6 +4293,9 @@ static int virtnet_alloc_queues(struct virtnet_info *vi)
- 		vi->ctrl = kzalloc(sizeof(*vi->ctrl), GFP_KERNEL);
- 		if (!vi->ctrl)
- 			goto err_ctrl;
-+		if ((vi->has_rss || vi->has_rss_hash_report) &&
-+		    rss_indirection_table_alloc(&vi->ctrl->rss, vi->rss_indir_table_size))
-+			goto err_sq;
- 	} else {
- 		vi->ctrl = NULL;
- 	}
-@@ -4298,7 +4328,10 @@ static int virtnet_alloc_queues(struct virtnet_info *vi)
- err_rq:
- 	kfree(vi->sq);
- err_sq:
-+	if (vi->ctrl)
-+		rss_indirection_table_free(&vi->ctrl->rss);
- 	kfree(vi->ctrl);
-+	vi->ctrl = NULL;
- err_ctrl:
- 	return -ENOMEM;
- }
++	acpi_remove_early_pio();
++
+ 	status = acpi_pci_probe_root_resources(ci);
+ 	if (status > 0) {
+ 		acpi_evaluate_integer(device->handle, "PCIH", NULL, &pci_h);
 -- 
 2.53.0
 
