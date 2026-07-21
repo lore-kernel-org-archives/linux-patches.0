@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EEF03B71A0;
-	Tue, 21 Jul 2026 21:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD1D404BF6;
+	Tue, 21 Jul 2026 21:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670416; cv=none; b=KqsVSDLVh5NHqsjuvPwAJy3E9crAVk9a2HfH7rGeHpTHOL18liIOfxlAnRn1yugKuQ9iER35EMlHAnuxYugZpJPw86VclQAbYChPCJlA7Yza5dZYE4Hd0PGtkR8lbVBbhUkcYUAMhz6ptrr3bk4KJximwN6XM6ssyTlgYJz47js=
+	t=1784670419; cv=none; b=Ds1uq9ul/A1rGFs/FgLQV1/plH4NyM5v3nhNkeeCbVM5Ve0u6AjPuxbK7mjwZFkRHaDEUvzVkGmO4sOjvL1dOE/KEdxD38gvUGkosJp+Ryx1quG+MWCM810LnHNQQJS1Czh6o8cji5yrE37MNnPnjWLm++dW6hjQ/JCLhaK++x8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670416; c=relaxed/simple;
-	bh=QYhwlorpM01stDeZmHq4BwDKsGDMvBgZlPekZZZ+5OY=;
+	s=arc-20240116; t=1784670419; c=relaxed/simple;
+	bh=tGYip14lTJEJKJ06E9chas6caZoW9gFG1byUstbr/os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mCtVokSNgCebR4fWCOu3E8phfdQqKgCOxEFPvVHulhwWIwVqukbaX3CSPpFtuYALT4EOHtOdtjQMiXuQXS5P3ZxejQb2WN3aZn/Y9gmw4PaGkXaN/6GyIBySFGNxdWYvPEeq3HJ38RI4epFKtpv9P/LQf564d9sESjugGLSUeuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GAVBAY/O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V0/fKcAt4fWcThe6oU8Qv9vC0gTh2UnOi41NSXiSnu0l2jT47m3GfVf6n/bUGw6z8Nd/M+TR+7EfzFRmjHt6hUgTNKSlk3okrCrgRHo6/IqQ15DojopU+v2eJ0YL9Z+lESP2mRvLmNEZ0io4s2odQT328uC69Hv28G51LuotKUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gzoQnrvE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GAVBAY/O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43541F000E9;
-	Tue, 21 Jul 2026 21:46:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gzoQnrvE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3E51F000E9;
+	Tue, 21 Jul 2026 21:46:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670415;
-	bh=CMFp45AJ0yEkJMDM5NpumkYv36IL7vwWaXprW3yYmsU=;
+	s=korg; t=1784670417;
+	bh=iHk1E4Lxx9FK0PHVXJ0CUIjjniICR3JZ9Cw41cq7qdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GAVBAY/Ohffz1N8ZRaUE8fLQeHXnmoxLqxjVX+w5s1p2NUxonxLCzU+59Sls5gh/r
-	 UH6LQnFp8MvJWhF/EnC2xkG9CnCXZvQTGENUKYpKE/pKr8iA/5evWNbC/OFMcoc0f0
-	 uPBKPDyDsk0rFwcUPhweNfiuA8ueRmG638V7aP1A=
+	b=gzoQnrvEwa83T0vDdjYOfLjqtIHDqLM05/t1VQUAl4x1YxE0cK4fRwrdrcELNEZpe
+	 KeKhOXOjX4z9muz2FZn2lyDRfmkRonXyHB/bnAmmHks8Bd68GtMAvi4dKiTPQX1XiD
+	 dMHNAsKuCLogR7S66drcZ21cJ9NCG2Oe6Gu1qzYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 0923/1067] llc: fix SAP refcount leak when creating incoming sockets
-Date: Tue, 21 Jul 2026 17:25:24 +0200
-Message-ID: <20260721152445.182290103@linuxfoundation.org>
+Subject: [PATCH 6.1 0888/1067] net/sched: sch_teql: move rcu_read_lock()/spin_lock() from _bh variants
+Date: Tue, 21 Jul 2026 17:24:49 +0200
+Message-ID: <20260721152444.398045526@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,42 +50,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-commit 2c72eb6286347d05a885412fb076993bd5286b53 upstream.
+commit 6301f6a34ed86fe6f3b7b3211ea069f3677fc559 upstream.
 
-llc_sap_add_socket() takes a SAP reference for each socket added to a SAP,
-and llc_sap_remove_socket() releases it. llc_create_incoming_sock() takes
-an additional SAP reference after adding the child socket.
+This is a followup based on sashiko comments [1] on commit e5b811fe7931
+("net/sched: sch_teql: Introduce slaves_lock to avoid race condition and UAF")
 
-This extra reference was balanced by an explicit llc_sap_put() in
-llc_ui_release() until commit 3100aa9d74db ("llc: fix SAP reference
-counting w.r.t. socket handling") removed that put. The corresponding hold
-in the accept path was left behind.
+Use plain rcu_read_lock()/spin_lock() in teql_master_xmit() instead of the
+_bh variants, since ndo_start_xmit is already invoked with BH disabled
+by the core stack and the _bh primitives can warn in_hardirq() when xmit
+is reached through netpoll or a softirq xmit path with hard IRQs disabled.
 
-When such a child socket is removed, only the reference taken by
-llc_sap_add_socket() is released. The extra reference keeps the SAP alive
-after its last socket is removed. Remove the obsolete hold.
+Moves rcu_read_lock() after restart: label + adds rcu_read_unlock() before
+goto restart (fixes the unbounded RCU hold across retries)
 
-Fixes: 3100aa9d74db ("llc: fix SAP reference counting w.r.t. socket handling")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Link: https://patch.msgid.link/20260712130343.518797-1-xuanqiang.luo@linux.dev
+[1] https://sashiko.dev/#/patchset/20260628111229.669751-1-jhs%40mojatatu.com
+
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Fixes: e5b811fe7931 ("net/sched: sch_teql: Introduce slaves_lock to avoid race condition and UAF")
+Link: https://patch.msgid.link/20260630150922.238714-1-jhs@mojatatu.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/llc/llc_conn.c |    1 -
- 1 file changed, 1 deletion(-)
+ net/sched/sch_teql.c |   27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
---- a/net/llc/llc_conn.c
-+++ b/net/llc/llc_conn.c
-@@ -761,7 +761,6 @@ static struct sock *llc_create_incoming_
- 	newllc->dev = dev;
- 	dev_hold(dev);
- 	llc_sap_add_socket(llc->sap, newsk);
--	llc_sap_hold(llc->sap);
- out:
- 	return newsk;
+--- a/net/sched/sch_teql.c
++++ b/net/sched/sch_teql.c
+@@ -311,14 +311,14 @@ static netdev_tx_t teql_master_xmit(stru
+ 	int subq = skb_get_queue_mapping(skb);
+ 	struct sk_buff *skb_res = NULL;
+ 
+-	rcu_read_lock_bh();
+-
+-	start = rcu_dereference_bh(master->slaves);
+-
+ restart:
+ 	nores = 0;
+ 	busy = 0;
+ 
++	rcu_read_lock();
++
++	start = rcu_dereference(master->slaves);
++
+ 	q = start;
+ 	if (!q)
+ 		goto drop;
+@@ -345,17 +345,17 @@ restart:
+ 				    netdev_start_xmit(skb, slave, slave_txq, false) ==
+ 				    NETDEV_TX_OK) {
+ 					__netif_tx_unlock(slave_txq);
+-					spin_lock_bh(&master->slaves_lock);
++					spin_lock(&master->slaves_lock);
+ 					if (rcu_dereference_protected(master->slaves,
+ 								      lockdep_is_held(&master->slaves_lock)) == q)
+ 						rcu_assign_pointer(master->slaves,
+ 								   rcu_dereference_protected(NEXT_SLAVE(q),
+ 											     lockdep_is_held(&master->slaves_lock)));
+-					spin_unlock_bh(&master->slaves_lock);
++					spin_unlock(&master->slaves_lock);
+ 					netif_wake_queue(dev);
+ 					master->tx_packets++;
+ 					master->tx_bytes += length;
+-					rcu_read_unlock_bh();
++					rcu_read_unlock();
+ 					return NETDEV_TX_OK;
+ 				}
+ 				__netif_tx_unlock(slave_txq);
+@@ -364,37 +364,38 @@ restart:
+ 				busy = 1;
+ 			break;
+ 		case 1:
+-			spin_lock_bh(&master->slaves_lock);
++			spin_lock(&master->slaves_lock);
+ 			if (rcu_dereference_protected(master->slaves,
+ 						      lockdep_is_held(&master->slaves_lock)) == q)
+ 				rcu_assign_pointer(master->slaves,
+ 						   rcu_dereference_protected(NEXT_SLAVE(q),
+ 									     lockdep_is_held(&master->slaves_lock)));
+-			spin_unlock_bh(&master->slaves_lock);
+-			rcu_read_unlock_bh();
++			spin_unlock(&master->slaves_lock);
++			rcu_read_unlock();
+ 			return NETDEV_TX_OK;
+ 		default:
+ 			nores = 1;
+ 			break;
+ 		}
+ 		__skb_pull(skb, skb_network_offset(skb));
+-	} while ((q = rcu_dereference_bh(NEXT_SLAVE(q))) != start);
++	} while ((q = rcu_dereference(NEXT_SLAVE(q))) != start);
+ 
+ 	if (nores && skb_res == NULL) {
+ 		skb_res = skb;
++		rcu_read_unlock();
+ 		goto restart;
+ 	}
+ 
+ 	if (busy) {
+ 		netif_stop_queue(dev);
+-		rcu_read_unlock_bh();
++		rcu_read_unlock();
+ 		return NETDEV_TX_BUSY;
+ 	}
+ 	master->tx_errors++;
+ 
+ drop:
+ 	master->tx_dropped++;
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
+ 	dev_kfree_skb(skb);
+ 	return NETDEV_TX_OK;
  }
 
 
