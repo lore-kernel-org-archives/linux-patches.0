@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1764439010;
-	Tue, 21 Jul 2026 22:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1334266BF;
+	Tue, 21 Jul 2026 22:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671692; cv=none; b=OTSAhS1fqZHtmJCU3pDOVJyPj+Jqo21XYJRtXng2Ah9DqsWtTDqOvSYmN4h+N8clYXvCr/mUG4ixAb92yOjZsjIW7dv3eR1281szx6qx9gukPVhhGGwGfKvzx0VqRW1dUvvxoJcG+n1bcyGE3RU3mnGcEAwfzeysTrhJRMCd4NU=
+	t=1784671695; cv=none; b=fkOUPk2Ox8u2EEKK4ev0soz3mJ+uerVKwoJyWS3zio08oc0KjihGSH/gzguXb5IDJ8QVlTNs1nrrLmhLDWCJhgMbjeczs+XBrKP83eVn4eb1vZQJGSeZI/vvpwsZ2uxO5gJO8I0GdVRxy8LHJFx/cf4x7ifTqoVBotHtBQqCzuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671692; c=relaxed/simple;
-	bh=X9bWD4cuGa68fdi7E78G5qfmZQ/28TXvzyCrll88qS0=;
+	s=arc-20240116; t=1784671695; c=relaxed/simple;
+	bh=xJDhj1nhVudeMb8QQZ8lG8NpMvMkSkL0HqRhBM7Z4Mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TzBFivi7ygHiBgA34eVbhsVcsgwjCkoX38G5VWBRc1ol3ucwAVnIH/QU5L1D1rSmalsh7XTPyMkdAa49oO30VR4WVX2QKoSRKwZpFIei71CpztlqAnF7zW4+YE8Jjy8Y+9IrkJTHyQa/fhllj38c5+GtIKuTq72F6BvqciaCSjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fur7jmHJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z5a93lQ3jaUaxvbXGSuh/VSn6zaJDa9xOYIe4P9GxaSQS1EJvV8Lv+zm8Lp0W8cViRQkdPMVO7siOLzqcOGgxbdxSY6dlVp49FCdxUri+YWzKxaSgFsgtHeqPV8ssLdy0YPC3HGJ2WV6wNqzmeIdIX0pB3YxdVaE1ykhr0BoRJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jl8PXwxM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fur7jmHJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58D61F000E9;
-	Tue, 21 Jul 2026 22:08:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jl8PXwxM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0501F00A3A;
+	Tue, 21 Jul 2026 22:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671688;
-	bh=EtFJz7EqIWYlu8c4ACHrVFnvgnijCbS4S8Zc3dCFsnY=;
+	s=korg; t=1784671690;
+	bh=bQ9mK14AUF7nZeadB2iYX7w+hlhR+/amW6vO+0SPVJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fur7jmHJ2EoNI/Rn/JTbPM3KeEgCYkKhSgzKTsrJ5fMqO8BweDUq29geqIgS9k+0D
-	 1mH48WWIt+DcPVFteyaAFBywyxx99fslxBrrUOAN/27dF9MsO91uugX1OapnXP76dO
-	 77N/hwdoMJtKqN62kFFVOUx7baWejNpu7/8mW5uM=
+	b=Jl8PXwxMwSJo7gaRV+BK520adiFdmdJOW6gbO4AKcZyOGrO4Wjt/dkG6Ba1cQ7QDs
+	 hNhkh+8DurmXHeeDR1A82dZG+0DnB6BdjR3Kz6mX/bG4Y55gEPRtXbvnDx0DDm/SCU
+	 BKJ/EFiTZ4jD/bSVm5JhUnptYHztqzOUtjb5J+l0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 340/843] ASoC: tegra: tegra210_ahub: Validate written enum value
-Date: Tue, 21 Jul 2026 17:19:35 +0200
-Message-ID: <20260721152413.671892270@linuxfoundation.org>
+Subject: [PATCH 5.15 341/843] net: fib_rules: Dont dump dying fib_rule in fib_rules_dump().
+Date: Tue, 21 Jul 2026 17:19:36 +0200
+Message-ID: <20260721152413.696580262@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,48 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 1d8aabb413b5638670dfd1162169edc0ba276a2e ]
+[ Upstream commit 2821e85c058f81c9948a2fb1a634f7b47457d51c ]
 
-tegra_ahub_put_value_enum() reads e->values[item[0]] before
-checking whether item[0] is within the enum item range. The existing
-check therefore happens too late to prevent an out-of-range read of the
-values array.
+rocker_router_fib_event() calls fib_rule_get() during RCU dump.
 
-Move the check before the array access.
+If the fib_rule is dying, refcount_inc() will complain about it.
 
-Fixes: 16e1bcc2caf4 ("ASoC: tegra: Add Tegra210 based AHUB driver")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20260609124317.38046-5-sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Let's call refcount_inc_not_zero() in fib_rules_dump().
+
+Fixes: 5d7bfd141924 ("ipv4: fib_rules: Dump FIB rules when registering FIB notifier")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260610061744.2030996-3-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/tegra/tegra210_ahub.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/net/fib_rules.h | 5 +++++
+ net/core/fib_rules.c    | 6 +++++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/tegra/tegra210_ahub.c b/sound/soc/tegra/tegra210_ahub.c
-index 686c8ff46ec8a1..3050ad46348c94 100644
---- a/sound/soc/tegra/tegra210_ahub.c
-+++ b/sound/soc/tegra/tegra210_ahub.c
-@@ -60,13 +60,15 @@ static int tegra_ahub_put_value_enum(struct snd_kcontrol *kctl,
- 	struct soc_enum *e = (struct soc_enum *)kctl->private_value;
- 	struct snd_soc_dapm_update update[TEGRA_XBAR_UPDATE_MAX_REG] = { };
- 	unsigned int *item = uctl->value.enumerated.item;
--	unsigned int value = e->values[item[0]];
-+	unsigned int value;
- 	unsigned int i, bit_pos, reg_idx = 0, reg_val = 0;
- 	int change = 0;
+diff --git a/include/net/fib_rules.h b/include/net/fib_rules.h
+index bd07484ab9dd5f..5a5d84a3fe6a40 100644
+--- a/include/net/fib_rules.h
++++ b/include/net/fib_rules.h
+@@ -128,6 +128,11 @@ static inline void fib_rule_get(struct fib_rule *rule)
+ 	refcount_inc(&rule->refcnt);
+ }
  
- 	if (item[0] >= e->items)
- 		return -EINVAL;
- 
-+	value = e->values[item[0]];
++static inline bool fib_rule_get_safe(struct fib_rule *rule)
++{
++	return refcount_inc_not_zero(&rule->refcnt);
++}
 +
- 	if (value) {
- 		/* Get the register index and value to set */
- 		reg_idx = (value - 1) / (8 * cmpnt->val_bytes);
+ static inline void fib_rule_put(struct fib_rule *rule)
+ {
+ 	if (refcount_dec_and_test(&rule->refcnt))
+diff --git a/net/core/fib_rules.c b/net/core/fib_rules.c
+index 1bb567a3b329cd..0756c40033ac70 100644
+--- a/net/core/fib_rules.c
++++ b/net/core/fib_rules.c
+@@ -328,7 +328,7 @@ int fib_rules_lookup(struct fib_rules_ops *ops, struct flowi *fl,
+ 
+ 		if (err != -EAGAIN) {
+ 			if ((arg->flags & FIB_LOOKUP_NOREF) ||
+-			    likely(refcount_inc_not_zero(&rule->refcnt))) {
++			    likely(fib_rule_get_safe(rule))) {
+ 				arg->rule = rule;
+ 				goto out;
+ 			}
+@@ -386,8 +386,12 @@ int fib_rules_dump(struct net *net, struct notifier_block *nb, int family,
+ 	if (!ops)
+ 		return -EAFNOSUPPORT;
+ 	list_for_each_entry_rcu(rule, &ops->rules_list, list) {
++		if (!fib_rule_get_safe(rule))
++			continue;
++
+ 		err = call_fib_rule_notifier(nb, FIB_EVENT_RULE_ADD,
+ 					     rule, family, extack);
++		fib_rule_put(rule);
+ 		if (err)
+ 			break;
+ 	}
 -- 
 2.53.0
 
