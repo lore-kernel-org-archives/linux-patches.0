@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7EB46EC63;
-	Tue, 21 Jul 2026 18:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E490046D094;
+	Tue, 21 Jul 2026 18:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659623; cv=none; b=bQpn36P5XZadLwvtY9lBDCfUTlacF6daQcWkmiLJuKFi+75jYmtyE6RdB4Ru3aJq1jEzKpg39Ec/Sv9Qef1Q/tuKXcyskx2WvNdU1Cl21+OrwjVPQexzxWsquzJrDtrzCzv0Yw4FSypMaYjOj2n0mxaxYOib1Oo59YW0XDRziVo=
+	t=1784659626; cv=none; b=sDkaHyIjr3bNuvwrlL8szJRBbHjfFQ7k4hT5tzgZeQm+8fP9ZCYEqqzhr5R+4GFCnPSq+a9qmeOm9r6V48mCzoG7+IlOOx/KrL8lYoPsg9LiUZoFXeGFKbbfzxAKvNx1RzSCa31ZXwh6XTAE/63NcHvWdNce3K1cQdKlKLGh9VU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659623; c=relaxed/simple;
-	bh=GJbQ5Rj+fvnOCnHE2RIbn3ng5eIQ8QcnG3MMtzkm880=;
+	s=arc-20240116; t=1784659626; c=relaxed/simple;
+	bh=xBlnuP/1ggOWGxeBY3aD6s0vMRCo6bceqt5fZauFXXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VGRphJw/eP6rCc/gjnt0FAxooYHof17J7QNjgrXkn9M5gls+25LTObH6Q2R1LJOt/H58EjKvFdmActXoO/iG0Dn1kSvZfR1dIHcCLy4dizKzOdhCuUkHxfraWQGVOeaSg+pQiO9DiKgxZeqzNIJmqfZwmXJlvf+ARezCvsntcVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qKRWE1E0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mUDQh+XRDAQpi/Uxk+f7TH0spfdSHmbjFIWEOREx8TBT5eZIcFEDATJnK1Jo0mMZBuEBrye74XZxp5QEJN880fpiRJhNNpdvW2J6knl6LxLuYxDUWF8AyZEV90G6OPFBqsGfbFa5PspRyOAEnatzMNz24Qp6gHICd5P6BHs7P6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFC/8Snd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKRWE1E0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5841F000E9;
-	Tue, 21 Jul 2026 18:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFC/8Snd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053A21F000E9;
+	Tue, 21 Jul 2026 18:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659621;
-	bh=YD8RBYF/T0pUXCu4RqyxVcqB043rTTTdU1SvnHhH4Ls=;
+	s=korg; t=1784659624;
+	bh=QEBwL0xF/6GUpZtKVjWfCm1DBWl+VPtoCLmeGz/Tpxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qKRWE1E0TOIYNmSou8y2kzpP7PTy5fJk+t0mJW0Y38//MfcYRgJzbCTHDa1EtSYy7
-	 In1FZvjQ1885wB2xzp9Y5nkO25cXDErm5+iBPW0runGWDsqKvkG6Krg7LYcag1eN6/
-	 5pSAbJBkSRC4Y3KGYGWFzSFNRkyX0Bg1hptWYnR8=
+	b=EFC/8Snd9wdxKRR1FE2rGVGn2Y4Sffs5iUCxGkqNmQ0pj2nadgf8w24qX7Qg5vfYT
+	 p0gwqfnO1Gk2enWPkwETZ8CN7peP6ex5h/MdH5SGgKgDsaQGT+jkn4Q9Izcpdkkdnq
+	 gSZu5vzJ3jAwt6SpQ41uuEqmtMLQc52JZNa17nU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1591/1611] btrfs: fix incorrect buffered IO fallback for append direct writes
-Date: Tue, 21 Jul 2026 17:28:27 +0200
-Message-ID: <20260721152551.262887893@linuxfoundation.org>
+	Oliver Upton <oupton@kernel.org>,
+	Wei-Lin Chang <weilin.chang@arm.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.18 1592/1611] KVM: arm64: Ensure level is always initialized when relaxing perms
+Date: Tue, 21 Jul 2026 17:28:28 +0200
+Message-ID: <20260721152551.285964908@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,197 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Oliver Upton <oupton@kernel.org>
 
-[ Upstream commit ff66fe6662330226b3f486014c375538d91c44aa ]
+commit 100baf0184896f859290a684f864b8200d8ac872 upstream.
 
-[BUG]
-With the previous bug of short direct writes fixed, test case
-generic/362 (*) still fails with the following error with nodatasum
-mount option:
+stage2_update_leaf_attrs() returns early before writing to @level if the
+table walker returned an error. At the same time,
+kvm_pgtable_stage2_relax_perms() uses the level as a TLBI TTL hint when the
+error was EAGAIN, indicating the vCPU raced with a table update and the TLB
+entry it hit is now stale.
 
-# generic/362  0s ... - output mismatch (see /home/adam/xfstests/results//generic/362.out.bad)
-# - output mismatch (see /home/adam/xfstests/results//generic/362.out.bad)
-#    --- tests/generic/362.out	2024-08-24 15:31:37.200000000 +0930
-#    +++ /home/adam/xfstests/results//generic/362.out.bad	2026-05-27 10:13:09.072485767 +0930
-#    @@ -1,2 +1,3 @@
-#     QA output created by 362
-#    +Wrong file size after first write, got 8192 expected 4096
-#     Silence is golden
-#    ...
+Fall back to an unknown TTL if none was provided by the walk.
 
-*: If the test case has been executed before with default data checksum,
-the failure will not reproduce. Need the following fix to make it
-reliably reproducible:
-https://lore.kernel.org/linux-btrfs/20260528111659.87113-1-wqu@suse.com/
-
-[CAUSE]
-Inside btrfs_dio_iomap_begin() for a direct write, we increase the isize
-if it's beyond the current isize.
-
-But if the direct io finished short, we do not revert the isize to the
-previous value nor to the short write end.
-
-Then if we need to fall back to buffered writes, and the write has
-IOCB_APPEND flag, then the buffered write will be positioned at the
-incorrect isize.
-
-The call chain looks like this:
-
- btrfs_direct_write(pos=0, length=4K)
- |- __iomap_dio_rw()
- |  |- iomap_iter()
- |  |  |- btrfs_dio_iomap_begin()
- |  |     |- btrfs_get_blocks_direct_write()
- |  |        |- i_size_write()
- |  |           Which updates the isize to the write end (4K).
- |  |
- |  |- iomap_dio_iter()
- |  |  Failed with -EFAULT on the first page.
- |  |
- |  |- iomap_iter()
- |  |  |- btrfs_dio_iomap_end()
- |  |     Detects a short write, return -ENOTBLK
- |  |- if (ret == -ENOTBLK) { ret = 0;}
- |     Which resets the return value.
- |
- |- ret = iomap_dio_complet()
- |  Which returns 0.
- |
- |- btrfs_buffered_write(iocb, from);
-    |- generic_write_checks()
-       |- iocb->ki_pos = i_size_read()
-          Which is still the new size (4K), other than the original
-	  isize 0.
-
-[FIX]
-Introduce the following btrfs_dio_data members:
-
-- old_isize
-
-- updated_isize
-  If the direct write has enlarged the isize.
-
-Then if we got a short write, and btrfs_dio_data::updated_isize is set,
-revert to the correct isize based on old_isize and current file
-position.
-
-And here we call i_size_write() without holding an extent lock, which is
-a very special case that we're safe to do:
-
- - Only a single writer can be enlarging isize
-   Enlarging isize will take the exclusive inode lock.
-
- - Buffered readers need to wait for the OE we're holding
-   Buffered readers will lock extent and wait for OE of the folio range.
-   Sometimes we can skip the OE wait, but since all page cache is
-   invalidated, the OE wait can not be skipped.
-
-But I do not think this is the most elegant solution, nor covers all
-cases. E.g. if the bio is submitted but IO failed, we are unable to do
-the revert.
-
-I believe the more elegant one would be extend the EXTENT_DIO_LOCKED
-lifespan for direct writes, so that we can update the isize when a
-write beyond EOF finished successfully.
-
-However that change is too huge for a small bug fix.
-So only implement the minimal partial fix for now.
-
-[REASON FOR NO FIXES TAG]
-The bug is again very old, before commit f85781fb505e ("btrfs: switch to
-iomap for direct IO") we are already increasing isize without a
-proper rollback for short writes.
-
-Thus only a CC to stable.
-
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: be097997a273 ("KVM: arm64: Always invalidate TLB for stage-2 permission faults")
+Signed-off-by: Oliver Upton <oupton@kernel.org>
+Reviewed-by: Wei-Lin Chang <weilin.chang@arm.com>
+Link: https://patch.msgid.link/20260701231620.3300204-2-oupton@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/direct-io.c |   43 ++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 42 insertions(+), 1 deletion(-)
+ arch/arm64/kvm/hyp/pgtable.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/direct-io.c
-+++ b/fs/btrfs/direct-io.c
-@@ -15,10 +15,12 @@
+--- a/arch/arm64/kvm/hyp/pgtable.c
++++ b/arch/arm64/kvm/hyp/pgtable.c
+@@ -1291,7 +1291,7 @@ int kvm_pgtable_stage2_relax_perms(struc
+ 				   enum kvm_pgtable_prot prot, enum kvm_pgtable_walk_flags flags)
+ {
+ 	int ret;
+-	s8 level;
++	s8 level = TLBI_TTL_UNKNOWN;
+ 	kvm_pte_t set = 0, clr = 0;
  
- struct btrfs_dio_data {
- 	ssize_t submitted;
-+	loff_t old_isize;
- 	struct extent_changeset *data_reserved;
- 	struct btrfs_ordered_extent *ordered;
- 	bool data_space_reserved;
- 	bool nocow_done;
-+	bool updated_isize;
- };
- 
- struct btrfs_dio_private {
-@@ -228,6 +230,7 @@ static int btrfs_get_blocks_direct_write
- 	bool space_reserved = false;
- 	u64 len = *lenp;
- 	u64 prev_len;
-+	loff_t old_isize;
- 	int ret = 0;
- 
- 	/*
-@@ -341,8 +344,14 @@ static int btrfs_get_blocks_direct_write
- 	 * Need to update the i_size under the extent lock so buffered
- 	 * readers will get the updated i_size when we unlock.
- 	 */
--	if (start + len > i_size_read(inode))
-+	old_isize = i_size_read(inode);
-+	if (start + len > old_isize) {
-+		if (!dio_data->updated_isize) {
-+			dio_data->old_isize = old_isize;
-+			dio_data->updated_isize = true;
-+		}
- 		i_size_write(inode, start + len);
-+	}
- out:
- 	if (ret && space_reserved) {
- 		btrfs_delalloc_release_extents(BTRFS_I(inode), len);
-@@ -626,6 +635,38 @@ static int btrfs_dio_iomap_end(struct in
- 		length -= submitted;
- 		if (write) {
- 			/*
-+			 * Got a short write and have updated the isize, need to
-+			 * revert the isize change.
-+			 *
-+			 * Normally we need to update isize with extent lock hold,
-+			 * but we're safe due to the following factors:
-+			 *
-+			 * - Only a single writer can be enlarging isize
-+			 *   Enlarging isize will take the exclusive inode lock.
-+			 *
-+			 * - Buffered readers need to wait for the OE we're holding
-+			 *   Buffered readers will lock extent and wait for OE
-+			 *   of the folio range, and since page cache is invalidated
-+			 *   the OE wait can not be skipped.
-+			 *
-+			 * So here we are safe to revert the isize before
-+			 * finishing the OE, and no reader of the remaining range
-+			 * can see the enlarged size.
-+			 *
-+			 * TODO: Extend the DIO_LOCKED lifespan for direct writes,
-+			 * and only enlarge isize after a successful write.
-+			 */
-+			if (dio_data->updated_isize) {
-+				u64 new_isize;
-+
-+				if (submitted == 0)
-+					new_isize = dio_data->old_isize;
-+				else
-+					new_isize = max(dio_data->old_isize, pos);
-+				i_size_write(inode, new_isize);
-+				dio_data->updated_isize = false;
-+			}
-+			/*
- 			 * We have a short write, if there is any range
- 			 * that is submitted properly, that part will have
- 			 * its own OE split from the original one.
+ 	if (prot & KVM_PTE_LEAF_ATTR_HI_SW)
 
 
