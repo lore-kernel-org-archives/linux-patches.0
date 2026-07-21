@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1914946E01D;
-	Tue, 21 Jul 2026 17:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9BD946C4AC;
+	Tue, 21 Jul 2026 17:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655281; cv=none; b=jBk41yB5K/bSmLzYKuFYedlm/ycl9oEg5AMT+pDhnaqCnDFgHJyIBxxGNjqm6UKJVy7qA47cQUH1kDWNAW1N8WRKz+hMeXIoCqYvvsYwujRufYGUm/QMslrtnSjX9IXtsA5FtPAfWJjwzu8l5b99yXudQ3yTjrXEmvUa4b1QJak=
+	t=1784655283; cv=none; b=PPuhbUrYKuFs92Ad6ayGYP+oMHvQ942qoVAraDEHOfotiy7rCihWI5T44VeB3Wsnbh2T+FdS+I1OnAtE8+Ue4ql8+FxjFaCWyPu+F4ooQfptOcOeFWmqZ4kNyrwKiKqdPHN+fkTmoTEevVr8sjm0VdxnDVCTCznZkLeJu2ROltY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655281; c=relaxed/simple;
-	bh=ZaDGuiKa6jZ0u3lVVuHYK+FqkJf0kg1Rcw/W8Q2Yycg=;
+	s=arc-20240116; t=1784655283; c=relaxed/simple;
+	bh=MwvDJIhI9sJ0pcgAdidY5CDHzB57uNgS/S7VDeIE06o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mVgg056HlC1U2ceV4q9V2tNJt14wqcrWrd4N7UE3KTZoYjt0VVQh5b5dzaCwEcZziMu7i7XDVcOfLWbPTVxu470HR93rFCJi6uFw+PEas5UYBa+pzsrlmCTUdVN8tSQ1qfMLCCM/L/gdP1qjcXDwpOqoXUkGu4+zsrFfifKgFXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVRL2Owc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mtTLPeueOaclzDT6ES46tDzmFugPrrHmRJDuT5S6Og4dw4uEZtgBs0s6sdb5dcq72Iy++Z6GbIMsNa+W01OwIkTQ8Z+2bQE/GVPKmSa1xzGMXPQjXTDL+XkzGMMkQI+chIjdPrXRwj1I6j61l65sekICz6ydqgFuyt1S2r68jGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aIkqtxLO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVRL2Owc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F0E61F000E9;
-	Tue, 21 Jul 2026 17:34:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aIkqtxLO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37AB51F000E9;
+	Tue, 21 Jul 2026 17:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655280;
-	bh=TZLbIq88xps8vTsD+ZsuOXBOm7E0h5urlqS+oWlvyjU=;
+	s=korg; t=1784655282;
+	bh=EAUXa25PxcfE84qHGiTAAPVIVTW+zmU8DOBqi0p45eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nVRL2OwcKPltyvqDPzX6nXI/vmI9svC9V2X7zAxi+hmqMepbJVQ0OWRnkBKWufyGp
-	 Zq/je5YCvZR+anhUalxYylh+MyU/YBnzl2nvHXceQasmoJov8dNZ1o7NTVImromXv1
-	 tAOhtm456jD06eCyy49ZO42qWtqHs9ocWBPdpFxg=
+	b=aIkqtxLOJBNnf4RzqYPqlm/pitp3M/a1aGzzP/kU2z5x0YZye+j4syE6T/ZaEq4Bb
+	 6iK2jT+zg5WW1ZO/9/DzdRo0PRrJoUq9KhP7lcmiyVsh3p4lsoDi5BMFfkmjw4jpsf
+	 J/ZVNNr1q5r7Zwiz7mDyPFbTiGdIDnWDP+cIIj7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.1 1987/2077] drbd: reject data replies with an out-of-range payload size
-Date: Tue, 21 Jul 2026 17:27:40 +0200
-Message-ID: <20260721152639.577042833@linuxfoundation.org>
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 7.1 2023/2077] wifi: ieee80211: validate MLE common info length
+Date: Tue, 21 Jul 2026 17:28:16 +0200
+Message-ID: <20260721152640.414983753@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,67 +44,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit bd910a7660d280595ef94cb6d193951d855d330f upstream.
+commit 293baeae9b2434a3e432629d7720b5603db2d77e upstream.
 
-recv_dless_read() receives a P_DATA_REPLY from a peer into the bio of an
-outstanding read request. The peer-supplied payload length reaches it as
-the signed int data_size, and two peer-controlled inputs can make it
-negative. With a negotiated data-integrity-alg the digest length is
-subtracted first, so a reply whose payload is smaller than the digest
-underflows data_size. With no integrity algorithm (the default) data_size
-is assigned from the unsigned h95/h100 wire length and drbdd() never
-bounds it for a payload-carrying command, so a length above INT_MAX casts
-it negative; this path needs no non-default feature. The bio receive loop
-then computes expect = min_t(int, data_size, bv_len), which is negative,
-and drbd_recv_all_warn(mapped, expect) receives with a size_t of SIZE_MAX
-into the first mapped page.
+ieee80211_mle_common_size() uses the first common-info octet as the
+common information length for all known MLE types. However,
+ieee80211_mle_size_ok() only validates that octet for Basic, Probe
+Request, and TDLS MLEs.
 
-The sibling receive path read_in_block() is not affected: it uses an
-unsigned size and rejects it against DRBD_MAX_BIO_SIZE before receiving.
-Reject a data reply whose size is negative after the optional digest
-subtraction, covering both triggers.
+Reconfiguration MLEs also skipped the length octet when calculating the
+minimum common size, and Priority Access MLEs skipped validation of the
+advertised common information length.
 
-Impact: a malicious or man-in-the-middle DRBD peer copies attacker-chosen
-bytes past a bio page in the receiver, corrupting kernel memory. A node
-that reads from its peer (a diskless node, or read-balancing to the peer)
-is exposed in the default configuration; data-integrity-alg is not
-required.
+Account for the Reconfiguration common-info length octet and validate
+the advertised common information length for all known MLE types. Keep
+unknown-type handling unchanged.
 
-Fixes: b411b3637fa7 ("The DRBD driver")
+Fixes: 0f48b8b88aa9 ("wifi: ieee80211: add definitions for multi-link element")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5-5-xhigh
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
-Link: https://patch.msgid.link/20260710022837.3738461-1-michael.bommarito@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260611173506.36838-2-enderaoelyther@gmail.com
+[remove now misleading comment]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/drbd/drbd_receiver.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ include/linux/ieee80211-eht.h |   12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
---- a/drivers/block/drbd/drbd_receiver.c
-+++ b/drivers/block/drbd/drbd_receiver.c
-@@ -1810,6 +1810,11 @@ static int recv_dless_read(struct drbd_p
- 		data_size -= digest_size;
- 	}
+--- a/include/linux/ieee80211-eht.h
++++ b/include/linux/ieee80211-eht.h
+@@ -844,7 +844,7 @@ static inline bool ieee80211_mle_size_ok
+ 	const struct ieee80211_multi_link_elem *mle = (const void *)data;
+ 	u8 fixed = sizeof(*mle);
+ 	u8 common = 0;
+-	bool check_common_len = false;
++	u8 common_len;
+ 	u16 control;
  
-+	if (data_size < 0) {
-+		drbd_err(peer_device, "Invalid data reply size\n");
-+		return -EIO;
-+	}
-+
- 	/* optimistically update recv_cnt.  if receiving fails below,
- 	 * we disconnect anyways, and counters will be reset. */
- 	peer_device->device->recv_cnt += data_size>>9;
+ 	if (!data || len < fixed)
+@@ -855,7 +855,6 @@ static inline bool ieee80211_mle_size_ok
+ 	switch (u16_get_bits(control, IEEE80211_ML_CONTROL_TYPE)) {
+ 	case IEEE80211_ML_CONTROL_TYPE_BASIC:
+ 		common += sizeof(struct ieee80211_mle_basic_common_info);
+-		check_common_len = true;
+ 		if (control & IEEE80211_MLC_BASIC_PRES_LINK_ID)
+ 			common += 1;
+ 		if (control & IEEE80211_MLC_BASIC_PRES_BSS_PARAM_CH_CNT)
+@@ -875,9 +874,9 @@ static inline bool ieee80211_mle_size_ok
+ 		common += sizeof(struct ieee80211_mle_preq_common_info);
+ 		if (control & IEEE80211_MLC_PREQ_PRES_MLD_ID)
+ 			common += 1;
+-		check_common_len = true;
+ 		break;
+ 	case IEEE80211_ML_CONTROL_TYPE_RECONF:
++		common += 1;
+ 		if (control & IEEE80211_MLC_RECONF_PRES_MLD_MAC_ADDR)
+ 			common += ETH_ALEN;
+ 		if (control & IEEE80211_MLC_RECONF_PRES_EML_CAPA)
+@@ -889,7 +888,6 @@ static inline bool ieee80211_mle_size_ok
+ 		break;
+ 	case IEEE80211_ML_CONTROL_TYPE_TDLS:
+ 		common += sizeof(struct ieee80211_mle_tdls_common_info);
+-		check_common_len = true;
+ 		break;
+ 	case IEEE80211_ML_CONTROL_TYPE_PRIO_ACCESS:
+ 		common = ETH_ALEN + 1;
+@@ -902,11 +900,9 @@ static inline bool ieee80211_mle_size_ok
+ 	if (len < fixed + common)
+ 		return false;
+ 
+-	if (!check_common_len)
+-		return true;
++	common_len = mle->variable[0];
+ 
+-	/* if present, common length is the first octet there */
+-	return mle->variable[0] >= common;
++	return common_len >= common && common_len <= len - fixed;
+ }
+ 
+ /**
 
 
