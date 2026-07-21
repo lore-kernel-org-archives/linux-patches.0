@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551F1415F04;
-	Tue, 21 Jul 2026 17:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A25415F0C;
+	Tue, 21 Jul 2026 17:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656261; cv=none; b=beTH+q9bd3JOGy0Rv80QU0PP+B5vCpmEME0nYAeWeZ1/eRFZ9ZjoyWKH8VQsu752eWEs8KEk0GxZFqqdAHXnsaQIg/m8BTlSdq8UF/fcwUAfzLx8Ie+PA5S510MgvLyyo8dzEo4MnZ+5ukJbGJD4Clh00WQodq8qQqkSL3EhZ08=
+	t=1784656264; cv=none; b=oh0gTOFZ6QC+dRlF0WOcgmeHPHw0GbF5ZhH38j40cRmacoujWgTmo3U2L9obdFLQYEyzV14gcAh3nupQhyoVFkz+17ztDdwMtnze6gmNs5qlRtWQ8NwgPbCIgxsl/eiRu2axAVtAhrKPDWOcojCrx0iuII9kq/pibMBRcceJDCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656261; c=relaxed/simple;
-	bh=zvexWj7xI2JTkW7boalGwCrduQIflNPwMXzfdoHcYxs=;
+	s=arc-20240116; t=1784656264; c=relaxed/simple;
+	bh=gL4qw7/xOXjE0magUwfotPtqIeQPPgdm7TKsL0IfifA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ayUbYr+SAOS70rEUlHhzhzkSDijz2UfrlXKvrJPyx4VQW9H3EyWbTfSLO6GP4Pmvz2/PFp0yDtkzk3gt5DZ+EK9tw9x0ENQIWCTEE5rad9Li/9YLIl1XIN3HWmEIPNivCp9ZepPlmRS4s3Xn1pob3Ge0LjJ+3Ayu/344qihCvR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEcXuBhO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A5ztG9mOfzSd7Lyp5E0LOyd9DQ3Wlhrm5+NDXXmPPfv4niSsiYDlsQfBxnJJcDaPQodEP8m8BIZG0rL5/na6ccJcmyGEsjcfnlHXpFG93nXNOmzC4IcknBzfdNBuN2DgmemJxhpdb6O8RdvUDMXeYoo+pvKH7Pau2O4wjdFtmxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SmPsuac+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEcXuBhO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC1231F000E9;
-	Tue, 21 Jul 2026 17:50:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SmPsuac+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669471F000E9;
+	Tue, 21 Jul 2026 17:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656260;
-	bh=1sTrv9ns9pQJqKC7M7aqHiEkb+4YJbGjWFMP8Uaxc8k=;
+	s=korg; t=1784656262;
+	bh=LCPx2ljSTgy5HCMitXun7CDscdnjSsLGLvUnpmWRBcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LEcXuBhO95fnZejXx+EGPBlnW8eJ7HQ6B7A7C+5IQR8B0qR6G0JFKWN1E9ErdoLY6
-	 W310PPhssZFwj22uJBJi1+fLalQ8BQpIRPk5X0mu2wVboQkKAVXONto4eELkiRjuZU
-	 zxGgo6lAD+UaPAV0dAAOsmLUpj+fM4/jZt0QvqZE=
+	b=SmPsuac+gsf2gw6o942MM5cYmbh9oZxdFlWNm8j1wpXCS8sEMpRPjLiXKaBG7Wecw
+	 xKnHqQdjKhrHAg2rmg0DfKCLcrj8ujJae+GdzdYXLV6KmFbdWJSdzm9EZE66B6JuQi
+	 8nIou/87NV0luErf/takaZ4Klaounrz5G+AWcGbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Breno Leitao <leitao@debian.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0319/1611] configfs_lookup(): dont leave ->s_dentry dangling on failure
-Date: Tue, 21 Jul 2026 17:07:15 +0200
-Message-ID: <20260721152522.257561784@linuxfoundation.org>
+Subject: [PATCH 6.18 0284/1611] raid1: fix nr_pending leak in REQ_ATOMIC bad-block error path
+Date: Tue, 21 Jul 2026 17:06:40 +0200
+Message-ID: <20260721152521.445024749@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,56 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
 
-[ Upstream commit 10da12d352b7b2bb330a8609fdda9a58bf0e9856 ]
+[ Upstream commit 909d9dc3b5730c8ed7b764c68bc788342df2a07b ]
 
-Normally ->s_dentry is cleared when dentry it's pointing to becomes
-negative (on eviction, realistically).  However, that only happens
-if dentry gets to be positive in the first place; in case of inode
-allocation failure dentry never becomes positive, so ->d_iput()
-is not called at all.
+In raid1_write_request(), each per-mirror loop iteration begins by
+incrementing rdev->nr_pending. If a REQ_ATOMIC write encounters a
+badblock within the requested range, the code jumps to err_handle
+without dropping the reference taken for the current mirror.
 
-We do part of what normally would've been done by configfs_d_iput()
-(dropping the reference to configfs_dirent) manually, but we do
-not clear ->s_dentry there.  Sloppy as it is, it does not matter in
-case of configfs_create_{dir,link}() - there configfs_dirent does
-not survive dropping the sole reference to it.
+err_handle's cleanup loop will only decrements for k < i and
+r1_bio->bios[k] is non-NULL. The current slot is therefore skipped,
+leaving its nr_pending reference leaked permanently. The reference
+prevents the rdev from ever being removed, since raid1_remove_conf()
+refuses to remove an rdev with nr_pending > 0.
 
-However, for configfs_lookup() it *does* survive, with a dangling
-pointer to soon to be freed dentry sitting it its ->s_dentry.
+Fix this by calling rdev_dec_pending() before jumping to err_handle.
 
-Subsequent getdents(2) in that directory will end up dereferencing
-that pointer in order to pick the inode number.  Use after free...
-
-This is the minimal fix; the right approach is to set the linkage
-between dentry and configfs_dirent only after we know that we have
-an inode, but that takes more surgery and the bug had been there
-since 2006, so...
-
-Fixes: 3d0f89bb1694 ("configfs: Add permission and ownership to configfs objects") # 2.6.16-rc3
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Fixes: f2a38abf5f1c ("md/raid1: Atomic write support")
+Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+Link: https://patch.msgid.link/20260530151411.4119-1-abd.masalkhi@gmail.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/configfs/dir.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/md/raid1.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
-index 81f4f06bc87e75..2898973f202a12 100644
---- a/fs/configfs/dir.c
-+++ b/fs/configfs/dir.c
-@@ -480,6 +480,9 @@ static struct dentry * configfs_lookup(struct inode *dir,
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index 84dbf801e9b1b8..df01070eb0c296 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -1581,8 +1581,10 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
+ 				 * complexity of supporting that is not worth
+ 				 * the benefit.
+ 				 */
+-				if (bio->bi_opf & REQ_ATOMIC)
++				if (bio->bi_opf & REQ_ATOMIC) {
++					rdev_dec_pending(rdev, mddev);
+ 					goto err_handle;
++				}
  
- 			inode = configfs_create(dentry, mode);
- 			if (IS_ERR(inode)) {
-+				spin_lock(&configfs_dirent_lock);
-+				sd->s_dentry = NULL;
-+				spin_unlock(&configfs_dirent_lock);
- 				configfs_put(sd);
- 				return ERR_CAST(inode);
- 			}
+ 				good_sectors = first_bad - r1_bio->sector;
+ 				if (good_sectors < max_sectors)
 -- 
 2.53.0
 
