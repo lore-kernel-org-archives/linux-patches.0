@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23108415F04;
-	Tue, 21 Jul 2026 20:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD184471268;
+	Tue, 21 Jul 2026 20:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664343; cv=none; b=iMbnqxv8pdTZG4wHbh8kb3kd9aVKZmjk2gAu3OXcFTREepv6Wy+672tgc9ZEVUbyBFniS1tqJrjE42OTDtifU3D8kyTF+4Sj24TYvTvofww3IPAkJEtHQrEqmot9aw9y4KFnFFePAyOwZ3sHgH+tMyzSST1mpAzMNaBu+R02lAQ=
+	t=1784664345; cv=none; b=dxugA9Kdk18OqHYNhbAH1dIK/C20d3BvxO/mhRg26FCo/Dyonpc/YYIJUAf0+NnrXHjjWDWniulJnEah0yerRsmIIZXlfMU9mLO3eeIdeIDQFoY7F97zwPISgpJoFShKXUAGW7HFiwdJpynDAqULXeAmIz6AY55wdP38DdU1Pwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664343; c=relaxed/simple;
-	bh=7+/3k+2VDB2p0s+jZcQ0gUhrr7agBOQM7mg196kKXjE=;
+	s=arc-20240116; t=1784664345; c=relaxed/simple;
+	bh=suugSX7iEYgAhK1LUwUx96mnfbyxrnweVqL+ZarpNAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dOmqvc1YyKIzeeSEdFospGXgWqHb2b+cytKhC069TYyY92jr7tAx+noFD8BKKgfBMGOmO9ceodIreQw68U4HARhuqIXPEiYPlJ5tZUSddaHqbp22hVDpbX5aDGHoPcuL0tnIG71b66Ne3MFJx/fVAits8u6VlUhxeoD5hsNzeWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBlKCGaW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C/mmoKQlkFngVomsVX5Hmzdvy5HnOKZAIyqX/NG/GwMwlXqHueiwpBcFBUGomnPg4uvk1clO6nJY5lm8mvXK0Ng2W1b+6TR4CVvI7Bb5QmZTBuv7DtwD0LQclbuME0DWexpHV0gkttVmyo7jcO/x1FZDUo8UlV/goqsfIkIT/Fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWic4w2+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBlKCGaW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2B01F000E9;
-	Tue, 21 Jul 2026 20:05:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWic4w2+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D1591F000E9;
+	Tue, 21 Jul 2026 20:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664342;
-	bh=STBwNlgOPL3cur5INnSbwoHJSC1Uzd0tqk6zjPloqNo=;
+	s=korg; t=1784664344;
+	bh=HLiC+txQrd4MHuqGFQzuYu1dIXNlPb2mOuR1ZFIuCiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aBlKCGaWxzp+VeA+cVZuKyrPWR8RuKyQHZSNpYcEYR4hrm5lE2BoZNMZJcXvb9nV0
-	 D2y8v4hF37CnzJApGXZaNcfD+REbiZfGbHynQCf5v7mMfrfZP6FnZ9cUg8VTj/Tkgt
-	 QdzcoG0D604M89srLeRc0iENIfMs/bdw3tDRuxGA=
+	b=WWic4w2+BZ0oOtR+qYDF0anY2p1xqmHrdcOWQQswBtVjhgQAkGo1A44w9rbFE6V9Y
+	 t2Kr6M/6N6D3Lc61TkR2N1Dbp+/tvap3XhVNwO6ocpv+7NosdowGCuEAqrQcCFr2pY
+	 2U5fXbhSnoNMLbO29ENiO5REBAT2LnhLmjqOzNsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Wigham <michael@wigham.net>,
-	Jens Axboe <axboe@kernel.dk>,
+	Frank Li <Frank.Li@nxp.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1165/1276] io_uring/rw: preserve partial result for iopoll
-Date: Tue, 21 Jul 2026 17:26:48 +0200
-Message-ID: <20260721152512.089878659@linuxfoundation.org>
+Subject: [PATCH 6.12 1166/1276] media: nxp: imx8-isi: use devm_pm_runtime_enable() to simplify code
+Date: Tue, 21 Jul 2026 17:26:49 +0200
+Message-ID: <20260721152512.113852379@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,55 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Wigham <michael@wigham.net>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit c554246ff4c68abf71b61a89c6e39d3cf94f523e ]
+[ Upstream commit 078161dd44d6f848a62a473206d69025607736ec ]
 
-A partial read will store the completed byte count in io->bytes_done.
-The regular completion path applies io_fixup_rw_res() so that, when the
-following operation reaches EOF, the number of bytes already read is
-returned.
+Use devm_pm_runtime_enable() to simplify code. Change to use
+dev_err_probe() because previous goto change to return.
 
-The iopoll completion path does not apply this fixup to the return value
-and can return zero instead.
+No functional change.
 
-Use the fixup result when updating the CQE, and the raw result for the
-reissue check.
-
-Cc: stable@vger.kernel.org
-Fixes: 4d9cb92ca41d ("io_uring/rw: fix short rw error handling")
-Signed-off-by: Michael Wigham <michael@wigham.net>
-Link: https://patch.msgid.link/20260613225240.34032-1-michael@wigham.net
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://patch.msgid.link/20260116-cam_cleanup-v4-2-29ce01640443@nxp.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Stable-dep-of: b670bf89824e ("media: nxp: imx8-isi: Fix use-after-free on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/rw.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/media/platform/nxp/imx8-isi/imx8-isi-core.c |   16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
---- a/io_uring/rw.c
-+++ b/io_uring/rw.c
-@@ -546,15 +546,15 @@ static void io_complete_rw_iopoll(struct
- {
- 	struct io_rw *rw = container_of(kiocb, struct io_rw, kiocb);
- 	struct io_kiocb *req = cmd_to_io_kiocb(rw);
-+	int final_res = io_fixup_rw_res(req, res);
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-core.c
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-core.c
+@@ -472,13 +472,14 @@ static int mxc_isi_probe(struct platform
+ 		return ret;
+ 	}
  
- 	if (kiocb->ki_flags & IOCB_WRITE)
- 		io_req_end_write(req);
--	if (unlikely(res != req->cqe.res)) {
--		if (res == -EAGAIN && io_rw_should_reissue(req))
--			req->flags |= REQ_F_REISSUE | REQ_F_BL_NO_RECYCLE;
--		else
--			req->cqe.res = res;
+-	pm_runtime_enable(dev);
++	ret = devm_pm_runtime_enable(dev);
++	if (ret)
++		return ret;
+ 
+ 	ret = mxc_isi_crossbar_init(isi);
+-	if (ret) {
+-		dev_err(dev, "Failed to initialize crossbar: %d\n", ret);
+-		goto err_pm;
 -	}
-+
-+	if (res == -EAGAIN && io_rw_should_reissue(req))
-+		req->flags |= REQ_F_REISSUE | REQ_F_BL_NO_RECYCLE;
-+	else if (unlikely(final_res != req->cqe.res))
-+		req->cqe.res = final_res;
++	if (ret)
++		return dev_err_probe(dev, ret,
++				     "Failed to initialize crossbar\n");
  
- 	/* order with io_iopoll_complete() checking ->iopoll_completed */
- 	smp_store_release(&req->iopoll_completed, 1);
+ 	for (i = 0; i < isi->pdata->num_channels; ++i) {
+ 		ret = mxc_isi_pipe_init(isi, i);
+@@ -501,8 +502,7 @@ static int mxc_isi_probe(struct platform
+ 
+ err_xbar:
+ 	mxc_isi_crossbar_cleanup(&isi->crossbar);
+-err_pm:
+-	pm_runtime_disable(isi->dev);
++
+ 	return ret;
+ }
+ 
+@@ -521,8 +521,6 @@ static void mxc_isi_remove(struct platfo
+ 
+ 	mxc_isi_crossbar_cleanup(&isi->crossbar);
+ 	mxc_isi_v4l2_cleanup(isi);
+-
+-	pm_runtime_disable(isi->dev);
+ }
+ 
+ static const struct of_device_id mxc_isi_of_match[] = {
 
 
