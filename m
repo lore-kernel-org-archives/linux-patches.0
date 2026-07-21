@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1190D37E310;
-	Tue, 21 Jul 2026 22:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CF43B6C17;
+	Tue, 21 Jul 2026 22:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674005; cv=none; b=L5iF+Mt3giVJGur7MFydcDEo/Bn3n78D3mwZxsVl3GFUo8d2gI38eNHYu9AZvDXeqe+SRiIEjfN9hZbVLdN45TXYbz03NpPnmaRVT4QjpS4WCAST1US2TZdu1okGS7Czxjqs9gYyn31OPA7GhXZSiqZMMQIhT+2rwaaRRSPkPms=
+	t=1784674008; cv=none; b=n48EkAAJ6PW4lICHJpSQYbUpYufoC8OYyzre5KzJV/XS28jxTsMFlcXOGhqxMgl5Edk2EwSeHsmYdoXrFCYLcEYGyE7DzXK+In1eXuwDxCIFdCIXNVd2WYnxOJmYvTj/IYiHAA9pFolDCLUdBy44sQhRPZo3Jnflesu/M9dMlis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674005; c=relaxed/simple;
-	bh=xPy0LWOoeT1CdPabA2CnoJ+Jxwb5+K8ifg7dQJCWjBg=;
+	s=arc-20240116; t=1784674008; c=relaxed/simple;
+	bh=iZ4UiAy+89DrMz82BrpFT6tRfcV4o28EOKujUpVKKzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=twU12Jln/jsQ38LhS00fsrN4vf1K2oB2eLDmdY1nmn1SFMij8mBZGSzfM0kIXRV171V88VEF1JN/ROjLDDddSIsacDae7Ldd5K+3aU46UaUGzSbbKdTBRt1RGFIAgBDBysY/35VcCzWJZSZfhAl39WVuM/AURGmT/na11J/KtFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULyHslQ8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IraKN6F2VIILJZLHDk2igjC2QvyvKIjSLdweXZ+8zUJTWHJZsLUA2inxOYXFKIuEGTycHPqaD1MNlZARkmEOTUeVbnmBMQsdMdhPikRuIMU63wvCVwgbZVXj+bcIkWF9JUwCkTxk/QesgZMwcTACYaU8lg6N/Ts5qf9+ef5t/Dk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3igrXuk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULyHslQ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC9C1F000E9;
-	Tue, 21 Jul 2026 22:46:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3igrXuk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118601F00A3A;
+	Tue, 21 Jul 2026 22:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674003;
-	bh=FBL7qLkfQpfGk8yIG+SjOaGf77GvnirhDpL0L8Jm/Qk=;
+	s=korg; t=1784674006;
+	bh=Y3pVic2PYv5H/YPT8/Gnew+xqI6A5dgsFP5Vhjy8uyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ULyHslQ8bOMtfCY7Hef81wPXWvGpF4Koez1GWn+/QFy05pJo2DvgDDIkv8DxTgCAt
-	 3iBTSAelyj0b7ICMgwCubR1kELLVo7cOTxYj/QjEH0KqZToujAFD5XCK3vGpmz/l2n
-	 9iouyK7lYbMKW7I/x/t87XmGxeWDK3xbYvVFUlX4=
+	b=r3igrXuk/qcDS3rwK1HQX7rEm0izgeCy2tgbjde7k+JWmeoazCR6+FTdVJcuc+m6Q
+	 C3Xs4oqJqKQEq0rotSP79cbDfUXNbf4C78k1vWYtxPWgIqxEQLKMvys4mFKSGD9ozG
+	 LCulC8u57BoBrAC76JbiA9y8RYcVWfTIFc20DVZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 377/699] hwmon: adm1275: Prevent reading uninitialized stack
-Date: Tue, 21 Jul 2026 17:22:16 +0200
-Message-ID: <20260721152404.197800164@linuxfoundation.org>
+Subject: [PATCH 5.10 378/699] usbnet: gl620a: fix out-of-bounds read in genelink_rx_fixup()
+Date: Tue, 21 Jul 2026 17:22:17 +0200
+Message-ID: <20260721152404.218897760@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,58 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 553f9517813912a5ab661af5504485d96824a61c ]
+[ Upstream commit 8ff7f2a6da4fccaa5cc9be7251a24e71e29fbd1a ]
 
-While adding support for the ROHM BD127X0 hot-swap controllers, sashiko
-reported an error in device-name comparison, which can lead to reading
-uninitialized stack memory.
+genelink_rx_fixup() splits an aggregated RX frame into its individual
+packets, using a per-packet length taken from device-supplied data. That
+length is only bounded by GL_MAX_PACKET_LEN (1514); it is never compared
+against how many bytes were actually received.
 
-Quoting Sashiko:
+A malicious GeneLink (GL620A) device can therefore send a short URB whose
+header claims packet_count > 1 and a first packet of up to 1514 bytes.
 
-This is a pre-existing issue, but I noticed that just before this block in
-adm1275_probe(), there might be an out-of-bounds stack read:
+	skb_put_data(gl_skb, packet->packet_data, size);
 
-    ret = i2c_smbus_read_block_data(client, PMBUS_MFR_MODEL, block_buffer);
-    if (ret < 0) { ... }
-    for (mid = adm1275_id; mid->name[0]; mid++) {
-            if (!strncasecmp(mid->name, block_buffer, strlen(mid->name)))
-                    break;
-    }
+then copies past the end of the receive buffer and hands the adjacent slab
+contents up the network stack, an out-of-bounds read that leaks kernel heap.
+No privilege is required: the path runs in the usbnet RX softirq as soon as
+the interface is up.
 
-Since i2c_smbus_read_block_data() reads up to 32 bytes into the
-uninitialized stack array block_buffer without appending a null
-terminator, strncasecmp() could read past the valid bytes returned in ret.
+  BUG: KASAN: slab-out-of-bounds in genelink_rx_fixup (drivers/net/usb/gl620a.c:112)
+  Read of size 1514 at addr ffff888011309708 by task ksoftirqd/0/14
+  Call Trace:
+    ...
+    __asan_memcpy (mm/kasan/shadow.c:105)
+    genelink_rx_fixup (include/linux/skbuff.h:2814 drivers/net/usb/gl620a.c:112)
+    usbnet_bh (drivers/net/usb/usbnet.c:572 drivers/net/usb/usbnet.c:1589)
+    process_one_work (kernel/workqueue.c:3322)
+    bh_worker (kernel/workqueue.c:3405)
+    tasklet_action (kernel/softirq.c:965)
+    handle_softirqs (kernel/softirq.c:622)
+    run_ksoftirqd (kernel/softirq.c:1076)
+    ...
 
-For example, if the device returns a shorter string like "adm12", checking
-it against "adm1275" up to the length of "adm1275" will continue reading
-into uninitialized stack bounds.
+skb_pull() already verifies that the requested length fits the buffer and
+returns NULL otherwise. Move it ahead of the copy and check its result, so
+a packet that overruns the received data is rejected before it is read.
+Well-formed frames, whose packets are fully present, are unaffected.
 
-Prevent reading uninitialized memory by zeroing the stack array.
-
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: 87102808d039 ("hwmon: (pmbus/adm1275) Validate device ID")
-Link: https://lore.kernel.org/r/c8ad38e0cdb347261c6245de2b7965e747f28d22.1782458224.git.mazziesaccount@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 47ee3051c856 ("[PATCH] USB: usbnet (5/9) module for genesys gl620a cables")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260627205353.4000788-1-xmei5@asu.edu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/adm1275.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/gl620a.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
-index c0618205758e93..71233e04b3fcb0 100644
---- a/drivers/hwmon/pmbus/adm1275.c
-+++ b/drivers/hwmon/pmbus/adm1275.c
-@@ -484,7 +484,7 @@ static int adm1275_enable_vout_temp(struct i2c_client *client, int config)
- static int adm1275_probe(struct i2c_client *client)
- {
- 	s32 (*config_read_fn)(const struct i2c_client *client, u8 reg);
--	u8 block_buffer[I2C_SMBUS_BLOCK_MAX + 1];
-+	u8 block_buffer[I2C_SMBUS_BLOCK_MAX + 1] = {0};
- 	int config, device_config;
- 	int ret;
- 	struct pmbus_driver_info *info;
+diff --git a/drivers/net/usb/gl620a.c b/drivers/net/usb/gl620a.c
+index 8c2838cba77bc1..d00d364fb8acc3 100644
+--- a/drivers/net/usb/gl620a.c
++++ b/drivers/net/usb/gl620a.c
+@@ -104,6 +104,9 @@ static int genelink_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 			return 0;
+ 		}
+ 
++		if (!skb_pull(skb, size + 4))
++			return 0;
++
+ 		// allocate the skb for the individual packet
+ 		gl_skb = alloc_skb(size, GFP_ATOMIC);
+ 		if (gl_skb) {
+@@ -116,9 +119,6 @@ static int genelink_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 		// advance to the next packet
+ 		packet = (struct gl_packet *)&packet->packet_data[size];
+ 		count--;
+-
+-		// shift the data pointer to the next gl_packet
+-		skb_pull(skb, size + 4);
+ 	}
+ 
+ 	// skip the packet length field 4 bytes
 -- 
 2.53.0
 
