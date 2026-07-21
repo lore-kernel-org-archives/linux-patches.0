@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE1E46C4C6;
-	Tue, 21 Jul 2026 15:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF4546C4B4;
+	Tue, 21 Jul 2026 15:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649160; cv=none; b=TeIbNkqlIUODOjTZPPKuM8uHHR6RQw8oq4W6h15FFD4P4In6ZPeTYM+nVLZsaNLfQJzF/I1CuKt8raIvmI/ozsr4X8Hrb4RXEhRwWilLtZplC6FZeE1+OaDZ/VQmYnfehzAoky1+sx/giiQAxSc5rkij5apHqtiTzaY0YQPtmdA=
+	t=1784649162; cv=none; b=crZEs+nrO4EhgD74UWqhKkZi3GC1hJ5ywBtWRuPv8N9/RR7+MI0r0JkX7UsnfVMG/OURuwTAejCtjPlsLIH04k+gYqyVybjRnf89eljekvxNFfH9MUKK5S64vDYmtDSf86NAgaOA9ws0T7kF/UYgzkBQId5JBvKpjXh0bUg8K0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649160; c=relaxed/simple;
-	bh=fiZ8ujDnwwqT75OI6kMRAFKzWVevP4HKY5cAYLa64bI=;
+	s=arc-20240116; t=1784649162; c=relaxed/simple;
+	bh=tRGgfVr3PmpZzHC4l6QDc4iY28UA+FHywQ6dNvZyMTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EzQQ+79bCuWKZgOUY9HAmYBMPeYwaYONQRraNKIoK60n9jz0p6AlayZEs/ZDU/DnNJdy2hXysi5F/8KCD6oIKq7TKZ/ii89+z/xQbc5LkSuVeFBC3KwHcDTvV2GmYx/gCMOKciklq9gvO6Mo8uX4L6+nVpenXO6nYgsSV1YU+70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MDQInqAW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bhApPojHx4zeND9aDr0R1617LI6BYbj/h9gBuNfqA2foT1VgSp4DGGVg435q5IOnpM8zwFbarLwJcKEYhlf6xduplU+Vz5HmfKIGLMb0wL68wgbj3Ajal3vywAyCOcvRGux/dTssm8g6SoVtNNfhEm7p1w+9fOuXp09cRW5Z5QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CQuAEZdF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MDQInqAW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC5201F00A3A;
-	Tue, 21 Jul 2026 15:52:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQuAEZdF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758111F000E9;
+	Tue, 21 Jul 2026 15:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649158;
-	bh=inDWqIVxb8mR4Hxf5uwYRAcd0lk0GNGG8sSvL95cH8s=;
+	s=korg; t=1784649161;
+	bh=f3DW5q6vwpi2Mn/idX5DXd1NjYpc5D5AxV1cy1kj3CQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MDQInqAWLavIiKpxkoeabos8VfwHehXSP8DCfFKYwVQvTViVYgM3+qSFDnEA+UaPQ
-	 fkFesnVX1sKG8p9gAI+GIiR43qfKoUfZhuvz3bC7DCY9rI8b6n2XfRdzmj5r1XZrE2
-	 g9kGW1eq9/PTIH3VN6EQVVx9F+unK/2Ifsrf25Wo=
+	b=CQuAEZdF1dh+5bh4PeRsZjlV+SPgn4jvb3d9a1QhiEnTher1rD3y9fvNaUm2LdSxL
+	 +qRsntzuKpAWW7oeLlP0Qpq7l+xZx2xpN2tlniMPMD1cdYWXFuG7cTrnMMDQFzYdx9
+	 OH0NauPjNqX+hzbX45o83k78OIrwJz9ZnwnR9U/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wandun Chen <chenwandun@lixiang.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	ShuangYu <shuangyu@yunyoo.cc>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0473/2077] of: reserved_mem: avoid post-init UAF when alloc_reserved_mem_array() fails
-Date: Tue, 21 Jul 2026 17:02:26 +0200
-Message-ID: <20260721152603.955098846@linuxfoundation.org>
+Subject: [PATCH 7.1 0456/2077] vhost: fix vhost_get_avail_idx for a non empty ring
+Date: Tue, 21 Jul 2026 17:02:09 +0200
+Message-ID: <20260721152603.542441440@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,96 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wandun Chen <chenwandun@lixiang.com>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit e1686ca81dbf3edbde589b7daf312b45cbf76e03 ]
+[ Upstream commit 09861858a68342f851f71c669ac0f69865c32151 ]
 
-The global pointer 'reserved_mem' continues to reference the
-reserved_mem_array which lives in __initdata if
-alloc_reserved_mem_array() fails. of_reserved_mem_lookup() is
-exported for post-init use, that would dereference freed memory
-and trigger a use-after-free.
+vhost_get_avail_idx is supposed to report whether it has updated
+vq->avail_idx. Instead, it returns whether all entries have been
+consumed, which is usually the same. But not always - in
+drivers/vhost/net.c and when mergeable buffers have been enabled, the
+driver checks whether the combined entries are big enough to store an
+incoming packet. If not, the driver re-enables notifications with
+available entries still in the ring. The incorrect return value from
+vhost_get_avail_idx propagates through vhost_enable_notify and causes
+the host to livelock if the guest is not making progress, as vhost will
+immediately disable notifications and retry using the available entries.
 
-So reset reserved_mem_count to 0 when alloc_reserved_mem_array()
-fails.
+This goes back to commit d3bb267bbdcb ("vhost: cache avail index in
+vhost_enable_notify()") which changed vhost_enable_notify() to compare
+the freshly read avail index against vq->last_avail_idx instead of the
+previously cached vq->avail_idx. Commit 7ad472397667 ("vhost: move
+smp_rmb() into vhost_get_avail_idx()") then carried over the same
+comparison when refactoring vhost_enable_notify() to call the unified
+vhost_get_avail_idx().
 
-Fixes: 00c9a452a235 ("of: reserved_mem: Add code to dynamically allocate reserved_mem array")
-Signed-off-by: Wandun Chen <chenwandun@lixiang.com>
-Link: https://patch.msgid.link/20260604015332.3669384-1-chenwandun1@gmail.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+The obvious fix is to make vhost_get_avail_idx do what the comment
+says it does and report whether new entries have been added.
+
+Reported-by: ShuangYu <shuangyu@yunyoo.cc>
+Fixes: d3bb267bbdcb ("vhost: cache avail index in vhost_enable_notify()")
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <559b04ae6ce52973c535dc47e461638b7f4c3d63.1772441455.git.mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/of_reserved_mem.c | 28 +++++++++++++++++++---------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ drivers/vhost/vhost.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
-index 8d5777cb5d1b3d..deaea58c74f2a5 100644
---- a/drivers/of/of_reserved_mem.c
-+++ b/drivers/of/of_reserved_mem.c
-@@ -69,29 +69,32 @@ static int __init early_init_dt_alloc_reserved_memory_arch(phys_addr_t size,
-  * the initial static array is copied over to this new array and
-  * the new array is used from this point on.
-  */
--static void __init alloc_reserved_mem_array(void)
-+static int __init alloc_reserved_mem_array(void)
+diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
+index 2f2c45d2088320..db329a6f614589 100644
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -1522,6 +1522,7 @@ static void vhost_dev_unlock_vqs(struct vhost_dev *d)
+ static inline int vhost_get_avail_idx(struct vhost_virtqueue *vq)
  {
- 	struct reserved_mem *new_array;
- 	size_t alloc_size, copy_size, memset_size;
-+	int ret;
+ 	__virtio16 idx;
++	u16 avail_idx;
+ 	int r;
+ 
+ 	r = vhost_get_avail(vq, idx, &vq->avail->idx);
+@@ -1532,17 +1533,19 @@ static inline int vhost_get_avail_idx(struct vhost_virtqueue *vq)
+ 	}
+ 
+ 	/* Check it isn't doing very strange thing with available indexes */
+-	vq->avail_idx = vhost16_to_cpu(vq, idx);
+-	if (unlikely((u16)(vq->avail_idx - vq->last_avail_idx) > vq->num)) {
++	avail_idx = vhost16_to_cpu(vq, idx);
++	if (unlikely((u16)(avail_idx - vq->last_avail_idx) > vq->num)) {
+ 		vq_err(vq, "Invalid available index change from %u to %u",
+-		       vq->last_avail_idx, vq->avail_idx);
++		       vq->last_avail_idx, avail_idx);
+ 		return -EINVAL;
+ 	}
+ 
+ 	/* We're done if there is nothing new */
+-	if (vq->avail_idx == vq->last_avail_idx)
++	if (avail_idx == vq->avail_idx)
+ 		return 0;
+ 
++	vq->avail_idx = avail_idx;
 +
-+	if (!total_reserved_mem_cnt)
-+		return 0;
- 
- 	alloc_size = array_size(total_reserved_mem_cnt, sizeof(*new_array));
- 	if (alloc_size == SIZE_MAX) {
--		pr_err("Failed to allocate memory for reserved_mem array with err: %d", -EOVERFLOW);
--		return;
-+		ret = -EOVERFLOW;
-+		goto fail;
- 	}
- 
- 	new_array = memblock_alloc(alloc_size, SMP_CACHE_BYTES);
- 	if (!new_array) {
--		pr_err("Failed to allocate memory for reserved_mem array with err: %d", -ENOMEM);
--		return;
-+		ret = -ENOMEM;
-+		goto fail;
- 	}
- 
- 	copy_size = array_size(reserved_mem_count, sizeof(*new_array));
- 	if (copy_size == SIZE_MAX) {
- 		memblock_free(new_array, alloc_size);
--		total_reserved_mem_cnt = MAX_RESERVED_REGIONS;
--		pr_err("Failed to allocate memory for reserved_mem array with err: %d", -EOVERFLOW);
--		return;
-+		ret = -EOVERFLOW;
-+		goto fail;
- 	}
- 
- 	memset_size = alloc_size - copy_size;
-@@ -100,6 +103,12 @@ static void __init alloc_reserved_mem_array(void)
- 	memset(new_array + reserved_mem_count, 0, memset_size);
- 
- 	reserved_mem = new_array;
-+	return 0;
-+
-+fail:
-+	pr_err("Failed to allocate memory for reserved_mem array with err: %d", ret);
-+	reserved_mem_count = 0;
-+	return ret;
- }
- 
- static void fdt_init_reserved_mem_node(unsigned long node, const char *uname,
-@@ -266,7 +275,8 @@ void __init fdt_scan_reserved_mem_late(void)
- 	}
- 
- 	/* Attempt dynamic allocation of a new reserved_mem array */
--	alloc_reserved_mem_array();
-+	if (alloc_reserved_mem_array())
-+		return;
- 
- 	if (__reserved_mem_check_root(node)) {
- 		pr_err("Reserved memory: unsupported node format, ignoring\n");
+ 	/*
+ 	 * We updated vq->avail_idx so we need a memory barrier between
+ 	 * the index read above and the caller reading avail ring entries.
 -- 
 2.53.0
 
