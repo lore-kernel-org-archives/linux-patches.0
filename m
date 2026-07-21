@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1027D47125D;
-	Tue, 21 Jul 2026 18:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8821474CC;
+	Tue, 21 Jul 2026 18:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657525; cv=none; b=OLGEljnrYY4S2NKJcusX63kCpkY2yPV/crn3WDS8EmYCH7cQRrRjIIzqdscFLvQ1G0v8+zdbbG0aNOENmaV2+dAydULE/FsvzyGIiGuG4reXQDUS9IR+BRv/uJkhRmJEgCYZIWoj5xi6wmFntX+8Ccd/6CK2Kk9bcy4Eaizxnvw=
+	t=1784657527; cv=none; b=OMnr5jEkIDEs9C0AgiRIORNLxgLCP3ogo71A3b2lTUUw+G5WaM7FKntGanbT5l70b9FDlaLgDep7iK49iMyM/a8ps241ou8dpjoaqQ5s1c6I5cBOl9PQcPuAUAh4sTqEtUAV/du3Pi+poobLoDSC2w6PiENd9Inis3K0CUFjdYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657525; c=relaxed/simple;
-	bh=ZKQ/eFOumwoOJdt1zOWVJYh0IcDpX+kdT2QXfdJPsi0=;
+	s=arc-20240116; t=1784657527; c=relaxed/simple;
+	bh=Y+E0ttFZGo4UUuxhVUA6x7YwKt/dhHsYmAKZ9pHZa7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hrNeDU8MuJP7QBnrmJlNyR31wfV17NHv00SPRlY81h6Zod1sloDirrTnuhkhXuSFzJEvI7KZ0btRyowxTFtoSBRSROlhFthKRh0/UI5S7LHOVkMjH8MLN2/gPCtAj4M5DmIteEGAos2stqBi50c2itXcuSP/jSJ71y7r2LoCvSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BRSf8P6h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=poqzS69PU6soFGkEwaBOTgwDqYFrh+oLsKgCbULaJgZWtZzdZAjnv1zU6RCvc+vUtINk6xvyqfDw2H4TQ+w+RpRjyo2jcDXOp8L+d38QbYV9PB5ARzbveq/vgWjFUI24MPVaCimP5evo6NAoynzGzUZ+9PqC12xxLeHIyE2XoiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RH8Dm2Q7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BRSf8P6h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278A51F000E9;
-	Tue, 21 Jul 2026 18:12:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RH8Dm2Q7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03871F000E9;
+	Tue, 21 Jul 2026 18:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657523;
-	bh=BZkb6Z6CVT3tNs1YxvxSpqD/ki6+lUmSKCrGkhpD7dg=;
+	s=korg; t=1784657526;
+	bh=9lBmtWtf7JQiCfhFnNRGHCQejOIAw7VDzLIhpyETTQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BRSf8P6h8WK0GlKTDC5mZSVwmrTxdeShywFU57QMZCvST2fqI9kxg74O3bXHqpAFw
-	 9+H4RFtYuxYg9gyCa5JOS8mO9GafrdCif3TomGBj/BT2Ab2i/HuCGy9ZVqsq1BroTc
-	 jcQVKLTmYfrP0V5zUriJYAGQT7BIRYgGuJm7yryE=
+	b=RH8Dm2Q7GTPA34MopqcidJJI0TA5mriRdpDCHmlrcjun+/8IYDNPSK/qECiyNGA+e
+	 OR0FI/LDSWJy0102crszl6Y+3dBBo3nOEs0h3bkyvUsGd+xtehBs2NkW7kgUna24LN
+	 0o7Hu9XnLkjryPzDfeTk+navO9CD+7oDRdoaZXMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	James Clark <james.clark@arm.com>,
-	Leo Yan <leo.yan@linaro.org>,
+	Song Liu <songliubraving@fb.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0798/1611] perf cs-etm: Bounds-check CPU in cs_etm__get_queue()
-Date: Tue, 21 Jul 2026 17:15:14 +0200
-Message-ID: <20260721152533.336337735@linuxfoundation.org>
+Subject: [PATCH 6.18 0799/1611] perf bpf: Validate array presence before casting BPF prog info pointers
+Date: Tue, 21 Jul 2026 17:15:15 +0200
+Message-ID: <20260721152533.358398676@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -48,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
@@ -57,115 +54,153 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 9a989e60cc6e29d98aed2087425cba53bf4b392d ]
+[ Upstream commit 5ebf4137d23a4fd6c0cc6a6fb766ee60d2b09193 ]
 
-cs_etm__get_queue() indexes etm->queues.queue_array[cpu] without
-validating that cpu is within nr_queues.  When processing
-AUX_OUTPUT_HW_ID events, the cpu value comes from untrusted perf.data
-trace payload and flows through cs_etm__process_trace_id_v0_1() and
-cs_etm__queue_aux_fragment() without bounds checking, allowing an
-out-of-bounds read with a crafted file.
+Several functions cast bpf_prog_info fields (jited_ksyms,
+jited_func_lens, jited_prog_insns) from u64 to pointers and
+dereference them.  These fields are only valid pointers if
+bpil_offs_to_addr() converted their file offsets to addresses, which
+only happens when the corresponding PERF_BPIL_* bits are set in
+info_linear->arrays.
 
-Add a bounds check in cs_etm__get_queue() and NULL checks in all
-callers.
+A crafted perf.data can leave these bits unset while setting non-zero
+counts and offset values, causing the functions to dereference raw file
+offsets as pointers.
 
-Also add NULL checks for queue_array[i].priv in the queue iteration
-loops in cs_etm__map_trace_id_v0() and cs_etm__process_trace_id_v0_1()
-— after auxtrace_queues__grow() new entries are zero-initialized so
-.priv can be NULL.  Add a get_cpu_data() NULL check in
-cs_etm__process_trace_id_v0_1(), matching the existing check in
-cs_etm__process_trace_id_v0().
+Add array bitmask validation to all perf.data processing paths:
 
-Fixes: 77c123f53e97ad4b ("perf: cs-etm: Move traceid_list to each queue")
+  - __bpf_event__print_bpf_prog_info(): check JITED_KSYMS and
+    JITED_FUNC_LENS (changed to take struct perf_bpil *)
+  - machine__process_bpf_event_load(): check JITED_KSYMS
+  - bpf_read(): check JITED_INSNS before memcpy from jited_prog_insns
+  - dso__disassemble_filename(): check JITED_INSNS before returning
+    jited_prog_insns pointer
+
+Fixes: f8dfeae009effc0b ("perf bpf: Show more BPF program info in print_bpf_prog_info()")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Leo Yan <leo.yan@linaro.org>
+Cc: Song Liu <songliubraving@fb.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm.c | 25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+ tools/perf/util/bpf-event.c | 20 +++++++++++++++++---
+ tools/perf/util/bpf-event.h |  4 ++--
+ tools/perf/util/dso.c       | 10 ++++++++++
+ tools/perf/util/header.c    |  3 +--
+ 4 files changed, 30 insertions(+), 7 deletions(-)
 
-diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
-index f2ea3cbea0fdfe..7a3c122fbcaebc 100644
---- a/tools/perf/util/cs-etm.c
-+++ b/tools/perf/util/cs-etm.c
-@@ -292,8 +292,11 @@ static struct cs_etm_queue *cs_etm__get_queue(struct cs_etm_auxtrace *etm, int c
- {
- 	if (etm->per_thread_decoding)
- 		return etm->queues.queue_array[0].priv;
--	else
--		return etm->queues.queue_array[cpu].priv;
+diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
+index 579742afe2221f..9fa64c4bde6972 100644
+--- a/tools/perf/util/bpf-event.c
++++ b/tools/perf/util/bpf-event.c
+@@ -59,6 +59,10 @@ static int machine__process_bpf_event_load(struct machine *machine,
+ 		return 0;
+ 	info_linear = info_node->info_linear;
+ 
++	/* jited_ksyms is only valid if bpil_offs_to_addr() converted it */
++	if (!(info_linear->arrays & (1UL << PERF_BPIL_JITED_KSYMS)))
++		return 0;
 +
-+	if (cpu < 0 || cpu >= (int)etm->queues.nr_queues)
-+		return NULL;
-+
-+	return etm->queues.queue_array[cpu].priv;
+ 	for (i = 0; i < info_linear->info.nr_jited_ksyms; i++) {
+ 		u64 *addrs = (u64 *)(uintptr_t)(info_linear->info.jited_ksyms);
+ 		u64 addr = addrs[i];
+@@ -961,12 +965,15 @@ int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env)
+ 	return evlist__add_sb_event(evlist, &attr, bpf_event__sb_cb, env);
  }
  
- static int cs_etm__map_trace_id_v0(struct cs_etm_auxtrace *etm, u8 trace_chan_id,
-@@ -306,6 +309,9 @@ static int cs_etm__map_trace_id_v0(struct cs_etm_auxtrace *etm, u8 trace_chan_id
- 	 * queue associated with that CPU so only one decoder is made.
- 	 */
- 	etmq = cs_etm__get_queue(etm, cpu_metadata[CS_ETM_CPU]);
-+	if (!etmq)
-+		return -EINVAL;
-+
- 	if (etmq->format == UNFORMATTED)
- 		return cs_etm__insert_trace_id_node(etmq, trace_chan_id,
- 						    cpu_metadata);
-@@ -318,6 +324,9 @@ static int cs_etm__map_trace_id_v0(struct cs_etm_auxtrace *etm, u8 trace_chan_id
- 		int ret;
+-void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
++void __bpf_event__print_bpf_prog_info(struct perf_bpil *info_linear,
+ 				      struct perf_env *env,
+ 				      FILE *fp)
+ {
+-	__u32 *prog_lens = (__u32 *)(uintptr_t)(info->jited_func_lens);
+-	__u64 *prog_addrs = (__u64 *)(uintptr_t)(info->jited_ksyms);
++	struct bpf_prog_info *info = &info_linear->info;
++	__u64 required_arrays = (1UL << PERF_BPIL_JITED_KSYMS) |
++				(1UL << PERF_BPIL_JITED_FUNC_LENS);
++	__u32 *prog_lens;
++	__u64 *prog_addrs;
+ 	char name[KSYM_NAME_LEN];
+ 	struct btf *btf = NULL;
+ 	u32 sub_prog_cnt, i;
+@@ -976,6 +983,13 @@ void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
+ 	    sub_prog_cnt != info->nr_jited_func_lens)
+ 		return;
  
- 		etmq = etm->queues.queue_array[i].priv;
-+		if (!etmq)
-+			continue;
++	/* Ensure the arrays were present and converted by bpil_offs_to_addr() */
++	if ((info_linear->arrays & required_arrays) != required_arrays)
++		return;
 +
- 		ret = cs_etm__insert_trace_id_node(etmq, trace_chan_id,
- 						   cpu_metadata);
- 		if (ret)
-@@ -358,6 +367,9 @@ static int cs_etm__process_trace_id_v0_1(struct cs_etm_auxtrace *etm, int cpu,
- 	u32 sink_id = FIELD_GET(CS_AUX_HW_ID_SINK_ID_MASK, hw_id);
- 	u8 trace_id = FIELD_GET(CS_AUX_HW_ID_TRACE_ID_MASK, hw_id);
++	prog_lens = (__u32 *)(uintptr_t)(info->jited_func_lens);
++	prog_addrs = (__u64 *)(uintptr_t)(info->jited_ksyms);
++
+ 	if (info->btf_id) {
+ 		struct btf_node *node;
  
-+	if (!etmq)
-+		return -EINVAL;
-+
- 	/*
- 	 * Check sink id hasn't changed in per-cpu mode. In per-thread mode,
- 	 * let it pass for now until an actual overlapping trace ID is hit. In
-@@ -375,6 +387,9 @@ static int cs_etm__process_trace_id_v0_1(struct cs_etm_auxtrace *etm, int cpu,
- 	for (unsigned int i = 0; i < etm->queues.nr_queues; ++i) {
- 		struct cs_etm_queue *other_etmq = etm->queues.queue_array[i].priv;
+diff --git a/tools/perf/util/bpf-event.h b/tools/perf/util/bpf-event.h
+index 60d2c6637af5d6..da4eeb4a1a7320 100644
+--- a/tools/perf/util/bpf-event.h
++++ b/tools/perf/util/bpf-event.h
+@@ -40,7 +40,7 @@ struct btf_node {
+ int machine__process_bpf(struct machine *machine, union perf_event *event,
+ 			 struct perf_sample *sample);
+ int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env);
+-void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
++void __bpf_event__print_bpf_prog_info(struct perf_bpil *info_linear,
+ 				      struct perf_env *env,
+ 				      FILE *fp);
+ void bpf_metadata_free(struct bpf_metadata *metadata);
+@@ -58,7 +58,7 @@ static inline int evlist__add_bpf_sb_event(struct evlist *evlist __maybe_unused,
+ 	return 0;
+ }
  
-+		if (!other_etmq)
-+			continue;
-+
- 		/* Different sinks, skip */
- 		if (other_etmq->sink_id != etmq->sink_id)
- 			continue;
-@@ -396,6 +411,9 @@ static int cs_etm__process_trace_id_v0_1(struct cs_etm_auxtrace *etm, int cpu,
+-static inline void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info __maybe_unused,
++static inline void __bpf_event__print_bpf_prog_info(struct perf_bpil *info_linear __maybe_unused,
+ 						    struct perf_env *env __maybe_unused,
+ 						    FILE *fp __maybe_unused)
+ {
+diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
+index 5b88b19f9d8e3c..48f0617df2dbbd 100644
+--- a/tools/perf/util/dso.c
++++ b/tools/perf/util/dso.c
+@@ -882,6 +882,12 @@ static ssize_t bpf_read(struct dso *dso, u64 offset, char *data)
+ 		return -1;
  	}
  
- 	cpu_data = get_cpu_data(etm, cpu);
-+	if (!cpu_data)
-+		return -EINVAL;
++	/* jited_prog_insns is only valid if bpil_offs_to_addr() converted it */
++	if (!(node->info_linear->arrays & (1UL << PERF_BPIL_JITED_INSNS))) {
++		dso__data(dso)->status = DSO_DATA_STATUS_ERROR;
++		return -1;
++	}
 +
- 	ret = cs_etm__insert_trace_id_node(etmq, trace_id, cpu_data);
- 	if (ret)
- 		return ret;
-@@ -3155,6 +3173,9 @@ static int cs_etm__queue_aux_fragment(struct perf_session *session, off_t file_o
- 	    aux_offset + aux_size <= auxtrace_event->offset + auxtrace_event->size) {
- 		struct cs_etm_queue *etmq = cs_etm__get_queue(etm, auxtrace_event->cpu);
+ 	len = node->info_linear->info.jited_prog_len;
+ 	buf = (u8 *)(uintptr_t)node->info_linear->info.jited_prog_insns;
  
-+		if (!etmq)
-+			return -EINVAL;
-+
- 		/*
- 		 * If this AUX event was inside this buffer somewhere, create a new auxtrace event
- 		 * based on the sizes of the aux event, and queue that fragment.
+@@ -1927,6 +1933,10 @@ const u8 *dso__read_symbol(struct dso *dso, const char *symfs_filename,
+ 			return NULL;
+ 		}
+ 		info_linear = info_node->info_linear;
++		if (!(info_linear->arrays & (1UL << PERF_BPIL_JITED_INSNS))) {
++			errno = SYMBOL_ANNOTATE_ERRNO__BPF_MISSING_BTF;
++			return NULL;
++		}
+ 		assert(len <= info_linear->info.jited_prog_len);
+ 		*out_buf_len = len;
+ 		return (const u8 *)(uintptr_t)(info_linear->info.jited_prog_insns);
+diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
+index 131fdbe9cefda5..9cb1d54b2452d9 100644
+--- a/tools/perf/util/header.c
++++ b/tools/perf/util/header.c
+@@ -1825,8 +1825,7 @@ static void print_bpf_prog_info(struct feat_fd *ff, FILE *fp)
+ 		node = rb_entry(next, struct bpf_prog_info_node, rb_node);
+ 		next = rb_next(&node->rb_node);
+ 
+-		__bpf_event__print_bpf_prog_info(&node->info_linear->info,
+-						 env, fp);
++		__bpf_event__print_bpf_prog_info(node->info_linear, env, fp);
+ 	}
+ 
+ 	up_read(&env->bpf_progs.lock);
 -- 
 2.53.0
 
