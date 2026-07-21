@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1870C46AA80;
-	Tue, 21 Jul 2026 15:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B396146AA6B;
+	Tue, 21 Jul 2026 15:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648332; cv=none; b=dCSjvUo6MZpLxwYP5ybR938a3zpK2zoG9R8SennzcY/YoYfqwIiZPMFGP33r7WxTrty1RtSS3jJnR5zojdo1DayD6jc7wvfYRJP3zcsWfaNJvqbPN6yMU1z7e7WUK27GUpAqddiat1poiw+/Ca2+Nvicir+bNL6KpNKjROvQIIA=
+	t=1784648334; cv=none; b=a9nlIcI2cT5TeQAFoAVW/Gjnl9SDq9TPXH9FnnhMD0sAtLfMws+7i4mnXuMud8oYT+9n4Nx2YPbaMazKXHjjSRPP4ghyiU+c7DdfmTPYl9Jnc3AgrKTls5aIYrueET3aPh/JZY9FnovCxDOyaNW568Z99nhAMoK0kNSagb/GWEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648332; c=relaxed/simple;
-	bh=kjcb1jKRMG/qxuN91C2ApT1o2NB6fCVbw7HIMqo/VJE=;
+	s=arc-20240116; t=1784648334; c=relaxed/simple;
+	bh=Is6ci5Oia0tHIduE07dX3dNu8fAZ5fzUJMxtBSo6gjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UYqDbSGpSk9zxg/WKY6OMPavLNsYhTmAbZRXmhNlarvlsFqROBZwaniIWXWetJzCF0vFi+UubB9de4mxvEoC1wSKEtjA5o/BD1F0PiU5kCKN4Os+uzx6P0SW/GhF/2yz8lepgke7lyXrr/6h4MeXCW7QbM9l6LabtBj0sqoML/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iy42W6zQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jghXekyZHMUMeZ4edduqw6t0das43rQYmugQKVX+P4nv13xn386imb6mEGPhgcrU9Ay00hYvEtHgrliJHDF6In3AVaCCiixKnUe4Mj9q0AJxUVgj55wVrhh+Ht+W6jKZ8ItKBtY5uWBzaSgHe3uFDH1UmLY7KyXg2cL0RHwmz6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VTG513Bx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iy42W6zQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8231F000E9;
-	Tue, 21 Jul 2026 15:38:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VTG513Bx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253591F000E9;
+	Tue, 21 Jul 2026 15:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648331;
-	bh=c6QOaFCKw9AWfdGRbqe0FYjE62TaRkxlDT7Q7gPCVzs=;
+	s=korg; t=1784648333;
+	bh=vmZdBu9qOryimW/ZwoYMhsF1QFe66INOD3xm6oafV2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iy42W6zQRVFKggQtQpVvcm/4ebI73tB5qfe44gyoHn2pgUlgQIfA7Vjex4HDL/PYl
-	 AmfyGgDzOG6cy+ZaR4uNICEYR8cbAeXlNMEKzxIDraOIOXAbE6h/aaR/CIe85qWCUi
-	 ZvPVzR5LE14WtqvznDij/qJu7ZTwxIbwS7nRfL6k=
+	b=VTG513BxrVp7QA9RGxWXQE6hTUlYzesbcNjoIywdl47xog9fL4DOhZBiaXi0lgaV1
+	 LUloZNyrtHsk0nholNxVLiUvMsM6cZG0mNiHj909WhYM/6gn8Srr+6yxPMBJ35e12n
+	 M9iDEaZdfyRjEkdSPFy28eWOcK+lkC2VliuAtxuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Machek <pavel@nabladev.com>,
-	Chris Brandt <chris.brandt@renesas.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0158/2077] drm: renesas: rz-du: mipi_dsi: Fix return path on error
-Date: Tue, 21 Jul 2026 16:57:11 +0200
-Message-ID: <20260721152556.411685939@linuxfoundation.org>
+Subject: [PATCH 7.1 0159/2077] alarmtimer: Remove stale return description from alarm_handle_timer()
+Date: Tue, 21 Jul 2026 16:57:12 +0200
+Message-ID: <20260721152556.435002153@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,62 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Brandt <chris.brandt@renesas.com>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-[ Upstream commit 79e1afecfe1afbfd06f63bf7bbe854a88155b7bd ]
+[ Upstream commit ed3b3c4976686b63b28e44f9805a88abc20ff18a ]
 
-In case of error, we should unwind correctly.
-Switching to using dmam_ instead of dma_ and moving the code earlier
-fixes the issue.
+alarm_handle_timer() was converted from returning enum alarmtimer_restart
+to void, but the kernel-doc "Return:" line was not removed. Remove the
+stale description.
 
-Fixes: 6f392f371650 ("drm: renesas: rz-du: Implement MIPI DSI host transfers")
-Suggested-by: Pavel Machek <pavel@nabladev.com>
-Signed-off-by: Chris Brandt <chris.brandt@renesas.com>
-Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://patch.msgid.link/20260501132135.196701-1-chris.brandt@renesas.com
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Fixes: 2634303f8773 ("alarmtimers: Remove return value from alarm functions")
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260429080635.166790-1-zhanxusheng@xiaomi.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ kernel/time/alarmtimer.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c b/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
-index a87a301326c7aa..0d0cf10225bb56 100644
---- a/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
-+++ b/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
-@@ -1441,6 +1441,11 @@ static int rzg2l_mipi_dsi_probe(struct platform_device *pdev)
- 		return dev_err_probe(dsi->dev, PTR_ERR(dsi->prstc),
- 				     "failed to get prst\n");
- 
-+	dsi->dcs_buf_virt = dmam_alloc_coherent(dsi->dev, RZG2L_DCS_BUF_SIZE,
-+						&dsi->dcs_buf_phys, GFP_KERNEL);
-+	if (!dsi->dcs_buf_virt)
-+		return -ENOMEM;
-+
- 	platform_set_drvdata(pdev, dsi);
- 
- 	pm_runtime_enable(dsi->dev);
-@@ -1473,11 +1478,6 @@ static int rzg2l_mipi_dsi_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		goto err_pm_disable;
- 
--	dsi->dcs_buf_virt = dma_alloc_coherent(dsi->host.dev, RZG2L_DCS_BUF_SIZE,
--					       &dsi->dcs_buf_phys, GFP_KERNEL);
--	if (!dsi->dcs_buf_virt)
--		return -ENOMEM;
--
- 	return 0;
- 
- err_phy:
-@@ -1492,8 +1492,6 @@ static void rzg2l_mipi_dsi_remove(struct platform_device *pdev)
+diff --git a/kernel/time/alarmtimer.c b/kernel/time/alarmtimer.c
+index 6e173d70d82592..fe9c42c03523c5 100644
+--- a/kernel/time/alarmtimer.c
++++ b/kernel/time/alarmtimer.c
+@@ -512,8 +512,6 @@ static enum alarmtimer_type clock2alarm(clockid_t clockid)
+  * @now: time at the timer expiration
+  *
+  * Posix timer callback for expired alarm timers.
+- *
+- * Return: whether the timer is to be restarted
+  */
+ static void alarm_handle_timer(struct alarm *alarm, ktime_t now)
  {
- 	struct rzg2l_mipi_dsi *dsi = platform_get_drvdata(pdev);
- 
--	dma_free_coherent(dsi->host.dev, RZG2L_DCS_BUF_SIZE, dsi->dcs_buf_virt,
--			  dsi->dcs_buf_phys);
- 	mipi_dsi_host_unregister(&dsi->host);
- 	pm_runtime_disable(&pdev->dev);
- }
 -- 
 2.53.0
 
