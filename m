@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AEA42DA53;
-	Tue, 21 Jul 2026 19:38:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9648B46D549;
+	Tue, 21 Jul 2026 19:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662709; cv=none; b=UoH5cnr8/2byopDwGuyj4NkHZ8KdLf2OkZvrLJGod7QSWhAyidlB/emSCGYSZNbtMv+lhDJxLAypY0KveVZcyZMoWivpCZ1fDiWjUxLjAZHSvLDHqUvPcWOD91+vFW+aGzYPwKl+aJb2aYPQkgcLmqYGvDexPpelwxlpBZTJkvg=
+	t=1784662709; cv=none; b=h7hjKase4dd0A2mP2/6S9JD6/Ip7LnPJhKHkrRyOJsLu0n694lfbmtirDPXJOwpxVKMkyj+g3SHsi8I++D5yqHoflOv6UqJVGMxlkEyWnsjrnVAnJC6/AKiu6RTHoPuqKIp0l89TBnnZQwfc5irZztTW3C++L5gge3P4hI+CmUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784662709; c=relaxed/simple;
-	bh=01mFnvo6QdWH+w+I/EODR/NENZwerQNvHCa+h7ZoM1w=;
+	bh=Ya7h57cd21eCDpDxkYdzA9zeVHcnE0GvliwybgHt2YA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kq2NHXPm75hGdOSxtQIY0vF5wbnT1ccQQMT4X6AcOrIS+wpQ9rA1p+iHL9TxToNDJulsn7NJqwVs98DvOLXItTkBMGF4ZA7uqk/WirkWv0vUPEkvrl+8tdXMC9oF1uHipviO/r4WwAV/t8mEAQhCOELRWcZ2hvPnhvi5qFJYilk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MCM0BxMW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LV0gKrqbPjZi05KpCnKFKWEIMis2fSdE2dbQLtCPMYfB4+ZEKiwGEGAyMM49+2bkgDF/UwbIe8h5WcCRdOKMEBsMoFaLqLO2D1oNrege/FNpY8G6aZssZ2jBkQJxMqL0/7XSwpmV9QIjiIu4Wph3F8wfT3DpvY2h5CKIPe0ZBTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5V5NTEx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MCM0BxMW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE781F000E9;
-	Tue, 21 Jul 2026 19:38:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5V5NTEx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 809DD1F00A3A;
+	Tue, 21 Jul 2026 19:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662708;
-	bh=1+oCtCGlZ+4b2lzjGi7UGHU6nze4Cb+A1jUW1ZhapWE=;
+	s=korg; t=1784662703;
+	bh=muueKJFwisZfphM7IPThQJCzgsetw0GIri5Orao95HM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MCM0BxMW1RhsyZkgMb77nhNaFgHT9kDZ/TynhpDPvIi65UIYq6i3PgQmTDhnPdTxC
-	 zUUuT6crXE3vJe774xwEoxSQ07Ph+MLkdfrMNRw4jBvAmUC1aUoNboiHdWYBHHT1O7
-	 9zUxGPrNmgibi2E1fhTOSxHsSxWjOmSBDEQxRJKU=
+	b=g5V5NTExTRSmlljaue0yFzdPuvcPtPvSr5DN1f7PoYgA5+1atTdNHf1AreoQVGFUS
+	 bZfQ5h29gkwL96yffUFvqbO8pbp0uUk1GwovEOFK0kK6+venGiFK/J07kE6W+rKVUy
+	 ZtUGe+SZr0xgMwFGzg124430yf7fj0sMYmHlNSPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Marco Crivellari <marco.crivellari@suse.com>,
+	Zygmunt Krynicki <me@zygoon.pl>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0545/1276] workqueue: Add new WQ_PERCPU flag
-Date: Tue, 21 Jul 2026 17:16:28 +0200
-Message-ID: <20260721152458.315954875@linuxfoundation.org>
+Subject: [PATCH 6.12 0544/1276] apparmor: put secmark label after secid lookup
+Date: Tue, 21 Jul 2026 17:16:27 +0200
+Message-ID: <20260721152458.294175466@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,65 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Crivellari <marco.crivellari@suse.com>
+From: Zygmunt Krynicki <me@zygoon.pl>
 
-[ Upstream commit 930c2ea566aff59e962c50b2421d5fcc3b98b8be ]
+[ Upstream commit 340372688bb87da45ff8d4e2f82ccfd1b64c65ff ]
 
-Currently if a user enqueue a work item using schedule_delayed_work() the
-used wq is "system_wq" (per-cpu wq) while queue_delayed_work() use
-WORK_CPU_UNBOUND (used when a cpu is not specified). The same applies to
-schedule_work() that is using system_wq and queue_work(), that makes use
-again of WORK_CPU_UNBOUND.
-This lack of consistentcy cannot be addressed without refactoring the API.
+apparmor_secmark_init() parses a configured secmark label to obtain its
+secid.  aa_label_strn_parse() returns a refcounted label, but the success
+path kept that reference after copying the secid.
 
-This patch adds a new WQ_PERCPU flag to explicitly request the use of
-the per-CPU behavior. Both flags coexist for one release cycle to allow
-callers to transition their calls.
-
-Once migration is complete, WQ_UNBOUND can be removed and unbound will
-become the implicit default.
-
-tj: Merged doc patch.
-
-Suggested-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Stable-dep-of: 527756cb9ebb ("i3c: master: Make hot-join workqueue freezable to block hot-join during suspend")
+Fixes: ab9f2115081a ("apparmor: Allow filtering based on secmark policy")
+Signed-off-by: Zygmunt Krynicki <me@zygoon.pl>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/core-api/workqueue.rst | 6 ++++++
- include/linux/workqueue.h            | 1 +
- 2 files changed, 7 insertions(+)
+ security/apparmor/net.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/core-api/workqueue.rst b/Documentation/core-api/workqueue.rst
-index 16f861c9791e4a..6597577f8c48b8 100644
---- a/Documentation/core-api/workqueue.rst
-+++ b/Documentation/core-api/workqueue.rst
-@@ -183,6 +183,12 @@ resources, scheduled and executed.
-   BH work items cannot sleep. All other features such as delayed queueing,
-   flushing and canceling are supported.
+diff --git a/security/apparmor/net.c b/security/apparmor/net.c
+index b6df6ff6bd9c1a..6e989184e40863 100644
+--- a/security/apparmor/net.c
++++ b/security/apparmor/net.c
+@@ -217,6 +217,7 @@ static int apparmor_secmark_init(struct aa_secmark *secmark)
+ 		return PTR_ERR(label);
  
-+``WQ_PERCPU``
-+  Work items queued to a per-cpu wq are bound to a specific CPU.
-+  This flag is the right choice when cpu locality is important.
-+
-+  This flag is the complement of ``WQ_UNBOUND``.
-+
- ``WQ_UNBOUND``
-   Work items queued to an unbound wq are served by the special
-   worker-pools which host workers which are not bound to any
-diff --git a/include/linux/workqueue.h b/include/linux/workqueue.h
-index 23642bb1a103cf..c75327e31e6a0e 100644
---- a/include/linux/workqueue.h
-+++ b/include/linux/workqueue.h
-@@ -401,6 +401,7 @@ enum wq_flags {
- 	 * http://thread.gmane.org/gmane.linux.kernel/1480396
- 	 */
- 	WQ_POWER_EFFICIENT	= 1 << 7,
-+	WQ_PERCPU		= 1 << 8, /* bound to a specific cpu */
+ 	secmark->secid = label->secid;
++	aa_put_label(label);
  
- 	__WQ_DESTROYING		= 1 << 15, /* internal: workqueue is destroying */
- 	__WQ_DRAINING		= 1 << 16, /* internal: workqueue is draining */
+ 	return 0;
+ }
 -- 
 2.53.0
 
