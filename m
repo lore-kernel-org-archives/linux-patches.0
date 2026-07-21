@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F7046F4A9;
-	Tue, 21 Jul 2026 19:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85ACC470135;
+	Tue, 21 Jul 2026 19:58:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663905; cv=none; b=KnmJCEEZQux/6b7lCxdVLw0iNL3UbNQ8QmHi66CSDOeQr81qpSqogJbgpatUsmWzqskqdjqVmGzRzNOKrGyIE3WJEZ6AtmMOKjLdVgwO5C9cOURPjYwfc60izUmS5DV0pNXalrdaTxmRjBF+ZKMRyrb8Qda1eYh6Ab+I0N82Vm8=
+	t=1784663908; cv=none; b=ZuaEBmCgnI9byKXNtgpGmjSGs/CfuxkFoOLUnLL5wUwFD17O+Y1ZZeeoNlBC5MhZ2sTxTFPuFveNmz2Q59z9M/vogvFEeBGi/sZe1+P9X/Bop/JILY7sOS3+VKRICd1Q/bseypH13g5+WP29DthGHG+qWAHhD/BiJ4qfd/EU8KI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663905; c=relaxed/simple;
-	bh=n3NJ2kA7tuhmlvW2K5l+wV38R9CzF7u6Y8PXbAjamAA=;
+	s=arc-20240116; t=1784663908; c=relaxed/simple;
+	bh=n08tQHi/tdwQE3XT/L+WckAq0pizeRtImMr3GxSqALk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QgCMrL4dYnwkdEiQIF+A46XvM+l+PBXQtCScHI8txxA3eeYFKfCiDNzzaLuWC9MXy9i/uTOFu4/j3V5UjgOjpnPBQfWy8JK3xSzExKX1yM3i1F/BN2yPbD/SxfLV3TWr4COxlmiL1O1GLVjhwJTBMkkw/K8/BJ3jsc+H+QXl7hY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0D5nL3UI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TcMpKb+9fxwPSk3wnzHU3WLRMaWjcPocw94N4V3GqQySnkBrbYH5xFTv78j8+BK+teUq6a/egmdYQrNtkEJYrky5+s2Wc2dL2er81wZ9GnX8aoD/H3zLikUZiizGIP5GQ9FqlSs8d3VYgllMU3UCBPeieqLQGAD67z+OBQDMZQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJN3+z7f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0D5nL3UI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F93B1F000E9;
-	Tue, 21 Jul 2026 19:58:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJN3+z7f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8B911F000E9;
+	Tue, 21 Jul 2026 19:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663903;
-	bh=JEU/EWIpztYG9cV4hMlbdbIUQbKHizmRHjgFRqc7g34=;
+	s=korg; t=1784663906;
+	bh=vzNMtAbyrQP+4J306xwRtqGqwh+kaYBcxiDUioRQIdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0D5nL3UIRINd9to3SVRj7hYzDs5P28Nb9Cx1ncaVObEpkw52iaR6fcVG8C8AP8N+A
-	 pxwpa1W2tzKo5MI/1Pzhi2VWPEHI5xqlVuOdN4VygZpI4fUvui3nOL+9Q1/eXOPEVh
-	 cii/OzjJibwtW8u+yxn1A3IrM9Glw8zblCCNgAAM=
+	b=HJN3+z7fg9BaWxpgwENnyUkh6/E9oYKjNK84lGes6ufxgHCrfpn70op4KWW4R2d+m
+	 xD3LJOKWJBPXB9yp1835a+ifVFdzTyXWJYNeRBXsicgeWDRg7sqHb4s0Z7ORQxQ2aV
+	 yubeeknhFMHwXzRProanizxnq8tNHK7NsrpwC/u4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Waychison <mike@waychison.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 0998/1276] block: fix race in blk_time_get_ns() returning 0
-Date: Tue, 21 Jul 2026 17:24:01 +0200
-Message-ID: <20260721152508.345170372@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 0999/1276] net: sparx5: unregister blocking notifier on init failure
+Date: Tue, 21 Jul 2026 17:24:02 +0200
+Message-ID: <20260721152508.368744763@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,90 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Waychison <mike@waychison.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 691b052139c94ee6640ac39e0b764dd3867897c0 upstream.
+commit 483be61b4a9a6df3b7cb277e8f189e082dee4cb8 upstream.
 
-blk_time_get_ns() populates the per-plug cached timestamp and then
-returns it by re-reading the field:
+sparx5_register_notifier_blocks() registers the switchdev blocking
+notifier before allocating the ordered workqueue. If the workqueue
+allocation fails, the error path unregisters the switchdev and netdevice
+notifiers, but leaves the blocking notifier registered.
 
-	if (!plug->cur_ktime) {
-		plug->cur_ktime = ktime_get_ns();
-		current->flags |= PF_BLOCK_TS;
-	}
-	return plug->cur_ktime;
+Add a separate error label for the workqueue allocation failure path and
+unregister the switchdev blocking notifier there.
 
-This is problematic when the compiler emits the final
-"return plug->cur_ktime" as a reload from memory, after PF_BLOCK_TS has
-already been set.
-
-Since the cached timestamp is now invalidated from finish_task_switch()
-(fad156c2af22 "block: invalidate cached plug timestamp after task
-switch"), a task preempted between setting PF_BLOCK_TS and that reload
-has plug->cur_ktime zeroed by blk_plug_invalidate_ts() when it is
-scheduled back in.  The reload then returns 0.
-
-A 0 handed back here is stored as a start timestamp -- e.g.
-blk_account_io_start() writes it to rq->start_time_ns -- and later
-subtracted from "now".  blk_account_io_done() then adds (now - 0), i.e.
-roughly the system uptime, to the per-group nsecs[] counters.  On an
-otherwise idle, healthy device this appears as sudden ~uptime-sized jumps
-in the diskstats time fields (write_ticks/discard_ticks/time_in_queue).
-
-The solution is to be explicit in our reads and writes to this field
-that is preemption volatile.  We also add a barrier() to ensure that any
-setting of PF_BLOCK_TS is ordered to happen after the cur_ktime update.
-
-This issue was discovered using AI-assisted kprobes looking for paths
-that were leaking zeroed timestamps in a live system, based on the
-observation that we were sometimes seeing uptime-sized jumps in kernel
-exported counters. This was flagged by NodeDiskIOSaturation
-prometheus alerts that started firing on all hosts post 7.1.3 kernel
-upgrade, due to node-exporter now exporting a nonsensical
-node_disk_io_time_weighted_seconds_total.
-
-Fixes: fad156c2af22 ("block: invalidate cached plug timestamp after task switch")
+Fixes: d6fce5141929 ("net: sparx5: add switching support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mike Waychison <mike@waychison.com>
-Assisted-by: Claude:claude-opus-4.8
-Link: https://patch.msgid.link/20260715192950.2488921-1-mike@waychison.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260623115714.2192074-1-haoxiang_li2024@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk.h |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -698,6 +698,7 @@ static inline int req_ref_read(struct re
- static inline u64 blk_time_get_ns(void)
- {
- 	struct blk_plug *plug = current->plug;
-+	u64 now;
- 
- 	if (!plug || !in_task())
- 		return ktime_get_ns();
-@@ -706,12 +707,18 @@ static inline u64 blk_time_get_ns(void)
- 	 * 0 could very well be a valid time, but rather than flag "this is
- 	 * a valid timestamp" separately, just accept that we'll do an extra
- 	 * ktime_get_ns() if we just happen to get 0 as the current time.
-+	 *
-+	 * cur_ktime can be zeroed by pre-emption the moment PF_BLOCK_TS is set.
- 	 */
--	if (!plug->cur_ktime) {
--		plug->cur_ktime = ktime_get_ns();
-+	now = READ_ONCE(plug->cur_ktime);
-+	if (!now) {
-+		now = ktime_get_ns();
-+		WRITE_ONCE(plug->cur_ktime, now);
-+		/* Ensure PF_BLOCK_TS is set after cur_ktime. */
-+		barrier();
- 		current->flags |= PF_BLOCK_TS;
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c
+@@ -740,11 +740,13 @@ int sparx5_register_notifier_blocks(stru
+ 	sparx5_owq = alloc_ordered_workqueue("sparx5_order", 0);
+ 	if (!sparx5_owq) {
+ 		err = -ENOMEM;
+-		goto err_switchdev_blocking_nb;
++		goto err_alloc_workqueue;
  	}
--	return plug->cur_ktime;
-+	return now;
- }
  
- static inline ktime_t blk_time_get(void)
+ 	return 0;
+ 
++err_alloc_workqueue:
++	unregister_switchdev_blocking_notifier(&s5->switchdev_blocking_nb);
+ err_switchdev_blocking_nb:
+ 	unregister_switchdev_notifier(&s5->switchdev_nb);
+ err_switchdev_nb:
 
 
