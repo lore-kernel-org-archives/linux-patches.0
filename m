@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED29743D502;
-	Tue, 21 Jul 2026 22:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58E744AB6A;
+	Tue, 21 Jul 2026 22:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673503; cv=none; b=NkJfNhcE4Z/ESnuvLY4/5VuHHySpzYBvBnmHQiompnahQfbWYdCz28DpybjK9sxIhsp0oVJoVLc4GCa8f/sccunBOf7JNfD0cIa/Vj6P3wX05DvUXfK2MpDLYsG0/3Y+1AmCLdyoAaPSIskQaWDpVoCIgLJhCxQVlT1yDfxu/Oc=
+	t=1784673505; cv=none; b=VyWO/Bqo01fR+lXhPxWXW5EaSRka1fImQu/Ln2qOlptrJABTPOnw8JZtJ5i/5lvwA7og4lvEiiejHOEP69jHQKLp4scBu/p4dbi3Iv4NMfk5WK1fln/VLSxxK2yFTRtuO0xDtn6A2fQy0YK3vk48/IwaNbwlcZtibZk2pdE9NpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673503; c=relaxed/simple;
-	bh=x3NhEpdifmGAckwGE3yHARbspfzxdfZ5m6rwkl/LHc4=;
+	s=arc-20240116; t=1784673505; c=relaxed/simple;
+	bh=Zi5pZYCdxf3LYbW2o8xsZQfQeHC7w8SVMNtdgEi8m+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U0+DXGyCNk8RXKqbHCer4iHyCGJ6p5nTA5b9m3/U7b8nZUcyKIiTJ4/IFs+kWZj38TvbMx3E7jwMNQ0ETSzvwn4IGrR2EsRKwM73adz3dgV3OYNzAzBRIbmaeleCeSZ0J20ZgllVzPLNvpATZaCKV65MHbh+8CWy7QhTnnWgpwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BRqDsQmi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RN+AAva9nO7QcOIryeHVRdIgR/N4Jigpcp0uzNd8b4hSjHFdcV0qD2+SqdePsYaS1amncMn6jGjnJR8t9OdmOiA7mR7c2OzaCQy3+OlJzcBUuKKek8n6MvPJjC/fKquDXHu6sFae5ITpiJBbk6MGgye4uKUbvgkBYQ1u7fP5Xog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w+2iwp1N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BRqDsQmi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F3481F00A3E;
-	Tue, 21 Jul 2026 22:38:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w+2iwp1N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F2F1F00A3D;
+	Tue, 21 Jul 2026 22:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673493;
-	bh=G4b/9XeGQcfGbTNRD5YqOxS42yDCgj1LbwerMBfjGF4=;
+	s=korg; t=1784673495;
+	bh=cmb0+4EkRsGE3hGppTykH8eDnQhH7sTeu2h0XzizH7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BRqDsQmipXTznlWtdxTC7bFDhI+Rsk+z8QQIHeAaiG+iUCQjDZGkss7avpqrHZ5v2
-	 L9O30NhoDqjQ63hn0VCBRhb8uVUDBEfVsEc0DW7h9AKUX2Voumpw7wUIncVZE3p3KO
-	 FExhM3r5RInC9pr9k3wU1cp/5EOVrwCOAVKc+7DE=
+	b=w+2iwp1NW3lL82iiqO+pfwDTk4lNQZDrUISeLQALdUAi9x4Kj9V8Gi3PeacyzOGDt
+	 KBmLkJSAnb6+QhO6goakAgKuxAwoBrA4ftArn+OaAt72njJyEyTu1lVR94k5xHbsrH
+	 yrrWg+kFxHX0sSGJ6mxGOz2stNeqtktiP3YuzbsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 184/699] thermal: hwmon: Fix critical temperature attribute removal
-Date: Tue, 21 Jul 2026 17:19:03 +0200
-Message-ID: <20260721152359.849342058@linuxfoundation.org>
+Subject: [PATCH 5.10 185/699] net/sched: sch_hfsc: annotate data-races in hfsc_dump_class_stats()
+Date: Tue, 21 Jul 2026 17:19:04 +0200
+Message-ID: <20260721152359.871976278@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -44,66 +46,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c2114dbda05354dbcf4dfbb30a2c623e8611c43a ]
+[ Upstream commit e300c7d470ad2726d6abf7d11b31b5d9912d9cf0 ]
 
-Since the return value of thermal_zone_crit_temp_valid() depends on
-the behavior of the thermal zone .get_crit_temp() callback which
-may change over time in theory, thermal_remove_hwmon_sysfs() may
-attempt to remove a critical temperature attribute that has not
-been created, passing a pointer to an uninitialized attribute
-structure to device_remove_file().
+hfsc_dump_class_stats() runs without qdisc spinlock being held.
 
-To avoid that, set a flag in struct thermal_hwmon_temp after creating
-a critical temperature attribute and use the value of that flag to
-decide whether or not the attribute needs to be removed.
+Add READ_ONCE()/WRITE_ONCE() annotations around:
 
-Fixes: e8db5d6736a7 ("thermal: hwmon: Make the check for critical temp valid consistent")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2437056.ElGaqSPkdT@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+- cl->level
+- cl->cl_vtperiod
+- cl->cl_total
+- cl->cl_cumul
+
+Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Link: https://patch.msgid.link/20260513080853.1383975-4-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_hwmon.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/sched/sch_hfsc.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/thermal/thermal_hwmon.c b/drivers/thermal/thermal_hwmon.c
-index 8b92e00ff23623..32d6091c20f783 100644
---- a/drivers/thermal/thermal_hwmon.c
-+++ b/drivers/thermal/thermal_hwmon.c
-@@ -39,6 +39,7 @@ struct thermal_hwmon_temp {
- 	struct thermal_zone_device *tz;
- 	struct thermal_hwmon_attr temp_input;	/* hwmon sys attr */
- 	struct thermal_hwmon_attr temp_crit;	/* hwmon sys attr */
-+	bool temp_crit_present;
- };
+diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
+index 3a271ad16443b9..29879e728408a3 100644
+--- a/net/sched/sch_hfsc.c
++++ b/net/sched/sch_hfsc.c
+@@ -716,7 +716,7 @@ init_vf(struct hfsc_class *cl, unsigned int len)
+ 			rtsc_min(&cl->cl_virtual, &cl->cl_fsc, cl->cl_vt, cl->cl_total);
+ 			cl->cl_vtadj = 0;
  
- static LIST_HEAD(thermal_hwmon_list);
-@@ -188,6 +189,8 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
- 					    &temp->temp_crit.attr);
- 		if (result)
- 			goto unregister_input;
-+
-+		temp->temp_crit_present = true;
- 	}
+-			cl->cl_vtperiod++;  /* increment vt period */
++			WRITE_ONCE(cl->cl_vtperiod, cl->cl_vtperiod + 1);  /* increment vt period */
+ 			cl->cl_parentperiod = cl->cl_parent->cl_vtperiod;
+ 			if (cl->cl_parent->cl_nactive == 0)
+ 				cl->cl_parentperiod++;
+@@ -758,7 +758,7 @@ update_vf(struct hfsc_class *cl, unsigned int len, u64 cur_time)
+ 		go_passive = 1;
  
- 	mutex_lock(&thermal_hwmon_list_lock);
-@@ -233,7 +236,7 @@ void thermal_remove_hwmon_sysfs(struct thermal_zone_device *tz)
- 	}
+ 	for (; cl->cl_parent != NULL; cl = cl->cl_parent) {
+-		cl->cl_total += len;
++		WRITE_ONCE(cl->cl_total, cl->cl_total + len);
  
- 	device_remove_file(hwmon->device, &temp->temp_input.attr);
--	if (thermal_zone_crit_temp_valid(tz))
-+	if (temp->temp_crit_present)
- 		device_remove_file(hwmon->device, &temp->temp_crit.attr);
+ 		if (!(cl->cl_flags & HFSC_FSC) || cl->cl_nactive == 0)
+ 			continue;
+@@ -848,7 +848,7 @@ hfsc_adjust_levels(struct hfsc_class *cl)
+ 			if (p->level >= level)
+ 				level = p->level + 1;
+ 		}
+-		cl->level = level;
++		WRITE_ONCE(cl->level, level);
+ 	} while ((cl = cl->cl_parent) != NULL);
+ }
  
- 	mutex_lock(&thermal_hwmon_list_lock);
+@@ -1336,10 +1336,10 @@ hfsc_dump_class_stats(struct Qdisc *sch, unsigned long arg,
+ 	__u32 qlen;
+ 
+ 	qdisc_qstats_qlen_backlog(cl->qdisc, &qlen, &cl->qstats.backlog);
+-	xstats.level   = cl->level;
+-	xstats.period  = cl->cl_vtperiod;
+-	xstats.work    = cl->cl_total;
+-	xstats.rtwork  = cl->cl_cumul;
++	xstats.level   = READ_ONCE(cl->level);
++	xstats.period  = READ_ONCE(cl->cl_vtperiod);
++	xstats.work    = READ_ONCE(cl->cl_total);
++	xstats.rtwork  = READ_ONCE(cl->cl_cumul);
+ 
+ 	if (gnet_stats_copy_basic(qdisc_root_sleeping_running(sch), d, NULL, &cl->bstats) < 0 ||
+ 	    gnet_stats_copy_rate_est(d, &cl->rate_est) < 0 ||
+@@ -1458,15 +1458,15 @@ hfsc_change_qdisc(struct Qdisc *sch, struct nlattr *opt,
+ static void
+ hfsc_reset_class(struct hfsc_class *cl)
+ {
+-	cl->cl_total        = 0;
+-	cl->cl_cumul        = 0;
++	WRITE_ONCE(cl->cl_total, 0);
++	WRITE_ONCE(cl->cl_cumul, 0);
+ 	cl->cl_d            = 0;
+ 	cl->cl_e            = 0;
+ 	cl->cl_vt           = 0;
+ 	cl->cl_vtadj        = 0;
+ 	cl->cl_cvtmin       = 0;
+ 	cl->cl_cvtoff       = 0;
+-	cl->cl_vtperiod     = 0;
++	WRITE_ONCE(cl->cl_vtperiod, 0);
+ 	cl->cl_parentperiod = 0;
+ 	cl->cl_f            = 0;
+ 	cl->cl_myf          = 0;
+@@ -1632,7 +1632,7 @@ hfsc_dequeue(struct Qdisc *sch)
+ 	bstats_update(&cl->bstats, skb);
+ 	update_vf(cl, qdisc_pkt_len(skb), cur_time);
+ 	if (realtime)
+-		cl->cl_cumul += qdisc_pkt_len(skb);
++		WRITE_ONCE(cl->cl_cumul, cl->cl_cumul + qdisc_pkt_len(skb));
+ 
+ 	if (cl->cl_flags & HFSC_RSC) {
+ 		if (cl->qdisc->q.qlen != 0) {
 -- 
 2.53.0
 
