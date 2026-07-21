@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E961435532;
-	Tue, 21 Jul 2026 22:11:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132D735C682;
+	Tue, 21 Jul 2026 22:11:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671868; cv=none; b=rmpfKs6+ieRxcVyTydR0T3kizZrgqXoPChINW2emXP0gQ8MzZrlSLPjYbdcLz6laEjPsRkq6kgeLjM6vMcSOE3fzXfcNixKxHvR9pHBEqgaQ7Riq9mo18Cp7M9yizwzSk6lDJrtN8QVD+TS7X4Yiqx3+0wqAbPDqDdxtJ/W+pBc=
+	t=1784671871; cv=none; b=botMaOgHliMve/IaH5DiTg+08citQGrE7F0qEUE5qRTYo190MRvbeXMghvqSxluD8ujw9Gl/owJ/hj1XdcapNxsXOud7VA7y7fJ0ej+7MuhSMZ91WtnjHu7WRf8myhSO3EV3nVHGHrTTvCaIC9wxvlwFRcGZW9i7DBtswPvrvcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671868; c=relaxed/simple;
-	bh=YJAuwHcxzx6xHcT32cGX9xTIGKzvtEg/LoojDe8p3aY=;
+	s=arc-20240116; t=1784671871; c=relaxed/simple;
+	bh=DodsAeCAgmraou46ico94dtEqdBDuJ2HbYD3kEdNT5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=H0iUFiR3FboA8gjQyOTt/swnI+PLQ/KJN+AFC5wmhH5zNjQ5rRLYaV7Es0vILxS09d9g+Yj2HVHj9DvYl2AVANMGgp4fo1hfK3+0Qi5OvopQqtfrubVLIpgjb5R2F1qt75xnaaRvBFVQCQptyPxTQR/7ImzKJ+QE9ZWZha9ARuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V8aGJCdN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q1WJ8wCp7403RImr9Ptm0q8MssRanAtAWsFzYu2WC69zp34pYBiqEXsLbZqAQ80B9t1u6W9Zyov3TiXb3cux7zTs8cw+Du28+uavv5rh8ZZ4LEHZqOuw1ZNLg+3spuZgG6VcfJEAumQtjesLetrh1AtvJcUggmq5Ve6G4F9oUgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ygtljt42; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8aGJCdN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D521B1F000E9;
-	Tue, 21 Jul 2026 22:11:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ygtljt42"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79AD81F000E9;
+	Tue, 21 Jul 2026 22:11:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671867;
-	bh=ZEJRNbk5dWy6W6M9UKshRxR8MbsNL1cLEt/hZ42QAGc=;
+	s=korg; t=1784671870;
+	bh=mO5kwagd3jy9oN4GkKtEdIamDXL5DhAqQotZEAjBDvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V8aGJCdN94gLm6vRwFVX8fqqB6Kt88Ifff0F/5rEUizgSRNAwa9WcMorvxndKyqbP
-	 iqYI0FIpfxYI/zhBe9bjiOnbTPoXOuFDK0iNiRUkqKezDDe6Ki3l4aO2Aq5yq/4tpj
-	 EMEV8U4JZo3abnvHR107Pt/paGDUnrEiw3/RsCbg=
+	b=Ygtljt42VHE0C7OPWcqzz7S9vpEc0C4ZkWPSl5TS+4EW3LMdAfmgfDqsKlxcITaAc
+	 wxzB9+VEhf7dTNqW0tAOiL2IihrJW3jxZ+K92MJ0IgmppBDZM+MCJBXW196Q3anIDe
+	 X1IGZ1DsL2meeUus3fWDp90ZhY2oMnClc0qxhZRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
+	Chris Mason <clm@meta.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 402/843] NFSv4/flexfiles: honor FF_FLAGS_NO_IO_THRU_MDS on fatal DS connect errors
-Date: Tue, 21 Jul 2026 17:20:37 +0200
-Message-ID: <20260721152415.080842930@linuxfoundation.org>
+Subject: [PATCH 5.15 411/843] xprtrdma: Fix bcall rep leak and unbounded peek
+Date: Tue, 21 Jul 2026 17:20:46 +0200
+Message-ID: <20260721152415.284105559@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -45,86 +46,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Chris Mason <clm@meta.com>
 
-[ Upstream commit 7a375cafc14ed151508f908ea5681caf0a9cc1d6 ]
+[ Upstream commit c7653d5cebc8492c77ec0415b5e9c0fb3e644bc6 ]
 
-Commit f06bedfa62d5 ("pNFS/flexfiles: don't attempt pnfs on fatal DS
-errors") teaches ff_layout_{read,write}_pagelist() to return
-PNFS_NOT_ATTEMPTED when nfs4_ff_layout_prepare_ds() fails with a
-nfs_error_is_fatal() errno (e.g. -ETIMEDOUT from a SOFTCONN connect
-deadline, -ENOMEM, -ERESTARTSYS), so that the client gives up instead
-of spinning.  pnfs_do_{read,write}() then dispatches the I/O through
-pnfs_{read,write}_through_mds() → nfs_pageio_reset_{read,write}_mds().
+rpcrdma_is_bcall() decodes a reply's first words to decide whether
+the frame is a backchannel call. Two issues in that decode path
+let a short or malformed reply leak the receive buffer and drain
+the Receive queue.
 
-That fallback is unconditional and silently violates FF_FLAGS_NO_IO_THRU_MDS:
-when the layout segment carries the flag (typically single-mirror
-appliance layouts where MDS I/O is explicitly forbidden), the
-out_failed: path's \`&& !ds_fatal_error\` clause overrides the flag's
-short-circuit through ff_layout_avoid_mds_available_ds() and routes
-the I/O to the MDS file handle anyway.
+First, the speculative peek
 
-This is reachable in practice during a data-server restart: SOFTCONN
-exhaustion produces -ETIMEDOUT, which is fatal per nfs_error_is_fatal(),
-which triggers PNFS_NOT_ATTEMPTED, which silently goes to MDS.
+    p = xdr_inline_decode(xdr, 0);
+    /* five p++ reads follow */
 
-Preserve the upstream "don't spin on fatal errors" intent for layouts
-that permit MDS fallback.  For layouts with FF_FLAGS_NO_IO_THRU_MDS
-set, mark the layout for return and request PNFS_TRY_AGAIN instead;
-if the server cannot supply a usable layout the failure now surfaces
-cleanly via pnfs_update_layout(), rather than via silent MDS I/O that
-contradicts the flag.
+asks xdr_inline_decode() for zero bytes, which returns xdr->p
+without consulting xdr->end. The five subsequent __be32 reads can
+then walk up to 20 bytes past the wire payload into stale regbuf
+contents and misclassify the reply as a backchannel call.
 
-Fixes: f06bedfa62d5 ("pNFS/flexfiles: don't attempt pnfs on fatal DS errors")
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Second, after the post-peek
+
+    p = xdr_inline_decode(xdr, 3 * sizeof(*p));
+    if (unlikely(!p))
+            return true;
+
+the short-header arm returns true without calling
+rpcrdma_bc_receive_call(). The contract with the caller is that a
+true return transfers ownership of rep to the backchannel path:
+
+    rpcrdma_reply_handler()
+      if (rpcrdma_is_bcall(r_xprt, rep))
+              return;        /* bare return, skips out_post */
+      ...
+    out_post:
+      rpcrdma_post_recvs(r_xprt, credits + ...);
+
+Because rpcrdma_bc_receive_call() never ran, no one took rep, but
+rpcrdma_reply_handler still bare-returns past rpcrdma_rep_put()
+and rpcrdma_post_recvs(). The rep, with its persistently
+DMA-mapped receive buffer, is orphaned on rb_all_reps and freed
+only at transport teardown. This completion reposts nothing, so
+its slot is reclaimed only when a later forward-channel reply
+reaches out_post and rpcrdma_post_recvs() allocates a fresh rep to
+backfill; absent that traffic the Receive queue drains and the
+peer's Sends draw RNR NAKs.
+
+Fix by consulting xdr->end after the zero-length peek so the five
+__be32 reads cannot run unless 20 bytes of wire payload remain. A
+byte-precise comparison against xdr->end is required because a
+non-4-aligned receive rounds the stream's word count up past the
+true payload. Also return false from the short-header arm so the
+reply falls through the normal out_norqst cleanup chain
+(rpcrdma_rep_put() plus rpcrdma_post_recvs()).
+
+Fixes: 41c8f70f5a3d ("xprtrdma: Harden backchannel call decoding")
+Assisted-by: kres:claude-opus-4-7
+Signed-off-by: Chris Mason <clm@meta.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayout.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ net/sunrpc/xprtrdma/rpc_rdma.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
-index 8fb5e05c4b266c..0e055b378a87d3 100644
---- a/fs/nfs/flexfilelayout/flexfilelayout.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-@@ -1889,6 +1889,14 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
- out_failed:
- 	if (ff_layout_avoid_mds_available_ds(lseg) && !ds_fatal_error)
- 		return PNFS_TRY_AGAIN;
-+	if (ff_layout_no_fallback_to_mds(lseg)) {
-+		/*
-+		 * FF_FLAGS_NO_IO_THRU_MDS: force fresh LAYOUTGET,
-+		 * never fall through to MDS I/O.
-+		 */
-+		pnfs_error_mark_layout_for_return(hdr->inode, lseg);
-+		return PNFS_TRY_AGAIN;
-+	}
- 	trace_pnfs_mds_fallback_read_pagelist(hdr->inode,
- 			hdr->args.offset, hdr->args.count,
- 			IOMODE_READ, NFS_I(hdr->inode)->layout, lseg);
-@@ -1960,6 +1968,14 @@ ff_layout_write_pagelist(struct nfs_pgio_header *hdr, int sync)
- out_failed:
- 	if (ff_layout_avoid_mds_available_ds(lseg) && !ds_fatal_error)
- 		return PNFS_TRY_AGAIN;
-+	if (ff_layout_no_fallback_to_mds(lseg)) {
-+		/*
-+		 * FF_FLAGS_NO_IO_THRU_MDS: force fresh LAYOUTGET,
-+		 * never fall through to MDS I/O.
-+		 */
-+		pnfs_error_mark_layout_for_return(hdr->inode, lseg);
-+		return PNFS_TRY_AGAIN;
-+	}
- 	trace_pnfs_mds_fallback_write_pagelist(hdr->inode,
- 			hdr->args.offset, hdr->args.count,
- 			IOMODE_RW, NFS_I(hdr->inode)->layout, lseg);
+diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
+index e9c69e9f429919..9c5e08ce9c2d3c 100644
+--- a/net/sunrpc/xprtrdma/rpc_rdma.c
++++ b/net/sunrpc/xprtrdma/rpc_rdma.c
+@@ -1129,6 +1129,8 @@ rpcrdma_is_bcall(struct rpcrdma_xprt *r_xprt, struct rpcrdma_rep *rep)
+ 
+ 	/* Peek at stream contents without advancing. */
+ 	p = xdr_inline_decode(xdr, 0);
++	if ((char *)xdr->end - (char *)p < 5 * XDR_UNIT)
++		return false;
+ 
+ 	/* Chunk lists */
+ 	if (xdr_item_is_present(p++))
+@@ -1153,7 +1155,7 @@ rpcrdma_is_bcall(struct rpcrdma_xprt *r_xprt, struct rpcrdma_rep *rep)
+ 	 */
+ 	p = xdr_inline_decode(xdr, 3 * sizeof(*p));
+ 	if (unlikely(!p))
+-		return true;
++		return false;
+ 
+ 	rpcrdma_bc_receive_call(r_xprt, rep);
+ 	return true;
 -- 
 2.53.0
 
