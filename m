@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1450F44AB9A;
-	Tue, 21 Jul 2026 21:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D6044AB91;
+	Tue, 21 Jul 2026 21:35:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669718; cv=none; b=e39L80FMB4+LhYqZOzCTTue5QZSCGCpGcyUHj+tlMGZyYX/RaPQTRPpARCQM/GFI/H+LvsqWJg+rjNmomZgFkMCH4RMwC0DuBnls7nlJ9wCSX3K5440xwDDKISLcp5yG5pTpjnlDDt53jUH1pBJQ/6unHFtRi9VcYgOIPyi6Bss=
+	t=1784669720; cv=none; b=rC7C2WCWZT/5ZVbMbogBaa2ExA1Ygu9MEc9cdVTNIFouolwwebs9tFc5arzPNKUWrhh/4eP1A6L8IVvqClUjF8VieYq8BAgOQrwQPeWOY3Rh30xK1aox++1zM5G5LZwacBvFuhDKzhsWNuy6eS4fJjQBo/7Pr1/hrMnZ3jpoUrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669718; c=relaxed/simple;
-	bh=cfNeOm/YdESbd7ZT5MyjQnH3hKHB37S2LnI2+IyRs/Y=;
+	s=arc-20240116; t=1784669720; c=relaxed/simple;
+	bh=PG/CBcNOzBxHVjJwPMe96XuSmqziD0xUfU/0EOAMego=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gvpc18UpvDTi4O4jo8ufXc2YWQWTD40/G8AMSEanp8T+RWhxecnfoXSa36GtZ63XDRVdQ8Xrrsien/GasSQvJlxwitdv+IKXtOMsEsYFoXvEyd2hEhJijy9/tsVAhT5dVCgZcA3QZ4vYvOQxfDJacGgO0ryaHMJbQObTLxqFTCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HPI3vnBn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CHVGmOGgBDzG8J8MMgDItuAn4lrH7OSVP7VO3aaxDMUid+kzRLIvaVZ2GFoRSI8xbqFariNfRkqYoir682mfhZeuruMNSSOVSBtmW7v/D+iGPiIPfg3mwZg/bVjhHvYM/rY2kN3OnfsxahbxM67m1bMQGmXnd90NhvIDWLSIDUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mwTed/kO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HPI3vnBn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350681F000E9;
-	Tue, 21 Jul 2026 21:35:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mwTed/kO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21BA1F000E9;
+	Tue, 21 Jul 2026 21:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669716;
-	bh=iMgFElGUllkk0jXl54fG/TtCRzc8xIKeBUcoP4eFSWo=;
+	s=korg; t=1784669719;
+	bh=0mLkUTaLlHYviwUW1Kzf+JYoVL8rAQKV3gn5berF3PA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HPI3vnBnpaSgGq+DOcVG8xyovcflbuVYskKNwSfKhS6ORE+LwdKMRifEH/OsdRBI4
-	 b+LkUVqT5r/hIcVdUVp48h/jAg/V1SDAdbiq6VWpzhVvuj7c8jC+ozBehQF7PaYpf5
-	 MZIvLMuSbl8mBnI7JkxYGs0YE1Wsb+Ocp7GBpj9E=
+	b=mwTed/kOU/5CUxRJlSaJEoSkUv+POYa7nUJKGLUPmvPDQnTbLV9FmNd9oyWU3mfux
+	 5AFsLBfCtNJqMmNCtlqpxxr9g9aLo6x2GSkZGlbbrveDOj6iyHaWysWExb+eh+scFb
+	 6VqmIdasYUjR8Fyl4UcKjGxATpbogv5UOluGjl2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0607/1067] octeontx2-pf: Clear stats of all resources when freeing resources
-Date: Tue, 21 Jul 2026 17:20:08 +0200
-Message-ID: <20260721152438.178020607@linuxfoundation.org>
+Subject: [PATCH 6.1 0654/1067] hwmon: adm1275: Prevent reading uninitialized stack
+Date: Tue, 21 Jul 2026 17:20:55 +0200
+Message-ID: <20260721152439.222952358@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,34 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Subbaraya Sundeep <sbhatta@marvell.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit fd4460721fb4062ef470ecdfdaedadfe7e415c09 ]
+[ Upstream commit 553f9517813912a5ab661af5504485d96824a61c ]
 
-When all MCS resources mapped to a PF are being freed then clear
-stats of all those resources too.
+While adding support for the ROHM BD127X0 hot-swap controllers, sashiko
+reported an error in device-name comparison, which can lead to reading
+uninitialized stack memory.
 
-Fixes: 815debbbf7b5 ("octeontx2-pf: mcs: Clear stats before freeing resource")
-Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Link: https://patch.msgid.link/1781636420-19816-2-git-send-email-sbhatta@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Quoting Sashiko:
+
+This is a pre-existing issue, but I noticed that just before this block in
+adm1275_probe(), there might be an out-of-bounds stack read:
+
+    ret = i2c_smbus_read_block_data(client, PMBUS_MFR_MODEL, block_buffer);
+    if (ret < 0) { ... }
+    for (mid = adm1275_id; mid->name[0]; mid++) {
+            if (!strncasecmp(mid->name, block_buffer, strlen(mid->name)))
+                    break;
+    }
+
+Since i2c_smbus_read_block_data() reads up to 32 bytes into the
+uninitialized stack array block_buffer without appending a null
+terminator, strncasecmp() could read past the valid bytes returned in ret.
+
+For example, if the device returns a shorter string like "adm12", checking
+it against "adm1275" up to the length of "adm1275" will continue reading
+into uninitialized stack bounds.
+
+Prevent reading uninitialized memory by zeroing the stack array.
+
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: 87102808d039 ("hwmon: (pmbus/adm1275) Validate device ID")
+Link: https://lore.kernel.org/r/c8ad38e0cdb347261c6245de2b7965e747f28d22.1782458224.git.mazziesaccount@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/pmbus/adm1275.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-index 60425e6ce07674..a415af6dce275b 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-@@ -163,6 +163,7 @@ static void cn10k_mcs_free_rsrc(struct otx2_nic *pfvf, enum mcs_direction dir,
- 	clear_req->id = hw_rsrc_id;
- 	clear_req->type = type;
- 	clear_req->dir = dir;
-+	clear_req->all = all;
- 
- 	req = otx2_mbox_alloc_msg_mcs_free_resources(mbox);
- 	if (!req)
+diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
+index b8543c06d022a2..a4b631798c9cd2 100644
+--- a/drivers/hwmon/pmbus/adm1275.c
++++ b/drivers/hwmon/pmbus/adm1275.c
+@@ -484,7 +484,7 @@ static int adm1275_enable_vout_temp(struct i2c_client *client, int config)
+ static int adm1275_probe(struct i2c_client *client)
+ {
+ 	s32 (*config_read_fn)(const struct i2c_client *client, u8 reg);
+-	u8 block_buffer[I2C_SMBUS_BLOCK_MAX + 1];
++	u8 block_buffer[I2C_SMBUS_BLOCK_MAX + 1] = {0};
+ 	int config, device_config;
+ 	int ret;
+ 	struct pmbus_driver_info *info;
 -- 
 2.53.0
 
