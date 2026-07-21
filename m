@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F219D3B9D9D;
-	Tue, 21 Jul 2026 22:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC79B42DFEC;
+	Tue, 21 Jul 2026 22:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671439; cv=none; b=QROeL/n++V0tLfg2yBA11/7c5Ykq8mY3aKVSGLRKnQfKpWmsnaX7q7KVUoT/oXTsBBbcHkb8le1ID2fV1c3xYhT0UWCLHDyxOrTcOy5dObR8fRWxdL38P+RcMdd/A2PT0OQDJiFCDf1YNrPAOW45R17MuWXlS+j9fM51M+dYOjA=
+	t=1784671441; cv=none; b=X7wj07JDItj66Cf9Lp3nPkFWdxVmUVMhg5DhPJrzKlCZ6aOE84v4+jvkDG+zPunfFEf7PSmL44eB/lYfmqUhn0QdI6777YdD8UuivIADUePwOLgDS0ILVsNcnur7ftXQ5VZM/BGQZ6ep1xeMD7aFWId3intxPlqPr0IQvR+ou4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671439; c=relaxed/simple;
-	bh=hbZ+4qgVCcI8DT1ZKSmvSr0o0qQsAeIBHXxt2vuDAIs=;
+	s=arc-20240116; t=1784671441; c=relaxed/simple;
+	bh=HKF88heIj+IqXdnsLj66JA0VmC/+0fAoCi1KLBF3+Sw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ca4WCOboZYv7yC/58dQy8v/VrI2zzlvIJNzggjJ5+zKGmZ6Tb6E2T7vy0o/Tfu1KEQJArm30z2UNrF7kobUXcWcuq6ly0dQKOAmZxkP7SH38pISia0e9z9wM3Ev7Fp/gpgplAs/s95ZZxJdU9TxY+pL5T03p2IY6zLOrI+UFdgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=irkONB6Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HuLiPDVpsDKp9s+FzSaAZFPnuCy2cALhWaNRjFhgC+V9rMGnxJrl6waiKrB3BI+GfQj+gaJm6xYQf9XkwMtCdTdagy3qqaxHLgH3+/cQl6IT7OpgtfRJxSI2DN5yBhpMxe2NBQFQaN9YaIBwPw/YDKw0K1X1+VLO1RjqkAshID4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FdktNqDE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="irkONB6Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E50A1F000E9;
-	Tue, 21 Jul 2026 22:03:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FdktNqDE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D071F000E9;
+	Tue, 21 Jul 2026 22:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671437;
-	bh=0ph6XZGH+fgi0+Xfrj0SnjCynIp4A2LbDztjbc6nMog=;
+	s=korg; t=1784671440;
+	bh=yIXoDfCpgHJ2XJZcgMebyoSdsA45YNPe09YF503nV6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=irkONB6ZvG5IW5yKtAG3z2IEEkHFf9vivlPzVCvsPZkHyEOTcgBekbrGqRiYMq9Ye
-	 9XHDtVE2jdgaS07ks34uEy4z+/CcvbF+96gD8rJ8pgRNbKe743yNqlvRDUCZrCwGDK
-	 FNcWqiuU6klUhN92Z3iTnwl9cLQhZozeu8goV3uA=
+	b=FdktNqDEfXGARmysx6A+IJkE22/BTQxmeom2pT2lQMrUsdbCGkRInDHUAODtua8c5
+	 brLxxo9UEwqGmMJKhx8XZJhj8e0C40e+TDnJ1X6OZscjAKDWlRXBJml/ekcHJ/DqLP
+	 4e8QeFcpbKOLL8MRSnXF44w55U8g+d/aN4lab9NQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 246/843] firmware: arm_scmi: Read sensor config as 32-bit value
-Date: Tue, 21 Jul 2026 17:18:01 +0200
-Message-ID: <20260721152411.551076371@linuxfoundation.org>
+Subject: [PATCH 5.15 220/843] wifi: rtw88: fix OOB read from firmware RX descriptor exceeding DMA buffer
+Date: Tue, 21 Jul 2026 17:17:35 +0200
+Message-ID: <20260721152410.965566961@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,39 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit f6fe7c3c007df18afd289ff2d98c692fae9ab085 ]
+[ Upstream commit 6e76e9ed273dfb4b3333a5ebbb94958cc5752ab6 ]
 
-The SENSOR_CONFIG_GET response contains a 32-bit sensor_config field,
-and the xfer is initialized with a 4-byte RX buffer. Reading it with
-get_unaligned_le64() can consume bytes past the returned payload.
+In rtw_pci_rx_napi(), new_len is computed as the sum of pkt_len (14-bit
+descriptor field, max 16383) and pkt_offset (drv_info_sz + shift, both
+firmware-controlled). The result can exceed RTK_PCI_RX_BUF_SIZE (11478),
+causing an out-of-bounds read from the pre-allocated DMA buffer when
+skb_put_data copies new_len bytes. The USB transport already validates
+this (rtw_usb_rx_data_put checks against RTW_USB_MAX_RECVBUF_SZ); the
+PCIe path does not.
 
-Use get_unaligned_le32() to match the protocol layout and the allocated
-response size.
+Add a check that new_len does not exceed the DMA buffer size.
 
-Fixes: 7b83c5f41088 ("firmware: arm_scmi: Add SCMI v3.0 sensor configuration support")
-Link: https://patch.msgid.link/20260517-scmi_fixes-v1-1-d86daec4defd@kernel.org
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260421111434.3389674-1-tristmd@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/sensors.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/pci.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/firmware/arm_scmi/sensors.c b/drivers/firmware/arm_scmi/sensors.c
-index 1ed66d13c06c44..3ce1f8349e3ef1 100644
---- a/drivers/firmware/arm_scmi/sensors.c
-+++ b/drivers/firmware/arm_scmi/sensors.c
-@@ -646,7 +646,7 @@ static int scmi_sensor_config_get(const struct scmi_protocol_handle *ph,
- 	if (!ret) {
- 		struct scmi_sensor_info *s = si->sensors + sensor_id;
- 
--		*sensor_config = get_unaligned_le64(t->rx.buf);
-+		*sensor_config = get_unaligned_le32(t->rx.buf);
- 		s->sensor_config = *sensor_config;
- 	}
- 
+diff --git a/drivers/net/wireless/realtek/rtw88/pci.c b/drivers/net/wireless/realtek/rtw88/pci.c
+index fa302d5e7839d1..f5f5f31c08b20f 100644
+--- a/drivers/net/wireless/realtek/rtw88/pci.c
++++ b/drivers/net/wireless/realtek/rtw88/pci.c
+@@ -1101,6 +1101,11 @@ static u32 rtw_pci_rx_napi(struct rtw_dev *rtwdev, struct rtw_pci *rtwpci,
+ 		 * discard the frame if none available
+ 		 */
+ 		new_len = pkt_stat.pkt_len + pkt_offset;
++		if (unlikely(new_len > RTK_PCI_RX_BUF_SIZE)) {
++			rtw_dbg(rtwdev, RTW_DBG_RX,
++				"oversized RX packet: %u\n", new_len);
++			goto next_rp;
++		}
+ 		new = dev_alloc_skb(new_len);
+ 		if (WARN_ONCE(!new, "rx routine starvation\n"))
+ 			goto next_rp;
 -- 
 2.53.0
 
