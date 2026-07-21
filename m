@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314A4347BC6;
-	Tue, 21 Jul 2026 22:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8BA8415F0C;
+	Tue, 21 Jul 2026 22:53:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674396; cv=none; b=VV2jnGloEvv2BVkxBIEnKNxGz660xujNkRcTmQlMJiKPxavWEVQBM28G2ARG1oVZYD+PkbfpJ35OC4FbazS1cnxC3pW3GcLoUpPBBFn/elbt6Bgqk/T3XP96YHi9TQAZhaYYYetIbrE2lKLfahA0oVSG3KWzh0K+X9bEHhc55FI=
+	t=1784674398; cv=none; b=adwtNEEKd/RV6z5YoQl6zMUxOt96xdPVDCV5fEsnjqN40691WIU3tHvoENbj1/mWWsJwvcYrlwgMX3tTuKy/S33HO74v7b2YJTGE86KTdtB3LwYeMxBrkZptQIa2G8zGe6WAdNqs8vwJhCm2tOb9u4Wi5xf7FsRlF7GgS2RNNAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674396; c=relaxed/simple;
-	bh=D8QmqmW0XXtEYNWFDXSMnfia5/GX5d9n8H/P3PJK+ps=;
+	s=arc-20240116; t=1784674398; c=relaxed/simple;
+	bh=sNDJDYUGOlI8d6b1XhHvpmLgwXZFU5ttpdtTYyPGRY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h7etez7nivgQ6LGOwqfFWbyL0/cXmeJQWofVytSKjC6I0/JlW5a3WRfqk8QbdbGGZ7RvNwIMDRHELs/V/z8h6laF2QavYCW1XK6g9d/6H3tLkpfXgHWL2CJH4OsWaVA5Z7EY0OcZmPwuCLYEGp+EnFcNTvKv7ZzWhezeps30rxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdOjhAyw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jKxQOB8iuvVnwzF4ln8jQaj4sEuTR/4E4+1/WSMaaC+CaWgzYxXA+dVDhM/kA55QcXpLFHq26FfHO3bRmeE/H8d/REhNbEAkx04R/6tFv8E1O5cPqwS/vs0U3C1NJsREF8qlH794CxYcaTeFRyUEjF1NkK5xFirWeg5RgDPwhP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SaZme6va; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdOjhAyw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97BDF1F000E9;
-	Tue, 21 Jul 2026 22:53:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SaZme6va"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2531F000E9;
+	Tue, 21 Jul 2026 22:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674395;
-	bh=2rxF2SmcCsK6hw+WZGTPs3e/VEPK4ai6vNKH7iZE4YY=;
+	s=korg; t=1784674397;
+	bh=6S25XXsmdsSYhpMT/KqMAtUDTc6ctX+PvGSswfJdFBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fdOjhAywig0TplTWB8/tsxP9Phk6f6Yrsds0tFw15Wt03YpPixZK56OJ5j+bO5wD8
-	 2LzEOFKs6QS0sCuyWFG5QRFXIE4OvXgoNBnSEbZAke7fOGxZ1cxtxAUTXpYnRTtNHA
-	 r1ODR3Igwy4vRN8rUwsF8ca4sUZttYR98+9gZJyM=
+	b=SaZme6va4RbN6m1fScfLLBzGK3Cb1NLoOA6tPwQuSM1bu1KFx0Y23zdclDlWTC1tY
+	 ik6iLDrFnLO9dRtC8ni/zwGzqeATxjysY+/+CTEew7RwCfNAD4vtNSs5nBU1zM+M/v
+	 0dfFbnvhRqH6ivPqNsRN4fD+mI3xvX72ZTnjHqbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaewon Yang <yong010301@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.10 498/699] tpm: Make the TPM character devices non-seekable
-Date: Tue, 21 Jul 2026 17:24:17 +0200
-Message-ID: <20260721152406.929141927@linuxfoundation.org>
+	Sashiko bot <sashiko-bot@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 525/699] Input: ims-pcu - fix type confusion in CDC union descriptor parsing
+Date: Tue, 21 Jul 2026 17:24:44 +0200
+Message-ID: <20260721152407.537329963@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,75 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaewon Yang <yong010301@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit f20d61c22bcaf172d6790b6500e3838e532e71c8 upstream.
+commit ca459e237bc49567649c56bc72e4c602fb92fd67 upstream.
 
-The TPM character devices expose a sequential command/response
-interface, but their open handlers leave FMODE_PREAD and FMODE_PWRITE
-enabled.
+The driver currently trusts the bMasterInterface0 from the CDC union
+descriptor without verifying that it matches the interface being
+probed. This could lead to the driver overwriting the private data of
+another interface.
 
-After a command leaves a response pending, pread(fd, buf, 16, 0x1400)
-passes 0x1400 as *off to tpm_common_read(). The transfer length is
-bounded by response_length, but the offset is used unchecked when
-forming data_buffer + *off. A sufficiently large offset therefore causes
-an out-of-bounds heap read through copy_to_user() and, if the copy
-succeeds, an out-of-bounds zero-write through the following memset().
+Validate that the control interface found in the descriptor is indeed
+the one we are probing.
 
-Positional I/O does not provide coherent semantics for this interface.
-An arbitrary pread offset cannot represent how much of a response has
-been consumed sequentially. The write callback always stores a command
-at the start of data_buffer, while pwrite() does not update file->f_pos
-and can leave the sequential read cursor stale.
-
-Call nonseekable_open() from both open handlers. This removes
-FMODE_PREAD and FMODE_PWRITE, causing positional reads and writes to
-fail with -ESPIPE before reaching the TPM callbacks, and explicitly
-marks the files non-seekable. Normal read() and write() continue to use
-the existing sequential f_pos cursor, leaving the response state machine
-unchanged.
-
-Tested on Linux 6.12 with KASAN and a swtpm TPM2 device:
-
- - sequential partial reads returned the complete response
- - pread() and preadv() with offset 0x1400 returned -ESPIPE
- - pwrite() and pwritev() with offset zero returned -ESPIPE
- - the pending response remained intact after the rejected operations
- - a subsequent normal command/response cycle completed normally
- - no KASAN report was produced.
-
-Fixes: 9488585b21be ("tpm: add support for partial reads")
-Link: https://lore.kernel.org/all/20260710090217.191289-1-yong010301@gmail.com/
+Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jaewon Yang <yong010301@gmail.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Reported-by: Sashiko bot <sashiko-bot@kernel.org>
+Assisted-by: Gemini:gemini-3.1-pro
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm-dev.c   |    2 +-
- drivers/char/tpm/tpmrm-dev.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/input/misc/ims-pcu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/char/tpm/tpm-dev.c
-+++ b/drivers/char/tpm/tpm-dev.c
-@@ -36,7 +36,7 @@ static int tpm_open(struct inode *inode,
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -1713,7 +1713,7 @@ static int ims_pcu_parse_cdc_data(struct
  
- 	tpm_common_open(file, chip, priv, NULL);
+ 	pcu->ctrl_intf = usb_ifnum_to_if(pcu->udev,
+ 					 union_desc->bMasterInterface0);
+-	if (!pcu->ctrl_intf)
++	if (pcu->ctrl_intf != intf)
+ 		return -EINVAL;
  
--	return 0;
-+	return nonseekable_open(inode, file);
- 
-  out:
- 	clear_bit(0, &chip->is_open);
---- a/drivers/char/tpm/tpmrm-dev.c
-+++ b/drivers/char/tpm/tpmrm-dev.c
-@@ -29,7 +29,7 @@ static int tpmrm_open(struct inode *inod
- 
- 	tpm_common_open(file, chip, &priv->priv, &priv->space);
- 
--	return 0;
-+	return nonseekable_open(inode, file);
- }
- 
- static int tpmrm_release(struct inode *inode, struct file *file)
+ 	alt = pcu->ctrl_intf->cur_altsetting;
 
 
