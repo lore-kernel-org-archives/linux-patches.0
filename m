@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EC635C682;
-	Tue, 21 Jul 2026 22:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8338B3E49FD;
+	Tue, 21 Jul 2026 22:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671845; cv=none; b=I3SaGbv6aC1FY5H573xk9fDSZ6QYFtJlbhc8KEBJg75TooGqiA+q8a+oU8B8u8hrWEZlsFOukq2nn+0Jsr0n1LHhW4csbHGyrX+yPWRYG/P2Z0Lj5110ANvCz1nwa5JHRL18dTlgZDmd3ESGDjq7eOWcMEXjRMa5DW/9ASpGiws=
+	t=1784671847; cv=none; b=gJz5jZwT2nZXAyF6j1u6/Co0ld+k/qHsqmXpv866+9prfSWkg5D28OwCWaf/bxQKMAo1XWjvf5aXVYu5FlmyF5TzSopSo33wxA2KIJV9fZx59iV/ywXUzXNxtn1EHLI/DbbFzdZunX87lzWtd2sTifR995hFu20d87AxomHBUwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671845; c=relaxed/simple;
-	bh=jTwMjo3HUyX2kYR0JHQcxKdPQ69OOzSGio89N18NpKI=;
+	s=arc-20240116; t=1784671847; c=relaxed/simple;
+	bh=6RGOKvdHsx9fEvCfjPvEJmhEdXsozOcHe1K/dGOiG/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IkpCb3vtffYXaJnkweiA6hAwDQTanxP34SM3htHUks5TmbK+l6MyRyCS5yT7R74hz/SOO0omGpVkPexv5IN9cjgCrL4tZtwh0Ox0QP1nKvwdGwfmVQdweySnq/iPbbhW7dLJvDdKEj+vlvMdgZCb5QBbtG5j9YKaj9pmmGqjuyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o6RMcj2g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l7iuJ4tPwrsn+HuOPgcaFcx4TX/eDW8KMSfe6zbNMy7K+Z74nxq1GKAP+xYgOW/WTT9dw5iCuhcZS+QlLaxQ/MA/97tvt2CA7S2XKDKHSe3hFhtjmIsgiaaTV6aMzClP06Qjofw/zQ0FHyaWp3GGSLljHD+0pF0/YNsSHiE1lfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ccfHaRqs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o6RMcj2g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47EF31F00A3A;
-	Tue, 21 Jul 2026 22:10:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccfHaRqs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E290A1F000E9;
+	Tue, 21 Jul 2026 22:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671843;
-	bh=4oNw5WzGTxSL6ZcLtmANVW0BsZNLPJQph2vUlLBGCb4=;
+	s=korg; t=1784671846;
+	bh=3gGPq+v018fPRqsjMLcn66JJBlNcOKk4h2XEOqBrg2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o6RMcj2gkV3weIKx595sO0+XfjMz/eC+oUGM5hzn4NbHYanxxSLNLkyWh6eeprdZR
-	 oA/I56dEPYvV+lx9ss8mq05dmg8rYIAsXNpemKBY4H1rldZJy+g43AtvPgAMCIv82Y
-	 O2pL7NLbGy5AkbauFZ1Lro4mnXBvpwJ8QaYVej9k=
+	b=ccfHaRqsZ1Pa1RMRLLYE9mBi5zEJl2glo2JAOMdCwpFoIrhQlfTqXpXpQP9zJtC7I
+	 xcSmtp2wbJ3X5+x99B8NJiN2ddO6K8Qt/NnKFexsYBkmzuoAG9CS8BYEkfh6PqFcE3
+	 4wBU3sPnM9j3mXB2tRfRT3EEVajK08ny85MXx1Vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Phillip Varney <pbvarney@protonmail.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 398/843] dmaengine: Fix possible use after free
-Date: Tue, 21 Jul 2026 17:20:33 +0200
-Message-ID: <20260721152414.993314500@linuxfoundation.org>
+Subject: [PATCH 5.15 399/843] clk: qcom: a53: Corrected frequency multiplier for 1152MHz
+Date: Tue, 21 Jul 2026 17:20:34 +0200
+Message-ID: <20260721152415.014824144@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -46,52 +47,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Phillip Varney <pbvarney@protonmail.com>
 
-[ Upstream commit 92f853f0645aebf1d05d333e97ab7c342ace1892 ]
+[ Upstream commit bb56147ea9fce98ebde1d367335ba006cba61fbd ]
 
-In dma_release_channel(), check chan->device->privatecnt after call
-dma_chan_put(). However, dma_chan_put() call dma_device_put() which could
-release the last reference of the device if the DMA provider is already
-gone and hence free it.
+The 1152MHz frequency entry for the a53 currently selects a multiplier of 62, giving 1190MHz. This changes the mulitiplier to 60 giving the intended 1152MHz.
 
-Fixes it by moving dma_chan_put() after the check.
-
-Fixes: 0f571515c332 ("dmaengine: Add privatecnt to revert DMA_PRIVATE property")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260424-dma-dmac-handle-vunmap-v4-1-90f43412fdc0@analog.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Phillip Varney <pbvarney@protonmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Fixes: 0c6ab1b8f894 ("clk: qcom: Add A53 PLL support")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260605005502.313928-1-pbvarney@protonmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dmaengine.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/a53-pll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index 9559ebd61f3bb6..68078e83d57560 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -906,11 +906,12 @@ void dma_release_channel(struct dma_chan *chan)
- 	mutex_lock(&dma_list_mutex);
- 	WARN_ONCE(chan->client_count != 1,
- 		  "chan reference count %d != 1\n", chan->client_count);
--	dma_chan_put(chan);
- 	/* drop PRIVATE cap enabled by __dma_request_channel() */
- 	if (--chan->device->privatecnt == 0)
- 		dma_cap_clear(DMA_PRIVATE, chan->device->cap_mask);
- 
-+	dma_chan_put(chan);
-+
- 	if (chan->slave) {
- 		sysfs_remove_link(&chan->dev->device.kobj, DMA_SLAVE_NAME);
- 		sysfs_remove_link(&chan->slave->kobj, chan->name);
+diff --git a/drivers/clk/qcom/a53-pll.c b/drivers/clk/qcom/a53-pll.c
+index 9e6decb9c26fa7..454a8458e00b33 100644
+--- a/drivers/clk/qcom/a53-pll.c
++++ b/drivers/clk/qcom/a53-pll.c
+@@ -20,7 +20,7 @@
+ static const struct pll_freq_tbl a53pll_freq[] = {
+ 	{  998400000, 52, 0x0, 0x1, 0 },
+ 	{ 1094400000, 57, 0x0, 0x1, 0 },
+-	{ 1152000000, 62, 0x0, 0x1, 0 },
++	{ 1152000000, 60, 0x0, 0x1, 0 },
+ 	{ 1209600000, 63, 0x0, 0x1, 0 },
+ 	{ 1248000000, 65, 0x0, 0x1, 0 },
+ 	{ 1363200000, 71, 0x0, 0x1, 0 },
 -- 
 2.53.0
 
