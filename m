@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36022EBB8D;
-	Tue, 21 Jul 2026 20:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA0433A9FC;
+	Tue, 21 Jul 2026 20:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666611; cv=none; b=dIRVMURbAThSdaXD3QrINVqj7lGIOKhP6sGiFlaV69vi3Aax+c8hX6hbWqApqDFJs0xEDgeh0Sd/n2tPQ+EPsCjN4dc4FrKTmQbuFSaJ3sHeIk8LjPsZCsj2iFuKVVR49F61TF31ojhb1Iz/OtPrOAzXzw1SgYio+7X6yq+X20o=
+	t=1784666613; cv=none; b=uKMry9nczSwdUULq3uQXluBu1I/YQd08Oik0Ac33qGq8UzQA+TRIHf9bDviTQsrnBRSlzUJzXjcMql9O4EjVGJI+l++aohMyLn8RR94uCkveuxeF3ogZQVSp+Kj9GZRIcCXydeTBTXh3n89nuMGnXSwnOwjZR3YCys8sq+j54NQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666611; c=relaxed/simple;
-	bh=esrZp3pzyMhvCoOJbXFYfD4fkRTRo7LchHHtCBl4u4s=;
+	s=arc-20240116; t=1784666613; c=relaxed/simple;
+	bh=CLSjXUA/2jzVOxDmZWXLU6UGZ/D7CkBbmXbkw4GqqNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kRclwN2uBQIIt9qS0NlAniDaiEGCXHH4pcz5781TZdYTsVE+wguD6Jy9aTbduaRC8QFyG9B1X0VkzGFZViR13eG39Q/uoEuWvzDDTMQw53HPafjbSSNtFq/ojkzcowlX1hUVtAscLo+n+LW8KSsTnKPyVj/06jSFHS3DaaLTcA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUded+g0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q20TplAZFTZ3C+1BRR9ptN5HE7r5f2V8JQBgiKvHSsRhuw1q3aEpTmElbqQfd06Y7bnVuQUSeJHNFuUzcT/UWGYalb3KHqnv3k8NVfsHl4UwvpncI1ULfre+dUmrp3gq1nXl0Kul9k0BfHlZnoCXV0c/uJA6SLYhqqFUsiUIPgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJFiaGVT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUded+g0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 231A21F000E9;
-	Tue, 21 Jul 2026 20:43:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJFiaGVT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C76C81F000E9;
+	Tue, 21 Jul 2026 20:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666609;
-	bh=gVwlhzelv4wC5ja+8hjuiKZmPQ7NuWuVwQC6uSdgnuE=;
+	s=korg; t=1784666612;
+	bh=uRirSnUqzDWZCnSyW8IK+tLoyTY7iWvDFO+SZW5gzRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AUded+g0Gfjr1NyAuRL0+dIeIgFY6wyBACdnZUHTZTO0SYaBoMAQZ9PLqkkkiJQIO
-	 p/F0wQNfg/8tCPigZFulOMIyqV6bMWAIe8AgFEF/PNJhnnHWocdjiQkKw+guySZExL
-	 KG1/MpxmeZWTxP4taDCzDJB94pvpnaYnACrnkOnI=
+	b=DJFiaGVTXTdo+uLsBlXM5WxeupXgpOhcuy5KeQyvurkmONn+DSF1Ac/a+8PvPM+xp
+	 BOpv3pTu7Xm1pzBIFxBNEgpJ+K0fExaoQrNyv1d24DPmC2KP3ntIkoIIYDq6C5eLd6
+	 ro+/xRTmCIu42LdjAPp9oWkY6b1bsfBncUh7sAnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sayali Patil <sayalip@linux.ibm.com>,
 	Aboorva Devarajan <aboorvad@linux.ibm.com>,
 	Alex Sierra <alex.sierra@amd.com>,
 	Alistair Popple <apopple@nvidia.com>,
@@ -42,14 +41,15 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michal Hocko <mhocko@suse.com>,
 	Mike Rapoport <rppt@kernel.org>,
 	Ralph Campbell <rcampbell@nvidia.com>,
+	Sayali Patil <sayalip@linux.ibm.com>,
 	Shuah Khan <shuah@kernel.org>,
 	Suren Baghdasaryan <surenb@google.com>,
 	Vlastimil Babka <vbabka@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0749/1266] selftests/mm: allow PUD-level entries in compound testcase of hmm tests
-Date: Tue, 21 Jul 2026 17:19:46 +0200
-Message-ID: <20260721152458.630829088@linuxfoundation.org>
+Subject: [PATCH 6.6 0750/1266] selftests/mm: fix exclusive_cow test fork() handling
+Date: Tue, 21 Jul 2026 17:19:47 +0200
+Message-ID: <20260721152458.653448086@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -68,38 +68,27 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sayali Patil <sayalip@linux.ibm.com>
+From: Aboorva Devarajan <aboorvad@linux.ibm.com>
 
-[ Upstream commit 224ed0e019b122d08580362abe57574a78f2b5fa ]
+[ Upstream commit cea5702144615878600d3a39b5d8b3cc34719012 ]
 
-Patch series "selftests/mm: assorted fixes for hmm-tests", v3.
+The test ignores the return value of fork(), so both the parent and the
+(newly created) child run the COW verification loops and then call
+hmm_buffer_free() before returning into the kselftest harness, which
+_exit()s each side.  This duplicated teardown sequence has been observed
+to manifest as a SIGSEGV in the test child, e.g.:
 
-This series fixes a few issues in hmm-tests that show up when page-size
-and huge-page configuration differ from the hardcoded assumptions the
-tests were written for (PMD/THP sizing, default hugepage size, and related
-cases).
+  hmm-tests[360141]: segfault (11) at 0 nip 10006964 lr 1000ac3c code 1
+  in hmm-tests[6964,10000000+30000]
 
-It also includes a fix to exclusive_cow: the test ignored the return value
-of fork(), so both parent and child ran the same teardown path.
+Fix this by adopting the same fork()-then-wait pattern already used by the
+nearby anon_write_child / anon_write_child_shared tests in this file: the
+child performs the COW verification and then _exit(0)s so it does not run
+the test teardown, while the parent independently verifies COW, waits for
+the child, and only then frees the buffer.
 
-This patch (of 3):
-
-The HMM compound testcase currently assumes only PMD-level mappings and
-fails on systems where default_hugepagesz=1G is set, because the region is
-then reported by the device at PUD level.
-
-Determine the mapping level (PMD or PUD) the device reports for the first
-page of the range and require every page to match that level exactly via
-ASSERT_EQ().  This accepts PUD-level mappings while preserving the
-expected/observed protection values printed on failure, and rejects a
-fragmented mapping that mixes PMD- and PUD-level entries within the same
-range (which a per-page OR check would have let pass).
-
-Link: https://lore.kernel.org/20260611034102.1030738-1-aboorvad@linux.ibm.com
-Link: https://lore.kernel.org/20260611034102.1030738-2-aboorvad@linux.ibm.com
-Fixes: e478425bec93 ("mm/hmm: add tests for hmm_pfn_to_map_order()")
-Signed-off-by: Sayali Patil <sayalip@linux.ibm.com>
-Co-developed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Link: https://lore.kernel.org/20260611034102.1030738-4-aboorvad@linux.ibm.com
+Fixes: b659baea75469 ("mm: selftests for exclusive device memory")
 Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
 Cc: Alex Sierra <alex.sierra@amd.com>
 Cc: Alistair Popple <apopple@nvidia.com>
@@ -114,83 +103,70 @@ Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
 Cc: Michal Hocko <mhocko@suse.com>
 Cc: Mike Rapoport <rppt@kernel.org>
 Cc: Ralph Campbell <rcampbell@nvidia.com>
+Cc: Sayali Patil <sayalip@linux.ibm.com>
 Cc: Shuah Khan <shuah@kernel.org>
 Cc: Suren Baghdasaryan <surenb@google.com>
 Cc: Vlastimil Babka <vbabka@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/hmm-tests.c | 32 +++++++++++++++++++-------
- 1 file changed, 24 insertions(+), 8 deletions(-)
+ tools/testing/selftests/mm/hmm-tests.c | 31 +++++++++++++++++++++++---
+ 1 file changed, 28 insertions(+), 3 deletions(-)
 
 diff --git a/tools/testing/selftests/mm/hmm-tests.c b/tools/testing/selftests/mm/hmm-tests.c
-index 69b88e973cee31..243dd421ed3842 100644
+index 243dd421ed3842..5286e400ce8bed 100644
 --- a/tools/testing/selftests/mm/hmm-tests.c
 +++ b/tools/testing/selftests/mm/hmm-tests.c
-@@ -1612,8 +1612,8 @@ TEST_F(hmm2, snapshot)
- }
- 
- /*
-- * Test the hmm_range_fault() HMM_PFN_PMD flag for large pages that
-- * should be mapped by a large page table entry.
-+ * Test the hmm_range_fault() handling of large pages (PMD or PUD)
-+ * that should be mapped by a large page table entry.
-  */
- TEST_F(hmm, compound)
- {
-@@ -1623,6 +1623,7 @@ TEST_F(hmm, compound)
- 	unsigned long default_hsize;
- 	int *ptr;
- 	unsigned char *m;
-+	unsigned char prot;
- 	int ret;
+@@ -1896,6 +1896,8 @@ TEST_F(hmm, exclusive_cow)
  	unsigned long i;
+ 	int *ptr;
+ 	int ret;
++	pid_t pid;
++	int status;
  
-@@ -1661,11 +1662,20 @@ TEST_F(hmm, compound)
+ 	npages = ALIGN(HMM_BUFFER_SIZE, self->page_size) >> self->page_shift;
+ 	ASSERT_NE(npages, 0);
+@@ -1924,14 +1926,37 @@ TEST_F(hmm, exclusive_cow)
  	ASSERT_EQ(ret, 0);
  	ASSERT_EQ(buffer->cpages, npages);
  
--	/* Check what the device saw. */
-+	/*
-+	 * Check what the device saw.  The region is backed by a single huge
-+	 * page that the device reports either at PMD or at PUD level depending
-+	 * on the configured default hugepage size.  Determine that level from
-+	 * the first page and require every page in the range to match it
-+	 * exactly, so that a fragmented mapping mixing levels (or a missing
-+	 * large-page bit) is still caught and reported with its actual value.
-+	 */
- 	m = buffer->mirror;
-+	prot = HMM_DMIRROR_PROT_WRITE |
-+	       ((m[0] & HMM_DMIRROR_PROT_PUD) ? HMM_DMIRROR_PROT_PUD :
-+						HMM_DMIRROR_PROT_PMD);
- 	for (i = 0; i < npages; ++i)
--		ASSERT_EQ(m[i], HMM_DMIRROR_PROT_WRITE |
--				HMM_DMIRROR_PROT_PMD);
-+		ASSERT_EQ(m[i], prot);
+-	fork();
++	pid = fork();
++	if (pid == -1)
++		ASSERT_EQ(pid, 0);
  
- 	/* Make the region read-only. */
- 	ret = mprotect(buffer->ptr, size, PROT_READ);
-@@ -1676,11 +1686,17 @@ TEST_F(hmm, compound)
- 	ASSERT_EQ(ret, 0);
- 	ASSERT_EQ(buffer->cpages, npages);
+-	/* Fault pages back to system memory and check them. */
++	if (pid == 0) {
++		/*
++		 * Child verifies COW independently, then _exit(0)s so it does
++		 * not run the test teardown.  A failed ASSERT_* here makes the
++		 * harness abort() the child, so the parent sees
++		 * !WIFEXITED(status) below and fails in turn.
++		 */
++		for (i = 0, ptr = buffer->ptr; i < size / sizeof(*ptr); ++i)
++			ASSERT_EQ(ptr[i]++, i);
++
++		for (i = 0, ptr = buffer->ptr; i < size / sizeof(*ptr); ++i)
++			ASSERT_EQ(ptr[i], i + 1);
++
++		_exit(0);
++	}
++
++	/* Parent: also increment to verify COW works for both processes. */
+ 	for (i = 0, ptr = buffer->ptr; i < size / sizeof(*ptr); ++i)
+ 		ASSERT_EQ(ptr[i]++, i);
  
--	/* Check what the device saw. */
-+	/*
-+	 * Check what the device saw after mprotect(PROT_READ).  Same
-+	 * approach as above: determine the mapping level from the first
-+	 * page and require every page to match it exactly.
-+	 */
- 	m = buffer->mirror;
-+	prot = HMM_DMIRROR_PROT_READ |
-+	       ((m[0] & HMM_DMIRROR_PROT_PUD) ? HMM_DMIRROR_PROT_PUD :
-+						HMM_DMIRROR_PROT_PMD);
- 	for (i = 0; i < npages; ++i)
--		ASSERT_EQ(m[i], HMM_DMIRROR_PROT_READ |
--				HMM_DMIRROR_PROT_PMD);
-+		ASSERT_EQ(m[i], prot);
+ 	for (i = 0, ptr = buffer->ptr; i < size / sizeof(*ptr); ++i)
+-		ASSERT_EQ(ptr[i], i+1);
++		ASSERT_EQ(ptr[i], i + 1);
++
++	/* Parent: wait for child and then free the buffer. */
++	ASSERT_EQ(waitpid(pid, &status, 0), pid);
++	ASSERT_TRUE(WIFEXITED(status));
++	ASSERT_EQ(WEXITSTATUS(status), 0);
  
- 	munmap(buffer->ptr, buffer->size);
- 	buffer->ptr = NULL;
+ 	hmm_buffer_free(buffer);
+ }
 -- 
 2.53.0
 
