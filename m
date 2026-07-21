@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A49446E007;
-	Tue, 21 Jul 2026 18:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C325A3B4EAC;
+	Tue, 21 Jul 2026 18:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658280; cv=none; b=ZmWLGu+kfdmvj0+BimP8VdH6Tiv3Lmfp8kA++sa/Cw68I/uWyBCmBmkNhv3pLibur6g2RKxIpBYM8xQ2JD9T3ZszpChFQ1gJ8hgPWjgFQfw3N9IC/IHZfXlVC66eR57Rvzsg5/Nj5mgL+T5eRZz/7qjDb9X0Foto5pp1ybZHieA=
+	t=1784658282; cv=none; b=LjNODtFiubQ0omfoJwuj5WOtzEfxq6DfuvOhJteO/2CmufvzcF+D0QDd+obt+/cmxhrVFGPGB8YiP6XdIp/lRL4oK/uHE5RMEExMoGImYXzcbs1NY2MVGgcw4TeetyDYXj0ZGR3Kp65d94z7P+JuKG4OqbWkbRmSqi8AeJ5ZEaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658280; c=relaxed/simple;
-	bh=yK/NPNfC6yU5e8O6j6w7tSdPtIzwbB+HBYhlbuIGWJA=;
+	s=arc-20240116; t=1784658282; c=relaxed/simple;
+	bh=8WrDRurQfQawMLHYzQisyNB+CnEomRO5RsCx0W+8iUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C8X1p7y3cw5ZaZAKsBHX2u376wYpAhAqpNCeNvbFQYGI/B0aP8PlRk2LI1skLrMfAlfCK85N0kcyuvx/9fifYVt6NhrjNBKGlz3EAX6uzLj9uB4NFSLCOKwc6hmk7xD1ZtO3551IM1Vq5FPxbMJZ+hb/JzfYavLFIoUkvmVSfl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fbgAXw+V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jSpFeanUakPMH6Li9xQ6bJPTmGuwxS1U90ox2cNahzupU+bdYmlLpNNXR18pnUiSqggYF1v26BBuyz4RO3kf4dWo/z9cxdR7LJkJc2cnuL60ATXi4uHt0jrGt6cIQ5playT8+wthxz8kkGc5ozwAKkrF2FdxxVmKprbVy/vKG0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dxfuf2dz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fbgAXw+V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2921F000E9;
-	Tue, 21 Jul 2026 18:24:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dxfuf2dz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8551F00A3A;
+	Tue, 21 Jul 2026 18:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658277;
-	bh=0U/fv+eyIYMRjX//ctxrbKTW7BpMDe1CAL6lBfO0TCk=;
+	s=korg; t=1784658280;
+	bh=dVYLkGO2oUWHXAlJNsRqM5rVeerCew+vOn3ODqsuDao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fbgAXw+Vy1xfJZndrVDBNU5vAM6jx+xpCGwlQL2OG+adu2TURcCWVpIJnDSvDMgEz
-	 akU+bH27Xlctpy/3e+Lz6h+aayM+BV5ggnjSfsPthByzbmkp04i/URdXypV5Fay/bB
-	 HEGXIFfdsy6CctK7ZjVcDrzlstc2gTXyJpVI0s8E=
+	b=Dxfuf2dzCC7uKaAGKWQt1/r6Dl0kEYeS3rmDoptJOanxDAhFFOHRsrlNUnpKzdyn4
+	 RIqJiv4yIDpeBJYZ/wG3w7otshfXGzVz+kMMXpQbgyKfdReOo0aPuiYQRKHAAxcfGM
+	 70zkIjeMRDm/b9ZbFBCBFY7R2jAG8db7CsrxkjIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rongguang Wei <weirongguang@kylinos.cn>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Max Zhen <max.zhen@amd.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1084/1611] s390/zcrypt: Remove the empty file
-Date: Tue, 21 Jul 2026 17:20:00 +0200
-Message-ID: <20260721152539.793438392@linuxfoundation.org>
+Subject: [PATCH 6.18 1067/1611] accel/amdxdna: Fix potential amdxdna_umap lifetime race
+Date: Tue, 21 Jul 2026 17:19:43 +0200
+Message-ID: <20260721152539.407629999@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,41 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rongguang Wei <weirongguang@kylinos.cn>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 575f87b9d4882b0d621192fdd754d7e09dbd5789 ]
+[ Upstream commit 14f172eff9c19f8043a9858845f33cd034f3a41e ]
 
-The files has no real user because CEX2 and CEX3 device drivers
-are removed, also remove these empty files.
+amdxdna_umap_release() calls the blocking mmu_interval_notifier_remove()
+before removing the object from abo->mem.umap_list. If
+aie2_populate_range() runs concurrently, it may obtain a reference to an
+amdxdna_umap that is being released, leading to a potential use-after-free.
 
-Fixes: 5ac8c72462cd ("s390/zcrypt: remove CEX2 and CEX3 device drivers")
-Signed-off-by: Rongguang Wei <weirongguang@kylinos.cn>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Use kref_get_unless_zero() in aie2_populate_range() when acquiring a
+reference. If the reference count has already dropped to zero, release
+is in progress and the entry is skipped.
+
+Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
+Reviewed-by: Max Zhen <max.zhen@amd.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260706221228.434099-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/zcrypt_cex2a.c | 0
- drivers/s390/crypto/zcrypt_cex2a.h | 0
- drivers/s390/crypto/zcrypt_cex2c.c | 0
- drivers/s390/crypto/zcrypt_cex2c.h | 0
- 4 files changed, 0 insertions(+), 0 deletions(-)
- delete mode 100644 drivers/s390/crypto/zcrypt_cex2a.c
- delete mode 100644 drivers/s390/crypto/zcrypt_cex2a.h
- delete mode 100644 drivers/s390/crypto/zcrypt_cex2c.c
- delete mode 100644 drivers/s390/crypto/zcrypt_cex2c.h
+ drivers/accel/amdxdna/aie2_ctx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/s390/crypto/zcrypt_cex2a.c b/drivers/s390/crypto/zcrypt_cex2a.c
-deleted file mode 100644
-index e69de29bb2d1d6..00000000000000
-diff --git a/drivers/s390/crypto/zcrypt_cex2a.h b/drivers/s390/crypto/zcrypt_cex2a.h
-deleted file mode 100644
-index e69de29bb2d1d6..00000000000000
-diff --git a/drivers/s390/crypto/zcrypt_cex2c.c b/drivers/s390/crypto/zcrypt_cex2c.c
-deleted file mode 100644
-index e69de29bb2d1d6..00000000000000
-diff --git a/drivers/s390/crypto/zcrypt_cex2c.h b/drivers/s390/crypto/zcrypt_cex2c.h
-deleted file mode 100644
-index e69de29bb2d1d6..00000000000000
+diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
+index 80de2906a26fcb..612ad6302622a4 100644
+--- a/drivers/accel/amdxdna/aie2_ctx.c
++++ b/drivers/accel/amdxdna/aie2_ctx.c
+@@ -794,7 +794,7 @@ static int aie2_populate_range(struct amdxdna_gem_obj *abo)
+ 	found = false;
+ 	down_write(&xdna->notifier_lock);
+ 	list_for_each_entry(mapp, &abo->mem.umap_list, node) {
+-		if (mapp->invalid) {
++		if (mapp->invalid && kref_get_unless_zero(&mapp->refcnt)) {
+ 			found = true;
+ 			break;
+ 		}
+@@ -805,7 +805,7 @@ static int aie2_populate_range(struct amdxdna_gem_obj *abo)
+ 		up_write(&xdna->notifier_lock);
+ 		return 0;
+ 	}
+-	kref_get(&mapp->refcnt);
++
+ 	up_write(&xdna->notifier_lock);
+ 
+ 	XDNA_DBG(xdna, "populate memory range %lx %lx",
 -- 
 2.53.0
 
