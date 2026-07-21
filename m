@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C56A40315B;
-	Tue, 21 Jul 2026 17:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350FD4028D6;
+	Tue, 21 Jul 2026 17:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654501; cv=none; b=nHFFIcNqPkaak/bZqYpGFd5x+Wclm01//wtC2TsVk7Rja/SE3oceNAAnrj5cLBkfDUavUnA3OtQrph9vSWwHtFSf2rE5Uk7cXXwI2ytDoL493d1DmxlaVnsIo158BpnFqx56mydxwoI4ejf5IFpC/s6pfRPuJcGoYglOYwqDJsM=
+	t=1784654503; cv=none; b=WOd7lhfjs+KHPZKNy/pQxCMU7PERnepXYLTUGL/6EDZsXzpvtro+aHaDT0AeDO2+H/WWVrIc+7fy5Oax+YeIIifkkhbBiT1zwnO3y6BQZA7+p+kPxMDsxftbl8pLYE6+RXo21e8vawKeyaRCwlpc55kTbBz4iith9k9Ek44GiOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654501; c=relaxed/simple;
-	bh=3HCUtW2SRPGcFZw/IoHCtpVicX13zOAVYuq19+TwMVQ=;
+	s=arc-20240116; t=1784654503; c=relaxed/simple;
+	bh=1CykKLuPzAb5XqbcmamW1wkCyHwcZxPcJnt7naz71F4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OSbM6EFltQKqstGtvVMEDk/py2qiQkm8CMoqyt4n8T+blk0jW5yCBLZJOK2IhJ+YMA2yNGTbkt55+1lHTeUQ6aao1bmvcY7kWglVDg7KNhfw+6B4vSfekKiESmpvoDYfe03kLTn3G+F1WwEiUiDg82WWVtx1R6gZjLjkbszpBfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMvOBSmS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ax4FiThSuWVbH6DUnMZOOs+mw5oTGlgdTw/LsN1Is6Pun4OWrOa5YW4e5954xTJXlLzn53rrvjQjjeN40mRv21R23xFXiJUS++k2YY28sriVbfKo5pQGvpMnBw8ls6Ll3my5VOrCnr310c3p58jb3vq7s9v/a0wxu24XZPpD9c8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1NzS+/Qo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMvOBSmS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E4FE1F000E9;
-	Tue, 21 Jul 2026 17:21:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1NzS+/Qo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDAF1F000E9;
+	Tue, 21 Jul 2026 17:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654499;
-	bh=XK2mWocdomJwQK7sJaQ9zB8c821K5kTgyWOIfNQbJHA=;
+	s=korg; t=1784654502;
+	bh=VqJQHv+ApBa88vvBQBfvYJcI/j0xpC7sIcQmFWgi/XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OMvOBSmSYAjuqX0rahDmmwXf1bcPK5X1nzkq6y1fPmMrVSrOwtlaHShuwtQDCbUXi
-	 qqugcI93dLpGlrhQcW5dWjroeZqCbeWBfgmKM43CqpF03Tcqm58liP0a1HdOi+3ovZ
-	 H8L79QzN5tABh4oSK5KxrU3jPL7pHu4qk76oUT08=
+	b=1NzS+/QoQ84hI9f4g36s5XRgG715gLLyjC0ShLpK9rjpXgQzQMTuKXFj8JT6CXrdN
+	 G04USfZ0vl8b/LcylgjMrvdZikqRS2nmMBO5sS5R9/jQJvR1vvir7+BHwwoWfHvb++
+	 l0K6TrTvuM/FcAvrr9xIcWL+5t5bhQwSZkLR6EQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kiryl Shutsemau <kas@kernel.org>,
 	Sashiko AI review <sashiko-bot@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
 	David Hildenbrand <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
 	Michal Hocko <mhocko@suse.com>,
 	Mike Rapoport <rppt@kernel.org>,
 	Peter Xu <peterx@redhat.com>,
@@ -39,9 +38,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vlastimil Babka <vbabka@kernel.org>,
 	Balbir Singh <balbirs@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 1728/2077] fs/proc/task_mmu: fix make_uffd_wp_huge_pte() prot-update race
-Date: Tue, 21 Jul 2026 17:23:21 +0200
-Message-ID: <20260721152633.509079532@linuxfoundation.org>
+Subject: [PATCH 7.1 1729/2077] fs/proc/task_mmu: fix hugetlb self-deadlock in pagemap_scan_pte_hole()
+Date: Tue, 21 Jul 2026 17:23:22 +0200
+Message-ID: <20260721152633.531969186@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -62,75 +61,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Kiryl Shutsemau (Meta) <kas@kernel.org>
 
-commit 04718f7c9290f95385f0dd328758753dc1c36dec upstream.
+commit e92d92bbafb264dc0518d52b846a3c07ed8d523f upstream.
 
-Patch series "userfaultfd/pagemap: pre-existing fixes".
+A PAGEMAP_SCAN ioctl requesting PM_SCAN_WP_MATCHING on a hugetlb VMA hangs
+the calling thread, unkillably, as soon as the scan reaches an unpopulated
+part of the range:
 
-These are pre-existing bug fixes that were carried at the front of the
-userfaultfd RWP working-set-tracking series up to v5 [1].  Per review
-feedback that fixes should not sit in the middle of a feature series, they
-are split out and sent on their own; the RWP series is reposted rebased on
-top of this.
+  do_pagemap_scan()
+    walk_page_range()
+      walk_hugetlb_range()
+        hugetlb_vma_lock_read()           # take the vma lock for read ...
+        pagemap_scan_pte_hole()           # ... ->pte_hole() for a hole
+          uffd_wp_range()
+            change_protection()
+              hugetlb_change_protection()
+                hugetlb_vma_lock_write()  # ... and block taking it for write
 
-All six were flagged by the Sashiko AI review of the RWP series and carry
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>.  They are
-independent of RWP, apply to mm-new directly, and carry Cc: stable@.
+walk_hugetlb_range() holds the hugetlb vma lock for read across the whole
+walk.  A present entry goes to ->hugetlb_entry(); an unpopulated one goes
+to ->pte_hole(), i.e.  pagemap_scan_pte_hole().  To write-protect the hole
+that handler calls uffd_wp_range(), which on a hugetlb VMA reaches
+hugetlb_change_protection() and takes the same vma lock for write.  The
+thread then blocks in down_write() waiting for the read lock it is itself
+holding.
 
-  1: fs/proc/task_mmu: a missing huge_ptep_modify_prot_start() in
-     make_uffd_wp_huge_pte() can lose hardware Dirty/Accessed updates
-     when PAGEMAP_SCAN write-protects a hugetlb PTE.
+The populated path avoids this: pagemap_scan_hugetlb_entry()
+write-protects the entry inline under the page-table lock and never enters
+hugetlb_change_protection().
 
-  2: fs/proc/task_mmu: pagemap_scan_hugetlb_entry() compares the range
-     against HPAGE_SIZE rather than the hstate page size, so it never
-     write-protects gigantic hugetlb pages.
+Do the same for holes.  Fault in the page table and install the uffd-wp
+marker directly with make_uffd_wp_huge_pte() under the page-table lock,
+rather than routing through uffd_wp_range().  That is the same sequence
+hugetlb_change_protection() runs for an unpopulated entry, minus the vma
+write lock -- which is safe to skip because PMD sharing is disabled on
+uffd-wp VMAs (hugetlb_unshare_all_pmds() runs at registration), leaving
+nothing for that lock to serialise against.
 
-  3: fs/proc/task_mmu: PAGEMAP_SCAN with PM_SCAN_WP_MATCHING over an
-     unpopulated hugetlb range self-deadlocks -- pagemap_scan_pte_hole()
-     calls uffd_wp_range() while walk_hugetlb_range() holds the hugetlb
-     vma lock for read, and hugetlb_change_protection() then takes it
-     for write. Install the marker inline instead.
-
-  4: mm/huge_memory: change_non_present_huge_pmd() drops pmd_swp_uffd_wp
-     on a device-private PMD permission downgrade, silently losing the
-     uffd-wp marker.
-
-  5: userfaultfd: must_wait() applies pte_write() to a locklessly read
-     PTE without checking pte_present(), so swap/migration entries
-     decode random offset bits and a thread can stay parked on a stale
-     fault.
-
-  6: userfaultfd: __VMA_UFFD_FLAGS feeds VMA_UFFD_MINOR_BIT (41) to
-     mk_vma_flags() unconditionally, an out-of-bounds write into the
-     single-word vma_flags_t on 32-bit. Build the mask from config-gated
-     per-mode masks so an unavailable bit is never materialised.
-
-
-This patch (of 6):
-
-make_uffd_wp_huge_pte() arms the UFFD_WP bit on a present HugeTLB PTE by
-calling huge_ptep_modify_prot_commit() with a ptent snapshot that was
-fetched without the corresponding huge_ptep_modify_prot_start().  The
-start helper is what atomically clears the entry so the kernel-owned
-snapshot stays consistent until the commit; without it, the hardware may
-set Dirty or Accessed in the live PTE between the original read and the
-commit, and huge_ptep_modify_prot_commit() (whose generic implementation
-just calls set_huge_pte_at()) then writes the stale snapshot back over the
-live hardware bits, losing the update.
-
-The non-hugetlb sibling make_uffd_wp_pte() does this correctly via
-ptep_modify_prot_start() / ptep_modify_prot_commit().  Mirror that pattern
-for the present-PTE branch.  The migration case stays as-is -- migration
-entries are non-present, so there's no hardware update to race against.
-
-Link: https://lore.kernel.org/20260529172331.356655-1-kas@kernel.org
-Link: https://lore.kernel.org/20260529172331.356655-2-kas@kernel.org
-Link: https://lore.kernel.org/all/20260526130509.2748441-1-kirill@shutemov.name/ [1]
+Link: https://lore.kernel.org/20260529172331.356655-4-kas@kernel.org
 Fixes: 52526ca7fdb9 ("fs/proc/task_mmu: implement IOCTL to get and optionally clear info about PTEs")
 Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
 Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
+Assisted-by: Claude:claude-opus-4-8
 Cc: David Hildenbrand <david@kernel.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
 Cc: Michal Hocko <mhocko@suse.com>
 Cc: Mike Rapoport <rppt@kernel.org>
 Cc: Peter Xu <peterx@redhat.com>
@@ -141,31 +114,85 @@ Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/task_mmu.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ fs/proc/task_mmu.c |   59 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 58 insertions(+), 1 deletion(-)
 
 --- a/fs/proc/task_mmu.c
 +++ b/fs/proc/task_mmu.c
-@@ -2523,12 +2523,16 @@ static void make_uffd_wp_huge_pte(struct
- 	if (softleaf_is_hwpoison(entry) || softleaf_is_marker(entry))
- 		return;
+@@ -2890,8 +2890,62 @@ out_unlock:
  
--	if (softleaf_is_migration(entry))
-+	if (softleaf_is_migration(entry)) {
- 		set_huge_pte_at(vma->vm_mm, addr, ptep,
- 				pte_swp_mkuffd_wp(ptent), psize);
--	else
--		huge_ptep_modify_prot_commit(vma, addr, ptep, ptent,
--					     huge_pte_mkuffd_wp(ptent));
-+	} else {
-+		pte_t old_pte, new_pte;
-+
-+		old_pte = huge_ptep_modify_prot_start(vma, addr, ptep);
-+		new_pte = huge_pte_mkuffd_wp(old_pte);
-+		huge_ptep_modify_prot_commit(vma, addr, ptep, old_pte, new_pte);
-+	}
+ 	return ret;
  }
- #endif /* CONFIG_HUGETLB_PAGE */
++
++/*
++ * Write-protect the unpopulated hugetlb entries covering [addr, end) by
++ * installing uffd-wp markers inline, exactly as pagemap_scan_hugetlb_entry()
++ * does for populated entries.
++ *
++ * walk_hugetlb_range() currently calls ->pte_hole() once per huge page, so the
++ * loop normally runs a single iteration; it is written to cover the full range
++ * in case the walker ever coalesces adjacent holes.
++ *
++ * The obvious route -- uffd_wp_range() -> hugetlb_change_protection() --
++ * cannot be used here: it takes hugetlb_vma_lock_write(), but the page-table
++ * walker (walk_hugetlb_range()) already holds hugetlb_vma_lock_read() on the
++ * same VMA, so the scanning thread would deadlock against itself. PMD sharing
++ * is disabled on uffd-wp VMAs (hugetlb_unshare_all_pmds() at registration), so
++ * the vma lock guards nothing that matters for these entries anyway.
++ */
++static int pagemap_scan_hugetlb_hole_wp(struct vm_area_struct *vma,
++					unsigned long addr, unsigned long end)
++{
++	struct hstate *h = hstate_vma(vma);
++	unsigned long psize = huge_page_size(h);
++	struct mm_struct *mm = vma->vm_mm;
++	spinlock_t *ptl;
++	pte_t *ptep;
++	pte_t pte;
++
++	for (addr = ALIGN_DOWN(addr, psize); addr < end; addr += psize) {
++		ptep = huge_pte_alloc(mm, vma, addr, psize);
++		if (!ptep)
++			return -ENOMEM;
++
++		i_mmap_lock_write(vma->vm_file->f_mapping);
++		ptl = huge_pte_lock(h, mm, ptep);
++		pte = huge_ptep_get(mm, addr, ptep);
++		make_uffd_wp_huge_pte(vma, addr, ptep, pte);
++		/*
++		 * A none entry has no cached translation, so installing the
++		 * marker needs no TLB flush. Flush only if a fault populated
++		 * the entry between huge_pte_alloc() and the page table lock.
++		 */
++		if (!huge_pte_none(pte))
++			flush_hugetlb_tlb_range(vma, addr, addr + psize);
++		spin_unlock(ptl);
++		i_mmap_unlock_write(vma->vm_file->f_mapping);
++	}
++
++	return 0;
++}
+ #else
+ #define pagemap_scan_hugetlb_entry NULL
++static int pagemap_scan_hugetlb_hole_wp(struct vm_area_struct *vma,
++					unsigned long addr, unsigned long end)
++{
++	return 0;
++}
+ #endif
+ 
+ static int pagemap_scan_pte_hole(unsigned long addr, unsigned long end,
+@@ -2911,7 +2965,10 @@ static int pagemap_scan_pte_hole(unsigne
+ 	if (~p->arg.flags & PM_SCAN_WP_MATCHING)
+ 		return ret;
+ 
+-	err = uffd_wp_range(vma, addr, end - addr, true);
++	if (is_vm_hugetlb_page(vma))
++		err = pagemap_scan_hugetlb_hole_wp(vma, addr, end);
++	else
++		err = uffd_wp_range(vma, addr, end - addr, true);
+ 	if (err < 0)
+ 		ret = err;
  
 
 
