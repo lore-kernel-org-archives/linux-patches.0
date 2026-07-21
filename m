@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075EC3E49CF;
-	Tue, 21 Jul 2026 17:07:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76A4403AE1;
+	Tue, 21 Jul 2026 17:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653639; cv=none; b=a0cYhARLTUTY6htTm3N69o2gNdlUf/j0BIq4UA9VdzI4tOz2dFV2alGTk4aQuPkzADc8IbkPnri7Uh/z/vvxbgfhA7i4yvLXISFpmm4S8iGHCOMlK+ZTMux7RHnsYSgBQjuqYqKC/0OfAuKBMjFLXXgEGaBHyJFciY000glYXIU=
+	t=1784653640; cv=none; b=IzNkQ3R9MLu4wCFf5F1CfSjlDtDXobijf0cXOEPrKZ7KB9zBg4J+uMtzSyz1mjHtEZ31shYgO6yLXLbeQScnivHcafgvc5DPVlG3wYZtdSaZJVSN+FIc/JMxdyv/sm3YHOrHwuV+bQ6Wx5WGa9heil6RnWIN9ltqwjXIXHobH0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653639; c=relaxed/simple;
-	bh=FFD8fi0CaPoBrcPzZFnpo6yzFLdYoZ5fDDj3CH5UMlg=;
+	s=arc-20240116; t=1784653640; c=relaxed/simple;
+	bh=E5K4EZvtBhJSRXxtFHxYZE+gxQ+gW/pJJQ+KXeWR1Vw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=e9LgZIh72eLgW7pAGVGwUxp+yPT1hCufSiLA1rC1Syju4JGFZYdWSHEOlIMSxt+1aQQW1yfFITu0ni8/ZaNyf9n7RDM1iv3E+iAh93S2Sz9A1JPYXV+EThv217WGfY+HDZMJJK1UiwEqLhKWo8v7Mzv2nRpgrpwjVgEVja/eLdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ni0wMB3A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KME26iNbwYKI3YHB0AAo6nqaMrAOp2IVA7EogPa38CIV6HL/8Eyr2+lmwjzjQw5i0BtAANCZTQ30GhOmFAZKBhRLfKhM40WgNwDNJ2RYyF30i+mIcqkrInRf5lRyIBA+J4CxW0iGp1x2BaJVyfcRfe9107q72z0wO59hJqjyU2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sN72Sgte; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ni0wMB3A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0011F00A3A;
-	Tue, 21 Jul 2026 17:07:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sN72Sgte"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174991F000E9;
+	Tue, 21 Jul 2026 17:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653636;
-	bh=BsXQ++LJiOKR+1jQjBJsN+3OMqmrOXF2HUDBLrSfFg4=;
+	s=korg; t=1784653639;
+	bh=3Zj1LMI5280xnVtEH4RoGMnNh39X601SYIvwYwWNK88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ni0wMB3Avur4bMeB6lBrWKlatS7Jye28wQmc43mUYQV5v8gXNVJr97Qguv8oD0JvO
-	 CY+g5G15J91ah9cF4ZxAjh+2hlSW+cVhAbbvObzlcB3tmAde1gmUEg4f9S1dDzqEI3
-	 /y4GCNGeYpbAZzEiBF2iAYuOrGaws9UbuKYi5Z8Y=
+	b=sN72Sgteqxm4b0H/XjrjU2slaVHmaRg9DwDNi1qQP5uzbUGxjGIBrS13rvoPz9neC
+	 i7rbeYtgpOQ3fziZ/InvrKaMKPar9IoYw4QkoHUb0Ttq3uh/9H42uMjJaVDexLI9nW
+	 IEHL/cu4Qg3vY7ME3xVkbawo1q8+ucX5M7L4gtjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zongyao Bai <zongyao.bai@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
 	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1402/2077] drm/xe/hw_engine: Fix double-free of managed BO in error path
-Date: Tue, 21 Jul 2026 17:17:55 +0200
-Message-ID: <20260721152625.877333428@linuxfoundation.org>
+Subject: [PATCH 7.1 1403/2077] drm/xe/pf: Dont attempt to process FAST_REQ or EVENT relays
+Date: Tue, 21 Jul 2026 17:17:56 +0200
+Message-ID: <20260721152625.900263412@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,51 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Michal Wajdeczko <michal.wajdeczko@intel.com>
 
-[ Upstream commit 7ac3cae7a251d28e9079de07a991bd4eb2bb7fd8 ]
+[ Upstream commit ed8b0d731892c68b41ecbd27c952af284816dec1 ]
 
-The error path in hw_engine_init() explicitly frees a BO allocated
-with xe_managed_bo_create_pin_map() via xe_bo_unpin_map_no_vm().
-Since the managed BO already has a devm cleanup action registered,
-this causes a double-free when devm unwinds during probe failure.
+Currently defined VF/PF relay actions use regular REQUEST messages
+only and the PF shouldn't attempt to handle FAST_REQUEST nor EVENT
+messages as this would result in breaking the VFPF ABI protocol
+and also might trigger an assert on the PF side.
 
-Remove the explicit free and let devm handle it, consistent with
-all other xe_managed_bo_create_pin_map() callers.
-
-Fixes: 0e1a47fcabc8 ("drm/xe: Add a helper for DRM device-lifetime BO create")
-Assisted-by: Claude:claude-opus-4.6
-Reviewed-by: Zongyao Bai <zongyao.bai@intel.com>
-Link: https://patch.msgid.link/20260626210631.3887291-1-shuicheng.lin@intel.com
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-(cherry picked from commit e459a3bdeb117be496d7f229e2ea1f6c9fe4080b)
+Fixes: 98e62805921c ("drm/xe/pf: Add SR-IOV GuC Relay PF services")
+Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Reviewed-by: Michał Winiarski <michal.winiarski@intel.com>
+Link: https://patch.msgid.link/20260527183735.22616-1-michal.wajdeczko@intel.com
+(cherry picked from commit 1714d360fc5ae2e0886a69e979095d9c7ff3568a)
 Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_hw_engine.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/xe/xe_guc_relay.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_hw_engine.c b/drivers/gpu/drm/xe/xe_hw_engine.c
-index 6dd05fac659564..a7441a66e94c21 100644
---- a/drivers/gpu/drm/xe/xe_hw_engine.c
-+++ b/drivers/gpu/drm/xe/xe_hw_engine.c
-@@ -629,7 +629,7 @@ static int hw_engine_init(struct xe_gt *gt, struct xe_hw_engine *hwe,
- 		hwe->exl_port = xe_execlist_port_create(xe, hwe);
- 		if (IS_ERR(hwe->exl_port)) {
- 			err = PTR_ERR(hwe->exl_port);
--			goto err_hwsp;
-+			goto err_name;
- 		}
- 	} else {
- 		/* GSCCS has a special interrupt for reset */
-@@ -649,8 +649,6 @@ static int hw_engine_init(struct xe_gt *gt, struct xe_hw_engine *hwe,
+diff --git a/drivers/gpu/drm/xe/xe_guc_relay.c b/drivers/gpu/drm/xe/xe_guc_relay.c
+index 577a315854afcf..eed0a750d2eb2a 100644
+--- a/drivers/gpu/drm/xe/xe_guc_relay.c
++++ b/drivers/gpu/drm/xe/xe_guc_relay.c
+@@ -689,12 +689,17 @@ static int relay_action_handler(struct xe_guc_relay *relay, u32 origin,
+ 		return relay_testloop_action_handler(relay, origin, msg, len, response, size);
  
- 	return devm_add_action_or_reset(xe->drm.dev, hw_engine_fini, hwe);
+ 	type = FIELD_GET(GUC_HXG_MSG_0_TYPE, msg[0]);
++	relay_assert(relay, guc_hxg_type_is_action(type));
  
--err_hwsp:
--	xe_bo_unpin_map_no_vm(hwe->hwsp);
- err_name:
- 	hwe->name = NULL;
+-	if (IS_SRIOV_PF(relay_to_xe(relay)))
+-		ret = xe_gt_sriov_pf_service_process_request(gt, origin, msg, len, response, size);
+-	else
++	if (IS_SRIOV_PF(relay_to_xe(relay))) {
++		if (type == GUC_HXG_TYPE_REQUEST)
++			ret = xe_gt_sriov_pf_service_process_request(gt, origin, msg, len,
++								     response, size);
++		else
++			ret = -EOPNOTSUPP;
++	} else {
+ 		ret = -EOPNOTSUPP;
+-
++	}
+ 	if (type == GUC_HXG_TYPE_EVENT)
+ 		relay_assert(relay, ret <= 0);
  
 -- 
 2.53.0
