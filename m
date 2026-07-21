@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB2833A9FC;
-	Tue, 21 Jul 2026 20:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0DE2EBB8D;
+	Tue, 21 Jul 2026 20:41:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666473; cv=none; b=CgKN9gA+Ps/uk26lU7k7lIYji0il9AB4BBKGv7FYdVNDIUESwoeENWAb9ZXFLX5r03RM4LAn6YC1ND4hzHrVACdMhKq80d5HFjvmR93BF/OnnAHHi8eO88hMfp0HusuzsPCogVERBp3UbiSoMVKM6zh6Xt/hXbo71oNroh22DHI=
+	t=1784666475; cv=none; b=nN68eXTa29FjoQ/QszY+Qivu3sG1uUJJQZpfFgKFYQZxResLMnM9Zzoj7IR+zt20nKJNzMfdAcxeF5dh0Jt1g4nqHhW1I50y2Dja4hakoApnI2Un3UWtnBsEQSskLs4qqCxCgmlSdzPsZ1VeQO2O+yxN5W+6tq8Z2EFzMKk6LGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666473; c=relaxed/simple;
-	bh=1IBLsqB9Tg+OyPptyqKG7kvYxgs6vCE2DcfEdZfmLcs=;
+	s=arc-20240116; t=1784666475; c=relaxed/simple;
+	bh=HSl7WJm4CltPqLIOOiQta+W4rN0JOvuOMW7ndOH7dsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BBzWVjs81tOmCOkHkbuG0fprY5L87sBxdrG5bfrTPnrLajtUTzXtucTvohtzqn5JQO85LxJfArRp4HEni9h9YyoLX3CA6gncC8WT3KR39T0YC9dYqdgHEyydWTPDsVwEPj28YbdJZ1helR8mHhQ69KT3uXi8hC4aM/NLncwW8Lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M50rQvku; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oN6q2IiyQJslX334to59iP1FJqhN4/yLswKWh+wPUnDKokYTT4gVtnr4e9Mkp4PC3zBPrLiDXTXuIPYLZO2LZdCvivYUR4MFIup91Qic2uKQjJcSIC4ZV92ZyO8e0y4tRgO6Jbyrrctv11tZ3Pzj/Gu+uaN3KSzWYoTZ4S54QDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTH0gK9e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M50rQvku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B45DE1F000E9;
-	Tue, 21 Jul 2026 20:41:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTH0gK9e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B9711F00A3A;
+	Tue, 21 Jul 2026 20:41:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666472;
-	bh=dFa5+U0lLpuUcgH5BuBhaR1y3wZT4WRErlQHSySJX3o=;
+	s=korg; t=1784666474;
+	bh=s35Ttn6kSJssw47lv3mGRT/c+VZfM69Xv7ASNerpdBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M50rQvkuQd7srTfnU4KdIPUwIlex8g6lGVpoTdLprfwZR2jJpl5WPXKRNRtKtquE9
-	 i6eRSDaSv6We/oSHAjVmmCGX2dPib6249GXPyeqyiRHlOahlDLe+VGY05ZPWEjQuho
-	 dF7IUDKAWd8Xgcf+JXmKchWdlrlColskQ1U75OLQ=
+	b=aTH0gK9eeOCdRLgQfQXy2Lkl919l4B6YmoRW+INJIqZqEw8QZXnXRFyh/l27mq3nV
+	 +FW6TX0uSlkAdjIzyoLbU7ffRai8OaQFmYqT5PF48u1skWpeA8XoCzWyEd1E2O5Zsf
+	 jLfFJ03IMyuieSCKHUo1uar6aFZt6iTKjfFbvYrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Zygmunt Krynicki <me@zygoon.pl>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0689/1266] tools lib api: Fix mount_overload() snprintf truncation and toupper range
-Date: Tue, 21 Jul 2026 17:18:46 +0200
-Message-ID: <20260721152457.268956053@linuxfoundation.org>
+Subject: [PATCH 6.6 0698/1266] apparmor: aa_label_alloc use aa_label_free on alloc failure
+Date: Tue, 21 Jul 2026 17:18:55 +0200
+Message-ID: <20260721152457.479007816@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,48 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Zygmunt Krynicki <me@zygoon.pl>
 
-[ Upstream commit fd1f70776add263f8ef38a87ae593c75303f1dcd ]
+[ Upstream commit 654fe7505dc6889724d4094fa64f89991afabfc3 ]
 
-mount_overload() builds an environment variable name like
-"PERF_SYSFS_ENVIRONMENT" from fs->name.  Two bugs:
+aa_label_alloc() allocates a secid before allocating or taking the label
+proxy. If the later proxy step fails, the error path only freed the label
+memory, leaking any resources initialized by aa_label_init().
 
-1) snprintf() uses name_len as the buffer size instead of sizeof(upper_name).
-   For fs->name = "sysfs" (len=5), the output is truncated to "PERF" (4
-   chars + null), so getenv() never finds the intended variable.
+Use aa_label_free() on the failure path so partially initialized labels
+release their secid and other label resources before the backing memory is
+freed.
 
-2) mem_toupper() only uppercases name_len bytes, converting just the "PERF"
-   prefix rather than the full string including the filesystem name portion.
-
-Fix by using sizeof(upper_name) for snprintf and strlen(upper_name) for
-mem_toupper, so the full "PERF_SYSFS_ENVIRONMENT" string is correctly
-formatted and uppercased.
-
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Fixes: 73ca85ad364769ff ("tools lib api fs: Add FSTYPE__mount() method")
-Cc: Jiri Olsa <jolsa@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: f1bd904175e81 ("apparmor: add the base fns() for domain labels")
+Signed-off-by: Zygmunt Krynicki <me@zygoon.pl>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/api/fs/fs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ security/apparmor/label.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/api/fs/fs.c b/tools/lib/api/fs/fs.c
-index 60968d0a3bb445..36b901e8167083 100644
---- a/tools/lib/api/fs/fs.c
-+++ b/tools/lib/api/fs/fs.c
-@@ -260,8 +260,8 @@ static const char *mount_overload(struct fs *fs)
- 	/* "PERF_" + name + "_ENVIRONMENT" + '\0' */
- 	char upper_name[5 + name_len + 12 + 1];
+diff --git a/security/apparmor/label.c b/security/apparmor/label.c
+index 73428072a754f1..37282a3c68a720 100644
+--- a/security/apparmor/label.c
++++ b/security/apparmor/label.c
+@@ -452,7 +452,7 @@ struct aa_label *aa_label_alloc(int size, struct aa_proxy *proxy, gfp_t gfp)
+ 	return new;
  
--	snprintf(upper_name, name_len, "PERF_%s_ENVIRONMENT", fs->name);
--	mem_toupper(upper_name, name_len);
-+	snprintf(upper_name, sizeof(upper_name), "PERF_%s_ENVIRONMENT", fs->name);
-+	mem_toupper(upper_name, strlen(upper_name));
+ fail:
+-	kfree(new);
++	aa_label_free(new);
  
- 	return getenv(upper_name) ?: *fs->mounts;
+ 	return NULL;
  }
 -- 
 2.53.0
