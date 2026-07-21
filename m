@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1593DC4C2;
-	Tue, 21 Jul 2026 17:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0343F12CE;
+	Tue, 21 Jul 2026 17:16:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654159; cv=none; b=UXVJ4KVTQX5jMv02w5MjuA/mLUd/5SSXH/1xYRK9lXSMgsiAisdn54co1Wt320i2d5lcsiTqhGlLrOcAaB8Z4lDlG3i+VuK+M0nToqvwEvJ5vMZFO/XIxJ3kjfnDHDk/0LC6zpA/LKozRkYtwTiDOO5AZ3jv4yVtsfMBHdTtEcI=
+	t=1784654162; cv=none; b=QEh+aJo7X2WUAzmBmDWCSI0M4ScCR+VpiXsLeSI+WmijBgmQBpPrJcTdOayHAXeO7oi53OQVKBR4h5NR7LLCIS3MkQsI6fKxeAM+4G7FiWfzq53LLtTz1MKvhck86RZRnam0q8eaSh6f640ou1OwfH48zswW/dY7LJ6AW52SJpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654159; c=relaxed/simple;
-	bh=e4la6m9TGcVPt4MN7nrBMkaMzikp4l3mBsZ5mwuAl9g=;
+	s=arc-20240116; t=1784654162; c=relaxed/simple;
+	bh=81k/Jon7VvyOIO4bd050Pliryo22jZqrbtCw2Ao3g4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lvfKc0YRwLwIL7i0J/aQokcz7gEWPAHw/Q8tuGGnwL/XIgrLbWZlVBcSI2Ed/YZStdX6voJ4GZ5uAZzucaLy8SZzQCaOQBphUHSOicO3NwBC7Kq6RiM5+QuKSzEPtfByPAekoYnlO5c6+J+XVq/K/nKmZHVKU/V/1UmEezK38wQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EVDF2CAe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=r+21bDRbJO18eGbNFaNIYYBAlxkWEiNTRbxYzaaZET9wHBi2Oagcm/bwLz9PWclzj2V4XXQYJYBz3CrGobsBzKA/6/3lJFAgyViV6pF8vPHHAFQN3LI9EWPs9ZHQ++sbGoJrYSswYPAmYSIxpG07Q/3rEsa4zRvXhlzJTiYRPEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pr2Crcdw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EVDF2CAe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED01C1F000E9;
-	Tue, 21 Jul 2026 17:15:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pr2Crcdw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAA91F000E9;
+	Tue, 21 Jul 2026 17:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654158;
-	bh=sfKOZ6qeMgIP+Hz/iVgFTV3SStqvTEtz2c90rB0cFfM=;
+	s=korg; t=1784654161;
+	bh=Ju0seLykxBaQDr8fVspA/moiwG7H+cM7/epCYaOM7WM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EVDF2CAeKMXPvDDQtn3g+n3fhfUcuFN4zgKmotIuo+PGlVNu+u65xGpPVA9cH8Nxm
-	 DQSMPtq/Sb41qbtBq9H9mojlLMxnIr/975q4UDASVoD/A+kTTeAW0sGi5QLCS4hKwj
-	 3k0p/NZ3/K16qApTHVHBvJ/i19fO0pNPjpoWOmjg=
+	b=pr2Crcdwyp//UQ9NrWjxCB+AmdL6zHjY0YdW01cG4gnFbB4CLx8Dg5I37mhGT+117
+	 1sfWafYhfDnjSqgrKxP3mgn7EMfoXBuKLNV7yeYgcTS+MtGbwWHLB3nUbGzkeiRoyl
+	 bZfqs4waXuSFhp9D3qky7wPZtjbOzmcxF3Vj3oNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.1 1598/2077] ASoC: mediatek: mt8183: Check runtime resume during probe
-Date: Tue, 21 Jul 2026 17:21:11 +0200
-Message-ID: <20260721152630.464006511@linuxfoundation.org>
+Subject: [PATCH 7.1 1599/2077] ASoC: mediatek: mt8183: Release reserved memory on cleanup
+Date: Tue, 21 Jul 2026 17:21:12 +0200
+Message-ID: <20260721152630.487537266@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,54 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit f0334fbfd107682d0c95f3f71e25f6127038e2b9 upstream.
+commit bee65e00c0924ebecf97718d95dcf4a05ee36471 upstream.
 
-The MT8183 AFE probe uses pm_runtime_get_sync() before reading hardware
-defaults into the regmap cache, but does not check whether runtime resume
-failed. If regmap_reinit_cache() then fails, the temporary runtime PM
-usage count is also not released.
+The MT8183 AFE probe can assign reserved memory with
+of_reserved_mem_device_init(), but the assignment is never released on
+driver removal or later probe failures.
 
-Use pm_runtime_resume_and_get() so resume failures abort probe without
-leaking a usage count, and release the temporary reference before
-handling the regmap cache result.
+Register a devm cleanup action so the reserved memory assignment is
+released consistently, matching newer Mediatek AFE drivers.
 
-Fixes: a94aec035a12 ("ASoC: mediatek: mt8183: add platform driver")
+Fixes: ec4a10ca4a68 ("ASoC: mediatek: use reserved memory or enable buffer pre-allocation")
 Cc: stable@vger.kernel.org
 Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260527-asoc-mt8183-probe-cleanup-v1-2-4f4f5593c8d1@gmail.com
+Link: https://patch.msgid.link/20260527-asoc-mt8183-probe-cleanup-v1-1-4f4f5593c8d1@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/mediatek/mt8183/mt8183-afe-pcm.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ sound/soc/mediatek/mt8183/mt8183-afe-pcm.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 --- a/sound/soc/mediatek/mt8183/mt8183-afe-pcm.c
 +++ b/sound/soc/mediatek/mt8183/mt8183-afe-pcm.c
-@@ -833,17 +833,21 @@ static int mt8183_afe_pcm_dev_probe(stru
+@@ -766,6 +766,11 @@ static const dai_register_cb dai_registe
+ 	mt8183_dai_memif_register,
+ };
  
- 	/* enable clock for regcache get default value from hw */
- 	afe_priv->pm_runtime_bypass_reg_ctl = true;
--	pm_runtime_get_sync(dev);
--
--	ret = regmap_reinit_cache(afe->regmap, &mt8183_afe_regmap_config);
-+	ret = pm_runtime_resume_and_get(dev);
++static void mt8183_afe_release_reserved_mem(void *data)
++{
++	of_reserved_mem_device_release(data);
++}
++
+ static int mt8183_afe_pcm_dev_probe(struct platform_device *pdev)
+ {
+ 	struct mtk_base_afe *afe;
+@@ -794,6 +799,12 @@ static int mt8183_afe_pcm_dev_probe(stru
  	if (ret) {
--		dev_err(dev, "regmap_reinit_cache fail, ret %d\n", ret);
-+		afe_priv->pm_runtime_bypass_reg_ctl = false;
- 		goto err_pm_disable;
+ 		dev_info(dev, "no reserved memory found, pre-allocating buffers instead\n");
+ 		afe->preallocate_buffers = true;
++	} else {
++		ret = devm_add_action_or_reset(dev,
++					       mt8183_afe_release_reserved_mem,
++					       dev);
++		if (ret)
++			return ret;
  	}
  
-+	ret = regmap_reinit_cache(afe->regmap, &mt8183_afe_regmap_config);
- 	pm_runtime_put_sync(dev);
- 	afe_priv->pm_runtime_bypass_reg_ctl = false;
- 
-+	if (ret) {
-+		dev_err(dev, "regmap_reinit_cache fail, ret %d\n", ret);
-+		goto err_pm_disable;
-+	}
-+
- 	regcache_cache_only(afe->regmap, true);
- 	regcache_mark_dirty(afe->regmap);
- 
+ 	/* initial audio related clock */
 
 
