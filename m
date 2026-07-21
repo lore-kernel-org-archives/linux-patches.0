@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B148471255;
-	Tue, 21 Jul 2026 18:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2AA9471267;
+	Tue, 21 Jul 2026 18:00:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656854; cv=none; b=TOzOn3oEO/KpFH8U80auEXiM18YZX7OexxFVNbCLqnA2r6wAuCbGox0WpEWm+4HaWgWqsekZs0seIDioQULFQcoaMlq3DMjKy3XHjVblqBWE/EqvpSxOaRUbBPBBBQzpSNGNnLoOMoSJ3sgfUTopRZ/GVGwdh0ZuPxv5y+Us8hs=
+	t=1784656856; cv=none; b=IJaUh6NI5D7T0PLnZyLNpEWwFNlDIto568dAQs7qxDI7qd3cqTbolvGWBIq6n76kl0vxMTxPd4UH6+IsT9jVwvDbHKwwcip7/RaZkYPgmAsc2BY8IoVcehWTXajZMCqCb+VkYIxG4KKdsUYseNPa+93yY9ETsK02OBegRvaFiC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656854; c=relaxed/simple;
-	bh=VWbQtrIt3capZY2oUvnZTeLzu96B6jYOht9PwU+JxK8=;
+	s=arc-20240116; t=1784656856; c=relaxed/simple;
+	bh=SxllsZCoIbxg74FUO5MEPPFpN7UFaHjRmhKPNDR5vQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J0x/Yn7EXEpyr98n8CJ2ajDWLO0J5c948TLvd5u8bv2uIts14shYXp6Z1YMYT+G51PhNB7SB2vufzwW1XTkuljDsBIJj5zYpkboOfb+DthsvVdqXxn/Z71AOsT6gFfIZiuggzEX7yy8d0pmDKyLGSHYMntgRwpbtb0U2sJcqBXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJ6cP+Ub; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d+/5LII67pcOn7glVOkJ/84UxX+RzbiJKYPSbE5Br8lnfo+n3oCnFYIF2LkuAwH6NBuwg4wYH6474N/z2B3ujiy+kztPHW2ubcmiUvBZOoZF47/8r425iooS1fJx6TFsMXG4QLMQR84ERea3CtPIIBGCMEH+gPmn5PXuc1ahSIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKSzf0l5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJ6cP+Ub"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 235621F000E9;
-	Tue, 21 Jul 2026 18:00:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKSzf0l5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D821F00A3A;
+	Tue, 21 Jul 2026 18:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656851;
-	bh=oT2FFzc5advp5J7Um9rsWEQ+LHgYx7bfxMboFq58ks4=;
+	s=korg; t=1784656854;
+	bh=szIEKBg4wahW+OaWxeXHyV8UltRNMCrRpM7t3GDO2WY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YJ6cP+UbOYkSKMqra/34rc6Z2ZCJIHEBSFUppC0ba+kh8gHNB+6KWaXynm+Bh1IE9
-	 qDfVnesTQQUSORrjw7xU9pH3oc59TmLv2p84St4c8E/k6xWk1RwFuGlPZDKQJKM1cq
-	 UA7zZ9WMWx8wGtgawIVOXo8d0ZJZuIwmTrIViXlU=
+	b=fKSzf0l5ummHhxb3OtZmbYqEQxGomGentNO3v1v4kECanvdbAfr1KKcRnj0IU5nZs
+	 xNhdXn6P6LZM7zUC/D6B/4It51WxkDFq6Z3wtUu6PoOLsiE/yG08xGTucfcRpcYmCq
+	 My8a6XWZQOM/iEZLje4p+ZgoRYRSsR8CJC0rRS04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+9307c991a6d07ce6e6d8@syzkaller.appspotmail.com,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0542/1611] net: remove addr_len argument of recvmsg() handlers
-Date: Tue, 21 Jul 2026 17:10:58 +0200
-Message-ID: <20260721152527.555823331@linuxfoundation.org>
+Subject: [PATCH 6.18 0543/1611] sockmap: Fix use-after-free in udp_bpf_recvmsg()
+Date: Tue, 21 Jul 2026 17:10:59 +0200
+Message-ID: <20260721152527.579174407@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,1077 +55,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 8341c989ac77d712c7d6e2bce29e8a4bcb2eeae4 ]
+[ Upstream commit c010995b29c8939c6aa69e3cb26f8dbee163d156 ]
 
-Use msg->msg_namelen as a place holder instead of a
-temporary variable, notably in inet[6]_recvmsg().
+syzbot reported use-after-free of struct sk_msg in sk_msg_recvmsg(). [0]
 
-This removes stack canaries and allows tail-calls.
+sk_msg_recvmsg() peeks sk_msg from psock->ingress_msg under a lock,
+but its processing is lockless.
 
-$ scripts/bloat-o-meter -t vmlinux.old vmlinux
-add/remove: 0/0 grow/shrink: 2/19 up/down: 26/-532 (-506)
-Function                                     old     new   delta
-rawv6_recvmsg                                744     767     +23
-vsock_dgram_recvmsg                           55      58      +3
-vsock_connectible_recvmsg                     50      47      -3
-unix_stream_recvmsg                          161     158      -3
-unix_seqpacket_recvmsg                        62      59      -3
-unix_dgram_recvmsg                            42      39      -3
-tcp_recvmsg                                  546     543      -3
-mptcp_recvmsg                               1568    1565      -3
-ping_recvmsg                                 806     800      -6
-tcp_bpf_recvmsg_parser                       983     974      -9
-ip_recv_error                                588     576     -12
-ipv6_recv_rxpmtu                             442     428     -14
-udp_recvmsg                                 1243    1224     -19
-ipv6_recv_error                             1046    1024     -22
-udpv6_recvmsg                               1487    1461     -26
-raw_recvmsg                                  465     437     -28
-udp_bpf_recvmsg                             1027     984     -43
-sock_common_recvmsg                          103      27     -76
-inet_recvmsg                                 257     175     -82
-inet6_recvmsg                                257     175     -82
-tcp_bpf_recvmsg                              663     568     -95
-Total: Before=25143834, After=25143328, chg -0.00%
+Thus, sk_msg_recvmsg() must be serialised by callers, otherwise
+multiple threads could touch the same sk_msg.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260227151120.1346573-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: c010995b29c8 ("sockmap: Fix use-after-free in udp_bpf_recvmsg()")
+For example, TCP uses lock_sock(), and AF_UNIX uses unix_sk(sk)->iolock.
+
+Initially, udp_bpf_recvmsg() had used lock_sock(), but the cited
+commit removed it.
+
+Let's serialise sk_msg_recvmsg() with lock_sock() in udp_bpf_recvmsg().
+
+Note that holding spin_lock_bh(&sk->sk_receive_queue.lock) is not
+an option due to copy_page_to_iter() in sk_msg_recvmsg().
+
+[0]:
+BUG: KASAN: slab-use-after-free in sk_msg_recvmsg+0xb54/0xc30 net/core/skmsg.c:428
+Read of size 4 at addr ffff88814cdcf000 by task syz.0.24/6020
+
+CPU: 1 UID: 0 PID: 6020 Comm: syz.0.24 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 01/13/2026
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0xba/0x230 mm/kasan/report.c:482
+ kasan_report+0x117/0x150 mm/kasan/report.c:595
+ sk_msg_recvmsg+0xb54/0xc30 net/core/skmsg.c:428
+ udp_bpf_recvmsg+0x4bd/0xe00 net/ipv4/udp_bpf.c:84
+ inet_recvmsg+0x260/0x270 net/ipv4/af_inet.c:891
+ sock_recvmsg_nosec net/socket.c:1078 [inline]
+ sock_recvmsg+0x1a8/0x270 net/socket.c:1100
+ ____sys_recvmsg+0x1e6/0x4a0 net/socket.c:2812
+ ___sys_recvmsg+0x215/0x590 net/socket.c:2854
+ do_recvmmsg+0x334/0x800 net/socket.c:2949
+ __sys_recvmmsg net/socket.c:3023 [inline]
+ __do_sys_recvmmsg net/socket.c:3046 [inline]
+ __se_sys_recvmmsg net/socket.c:3039 [inline]
+ __x64_sys_recvmmsg+0x198/0x250 net/socket.c:3039
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xe2/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fb319f9aeb9
+Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fb31ad97028 EFLAGS: 00000246 ORIG_RAX: 000000000000012b
+RAX: ffffffffffffffda RBX: 00007fb31a216090 RCX: 00007fb319f9aeb9
+RDX: 0000000000000001 RSI: 0000200000000400 RDI: 0000000000000004
+RBP: 00007fb31a008c1f R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000040000021 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007fb31a216128 R14: 00007fb31a216090 R15: 00007ffe21dd0a98
+ </TASK>
+
+Allocated by task 6019:
+ kasan_save_stack mm/kasan/common.c:57 [inline]
+ kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
+ poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
+ __kasan_kmalloc+0x93/0xb0 mm/kasan/common.c:415
+ kasan_kmalloc include/linux/kasan.h:263 [inline]
+ __kmalloc_cache_noprof+0x3d1/0x6e0 mm/slub.c:5780
+ kmalloc_noprof include/linux/slab.h:957 [inline]
+ kzalloc_noprof include/linux/slab.h:1094 [inline]
+ alloc_sk_msg net/core/skmsg.c:510 [inline]
+ sk_psock_skb_ingress_self+0x60/0x350 net/core/skmsg.c:612
+ sk_psock_verdict_apply net/core/skmsg.c:1038 [inline]
+ sk_psock_verdict_recv+0x7d9/0x8d0 net/core/skmsg.c:1236
+ udp_read_skb+0x73e/0x7e0 net/ipv4/udp.c:2045
+ sk_psock_verdict_data_ready+0x12d/0x550 net/core/skmsg.c:1257
+ __udp_enqueue_schedule_skb+0xc54/0x10b0 net/ipv4/udp.c:1789
+ __udp_queue_rcv_skb net/ipv4/udp.c:2346 [inline]
+ udp_queue_rcv_one_skb+0xac5/0x19c0 net/ipv4/udp.c:2475
+ __udp4_lib_mcast_deliver+0xc06/0xcf0 net/ipv4/udp.c:2585
+ __udp4_lib_rcv+0x10f6/0x2620 net/ipv4/udp.c:2724
+ ip_protocol_deliver_rcu+0x282/0x440 net/ipv4/ip_input.c:207
+ ip_local_deliver_finish+0x3bb/0x6f0 net/ipv4/ip_input.c:241
+ NF_HOOK+0x336/0x3c0 include/linux/netfilter.h:318
+ dst_input include/net/dst.h:474 [inline]
+ ip_sublist_rcv_finish+0x221/0x2a0 net/ipv4/ip_input.c:584
+ ip_list_rcv_finish net/ipv4/ip_input.c:628 [inline]
+ ip_sublist_rcv+0x5c6/0xa70 net/ipv4/ip_input.c:644
+ ip_list_rcv+0x3f1/0x450 net/ipv4/ip_input.c:678
+ __netif_receive_skb_list_ptype net/core/dev.c:6195 [inline]
+ __netif_receive_skb_list_core+0x7e5/0x810 net/core/dev.c:6242
+ __netif_receive_skb_list net/core/dev.c:6294 [inline]
+ netif_receive_skb_list_internal+0x995/0xcf0 net/core/dev.c:6385
+ netif_receive_skb_list+0x54/0x410 net/core/dev.c:6437
+ xdp_recv_frames net/bpf/test_run.c:269 [inline]
+ xdp_test_run_batch net/bpf/test_run.c:350 [inline]
+ bpf_test_run_xdp_live+0x1946/0x1cf0 net/bpf/test_run.c:379
+ bpf_prog_test_run_xdp+0x81c/0x1160 net/bpf/test_run.c:1396
+ bpf_prog_test_run+0x2c7/0x340 kernel/bpf/syscall.c:4703
+ __sys_bpf+0x5cb/0x920 kernel/bpf/syscall.c:6182
+ __do_sys_bpf kernel/bpf/syscall.c:6274 [inline]
+ __se_sys_bpf kernel/bpf/syscall.c:6272 [inline]
+ __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:6272
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xe2/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Freed by task 6021:
+ kasan_save_stack mm/kasan/common.c:57 [inline]
+ kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
+ kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:584
+ poison_slab_object mm/kasan/common.c:253 [inline]
+ __kasan_slab_free+0x5c/0x80 mm/kasan/common.c:285
+ kasan_slab_free include/linux/kasan.h:235 [inline]
+ slab_free_hook mm/slub.c:2540 [inline]
+ slab_free mm/slub.c:6674 [inline]
+ kfree+0x1be/0x650 mm/slub.c:6882
+ kfree_sk_msg include/linux/skmsg.h:385 [inline]
+ sk_msg_recvmsg+0xaa8/0xc30 net/core/skmsg.c:483
+ udp_bpf_recvmsg+0x4bd/0xe00 net/ipv4/udp_bpf.c:84
+ inet_recvmsg+0x260/0x270 net/ipv4/af_inet.c:891
+ sock_recvmsg_nosec net/socket.c:1078 [inline]
+ sock_recvmsg+0x1a8/0x270 net/socket.c:1100
+ ____sys_recvmsg+0x1e6/0x4a0 net/socket.c:2812
+ ___sys_recvmsg+0x215/0x590 net/socket.c:2854
+ do_recvmmsg+0x334/0x800 net/socket.c:2949
+ __sys_recvmmsg net/socket.c:3023 [inline]
+ __do_sys_recvmmsg net/socket.c:3046 [inline]
+ __se_sys_recvmmsg net/socket.c:3039 [inline]
+ __x64_sys_recvmmsg+0x198/0x250 net/socket.c:3039
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xe2/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: 9f2470fbc4cb ("skmsg: Improve udp_bpf_recvmsg() accuracy")
+Reported-by: syzbot+9307c991a6d07ce6e6d8@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/69922ac9.a70a0220.2c38d7.00e0.GAE@google.com/
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://lore.kernel.org/r/20260615021959.140010-5-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../chelsio/inline_crypto/chtls/chtls.h         |  2 +-
- .../chelsio/inline_crypto/chtls/chtls_io.c      |  8 ++++----
- drivers/net/ovpn/tcp.c                          |  2 +-
- include/net/inet_common.h                       |  3 +--
- include/net/ip.h                                |  2 +-
- include/net/ipv6.h                              |  6 ++----
- include/net/ping.h                              |  5 ++---
- include/net/sock.h                              |  2 +-
- include/net/tcp.h                               |  2 +-
- net/core/sock.c                                 |  7 +------
- net/ieee802154/socket.c                         |  6 +++---
- net/ipv4/af_inet.c                              | 17 ++++++-----------
- net/ipv4/ip_sockglue.c                          |  4 ++--
- net/ipv4/ping.c                                 |  9 ++++-----
- net/ipv4/raw.c                                  |  6 +++---
- net/ipv4/tcp.c                                  |  5 ++---
- net/ipv4/tcp_bpf.c                              | 17 ++++++++---------
- net/ipv4/udp.c                                  |  9 ++++-----
- net/ipv4/udp_bpf.c                              | 16 ++++++++--------
- net/ipv4/udp_impl.h                             |  3 +--
- net/ipv6/af_inet6.c                             | 11 +++--------
- net/ipv6/datagram.c                             |  9 ++++-----
- net/ipv6/ping.c                                 |  3 +--
- net/ipv6/raw.c                                  |  8 ++++----
- net/ipv6/udp.c                                  | 10 +++++-----
- net/ipv6/udp_impl.h                             |  3 +--
- net/l2tp/l2tp_ip.c                              |  4 ++--
- net/l2tp/l2tp_ip6.c                             |  6 +++---
- net/mptcp/protocol.c                            |  4 ++--
- net/phonet/datagram.c                           |  4 ++--
- net/phonet/pep.c                                |  2 +-
- net/sctp/socket.c                               | 12 ++++++------
- net/tls/tls.h                                   |  2 +-
- net/tls/tls_sw.c                                |  3 +--
- net/unix/af_unix.c                              |  4 ++--
- net/unix/unix_bpf.c                             |  2 +-
- net/vmw_vsock/af_vsock.c                        |  4 ++--
- net/vmw_vsock/vsock_bpf.c                       |  2 +-
- net/xfrm/espintcp.c                             |  2 +-
- 39 files changed, 99 insertions(+), 127 deletions(-)
+ net/ipv4/udp_bpf.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls.h b/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls.h
-index 21e0dfeff1585d..1de5744a49b072 100644
---- a/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls.h
-+++ b/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls.h
-@@ -567,7 +567,7 @@ void chtls_shutdown(struct sock *sk, int how);
- void chtls_destroy_sock(struct sock *sk);
- int chtls_sendmsg(struct sock *sk, struct msghdr *msg, size_t size);
- int chtls_recvmsg(struct sock *sk, struct msghdr *msg,
--		  size_t len, int flags, int *addr_len);
-+		  size_t len, int flags);
- void chtls_splice_eof(struct socket *sock);
- int send_tx_flowc_wr(struct sock *sk, int compl,
- 		     u32 snd_nxt, u32 rcv_nxt);
-diff --git a/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_io.c b/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_io.c
-index 4036db466e188c..4ff9b99a1e9f28 100644
---- a/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_io.c
-+++ b/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_io.c
-@@ -1338,7 +1338,7 @@ static void chtls_cleanup_rbuf(struct sock *sk, int copied)
- }
- 
- static int chtls_pt_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--			    int flags, int *addr_len)
-+			    int flags)
- {
- 	struct chtls_sock *csk = rcu_dereference_sk_user_data(sk);
- 	struct chtls_hws *hws = &csk->tlshws;
-@@ -1662,7 +1662,7 @@ static int peekmsg(struct sock *sk, struct msghdr *msg,
- }
- 
- int chtls_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--		  int flags, int *addr_len)
-+		  int flags)
- {
- 	struct tcp_sock *tp = tcp_sk(sk);
- 	struct chtls_sock *csk;
-@@ -1676,7 +1676,7 @@ int chtls_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 	buffers_freed = 0;
- 
- 	if (unlikely(flags & MSG_OOB))
--		return tcp_prot.recvmsg(sk, msg, len, flags, addr_len);
-+		return tcp_prot.recvmsg(sk, msg, len, flags);
- 
- 	if (unlikely(flags & MSG_PEEK))
- 		return peekmsg(sk, msg, len, flags);
-@@ -1690,7 +1690,7 @@ int chtls_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 	csk = rcu_dereference_sk_user_data(sk);
- 
- 	if (is_tls_rx(csk))
--		return chtls_pt_recvmsg(sk, msg, len, flags, addr_len);
-+		return chtls_pt_recvmsg(sk, msg, len, flags);
- 
- 	timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
- 	target = sock_rcvlowat(sk, flags & MSG_WAITALL, len);
-diff --git a/drivers/net/ovpn/tcp.c b/drivers/net/ovpn/tcp.c
-index 505c2f214c9f14..433bd07a4f1be9 100644
---- a/drivers/net/ovpn/tcp.c
-+++ b/drivers/net/ovpn/tcp.c
-@@ -158,7 +158,7 @@ static void ovpn_tcp_rcv(struct strparser *strp, struct sk_buff *skb)
- }
- 
- static int ovpn_tcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--			    int flags, int *addr_len)
-+			    int flags)
- {
- 	int err = 0, off, copied = 0, ret;
- 	struct ovpn_socket *sock;
-diff --git a/include/net/inet_common.h b/include/net/inet_common.h
-index c17a6585d0b0b4..0f4626776b2961 100644
---- a/include/net/inet_common.h
-+++ b/include/net/inet_common.h
-@@ -60,8 +60,7 @@ int inet_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg);
- int inet_ctl_sock_create(struct sock **sk, unsigned short family,
- 			 unsigned short type, unsigned char protocol,
- 			 struct net *net);
--int inet_recv_error(struct sock *sk, struct msghdr *msg, int len,
--		    int *addr_len);
-+int inet_recv_error(struct sock *sk, struct msghdr *msg, int len);
- 
- struct sk_buff *inet_gro_receive(struct list_head *head, struct sk_buff *skb);
- int inet_gro_complete(struct sk_buff *skb, int nhoff);
-diff --git a/include/net/ip.h b/include/net/ip.h
-index 1ce79e62a76fb9..e94c59cecef016 100644
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -812,7 +812,7 @@ int ip_getsockopt(struct sock *sk, int level, int optname, char __user *optval,
- int ip_ra_control(struct sock *sk, unsigned char on,
- 		  void (*destructor)(struct sock *));
- 
--int ip_recv_error(struct sock *sk, struct msghdr *msg, int len, int *addr_len);
-+int ip_recv_error(struct sock *sk, struct msghdr *msg, int len);
- void ip_icmp_error(struct sock *sk, struct sk_buff *skb, int err, __be16 port,
- 		   u32 info, u8 *payload);
- void ip_local_error(struct sock *sk, int err, __be32 daddr, __be16 dport,
-diff --git a/include/net/ipv6.h b/include/net/ipv6.h
-index 7e984e75f33454..087aa7f502d56a 100644
---- a/include/net/ipv6.h
-+++ b/include/net/ipv6.h
-@@ -1196,10 +1196,8 @@ int ip6_datagram_connect_v6_only(struct sock *sk, struct sockaddr *addr,
- int ip6_datagram_dst_update(struct sock *sk, bool fix_sk_saddr);
- void ip6_datagram_release_cb(struct sock *sk);
- 
--int ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len,
--		    int *addr_len);
--int ipv6_recv_rxpmtu(struct sock *sk, struct msghdr *msg, int len,
--		     int *addr_len);
-+int ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len);
-+int ipv6_recv_rxpmtu(struct sock *sk, struct msghdr *msg, int len);
- void ipv6_icmp_error(struct sock *sk, struct sk_buff *skb, int err, __be16 port,
- 		     u32 info, u8 *payload);
- void ipv6_local_error(struct sock *sk, int err, struct flowi6 *fl6, u32 info);
-diff --git a/include/net/ping.h b/include/net/ping.h
-index 9634b8800814da..08503f7f89539a 100644
---- a/include/net/ping.h
-+++ b/include/net/ping.h
-@@ -20,8 +20,7 @@
- 
- /* Compatibility glue so we can support IPv6 when it's compiled as a module */
- struct pingv6_ops {
--	int (*ipv6_recv_error)(struct sock *sk, struct msghdr *msg, int len,
--			       int *addr_len);
-+	int (*ipv6_recv_error)(struct sock *sk, struct msghdr *msg, int len);
- 	void (*ip6_datagram_recv_common_ctl)(struct sock *sk,
- 					     struct msghdr *msg,
- 					     struct sk_buff *skb);
-@@ -64,7 +63,7 @@ int  ping_getfrag(void *from, char *to, int offset, int fraglen, int odd,
- 		  struct sk_buff *);
- 
- int  ping_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--		  int flags, int *addr_len);
-+		  int flags);
- int  ping_common_sendmsg(int family, struct msghdr *msg, size_t len,
- 			 void *user_icmph, size_t icmph_len);
- int  ping_queue_rcv_skb(struct sock *sk, struct sk_buff *skb);
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 5a26a3834ac68f..9637ee4f55ee1a 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1289,7 +1289,7 @@ struct proto {
- 	int			(*sendmsg)(struct sock *sk, struct msghdr *msg,
- 					   size_t len);
- 	int			(*recvmsg)(struct sock *sk, struct msghdr *msg,
--					   size_t len, int flags, int *addr_len);
-+					   size_t len, int flags);
- 	void			(*splice_eof)(struct socket *sock);
- 	int			(*bind)(struct sock *sk,
- 					struct sockaddr *addr, int addr_len);
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 5999786c42e1ec..31ac90230b12dc 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -485,7 +485,7 @@ void tcp_reset_keepalive_timer(struct sock *sk, unsigned long timeout);
- void tcp_set_keepalive(struct sock *sk, int val);
- void tcp_syn_ack_timeout(const struct request_sock *req);
- int tcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--		int flags, int *addr_len);
-+		int flags);
- int tcp_set_rcvlowat(struct sock *sk, int val);
- int tcp_set_window_clamp(struct sock *sk, int val);
- void tcp_update_recv_tstamps(struct sk_buff *skb,
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 04fa0c18adc3e4..c52cec0bf942c0 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -3900,13 +3900,8 @@ int sock_common_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
- 			int flags)
- {
- 	struct sock *sk = sock->sk;
--	int addr_len = 0;
--	int err;
- 
--	err = sk->sk_prot->recvmsg(sk, msg, size, flags, &addr_len);
--	if (err >= 0)
--		msg->msg_namelen = addr_len;
--	return err;
-+	return sk->sk_prot->recvmsg(sk, msg, size, flags);
- }
- EXPORT_SYMBOL(sock_common_recvmsg);
- 
-diff --git a/net/ieee802154/socket.c b/net/ieee802154/socket.c
-index 18d267921bb531..dc0de5ae6afbdb 100644
---- a/net/ieee802154/socket.c
-+++ b/net/ieee802154/socket.c
-@@ -313,7 +313,7 @@ static int raw_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
- }
- 
- static int raw_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--		       int flags, int *addr_len)
-+		       int flags)
- {
- 	size_t copied = 0;
- 	int err = -EOPNOTSUPP;
-@@ -703,7 +703,7 @@ static int dgram_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
- }
- 
- static int dgram_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--			 int flags, int *addr_len)
-+			 int flags)
- {
- 	size_t copied = 0;
- 	int err = -EOPNOTSUPP;
-@@ -737,7 +737,7 @@ static int dgram_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 
- 		saddr->family = AF_IEEE802154;
- 		ieee802154_addr_to_sa(&saddr->addr, &mac_cb(skb)->source);
--		*addr_len = sizeof(*saddr);
-+		msg->msg_namelen = sizeof(*saddr);
- 	}
- 
- 	if (ro->want_lqi) {
-diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
-index 3109c5ec38f39d..4f105a0d0cfc50 100644
---- a/net/ipv4/af_inet.c
-+++ b/net/ipv4/af_inet.c
-@@ -871,22 +871,17 @@ void inet_splice_eof(struct socket *sock)
- EXPORT_SYMBOL_GPL(inet_splice_eof);
- 
- INDIRECT_CALLABLE_DECLARE(int udp_recvmsg(struct sock *, struct msghdr *,
--					  size_t, int, int *));
-+					  size_t, int));
- int inet_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
- 		 int flags)
- {
- 	struct sock *sk = sock->sk;
--	int addr_len = 0;
--	int err;
- 
- 	if (likely(!(flags & MSG_ERRQUEUE)))
- 		sock_rps_record_flow(sk);
- 
--	err = INDIRECT_CALL_2(sk->sk_prot->recvmsg, tcp_recvmsg, udp_recvmsg,
--			      sk, msg, size, flags, &addr_len);
--	if (err >= 0)
--		msg->msg_namelen = addr_len;
--	return err;
-+	return INDIRECT_CALL_2(sk->sk_prot->recvmsg, tcp_recvmsg, udp_recvmsg,
-+			       sk, msg, size, flags);
- }
- EXPORT_SYMBOL(inet_recvmsg);
- 
-@@ -1571,15 +1566,15 @@ __be32 inet_current_timestamp(void)
- }
- EXPORT_SYMBOL(inet_current_timestamp);
- 
--int inet_recv_error(struct sock *sk, struct msghdr *msg, int len, int *addr_len)
-+int inet_recv_error(struct sock *sk, struct msghdr *msg, int len)
- {
- 	unsigned int family = READ_ONCE(sk->sk_family);
- 
- 	if (family == AF_INET)
--		return ip_recv_error(sk, msg, len, addr_len);
-+		return ip_recv_error(sk, msg, len);
- #if IS_ENABLED(CONFIG_IPV6)
- 	if (family == AF_INET6)
--		return pingv6_ops.ipv6_recv_error(sk, msg, len, addr_len);
-+		return pingv6_ops.ipv6_recv_error(sk, msg, len);
- #endif
- 	return -EINVAL;
- }
-diff --git a/net/ipv4/ip_sockglue.c b/net/ipv4/ip_sockglue.c
-index 6d9c5c20b1c4f9..7d4f1face2e793 100644
---- a/net/ipv4/ip_sockglue.c
-+++ b/net/ipv4/ip_sockglue.c
-@@ -520,7 +520,7 @@ static bool ipv4_datagram_support_cmsg(const struct sock *sk,
- /*
-  *	Handle MSG_ERRQUEUE
-  */
--int ip_recv_error(struct sock *sk, struct msghdr *msg, int len, int *addr_len)
-+int ip_recv_error(struct sock *sk, struct msghdr *msg, int len)
- {
- 	struct sock_exterr_skb *serr;
- 	struct sk_buff *skb;
-@@ -557,7 +557,7 @@ int ip_recv_error(struct sock *sk, struct msghdr *msg, int len, int *addr_len)
- 						   serr->addr_offset);
- 		sin->sin_port = serr->port;
- 		memset(&sin->sin_zero, 0, sizeof(sin->sin_zero));
--		*addr_len = sizeof(*sin);
-+		msg->msg_namelen = sizeof(*sin);
- 	}
- 
- 	memcpy(&errhdr.ee, &serr->ee, sizeof(struct sock_extended_err));
-diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
-index 690f486173e01d..7f32753a16f414 100644
---- a/net/ipv4/ping.c
-+++ b/net/ipv4/ping.c
-@@ -847,8 +847,7 @@ static int ping_v4_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 	goto out;
- }
- 
--int ping_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags,
--		 int *addr_len)
-+int ping_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags)
- {
- 	struct inet_sock *isk = inet_sk(sk);
- 	int family = sk->sk_family;
-@@ -863,7 +862,7 @@ int ping_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags,
- 		goto out;
- 
- 	if (flags & MSG_ERRQUEUE)
--		return inet_recv_error(sk, msg, len, addr_len);
-+		return inet_recv_error(sk, msg, len);
- 
- 	skb = skb_recv_datagram(sk, flags, &err);
- 	if (!skb)
-@@ -891,7 +890,7 @@ int ping_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags,
- 			sin->sin_port = 0 /* skb->h.uh->source */;
- 			sin->sin_addr.s_addr = ip_hdr(skb)->saddr;
- 			memset(sin->sin_zero, 0, sizeof(sin->sin_zero));
--			*addr_len = sizeof(*sin);
-+			msg->msg_namelen = sizeof(*sin);
- 		}
- 
- 		if (inet_cmsg_flags(isk))
-@@ -912,7 +911,7 @@ int ping_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags,
- 			sin6->sin6_scope_id =
- 				ipv6_iface_scope_id(&sin6->sin6_addr,
- 						    inet6_iif(skb));
--			*addr_len = sizeof(*sin6);
-+			msg->msg_namelen = sizeof(*sin6);
- 		}
- 
- 		if (inet6_sk(sk)->rxopt.all)
-diff --git a/net/ipv4/raw.c b/net/ipv4/raw.c
-index f79f4c29a04331..26468a2ec63db1 100644
---- a/net/ipv4/raw.c
-+++ b/net/ipv4/raw.c
-@@ -737,7 +737,7 @@ static int raw_bind(struct sock *sk, struct sockaddr *uaddr, int addr_len)
-  */
- 
- static int raw_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--		       int flags, int *addr_len)
-+		       int flags)
- {
- 	struct inet_sock *inet = inet_sk(sk);
- 	size_t copied = 0;
-@@ -749,7 +749,7 @@ static int raw_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 		goto out;
- 
- 	if (flags & MSG_ERRQUEUE) {
--		err = ip_recv_error(sk, msg, len, addr_len);
-+		err = ip_recv_error(sk, msg, len);
- 		goto out;
- 	}
- 
-@@ -775,7 +775,7 @@ static int raw_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 		sin->sin_addr.s_addr = ip_hdr(skb)->saddr;
- 		sin->sin_port = 0;
- 		memset(&sin->sin_zero, 0, sizeof(sin->sin_zero));
--		*addr_len = sizeof(*sin);
-+		msg->msg_namelen = sizeof(*sin);
- 	}
- 	if (inet_cmsg_flags(inet))
- 		ip_cmsg_recv(msg, skb);
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 6fc00b38695baf..db80b81a74cbb7 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -2909,14 +2909,13 @@ static int tcp_recvmsg_locked(struct sock *sk, struct msghdr *msg, size_t len,
- 	goto out;
- }
- 
--int tcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags,
--		int *addr_len)
-+int tcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags)
- {
- 	int cmsg_flags = 0, ret;
- 	struct scm_timestamping_internal tss;
- 
- 	if (unlikely(flags & MSG_ERRQUEUE))
--		return inet_recv_error(sk, msg, len, addr_len);
-+		return inet_recv_error(sk, msg, len);
- 
- 	if (sk_can_busy_loop(sk) &&
- 	    skb_queue_empty_lockless(&sk->sk_receive_queue) &&
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index d3d6a47af52701..7a3f0b244c8fc8 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -221,8 +221,7 @@ static bool is_next_msg_fin(struct sk_psock *psock)
- static int tcp_bpf_recvmsg_parser(struct sock *sk,
- 				  struct msghdr *msg,
- 				  size_t len,
--				  int flags,
--				  int *addr_len)
-+				  int flags)
- {
- 	int peek = flags & MSG_PEEK;
- 	struct sk_psock *psock;
-@@ -232,14 +231,14 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
- 	u32 seq;
- 
- 	if (unlikely(flags & MSG_ERRQUEUE))
--		return inet_recv_error(sk, msg, len, addr_len);
-+		return inet_recv_error(sk, msg, len);
- 
- 	if (!len)
- 		return 0;
- 
- 	psock = sk_psock_get(sk);
- 	if (unlikely(!psock))
--		return tcp_recvmsg(sk, msg, len, flags, addr_len);
-+		return tcp_recvmsg(sk, msg, len, flags);
- 
- 	lock_sock(sk);
- 	tcp = tcp_sk(sk);
-@@ -352,24 +351,24 @@ static int tcp_bpf_ioctl(struct sock *sk, int cmd, int *karg)
- }
- 
- static int tcp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--			   int flags, int *addr_len)
-+			   int flags)
- {
- 	struct sk_psock *psock;
- 	int copied, ret;
- 
- 	if (unlikely(flags & MSG_ERRQUEUE))
--		return inet_recv_error(sk, msg, len, addr_len);
-+		return inet_recv_error(sk, msg, len);
- 
- 	if (!len)
- 		return 0;
- 
- 	psock = sk_psock_get(sk);
- 	if (unlikely(!psock))
--		return tcp_recvmsg(sk, msg, len, flags, addr_len);
-+		return tcp_recvmsg(sk, msg, len, flags);
- 	if (!skb_queue_empty(&sk->sk_receive_queue) &&
- 	    sk_psock_queue_empty(psock)) {
- 		sk_psock_put(sk, psock);
--		return tcp_recvmsg(sk, msg, len, flags, addr_len);
-+		return tcp_recvmsg(sk, msg, len, flags);
- 	}
- 	lock_sock(sk);
- msg_bytes_ready:
-@@ -389,7 +388,7 @@ static int tcp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 				goto msg_bytes_ready;
- 			release_sock(sk);
- 			sk_psock_put(sk, psock);
--			return tcp_recvmsg(sk, msg, len, flags, addr_len);
-+			return tcp_recvmsg(sk, msg, len, flags);
- 		}
- 		copied = -EAGAIN;
- 	}
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 4ac4a120fca8ca..2f5c91ba0ce92e 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -2059,8 +2059,7 @@ EXPORT_IPV6_MOD(udp_read_skb);
-  * 	return it, otherwise we block.
-  */
- 
--int udp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags,
--		int *addr_len)
-+int udp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags)
- {
- 	struct inet_sock *inet = inet_sk(sk);
- 	DECLARE_SOCKADDR(struct sockaddr_in *, sin, msg->msg_name);
-@@ -2071,7 +2070,7 @@ int udp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags,
- 	bool checksum_valid = false;
- 
- 	if (flags & MSG_ERRQUEUE)
--		return ip_recv_error(sk, msg, len, addr_len);
-+		return ip_recv_error(sk, msg, len);
- 
- try_again:
- 	off = sk_peek_offset(sk, flags);
-@@ -2134,11 +2133,11 @@ int udp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags,
- 		sin->sin_port = udp_hdr(skb)->source;
- 		sin->sin_addr.s_addr = ip_hdr(skb)->saddr;
- 		memset(sin->sin_zero, 0, sizeof(sin->sin_zero));
--		*addr_len = sizeof(*sin);
-+		msg->msg_namelen = sizeof(*sin);
- 
- 		BPF_CGROUP_RUN_PROG_UDP4_RECVMSG_LOCK(sk,
- 						      (struct sockaddr *)sin,
--						      addr_len);
-+						      &msg->msg_namelen);
- 	}
- 
- 	if (udp_test_bit(GRO_ENABLED, sk))
 diff --git a/net/ipv4/udp_bpf.c b/net/ipv4/udp_bpf.c
-index 779a3a03762f1e..d328a3078ae04f 100644
+index d328a3078ae04f..6987b8cf59eb45 100644
 --- a/net/ipv4/udp_bpf.c
 +++ b/net/ipv4/udp_bpf.c
-@@ -12,13 +12,13 @@
- static struct proto *udpv6_prot_saved __read_mostly;
- 
- static int sk_udp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--			  int flags, int *addr_len)
-+			  int flags)
- {
- #if IS_ENABLED(CONFIG_IPV6)
- 	if (sk->sk_family == AF_INET6)
--		return udpv6_prot_saved->recvmsg(sk, msg, len, flags, addr_len);
-+		return udpv6_prot_saved->recvmsg(sk, msg, len, flags);
- #endif
--	return udp_prot.recvmsg(sk, msg, len, flags, addr_len);
-+	return udp_prot.recvmsg(sk, msg, len, flags);
- }
- 
- static bool udp_sk_has_data(struct sock *sk)
-@@ -61,23 +61,23 @@ static int udp_msg_wait_data(struct sock *sk, struct sk_psock *psock,
- }
- 
- static int udp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--			   int flags, int *addr_len)
-+			   int flags)
- {
- 	struct sk_psock *psock;
- 	int copied, ret;
- 
- 	if (unlikely(flags & MSG_ERRQUEUE))
--		return inet_recv_error(sk, msg, len, addr_len);
-+		return inet_recv_error(sk, msg, len);
- 
- 	if (!len)
- 		return 0;
- 
- 	psock = sk_psock_get(sk);
- 	if (unlikely(!psock))
--		return sk_udp_recvmsg(sk, msg, len, flags, addr_len);
-+		return sk_udp_recvmsg(sk, msg, len, flags);
- 
- 	if (!psock_has_data(psock)) {
--		ret = sk_udp_recvmsg(sk, msg, len, flags, addr_len);
-+		ret = sk_udp_recvmsg(sk, msg, len, flags);
+@@ -52,7 +52,9 @@ static int udp_msg_wait_data(struct sock *sk, struct sk_psock *psock,
+ 	sk_set_bit(SOCKWQ_ASYNC_WAITDATA, sk);
+ 	ret = udp_msg_has_data(sk, psock);
+ 	if (!ret) {
++		release_sock(sk);
+ 		wait_woken(&wait, TASK_INTERRUPTIBLE, timeo);
++		lock_sock(sk);
+ 		ret = udp_msg_has_data(sk, psock);
+ 	}
+ 	sk_clear_bit(SOCKWQ_ASYNC_WAITDATA, sk);
+@@ -81,6 +83,7 @@ static int udp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
  		goto out;
  	}
  
-@@ -92,7 +92,7 @@ static int udp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
++	lock_sock(sk);
+ msg_bytes_ready:
+ 	copied = sk_msg_recvmsg(sk, psock, msg, len, flags);
+ 	if (!copied) {
+@@ -92,11 +95,17 @@ static int udp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
  		if (data) {
  			if (psock_has_data(psock))
  				goto msg_bytes_ready;
--			ret = sk_udp_recvmsg(sk, msg, len, flags, addr_len);
-+			ret = sk_udp_recvmsg(sk, msg, len, flags);
++
++			release_sock(sk);
++
+ 			ret = sk_udp_recvmsg(sk, msg, len, flags);
  			goto out;
  		}
  		copied = -EAGAIN;
-diff --git a/net/ipv4/udp_impl.h b/net/ipv4/udp_impl.h
-index c7142213fc2112..17a6fa8b140930 100644
---- a/net/ipv4/udp_impl.h
-+++ b/net/ipv4/udp_impl.h
-@@ -18,8 +18,7 @@ int udp_setsockopt(struct sock *sk, int level, int optname, sockptr_t optval,
- int udp_getsockopt(struct sock *sk, int level, int optname,
- 		   char __user *optval, int __user *optlen);
- 
--int udp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags,
--		int *addr_len);
-+int udp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags);
- void udp_destroy_sock(struct sock *sk);
- 
- #ifdef CONFIG_PROC_FS
-diff --git a/net/ipv6/af_inet6.c b/net/ipv6/af_inet6.c
-index 3709f213d33de3..f8e1dc4f3227fb 100644
---- a/net/ipv6/af_inet6.c
-+++ b/net/ipv6/af_inet6.c
-@@ -661,25 +661,20 @@ int inet6_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
- }
- 
- INDIRECT_CALLABLE_DECLARE(int udpv6_recvmsg(struct sock *, struct msghdr *,
--					    size_t, int, int *));
-+					    size_t, int));
- int inet6_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
- 		  int flags)
- {
- 	struct sock *sk = sock->sk;
- 	const struct proto *prot;
--	int addr_len = 0;
--	int err;
- 
- 	if (likely(!(flags & MSG_ERRQUEUE)))
- 		sock_rps_record_flow(sk);
- 
- 	/* IPV6_ADDRFORM can change sk->sk_prot under us. */
- 	prot = READ_ONCE(sk->sk_prot);
--	err = INDIRECT_CALL_2(prot->recvmsg, tcp_recvmsg, udpv6_recvmsg,
--			      sk, msg, size, flags, &addr_len);
--	if (err >= 0)
--		msg->msg_namelen = addr_len;
--	return err;
-+	return INDIRECT_CALL_2(prot->recvmsg, tcp_recvmsg, udpv6_recvmsg,
-+			       sk, msg, size, flags);
- }
- 
- const struct proto_ops inet6_stream_ops = {
-diff --git a/net/ipv6/datagram.c b/net/ipv6/datagram.c
-index a62c20e8329f65..97c655c2605689 100644
---- a/net/ipv6/datagram.c
-+++ b/net/ipv6/datagram.c
-@@ -451,7 +451,7 @@ static bool ip6_datagram_support_cmsg(struct sk_buff *skb,
- /*
-  *	Handle MSG_ERRQUEUE
-  */
--int ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len, int *addr_len)
-+int ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len)
- {
- 	struct ipv6_pinfo *np = inet6_sk(sk);
- 	struct sock_exterr_skb *serr;
-@@ -502,7 +502,7 @@ int ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len, int *addr_len)
- 					       &sin->sin6_addr);
- 			sin->sin6_scope_id = 0;
- 		}
--		*addr_len = sizeof(*sin);
-+		msg->msg_namelen = sizeof(*sin);
  	}
- 
- 	memcpy(&errhdr.ee, &serr->ee, sizeof(struct sock_extended_err));
-@@ -544,8 +544,7 @@ EXPORT_SYMBOL_GPL(ipv6_recv_error);
- /*
-  *	Handle IPV6_RECVPATHMTU
-  */
--int ipv6_recv_rxpmtu(struct sock *sk, struct msghdr *msg, int len,
--		     int *addr_len)
-+int ipv6_recv_rxpmtu(struct sock *sk, struct msghdr *msg, int len)
- {
- 	struct ipv6_pinfo *np = inet6_sk(sk);
- 	struct sk_buff *skb;
-@@ -578,7 +577,7 @@ int ipv6_recv_rxpmtu(struct sock *sk, struct msghdr *msg, int len,
- 		sin->sin6_port = 0;
- 		sin->sin6_scope_id = mtu_info.ip6m_addr.sin6_scope_id;
- 		sin->sin6_addr = mtu_info.ip6m_addr.sin6_addr;
--		*addr_len = sizeof(*sin);
-+		msg->msg_namelen = sizeof(*sin);
- 	}
- 
- 	put_cmsg(msg, SOL_IPV6, IPV6_PATHMTU, sizeof(mtu_info), &mtu_info);
-diff --git a/net/ipv6/ping.c b/net/ipv6/ping.c
-index d7a2cdaa26312b..b74606334c346a 100644
---- a/net/ipv6/ping.c
-+++ b/net/ipv6/ping.c
-@@ -24,8 +24,7 @@
- #include <net/ping.h>
- 
- /* Compatibility glue so we can support IPv6 when it's compiled as a module */
--static int dummy_ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len,
--				 int *addr_len)
-+static int dummy_ipv6_recv_error(struct sock *sk, struct msghdr *msg, int len)
- {
- 	return -EAFNOSUPPORT;
- }
-diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
-index e369f54844dd94..c534848933ee64 100644
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -431,7 +431,7 @@ int rawv6_rcv(struct sock *sk, struct sk_buff *skb)
-  */
- 
- static int rawv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--			 int flags, int *addr_len)
-+			 int flags)
- {
- 	struct ipv6_pinfo *np = inet6_sk(sk);
- 	DECLARE_SOCKADDR(struct sockaddr_in6 *, sin6, msg->msg_name);
-@@ -443,10 +443,10 @@ static int rawv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 		return -EOPNOTSUPP;
- 
- 	if (flags & MSG_ERRQUEUE)
--		return ipv6_recv_error(sk, msg, len, addr_len);
-+		return ipv6_recv_error(sk, msg, len);
- 
- 	if (np->rxopt.bits.rxpmtu && READ_ONCE(np->rxpmtu))
--		return ipv6_recv_rxpmtu(sk, msg, len, addr_len);
-+		return ipv6_recv_rxpmtu(sk, msg, len);
- 
- 	skb = skb_recv_datagram(sk, flags, &err);
- 	if (!skb)
-@@ -480,7 +480,7 @@ static int rawv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 		sin6->sin6_flowinfo = 0;
- 		sin6->sin6_scope_id = ipv6_iface_scope_id(&sin6->sin6_addr,
- 							  inet6_iif(skb));
--		*addr_len = sizeof(*sin6);
-+		msg->msg_namelen = sizeof(*sin6);
- 	}
- 
- 	sock_recv_cmsgs(msg, sk, skb);
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index d47b4f5ac8705a..7ae825cb5413b7 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -466,7 +466,7 @@ static int udp6_skb_len(struct sk_buff *skb)
-  */
- 
- int udpv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--		  int flags, int *addr_len)
-+		  int flags)
- {
- 	struct ipv6_pinfo *np = inet6_sk(sk);
- 	struct inet_sock *inet = inet_sk(sk);
-@@ -479,10 +479,10 @@ int udpv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 	int is_udp4;
- 
- 	if (flags & MSG_ERRQUEUE)
--		return ipv6_recv_error(sk, msg, len, addr_len);
-+		return ipv6_recv_error(sk, msg, len);
- 
- 	if (np->rxopt.bits.rxpmtu && READ_ONCE(np->rxpmtu))
--		return ipv6_recv_rxpmtu(sk, msg, len, addr_len);
-+		return ipv6_recv_rxpmtu(sk, msg, len);
- 
- try_again:
- 	off = sk_peek_offset(sk, flags);
-@@ -554,11 +554,11 @@ int udpv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 				ipv6_iface_scope_id(&sin6->sin6_addr,
- 						    inet6_iif(skb));
- 		}
--		*addr_len = sizeof(*sin6);
-+		msg->msg_namelen = sizeof(*sin6);
- 
- 		BPF_CGROUP_RUN_PROG_UDP6_RECVMSG_LOCK(sk,
- 						      (struct sockaddr *)sin6,
--						      addr_len);
-+						      &msg->msg_namelen);
- 	}
- 
- 	if (udp_test_bit(GRO_ENABLED, sk))
-diff --git a/net/ipv6/udp_impl.h b/net/ipv6/udp_impl.h
-index 8a406be25a3a6d..1bd4a573e1bb21 100644
---- a/net/ipv6/udp_impl.h
-+++ b/net/ipv6/udp_impl.h
-@@ -22,8 +22,7 @@ int udpv6_getsockopt(struct sock *sk, int level, int optname,
- int udpv6_setsockopt(struct sock *sk, int level, int optname, sockptr_t optval,
- 		     unsigned int optlen);
- int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len);
--int udpv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags,
--		  int *addr_len);
-+int udpv6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int flags);
- void udpv6_destroy_sock(struct sock *sk);
- 
- #ifdef CONFIG_PROC_FS
-diff --git a/net/l2tp/l2tp_ip.c b/net/l2tp/l2tp_ip.c
-index 29795d2839e8b0..e9565bbdc4f629 100644
---- a/net/l2tp/l2tp_ip.c
-+++ b/net/l2tp/l2tp_ip.c
-@@ -535,7 +535,7 @@ static int l2tp_ip_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- }
- 
- static int l2tp_ip_recvmsg(struct sock *sk, struct msghdr *msg,
--			   size_t len, int flags, int *addr_len)
-+			   size_t len, int flags)
- {
- 	struct inet_sock *inet = inet_sk(sk);
- 	size_t copied = 0;
-@@ -568,7 +568,7 @@ static int l2tp_ip_recvmsg(struct sock *sk, struct msghdr *msg,
- 		sin->sin_addr.s_addr = ip_hdr(skb)->saddr;
- 		sin->sin_port = 0;
- 		memset(&sin->sin_zero, 0, sizeof(sin->sin_zero));
--		*addr_len = sizeof(*sin);
-+		msg->msg_namelen = sizeof(*sin);
- 	}
- 	if (inet_cmsg_flags(inet))
- 		ip_cmsg_recv(msg, skb);
-diff --git a/net/l2tp/l2tp_ip6.c b/net/l2tp/l2tp_ip6.c
-index ea232f338dcb65..2d26d10b661254 100644
---- a/net/l2tp/l2tp_ip6.c
-+++ b/net/l2tp/l2tp_ip6.c
-@@ -678,7 +678,7 @@ static int l2tp_ip6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- }
- 
- static int l2tp_ip6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--			    int flags, int *addr_len)
-+			    int flags)
- {
- 	struct ipv6_pinfo *np = inet6_sk(sk);
- 	DECLARE_SOCKADDR(struct sockaddr_l2tpip6 *, lsa, msg->msg_name);
-@@ -690,7 +690,7 @@ static int l2tp_ip6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 		goto out;
- 
- 	if (flags & MSG_ERRQUEUE)
--		return ipv6_recv_error(sk, msg, len, addr_len);
-+		return ipv6_recv_error(sk, msg, len);
- 
- 	skb = skb_recv_datagram(sk, flags, &err);
- 	if (!skb)
-@@ -718,7 +718,7 @@ static int l2tp_ip6_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 		lsa->l2tp_conn_id = 0;
- 		if (ipv6_addr_type(&lsa->l2tp_addr) & IPV6_ADDR_LINKLOCAL)
- 			lsa->l2tp_scope_id = inet6_iif(skb);
--		*addr_len = sizeof(*lsa);
-+		msg->msg_namelen = sizeof(*lsa);
- 	}
- 
- 	if (np->rxopt.all)
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index b82b2a4094874a..72a909bc0fca4c 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2206,7 +2206,7 @@ static unsigned int mptcp_inq_hint(const struct sock *sk)
- }
- 
- static int mptcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--			 int flags, int *addr_len)
-+			 int flags)
- {
- 	struct mptcp_sock *msk = mptcp_sk(sk);
- 	struct scm_timestamping_internal tss;
-@@ -2216,7 +2216,7 @@ static int mptcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 
- 	/* MSG_ERRQUEUE is really a no-op till we support IP_RECVERR */
- 	if (unlikely(flags & MSG_ERRQUEUE))
--		return inet_recv_error(sk, msg, len, addr_len);
-+		return inet_recv_error(sk, msg, len);
- 
- 	lock_sock(sk);
- 	if (unlikely(sk->sk_state == TCP_LISTEN)) {
-diff --git a/net/phonet/datagram.c b/net/phonet/datagram.c
-index 976fe250b50955..22cf23f068328e 100644
---- a/net/phonet/datagram.c
-+++ b/net/phonet/datagram.c
-@@ -109,7 +109,7 @@ static int pn_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- }
- 
- static int pn_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--		      int flags, int *addr_len)
-+		      int flags)
- {
- 	struct sk_buff *skb = NULL;
- 	struct sockaddr_pn sa;
-@@ -143,7 +143,7 @@ static int pn_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 	if (msg->msg_name != NULL) {
- 		__sockaddr_check_size(sizeof(sa));
- 		memcpy(msg->msg_name, &sa, sizeof(sa));
--		*addr_len = sizeof(sa);
-+		msg->msg_namelen = sizeof(sa);
- 	}
- 
++
++	release_sock(sk);
++
+ 	ret = copied;
  out:
-diff --git a/net/phonet/pep.c b/net/phonet/pep.c
-index 058a16c423aefc..7c695f3afc2857 100644
---- a/net/phonet/pep.c
-+++ b/net/phonet/pep.c
-@@ -1276,7 +1276,7 @@ struct sk_buff *pep_read(struct sock *sk)
- }
- 
- static int pep_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--		       int flags, int *addr_len)
-+		       int flags)
- {
- 	struct sk_buff *skb;
- 	int err;
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index c763eb3296b3ee..8a2622da56d23e 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -2095,7 +2095,7 @@ static int sctp_skb_pull(struct sk_buff *skb, int len)
-  *            5 for complete description of the flags.
-  */
- static int sctp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--			int flags, int *addr_len)
-+			int flags)
- {
- 	struct sctp_ulpevent *event = NULL;
- 	struct sctp_sock *sp = sctp_sk(sk);
-@@ -2104,11 +2104,11 @@ static int sctp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 	int err = 0;
- 	int skb_len;
- 
--	pr_debug("%s: sk:%p, msghdr:%p, len:%zd, flags:0x%x, addr_len:%p)\n",
--		 __func__, sk, msg, len, flags, addr_len);
-+	pr_debug("%s: sk:%p, msghdr:%p, len:%zd, flags:0x%x)\n",
-+		 __func__, sk, msg, len, flags);
- 
- 	if (unlikely(flags & MSG_ERRQUEUE))
--		return inet_recv_error(sk, msg, len, addr_len);
-+		return inet_recv_error(sk, msg, len);
- 
- 	if (sk_can_busy_loop(sk) &&
- 	    skb_queue_empty_lockless(&sk->sk_receive_queue))
-@@ -2149,9 +2149,9 @@ static int sctp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 	sock_recv_cmsgs(msg, sk, head_skb);
- 	if (sctp_ulpevent_is_notification(event)) {
- 		msg->msg_flags |= MSG_NOTIFICATION;
--		sp->pf->event_msgname(event, msg->msg_name, addr_len);
-+		sp->pf->event_msgname(event, msg->msg_name, &msg->msg_namelen);
- 	} else {
--		sp->pf->skb_msgname(head_skb, msg->msg_name, addr_len);
-+		sp->pf->skb_msgname(head_skb, msg->msg_name, &msg->msg_namelen);
- 	}
- 
- 	/* Check if we allow SCTP_NXTINFO. */
-diff --git a/net/tls/tls.h b/net/tls/tls.h
-index a1d8467bece337..12f44cb649c964 100644
---- a/net/tls/tls.h
-+++ b/net/tls/tls.h
-@@ -161,7 +161,7 @@ void tls_sw_free_resources_rx(struct sock *sk);
- void tls_sw_release_resources_rx(struct sock *sk);
- void tls_sw_free_ctx_rx(struct tls_context *tls_ctx);
- int tls_sw_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--		   int flags, int *addr_len);
-+		   int flags);
- bool tls_sw_sock_is_readable(struct sock *sk);
- ssize_t tls_sw_splice_read(struct socket *sock, loff_t *ppos,
- 			   struct pipe_inode_info *pipe,
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 9949ae02708117..c80ae566ad4e6f 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -2064,8 +2064,7 @@ static void tls_rx_reader_unlock(struct sock *sk, struct tls_sw_context_rx *ctx)
- int tls_sw_recvmsg(struct sock *sk,
- 		   struct msghdr *msg,
- 		   size_t len,
--		   int flags,
--		   int *addr_len)
-+		   int flags)
- {
- 	struct tls_context *tls_ctx = tls_get_ctx(sk);
- 	struct tls_sw_context_rx *ctx = tls_sw_ctx_rx(tls_ctx);
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 12c075a07e76b7..b65479a738f4cd 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2702,7 +2702,7 @@ static int unix_dgram_recvmsg(struct socket *sock, struct msghdr *msg, size_t si
- 	const struct proto *prot = READ_ONCE(sk->sk_prot);
- 
- 	if (prot != &unix_dgram_proto)
--		return prot->recvmsg(sk, msg, size, flags, NULL);
-+		return prot->recvmsg(sk, msg, size, flags);
- #endif
- 	return __unix_dgram_recvmsg(sk, msg, size, flags);
- }
-@@ -3179,7 +3179,7 @@ static int unix_stream_recvmsg(struct socket *sock, struct msghdr *msg,
- 	const struct proto *prot = READ_ONCE(sk->sk_prot);
- 
- 	if (prot != &unix_stream_proto)
--		return prot->recvmsg(sk, msg, size, flags, NULL);
-+		return prot->recvmsg(sk, msg, size, flags);
- #endif
- 	return unix_stream_read_generic(&state, true);
- }
-diff --git a/net/unix/unix_bpf.c b/net/unix/unix_bpf.c
-index 57f3124c9d8db9..f86ff19e9764d5 100644
---- a/net/unix/unix_bpf.c
-+++ b/net/unix/unix_bpf.c
-@@ -49,7 +49,7 @@ static int __unix_recvmsg(struct sock *sk, struct msghdr *msg,
- }
- 
- static int unix_bpf_recvmsg(struct sock *sk, struct msghdr *msg,
--			    size_t len, int flags, int *addr_len)
-+			    size_t len, int flags)
- {
- 	struct unix_sock *u = unix_sk(sk);
- 	struct sk_psock *psock;
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 2db48b53e47c77..d007ce89d19b8e 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -1412,7 +1412,7 @@ int vsock_dgram_recvmsg(struct socket *sock, struct msghdr *msg,
- 
- 	prot = READ_ONCE(sk->sk_prot);
- 	if (prot != &vsock_proto)
--		return prot->recvmsg(sk, msg, len, flags, NULL);
-+		return prot->recvmsg(sk, msg, len, flags);
- #endif
- 
- 	return __vsock_dgram_recvmsg(sock, msg, len, flags);
-@@ -2485,7 +2485,7 @@ vsock_connectible_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
- 
- 	prot = READ_ONCE(sk->sk_prot);
- 	if (prot != &vsock_proto)
--		return prot->recvmsg(sk, msg, len, flags, NULL);
-+		return prot->recvmsg(sk, msg, len, flags);
- #endif
- 
- 	return __vsock_connectible_recvmsg(sock, msg, len, flags);
-diff --git a/net/vmw_vsock/vsock_bpf.c b/net/vmw_vsock/vsock_bpf.c
-index 07b96d56f3a577..9049d26486460c 100644
---- a/net/vmw_vsock/vsock_bpf.c
-+++ b/net/vmw_vsock/vsock_bpf.c
-@@ -74,7 +74,7 @@ static int __vsock_recvmsg(struct sock *sk, struct msghdr *msg, size_t len, int
- }
- 
- static int vsock_bpf_recvmsg(struct sock *sk, struct msghdr *msg,
--			     size_t len, int flags, int *addr_len)
-+			     size_t len, int flags)
- {
- 	struct sk_psock *psock;
- 	struct vsock_sock *vsk;
-diff --git a/net/xfrm/espintcp.c b/net/xfrm/espintcp.c
-index b951700dffc4dc..542098283783d7 100644
---- a/net/xfrm/espintcp.c
-+++ b/net/xfrm/espintcp.c
-@@ -133,7 +133,7 @@ static int espintcp_parse(struct strparser *strp, struct sk_buff *skb)
- }
- 
- static int espintcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
--			    int flags, int *addr_len)
-+			    int flags)
- {
- 	struct espintcp_ctx *ctx = espintcp_getctx(sk);
- 	struct sk_buff *skb;
+ 	sk_psock_put(sk, psock);
 -- 
 2.53.0
 
