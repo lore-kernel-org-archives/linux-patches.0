@@ -1,37 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F219471248;
-	Tue, 21 Jul 2026 17:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27E7471253;
+	Tue, 21 Jul 2026 17:54:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656482; cv=none; b=CrAvL7S70yWZma59di8AP2wyctKi2Ugkuw6Q/MXUc2vpzeDwhUNGKdzCVAUqtXS6IsAoNRzk2PtLkqBOULStx/zXQiuuQ7ncWZZ5Uhw8CZAnYk1/MJAdBYg2gkYZE8+A/29FF3+Q36vK9mAskrAnz/7XJYHgbeUHbbd5ctoYEW8=
+	t=1784656483; cv=none; b=IimIaX3u0zhIIXkeHbX/vLCNfVBf0TSPaEhFHCUAzi2EXR6pkwlfzpPQw6o30vTAt3yTsSGlXwSbV4jjdJLAsu1pLoItvz3KsPG6kVCTA5wm87ZiJQ6/49jCLYUhadJCgGa3sZYwnAQs08S40YxUZXMO0Cw+hipfnJj1UWSVifA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656482; c=relaxed/simple;
-	bh=atOFiWKQ+KFX+xMK0E1zSyNBeG9fGDE+erNc3BOYm50=;
+	s=arc-20240116; t=1784656483; c=relaxed/simple;
+	bh=xq10RFWn+wvqZUKaqGkoEgcYnvTh1sbq+Qk7/QMzzNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qTZYx9TVOnkDIVoOPCls44NcOw9UJESG9z6gFLrXluksC6b+MD57OwiRBNmux8Wg6n2Pd3wD77XofNUX4LPyjmO9WzZOcva1SAlvjVO5NXustYVNKKKRVC/Iwxsq7uA2Fu3zaG2Y/4Mp29YbISVY2IXuSKE/RRQfNLnmI+L7n1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZ6JTc2d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=reyyWlsgIOZEoeA9LiWjlaOBZESq9M4mJwWDBCmkxR5R7t3NlKioIzGCrQtdAyCcwCVqQGi9k8/HEsHPai8E6Yx77yAWWUIYNrD5fbug6PTsv5VrA9+YSHUfFWTyNlxVnWvM5/Pm/FwOuZi31vnT98GVScScMz6DLqR/3gbEWLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z5f+KGD9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZ6JTc2d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38571F00A3A;
-	Tue, 21 Jul 2026 17:54:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z5f+KGD9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D88D1F000E9;
+	Tue, 21 Jul 2026 17:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656479;
-	bh=u8TOeBg0oxR9xJp6Wmoseh/SjFpf1CqrAtDmlkO9G5w=;
+	s=korg; t=1784656481;
+	bh=BzLV8dcqeuQWZ2Bm8m+Msuu+9a9vJcTHKIWvaXxFpmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GZ6JTc2d/uNrptq+CdoeKPvrG8cf8tMFxCLp3SJQRpkc4OAJ2Q3e89WDVXwJuIMc5
-	 v+xFLgrE3r1rGTaZ7iBRdGDhfguYp7T6shM1qdzuv+2oACQySZsvIFtuHfRCraDnTb
-	 bLMg71ZjwngtpFIHERW0l1Y9pTjbAhcfKKmzOo/0=
+	b=z5f+KGD9OuTeULdn5E2yEA9b5yo6a8Ni0NdJCcQ6GCBB6p1dl//S853u/9cKL+WD7
+	 egbFkie/OxGzRPf0Fk3n7aQr4URhw19u2fbn7NzYLSrpAeWuVFebvtS8bTcib84zVb
+	 P0IGR5hx0IaMKf7V0Z91YIZwziQtXPQyB++5zkwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Marcin FM <marcin@lgic.pl>,
+	Cristian-Florin Radoi <radoi.chris@gmail.com>,
+	George Salukvadze <giosal90@gmail.com>,
+	Evgeny Kapusta <3193631@gmail.com>,
+	Samu Toljamo <samu.toljamo@gmail.com>,
+	Ariel Rosenfeld <ariel.rosenfeld.750@gmail.com>,
+	Chapuis Dario <chapuisdario4@gmail.com>,
+	=?UTF-8?q?Thibaut=20Fran=C3=A7ois?= <tibo@humeurlibre.fr>,
+	=?UTF-8?q?=E5=BC=A0=E6=97=AD=E6=B6=B5?= <Loong.0x00@gmail.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Javier Tia <floss@jetm.me>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0402/1611] wifi: mt76: mt7996: add missing max_remain_on_channel_duration
-Date: Tue, 21 Jul 2026 17:08:38 +0200
-Message-ID: <20260721152524.277997686@linuxfoundation.org>
+Subject: [PATCH 6.18 0403/1611] wifi: mt76: mt7925: fix stale pointer comparisons in change_vif_links
+Date: Tue, 21 Jul 2026 17:08:39 +0200
+Message-ID: <20260721152524.303580340@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -44,66 +55,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Javier Tia <floss@jetm.me>
 
-[ Upstream commit ac41612e0044fa29cf9bc45b6808dda6d87ac2da ]
+[ Upstream commit 9f1accf3069a0cd42c14ca6c7d44d5b17cc48a80 ]
 
-Having this unset breaks remain-on-channel and mgmt TX.
-Move setting it to mt76 core to keep it in one place.
+In the error path of mt7925_change_vif_links(), the free: label iterates
+over link_ids to clean up, but compares against `mconf` and `mlink`
+which hold stale values from the last loop iteration rather than the
+current link_id being freed.
 
-Fixes: 69d54ce7491d0 ("wifi: mt76: mt7996: switch to single multi-radio wiphy")
-Link: https://patch.msgid.link/20260324154904.2555603-2-nbd@nbd.name
+Use array-indexed access (mconfs[link_id] / mlinks[link_id]) to compare
+against the correct per-link pointers.
+
+Fixes: 69acd6d910b0 ("wifi: mt76: mt7925: add mt7925_change_vif_links")
+Tested-by: Marcin FM <marcin@lgic.pl>
+Tested-by: Cristian-Florin Radoi <radoi.chris@gmail.com>
+Tested-by: George Salukvadze <giosal90@gmail.com>
+Tested-by: Evgeny Kapusta <3193631@gmail.com>
+Tested-by: Samu Toljamo <samu.toljamo@gmail.com>
+Tested-by: Ariel Rosenfeld <ariel.rosenfeld.750@gmail.com>
+Tested-by: Chapuis Dario <chapuisdario4@gmail.com>
+Tested-by: Thibaut François <tibo@humeurlibre.fr>
+Tested-by: 张旭涵 <Loong.0x00@gmail.com>
+Reviewed-by: Sean Wang <sean.wang@mediatek.com>
+Signed-off-by: Javier Tia <floss@jetm.me>
+Link: https://patch.msgid.link/20260425195011.790265-2-sean.wang@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mac80211.c    | 2 ++
- drivers/net/wireless/mediatek/mt76/mt7615/init.c | 1 -
- drivers/net/wireless/mediatek/mt76/mt792x_core.c | 1 -
- 3 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
-index 2d24f9fa51a505..f6a642fd29d2dd 100644
---- a/drivers/net/wireless/mediatek/mt76/mac80211.c
-+++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
-@@ -449,6 +449,8 @@ mt76_phy_init(struct mt76_phy *phy, struct ieee80211_hw *hw)
- 	wiphy_ext_feature_set(wiphy, NL80211_EXT_FEATURE_AIRTIME_FAIRNESS);
- 	wiphy_ext_feature_set(wiphy, NL80211_EXT_FEATURE_AQL);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+index 9a8ef3449eea17..6c0dc72efc3928 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+@@ -2066,9 +2066,9 @@ mt7925_change_vif_links(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 		rcu_assign_pointer(mvif->link_conf[link_id], NULL);
+ 		rcu_assign_pointer(mvif->sta.link[link_id], NULL);
  
-+	if (!wiphy->max_remain_on_channel_duration)
-+		wiphy->max_remain_on_channel_duration = 5000;
- 	if (!wiphy->available_antennas_tx)
- 		wiphy->available_antennas_tx = phy->antenna_mask;
- 	if (!wiphy->available_antennas_rx)
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/init.c b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-index 3e7af3e58736cb..c4f5f6ee916aff 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-@@ -195,7 +195,6 @@ mt7615_check_offload_capability(struct mt7615_dev *dev)
- 		ieee80211_hw_set(hw, SUPPORTS_DYNAMIC_PS);
+-		if (mconf != &mvif->bss_conf)
++		if (mconfs[link_id] != &mvif->bss_conf)
+ 			devm_kfree(dev->mt76.dev, mconfs[link_id]);
+-		if (mlink != &mvif->sta.deflink)
++		if (mlinks[link_id] != &mvif->sta.deflink)
+ 			devm_kfree(dev->mt76.dev, mlinks[link_id]);
+ 	}
  
- 		wiphy->flags &= ~WIPHY_FLAG_4ADDR_STATION;
--		wiphy->max_remain_on_channel_duration = 5000;
- 		wiphy->features |= NL80211_FEATURE_SCHED_SCAN_RANDOM_MAC_ADDR |
- 				   NL80211_FEATURE_SCAN_RANDOM_MAC_ADDR |
- 				   WIPHY_FLAG_HAS_REMAIN_ON_CHANNEL |
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_core.c b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
-index 9cad572c34a38a..a5bdccae92c5bd 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x_core.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
-@@ -657,7 +657,6 @@ int mt792x_init_wiphy(struct ieee80211_hw *hw)
- 				 BIT(NL80211_IFTYPE_P2P_CLIENT) |
- 				 BIT(NL80211_IFTYPE_P2P_GO) |
- 				 BIT(NL80211_IFTYPE_P2P_DEVICE);
--	wiphy->max_remain_on_channel_duration = 5000;
- 	wiphy->max_scan_ie_len = MT76_CONNAC_SCAN_IE_LEN;
- 	wiphy->max_scan_ssids = 4;
- 	wiphy->max_sched_scan_plan_interval =
 -- 
 2.53.0
 
