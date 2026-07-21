@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B1C46D0B7;
-	Tue, 21 Jul 2026 18:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD76746D2C3;
+	Tue, 21 Jul 2026 18:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657795; cv=none; b=lFAMCsGum/+l6ooQm256m1KMmtEZppuF65xWzHSr8SBtdZ+NVIyke3r0Pg7hbaj/Bu5lU6HXO/eG9VK3x4w8S4KvJwvS2+ApRY3eV/8CaZJe4RS2xCvVCC+JyMGfwKasNyomhpYrXt0/9k0T3V52NY4l/rvbAci5+hcfITYCnEM=
+	t=1784657798; cv=none; b=GFJ2oT8RM4pSLkpf+3JzwKwyN9HcF0JZjN3Lu9YlUMYKcjV2XUf8GPdxYIr00t+P+VTKbaRsjzIXBtooOAaqZ+9Z1edxncnwE4/dn+QYyX5hYtOr+GodQBdVvsmKN0wiyxGjP0nXnmV37qsIe4jPf+S+Tx9ayr4DjwU6GC5Rqyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657795; c=relaxed/simple;
-	bh=GAuUQsrvSBg/TM5BFy4NCWYiAEugEet2KQ0EJnCKPn4=;
+	s=arc-20240116; t=1784657798; c=relaxed/simple;
+	bh=PIBiGWdARqXKDZa9azegLLBj6JnEvSeQF8VLN6LZm40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ebFNqoLqy4AvZKbzoCqJCC5jYKd9+JPKF5KnLD5IWr3hn0dpajOWn4G31k0Km4hdn4KnVRA3SXsh5zeH0OpCjD7K9BbYAkHzQnJOa3YOaVl4iJcZDwZlTUBekUilzqnMBJBk1bvtusPqvmLQbUBtcIjYFUvqA+6Ng5o6RYeEDrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PfA7aKgV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u4sGOuuuI2W+KfhUpAXH5byfHMf8kRMJa8g1JvbzRPqSiKQdQIUScYVUNxaqHfECe18qwQeFQ8HA5m59STQTGYP35/ql7DVadQif1Bl5NEF9S+b+h7oeZ9mfNe3rosHV35cVuZXYefjxfYcLE1IQlBCt7hURNJsy8v1YheM6tlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mI94c8sT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PfA7aKgV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9DA61F000E9;
-	Tue, 21 Jul 2026 18:16:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mI94c8sT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EB271F00A3A;
+	Tue, 21 Jul 2026 18:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657794;
-	bh=4UvgnMLkZCOEAeqXxiDr06M/UHrBkksjGPnQwKK3FqY=;
+	s=korg; t=1784657796;
+	bh=IEUvZSAQqPQO7bnTzzUlO6EgvnRnFSyJQw9zcr2uDBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PfA7aKgVVCGn6ln/zXgC3ByR3mQ09hTCn+mfnCBT/tDoUg6OcsnN8PVRf2hzOgduR
-	 7smyxsPwKcwuAkIifzQ35j4lTM3UcZupJ4y2FbJ63dzPJkZgx9zK8Th9d+NQK9tiV4
-	 N4GykSx2T/5YMjVC4GR5KYmIYs+FvrgODL96eUSk=
+	b=mI94c8sT9hasIC2vNSlIoWZXb7QglnnjrdRbeohlLpwn4wOssJ0fe3xvgbM1hEWkY
+	 rKZFm8YAS6+SnLqT0o4oZ6pVL7wmC+DOIcRVarjXPVklSaFdlD8BfpXT+orF3Ck0g8
+	 UTp2V5uwLebDeRAAcEdENeDZXP02rlpthJD2rY+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Cheng <chencheng@fnnas.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Bradley Morgan <include@grrlz.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0900/1611] md/raid5: avoid R5_Overlap races while breaking stripe batches
-Date: Tue, 21 Jul 2026 17:16:56 +0200
-Message-ID: <20260721152535.634317186@linuxfoundation.org>
+Subject: [PATCH 6.18 0901/1611] bpf: Disable xfrm_decode_session hook attachment
+Date: Tue, 21 Jul 2026 17:16:57 +0200
+Message-ID: <20260721152535.655895423@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,126 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Cheng <chencheng@fnnas.com>
+From: Bradley Morgan <include@grrlz.net>
 
-[ Upstream commit 55b77337bdd088c77461588e5ec094421b89911b ]
+[ Upstream commit 12091470c6b4c1c14b2de12dcbae2ada6cb6d20b ]
 
-KCSAN report a race in break_stripe_batch_list() vs. raid5_make_request()
-on sh->dev[i].flags (plain word write vs. atomic bit op)..
+BPF LSM programs can currently attach to xfrm_decode_session(). That
+hook may return an error, but security_skb_classify_flow() calls it
+from a void path and triggers BUG_ON() if an error is returned.
 
-and .. one possible scenario is:
+Disable BPF attachment to the hook to prevent a BPF LSM program from
+turning packet classification into a full panic.
 
-CPU1                            CPU2
-break_stripe_batch_list(sh1)
--> handle sh2
--> lock(sh2)
--> sh2->batch_head = NULL
--> unlock(sh2)
--> test_and_clear_bit(R5_Overlap, sh2->dev[i].flags)
--> wake_up_bit(sh2->dev[i].flags)
-                                raid5_make_request()
-                                -> add_all_stripe_bios(sh2)
-                                -> lock(sh2)
-                                -> stripe_bio_overlaps(sh2) returns true
-				   batch_head is NULL, so new bio overlap
-				   exist bio on sh2 -> true
-                                -> set_bit(R5_Overlap, sh2->dev[i].flags)
-                                -> unlock(sh2)
-                                -> wait_on_bit(sh2->dev[i].flags)
--> sh2->dev[i].flags = sh1->dev[i].flags & ~R5_Overlap
-
-No wait_up_bit(), CPU2 could be wait_on_bit() forever...
-
-Fix by :
-- Expand the protect zone.
-- Use batch_head's device flag's snaphot when no held head_sh->stripe_lock.
-- Move sh/head_sh->batch_head = NULL to the end of protected zone , and ,
-  any concurrent add_all_stripe_bios() grabs sh->stripe_lock now either:
-	- see batch_head != null, and , is rejected by stripe_bio_overlaps()
-	  under the lock (no R5_Overlap wait ) , or ,
-	- sees batch_head == NULL, only after dev[i].flags has already been
-	  set and the prior R5_Overlap waiters worken.
-
-KCSAN report:
-================================================
-  BUG: KCSAN: data-race in break_stripe_batch_list / raid5_make_request
-
-  write (marked) to 0xffff8e89c8117548 of 8 bytes by task 4042 on cpu 0:
-    raid5_make_request+0xea0/0x2930
-    md_handle_request+0x4a2/0xa40
-    md_submit_bio+0x109/0x1a0
-    __submit_bio+0x2ec/0x390
-    submit_bio_noacct_nocheck+0x457/0x710
-    submit_bio_noacct+0x2a7/0xc20
-    submit_bio+0x56/0x250
-    blkdev_direct_IO+0x54c/0xda0
-    blkdev_write_iter+0x38f/0x570
-    aio_write+0x22b/0x490
-    io_submit_one+0xa51/0xf70
-    __x64_sys_io_submit+0xf7/0x220
-    x64_sys_call+0x1907/0x1c60
-    do_syscall_64+0x130/0x570
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-  read to 0xffff8e89c8117548 of 8 bytes by task 4010 on cpu 5:
-    break_stripe_batch_list+0x249/0x480
-    handle_stripe_clean_event+0x720/0x9b0
-    handle_stripe+0x32fb/0x4500
-    handle_active_stripes.isra.0+0x6e0/0xa50
-    raid5d+0x7e0/0xba0
-    md_thread+0x15a/0x2d0
-    kthread+0x1e3/0x220
-    ret_from_fork+0x37a/0x410
-    ret_from_fork_asm+0x1a/0x30
-
-  value changed: 0x0000000000000019 -> 0x0000000000000099 --> R5_Overlap
-
-Fixes: fb642b92c267 ("md/raid5: duplicate some more handle_stripe_clean_event code in break_stripe_batch_list")
-
-Signed-off-by: Chen Cheng <chencheng@fnnas.com>
-Link: https://patch.msgid.link/20260619041013.1207148-1-chencheng@fnnas.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 9e4e01dfd325 ("bpf: lsm: Implement attach, detach and execution")
+Signed-off-by: Bradley Morgan <include@grrlz.net>
+Link: https://lore.kernel.org/r/20260619130305.27779-1-include@grrlz.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ kernel/bpf/bpf_lsm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index e4cbf5fcec8e7a..b19d870e417194 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -4886,14 +4886,14 @@ static void break_stripe_batch_list(struct stripe_head *head_sh,
- 		sh->check_state = head_sh->check_state;
- 		sh->reconstruct_state = head_sh->reconstruct_state;
- 		spin_lock_irq(&sh->stripe_lock);
--		sh->batch_head = NULL;
--		spin_unlock_irq(&sh->stripe_lock);
- 		for (i = 0; i < sh->disks; i++) {
- 			if (test_and_clear_bit(R5_Overlap, &sh->dev[i].flags))
- 				wake_up_bit(&sh->dev[i].flags, R5_Overlap);
--			sh->dev[i].flags = head_sh->dev[i].flags &
-+			sh->dev[i].flags = READ_ONCE(head_sh->dev[i].flags) &
- 				(~((1 << R5_WriteError) | (1 << R5_Overlap)));
- 		}
-+		sh->batch_head = NULL;
-+		spin_unlock_irq(&sh->stripe_lock);
+diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
+index 554985ce9025ac..518c933fe944c4 100644
+--- a/kernel/bpf/bpf_lsm.c
++++ b/kernel/bpf/bpf_lsm.c
+@@ -50,6 +50,9 @@ BTF_ID(func, bpf_lsm_key_getsecurity)
+ #ifdef CONFIG_AUDIT
+ BTF_ID(func, bpf_lsm_audit_rule_match)
+ #endif
++#ifdef CONFIG_SECURITY_NETWORK_XFRM
++BTF_ID(func, bpf_lsm_xfrm_decode_session)
++#endif
+ BTF_ID(func, bpf_lsm_ismaclabel)
+ BTF_SET_END(bpf_lsm_disabled_hooks)
  
- 		state = READ_ONCE(sh->state);
- 		if (handle_flags == 0 || (state & handle_flags))
-@@ -4901,11 +4901,11 @@ static void break_stripe_batch_list(struct stripe_head *head_sh,
- 		raid5_release_stripe(sh);
- 	}
- 	spin_lock_irq(&head_sh->stripe_lock);
--	head_sh->batch_head = NULL;
--	spin_unlock_irq(&head_sh->stripe_lock);
- 	for (i = 0; i < head_sh->disks; i++)
- 		if (test_and_clear_bit(R5_Overlap, &head_sh->dev[i].flags))
- 			wake_up_bit(&head_sh->dev[i].flags, R5_Overlap);
-+	head_sh->batch_head = NULL;
-+	spin_unlock_irq(&head_sh->stripe_lock);
- 
- 	state = READ_ONCE(head_sh->state);
- 	if (state & handle_flags)
 -- 
 2.53.0
 
