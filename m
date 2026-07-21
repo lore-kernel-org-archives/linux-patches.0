@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B352E44AB62;
-	Tue, 21 Jul 2026 21:22:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5794344AB68;
+	Tue, 21 Jul 2026 21:22:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668978; cv=none; b=SfDa3T7eofi8cBxErVZQiN4cc/eor2tV77u0n4X6CaedIEgrUIHwpYrIV51b4azUhWKZAKEP26dOie4MgCN0eP+tz+oT02e37DlbgM+vZRmyDeO2isxL/kH6JDVLqYuul2EzJy97oyJ37krVgPGZDJEOa2FBsK4qoo4JrhbePtQ=
+	t=1784668980; cv=none; b=nrQ7MEoM1y2xtBq145eelfi+LMRbb+ikS7tnEcdJ4O1bcuS9Ep2z07zmSe6Gisf72GkpviUhy7E1d2ep561vu0P3Y4EOzx8loYrp/ElaLB3NoBzhVU0Q9m5XrpXUIE3UTl1t8ElyhWkXEIfBpt5x633/ptQ1dyc/QpbfRN49E0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668978; c=relaxed/simple;
-	bh=lAmo+xshde2fOrOqXYxqRRn0l6eAQLksSgVPxKzeeGQ=;
+	s=arc-20240116; t=1784668980; c=relaxed/simple;
+	bh=jIAIQquStT/ya0dmrTtumZQ6sFd8oIqiVdDg5/XEOA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L0TSvp4eqvC4TK19viIsy0DKZYFP5zv5QQzpSSYXbRsUigt+foOdjvOR714lkSM0R0q8QCtUlRiEZBXIUbsKxRZA4tK3Cl+yM2TxQaFewqzz16WSLQVG9YO1mwe6gYN//UxeSvwIG6Way5anFAEwkOxL4IAwdZHDTHLGyYCqQnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UyUKiO+x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qoNfaDDpg8043M2xk0H/EtB/Zp78Zdxb5kHVLQ4Ii/pn1PrAlksctCrQ1qWZHZCDn44jE2KOmcvU55etij2OI0ozqHJ5gZjzQ/drc1hD0aSwZBagxQVA5Gn1nxfO2lmoIjFFQmUDI9WJRYvQYNIrGI2NJk/Ii2xNJGLOXLvyeNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wkYJYAHj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UyUKiO+x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2638A1F000E9;
-	Tue, 21 Jul 2026 21:22:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkYJYAHj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C155A1F000E9;
+	Tue, 21 Jul 2026 21:22:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668976;
-	bh=t5Bus35y1BFxkK/ksI+4s7rL8eo0/0YHdisbZt31xOg=;
+	s=korg; t=1784668979;
+	bh=xdkZTo6HCWbJigpOOtuJMrgft/WRUDTS4RbmFMqxt0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UyUKiO+xhLtJ948moFwN6eR4EF8z3vdW3qQHUNoJWZVNznqUR2SGjXKYGulKzuDzW
-	 SA7OOtx308ZcMXpy2N24mRsCRUOJFQbgqhsffv952Upe3GD9h687MhNJdjuoBQ+2Z9
-	 xI6EVC4R+7VfeQJASzjPwNL4devb1AYIT/KXvIdY=
+	b=wkYJYAHjV6KmsBcLF5t+Xjs00iMjDAywjKCPnqlW7affBbG4i+rKvL5Kt6wXFxcum
+	 iPqrMhhhSnhP1nx39J/NLnGNbEJWLe4GlEvViJeg6sg7YiO3pCRholUGY9amYHTyGC
+	 2jSS7LVyrW1NQJdZGjmnqU3sevp6PP8ho4YEhJKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	John Garry <john.g.garry@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0337/1067] ALSA: seq: midi: Serialize output teardown with event_input
-Date: Tue, 21 Jul 2026 17:15:38 +0200
-Message-ID: <20260721152432.135993731@linuxfoundation.org>
+Subject: [PATCH 6.1 0338/1067] nvme-multipath: fix flex array size in struct nvme_ns_head
+Date: Tue, 21 Jul 2026 17:15:39 +0200
+Message-ID: <20260721152432.158054772@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,196 +55,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Nilay Shroff <nilay@linux.ibm.com>
 
-[ Upstream commit ef7607ab1c8adc6258fb1b27d08e26aecdc18a58 ]
+[ Upstream commit 001e57554de81aa79c25c18fd53911d8a415c304 ]
 
-event_process_midi() borrows msynth->output_rfile.output and then
-passes the substream to dump_midi() and snd_rawmidi_kernel_write()
-without synchronizing with the output open/close transition.
-midisynth_use() also publishes output_rfile before
-snd_rawmidi_output_params() has finished.
+struct nvme_ns_head contains a flexible array member, current_path[],
+which is indexed using the NUMA node ID:
+head->current_path[numa_node_id()]
 
-The last midisynth_unuse() can therefore release the same rawmidi file
-and free substream->runtime before snd_rawmidi_kernel_write1() takes
-its runtime buffer reference. That leaves the event_input path using a
-stale substream or runtime and can end in a NULL-deref or use-after-free.
+The structure is currently allocated as:
+size = sizeof(struct nvme_ns_head) +
+       (num_possible_nodes() * sizeof(struct nvme_ns *));
+head = kzalloc(size, GFP_KERNEL);
 
-Fix this with two pieces of synchronization. Keep a short IRQ-safe
-spinlock only for publishing or clearing output_rfile and for pairing
-the output snapshot with an snd_use_lock_t reference. Once
-event_process_midi() has taken that in-flight reference, it drops the
-spinlock before calling snd_seq_dump_var_event(), dump_midi(), or
-snd_rawmidi_kernel_write(). midisynth_unuse() now detaches the visible
-rawmidi file under the same spinlock, waits for the in-flight writers
-to drain, and only then drains and releases the saved file.
-midisynth_use() likewise opens into a local snd_rawmidi_file and
-publishes it only after snd_rawmidi_output_params() succeeds.
+This allocation assumes that NUMA node IDs are sequential and densely
+packed from 0 .. num_possible_nodes() - 1. While this assumption holds
+on many systems, it is not always true on some architectures such as
+powerpc.
 
-The buggy scenario involves two paths, with each column showing the
-order within that path:
+On some powerpc systems, NUMA node IDs can be sparse. For example:
+NUMA:
+  NUMA node(s):              6
+  NUMA node0 CPU(s):         80-159
+  NUMA node8 CPU(s):         0-79
+  NUMA node252 CPU(s):
+  NUMA node253 CPU(s):
+  NUMA node254 CPU(s):
+  NUMA node255 CPU(s):
 
-event_input path:                     last unuse path:
-1. event_process_midi() snapshots    1. midisynth_unuse() starts
-   output_rfile.output.                 tearing down output_rfile.
-2. dump_midi() reaches               2. snd_rawmidi_kernel_release()
-   snd_rawmidi_kernel_write()           closes the output file.
-   before runtime is pinned.         3. close_substream() frees
-3. The callback keeps using             substream->runtime.
-   the borrowed substream.
+That is, the possible/online NUMA node IDs are: 0, 8, 252, 253, 254, 255
+In this case: num_possible_nodes() = 6
 
-Validation reproduced this kernel report:
-KASAN null-ptr-deref in snd_rawmidi_kernel_write1+0x56/0x360
-RIP: 0033:0x7fde7dd0837f
-RIP: 0010:snd_rawmidi_kernel_write1+0x56/0x360
+So memory is allocated for only 6 entries in current_path[]. However,
+the array is later indexed using the actual NUMA node ID. As a result,
+accesses such as:
+head->current_path[8] or
+head->current_path[252]
+goes out of bounds, leading to the following KASAN splat:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Link: https://patch.msgid.link/20260527062948.3614025-1-rollkingzzc@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+==================================================================
+BUG: KASAN: slab-out-of-bounds in nvme_mpath_revalidate_paths+0x22c/0x290 [nvme_core]
+Write of size 8 at addr c00020003bda35b8 by task kworker/u641:2/1997
+
+CPU: 1 UID: 0 PID: 1997 Comm: kworker/u641:2 Not tainted 7.1.0-rc5-dirty #14 PREEMPT(lazy)
+Hardware name: 8335-GTH POWER9 0x4e1202 opal:skiboot-v6.5.3-35-g1851b2a06 PowerNV
+Workqueue: async async_run_entry_fn
+Call Trace:
+[c000200037fa7510] [c0000000021c23d4] dump_stack_lvl+0x88/0xdc (unreliable)
+[c000200037fa7540] [c0000000009fda90] print_report+0x22c/0x67c
+[c000200037fa7630] [c0000000009fd508] kasan_report+0x108/0x220
+[c000200037fa7740] [c0000000009fff48] __asan_store8+0xe8/0x120
+[c000200037fa7760] [c008000018e76474] nvme_mpath_revalidate_paths+0x22c/0x290 [nvme_core]
+[c000200037fa7800] [c008000018e6556c] nvme_update_ns_info+0x4a4/0x5e0 [nvme_core]
+[c000200037fa7a50] [c008000018e66270] nvme_alloc_ns+0x6d8/0x1a70 [nvme_core]
+[c000200037fa7c20] [c008000018e679fc] nvme_scan_ns+0x3f4/0x630 [nvme_core]
+[c000200037fa7d10] [c00000000031f22c] async_run_entry_fn+0x9c/0x3a0
+[c000200037fa7db0] [c0000000002fa544] process_one_work+0x414/0xa10
+[c000200037fa7ec0] [c0000000002fbf00] worker_thread+0x320/0x640
+[c000200037fa7f80] [c00000000030d0f8] kthread+0x278/0x290
+[c000200037fa7fe0] [c00000000000ded8] start_kernel_thread+0x14/0x18
+
+Allocated by task 1997 on cpu 1 at 35.928317s:
+
+The buggy address belongs to the object at c00020003bda3000
+ which belongs to the cache kmalloc-rnd-15-2k of size 2048
+The buggy address is located 16 bytes to the right of
+ allocated 1448-byte region [c00020003bda3000, c00020003bda35a8)
+
+The buggy address belongs to the physical page:
+
+Memory state around the buggy address:
+ c00020003bda3480: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ c00020003bda3500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>c00020003bda3580: 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc fc
+                                        ^
+ c00020003bda3600: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ c00020003bda3680: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+==================================================================
+
+Fix this by allocating the flexible array using nr_node_ids instead
+of num_possible_nodes(). Since nr_node_ids represents the maximum
+possible NUMA node IDs, indexing current_path[] using numa_node_id()
+becomes safe even on systems with sparse node IDs.
+
+Fixes: f333444708f8 ("nvme: take node locality into account when selecting a path")
+Tested-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_midi.c | 55 +++++++++++++++++++++++++++++----------
- 1 file changed, 41 insertions(+), 14 deletions(-)
+ drivers/nvme/host/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/core/seq/seq_midi.c b/sound/core/seq/seq_midi.c
-index b00bbf18a6f5d8..a687d8284161da 100644
---- a/sound/core/seq/seq_midi.c
-+++ b/sound/core/seq/seq_midi.c
-@@ -24,6 +24,7 @@ Possible options for midisynth module:
- #include <sound/seq_device.h>
- #include <sound/seq_midi_event.h>
- #include <sound/initval.h>
-+#include "seq_lock.h"
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 28f54f414e9c02..8cc2c2ab95c6eb 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4146,7 +4146,7 @@ static struct nvme_ns_head *nvme_alloc_ns_head(struct nvme_ctrl *ctrl,
+ 	int ret = -ENOMEM;
  
- MODULE_AUTHOR("Frank van de Pol <fvdpol@coil.demon.nl>, Jaroslav Kysela <perex@perex.cz>");
- MODULE_DESCRIPTION("Advanced Linux Sound Architecture sequencer MIDI synth.");
-@@ -41,6 +42,8 @@ struct seq_midisynth {
- 	int device;
- 	int subdevice;
- 	struct snd_rawmidi_file input_rfile;
-+	spinlock_t output_lock;		/* protects output_rfile publication */
-+	snd_use_lock_t output_use_lock;	/* in-flight event_input users */
- 	struct snd_rawmidi_file output_rfile;
- 	int seq_client;
- 	int seq_port;
-@@ -124,31 +127,42 @@ static int event_process_midi(struct snd_seq_event *ev, int direct,
- 	struct seq_midisynth *msynth = private_data;
- 	unsigned char msg[10];	/* buffer for constructing midi messages */
- 	struct snd_rawmidi_substream *substream;
-+	int err = 0;
- 	int len;
+ #ifdef CONFIG_NVME_MULTIPATH
+-	size += num_possible_nodes() * sizeof(struct nvme_ns *);
++	size += nr_node_ids * sizeof(struct nvme_ns *);
+ #endif
  
- 	if (snd_BUG_ON(!msynth))
- 		return -EINVAL;
--	substream = msynth->output_rfile.output;
--	if (substream == NULL)
--		return -ENODEV;
-+
-+	scoped_guard(spinlock_irqsave, &msynth->output_lock) {
-+		substream = msynth->output_rfile.output;
-+		if (!substream)
-+			return -ENODEV;
-+		snd_use_lock_use(&msynth->output_use_lock);
-+	}
-+
- 	if (ev->type == SNDRV_SEQ_EVENT_SYSEX) {	/* special case, to save space */
- 		if ((ev->flags & SNDRV_SEQ_EVENT_LENGTH_MASK) != SNDRV_SEQ_EVENT_LENGTH_VARIABLE) {
- 			/* invalid event */
- 			pr_debug("ALSA: seq_midi: invalid sysex event flags = 0x%x\n", ev->flags);
--			return 0;
-+			goto out;
- 		}
- 		snd_seq_dump_var_event(ev, __dump_midi, substream);
- 		snd_midi_event_reset_decode(msynth->parser);
- 	} else {
--		if (msynth->parser == NULL)
--			return -EIO;
-+		if (!msynth->parser) {
-+			err = -EIO;
-+			goto out;
-+		}
- 		len = snd_midi_event_decode(msynth->parser, msg, sizeof(msg), ev);
- 		if (len < 0)
--			return 0;
-+			goto out;
- 		if (dump_midi(substream, msg, len) < 0)
- 			snd_midi_event_reset_decode(msynth->parser);
- 	}
--	return 0;
-+
-+out:
-+	snd_use_lock_free(&msynth->output_use_lock);
-+	return err;
- }
- 
- 
-@@ -162,6 +176,8 @@ static int snd_seq_midisynth_new(struct seq_midisynth *msynth,
- 	msynth->card = card;
- 	msynth->device = device;
- 	msynth->subdevice = subdevice;
-+	spin_lock_init(&msynth->output_lock);
-+	snd_use_lock_init(&msynth->output_use_lock);
- 	return 0;
- }
- 
-@@ -215,13 +231,14 @@ static int midisynth_use(void *private_data, struct snd_seq_port_subscribe *info
- {
- 	int err;
- 	struct seq_midisynth *msynth = private_data;
-+	struct snd_rawmidi_file rfile = {};
- 	struct snd_rawmidi_params params;
- 
- 	/* open midi port */
- 	err = snd_rawmidi_kernel_open(msynth->card, msynth->device,
- 				      msynth->subdevice,
- 				      SNDRV_RAWMIDI_LFLG_OUTPUT,
--				      &msynth->output_rfile);
-+				      &rfile);
- 	if (err < 0) {
- 		pr_debug("ALSA: seq_midi: midi output open failed!!!\n");
- 		return err;
-@@ -230,12 +247,14 @@ static int midisynth_use(void *private_data, struct snd_seq_port_subscribe *info
- 	params.avail_min = 1;
- 	params.buffer_size = output_buffer_size;
- 	params.no_active_sensing = 1;
--	err = snd_rawmidi_output_params(msynth->output_rfile.output, &params);
-+	err = snd_rawmidi_output_params(rfile.output, &params);
- 	if (err < 0) {
--		snd_rawmidi_kernel_release(&msynth->output_rfile);
-+		snd_rawmidi_kernel_release(&rfile);
- 		return err;
- 	}
- 	snd_midi_event_reset_decode(msynth->parser);
-+	scoped_guard(spinlock_irqsave, &msynth->output_lock)
-+		msynth->output_rfile = rfile;
- 	return 0;
- }
- 
-@@ -243,11 +262,19 @@ static int midisynth_use(void *private_data, struct snd_seq_port_subscribe *info
- static int midisynth_unuse(void *private_data, struct snd_seq_port_subscribe *info)
- {
- 	struct seq_midisynth *msynth = private_data;
-+	struct snd_rawmidi_file rfile = {};
- 
--	if (snd_BUG_ON(!msynth->output_rfile.output))
-+	scoped_guard(spinlock_irqsave, &msynth->output_lock) {
-+		rfile = msynth->output_rfile;
-+		msynth->output_rfile = (struct snd_rawmidi_file){};
-+	}
-+
-+	if (snd_BUG_ON(!rfile.output))
- 		return -EINVAL;
--	snd_rawmidi_drain_output(msynth->output_rfile.output);
--	return snd_rawmidi_kernel_release(&msynth->output_rfile);
-+
-+	snd_use_lock_sync(&msynth->output_use_lock);
-+	snd_rawmidi_drain_output(rfile.output);
-+	return snd_rawmidi_kernel_release(&rfile);
- }
- 
- /* delete given midi synth port */
+ 	head = kzalloc(size, GFP_KERNEL);
 -- 
 2.53.0
 
