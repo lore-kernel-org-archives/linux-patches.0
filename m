@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E5D47255C;
-	Tue, 21 Jul 2026 18:44:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE77F46EF82;
+	Tue, 21 Jul 2026 18:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659482; cv=none; b=Rh+CMzBL6aIHQlGSgaF0fp+n72otL7FNyHMBv+ne0Q51L2ylliGX1g1n0mCxRArjpeZhkcLysAeegWWwUZIq8VE32TG/7KRczJsMgbS1RRBn5JgLMbCmVCWnuA8Eb5LUrljSzByoiRHOfh9vwkPRYtBa1fjdhmfyJvq4T90a+M8=
+	t=1784659485; cv=none; b=GbyLqp8fMXCAppg7IiYzQpcwW1lx1nSc8qS3GOuuA9Qmr6Dg2YyDfT7MkPo3upg+672lAqaQiz4eagco7CGGiAwjuyLj5d/Cpxp7HMfGcbqs7XQogeapnzxAt18y3L1I+OKAUSDWZPwQh1nw2HL1fw1ZqLDJIBwPitDyJa7DopI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659482; c=relaxed/simple;
-	bh=WZcmY8V/qfWEFUb/5m9fleul/TR3bW4iWcCsaJ8JTDs=;
+	s=arc-20240116; t=1784659485; c=relaxed/simple;
+	bh=gBb6rStQmPd1B/sSrzklKmUVauE6diUp6s7G/QLLA34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mlhuI+wmY3pGYhA63qD1SUF6OakC6+v1BEg4gBGJt6rU4pjgYMkPjwodDTFwnYV8kcjvH1CNFFKn5BOZ3j5YSP+nN4b+ayAoGtrwcgiFujDJz+k86NeHyM9z0fM2rKhhoixYBqb6SGQ8x/J+NVfuLoIolFxun8C/2C6zh2Gu0W4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SA21cz6C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o2cVrUdrEngLw711q+6XmfwHk55J6XoZlNGCA9C1/AkmqRp9L1/DzLSpb6jo6hSon8Xbet/Xc4eC89NpufUB5biycF/jEw/7yQH80TQIgPnqxDfdq2nbND88VUVsJa6EwJcQkaBrBCEQJ/rhI0hQYaDFpf1mIHiPDAHPxpTdM2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4/enwrk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SA21cz6C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F731F00A3D;
-	Tue, 21 Jul 2026 18:44:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4/enwrk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 306D91F00A3D;
+	Tue, 21 Jul 2026 18:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659481;
-	bh=UVaFV40cm15qfnWxNvXy6HZwBpUXj46tAp2Arl92xw0=;
+	s=korg; t=1784659483;
+	bh=cMsMaoFRBJhNHnXR44/8kZdECvtf+DwVbjuE5k5wkeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SA21cz6CTycZD0ZZg8e+WK3FGNrAj/GznuwIicKTQ6n4jzv/NiUPxiWOenhwAyerZ
-	 s89BHDTHfOTU1rnOh/+Z+rua/KGaXUsEPhmYX8LL0cBCVkx5jjOCBbqEMbrBAhTSxg
-	 n59i2MEweJe8M6wgmfWMoK11/3UMmCb2L34WKWYE=
+	b=W4/enwrkUchBjITsEARan21qLv8YPreEcmzwUcDMntXWLXU+0/C+xhg8HB2Oldla2
+	 hrlRwHkaaVMb0y50ZkEsen94oOQx3r3+Siz5p9oKCIzIdeXXIlrac5WttksdCwjY7s
+	 N8DkoYqWZmkvEliVCAfsOUKLoCRlT3Y0AIXhFMxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Nenciarini <mnencia@kcore.it>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	William Hansen-Baird <william.hansen.baird@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1538/1611] PCI: Skip Resizable BAR restore on read error
-Date: Tue, 21 Jul 2026 17:27:34 +0200
-Message-ID: <20260721152550.042145831@linuxfoundation.org>
+Subject: [PATCH 6.18 1539/1611] staging: rtl8723bs: core: move constants to right side in comparison
+Date: Tue, 21 Jul 2026 17:27:35 +0200
+Message-ID: <20260721152550.065079151@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,58 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Nenciarini <mnencia@kcore.it>
+From: William Hansen-Baird <william.hansen.baird@gmail.com>
 
-[ Upstream commit ee7471fe968d210939be9046089a924cd23c8c3b ]
+[ Upstream commit cf0f2680c30d4b438a5e84b73dc70be405936b54 ]
 
-pci_restore_rebar_state() uses the Resizable BAR Control register to decide
-how many BARs to restore (nbars) and which BAR each iteration addresses
-(bar_idx).
+Move constants to right side in if-statement conditions.
 
-When a device does not respond, config reads typically return
-PCI_ERROR_RESPONSE (~0).  Both fields are 3 bits wide, so nbars and bar_idx
-both evaluate to 7, past the spec's valid ranges for both fields.
-pci_resource_n() then returns an unrelated resource slot, whose size is
-used to derive a nonsensical value written back to the Resizable BAR
-Control register.
-
-Bail out if any Resizable BAR Control read returns PCI_ERROR_RESPONSE. No
-further BARs are touched, which is safe because a config read that returns
-PCI_ERROR_RESPONSE indicates the device is unreachable and restoration is
-pointless.
-
-Fixes: d3252ace0bc6 ("PCI: Restore resized BAR state on resume")
-Signed-off-by: Marco Nenciarini <mnencia@kcore.it>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/666cac19b5daa0ab0e0ab64454e76b4d24465dbd.1776429882.git.mnencia@kcore.it
+Signed-off-by: William Hansen-Baird <william.hansen.baird@gmail.com>
+Link: https://patch.msgid.link/20251224100329.762141-3-william.hansen.baird@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 1463ca3ec660 ("staging: rtl8723bs: fix OOB reads in rtw_get_sec_ie(), rtw_get_wapi_ie(), and rtw_get_wps_attr()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/rebar.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/staging/rtl8723bs/core/rtw_ieee80211.c |    4 ++--
+ drivers/staging/rtl8723bs/core/rtw_security.c  |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/pci/rebar.c
-+++ b/drivers/pci/rebar.c
-@@ -145,6 +145,9 @@ void pci_restore_rebar_state(struct pci_
- 		return;
+--- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
++++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
+@@ -1012,7 +1012,7 @@ static int rtw_get_cipher_info(struct wl
+ 	pbuf = rtw_get_wpa_ie(&pnetwork->network.ies[12], &wpa_ielen, pnetwork->network.ie_length-12);
  
- 	pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
-+	if (PCI_POSSIBLE_ERROR(ctrl))
-+		return;
-+
- 	nbars = FIELD_GET(PCI_REBAR_CTRL_NBAR_MASK, ctrl);
+ 	if (pbuf && (wpa_ielen > 0)) {
+-		if (_SUCCESS == rtw_parse_wpa_ie(pbuf, wpa_ielen+2, &group_cipher, &pairwise_cipher, &is8021x)) {
++		if (rtw_parse_wpa_ie(pbuf, wpa_ielen+2, &group_cipher, &pairwise_cipher, &is8021x) == _SUCCESS) {
+ 			pnetwork->bcn_info.pairwise_cipher = pairwise_cipher;
+ 			pnetwork->bcn_info.group_cipher = group_cipher;
+ 			pnetwork->bcn_info.is_8021x = is8021x;
+@@ -1022,7 +1022,7 @@ static int rtw_get_cipher_info(struct wl
+ 		pbuf = rtw_get_wpa2_ie(&pnetwork->network.ies[12], &wpa_ielen, pnetwork->network.ie_length-12);
  
- 	for (i = 0; i < nbars; i++, pos += 8) {
-@@ -152,6 +155,9 @@ void pci_restore_rebar_state(struct pci_
- 		int bar_idx, size;
+ 		if (pbuf && (wpa_ielen > 0)) {
+-			if (_SUCCESS == rtw_parse_wpa2_ie(pbuf, wpa_ielen+2, &group_cipher, &pairwise_cipher, &is8021x)) {
++			if (rtw_parse_wpa2_ie(pbuf, wpa_ielen+2, &group_cipher, &pairwise_cipher, &is8021x) == _SUCCESS) {
+ 				pnetwork->bcn_info.pairwise_cipher = pairwise_cipher;
+ 				pnetwork->bcn_info.group_cipher = group_cipher;
+ 				pnetwork->bcn_info.is_8021x = is8021x;
+--- a/drivers/staging/rtl8723bs/core/rtw_security.c
++++ b/drivers/staging/rtl8723bs/core/rtw_security.c
+@@ -1495,7 +1495,7 @@ void rtw_sec_restore_wep_key(struct adap
+ 	struct security_priv *securitypriv = &(adapter->securitypriv);
+ 	signed int keyid;
  
- 		pci_read_config_dword(pdev, pos + PCI_REBAR_CTRL, &ctrl);
-+		if (PCI_POSSIBLE_ERROR(ctrl))
-+			return;
-+
- 		bar_idx = ctrl & PCI_REBAR_CTRL_BAR_IDX;
- 		res = pci_resource_n(pdev, bar_idx);
- 		size = pci_rebar_bytes_to_size(resource_size(res));
+-	if ((_WEP40_ == securitypriv->dot11PrivacyAlgrthm) || (_WEP104_ == securitypriv->dot11PrivacyAlgrthm)) {
++	if ((securitypriv->dot11PrivacyAlgrthm == _WEP40_) || (securitypriv->dot11PrivacyAlgrthm == _WEP104_)) {
+ 		for (keyid = 0; keyid < 4; keyid++) {
+ 			if (securitypriv->key_mask & BIT(keyid)) {
+ 				if (keyid == securitypriv->dot11PrivacyKeyIndex)
 
 
