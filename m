@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C6435C682;
-	Tue, 21 Jul 2026 22:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409C8305E3B;
+	Tue, 21 Jul 2026 22:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671596; cv=none; b=lpMbZnONTP1ZXX7QfFYO5oyFbCGx9OJJhpD+LIT2jOvAogTrAsVBZXB7fTvgrf9upSdrcz1BV4lluKHy0WKTwU0Ea597xXDNB7oUn14d7g9jt6fFp7avrDjOzMBKMsbxrga87joKNTKD/F17KdybyU0LMTadSDUe4Nm+ducdrcM=
+	t=1784671599; cv=none; b=POUChvuMeFR93p0fyICT4Y/Z4lpl3Ptbam1xTa5Aka74mETQfkg+GOA3KNJGhLjlyddd8ECoAQR2LI85r/UMtsKhpItAD/m3c0/P+GFD9m/KvFyFnhDemic+dltVf+ERniW1ZhEp31ltJmOkss7AkqTW8J1c9hRPPtkH/9d/mR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671596; c=relaxed/simple;
-	bh=YpyXSYcaFclqY6eZDjsM+SvogIKHq7lUmdWuwI0F1po=;
+	s=arc-20240116; t=1784671599; c=relaxed/simple;
+	bh=DIrEF4exXhWr1H6CJUFc3we1tEBDqZOcuIoPD7bPQZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ImBydP6mIH/LRD5jLLlRPp8JjMFw4opFvXvnjgmgEuGR9I4jyGrzB4w8iOp+55M576zcouRvUsHoFvMzX10NRwE3yS/sY/zMxnCUAPaUSctEyvTWESZ0fb+i5u/Tdb6MlyMRFmWU7BHWwcFcgAbjgpVMQ6ZnvzuVtnak2VEKeWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Flyq7lLD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F9kcDft/Fo6W+Pc7Ot5CYDvrgWUQFnawGbXnqoJ/Dy+ex5oBmFuiFGgrQYRPcCO4JQrsQ042Y0yCzzSpk2NOaB7w63b5shAw+PgK+6fho3K3zzWDTU+A5YkuBecv/TKOuDYqRAgrN1rsiRJhIfaJZQ2C4WZXkptcelOFZsVizB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDYnD+s9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Flyq7lLD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A3341F000E9;
-	Tue, 21 Jul 2026 22:06:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDYnD+s9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5E7D1F000E9;
+	Tue, 21 Jul 2026 22:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671595;
-	bh=iJTHS70pm8WHFoKV4Z+X8wdZi711TGopWGK8MbjkSjE=;
+	s=korg; t=1784671598;
+	bh=P3G6UCWtqLSd1KkSfrNkR+PUr++75yseOKNaaGM6hBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Flyq7lLDRh9R4DQq/bTASsLm9BOo3ZOB1Fa5bJXLyNwXGxhxUg3c80cjQD0DzGdci
-	 6P6Mh0ocANndqUf6VZ88iaeuSlPcT+ts0ihSyOd09IMMpk1yIPyexhVGeuXygW1Q5g
-	 DEvh2nXpV1NZcPbYVXRFBRYDwVfUJlUrHVnyt7/o=
+	b=lDYnD+s9+vWphTukZt3Rn2BMXpn1NoQjfCyAwhOQh87OW92uB6rud05uzRTlRLEqr
+	 sKMM3iXBcY7maTLWJ2g3mplsDBai1Khq4ZqMmUSSap2yRtYkZbSQQTQ/FYjIyPqMMH
+	 O6fSivZpO9gXjfwlPt/8ONcocwhvxgvTbCwIa7XU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jacob Moroni <jmoroni@google.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 304/843] IB/cm: Fix av cm device leak on an error path in cm_init_av_by_path()
-Date: Tue, 21 Jul 2026 17:18:59 +0200
-Message-ID: <20260721152412.866580383@linuxfoundation.org>
+Subject: [PATCH 5.15 305/843] RDMA/irdma: Fix OOB read during CQ MR registration
+Date: Tue, 21 Jul 2026 17:19:00 +0200
+Message-ID: <20260721152412.888976356@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,85 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit 9b2207bc5cdb955bdae34b3eec80f04979e17081 ]
+[ Upstream commit 4385ddd654d90245eeb83b3cb539670ab5c85ba4 ]
 
-Codex pointed out that cm_init_av_by_path() can call cm_set_av_port()
-which takes a reference on the cm device, but then can immediately return
-error if ib_init_ah_attr_from_path() fails.
+Sashiko pointed out an unrelated bug during a previous patch:
+https://sashiko.dev/#/patchset/20260512183852.614045-1-jmoroni%40google.com
 
-Since callers like ib_send_cm_req() put the av on the stack this leaks
-that cm device reference.
+This change fixes the bug by eliminating the cqmr->split field which
+was not being set properly and instead just checks the CQ resize
+feature flag directly.
 
-Re-order cm_init_av_by_path() so it doesn't touch the av until it has done
-all its failable work, and then update the av in one shot so it is either
-left alone or fully init'd.
+The cqmr->split field essentially tracks whether IRDMA_FEATURE_CQ_RESIZE
+is set, but it was not being set until CQ creation time, which is _after_
+CQ memory registration (the only other place where it is referenced).
 
-Sashiko also pointed out that the cm_destroy_av() prior to
-cm_init_av_by_path() is harmful as it leaves the AV broken in the error
-case and thus the REJ won't send. Since cm_init_av_by_path() is now atomic
-it is safe to delete the cm_destroy_av(). On succees the av from
-cm_init_av_for_response() is cleaned up by cm_init_av_by_path(), on
-failure the 'goto rejected' guarentees the av is destroyed during
-ib_destroy_cm_id().
+As a result, it would always be false during MR registration and would
+therefore cause irdma_handle_q_mem to populate cqmr->shadow even for GEN_2
+HW and beyond:
 
-Fixes: 76039ac9095f ("IB/cm: Protect cm_dev, cm_ports and mad_agent with kref and lock")
-Link: https://patch.msgid.link/r/0-v1-38292501f539+14f-ib_cm_av_leak_jgg@nvidia.com
+    cqmr->shadow = (dma_addr_t)arr[req->cq_pages];
+
+The issue is that for GEN_2 and beyond, req->cq_pages may be exactly equal
+to iwmr->page_cnt and therefore equal to the size of arr, which would cause
+an OOB read by one.
+
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Link: https://patch.msgid.link/r/20260602214423.1315105-2-jmoroni@google.com
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cm.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/infiniband/hw/irdma/verbs.c | 4 ++--
+ drivers/infiniband/hw/irdma/verbs.h | 1 -
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/core/cm.c b/drivers/infiniband/core/cm.c
-index 5dc864cec9f838..e93287b969f762 100644
---- a/drivers/infiniband/core/cm.c
-+++ b/drivers/infiniband/core/cm.c
-@@ -513,6 +513,7 @@ static int cm_init_av_by_path(struct sa_path_rec *path,
- 	struct rdma_ah_attr new_ah_attr;
- 	struct cm_device *cm_dev;
- 	struct cm_port *port;
-+	u16 pkey_index;
- 	int ret;
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index f6409fa1d33b82..e6cf2734c684a8 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -2024,7 +2024,6 @@ static int irdma_create_cq(struct ib_cq *ibcq,
+ 			}
+ 			cqmr_shadow = &iwpbl_shadow->cq_mr;
+ 			info.shadow_area_pa = cqmr_shadow->cq_pbl.addr;
+-			cqmr->split = true;
+ 		} else {
+ 			info.shadow_area_pa = cqmr->shadow;
+ 		}
+@@ -2400,7 +2399,8 @@ static int irdma_handle_q_mem(struct irdma_device *iwdev,
+ 	case IRDMA_MEMREG_TYPE_CQ:
+ 		hmc_p = &cqmr->cq_pbl;
  
- 	port = get_cm_port_from_path(path, sgid_attr);
-@@ -521,12 +522,10 @@ static int cm_init_av_by_path(struct sa_path_rec *path,
- 	cm_dev = port->cm_dev;
+-		if (!cqmr->split)
++		if (!(iwdev->rf->sc_dev.hw_attrs.uk_attrs.feature_flags &
++		      IRDMA_FEATURE_CQ_RESIZE))
+ 			cqmr->shadow = (dma_addr_t)arr[req->cq_pages];
  
- 	ret = ib_find_cached_pkey(cm_dev->ib_device, port->port_num,
--				  be16_to_cpu(path->pkey), &av->pkey_index);
-+				  be16_to_cpu(path->pkey), &pkey_index);
- 	if (ret)
- 		return ret;
+ 		if (use_pbles)
+diff --git a/drivers/infiniband/hw/irdma/verbs.h b/drivers/infiniband/hw/irdma/verbs.h
+index 13c66908411f75..9604d9dc2784c0 100644
+--- a/drivers/infiniband/hw/irdma/verbs.h
++++ b/drivers/infiniband/hw/irdma/verbs.h
+@@ -56,7 +56,6 @@ struct irdma_hmc_pble {
+ struct irdma_cq_mr {
+ 	struct irdma_hmc_pble cq_pbl;
+ 	dma_addr_t shadow;
+-	bool split;
+ };
  
--	cm_set_av_port(av, port);
--
- 	/*
- 	 * av->ah_attr might be initialized based on wc or during
- 	 * request processing time which might have reference to sgid_attr.
-@@ -541,6 +540,8 @@ static int cm_init_av_by_path(struct sa_path_rec *path,
- 	if (ret)
- 		return ret;
- 
-+	av->pkey_index = pkey_index;
-+	cm_set_av_port(av, port);
- 	av->timeout = path->packet_life_time + 1;
- 	rdma_move_ah_attr(&av->ah_attr, &new_ah_attr);
- 	return 0;
-@@ -2175,8 +2176,10 @@ static int cm_req_handler(struct cm_work *work)
- 				 cm_id_priv->av.ah_attr.roce.dmac);
- 	work->path[0].hop_limit = grh->hop_limit;
- 
--	/* This destroy call is needed to pair with cm_init_av_for_response */
--	cm_destroy_av(&cm_id_priv->av);
-+	/*
-+	 * cm_init_av_by_path() will internally pair with the above
-+	 * cm_init_av_for_response() if it succeeds.
-+	 */
- 	ret = cm_init_av_by_path(&work->path[0], gid_attr, &cm_id_priv->av);
- 	if (ret) {
- 		int err;
+ struct irdma_qp_mr {
 -- 
 2.53.0
 
