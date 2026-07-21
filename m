@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0AF1408617;
-	Tue, 21 Jul 2026 22:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8653B52FF;
+	Tue, 21 Jul 2026 22:13:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672011; cv=none; b=oMvm9CrrTYauqcPxQDKebNwHImsp+Sme0feO4jl1Gi61PCL3hnM2bz/8szCmvEleKBaweqxpx3EkXR0/2rj38vZSNNoiJghy60MdNVL0uSp/LVxia5aj3yY6jw0dNbZkpVSO9SFkon7larMO1oM7UqlbmT1MWoeaxARSmMouWOY=
+	t=1784672014; cv=none; b=SKWraPfQqbH+QtQxQrf4bmheFKMoXrzrLk9G6AsNTWTS9/HLzBQ9sEa3l903gGtc2IIQKARFnYojbCRld1LUg+rm0uo1Tpk0AwkhHnVqkIG07jAzfc7M6wsR3zlHq073hZ1nUaMDxxZpx4Y1k9rTw4h86S2m9LGn0a1lWufpbUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672011; c=relaxed/simple;
-	bh=bhVW4PcjtHSIHfy2ol4bWGzQ+MvCT/scideKZcutNOY=;
+	s=arc-20240116; t=1784672014; c=relaxed/simple;
+	bh=kabwmLGYScUX3pXat9nMZ3BYjV1fTQIS5SjOpwpp99c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NA9ZIM+6UJri9w0N0M0FvjQqmz8+lDm9YIeKpvzRJ1ZxU+CzNeey0LKFf+thlkVJrICELnEO2sZ8DAFZoW1sjdFiHOQ2YKIkg74BBzAmNKQO7rQMWSGIX0c9i0qVws100kKy0kFWZ0gk8xOah8GJRtzG3z+LsKxfWygXqmcimNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVRtrfr3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TWF0UydHbrbOukBTApKCMyzAdXCwFO3e47h3a8XkYvjH/z8xahJ1jyHWffKb0uY1+aojkyzyB46vjHif7vJ18A5Mj1iZCxrz6RMkRvxTeL8ArcK6w9BXcul+lGvJp4BD4VJloAR3SpfvQlSr7otIhl7lGUPRi/rffWA84pv5M/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rAucmLq8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVRtrfr3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22CF21F000E9;
-	Tue, 21 Jul 2026 22:13:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rAucmLq8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93ED1F000E9;
+	Tue, 21 Jul 2026 22:13:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672010;
-	bh=kyMqGhNP7oblMJOzIJe7lKahIMJlSxCPXuaA9cl4lXY=;
+	s=korg; t=1784672013;
+	bh=eHBfXj6/lijdlhgt8PGLCl1OPEMlBCfmGvenxBld6Rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mVRtrfr3fNRm/4Qlc+mS9NHzjoV1k1wUVQE/OOypDLTJKiG025OU8F7AYKIE5Etet
-	 mZolPyvoSUUqCjKaQyYYQMRkXqcwfJB/ohRyrwPAyVgezTSd7WWwomCiSbTvdpVThq
-	 Ra3zdmedVJR3UfUHdoy0sjtNA/NmGpL4Ow8GrLdQ=
+	b=rAucmLq80gBVffD8z8WQwSHK78tXc7iobLC9KQ6QL7bXHwtaYcKYhc9VpEn72nvwB
+	 kqNIuyFk8KFSrFPcXfkyAfV3OuL/CxG/4YzzLGXJjqYORr+QIEvbXAKLAji3dwaUot
+	 BxTyIY+Lt6mi/Da67eXbfdZioqb3yE93/tCni7y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Portnoy <dddhkts1@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 464/843] ksmbd: fix use-after-free of conn->preauth_info in concurrent SMB2 NEGOTIATE
-Date: Tue, 21 Jul 2026 17:21:39 +0200
-Message-ID: <20260721152416.473828994@linuxfoundation.org>
+Subject: [PATCH 5.15 465/843] ipv6: Fix null-ptr-deref in fib6_nh_mtu_change().
+Date: Tue, 21 Jul 2026 17:21:40 +0200
+Message-ID: <20260721152416.496676585@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,73 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gil Portnoy <dddhkts1@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 0c054227479ed7e36ebccb3a558bc0ef698264f6 ]
+[ Upstream commit 46c3b8191aad3d032776bf3bebf03efdf5f4b905 ]
 
-conn->preauth_info is shared connection state (struct
-preauth_integrity_info, kmalloc-96) that is allocated and freed by the
-SMB2 NEGOTIATE handler and read by the response send path.
+fib6_nh_mtu_change() re-fetches idev via __in6_dev_get(arg->dev) and
+dereferences idev->cnf.mtu6 without a NULL check. addrconf_ifdown()
+clears dev->ip6_ptr with RCU_INIT_POINTER() after rt6_disable_ip() has
+released tb6_lock, so the RA-driven MTU walk can observe a NULL idev and
+oops. The caller rt6_mtu_change_route() guards its own __in6_dev_get(),
+but this re-fetch is unguarded; nexthop-backed routes survive
+addrconf_ifdown()'s flush, so the walk still reaches it after ip6_ptr is
+nulled.
 
-smb2_handle_negotiate() allocates conn->preauth_info, and on a
-deassemble_neg_contexts() failure kfrees it and sets it to NULL. Both the
-allocation and the free/NULL happen under ksmbd_conn_lock(conn) (the
-connection srv_mutex), which is held across the whole handler body.
+Return 0 when idev is NULL, matching rt6_mtu_change_route() and the
+fib6_mtu() fix in commit 5ad509c1fdad ("ipv6: Fix null-ptr-deref in
+fib6_mtu().").
 
-The response send path smb3_preauth_hash_rsp(), called from the send:
-block of __handle_ksmbd_work(), reads conn->preauth_info and dereferences
-conn->preauth_info->Preauth_HashValue (via
-ksmbd_gen_preauth_integrity_hash()) without taking conn_lock. When a
-client drives two SMB2 NEGOTIATE requests on the same connection, one
-worker can free conn->preauth_info on the failing-negotiate path while a
-concurrent send-path worker is reading it, producing a slab
-use-after-free read (KASAN-confirmed).
+  Oops: general protection fault, ... KASAN: null-ptr-deref in range
+        [0x00000000000002a8-0x00000000000002af]
+  RIP: 0010:fib6_nh_mtu_change+0x203/0x990
+   rt6_mtu_change_route+0x141/0x1d0
+   __fib6_clean_all+0xd0/0x160
+   rt6_mtu_change+0xb4/0x100
+   ndisc_router_discovery+0x24b5/0x2cb0
+   icmpv6_rcv+0x12e9/0x1710
+   ipv6_rcv+0x39b/0x410
 
-The send-path read tested conn->preauth_info for NULL but raced with the
-free that occurs between the NULL check and the dereference, so the NULL
-guard alone does not close the window.
-
-Serialize the NEGOTIATE-branch read in smb3_preauth_hash_rsp() under
-ksmbd_conn_lock(conn) and re-check conn->preauth_info inside the lock.
-Because the negotiate handler holds conn_lock across its kfree + NULL
-assignment, a reader that also takes conn_lock either runs fully before
-the allocation or fully after the NULL store, and can never observe the
-freed-but-not-yet-NULLed pointer. ksmbd_gen_preauth_integrity_hash()
-takes no locks itself (it only computes a SHA-512 over the buffer), so
-no lock-ordering inversion is introduced, and conn_lock is a sleepable
-mutex which is safe on this send path (it already performs network I/O).
-
-Fixes: aa7253c2393f ("ksmbd: fix memory leak in smb2_handle_negotiate")
-Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: c0b220cf7d80 ("ipv6: Refactor exception functions")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260619045334.2427073-1-xmei5@asu.edu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/smb2pdu.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/ipv6/route.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index 496e1b50700d03..5daf02c22d5a46 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -8604,10 +8604,13 @@ void smb3_preauth_hash_rsp(struct ksmbd_work *work)
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 907b3282924678..cb1cf7d5946ff4 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -4941,6 +4941,9 @@ static int fib6_nh_mtu_change(struct fib6_nh *nh, void *_arg)
+ 		struct inet6_dev *idev = __in6_dev_get(arg->dev);
+ 		u32 mtu = f6i->fib6_pmtu;
  
- 	WORK_BUFFERS(work, req, rsp);
- 
--	if (le16_to_cpu(req->Command) == SMB2_NEGOTIATE_HE &&
--	    conn->preauth_info)
--		ksmbd_gen_preauth_integrity_hash(conn, work->response_buf,
--						 conn->preauth_info->Preauth_HashValue);
-+	if (le16_to_cpu(req->Command) == SMB2_NEGOTIATE_HE) {
-+		ksmbd_conn_lock(conn);
-+		if (conn->preauth_info)
-+			ksmbd_gen_preauth_integrity_hash(conn, work->response_buf,
-+							 conn->preauth_info->Preauth_HashValue);
-+		ksmbd_conn_unlock(conn);
-+	}
- 
- 	if (le16_to_cpu(rsp->Command) == SMB2_SESSION_SETUP_HE && sess) {
- 		__u8 *hash_value;
++		if (!idev)
++			return 0;
++
+ 		if (mtu >= arg->mtu ||
+ 		    (mtu < arg->mtu && mtu == idev->cnf.mtu6))
+ 			fib6_metric_set(f6i, RTAX_MTU, arg->mtu);
 -- 
 2.53.0
 
