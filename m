@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180C843B6FD;
-	Tue, 21 Jul 2026 21:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76CD444AB62;
+	Tue, 21 Jul 2026 21:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667788; cv=none; b=iL/WGTYuOHE8LAjs0Hg8JR+P5oPqPelb33Cno//H4afQ03/RwTrzbZYQPI2UA7QV/ch21FIB6MDI8dKU7T8qFwWPysKc5UEgZFpSQZqhwuxOhvnbFAeoE+IUyIoqIod6rd03kDeZq1d9GJNE/BKiV6iCHZMIhSB1m6FHa0OJgW4=
+	t=1784667789; cv=none; b=jHTjNl5pC3XfLii5SVN/i+JQxGept//OdN2zV0dOqk0Ftip4asiSUu36kVC1aNiCrRB95kraepbteOtpB1C4jvOMZ0jyqAWkl0826/6T4TJoxZFR8jb/MnsdF6KU85XkPch2Ia4RB4CSM+ZfaEFeTNstRsCGoMVJmNv0cEeMPdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667788; c=relaxed/simple;
-	bh=092hM5afSKsod356i40oJEcVBDZBMhN8KntLqU68ARA=;
+	s=arc-20240116; t=1784667789; c=relaxed/simple;
+	bh=FaWTkWKq/yhPwtAQtuzoV1CAjqFeGLWJUJyIrteupvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=buSxgPE7HiDukFoeMXjlT4Y9uzLcWGw32Xc91moPv91UbuVKfJovN9Dg/d5K3Vaybgs/CJ52NSmObm7PLTdqYHnVuD2mFXfXZWCx+eYRPMOlzEYcqKcXiS3cbMdm2D3sSZIS9F/31nPrfq1WTr7ouX60djYL9reqOekm4wR6pK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=is2itl4m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hCAXnSgQij8QUcOyoGUUPSAOwewX9x/6YHmaz8dh7uMsRscQBrrfomffpSAETRaClMr5i1+9/ZiP0gV422df3ngdzkpFlP8BAp7GYgLR9erjATGwncsQ3EY1RZhwtjokPkH1BXu7IDBq9cGJVZxqZsEMp7G/GNZ96OgK88nDwB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EToPgDXI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="is2itl4m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2781F00A3D;
-	Tue, 21 Jul 2026 21:02:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EToPgDXI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FFBE1F00A3A;
+	Tue, 21 Jul 2026 21:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667779;
-	bh=Z1T9JSO8NHafdjjDR6r+f8EegYhHVAAENsT+zU0H/u4=;
+	s=korg; t=1784667784;
+	bh=VWQ+CZmx+NzoE22PG8w6FIbm0OlMPA5Bzjy54m4Uyl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=is2itl4mlCm4j6+wY11QCzQVO+ltJwv/JAuTbJq/zlvKT3s5HdEgqUAiqXukvtCcr
-	 PboCx/1EPKz2eeos9Rab2dD5SH9aPMo9+MsKR7tdM/GqQiU/N4Pure66/qgu+Yfb2D
-	 Wdcxvi0iMzy7UEAYKEmxq0L/YL+4GAxDJygtiawg=
+	b=EToPgDXISNVnmd4IFT5U6CA0YnOo1Dns+A8mw7eoXBvRzzAssVgGVh7DRVjhsEa0D
+	 cvInlG6zAghzpK6k4aOALFxkGK4Qsu6BJxLqNcG8pUYxOCot7mVZKhNgDHiT8fsla7
+	 ABSgOe5gQv0vFB7jbvyXQFtvW+c4jML4y8yc6KPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1153/1266] ACPI: NFIT: core: Use devm_acpi_install_notify_handler()
-Date: Tue, 21 Jul 2026 17:26:30 +0200
-Message-ID: <20260721152507.583140136@linuxfoundation.org>
+Subject: [PATCH 6.6 1190/1266] netfilter: ebtables: Use vmalloc_array() to improve code
+Date: Tue, 21 Jul 2026 17:27:07 +0200
+Message-ID: <20260721152508.425819724@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,62 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-[ Upstream commit 198541ad53c0d0d891fedea4098f9953a0f566c0 ]
+[ Upstream commit 46015e6b3ea75297b28d4806564f3f692cf11861 ]
 
-Now that devm_acpi_install_notify_handler() is available, use it in
-acpi_nfit_probe() instead of a custom devm action removing an ACPI
-notify handler installed via acpi_dev_install_notify_handler().
+Remove array_size() calls and replace vmalloc() with vmalloc_array() to
+simplify the code.  vmalloc_array() is also optimized better, uses fewer
+instructions, and handles overflow more concisely[1].
 
-Also drop the explicit ACPI_COMPANION() check against NULL that is
-not necessary any more becuase devm_acpi_install_notify_handler()
-carries out an equivalent check internally and use ACPI_HANDLE() to
-retrieve the platform device's ACPI handle.
-
-No intentional functional impact.
-
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/3048737.e9J7NaK4W3@rafael.j.wysocki
-Stable-dep-of: 18a00ed0e718 ("ACPI: NFIT: core: Fix possible deadlock and missing notifications")
+[1]: https://lore.kernel.org/lkml/abc66ec5-85a4-47e1-9759-2f60ab111971@vivo.com/
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: cbfe53599eeb ("netfilter: ebtables: zero chainstack array")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/nfit/core.c |   17 ++---------------
- 1 file changed, 2 insertions(+), 15 deletions(-)
+ net/bridge/netfilter/ebtables.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/acpi/nfit/core.c
-+++ b/drivers/acpi/nfit/core.c
-@@ -3298,14 +3298,6 @@ static void acpi_nfit_notify(acpi_handle
- 	device_unlock(&adev->dev);
- }
+--- a/net/bridge/netfilter/ebtables.c
++++ b/net/bridge/netfilter/ebtables.c
+@@ -923,8 +923,8 @@ static int translate_table(struct net *n
+ 		 * if an error occurs
+ 		 */
+ 		newinfo->chainstack =
+-			vmalloc(array_size(nr_cpu_ids,
+-					   sizeof(*(newinfo->chainstack))));
++			vmalloc_array(nr_cpu_ids,
++				      sizeof(*(newinfo->chainstack)));
+ 		if (!newinfo->chainstack)
+ 			return -ENOMEM;
+ 		for_each_possible_cpu(i) {
+@@ -941,7 +941,7 @@ static int translate_table(struct net *n
+ 			}
+ 		}
  
--static void acpi_nfit_remove_notify_handler(void *data)
--{
--	struct acpi_device *adev = data;
--
--	acpi_dev_remove_notify_handler(adev, ACPI_DEVICE_NOTIFY,
--				       acpi_nfit_notify);
--}
--
- void acpi_nfit_shutdown(void *data)
- {
- 	struct acpi_nfit_desc *acpi_desc = data;
-@@ -3350,13 +3342,8 @@ static int acpi_nfit_add(struct acpi_dev
- 	acpi_size sz;
- 	int rc = 0;
+-		cl_s = vmalloc(array_size(udc_cnt, sizeof(*cl_s)));
++		cl_s = vmalloc_array(udc_cnt, sizeof(*cl_s));
+ 		if (!cl_s)
+ 			return -ENOMEM;
+ 		i = 0; /* the i'th udc */
+@@ -1021,8 +1021,8 @@ static int do_replace_finish(struct net
+ 	 * the check on the size is done later, when we have the lock
+ 	 */
+ 	if (repl->num_counters) {
+-		unsigned long size = repl->num_counters * sizeof(*counterstmp);
+-		counterstmp = vmalloc(size);
++		counterstmp = vmalloc_array(repl->num_counters,
++					    sizeof(*counterstmp));
+ 		if (!counterstmp)
+ 			return -ENOMEM;
+ 	}
+@@ -1389,7 +1389,7 @@ static int do_update_counters(struct net
+ 	if (num_counters == 0)
+ 		return -EINVAL;
  
--	rc = acpi_dev_install_notify_handler(adev, ACPI_DEVICE_NOTIFY,
--					     acpi_nfit_notify);
--	if (rc)
--		return rc;
--
--	rc = devm_add_action_or_reset(dev, acpi_nfit_remove_notify_handler,
--					adev);
-+	rc = devm_acpi_install_notify_handler(dev, ACPI_DEVICE_NOTIFY,
-+					      acpi_nfit_notify);
- 	if (rc)
- 		return rc;
+-	tmp = vmalloc(array_size(num_counters, sizeof(*tmp)));
++	tmp = vmalloc_array(num_counters, sizeof(*tmp));
+ 	if (!tmp)
+ 		return -ENOMEM;
+ 
+@@ -1531,7 +1531,7 @@ static int copy_counters_to_user(struct
+ 	if (num_counters != nentries)
+ 		return -EINVAL;
+ 
+-	counterstmp = vmalloc(array_size(nentries, sizeof(*counterstmp)));
++	counterstmp = vmalloc_array(nentries, sizeof(*counterstmp));
+ 	if (!counterstmp)
+ 		return -ENOMEM;
  
 
 
