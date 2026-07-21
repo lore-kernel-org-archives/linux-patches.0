@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEEC3400DFC;
-	Tue, 21 Jul 2026 20:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F86F414A27;
+	Tue, 21 Jul 2026 20:01:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664070; cv=none; b=pv4C4l4TFWX6c+O2bUTcVoerv2AYSRv+HiuARln+6OF5nnMctXWFNgeY3FKRHRnSu8VkNA48Ba0IA598F5pWS2ckYjsZ1TIuxKTJoUC/WTbeHWKr0rzM9ZlzdzCNSm6JhXPu7cnlRqz2ew8EdGN75J2tBzj6UofwZuANIfjsQEw=
+	t=1784664073; cv=none; b=MluEXe9DvitVwemKvuxz/WYwsgHu/U5xlarFfc3IBgG1GovoiPZJxjh/hyiR4laAz+TFFJ2TpUiFbbpt4G3d5WLrd9iL9e1FDM8QL95jSNKOO+cqkvuSkVVo3X7vDexD3tVZhGmSkWWTJsColidLKC9XBF+lyz4I6sD2ocOg28Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664070; c=relaxed/simple;
-	bh=zFJqgOKh+n21JVy4HxE9mSUhhOWS3jg2cePkDudEjag=;
+	s=arc-20240116; t=1784664073; c=relaxed/simple;
+	bh=RFFSj2wCWWF4EyzDcaftZoPPBvkmDlT7dVKZnTArGmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=V1F6VFMxK8owNscBTcr8YWw4xcORN1n5ZCld1KHlfBEH9Ifu89nyQYUIsP0qrgHl6kbBq/IDjPaDAnOR/RsXuq3CKCunzPBW3p5BdTcJFa5de/OF1AeuCOmgCVsV2Z5xfYzCX289Zhkjl33/swkNXFUzu2CyUHsTHSiCv5bISzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFniRNTN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=au+wJ6ww80ow1SW02ORHM8kwryfwwX715gx0fUVOYYcbeRotZbTyno0CYpI2IooUFQoH/Cp6V+dKN+KgXS7kJHELO635Uy6hZRcUB4SRWmY7RWZKImJPmXTV+n0eDhVvcRKOo6zmkrOAI/4JKxEke1J7OSw25Q2ufgl66cwIw5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0zU68f1I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFniRNTN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD7A1F000E9;
-	Tue, 21 Jul 2026 20:01:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0zU68f1I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF8C1F000E9;
+	Tue, 21 Jul 2026 20:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664069;
-	bh=wVsIAH6HCBtpY4gqHyyj60E+Z9QG8kEmJvCjCbAus2U=;
+	s=korg; t=1784664072;
+	bh=TgcIcXlKuPXp5z80+s8wdSysU+mI2q565YACeYv0BQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WFniRNTNx5Fb8g2pCFYhxlnpDM+N5CUXj3rr/iux+8nHNmUFFb2bXNgey+8mewlyG
-	 /tn4FRm0Y8wbDKJr9VgVodHMoIF9X2BY0MozDEQ4IiV9WgiXWv6H2bdhavKhzWunyq
-	 86dGNmCkp6u7Iw99RuQ83+XVbmczs0OmnfCxzeoI=
+	b=0zU68f1I/8zhmPwEEawBX4qi+OBT6Lm75YxQnS6Xp/ZPxAfkvadsCs4kFK8vJ3Ypo
+	 TQ78H6iB6lBBgsrEulqhUGzmiBcernEzRVzyYyQWuIQxb1PqWtNhafijClcdLxvsUh
+	 ++50b29FmfhglJw3yNEVDIhoOSJddLa72DoVvMR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Daniel Gibson <daniel@gibson.sh>
-Subject: [PATCH 6.12 1059/1276] platform/x86/amd/pmc: Avoid logging "(null)" for DMI values
-Date: Tue, 21 Jul 2026 17:25:02 +0200
-Message-ID: <20260721152509.686298781@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.12 1018/1276] scsi: sg: Report request-table problems when any status is set
+Date: Tue, 21 Jul 2026 17:24:21 +0200
+Message-ID: <20260721152508.782171152@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -45,55 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Gibson <daniel@gibson.sh>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit a0738abd042f7406edd2175a819cf2e66388ed97 upstream.
+commit 1d3a742afeb761eaead774691bde1ced699e9a5d upstream.
 
-dmi_get_system_info(...) can return NULL. Using that as %s arguments
-of dev_info() would log "(null)" (as part of a message like
-'... System Vendor: "(null)", Product Name: "(null)" ...'), which may
-be confusing for users.
+SG_GET_REQUEST_TABLE reports per-request diagnostic state through
+sg_req_info::problem. The field is meant to indicate whether there is an
+error to report for a completed request.
 
-Use Elvis operator to print "(Unknown)" instead.
+sg_fill_request_table() currently combines masked_status, host_status
+and driver_status with bitwise AND. This only reports a problem when all
+three status fields are non-zero at the same time. A normal target check
+condition, for example, has masked_status set while host_status and
+driver_status may both be zero, so the request is incorrectly reported
+as clean.
 
-Fixes: 428b9fd2dce5 ("platform/x86/amd/pmc: Add delay_suspend module parameter")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202606251540.Nr2BtaNu-lkp@intel.com/
-Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Daniel Gibson <daniel@gibson.sh>
-Link: https://patch.msgid.link/20260626220210.1761783-2-daniel@gibson.sh
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Use the same condition as sg_new_read(), which sets SG_INFO_CHECK when
+any of the three status fields is non-zero.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/54B60C19F7DB8889+20260707030845.970018-1-raoxu@uniontech.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd/pmc/pmc.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/scsi/sg.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/drivers/platform/x86/amd/pmc/pmc.c
-+++ b/drivers/platform/x86/amd/pmc/pmc.c
-@@ -921,11 +921,11 @@ static bool amd_pmc_want_suspend_delay(s
- 	} else if (delay_suspend == 1) {
- 		if (!intermediate_wakeup)
- 			dev_info(pdev->dev, "Delaying suspend by 2.5s because delay_suspend=1. If this solves problems on your machine, please report this whole line to: platform-driver-x86@vger.kernel.org so it can be automatically detected as affected in the future. System Vendor: \"%s\" Product Name: \"%s\" Product Family: \"%s\" Board Vendor: \"%s\" Board Name: \"%s\"\n",
--				 dmi_get_system_info(DMI_SYS_VENDOR),
--				 dmi_get_system_info(DMI_PRODUCT_NAME),
--				 dmi_get_system_info(DMI_PRODUCT_FAMILY),
--				 dmi_get_system_info(DMI_BOARD_VENDOR),
--				 dmi_get_system_info(DMI_BOARD_NAME));
-+				 dmi_get_system_info(DMI_SYS_VENDOR) ?: "(Unknown)",
-+				 dmi_get_system_info(DMI_PRODUCT_NAME) ?: "(Unknown)",
-+				 dmi_get_system_info(DMI_PRODUCT_FAMILY) ?: "(Unknown)",
-+				 dmi_get_system_info(DMI_BOARD_VENDOR) ?: "(Unknown)",
-+				 dmi_get_system_info(DMI_BOARD_NAME) ?: "(Unknown)");
- 		return true;
- 	}
- 	return false;
+--- a/drivers/scsi/sg.c
++++ b/drivers/scsi/sg.c
+@@ -862,10 +862,9 @@ sg_fill_request_table(Sg_fd *sfp, sg_req
+ 		if (val >= SG_MAX_QUEUE)
+ 			break;
+ 		rinfo[val].req_state = srp->done + 1;
+-		rinfo[val].problem =
+-			srp->header.masked_status &
+-			srp->header.host_status &
+-			srp->header.driver_status;
++		rinfo[val].problem = srp->header.masked_status ||
++					     srp->header.host_status ||
++					     srp->header.driver_status;
+ 		if (srp->done)
+ 			rinfo[val].duration =
+ 				srp->header.duration;
 
 
