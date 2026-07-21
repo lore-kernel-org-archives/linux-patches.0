@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9481B47127D;
-	Tue, 21 Jul 2026 18:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F951471262;
+	Tue, 21 Jul 2026 18:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657887; cv=none; b=gX81iA/km4YRTMQ2YMw3QXcAmsRCbWtNWsstG737jMxT5lNiUJUcQzH50Az+6YVbV/VqfTP3i6l4gkEYbBDcDKtTGTrZFxh2M8uKdt/qCw4visaHsXTu/i2Nmg8w8fryOH+xEAvE+uqrumQ/HFoMJD+c+UCC7xPMRT6fGTYDvUI=
+	t=1784657890; cv=none; b=a1wseMhnPTonZpw9j5dgtude/HaM61qTZU3ywe1PQDP6tOp9OkkI1tQh8kINBhz6QAF1hK3C+43aRFoKyluhCe3hRfOc/e39PEl9A446X6wGeBVHr/dSbBcXo5TFPcud9UGzcFlQykDYPj89asllWRPK7O2TZD04rhIjojHukdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657887; c=relaxed/simple;
-	bh=3PnexQLznrgbKynBr/ZrMidf0VgVnPu9+u+YmawvC70=;
+	s=arc-20240116; t=1784657890; c=relaxed/simple;
+	bh=bQbSdskbxpF3aZhAR19nzZxt71XrmyqYbOeaEpvbMv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EGYVdGYkoaA/opkOMyhWft4lswNfR7kNN3Wcb2VdSCdtUsrZeEtDHmouluV8opN5BlgrYxtPUsslDwZyFHYNbFu5tj0Gf6ya6OR2cJaKxINmiYUmjIKD2hYw/VMU44hNt5NDggXbho1UE9jfGWvxhbiJNDE+QTufI9nBjwKly54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IF4Ds7xz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KgFWkIxjCNj5b3QfsbQnhS0RjJRc3edIpZpAWAXFwNA3p83+rFnU/7H/qoy2CeDxjjacyffkVzg9QKYbrHL8l+76VJgkIhS8IboaxUwMQ9+Ze0eVzipMrAb9TRDTb2kSa+9wZomPvuWH3Yvw5ya1AvqaEVoR3Sy5X/IFUvT6DH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QuVbbawA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IF4Ds7xz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C869E1F000E9;
-	Tue, 21 Jul 2026 18:18:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QuVbbawA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8414B1F000E9;
+	Tue, 21 Jul 2026 18:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657886;
-	bh=AxiqhrKQqNQJXbu6M3yBQKWmHXU+1RvCZAlgc08CcqE=;
+	s=korg; t=1784657889;
+	bh=EpGxXUlilDjgRURnzGOoYpI8wmnVz0LcgIQ544+R0jQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IF4Ds7xzZdDeTC481jbLNNisq2WF7vu0e6Ze9YjS8J9ChF0N5HMm+5EWtXdmHGwVN
-	 uk/TgcLGw91PEzKhUt1o3WE+DoKCun7YsijekLj0ZsIfSALs/2uYUIK6U8mxeVadCt
-	 woBARWjm190AavWkVPGsytWmJTqZix3I2r4HraqM=
+	b=QuVbbawAIoyVbFINvBLkOkoivFUXFtzFfVZtoLkW72tBeu9Cc8SNZP2yCX0UJrrtN
+	 AqC6GX5SDlH7VWl1dvsF9TFmW9cLpnoDPGGQy6F6GlGU06disCyk6MiTxxpgBkHD8A
+	 mc0GpoEoYuGQCBe4wRn5lgWTVzQVbGhSptVKQsoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>,
-	Fredrik M Olsson <fredrik.m.olsson@axis.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0928/1611] rtc: ds1307: Fix off-by-one issue with wday for rx8130
-Date: Tue, 21 Jul 2026 17:17:24 +0200
-Message-ID: <20260721152536.259761917@linuxfoundation.org>
+Subject: [PATCH 6.18 0937/1611] LoongArch: BPF: Fix outdated tail call comments
+Date: Tue, 21 Jul 2026 17:17:33 +0200
+Message-ID: <20260721152536.463437205@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,48 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fredrik M Olsson <fredrik.m.olsson@axis.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit 6882aab3c66112b33b251be95c09c8ead3e8d580 ]
+[ Upstream commit 25d9127bb0e27275d55a5b3d0fd30b04bafffd5a ]
 
-The RTC represent each weekday with a individual bit set in the WDAY
-register, where the 0th bit represent the first day of the week and the
-6th bit represents the last day of the week. For each passed day the
-chip performs a rotary-left-shift by one to advance the weekday by one.
+The current LoongArch BPF JIT implementation hardcodes the number of
+prologue instructions skipped during a tail call as a magic number '7'
+in the jirl instruction. However, the accompanying comment explaining
+this offset is completely outdated. It inaccurately states that only
+a single TCC initialization instruction is bypassed, but in reality,
+multiple setup slots are skipped, so fix these outdated comments in
+__build_epilogue().
 
-The tm_wday field represent weekdays by a value in the range of 0-6.
+While at it, refine the comments in build_prologue() to describe the
+skipped setup slots (RA saving, fentry nops, and the TCC register slot)
+using proper dynamic tracing context. Also, remove the magic number '7'
+by introducing descriptive macros to formally define the prologue layout
+and make the tail call jump offset self-documenting.
 
-The fls() function return the bit index of the last bit set. To handle
-when there are no bits set it will return 0, and if the 0th bit is set
-it will return 1, and if the 1st bit is set it will return 2, and so on.
-
-In order to make the result of the fls() function fall into the expected
-range of 0-6 (instead of 1-7) this patch subtracts one from the result
-(which matches how the value is written in ds1307_set_time()).
-
-Fixes: 204756f016726 ("rtc: ds1307: Fix wday settings for rx8130")
-Reviewed-by: Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>
-Signed-off-by: Fredrik M Olsson <fredrik.m.olsson@axis.com>
-Link: https://patch.msgid.link/20260520-ds1307-rx8901-add-v2-2-e069ea32e1db@axis.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 61319d15a560 ("LoongArch: BPF: Adjust the jump offset of tail calls")
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ds1307.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/net/bpf_jit.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
-index edf81b975decb7..9ba5958ca7a6e6 100644
---- a/drivers/rtc/rtc-ds1307.c
-+++ b/drivers/rtc/rtc-ds1307.c
-@@ -311,7 +311,7 @@ static int ds1307_get_time(struct device *dev, struct rtc_time *t)
- 	t->tm_hour = bcd2bin(tmp);
- 	/* rx8130 is bit position, not BCD */
- 	if (ds1307->type == rx_8130)
--		t->tm_wday = fls(regs[DS1307_REG_WDAY] & 0x7f);
-+		t->tm_wday = fls(regs[DS1307_REG_WDAY] & 0x7f) - 1;
- 	else
- 		t->tm_wday = bcd2bin(regs[DS1307_REG_WDAY] & 0x07) - 1;
- 	t->tm_mday = bcd2bin(regs[DS1307_REG_MDAY] & 0x3f);
+diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
+index a000620ca99da7..5bfed3c4e08398 100644
+--- a/arch/loongarch/net/bpf_jit.c
++++ b/arch/loongarch/net/bpf_jit.c
+@@ -9,7 +9,13 @@
+ 
+ #define LOONGARCH_MAX_REG_ARGS 8
+ 
++#define LOONGARCH_SAVE_RA_NINSNS   1
+ #define LOONGARCH_LONG_JUMP_NINSNS 5
++#define LOONGARCH_TCC_SLOT_NINSNS  1
++
++#define LOONGARCH_PROLOGUE_SKIP_INSNS \
++	(LOONGARCH_SAVE_RA_NINSNS + LOONGARCH_LONG_JUMP_NINSNS + LOONGARCH_TCC_SLOT_NINSNS)
++
+ #define LOONGARCH_LONG_JUMP_NBYTES (LOONGARCH_LONG_JUMP_NINSNS * 4)
+ 
+ #define LOONGARCH_FENTRY_NINSNS 2
+@@ -139,8 +145,13 @@ static void build_prologue(struct jit_ctx *ctx)
+ 	stack_adjust = round_up(stack_adjust, 16);
+ 	stack_adjust += bpf_stack_adjust;
+ 
++	/*
++	 * Save the original return address to a temporary register to prevent
++	 * it from being overwritten, then reserve space for the long jump and
++	 * fentry trampoline slot for dynamically patching by ftrace at runtime.
++	 * These instructions are bypassed during a tail call invocation.
++	 */
+ 	move_reg(ctx, LOONGARCH_GPR_T0, LOONGARCH_GPR_RA);
+-	/* Reserve space for the move_imm + jirl instruction */
+ 	for (i = 0; i < LOONGARCH_LONG_JUMP_NINSNS; i++)
+ 		emit_insn(ctx, nop);
+ 
+@@ -236,10 +247,11 @@ static void __build_epilogue(struct jit_ctx *ctx, bool is_tail_call)
+ 		emit_insn(ctx, jirl, LOONGARCH_GPR_ZERO, LOONGARCH_GPR_RA, 0);
+ 	} else {
+ 		/*
+-		 * Call the next bpf prog and skip the first instruction
+-		 * of TCC initialization.
++		 * Tail call to the next BPF program, passing offset in number
++		 * of instructions to jirl to bypass the initial setup slots.
+ 		 */
+-		emit_insn(ctx, jirl, LOONGARCH_GPR_ZERO, LOONGARCH_GPR_T3, 7);
++		emit_insn(ctx, jirl, LOONGARCH_GPR_ZERO,
++			  LOONGARCH_GPR_T3, LOONGARCH_PROLOGUE_SKIP_INSNS);
+ 	}
+ }
+ 
 -- 
 2.53.0
 
