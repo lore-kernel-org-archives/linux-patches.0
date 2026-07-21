@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2270545A288;
-	Tue, 21 Jul 2026 22:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74EC45DF7E;
+	Tue, 21 Jul 2026 22:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672305; cv=none; b=eay9cQxvbbF+MrMvzunP5AATtChzokYBxci4jePY+S6g4kFVFYk58Y0XOxsqy9RszLEo8nxeoS7Un67HSHT9v+gqUn0i1DMhSt++uuQKIRfIHyFuUXhFaXfW7oxiF6dxsHPHvSPreF1V+RsbbuGpA3DTB+HGiJlXYWMosk+o388=
+	t=1784672308; cv=none; b=m0r9TwZn//eORMytLwDoZFd8oqlFIJC3eMrFJ75ocMWIKUE6FwDyjZwTWpe+9NGlFfk86woOyLLnfMuZLB057UHuZ0DOqSyjd0P2jYS7VfmvTp2qF43W48voAQcUdoptDn+Lvdi3BsHNh42mCxjP5QZlf7vvtm3o4KRmQpHcUg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672305; c=relaxed/simple;
-	bh=5FoqiNJ0B/OETYA/Mx7ZZlCccfnEfMk6qpM9eEmYn8A=;
+	s=arc-20240116; t=1784672308; c=relaxed/simple;
+	bh=J7mIQ/DFOE39T2jviNaLDCG0lVpSezObjblN1dR3yNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rt8TNvPKxKukCLFRRWGmSi85z9hClu/a1mnmDOpIBmVnGVGxYqDEMwniVMgjiGum++BUIx9NGindCbadJXITZqqJCwAvyZB4o+ZsnZajio7B3JytAlQ2w4+ClOaEn5NU5vLVyxph/pfk3RCeGACNRUcabBHj8LMfqZChGD4+9pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C64qO6PJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A3jiAlPw5JkWezJp8GJ2dEiK2TO6AE9Mouw67Vk41MT5YqsXVXqnIzdg8weTVqH+ixkmrNU0TXZwuokcLc2p8+jsvp9fvlfwjbSkv8eZUwdjUpoU7WTwH55XCWdP2TQ21c3e9GW+FmpgAFhsRGQ8y1WoZ1MIC7/jePOlS7kU5yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yu4dE0UZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C64qO6PJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87C471F000E9;
-	Tue, 21 Jul 2026 22:18:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yu4dE0UZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C0341F000E9;
+	Tue, 21 Jul 2026 22:18:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672304;
-	bh=eD/cUUPCkOgkut56dNTMwZv3Zhn0m7ZjF7wv3xCqalg=;
+	s=korg; t=1784672306;
+	bh=CP2d/jfTbAzQgRvOhUvsJIKoDywGBv3l0NYoTQYdDvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C64qO6PJUprF1aup4m7OTVRybOkmjt2DEUsipSJAA3QHi68NDKupbhzrs4+J0keJE
-	 P9ojvtDNL3JM6+QZrBFgeai+8nMv4dnfno7jf9c01sG3TvRgo3Ani1AHCR1x2aQLid
-	 PkEsH0r4ZrvudJ89Gg5neMTwo6zey9rdAKa54DQY=
+	b=Yu4dE0UZT9x1DCzqdVZ0Hq5qA9b/GbS1rQQJ/UYnrXs3mK/Hu6cXRJfeKOrX+egyc
+	 41M/wtmIU5iVUufM7VdOHcx03szEMRsYQkGjf7D0PVjKY0OnKgUOzIchNwVOpK8kFJ
+	 k1ZfW2tCumQ0LlqOeQa5ogvfKbWYK8IujCS1bw+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 5.15 573/843] netfilter: nfnl_cthelper: apply per-class values when updating policies
-Date: Tue, 21 Jul 2026 17:23:28 +0200
-Message-ID: <20260721152418.937277203@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Wyatt Feng <bronzed_45_vested@icloud.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.15 574/843] netfilter: xt_cluster: reject template conntracks in hash match
+Date: Tue, 21 Jul 2026 17:23:29 +0200
+Message-ID: <20260721152418.958807488@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,46 +56,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Wyatt Feng <bronzed_45_vested@icloud.com>
 
-commit d738feccb98cb224ebabecb703e98f5008276bff upstream.
+commit 5feba91006ec92da57acc1cc2e34df623b98541e upstream.
 
-When a userspace conntrack helper with multiple expectation classes is
-updated via nfnetlink, every class ends up with the first class's
-max_expected and timeout values.
+xt_cluster_mt() treats any non-NULL nf_ct_get() result as a fully
+initialized conntrack and passes it to xt_cluster_hash().
 
-nfnl_cthelper_update_policy_all() validates each new policy into the
-corresponding slot of the temporary new_policy array, but the second
-loop that commits the values into the live helper dereferences
-new_policy as a pointer instead of indexing it, so every iteration
-reads new_policy[0] regardless of i.  An update that changes per-class
-values is silently collapsed onto class 0's values with no error
-returned to userspace.
+This causes a state confusion bug when the raw table CT target attaches
+a template conntrack to skb->_nfct before normal conntrack processing.
+Templates carry IPS_TEMPLATE status but do not have a valid tuple for
+hashing yet, so xt_cluster_hash() can hit its WARN_ON() path on the
+zeroed l3num field.
 
-Index the temporary array by i in the commit loop so each class gets
-its own validated values.
+Reject template conntracks before hashing them. This matches existing
+netfilter handling for template objects and avoids hashing incomplete
+conntrack state.
 
-Fixes: 2c422257550f ("netfilter: nfnl_cthelper: fix runtime expectation policy updates")
+Fixes: 0269ea493734 ("netfilter: xtables: add cluster match")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nfnetlink_cthelper.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/xt_cluster.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/netfilter/nfnetlink_cthelper.c
-+++ b/net/netfilter/nfnetlink_cthelper.c
-@@ -344,8 +344,8 @@ static int nfnl_cthelper_update_policy_a
- 	for (i = 0; i < helper->expect_class_max + 1; i++) {
- 		policy = (struct nf_conntrack_expect_policy *)
- 				&helper->expect_policy[i];
--		policy->max_expected = new_policy->max_expected;
--		policy->timeout	= new_policy->timeout;
-+		policy->max_expected = new_policy[i].max_expected;
-+		policy->timeout	= new_policy[i].timeout;
+--- a/net/netfilter/xt_cluster.c
++++ b/net/netfilter/xt_cluster.c
+@@ -107,7 +107,7 @@ xt_cluster_mt(const struct sk_buff *skb,
  	}
  
- err:
+ 	ct = nf_ct_get(skb, &ctinfo);
+-	if (ct == NULL)
++	if (!ct || nf_ct_is_template(ct))
+ 		return false;
+ 
+ 	if (ct->master)
 
 
