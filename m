@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B66746A5FB;
-	Tue, 21 Jul 2026 17:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80FE3FFFAF;
+	Tue, 21 Jul 2026 17:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655952; cv=none; b=a4J959Ydx5bXdLjWoVphB6Ve0ktZywMyPzBrF8WmlEMgHSAhrxg7y5SOqUl7wHSn0t6R0JEWhQPOgA2n2litANUfnlGdIgC5dD4JAHmh9u6AsxSFoMQNs788ZpQlhRwbhjPB5Hg/FjPC/yPATYu2sSMH7NuFmByY+2WJP+XW8ck=
+	t=1784655954; cv=none; b=S7oIn3lT/xRFAemhTpZCdYK9AGa5dQpCqY2C1qgL4UDSkGGR8f8bQXLcQG0VSG/WXwYASrY59K+t1Mx+PJeFHb7ADsvcGXzOev2tQEhporoxmZ+BWOqDdQvvBno0S7wGWSfwP55wsegCeDK3Rr1WqHmykPN55SeobcwjzKJImvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655952; c=relaxed/simple;
-	bh=Jl6zglAEowK0YhdUaa7xK/sfPdnEJ1W7HlTlXHDT63I=;
+	s=arc-20240116; t=1784655954; c=relaxed/simple;
+	bh=+QV1xnHuDjvhAu7mBVU6KPzKMIooQAIXqCJ1gpW2Icw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=USbXKFR0wB+0CzVQ0D21GiRQIZswyr/acbUsPMpiY1MBTCx6MRgm1e0byTQ1Yrxxr3mm4BFpVOfsVh9PyTX634Eo9ab7yhXBYP4nZJW0pJO/FagBBWjFtj5p3OQlSKjlLSBfdyji9ZXX8Hr6a7uFk5HIwiVnabZjzXUWIG5c2gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOhwp9tw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qgTq7Rgc3W+9lb61DolC16WVWNPIWzu5PQ4j6lT6TPSGrT1RFzONtoIkEFvjwMh91wLb3dRy1zgtopkUcEMPOJrQjvHEK+w4t6AgyukWOVLWkvxarWbt54T87Ippgqy+hR7feLqIz7iDCIudkSdbT8osYfITHwDa841gCn/nxT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BikxNN0J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOhwp9tw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 896CB1F000E9;
-	Tue, 21 Jul 2026 17:45:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BikxNN0J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B2B1F000E9;
+	Tue, 21 Jul 2026 17:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655951;
-	bh=0FyLuTxTrfgFd8o89YlBR8UELZ0v1ygrecUwvvYpQFA=;
+	s=korg; t=1784655953;
+	bh=KpVVPjfvPe+/3W+YxAIdDDG5YykyVc5ndKE66Ie+NhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nOhwp9twnR6Y6WdBfw91s7Hi93e4ypPhEIg6WiwNCyUscTnFepkdXhoFQQhNsI8dk
-	 Dde1GbKJiUB8ztysNf9YzyqpRPtJDRqSmrywxqaU3lBXpSHogvpTFdbCElDBCFaO8v
-	 d8ZU71PQa6KdlsajfUG8YjndVZsKtpRcn4KM1B7k=
+	b=BikxNN0JjzQJEAnjUcmd74gnPKG+vZzdeNWQqYBCBFAkAJSXIo5OPMscv0VUU2V7+
+	 U1DhzoMkTXcuAFcmSFzQ8VZH2wELKP0MW7skPc7Oj3laIhzWXe9O4PsaSajc+7w6n8
+	 xxKXqm2UHMA081enlR1PSZMatNtWb4oKIMTS68/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel@sholland.org>,
-	Andrey Skvortsov <andrej.skvortzov@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Han Gao <gaohan@iscas.ac.cn>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Yixun Lan <dlan@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0204/1611] bus: sunxi-rsb: Always check register address validity
-Date: Tue, 21 Jul 2026 17:05:20 +0200
-Message-ID: <20260721152519.555910116@linuxfoundation.org>
+Subject: [PATCH 6.18 0205/1611] pinctrl: spacemit: fix NULL check in spacemit_pin_set_config
+Date: Tue, 21 Jul 2026 17:05:21 +0200
+Message-ID: <20260721152519.579670005@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,41 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Holland <samuel@sholland.org>
+From: Han Gao <gaohan@iscas.ac.cn>
 
-[ Upstream commit 61192938a5870ac36edae81e4775b680dcf02c61 ]
+[ Upstream commit 09c816e5c4d3a8d6d6e4b7537433e5e98505d934 ]
 
-The register address was already validated for read operations in
-regmap_sunxi_rsb_reg_read before being truncated to a u8. Write operations
-have the same set of possible addresses, and the address is being truncated
-from u32 to u8 here as well, so the same check is needed.
+spacemit_pin_set_config() looks up the per-pin descriptor with
+spacemit_get_pin() then checks the wrong variable for failure:
 
-Signed-off-by: Samuel Holland <samuel@sholland.org>
-Signed-off-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
-Fixes: d787dcdb9c8f ("bus: sunxi-rsb: Add driver for Allwinner Reduced Serial Bus")
-Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20260301144939.1832806-1-andrej.skvortzov@gmail.com
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+	const struct spacemit_pin *spin = spacemit_get_pin(pctrl, pin);
+	...
+	if (!pin)
+		return -EINVAL;
+
+	reg = spacemit_pin_to_reg(pctrl, spin->pin);
+
+pin is an unsigned int pin id, where 0 (GPIO_0 / gmac0_rxdv on K3) is a
+valid pin, so rejecting it here drops the PAD config write for the first
+pin of every group. On K3 Pico-ITX the GMAC RGMII group lists pin 0 as
+its first entry, so its drive-strength / bias configuration was silently
+ignored.
+
+The intended guard is against spacemit_get_pin() returning NULL when the
+pin id isn't in the SoC's pin table. Check spin instead, which both
+restores PAD setup for pin 0 and prevents a NULL deref on spin->pin.
+
+Fixes: a83c29e1d145 ("pinctrl: spacemit: add support for SpacemiT K1 SoC")
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Reviewed-by: Yixun Lan <dlan@kernel.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/sunxi-rsb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pinctrl/spacemit/pinctrl-k1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bus/sunxi-rsb.c b/drivers/bus/sunxi-rsb.c
-index 7a33c3b31d1e94..9e007fa4c75dec 100644
---- a/drivers/bus/sunxi-rsb.c
-+++ b/drivers/bus/sunxi-rsb.c
-@@ -447,6 +447,9 @@ static int regmap_sunxi_rsb_reg_write(void *context, unsigned int reg,
- 	struct sunxi_rsb_ctx *ctx = context;
- 	struct sunxi_rsb_device *rdev = ctx->rdev;
+diff --git a/drivers/pinctrl/spacemit/pinctrl-k1.c b/drivers/pinctrl/spacemit/pinctrl-k1.c
+index 33af9b5791c110..8d797bf24b7784 100644
+--- a/drivers/pinctrl/spacemit/pinctrl-k1.c
++++ b/drivers/pinctrl/spacemit/pinctrl-k1.c
+@@ -609,7 +609,7 @@ static int spacemit_pin_set_config(struct spacemit_pinctrl *pctrl,
+ 	void __iomem *reg;
+ 	unsigned int mux;
  
-+	if (reg > 0xff)
-+		return -EINVAL;
-+
- 	return sunxi_rsb_write(rdev->rsb, rdev->rtaddr, reg, &val, ctx->size);
- }
+-	if (!pin)
++	if (!spin)
+ 		return -EINVAL;
  
+ 	reg = spacemit_pin_to_reg(pctrl, spin->pin);
 -- 
 2.53.0
 
