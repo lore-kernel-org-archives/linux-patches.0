@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0C6357CEB;
-	Tue, 21 Jul 2026 21:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6262539B97E;
+	Tue, 21 Jul 2026 21:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670156; cv=none; b=AWdNDqCHOKepqA0/x2jk+u+23C0AQ7WpqpsSg8o/RKzetXbzHIc/vIL299mX4Mh4Vst68pcCmu6Bl9nJm/4dTvPyws3lHppSA6BXtRST02QzjJ62F6P3KgCPoXvgaH3qwiJTQz/3IUtzatqa/yHQDLFaIH2K9UtuBBPerH8FaFo=
+	t=1784670159; cv=none; b=s6Lj0cbPX2bA2pMpomTDFZhNMIiqkK100NnchHUCkL8BS6SRLy/3RQWXeggYMEURDqwHCHk/BZFT0AGIa+u6utQ8Lilq8OhjLu0CB3U4C8M7sznP89dosCdI4aZT56Upu2sIkNr7B2D7KLZuc0eP+ayjc5fTf+d4S9BSZ+upWH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670156; c=relaxed/simple;
-	bh=AhslXXSgQulh7AWinQPnpUsEOz7ZXX4knr+3i2QokwM=;
+	s=arc-20240116; t=1784670159; c=relaxed/simple;
+	bh=TIJc9JOGOvvNtWUDutnytvar2br9ElFSZ1mrtSBaS9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ruW6L5xUcZYTbrFC/pI9KARn0n/2wfBr9FteBpGJvyrT1RY0s93zOJqtWBOhzarloUStqWR9xaPlVdMkfTB6kJLyYcBrfKcES0TvUsYBe5QMgVtMJw44cruag5VuVIfyCmmbLLdnj8Gow+FxLTOn2YbWkNYhU6k6t+0kFkhn+E0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aicgdpXc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=izUVzDEPAdWenkeBkfad3nTIDPk6bUC52eRWfrNvsW2KfPEHXulPPq7kstj6IJSar1tZc8wHhHTznqAMq6XmtrVQqg53jaG3q5zT2bcPsfzDPIXCJAH95V8Kd88gOAValkwyIbEpWhO9REpaSugAnNtHlQjgVLDV1LgQ7fA/0SM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O12aiCQo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aicgdpXc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B4D61F000E9;
-	Tue, 21 Jul 2026 21:42:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O12aiCQo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C81001F000E9;
+	Tue, 21 Jul 2026 21:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670155;
-	bh=tX+p2QnzruOt/ooYTAD+wSolDtqJ+OGIJVKU9apS2sc=;
+	s=korg; t=1784670158;
+	bh=MSRw0os5g7zsZ5lgqdgKGXeZ45UEOh3FhVrT0w5VxXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aicgdpXcU/ieyG+huJSOgfU3d/0KTe8TpEKZwJamASVPrLwuQAUlWfBQL1DMf2HhD
-	 rDe8zYoX7fWCCnCgvyLGsyKGMq0AkGZDTmby1a3knLMuydSPSSCo8X/oVDgNIdErP7
-	 g2lG47GVsmzb86mWXqO6KZwpnwewj9ayLHmW4/2w=
+	b=O12aiCQoNgiZkSGI5CV5NvezT9meTjO98i4/AgwhdepMwGof+5h658Yk6Zv3Qj5t2
+	 uHX36bybqhItDgOwRmKAE3m1Y9uBpIwjxdKubLDkK2HVw42orDQ6uxGXkvGjYDXSgs
+	 ltIhr2HWDg9CJ7v5RnxuDftDWdPFucMOfu5zpcBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.1 0825/1067] i2c: mlxbf: Fix use-after-free in mlxbf_i2c_init_resource()
-Date: Tue, 21 Jul 2026 17:23:46 +0200
-Message-ID: <20260721152443.006549858@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 6.1 0826/1067] xen/gntdev: fix error handling in ioctl
+Date: Tue, 21 Jul 2026 17:23:47 +0200
+Message-ID: <20260721152443.028503408@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,39 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 71356737a7a55c76fee847563e3d33f8e6dc6b6d upstream.
+commit 45ca1afe2fd14c04e37227e79d3f8455831d8408 upstream.
 
-If devm_platform_get_and_ioremap_resource() returns an error,
-mlxbf_i2c_init_resource() frees tmp_res before reading tmp_res->io to
-get the error code. This results in a use-after-free.
+When gntdev_ioctl_map_grant_ref() fails to copy the operation result
+back to userspace after successfully adding the mapping to the list,
+the error path returns -EFAULT without releasing the reference
+acquired by gntdev_alloc_map(). The mapping remains in priv->maps
+with a refcount of 1, causing a memory leak and a dangling list
+entry.
 
-Save the error code before freeing tmp_res.
+Additionally, gntdev_add_map() may modify map->index to avoid overlap
+with existing mappings. Therefore, the index returned to userspace
+must be obtained after gntdev_add_map() completes.
 
-Fixes: b5b5b32081cd ("i2c: mlxbf: I2C SMBus driver for Mellanox BlueField SoC")
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Cc: <stable@vger.kernel.org> # v5.10+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260714150808.85045-1-xuanqiang.luo@linux.dev
+Fix this by holding the mutex across gntdev_add_map(), retrieving
+the correct index, and copy_to_user(). If copy_to_user() fails,
+remove the mapping from the list and release the reference while
+still holding the lock.
+
+Cc: stable@vger.kernel.org
+
+Fix these issues by properly handling all error cases.
+
+Fixes: 1401c00e59ea ("xen/gntdev: convert priv->lock to a mutex")
+Fixes: 68b025c813c2 ("xen-gntdev: Add reference counting to maps")
+
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260622112541.38194-1-vulab@iscas.ac.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-mlxbf.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/xen/gntdev.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/i2c/busses/i2c-mlxbf.c
-+++ b/drivers/i2c/busses/i2c-mlxbf.c
-@@ -1088,8 +1088,10 @@ static int mlxbf_i2c_init_resource(struc
+--- a/drivers/xen/gntdev.c
++++ b/drivers/xen/gntdev.c
+@@ -678,11 +678,15 @@ static long gntdev_ioctl_map_grant_ref(s
+ 	mutex_lock(&priv->lock);
+ 	gntdev_add_map(priv, map);
+ 	op.index = map->index << PAGE_SHIFT;
+-	mutex_unlock(&priv->lock);
  
- 	tmp_res->io = devm_ioremap_resource(dev, tmp_res->params);
- 	if (IS_ERR(tmp_res->io)) {
-+		int ret = PTR_ERR(tmp_res->io);
-+
- 		devm_kfree(dev, tmp_res);
--		return PTR_ERR(tmp_res->io);
-+		return ret;
- 	}
+-	if (copy_to_user(u, &op, sizeof(op)) != 0)
++	if (copy_to_user(u, &op, sizeof(op)) != 0) {
++		list_del(&map->next);
++		mutex_unlock(&priv->lock);
++		gntdev_put_map(priv, map);
+ 		return -EFAULT;
++	}
  
- 	tmp_res->type = type;
++	mutex_unlock(&priv->lock);
+ 	return 0;
+ }
+ 
 
 
