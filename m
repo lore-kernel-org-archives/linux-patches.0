@@ -1,34 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8192241A547;
-	Tue, 21 Jul 2026 19:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A919E42DA53;
+	Tue, 21 Jul 2026 19:26:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661999; cv=none; b=BX3AQ7sR4Py9lh35ndudEWhGf2wAbf+07093BRTMofbh9BvBdzZ0l9EDkdGCm6vLx57Xf6kpkxxfOVy075kByTkV1wesMdwxjlybnvwfPX1I3LVNjNBrLa9+VbiRhTc/X+ILSN7QgBu3wS2oihBzFDR0NaeTuFGiJ7OcjbFqAEs=
+	t=1784662001; cv=none; b=Qx5mc5arAfGYqTCpgMUbv1zCwv/QdyctQ7Y7OR3K+otW2xgTEhufRBt9F/nue3giCcA6xfzV/AGmE0FSpj/zX5MGr17iinB4riBHvceSrH3ZGPMxN2QwpkrqjOuFSRbJtmaSAVAc3qCXjVwbkEddTrXupVBD0bcKtiXzIb27Px0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661999; c=relaxed/simple;
-	bh=G/QADAYxiVIdd1u6AjwjeUQ/K8VS0ci5hCc/L6J4VoY=;
+	s=arc-20240116; t=1784662001; c=relaxed/simple;
+	bh=6BnlB586MvxXx4J27kvSULHqedNGTLvZsZnqhMVHlag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pUgrbF0b/4eFrvjiDEkOKBbxq1SvRtwIPJ0s9v01VhLoRpVjlcio+ImUOb+N6enOHOmwtQ2BYam9CXfZe3B/KfmUkRPKsHZeAi8Q3m2E6fCHGY2LBSuwLmjcREsmnoRwf8PqrEvk4+sQ7KnLCiZAzFpzKBtvplVoQOZaRIO+/jA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYYLVfUy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vs1NkYTBQgRNgbqZs2dyrgj4EcibQS6QGgszJRoAWq+KNQfgtycnGE/TzNVTJqNpz06nN3J807LzHilTKgb+d2OxuXYcYeUYlV5qPWXo3iBBs4SMs3X8DiXkCEQ+0/m9Zn/MLpgwi/QURtpTAUfI3JGEvHRhGapUr2GmVmxBPbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NL3f+WvC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYYLVfUy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D96E1F00A3A;
-	Tue, 21 Jul 2026 19:26:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NL3f+WvC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E6E1F000E9;
+	Tue, 21 Jul 2026 19:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661998;
-	bh=ekd4oUrmivkAD2dDvdK0f44N5gzmRShbGjx9K5kffS0=;
+	s=korg; t=1784662000;
+	bh=9cj5tiilyFviZ4SekmbxjEoE+eOsKtE6Bb6/rOfkAG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lYYLVfUyp/4IN2+rn8KDnuvgPM2PA9ZtUPhvN2LkXgyxoaN5IQ8PMCluNPlJXtN74
-	 KHP3p5JL6DpI9eqlvVIB7kpxiDs9zJU5zdwUG8ehbVdME4KyZti8Hw+Xw1OAVA2mi6
-	 +o/acBlHb06uWdGPLCeKnM9u+5rCZv+2Jm0Dv6MM=
+	b=NL3f+WvCxTAEvej2GSFtrPKeAhT4Ml+oUpLJVyv/I4HNfG1Bf5pKADAPz2xzrKjZd
+	 s7IH64Mih7Elb+FbLhFuhKkhFrr8t4mg//D1AZSZn1AAdbLVHEmBAo7qVrxmo07gsq
+	 oSxCyHeyOOnzCkb2pcN5W+Px09ZITaCFu7276E6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	syzbot+caacd220635a9cc3bac9@syzkaller.appspotmail.com,
+	Zhang Cen <rollkingzzc@gmail.com>,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
@@ -38,9 +37,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Heming Zhao <heming.zhao@suse.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0236/1276] ocfs2: fix buffer head management in ocfs2_read_blocks()
-Date: Tue, 21 Jul 2026 17:11:19 +0200
-Message-ID: <20260721152451.371283375@linuxfoundation.org>
+Subject: [PATCH 6.12 0237/1276] ocfs2: reject FITRIM ranges shorter than a cluster
+Date: Tue, 21 Jul 2026 17:11:20 +0200
+Message-ID: <20260721152451.393758367@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -59,25 +58,27 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit 6371a07148ee979af22a9d6f4c277462953a9a4a ]
+[ Upstream commit ca1afd88f5eaaff9168e1466e5401385edf59543 ]
 
-In ocfs2_read_blocks(), caller should't assume that buffer head returned
-by 'sb_getblk()' is exclusively owned and so 'put_bh()' always drops
-b_count from 1 to 0.  If it is not so, buffer head remains on hold and
-likely to be returned by the next call to 'sb_getblk()' unchanged - that
-is, with BH_Uptodate bit set even if it has failed validation previously,
-thus allowing to insert that buffer head into OCFS2 metadata cache and
-submit it to upper layers.  To avoid such a scenario, BH_Uptodate should
-be cleared immediately after 'validate()' callback has detected some data
-inconsistency.
+ocfs2_trim_mainbm() trims the global bitmap in cluster units, but its
+too-short range validation only checks sb->s_blocksize.
 
-Link: https://lore.kernel.org/20260529094128.494293-1-dmantipov@yandex.ru
-Fixes: cf76c78595ca ("ocfs2: don't put and assigning null to bh allocated outside")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Reported-by: syzbot+caacd220635a9cc3bac9@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=caacd220635a9cc3bac9
+On filesystems with a cluster size larger than the block size, a FITRIM
+range that is at least one block but shorter than one cluster is accepted
+and shifted down to len == 0.  The later start + len - 1 and len -= ...
+arithmetic then underflows and can drive trimming past the requested
+range.
+
+Reject ranges shorter than s_clustersize instead.  That preserves the
+existing -EINVAL behavior for requests that cannot discard even one
+allocation unit and keeps zero-cluster trims out of the group walk.
+
+Link: https://lore.kernel.org/20260528151247.361854-1-rollkingzzc@gmail.com
+Fixes: aa89762c5480 ("ocfs2: return EINVAL if the given range to discard is less than block size")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
@@ -88,35 +89,22 @@ Cc: Heming Zhao <heming.zhao@suse.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/buffer_head_io.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/ocfs2/alloc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/buffer_head_io.c b/fs/ocfs2/buffer_head_io.c
-index 8f714406528d62..e52e202857d130 100644
---- a/fs/ocfs2/buffer_head_io.c
-+++ b/fs/ocfs2/buffer_head_io.c
-@@ -350,8 +350,6 @@ int ocfs2_read_blocks(struct ocfs2_caching_info *ci, u64 block, int nr,
- 						wait_on_buffer(bh);
- 					put_bh(bh);
- 					bhs[i] = NULL;
--				} else if (bh && buffer_uptodate(bh)) {
--					clear_buffer_uptodate(bh);
- 				}
- 				continue;
- 			}
-@@ -380,8 +378,11 @@ int ocfs2_read_blocks(struct ocfs2_caching_info *ci, u64 block, int nr,
- 				BUG_ON(buffer_jbd(bh));
- 				clear_buffer_needs_validate(bh);
- 				status = validate(sb, bh);
--				if (status)
-+				if (status) {
-+					if (buffer_uptodate(bh))
-+						clear_buffer_uptodate(bh);
- 					goto read_failure;
-+				}
- 			}
- 		}
+diff --git a/fs/ocfs2/alloc.c b/fs/ocfs2/alloc.c
+index f8025433ce3bf1..eb6adb785e4555 100644
+--- a/fs/ocfs2/alloc.c
++++ b/fs/ocfs2/alloc.c
+@@ -7553,7 +7553,7 @@ int ocfs2_trim_mainbm(struct super_block *sb, struct fstrim_range *range)
+ 	len = range->len >> osb->s_clustersize_bits;
+ 	minlen = range->minlen >> osb->s_clustersize_bits;
  
+-	if (minlen >= osb->bitmap_cpg || range->len < sb->s_blocksize)
++	if (minlen >= osb->bitmap_cpg || range->len < osb->s_clustersize)
+ 		return -EINVAL;
+ 
+ 	trace_ocfs2_trim_mainbm(start, len, minlen);
 -- 
 2.53.0
 
