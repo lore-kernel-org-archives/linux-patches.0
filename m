@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76CA14746D4;
-	Tue, 21 Jul 2026 20:58:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71A24746A6;
+	Tue, 21 Jul 2026 20:58:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667507; cv=none; b=GEUJ3x+MfFgSFBLwGK197CQk1VYnoPyWgMZlbgMGzwQmDPXoToOYg29weiu5s4riYYhZDADmMVZLK9QJoK12W7rQ+zLQmaWzq3lOq2ZvpI9l4WCX1FoiREOa+E94K2TlU+uHf2vQC/aDh13EEOqqKze60O3jLek51Q1/g0ixOjI=
+	t=1784667507; cv=none; b=F9G0pm0rVPBxbH+Fh07V9sYTFp1bLAifli9cN5v8jPTVbiOfW/S4HRY9J0c/eZaJY3gYpvEPjFCJEj5EtE9eL5yWwwL2sBh2VOP2CSUcE0CYMxfieiGtUokmAvy37kywjFyd6bFk1jDPQEgZHWa+KFzbHGwWWCuJ95p5PEzISsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784667507; c=relaxed/simple;
-	bh=d0SO0ydimH8tY7SjZh18tQTGf3ar9haFHv/YnrmHdSE=;
+	bh=2lSdh18JwAsQ9OjjgYWC4BVHkuTZmf/Nw4+W/f1NbZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ColhAh0pUpR9a5AABvFA0wM1EdETsjedspkHKQr6K6TWCNhoAboYKkFE547iO7vx/dPAEPmOJuQ62+L+BlPL94yYIIDr77pe8ak4Hy4RkXGudqdG4yCbId3+43BBr6Tqlj2alxCO5+hJ/WZIJiG/IO+0/8o4kMeVQv9hJGQv2r0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVfW7iEb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NB8LLbNla/B3Nl5epp9Z9J5V7UUnaQk1lQOoL6n70rUwpeGivxNYXThlBLivb5CpxNWEXYasRhi8mKTnxGxF7ssjhDNh7FHVeJrgP2Wg1MgnXNvXm2X8Twq9/I+E+unNm2SbpkgyRoalKc3dEj8tHd6u5Fm755VgRlPzip19I+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+FzYC8I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVfW7iEb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F751F00A3A;
-	Tue, 21 Jul 2026 20:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+FzYC8I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D6F1F00A3E;
+	Tue, 21 Jul 2026 20:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667493;
-	bh=EFA6LmHgGSV6a4ZWI6PScGnZJQn5dNaJmYYdUQEZ9ww=;
+	s=korg; t=1784667490;
+	bh=2zBYyUlIw7pfX777FidV2iz4QX2ceehLM+6VJWZYq9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dVfW7iEb8KoU3IgVo05LHwb4xHrVI6skVjXlGV3pd9twFsv+DzDPojeYNH5YaO4Lk
-	 jLp3x5hXC3Hc5yh+JgZv7vqaQtLsWUVMR62J5OBnb9Q5kvQc8jkjxVsABWKFTGAJb+
-	 UgzZ2qWupb5RwwDe4Qu1WZtehNvAT69ieRiWi9xU=
+	b=g+FzYC8I7SdVcKa12aq9r/3R/BLi49W/eDw8PEGYUo94kml4yRH8JRfeiZpG9wcv6
+	 EXHpYDt6HUnqp+hXNObfV11f1+oakuKTShru5jl8H2kPmVm2+eAEgMnhu9ysk5mQcs
+	 0Z5NJp5oygnPUDLb9kEgWJAVfckBJL/jTDff8rHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Haoxiang Li <haoxiang_li2024@163.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 1082/1266] net: ixp4xx_hss: fix duplicate HDLC netdev allocation
-Date: Tue, 21 Jul 2026 17:25:19 +0200
-Message-ID: <20260721152506.024015389@linuxfoundation.org>
+Subject: [PATCH 6.6 1081/1266] net: wwan: t7xx: destroy DMA pool on CLDMA late init failure
+Date: Tue, 21 Jul 2026 17:25:18 +0200
+Message-ID: <20260721152506.001286035@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,52 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit db818b0e8af7bac16860116a19c341a63d6677b4 upstream.
+commit 2bd6f26d4ce1e87de4d736b1e8896daf3acf1c0e upstream.
 
-ixp4xx_hss_probe() allocates two HDLC netdevs. The first one is stored
-in ndev, initialized, and registered with register_hdlc_device(). The
-second one is stored in port->netdev and later used by the remove path
-for unregister_hdlc_device() and free_netdev().
+t7xx_cldma_late_init() creates md_ctrl->gpd_dmapool before
+initializing the TX and RX rings. If any ring initialization
+fails, the error path frees the already initialized rings but
+leaves the DMA pool allocated.
 
-This means that the registered netdev is not the same object that is
-unregistered and freed on remove. It also leaks the first allocation if
-the second alloc_hdlcdev() call fails, and the first allocation is not
-checked before ndev is used.
+Destroy md_ctrl->gpd_dmapool on the late-init failure path
+to avoid leaking the DMA pool.
 
-Older code allocated the HDLC netdev only once and stored the same object
-in both the local variable and port->netdev. The buggy conversion split
-this into two alloc_hdlcdev() calls. A later rename changed the local
-variable name to ndev, but the underlying mismatch remained.
-
-Fix this by allocating the HDLC netdev only once and assigning the same
-object to port->netdev.
-
-Fixes: 99ebe65eb9c0 ("net: ixp4xx_hss: move out assignment in if condition")
+Fixes: 39d439047f1d ("net: wwan: t7xx: Add control DMA interface")
 Cc: stable@vger.kernel.org
 Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260622043015.643637-1-haoxiang_li2024@163.com
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260621031714.3605022-1-haoxiang_li2024@163.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wan/ixp4xx_hss.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wwan/t7xx/t7xx_hif_cldma.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/wan/ixp4xx_hss.c
-+++ b/drivers/net/wan/ixp4xx_hss.c
-@@ -1487,11 +1487,11 @@ static int ixp4xx_hss_probe(struct platf
- 				     "unable to get CLK internal GPIO\n");
+--- a/drivers/net/wwan/t7xx/t7xx_hif_cldma.c
++++ b/drivers/net/wwan/t7xx/t7xx_hif_cldma.c
+@@ -1053,6 +1053,9 @@ err_free_tx_ring:
+ 	while (i--)
+ 		t7xx_cldma_ring_free(md_ctrl, &md_ctrl->tx_ring[i], DMA_TO_DEVICE);
  
- 	ndev = alloc_hdlcdev(port);
--	port->netdev = alloc_hdlcdev(port);
--	if (!port->netdev) {
-+	if (!ndev) {
- 		err = -ENOMEM;
- 		goto err_plat;
- 	}
-+	port->netdev = ndev;
++	dma_pool_destroy(md_ctrl->gpd_dmapool);
++	md_ctrl->gpd_dmapool = NULL;
++
+ 	return ret;
+ }
  
- 	SET_NETDEV_DEV(ndev, &pdev->dev);
- 	hdlc = dev_to_hdlc(ndev);
 
 
