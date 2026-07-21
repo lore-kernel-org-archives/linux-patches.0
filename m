@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC01D44AB60;
-	Tue, 21 Jul 2026 21:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64CF729CE9;
+	Tue, 21 Jul 2026 21:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669093; cv=none; b=NcYj8TTjj2F0+jUhTIu9d9hPvur6lAdGiyKcUB/+bdEWc/qLgPCk2j6aO23x6KDSQJKDPwJAYTHJzR+r48F3RoZZKGRRqjVEjKT0NcnGAVeBWDY0z3lCLYn8OGdBJsqR2HHsjE1hBU8EOJ3H+OjGUYzRWdlYJpw7uIw4BIAmgXg=
+	t=1784669097; cv=none; b=fy2ikxWJN1ss8mPJsKpp7mpFSiLG1+kExft2W0oI3JOgKk6NsehCu4FeozzDhfL6lQJGwft1nGWQycNh97S9J5DtU6Mp2K1XbhPM9G5EcEVHVWZ7RKiprqitrhrXHawTQGOWmD7bTSWJaGAPnDRxDrU96whVCOIRz/Q3ocuEDLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669093; c=relaxed/simple;
-	bh=H261A6hBbZX0BGrWIVbCVJM4z4GuldiozTKzRbBo1kM=;
+	s=arc-20240116; t=1784669097; c=relaxed/simple;
+	bh=bf7gjjn+kRx1IfAEegETkfHSZ8wzPfusjuK9qF/aP10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t/v0PG4QuixnK9263RtIiakxMqAXovlqqHvguRKMf7ytozMnrB1z9cC/4qpdJ+xviD/ZIcBe9jqhOnVhXbNWjDlHuA4XfSfdl4BRI9Go3bRmIvf2j5k0rsR+oZZEmDX9LqJscNkYMV+Gddk8O7KcutBaE7XT0YCuELRtE4dITdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SIFHusGx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YZaxkQJHcYRF561mACKFuzvJKm4PMn0WXMuBKbP7xJseUOZMJdktQ3MPrkRQBgN1II4eIje1aMO1OFgnqVvU3VpQT/M5csUIm+t6VVJqO2B4HOnT1hADAEldSmsrdYrPu4HHF+TjEZGA6EpTHjSOch2EHiWhDA4NFpRqE1Ianms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZpHRtwH5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SIFHusGx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F2F1F000E9;
-	Tue, 21 Jul 2026 21:24:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZpHRtwH5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C741F000E9;
+	Tue, 21 Jul 2026 21:24:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669092;
-	bh=Y5YYlwrL/iadTdEb+JGY+EF0CVAqJF2IpbBbBtHEfSQ=;
+	s=korg; t=1784669095;
+	bh=B23fKGrKJ5eqSGqKOzSgU1FzflSBdBFhvlDVcTWtwko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SIFHusGxHsc0X33g9D9wbyl8QSo+0w7OuOirOVtazWuOvdBtSM/Om2XIuxmuiP3OB
-	 J9Ws4VIxwu4cSivsFbdD+cgDYytSBc2VvLOmkb1mxG7q/FcP9uvPsCvOdR8v64tqNv
-	 oZ/2zAqsq/sj7Mb4kAP64FNcQyUJIlsn2Oe7lbks=
+	b=ZpHRtwH59y3xjrkZEjof3oxfUypeYlu9QQfahD4YcTlBhKPBeXly2u3LnBWPBCHR2
+	 w5VC1+HPWsneMU2/r6E7NYQx5eRDkXJoeqMRiboVWOOQHFp7+JBaHNW+n9A9qQocki
+	 iuNqJUBSnhH/e5pM4EjKclBekQEyB4nx9a+y/eOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0381/1067] netfilter: nfnetlink_osf: fix mss parsing on big-endian architectures
-Date: Tue, 21 Jul 2026 17:16:22 +0200
-Message-ID: <20260721152433.155361327@linuxfoundation.org>
+Subject: [PATCH 6.1 0382/1067] netfilter: synproxy: protect nf_ct_seqadj_init() with conntrack lock
+Date: Tue, 21 Jul 2026 17:16:23 +0200
+Message-ID: <20260721152433.177107445@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,43 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit a625c94144c9b66d32e1f374f909f38db46161c1 ]
+[ Upstream commit 9e37388b8070afe73d4ab2d973b28593ed65f3ad ]
 
-The MSS calculation in nf_osf_match_one() manually shifts bytes to
-construct a 16-bit value before passing it to ntohs().
+nf_ct_seqadj_init() is called without holding the ct lock. This can race
+with nf_ct_seq_adjust() when a connection is in CLOSE state due to an
+RST or connection reopening. In addition for SYN_RECV state, concurrent
+processing of packets can trigger nf_ct_seq_adjust() too. These
+situations create a read/write data race.
 
-This works on little-endian hosts but it does not work on big-endian as
-the bytes are being always shifted and set in the same way for all
-architectures.
+As synproxy is the only user of nf_ct_seqadj_init() at the moment, fix
+this by holding ct->lock inside nf_ct_seqadj_init() until all is done.
 
-Use get_unaligned_be16() to fix this on big-endian systems. It also
-simplifies the code.
-
-Fixes: 11eeef41d5f6 ("netfilter: passive OS fingerprint xtables match")
+Fixes: 48b1de4c110a ("netfilter: add SYNPROXY core/target")
 Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_osf.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ net/netfilter/nf_conntrack_seqadj.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
-index 6d3dfbeb398cb4..b61656cb0f3eb5 100644
---- a/net/netfilter/nfnetlink_osf.c
-+++ b/net/netfilter/nfnetlink_osf.c
-@@ -95,11 +95,7 @@ static bool nf_osf_match_one(const struct sk_buff *skb,
+diff --git a/net/netfilter/nf_conntrack_seqadj.c b/net/netfilter/nf_conntrack_seqadj.c
+index 7ab2b25b57bcc0..b7e99f34dfce86 100644
+--- a/net/netfilter/nf_conntrack_seqadj.c
++++ b/net/netfilter/nf_conntrack_seqadj.c
+@@ -17,12 +17,14 @@ int nf_ct_seqadj_init(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
+ 	if (off == 0)
+ 		return 0;
  
- 			switch (*optp) {
- 			case OSFOPT_MSS:
--				mss = optp[3];
--				mss <<= 8;
--				mss |= optp[2];
--
--				mss = ntohs((__force __be16)mss);
-+				mss = get_unaligned_be16(&optp[2]);
- 				break;
- 			case OSFOPT_TS:
- 				break;
++	spin_lock_bh(&ct->lock);
+ 	set_bit(IPS_SEQ_ADJUST_BIT, &ct->status);
+ 
+ 	seqadj = nfct_seqadj(ct);
+ 	this_way = &seqadj->seq[dir];
+ 	this_way->offset_before	 = off;
+ 	this_way->offset_after	 = off;
++	spin_unlock_bh(&ct->lock);
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(nf_ct_seqadj_init);
 -- 
 2.53.0
 
