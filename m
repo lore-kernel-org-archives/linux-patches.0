@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E5031716E;
-	Tue, 21 Jul 2026 19:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FFD41A547;
+	Tue, 21 Jul 2026 19:18:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661533; cv=none; b=kRtVHc9tEuCY7oVR6WSFOB5yBid1OpHxmt5uNVuejlzZxLwjiln9Rl42Q+IVl3MLD3AYKp8lrePsA7vls2o1RH41ZTrV+bvfehpz6S93grMukEmCXi2xI9AIphG3GA19l52b/HLxYadpj57jOEiohaiFZQWdzfHCbT+2DtqkyQw=
+	t=1784661535; cv=none; b=jgVYhbq6AZbRk9teiz6cDpZT0pRTTqlOTy83YvuPsPeDdFxiQd7cCB6suItlT95icAJBwQ98Xf0CANLXTtBq/YBHE+8Po6ADBYtCcSSDOCmaq6uINkJs0fDkxs0uSn+T9lBHKKlYfwtUzuxEPhmilLmLGm/4vbHb7n9D+q366vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661533; c=relaxed/simple;
-	bh=5n+x4d8KdzhwPsLJSKs1IavKgNW1cqXG0BK8OfKVn94=;
+	s=arc-20240116; t=1784661535; c=relaxed/simple;
+	bh=znlxiz2AUeyoAbPjA0CHL/C6TeQyLCTR7j2R+PUXXzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NdHcn5Vtmo6niD04QoaWnCPbStLZ8Lu4uVfsHykOwEM+4HVyPzxndXoiNTNGj77tEbPujYuTH6S1s8hoTKnQNK75Hlh8n1ZuX4uzWu8rx/W4MD5M4gEZV0DVnPxOsRETiVM2i0pCjLUXnD5eRrvh5DXEz7+Uu9/kPMzNVLdEx9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ceoubJur; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QfsYAFC0o7294ffQCwRALXsTrvghXRZqeGVLJvl6/xJ88sxuGRzYVKh8Xoh/touaKP4Vky/Iyrq+wb348QFEc1iIullgQpCzbJSl7Z0JCoUWj/Cz5Pc4mePdXbV6ixukzQrv4u0JWaTmoJEj1hNk69Uc/3b8D2WW54WZ9BUnXck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y7igB699; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ceoubJur"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60C8E1F000E9;
-	Tue, 21 Jul 2026 19:18:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y7igB699"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E8A1F000E9;
+	Tue, 21 Jul 2026 19:18:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661531;
-	bh=vhLr8Npg/EdJ9hkLL7h3QOWGFxcAgK7mef40P5KJ+MU=;
+	s=korg; t=1784661534;
+	bh=z4ImlkmvPC1tnqn449oWpH9TjvfpKYf/ZOT736opvBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ceoubJurtvIkyU4QvCTytx4/hXJ08VWeDepPmrusH9jTnCgI4CozzVqiAqOv7FA05
-	 s5V8O+E5/anmEBuR4Mmi0sVLgQCIMVfNygeh7uUilk9f5+kuWAgEieGNyTIanJc8yo
-	 hNsNIJw+HSfzGbbHpaRUY86P12Y4fKR2UaWY7ZXM=
+	b=y7igB699lwLpeqWtxXyKx6Plv5tMjd3NEZbRfB/CciI64TEdY5d1vMDt8ParT6OrS
+	 40e1oxijfFroY1pJSSVzT+7KWbhiM8F1PRPia9LkqeNr4CXicK1PHybUSCr0eiZ57D
+	 c25lE+GHn7UNwhFFXliTasfEKbWpZMdu00iIxJh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Wei Wang <wei.w.wang@hotmail.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0103/1276] media: qcom: camss: vfe: fix PIX subdev naming on VFE lite
-Date: Tue, 21 Jul 2026 17:09:06 +0200
-Message-ID: <20260721152448.400074748@linuxfoundation.org>
+Subject: [PATCH 6.12 0104/1276] iommu/amd: Fix a stale comment about which legacy mode is user visible
+Date: Tue, 21 Jul 2026 17:09:07 +0200
+Message-ID: <20260721152448.424445233@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,39 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit c97e797a64cdfe4acecff831b4285418d2815893 ]
+[ Upstream commit 4bf53c2d0c08bbdaa32f2114281f1ddab61902bf ]
 
-VFE lite hardware does not provide a functional PIX path, but after
-the per sub-device type resource changes the PIX subdev name is still
-assigned unconditionally.
+Update a stale comment about which of the legacy modes is visible to the
+user, i.e. can be forced via amd_iommu_intr=legacy.
 
-Only assign the PIX subdev name on non-lite VFE variants to avoid
-exposing a misleading device name.
-
-Fixes: ae44829a4a97 ("media: qcom: camss: Add per sub-device type resources")
-Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Fixes: b74aa02d7a30 ("iommu/amd: Fix legacy interrupt remapping for x2APIC-enabled system")
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Wei Wang <wei.w.wang@hotmail.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss-vfe.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/amd/amd_iommu_types.h | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index 8f6b0eccefb48f..76839898ace976 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -1740,7 +1740,7 @@ int msm_vfe_register_entities(struct vfe_device *vfe,
- 		v4l2_subdev_init(sd, &vfe_v4l2_ops);
- 		sd->internal_ops = &vfe_v4l2_internal_ops;
- 		sd->flags |= V4L2_SUBDEV_FL_HAS_DEVNODE;
--		if (i == VFE_LINE_PIX)
-+		if (i == VFE_LINE_PIX && vfe->res->is_lite == false)
- 			snprintf(sd->name, ARRAY_SIZE(sd->name), "%s%d_%s",
- 				 MSM_VFE_NAME, vfe->id, "pix");
- 		else
+diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
+index 09131d067a8a54..b3af429f23143a 100644
+--- a/drivers/iommu/amd/amd_iommu_types.h
++++ b/drivers/iommu/amd/amd_iommu_types.h
+@@ -969,12 +969,13 @@ static inline int get_hpet_devid(int id)
+ }
+ 
+ enum amd_iommu_intr_mode_type {
+-	AMD_IOMMU_GUEST_IR_LEGACY,
+-
+-	/* This mode is not visible to users. It is used when
+-	 * we cannot fully enable vAPIC and fallback to only support
+-	 * legacy interrupt remapping via 128-bit IRTE.
++	/*
++	 * The legacy format mode is not visible to users to prevent the user
++	 * from crashing x2APIC systems, which for all intents and purposes
++	 * require 128-bit IRTEs.   The legacy format will be forced as needed
++	 * when hardware doesn't support 128-bit IRTEs.
+ 	 */
++	AMD_IOMMU_GUEST_IR_LEGACY,
+ 	AMD_IOMMU_GUEST_IR_LEGACY_GA,
+ 	AMD_IOMMU_GUEST_IR_VAPIC,
+ };
 -- 
 2.53.0
 
