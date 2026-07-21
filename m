@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96EB147142F;
-	Tue, 21 Jul 2026 18:48:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2291A46F4A3;
+	Tue, 21 Jul 2026 18:48:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659688; cv=none; b=QbAOgst94/RQ24FU8Qjq6vh+x3BEY3Ipz+66ppEwEAx+PU5jzbLqtJaUjawQYjB6FKa7mvm5g3zXNo2wiOYKJ1tRjSvlozRK/vcccrvKgEKcSBwejzy092LyigI1R6JGQU1aWX2zb8UQORvTo+lRw80QFgzd3jONyigQg3nuI9U=
+	t=1784659692; cv=none; b=ttXSMJytQn4Zj89uDuMrRV8HHQS3zxWHhi7XNVGCdkXWE2wyqtJevvX5qcvFyo162El5O2TiCJRSk0sf74QO+MMkzPfoMmB9DPYW6xmnPpb2QMcw7zADg+4DNO9lrY8u1zkscYBrwm4RNh+xQ9i+RQrCRTNbY5Yam8pB93WwCLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659688; c=relaxed/simple;
-	bh=XXcyfinz+d4PUe3E63B3VVT27a3YV365ipR3z+0ay4o=;
+	s=arc-20240116; t=1784659692; c=relaxed/simple;
+	bh=qd6jKNqTpRmWhmkrcFqjvrHlrAH4e2Pe9f5E4OFatSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FsOs7F91gcZc5+pcydGs/VrKn9aEf6kGQ7y+RIaOo3fxWvZbr4NQQTdIQ0nX9PTxgpRXD7jkCFoOoitqYTe0Adi222td43933PY1EAK7CNkCy6yDs9Js3Vui5cP1vn7Jo9wCQ6p29yS4RuoaVOY7U0qzK3uFJsx+tXGBt/kJqso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yACHtY+Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H2zefRG4/XnTrK/44p0IzyRqDizjvcGn2JPHtSssYJ2q472qVSAC5BAk2BdUGiXYY7ZS5QpijuHGpOXG8QLB5aQcKbUY1nOBMOEsaTVB+Fm39fEfvYUf2LS1XB1YPp9e/7sDAj5/OrUwrA0TQmpAi3RcAtgMqpje1Vv84TGezlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YglH+fib; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yACHtY+Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10D31F00A3A;
-	Tue, 21 Jul 2026 18:48:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YglH+fib"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89BF41F000E9;
+	Tue, 21 Jul 2026 18:48:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659685;
-	bh=PUF0OI6BspUpYsjz4jmW3Blo3wbQHif/sTSavWZCD94=;
+	s=korg; t=1784659688;
+	bh=F7QKHE28bpWrzb+JQnRuvpa4W5vkyALSN2AjOX5Uy/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yACHtY+Zj5JbjMHUhh9WMLbQ6ffq2/Q9fdwEaUDkBOojY3Lx8kY4QSUajSieAHA+V
-	 ZDce5gUEsqdfQJ6HWhUZ80Fxv88i8Dz9BqLd6G84tmPjsQT05zBjT613ZIR8VHxYKy
-	 35Cls6dFsdwIr9mu5jX2aec5rE8lp602bZY5uUGQ=
+	b=YglH+fib2d5MqjUeiSskprrdUR6t6dieoLZawu9qAX0Igkieo2cqtLAIxEXF6mL3j
+	 QPFUm0oraxEkbJsT4X+JfSQGqeGGePhPRj5Q0Ae+w9Z+QDXznVOMVCUX+hDbb514EM
+	 2la5BQKEl2YFruSNbr0ciZLknAYPOicsLiDrc/34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1579/1611] functionfs: dont abuse ffs_data_closed() on fs shutdown
-Date: Tue, 21 Jul 2026 17:28:15 +0200
-Message-ID: <20260721152550.988020930@linuxfoundation.org>
+Subject: [PATCH 6.18 1580/1611] functionfs: dont bother with ffs->ref in ffs_data_{opened,closed}()
+Date: Tue, 21 Jul 2026 17:28:16 +0200
+Message-ID: <20260721152551.010243563@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,27 +52,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit fcb8985143540cbcb8e91c0ea8b7fb5d37c88177 ]
+[ Upstream commit fe47466282a69499ae17a22f064e827badb77078 ]
 
-ffs_data_closed() has a seriously confusing logics in it: in addition
-to the normal "decrement a counter and do some work if it hits zero"
-there's "... and if it has somehow become negative, do that" bit.
-
-It's not a race, despite smelling rather fishy.  What really happens
-is that in addition to "call that on close of files there, to match
-the increments of counter on opens" there's one call in ->kill_sb().
-Counter starts at 0 and never goes negative over the lifetime of
-filesystem (or we have much worse problems everywhere - ->release()
-call of some file somehow unpaired with successful ->open() of the
-same).  At the filesystem shutdown it will be 0 or, again, we have
-much worse problems - filesystem instance destroyed with files on it
-still open.  In other words, at that call and at that call alone
-the decrement would go from 0 to -1, hitting that chunk (and not
-hitting the "if it hits 0" part).
-
-So that check is a weirdly spelled "called from ffs_kill_sb()".
-Just expand the call in the latter and kill the misplaced chunk
-in ffs_data_closed().
+A reference is held by the superblock (it's dropped in ffs_kill_sb())
+and filesystem will not get to ->kill_sb() while there are any opened
+files, TYVM...
 
 Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
@@ -80,51 +64,41 @@ Stable-dep-of: 3137b243c939 ("usb: gadget: f_fs: initialize reset_work at alloca
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/usb/gadget/function/f_fs.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
 --- a/drivers/usb/gadget/function/f_fs.c
 +++ b/drivers/usb/gadget/function/f_fs.c
-@@ -2086,12 +2086,18 @@ static int ffs_fs_init_fs_context(struct
- 	return 0;
- }
+@@ -2143,7 +2143,6 @@ static void ffs_data_get(struct ffs_data
  
-+static void ffs_data_reset(struct ffs_data *ffs);
+ static void ffs_data_opened(struct ffs_data *ffs)
+ {
+-	refcount_inc(&ffs->ref);
+ 	if (atomic_add_return(1, &ffs->opened) == 1 &&
+ 			ffs->state == FFS_DEACTIVATED) {
+ 		ffs->state = FFS_CLOSING;
+@@ -2168,11 +2167,11 @@ static void ffs_data_put(struct ffs_data
+ 
+ static void ffs_data_closed(struct ffs_data *ffs)
+ {
+-	struct ffs_epfile *epfiles;
+-	unsigned long flags;
+-
+ 	if (atomic_dec_and_test(&ffs->opened)) {
+ 		if (ffs->no_disconnect) {
++			struct ffs_epfile *epfiles;
++			unsigned long flags;
 +
- static void
- ffs_fs_kill_sb(struct super_block *sb)
- {
- 	kill_litter_super(sb);
--	if (sb->s_fs_info)
--		ffs_data_closed(sb->s_fs_info);
-+	if (sb->s_fs_info) {
-+		struct ffs_data *ffs = sb->s_fs_info;
-+		ffs->state = FFS_CLOSING;
-+		ffs_data_reset(ffs);
-+		ffs_data_put(ffs);
-+	}
- }
- 
- static struct file_system_type ffs_fs_type = {
-@@ -2129,7 +2135,6 @@ static void functionfs_cleanup(void)
- /* ffs_data and ffs_function construction and destruction code **************/
- 
- static void ffs_data_clear(struct ffs_data *ffs);
--static void ffs_data_reset(struct ffs_data *ffs);
- 
- static void ffs_data_get(struct ffs_data *ffs)
- {
-@@ -2186,11 +2191,6 @@ static void ffs_data_closed(struct ffs_d
+ 			ffs->state = FFS_DEACTIVATED;
+ 			spin_lock_irqsave(&ffs->eps_lock, flags);
+ 			epfiles = ffs->epfiles;
+@@ -2191,7 +2190,6 @@ static void ffs_data_closed(struct ffs_d
  			ffs_data_reset(ffs);
  		}
  	}
--	if (atomic_read(&ffs->opened) < 0) {
--		ffs->state = FFS_CLOSING;
--		ffs_data_reset(ffs);
--	}
--
- 	ffs_data_put(ffs);
+-	ffs_data_put(ffs);
  }
  
+ static struct ffs_data *ffs_data_new(const char *dev_name)
 
 
