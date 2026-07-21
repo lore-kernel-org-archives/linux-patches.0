@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6505474AE5;
-	Tue, 21 Jul 2026 17:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3DE474AF0;
+	Tue, 21 Jul 2026 17:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656793; cv=none; b=EMVNaHVvkZPwB7jpz0egv+nf63ZKzn7H7IodT3gg1KKXx0BodyJM2SIFw/z0tnZMeVyMUai9s2B+BqG6cXsj9O5n6FSUZdY2oYMiuhCrStrlEf/TCsCA6TUaReOR6maxALQ+2RqLd6GGm+SPktD8oZy1oXSvlQQccsjtM1OCPqE=
+	t=1784656796; cv=none; b=eDydShWZu1P3Mzn5IS1epx1DzsmLzG2KnkpRWsxHk8zhf7X9fUPsA3AEfymhQGS/aKZZcBdOmqnRrPtXyMdM4N5vkVPAPaVmP32cETFvbHPtX4RRW8e5W6lB+70DoC5yFhxJ4hq6fDlQ30X7ZM/IsC4c0Q4N9DcPAFSIsy6+G5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656793; c=relaxed/simple;
-	bh=u12fjGescP96OIGdITHDjLVtJZG85QyMbeHTyHmGJUo=;
+	s=arc-20240116; t=1784656796; c=relaxed/simple;
+	bh=S8b/XRN73IM1ezlJC473dh9LWe7OW17+n0CgRddZVXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=juCFCl2GvQnNeIfgb5CAjaoI0roVEAT5IEb7bRiEChOWf1OrcsJ9mzsESmfKoBahxV4vbpH7axfKP301N288i6COW4U58hD08Khlr95/2y0tQUUMjjwFSdnCEsMdOtm66KaMMlYZp7QCPxX2K7ZcTax1NA/4rovDwgLshd7laZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ggun8Lte; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W+g7nng1HW7KZHMIH1/ouEtKRkSrV6d8Ifjj9nvXyb6qF3oDj3CUHwXpkacMFCMxA8XYnc3wuvGShwtSt8syY6fttmx5bTBFt+pRUpiAJYhqnnUPZDeZ4jsDqh8jE2rhJkRTnWkx7Qiq1nQY5HGy7bpSjzVovPuKoo/kUVVpaj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u6ZeIhFa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ggun8Lte"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3701C1F000E9;
-	Tue, 21 Jul 2026 17:59:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u6ZeIhFa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4AD51F000E9;
+	Tue, 21 Jul 2026 17:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656792;
-	bh=bJ2/lIvCKxyhWfJAyNwfXCTljtqxsRf/I+Gml9Y/vac=;
+	s=korg; t=1784656795;
+	bh=LuhBp/bahKBOYh0ockPTjW8rC7c49caEn3fhKUHeLuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ggun8LteyzqCjxW6p9iPiCPxAirgCpfYyGtW40rA5vTjrwkfSSs6lp9XiB0xa9rCN
-	 yOczRY4+ud4HkwTNn1jtivhxAvSfLN/K76+FILUPsdX1jE/CJ5YReBxdYRdw08BkL8
-	 FQGhM2X761n8ujl02jfLtWSH8ZSYig5bNcsCZ244=
+	b=u6ZeIhFabCNuvnD8JzvBvaCyTMiJul7nUrgJNkt7Jv5lMrkjvqHhP7gJHvmdZreFY
+	 KbEN8MqZ/5fxjV/C7FkUpaCAKml3niCuJMQiHXzDF0VaavMruqykC2Ew/93hXB1ykm
+	 DqHQycAiQf+iVCPiLm7arZ3xLumpQUWeUhp6l/ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0522/1611] dpll: send delete notification before unregister in on-pin rollback
-Date: Tue, 21 Jul 2026 17:10:38 +0200
-Message-ID: <20260721152527.088519958@linuxfoundation.org>
+Subject: [PATCH 6.18 0523/1611] dpll: emit per-dpll delete notifications in dpll_pin_on_pin_unregister()
+Date: Tue, 21 Jul 2026 17:10:39 +0200
+Message-ID: <20260721152527.111804294@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,43 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Grzegorz Nitka <grzegorz.nitka@intel.com>
 
-[ Upstream commit e83b403eb142be18d223fc599c0ac45519053671 ]
+[ Upstream commit df0ba51ccf873e533669578104981109217d8201 ]
 
-The rollback path in dpll_pin_on_pin_register() called
-__dpll_pin_unregister() before dpll_pin_delete_ntf(). When the
-unregister dropped the pin's last DPLL reference it cleared the
-DPLL_REGISTERED mark in dpll_pin_xa, so the subsequent
-dpll_pin_event_send() failed dpll_pin_available() and aborted with
--ENODEV. As a result userspace was never notified of the rollback
-deletion and remained out of sync with the kernel.
+dpll_pin_on_pin_register() emits a creation notification for every
+parent->dpll_refs entry, but dpll_pin_on_pin_unregister() emitted only
+one deletion notification outside the loop. When a pin is registered
+against multiple parent dplls, userspace sees N creates but a single
+delete and leaks per-dpll state.
 
-Send the delete notification first, matching the order used by
-dpll_pin_unregister() and dpll_pin_on_pin_unregister().
+Move dpll_pin_delete_ntf() into the loop and call it before
+__dpll_pin_unregister() so the DPLL_REGISTERED mark is still set when
+dpll_pin_available() is consulted.
 
 Fixes: 9d71b54b65b1 ("dpll: netlink: Add DPLL framework base functions")
 Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
-Link: https://patch.msgid.link/20260607183045.1213735-5-grzegorz.nitka@intel.com
+Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Link: https://patch.msgid.link/20260607183045.1213735-6-grzegorz.nitka@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dpll/dpll_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dpll/dpll_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
-index 241d0e906a6e81..9fdfb7617126c7 100644
+index 9fdfb7617126c7..08b5055ee09cf5 100644
 --- a/drivers/dpll/dpll_core.c
 +++ b/drivers/dpll/dpll_core.c
-@@ -937,9 +937,9 @@ int dpll_pin_on_pin_register(struct dpll_pin *parent, struct dpll_pin *pin,
- dpll_unregister:
- 	xa_for_each(&parent->dpll_refs, i, ref)
- 		if (i < stop) {
-+			dpll_pin_delete_ntf(pin);
- 			__dpll_pin_unregister(ref->dpll, pin, ops, priv,
- 					      parent);
--			dpll_pin_delete_ntf(pin);
- 		}
- 	dpll_xa_ref_pin_del(&pin->parent_refs, parent, ops, priv, pin);
- unlock:
+@@ -966,14 +966,14 @@ void dpll_pin_on_pin_unregister(struct dpll_pin *parent, struct dpll_pin *pin,
+ 	unsigned long i;
+ 
+ 	mutex_lock(&dpll_lock);
+-	dpll_pin_delete_ntf(pin);
+-	dpll_xa_ref_pin_del(&pin->parent_refs, parent, ops, priv, pin);
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
+ 		reg = dpll_pin_registration_find(ref, ops, priv, parent);
+ 		if (!reg)
+ 			continue;
++		dpll_pin_delete_ntf(pin);
+ 		__dpll_pin_unregister(ref->dpll, pin, ops, priv, parent);
+ 	}
++	dpll_xa_ref_pin_del(&pin->parent_refs, parent, ops, priv, pin);
+ 	mutex_unlock(&dpll_lock);
+ }
+ EXPORT_SYMBOL_GPL(dpll_pin_on_pin_unregister);
 -- 
 2.53.0
 
