@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E3B3CF1E0;
-	Tue, 21 Jul 2026 17:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8A940B112;
+	Tue, 21 Jul 2026 17:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655342; cv=none; b=k9P/B2kObyIZwadM45s6GwBhMmcDY1CdHFD0dJ6S3ty7J5XhP/0FlpHQpI9XO2DTg1BZqiv4YeSMDRUegBAVCir4syiaH7rdf93GSXTnUoCGAUJJM0Iq9ihLvKyJIRBExIVgsXtAyHqQkh//v0agKIdJWoqEtPMGGzXErp3gFzE=
+	t=1784655345; cv=none; b=ZlRZLFZqdZp0VKLnarK27uu6ihTmYLeUDUNl1Vfx9YB3KOOZt0lQF+UlK9J/esoD9a7aPFQSslsV8qaJsUPjJIy9BxBOpKVvAd+FMKxzUNxD5Ix9z2t5WQskM4zu6rq1LrbvXNV6humHvrkWxURUjcUEe+2aI8GE99vY/5IY+Gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655342; c=relaxed/simple;
-	bh=Em9e/sox1fUGHXO6ToWye5v/QwsbOeQt6JRHRIXjedo=;
+	s=arc-20240116; t=1784655345; c=relaxed/simple;
+	bh=r8bjxbth+ZRKm9BsdatItn3HsBC6WLO2QVBeHKaq7kE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p+b+DJGZub8VQzfZNnWNvLCqD9ZnNlJIkhqI5fSjZSVytkCn5rA6Q2CL8DbcHinAySoVnhf5Aw8BilMBlQPrFm/ppGOzLB+HDERuYH+WJBsNxHJQB7grlKENvgRNBDeo3jSZqQHISL2RU409Oew1YWZ/QGllHqntraZPMAedGdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxiRHu38; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=okTRelkMLFW4zHKkkN/+P6gQ3VXeEiWi2xvdFlgmg0vNe2DV7ihaqEMZAEiQWeH2nr/w3brCyfixoLJhWZiZo1OUrfNPLglvCev0XZ28s9JFFv3ltXBbDZyCeVNQ2QPZEd+YbHXbyoqz6kSbdo/8ZguaxP/AUeQP9gvyS7XGc+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B8FUy1yT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxiRHu38"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E89C1F000E9;
-	Tue, 21 Jul 2026 17:35:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B8FUy1yT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C6271F000E9;
+	Tue, 21 Jul 2026 17:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655340;
-	bh=AMcsfF4L7yPg3+AeeYWAdotUen0mAiIyBSC0mvqRzco=;
+	s=korg; t=1784655343;
+	bh=c+jWwqcjhCf6kT5pCLIgoP22Osx4k9IZZ1Kx1bW/BJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qxiRHu38/dxN7yV2yhsNnOTzmI8F9CRlbrBB6hBrTOESol2xwhKNxxbhnwdKixef/
-	 m745ZpEITSwctnuyCoARqviIFSgVBKc762Nk/oHCuxshusfh11nzlkZDYpLfi90Fj5
-	 AFXlw0Jy0tbw4uYFrN+AZgVOv7pwrTcSJ4lhkEkk=
+	b=B8FUy1yT2laytf/3wEBhIYjholkZcKyox1UKQQxYiPQgChInz4KIrghPBItQ5rDYE
+	 ynwjHITMDgpiL6K+54QlKyfxt70hdnCTRTAHsbrKEani+DK6TxWo1TFV4n1waffRXg
+	 od0eICHd+KHGrDM4/nblH74R0FXRFtVa634cVj+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 7.1 2030/2077] mmc: vub300: defer reset until cmd_mutex is unlocked
-Date: Tue, 21 Jul 2026 17:28:23 +0200
-Message-ID: <20260721152640.576955626@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Ruipeng Qi <ruipengqi3@gmail.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 2048/2077] f2fs: fix potential deadlock in f2fs_balance_fs()
+Date: Tue, 21 Jul 2026 17:28:41 +0200
+Message-ID: <20260721152641.003888405@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,126 +52,250 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Ruipeng Qi <ruipengqi3@gmail.com>
 
-commit ee5fb641c4ccac8406c668d3e947eb20ce44f233 upstream.
+[ Upstream commit dd3114870771562036fdcf5abe813956f36d224d ]
 
-vub300_cmndwork_thread() holds cmd_mutex while it sends a command and
-waits for the command response.  If the response wait times out,
-__vub300_command_response() kills the command URBs and then synchronously
-resets the USB device through usb_reset_device().
+When the f2fs filesystem space is nearly exhausted, we encounter deadlock
+issues as below:
 
-That reset path re-enters the driver through vub300_pre_reset(), which
-also takes cmd_mutex.  The worker therefore tries to acquire the same
-mutex recursively while it is still holding it from the command path.
+INFO: task A:1890 blocked for more than 120 seconds.
+      Tainted: G           O       6.12.41-g3fe07ddf05ab #1
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:A    state:D stack:0     pid:1890  tgid:1626  ppid:1153   flags:0x00000204
+Call trace:
+ __switch_to+0xf4/0x158
+ __schedule+0x27c/0x908
+ schedule+0x3c/0x118
+ io_schedule+0x44/0x68
+ folio_wait_bit_common+0x174/0x370
+ folio_wait_bit+0x20/0x38
+ folio_wait_writeback+0x54/0xc8
+ truncate_inode_partial_folio+0x70/0x1e0
+ truncate_inode_pages_range+0x1b0/0x450
+ truncate_pagecache+0x54/0x88
+ f2fs_file_write_iter+0x3e8/0xb80
+ do_iter_readv_writev+0xf0/0x1e0
+ vfs_writev+0x138/0x2c8
+ do_writev+0x88/0x130
+ __arm64_sys_writev+0x28/0x40
+ invoke_syscall+0x50/0x120
+ el0_svc_common.constprop.0+0xc8/0xf0
+ do_el0_svc+0x24/0x38
+ el0_svc+0x30/0xf8
+ el0t_64_sync_handler+0x120/0x130
+ el0t_64_sync+0x190/0x198
 
-This issue was found by our static analysis tool and then manually
-reviewed against the current tree.
+INFO: task kworker/u8:11:2680853 blocked for more than 120 seconds.
+      Tainted: G           O       6.12.41-g3fe07ddf05ab #1
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:kworker/u8:11   state:D stack:0     pid:2680853 tgid:2680853 ppid:2      flags:0x00000208
+Workqueue: writeback wb_workfn (flush-254:0)
+Call trace:
+ __switch_to+0xf4/0x158
+ __schedule+0x27c/0x908
+ schedule+0x3c/0x118
+ io_schedule+0x44/0x68
+ folio_wait_bit_common+0x174/0x370
+ __filemap_get_folio+0x214/0x348
+ pagecache_get_page+0x20/0x70
+ f2fs_get_read_data_page+0x150/0x3e8
+ f2fs_get_lock_data_page+0x2c/0x160
+ move_data_page+0x50/0x478
+ do_garbage_collect+0xd38/0x1528
+ f2fs_gc+0x240/0x7e0
+ f2fs_balance_fs+0x1a0/0x208
+ f2fs_write_single_data_page+0x6e4/0x730
+ f2fs_write_cache_pages+0x378/0x9b0
+ f2fs_write_data_pages+0x2e4/0x388
+ do_writepages+0x8c/0x2c8
+ __writeback_single_inode+0x4c/0x498
+ writeback_sb_inodes+0x234/0x4a8
+ __writeback_inodes_wb+0x58/0x118
+ wb_writeback+0x2f8/0x3c0
+ wb_workfn+0x2c4/0x508
+ process_one_work+0x180/0x408
+ worker_thread+0x258/0x368
+ kthread+0x118/0x128
+ ret_from_fork+0x10/0x200
 
-The grounded PoC kept the real worker and timeout/reset carrier:
+INFO: task kworker/u8:8:2641297 blocked for more than 120 seconds.
+      Tainted: G           O       6.12.41-g3fe07ddf05ab #1
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:kworker/u8:8    state:D stack:0     pid:2641297 tgid:2641297 ppid:2      flags:0x00000208
+Workqueue: writeback wb_workfn (flush-254:0)
+Call trace:
+ __switch_to+0xf4/0x158
+ __schedule+0x27c/0x908
+ rt_mutex_schedule+0x30/0x60
+ __rt_mutex_slowlock_locked.constprop.0+0x460/0x8a8
+ rwbase_write_lock+0x24c/0x378
+ down_write+0x1c/0x30
+ f2fs_balance_fs+0x184/0x208
+ f2fs_write_inode+0xf4/0x328
+ __writeback_single_inode+0x370/0x498
+ writeback_sb_inodes+0x234/0x4a8
+ __writeback_inodes_wb+0x58/0x118
+ wb_writeback+0x2f8/0x3c0
+ wb_workfn+0x2c4/0x508
+ process_one_work+0x180/0x408
+ worker_thread+0x258/0x368
+ kthread+0x118/0x128
+ ret_from_fork+0x10/0x20
 
-  vub300_cmndwork_thread()
-  __vub300_command_response()
-  usb_lock_device_for_reset()
-  usb_reset_device()
-  vub300_pre_reset()
+INFO: task B:1902 blocked for more than 120 seconds.
+      Tainted: G           O       6.12.41-g3fe07ddf05ab #1
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:B     state:D stack:0     pid:1902  tgid:1626  ppid:1153   flags:0x0000020c
+Call trace:
+ __switch_to+0xf4/0x158
+ __schedule+0x27c/0x908
+ rt_mutex_schedule+0x30/0x60
+ __rt_mutex_slowlock_locked.constprop.0+0x460/0x8a8
+ rwbase_write_lock+0x24c/0x378
+ down_write+0x1c/0x30
+ f2fs_balance_fs+0x184/0x208
+ f2fs_map_blocks+0x94c/0x1110
+ f2fs_file_write_iter+0x228/0xb80
+ do_iter_readv_writev+0xf0/0x1e0
+ vfs_writev+0x138/0x2c8
+ do_writev+0x88/0x130
+ __arm64_sys_writev+0x28/0x40
+ invoke_syscall+0x50/0x120
+ el0_svc_common.constprop.0+0xc8/0xf0
+ do_el0_svc+0x24/0x38
+ el0_svc+0x30/0xf8
+ el0t_64_sync_handler+0x120/0x130
+ el0t_64_sync+0x190/0x198
 
-Lockdep reported the same-task recursive acquisition on cmd_mutex:
+INFO: task sync:2769849 blocked for more than 120 seconds.
+      Tainted: G           O       6.12.41-g3fe07ddf05ab #1
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:sync            state:D stack:0     pid:2769849 tgid:2769849 ppid:736    flags:0x0000020c
+Call trace:
+ __switch_to+0xf4/0x158
+ __schedule+0x27c/0x908
+ schedule+0x3c/0x118
+ wb_wait_for_completion+0xb0/0xe8
+ sync_inodes_sb+0xc8/0x2b0
+ sync_inodes_one_sb+0x24/0x38
+ iterate_supers+0xa8/0x138
+ ksys_sync+0x54/0xc8
+ __arm64_sys_sync+0x18/0x30
+ invoke_syscall+0x50/0x120
+ el0_svc_common.constprop.0+0xc8/0xf0
+ do_el0_svc+0x24/0x38
+ el0_svc+0x30/0xf8
+ el0t_64_sync_handler+0x120/0x130
+ el0t_64_sync+0x190/0x198
 
-  WARNING: possible recursive locking detected
-  ... (&test_vub300.cmd_mutex) ... at: usb_reset_device... [vuln_msv]
-  ... (&test_vub300.cmd_mutex) ... at: vub300_cmndwork_thread+0x12/0x20 [vuln_msv]
-  Workqueue: vub300_cmd_wq vub300_cmndwork_thread [vuln_msv]
-  *** DEADLOCK ***
+The root cause is a potential deadlock between the following tasks:
 
-Return a flag from __vub300_command_response() when the timeout path needs
-a device reset, then perform the reset after vub300_cmndwork_thread() has
-cleared the in-flight command state and dropped cmd_mutex.  The reset is
-still attempted before mmc_request_done(), preserving the existing request
-completion ordering while avoiding the recursive lock.
+kworker/u8:11				Thread A
+- f2fs_write_single_data_page
+ - f2fs_do_write_data_page
+  - folio_start_writeback(X)
+  - f2fs_outplace_write_data
+   - bio_add_folio(X)
+ - folio_unlock(X)
+					- truncate_inode_pages_range
+					 - __filemap_get_folio(X, FGP_LOCK)
+					 - truncate_inode_partial_folio(X)
+					  - folio_wait_writeback(X)
+ - f2fs_balance_fs
+  - f2fs_gc
+   - do_garbage_collect
+    - move_data_page
+     - f2fs_get_lock_data_page
+      - __filemap_get_folio(X, FGP_LOCK)
 
-Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Both threads try to access folio X. Thread A holds the lock but waits
+for writeback, while kworker waits for the lock. This causes a deadlock.
+
+Other threads also enter D state, waiting for locks such as gc_lock and
+writepages.
+
+OPU/IPU DATA folio are all affected by this issue. To avoid such
+potential deadlocks, always commit these cached folios before
+triggering f2fs_gc() in f2fs_balance_fs().
+
+Suggested-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Ruipeng Qi <ruipengqi3@gmail.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: 8b4468ec023d ("f2fs: fix potential deadlock in gc_merge path of f2fs_balance_fs()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/vub300.c |   26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ fs/f2fs/data.c    |   29 +++++++++++++++++++++++++++++
+ fs/f2fs/f2fs.h    |    1 +
+ fs/f2fs/segment.c |    8 ++++++++
+ 3 files changed, 38 insertions(+)
 
---- a/drivers/mmc/host/vub300.c
-+++ b/drivers/mmc/host/vub300.c
-@@ -1586,7 +1586,7 @@ static int __command_write_data(struct v
- 	return linear_length;
- }
- 
--static void __vub300_command_response(struct vub300_mmc_host *vub300,
-+static bool __vub300_command_response(struct vub300_mmc_host *vub300,
- 				      struct mmc_command *cmd,
- 				      struct mmc_data *data, int data_length)
- {
-@@ -1598,17 +1598,11 @@ static void __vub300_command_response(st
- 					    msecs_to_jiffies(msec_timeout));
- 	if (respretval == 0) { /* TIMED OUT */
- 		/* we don't know which of "out" and "res" if any failed */
--		int result;
- 		vub300->usb_timed_out = 1;
- 		usb_kill_urb(vub300->command_out_urb);
- 		usb_kill_urb(vub300->command_res_urb);
- 		cmd->error = -ETIMEDOUT;
--		result = usb_lock_device_for_reset(vub300->udev,
--						   vub300->interface);
--		if (result == 0) {
--			result = usb_reset_device(vub300->udev);
--			usb_unlock_device(vub300->udev);
--		}
-+		return true;
- 	} else if (respretval < 0) {
- 		/* we don't know which of "out" and "res" if any failed */
- 		usb_kill_urb(vub300->command_out_urb);
-@@ -1704,6 +1698,8 @@ static void __vub300_command_response(st
- 	} else {
- 		cmd->error = -EINVAL;
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -943,6 +943,35 @@ void f2fs_submit_merged_ipu_write(struct
  	}
-+
-+	return false;
  }
  
- static void construct_request_response(struct vub300_mmc_host *vub300,
-@@ -1749,6 +1745,7 @@ static void vub300_cmndwork_thread(struc
- 		struct mmc_request *req = vub300->req;
- 		struct mmc_command *cmd = vub300->cmd;
- 		struct mmc_data *data = vub300->data;
-+		bool reset_device;
- 		int data_length;
- 		mutex_lock(&vub300->cmd_mutex);
- 		init_completion(&vub300->command_complete);
-@@ -1771,7 +1768,8 @@ static void vub300_cmndwork_thread(struc
- 			data_length = __command_read_data(vub300, cmd, data);
- 		else
- 			data_length = __command_write_data(vub300, cmd, data);
--		__vub300_command_response(vub300, cmd, data, data_length);
-+		reset_device = __vub300_command_response(vub300, cmd,
-+							 data, data_length);
- 		vub300->req = NULL;
- 		vub300->cmd = NULL;
- 		vub300->data = NULL;
-@@ -1779,6 +1777,16 @@ static void vub300_cmndwork_thread(struc
- 			if (cmd->error == -ENOMEDIUM)
- 				check_vub300_port_status(vub300);
- 			mutex_unlock(&vub300->cmd_mutex);
-+			if (reset_device) {
-+				int result;
++void f2fs_submit_all_merged_ipu_writes(struct f2fs_sb_info *sbi)
++{
++	struct bio_entry *be, *tmp;
++	struct f2fs_bio_info *io;
++	enum temp_type temp;
 +
-+				result = usb_lock_device_for_reset(vub300->udev,
-+								   vub300->interface);
-+				if (result == 0) {
-+					result = usb_reset_device(vub300->udev);
-+					usb_unlock_device(vub300->udev);
-+				}
-+			}
- 			mmc_request_done(vub300->mmc, req);
- 			kref_put(&vub300->kref, vub300_delete);
- 			return;
++	for (temp = HOT; temp < NR_TEMP_TYPE; temp++) {
++		LIST_HEAD(list);
++
++		io = sbi->write_io[DATA] + temp;
++
++		/* A lockless list_empty() check is safe here: any bios from
++		 * other kworkers that we miss will be submitted by those
++		 * kworkers accordingly.
++		 */
++		if (list_empty(&io->bio_list))
++			continue;
++
++		f2fs_down_write(&io->bio_list_lock);
++		list_splice_init(&io->bio_list, &list);
++		f2fs_up_write(&io->bio_list_lock);
++
++		list_for_each_entry_safe(be, tmp, &list, list) {
++			f2fs_submit_write_bio(sbi, be->bio, DATA);
++			del_bio_entry(be);
++		}
++	}
++}
++
+ int f2fs_merge_page_bio(struct f2fs_io_info *fio)
+ {
+ 	struct bio *bio = *fio->bio;
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -4154,6 +4154,7 @@ void f2fs_submit_merged_write_folio(stru
+ 				struct folio *folio, enum page_type type);
+ void f2fs_submit_merged_ipu_write(struct f2fs_sb_info *sbi,
+ 					struct bio **bio, struct folio *folio);
++void f2fs_submit_all_merged_ipu_writes(struct f2fs_sb_info *sbi);
+ void f2fs_flush_merged_writes(struct f2fs_sb_info *sbi);
+ int f2fs_submit_page_bio(struct f2fs_io_info *fio);
+ int f2fs_merge_page_bio(struct f2fs_io_info *fio);
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -462,6 +462,14 @@ void f2fs_balance_fs(struct f2fs_sb_info
+ 			.should_migrate_blocks = false,
+ 			.err_gc_skipped = false,
+ 			.nr_free_secs = 1 };
++
++		/*
++		 * Submit all cached OPU/IPU DATA bios before triggering
++		 * foreground GC to avoid potential deadlocks.
++		 */
++		f2fs_submit_merged_write(sbi, DATA);
++		f2fs_submit_all_merged_ipu_writes(sbi);
++
+ 		f2fs_down_write_trace(&sbi->gc_lock, &gc_control.lc);
+ 		stat_inc_gc_call_count(sbi, FOREGROUND);
+ 		f2fs_gc(sbi, &gc_control);
 
 
