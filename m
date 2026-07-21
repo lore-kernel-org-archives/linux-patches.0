@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF14F46A5FB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111C746A606;
 	Tue, 21 Jul 2026 15:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648896; cv=none; b=FG5B2+klGIkbYq+EyeoCx9q++60DYNV0mTeFdr9c7bgkyRXqU+EsNkjCyrCnXJdFpI0uvQUBeV9Elb76OI0xQ8q5NY77d/UGWy7vltYyhXc/M/VUqQE0FYpim/yp4FcYnMH+v6ur3pV6NN4riLp3+O5OV4y5MyeUP/S4Bj6WtZE=
+	t=1784648896; cv=none; b=Z4xVmycS95gOeQHdih/qJK5oAaVCZtbuT99XEuUm8lo3d4ReJe3FsuyySvtfbVCH5js1+l/d6b5bWUn0PYQpyjPwinSBNURBmS2NotwEV8cC1CVfN1F/vamxA2gHm1sX8SMXbfeTR1ew2csd+rXksWZd9cuG6XOIOb/JvFHABak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784648896; c=relaxed/simple;
-	bh=vf2JCzHpADQ8IBAnJ5z3RHWbN1L+Fz13NBbV3ZapL4w=;
+	bh=AmHq2VHbXzhnHJt0snpYucqcv8NmDvrelN2dKFyudyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oiuBZG3d9GkF0O1XWTV1iBU0wpcphClmPyfHW9ScJK77+xQOzGDICpUfrNurI1RL9r6IbPr8k5j9uZFTixWaIdJEnUTFOkI9wdXLmhz0GS89nwmoRGxCZkpRfJjLjr0fJvj2oihHP+5KqOhbX8zXE+ao388cGsaPCVIo7ZtTdGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T79U+5Ii; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bnMD7/RdXjgAoyKghYATE+XyiELxqtcQ3+tBfvY5015MMrCkti536LSwJMhtGYzsd/E3Hk1Zp8WU9+A057KM6lxigcaRWgsJwOFYOYGA8+134oxMRhCGtP/4bUcKmAKElB5UryXsQ6P1pFL2ghny5Qfr+n9Q8LGuA0Qix/AgZyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lUQcnLAN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T79U+5Ii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C8971F00A3D;
-	Tue, 21 Jul 2026 15:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lUQcnLAN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31B01F00A3A;
+	Tue, 21 Jul 2026 15:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648891;
-	bh=zD4nUQJ19r5MnO/jlj1sZJHpkqnFcX88mtfLA7K27Jw=;
+	s=korg; t=1784648894;
+	bh=ycGn9HBuzxq02E2e/8rChgYHUs6/9Vv+na0cadcIQro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T79U+5IitZzNpmnYoj/EGS2Oyf+HHUnBnz1ZoUIm6X3ow1IJC7F+GhPKmmngQjbYA
-	 A1x/j+Z6cHhiEG4foLIUlTMCDDcHB1R2VZ4ZWxpUX90Gmoj98YkTPs+NaVMCwIidW8
-	 bYtn6xpT1AjV/aQbGga4StZUcSNqclSmi4uzFS7U=
+	b=lUQcnLANt2BavFZvBK7qfwHeXvLJNurAyRoBQedTPy2+RanvjR8P04IVW65xsbtGS
+	 JCL0tx2P8LLT+HiMDKAPW50nCFyv2tP3KmnBmlVvaEkcJQOnp9imYLFax8EA+j/2gQ
+	 nRD06FDC3+A/UD3NDG742WlRYGkIX/R4+l3MakMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Val Packett <val@packett.cool>,
-	Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Subject: [PATCH 7.1 0372/2077] drm/msm/dp: Fix the ISR_* enum values
-Date: Tue, 21 Jul 2026 17:00:45 +0200
-Message-ID: <20260721152601.463455935@linuxfoundation.org>
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 0373/2077] firmware: samsung: acpm: Add devm_acpm_get_by_phandle helper
+Date: Tue, 21 Jul 2026 17:00:46 +0200
+Message-ID: <20260721152601.486934202@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,45 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-[ Upstream commit 3fbfdc3b1d48cc115a86953e5df0c76cd2efc42b ]
+[ Upstream commit fc13a4b9b9c8cb0b8e5ba54b21712d00f810496c ]
 
-The ISR_HPD_* enum should represent values that can be read from the
-REG_DP_DP_HPD_INT_STATUS register. Swap ISR_HPD_IO_GLITCH_COUNT and
-ISR_HPD_REPLUG_COUNT to map them correctly to register values.
+Introduce devm_acpm_get_by_phandle() to standardize how consumer
+drivers acquire a handle to the ACPM IPC interface. Enforce the
+use of the "samsung,acpm-ipc" property name across the SoC and
+simplify the boilerplate code in client drivers.
 
-While we are at it, correct the spelling for ISR_HPD_REPLUG_COUNT.
+The first consumer of this helper is the Exynos ACPM Thermal Management
+Unit (TMU) driver. The TMU utilizes a hybrid management approach: direct
+register access from the Application Processor (AP) is restricted to the
+interrupt pending (INTPEND) registers for event identification.
+High-level functional tasks, such as sensor initialization, threshold
+programming, and temperature reads, are delegated to the ACPM firmware
+via this IPC interface.
 
-Fixes: 8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
-Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Tested-by: Val Packett <val@packett.cool> # x1e80100-dell-latitude-7455
-Tested-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com> # Hamoa IOT EVK, QCS8300 Ride
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/727602/
-Link: https://lore.kernel.org/r/20260524-hpd-refactor-v6-2-cf3ab488dd7b@oss.qualcomm.com
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
+Link: https://patch.msgid.link/20260515-acpm-tmu-helpers-v2-6-8ca011d5a965@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Stable-dep-of: 7b661285aa75 ("firmware: samsung: acpm: remove compile-testing stubs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/firmware/samsung/exynos-acpm.c        | 23 +++++++++++++++++++
+ .../firmware/samsung/exynos-acpm-protocol.h   |  6 +++++
+ 2 files changed, 29 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index d2124d6254855b..cf2415635c426f 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -38,9 +38,9 @@ enum {
- 	ISR_DISCONNECTED,
- 	ISR_CONNECT_PENDING,
- 	ISR_CONNECTED,
--	ISR_HPD_REPLUG_COUNT,
-+	ISR_HPD_IO_GLITCH_COUNT,
- 	ISR_IRQ_HPD_PULSE_COUNT,
--	ISR_HPD_LO_GLITH_COUNT,
-+	ISR_HPD_REPLUG_COUNT,
- };
+diff --git a/drivers/firmware/samsung/exynos-acpm.c b/drivers/firmware/samsung/exynos-acpm.c
+index 19db3674a28f3e..65949e7fd430d9 100644
+--- a/drivers/firmware/samsung/exynos-acpm.c
++++ b/drivers/firmware/samsung/exynos-acpm.c
+@@ -819,6 +819,29 @@ struct acpm_handle *devm_acpm_get_by_node(struct device *dev,
+ }
+ EXPORT_SYMBOL_GPL(devm_acpm_get_by_node);
  
- /* event thread connection state */
++/**
++ * devm_acpm_get_by_phandle - Resource managed lookup of the standardized
++ * "samsung,acpm-ipc" handle.
++ * @dev: consumer device
++ *
++ * Return: pointer to handle on success, ERR_PTR(-errno) otherwise.
++ */
++struct acpm_handle *devm_acpm_get_by_phandle(struct device *dev)
++{
++	struct acpm_handle *handle;
++	struct device_node *np;
++
++	np = of_parse_phandle(dev->of_node, "samsung,acpm-ipc", 0);
++	if (!np)
++		return ERR_PTR(-ENODEV);
++
++	handle = devm_acpm_get_by_node(dev, np);
++	of_node_put(np);
++
++	return handle;
++}
++EXPORT_SYMBOL_GPL(devm_acpm_get_by_phandle);
++
+ static const struct acpm_match_data acpm_gs101 = {
+ 	.initdata_base = ACPM_GS101_INITDATA_BASE,
+ 	.acpm_clk_dev_name = "gs101-acpm-clk",
+diff --git a/include/linux/firmware/samsung/exynos-acpm-protocol.h b/include/linux/firmware/samsung/exynos-acpm-protocol.h
+index 13f17dc4443b8f..596d17f0384f43 100644
+--- a/include/linux/firmware/samsung/exynos-acpm-protocol.h
++++ b/include/linux/firmware/samsung/exynos-acpm-protocol.h
+@@ -52,6 +52,7 @@ struct device;
+ #if IS_ENABLED(CONFIG_EXYNOS_ACPM_PROTOCOL)
+ struct acpm_handle *devm_acpm_get_by_node(struct device *dev,
+ 					  struct device_node *np);
++struct acpm_handle *devm_acpm_get_by_phandle(struct device *dev);
+ #else
+ 
+ static inline struct acpm_handle *devm_acpm_get_by_node(struct device *dev,
+@@ -59,6 +60,11 @@ static inline struct acpm_handle *devm_acpm_get_by_node(struct device *dev,
+ {
+ 	return NULL;
+ }
++
++static inline struct acpm_handle *devm_acpm_get_by_phandle(struct device *dev)
++{
++	return ERR_PTR(-ENODEV);
++}
+ #endif
+ 
+ #endif /* __EXYNOS_ACPM_PROTOCOL_H */
 -- 
 2.53.0
 
