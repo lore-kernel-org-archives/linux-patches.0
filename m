@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE279326D44;
-	Tue, 21 Jul 2026 17:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774F3326D44;
+	Tue, 21 Jul 2026 17:42:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655718; cv=none; b=rZHda/7w/Ga4W6CpAVBQ0OUwK5bV6GzX/kE7WOGWNzPh+DJ3WuXLKmOkLuDd8udKSnXkbnjlutEobipACna6fbsLXUqwmwFika3knbjN36tIjHC8vau/yc02l4iHUVPYQO6SLl8TntFjEofNlXoQRM9hrByhTs2qlGene47C2p8=
+	t=1784655721; cv=none; b=VY4favGpv0DOk2dofkrKU5P5eQ6vNM2qNbFYfLuT8ucxkbyIFJOxdF0XH7VjLtVRpwA//VBE1BpHU1J7PBuiQquoRWzislm1wKSvI/tt/y/EqSKOwbeV6k85ERXILJ7cCtieXpcH0RKCBOrYttplprhk2Dmx+KA1dVkK5iyTrls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655718; c=relaxed/simple;
-	bh=PtcvejPyc271wMEjoSrtrDg8dOvpCcFyp3ImDknFNGY=;
+	s=arc-20240116; t=1784655721; c=relaxed/simple;
+	bh=DwzHLpt3xGHAM+vpR1X5POmY5ggDz9Ns1cwUrvap4mw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RphjbzhwrwZZHCZJnYiWTqntwd36nAnAwyvhRI0M4juMoVwrdQnk6FV6Xxkymrd4D5LaKGmLz4AiOmaSzSLJwgWI5hpCHlfoHX59mtFYotY0f7rkKKcY9ffmst++gPekh75G1QjVSnjRbdl5VlI+KBGrVm10sJ09bHhm+yN2HEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uYef4Vx2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e2eEmSHH//VTit/zihZSUiArzQAMiH5Ivhgp4v7xwwxJctakx/OLmHnEJEdzfNUrxUGWP4CDOqQxXvy2MbKOuPjfeNcpBdLwpBRMDFeBYx3sNIqqgLHTh2WqFLSmHxAm7Y0m0OCD6PE9a73LFgdbYtqP3n6hGOvr3aX+MPWR2+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RIgF9ZB5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uYef4Vx2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 407D31F000E9;
-	Tue, 21 Jul 2026 17:41:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIgF9ZB5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8681F000E9;
+	Tue, 21 Jul 2026 17:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655717;
-	bh=Ypucml4f6ZUw6YHsH6/jUtrpBd9P+SJwvVlBQxgnhJ4=;
+	s=korg; t=1784655720;
+	bh=rMUJo+ObfIhl1pzCReiT4xt1b8qZ0T3P7uGkBte6anw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uYef4Vx2tLX9otxbihig1F9yY6rp1LpN1W0PvQzVo1J1sbZekzCTjkV/42FEMLyBs
-	 PEd0lt2B5jAOiR30Qhqi2Z15239dZXpGwtV0ed/7OJ/IahVnXp2z5Olf4QjdQqC3kn
-	 VL9foe9YOBbtPA5ZuHCxT6t8Y/XyLB5TDAVtrKzU=
+	b=RIgF9ZB595EI95r58kwm9XYFZjErItnBfjCHdBCw+pySdXFH6dN2Hxsf0DfdiG+UW
+	 YXOufwant0ySP5TzPYmWlahLyM13qJl7KnWVexSlFAlNu7erk4XyklXjWYhZYFWMl+
+	 svEHl5GoMVu2O80K6jRqMjW4Td6mG3O1FfX3Pl4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0115/1611] Revert "arm64: dts: imx8mp-kontron: Add support for reading SD_VSEL signal"
-Date: Tue, 21 Jul 2026 17:03:51 +0200
-Message-ID: <20260721152517.441958332@linuxfoundation.org>
+Subject: [PATCH 6.18 0116/1611] vxlan: Fix potential null-ptr-deref in vxlan_gro_prepare_receive().
+Date: Tue, 21 Jul 2026 17:03:52 +0200
+Message-ID: <20260721152517.465357130@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,67 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 22465a195af370ed6311be3adee479fb7c683685 ]
+[ Upstream commit 30a45c0bffdd62350261e2f2689fdba426a33578 ]
 
-This reverts commit 39e4189d9d63a0b6fc15458ce0136e99ecdfb1b8.
+udp_tunnel_sock_release() could set sk->sk_user_data to NULL
+while vxlan_gro_prepare_receive() is running.
 
-The board uses SDHC VSELECT to automatically switch between 1.8v and
-3.3v. It does not use GPIO to control the PMIC SD_VSEL signal.
-The original commit intends to read back SD_VSEL value from GPIO,
-but it is wrong. When MUX is configured as SDHC VSELECT, it is
-impossible to read back the value from GPIO controller. Setting SION
-could only enable the input path for the mux function. It could not
-redirect the input to GPIO.
+Let's check if rcu_dereference_sk_user_data() is NULL after
+skb_gro_remcsum_init().
 
-Fixes: 39e4189d9d63a ("arm64: dts: imx8mp-kontron: Add support for reading SD_VSEL signal")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Fixes: 5602c48cf875 ("vxlan: change vxlan to use UDP socket GRO")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260502031401.3557229-7-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-kontron-osm-s.dtsi | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/net/vxlan/vxlan_core.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-kontron-osm-s.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-kontron-osm-s.dtsi
-index bc1a261bb000ed..ea69c639b30b8f 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-kontron-osm-s.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-kontron-osm-s.dtsi
-@@ -311,7 +311,6 @@ reg_nvcc_sd: LDO5 {
- 				regulator-name = "NVCC_SD (LDO5)";
- 				regulator-min-microvolt = <1800000>;
- 				regulator-max-microvolt = <3300000>;
--				sd-vsel-gpios = <&gpio1 4 GPIO_ACTIVE_HIGH>;
- 			};
- 		};
- 	};
-@@ -815,7 +814,7 @@ MX8MP_IOMUXC_SD2_DATA0__USDHC2_DATA0		0x1d0 /* SDIO_A_D0 */
- 			MX8MP_IOMUXC_SD2_DATA1__USDHC2_DATA1		0x1d0 /* SDIO_A_D1 */
- 			MX8MP_IOMUXC_SD2_DATA2__USDHC2_DATA2		0x1d0 /* SDIO_A_D2 */
- 			MX8MP_IOMUXC_SD2_DATA3__USDHC2_DATA3		0x1d0 /* SDIO_A_D3 */
--			MX8MP_IOMUXC_GPIO1_IO04__USDHC2_VSELECT		0x400001d0
-+			MX8MP_IOMUXC_GPIO1_IO04__USDHC2_VSELECT		0x1d0
- 		>;
- 	};
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index a4ff66e354f532..b706e1777354c0 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -658,14 +658,18 @@ static struct vxlanhdr *vxlan_gro_prepare_receive(struct sock *sk,
+ 						  struct sk_buff *skb,
+ 						  struct gro_remcsum *grc)
+ {
+-	struct sk_buff *p;
+ 	struct vxlanhdr *vh, *vh2;
+ 	unsigned int hlen, off_vx;
+-	struct vxlan_sock *vs = rcu_dereference_sk_user_data(sk);
++	struct vxlan_sock *vs;
++	struct sk_buff *p;
+ 	__be32 flags;
  
-@@ -827,7 +826,7 @@ MX8MP_IOMUXC_SD2_DATA0__USDHC2_DATA0		0x1d4 /* SDIO_A_D0 */
- 			MX8MP_IOMUXC_SD2_DATA1__USDHC2_DATA1		0x1d4 /* SDIO_A_D1 */
- 			MX8MP_IOMUXC_SD2_DATA2__USDHC2_DATA2		0x1d4 /* SDIO_A_D2 */
- 			MX8MP_IOMUXC_SD2_DATA3__USDHC2_DATA3		0x1d4 /* SDIO_A_D3 */
--			MX8MP_IOMUXC_GPIO1_IO04__USDHC2_VSELECT		0x400001d0
-+			MX8MP_IOMUXC_GPIO1_IO04__USDHC2_VSELECT		0x1d0
- 		>;
- 	};
+ 	skb_gro_remcsum_init(grc);
  
-@@ -839,7 +838,7 @@ MX8MP_IOMUXC_SD2_DATA0__USDHC2_DATA0		0x1d6 /* SDIO_A_D0 */
- 			MX8MP_IOMUXC_SD2_DATA1__USDHC2_DATA1		0x1d6 /* SDIO_A_D1 */
- 			MX8MP_IOMUXC_SD2_DATA2__USDHC2_DATA2		0x1d6 /* SDIO_A_D2 */
- 			MX8MP_IOMUXC_SD2_DATA3__USDHC2_DATA3		0x1d6 /* SDIO_A_D3 */
--			MX8MP_IOMUXC_GPIO1_IO04__USDHC2_VSELECT		0x400001d0
-+			MX8MP_IOMUXC_GPIO1_IO04__USDHC2_VSELECT		0x1d0
- 		>;
- 	};
- 
++	vs = rcu_dereference_sk_user_data(sk);
++	if (!vs)
++		return NULL;
++
+ 	off_vx = skb_gro_offset(skb);
+ 	hlen = off_vx + sizeof(*vh);
+ 	vh = skb_gro_header(skb, hlen, off_vx);
 -- 
 2.53.0
 
