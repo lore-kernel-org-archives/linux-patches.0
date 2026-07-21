@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3F53672BA;
-	Tue, 21 Jul 2026 17:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1FF369D71;
+	Tue, 21 Jul 2026 17:40:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655655; cv=none; b=UT1FJGx3E6ePTIIxFQqlG/i4S0BJ4Z9/+bVQTifqex3UIme9NAuBYfTU2oJF548wNtut8GfcmEVt5H3Th7FuH3xgfX7t+gCCWeBQ8iGPz4K+/rx8YKRYSs/0RYnl1XXx/xzdQtW+3onTf8wTuoZu852ORTVvPpUvP9uwGVoTQz8=
+	t=1784655658; cv=none; b=BcI9XsSFs9XHj9HxCMd4lWP4c35aktGU/0lyLQFI0LwsqYF8K1gziNFecUIg186OE6L+juolh8XHLWigajYaPOrBEknQSLzTiaDQ6JGCS2G2DJ3FRDmyDeYSTKZAKqwP0dSDJmjK43Yj3UwCWwBGKzjaBPCmxUv66oTiZbAQjbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655655; c=relaxed/simple;
-	bh=DmopRLFULzp5pl7om6PjNWzavker6/VZs+rAn/Lva5A=;
+	s=arc-20240116; t=1784655658; c=relaxed/simple;
+	bh=nDwZFccglUamHQWB68Hf6pk8EiaHZnmSTnVp7tYpR38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ASChoQb/fFa0Al2d/3oksA7apMuX16pNddu4IWvhho53vf40BmHbjQOApi6v6dz68pjQjeC0auAbNCYc1mw6IPd+Dn8rJ8wFcHKHCKyVCTi8VlU9YYEJnLypN8f6I9ThWcGIDC0oPhjQbz6Dl06ygiRs01xzz4gJzH7TBVXm0sY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wN5odFuK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LrmgftGlfb5T2o34CKIFUnNO5Y0I8eHnuwJQS16iwWBTYt/3QkriRDgBDB5cM1hUkWJmG2ktRnSWfHcLtf2PpwXnK6ELdNAY2lTzmkQ7SOuO/AWllNsd1VcBmF1z+oNn4BMkUfWHGZg8+5hPTkItCab6d3JeXikWbxnMrC5h7mk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zX1PwubN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wN5odFuK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE461F000E9;
-	Tue, 21 Jul 2026 17:40:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zX1PwubN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D493E1F000E9;
+	Tue, 21 Jul 2026 17:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655654;
-	bh=Jh9TemLiD2UL+aalwpYmowcwLJMDiQE+yVnVzSu+VvQ=;
+	s=korg; t=1784655657;
+	bh=Cilg4TKWLWA2z59Ok6+RFrLrX9YdHDJ4VBAoNOp0jik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wN5odFuKFXgEFhgcqYMdqvHSmPJbZzK3BurfpGtR3wowG3MY7b/fwrlUoPsGXtckh
-	 NePtyUV2iT5tE1yGuw2md2BJ3rLYHMLMB14+0KvL9daxSm6z3cSHec7hdkUt+vlhmA
-	 qmqZ+uzQSOTy6IYa5xlgFw6vxFq+Rzp8P11K0BXE=
+	b=zX1PwubNhDaK2MtCrDEO7fF+2ezSz/WQGoNVM7nfBTKRQuJwKDWIqHncr3tOYVb7A
+	 reCHfT/ycv6wVoBJaoo6iFETGNuiP+2A3AQwmDk2lORYpdaT4hpjRG7vq7E2iz9RCS
+	 9iCQzAoeT0uUHjoJwYcEkCqsvgpto7Hls1eod+wI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tristan Madani <tristan@talencesecurity.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0089/1611] wifi: rtw88: fix OOB read from firmware RX descriptor exceeding DMA buffer
-Date: Tue, 21 Jul 2026 17:03:25 +0200
-Message-ID: <20260721152516.848063735@linuxfoundation.org>
+Subject: [PATCH 6.18 0090/1611] wifi: rtw89: add bounds check on firmware mac_id in link lookup
+Date: Tue, 21 Jul 2026 17:03:26 +0200
+Message-ID: <20260721152516.870156724@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,43 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 6e76e9ed273dfb4b3333a5ebbb94958cc5752ab6 ]
+[ Upstream commit 6d88244bb129755acca696f9227200f4a2d106a6 ]
 
-In rtw_pci_rx_napi(), new_len is computed as the sum of pkt_len (14-bit
-descriptor field, max 16383) and pkt_offset (drv_info_sz + shift, both
-firmware-controlled). The result can exceed RTK_PCI_RX_BUF_SIZE (11478),
-causing an out-of-bounds read from the pre-allocated DMA buffer when
-skb_put_data copies new_len bytes. The USB transport already validates
-this (rtw_usb_rx_data_put checks against RTW_USB_MAX_RECVBUF_SZ); the
-PCIe path does not.
+The mac_id field in RX descriptors is 8 bits wide (0-255), but
+assoc_link_on_macid[] has only RTW89_MAX_MAC_ID_NUM (128) entries.
+While the driver currently assigns mac_id values below 128, the
+descriptor value comes from firmware and is not validated before use
+as an array index. Add a defensive bounds check in
+rtw89_assoc_link_rcu_dereference() to guard against out-of-range
+firmware values.
 
-Add a check that new_len does not exceed the DMA buffer size.
-
-Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
+Fixes: 144c6cd24b35 ("wifi: rtw89: 8922a: configure AP_LINK_PS if FW supports")
 Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260421111434.3389674-1-tristmd@gmail.com
+Link: https://patch.msgid.link/20260421111442.3395411-1-tristmd@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/pci.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/realtek/rtw89/core.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/pci.c b/drivers/net/wireless/realtek/rtw88/pci.c
-index d6d8386f930a9a..eae54f50485c21 100644
---- a/drivers/net/wireless/realtek/rtw88/pci.c
-+++ b/drivers/net/wireless/realtek/rtw88/pci.c
-@@ -1076,6 +1076,11 @@ static u32 rtw_pci_rx_napi(struct rtw_dev *rtwdev, struct rtw_pci *rtwpci,
- 		 * discard the frame if none available
- 		 */
- 		new_len = pkt_stat.pkt_len + pkt_offset;
-+		if (unlikely(new_len > RTK_PCI_RX_BUF_SIZE)) {
-+			rtw_dbg(rtwdev, RTW_DBG_RX,
-+				"oversized RX packet: %u\n", new_len);
-+			goto next_rp;
-+		}
- 		new = dev_alloc_skb(new_len);
- 		if (WARN_ONCE(!new, "rx routine starvation\n"))
- 			goto next_rp;
+diff --git a/drivers/net/wireless/realtek/rtw89/core.h b/drivers/net/wireless/realtek/rtw89/core.h
+index c3839d49f4420a..e146fd082f21a7 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.h
++++ b/drivers/net/wireless/realtek/rtw89/core.h
+@@ -6254,6 +6254,9 @@ static inline void rtw89_assoc_link_clr(struct rtw89_sta_link *rtwsta_link)
+ static inline struct rtw89_sta_link *
+ rtw89_assoc_link_rcu_dereference(struct rtw89_dev *rtwdev, u8 macid)
+ {
++	if (unlikely(macid >= RTW89_MAX_MAC_ID_NUM))
++		return NULL;
++
+ 	return rcu_dereference(rtwdev->assoc_link_on_macid[macid]);
+ }
+ 
 -- 
 2.53.0
 
