@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0EE3EEAE2;
-	Tue, 21 Jul 2026 18:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1827240803D;
+	Tue, 21 Jul 2026 18:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659816; cv=none; b=YQoC4BJt3xBAMYEVkEYmyREtzpzzMlkuTzpmRXFQPbGqZ4B6dxbmtiYMF16aClMBDT7P8i439r5CEqnZSbw9GnLwEW3EG7aD808ngsbV155ll0e1yiT+KrmU3JiNuRAonTmgAz33YZ0OUv69KOQk7M8LWJt9NLT9+z1U0K/4+JI=
+	t=1784659819; cv=none; b=YFCrVz6nU0QF1zDya4QwerxYDIRmsfX5BINNk0tTd33Ycsc6ag/rxk+YaAcRDAROOt6wIk7zJFo2c2cCnSj2QfZD62GsLGKN7joy0U5yZQompIgkm0bVrygzspRWNTuqG+2JveqD3k3SQim17gjHEJy8h+aH/vB2cBNNlcQ/Upk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659816; c=relaxed/simple;
-	bh=zerFSYOGxfh7swFTyf+XHAC3ouLqeSpSyyDM/VY9NsM=;
+	s=arc-20240116; t=1784659819; c=relaxed/simple;
+	bh=mvUi/i0BxE1n52KJHUBERd4yiryW2gJlCENnyXeQg48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pObU1b57zSn8YA35uavhFejxbtXcw17Q15JEz0cmOBOGJlBgohGnduCGmnUX151kATziOl2UabzvZa+ERoFvumvi/5h90RSFnvAC0KoT9vzroMsw0usjdw2CzuNMSxG6DipSolM1Ulo7g4yZArMkOolj3/tNqPY4edldbOOZcDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pk5BRdwz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NgYxh08ox3CRe3kDgKzrbRsXmlDlRPfPEQS9luBbGC5fpdFqV5AHJWw2Igen1xxz1i9t9M7lSuFoDJmwCMHTSki9Hky+XI4zCpyPUQxIS934eiXot4eH4g6b8kc0hoJ3fOaPJwe0mMHThiIVqgCfYE2Zjrf635ATXhwzyvAEsdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlkJgoTh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pk5BRdwz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0FF21F000E9;
-	Tue, 21 Jul 2026 18:50:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlkJgoTh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C8651F000E9;
+	Tue, 21 Jul 2026 18:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659815;
-	bh=p/49eGwzKC6vHGM1Ltbk1SugSdpGXOum7pV4BtZmlIA=;
+	s=korg; t=1784659818;
+	bh=f6a584ovT3wS2CgLSR4cx+P7Axcv2UFYh8T4L+s/JJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pk5BRdwzULh/jffoa0AP7iAHDSMWE3ZFUK3a3CjGfB42ZD1zdzKubKg3c+Gr6F83z
-	 xTSmsozbhUKXl+sWkqAFDt7/k2es8312JLebt0OeZqhkPCf68dXMF8HSsFIp4LQwhm
-	 DtGF6TenH0oO8J3hKFXDhyD81zdlF+6EomKa8s+k=
+	b=zlkJgoTh4sggOBG1krUzT53gyfuPKDB2DpKQ2daoWZ2dMSsTU++Zr2DesYNUpHYAw
+	 ESdDHgdda6fixX4aiNqI6XLUkStaQIXBytjJL/SKVK9iD3bONzeFMy4XxAau6CQ81K
+	 yK1hnSO+FmS7yMSYrRgq9WuuP05V3sjlSALKdZlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Victor Nogueira <victor@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0745/2077] net/sched: sch_codel: Do not call qdisc_tree_reduce_backlog during peek before restoring qlen
-Date: Tue, 21 Jul 2026 17:06:58 +0200
-Message-ID: <20260721152610.366649158@linuxfoundation.org>
+Subject: [PATCH 7.1 0746/2077] net/sched: sch_dualpi2: Do not call qdisc_tree_reduce_backlog during peek before restoring qlen
+Date: Tue, 21 Jul 2026 17:06:59 +0200
+Message-ID: <20260721152610.390194976@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,106 +54,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 52f1da34c9f4d5bdc1e8b44242da5c7ba8db85f3 ]
+[ Upstream commit 15cd0c93bf4f892d66bc7a93667e2357b5673365 ]
 
-Whenever codel drops packets during peek, it calls
+Whenever dualpi2 drops packets during peek, it calls
 qdisc_tree_reduce_backlog. An issue arises because it calls
 qdisc_tree_reduce_backlog before it reincrements the qlen. If qlen drops
-to zero, but peek returns an skb, the parent's qlen_notify callback will
-be executed even though codel still has 1 packet on the queue and, thus,
-will mistakenly deactivate the parent's class causing issues like a wild
-memory access when qfq has codel as a child:
+to zero, but peek returns an skb, the parent's qlen_notify callback will be
+executed even though dualpi2 still has 1 packet on the queue and, thus,
+mistakenly deactivates the parent's class which leads to a null-ptr-deref:
 
-[   36.339843][  T370] Oops: general protection fault, probably for non-canonical address 0xfbd59c0000000024: 0000 [#1] SMP KASAN NOPTI
-[   36.340408][  T370] KASAN: maybe wild-memory-access in range [0xdead000000000120-0xdead000000000127]
-[   36.340737][  T370] CPU: 2 UID: 0 PID: 370 Comm: tc Not tainted 7.1.0-rc5-00287-g66e13b626592 #87 PREEMPT(full)
-[   36.341113][  T370] Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
-[   36.341357][  T370] RIP: 0010:qfq_deactivate_agg (include/linux/list.h:1029 (discriminator 2) include/linux/list.h:1043 (discriminator 2) net/sched/sch_qfq.c:1369 (discriminator 2) net/sched/sch_qfq.c:1395 (discriminator 2)) sch_qfq
-[   36.342221][  T370] RSP: 0018:ffff8881100ef370 EFLAGS: 00010216
-[   36.342422][  T370] RAX: 0000000000000000 RBX: ffff8881058a9568 RCX: dffffc0000000000
-[   36.342664][  T370] RDX: 1ffff11021064dc3 RSI: ffff888108326e00 RDI: dffffc0000000000
-[   36.342905][  T370] RBP: ffff8881058a8280 R08: dead000000000122 R09: 1bd5a00000000024
-[   36.343140][  T370] R10: fffffbfff2940329 R11: fffffbfff2940329 R12: 0000000000000000
-[   36.343383][  T370] R13: dead000000000100 R14: ffff8881058a9580 R15: ffff8881058a9578
-[   36.343631][  T370] FS:  00007fc04b0ca780(0000) GS:ffff888184fef000(0000) knlGS:0000000000000000
-[   36.343911][  T370] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   36.344116][  T370] CR2: 0000557c02c02000 CR3: 000000010e0ba000 CR4: 0000000000750ef0
-[   36.344359][  T370] PKRU: 55555554
-[   36.344481][  T370] Call Trace:
-...
-[   36.345054][  T370] qfq_reset_qdisc (net/sched/sch_qfq.c:357 net/sched/sch_qfq.c:1487) sch_qfq
-[   36.345222][  T370]  qdisc_reset (net/sched/sch_generic.c:1057)
-[   36.345503][  T370]  __qdisc_destroy (net/sched/sch_generic.c:1096)
-[   36.345677][  T370]  qdisc_graft (net/sched/sch_api.c:1062 net/sched/sch_api.c:1053 net/sched/sch_api.c:1159)
-[   36.346335][  T370]  tc_get_qdisc (net/sched/sch_api.c:1528 net/sched/sch_api.c:1556)
+[  101.427314][  T599] Oops: general protection fault, probably for non-canonical address 0xdffffc0000000009: 0000 [#1] SMP KASAN NOPTI
+[  101.427755][  T599] KASAN: null-ptr-deref in range [0x0000000000000048-0x000000000000004f]
+[  101.428048][  T599] CPU: 2 UID: 0 PID: 599 Comm: ping Not tainted 7.1.0-rc5-00284-gbce53c430ed7 #102 PREEMPT(full)
+[  101.428400][  T599] Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
+[  101.428608][  T599] RIP: 0010:qfq_dequeue (net/sched/sch_qfq.c:1150) sch_qfq
+[  101.428821][  T599] Code: 00 fc ff df 80 3c 02 00 0f 85 46 0c 00 00 4c 8d 73 48 48 89 9d b8 02 00 00 48 b8 00 00 00 00 00 fc ff df 4c 89 f2 48 c1 ea 03 <80> 3c 02 00 0f 85 2d 0c 00 00 48 b8 00 00 00 00 00 fc ff df 4c 8b
+All code
+[  101.429348][  T599] RSP: 0018:ffff8881110df4f0 EFLAGS: 00010216
+[  101.429541][  T599] RAX: dffffc0000000000 RBX: 0000000000000000 RCX: dffffc0000000000
+[  101.429763][  T599] RDX: 0000000000000009 RSI: 00000024c0000000 RDI: ffff88811436c2b0
+[  101.429985][  T599] RBP: ffff88811436c000 R08: ffff88811436c280 R09: 1ffff11021277523
+[  101.430206][  T599] R10: 1ffff11021277526 R11: 1ffff11021277527 R12: 00000024c0000000
+[  101.430423][  T599] R13: ffff88811436c2b8 R14: 0000000000000048 R15: 0000000020000000
+[  101.430642][  T599] FS:  00007f61813e1c40(0000) GS:ffff8881691ef000(0000) knlGS:0000000000000000
+[  101.430913][  T599] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  101.431100][  T599] CR2: 00005651650850a8 CR3: 000000010ca0b000 CR4: 0000000000750ef0
+[  101.431320][  T599] PKRU: 55555554
+[  101.431433][  T599] Call Trace:
+[  101.431544][  T599]  <TASK>
+[  101.431628][  T599]  __qdisc_run (net/sched/sch_generic.c:322 net/sched/sch_generic.c:427 net/sched/sch_generic.c:445)
+[  101.431792][  T599]  ? dev_qdisc_enqueue (./include/trace/events/qdisc.h:49 (discriminator 22) net/core/dev.c:4176 (discriminator 22))
+[  101.431941][  T599]  __dev_queue_xmit (./include/net/pkt_sched.h:120 ./include/net/pkt_sched.h:117 net/core/dev.c:4292 net/core/dev.c:4831)
 
 Fix this by only calling qdisc_tree_reduce_backlog in peek after the
 qlen is restored.
 
-Fixes: 342debc12183 ("codel: remove sch->q.qlen check before qdisc_tree_reduce_backlog()")
+Fixes: 8f9516daedd6 ("sched: Add enqueue/dequeue of dualpi2 qdisc")
 Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20260610192855.3121513-3-victor@mojatatu.com
+Link: https://patch.msgid.link/20260610192855.3121513-4-victor@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_codel.c | 48 ++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 43 insertions(+), 5 deletions(-)
+ net/sched/sch_dualpi2.c | 41 +++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 39 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_codel.c b/net/sched/sch_codel.c
-index 317aae0ec7bd6a..7d5076196aff68 100644
---- a/net/sched/sch_codel.c
-+++ b/net/sched/sch_codel.c
-@@ -56,7 +56,7 @@ static void drop_func(struct sk_buff *skb, void *ctx)
+diff --git a/net/sched/sch_dualpi2.c b/net/sched/sch_dualpi2.c
+index b81a922f5e4684..592c58938d3e80 100644
+--- a/net/sched/sch_dualpi2.c
++++ b/net/sched/sch_dualpi2.c
+@@ -577,7 +577,7 @@ static void drop_and_retry(struct dualpi2_sched_data *q, struct sk_buff *skb,
  	qdisc_qstats_drop(sch);
  }
  
--static struct sk_buff *codel_qdisc_dequeue(struct Qdisc *sch)
-+static struct sk_buff *__codel_qdisc_dequeue(struct Qdisc *sch)
+-static struct sk_buff *dualpi2_qdisc_dequeue(struct Qdisc *sch)
++static struct sk_buff *__dualpi2_qdisc_dequeue(struct Qdisc *sch)
  {
- 	struct codel_sched_data *q = qdisc_priv(sch);
+ 	struct dualpi2_sched_data *q = qdisc_priv(sch);
  	struct sk_buff *skb;
-@@ -65,13 +65,51 @@ static struct sk_buff *codel_qdisc_dequeue(struct Qdisc *sch)
- 			    &q->stats, qdisc_pkt_len, codel_get_enqueue_time,
- 			    drop_func, dequeue_func);
+@@ -604,12 +604,49 @@ static struct sk_buff *dualpi2_qdisc_dequeue(struct Qdisc *sch)
+ 		break;
+ 	}
  
-+	if (skb)
-+		qdisc_bstats_update(sch, skb);
 +	return skb;
 +}
 +
-+static void codel_dequeue_drop(struct Qdisc *sch)
++static void dualpi2_dequeue_drop(struct Qdisc *sch)
 +{
-+	struct codel_sched_data *q = qdisc_priv(sch);
++	struct dualpi2_sched_data *q = qdisc_priv(sch);
 +
- 	if (q->stats.drop_count) {
--		qdisc_tree_reduce_backlog(sch, q->stats.drop_count, q->stats.drop_len);
-+		qdisc_tree_reduce_backlog(sch, q->stats.drop_count,
-+					  q->stats.drop_len);
- 		q->stats.drop_count = 0;
- 		q->stats.drop_len = 0;
+ 	if (q->deferred_drops_cnt) {
+ 		qdisc_tree_reduce_backlog(sch, q->deferred_drops_cnt,
+ 					  q->deferred_drops_len);
+ 		q->deferred_drops_cnt = 0;
+ 		q->deferred_drops_len = 0;
  	}
--	if (skb)
--		qdisc_bstats_update(sch, skb);
 +}
 +
-+static struct sk_buff *codel_qdisc_dequeue(struct Qdisc *sch)
++static struct sk_buff *dualpi2_qdisc_dequeue(struct Qdisc *sch)
 +{
 +	struct sk_buff *skb;
 +
-+	skb = __codel_qdisc_dequeue(sch);
++	skb = __dualpi2_qdisc_dequeue(sch);
 +
-+	codel_dequeue_drop(sch);
++	dualpi2_dequeue_drop(sch);
 +
 +	return skb;
 +}
 +
-+static struct sk_buff *codel_peek(struct Qdisc *sch)
++static struct sk_buff *dualpi2_peek(struct Qdisc *sch)
 +{
 +	struct sk_buff *skb = skb_peek(&sch->gso_skb);
 +
 +	if (!skb) {
-+		skb = __codel_qdisc_dequeue(sch);
++		skb = __dualpi2_qdisc_dequeue(sch);
 +
 +		if (skb) {
 +			__skb_queue_head(&sch->gso_skb, skb);
@@ -162,21 +156,21 @@ index 317aae0ec7bd6a..7d5076196aff68 100644
 +			sch->q.qlen++;
 +		}
 +
-+		codel_dequeue_drop(sch);
++		dualpi2_dequeue_drop(sch);
 +	}
 +
  	return skb;
  }
  
-@@ -257,7 +295,7 @@ static struct Qdisc_ops codel_qdisc_ops __read_mostly = {
- 
- 	.enqueue	=	codel_qdisc_enqueue,
- 	.dequeue	=	codel_qdisc_dequeue,
--	.peek		=	qdisc_peek_dequeued,
-+	.peek		=	codel_peek,
- 	.init		=	codel_init,
- 	.reset		=	codel_reset,
- 	.change 	=	codel_change,
+@@ -1164,7 +1201,7 @@ static struct Qdisc_ops dualpi2_qdisc_ops __read_mostly = {
+ 	.priv_size	= sizeof(struct dualpi2_sched_data),
+ 	.enqueue	= dualpi2_qdisc_enqueue,
+ 	.dequeue	= dualpi2_qdisc_dequeue,
+-	.peek		= qdisc_peek_dequeued,
++	.peek		= dualpi2_peek,
+ 	.init		= dualpi2_init,
+ 	.destroy	= dualpi2_destroy,
+ 	.reset		= dualpi2_reset,
 -- 
 2.53.0
 
