@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A103244AB9A;
-	Tue, 21 Jul 2026 21:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A61B35C69A;
+	Tue, 21 Jul 2026 21:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669704; cv=none; b=eQJj2iUhaRsUhBtI97DOMLYwtVRzQ1vY41jpZyRnX4PhoT7b03SQchIAPyXaSFrqEvhQii340AZD4h9Yx1PvQKhdvQn3qakGLTvMXlYSDLmY2ZRkX0DYBMIYgnIo2zCVkc1/sUFfX68sp8QM6W0U742Nt8DQlWjtbz8aybKz4rY=
+	t=1784669707; cv=none; b=DjHQ3TLvbLCr4EQQRpXs/D3kJSxh8IbVND3K4Eyg/Rn1VhNkM+GD2oIT5aH/5miiBsvk8Yd59A9SuYxDHnaIzgAQntLqNP7HJF/VpRiizcPRkI/5Cy5vlPRW2RNvZdagPHkxpUDT8WUx9fTwo2/c6K7qlJwGjCqpvdHI6Ud4FVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669704; c=relaxed/simple;
-	bh=6uN46qYPD77vEO78UXfCAPN4ByKidJmReH6057g+F4A=;
+	s=arc-20240116; t=1784669707; c=relaxed/simple;
+	bh=xK3qiAWcKZfjTvdv9tWUqJtp9wzR0oP7vF7ujjtQNNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aiRDUNR/CJvwbPVLjoG8AojWCb1U7ZEiG8pfQIKUFoC23NCa4Z03nQSMMWbsK1kewwUZ2JWyNuqbNBTzm9kxtrSKsh+zzZTJpeIeO7tfVUi+ntmgZ1DbQiFjtTBnLzq54rkYyauTkpvQMOtRXxPiRwmgi4LcHv/J2+cJtc8ndQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEgbMZKn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q9y1/+EcLhBcuRN+LGb3Kz0B2RCyc8diYwEAdFS04r7EnjvejinmObIAUSaVWmJ8LkQ44cxf6bLEXe9aZ1EPFkWrBUjcZJKiuWFJDHuW2Q0Aeo2PjEiOkkTUfYpL7mWE8l/ZDHaruxArNd9gQhKt/Xise69XDF5U79VNtBSLMk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4B49Hga; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEgbMZKn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F4A1F000E9;
-	Tue, 21 Jul 2026 21:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4B49Hga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADCA51F000E9;
+	Tue, 21 Jul 2026 21:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669703;
-	bh=kingh4XbF3ii+wFSVvKNNAYokoGUtTmgoD1qE7Forfw=;
+	s=korg; t=1784669706;
+	bh=v5V1puiCY4CHgIOdmWdMn/Hydtf93Z25x5JmyoqYo7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kEgbMZKnnUkCsaA2IPa1OYg+ic9aqXtprEjoONzWgNpmr9nhjh4+N+MPXD+HRs7CN
-	 Yc09OFFEde7b8Eeo6rtR/KW4ml12Acqa1WWjmtLxU0Wfxrg+5jQJNnxrQDsY/fu7EQ
-	 mUEXGL477pUKIeZWHonlOYBAZapUMqqzPR3wzl1w=
+	b=r4B49HgamG3GRhtXLMOrKOD2DApQx62mVQVo3tqOLoogB2WxMOiu99PHQHGpWin4w
+	 cbadOJUMT3BqDj14od4MKbv1eRu6X0l5cRbCuSSeZTA2hHf4s/6Xg5cQmmj2BBlisd
+	 2MeMPrESPdDlpk1LPNuEXbVDRO5x/jhqS03wwR8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avinash Duduskar <avinash.duduskar@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0612/1067] bpf: zero-initialize the fib lookup flow struct
-Date: Tue, 21 Jul 2026 17:20:13 +0200
-Message-ID: <20260721152438.290154505@linuxfoundation.org>
+Subject: [PATCH 6.1 0613/1067] drm/edid: fix OOB read in drm_parse_tiled_block()
+Date: Tue, 21 Jul 2026 17:20:14 +0200
+Message-ID: <20260721152438.312409537@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -46,83 +46,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Avinash Duduskar <avinash.duduskar@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 0dfcb68a6a5ac517b22dff6a1f01cb4f126dfc57 ]
+[ Upstream commit faaa1e1155833e7d4ce7e3cfaf64c0d636b190db ]
 
-bpf_ipv4_fib_lookup() and bpf_ipv6_fib_lookup() build the flow key on
-the stack with a bare "struct flowi4 fl4;" / "struct flowi6 fl6;" and
-fill it field by field, but never set flowi4_l3mdev / flowi6_l3mdev.
+drm_parse_tiled_block() casts the DisplayID block to a
+struct displayid_tiled_block and reads the full fixed layout up to
+tile->topology_id[7] without checking block->num_bytes. The DisplayID
+iterator only validates the declared payload length, so a crafted EDID
+can advertise a tiled-display block (tag DATA_BLOCK_TILED_DISPLAY, or
+DATA_BLOCK_2_TILED_DISPLAY_TOPOLOGY for v2.0) with a small num_bytes at
+the end of a DisplayID extension. The read then runs past the end of the
+exact-sized kmemdup()'d EDID allocation, a heap out-of-bounds read.
 
-On the non-DIRECT path the lookup goes through the fib rules whenever the
-netns has custom rules, which a VRF installs:
+Reject blocks shorter than the spec's 22-byte tiled payload before
+reading the fixed struct, as drm_parse_vesa_mso_data() already does.
 
-	bpf_ipv4_fib_lookup() -> fib_lookup() -> __fib_lookup()
-	  -> l3mdev_update_flow()   reads !fl->flowi_l3mdev
-	  -> fib_rules_lookup() -> fib_rule_match()
-	       -> l3mdev_fib_rule_match()   uses fl->flowi_l3mdev
+  BUG: KASAN: slab-out-of-bounds in drm_edid_connector_update
+  Read of size 2 at addr ffff888010077700 by task exploit/147
+   dump_stack_lvl (lib/dump_stack.c:94 ...)
+   print_report (mm/kasan/report.c:378 ...)
+   kasan_report (mm/kasan/report.c:595)
+   drm_edid_connector_update (drivers/gpu/drm/drm_edid.c:7581)
+   bochs_connector_helper_get_modes (drivers/gpu/drm/tiny/bochs.c:574)
+   drm_helper_probe_single_connector_modes (drivers/gpu/drm/drm_probe_helper.c:426)
+   status_store (drivers/gpu/drm/drm_sysfs.c:219)
+   ...
+   vfs_write (fs/read_write.c:595 fs/read_write.c:688)
+   ksys_write (fs/read_write.c:740)
 
-l3mdev_update_flow() resolves the l3mdev master from the ingress device
-only while the field is still zero. Left at a nonzero stack value the
-resolution is skipped, and l3mdev_fib_rule_match() then tests that value
-as an ifindex, so the VRF master is not resolved and the rule fails to
-match: an ingress enslaved to a VRF can fail to select its table. FIB
-rules matching on an L3 master device (l3mdev_fib_rule_iif_match()/
-_oif_match()) read the same value, so an "ip rule iif/oif <vrf>"
-mismatches the same way.
-
-Zero-initialize the whole flow struct rather than adding one more
-field assignment, so any flowi field added later is covered too.
-ip_route_input_slow() likewise zeroes the field before its input lookup.
-
-CONFIG_INIT_STACK_ALL_ZERO masks this by default, but it depends on
-compiler support (CC_HAS_AUTO_VAR_INIT_ZERO), so INIT_STACK_NONE builds,
-including older toolchains that fall back to it, are exposed. Built with
-INIT_STACK_ALL_PATTERN, a plain bpf_fib_lookup (no VLAN, no DIRECT) over a
-VRF slave whose destination is routed only in the VRF table returns
-BPF_FIB_LKUP_RET_NOT_FWDED, and resolves with this patch. On the default
-config the lookup succeeds either way, so ordinary testing does not catch
-the bug.
-
-Fixes: 40867d74c374 ("net: Add l3mdev index to flow struct and avoid oif reset for port devices")
-Signed-off-by: Avinash Duduskar <avinash.duduskar@gmail.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://lore.kernel.org/r/20260617224719.1428599-1-avinash.duduskar@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 40d9b043a89e ("drm/connector: store tile information from displayid (v3)")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patch.msgid.link/20260615184737.899892-1-xmei5@asu.edu
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_edid.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 94a2dcf3aa08e3..75b3362c85e777 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -5865,7 +5865,7 @@ static int bpf_ipv4_fib_lookup(struct net *net, struct bpf_fib_lookup *params,
- 	struct neighbour *neigh;
- 	struct net_device *dev;
- 	struct fib_result res;
--	struct flowi4 fl4;
-+	struct flowi4 fl4 = {};
- 	u32 mtu = 0;
- 	int err;
+diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+index fc6028aae9bda3..b202bb197f3169 100644
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -6953,6 +6953,14 @@ static void drm_parse_tiled_block(struct drm_connector *connector,
+ 	u8 num_v_tile, num_h_tile;
+ 	struct drm_tile_group *tg;
  
-@@ -6002,7 +6002,7 @@ static int bpf_ipv6_fib_lookup(struct net *net, struct bpf_fib_lookup *params,
- 	struct neighbour *neigh;
- 	struct net_device *dev;
- 	struct inet6_dev *idev;
--	struct flowi6 fl6;
-+	struct flowi6 fl6 = {};
- 	int strict = 0;
- 	int oif, err;
- 	u32 mtu = 0;
++	/* tiled block payload per spec: cap 1 + topo 3 + size 4 + bezel 5 + id 9 = 22 */
++	if (block->num_bytes < 22) {
++		drm_dbg_kms(connector->dev,
++			    "[CONNECTOR:%d:%s] Unexpected tiled block size %u\n",
++			    connector->base.id, connector->name, block->num_bytes);
++		return;
++	}
++
+ 	w = tile->tile_size[0] | tile->tile_size[1] << 8;
+ 	h = tile->tile_size[2] | tile->tile_size[3] << 8;
+ 
 -- 
 2.53.0
 
