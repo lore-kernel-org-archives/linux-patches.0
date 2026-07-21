@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1CF46A5F8;
-	Tue, 21 Jul 2026 15:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2C646A603;
+	Tue, 21 Jul 2026 15:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649443; cv=none; b=qE7UhMpydx8gEJ1TAPCdG4H8ZJrlwcqRXoyUUo1k2GVqqUbcKI75Er51zKutONo59PCtzXt9Ck+nqWL4k21YwEwaFx5BnPEBA5aR91AEX4I7Ij2KWaEea56GETGgYZYUt1ZNBBXMBMV3q1ZTwO/6a4+Ewt4OesJDx5bac3Eg1+o=
+	t=1784649446; cv=none; b=uyhO6sx4MJ4yc4LhxD/wDHA1aTv6JLCdLl52xUzJc1ckgBC5wYyS1M3k2sKK3A3KD2Dt1NditrfLQwadu9SNcrs2Gz0n1MllL7G7uzfl9QgtP7nwefrXNVi67aEJu1mWoy5Sp2K+xzk6olUQGWwFtAJMCwdRdox7j0oCZcRbI/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649443; c=relaxed/simple;
-	bh=/Ek/Ez0KyY2CzfzisB698jZCgTgvhEeuSUnq9Y1frZE=;
+	s=arc-20240116; t=1784649446; c=relaxed/simple;
+	bh=hd1tlP6fvGYfvkk1Y+SstJKp0Xr0WBrfPMvHWCQEZBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pxa5xuNOB9Gvcd3o4nryLjpTHZxHnmPsQx8XNNeoAnoxcbWl5l7FfrUm9ZEKODXckzjfj6svS0Xn/9b4gxOTmEAQiaWIuvBHvV3ZgwTSarR/EyAXUL3asqtN+SaeThIYibrrTViJNSKbLIruGYFYOwVFV+YPfNnj8SA1otxUM+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cto5FYQy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V4TQTtkeipu6caYG4nc6tZD99mny0EQrLGufIM5ZeTcznwxEVaBpK6o2jVHTxpaALAByPuhGFDeIhzSy4//RHhd+aSWiVHyMRXsjjGE+sJY3AhoIo9CnubZUmmv0enZ89Vhz62ZKV6ucjg0dMZbtFID7YR7T0hpxvm+jN5haiCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1StsxTGh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cto5FYQy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CDE1F000E9;
-	Tue, 21 Jul 2026 15:57:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1StsxTGh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF6B1F000E9;
+	Tue, 21 Jul 2026 15:57:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649442;
-	bh=h0N9gVMA/IYKqmzugfWKg3WzM1WVewk0sVUrth+83LM=;
+	s=korg; t=1784649445;
+	bh=sFxHjEKeACRy8tVQmNkJ7KIJFBcr8xM3tBqyBUHZHKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cto5FYQyzDck5I4s0LFiBZQQyRhWwCoxgxtcHiJLolbuvr25WSnjisjH86oB159kL
-	 y8xpDK91J3G26xOyF4cF2hRz696aWIp1SJTBeScL/3J39QCeyGwp+odZgwONgAuwHI
-	 74xjgM3ni6ulKEkxSKfLzKk8YLgWdx2nUFt1raPY=
+	b=1StsxTGhJZexOIEKOONvLpo2Fjst7Xz/fjt+eysfe0KpBPV7U0B25rpnxgrBfJWIa
+	 mmkfTZcAZWwf5By49QrjtIFl2xIfZXfy04MeGAOjk7BHuf4hNMwvqu38gQMrGwGrvl
+	 OI+6SJZ7batOb5F0kLUFxggGvtZbC6K3pUuSHCCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongling Zeng <zenghongling@kylinos.cn>,
+	Rajat Gupta <rajat.gupta@oss.qualcomm.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0579/2077] wifi: mt76: mt7921: fix resource leak in probe error path
-Date: Tue, 21 Jul 2026 17:04:12 +0200
-Message-ID: <20260721152606.466442557@linuxfoundation.org>
+Subject: [PATCH 7.1 0580/2077] wifi: mt76: use kfree_rcu for offchannel link in mt76_put_vif_phy_link
+Date: Tue, 21 Jul 2026 17:04:13 +0200
+Message-ID: <20260721152606.489453513@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,62 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Rajat Gupta <rajat.gupta@oss.qualcomm.com>
 
-[ Upstream commit 346dac35b1384af9338b34b6835e82e634ea4d2c ]
+[ Upstream commit 7fae097aa9a56c30febf539d72ef3773165d3aa3 ]
 
-When pcim_iomap_region() or devm_kmemdup() fail, the code returns
-directly without cleaning up previously allocated resources:
-  - mt76_device allocated by mt76_alloc_device()
-  - pci irq vectors allocated by pci_alloc_irq_vectors()
-Fix this by jumping to the existing error cleanup path instead of
-returning directly.
+mt76_put_vif_phy_link() frees the offchannel mlink with plain kfree()
+after rcu_assign_pointer(NULL). However, rcu_assign_pointer only prevents
+future RCU readers from obtaining the pointer -- it does not wait for
+existing readers that already hold it via rcu_dereference.
 
-Fixes: ee5bb35d2b83 ("wifi: mt76: mt7921: Replace deprecated PCI function")
-Fixes: 222606f43b58 ("wifi: mt76: mt7921: handle MT7902 irq_map quirk with mutable copy")
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Link: https://patch.msgid.link/20260512065245.46496-1-zenghongling@kylinos.cn
+The TX datapath (e.g. mt7996_mac_write_txwi) dereferences mlink->wcid
+and mlink->idx under rcu_read_lock. If a TX softirq obtained the pointer
+via rcu_dereference just before the NULL assignment, it will dereference
+freed memory after the kfree.
+
+struct mt76_vif_link already contains an rcu_head field that is unused at
+this free site -- a developer oversight, since the adjacent
+kfree_rcu_mightsleep call for rx_sc in the same function shows the
+pattern was understood.
+
+Replace kfree(mlink) with kfree_rcu(mlink, rcu_head).
+
+Fixes: a8f424c1287c ("wifi: mt76: add multi-radio remain_on_channel functions")
+Signed-off-by: Rajat Gupta <rajat.gupta@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260507043531.492-1-rajat.gupta@oss.qualcomm.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/pci.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/net/wireless/mediatek/mt76/channel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/pci.c b/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
-index 7a790ddf43bb69..49a37185f0564e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
-@@ -343,11 +343,14 @@ static int mt7921_pci_probe(struct pci_dev *pdev,
+diff --git a/drivers/net/wireless/mediatek/mt76/channel.c b/drivers/net/wireless/mediatek/mt76/channel.c
+index 05eee64706ea87..6edcb3b8f2798e 100644
+--- a/drivers/net/wireless/mediatek/mt76/channel.c
++++ b/drivers/net/wireless/mediatek/mt76/channel.c
+@@ -307,7 +307,7 @@ void mt76_put_vif_phy_link(struct mt76_phy *phy, struct ieee80211_vif *vif,
  
- 	pci_set_drvdata(pdev, mdev);
+ 	rcu_assign_pointer(mvif->offchannel_link, NULL);
+ 	dev->drv->vif_link_remove(phy, vif, &vif->bss_conf, mlink);
+-	kfree(mlink);
++	kfree_rcu(mlink, rcu_head);
+ }
  
-+	dev = container_of(mdev, struct mt792x_dev, mt76);
-+
- 	regs =  pcim_iomap_region(pdev, 0, pci_name(pdev));
--	if (IS_ERR(regs))
--		return PTR_ERR(regs);
-+	if (IS_ERR(regs)) {
-+		ret = PTR_ERR(regs);
-+		goto err_free_dev;
-+	}
- 
--	dev = container_of(mdev, struct mt792x_dev, mt76);
- 	dev->fw_features = features;
- 	dev->hif_ops = &mt7921_pcie_ops;
- 	dev->irq_map = &irq_map;
-@@ -359,8 +362,10 @@ static int mt7921_pci_probe(struct pci_dev *pdev,
- 		/* MT7902 needs a mutable copy because wm2_complete_mask differs */
- 		map = devm_kmemdup(&pdev->dev, &irq_map,
- 				   sizeof(irq_map), GFP_KERNEL);
--		if (!map)
--			return -ENOMEM;
-+		if (!map) {
-+			ret = -ENOMEM;
-+			goto err_free_dev;
-+		}
- 
- 		map->rx.wm2_complete_mask = 0;
- 		dev->irq_map = map;
+ void mt76_roc_complete(struct mt76_phy *phy)
 -- 
 2.53.0
 
