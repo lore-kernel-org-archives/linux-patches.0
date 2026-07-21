@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BDC47127A;
-	Tue, 21 Jul 2026 18:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7768647127A;
+	Tue, 21 Jul 2026 18:43:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659386; cv=none; b=GWGmANYPFjBHrJJplGV4APB8DrWr7+f6LvKiUqXM2dxPKu/GjDtvc18XTYkRKxWCYci32hMILw7gYO+ktvpQQmwCsMxP50AULrvHCj5Xw1e9Ko+asN0tpSWfShOWi0obwnj4rw2pCC6HdkwyUMYklbOfVgdD0dQSqsC1JHB+HFw=
+	t=1784659389; cv=none; b=MmV+YsMDdM0xyPmOxcHKTC1ZFuSzWHvyd0THYA9fa8KCt4ruT43SJF2I8z16/UWDQUO6HWZLkTO/2tIHyXG+H6RLnsAv+1T7nb70PIMI8cIeUrF9Qgwa4E/rvZC25CaLNGN+ZxuD3EoirkbsybecbTybKHVUEkx5DxBIvAG4IeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659386; c=relaxed/simple;
-	bh=JzCY6I7/DKtl2cmBtllP0qi0D/wAXB24log74vWKyAg=;
+	s=arc-20240116; t=1784659389; c=relaxed/simple;
+	bh=Qe8vFk/7BDuFYKxGMPDjrKWCSgS5u8rhqe9S1EzjA9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GDb0UUvDmbPdQMBf5tPUg1NXEBJyvpB4OMDFmKMTmwOjGzQN5zXiO+uFhE1IMW6bQVszvggqdzORKiqgLWEzJJZSiNHr9CEQ1eOiVzSXQoMs3r2gukS2iNf1qvPduaV2CGGG+LdE0NNtt1DEssC5LwsUhn2LIOM0d8xZQsDT22s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pYslwBnM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rUm6amMe0s9CAk8lFVzkyAWKbwCD08Y7A9R/Req9hCsfGJJkNbOBVR17l6QTfaGEQEmTXjSWbju6poklhvdbYlYwHyuWErreNnNnBhcsFKLeI2qXzIdBbQqpqdOH3vHBdbhtoC3dlxHChjVzR7+amjUd+zzqdlFYPlHuP36TV9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9+0/gkF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pYslwBnM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441311F000E9;
-	Tue, 21 Jul 2026 18:43:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9+0/gkF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4581F00A3A;
+	Tue, 21 Jul 2026 18:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659385;
-	bh=6eMVPlTiHXHc1maKeraQrWTWPpCsidJ19SjJ+mHGq0s=;
+	s=korg; t=1784659388;
+	bh=bt4Sde717sEca/tVcXTZVtulYpmsjaEcfhkCDzuYcQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pYslwBnM3HKaqSddy24ZQmeKDiZ3jRhVzOc2CHyRzMrQkv6uvKgb9/kdslVnOmAvv
-	 Ax2eBLv77naBTPGKoWyQI8DNyn4hwwVqyvhY8HvoKzdb7EUEglw143Q65Q6Mf0kY20
-	 jYAdSkbj7UT8/eF9/sWSHJAV4FjoEurqVw+fldc8=
+	b=R9+0/gkFEkOhFephmi5PXtmXIY5saCXSIpLoGmZ09pdKUuhoxQ7KpgIUkLkQ2Mfij
+	 LZ9u+K3h+BprwRATKVQjwbkjF24Yhh6/x2bZeTp5CxNGu/DkmY5NW+vS21A+zEr2GC
+	 9lTCLBbX4ZFQGseiJzVczbN/P5cCUFQbpB4ei11w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 6.18 1484/1611] riscv: vdso: Do not use LTO for the vDSO
-Date: Tue, 21 Jul 2026 17:26:40 +0200
-Message-ID: <20260721152548.825751481@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.18 1502/1611] mmc: vub300: defer reset until cmd_mutex is unlocked
+Date: Tue, 21 Jul 2026 17:26:58 +0200
+Message-ID: <20260721152549.226496798@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -45,50 +44,132 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit ad6dcfa023762e37962f77ee48e752b7570e9440 upstream.
+commit ee5fb641c4ccac8406c668d3e947eb20ce44f233 upstream.
 
-With LTO enabled the compiler assumes that the vDSO functions are not
-used and optimizes them away completely. Currently this happens to
-__vdso_clock_getres(), __vdso_clock_gettime(), __vdso_getrandom(),
-__vdso_gettimeofday() and __vdso_riscv_hwprobe().
+vub300_cmndwork_thread() holds cmd_mutex while it sends a command and
+waits for the command response.  If the response wait times out,
+__vub300_command_response() kills the command URBs and then synchronously
+resets the USB device through usb_reset_device().
 
-Disable LTO for the vDSO, as these functions are hand-optimized anyways.
+That reset path re-enters the driver through vub300_pre_reset(), which
+also takes cmd_mutex.  The worker therefore tries to acquire the same
+mutex recursively while it is still holding it from the command path.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202606301855.WvkSC4kD-lkp@intel.com/
-Fixes: 021d23428bdb ("RISC-V: build: Allow LTO to be selected")
+This issue was found by our static analysis tool and then manually
+reviewed against the current tree.
+
+The grounded PoC kept the real worker and timeout/reset carrier:
+
+  vub300_cmndwork_thread()
+  __vub300_command_response()
+  usb_lock_device_for_reset()
+  usb_reset_device()
+  vub300_pre_reset()
+
+Lockdep reported the same-task recursive acquisition on cmd_mutex:
+
+  WARNING: possible recursive locking detected
+  ... (&test_vub300.cmd_mutex) ... at: usb_reset_device... [vuln_msv]
+  ... (&test_vub300.cmd_mutex) ... at: vub300_cmndwork_thread+0x12/0x20 [vuln_msv]
+  Workqueue: vub300_cmd_wq vub300_cmndwork_thread [vuln_msv]
+  *** DEADLOCK ***
+
+Return a flag from __vub300_command_response() when the timeout path needs
+a device reset, then perform the reset after vub300_cmndwork_thread() has
+cleared the in-flight command state and dropped cmd_mutex.  The reset is
+still attempted before mmc_request_done(), preserving the existing request
+completion ordering while avoiding the recursive lock.
+
+Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Link: https://patch.msgid.link/20260701-riscv-vdso-lto-v1-1-89db0cd82077@linutronix.de
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/vdso/Makefile |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/mmc/host/vub300.c |   26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
---- a/arch/riscv/kernel/vdso/Makefile
-+++ b/arch/riscv/kernel/vdso/Makefile
-@@ -49,9 +49,9 @@ CPPFLAGS_vdso.lds += -DHAS_VGETTIMEOFDAY
- endif
+--- a/drivers/mmc/host/vub300.c
++++ b/drivers/mmc/host/vub300.c
+@@ -1586,7 +1586,7 @@ static int __command_write_data(struct v
+ 	return linear_length;
+ }
  
- # Disable -pg to prevent insert call site
--CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS)
--CFLAGS_REMOVE_getrandom.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS)
--CFLAGS_REMOVE_hwprobe.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS)
-+CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS) $(CC_FLAGS_LTO)
-+CFLAGS_REMOVE_getrandom.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS) $(CC_FLAGS_LTO)
-+CFLAGS_REMOVE_hwprobe.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS) $(CC_FLAGS_LTO)
+-static void __vub300_command_response(struct vub300_mmc_host *vub300,
++static bool __vub300_command_response(struct vub300_mmc_host *vub300,
+ 				      struct mmc_command *cmd,
+ 				      struct mmc_data *data, int data_length)
+ {
+@@ -1598,17 +1598,11 @@ static void __vub300_command_response(st
+ 					    msecs_to_jiffies(msec_timeout));
+ 	if (respretval == 0) { /* TIMED OUT */
+ 		/* we don't know which of "out" and "res" if any failed */
+-		int result;
+ 		vub300->usb_timed_out = 1;
+ 		usb_kill_urb(vub300->command_out_urb);
+ 		usb_kill_urb(vub300->command_res_urb);
+ 		cmd->error = -ETIMEDOUT;
+-		result = usb_lock_device_for_reset(vub300->udev,
+-						   vub300->interface);
+-		if (result == 0) {
+-			result = usb_reset_device(vub300->udev);
+-			usb_unlock_device(vub300->udev);
+-		}
++		return true;
+ 	} else if (respretval < 0) {
+ 		/* we don't know which of "out" and "res" if any failed */
+ 		usb_kill_urb(vub300->command_out_urb);
+@@ -1704,6 +1698,8 @@ static void __vub300_command_response(st
+ 	} else {
+ 		cmd->error = -EINVAL;
+ 	}
++
++	return false;
+ }
  
- # Force dependency
- $(obj)/vdso.o: $(obj)/vdso.so
+ static void construct_request_response(struct vub300_mmc_host *vub300,
+@@ -1749,6 +1745,7 @@ static void vub300_cmndwork_thread(struc
+ 		struct mmc_request *req = vub300->req;
+ 		struct mmc_command *cmd = vub300->cmd;
+ 		struct mmc_data *data = vub300->data;
++		bool reset_device;
+ 		int data_length;
+ 		mutex_lock(&vub300->cmd_mutex);
+ 		init_completion(&vub300->command_complete);
+@@ -1771,7 +1768,8 @@ static void vub300_cmndwork_thread(struc
+ 			data_length = __command_read_data(vub300, cmd, data);
+ 		else
+ 			data_length = __command_write_data(vub300, cmd, data);
+-		__vub300_command_response(vub300, cmd, data, data_length);
++		reset_device = __vub300_command_response(vub300, cmd,
++							 data, data_length);
+ 		vub300->req = NULL;
+ 		vub300->cmd = NULL;
+ 		vub300->data = NULL;
+@@ -1779,6 +1777,16 @@ static void vub300_cmndwork_thread(struc
+ 			if (cmd->error == -ENOMEDIUM)
+ 				check_vub300_port_status(vub300);
+ 			mutex_unlock(&vub300->cmd_mutex);
++			if (reset_device) {
++				int result;
++
++				result = usb_lock_device_for_reset(vub300->udev,
++								   vub300->interface);
++				if (result == 0) {
++					result = usb_reset_device(vub300->udev);
++					usb_unlock_device(vub300->udev);
++				}
++			}
+ 			mmc_request_done(vub300->mmc, req);
+ 			kref_put(&vub300->kref, vub300_delete);
+ 			return;
 
 
