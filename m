@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6087C46A5F3;
-	Tue, 21 Jul 2026 15:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53B0366DA5;
+	Tue, 21 Jul 2026 15:47:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648844; cv=none; b=A09t91eX+5MgQmjDfqeLHNk0v1M8y6gEoBCjV0lLYZ/oq8U4FUo4ra518CnkGNqqw3ak0IOVfekS+57nTcDGJzE820oDpXvviqfRdbhsdzGoXRxOdVzHU9GJ5f+ZTEdsKqezFzEDamjG1moLHgApeiMs5z0tzLRSS8R/fPHqa2c=
+	t=1784648845; cv=none; b=klIx2TJAHeulA9vWmEEL3Ymm0XCngRnBZ6Bpx8/PgJSyh9D0YbIMNZ5qnOpGblbZXLtEOOBHt13ClJo8jCj5xh9300qL+r8VOpDs5MFlN8AhapkGnVdZJT7DMg8oxKDcD2H137vrK/vD8DW0mqgFzgZqEP5zOJt5iNlXziCVhOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648844; c=relaxed/simple;
-	bh=crPodguOW93K5GRMOcf4+LxZwCugufKEXZKBU8WmfHc=;
+	s=arc-20240116; t=1784648845; c=relaxed/simple;
+	bh=qnmP+JN3P0IMJMTY7qVcVvpXi+AVsAu1SaH/ScVguHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f4phv3gzHmGcH/lCWts7lmNFF6F/VsEqMMvcfxtGBc32Xll3EuKBFc2Sb3LcfV/mi0sDg7MuOhmXJmkarUNWPaYREObmHMp9KlOgXF8Bzc/QPL/EZEuHV1IL1vOBNN5m3AgUtKUcySRFdm4MhaGxo99k4rJp9SBaCtoX0X6H8Tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XtQon5yw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WmA09u7XEDvSXWzpSI9ICHE0g4wAKzIGLNHiKP2IJnw8Po+B4Csvjsl+6/zX+IBPZ3Plez1ziNI4LsoyKaOqMVHRHzhmjgY1L+aMOdCFYMcFgepTdcqfRLSRVYqDTCajt/+VpPQ8krVzsiUqnNXecGWNFdZ8GSLKmMDd0au0fHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/C/G2Ix; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XtQon5yw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854971F000E9;
-	Tue, 21 Jul 2026 15:47:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/C/G2Ix"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 280751F000E9;
+	Tue, 21 Jul 2026 15:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648842;
-	bh=DbRF9UqflEA7e2aIr90DGU/9aeMkiKWJcsKWOODa0nw=;
+	s=korg; t=1784648844;
+	bh=QvYxGLiq3KscTgW4et2BYfGkn55DT/Ii86V7iwkN6EU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XtQon5yw9r2lyB7VAtIf5azGRIxu2Se0ia/p9O6wFytlsPwk/SEs0+Wpa9yH1suC6
-	 4bW5NQqKA+XhiRoxJJTKEmEaLWp/jDEDVcQGvLKCuvRtW/zcJAbwgVPyUIXAmMm4tP
-	 fgbrAnZYCB/ZgTYlDGOttVyBuPKsYYLghUS/ebOU=
+	b=x/C/G2IxTVfJ7OJXvUqyvt09CAeAD+EFQPbIjoSupo0uTCCqmb88ls0t8Ud3crds0
+	 8q0odmHiXzNc7+F/gryFYgJmv+uvXBvxmdJIlde3I1FYcijqZI92K4COB1/pYEj+0P
+	 YB/PX7GOSEdMIAfxSlwnJ8a6wJWoApl5eHuOf1Xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
+	Siddharth Nayyar <sidnayyar@google.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	Quentin Monnet <qmo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0351/2077] libbpf: Harden parse_vma_segs() path parsing
-Date: Tue, 21 Jul 2026 17:00:24 +0200
-Message-ID: <20260721152600.970511050@linuxfoundation.org>
+Subject: [PATCH 7.1 0352/2077] bpftool: Fix typo in struct_ops map FD generation for light skeleton
+Date: Tue, 21 Jul 2026 17:00:25 +0200
+Message-ID: <20260721152600.993648836@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,84 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Siddharth Nayyar <sidnayyar@google.com>
 
-[ Upstream commit fee9a38174f4c6454fb1fbaf2b9b5a1cca9070d0 ]
+[ Upstream commit be4c6c7bc42952b71188894933946b410deadcfe ]
 
-parse_vma_segs() in tools/lib/bpf/usdt.c parses /proc/<pid>/maps
-with two widthless scansets, "%s" into mode[16] and "%[^\n]"
-into line[4096]. A VMA name in maps is not limited to that local
-buffer; a deeply nested backing path can produce a maps record long
-enough to overflow the stack buffer.
+When generating light skeletons for BPF programs containing struct_ops
+maps, bpftool incorrectly outputs a stray literal 't' instead of a tab
+character for the map file descriptor member in the links structure.
+This causes a compilation error when the generated light skeleton is
+used.
 
-Bound both scansets to the declared buffer sizes ("%15s" for mode[16]
-and "%4095[^\n]" for line[4096]) and drain any residue past line[4094]
-with "%*[^\n]" before the trailing "\n". Without the drain, the residue
-of an over-long record would stay in the stream and break the next
-"%zx-%zx" parse, so the loop would exit early and silently skip later
-maps records.
+Correct the format string by replacing 't' with '\t'.
 
-Also stop using sscanf(..., "%s") to peel the /proc/<pid>/root prefix
-from lib_path. Parse the pid and prefix length with "%n", check for the
-following slash, and copy the remainder with libbpf_strlcpy(). That
-removes a second unbounded stack write and preserves paths containing
-spaces.
-
-Fixes: 74cc6311cec9 ("libbpf: Add USDT notes parsing and resolution logic")
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Fixes: 08ac454e258e ("libbpf: Auto-attach struct_ops BPF maps in BPF skeleton")
+Signed-off-by: Siddharth Nayyar <sidnayyar@google.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/bpf/20260522201353.1454653-1-michael.bommarito@gmail.com
+Acked-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/bpf/20260520-struct_ops_gen_typo_fix-v1-1-4dee3771da46@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/usdt.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ tools/bpf/bpftool/gen.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/usdt.c b/tools/lib/bpf/usdt.c
-index e3710933fd52a6..57fb82bb81b588 100644
---- a/tools/lib/bpf/usdt.c
-+++ b/tools/lib/bpf/usdt.c
-@@ -468,10 +468,10 @@ static int parse_elf_segs(Elf *elf, const char *path, struct elf_seg **segs, siz
+diff --git a/tools/bpf/bpftool/gen.c b/tools/bpf/bpftool/gen.c
+index 2f9e10752e288d..d6040b52d4e1bf 100644
+--- a/tools/bpf/bpftool/gen.c
++++ b/tools/bpf/bpftool/gen.c
+@@ -1399,7 +1399,7 @@ static int do_skeleton(int argc, char **argv)
+ 				continue;
  
- static int parse_vma_segs(int pid, const char *lib_path, struct elf_seg **segs, size_t *seg_cnt)
- {
--	char path[PATH_MAX], line[PATH_MAX], mode[16];
-+	char path[PATH_MAX], line[4096], mode[16];
- 	size_t seg_start, seg_end, seg_off;
- 	struct elf_seg *seg;
--	int tmp_pid, i, err;
-+	int tmp_pid, n, i, err;
- 	FILE *f;
- 
- 	*seg_cnt = 0;
-@@ -480,8 +480,13 @@ static int parse_vma_segs(int pid, const char *lib_path, struct elf_seg **segs,
- 	 * /proc/<pid>/root/<path>. They will be reported as just /<path> in
- 	 * /proc/<pid>/maps.
- 	 */
--	if (sscanf(lib_path, "/proc/%d/root%s", &tmp_pid, path) == 2 && pid == tmp_pid)
-+	/* %n is not counted in sscanf() return value, so initialize it. */
-+	n = 0;
-+	if (sscanf(lib_path, "/proc/%d/root%n", &tmp_pid, &n) == 1 &&
-+	    n > 0 && pid == tmp_pid && lib_path[n] == '/') {
-+		libbpf_strlcpy(path, lib_path + n, sizeof(path));
- 		goto proceed;
-+	}
- 
- 	if (!realpath(lib_path, path)) {
- 		pr_warn("usdt: failed to get absolute path of '%s' (err %s), using path as is...\n",
-@@ -504,8 +509,11 @@ static int parse_vma_segs(int pid, const char *lib_path, struct elf_seg **segs,
- 	 * 7f5c6f5d1000-7f5c6f5d3000 rw-p 001c7000 08:04 21238613      /usr/lib64/libc-2.17.so
- 	 * 7f5c6f5d3000-7f5c6f5d8000 rw-p 00000000 00:00 0
- 	 * 7f5c6f5d8000-7f5c6f5d9000 r-xp 00000000 103:01 362990598    /data/users/andriin/linux/tools/bpf/usdt/libhello_usdt.so
-+	 *
-+	 * Some VMA names can be longer than the local buffer. Bound the
-+	 * writes, but still consume the rest of the line.
- 	 */
--	while (fscanf(f, "%zx-%zx %s %zx %*s %*d%[^\n]\n",
-+	while (fscanf(f, "%zx-%zx %15s %zx %*s %*d%4095[^\n]%*[^\n]\n",
- 		      &seg_start, &seg_end, mode, &seg_off, line) == 5) {
- 		void *tmp;
- 
+ 			if (use_loader)
+-				printf("t\tint %s_fd;\n", ident);
++				printf("\t\tint %s_fd;\n", ident);
+ 			else
+ 				printf("\t\tstruct bpf_link *%s;\n", ident);
+ 		}
 -- 
 2.53.0
 
