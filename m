@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624CF39B4A2;
-	Tue, 21 Jul 2026 17:33:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217B546D541;
+	Tue, 21 Jul 2026 17:33:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655199; cv=none; b=q+6xr+RxsKiIEUsRSkCbjAVrDnS4p/g106JGzcIxPWmtQRBVGe+tUKttcn51/tgxuT3DP0G76W5RMHf9yjNtfeuA1VLq9YYo/6ELLpQOiNWgU9S2roV8mLdPqxV5qeAHqhESskmoqxiHWWsJyUmfvqkxuVePeE4USMA/CpIyAXA=
+	t=1784655202; cv=none; b=ax3+xaOwGelRa60/Whp3P1l8lgRZx+HE46OhfVdyI+P/nthoXNIZm56hsEo5sgZ90oLQBXS4yN1t5YXZ7ekWlg6mJIdKKecLxrcUbFHIa97rrGpdbL255kvt1RQfcIVgvDkYVgKTiKE9Lgz+C77qo1IpTjsG01ztCMp73CZUIps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655199; c=relaxed/simple;
-	bh=TssOHHWTlYZ/F6gVP5ZiLOoilvqe2NfOUs4QhEvCwmI=;
+	s=arc-20240116; t=1784655202; c=relaxed/simple;
+	bh=vrL9G9WunWz0VS5zRx7OITjlI9IeKnTpl0Pc3z39A4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9DklRnikiok4hJn8ScF4TDV+AmsncNMer5I37yEOKd/odbzlF9jKR7bGdJ8KhMY3xC8iu01SrnkiPNijIQ+eCtEpmglioxT+7k6zX0pb0vSKblP+rnQn/ITFWaXld4FPDCeOYkFyY3FcLtmxwaW2U429DIaaLLxV+auFVepGNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbBSH9tU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VRuzzECPd7wNyGIJNeWp0evyynVCo0HkI2GMjNBl6XT3c8XWw1BYu2lCJGZZTkgrxjyCl5hNqq8/GHiBqC+LBGnnYTsJC+jqb4BQSNRdLnCBcf+h79+geoCk+pW4Dhme5PZ2kwoamdwhLiZHq8UZXVmd28C5tVOyO2L6N59x+j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=baQ0iMFi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbBSH9tU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5991F000E9;
-	Tue, 21 Jul 2026 17:33:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="baQ0iMFi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82CAB1F000E9;
+	Tue, 21 Jul 2026 17:33:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655198;
-	bh=n6pZCAiEAv5w4M78E0J7c0M6jgs2pq1Ya2JJrGihBmI=;
+	s=korg; t=1784655201;
+	bh=tvo0Anq6JPSJ8fmOmYZZ4cLPyS1EJq84HjTUSg7YKKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nbBSH9tUZlZRQcoFffaYT2qCcaBS5bvRDDXInfwyrbjgck5po61ex3peGoCdX5rU+
-	 Tb+en4c/ZO4ree/SattCSYnDUYhAJUu6+2ww2WJpfhwwBV8S8wceoDSaoJqKsK6AcT
-	 SH25DIrx/GeVIECbL1RBkDH/2d1m5wcFgUVBXTxM=
+	b=baQ0iMFidVso6J2RCIHFVLi1q/zQJ7Xn5RWzEeyVaQBijXl0ouVhoyHPkqcIBmR5W
+	 +aEQEGiwUJTL52SVH4h+YiYobcmRELCzG3Qvzv1ewgqw9QzaqYLTefm/db28uYYuYx
+	 2on0xsJkIg4GP0gYMETGFUBul4mpU1YQCkFrZfa0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guoniu Zhou <guoniu.zhou@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 7.1 1994/2077] pmdomain: imx93-blk-ctrl: Extract PHY as shared domain for DSI/CSI
-Date: Tue, 21 Jul 2026 17:27:47 +0200
-Message-ID: <20260721152639.742930900@linuxfoundation.org>
+Subject: [PATCH 7.1 1995/2077] pmdomain: mediatek: Fix possible nullptr KP in HWV cleanup/on-check
+Date: Tue, 21 Jul 2026 17:27:48 +0200
+Message-ID: <20260721152639.766014786@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,166 +50,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guoniu Zhou <guoniu.zhou@oss.nxp.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-commit 99611233f8cda833169fa6487d5dacdf189e5cb0 upstream.
+commit a4876f11aa1d076802676e23f8af500706e780e3 upstream.
 
-The MIPI DSI and CSI domains share control bits for clock and reset, which
-can lead to incorrect behavior if one domain disables the shared resource
-while the other is still active.
+Should probe fail for HW_VOTER type power domains, this driver was
+unconditionally trying to perform cleanup for DIRECT_CTL domains,
+but only after checking if the target domain is powered on... with
+the DIRECT_CTL scpsys_domain_is_on() code again.
 
-To fix the issue, introduce a shared MIPI PHY power domain to own the
-common resources and make DSI and CSI its subdomains. This ensures the
-shared bits are properly managed and not disabled while still in use.
+And there's more: the scpsys_domain_is_on() function is also being
+unconditionally used in the probe path, for any power domain that
+has flag MTK_SCPD_KEEP_DEFAULT_OFF!
 
-Fixes: e9aa77d413c9 ("soc: imx: add i.MX93 media blk ctrl driver")
+This bug was never experienced by anyone because the HWV domains
+never failed probe, and because none of those is declared with the
+aforementioned flag - but it's still something critical.
+
+In order to fix this, add a check for MTCMOS Type and, based on
+that, call the correct functions for an "is on" check, and also
+do the same for the cleanup path, calling the correct functions
+for the "power off" action.
+
+For the latter, since there's a call to pm_genpd_remove() right
+before calling power_off, be cautious and add a variation of the
+power off functions (with a _internal suffix) for those to get a
+pointer to scpsys_domain instead of one to generic_pm_domain as,
+even if that's still working, this is way too much fragile and
+would break at some point.
+
+Fixes: 88914db077b6 ("pmdomain: mediatek: Add support for Hardware Voter power domains")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Guoniu Zhou <guoniu.zhou@oss.nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/imx/imx93-blk-ctrl.c |   60 ++++++++++++++++++++++++++++++++--
- 1 file changed, 58 insertions(+), 2 deletions(-)
+ drivers/pmdomain/mediatek/mtk-pm-domains.c |   40 +++++++++++++++++++++++------
+ 1 file changed, 33 insertions(+), 7 deletions(-)
 
---- a/drivers/pmdomain/imx/imx93-blk-ctrl.c
-+++ b/drivers/pmdomain/imx/imx93-blk-ctrl.c
-@@ -48,6 +48,8 @@
- 
- #define PRIO(X)			(X)
- 
-+#define BLK_CTRL_NO_PARENT	UINT_MAX
-+
- struct imx93_blk_ctrl_domain;
- 
- struct imx93_blk_ctrl {
-@@ -68,12 +70,18 @@ struct imx93_blk_ctrl_qos {
- 	u32 cfg_prio;
+--- a/drivers/pmdomain/mediatek/mtk-pm-domains.c
++++ b/drivers/pmdomain/mediatek/mtk-pm-domains.c
+@@ -393,9 +393,8 @@ err_infra:
+ 	return ret;
  };
  
-+struct imx93_blk_ctrl_subdomain_link {
-+	struct generic_pm_domain *parent;
-+	struct generic_pm_domain *subdomain;
-+};
-+
- struct imx93_blk_ctrl_domain_data {
- 	const char *name;
- 	const char * const *clk_names;
- 	int num_clks;
- 	u32 rst_mask;
- 	u32 clk_mask;
-+	u32 parent;
- 	int num_qos;
- 	struct imx93_blk_ctrl_qos qos[DOMAIN_MAX_QOS];
+-static int scpsys_hwv_power_off(struct generic_pm_domain *genpd)
++static int scpsys_hwv_power_off_internal(struct scpsys_domain *pd)
+ {
+-	struct scpsys_domain *pd = container_of(genpd, struct scpsys_domain, genpd);
+ 	const struct scpsys_hwv_domain_data *hwv = pd->hwv_data;
+ 	struct scpsys *scpsys = pd->scpsys;
+ 	u32 val;
+@@ -464,6 +463,13 @@ err_infra:
+ 	return ret;
  };
-@@ -203,6 +211,13 @@ static void imx93_release_pm_genpd(void
- 	pm_genpd_remove(genpd);
- }
  
-+static void imx93_release_subdomain(void *data)
++static int scpsys_hwv_power_off(struct generic_pm_domain *genpd)
 +{
-+	struct imx93_blk_ctrl_subdomain_link *link = data;
++	struct scpsys_domain *pd = container_of(genpd, struct scpsys_domain, genpd);
 +
-+	pm_genpd_remove_subdomain(link->parent, link->subdomain);
++	return scpsys_hwv_power_off_internal(pd);
 +}
 +
- static struct lock_class_key blk_ctrl_genpd_lock_class;
+ static int scpsys_ctl_pwrseq_on(struct scpsys_domain *pd)
+ {
+ 	struct scpsys *scpsys = pd->scpsys;
+@@ -694,9 +700,8 @@ err_reg:
+ 	return ret;
+ }
  
- static int imx93_blk_ctrl_probe(struct platform_device *pdev)
-@@ -302,6 +317,34 @@ static int imx93_blk_ctrl_probe(struct p
- 		bc->onecell_data.domains[i] = &domain->genpd;
- 	}
+-static int scpsys_power_off(struct generic_pm_domain *genpd)
++static int scpsys_power_off_internal(struct scpsys_domain *pd)
+ {
+-	struct scpsys_domain *pd = container_of(genpd, struct scpsys_domain, genpd);
+ 	struct scpsys *scpsys = pd->scpsys;
+ 	bool tmp;
+ 	int ret;
+@@ -737,6 +742,13 @@ static int scpsys_power_off(struct gener
+ 	return 0;
+ }
  
-+	for (i = 0; i < bc_data->num_domains; i++) {
-+		struct imx93_blk_ctrl_domain *domain = &bc->domains[i];
-+		const struct imx93_blk_ctrl_domain_data *data = domain->data;
-+		struct imx93_blk_ctrl_subdomain_link *link;
++static int scpsys_power_off(struct generic_pm_domain *genpd)
++{
++	struct scpsys_domain *pd = container_of(genpd, struct scpsys_domain, genpd);
 +
-+		if (bc_data->skip_mask & BIT(i) ||
-+		    data->parent == BLK_CTRL_NO_PARENT)
-+			continue;
++	return scpsys_power_off_internal(pd);
++}
 +
-+		link = devm_kzalloc(dev, sizeof(*link), GFP_KERNEL);
-+		if (!link)
-+			return -ENOMEM;
+ static struct
+ generic_pm_domain *scpsys_add_one_domain(struct scpsys *scpsys, struct device_node *node)
+ {
+@@ -884,7 +896,14 @@ generic_pm_domain *scpsys_add_one_domain
+ 	 * late_init time.
+ 	 */
+ 	if (MTK_SCPD_CAPS(pd, MTK_SCPD_KEEP_DEFAULT_OFF)) {
+-		if (scpsys_domain_is_on(pd))
++		bool domain_is_on;
 +
-+		link->parent = &bc->domains[data->parent].genpd;
-+		link->subdomain = &domain->genpd;
++		if (scpsys->soc_data->type == SCPSYS_MTCMOS_TYPE_HW_VOTER)
++			domain_is_on = scpsys_hwv_domain_is_enable_done(pd);
++		else
++			domain_is_on = scpsys_domain_is_on(pd);
 +
-+		ret = pm_genpd_add_subdomain(&bc->domains[data->parent].genpd,
-+					     &domain->genpd);
-+		if (ret)
-+			return dev_err_probe(dev, ret, "failed to add subdomain %s\n",
-+					     domain->genpd.name);
++		if (domain_is_on)
+ 			dev_warn(scpsys->dev,
+ 				 "%pOF: A default off power domain has been ON\n", node);
+ 	} else {
+@@ -973,6 +992,7 @@ err_put_node:
+ 
+ static void scpsys_remove_one_domain(struct scpsys_domain *pd)
+ {
++	struct scpsys *scpsys = pd->scpsys;
+ 	int ret;
+ 
+ 	/*
+@@ -984,8 +1004,14 @@ static void scpsys_remove_one_domain(str
+ 		dev_err(pd->scpsys->dev,
+ 			"failed to remove domain '%s' : %d - state may be inconsistent\n",
+ 			pd->genpd.name, ret);
+-	if (scpsys_domain_is_on(pd))
+-		scpsys_power_off(&pd->genpd);
 +
-+		ret = devm_add_action_or_reset(dev, imx93_release_subdomain, link);
-+		if (ret)
-+			return dev_err_probe(dev, ret,
-+					     "failed to add subdomain release callback\n");
++	if (scpsys->soc_data->type == SCPSYS_MTCMOS_TYPE_HW_VOTER) {
++		if (scpsys_hwv_domain_is_enable_done(pd))
++			scpsys_hwv_power_off_internal(pd);
++	} else {
++		if (scpsys_domain_is_on(pd))
++			scpsys_power_off_internal(pd);
 +	}
-+
- 	ret = devm_pm_runtime_enable(dev);
- 	if (ret)
- 		return dev_err_probe(dev, ret, "failed to enable pm-runtime\n");
-@@ -326,8 +369,9 @@ static const struct imx93_blk_ctrl_domai
- 		.name = "mediablk-mipi-dsi",
- 		.clk_names = (const char *[]){ "dsi" },
- 		.num_clks = 1,
--		.rst_mask = BIT(11) | BIT(12),
--		.clk_mask = BIT(11) | BIT(12),
-+		.rst_mask = BIT(11),
-+		.clk_mask = BIT(11),
-+		.parent = IMX93_MEDIABLK_PD_MIPI_PHY,
- 	},
- 	[IMX93_MEDIABLK_PD_MIPI_CSI] = {
- 		.name = "mediablk-mipi-csi",
-@@ -335,6 +379,7 @@ static const struct imx93_blk_ctrl_domai
- 		.num_clks = 2,
- 		.rst_mask = BIT(9) | BIT(10),
- 		.clk_mask = BIT(9) | BIT(10),
-+		.parent = IMX93_MEDIABLK_PD_MIPI_PHY,
- 	},
- 	[IMX93_MEDIABLK_PD_PXP] = {
- 		.name = "mediablk-pxp",
-@@ -342,6 +387,7 @@ static const struct imx93_blk_ctrl_domai
- 		.num_clks = 1,
- 		.rst_mask = BIT(7) | BIT(8),
- 		.clk_mask = BIT(7) | BIT(8),
-+		.parent = BLK_CTRL_NO_PARENT,
- 		.num_qos = 2,
- 		.qos = {
- 			{
-@@ -363,6 +409,7 @@ static const struct imx93_blk_ctrl_domai
- 		.num_clks = 2,
- 		.rst_mask = BIT(4) | BIT(5) | BIT(6),
- 		.clk_mask = BIT(4) | BIT(5) | BIT(6),
-+		.parent = BLK_CTRL_NO_PARENT,
- 		.num_qos = 1,
- 		.qos = {
- 			{
-@@ -379,6 +426,7 @@ static const struct imx93_blk_ctrl_domai
- 		.num_clks = 1,
- 		.rst_mask = BIT(2) | BIT(3),
- 		.clk_mask = BIT(2) | BIT(3),
-+		.parent = BLK_CTRL_NO_PARENT,
- 		.num_qos = 4,
- 		.qos = {
- 			{
-@@ -404,6 +452,14 @@ static const struct imx93_blk_ctrl_domai
- 			}
- 		}
- 	},
-+	[IMX93_MEDIABLK_PD_MIPI_PHY] = {
-+		.name = "mediablk-mipi-phy",
-+		.clk_names = NULL,
-+		.num_clks = 0,
-+		.rst_mask = BIT(12),
-+		.clk_mask = BIT(12),
-+		.parent = BLK_CTRL_NO_PARENT,
-+	},
- };
  
- static const struct regmap_range imx93_media_blk_ctl_yes_ranges[] = {
+ 	clk_bulk_put(pd->num_clks, pd->clks);
+ 	clk_bulk_put(pd->num_subsys_clks, pd->subsys_clks);
 
 
