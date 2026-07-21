@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FF246EF81;
-	Tue, 21 Jul 2026 18:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF4946D2D5;
+	Tue, 21 Jul 2026 18:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659649; cv=none; b=rVq+V5v+bDLpRISOrXXeQpMRx15ujEg7H5ziYxPIU0Wk4tGrEm8ss6rHBR7FC+3fMDwZPcK8oM+635s9j6jm/8AhEWz24U5qAvetMq6+lZMuDoT4PwSm45LCcqVmXw/Pb1/2Zqy0LgceAzEmb/l2BK6klh9sty8limGZ2tGA2UM=
+	t=1784659653; cv=none; b=fFRJYYvjvRp4BJW/iIyAnwPAzYQCh0HJwqPzoSP9VWNpxLbFRnrDJP9VnFD1y7k+AdCBftp0celc+PGsCd8iSQtJUWPl5Nwm15WRafmRAargS6ZVfrlhHNbgbHHsrsEBaNY0A0bOENuKFuxUcrMCYxdZkZkbIpWm8rwf8YFCVWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659649; c=relaxed/simple;
-	bh=TWUnUZT8+uoUaHg3Soj9VD5m/FZhUOIVsDKp2Emfic8=;
+	s=arc-20240116; t=1784659653; c=relaxed/simple;
+	bh=jZYdqOEzf7eZ/tc0DOnVj+7iQb9M5kKuNuWvySeSE3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UxBbQduPw0BfySDBMflb2+ioGAoy1FHh1ung6ascQhFcm2HN5ypDLiRhv5aR6Wz+xsLWpT3KxLm8+pIgrfpehMXSe5liHbK6pxOj2kbkOJlJdr7zVHlmJvKJKbjnmgHXF9hW8fDws+omD6P2nrAPlynp9EF8MoQlAzQf6HMs11E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nk6A08Sx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lRbM3nI5dsyptwpDNa543GJoJqdtKRuMk4iDaL1JFQLD9NCW90kBavCrYthSRyPa9eBcSWNnjHMD87SbtxTAHNwA+CPp9Z6BokUewgiEobEDLRxpI57+IrddJNkJC+J6+dyX583jJpUhFOC3ZfG4RigcibS//TtYW9k3jIPXKKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fpHw6SDD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nk6A08Sx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7CAB1F000E9;
-	Tue, 21 Jul 2026 18:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fpHw6SDD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E551F000E9;
+	Tue, 21 Jul 2026 18:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659648;
-	bh=x9zo9jbmvCIig6sIx77K2I3hiY5FfTHmxHJJd00Y9jk=;
+	s=korg; t=1784659651;
+	bh=Iw/yx13ixDklXES9HUI4OzoRSZVoxGWl4/jA7djAuIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nk6A08SxiHsFRaf8Ab8S9liK0g5VjKiufs5i6tLl8fI1XXConM72lh/6vu2wknOCx
-	 ZH9dEQTtMw8om8iNY2p+nNmGQ39Usvw327kjybfjftWYgdZ4YM1O7ZnAK8a/wDhXrj
-	 QL/Zfaea4qNs/zY9H6nWrVNU5R1pxnpmvkF7kef8=
+	b=fpHw6SDDyGlHBY8TmM42EDoKBiJY1P62yTjlNMIKWLUCjm9fEYkAUqZ7xprtv7DDI
+	 5eNccRVdbeWH8g/UhArZGLw2whg3MikSpujYccXzlqqZ1N9cFmUso+G6dOI5FmBMDF
+	 KheOhh9MmYhI2Z0Pz/P0B8d0AOFPuzhha5X0OFhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
+	oxsignal <awo@kakao.com>,
+	Matt Bobrowski <mattbobrowski@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Amery Hung <ameryhung@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1600/1611] iommufd: Move vevent memory allocation outside spinlock
-Date: Tue, 21 Jul 2026 17:28:36 +0200
-Message-ID: <20260721152551.463790322@linuxfoundation.org>
+Subject: [PATCH 6.18 1601/1611] bpf: Reject BPF_MAP_TYPE_INODE_STORAGE creation if BPF LSM is uninitialized
+Date: Tue, 21 Jul 2026 17:28:37 +0200
+Message-ID: <20260721152551.487375329@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,64 +54,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Matt Bobrowski <mattbobrowski@google.com>
 
-[ Upstream commit 47443565d10c51366c9382dbc8597cd6c460b8a2 ]
+[ Upstream commit a6f0643e4f63cfaa0d5d4a69de4f132eac4b8fe4 ]
 
-The veventq memory allocation happens inside the spinlock. Given its depth
-is decided by the user space, this leaves a vulnerability, where userspace
-can allocate large queues to exhaust atomic memory reserves.
+When CONFIG_BPF_LSM=y is set, BPF inode storage maps
+(BPF_MAP_TYPE_INODE_STORAGE) are compiled into the kernel. However,
+if the BPF LSM is not explicitly enabled at boot time (e.g. omitted
+from the "lsm=" boot parameter), lsm_prepare() is never executed for
+the BPF LSM.
 
-Move the allocation outside the spinlock and use GFP_NOWAIT, which can fail
-fast under memory pressure without dipping into the GFP_ATOMIC reserves or
-direct-reclaiming from the threaded IRQ handler. On allocation failure,
-queue the lost_events_header (so userspace learns of the drop) and return
--ENOMEM so the caller learns of the kernel-side memory pressure.
+Consequently, the BPF inode security blob offset
+(bpf_lsm_blob_sizes.lbs_inode) is never initialized and remains at
+its default compiled size of 8 bytes instead of being updated to a
+valid offset past the reserved struct rcu_head (typically 16 bytes
+or more).
 
-This is intentionally distinct from the queue-overflow path, which also
-queues the lost_events_header but returns 0: a full queue is an expected
-userspace-pacing condition rather than a kernel error.
+When a privileged user creates and updates a BPF_MAP_TYPE_INODE_STORAGE
+map, bpf_inode() evaluates inode->i_security + 8. This erroneously
+aliases the struct rcu_head.func callback pointer at the beginning
+of the inode->i_security blob. During subsequent map element cleanup
+or inode destruction, writing NULL to owner_storage clears the queued
+RCU callback pointer. When rcu_do_batch() later executes the queued
+callback, it attempts an instruction fetch at address 0x0, triggering
+an immediate kernel panic.
 
-A subsequent change will cap the upper bound of the veventq_depth.
+Fix this by introducing a global bpf_lsm_initialized boolean flag
+marked with __ro_after_init. Set this flag to true inside bpf_lsm_init()
+when the LSM framework successfully registers the BPF LSM. Gate map
+allocation in inode_storage_map_alloc() on this flag, returning
+-EOPNOTSUPP if the BPF LSM is in turn uninitialized.
 
-Fixes: e36ba5ab808e ("iommufd: Add IOMMUFD_OBJ_VEVENTQ and IOMMUFD_CMD_VEVENTQ_ALLOC")
-Link: https://patch.msgid.link/r/5ff36b5d80f7f6299f851be532a5195c1d2f1dae.1779408671.git.nicolinc@nvidia.com
-Cc: stable@vger.kernel.org
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+This fail-fast approach prevents userspace from allocating inode
+storage maps when the supporting BPF LSM infrastructure is absent,
+avoiding zombie map states.
+
+Fixes: 8ea636848aca ("bpf: Implement bpf_local_storage for inodes")
+Reported-by: oxsignal <awo@kakao.com>
+Signed-off-by: Matt Bobrowski <mattbobrowski@google.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Reviewed-by: Amery Hung <ameryhung@gmail.com>
+Link: https://lore.kernel.org/bpf/20260628201103.3624525-1-mattbobrowski@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/driver.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ include/linux/bpf_lsm.h        |    4 ++++
+ kernel/bpf/bpf_inode_storage.c |    9 +++++++++
+ security/bpf/hooks.c           |    3 +++
+ 3 files changed, 16 insertions(+)
 
---- a/drivers/iommu/iommufd/driver.c
-+++ b/drivers/iommu/iommufd/driver.c
-@@ -149,15 +149,18 @@ int iommufd_viommu_report_event(struct i
- 		goto out_unlock_veventqs;
- 	}
+--- a/include/linux/bpf_lsm.h
++++ b/include/linux/bpf_lsm.h
+@@ -14,6 +14,8 @@
  
--	spin_lock(&veventq->common.lock);
--	if (veventq->num_events == veventq->depth) {
-+	/* Pre-allocate to avoid GFP_ATOMIC; use GFP_NOWAIT to avoid sleeping */
-+	vevent = kzalloc_flex(*vevent, event_data, data_len, GFP_NOWAIT);
-+	if (!vevent) {
-+		spin_lock(&veventq->common.lock);
- 		vevent = &veventq->lost_events_header;
-+		rc = -ENOMEM;
- 		goto out_set_header;
- 	}
+ #ifdef CONFIG_BPF_LSM
  
--	vevent = kzalloc(struct_size(vevent, event_data, data_len), GFP_ATOMIC);
--	if (!vevent) {
--		rc = -ENOMEM;
-+	spin_lock(&veventq->common.lock);
-+	if (veventq->num_events == veventq->depth) {
-+		kfree(vevent);
- 		vevent = &veventq->lost_events_header;
- 		goto out_set_header;
- 	}
++extern bool bpf_lsm_initialized __ro_after_init;
++
+ #define LSM_HOOK(RET, DEFAULT, NAME, ...) \
+ 	RET bpf_lsm_##NAME(__VA_ARGS__);
+ #include <linux/lsm_hook_defs.h>
+@@ -56,6 +58,8 @@ bool bpf_lsm_hook_returns_errno(u32 btf_
+ 
+ #else /* !CONFIG_BPF_LSM */
+ 
++#define bpf_lsm_initialized false
++
+ static inline bool bpf_lsm_is_sleepable_hook(u32 btf_id)
+ {
+ 	return false;
+--- a/kernel/bpf/bpf_inode_storage.c
++++ b/kernel/bpf/bpf_inode_storage.c
+@@ -181,6 +181,15 @@ static int notsupp_get_next_key(struct b
+ 
+ static struct bpf_map *inode_storage_map_alloc(union bpf_attr *attr)
+ {
++	/*
++	 * Do not allow allocation of BPF_MAP_TYPE_INODE_STORAGE if the BPF LSM
++	 * was not initialized by the LSM framework at boot. Without proper
++	 * initialization, the BPF inode security blob offset remains unprepared,
++	 * causing bpf_inode() to calculate an invalid memory offset and corrupt
++	 * inode->i_security.
++	 */
++	if (!bpf_lsm_initialized)
++		return ERR_PTR(-EOPNOTSUPP);
+ 	return bpf_local_storage_map_alloc(attr, &inode_cache, false);
+ }
+ 
+--- a/security/bpf/hooks.c
++++ b/security/bpf/hooks.c
+@@ -7,6 +7,8 @@
+ #include <linux/bpf_lsm.h>
+ #include <uapi/linux/lsm.h>
+ 
++bool bpf_lsm_initialized __ro_after_init;
++
+ static struct security_hook_list bpf_lsm_hooks[] __ro_after_init = {
+ 	#define LSM_HOOK(RET, DEFAULT, NAME, ...) \
+ 	LSM_HOOK_INIT(NAME, bpf_lsm_##NAME),
+@@ -24,6 +26,7 @@ static int __init bpf_lsm_init(void)
+ {
+ 	security_add_hooks(bpf_lsm_hooks, ARRAY_SIZE(bpf_lsm_hooks),
+ 			   &bpf_lsmid);
++	bpf_lsm_initialized = true;
+ 	pr_info("LSM support for eBPF active\n");
+ 	return 0;
+ }
 
 
