@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B259D43B490;
-	Tue, 21 Jul 2026 22:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A9044AB91;
+	Tue, 21 Jul 2026 22:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674214; cv=none; b=AomCgCavZbaWDa9PhuNMOoCYwLtY2m+esUXXf5ApirpcB1LWioZg71vd34FtfByHA09fBqjcaCYNVEgJ7zkRcgHzV9pYNy9uF2qcEh/wAszECy59e6qkaJH6kB6tavZhWBy7SGJn9QyE4JUWeEx9Dtei7C5JGsO16lBbLbyc0gs=
+	t=1784674214; cv=none; b=nHpOp+m1rKHDEG8/NQuqeMKA/7RfshZni37+dsr2HSADWJlFmgPT3l9tA3c+WQ8IDEOoSN/RhQA7k/bt9hEKN/UErbfRIz5HrSquAba3ULCc8ZFzYDxMeaeHDgVnMYx/CqM3g1rJlNl8yEGRh3pChXivtInchIK73CgKktdF3/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784674214; c=relaxed/simple;
-	bh=gdhs4+5bLokKaEXFzm3fBf47j95epvBe3GqQaD+XO4E=;
+	bh=l2L48tAGfVluZCtrq6IACEz5gN0V5sTAuxGB2ozYg9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A7SkMguZeC9gl0lmfUNTfnQ7wxqcszC19nYcgJXoA8FkesdRzMP8+7s/qdCAk9O9Z+sfa3nQaBz981by2fGlj1h83+JuPzfVdSbil7RHXcb2acVILVGOmb5BWSid5tgP+SFpmmo2U7W6weuHgJjiqWvz8MPZ8QvctL6TSBEn04s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1nk8GYYt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pBMhrr3EinsGePlqa2qRT9UP/fZ06q8rbBSJEtpiy2/17Ci4TI0+YLZd08guWa64FwUHlgEroEZ6f4TOgSptKIstk2MZ/6wPwp1bg64uhQqE661995R4muzrY5AqDj5pDab1FEyg5SeuFS5t6v+zKP3HJ6n8FHZxgHQsrrmbcPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NexUW2ro; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1nk8GYYt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC01D1F000E9;
-	Tue, 21 Jul 2026 22:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NexUW2ro"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F091F00A3A;
+	Tue, 21 Jul 2026 22:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674210;
-	bh=ZEg9HdH+b1BGIZDqOd56yG6QLRh0G7MucfhY56YA5R0=;
+	s=korg; t=1784674213;
+	bh=Ji9BZYCAcJbwHYzG9q9/j/Yn0wdWQiKeVr6WIHEC+sQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1nk8GYYtY52RInSiZW5dHSjZtiDctYmB6XCNRKyFpZF7Ros4gxFzMu0FqqHAwq5Ur
-	 UO5HQYWXiCRHeeFhN4AgjgM2mfqk8aYWbylfm9w1w1zFMXxRVD5xL3W5dy8YS7zm6F
-	 E/nv7SbqQhsJTsj+quFrhh1Fvs/87A5z5pqF+SMA=
+	b=NexUW2roXaKcPttPK98Snt7gXLrcApBy+q1IrvLpb3aeUA63ZedDl01LkRynIude2
+	 6i21OLYnp4bmZXgFTxwUC1BHz2rqetaidaP20QeKH4BSKdxGYxiVtsJ86ppDceUBVb
+	 ynvltnQIXBhxNZ0woVrqbrl4ygLF86RpnlWlIUEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Taehee Yoo <ap420073@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 412/699] mld: convert ipv6_mc_socklist->sflist to RCU
-Date: Tue, 21 Jul 2026 17:22:51 +0200
-Message-ID: <20260721152404.986934675@linuxfoundation.org>
+Subject: [PATCH 5.10 403/699] net: qualcomm: rmnet: validate MAP frame length before ingress parsing
+Date: Tue, 21 Jul 2026 17:22:42 +0200
+Message-ID: <20260721152404.786668682@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,201 +53,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taehee Yoo <ap420073@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 882ba1f73c06831f2a21044ebd8864c485ac04f2 ]
+[ Upstream commit f0f1887a9e30712a1df03e152dce6fb91344b1f3 ]
 
-The sflist has been protected by rwlock so that the critical section
-is atomic context.
-In order to switch this context, changing locking is needed.
-The sflist actually already protected by RTNL So if it's converted
-to use RCU, its control path context can be switched to sleepable.
+When ingress deaggregation is disabled, rmnet_map_ingress_handler() passes
+the skb straight to __rmnet_map_ingress_handler(), skipping the length
+validation that rmnet_map_deaggregate() performs on the aggregated path.
+The parser then dereferences the MAP header and csum header/trailer based on
+the on-wire pkt_len without checking skb->len, so a short frame is read out
+of bounds:
 
-Suggested-by: Cong Wang <xiyou.wangcong@gmail.com>
-Signed-off-by: Taehee Yoo <ap420073@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 9b26518b6896 ("ipv6: mcast: Fix potential UAF in MLD delayed work")
+  BUG: KASAN: slab-out-of-bounds in rmnet_map_checksum_downlink_packet
+  Read of size 1 at addr ffff88801118ed00 by task exploit/147
+  Call Trace:
+   ...
+   rmnet_map_checksum_downlink_packet (drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c:413)
+   __rmnet_map_ingress_handler (drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c:96)
+   rmnet_rx_handler (drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c:129)
+   __netif_receive_skb_core.constprop.0 (net/core/dev.c:6089)
+   netif_receive_skb (net/core/dev.c:6460)
+   tun_get_user (drivers/net/tun.c:1955)
+   tun_chr_write_iter (drivers/net/tun.c:2001)
+   vfs_write (fs/read_write.c:688)
+   ksys_write (fs/read_write.c:740)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+   ...
+
+Factor that validation out of rmnet_map_deaggregate() into
+rmnet_map_validate_packet_len() and run it on the no-aggregation path too.
+The MAP header is bounds-checked first, since this path can receive a frame
+shorter than the header.
+
+Fixes: ceed73a2cf4a ("drivers: net: ethernet: qualcomm: rmnet: Initial implementation")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Suggested-by: Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260630174110.2003121-1-xmei5@asu.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/if_inet6.h |  4 ++--
- net/ipv6/mcast.c       | 52 ++++++++++++++++++------------------------
- 2 files changed, 24 insertions(+), 32 deletions(-)
+ .../ethernet/qualcomm/rmnet/rmnet_handlers.c  |  5 +-
+ .../net/ethernet/qualcomm/rmnet/rmnet_map.h   |  1 +
+ .../ethernet/qualcomm/rmnet/rmnet_map_data.c  | 72 ++++++++++---------
+ 3 files changed, 45 insertions(+), 33 deletions(-)
 
-diff --git a/include/net/if_inet6.h b/include/net/if_inet6.h
-index 6ae15539d09d9b..f91e62cf126661 100644
---- a/include/net/if_inet6.h
-+++ b/include/net/if_inet6.h
-@@ -82,6 +82,7 @@ struct inet6_ifaddr {
- struct ip6_sf_socklist {
- 	unsigned int		sl_max;
- 	unsigned int		sl_count;
-+	struct rcu_head		rcu;
- 	struct in6_addr		sl_addr[];
- };
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c
+index 9fec50a1969f14..8e5be431acaeb4 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c
+@@ -125,7 +125,10 @@ rmnet_map_ingress_handler(struct sk_buff *skb,
  
-@@ -95,8 +96,7 @@ struct ipv6_mc_socklist {
- 	int			ifindex;
- 	unsigned int		sfmode;		/* MCAST_{INCLUDE,EXCLUDE} */
- 	struct ipv6_mc_socklist __rcu *next;
--	rwlock_t		sflock;
--	struct ip6_sf_socklist	*sflist;
-+	struct ip6_sf_socklist	__rcu *sflist;
- 	struct rcu_head		rcu;
- };
- 
-diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
-index f5e01bfdfc46a9..2a08c1e1ebc5f6 100644
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -178,8 +178,7 @@ static int __ipv6_sock_mc_join(struct sock *sk, int ifindex,
- 
- 	mc_lst->ifindex = dev->ifindex;
- 	mc_lst->sfmode = mode;
--	rwlock_init(&mc_lst->sflock);
--	mc_lst->sflist = NULL;
-+	RCU_INIT_POINTER(mc_lst->sflist, NULL);
- 
- 	/*
- 	 *	now add/increase the group membership on the device
-@@ -335,7 +334,6 @@ int ip6_mc_source(int add, int omode, struct sock *sk,
- 	struct net *net = sock_net(sk);
- 	int i, j, rv;
- 	int leavegroup = 0;
--	int pmclocked = 0;
- 	int err;
- 
- 	source = &((struct sockaddr_in6 *)&pgsr->gsr_source)->sin6_addr;
-@@ -364,7 +362,7 @@ int ip6_mc_source(int add, int omode, struct sock *sk,
- 		goto done;
- 	}
- 	/* if a source filter was set, must be the same mode as before */
--	if (pmc->sflist) {
-+	if (rcu_access_pointer(pmc->sflist)) {
- 		if (pmc->sfmode != omode) {
- 			err = -EINVAL;
- 			goto done;
-@@ -376,10 +374,7 @@ int ip6_mc_source(int add, int omode, struct sock *sk,
- 		pmc->sfmode = omode;
- 	}
- 
--	write_lock(&pmc->sflock);
--	pmclocked = 1;
--
--	psl = pmc->sflist;
-+	psl = rtnl_dereference(pmc->sflist);
- 	if (!add) {
- 		if (!psl)
- 			goto done;	/* err = -EADDRNOTAVAIL */
-@@ -429,9 +424,11 @@ int ip6_mc_source(int add, int omode, struct sock *sk,
- 		if (psl) {
- 			for (i = 0; i < psl->sl_count; i++)
- 				newpsl->sl_addr[i] = psl->sl_addr[i];
--			sock_kfree_s(sk, psl, IP6_SFLSIZE(psl->sl_max));
-+			atomic_sub(IP6_SFLSIZE(psl->sl_max), &sk->sk_omem_alloc);
-+			kfree_rcu(psl, rcu);
- 		}
--		pmc->sflist = psl = newpsl;
-+		psl = newpsl;
-+		rcu_assign_pointer(pmc->sflist, psl);
- 	}
- 	rv = 1;	/* > 0 for insert logic below if sl_count is 0 */
- 	for (i = 0; i < psl->sl_count; i++) {
-@@ -447,8 +444,6 @@ int ip6_mc_source(int add, int omode, struct sock *sk,
- 	/* update the interface list */
- 	ip6_mc_add_src(idev, group, omode, 1, source, 1);
- done:
--	if (pmclocked)
--		write_unlock(&pmc->sflock);
- 	read_unlock_bh(&idev->lock);
- 	rcu_read_unlock();
- 	if (leavegroup)
-@@ -526,17 +521,16 @@ int ip6_mc_msfilter(struct sock *sk, struct group_filter *gsf,
- 		(void) ip6_mc_add_src(idev, group, gsf->gf_fmode, 0, NULL, 0);
- 	}
- 
--	write_lock(&pmc->sflock);
--	psl = pmc->sflist;
-+	psl = rtnl_dereference(pmc->sflist);
- 	if (psl) {
- 		(void) ip6_mc_del_src(idev, group, pmc->sfmode,
- 			psl->sl_count, psl->sl_addr, 0);
--		sock_kfree_s(sk, psl, IP6_SFLSIZE(psl->sl_max));
-+		atomic_sub(IP6_SFLSIZE(psl->sl_max), &sk->sk_omem_alloc);
-+		kfree_rcu(psl, rcu);
- 	} else
- 		(void) ip6_mc_del_src(idev, group, pmc->sfmode, 0, NULL, 0);
--	pmc->sflist = newpsl;
-+	rcu_assign_pointer(pmc->sflist, newpsl);
- 	pmc->sfmode = gsf->gf_fmode;
--	write_unlock(&pmc->sflock);
- 	err = 0;
- done:
- 	read_unlock_bh(&idev->lock);
-@@ -585,16 +579,14 @@ int ip6_mc_msfget(struct sock *sk, struct group_filter *gsf,
- 	if (!pmc)		/* must have a prior join */
- 		goto done;
- 	gsf->gf_fmode = pmc->sfmode;
--	psl = pmc->sflist;
-+	psl = rtnl_dereference(pmc->sflist);
- 	count = psl ? psl->sl_count : 0;
- 	read_unlock_bh(&idev->lock);
- 	rcu_read_unlock();
- 
- 	copycount = count < gsf->gf_numsrc ? count : gsf->gf_numsrc;
- 	gsf->gf_numsrc = count;
--	/* changes to psl require the socket lock, and a write lock
--	 * on pmc->sflock. We have the socket lock so reading here is safe.
--	 */
-+
- 	for (i = 0; i < copycount; i++, p++) {
- 		struct sockaddr_in6 *psin6;
- 		struct sockaddr_storage ss;
-@@ -630,8 +622,7 @@ bool inet6_mc_check(struct sock *sk, const struct in6_addr *mc_addr,
- 		rcu_read_unlock();
- 		return np->mc_all;
- 	}
--	read_lock(&mc->sflock);
--	psl = mc->sflist;
-+	psl = rcu_dereference(mc->sflist);
- 	if (!psl) {
- 		rv = mc->sfmode == MCAST_EXCLUDE;
+ 		consume_skb(skb);
  	} else {
-@@ -646,7 +637,6 @@ bool inet6_mc_check(struct sock *sk, const struct in6_addr *mc_addr,
- 		if (mc->sfmode == MCAST_EXCLUDE && i < psl->sl_count)
- 			rv = false;
+-		__rmnet_map_ingress_handler(skb, port);
++		if (rmnet_map_validate_packet_len(skb, port))
++			__rmnet_map_ingress_handler(skb, port);
++		else
++			kfree_skb(skb);
  	}
--	read_unlock(&mc->sflock);
- 	rcu_read_unlock();
- 
- 	return rv;
-@@ -2419,19 +2409,21 @@ static void igmp6_join_group(struct ifmcaddr6 *ma)
- static int ip6_mc_leave_src(struct sock *sk, struct ipv6_mc_socklist *iml,
- 			    struct inet6_dev *idev)
- {
-+	struct ip6_sf_socklist *psl;
- 	int err;
- 
--	write_lock_bh(&iml->sflock);
--	if (!iml->sflist) {
-+	psl = rtnl_dereference(iml->sflist);
-+
-+	if (!psl) {
- 		/* any-source empty exclude case */
- 		err = ip6_mc_del_src(idev, &iml->addr, iml->sfmode, 0, NULL, 0);
- 	} else {
- 		err = ip6_mc_del_src(idev, &iml->addr, iml->sfmode,
--				iml->sflist->sl_count, iml->sflist->sl_addr, 0);
--		sock_kfree_s(sk, iml->sflist, IP6_SFLSIZE(iml->sflist->sl_max));
--		iml->sflist = NULL;
-+				psl->sl_count, psl->sl_addr, 0);
-+		RCU_INIT_POINTER(iml->sflist, NULL);
-+		atomic_sub(IP6_SFLSIZE(psl->sl_max), &sk->sk_omem_alloc);
-+		kfree_rcu(psl, rcu);
- 	}
--	write_unlock_bh(&iml->sflock);
- 	return err;
  }
  
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map.h b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map.h
+index 7a2718b7e359db..dbbec14dff5cf7 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map.h
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map.h
+@@ -55,5 +55,6 @@ void rmnet_map_tx_aggregate_init(struct rmnet_port *port);
+ void rmnet_map_tx_aggregate_exit(struct rmnet_port *port);
+ void rmnet_map_update_ul_agg_config(struct rmnet_port *port, u32 size,
+ 				    u32 count, u32 time);
++u32 rmnet_map_validate_packet_len(struct sk_buff *skb, struct rmnet_port *port);
+ 
+ #endif /* _RMNET_MAP_H_ */
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
+index d82af25f51cc2e..a655bb8d5c57bc 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
+@@ -293,54 +293,62 @@ struct rmnet_map_header *rmnet_map_add_map_header(struct sk_buff *skb,
+ 	return map_header;
+ }
+ 
+-/* Deaggregates a single packet
+- * A whole new buffer is allocated for each portion of an aggregated frame.
+- * Caller should keep calling deaggregate() on the source skb until 0 is
+- * returned, indicating that there are no more packets to deaggregate. Caller
+- * is responsible for freeing the original skb.
+- */
+-struct sk_buff *rmnet_map_deaggregate(struct sk_buff *skb,
+-				      struct rmnet_port *port)
++u32 rmnet_map_validate_packet_len(struct sk_buff *skb, struct rmnet_port *port)
+ {
+ 	struct rmnet_map_v5_csum_header *next_hdr = NULL;
+ 	struct rmnet_map_header *maph;
+ 	void *data = skb->data;
+-	struct sk_buff *skbn;
+-	u8 nexthdr_type;
+ 	u32 packet_len;
+ 
+-	if (skb->len == 0)
+-		return NULL;
++	if (skb->len < sizeof(*maph))
++		return 0;
+ 
+ 	maph = (struct rmnet_map_header *)skb->data;
++
++	/* Some hardware can send us empty frames. Catch them */
++	if (!maph->pkt_len)
++		return 0;
++
+ 	packet_len = ntohs(maph->pkt_len) + sizeof(*maph);
+ 
+ 	if (port->data_format & RMNET_FLAGS_INGRESS_MAP_CKSUMV4) {
+ 		packet_len += sizeof(struct rmnet_map_dl_csum_trailer);
+-	} else if (port->data_format & RMNET_FLAGS_INGRESS_MAP_CKSUMV5) {
+-		if (!(maph->flags & MAP_CMD_FLAG)) {
+-			packet_len += sizeof(*next_hdr);
+-			if (maph->flags & MAP_NEXT_HEADER_FLAG)
+-				next_hdr = data + sizeof(*maph);
+-			else
+-				/* Mapv5 data pkt without csum hdr is invalid */
+-				return NULL;
+-		}
++	} else if ((port->data_format & RMNET_FLAGS_INGRESS_MAP_CKSUMV5) &&
++		   !(maph->flags & MAP_CMD_FLAG)) {
++		/* Mapv5 data pkt without csum hdr is invalid */
++		if (!(maph->flags & MAP_NEXT_HEADER_FLAG))
++			return 0;
++
++		packet_len += sizeof(*next_hdr);
++		next_hdr = data + sizeof(*maph);
+ 	}
+ 
+-	if (((int)skb->len - (int)packet_len) < 0)
+-		return NULL;
++	if (skb->len < packet_len)
++		return 0;
+ 
+-	/* Some hardware can send us empty frames. Catch them */
+-	if (!maph->pkt_len)
+-		return NULL;
++	if (next_hdr &&
++	    u8_get_bits(next_hdr->header_info, MAPV5_HDRINFO_HDR_TYPE_FMASK) !=
++	    RMNET_MAP_HEADER_TYPE_CSUM_OFFLOAD)
++		return 0;
+ 
+-	if (next_hdr) {
+-		nexthdr_type = u8_get_bits(next_hdr->header_info,
+-					   MAPV5_HDRINFO_HDR_TYPE_FMASK);
+-		if (nexthdr_type != RMNET_MAP_HEADER_TYPE_CSUM_OFFLOAD)
+-			return NULL;
+-	}
++	return packet_len;
++}
++
++/* Deaggregates a single packet
++ * A whole new buffer is allocated for each portion of an aggregated frame.
++ * Caller should keep calling deaggregate() on the source skb until 0 is
++ * returned, indicating that there are no more packets to deaggregate. Caller
++ * is responsible for freeing the original skb.
++ */
++struct sk_buff *rmnet_map_deaggregate(struct sk_buff *skb,
++				      struct rmnet_port *port)
++{
++	struct sk_buff *skbn;
++	u32 packet_len;
++
++	packet_len = rmnet_map_validate_packet_len(skb, port);
++	if (!packet_len)
++		return NULL;
+ 
+ 	skbn = alloc_skb(packet_len + RMNET_MAP_DEAGGR_SPACING, GFP_ATOMIC);
+ 	if (!skbn)
 -- 
 2.53.0
 
