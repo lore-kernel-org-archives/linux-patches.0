@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0B4403AEA;
-	Tue, 21 Jul 2026 17:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28ED403AEA;
+	Tue, 21 Jul 2026 17:19:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654382; cv=none; b=Ew2FM9tRSG/mFHIA93erbSvi4HezNl2ABodmLM/EO8Umc1Vg2AJJ7RNB/jd0RC5ixb2XXuM89ZAbVBFLv8rx+7dDMb1YOtkLgISHKJ39xqQcq6HVtIIU10qY4neJecvuoZukO2McubtJ4+/ReckSkkDzKq8rEJe7tj5bSOb0p8U=
+	t=1784654385; cv=none; b=B9REFN7MC+Wkcir8NFIOMaYIExxCbFBqhyfMCSF+3s1K7XdJ+EkSxUeFxoSNjSu+neYReNxSgidkvGwJQTxxex9PxcRkbx4PI8CBbZv+TrfZHPCV1Dumf+H5yxP4EtTJIbPqQLSyLFd8LvQ0K3hudpSWdTrLT44H3JrCOC4aGsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654382; c=relaxed/simple;
-	bh=uhNH4NelCpbkIgdZwC8SJMrwiVc+cnn992ebej8o59k=;
+	s=arc-20240116; t=1784654385; c=relaxed/simple;
+	bh=Ww9XocpQIrPKFx7glG+wslMkXsf0Z7W1uz0mpFp/ktw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KmPv82D/TPtEymgX0dCDNRDeoCMu9I92f8URNBuy4sNtiWEJVHpQq7d9+MU/0ImtflN48cvI9iUqK7fTJSWjlHuadYjgyp4klZDSO9WX+RisBP4najNH7mJ4twregkYl8GIeBk/Lv9XMz7FfjNdeN2sXNxNU3yirwy6B/NxOsIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0x3eVH/E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bSRCEO8FYPbAYhzn7tBn0jew89U+AOBnwkBQ8xdGw8eSZrJIsPXKHwWMjpFayMIXLdstX9wN8Lb31DYEb8ka8QCuKHcTl3+CALmnsdF7Je1LfDhsOYbcm11Az2q2UVHpzgKCOucFqdwwb0rZAtqMa4COlyPIJM0PvMN0+fOA+VU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/O3eU0O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0x3eVH/E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 992871F000E9;
-	Tue, 21 Jul 2026 17:19:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/O3eU0O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441811F000E9;
+	Tue, 21 Jul 2026 17:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654381;
-	bh=Bb3GMZD9Ys66W/F8DwIR2AouO9Aa2pSnBwOA7qt76Io=;
+	s=korg; t=1784654383;
+	bh=BBh965I9vVGas6/eP5CZH6wI40KzM9j1G63MNRxrxlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0x3eVH/EEpRLcK+v40QwMbDs32B+Q9AyM3A6t8c2zakh8ValY0NGLqJ+dA2ycRT9V
-	 tKwjP8AgCjYHE4XKDFXZMDPF66QjNC3ADxwu/MrxJiAhkJRYThYJmI26rzq0HehJIU
-	 uikSCk0v1ewYLR9rht4Zv5KJq7kwi6+zlVnzp1wE=
+	b=D/O3eU0OHML16eD6HgTzPbRDSQIPtSXEypG3N1ZuNcZsyMZiMZhY6XCG5mWzBJM07
+	 MUujajWiiv+biFe4WkBHjJXFmQuSZbZ307p4CydBRwjNm+8cZrdNlPJqXkd79o2Hy+
+	 yk4iogLIfyOmQwwsAfjJXHjMgNQEZ+wEO3Y/yKXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Marco Crivellari <marco.crivellari@suse.com>,
-	Hyunchul Lee <hyc.lee@gmail.com>,
+	DaeMyung Kang <charsyam@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.1 1683/2077] ntfs: Add WQ_PERCPU to alloc_workqueue users
-Date: Tue, 21 Jul 2026 17:22:36 +0200
-Message-ID: <20260721152632.446052539@linuxfoundation.org>
+Subject: [PATCH 7.1 1684/2077] ntfs: validate attribute values on lookup
+Date: Tue, 21 Jul 2026 17:22:37 +0200
+Message-ID: <20260721152632.470790125@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,54 +44,291 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marco Crivellari <marco.crivellari@suse.com>
+From: DaeMyung Kang <charsyam@gmail.com>
 
-commit 38e8db370843b518ff9bee4af46c6b800684cc78 upstream.
+commit d5803e3345dae9c6470bb61869885236276b9a35 upstream.
 
-This continues the effort to refactor workqueue APIs, which began with
-the introduction of new workqueues and a new alloc_workqueue flag in:
+ntfs_attr_find() and ntfs_external_attr_find() check that generic
+resident attribute values fit in their attribute records and that
+fixed-size resident values are large enough. For variable-length resident
+formats, however, the fixed part is not enough: embedded length fields
+can still point callers past the resident value.
 
-  commit 128ea9f6ccfb ("workqueue: Add system_percpu_wq and system_dfl_wq")
-  commit 930c2ea566af ("workqueue: Add new WQ_PERCPU flag")
+A crafted image can set a small resident $FILE_NAME value_length while
+leaving file_name_length large. Callers then trust file_name_length and
+read past the resident value when converting or comparing the name. This
+was reproduced with a crafted image under KASAN as a slab-out-of-bounds
+read from the kmalloc-1k MFT record copy. The stack included
+ntfs_lookup(), ntfs_iget(), ntfs_read_locked_inode(), ntfs_attr_name_get(),
+ntfs_ucstonls(), and utf16s_to_utf8s().
 
-The refactoring is going to alter the default behavior of
-alloc_workqueue() to be unbound by default.
+Add a shared attribute value validator and use it before a lookup path
+can return an attribute, including the AT_UNUSED enumeration case where
+callers inspect returned attributes directly. The helper validates
+resident value bounds, minimum resident value sizes, variable-length
+$FILE_NAME fields, and non-resident mapping-pairs metadata that was
+previously checked separately in both lookup paths.
 
-With the introduction of the WQ_PERCPU flag (equivalent to !WQ_UNBOUND),
-any alloc_workqueue() caller that doesn’t explicitly specify WQ_UNBOUND
-must now use WQ_PERCPU. For more details see the Link tag below.
+This also preserves the intended resident @val matching semantics in the
+external attribute lookup path. The old duplicated validation block
+overwrote the actual resident value length with the type-specific minimum
+length before comparing @val, so variable-length resident values could
+fail to match even when the bytes were identical. Keep the comparison on
+the actual value length, and make ntfs_attrlist_entry_add() compare
+resident attributes with lowest_vcn zero instead of reading the
+non-resident union member after a successful resident match.
 
-In order to keep alloc_workqueue() behavior identical, explicitly request
-WQ_PERCPU.
+Reject non-resident $FILE_NAME records too: the format requires
+$FILE_NAME to be resident and callers treat returned records as resident.
 
 Cc: stable@vger.kernel.org # v7.1
-Link: https://lore.kernel.org/all/20250221112003.1dSuoGyc@linutronix.de/
-Suggested-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
-Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
+Fixes: 6ceb4cc81ef3 ("ntfs: add bound checking to ntfs_attr_find")
+Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs/super.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs/attrib.c   |  160 ++++++++++++++++++++++++++++++++---------------------
+ fs/ntfs/attrlist.c |   11 ++-
+ 2 files changed, 107 insertions(+), 64 deletions(-)
 
---- a/fs/ntfs/super.c
-+++ b/fs/ntfs/super.c
-@@ -2656,7 +2656,7 @@ MODULE_ALIAS_FS("ntfs");
+--- a/fs/ntfs/attrib.c
++++ b/fs/ntfs/attrib.c
+@@ -595,6 +595,97 @@ static u32 ntfs_resident_attr_min_value_
+ 	}
+ }
  
- static int ntfs_workqueue_init(void)
- {
--	ntfs_wq = alloc_workqueue("ntfs-bg-io", 0, 0);
-+	ntfs_wq = alloc_workqueue("ntfs-bg-io", WQ_PERCPU, 0);
- 	if (!ntfs_wq)
- 		return -ENOMEM;
- 	return 0;
++static bool ntfs_file_name_attr_value_is_valid(const u8 *value, const u32 value_length)
++{
++	const struct file_name_attr *fn;
++	u32 file_name_size;
++
++	fn = (const struct file_name_attr *)value;
++	file_name_size = fn->file_name_length * sizeof(__le16);
++
++	return file_name_size <=
++			value_length - offsetof(struct file_name_attr, file_name);
++}
++
++struct ntfs_resident_attr_value {
++	const u8 *data;
++	u32 len;
++};
++
++static bool ntfs_resident_attr_value_get(const struct attr_record *a,
++					 struct ntfs_resident_attr_value *value)
++{
++	u32 attr_len;
++	u16 value_offset;
++
++	attr_len = le32_to_cpu(a->length);
++	if (attr_len < offsetof(struct attr_record, data.resident.reserved) +
++			sizeof(a->data.resident.reserved))
++		return false;
++
++	value->len = le32_to_cpu(a->data.resident.value_length);
++	value_offset = le16_to_cpu(a->data.resident.value_offset);
++
++	if (value->len > attr_len || value_offset > attr_len - value->len)
++		return false;
++
++	value->data = (const u8 *)a + value_offset;
++	return true;
++}
++
++static bool ntfs_non_resident_attr_value_is_valid(const struct attr_record *a)
++{
++	u32 attr_len;
++	u32 min_len;
++	u16 mp_offset;
++
++	attr_len = le32_to_cpu(a->length);
++	min_len = offsetof(struct attr_record, data.non_resident.initialized_size) +
++		  sizeof(a->data.non_resident.initialized_size);
++	if (attr_len < min_len)
++		return false;
++
++	mp_offset = le16_to_cpu(a->data.non_resident.mapping_pairs_offset);
++	return mp_offset >= min_len && mp_offset <= attr_len;
++}
++
++static bool ntfs_attr_value_is_valid(struct ntfs_volume *vol,
++				     const struct attr_record *a,
++				     const u64 mft_no)
++{
++	struct ntfs_resident_attr_value value;
++	u32 min_len;
++
++	if (a->non_resident) {
++		if (a->type == AT_FILE_NAME)
++			goto corrupt;
++		if (!ntfs_non_resident_attr_value_is_valid(a))
++			goto corrupt;
++		return true;
++	}
++
++	if (!ntfs_resident_attr_value_get(a, &value))
++		goto corrupt;
++
++	min_len = ntfs_resident_attr_min_value_length(a->type);
++	if (min_len && value.len < min_len)
++		goto corrupt;
++
++	switch (a->type) {
++	case AT_FILE_NAME:
++		if (!ntfs_file_name_attr_value_is_valid(value.data, value.len))
++			goto corrupt;
++		break;
++	}
++	return true;
++
++corrupt:
++	ntfs_error(vol->sb,
++		   "Corrupt %#x attribute in MFT record %llu\n",
++		   le32_to_cpu(a->type), mft_no);
++	return false;
++}
++
+ /*
+  * ntfs_attr_find - find (next) attribute in mft record
+  * @type:	attribute type to find
+@@ -705,8 +796,11 @@ static int ntfs_attr_find(const __le32 t
+ 			}
+ 		}
+ 
+-		if (type == AT_UNUSED)
++		if (type == AT_UNUSED) {
++			if (!ntfs_attr_value_is_valid(vol, a, ctx->ntfs_ino->mft_no))
++				break;
+ 			return 0;
++		}
+ 		if (a->type != type)
+ 			continue;
+ 		/*
+@@ -747,37 +841,8 @@ static int ntfs_attr_find(const __le32 t
+ 			}
+ 		}
+ 
+-		 /* Validate attribute's value offset/length */
+-		if (!a->non_resident) {
+-			u32 min_len;
+-			u32 value_length = le32_to_cpu(a->data.resident.value_length);
+-			u16 value_offset = le16_to_cpu(a->data.resident.value_offset);
+-
+-			if (value_length > le32_to_cpu(a->length) ||
+-			    value_offset > le32_to_cpu(a->length) - value_length)
+-				break;
+-
+-			min_len = ntfs_resident_attr_min_value_length(a->type);
+-			if (min_len && value_length < min_len) {
+-				ntfs_error(vol->sb,
+-					   "Too small %#x resident attribute value in MFT record %lld\n",
+-					   le32_to_cpu(a->type), (long long)ctx->ntfs_ino->mft_no);
+-				break;
+-			}
+-		} else {
+-			u32 min_len;
+-			u16 mp_offset;
+-
+-			min_len = offsetof(struct attr_record, data.non_resident.initialized_size) +
+-				  sizeof(a->data.non_resident.initialized_size);
+-			if (le32_to_cpu(a->length) < min_len)
+-				break;
+-
+-			mp_offset = le16_to_cpu(a->data.non_resident.mapping_pairs_offset);
+-			if (mp_offset < min_len ||
+-			    mp_offset > le32_to_cpu(a->length))
+-				break;
+-		}
++		if (!ntfs_attr_value_is_valid(vol, a, ctx->ntfs_ino->mft_no))
++			break;
+ 
+ 		/*
+ 		 * The names match or @name not present and attribute is
+@@ -1299,22 +1364,8 @@ do_next_attr_loop:
+ 
+ 		ctx->attr = a;
+ 
+-		if (a->non_resident) {
+-			u32 min_len;
+-			u16 mp_offset;
+-
+-			min_len = offsetof(struct attr_record,
+-					   data.non_resident.initialized_size) +
+-				  sizeof(a->data.non_resident.initialized_size);
+-
+-			if (le32_to_cpu(a->length) < min_len)
+-				break;
+-
+-			mp_offset =
+-				le16_to_cpu(a->data.non_resident.mapping_pairs_offset);
+-			if (mp_offset < min_len || mp_offset > attr_len)
+-				break;
+-		}
++		if (!ntfs_attr_value_is_valid(vol, a, ctx->ntfs_ino->mft_no))
++			break;
+ 
+ 		/*
+ 		 * If no @val specified or @val specified and it matches, we
+@@ -1326,19 +1377,6 @@ do_next_attr_loop:
+ 			u32 value_length = le32_to_cpu(a->data.resident.value_length);
+ 			u16 value_offset = le16_to_cpu(a->data.resident.value_offset);
+ 
+-			if (attr_len < offsetof(struct attr_record, data.resident.reserved) +
+-					sizeof(a->data.resident.reserved))
+-				break;
+-			if (value_length > attr_len || value_offset > attr_len - value_length)
+-				break;
+-
+-			value_length = ntfs_resident_attr_min_value_length(a->type);
+-			if (value_length && le32_to_cpu(a->data.resident.value_length) <
+-			    value_length) {
+-				pr_err("Too small resident attribute value in MFT record %lld, type %#x\n",
+-				       (long long)ctx->ntfs_ino->mft_no, a->type);
+-				break;
+-			}
+ 			if (value_length == val_len &&
+ 			    !memcmp((u8 *)a + value_offset, val, val_len)) {
+ attr_found:
+--- a/fs/ntfs/attrlist.c
++++ b/fs/ntfs/attrlist.c
+@@ -118,6 +118,7 @@ int ntfs_attrlist_entry_add(struct ntfs_
+ 	int entry_len, entry_offset, err;
+ 	struct mft_record *ni_mrec;
+ 	u8 *old_al;
++	__le64 lowest_vcn;
+ 
+ 	if (!ni || !attr) {
+ 		ntfs_debug("Invalid arguments.\n");
+@@ -158,17 +159,21 @@ int ntfs_attrlist_entry_add(struct ntfs_
+ 		ntfs_error(ni->vol->sb, "Failed to get search context");
+ 		goto err_out;
+ 	}
++	if (attr->non_resident)
++		lowest_vcn = attr->data.non_resident.lowest_vcn;
++	else
++		lowest_vcn = 0;
+ 
+ 	err = ntfs_attr_lookup(attr->type, (attr->name_length) ? (__le16 *)
+ 			((u8 *)attr + le16_to_cpu(attr->name_offset)) :
+ 			AT_UNNAMED, attr->name_length, CASE_SENSITIVE,
+-			(attr->non_resident) ? le64_to_cpu(attr->data.non_resident.lowest_vcn) :
+-			0, (attr->non_resident) ? NULL : ((u8 *)attr +
++			le64_to_cpu(lowest_vcn),
++			(attr->non_resident) ? NULL : ((u8 *)attr +
+ 			le16_to_cpu(attr->data.resident.value_offset)), (attr->non_resident) ?
+ 			0 : le32_to_cpu(attr->data.resident.value_length), ctx);
+ 	if (!err) {
+ 		/* Found some extent, check it to be before new extent. */
+-		if (ctx->al_entry->lowest_vcn == attr->data.non_resident.lowest_vcn) {
++		if (ctx->al_entry->lowest_vcn == lowest_vcn) {
+ 			err = -EEXIST;
+ 			ntfs_debug("Such attribute already present in the attribute list.\n");
+ 			ntfs_attr_put_search_ctx(ctx);
 
 
