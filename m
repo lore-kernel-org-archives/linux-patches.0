@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33AF73FE356;
-	Tue, 21 Jul 2026 20:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27EFD44211F;
+	Tue, 21 Jul 2026 20:59:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667571; cv=none; b=hVb5OqeuZcRoLa6gaXwBRMH/TsWqil5WmQmG93fm+qH5qmFanrdRqdLObkzknxS9jHd9ZZPT86SRrY13XEPom5+/MFGI05tNeVBXQdo0QphXLwYkWUwoaBMztM6M8IQazeof7c9IYWq4oIW+jKbaOPlieALbrErnBiQ9l93S6X8=
+	t=1784667574; cv=none; b=qEZ5uhHR4KTQPdbRpme8TzUUIbUMh6Q6IgSDa2EetsMzpW7BGyysL4bTpp7mGg+tMHkY7p55VegJZS2lS1AdjHrquDkgMpn3YgLe7Q5FyuE8BpUXbWan3C2QzcwYPeKojZahGpquLi1JXC5OsPUwN/77WdszlLQLsKTKgg3FxcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667571; c=relaxed/simple;
-	bh=ls39EXYaeJutC2NHj8Ewu9N1M8qQnwxV9pz1B4QIzhI=;
+	s=arc-20240116; t=1784667574; c=relaxed/simple;
+	bh=0/AHFi6eDF2BKKybeDFJf6in8kgFg7XULdLsIZI8DSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AsYYvUgPdsso1W1nktEaGYtFNkxgGDG0FYRE2/4kIzYiHkhWCpHnNtIh/D0Hq8tVf5zjb3kyd9liR0sCVjkaGUpV7XTqxzanOQzEH9FDSwHs4UFeCEH8b++zVUKEXt1+KBFmGtfb0TGrdLAuy+xq5fPfI1Fz/fzVCFRqzlob3cI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAzvF+Fe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LD4UgDjhQzm6ZnkKW3vbl0zXi/l20DYom2FOpxllKOteCNyInHXiEqXtNMTfS3iPYVO/GnughKa4DDZT182ya4Gib00r26Zn6PmFs79WKn9yryyJuliZcvSdDCAyt0YmuEI7EIsRwhZ0UtHFpPbhHg+dU54eoDE5nb1tktPvYtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kApnElT7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAzvF+Fe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 580121F000E9;
-	Tue, 21 Jul 2026 20:59:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kApnElT7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 117A71F000E9;
+	Tue, 21 Jul 2026 20:59:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667569;
-	bh=6hZuylBTUCXrqw8m1hnqxVNpbDQlNLoQz4JewHw04E0=;
+	s=korg; t=1784667572;
+	bh=wk6bXWMCES1yr2xGFQof9Co9so/zEbS7aQWB7aDqT70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jAzvF+FeTAEfn/x9fdUWPMLCSEY1OpAYJC+uthgHeUFzAYGI15rCmFj1LlAqcRXb0
-	 NNwNdEo6Oc95x2himBkUyuaw7bG2vJlztkErvnZpQCueaDN5WYFgvBS9UlRWNqhwgj
-	 L/8IPANz7FWIdjsphz378+N5vdl1+Vra9SCnkBeA=
+	b=kApnElT719Amzfjzy4C/D8LhU9mcA6qqMnBgOGGkafSV9upEYlHJoOO1epC8vSuK1
+	 hQTuoORGhB+T2PjetROkmWH7q0IZ953TdzpUDoaU/6f7KfaZ+mm8IHHcBKJ8S8G8eC
+	 pnnHk2NZOFa0tn1DY7wVHRLHHrLt3pC2vi/PqyJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	HyeongJun An <sammiee5311@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.6 1104/1266] hwmon: (occ) unregister sysfs devices outside occ lock
-Date: Tue, 21 Jul 2026 17:25:41 +0200
-Message-ID: <20260721152506.508026333@linuxfoundation.org>
+Subject: [PATCH 6.6 1113/1266] hwmon: (asus_atk0110) Check package count before accessing element
+Date: Tue, 21 Jul 2026 17:25:50 +0200
+Message-ID: <20260721152506.710538897@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,163 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit e31408734332b8cc611342cdaaab6ba492180156 upstream.
+commit e2735b39f044bad7bf2017aef248935525bc0b97 upstream.
 
-occ_active(false) and occ_shutdown() unregister sysfs-backed devices while
-occ->lock is held.  hwmon_device_unregister() and sysfs_remove_group() can
-wait for active sysfs callbacks to drain, and those callbacks can enter the
-OCC update path and try to take occ->lock again.  That gives the unregister
-paths the lock ordering occ->lock -> sysfs callback drain, while a callback
-has the opposite edge sysfs callback -> occ->lock.
+atk_ec_present() walks the management group package returned by the GGRP
+ACPI method and, for each sub-package, reads its first element:
 
-This issue was found by our static analysis tool and then manually
-reviewed against the current tree.
+	id = &obj->package.elements[0];
+	if (id->type != ACPI_TYPE_INTEGER)
 
-The grounded PoC kept the real unregister and callback carrier:
+without checking that the sub-package is non-empty.  ACPICA allocates the
+element array with exactly package.count entries, so for a sub-package
+with a zero count this reads past the allocation.
 
-  occ_shutdown()
-  hwmon_device_unregister()
-  occ_show_temp_1()
-  occ_update_response()
+The sibling function atk_debugfs_ggrp_open() performs the same access but
+skips empty packages with a package.count check first.  Add the same
+check to atk_ec_present() so a malformed firmware package cannot trigger
+an out-of-bounds read.
 
-Lockdep reported the circular dependency with occ_shutdown() already
-holding the OCC mutex and hwmon_device_unregister() waiting on the sysfs
-side:
-
-  WARNING: possible circular locking dependency detected
-  ... (sysfs_lock) ... at: hwmon_device_unregister+0x12/0x30 [vuln_msv]
-  ... (&test_occ.lock) ... at: occ_shutdown.constprop.0+0xe/0x40 [vuln_msv]
-  occ_update_response.isra.0+0xb/0x20 [vuln_msv]
-  occ_show_temp_1.constprop.0.isra.0+0x23/0x40 [vuln_msv]
-  *** DEADLOCK ***
-
-Serialize hwmon registration and removal with a separate hwmon_lock.
-Under that lock, detach occ->hwmon and update occ->active while occ->lock
-is held so concurrent OCC state changes still see a stable state, then
-drop occ->lock before calling hwmon_device_unregister().  Remove the
-driver sysfs group before taking occ->lock in occ_shutdown(), so draining
-the driver attributes cannot wait while the OCC mutex is held.  Also make
-OCC update callbacks return -ENODEV after deactivation, so callbacks that
-already passed sysfs active protection do not poll the hardware after
-teardown has detached the hwmon device.
-
-Fixes: 849b0156d996 ("hwmon: (occ) Delay hwmon registration until user request")
-Fixes: ac6888ac5a11 ("hwmon: (occ) Lock mutex in shutdown to prevent race with occ_active")
+Fixes: 9e6eba610c2e ("hwmon: (asus_atk0110) Enable the EC")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://lore.kernel.org/r/20260619015938.494464-1-runyu.xiao@seu.edu.cn
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://lore.kernel.org/r/20260619122746.721981-1-sammiee5311@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/occ/common.c |   34 ++++++++++++++++++++++++++++------
- drivers/hwmon/occ/common.h |    1 +
- 2 files changed, 29 insertions(+), 6 deletions(-)
+ drivers/hwmon/asus_atk0110.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/hwmon/occ/common.c
-+++ b/drivers/hwmon/occ/common.c
-@@ -214,6 +214,11 @@ int occ_update_response(struct occ *occ)
- 	if (rc)
- 		return rc;
+--- a/drivers/hwmon/asus_atk0110.c
++++ b/drivers/hwmon/asus_atk0110.c
+@@ -1037,6 +1037,9 @@ static int atk_ec_present(struct atk_dat
+ 		if (obj->type != ACPI_TYPE_PACKAGE)
+ 			continue;
  
-+	if (!occ->active) {
-+		rc = -ENODEV;
-+		goto unlock;
-+	}
++		if (!obj->package.count)
++			continue;
 +
- 	/* limit the maximum rate of polling the OCC */
- 	if (time_after(jiffies, occ->next_update)) {
- 		rc = occ_poll(occ);
-@@ -222,6 +227,7 @@ int occ_update_response(struct occ *occ)
- 		rc = occ->last_error;
- 	}
- 
-+unlock:
- 	mutex_unlock(&occ->lock);
- 	return rc;
- }
-@@ -1105,11 +1111,16 @@ static void occ_parse_poll_response(stru
- 
- int occ_active(struct occ *occ, bool active)
- {
--	int rc = mutex_lock_interruptible(&occ->lock);
-+	struct device *hwmon = NULL;
-+	int rc = mutex_lock_interruptible(&occ->hwmon_lock);
- 
- 	if (rc)
- 		return rc;
- 
-+	rc = mutex_lock_interruptible(&occ->lock);
-+	if (rc)
-+		goto unlock_hwmon;
-+
- 	if (active) {
- 		if (occ->active) {
- 			rc = -EALREADY;
-@@ -1154,14 +1165,17 @@ int occ_active(struct occ *occ, bool act
- 			goto unlock;
- 		}
- 
--		if (occ->hwmon)
--			hwmon_device_unregister(occ->hwmon);
-+		hwmon = occ->hwmon;
- 		occ->active = false;
- 		occ->hwmon = NULL;
- 	}
- 
- unlock:
- 	mutex_unlock(&occ->lock);
-+	if (hwmon)
-+		hwmon_device_unregister(hwmon);
-+unlock_hwmon:
-+	mutex_unlock(&occ->hwmon_lock);
- 	return rc;
- }
- 
-@@ -1170,6 +1184,7 @@ int occ_setup(struct occ *occ)
- 	int rc;
- 
- 	mutex_init(&occ->lock);
-+	mutex_init(&occ->hwmon_lock);
- 	occ->groups[0] = &occ->group;
- 
- 	rc = occ_setup_sysfs(occ);
-@@ -1190,15 +1205,22 @@ EXPORT_SYMBOL_GPL(occ_setup);
- 
- void occ_shutdown(struct occ *occ)
- {
--	mutex_lock(&occ->lock);
-+	struct device *hwmon;
- 
- 	occ_shutdown_sysfs(occ);
- 
--	if (occ->hwmon)
--		hwmon_device_unregister(occ->hwmon);
-+	mutex_lock(&occ->hwmon_lock);
-+	mutex_lock(&occ->lock);
-+
-+	hwmon = occ->hwmon;
-+	occ->active = false;
- 	occ->hwmon = NULL;
- 
- 	mutex_unlock(&occ->lock);
-+
-+	if (hwmon)
-+		hwmon_device_unregister(hwmon);
-+	mutex_unlock(&occ->hwmon_lock);
- }
- EXPORT_SYMBOL_GPL(occ_shutdown);
- 
---- a/drivers/hwmon/occ/common.h
-+++ b/drivers/hwmon/occ/common.h
-@@ -101,6 +101,7 @@ struct occ {
- 
- 	unsigned long next_update;
- 	struct mutex lock;		/* lock OCC access */
-+	struct mutex hwmon_lock;		/* serialize hwmon registration/removal */
- 
- 	struct device *hwmon;
- 	struct occ_attribute *attrs;
+ 		id = &obj->package.elements[0];
+ 		if (id->type != ACPI_TYPE_INTEGER)
+ 			continue;
 
 
