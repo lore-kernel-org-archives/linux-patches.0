@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4AF4582D0;
-	Tue, 21 Jul 2026 22:15:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B4C449B2A;
+	Tue, 21 Jul 2026 22:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672122; cv=none; b=SswhIIjgG0w43FXY9V8GH8CKCbCO4nPHUb0fgbwTdrSuq3s/IxpAKErx8/CBzQdjgB88JQdd1yEnvP8f8atVJUG/jCcLqV3E4ZlQxiIVq7ZnHNyk7wGF3/cWWUm/XWZGrr3YxD+lu6apEuvYM/GYGEDBQfcqm+dq9IyTlGizPI0=
+	t=1784672125; cv=none; b=iSqAIuS34nK6cW5XAEZA1rAjLNf4M52u4hq2Lagub5RvEr5fZ2BQXXMgo1zssnzVwpgMdbe7SDy03VVaVzy6MwF5dE+vnNKHCuecakG29njUYB9m8MOfUFVNggg3kSh12mJ+hObZKCJ0AvnZIUjrNJmI3CfdqFIAZYKOg68X074=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672122; c=relaxed/simple;
-	bh=kWjNJroGrEc11uYgcCtPqh+rIjRAWXFR0+I91itYHhs=;
+	s=arc-20240116; t=1784672125; c=relaxed/simple;
+	bh=nQXWj4FVe2yO9Aqf7u+27Lv6/nVLUBuKEi1jwzY7Yv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=txxurdru8v5uodOuf8wQVKuIj1DfyonwhKcWWh6L/8cSUO8RdG2/ngSx+rO5edHemW61jgy8jSwZ0OlP/6jPjdAso9wg6+X/IK6RZ8Kz7OWl805Ey7aDXUplYtsBNfi4utvGEhl5IhKKK7El1OXdxjSpq4STq5k3RgKBTqCQlS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=butIQ4Oy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ShQJCLC5eQDS3k5gfEsbkAwSBKxMOOOQKlv5D3fAjlG1SyDnBCZIATZCBhqwXgag0PPCkh5rEj8PJZxgVlSYCU+4jFg2V5pRBpYYnoM89x5i69AiBNGKM+sUZntjpPkvnciIcQ+MN99Hr2uJv8EpzFchUymYF/qv/MxTrc95ENU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D05A4sgB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="butIQ4Oy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57A61F000E9;
-	Tue, 21 Jul 2026 22:15:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D05A4sgB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A61E1F000E9;
+	Tue, 21 Jul 2026 22:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672121;
-	bh=oOtxJhHIsF4DsDNKk/3I8gmzgw1YzZS+dzu7veWDBBk=;
+	s=korg; t=1784672123;
+	bh=QDSXGh2s5UvtOQ+i2lBJLJTwaBAs8NGzFJ10ts64D3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=butIQ4OyiXiCin7r+pKLN0i//TE7rcSrybbjVw1z6fV4BbrtJDyNAxPYZ8zOl331I
-	 8E9+GuZpkmjvYebfJ9dNu12u8qkOo/lQRJwgpRTkKUvgJsQVZDTqfgj0p0KYnEsQZz
-	 5r5Wdq6SHj+SDXK3EyQCjtPTRyHnVikEuhD6Rbf0=
+	b=D05A4sgBambkz96r2g5/67qeq3gnnWSdc7PXYwUb/OWyds4xsOL9HdFjPp99ikxOr
+	 1Yjiea8TvtgJ15IPxHSxGEzissz+cUhifYg4d3/E+G05CPnJ0SUlWMNQRd2yTphyWj
+	 Ia4/vgZzXXYtZllQ2hHVB4NODaaKEIOZqX0PA5Ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vz@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Samuel Moelius <sam.moelius@trailofbits.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 506/843] gpio: timberdale: Return -ENOMEM on dynamic memory allocation in probe
-Date: Tue, 21 Jul 2026 17:22:21 +0200
-Message-ID: <20260721152417.414007207@linuxfoundation.org>
+Subject: [PATCH 5.15 507/843] net/sched: hhf: clear heavy-hitter state on reset
+Date: Tue, 21 Jul 2026 17:22:22 +0200
+Message-ID: <20260721152417.435773176@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,35 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vz@kernel.org>
+From: Samuel Moelius <sam.moelius@trailofbits.com>
 
-[ Upstream commit 8d7e62d5e9b2d2ff146f472a9215d7e29c7e2307 ]
+[ Upstream commit a225f8c20712713406ae47024b8df42deacddd4a ]
 
-Out of memory situation on driver's probe is expected to be reported to
-the driver's framework with a proper -ENOMEM error code.
+HHF reset does not clear the classifier state used to identify heavy
+hitters.  Packets after reset can therefore be scheduled using flow
+history from before the reset.
 
-Fixes: 35570ac6039e ("gpio: add GPIO driver for the Timberdale FPGA")
-Signed-off-by: Vladimir Zapolskiy <vz@kernel.org>
-Link: https://patch.msgid.link/20260630145148.4081967-1-vz@kernel.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+The reset operation should return the qdisc to an empty state.
+
+Clear the heavy-hitter classifier tables when HHF is reset.
+
+Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
+Assisted-by: Codex:gpt-5.5-cyber-preview
+Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-timberdale.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_hhf.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/drivers/gpio/gpio-timberdale.c b/drivers/gpio/gpio-timberdale.c
-index 92c1f2baa4bff2..3a9cb305c13777 100644
---- a/drivers/gpio/gpio-timberdale.c
-+++ b/drivers/gpio/gpio-timberdale.c
-@@ -228,7 +228,7 @@ static int timbgpio_probe(struct platform_device *pdev)
+diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
+index 73cabb4451ce7a..1fb9294a27f252 100644
+--- a/net/sched/sch_hhf.c
++++ b/net/sched/sch_hhf.c
+@@ -461,12 +461,39 @@ static struct sk_buff *hhf_dequeue(struct Qdisc *sch)
+ 	return skb;
+ }
  
- 	tgpio = devm_kzalloc(dev, sizeof(*tgpio), GFP_KERNEL);
- 	if (!tgpio)
--		return -EINVAL;
-+		return -ENOMEM;
++static void hhf_reset_classifier(struct hhf_sched_data *q)
++{
++	int i;
++
++	if (!q->hh_flows)
++		return;
++
++	for (i = 0; i < HH_FLOWS_CNT; i++) {
++		struct hh_flow_state *flow, *next;
++		struct list_head *head = &q->hh_flows[i];
++
++		list_for_each_entry_safe(flow, next, head, flowchain) {
++			list_del(&flow->flowchain);
++			kfree(flow);
++		}
++	}
++	WRITE_ONCE(q->hh_flows_current_cnt, 0);
++
++	for (i = 0; i < HHF_ARRAYS_CNT; i++) {
++		if (q->hhf_valid_bits[i])
++			bitmap_zero(q->hhf_valid_bits[i], HHF_ARRAYS_LEN);
++	}
++	q->hhf_arrays_reset_timestamp = hhf_time_stamp();
++}
++
+ static void hhf_reset(struct Qdisc *sch)
+ {
++	struct hhf_sched_data *q = qdisc_priv(sch);
+ 	struct sk_buff *skb;
  
- 	tgpio->irq_base = pdata->irq_base;
+ 	while ((skb = hhf_dequeue(sch)) != NULL)
+ 		rtnl_kfree_skbs(skb, skb);
++	hhf_reset_classifier(q);
+ }
  
+ static void hhf_destroy(struct Qdisc *sch)
 -- 
 2.53.0
 
