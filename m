@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC0046A5E7;
-	Tue, 21 Jul 2026 15:30:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17EE46A5F2;
+	Tue, 21 Jul 2026 15:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784647835; cv=none; b=pO3t9NTVJ/yftDqnKQTM+2kPeq0t4eCabFuIOmJFaCNZHCP4gqhz3WuKGc24IN3fANPzYg07/LTwDv0iOjap9AVwE8C4N/dMRfpIWBV+6bczni7SGDAI6EPdsQWJd94+i4Fh3uSJ4KyykWLxTfB8u5Km7WcIXTfX9/rNCeYkJs4=
+	t=1784647835; cv=none; b=DV3djcSdo2tG2OTAR3bGYVD5a2ErO4LQ/X8h+n4sKQE/oNmTcGk67tD0fmTjT2AYn94rV89YeEyiYWH8GnT/QzDTvqHJqVClDMaqkgm3gl9ft2cGB2jhsLYW9tfRcJuXhD8HqfhDh/i4E9kaIWQPHiAELJzUK7mBIadFa27QP/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784647835; c=relaxed/simple;
-	bh=z6Iq1IdDMbGWVaT05SGaBNicAmK2aNKnEIgrxDzBT/E=;
+	bh=ccXncTKm7+Og8WMKm1s56jYqaT7vUFT+K/YaJeHx58g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rDotaKc8QKIJswhRbHVqyVXh6AFMyENIWU3tAq+L+a+/ImXVF5J4Bzs5tKcVHpzhP3wQj62xUkQaVXBzEU42gQaBkBBJ17Z87/Pnr/glRNlc25OpPJF0eI6bMwOQ58l4lKrWPYOytofEDAg+Zm2/KKeJJunbXJxuCqW3ohyIpN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLMp1diQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J+Tc2yTE27JqaUK+MMYsWs1P+RJPuFhDc56a6iDHYnJVBKAOtNBrs+cs2ZM4qTJo9IH4Ajg16GYS+aSby9V2U382934hvEMIGmJiwVpZ6YHKUu4+uOV6XqOkY2M5DZ1Lp+GsvZHb1E01Hrmn4sPhInlorPoBVQc5y3wuUfOMuhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0iJ99ykI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLMp1diQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B911F000E9;
-	Tue, 21 Jul 2026 15:30:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0iJ99ykI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8EC1F00A3A;
+	Tue, 21 Jul 2026 15:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784647831;
-	bh=BlizC1lA+PtcqwMYiIt0aEmSvppW/q4G/yox1ZK/Tk0=;
+	s=korg; t=1784647833;
+	bh=0TmsEVQFqMP+hh05WmXuupuZGOQuyOe3xeZuGbPxu7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TLMp1diQVxVfMo1oFEpJWeBhco5ni6ecWmC8lsWDpwwgUMM62l1cgZo2hbnMWiRKv
-	 6M7PdEUHDPDHz0LD8yTqdiEYxZiICENbOmZM/b2zzplvYZJzeXWHvUadzQ1yKs6uwu
-	 h8tkK7gzljVUGde6E+il+dAWhsCusC6HCqGJUz1U=
+	b=0iJ99ykIt4PwoNrJGa6IgyxeWatRUcLBaIoP5c6lEvWOKfYDLYd2gYVVt1HLkU9PG
+	 ik4sd0FpBxaAoNcMmbuHgja9ewdtd/M36a6NCHq+Pp2Xr7+UgXbQOzhBZs1jF9+4pA
+	 LEvnjnMlGmPQkHs2fWSyAc9P0UmYt9D1PmmdV7G0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,12 +32,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 003/843] nfsd: release layout stid on setlease failure
-Date: Tue, 21 Jul 2026 17:13:58 +0200
-Message-ID: <20260721152406.029463783@linuxfoundation.org>
+Subject: [PATCH 6.1 0003/1067] nfsd: release layout stid on setlease failure
+Date: Tue, 21 Jul 2026 17:10:04 +0200
+Message-ID: <20260721152424.607508506@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
-References: <20260721152405.946368001@linuxfoundation.org>
+In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
+References: <20260721152424.521567757@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,7 +49,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -98,7 +98,7 @@ Assisted-by: kres (claude-opus-4-7)
 Signed-off-by: Chris Mason <clm@meta.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ cel: no ls_fence_work in 5.15.y; dropped INIT_DELAYED_WORK hunk ]
+[ cel: no ls_fence_work in 6.1.y; dropped INIT_DELAYED_WORK hunk ]
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -106,10 +106,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/fs/nfsd/nfs4layouts.c b/fs/nfsd/nfs4layouts.c
-index d0fbbd34db689c..bcf16dd07d4883 100644
+index 308214378fd352..84bb200e24adea 100644
 --- a/fs/nfsd/nfs4layouts.c
 +++ b/fs/nfsd/nfs4layouts.c
-@@ -241,9 +241,7 @@ nfsd4_alloc_layout_stateid(struct nfsd4_compound_state *cstate,
+@@ -242,9 +242,7 @@ nfsd4_alloc_layout_stateid(struct nfsd4_compound_state *cstate,
  	BUG_ON(!ls->ls_file);
  
  	if (nfsd4_layout_setlease(ls)) {
