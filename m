@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4909144AB9F;
-	Tue, 21 Jul 2026 22:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B958430CE3;
+	Tue, 21 Jul 2026 22:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674536; cv=none; b=ATvf3yO45JmT3Mk6tGe+L8NZ2wQ+waqNSP1qUDYaX3g5Rlh1MYdyBj6R1zrTBiMbDGZwLMdieasUlaR4OFlhY7+vc82A2HalcdozLXCKeT8iMty0eFhKCjKXB14ZoukDyA8T9x4EdfhwVBH5SoziKJOTyTC1r7A1ORxSzqux4FI=
+	t=1784674539; cv=none; b=epOH9jDUy62aI3GuOS06j6PQqc/31fkm596Mr4gV7WPsplbeMu+FwNRTw3Gu5dq0qJht3RU9nY+ErYva7XysX3yG8UwfprGWboQEqPHpq7WqNWHvVet3fBIJbcgmA69MFmg/WgLYPDdjGzvvwZvsTAGJ85UsaktsjEtrm5FT7jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674536; c=relaxed/simple;
-	bh=ipIcprCd36z6h9PaifxtQ0LrAqet8SAdiwfiNLMmWeg=;
+	s=arc-20240116; t=1784674539; c=relaxed/simple;
+	bh=7n358Bz7G9uJr43ZE9iVoJ6vGveD1x10EFC1/kTeeyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IAG0HSdw0OauWvj5NLGcdNhkaG7BPBuzrMSSM7QFUmMfLr4b608Q+66kbdWnJ93+I2DoGnTGQaTOiXj+wCc9cbwA3d6dojSg1CWPvf9PN138l34knSged5pkkZ7X4xENLkqKGshNDgVa/cvA1VPd8eUur24HxmRMzhDbJICNyh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVY3nCiG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FaW1ty19V2ReAwz2Z1Qcg1jFv4wHPjROwxKyA9M6t2U9Tgxq6OSmaE53YcPcdbneubaPqM30Jueek+EJDApWQnR3JO9LkQEM9b9Yo9DGYMTLTdQFrDF3utpMrq8nabcccUE9wHOj49JK5ZvsMG00RiNie275foCDFPFLibrcuiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kdb9VgJP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVY3nCiG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7751F000E9;
-	Tue, 21 Jul 2026 22:55:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kdb9VgJP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD2C1F000E9;
+	Tue, 21 Jul 2026 22:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674535;
-	bh=7gQhiwFCjxGLdtb8mYnNl1cpDP7cIWOz12pfiiCOYkQ=;
+	s=korg; t=1784674537;
+	bh=lWyIjpJaZItVzgNrFx5IejxMlf7SyJkRsqOaH0PkIAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pVY3nCiGWmXz2mB3kTh/n+dhm+5Y+kDivETyDHGX2kTI13YNanFxmYJtfRgbdwUjj
-	 Nc9x2P5VTQcnjCCI/aQj1+6t6kArp36buUmQq7PvVwUzRpcuR68+O5tF41vTIZP2yp
-	 jHy1j5bm1rpbenuMWOQD1T0WdzR5Uy0vfK/pjADk=
+	b=Kdb9VgJPQqRQQUhFBoN0YtX1UWRx7uyP+lVwEO0Mcv1drg9q7YAq11uRxxfXCZ1ke
+	 K00BrX58wFhHdATCIUmoJTFQJTVybe253uujqEiVTjWfjmvVnuZdpmMUqdz//fuDuk
+	 Bipj5CtAYYMJq3WNshewbAvC1KRc06bfDTSqnUOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Srivastava <yashsri421@gmail.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 5.10 577/699] crypto: amcc - fix incorrect kernel-doc comment syntax in files
-Date: Tue, 21 Jul 2026 17:25:36 +0200
-Message-ID: <20260721152408.726773508@linuxfoundation.org>
+Subject: [PATCH 5.10 578/699] crypto: crypto4xx - Remove ahash-related code
+Date: Tue, 21 Jul 2026 17:25:37 +0200
+Message-ID: <20260721152408.750135791@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,321 +50,257 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aditya Srivastava <yashsri421@gmail.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit 73f04d3d800f3c8058bb00447e3e1c4cdc85a2b0 upstream.
+commit 97855e7f1ccf4917f305baab199edb9f2595ff5b upstream.
 
-The opening comment mark '/**' is used for highlighting the beginning of
-kernel-doc comments.
-There are certain files in drivers/crypto/amcc, which follow this syntax,
-but the content inside does not comply with kernel-doc.
-Such lines were probably not meant for kernel-doc parsing, but are parsed
-due to the presence of kernel-doc like comment syntax(i.e, '/**'), which
-causes unexpected warnings from kernel-doc.
+The hash implementation in crypto4xx has been disabled since 2009.
+As nobody has tried to fix this remove all the dead code.
 
-E.g., presence of kernel-doc like comment in
-drivers/crypto/amcc/crypto4xx_alg.c at header, and some other lines,
-causes these warnings by kernel-doc:
-
-"warning: expecting prototype for AMCC SoC PPC4xx Crypto Driver(). Prototype was for set_dynamic_sa_command_0() instead"
-"warning: Function parameter or member 'dir' not described in 'set_dynamic_sa_command_0'"
-etc..
-
-Provide a simple fix by replacing such occurrences with general comment
-format, i.e. '/*', to prevent kernel-doc from parsing it.
-
-Signed-off-by: Aditya Srivastava <yashsri421@gmail.com>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/amcc/crypto4xx_alg.c     |   12 ++++++------
- drivers/crypto/amcc/crypto4xx_core.c    |   18 +++++++++---------
- drivers/crypto/amcc/crypto4xx_core.h    |    4 ++--
- drivers/crypto/amcc/crypto4xx_reg_def.h |    8 ++++----
- drivers/crypto/amcc/crypto4xx_sa.h      |   18 +++++++++---------
- drivers/crypto/amcc/crypto4xx_trng.h    |    2 +-
- 6 files changed, 31 insertions(+), 31 deletions(-)
+ drivers/crypto/amcc/crypto4xx_alg.c  |  106 -----------------------------------
+ drivers/crypto/amcc/crypto4xx_core.c |   43 --------------
+ drivers/crypto/amcc/crypto4xx_core.h |    7 --
+ 3 files changed, 1 insertion(+), 155 deletions(-)
 
 --- a/drivers/crypto/amcc/crypto4xx_alg.c
 +++ b/drivers/crypto/amcc/crypto4xx_alg.c
-@@ -1,5 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
--/**
-+/*
-  * AMCC SoC PPC4xx Crypto Driver
-  *
-  * Copyright (c) 2008 Applied Micro Circuits Corporation.
-@@ -115,7 +115,7 @@ int crypto4xx_decrypt_iv_block(struct sk
- 	return crypto4xx_crypt(req, AES_IV_SIZE, true, true);
- }
- 
--/**
-+/*
-  * AES Functions
-  */
- static int crypto4xx_setkey_aes(struct crypto_skcipher *cipher,
-@@ -374,7 +374,7 @@ static int crypto4xx_aead_setup_fallback
- 	return crypto_aead_setkey(ctx->sw_cipher.aead, key, keylen);
- }
- 
--/**
-+/*
-  * AES-CCM Functions
-  */
- 
-@@ -489,7 +489,7 @@ int crypto4xx_setauthsize_aead(struct cr
- 	return crypto_aead_setauthsize(ctx->sw_cipher.aead, authsize);
- }
- 
--/**
-+/*
-  * AES-GCM Functions
-  */
- 
-@@ -617,7 +617,7 @@ int crypto4xx_decrypt_aes_gcm(struct aea
+@@ -12,9 +12,6 @@
+ #include <linux/interrupt.h>
+ #include <linux/spinlock_types.h>
+ #include <linux/scatterlist.h>
+-#include <linux/crypto.h>
+-#include <linux/hash.h>
+-#include <crypto/internal/hash.h>
+ #include <linux/dma-mapping.h>
+ #include <crypto/algapi.h>
+ #include <crypto/aead.h>
+@@ -616,106 +613,3 @@ int crypto4xx_decrypt_aes_gcm(struct aea
+ {
  	return crypto4xx_crypt_aes_gcm(req, true);
  }
- 
--/**
-+/*
-  * HASH SHA1 Functions
-  */
- static int crypto4xx_hash_alg_init(struct crypto_tfm *tfm,
-@@ -711,7 +711,7 @@ int crypto4xx_hash_digest(struct ahash_r
- 				  ctx->sa_len, 0, NULL);
- }
- 
--/**
-+/*
-  * SHA1 Algorithm
-  */
- int crypto4xx_sha1_alg_init(struct crypto_tfm *tfm)
+-
+-/*
+- * HASH SHA1 Functions
+- */
+-static int crypto4xx_hash_alg_init(struct crypto_tfm *tfm,
+-				   unsigned int sa_len,
+-				   unsigned char ha,
+-				   unsigned char hm)
+-{
+-	struct crypto_alg *alg = tfm->__crt_alg;
+-	struct crypto4xx_alg *my_alg;
+-	struct crypto4xx_ctx *ctx = crypto_tfm_ctx(tfm);
+-	struct dynamic_sa_hash160 *sa;
+-	int rc;
+-
+-	my_alg = container_of(__crypto_ahash_alg(alg), struct crypto4xx_alg,
+-			      alg.u.hash);
+-	ctx->dev   = my_alg->dev;
+-
+-	/* Create SA */
+-	if (ctx->sa_in || ctx->sa_out)
+-		crypto4xx_free_sa(ctx);
+-
+-	rc = crypto4xx_alloc_sa(ctx, sa_len);
+-	if (rc)
+-		return rc;
+-
+-	crypto_ahash_set_reqsize(__crypto_ahash_cast(tfm),
+-				 sizeof(struct crypto4xx_ctx));
+-	sa = (struct dynamic_sa_hash160 *)ctx->sa_in;
+-	set_dynamic_sa_command_0(&sa->ctrl, SA_SAVE_HASH, SA_NOT_SAVE_IV,
+-				 SA_NOT_LOAD_HASH, SA_LOAD_IV_FROM_SA,
+-				 SA_NO_HEADER_PROC, ha, SA_CIPHER_ALG_NULL,
+-				 SA_PAD_TYPE_ZERO, SA_OP_GROUP_BASIC,
+-				 SA_OPCODE_HASH, DIR_INBOUND);
+-	set_dynamic_sa_command_1(&sa->ctrl, 0, SA_HASH_MODE_HASH,
+-				 CRYPTO_FEEDBACK_MODE_NO_FB, SA_EXTENDED_SN_OFF,
+-				 SA_SEQ_MASK_OFF, SA_MC_ENABLE,
+-				 SA_NOT_COPY_PAD, SA_NOT_COPY_PAYLOAD,
+-				 SA_NOT_COPY_HDR);
+-	/* Need to zero hash digest in SA */
+-	memset(sa->inner_digest, 0, sizeof(sa->inner_digest));
+-	memset(sa->outer_digest, 0, sizeof(sa->outer_digest));
+-
+-	return 0;
+-}
+-
+-int crypto4xx_hash_init(struct ahash_request *req)
+-{
+-	struct crypto4xx_ctx *ctx = crypto_tfm_ctx(req->base.tfm);
+-	int ds;
+-	struct dynamic_sa_ctl *sa;
+-
+-	sa = ctx->sa_in;
+-	ds = crypto_ahash_digestsize(
+-			__crypto_ahash_cast(req->base.tfm));
+-	sa->sa_command_0.bf.digest_len = ds >> 2;
+-	sa->sa_command_0.bf.load_hash_state = SA_LOAD_HASH_FROM_SA;
+-
+-	return 0;
+-}
+-
+-int crypto4xx_hash_update(struct ahash_request *req)
+-{
+-	struct crypto_ahash *ahash = crypto_ahash_reqtfm(req);
+-	struct crypto4xx_ctx *ctx = crypto_tfm_ctx(req->base.tfm);
+-	struct scatterlist dst;
+-	unsigned int ds = crypto_ahash_digestsize(ahash);
+-
+-	sg_init_one(&dst, req->result, ds);
+-
+-	return crypto4xx_build_pd(&req->base, ctx, req->src, &dst,
+-				  req->nbytes, NULL, 0, ctx->sa_in,
+-				  ctx->sa_len, 0, NULL);
+-}
+-
+-int crypto4xx_hash_final(struct ahash_request *req)
+-{
+-	return 0;
+-}
+-
+-int crypto4xx_hash_digest(struct ahash_request *req)
+-{
+-	struct crypto_ahash *ahash = crypto_ahash_reqtfm(req);
+-	struct crypto4xx_ctx *ctx = crypto_tfm_ctx(req->base.tfm);
+-	struct scatterlist dst;
+-	unsigned int ds = crypto_ahash_digestsize(ahash);
+-
+-	sg_init_one(&dst, req->result, ds);
+-
+-	return crypto4xx_build_pd(&req->base, ctx, req->src, &dst,
+-				  req->nbytes, NULL, 0, ctx->sa_in,
+-				  ctx->sa_len, 0, NULL);
+-}
+-
+-/*
+- * SHA1 Algorithm
+- */
+-int crypto4xx_sha1_alg_init(struct crypto_tfm *tfm)
+-{
+-	return crypto4xx_hash_alg_init(tfm, SA_HASH160_LEN, SA_HASH_ALG_SHA1,
+-				       SA_HASH_MODE_HASH);
+-}
 --- a/drivers/crypto/amcc/crypto4xx_core.c
 +++ b/drivers/crypto/amcc/crypto4xx_core.c
-@@ -1,5 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
--/**
-+/*
-  * AMCC SoC PPC4xx Crypto Driver
-  *
-  * Copyright (c) 2008 Applied Micro Circuits Corporation.
-@@ -44,7 +44,7 @@
- 
- #define PPC4XX_SEC_VERSION_STR			"0.5"
- 
--/**
-+/*
-  * PPC4xx Crypto Engine Initialization Routine
-  */
- static void crypto4xx_hw_init(struct crypto4xx_device *dev)
-@@ -159,7 +159,7 @@ void crypto4xx_free_sa(struct crypto4xx_
- 	ctx->sa_len = 0;
+@@ -485,18 +485,6 @@ static void crypto4xx_copy_pkt_to_dst(st
+ 	}
  }
  
--/**
-+/*
-  * alloc memory for the gather ring
-  * no need to alloc buf for the ring
-  * gdr_tail, gdr_head and gdr_count are initialized by this function
-@@ -268,7 +268,7 @@ static u32 crypto4xx_put_pd_to_pdr(struc
- 	return tail;
+-static void crypto4xx_copy_digest_to_dst(void *dst,
+-					struct pd_uinfo *pd_uinfo,
+-					struct crypto4xx_ctx *ctx)
+-{
+-	struct dynamic_sa_ctl *sa = (struct dynamic_sa_ctl *) ctx->sa_in;
+-
+-	if (sa->sa_command_0.bf.hash_alg == SA_HASH_ALG_SHA1) {
+-		memcpy(dst, pd_uinfo->sr_va->save_digest,
+-		       SA_HASH_ALG_SHA1_DIGEST_SIZE);
+-	}
+-}
+-
+ static void crypto4xx_ret_sg_desc(struct crypto4xx_device *dev,
+ 				  struct pd_uinfo *pd_uinfo)
+ {
+@@ -549,23 +537,6 @@ static void crypto4xx_cipher_done(struct
+ 	skcipher_request_complete(req, 0);
  }
  
--/**
-+/*
-  * alloc memory for the gather ring
-  * no need to alloc buf for the ring
-  * gdr_tail, gdr_head and gdr_count are initialized by this function
-@@ -346,7 +346,7 @@ static inline struct ce_gd *crypto4xx_ge
- 	return &dev->gdr[idx];
+-static void crypto4xx_ahash_done(struct crypto4xx_device *dev,
+-				struct pd_uinfo *pd_uinfo)
+-{
+-	struct crypto4xx_ctx *ctx;
+-	struct ahash_request *ahash_req;
+-
+-	ahash_req = ahash_request_cast(pd_uinfo->async_req);
+-	ctx = crypto_ahash_ctx(crypto_ahash_reqtfm(ahash_req));
+-
+-	crypto4xx_copy_digest_to_dst(ahash_req->result, pd_uinfo, ctx);
+-	crypto4xx_ret_sg_desc(dev, pd_uinfo);
+-
+-	if (pd_uinfo->state & PD_ENTRY_BUSY)
+-		ahash_request_complete(ahash_req, -EINPROGRESS);
+-	ahash_request_complete(ahash_req, 0);
+-}
+-
+ static void crypto4xx_aead_done(struct crypto4xx_device *dev,
+ 				struct pd_uinfo *pd_uinfo,
+ 				struct ce_pd *pd)
+@@ -642,9 +613,6 @@ static void crypto4xx_pd_done(struct cry
+ 	case CRYPTO_ALG_TYPE_AEAD:
+ 		crypto4xx_aead_done(dev, pd_uinfo, pd);
+ 		break;
+-	case CRYPTO_ALG_TYPE_AHASH:
+-		crypto4xx_ahash_done(dev, pd_uinfo);
+-		break;
+ 	}
  }
  
--/**
-+/*
-  * alloc memory for the scatter ring
-  * need to alloc buf for the ring
-  * sdr_tail, sdr_head and sdr_count are initialized by this function
-@@ -928,7 +928,7 @@ int crypto4xx_build_pd(struct crypto_asy
- 	return is_busy ? -EBUSY : -EINPROGRESS;
- }
+@@ -915,8 +883,7 @@ int crypto4xx_build_pd(struct crypto_asy
+ 	}
  
--/**
-+/*
-  * Algorithm Registration Functions
-  */
- static void crypto4xx_ctx_init(struct crypto4xx_alg *amcc_alg,
-@@ -1095,7 +1095,7 @@ static void crypto4xx_bh_tasklet_cb(unsi
- 	} while (head != tail);
- }
+ 	pd->pd_ctl.w = PD_CTL_HOST_READY |
+-		((crypto_tfm_alg_type(req->tfm) == CRYPTO_ALG_TYPE_AHASH) ||
+-		 (crypto_tfm_alg_type(req->tfm) == CRYPTO_ALG_TYPE_AEAD) ?
++		((crypto_tfm_alg_type(req->tfm) == CRYPTO_ALG_TYPE_AEAD) ?
+ 			PD_CTL_HASH_FINAL : 0);
+ 	pd->pd_ctl_len.w = 0x00400000 | (assoclen + datalen);
+ 	pd_uinfo->state = PD_ENTRY_INUSE | (is_busy ? PD_ENTRY_BUSY : 0);
+@@ -1022,10 +989,6 @@ static int crypto4xx_register_alg(struct
+ 			rc = crypto_register_aead(&alg->alg.u.aead);
+ 			break;
  
--/**
-+/*
-  * Top Half of isr.
-  */
- static inline irqreturn_t crypto4xx_interrupt_handler(int irq, void *data,
-@@ -1184,7 +1184,7 @@ static int crypto4xx_prng_seed(struct cr
- 	return 0;
- }
- 
--/**
-+/*
-  * Supported Crypto Algorithms
-  */
- static struct crypto4xx_alg_common crypto4xx_alg[] = {
-@@ -1367,7 +1367,7 @@ static struct crypto4xx_alg_common crypt
- 	} },
- };
- 
--/**
-+/*
-  * Module Initialization Routine
-  */
- static int crypto4xx_probe(struct platform_device *ofdev)
+-		case CRYPTO_ALG_TYPE_AHASH:
+-			rc = crypto_register_ahash(&alg->alg.u.hash);
+-			break;
+-
+ 		case CRYPTO_ALG_TYPE_RNG:
+ 			rc = crypto_register_rng(&alg->alg.u.rng);
+ 			break;
+@@ -1051,10 +1014,6 @@ static void crypto4xx_unregister_alg(str
+ 	list_for_each_entry_safe(alg, tmp, &sec_dev->alg_list, entry) {
+ 		list_del(&alg->entry);
+ 		switch (alg->alg.type) {
+-		case CRYPTO_ALG_TYPE_AHASH:
+-			crypto_unregister_ahash(&alg->alg.u.hash);
+-			break;
+-
+ 		case CRYPTO_ALG_TYPE_AEAD:
+ 			crypto_unregister_aead(&alg->alg.u.aead);
+ 			break;
 --- a/drivers/crypto/amcc/crypto4xx_core.h
 +++ b/drivers/crypto/amcc/crypto4xx_core.h
-@@ -1,5 +1,5 @@
- /* SPDX-License-Identifier: GPL-2.0-or-later */
--/**
-+/*
-  * AMCC SoC PPC4xx Crypto Driver
-  *
-  * Copyright (c) 2008 Applied Micro Circuits Corporation.
-@@ -188,7 +188,7 @@ int crypto4xx_hash_final(struct ahash_re
- int crypto4xx_hash_update(struct ahash_request *req);
- int crypto4xx_hash_init(struct ahash_request *req);
+@@ -16,7 +16,6 @@
+ #include <linux/ratelimit.h>
+ #include <linux/mutex.h>
+ #include <linux/scatterlist.h>
+-#include <crypto/internal/hash.h>
+ #include <crypto/internal/aead.h>
+ #include <crypto/internal/rng.h>
+ #include <crypto/internal/skcipher.h>
+@@ -135,7 +134,6 @@ struct crypto4xx_alg_common {
+ 	u32 type;
+ 	union {
+ 		struct skcipher_alg cipher;
+-		struct ahash_alg hash;
+ 		struct aead_alg aead;
+ 		struct rng_alg rng;
+ 	} u;
+@@ -182,11 +180,6 @@ int crypto4xx_encrypt_noiv_block(struct
+ int crypto4xx_decrypt_noiv_block(struct skcipher_request *req);
+ int crypto4xx_rfc3686_encrypt(struct skcipher_request *req);
+ int crypto4xx_rfc3686_decrypt(struct skcipher_request *req);
+-int crypto4xx_sha1_alg_init(struct crypto_tfm *tfm);
+-int crypto4xx_hash_digest(struct ahash_request *req);
+-int crypto4xx_hash_final(struct ahash_request *req);
+-int crypto4xx_hash_update(struct ahash_request *req);
+-int crypto4xx_hash_init(struct ahash_request *req);
  
--/**
-+/*
+ /*
   * Note: Only use this function to copy items that is word aligned.
-  */
- static inline void crypto4xx_memcpy_swab32(u32 *dst, const void *buf,
---- a/drivers/crypto/amcc/crypto4xx_reg_def.h
-+++ b/drivers/crypto/amcc/crypto4xx_reg_def.h
-@@ -1,5 +1,5 @@
- /* SPDX-License-Identifier: GPL-2.0-or-later */
--/**
-+/*
-  * AMCC SoC PPC4xx Crypto Driver
-  *
-  * Copyright (c) 2008 Applied Micro Circuits Corporation.
-@@ -104,7 +104,7 @@
- #define CRYPTO4XX_PRNG_LFSR_L			0x00070030
- #define CRYPTO4XX_PRNG_LFSR_H			0x00070034
- 
--/**
-+/*
-  * Initialize CRYPTO ENGINE registers, and memory bases.
-  */
- #define PPC4XX_PDR_POLL				0x3ff
-@@ -123,7 +123,7 @@
- #define PPC4XX_INT_TIMEOUT_CNT			0
- #define PPC4XX_INT_TIMEOUT_CNT_REVB		0x3FF
- #define PPC4XX_INT_CFG				1
--/**
-+/*
-  * all follow define are ad hoc
-  */
- #define PPC4XX_RING_RETRY			100
-@@ -131,7 +131,7 @@
- #define PPC4XX_SDR_SIZE				PPC4XX_NUM_SD
- #define PPC4XX_GDR_SIZE				PPC4XX_NUM_GD
- 
--/**
-+/*
-   * Generic Security Association (SA) with all possible fields. These will
-  * never likely used except for reference purpose. These structure format
-  * can be not changed as the hardware expects them to be layout as defined.
---- a/drivers/crypto/amcc/crypto4xx_sa.h
-+++ b/drivers/crypto/amcc/crypto4xx_sa.h
-@@ -1,5 +1,5 @@
- /* SPDX-License-Identifier: GPL-2.0-or-later */
--/**
-+/*
-  * AMCC SoC PPC4xx Crypto Driver
-  *
-  * Copyright (c) 2008 Applied Micro Circuits Corporation.
-@@ -14,7 +14,7 @@
- 
- #define AES_IV_SIZE				16
- 
--/**
-+/*
-  * Contents of Dynamic Security Association (SA) with all possible fields
-  */
- union dynamic_sa_contents {
-@@ -122,7 +122,7 @@ union sa_command_0 {
- #define SA_AES_KEY_LEN_256			4
- 
- #define SA_REV2					1
--/**
-+/*
-  * The follow defines bits sa_command_1
-  * In Basic hash mode  this bit define simple hash or hmac.
-  * In IPsec mode, this bit define muting control.
-@@ -172,7 +172,7 @@ struct dynamic_sa_ctl {
- 	union sa_command_1 sa_command_1;
- } __attribute__((packed));
- 
--/**
-+/*
-  * State Record for Security Association (SA)
-  */
- struct  sa_state_record {
-@@ -184,7 +184,7 @@ struct  sa_state_record {
- 	};
- } __attribute__((packed));
- 
--/**
-+/*
-  * Security Association (SA) for AES128
-  *
-  */
-@@ -213,7 +213,7 @@ struct dynamic_sa_aes192 {
- #define SA_AES192_LEN		(sizeof(struct dynamic_sa_aes192)/4)
- #define SA_AES192_CONTENTS	0x3e000062
- 
--/**
-+/*
-  * Security Association (SA) for AES256
-  */
- struct dynamic_sa_aes256 {
-@@ -228,7 +228,7 @@ struct dynamic_sa_aes256 {
- #define SA_AES256_CONTENTS	0x3e000082
- #define SA_AES_CONTENTS		0x3e000002
- 
--/**
-+/*
-  * Security Association (SA) for AES128 CCM
-  */
- struct dynamic_sa_aes128_ccm {
-@@ -242,7 +242,7 @@ struct dynamic_sa_aes128_ccm {
- #define SA_AES128_CCM_CONTENTS	0x3e000042
- #define SA_AES_CCM_CONTENTS	0x3e000002
- 
--/**
-+/*
-  * Security Association (SA) for AES128_GCM
-  */
- struct dynamic_sa_aes128_gcm {
-@@ -258,7 +258,7 @@ struct dynamic_sa_aes128_gcm {
- #define SA_AES128_GCM_CONTENTS	0x3e000442
- #define SA_AES_GCM_CONTENTS	0x3e000402
- 
--/**
-+/*
-  * Security Association (SA) for HASH160: HMAC-SHA1
-  */
- struct dynamic_sa_hash160 {
---- a/drivers/crypto/amcc/crypto4xx_trng.h
-+++ b/drivers/crypto/amcc/crypto4xx_trng.h
-@@ -1,5 +1,5 @@
- /* SPDX-License-Identifier: GPL-2.0-or-later */
--/**
-+/*
-  * AMCC SoC PPC4xx Crypto Driver
-  *
-  * Copyright (c) 2008 Applied Micro Circuits Corporation.
 
 
