@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB5145A299;
-	Tue, 21 Jul 2026 21:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A471043D51D;
+	Tue, 21 Jul 2026 21:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668286; cv=none; b=rXNWUj83uhlruboMvSbup/4flOdbWSQ8XN/O0o1OF8ZCBaKDx3mWqb9doK9aRoZ+XjbWyTZuJiUsTnnit+8xznjI2c68vM/6FmbWRAxwBHXhOJ7vCFGGhixoZx6Dygva9OEDxytR4k5x8gqBUynWzyQtYyMbVYbNDIdHNwo2X0E=
+	t=1784668288; cv=none; b=MSkXi5ziek0yqgjAU3BgyFip5MUaCisP//S88pZAzrE/EriWC60j9mN5OmZsT22/v27376UK3cUkZHiYYCD7SQnBFErsvzAcwbZ7j+RWL7+mXUlnNG98JFjok9iq00RFLcnEaXaD1FdW6m6ZWq+mj5u0SaoFrkTIES7cxySRnqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668286; c=relaxed/simple;
-	bh=tWdBd2Ba6JhX1IQFsdy7ppRh/GAqRC6M3O+sy1aYsKw=;
+	s=arc-20240116; t=1784668288; c=relaxed/simple;
+	bh=S218omFb3cCCJZFOYFWboQFI6bTNT+2A+pXXE7pR4J0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kb1rC1UY0+fI0ej/INtL7hQOkUn23bHPkkFg/FqEsveVEfy+6nCTIfqJ7C5XssJTgkKwLDAN4WRJs+bXsKakNEFC4DkxkCjqLRhCgWxvEp2lUdcV1BtqMu5lC38RG9p2JDhc+TtfA9s2YtUXc8LxjUpiPcYVkRdiZ4fEn8enixg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jprvFTZ7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kCQZFCCauff+larWgdY/zoLYb11OASmpEH2ZZYiQ2ywReEY7Jm01RB9sVRanUMkVO1mx1NgoYBGmzke7h5eJAIfxdmLrFzj7wlb8G2EXwyp/FlRbPggQXjD/6emdWTPkYJ7pPA8j8pb6jpqlySi4VKZ8ldO709cGPxR+8BFuz5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzeiKy7+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jprvFTZ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B9181F00A3D;
-	Tue, 21 Jul 2026 21:11:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzeiKy7+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154491F000E9;
+	Tue, 21 Jul 2026 21:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668284;
-	bh=gNU67y97UVPIC12iKFU0LAYYx8ZFUc7vtWEyGZI2icc=;
+	s=korg; t=1784668287;
+	bh=wxUeDT7vASud3rd7cfrnrSyb92iwWKu2GCI6WWt/K2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jprvFTZ7ApHJWTAC9VUi9M+iOp+u2+nkU72IUIBMB3b5eFTE/VMXmgnYrTtI/QgAG
-	 zvZLeUOixFSl1D1vP1EXsb1lqvn24/fQYvanUeH8qbTvvNYtY2cV70GPJD3StS+tv8
-	 PeJXQmVj5CWgBi27qm5MJn2dUfvEWVVaftIyiYdw=
+	b=nzeiKy7+6DkaPXY7I5jQ/7Jfv/Q53v6wVKzJHKe9Bh9+bFhdoR/nnPyjgdI5FnXLE
+	 oH0HRow5q4/eEQKDFMNLzhiws7lKHU8JjghOZ+Otd6f2ho6c3UAuMapTykmGlDJFhZ
+	 6pypEgZCvQ0vcFOzfqcGzEmfvUrydW16JwFUo0Lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chi Wang <wangchi@kylinos.cn>,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.1 0118/1067] audit: Fix data races of skb_queue_len() readers on audit_queue
-Date: Tue, 21 Jul 2026 17:11:59 +0200
-Message-ID: <20260721152427.228862740@linuxfoundation.org>
+	syzbot+5e8dda76ca21dae314b6@syzkaller.appspotmail.com,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.1 0119/1067] debugobjects: Plug race against a concurrent OOM disable
+Date: Tue, 21 Jul 2026 17:12:00 +0200
+Message-ID: <20260721152427.251615408@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -45,114 +44,117 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chi Wang <wangchi@kylinos.cn>
+From: Thomas Gleixner <tglx@kernel.org>
 
-commit c9a71daaecb2fb1d8c704545cc0b1c920b9bf5d7 upstream.
+commit b81dde13cc163450dcb402dcc915ef13ba241e01 upstream.
 
-Multiple readers access audit_queue.qlen via skb_queue_len() without
-holding the queue lock or using READ_ONCE(), while kauditd writes to
-this field via the skb_dequeue() → __skb_unlink() path with WRITE_ONCE()
-protected by a spinlock. This constitutes data races.
+syzbot reported a puzzling splat:
 
-All affected skb_queue_len(&audit_queue) call sites:
-  - kauditd_thread() wait_event_freezable() condition
-  - audit_receive_msg() AUDIT_GET handler (s.backlog assignment)
-  - audit_receive() backlog check
-  - audit_log_start() backlog check and pr_warn()
+   WARNING: kernel/time/hrtimer.c:443 at stub_timer+0xa/0x20
 
-KCSAN reports the following conflicting access pattern (one example):
-==================================================================
-BUG: KCSAN: data-race in audit_log_start / skb_dequeue
+stub_timer() is installed as timer callback function in
+hrtimer_fixup_assert_init(), which is invoked when
+debug_object_assert_init() can't find a shadow object. In that case debug
+objects emits a warning about it before invoking the fixup.
 
-write (marked) to 0xffffffff8512ee20 of 4 bytes by task 661 on cpu 57:
- skb_dequeue+0x70/0xf0
- kauditd_send_queue+0x71/0x220
- kauditd_thread+0x1cb/0x430
- kthread+0x1c2/0x210
- ret_from_fork+0x162/0x1a0
- ret_from_fork_asm+0x1a/0x30
+Though the provided console log lacks this warning and instead has the
+following a few seconds before the splat:
 
-read to 0xffffffff8512ee20 of 4 bytes by task 36586 on cpu 1:
- audit_log_start+0x2a0/0x6b0
- audit_core_dumps+0x64/0xa0
- do_coredump+0x14b/0x1260
- get_signal+0xeb2/0xf70
- arch_do_signal_or_restart+0x41/0x170
- exit_to_user_mode_loop+0xa2/0x1c0
- do_syscall_64+0x1a3/0x1c0
- entry_SYSCALL_64_after_hwframe+0x76/0xe0
+     ODEBUG: Out of memory. ODEBUG disabled
 
-value changed: 0x00000001 -> 0x00000000
-==================================================================
+So the object was looked up in debug_object_assert_init() and the lookup
+failed due a concurrent out of memory situation which disabled debug
+objects and freed the shadow objects:
 
-Resolve the race by switching to lockless helper skb_queue_len_lockless(),
-which internally uses READ_ONCE() and properly pairs with the WRITE_ONCE()
-write accesses already present on the writer side.
+debug_object_assert_init()
+        if (!debug_objects_enabled)
+        	return;                         obj = alloc();
+                				if (!obj) {
+							// Out of memory
+                                                	debug_objects_enabled = false;
+                                                        free_objects();
+        obj = lookup_or_alloc();
 
+        // The lookup failed because the other side
+        // removed the objects, so this returns
+        // an error code as the object in question
+        // is not statically initialized
+
+	if (!IS_ERR_OR_NULL(obj))
+        	return;
+        if (!obj) {
+        	debug_oom();
+                return;
+        }
+
+        print(...)
+           if (!debug_objects_enabled)
+                return;
+
+        fixup(...)
+
+The debug object splat is skipped because debug_objects_enabled is false,
+but the fixup callback is invoked unconditionally, which makes the timer
+disfunctional.
+
+This is only a problem in debug_object_assert_init() and
+debug_object_activate() as both have to handle statically initialized
+objects and therefore must handle the error pointer return case
+gracefully. All other places only handle the found/not found case and the
+NULL pointer return is a signal for OOM. Otherwise they get a valid shadow
+object.
+
+Plug the hole by checking whether debug objects are still enabled before
+invoking the print and fixup function in those two places.
+
+Fixes: b84d435cc228 ("debugobjects: Extend to assert that an object is initialized")
+Reported-by: syzbot+5e8dda76ca21dae314b6@syzkaller.appspotmail.com
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: 3197542482df ("audit: rework audit_log_start()")
-Signed-off-by: Chi Wang <wangchi@kylinos.cn>
-Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
-[PM: line length tweak]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Link: https://patch.msgid.link/874iiwlzlb.ffs@fw13
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/audit.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ lib/debugobjects.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/kernel/audit.c
-+++ b/kernel/audit.c
-@@ -910,7 +910,7 @@ main_queue:
- 		 *       do the multicast send and rotate records from the
- 		 *       main queue to the retry/hold queues */
- 		wait_event_freezable(kauditd_wait,
--				     (skb_queue_len(&audit_queue) ? 1 : 0));
-+				(skb_queue_len_lockless(&audit_queue) ? 1 : 0));
+--- a/lib/debugobjects.c
++++ b/lib/debugobjects.c
+@@ -768,6 +768,14 @@ int debug_object_activate(void *addr, co
  	}
  
- 	return 0;
-@@ -1245,7 +1245,7 @@ static int audit_receive_msg(struct sk_b
- 		s.rate_limit		   = audit_rate_limit;
- 		s.backlog_limit		   = audit_backlog_limit;
- 		s.lost			   = atomic_read(&audit_lost);
--		s.backlog		   = skb_queue_len(&audit_queue);
-+		s.backlog		   = skb_queue_len_lockless(&audit_queue);
- 		s.feature_bitmap	   = AUDIT_FEATURE_BITMAP_ALL;
- 		s.backlog_wait_time	   = audit_backlog_wait_time;
- 		s.backlog_wait_time_actual = atomic_read(&audit_backlog_wait_time_actual);
-@@ -1586,7 +1586,7 @@ static void audit_receive(struct sk_buff
+ 	raw_spin_unlock_irqrestore(&db->lock, flags);
++
++	/*
++	 * lookup_object_or_alloc() might have raced with a concurrent
++	 * allocation failure which disabled debug objects.
++	 */
++	if (!debug_objects_enabled)
++		return 0;
++
+ 	debug_print_object(&o, "activate");
  
- 	/* can't block with the ctrl lock, so penalize the sender now */
- 	if (audit_backlog_limit &&
--	    (skb_queue_len(&audit_queue) > audit_backlog_limit)) {
-+	    (skb_queue_len_lockless(&audit_queue) > audit_backlog_limit)) {
- 		DECLARE_WAITQUEUE(wait, current);
+ 	switch (o.state) {
+@@ -945,6 +953,15 @@ void debug_object_assert_init(void *addr
+ 		return;
+ 	}
  
- 		/* wake kauditd to try and flush the queue */
-@@ -1888,7 +1888,7 @@ struct audit_buffer *audit_log_start(str
- 		long stime = audit_backlog_wait_time;
- 
- 		while (audit_backlog_limit &&
--		       (skb_queue_len(&audit_queue) > audit_backlog_limit)) {
-+			(skb_queue_len_lockless(&audit_queue) > audit_backlog_limit)) {
- 			/* wake kauditd to try and flush the queue */
- 			wake_up_interruptible(&kauditd_wait);
- 
-@@ -1908,7 +1908,7 @@ struct audit_buffer *audit_log_start(str
- 			} else {
- 				if (audit_rate_check() && printk_ratelimit())
- 					pr_warn("audit_backlog=%d > audit_backlog_limit=%d\n",
--						skb_queue_len(&audit_queue),
-+						skb_queue_len_lockless(&audit_queue),
- 						audit_backlog_limit);
- 				audit_log_lost("backlog limit exceeded");
- 				return NULL;
++	/*
++	 * lookup_object_or_alloc() might have raced with a concurrent
++	 * allocation failure which disabled debug objects. Don't run the fixup
++	 * as it might turn a valid object useless. See for example
++	 * hrtimer_fixup_assert_init().
++	 */
++	if (!debug_objects_enabled)
++		return;
++
+ 	/* Object is neither tracked nor static. It's not initialized. */
+ 	debug_print_object(&o, "assert_init");
+ 	debug_object_fixup(descr->fixup_assert_init, addr, ODEBUG_STATE_NOTAVAILABLE);
 
 
