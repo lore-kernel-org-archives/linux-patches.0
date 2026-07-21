@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1279546D098;
-	Tue, 21 Jul 2026 18:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F4846A5FD;
+	Tue, 21 Jul 2026 18:07:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657262; cv=none; b=YIPE6EqOGbCQCc2zDcJGQfd4tW/EQQrY8YeJEq1ZB4ku7KNr/A5RdxAHl9zXtn4TWT3mrAppweyP62Cbd11wGQ9jdZqeswdjXtJcsLYF95hXGhfdj8wjUabRVSNzHf2jvJpAI0duzX30SU+E4WJizWlSVlDvt0PSW/wfDV35OF4=
+	t=1784657265; cv=none; b=qLAlv5ZVouydZRkre010G2dzQt9j6FM7x9/sXtF0seahWtyXnbyoMiLnR1zDVlenftn18HPQ8Qjzy5+8U064b7UaNc/q/W7HhHvNwA56jyZeOuNh+ib+yIOM5o5voNmsba+R906y3CJ3ubj6qEbYd/cRqnGUZiyl37hajALYEXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657262; c=relaxed/simple;
-	bh=HnuJOYA/bkFczrFDZklgujA0Lb1Zi45UWFroxFyTl4o=;
+	s=arc-20240116; t=1784657265; c=relaxed/simple;
+	bh=eh80qxA6IF2hI+zoK1N2v3BRu1Fk9V/FGSHh18740Gg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D4PMLfvqZL5Tg4lLgsGHk5alwmmxfxCg9jXnypy+expNjHW5GFJPhqfPe6C/oHd9/iudL1nmzgZYcHBipFmGZv0IX/eY71oygJtLlPQZjKHsaGiaOY9t7RC8lcNpgPEzqa6EC3FjJQacUihP5JMO22+D5EhsewL2TRGiEZ8y+WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sAMZNdbd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YQg1N13yx7fk17iMLuN/dLv0p8MGr+HhjHeadT7xxp0hycYso2ssxrxnrDVbNS6tsK4Gd45z6eT7aAEMzmvQRbCS20GLDGSKqS8etev0IwyRabnp7b8N9Dqe4MRYb60BcoxwGCKVfwt77LzLNjBhbqWKI1aIdk/h1aPvVBQ9qfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqiA8F0m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sAMZNdbd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B141F000E9;
-	Tue, 21 Jul 2026 18:07:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqiA8F0m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E8D1F000E9;
+	Tue, 21 Jul 2026 18:07:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657261;
-	bh=KJoeaxqpYjU0OlJ9JpMFbw0NoUCfbtnFXM0TfUv9CRo=;
+	s=korg; t=1784657263;
+	bh=2l5Ln3HEEz0fFzXKWrDaszGfaImFcgZdxNSJ/iF1Dj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sAMZNdbdOeRi06OIed/hARPVY+B0nGQveCnLP/qAW9yocw700uNxrmc/ikmu/SBVU
-	 eLxUyb5EPOi5Ig6OvyuLk8SDhLLGI3ix0H40YEUXUR0XfJDvyycxvQI5KizFtclaak
-	 co2T9yi2u4S6LGCvHE4WZlPOMU3kl51qZbyTvfS4=
+	b=vqiA8F0mQSyK9qcIkxOzRORSZdxm5CLbm76wdbouzM0gGcp5hJkzS5QyAWCHKiZFa
+	 VCHh5jHT0ccUEn7ybiAg+YibVRw9Lyg51WqZ2rVvK2lU5oojMmMHIrunhQ65/GFZ58
+	 sPCFzMRqOpx9YmKtjgixNPH9SotPrAGtrCNmaK0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0654/1611] perf tools: Fix int16_t truncation of max_cpu_num in set_max_cpu_num()
-Date: Tue, 21 Jul 2026 17:12:50 +0200
-Message-ID: <20260721152530.096567473@linuxfoundation.org>
+Subject: [PATCH 6.18 0655/1611] dt-bindings: clock: qcom: Add X1P42100 camera clock controller
+Date: Tue, 21 Jul 2026 17:12:51 +0200
+Message-ID: <20260721152530.119168373@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -46,85 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
 
-[ Upstream commit 33fa2bf5608fc36bc25231592145f4738f14f11b ]
+[ Upstream commit 97a5e120be5d3d7cf7d221b8703921046b73f0d2 ]
 
-set_max_cpu_num() assigns the sysfs "possible" CPU count to
-max_cpu_num.cpu which is int16_t (struct perf_cpu).  On systems
-with >32767 possible CPUs the value silently truncates, potentially
-wrapping negative.  This causes cpunode_map to be underallocated
-and subsequent cpu__get_node() calls to read out of bounds.
+Add X1P42100 camera clock controller support and clock bindings
+for camera QDSS debug clocks which are applicable for both X1E80100
+and X1P42100 platforms.
 
-The matching check for max_present_cpu_num was added by commit
-c760174401f6 ("perf cpumap: Reduce cpu size from int to int16_t")
-but max_cpu_num was missed.  Add the same INT16_MAX guard.
-
-Fixes: c760174401f605cf ("perf cpumap: Reduce cpu size from int to int16_t")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Ian Rogers <irogers@google.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260507-purwa-videocc-camcc-v5-2-fc3af4130282@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 1e6ae74ac6f2 ("clk: qcom: camcc-x1e80100: Add support for camera QDSS debug clocks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cpumap.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ .../devicetree/bindings/clock/qcom,x1e80100-camcc.yaml         | 1 +
+ include/dt-bindings/clock/qcom,x1e80100-camcc.h                | 3 +++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/tools/perf/util/cpumap.c b/tools/perf/util/cpumap.c
-index 0b419783c9dd08..d0516797a00881 100644
---- a/tools/perf/util/cpumap.c
-+++ b/tools/perf/util/cpumap.c
-@@ -466,6 +466,16 @@ static void set_max_cpu_num(void)
- 	if (ret)
- 		goto out;
+diff --git a/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml
+index 938a2f1ff3fca8..b28614186cc098 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml
+@@ -23,6 +23,7 @@ properties:
+   compatible:
+     enum:
+       - qcom,x1e80100-camcc
++      - qcom,x1p42100-camcc
  
-+	/*
-+	 * struct perf_cpu.cpu is int16_t (libperf ABI) — clamp to avoid
-+	 * truncation to negative.  See tools/lib/perf/TODO for the ABI
-+	 * widening plan.
-+	 */
-+	if (max > INT16_MAX) {
-+		pr_warning("WARNING: max possible cpus %d exceeds int16_t, clamping to %d\n",
-+			   max, INT16_MAX);
-+		max = INT16_MAX;
-+	}
- 	max_cpu_num.cpu = max;
+   reg:
+     maxItems: 1
+diff --git a/include/dt-bindings/clock/qcom,x1e80100-camcc.h b/include/dt-bindings/clock/qcom,x1e80100-camcc.h
+index d72fdfb06a7c71..06c316022fb0d2 100644
+--- a/include/dt-bindings/clock/qcom,x1e80100-camcc.h
++++ b/include/dt-bindings/clock/qcom,x1e80100-camcc.h
+@@ -115,6 +115,9 @@
+ #define CAM_CC_SLEEP_CLK_SRC					105
+ #define CAM_CC_SLOW_AHB_CLK_SRC					106
+ #define CAM_CC_XO_CLK_SRC					107
++#define CAM_CC_QDSS_DEBUG_CLK					108
++#define CAM_CC_QDSS_DEBUG_CLK_SRC				109
++#define CAM_CC_QDSS_DEBUG_XO_CLK				110
  
- 	/* get the highest present cpu number for a sparse allocation */
-@@ -478,11 +488,12 @@ static void set_max_cpu_num(void)
- 	ret = get_max_num(path, &max);
- 
- 	if (!ret && max > INT16_MAX) {
--		pr_err("Read out of bounds max cpus of %d\n", max);
--		ret = -1;
-+		pr_warning("WARNING: max present cpus %d exceeds int16_t, clamping to %d\n",
-+			   max, INT16_MAX);
-+		max = INT16_MAX;
- 	}
- 	if (!ret)
--		max_present_cpu_num.cpu = (int16_t)max;
-+		max_present_cpu_num.cpu = max;
- out:
- 	if (ret)
- 		pr_err("Failed to read max cpus, using default of %d\n", max_cpu_num.cpu);
-@@ -619,7 +630,9 @@ int cpu__setup_cpunode_map(void)
- 		while ((dent2 = readdir(dir2)) != NULL) {
- 			if (dent2->d_type != DT_LNK || sscanf(dent2->d_name, "cpu%u", &cpu) < 1)
- 				continue;
--			cpunode_map[cpu] = mem;
-+			/* cpunode_map allocated for max_cpu_num entries */
-+			if (cpu < (unsigned int)max_cpu_num.cpu)
-+				cpunode_map[cpu] = mem;
- 		}
- 		closedir(dir2);
- 	}
+ /* CAM_CC power domains */
+ #define CAM_CC_BPS_GDSC						0
 -- 
 2.53.0
 
