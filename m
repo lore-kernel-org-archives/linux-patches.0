@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A883BED61;
-	Tue, 21 Jul 2026 21:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4EF53BCD29;
+	Tue, 21 Jul 2026 21:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668035; cv=none; b=R7SG5cA0JCXKxv/Ng1l/lgpu0RFdmyvxvPKgFNCwdmKz/t+atUsXtGrlLReonmje0U2e89v5XSESlkrMrLheAG1tC9hUvPBwHqSpAIXNMDwYHr0QsreXsWDoI+vlBmcNSxE2uHxbHbZg75VOqO6Oe/KfTZRuy+ovFtYu6zeG9s4=
+	t=1784668037; cv=none; b=Rppsfff8AyHgwwuJz6h9tMy6S+vNFrYzpu2Ce0WiroAEg6EfKKn994qfsJluXHH98IBMuNZ9+L1gHd9GvD2z0uGD4+0qE3ICEZVVccwKZSeb8c/7ST193RyyQ9icWjdxwovzoHo+ew09xJoJy/vR8qP8CQfSdMM9batno8k8+LY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668035; c=relaxed/simple;
-	bh=l8N/iDgthd+OqVWqFBxbiAxf60oda7Obqz/8lPG0iio=;
+	s=arc-20240116; t=1784668037; c=relaxed/simple;
+	bh=1qD567lOmxh0rJxZcf6WNNZwoD8Va3+TFj8dNObi9C0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AGtrHuRbg/U9+JZu5bqbLnyQLg5S2Dpx9litan9EfOrLXXbHXm2paiR7KUpnUuXOPmYD2klSR5ZNxoFHbW95SfvfIWP2H3+y/Tjp72A9hzPpdmolhv6Xa7jjVRsWSDCzfLwd8pD9jtKospRMnk7vwwaFCaxZxJcFziL69Mzbxl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BVyFt9NB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PUUTB/TVIIUeqByQoXW5Apw+KWPgs5i6fh1k1pr8DHNKJbuGNEmQDSoCT1hFK/fYMVQaBuqqgvLsDSX2YiDy71BKLCb3whyWE5noxeXVqK5NoM8wbvPSZWnHuy+EUJFmXHwJmJAS+GV0KMzlJT91lzbtXaYxpngJw1fEydUp+WM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bBemkIBK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BVyFt9NB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA591F000E9;
-	Tue, 21 Jul 2026 21:07:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBemkIBK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45CF81F000E9;
+	Tue, 21 Jul 2026 21:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668034;
-	bh=X9pa8a/7gKSYiPfMOrhHXKcF0tiM6bsoUcNOV7DWYJg=;
+	s=korg; t=1784668036;
+	bh=anx8Njge9mRvbtcl3c6RE4WgfPWq+EMdfVqXJtkvR0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BVyFt9NB95YlC4geV2tbeUTUmG3Z+HSIlmR8lW6EpdNljMrHQkGTi/PNmnwDbwBU4
-	 LN7hYhkKc8zStH2CIxhdX15qDEMSNE0hpwvISg61gxpYbs/C2rDFzmvALKQ96MhUA9
-	 8bmzIXtusd3wQysfo05xEERc7+fJZVGfYK4GgD5k=
+	b=bBemkIBKA1jsiXBhxEYonLL9cdsHQXfx11TPjrcD0Z8/g8STQ3T2vhtnSfTcqFwhw
+	 B2j7D3Lokaqd1DEXOumQK4w630UhJ4qSLYPZrjZ3Hwy/sZ66GP5Kw1U9tARqHibQfi
+	 bxQ57LzwaHMl/B+KdbwFZQrBV2aZ7rWxd5UE8t/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0024/1067] i2c: core: fix irq domain leak on adapter registration failure
-Date: Tue, 21 Jul 2026 17:10:25 +0200
-Message-ID: <20260721152425.077798168@linuxfoundation.org>
+Subject: [PATCH 6.1 0007/1067] net/sched: act_pedit: use NLA_POLICY for parsing ex keys
+Date: Tue, 21 Jul 2026 17:10:08 +0200
+Message-ID: <20260721152424.697647462@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,47 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-[ Upstream commit 8ce19524e4cc2462685f596a6402fbd8fb984ab2 ]
+[ Upstream commit 5036034572b79daa6d6600338e8e8229e2a44b09 ]
 
-Make sure to tear down the host notify irq domain on adapter
-registration failure to avoid leaking it.
+Transform two checks in the 'ex' key parsing into netlink policies
+removing extra if checks.
 
-This issue was flagged by Sashiko when reviewing another adapter
-registration fix.
-
-Fixes: 4d5538f5882a ("i2c: use an IRQ to report Host Notify events, not alert")
-Cc: stable@vger.kernel.org	# 4.10
-Cc: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Stable-dep-of: ba14d7cf2fe7 ("i2c: core: fix adapter registration race")
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core-base.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sched/act_pedit.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -1556,7 +1556,7 @@ static int i2c_register_adapter(struct i
- 	res = device_register(&adap->dev);
- 	if (res) {
- 		pr_err("adapter '%s': can't register device (%d)\n", adap->name, res);
--		goto out_list;
-+		goto err_remove_irq_domain;
+diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
+index 09310b56b45beb..1d06873da8f12d 100644
+--- a/net/sched/act_pedit.c
++++ b/net/sched/act_pedit.c
+@@ -35,8 +35,9 @@ static const struct nla_policy pedit_policy[TCA_PEDIT_MAX + 1] = {
+ };
+ 
+ static const struct nla_policy pedit_key_ex_policy[TCA_PEDIT_KEY_EX_MAX + 1] = {
+-	[TCA_PEDIT_KEY_EX_HTYPE]  = { .type = NLA_U16 },
+-	[TCA_PEDIT_KEY_EX_CMD]	  = { .type = NLA_U16 },
++	[TCA_PEDIT_KEY_EX_HTYPE] =
++		NLA_POLICY_MAX(NLA_U16, TCA_PEDIT_HDR_TYPE_MAX),
++	[TCA_PEDIT_KEY_EX_CMD] = NLA_POLICY_MAX(NLA_U16, TCA_PEDIT_CMD_MAX),
+ };
+ 
+ static struct tcf_pedit_key_ex *tcf_pedit_keys_ex_parse(struct nlattr *nla,
+@@ -86,12 +87,6 @@ static struct tcf_pedit_key_ex *tcf_pedit_keys_ex_parse(struct nlattr *nla,
+ 		k->htype = nla_get_u16(tb[TCA_PEDIT_KEY_EX_HTYPE]);
+ 		k->cmd = nla_get_u16(tb[TCA_PEDIT_KEY_EX_CMD]);
+ 
+-		if (k->htype > TCA_PEDIT_HDR_TYPE_MAX ||
+-		    k->cmd > TCA_PEDIT_CMD_MAX) {
+-			err = -EINVAL;
+-			goto err_out;
+-		}
+-
+ 		k++;
  	}
  
- 	adap->debugfs = debugfs_create_dir(dev_name(&adap->dev), i2c_debugfs_root);
-@@ -1604,6 +1604,8 @@ out_reg:
- 	init_completion(&adap->dev_released);
- 	device_unregister(&adap->dev);
- 	wait_for_completion(&adap->dev_released);
-+err_remove_irq_domain:
-+	i2c_host_notify_irq_teardown(adap);
- out_list:
- 	mutex_lock(&core_lock);
- 	idr_remove(&i2c_adapter_idr, adap->nr);
+-- 
+2.53.0
+
 
 
