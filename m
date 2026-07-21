@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28016224B05;
-	Tue, 21 Jul 2026 22:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE59A3DDB03;
+	Tue, 21 Jul 2026 22:45:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673955; cv=none; b=o1PcgXNZg3Nx8Py9yUtMQ3blMwHSj7eI111YV2jUAdPth43CkQKHGEJtcctlunIdWHiSVdnfYFVBgXZTbJot4PXC19uJlajKZdet9fF1MzR5TXSYHBfCaDnXLNM9kKD6U2or2sXiWt8WPIm6G2CPK4zS/gDzbfFnb0FMrUzygLI=
+	t=1784673957; cv=none; b=Qm9Rnt2W42LFxalYlU/NT1xgyxP7x0N+7LaOnqHse3UMUQ1fSghpKB5nQW1Q8HlvcABufzuCOcWnoTwtVSS6hMT0apIVgJi/NJ58446RrgLeCx5yuftDRUPr7AI6BIHQMybmbDy86JOd0Q5BadzKb6W6vOrBwhLSShF5C5WEGhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673955; c=relaxed/simple;
-	bh=LwCRCxlqWZ8sZwAngR0X2iyeRR/zpQYLH6PRJ++OpNo=;
+	s=arc-20240116; t=1784673957; c=relaxed/simple;
+	bh=o0zI7/7tUuiVXIFYbaoQbKQOu4fxNW6FPgnGjISgZiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rSzSigZq55oIVrQjlsMOAMxHDgdSu6tU1aYx28qWTC8QZ4i1Fz/bxOTbW9IkaoxcNK6+xSuEaqiF/PYbAZe9+s4bKqR844IFoz8V2rsV/5O5FpB3n6XN1hIOjE4Hh9/NDcCUUZGmFvLySeqXNFVa/3Lxr2B0Mzcm+1XHQ3Idt/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uzb2SoK0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=R+EUpAIBHlFjCe+jHhV0h/WuK4s4BJCwW1on/cUPNwOr/KxEF6EjSzIIlZ8peS+uhNs/FcessoAuASTrj9ZG4woUUKEDLv/ZuPP9co2exOUhQo7xz3OqW/LTnLD1dAoJQyycSnDiEmrRyAXCrySrxPVrUOHbUefVqsSAmYEC9vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UezY5gU/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uzb2SoK0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828081F000E9;
-	Tue, 21 Jul 2026 22:45:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UezY5gU/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203591F000E9;
+	Tue, 21 Jul 2026 22:45:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673954;
-	bh=q1Bs899jlfnEv3iUY/9Sxi5icKGc/sbee5qf5NIq4ko=;
+	s=korg; t=1784673956;
+	bh=IwtTBWYc1u7EC2pDTbjyqha5DFarjsR9m+liDOmNnis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uzb2SoK0HD/VwsVBuBtwcFjuGWJAG5GtBY7PF+DA1sF1/HwLmx2Vs6rGYVTIteSTE
-	 C3O70LyYMua0lp67eGqCiE/1UzEUT3fZ71rPHZzBTfGcrsQ1cPvv8Sb5erm1sKi/lx
-	 8TqT7SWTA4gMkE9y7eCmAFOcIJAKldoJZZTO06H4=
+	b=UezY5gU/2ISCa80zB0mxWGQB5dnWh55cqNcORz4JBepeOGqnUSJ+FHcbj5eld1lpe
+	 edWIDhcZjNKoxWK76XbSvuCRIboTmN7pW77AhpiK24eVqS1Pkk2DagxRcdoHLdrjeT
+	 62xjTsxAyHcfhXsjcz1dQ24rFaX5VYWWu5o3UhAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 356/699] ipv6: Fix null-ptr-deref in fib6_nh_mtu_change().
-Date: Tue, 21 Jul 2026 17:21:55 +0200
-Message-ID: <20260721152403.722432024@linuxfoundation.org>
+Subject: [PATCH 5.10 316/699] perf tools: Fix thread__set_comm_from_proc() on empty comm file
+Date: Tue, 21 Jul 2026 17:21:15 +0200
+Message-ID: <20260721152402.821764996@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -48,65 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 46c3b8191aad3d032776bf3bebf03efdf5f4b905 ]
+[ Upstream commit 31d596054550f793508abe7dd593853ece47d428 ]
 
-fib6_nh_mtu_change() re-fetches idev via __in6_dev_get(arg->dev) and
-dereferences idev->cnf.mtu6 without a NULL check. addrconf_ifdown()
-clears dev->ip6_ptr with RCU_INIT_POINTER() after rt6_disable_ip() has
-released tb6_lock, so the RA-driven MTU walk can observe a NULL idev and
-oops. The caller rt6_mtu_change_route() guards its own __in6_dev_get(),
-but this re-fetch is unguarded; nexthop-backed routes survive
-addrconf_ifdown()'s flush, so the walk still reaches it after ip6_ptr is
-nulled.
+thread__set_comm_from_proc() calls procfs__read_str() then strips
+the trailing newline via comm[sz - 1] = '\0'.  procfs__read_str()
+allocates the buffer before reading, so on an empty /proc/pid/comm
+(reachable during late exit teardown) it returns success with sz = 0
+and an unterminated heap buffer.
 
-Return 0 when idev is NULL, matching rt6_mtu_change_route() and the
-fib6_mtu() fix in commit 5ad509c1fdad ("ipv6: Fix null-ptr-deref in
-fib6_mtu().").
+The sz - 1 underflow was the original sashiko finding: it writes a
+null byte before the allocation.  But even with a sz > 0 guard on
+the newline strip, the unterminated buffer would still be passed to
+thread__set_comm() which calls strlen() — an unbounded heap read.
 
-  Oops: general protection fault, ... KASAN: null-ptr-deref in range
-        [0x00000000000002a8-0x00000000000002af]
-  RIP: 0010:fib6_nh_mtu_change+0x203/0x990
-   rt6_mtu_change_route+0x141/0x1d0
-   __fib6_clean_all+0xd0/0x160
-   rt6_mtu_change+0xb4/0x100
-   ndisc_router_discovery+0x24b5/0x2cb0
-   icmpv6_rcv+0x12e9/0x1710
-   ipv6_rcv+0x39b/0x410
+Fix by treating sz == 0 as failure: free the buffer and return -1.
+This is consistent with pmu.c's perf_pmu__parse_scale/unit which
+already treat len == 0 from filename__read_str as an error.
 
-Fixes: c0b220cf7d80 ("ipv6: Refactor exception functions")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260619045334.2427073-1-xmei5@asu.edu
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2f3027ac28bf6bc3 ("perf thread: Introduce method to set comm from /proc/pid/self")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/perf/util/thread.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 039e1304b03136..b8bf919a940f34 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -4829,6 +4829,9 @@ static int fib6_nh_mtu_change(struct fib6_nh *nh, void *_arg)
- 		struct inet6_dev *idev = __in6_dev_get(arg->dev);
- 		u32 mtu = f6i->fib6_pmtu;
- 
-+		if (!idev)
-+			return 0;
-+
- 		if (mtu >= arg->mtu ||
- 		    (mtu < arg->mtu && mtu == idev->cnf.mtu6))
- 			fib6_metric_set(f6i, RTAX_MTU, arg->mtu);
+diff --git a/tools/perf/util/thread.c b/tools/perf/util/thread.c
+index 665e5c0618ed3d..6840a2d357b6a6 100644
+--- a/tools/perf/util/thread.c
++++ b/tools/perf/util/thread.c
+@@ -282,6 +282,11 @@ int thread__set_comm_from_proc(struct thread *thread)
+ 	if (!(snprintf(path, sizeof(path), "%d/task/%d/comm",
+ 		       thread->pid_, thread->tid) >= (int)sizeof(path)) &&
+ 	    procfs__read_str(path, &comm, &sz) == 0) {
++		/* sz==0: read got nothing, e.g. race during exit teardown */
++		if (sz == 0) {
++			free(comm);
++			return -1;
++		}
+ 		comm[sz - 1] = '\0';
+ 		err = thread__set_comm(thread, comm, 0);
+ 	}
 -- 
 2.53.0
 
