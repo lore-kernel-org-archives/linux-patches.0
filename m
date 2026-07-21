@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD823370EA;
-	Tue, 21 Jul 2026 19:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0C730EF7E;
+	Tue, 21 Jul 2026 19:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663561; cv=none; b=T4KWEXcXyZfOLk07ccnxJ8dOHjp2CawACBqt7qAdJF5tMeUQabFyMraaILferWS+Ur534jz60fa6aUJDJL9mFugQIKLFLH3floYUXg6Luv4hWKMfCKp9FVDXIRW502NTl7M+jVL9IjY0amXTYt0mgsiWaDiqkrI/W7vJ91crgDU=
+	t=1784663563; cv=none; b=VW+maH7OrBlUCosz79RwL0CgJyOxsebdeogIba0zoi2t5wf3p242pEsRBy9ia/saenpHjIfv5g8XfBq3xnHxFvflbWup6xmwBXfsxww4ClSJUfyXUhEBOsvfSHnI58eHIHhGd0UOEBP8Hw+4TuomK1iTlAJ5O+tFY0yu/7SwALg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663561; c=relaxed/simple;
-	bh=Rxor9iIEypknTxfPKlXYesXOsAxdp8dDam9A8njZ4r8=;
+	s=arc-20240116; t=1784663563; c=relaxed/simple;
+	bh=LYtQ+9l987i2sTPzBji1pMv0a+WfFbS1AtNvvIxK3h8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VkqDuMJzIsuxOtBMt5rPOkU+b0hacsQ0UZM89wJ3M50uRtWT3U8swE0N/EPLYLZuKb+UEmSxup48gfWzKqciyOvsIui1yF7Zs/zhYU9PhA2UcOrZTF1exQ74k+5BpTAba4xazTnjRI/H3U3KrEbDW+gaHR4O8e1NJoPSmqqga64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vICT2xk1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NcxC3jcsiSjwZpLYLHrfhKN+av6UTJaKS2XkqElhzc+aVsCkJXvu8luhNoxx4/nMbD1aMpgQSr4iKI8MSyjpZ+5G6kyr6rOoWP8qJbZkcjiHdwiet5KwPS6IXvI8NJYwIkHp0FWMBjiUFG3lLQRCrMNuUxjWGKox0wzT9qzoL9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhR+rEL8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vICT2xk1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39DC1F000E9;
-	Tue, 21 Jul 2026 19:52:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhR+rEL8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD221F000E9;
+	Tue, 21 Jul 2026 19:52:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663560;
-	bh=DpwmHoOoiuyeyFyWuANlhV7oNjHJSV31wJqUIXgRFZU=;
+	s=korg; t=1784663562;
+	bh=BZ5UFHWuMcicaktoWkfSR0kk5Z9f+dLYwwMD5wqYVLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vICT2xk1ErOdnt6q7SGW5hFs1KpyJUf99/AUP0A7qYOOaYFOvxti/qAO9cokTYWQl
-	 gw4gvLE1Ba0LP3olCBmUjwpf+xKy4wCRD2F3rU6eBLbpeajZxdsgHlLFq80z9XZQiX
-	 7QcgUir1OIEzr5kBu9H5OS5cs9+pV6MgI3pJsZEU=
+	b=HhR+rEL8iiO705l3lTNJ0Vfg75jKSZXoo1Mq3GMvKKV/xziqhDo1RUfJWU8hz+QJ3
+	 9hfKEJb8WyySeq+3YDRVUPb7/WpCWfrP+5tkZC/1fwctpDTgke5+Fq6jXkgzMRQ/PR
+	 /utw6itkL882MqMWv4yfyRCz98yusWhDX1QZOau8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.12 0832/1276] KVM: arm64: vgic: Check the interrupt is still ours before migrating it
-Date: Tue, 21 Jul 2026 17:21:15 +0200
-Message-ID: <20260721152504.677850055@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>
+Subject: [PATCH 6.12 0868/1276] gpu: host1x: Fix device reference leak in host1x_device_parse_dt() error path
+Date: Tue, 21 Jul 2026 17:21:51 +0200
+Message-ID: <20260721152505.475268603@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,60 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 0074b82cdfcb5fd13710a0ac308ade68ac6f6fbe upstream.
+commit e75717f9aec04355777be41070890c6a815c76df upstream.
 
-vgic_prune_ap_list() drops both ap_list_lock and irq_lock while migrating
-an interrupt to another vCPU. After reacquiring the locks it only checks
-that the affinity is unchanged (target_vcpu == vgic_target_oracle(irq))
-before moving the interrupt, which assumes that an interrupt whose affinity
-is preserved is still queued on this vCPU's ap_list.
+After device_initialize(), the embedded struct device in struct
+host1x_device should be released through the device core with
+put_device().
 
-That assumption no longer holds if the interrupt is taken off the ap_list
-while the locks are dropped. vgic_flush_pending_lpis() removes the
-interrupt from the list and sets irq->vcpu to NULL, but leaves
-enabled/pending/target_vcpu untouched. As the interrupt is still enabled
-and pending, vgic_target_oracle() returns the same target_vcpu, so the
-affinity check passes and list_del() is run a second time on an entry that
-has already been removed.
+In host1x_device_add(), if host1x_device_parse_dt() fails, the current
+error path frees the object directly with kfree(device). That bypasses
+the normal device lifetime handling and leaks the reference held on the
+embedded struct device.
 
-Also check that the interrupt is still assigned to this vCPU
-(irq->vcpu == vcpu) before moving it.
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
 
-Fixes: 0919e84c0fc1 ("KVM: arm/arm64: vgic-new: Add IRQ sync/flush framework")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Link: https://patch.msgid.link/aiHnI1mu6SGQrgnz@v4bel
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Fix this by using put_device() in the host1x_device_parse_dt() failure
+path.
+
+Fixes: f4c5cf88fbd50 ("gpu: host1x: Provide a proper struct bus_type")
 Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Acked-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260413141526.2961841-1-lgs201920130244@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/gpu/host1x/bus.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/vgic/vgic.c
-+++ b/arch/arm64/kvm/vgic/vgic.c
-@@ -684,15 +684,16 @@ retry:
- 		raw_spin_lock(&irq->irq_lock);
+--- a/drivers/gpu/host1x/bus.c
++++ b/drivers/gpu/host1x/bus.c
+@@ -457,7 +457,7 @@ static int host1x_device_add(struct host
  
- 		/*
--		 * If the affinity has been preserved, move the
--		 * interrupt around. Otherwise, it means things have
--		 * changed while the interrupt was unlocked, and we
--		 * need to replay this.
-+		 * If the interrupt is still ours and its affinity has
-+		 * been preserved, move it around. Otherwise, it means
-+		 * things have changed while the interrupt was unlocked
-+		 * (it may even have been taken off the list with its
-+		 * affinity left untouched), and we need to replay this.
- 		 *
- 		 * In all cases, we cannot trust the list not to have
- 		 * changed, so we restart from the beginning.
- 		 */
--		if (target_vcpu == vgic_target_oracle(irq)) {
-+		if (irq->vcpu == vcpu && target_vcpu == vgic_target_oracle(irq)) {
- 			struct vgic_cpu *new_cpu = &target_vcpu->arch.vgic_cpu;
+ 	err = host1x_device_parse_dt(device, driver);
+ 	if (err < 0) {
+-		kfree(device);
++		put_device(&device->dev);
+ 		return err;
+ 	}
  
- 			list_del(&irq->ap_list);
 
 
