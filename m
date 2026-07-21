@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14362415F14;
-	Tue, 21 Jul 2026 19:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AF0415F14;
+	Tue, 21 Jul 2026 19:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661562; cv=none; b=YSospBmibw7P2V5QMqxSDBRnRIkLQRm2+bj1v5qJzfcCN/vP+Kys65MJe4DTe2k6plUpb+XABw1S9KaS8u+zqT5KTZyCrDCZhtiZKwOaDX0kyc5lY3dRxGs6PvVGtiaa/gWs6igiAnwqap1v/KW1ZYr2emrMWMprnEnjkHe4x0c=
+	t=1784661564; cv=none; b=KgDwIl8jkqTeeEm6nSpDaVHTuUtkO4DHemiZBpapWPoyVZYWzUnENL8xO84c+Qe7D4P5AcbA9VlvKbOVAp3PkC8uny/iB7Po506l02AEjccB7+TFZMNDjeSJHtcZoIl9dgQg84pNbxSQ6JJi/uMC1H/r+UBiPXovkiUncW7A0R8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661562; c=relaxed/simple;
-	bh=YyZn+46/N71F4UlvLgadq5Q1Z8og5sQop4xwdl8aEVM=;
+	s=arc-20240116; t=1784661564; c=relaxed/simple;
+	bh=Nb/JJBdJQOO+H94bVnVZp29kJBzToXBTYN5/p2Pr9Ew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S/r9wbZAPXf3RndhGezSOVbqj7iI8R0oAoD4EAaweSLN6m+hPfzs3QcB/L6hgkZcKkav/pAsFB3z9pGxlFDukZK590T0QCC/wUUImsQxV2UCDhGAueCjwjg9/EPRhm89CO32umNwR9pNo4ZgtZVyL3efjzwFOb+ecZ2o4V9q2W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqFy1yog; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FQWZFSXvGuaTt3uDyETz9otufTYZvQOlRPqzIWkYB0FhJmedUffw2PUlUfGGD/wKBu0VMljikZLXWNFG7OVJEjJ0XAPS15QNwjX6lU4OsOiB446IrT/bO5crXfuxZofzByDAx3gDaEIbc0ZRZUNV+QLjiF9dkPr5436rsOzWCwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGQ/kY/O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqFy1yog"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B34E1F00A3A;
-	Tue, 21 Jul 2026 19:19:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGQ/kY/O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9AC1F000E9;
+	Tue, 21 Jul 2026 19:19:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661561;
-	bh=FNMcC5UTpV3Ozg19Ip0pm1sPMCMzprH+vNXxBQzBiS8=;
+	s=korg; t=1784661563;
+	bh=/FkaRndpTIgebSWBRHyIYgf+NpFc+k/luQHmEr5ryzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cqFy1yoglSksVUpT0vj12HFaGwS+gmtjWbbP8hskxfqN1IvULGhPuJJDD/dRWkCqZ
-	 /TVM2AzLV+W0NegtNYOrkvlMaXTSRBHA5YZPpIHonG7QP67UWOg6YPhxBrh/oUId3a
-	 dOi59B5pAQGO+niVoptGbgIEssKnDXdbXksq5Oo8=
+	b=MGQ/kY/OF0rMHX89aqpjxjna4Km/JaR5Uzz73I4wjnZEpNzxioS2xX2Nhi9fmbBEM
+	 mLkGvHzXDNmFaGsXdDqMw2TfBq6oKeYMSVcEaRdHvfc9tPHqvx8aeYoELNjEXC6jLk
+	 JS8U2f95QH092vQG9+mm3k4nPOxl0PiDAzf4jK84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Stepan Ionichev <sozdayvek@gmail.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0113/1276] thermal: hwmon: Fix critical temperature attribute removal
-Date: Tue, 21 Jul 2026 17:09:16 +0200
-Message-ID: <20260721152448.627635323@linuxfoundation.org>
+Subject: [PATCH 6.12 0114/1276] clk: scpi: Unregister child clock providers on remove
+Date: Tue, 21 Jul 2026 17:09:17 +0200
+Message-ID: <20260721152448.650354401@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,60 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-[ Upstream commit c2114dbda05354dbcf4dfbb30a2c623e8611c43a ]
+[ Upstream commit b79d9b5747d961516c35ef4d5e91efa579fd3e9a ]
 
-Since the return value of thermal_zone_crit_temp_valid() depends on
-the behavior of the thermal zone .get_crit_temp() callback which
-may change over time in theory, thermal_remove_hwmon_sysfs() may
-attempt to remove a critical temperature attribute that has not
-been created, passing a pointer to an uninitialized attribute
-structure to device_remove_file().
+SCPI clock providers are registered for each child node in
+scpi_clk_add(), but scpi_clocks_remove() unregisters the parent node on
+each iteration.
 
-To avoid that, set a flag in struct thermal_hwmon_temp after creating
-a critical temperature attribute and use the value of that flag to
-decide whether or not the attribute needs to be removed.
+of_clk_del_provider() matches providers by the node used at registration
+time, so passing the parent node leaves the child providers registered.
+This leaks the provider allocations and the node references held by the
+clock provider core.
 
-Fixes: e8db5d6736a7 ("thermal: hwmon: Make the check for critical temp valid consistent")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2437056.ElGaqSPkdT@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Pass the child node to of_clk_del_provider() so the remove path matches
+the probe path.
+
+Fixes: cd52c2a4b5c4 ("clk: add support for clocks provided by SCP(System Control Processor)")
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Link: https://patch.msgid.link/20260513090900.5323-1-sozdayvek@gmail.com
+(sudeep.holla: Updated commit title and message a bit)
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_hwmon.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/clk/clk-scpi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/thermal_hwmon.c b/drivers/thermal/thermal_hwmon.c
-index f0e504fd866aeb..112188c15c30ec 100644
---- a/drivers/thermal/thermal_hwmon.c
-+++ b/drivers/thermal/thermal_hwmon.c
-@@ -40,6 +40,7 @@ struct thermal_hwmon_temp {
- 	struct thermal_zone_device *tz;
- 	struct thermal_hwmon_attr temp_input;	/* hwmon sys attr */
- 	struct thermal_hwmon_attr temp_crit;	/* hwmon sys attr */
-+	bool temp_crit_present;
- };
- 
- static LIST_HEAD(thermal_hwmon_list);
-@@ -194,6 +195,8 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
- 					    &temp->temp_crit.attr);
- 		if (result)
- 			goto unregister_input;
-+
-+		temp->temp_crit_present = true;
+diff --git a/drivers/clk/clk-scpi.c b/drivers/clk/clk-scpi.c
+index 19d530d52e647b..50ac1cd2557857 100644
+--- a/drivers/clk/clk-scpi.c
++++ b/drivers/clk/clk-scpi.c
+@@ -256,7 +256,7 @@ static void scpi_clocks_remove(struct platform_device *pdev)
  	}
  
- 	mutex_lock(&thermal_hwmon_list_lock);
-@@ -238,7 +241,7 @@ void thermal_remove_hwmon_sysfs(struct thermal_zone_device *tz)
- 	}
+ 	for_each_available_child_of_node(np, child)
+-		of_clk_del_provider(np);
++		of_clk_del_provider(child);
+ }
  
- 	device_remove_file(hwmon->device, &temp->temp_input.attr);
--	if (thermal_zone_crit_temp_valid(tz))
-+	if (temp->temp_crit_present)
- 		device_remove_file(hwmon->device, &temp->temp_crit.attr);
- 
- 	mutex_lock(&thermal_hwmon_list_lock);
+ static int scpi_clocks_probe(struct platform_device *pdev)
 -- 
 2.53.0
 
