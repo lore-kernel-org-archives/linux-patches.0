@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3CF471264;
-	Tue, 21 Jul 2026 18:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DD5471262;
+	Tue, 21 Jul 2026 18:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659405; cv=none; b=ZhaJqhPPlpP/Umd/B32x8QkWv3AtdsF0wdrXYZZrhPOOWMcx//B7EX+rrcesHW9ihVb4FsYIynmPSnjlqROMzrkzn4iFE4ZpRhCY+Gy1DtCo1EmshY1ygCvzS6br1rVsgVIhfL6txfX/a1MhoOzdOldribYGMDGOQ1eamS9dBro=
+	t=1784659408; cv=none; b=rdVmD0k08So06bQMgc3MPMW4UYnXetj/mQ1xzgVob/3Kp1279whfCCcNgNFJen+Eq937Roa+OtDifsj/wRW0Lc+bHgKknjdPaopxgz/oKYAP1/7YdxZN4oaxOGFHv4juup8qcsK0DDYJnVsv+zKQ2z+7FBWInqgj8ZXl8akdQSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659405; c=relaxed/simple;
-	bh=lSN0HwmRp/bkPLXLO3AXnAG4KJYlCiVxIB7CKiHf9Z8=;
+	s=arc-20240116; t=1784659408; c=relaxed/simple;
+	bh=tYmtemzoAJpP3C0gr0JGtl7hbneEAzhjy5k/S9nGahs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iMbFTJCj7Jx+pL0HtAh6HwX2p9UtNDRZMuYcGt2xkGX/ey3PU6DadZ9amRIlElqVQ8cUa097jEfwDsibfVvjcSyyFug01ZZrKw555P1ACiYOxwEUEh9+oIy2ivlItW4Hi0E83EYvZCbZPEyUF+ntEK8pGSlPHlWuiEDMWESwWp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1b6kM8l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yvu26Jprchk96qXGe1Db6y3nFHcXMZ4IWwxp/s5yF1mPtVXHulcse/tPMOyt8fUqCcba9Oz4lVq6EiklhA9VlupIhi6olx5H1gj7QmATV6xO/m0VvAUiWfWEpC62nMpEF/7fKbXcCyYxqvXNG2hyvIS+9MZC7MLYdMg3UaAYwr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJwCkd3H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1b6kM8l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D073F1F000E9;
-	Tue, 21 Jul 2026 18:43:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJwCkd3H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 799711F000E9;
+	Tue, 21 Jul 2026 18:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659404;
-	bh=kEHzi9KjOCLIKwMhBEVj4YWr77S8Ngqtc//KTtqhtPA=;
+	s=korg; t=1784659407;
+	bh=6S0Ik92Ox2DQSSpwHf/Tuk3EtsgDTAk1T+KOI3AhXi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S1b6kM8lT/WXbB8Q9Q7MPgTvQjZIc9W5FwaS9U/gPv/P2r2ziWUntxbX+e/VB33+W
-	 lj28VzSxMk6Nx9dUQhZvS97wqh3hn3pk6xx73FZnTI/iQGOx0W3uG1fbzCdtMEjwqn
-	 ZfiR3s/jo0DRZBDDcsHW4KvInXSZ0iHIC87IHLVg=
+	b=OJwCkd3HRDzXzekD2nMaVcKURmxiQq/wlkcu3Mnlc0sdic0TWdu+luHD3rLzWPzZA
+	 85H+jASAYMgLn9GOOMHCDkvGKJej5cvg84TDj/UvXcWbMoVzplcgjY+NBNxVl+EP5A
+	 P0FduxwC4e1PgsNbaZg1O/acz9Ts5dfSBbb0xMqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Haibo Chen <haibo.chen@nxp.com>,
 	Luke Wang <ziniu.wang_1@nxp.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 1508/1611] mmc: sdhci-esdhc-imx: remove unnecessary mmc_card_wake_sdio_irq check for tuning save/restore
-Date: Tue, 21 Jul 2026 17:27:04 +0200
-Message-ID: <20260721152549.360452989@linuxfoundation.org>
+Subject: [PATCH 6.18 1509/1611] mmc: sdhci-esdhc-imx: restore DLL override for DDR modes on resume
+Date: Tue, 21 Jul 2026 17:27:05 +0200
+Message-ID: <20260721152549.383385548@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -55,21 +55,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Luke Wang <ziniu.wang_1@nxp.com>
 
-commit 899160e2774d9952e9f2770b38f701ff1906c0b2 upstream.
+commit 2439becd91bad6883b135044f85f83a0538b96a6 upstream.
 
-The tuning save/restore during system PM is conditioned on
-mmc_card_wake_sdio_irq(), but this check is unrelated to whether
-tuning values need to be preserved. The actual requirement is that
-the card keeps power during suspend and the controller is a uSDHC.
+sdhci_esdhc_imx_hwinit() unconditionally clears ESDHC_DLL_CTRL by
+writing zero. For SDIO devices that keep power during system suspend
+and operate in DDR mode, the card remains in DDR timing while the host
+DLL override configuration is lost.
 
-SDIO devices using out-of-band GPIO wakeup maintain power during
-suspend but do not set the SDIO IRQ wake flag. In this case the
-tuning delay values are not saved/restored.
+Extract the DLL override setup from esdhc_set_uhs_signaling() into
+a helper esdhc_set_dll_override(), and call it on the resume path
+when the card kept power and is using a DDR timing mode.
 
-Remove the unnecessary mmc_card_wake_sdio_irq() condition from both
-the suspend save and resume restore paths.
-
-Fixes: c63d25cdc59a ("mmc: sdhci-esdhc-imx: Save tuning value when card stays powered in suspend")
+Fixes: 676a83855614 ("mmc: host: sdhci-esdhc-imx: refactor the system PM logic")
 Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Reviewed-by: Haibo Chen <haibo.chen@nxp.com>
@@ -78,30 +75,79 @@ Cc: stable@vger.kernel.org
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-esdhc-imx.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/mmc/host/sdhci-esdhc-imx.c |   39 ++++++++++++++++++++++++++-----------
+ 1 file changed, 28 insertions(+), 11 deletions(-)
 
 --- a/drivers/mmc/host/sdhci-esdhc-imx.c
 +++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -2041,8 +2041,7 @@ static int sdhci_esdhc_suspend(struct de
- 	 * to save the tuning delay value just in case the usdhc
- 	 * lost power during system PM.
- 	 */
--	if (mmc_card_keep_power(host->mmc) && mmc_card_wake_sdio_irq(host->mmc) &&
--	    esdhc_is_usdhc(imx_data))
-+	if (mmc_card_keep_power(host->mmc) && esdhc_is_usdhc(imx_data))
- 		sdhc_esdhc_tuning_save(host);
+@@ -1338,6 +1338,23 @@ static int esdhc_change_pinstate(struct
+ 	return pinctrl_select_state(imx_data->pinctrl, pinctrl);
+ }
  
- 	if (device_may_wakeup(dev)) {
-@@ -2107,8 +2106,7 @@ static int sdhci_esdhc_resume(struct dev
++static void esdhc_set_dll_override(struct sdhci_host *host)
++{
++	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
++	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
++	struct esdhc_platform_data *boarddata = &imx_data->boarddata;
++	u32 v;
++
++	if (!boarddata->delay_line)
++		return;
++
++	v = boarddata->delay_line << ESDHC_DLL_OVERRIDE_VAL_SHIFT |
++	    (1 << ESDHC_DLL_OVERRIDE_EN_SHIFT);
++	if (is_imx53_esdhc(imx_data))
++		v <<= 1;
++	writel(v, host->ioaddr + ESDHC_DLL_CTRL);
++}
++
+ /*
+  * For HS400 eMMC, there is a data_strobe line. This signal is generated
+  * by the device and used for data output and CRC status response output
+@@ -1393,7 +1410,6 @@ static void esdhc_set_uhs_signaling(stru
+ 	u32 m;
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
+-	struct esdhc_platform_data *boarddata = &imx_data->boarddata;
+ 
+ 	/* disable ddr mode and disable HS400 mode */
+ 	m = readl(host->ioaddr + ESDHC_MIX_CTRL);
+@@ -1414,15 +1430,7 @@ static void esdhc_set_uhs_signaling(stru
+ 		m |= ESDHC_MIX_CTRL_DDREN;
+ 		writel(m, host->ioaddr + ESDHC_MIX_CTRL);
+ 		imx_data->is_ddr = 1;
+-		if (boarddata->delay_line) {
+-			u32 v;
+-			v = boarddata->delay_line <<
+-				ESDHC_DLL_OVERRIDE_VAL_SHIFT |
+-				(1 << ESDHC_DLL_OVERRIDE_EN_SHIFT);
+-			if (is_imx53_esdhc(imx_data))
+-				v <<= 1;
+-			writel(v, host->ioaddr + ESDHC_DLL_CTRL);
+-		}
++		esdhc_set_dll_override(host);
+ 		break;
+ 	case MMC_TIMING_MMC_HS400:
+ 		m |= ESDHC_MIX_CTRL_DDREN | ESDHC_MIX_CTRL_HS400_EN;
+@@ -2106,9 +2114,18 @@ static int sdhci_esdhc_resume(struct dev
  	 * restore the saved tuning delay value for the device which keep
  	 * power during system PM.
  	 */
--	if (mmc_card_keep_power(host->mmc) && mmc_card_wake_sdio_irq(host->mmc) &&
--	    esdhc_is_usdhc(imx_data))
-+	if (mmc_card_keep_power(host->mmc) && esdhc_is_usdhc(imx_data))
+-	if (mmc_card_keep_power(host->mmc) && esdhc_is_usdhc(imx_data))
++	if (mmc_card_keep_power(host->mmc) && esdhc_is_usdhc(imx_data)) {
  		sdhc_esdhc_tuning_restore(host);
  
++		/*
++		 * Restore DLL override for DDR modes. hwinit unconditionally
++		 * clears ESDHC_DLL_CTRL, but the card is still in DDR mode.
++		 */
++		if (host->timing == MMC_TIMING_UHS_DDR50 ||
++		    host->timing == MMC_TIMING_MMC_DDR52)
++			esdhc_set_dll_override(host);
++	}
++
  	pm_runtime_put_autosuspend(dev);
+ 
+ 	return ret;
 
 
