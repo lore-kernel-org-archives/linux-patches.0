@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B183C434E2C;
-	Tue, 21 Jul 2026 15:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5561D46A611;
+	Tue, 21 Jul 2026 15:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648903; cv=none; b=dEQZ7ei66fYVOMkVWt70IFViOE3sFsloC0dfo3a+ttWm2tyPxe6+f/QbxXjF81V9SmHeFuN11CJ4xRkuH5jR72FO1mIN2fD9caUO0VTVx/5tYvpjAWwdDLlaBg3YbyEzfc5Bdo4NgciGGJNr1nHJGvArbBq/NtpyMISw3LIMROw=
+	t=1784648906; cv=none; b=C1eXhN3VEhjMrWGiDPuwqBPJmSepyrA0IaVZQz5ecZv2VI5sUOxyDno8UOpDzhR5PTpOEYROBRqal43YLa8HqJ5lqY/4MciLI06b0lpu0d0sPKf7nVqgmvxCjLjpsr93pdrwHEsCSr0C3uP3Peah70JbIFOfLWNeOuypUmOV1V0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648903; c=relaxed/simple;
-	bh=WqCMqQ+yrdmoDmPv5PaWzAZavDxm7p6GWI3FzkpC8iI=;
+	s=arc-20240116; t=1784648906; c=relaxed/simple;
+	bh=5JIeuv11Xj5nVT97nIvUVsqdp70grb0Y9gC7OzKBsLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SlPaQ3yi0hp3Vz3IUhs9AODpoW9W5Anvm+AjtAkKftVla4QPSUsk4hZOHTB/Wv3Uf3GrCNFlFFUyDa5YYaXzH04gWw4h3qr1fIoeD8UiJKB6X9Xybg6lH8QzYCz1TtbsEkCRXMNJqCjABee5g/l15vrmExG6j97H9k398R0NQ6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tCFk3heL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=feCuj+7AiB9WA9XiAsqVFKMjv5i0nBkY9jvDux73VOLNFHx5wKZwW2yMKqT8kEhToc4JG9RkV0F/Bg9z0H/zZMRfAT2Saa3VUyQRTiALVt62k1jbHHw+/qIP09rwkyIp4+d9uOtxp62jQv+4829eQthVej2e0xwg9QgVZuHCEF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+x8tGag; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCFk3heL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E3D1F000E9;
-	Tue, 21 Jul 2026 15:48:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+x8tGag"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72D231F000E9;
+	Tue, 21 Jul 2026 15:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648902;
-	bh=U4lWV2DhhgmwazWnJMAMs5pXzPYVD2yZ+NwjZ6wIVT8=;
+	s=korg; t=1784648904;
+	bh=baIvD206u7VgW0qv/SrTTBGMw2wzZgJbKt7St0UlQ+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tCFk3heLmNL3oeSNzj5TZldQm+Xui1DSxx5/ail18NPJH5aoLOzl7Pda0Cskg+RH5
-	 d/WDifoL+XzmPIffJ/Ngt+x0ncfSWWc49Ir/ewuYiclgmT2NL38QS436LlW8ruC/xS
-	 OTKuBFEsV6CwvZsSwZKb8uDYUmdw9XClzTOepRUs=
+	b=B+x8tGag/jzbGQspTMltAQIFB5zukuHIOT84pM0KEQXSXEVb5ObrLxXkmDmgpVBlU
+	 DmLh3Mm+X0qlNGgG8Vy9nfhZumPJuuIulh2+nwc62Qj5EjyKQ4SwNFuI5KyfqdRtQj
+	 FCHYUbyDFV3o+R8OgTAgSqeQV/1gbZwGq7jM/UIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0376/2077] drm/msm/a8xx: Fix RSCC offset
-Date: Tue, 21 Jul 2026 17:00:49 +0200
-Message-ID: <20260721152601.559537224@linuxfoundation.org>
+Subject: [PATCH 7.1 0377/2077] EDAC/igen6: Fix call trace due to missing release()
+Date: Tue, 21 Jul 2026 17:00:50 +0200
+Message-ID: <20260721152601.582619647@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,41 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit 586a34dafc08c4fa68d1b4673de24cd84d09df05 ]
+[ Upstream commit ab1f9d466c7d83ab0d2a529e07984e53b5960dcd ]
 
-In A8xx, the RSCC block is part of GPU's register space. Update the
-virtual base address of rscc to point to the correct address.
+When unloading the igen6_edac driver, there is a call trace:
 
-Fixes: 50e8a557d8d3 ("drm/msm/a8xx: Add support for A8x GMU")
-Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/727117/
-Message-ID: <20260522-glymur-gpu-dt-v5-1-562c406b210c@oss.qualcomm.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+  Device '(null)' does not have a release() function, it is broken and must be fixed.
+  See Documentation/core-api/kobject.rst.
+  WARNING: drivers/base/core.c:2567 at device_release+0x84/0x90, CPU#5: rmmod/127209
+  ...
+  RIP: 0010:device_release+0x84/0x90
+  Call Trace:
+   <TASK>
+   kobject_put+0x8c/0x220
+   put_device+0x17/0x30
+   igen6_unregister_mcis+0xa2/0xe0 [igen6_edac]
+   igen6_remove+0x82/0xb0 [igen6_edac]
+   ...
+
+Fix the call trace by providing empty release() functions for the
+memory controller devices.
+
+Fixes: 10590a9d4f23 ("EDAC/igen6: Add EDAC driver for Intel client SoCs using IBECC")
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://patch.msgid.link/20260403054029.3950383-2-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/edac/igen6_edac.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 1b44b9e21ad868..cab4c46c6cf2ea 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -2357,7 +2357,12 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
- 			goto err_mmio;
- 		}
- 	} else if (adreno_is_a8xx(adreno_gpu)) {
--		gmu->rscc = gmu->mmio + 0x19000;
-+		/*
-+		 * On a8xx , RSCC lives at GPU base + 0x50000, which falls
-+		 * inside the GPU's kgsl_3d0_reg_memory range rather than the
-+		 * GMU's.
-+		 */
-+		gmu->rscc = gpu->mmio + 0x50000;
- 	} else {
- 		gmu->rscc = gmu->mmio + 0x23000;
- 	}
+diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
+index fcb8ab44cba55b..0bf9cf349d0b4e 100644
+--- a/drivers/edac/igen6_edac.c
++++ b/drivers/edac/igen6_edac.c
+@@ -1296,6 +1296,11 @@ static bool igen6_imc_absent(void __iomem *window)
+ 	return readl(window + MAD_INTER_CHANNEL_OFFSET) == ~0;
+ }
+ 
++static void imc_release(struct device *dev)
++{
++	/* Nothing to do, the 'imc' owns the 'dev' and will also release it. */
++}
++
+ static int igen6_register_mci(int mc, void __iomem *window, struct pci_dev *pdev)
+ {
+ 	struct edac_mc_layer layers[2];
+@@ -1334,6 +1339,7 @@ static int igen6_register_mci(int mc, void __iomem *window, struct pci_dev *pdev
+ 	mci->pvt_info = &igen6_pvt->imc[mc];
+ 
+ 	imc = mci->pvt_info;
++	imc->dev.release = imc_release;
+ 	device_initialize(&imc->dev);
+ 	/*
+ 	 * EDAC core uses mci->pdev(pointer of structure device) as
 -- 
 2.53.0
 
