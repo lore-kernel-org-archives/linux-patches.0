@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01301443AB3;
-	Tue, 21 Jul 2026 21:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B64094446EA;
+	Tue, 21 Jul 2026 21:08:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668080; cv=none; b=nlNGE8jGVVyx7g/Sz17MLY1NY3A/7u6/Am6WA6fFh+Gekda2tOCqw3poA/Mv8pu32Mynat4WGs5yYRhMKbq4HV1rZPpXESwAi9ScSRUmr1TAnJte6ShTlWxKYu1HY957EbSbOkFdrgjv+RVoxtLJbocSDo6HjReQw1ewirTH5wk=
+	t=1784668082; cv=none; b=sqjc6X/Rg1CoRvP8bRoTjtKWzMKG05ch+VsRvKMBwo0DRz156NOOF/RxgpXDZDXun8AcLaTEqaw2xfA4SbLkDZXnOe66uzIowkqC7nQbAE7KAn76YTO4c/Hrunwwpb0Jv4YfFti9AP/rJymzYmNlfImdjBXuiXcFyjn36VTaa0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668080; c=relaxed/simple;
-	bh=EbIRrbbiQK06m/0g8SvjWRtKbowwFjbm51paS+Jct3k=;
+	s=arc-20240116; t=1784668082; c=relaxed/simple;
+	bh=tapXgIuXEKW933Y9h2meXcV7aPh1LDtcHsUn3R7u930=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QNiCwhh5q75VczjFkKKS4P9nzhSPLKeTTOKMjZqb6d5VbDuywhqNM7IlYoi6u1Nnp7PKX7cPTyY7rw/8tMV8knRE3yBJfwSp561FICszbsuE+3CiM609DBuW/B+/TIbhLMEZdqn0vd7aqgaCaB2XAApQ1XQliTP7noRfk0oa8Mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XQ1nXgB3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NcX2abztdr+WGUSuVr1W/WA8DKpuiCEYcXQSImZnuFtta6SeOde9eredebDG3sfYer7xa+k4zeJlxCyOyzbdTpYctBUD9ABgPeKT00AjZgdZ/o7sSFi4t2kYPJ7xJE+cwbaikFF4mn64oL1h5jMK80asSn9T+hB4z4O6nLfhokg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSIHpEUm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XQ1nXgB3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680711F000E9;
-	Tue, 21 Jul 2026 21:07:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSIHpEUm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218041F000E9;
+	Tue, 21 Jul 2026 21:08:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668078;
-	bh=2d8PhelC6I3HPMeVu2WT0DcjD948WkFl6zFTsc/kWRs=;
+	s=korg; t=1784668081;
+	bh=VVarg6RYx9kvedrBmmvQJtjaXp0KxM5GH8B08wSS3hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XQ1nXgB3wReGEbNUqB2mk66ksXBnFkKXL2YrJKaNCMXPC6LRhKrXtJmgEsGPI1Oc+
-	 Hg/3xoDUtOdL/2Ss1nS8238iOX3KW87pWnV/9si0XmYnT7NEmRxj61r3AsV1ratI/N
-	 RDpLwyPCnPAE4kVMxOQtliqw9IRDkoyxRKG7id24=
+	b=sSIHpEUmxVrYuVElv570AHp/YBtZy7wXeoK5+km7qPVV1y1Q/4s5NJaG/MPOsrrDv
+	 hWk/zhIfEwe8Ck+MqwZ97CvysggrHUaTPqEkiOL+TC62Ol4Wxc1C7MdSVZLGw11giv
+	 OUq/+7yeW3yFfJynWu/VBzUG8XvyRs80MteHtn9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org,
 	carnil@debian.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
 	Wentao Guan <guanwentao@uniontech.com>
-Subject: [PATCH 6.1 0039/1067] file: add fput() cleanup helper
-Date: Tue, 21 Jul 2026 17:10:40 +0200
-Message-ID: <20260721152425.431323327@linuxfoundation.org>
+Subject: [PATCH 6.1 0040/1067] eventpoll: use hlist_is_singular_node() in __ep_remove()
+Date: Tue, 21 Jul 2026 17:10:41 +0200
+Message-ID: <20260721152425.453040452@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -55,37 +54,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 257b1c2c78c25643526609dee0c15f1544eb3252 ]
+[ Upstream commit 3d9fd0abc94d8cd430cc7cd7d37ce5e5aae2cd2b ]
 
-Add a simple helper to put a file reference.
+Replace the open-coded "epi is the only entry in file->f_ep" check
+with hlist_is_singular_node(). Same semantics, and the helper avoids
+the head-cacheline access in the common false case.
 
-Link: https://lore.kernel.org/r/20240719-work-mount-namespace-v1-4-834113cab0d2@kernel.org
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Link: https://patch.msgid.link/20260423-work-epoll-uaf-v1-1-2470f9eec0f5@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Stable-dep-of: a6dc643c6931 ("eventpoll: fix ep_remove struct eventpoll / struct file UAF")
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
 Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/file.h |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/eventpoll.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/file.h
-+++ b/include/linux/file.h
-@@ -11,6 +11,7 @@
- #include <linux/posix_types.h>
- #include <linux/errno.h>
- #include <linux/cleanup.h>
-+#include <linux/err.h>
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -745,7 +745,7 @@ static bool __ep_remove(struct eventpoll
  
- struct file;
- 
-@@ -93,6 +94,7 @@ extern void put_unused_fd(unsigned int f
- 
- DEFINE_CLASS(get_unused_fd, int, if (_T >= 0) put_unused_fd(_T),
- 	     get_unused_fd_flags(flags), unsigned flags)
-+DEFINE_FREE(fput, struct file *, if (!IS_ERR_OR_NULL(_T)) fput(_T))
- 
- extern void fd_install(unsigned int fd, struct file *file);
- 
+ 	to_free = NULL;
+ 	head = file->f_ep;
+-	if (head->first == &epi->fllink && !epi->fllink.next) {
++	if (hlist_is_singular_node(&epi->fllink, head)) {
+ 		/* See eventpoll_release() for details. */
+ 		WRITE_ONCE(file->f_ep, NULL);
+ 		if (!is_file_epoll(file)) {
 
 
