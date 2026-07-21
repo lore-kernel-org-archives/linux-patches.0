@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E0547012D;
-	Tue, 21 Jul 2026 18:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2C0470420;
+	Tue, 21 Jul 2026 18:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659564; cv=none; b=D/7VkwXU0NAAH5MRjr1CTfSIaSuPVlEFMUc0mz13PzyOqgbf0Ep9MobSmZnApkpm8svkoRC1a/Q4nIfFCzhQIOK+u/vBiyBFbDx+IegsQNZLNjNQsU8xyNWQK4M0AE2M8eInoqnGEDNneausqBADfz/ANQABe8jFhE/dIgsajr4=
+	t=1784659567; cv=none; b=tA++Md0KL27Ar20jsQskeVHZY4/caZEfe9M9s7GHz2P1WDiC10gg4GMte+u6t+m4hSzTWVrDfrSg5vNDRjPIzDmoUNn4LdxuYk2zZSATqH1wd10HWg9aLPpQFb+qXGEO7eoXGoRV7k3A/+YwIn8S9YyXJcEF2FOIDo4Jtn4NXNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659564; c=relaxed/simple;
-	bh=vzCeQ6f/qV7mwIF6ljwYRTRYEw5B0LegHd8gMMZR0Zk=;
+	s=arc-20240116; t=1784659567; c=relaxed/simple;
+	bh=AFpQSVfaSgFfsvRXNqa/xy1V6vgh1CURSLtK6UluiIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K0VBvvbXbI50j2of97ndps0D1fbNCihdDpjcW8u+acTmmZz4ZzT6lwOOFhXNSrFU2udJhXSQ0X12rP5UajNqfo2YGon+kiTInLxd3OUqtXWxrot1DLf3ocrFPM/d8YsPIQFHke2H8DXgPRNvumeVBAMMLAJZJtunPZ2p95ct9KE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KMmOOGcV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rDDLV/lvg7l311TE1OXLbDhIkDW8hTlldC+WyP40qCkoQON2wTNeetriBrq4n/9+h7o6NeBAnqEvYVEGQZ0jA3q1rS1XDu4ifNO1E9Ut9PencBflvrHaNfRSzXTGLnEt9BRTFher12zr+b2q9YfIE8wehh5FxCptlklVn03yKx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0qiwdSta; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KMmOOGcV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA14B1F00A3D;
-	Tue, 21 Jul 2026 18:46:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0qiwdSta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852241F000E9;
+	Tue, 21 Jul 2026 18:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659563;
-	bh=DB/nbYh9rVp713gHo3uG/meUDbOY7cc6NDVC0IxgFLU=;
+	s=korg; t=1784659566;
+	bh=Wc7G1AwMF9kC89xxOoyCX5Fl7giwrurAhD9AZk79RF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KMmOOGcVLMMrOFtDnaRiqunNFzaxvcQsb2CMYxRLTNhhJFShQiY+UjTPcpIY84vsl
-	 2zmp6TkRs0OMabVSN9fql5Tw6t3e57tC/p7+crumc8f9g4ZL2m9TnLntmLTZK8jEB8
-	 i3NAa3oj16Ak5odOqt/cBDBOwtLjTEFsuce5eTlw=
+	b=0qiwdStaw+vnzvM9GZip2JWfiltt/ZyyoPZBOAbSAOr8hDcUQrk/HNaRdMxvk51P0
+	 OwpReMBDiGCoPtA0bzsI5pYaYflzxw6X4GSxtCO/5QiuExioe4gDZIU841x13+jLl/
+	 ZQnzI1wGInVpaXrNk6l7Qjoy5boMglJNwkNTUOIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1567/1611] bpf: Keep dynamic inner array lookups nullable
-Date: Tue, 21 Jul 2026 17:28:03 +0200
-Message-ID: <20260721152550.709678063@linuxfoundation.org>
+Subject: [PATCH 6.18 1532/1611] PCI: Change pci_dev variable from bridge to dev
+Date: Tue, 21 Jul 2026 17:27:28 +0200
+Message-ID: <20260721152549.906028078@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -47,90 +46,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 53040a81ae57cdca8af8ac36fe4e661730cf7c6b ]
+[ Upstream commit 34c702ea0497e092a487eacdf28a037f43e3e39f ]
 
-An ARRAY_OF_MAPS can use an array created with BPF_F_INNER_MAP as its
-inner map template. A concrete inner array with a different max_entries
-value can then replace the template.
+Upcoming fix to BAR resize will store also device BAR resource in the
+saved list. Change the pci_dev variable in the loop from 'bridge' to
+'dev' as the former would be misleading with non-bridges in the list.
 
-After a successful outer map lookup, the verifier represents the
-resulting map pointer using the inner map template. Const-key lookup
-nullness elision consequently uses the template max_entries even though
-the runtime helper uses the concrete inner map max_entries.
+This is in a separate change to reduce churn in the upcoming BAR resize
+fix.
 
-Do not elide lookup result nullness for maps marked with BPF_F_INNER_MAP,
-because the template max_entries does not prove that the key is in bounds
-for the concrete runtime map.
+While it appears that the logic in the loop doing pci_setup_bridge() is
+altered as 'bridge' variable is no longer updated, a bridge should never
+appear more than once in the saved list so the check can only match to the
+first entry. As such, the code with two distinct pci_dev variables better
+represents the intention of the check compared with the old code where
+bridge variable was reused for a different purpose.
 
-Fixes: d2102f2f5d75 ("bpf: verifier: Support eliding map lookup nullness")
-Signed-off-by: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/bpf/20260607-f01-v2-v2-1-da48453146e8@mails.tsinghua.edu.cn
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Alex Bennée <alex.bennee@linaro.org> # AVA, AMD GPU
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Link: https://patch.msgid.link/20251113162628.5946-4-ilpo.jarvinen@linux.intel.com
+Stable-dep-of: ee7471fe968d ("PCI: Skip Resizable BAR restore on read error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/pci/setup-bus.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -9710,7 +9710,7 @@ static int get_constant_map_key(struct b
- 	return 0;
- }
+--- a/drivers/pci/setup-bus.c
++++ b/drivers/pci/setup-bus.c
+@@ -2431,12 +2431,13 @@ int pbus_reassign_bridge_resources(struc
+ 	}
  
--static bool can_elide_value_nullness(enum bpf_map_type type);
-+static bool can_elide_value_nullness(const struct bpf_map *map);
- 
- static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
- 			  struct bpf_call_arg_meta *meta,
-@@ -9860,7 +9860,7 @@ skip_type_check:
- 		err = check_helper_mem_access(env, regno, key_size, BPF_READ, false, NULL);
- 		if (err)
- 			return err;
--		if (can_elide_value_nullness(meta->map.ptr->map_type)) {
-+		if (can_elide_value_nullness(meta->map.ptr)) {
- 			err = get_constant_map_key(env, reg, key_size, &meta->const_map_key);
- 			if (err < 0) {
- 				meta->const_map_key = -1;
-@@ -11433,13 +11433,16 @@ static void update_loop_inline_state(str
- 				 state->callback_subprogno == subprogno);
- }
- 
--/* Returns whether or not the given map type can potentially elide
-+/* Returns whether or not the given map can potentially elide
-  * lookup return value nullness check. This is possible if the key
-  * is statically known.
-  */
--static bool can_elide_value_nullness(enum bpf_map_type type)
-+static bool can_elide_value_nullness(const struct bpf_map *map)
- {
--	switch (type) {
-+	if (map->map_flags & BPF_F_INNER_MAP)
-+		return false;
+ 	list_for_each_entry(dev_res, &saved, list) {
++		struct pci_dev *dev = dev_res->dev;
 +
-+	switch (map->map_type) {
- 	case BPF_MAP_TYPE_ARRAY:
- 	case BPF_MAP_TYPE_PERCPU_ARRAY:
- 		return true;
-@@ -11821,7 +11824,7 @@ static int check_helper_call(struct bpf_
+ 		/* Skip the bridge we just assigned resources for */
+-		if (bridge == dev_res->dev)
++		if (bridge == dev)
+ 			continue;
+ 
+-		bridge = dev_res->dev;
+-		pci_setup_bridge(bridge->subordinate);
++		pci_setup_bridge(dev->subordinate);
+ 	}
+ 
+ 	free_list(&saved);
+@@ -2452,19 +2453,19 @@ cleanup:
+ 	/* Revert to the old configuration */
+ 	list_for_each_entry(dev_res, &saved, list) {
+ 		struct resource *res = dev_res->res;
++		struct pci_dev *dev = dev_res->dev;
+ 
+-		bridge = dev_res->dev;
+-		i = pci_resource_num(bridge, res);
++		i = pci_resource_num(dev, res);
+ 
+ 		if (res->parent) {
+ 			release_child_resources(res);
+-			pci_release_resource(bridge, i);
++			pci_release_resource(dev, i);
  		}
  
- 		if (func_id == BPF_FUNC_map_lookup_elem &&
--		    can_elide_value_nullness(meta.map.ptr->map_type) &&
-+		    can_elide_value_nullness(meta.map.ptr) &&
- 		    meta.const_map_key >= 0 &&
- 		    meta.const_map_key < meta.map.ptr->max_entries)
- 			ret_flag &= ~PTR_MAYBE_NULL;
+ 		restore_dev_resource(dev_res);
+ 
+-		pci_claim_resource(bridge, i);
+-		pci_setup_bridge(bridge->subordinate);
++		pci_claim_resource(dev, i);
++		pci_setup_bridge(dev->subordinate);
+ 	}
+ 	free_list(&saved);
+ 	up_read(&pci_bus_sem);
 
 
