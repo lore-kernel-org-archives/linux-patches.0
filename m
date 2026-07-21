@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C4A46D562;
-	Tue, 21 Jul 2026 18:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6938437DE97;
+	Tue, 21 Jul 2026 18:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658355; cv=none; b=WuxwqIiuImSYEZx+GDNSvGxW/5MbCxa5tTe+2r199BQXMwC3rl8p9Llj98BphadlQY7ShXnu6tXg/l8QZB9zCpL/V9iG3R9jeu8TwPF9tYqhaQnt9HWprmSErmAzOJPbQZQyTm52TltHPDeXYFPtTbJ0o9YSC23wvmx5WP5FyVk=
+	t=1784658358; cv=none; b=TwRZNCDXS1np3/rRnWIBCEzoh+98X0HP/6/CBj/hYw0NGw+e2W8Xzk8P3YQy7oTppzB+VPCCg5/dk+/OXbDXSIJoj1f+8Ok5myCANpFnDxbdPW1voAljfcgoGPHnnWyKZDDzs4oeH0Zimg25g4eaWik/nSMTLd+XtqEszXng2vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658355; c=relaxed/simple;
-	bh=Rlzj/czyxHkC7qQaDHDHmK2/qvKF7gJ7gM2q3QxjPOQ=;
+	s=arc-20240116; t=1784658358; c=relaxed/simple;
+	bh=o9W1j86Hx5u2kybBbCw6Eh6f+2CzJBQCgk6shFP/+w8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYEaNI6GGnkwFRjRxWgA1GEL0AiTCwpL9mVRI3tp7W553fioW64l8ltzQEx45KHpiDH2tOM+qJaDeuNZoxpiuM1sRbtFDxEnx90n8dkf1+Cd30YHgfJGpzvWyQWu44sb7f0oBH6Ydq9oiYqIYIZyk1ZU93mkpZssh3loYLNXQfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LdUegSRH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KXA8DR1K4SS4ltJUv6DpSvElhjDvrIOSS/qYFjTBGu+zPCoS4Rq2yGEoivi8RpEksaF2xffVWMEcnHswuxVa0db/qYvRmULz5gjC6kvuyVXAFx2QMWmasVawtzh+3dDJlED4aSdXRWzUXd6EBwQdsXBC0E6+T32GiWklw2d7gUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rjXBCOB9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LdUegSRH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E019A1F000E9;
-	Tue, 21 Jul 2026 18:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rjXBCOB9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8549B1F000E9;
+	Tue, 21 Jul 2026 18:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658354;
-	bh=JQvQrZ2krYBFikyP5d9QEjJE+uL1FbvsQIvX10hw5mE=;
+	s=korg; t=1784658357;
+	bh=yFLAx/p1046Mms9SGpqQ/GyYEOGjFUgaCyGlyG7k0EQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LdUegSRHHI1Sd6SDWijQ2GNd+Vg/bj2Az7ZDF761Y6lUC+njpJJHFCw1Z78lfVc8g
-	 hiE12YWccGStvWQFkk3oWAkpPxqt58SXhK/opcGSJgdxN0uYL1IFSHbjVeDV/7WXzX
-	 9lL18F/2SF+6Lf9vipnzjYMHdOnFA8CtpNzuL2Sc=
+	b=rjXBCOB9y7LU77BEACPYsvl4wAi4qyWq3OJ3+tXXwrkV+nONKQUK9phLSfco/rQph
+	 YKxMNDU0BJeDf4tWf9G4QCFZ1u62cIrLpfqAQM/x373htuUQvh5tfhOVslrR44Jg5Q
+	 66qjUtk6LsoxHLB4e+UJBdqq5GluUnNuJkXPK4+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>,
+	stable@kernel.org,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
 	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 6.18 1110/1611] arm64: dts: s32g3: Fix SWT8 watchdog address
-Date: Tue, 21 Jul 2026 17:20:26 +0200
-Message-ID: <20260721152540.381062122@linuxfoundation.org>
+Subject: [PATCH 6.18 1111/1611] ARM: dts: imx6ul-var-som: fix warning for non-existent dc-supply property
+Date: Tue, 21 Jul 2026 17:20:27 +0200
+Message-ID: <20260721152540.405093569@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,40 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit 65210e81f7837a871a17237d15e4b1191d5e8771 upstream.
+commit 0372cc5776e7fd5570884aed0c1e9a8a546cad66 upstream.
 
-Add missing hex annotation to fix the SWT8 watchdog address in 'reg'
-property, as reported by dtc W=1:
+The dc-supply property is non-existent in Linux now, nor when this DTS file
+was created when importing it from Variscite own kernel.
 
-  s32g3.dtsi:863.27-869.5: Warning (simple_bus_reg): /soc@0/watchdog@40500000: simple-bus unit address format error, expected "269fb20"
+Therefore remove it to fix this warning:
 
-Lack of hex '0x' meant address would be interpreted as decimal thus
-completely different value used as this device MMIO.  If device was
-enabled this could lead to corruption of other device address space and
-broken boot.
+    imx6ul-var-som-concerto.dtb: cpu@0 (arm,cortex-a7): Unevaluated
+    properties are not allowed ('dc-supply' was unexpected)
+        from schema $id: http://devicetree.org/schemas/arm/cpus.yaml
 
-Cc: stable@vger.kernel.org
-Fixes: 6db84f042745 ("arm64: dts: s32g3: Add the Software Timer Watchdog (SWT) nodes")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
+Fixes: 9d6a67d9c7a9 ("ARM: dts: imx6ul: Add Variscite VAR-SOM-MX6UL SoM support")
+Cc: stable@kernel.org
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/s32g3.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/nxp/imx/imx6ul-var-som.dtsi |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/arch/arm64/boot/dts/freescale/s32g3.dtsi
-+++ b/arch/arm64/boot/dts/freescale/s32g3.dtsi
-@@ -806,7 +806,7 @@
+--- a/arch/arm/boot/dts/nxp/imx/imx6ul-var-som.dtsi
++++ b/arch/arm/boot/dts/nxp/imx/imx6ul-var-som.dtsi
+@@ -45,10 +45,6 @@
+ 	assigned-clock-rates = <786432000>;
+ };
  
- 		swt8: watchdog@40500000 {
- 			compatible = "nxp,s32g3-swt", "nxp,s32g2-swt";
--			reg = <40500000 0x1000>;
-+			reg = <0x40500000 0x1000>;
- 			clocks = <&clks 0x3a>, <&clks 0x3b>, <&clks 0x3b>;
- 			clock-names = "counter", "module", "register";
- 			status = "disabled";
+-&cpu0 {
+-	dc-supply = <&reg_gpio_dvfs>;
+-};
+-
+ &fec1 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_enet1>, <&pinctrl_enet1_gpio>, <&pinctrl_enet1_mdio>;
 
 
