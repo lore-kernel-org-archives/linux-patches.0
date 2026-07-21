@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EB5434409;
-	Tue, 21 Jul 2026 23:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA87379960;
+	Tue, 21 Jul 2026 23:00:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674808; cv=none; b=phQJ2aox6ls+AyhZ4LMEp7fnSN1G0JOLp3C6WKmmLJOQ2J+FGscUK3jQ1ZxoIgLgFlQU1LOHtBZITH751XUAkYW5zWH4RwIKJXjEnHNBmGJ0cgcGuV9BEIcj45lXc0cI6bVbSKC5QwCKDgSOHODckCWEFl9k+dTCCj5sCBYeZVI=
+	t=1784674810; cv=none; b=OjldAynNUaeYRDyNk55pyksta1tai5siEyDErQPAqsGSsS7Nq3keoO8OaYc26APw7oGDeSbROq8s5ifeCBkRaMg1/rgfiZ4h2UVHJbKr2ZqIWbSlyD1DeufosnfPMKTJtlbcE46uyo+jJWNnQHoGYVQ2RMQ7rpdgrNQZTqo1vEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674808; c=relaxed/simple;
-	bh=Hss8OpbucjoPPMrT7kBjlKHUGNCGcX7AXZN04PQ/uL8=;
+	s=arc-20240116; t=1784674810; c=relaxed/simple;
+	bh=87mbpO/NlA3jOXwv/7+VbZs0VUWE9fuZnVPBKEuafRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rYKnVLLz4JuYbkJhO0M4Hpv6gEyLxlgZaAlPHuWMFfCgnQDT552LAknY4/7n+689M9LpRp8gKL/zfPWmiG9OZ1tDj46P+CbJaVK3te7fbC2FobLoIPesraxH5UaJvOSX5wJSUpYpo4gGGcvTUT3gw8V16PLqQCCnX8g5fTNPIDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cs3ykqOs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TibBY7oittyXk7lS3hZdjokKDEV2fAY0fE0UBrTByrpib9yzcLBP5sNGV7oEINxYauMmQl+CGEdoIdzVacXThvBUpraVrPyvj6FZYXqHfCaGsnhEWxiMNqddsjyB03h3263qFL+emWB+YGD//st4owBiW+U+OG8+u35+faYu39c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwwsVbYR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cs3ykqOs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C47C1F000E9;
-	Tue, 21 Jul 2026 23:00:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwwsVbYR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39CAC1F000E9;
+	Tue, 21 Jul 2026 23:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674807;
-	bh=OigoA0EZ6wEUzfZvC0bdeR1aZqyRMO/ANRcNrYpD7o0=;
+	s=korg; t=1784674809;
+	bh=2aW2XIeVrydtRy2FpHsYI3Uo1UbFfu+Dx9KrIzT/434=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cs3ykqOsIlNgAyjoVpNa17j3/muYiWaVUKUGRZH3O+FutsvHuDIDpCBOk55NabxUI
-	 B2hOaSUuvjCatWk7j152Qy606bScoBasYD4NNQFMSQfBR3/AJoPGJ9bGOmjnBImWv8
-	 p2RV5U7nGOV0gzuNAziQO9sT/OQtqrRNvqmMgvhg=
+	b=CwwsVbYRWAmXjaS/S2pmtCVVz7ZipAlcr4P+k3DJMp1fwXqGFsdlyevm1rZVqr4Cs
+	 KoLl4G8KxLOnslLE0zKmdTNYmhM/ss/6EheLiFjwvPo4VVONlXtAkQh7V4Udoamb2e
+	 D3cK8GgzOLzCVroPzmsby4dqyw93jVPZec+Z4vjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 637/699] netfilter: ebtables: Use vmalloc_array() to improve code
-Date: Tue, 21 Jul 2026 17:26:36 +0200
-Message-ID: <20260721152410.119796317@linuxfoundation.org>
+Subject: [PATCH 5.10 638/699] netfilter: ebtables: zero chainstack array
+Date: Tue, 21 Jul 2026 17:26:37 +0200
+Message-ID: <20260721152410.146230277@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,74 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 46015e6b3ea75297b28d4806564f3f692cf11861 ]
+[ Upstream commit cbfe53599eebffd188938ab6774cc41794f6f9d5 ]
 
-Remove array_size() calls and replace vmalloc() with vmalloc_array() to
-simplify the code.  vmalloc_array() is also optimized better, uses fewer
-instructions, and handles overflow more concisely[1].
+sashiko reports:
+ looking at ebtables table
+ translation, could a sparse cpu_possible_mask lead to an uninitialized pointer
+ free?
 
-[1]: https://lore.kernel.org/lkml/abc66ec5-85a4-47e1-9759-2f60ab111971@vivo.com/
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+ If cpu_possible_mask is sparse (for example, CPU 0 and CPU 2 are possible,
+ but CPU 1 is not), the allocation loop skips CPU 1. If vmalloc_node() fails at
+ CPU 2, the cleanup loop will blindly decrement and call vfree() on
+ newinfo->chainstack[1].
+
+Not a real-world bug, such allocation isn't expected to fail
+in the first place.
+
+Cc: stable@vger.kernel.org
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: cbfe53599eeb ("netfilter: ebtables: zero chainstack array")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/netfilter/ebtables.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ net/bridge/netfilter/ebtables.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 --- a/net/bridge/netfilter/ebtables.c
 +++ b/net/bridge/netfilter/ebtables.c
-@@ -884,8 +884,8 @@ static int translate_table(struct net *n
+@@ -884,8 +884,7 @@ static int translate_table(struct net *n
  		 * if an error occurs
  		 */
  		newinfo->chainstack =
--			vmalloc(array_size(nr_cpu_ids,
--					   sizeof(*(newinfo->chainstack))));
-+			vmalloc_array(nr_cpu_ids,
-+				      sizeof(*(newinfo->chainstack)));
+-			vmalloc_array(nr_cpu_ids,
+-				      sizeof(*(newinfo->chainstack)));
++			vcalloc(nr_cpu_ids, sizeof(*(newinfo->chainstack)));
  		if (!newinfo->chainstack)
  			return -ENOMEM;
  		for_each_possible_cpu(i) {
-@@ -900,7 +900,7 @@ static int translate_table(struct net *n
- 			}
- 		}
- 
--		cl_s = vmalloc(array_size(udc_cnt, sizeof(*cl_s)));
-+		cl_s = vmalloc_array(udc_cnt, sizeof(*cl_s));
- 		if (!cl_s)
- 			return -ENOMEM;
- 		i = 0; /* the i'th udc */
-@@ -980,8 +980,8 @@ static int do_replace_finish(struct net
- 	 * the check on the size is done later, when we have the lock
- 	 */
- 	if (repl->num_counters) {
--		unsigned long size = repl->num_counters * sizeof(*counterstmp);
--		counterstmp = vmalloc(size);
-+		counterstmp = vmalloc_array(repl->num_counters,
-+					    sizeof(*counterstmp));
- 		if (!counterstmp)
- 			return -ENOMEM;
- 	}
-@@ -1276,7 +1276,7 @@ static int do_update_counters(struct net
- 	if (num_counters == 0)
- 		return -EINVAL;
- 
--	tmp = vmalloc(array_size(num_counters, sizeof(*tmp)));
-+	tmp = vmalloc_array(num_counters, sizeof(*tmp));
- 	if (!tmp)
- 		return -ENOMEM;
- 
-@@ -1417,7 +1417,7 @@ static int copy_counters_to_user(struct
- 	if (num_counters != nentries)
- 		return -EINVAL;
- 
--	counterstmp = vmalloc(array_size(nentries, sizeof(*counterstmp)));
-+	counterstmp = vmalloc_array(nentries, sizeof(*counterstmp));
- 	if (!counterstmp)
- 		return -ENOMEM;
- 
 
 
