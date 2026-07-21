@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B18470459;
-	Tue, 21 Jul 2026 20:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41AC347142D;
+	Tue, 21 Jul 2026 20:13:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664831; cv=none; b=MWxqu8UDHdhVeZr/W9ExWtV8fyFLMesiOoEZcPQCi3foS9LvHB0IxzEceStfSjBsAxduqhYHvkPYO7tbuR4yF3j0SalORUgLPlx21RY2j7uu7hVxyuWW9Q+xmdCLNj5qDYuT3inAwjNof2yrtWQbnIQRYy8akyy6pPecrOpCvDg=
+	t=1784664834; cv=none; b=CgeV74OEuD3acEtskCoivicw0mD4ktNMVUmnoLcq3wz/BSoKKCJt3iQxcpGbCLUZH6lMqjgMw0I92Kqlx34DlaNDUBdEOe/XpNDJrLCXgkwv/jDLR9ot7HAS/0we5brVGTBCtA1wbtu2jFYg2MiJihjrELkf8Kb3Xq73X8d9Bgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664831; c=relaxed/simple;
-	bh=2NfUNU2tX+OpBG2hddOn95swerFtbqveqTBhCmQZrJ8=;
+	s=arc-20240116; t=1784664834; c=relaxed/simple;
+	bh=+uN3dVzNkEvH5E4hAS2hGMoZQ/xOSH67xRdWqyFhVIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dC5OgGB+vOch+BUWfmNK8EAvoiVftkID6ClwjkkP3Zo7WFpPWsnAMrsET1pkoI29cwDyA1eJzEPv3OEMaIzcB9Yp/n80fbsGQlFTShpzbZo4gd9ATe2MjJQBsI2oit4lImlVVJBPP8o4r2JUIuHu9djaCd8JMWxyU58qywyX6vM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=thYmI4eb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EGmp4VuS9nXbpAnm0cOzCC3mM2DezWb/c+r5YOIO7445IODClEUCKwhLco1NobLHfgpb92kvMyl3rMb/AGRDqwOkscbvdoiUpMVx0j4fV4O0yXC0uPixoxvyl2YBweGZUq5TXtL6wzPsH7nI+1tZrR5ZaioQ+MyGHdjjrIDOJbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ntputtxl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thYmI4eb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1968D1F000E9;
-	Tue, 21 Jul 2026 20:13:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ntputtxl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF4F1F000E9;
+	Tue, 21 Jul 2026 20:13:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664830;
-	bh=LxGJMaZ//TAgegOpiAC5bbNmj6/KLeQkiZkn0SiO06Q=;
+	s=korg; t=1784664833;
+	bh=UwFtZXKtY72TLhBp7tauHwf7Qg0lO3rK1Zc6ys8PnzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=thYmI4ebDWIXaCTY6ET0zt4/S7DF5/V0C0bOSS2IahKllcEPBJxJH02kZnkQJqQ2o
-	 BcLMeN2CM8o9Od/TZKxWM9OMrm8WWcGVI3u7RpoDkcAubRT5+ljQGJcfGLPaMgiWl8
-	 Nw/pRmsBqEEzyzmuKvvq7Upkx4UK/FuzCQpyDmTc=
+	b=NtputtxlLQWzHl07Eau6YRukCdl4x69oI/UzxWUJNk4KTgfjOo578L03o0NgJQjZv
+	 QOVU9WT8HPTNI4Ti92aR9nDUXAQjmUlFhdgM3sWuExIXklUkjFxWyYFIZ7wie0N1wU
+	 Hz8HZ5r2IANgIF3KpjZF/K17zQsBjOPNGdgNgDko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Ahmed Genidi <ahmed.genidi@arm.com>,
 	Mark Rutland <mark.rutland@arm.com>,
-	Ben Horgan <ben.horgan@arm.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
 	Oliver Upton <oliver.upton@linux.dev>,
-	Will Deacon <will@kernel.org>,
+	Jan Kotas <jank@cadence.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Colton Lewis <coltonlewis@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0074/1266] KVM: arm64: Initialize SCTLR_EL1 in __kvm_hyp_init_cpu()
-Date: Tue, 21 Jul 2026 17:08:31 +0200
-Message-ID: <20260721152443.457676577@linuxfoundation.org>
+Subject: [PATCH 6.6 0075/1266] arm64: Revamp HCR_EL2.E2H RES1 detection
+Date: Tue, 21 Jul 2026 17:08:32 +0200
+Message-ID: <20260721152443.479241724@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -58,114 +55,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmed Genidi <ahmed.genidi@arm.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 3855a7b91d42ebf3513b7ccffc44807274978b3d ]
+[ Upstream commit ca88ecdce5f51874a7c151809bd2c936ee0d3805 ]
 
-When KVM is in protected mode, host calls to PSCI are proxied via EL2,
-and cold entries from CPU_ON, CPU_SUSPEND, and SYSTEM_SUSPEND bounce
-through __kvm_hyp_init_cpu() at EL2 before entering the host kernel's
-entry point at EL1. While __kvm_hyp_init_cpu() initializes SPSR_EL2 for
-the exception return to EL1, it does not initialize SCTLR_EL1.
+We currently have two ways to identify CPUs that only implement FEAT_VHE
+and not FEAT_E2H0:
 
-Due to this, it's possible to enter EL1 with SCTLR_EL1 in an UNKNOWN
-state. In practice this has been seen to result in kernel crashes after
-CPU_ON as a result of SCTLR_EL1.M being 1 in violation of the initial
-core configuration specified by PSCI.
+- either they advertise it via ID_AA64MMFR4_EL1.E2H0,
+- or the HCR_EL2.E2H bit is RAO/WI
 
-Fix this by initializing SCTLR_EL1 for cold entry to the host kernel.
-As it's necessary to write to SCTLR_EL12 in VHE mode, this
-initialization is moved into __kvm_host_psci_cpu_entry() where we can
-use write_sysreg_el1().
+However, there is a third category of "cpus" that fall between these
+two cases: on CPUs that do not implement FEAT_FGT, it is IMPDEF whether
+an access to ID_AA64MMFR4_EL1 can trap to EL2 when the register value
+is zero.
 
-The remnants of the '__init_el2_nvhe_prepare_eret' macro are folded into
-its only caller, as this is clearer than having the macro.
+A consequence of this is that on systems such as Neoverse V2, a NV
+guest cannot reliably detect that it is in a VHE-only configuration
+(E2H is writable, and ID_AA64MMFR0_EL1 is 0), despite the hypervisor's
+best effort to repaint the id register.
 
-Fixes: cdf367192766ad11 ("KVM: arm64: Intercept host's CPU_ON SMCs")
-Reported-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Ahmed Genidi <ahmed.genidi@arm.com>
-[ Mark: clarify commit message, handle E2H, move to C, remove macro ]
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Ahmed Genidi <ahmed.genidi@arm.com>
-Cc: Ben Horgan <ben.horgan@arm.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Leo Yan <leo.yan@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Oliver Upton <oliver.upton@linux.dev>
-Cc: Will Deacon <will@kernel.org>
-Reviewed-by: Leo Yan <leo.yan@arm.com>
-Link: https://lore.kernel.org/r/20250227180526.1204723-3-mark.rutland@arm.com
+Replace the RAO/WI test by a sequence that makes use of the VHE
+register remnapping between EL1 and EL2 to detect this situation,
+and work out whether we get the VHE behaviour even after having
+set HCR_EL2.E2H to 0.
+
+This solves the NV problem, and provides a more reliable acid test
+for CPUs that do not completely follow the letter of the architecture
+while providing a RES1 behaviour for HCR_EL2.E2H.
+
+Suggested-by: Mark Rutland <mark.rutland@arm.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
+Tested-by: Jan Kotas <jank@cadence.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-[ Backport: Resolved context conflicts when removing the
-  __init_el2_nvhe_prepare_eret macro and invocation:
-  - arch/arm64/include/asm/el2_setup.h: conflicted because 6.6.y lacks later
-    GCS/MPAM macros (__init_el2_gcs / __init_el2_mpam) surrounding the definition.
-  - arch/arm64/kvm/hyp/nvhe/hyp-init.S: conflicted because __kvm_init_el2_state
-    does not exist in 6.6.y (EL2 state is initialized inline). ]
+Link: https://lore.kernel.org/r/15A85F2B-1A0C-4FA7-9FE4-EEC2203CC09E@global.cadence.com
+
+[ Backport: Resolved conflict in arch/arm64/include/asm/el2_setup.h
+  by replacing msr_hcr_el2 macro usages with raw msr hcr_el2 (since
+  the macro is missing in 6.6.y). ]
 Signed-off-by: Colton Lewis <coltonlewis@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/el2_setup.h   | 4 ----
- arch/arm64/kernel/head.S             | 3 ++-
- arch/arm64/kvm/hyp/nvhe/hyp-init.S   | 1 -
- arch/arm64/kvm/hyp/nvhe/psci-relay.c | 3 +++
- 4 files changed, 5 insertions(+), 6 deletions(-)
+ arch/arm64/include/asm/el2_setup.h | 38 +++++++++++++++++++++++++-----
+ 1 file changed, 32 insertions(+), 6 deletions(-)
 
 diff --git a/arch/arm64/include/asm/el2_setup.h b/arch/arm64/include/asm/el2_setup.h
-index 3498dc5d02c188..76b0d50d286d59 100644
+index 76b0d50d286d59..4c7467b382b608 100644
 --- a/arch/arm64/include/asm/el2_setup.h
 +++ b/arch/arm64/include/asm/el2_setup.h
-@@ -229,10 +229,6 @@
- .Lskip_fgt_\@:
+@@ -24,22 +24,48 @@
+ 	 * ID_AA64MMFR4_EL1.E2H0 < 0. On such CPUs HCR_EL2.E2H is RES1, but it
+ 	 * can reset into an UNKNOWN state and might not read as 1 until it has
+ 	 * been initialized explicitly.
+-	 *
+-	 * Fruity CPUs seem to have HCR_EL2.E2H set to RAO/WI, but
+-	 * don't advertise it (they predate this relaxation).
+-	 *
+ 	 * Initalize HCR_EL2.E2H so that later code can rely upon HCR_EL2.E2H
+ 	 * indicating whether the CPU is running in E2H mode.
+ 	 */
+ 	mrs_s	x1, SYS_ID_AA64MMFR4_EL1
+ 	sbfx	x1, x1, #ID_AA64MMFR4_EL1_E2H0_SHIFT, #ID_AA64MMFR4_EL1_E2H0_WIDTH
+ 	cmp	x1, #0
+-	b.ge	.LnVHE_\@
++	b.lt	.LnE2H0_\@
+ 
++	/*
++	 * Unfortunately, HCR_EL2.E2H can be RES1 even if not advertised
++	 * as such via ID_AA64MMFR4_EL1.E2H0:
++	 *
++	 * - Fruity CPUs predate the !FEAT_E2H0 relaxation, and seem to
++	 *   have HCR_EL2.E2H implemented as RAO/WI.
++	 *
++	 * - On CPUs that lack FEAT_FGT, a hypervisor can't trap guest
++	 *   reads of ID_AA64MMFR4_EL1 to advertise !FEAT_E2H0. NV
++	 *   guests on these hosts can write to HCR_EL2.E2H without
++	 *   trapping to the hypervisor, but these writes have no
++	 *   functional effect.
++	 *
++	 * Handle both cases by checking for an essential VHE property
++	 * (system register remapping) to decide whether we're
++	 * effectively VHE-only or not.
++	 */
++	msr	hcr_el2, x0		// Setup HCR_EL2 as nVHE
++	isb
++	mov	x1, #1		// Write something to FAR_EL1
++	msr	far_el1, x1
++	isb
++	mov	x1, #2		// Try to overwrite it via FAR_EL2
++	msr	far_el2, x1
++	isb
++	mrs	x1, far_el1	// If we see the latest write in FAR_EL1,
++	cmp	x1, #2		// we can safely assume we are VHE only.
++	b.ne	.LnVHE_\@	// Otherwise, we know that nVHE works.
++
++.LnE2H0_\@:
+ 	orr	x0, x0, #HCR_E2H
+-.LnVHE_\@:
+ 	msr	hcr_el2, x0
+ 	isb
++.LnVHE_\@:
  .endm
  
--.macro __init_el2_nvhe_prepare_eret
--	mov	x0, #INIT_PSTATE_EL1
--	msr	spsr_el2, x0
--.endm
- 
- /**
-  * Initialize EL2 registers to sane values. This should be called early on all
-diff --git a/arch/arm64/kernel/head.S b/arch/arm64/kernel/head.S
-index ff7769821166a4..9996029853d236 100644
---- a/arch/arm64/kernel/head.S
-+++ b/arch/arm64/kernel/head.S
-@@ -601,7 +601,8 @@ SYM_INNER_LABEL(init_el2, SYM_L_LOCAL)
- 	msr	sctlr_el1, x1
- 	mov	x2, xzr
- 3:
--	__init_el2_nvhe_prepare_eret
-+	mov	x0, #INIT_PSTATE_EL1
-+	msr	spsr_el2, x0
- 
- 	mov	w0, #BOOT_CPU_MODE_EL2
- 	orr	x0, x0, x2
-diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-init.S b/arch/arm64/kvm/hyp/nvhe/hyp-init.S
-index 3efa9cfaa9d48d..9b2ada54be5384 100644
---- a/arch/arm64/kvm/hyp/nvhe/hyp-init.S
-+++ b/arch/arm64/kvm/hyp/nvhe/hyp-init.S
-@@ -207,7 +207,6 @@ SYM_CODE_START_LOCAL(__kvm_hyp_init_cpu)
- 	/* Initialize EL2 CPU state to sane values. */
- 	init_el2_state				// Clobbers x0..x2
- 	finalise_el2_state
--	__init_el2_nvhe_prepare_eret
- 
- 	/* Enable MMU, set vectors and stack. */
- 	mov	x0, x28
-diff --git a/arch/arm64/kvm/hyp/nvhe/psci-relay.c b/arch/arm64/kvm/hyp/nvhe/psci-relay.c
-index d57bcb6ab94d25..5688a16e2ea75d 100644
---- a/arch/arm64/kvm/hyp/nvhe/psci-relay.c
-+++ b/arch/arm64/kvm/hyp/nvhe/psci-relay.c
-@@ -218,6 +218,9 @@ asmlinkage void __noreturn __kvm_host_psci_cpu_entry(bool is_cpu_on)
- 	if (is_cpu_on)
- 		release_boot_args(boot_args);
- 
-+	write_sysreg_el1(INIT_SCTLR_EL1_MMU_OFF, SYS_SCTLR);
-+	write_sysreg(INIT_PSTATE_EL1, SPSR_EL2);
-+
- 	__host_enter(host_ctxt);
- }
- 
+ .macro __init_el2_sctlr
 -- 
 2.53.0
 
