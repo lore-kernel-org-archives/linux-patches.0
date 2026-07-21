@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C1D44AB9E;
-	Tue, 21 Jul 2026 21:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8881B35C686;
+	Tue, 21 Jul 2026 21:18:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668726; cv=none; b=fBa7u4LsClNk6to3KxkuZ9OmAc/CfQH+zeR0NpHaf7DuPS75vnZvzGgZC63qY+x80wnJqy3VOJ9299nQtNB12eKkni2/iIT6rUaxBLBDq9BwMyPqSdgyNerFEspsOoyPFTz6EikG88B3qaEfd10aL5sw1yET6uDpaKDjwnSvcog=
+	t=1784668727; cv=none; b=BIKjM+Ww/kwOIFQn7NOWFSikpnW0tSRMneC/ROpuTjnj9d+0AqlaKs8c88THGnYjZVmfG3Qcpmnk0A+SQo5fclSnnsFZ8bXFiPf71aZoyfiwGCN2PA8VHUjAVVPaPUB79np+VyzV6yTYlYYSM4BDjVKT+VGxJYtaQNUim7Suxic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668726; c=relaxed/simple;
-	bh=IMlqzIAkQJdjmGCigmQtKgaDKcREQXRQ7PTwcI68HKg=;
+	s=arc-20240116; t=1784668727; c=relaxed/simple;
+	bh=bt3hCswXpp8xG77nFDMlHHqz+U3XHo5xi74MBsYZ/OA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cvsvtdF/541Bug2zg0I7Uu/mg75cLYEN92fq3iuPYCjUTk7bZabRFQqKa13fQtKyE47N5aUj5Ti7n/dH/8IOcSEhzHiaKjWAHDT960AzmW+j1S0OGsZELWa+6TQI94a97h67UvNDS2hlxqLx4fKvZGB2VyTqCBC/VVwYkD/yR8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jb6sD4R+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DhyoVa8aDQCbqiKNuHw0dt0HI37bET2vMR3gGw5nIjJnFBw4Bf00Xma+g7stH5l4xIvf34ASsctqm3BcKm3A/ocD9PgsDQaObF0sTfg57plDIfwhS754vdUCopJnwFtl48k1N//QCAdUaKC6NGWr4zngaTCD+ZyXY7ZFDiDy7jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNXd394X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jb6sD4R+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424991F000E9;
-	Tue, 21 Jul 2026 21:18:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNXd394X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12151F00A3A;
+	Tue, 21 Jul 2026 21:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668723;
-	bh=kyLgGxgQ3wE/KqikIVEtzu2cGmTlIYL/pNM5FXFwDmg=;
+	s=korg; t=1784668726;
+	bh=axlWFwWMue9hW8o/Z08p+Rs6uuaZTZ58rSXpWbYAOd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jb6sD4R+ynnrpr80+7Z2PGO7tymX/md8VVotyhzYSlCawz0M1LUM8C+QrV5n7aG2v
-	 LZRSWeZZMmk3sA2dDU/GcBTewWhGoysW/VQk/ZP/p0Q+9XV3B93D9zNiFOw0hEQHMc
-	 8VFs54S8+llqq3Fzfy6xlBqa0j8k/9eynJMknnmY=
+	b=nNXd394XWWwBalgB+eeObVU8cKEOYFeM/Nfe20+NQPZF1QoWqWbGWJ8u0Exqp8z5y
+	 AQwR+9Umx/BQ6+M6Uh2RZWKucb1ZWBcgzXDUhaSLPeJ806kY5WpE00hbTHP+IKkLrV
+	 E1tSd339XUvsei9CGavPmYMF6NOMElarzLaNmCnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Liu <liubaolin@kylinos.cn>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+	Louis Kotze <loukot@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0282/1067] Documentation: proc: fix section numbering in table of contents
-Date: Tue, 21 Jul 2026 17:14:43 +0200
-Message-ID: <20260721152430.909465801@linuxfoundation.org>
+Subject: [PATCH 6.1 0283/1067] wifi: cfg80211: fix grammar in MLO group key error message
+Date: Tue, 21 Jul 2026 17:14:44 +0200
+Message-ID: <20260721152430.932146401@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,50 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baolin Liu <liubaolin@kylinos.cn>
+From: Louis Kotze <loukot@gmail.com>
 
-[ Upstream commit 97a7bd8c2c58a6d820df563d1d0f68aafec45477 ]
+[ Upstream commit 9dcc1af3bbf5441f71a1e51b8d81bdf38a249607 ]
 
-Commit e24ccaaf7ec4 ("block: remove last remaining traces of IDE
-documentation") removed the IDE section but left its table of
-contents entry behind.
-Fix the stale entry and renumber the following sections.
+The error message emitted by nl80211_validate_key_link_id() when a group
+key install on an MLO wdev is missing the link ID reads "link ID must
+for MLO group key", which is missing the words "be set". This makes the
+error harder to grep and parse in userspace logs, and is reported
+verbatim by wpa_supplicant via its nl80211 extack relay, e.g.:
 
-Fixes: e24ccaaf7ec4 ("block: remove last remaining traces of IDE documentation")
-Signed-off-by: Baolin Liu <liubaolin@kylinos.cn>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Message-ID: <20260424090654.19229-1-liubaolin12138@163.com>
+  wpa_supplicant: nl80211: kernel reports: link ID must for MLO group key
+
+The sibling error strings in the same helper already use grammatical
+phrasing ("link ID not allowed for pairwise key", "invalid link ID for
+MLO group key", "link ID not allowed for non-MLO group key"). Fix this
+one to match.
+
+No functional change.
+
+Fixes: e7a7b84e3317 ("wifi: cfg80211: Add link_id parameter to various key operations for MLO")
+Signed-off-by: Louis Kotze <loukot@gmail.com>
+Link: https://patch.msgid.link/20260414122728.92234-1-loukot@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/filesystems/proc.rst | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ net/wireless/nl80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/filesystems/proc.rst b/Documentation/filesystems/proc.rst
-index 898c99eae8e446..2efadcb651bc3e 100644
---- a/Documentation/filesystems/proc.rst
-+++ b/Documentation/filesystems/proc.rst
-@@ -23,13 +23,13 @@ fixes/update part 1.1  Stefani Seibold <stefani@seibold.net>    June 9 2009
-   1	Collecting System Information
-   1.1	Process-Specific Subdirectories
-   1.2	Kernel data
--  1.3	IDE devices in /proc/ide
--  1.4	Networking info in /proc/net
--  1.5	SCSI info
--  1.6	Parallel port info in /proc/parport
--  1.7	TTY info in /proc/tty
--  1.8	Miscellaneous kernel statistics in /proc/stat
--  1.9	Ext4 file system parameters
-+  1.3	Networking info in /proc/net
-+  1.4	SCSI info
-+  1.5	Parallel port info in /proc/parport
-+  1.6	TTY info in /proc/tty
-+  1.7	Miscellaneous kernel statistics in /proc/stat
-+  1.8	Ext4 file system parameters
-+  1.9	/proc/consoles - Shows registered system consoles
- 
-   2	Modifying System Parameters
- 
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 9c8306fbb4e45d..36a7b9707eabd2 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -4435,7 +4435,7 @@ static int nl80211_validate_key_link_id(struct genl_info *info,
+ 	if (wdev->valid_links) {
+ 		if (link_id == -1) {
+ 			GENL_SET_ERR_MSG(info,
+-					 "link ID must for MLO group key");
++					 "link ID must be set for MLO group key");
+ 			return -EINVAL;
+ 		}
+ 		if (!(wdev->valid_links & BIT(link_id))) {
 -- 
 2.53.0
 
