@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDFBE35C69D;
-	Tue, 21 Jul 2026 21:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771983B8412;
+	Tue, 21 Jul 2026 21:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669746; cv=none; b=G3t2kPwEvmnDX+TlwVhhjpeJPZ2C4RFN8ruF14ndmXf1EbJc9oMLIvxUV3oYtEHXUBMyFbWhaSPlfqSzRxzobiwvLlaVxLFeJcQ2KnFjWhQyMSGhlCwkOt5c4lMY2Oba0DiWW4ErVLgKKcxVVwYeCiYjUQSWr4B1oNVnYg/qycM=
+	t=1784669749; cv=none; b=W0LLx/Q7Vg805JLyP4/KC+GqNu9F4AWm7sJ+W+y6MIuATccP6ceJeop0yO1z0unlEYUIJwTk7C0NAD96CH7WPwy2ZcFhhNNQD5puiobw6vZ2BHpxI7/mHz8tEbItVXOZmvY6CsSNNqLCCAESWf6YD51ByYR1/6aQ3emVMxls5OU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669746; c=relaxed/simple;
-	bh=ob/2g/iNCLYfUFmRf8YJJFtvBBYSEBse9qdpnvVKeqM=;
+	s=arc-20240116; t=1784669749; c=relaxed/simple;
+	bh=abiWFxmaidduuqpdrYNoEsVRBbm4b1EYyAW5VAdiPMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lHeTlkeKKgeeKVNBPUAe1oTQDpi8kYkcPxBp6LK6kHQfGdFMLzdyPU2GW/DNSjZYOzHbihtXiHrisaKNEoWr9IwvPUcVMzQwMFgTBLVJm9cPpZyRDHUdJI3EN+V9qGG1YqF2EPrKmX8rP42mUbpUAub7llOCyUTE3UKQSvzUXjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBbGeZML; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZPYnxRQ2yTVzZ/cmE3Dlt7l+TKBECMyxlw8Q4LY5PThMXJ0QpTQzJF1L43EEH4LwEJmdhoB8UNn2RYRz9EiLi2MGZ6c9QPwOQe8k+f+M5KJ1E6A9ROazWrX8Yjwk+iEAMGfuANRaTNcYxQYAypxLlhJoDrigZZjPPcCQjEr3OYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nF36Cf3b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBbGeZML"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7E71F000E9;
-	Tue, 21 Jul 2026 21:35:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nF36Cf3b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC27A1F00A3A;
+	Tue, 21 Jul 2026 21:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669745;
-	bh=OGJ1NYekPHAPBVePvAWso8P74ONgdLzDDVD7R8MNz4Y=;
+	s=korg; t=1784669748;
+	bh=+mq4hFhtY61EF99dZRb4OpWJxRNUdPctd2J0fpIhegE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FBbGeZMLeZ3XCn+ZxQy0nfgBcZKiWfhN4waDSI7KBzqwSZwTAJPmN50Fd3pRwBj9T
-	 Q7kg4fJUidGu/UtmO4q4o0MYBzEgKGWirT59M2fg3t+8UeIaZTFatB1Mq4cOrq+pmy
-	 ZTefOcWJfxLESRm9J54eGGl8UDvxbqZKYA4Y17qs=
+	b=nF36Cf3b2EhZj044RGyU/26u3SKlWo4sf/y+CGqamArrNP/9fZAxVIaVhnNRVfG+R
+	 M12E03GA9BlwyDDYe1YKzlrM07U7KJzTiPH8D7jjWkvM/EAOJ19/L9h0wuQpfTwFNM
+	 EVHWCSEM4aT0xV+DeORuHZUD5kDdyONddAPtaJV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0672/1067] afs: Fix callback service message parsers to pass through -EAGAIN
-Date: Tue, 21 Jul 2026 17:21:13 +0200
-Message-ID: <20260721152439.628538087@linuxfoundation.org>
+Subject: [PATCH 6.1 0655/1067] usbnet: gl620a: fix out-of-bounds read in genelink_rx_fixup()
+Date: Tue, 21 Jul 2026 17:20:56 +0200
+Message-ID: <20260721152439.245279508@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,51 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 0f36469d7ce98b362934113c550d08bb0c784231 ]
+[ Upstream commit 8ff7f2a6da4fccaa5cc9be7251a24e71e29fbd1a ]
 
-The AFS filesystem client uses an rxrpc server to listen for callback
-notifications.  Each callback call type handler has a delivery function
-that parses the incoming request stream, and this should return -EAGAIN the
-last packet hasn't yet been seen, but all currently queued received data is
-consumed.  afs_extract_data() does this, but the -EAGAIN return is switched
-to 0 inadvertantly
+genelink_rx_fixup() splits an aggregated RX frame into its individual
+packets, using a per-packet length taken from device-supplied data. That
+length is only bounded by GL_MAX_PACKET_LEN (1514); it is never compared
+against how many bytes were actually received.
 
-Fix callback service message parsers to pass through -EAGAIN
+A malicious GeneLink (GL620A) device can therefore send a short URB whose
+header claims packet_count > 1 and a first packet of up to 1514 bytes.
 
-Fixes: d001648ec7cf ("rxrpc: Don't expose skbs to in-kernel users [ver #2]")
-Closes: https://sashiko.dev/#/patchset/20260609081738.770127-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260622090856.2746629-14-dhowells@redhat.com
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+	skb_put_data(gl_skb, packet->packet_data, size);
+
+then copies past the end of the receive buffer and hands the adjacent slab
+contents up the network stack, an out-of-bounds read that leaks kernel heap.
+No privilege is required: the path runs in the usbnet RX softirq as soon as
+the interface is up.
+
+  BUG: KASAN: slab-out-of-bounds in genelink_rx_fixup (drivers/net/usb/gl620a.c:112)
+  Read of size 1514 at addr ffff888011309708 by task ksoftirqd/0/14
+  Call Trace:
+    ...
+    __asan_memcpy (mm/kasan/shadow.c:105)
+    genelink_rx_fixup (include/linux/skbuff.h:2814 drivers/net/usb/gl620a.c:112)
+    usbnet_bh (drivers/net/usb/usbnet.c:572 drivers/net/usb/usbnet.c:1589)
+    process_one_work (kernel/workqueue.c:3322)
+    bh_worker (kernel/workqueue.c:3405)
+    tasklet_action (kernel/softirq.c:965)
+    handle_softirqs (kernel/softirq.c:622)
+    run_ksoftirqd (kernel/softirq.c:1076)
+    ...
+
+skb_pull() already verifies that the requested length fits the buffer and
+returns NULL otherwise. Move it ahead of the copy and check its result, so
+a packet that overruns the received data is rejected before it is read.
+Well-formed frames, whose packets are fully present, are unaffected.
+
+Fixes: 47ee3051c856 ("[PATCH] USB: usbnet (5/9) module for genesys gl620a cables")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260627205353.4000788-1-xmei5@asu.edu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/cmservice.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/usb/gl620a.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/afs/cmservice.c b/fs/afs/cmservice.c
-index 7dcd59693a0c2f..986defdf5bb1a3 100644
---- a/fs/afs/cmservice.c
-+++ b/fs/afs/cmservice.c
-@@ -388,7 +388,6 @@ static int afs_deliver_cb_init_call_back_state3(struct afs_call *call)
- 		ret = afs_extract_data(call, false);
- 		switch (ret) {
- 		case 0:		break;
--		case -EAGAIN:	return 0;
- 		default:	return ret;
+diff --git a/drivers/net/usb/gl620a.c b/drivers/net/usb/gl620a.c
+index 0bfa37c1405918..09afd137b64e15 100644
+--- a/drivers/net/usb/gl620a.c
++++ b/drivers/net/usb/gl620a.c
+@@ -104,6 +104,9 @@ static int genelink_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 			return 0;
  		}
  
-@@ -501,7 +500,6 @@ static int afs_deliver_cb_probe_uuid(struct afs_call *call)
- 		ret = afs_extract_data(call, false);
- 		switch (ret) {
- 		case 0:		break;
--		case -EAGAIN:	return 0;
- 		default:	return ret;
- 		}
++		if (!skb_pull(skb, size + 4))
++			return 0;
++
+ 		// allocate the skb for the individual packet
+ 		gl_skb = alloc_skb(size, GFP_ATOMIC);
+ 		if (gl_skb) {
+@@ -116,9 +119,6 @@ static int genelink_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 		// advance to the next packet
+ 		packet = (struct gl_packet *)&packet->packet_data[size];
+ 		count--;
+-
+-		// shift the data pointer to the next gl_packet
+-		skb_pull(skb, size + 4);
+ 	}
  
+ 	// skip the packet length field 4 bytes
 -- 
 2.53.0
 
