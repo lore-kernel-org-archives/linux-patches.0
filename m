@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62153EDE57;
-	Tue, 21 Jul 2026 19:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F183EDE57;
+	Tue, 21 Jul 2026 19:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662335; cv=none; b=NBBXdaI8hYcdVupVUI0+M5tQ8ZfATDgogFRw7h1RwQJMlze/aegAI3kjz9oN/VbcZ/Vg5tWC7etEXwF6zGYvqbGlqB/eKWrB3CClVFOEbTjsFmrbGxOdcMesXE6cASZc7mvyIayy5tkbSCEos/7JkWfehh5ySzrjMd9qcNrs2NU=
+	t=1784662337; cv=none; b=IN4atqC0CnOntCilx+e4dyH3t3uuPimYzES7l7LoyfHDO0dKIW1PAahCizFkoBMM6v7eQoHgkF7TBBCpApF4gjnuMRHPKw2eAx43WNFRtoDcBl4ps457utBqn6Hufoeg3sFH7mQTJImtPNc7DlPzJL2k6DWFSlkxP3fyhfkbqk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662335; c=relaxed/simple;
-	bh=LUVSdag/KlxqtOrMcgHNqQd2bYXqPACLQTpe/Cly35k=;
+	s=arc-20240116; t=1784662337; c=relaxed/simple;
+	bh=DFBN96/QVzz9mWNvHikkhduTneHP7nYDkxEhlh2HQMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jRdgzZZJjetSOe6PPgI4d2K1SqW9Umg/l9lHXOG/G6jKRKJqyFgRVKi4WSEZkEof/A8m3DTDoi5ra15yeaBGx9c4EDIrAMzpun2Q0Nd0pQs/l4nOQjqA0CNSofB8xgX0D/ClmOWJ7eBMiySOMOArKLdNH/VteQmnXoDPs3X6n74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Su89useJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I+UwjCjmU/6p8qFbcdWgK1GOYBS/xXnjs8KqZFP8uCfpTU63rzkR2d/mc5jmloLBQ+Q2LtG557lb+NkxGnOAjWQCi25dr/BV3UErsljvHgcBWdU47tGlMvR1LO4amGJXSveTmwqMBYD2i8EKpGh5ym0G/BJUeylSEF/wWtbraEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVAEiSdl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Su89useJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB3D1F000E9;
-	Tue, 21 Jul 2026 19:32:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVAEiSdl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE5A1F000E9;
+	Tue, 21 Jul 2026 19:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662333;
-	bh=YStvAsjrn1mhCgp+7xb96nQexsimAja1um+Z1J4WPz0=;
+	s=korg; t=1784662336;
+	bh=ZV48HW2gIF77Gd9JUPFEQVj7bcCkR9tz/CkmRqeE+0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Su89useJgSRiHzbO4sR7gnwcPySegiak9f7R+ozjx0KLI7ocXu2cJTJY4ZkZP/SAO
-	 gxMCD4Q1U8UNjOjNDa80mg+8g7HvWGBLJCclqbLlrN27T8uemBIx66bLzk+pDYcIQp
-	 l+awB2fph9XKoxZZ71IpYYpYk5+H0T96hVNu1IiI=
+	b=kVAEiSdlVl2fmJL4W2DHT3/xW+n8C96NoqNpPFkV3eDfam2tEFIVUm6P03roUoBmQ
+	 7aZog3YrYEBOz2ULEZWY+La5jVjVe+4Eyj4DrqtFnqchD1l6AkpmQFsG2dD/o84w62
+	 RyRHTOmKiCMNOs82/t1F9J1Kya+0QVh3i2zuFdtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0404/1276] net/9p: fix race condition on rdma->state in trans_rdma.c
-Date: Tue, 21 Jul 2026 17:14:07 +0200
-Message-ID: <20260721152455.141690219@linuxfoundation.org>
+Subject: [PATCH 6.12 0405/1276] eventpoll: expand top-of-file overview / locking doc
+Date: Tue, 21 Jul 2026 17:14:08 +0200
+Message-ID: <20260721152455.162773123@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -56,121 +50,251 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 7d54894a1ee265a72d70f7cae1da6cc774cccc71 ]
+[ Upstream commit 7c25a0bd4bf7139944c5893ff61211f4b5a3455e ]
 
-The rdma->state field is modified without holding req_lock in both
-recv_done() and p9_cm_event_handler(), while rdma_request() accesses
-the same field under the req_lock spinlock. This inconsistent locking
-creates a race condition:
+The existing ~40-line "LOCKING:" banner covered the three-level lock
+hierarchy (epnested_mutex > ep->mtx > ep->lock) but nothing else.
+Lifetime rules, the ready-list state machine, the three removal paths,
+and the POLLFREE contract are implicit in the code. The recent UAF
+series (a6dc643c6931, 07712db80857, 8c2e52ebbe88, f2e467a48287) rode
+on invariants that were only implicit.
 
-- recv_done() running in softirq completion context sets
-  rdma->state = P9_RDMA_FLUSHING without acquiring req_lock
+Codify them at the top of the file: the subsystem overview, the lock
+hierarchy and its mutex_lock_nested() subclass convention (reworded
+from the old banner), a field-protection table for struct eventpoll
+and struct epitem that names the two faces of the rbn/rcu union (rbn
+under ep->mtx while linked into ep->rbr; rcu touched only by
+kfree_rcu(epi) on the free path), the ovflist sentinel encoding and
+scan-flip invariants, the three removal paths (A ep_remove, B
+ep_clear_and_put, C eventpoll_release_file) and the epi_fget() pin
+that orchestrates A vs C, and the POLLFREE store-release /
+load-acquire handshake.
 
-- p9_cm_event_handler() modifies rdma->state at multiple points
-  (ADDR_RESOLVED, ROUTE_RESOLVED, ESTABLISHED, CLOSED) without
-  req_lock
+No functional change.
 
-- rdma_request() uses spin_lock_irqsave(&rdma->req_lock, flags) to
-  protect the read-modify-write of rdma->state
-
-The race can cause lost state transitions: recv_done() or the CM
-event handler could set state to FLUSHING/CLOSED while rdma_request()
-is concurrently checking or modifying state under the lock, leading to
-the FLUSHING transition being silently overwritten by CLOSING. This
-corrupts the connection state machine and can cause use-after-free on
-RDMA request objects during teardown.
-
-Fix by adding req_lock protection to all rdma->state modifications in
-recv_done() and p9_cm_event_handler(), matching the pattern already
-used in rdma_request(). Use spin_lock_irqsave/spin_unlock_irqrestore
-in the CM event handler since it can race with recv_done() which runs
-in softirq context.
-
-Tested with a kernel module that races two threads (simulating
-rdma_request and recv_done/CM handler) on rdma->state with proper
-locking: 5.5M+ FLUSHING writes over 27M iterations with 0 lost
-transitions.
-
-Fixes: 473c7dd1d7b5 ("9p/rdma: remove useless check in cm_event_handler")
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: GLM:GLM-5.1
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Message-ID: <20260529073933.77315-1-zhaoyz24@mails.tsinghua.edu.cn>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Link: https://patch.msgid.link/20260424-work-epoll-rework-v1-1-249ed00a20f3@kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 0c4aefe3c2d0 ("eventpoll: Fix epoll_wait() report false negative")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_rdma.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ fs/eventpoll.c | 199 ++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 162 insertions(+), 37 deletions(-)
 
-diff --git a/net/9p/trans_rdma.c b/net/9p/trans_rdma.c
-index b84748baf9cbe3..d9f53f1da2c21a 100644
---- a/net/9p/trans_rdma.c
-+++ b/net/9p/trans_rdma.c
-@@ -240,25 +240,36 @@ p9_cm_event_handler(struct rdma_cm_id *id, struct rdma_cm_event *event)
- {
- 	struct p9_client *c = id->context;
- 	struct p9_trans_rdma *rdma = c->trans;
-+	unsigned long flags;
-+
- 	switch (event->event) {
- 	case RDMA_CM_EVENT_ADDR_RESOLVED:
-+		spin_lock_irqsave(&rdma->req_lock, flags);
- 		BUG_ON(rdma->state != P9_RDMA_INIT);
- 		rdma->state = P9_RDMA_ADDR_RESOLVED;
-+		spin_unlock_irqrestore(&rdma->req_lock, flags);
- 		break;
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index 22605fbc12ded5..b92cc8a1161ef2 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -41,45 +41,170 @@
+ #include <net/busy_poll.h>
  
- 	case RDMA_CM_EVENT_ROUTE_RESOLVED:
-+		spin_lock_irqsave(&rdma->req_lock, flags);
- 		BUG_ON(rdma->state != P9_RDMA_ADDR_RESOLVED);
- 		rdma->state = P9_RDMA_ROUTE_RESOLVED;
-+		spin_unlock_irqrestore(&rdma->req_lock, flags);
- 		break;
+ /*
+- * LOCKING:
+- * There are three level of locking required by epoll :
++ * fs/eventpoll.c - Efficient event polling ("epoll") kernel implementation.
+  *
+- * 1) epnested_mutex (mutex)
+- * 2) ep->mtx (mutex)
+- * 3) ep->lock (spinlock)
+  *
+- * The acquire order is the one listed above, from 1 to 3.
+- * We need a spinlock (ep->lock) because we manipulate objects
+- * from inside the poll callback, that might be triggered from
+- * a wake_up() that in turn might be called from IRQ context.
+- * So we can't sleep inside the poll callback and hence we need
+- * a spinlock. During the event transfer loop (from kernel to
+- * user space) we could end up sleeping due a copy_to_user(), so
+- * we need a lock that will allow us to sleep. This lock is a
+- * mutex (ep->mtx). It is acquired during the event transfer loop,
+- * during epoll_ctl(EPOLL_CTL_DEL) and during eventpoll_release_file().
+- * The epnested_mutex is acquired when inserting an epoll fd onto another
+- * epoll fd. We do this so that we walk the epoll tree and ensure that this
+- * insertion does not create a cycle of epoll file descriptors, which
+- * could lead to deadlock. We need a global mutex to prevent two
+- * simultaneous inserts (A into B and B into A) from racing and
+- * constructing a cycle without either insert observing that it is
+- * going to.
+- * It is necessary to acquire multiple "ep->mtx"es at once in the
+- * case when one epoll fd is added to another. In this case, we
+- * always acquire the locks in the order of nesting (i.e. after
+- * epoll_ctl(e1, EPOLL_CTL_ADD, e2), e1->mtx will always be acquired
+- * before e2->mtx). Since we disallow cycles of epoll file
+- * descriptors, this ensures that the mutexes are well-ordered. In
+- * order to communicate this nesting to lockdep, when walking a tree
+- * of epoll file descriptors, we use the current recursion depth as
+- * the lockdep subkey.
+- * It is possible to drop the "ep->mtx" and to use the global
+- * mutex "epnested_mutex" (together with "ep->lock") to have it working,
+- * but having "ep->mtx" will make the interface more scalable.
+- * Events that require holding "epnested_mutex" are very rare, while for
+- * normal operations the epoll private "ep->mtx" will guarantee
+- * a better scalability.
++ * Overview
++ * --------
++ *
++ * Each epoll_create(2) returns an anonymous [eventpoll] file whose
++ * ->private_data is a struct eventpoll. Each EPOLL_CTL_ADD installs
++ * a struct epitem linking one (watched file, fd) pair back to that
++ * eventpoll via the watched file's f_op->poll() wait queue(s). When
++ * the watched file signals readiness, ep_poll_callback() fires and
++ * marks the epitem ready. epoll_wait(2) drains the ready list under
++ * ep->mtx, re-queueing items in level-triggered mode.
++ *
++ * epoll instances can watch other epoll instances up to EP_MAX_NESTS
++ * deep; cycles are forbidden and detected at EPOLL_CTL_ADD time.
++ *
++ *
++ * Locking
++ * -------
++ *
++ * Three levels, acquired from outer to inner:
++ *
++ *   epnested_mutex   (global; rare; taken only for EPOLL_CTL_ADD
++ *                     loop / path checks)
++ *     > ep->mtx     (per-eventpoll; sleepable; serializes most ops)
++ *       > ep->lock  (per-eventpoll; IRQ-safe spinlock)
++ *
++ *   file->f_lock    (per-file; NOT IRQ-safe; guards f_ep hlist ops;
++ *                    nested inside ep->mtx, outside ep->lock)
++ *
++ * Rationale:
++ *   - ep->lock is a spinlock because ep_poll_callback() is called from
++ *     wake_up() which may run in hard-IRQ context. All ep->lock
++ *     critical sections use spin_lock_irqsave().
++ *   - ep->mtx is a sleepable mutex because the event delivery loop
++ *     calls copy_to_user(), and ep_insert() may sleep in
++ *     kmem_cache_alloc() and f_op->poll().
++ *   - epnested_mutex is global because cycle detection needs a global
++ *     view of the epoll topology; a per-object scheme would let two
++ *     concurrent inserts (A into B, B into A) construct a cycle
++ *     without either observer seeing it.
++ *   - Per-ep ep->mtx is preferred for scalability elsewhere. Events
++ *     that require epnested_mutex are rare.
++ *
++ * When EPOLL_CTL_ADD nests one eventpoll inside another we acquire
++ * ep->mtx on both: outer first, target second. Since cycles are
++ * forbidden the set of live ep->mtx holds is always a strict chain,
++ * communicated to lockdep via mutex_lock_nested() subclasses derived
++ * from the current recursion depth.
++ *
++ *
++ * Field protection
++ * ----------------
++ *
++ * struct eventpoll:
++ *   mtx              - self
++ *   rbr              - ep->mtx
++ *   ovflist, rdllist - ep->lock (IRQ-safe)
++ *   wq               - ep->lock for queue mutation
++ *   poll_wait        - internal waitqueue spinlock
++ *   refs             - file->f_lock for adds; ep->mtx for removes;
++ *                      RCU for readers (hlist_del_rcu + kfree_rcu(ep))
++ *   ws               - ep->mtx
++ *   gen, loop_check_depth - epnested_mutex
++ *   file, user       - immutable after setup
++ *   refcount         - atomic (refcount_t)
++ *   napi_*           - READ_ONCE / WRITE_ONCE
++ *
++ * struct epitem:
++ *   rbn / rcu union  - rbn: ep->mtx (while epi is linked in ep->rbr).
++ *                      rcu: written only by kfree_rcu(epi) on the free
++ *                      path; otherwise untouched by epoll code.
++ *   rdllink, next    - ep->lock
++ *   ffd, ep          - immutable after ep_insert()
++ *   pwqlist          - ep->mtx for writes; POLLFREE clears pwq->whead
++ *                      via smp_store_release(), see below
++ *   fllink           - file->f_lock for mutation; hlist_del_rcu +
++ *                      kfree_rcu(epi) for safe RCU readers
++ *   ws               - RCU (rcu_assign_pointer /
++ *                      rcu_dereference_check(mtx))
++ *   event            - ep->mtx for writes; lockless read in
++ *                      ep_poll_callback pairs with smp_mb() in
++ *                      ep_modify()
++ *
++ *
++ * Ready-list state machine
++ * ------------------------
++ *
++ * Readiness is tracked in two lists under ep->lock:
++ *
++ *   rdllist   - doubly-linked FIFO; the "current" ready list.
++ *   ovflist   - singly-linked LIFO; used during a scan to catch
++ *               events that arrive while rdllist is being iterated
++ *               without ep->lock.
++ *
++ * Encoded in ep->ovflist:
++ *   EP_UNACTIVE_PTR - no scan active; callback appends to rdllist.
++ *   NULL            - scan active, no spill yet.
++ *   pointer to epi  - scan active with spilled items (LIFO).
++ *
++ * Encoded in epi->next:
++ *   EP_UNACTIVE_PTR - epi is not on ovflist.
++ *   otherwise       - next epi on ovflist (NULL at tail).
++ *
++ * ep_start_scan() flips "not scanning" to "scanning" and splices
++ * rdllist into a caller-local txlist. ep_done_scan() drains ovflist
++ * back to rdllist (list_add head-insert reverses LIFO to FIFO),
++ * flips back to "not scanning", and re-splices any items the caller
++ * left in txlist (e.g., level-triggered re-queues).
++ *
++ *
++ * Removal paths
++ * -------------
++ *
++ * Three paths dispose of epitems and/or eventpolls:
++ *
++ *   A. ep_remove()              - EPOLL_CTL_DEL and ep_insert()
++ *                                 rollback. Caller holds ep->mtx.
++ *   B. ep_clear_and_put()       - close of the epoll fd itself
++ *                                 (ep_eventpoll_release).
++ *   C. eventpoll_release_file() - close of a watched file, invoked
++ *                                 from __fput().
++ *
++ * Coordination:
++ *   A and C exclude each other via the watched file's refcount.
++ *   A pins the file with epi_fget() before touching file->f_ep or
++ *   file->f_lock; if the pin fails, __fput() is in flight and C
++ *   will clean this epi up. See the epi_fget() block comment.
++ *   A and B both hold ep->mtx serially. B walks the rbtree with
++ *   rb_next() captured before ep_remove() erases the current node.
++ *   B and C both take ep->mtx; the loser sees fewer entries or an
++ *   empty file->f_ep.
++ *
++ * Within every path the internal order is strict:
++ *   ep_unregister_pollwait()  - drain pwqlist; synchronizes with any
++ *                                in-flight ep_poll_callback via the
++ *                                watched wait-queue head's lock.
++ *   ep_remove_file()          - hlist_del_rcu of epi->fllink and,
++ *                                if last watcher, clear file->f_ep,
++ *                                under file->f_lock.
++ *   ep_remove_epi()           - rb_erase, rdllist unlink (ep->lock),
++ *                                wakeup_source_unregister,
++ *                                kfree_rcu(epi).
++ *
++ * kfree_rcu(epi) defers the free past RCU readers in
++ * reverse_path_check_proc(); kfree_rcu(ep) defers past readers in
++ * ep_get_upwards_depth_proc().
++ *
++ *
++ * POLLFREE handshake
++ * ------------------
++ *
++ * When a subsystem tears down a wait-queue head that an epitem is
++ * registered on (binder, signalfd, ...), it wakes the callback with
++ * POLLFREE and must RCU-defer the head's free. The store/load pair:
++ *
++ *   ep_poll_callback() POLLFREE branch:
++ *     smp_store_release(&pwq->whead, NULL)
++ *
++ *   ep_remove_wait_queue():
++ *     smp_load_acquire(&pwq->whead)
++ *
++ * See those sites for the full argument.
+  */
  
- 	case RDMA_CM_EVENT_ESTABLISHED:
-+		spin_lock_irqsave(&rdma->req_lock, flags);
- 		BUG_ON(rdma->state != P9_RDMA_ROUTE_RESOLVED);
- 		rdma->state = P9_RDMA_CONNECTED;
-+		spin_unlock_irqrestore(&rdma->req_lock, flags);
- 		break;
- 
- 	case RDMA_CM_EVENT_DISCONNECTED:
--		if (rdma)
-+		if (rdma) {
-+			spin_lock_irqsave(&rdma->req_lock, flags);
- 			rdma->state = P9_RDMA_CLOSED;
-+			spin_unlock_irqrestore(&rdma->req_lock, flags);
-+		}
- 		c->status = Disconnected;
- 		break;
- 
-@@ -296,6 +307,7 @@ recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 	struct p9_req_t *req;
- 	int err = 0;
- 	int16_t tag;
-+	unsigned long flags;
- 
- 	req = NULL;
- 	ib_dma_unmap_single(rdma->cm_id->device, c->busa, client->msize,
-@@ -332,7 +344,10 @@ recv_done(struct ib_cq *cq, struct ib_wc *wc)
-  err_out:
- 	p9_debug(P9_DEBUG_ERROR, "req %p err %d status %d\n",
- 			req, err, wc->status);
--	rdma->state = P9_RDMA_FLUSHING;
-+	spin_lock_irqsave(&rdma->req_lock, flags);
-+	if (rdma->state < P9_RDMA_FLUSHING)
-+		rdma->state = P9_RDMA_FLUSHING;
-+	spin_unlock_irqrestore(&rdma->req_lock, flags);
- 	client->status = Disconnected;
- 	goto out;
- }
+ /* Epoll private bits inside the event mask */
 -- 
 2.53.0
 
