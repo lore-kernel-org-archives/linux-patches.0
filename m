@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90BA3B71A0;
-	Tue, 21 Jul 2026 21:05:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512CF3B995D;
+	Tue, 21 Jul 2026 21:05:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667949; cv=none; b=Jd3MeQIFp5jdaMuMs0Fwdy6dK45NFkgsiRmOpHn3VIbXkaBdX5ZjTctpKgZeT4LX6S+dadAj8prCIqq4bGrjC0RfRyOn6tqCRt24Mdx8CHC9mpuihviRDhsHYGCGqZ5Z4U/zuXXO0QHHKJAPGRkbJ1B/kl1oyia83Vmg0Vv01L8=
+	t=1784667952; cv=none; b=Htsz3Pr6DREHABufhcgFD4CurUIczJi17kXIFaITTdQLH/oRXLQznKwZcs/34L0gAIjvPSKn2b8f/WI4TINGLkt2gLEO4b4LJrbQjFdZuUUgeQaRTcDGhrrcRT20lIZBV/g2fPFI+E4HO7fOTa1r8T0L9GUqOVMHWhZctNQ7/Ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667949; c=relaxed/simple;
-	bh=r6Dq7uIENrXEc9LMs3vP776E+3uF1R2pXaZKdY4O7pg=;
+	s=arc-20240116; t=1784667952; c=relaxed/simple;
+	bh=P22/r+k35SYrUJ7sGExE+zZq/iwnxPSi1844PRh7KqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oje4g2uF6mrf/ytQht3Iz2DUs1MTBi4azcPPPVgfxtz/sQeFI8IzxDexim9RGTvwIca2Ofe9anHQpYAIN0YdutO+W40sopYUFoW8vB1YG1gD5VqyY57TGRMFgPUy6evSnsEeZMyvmmzpOfxNZQ2gfHks/xHZWdsHcPywYxj8Zxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wozD6HGM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QzY8wrJlEh6WbToCidCNXphtj0SzPhtZ4065W7Tf2Df3MbiEzO0jFL4pOAuMptPPcgV9dp391m13nx7owtwsBgL0UTrPWldo9UYxtheWW32fuaL1oapN/MvJhVGrkp16T+zpf0scxFWN3vJC8cQ/dy+M8/6ru8p4gdDi1YDpwRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1hqex56c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wozD6HGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD461F000E9;
-	Tue, 21 Jul 2026 21:05:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1hqex56c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A741F000E9;
+	Tue, 21 Jul 2026 21:05:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667948;
-	bh=jLWCDsr4ZuBqu/tXWzuXH9oUOB1fqgyUI780WOD5aaM=;
+	s=korg; t=1784667951;
+	bh=wRI+YuKHhVNpadSq7TCdCDuh52iKDAvxHHuQ5BEFTgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wozD6HGMvypOQRTHwqL1rtYdo2RBdpyuF3lsPIj7CDzbQskL9pS6rd+/nHluTGGcd
-	 b3ZSwDsSNHaGFp8nQDkukB7V/9Klj9ukfGuSfFQ2/7Yz/RzbwNj7wxDpHsBi7BO1Vj
-	 wm5CeTdmiap0VYIiR4TIfApyO+EVVxfmV2cX+inU=
+	b=1hqex56cKdsAAjy9syRHuZUPbwwDLmOytIEN5ULlS2ocPH7sABG1IccWnQepzqxud
+	 /ARrMctMmE/Eus5jQCsrKH8vKmW8SXY525oHknyA+3CJG+Z/HWT73NuoNF/8hY9SHB
+	 ypasCVxJSWEKxAFCxMJRNah5Ty4hq6UsRY2Gxzvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 1255/1266] Bluetooth: hci_sync: Fix attempting to send HCI_Disconnect to BIS handle
-Date: Tue, 21 Jul 2026 17:28:12 +0200
-Message-ID: <20260721152509.907999576@linuxfoundation.org>
+Subject: [PATCH 6.6 1256/1266] Bluetooth: 6lowpan: Fix using chan->conn as indication to no remote netdev
+Date: Tue, 21 Jul 2026 17:28:13 +0200
+Message-ID: <20260721152509.930907327@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,28 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 314d30b1508682e27c8a324096262c66f23455d9 upstream.
+commit d38eaf611839b85ade3dd3db309dbc8aaaaf0095 upstream.
 
-BIS/PA connections do have their own cleanup proceedure which are
-performed by hci_conn_cleanup/bis_cleanup.
+b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding
+conn ref") don't reset the chan->conn to NULL anymore making the bt#
+netdev not be remove once the last l2cap_chan_del is removed.
 
-Fixes: 23205562ffc8 ("Bluetooth: separate CIS_LINK and BIS_LINK link types")
+Instead of restoring the original behavior this remove the logic of
+keeping the interface after the last channel is removed because it
+never worked as intended and the l2cap_chan_del always detach its
+l2cap_conn which results in always removing the channel anyway.
+
+Fixes: b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sync.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/6lowpan.c |   18 +++---------------
+ 1 file changed, 3 insertions(+), 15 deletions(-)
 
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -5529,7 +5529,7 @@ static int hci_disconnect_sync(struct hc
- {
- 	struct hci_cp_disconnect cp;
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -781,20 +781,10 @@ static void chan_close_cb(struct l2cap_c
+ 	struct lowpan_btle_dev *dev = NULL;
+ 	struct lowpan_peer *peer;
+ 	int err = -ENOENT;
+-	bool last = false, remove = true;
++	bool last = false;
  
--	if (test_bit(HCI_CONN_BIG_CREATED, &conn->flags)) {
-+	if (conn->type == BIS_LINK) {
- 		/* This is a BIS connection, hci_conn_del will
- 		 * do the necessary cleanup.
- 		 */
+ 	BT_DBG("chan %p conn %p", chan, chan->conn);
+ 
+-	if (chan->conn && chan->conn->hcon) {
+-		if (!is_bt_6lowpan(chan->conn->hcon))
+-			return;
+-
+-		/* If conn is set, then the netdev is also there and we should
+-		 * not remove it.
+-		 */
+-		remove = false;
+-	}
+-
+ 	spin_lock(&devices_lock);
+ 
+ 	list_for_each_entry_rcu(entry, &bt_6lowpan_devices, list) {
+@@ -821,10 +811,8 @@ static void chan_close_cb(struct l2cap_c
+ 
+ 		ifdown(dev->netdev);
+ 
+-		if (remove) {
+-			INIT_WORK(&entry->delete_netdev, delete_netdev);
+-			schedule_work(&entry->delete_netdev);
+-		}
++		INIT_WORK(&entry->delete_netdev, delete_netdev);
++		schedule_work(&entry->delete_netdev);
+ 	} else {
+ 		spin_unlock(&devices_lock);
+ 	}
 
 
