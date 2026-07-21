@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4725C43E4B9;
-	Tue, 21 Jul 2026 21:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609B743F4D2;
+	Tue, 21 Jul 2026 21:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671045; cv=none; b=Htwc14qIIW3CKOdsNxcCK0bL0FSiEBbXWbqJpqFQKIN5saTrZoO+zASs/7vQUMY5Ma9vV/b33rAWTXCIwP3rYuQ6c7gLKrXQ2N20el/ztKPzDaLA1JYgl6CcEnFdVdZ1VeKLifxrHHAIufzhQ/Y60XVOVoyMLBSj48SRG3njwHs=
+	t=1784671047; cv=none; b=Jcfw3UdyMFXmzo7mg8iwtp+GinG1jRziK3B+pQlNA0nfbTAyBASf/ps0E7lddxt+LJiGIBzbUv4xnsB0yGksbP3UP0DWxzJL7KG1BEiXn8VNFbQsmUnHCiK1BL9mpYs8BMjWZLGuk6WynaKPia9+d3MY6cL1X8lwyFaO2m2yVOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671045; c=relaxed/simple;
-	bh=Ie9Ft4V2YFkZzX8tPdh0V1kFPDfblwPwarrl6+SgWiM=;
+	s=arc-20240116; t=1784671047; c=relaxed/simple;
+	bh=AlsywjrBr1O+K9cxZZdp6iuaMjhpUnZirI1GdHFj+wE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JKSybxqkSaFD7FhdRJeKpY5aYg9F4lc2R1OopdqgMvTWGqu8/sskszdGCXx2nQd21T7Ty4keRNgJplGIPa6bZp3NMs5I9jylsWW8B60bKvKcQnlQBHYJlDxUR56u9Ztal+9L4crdrYh5ZnyEl2G6MGmYW/IIJXUQSqN7cIJlnBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YcvGsA8z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pBFcy8oJ92s7Z5sMpEN6TmxTGrx8rVmL3YgSQOE+v/BPsdWJShGzzEqfxOLUaDBMphrEOmwEmLsJ4gi3wy5WQsD5bHoZ3CXu5ZgDn3pjiKpwqBEyPhwNwpOAUaZOnozqvHKq2uXeNXwdPqeJO4HROwO+Ivxkb4zT70N2y+zf/cI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N06O8COi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YcvGsA8z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E26B1F00A3E;
-	Tue, 21 Jul 2026 21:57:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N06O8COi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E3B1F000E9;
+	Tue, 21 Jul 2026 21:57:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671042;
-	bh=BeqwIt29hk/uMAVy19FUZ331g2jyHwUgdpXycLSsMMM=;
+	s=korg; t=1784671045;
+	bh=9JijJbtgdpYES3mt5JHCGO+zdrYe14GdrPOWvAYqLT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YcvGsA8z+tUuraCf7swLKJG05i1HNpohnTv/7j2tC6NuHpiStV6bvH3GiVSz4ifGK
-	 NlY+i0gNTyX219C83Yq0RiXLPerAZ0L0aL3en6IPJswbb4X5npeJyG3nX8GboL9Qjo
-	 49dmQxd6TuEHKNwfpLF/cQkDzeEBkGK+/cX71tYE=
+	b=N06O8COiMD6DmLyGgp0DjIJvvf0s5eVLn0IeeXi8zw0oIKzTBv5il3iaiq4R/rDeP
+	 OUoVVahhn4xTV8Sp5FCFUWm2POdnkT3+tm7F0q/w+SBKWc0CcCZHXxFgO/wQcV/EVP
+	 EZkItsS6wicm+1kmzX8vgjBcA33A6mUSI7pMCMZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 5.15 080/843] binder: fix UAF in binder_free_transaction()
-Date: Tue, 21 Jul 2026 17:15:15 +0200
-Message-ID: <20260721152407.798612210@linuxfoundation.org>
+	Alexandru Hossu <hossu.alexandru@gmail.com>,
+	Luka Gejak <luka.gejak@linux.dev>
+Subject: [PATCH 5.15 098/843] staging: rtl8723bs: fix OOB write in HT_caps_handler()
+Date: Tue, 21 Jul 2026 17:15:33 +0200
+Message-ID: <20260721152408.204973101@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,95 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Alexandru Hossu <hossu.alexandru@gmail.com>
 
-commit f223d27a546c1e1f48d38fd67760e78f068fe8c4 upstream.
+commit f8001e1a516ba3b495728c65b61f799cbfad6bd0 upstream.
 
-In binder_free_transaction(), the t->to_proc is read under the t->lock.
-However, once the t->lock is dropped, the to_proc can die in parallel.
-This leads to a use-after-free error when we attempt to acquire its
-inner lock right afterwards:
+HT_caps_handler() iterates pIE->length bytes and writes into
+HT_caps.u.HT_cap[], which is a fixed 26-byte array (sizeof struct
+HT_caps_element). Because pIE->length is a raw u8 from an over-the-air
+802.11 AssocResponse frame and is never validated, a malicious AP can
+set it up to 255, causing up to 229 bytes of out-of-bounds writes into
+adjacent fields of struct mlme_ext_info.
 
-  ==================================================================
-  BUG: KASAN: slab-use-after-free in _raw_spin_lock+0xe4/0x1a0
-  Write of size 4 at addr ffff00001125da70 by task B/672
+Truncate the iteration count to the size of HT_caps.u.HT_cap using
+umin() so that data from a longer-than-expected IE is silently ignored
+rather than written out of bounds, preserving interoperability with APs
+that pad the element. An early return on oversized IEs was considered
+but rejected: it would bypass the pmlmeinfo->HT_caps_enable = 1
+assignment that precedes the loop, silently disabling HT mode for APs
+that append extra bytes to the HT Capabilities IE.
 
-  CPU: 20 UID: 0 PID: 672 Comm: B Not tainted 7.1.0-rc6-00284-g8e65320d91cd #4 PREEMPT
-  Hardware name: linux,dummy-virt (DT)
-  Call trace:
-   _raw_spin_lock+0xe4/0x1a0
-   binder_free_transaction+0x8c/0x320
-   binder_send_failed_reply+0x21c/0x2f8
-   binder_thread_release+0x488/0x7e0
-   binder_ioctl+0x12c0/0x29a0
-  [...]
-
-  Allocated by task 675:
-   __kmalloc_cache_noprof+0x174/0x444
-   binder_open+0x118/0xb70
-   do_dentry_open+0x374/0x1040
-   vfs_open+0x58/0x3bc
-  [...]
-
-  Freed by task 212:
-   __kasan_slab_free+0x58/0x80
-   kfree+0x1a0/0x4a4
-   binder_proc_dec_tmpref+0x32c/0x5e0
-   binder_deferred_func+0xc48/0x104c
-   process_one_work+0x53c/0xbc0
-  [...]
-  ==================================================================
-
-To prevent this, pin the target thread (t->to_thread) to guarantee the
-target process remains alive. Undelivered transactions without a target
-thread are already safe, as the target process can only be the current
-context in those paths.
-
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
 Cc: stable <stable@kernel.org>
-Reported-by: Alice Ryhl <aliceryhl@google.com>
-Closes: https://lore.kernel.org/all/aikJKVuny_eOivwN@google.com/
-Fixes: a370003cc301 ("binder: fix possible UAF when freeing buffer")
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260619185233.2194678-2-cmllamas@google.com
+Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
+Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
+Link: https://patch.msgid.link/20260522004531.1038924-5-hossu.alexandru@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/staging/rtl8723bs/core/rtw_wlan_util.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -1537,10 +1537,19 @@ static void binder_txn_latency_free(stru
+--- a/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
++++ b/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
+@@ -979,7 +979,8 @@ void HT_caps_handler(struct adapter *pad
  
- static void binder_free_transaction(struct binder_transaction *t)
- {
-+	struct binder_thread *target_thread;
- 	struct binder_proc *target_proc;
+ 	pmlmeinfo->HT_caps_enable = 1;
  
- 	spin_lock(&t->lock);
- 	target_proc = t->to_proc;
-+	target_thread = t->to_thread;
-+	/*
-+	 * Pin target_thread to keep target_proc alive. Undelivered
-+	 * transactions with !target_thread are safe, as target_proc
-+	 * can only be the current context there.
-+	 */
-+	if (target_thread)
-+		atomic_inc(&target_thread->tmp_ref);
- 	spin_unlock(&t->lock);
- 
- 	if (target_proc) {
-@@ -1555,6 +1564,10 @@ static void binder_free_transaction(stru
- 			t->buffer->transaction = NULL;
- 		binder_inner_proc_unlock(target_proc);
- 	}
-+
-+	if (target_thread)
-+		binder_thread_dec_tmpref(target_thread);
-+
- 	if (trace_binder_txn_latency_free_enabled())
- 		binder_txn_latency_free(t);
- 	/*
+-	for (i = 0; i < (pIE->length); i++) {
++	for (i = 0; i < umin(pIE->length,
++			     sizeof(pmlmeinfo->HT_caps.u.HT_cap)); i++) {
+ 		if (i != 2) {
+ 			/* Commented by Albert 2010/07/12 */
+ 			/* Got the endian issue here. */
 
 
