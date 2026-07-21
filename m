@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55EB3368A5;
-	Tue, 21 Jul 2026 19:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7621046D0AF;
+	Tue, 21 Jul 2026 19:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663632; cv=none; b=uFEb0aTb/MZ5WfraGbehUejd5v143jarVVYkccZVPXnc3QXVormLf/+CaBMH/S8bLa3NOl8C+MRdlHnDS2JnFYjsJ9fFg+7MPjg2EaiqNiSUgli6552jIxB/Ng961gTjsbi3/0OKrLwPANpwlNYxxffNcw15w2hzGmdLQJpNSHI=
+	t=1784663635; cv=none; b=dkN6md1OoSOg7yhXraCgYUPJOY3UYmnFSFtLgYfI1g8NCL5b2Ff2H4yAs/bjmQepwMSKj9qNLomvEXmjYjFLLtLocXlz+rABASORf5yJSuIvPxhJWTTmW5fX0UV7nO3DRfEhUvpoaXByQ20YC4knQ+eDqEq4zaQP8+/boyJOaP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663632; c=relaxed/simple;
-	bh=X3IV3PqXtC4TPS82t8XeqmBq7xvEF5zk2sAKINj/nnM=;
+	s=arc-20240116; t=1784663635; c=relaxed/simple;
+	bh=SmMMs4hZb0y7EkraHCEsC8CiM/jXVrIe2Btl9B10oRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gz3U5wBLzdUhKtIi5+1WsddihRRx/S9Kj7zTViysDm7bKKlJCQwQ+sXUpip3XqSx4c7Yrlwe/0lfEZdMPO1tGCOhZVdcYQ4MsKJQh9jEIiD3tIRyhwfkSByaa+h1m1f9ls8rr5TThrIi2TUGMKQMwO5hvj7JrU/+iya3CsvW2YA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHMofes7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qQiI+u5EgCQA7DAr8DmoX3rvc07rSqYOAiYp1Anmi5DhDo3/1wk2Pbxm7B8OjcqBN6VnIXCNeaoDimrQ4zj4iIxhDsGyQ+TphLH0bmsc+S+e499puyjc9CRhOt1r8dCEKo3kxodF/GsixUi/pDZ0BT/Vb+j1qZzKJj2brVGsoh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rkP9dzrM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHMofes7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 414271F000E9;
-	Tue, 21 Jul 2026 19:53:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rkP9dzrM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB7141F000E9;
+	Tue, 21 Jul 2026 19:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663631;
-	bh=wB17J2PMaHz9c8o60JyqCuLyXLYHN41Jdtww4RLt588=;
+	s=korg; t=1784663634;
+	bh=ahwdGh4MguvbyndYP7N7bW5N8HhXi4yPcrNCOG7PwlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jHMofes7nsXXuwCBHvaL0H+k02RjFJy2szb6wPhot5PhJiy8e/3jaCvNLAShlkXTp
-	 tQZ+muVVbLsMbkXnUFgZPctQt9PyUrvYMuuQXuIVJRjME+y2TC5mfBRPAYb7kDiT/p
-	 JnEhUiPmZZCcXIaPsP9xI6KSTL7OX/Vqza2WjEk4=
+	b=rkP9dzrMkFDbj8BWrKT9j9BIwAQrBVODZ+0wI/30lRdQYhwwFs1+mTRKZJ2DiJ+kV
+	 uCqeD4z3iOj/fQ3hv60SBtR6PyEnGqm8LLmQZw4TTtktohMwrnvi7zLWBB6F9sWj/u
+	 u/42EGA3mpDynHs/O7bd/wObhJNfM3MHyZSlCBR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.12 0896/1276] HID: playstation: validate num_touch_reports in DualShock 4 reports
-Date: Tue, 21 Jul 2026 17:22:19 +0200
-Message-ID: <20260721152506.096621997@linuxfoundation.org>
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 0897/1276] Bluetooth: SCO: fix sleeping under spinlock in sco_conn_ready
+Date: Tue, 21 Jul 2026 17:22:20 +0200
+Message-ID: <20260721152506.117517540@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -44,63 +44,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benoît Sevens <bsevens@google.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-commit 82a4fc46330910b4c1d9b189561439d468e3ff11 upstream.
+commit b819db93d73f4593636299e229914052b89e3ef2 upstream.
 
-The DualShock 4 HID driver fails to validate the num_touch_reports field
-received from the device in both USB and Bluetooth input reports.
-A malicious device could set this field to a value larger than the
-allocated size of the touch_reports array (3 for USB, 4 for Bluetooth),
-leading to an out-of-bounds read in dualshock4_parse_report().
+sco_conn_ready calls sleeping functions under conn->lock spinlock.
 
-This can result in kernel memory disclosure when processing malicious
-HID reports.
+The critical section can be reduced: conn->hcon is modified only with
+hdev->lock held. It is guaranteed to be held in sco_conn_ready, so
+conn->lock is not needed to guard it.
 
-Validate num_touch_reports against the array size for the respective
-connection types before processing the touch data.
+Move taking conn->lock after lock_sock(parent). This also follows the
+lock ordering lock_sock() > conn->lock elsewhere in the file.
 
-Signed-off-by: Benoît Sevens <bsevens@google.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 27c24fda62b60 ("Bluetooth: switch to lock_sock in SCO")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-playstation.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/bluetooth/sco.c |   20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
---- a/drivers/hid/hid-playstation.c
-+++ b/drivers/hid/hid-playstation.c
-@@ -2247,6 +2247,12 @@ static int dualshock4_parse_report(struc
- 			size == DS4_INPUT_REPORT_USB_SIZE) {
- 		struct dualshock4_input_report_usb *usb = (struct dualshock4_input_report_usb *)data;
- 
-+		if (usb->num_touch_reports > ARRAY_SIZE(usb->touch_reports)) {
-+			hid_err(hdev, "DualShock4 USB input report has invalid num_touch_reports=%d\n",
-+				usb->num_touch_reports);
-+			return -EINVAL;
-+		}
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -1317,26 +1317,24 @@ static void sco_conn_ready(struct sco_co
+ 		sk->sk_state_change(sk);
+ 		release_sock(sk);
+ 	} else {
+-		sco_conn_lock(conn);
+-
+-		if (!conn->hcon) {
+-			sco_conn_unlock(conn);
++		if (!conn->hcon)
+ 			return;
+-		}
 +
- 		ds4_report = &usb->common;
- 		num_touch_reports = min_t(u8, usb->num_touch_reports,
- 					  ARRAY_SIZE(usb->touch_reports));
-@@ -2262,6 +2268,12 @@ static int dualshock4_parse_report(struc
- 			return -EILSEQ;
++		lockdep_assert_held(&conn->hcon->hdev->lock);
+ 
+ 		parent = sco_get_sock_listen(&conn->hcon->src);
+-		if (!parent) {
+-			sco_conn_unlock(conn);
++		if (!parent)
+ 			return;
+-		}
+ 
+ 		lock_sock(parent);
+ 
++		sco_conn_lock(conn);
++
+ 		sk = sco_sock_alloc(sock_net(parent), NULL,
+ 				    BTPROTO_SCO, GFP_ATOMIC, 0);
+ 		if (!sk) {
+-			release_sock(parent);
+ 			sco_conn_unlock(conn);
++			release_sock(parent);
+ 			return;
  		}
  
-+		if (bt->num_touch_reports > ARRAY_SIZE(bt->touch_reports)) {
-+			hid_err(hdev, "DualShock4 BT input report has invalid num_touch_reports=%d\n",
-+				bt->num_touch_reports);
-+			return -EINVAL;
-+		}
+@@ -1356,9 +1354,9 @@ static void sco_conn_ready(struct sco_co
+ 		/* Wake up parent */
+ 		parent->sk_data_ready(parent);
+ 
+-		release_sock(parent);
+-
+ 		sco_conn_unlock(conn);
 +
- 		ds4_report = &bt->common;
- 		num_touch_reports = min_t(u8, bt->num_touch_reports,
- 					  ARRAY_SIZE(bt->touch_reports));
++		release_sock(parent);
+ 	}
+ }
+ 
 
 
