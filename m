@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C89381E92;
-	Tue, 21 Jul 2026 17:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05AC381E92;
+	Tue, 21 Jul 2026 17:05:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653516; cv=none; b=eatca2hCJX7prCWxgoTsf1/Uu+DLfEd6wqw6lk0BHB4hdBoPBV14ES8PN3WRy8zsmmi3BKzk3Hf8eWngzC2O/WcMRg8g3DVLUPxAoC97l6ZxYK+sqbWVeCPslPBlR68a2nXZr28gFlUjNJ+LrCeghnkTfP8S/++QXcafEo7bmAk=
+	t=1784653519; cv=none; b=WW9B7yGRJD7+z/Jc8exMT6KSCrflq/3qsaPqAyEBDzVgDHsz+oDB+0L/yyZkWsUriKhDWKSWA5FT2sYTkzArfENUFaD7ihrCCxvp5rX3ALuvR17NB6jzj+TwDGxCvBlgk5x8NdHFD0AKp88sBlDVdSRce1OS0WitEySVLp1lQtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653516; c=relaxed/simple;
-	bh=e3gwW7OKutCclPjPsxT6UEPSBl3zMFREtz19fBxVfdY=;
+	s=arc-20240116; t=1784653519; c=relaxed/simple;
+	bh=8DswrC6V2U5ghpJceFk1CbhfmVONsvtJ9MRcC5dB5EA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AIa+xV7OB9lbv/PGFAIOUeZOO6ACgX/uBmd8kXFbCP4uU40AvjlBr/WCQWDDQ0EbKrqozujxF1UUdI9G8kspyRAkiBQb7bb5BThSblV4Aj8ogF9G7jKGH5V89/S7wuV8kSFZvGkbddflDNoElV3cDIYUK8R8l2IhhKnCkD5rXes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQWDzTU4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N1u+ilLYmK6JTsTYv/Se/1yVLvZjNgplHRkr0DLXJpW3tnSJq7IobZAv/ndEs+Pq/6HNeAniBoXIBKi+XJ+RfWAcTtM9cI7GRsEkdTD9TxwHFGGeVDymZQOCkDKUleaw3OEZhmJ9OB6NVazx0wubKZujs1t3yhIcomHPLL1d3YY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIrqQkzi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQWDzTU4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D31C1F000E9;
-	Tue, 21 Jul 2026 17:05:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIrqQkzi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257DF1F000E9;
+	Tue, 21 Jul 2026 17:05:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653515;
-	bh=CzKIImKlIS+fq8LBMBbAknCMKwtsVmWnNh7TF4kwL1w=;
+	s=korg; t=1784653517;
+	bh=+4bCYUzqAPA1FFmrbIlOK1YzYrKr3agPo4IW1r6CXwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LQWDzTU4jUuk2aiDkmOiYXtDfCG9T7lBOQiY083hV80ULEAvrpR44bKc3CNP+vFxX
-	 mwQx9vvw4rLkitbp/3oIe3+CSS+Q2x04jAXqXjdjtHL/d2l6l7A5S+Eu9WGnry67uq
-	 jVW4NhgS5JjCXN6aC33GUtBWSGcBn7mE2Q8eB5iI=
+	b=hIrqQkzixCOK0ZCFlPxJ2ZwyRHlF/0X+ne4T2x9vULoJfSqM2iN+F0QPbta1NFSFW
+	 f/vlCD7HRGU288b6t42mg+YV64OogldtmUjemCtqbIGLzb5jcZxwNeF1W1LKsD7ydT
+	 gsYi30lTCgY0Sy0VpNaawy5lFFQsoDiPJr0uvZK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1356/2077] spi: rzv2h-rspi: Fix DMA transfer error handling for signal interruption
-Date: Tue, 21 Jul 2026 17:17:09 +0200
-Message-ID: <20260721152624.800734557@linuxfoundation.org>
+Subject: [PATCH 7.1 1357/2077] sctp: fix addr_wq_timer race in sctp_free_addr_wq()
+Date: Tue, 21 Jul 2026 17:17:10 +0200
+Message-ID: <20260721152624.824718493@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,48 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 7fc2c3dcae28347a30ccd76c8817e5719005f1c3 ]
+[ Upstream commit 976c19de0f22a857ba0112f39635f8fd7a257568 ]
 
-wait_event_interruptible_timeout() can return a negative error code when
-interrupted by a signal. The original code treated all non-zero return
-values as success, which would incorrectly synchronize DMA channels and
-return 0 instead of propagating the interruption error.
+sctp_free_addr_wq() previously removed addr_wq_timer using timer_delete()
+while holding addr_wq_lock. However, timer_delete() does not guarantee that
+a currently running timer handler has completed.
 
-Fixes: fa08b566860b ("spi: rzv2h-rspi: add support for DMA mode")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
-Tested-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://patch.msgid.link/20260627-rspi-v1-1-170c93ee14da@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This allows a race with sctp_addr_wq_timeout_handler(), where the handler
+may still run after addr_waitq has been freed, acquire addr_wq_lock, and
+access freed memory, leading to a use-after-free.
+
+Fix this by calling timer_shutdown_sync() before taking addr_wq_lock.  This
+guarantees that any in-flight timer handler has finished and prevents the
+timer from being re-armed during teardown, making subsequent cleanup safe.
+
+Fixes: 4db67e808640 ("sctp: Make the address lists per network namespace")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/5dc95f295bdb5c3f60e880dd9aa5112dc5c071cc.1782757874.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-rzv2h-rspi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sctp/protocol.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-rzv2h-rspi.c b/drivers/spi/spi-rzv2h-rspi.c
-index 6ed3fad873b8cf..190d7eb2034afa 100644
---- a/drivers/spi/spi-rzv2h-rspi.c
-+++ b/drivers/spi/spi-rzv2h-rspi.c
-@@ -366,14 +366,14 @@ static int rzv2h_rspi_transfer_dma(struct rzv2h_rspi_priv *rspi,
- 	rzv2h_rspi_clear_all_irqs(rspi);
+diff --git a/net/sctp/protocol.c b/net/sctp/protocol.c
+index 5c6fa8e8d34d33..e95061b672ef4d 100644
+--- a/net/sctp/protocol.c
++++ b/net/sctp/protocol.c
+@@ -663,8 +663,9 @@ static void sctp_free_addr_wq(struct net *net)
+ 	struct sctp_sockaddr_entry *addrw;
+ 	struct sctp_sockaddr_entry *temp;
  
- 	ret = wait_event_interruptible_timeout(rspi->wait, rspi->dma_callbacked, HZ);
--	if (ret) {
-+	if (ret > 0) {
- 		dmaengine_synchronize(rspi->controller->dma_tx);
- 		dmaengine_synchronize(rspi->controller->dma_rx);
- 		ret = 0;
- 	} else {
- 		dmaengine_terminate_sync(rspi->controller->dma_tx);
- 		dmaengine_terminate_sync(rspi->controller->dma_rx);
--		ret = -ETIMEDOUT;
-+		ret = ret ?: -ETIMEDOUT;
- 	}
- 
- 	enable_irq(rspi->irq_rx);
++	timer_shutdown_sync(&net->sctp.addr_wq_timer);
++
+ 	spin_lock_bh(&net->sctp.addr_wq_lock);
+-	timer_delete(&net->sctp.addr_wq_timer);
+ 	list_for_each_entry_safe(addrw, temp, &net->sctp.addr_waitq, list) {
+ 		list_del(&addrw->list);
+ 		kfree(addrw);
 -- 
 2.53.0
 
