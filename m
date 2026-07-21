@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8C2471250;
-	Tue, 21 Jul 2026 18:41:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8207436344;
+	Tue, 21 Jul 2026 18:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659294; cv=none; b=fdozmQBfuzkgWCz6+djqYqJYQ2IL3ZPt1d/HDmR8TaZIV9BLwHDLZE53BfLMyuJC5UbohJAD56qZeib3Fsh0bYwdlllb/zYwZFqsbXvvyZuv5QOQ7U8waPiLG0+9sdvihx6UOgmPCT21uwQl2N5ZE7QhpB1Ia8ZN+ZLfVW65/0w=
+	t=1784659296; cv=none; b=T1sQwlGKBl5Jh4VIubwFICb5p8FfHx79Mm5YstuzOPPyvwoPuX54rUyoiPjb/T7J58WCOCZVkvBbQ4V6gOckvkrQX7+ts54dl48qqzwN0eoeWTm8f/6Wh4RKgC2beTERYrmnFnhT5dUuYGynYHyI41cpA1SZ5zUBgqDzLt+gMw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659294; c=relaxed/simple;
-	bh=tS6nlVVWmuGLTLroCYw3Ut5okMqrToDRCdRgcUddX2E=;
+	s=arc-20240116; t=1784659296; c=relaxed/simple;
+	bh=PsUj7TKj6Wb0Bip8d1z0wIvvA4L1R24dojOMshiXfhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oWo0Rtn0CGPMv91yttmvbADQtbdjwlu9oNG6jY0FfeETx+qHxtGX9pINxzd4T6wW27lfwMXqx8X8UDf1f5D2TPyhjcFu7KrW5PXEMCeLxXJ5SEAW+q1hx30ae+4BUmAjdOOAgjJfpqtv7LNYFZ5CTs+CEuLIkBZa+VOgiG4amo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YzLkqkdX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gUmLn9ic2eFrPHmoM1lFpzI/DMRRfhlx20K71mYCMBOW6jYK04Sp9gDkKA2USSvALmCRkZGCTGX5wS3mHBspuJ8ECbmVyCTDsW3KZs3151zWHZ6VDdYj4zZavMNgUJ2J/oe4y5RhRaOYQt5DFLJewvGLjW/rgZBFNTPZaNTTjgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xyAIU/Lr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YzLkqkdX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744B51F000E9;
-	Tue, 21 Jul 2026 18:41:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xyAIU/Lr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A1F81F00A3A;
+	Tue, 21 Jul 2026 18:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659293;
-	bh=yR4pi/7av9wQuZh7I/tOq6jPRbYaXj5SfcjUnYLSS5A=;
+	s=korg; t=1784659295;
+	bh=sNnz4bYZ5rAQqLOgom/DBdAWeLSzUg+ItN4zsos0r3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YzLkqkdXx/akLCUaiW8vEfIF0W+m63T+x/VNSN8g9J7GN0EHRvAm/YDvVyGOOfs8s
-	 b+AS/1B97h7T0MNdYjVsLR6BI6Ba1OzFKQQGk/KvG3aJNsBTaAtC0JvP5amLapBmdF
-	 ZoBHwdnhhkVzMLvHREj/is1QzBKb34EmkjJDnFvs=
+	b=xyAIU/Lr3zjyybR6GD2D71Ll98lt28zNSH4SMpNtG5fmYStTiNmhJ9MBM9rkj41av
+	 qfk9zR9DLLCLU/Qwf59acub+k1FDd3eJYG2kTv9IN7jhx6OtusheUL0CqMn6/btBab
+	 3OUAEHLQaSPaxswYW5fbch7geLyRv7+HOAuQ+g6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lee <david.lee@trailofbits.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 1439/1611] fhandle: reject detached mounts in capable_wrt_mount()
-Date: Tue, 21 Jul 2026 17:25:55 +0200
-Message-ID: <20260721152547.813882633@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 1466/1611] drbd: reject data replies with an out-of-range payload size
+Date: Tue, 21 Jul 2026 17:26:22 +0200
+Message-ID: <20260721152548.421453424@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -45,54 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Lee <david.lee@trailofbits.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 6c732471740bc2ac9b0946134f9f551dc75f4369 upstream.
+commit bd910a7660d280595ef94cb6d193951d855d330f upstream.
 
-The recent fhandle RCU fix moved the mount namespace capability check
-into capable_wrt_mount(), so a non-NULL mnt_namespace survives the
-ns_capable() dereference. The helper still assumes the later
-READ_ONCE(mount->mnt_ns) must be non-NULL because may_decode_fh()
-checked is_mounted() first.
+recv_dless_read() receives a P_DATA_REPLY from a peer into the bio of an
+outstanding read request. The peer-supplied payload length reaches it as
+the signed int data_size, and two peer-controlled inputs can make it
+negative. With a negotiated data-integrity-alg the digest length is
+subtracted first, so a reply whose payload is smaller than the digest
+underflows data_size. With no integrity algorithm (the default) data_size
+is assigned from the unsigned h95/h100 wire length and drbdd() never
+bounds it for a payload-carrying command, so a length above INT_MAX casts
+it negative; this path needs no non-default feature. The bio receive loop
+then computes expect = min_t(int, data_size, bv_len), which is negative,
+and drbd_recv_all_warn(mapped, expect) receives with a size_t of SIZE_MAX
+into the first mapped page.
 
-That assumption is not stable. A detached mount from
-open_tree(..., OPEN_TREE_CLONE) can be dissolved on fput while
-open_by_handle_at() is between those checks, and umount_tree() can
-clear mount->mnt_ns. If the helper observes NULL, it dereferences
-mnt_ns->user_ns and panics.
+The sibling receive path read_in_block() is not affected: it uses an
+unsigned size and rejects it against DRBD_MAX_BIO_SIZE before receiving.
+Reject a data reply whose size is negative after the optional digest
+subtraction, covering both triggers.
 
-Return false when the RCU read observes a detached mount. This keeps
-the relaxed permission path conservative: a mount no longer attached
-to a namespace cannot authorize open_by_handle_at() access.
+Impact: a malicious or man-in-the-middle DRBD peer copies attacker-chosen
+bytes past a bio page in the receiver, corrupting kernel memory. A node
+that reads from its peer (a diskless node, or read-balancing to the peer)
+is exposed in the default configuration; data-integrity-alg is not
+required.
 
-Fixes: 620c266f3949 ("fhandle: relax open_by_handle_at() permission checks")
+Fixes: b411b3637fa7 ("The DRBD driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Assisted-by: LLM
-Link: https://patch.msgid.link/20260701114438.24431-1-david.lee@trailofbits.com
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Assisted-by: Codex:gpt-5-5-xhigh
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Link: https://patch.msgid.link/20260710022837.3738461-1-michael.bommarito@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fhandle.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/drbd/drbd_receiver.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/fhandle.c
-+++ b/fs/fhandle.c
-@@ -297,7 +297,7 @@ static bool capable_wrt_mount(struct mou
- 	 */
- 	guard(rcu)();
- 	mnt_ns = READ_ONCE(mount->mnt_ns);
--	return ns_capable(mnt_ns->user_ns, CAP_SYS_ADMIN);
-+	return mnt_ns && ns_capable(mnt_ns->user_ns, CAP_SYS_ADMIN);
- }
+--- a/drivers/block/drbd/drbd_receiver.c
++++ b/drivers/block/drbd/drbd_receiver.c
+@@ -1810,6 +1810,11 @@ static int recv_dless_read(struct drbd_p
+ 		data_size -= digest_size;
+ 	}
  
- static inline int may_decode_fh(struct handle_to_path_ctx *ctx,
++	if (data_size < 0) {
++		drbd_err(peer_device, "Invalid data reply size\n");
++		return -EIO;
++	}
++
+ 	/* optimistically update recv_cnt.  if receiving fails below,
+ 	 * we disconnect anyways, and counters will be reset. */
+ 	peer_device->device->recv_cnt += data_size>>9;
 
 
