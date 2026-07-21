@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010B43998AF;
-	Tue, 21 Jul 2026 17:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A038B397E9A;
+	Tue, 21 Jul 2026 17:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653950; cv=none; b=nek0sADcD94URgInamqQDkPk5ajlmPL7ozZ2QvpAGLWM9FcnLmFausE4uUHZT7G51aJS1RXlVXSZnsRwBsnl+5x4zcP4w7pZ8gb6D67xUTzejhjsC72jSiIWdQSV565uZni7EgpmlSB5s1weifb+E0DdKKgxvJJTXR2ztKSWkyg=
+	t=1784653952; cv=none; b=d/s374iDhu/UuaHUf4KyXTE28eABugoB0e6PPdRMn+oSK/TRCJ/NtxYO8kF8ZmlrUAt11gVXhxnbF7nD04uCqti6jR969PtxRV4r/5VQ0AQ8SWJXZPKYdAQUa8ZHCrs5kObvZE5jFCnFecurZCwbtPDYSKavCmKiaELpmJhaGSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653950; c=relaxed/simple;
-	bh=S/iDmy8/DoH0Hyq5hiK6jAs8f/lIedo1hEA1gW5aVKE=;
+	s=arc-20240116; t=1784653952; c=relaxed/simple;
+	bh=tLrwtmltW5HUP8aqFKIkUh7kavY1VEFFo+SpOO3UFrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qL/bGMq7yC7d65FVh1z4dBRC57OLXRuy9nL5RjU1xlf6/xWczaUFqLvMN8HhzpWi43Ily6642wKw5PsG2/gea6EZEqDoa9FT4vu+ilxcJYV0idKcUfMx/f2DDvy8HBgWZPKgKZal8Qqf0r3ea1UlOXHICBAKOYwwjgW9Hr8w5b4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xoRlYi9b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z4CZQYGQkRJcLENnF6aMt6EZPwhMKe7DyXRTj/pN8b0GRJSR8TLmMreUjmMO/hMm2z5ua+Bx16JYv+oYis8bKy74Bhjh7JQcFcpM4j2chSFkZ6Gf/MTz7B+fmrgOPtyipPVa6qsZVXLEVfqEF5NZPr3yPutSN66x9tRKHL1DKJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WG0mPHfd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xoRlYi9b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E8E1F000E9;
-	Tue, 21 Jul 2026 17:12:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WG0mPHfd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10FD31F000E9;
+	Tue, 21 Jul 2026 17:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653948;
-	bh=e7Vy7YUAmgn7+ps8tKKVAnBkxf6dHiztP67MFjsH4/I=;
+	s=korg; t=1784653951;
+	bh=zAisxemX5fdN80CbzxgH48BoKknSrV1mlKMzNHs3xJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xoRlYi9bV6b6wihwzRfN0kNcQ2Ez6CkVf2ddzhFgtDjzH8tUptsi3uFLPs0cCk80x
-	 SZZdGQaXt52I3Pm+r/zzpkB48Yw818ifb/sGF4W3+4uhxLw+ARju1S6mhwwFhGC1op
-	 mNyPrO2wWXrXHYJnv8zkoCivLLTR9yHAtcBEekik=
+	b=WG0mPHfdh1AaRLXxXysuxqJpZK26lTONf2DGFruA8IGVOUdGm2di23ljWsvxRwOYa
+	 KDyx3Ej8v1JUF+8fuFt9AYO9j0CuuUcpL4jMzWa/QfE4ywL3yZMhY1iiS56bCh+Ke8
+	 KLeEsJitD9hz5N0w1GrEwje9lWhdPBSyGQ+B6Q4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Tianci <zhangtianci.1997@bytedance.com>,
-	Xie Yongji <xieyongji@bytedance.com>,
-	Jason Wang <jasowang@redhat.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 7.1 1518/2077] vduse: Fix race in vduse_dev_msg_sync and vduse_dev_read_iter
-Date: Tue, 21 Jul 2026 17:19:51 +0200
-Message-ID: <20260721152628.588449463@linuxfoundation.org>
+	Max Zhen <max.zhen@amd.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 1478/2077] accel/amdxdna: Fix potential amdxdna_umap lifetime race
+Date: Tue, 21 Jul 2026 17:19:11 +0200
+Message-ID: <20260721152627.657628035@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -47,112 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Tianci <zhangtianci.1997@bytedance.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-commit ae9c13b6fd79087cc5a216ee1649b6f012c2a238 upstream.
+[ Upstream commit 14f172eff9c19f8043a9858845f33cd034f3a41e ]
 
-There is one race case in vduse_dev_msg_sync and vduse_dev_read_iter:
+amdxdna_umap_release() calls the blocking mmu_interval_notifier_remove()
+before removing the object from abo->mem.umap_list. If
+aie2_populate_range() runs concurrently, it may obtain a reference to an
+amdxdna_umap that is being released, leading to a potential use-after-free.
 
-vduse_dev_read_iter():
-    lock(msg_lock);
-    dequeue_msg(send_list);
-    unlock(msg_lock);
-vduse_dev_msg_sync():
-    wait_timeout() finish
-    lock(msg_lock);
-    check msg->complete is false
-        list_del(msg);   <- double list_del() crash!
+Use kref_get_unless_zero() in aie2_populate_range() when acquiring a
+reference. If the reference count has already dropped to zero, release
+is in progress and the entry is skipped.
 
-To fix this case, we shall ensure vduse_msg is on send_list or recv_list
-outside the msg_lock critical section.
-
-Fixes: c8a6153b6c59 ("vduse: Introduce VDUSE - vDPA Device in Userspace")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhang Tianci <zhangtianci.1997@bytedance.com>
-Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260226115550.1814-3-zhangtianci.1997@bytedance.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
+Reviewed-by: Max Zhen <max.zhen@amd.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260706221228.434099-1-lizhi.hou@amd.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_user/vduse_dev.c |   37 +++++++++++++++++++++++++++----------
- 1 file changed, 27 insertions(+), 10 deletions(-)
+ drivers/accel/amdxdna/aie2_ctx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/vdpa/vdpa_user/vduse_dev.c
-+++ b/drivers/vdpa/vdpa_user/vduse_dev.c
-@@ -364,6 +364,7 @@ static ssize_t vduse_dev_read_iter(struc
- 	struct file *file = iocb->ki_filp;
- 	struct vduse_dev *dev = file->private_data;
- 	struct vduse_dev_msg *msg;
-+	struct vduse_dev_request req;
- 	int size = sizeof(struct vduse_dev_request);
- 	ssize_t ret;
- 
-@@ -375,12 +376,11 @@ static ssize_t vduse_dev_read_iter(struc
- 		msg = vduse_dequeue_msg(&dev->send_list);
- 		if (msg)
+diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
+index 884a64fa3e4fac..a417b7d9ffac30 100644
+--- a/drivers/accel/amdxdna/aie2_ctx.c
++++ b/drivers/accel/amdxdna/aie2_ctx.c
+@@ -963,7 +963,7 @@ static int aie2_populate_range(struct amdxdna_gem_obj *abo)
+ 	found = false;
+ 	down_write(&xdna->notifier_lock);
+ 	list_for_each_entry(mapp, &abo->mem.umap_list, node) {
+-		if (mapp->invalid) {
++		if (mapp->invalid && kref_get_unless_zero(&mapp->refcnt)) {
+ 			found = true;
  			break;
-+		spin_unlock(&dev->msg_lock);
- 
--		ret = -EAGAIN;
- 		if (file->f_flags & O_NONBLOCK)
--			goto unlock;
-+			return -EAGAIN;
- 
--		spin_unlock(&dev->msg_lock);
- 		ret = wait_event_interruptible_exclusive(dev->waitq,
- 					!list_empty(&dev->send_list));
- 		if (ret)
-@@ -388,17 +388,34 @@ static ssize_t vduse_dev_read_iter(struc
- 
- 		spin_lock(&dev->msg_lock);
+ 		}
+@@ -974,7 +974,7 @@ static int aie2_populate_range(struct amdxdna_gem_obj *abo)
+ 		up_write(&xdna->notifier_lock);
+ 		return 0;
  	}
+-	kref_get(&mapp->refcnt);
 +
-+	memcpy(&req, &msg->req, sizeof(req));
-+	/*
-+	 * We must ensure vduse_msg is on send_list or recv_list before unlock
-+	 * dev->msg_lock. Because vduse_dev_msg_sync() may be timeout when we
-+	 * copy data to userspace, and will call list_del() for this msg.
-+	 */
-+	vduse_enqueue_msg(&dev->recv_list, msg);
- 	spin_unlock(&dev->msg_lock);
--	ret = copy_to_iter(&msg->req, size, to);
--	spin_lock(&dev->msg_lock);
-+
-+	ret = copy_to_iter(&req, size, to);
- 	if (ret != size) {
-+		/*
-+		 * Roll back: move msg back to send_list if still pending.
-+		 *
-+		 * NOTE:
-+		 * vduse_find_msg() must use req.request_id instead of `msg`.
-+		 * A malicious userspace may reply to this request, and wake up
-+		 * the caller, after which `msg` will have already been freed.
-+		 * And here vduse_find_msg() will return NULL then do nothing.
-+		 */
-+		spin_lock(&dev->msg_lock);
-+		msg = vduse_find_msg(&dev->recv_list, req.request_id);
-+		if (msg)
-+			vduse_enqueue_msg_head(&dev->send_list, msg);
-+		spin_unlock(&dev->msg_lock);
- 		ret = -EFAULT;
--		vduse_enqueue_msg_head(&dev->send_list, msg);
--		goto unlock;
- 	}
--	vduse_enqueue_msg(&dev->recv_list, msg);
--unlock:
--	spin_unlock(&dev->msg_lock);
+ 	up_write(&xdna->notifier_lock);
  
- 	return ret;
- }
+ 	mm = mapp->notifier.mm;
+-- 
+2.53.0
+
 
 
