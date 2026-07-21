@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFC43B9930;
-	Tue, 21 Jul 2026 22:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93573B9D9D;
+	Tue, 21 Jul 2026 22:07:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671647; cv=none; b=jr6gfqzW0Ek3IBBH0MiTDiAgAYOfOisIt8RKwGekfl3SS58I4FRN8csQh0lhEW8+1FekItXRNPCbfYSMgggojXg3qIu2ghu+UiYWmCJ1h1OPgAOXZV9c47T2s5AOaJBP3FxmVycaxRUvyZLeFYeYcmadPRC809BHizNGYTToJVw=
+	t=1784671649; cv=none; b=eyAkQ/CbYjbNfzjRL/N4r4ZGvHsKgPaOWvB+kaoG39rDCIw8LWbCU0Dl4JCCgV1uslvIVvYZ1OBt5Pf64Ai+ZgvqgKSWcfdnGE6Wb5KhzlHrTtHpW6QvvYB6MAJZmhsLFi7hKaaZcaXN7RYG8GhcnumvuGClTsgioDV40B7EED8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671647; c=relaxed/simple;
-	bh=DniO/9pOUF2jGX2eAwjNvCWe/CuuD0+UZcrTcABacEQ=;
+	s=arc-20240116; t=1784671649; c=relaxed/simple;
+	bh=yNHBNhdQKUgFhqhNPGPew1rOpXEIrCsV0H0adbHyamg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L00sPHENlzAORNkp61RZhAbEWSvCJKns+C4L092UAPznxEC1BNZKqww8dBEJkA9vFlZFMLSnmj4Jtg95suF/wexufCnMED1drvCHkaYk8Nqaf4SbwgIV3GGo/PQSTM8Pt3CEUBiTc4477WEL5x9asxmAWgctYx6WiIvg2ioBXKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XwDD1HtO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EsKOeePkwHJzdpMdqbrPhe1ORjYSct5nS2OArDhjrjruZT64HRXQ7Jr2DpvAHw747yp2oAyMQ38qr3SIp9JW0QWDH2o219jQObk/aN7x9BqwTjzXbFc9D+0rV+W+04lYNWZxzAsmSR5WfYtwwH7Yxrd2POv6RjkZamwLs616SFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I2/0eImB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwDD1HtO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E4B1F000E9;
-	Tue, 21 Jul 2026 22:07:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I2/0eImB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BDA61F000E9;
+	Tue, 21 Jul 2026 22:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671646;
-	bh=1ZciyVY1rYqjR/MzmYUBwzVWnwfyDMKF/wQf2KgBd7Q=;
+	s=korg; t=1784671648;
+	bh=r6Onk9LLmXj+MrBhpxE7+WDT8JqsIc/Uws1LTAt4gL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XwDD1HtOmQs9ehb+dhE1qv7h/J7h6zO+f+ZehU3cR2w3pm9kwjjqVKnUh7XpK/dpB
-	 bu066ghty7vegIBDwwLj1H3blRkCGDQBC7YF62Opd4j52dN+sgusfooNUCiONiB+hM
-	 32OtgDKLGInSD2mE6ZdGbNIFIishD1qexD8N7JHw=
+	b=I2/0eImBglHR2oR1CwidbLlrHr2fNpwB4JQdurpmAz8vUGh7ombTnoQFU6yuB38I1
+	 12tG5ZDGjC53WdR/LtV+L3nMrvjAp6cfdyLyczR2jDdASXQbsF1UtrhV8RcFfg8um3
+	 AaCUMPYJNAn2MpHuY2CYktdMBXsZvkNxM3zKlfqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Qihang Tang <q.h.hack.winter@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 326/843] IB/mlx4: Fill in the access_flags if IB_MR_REREG_ACCESS is not specified
-Date: Tue, 21 Jul 2026 17:19:21 +0200
-Message-ID: <20260721152413.352911277@linuxfoundation.org>
+Subject: [PATCH 5.15 327/843] vduse: hold vduse_lock across IDR lookup in open path
+Date: Tue, 21 Jul 2026 17:19:22 +0200
+Message-ID: <20260721152413.375292688@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,77 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Qihang Tang <q.h.hack.winter@gmail.com>
 
-[ Upstream commit bade9a3150d44ed20b8c6484c4c8a943b7289abb ]
+[ Upstream commit e440e077748939839d9f76e24383b76b785f80ce ]
 
-Sashiko noticed mlx4 was using whatever random access flags were provided
-when IB_MR_REREG_ACCESS is not used. Since IB_MR_REREG_TRANS needs
-access_flags it used the random ones which means it doesn't work sensibly
-if userspace provides only IB_MR_REREG_TRANS.
+vduse_dev_open() looks up struct vduse_dev through the IDR and then
+acquires dev->lock only after vduse_lock has been dropped.
 
-Keep track of the current access_flag of the MR and use it if the user
-does not specify one.
+This leaves a window where a concurrent VDUSE_DESTROY_DEV can remove the
+same object from the IDR and free it before the open path locks the
+device, leading to a use-after-free.
 
-Also fixup a little confusion around mmr.access, it is the HW access flags
-so the convert_access() was missing. But nothing reads this by the time
-rereg_mr can happen.
+Close this race by keeping vduse_lock held until dev->lock has been
+acquired in the open path, matching the lock ordering already used by
+the destroy path.
 
-Fixes: 9376932d0c26 ("IB/mlx4_ib: Add support for user MR re-registration")
-Link: https://patch.msgid.link/r/0-v1-29ca7a402625+ddd6-mlx4_rereg_flags_jgg@nvidia.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: c8a6153b6c59 ("vduse: Introduce VDUSE - vDPA Device in Userspace")
+Signed-off-by: Qihang Tang <q.h.hack.winter@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260508094659.94647-1-q.h.hack.winter@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx4/mlx4_ib.h | 1 +
- drivers/infiniband/hw/mlx4/mr.c      | 9 +++++++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/vdpa/vdpa_user/vduse_dev.c | 21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx4/mlx4_ib.h b/drivers/infiniband/hw/mlx4/mlx4_ib.h
-index c60f6e9ac640d2..4574a6f9ab5391 100644
---- a/drivers/infiniband/hw/mlx4/mlx4_ib.h
-+++ b/drivers/infiniband/hw/mlx4/mlx4_ib.h
-@@ -136,6 +136,7 @@ struct mlx4_ib_mr {
- 	dma_addr_t		page_map;
- 	u32			npages;
- 	u32			max_pages;
-+	int			access_flags;
- 	struct mlx4_mr		mmr;
- 	struct ib_umem	       *umem;
- 	size_t			page_map_size;
-diff --git a/drivers/infiniband/hw/mlx4/mr.c b/drivers/infiniband/hw/mlx4/mr.c
-index 004311925dbf9b..db3cd0a9c7ec87 100644
---- a/drivers/infiniband/hw/mlx4/mr.c
-+++ b/drivers/infiniband/hw/mlx4/mr.c
-@@ -439,6 +439,7 @@ struct ib_mr *mlx4_ib_reg_user_mr(struct ib_pd *pd, u64 start, u64 length,
- 	if (err)
- 		goto err_mr;
+diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
+index 4684d4756b427e..bd5d78fd926db5 100644
+--- a/drivers/vdpa/vdpa_user/vduse_dev.c
++++ b/drivers/vdpa/vdpa_user/vduse_dev.c
+@@ -1108,26 +1108,18 @@ static int vduse_dev_release(struct inode *inode, struct file *file)
+ 	return 0;
+ }
  
-+	mr->access_flags = access_flags;
- 	mr->ibmr.rkey = mr->ibmr.lkey = mr->mmr.key;
- 	mr->ibmr.page_size = 1U << shift;
+-static struct vduse_dev *vduse_dev_get_from_minor(int minor)
++static int vduse_dev_open(struct inode *inode, struct file *file)
+ {
++	int ret = -EBUSY;
+ 	struct vduse_dev *dev;
  
-@@ -495,6 +496,8 @@ struct ib_mr *mlx4_ib_rereg_user_mr(struct ib_mr *mr, int flags, u64 start,
- 
- 		if (err)
- 			goto release_mpt_entry;
-+	} else {
-+		mr_access_flags = mmr->access_flags;
- 	}
- 
- 	if (flags & IB_MR_REREG_TRANS) {
-@@ -536,8 +539,10 @@ struct ib_mr *mlx4_ib_rereg_user_mr(struct ib_mr *mr, int flags, u64 start,
- 	 * return a failure. But dereg_mr will free the resources.
- 	 */
- 	err = mlx4_mr_hw_write_mpt(dev->dev, &mmr->mmr, pmpt_entry);
--	if (!err && flags & IB_MR_REREG_ACCESS)
--		mmr->mmr.access = mr_access_flags;
-+	if (!err && flags & IB_MR_REREG_ACCESS) {
-+		mmr->access_flags = mr_access_flags;
-+		mmr->mmr.access = convert_access(mr_access_flags);
+ 	mutex_lock(&vduse_lock);
+-	dev = idr_find(&vduse_idr, minor);
+-	mutex_unlock(&vduse_lock);
+-
+-	return dev;
+-}
+-
+-static int vduse_dev_open(struct inode *inode, struct file *file)
+-{
+-	int ret;
+-	struct vduse_dev *dev = vduse_dev_get_from_minor(iminor(inode));
+-
+-	if (!dev)
++	dev = idr_find(&vduse_idr, iminor(inode));
++	if (!dev) {
++		mutex_unlock(&vduse_lock);
+ 		return -ENODEV;
 +	}
  
- release_mpt_entry:
- 	mlx4_mr_hw_put_mpt(dev->dev, pmpt_entry);
+-	ret = -EBUSY;
+ 	mutex_lock(&dev->lock);
+ 	if (dev->connected)
+ 		goto unlock;
+@@ -1137,6 +1129,7 @@ static int vduse_dev_open(struct inode *inode, struct file *file)
+ 	file->private_data = dev;
+ unlock:
+ 	mutex_unlock(&dev->lock);
++	mutex_unlock(&vduse_lock);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
