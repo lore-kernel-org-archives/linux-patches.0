@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935E4397E80;
-	Tue, 21 Jul 2026 20:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C673B3C15;
+	Tue, 21 Jul 2026 20:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666038; cv=none; b=o8UZ6RGF+dRCun1kdYI8uE1Mcy3gxjlX1f4PbCvaxFfhFmDr0CS4HzD9wND9m6Ei09m9LWGAnG0ltKZk4QEymvPVAHlu/x3wrf8qc50Tn77tFVmj2asBfmrg/w7hs7+m2HP+/x/u0CR2o99B2foIQpj0sN2OfSOuarG9d49kNLw=
+	t=1784666041; cv=none; b=Gy2uH9Sj+DkdU9UOXjTyxbHBCRPZDoEkzJNl6megjycTCj0n/736jWYoEUF/lSKW95jz5FGNCmgbyzVVbvlafQsZ+Ub6nurfrh0RiMeSNSSKbz6otxjXOQzMnrWMyzgzxnqyJ16zDWwM8MWwBhKHKvdKOTDed8qPUi39ttmU0SY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666038; c=relaxed/simple;
-	bh=a6KMrZlcmSiwM3HriHqkAS0IMkK4hDVr1ua/KijMhxU=;
+	s=arc-20240116; t=1784666041; c=relaxed/simple;
+	bh=25eNqVZ62FhRQ7tXlzBI7x/I6IJ4eN5Z5F5Rs6y+90g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SMrUerTrlWe/nHLkN+Uz+Ugj4BwGHbbSSR2tGACwu3eK9rElwDLAmbOIYnmoeW4ohsb7nmvGoOoOy7o8eStGjayHNHnAePfUlz/tSmMjZCroYA3gKKiTeDt8CL/nur2OaU1OEWy6MaAdkHy0xMo4PAMaSnhE4/s1RlDtKlk+mA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cj077u8O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oTEbCAMFchyP+13YdRXOCh5JBeeaQxdSpnyzZl5y69kX9gI0Rd0kfl0ebgBclOjS0GTfA5OBpqA4C4R7p/a+eFhYeXEC8mPWl41IuAPWwctJZ6E7Y49mwgi/WEIszbss5frbWVdETIM7HwNfYbDVuQjQL3wGQoQm/wqZ9+tfwKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fLbl3JCD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cj077u8O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C551F000E9;
-	Tue, 21 Jul 2026 20:33:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fLbl3JCD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D97F1F000E9;
+	Tue, 21 Jul 2026 20:33:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666037;
-	bh=8gGXOZsSia/HfKizkDYQ1/NuCTWXt/l/bJixqHc0jx8=;
+	s=korg; t=1784666040;
+	bh=7b0mB2uxEOZeKDFf+/T4e/JxMp/m1GGRFMibLu0RTfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cj077u8O7+tXXPr1qfXcCjutzWY9Xzr26VcY+S701PYN8/t+gC52FM84X0u64EJGu
-	 zgNVVKRt9a4kLmkJ1DkLG2C3zzdngyrNCZbS0O8CmA4xFXF44w+QFBlGC+qfwFI1P7
-	 o+OmFxZwhWIK+5AYUhQnuvtj6Pt7CAlr8rLXCNsM=
+	b=fLbl3JCDcW8aN44nNOktPEKmRZnYmkJt/MRgmn5fQQ9cOuAVnev+h9RgrI56hSYnC
+	 NV8AT3s2Awe898d6f/L8CbCx/ut0RV3c6u/miE7nycs6MfD3x20cXxd/hrN4oiTyE2
+	 azmIRlpynqAXmkrOSbpv5s/YmfMV1XGzVNwwIOzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0531/1266] IB/mlx4: Fill in the access_flags if IB_MR_REREG_ACCESS is not specified
-Date: Tue, 21 Jul 2026 17:16:08 +0200
-Message-ID: <20260721152453.740190816@linuxfoundation.org>
+Subject: [PATCH 6.6 0532/1266] spi: meson-spifc: fix runtime PM leak on remove
+Date: Tue, 21 Jul 2026 17:16:09 +0200
+Message-ID: <20260721152453.763224966@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,77 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit bade9a3150d44ed20b8c6484c4c8a943b7289abb ]
+[ Upstream commit 606c0826bd90384a54571c0c5475ca41f50164ea ]
 
-Sashiko noticed mlx4 was using whatever random access flags were provided
-when IB_MR_REREG_ACCESS is not used. Since IB_MR_REREG_TRANS needs
-access_flags it used the random ones which means it doesn't work sensibly
-if userspace provides only IB_MR_REREG_TRANS.
+pm_runtime_get_sync() increments the runtime PM usage counter even when it
+returns an error. meson_spifc_remove() uses it to resume the controller
+before disabling runtime PM, but never drops the usage counter again.
 
-Keep track of the current access_flag of the MR and use it if the user
-does not specify one.
+Balance the get with pm_runtime_put_noidle() after disabling runtime PM,
+matching the teardown pattern used by other SPI controller drivers.
 
-Also fixup a little confusion around mmr.access, it is the HW access flags
-so the convert_access() was missing. But nothing reads this by the time
-rereg_mr can happen.
+Found by static analysis. I do not have hardware to test this.
 
-Fixes: 9376932d0c26 ("IB/mlx4_ib: Add support for user MR re-registration")
-Link: https://patch.msgid.link/r/0-v1-29ca7a402625+ddd6-mlx4_rereg_flags_jgg@nvidia.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: c3e4bc5434d2 ("spi: meson: Add support for Amlogic Meson SPIFC")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Link: https://patch.msgid.link/20260609052647.5-1-ruoyuw560@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx4/mlx4_ib.h | 1 +
- drivers/infiniband/hw/mlx4/mr.c      | 9 +++++++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/spi/spi-meson-spifc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/hw/mlx4/mlx4_ib.h b/drivers/infiniband/hw/mlx4/mlx4_ib.h
-index 41ca1114a9958e..f9eb4d32ad754a 100644
---- a/drivers/infiniband/hw/mlx4/mlx4_ib.h
-+++ b/drivers/infiniband/hw/mlx4/mlx4_ib.h
-@@ -137,6 +137,7 @@ struct mlx4_ib_mr {
- 	dma_addr_t		page_map;
- 	u32			npages;
- 	u32			max_pages;
-+	int			access_flags;
- 	struct mlx4_mr		mmr;
- 	struct ib_umem	       *umem;
- 	size_t			page_map_size;
-diff --git a/drivers/infiniband/hw/mlx4/mr.c b/drivers/infiniband/hw/mlx4/mr.c
-index e331c04967df8d..1f2f924b5c30e4 100644
---- a/drivers/infiniband/hw/mlx4/mr.c
-+++ b/drivers/infiniband/hw/mlx4/mr.c
-@@ -439,6 +439,7 @@ struct ib_mr *mlx4_ib_reg_user_mr(struct ib_pd *pd, u64 start, u64 length,
- 	if (err)
- 		goto err_mr;
+diff --git a/drivers/spi/spi-meson-spifc.c b/drivers/spi/spi-meson-spifc.c
+index 06626f406f6847..fd1f294af02e23 100644
+--- a/drivers/spi/spi-meson-spifc.c
++++ b/drivers/spi/spi-meson-spifc.c
+@@ -363,6 +363,7 @@ static void meson_spifc_remove(struct platform_device *pdev)
+ 	pm_runtime_get_sync(&pdev->dev);
+ 	clk_disable_unprepare(spifc->clk);
+ 	pm_runtime_disable(&pdev->dev);
++	pm_runtime_put_noidle(&pdev->dev);
+ }
  
-+	mr->access_flags = access_flags;
- 	mr->ibmr.rkey = mr->ibmr.lkey = mr->mmr.key;
- 	mr->ibmr.page_size = 1U << shift;
- 
-@@ -499,6 +500,8 @@ struct ib_mr *mlx4_ib_rereg_user_mr(struct ib_mr *mr, int flags, u64 start,
- 
- 		if (err)
- 			goto release_mpt_entry;
-+	} else {
-+		mr_access_flags = mmr->access_flags;
- 	}
- 
- 	if (flags & IB_MR_REREG_TRANS) {
-@@ -540,8 +543,10 @@ struct ib_mr *mlx4_ib_rereg_user_mr(struct ib_mr *mr, int flags, u64 start,
- 	 * return a failure. But dereg_mr will free the resources.
- 	 */
- 	err = mlx4_mr_hw_write_mpt(dev->dev, &mmr->mmr, pmpt_entry);
--	if (!err && flags & IB_MR_REREG_ACCESS)
--		mmr->mmr.access = mr_access_flags;
-+	if (!err && flags & IB_MR_REREG_ACCESS) {
-+		mmr->access_flags = mr_access_flags;
-+		mmr->mmr.access = convert_access(mr_access_flags);
-+	}
- 
- release_mpt_entry:
- 	mlx4_mr_hw_put_mpt(dev->dev, pmpt_entry);
+ #ifdef CONFIG_PM_SLEEP
 -- 
 2.53.0
 
