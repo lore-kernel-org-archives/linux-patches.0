@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1A83B9950;
-	Tue, 21 Jul 2026 21:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610D83B9950;
+	Tue, 21 Jul 2026 21:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669545; cv=none; b=lnYGqcx9TXQcnO4OelDDDBpVaiMi6Vwmbu/ejLV55WVXQaU/dpOTVohCalNoa8pbu7TpTUoq0eExKjQ7ibccg7dQxjhrvhYy+cpvECe1cZUPGWw8JJRHFlrXXMCQuybwzvyfnpHRN+1KK0+RLw/zo3RBebrU7T468SxgZJXKnWY=
+	t=1784669549; cv=none; b=CU429fuE8UvqYCISW9rJ5pSTWvP7ax+XuirHR6uOdMJWGH7tQCOpxYaHs3SsIlaceNKxdtInzKfp16wZQXAP97RqYLkhIsDJfKkm4QY6Ejg4rZxvXduWUcidEroTa9xwzQ3iNRh+jpdnR1KZGy/RbzUwZ7Q/WJMhxieW/Xp55Vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669545; c=relaxed/simple;
-	bh=8Bqxl6LYaZXUYYA+0rQqQYGr4VX16etk0+fsr4SiplU=;
+	s=arc-20240116; t=1784669549; c=relaxed/simple;
+	bh=1r3KadkpgDBL/2iXNDx6OcS+omfvcAZIlGXEPHpIRKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CWM8VDohSSVVH2x2nVW8UgjRKssDxqR2Mmwiew3uVLCYX17vNrYWc9hQ01r/demnhGZrf6eQ4Bzr4ZkZoeu/WOHRbBMSapc5rQ5JSES64CyBHiOQ343UGH3qkj8BLL43fAkRxd9mgHk4XGZ4Tqp6Xg4oHUbhv8aRasGtKQ0XWNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYsZbiDW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hgXNFgH5NyNXELR/3oXEt6hCs7EhYsVGPc3JNW6TOExMgOOPtSu+5lPKdu8Ae4PHDfWTiGSad0ILzvwigstdXuGKHIxj1GNYqBuc3OVxBSBQ/HLqIOmrXIAPi31fI1x9Z8F9m6E8yP1d85U03kc1dwbm0weGtKWknOtpBR041TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPItIYGY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYsZbiDW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28FCB1F000E9;
-	Tue, 21 Jul 2026 21:32:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPItIYGY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27FB1F000E9;
+	Tue, 21 Jul 2026 21:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669544;
-	bh=O59kUvyvtDKgvnS3wP7rgrn28I8UVuHYiPLGhUl8QPg=;
+	s=korg; t=1784669547;
+	bh=5ad4mmwQeTbaUMlrfKann14jJwtBxp4PWrmslkSTRAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lYsZbiDWMTLU8oHWbSjg3Y9QNX/VzRTBLNFlYGAOBtd2QNsLeD/vXXOl+dxx51iXv
-	 ltORKRWIM4lTH8wpx5qSUJckZ7Bp4WAdRjBWlAcj7XtboFcZJFGEBuB14q+WOOBi23
-	 y+I1IYqd/qu6+VvdtEAMC9RBXOGFCxfCv05fAGFY=
+	b=TPItIYGYS5JIBUI/p32Sa8QIs2gHlH2xxXPckM2HUJqBv/yBbDL32pZuhLkR60R3F
+	 OjPmcWE6SThMHJVyZp4Lkh5QXoybaXb08cC8CqS8FnRE84MjnocDUL68vd+EksYUIB
+	 mzZpmIRVAuKvmcJTaU3Sf19nItNsX8tcWVgW6YqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	syzbot+786c889f046e8b003ca6@syzkaller.appspotmail.com,
+	syzbot+1da17e4b41d795df059e@syzkaller.appspotmail.com,
+	syzbot+421c5f3ff8e9493084d9@syzkaller.appspotmail.com,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0594/1067] md/raid1: free r1_bio when REQ_NOWAIT is set and read would block on retry
-Date: Tue, 21 Jul 2026 17:19:55 +0200
-Message-ID: <20260721152437.891514856@linuxfoundation.org>
+Subject: [PATCH 6.1 0595/1067] netfilter: ipset: Fix data race between add and dump in all hash types
+Date: Tue, 21 Jul 2026 17:19:56 +0200
+Message-ID: <20260721152437.915988276@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,45 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+From: Jozsef Kadlecsik <kadlec@netfilter.org>
 
-[ Upstream commit 69ad6ce47f9bf2b9fe0ed69b042db993d33bbf12 ]
+[ Upstream commit 2358f7427ccd6ec8867a48205d8fcec973683a3f ]
 
-When a read is retried, raid1_read_request() may be called with a
-pre-allocated r1_bio. If wait_read_barrier() fails for a REQ_NOWAIT
-read, the bio is completed and the function returns immediately. In this
-case the existing r1_bio is leaked.
+When adding a new entry to the next position in the existing hash bucket,
+the position index was incremented too early and parallel dump could
+read it before the entry was populated with the value. Move the setting
+of the position index after populating the entry.
 
-This fixes a leak of pre-allocated r1_bio structures for retried reads.
+v2: Position counting fixed, noticed by Florian Westphal.
 
-Fixes: 5aa705039c4f ("md: raid1 add nowait support")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260611083514.754922-1-abd.masalkhi@gmail.com?part=1
-Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-Link: https://patch.msgid.link/20260611101350.759154-1-abd.masalkhi@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 18f84d41d34f ("netfilter: ipset: Introduce RCU locking in hash:* types")
+Reported-by: syzbot+786c889f046e8b003ca6@syzkaller.appspotmail.com
+Reported-by: syzbot+1da17e4b41d795df059e@syzkaller.appspotmail.com
+Reported-by: syzbot+421c5f3ff8e9493084d9@syzkaller.appspotmail.com
+Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: e4b4984e28c1 ("netfilter: ipset: Don't use test_bit() in lockless RCU readers in hash types")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/netfilter/ipset/ip_set_hash_gen.h | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index ebff40a3423aed..f6196a3c89455a 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -1244,6 +1244,12 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
- 	if (!wait_read_barrier(conf, bio->bi_iter.bi_sector,
- 				bio->bi_opf & REQ_NOWAIT)) {
- 		bio_wouldblock_error(bio);
-+
-+		if (r1bio_existed) {
-+			set_bit(R1BIO_Returned, &r1_bio->state);
-+			raid_end_bio_io(r1_bio);
-+		}
-+
- 		return;
+diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
+index da7956e2f8d898..dea04887b8e699 100644
+--- a/net/netfilter/ipset/ip_set_hash_gen.h
++++ b/net/netfilter/ipset/ip_set_hash_gen.h
+@@ -831,7 +831,7 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
+ 	const struct mtype_elem *d = value;
+ 	struct mtype_elem *data;
+ 	struct hbucket *n, *old = ERR_PTR(-ENOENT);
+-	int i, j = -1, ret;
++	int i, j = -1, npos = 0, ret;
+ 	bool flag_exist = flags & IPSET_FLAG_EXIST;
+ 	bool deleted = false, forceadd = false, reuse = false;
+ 	u32 r, key, multi = 0, elements, maxelem;
+@@ -876,6 +876,7 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
+ 			ext_size(AHASH_INIT_SIZE, set->dsize);
+ 		goto copy_elem;
+ 	}
++	npos = n->pos;
+ 	for (i = 0; i < n->pos; i++) {
+ 		if (!test_bit(i, n->used)) {
+ 			/* Reuse first deleted entry */
+@@ -949,7 +950,8 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
  	}
  
+ copy_elem:
+-	j = n->pos++;
++	j = npos;
++	npos = n->pos + 1;
+ 	data = ahash_data(n, j, set->dsize);
+ copy_data:
+ 	t->hregion[r].elements++;
+@@ -972,6 +974,7 @@ mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
+ 	if (SET_WITH_TIMEOUT(set))
+ 		ip_set_timeout_set(ext_timeout(data, set), ext->timeout);
+ 	smp_mb__before_atomic();
++	n->pos = npos;
+ 	set_bit(j, n->used);
+ 	if (old != ERR_PTR(-ENOENT)) {
+ 		rcu_assign_pointer(hbucket(t, key), n);
 -- 
 2.53.0
 
