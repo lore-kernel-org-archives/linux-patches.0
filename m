@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7D846AA9E;
-	Tue, 21 Jul 2026 15:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B3146AA69;
+	Tue, 21 Jul 2026 15:33:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648022; cv=none; b=OF9XHJOGRN7GePRJ9k2Ood2+mPGYbg7wmc3WYcEZIXFPdqXVw6dHMwRYHWHBbArziNg1bFg7SRddfCmPsq2A73fGWA2/Z4nt41Jnt3FGl+owVjtYIozql8gUO5i7rsO8lmQIgMXL+qlpGnX2bH6BWG8YyazXXrZoCU1o/JMNXCA=
+	t=1784648024; cv=none; b=JdPNVt3TlCZATyzn6+dwq1/jgUlUby4qvSs6RJc2Ap4lQg4m8MOjmg1rW2cHaRHKrP0qxJ5TYiTA92iGWXsbCJit9yqWhmEavHmsY8hO+Ezu8mb0JCZrtvrXVdeOqIv7sA8O7F0n67ttZX/+VX9HOW/ATv3EL5ZpacTH8NU2p/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648022; c=relaxed/simple;
-	bh=I4DTykokFs/8+13u/MkCXP2Bsp9r+it7V+w9uDfeEkM=;
+	s=arc-20240116; t=1784648024; c=relaxed/simple;
+	bh=gsY0qSR6SywC2OXSrGH8hIaYn6BN4pykq0fYufAxQeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CQ95pw36kr+SVtLN1euTKcgic8PpTjx5jyFFs9s2ehPJrLnu97sAyJH0p+nceJs/6XXkOm1AYDIPhN6V5A+5Ya39UfWKK4hTOTF2lix1I4E85d45xTOWpARahj+CrAFh27glJfH0Ht/aDZiSg/PzMNOheQNh4JjDhj/EHmh6TiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OD/gJjGK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h0EB5Ai9OgeNmqnCIwE13eHfWcYB6ARnSuva2XyiGGUbn07DpX3YSNL8+l+xLd7u+xZP/0XpZhGXSJatXF6JYNrbxxq9LPVOTYSZIXwrq90aerdtguX93Olgove4tkoLm3YxoWp+ncGTUvo+Ny4SQP1KCZ/po28VSWQjwUhGu6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tI6fIgdC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OD/gJjGK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7F61F000E9;
-	Tue, 21 Jul 2026 15:33:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tI6fIgdC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B701F000E9;
+	Tue, 21 Jul 2026 15:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648020;
-	bh=nthtbsFAfFI3rUT3Yq5CHobEjtb9EEQjaN8DPMA/6sY=;
+	s=korg; t=1784648023;
+	bh=nCUL+RfQQkU5JtDZb4WR+PlpDbU2+qmxdiOsM9CNTTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OD/gJjGKWsLXZcySC0WK6hW+7vtE1sgvV1piemy39MSXtJ823cuqmwq7lPueJjOL9
-	 OiOACFlf1RH3Chv0WT3L6xHB9VdF9nxLnSv67PiHccFdqw/Ok45bJVUm/B28/15VcT
-	 V9y2+wT66+4SM7P48fNBj3kFtF3FWPP04YfvyAJs=
+	b=tI6fIgdC5RZmoHfIXZGEW47PrrhoVReyj36qaufAj/SHjVzLTFY7g7NLqm2SUL2F8
+	 BZJlhBocKHyQ/D6gsKu7PahfrQwE2CFMHzTCPS1G/ZQZSUJe+0XaJkFS9RWpZ5M51+
+	 FnVZ4+A1pPqt+arprE5iA2A0tLarTCk6N8OU5OBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0004/2077] media: uvcvideo: Fix deadlock if uvc_status_stop is called from async_ctrl.work
-Date: Tue, 21 Jul 2026 16:54:37 +0200
-Message-ID: <20260721152552.765382316@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Nan Li <tonanli66@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.1 0036/2077] afs: handle CB.InitCallBackState3 requests without a server record
+Date: Tue, 21 Jul 2026 16:55:09 +0200
+Message-ID: <20260721152553.539180103@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,99 +59,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Nan Li <tonanli66@gmail.com>
 
-[ Upstream commit 6d27f92c54ce28cfbd2a8a479a96d6f4a781b7d2 ]
+commit f3cf725cd284b7912d5522babb44721bf38c8887 upstream.
 
-If a UVC camera has an asynchronous control, uvc_status_stop may be
-called from async_ctrl.work:
+The cache manager callback path now attaches the server record to an
+incoming call through the rxrpc peer's app data.  That association is
+not guaranteed to exist for every callback request, and most callback
+handlers already tolerate that case.
 
-uvc_ctrl_status_event_work()
-    uvc_ctrl_status_event()
-        uvc_ctrl_clear_handle()
-	    uvc_pm_put()
-	        uvc_status_put()
-		    uvc_status_stop()
-		        cancel_work_sync()
+Make CB.InitCallBackState3 follow the same pattern by checking whether a
+server record was attached before using it.  If the peer is not mapped
+to a server record, trace the request and ignore it, matching the
+existing behaviour for other unmatched callback requests.
 
-This will cause a deadlock, since cancel_work_sync will wait for
-uvc_ctrl_status_event_work to complete before returning.
+This keeps the callback handler consistent with the rest of the cache
+manager service and avoids depending on peer state that may not be
+available for a given request.
 
-Fix this by returning early from uvc_status_stop if we are currently in
-the work function. flush_status now remains false until uvc_status_start
-is called again, ensuring that uvc_ctrl_status_event_work won't resubmit
-the URB.
-
-Fixes: a32d9c41bdb8 ("media: uvcvideo: Make power management granular")
-Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/all/6733bdfb-3e88-479f-8956-ab09c04c433e@linux.dev/
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://patch.msgid.link/20260316155823.1855434-1-sean.anderson@linux.dev
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Tested-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 40e8b52fe8c8 ("afs: Use the per-peer app data provided by rxrpc")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Nan Li <tonanli66@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260622090856.2746629-2-dhowells@redhat.com
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_status.c | 28 +++++++++++++++++++---------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ fs/afs/cmservice.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/media/usb/uvc/uvc_status.c b/drivers/media/usb/uvc/uvc_status.c
-index 65f5356bebb399..b632cf5e3fe9b2 100644
---- a/drivers/media/usb/uvc/uvc_status.c
-+++ b/drivers/media/usb/uvc/uvc_status.c
-@@ -316,6 +316,16 @@ static int uvc_status_start(struct uvc_device *dev, gfp_t flags)
- 	if (!dev->int_urb)
- 		return 0;
+--- a/fs/afs/cmservice.c
++++ b/fs/afs/cmservice.c
+@@ -364,6 +364,11 @@ static int afs_deliver_cb_init_call_back
+ 	if (!afs_check_call_state(call, AFS_CALL_SV_REPLYING))
+ 		return afs_io_error(call, afs_io_error_cm_reply);
  
-+	/*
-+	 * If the previous uvc_status_stop() call was from the async work,
-+	 * the work may still be running. Wait for it to finish before we submit
-+	 * the urb.
-+	 */
-+	flush_work(&dev->async_ctrl.work);
++	if (!call->server) {
++		trace_afs_cm_no_server_u(call, call->request);
++		return 0;
++	}
 +
-+	/* Clear the flush status if we were previously stopped. */
-+	smp_store_release(&dev->flush_status, false);
-+
- 	return usb_submit_urb(dev->int_urb, flags);
- }
- 
-@@ -336,6 +346,15 @@ static void uvc_status_stop(struct uvc_device *dev)
- 	 */
- 	smp_store_release(&dev->flush_status, true);
- 
-+	/*
-+	 * If we are called from the event work function, the URB is guaranteed
-+	 * to not be in flight as it has completed and has not been resubmitted.
-+	 * There's no need to cancel the work (which would deadlock), or to kill
-+	 * the URB.
-+	 */
-+	if (current_work() == &w->work)
-+		return;
-+
- 	/*
- 	 * Cancel any pending asynchronous work. If any status event was queued,
- 	 * process it synchronously.
-@@ -354,15 +373,6 @@ static void uvc_status_stop(struct uvc_device *dev)
- 	 */
- 	if (cancel_work_sync(&w->work))
- 		uvc_ctrl_status_event(w->chain, w->ctrl, w->data);
--
--	/*
--	 * From this point, there are no events on the queue and the status URB
--	 * is dead. No events will be queued until uvc_status_start() is called.
--	 * The barrier is needed to make sure that flush_status is visible to
--	 * uvc_ctrl_status_event_work() when uvc_status_start() will be called
--	 * again.
--	 */
--	smp_store_release(&dev->flush_status, false);
- }
- 
- int uvc_status_resume(struct uvc_device *dev)
--- 
-2.53.0
-
+ 	if (memcmp(call->request, &call->server->_uuid, sizeof(call->server->_uuid)) != 0) {
+ 		pr_notice("Callback UUID does not match fileserver UUID\n");
+ 		trace_afs_cm_no_server_u(call, call->request);
 
 
