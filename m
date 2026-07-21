@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8061D7E5C;
-	Tue, 21 Jul 2026 20:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C82B42F704;
+	Tue, 21 Jul 2026 20:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665624; cv=none; b=nQKoaygvvocQOtNs4iO1FE3tHILD+cAZs3+qq6pF3IjZJpLhAUlgmyHTPC2xCYZ5xbDO2KsPL3Cj/ngAiblkSJsGdWDUKUjSK20Fzs26WC/ZE0CfmPI17d/2wlGv6/EH/Sw1iVyI7X4oWeUIbFWhrqjpJqKIwNtC0QqD+3yISRg=
+	t=1784665627; cv=none; b=a9+BoLT0LPPGS1/pK2eZ/9HngZXevC7LIOdhg4LShL3SitFXeLOvUnDgIg+TXhfPEHsxb/SwOdV7mI6eJ82KCdYECwbGH//DFwh5MUFVViB6t+E5xiQTxGrmQkw9u3GOWPGAoPd642PyitUFOMDOPPt1cO68r0d18x1+FwzoMf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665624; c=relaxed/simple;
-	bh=0LiHp40sm1nJDn6xRdt2icT+/ZzJtwvQFMNW6XnU2VQ=;
+	s=arc-20240116; t=1784665627; c=relaxed/simple;
+	bh=9Ao811yfMrHLdO/4c56tThkT3sEBm28XtrFK4ZA4DeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V1xPvVVS79U+r5lKnF3HylYDsi91ZrI2c06QI8L379iEw59nA7PCY0PkEOPZiXfuqBxYyS0fE718X+0h2BZaL9/KVf96U0DLsVs4FxLUFAO9RghnVf4qi2wQBRRd92QNRUYoNXywStQ2qDbOMCXpYeAiqJDBWcOTyCCW5WqIc6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nB7qH2mp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=vGEx5CyIC8n8d7kISYEtqflWG5CR88QE9cNkDONynh1+XBcfLjIZQdVpZwlKaJp+B2UoNcYQ64W5Yum1DtnJH5tGkIZOrJuFHP0TxSrVeYiqmj/1pPn84nKU0R+XWvRrf/W+srgBDPxTFWl6rOTB9Vg2+WIyXRoatJZY9YNeKkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHZqQSLD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nB7qH2mp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF7B41F000E9;
-	Tue, 21 Jul 2026 20:27:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHZqQSLD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892B41F000E9;
+	Tue, 21 Jul 2026 20:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665623;
-	bh=QVEbPF9HruLNiZ+vvNV0fhdroLATvvXV7H+OlwSj2D8=;
+	s=korg; t=1784665626;
+	bh=XY+qi1HbUajS07jpskBM5my+ycLPW+JZ8U9p5RsqzAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nB7qH2mpbvuXlV8gJSHN55eQkaox5Zl4293Iln63qh0lpdy0hIqcWGv59azJfR5gi
-	 1IFozLTZZZcoLs5YoXuMhndLxVkbRbk4jw84q53B5Ua6/W0t9JRiWtXKb8smGyQ3na
-	 LQeHDridXtEsDR6RnOwgw5iEIwfSLY/eyGI9CXrU=
+	b=YHZqQSLDOSXt4I/26hb1ilbaTkJgvnpBzQLw/aYWoZGAo7ZgPR9ohuHYbRdzTXTP6
+	 3bAd+MGPd1D017vL6bdYmIyIRLjh+h4kaw4hm9faYVhfMYqrcdPoU06HbpH8hIz/UW
+	 Xpwf0Mzl9AQwCbZj6CXM2cMxFAPflqedmqVEgKHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingjing Deng <micro6947@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0375/1266] kconfig: fix potential NULL pointer dereference in conf_askvalue
-Date: Tue, 21 Jul 2026 17:13:32 +0200
-Message-ID: <20260721152450.218714371@linuxfoundation.org>
+Subject: [PATCH 6.6 0376/1266] wifi: ath9k: fix OOB access from firmware tx status queue ID
+Date: Tue, 21 Jul 2026 17:13:33 +0200
+Message-ID: <20260721152450.241455953@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -45,63 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xingjing Deng <micro6947@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit b9d21c32dca2167a614e66c9e27999b9e1c33d55 ]
+[ Upstream commit 7ce2f118a2389e8f0a64068c6fe7cc7d40639be0 ]
 
-In conf_askvalue(), the 'def' argument (retrieved via sym_get_string_value)
-can be NULL. While current call sites ensure that 'def' is valid,
-calling printf("%s\n", def) is technically undefined behavior and could
-lead to a segmentation fault on certain libc implementations if the
-function were called with a NULL pointer in the future.
+ath_tx_edma_tasklet() accesses sc->tx.txq[ts.qid] where ts.qid is a
+4-bit hardware field (0-15), but the txq array only has
+ATH9K_NUM_TX_QUEUES (10) entries. A qid >= 10 causes an OOB array
+access.
 
-Improve the robustness of conf_askvalue() by providing an empty string
-as a fallback.
+Add a bounds check on ts.qid before using it as an array index.
 
-Additionally, remove the redundant re-initialization of the 'line'
-buffer inside the !sym_is_changeable(sym) block, as it is already
-properly initialized at the function entry.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Xingjing Deng <micro6947@gmail.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20260306021709.27068-1-micro6947@gmail.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: fce041beb03f ("ath9k: unify edma and non-edma tx code, improve tx fifo handling")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Link: https://patch.msgid.link/20260415222343.1540564-1-tristmd@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/conf.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath9k/xmit.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/scripts/kconfig/conf.c b/scripts/kconfig/conf.c
-index 662a5e7c37c285..6c4ff012a05ebd 100644
---- a/scripts/kconfig/conf.c
-+++ b/scripts/kconfig/conf.c
-@@ -323,9 +323,7 @@ static int conf_askvalue(struct symbol *sym, const char *def)
- 	line[1] = 0;
- 
- 	if (!sym_is_changeable(sym)) {
--		printf("%s\n", def);
--		line[0] = '\n';
--		line[1] = 0;
-+		printf("%s\n", def ?: "");
- 		return 0;
- 	}
- 
-@@ -333,7 +331,7 @@ static int conf_askvalue(struct symbol *sym, const char *def)
- 	case oldconfig:
- 	case syncconfig:
- 		if (sym_has_value(sym)) {
--			printf("%s\n", def);
-+			printf("%s\n", def ?: "");
- 			return 0;
+diff --git a/drivers/net/wireless/ath/ath9k/xmit.c b/drivers/net/wireless/ath/ath9k/xmit.c
+index 4e939dcac1c9dc..c1807356bea76b 100644
+--- a/drivers/net/wireless/ath/ath9k/xmit.c
++++ b/drivers/net/wireless/ath/ath9k/xmit.c
+@@ -2754,6 +2754,11 @@ void ath_tx_edma_tasklet(struct ath_softc *sc)
+ 			continue;
  		}
- 		/* fall through */
+ 
++		if (ts.qid >= ATH9K_NUM_TX_QUEUES) {
++			ath_dbg(common, XMIT, "invalid qid %d\n", ts.qid);
++			continue;
++		}
++
+ 		txq = &sc->tx.txq[ts.qid];
+ 
+ 		ath_txq_lock(sc, txq);
 -- 
 2.53.0
 
