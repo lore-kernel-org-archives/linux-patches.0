@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51AE0471421;
-	Tue, 21 Jul 2026 20:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A16747141F;
+	Tue, 21 Jul 2026 20:08:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664500; cv=none; b=CESSAbkwqSRgVJdd9E44OtPZs1V5R1yC7Gx8yPBveByoDA9cByb+L5gGXc+mytogh4RPeOjV7dRFS7m2iSIG3m4GgMKMWHBJh2/qwnfZfCn1zF2x+KG1ady2QTYZGHKQfnmR32NxnrQAN4BVJqgunN+67awoluuxac0C7y8jrCo=
+	t=1784664500; cv=none; b=kTNSs+mPDtztNeAL05UIh2WIrxeMyos8S3+oJ67fxR0qWHARIF1kBjyLVZ8G8JZWfpELiCh9MtSglMOiw6Hq9kBp0yOajZllWjHwGHNdnhfgvfjIoiymK244M61tCmgU9ZvMEmR3HNDOHw01lID+MnAKheUSEki6Pm035INRY0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784664500; c=relaxed/simple;
-	bh=9nV8qc6zIqMkRQtSCRvUpy1SMbbwxrGgp7SMjfqQBtA=;
+	bh=rpN227LQmXckWKcgOPeS3ir+F/ICWaMNHr8rItjOWnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S6+h5hYhC5OT3ssDWBIxnuavLL01KSz5OT/QLx4wZx/NVxjYuTGjk6L7UXFExVhSA4hEzvApEefIWUBB7hIspG59hIgrxlgMyFSfshWyXXY1tXTf3xH7NYUkqqNs3P7wFKzcS1+dezPh/kJELEddnIHJmGtSWs3LFainvWtBeTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wREhQGzX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SuuJnXU58SRBxg1UFUXARfevDsX23Y7+yiVeKirzcTRiwVCQSynMJLsht0e/Yh+8JlWs8iaUnEzybW4mw+nFMzHP0wbpx0nD+MlIwgb4DNWmuJtqAgujPiJ2VTrkqJog21TdFIBjvghpYFVK1WwUWeW5T/zFRxWVZryuJJBkmUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HwJxg10/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wREhQGzX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA4C1F000E9;
-	Tue, 21 Jul 2026 20:08:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HwJxg10/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1042C1F00A3F;
+	Tue, 21 Jul 2026 20:08:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664485;
-	bh=n0nJaGBuFD9r7fBCzkwwsgvwU2LNKQkz3tOyw9RafGY=;
+	s=korg; t=1784664493;
+	bh=qqwwVj+N2n08CUmVRRZNc8PI2oeMhHnXPkNWtLC2DtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wREhQGzX+xriqPuYWwE5GiB264vbMNCF4EaLCQ2O5PjhiZ8nGcOhXjYfSrw19f+NG
-	 4SSuLEAQePS/8NDCx801BleAXb1rUje1yHPJ6pX2vms0ASmf2fizwmlidk1Lq568L4
-	 g0sBWfNfKqJPP5BP+MvQo+93MjtNFOt3d/GLnINU=
+	b=HwJxg10/vPYVS37+m+PerR6MmPfBOXG0JyLDYRReQemenA0ovonncj/6HrRL7mg+4
+	 AnJ4JZ4CsRLIvT6Y3Ww6dvGJ/A9LitFgEu/x1ojqzJOqm8hxv+wuWNvW5Nsz9UFvkx
+	 lLtSRZpm1yVZQBxjeVfRX/VWAv0oPHCHbbiTTUSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Dionna Glaze <dionnaglaze@google.com>,
+	Alexey Kardashevskiy <aik@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1218/1276] btrfs: check and set EXTENT_DELALLOC_NEW before clearing EXTENT_DELALLOC
-Date: Tue, 21 Jul 2026 17:27:41 +0200
-Message-ID: <20260721152513.326726479@linuxfoundation.org>
+Subject: [PATCH 6.12 1221/1276] crypto: ccp - Register SNP panic notifier only if SNP is enabled
+Date: Tue, 21 Jul 2026 17:27:44 +0200
+Message-ID: <20260721152513.398731084@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,265 +54,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Ashish Kalra <ashish.kalra@amd.com>
 
-[ Upstream commit 95ee2231896d5f2a31760411429075a99d6045a7 ]
+[ Upstream commit 19860c3274fb209e36ebcba562dc5da301a53cb3 ]
 
-[WARNING]
-When running test cases with injected errors or shutdown, e.g.
-generic/388 or generic/475, there is a chance that the following kernel
-warning is triggered:
+Currently, the SNP panic notifier is registered on module initialization
+regardless of whether SNP is being enabled or initialized.
 
-  BTRFS info (device dm-2): first mount of filesystem d8a19a28-3232-4809-b0df-38df83e71bff
-  BTRFS info (device dm-2): using crc32c checksum algorithm
-  BTRFS info (device dm-2): checking UUID tree
-  BTRFS info (device dm-2): turning on async discard
-  BTRFS info (device dm-2): enabling free space tree
-  BTRFS critical (device dm-2 state E): emergency shutdown
-  ------------[ cut here ]------------
-  WARNING: extent_io.c:1742 at extent_writepage_io+0x437/0x520 [btrfs], CPU#2: kworker/u43:2/651591
-  CPU: 2 UID: 0 PID: 651591 Comm: kworker/u43:2 Tainted: G        W  OE       7.0.0-rc6-custom+ #365 PREEMPT(full)  5804053f02137e627472d94b5128cc9fcb110e88
-  RIP: 0010:extent_writepage_io+0x437/0x520 [btrfs]
-  Call Trace:
-   <TASK>
-   extent_write_cache_pages+0x2a5/0x820 [btrfs 70299925d0856939e93b17d480651713b3cbba58]
-   btrfs_writepages+0x74/0x130 [btrfs 70299925d0856939e93b17d480651713b3cbba58]
-   do_writepages+0xd0/0x160
-   __writeback_single_inode+0x42/0x340
-   writeback_sb_inodes+0x22d/0x580
-   wb_writeback+0xc6/0x360
-   wb_workfn+0xbd/0x470
-   process_one_work+0x198/0x3b0
-   worker_thread+0x1c8/0x330
-   kthread+0xee/0x120
-   ret_from_fork+0x2a6/0x330
-   ret_from_fork_asm+0x11/0x20
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
-  BTRFS error (device dm-2 state E): root 5 ino 259 folio 1323008 is marked dirty without notifying the fs
-  BTRFS error (device dm-2 state E): failed to submit blocks, root=5 inode=259 folio=1323008 submit_bitmap=0: -117
-  BTRFS info (device dm-2 state E): last unmount of filesystem d8a19a28-3232-4809-b0df-38df83e71bff
+Instead, register the SNP panic notifier only when SNP is actually
+initialized and unregister the notifier when SNP is shutdown.
 
-[CAUSE]
-Inside btrfs we have the following pattern in several locations, for
-example inside btrfs_dirty_folio():
-
-	btrfs_clear_extent_bit(&inode->io_tree, start_pos, end_of_last_block,
-			       EXTENT_DELALLOC | EXTENT_DO_ACCOUNTING | EXTENT_DEFRAG,
-			       cached);
-
-	ret = btrfs_set_extent_delalloc(inode, start_pos, end_of_last_block,
-					extra_bits, cached);
-	if (ret)
-		return ret;
-
-However btrfs_set_extent_delalloc() can return IO errors other than -ENOMEM
-through the following callchain:
-
- btrfs_set_extent_delalloc()
- \- btrfs_find_new_delalloc_bytes()
-    \- btrfs_get_extent()
-       \- btrfs_lookup_file_extent()
-          \- btrfs_search_slot()
-
-When such IO error happened, the previous btrfs_clear_extent_bit() has
-cleared the EXTENT_DELALLOC for the range, and we're expecting
-btrfs_set_extent_delalloc() to re-set EXTENT_DELALLOC.
-
-But since btrfs_set_extent_delalloc() failed before
-btrfs_set_extent_bit(), EXTENT_DELALLOC flag is no longer present.
-
-And if the folio range is dirty before entering
-btrfs_set_extent_delalloc(), we got a dirty folio but no EXTENT_DELALLOC
-flag now.
-
-Then we hit the folio writeback:
-
-  extent_writepage()
-  |- writepage_delalloc()
-  |  No ordered extent is created, as there is no EXTENT_DELALLOC set
-  |  for the folio range.
-  |  This also means the folio has no ordered flag set.
-  |
-  |- extent_writepage_io()
-     \- if (unlikely(!folio_test_ordered(folio))
-        Now we hit the warning.
-
-[FIX]
-Introduce a new helper, btrfs_reset_extent_delalloc() to replace the
-currently open-coded btrfs_clear_extent_bit() +
-btrfs_set_extent_delalloc() combination.
-
-Instead of calling btrfs_clear_extent_bit() first, update
-EXTENT_DELALLOC_NEW first, as that part can fail due to metadata IO,
-meanwhile btrfs_clear_extent_bit() and btrfs_set_extent_bit() won't
-return any error but retry memory allocation until succeeded.
-
-This allows us to fail early without clearing EXTENT_DELALLOC bit, so
-even if that new btrfs_reset_extent_delalloc() failed before touching
-EXTENT_DELALLOC, the existing dirty range will still have their old
-EXTENT_DELALLOC flag present, thus avoid the warning.
-
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Dionna Glaze <dionnaglaze@google.com>
+Reviewed-by: Alexey Kardashevskiy <aik@amd.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 08f0e65e784c ("crypto: ccp - Do not initialize SNP for ioctl(SNP_CONFIG)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/btrfs_inode.h |    2 +
- fs/btrfs/file.c        |   27 +++--------------------
- fs/btrfs/inode.c       |   57 ++++++++++++++++++++++++++++++++++++++++++-------
- fs/btrfs/reflink.c     |    5 ----
- 4 files changed, 57 insertions(+), 34 deletions(-)
+ drivers/crypto/ccp/sev-dev.c |   22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
---- a/fs/btrfs/btrfs_inode.h
-+++ b/fs/btrfs/btrfs_inode.h
-@@ -547,6 +547,8 @@ int btrfs_start_delalloc_roots(struct bt
- int btrfs_set_extent_delalloc(struct btrfs_inode *inode, u64 start, u64 end,
- 			      unsigned int extra_bits,
- 			      struct extent_state **cached_state);
-+int btrfs_reset_extent_delalloc(struct btrfs_inode *inode, u64 start, u64 end,
-+				unsigned int extra_bits, struct extent_state **cached_state);
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -105,6 +105,13 @@ static void *sev_init_ex_buffer;
  
- struct btrfs_new_inode_args {
- 	/* Input */
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -150,16 +150,8 @@ int btrfs_dirty_pages(struct btrfs_inode
+ static void __sev_firmware_shutdown(struct sev_device *sev, bool panic);
  
- 	end_of_last_block = start_pos + num_bytes - 1;
- 
--	/*
--	 * The pages may have already been dirty, clear out old accounting so
--	 * we can set things up properly
--	 */
--	clear_extent_bit(&inode->io_tree, start_pos, end_of_last_block,
--			 EXTENT_DELALLOC | EXTENT_DO_ACCOUNTING | EXTENT_DEFRAG,
--			 cached);
--
--	ret = btrfs_set_extent_delalloc(inode, start_pos, end_of_last_block,
--					extra_bits, cached);
-+	ret = btrfs_reset_extent_delalloc(inode, start_pos, end_of_last_block,
-+					  extra_bits, cached);
- 	if (ret)
- 		return ret;
- 
-@@ -1997,19 +1989,8 @@ again:
- 		}
- 	}
- 
--	/*
--	 * page_mkwrite gets called when the page is firstly dirtied after it's
--	 * faulted in, but write(2) could also dirty a page and set delalloc
--	 * bits, thus in this case for space account reason, we still need to
--	 * clear any delalloc bits within this page range since we have to
--	 * reserve data&meta space before lock_page() (see above comments).
--	 */
--	clear_extent_bit(&BTRFS_I(inode)->io_tree, page_start, end,
--			  EXTENT_DELALLOC | EXTENT_DO_ACCOUNTING |
--			  EXTENT_DEFRAG, &cached_state);
--
--	ret2 = btrfs_set_extent_delalloc(BTRFS_I(inode), page_start, end, 0,
--					&cached_state);
-+	ret2 = btrfs_reset_extent_delalloc(BTRFS_I(inode), page_start, end, 0,
-+					   &cached_state);
- 	if (ret2) {
- 		unlock_extent(io_tree, page_start, page_end, &cached_state);
- 		ret = VM_FAULT_SIGBUS;
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -2799,7 +2799,11 @@ int btrfs_set_extent_delalloc(struct btr
- 			      unsigned int extra_bits,
- 			      struct extent_state **cached_state)
- {
--	WARN_ON(PAGE_ALIGNED(end));
-+	const u32 blocksize = inode->root->fs_info->sectorsize;
++static int snp_shutdown_on_panic(struct notifier_block *nb,
++				 unsigned long reason, void *arg);
 +
-+	/* Basic alignment check. */
-+	ASSERT(IS_ALIGNED(start, blocksize));
-+	ASSERT(IS_ALIGNED(end + 1, blocksize));
++static struct notifier_block snp_panic_notifier = {
++	.notifier_call = snp_shutdown_on_panic,
++};
++
+ static inline bool sev_version_greater_or_equal(u8 maj, u8 min)
+ {
+ 	struct sev_device *sev = psp_master->sev_data;
+@@ -1196,6 +1203,9 @@ static int __sev_snp_init_locked(int *er
+ 	dev_info(sev->dev, "SEV-SNP API:%d.%d build:%d\n", sev->api_major,
+ 		 sev->api_minor, sev->build);
  
- 	if (start >= i_size_read(&inode->vfs_inode) &&
- 	    !(inode->flags & BTRFS_INODE_PREALLOC)) {
-@@ -2822,6 +2826,50 @@ int btrfs_set_extent_delalloc(struct btr
- 			      EXTENT_DELALLOC | extra_bits, cached_state);
++	atomic_notifier_chain_register(&panic_notifier_list,
++				       &snp_panic_notifier);
++
+ 	sev_es_tmr_size = SNP_TMR_SIZE;
+ 
+ 	return 0;
+@@ -1792,6 +1802,9 @@ static int __sev_snp_shutdown_locked(int
+ 	sev->snp_initialized = false;
+ 	dev_dbg(sev->dev, "SEV-SNP firmware shutdown\n");
+ 
++	atomic_notifier_chain_unregister(&panic_notifier_list,
++					 &snp_panic_notifier);
++
+ 	/* Reset TMR size back to default */
+ 	sev_es_tmr_size = SEV_TMR_SIZE;
+ 
+@@ -2488,10 +2501,6 @@ static int snp_shutdown_on_panic(struct
+ 	return NOTIFY_DONE;
  }
  
-+/*
-+ * Clear the old accounting flags and set EXTENT_DELALLOC for the range.
-+ *
-+ * Return <0 for error, in that case no range has EXTENT_DELALLOC bit cleared or set.
-+ */
-+int btrfs_reset_extent_delalloc(struct btrfs_inode *inode, u64 start, u64 end,
-+				unsigned int extra_bits, struct extent_state **cached_state)
-+{
-+	const u32 blocksize = inode->root->fs_info->sectorsize;
-+
-+	/* The @extra_bits can only be EXTENT_NORESERVE for now. */
-+	ASSERT(!(extra_bits & ~EXTENT_NORESERVE));
-+
-+	/* Basic alignment check. */
-+	ASSERT(IS_ALIGNED(start, blocksize));
-+	ASSERT(IS_ALIGNED(end + 1, blocksize));
-+
-+	/*
-+	 * Check and set DELALLOC_NEW flag, this needs to search tree thus can
-+	 * fail early.  Thus we want to do this before clearing EXTENT_DELALLOC.
-+	 */
-+	if (start >= i_size_read(&inode->vfs_inode) &&
-+	    !(inode->flags & BTRFS_INODE_PREALLOC)) {
-+		/*
-+		 * There can't be any extents following EOF in this case so just
-+		 * set the delalloc new bit for the range directly.
-+		 */
-+		extra_bits |= EXTENT_DELALLOC_NEW;
-+	} else {
-+		int ret;
-+
-+		ret = btrfs_find_new_delalloc_bytes(inode, start, end + 1 - start,
-+						    NULL);
-+		if (unlikely(ret))
-+			return ret;
-+	}
-+	/* Clear the old accounting as the range may already be dirty. */
-+	clear_extent_bit(&inode->io_tree, start, end,
-+			 EXTENT_DELALLOC | EXTENT_DO_ACCOUNTING |
-+			 EXTENT_DEFRAG, cached_state);
-+	return set_extent_bit(&inode->io_tree, start, end,
-+			      EXTENT_DELALLOC | extra_bits, cached_state);
-+}
-+
- static int insert_reserved_file_extent(struct btrfs_trans_handle *trans,
- 				       struct btrfs_inode *inode, u64 file_pos,
- 				       struct btrfs_file_extent_item *stack_fi,
-@@ -4745,12 +4793,7 @@ again:
- 		goto again;
- 	}
- 
--	clear_extent_bit(&inode->io_tree, block_start, block_end,
--			 EXTENT_DELALLOC | EXTENT_DO_ACCOUNTING | EXTENT_DEFRAG,
--			 &cached_state);
+-static struct notifier_block snp_panic_notifier = {
+-	.notifier_call = snp_shutdown_on_panic,
+-};
 -
--	ret = btrfs_set_extent_delalloc(inode, block_start, block_end, 0,
--					&cached_state);
-+	ret = btrfs_reset_extent_delalloc(inode, block_start, block_end, 0, &cached_state);
- 	if (ret) {
- 		unlock_extent(io_tree, block_start, block_end, &cached_state);
- 		goto out_unlock;
---- a/fs/btrfs/reflink.c
-+++ b/fs/btrfs/reflink.c
-@@ -95,10 +95,7 @@ static int copy_inline_to_page(struct bt
- 	if (ret < 0)
- 		goto out_unlock;
+ int sev_issue_cmd_external_user(struct file *filep, unsigned int cmd,
+ 				void *data, int *error)
+ {
+@@ -2537,8 +2546,6 @@ void sev_pci_init(void)
+ 		dev_err(sev->dev, "SEV: failed to INIT error %#x, rc %d\n",
+ 			args.error, rc);
  
--	clear_extent_bit(&inode->io_tree, file_offset, range_end,
--			 EXTENT_DELALLOC | EXTENT_DO_ACCOUNTING | EXTENT_DEFRAG,
--			 NULL);
--	ret = btrfs_set_extent_delalloc(inode, file_offset, range_end, 0, NULL);
-+	ret = btrfs_reset_extent_delalloc(inode, file_offset, range_end, 0, NULL);
- 	if (ret)
- 		goto out_unlock;
+-	atomic_notifier_chain_register(&panic_notifier_list,
+-				       &snp_panic_notifier);
+ 	return;
  
+ err:
+@@ -2555,7 +2562,4 @@ void sev_pci_exit(void)
+ 		return;
+ 
+ 	sev_firmware_shutdown(sev);
+-
+-	atomic_notifier_chain_unregister(&panic_notifier_list,
+-					 &snp_panic_notifier);
+ }
 
 
