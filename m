@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56DDE4071E3;
-	Tue, 21 Jul 2026 17:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1779415F1C;
+	Tue, 21 Jul 2026 17:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656348; cv=none; b=rQopnxotxd2iF9azwM6hQOnSPacyTORL7FbAP6+ThnQtNYYZdprE0T2+ldWlHLtkM3E6OHbldt+xZhEgYmZlq3Y7nhNq+HU69JzTGeqf1hECTBzj2ctnIPTviYdaGp9e8eoYEKQq1aMh5SfM8yN27hvUzEgQawXiUfphyv0vOAc=
+	t=1784656351; cv=none; b=dExEWQK0ycI+Iqdu9VPcX8zQCupLqQoTFIBdj2a0NwujVO+tH7Ms51h9emxk6egJbcKRtAvPXBip3IarDvh88TSwGMm1U6bi7JV/0VRy4vWP/BvmqX8Wg9gkSomRxG8w97HujT6G6wzgj8mw4glv+fVTK49sP97muh19puqw/Qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656348; c=relaxed/simple;
-	bh=S6g4NoPne2IGrtBWBrVg0F52fZ0P6bccb0skWIUqcvA=;
+	s=arc-20240116; t=1784656351; c=relaxed/simple;
+	bh=lqocsCMV5An0uUyZwka0l1Wl2QwvatzaEjh2UoMD/Ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QGwksUpJGpxn3PLaSjdB4hjR19O0fZPxMYZ0S438d3V8Jvn685cKXuIK6/48l+AIDQmBXLqJPW4Yx4XYN4HZMmJiyAK5l7oD+78zNw5mViysDs+/sidIq06qNVNyPKgMbOnyukG0YLrkZmqYw29+qCeCR9pE+IDVk7VZtFGKc50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Gyiz1tl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MJxXd6djgFjWrA3DORicuNqMrEUVz+DS40KSkxBq5vduAnGuKzXK8kRfPiEpMIyM5QbSBUT7cIehRD5gA+cPDQXdJRcO04Zcn7xAvaszdEsdPxqiPImAzwiEfXYoJJvU/W6I/1pWWh3zZDLXLtRsRHC61neefLmveHJiDGr876o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SFA6xwvD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Gyiz1tl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDA041F000E9;
-	Tue, 21 Jul 2026 17:52:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFA6xwvD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641991F000E9;
+	Tue, 21 Jul 2026 17:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656347;
-	bh=CzVx9zvHwRwNF7hDKAf7HyoUV2w6psobeX6yD7uk22g=;
+	s=korg; t=1784656349;
+	bh=h8CjqUp5DipKspH7ZUgK5pG9D7ki7blcobVGXpb9Rag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Gyiz1tlBDHPNSXEBmq9TGQK7D6rpUcYy/oyr/T5AIFGphCcxbKnvlxkj3Qz621Ct
-	 3VHUwsXQPkzBlTLiEzi1ZsSjGPVwf/Zklr8yElMC6GtoqrmtvKGENk7ajkCZa//w+F
-	 fNOEX7ku3NzqPegwAAxvh1xYSFXUnbOcPS2zCMtg=
+	b=SFA6xwvDOrIgp7dDiEGPJ8YxA3PR68YEl9l0u8s2a53BFrkOfOaTPWk0JuQoAvWkr
+	 xiqFTuZW43J08qyVORtGhOTzzWpyBlv8v3JZoE8soQvu5mzm7E6DPMQP5h2xN5AG00
+	 wMo0jFr+dFUvvEaSSvY87/GisiOci1v24dW1Ugx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jacob Moroni <jmoroni@google.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0353/1611] RDMA/irdma: Fix OOB read during CQ MR registration
-Date: Tue, 21 Jul 2026 17:07:49 +0200
-Message-ID: <20260721152523.077686861@linuxfoundation.org>
+Subject: [PATCH 6.18 0354/1611] RDMA/irdma: Initialize iwmr->access during MR registration
+Date: Tue, 21 Jul 2026 17:07:50 +0200
+Message-ID: <20260721152523.102804627@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,73 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit 4385ddd654d90245eeb83b3cb539670ab5c85ba4 ]
+[ Upstream commit 1521d560b7a1a39e437d37fffd9b55435d329ad1 ]
 
-Sashiko pointed out an unrelated bug during a previous patch:
-https://sashiko.dev/#/patchset/20260512183852.614045-1-jmoroni%40google.com
+Initialize iwmr->access during initial user mem registration so
+that it contains a valid value during a subsequent rereg_mr.
 
-This change fixes the bug by eliminating the cqmr->split field which
-was not being set properly and instead just checks the CQ resize
-feature flag directly.
+Otherwise, a rereg_mr that doesn't set IB_MR_REREG_ACCESS (for
+example, one that only changes the PD) ends up clearing the
+access flags in HW since iwmr->access is zero-initialized, which
+is not intended.
 
-The cqmr->split field essentially tracks whether IRDMA_FEATURE_CQ_RESIZE
-is set, but it was not being set until CQ creation time, which is _after_
-CQ memory registration (the only other place where it is referenced).
-
-As a result, it would always be false during MR registration and would
-therefore cause irdma_handle_q_mem to populate cqmr->shadow even for GEN_2
-HW and beyond:
-
-    cqmr->shadow = (dma_addr_t)arr[req->cq_pages];
-
-The issue is that for GEN_2 and beyond, req->cq_pages may be exactly equal
-to iwmr->page_cnt and therefore equal to the size of arr, which would cause
-an OOB read by one.
-
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Link: https://patch.msgid.link/r/20260602214423.1315105-2-jmoroni@google.com
+Fixes: 5ac388db27c4 ("RDMA/irdma: Add support to re-register a memory region")
+Link: https://patch.msgid.link/r/20260604154104.4035581-1-jmoroni@google.com
 Signed-off-by: Jacob Moroni <jmoroni@google.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 4 ++--
- drivers/infiniband/hw/irdma/verbs.h | 1 -
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/irdma/verbs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index 6c9925f175711f..80e9cdef5baff3 100644
+index 80e9cdef5baff3..2b85e32134a5b8 100644
 --- a/drivers/infiniband/hw/irdma/verbs.c
 +++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -2563,7 +2563,6 @@ static int irdma_create_cq(struct ib_cq *ibcq,
- 			}
- 			cqmr_shadow = &iwpbl_shadow->cq_mr;
- 			info.shadow_area_pa = cqmr_shadow->cq_pbl.addr;
--			cqmr->split = true;
- 		} else {
- 			info.shadow_area_pa = cqmr->shadow;
- 		}
-@@ -2965,7 +2964,8 @@ static int irdma_handle_q_mem(struct irdma_device *iwdev,
- 	case IRDMA_MEMREG_TYPE_CQ:
- 		hmc_p = &cqmr->cq_pbl;
+@@ -3312,6 +3312,7 @@ static int irdma_reg_user_mr_type_mem(struct irdma_mr *iwmr, int access,
+ 	int err;
  
--		if (!cqmr->split)
-+		if (!(iwdev->rf->sc_dev.hw_attrs.uk_attrs.feature_flags &
-+		      IRDMA_FEATURE_CQ_RESIZE))
- 			cqmr->shadow = (dma_addr_t)arr[req->cq_pages];
+ 	lvl = iwmr->page_cnt != 1 ? PBLE_LEVEL_1 | PBLE_LEVEL_2 : PBLE_LEVEL_0;
++	iwmr->access = access;
  
- 		if (lvl)
-diff --git a/drivers/infiniband/hw/irdma/verbs.h b/drivers/infiniband/hw/irdma/verbs.h
-index aabbb3442098bc..289ebc9b23ca78 100644
---- a/drivers/infiniband/hw/irdma/verbs.h
-+++ b/drivers/infiniband/hw/irdma/verbs.h
-@@ -65,7 +65,6 @@ struct irdma_hmc_pble {
- struct irdma_cq_mr {
- 	struct irdma_hmc_pble cq_pbl;
- 	dma_addr_t shadow;
--	bool split;
- };
- 
- struct irdma_srq_mr {
+ 	err = irdma_setup_pbles(iwdev->rf, iwmr, lvl);
+ 	if (err)
 -- 
 2.53.0
 
