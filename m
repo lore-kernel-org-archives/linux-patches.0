@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12AF43F4C3;
-	Tue, 21 Jul 2026 22:00:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9565043C7DA;
+	Tue, 21 Jul 2026 22:00:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671251; cv=none; b=A26t5i+s0QDltAGSH4NP+F6PmKV19gal7Sle0LVR2dTb9+kDo0kGA166nATkp5JKTkpylnGIKWPzCdddsyIJwS0/MI/GHn7VUnJZdQMUOvOaaaClOPhbachLq7uR4igVM88nB8SGPy+224w+0JLV6+0yIc9sg9BUITYSMtX/9BQ=
+	t=1784671253; cv=none; b=SaYO+lgbUdt8AO/M0CADHjZW97o7yZPDC/wy5h/6bMWRdcZRs03pyEHJKZR7TMsh0ZbF+QYwv37KCQeBEDu1hhWHjRDn7mvHIAh9T51KhUT+p1B7AoJ0kmApzh6d94RKOcjiQc2bZCc8XSMr7oPNU4gDzwRTcxf5K6eAGcCw4/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671251; c=relaxed/simple;
-	bh=MV0im8LnBRv5yqBZEECUgMzRbQUYKh6wRJKXgCYugpY=;
+	s=arc-20240116; t=1784671253; c=relaxed/simple;
+	bh=lTGy4PshACiWs/eU8700ZNpJ0LhdnLSKgJI0LPV9EvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rHDylK18sxqr130mlxUDBeit8t2efKSkU5FMlcfVrxvgPaUqx7j29ZX8LU+lhne5m7XUEUzwfxq4hr5ls2yULvcIqSh5/FMsU+KxN4WzVOfWoFluKV6eb6juHYWgDxiljhTt9LqLAkPJWEap4knWMdNk1KmPnSq1n4zfvSYNK44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0N5064r5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NJAZR965+stLtIcAbcZrVN1+2l2JABcnU6t2MT2pwVwuXyE09cYRTbpkU9UI7NgklWViEbqmVlcGnnVE+ZglJziu47YH4iRIhBpeMRHUgmGs4GYiqfWb5MnzbgW99exywbb9a3W+AZuItsQvZL2HIez8/4UPVkS1IydmnfhOyU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfIYTYr/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0N5064r5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640221F000E9;
-	Tue, 21 Jul 2026 22:00:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfIYTYr/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077521F00A3A;
+	Tue, 21 Jul 2026 22:00:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671249;
-	bh=eMBaqR5Yg/7o7aIat3wTJ4WjhxyfR6/Sm3QsM3CKAMQ=;
+	s=korg; t=1784671252;
+	bh=mIdWtfgTLROV+kZM6dDiQwPVKfpNOJDDX/n+A1z52+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0N5064r5sNzqXON7bEoVpU3z7wDiF5TlzLvuCCpMQIhpZ/wQ+05Cnxx7MvX2eovlP
-	 wZIln9TpMoB/1mqtwut8m4fo2gEdZZ3vBb+jXHNeH4Why/5QacHmZv8/T37Puc2C6q
-	 4eGCWm48mE6k07NVjoPZh3uQSnN9spfVmYwtbqNs=
+	b=nfIYTYr/nBfhliNjY/f7qN+LmgVFb4p3iqnJXcjc/kHN8wNse1WlUtB40As7+BD18
+	 5pKd/b+kpzzYhhJOdMmD3GSNGmoUe+9aEmY75D+yVr9S1nlJpLLlve/RbXsLMqRbTp
+	 //1gcdvnmJ0RS5nS5ZJ/XKI5sUL7sORM7UOCXgDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alan Stern <stern@rowland.harvard.edu>,
 	stable <stable@kernel.org>,
-	Maoyi Xie <maoyixie.tju@gmail.com>
-Subject: [PATCH 5.15 132/843] usb: gadget: composite: fix dead empty check in the USB_DT_OTG handler
-Date: Tue, 21 Jul 2026 17:16:07 +0200
-Message-ID: <20260721152408.981052861@linuxfoundation.org>
+	Jimmy Hu <hhhuuu@google.com>
+Subject: [PATCH 5.15 133/843] usb: gadget: udc: Fix use-after-free in gadget_match_driver
+Date: Tue, 21 Jul 2026 17:16:08 +0200
+Message-ID: <20260721152409.006365389@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,61 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Jimmy Hu <hhhuuu@google.com>
 
-commit f8f680609c2b3ab795ffcd6f21585b6dfc46d395 upstream.
+commit 67e511d2989eb1c8c588b599ce2fcc6bb8e6f7ea upstream.
 
-The OTG branch of composite_setup() falls back to the first
-configuration when none is selected:
+The udc structure acts as the management structure for the gadget,
+but their lifecycles are decoupled. A race condition exists where
+usb_del_gadget() frees the udc memory (e.g., via mode-switch work)
+while gadget_match_driver() concurrently accesses the freed udc memory
+(e.g., via configfs), causing a Use-After-Free (UAF) that triggers a
+NULL pointer dereference when the freed memory is zeroed:
 
-	if (cdev->config)
-		config = cdev->config;
-	else
-		config = list_first_entry(&cdev->configs,
-					  struct usb_configuration, list);
-	if (!config)
-		goto done;
-	...
-	memcpy(req->buf, config->descriptors[0], value);
+[39430.908615][ T1171] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+[39430.911397][ T1171] pc : __pi_strcmp+0x20/0x140
+[39430.911441][ T1171] lr : gadget_match_driver+0x34/0x60
+...
+[39430.911890][ T1171]  usb_gadget_register_driver_owner+0x50/0xf8
+[39430.911910][ T1171]  gadget_dev_desc_UDC_store+0xf4/0x140
+[39430.931308][ T1171]  configfs_write_iter+0xec/0x134
 
-list_first_entry() never returns NULL. On an empty list it returns
-container_of() of the list head. So the "if (!config)" check is dead.
+[39430.957058][ T1171] Workqueue: events_freezable __dwc3_set_mode
+[39430.957287][ T1171]  dwc3_gadget_exit+0x34/0x8c
+[39430.957304][ T1171]  __dwc3_set_mode+0xc0/0x664
 
-When cdev->configs is empty, config points at the head inside struct
-usb_composite_dev. config->descriptors[0] reads whatever sits at that
-offset. The memcpy copies up to w_length bytes of it into the response
-buffer.
+Fix this by ensuring the udc structure remains allocated until the
+gadget is released. To achieve this, introduce a new
+usb_gadget_release() routine to the core. When the gadget is added,
+usb_add_gadget() stores the gadget's release routine in the udc
+structure and takes a reference to the udc. When the gadget is
+released, usb_gadget_release() drops the reference to the udc and
+then calls the gadget's release routine.
 
-cdev->configs can be empty in two cases. One is a teardown race on
-gadget unbind with a control transfer in flight. The other is a driver
-that sets is_otg before it adds a config. A reproducer that holds
-cdev->configs empty triggers a KASAN fault in this branch.
-
-Use list_first_entry_or_null() so the existing check does its job.
-
-Fixes: 53e6242db8d6 ("usb: gadget: composite: add USB_DT_OTG request handling")
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Link: https://patch.msgid.link/20260527150832.2943293-1-maoyixie.tju@gmail.com
+Signed-off-by: Jimmy Hu <hhhuuu@google.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260625073705.803880-1-hhhuuu@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/composite.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/udc/core.c |   29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/composite.c
-+++ b/drivers/usb/gadget/composite.c
-@@ -1840,9 +1840,10 @@ composite_setup(struct usb_gadget *gadge
- 				if (cdev->config)
- 					config = cdev->config;
- 				else
--					config = list_first_entry(
-+					config = list_first_entry_or_null(
- 							&cdev->configs,
--						struct usb_configuration, list);
-+							struct usb_configuration,
-+							list);
- 				if (!config)
- 					goto done;
+--- a/drivers/usb/gadget/udc/core.c
++++ b/drivers/usb/gadget/udc/core.c
+@@ -24,8 +24,9 @@
+ /**
+  * struct usb_udc - describes one usb device controller
+  * @driver: the gadget driver pointer. For use by the class code
+- * @dev: the child device to the actual controller
+  * @gadget: the gadget. For use by the class code
++ * @gadget_release: the gadget's release routine
++ * @dev: the child device to the actual controller
+  * @list: for use by the udc class driver
+  * @vbus: for udcs who care about vbus status, this value is real vbus status;
+  * for udcs who do not care about vbus status, this value is always true
+@@ -37,6 +38,7 @@
+ struct usb_udc {
+ 	struct usb_gadget_driver	*driver;
+ 	struct usb_gadget		*gadget;
++	void				(*gadget_release)(struct device *dev);
+ 	struct device			dev;
+ 	struct list_head		list;
+ 	bool				vbus;
+@@ -1289,6 +1291,17 @@ static int check_pending_gadget_drivers(
+ 	return ret;
+ }
+ 
++static void usb_gadget_release(struct device *dev)
++{
++	struct usb_gadget *gadget = dev_to_usb_gadget(dev);
++	struct usb_udc *udc = gadget->udc;
++	/* Cache the gadget's release routine to prevent UAF */
++	void (*release)(struct device *dev) = udc->gadget_release;
++
++	put_device(&udc->dev);
++	release(dev);
++}
++
+ /**
+  * usb_initialize_gadget - initialize a gadget and its embedded struct device
+  * @parent: the parent device to this udc. Usually the controller driver's
+@@ -1351,6 +1364,14 @@ int usb_add_gadget(struct usb_gadget *ga
+ 	gadget->udc = udc;
+ 
+ 	udc->started = false;
++	/*
++	 * Align decoupled lifecycles: take a UDC reference to ensure it
++	 * remains allocated until the gadget is released, requiring an
++	 * override of the gadget's release routine to drop it.
++	 */
++	udc->gadget_release = gadget->dev.release;
++	gadget->dev.release = usb_gadget_release;
++	get_device(&udc->dev);
+ 
+ 	mutex_lock(&udc_lock);
+ 	list_add_tail(&udc->list, &udc_list);
+@@ -1378,6 +1399,12 @@ int usb_add_gadget(struct usb_gadget *ga
+  err_unlist_udc:
+ 	list_del(&udc->list);
+ 	mutex_unlock(&udc_lock);
++	/*
++	 * Revert the override and drop the UDC reference to prevent
++	 * leaking the UDC if the gadget was statically allocated.
++	 */
++	gadget->dev.release = udc->gadget_release;
++	put_device(&udc->dev);
+ 
+ 	device_del(&gadget->dev);
  
 
 
