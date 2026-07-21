@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CF43B6C17;
-	Tue, 21 Jul 2026 22:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D4E43B48C;
+	Tue, 21 Jul 2026 22:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674008; cv=none; b=n48EkAAJ6PW4lICHJpSQYbUpYufoC8OYyzre5KzJV/XS28jxTsMFlcXOGhqxMgl5Edk2EwSeHsmYdoXrFCYLcEYGyE7DzXK+In1eXuwDxCIFdCIXNVd2WYnxOJmYvTj/IYiHAA9pFolDCLUdBy44sQhRPZo3Jnflesu/M9dMlis=
+	t=1784674010; cv=none; b=tXe26L9U0oS8+evaUJvxwr6vuA78vuhuSa20m6ZCJAKp8e4wrS6uxNOz7qt5EIRYl2X3Wwt/HNhmYVNNWw5BKQ1DpgVKLwnhlJSIYi9kPvS2Wgmst4CGeFNhfGuur7b6F8yV8OLrgYYNjWkkbA8j5jmJNEhyroW3gSidRoxlCok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674008; c=relaxed/simple;
-	bh=iZ4UiAy+89DrMz82BrpFT6tRfcV4o28EOKujUpVKKzI=;
+	s=arc-20240116; t=1784674010; c=relaxed/simple;
+	bh=0q7qPVa2krYlxb70CkohHtyB9uLdRw8xkO9J77BFAu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IraKN6F2VIILJZLHDk2igjC2QvyvKIjSLdweXZ+8zUJTWHJZsLUA2inxOYXFKIuEGTycHPqaD1MNlZARkmEOTUeVbnmBMQsdMdhPikRuIMU63wvCVwgbZVXj+bcIkWF9JUwCkTxk/QesgZMwcTACYaU8lg6N/Ts5qf9+ef5t/Dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3igrXuk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=huIvoARqzkdZ1mkZWzaEoBqtgLhrIAtUEGvoWfqnPtxGN7MHKvHPwo/S6EWUV9zSRyKrahD7EzFg2WbKI6RMNKL7DulrVxwadcd1qkcYMeLamZbTFipGxYF73WP4WGV64VdwdJjfbY0271IY0wpr+Fp95w6KC2xAoqK3r4AK0Qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dV4hGugy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3igrXuk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118601F00A3A;
-	Tue, 21 Jul 2026 22:46:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dV4hGugy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC46B1F000E9;
+	Tue, 21 Jul 2026 22:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674006;
-	bh=Y3pVic2PYv5H/YPT8/Gnew+xqI6A5dgsFP5Vhjy8uyU=;
+	s=korg; t=1784674009;
+	bh=aFpkPU/s9awKRitwQMLTgmi6jBlthVGCMLeY4TJRrD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r3igrXuk/qcDS3rwK1HQX7rEm0izgeCy2tgbjde7k+JWmeoazCR6+FTdVJcuc+m6Q
-	 C3Xs4oqJqKQEq0rotSP79cbDfUXNbf4C78k1vWYtxPWgIqxEQLKMvys4mFKSGD9ozG
-	 LCulC8u57BoBrAC76JbiA9y8RYcVWfTIFc20DVZI=
+	b=dV4hGugyQTLazMuFknuJB9NbRVFLSDgMjeO7L3ezCyQ1dH9GdaQfPPIwgHVEbFCKx
+	 uUQ4B4NqAQfNjiZWnES5nmbDmhVe0fC+QFnDTzRVMLlXrMJqhIaN8YGivVSz+easjq
+	 M0S3YpMP9dnL2SDE1fSl7Ahks7h3r/LvPG/ogmkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 378/699] usbnet: gl620a: fix out-of-bounds read in genelink_rx_fixup()
-Date: Tue, 21 Jul 2026 17:22:17 +0200
-Message-ID: <20260721152404.218897760@linuxfoundation.org>
+Subject: [PATCH 5.10 379/699] tracing/events: Fix to check the simple_tsk_fn creation
+Date: Tue, 21 Jul 2026 17:22:18 +0200
+Message-ID: <20260721152404.241100323@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,78 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 8ff7f2a6da4fccaa5cc9be7251a24e71e29fbd1a ]
+[ Upstream commit cda1fbfc5313bb90daa271d45eea4a8d317a8544 ]
 
-genelink_rx_fixup() splits an aggregated RX frame into its individual
-packets, using a per-packet length taken from device-supplied data. That
-length is only bounded by GL_MAX_PACKET_LEN (1514); it is never compared
-against how many bytes were actually received.
+Sashiko pointed that this sample code does not correctly handle the
+failure of thread creation because kthread_run() can return -errno.
 
-A malicious GeneLink (GL620A) device can therefore send a short URB whose
-header claims packet_count > 1 and a first packet of up to 1514 bytes.
+Check the simple_tsk_fn is correctly initialized (created) or not.
 
-	skb_put_data(gl_skb, packet->packet_data, size);
+Link: https://lore.kernel.org/all/178165817322.269421.3992299509400184196.stgit@devnote2/
 
-then copies past the end of the receive buffer and hands the adjacent slab
-contents up the network stack, an out-of-bounds read that leaks kernel heap.
-No privilege is required: the path runs in the usbnet RX softirq as soon as
-the interface is up.
+Link: https://sashiko.dev/#/patchset/178092865666.163648.10457567771536160909.stgit%40devnote2
 
-  BUG: KASAN: slab-out-of-bounds in genelink_rx_fixup (drivers/net/usb/gl620a.c:112)
-  Read of size 1514 at addr ffff888011309708 by task ksoftirqd/0/14
-  Call Trace:
-    ...
-    __asan_memcpy (mm/kasan/shadow.c:105)
-    genelink_rx_fixup (include/linux/skbuff.h:2814 drivers/net/usb/gl620a.c:112)
-    usbnet_bh (drivers/net/usb/usbnet.c:572 drivers/net/usb/usbnet.c:1589)
-    process_one_work (kernel/workqueue.c:3322)
-    bh_worker (kernel/workqueue.c:3405)
-    tasklet_action (kernel/softirq.c:965)
-    handle_softirqs (kernel/softirq.c:622)
-    run_ksoftirqd (kernel/softirq.c:1076)
-    ...
-
-skb_pull() already verifies that the requested length fits the buffer and
-returns NULL otherwise. Move it ahead of the copy and check its result, so
-a packet that overruns the received data is rejected before it is read.
-Well-formed frames, whose packets are fully present, are unaffected.
-
-Fixes: 47ee3051c856 ("[PATCH] USB: usbnet (5/9) module for genesys gl620a cables")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260627205353.4000788-1-xmei5@asu.edu
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9cfe06f8cd5c ("tracing/events: add trace-events-sample")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/gl620a.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ samples/trace_events/trace-events-sample.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/usb/gl620a.c b/drivers/net/usb/gl620a.c
-index 8c2838cba77bc1..d00d364fb8acc3 100644
---- a/drivers/net/usb/gl620a.c
-+++ b/drivers/net/usb/gl620a.c
-@@ -104,6 +104,9 @@ static int genelink_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 			return 0;
- 		}
- 
-+		if (!skb_pull(skb, size + 4))
-+			return 0;
-+
- 		// allocate the skb for the individual packet
- 		gl_skb = alloc_skb(size, GFP_ATOMIC);
- 		if (gl_skb) {
-@@ -116,9 +119,6 @@ static int genelink_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 		// advance to the next packet
- 		packet = (struct gl_packet *)&packet->packet_data[size];
- 		count--;
--
--		// shift the data pointer to the next gl_packet
--		skb_pull(skb, size + 4);
- 	}
- 
- 	// skip the packet length field 4 bytes
+diff --git a/samples/trace_events/trace-events-sample.c b/samples/trace_events/trace-events-sample.c
+index 1a72b7d95cdc74..2bcae90d85e51f 100644
+--- a/samples/trace_events/trace-events-sample.c
++++ b/samples/trace_events/trace-events-sample.c
+@@ -94,6 +94,10 @@ int foo_bar_reg(void)
+ 	 * for consistency sake, we still take the thread_mutex.
+ 	 */
+ 	simple_tsk_fn = kthread_run(simple_thread_fn, NULL, "event-sample-fn");
++	if (IS_ERR_OR_NULL(simple_tsk_fn)) {
++		pr_err("Failed to create simple_thread_fn\n");
++		simple_tsk_fn = NULL;
++	}
+  out:
+ 	mutex_unlock(&thread_mutex);
+ 	return 0;
 -- 
 2.53.0
 
