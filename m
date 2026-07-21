@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A92347BC6;
-	Tue, 21 Jul 2026 22:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEFD367B63;
+	Tue, 21 Jul 2026 22:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673189; cv=none; b=XzmKPXwMwiJF0xGrKIx/CpLR0Fz4o5W50JsMyf/PyXtrJ1NpUNdLI+BmkjbG0MvMLmzLDotNfV0nGy2y1SaRHwo9l1XJ8INp8ZKFoHAwXDpp6NTHBLgXlhrSeJuy8/oorg4+3eQD9ZYOp6tPuaRQq8v6hyafBHYoTz6I4u3UPLU=
+	t=1784673191; cv=none; b=g4PB3UV4yTEYJ5TW8hWxy2ijMQJXjR77uIl3NqWUVBg9ol+gLjXcWX5XFfPDeEHt9R5AIo2GAuM0zdE+YWLuvz5hHCQNOsnZs4CSkvy0Beu6Vmx61KojJ3dX7XswdCm0GFUOe2gY5fxmKt3xCw3md4G2nNM9OO3Z/IlfE4WFW6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673189; c=relaxed/simple;
-	bh=4oMo8+TDMRj1uK6XzGNW6QTGNUvS6Ik3HptBBF7BJcE=;
+	s=arc-20240116; t=1784673191; c=relaxed/simple;
+	bh=2iAnVLma1Ywdq0hKAIPGd+wWKvjYb9CjhYBkraeNvJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VgFi4i76h7N5KG3AcVX5Kb/6aMwwgcxOk45d5YB5GzMABQrwrQT1YdNhPhznWvO3Jwa4l08lKZHhxJJYUoYFp+ck8t66ypYkytlkFaPpJ/BdctZP3113DucE9HWBb40RS4qI9v49ET0/+f69Eq1/5JK/YHOAJ2KpGHjMgu3cq3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nWmrxmnG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l0Jby15HjudVenJvgqZL4ukOLHj1M49GKzVi+8549n3OeOdMKDiySNgU9Bsu9Ew2TWw3Z/SnBGe3t3nTwbYne6lene5heJn00lId9E/hgnaXFe6QssubqzK9x//4G6rz9Gzf3lo7uqUBnCNa02oCfPx7c9sd949Vr/70gLdYX48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ITtB4Y1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWmrxmnG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 501F01F000E9;
-	Tue, 21 Jul 2026 22:33:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ITtB4Y1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E525E1F000E9;
+	Tue, 21 Jul 2026 22:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673187;
-	bh=WhXHQ/dfv3ppzUQ3JPrjuaqbNwf6rWA8yK8b5yIc01s=;
+	s=korg; t=1784673190;
+	bh=0yvV+MNvCR4lkSLUolYRd7iJlp+H9bXuMB7OLV0xqt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nWmrxmnGntvarJq/reDi6P/6nCRxg824zGeL/A8I8fI/hJDeKHwwJR+tzpRpot/7S
-	 P4HVR95fBHRAagyJRV7EWfyXBBUDQuYGjKcDquSYL/2O6XpCuXyjoT6/sMXgZop9qr
-	 IHyAwMhxm/orrxObIlgN4xt83YiUExyvI92d4Pr8=
+	b=0ITtB4Y1cZ6sRCv4BB0KKJf0zXph6pJvjcjkBHApuW1CTjsF6e1RtD7Q7+Fhp6GBQ
+	 bKMAjfgD2pOJb11F2LoXn+DMAdiUj32NzT/OMrKt3hDco/d0bBEgqzjCr7qJQvZq2a
+	 6WsL9lDWMXp5ukUDIjJXmvcm+J5EoS4YzLeaBNig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Michael Bommarito <michael.bommarito@gmail.com>
-Subject: [PATCH 5.10 067/699] hwrng: virtio: clamp device-reported used.len at copy_data()
-Date: Tue, 21 Jul 2026 17:17:06 +0200
-Message-ID: <20260721152357.215247593@linuxfoundation.org>
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	stable <stable@kernel.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 068/699] USB: chaoskey: Fix slab-use-after-free in chaoskey_release()
+Date: Tue, 21 Jul 2026 17:17:07 +0200
+Message-ID: <20260721152357.238674162@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,120 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit e3046eeada299f917a8ad883af4434bfb86556b1 upstream.
+commit abf76d3239dee97b66e7241ad04811f1ce562e28 upstream.
 
-random_recv_done() stores the device-reported used.len directly into
-vi->data_avail.  copy_data() then indexes vi->data[] using
-vi->data_idx (advanced by previous copy_data() calls) and issues a
-memcpy() without re-validating either value against the posted
-buffer size sizeof(vi->data) (SMP_CACHE_BYTES bytes, typically 32
-or 64).
+The chaoskey driver has a use-after-free bug in its release routine.
+If the user closes the device file after the USB device has been
+unplugged, a debugging log statement will try to access the
+usb_interface structure after it has been deallocated:
 
-A malicious or buggy virtio-rng backend can set used.len beyond
-sizeof(vi->data), steering the memcpy() past the end of the inline
-array into adjacent kmalloc-1k slab bytes.  hwrng_fillfn() mixes
-those bytes into the guest RNG, and guest root can also observe
-them directly via /dev/hwrng.
+	BUG: KASAN: slab-use-after-free in dev_driver_string (drivers/base/core.c:2406)
+	Read of size 8 at addr ffff888168e8a0b8 by task chaoskey_raw_re/10106
 
-Concrete impact is inside the guest:
+	Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+	Call Trace:
+	 <TASK>
+	 dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+	 print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+	 kasan_report (mm/kasan/report.c:595)
+	 dev_driver_string (drivers/base/core.c:2406)
+	 __dynamic_dev_dbg (lib/dynamic_debug.c:906)
+	 chaoskey_release (drivers/usb/misc/chaoskey.c:323)
+	 __fput (fs/file_table.c:510)
+	 fput_close_sync (fs/file_table.c:615)
+	 __x64_sys_close (fs/open.c:1507 fs/open.c:1492 fs/open.c:1492)
+	 do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
+	 entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
 
- - Memory-safety / hardening: any virtio-rng backend that
-   over-reports used.len causes the driver to read past vi->data
-   into unrelated slab contents.  hwrng_fillfn() is a kernel thread
-   that runs as soon as the device is probed; no guest userspace
-   interaction is required to first-trigger the OOB.
+The driver's last reference to the interface structure is dropped in
+the chaoskey_free() routine, so the code must not use the interface --
+even in a debugging statement -- after that routine returns.
+(Exception: If we know that another reference is held by someone else,
+such as the device core while the disconnect routine runs, there's no
+problem.  Thanks to Johan Hovold for pointing this out.)
 
- - Cross-boundary leak (confidential-compute threat model): a
-   malicious hypervisor cooperating with a malicious or compromised
-   guest root userspace can use /dev/hwrng as a leak channel for
-   guest-kernel heap data.  The host sets a large used.len, guest
-   root reads /dev/hwrng, and the returned bytes contain guest
-   kernel slab contents that were adjacent to vi->data.  In
-   practice, confidential-compute guests (SEV-SNP, TDX) usually
-   disable virtio-rng entirely, so this path is narrow, but the
-   fix is still worth carrying because the underlying
-   memory-safety bug contaminates the guest RNG on any host.
+Since the bad access is part of an unimportant debugging statement,
+we can fix the problem simply by removing the whole statement.
 
-KASAN confirms the OOB on a 7.1-rc4 guest whose virtio-rng backend
-has been patched to report used.len = 0x10000:
-
-  BUG: KASAN: slab-out-of-bounds in virtio_read+0x394/0x5d0
-  Read of size 64 at addr ffff88800ae0ba20 by task hwrng/52
-  Call Trace:
-   __asan_memcpy+0x23/0x60
-   virtio_read+0x394/0x5d0
-   hwrng_fillfn+0xb2/0x470
-   kthread+0x2cc/0x3a0
-  Allocated by task 1:
-   probe_common+0xa5/0x660
-   virtio_dev_probe+0x549/0xbc0
-  The buggy address belongs to the object at ffff88800ae0b800
-   which belongs to the cache kmalloc-1k of size 1024
-  The buggy address is located 0 bytes to the right of
-   allocated 544-byte region [ffff88800ae0b800, ffff88800ae0ba20)
-
-Same class of bug as commit c04db81cd028 ("net/9p: Fix buffer
-overflow in USB transport layer"), which hardened
-usb9pfs_rx_complete() against unchecked device-reported length in
-the USB 9p transport.
-
-With the clamp at point of use and array_index_nospec() in place,
-the same harness boots cleanly: copy_data() returns zero for the
-bogus report, the device-supplied bytes after data_idx are
-discarded, and the driver issues a fresh request.
-
-Fixes: f7f510ec1957 ("virtio: An entropy device, as suggested by hpa.")
-Cc: stable@vger.kernel.org
-Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260531142251.2792061-1-michael.bommarito@gmail.com>
+Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Closes: https://lore.kernel.org/linux-usb/20EC9664-054E-438B-B411-2145D347F97B@gmail.com/
+Tested-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 66e3e591891d ("usb: Add driver for Altus Metrum ChaosKey device (v2)")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/bb5b1dc6-eb59-43e1-8d26-51e658e88bbe@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/hw_random/virtio-rng.c |   23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ drivers/usb/misc/chaoskey.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/char/hw_random/virtio-rng.c
-+++ b/drivers/char/hw_random/virtio-rng.c
-@@ -7,6 +7,7 @@
- #include <asm/barrier.h>
- #include <linux/err.h>
- #include <linux/hw_random.h>
-+#include <linux/nospec.h>
- #include <linux/scatterlist.h>
- #include <linux/spinlock.h>
- #include <linux/virtio.h>
-@@ -66,8 +67,26 @@ static void request_entropy(struct virtr
- static unsigned int copy_data(struct virtrng_info *vi, void *buf,
- 			      unsigned int size)
- {
--	size = min_t(unsigned int, size, vi->data_avail);
--	memcpy(buf, vi->data + vi->data_idx, size);
-+	unsigned int idx, avail;
-+
-+	/*
-+	 * vi->data_avail was set from the device-reported used.len and
-+	 * vi->data_idx was advanced by previous copy_data() calls.  A
-+	 * malicious or buggy virtio-rng backend can drive either past
-+	 * sizeof(vi->data).  Clamp at point of use and harden the index
-+	 * with array_index_nospec() so the memcpy() below cannot be
-+	 * steered into adjacent slab memory, including under
-+	 * speculation.
-+	 */
-+	avail = min_t(unsigned int, vi->data_avail, sizeof(vi->data));
-+	if (vi->data_idx >= avail) {
-+		vi->data_avail = 0;
-+		request_entropy(vi);
-+		return 0;
-+	}
-+	size = min_t(unsigned int, size, avail - vi->data_idx);
-+	idx = array_index_nospec(vi->data_idx, sizeof(vi->data));
-+	memcpy(buf, vi->data + idx, size);
- 	vi->data_idx += size;
- 	vi->data_avail -= size;
- 	if (vi->data_avail == 0)
+--- a/drivers/usb/misc/chaoskey.c
++++ b/drivers/usb/misc/chaoskey.c
+@@ -321,7 +321,6 @@ bail:
+ 	mutex_unlock(&dev->lock);
+ destruction:
+ 	mutex_unlock(&chaoskey_list_lock);
+-	usb_dbg(interface, "release success");
+ 	return rv;
+ }
+ 
 
 
