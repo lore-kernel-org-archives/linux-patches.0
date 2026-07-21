@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8E23EEAC7;
-	Tue, 21 Jul 2026 19:14:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920E746F4AB;
+	Tue, 21 Jul 2026 19:14:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661268; cv=none; b=KGPzURxpJRsEr0pdlywITTHnMQZ+g0aKmVF8YfEC7Fe9BrQ0LeVZN4wZQDQQp7I4vZwGFJTJxv2hXMB8EfAbA9hVnTmuoH483d8l1iTaL9St6YewQ+kPdFyM7kRS4ulghYeTZI0+kCPlLbockpXdSJ+mbyYR6c2b/T83pufJyeM=
+	t=1784661270; cv=none; b=jmi4xqVk4f1vOge8WAFhbuYbGGv+QJNltTtRd3SWtnJ17VzT4QHj+k6g3VKo+wYE0FW+bDQwbA7M45dCPNGTFOlR5g0frl1mQSd0Cop0Uw6jvv45Dd5caB7jAH7Kl+6G3NqeV0zPSQRfWDAJvp15fU85X/ecHzOnyNuZaPNe9aE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661268; c=relaxed/simple;
-	bh=hQNbGioVTC9nFKhB3qEbXKaUUbwhiSGlUjsqO8rLsnc=;
+	s=arc-20240116; t=1784661270; c=relaxed/simple;
+	bh=TyUBCijT6osOl8xqS2iswZ14akdzQ/6PfKlN3owNapE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IcbjX+lEKDc2Q+ZRr9tG3MlJtabhaBxlNWsYxtGXQiMtCKc0ZuocrVkS/SJZHc/G0ZiVITZA+3/6ruNbjEBGYqS9gtrc/w2jv0KwJC759S2x3+9LfZ17XCpJlo+NuF+yXTI/avl++NnzfU8DCLSFrKg+ndoqCGrUNtGqCQR2yq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+D+sr7v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jFDBQb8T+osSyGeh24WZAU/ZFmYqsj2Mc0Q//Wd5x9fwjzNDDyBNyqnvCivSe8YDcIAlumubfoCCP+4B2Ch03sc6mAvtfKC0GMUu1/QXgPfoi4XaKZh9/hGnyp2hfwqx+GuggD15aJPflPk3VXYg9mVzB2jASNKqdyPxuPdxpkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKM6ljd6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+D+sr7v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D421F000E9;
-	Tue, 21 Jul 2026 19:14:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKM6ljd6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F421F00A3F;
+	Tue, 21 Jul 2026 19:14:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661266;
-	bh=w7Ymc4+luAsXNwme2onWi9qY1TNCgG9LcdvV06UEUAg=;
+	s=korg; t=1784661269;
+	bh=PRRM5D9jY1x76BL8KQoOdd5X53HHhzUA6nV/I0NM49g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S+D+sr7vSGK/LDpstY4ltc244f4DUKSXqwSOdarqpEy05Vkd5qOPMMcCEJf3h2Q2w
-	 I1GiSIPpX/uKHDU+I/JDnrWZMf5z/wBKpCg9oysoElv4Z/VS1/HBNJQ0B2FGlnv0RU
-	 kmPiqH8Nenum8VIiETkGmve3w6diBrT0HFR8vQ8w=
+	b=LKM6ljd6Xr/GZIslxEVgu4CAf5EYxIwkXocxU7EVryZW3iqQhRx2CCGDR8t+riP1h
+	 z7yz6npYXc3IUf7Eg4qW5hRi2ngaLqqfquQDRXVNVx2jdZR8UIYjMrsk1UPAOo2Abt
+	 +v8I8VgXBFDJ2dFx13GojuXWuqPFIPZwm8b6eo6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Oder Chiou <oder_chiou@realtek.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1251/2077] net: do not acquire dev->tx_global_lock in netdev_watchdog_up()
-Date: Tue, 21 Jul 2026 17:15:24 +0200
-Message-ID: <20260721152622.318978517@linuxfoundation.org>
+Subject: [PATCH 7.1 1242/2077] ASoC: rt5575: Use __le32 for SPI burst write address
+Date: Tue, 21 Jul 2026 17:15:15 +0200
+Message-ID: <20260721152622.108280815@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,64 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Oder Chiou <oder_chiou@realtek.com>
 
-[ Upstream commit d09a78a2a469e4fab75108325efb813c49520809 ]
+[ Upstream commit d0c415f0076b71b956f62ff6f31de885f0fa2489 ]
 
-Marek Szyprowski reported a deadlock during system resume when virtio_net
-driver is used.
+The addr field in the SPI burst write buffer represents on-wire
+little-endian data. Define it as __le32 so that the assignment of
+cpu_to_le32() is type correct and avoids sparse endian warnings.
 
-The deadlock occurs because netif_device_attach() is called while holding
-dev->tx_global_lock (via netif_tx_lock_bh() in virtnet_restore_up()).
-netif_device_attach() calls __netdev_watchdog_up(), which now also tries
-to acquire dev->tx_global_lock to synchronize with dev_watchdog().
+Closes:
+https://lore.kernel.org/oe-kbuild-all/202606230139.rFZUVpCa-lkp@intel.com/
 
-This recursive lock acquisition results in a deadlock.
-
-Fix this by removing the tx_global_lock acquisition from netdev_watchdog_up().
-
-The critical state (watchdog_timer and watchdog_ref_held) is already
-protected by dev->watchdog_lock, which was introduced in the blamed commit.
-
-Fixes: 8eed5519e496 ("net: watchdog: fix refcount tracking races")
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Closes: https://lore.kernel.org/netdev/a443376e-5187-4268-93b3-58047ef113a8@samsung.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260622110108.69541-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 420739112e95 ("ASoC: rt5575: Add the codec driver for the ALC5575")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Oder Chiou <oder_chiou@realtek.com>
+Link: https://patch.msgid.link/20260623102514.2422990-1-oder_chiou@realtek.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_generic.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ sound/soc/codecs/rt5575-spi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
-index 3a0f3bb6a1ff4e..fe73ac40d409e8 100644
---- a/net/sched/sch_generic.c
-+++ b/net/sched/sch_generic.c
-@@ -594,9 +594,8 @@ void netdev_watchdog_up(struct net_device *dev)
- 		return;
- 	if (dev->watchdog_timeo <= 0)
- 		dev->watchdog_timeo = 5*HZ;
--	spin_lock_bh(&dev->tx_global_lock);
+diff --git a/sound/soc/codecs/rt5575-spi.c b/sound/soc/codecs/rt5575-spi.c
+index 9a349965435b64..d5b3a57c886664 100644
+--- a/sound/soc/codecs/rt5575-spi.c
++++ b/sound/soc/codecs/rt5575-spi.c
+@@ -17,7 +17,7 @@
  
--	spin_lock(&dev->watchdog_lock);
-+	spin_lock_bh(&dev->watchdog_lock);
- 	if (!mod_timer(&dev->watchdog_timer,
- 		       round_jiffies(jiffies + dev->watchdog_timeo))) {
- 		if (!dev->watchdog_ref_held) {
-@@ -605,9 +604,7 @@ void netdev_watchdog_up(struct net_device *dev)
- 			dev->watchdog_ref_held = true;
- 		}
- 	}
--	spin_unlock(&dev->watchdog_lock);
--
--	spin_unlock_bh(&dev->tx_global_lock);
-+	spin_unlock_bh(&dev->watchdog_lock);
- }
- EXPORT_SYMBOL_GPL(netdev_watchdog_up);
- 
+ struct rt5575_spi_burst_write {
+ 	u8 cmd;
+-	u32 addr;
++	__le32 addr;
+ 	u8 data[RT5575_SPI_BUF_LEN];
+ 	u8 dummy;
+ } __packed;
 -- 
 2.53.0
 
