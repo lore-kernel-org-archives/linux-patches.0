@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5528472557;
-	Tue, 21 Jul 2026 17:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4F346E00D;
+	Tue, 21 Jul 2026 17:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656697; cv=none; b=BnCswdDRfAj88G/iHN0HPMZUa/dzWY74+ZLv4xEF41nhBFHu6McetuiNvJFOk5DF9ue3jBgz34JYFbsc7Mn/iUfjPmEhFyJlZq52qWZEbxBtRu6BM6r3OvqquvfFMoKj+y/xXllxdH3Rs4150i25JJCI7SE8dEPRRkSC1Jrz1vY=
+	t=1784656698; cv=none; b=u2XgDo3kbRoWMXIT6GASYex/RnfbxONlmLaXA1L1hBJEMqayDc3VlRsy3e/07B5e5U6rS5FH2MG94eR6c96+CIk4vniCx4yMIxgQ+Ux7SH1TORKwrCepjq1uXTWBxIZEot7AN2MEfc5Az5TXvtCYeNbTgWAEjKr8jFiiG0Gbn0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656697; c=relaxed/simple;
-	bh=Jb4uD89IX1WfH2o01TBqs9Cml0qyoAo9OgLklYHRnVI=;
+	s=arc-20240116; t=1784656698; c=relaxed/simple;
+	bh=nn+Q0QAcRT39bcsEQxm/Sml3LS9SaEIivcV7jDzUsO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y/wi6AQnPr5VxMMwFz5ZJbNzqrAMgjvKOmvv06TgGF/aq5wsJuXZXzCkwQUSwJ/O1l4ppMYhvut4OEDREW3zFYiHU2kgaSsqG7r+HIGVJHOfS2oE+x6y2cxbJMzV/WECsmUjkUwccbK2kBJBouI/fb/PO+DShlKE7V3ukQLP++U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYppJ13q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RiLdHxC5/cryFGrJqjARMCqdbAKYCcRu6qhAoeRjKTRbuto/ix7WGFQvHn6HOxZOuiUZe4Ux4mIzdqrfCsdUySQCjjO94/aGbeipuu2n+wIwaD4gHQx/Gh7K1dAPR7qfCGu7IeSWD4MkesFeJjbc0jTzTC5pQ/q4p42OrRsNhTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UaJ+lNg6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYppJ13q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C128E1F00A3A;
-	Tue, 21 Jul 2026 17:58:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UaJ+lNg6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670891F000E9;
+	Tue, 21 Jul 2026 17:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656692;
-	bh=aFRAAh4U1oJabCfQQgjjytTztHifFpQoPziJc3gVz/I=;
+	s=korg; t=1784656694;
+	bh=V8JhldhbhjDqkmSpsP3gkH6PrfCqfAG+zZ9k1LI1BOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KYppJ13qYYJQq0ele7OnWlycF04Ij/Rux4umfi318I+PJePYLTDd+sXlshEy1jhgH
-	 r6NEZ/W3uFUoCIAn6KoikGI6VDE58JGA/3x6opsz4WjMvrCOH4v6/0PUBNGCv94lc7
-	 4xSGJpEw87rcoEWh97pFJ2OJJNqHITpgPSEcOgOI=
+	b=UaJ+lNg6LGeGbaLS8mXiYFWJf6noZWGt0OKCNj8IZ5Sl40/vsFoJINcWtKYVIF/rm
+	 k6I+b+qZKchozjYchPcbUvz9lu7qBKLLNwrikXM4V76V9VfhFANtOqnVAFGKp35h3P
+	 vb4w1igrhuhgIJ92KL7B0lGuUImBv9XEeVatITtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
 	Weiming Shi <bestswngs@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0466/1611] Bluetooth: eir: Fix stack OOB write when prepending the Flags AD
-Date: Tue, 21 Jul 2026 17:09:42 +0200
-Message-ID: <20260721152525.797847983@linuxfoundation.org>
+Subject: [PATCH 6.18 0484/1611] bridge: cfm: reject invalid CCM interval at configuration time
+Date: Tue, 21 Jul 2026 17:10:00 +0200
+Message-ID: <20260721152526.219417517@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,73 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 6f5fb689fdf80bdd143f22a502f9eb1f3c85e286 ]
+[ Upstream commit f3e02edd8322b31b8e6517faa6ba053bf29d1e26 ]
 
-eir_create_adv_data() builds the advertising data into a fixed-size
-buffer ("size", 31 for the legacy path). It may prepend a 3-byte "Flags"
-AD structure (LE_AD_NO_BREDR on an LE-only controller) and then copies
-the per-instance data without checking that it still fits:
+ccm_tx_work_expired() re-arms itself via queue_delayed_work() using
+the configured exp_interval converted by interval_to_us(). When
+exp_interval is BR_CFM_CCM_INTERVAL_NONE or out of range,
+interval_to_us() returns 0, causing the worker to fire immediately in
+a tight loop that allocates skbs until OOM.
 
-	memcpy(ptr, adv->adv_data, adv->adv_data_len);
+Fix this by validating exp_interval at configuration time:
 
-tlv_data_max_len() only reserves those 3 bytes when the user-supplied
-flags carry a managed-flags bit, so an instance added with flags == 0 is
-accepted with adv_data_len up to the full buffer. At advertise time the
-flags are still prepended, and the memcpy() writes 3 + adv_data_len
-bytes into the size-byte buffer:
+ - Constrain IFLA_BRIDGE_CFM_CC_CONFIG_EXP_INTERVAL to the valid range
+   [BR_CFM_CCM_INTERVAL_3_3_MS, BR_CFM_CCM_INTERVAL_10_MIN] in the
+   netlink policy so userspace cannot set an invalid value.
 
-  BUG: KASAN: stack-out-of-bounds in eir_create_adv_data (net/bluetooth/eir.c:301)
-  Write of size 31 at addr ffff88800a547bdc by task kworker/u9:0/65
-  Workqueue: hci0 hci_cmd_sync_work
-   __asan_memcpy (mm/kasan/shadow.c:106)
-   eir_create_adv_data (net/bluetooth/eir.c:301)
-   hci_update_adv_data_sync (net/bluetooth/hci_sync.c:1310)
-   hci_schedule_adv_instance_sync (net/bluetooth/hci_sync.c:1817)
-   hci_cmd_sync_work (net/bluetooth/hci_sync.c:332)
-  This frame has 1 object:
-   [32, 64) 'cp'
+ - Reject starting CCM TX in br_cfm_cc_ccm_tx() when exp_interval has
+   not yet been configured (defaults to 0 from kzalloc).
 
-The "Flags" structure is added by the kernel, not requested by
-userspace, so only prepend it when it fits together with the instance
-advertising data; when there is no room for both, drop the flags rather
-than the user-provided data.
-
-Reachable by a local user with CAP_NET_ADMIN owning an LE-only
-controller on the legacy advertising path.
-
-Fixes: b44133ff03be ("Bluetooth: Support the "discoverable" adv flag")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 2be665c3940d ("bridge: cfm: Netlink SET configuration Interface.")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260609065116.2818837-1-xmei5@asu.edu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/eir.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/bridge/br_cfm.c         | 6 ++++++
+ net/bridge/br_cfm_netlink.c | 4 +++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/eir.c b/net/bluetooth/eir.c
-index 3f72111ba651f9..1de5f9df6eec00 100644
---- a/net/bluetooth/eir.c
-+++ b/net/bluetooth/eir.c
-@@ -283,10 +283,12 @@ u8 eir_create_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr, u8 size)
- 		if (!flags)
- 			flags |= mgmt_get_adv_discov_flags(hdev);
+diff --git a/net/bridge/br_cfm.c b/net/bridge/br_cfm.c
+index f4ca77d9b0e96e..e1de280bacc1b2 100644
+--- a/net/bridge/br_cfm.c
++++ b/net/bridge/br_cfm.c
+@@ -805,6 +805,12 @@ int br_cfm_cc_ccm_tx(struct net_bridge *br, const u32 instance,
+ 		goto save;
+ 	}
  
--		/* If flags would still be empty, then there is no need to
--		 * include the "Flags" AD field".
-+		/* Only add the "Flags" if it fits together with the instance
-+		 * advertising data; drop it rather than overflow the buffer.
- 		 */
--		if (flags && (ad_len + eir_precalc_len(1) <= size)) {
-+		if (flags &&
-+		    (ad_len + eir_precalc_len(1) +
-+		     (adv ? adv->adv_data_len : 0) <= size)) {
- 			ptr[0] = 0x02;
- 			ptr[1] = EIR_FLAGS;
- 			ptr[2] = flags;
++	if (!interval_to_us(mep->cc_config.exp_interval)) {
++		NL_SET_ERR_MSG_MOD(extack,
++				   "Invalid CCM interval");
++		return -EINVAL;
++	}
++
+ 	/* Start delayed work to transmit CCM frames. It is done with zero delay
+ 	 * to send first frame immediately
+ 	 */
+diff --git a/net/bridge/br_cfm_netlink.c b/net/bridge/br_cfm_netlink.c
+index 2faab44652e7c0..91b9922dc3f25e 100644
+--- a/net/bridge/br_cfm_netlink.c
++++ b/net/bridge/br_cfm_netlink.c
+@@ -34,7 +34,9 @@ br_cfm_cc_config_policy[IFLA_BRIDGE_CFM_CC_CONFIG_MAX + 1] = {
+ 	[IFLA_BRIDGE_CFM_CC_CONFIG_UNSPEC]	 = { .type = NLA_REJECT },
+ 	[IFLA_BRIDGE_CFM_CC_CONFIG_INSTANCE]	 = { .type = NLA_U32 },
+ 	[IFLA_BRIDGE_CFM_CC_CONFIG_ENABLE]	 = { .type = NLA_U32 },
+-	[IFLA_BRIDGE_CFM_CC_CONFIG_EXP_INTERVAL] = { .type = NLA_U32 },
++	[IFLA_BRIDGE_CFM_CC_CONFIG_EXP_INTERVAL] =
++		NLA_POLICY_RANGE(NLA_U32, BR_CFM_CCM_INTERVAL_3_3_MS,
++				 BR_CFM_CCM_INTERVAL_10_MIN),
+ 	[IFLA_BRIDGE_CFM_CC_CONFIG_EXP_MAID]	 = {
+ 	.type = NLA_BINARY, .len = CFM_MAID_LENGTH },
+ };
 -- 
 2.53.0
 
