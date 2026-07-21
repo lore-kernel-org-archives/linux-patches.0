@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DAC243F4B3;
-	Tue, 21 Jul 2026 22:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B3D434E2F;
+	Tue, 21 Jul 2026 22:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672143; cv=none; b=cRsYXJ7+ysFtNKEDCrom6uVWctGFS18o4oyV5+vprMhKwdy+l5B7+qU6LUfwV4ZfXJGxfLx6Q05pmNG/XiYC+cDOSjvGPEEcoOtqVxWd3TNkglU7chILwN/dhxx4gqpkTQ189Gy/FfBkRSLq1SJcFgo64CWjUDx/4k9all3BhP8=
+	t=1784672147; cv=none; b=rL558WKyZ+UiGY13GZ05ZcPhaPUYJ8+PnPLXNxctx4WXsAm0QHbE4amAnpE7U9YOppDkLy7i3kqcIFC8iCvyKoNeiMDQ/mrYZCIFiR4sV7IzlyUgUKcK6kNSB5WEdNvn/QPHhdRC3bCNkRQ5Ylb50bu1W58KZM3UTCaB8ZbSMiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672143; c=relaxed/simple;
-	bh=p8eYcKsGCL+NFr4WgIQ0rK2LGJyaE1nYJnmY/9BIUyo=;
+	s=arc-20240116; t=1784672147; c=relaxed/simple;
+	bh=upPRJorYKHVC0zvQiV+uBp+cXe9cr4LaAt6quujEItk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tapVo6lJ/0+hqn9kLL4uzB3WkgoTRvfiBo//m6gnekpdo0oTNNnh6CfdCPK2qY5V2ajiIek1T+cVWi6x94jNY2Rpinb3JsScrpMb7M9bAezcf/hyuQkTgQBlZmJVb/swGBvP/7HSM6vvzzIW4/wYejjg3WdUHOt6xBUXTqGG19Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FbkbjgxZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SQ1KRJsjG/omldJjB9CCf7zx1USGDDoTiGL8n7/gX3zx14y3lLNWhi7K13bjwcLjoCaXa09PawWwJOEO8IkW2z+rLGMdoI/x6NZ3bz2b+Ak2Js7WtQyYsYIE1t6vaZfLiLB0vVmAtEa3ZrlU3bXvsDvJRZkMap2WPOATq3n0Po0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xOipbgOt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FbkbjgxZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0D5E1F000E9;
-	Tue, 21 Jul 2026 22:15:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xOipbgOt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 745BE1F000E9;
+	Tue, 21 Jul 2026 22:15:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672142;
-	bh=i9EYSMSQstVlCCP3NeFkrZdUEHKPS8wdbI8q7xtXbLA=;
+	s=korg; t=1784672145;
+	bh=+zxQBgd97Yhk0iu3eThhpbZRfgM6U53XStrM4ogm4q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FbkbjgxZWPU78MDCxV/Zuhvsz+6/c4nfLgeUwSimGNFSYDKcCHUPHjqDSrfakqora
-	 TahT51O2OJIzjI55OBYvRb8+Fdoiyf54pYQmSICaoBdk45al6i4iHYgO6xdm9wANIr
-	 rUt7qc3szbZeXKCAqSgLpUCkwpWmBp28cn2wcIwM=
+	b=xOipbgOtcK53LYjETnKJy1qNgbd1lus/NtIArpE+kjg9Mbe8B+0Dk/W8WfIv6gtUu
+	 Vk+T80bG3OFqAe0zO+hVOneTmjAeUweJG2Whuj9iY/OXmiqLIcG04IW6ulbQmqMeGQ
+	 TYi4zrACJZMfLotcZ/KUbmBDDrMSvX4WXMXbqbXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Niklas Cassel <cassel@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Georgiy Osokin <g.osokin@auroraos.dev>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 513/843] ata: sata_gemini: unwind clocks on IDE pinctrl errors
-Date: Tue, 21 Jul 2026 17:22:28 +0200
-Message-ID: <20260721152417.571996898@linuxfoundation.org>
+Subject: [PATCH 5.15 514/843] HID: picolcd: prevent NULL pointer dereference in picolcd_send_and_wait()
+Date: Tue, 21 Jul 2026 17:22:29 +0200
+Message-ID: <20260721152417.594900733@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -54,45 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Georgiy Osokin <g.osokin@auroraos.dev>
 
-[ Upstream commit c0ace4130e813acbabdfaa28d4e94a849c2ffdd7 ]
+[ Upstream commit 0021eb09041f021c079be1022934a280f7f176c0 ]
 
-gemini_sata_bridge_init() prepares and enables both SATA PCLKs, then
-disables them again while keeping the clocks prepared for later bridge
-start and stop operations. If gemini_setup_ide_pins() fails after that,
-gemini_sata_probe() returns directly and skips the existing
-out_unprep_clk unwind path.
+In picolcd_send_and_wait(), an integer overflow of the signed loop counter
+'k' can theoretically lead to a NULL pointer dereference of 'raw_data'.
+If the loop executes more than INT_MAX times, 'k' becomes negative,
+making the condition 'k < size' true even when 'size' is 0.
 
-Route the IDE pinctrl failure through out_unprep_clk so the clocks
-prepared by gemini_sata_bridge_init() are unprepared before probe
-fails.
+Change the type of 'k' to 'unsigned int' to prevent the overflow and
+eliminate the out-of-bounds access.
 
-Fixes: d872ced29d5f ("ata: sata_gemini: Introduce explicit IDE pin control")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
+
+[jkosina@suse.com: extended hash length]
+Fixes: fabdbf2fd22fa17 ("HID: picoLCD: split driver code")
+Signed-off-by: Georgiy Osokin <g.osokin@auroraos.dev>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/sata_gemini.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-picolcd_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ata/sata_gemini.c b/drivers/ata/sata_gemini.c
-index 1564472fd5d509..5b7ffbc2e174c6 100644
---- a/drivers/ata/sata_gemini.c
-+++ b/drivers/ata/sata_gemini.c
-@@ -391,7 +391,7 @@ static int gemini_sata_probe(struct platform_device *pdev)
- 	if (sg->ide_pins) {
- 		ret = gemini_setup_ide_pins(dev);
- 		if (ret)
--			return ret;
-+			goto out_unprep_clk;
- 	}
+diff --git a/drivers/hid/hid-picolcd_core.c b/drivers/hid/hid-picolcd_core.c
+index bbda231a7ce303..ee0977a8e42e0d 100644
+--- a/drivers/hid/hid-picolcd_core.c
++++ b/drivers/hid/hid-picolcd_core.c
+@@ -72,7 +72,8 @@ struct picolcd_pending *picolcd_send_and_wait(struct hid_device *hdev,
+ 	struct picolcd_pending *work;
+ 	struct hid_report *report = picolcd_out_report(report_id, hdev);
+ 	unsigned long flags;
+-	int i, j, k;
++	int i, j;
++	unsigned int k;
  
- 	dev_info(dev, "set up the Gemini IDE/SATA nexus\n");
+ 	if (!report || !data)
+ 		return NULL;
 -- 
 2.53.0
 
