@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73318404BF6;
-	Tue, 21 Jul 2026 22:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA3E368D40;
+	Tue, 21 Jul 2026 22:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673326; cv=none; b=eykz3KrB9QF2VBvIPExFqMcYjn/AQb2YTt9ADnSWQA6kqsxzmVMq8qWg/tON4mciSoWwSpyroumxYTIutfGm8MjOSuu6Q0n1/AON0rDpgLSN1wXnjftt0qHVSItgJqygdnZDUK7F5iJxskXzrm11MD3LeM+VNxva/LaSSfiw/KY=
+	t=1784673329; cv=none; b=vF8FUPCnxwlYuRmFNZUJW+O5zxHNRfLLzK6U6e5fU0ye5/RGV1rWz+4GOemdcuvuFUNzheI07mMpuYyMHdcN65DZzwjRCuFLzKwmZiquYwPDhxfiipxhrJotWXTohzOS/FEPootWweV8BMEQKqzU9TKXeb9tRMVZyX2tJ6NWNKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673326; c=relaxed/simple;
-	bh=Lm6Qap8yHrfLXuMFeV9IzvSwYjsNM/7LqVqTQKPV9d4=;
+	s=arc-20240116; t=1784673329; c=relaxed/simple;
+	bh=eZ8jE3igTZEx5PpeHgsL6+TbPFAHDzLcr91icalN+yk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Asugmn6/znlFkCJ87GTzADFda3+WlU7quu9CagVmG87CYnOlvMCArD08AlVJbTUUoz8wDxa89IOAruyj7VxYk4Kxu+kpz3lpmzCbTtvEplHap0L2kC8lggdFMljT5Wuq3cbXSrRWcW5rAJGcPIoBc0XWhtBJ/7Yh1gM+CNS/TAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DllgggMB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lBWOgDmeKv/wwLiVCCZ6KPR+MrUs7bBoftb7VjqLPt+7FBsUoFmIy5IvR7ZkTsbPwlvHuHluaOUaDqbEsrIRyXTCDltNHWNx4eugwNw1HZ+xAIivPoNq0Gd/wOacfcTOBtWZMwPF5fxi4Ts5eZlpiK9swYvN/MD3v6+uywD/o/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDHcLXhf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DllgggMB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEEC1F000E9;
-	Tue, 21 Jul 2026 22:35:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDHcLXhf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9007C1F000E9;
+	Tue, 21 Jul 2026 22:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673325;
-	bh=0AFyP8+URNZ5ImKSRJdWnh7STreBoh8uUPGZ8hbP6NQ=;
+	s=korg; t=1784673328;
+	bh=He731H0IgTm0h/kHT2mzH2pHmuWAMr2lyHcJZ3lcEKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DllgggMBJM16bE48TuLCSsLF/AdOPg3MkA2XSQmQtXhaix3qdOMXf3xXsn3ZzxVLN
-	 XnZs7e6zud3yH9gpvPfXwIiXJjdhr/isZPd71wOOuztiIUnCwPsFya0kndBXtM09dX
-	 OwcH/5+NbDGjXAeV1gZQkIVAAXvEI+VtJs+wKntw=
+	b=CDHcLXhf9OBkp/vZ9udLdWRV9IF2mgMJZCQfjUpYiiYcCI0hWMtH2triN3nn4DM4u
+	 cp1b6wN1VrJ23vYI44Bj4TA9CS/a0Q5zW/CCS5cU+AVSzi5cc82eNuTt9cH59ARL7X
+	 qhSXMBtPTNWLNxVzorjUR+LTpTKOS3/OZv9YyXME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sangyun Kim <sangyun.kim@snu.ac.kr>,
-	Kyungwook Boo <bookyungwook@gmail.com>,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Maxwell Doose <m32285159@gmail.com>,
-	Vladimir Zapolskiy <vz@kernel.org>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 119/699] iio: adc: spear: Initialize completion before requesting IRQ
-Date: Tue, 21 Jul 2026 17:17:58 +0200
-Message-ID: <20260721152358.389923177@linuxfoundation.org>
+	syzbot+674ff7e4d7fdfd572afc@syzkaller.appspotmail.com,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.10 084/699] Bluetooth: fix UAF in bt_accept_dequeue()
+Date: Tue, 21 Jul 2026 17:17:23 +0200
+Message-ID: <20260721152357.599607213@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -56,79 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxwell Doose <m32285159@gmail.com>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit 3ee2128b6f0eb0be7b6cb8f6e0f1f113a65201a0 ]
+commit 4bd0b274054f2679f28b70222b607bb0afc3ab9a upstream.
 
-In the report from Jaeyoung Chung:
+bt_accept_get() takes a temporary reference before dropping the accept
+queue lock. bt_accept_dequeue() currently drops that reference before
+bt_accept_unlink(), leaving only the queue reference.
 
-"spear_adc_probe() in drivers/iio/adc/spear_adc.c registers its
-interrupt handler with devm_request_irq() before it initializes
-st->completion with init_completion(). If an interrupt arrives after
-devm_request_irq() and before init_completion(), the handler calls
-complete() on an uninitialized completion, causing a kernel panic.
+bt_accept_unlink() drops the queue reference. The subsequent
+sock_hold() therefore accesses freed memory if it was the final
+reference, as observed by KASAN during listening L2CAP socket cleanup.
 
-The probe path, in spear_adc_probe():
+Retain the temporary queue-walk reference through unlink and hand it to
+the caller on success. Drop it explicitly on the closed and
+not-yet-connected paths.
 
-    iodev = devm_iio_device_alloc(&pdev->dev, sizeof(*st)); /* st kzalloc-zeroed */
-    ...
-    retval = devm_request_irq(&pdev->dev, irq, spear_adc_isr, 0,
-                              LPC32XXAD_NAME, st);           /* register handler */
-    ...
-    init_completion(&st->completion);                       /* initialize completion */
-
-spear_adc_isr() calls complete():
-
-    complete(&st->completion);
-
-If the device raises an interrupt before init_completion() runs,
-complete() acquires the uninitialized wait.lock and walks the zeroed
-task_list in swake_up_locked(). The zeroed task_list makes list_empty()
-return false, so swake_up_locked() dereferences a NULL list entry,
-triggering a KASAN wild-memory-access."
-
-Fix the chance of a spurious IRQ causing an uninitialized pointer
-dereference by moving init_completion() above devm_request_irq().
-
-Fixes: b586e5d9eee0 ("staging:iio:adc:spear rename device specific state structure to _state")
-Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
-Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Closes: https://lore.kernel.org/linux-iio/20260610115700.774689-1-jjy600901@snu.ac.kr/
-Signed-off-by: Maxwell Doose <m32285159@gmail.com>
-Reviewed-by: Vladimir Zapolskiy <vz@kernel.org>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
-Signed-off-by: Maxwell Doose <m32285159@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ab1513597c6c ("Bluetooth: fix UAF in l2cap_sock_cleanup_listen() vs l2cap_conn_del()")
+Reported-by: syzbot+674ff7e4d7fdfd572afc@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=674ff7e4d7fdfd572afc
+Cc: stable@vger.kernel.org
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/spear_adc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/af_bluetooth.c |   17 +++--------------
+ net/bluetooth/l2cap_sock.c   |    4 ++--
+ 2 files changed, 5 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/iio/adc/spear_adc.c b/drivers/iio/adc/spear_adc.c
-index 4d4aff88aa6ceb..12e0811a47b71a 100644
---- a/drivers/iio/adc/spear_adc.c
-+++ b/drivers/iio/adc/spear_adc.c
-@@ -274,6 +274,8 @@ static int spear_adc_probe(struct platform_device *pdev)
- 	st = iio_priv(indio_dev);
- 	st->np = np;
+--- a/net/bluetooth/af_bluetooth.c
++++ b/net/bluetooth/af_bluetooth.c
+@@ -281,7 +281,7 @@ struct sock *bt_accept_dequeue(struct so
  
-+	init_completion(&st->completion);
-+
- 	/*
- 	 * SPEAr600 has a different register layout than other SPEAr SoC's
- 	 * (e.g. SPEAr3xx). Let's provide two register base addresses
-@@ -334,8 +336,6 @@ static int spear_adc_probe(struct platform_device *pdev)
+ restart:
+ 	for (sk = bt_accept_get(parent, NULL); sk; sk = next) {
+-		/* Prevent early freeing of sk due to unlink and sock_kill */
++		/* The reference from bt_accept_get() keeps sk alive. */
+ 		lock_sock(sk);
  
- 	platform_set_drvdata(pdev, indio_dev);
+ 		/* Check sk has not already been unlinked via
+@@ -297,13 +297,11 @@ restart:
  
--	init_completion(&st->completion);
+ 		next = bt_accept_get(parent, sk);
+ 
+-		/* sk is safely in the parent list so reduce reference count */
+-		sock_put(sk);
 -
- 	indio_dev->name = SPEAR_ADC_MOD_NAME;
- 	indio_dev->info = &spear_adc_info;
- 	indio_dev->modes = INDIO_DIRECT_MODE;
--- 
-2.53.0
-
+ 		/* FIXME: Is this check still needed */
+ 		if (sk->sk_state == BT_CLOSED) {
+ 			bt_accept_unlink(sk);
+ 			release_sock(sk);
++			sock_put(sk);
+ 			continue;
+ 		}
+ 
+@@ -313,16 +311,6 @@ restart:
+ 			if (newsock)
+ 				sock_graft(sk, newsock);
+ 
+-			/* Hand the caller a reference taken while sk is
+-			 * still locked.  bt_accept_unlink() just dropped
+-			 * the accept-queue reference; without this hold a
+-			 * concurrent teardown (e.g. l2cap_conn_del() ->
+-			 * l2cap_sock_kill()) could free sk between
+-			 * release_sock() and the caller using it.  Every
+-			 * caller drops this with sock_put() when done.
+-			 */
+-			sock_hold(sk);
+-
+ 			release_sock(sk);
+ 			if (next)
+ 				sock_put(next);
+@@ -330,6 +318,7 @@ restart:
+ 		}
+ 
+ 		release_sock(sk);
++		sock_put(sk);
+ 	}
+ 
+ 	return NULL;
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1420,8 +1420,8 @@ static void l2cap_sock_cleanup_listen(st
+ 
+ 	/* Close not yet accepted channels.
+ 	 *
+-	 * bt_accept_dequeue() now returns sk with an extra reference held
+-	 * (taken while sk was still locked) so a concurrent l2cap_conn_del()
++	 * bt_accept_dequeue() returns sk with its temporary queue-walk
++	 * reference held, so a concurrent l2cap_conn_del()
+ 	 * -> l2cap_sock_kill() cannot free sk under us.
+ 	 *
+ 	 * cleanup_listen() runs under the parent sk lock, so unlike
 
 
