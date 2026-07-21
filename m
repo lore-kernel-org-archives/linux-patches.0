@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCD13346A6;
-	Tue, 21 Jul 2026 17:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B603672BA;
+	Tue, 21 Jul 2026 17:41:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655674; cv=none; b=udfN4Y+E6KrzeRHZVbWgi8qlgswQ14/JR/Y7N7lgmVwlPcp3H7iAWujO9jiX6QWt0M++kdAn2tdmdKRq9BWFPKxcqbSvILn4r9L580SZ9tJ0GN/eX0zi9heXBSgh8hiLLv0CqAAmf6U6q2Ci19zwAA33E6iA86rwCN3FxBZQM7I=
+	t=1784655677; cv=none; b=j80bGUR2MQbXrlIB5780FkcO2rqByplsuZ9Skfc3NJT0BC1oYey36D/lIDJ/JNnC+UCBmqjRp/GKNgq8bNBollhQF0Cp5uLqxvXWT7FLiB3c4wOJQZUDArs01PywN5xqPnwKRV211IxahVZccWG9M3CvwbMNeaottrNUGzmmSPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655674; c=relaxed/simple;
-	bh=+tr/ZDz4XzRkoCNbsNkVcnJWwvrh7pkE8gkmfQrXy7U=;
+	s=arc-20240116; t=1784655677; c=relaxed/simple;
+	bh=d+b+aQP3UZue+sJOw1oX59/N3Kx2KJ2jzOW0RYN8KC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L2BXEjyBxAnN50zUbIXZTitJhwtIhmVlOllMiVgGGSW8350VjBUqDA8Ne7msY/efz9Uz5F9aRAfLuEa5rpALbEL3LDCWslnIxIjOy6CDFrLAcZ5iS7x9d4OS4YwfKG9q28qd6uB4GG2OHNpVkaLbP5dMkLIWwZWaxYWZDPPcUKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUmDXhcs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qkHohC2WQIHBYvDGvagxFfvRV5bbcMMfG1p8xuaS8m+VzSz26/8Z+UemWktGN/THNFlYE4NU5WPHDUgWe1dYBMfPYhvi+PT7zLAh/JgH0NLBdeMgDyUtsg4IFF5GrvNQ5iVfBzHGDrGsCWD8Ag9LVvjgOjCrQwhL6vIWf1Mot2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1SPnCt1S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUmDXhcs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B0E31F000E9;
-	Tue, 21 Jul 2026 17:41:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1SPnCt1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385071F000E9;
+	Tue, 21 Jul 2026 17:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655673;
-	bh=iKwuEKcU95Q1Z6FBNUM7M79LwJEQT3hT9J7gQ3gbHQs=;
+	s=korg; t=1784655675;
+	bh=zLYDj1lVi//kR25S1Ma4SRYAYyitkLvlnpQl6S/8gHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QUmDXhcsr3r59RnOMsj8GvfOk6u94m4EuriIK1wMzDmoaMz3LkYDD1+9ykvRVHWik
-	 PCEpT+mOPTSAq6sVdiQgnMirEWBZMkZgSJX1YDIKEWnpPQrrgEQvGViX+z0ew1vPM3
-	 9R66sxToN+iZmzhOZzyAXN0r11oABBa27NHh7Bmg=
+	b=1SPnCt1Sim15RbrHV6uyIgAr9eyDOgkFCQZbxR7FHvRinKSPvIQlvtMrJwhnz5CyF
+	 lJV8c/fqJBcl9h4pZTN1yaS7NSEfN4XjFJxEi9xwSc049VBKm9eyrNtPpK9/lkJrEb
+	 Wg6z9SEWJdgF8VAECuNlAV8/mg+qPOt11M8+niLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Li Daming <d4n.for.sec@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 0054/1611] afs: Fix uncancelled rxrpc OOB message handler
-Date: Tue, 21 Jul 2026 17:02:50 +0200
-Message-ID: <20260721152516.040460301@linuxfoundation.org>
+	syzbot+42525d636f430fd5d983@syzkaller.appspotmail.com,
+	Ian Bridges <icb@fastmail.org>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.18 0055/1611] fbcon: fix NULL pointer dereference for a console without vc_data
+Date: Tue, 21 Jul 2026 17:02:51 +0200
+Message-ID: <20260721152516.063158007@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -57,70 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Ian Bridges <icb@fastmail.org>
 
-commit a4057e58b07005d0fe0491bdbf1868c1491909ee upstream.
+commit 5fae9a928482d4845bca169a3a098789203a1ca4 upstream.
 
-Fix AFS to cancel its OOB message processing (typically to respond to
-security challenges).  Also move OOB message processing to afs_wq so that
-it's also waited for and make the OOB handler just return if the net
-namespace is no longer live.
+fbcon_new_modelist() runs when a framebuffer's modelist changes. For each
+console mapped to it with fb_display[i].mode set, it reads vc_cons[i].d and
+passes the vc_num to fbcon_set_disp(). This assumes a console with a mode
+set has a vc_data, but it can be NULL. fbcon_set_disp() sets
+fb_display[i].mode before it checks vc_data, and fbcon_deinit() leaves the
+mode set after the vc_data is freed. fbcon_new_modelist() then dereferences
+the NULL vc_data.
 
-Fixes: 5800b1cf3fd8 ("rxrpc: Allow CHALLENGEs to the passed to the app for a RESPONSE")
-Link: https://sashiko.dev/#/patchset/20260609140911.838677-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Li Daming <d4n.for.sec@gmail.com>
-cc: Ren Wei <n05ec@lzu.edu.cn>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260624163819.3017002-6-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Keep fb_display[i].mode set only while the console has a vc_data. Check
+vc_data before setting the mode in fbcon_set_disp(), and clear the mode in
+fbcon_deinit(). The existing mode check in fbcon_new_modelist() then skips
+such consoles.
+
+Reported-by: syzbot+42525d636f430fd5d983@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=42525d636f430fd5d983
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/cm_security.c |    3 ++-
- fs/afs/rxrpc.c       |    5 ++++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/core/fbcon.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/fs/afs/cm_security.c
-+++ b/fs/afs/cm_security.c
-@@ -101,7 +101,8 @@ void afs_process_oob_queue(struct work_s
- 	struct sk_buff *oob;
- 	enum rxrpc_oob_type type;
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -1205,6 +1205,7 @@ static void fbcon_deinit(struct vc_data
+ 	int idx;
  
--	while ((oob = rxrpc_kernel_dequeue_oob(net->socket, &type))) {
-+	while (READ_ONCE(net->live) &&
-+	       (oob = rxrpc_kernel_dequeue_oob(net->socket, &type))) {
- 		switch (type) {
- 		case RXRPC_OOB_CHALLENGE:
- 			afs_respond_to_challenge(oob);
---- a/fs/afs/rxrpc.c
-+++ b/fs/afs/rxrpc.c
-@@ -128,6 +128,7 @@ void afs_close_socket(struct afs_net *ne
- 	_enter("");
+ 	fbcon_free_font(p);
++	p->mode = NULL;
+ 	idx = con2fb_map[vc->vc_num];
  
- 	cancel_work_sync(&net->charge_preallocation_work);
-+	cancel_work_sync(&net->rx_oob_work);
- 	/* Future work items should now see ->live is false. */
+ 	if (idx == -1)
+@@ -1375,14 +1376,14 @@ static void fbcon_set_disp(struct fb_inf
  
- 	kernel_listen(net->socket, 0);
-@@ -148,6 +149,7 @@ void afs_close_socket(struct afs_net *ne
+ 	p = &fb_display[unit];
  
- 	kernel_sock_shutdown(net->socket, SHUT_RDWR);
- 	flush_workqueue(afs_async_calls);
-+	cancel_work_sync(&net->rx_oob_work);
- 	net->socket->sk->sk_user_data = NULL;
- 	sock_release(net->socket);
- 	key_put(net->fs_cm_token_key);
-@@ -989,5 +991,6 @@ static void afs_rx_notify_oob(struct soc
- {
- 	struct afs_net *net = sk->sk_user_data;
+-	if (var_to_display(p, var, info))
+-		return;
+-
+ 	vc = vc_cons[unit].d;
  
--	schedule_work(&net->rx_oob_work);
-+	if (READ_ONCE(net->live))
-+		queue_work(afs_wq, &net->rx_oob_work);
- }
+ 	if (!vc)
+ 		return;
+ 
++	if (var_to_display(p, var, info))
++		return;
++
+ 	default_mode = vc->vc_display_fg;
+ 	svc = *default_mode;
+ 	t = &fb_display[svc->vc_num];
 
 
