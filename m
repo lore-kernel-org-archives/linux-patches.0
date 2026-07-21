@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF00639B4A2;
-	Tue, 21 Jul 2026 17:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 477EB175A74;
+	Tue, 21 Jul 2026 17:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655477; cv=none; b=cHkHaNKj2XpeZk+pn8pVFzktvYSQg0nBT48QON38+9VGa9JQjVzG92KlECa9tOQTlFf6pJMS4PjcsAI12p5U/Rd5LV1OIYFdX7g5NGVaaCy50eBvY2cjwDaYPSeuJRDDHguGjUlBhFg+wJiOJgxDLWhOFDLOelGhuY0WDyrXNcs=
+	t=1784655479; cv=none; b=Z4Z0y5Bdaezql0no3J6FpHSA7WKevNPbm7FSXUZhp6kJXjezvhukS80DMfp/S/B3uNWloMjI7p14V0duJC7OPhe4DgRBAUe8P8FfXIdF+GK4Gy/E11UJ22zFXFNfoY/oDt1GAecBiMZb8vsww3uAmtLSHmZSDbDZwOFnlYZGzPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655477; c=relaxed/simple;
-	bh=UEswJrzz8aYqOqXiIj/3f9Y1ceeVvc07YsZNT+vxZhw=;
+	s=arc-20240116; t=1784655479; c=relaxed/simple;
+	bh=kximmQ6OYRE3NWAwrfvdKRo8/LBdb04hOcl/ZhxG2qY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXGHqTYB+3QlZfxMg5Ipmx1oiQdy843rTDNAt7rArEkmGE1xM08/6ove2925kgfhX0BoN2yypzkqWSRp8yUeY7JJoUfBaXbhAdS2MVDTQgq0hEbxnjZbbOqaoUNgzcQAvF8aZp44DfewEpimXFKR72uyCcURM2Ubi6Vr8pVazhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUu/a+9H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XxknJTCsqKX85udTPPsnW38BCjVFjjAxFjq/PLbJk3fd7joA427QlzYDvJbp5EC8GGVhb8IHgIL5npcoLygwNGMhasfHnblp1f2laOBrvz7IBeOWdH85ylNuEw0UQbTUGV+wFv1jBJBJ4Re55uBA+6xZCinx+M7F/uHLSTcXLVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=thn5d4mS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUu/a+9H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5BD1F000E9;
-	Tue, 21 Jul 2026 17:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thn5d4mS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7B71F000E9;
+	Tue, 21 Jul 2026 17:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655475;
-	bh=+3FSj1T84JRjNkHI7rbfBerdIVmte6hjxWK7QvOsSBk=;
+	s=korg; t=1784655478;
+	bh=rT+xfA5wpe8uroX0bsXx0vnPNZy0s8pVgq64bSeBcpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aUu/a+9HdUNdFjDhEc3dey67cyuftvdp+QAlFvxWP9Et+9CPlo4HtdVOHbs0ALhlv
-	 29EnL8cFiM33VO3Ulq0cB2m3KYkrW8KJogluYghpjHMt5AWE3Hac29rHCen3Las/uQ
-	 EJZZzFu8Vevmxy9orHqR+kIAleBoGr5wlcDpZfq8=
+	b=thn5d4mSAOvOr8BwSaWgxHTQH/L4+lDTFw3KSCTB3pFssK6dYctLibuJxjwEVjju6
+	 3E7uV+UYgwdjfqbaoLs5rCOsBwDSZrE7qWPD1dXLWortlChHTN1DOieg8X+h3D0o/P
+	 VkifyYH8Z9XoVQZgR6Jbh2QFv7Lz0xp/ZhZ5TiXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
+	Damien Laine <damien.laine@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 0023/1611] ALSA: hda: Fix cached processing coefficient verbs
-Date: Tue, 21 Jul 2026 17:02:19 +0200
-Message-ID: <20260721152515.321630174@linuxfoundation.org>
+Subject: [PATCH 6.18 0024/1611] ALSA: hda/realtek: Fix speakers on Legion Pro 7 16ARX8H with codec SSID 17aa:38a7
+Date: Tue, 21 Jul 2026 17:02:20 +0200
+Message-ID: <20260721152515.346485156@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,58 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Damien Laine <damien.laine@gmail.com>
 
-commit f67be28fdf8b5d31ac1cc1152bb17250f9f8f513 upstream.
+commit d35dfb6329accfe1cfa0b57e35214b5cbbe0f9ae upstream.
 
-Intel HD Audio defines Coefficient Index and Processing Coefficient as
-separate audio widget controls in the Audio Widget Verb Definitions:
-Coefficient Index selects the coefficient slot, while Processing
-Coefficient accesses the value at the selected slot.
+Some units of the Lenovo Legion Pro 7 16ARX8H (82WS) report codec
+subsystem ID 17aa:38a7 instead of 17aa:38a8. Since only 38a8 has a
+codec SSID quirk, these machines fall through to the PCI SSID match
+17aa:386f (Legion Pro 7i 16IAX7) and get ALC287_FIXUP_CS35L41_I2C_2,
+which probes the Cirrus amplifiers of the Intel variant. The TI
+TAS2781 amplifier (ACPI TIAS2781:00) present on this AMD variant is
+never bound and the internal speakers remain silent.
 
-hda_reg_read_coef() selects the slot with AC_VERB_SET_COEF_INDEX, but
-then uses AC_VERB_GET_COEF_INDEX for the value read.  That reads back the
-selected index instead of the coefficient value.  hda_reg_write_coef()
-has the same issue and builds the value write from AC_VERB_GET_COEF_INDEX
-instead of AC_VERB_SET_PROC_COEF.
+Add a codec SSID quirk for 17aa:38a7 pointing to
+ALC287_FIXUP_TAS2781_I2C, mirroring the existing 38a8 entry.
 
-This only affects the regmap coefficient cache path used by codecs that
-set codec->cache_coef.  Direct coefficient helpers already use the normal
-SET_COEF_INDEX followed by GET_PROC_COEF or SET_PROC_COEF sequence, which
-is likely why this has not been noticed widely.
+Tested on a Legion Pro 7 16ARX8H (82WS, BIOS LPCN62WW): with the codec
+SSID overridden to 17aa:38a8 via the HDA patch loader, the TAS2781
+amplifier binds and the internal speakers work.
 
-Use AC_VERB_GET_PROC_COEF for cached coefficient reads and
-AC_VERB_SET_PROC_COEF for cached coefficient writes.
-
-Fixes: 40ba66a702b8 ("ALSA: hda - Add cache support for COEF read/write")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/DB9023BF2920BA99+20260707132419.1731342-1-raoxu@uniontech.com
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Damien Laine <damien.laine@gmail.com>
+Link: https://patch.msgid.link/20260712213708.1835469-1-damien.laine@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/core/regmap.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/hda/codecs/realtek/alc269.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/hda/core/regmap.c
-+++ b/sound/hda/core/regmap.c
-@@ -214,7 +214,7 @@ static int hda_reg_read_coef(struct hdac
- 	err = snd_hdac_exec_verb(codec, verb, 0, NULL);
- 	if (err < 0)
- 		return err;
--	verb = (reg & ~0xfffff) | (AC_VERB_GET_COEF_INDEX << 8);
-+	verb = (reg & ~0xfffff) | (AC_VERB_GET_PROC_COEF << 8);
- 	return snd_hdac_exec_verb(codec, verb, 0, val);
- }
- 
-@@ -232,7 +232,7 @@ static int hda_reg_write_coef(struct hda
- 	err = snd_hdac_exec_verb(codec, verb, 0, NULL);
- 	if (err < 0)
- 		return err;
--	verb = (reg & ~0xfffff) | (AC_VERB_GET_COEF_INDEX << 8) |
-+	verb = (reg & ~0xfffff) | (AC_VERB_SET_PROC_COEF << 8) |
- 		(val & 0xffff);
- 	return snd_hdac_exec_verb(codec, verb, 0, NULL);
- }
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7435,6 +7435,7 @@ static const struct hda_quirk alc269_fix
+ 	HDA_CODEC_QUIRK(0x17aa, 0x386e, "Legion Y9000X 2022 IAH7", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x386e, "Yoga Pro 7 14ARP8", ALC285_FIXUP_SPEAKER2_TO_DAC1),
+ 	HDA_CODEC_QUIRK(0x17aa, 0x38a8, "Legion Pro 7 16ARX8H", ALC287_FIXUP_TAS2781_I2C), /* this must match before PCI SSID 17aa:386f below */
++	HDA_CODEC_QUIRK(0x17aa, 0x38a7, "Legion Pro 7 16ARX8H", ALC287_FIXUP_TAS2781_I2C), /* this must match before PCI SSID 17aa:386f below */
+ 	SND_PCI_QUIRK(0x17aa, 0x386f, "Legion Pro 7i 16IAX7", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x3870, "Lenovo Yoga 7 14ARB7", ALC287_FIXUP_YOGA7_14ARB7_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3877, "Lenovo Legion 7 Slim 16ARHA7", ALC287_FIXUP_CS35L41_I2C_2),
 
 
