@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D333F12CE;
-	Tue, 21 Jul 2026 17:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593773D3321;
+	Tue, 21 Jul 2026 17:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654731; cv=none; b=pDCAb4sdH4KBZPcBWlRkr8HAisHaaemFlrbfLjnV66CGbt0FgCHUGIf03FdyVAWlzQX+waErz/Dne3Md3UUXFi7Z/IaPHq9wm1ivgoe9UKRpXyL9pdJT5Y6mA1wPjAiZrbQ3Od/AQFOk19Aj0MspMJ+q6rE9dAB1wdUytd6xF2A=
+	t=1784654734; cv=none; b=tE5HuqdeX7to3OvuVz0dxLme+kTCqq2FEgHT78R+aplkmewF9erEdcBt0aX1lUyb8fhD6CghtaXemAADRMGUdK/whpQb4HWMbMp+2s1SYIGbmkuh35svTUp+sPrA0K+emAT6bsKtoF1HAADRGlhCTzu/1Ji6sZQs9GaD2W/op/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654731; c=relaxed/simple;
-	bh=Sxn6ENhuHV01lBmL2wXzxz8mw5j9kHyOaJeA9C6RaTo=;
+	s=arc-20240116; t=1784654734; c=relaxed/simple;
+	bh=VilFUno4bLgeaypHjmYEKcsGvyNewgZhGyeNWtJVlas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R/n3iF5kJGZxCqKl/c05DPP1Y+nAAKnBdA3Ur/Jih/cVyFXcI/ZXzB6pJenCCizM6k68rgy+ZO/Vo72doZDhwOwSx9Qnz1YgWpTEzzZW6uzuWvGMNbOln4zlSh3kltTcd2SrGwXPIxc0K1FEmqcjjp9i2YK3zIcEuC36z7bYgLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Y6n3xBm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aJjyJAshZRoCKcPlMJlLt3CZjTuzHxKOm5CFHsCryZR4pdm8+rLc+eDg5Mnd3HteyWogC9aHIlgQ0LTy9xlzGcKCWDsTKM3AgJ0WZiTa22QH5F9SVCkbrqdoxh2ezvwur2xWEWLv8UItaJwApmSr+os457gqz3BJhMaTZovSTkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tp9L45Tw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Y6n3xBm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293F91F00A3A;
-	Tue, 21 Jul 2026 17:25:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tp9L45Tw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC951F000E9;
+	Tue, 21 Jul 2026 17:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654730;
-	bh=h6mWzSKCMOX/JBElgMNh0VCqbKvF4Nsfd+LrwMyLdY4=;
+	s=korg; t=1784654733;
+	bh=ompKkpgKhFI7+Sb0gzQ526vqL/vG8DjX69j2oIyThQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Y6n3xBmjJiOZO/yAqFfQBydw2xL+8upUxwNTh84/zrKlIYW9P951DyrqB03YI3AG
-	 nrseM5p6cB6KoZ/WHxdDIgG83FdNzswKScBvtJDOTqBs1jp/tmi5S4NBryNHPmmK87
-	 dombWd8dWvUVtKnIlsmi7U0xT7OIkXT7ZHNnIP0U=
+	b=Tp9L45Tw31UV0r3Oo8jo0VERwmCQqwGdoZScMeQVSZLGzeqxaLd4nU7zOjHCAlxdt
+	 axox50Yht1hSWpRArQa2ejJTz5WPSW4KE6TEXH2HP9efbWFHKRFcOGpuLdsRXIeMKS
+	 HtievhJu0MyNTn5GQPqRl4770h2fII3Jq7m6s0xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Dmitry Safonov <dima@arista.com>,
-	Qihang <q.h.hack.winter@gmail.com>,
-	Dmitry Safonov <0x7f454c46@gmail.com>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Joe Damato <joe@dama.to>,
+	Samiullah Khawaja <skhawaja@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 1799/2077] tcp: defer md5sig_info kfree past RCU grace period in tcp_connect
-Date: Tue, 21 Jul 2026 17:24:32 +0200
-Message-ID: <20260721152635.178693170@linuxfoundation.org>
+Subject: [PATCH 7.1 1817/2077] netdev-genl: report NAPI thread PID in the callers pid namespace
+Date: Tue, 21 Jul 2026 17:24:50 +0200
+Message-ID: <20260721152635.602966580@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,123 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit b74cd55038905d5e74c1de109ab78a30b2ea0e1f upstream.
+commit 1f24c0d01db214c9e661915e9972404c96ca73c0 upstream.
 
-The md5+ao reconciliation in tcp_connect() (net/ipv4/tcp_output.c)
-has two symmetric branches:
+netdev_nl_napi_fill_one() reports the NAPI kthread PID in NETDEV_A_NAPI_PID
+using task_pid_nr(), which returns the PID in the initial pid namespace.
 
-	if (needs_md5) {
-		tcp_ao_destroy_sock(sk, false);
-	} else if (needs_ao) {
-		tcp_clear_md5_list(sk);
-		kfree(rcu_replace_pointer(tp->md5sig_info, NULL, ...));
-	}
+NETDEV_CMD_NAPI_GET does not have GENL_ADMIN_PERM and the netdev genl family
+is netnsok, so a caller in a child pid namespace can issue it. That caller
+then sees the kthread's global PID, even though the kthread is not visible
+in its pid namespace, where the value should be 0.
 
-Both branches free a per-socket auth-info object while the socket is
-in TCP_SYN_SENT and is already on the inet ehash (inserted by
-inet_hash_connect() in tcp_v4_connect()). Both branches are reachable
-by softirq RX-path readers that load the corresponding info pointer
-via implicit RCU before bh_lock_sock_nested() is taken.
+Translate the PID through the caller's pid namespace, the same way commit
+3799c2570982 ("io_uring/fdinfo: translate SqThread PID through caller's
+pid_ns") did for the io_uring SQPOLL thread. The doit and dumpit paths both
+run synchronously in the caller's context, so task_active_pid_ns(current) is
+the caller's pid namespace.
 
-The needs_md5 branch is fixed in the prior patch by re-introducing
-the call_rcu() free in tcp_ao_destroy_sock(): the equivalent per-key
-loop runs inside tcp_ao_info_free_rcu(), the RCU callback, so by the
-time it frees each tcp_ao_key all softirq readers that captured the
-container have already completed rcu_read_unlock().
-
-The needs_ao branch is not symmetric in the same way. The container
-free can be deferred via kfree_rcu(md5sig, rcu) -- struct
-tcp_md5sig_info already has the required rcu member
-(include/net/tcp.h:1999-2002), and the rest of the tree already does
-this in the tcp_md5sig_info_add() rollback paths
-(net/ipv4/tcp_ipv4.c:1410, 1436). But the per-key teardown is done
-by tcp_clear_md5_list() in process context BEFORE the container's
-RCU grace period: it walks &md5sig->head and frees each
-tcp_md5sig_key with bare hlist_del + kfree. A concurrent softirq
-reader in __tcp_md5_do_lookup() / __tcp_md5_do_lookup_exact()
-(tcp_ipv4.c:1253, 1298) walks the same list via
-hlist_for_each_entry_rcu() and races with that bare kfree on the
-keys themselves -- a per-key slab use-after-free of the same class
-as the TCP-AO bug, on the same race window.
-
-Fix this in two halves:
-
-  1. Convert the bare kfree() in tcp_connect() to kfree_rcu() so the
-     md5sig_info container joins the rest of the md5sig lifecycle.
-     The local-variable lift is mechanical and required because
-     kfree_rcu() is a macro that expects an lvalue.
-
-  2. Make tcp_clear_md5_list() RCU-safe by replacing hlist_del +
-     kfree(key) with hlist_del_rcu + kfree_rcu(key, rcu). struct
-     tcp_md5sig_key already carries the rcu member
-     (include/net/tcp.h:1995) and tcp_md5_do_del()
-     (net/ipv4/tcp_ipv4.c:1456) already uses kfree_rcu, so this
-     restores the lifecycle invariant the rest of the file follows
-     rather than introducing a one-off.
-
-The other caller of tcp_clear_md5_list() is tcp_md5_destruct_sock()
-(net/ipv4/tcp.c:412), which runs from the sock destructor when the
-socket is already unhashed and unreachable; the extra grace period
-there is unnecessary but harmless. Making the helper unconditionally
-RCU-safe is the cleaner contract.
-
-The needs_ao branch is not reachable by the userns reproducer used
-to demonstrate the AO-side splat (the repro installs both keys but
-ends up in the needs_md5 branch because the connect peer matches
-the MD5 key, not the AO key); however the symmetric race exists
-and a maintainer touching this code should not have to think about
-which branch escapes RCU and which one does not.
-
-Fixes: 51e547e8c89c ("tcp: Free TCP-AO/TCP-MD5 info/keys without RCU")
-Cc: stable@vger.kernel.org # v6.18+
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Dmitry Safonov <dima@arista.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-[also credits to Qihang, who found that this races with tcp-diag]
-Reported-by: Qihang <q.h.hack.winter@gmail.com>
-Signed-off-by: Dmitry Safonov <0x7f454c46@gmail.com>
-Link: https://patch.msgid.link/20260625-tcp-md5-connect-v3-2-1fd313d6c1e0@gmail.com
+Fixes: db4704f4e4df ("netdev-genl: Add PID for the NAPI thread")
+Cc: stable@vger.kernel.org
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Joe Damato <joe@dama.to>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Link: https://patch.msgid.link/20260615171736.1709318-1-maoyixie.tju@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_ipv4.c   |    4 ++--
- net/ipv4/tcp_output.c |    8 ++++++--
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ net/core/netdev-genl.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -1467,9 +1467,9 @@ void tcp_clear_md5_list(struct sock *sk)
- 	md5sig = rcu_dereference_protected(tp->md5sig_info, 1);
+--- a/net/core/netdev-genl.c
++++ b/net/core/netdev-genl.c
+@@ -2,6 +2,7 @@
  
- 	hlist_for_each_entry_safe(key, n, &md5sig->head, node) {
--		hlist_del(&key->node);
-+		hlist_del_rcu(&key->node);
- 		atomic_sub(sizeof(*key), &sk->sk_omem_alloc);
--		kfree(key);
-+		kfree_rcu(key, rcu);
- 	}
- }
+ #include <linux/netdevice.h>
+ #include <linux/notifier.h>
++#include <linux/pid_namespace.h>
+ #include <linux/rtnetlink.h>
+ #include <net/busy_poll.h>
+ #include <net/net_namespace.h>
+@@ -189,7 +190,8 @@ netdev_nl_napi_fill_one(struct sk_buff *
+ 		goto nla_put_failure;
  
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -4328,9 +4328,13 @@ int tcp_connect(struct sock *sk)
- 		if (needs_md5) {
- 			tcp_ao_destroy_sock(sk, false);
- 		} else if (needs_ao) {
-+			struct tcp_md5sig_info *md5sig;
-+
- 			tcp_clear_md5_list(sk);
--			kfree(rcu_replace_pointer(tp->md5sig_info, NULL,
--						  lockdep_sock_is_held(sk)));
-+			md5sig = rcu_replace_pointer(tp->md5sig_info, NULL,
-+						     lockdep_sock_is_held(sk));
-+			if (md5sig)
-+				kfree_rcu(md5sig, rcu);
- 		}
+ 	if (napi->thread) {
+-		pid = task_pid_nr(napi->thread);
++		pid = task_pid_nr_ns(napi->thread,
++				     task_active_pid_ns(current));
+ 		if (nla_put_u32(rsp, NETDEV_A_NAPI_PID, pid))
+ 			goto nla_put_failure;
  	}
- #endif
 
 
