@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BC247124C;
-	Tue, 21 Jul 2026 18:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD1F47126E;
+	Tue, 21 Jul 2026 18:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657214; cv=none; b=AeVkEOCek99iAj12x4AhTXPlmOAyFgxpMSVJiMkF3eTx5d0Cu5fHrm3AFo7/dYLVkrqjwkEWLqZUPXOehdUOFEpw4Cwfh6Hk2TmwW8mRt9qPo99c5qdSpeO5p6wzO6P8ljkw/TdYfj3G9wV/M6rry8dzx6apSNojr0GuXVD5DCQ=
+	t=1784657217; cv=none; b=Yh1lKheEzcS7nnmQEOU2MpzwrMxP4cCzdwzLZ+KJbptq4suLVGhvppxkXP7lTCY1/787+mkRyzgAdm62zs4wJ5tdgJ5RicsytI2mQj4dcqgfvHDTsTCphkuiITh5kq9w7KVJwrRELThfS+/bzb7ZeqLzvfoVw9lAk3zsWILyCYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657214; c=relaxed/simple;
-	bh=sq+p2/IQmU/+X+Wbmw3HS/4tqMCDqtM3MFAkLz0UJUE=;
+	s=arc-20240116; t=1784657217; c=relaxed/simple;
+	bh=HU9lQkfxQHzZEN0UB0KTWbH3u07Q7QmJCtOR2aRUCTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=us1KcqXFHWAXVSQ+wuSiIuDWEiJ+cZeqPglTsjs6SIf0q815oQICdguv1somOaobx5ERxhodWIy1FybiKoo5PgHNCq6GzIshu/2jdbbED7NWmOoJ5kXbgfxi6BeQvMsWQCqWpANYoEGmEERbmth0vj/S3SAvECP7Kd7cDPyDmZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgTbW22E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=shS+wiexbzvjfKcMQKm4sjVydCoCC1feCohnvJbUCagXo6G/krDVDPHQylNQ9OdaURQm0qfg/fy+hs15ytf6a7Olapu2svtaJCcioHg8kVFz0TbQXQQ9ukMf0Pkqj2wJLeJ/Giy+lArUtKcExgRnJiDZ2mLzxXTCXnlSWxTKuIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kp7qEdMG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgTbW22E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C1231F000E9;
-	Tue, 21 Jul 2026 18:06:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kp7qEdMG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A5A1F00A3A;
+	Tue, 21 Jul 2026 18:06:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657213;
-	bh=U5YZOXBUauZ2nK3MUEImI+W9wbgZr+5p4oZwJo/ujTU=;
+	s=korg; t=1784657215;
+	bh=fZMmtjXDTef63DitLJCOkav52Ko8Gkbwi+DsQ+FH1uQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hgTbW22EqGRnadN8e63qfWozaBr1x+pzX+qZt9BplwCZ7ec9119NWZupcROy57ajL
-	 qktTE15sSZs1rV1KTJfa0YQ+roiFIADxKLev7k81pP8HYqhF6I8hzf+j9VPDUw/hNu
-	 ATeUZrw5acVQd9wxgekPLJf9z8fdWVCZ5QDMln8g=
+	b=Kp7qEdMG33KAwvpl1/hYlKqLs0rXxSePQdW2COdMNONtafCPL4bouozWnmzegn9YS
+	 HvoUfd0qkW6kGeVhYKLHgKD6kM2xrFRshHIVxa8mgyMi5GQvPJ7LY6gjpp29h5hRaC
+	 xUyP2YgukZgdHCZySML5DXVIG5Xel6PpciQnbzuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carol L Soto <csoto@nvidia.com>,
-	Jamie Nguyen <jamien@nvidia.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Xi Pardee <xi.pardee@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0679/1611] fs/ntfs3: resize log->one_page_buf when adopting on-disk page size
-Date: Tue, 21 Jul 2026 17:13:15 +0200
-Message-ID: <20260721152530.654875440@linuxfoundation.org>
+Subject: [PATCH 6.18 0680/1611] platform/x86:intel/pmc: Add support for multiple DMU GUIDs
+Date: Tue, 21 Jul 2026 17:13:16 +0200
+Message-ID: <20260721152530.677157613@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -46,91 +45,165 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamie Nguyen <jamien@nvidia.com>
+From: Xi Pardee <xi.pardee@linux.intel.com>
 
-[ Upstream commit 5a35454179fe1041d9cd286f5d320ce0d448c12a ]
+[ Upstream commit 3b603955f2423cf668ebd5ba670019a5b4960cc5 ]
 
-log_replay() allocates log->one_page_buf using the page size that was
-chosen from the host PAGE_SIZE:
+Enable support for multiple DMU GUIDs to accommodate Arrow
+Lake H/U platforms. Arrow Lake U/H may have several GUIDs
+pointing to a single telemetry region providing die C6 value
+Add support to search for available GUIDs.
 
-	log->one_page_buf = kmalloc(log->page_size, GFP_NOFS);
-
-Later, when a restart area is found, the log page size recorded on disk
-is adopted:
-
-	t32 = le32_to_cpu(log->rst_info.r_page->sys_page_size);
-	if (log->page_size != t32) {
-		log->l_size = log->orig_file_size;
-		log->page_size = norm_file_page(t32, &log->l_size,
-						t32 == DefaultLogPageSize);
-	}
-
-If the on-disk page size is larger than the size used for the initial
-allocation, log->page_size grows but one_page_buf is left at its
-original, smaller size. A subsequent unaligned read_log_page() then
-reads log->page_size bytes into the undersized scratch buffer:
-
-	page_buf = page_off ? log->one_page_buf : *buffer;
-	err = ntfs_read_run_nb_ra(ni->mi.sbi, &ni->file.run, page_vbo, page_buf,
-				  log->page_size, NULL, &log->read_ahead);
-
-overflowing the allocation. This is reachable when mounting a dirty
-NTFS volume whose log was formatted with a page size larger than the
-buffer initially allocated on the mounting host (for example a 64K-log
-volume mounted on a host that allocated a 4K scratch buffer).
-
-Grow one_page_buf when the adopted on-disk page size exceeds the size
-used for the initial allocation. On krealloc() failure the original
-buffer is left intact and freed by the existing error path.
-
-Fixes: b46acd6a6a627 ("fs/ntfs3: Add NTFS journal")
-Reported-by: Carol L Soto <csoto@nvidia.com>
-Signed-off-by: Jamie Nguyen <jamien@nvidia.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Xi Pardee <xi.pardee@linux.intel.com>
+Link: https://patch.msgid.link/20251014214548.629023-3-xi.pardee@linux.intel.com
+[ij: add include & reverse logic in a loop]
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Stable-dep-of: 375bbbbd112a ("platform/x86/intel/vsec: Restore BAR fallback for header walk")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/platform/x86/intel/pmc/arl.c  |  6 ++++--
+ drivers/platform/x86/intel/pmc/core.c | 22 ++++++++++++++++++----
+ drivers/platform/x86/intel/pmc/core.h |  6 +++---
+ drivers/platform/x86/intel/pmc/mtl.c  |  3 ++-
+ 4 files changed, 27 insertions(+), 10 deletions(-)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index 124198539b9506..8395ca003af037 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -3936,9 +3936,28 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)
- 	 */
- 	t32 = le32_to_cpu(log->rst_info.r_page->sys_page_size);
- 	if (log->page_size != t32) {
-+		u32 old_page_size = log->page_size;
+diff --git a/drivers/platform/x86/intel/pmc/arl.c b/drivers/platform/x86/intel/pmc/arl.c
+index 17ad87b392abef..cc05a168c37213 100644
+--- a/drivers/platform/x86/intel/pmc/arl.c
++++ b/drivers/platform/x86/intel/pmc/arl.c
+@@ -720,9 +720,10 @@ static int arl_h_core_init(struct pmc_dev *pmcdev, struct pmc_dev_info *pmc_dev_
+ 	return generic_core_init(pmcdev, pmc_dev_info);
+ }
+ 
++static u32 ARL_PMT_DMU_GUIDS[] = {ARL_PMT_DMU_GUID, 0x0};
+ struct pmc_dev_info arl_pmc_dev = {
+ 	.pci_func = 0,
+-	.dmu_guid = ARL_PMT_DMU_GUID,
++	.dmu_guids = ARL_PMT_DMU_GUIDS,
+ 	.regmap_list = arl_pmc_info_list,
+ 	.map = &arl_socs_reg_map,
+ 	.sub_req_show = &pmc_core_substate_req_regs_fops,
+@@ -732,9 +733,10 @@ struct pmc_dev_info arl_pmc_dev = {
+ 	.sub_req = pmc_core_pmt_get_lpm_req,
+ };
+ 
++static u32 ARL_H_PMT_DMU_GUIDS[] = {ARL_PMT_DMU_GUID, 0x0};
+ struct pmc_dev_info arl_h_pmc_dev = {
+ 	.pci_func = 2,
+-	.dmu_guid = ARL_PMT_DMU_GUID,
++	.dmu_guids = ARL_H_PMT_DMU_GUIDS,
+ 	.regmap_list = arl_pmc_info_list,
+ 	.map = &mtl_socm_reg_map,
+ 	.sub_req_show = &pmc_core_substate_req_regs_fops,
+diff --git a/drivers/platform/x86/intel/pmc/core.c b/drivers/platform/x86/intel/pmc/core.c
+index ac3d19ae8c56d5..ca126a253f9d0d 100644
+--- a/drivers/platform/x86/intel/pmc/core.c
++++ b/drivers/platform/x86/intel/pmc/core.c
+@@ -20,6 +20,7 @@ enum header_type {
+ #include <linux/debugfs.h>
+ #include <linux/delay.h>
+ #include <linux/dmi.h>
++#include <linux/err.h>
+ #include <linux/io.h>
+ #include <linux/module.h>
+ #include <linux/pci.h>
+@@ -1281,7 +1282,20 @@ int get_primary_reg_base(struct pmc *pmc)
+ 	return 0;
+ }
+ 
+-void pmc_core_punit_pmt_init(struct pmc_dev *pmcdev, u32 guid)
++static struct telem_endpoint *pmc_core_register_endpoint(struct pci_dev *pcidev, u32 *guids)
++{
++	struct telem_endpoint *ep;
++	unsigned int i;
 +
- 		log->l_size = log->orig_file_size;
- 		log->page_size = norm_file_page(t32, &log->l_size,
- 						t32 == DefaultLogPageSize);
++	for (i = 0; guids[i]; i++) {
++		ep = pmt_telem_find_and_register_endpoint(pcidev, guids[i], 0);
++		if (!IS_ERR(ep))
++			return ep;
++	}
++	return ERR_PTR(-ENODEV);
++}
 +
-+		/*
-+		 * If the adopted on-disk page size is larger than the size used
-+		 * to allocate one_page_buf above, grow the scratch buffer so a
-+		 * later read_log_page() cannot overflow it.
-+		 */
-+		if (log->page_size > old_page_size) {
-+			void *buf;
-+
-+			buf = krealloc(log->one_page_buf, log->page_size,
-+				       GFP_NOFS);
-+			if (!buf) {
-+				err = -ENOMEM;
-+				goto out;
-+			}
-+			log->one_page_buf = buf;
-+		}
++void pmc_core_punit_pmt_init(struct pmc_dev *pmcdev, u32 *guids)
+ {
+ 	struct telem_endpoint *ep;
+ 	struct pci_dev *pcidev;
+@@ -1292,7 +1306,7 @@ void pmc_core_punit_pmt_init(struct pmc_dev *pmcdev, u32 guid)
+ 		return;
  	}
  
- 	if (log->page_size != t32 ||
+-	ep = pmt_telem_find_and_register_endpoint(pcidev, guid, 0);
++	ep = pmc_core_register_endpoint(pcidev, guids);
+ 	pci_dev_put(pcidev);
+ 	if (IS_ERR(ep)) {
+ 		dev_err(&pmcdev->pdev->dev,
+@@ -1689,8 +1703,8 @@ int generic_core_init(struct pmc_dev *pmcdev, struct pmc_dev_info *pmc_dev_info)
+ 	}
+ 
+ 	pmc_core_get_low_power_modes(pmcdev);
+-	if (pmc_dev_info->dmu_guid)
+-		pmc_core_punit_pmt_init(pmcdev, pmc_dev_info->dmu_guid);
++	if (pmc_dev_info->dmu_guids)
++		pmc_core_punit_pmt_init(pmcdev, pmc_dev_info->dmu_guids);
+ 
+ 	if (ssram) {
+ 		ret = pmc_core_get_telem_info(pmcdev, pmc_dev_info);
+diff --git a/drivers/platform/x86/intel/pmc/core.h b/drivers/platform/x86/intel/pmc/core.h
+index d6818bd34768ec..83d6e2e833785f 100644
+--- a/drivers/platform/x86/intel/pmc/core.h
++++ b/drivers/platform/x86/intel/pmc/core.h
+@@ -481,7 +481,7 @@ enum pmc_index {
+ /**
+  * struct pmc_dev_info - Structure to keep PMC device info
+  * @pci_func:		Function number of the primary PMC
+- * @dmu_guid:		Die Management Unit GUID
++ * @dmu_guids:		List of Die Management Unit GUID
+  * @regmap_list:	Pointer to a list of pmc_info structure that could be
+  *			available for the platform. When set, this field implies
+  *			SSRAM support.
+@@ -495,7 +495,7 @@ enum pmc_index {
+  */
+ struct pmc_dev_info {
+ 	u8 pci_func;
+-	u32 dmu_guid;
++	u32 *dmu_guids;
+ 	struct pmc_info *regmap_list;
+ 	const struct pmc_reg_map *map;
+ 	const struct file_operations *sub_req_show;
+@@ -532,7 +532,7 @@ int pmc_core_send_ltr_ignore(struct pmc_dev *pmcdev, u32 value, int ignore);
+ int pmc_core_resume_common(struct pmc_dev *pmcdev);
+ int get_primary_reg_base(struct pmc *pmc);
+ void pmc_core_get_low_power_modes(struct pmc_dev *pmcdev);
+-void pmc_core_punit_pmt_init(struct pmc_dev *pmcdev, u32 guid);
++void pmc_core_punit_pmt_init(struct pmc_dev *pmcdev, u32 *guids);
+ void pmc_core_set_device_d3(unsigned int device);
+ 
+ int generic_core_init(struct pmc_dev *pmcdev, struct pmc_dev_info *pmc_dev_info);
+diff --git a/drivers/platform/x86/intel/pmc/mtl.c b/drivers/platform/x86/intel/pmc/mtl.c
+index 0b87e10f864e6f..19470ca311cf72 100644
+--- a/drivers/platform/x86/intel/pmc/mtl.c
++++ b/drivers/platform/x86/intel/pmc/mtl.c
+@@ -992,9 +992,10 @@ static int mtl_core_init(struct pmc_dev *pmcdev, struct pmc_dev_info *pmc_dev_in
+ 	return generic_core_init(pmcdev, pmc_dev_info);
+ }
+ 
++static u32 MTL_PMT_DMU_GUIDS[] = {MTL_PMT_DMU_GUID, 0x0};
+ struct pmc_dev_info mtl_pmc_dev = {
+ 	.pci_func = 2,
+-	.dmu_guid = MTL_PMT_DMU_GUID,
++	.dmu_guids = MTL_PMT_DMU_GUIDS,
+ 	.regmap_list = mtl_pmc_info_list,
+ 	.map = &mtl_socm_reg_map,
+ 	.sub_req_show = &pmc_core_substate_req_regs_fops,
 -- 
 2.53.0
 
