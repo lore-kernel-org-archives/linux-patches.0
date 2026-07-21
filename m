@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F74446D2C1;
-	Tue, 21 Jul 2026 19:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B1D46EF88;
+	Tue, 21 Jul 2026 19:35:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662502; cv=none; b=LBVcSlhCgS46wf+HLz+zSQwFPkDUfdiUl1mS5SAug7srBrJcX+Lc8G8B77cW+n+LtWqWgN8nqD/WTnpO9LkADf+xnXjqTUGDtjc3BzIaM28jdZdECyVao0vhb/qKe+w0Ch1Rb6j/JqrzjCKYsCrLkrwTE66eIFRoYa09S0QkSyE=
+	t=1784662505; cv=none; b=e7x9yUCD0++ZH4Jt/JRi8N7ssramPg4KSprZgJ6zkCqBL3m3oxXLy1FBGSYPxr6lc+e2eIhtCiaETSYMTbYSPTuICCknRtEobUqM9UC2XccWTFspGZhHR9MO35tVYpmc6rB4GZawAkw+6+Gmc8ELZT43P8tCKdCPKQpo7PD3X38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662502; c=relaxed/simple;
-	bh=FTovy4XjpGFM/xmbY2h0NSWNdc35n2mqs5F0cYRlhLk=;
+	s=arc-20240116; t=1784662505; c=relaxed/simple;
+	bh=+GK8CYdb2I6jfbdT84M51PE0aULtLaOZViMYXQaxajA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ca1B6uIxwvMsJ0YaKT8+P2nKa/cBTGVp+WvhN20APjqYvgBfolTfn6cxE8x2BBz+WvFBBgnZ/7s8O3+HwLO0SqCVOVR2dztG7crJMH/ZlrC8DqGWEgg25is7MW4PGdZ2hRMwOwdqU/Q38TBm+PWsJrJRgb78OZm5Cfq9LX2ZRug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OcxKVUSv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=hTZHqKBVSXrHY+4paLy7ipUSJxbwWib6iMdwNT+L6xsslNcx8KowC9D/mMs7VY6O6z0Aq9NhiQijHqDtslmB47qILQftnpvdmovOhdFwmq6ypO1sLnVVa9Sg9xb0DXB4UBovQ7lkkgDBHdTInpz6fUphJNXf3nl3rtVBhX2NaWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L7pPaPBw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OcxKVUSv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00011F000E9;
-	Tue, 21 Jul 2026 19:35:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L7pPaPBw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B501C1F000E9;
+	Tue, 21 Jul 2026 19:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662501;
-	bh=wPw93RuU40oDBMtN/X5dBitqlK8VjXcUZqHFih8ue5Q=;
+	s=korg; t=1784662504;
+	bh=lMaI8EEQNU08F1plnbMA/K7rfZ9sZ4YOxQ9lEnjhQd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OcxKVUSv/ETQdTNPtZRT2C/OimO49lP5iG+YC7Mcah7fWtHyCaX0RDClOddLKg55b
-	 SE7mvnJ4cYhnhJtDG/m1MOlE7dZ+wF7roTFst8XMjbWdjzzNU4A0Cjyg5nLFlbVEfA
-	 Rk8hCLD9fgW9+F4V8O7DEuUK4rXcsCV5SR1CeXg0=
+	b=L7pPaPBw1dTLog89Kq4Hb6I7mfpzATLvFo+7RhYvFFnNIiQU6I/XDXMTk02SpndcZ
+	 OwDOFBjRRlogigwG60CgnNuazJZkMwwviSo4Zy9bstdRgDdVbkNuipqrSVLHJCDtMF
+	 aYXYnq3LMCpAGokH2hLHRTqNxDQj49lhI5/7HxeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	David Ahern <dsahern@gmail.com>,
 	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0470/1276] perf sched: Fix thread leaks in perf sched timehist
-Date: Tue, 21 Jul 2026 17:15:13 +0200
-Message-ID: <20260721152456.622423922@linuxfoundation.org>
+Subject: [PATCH 6.12 0471/1276] perf sched: Use thread__put() in free_idle_threads()
+Date: Tue, 21 Jul 2026 17:15:14 +0200
+Message-ID: <20260721152456.646587146@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -45,203 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit e2eb59260c4f6bac403491d0112891766b8650d1 ]
+[ Upstream commit a99d6394cd48fed75b1d24733d5afe6837a61a3f ]
 
-Add missing thread__put() after machine__findnew_thread() or
-timehist_get_thread().  Also idle threads' last_thread should be
-refcounted properly.
+free_idle_threads() calls thread__delete() directly instead of
+thread__put(), bypassing the reference counting lifecycle.  Under
+REFCNT_CHECKING builds, this leaks the pointer handle since
+thread__delete() frees the object without going through the refcount
+wrapper.
 
-Fixes: 699b5b920db04a6f ("perf sched timehist: Save callchain when entering idle")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Tested-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250703014942.1369397-5-namhyung@kernel.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Stable-dep-of: a99d6394cd48 ("perf sched: Use thread__put() in free_idle_threads()")
+The idle threads are created via thread__new() (refcount=1) in
+get_idle_thread().  Callers get additional references via thread__get()
+which they release with thread__put().  free_idle_threads() drops the
+base reference — thread__put() is the correct call, matching the
+thread__new() acquisition.
+
+Fixes: 49394a2a24c7 ("perf sched timehist: Introduce timehist command")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: David Ahern <dsahern@gmail.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 48 +++++++++++++++++++++++++++++---------
- 1 file changed, 37 insertions(+), 11 deletions(-)
+ tools/perf/builtin-sched.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 1203425d2b8a55..f3a03be9471aa0 100644
+index f3a03be9471aa0..8eb5c880a5b605 100644
 --- a/tools/perf/builtin-sched.c
 +++ b/tools/perf/builtin-sched.c
-@@ -2386,8 +2386,10 @@ static void save_task_callchain(struct perf_sched *sched,
- 		return;
- 	}
+@@ -2489,7 +2489,7 @@ static void free_idle_threads(void)
+ 			if (itr)
+ 				thread__put(itr->last_thread);
  
--	if (!sched->show_callchain || sample->callchain == NULL)
-+	if (!sched->show_callchain || sample->callchain == NULL) {
-+		thread__put(thread);
- 		return;
-+	}
- 
- 	cursor = get_tls_callchain_cursor();
- 
-@@ -2396,10 +2398,12 @@ static void save_task_callchain(struct perf_sched *sched,
- 		if (verbose > 0)
- 			pr_err("Failed to resolve callchain. Skipping\n");
- 
-+		thread__put(thread);
- 		return;
- 	}
- 
- 	callchain_cursor_commit(cursor);
-+	thread__put(thread);
- 
- 	while (true) {
- 		struct callchain_cursor_node *node;
-@@ -2476,8 +2480,17 @@ static void free_idle_threads(void)
- 		return;
- 
- 	for (i = 0; i < idle_max_cpu; ++i) {
--		if ((idle_threads[i]))
--			thread__delete(idle_threads[i]);
-+		struct thread *idle = idle_threads[i];
-+
-+		if (idle) {
-+			struct idle_thread_runtime *itr;
-+
-+			itr = thread__priv(idle);
-+			if (itr)
-+				thread__put(itr->last_thread);
-+
-+			thread__delete(idle);
-+		}
- 	}
- 
- 	free(idle_threads);
-@@ -2517,7 +2530,7 @@ static struct thread *get_idle_thread(int cpu)
+-			thread__delete(idle);
++			thread__put(idle);
  		}
  	}
  
--	return idle_threads[cpu];
-+	return thread__get(idle_threads[cpu]);
- }
- 
- static void save_idle_callchain(struct perf_sched *sched,
-@@ -2572,7 +2585,8 @@ static struct thread *timehist_get_thread(struct perf_sched *sched,
- 			if (itr == NULL)
- 				return NULL;
- 
--			itr->last_thread = thread;
-+			thread__put(itr->last_thread);
-+			itr->last_thread = thread__get(thread);
- 
- 			/* copy task callchain when entering to idle */
- 			if (evsel__intval(evsel, sample, "next_pid") == 0)
-@@ -2643,6 +2657,7 @@ static void timehist_print_wakeup_event(struct perf_sched *sched,
- 	/* show wakeup unless both awakee and awaker are filtered */
- 	if (timehist_skip_sample(sched, thread, evsel, sample) &&
- 	    timehist_skip_sample(sched, awakened, evsel, sample)) {
-+		thread__put(thread);
- 		return;
- 	}
- 
-@@ -2659,6 +2674,8 @@ static void timehist_print_wakeup_event(struct perf_sched *sched,
- 	printf("awakened: %s", timehist_get_commstr(awakened));
- 
- 	printf("\n");
-+
-+	thread__put(thread);
- }
- 
- static int timehist_sched_wakeup_ignore(const struct perf_tool *tool __maybe_unused,
-@@ -2687,8 +2704,10 @@ static int timehist_sched_wakeup_event(const struct perf_tool *tool,
- 		return -1;
- 
- 	tr = thread__get_runtime(thread);
--	if (tr == NULL)
-+	if (tr == NULL) {
-+		thread__put(thread);
- 		return -1;
-+	}
- 
- 	if (tr->ready_to_run == 0)
- 		tr->ready_to_run = sample->time;
-@@ -2698,6 +2717,7 @@ static int timehist_sched_wakeup_event(const struct perf_tool *tool,
- 	    !perf_time__skip_sample(&sched->ptime, sample->time))
- 		timehist_print_wakeup_event(sched, evsel, sample, machine, thread);
- 
-+	thread__put(thread);
- 	return 0;
- }
- 
-@@ -2725,6 +2745,7 @@ static void timehist_print_migration_event(struct perf_sched *sched,
- 
- 	if (timehist_skip_sample(sched, thread, evsel, sample) &&
- 	    timehist_skip_sample(sched, migrated, evsel, sample)) {
-+		thread__put(thread);
- 		return;
- 	}
- 
-@@ -2752,6 +2773,7 @@ static void timehist_print_migration_event(struct perf_sched *sched,
- 	printf(" cpu %d => %d", ocpu, dcpu);
- 
- 	printf("\n");
-+	thread__put(thread);
- }
- 
- static int timehist_migrate_task_event(const struct perf_tool *tool,
-@@ -2771,8 +2793,10 @@ static int timehist_migrate_task_event(const struct perf_tool *tool,
- 		return -1;
- 
- 	tr = thread__get_runtime(thread);
--	if (tr == NULL)
-+	if (tr == NULL) {
-+		thread__put(thread);
- 		return -1;
-+	}
- 
- 	tr->migrations++;
- 	tr->migrated = sample->time;
-@@ -2782,6 +2806,7 @@ static int timehist_migrate_task_event(const struct perf_tool *tool,
- 		timehist_print_migration_event(sched, evsel, sample,
- 							machine, thread);
- 	}
-+	thread__put(thread);
- 
- 	return 0;
- }
-@@ -2804,10 +2829,10 @@ static void timehist_update_task_prio(struct evsel *evsel,
- 		return;
- 
- 	tr = thread__get_runtime(thread);
--	if (tr == NULL)
--		return;
-+	if (tr != NULL)
-+		tr->prio = next_prio;
- 
--	tr->prio = next_prio;
-+	thread__put(thread);
- }
- 
- static int timehist_sched_change_event(const struct perf_tool *tool,
-@@ -2819,7 +2844,7 @@ static int timehist_sched_change_event(const struct perf_tool *tool,
- 	struct perf_sched *sched = container_of(tool, struct perf_sched, tool);
- 	struct perf_time_interval *ptime = &sched->ptime;
- 	struct addr_location al;
--	struct thread *thread;
-+	struct thread *thread = NULL;
- 	struct thread_runtime *tr = NULL;
- 	u64 tprev, t = sample->time;
- 	int rc = 0;
-@@ -2944,6 +2969,7 @@ static int timehist_sched_change_event(const struct perf_tool *tool,
- 
- 	evsel__save_time(evsel, sample->time, sample->cpu);
- 
-+	thread__put(thread);
- 	addr_location__exit(&al);
- 	return rc;
- }
 -- 
 2.53.0
 
