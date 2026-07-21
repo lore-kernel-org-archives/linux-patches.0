@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60BC0470119;
-	Tue, 21 Jul 2026 19:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBDE47143E;
+	Tue, 21 Jul 2026 19:42:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662926; cv=none; b=t9tyj+3xCHu4BHMoERdgPO5w2XKqQX3l/n/FfA8BSBkaji3xTJMMT5i2/opj14aAmyZaEKn/XREVJsWMiaceUmYYQ7ifOBsF2wYHFNvKbGDZUWCKgB9UFsEs47sI8y8LpsbEkPfTzd3APKOeLaSP98nfhigF1nDphzDdezdsg2w=
+	t=1784662929; cv=none; b=CJEbox6/xBlXoKE9B50vf+zQPEUKYCa5oOrmlTPhtQgbX6gSxaP5ObySiyyKlPiLm1dEyTLNVN6ajYeRd+HkwZymY1S1kv1G8gMBZft9J8iXH6Ep9qB6aX/hawTj0Q50WamD5DVAk65MzS0wnIMbhDvVcskvfbXehpQZxc6uKoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662926; c=relaxed/simple;
-	bh=KVOnduxtOqmPuV9l+Iq03BvLXKCJmUDGXH4KAw9WirA=;
+	s=arc-20240116; t=1784662929; c=relaxed/simple;
+	bh=wpBPoWScRRpu0w9v5DOmBDV9iQWLBsWj9kEXtCJRzmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hBO7SLFalU3thqthdvpqiQryEF3J0ao9lmB4pNqrsoKC0SSzdY4zmtkoDsy7ObvZhh9yrAmVBA4otDVH1bJOlPgNMHqX0/BL8HM2IMmiEs77Kkk74BbZa40bqTCeINIteXHHmdCDFCD7rpPWxjOvoG7pkAFJR/RPvTnHkm4yIu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yLpWEzv0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CKBXfZDPogfUm/mRoN0oiYVJGgVQHO1On6dqEsHZzK84xahx+4Fvd52CaZBcWvbZyquUL+yV7Hef7aqtayHPYeq7ru7BICniitISYKep2ijhI2+6w/9KwEoDsJzg/tKDRTCFQt2qmDLKaYy731t32osath7vZeNJDGOsWSd9V7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTymBYyx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yLpWEzv0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71771F000E9;
-	Tue, 21 Jul 2026 19:42:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTymBYyx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7156D1F000E9;
+	Tue, 21 Jul 2026 19:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662925;
-	bh=XHVXcY+Y/Jzl0724r4xq/EIjPVuj9sQtikOKIdIgq20=;
+	s=korg; t=1784662927;
+	bh=5rUfiSGG0YwykDVQjtCd9DRS4jKHy3IVl5OdDWJnSRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yLpWEzv0yigrloKK+j364s1BcexEeudnXcd59AGTszbfgsth0U6pABupTqCZZ3Hrc
-	 R++Tfd8u5dGVSpN4beV6Z/FpOP231JBu5pkuXwFDcVMp0OBY3oRjocHGGJAP12r1v7
-	 RA5YUaMD+FYJ6wjhkSio0IKX8zyAsrutZ0UO20IM=
+	b=eTymBYyx788H8/05qsJGmGRCBG4VV4r8uZMJGKyFUKJjgcm+DLcLJ5VWLAe5XZydv
+	 tZeynyNLzTg3SeMngFFdpSAxC62gm5RF1Vn2rZqsDGDJEN8XfKmIA9eOZNUjsEXzYC
+	 jCKkk8AbKIy9rXDWN5pGh3+VG4CFm89YIL1I8tik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcin Szycik <marcin.szycik@intel.com>,
+	ZhaoJinming <zhaojinming@uniontech.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Patryk Holda <patryk.holda@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0628/1276] ice: call netif_keep_dst() once when entering switchdev mode
-Date: Tue, 21 Jul 2026 17:17:51 +0200
-Message-ID: <20260721152500.162788999@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.12 0629/1276] ice: dpll: set pointers to NULL after kfree in ice_dpll_deinit_info
+Date: Tue, 21 Jul 2026 17:17:52 +0200
+Message-ID: <20260721152500.184897321@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -54,47 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marcin Szycik <marcin.szycik@intel.com>
+From: ZhaoJinming <zhaojinming@uniontech.com>
 
-[ Upstream commit c0d00c882bc432990d57052a659f9a8bd1f60687 ]
+[ Upstream commit a903afff66d7379c6ece42bd18b2a17f4c79d1a9 ]
 
-netif_keep_dst() only needs to be called once for the uplink VSI, not
-once for each port representor.  Move it from ice_eswitch_setup_repr()
-to ice_eswitch_enable_switchdev().
+ice_dpll_deinit_info() calls kfree() on several pf->dplls fields
+(inputs, outputs, eec.input_prio, pps.input_prio) but does not set
+the pointers to NULL afterward. This leaves dangling pointers in the
+pf->dplls structure.
 
-Fixes: defd52455aee ("ice: do Tx through PF netdev in slow-path")
-Signed-off-by: Marcin Szycik <marcin.szycik@intel.com>
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Patryk Holda <patryk.holda@intel.com>
+While not currently exploitable through existing code paths, this is
+unsafe because:
+
+1. If ice_dpll_init_info() is called again after a deinit (e.g. during
+   driver recovery), and a subsequent allocation within init fails, the
+   error path will jump to deinit_info and call ice_dpll_deinit_info()
+   again. Since some pointers still hold the old freed addresses, this
+   would result in a double-free.
+
+2. Any future code that checks these pointers before use or after free
+   would be unprotected against use-after-free.
+
+Follow the common kernel convention of setting pointers to NULL after
+kfree() so that:
+- kfree(NULL) is a safe no-op, preventing double-free
+- NULL checks on these pointers become meaningful
+
+This is a preparatory fix for a subsequent patch that routes additional
+error paths in ice_dpll_init_info() to the deinit_info label.
+
+Fixes: d7999f5ea64b ("ice: implement dpll interface to control cgu")
+Signed-off-by: ZhaoJinming <zhaojinming@uniontech.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_eswitch.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_dpll.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_eswitch.c b/drivers/net/ethernet/intel/ice/ice_eswitch.c
-index 5b9a7ee278f17b..32b52ecff04ffb 100644
---- a/drivers/net/ethernet/intel/ice/ice_eswitch.c
-+++ b/drivers/net/ethernet/intel/ice/ice_eswitch.c
-@@ -116,8 +116,6 @@ static int ice_eswitch_setup_repr(struct ice_pf *pf, struct ice_repr *repr)
- 	if (!repr->dst)
- 		return -ENOMEM;
+diff --git a/drivers/net/ethernet/intel/ice/ice_dpll.c b/drivers/net/ethernet/intel/ice/ice_dpll.c
+index 38e151c7ea2362..7864f29c30eaed 100644
+--- a/drivers/net/ethernet/intel/ice/ice_dpll.c
++++ b/drivers/net/ethernet/intel/ice/ice_dpll.c
+@@ -2279,9 +2279,13 @@ ice_dpll_init_pins_info(struct ice_pf *pf, enum ice_dpll_pin_type pin_type)
+ static void ice_dpll_deinit_info(struct ice_pf *pf)
+ {
+ 	kfree(pf->dplls.inputs);
++	pf->dplls.inputs = NULL;
+ 	kfree(pf->dplls.outputs);
++	pf->dplls.outputs = NULL;
+ 	kfree(pf->dplls.eec.input_prio);
++	pf->dplls.eec.input_prio = NULL;
+ 	kfree(pf->dplls.pps.input_prio);
++	pf->dplls.pps.input_prio = NULL;
+ }
  
--	netif_keep_dst(uplink_vsi->netdev);
--
- 	dst = repr->dst;
- 	dst->u.port_info.port_id = vsi->vsi_num;
- 	dst->u.port_info.lower_dev = uplink_vsi->netdev;
-@@ -306,6 +304,8 @@ static int ice_eswitch_enable_switchdev(struct ice_pf *pf)
- 	if (ice_eswitch_br_offloads_init(pf))
- 		goto err_br_offloads;
- 
-+	netif_keep_dst(uplink_vsi->netdev);
-+
- 	pf->eswitch.is_running = true;
- 
- 	return 0;
+ /**
 -- 
 2.53.0
 
