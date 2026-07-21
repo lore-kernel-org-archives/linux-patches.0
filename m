@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC2A36DA1D;
-	Tue, 21 Jul 2026 21:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C134735C6AB;
+	Tue, 21 Jul 2026 21:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668638; cv=none; b=GWKjMusWp3ARJbO6Baqmngyd1dwNYrBzgdG0f2O8TVuW4ok2fed+8pwxFZkeiSOEDiUagQMEYMB2fq3FFfWPcKkGR6gzNnCs7MdREgfX5Fd+zk9iVhLxz9NWjd/RARV2ooWSm0THxf0vOuOAfAkfXfk8cZCYhARMa3pIvs2cIqk=
+	t=1784668639; cv=none; b=HP542RE9zOgLaqqK0Vy+jnn0zsUxPFFZDAqKMoR+svQXiUms61pingwUPWBNu25Mh+AqQMEkIQbryjhkiuTsu6eCYnmRDk8TdjRGJH67QsmX4V4rIT/4CbaU9v4T8Un7z1DJ1HTyrtkppWCvSlfFu+aLhdp8jPIO1vjkFi37AwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668638; c=relaxed/simple;
-	bh=rS0kKZBisOP5EGQCaRSg/69T/gQKWbbmgiZzWJUxCvs=;
+	s=arc-20240116; t=1784668639; c=relaxed/simple;
+	bh=A3pDUxQ9i0Fnvv+YtYaM4bkyEdyUrS3yb/pv83rrKbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S2Hakv7L3kyTFruNvl4/5AG+Wg3rmAg4TqJYbeTzWlAm5RFc0N1pQvTuoJxYWEv92V/l6rsL4umTJhNJuNqFHRdDW4OcRpamJG0Wg4csl1K+aRpQyYRfFXo6X5l2eahsUGJml+w0t6UYtR/ysJJEZUmK0hObGUwwuD8T2laW/X8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVVgVtEb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E/BWuK8NcPkkZg7g4pi8VI8En3vtuzHEiAw2qzBhByXAFI+z1NoEpPpQZbJRKVSvY1M95D8HSWeTbRG1YhrL1krPKLeVDvJ0tIt0qVqhtkOyeZynANCD507gqvCii0HzFyHMl9XHJhOHv0hsvfkoPWFGDWGUb5rrSxoIj5dUPY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOpqXGqo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVVgVtEb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82201F000E9;
-	Tue, 21 Jul 2026 21:17:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOpqXGqo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 675AA1F00A3A;
+	Tue, 21 Jul 2026 21:17:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668631;
-	bh=uzUE6crRS5iSri9gt+eTiZ0pYiIxtIsDKp9p+HXm9u4=;
+	s=korg; t=1784668633;
+	bh=Zj5c10Kwg4ZwxwDqKq590U3bb9J5i3GZijmfbGoErrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PVVgVtEbJe/D7MmGyAq/5He9vb3bK2Dr+kgfVupdTzRQU15U9i9ef1cPvQZ+ODKHV
-	 d/IfqAEPrS6tmDkW08au3+OomgXZGYPnYFjnJy5OssH99rpzpr2BGxjI0A2arhZAd0
-	 n3khwQTO7mH0af9WkHb2EfrvdORb6AfrkrJ/BbbY=
+	b=sOpqXGqo61EbNTSzG/87NWyEnACh+XaI8MPgrpLWDRVDET0lQCBVjvHBcG97uUgtB
+	 oMqcqrnvAwrRXN6AbVIjaOimd75P0gUnWHQgo2CvConSv7UnMN9ocy/v43NMzwHua5
+	 tW3LjEOVZRunLYXGqqI1hYDulNZjcLg77dlwvFRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jungwoo Lee <jwlee2217@gmail.com>,
-	Wongi Lee <qw3rtyp0@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 0250/1067] ipv4: account for fraggap on the paged allocation path
-Date: Tue, 21 Jul 2026 17:14:11 +0200
-Message-ID: <20260721152430.189949575@linuxfoundation.org>
+	Shoichiro Miyamoto <shoichiro.miyamoto@gmail.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 0251/1067] smb: client: reject overlapping data areas in SMB2 responses
+Date: Tue, 21 Jul 2026 17:14:12 +0200
+Message-ID: <20260721152430.212870856@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,52 +50,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wongi Lee <qw3rtyp0@gmail.com>
+From: Shoichiro Miyamoto <shoichiro.miyamoto@gmail.com>
 
-commit eca856950f7cb1a221e02b99d758409f2c5cec42 upstream.
+commit 8986c932905ea508d66da421eb2eb6e676ace1fe upstream.
 
-In __ip_append_data(), when the paged-allocation branch is taken,
-alloclen and pagedlen are computed as
+Commit 53b7c271f06b ("smb: client: restrict implied bcc[0] exemption to
+responses without data area") restricted the implied bcc[0] length
+exception to responses without a data area. However, the overlap
+handling in __smb2_calc_size() clears data_length, which can make an
+invalid response appear to have no data area and so qualify for the
+exception.
 
-	alloclen = fragheaderlen + transhdrlen;
-	pagedlen = datalen - transhdrlen;
+Track data area overlap separately and reject such responses before
+applying the length compatibility exceptions.
 
-datalen already includes fraggap, but the fraggap bytes carried over
-from the previous skb are copied into the new skb's linear area at
-offset transhdrlen by the subsequent skb_copy_and_csum_bits(). The
-linear area is therefore undersized by fraggap bytes while pagedlen is
-overstated by the same amount.
-
-The non-paged branch sets alloclen to fraglen, which already accounts
-for fraggap because datalen does. Bring the paged branch in line by
-adding fraggap to alloclen and subtracting it from pagedlen.
-
-After this adjustment, copy no longer collapses to -fraggap on the
-paged path, so remove the stale comment describing that old arithmetic.
-
-Fixes: 8eb77cc73977 ("ipv4: avoid partial copy for zc")
-Signed-off-by: Jungwoo Lee <jwlee2217@gmail.com>
-Signed-off-by: Wongi Lee <qw3rtyp0@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/ajFR1eLAIs42TN3g@DESKTOP-19IMU7U.localdomain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 53b7c271f06b ("smb: client: restrict implied bcc[0] exemption to responses without data area")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shoichiro Miyamoto <shoichiro.miyamoto@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/ip_output.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2misc.c |   34 +++++++++++++++++++++++++---------
+ 1 file changed, 25 insertions(+), 9 deletions(-)
 
---- a/net/ipv4/ip_output.c
-+++ b/net/ipv4/ip_output.c
-@@ -1117,8 +1117,8 @@ alloc_new_skb:
- 				  !(rt->dst.dev->features & NETIF_F_SG)))
- 				alloclen = fraglen;
- 			else {
--				alloclen = fragheaderlen + transhdrlen;
--				pagedlen = datalen - transhdrlen;
-+				alloclen = fragheaderlen + transhdrlen + fraggap;
-+				pagedlen = datalen - transhdrlen - fraggap;
- 			}
+--- a/fs/smb/client/smb2misc.c
++++ b/fs/smb/client/smb2misc.c
+@@ -18,7 +18,8 @@
+ #include "nterr.h"
+ #include "cached_dir.h"
  
- 			alloclen += alloc_extra;
+-static unsigned int __smb2_calc_size(void *buf, bool *have_data);
++static unsigned int __smb2_calc_size(void *buf, bool *have_data,
++				     bool *data_area_overlap);
+ 
+ static int
+ check_smb2_hdr(struct smb2_hdr *shdr, __u64 mid)
+@@ -146,6 +147,7 @@ smb2_check_message(char *buf, unsigned i
+ 	__u32 calc_len; /* calculated length */
+ 	__u64 mid;
+ 	bool have_data;
++	bool data_area_overlap;
+ 
+ 	/* If server is a channel, select the primary channel */
+ 	pserver = CIFS_SERVER_IS_CHAN(server) ? server->primary_server : server;
+@@ -230,7 +232,12 @@ smb2_check_message(char *buf, unsigned i
+ 	}
+ 
+ 	have_data = false;
+-	calc_len = __smb2_calc_size(buf, &have_data);
++	data_area_overlap = false;
++	calc_len = __smb2_calc_size(buf, &have_data, &data_area_overlap);
++
++	/* Reject responses whose data area overlaps the fixed area. */
++	if (data_area_overlap)
++		return 1;
+ 
+ 	/* For SMB2_IOCTL, OutputOffset and OutputLength are optional, so might
+ 	 * be 0, and not a real miscalculation */
+@@ -414,14 +421,15 @@ smb2_get_data_area_len(int *off, int *le
+ }
+ 
+ /*
+- * Calculate the size of the SMB message based on the fixed header
+- * portion, the number of word parameters and the data portion of the message.
+- * If have_data is non-NULL, it is set to true when a non-empty data area was
+- * found (data_length > 0), allowing callers to distinguish the implied bcc[0]
+- * case (no data area) from an overreported data length.
++ * Calculate the size of the SMB message based on the fixed header, fixed
++ * parameter area, and variable data area.
++ *
++ * If have_data is not NULL, it is set when a non-empty data area is found.
++ * If data_area_overlap is not NULL, it is set when the data area overlaps
++ * the fixed area.
+  */
+ static unsigned int
+-__smb2_calc_size(void *buf, bool *have_data)
++__smb2_calc_size(void *buf, bool *have_data, bool *data_area_overlap)
+ {
+ 	struct smb2_pdu *pdu = buf;
+ 	struct smb2_hdr *shdr = &pdu->hdr;
+@@ -430,6 +438,11 @@ __smb2_calc_size(void *buf, bool *have_d
+ 	/* Structure Size has already been checked to make sure it is 64 */
+ 	int len = le16_to_cpu(shdr->StructureSize);
+ 
++	if (have_data)
++		*have_data = false;
++	if (data_area_overlap)
++		*data_area_overlap = false;
++
+ 	/*
+ 	 * StructureSize2, ie length of fixed parameter area has already
+ 	 * been checked to make sure it is the correct length.
+@@ -452,7 +465,10 @@ __smb2_calc_size(void *buf, bool *have_d
+ 		if (offset + 1 < len) {
+ 			cifs_dbg(VFS, "data area offset %d overlaps SMB2 header %d\n",
+ 				 offset + 1, len);
++			if (data_area_overlap)
++				*data_area_overlap = true;
+ 			data_length = 0;
++			goto calc_size_exit;
+ 		} else {
+ 			len = offset + data_length;
+ 		}
+@@ -467,7 +483,7 @@ calc_size_exit:
+ unsigned int
+ smb2_calc_size(void *buf)
+ {
+-	return __smb2_calc_size(buf, NULL);
++	return __smb2_calc_size(buf, NULL, NULL);
+ }
+ 
+ /* Note: caller must free return buffer */
 
 
