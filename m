@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6093C8716;
-	Tue, 21 Jul 2026 20:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1531D3B7B64;
+	Tue, 21 Jul 2026 20:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667483; cv=none; b=TOgeEuShvEloC6N85Oec9HWOf2Eh0/fJyDPifPYsdAUMEfFE8BdSxX804UBgZHxUkOMaEi/zv4VtW7PNqwQGnTeKI1GEjIwbqMM+AKnmjuE0vIkkjjVruOhudCVTvuU1vOM+dmW0kaPTyEFxUUE+rS+EDN19FGrCjnRUjVyJ6+k=
+	t=1784667488; cv=none; b=XMFv5SXQ+qRsgOtFQQeNHNOA7tAxpc6d+G05BUa3n8cxlKv2KoPfRPBzgDDxn9364KuM/JbDo0iT2RKQ25VO7sCDgBk7kdWl+Dp5KrJfe1EzSDEzbm6QAeMk/KJV0sHVbOTEZlzDbBr2qWaN+sgM1bOL6PBRpvl0byvsbb3vJYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667483; c=relaxed/simple;
-	bh=Y+RW+dBlHXOWGtCQfmfB7UqKp4pdutqwytIRd5XyAQg=;
+	s=arc-20240116; t=1784667488; c=relaxed/simple;
+	bh=jJLoVRhn/2pMsSGv+N3Zm5sKIOdmQ1LKWrnpK4zQF4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jlgMv5tCQ1GupVqMEoNKLrEuMUpZIl9LGUjL6pqF0WPJK1gAXyNX8ayoYKW4bBkxHai85QsHp5ltdIia7oV2Ryqi69jAExJN88DWSVo603iNst0NVeqHrVlRWlSiAIFnXbrQlH5pDm/CvR8UQ8Mk+shMelpzPGApDNBKxh2MuKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zv5pE2OL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eWTWN0fFkiHMkxmOJDkZ0/gwkddND/WcInFhWTuCNRxzCC269rveurR/uFn25+dBTVxpo7QVrBtdu1M/QBjwPRWKdd1Ym3odiTneqqXUCurE6xTQbQCn7qQJCWLHRpYfpLr9r1vBG6JMJdgjF7fsT1/JkLWdtV2PSIk9ENwx9OQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2YTjOCu/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zv5pE2OL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA6E1F00ACF;
-	Tue, 21 Jul 2026 20:57:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2YTjOCu/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A951F00A3E;
+	Tue, 21 Jul 2026 20:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667471;
-	bh=gVJeKSTWpLnVWasf3BJicwE3VrPU8AQsld9bCR7YFE0=;
+	s=korg; t=1784667479;
+	bh=dAdUnNjDCRxG1W6CxPS08/5lAeLoC6IppNhBiZMPYJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zv5pE2OL3TDzYnJQYAV1CZeFmxPdEv8FzUvLeyLjWV0Ic4tUByuZhtBllhg44G0Pj
-	 Sy4TzChYcg0Miozd2A8VlMNGVrSmCCLwvTFgPjskWJcHcW2/enfeXm1hl/0Jj8N2kq
-	 xzyYZ08Mf9QoBAiHLA7wgqTk05K0RbP6RLhMlc44=
+	b=2YTjOCu/dnpqZeMN3sJvNHlot5SLSRTN9ssfvNwmWioFOW0olQtjrnEmGMx3VAS1z
+	 CJ9yv2QyNt/FichLvF0ACVQ/4Q18RIf95yUhDMnoHMpD10IuEb4g/2YaaUH0LM48uD
+	 aJSTn2YOo0EzB6LaTfoiw/lgHNYp63AX3LffeB5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.6 1075/1266] posix-cpu-timers: Use u64 multiplication in update_rlimit_cpu()
-Date: Tue, 21 Jul 2026 17:25:12 +0200
-Message-ID: <20260721152505.873556444@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Juergen Gross <jgross@suse.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 1060/1266] scsi: xen: scsiback: Free unsubmitted command instead of double-putting it
+Date: Tue, 21 Jul 2026 17:24:57 +0200
+Message-ID: <20260721152505.539363293@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,53 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 26aff38fefb1d6cd87e22525f41cc8f1aa61b24f upstream.
+commit ca978f8a93d4d36841839bf2847d29b88c2591d6 upstream.
 
-update_rlimit_cpu() converts the RLIMIT_CPU value to nanoseconds with
+scsiback_get_pend_req() obtains a command tag and returns a vscsibk_pend
+whose embedded se_cmd has only been memset to 0, so its cmd_kref is 0;
+the se_cmd is initialised (kref_init() via target_init_cmd()) only
+later, in scsiback_cmd_exec(), on the successful VSCSIIF_ACT_SCSI_CDB
+path. The two error paths in scsiback_do_cmd_fn() taken before the
+command is submitted -- a failed scsiback_gnttab_data_map() and an
+unknown ring_req.act -- call
+transport_generic_free_cmd(&pending_req->se_cmd, 0), which kref_put()s a
+refcount of 0. That underflows it ("refcount_t: underflow;
+use-after-free") and, as the release function is not run, leaks the
+command tag.
 
-        u64 nsecs = rlim_new * NSEC_PER_SEC;
+Impact: a pvSCSI guest can leak every command tag of a LUN's session,
+stopping the LUN, by submitting requests with a bad grant reference or
+an unknown request type; under panic_on_warn the refcount underflow
+panics the host.
 
-On 32-bit kernels both rlim_new (unsigned long) and NSEC_PER_SEC
-(1000000000L) are 32-bit, so the multiplication is performed in unsigned
-long and truncated for rlim_new > 4 seconds before being widened to u64.
+Add a helper that just returns the tag with target_free_tag() and sends
+the error response. It frees the tag while the v2p reference still pins
+the session, and snapshots the response fields beforehand because
+freeing the tag can let another ring reuse the pending_req slot.
 
-The same file already casts to u64 for the matching computation in
-check_process_timers():
-
-        u64 softns = (u64)soft * NSEC_PER_SEC;
-
-As a result, the truncated value is installed into the CPUCLOCK_PROF
-expiry cache (nextevt), causing the process CPU timer to be programmed
-to fire prematurely for any RLIMIT_CPU soft limit >= 5 seconds. The
-actual SIGXCPU/SIGKILL decision in check_process_timers() already casts
-to u64 and is therefore correct, so limit enforcement is not broken;
-only the expiry-cache programming is wrong. Apply the same cast here so
-both paths convert rlim_cur identically.
-
-64-bit kernels are unaffected.
-
-Fixes: 858cf3a8c599 ("timers/itimer: Convert internal cputime_t units to nsec")
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Fixes: 2dbcdf33dbf6 ("xen-scsiback: Convert to percpu_ida tag allocation")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260616112017.1681372-1-zhanxusheng@xiaomi.com
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://patch.msgid.link/20260611123046.2323342-2-michael.bommarito@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/posix-cpu-timers.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/xen/xen-scsiback.c |   28 ++++++++++++++++++++++------
+ 1 file changed, 22 insertions(+), 6 deletions(-)
 
---- a/kernel/time/posix-cpu-timers.c
-+++ b/kernel/time/posix-cpu-timers.c
-@@ -41,7 +41,7 @@ void posix_cputimers_group_init(struct p
-  */
- int update_rlimit_cpu(struct task_struct *task, unsigned long rlim_new)
- {
--	u64 nsecs = rlim_new * NSEC_PER_SEC;
-+	u64 nsecs = (u64)rlim_new * NSEC_PER_SEC;
- 	unsigned long irq_fl;
+--- a/drivers/xen/xen-scsiback.c
++++ b/drivers/xen/xen-scsiback.c
+@@ -612,6 +612,25 @@ static void scsiback_disconnect(struct v
+ 	xenbus_unmap_ring_vfree(info->dev, info->ring.sring);
+ }
  
- 	if (!lock_task_sighand(task, &irq_fl))
++/*
++ * Send the error response for a request that did not reach the target core
++ * and return its tag.  Free the tag before the response drops the v2p
++ * reference that keeps the session alive, and snapshot what the response
++ * needs since returning the tag can let the slot be reused.
++ */
++static void scsiback_resp_and_free(struct vscsibk_pend *pending_req,
++				   int32_t result)
++{
++	struct vscsibk_info *info = pending_req->info;
++	struct v2p_entry *v2p = pending_req->v2p;
++	struct se_session *se_sess = v2p->tpg->tpg_nexus->tvn_se_sess;
++	u16 rqid = pending_req->rqid;
++
++	target_free_tag(se_sess, &pending_req->se_cmd);
++	scsiback_send_response(info, NULL, result, 0, rqid);
++	kref_put(&v2p->kref, scsiback_free_translation_entry);
++}
++
+ static void scsiback_device_action(struct vscsibk_pend *pending_req,
+ 	enum tcm_tmreq_table act, int tag)
+ {
+@@ -793,9 +812,8 @@ static int scsiback_do_cmd_fn(struct vsc
+ 		case VSCSIIF_ACT_SCSI_CDB:
+ 			if (scsiback_gnttab_data_map(&ring_req, pending_req)) {
+ 				scsiback_fast_flush_area(pending_req);
+-				scsiback_do_resp_with_sense(NULL,
+-						DID_ERROR << 16, 0, pending_req);
+-				transport_generic_free_cmd(&pending_req->se_cmd, 0);
++				scsiback_resp_and_free(pending_req,
++						       DID_ERROR << 16);
+ 			} else {
+ 				scsiback_cmd_exec(pending_req);
+ 			}
+@@ -809,9 +827,7 @@ static int scsiback_do_cmd_fn(struct vsc
+ 			break;
+ 		default:
+ 			pr_err_ratelimited("invalid request\n");
+-			scsiback_do_resp_with_sense(NULL, DID_ERROR << 16, 0,
+-						    pending_req);
+-			transport_generic_free_cmd(&pending_req->se_cmd, 0);
++			scsiback_resp_and_free(pending_req, DID_ERROR << 16);
+ 			break;
+ 		}
+ 
 
 
