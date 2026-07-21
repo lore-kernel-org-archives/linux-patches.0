@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EAA1D7E5C;
-	Tue, 21 Jul 2026 20:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021B524A078;
+	Tue, 21 Jul 2026 20:16:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664977; cv=none; b=L1TymCpOy4rFUnTTpdXcQ//zO9D+VuuntiltMBpOlnrcXpUwuPEmhWL6Y7C85FzIDsdtNUy+CdjF6F2oW1+i+W8+K+y6XjaneWim6XY/3a1oXJ2vYFISWMFjS0Cg2dfhKOVHZGJkpgxXLlWwBY9fNy57LbteTR0gRsAL5CLWSbA=
+	t=1784664980; cv=none; b=VluPmLzKD2vbxEB6qz6E0KdC7oYRWLlVUrmHjsMSAKJoSDaAXG5Qi6J0g1z1CSU9VjDVRCfLTK7g+BPv91vtoYQBa9xdjDeuUqy3eedF5YFcDhLXc3tV0mkMwT+BgNkem4xg+hcTBfv6/nB9I4w0KAYNHsXT0Mn6FHohE1e/tMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664977; c=relaxed/simple;
-	bh=WenJyzUazwM3CJAWzLrtZrzbCufySAdT791yIcaCers=;
+	s=arc-20240116; t=1784664980; c=relaxed/simple;
+	bh=isA3Bx6Fmd/QNVCXgUJGXHDhDZef2Ys1gyJDQ65WnW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BBFBkq1dzKCY0/b5HnF8u/YAa6mAzZPG+x4oVoG68hxZCDAEwL1Oyj2P5WbVzHRnXiFwfMhOa6ZLBQr1jXV/tVIz+lhxPYMeWUDpJmzLu2GOWIIf1P9APZrj/E6ff74rOqeHgWGFdGBkP7My2m1cXuAvivjyEiMa+uMC5QG7MOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s91sAiv1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VRFyUvzxevTuqtTJY8UXBSylVrIpUcJaq3rFVIIVRC26zIovDPSF2oYI9CuvOdBxZI6Sowt1/nJm28vLC5nWBCcfbpV0WIySOX9zh90icf/UKpcXlbgo2UYCSDHQp6e84TVFULsIuQRW60MR+oy6C0gMQgdIFX8YCHhEBOnmIMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8wRU4lv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s91sAiv1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B321F000E9;
-	Tue, 21 Jul 2026 20:16:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8wRU4lv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6721E1F00A3A;
+	Tue, 21 Jul 2026 20:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664976;
-	bh=jSn1VgyvuL3MQRfodtOZQWhN+YAfEr/HIcQ4nRC4kkM=;
+	s=korg; t=1784664978;
+	bh=5oA8i9yaiTV6UHUw2TGhWOIpE/653frwjyknjMLZylc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s91sAiv1KT709F7tIqufmcuz/zadeP5StxcT+8YdaAtrEZRBeaTLafzQ5cHad+hbf
-	 2+a9dX/r7o6ExsmhwXbQcY1pwFeQ4+1QS/hPMIYZLHsMXE3PxwZ983QRzyWpUAJjrQ
-	 GCDDtjj1G+9DdiN8nrMd8vPkTtRBtgvjv7FwjzKI=
+	b=p8wRU4lv8Q+RBTLUGKO39PJwuZe2yysF8ArkrhhOGe++o7WM/J8bRc/IM+1YLPApO
+	 LWz3qBf86Zj/8wZhHrE5hxsEbil05HIvF5B4xkjAdtyl2OEujZpg8bORtul7pBTu3P
+	 e0jyZWS+mxsZyicqi8ckyj/GID7glU1uW1Uo4X+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Lianqin Hu <hulianqin@vivo.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.6 0128/1266] usb: xhci: Fix sleep in atomic context in xhci_free_streams()
-Date: Tue, 21 Jul 2026 17:09:25 +0200
-Message-ID: <20260721152444.668540351@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>
+Subject: [PATCH 6.6 0129/1266] usb: typec: tcpci_rt1711h: unregister TCPCI port with devres
+Date: Tue, 21 Jul 2026 17:09:26 +0200
+Message-ID: <20260721152444.691819399@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -45,93 +45,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: 胡连勤 <hulianqin@vivo.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 42c37c4b75d38b51d84f31a8e29427f5e06a7c2a upstream.
+commit e8da46d99d3710106e7c44db14566bf9b57386b5 upstream.
 
-When a USB device with active stream endpoints is disconnected,
-xhci_free_streams() is called from the hub_event workqueue to
-free the stream resources.  It calls xhci_free_stream_info()
-while holding xhci->lock with irqs disabled.
+rt1711h_probe() registers the TCPCI port before requesting the interrupt
+and enabling alert interrupts. If either of those later steps fails, the
+probe function returns without unregistering the TCPCI port. The explicit
+unregister currently only happens from the remove callback.
 
-xhci_free_stream_info() invokes xhci_free_stream_ctx(), which
-calls dma_free_coherent() for large stream context arrays.
+Register a devres action immediately after tcpci_register_port() succeeds,
+so tcpci_unregister_port() runs on later probe failures and on driver
+detach. Drop the remove callback to avoid unregistering the same port
+twice.
 
-dma_free_coherent() can sleep (e.g. via vunmap), triggering
-a BUG when called from atomic context.
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-Call trace:
- dma_free_attrs+0x174/0x220
- xhci_free_stream_info+0xd0/0x11c
- xhci_free_streams+0x278/0x37c
- usb_free_streams+0x98/0xc0
- usb_unbind_interface+0x1b8/0x2f8
- device_release_driver_internal+0x1d4/0x2cc
- device_release_driver+0x18/0x28
- bus_remove_device+0x160/0x1a4
- device_del+0x1ec/0x350
- usb_disable_device+0x98/0x214
- usb_disconnect+0xf0/0x35c
- hub_event+0xab4/0x19ec
- process_one_work+0x278/0x63c
-
-Fix this by saving the stream_info pointers and clearing the
-ep references under the lock, then calling xhci_free_stream_info()
-outside the lock where sleeping is allowed.
-
-Fixes: 8df75f42f8e6 ("USB: xhci: Add memory allocation for USB3 bulk streams.")
+Fixes: 302c570bf36e ("usb: typec: tcpci_rt1711h: avoid screaming irq causing boot hangs")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260703144033.483286-3-mathias.nyman@linux.intel.com
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260706145312.37260-1-mhun512@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/usb/typec/tcpm/tcpci_rt1711h.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -3577,6 +3577,7 @@ static int xhci_free_streams(struct usb_
- 	struct xhci_virt_device *vdev;
- 	struct xhci_command *command;
- 	struct xhci_input_control_ctx *ctrl_ctx;
-+	struct xhci_stream_info *stream_info[EP_CTX_PER_DEV];
- 	unsigned int ep_index;
- 	unsigned long flags;
- 	u32 changed_ep_bitmask;
-@@ -3637,10 +3638,15 @@ static int xhci_free_streams(struct usb_
- 	if (ret < 0)
- 		return ret;
+--- a/drivers/usb/typec/tcpm/tcpci_rt1711h.c
++++ b/drivers/usb/typec/tcpm/tcpci_rt1711h.c
+@@ -327,6 +327,8 @@ static int rt1711h_check_revision(struct
+ 	return ret;
+ }
  
-+	/*
-+	 * dma_free_coherent() called by xhci_free_stream_info() may sleep,
-+	 * so save stream_info pointers and clear references under lock,
-+	 * then free the memory outside lock.
-+	 */
- 	spin_lock_irqsave(&xhci->lock, flags);
- 	for (i = 0; i < num_eps; i++) {
- 		ep_index = xhci_get_endpoint_index(&eps[i]->desc);
--		xhci_free_stream_info(xhci, vdev->eps[ep_index].stream_info);
-+		stream_info[i] = vdev->eps[ep_index].stream_info;
- 		vdev->eps[ep_index].stream_info = NULL;
- 		/* FIXME Unset maxPstreams in endpoint context and
- 		 * update deq ptr to point to normal string ring.
-@@ -3650,6 +3656,9 @@ static int xhci_free_streams(struct usb_
- 	}
- 	spin_unlock_irqrestore(&xhci->lock, flags);
- 
-+	for (i = 0; i < num_eps; i++)
-+		xhci_free_stream_info(xhci, stream_info[i]);
++static void rt1711h_unregister_tcpci_port(void *tcpci);
 +
+ static int rt1711h_probe(struct i2c_client *client)
+ {
+ 	int ret;
+@@ -378,6 +380,10 @@ static int rt1711h_probe(struct i2c_clie
+ 	if (IS_ERR_OR_NULL(chip->tcpci))
+ 		return PTR_ERR(chip->tcpci);
+ 
++	ret = devm_add_action_or_reset(chip->dev, rt1711h_unregister_tcpci_port, chip->tcpci);
++	if (ret)
++		return ret;
++
+ 	ret = devm_request_threaded_irq(chip->dev, client->irq, NULL,
+ 					rt1711h_irq,
+ 					IRQF_ONESHOT | IRQF_TRIGGER_LOW,
+@@ -395,11 +401,9 @@ static int rt1711h_probe(struct i2c_clie
  	return 0;
  }
  
+-static void rt1711h_remove(struct i2c_client *client)
++static void rt1711h_unregister_tcpci_port(void *tcpci)
+ {
+-	struct rt1711h_chip *chip = i2c_get_clientdata(client);
+-
+-	tcpci_unregister_port(chip->tcpci);
++	tcpci_unregister_port(tcpci);
+ }
+ 
+ static const struct i2c_device_id rt1711h_id[] = {
+@@ -424,7 +428,6 @@ static struct i2c_driver rt1711h_i2c_dri
+ 		.of_match_table = of_match_ptr(rt1711h_of_match),
+ 	},
+ 	.probe = rt1711h_probe,
+-	.remove = rt1711h_remove,
+ 	.id_table = rt1711h_id,
+ };
+ module_i2c_driver(rt1711h_i2c_driver);
 
 
