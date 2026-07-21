@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC7C37B40C;
-	Tue, 21 Jul 2026 17:05:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65563E1723;
+	Tue, 21 Jul 2026 17:05:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653548; cv=none; b=LITXNXlHlLk9kfUDd5rQyBjcaHfGG4uqcKCQNTJg6bKWN2DoK/uNQelo2XJXP9949/bbFQyqy2q6VjHYvpC7qkVqFYrXCmW9X/TMP0hRTDsRvd13cIHbVJP2ucGC+RKxP6v494ibCJAlDnSm5XNtM1KWdEUrJciNlLNoZCVh9fU=
+	t=1784653551; cv=none; b=qg6SIv8P6HiC/EVwDbU2jrpBf8qy+JVTga9VCgwwQoPekRy2jTbvzvHZW3zW5DBZvURKGvu6FDy5aAh0IQOgNV5K/1ZVA588eNC+Ib8vmLR142O6EB3e5udouUiPD47FeQpLb8VcBOUqRjw1RdvACLnG8XD9UMf08QML1nWe2Yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653548; c=relaxed/simple;
-	bh=QO9/+kph0zucdANqjLSTq3XC142Z3jiG3dakOQxhTfA=;
+	s=arc-20240116; t=1784653551; c=relaxed/simple;
+	bh=Hkzu0sTSjyjaxK+4B5yLpNlYaJoEyIzh+FZ3+4SwG/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mUig1z4nOTsqWCnNk/RycjWI91K1PAziXq5pZorI12eEPGYY9pbHgMwT3863Tu58HYsYWfDjhboPkWTXIIrK/lThx7H6jkdtVR72ttY+rNYRgcT8yLzRMb8Z1R50Z7gaOGC8lvKDKaOnVtPCAodneM57dngFFxhL3kruGGT+yt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O2m8laP0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MDST4PVnE900DRlwxec4mdcbqojUNdoXUBkUkwkbOf3CNGOLWOCAtGTWiVJJMUflpeuGhmt/F+DOYokGRveqB3+CVt0e2fK6HdpYgdluOp7h/hZt0cvCPRlstAcuuWDjqhaQDdu7C6m1MuaLdfIQUEdVxmFMu8V26nu3j8oNdC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCVbBPWD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2m8laP0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83FFF1F00A3A;
-	Tue, 21 Jul 2026 17:05:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCVbBPWD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 291CA1F000E9;
+	Tue, 21 Jul 2026 17:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653547;
-	bh=OkqL7oTAuymuZDbzJGZBZehpjzwqjYBdoRjnoz7xWxQ=;
+	s=korg; t=1784653549;
+	bh=9lY7vaywUG4qabquyVBH7+PoxzcF9z8StcNJDbtv3qA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O2m8laP0gjsqcMDwwf8V/pE0RgdCBvcxy+7u//Tdj+oYUXmlxbaoWj44b9A13uxq3
-	 0wppcDE66As/lq1ky1VLMwiRsn6L/m5j4q0PMeCsKvUcexDaTwo/QbRXV/s5dcH0uo
-	 9Yt+l2KkhGXkk9GBj8CbLxF83O5xk7TbGtN5U578=
+	b=iCVbBPWD8JCMCVyQUFFxaF+RegsCzZN5ReXiTN7Ll5JNtgh392Nb8UAbrkXYIT0OF
+	 4Aw8Yp04d4NQx23u+j/QDgqpUCYpCm+1DjoY12YEhZLq/dmMose+ddNjlnXd+OoYQw
+	 EvMXAS0nkhbTZpA9PUarBLfRy/zxMXJsqcfCa3xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Samuel Moelius <sam.moelius@trailofbits.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1367/2077] net/sched: dualpi2: clear stale classification on filter miss
-Date: Tue, 21 Jul 2026 17:17:20 +0200
-Message-ID: <20260721152625.060995162@linuxfoundation.org>
+Subject: [PATCH 7.1 1368/2077] net/sched: hhf: clear heavy-hitter state on reset
+Date: Tue, 21 Jul 2026 17:17:21 +0200
+Message-ID: <20260721152625.083621100@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,53 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Samuel Moelius <sam.moelius@trailofbits.com>
 
-[ Upstream commit bf83ee45874e9f071478bed39f9cf40cc741629f ]
+[ Upstream commit a225f8c20712713406ae47024b8df42deacddd4a ]
 
-DualPI2 leaves previous classification state attached to an skb when
-filter classification returns no match.  The enqueue path can then act
-on stale state from an earlier classification attempt.
+HHF reset does not clear the classifier state used to identify heavy
+hitters.  Packets after reset can therefore be scheduled using flow
+history from before the reset.
 
-A filter miss should fall back to the default class without reusing old
-per-packet classification data.
+The reset operation should return the qdisc to an empty state.
 
-Initialize the classification result to CLASSIC before running the
-classifier.  Explicit L4S, priority, and successful filter
-classification can still override that default.
+Clear the heavy-hitter classifier tables when HHF is reset.
 
-Fixes: 8f9516daedd6 ("sched: Add enqueue/dequeue of dualpi2 qdisc")
+Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
 Assisted-by: Codex:gpt-5.5-cyber-preview
 Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_dualpi2.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/sched/sch_hhf.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/net/sched/sch_dualpi2.c b/net/sched/sch_dualpi2.c
-index 5434df6ca8efe6..27088760eff443 100644
---- a/net/sched/sch_dualpi2.c
-+++ b/net/sched/sch_dualpi2.c
-@@ -346,6 +346,8 @@ static int dualpi2_skb_classify(struct dualpi2_sched_data *q,
- 	struct tcf_proto *fl;
- 	int result;
+diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
+index 1e25b75daae2e5..d85cb0263b675a 100644
+--- a/net/sched/sch_hhf.c
++++ b/net/sched/sch_hhf.c
+@@ -462,12 +462,39 @@ static struct sk_buff *hhf_dequeue(struct Qdisc *sch)
+ 	return skb;
+ }
  
-+	cb->classified = DUALPI2_C_CLASSIC;
++static void hhf_reset_classifier(struct hhf_sched_data *q)
++{
++	int i;
 +
- 	dualpi2_read_ect(skb);
- 	if (cb->ect & q->ecn_mask) {
- 		cb->classified = DUALPI2_C_L4S;
-@@ -359,10 +361,8 @@ static int dualpi2_skb_classify(struct dualpi2_sched_data *q,
- 	}
++	if (!q->hh_flows)
++		return;
++
++	for (i = 0; i < HH_FLOWS_CNT; i++) {
++		struct hh_flow_state *flow, *next;
++		struct list_head *head = &q->hh_flows[i];
++
++		list_for_each_entry_safe(flow, next, head, flowchain) {
++			list_del(&flow->flowchain);
++			kfree(flow);
++		}
++	}
++	WRITE_ONCE(q->hh_flows_current_cnt, 0);
++
++	for (i = 0; i < HHF_ARRAYS_CNT; i++) {
++		if (q->hhf_valid_bits[i])
++			bitmap_zero(q->hhf_valid_bits[i], HHF_ARRAYS_LEN);
++	}
++	q->hhf_arrays_reset_timestamp = hhf_time_stamp();
++}
++
+ static void hhf_reset(struct Qdisc *sch)
+ {
++	struct hhf_sched_data *q = qdisc_priv(sch);
+ 	struct sk_buff *skb;
  
- 	fl = rcu_dereference_bh(q->tcf_filters);
--	if (!fl) {
--		cb->classified = DUALPI2_C_CLASSIC;
-+	if (!fl)
- 		return NET_XMIT_SUCCESS;
--	}
+ 	while ((skb = hhf_dequeue(sch)) != NULL)
+ 		rtnl_kfree_skbs(skb, skb);
++	hhf_reset_classifier(q);
+ }
  
- 	result = tcf_classify(skb, NULL, fl, &res, false);
- 	if (result >= 0) {
+ static void hhf_destroy(struct Qdisc *sch)
 -- 
 2.53.0
 
