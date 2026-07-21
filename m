@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DDFE4195C9;
-	Tue, 21 Jul 2026 20:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0FD3783D4;
+	Tue, 21 Jul 2026 20:29:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665762; cv=none; b=EjMRni7PDE+FGq21Z+bA+GhsXRpldYN/2fU7zK18R1k105YEgLdV35bK3HacExeWy92+/jm1ethR59RZJWq888+CEc/zqWGXiTGlGCr5BTXuUfP8zBwdA/xWyz4y8Ht9zyibyedJDqObl3ZHtuqDTt+Tzoy5jaK+Mspr4Oj7/g0=
+	t=1784665765; cv=none; b=U5PP+vG2hxWl77y8oxd3+FoLgVuLEIOVWntDAzVvjnz4LYKM50BalvtUMD0JVu2ITkfAWdSeJFvIC4X/JuKrvWAXZJxaEkasc7Lc+zi0Hr9SSkZ1wRksEjAI4okm0Jmpp6VJ+puzEP1r9lSZgNZSAghXuJ3vVTpcEz26X8jMHv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665762; c=relaxed/simple;
-	bh=zjSRAhjLXf4CBIYbOJAjzmGv2IbqroCMCw9TvDCQqyo=;
+	s=arc-20240116; t=1784665765; c=relaxed/simple;
+	bh=ql1RIa34lRQggwk50sqfxs5v7Q0EcP2ng/fEWgioHW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e9DwKJDgbjSe3pBCRiCv2r1fykhWn3nzBvK6oI1s+mxQ2T6r+hgxkCj+PHBxQqjRr7S3e57oOldw+o2RZ9biCv9FwHEwqjaZ6ryjC2yfOab8W5DgiNVBXLzeKbxU8S8LcS0WXpYpGjLlw7wudR2Lyt3ESdJbzCgZVS+r8J6qjQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vgcVVobr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kDA/uVyOMM+rAATsjm8mncwDWhWah7y86SQI9bxB6Ry/Ugnwb0kK1ULaVIzI5kB5v6+5IafsEI+F1iXQE+nmQzatfLz+j5cmEZrf5B8fZPcztGy6TbKJDJZGMTKhudC8DpF9nIJWhv30n9bR6oaM7QVtQNRkuW7y59DQePtC8wQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JnWqiLw+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgcVVobr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38431F000E9;
-	Tue, 21 Jul 2026 20:29:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JnWqiLw+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BBBA1F000E9;
+	Tue, 21 Jul 2026 20:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665761;
-	bh=kaaBsSejQ9zzuyqSmStuH0+E2RWiVJHxCNLY7SpIBa4=;
+	s=korg; t=1784665763;
+	bh=rO1yaC5PzNlxM6mNvWgUkXxZh+vy79vNxLoNxdQz29A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vgcVVobrTkUDwaGC3sRU+p+jQ4cOqn2Q0sE6BlHmoY2sfAd7+mbTc1KpLzM1SeiKm
-	 3ltXGF1AP6cCuHopBXjKDIynACgAcOUs8uFa/zdXvNMNZySD2QwjuClO3KqKedVuEf
-	 Wjvxyw2fWZtK1KRIBliwPGvjE9thOEIaGkVGLuT4=
+	b=JnWqiLw++BvO8SdD6xAyNlB1OLRKtntV1EItJynmFu0+PGDqfzzagxNKDvS+hrgT/
+	 RD4s0NeVseChjQv2h+e2zV9XLFMjXrqalRpPFpRHH8zMaw/eQtnxuOITN4ROzhxbes
+	 HCsSjjSQgOpCOURav4I4yUZcV1wYPPaaqfmNj37U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel@sholland.org>,
-	Andrey Skvortsov <andrej.skvortzov@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jacob Moroni <jmoroni@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0427/1266] bus: sunxi-rsb: Always check register address validity
-Date: Tue, 21 Jul 2026 17:14:24 +0200
-Message-ID: <20260721152451.395583615@linuxfoundation.org>
+Subject: [PATCH 6.6 0428/1266] RDMA/irdma: Fix out-of-bounds write in irdma_copy_user_pgaddrs
+Date: Tue, 21 Jul 2026 17:14:25 +0200
+Message-ID: <20260721152451.418170765@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,41 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Holland <samuel@sholland.org>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit 61192938a5870ac36edae81e4775b680dcf02c61 ]
+[ Upstream commit 5ebb3ed757be3e04cf803026004aa0beaeb13e9b ]
 
-The register address was already validated for read operations in
-regmap_sunxi_rsb_reg_read before being truncated to a u8. Write operations
-have the same set of possible addresses, and the address is being truncated
-from u32 to u8 here as well, so the same check is needed.
+The irdma_copy_user_pgaddrs function loops through all of the umem DMA
+blocks to populate the PBLEs and will stop when either the last DMA
+block is reached or palloc->total_cnt is reached. The issue is that
+the logic for checking palloc->total_cnt would only work for non-zero
+values.
 
-Signed-off-by: Samuel Holland <samuel@sholland.org>
-Signed-off-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
-Fixes: d787dcdb9c8f ("bus: sunxi-rsb: Add driver for Allwinner Reduced Serial Bus")
-Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20260301144939.1832806-1-andrej.skvortzov@gmail.com
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+When irdma_setup_pbles is called with lvl==0, it
+calls irdma_copy_user_pgaddrs with palloc->total_cnt==0, which means
+the only way to break out of the loop is to reach the last umem DMA
+block, which means it could end up going beyond the fixed size of 4
+iwmr->pgaddrmem array that is used in the lvl==0 case.
+
+In the case of QP/CQ/SRQ rings, the value of lvl is determined by a
+separate input (for example, req.cq_pages in the case of a CQ). So,
+we must perform explicit checking to ensure we don't overflow the
+pgaddrmem array if the user provides a umem that consists of more
+blocks than their provided req.cq_pages.
+
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Link: https://patch.msgid.link/r/20260512183852.614045-1-jmoroni@google.com
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/sunxi-rsb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/hw/irdma/verbs.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/bus/sunxi-rsb.c b/drivers/bus/sunxi-rsb.c
-index db0ed4e5d315fa..c2b2e56331d1bc 100644
---- a/drivers/bus/sunxi-rsb.c
-+++ b/drivers/bus/sunxi-rsb.c
-@@ -447,6 +447,9 @@ static int regmap_sunxi_rsb_reg_write(void *context, unsigned int reg,
- 	struct sunxi_rsb_ctx *ctx = context;
- 	struct sunxi_rsb_device *rdev = ctx->rdev;
- 
-+	if (reg > 0xff)
-+		return -EINVAL;
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 2358fab95784b0..91d5b1b0d6b1b2 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -2326,10 +2326,11 @@ static inline u64 *irdma_next_pbl_addr(u64 *pbl, struct irdma_pble_info **pinfo,
+  * irdma_copy_user_pgaddrs - copy user page address to pble's os locally
+  * @iwmr: iwmr for IB's user page addresses
+  * @pbl: ple pointer to save 1 level or 0 level pble
++ * @pbl_len: Max number of PBL entries to populate
+  * @level: indicated level 0, 1 or 2
+  */
+ static void irdma_copy_user_pgaddrs(struct irdma_mr *iwmr, u64 *pbl,
+-				    enum irdma_pble_level level)
++				    u32 pbl_len, enum irdma_pble_level level)
+ {
+ 	struct ib_umem *region = iwmr->region;
+ 	struct irdma_pbl *iwpbl = &iwmr->iwpbl;
+@@ -2337,7 +2338,9 @@ static void irdma_copy_user_pgaddrs(struct irdma_mr *iwmr, u64 *pbl,
+ 	struct irdma_pble_info *pinfo;
+ 	struct ib_block_iter biter;
+ 	u32 idx = 0;
+-	u32 pbl_cnt = 0;
 +
- 	return sunxi_rsb_write(rdev->rsb, rdev->rtaddr, reg, &val, ctx->size);
- }
++	if (!pbl_len)
++		return;
  
+ 	pinfo = (level == PBLE_LEVEL_1) ? NULL : palloc->level2.leaf;
+ 
+@@ -2346,7 +2349,7 @@ static void irdma_copy_user_pgaddrs(struct irdma_mr *iwmr, u64 *pbl,
+ 
+ 	rdma_umem_for_each_dma_block(region, &biter, iwmr->page_size) {
+ 		*pbl = rdma_block_iter_dma_address(&biter);
+-		if (++pbl_cnt == palloc->total_cnt)
++		if (!--pbl_len)
+ 			break;
+ 		pbl = irdma_next_pbl_addr(pbl, &pinfo, &idx);
+ 	}
+@@ -2422,6 +2425,7 @@ static int irdma_setup_pbles(struct irdma_pci_f *rf, struct irdma_mr *iwmr,
+ 	u64 *pbl;
+ 	int status;
+ 	enum irdma_pble_level level = PBLE_LEVEL_1;
++	u32 pbl_len;
+ 
+ 	if (lvl) {
+ 		status = irdma_get_pble(rf->pble_rsrc, palloc, iwmr->page_cnt,
+@@ -2429,16 +2433,18 @@ static int irdma_setup_pbles(struct irdma_pci_f *rf, struct irdma_mr *iwmr,
+ 		if (status)
+ 			return status;
+ 
++		pbl_len = palloc->total_cnt;
+ 		iwpbl->pbl_allocated = true;
+ 		level = palloc->level;
+ 		pinfo = (level == PBLE_LEVEL_1) ? &palloc->level1 :
+ 						  palloc->level2.leaf;
+ 		pbl = pinfo->addr;
+ 	} else {
++		pbl_len = IRDMA_MAX_SAVED_PHY_PGADDR;
+ 		pbl = iwmr->pgaddrmem;
+ 	}
+ 
+-	irdma_copy_user_pgaddrs(iwmr, pbl, level);
++	irdma_copy_user_pgaddrs(iwmr, pbl, pbl_len, level);
+ 
+ 	if (lvl)
+ 		iwmr->pgaddrmem[0] = *pbl;
 -- 
 2.53.0
 
