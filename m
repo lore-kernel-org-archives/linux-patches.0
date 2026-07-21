@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8091635C68A;
-	Tue, 21 Jul 2026 21:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D50235C684;
+	Tue, 21 Jul 2026 21:09:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668156; cv=none; b=JXVvZw/yYn8WFcObBDYkQPXwWZfuaKoweH6ysxiUl4yQDsrJUPD7xXuz6EMdB7VGuqtuuAgdugyuwIyaRnooPD4w3ejqwBuhoktJBL8msxYiRDiwTNyZvAcweW0ZUQ7an0gQSjDquyd2OHIF4sYGt+DG8cnaKyDDM6HKjz/gxyY=
+	t=1784668159; cv=none; b=Jy0UGPCB+ImL8SMryddNtbaHsbKdX21Aq5PJY6HNoRacYjwVabuZ0DHKd8TvtZL/nY9AG1DzKaNSHgOvnAsOQMf8cXeppHqz0+R7VXaCwXtewQrujlZS4HvvsksPLq2GBIWwc5hIa7RJZE0D8jE1Znhv4zkUmW0+MKq4/l2uqbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668156; c=relaxed/simple;
-	bh=DAF7Czj2uxyKc0hMCabB5atKHSNO2+T/uQCdGDqiJe4=;
+	s=arc-20240116; t=1784668159; c=relaxed/simple;
+	bh=WJG5oGkT6NQTbIFnteepixZ56R8+8KEMip5wTtW5h30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oTWQZEJFAWSiq6Lo8bdcJiroursoSclUAJAs6+Uezs9sMNuqK0ViaQG/S2G3NMdUjatqSbgeDsRjjUqaBLmDfgUc402genK3eRoOUzXC1iCYzSeNnSWoN8Y3lhAfSZukYTIZ119mzs4q/vxXeqdWzE+TmKey27nyG6SNruyqHCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qq6zYtGy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YNK/77RyWak1V9S8JJ+E+1EMudliLqs28MOc9NZVQIX9V2unQdh9VkKEiv3+XPqNflBuWegBHWqDk1qNPigmBPI9YUTOVSw3PHDuA6Fi4os20er9YH6Sjx1z9+Pf4cjoweZQX0ALZu23SY6MzldUD1lrLeWS8UaY98d4NyymOFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Um8iZoBP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qq6zYtGy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5FEA1F000E9;
-	Tue, 21 Jul 2026 21:09:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Um8iZoBP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1A81F000E9;
+	Tue, 21 Jul 2026 21:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668155;
-	bh=JjwrMcYoyDylLjWkYkhXr7+VGuw0qi+iCs+PvKDiWgY=;
+	s=korg; t=1784668158;
+	bh=DjNLR9w0++syCxxffPfrqD6+nsolgvQ8i5kKL1VxI7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qq6zYtGyj+Y2X66rPcNLPXZIq2szdJxYxAxs48ure3OrhzBlaQJ4zD++L6GconDUX
-	 NnLCcDgfwOzjIGMXZbms1CzOo1IArRXYDasay4MypfTMx8laRgnJ+2EyFphjpeHGon
-	 bW28a58B0T9OJJorZ5Pauil3xYmLfAsL5Ldy97lY=
+	b=Um8iZoBPC5GtKoVgqbKkhQAAeHdZMldPzXQS2WPuZ2h7brBW/rWZFYfRIYva5qTFT
+	 lM7Sbnk53MwLJ6PnxhEG8Ynj+pha1TeHzWR1jQoTpQt1nLazCJNnO+GaEBqcq3eMeA
+	 iKC0nO6NbWq+uMYpvdW4pAu8YIkBL7sqIHkjhq3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.1 0070/1067] iio: magnetometer: ak8975: Add missed pm_runtime_put_autosuspend() call
-Date: Tue, 21 Jul 2026 17:11:11 +0200
-Message-ID: <20260721152426.138405171@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Griffin Kroah-Hartman <griffin@kroah.com>
+Subject: [PATCH 6.1 0053/1067] usb: gadget: function: rndis: add length check for header
+Date: Tue, 21 Jul 2026 17:10:54 +0200
+Message-ID: <20260721152425.751422217@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,34 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-commit e94944d7364d3ddb273539492f9bd9c9a622549a upstream.
+commit 21b5bf155435008e0fb0736795289788e63d426f upstream.
 
-On the failure in the ak8975_read_axis() the PM runtime gets unbalanced.
-Balance it by calling pm_runtime_put_autosuspend() on error path as well.
+Add a length check for the rndis header in rndis_rm_hdr, to ensure that
+MessageType, MessageLength, DataOffset, and DataLength fields are
+present before they are accessed.
 
-Fixes: cde4cb5dd422 ("iio: magn: ak8975: deploy runtime and system PM")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260505-magnetometer-fixes-v5-0-831b9b5550fc%40gmail.com
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Assisted-by: gkh_clanker_2000
+Cc: stable <stable@kernel.org>
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Link: https://patch.msgid.link/20260708-usb-gadget-rndis-v1-2-e77e026dcc6a@kroah.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/magnetometer/ak8975.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/gadget/function/rndis.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/iio/magnetometer/ak8975.c
-+++ b/drivers/iio/magnetometer/ak8975.c
-@@ -746,6 +746,7 @@ static int ak8975_read_axis(struct iio_d
+--- a/drivers/usb/gadget/function/rndis.c
++++ b/drivers/usb/gadget/function/rndis.c
+@@ -1080,6 +1080,12 @@ int rndis_rm_hdr(struct gether *port,
+ 	/* tmp points to a struct rndis_packet_msg_type */
+ 	__le32 *tmp = (void *)skb->data;
  
- exit:
- 	mutex_unlock(&data->lock);
-+	pm_runtime_put_autosuspend(&data->client->dev);
- 	dev_err(&client->dev, "Error in reading axis\n");
- 	return ret;
- }
++	/* Need at least MessageType, MessageLength, DataOffset, DataLength */
++	if (skb->len < 16) {
++		dev_kfree_skb_any(skb);
++		return -EINVAL;
++	}
++
+ 	/* MessageType, MessageLength */
+ 	if (cpu_to_le32(RNDIS_MSG_PACKET)
+ 			!= get_unaligned(tmp++)) {
 
 
