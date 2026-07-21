@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD1D404BF6;
-	Tue, 21 Jul 2026 21:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D72F34B1A6;
+	Tue, 21 Jul 2026 21:47:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670419; cv=none; b=Ds1uq9ul/A1rGFs/FgLQV1/plH4NyM5v3nhNkeeCbVM5Ve0u6AjPuxbK7mjwZFkRHaDEUvzVkGmO4sOjvL1dOE/KEdxD38gvUGkosJp+Ryx1quG+MWCM810LnHNQQJS1Czh6o8cji5yrE37MNnPnjWLm++dW6hjQ/JCLhaK++x8=
+	t=1784670422; cv=none; b=Lt63OUwasm94e7KTznR8+AiGs2tixLk7AsZM65rO/exT/mUu4CvLAe74p09HuAP10jWNsPoxPuzyGwuo7dvXsgj7X1deH+WyOyA3lOGeOUS8rgvzH77jl0tZci123DpomzKuFgj4MTUlL/VQKmzUXlt6UqIko2zt5LtibGvzxUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670419; c=relaxed/simple;
-	bh=tGYip14lTJEJKJ06E9chas6caZoW9gFG1byUstbr/os=;
+	s=arc-20240116; t=1784670422; c=relaxed/simple;
+	bh=AEoyiWH96TdJ+scrxIYc52dadat7pZIdQCzYwdpMnik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V0/fKcAt4fWcThe6oU8Qv9vC0gTh2UnOi41NSXiSnu0l2jT47m3GfVf6n/bUGw6z8Nd/M+TR+7EfzFRmjHt6hUgTNKSlk3okrCrgRHo6/IqQ15DojopU+v2eJ0YL9Z+lESP2mRvLmNEZ0io4s2odQT328uC69Hv28G51LuotKUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gzoQnrvE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GENhIRkjNPE4dJXQiIOJx9d+LJpOO5JlQQMtMzl4pNZgN7X2OREwEDA4dadbv7mog29pJW5ShnyTNC1WQWxSTrSqwGBHuk8Zc3Pm8UZvG1UXJf36QYaWcYcvbg70uVTR8k7PoV2LxK2mB/3iLdzA5SsL9klrj6jXoRSBCJYXIQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cptgn0em; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gzoQnrvE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3E51F000E9;
-	Tue, 21 Jul 2026 21:46:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cptgn0em"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2533E1F000E9;
+	Tue, 21 Jul 2026 21:46:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670417;
-	bh=iHk1E4Lxx9FK0PHVXJ0CUIjjniICR3JZ9Cw41cq7qdI=;
+	s=korg; t=1784670420;
+	bh=FRulexm+jjQebOCwjo8pFST81QRB3NGtg7nG90vvNHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gzoQnrvEwa83T0vDdjYOfLjqtIHDqLM05/t1VQUAl4x1YxE0cK4fRwrdrcELNEZpe
-	 KeKhOXOjX4z9muz2FZn2lyDRfmkRonXyHB/bnAmmHks8Bd68GtMAvi4dKiTPQX1XiD
-	 dMHNAsKuCLogR7S66drcZ21cJ9NCG2Oe6Gu1qzYQ=
+	b=cptgn0emyLM3sjSarWfriql8fLJrqchmsVE5Df0/dX1N+mCduMPj7xUo1L6FaG+ak
+	 cBoZHqHQLC8LAM8Cn5G9v5gHPdpEEkw5PVQJYJqr3ufL6i/y3God3kZKFIyH+e3y5j
+	 ZB1C4vAdJMyk87W6NXgOqbguN4eQJnrt3z9+xM5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	James Raphael Tiovalen <jamestiotio@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 0888/1067] net/sched: sch_teql: move rcu_read_lock()/spin_lock() from _bh variants
-Date: Tue, 21 Jul 2026 17:24:49 +0200
-Message-ID: <20260721152444.398045526@linuxfoundation.org>
+Subject: [PATCH 6.1 0924/1067] macsec: fix promiscuity refcount leak in macsec_dev_open()
+Date: Tue, 21 Jul 2026 17:25:25 +0200
+Message-ID: <20260721152445.204605205@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,118 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: James Raphael Tiovalen <jamestiotio@gmail.com>
 
-commit 6301f6a34ed86fe6f3b7b3211ea069f3677fc559 upstream.
+commit 7410d11460eb90d6c9281162ccc6a128534d897d upstream.
 
-This is a followup based on sashiko comments [1] on commit e5b811fe7931
-("net/sched: sch_teql: Introduce slaves_lock to avoid race condition and UAF")
+When a MACsec interface with IFF_PROMISC set is brought up on top of a
+device that has hardware offload enabled, macsec_dev_open() first calls
+dev_set_promiscuity(real_dev, 1) and then propagates the open to the
+offload device. If that propagation fails, the error path jumps to the
+clear_allmulti label, which only reverts allmulti and the unicast
+address. The promiscuity taken on the lower device is never dropped, so
+real_dev is left permanently stuck in promiscuous mode. Its promiscuity
+count can no longer be balanced from software.
 
-Use plain rcu_read_lock()/spin_lock() in teql_master_xmit() instead of the
-_bh variants, since ndo_start_xmit is already invoked with BH disabled
-by the core stack and the _bh primitives can warn in_hardirq() when xmit
-is reached through netpoll or a softirq xmit path with hard IRQs disabled.
+Add a clear_promisc label that drops the promiscuity reference and
+route the two offload failure paths to it. The dev_set_promiscuity()
+failure itself still jumps to clear_allmulti, since on that failure the
+count was not incremented.
 
-Moves rcu_read_lock() after restart: label + adds rcu_read_unlock() before
-goto restart (fixes the unbounded RCU hold across retries)
-
-[1] https://sashiko.dev/#/patchset/20260628111229.669751-1-jhs%40mojatatu.com
-
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Fixes: e5b811fe7931 ("net/sched: sch_teql: Introduce slaves_lock to avoid race condition and UAF")
-Link: https://patch.msgid.link/20260630150922.238714-1-jhs@mojatatu.com
+Fixes: 3cf3227a21d1 ("net: macsec: hardware offloading infrastructure")
+Cc: stable@vger.kernel.org
+Signed-off-by: James Raphael Tiovalen <jamestiotio@gmail.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20260705113629.187490-1-jamestiotio@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_teql.c |   27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ drivers/net/macsec.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/net/sched/sch_teql.c
-+++ b/net/sched/sch_teql.c
-@@ -311,14 +311,14 @@ static netdev_tx_t teql_master_xmit(stru
- 	int subq = skb_get_queue_mapping(skb);
- 	struct sk_buff *skb_res = NULL;
- 
--	rcu_read_lock_bh();
--
--	start = rcu_dereference_bh(master->slaves);
--
- restart:
- 	nores = 0;
- 	busy = 0;
- 
-+	rcu_read_lock();
-+
-+	start = rcu_dereference(master->slaves);
-+
- 	q = start;
- 	if (!q)
- 		goto drop;
-@@ -345,17 +345,17 @@ restart:
- 				    netdev_start_xmit(skb, slave, slave_txq, false) ==
- 				    NETDEV_TX_OK) {
- 					__netif_tx_unlock(slave_txq);
--					spin_lock_bh(&master->slaves_lock);
-+					spin_lock(&master->slaves_lock);
- 					if (rcu_dereference_protected(master->slaves,
- 								      lockdep_is_held(&master->slaves_lock)) == q)
- 						rcu_assign_pointer(master->slaves,
- 								   rcu_dereference_protected(NEXT_SLAVE(q),
- 											     lockdep_is_held(&master->slaves_lock)));
--					spin_unlock_bh(&master->slaves_lock);
-+					spin_unlock(&master->slaves_lock);
- 					netif_wake_queue(dev);
- 					master->tx_packets++;
- 					master->tx_bytes += length;
--					rcu_read_unlock_bh();
-+					rcu_read_unlock();
- 					return NETDEV_TX_OK;
- 				}
- 				__netif_tx_unlock(slave_txq);
-@@ -364,37 +364,38 @@ restart:
- 				busy = 1;
- 			break;
- 		case 1:
--			spin_lock_bh(&master->slaves_lock);
-+			spin_lock(&master->slaves_lock);
- 			if (rcu_dereference_protected(master->slaves,
- 						      lockdep_is_held(&master->slaves_lock)) == q)
- 				rcu_assign_pointer(master->slaves,
- 						   rcu_dereference_protected(NEXT_SLAVE(q),
- 									     lockdep_is_held(&master->slaves_lock)));
--			spin_unlock_bh(&master->slaves_lock);
--			rcu_read_unlock_bh();
-+			spin_unlock(&master->slaves_lock);
-+			rcu_read_unlock();
- 			return NETDEV_TX_OK;
- 		default:
- 			nores = 1;
- 			break;
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -3569,19 +3569,22 @@ static int macsec_dev_open(struct net_de
+ 		ops = macsec_get_ops(netdev_priv(dev), &ctx);
+ 		if (!ops) {
+ 			err = -EOPNOTSUPP;
+-			goto clear_allmulti;
++			goto clear_promisc;
  		}
- 		__skb_pull(skb, skb_network_offset(skb));
--	} while ((q = rcu_dereference_bh(NEXT_SLAVE(q))) != start);
-+	} while ((q = rcu_dereference(NEXT_SLAVE(q))) != start);
  
- 	if (nores && skb_res == NULL) {
- 		skb_res = skb;
-+		rcu_read_unlock();
- 		goto restart;
+ 		ctx.secy = &macsec->secy;
+ 		err = macsec_offload(ops->mdo_dev_open, &ctx);
+ 		if (err)
+-			goto clear_allmulti;
++			goto clear_promisc;
  	}
  
- 	if (busy) {
- 		netif_stop_queue(dev);
--		rcu_read_unlock_bh();
-+		rcu_read_unlock();
- 		return NETDEV_TX_BUSY;
- 	}
- 	master->tx_errors++;
+ 	if (netif_carrier_ok(real_dev))
+ 		netif_carrier_on(dev);
  
- drop:
- 	master->tx_dropped++;
--	rcu_read_unlock_bh();
-+	rcu_read_unlock();
- 	dev_kfree_skb(skb);
- 	return NETDEV_TX_OK;
- }
+ 	return 0;
++clear_promisc:
++	if (dev->flags & IFF_PROMISC)
++		dev_set_promiscuity(real_dev, -1);
+ clear_allmulti:
+ 	if (dev->flags & IFF_ALLMULTI)
+ 		dev_set_allmulti(real_dev, -1);
 
 
