@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAF1433BC7;
-	Tue, 21 Jul 2026 19:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD07846C4A6;
+	Tue, 21 Jul 2026 19:41:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662884; cv=none; b=td9PKv0IIxRtt4pG0l4JN16hNe/YDFc0LiRLYtaHZQPXCy66gSaItioBOZlpD7cEjqSRfjdNao3MIc7M8hF7a6THghDhF5bSBx8MJ06w9KusPV9ms1+gZnYVWb/8b1/g+PeQOsAkSVO8ZzeiF+FyCIxEUoSljcnk6GpSTLvTP8M=
+	t=1784662886; cv=none; b=onpjtHNmKG1pwu+0AoLk3/YHiNKjprtR+l19TwhpcuUUoYRYe5GQUdYpSSsbzN8V7mVnVNrql5+axf7U946O43hJlvq+m6ncYckWmkoTA48YqBpA8YgFZINVqwU1gtikZkoD3iSCrmXVldbflV9230dEp/+G57wMMNCa3hAyYMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662884; c=relaxed/simple;
-	bh=zXLMSlUY3lQR32KKbZ6mOVMQKp/eN+txFqpVLEQu4n8=;
+	s=arc-20240116; t=1784662886; c=relaxed/simple;
+	bh=lxZDdA8ohP/iNZaTXKalfVmbBSGaJtXWqZRDCSVol2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hNe6SliEch67THzIuiF+xCiOt4EJqRx0JxQaeWCdLKEqWJHsRmebB2kaO1C+tA0k67yh3HYkk4J/BhPqus2FqGt4U05MBfndAiuG5G9qX13X1bg3FDjFsnoH2x8UTKA/pB7XxNig4LGoXNeYSSV0j0XW47s2g29ZFQHvQ848dPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8XUMLdg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uZJkyR9hAhdeme2q4jWST/OHVDmOFDd6dmo1lKpZAOwVNHLSHDpwgvfBB1QrSPAE012ZLpytHgveU16wcT8j7AQZWWUNbQE2gtXXD5KdmtTIbmPP4uluQgH89MwSaAE/uzWveGA/rDj+EFU9snBiTq3ZiyFESbaXutfVoTYC/9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t2++kHWg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8XUMLdg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0DC1F000E9;
-	Tue, 21 Jul 2026 19:41:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t2++kHWg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E05F1F000E9;
+	Tue, 21 Jul 2026 19:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662883;
-	bh=t56uNj8rrrB/t7arjHjeY6/CoLD+4Clx0hPEC8L3aWk=;
+	s=korg; t=1784662885;
+	bh=tzlDtpVQIVwKncGxIyt9R0se/tIaruubp/bBrGybuo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y8XUMLdgpOaf1DAYa7Al3B1ebFcY8mTjOc7JBTIo4q8283T/eQvwRM0K8R3sJrYDC
-	 I8n5ALrTrN5Zo+4xJby7bKdPoupyr710Jpaduy9/GC0g6M2cgcXeUEq+yJoAOI5GE4
-	 Hq8Ky6NQBH2PnXMo+doS9UipGumr51d5upp28h+w=
+	b=t2++kHWg++QtQGLiyVXULnqNi4csxzI4Gl/oArthe1P5s1znKE5UW3tNeXaN2neiW
+	 +mq9AgZoOeuzMHSXyWXBvgVwGwJs2+/wm1M6uus7NI4wKA+LZi34uj/5YBa2csku8/
+	 l8D3aFanWTS9iJCJH/VLUe6U+WJH1xdNMHi22tXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0614/1276] ipv6: ndisc: fix NULL deref in accept_untracked_na()
-Date: Tue, 21 Jul 2026 17:17:37 +0200
-Message-ID: <20260721152459.849138251@linuxfoundation.org>
+Subject: [PATCH 6.12 0615/1276] dpaa2-switch: do not accept VLAN uppers while bridged
+Date: Tue, 21 Jul 2026 17:17:38 +0200
+Message-ID: <20260721152459.871816618@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,85 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit d186e942365acece7c56d39da05dd63bf95b280a ]
+[ Upstream commit d07d80b6a129a44538cda1549b7acf95154fb197 ]
 
-accept_untracked_na() re-fetches the inet6_dev with __in6_dev_get(dev)
-and dereferences idev->cnf.accept_untracked_na without a NULL check,
-even though its only caller ndisc_recv_na() already fetched and
-NULL-checked idev for the same device.
+The dpaa2-switch driver does not support VLAN uppers while its ports are
+bridged. This scenario tried to be prevented by rejecting a bridge join
+while VLAN uppers exist but the reverse order was still possible.
 
-Both reads of dev->ip6_ptr run in the same RCU read-side critical
-section, but a concurrent addrconf_ifdown() can clear dev->ip6_ptr
-between them: lowering the MTU below IPV6_MIN_MTU calls addrconf_ifdown()
-without the synchronize_net() that orders the unregister path, so the
-re-fetch returns NULL and oopses:
+This patches adds a check so that the dpaa2-switch also does not accept
+VLAN uppers while bridged.
 
- BUG: KASAN: null-ptr-deref in ndisc_recv_na (net/ipv6/ndisc.c:974)
- Read of size 4 at addr 0000000000000364
- Call Trace:
-  <IRQ>
-  ndisc_recv_na (net/ipv6/ndisc.c:974)
-  icmpv6_rcv (net/ipv6/icmp.c:1193)
-  ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:479)
-  ip6_input_finish (net/ipv6/ip6_input.c:534)
-  ip6_input (net/ipv6/ip6_input.c:545)
-  ip6_mc_input (net/ipv6/ip6_input.c:635)
-  ipv6_rcv (net/ipv6/ip6_input.c:351)
-  </IRQ>
-
-It is reachable by an unprivileged user via a network namespace.
-
-Pass the caller's already validated idev instead of re-fetching it; the
-idev stays alive for the whole RCU critical section, so it is safe even
-after dev->ip6_ptr has been cleared.
-
-Fixes: aaa5f515b16b ("net: ipv6: new accept_untracked_na option to accept na only if in-network")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260617065512.2529757-2-bestswngs@gmail.com
+Fixes: f48298d3fbfa ("staging: dpaa2-switch: move the driver out of staging")
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://patch.msgid.link/20260618092813.432535-2-ioana.ciornei@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ndisc.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
-index 64bd0cbb67d70b..73e2e457e30be6 100644
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -976,10 +976,8 @@ static enum skb_drop_reason ndisc_recv_ns(struct sk_buff *skb)
- 	return reason;
- }
- 
--static int accept_untracked_na(struct net_device *dev, struct in6_addr *saddr)
-+static int accept_untracked_na(struct inet6_dev *idev, struct in6_addr *saddr)
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+index 5faf48a63c857c..4520c2788b1c56 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+@@ -2197,6 +2197,7 @@ dpaa2_switch_prechangeupper_sanity_checks(struct net_device *netdev,
+ static int dpaa2_switch_port_prechangeupper(struct net_device *netdev,
+ 					    struct netdev_notifier_changeupper_info *info)
  {
--	struct inet6_dev *idev = __in6_dev_get(dev);
--
- 	switch (READ_ONCE(idev->cnf.accept_untracked_na)) {
- 	case 0: /* Don't accept untracked na (absent in neighbor cache) */
- 		return 0;
-@@ -989,7 +987,7 @@ static int accept_untracked_na(struct net_device *dev, struct in6_addr *saddr)
- 		 * same subnet as an address configured on the interface that
- 		 * received the na
- 		 */
--		return !!ipv6_chk_prefix(saddr, dev);
-+		return !!ipv6_chk_prefix(saddr, idev->dev);
- 	default:
- 		return 0;
++	struct ethsw_port_priv *port_priv;
+ 	struct netlink_ext_ack *extack;
+ 	struct net_device *upper_dev;
+ 	int err;
+@@ -2215,6 +2216,13 @@ static int dpaa2_switch_port_prechangeupper(struct net_device *netdev,
+ 
+ 		if (!info->linking)
+ 			dpaa2_switch_port_pre_bridge_leave(netdev);
++	} else if (is_vlan_dev(upper_dev)) {
++		port_priv = netdev_priv(netdev);
++		if (port_priv->fdb->bridge_dev) {
++			NL_SET_ERR_MSG_MOD(extack,
++					   "Cannot accept VLAN uppers while bridged");
++			return -EOPNOTSUPP;
++		}
  	}
-@@ -1088,7 +1086,7 @@ static enum skb_drop_reason ndisc_recv_na(struct sk_buff *skb)
- 	 */
- 	new_state = msg->icmph.icmp6_solicited ? NUD_REACHABLE : NUD_STALE;
- 	if (!neigh && lladdr && idev && READ_ONCE(idev->cnf.forwarding)) {
--		if (accept_untracked_na(dev, saddr)) {
-+		if (accept_untracked_na(idev, saddr)) {
- 			neigh = neigh_create(&nd_tbl, &msg->target, dev);
- 			new_state = NUD_STALE;
- 		}
+ 
+ 	return 0;
 -- 
 2.53.0
 
