@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640ED43E075;
-	Tue, 21 Jul 2026 21:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11905441035;
+	Tue, 21 Jul 2026 21:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669808; cv=none; b=dTtvh2IFqshYa8JGQrd1f3ZQK2KqFLITB6lJHkpfnagwr3xR0ftC5YzuR7bXLh044l5qVbWn2lHFTKGOqK8W1dv3d1qmcbcxsKo9ISrH3kUAf/yJFstZm5hNVZYRdeZUfJwTdrSf3lVyhWB7jNJqarPVhhJZe7okBsUcbJjDq/M=
+	t=1784669813; cv=none; b=pOI66VNGunvYcKB6N2Jek03cijXKXVfLsTLsyNeiqbBTqzeYBK0/fNQlNy5+I1bRt9rWZTUbU0A4pgr7uKUh/I1jP3bW+6se43nrfOV0euBJzzKvdCtIrhe0oo5fkQRp6RmT1jG1xQPQZ7XoQs9OUppGW53G4eoep2ike1QuZOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669808; c=relaxed/simple;
-	bh=jSxVpFF7o2m63XWTMl98M27ci+fuIqHzro9Hbnkm7nM=;
+	s=arc-20240116; t=1784669813; c=relaxed/simple;
+	bh=tBcuRcYBCGauuyn73tvgidFWr5iTtCr6QMUN4PtRv7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oKi9jkXnJiZ0D6cq+aQwJiD7/Oj5+ihL1X8bHta4AyZ6k5Yx5MZ5FELLJug6Iso6hBqs18t86CLAvMXexSy5YSN6xyl9M2tz4bsgPpopG0DJEtcwNeOZDchvERtqBXlJiEZVSnI1mTEiXQTzeJPZbWoKzIPqc90K3goSUARK+Pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1Yfa2HB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ox2/PITeq4Byka332PHWRm6ZjEvBTyCMx26RG4kUpBkH7nwYYYqx5A0sWYIHil+OlFDmQba17LO4THoExY7YuslWT8REWa4CTtRQkcRYxsvwXFAOiXY6bd5AwzEsYq3azkvDqcy/3BVgq+RymMJzQif205zJ6Q5RulgQIwPQU9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0avCeeWe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1Yfa2HB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856DB1F00A3A;
-	Tue, 21 Jul 2026 21:36:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0avCeeWe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F5B1F000E9;
+	Tue, 21 Jul 2026 21:36:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669807;
-	bh=IKMODs0Yw58Sea4n51h3/5sYhVj4zFgIZPkN+kudcAc=;
+	s=korg; t=1784669809;
+	bh=hUBh79rurwwPudFhShpOX4ckGv3g21g92tDuYEHb+uE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u1Yfa2HBBo9G52siCdGcQu0XJ4Q7Sxi7HHaWxL2cKnrI9lWavMCf4u52b3marhTIM
-	 S7+6Lbf3Ou6Agp16JUEKLDjyeBjJzy/rDgJW92Bd6v0+0aLe5r4WQeFmjRjnHcQog1
-	 GScUvSRiflC//ddbV9evEiJRvj3AMWI7D0eihymc=
+	b=0avCeeWexHYtVZK5QyK+j/Xma0bpozdiM84QT44b7s4Ff2w/L0lZrwDxyozpDrkFP
+	 0WNQuHQXElxNoSVDqm0wnZSZuAvWAVCAGJ2C9S1XO+eW1GMc0uztlEqIr3JaWBugyd
+	 7XJFa4JHIHAkwlDC4mDiTDrGpMZXOD77321qP1hE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0657/1067] net: gianfar: dispose irq mappings on probe failure and device removal
-Date: Tue, 21 Jul 2026 17:20:58 +0200
-Message-ID: <20260721152439.291696222@linuxfoundation.org>
+Subject: [PATCH 6.1 0693/1067] amt: fix size calculation in amt_get_size()
+Date: Tue, 21 Jul 2026 17:21:34 +0200
+Message-ID: <20260721152440.097906738@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,79 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit dbf803bc4a8b0522c9a12560c20905a5952d1cb9 ]
+[ Upstream commit 9e05e91a9a847ed57926414bd7c2c5e54d6c56c6 ]
 
-irq_of_parse_and_map() creates irqdomain mappings that should be
-balanced with irq_dispose_mapping(). The driver never called
-irq_dispose_mapping(), leaking mappings on probe failure and
-device removal.
+amt_get_size() incorrectly used sizeof(struct iphdr) for the sizes of
+IFLA_AMT_DISCOVERY_IP, IFLA_AMT_REMOTE_IP, and IFLA_AMT_LOCAL_IP.
+These attributes contain IPv4 addresses (__be32), not full IP headers.
 
-Fix by adding irq_dispose_mapping() in free_gfar_dev() and
-expanding its loop from priv->num_grps to MAXGROUPS so the
-error path also catches partially-initialized groups. All
-irqinfo pointers are pre-initialized to NULL in gfar_of_init(),
-making the NULL-guarded walk in free_gfar_dev() safe for every
-scenario.
+Replace sizeof(struct iphdr) with sizeof(__be32) to avoid over-allocating
+netlink message space.
 
-gfar_parse_group() itself is left as a simple parse function
-with no resource management; cleanup is centralized in the
-caller's error path.
-
-Assisted-by: opencode:big-pickle
-Fixes: b31a1d8b4151 ("gianfar: Convert gianfar to an of_platform_driver")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Link: https://patch.msgid.link/20260626225228.427392-1-rosenp@gmail.com
+Fixes: b9022b53adad ("amt: add control plane of amt interface")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260701122329.3562825-1-edumazet@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/gianfar.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/net/amt.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/gianfar.c b/drivers/net/ethernet/freescale/gianfar.c
-index b2def295523ab5..26faf77d06b1a8 100644
---- a/drivers/net/ethernet/freescale/gianfar.c
-+++ b/drivers/net/ethernet/freescale/gianfar.c
-@@ -470,10 +470,13 @@ static void free_gfar_dev(struct gfar_private *priv)
- {
- 	int i, j;
+diff --git a/drivers/net/amt.c b/drivers/net/amt.c
+index ddd087c2c3ed45..f2da0c49171f5d 100644
+--- a/drivers/net/amt.c
++++ b/drivers/net/amt.c
+@@ -3303,9 +3303,9 @@ static size_t amt_get_size(const struct net_device *dev)
+ 	       nla_total_size(sizeof(__u16)) + /* IFLA_AMT_GATEWAY_PORT */
+ 	       nla_total_size(sizeof(__u32)) + /* IFLA_AMT_LINK */
+ 	       nla_total_size(sizeof(__u32)) + /* IFLA_MAX_TUNNELS */
+-	       nla_total_size(sizeof(struct iphdr)) + /* IFLA_AMT_DISCOVERY_IP */
+-	       nla_total_size(sizeof(struct iphdr)) + /* IFLA_AMT_REMOTE_IP */
+-	       nla_total_size(sizeof(struct iphdr)); /* IFLA_AMT_LOCAL_IP */
++	       nla_total_size(sizeof(__be32)) + /* IFLA_AMT_DISCOVERY_IP */
++	       nla_total_size(sizeof(__be32)) + /* IFLA_AMT_REMOTE_IP */
++	       nla_total_size(sizeof(__be32)); /* IFLA_AMT_LOCAL_IP */
+ }
  
--	for (i = 0; i < priv->num_grps; i++)
-+	for (i = 0; i < MAXGROUPS; i++)
- 		for (j = 0; j < GFAR_NUM_IRQS; j++) {
--			kfree(priv->gfargrp[i].irqinfo[j]);
--			priv->gfargrp[i].irqinfo[j] = NULL;
-+			if (priv->gfargrp[i].irqinfo[j]) {
-+				irq_dispose_mapping(priv->gfargrp[i].irqinfo[j]->irq);
-+				kfree(priv->gfargrp[i].irqinfo[j]);
-+				priv->gfargrp[i].irqinfo[j] = NULL;
-+			}
- 		}
- 
- 	free_netdev(priv->ndev);
-@@ -630,7 +633,7 @@ static phy_interface_t gfar_get_interface(struct net_device *dev)
- static int gfar_of_init(struct platform_device *ofdev, struct net_device **pdev)
- {
- 	const char *model;
--	int err = 0, i;
-+	int err = 0, i, j;
- 	phy_interface_t interface;
- 	struct net_device *dev = NULL;
- 	struct gfar_private *priv = NULL;
-@@ -714,8 +717,11 @@ static int gfar_of_init(struct platform_device *ofdev, struct net_device **pdev)
- 	priv->rx_list.count = 0;
- 	mutex_init(&priv->rx_queue_access);
- 
--	for (i = 0; i < MAXGROUPS; i++)
-+	for (i = 0; i < MAXGROUPS; i++) {
- 		priv->gfargrp[i].regs = NULL;
-+		for (j = 0; j < GFAR_NUM_IRQS; j++)
-+			priv->gfargrp[i].irqinfo[j] = NULL;
-+	}
- 
- 	/* Parse and initialize group specific information */
- 	if (priv->mode == MQ_MG_MODE) {
+ static int amt_fill_info(struct sk_buff *skb, const struct net_device *dev)
 -- 
 2.53.0
 
