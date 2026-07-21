@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845692F6931;
-	Tue, 21 Jul 2026 20:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EF62F6931;
+	Tue, 21 Jul 2026 20:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664110; cv=none; b=rZ1HsirNJNrs4Yv5Naa0bvwa5rvkLThAWUVX5JrD4icIO262NcHciNSxadW5x61PSZ8a53YJbgXIQYdXe0LfSjNxQKSh7e9eZDuXxtD/3M4KEbikN7n83OGfuZ6R8c9G9LeP2y9fm77pDt/FHRcj0qipAz8VAeHrQAEVuIuJsm4=
+	t=1784664113; cv=none; b=F0YesaawXtEeqmsLEk54Hsu6MRAlKkpLXNidE7ivBxolo7YTue7xnxNDJOuEFdlx3heE15mTfF6gW4WY4qyc8IPxQx/Zd37kSgtMETbNXDySSCr7nhaofBmMynnEZE0B1QjTplQ3UKov2Oqn3R6jxp+cCfw+ha94CLP11xPiQvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664110; c=relaxed/simple;
-	bh=2m9oPMJcfaRKHIYOSJl3Dz39MydHEESplE8u1a/+ttQ=;
+	s=arc-20240116; t=1784664113; c=relaxed/simple;
+	bh=bYzh6aDdptWhdqhNpscUj6pn+NU0oMttgaYYMB2WoRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lg5+c5tBYm2GddZnRk3bAXwnepCZgYpSxfZEkqWw4JgyUhNSmt87SJyUG9Nch+yWmkdzkZLxiHRvFD9powZW5cMm+cBG21Q2mSxIl6LYtm3BpHIEM3OSDTZba5My8+DYaYkfDP6mYBwQhxQgRHErbI4vYrYM7cQQksQACnBFbAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RcdZZLBV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ADo3tN8Z4dt7414rfeVxmM3xnd6OrQr2i5mFzT8Lxch5irVBVT4dipBNpttxpnMlzeNNsb33+RwBdcNEgcsMVFidEfK0zdj7bn0n5/jAjuO9iqKl78LbS9oFPuf6yelHmW9PtImJc0vlkajkQtC6hmI3M4Q8KDnNGre4q2m0a3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mx5QaASk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RcdZZLBV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8CF31F000E9;
-	Tue, 21 Jul 2026 20:01:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mx5QaASk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A508B1F000E9;
+	Tue, 21 Jul 2026 20:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664109;
-	bh=LwQcJuZZU7TiTe+EkJgm+T6+3TldYUom241WddXxL5o=;
+	s=korg; t=1784664112;
+	bh=8KSXAuUmSG9CrEpIFk+YrHaWCGLg/qogf7yHuXUKfmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RcdZZLBV+wjDTzY79uDLemmMfoT0MY4rajPQrQr4QtmWGsZX0LJjtIcT2C3ZjGtx2
-	 jVI89J554PE+yh75rfQOjDXdI8eWs3eABL216U9yw1lM9hfdBN+q+9T446les3HUg5
-	 SMz1xC5Q4ljG2128UOUG9v/OxZwAahdMT5eYKtoc=
+	b=mx5QaASkdkvEBgJCo9yfDmYUKGQZ5nT66ta4l6+zHVudHxRd/1f0J6zEF4kSLC0Do
+	 ueInMDZz+TXt8QSMf9eUeMZ7NnOe4jrffXQY8kaxKOoe070FIAJcagEjEqQxR63m31
+	 Hta+062gQq8NGZluVZnthv5lzCt9/EB5P9x2k5e4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 1077/1276] net/sched: sch_taprio: Replace direct dequeue call with peek and qdisc_dequeue_peeked
-Date: Tue, 21 Jul 2026 17:25:20 +0200
-Message-ID: <20260721152510.090025020@linuxfoundation.org>
+	David Lee <david.lee@trailofbits.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.12 1078/1276] fhandle: reject detached mounts in capable_wrt_mount()
+Date: Tue, 21 Jul 2026 17:25:21 +0200
+Message-ID: <20260721152510.111780783@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,45 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: David Lee <david.lee@trailofbits.com>
 
-commit e056e1dfcddca877dd46d704e8ec9860cfc9ec44 upstream.
+commit 6c732471740bc2ac9b0946134f9f551dc75f4369 upstream.
 
-When taprio's software path peeks a non-work-conserving child qdisc, the
-child stashes the peeked skb in its gso_skb; taprio_dequeue_from_txq()
-then takes the packet with a direct child ->dequeue() call, which ignores
-that stash, orphans the peeked skb and desyncs the child's qlen/backlog.
-With a qfq child this re-enters the child on an emptied list and
-dereferences NULL, panicking the kernel from softirq on ordinary egress.
+The recent fhandle RCU fix moved the mount namespace capability check
+into capable_wrt_mount(), so a non-NULL mnt_namespace survives the
+ns_capable() dereference. The helper still assumes the later
+READ_ONCE(mount->mnt_ns) must be non-NULL because may_decode_fh()
+checked is_mounted() first.
 
-Take the packet through qdisc_dequeue_peeked(), as sch_red and sch_sfb
-now do. The helper returns the child's stashed skb first and is a no-op
-when there is none, so a work-conserving child is unaffected and the
-gated path now consumes the skb whose length was charged to the budget.
+That assumption is not stable. A detached mount from
+open_tree(..., OPEN_TREE_CLONE) can be dissolved on fput while
+open_by_handle_at() is between those checks, and umount_tree() can
+clear mount->mnt_ns. If the helper observes NULL, it dereferences
+mnt_ns->user_ns and panics.
 
-Fixes: 5a781ccbd19e ("tc: Add support for configuring the taprio scheduler")
+Return false when the RCU read observes a detached mount. This keeps
+the relaxed permission path conservative: a mount no longer attached
+to a namespace cannot authorize open_by_handle_at() access.
+
+Fixes: 620c266f3949 ("fhandle: relax open_by_handle_at() permission checks")
 Cc: stable@vger.kernel.org
-Cc: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260625-b4-disp-31bcb279-v1-1-85c40b83c529@proton.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Assisted-by: LLM
+Link: https://patch.msgid.link/20260701114438.24431-1-david.lee@trailofbits.com
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_taprio.c |    2 +-
+ fs/fhandle.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -748,7 +748,7 @@ static struct sk_buff *taprio_dequeue_fr
- 		return NULL;
+--- a/fs/fhandle.c
++++ b/fs/fhandle.c
+@@ -252,7 +252,7 @@ static bool capable_wrt_mount(struct mou
+ 	 */
+ 	guard(rcu)();
+ 	mnt_ns = READ_ONCE(mount->mnt_ns);
+-	return ns_capable(mnt_ns->user_ns, CAP_SYS_ADMIN);
++	return mnt_ns && ns_capable(mnt_ns->user_ns, CAP_SYS_ADMIN);
+ }
  
- skip_peek_checks:
--	skb = child->ops->dequeue(child);
-+	skb = qdisc_dequeue_peeked(child);
- 	if (unlikely(!skb))
- 		return NULL;
- 
+ /*
 
 
