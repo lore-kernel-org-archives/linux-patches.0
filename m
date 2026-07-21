@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011CD34B1A6;
-	Tue, 21 Jul 2026 22:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981AE368D40;
+	Tue, 21 Jul 2026 22:41:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673689; cv=none; b=SXZHyR6x+eVnwh/fN5TW2O5etSoz8JhghyKlGoKzNSVbK/dv2N5IEdlywWpFwKByBCqxnXIy8UrsJQTBFE3i3BtF4WtAfMMqWZDdF7NSIXdPaIkAiBZfMR590Xiw5NeThoksSY0+sTBmbmdgdwO5OwQgvIUimYQwFK0iE4hgZ/o=
+	t=1784673691; cv=none; b=ZVKutNjIU8R8dWIwwasjNF7MJw9YsrMZWXPnKZXNifO/1W2xUL4OlbiLWqlRWXqjUZVbliSFaZjOBbx1T0KTgEYcOuHFcAJcCW0bBxylukOnENd1k9+rxMNShk5Fjf1WmFolhwufjieZo9Kh98uNznln7vy9CNw0BiZmsSJPVak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673689; c=relaxed/simple;
-	bh=f+1/zN4TDrqMHVm0WaxhkV/YLMObzlQNMFIehjjyr00=;
+	s=arc-20240116; t=1784673691; c=relaxed/simple;
+	bh=SImU+YVir5agA9Q3tSKbiK0GIwbHemZ79OcmAS9ECM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U4p3aWFDLiecxQJTZdcwNrtD5JolIY/Lh7YEe3vEYRoxtnThi+TtWW0fW7OEfU/hY+oJn9hIc0qgWqO3+BB+ttdJKDUmb7l5n/nQndOofj1FyeibDoGUVlHG08fu6CdQuCimvGJFhNCEsezdtKqJg3O3++oHik1QObImPkdCMKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axcmEeH1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iSRy/1m6GkX1BWs/Fr04Fc2G3BtOM1HyfZQVRMOc2/105uTPkXzICCvJlkflzEHiNQQX/wWgMBDjOh+fQXKmR608c9zSsrOshAZpmkdg+F/I9DljV75GWnO1SMr9zmfEJtz/j/wq51yL3yNLpGFzGpyPzmVl95aCf2l7BCFOTCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vjCSr7d+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axcmEeH1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 653A51F000E9;
-	Tue, 21 Jul 2026 22:41:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vjCSr7d+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A3931F000E9;
+	Tue, 21 Jul 2026 22:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673687;
-	bh=fmbr6jFFq5o1i9z6SbAfedKSoxGhQkE8X3gYyajegvk=;
+	s=korg; t=1784673690;
+	bh=UQDzBdtQEND4K55ICRgWIgR7rS2UzKS+WsJaZUO+qcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=axcmEeH1M8mxfoUyJhypbfIk42ZK64hLfg75HH5Ph5WYPmKdZQDQqhLFUY8brfF3B
-	 efS85/mjQYnduZpSbhAIrygcS/TtVgz9WkWrAzuJzR7KnLMeinqzQOKcPQkNKKMkkl
-	 N0pYPQhS2UoUeX8N8m86py0xnXYNeXjfr3J2/NJs=
+	b=vjCSr7d+teAKNmkHtbHAAXHt29jok2XP362WnY80lNpLpqd46LjmJQd8a4ehhEYFA
+	 +My46965dbb5j5M3qhdbmx8wYhTCfhR/ePI2AFtT8Ysmz8GsSjdsSbfir6QwdwT+xo
+	 aam4Zx3aFZsXF9L7m1BKAVNlgPyF2pChVK4l01rY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
+	sashiko <sashiko-bot@kernel.org>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 256/699] net: fib_rules: Dont dump dying fib_rule in fib_rules_dump().
-Date: Tue, 21 Jul 2026 17:20:15 +0200
-Message-ID: <20260721152401.472938531@linuxfoundation.org>
+Subject: [PATCH 5.10 257/699] sctp: validate embedded address parameter length
+Date: Tue, 21 Jul 2026 17:20:16 +0200
+Message-ID: <20260721152401.496021204@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -53,70 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 2821e85c058f81c9948a2fb1a634f7b47457d51c ]
+[ Upstream commit e9361d0ca55c4af12aac09e2572852fa91046229 ]
 
-rocker_router_fib_event() calls fib_rule_get() during RCU dump.
+sctp_verify_asconf() and sctp_verify_param() only validate ADD_IP, DEL_IP,
+and SET_PRIMARY parameters against a fixed minimum size of sizeof(struct
+sctp_addip_param) + sizeof(struct sctp_paramhdr). This ensures the outer
+parameter is large enough to contain an embedded address parameter header,
+but does not verify that the embedded address parameter's declared length
+fits within the bounds of the outer parameter.
 
-If the fib_rule is dying, refcount_inc() will complain about it.
+Later, sctp_process_param() and sctp_process_asconf_param() extract the
+embedded address parameter and pass it to af->from_addr_param(), which uses
+the address parameter length to parse the variable-length address payload.
+A malformed peer can therefore advertise an embedded address parameter
+length that exceeds the remaining bytes in the enclosing parameter.
 
-Let's call refcount_inc_not_zero() in fib_rules_dump().
+Validate that addr_param->p.length does not exceed the space available
+after the sctp_addip_param header before processing the embedded address
+parameter. Reject malformed parameters when the embedded address length
+extends beyond the enclosing parameter bounds.
 
-Fixes: 5d7bfd141924 ("ipv4: fib_rules: Dump FIB rules when registering FIB notifier")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260610061744.2030996-3-kuniyu@google.com
+This prevents out-of-bounds reads when parsing malformed parameters carried
+in INIT or ASCONF processing paths.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/7838b86b69f52add28808fb59034c8f992e97b2d.1781043268.git.lucien.xin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/fib_rules.h | 5 +++++
- net/core/fib_rules.c    | 6 +++++-
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ net/sctp/sm_make_chunk.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/fib_rules.h b/include/net/fib_rules.h
-index bd07484ab9dd5f..5a5d84a3fe6a40 100644
---- a/include/net/fib_rules.h
-+++ b/include/net/fib_rules.h
-@@ -128,6 +128,11 @@ static inline void fib_rule_get(struct fib_rule *rule)
- 	refcount_inc(&rule->refcnt);
- }
+diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
+index 85cc11a85b383a..e9d89409cb5ee9 100644
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -2624,6 +2624,9 @@ static int sctp_process_param(struct sctp_association *asoc,
+ 			goto fall_through;
  
-+static inline bool fib_rule_get_safe(struct fib_rule *rule)
-+{
-+	return refcount_inc_not_zero(&rule->refcnt);
-+}
-+
- static inline void fib_rule_put(struct fib_rule *rule)
- {
- 	if (refcount_dec_and_test(&rule->refcnt))
-diff --git a/net/core/fib_rules.c b/net/core/fib_rules.c
-index a6159624eec046..b4f125685256f8 100644
---- a/net/core/fib_rules.c
-+++ b/net/core/fib_rules.c
-@@ -328,7 +328,7 @@ int fib_rules_lookup(struct fib_rules_ops *ops, struct flowi *fl,
+ 		addr_param = param.v + sizeof(struct sctp_addip_param);
++		if (ntohs(addr_param->p.length) >
++		    ntohs(param.p->length) - sizeof(struct sctp_addip_param))
++			break;
  
- 		if (err != -EAGAIN) {
- 			if ((arg->flags & FIB_LOOKUP_NOREF) ||
--			    likely(refcount_inc_not_zero(&rule->refcnt))) {
-+			    likely(fib_rule_get_safe(rule))) {
- 				arg->rule = rule;
- 				goto out;
- 			}
-@@ -386,8 +386,12 @@ int fib_rules_dump(struct net *net, struct notifier_block *nb, int family,
- 	if (!ops)
- 		return -EAFNOSUPPORT;
- 	list_for_each_entry_rcu(rule, &ops->rules_list, list) {
-+		if (!fib_rule_get_safe(rule))
-+			continue;
+ 		af = sctp_get_af_specific(param_type2af(addr_param->p.type));
+ 		if (!af)
+@@ -3022,13 +3025,16 @@ static __be16 sctp_process_asconf_param(struct sctp_association *asoc,
+ 	union sctp_addr	addr;
+ 	struct sctp_af *af;
+ 
+-	addr_param = (void *)asconf_param + sizeof(*asconf_param);
+-
+ 	if (asconf_param->param_hdr.type != SCTP_PARAM_ADD_IP &&
+ 	    asconf_param->param_hdr.type != SCTP_PARAM_DEL_IP &&
+ 	    asconf_param->param_hdr.type != SCTP_PARAM_SET_PRIMARY)
+ 		return SCTP_ERROR_UNKNOWN_PARAM;
+ 
++	addr_param = (void *)asconf_param + sizeof(*asconf_param);
++	if (ntohs(addr_param->p.length) >
++	    ntohs(asconf_param->param_hdr.length) - sizeof(*asconf_param))
++		return SCTP_ERROR_PROTO_VIOLATION;
 +
- 		err = call_fib_rule_notifier(nb, FIB_EVENT_RULE_ADD,
- 					     rule, family, extack);
-+		fib_rule_put(rule);
- 		if (err)
- 			break;
- 	}
+ 	switch (addr_param->p.type) {
+ 	case SCTP_PARAM_IPV6_ADDRESS:
+ 		if (!asoc->peer.ipv6_address)
 -- 
 2.53.0
 
