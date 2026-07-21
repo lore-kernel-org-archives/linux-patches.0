@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9BA4F7971;
-	Tue, 21 Jul 2026 17:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB8547141A;
+	Tue, 21 Jul 2026 17:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656277; cv=none; b=VKBW/A1CE9TmINXtwrfY4Cd0hQRLx1s5BqW5KoztAq6eUdA/52QVzt2sH99xXKia898EHM+wunhb1Ni3HDLVEN3oKp/MzXOzXElDP5coeXfP5FR5KUus4h60sHzPVUQC3pPfJCntCtD0i5IwmouhavCg3cW7VE4mqZ6fRm1FoqY=
+	t=1784656280; cv=none; b=nAqGy55Sp/0URtH5Lqu/wBCvlE9Se5o8OMRVPQaUERg/yOShh+eL1YjNeZ3UPrGn4h5pNWnbFE4/oiDfd8bHV/vLy9klpeg6DLRSBFaQUaUt/7TZeSwzGCZtV+Z67reDzM9DejcfWMjwEUMf27yl8n6KjRAH/9CHFTEvlJnZMSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656277; c=relaxed/simple;
-	bh=m0QnFr/tAEjPifvopfEYb8AnKowitBPDun9sRzaK4lI=;
+	s=arc-20240116; t=1784656280; c=relaxed/simple;
+	bh=MJCYJLKW4PEAmGocVGlirpDMJdokNHQOmjTtJtr7ZRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UDfCd8QXEffamx26Wb7HX9PzpB757vkoGeUb+4s3usoLCmaSUcKEkHAwi1HBuz/1vmlNjq9TJFmpMf1v0zmz9iH1Jy88Wb6At457wmvIl1aGBj0Wbzg4ss6HIgc5t8QKcH0WNc0n7geEnsUpo9QUpH2znC4pNgPGKco7L1yp/9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wIai+4G7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oztOhQ4kXehOlVyqBu11QogwJxIpnQmmermnrn/M+GG9ccil1VFyCLsPxXixp2kU1Fjv8+u/CS+hyRtLlB7tsHapXL42+dW8csXIZMi1fW2+uTXcN84MYxfkk0mTFnd22O0hBHGLDTGXtr6N2k5IAE4KBAg3yilG/WyG05b2Ovk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UyV/hF+0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wIai+4G7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2271F000E9;
-	Tue, 21 Jul 2026 17:51:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UyV/hF+0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4641A1F00A3A;
+	Tue, 21 Jul 2026 17:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656276;
-	bh=nflj2bOt0H6wXM/xIzX0lkzdw4HKVNHgGqychZGVufs=;
+	s=korg; t=1784656278;
+	bh=7bQloNj/YmKYUrFv8vRMamEkpAzxBcZT2Bd7Zi2l7Jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wIai+4G7a0TgmlvH+nd+ABXST/lvyzBmpVureKq9CwojYjg/dsaWRcqKgOqebu3sZ
-	 EHfJftwAHeAgL2u/b6XZdMDgNNYcpFUR9nt42Lp93Txbh4I7IILF1T2rKv95yiSQd9
-	 dD+IZc42Vu3EoTkycQb36bCIGcvlvvQDMV68j6N0=
+	b=UyV/hF+0LbalV2H3eQZ94bnWZ4JnNiVOXrgD/FXILv5GkRsi/wdE0JKEYmpVHXNaH
+	 dgv5yh0aI+BPuIYaMc7G7ijX9QC1573O79c9cr5PeZZIbkdoKrS1Jyt8FpRgjiOVCH
+	 fWw8sG/pAizX9migYWwQcL38FB4g2kyGz+LtmPVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Woojin Ji <random6.xyz@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Quentin Monnet <qmo@kernel.org>,
+	ShuangYu <shuangyu@yunyoo.cc>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0324/1611] bpftool: Use libbpf error code for flow dissector query
-Date: Tue, 21 Jul 2026 17:07:20 +0200
-Message-ID: <20260721152522.377638516@linuxfoundation.org>
+Subject: [PATCH 6.18 0325/1611] vhost: fix vhost_get_avail_idx for a non empty ring
+Date: Tue, 21 Jul 2026 17:07:21 +0200
+Message-ID: <20260721152522.401281059@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,71 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Woojin Ji <random6.xyz@gmail.com>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit 8a7f2bff2165e53595d1e91c160b340f978c0ab7 ]
+[ Upstream commit 09861858a68342f851f71c669ac0f69865c32151 ]
 
-bpf_prog_query() returns a negative errno on failure.
-query_flow_dissector() currently closes the namespace fd and then reads
-errno to decide whether -EINVAL means that the running kernel does not
-support flow dissector queries.
+vhost_get_avail_idx is supposed to report whether it has updated
+vq->avail_idx. Instead, it returns whether all entries have been
+consumed, which is usually the same. But not always - in
+drivers/vhost/net.c and when mergeable buffers have been enabled, the
+driver checks whether the combined entries are big enough to store an
+incoming packet. If not, the driver re-enables notifications with
+available entries still in the ring. The incorrect return value from
+vhost_get_avail_idx propagates through vhost_enable_notify and causes
+the host to livelock if the guest is not making progress, as vhost will
+immediately disable notifications and retry using the available entries.
 
-That errno check controls behavior, not just diagnostics: -EINVAL is
-handled as a non-fatal old-kernel case, while any other error makes bpftool
-net fail.
+This goes back to commit d3bb267bbdcb ("vhost: cache avail index in
+vhost_enable_notify()") which changed vhost_enable_notify() to compare
+the freshly read avail index against vq->last_avail_idx instead of the
+previously cached vq->avail_idx. Commit 7ad472397667 ("vhost: move
+smp_rmb() into vhost_get_avail_idx()") then carried over the same
+comparison when refactoring vhost_enable_notify() to call the unified
+vhost_get_avail_idx().
 
-The namespace fd is opened read-only, so close() is not expected to
-commonly fail in normal use. Still, the BPF_PROG_QUERY error is already
-available in err, and reading errno after an intervening close() is
-fragile. If close() does change errno, the compatibility branch may be
-based on close()'s error instead of the BPF_PROG_QUERY result.
+The obvious fix is to make vhost_get_avail_idx do what the comment
+says it does and report whether new entries have been added.
 
-This was reproduced with an LD_PRELOAD fault injector that forced
-BPF_PROG_QUERY for BPF_FLOW_DISSECTOR to fail with EINVAL and then
-forced close() on the netns fd to fail with EIO. The unpatched bpftool
-reported "can't query prog: Input/output error". With this change, the
-same injected failure is handled as the intended non-fatal EINVAL
-compatibility case.
-
-Use the libbpf-returned error code instead. Keep the existing errno reset
-in the non-fatal path to preserve batch mode behavior. The success path
-is unchanged.
-
-Fixes: 7f0c57fec80f ("bpftool: show flow_dissector attachment status")
-Signed-off-by: Woojin Ji <random6.xyz@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Leon Hwang <leon.hwang@linux.dev>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/bpf/20260603003339.33791-1-random6.xyz@gmail.com
-
-Assisted-by: ChatGPT:gpt-5.5
+Reported-by: ShuangYu <shuangyu@yunyoo.cc>
+Fixes: d3bb267bbdcb ("vhost: cache avail index in vhost_enable_notify()")
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <559b04ae6ce52973c535dc47e461638b7f4c3d63.1772441455.git.mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/net.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/vhost/vhost.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/tools/bpf/bpftool/net.c b/tools/bpf/bpftool/net.c
-index 1a06b0b5eef350..f669716a588b4a 100644
---- a/tools/bpf/bpftool/net.c
-+++ b/tools/bpf/bpftool/net.c
-@@ -603,14 +603,14 @@ static int query_flow_dissector(struct bpf_attach_info *attach_info)
- 			     &attach_flags, prog_ids, &prog_cnt);
- 	close(fd);
- 	if (err) {
--		if (errno == EINVAL) {
-+		if (err == -EINVAL) {
- 			/* Older kernel's don't support querying
- 			 * flow dissector programs.
- 			 */
- 			errno = 0;
- 			return 0;
- 		}
--		p_err("can't query prog: %s", strerror(errno));
-+		p_err("can't query prog: %s", strerror(-err));
- 		return -1;
+diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
+index bccdc9eab267a7..6a7b22650aa721 100644
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -1526,6 +1526,7 @@ static void vhost_dev_unlock_vqs(struct vhost_dev *d)
+ static inline int vhost_get_avail_idx(struct vhost_virtqueue *vq)
+ {
+ 	__virtio16 idx;
++	u16 avail_idx;
+ 	int r;
+ 
+ 	r = vhost_get_avail(vq, idx, &vq->avail->idx);
+@@ -1536,17 +1537,19 @@ static inline int vhost_get_avail_idx(struct vhost_virtqueue *vq)
  	}
  
+ 	/* Check it isn't doing very strange thing with available indexes */
+-	vq->avail_idx = vhost16_to_cpu(vq, idx);
+-	if (unlikely((u16)(vq->avail_idx - vq->last_avail_idx) > vq->num)) {
++	avail_idx = vhost16_to_cpu(vq, idx);
++	if (unlikely((u16)(avail_idx - vq->last_avail_idx) > vq->num)) {
+ 		vq_err(vq, "Invalid available index change from %u to %u",
+-		       vq->last_avail_idx, vq->avail_idx);
++		       vq->last_avail_idx, avail_idx);
+ 		return -EINVAL;
+ 	}
+ 
+ 	/* We're done if there is nothing new */
+-	if (vq->avail_idx == vq->last_avail_idx)
++	if (avail_idx == vq->avail_idx)
+ 		return 0;
+ 
++	vq->avail_idx = avail_idx;
++
+ 	/*
+ 	 * We updated vq->avail_idx so we need a memory barrier between
+ 	 * the index read above and the caller reading avail ring entries.
 -- 
 2.53.0
 
