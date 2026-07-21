@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8F23161BF;
-	Tue, 21 Jul 2026 17:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10EAB3EE1EE;
+	Tue, 21 Jul 2026 17:07:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653664; cv=none; b=k6g7h7P3YFx9Hlu5Lhz5sBGW6H0KMHsjs4p5OzKbN0tTOWWpREkeu052ZqG2ndynugMg0Jfx4qOhcvYIHk1Uwr4bP/f8wdrNefNQXUyQ0pFjDfFyzGdT6AOJWQVEnh8j+O9d0l6puF35FgQxvc/5F79cPwc99wAe7wD2zo7j+R4=
+	t=1784653667; cv=none; b=YSy+jGwNVqc4AxgduDxGBhQAKW5tAoal+qhSz0aJoITDy4GfnzMSntvBrATSZkt9L8+fZR8TkWBISQy+jzKi/vgOxrgAYlTOb25VL4fWa5ddFJPdJZCjuRjcGVIWwTuHQ4RCBqJ8yDB4J0zM4APX7hXHtgwPp63Zr633YcDM09A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653664; c=relaxed/simple;
-	bh=vs5yT8EjBn8tvYpqjylI/HCi6sb6doUx/+jHsuoh9IU=;
+	s=arc-20240116; t=1784653667; c=relaxed/simple;
+	bh=fWk2WMvZ9gCpLNz2SHSXfTZ9Be08NLOk2BN+/snTAiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rtAL6FmO2+sL3WmuaVtn0JAGylxkWnXEnYqu5/KHlKGpKmvYDctuuSGbxuFFYVDMDR2w7jTE6R8rYktwMpx3F+lZ22qyxoWL41/l9odoS08nDFzKTtE3Y/h+XCq2OV9c6hDldRCkGFLg81j/aEuw8I4tD16oeARhGCplij4hLzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUkH1bGF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fhpzxn/UE1PuWlrcaUD/5AyXDN3PBuEfwGZLMarctg1gamtDlcyMoCEuqTAOcpRJJv+zs+V8ovsZO1A3AYSN7YHflmdvwaGOHhMJnF43ByRdkRS2YI3PKX9C69WQTET/PZiL/So5r8uOmKBmYVBoXrrTgFil5+X1eXY7UYWB7CQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qabo8sQx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUkH1bGF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D301F000E9;
-	Tue, 21 Jul 2026 17:07:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qabo8sQx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 648061F00A3A;
+	Tue, 21 Jul 2026 17:07:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653663;
-	bh=hUOQnHMxNQMYlUGAaqgMEU4Aw+m4qmzUCdxFyHztgXI=;
+	s=korg; t=1784653665;
+	bh=D5Xft4DPvrfRevsNULfRwmHGYfKyNgpAG2b8HLFMRfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WUkH1bGFmww3QvO4ilhRsiXOmw5lEzAK1rj/vVyQl5OKl07lnTJWtN3XItyw8kP5F
-	 e7WviV7d3HV9aWl8Vd/A0hnJU9dYOieyHUMqL8J3oxh8et7128/71M6jQN41EmudUr
-	 0nxtrJ68+RAoRabOb2RE28LjSkiXH3a20y5F95iQ=
+	b=Qabo8sQxzcTg3CJz2G6wUC14Hx26hhR4PfuhJSGtzGnPMeoEmqPQJgHklJWITElNj
+	 QJnABUqUyNLSWxJ5G0myhCq902/f3Qd/Ezp+9PJTT4Zjy3kD/P2DcndQEEHmhD9VRz
+	 Akskuz6Q8FG5QpQpUb6uJ9xk+KpoylYFM0VfBPgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1411/2077] netfs: Fix barriering when walking subrequest list
-Date: Tue, 21 Jul 2026 17:18:04 +0200
-Message-ID: <20260721152626.087808706@linuxfoundation.org>
+Subject: [PATCH 7.1 1412/2077] ntfs: avoid stale runlist element dereference in MFT writeback
+Date: Tue, 21 Jul 2026 17:18:05 +0200
+Message-ID: <20260721152626.111071579@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,66 +52,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 5c6ce05e406520290c1d89da97fb3cd70c09137d ]
+[ Upstream commit 81fe702ff1760da32bcd3ef4494b2a33dbeced72 ]
 
-Fix the barriering used when walking the subrequest list in retry as
-there's a possibility of seeing a subreq that's just been added by the
-application thread.
+ntfs_write_mft_block() maps each $MFT record through the $MFT data
+runlist. For sub-folio clusters it looks up a struct runlist_element under
+ni->runlist.lock, drops the lock, and later uses rl->length and rl->vcn
+when choosing folio_sz.
 
-Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
-Fixes: 288ace2f57c9 ("netfs: New writeback implementation")
-Link: https://sashiko.dev/#/patchset/20260608145432.681865-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/138807.1782980582@warthog.procyon.org.uk
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+That pointer is only borrowed from ni->runlist.rl. Concurrent $MFT
+allocation extension can merge a replacement runlist under the same lock,
+and ntfs_rl_realloc() can free the old backing array. If that happens
+between the lookup and the later folio_sz decision, writeback can
+dereference freed runlist storage.
+
+The buggy scenario involves two paths, with each column showing the order
+within that path:
+
+MFT writeback path:               $MFT allocation extension:
+1. Look up rl under               1. Extend the $MFT data allocation.
+   ni->runlist.lock.              2. Publish a replacement runlist.
+2. Drop ni->runlist.lock.         3. Free the old runlist array.
+3. Read rl->length and rl->vcn
+   to choose folio_sz.
+
+Compute the remaining run length while ni->runlist.lock is still held, and
+use that scalar after unlock. This preserves the existing folio sizing
+decision without carrying a borrowed runlist_element across the lock
+boundary.
+
+Validation reproduced this kernel report:
+BUG: KASAN: slab-use-after-free in ntfs_mft_writepages+0x1c8d/0x1fb0
+
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x66/0xa0
+ print_report+0xce/0x630
+ ? ntfs_mft_writepages+0x1c8d/0x1fb0
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __virt_addr_valid+0x20d/0x410
+ ? ntfs_mft_writepages+0x1c8d/0x1fb0
+ kasan_report+0xe0/0x110
+ ? ntfs_mft_writepages+0x1c8d/0x1fb0
+ ntfs_mft_writepages+0x1c8d/0x1fb0
+ ? __pfx_ntfs_mft_writepages+0x10/0x10
+ ? __pfx___mutex_unlock_slowpath+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? iput+0x92/0xa80
+ do_writepages+0x219/0x530
+ ? __pfx_do_writepages+0x10/0x10
+ __writeback_single_inode+0x117/0xf50
+ ? do_raw_spin_lock+0x130/0x270
+ ? __pfx_do_raw_spin_lock+0x10/0x10
+ ? __pfx___writeback_single_inode+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ writeback_sb_inodes+0x65b/0x1810
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? lock_acquire+0x2b8/0x2f0
+ ? __pfx_writeback_sb_inodes+0x10/0x10
+ ? lock_release+0x1e0/0x280
+ ? _raw_spin_unlock+0x23/0x40
+ ? move_expired_inodes+0x2b8/0x850
+ __writeback_inodes_wb+0xf4/0x270
+ ? __pfx___writeback_inodes_wb+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? queue_io+0x2e4/0x410
+ wb_writeback+0x666/0x880
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __pfx_wb_writeback+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? get_nr_dirty_inodes+0x1c/0x170
+ wb_workfn+0x75e/0xbb0
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? _raw_spin_unlock_irqrestore+0x27/0x60
+ ? __pfx_wb_workfn+0x10/0x10
+ ? __pfx_debug_object_deactivate+0x10/0x10
+ ? lock_acquire+0x2b8/0x2f0
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? lock_release+0x1e0/0x280
+ process_one_work+0x8d0/0x1870
+ ? __pfx_process_one_work+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ worker_thread+0x575/0xf80
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0x2e7/0x3c0
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x576/0x810
+ ? __pfx_ret_from_fork+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __switch_to+0x57e/0xe10
+ ? __switch_to_asm+0x33/0x70
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+
+Allocated by task 970:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ __kasan_kmalloc+0xaa/0xb0
+ __kvmalloc_node_noprof+0x353/0x920
+ ntfs_rl_realloc+0x3c/0x80
+ ntfs_runlists_merge+0x1212/0x3010
+ ntfs_mft_data_extend_allocation_nolock+0x3e0/0x1f40
+ ntfs_mft_record_alloc+0x1ab4/0x4f10
+ __ntfs_create+0x680/0x2e50
+ ntfs_create+0x1e6/0x3a0
+ path_openat+0x2b55/0x3c10
+ do_file_open+0x1f4/0x460
+ do_sys_openat2+0xde/0x170
+ __x64_sys_openat+0x122/0x1e0
+ do_syscall_64+0x115/0x6a0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Freed by task 1294:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ kasan_save_free_info+0x3b/0x60
+ __kasan_slab_free+0x5f/0x80
+ kfree+0x307/0x580
+ ntfs_rl_realloc+0x66/0x80
+ ntfs_runlists_merge+0x1212/0x3010
+ ntfs_mft_data_extend_allocation_nolock+0x3e0/0x1f40
+ ntfs_mft_record_alloc+0x1ab4/0x4f10
+ __ntfs_create+0x680/0x2e50
+ ntfs_create+0x1e6/0x3a0
+ path_openat+0x2b55/0x3c10
+ do_file_open+0x1f4/0x460
+ do_sys_openat2+0xde/0x170
+ __x64_sys_openat+0x122/0x1e0
+ do_syscall_64+0x115/0x6a0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: 115380f9a2f9 ("ntfs: update mft operations")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/read_retry.c  | 7 ++++++-
- fs/netfs/write_retry.c | 7 ++++++-
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ fs/ntfs/mft.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/netfs/read_retry.c b/fs/netfs/read_retry.c
-index f59a70f3a086b4..2b42758e01ec94 100644
---- a/fs/netfs/read_retry.c
-+++ b/fs/netfs/read_retry.c
-@@ -98,7 +98,12 @@ static void netfs_retry_read_subrequests(struct netfs_io_request *rreq)
- 			goto abandon;
- 		}
+diff --git a/fs/ntfs/mft.c b/fs/ntfs/mft.c
+index a7d10ee41b3447..464f8f706cbc85 100644
+--- a/fs/ntfs/mft.c
++++ b/fs/ntfs/mft.c
+@@ -2745,7 +2745,6 @@ static int ntfs_write_mft_block(struct folio *folio, struct writeback_control *w
+ 	s64 vcn = ntfs_pidx_to_cluster(vol, folio->index);
+ 	s64 end_vcn = ntfs_bytes_to_cluster(vol, ni->allocated_size);
+ 	unsigned int folio_sz;
+-	struct runlist_element *rl = NULL;
+ 	loff_t i_size = i_size_read(vi);
  
--		list_for_each_continue(next, &stream->subrequests) {
-+		for (;;) {
-+			/* Read pointer to subreq before reading subreq state. */
-+			next = smp_load_acquire(&next->next);
-+			if (next == &stream->subrequests)
-+				break;
-+
- 			subreq = list_entry(next, struct netfs_io_subrequest, rreq_link);
- 			if (subreq->start + subreq->transferred != start + len ||
- 			    test_bit(NETFS_SREQ_BOUNDARY, &subreq->flags) ||
-diff --git a/fs/netfs/write_retry.c b/fs/netfs/write_retry.c
-index 32735abfa03f06..058bc7a166a59f 100644
---- a/fs/netfs/write_retry.c
-+++ b/fs/netfs/write_retry.c
-@@ -72,7 +72,12 @@ static void netfs_retry_write_stream(struct netfs_io_request *wreq,
- 		    !test_bit(NETFS_SREQ_NEED_RETRY, &from->flags))
- 			return;
+ 	ntfs_debug("Entering for inode 0x%llx, attribute type 0x%x, folio index 0x%lx.",
+@@ -2790,6 +2789,7 @@ static int ntfs_write_mft_block(struct folio *folio, struct writeback_control *w
+ 					&tni, &ref_inos[nr_ref_inos])) {
+ 			unsigned int mft_record_off = 0;
+ 			s64 vcn_off = vcn;
++			s64 rl_len = 0;
  
--		list_for_each_continue(next, &stream->subrequests) {
-+		for (;;) {
-+			/* Read pointer to subreq before reading subreq state. */
-+			next = smp_load_acquire(&next->next);
-+			if (next == &stream->subrequests)
-+				break;
+ 			/*
+ 			 * Skip $MFT extent mft records and let them being written
+@@ -2822,8 +2822,12 @@ static int ntfs_write_mft_block(struct folio *folio, struct writeback_control *w
+ 			}
+ 
+ 			if (vol->cluster_size < folio_size(folio)) {
++				struct runlist_element *rl;
 +
- 			subreq = list_entry(next, struct netfs_io_subrequest, rreq_link);
- 			if (subreq->start + subreq->transferred != start + len ||
- 			    test_bit(NETFS_SREQ_BOUNDARY, &subreq->flags) ||
+ 				down_write(&ni->runlist.lock);
+ 				rl = ntfs_attr_vcn_to_rl(ni, vcn_off, &lcn);
++				if (!IS_ERR(rl))
++					rl_len = rl->length - (vcn_off - rl->vcn);
+ 				up_write(&ni->runlist.lock);
+ 				if (IS_ERR(rl) || lcn < 0) {
+ 					err = -EIO;
+@@ -2854,7 +2858,7 @@ static int ntfs_write_mft_block(struct folio *folio, struct writeback_control *w
+ 
+ 			if (vol->cluster_size == NTFS_BLOCK_SIZE &&
+ 			    (mft_record_off ||
+-			     (rl && rl->length - (vcn_off - rl->vcn) == 1) ||
++			     rl_len == 1 ||
+ 			     mft_ofs + NTFS_BLOCK_SIZE >= PAGE_SIZE))
+ 				folio_sz = NTFS_BLOCK_SIZE;
+ 			else
 -- 
 2.53.0
 
