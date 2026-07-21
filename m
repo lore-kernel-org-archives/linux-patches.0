@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D3B470107;
-	Tue, 21 Jul 2026 19:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC85446F4B9;
+	Tue, 21 Jul 2026 19:02:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660579; cv=none; b=Ljg8uzPwmX/qL3ekWUmhya3JvLFUxjrroaFZwW/EW9/Aa7x20wRZxYX7Lr4ioabTPQF23OEv9u70elAe9pbPDhm8XSxb2wc6JXZaOjAQ0xAJgWCfZmSmnKGe0STvawkdE8WpzexkQdSKGD1dpHl21u4eGcuDf9q5hGD5WELPCiA=
+	t=1784660582; cv=none; b=MDzUB5eAHtvDxwkcElWn7HNFhPzvT9KO9DeODzKBM0tVRSIqdAI6yeD3kA6fP34UZSkx1wFBvcOBJ0I6sLbxK9PVy0lv+kHWqOl1AW0kNakScOYWCDePsHgG43mqa0G60/4lpCtfWAMR13cjhB0egPJL9iwafDmLdFp/IzrYkaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660579; c=relaxed/simple;
-	bh=uJ+U3987fKQ1kjXWrnBTKxPRkS2n4LXzHYOb+7E/scU=;
+	s=arc-20240116; t=1784660582; c=relaxed/simple;
+	bh=/aYd8O0nFTShNLZm/6jctUVO+FhHNIRQv56/J/2pwUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EGBo1x7jF8+nke9UQFlzgE0e1fMGotGErTiESk+yPLRk+cTAa/umfTkhaRteHF1eA9qTCoVLvbvx4BPln0Ff8A0ttv1i/r23+DILqdK2DGTuw9KJrvBL91bOtUDwPbx1++PoI7irYm13G7RiiASi9vapcCpuRui/2VkHNCLI7hE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQemH54p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=geHTYmQU9BuqbMe4BsEmWEqzKifdm9e/cxFrtrgNw0nlTIuTWUpQwIsJkBMjkO9CtAHVeHo0mV7LSWky6DaqXucdkvITNHzE629dsPkDPLeNwKcqARzYatqT7zZPUT9EUeTVL6tBG2F61ZoumerJRZhAyUUHj6oi/32PnFLjXT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qnD80uoR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQemH54p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEBE71F000E9;
-	Tue, 21 Jul 2026 19:02:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qnD80uoR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 951B41F00A3A;
+	Tue, 21 Jul 2026 19:02:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660576;
-	bh=LngPpxHEnbcS6hWPiyN6uCs2PEWOAukgfK36Ad2C5qg=;
+	s=korg; t=1784660579;
+	bh=kCsrA8rNk/4hvYN4qYVgOPCe5bsEJAEWoubDGkiDG/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lQemH54pYrkGJStj8mz3CqYfc3iob7yfviUR20cCTNTPMbdja3McliYFja9Iq4Vbc
-	 IV9SlhjiHOlWnrhunGdT1IUXUWBxjVrF19KB+X82Mjy/mXErLl3iOaBT5sePSVGqjH
-	 8DLUEavPJAAfhVrOMQV3kDHpWCHXX08+p8RGjAfk=
+	b=qnD80uoRE0TQdvEmKRYKiwqeauKur6sjxZWpiHLS3yxjpE7OWWKL8KoJpMtktBDQh
+	 F4eOm7bcdwveqq//cN1sOEWm9NlR1HVRaqnosBlLgg/O6vitZ8jnK4wDF/2nQAXwnz
+	 vHLsMHlMTG4pI4leH+7YEjH23/7Zhm2XLQ9O/+fU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Chunxiao <xuchunxiao3@huawei.com>,
-	Dong Chenchen <dongchenchen2@huawei.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Andreas Larsson <andreas@gaisler.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1032/2077] xfrm: Fix dev use-after-free in xfrm async resumption
-Date: Tue, 21 Jul 2026 17:11:45 +0200
-Message-ID: <20260721152617.156864337@linuxfoundation.org>
+Subject: [PATCH 7.1 1033/2077] sparc: Avoid -Wunused-but-set-parameter in clear_user_page()
+Date: Tue, 21 Jul 2026 17:11:46 +0200
+Message-ID: <20260721152617.179670636@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,176 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dong Chenchen <dongchenchen2@huawei.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 8045c0df98d4f14c54e5cb875f1c9c0ce89fe4ff ]
+[ Upstream commit 9bc0bd9617964804dc02e6ee2413af42c4a50d6b ]
 
-xfrm async resumption hold skb->dev refcnt until after transport_finish.
-However, xfrm_rcv_cb may modify skb->dev to tunnel dev without taking
-device reference, such as vti_rcv_cb. The subsequent async resumption
-will decrement the tunnel device's reference count, which lead to uaf
-of tunnel dev and refcnt leak of orig dev as below:
+The loop in clear_user_pages() iterates over all pages and calls
+clear_user_page() for each of them. During the loop "vaddr" is modified.
+However on sparc clear_user() is a macro which does not use "vaddr".
+The compiler sees a variable which is modified but never used and emits
+a warning for that:
 
-unregister_netdevice: waiting for vti1 to become free. Usage count = -2
+	include/linux/highmem.h: In function 'clear_user_pages':
+	include/linux/highmem.h:234:63: warning: parameter 'vaddr' set but not used [-Wunused-but-set-parameter=]
+		static inline void clear_user_pages(void *addr, unsigned long vaddr,
 
-Stash the original skb->dev to fix refcnt imbalance. The new skb->dev set
-by xfrm_rcv_cb can race with device teardown. Extend rcu protection over
-xfrm_rcv_cb and transport_finish to prevent races.
+Other architectures use an inline function for clear_user_page() which
+avoids the warning. This is not possible on sparc, as
+sparc_flush_page_to_ram() is not yet declared where clear_user_page() is
+defined. Including cacheflush_32.h will trigger recursive and lots of
+other issues.
 
-Fixes: 1c428b038400 ("xfrm: hold dev ref until after transport_finish NF_HOOK")
-Reported-by: Xu Chunxiao <xuchunxiao3@huawei.com>
-Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+So hide the warning with a cast to (void) instead.
+
+While we are here, do the same for copy_user_page().
+
+Fixes: 62a9f5a85b98 ("mm: introduce clear_pages() and clear_user_pages()")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/xfrm4_input.c |  2 --
- net/ipv6/xfrm6_input.c |  2 --
- net/xfrm/xfrm_input.c  | 29 ++++++++++++++++-------------
- 3 files changed, 16 insertions(+), 17 deletions(-)
+ arch/sparc/include/asm/page_32.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv4/xfrm4_input.c b/net/ipv4/xfrm4_input.c
-index c2eac844bcdb4e..f6f2a8ef3f8847 100644
---- a/net/ipv4/xfrm4_input.c
-+++ b/net/ipv4/xfrm4_input.c
-@@ -76,8 +76,6 @@ int xfrm4_transport_finish(struct sk_buff *skb, int async)
- 	NF_HOOK(NFPROTO_IPV4, NF_INET_PRE_ROUTING,
- 		dev_net(dev), NULL, skb, dev, NULL,
- 		xfrm4_rcv_encap_finish);
--	if (async)
--		dev_put(dev);
- 	return 0;
- }
+diff --git a/arch/sparc/include/asm/page_32.h b/arch/sparc/include/asm/page_32.h
+index c1bccbedf567ec..9f0b54f709088f 100644
+--- a/arch/sparc/include/asm/page_32.h
++++ b/arch/sparc/include/asm/page_32.h
+@@ -20,10 +20,12 @@
+ #define clear_user_page(addr, vaddr, page)	\
+ 	do { 	clear_page(addr);		\
+ 		sparc_flush_page_to_ram(page);	\
++		(void)(vaddr);			\
+ 	} while (0)
+ #define copy_user_page(to, from, vaddr, page)	\
+ 	do {	copy_page(to, from);		\
+ 		sparc_flush_page_to_ram(page);	\
++		(void)(vaddr);			\
+ 	} while (0)
  
-diff --git a/net/ipv6/xfrm6_input.c b/net/ipv6/xfrm6_input.c
-index 699a001ac16629..89d0443b530732 100644
---- a/net/ipv6/xfrm6_input.c
-+++ b/net/ipv6/xfrm6_input.c
-@@ -71,8 +71,6 @@ int xfrm6_transport_finish(struct sk_buff *skb, int async)
- 	NF_HOOK(NFPROTO_IPV6, NF_INET_PRE_ROUTING,
- 		dev_net(dev), NULL, skb, dev, NULL,
- 		xfrm6_transport_finish2);
--	if (async)
--		dev_put(dev);
- 	return 0;
- }
- 
-diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
-index e4c2cd24936d3f..eecab337bd0a79 100644
---- a/net/xfrm/xfrm_input.c
-+++ b/net/xfrm/xfrm_input.c
-@@ -467,6 +467,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- {
- 	const struct xfrm_state_afinfo *afinfo;
- 	struct net *net = dev_net(skb->dev);
-+	struct net_device *dev = skb->dev;
- 	int err;
- 	__be32 seq;
- 	__be32 seq_hi;
-@@ -493,7 +494,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- 					       LINUX_MIB_XFRMINSTATEINVALID);
- 
- 			if (encap_type == -1)
--				dev_put(skb->dev);
-+				dev_put(dev);
- 			goto drop;
- 		}
- 
-@@ -655,16 +656,16 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- 
- 		if (!crypto_done) {
- 			spin_unlock(&x->lock);
--			dev_hold(skb->dev);
-+			dev_hold(dev);
- 
- 			nexthdr = x->type->input(x, skb);
- 			if (nexthdr == -EINPROGRESS) {
- 				if (async)
--					dev_put(skb->dev);
-+					dev_put(dev);
- 				return 0;
- 			}
- 
--			dev_put(skb->dev);
-+			dev_put(dev);
- 			spin_lock(&x->lock);
- 		}
- resume:
-@@ -699,7 +700,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- 		err = xfrm_inner_mode_input(x, skb);
- 		if (err == -EINPROGRESS) {
- 			if (async)
--				dev_put(skb->dev);
-+				dev_put(dev);
- 			return 0;
- 		} else if (err) {
- 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINSTATEMODEERROR);
-@@ -726,9 +727,12 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- 		crypto_done = false;
- 	} while (!err);
- 
-+	rcu_read_lock();
- 	err = xfrm_rcv_cb(skb, family, x->type->proto, 0);
--	if (err)
-+	if (err) {
-+		rcu_read_unlock();
- 		goto drop;
-+	}
- 
- 	nf_reset_ct(skb);
- 
-@@ -739,8 +743,9 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- 		if (skb_valid_dst(skb))
- 			skb_dst_drop(skb);
- 		if (async)
--			dev_put(skb->dev);
-+			dev_put(dev);
- 		gro_cells_receive(&gro_cells, skb);
-+		rcu_read_unlock();
- 		return 0;
- 	} else {
- 		xo = xfrm_offload(skb);
-@@ -748,23 +753,21 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- 			xfrm_gro = xo->flags & XFRM_GRO;
- 
- 		err = -EAFNOSUPPORT;
--		rcu_read_lock();
- 		afinfo = xfrm_state_afinfo_get_rcu(x->props.family);
- 		if (likely(afinfo))
- 			err = afinfo->transport_finish(skb, xfrm_gro || async);
--		rcu_read_unlock();
- 		if (xfrm_gro) {
- 			sp = skb_sec_path(skb);
- 			if (sp)
- 				sp->olen = 0;
- 			if (skb_valid_dst(skb))
- 				skb_dst_drop(skb);
--			if (async)
--				dev_put(skb->dev);
- 			gro_cells_receive(&gro_cells, skb);
--			return err;
- 		}
- 
-+		if (async)
-+			dev_put(dev);
-+		rcu_read_unlock();
- 		return err;
- 	}
- 
-@@ -772,7 +775,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- 	spin_unlock(&x->lock);
- drop:
- 	if (async)
--		dev_put(skb->dev);
-+		dev_put(dev);
- 	xfrm_rcv_cb(skb, family, x && x->type ? x->type->proto : nexthdr, -1);
- 	kfree_skb(skb);
- 	return 0;
+ /* The following structure is used to hold the physical
 -- 
 2.53.0
 
