@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9BFC470444;
-	Tue, 21 Jul 2026 19:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB24D46F4A9;
+	Tue, 21 Jul 2026 19:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662175; cv=none; b=TwLxMmCg4Op1OQileBmhMKQ60+TftdLbarqIYZIQBdrFBmJxHxP8KMaCtmAVP/7BwtDYOlNETlMGzvhAKDeIZTids9OhCuSEaEyhoR0fWeYL+MJxft/qMyUykGT5vVz7ES+ibfsnGCxQvATsRzjoO0MeSA3FQRcnLhvCgGadNuc=
+	t=1784662178; cv=none; b=WVvtV4dD3ap5INf+Alow/1uVZStYWtFpOGD/XcVCo36No9IG40bQ2ons2oB8vUXarWrEy++36L+/soWkD4mA4BoyGdhBxjE/440TZfYoT1DCxpsW+nGOuax9tQGNMLd9/8wPiBQKqgJAwQZnsgx2LFirNpQByRm+1igU5K68yJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662175; c=relaxed/simple;
-	bh=70obdEOFFwScIfHA6y9g0lzj7BGJ8Q5bivECXa1/py4=;
+	s=arc-20240116; t=1784662178; c=relaxed/simple;
+	bh=4Zh2VkBB2Z0U2pAo4wShbluw6mPbM1mCEEez0yaqWhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AWBbSEgI0fMX1v1G6q0qsdm+zKoE70JtHg7UFw9fsEO8+1oY1Qh3R0lfQY5JO2sGwBZodfesgM3G7bp09VPuMfhWiM2O0NBehdPARfn5GCXbPARrKdeLcjFLcC7zkCtLLIrn4woEYRB2I0TSmAlpBbAWaxZjlFdmupddANZsxeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wxu6CSBG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IdRYlO9kdm+lyw9BJkSu5arZtXvIKP2N5Jq1k+6wYV3AHZumD475zBSb1j93duJRIFD7s2Woop2DHGYO/2WOJ4ySmhwb3+fwDfK1WUvNsj36r4dDeViuYUiqNGB4aV1ttI8ldyHBRKnlgyqW2P3Lj79VdrI3UPPc43DHuMWLmpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFELCMAW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wxu6CSBG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC8D1F000E9;
-	Tue, 21 Jul 2026 19:29:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFELCMAW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7B291F000E9;
+	Tue, 21 Jul 2026 19:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662174;
-	bh=LtRjlRZKA3rgbqPWkNVm5/uCnIj1HOOm1igapmSZxjQ=;
+	s=korg; t=1784662177;
+	bh=vrTBE7SoHuH67rdAlh2CVv6oRyRkbzZC5T3utu54PXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wxu6CSBG2ohCWsU+M1TQLnjgLNVcL6kKIv6zqLw/qXaV2oFX7YiCjbTW8O5AC/4Yf
-	 53HJ4VdTNosXP9z5L8uXc6zTTh5Q0S5bJsWKiREgCcanqwzx79V1dOd0kwm2Texm03
-	 iF1eD2F7Zb+KF8ECkmA3agfbi7vbC2SPLDqUtHoc=
+	b=zFELCMAWyUVfgVht2uc0UJASM6noK01Gh8AbAe7bTur5LGG8h+7/V7WKzp/EdKPBp
+	 eg4m9RIJh5RHpLh4HR88venUAHeUv+ojveuX4NnBO85EaTfNFDtEgc0Ryh0SVyoCOH
+	 FzKH1iyhWBl7i0OB7R2yZbV7Hc4BVxaTpvk3NMTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0345/1276] crypto: cavium/cpt - fix DMA cleanup using wrong loop index
-Date: Tue, 21 Jul 2026 17:13:08 +0200
-Message-ID: <20260721152453.829054278@linuxfoundation.org>
+Subject: [PATCH 6.12 0346/1276] crypto: rng - Free default RNG on module exit
+Date: Tue, 21 Jul 2026 17:13:09 +0200
+Message-ID: <20260721152453.852653447@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,37 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 9dbf173bd32d5f81b005008b682bfb50aa093455 ]
+[ Upstream commit 606ba888b98e0d26a2c4e5c8dc0542e3ad8f0f3a ]
 
-The sg_cleanup error path used list[i] instead of list[j] when unmapping
-DMA buffers, leaking successfully mapped entries and repeatedly unmapping
-the failed one.
+When the rng module is removed the default RNG will be leaked.
+Call crypto_del_default_rng to free it if possible.
 
-Fixes: c694b233295b ("crypto: cavium - Add the Virtual Function driver for CPT")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Fixes: 7cecadb7cca8 ("crypto: rng - Do not free default RNG when it becomes unused")
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/cavium/cpt/cptvf_reqmanager.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ crypto/rng.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/crypto/cavium/cpt/cptvf_reqmanager.c b/drivers/crypto/cavium/cpt/cptvf_reqmanager.c
-index 153004bdfb5cde..753bdb2ae33f8d 100644
---- a/drivers/crypto/cavium/cpt/cptvf_reqmanager.c
-+++ b/drivers/crypto/cavium/cpt/cptvf_reqmanager.c
-@@ -108,8 +108,8 @@ static int setup_sgio_components(struct cpt_vf *cptvf, struct buf_ptr *list,
- sg_cleanup:
- 	for (j = 0; j < i; j++) {
- 		if (list[j].dma_addr) {
--			dma_unmap_single(&pdev->dev, list[i].dma_addr,
--					 list[i].size, DMA_BIDIRECTIONAL);
-+			dma_unmap_single(&pdev->dev, list[j].dma_addr,
-+					 list[j].size, DMA_BIDIRECTIONAL);
- 		}
+diff --git a/crypto/rng.c b/crypto/rng.c
+index 72da96fdfb5ddc..b0bc13d14db5f2 100644
+--- a/crypto/rng.c
++++ b/crypto/rng.c
+@@ -225,5 +225,16 @@ void crypto_unregister_rngs(struct rng_alg *algs, int count)
+ }
+ EXPORT_SYMBOL_GPL(crypto_unregister_rngs);
  
- 		list[j].dma_addr = 0;
++static void __exit rng_exit(void)
++{
++	int err;
++
++	err = crypto_del_default_rng();
++	if (err)
++		pr_err("Failed delete default RNG: %d\n", err);
++}
++
++module_exit(rng_exit);
++
+ MODULE_LICENSE("GPL");
+ MODULE_DESCRIPTION("Random Number Generator");
 -- 
 2.53.0
 
