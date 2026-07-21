@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F16838D3E5;
-	Tue, 21 Jul 2026 15:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8604840B11B;
+	Tue, 21 Jul 2026 15:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648244; cv=none; b=UrfXF1lMKCbtXK2gdeVQv50pxpCr8OIF+9c1OupyGdMe+x18wRrzYbRH54Hg712zLimr66UI2iADTOpeKzDsbEphFKP41NbWEfISuFLDcFBWmumeB6SuO5k2qtwCCEYZrI8+T4LYCujdUxKDba83WavyCZrLMqdLUPuJ0wuHYkk=
+	t=1784648247; cv=none; b=S8dT5UQ5ILeIEyPJXHkF+Q8jy4K7VklEwtbJsfKRiGgH7VtZ4x7Ah+ex0y6zGfCWqfnoV+rh3ztwvXZDxZTO3i+fubnmtcdHYR9YKl1fv5T3BWSjNi8TYz+Og5JZ45Jqf0S6rh7fTyczXj9q0vR+aIV0Q0OZryBF7BeU936zEOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648244; c=relaxed/simple;
-	bh=uIg/93/QdGO2ZYSfpU7KMHOct7BDQnOiEIKnDw6fovI=;
+	s=arc-20240116; t=1784648247; c=relaxed/simple;
+	bh=ElkgWfcRdaQMPM4c6TqmKTzPSxQUfw6mfh7KJAEyvqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TLo6MC+o4swM5J3jHAUNeOWHv83B/8l8xrEP85LG+adGBCwAwAvzYitBpDfjQPe45cUVrxhIJ20SegsFM4iy7Xzigizdhy7B1rgfXj3K6vuW3pbE+p6S5HUzCpegCDKdZVql3PY6mXg6XTw24YaDbKSWA0HSD48NHCuVats2JHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjBHGL+z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fbWiNAuyMVvAkZjW6X+p9V++YPCHsEvUl4i5PIqfbM6tR2zDUJ3Y5SJiKTU6Rfs6NAuTbXBUz6/v3ZKTiqqqUCikgy/jvkEy4JGjMNgt9bhJUHyCHbVON3WVitKYOlnkxHg9CHc5O/wHHYlZ2C1lW1is9GXRxWLBA/5nAE9+rlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aDgzuhSc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjBHGL+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008E01F000E9;
-	Tue, 21 Jul 2026 15:37:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aDgzuhSc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A531F000E9;
+	Tue, 21 Jul 2026 15:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648243;
-	bh=7p+C8VA9ezxpsurvQVeUe9P7FlQjoHprOQiHfkUV7Us=;
+	s=korg; t=1784648246;
+	bh=I6uTPltVTJgT5mN2AQKAA4Mh2tuTTh3gJwNtrOcpHGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JjBHGL+zZpyiZFolt5L3rcU9pqWRDCLXguyZ/4YwgNIXv0z4Emq80ZZSoCXNuSaYX
-	 PCVEuOrLYTLaQffx5Bbqn80tMhKcVWr8bMFtsuVUqxnMG61JC+61hrAsyVbBc9QJqc
-	 5+E15vSU5BQYO4/iPAE1oUK4dB6h93kaGGt4vSJY=
+	b=aDgzuhSczz01zyZKTPeYcENBdfa3cjEE2e9lA2VdtMtkxx556m2mJrg3yE6/KOEQL
+	 5S6iJgw6utAExTDUcDjlk17xjvyXFzs46s2mCepkG38gzEh3kaEmFLRZIJWSwQGyjf
+	 4C7LWKfbwIJP8VQXguvRMGCpujqUS+xy3kY5hJ2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Miroslav Benes <mbenes@suse.cz>,
 	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0124/2077] objtool/klp: Fix handling of zero-length .altinstr_replacement sections
-Date: Tue, 21 Jul 2026 16:56:37 +0200
-Message-ID: <20260721152555.623064447@linuxfoundation.org>
+Subject: [PATCH 7.1 0125/2077] objtool/klp: Fix cloning of zero-length section symbols
+Date: Tue, 21 Jul 2026 16:56:38 +0200
+Message-ID: <20260721152555.645895222@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,11 +54,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit c4c02d4450b5b7e2fbde578252f71a5697180112 ]
+[ Upstream commit 98377f3ba7c02d6eb34e203c9f9823bc62b0d231 ]
 
-When a section is empty (e.g. only zero-length alternative
-replacements), there are no symbols to convert a section symbol
-reference to.  Skip the reloc instead of erroring out.
+Fix NULL dereference when cloning a symbol from an empty section.
+sec->data is only populated for sections with non-zero size.
 
 Fixes: dd590d4d57eb ("objtool/klp: Introduce klp diff subcommand for diffing object files")
 Acked-by: Song Liu <song@kernel.org>
@@ -66,52 +65,22 @@ Reviewed-by: Miroslav Benes <mbenes@suse.cz>
 Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/klp-diff.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ tools/objtool/klp-diff.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tools/objtool/klp-diff.c b/tools/objtool/klp-diff.c
-index 18e40a7f864310..8aec5f5702c73b 100644
+index 8aec5f5702c73b..67fdc43a743373 100644
 --- a/tools/objtool/klp-diff.c
 +++ b/tools/objtool/klp-diff.c
-@@ -993,6 +993,13 @@ static int convert_reloc_secsym_to_sym(struct elf *elf, struct reloc *reloc)
- 	/* No dedicated section; find the symbol manually */
- 	sym = find_symbol_containing(sec, arch_adjusted_addend(reloc));
- 	if (!sym) {
-+		/*
-+		 * This is presumably an .altinstr_replacement section which is
-+		 * empty due to it only having zero-length replacement(s).
-+		 */
-+		if (!sec_size(sec))
-+			return 1;
-+
- 		/*
- 		 * This can happen for special section references to weak code
- 		 * whose symbol has been stripped by the linker.
-@@ -1253,6 +1260,7 @@ static int clone_sym_relocs(struct elfs *e, struct symbol *patched_sym)
+@@ -669,7 +669,7 @@ static struct symbol *__clone_symbol(struct elf *elf, struct symbol *patched_sym
+ 			size_t size;
  
- 	for_each_reloc(patched_rsec, patched_reloc) {
- 		unsigned long offset;
-+		int ret;
+ 			/* bss doesn't have data */
+-			if (patched_sym->sec->data->d_buf)
++			if (patched_sym->sec->data && patched_sym->sec->data->d_buf)
+ 				data = patched_sym->sec->data->d_buf + patched_sym->offset;
  
- 		if (reloc_offset(patched_reloc) < start ||
- 		    reloc_offset(patched_reloc) >= end)
-@@ -1266,12 +1274,15 @@ static int clone_sym_relocs(struct elfs *e, struct symbol *patched_sym)
- 		    !strcmp(patched_reloc->sym->sec->name, ".altinstr_aux"))
- 			continue;
- 
--		if (convert_reloc_sym(e->patched, patched_reloc)) {
-+		ret = convert_reloc_sym(e->patched, patched_reloc);
-+		if (ret < 0) {
- 			ERROR_FUNC(patched_rsec->base, reloc_offset(patched_reloc),
- 				   "failed to convert reloc sym '%s' to its proper format",
- 				   patched_reloc->sym->name);
- 			return -1;
- 		}
-+		if (ret > 0)
-+			continue;
- 
- 		offset = out_sym->offset + (reloc_offset(patched_reloc) - patched_sym->offset);
- 
+ 			if (is_sec_sym(patched_sym))
 -- 
 2.53.0
 
