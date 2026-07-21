@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D1B4229C6;
-	Tue, 21 Jul 2026 20:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3DC71A683A;
+	Tue, 21 Jul 2026 20:00:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664015; cv=none; b=nlYZ+7uZ5pyTNJH0YPkqPUcUxqAPMaWaGb55ChHw3tMdl4vBGPBtbMLYgdHh/P8Ufv04IDtMyiwZ00zqinKgR7xnHQuCUrQnVZMOHcbTqoGPvbjxRaKGVbVWuhfa324UyvdpTZbA8CDkNL4QiG803522kgIsaZhmer/4purfBj0=
+	t=1784664018; cv=none; b=BaWdCVRzHL1gnPPUSc5xQYL/V8+32QD4jTs8d6IG8XRjGV7KxgWAe4BPznrmHm6DcFHdwhfjpYMKQ7k1F0Q0Knctv/HVDWljyouRoP9ciwSQ8gGFpPuhXjY+Mb3JR5YYrb6DAAAvqU9c274IFi68UQZlC6gqvBZQc+wgdXPbKNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664015; c=relaxed/simple;
-	bh=L9roLUsqp5oY8hXLbjdhb/gFD/N1Bv3wJqi582mB2bQ=;
+	s=arc-20240116; t=1784664018; c=relaxed/simple;
+	bh=kRwZHaT3ZctefIIEU+W8GyBn6SDZKs/OerJ3oQS93Nk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FJL9DYu5SEuRLIAPelHp0WXZIcOIRtiYV47cEy9D4EfuRT+IwstTsujUeZCsiq0vIVk4ZeXFehxLIhefYaPzbc3d65bCp9MYaUAuCKxfOp2hNfBxSH08yRQfDy5TIo5/J24nzhcjXjnhkdggywgdbNL/0nTnAR/ufplaTJUNHPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EppUG7Gj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gqHbfKj6L3UM2nOwd3h7TYvaTaGUsMDjAdhkWlJzIJ16Iis1BaACJ94AXKwuL2vtW2z8mn44XU6AS2Kr8tulyCKt/++9sgx4+V05dEvdQWFxvg5Zr7l6ykGgDl+Sdm5fONJDeOKcfJI5Q1ubDy1dmXdegqKDzAZroDHNWW9bCQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=majcKQzC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EppUG7Gj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ABCB1F000E9;
-	Tue, 21 Jul 2026 20:00:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="majcKQzC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DFD1F000E9;
+	Tue, 21 Jul 2026 20:00:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664014;
-	bh=pzkDjQm+i5tQ5yc1kcsaQbsD7uUAoHLlnVNjG5RRNN4=;
+	s=korg; t=1784664016;
+	bh=5PyrUvYoPpjnYKbeX2ysz6OJx12nhGfIh/3IpEC2qUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EppUG7Gj2dAlgDavZmDbZJwPTms8JMdD7elfY7m63S2zbq22V9cybYzdLsu9euhbw
-	 Oibx4SOcmTzG56QKpYpSxis1bcNYt2GwDnNDG0elQSkDvePOyekibdsOPsdRaushJU
-	 M8Q92iiYIgTOHGvqzbf5lk/hD7vB5L93GWzwFrEM=
+	b=majcKQzC/R3hLAqC39h4IumYGd6QL0fNwFrEYdp6jbpBssXk+0PMqe8O9W1uJZ4qu
+	 RrJwi/iYX9xiTFvq1BQbm9ptk7U9iPxR2eymLg1VdBANhC+uVM4QhiP3ydjLrKu4uD
+	 UuuLskhW3eOgETf+lQiAq30rK9wojA36bTy/dOck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bradley Morgan <include@grrlz.net>,
 	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.12 1040/1276] cpu: hotplug: Preserve per instance callback errors
-Date: Tue, 21 Jul 2026 17:24:43 +0200
-Message-ID: <20260721152509.260002627@linuxfoundation.org>
+Subject: [PATCH 6.12 1041/1276] cpu: hotplug: Bound hotplug states sysfs output
+Date: Tue, 21 Jul 2026 17:24:44 +0200
+Message-ID: <20260721152509.280552061@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,51 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Bradley Morgan <include@grrlz.net>
 
-commit 673db10729fb121ea1b16fe57791a0cb9eac1eb5 upstream.
+commit 86f436567f2516a0083b210bedc933544826a2c3 upstream.
 
-cpuhp_invoke_callback() unwinds earlier callbacks for the same
-hotplug state when one instance fails. The rollback path currently
-reuses ret, so a successful rollback can hide the original error and
-make the failed transition look successful.
+states_show() adds CPU hotplug state names into a single sysfs buffer
+using sprintf(). With enough registered states, this can write past the
+end of the PAGE_SIZE buffer.
 
-Keep the rollback result separate from the original error.
+Use sysfs_emit_at() so output is bounded.
 
-Fixes: 724a86881d03 ("smp/hotplug: Callback vs state-machine consistency")
+Fixes: 98f8cdce1db5 ("cpu/hotplug: Add sysfs state interface")
 Signed-off-by: Bradley Morgan <include@grrlz.net>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260619163719.12103-1-include@grrlz.net
+Link: https://patch.msgid.link/20260619163719.12103-2-include@grrlz.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cpu.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/cpu.c |   12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
 --- a/kernel/cpu.c
 +++ b/kernel/cpu.c
-@@ -174,7 +174,7 @@ static int cpuhp_invoke_callback(unsigne
- 	struct cpuhp_step *step = cpuhp_get_step(state);
- 	int (*cbm)(unsigned int cpu, struct hlist_node *node);
- 	int (*cb)(unsigned int cpu);
--	int ret, cnt;
-+	int ret, cnt, rollback_ret;
+@@ -2864,21 +2864,17 @@ static const struct attribute_group cpuh
+ 	NULL
+ };
  
- 	if (st->fail == state) {
- 		st->fail = CPUHP_INVALID;
-@@ -238,12 +238,12 @@ err:
- 			break;
+-static ssize_t states_show(struct device *dev,
+-				 struct device_attribute *attr, char *buf)
++static ssize_t states_show(struct device *dev, struct device_attribute *attr, char *buf)
+ {
+-	ssize_t cur, res = 0;
++	ssize_t res = 0;
+ 	int i;
  
- 		trace_cpuhp_multi_enter(cpu, st->target, state, cbm, node);
--		ret = cbm(cpu, node);
--		trace_cpuhp_exit(cpu, st->state, state, ret);
-+		rollback_ret = cbm(cpu, node);
-+		trace_cpuhp_exit(cpu, st->state, state, rollback_ret);
- 		/*
- 		 * Rollback must not fail,
- 		 */
--		WARN_ON_ONCE(ret);
-+		WARN_ON_ONCE(rollback_ret);
+ 	mutex_lock(&cpuhp_state_mutex);
+ 	for (i = CPUHP_OFFLINE; i <= CPUHP_ONLINE; i++) {
+ 		struct cpuhp_step *sp = cpuhp_get_step(i);
+ 
+-		if (sp->name) {
+-			cur = sprintf(buf, "%3d: %s\n", i, sp->name);
+-			buf += cur;
+-			res += cur;
+-		}
++		if (sp->name)
++			res += sysfs_emit_at(buf, res, "%3d: %s\n", i, sp->name);
  	}
- 	return ret;
- }
+ 	mutex_unlock(&cpuhp_state_mutex);
+ 	return res;
 
 
