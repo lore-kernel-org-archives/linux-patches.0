@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6588B356A12;
-	Tue, 21 Jul 2026 19:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091B317A2F6;
+	Tue, 21 Jul 2026 19:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661323; cv=none; b=isGWPX1aMvGSZ8qwk96Ygf0Ydf9LeL5tbcjfYpggjE0rDMwQTk6nktCa5WHG3qMS0CXBv2/MRXMoKKgf9sT19Obo/3kJpW4GRYZ5XVDSpf/vg3FD0WfUD4TP6M6Ndt1Mrm1BzDHQC9vxypkFcEhjjC4dP8cvtA0wspVnMr5JXZ0=
+	t=1784661326; cv=none; b=Z5ETHfJdsC3C2nqKQ8l25f48yqFgEdDlyTmGoqv2ua3lGXj70p7fH+MyCnPkEC/6JvHfA+N/UM+/hS3ZjT9yk19zHUo2coSoAx2Hymq7FhbKcC/7eXjyqYg6J+peWtLRCXo9IKN1fW+vopArgieOL+cQF3Vxi4Awi1JARVupJsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661323; c=relaxed/simple;
-	bh=BA2kON/wZ22oq041h+hf345Srz+rxWqpwZv4tPQoNpM=;
+	s=arc-20240116; t=1784661326; c=relaxed/simple;
+	bh=nEeVIve03UqPCzxU/jL62iBk/77bypV1bycaAztptfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IOB2TUeEFIzbrPXbHWxVnAC1ql/xJkiqJIyxJqBiQLpulOg0+nSVgZT9kjikkR+MIUKWG7FELUNQdpiSE19SD+u30xda/JvFttZeYkNqobkSGtCvpLUBJG0tUxLn/MAcjnewkwGc5D2uogwUgO3QZP2w3vMpBcAVa73uKrhSxd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLLXgkCV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cxpoopHCVUdpzzxHmYPHVdjutPV10cqB7KBPqPCMGzwBVKvOM5ICSmEXfFWaa35SFvqwZOBOOsiwZRMb+TG/1mDJaUBzUuKaPdpj75lpTjpHJLvXH9p+W3xWJMjIzn88FGhG0cIlwlrxsEWA226GzAa7Y+fxByMlYilWoDZPjl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q6F4HVBN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLLXgkCV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35C01F000E9;
-	Tue, 21 Jul 2026 19:15:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q6F4HVBN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74DC11F00A3A;
+	Tue, 21 Jul 2026 19:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661322;
-	bh=/QEsS85ouI//0jw6RzkRm/IabH9LYSI0Z5l7PFEkw08=;
+	s=korg; t=1784661324;
+	bh=jxsQcYx0rSOBF5q3bVKcvdn1QSzE3QZVN8/1WgecoCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kLLXgkCVL2ENohny9LA0Sbv6TrIg9lDXoAaBeMwwwi/I3uMWcKaLDGkNo+01o9VMK
-	 Lo9wVL5/UziolyhQ+bYeYYY42L+VR/qOASYeuUXJEdyQWrK/EACz98hc350DH7x9wA
-	 Vb42eyz85RYJbHbTvj02QjhUvzPKKlfb7GLqdK9E=
+	b=Q6F4HVBN/nlIRD7+7wylzmb3f6YtFmpbQnWDVA88HuWtd3CTRnPh/VPDFm/sjNUuS
+	 Ozoj8vUvFz710I2gm+JWM0gRuj8esKca1G9WNtbPy3KEK2OSosru+9U/Vm9iysn8BS
+	 AHvL8kwcn+1mg1CYJRc4WpS84FIQ5rjQw4W7mVGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>,
 	Liam Merwick <liam.merwick@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0023/1276] iommu/amd: Use maximum Event log buffer size when SNP is enabled on Family 0x19
-Date: Tue, 21 Jul 2026 17:07:46 +0200
-Message-ID: <20260721152446.600823937@linuxfoundation.org>
+Subject: [PATCH 6.12 0024/1276] iommu/amd: Use maximum PPR log buffer size when SNP is enabled on Family 0x19
+Date: Tue, 21 Jul 2026 17:07:47 +0200
+Message-ID: <20260721152446.622904037@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -57,28 +57,24 @@ Content-Transfer-Encoding: 8bit
 
 From: Vasant Hegde <vasant.hegde@amd.com>
 
-commit 58c0ac6125d89bf6ec65a521eaeb52a0e8e20a9f upstream.
+commit 1f44aab79bac31f459422dfb213e907bb386509c upstream.
 
-Due to CVE-2023-20585, the Event log buffer must use the maximum supported
-size (512K) on Milan/Genoa (Family 0x19) systems when SNP is enabled,
-to mitigate a potential security vulnerability. All other systems continue to
-use the default Event log buffer size (8K).
+Due to CVE-2023-20585, the PPR log buffer must use the maximum supported
+size (512K) on Genoa (Family 0x19, model >= 0x10) systems when SNP is
+enabled, to mitigate a potential security vulnerability. Note that Family
+0x19 models below 0x10 (Milan) do not support PPR when SNP is enabled.
+Hence the PPR log size increase is only applied for model >= 0x10.
+All other systems continue to use the default PPR log buffer size (8K).
 
 Apply the errata fix by making the following changes:
 
-* Introduce new global variable (amd_iommu_evtlog_size) to have event log
-  buffer size. Adjust variable size for family 0x19.
+- Introduce global new variable (amd_iommu_pprlog_size) to have PPR log buffer
+  size. Adjust variable size for Genoa family.
 
-* Since 'iommu_snp_enable()' must be called after the core IOMMU subsystem
-  is initialized, it cannot be moved to the early init stage. The SNP errata
-  must also be applied after the 'iommu_snp_enable()' check. Therefore,
-  'alloc_event_buffer()' and 'iommu_enable_event_buffer()' are now called
-  in the IOMMU_ENABLED state, after the errata is applied.
+- Extend 'amd_iommu_apply_erratum_snp()' to also set the PPR log buffer
+  size to maximum for Family 0x19 model >= 0x10 when SNP is enabled.
 
-* Adjust alloc_event_buffer() and iommu_enable_event_buffer() to handle
-  all IOMMU instances.
-
-* Also rename EVT_* macros to make it more readable.
+- Rename PPR_* macros to make it more readable.
 
 Link: https://www.amd.com/en/resources/product-security/bulletin/amd-sb-3016.html
 Cc: Borislav Petkov <bp@alien8.de>
@@ -87,245 +83,131 @@ Cc: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
 Tested-by: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
-(cherry picked from commit 58c0ac6125d89bf6ec65a521eaeb52a0e8e20a9f)
-Conflicts:
-	drivers/iommu/amd/init.c
-[ Conflicts in alloc_event_buffer() and iommu_enable_event_buffer()
-  due to lack of upstream AMD IOMMU kdump buffer reuse code.
-  Similarly, do not add a kdump check when allocating an
-  event log buffer in state_next(). ]
+(cherry picked from commit 1f44aab79bac31f459422dfb213e907bb386509c)
+[ Modify amd_iommu_free_ppr_log() due to different iommu_free_pages() API. ]
 Signed-off-by: Liam Merwick <liam.merwick@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/amd_iommu.h       |  2 +
- drivers/iommu/amd/amd_iommu_types.h | 10 ++--
- drivers/iommu/amd/init.c            | 77 +++++++++++++++++++++--------
- drivers/iommu/amd/iommu.c           |  2 +-
- 4 files changed, 67 insertions(+), 24 deletions(-)
+ drivers/iommu/amd/amd_iommu.h       |  1 +
+ drivers/iommu/amd/amd_iommu_types.h | 11 ++++++-----
+ drivers/iommu/amd/init.c            | 13 ++++++++++++-
+ drivers/iommu/amd/ppr.c             | 10 ++++++----
+ 4 files changed, 25 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/iommu/amd/amd_iommu.h b/drivers/iommu/amd/amd_iommu.h
-index 27eedfb47d8b69..36cd610104e3f8 100644
+index 36cd610104e3f8..8be6b4514dd51a 100644
 --- a/drivers/iommu/amd/amd_iommu.h
 +++ b/drivers/iommu/amd/amd_iommu.h
-@@ -11,6 +11,8 @@
- 
+@@ -12,6 +12,7 @@
  #include "amd_iommu_types.h"
  
-+extern int amd_iommu_evtlog_size;
-+
+ extern int amd_iommu_evtlog_size;
++extern int amd_iommu_pprlog_size;
+ 
  irqreturn_t amd_iommu_int_thread(int irq, void *data);
  irqreturn_t amd_iommu_int_thread_evtlog(int irq, void *data);
- irqreturn_t amd_iommu_int_thread_pprlog(int irq, void *data);
 diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
-index 7f13b314abbcef..d622fa0091a5a3 100644
+index d622fa0091a5a3..09131d067a8a54 100644
 --- a/drivers/iommu/amd/amd_iommu_types.h
 +++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -15,6 +15,7 @@
- #include <linux/mutex.h>
- #include <linux/msi.h>
- #include <linux/list.h>
-+#include <linux/sizes.h>
- #include <linux/spinlock.h>
- #include <linux/pci.h>
- #include <linux/irqreturn.h>
-@@ -132,7 +133,6 @@
- #define MMIO_STATUS_GALOG_INT_MASK		BIT(10)
- 
- /* event logging constants */
--#define EVENT_ENTRY_SIZE	0x10
- #define EVENT_TYPE_SHIFT	28
- #define EVENT_TYPE_MASK		0xf
- #define EVENT_TYPE_ILL_DEV	0x1
-@@ -240,8 +240,12 @@
- #define MMIO_CMD_SIZE_512 (0x9ULL << MMIO_CMD_SIZE_SHIFT)
- 
- /* constants for event buffer handling */
--#define EVT_BUFFER_SIZE		8192 /* 512 entries */
--#define EVT_LEN_MASK		(0x9ULL << 56)
-+#define EVTLOG_ENTRY_SIZE	0x10
-+#define EVTLOG_SIZE_SHIFT	56
-+#define EVTLOG_SIZE_DEF		SZ_8K /* 512 entries */
-+#define EVTLOG_LEN_MASK_DEF	(0x9ULL << EVTLOG_SIZE_SHIFT)
-+#define EVTLOG_SIZE_MAX		SZ_512K /* 32K entries */
-+#define EVTLOG_LEN_MASK_MAX	(0xFULL << EVTLOG_SIZE_SHIFT)
+@@ -248,11 +248,12 @@
+ #define EVTLOG_LEN_MASK_MAX	(0xFULL << EVTLOG_SIZE_SHIFT)
  
  /* Constants for PPR Log handling */
- #define PPR_LOG_ENTRIES		512
+-#define PPR_LOG_ENTRIES		512
+-#define PPR_LOG_SIZE_SHIFT	56
+-#define PPR_LOG_SIZE_512	(0x9ULL << PPR_LOG_SIZE_SHIFT)
+-#define PPR_ENTRY_SIZE		16
+-#define PPR_LOG_SIZE		(PPR_ENTRY_SIZE * PPR_LOG_ENTRIES)
++#define PPRLOG_ENTRY_SIZE	0x10
++#define PPRLOG_SIZE_SHIFT	56
++#define PPRLOG_SIZE_DEF		SZ_8K	/* 512 entries */
++#define PPRLOG_LEN_MASK_DEF	(0x9ULL << PPRLOG_SIZE_SHIFT)
++#define PPRLOG_SIZE_MAX		SZ_512K	/* 32K entries */
++#define PPRLOG_LEN_MASK_MAX	(0xFULL << PPRLOG_SIZE_SHIFT)
+ 
+ /* PAGE_SERVICE_REQUEST PPR Log Buffer Entry flags */
+ #define PPR_FLAG_EXEC		0x002	/* Execute permission requested */
 diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 78e9ceda2338f3..570471e1058655 100644
+index 570471e1058655..7fa340281b9fb2 100644
 --- a/drivers/iommu/amd/init.c
 +++ b/drivers/iommu/amd/init.c
-@@ -133,6 +133,8 @@ struct ivhd_entry {
- 	u8 uid;
+@@ -134,6 +134,7 @@ struct ivhd_entry {
  } __attribute__((packed));
  
-+int amd_iommu_evtlog_size = EVTLOG_SIZE_DEF;
-+
+ int amd_iommu_evtlog_size = EVTLOG_SIZE_DEF;
++int amd_iommu_pprlog_size = PPRLOG_SIZE_DEF;
+ 
  /*
   * An AMD IOMMU memory definition structure. It defines things like exclusion
-  * ranges for devices and regions that should be unity mapped.
-@@ -855,30 +857,41 @@ void *__init iommu_alloc_4k_pages(struct amd_iommu *iommu, gfp_t gfp,
- }
- 
- /* allocates the memory where the IOMMU will log its events to */
--static int __init alloc_event_buffer(struct amd_iommu *iommu)
-+static int __init alloc_event_buffer(void)
- {
--	iommu->evt_buf = iommu_alloc_4k_pages(iommu, GFP_KERNEL,
--					      EVT_BUFFER_SIZE);
-+	struct amd_iommu *iommu;
- 
--	return iommu->evt_buf ? 0 : -ENOMEM;
-+	for_each_iommu(iommu) {
-+		iommu->evt_buf = iommu_alloc_4k_pages(iommu, GFP_KERNEL,
-+						      amd_iommu_evtlog_size);
-+		if (!iommu->evt_buf)
-+			return -ENOMEM;
-+	}
+@@ -3265,6 +3266,16 @@ static void amd_iommu_apply_erratum_snp(void)
+ 	amd_iommu_evtlog_size = EVTLOG_SIZE_MAX;
+ 	pr_info("Applying erratum: Increase Event log size to 0x%x\n",
+ 		amd_iommu_evtlog_size);
 +
-+	return 0;
- }
- 
--static void iommu_enable_event_buffer(struct amd_iommu *iommu)
-+static void iommu_enable_event_buffer(void)
- {
-+	struct amd_iommu *iommu;
- 	u64 entry;
- 
--	BUG_ON(iommu->evt_buf == NULL);
-+	for_each_iommu(iommu) {
-+		BUG_ON(iommu->evt_buf == NULL);
- 
--	entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
-+		entry = iommu_virt_to_phys(iommu->evt_buf);
-+		entry |= (amd_iommu_evtlog_size == EVTLOG_SIZE_DEF) ?
-+			EVTLOG_LEN_MASK_DEF : EVTLOG_LEN_MASK_MAX;
- 
--	memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
--		    &entry, sizeof(entry));
-+		memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
-+			    &entry, sizeof(entry));
- 
--	/* set head and tail to zero manually */
--	writel(0x00, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
--	writel(0x00, iommu->mmio_base + MMIO_EVT_TAIL_OFFSET);
-+		/* set head and tail to zero manually */
-+		writel(0x00, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
-+		writel(0x00, iommu->mmio_base + MMIO_EVT_TAIL_OFFSET);
- 
--	iommu_feature_enable(iommu, CONTROL_EVT_LOG_EN);
-+		iommu_feature_enable(iommu, CONTROL_EVT_LOG_EN);
++	/*
++	 * Set PPR log buffer size to max.
++	 * (Family 0x19, model < 0x10 doesn't support PPR when SNP is enabled).
++	 */
++	if (boot_cpu_data.x86_model >= 0x10) {
++		amd_iommu_pprlog_size = PPRLOG_SIZE_MAX;
++		pr_info("Applying erratum: Increase PPR log size to 0x%x\n",
++			amd_iommu_pprlog_size);
 +	}
- }
- 
- /*
-@@ -891,7 +904,7 @@ static void iommu_disable_event_buffer(struct amd_iommu *iommu)
- 
- static void __init free_event_buffer(struct amd_iommu *iommu)
- {
--	iommu_free_pages(iommu->evt_buf, get_order(EVT_BUFFER_SIZE));
-+	iommu_free_pages(iommu->evt_buf, get_order(amd_iommu_evtlog_size));
- }
- 
- static void free_ga_log(struct amd_iommu *iommu)
-@@ -1828,9 +1841,6 @@ static int __init init_iommu_one_late(struct amd_iommu *iommu)
- 	if (alloc_command_buffer(iommu))
- 		return -ENOMEM;
- 
--	if (alloc_event_buffer(iommu))
--		return -ENOMEM;
--
- 	iommu->int_enabled = false;
- 
- 	init_translation_status(iommu);
-@@ -2754,7 +2764,6 @@ static void early_enable_iommu(struct amd_iommu *iommu)
- 	iommu_init_flags(iommu);
- 	iommu_set_device_table(iommu);
- 	iommu_enable_command_buffer(iommu);
--	iommu_enable_event_buffer(iommu);
- 	iommu_set_exclusion_range(iommu);
- 	iommu_enable_gt(iommu);
- 	iommu_enable_ga(iommu);
-@@ -2812,7 +2821,6 @@ static void early_enable_iommus(void)
- 			iommu_disable_event_buffer(iommu);
- 			iommu_disable_irtcachedis(iommu);
- 			iommu_enable_command_buffer(iommu);
--			iommu_enable_event_buffer(iommu);
- 			iommu_enable_ga(iommu);
- 			iommu_enable_xt(iommu);
- 			iommu_enable_irtcachedis(iommu);
-@@ -2928,6 +2936,7 @@ static void amd_iommu_resume(void)
- 	/* re-load the hardware */
- 	enable_iommus();
- 
-+	iommu_enable_event_buffer();
- 	amd_iommu_enable_interrupts();
- }
- 
-@@ -3242,6 +3251,23 @@ static void iommu_snp_enable(void)
  #endif
  }
  
-+static void amd_iommu_apply_erratum_snp(void)
-+{
-+#ifdef CONFIG_KVM_AMD_SEV
-+	if (!amd_iommu_snp_en)
-+		return;
-+
-+	/* Errata fix for Family 0x19 */
-+	if (boot_cpu_data.x86 != 0x19)
-+		return;
-+
-+	/* Set event log buffer size to max */
-+	amd_iommu_evtlog_size = EVTLOG_SIZE_MAX;
-+	pr_info("Applying erratum: Increase Event log size to 0x%x\n",
-+		amd_iommu_evtlog_size);
-+#endif
-+}
-+
- /****************************************************************************
-  *
-  * AMD IOMMU Initialization State Machine
-@@ -3278,6 +3304,17 @@ static int __init state_next(void)
- 	case IOMMU_ENABLED:
- 		register_syscore_ops(&amd_iommu_syscore_ops);
- 		iommu_snp_enable();
-+
-+		amd_iommu_apply_erratum_snp();
-+
-+		/* Allocate/enable event log buffer */
-+		ret = alloc_event_buffer();
-+		if (ret) {
-+			init_state = IOMMU_INIT_ERROR;
-+			break;
-+		}
-+		iommu_enable_event_buffer();
-+
- 		ret = amd_iommu_init_pci();
- 		init_state = ret ? IOMMU_INIT_ERROR : IOMMU_PCI_INIT;
- 		break;
-@@ -3865,7 +3902,7 @@ int amd_iommu_snp_disable(void)
- 		return 0;
- 
- 	for_each_iommu(iommu) {
--		ret = iommu_make_shared(iommu->evt_buf, EVT_BUFFER_SIZE);
-+		ret = iommu_make_shared(iommu->evt_buf, amd_iommu_evtlog_size);
+@@ -3906,7 +3917,7 @@ int amd_iommu_snp_disable(void)
  		if (ret)
  			return ret;
  
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index 5ea0d9eb0ccc54..b4052fa9cc76bc 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -1003,7 +1003,7 @@ static void iommu_poll_events(struct amd_iommu *iommu)
- 		iommu_print_event(iommu, iommu->evt_buf + head);
+-		ret = iommu_make_shared(iommu->ppr_log, PPR_LOG_SIZE);
++		ret = iommu_make_shared(iommu->ppr_log, amd_iommu_pprlog_size);
+ 		if (ret)
+ 			return ret;
+ 
+diff --git a/drivers/iommu/amd/ppr.c b/drivers/iommu/amd/ppr.c
+index 7c67d69f0b8cad..42d895bd1c44f7 100644
+--- a/drivers/iommu/amd/ppr.c
++++ b/drivers/iommu/amd/ppr.c
+@@ -20,7 +20,7 @@
+ int __init amd_iommu_alloc_ppr_log(struct amd_iommu *iommu)
+ {
+ 	iommu->ppr_log = iommu_alloc_4k_pages(iommu, GFP_KERNEL | __GFP_ZERO,
+-					      PPR_LOG_SIZE);
++					      amd_iommu_pprlog_size);
+ 	return iommu->ppr_log ? 0 : -ENOMEM;
+ }
+ 
+@@ -33,7 +33,9 @@ void amd_iommu_enable_ppr_log(struct amd_iommu *iommu)
+ 
+ 	iommu_feature_enable(iommu, CONTROL_PPR_EN);
+ 
+-	entry = iommu_virt_to_phys(iommu->ppr_log) | PPR_LOG_SIZE_512;
++	entry = iommu_virt_to_phys(iommu->ppr_log);
++	entry |= (amd_iommu_pprlog_size == PPRLOG_SIZE_DEF) ?
++			PPRLOG_LEN_MASK_DEF : PPRLOG_LEN_MASK_MAX;
+ 
+ 	memcpy_toio(iommu->mmio_base + MMIO_PPR_LOG_OFFSET,
+ 		    &entry, sizeof(entry));
+@@ -48,7 +50,7 @@ void amd_iommu_enable_ppr_log(struct amd_iommu *iommu)
+ 
+ void __init amd_iommu_free_ppr_log(struct amd_iommu *iommu)
+ {
+-	iommu_free_pages(iommu->ppr_log, get_order(PPR_LOG_SIZE));
++	iommu_free_pages(iommu->ppr_log, get_order(amd_iommu_pprlog_size));
+ }
+ 
+ /*
+@@ -201,7 +203,7 @@ void amd_iommu_poll_ppr_log(struct amd_iommu *iommu)
+ 			raw[0] = raw[1] = 0UL;
  
  		/* Update head pointer of hardware ring-buffer */
--		head = (head + EVENT_ENTRY_SIZE) % EVT_BUFFER_SIZE;
-+		head = (head + EVTLOG_ENTRY_SIZE) % amd_iommu_evtlog_size;
- 		writel(head, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
- 	}
+-		head = (head + PPR_ENTRY_SIZE) % PPR_LOG_SIZE;
++		head = (head + PPRLOG_ENTRY_SIZE) % amd_iommu_pprlog_size;
+ 		writel(head, iommu->mmio_base + MMIO_PPR_HEAD_OFFSET);
  
+ 		/* Handle PPR entry */
 -- 
 2.53.0
 
