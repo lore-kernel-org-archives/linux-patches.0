@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E501315D53;
-	Tue, 21 Jul 2026 18:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCD346D2CC;
+	Tue, 21 Jul 2026 18:39:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659142; cv=none; b=DLhd6BmJGyBRB63nnzkRZ2iVOKZdUv9dZDwKp6/burWilOQ0pIogzE4C2S3C/1AbXpYjNKsb7nC8LlTAdFz78skr+pJns6f0tz2j+UeK9OzfbUI6mXYQzSSl1sp0wHLxtk0VAbDN74r54k5No57I3BcgeCgnzeMWB3xzM1Vc1Y8=
+	t=1784659145; cv=none; b=mipd8BF8QAIaM8WXKw05BzNMIr+AnW0ASM2unGOijgvvuKjvgK9fGGPjwKIORux7mX8doEnwY0+MczdyBZLj6wZw7aql9zBt+FcJ3w+AkjD/rFZvbAJh4t4knsDvtBy1T63ik3RcUZmdfe5C6thzFTAODLo13XJMnIqr03bCWI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659142; c=relaxed/simple;
-	bh=/sMnKXUwDu8rfpCIa/68Xg3aCHeTmG+0sFd/oVQArfw=;
+	s=arc-20240116; t=1784659145; c=relaxed/simple;
+	bh=cgE/obKyX74vKGgzbdw+AJ7nwnjfr+fK7LzJ00bgqaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TTJ9YEKkTbQIdZh2NEgYeh2eO4w7dxX5LvF9SCBGhkJdTqPlPjVK6eU1Fm5/o7AeFc5lM+mNuK4+gxOYkiow4uysL4uLOiZrM8eOshAnhCsGtDLq8OmfKqnI9wu11teR3HewgGo4E2sKclTroyX62CmkRlz5wfUJ2ZHpT2sWH6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LgBcHMk+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r1Xh7A6xoEB715iH3ZiZM8eHM4K2ETisVXTiUeqkvEOLP+pdlGTXlbp9y0Amn7vFVTkojYekJRYD9rs0WW2FlEyDv81Xc6wBEYeKW+aMqEHmfgSRAwVgKKTiBWatblma96InrJB7D5qyoLQGuHYZZhbIE1tyOV2VpHjfYUD7Khs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LER7sEDr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LgBcHMk+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E55B61F000E9;
-	Tue, 21 Jul 2026 18:39:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LER7sEDr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44661F000E9;
+	Tue, 21 Jul 2026 18:39:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659141;
-	bh=l1vJribPA0FhVbp/gKsA34o4N/jdR55E5aT420OCgMY=;
+	s=korg; t=1784659144;
+	bh=q0v1vjo5NvR6EbmK+RAU01u45QJHQ/vv9GnIZ/QYdMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LgBcHMk+cqqUwQgcMQswOi5fkMl1ll5HGL75iDY2LSIRtsm0cdvQ1sIKgrqwJ+Dz6
-	 sWDQ2UtX9gOkFwKNZWiuuOraJLCMSUxYrwIm992wRolIbqRaHcw0PM+RmBkFH9FJBl
-	 YzDBDDc/jG/ivYWDGtaEMICLiW7y6MTpRnjuSP6g=
+	b=LER7sEDrzUWopnh9h+xnESGO+Q6t85JBOv5SPRVtCswRZsbhSv2AUa5lBkDFgIVp8
+	 FEzVDBAPh2J5Ufxz7lynwSleYNehnGqUnhXtMjLh6hIOTRj4fP4ilATZaGsT8+G+13
+	 kycC81E15R3M06J1asi+omN8tJDFS4G4iYu4sXNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <include@grrlz.net>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.18 1392/1611] cpu: hotplug: Bound hotplug states sysfs output
-Date: Tue, 21 Jul 2026 17:25:08 +0200
-Message-ID: <20260721152546.753581449@linuxfoundation.org>
+	Xiao Liang <shaw.leon@gmail.com>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 1410/1611] net: ip6_tunnel: require CAP_NET_ADMIN in the device netns for changelink
+Date: Tue, 21 Jul 2026 17:25:26 +0200
+Message-ID: <20260721152547.156552695@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,53 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bradley Morgan <include@grrlz.net>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit 86f436567f2516a0083b210bedc933544826a2c3 upstream.
+commit 2496fa0b7d180b3ad356b514e7ff93bb14e6140a upstream.
 
-states_show() adds CPU hotplug state names into a single sysfs buffer
-using sprintf(). With enough registered states, this can write past the
-end of the PAGE_SIZE buffer.
+ip6_tnl_changelink() operates on at most two netns, dev_net(dev) and the
+tunnel link netns t->net. They differ once the device is created in or
+moved to a netns other than the one the request runs in. The rtnl
+changelink path checks CAP_NET_ADMIN only against dev_net(dev), so a
+caller privileged there but not in t->net can rewrite a tunnel that
+lives in t->net.
 
-Use sysfs_emit_at() so output is bounded.
+Gate ip6_tnl_changelink() on rtnl_dev_link_net_capable() at its top,
+before any attribute is parsed.
 
-Fixes: 98f8cdce1db5 ("cpu/hotplug: Add sysfs state interface")
-Signed-off-by: Bradley Morgan <include@grrlz.net>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reported-by: Xiao Liang <shaw.leon@gmail.com>
+Closes: https://lore.kernel.org/netdev/CABAhCOSzP1vaThGV35_VnsRCb=87_CPjPVsTHbq905k8A+BuUg@mail.gmail.com/
+Fixes: 0bd8762824e7 ("ip6tnl: add x-netns support")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260619163719.12103-2-include@grrlz.net
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260612085941.3158249-5-maoyixie.tju@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cpu.c |   12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ net/ipv6/ip6_tunnel.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -2865,21 +2865,17 @@ static const struct attribute_group cpuh
- 	.name = "hotplug",
- };
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -2068,6 +2068,9 @@ static int ip6_tnl_changelink(struct net
+ 	struct ip6_tnl_net *ip6n = net_generic(net, ip6_tnl_net_id);
+ 	struct ip_tunnel_encap ipencap;
  
--static ssize_t states_show(struct device *dev,
--				 struct device_attribute *attr, char *buf)
-+static ssize_t states_show(struct device *dev, struct device_attribute *attr, char *buf)
- {
--	ssize_t cur, res = 0;
-+	ssize_t res = 0;
- 	int i;
- 
- 	mutex_lock(&cpuhp_state_mutex);
- 	for (i = CPUHP_OFFLINE; i <= CPUHP_ONLINE; i++) {
- 		struct cpuhp_step *sp = cpuhp_get_step(i);
- 
--		if (sp->name) {
--			cur = sprintf(buf, "%3d: %s\n", i, sp->name);
--			buf += cur;
--			res += cur;
--		}
-+		if (sp->name)
-+			res += sysfs_emit_at(buf, res, "%3d: %s\n", i, sp->name);
- 	}
- 	mutex_unlock(&cpuhp_state_mutex);
- 	return res;
++	if (!rtnl_dev_link_net_capable(dev, net))
++		return -EPERM;
++
+ 	if (dev == ip6n->fb_tnl_dev) {
+ 		if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
+ 			/* iproute2 always sets TUNNEL_ENCAP_FLAG_CSUM6, so
 
 
