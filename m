@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03AD415F14;
-	Tue, 21 Jul 2026 19:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E743FE356;
+	Tue, 21 Jul 2026 19:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661585; cv=none; b=a73TjsO2idUg9d/fUCGMqmQfEnsnwuDLEZ7WI6O37YToIzCiabjBKU5rPzzmNdFBUK1B86xTx3/RPr+DXYl9RY3K+hbFztkeUWTxVS179uHFL1S5aY74soIPMhyqL4M3ZuG3IRAQcIrNSFg+HdFecyObOctIcbaCJcpwWP4KDvA=
+	t=1784661587; cv=none; b=EayBR61T2fM24hQiM9VsJ3iYMt0K6Jddc6SKjfXjnwbT88JxOHJ0hD/QtV4Xa9s0f9oLfUaRcrpU6neJQmih9LztSxah3g1+IAs3H0Va40gLNSkL2sr47wsjJkHCGex0AD+UGGvDptcRyXoz+wAqOy04UI7im268TWtSWy1DT7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661585; c=relaxed/simple;
-	bh=qvnUA+wPAGABT8EQCWbO81Qfhn77I7T4p55aG+uzVjg=;
+	s=arc-20240116; t=1784661587; c=relaxed/simple;
+	bh=xSwMPSvjkbb0/jZgyxenw6mChg8I7W/4WBc94hoKoU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kZRx6DVD1FfM2XWnH5zOZWzEvg++e+U0728elxyAFN3aPMuqgd3KnFW0sgpHHMotGmNemxLUlBp4zBtk0kveI46xhooF9f1lhQassZoZq83boukJJS9RjdjuMpgaC1rjzjOw7bccaH8d0uc6/uYbgDBo8x0emCQouVndNO0C8y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2BhCBd1S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b4O79RHebK7OoY9wxjhTuz5IiTN78D130/5Zy/jfE7dXtYeXPSoe7Ln76Mp6zIFn88kGYSbhEB7noxB6sUqoUNseHX9VciYhfGVaxIlBFbQ+niLlZKBgYEDaPRwyyU/yWXaQE0hGH5lAbw6jV9ohLsh95a4RCuXxGJdH9R7twdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BcDib4Rr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2BhCBd1S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4305E1F00A3A;
-	Tue, 21 Jul 2026 19:19:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BcDib4Rr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C1071F000E9;
+	Tue, 21 Jul 2026 19:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661584;
-	bh=3g14ArYF0A7Y9DblgPs9tPDxuxAMh/X0Tr9oDFKICRc=;
+	s=korg; t=1784661582;
+	bh=ybddiorq022y/v0YmjoNqCA0mpwLwSZxH2l+ippAUeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2BhCBd1SG0cbBhhydkBAOxgKrFJtXTFQCeFqpyHmQVX/vhMsn11yFDn1R5GufIfY0
-	 pdpSqEfCTIE3PYT+bnNi3cgowPg+YLVT30hg0JkfTbDpHM3QoboLXHbl/AqyGIN0H/
-	 qiYdnqv/lzDxawbgLkYOmiGax2BSS1QWpP1f4Q7E=
+	b=BcDib4RrFZY2eH8UOjlaf5PVZgTkpsYHtqhb1k7cLCW9jhwKYRo+CCUnO9RAQZhBQ
+	 lC/tecZbCVN7Fl3b/SfP8ynJz0lPYGKD6pSC9aknRtvmCaQstcXwxRNFEEEGXNyo9v
+	 liox9KD97uMn4os9VCJYlAOlntJ3RnHlK1TRxLjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0121/1276] IB/mlx5: Fix transport-domain rollback and initialize lb mutex earlier
-Date: Tue, 21 Jul 2026 17:09:24 +0200
-Message-ID: <20260721152448.811713255@linuxfoundation.org>
+Subject: [PATCH 6.12 0120/1276] ipv6: addrconf: bail out of dad_failure when state is no longer POSTDAD
+Date: Tue, 21 Jul 2026 17:09:23 +0200
+Message-ID: <20260721152448.788051112@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,66 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit e79389115b9d27287ff6230a9750675106ed7668 ]
+[ Upstream commit 627ac78f2741e2ebd2225e2e953b6964a8a9182f ]
 
-mlx5_ib_alloc_transport_domain() allocates a transport domain and then
-may fail in mlx5_ib_enable_lb(). In that case, the allocated TD is leaked.
+addrconf_dad_failure() transitions ifp->state from DAD to POSTDAD
+via addrconf_dad_end(), which drops ifp->lock on return.  The lock
+is re-acquired after net_info_ratelimited().  A concurrent
+ipv6_del_addr() can take the lock in that window, set ifp->state
+to DEAD and run list_del_rcu(&ifp->if_list).
 
-Fix this by deallocating the TD when mlx5_ib_enable_lb() returns an
-error. Also return 0 explicitly in the no-loopback-capability success
-branch, and move dev->lb.mutex initialization to mlx5_ib_stage_init_init().
+addrconf_dad_failure() then overwrites DEAD with ERRDAD at errdad:
+and schedules a new dad_work.  The work calls ipv6_del_addr()
+again, hitting the already-poisoned list entry:
 
-Fixes: 146d2f1af324 ("IB/mlx5: Allocate a Transport Domain for each ucontext")
-Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+  general protection fault: 0000 [#1] SMP NOPTI
+  CPU: 4 PID: 217 Comm: kworker/4:1
+  Workqueue: ipv6_addrconf addrconf_dad_work
+  RIP: 0010:ipv6_del_addr+0xe9/0x280
+  RAX: dead000000000122
+  Call Trace:
+   addrconf_dad_stop+0x113/0x140
+   addrconf_dad_work+0x28c/0x430
+   process_one_work+0x1eb/0x3b0
+   worker_thread+0x4d/0x400
+   kthread+0x104/0x140
+   ret_from_fork+0x35/0x40
+
+Fold the addrconf_dad_end() logic into addrconf_dad_failure() under
+a single ifp->lock critical section.  The STABLE_PRIVACY branch
+temporarily drops ifp->lock around address regeneration, so at
+lock_errdad: verify the state is still POSTDAD before transitioning
+to ERRDAD; bail out otherwise to avoid overwriting a state set by
+another path while the lock was released.
+
+Fixes: c15b1ccadb32 ("ipv6: move DAD and addrconf_verify processing to workqueue")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260513025509.3776405-1-lilinmao@kylinos.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ net/ipv6/addrconf.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index b0a0e11ef721f9..3f5d0eb60db2a4 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -1915,9 +1915,13 @@ static int mlx5_ib_alloc_transport_domain(struct mlx5_ib_dev *dev, u32 *tdn,
- 	if ((MLX5_CAP_GEN(dev->mdev, port_type) != MLX5_CAP_PORT_TYPE_ETH) ||
- 	    (!MLX5_CAP_GEN(dev->mdev, disable_local_lb_uc) &&
- 	     !MLX5_CAP_GEN(dev->mdev, disable_local_lb_mc)))
--		return err;
-+		return 0;
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index c6fcdb60dfee14..522b05201c3e98 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -2162,16 +2162,18 @@ void addrconf_dad_failure(struct sk_buff *skb, struct inet6_ifaddr *ifp)
+ 	struct net *net = dev_net(idev->dev);
+ 	int max_addresses;
+ 
+-	if (addrconf_dad_end(ifp)) {
++	spin_lock_bh(&ifp->lock);
 +
-+	err = mlx5_ib_enable_lb(dev, true, false);
-+	if (err)
-+		mlx5_cmd_dealloc_transport_domain(dev->mdev, *tdn, uid);
++	if (ifp->state != INET6_IFADDR_STATE_DAD) {
++		spin_unlock_bh(&ifp->lock);
+ 		in6_ifa_put(ifp);
+ 		return;
+ 	}
++	ifp->state = INET6_IFADDR_STATE_POSTDAD;
  
--	return mlx5_ib_enable_lb(dev, true, false);
-+	return err;
- }
+ 	net_info_ratelimited("%s: IPv6 duplicate address %pI6c used by %pM detected!\n",
+ 			     ifp->idev->dev->name, &ifp->addr, eth_hdr(skb)->h_source);
  
- static void mlx5_ib_dealloc_transport_domain(struct mlx5_ib_dev *dev, u32 tdn,
-@@ -4164,6 +4168,8 @@ static int mlx5_ib_stage_init_init(struct mlx5_ib_dev *dev)
- 		dev->port[i].roce.last_port_state = IB_PORT_DOWN;
+-	spin_lock_bh(&ifp->lock);
+-
+ 	if (ifp->flags & IFA_F_STABLE_PRIVACY) {
+ 		struct in6_addr new_addr;
+ 		struct inet6_ifaddr *ifp2;
+@@ -2219,6 +2221,11 @@ void addrconf_dad_failure(struct sk_buff *skb, struct inet6_ifaddr *ifp)
+ 		in6_ifa_put(ifp2);
+ lock_errdad:
+ 		spin_lock_bh(&ifp->lock);
++		if (ifp->state != INET6_IFADDR_STATE_POSTDAD) {
++			spin_unlock_bh(&ifp->lock);
++			in6_ifa_put(ifp);
++			return;
++		}
  	}
  
-+	mutex_init(&dev->lb.mutex);
-+
- 	err = mlx5r_cmd_query_special_mkeys(dev);
- 	if (err)
- 		return err;
-@@ -4378,11 +4384,6 @@ static int mlx5_ib_stage_caps_init(struct mlx5_ib_dev *dev)
- 	if (err)
- 		return err;
- 
--	if ((MLX5_CAP_GEN(dev->mdev, port_type) == MLX5_CAP_PORT_TYPE_ETH) &&
--	    (MLX5_CAP_GEN(dev->mdev, disable_local_lb_uc) ||
--	     MLX5_CAP_GEN(dev->mdev, disable_local_lb_mc)))
--		mutex_init(&dev->lb.mutex);
--
- 	if (MLX5_CAP_GEN_64(dev->mdev, general_obj_types) &
- 			MLX5_GENERAL_OBJ_TYPES_CAP_VIRTIO_NET_Q) {
- 		err = mlx5_ib_init_var_table(dev);
+ errdad:
 -- 
 2.53.0
 
