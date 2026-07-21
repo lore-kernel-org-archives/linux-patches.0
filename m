@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842DE46D57A;
-	Tue, 21 Jul 2026 15:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29ADE46D54F;
+	Tue, 21 Jul 2026 15:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648625; cv=none; b=qbiwUGteqkZtkK8DCnjLRF3ys7OuK3ms2k3QLdX4kT6X/RoWW0sN0TD4cwkMBg2A0JH9DE3gNehRfn/pIeR8VPoIYds0oZselSXJvUpdPGFFRQYGlxfcmZi1p3DVyf/zMceZqYdRIOrKxHenlGXeEkDaOW5sWsbs+Qoui2NOO6M=
+	t=1784648629; cv=none; b=g6yQv49d5budamYmR8Fbz2uM6H1FzTXiib/NH9AV1deSCpV614FLOG67H/EyCZEmy6lPbCtgUrHWoakpYicQtMODNJSIJpNfn35jcnnx/6f8RdiW7YkRuzI+bmNjzmm+9YNUbl7MEzRqCbwqUtLytcaDfcVa3Mg2uPNMldD/fAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648625; c=relaxed/simple;
-	bh=aN7h45aAROV/pZoOahu0JuQOcUgukCKwq5QlWQ+opeo=;
+	s=arc-20240116; t=1784648629; c=relaxed/simple;
+	bh=4zrUpSnoVtLG63mdbciPx06wCcitUqzh3zeLGNwiMiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NvlJ2Mvu5nSnRnfnSCVJAOTfnSlj92mH2f3wojI1r7PgxpmD6ED2JCheF6ggkYnGAq2RfzFUjXE4tDykhkkuICgSVQ+UmgkDA8L5XUpJJZsDM7AsQpvx6PBGXzRYO7SMrIc1cYBd+gZV1tbXfj7vJ++VQOTr/1g4gol5grEmr4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HdvJs2aK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MS5ZrWsY4+AZ5GPLnoXCTOaMeQrff3OztMx82vneRqh2tQiRPq7qPWDL59hFpaQ1mN9iXh1JUmwCoqOvdSi7CaIHqZdfacgMADj10N+enD9osr9qLhmLQJ8tETNaoxxdrMY71Lp6jhyvAf+shi9eyGxvpeZavlUhBv99WSTTBgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qnn09p/h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HdvJs2aK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EACF21F000E9;
-	Tue, 21 Jul 2026 15:43:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qnn09p/h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9E01F000E9;
+	Tue, 21 Jul 2026 15:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648624;
-	bh=SV/5jVwKTUE3zKDNhXIqmXu60A850ozv/hH3l0LesuQ=;
+	s=korg; t=1784648627;
+	bh=r2ZDy1HhEnsGRN+vh+ci4IbAaOw2lz2dGf2czBygX54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HdvJs2aKdXsZSiFTcxpolUekdB0lbAyKaY72VUYsKMAbvbZ8623O6o79vEaa97OK9
-	 2cy2tX0hYnD0sCCwd/ahtbCXj+DG4xGBGCy/MYrFzrfRtAZH0cJLQJXA4eox1Ty8V4
-	 daOEjHZ5auxelveCQFDdpUnM4x6Gu9Wa0S9dd/+g=
+	b=Qnn09p/hzXbRPq78OOVgLCDxM95yFRNxFsUScZUk60Gc8/cT3E3xrQ/7Zrko8TUtL
+	 7AiojwHNlXwFZWbCdj6P41ncbafAapr/uc7L9r1eETIU8zL7gxjohaLZJSn+8pLI5D
+	 5snzscNcUDAyDsP2l3imZYHQJucl5IKD5UJi7dSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Costa Shulyupin <costa.shul@redhat.com>,
+	Tomas Glozar <tglozar@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0226/2077] RDMA/hns: Initialize seqfile before creating file
-Date: Tue, 21 Jul 2026 16:58:19 +0200
-Message-ID: <20260721152558.010064446@linuxfoundation.org>
+Subject: [PATCH 7.1 0227/2077] tools/rtla: Fix --dump-tasks usage in timerlat
+Date: Tue, 21 Jul 2026 16:58:20 +0200
+Message-ID: <20260721152558.033452337@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,65 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Costa Shulyupin <costa.shul@redhat.com>
 
-[ Upstream commit b4070770506ff516e21b4923afdaf7eb5da0e150 ]
+[ Upstream commit 704fe8f3d97bba842f5f357e317116f1b88169e8 ]
 
-The debugfs file was created before seq->read and seq->data were set,
-leaving a small window where userspace could access an uninitialized
-seqfile.
+Fix --dump-task to --dump-tasks in timerlat_hist usage string
+and getopt_long table for consistency with timerlat_top.
 
-Move debugfs_create_file() after the assignments to avoid this issue.
-Also, inline the original init_debugfs_seqfile() since it is not a
-really necessary helper.
+Add missing --dump-tasks to timerlat_top usage synopsis.
 
-Fixes: ca7ad04cd5d2 ("RDMA/hns: Add debugfs to hns RoCE")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20260507012148.1079712-2-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Costa Shulyupin <costa.shul@redhat.com>
+Fixes: 2091336b9a8b ("rtla/timerlat_hist: Add auto-analysis support")
+Link: https://lore.kernel.org/r/20260414185223.65353-1-costa.shul@redhat.com
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_debugfs.c | 19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ tools/tracing/rtla/src/timerlat_hist.c | 4 ++--
+ tools/tracing/rtla/src/timerlat_top.c  | 3 ++-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_debugfs.c b/drivers/infiniband/hw/hns/hns_roce_debugfs.c
-index b869cdc5411893..db32c5897640fb 100644
---- a/drivers/infiniband/hw/hns/hns_roce_debugfs.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_debugfs.c
-@@ -26,17 +26,6 @@ static const struct file_operations hns_debugfs_seqfile_fops = {
- 	.llseek = seq_lseek
- };
+diff --git a/tools/tracing/rtla/src/timerlat_hist.c b/tools/tracing/rtla/src/timerlat_hist.c
+index 4b6708e333b8f4..d52fd59195cd1f 100644
+--- a/tools/tracing/rtla/src/timerlat_hist.c
++++ b/tools/tracing/rtla/src/timerlat_hist.c
+@@ -694,7 +694,7 @@ static void timerlat_hist_usage(void)
+ 		"[-d s] [-D] [-n] [-a us] [-p us] [-i us] [-T us] [-s us] \\",
+ 		"         [-t [file]] [-e sys[:event]] [--filter <filter>] [--trigger <trigger>] [-c cpu-list] [-H cpu-list]\\",
+ 		"	  [-P priority] [-E N] [-b N] [--no-irq] [--no-thread] [--no-header] [--no-summary] \\",
+-		"	  [--no-index] [--with-zeros] [--dma-latency us] [-C [cgroup_name]] [--no-aa] [--dump-task] [-u|-k]",
++		"	  [--no-index] [--with-zeros] [--dma-latency us] [-C [cgroup_name]] [--no-aa] [--dump-tasks] [-u|-k]",
+ 		"	  [--warm-up s] [--deepest-idle-state n]",
+ 		NULL,
+ 	};
+@@ -809,7 +809,7 @@ static struct common_params
+ 			{"filter",		required_argument,	0, '7'},
+ 			{"dma-latency",		required_argument,	0, '8'},
+ 			{"no-aa",		no_argument,		0, '9'},
+-			{"dump-task",		no_argument,		0, '\1'},
++			{"dump-tasks",		no_argument,		0, '\1'},
+ 			{"warm-up",		required_argument,	0, '\2'},
+ 			{"trace-buffer-size",	required_argument,	0, '\3'},
+ 			{"deepest-idle-state",	required_argument,	0, '\4'},
+diff --git a/tools/tracing/rtla/src/timerlat_top.c b/tools/tracing/rtla/src/timerlat_top.c
+index 91f88bbebad9eb..035abf01dbe631 100644
+--- a/tools/tracing/rtla/src/timerlat_top.c
++++ b/tools/tracing/rtla/src/timerlat_top.c
+@@ -467,7 +467,8 @@ static void timerlat_top_usage(void)
+ 	static const char *const msg_start[] = {
+ 		"[-q] [-a us] [-d s] [-D] [-n] [-p us] [-i us] [-T us] [-s us] \\",
+ 		"	  [[-t [file]] [-e sys[:event]] [--filter <filter>] [--trigger <trigger>] [-c cpu-list] [-H cpu-list]\\",
+-		"	  [-P priority] [--dma-latency us] [--aa-only us] [-C [cgroup_name]] [-u|-k] [--warm-up s] [--deepest-idle-state n]",
++		"	  [-P priority] [--dma-latency us] [--aa-only us] [-C [cgroup_name]] [--dump-tasks] [-u|-k] [--warm-up s]\\",
++		"	  [--deepest-idle-state n]",
+ 		NULL,
+ 	};
  
--static void init_debugfs_seqfile(struct hns_debugfs_seqfile *seq,
--				 const char *name, struct dentry *parent,
--				 int (*read_fn)(struct seq_file *, void *),
--				 void *data)
--{
--	debugfs_create_file(name, 0400, parent, seq, &hns_debugfs_seqfile_fops);
--
--	seq->read = read_fn;
--	seq->data = data;
--}
--
- static const char * const sw_stat_info[] = {
- 	[HNS_ROCE_DFX_AEQE_CNT] = "aeqe",
- 	[HNS_ROCE_DFX_CEQE_CNT] = "ceqe",
-@@ -76,10 +65,12 @@ static void create_sw_stat_debugfs(struct hns_roce_dev *hr_dev,
- {
- 	struct hns_sw_stat_debugfs *dbgfs = &hr_dev->dbgfs.sw_stat_root;
- 
--	dbgfs->root = debugfs_create_dir("sw_stat", parent);
-+	dbgfs->sw_stat.read = sw_stat_debugfs_show;
-+	dbgfs->sw_stat.data = hr_dev;
- 
--	init_debugfs_seqfile(&dbgfs->sw_stat, "sw_stat", dbgfs->root,
--			     sw_stat_debugfs_show, hr_dev);
-+	dbgfs->root = debugfs_create_dir("sw_stat", parent);
-+	debugfs_create_file("sw_stat", 0400, dbgfs->root, &dbgfs->sw_stat,
-+			    &hns_debugfs_seqfile_fops);
- }
- 
- /* debugfs for device */
 -- 
 2.53.0
 
