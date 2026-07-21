@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858B041A547;
-	Tue, 21 Jul 2026 19:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407F542DA53;
+	Tue, 21 Jul 2026 19:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661978; cv=none; b=OkQB5hwD33r34U1KfRYt2c32svZWqRShqN1jH9dwfQq82aeo4ePq7Zsb1nVwvxTIhoU/j/A1Dq/+SHDUH9vNo6aZ49BxAQYp5kAgVfh3mj5rccyLWEHPBF0WK/AHlOmvNwl5BT/gjSoJMsji6OFTZc21sKwfuDSFZQ7tium32UM=
+	t=1784661981; cv=none; b=eTRBTGkIXffulHfwtkDOkJv7HhsdydEEG8qwaAyNWiueDYyoOm9BK7//sbjHRcAplsrRaEsyp0ZifYpn3pesgymzqH1Tuawa0IsK5tvt58+jz5Y77O3TQi0GH5m1yzXYN4XP+mrHENVKEO2CkwgqvglWaveeAqyq269Bx6R+ciU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661978; c=relaxed/simple;
-	bh=qEiWErqqooRrwOkj2ocTj8aMlUYHQvE5FU0b9z9eiMU=;
+	s=arc-20240116; t=1784661981; c=relaxed/simple;
+	bh=ndAbPcYR8Du2TD4Hm4BehWTlmZUSbV/NocLHOyIvQ1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TIU9Ectccbonm3OhAYiDboD6itOXwo8dYJ1zScTObuuOy//3SfEwTZvhqITsmkn2wY3eycNp6Sw7TFpmuhUyYNWVJQhEI5K7nzMyWJgTb7geiUm41NkR8Xu0Q6aoe4UgeIHA+lbuSEoh+wHu+3xIEf6iIZAv+27LzzaLigMqV6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zF00FPwu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s6unkbKsE6SdgKfNfZSFAIYI0F8COfHdIrLUGqjtEcnEnI6wx+6RMauufaY4dFDa13t20DXxw6GTS3wayKG3Ub/fXvZXISIl0mJYG9E85ZaXRi7TgyQUnoThDpmQqJ1TEUrs40RMAzUjQ7JMMHJQQ4RfdQ/c7MrO5tYx0ino4ZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbhHW1+/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zF00FPwu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22E01F000E9;
-	Tue, 21 Jul 2026 19:26:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbhHW1+/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7FB1F000E9;
+	Tue, 21 Jul 2026 19:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661977;
-	bh=d34Ks8BxZVaaUKtJoVo65xfRZi5/CTv3JItpuWTJH9A=;
+	s=korg; t=1784661980;
+	bh=bTVubFZzyuPqGfXoesHz83Uj9mOM0gg0bfqkjWS5+08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zF00FPwukrLtI6BDeAKhCrVnZvj9CMfimSfugpN4WVBpDcxf5fibM73swuvydCEDY
-	 63rwaDUmH62ApXNxr5TAXsqTS/ALh5/CaTaBfSIWxel0BI/Kq/eB88dyF9ZQkxHeVM
-	 gnWdYZsi1KX0+s2nrjtzxTTspAcyzegg8PXBusvE=
+	b=nbhHW1+/H1rrupSVAKMqShgBT+ArW940TCS2hzlvyKgcklaZ7Ilg8Jt56TxXtdr/Z
+	 JDLmm0fY6YPP8+rCBdRoxtmWssG+c6zAg7RaV3RUWTeQpdWT2usrDDHHu3bFf+x1mL
+	 Klizv8uzMMWYEgzNBkb/RERWyUP0gl27+UBd9h0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
+	Aaron Ma <aaron.ma@canonical.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0268/1276] spi: ep93xx: fix double-free of zeropage on DMA setup failure
-Date: Tue, 21 Jul 2026 17:11:51 +0200
-Message-ID: <20260721152452.077831549@linuxfoundation.org>
+Subject: [PATCH 6.12 0269/1276] ASoC: amd: acp-sdw-sof: Bound DAI link iteration
+Date: Tue, 21 Jul 2026 17:11:52 +0200
+Message-ID: <20260721152452.099642715@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,39 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Aaron Ma <aaron.ma@canonical.com>
 
-[ Upstream commit 7886054b06f762f62054957a8f6de0f14e6b7541 ]
+[ Upstream commit 4d992e63f52d58f52b724606c60ae7b37a1c582f ]
 
-If DMA setup fails after allocating the zeropage, the error path frees
-the page but leaves espi->zeropage dangling. A subsequent call to
-ep93xx_spi_release_dma() sees the non-NULL pointer and frees the page
-again.
+create_sdw_dailinks() walks sof_dais until it finds an entry with
+initialised cleared, but sof_dais is allocated with exactly num_ends
+entries. If all entries are initialised, the loop reads past the end of
+the array.
 
-Clear the pointer after freeing in the error path of
-ep93xx_spi_setup_dma().
+Pass the allocated entry count to create_sdw_dailinks() and stop before
+reading past the array.
 
-Fixes: 626a96db1169 ("spi/ep93xx: add DMA support")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260529-ep93xx-v1-1-9185070ca1fc@gmail.com
+Fixes: 6d8348ddc56e ("ASoC: amd: acp: refactor SoundWire machine driver code")
+Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
+Link: https://patch.msgid.link/20260528082110.915549-2-aaron.ma@canonical.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-ep93xx.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/amd/acp/acp-sdw-sof-mach.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-ep93xx.c b/drivers/spi/spi-ep93xx.c
-index 0b42eeccd42ea6..fdf72636b66ad9 100644
---- a/drivers/spi/spi-ep93xx.c
-+++ b/drivers/spi/spi-ep93xx.c
-@@ -600,6 +600,7 @@ static int ep93xx_spi_setup_dma(struct device *dev, struct ep93xx_spi *espi)
- 	espi->dma_rx = NULL;
- fail_free_page:
- 	free_page((unsigned long)espi->zeropage);
-+	espi->zeropage = NULL;
+diff --git a/sound/soc/amd/acp/acp-sdw-sof-mach.c b/sound/soc/amd/acp/acp-sdw-sof-mach.c
+index 876f0b7fcd3dee..e169b33f65712c 100644
+--- a/sound/soc/amd/acp/acp-sdw-sof-mach.c
++++ b/sound/soc/amd/acp/acp-sdw-sof-mach.c
+@@ -260,13 +260,14 @@ static int create_sdw_dailink(struct snd_soc_card *card,
  
- 	return ret;
- }
+ static int create_sdw_dailinks(struct snd_soc_card *card,
+ 			       struct snd_soc_dai_link **dai_links, int *be_id,
+-			       struct asoc_sdw_dailink *sof_dais,
++			       struct asoc_sdw_dailink *sof_dais, int num_dais,
+ 			       struct snd_soc_codec_conf **codec_conf)
+ {
++	int i;
+ 	int ret;
+ 
+ 	/* generate DAI links by each sdw link */
+-	while (sof_dais->initialised) {
++	for (i = 0; i < num_dais && sof_dais->initialised; i++) {
+ 		int current_be_id = 0;
+ 
+ 		ret = create_sdw_dailink(card, sof_dais, dai_links,
+@@ -373,7 +374,7 @@ static int sof_card_dai_links_create(struct snd_soc_card *card)
+ 	/* SDW */
+ 	if (sdw_be_num) {
+ 		ret = create_sdw_dailinks(card, &dai_links, &be_id,
+-					  sof_dais, &codec_conf);
++					  sof_dais, num_ends, &codec_conf);
+ 		if (ret)
+ 			goto err_end;
+ 	}
 -- 
 2.53.0
 
