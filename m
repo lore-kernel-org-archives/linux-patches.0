@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9832D5436;
-	Tue, 21 Jul 2026 17:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724D846D2B3;
+	Tue, 21 Jul 2026 17:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655584; cv=none; b=GN+Atb1kCnxZqi8UkpUBu5P0q5OdOB2tnTXe9EWSsogsHQ/uPgqxmBYAMhfn1Q61ZNoqVmFR962UU9dPEMdAolnbkiNDZWosjMeewqTD5+g9J4l+qmZQqtsfVa2alHc/y6znnUsQEmrtPz7x8QCKcoFZUPnsJJAX2cKgc38jMrQ=
+	t=1784655587; cv=none; b=BtVX898sNqaG5kJBIfql882nyUUAP0xF9jWSi8SObhlrY2R0Zs8KtvJ762yFXp6ZLdduNYTaOlCj+kfSCOVSWkNMHY5g0xYOoh1JAsPBFyBUyQctOEow08VdqeOUCLqBnOkXIrvqNgxgfjxdYbLLXfFQjuOYEyvbSF8KSZvlyFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655584; c=relaxed/simple;
-	bh=q0nMd44P4P0p/FVb3fXqnM9eFN4Oe4PGUR0XU1WON2Y=;
+	s=arc-20240116; t=1784655587; c=relaxed/simple;
+	bh=mcNmW3UDCsvv82gegy/KYpjkmSyjHNkRj7bmZaehIsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jIUNeQ+7xtr4MNzMJzfFOqt8bSIltCA7vkp/ru+6Q3lOsQ7bYSGiDINd2b37LxFGM9Sl7domzbILsd+Fu522f27TGpH72Ju8D+DZGE9m7sUaGmqDse5p0Q0Nt8sDMmzlzP/ATL2XAgleLGNADV6hh+khFqNkfB4AwU84GPekc+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZOaBI66g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U+JjnlX6mjx2uzOrhheiKrGh65abW1hNpym6AMQOVI+shTEJACnnYeiEfFpkxMJDQWmvD6J40SJr0WgG+kIyx5NaGpc7oNdexhrygoVPuoFKktycaS4bvDtKvueZwBcWXKCCnT5dukNtbhuLvfMC671BLD627O0SOZ7lJNHANwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gUZiCuud; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZOaBI66g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40051F000E9;
-	Tue, 21 Jul 2026 17:39:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gUZiCuud"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969081F00A3A;
+	Tue, 21 Jul 2026 17:39:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655583;
-	bh=PUSoRcu8QljL1UnGdpJHGhO6GyJ9MnTEElXfpTMSVsI=;
+	s=korg; t=1784655586;
+	bh=r8uLvb/2KFt8eoKOVKz9W1SKXo98rCe4h7CZO/3Jpko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZOaBI66gOSux81NYrfUkYUmEAqIg4+cEUkPdvXtM7fJZGWMHaRm2FRsEXUbRHo3uD
-	 8KCnRef4vRlY5u+gSKKK1vsKdONtrf5BkzvE0df2zSUQjLOtW3B/WkJm1IVvHXjibB
-	 7U6IZzNDnMknqplhIAO4dTmzds0Q8eOZxTsKcZbQ=
+	b=gUZiCuudJWeiPuvvE6JQsg4phAhMHJYH5dY7Osy0wIrgWb3BjshC7h8u00hYM4vS3
+	 mVsTSrdCbgbvTjPk03pWll8KlSD4BN2zbXob16G80FhMyOd3om3Q+BF3k4iKINdnny
+	 jTVcwBkSqxqxrQKcyVGerVHMswOXYcK71bLMP+3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Krzysztof Karas <krzysztof.karas@intel.com>,
+	Werner Kasselman <werner@verivus.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0065/1611] drm/gpuvm: Do not prepare NULL objects
-Date: Tue, 21 Jul 2026 17:03:01 +0200
-Message-ID: <20260721152516.294174956@linuxfoundation.org>
+Subject: [PATCH 6.18 0066/1611] drm/amdgpu: fix integer overflow in amdgpu_gem_align_pitch()
+Date: Tue, 21 Jul 2026 17:03:02 +0200
+Message-ID: <20260721152516.318004640@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -47,52 +45,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonathan Cavitt <jonathan.cavitt@intel.com>
+From: Werner Kasselman <werner@verivus.ai>
 
-[ Upstream commit 88f059f6f6f589bd78e2ceb05a1339a8c10b8626 ]
+[ Upstream commit fc3659f178d4a65599167d5a648bbeef4b0d4446 ]
 
-Statis analysis issue:
+amdgpu_gem_align_pitch() is passed u32 width and cpp from dumb buffer
+creation but uses signed int internally.  The round-up add and the
+aligned * cpp multiplication can overflow, returning zero or a negative
+pitch.  A zero pitch propagates to a zero-sized GEM object allocation
+that reaches userspace via DRM_IOCTL_MODE_CREATE_DUMB.
 
-drm_gpuvm_prepare_range issues an exec_object_prepare call to all
-drm_gem_objects mapped between addr and addr + range.  However, it is
-possible (albeit very unlikely) that the objects found through
-drm_gpuvm_for_each_va_range (as connected to va->gem) are NULL, as seen
-in other functions such as drm_gpuva_link and drm_gpuva_unlink_defer.
+Switch the helper to unsigned int and use check_add_overflow() /
+check_mul_overflow() so wraparound returns zero.  Reject a zero pitch
+or size in amdgpu_mode_dumb_create() rather than allocating a zero-
+byte BO.
 
-Do not prepare NULL objects.
-
-Fixes: 50c1a36f594b ("drm/gpuvm: track/lock/validate external/evicted objects")
-Signed-off-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Krzysztof Karas <krzysztof.karas@intel.com>
-Link: https://patch.msgid.link/20260130191953.61718-2-jonathan.cavitt@intel.com
+Fixes: 8e911ab770f7 ("drm: amdgpu: Replace drm_fb_get_bpp_depth() with drm_format_plane_cpp()")
+Signed-off-by: Werner Kasselman <werner@verivus.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_gpuvm.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_gpuvm.c b/drivers/gpu/drm/drm_gpuvm.c
-index af63f4d003155d..23e43406a1a8be 100644
---- a/drivers/gpu/drm/drm_gpuvm.c
-+++ b/drivers/gpu/drm/drm_gpuvm.c
-@@ -1289,6 +1289,9 @@ drm_gpuvm_prepare_range(struct drm_gpuvm *gpuvm, struct drm_exec *exec,
- 	drm_gpuvm_for_each_va_range(va, gpuvm, addr, end) {
- 		struct drm_gem_object *obj = va->gem.obj;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
+index 1bc1233487a0b6..cd52ddd27c58b3 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
+@@ -27,6 +27,7 @@
+  */
+ #include <linux/ktime.h>
+ #include <linux/module.h>
++#include <linux/overflow.h>
+ #include <linux/pagemap.h>
+ #include <linux/pci.h>
+ #include <linux/dma-buf.h>
+@@ -1209,13 +1210,14 @@ int amdgpu_gem_list_handles_ioctl(struct drm_device *dev, void *data,
+ 	return ret;
+ }
  
-+		if (unlikely(!obj))
-+			continue;
-+
- 		ret = exec_prepare_obj(exec, obj, num_fences);
- 		if (ret)
- 			return ret;
+-static int amdgpu_gem_align_pitch(struct amdgpu_device *adev,
+-				  int width,
+-				  int cpp,
+-				  bool tiled)
++static unsigned int amdgpu_gem_align_pitch(struct amdgpu_device *adev,
++					   unsigned int width,
++					   unsigned int cpp,
++					   bool tiled)
+ {
+-	int aligned = width;
+-	int pitch_mask = 0;
++	unsigned int aligned = width;
++	unsigned int pitch_mask = 0;
++	unsigned int pitch;
+ 
+ 	switch (cpp) {
+ 	case 1:
+@@ -1230,9 +1232,12 @@ static int amdgpu_gem_align_pitch(struct amdgpu_device *adev,
+ 		break;
+ 	}
+ 
+-	aligned += pitch_mask;
++	if (check_add_overflow(aligned, pitch_mask, &aligned))
++		return 0;
+ 	aligned &= ~pitch_mask;
+-	return aligned * cpp;
++	if (check_mul_overflow(aligned, cpp, &pitch))
++		return 0;
++	return pitch;
+ }
+ 
+ int amdgpu_mode_dumb_create(struct drm_file *file_priv,
+@@ -1259,8 +1264,12 @@ int amdgpu_mode_dumb_create(struct drm_file *file_priv,
+ 
+ 	args->pitch = amdgpu_gem_align_pitch(adev, args->width,
+ 					     DIV_ROUND_UP(args->bpp, 8), 0);
++	if (!args->pitch)
++		return -EINVAL;
+ 	args->size = (u64)args->pitch * args->height;
+ 	args->size = ALIGN(args->size, PAGE_SIZE);
++	if (!args->size)
++		return -EINVAL;
+ 	domain = amdgpu_bo_get_preferred_domain(adev,
+ 				amdgpu_display_supported_domains(adev, flags));
+ 	r = amdgpu_gem_object_create(adev, args->size, 0, domain, flags,
 -- 
 2.53.0
 
