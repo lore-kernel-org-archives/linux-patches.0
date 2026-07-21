@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A048346D083;
-	Tue, 21 Jul 2026 18:25:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86799471261;
+	Tue, 21 Jul 2026 18:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658347; cv=none; b=UqdvGPwT0qE+w0ca26xSW5A7Sm2yegqcudH3T4CV0I2zpL/vW9U2eC3I7uODrTvFXj4FGI1jtxkvYS4PM3UbdW+tGBPICCN1hPjJY2t1eDj1zDtJSLSxlhdhtO+p/rWNYERxoIm+EPfUufFIdKD8H7zoYlGfm1VyhND2wZsujm8=
+	t=1784658350; cv=none; b=qGIy1+QVNn4hFxFfIKrB/jZEUPwUSKyVgsHicE3RObX8AzeJvFYvIx1cZkkOpCgj/CuLA43pSZ73g65oI+ZBe4BSo4wCEoXcwpH9sOWIPYZuD1Yi0YhNK8g7vJomZz8wu9QSyCvm0ICf2OKa7GgGfO4nN7WthHhhm8GYkvWSUk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658347; c=relaxed/simple;
-	bh=JkOomcPIhEN8pygpvU2mNX0O77uHUjVlpPQgeGeCzSM=;
+	s=arc-20240116; t=1784658350; c=relaxed/simple;
+	bh=n/HBmSyYgkBvqVjjfvOCW8up4XXdZ0ITOLXZT8GpsZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WXMzGPuv3WMNtaRwijJa6wPEOFAtqrM2jGuKSZ5guQ5Hc6pgo33abriwjYefmkhpjfPYPDncuz3tjP6eoye3OSV/YQS0thogflqeZ0sls9Dep2dzx84szp44aLCVn7TDnCM2qlfRhciTZmXnFan6v7lyjNLznTRw3e1dKwaubxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSkZ+Af8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t78f+lzqzz7c/erMoxzwQMC6b4eNUViyNmkhpXc1I0FHE83GrZvADOx/2GBnw4Ty9eg2h34i1TyuBBhfA+CYHIz0GbYpmbUptULQp5nC0/ovN9hFy8tfYEzRRDEGlW8wbyeHCy7B9ib5Hsbdk6+na54euvQ2WlsoBia41c15CB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/to3aPy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSkZ+Af8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B4B1F000E9;
-	Tue, 21 Jul 2026 18:25:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/to3aPy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D631F000E9;
+	Tue, 21 Jul 2026 18:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658346;
-	bh=AeylPrAf3hVGNQZ/ZvCiyRAamkHfStDKBY7NZmax/kc=;
+	s=korg; t=1784658349;
+	bh=5vW5wb8nRrKgPHNSQ5e8HKiQBRSJtjHTgI8Rd8+s7zE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MSkZ+Af8PBOjXzAhK9ZkENrQWEXQ5ZmiwSGCu2PDZ29UGhuw2k9Je8Dx7PLQGRqLZ
-	 wp0rs+cBxYyEXkiq8T2Vl9BNp7flNvJBDEGpuPhOgZHKIgoOtlvftsx57IgWT3qxru
-	 bjrHuLAdAyMcCqZquafVEqYzouOYONW5jT0n29/A=
+	b=a/to3aPyLIBSNSk3DWzlritpkCwEOKC5UECfvJLnY35bzfvLW5Fxd+RUuAaf+QX/S
+	 sDOPQI0wO62Qegy7OgopY/UYahVoXI8aU/92wuw7OpwwXZ+ck/FxBe0kVn2BeZsxOq
+	 kE9jkDEo6Y6bYF5AwDpBAGJdyDmX3VrEtRHyARCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Simon Horman <horms@kernel.org>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yong Wang <edragain@163.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 1107/1611] octeontx2-vf: clear stale mailbox IRQ state before request_irq()
-Date: Tue, 21 Jul 2026 17:20:23 +0200
-Message-ID: <20260721152540.312995123@linuxfoundation.org>
+Subject: [PATCH 6.18 1108/1611] net: ife: require ETH_HLEN to be pullable in ife_decode()
+Date: Tue, 21 Jul 2026 17:20:24 +0200
+Message-ID: <20260721152540.334895153@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,80 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Yong Wang <edragain@163.com>
 
-commit 0b352f04b9be2c83c0240aa6dae7257fefa90464 upstream.
+commit 9406f6012b7343661efb516a11c62d4db2b62f75 upstream.
 
-otx2vf_register_mbox_intr() currently installs the VF mailbox IRQ
-handler before clearing stale mailbox interrupt state. The code then says
-that local interrupt bits should be cleared first to avoid spurious
-interrupts, but that clear still happens only after request_irq() has
-already made the handler reachable.
+ife decode may return after making only the outer IFE header and
+metadata pullable. The caller then passes the decapsulated packet to
+eth_type_trans(), which expects the inner Ethernet header to be
+accessible from the linear data area.
 
-A running system can reach this during VF mailbox interrupt registration
-while stale or latched RVU_VF_INT state is still present. If delivery
-happens in the request_irq()-to-clear window,
-otx2vf_vfaf_mbox_intr_handler() can run before local quiesce and touch
-the same vf->mbox and vf->mbox_wq carrier that probe and teardown later
-reuse or destroy.
+With a malformed IFE frame, the inner Ethernet header may still be
+shorter than ETH_HLEN in the linear area, which can lead to a crash in
+the original code.
 
-Move the stale mailbox interrupt clear ahead of request_irq(), but keep
-interrupt enabling after the handler is installed. This closes the
-pre-clear early-IRQ window without creating a new enable-before-handler
-window.
+Fix this by extending the pull check in ife_decode() so that the inner
+Ethernet header is also guaranteed to be pullable before returning.
 
-Fixes: 3184fb5ba96e ("octeontx2-vf: Virtual function driver support")
+Fixes: ef6980b6becb ("introduce IFE action")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Link: https://patch.msgid.link/20260611160014.3202224-3-runyu.xiao@seu.edu.cn
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yong Wang <edragain@163.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Link: https://patch.msgid.link/20260610183814.1648888-2-n05ec@lzu.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c |   22 ++++++++-----------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ net/ife/ife.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
-@@ -251,9 +251,17 @@ static int otx2vf_register_mbox_intr(str
- {
- 	struct otx2_hw *hw = &vf->hw;
- 	struct msg_req *req;
-+	u64 mbox_int_mask;
- 	char *irq_name;
- 	int err;
+--- a/net/ife/ife.c
++++ b/net/ife/ife.c
+@@ -79,7 +79,7 @@ void *ife_decode(struct sk_buff *skb, u1
+ 	if (unlikely(ifehdrln < 2))
+ 		return NULL;
  
-+	mbox_int_mask = !is_cn20k(vf->pdev) ? BIT_ULL(0) :
-+				BIT_ULL(0) | BIT_ULL(1) |
-+				BIT_ULL(2) | BIT_ULL(3);
-+
-+	/* Clear stale mailbox interrupt state before installing the handler. */
-+	otx2_write64(vf, RVU_VF_INT, mbox_int_mask);
-+
- 	/* Register mailbox interrupt handler */
- 	irq_name = &hw->irq_name[RVU_VF_INT_VEC_MBOX * NAME_SIZE];
- 	snprintf(irq_name, NAME_SIZE, "RVUVF%d AFVF Mbox", ((vf->pcifunc &
-@@ -274,18 +282,8 @@ static int otx2vf_register_mbox_intr(str
- 		return err;
- 	}
+-	if (unlikely(!pskb_may_pull(skb, total_pull)))
++	if (unlikely(!pskb_may_pull(skb, total_pull + ETH_HLEN)))
+ 		return NULL;
  
--	/* Enable mailbox interrupt for msgs coming from PF.
--	 * First clear to avoid spurious interrupts, if any.
--	 */
--	if (!is_cn20k(vf->pdev)) {
--		otx2_write64(vf, RVU_VF_INT, BIT_ULL(0));
--		otx2_write64(vf, RVU_VF_INT_ENA_W1S, BIT_ULL(0));
--	} else {
--		otx2_write64(vf, RVU_VF_INT, BIT_ULL(0) | BIT_ULL(1) |
--			     BIT_ULL(2) | BIT_ULL(3));
--		otx2_write64(vf, RVU_VF_INT_ENA_W1S, BIT_ULL(0) |
--			     BIT_ULL(1) | BIT_ULL(2) | BIT_ULL(3));
--	}
-+	/* Enable mailbox interrupt for msgs coming from PF. */
-+	otx2_write64(vf, RVU_VF_INT_ENA_W1S, mbox_int_mask);
- 
- 	if (!probe_pf)
- 		return 0;
+ 	ifehdr = (struct ifeheadr *)(skb->data + skb->dev->hard_header_len);
 
 
