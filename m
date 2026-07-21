@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6846E46D54F;
-	Tue, 21 Jul 2026 15:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19F646D55F;
+	Tue, 21 Jul 2026 15:43:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648608; cv=none; b=e7JrfN5tYdEYIryHz9w3y7Rw28nvDlUeVofexJwzVXso2DYUunysXc08WvgBkuTBqSYIxpn0uHqHfXVoS5crV4KNR0wegMOc+PXzR+NYGcC2OLQTUizSboZyP9f5j7Mn4RRIuDZdw/SIn/KMw/G6O2sN8Kx2fkRJsQcCn6f5Y/o=
+	t=1784648609; cv=none; b=a0BimTMSeKpi0vvMbhYtUC5QNhcSJ7JPPELkCTM+RpdpfjfjzXmpnGmrw153ssmL7gIU/GXT0yvqjgghye5jNghb2utAu5WvIfEpbmc97zfz1pfI3usrFVcN06a6ZlH+AemKV6Fdwxh7LRuBmWWAso3Rf0ZdApMGcg2sNBtGeCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648608; c=relaxed/simple;
-	bh=JgPjyyXOfmlxD+CXs4H9bh06RhYcrYMScKBbcSjujYs=;
+	s=arc-20240116; t=1784648609; c=relaxed/simple;
+	bh=c9guzoIges84FCjfsdpuijmeJNvgmG3HCjfIPvpDsso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jmGtB98Fdj9ptM0lnW0rlOQEjDk0EKmx+D8IYi934xcz594p0oXcxDV18qhsp7I9Wrtmft1JhtsmiFw9yZ9fbjWXCATEIvOBhznU2Bu/2ob7U/q7y+D4Bsng/XbFzOpRNsWTuP12cHfdo9Ql8BU3ebMv03fliRFWbonu416BSNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZsrXxeZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iro2sYM1LMqBkKMlOfSGBswFi4XdTCJClcS5yBOWAirm52moChzAh0/pll+5R6MsT2RlZhiKExM9d+hDvtN6vlRrk7K0M5+JJCSGN7x7aHZwK+2nBk47AHiR2XYJDa2m4i+yqpQF1EPRHPpyZDWJ6kNSH+zQJEik2TnGd/WHwCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqGDJ1CP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZsrXxeZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED751F000E9;
-	Tue, 21 Jul 2026 15:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqGDJ1CP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 310F61F00A3A;
+	Tue, 21 Jul 2026 15:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648603;
-	bh=Tr89Eqozx8dtQv7RlGaybPKwfC3++6eDEtKp+IdnJFQ=;
+	s=korg; t=1784648608;
+	bh=MDSh9wTx9Fapav81Htmyy/02c1uoPt9LPIujkKi+rkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aZsrXxeZCSbCChx3xQpSJGqbUT71galgRlVxmjVvLK4a0iwJvz1FoQdaiCZ5JvdZT
-	 SRYLM87VI3yYYZ8nFXvu9Sk9pXsc7mHn3s6dzrfR6ta9xpEEp0YKdY5Rh82Y9DD0R4
-	 8iAzW5BcA5zTb6jPfuZlWSNs6FHW3geUjURx0kMw=
+	b=yqGDJ1CPvEKHu3cd6ZwOLtWIxbVF4JzK8d0OLZTHBA28ibRzKBSXtqaW8nhnpMH8m
+	 xgPAwjy2jj3fhYlZhivFmfn/Hj39rtaVYbpsqbFzTmcU554j8CnZJJxMZmWQgqMdwA
+	 LKKdc/l3FFHLf4PY4dxCikxXt30RUvhq480reZnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Carlos Bilbao (Lambda)" <carlos.bilbao@kernel.org>,
-	Sara Venkatesh <sarajvenkatesh@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Leon Romanovsky <leon@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0225/2077] RDMA/srpt: fix integer overflow in immediate data length check
-Date: Tue, 21 Jul 2026 16:58:18 +0200
-Message-ID: <20260721152557.986266139@linuxfoundation.org>
+Subject: [PATCH 7.1 0262/2077] firmware: arm_scmi: Fix OOB in scmi_power_name_get()
+Date: Tue, 21 Jul 2026 16:58:55 +0200
+Message-ID: <20260721152558.858957654@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,47 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sara Venkatesh <sarajvenkatesh@gmail.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit eb4ecdf631fe00e8020bf461503cb9b7017ed796 ]
+[ Upstream commit f9ef3f66f4b18078e464b7606f9497e4dbeb9905 ]
 
-imm_buf->len is a user-controlled uint32_t received from the network.
-Adding it to imm_data_offset without overflow checking allows a
-malicious initiator to send len=0xFFFFFFFF, causing req_size to wrap
-around to a small value, bypassing the bounds check, and subsequently
-passing a ~4GB length to sg_init_one().
+scmi_power_name_get() does not validate the domain number passed by the
+external caller, which may lead to an out-of-bounds access.
 
-Use check_add_overflow() to detect wrapping before the comparison.
+Fix this by returning "unknown" for invalid domains, like
+scmi_reset_name_get() does.
 
-Fixes: 5dabcd0456d7 ("RDMA/srpt: Add support for immediate data")
-Reported-by: Carlos Bilbao (Lambda) <carlos.bilbao@kernel.org>
-Signed-off-by: Sara Venkatesh <sarajvenkatesh@gmail.com>
-Link: https://patch.msgid.link/20260504080036.3482415-1-sarajvenkatesh@gmail.com
-Reviewed-by: Carlos Bilbao (Lambda) <carlos.bilbao@kernel.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 76a6550990e296a7 ("firmware: arm_scmi: add initial support for power protocol")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://patch.msgid.link/75caae28bdffb55199a0bc6cac5df112a966c608.1778838987.git.geert+renesas@glider.be
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srpt/ib_srpt.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/firmware/arm_scmi/power.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/ulp/srpt/ib_srpt.c b/drivers/infiniband/ulp/srpt/ib_srpt.c
-index 9aec5d80117f1f..f66cfd70c2636a 100644
---- a/drivers/infiniband/ulp/srpt/ib_srpt.c
-+++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
-@@ -1129,9 +1129,10 @@ static int srpt_get_desc_tbl(struct srpt_recv_ioctx *recv_ioctx,
- 		struct srp_imm_buf *imm_buf = srpt_get_desc_buf(srp_cmd);
- 		void *data = (void *)srp_cmd + imm_data_offset;
- 		uint32_t len = be32_to_cpu(imm_buf->len);
--		uint32_t req_size = imm_data_offset + len;
-+		uint32_t req_size;
+diff --git a/drivers/firmware/arm_scmi/power.c b/drivers/firmware/arm_scmi/power.c
+index bb5062ab8280e0..28ef63a4ecc2e1 100644
+--- a/drivers/firmware/arm_scmi/power.c
++++ b/drivers/firmware/arm_scmi/power.c
+@@ -204,8 +204,12 @@ scmi_power_name_get(const struct scmi_protocol_handle *ph,
+ 		    u32 domain)
+ {
+ 	struct scmi_power_info *pi = ph->get_priv(ph);
+-	struct power_dom_info *dom = pi->dom_info + domain;
++	struct power_dom_info *dom;
++
++	if (domain >= pi->num_domains)
++		return "unknown";
  
--		if (req_size > srp_max_req_size) {
-+		if (check_add_overflow((uint32_t)imm_data_offset, len, &req_size) ||
-+		    req_size > srp_max_req_size) {
- 			pr_err("Immediate data (length %d + %d) exceeds request size %d\n",
- 			       imm_data_offset, len, srp_max_req_size);
- 			return -EINVAL;
++	dom = pi->dom_info + domain;
+ 	return dom->name;
+ }
+ 
 -- 
 2.53.0
 
