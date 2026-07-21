@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434B046A611;
-	Tue, 21 Jul 2026 16:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E0D3FDC06;
+	Tue, 21 Jul 2026 16:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649765; cv=none; b=DWCimf9JkDViooMguv5G8+SMxQgBK1PUx6SsMTgDgAnx+mfrPpxZ7zwJka6AHO9eyIYZM7lW1sMi33Xk/qnBJmxQsmNgcUGNAXYH6LMPb2jYblOizUme3axg9mnilFeba7Z/nifgWXtOLkt89NkYxPZJmdyuf9ulX7H0dF7IHFY=
+	t=1784649767; cv=none; b=RLDyDvwp3mAta8cAHqUVp7G6ws/ydli/OLGQPHIoDGlFjJAzEhPwXuTAqFG8vc3shlpJDgOwlBKSahUROtlEqCT7ktAMTWRQ+8rskxF+FigHXCe6FD5kOZ5fwKhv6X2mjpuAJKHV+Wej4HEs5lv5a2ioZHX/WD4jH/soQBWk10U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649765; c=relaxed/simple;
-	bh=4y3bIX/wktJspaaCVSeSIQaj+1pvWtkq2o/QLvECqvo=;
+	s=arc-20240116; t=1784649767; c=relaxed/simple;
+	bh=kMSfiaGGm0Rh1R2ZEDC0f5tzi541c3F1V0IgIYkqWh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=csXKJYl+0uxzDnJcZwcDnA2MzHPWNUvPWktD789yR0qD+WBazxA2z2j9KxdTMaI9K/jFpCF4uq6viJQmwZTwLzZc4L3j1T7DZUOUEMUXECFTegXhYVcmYGW8vN6h6gArX9qA+iMdr6MN4ToEzGek08xs211Un1hzLUqqzaU9hkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cLS/Qjbx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZNj3Tbk6djP1EHMm614qN3MUoFdMmegu2xdg3TptpwXekmzFWODu5GiLXJvHivA8ULR2ALGV2U6IxgRe12zC560YpX3IRQ7+X+KljOZeEFvgvwL4TC/x+sIjBvJjBRpB7uWb2Wx0hl8+GOtNpfcPrsrjkm7uXeGtTQDmfM5KvMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzkA+heH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cLS/Qjbx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D271F000E9;
-	Tue, 21 Jul 2026 16:02:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzkA+heH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E411F00A3F;
+	Tue, 21 Jul 2026 16:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649764;
-	bh=Furv9Kgjq07zm8nb3kG+8TLNlODKfokyNqBPud+adcQ=;
+	s=korg; t=1784649766;
+	bh=+yWtjVN47xwOYoVkeU72WPPZwFHJQnXRY6AMqfh2JEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cLS/QjbxFmH3vuquiI3UVdaSeg17sLi2l/ahRAc37uupl7w91on70cGUeo5dZAuIo
-	 S8sbYmfWgdGA4IyM90wuEmTE2VA4V0pnBR3A+ncOaZW5vEnC3T/W4PX8VvPyUV4cK5
-	 VZZZy2/7ehKRpugE3V4ibo+DF981CtJwdGkPZzzg=
+	b=WzkA+heH7W760v9tc6ccv1eSGJiuHLi1McFzDT7MvuHBsqfNc44cfsEGCqzudSiiv
+	 nSHC/1s3Bgd7u6Y1Lwg8ExtD4ybEcJvmvC8rhd5uXwrdd5DNCuknjXWmBFhBGFEtxT
+	 5fsIKPYTGfFV5BMwOIEKwaLCVkYizRepFphu6OPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0699/2077] =?UTF-8?q?RDMA/mlx5:=20Release=20the=20HW=E2=80=91provided=20UAR?= =?UTF-8?q?=20index=20rather=20than=20the=20SW=20one?=
-Date: Tue, 21 Jul 2026 17:06:12 +0200
-Message-ID: <20260721152609.281076005@linuxfoundation.org>
+Subject: [PATCH 7.1 0700/2077] ASoC: cs35l56: Fix wrong error test on simple_write_to_buffer()
+Date: Tue, 21 Jul 2026 17:06:13 +0200
+Message-ID: <20260721152609.304543476@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,34 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 449ae7927152e46acbe5f19f97eafdae6d3a96b1 ]
+[ Upstream commit 3073eb1f1143deabbda6a043238ab9d99672e7c8 ]
 
-Free the UAR index returned by the hardware.
+In cs35l56_cal_data_debugfs_write() fix the if statement that checks for
+error return to only check for negative values.
 
-Fixes: 4ed131d0bb15 ("IB/mlx5: Expose dynamic mmap allocation")
-Link: https://patch.msgid.link/r/20260611-fix-uar-release-v1-1-f5464d845dbf@nvidia.com
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reported by Sashiko:
+
+  simple_write_to_buffer() returns the positive number of bytes copied
+  on success. Since the condition returns immediately on any non-zero
+  value, is it possible that the written calibration data is discarded
+  and cs35l56_stash_calibration() is never called?
+
+Fixes: f7097161e94c ("ASoC: cs35l56: Add common code for factory calibration")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260610093432.557375-1-rf%40opensource.cirrus.com
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260611151234.1111153-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 2 +-
+ sound/soc/codecs/cs35l56-shared.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index aa2eb64ecf15e6..1144bfee58048d 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -2662,7 +2662,7 @@ static int uar_mmap(struct mlx5_ib_dev *dev, enum mlx5_ib_mmap_cmd cmd,
- 	if (!dyn_uar)
- 		return err;
+diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
+index 5405f70b7119d8..9928608296d881 100644
+--- a/sound/soc/codecs/cs35l56-shared.c
++++ b/sound/soc/codecs/cs35l56-shared.c
+@@ -1260,7 +1260,7 @@ ssize_t cs35l56_cal_data_debugfs_write(struct cs35l56_base *cs35l56_base,
+ 		return -EMSGSIZE;
  
--	mlx5_cmd_uar_dealloc(dev->mdev, idx, context->devx_uid);
-+	mlx5_cmd_uar_dealloc(dev->mdev, uar_index, context->devx_uid);
+ 	ret = simple_write_to_buffer(&cal_data, sizeof(cal_data), ppos, from, count);
+-	if (ret)
++	if (ret < 0)
+ 		return ret;
  
- free_bfreg:
- 	mlx5_ib_free_bfreg(dev, bfregi, bfreg_dyn_idx);
+ 	ret = cs35l56_stash_calibration(cs35l56_base, &cal_data);
 -- 
 2.53.0
 
