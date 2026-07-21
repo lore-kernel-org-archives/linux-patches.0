@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DCF415F1A;
-	Tue, 21 Jul 2026 19:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28840430CF4;
+	Tue, 21 Jul 2026 19:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662799; cv=none; b=VbOYUsLfM3gytM7PRZS/hv60rkTgk1wwG+hh8FV11e1VReWHDWUVJ6HFnrsiLLweGOkPi6xHAnBNpcpC9Zh5dAjPhE+VpnWaKHiTPfwW0whcz2MElAliez5nJhRqmOMqsZAc9sFiLwNrPRJSmM7tC7BigbNY6AglCguIMs4X/I4=
+	t=1784662802; cv=none; b=GN9SHwmLFvDTAKBhurOZP76j3aY+AjPv6GFOAfdyN1gfIPhSSkn5qFKzjiL1+1ZfGlAtKSw9UIdquFFPdbPTNDGrx3aGuWIIY2apbHEODJSPvDTXqgV3ZfePxQtfKOt4n7ncw6nV+F7wLEbMu3dwdUQRXAAhsNdYaRxqPneeC3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662799; c=relaxed/simple;
-	bh=WJSd9kQ0eK7yR3AUTGlsnodg0iEsQvCdmiBGdgAIViQ=;
+	s=arc-20240116; t=1784662802; c=relaxed/simple;
+	bh=ujpFfK+0k0+TfcXXKcOBY4Cy/RDrJz8sxL4KGPfshZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s5aOrkJISoJ0Rvh7FvT0jQIIz40RhMmTeZid7iMgxOmBe6D6mdabpb17mjv5cqKlD5HKIvaoZxaNZ+lPFFgSTk6kcPVBoI/csVnZop5/whCajg7U4PlMXGfHDJFKBs8/kcRlELOJN2GYE77zw1YN0/nzXZfnWgfOmlv+9apteQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smGmECPS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XXP3fWem6hDVFulYYHrUw344H4aPeWFTOJZb3SPsS9SLbn56PY2aTCM2ZhIOAtNA2Q24Ju7WKCxII2nHfqQRLHzNYYKwdJvgq2DMHvzm4xHTAgBoM5G98crAywng51Ld5NrOF1N7yLjwKegXru5wKww43gpFoCqxWZxWNEqPdoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lz0I0J6L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smGmECPS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C245E1F000E9;
-	Tue, 21 Jul 2026 19:39:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lz0I0J6L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B476E1F000E9;
+	Tue, 21 Jul 2026 19:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662798;
-	bh=6lucmu2F5WFXoHWYcD0Xz+5oPyTHDk8B+mYozdAUKJc=;
+	s=korg; t=1784662801;
+	bh=vg1ps6PK5HROaunFwYjjgKQM1U01sHtu742rnzrHGBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=smGmECPS1ohAhGs5SK3NeE0sj+Okbtf9VpBu/KAmH4Y5cJEsDia9AFz0eeJ506b67
-	 OwLFcHM1iazFX8QiKgkxm9E3CqtgEnXHZcBYGQKbJKouIDqeAcgulHVI1TMPwv6CxQ
-	 PCq8sZoqiwCGFdbuYT/1Gqi9BV9saCenJXCb2rQ4=
+	b=Lz0I0J6LMnRdtgDP0qkw5/apBAGej9HAI1l6hvrDu7R3RBbwaWcv+55SoI06z+0+p
+	 W2qV0v6Ll0mXPyGZuAlOtpdoRyZc+rnFnJwpdtMICS2yhwnXDKY0wnbaAYKjnnvkHU
+	 /bUez16IGyCMq0klsZDZmWq4LEpCyJsLtBiUEsa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0554/1276] perf symbols: Break infinite loop on zero-filled notes in sysfs__read_build_id()
-Date: Tue, 21 Jul 2026 17:16:37 +0200
-Message-ID: <20260721152458.516499617@linuxfoundation.org>
+Subject: [PATCH 6.12 0581/1276] devlink: Fix parent ref leak in devl_rate_node_create()
+Date: Tue, 21 Jul 2026 17:17:04 +0200
+Message-ID: <20260721152459.116242245@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -46,53 +47,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit 063c647b24f640657d6d9e2e90d620ea3ee19ae6 ]
+[ Upstream commit ba45106342bbdd905651cb9fcefb8c11871d4c25 ]
 
-sysfs__read_build_id() iterates ELF note headers from sysfs files in a
-while(1) loop.  If the file contains a zero-filled note header (both
-n_namesz and n_descsz are 0), the code computes n = namesz + descsz = 0
-and calls read(fd, bf, 0).  read() with count 0 returns 0, which
-matches the expected (ssize_t)n value, so the error check passes and
-the loop repeats — reading the same zero bytes and spinning forever.
+In the original commit the function bails out on kstrdup failure,
+forgetting to decrement the refcnt of the parent.
 
-This can happen with corrupted or zero-padded sysfs pseudo-files.
+Fix that by moving the parent refcnt setting after kstrdup.
 
-Add a check for n == 0 before the read, since no valid ELF note has
-both name and description of zero length.
-
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Fixes: f1617b40596cb341 ("perf symbols: Record the build_ids of kernel modules too")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: caba177d7f4d ("devlink: Enable creation of the devlink-rate nodes from the driver")
+Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260616110633.1449432-2-cratiu@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-elf.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/devlink/rate.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-index 4ba49975970a9b..bb3c1b68fe3706 100644
---- a/tools/perf/util/symbol-elf.c
-+++ b/tools/perf/util/symbol-elf.c
-@@ -1092,6 +1092,9 @@ int sysfs__read_build_id(const char *filename, struct build_id *bid)
- 			} else {
- 				n = namesz + descsz;
- 			}
-+			/* no valid note has both namesz and descsz zero */
-+			if (n == 0)
-+				break;
- 			if (read(fd, bf, n) != (ssize_t)n)
- 				break;
- 		}
+diff --git a/net/devlink/rate.c b/net/devlink/rate.c
+index adb5267d377cfd..f3b234f356f38c 100644
+--- a/net/devlink/rate.c
++++ b/net/devlink/rate.c
+@@ -597,11 +597,6 @@ devl_rate_node_create(struct devlink *devlink, void *priv, char *node_name,
+ 	if (!rate_node)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	if (parent) {
+-		rate_node->parent = parent;
+-		refcount_inc(&rate_node->parent->refcnt);
+-	}
+-
+ 	rate_node->type = DEVLINK_RATE_TYPE_NODE;
+ 	rate_node->devlink = devlink;
+ 	rate_node->priv = priv;
+@@ -612,6 +607,11 @@ devl_rate_node_create(struct devlink *devlink, void *priv, char *node_name,
+ 		return ERR_PTR(-ENOMEM);
+ 	}
+ 
++	if (parent) {
++		rate_node->parent = parent;
++		refcount_inc(&rate_node->parent->refcnt);
++	}
++
+ 	refcount_set(&rate_node->refcnt, 1);
+ 	list_add(&rate_node->list, &devlink->rate_list);
+ 	devlink_rate_notify(rate_node, DEVLINK_CMD_RATE_NEW);
 -- 
 2.53.0
 
