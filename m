@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F021470435;
-	Tue, 21 Jul 2026 19:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1E846A5F7;
+	Tue, 21 Jul 2026 19:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663495; cv=none; b=QGOYEKftzODs9r95X30Caj+lTDYzGnh4qNK3gaX0iQYcBnRGd9Ebg460aLbzW1VjVk57L7ItttuS3U7jgXnnA1EppdazxxeMuO6CsQ6jbRTezbSUD92p1AW66oGnJbHY6SiCIepolncM7uMheZlhSCW4oxdjXkwD/Yp9V0SCTLM=
+	t=1784663497; cv=none; b=HcbcLMtm+ckGDckvFVxWIUMF/fOWGgrQZglxrCoqt1f8xpDjQMs+3nfgEl/NHFPikzrBtEoqlpA/X1eYkFGI2uuqlt0l2jzCuBjCVOPjy62eja03GhrRtr1OsA15DJZvm3S1VwvT0YXEpoHHCNoNCvQO9Az8zXLS4b/0CnDgiOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663495; c=relaxed/simple;
-	bh=O2a90vGqamHqLQIFlKm8Pp84ciPFdu5sPoKX53EhkGU=;
+	s=arc-20240116; t=1784663497; c=relaxed/simple;
+	bh=jq7mYGy/6RivQGjr0ZtfF3nrUSI5Qs5f2YxZjwgwYIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k89qtObC4RoLnDvaCJElfslGUmIKbb9NkqtDsWDLMOn7yj7I+LJXOvwRhwentL9BeKZOkvTJ284T9lDCa1pvl8NcoaYxbIUsWSaSo/sX/e2OZnN22OVS3jGaEp6NET1PAWYPjmE2tFDckCuQrszIVExDdHQTvQbJ3r2dK30/vFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pweyZPQG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D+s0pg3SJ/fy2HeNfSxy4LRL1KGqLJhvoA8tR4uowbGQBYpcUQ3gYkHuVTq663aTiegjOaoZDJhQl0qmlHxAb2y73Oj8A9zKmtncrnawEluv1QU0khw18nqrD8jTbG5YKolxIvw3LpFmIN10FTULnMTH47y6ErxNuXLojP+sNqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHBvBrCE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pweyZPQG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 320AB1F000E9;
-	Tue, 21 Jul 2026 19:51:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHBvBrCE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F3F1F000E9;
+	Tue, 21 Jul 2026 19:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663493;
-	bh=mUJYc1VWXkWijIQrdMphwQwp13k4PdPVUcKKw8h1klQ=;
+	s=korg; t=1784663496;
+	bh=iFsgwAJSMTHUdHF9BUJUuznA9BSzJTPMotbQPYJvvxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pweyZPQGaWhqf3hPkS0YdUqIW8sUZ0JpRJEfC257qHcNmIgPmSDFFPO+FMP9O5zp8
-	 4T2NSq27WqJck6/sWvKpaULBsbnJ1iLZu8C/4z+UBX/1dax257DLdUeTPEMhEVJGLK
-	 RIt+6Ontro0pqTxmfL1SaME6RbPLtidhI8j8Y3fs=
+	b=hHBvBrCEYHo8OJ+N1pjH11Jll0IleKrL+QKjlKOVpgMkrZ6OGV4Pw/l1b1v/Er5qJ
+	 cTi5ES/IPgb7iPo0e2mGxC/MLFegZyZJYPMfXP2qVdhXF9zDUhOoa7bJjnPlh5Ns7i
+	 4ntq5iWX7f5z2j4ALL5aytelNPvo+y7EYJDoAM5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 0845/1276] fbdev: s3fb: fix potential memory leak in s3_pci_probe()
-Date: Tue, 21 Jul 2026 17:21:28 +0200
-Message-ID: <20260721152504.964274404@linuxfoundation.org>
+Subject: [PATCH 6.12 0846/1276] fbdev: uvesafb: fix potential memory leak in uvesafb_probe()
+Date: Tue, 21 Jul 2026 17:21:29 +0200
+Message-ID: <20260721152504.986054654@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,30 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit 3b0ed04bc852887a9164e1bbf521652e8ef3eb92 upstream.
+commit 033e56fed09047ee63072e9f58789f40c1c7079d upstream.
 
-In s3_pci_probe(), the memory allocated for modelist using
-fb_videomode_to_modelist() is not freed in subsequent error paths.
-Fix that by calling fb_destroy_modelist()
+Due to an incorrect goto label, memory allocated for modedb and modelist
+in uvesafb_vbe_init() is not freed in some error paths. Fix this by
+updating the goto label.
 
-Fixes: 86c0f043a737 ("s3fb: add DDC support")
+Fixes: 8bdb3a2d7df4 ("uvesafb: the driver core")
 Cc: stable@vger.kernel.org
 Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/s3fb.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/video/fbdev/uvesafb.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/video/fbdev/s3fb.c
-+++ b/drivers/video/fbdev/s3fb.c
-@@ -1382,6 +1382,7 @@ err_reg_fb:
- err_alloc_cmap:
- err_find_mode:
- #ifdef CONFIG_FB_S3_DDC
-+	fb_destroy_modelist(&info->modelist);
- 	if (par->ddc_registered)
- 		i2c_del_adapter(&par->ddc_adapter);
- 	if (par->mmio)
+--- a/drivers/video/fbdev/uvesafb.c
++++ b/drivers/video/fbdev/uvesafb.c
+@@ -1697,14 +1697,14 @@ static int uvesafb_probe(struct platform
+ 	i = uvesafb_vbe_init_mode(info);
+ 	if (i < 0) {
+ 		err = -EINVAL;
+-		goto out;
++		goto out_mode;
+ 	} else {
+ 		mode = &par->vbe_modes[i];
+ 	}
+ 
+ 	if (fb_alloc_cmap(&info->cmap, 256, 0) < 0) {
+ 		err = -ENXIO;
+-		goto out;
++		goto out_mode;
+ 	}
+ 
+ 	uvesafb_init_info(info, mode);
 
 
