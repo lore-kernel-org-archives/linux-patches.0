@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC4E33689F;
-	Tue, 21 Jul 2026 17:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD4F2E736D;
+	Tue, 21 Jul 2026 17:18:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654297; cv=none; b=AK8epHT8NGroOYxeLHuBAP28jQYjLIJW1oeA8dIJD0N6DbxD4MzCadWs4Q3ztoE/cMwJ5EzGXtp4R1a2flU79eskfylDD0YAe2B3dF9FxLVEoL7UMStfSEfUoYvxP9FTUdNwYngOktrFfsXrPZYzphakFOPrHokMNROjW82mtXQ=
+	t=1784654300; cv=none; b=CVjw2ew/UKxiPtRQx/be2V/HOjM0QlPXHGi6RPcBl9YoDrFMm7+U5QMe6+gr+Sr4/Udcpmef5EhEHdc27qIs2kv5jKW3+7WYLVpAsbnNm8/W7bkOcKptjkY+MVsGS2AdzKM8KnsKvULzBReCmlO7wPEjnXE0zyLbEoAEK7ksipw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654297; c=relaxed/simple;
-	bh=rt7NKjj+0OAjhyUfhsYJozf2G98A9E7wAhAJkmJuleU=;
+	s=arc-20240116; t=1784654300; c=relaxed/simple;
+	bh=g9BoBpAaCUbPs7ss5kDCzkjTd9iNZAeakDfDAEaS3fI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=loyAkwryiBCKUiit1p3AeUXl7OrcGONlo6n/y9jKraVPjAZxV03Du/PgDBy1JfyH/QueSkLFhfr7VYfLQ320guYEE7uJk3s8PS+e7zkRhkQggrqV9+qAgZyf6TMn6FmxB0fA5Qt/wLIG8dS69J8YVpQX6yhfDjx6Ymw+WVlQ/Io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R1x/wJ9p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RQX8MoILIAWRCC3XNaIKzw7N98X0NdpYiW83YvB1WZ2Csa7fCmxi4lb0mVEGXEhhNNs/jrEepgNj3LpJdETNx6mX1yUztuim3ukWCgmRK4dS8EOOgz70dsk04251yFWnGj0TY4U2LkHXZJ6sf5M4DxRgqT0OitrwW70Fsuvlz1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2bUSrMsP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R1x/wJ9p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48631F000E9;
-	Tue, 21 Jul 2026 17:18:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2bUSrMsP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB661F000E9;
+	Tue, 21 Jul 2026 17:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654296;
-	bh=s4gW19/KvOKoxG+8jjvH8G42Jt65b0ihNvA5M9mPtS8=;
+	s=korg; t=1784654298;
+	bh=/oyNhXD7SDIWgupeWTY7kZ/yB8TYrOm+mxBtgsmQms0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R1x/wJ9pMnLLHrWeQVU17WRUb6egufhUXFSzcapkcoD7qAtuOaB8g9ze1gzov2cCd
-	 n3KlSUXZ27dk9Pddb76rvbjBcZk6Pw7hhb3I8FeZ4Y4JV7qBuy7WRWSzZEA722p5Sp
-	 AWDWUIHxmdqg6ZnQ+/2dp+mFfk77bKv4p+1fsNnA=
+	b=2bUSrMsPZFI2EpKhStBJnOOvNg7QUQw/93JN6iV6gWMDn5nUVsbrIBA4x4GhcCNi/
+	 Hl8c6fYrJPi4k/7hhaxfLBwOdvlSzBhJxz/FvRZlzJlCnFs/9/h5wxE3CsuWApxPiC
+	 2LjKaoFAcOOoQE6fRFpW+HhOj5A5UG0Xb1Gb8+ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 7.1 1650/2077] batman-adv: frag: fix primary_if leak on failed linearization
-Date: Tue, 21 Jul 2026 17:22:03 +0200
-Message-ID: <20260721152631.666782063@linuxfoundation.org>
+Subject: [PATCH 7.1 1651/2077] batman-adv: mcast: avoid OOB read of num_dests header
+Date: Tue, 21 Jul 2026 17:22:04 +0200
+Message-ID: <20260721152631.691250716@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,31 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 353d2c1d5492e53ae34f490a84494124dc3d3531 upstream.
+commit 38eaed28e250895d56f4b7989bd65479a511c5c3 upstream.
 
-If the skb has a frag_list, it must be linearized before it can be split
-using skb_split(). But when this step failed, it must not only free the skb
-but also take care of the reference to the already found primary_if.
+Before the access to struct batadv_tvlv_mcast_tracker's num_dests, it is
+attempted to check whether enough space is actually in the network header.
+But instead of using offsetofend() to check for the whole size (2) which
+must be accessible, offsetof() of is called. The latter is always returning
+0. The comparison with the network header length will always return that
+enough data is available - even when only 1 or 0 bytes are accessible.
+
+Instead of using offsetofend(), use the more common check for the whole
+header.
 
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: a063f2fba3fa ("batman-adv: Don't skb_split skbuffs with frag_list")
+Fixes: 07afe1ba288c ("batman-adv: mcast: implement multicast packet reception and forwarding")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/fragmentation.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/batman-adv/multicast_forw.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/net/batman-adv/fragmentation.c
-+++ b/net/batman-adv/fragmentation.c
-@@ -545,7 +545,7 @@ int batadv_frag_send_packet(struct sk_bu
- 	 */
- 	if (skb_has_frag_list(skb) && __skb_linearize(skb)) {
- 		ret = -ENOMEM;
--		goto free_skb;
-+		goto put_primary_if;
- 	}
+--- a/net/batman-adv/multicast_forw.c
++++ b/net/batman-adv/multicast_forw.c
+@@ -927,11 +927,11 @@ static int batadv_mcast_forw_packet(stru
+ {
+ 	struct batadv_tvlv_mcast_tracker *mcast_tracker;
+ 	struct batadv_neigh_node *neigh_node;
+-	unsigned long offset, num_dests_off;
+ 	struct sk_buff *nexthop_skb;
+ 	unsigned char *skb_net_hdr;
+ 	bool local_recv = false;
+ 	unsigned int tvlv_len;
++	unsigned long offset;
+ 	bool xmitted = false;
+ 	u8 *dest, *next_dest;
+ 	u16 num_dests;
+@@ -940,9 +940,8 @@ static int batadv_mcast_forw_packet(stru
+ 	/* (at least) TVLV part needs to be linearized */
+ 	SKB_LINEAR_ASSERT(skb);
  
- 	/* Create one header to be copied to all fragments */
+-	/* check if num_dests is within skb length */
+-	num_dests_off = offsetof(struct batadv_tvlv_mcast_tracker, num_dests);
+-	if (num_dests_off > skb_network_header_len(skb))
++	/* check if batadv_tvlv_mcast_tracker header is within skb length */
++	if (sizeof(*mcast_tracker) > skb_network_header_len(skb))
+ 		return -EINVAL;
+ 
+ 	skb_net_hdr = skb_network_header(skb);
 
 
