@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615F546EC9C;
-	Tue, 21 Jul 2026 17:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD5746EC84;
+	Tue, 21 Jul 2026 17:56:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656575; cv=none; b=Pi48E0V24LgUP/HnKIkI8WvtftQboBPywJDkONzCLsSV0jgCbCT385Y0fl/YYR7CVIom5Nbp8+ac/CGLwA4lzZGy3sPW4qaOB+2+nMJE8WjdMUlLIrLiFTanoPopUoNPfgzKuz5tQPmY2nPbWRPQHjAMtCMXGRmkHuTE9lLyI00=
+	t=1784656578; cv=none; b=nRy5m18IorLc1c8qNDrwWXt4v4lqonNaN77HY3grxBb2p9q8QGoeAckhn0CJ892uiFyBNwQjUhs7QFbBOhxa7YmADMtMXdzI3BHUyzcalSJrEqWuTO3p/O25GnBFaZ7pup86/rHZMzKzBlnXheGdzZIHUfwfAiIQiB/vbjCZsFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656575; c=relaxed/simple;
-	bh=EZbKsIGco2OwRP2ilPjcESreqwfsWHPY80JvvXDZtNI=;
+	s=arc-20240116; t=1784656578; c=relaxed/simple;
+	bh=lZuRIthj7uvmfq5DanRV1cw0eYdz+JogLa0FgVnwChM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AfD8h0aiS4TSVF+mkQ4YRg6jILi3UD6N1dumZCfQvirnt1ZyU5uT2pxM1Jny1cLjQhNrtppWF/ms5j1D30VS/3Ze+C8mCZoHh9ohRx5wOBHi0uY6zxEqobab7sUO/v4efZwa2VdUkdbiwY/NjpIs1U2rrcCSDMwxqtq38nr0/0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IHTBOuDn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QgA7qNuF/KPYqwE9Ys/5nWV0hALl4PnYzp4zpq9+KOHfQSO8uGJb54Lugts2KuixWc7FbiXG1ofoCZ3v1gZAEH+S0pZHto1GH4xfdvf+h4dXaxH7MbUDcM+JyTLZp2ZKS+P4VEqjtnYh6xG8ox7qMscHDcbm1BjZsF2LkqgrEUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uZm2oX62; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IHTBOuDn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C70731F000E9;
-	Tue, 21 Jul 2026 17:56:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uZm2oX62"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709FC1F000E9;
+	Tue, 21 Jul 2026 17:56:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656574;
-	bh=SliWCDNfUfEwWRuF7qZLFutrZdjrOhydt0UAysHNhLM=;
+	s=korg; t=1784656576;
+	bh=GP3/wL+BldZ4lgyn0zGwpFkRylNYtxQM1l557u1DwBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IHTBOuDnt+AUXZtR0MxwOpKz+6EAy67TukH249wH38DqJjZAU1rFg3kGw1sLITWxA
-	 X6nnC7Og6/KlIUuhVD6Qe9XNh0KLL40l7Ahww2+p3qCCqZOP9QprwA/2mFo7kGw6+H
-	 SpJG9xUGFh5M4FDuaL8SG6CzhDw1RB6ioGtSyEjc=
+	b=uZm2oX62VX2rPSa/ijMrLrH6YzEx9DGJbgdW4XuYkFHtgsZEuq6aariKDh27tTXkb
+	 tTSmbw4eEFE6eFosz18s6AsLflOwXvEsw0NSn4aL2xPFEM5GIRyNFG4mUSWroFhhku
+	 Dmxrh2gUpmCw9olq/q7a4XMeKC246XMxCosyMmXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Ming <a0yami@mailbox.org>,
+	longlong yan <yanlonglong@kylinos.cn>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0439/1611] vhost/net: complete zerocopy ubufs only once
-Date: Tue, 21 Jul 2026 17:09:15 +0200
-Message-ID: <20260721152525.161462481@linuxfoundation.org>
+Subject: [PATCH 6.18 0440/1611] tools/virtio: check mmap return value in vringh_test
+Date: Tue, 21 Jul 2026 17:09:16 +0200
+Message-ID: <20260721152525.185105765@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,81 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Ming <a0yami@mailbox.org>
+From: longlong yan <yanlonglong@kylinos.cn>
 
-[ Upstream commit 8f6898fe80794f2d7c3d38c1158c806e4074a1c4 ]
+[ Upstream commit ec6177dfe98b9be1c3ede6c0dfe4394ea2a76959 ]
 
-vhost-net initializes one ubuf_info per outstanding zerocopy TX
-descriptor and hands it to the backend socket.  The networking stack may
-then clone a zerocopy skb before all skb references are released.  For
-example, batman-adv fragmentation reaches skb_split(), which calls
-skb_zerocopy_clone() and increments the same ubuf_info refcount.
+In parallel_test(), the return values of mmap() for both host_map and
+guest_map are not checked against MAP_FAILED. If mmap() fails, the
+subsequent code will dereference the invalid pointer, leading to a
+segmentation fault.
 
-vhost_zerocopy_complete() currently treats every ubuf callback as a
-completed vhost descriptor.  It dereferences ubuf->ctx, writes the
-descriptor completion state, and drops the vhost_net_ubuf_ref even when
-the callback only releases a cloned skb reference.  A backend reset can
-therefore wait for and free the vhost_net_ubuf_ref while another cloned
-skb still carries the same ubuf_info.  A later completion then
-dereferences the freed ubufs pointer.
+Add MAP_FAILED checks after both mmap() calls, using err() to report
+the error and exit, consistent with the existing error handling style
+in this file (e.g., the open() call on line 149).
 
-KASAN reports the stale completion as:
-
-  BUG: KASAN: slab-use-after-free in vhost_zerocopy_complete+0x1d7/0x1f0
-  BUG: KASAN: slab-use-after-free in vhost_zerocopy_complete+0x101/0x1f0
-  vhost_zerocopy_complete
-  skb_copy_ubufs
-  __dev_forward_skb2
-  veth_xmit
-
-The freed object was allocated from vhost_net_ioctl() while setting the
-backend and freed through kfree_rcu()/kvfree_rcu_bulk after backend
-removal, while delayed skb completion still reached
-vhost_zerocopy_complete().
-
-Honor the generic ubuf_info refcount before touching vhost state, and run
-the vhost descriptor completion only for the final ubuf reference.  This
-matches the msg_zerocopy_complete() ownership rule for cloned zerocopy
-skbs.
-
-Fixes: bab632d69ee4 ("vhost: vhost TX zero-copy support")
-Signed-off-by: Qing Ming <a0yami@mailbox.org>
+Fixes: 1515c5ce26ae ("tools/virtio: add vring_test.")
+Signed-off-by: longlong yan <yanlonglong@kylinos.cn>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260601104300.197210-1-a0yami@mailbox.org>
+Message-ID: <20260605021446.1611-1-yanlonglong@kylinos.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/net.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ tools/virtio/vringh_test.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/vhost/net.c b/drivers/vhost/net.c
-index e11b46a1c9374c..b2b90732b1d595 100644
---- a/drivers/vhost/net.c
-+++ b/drivers/vhost/net.c
-@@ -392,13 +392,20 @@ static void vhost_zerocopy_signal_used(struct vhost_net *net,
- static void vhost_zerocopy_complete(struct sk_buff *skb,
- 				    struct ubuf_info *ubuf_base, bool success)
- {
--	struct ubuf_info_msgzc *ubuf = uarg_to_msgzc(ubuf_base);
--	struct vhost_net_ubuf_ref *ubufs = ubuf->ctx;
--	struct vhost_virtqueue *vq = ubufs->vq;
-+	struct ubuf_info_msgzc *ubuf;
-+	struct vhost_net_ubuf_ref *ubufs;
-+	struct vhost_virtqueue *vq;
- 	int cnt;
+diff --git a/tools/virtio/vringh_test.c b/tools/virtio/vringh_test.c
+index b9591223437a64..5ea6d29bc992d2 100644
+--- a/tools/virtio/vringh_test.c
++++ b/tools/virtio/vringh_test.c
+@@ -159,7 +159,12 @@ static int parallel_test(u64 features,
  
--	rcu_read_lock_bh();
-+	/* Only the final cloned skb reference completes the vhost descriptor. */
-+	if (!refcount_dec_and_test(&ubuf_base->refcnt))
-+		return;
+ 	/* Parent and child use separate addresses, to check our mapping logic! */
+ 	host_map = mmap(NULL, mapsize, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
++	if (host_map == MAP_FAILED)
++		err(1, "mmap host_map");
 +
-+	ubuf = uarg_to_msgzc(ubuf_base);
-+	ubufs = ubuf->ctx;
-+	vq = ubufs->vq;
+ 	guest_map = mmap(NULL, mapsize, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
++	if (guest_map == MAP_FAILED)
++		err(1, "mmap guest_map");
  
-+	rcu_read_lock_bh();
- 	/* set len to mark this desc buffers done DMA */
- 	vq->heads[ubuf->desc].len = success ?
- 		VHOST_DMA_DONE_LEN : VHOST_DMA_FAILED_LEN;
+ 	pipe_ret = pipe(to_guest);
+ 	assert(!pipe_ret);
 -- 
 2.53.0
 
