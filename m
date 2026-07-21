@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700951474CC;
-	Tue, 21 Jul 2026 18:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268852417D9;
+	Tue, 21 Jul 2026 18:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659230; cv=none; b=uSRz74zDyP7qvsepVTPx26IjfWNG6fLPBCZa2kwFicSyUjqtPf5d1CZQopFoqtw6NBqxgM8kgAVwWF5LT4AZxnGC8Nx45qew1bNSLzigbH46U6vlwxD6Hzn4zP95ixEU/qSwxUxtp7DY71lmXNS5fXGilo2FGUjdNizovAN0tqM=
+	t=1784659233; cv=none; b=emlw1bC70Cvv9W3J+VjULuLu0Cly56DEWY9vW6wY4lnxWijCfzwcXNdiKUAgE6djuvVzZZBo/GR/4vI8Xi3MnMCGyoj+2d24D38ev1uEKJGTSuf6bzssbuweFqHyyROQkJGIiLZa2MrfTvxTUdQjZBhaJTzVKLByOXUnnhQICuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659230; c=relaxed/simple;
-	bh=mOptVu/IQPGMxz/7uq5iOsFqGuSilr3v1anZKXLjx+U=;
+	s=arc-20240116; t=1784659233; c=relaxed/simple;
+	bh=vk/uEceawZTJxhQnchBAaWQfoaF3HD+qaIiEmOBKTcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZE4Vw019xb5lA8TJXlkwlDDrZQqDzl6fTA/+poWzQAyZbxFN6dVfqSgdStOy1IDt1endSfGUEt04hSjZdni9fWikCPBY6ZxHY0tv7qEvmmgINELh0G38IGvCq5dx/31iqa4nxblM7ue6IpJuoPJbWlxzog2hDoGhnGSm2llq+/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqC43pEL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c0Ii3xgyC6Aelc9Js09RrIMCODi5GyPBCUIn/18t7Qo4H1SGzE4CBoAASDHo6Bzu6dk+/1o+QFGmvQUjQ610N6A5ZqkwVzn3B016sWRlZAq8WwZbfLlgODFU3+9ozllXLrWvBe49O5XDI0Ym6z98NVJUcutbH/H6AEHxdTbIah4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18MGxpYE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqC43pEL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91511F000E9;
-	Tue, 21 Jul 2026 18:40:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18MGxpYE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866621F00A3A;
+	Tue, 21 Jul 2026 18:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659229;
-	bh=M8ADjKFdrbhHaH2bVeZ9YVqAtqPi2kj+vO0ceXbCgNo=;
+	s=korg; t=1784659232;
+	bh=LYAhMHnkX5UN4M531zCtCyhp4UTsyeVKZ9JxuthXh74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wqC43pELPh91cNTjPgd5Z8vW3HYUPh5QieZRauzMo5eKxl890Qd8ZlNtDzdqIKUtF
-	 9B0bQfVd082RfS9zMf42QrGhfXCjD2LnpIsE2pq0Y5LrCsP0d3gI6LIlwPP80bOF25
-	 3+oGWurpv0pRTtnnP50vdpUez0W19AaMKnZVPyaQ=
+	b=18MGxpYEsgM4kGkmgybZ5mx5WDKOKOpFS6iKhURd+kxtkbsoLL0uauq/b08JhJamb
+	 PdNwC4b6l54iRN0XwvqJwPWAzuS3NjRNxOxZ/bTD3th2y7UWDm0ER0cssovs2U04NX
+	 NXimEV96reEYwkeNIr/ChT1r/xln+1Bh/kNjU3qQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 1399/1611] net: sit: require CAP_NET_ADMIN in the device netns for changelink
-Date: Tue, 21 Jul 2026 17:25:15 +0200
-Message-ID: <20260721152546.911090688@linuxfoundation.org>
+	Cao Ruichuang <create0818@163.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.18 1390/1611] selftests/ftrace: Drop invalid top-level local in test_ownership
+Date: Tue, 21 Jul 2026 17:25:06 +0200
+Message-ID: <20260721152546.708482441@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,46 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Cao Ruichuang <create0818@163.com>
 
-commit 27ccb68e7cccead5d8c611665a45d23032d468b3 upstream.
+commit 808c447df2fe234eb7d9e08ecf53159d291c104c upstream.
 
-ipip6_changelink() operates on at most two netns, dev_net(dev) and the
-tunnel link netns t->net. They differ once the device is created in or
-moved to a netns other than the one the request runs in. The rtnl
-changelink path checks CAP_NET_ADMIN only against dev_net(dev), so a
-caller privileged there but not in t->net can rewrite a tunnel that
-lives in t->net.
+test_ownership.tc is sourced by ftracetest under /bin/sh.
 
-Gate ipip6_changelink() on rtnl_dev_link_net_capable() at its top,
-before any attribute is parsed. sit was the one tunnel type not covered
-by the recent series that added this check to the other changelink()
-handlers.
+The script currently declares mount_point with local at file scope,
+which makes /bin/sh abort with "local: not in a function" before the
+test can reach the eventfs ownership checks.
 
-Fixes: 5e6700b3bf98 ("sit: add support of x-netns")
-Link: https://lore.kernel.org/netdev/20260612085941.3158249-1-maoyixie.tju@gmail.com/
+Replace the top-level local declaration with a normal shell variable so
+kernels that support the gid= tracefs mount option can run the test at
+all.
+
+Link: https://lore.kernel.org/r/20260407102613.81419-1-create0818@163.com
+Fixes: 8b55572e51805 ("tracing/selftests: Add tracefs mount options test")
+Signed-off-by: Cao Ruichuang <create0818@163.com>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260618070817.3378283-1-maoyixie.tju@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/sit.c |    3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/ftrace/test.d/00basic/test_ownership.tc |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv6/sit.c
-+++ b/net/ipv6/sit.c
-@@ -1610,6 +1610,9 @@ static int ipip6_changelink(struct net_d
- 	__u32 fwmark = t->fwmark;
- 	int err;
+--- a/tools/testing/selftests/ftrace/test.d/00basic/test_ownership.tc
++++ b/tools/testing/selftests/ftrace/test.d/00basic/test_ownership.tc
+@@ -6,7 +6,7 @@
+ original_group=`stat -c "%g" .`
+ original_owner=`stat -c "%u" .`
  
-+	if (!rtnl_dev_link_net_capable(dev, net))
-+		return -EPERM;
-+
- 	if (dev == sitn->fb_tunnel_dev)
- 		return -EINVAL;
+-local mount_point=$(get_mount_point)
++mount_point=$(get_mount_point)
+ 
+ mount_options=$(get_mnt_options "$mount_point")
  
 
 
