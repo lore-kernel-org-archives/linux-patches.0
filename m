@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63801436BC6;
-	Tue, 21 Jul 2026 19:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACEA436BC6;
+	Tue, 21 Jul 2026 19:20:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661616; cv=none; b=upXf8diqMWUJMekhRVWQNMoElHwr7wEZhRDrmQucdiBVmXWvHp4uYDKdIsMcCUW48q7na3SnkwdKQ99doICOniLBrHhg8fqSLlOJ33QmQuqEPmQh0T6HA3xMK/d0o8+xWXfDSzId939gUOcMoU9qPNFc6zkrGyNHMzTWPysZP7k=
+	t=1784661618; cv=none; b=P9UXoYm19YqdlNK2xLlI5bS9PtLtPG/K8OyoL1iNe6ZiGMbK3FH4d7+8WAzHL+kFhsAk7vYuD5gcI3BAQh4CMv/Jwf9SvdnejdO4NIwE7hOsyVuTEUlR9F13ua2ymkxeRplf7W9c6s4lLbX6DuPHpmWoZpq3sFayTw1PQZlyPGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661616; c=relaxed/simple;
-	bh=zV64PClgYSW7HsU+eVUOj1SBcCPwe6k8YjE31d8GE5w=;
+	s=arc-20240116; t=1784661618; c=relaxed/simple;
+	bh=1Gtbo9TP5lgSVXJpggroh+pE5AUt9TR6rSeT25NghxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OPmeQkztTOxAWZHS4i1Z6xQ55UnTSn5mpS3AluddxwhXZPKbS+T1yw+54JQGhg/ORjeXVvnXNNizfduDSCAw7kVJBbYaQtzeFpXPeTK0gSK47d6cYGdrMkSCyOVaK6zrFJo1KOfv2HQXYChf9Ee27yknj4jioFG8v5iMJtbv7oM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8ivoViX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CrRUgCsQbxGejSEybXHItq11B133DVK4dPqfa4+oSJSuRAMz5Xv83NuGL11clRQozsrljKlMHB0GRSSr7aD8n5fXHWykHfHa4TIr8AkfaS/ioqJQS2cvc5k2qNcTy9vp2ns/Nf01ybNpq5QnFfXYGdvUaqnFW+Om768wPxoeAxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2RFfDt7g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8ivoViX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F191F000E9;
-	Tue, 21 Jul 2026 19:20:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2RFfDt7g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71CD61F000E9;
+	Tue, 21 Jul 2026 19:20:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661614;
-	bh=pEeX7guA30W/yhOfiZTBT8R2yVl2xXd5H++0h7RBImc=;
+	s=korg; t=1784661616;
+	bh=hiXIS3JEzAmWnU0/tMXdzUh5fX2RvvTAIOgfLgU2CYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d8ivoViXA4gWiiao8ULDWojs3UVPt/7OAPGzFeZDGrZ+giR1SfgDxUm0GPbT2xaWq
-	 BSdv+ABGgK1uTlGPSYYY0YgOsEhQRzcytiHAMbc/m9nI+GOniku4HrH2ySQuwKtQYA
-	 acw7DlYf71HDFqFhpgLJATZ4yDMhSJ2JgZRFiNXM=
+	b=2RFfDt7gq3FOENmqP0QRw64L2w5UgaEMgftb7zO+n0q+G9NU0bO9pIGnXA4+XxTZZ
+	 I2uP3MZcleGGnD2Z85M3kbIUHWj32lp9xaEfr/g4dnmbYtrRnvwQ0Z+ERbWi/nq8fw
+	 2gh17+4pFMQJO5jCOC/bOz3536uM0seuG2bXzdP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0131/1276] staging: media: atomisp: fix loop shadowing in ia_css_stream_destroy()
-Date: Tue, 21 Jul 2026 17:09:34 +0200
-Message-ID: <20260721152449.034881051@linuxfoundation.org>
+Subject: [PATCH 6.12 0132/1276] firmware: arm_scmi: Read sensor config as 32-bit value
+Date: Tue, 21 Jul 2026 17:09:35 +0200
+Message-ID: <20260721152449.056562743@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,52 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jose A. Perez de Azpillaga <azpijr@gmail.com>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 9087395a383212ab1beaefcbe3b57ed131c7823d ]
+[ Upstream commit f6fe7c3c007df18afd289ff2d98c692fae9ab085 ]
 
-The nested loop inside the IS_ISP2401 block incorrectly uses the same
-variable 'i' as the outer loop. This shadows the outer loop variable
-and causes premature termination or skipped array elements.
+The SENSOR_CONFIG_GET response contains a 32-bit sensor_config field,
+and the xfer is initialized with a 4-byte RX buffer. Reading it with
+get_unaligned_le64() can consume bytes past the returned payload.
 
-Change the inner loop to use a new variable 'j' to prevent this.
+Use get_unaligned_le32() to match the protocol layout and the allocated
+response size.
 
-Fixes: 113401c67386 ("media: atomisp: sh_css: Removed #ifdef ISP2401 to make code generic")
-Signed-off-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: 7b83c5f41088 ("firmware: arm_scmi: Add SCMI v3.0 sensor configuration support")
+Link: https://patch.msgid.link/20260517-scmi_fixes-v1-1-d86daec4defd@kernel.org
+Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/atomisp/pci/sh_css.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/firmware/arm_scmi/sensors.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/media/atomisp/pci/sh_css.c b/drivers/staging/media/atomisp/pci/sh_css.c
-index 499afd73939221..e6ffef36a7ae4a 100644
---- a/drivers/staging/media/atomisp/pci/sh_css.c
-+++ b/drivers/staging/media/atomisp/pci/sh_css.c
-@@ -8237,7 +8237,7 @@ ia_css_stream_create(const struct ia_css_stream_config *stream_config,
- int
- ia_css_stream_destroy(struct ia_css_stream *stream)
- {
--	int i;
-+	int i, j;
- 	int err = 0;
+diff --git a/drivers/firmware/arm_scmi/sensors.c b/drivers/firmware/arm_scmi/sensors.c
+index 791efd0f82d737..1be0f89fc2c4b1 100644
+--- a/drivers/firmware/arm_scmi/sensors.c
++++ b/drivers/firmware/arm_scmi/sensors.c
+@@ -795,7 +795,7 @@ static int scmi_sensor_config_get(const struct scmi_protocol_handle *ph,
+ 	if (!ret) {
+ 		struct scmi_sensor_info *s = si->sensors + sensor_id;
  
- 	IA_CSS_ENTER_PRIVATE("stream = %p", stream);
-@@ -8268,10 +8268,10 @@ ia_css_stream_destroy(struct ia_css_stream *stream)
- 					sp_pipeline_input_terminal =
- 						&sh_css_sp_group.pipe_io[sp_thread_id].input;
+-		*sensor_config = get_unaligned_le64(t->rx.buf);
++		*sensor_config = get_unaligned_le32(t->rx.buf);
+ 		s->sensor_config = *sensor_config;
+ 	}
  
--					for (i = 0; i < IA_CSS_STREAM_MAX_ISYS_STREAM_PER_CH; i++) {
-+					for (j = 0; j < IA_CSS_STREAM_MAX_ISYS_STREAM_PER_CH; j++) {
- 						ia_css_isys_stream_h isys_stream =
--							&sp_pipeline_input_terminal->context.virtual_input_system_stream[i];
--						if (stream->config.isys_config[i].valid && isys_stream->valid)
-+							&sp_pipeline_input_terminal->context.virtual_input_system_stream[j];
-+						if (stream->config.isys_config[j].valid && isys_stream->valid)
- 							ia_css_isys_stream_destroy(isys_stream);
- 					}
- 				}
 -- 
 2.53.0
 
