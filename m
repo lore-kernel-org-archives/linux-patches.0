@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14BE46D569;
-	Tue, 21 Jul 2026 18:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A09AA46D0BD;
+	Tue, 21 Jul 2026 18:05:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657151; cv=none; b=S8FjtiJf2B6wcdT1ertHZoCyndH2uG77vqrqQnEj64mDMRRgSsxSE63kOwmXvSXrhsJOKqroPAzHiEI2JuHDUphKYtcTdZ0mU68uYx1iRMa/goYYvPfXXvzv5CvJ3nCqJoFksdFDY/y9WpNO4X6v1zlLYczTb8dS7NcdPkjSk3k=
+	t=1784657153; cv=none; b=ehfz53R23i4m8Q2MedZDFz18qWHMO2vpvimlIvYjpjg6nLANb3xiiK1gB+aPYiN4SeJmBBVku1+99t4VDMB0HPPSvxKJsCUrHFffZpf9ZLAH5Ii3THNoHwStFOmSoRWYAnLs7NXTVbJkcdfnJ6cFh9PJTMo1tWKI4nvszQv8oUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657151; c=relaxed/simple;
-	bh=Xa1osygYwCH40yvgrWfQ0DgV2S6vbE/q2CZdMWrIbdY=;
+	s=arc-20240116; t=1784657153; c=relaxed/simple;
+	bh=x3h9hiUeEr04pmiwZZG0HrYfCLDVymFmzLC8PQ9L3bI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E8ig4egqkS8Vr0nESWqCxqie2MkdCoHMDQC+4vTRwG5vGwNeaKoaEDjn26Fe5mokocta6JgLtAiRHbvAguEM2t2fqVItnVHG5SuXkc7n91dezN78QSq3gFYlFXdVj4yHMBLZqaEaAbOkIpUMej9NrRHGtTAgtG0w1DT694DprEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lh5LTKHV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bFE+mt5nNYhdDoThXuewcmG8AqXuTKWNj29gaEBjow9WnWI/af3vgNankXg9gBb4KMDMwmorZECVcKri+vgBgkIPuesI22PYBBcpFl4NucuQ5Jmgc9Bs9+25wU+6ivtxe3BrRoC4sU2aPbW4de8mOuXKxVtL7blEOqFvcpelnMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Em4cjn2d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lh5LTKHV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE611F000E9;
-	Tue, 21 Jul 2026 18:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Em4cjn2d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE7431F00A3A;
+	Tue, 21 Jul 2026 18:05:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657149;
-	bh=QYo7O3ftDuqQS7N2j08teaOUtEK1xZJesiO0G+cEaEA=;
+	s=korg; t=1784657152;
+	bh=+0lO4Rw0tszIPPQrZm2OOb3OzfhvcEHvL/JbO7wOVwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lh5LTKHVdh7bxqiA1h19/9t73+hY4qPTn68z88niFchIdCgKC1c+GL7illEwOPQGV
-	 KGdgGRXRhFomNGJi+3BBuek/7H1be0MUrCqmQ0ZY+xhywIGXgC4rNnUbt+UqFXeUdo
-	 iC3mt2GXdSDaEcKds/x1h32d2Cb0PbQb9d269wvE=
+	b=Em4cjn2dPAzzsfd1rPyES9c0SkMsx9hMa3qnrInUQiW7Tj7XVMLHUJdCHismGs9H7
+	 9OK0Bqk7JX2RHf4QHIol/Uql1/ZIjw0WqnWCjsyA2Qu5CXhxl+j2hZ9OgwUn/4kOyV
+	 KD2tkK/qTkktRaHr7lBOyGhoV2gH19oJDN23aJT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Hans Zhang <18255117159@163.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Alexey Budankov <alexey.budankov@linux.intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0603/1611] PCI: dwc: Fix signedness bug in fault injection test code
-Date: Tue, 21 Jul 2026 17:11:59 +0200
-Message-ID: <20260721152528.950229004@linuxfoundation.org>
+Subject: [PATCH 6.18 0650/1611] perf mmap: Fix NULL deref in aio cleanup on alloc failure
+Date: Tue, 21 Jul 2026 17:12:46 +0200
+Message-ID: <20260721152530.010588066@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,52 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 94ac934d2c054fba4a22d8dc84749094c5fa0ec0 ]
+[ Upstream commit 25627346b10e6a564610ea2c49dc6dd54812226d ]
 
-The kstrtou32() function returns negative error code or zero on success.
-However, in this case "val" is a u32 and the function returns signed long,
-so negative error codes from kstrtou32() are returned as high positive
-values.
+perf_mmap__aio_mmap() sets map->aio.nr_cblocks before allocating the
+data array.  If calloc() for aiocb or cblocks fails before the data
+array is allocated, the return -1 path leads to perf_mmap__aio_munmap()
+which loops nr_cblocks times calling perf_mmap__aio_free().  Both
+versions of perf_mmap__aio_free() (NUMA and non-NUMA) dereference
+map->aio.data[idx] without checking if data is NULL, causing a NULL
+pointer dereference.
 
-Store the error code in an int instead.
+Add NULL checks for map->aio.data at the top of both
+perf_mmap__aio_free() variants so the cleanup path is safe when
+allocation fails partway through perf_mmap__aio_mmap().
 
-Fixes: d20ee8e2dbd6 ("PCI: dwc: Add debugfs based Error Injection support for DWC")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Hans Zhang <18255117159@163.com>
-Link: https://patch.msgid.link/agL-Uwfn26SI4Gb0@stanley.mountain
+Fixes: d3d1af6f011a553a ("perf record: Enable asynchronous trace writing")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Alexey Budankov <alexey.budankov@linux.intel.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-debugfs.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ tools/perf/util/mmap.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-debugfs.c b/drivers/pci/controller/dwc/pcie-designware-debugfs.c
-index afcc08efe25315..bc741d2261fbbb 100644
---- a/drivers/pci/controller/dwc/pcie-designware-debugfs.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-debugfs.c
-@@ -256,6 +256,7 @@ static ssize_t err_inj_write(struct file *file, const char __user *buf,
- 	u32 val, counter, vc_num, err_group, type_mask;
- 	int val_diff = 0;
- 	char *kern_buf;
-+	int ret;
+diff --git a/tools/perf/util/mmap.c b/tools/perf/util/mmap.c
+index ca897999189722..fcc09398468308 100644
+--- a/tools/perf/util/mmap.c
++++ b/tools/perf/util/mmap.c
+@@ -88,10 +88,10 @@ static int perf_mmap__aio_alloc(struct mmap *map, int idx)
  
- 	err_group = err_inj_list[pdata->idx].err_inj_group;
- 	type_mask = err_inj_type_mask[err_group];
-@@ -277,10 +278,10 @@ static ssize_t err_inj_write(struct file *file, const char __user *buf,
- 			return -EINVAL;
- 		}
- 	} else {
--		val = kstrtou32(kern_buf, 0, &counter);
--		if (val) {
-+		ret = kstrtou32(kern_buf, 0, &counter);
-+		if (ret) {
- 			kfree(kern_buf);
--			return val;
-+			return ret;
- 		}
- 	}
+ static void perf_mmap__aio_free(struct mmap *map, int idx)
+ {
+-	if (map->aio.data[idx]) {
+-		munmap(map->aio.data[idx], mmap__mmap_len(map));
+-		map->aio.data[idx] = NULL;
+-	}
++	if (!map->aio.data || !map->aio.data[idx])
++		return;
++	munmap(map->aio.data[idx], mmap__mmap_len(map));
++	map->aio.data[idx] = NULL;
+ }
+ 
+ static int perf_mmap__aio_bind(struct mmap *map, int idx, struct perf_cpu cpu, int affinity)
+@@ -140,6 +140,8 @@ static int perf_mmap__aio_alloc(struct mmap *map, int idx)
+ 
+ static void perf_mmap__aio_free(struct mmap *map, int idx)
+ {
++	if (!map->aio.data)
++		return;
+ 	zfree(&(map->aio.data[idx]));
+ }
  
 -- 
 2.53.0
