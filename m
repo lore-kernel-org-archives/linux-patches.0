@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE4A367B92;
-	Tue, 21 Jul 2026 19:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE8C446C4BD;
+	Tue, 21 Jul 2026 19:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663622; cv=none; b=MtFX3loUkRu4DNZ9GPYYelcbPlGzJmbwJ2EEnLUWK6TM2O4r2lOPPr/I2vEcX2cGxzTeUI/Yzd+JGTX80u0kRWTKA6lc/KWI9hGQy2Ket1l2hUvTEQ/BKt6tgL21WtOYm/b1vNJkx5zE/nvB+x4FXEWGVQi69QbKi+ogtymUd7Q=
+	t=1784663625; cv=none; b=GfL4lHbPhWYporP1JRYv+B4ltSMAyTXPiOQAv8dqDZgQoNA2z06H76HHHzPvZ96FrqkD7rRLTJtLbMNEfP9RqZiIFO2BBsIYx/K4YLnEagr6Hb4aZBZrCN0KxEbSxykq4pUoAZh8tvxXg3Ajx8Puu/cWP9eA2EuAZZU1Ju4x7UY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663622; c=relaxed/simple;
-	bh=N14Ajg2v8jJQZWzZxsA1y0DJMTt5v41dXdUVLY9ByCc=;
+	s=arc-20240116; t=1784663625; c=relaxed/simple;
+	bh=L08l/4CldW3hJZhyQ/1Sg+F0nwjlzCSi8wqahho6gUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lxJmE9SmDicV5/klp71xNDvNBPZVgYfk1UG7JeilPs1j1V2AP+z0rcO4ku8Or3ysCr0+eTIY4mxZJ3uHvhtRQrhHA2TSVKvevbPl+00WSZbBGh78lkp1Rb+2A+LacqrYpSf1Af4P1cdPaqRlnJp4kLguw28nMM7kdzNLHjPSv8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=waururVI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hqwte9tG0HtHIQvHIgWnqSnOEZ+lYslva12/KazOgdSU65wUdiFh/D5/UqGOUtrtGBgYNce/p0BV3e3QjM4qB2sNxwmA1PSXQ8aBISJ3xGD8qMHszmTGjgyEZZXp9Z9DRvtmM8IsmCzbvIfw9LnfTlXo+sqc/1RcADDX+kZKm80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNQFLn+j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="waururVI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6AF81F00AC4;
-	Tue, 21 Jul 2026 19:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNQFLn+j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60D591F000E9;
+	Tue, 21 Jul 2026 19:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663621;
-	bh=SC5di6EXfGcaZhYEh0IReax1yemGxU5CsJmygYWhgq4=;
+	s=korg; t=1784663623;
+	bh=VUUVThmRqbzfwtYDqPHlUT6ZUDd49g0ekTr1AcrIQeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=waururVIIwN0qSo+V9goVXEwNrUGE2I5Qj0HAbFwM55QZ+pUvI8I+vznMr7xA3r3+
-	 FpAWuxDAo82QayTIJq1HEcFIXQuuOzbN78YxQTEgbdClVfpEUrhdeVe9NQKOzpO8mA
-	 JNa3nCzOwlIHigBmefXw3jhCYEEeXQQc59Pb7uqk=
+	b=PNQFLn+jgo8sRSkdLvlukNUNzL8CZUKSpKJZ0A9GdY75DjYlT0LEZ6j5sBpfAtPMG
+	 DqM438BMQJWk5wWaohuu1DyrJ2r6aYV8ZJJDRaHsMOxL7p01QSeKXEDY7f0hs03r5d
+	 JRAw4M903jroi/0IYUAJ4VUNp9mL9hRw3xq++ruY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.12 0893/1276] batman-adv: tt: prevent TVLV OOB check overflow
-Date: Tue, 21 Jul 2026 17:22:16 +0200
-Message-ID: <20260721152506.028132344@linuxfoundation.org>
+	Ali Ahmet MEMIS <dev@unknownbbqr.xyz>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	stable@kernel.org
+Subject: [PATCH 6.12 0876/1276] tools/power/x86/intel-speed-select: Harden daemon pidfile open
+Date: Tue, 21 Jul 2026 17:21:59 +0200
+Message-ID: <20260721152505.656079204@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -49,38 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Ali Ahmet MEMIS <dev@unknownbbqr.xyz>
 
-commit 7a581d9aaba8c82bd6177fa36b2588eea77f6e2b upstream.
+commit 607af438e6430893a822964c841a1994b33acccc upstream.
 
-A TT unicast TVLV contains the number of VLANs stored in it. This number is
-an u16 and gets multiplied by the size of the struct
-batadv_tvlv_tt_vlan_data (8 bytes). The size can therefore overflow the u16
-used to store the tt_vlan_len. All additional safety checks to prevent
-out-of-bounds access of the TVLV buffer are invalid due to this overflow.
+Avoid symlink-based pidfile clobbering by opening the pidfile with
+O_NOFOLLOW and validating it with fstat() before locking/writing.
 
-Using size_t prevents this overflow and ensures that the safety checks
-compare against the actual buffer requirements.
+The daemon currently uses a fixed pidfile path under /tmp. A local
+unprivileged user can pre-create a symlink at that path and cause a
+root-run daemon instance to write into an attacker-chosen file.
 
-Cc: stable@vger.kernel.org
-Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Fixes: 7fd786dfbd2c ("tools/power/x86/intel-speed-select: OOB daemon mode")
+Signed-off-by: Ali Ahmet MEMIS <dev@unknownbbqr.xyz>
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/translation-table.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/power/x86/intel-speed-select/isst-daemon.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -4101,7 +4101,8 @@ static int batadv_tt_tvlv_unicast_handle
- 					     u16 tvlv_value_len)
+--- a/tools/power/x86/intel-speed-select/isst-daemon.c
++++ b/tools/power/x86/intel-speed-select/isst-daemon.c
+@@ -148,6 +148,7 @@ static void daemonize(char *rundir, char
  {
- 	struct batadv_tvlv_tt_data *tt_data;
--	u16 tt_vlan_len, tt_num_entries;
-+	u16 tt_num_entries;
-+	size_t tt_vlan_len;
- 	char tt_flag;
- 	bool ret;
+ 	int pid, sid, i;
+ 	char str[10];
++	struct stat st;
+ 	struct sigaction sig_actions;
+ 	sigset_t sig_set;
+ 	int ret;
+@@ -200,11 +201,17 @@ static void daemonize(char *rundir, char
+ 	if (ret == -1)
+ 		exit(EXIT_FAILURE);
  
+-	pid_file_handle = open(pidfile, O_RDWR | O_CREAT, 0600);
++	pid_file_handle = open(pidfile, O_RDWR | O_CREAT | O_NOFOLLOW, 0600);
+ 	if (pid_file_handle == -1) {
+ 		/* Couldn't open lock file */
+ 		exit(1);
+ 	}
++
++	if (fstat(pid_file_handle, &st) == -1)
++		exit(1);
++
++	if (!S_ISREG(st.st_mode))
++		exit(1);
+ 	/* Try to lock file */
+ #ifdef LOCKF_SUPPORT
+ 	if (lockf(pid_file_handle, F_TLOCK, 0) == -1) {
 
 
