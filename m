@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AEEB35C6B3;
-	Tue, 21 Jul 2026 21:52:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FC13B8412;
+	Tue, 21 Jul 2026 21:52:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670774; cv=none; b=EC7og7GJs5CFcX8RaFG7B49dxZeAZrCoQRgPvs7FYKj1yjamoUdVfAZunWDIRXAVubMCclhALKr9sOHB2LdNgk4fU03IboC+vJmOs+B40K5t6CskyjguM5ybHtogCcBXydqh61JnGnnq+e1tPtBO156ONMB5aEpxSQfjbWIWs7k=
+	t=1784670777; cv=none; b=LcEjWafGMRoYco+gnnjCL5Tes/f0frSTDfNrKEP3bdegFVmQfqpBbRseVmsT3HOtQ4ZqPmb57/+iyan/xCPi2IP1aPUZ4luMBhIlsIPDxGT7n+GsmF3ykUonyibIjvcFCJQDUOKJQDnE6OH+5QDtzX4NYsw355Y2rZJu/rjymuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670774; c=relaxed/simple;
-	bh=JWl9cx9E8fhInoDDJ3lJThegzgaN7ByIZrRlOXp/D7E=;
+	s=arc-20240116; t=1784670777; c=relaxed/simple;
+	bh=57Yxmr3FGqGX+0xDJWe44dQVGz8mjqZ6ugpqAjkU4dY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J4r0lGefum7naetZRE+Nj9wkhVY7iRZXOPntuESZGIRDWuh6fcU/ORWY0fAiy1zktaHIh/nv86Cih8//IEEogCn1MBLCbPA9kYAP1ZI23aNIsO4Sg4RBaUt7tv+1RW9hUD8jlDpNALts6L7YkR3ZKEX5rpdLaCiA1HH+1Wl4Ya4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zmubh4XB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XD1Ezig/XX6b0sW3S/2QDodBPI/t+HQQT6V6P/jVvM3bEX5Z0xQXAHJx6lK7/uI/NBp2n05Mm9mJuX78jS+1uaPcIcHYjzCEYoa2rCgJMWIl85Ec21yHdbczsis34l84BRc/h3JEPyb8q3PWBBjLyoBCwZlGRqTC5yC8W+Axtbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2Bu5bK+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zmubh4XB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20EA1F000E9;
-	Tue, 21 Jul 2026 21:52:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2Bu5bK+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A5EE1F000E9;
+	Tue, 21 Jul 2026 21:52:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670773;
-	bh=PhTpcYM6LLBTEe1xOTkSy1Ub6PmSTBWYmFfLsgm9MsE=;
+	s=korg; t=1784670775;
+	bh=gtZTRwuZ6GwJJ8x7XoLVOMeV6Eo2SH/WfPfeBYfOmwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zmubh4XBCENMevdURIMAuTpZNLVZjNo/prC7chEM/AkvLOGHQP11aKmn96eKqh4Yy
-	 u8pM3mFdPrHmW4HRDOz5Ppt99HH2ZjuWa8ran+yXTrihYuH7JfFFlfk4KJMpYCgaep
-	 NhoiOlZzeL0th0ANVykK14ZGAUPefdDOpFDM65FY=
+	b=T2Bu5bK+8E9O9ZS4RjaxoFv/LfQJJ3l+7Eed4v2V5iH/B7TcQqYJqVfuU/iAAO6cT
+	 RkGoQDlMBFBkohdRbfdVe9f2C2+NtPmX3r6AdrmDhPAumreQPDm9CITva8Lx0LI2m1
+	 GG9LNpvH/KmevqVUYhRXqkcvFwpI30zhH+4XKNoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Alcantara <pc@manguebit.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 1058/1067] cifs: fix lock ordering while disabling multichannel
-Date: Tue, 21 Jul 2026 17:27:39 +0200
-Message-ID: <20260721152448.253793660@linuxfoundation.org>
+	"Ning, Hongyu" <hongyu.ning@linux.intel.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Parav Pandit <parav@nvidia.com>
+Subject: [PATCH 6.1 1059/1067] virtio_ring: fix syncs DMA memory with different direction
+Date: Tue, 21 Jul 2026 17:27:40 +0200
+Message-ID: <20260721152448.276721811@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,82 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
 
-commit 5eef12c4e3230f2025dc46ad8c4a3bc19978e5d7 upstream.
+commit 1f475cd572ea77ae6474a17e693a96bca927efe9 upstream.
 
-The code to handle the case of server disabling multichannel
-was picking iface_lock with chan_lock held. This goes against
-the lock ordering rules, as iface_lock is a higher order lock
-(even if it isn't so obvious).
+Now the APIs virtqueue_dma_sync_single_range_for_{cpu,device} ignore
+the parameter 'dir', that is a mistake.
 
-This change fixes the lock ordering by doing the following in
-that order for each secondary channel:
-1. store iface and server pointers in local variable
-2. remove references to iface and server in channels
-3. unlock chan_lock
-4. lock iface_lock
-5. dec ref count for iface
-6. unlock iface_lock
-7. dec ref count for server
-8. lock chan_lock again
+[    6.101666] ------------[ cut here ]------------
+[    6.102079] DMA-API: virtio-pci 0000:00:04.0: device driver syncs DMA memory with different direction [device address=0x00000000ae010000] [size=32752 bytes] [mapped with DMA_FROM_DEVICE] [synced with DMA_BIDIRECTIONAL]
+[    6.103630] WARNING: CPU: 6 PID: 0 at kernel/dma/debug.c:1125 check_sync+0x53e/0x6c0
+[    6.107420] CPU: 6 PID: 0 Comm: swapper/6 Tainted: G            E      6.6.0+ #290
+[    6.108030] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+[    6.108936] RIP: 0010:check_sync+0x53e/0x6c0
+[    6.109289] Code: 24 10 e8 f5 d9 74 00 4c 8b 4c 24 10 4c 8b 44 24 18 48 8b 4c 24 20 48 89 c6 41 56 4c 89 ea 48 c7 c7 b0 f1 50 82 e8 32 fc f3 ff <0f> 0b 48 c7 c7 48 4b 4a 82 e8 74 d9 fc ff 8b 73 4c 48 8d 7b 50 31
+[    6.110750] RSP: 0018:ffffc90000180cd8 EFLAGS: 00010092
+[    6.111178] RAX: 00000000000000ce RBX: ffff888100aa5900 RCX: 0000000000000000
+[    6.111744] RDX: 0000000000000104 RSI: ffffffff824c3208 RDI: 00000000ffffffff
+[    6.112316] RBP: ffffc90000180d40 R08: 0000000000000000 R09: 00000000fffeffff
+[    6.112893] R10: ffffc90000180b98 R11: ffffffff82f63308 R12: ffffffff83d5af00
+[    6.113460] R13: ffff888100998200 R14: ffffffff824a4b5f R15: 0000000000000286
+[    6.114027] FS:  0000000000000000(0000) GS:ffff88842fd80000(0000) knlGS:0000000000000000
+[    6.114665] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    6.115128] CR2: 00007f10f1e03030 CR3: 0000000108272004 CR4: 0000000000770ee0
+[    6.115701] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[    6.116272] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[    6.116842] PKRU: 55555554
+[    6.117069] Call Trace:
+[    6.117275]  <IRQ>
+[    6.117452]  ? __warn+0x84/0x140
+[    6.117727]  ? check_sync+0x53e/0x6c0
+[    6.118034]  ? __report_bug+0xea/0x100
+[    6.118353]  ? check_sync+0x53e/0x6c0
+[    6.118653]  ? report_bug+0x41/0xc0
+[    6.118944]  ? handle_bug+0x3c/0x70
+[    6.119237]  ? exc_invalid_op+0x18/0x70
+[    6.119551]  ? asm_exc_invalid_op+0x1a/0x20
+[    6.119900]  ? check_sync+0x53e/0x6c0
+[    6.120199]  ? check_sync+0x53e/0x6c0
+[    6.120499]  debug_dma_sync_single_for_cpu+0x5c/0x70
+[    6.120906]  ? dma_sync_single_for_cpu+0xb7/0x100
+[    6.121291]  virtnet_rq_unmap+0x158/0x170 [virtio_net]
+[    6.121716]  virtnet_receive+0x196/0x220 [virtio_net]
+[    6.122135]  virtnet_poll+0x48/0x1b0 [virtio_net]
+[    6.122524]  __napi_poll+0x29/0x1b0
+[    6.123083]  net_rx_action+0x282/0x360
+[    6.123612]  __do_softirq+0xf3/0x2fb
+[    6.124138]  __irq_exit_rcu+0x8e/0xf0
+[    6.124663]  common_interrupt+0xbc/0xe0
+[    6.125202]  </IRQ>
 
-Since this function can only be called in smb2_reconnect, and
-that cannot be called by two parallel processes, we should not
-have races due to dropping chan_lock between steps 3 and 8.
+We need to enable CONFIG_DMA_API_DEBUG and work with need sync mode(such
+as swiotlb) to reproduce this warn.
 
-Fixes: ee1d21794e55 ("cifs: handle when server stops supporting multichannel")
-Reported-by: Paulo Alcantara <pc@manguebit.com>
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 8bd2f71054bd ("virtio_ring: introduce dma sync api for virtqueue")
+Reported-by: "Ning, Hongyu" <hongyu.ning@linux.intel.com>
+Closes: https://lore.kernel.org/all/f37cb55a-6fc8-4e21-8789-46d468325eea@linux.intel.com/
+Suggested-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Message-Id: <20231201033303.25141-1-xuanzhuo@linux.alibaba.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Parav Pandit <parav@nvidia.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Tested-by: Hongyu Ning <hongyu.ning@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/sess.c |   22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ drivers/virtio/virtio_ring.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/fs/smb/client/sess.c
-+++ b/fs/smb/client/sess.c
-@@ -303,28 +303,32 @@ cifs_disable_secondary_channels(struct c
- 		iface = ses->chans[i].iface;
- 		server = ses->chans[i].server;
+--- a/drivers/virtio/virtio_ring.c
++++ b/drivers/virtio/virtio_ring.c
+@@ -3039,8 +3039,7 @@ void virtqueue_dma_sync_single_range_for
+ 	if (!vq->use_dma_api)
+ 		return;
  
-+		/*
-+		 * remove these references first, since we need to unlock
-+		 * the chan_lock here, since iface_lock is a higher lock
-+		 */
-+		ses->chans[i].iface = NULL;
-+		ses->chans[i].server = NULL;
-+		spin_unlock(&ses->chan_lock);
-+
- 		if (iface) {
- 			spin_lock(&ses->iface_lock);
- 			kref_put(&iface->refcount, release_iface);
--			ses->chans[i].iface = NULL;
- 			iface->num_channels--;
- 			if (iface->weight_fulfilled)
- 				iface->weight_fulfilled--;
- 			spin_unlock(&ses->iface_lock);
- 		}
+-	dma_sync_single_range_for_cpu(dev, addr, offset, size,
+-				      DMA_BIDIRECTIONAL);
++	dma_sync_single_range_for_cpu(dev, addr, offset, size, dir);
+ }
+ EXPORT_SYMBOL_GPL(virtqueue_dma_sync_single_range_for_cpu);
  
--		spin_unlock(&ses->chan_lock);
--		if (server && !server->terminate) {
--			server->terminate = true;
--			cifs_signal_cifsd_for_reconnect(server, false);
--		}
--		spin_lock(&ses->chan_lock);
--
- 		if (server) {
--			ses->chans[i].server = NULL;
-+			if (!server->terminate) {
-+				server->terminate = true;
-+				cifs_signal_cifsd_for_reconnect(server, false);
-+			}
- 			cifs_put_tcp_session(server, false);
- 		}
+@@ -3066,8 +3065,7 @@ void virtqueue_dma_sync_single_range_for
+ 	if (!vq->use_dma_api)
+ 		return;
  
-+		spin_lock(&ses->chan_lock);
- 	}
+-	dma_sync_single_range_for_device(dev, addr, offset, size,
+-					 DMA_BIDIRECTIONAL);
++	dma_sync_single_range_for_device(dev, addr, offset, size, dir);
+ }
+ EXPORT_SYMBOL_GPL(virtqueue_dma_sync_single_range_for_device);
  
- done:
 
 
