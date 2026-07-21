@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFF338910F;
-	Tue, 21 Jul 2026 18:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F6246EF77;
+	Tue, 21 Jul 2026 18:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659604; cv=none; b=MRWyqTEn2EsxiwMyuoylIGP7cQ+kraUucTLTyTzlUmI4XRYFdZDe/3B5jZ1vwZ0/gSN6JxIAHqi1qJCqqTVl6hPXAXFs4GGBa/SBCZJCU4zAc2ouyrFNTWW1Gn2/gN/cdM+JZJ7kqEs7CIk6gYouuy3fEpusaKbjPoC51NS2AQ4=
+	t=1784659607; cv=none; b=t0YdeU1d37NlmxU3/uHdqdJ1D0vniFEdcmDWnRRfjR/F6Se9jM6vWVDJ6USI7oKPdiGhx32UETUrOWpvokN0/Q1PA5DvPeNRwYoOTQ0yvBvYz5LqrumGOjUAFN/7wawjUhYZh+0I0LaLLkrdxFCYCC+eVmZ3RTSB+lmyyC47yOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659604; c=relaxed/simple;
-	bh=tTHCIJSI7bHjQ6jpA/31aysmlCmxh3Ch/0rD4E6GfYo=;
+	s=arc-20240116; t=1784659607; c=relaxed/simple;
+	bh=yBTXJjvL+fP9Ztx30TeBzSbTKOeVx9U5AKodSEYn8VI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uIdQaSfh5EknqcoA0GRW7dfJQyBYZY0WmERkjigU9Xuk3gqOxSc3fi0CIptQPIPlY9Ig659GNh/kQZXTO0+Ox7/hwpd8zxuse1c7IwKpa3TBf+xiicPpdp0CyJHFdtnIUZbjACHrYPKk1Sm+AF4Wbf7aSAsZnZqxDVlEegu65cI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGg0YSLr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=llsTe/E0VopZgXS50gCrUaUJPO8dMQqYHm2wPzoqdKo9pVunyzF3l2NLRTVY979TCBPrlG+h9yKwf82sFzNwhCrZP7oxrFPq/CzwsAskMzBHlRZCKki7FpGC88HffMjEntYyaOaoIUDmbVA41EV8pVx1zreTVcVfb6/o8dM9bcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xO/qIr5C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGg0YSLr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B53C31F000E9;
-	Tue, 21 Jul 2026 18:46:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xO/qIr5C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C571F000E9;
+	Tue, 21 Jul 2026 18:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659603;
-	bh=Emlq+awp+iJhu+uPDTiV5QAeqWpkOgv7i5yspK8Pots=;
+	s=korg; t=1784659605;
+	bh=87296R8MqdBcalJyVJFub0Ab2AFaAlML57tfwXWKa8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hGg0YSLrZi3AquwKRq8gTj4utJTM8N/8R13iJrA2oQA06+EMXSglVNxxlfbPuHNop
-	 0Ol7TUJMhMZy2tzYMVmYqbSdn76o0kdHnJbpvhvy3CSM86Cldv6hMj8k2wwIV29PVV
-	 f8KztLv2C3KYKEbX2EQ+UUja3bmbU6g3RB/emMhA=
+	b=xO/qIr5CpBwColaguBXon4JPIjcZjzbmCUt1f7Ftor/b5tWsHihBxmvAQXyBaJ0ou
+	 pBgFDiMIdbx2Q46D3Ory8Lkd7WTf390iFWaKrcwHTv/ytdaHWlTDa16xAHSsxSQlqg
+	 s4u4XOw1FrMfq4WocA2BjRzpx03M030iZf9QsVOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Neill Kapron <nkapron@google.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1584/1611] usb: gadget: f_fs: Tie read_buffer lifetime to ffs_epfile
-Date: Tue, 21 Jul 2026 17:28:20 +0200
-Message-ID: <20260721152551.100084953@linuxfoundation.org>
+Subject: [PATCH 6.18 1585/1611] crypto: atmel-sha204a - fail on hwrng registration error in probe path
+Date: Tue, 21 Jul 2026 17:28:21 +0200
+Message-ID: <20260721152551.123926915@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -45,57 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neill Kapron <nkapron@google.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 8bdcf96eb135aebacac319667f87db034fb38406 ]
+[ Upstream commit 49e05bb00f2e8168695f7af4d694c39e1423e8a2 ]
 
-Currently, ffs_epfile_release unconditionally frees the endpoint's
-read_buffer when a file descriptor is closed. If userspace explicitly
-opens the endpoint multiple times and closes one, the read_buffer is
-destroyed. This can lead to silent data loss if other file descriptors
-are still actively reading from the endpoint.
+Commit 13909a0c8897 ("crypto: atmel-sha204a - provide the otp content")
+overwrote the hwrng registration return value when creating the sysfs
+group, which allowed atmel_sha204a_probe() to succeed even if
+devm_hwrng_register() failed.
 
-By tying the lifetime of the read_buffer to the ffs_epfile structure itself
-(which is destroyed when the functionfs instance is torn down in
-ffs_epfiles_destroy), we eliminate the brittle dependency on open/release
-calls while correctly matching the conceptual lifetime of unread data on
-the hardware endpoint.
+Return immediately when devm_hwrng_register() fails, and report both
+hwrng and sysfs registration errors with dev_err(). Adjust the sysfs
+error log message for consistency.
 
-Fixes: 9353afbbfa7b ("usb: gadget: f_fs: buffer data from ‘oversized’ OUT requests")
-Cc: stable <stable@kernel.org>
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Neill Kapron <nkapron@google.com>
-Link: https://patch.msgid.link/20260619040609.4010746-3-nkapron@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 13909a0c8897 ("crypto: atmel-sha204a - provide the otp content")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/atmel-sha204a.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -1353,7 +1353,6 @@ ffs_epfile_release(struct inode *inode,
+--- a/drivers/crypto/atmel-sha204a.c
++++ b/drivers/crypto/atmel-sha204a.c
+@@ -183,8 +183,10 @@ static int atmel_sha204a_probe(struct i2
+ 		i2c_priv->hwrng.quality = *quality;
  
- 	mutex_unlock(&epfile->dmabufs_mutex);
+ 	ret = devm_hwrng_register(&client->dev, &i2c_priv->hwrng);
+-	if (ret)
+-		dev_warn(&client->dev, "failed to register RNG (%d)\n", ret);
++	if (ret) {
++		dev_err(&client->dev, "failed to register RNG (%d)\n", ret);
++		return ret;
++	}
  
--	__ffs_epfile_read_buffer_free(epfile);
- 	ffs_data_closed(epfile->ffs);
+ 	/* otp read out */
+ 	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C))
+@@ -192,7 +194,7 @@ static int atmel_sha204a_probe(struct i2
  
- 	return 0;
-@@ -2370,6 +2369,7 @@ static void ffs_epfiles_destroy(struct s
- 
- 	for (; count; --count, ++epfile) {
- 		BUG_ON(mutex_is_locked(&epfile->mutex));
-+		__ffs_epfile_read_buffer_free(epfile);
- 		simple_remove_by_name(root, epfile->name, NULL);
+ 	ret = sysfs_create_group(&client->dev.kobj, &atmel_sha204a_groups);
+ 	if (ret) {
+-		dev_err(&client->dev, "failed to register sysfs entry\n");
++		dev_err(&client->dev, "failed to create sysfs group (%d)\n", ret);
+ 		return ret;
  	}
  
 
