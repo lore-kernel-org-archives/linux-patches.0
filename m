@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184342EBB8D;
-	Tue, 21 Jul 2026 20:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADB33B4E9B;
+	Tue, 21 Jul 2026 20:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667412; cv=none; b=nLtsYAzwj7F6nGY8BqwauRF2Nda5vUx24/6CiI9HiBqnd6Il8glLgZOtvUrrHH7ymdApI0pGVLSa5pE+oNkQVBOEnE2bonvtiZ22OG5zsaJXmYkfyq/BKDqOE7PX2iZQjwy5auiXG0RD9REBbQuvS+2GvNpp8EDhnMzP7Gg7NBw=
+	t=1784667414; cv=none; b=BViCJn+a4cFA+0Kh2q/JN+EvIrXHRuwnf0c4bWxM6U0/zC4AnkIRl4kU5yAKNGuSH2i/9ulgHw3qCFGsNfSZL/cK6bzY4IwkuCBBFpSbtaJczJyWvvHdej8r0xePTiI+Vy5Be2RTfxie+VxzzYZeBp+9iNSEgclgKeH5dj4aphU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667412; c=relaxed/simple;
-	bh=sIkC9w4iXs3cOnlPfIOhBYHpEKTrcABBXGBBNE092BQ=;
+	s=arc-20240116; t=1784667414; c=relaxed/simple;
+	bh=9MeRKxmv+Zn0FqQWYTo96SMVGXFwtkWwWDyaBawsOOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mDQUlZZEho8J/4/wc4rn2qHrg5xIJ+xcqoiZP+Mom8CNO/BHEsmsX9lQaekozpAtsy2Kbpdksq+IpG58WrWJYEBv8v9t81aOn18NSK7GwDbQy9Nn7gv8Ds1h9XdNTGRJJTjFgBTuK4zxdr/wgE7qgj9WzhRQcLhynYjUxTM75yQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADjifQTi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nm1+GtomA1OOk0rh9X4GPJoYRfk0N/X2kFZ1rLpOxBFt9i2gEsVb3IE71IiO+enIZmhfPe2P019Qr6svKvonsAEZwzmKj4OKsvEV3NL1Ny125Q/5ddECqMmNhR0K4yvIfhu5JnKIKf13sILsniJZeDc+AfSTxb3BMIkSc1w240M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqO45nDJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADjifQTi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7F81F000E9;
-	Tue, 21 Jul 2026 20:56:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqO45nDJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362881F00A3A;
+	Tue, 21 Jul 2026 20:56:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667411;
-	bh=yMutYvlqoeGyFI9iLf8cMKsCIyGGurooSrErjnvda8Y=;
+	s=korg; t=1784667413;
+	bh=KP6Ktm7CxXJLwOboWwcnXi9Xd1eEfsV9Qil2t8hwcTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ADjifQTiorZD5KZMQbxUablMXVvQOfdRjNC1SQcwSiIe9L9X04hUVs9BBkAorJ52V
-	 Rnmm9vuHCQ3rcoSrarvG8rha6gFbLFfeYhCEVqdl94sgs9yOuhIAviZ3rg36sU2Qww
-	 bRBkDHQ/S8I3PXqzR74rOxEpHDV/oplAbnK+Qn8I=
+	b=bqO45nDJSXkIPnGxUZnT+qPfp+IV8+y9Vg3KX/6DKshz4lUzBDxNW6bbN/z3+LmSB
+	 eyboTxChBAU7TAuKUznicHPlkVA2kMGWDZHh6JfKVdb0r2f0lSk4SHqracyjU2mH4m
+	 PiM11e5lnIsdJb8qIgqhRFKkvgqL+0+uQTfVYbxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.6 1050/1266] dm-stats: fix dm_jiffies_to_msec64
-Date: Tue, 21 Jul 2026 17:24:47 +0200
-Message-ID: <20260721152505.314157801@linuxfoundation.org>
+Subject: [PATCH 6.6 1051/1266] dm-stats: fix merge accounting
+Date: Tue, 21 Jul 2026 17:24:48 +0200
+Message-ID: <20260721152505.335726072@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,10 +51,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 386df1a57b631c456d14f857cb0c0c2e11c16bef upstream.
+commit 1917eb2db750ecbdf710f79a8042eaa545a063c7 upstream.
 
-There were wrong calculations in dm_jiffies_to_msec64 that produced
-incorrect output when HZ was different from 1000. This commit fixes them.
+There were wrong parentheses when setting stats_aux->merged, so that
+merging was never properly accounted. This commit fixes it.
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Assisted-by: Claude:claude-opus-4-6
@@ -62,23 +62,23 @@ Fixes: fd2ed4d25270 ("dm: add statistics support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-stats.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/dm-stats.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 --- a/drivers/md/dm-stats.c
 +++ b/drivers/md/dm-stats.c
-@@ -833,10 +833,10 @@ static unsigned long long dm_jiffies_to_
- 		result = jiffies_to_msecs(j & 0x3fffff);
- 	if (j >= 1 << 22) {
- 		mult = jiffies_to_msecs(1 << 22);
--		result += (unsigned long long)mult * (unsigned long long)jiffies_to_msecs((j >> 22) & 0x3fffff);
-+		result += (unsigned long long)mult * ((j >> 22) & 0x3fffff);
- 	}
- 	if (j >= 1ULL << 44)
--		result += (unsigned long long)mult * (unsigned long long)mult * (unsigned long long)jiffies_to_msecs(j >> 44);
-+		result += (unsigned long long)mult * (unsigned long long)(1 << 22) * (j >> 44);
- 
- 	return result;
- }
+@@ -683,10 +683,8 @@ void dm_stats_account_io(struct dm_stats
+ 		 */
+ 		last = raw_cpu_ptr(stats->last);
+ 		stats_aux->merged =
+-			(bi_sector == (READ_ONCE(last->last_sector) &&
+-				       ((bi_rw == WRITE) ==
+-					(READ_ONCE(last->last_rw) == WRITE))
+-				       ));
++			bi_sector == READ_ONCE(last->last_sector) &&
++				(bi_rw == WRITE) == (READ_ONCE(last->last_rw) == WRITE);
+ 		WRITE_ONCE(last->last_sector, end_sector);
+ 		WRITE_ONCE(last->last_rw, bi_rw);
+ 	} else
 
 
