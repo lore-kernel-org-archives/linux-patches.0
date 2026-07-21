@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5814439908;
-	Tue, 21 Jul 2026 20:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD3653B8950;
+	Tue, 21 Jul 2026 20:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666924; cv=none; b=NKZsBSCo2NN56VB5ioJ+1+cFzd/sB6mr5M/a8kK1oh1lSm0l7ve3T3kyBpjEMh6tM0gKtVzE1O1e/OhRiZ084Zyopcf2BYVCF6so2quhMshUt5TvSy5+53kRZtgz9pwOFOCWnI+rGnqzpgby/TMg0+JB+Yl/IyTqD5CoSHmkguo=
+	t=1784666925; cv=none; b=dEkQXS2sAvT7km+lOtvuqdFzXGGb/PLPxV3SLwXH3qdvEf1LKYbUOPPcMJHPq74wzCIN9/Dh33cBiV7qaG21oRbZlH+elriEPtBIkRAY7OYLI+EYhts0LnSt3iUC2L7Zj/+EbHxI4rz/lrdUsC+YhYBAjbUZH48nAdjgMGoUu/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666924; c=relaxed/simple;
-	bh=NebXBvP4cyw2gvKjKMVxo6UKdltF5+NEAoPKc2yhuys=;
+	s=arc-20240116; t=1784666925; c=relaxed/simple;
+	bh=V4jsWt+jtvWGABJMzcxmuyiy7vM4MhlO5ubn2Th3stI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N0E4MqJka/2Zykr6a8VtrEVp1bLJG8h5EypCQaZLqC+oeAtVelLIitzM6yDeugyUYfyLcaPvq+DnmDrmWyKm4DOUW40CHumqzhzHfkJXfiHXnUoluLdzQD0THv0ZNanu2tdpWYD91eFcdoCnV94aqWLEQ5alBln0hwkUFpckIms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YGFUbtWW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qJQNHEk2wEoQH6UcaND/69nrcN7/U1pTcngxP2Q4GrQfVDTglJvf2vwebDJ95/E1Esw6k2rbnKZbq4BQjrcHHJT+HHVENg6mKMQi310hkzGAhZ7rrlK0UY11ERoWhh3YG4Dn/710zq3izfHYGhhU/bFKiWKsV0wcpMuMSvq+W/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AWOzo1kh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YGFUbtWW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E394B1F000E9;
-	Tue, 21 Jul 2026 20:48:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AWOzo1kh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC9E1F00ACF;
+	Tue, 21 Jul 2026 20:48:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666919;
-	bh=MeZaMXQgDexo2KNtU+3dKM28tr3TI8YWo0QSbeNGFcs=;
+	s=korg; t=1784666922;
+	bh=zbX0OKau5y78DoSD+PzIMfrZtJDF4k/LHXuWrojZW7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YGFUbtWWCj/xvIPpbnA74fZKNnE9K+AmQx/zfLnhw9ZQvx87fHvK7hh/Z3idl6SQn
-	 DEHrEHjbSLt0W/EyXxdrz3Wl8a1IrfggmdSg9xsS36E+DMjezk55E3Gwu1v98BG88Y
-	 FerXdGZ0v2o59YyxyfmxT3JpJQ24bYrsthfcj46Q=
+	b=AWOzo1khc9RxDjskTEite4vEPr4DggWIxh+UF8mFdkg7NZUFRWTnP/dES59bm+A8k
+	 yfPK+hLhucjIpLe6Afsqq1lVQPRCWr4feTs/0yteii7VZIEBHJweZkfj03dXlukLIG
+	 g+/PMDEsSfmn0kYDw1qH6K4J+GJJnFVRQWpicpJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0864/1266] Bluetooth: ISO: exclude RFU bits from ISO_SDU_Length
-Date: Tue, 21 Jul 2026 17:21:41 +0200
-Message-ID: <20260721152501.182444356@linuxfoundation.org>
+Subject: [PATCH 6.6 0865/1266] Bluetooth: bpa10x: avoid OOB read of revision string in bpa10x_setup()
+Date: Tue, 21 Jul 2026 17:21:42 +0200
+Message-ID: <20260721152501.205778687@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,40 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit fd076d8deeab6f9f18ef13400f89e1f550df665b ]
+[ Upstream commit dd068ef044128db655f48323a4acfd5907e04903 ]
 
-slen contains ISO_SDU_Length (12 bits), RFU (2 bits),
-Packet_Status_Flags (2 bits).
+bpa10x_setup() sends the vendor command 0xfc0e and passes the response
+to bt_dev_info() and hci_set_fw_info() as a "%s" string starting at
+skb->data + 1, without checking the length:
 
-Exclude the RFU bits from hci_iso_data_len. Also add masks to the pack
-macro.
+	bt_dev_info(hdev, "%s", (char *)(skb->data + 1));
+	hci_set_fw_info(hdev, "%s", skb->data + 1);
 
-Fixes: 4de0fc599eb9 ("Bluetooth: Add definitions for CIS connections")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+A device that returns a one-byte response (status only) leaves
+skb->data + 1 past the end of the data, and the %s walk reads adjacent
+slab memory until it meets a NUL. The same happens when the payload is
+not NUL-terminated within skb->len. The out-of-bounds bytes end up in
+the kernel log and the firmware-info debugfs file.
+
+Print the revision string with a bounded "%.*s" limited to skb->len - 1
+instead. This keeps the string readable for well-behaved devices while
+never reading past the received data, and does not fail setup, so a
+device returning a short or unterminated response keeps working.
+
+Fixes: ddd68ec8f484 ("Bluetooth: bpa10x: Read revision information in setup stage")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reported-by: Xiang Mei <xmei5@asu.edu>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/bluetooth/bpa10x.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index b25746b91986c2..ad640f85a66079 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -2914,8 +2914,9 @@ static inline struct hci_sco_hdr *hci_sco_hdr(const struct sk_buff *skb)
- #define hci_iso_flags_pack(pb, ts)	((pb & 0x03) | ((ts & 0x01) << 2))
+diff --git a/drivers/bluetooth/bpa10x.c b/drivers/bluetooth/bpa10x.c
+index 1fa58c059cbf5c..8942ebd0d0b9f6 100644
+--- a/drivers/bluetooth/bpa10x.c
++++ b/drivers/bluetooth/bpa10x.c
+@@ -254,9 +254,13 @@ static int bpa10x_setup(struct hci_dev *hdev)
+ 	if (IS_ERR(skb))
+ 		return PTR_ERR(skb);
  
- /* ISO data length and flags pack/unpack */
--#define hci_iso_data_len_pack(h, f)	((__u16) ((h) | ((f) << 14)))
--#define hci_iso_data_len(h)		((h) & 0x3fff)
-+#define hci_iso_data_len_pack(h, f)	((__u16) (((h) & 0x0fff) | \
-+						  (((f) & 0x3) << 14)))
-+#define hci_iso_data_len(h)		((h) & 0x0fff)
- #define hci_iso_data_flags(h)		((h) >> 14)
+-	bt_dev_info(hdev, "%s", (char *)(skb->data + 1));
++	/* Bounded print: the device controls skb->len. */
++	if (skb->len > 1) {
++		int len = skb->len - 1;
  
- /* codec transport types */
+-	hci_set_fw_info(hdev, "%s", skb->data + 1);
++		bt_dev_info(hdev, "%.*s", len, (char *)(skb->data + 1));
++		hci_set_fw_info(hdev, "%.*s", len, skb->data + 1);
++	}
+ 
+ 	kfree_skb(skb);
+ 	return 0;
 -- 
 2.53.0
 
