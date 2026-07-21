@@ -1,35 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305D7471255;
-	Tue, 21 Jul 2026 18:14:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B8447125C;
+	Tue, 21 Jul 2026 18:14:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657682; cv=none; b=KxeCz9XVNr70fPNVL8XFcFIf0EyPqHnmUWuY2tvqZZUdg4FUSAKXThOySIIQQllf4BrW7UwgJhgFySRZA2VPYi23hbCPZMVNnHEaDqDod0FsbP0ItdKiq+YQY3/g1Qe6hPGNynsZx7eqASWyTIvZ3VYJzlk6i5Eaiz73l4dvzu0=
+	t=1784657684; cv=none; b=tckw2ki8j8HnuWAAuPjHwwJm0+b7HYPh9sVz0R1oeppt19AuQefaYACywFONFjdImfX6ocf8gJ358TFt1LWN+bomX0dl17pJyJ+TYIL6v7L+MxDYwXFcB/E+QjVQv8uchvnLD6VF7OCnwH0Ch5CEHtM+1eW2nYnRQhHeCG1d8is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657682; c=relaxed/simple;
-	bh=y0S4evg+QgDxIocv4N1cLsY6+8+nii91n99Pz4tvo/U=;
+	s=arc-20240116; t=1784657684; c=relaxed/simple;
+	bh=GGzyd6/GZ1HPiznjMcAa7fg+Vb1RtC0WGtLBlh4PIXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZtwGgL4nraTxjTyARjAQb+9ItXb0AAcXjZU34Y3dbJBvKiQ8xR+gO7aFjP+zyLivVTZ9whPIRxHMKUUVF2DgZeszgM0LYdlnXr6Wgr4wAI/lDUgcVNGh4JHUNdNHNn7WaIT2EM9no5szQD7W35NA/9WhUtzJL7vd53WtewrmTPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQfcslKd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EldwHZchS4EW8nCdW4GEKM9i2Q4Yu+PLvQ5wDkHyw1zWtH8IzWMBBfh7gYV5lV6AHcV0qMK1fN8/2wG8b/+fPwp7K0r9h/Ik+bWgb4b5f7OId/A1KHOpiytzC7O/dGd4WKMBNV8PwMfdDwAg0EK0Hr6mXgdS/gQRb9jRhqpxS1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8IBmZim; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQfcslKd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 899091F000E9;
-	Tue, 21 Jul 2026 18:14:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8IBmZim"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2991F000E9;
+	Tue, 21 Jul 2026 18:14:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657681;
-	bh=POqLdCqfofu6WKsjhj1SnP0OB87tFmA3AxQEikJ3PpA=;
+	s=korg; t=1784657683;
+	bh=5HY7IZsg2zTLghJmCrlpXj5EJBjWc1uEu8y/VSWfctc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oQfcslKdmwrcMUzv045jlsh0XX9cfjaRYQDoPgZFtbtfeAxfoBrpnUGIYOE7eTJRJ
-	 uor/HDkgva+LK+c90i+BF1UN23l/w39r2esqlgPsSAu2MFI3BKluySqXqPN1ymc85b
-	 5UbNNymqzFJaiLxGQY+iUEc4iwl6cqi74ub7a7CU=
+	b=s8IBmZimfX4zgDUzwAaJDXXHnQGz4X9fDl/BzzBonqWxAOxLMVNjglte2ODMmWRzF
+	 Z3PvsgkPamolFJX5M5t/cI8SYiJkKtj+mF+aS17dcxw6YEehCJzHPQXn+AyP2WE9yR
+	 c9Afx0x29OZ599bdaiXt31aJEPxxFjTNfBZRxHpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sayali Patil <sayalip@linux.ibm.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Zi Yan <ziy@nvidia.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
 	Dev Jain <dev.jain@arm.com>,
 	Liam Howlett <liam.howlett@oracle.com>,
 	Miaohe Lin <linmiaohe@huawei.com>,
@@ -37,12 +38,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Oscar Salvador <osalvador@suse.de>,
 	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
 	Shuah Khan <shuah@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0857/1611] selftests/mm: ensure destination is hugetlb-backed in hugetlb-mremap
-Date: Tue, 21 Jul 2026 17:16:13 +0200
-Message-ID: <20260721152534.667651502@linuxfoundation.org>
+Subject: [PATCH 6.18 0858/1611] selftests/mm: skip uffd-stress test when nr_pages_per_cpu is zero
+Date: Tue, 21 Jul 2026 17:16:14 +0200
+Message-ID: <20260721152534.688652813@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -63,34 +63,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Sayali Patil <sayalip@linux.ibm.com>
 
-[ Upstream commit f20ca8972e83f111c4300c60d74314568c8964bc ]
+[ Upstream commit f3bd00507f226a419125df6064632bcbd47d8e70 ]
 
-The hugetlb-mremap selftest reserves the destination address using a
-anonymous base-page mapping before calling mremap() with MREMAP_FIXED,
-while the source region is hugetlb-backed.
+uffd-stress currently fails when the computed nr_pages_per_cpu evaluates
+to zero:
 
-When remapping a hugetlb mapping into a base-page VMA may fail with:
+nr_pages_per_cpu = bytes / page_size / nr_parallel
 
-    mremap: Device or resource busy
+This can occur on systems with large hugepage sizes (e.g.  1GB) and a high
+number of CPUs, where the total allocated memory is sufficient overall but
+not enough to provide at least one page per cpu.
 
-This is observed on powerpc hash MMU systems where slice constraints and
-page size incompatibilities prevent the remap.
+In such cases, the failure is due to insufficient test resources rather
+than incorrect kernel behaviour.  Update the test to treat this condition
+as a test skip instead of reporting an error.
 
-Ensure the destination region is created using MAP_HUGETLB so that both
-source and destination VMAs are hugetlb-backed and compatible.
-
-Update the FLAGS macro to include MAP_HUGETLB | MAP_SHARED so that both
-mappings are hugetlb-backed and compatible.  Also use the macro for the
-mmap() calls to avoid repeating the flag combination.
-
-This ensures the test reliably exercises hugetlb mremap instead of failing
-due to VMA type mismatch.
-
-Link: https://lore.kernel.org/367644df45c65098f23e3945c6a80f4b8a8964a6.1779296493.git.sayalip@linux.ibm.com
-Fixes: 12b613206474 ("mm, hugepages: add hugetlb vma mremap() test")
+[sayalip@linux.ibm.com: use ksft_exit_skip() instead of KSFT_SKIP]
+  Link: https://lore.kernel.org/88202b56-1dc5-43e2-9d1f-a0823a9531f0@linux.ibm.com
+Link: https://lore.kernel.org/0707e9a0f1b3dd904c4a069b91db317f9c160faa.1779296493.git.sayalip@linux.ibm.com
+Fixes: db0f1c138f18 ("selftests/mm: print some details when uffd-stress gets bad params")
 Signed-off-by: Sayali Patil <sayalip@linux.ibm.com>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
 Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Cc: David Hildenbrand (Arm) <david@kernel.org>
 Cc: Dev Jain <dev.jain@arm.com>
 Cc: Liam Howlett <liam.howlett@oracle.com>
 Cc: Miaohe Lin <linmiaohe@huawei.com>
@@ -98,53 +93,28 @@ Cc: Michal Hocko <mhocko@kernel.org>
 Cc: Oscar Salvador <osalvador@suse.de>
 Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
 Cc: Shuah Khan <shuah@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/hugepage-mremap.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ tools/testing/selftests/mm/uffd-stress.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/mm/hugepage-mremap.c b/tools/testing/selftests/mm/hugepage-mremap.c
-index cd862a619471e7..928c1045e29548 100644
---- a/tools/testing/selftests/mm/hugepage-mremap.c
-+++ b/tools/testing/selftests/mm/hugepage-mremap.c
-@@ -31,7 +31,7 @@
- #define MB_TO_BYTES(x) (x * 1024 * 1024)
+diff --git a/tools/testing/selftests/mm/uffd-stress.c b/tools/testing/selftests/mm/uffd-stress.c
+index b51c89e1cd1ae4..73af98ef6850cd 100644
+--- a/tools/testing/selftests/mm/uffd-stress.c
++++ b/tools/testing/selftests/mm/uffd-stress.c
+@@ -491,9 +491,8 @@ int main(int argc, char **argv)
  
- #define PROTECTION (PROT_READ | PROT_WRITE | PROT_EXEC)
--#define FLAGS (MAP_SHARED | MAP_ANONYMOUS)
-+#define FLAGS (MAP_HUGETLB | MAP_SHARED)
+ 	gopts->nr_pages_per_cpu = bytes / gopts->page_size / gopts->nr_parallel;
+ 	if (!gopts->nr_pages_per_cpu) {
+-		_err("pages_per_cpu = 0, cannot test (%lu / %lu / %lu)",
+-			bytes, gopts->page_size, gopts->nr_parallel);
+-		usage();
++		ksft_exit_skip("pages_per_cpu = 0, cannot test (%zu / %lu / %lu)\n",
++			       bytes, gopts->page_size, gopts->nr_parallel);
+ 	}
  
- static void check_bytes(char *addr)
- {
-@@ -121,23 +121,20 @@ int main(int argc, char *argv[])
- 
- 	/* mmap to a PUD aligned address to hopefully trigger pmd sharing. */
- 	unsigned long suggested_addr = 0x7eaa40000000;
--	void *haddr = mmap((void *)suggested_addr, length, PROTECTION,
--			   MAP_HUGETLB | MAP_SHARED | MAP_POPULATE, fd, 0);
-+	void *haddr = mmap((void *)suggested_addr, length, PROTECTION, FLAGS, fd, 0);
- 	ksft_print_msg("Map haddr: Returned address is %p\n", haddr);
- 	if (haddr == MAP_FAILED)
- 		ksft_exit_fail_msg("mmap1: %s\n", strerror(errno));
- 
- 	/* mmap again to a dummy address to hopefully trigger pmd sharing. */
- 	suggested_addr = 0x7daa40000000;
--	void *daddr = mmap((void *)suggested_addr, length, PROTECTION,
--			   MAP_HUGETLB | MAP_SHARED | MAP_POPULATE, fd, 0);
-+	void *daddr = mmap((void *)suggested_addr, length, PROTECTION, FLAGS, fd, 0);
- 	ksft_print_msg("Map daddr: Returned address is %p\n", daddr);
- 	if (daddr == MAP_FAILED)
- 		ksft_exit_fail_msg("mmap3: %s\n", strerror(errno));
- 
- 	suggested_addr = 0x7faa40000000;
--	void *vaddr =
--		mmap((void *)suggested_addr, length, PROTECTION, FLAGS, -1, 0);
-+	void *vaddr = mmap((void *)suggested_addr, length, PROTECTION, FLAGS, fd, 0);
- 	ksft_print_msg("Map vaddr: Returned address is %p\n", vaddr);
- 	if (vaddr == MAP_FAILED)
- 		ksft_exit_fail_msg("mmap2: %s\n", strerror(errno));
+ 	bounces = atoi(argv[3]);
 -- 
 2.53.0
 
