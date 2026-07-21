@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783081D7E5C;
-	Tue, 21 Jul 2026 20:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3153318ED6;
+	Tue, 21 Jul 2026 20:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665657; cv=none; b=lcyIBa6067fQDRiYzOkUgNJcajvnPv3CQ7HJo7M+XJUyN2fCwMRItSdAxql1tik+wp8zw0mWzTQbKnT5ZzLuPsjYgBsPxYEbjozv5JA2N8cVlR00HVeaZ5RigmOq/zEFmg1ghfNOzQPsBswOl/ZO0+3UPKpGc63eJct9ahugPP0=
+	t=1784665658; cv=none; b=ldJOyIbcmfPXdsFSazSqMvowjqWNuaB8iueRYpwxX0SU4JfYv0yUpjApygExK4OmOdTCQLTS6CtjoZ3R2J2OB/V7WisyiplD4jaKiKhZaGPAWtteEO+p/NNOVoZwwsMfx1MAzlo1O630i2qYRw1iTvXvgM5rM25bMT0e1p34nDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665657; c=relaxed/simple;
-	bh=ZOx+tlnM+jx7hZOBxU6a3A/A7pa6c+SJdL5HGYZ9Yng=;
+	s=arc-20240116; t=1784665658; c=relaxed/simple;
+	bh=Mi7MJWoZFXpZo4nRP8Y6JaetGAjVA8SivXBiadmSrdY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DEQRws7vrD1yGbv1tGh1EmHOtylfLuXJLRHDvknG5abzHIOhGnvCsUV93IdWMN990hCEDE066M7ES/v5FcVvyzawjZ/caH2dNyrOBqgv7n/3a8Zz4BXRY3xYnWLq+eIXhydDQ0BOZ/WLPxZQ4AS0YKeUowg3fk7DqV2lT2GmjN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8kQ9QcH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ptp4ShpcFfrvg7XMS6S5t9NG0fwsBb+aGmQuUjb3LKuhD5HrpFlkSAf2dKayj3OTzO7zoSdalo4dmsNOeFQlzBZ6yju52OGOG0ufMuWt7sAEmVX+smidga9nRgMiSPqWMNI5b2DpqeXibOZiEidTJi4KssX1PIWFCqlI0uXmDAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jT+0DXgY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8kQ9QcH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922901F000E9;
-	Tue, 21 Jul 2026 20:27:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jT+0DXgY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A431F000E9;
+	Tue, 21 Jul 2026 20:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665655;
-	bh=cGFT/MgzHBL/ZSu2LYbpFAn0bVBAPVPlyBIzWR63/+4=;
+	s=korg; t=1784665657;
+	bh=8+XkA1QW+cQEPUcUPOOnvFDG1hhkX9R5aC5xVtuJRFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z8kQ9QcH4JJ6pe3GzlM/5qUlLED3zIdxBMQ7vk72RHgS/Fo5mBTIXXHinRtH1YGpt
-	 LpZ1QsfAVl+h8ughHKHQu9IQQcmVd8uumHuBr8KnL5YhlHLjYA80Pg4yuqCb+DQVoO
-	 ZGONF1BOfXA5+Uq/kh+bXj4TCvMP5V8Ai6bvzeX8=
+	b=jT+0DXgYkHKtB4IcZEyLchcfIsiYrCOmYCKnDHRuCCBJ3zEywJ7V5HtnL/fYx4iL9
+	 RtwhBDKSytPx6foTzlunExfwDpHewuQOpJT3nClaCxF3CaXGsR6KTpzZoxOBqNzpTG
+	 PBR9ehGn797nlwnggWxdrwZBPPYxmBmTq+Rd28I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Lothar Rubusch <l.rubusch@gmail.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0386/1266] vxlan: Fix potential null-ptr-deref in vxlan_gro_prepare_receive().
-Date: Tue, 21 Jul 2026 17:13:43 +0200
-Message-ID: <20260721152450.461466022@linuxfoundation.org>
+Subject: [PATCH 6.6 0387/1266] crypto: atmel-sha204a - fix blocking and non-blocking rng logic
+Date: Tue, 21 Jul 2026 17:13:44 +0200
+Message-ID: <20260721152450.484666672@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,50 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Lothar Rubusch <l.rubusch@gmail.com>
 
-[ Upstream commit 30a45c0bffdd62350261e2f2689fdba426a33578 ]
+[ Upstream commit 319400fc5ee15db5793aa45f854968141326effc ]
 
-udp_tunnel_sock_release() could set sk->sk_user_data to NULL
-while vxlan_gro_prepare_receive() is running.
+The blocking and non-blocking paths were failing to provide valid entropy
+due to improper buffer management. Reading the buffer starting from byte 1,
+only fetch the 32 bytes of random data from the return message.
 
-Let's check if rcu_dereference_sk_user_data() is NULL after
-skb_gro_remcsum_init().
+Tested on an Atmel SHA204A device.
 
-Fixes: 5602c48cf875 ("vxlan: change vxlan to use UDP socket GRO")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260502031401.3557229-7-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Before (here for blocking), tests showed repeatedly reading reduced bytes.
+$ head -c 32 /dev/hwrng | hexdump -C
+00000000  02 28 85 b3 47 40 f2 ee  00 00 00 00 00 00 00 00  |.(..G@..........|
+00000010  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+00000020
+
+After, the result will be similar to the following:
+$ head -c 32 /dev/hwrng | hexdump -C
+00000000  5a fc 3f 13 14 68 fe 06  68 0a bd 04 83 6e 09 69  |Z.?..h..h....n.i|
+00000010  75 ff cf 87 10 84 3b c9  c1 df ae eb 45 53 4c c3  |u.....;.....ESL.|
+00000020
+
+Fixes: da001fb651b0 ("crypto: atmel-i2c - add support for SHA204A random number generator")
+Suggested-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Lothar Rubusch <l.rubusch@gmail.com>
+Tested-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/crypto/atmel-sha204a.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 958d3be4f99086..1a3a00476a9368 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -680,14 +680,18 @@ static struct vxlanhdr *vxlan_gro_prepare_receive(struct sock *sk,
- 						  struct sk_buff *skb,
- 						  struct gro_remcsum *grc)
- {
--	struct sk_buff *p;
- 	struct vxlanhdr *vh, *vh2;
- 	unsigned int hlen, off_vx;
--	struct vxlan_sock *vs = rcu_dereference_sk_user_data(sk);
-+	struct vxlan_sock *vs;
-+	struct sk_buff *p;
- 	__be32 flags;
+diff --git a/drivers/crypto/atmel-sha204a.c b/drivers/crypto/atmel-sha204a.c
+index 2cf5407818f146..68e9e2897e7fd8 100644
+--- a/drivers/crypto/atmel-sha204a.c
++++ b/drivers/crypto/atmel-sha204a.c
+@@ -47,8 +47,8 @@ static int atmel_sha204a_rng_read_nonblocking(struct hwrng *rng, void *data,
  
- 	skb_gro_remcsum_init(grc);
+ 	if (rng->priv) {
+ 		work_data = (struct atmel_i2c_work_data *)rng->priv;
+-		max = min(sizeof(work_data->cmd.data), max);
+-		memcpy(data, &work_data->cmd.data, max);
++		max = min(RANDOM_RSP_SIZE - CMD_OVERHEAD_SIZE, max);
++		memcpy(data, &work_data->cmd.data[RSP_DATA_IDX], max);
+ 		rng->priv = 0;
+ 	} else {
+ 		work_data = kmalloc(sizeof(*work_data), GFP_ATOMIC);
+@@ -86,8 +86,8 @@ static int atmel_sha204a_rng_read(struct hwrng *rng, void *data, size_t max,
+ 	if (ret)
+ 		return ret;
  
-+	vs = rcu_dereference_sk_user_data(sk);
-+	if (!vs)
-+		return NULL;
-+
- 	off_vx = skb_gro_offset(skb);
- 	hlen = off_vx + sizeof(*vh);
- 	vh = skb_gro_header(skb, hlen, off_vx);
+-	max = min(sizeof(cmd.data), max);
+-	memcpy(data, cmd.data, max);
++	max = min(RANDOM_RSP_SIZE - CMD_OVERHEAD_SIZE, max);
++	memcpy(data, &cmd.data[RSP_DATA_IDX], max);
+ 
+ 	return max;
+ }
 -- 
 2.53.0
 
