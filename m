@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17B846EF6B;
-	Tue, 21 Jul 2026 19:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427D0403E8A;
+	Tue, 21 Jul 2026 19:15:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661344; cv=none; b=Vi1ECM6zDRDIZ13XBS707Z2zJ060xcffvqrN8q6rhPLI+3sHoKkjVMjxpcjNGcmfdX1DGNCnK4MPObCTkisxuQt/9yllQ04GGAZsXDaA2lS1edGQ6+Y+BoxGhxl2JQcQWXweIvUB+Yy0h2mzzTmGoMiz6I/20stMHCNEnInjZ/s=
+	t=1784661347; cv=none; b=HRuNngKHt4jQCSQvJZx3I47B8ixmRlFZv2LvrengU06wBWvSR4brbU6T1nSBIrn8gR6AllsqWA1uQTO6rHZkhcb20sy+l82it7ZBt/LVVdnYnlTPFCVEKMoTLBc9gpsTn7h+wyjZ5+MlHrGRfyFHuILFQG6LWqWAMpdsyyrBIj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661344; c=relaxed/simple;
-	bh=k7NxUikLLhX15ZJI6rs1L6Wvr4OQHShyuMY76JKlZag=;
+	s=arc-20240116; t=1784661347; c=relaxed/simple;
+	bh=hnZK2iuSOk9MugilstPD70W3iIgM2Rw0z4qsYaENAjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=exF7XHUopPed4qUDEsHN5Ee/HbcmGNih9NyS6HdoX2vH98GqrcPgsKsGpSaBtnd+vPKD7r6WlmM08jPL1D+xMIj2Xhetj/PGNC+ud2Y7Z5X1ghAPfEE+IIoxhT1wZb+4m0a4GNJs1NQ1iL8BXmf5UvJ9qudJJWWn+Aw5SZNP5Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JsP8Xrby; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BqdPwd/opqfY35s5nJnJwB/yQRgD4nsI0yg6QtBIS3RpnsgNufsvBH+gGOggUpDKp1/5SsAYxIGRiPA3HfX56sMHNfUgWK9k5jyRTkUD0PNa3zasUUxD3nU/zDSgBeGSKkfz5643IyeK2ParnunNzfk3aUTdHmjeCB67au9qe3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOcEoZI2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JsP8Xrby"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA981F000E9;
-	Tue, 21 Jul 2026 19:15:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOcEoZI2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F6B1F000E9;
+	Tue, 21 Jul 2026 19:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661343;
-	bh=DjHJ+4gqYxBwB+sA3CzukBXcvYV4vfFT6QE1Wuqq8VE=;
+	s=korg; t=1784661346;
+	bh=LJWjMwXqEnnMEeGeACGO0CXVC/TaAU4aLak7RHHMVQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JsP8XrbyQd58vYxLcLqLKGI5LmzDMohHdgJ6UXWF/KKMnJYkxIHO1vGpdA1d8a5et
-	 oTZt2XrsW9zmj3zSapU7NEB3g/wkRs3rJyzo3P9NACn0m+tUzHE+/rCFWpTddLaYM6
-	 rujh3Css8m7kuc3hyHfLClxMYmo4kd+TAixxRmL8=
+	b=bOcEoZI2eB01gmwTfDQ9M1kvKuBXX7guyzhES+hXhUxzoNwsORTntV+9TRd6WRaXx
+	 P997MQ0TL/Adi+FVV+SJQhQZPYEbqnOQjzJHWDA0J5RKDuaLi0NtNtc87kq+ySScKE
+	 UvGMdG/yNycfciQZByESZQ08fSjlFmSYaIYwKZT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kuniyuki Iwashima <kuniyu@google.com>,
-	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Heiko Stuebner <heiko.stuebner@cherry.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0031/1276] af_unix: Dont hold unix_state_lock() in __unix_dgram_recvmsg().
-Date: Tue, 21 Jul 2026 17:07:54 +0200
-Message-ID: <20260721152446.779261259@linuxfoundation.org>
+Subject: [PATCH 6.12 0032/1276] af_unix: Dont check SOCK_DEAD in unix_stream_read_skb().
+Date: Tue, 21 Jul 2026 17:07:55 +0200
+Message-ID: <20260721152446.802492826@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -55,47 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit b429a5ad19cb4efe63d18388a2a4deebcba742c6 ]
+[ Upstream commit 772f01049c4b722b28b3f7025b4996379f127ebf ]
 
-When __skb_try_recv_datagram() returns NULL in __unix_dgram_recvmsg(),
-we hold unix_state_lock() unconditionally.
+unix_stream_read_skb() checks SOCK_DEAD only when the dequeued skb is
+OOB skb.
 
-This is because SOCK_SEQPACKET sk needs to return EOF in case its peer
-has been close()d concurrently.
+unix_stream_read_skb() is called for a SOCK_STREAM socket in SOCKMAP
+when data is sent to it.
 
-This behaviour totally depends on the timing of the peer's close() and
-reading sk->sk_shutdown, and taking the lock does not play a role.
+The function is invoked via sk_psock_verdict_data_ready(), which is
+set to sk->sk_data_ready().
 
-Let's drop the lock from __unix_dgram_recvmsg() and use READ_ONCE().
+During sendmsg(), we check if the receiver has SOCK_DEAD, so there
+is no point in checking it again later in ->read_skb().
+
+Also, unix_read_skb() for SOCK_DGRAM does not have the test either.
+
+Let's remove the SOCK_DEAD test in unix_stream_read_skb().
 
 Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250702223606.1054680-2-kuniyu@google.com
+Link: https://patch.msgid.link/20250702223606.1054680-3-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Heiko Stuebner <heiko.stuebner@cherry.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/unix/af_unix.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
 diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index c64d8ee0ede435..f50049ea54a5a4 100644
+index f50049ea54a5a4..a18a4b0229707f 100644
 --- a/net/unix/af_unix.c
 +++ b/net/unix/af_unix.c
-@@ -2463,12 +2463,10 @@ int __unix_dgram_recvmsg(struct sock *sk, struct msghdr *msg, size_t size,
- 					      &err, &timeo, last));
+@@ -2737,14 +2737,6 @@ static int unix_stream_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
+ 	if (unlikely(skb == READ_ONCE(u->oob_skb))) {
+ 		bool drop = false;
  
- 	if (!skb) { /* implies iolock unlocked */
 -		unix_state_lock(sk);
- 		/* Signal EOF on disconnected non-blocking SEQPACKET socket. */
- 		if (sk->sk_type == SOCK_SEQPACKET && err == -EAGAIN &&
--		    (sk->sk_shutdown & RCV_SHUTDOWN))
-+		    (READ_ONCE(sk->sk_shutdown) & RCV_SHUTDOWN))
- 			err = 0;
--		unix_state_unlock(sk);
- 		goto out;
- 	}
+-
+-		if (sock_flag(sk, SOCK_DEAD)) {
+-			unix_state_unlock(sk);
+-			kfree_skb_reason(skb, SKB_DROP_REASON_SOCKET_CLOSE);
+-			return -ECONNRESET;
+-		}
+-
+ 		spin_lock(&sk->sk_receive_queue.lock);
+ 		if (likely(skb == u->oob_skb)) {
+ 			WRITE_ONCE(u->oob_skb, NULL);
+@@ -2752,8 +2744,6 @@ static int unix_stream_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
+ 		}
+ 		spin_unlock(&sk->sk_receive_queue.lock);
  
+-		unix_state_unlock(sk);
+-
+ 		if (drop) {
+ 			kfree_skb_reason(skb, SKB_DROP_REASON_UNIX_SKIP_OOB);
+ 			return -EAGAIN;
 -- 
 2.53.0
 
