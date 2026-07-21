@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6559846AA67;
-	Tue, 21 Jul 2026 15:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240E746AA67;
+	Tue, 21 Jul 2026 15:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648138; cv=none; b=rf4ONXIGG2bK/dvbQzCgTJfkricExfnnLDomqSTjTb+sPgkddmE6h2r5w0cgud3Vi5iqjSlXBKGvT6NcaMq5kar3BRXEEu0RRMNV7EfoFYpEbmYCpMHyNaHK4OSoAHwfprkfPoHNH8f4najSMOMd1icUg0q9CHg0U2V0B/ez9Bs=
+	t=1784648141; cv=none; b=nlB5fxnDlXD5Ndc8aEm71nV5ehrfmI0p5dBGhBIqZTCY1s6WWLg3y0o71H89Li4M/wIFxKJ4vHmv5sHiR/bKTjEv8gFdCh1BJJ/zm/APAocr58adaBwknmhvNigvalPJVRJ3puTfBTnz3pzjAc9FrBLXL9bZ8W+O5Aby5w3V0tI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648138; c=relaxed/simple;
-	bh=1bta/gukVvGZSIr40vGaTo6iOLpJUilrQ7I1Sw2wFC8=;
+	s=arc-20240116; t=1784648141; c=relaxed/simple;
+	bh=+HVTvLgV3OQTggdb8yzP5gT5cNONneDsWwHNfKRc4Ew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CKw2IeEwPCkT/if9ryjpltOb1YUk0BqviLrkXEi9nsRfwcdoWqNTUVv1O6rervPEBbrhiQ21KFMSqUwyntCKfQY+BSwYex49ewzbxhjtLqNEhA9zvTCZdPF7DzSmJKHt0VZ7B0DW4jO2oR+D+hD/KUzKsF2LWAvpo8vQrdB+eK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ri+mtbcT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mCtJtAVNLwReFsu41hzEgEzpJ9C54cYRHPNrIK37fmgLSLSZzgDJXrlgam8c1eyJ2PC8ba83WmU8qLNcffhiA/3c8c4lGwd9Z8Wm+cSA1j7kExBTMT5F8wF+btt8sP5xR8W8EkSRI6N3c+P2BUoLoMha5D1ykLpkW3RHqmmQnVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jG3TGTCv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ri+mtbcT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA871F000E9;
-	Tue, 21 Jul 2026 15:35:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jG3TGTCv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841F81F000E9;
+	Tue, 21 Jul 2026 15:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648137;
-	bh=nAxK9K82Bio6j4JfI3L7O4tuhmavb21JoIwWYJZM4Rk=;
+	s=korg; t=1784648140;
+	bh=z4vWf5SVf5BXXRQJumhYW3JCJAMa4vmLnprG/0EptGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ri+mtbcTt9md2Ujy06uSZ1ItoNxSDQB+v3vWWo9Q6hk8lucjnhknuhOKWG4el/ufd
-	 7nZd0wecq7AH0jnt9luYOdNM9drP0Cd6j3GbeGoXWmTemRM6/KLfQG5tIWhGuJ5V90
-	 i0350el+/moN/STUrDjsQuzpa9nA+JCel4VZafzw=
+	b=jG3TGTCvpDH2FLfIln0q9sFiftPy5+ia5G+j9P9cKYfIBvhdIXbKRUS2OoSUJGQqG
+	 fKaWt6XMUWKHKkYlub5lcgoycL/h033MEFZA+SSO5uV5unSbZ0zhxk/7Kh9Z9flNGn
+	 c8GLHpExG5XILIuaZSgiVW7WbBsK6WyGnSSvu5gw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Stafford Horne <shorne@gmail.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0042/2077] openrisc: mm: Fix section mismatch between map_page and __set_fixmap
-Date: Tue, 21 Jul 2026 16:55:15 +0200
-Message-ID: <20260721152553.680549274@linuxfoundation.org>
+Subject: [PATCH 7.1 0043/2077] clocksource/drivers/sun5i: Handle error returns from devm_reset_control_get_optional_exclusive()
+Date: Tue, 21 Jul 2026 16:55:16 +0200
+Message-ID: <20260721152553.702802943@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,45 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stafford Horne <shorne@gmail.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 431400d49cac4bac944fc2d989921003314667ae ]
+[ Upstream commit fed9f727cc3f91dde8278961269419083502b40e ]
 
-This warning was reported by the kernel test robot:
+The devm_reset_control_get_optional_exclusive() function may return an
+ERR_PTR in case of genuine reset control acquisition errors, not just
+NULL which indicates the legitimate absence of an optional reset.
 
-  WARNING: modpost: vmlinux: section mismatch in reference: __set_fixmap+0x84 (section: .text.unlikely) -> map_page.isra.0 (section: .init.text)
+Add an IS_ERR() check after the call in sun5i_timer_probe(). On error,
+return the error code to ensure proper failure handling rather than
+proceeding with invalid pointers.
 
-With commit 4735037b5d9b ("openrisc: Add text patching API support") the
-__set_fixmap function was moved out of the .init.text section.
-However, the map_page helper that it uses was not moved.  This was not
-noticed on gcc 15.1.0 where map_page gets inlined unlike lkp@intel.com
-which uses gcc 10.5.0.
-
-Fix this by also moving the map_page helper function out of the init
-section.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202603211503.E8mMETO3-lkp@intel.com/
-Fixes: 4735037b5d9b ("openrisc: Add text patching API support")
-Signed-off-by: Stafford Horne <shorne@gmail.com>
+Fixes: 7e5bac610d2f ("clocksource/drivers/sun5i: Convert to platform device driver")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Acked-by: Chen-Yu Tsai <wens@kernel.org>
+Link: https://patch.msgid.link/20260205084037.3661261-1-nichen@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/openrisc/mm/init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clocksource/timer-sun5i.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/openrisc/mm/init.c b/arch/openrisc/mm/init.c
-index 89d8c6df885511..db7c844faeeb62 100644
---- a/arch/openrisc/mm/init.c
-+++ b/arch/openrisc/mm/init.c
-@@ -193,7 +193,7 @@ void __init mem_init(void)
- 	return;
- }
+diff --git a/drivers/clocksource/timer-sun5i.c b/drivers/clocksource/timer-sun5i.c
+index f827d3f98f60e6..d7e012992170b7 100644
+--- a/drivers/clocksource/timer-sun5i.c
++++ b/drivers/clocksource/timer-sun5i.c
+@@ -286,6 +286,9 @@ static int sun5i_timer_probe(struct platform_device *pdev)
+ 	}
  
--static int __init map_page(unsigned long va, phys_addr_t pa, pgprot_t prot)
-+static int map_page(unsigned long va, phys_addr_t pa, pgprot_t prot)
- {
- 	p4d_t *p4d;
- 	pud_t *pud;
+ 	rstc = devm_reset_control_get_optional_exclusive(dev, NULL);
++	if (IS_ERR(rstc))
++		return dev_err_probe(dev, PTR_ERR(rstc),
++				     "failed to get reset\n");
+ 	if (rstc)
+ 		reset_control_deassert(rstc);
+ 
 -- 
 2.53.0
 
