@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBD546EF95;
-	Tue, 21 Jul 2026 19:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FDF4470452;
+	Tue, 21 Jul 2026 19:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660574; cv=none; b=FebJVPxB1058gD9kCjmcc3mQtoT/J8KedSM8SjayHIcJIMS/dEWM4EZUB8gXmvLqxpN0JodbJqnoYwwB4Tz6Aoo7Rw5pCc4YsH7xTQrYBHL9H2eb67wlh/KR1VWfrxgIRFNf5HGhdmTzmhhU2EAnbvsy2ivXnRMdcA10lvu9dZs=
+	t=1784660576; cv=none; b=Yysf0fHiqCeCSnE74z6s51XIecwhTB6YKYCg+sNDsg2sMzAQpSIanID4wsM0SBo2rtpDW+15oSTuHbXDcod72U21cS75NEkRhtcd4mCkUZwwuuSrvy9WRwO/xvzJxSIeZkKB55VJ+lvoHSo30Xjhgu3BFAuHDYQWcG0Gzz1YdyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660574; c=relaxed/simple;
-	bh=N6K+pp8NZOmlTM4I0TeetUIumk7p3j+MlcDJz1p9N0Q=;
+	s=arc-20240116; t=1784660576; c=relaxed/simple;
+	bh=b4u7UU/v8TG5G5EBMyQV+RSZB440RBSYNezziozVy/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HE1a9a03bnzANWOt9FG6PffUmwFHdvYIQQcPwJERZX/pbUNeZktZ7JxbzpjzdcqoVY6HcS9xLs7Mw1VFAl+tRRBRtmnkwNAdrm/wc/Xne+zS122ZNiEyBm4sF50Zo+y2PwxeZQUNqCOtvJmWdPCuokFqSGitmVqU8S95ngeWhS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WDZsQqUd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pd34I1GuzRrjyxWMpeNdcLadpmOSuDq4jfgs5EWx4njEcXInp2olJTuaKNvc76Ip6cgrDLp1EjifVDSdlCNoUDchF/etaQMq9iuILTmJB/8bnLQ1LArBs3PSFvNa1/Futp8OP71lVud/wYVvxNwQlYVOMYixBup9786nvE7x17I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jr5Ur+4e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDZsQqUd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF901F00A3A;
-	Tue, 21 Jul 2026 19:02:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jr5Ur+4e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C4B71F00ACF;
+	Tue, 21 Jul 2026 19:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660571;
-	bh=FxFLBI0r+/2Mcu/X+gxmexC33BWW88YGFJQog26kumE=;
+	s=korg; t=1784660573;
+	bh=JIbtW7od5RsQaYuY0LLiSxmJbW79+3s5o/Ai7SK8dmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WDZsQqUdBwWOo73ZB1vUI/QpAZCcBRhTopizO2Xy/K1pnFolcyWdaE61rg7W3QC0m
-	 IMYPIzPKa2P20WvdQPtOFC/Iu8gwsdFvC/kT8UVIcGrUQgoLo3gzBolwoF8BuFD4OM
-	 Dq3fGpOS8Le08AjH2OimN/ujZAhwp/JAdjfRuu8w=
+	b=jr5Ur+4eMZArJC3oXLFjg6Z/iJOG8dWlnPGvpr+iZHxFC+Zgz4+eKn6t4kSVKwslm
+	 zWggZevKyK5bu8MXIaV4E+wjBUN+dT6SVcyytNeCKyahZ8LIuqUe5M+W/PiTpm8jYp
+	 28VSdLnvPjRFdN9AO4dTvn2bt6lOSOjZebhXEWg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Ying <victor.liu@nxp.com>,
-	Felix Gu <ustc.gu@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Shuvam Pandey <shuvampandey1@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1030/2077] phy: freescale: phy-fsl-imx8qm-lvds-phy: Fix missing pm_runtime_disable() on probe error path
-Date: Tue, 21 Jul 2026 17:11:43 +0200
-Message-ID: <20260721152617.111907343@linuxfoundation.org>
+Subject: [PATCH 7.1 1031/2077] PCI: dwc: Avoid dwc_pcie_rasdes_debugfs_deinit() NULL dereference when no RAS DES capability
+Date: Tue, 21 Jul 2026 17:11:44 +0200
+Message-ID: <20260721152617.133892039@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,94 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Shuvam Pandey <shuvampandey1@gmail.com>
 
-[ Upstream commit 799e7cf2f0b50b34660b5ffce0f7d8dec376a0d5 ]
+[ Upstream commit 26b67fa10ef84ea667942491b50e6261a45f098d ]
 
-If mixel_lvds_phy_reset() fails in probe after pm_runtime_enable(),
-the function returns directly without calling pm_runtime_disable(),
-leaving runtime PM permanently enabled for the device.
+dwc_pcie_rasdes_debugfs_init() returns success when the controller has no
+RAS DES capability, leaving pci->debugfs->rasdes_info unset. The common
+debugfs teardown path still calls dwc_pcie_rasdes_debugfs_deinit(), which
+dereferences rasdes_info unconditionally.
 
-Fix this by using devm_pm_runtime_enable() so that cleanup is
-automatic on any probe failure or driver unbind. This also allows
-removing the manual err label and the .remove callback.
+Return early when no RAS DES state was allocated. In that case no RAS DES
+mutex was initialized, so there is nothing to destroy.
 
-Fixes: 06ff622d61d2 ("phy: freescale: Add i.MX8qm Mixel LVDS PHY support")
-Acked-by: Liu Ying <victor.liu@nxp.com>
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260605-lvds-v2-1-3ce7539d1104@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 4fbfa17f9a07 ("PCI: dwc: Add debugfs based Silicon Debug support for DWC")
+Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
+[mani: reworded subject]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/0f97352506d8d813f70f441de4d63fcd5b7d1c3e.1779123847.git.shuvampandey1@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../phy/freescale/phy-fsl-imx8qm-lvds-phy.c   | 24 ++++++-------------
- 1 file changed, 7 insertions(+), 17 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware-debugfs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/phy/freescale/phy-fsl-imx8qm-lvds-phy.c b/drivers/phy/freescale/phy-fsl-imx8qm-lvds-phy.c
-index e2a1645000ae55..368679436d8627 100644
---- a/drivers/phy/freescale/phy-fsl-imx8qm-lvds-phy.c
-+++ b/drivers/phy/freescale/phy-fsl-imx8qm-lvds-phy.c
-@@ -345,7 +345,9 @@ static int mixel_lvds_phy_probe(struct platform_device *pdev)
+diff --git a/drivers/pci/controller/dwc/pcie-designware-debugfs.c b/drivers/pci/controller/dwc/pcie-designware-debugfs.c
+index 4bfc1748f2d737..449c67e7930d3f 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-debugfs.c
++++ b/drivers/pci/controller/dwc/pcie-designware-debugfs.c
+@@ -558,6 +558,9 @@ static void dwc_pcie_rasdes_debugfs_deinit(struct dw_pcie *pci)
+ {
+ 	struct dwc_pcie_rasdes_info *rinfo = pci->debugfs->rasdes_info;
  
- 	dev_set_drvdata(dev, priv);
- 
--	pm_runtime_enable(dev);
-+	ret = devm_pm_runtime_enable(dev);
-+	if (ret)
-+		return ret;
- 
- 	ret = mixel_lvds_phy_reset(dev);
- 	if (ret) {
-@@ -355,17 +357,15 @@ static int mixel_lvds_phy_probe(struct platform_device *pdev)
- 
- 	for (i = 0; i < PHY_NUM; i++) {
- 		lvds_phy = devm_kzalloc(dev, sizeof(*lvds_phy), GFP_KERNEL);
--		if (!lvds_phy) {
--			ret = -ENOMEM;
--			goto err;
--		}
-+		if (!lvds_phy)
-+			return -ENOMEM;
- 
- 		phy = devm_phy_create(dev, NULL, &mixel_lvds_phy_ops);
- 		if (IS_ERR(phy)) {
- 			ret = PTR_ERR(phy);
- 			dev_err(dev, "failed to create PHY for channel%d: %d\n",
- 				i, ret);
--			goto err;
-+			return ret;
- 		}
- 
- 		lvds_phy->phy = phy;
-@@ -379,19 +379,10 @@ static int mixel_lvds_phy_probe(struct platform_device *pdev)
- 	if (IS_ERR(phy_provider)) {
- 		ret = PTR_ERR(phy_provider);
- 		dev_err(dev, "failed to register PHY provider: %d\n", ret);
--		goto err;
-+		return ret;
- 	}
- 
- 	return 0;
--err:
--	pm_runtime_disable(dev);
--
--	return ret;
--}
--
--static void mixel_lvds_phy_remove(struct platform_device *pdev)
--{
--	pm_runtime_disable(&pdev->dev);
++	if (!rinfo)
++		return;
++
+ 	mutex_destroy(&rinfo->reg_event_lock);
  }
  
- static int __maybe_unused mixel_lvds_phy_runtime_suspend(struct device *dev)
-@@ -432,7 +423,6 @@ MODULE_DEVICE_TABLE(of, mixel_lvds_phy_of_match);
- 
- static struct platform_driver mixel_lvds_phy_driver = {
- 	.probe = mixel_lvds_phy_probe,
--	.remove = mixel_lvds_phy_remove,
- 	.driver = {
- 		.pm = &mixel_lvds_phy_pm_ops,
- 		.name = "mixel-lvds-phy",
 -- 
 2.53.0
 
