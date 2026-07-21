@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE37C3D1CCA;
-	Tue, 21 Jul 2026 17:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104DA3D3337;
+	Tue, 21 Jul 2026 17:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653439; cv=none; b=H+Yp95u5EKVVFwkG/Sn78hjmtlwkj/C3F6J3cBVE+/B0MXMtJw9tIKmtQIusfh+9pfyzLI/ZrcsIJk3qtHZxs4yQE22v4sfRIivNuq7nCugl+WgPIIyt4u8ZHC/IVjaeMgh37z0b5GtXTwfylJaVOcJkmCDJl6ltuVA8vYwznPE=
+	t=1784653442; cv=none; b=Zx/JhkJXYf44y8nI8Bnd75DvqRzv1WfzdnJe7ttZREnIKmW2w/0Jx9fFfQLYiFQ56DyFQ8Ikcmx0YYTO2V5HAcotooeEhHlckywKL95f7tK2uc8ZoEtKCW2pxkQkb30ipMDPb9soRW+lgBRNwDckVE5ixIR8jXHRz5gZNEciRMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653439; c=relaxed/simple;
-	bh=/UjWbjUyzGWNgUQlb3RkbP9UB5JtybXb0QPjBHUdK9M=;
+	s=arc-20240116; t=1784653442; c=relaxed/simple;
+	bh=ZzPrjRcbvzVJ2/gE/kmaAtyWI+ML/F9fh8zFaDv7mlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ioTOhke+A9ShswZaNTJPOJzC23eZ0aU6YQZYmF3oTYkM/kVEla2rQt5wI75ihVp9YHbb3pZ/JETW0tYMxDM1l7SwdiRa/xvnDFg4t6TieUklZ5qefvkffeMFvEFGdJPefJ/cgPMUMHkiniCL2hkzE1WeVP9GgrtZrUEPPY7SM/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iqa8iU0x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ot1YwiGg0gFTPR3ingnRI0YtXN7sC+wCUAwsyyLQqVGFsDim4jc/Yp9DsmU5JCN8b2jnFKfCgmb45tNu0iw+arnwxCjDEA/3qR4Nljpm+JRxYCsxcq5h7EHFNY7FL/xNDGhdmCLfXsOKx9jo2W+fQKjQQQpBdA0wuvYdTAYvvpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ine/2LpK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iqa8iU0x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBB121F000E9;
-	Tue, 21 Jul 2026 17:03:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ine/2LpK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5051F000E9;
+	Tue, 21 Jul 2026 17:04:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653438;
-	bh=0/PUdLSfVebKJLdSMfrnh0nDKs3kbVGrTLfO6Sr75Es=;
+	s=korg; t=1784653441;
+	bh=Jr80BJ9Q/P7vzuj+RTmyrR5bCEX8k+qZ2eGnQPb+9N8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iqa8iU0xkVN9qb2w6+qVFRAmVAGlIqitNV0Zq5HKkobkzV/5n7ZbzTh3189IAXpN7
-	 rCFkgmJf8PBGtK5xQWWplD89QfUuv+i5r3PPaCsYWyvJzRnndf1e+NxXE4bbDi47I0
-	 2KkzzTAJTzXnWRnU/Ef/oxi64KWMOrkytcmMg2Ns=
+	b=ine/2LpKPkj41O+/kVGiEkownsax0Fb1ePWRdXvOw8d2J5asg1QKaFcP2atQfx8Nd
+	 HHvbYKZZ8Y7zYEGEx4b5GUUBIAKjCXdrrszz/+hEGcYe+WTv/1Zlg0m2GWMVYhfmbe
+	 aBXR/83g6lovAwMSbMiGc8+jHxs24yngdXOKjkBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Billy Tsai <billy_tsai@aspeedtech.com>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1326/2077] hwmon: (pmbus) Fix passing events to regulator core
-Date: Tue, 21 Jul 2026 17:16:39 +0200
-Message-ID: <20260721152624.091560815@linuxfoundation.org>
+Subject: [PATCH 7.1 1327/2077] hwmon: (aspeed-g6-pwm-tach) Guard fan RPM calculation against divide-by-zero
+Date: Tue, 21 Jul 2026 17:16:40 +0200
+Message-ID: <20260721152624.115471070@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,64 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 9ef7dacd44216bf5ea05c8aef49eba4d145f4047 ]
+[ Upstream commit fe87b8dc67f1b2c64e76a66e78468c533d3c44ca ]
 
 Sashiko reports:
 
-Commit 754bd2b4a084 ("hwmon: (pmbus/core) Protect regulator operations with
-mutex") introduced a worker to batch regulator events over time using
-atomic_or(). The delayed worker then passes the combined bitmask unmodified
-to regulator_notifier_call_chain().
+In the aspeed-g6-pwm-tacho driver, the aspeed_tach_val_to_rpm() function
+calculates the fan RPM using the tachometer value. However, it does not
+check if the tachometer value is zero before performing the division.
 
-The core regulator subsystem's regulator_handle_critical() function
-evaluates the event parameter using a strict switch statement. If
-multiple distinct faults occur before the worker runs (e.g.,
-REGULATOR_EVENT_UNDER_VOLTAGE | REGULATOR_EVENT_OVER_CURRENT), the combined
-bitmask fails to match any case. This leaves the reason as NULL and
-completely bypasses the critical hw_protection_trigger().
+If the hardware reports a tachometer value of 0 (which can happen due to
+an extremely fast pulse, a stuck edge, or a hardware glitch), the
+calculated tach_div evaluates to 0. The subsequent call to do_div() with
+tach_div as the divisor triggers a divide-by-zero exception, leading to
+a kernel panic.
 
-Fix the problem by passing events bit by bit to the regulator event
-handler.
+Check the divisor against zero to fix the problem.
 
+Fixes: 7e1449cd15d1 ("hwmon: (aspeed-g6-pwm-tacho): Support for ASPEED g6 PWM/Fan tach")
+Cc: Billy Tsai <billy_tsai@aspeedtech.com>
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 754bd2b4a084 ("hwmon: (pmbus/core) Protect regulator operations with mutex")
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/pmbus_core.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/hwmon/aspeed-g6-pwm-tach.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index 8123a568af40d5..3143b9e0316c46 100644
---- a/drivers/hwmon/pmbus/pmbus_core.c
-+++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -3347,18 +3347,23 @@ static void pmbus_regulator_notify_worker(struct work_struct *work)
- 	int i, j;
+diff --git a/drivers/hwmon/aspeed-g6-pwm-tach.c b/drivers/hwmon/aspeed-g6-pwm-tach.c
+index 4f6e6d440dd405..5d611a8e526908 100644
+--- a/drivers/hwmon/aspeed-g6-pwm-tach.c
++++ b/drivers/hwmon/aspeed-g6-pwm-tach.c
+@@ -293,7 +293,10 @@ static int aspeed_tach_val_to_rpm(struct aspeed_pwm_tach_data *priv, u32 tach_va
+ 		priv->clk_rate, tach_val, tach_div);
  
- 	for (i = 0; i < data->info->pages; i++) {
--		int event;
-+		unsigned int event;
+ 	rpm = (u64)priv->clk_rate * 60;
+-	do_div(rpm, tach_div);
++	if (tach_div)
++		do_div(rpm, tach_div);
++	else
++		rpm = 0;
  
- 		event = atomic_xchg(&data->regulator_events[i], 0);
- 		if (!event)
- 			continue;
- 
- 		for (j = 0; j < data->info->num_regulators; j++) {
--			if (i == rdev_get_id(data->rdevs[j])) {
-+			if (i != rdev_get_id(data->rdevs[j]))
-+				continue;
-+			while (event) {
-+				unsigned int _event = BIT(__ffs(event));
-+
- 				regulator_notifier_call_chain(data->rdevs[j],
--							      event, NULL);
--				break;
-+							      _event, NULL);
-+				event &= ~_event;
- 			}
-+			break;
- 		}
- 	}
+ 	return (int)rpm;
  }
 -- 
 2.53.0
