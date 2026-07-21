@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D243846EC61;
-	Tue, 21 Jul 2026 18:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33625471265;
+	Tue, 21 Jul 2026 18:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658931; cv=none; b=pL1ZfhSVGezYVu9p242ic+dj/B5cH9Pio5DN8xP9ddQuvnmhmDaF/U6MY3kYJph5i11O/BqTwGmOc6n+ApNYVi/toK4+5M7Msau/O1vBS9nupvq+hqjfEWM/3zUABJWvK7DrW6PnG5EVUpGkLVWX1QnF0vWs89JOegEealWE9kI=
+	t=1784658933; cv=none; b=s/ABpCrmIa/b6v+/bbrU13WZT7ESeZxqja2VEUQX4ZRwlIayiq7XlpQ2iFLatxJ5MoOIdsLOFfEjxeR7fRwhbXujDSoElsfPVBlQ6erZvvbebRTAYZayJdaUgCKCjX5YnEWRjkUy8yxUHPgYvDVMCwprLHILvG8wWqhKQUFpaf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658931; c=relaxed/simple;
-	bh=7TVz3Zt5nZn/vOatxxmQEUy3ktz5Auu1rgMdFE7dDXE=;
+	s=arc-20240116; t=1784658933; c=relaxed/simple;
+	bh=HlvpLNR69+kDh13OWsECuYH58Xl5tSs7JVJZcK2os5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JjDVytyMAf/4N+CWtuL946tNnM9LnUF4zQo3QOEx4pl3zFguV+ykxpsd+4IVjbSKvGU38lovXXJxZTzimkwnKWubP+tS6DcWq6PP7/zwkmsj8a7YtX4ERNMtQfWDda1Hl/IhzRX6OK8BG62dxse7bVUXOL6WKcEqO+OhU4SJyKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evqIRAGK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jd+9Tj2CXS/MiZ7lSD9N1xUBhrS5jtL+3yXY/fvdRBQBOtS+fEchWOiuNze3wYPYJ0mjnkJP7QvJ3x4x1h9ughEfPNamHBo9TyHk5lQkwEzioYgJFp9N/VJMl9aAzq9CafuecMVZh4W33M6OOKx5GL2rPSOEY6yLEpyN2us6ybE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3bhH8hC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evqIRAGK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4379F1F00A3D;
-	Tue, 21 Jul 2026 18:35:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3bhH8hC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999141F000E9;
+	Tue, 21 Jul 2026 18:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658930;
-	bh=1jjuVhZJgqEYR2GIAQRcNsmOLFWUoMuoB7XX02w025M=;
+	s=korg; t=1784658928;
+	bh=2scLtOK/eUvBEC2Juvejz3M3ZeU/2THATM21ym0MOdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=evqIRAGKetj0QVTwogNP/cFTF+BU9wCN07+8R8Ck9/QNvYNfgIpkWod/aVPtcuXCf
-	 nTKdzZeTC3/Hxn8NR4kq2KmcMbfVpQ9GhX8cn3ug3j2eRvIoNfCOSHEKPO190UZjYf
-	 Vo6viDXJ75wiU8T0zRrzw4WJM6KBTfGhpUSdCH7A=
+	b=I3bhH8hC2qedh01yGzG0Ue+VuouG0Hq6zgaNnZqrMY8HBGjOLTYP5JrWzDK2XjIV2
+	 SFuoY2YySWwZfQ0pXVO+/K8tPlCBYoB3buAxia2AO3d9wDSq7TiG4a3G2zg4M74Plz
+	 48n1q/OItgsVCJA5l9elNS3rQu88J+vo7Cn9bY+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.18 1329/1611] nvmet: fix refcount leak in nvmet_sq_create()
-Date: Tue, 21 Jul 2026 17:24:05 +0200
-Message-ID: <20260721152545.345806913@linuxfoundation.org>
+	Keith Busch <kbusch@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>
+Subject: [PATCH 6.18 1328/1611] nvmet-rdma: handle inline data with a nonzero offset
+Date: Tue, 21 Jul 2026 17:24:04 +0200
+Message-ID: <20260721152545.323516127@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,38 +50,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 34b9a83c50660148bde01cde16451dbe78369749 upstream.
+commit 48c0162f647bb47e6084ffbc71b8f213f5e2f4f8 upstream.
 
-In nvmet_sq_create(), a reference on the ctrl is taken
-via kref_get_unless_zero() before calling nvmet_check_sqid().
-If nvmet_check_sqid() fails, the function returns the error
-directly without releasing the reference, leading to a leak.
+nvmet_rdma_use_inline_sg() maps the host-controlled inline data offset
+into the per-command inline scatterlist.  The bounds check admits any
+offset with off + len <= inline_data_size, but the mapping still assumes
+the data begins in the first inline page:
 
-Fix this by jumping to the "ctrl_put" label, which already
-performs the necessary nvmet_ctrl_put(ctrl). This ensures the
-reference is properly released on this error path.
+	sg->offset = off;
+	sg->length = min_t(int, len, PAGE_SIZE - off);
 
+When a port is configured with inline_data_size > PAGE_SIZE (settable up
+to max(SZ_16K, PAGE_SIZE)), an offset in (PAGE_SIZE, inline_data_size]
+makes "PAGE_SIZE - off" underflow, so sg->length is set to ~4 GiB and
+the block backend reads far past the first inline page.  num_pages(len)
+also ignores the offset, so an in-bounds offset whose [off, off+len)
+span crosses a page boundary under-counts the scatterlist.
+
+Map the offset properly: split it into a page index and an in-page
+offset, start the scatterlist at that page, and size the page count from
+page_off + len.  Because the request scatterlist may now start at
+inline_sg[page_idx] rather than inline_sg[0], generalize the inline-SGL
+identity test in nvmet_rdma_release_rsp() to a range test; otherwise the
+persistent inline scatterlist is mistaken for an allocated one and
+nvmet_req_free_sgls() frees an inline page (and warns in
+free_large_kmalloc()).
+
+Fixes: 0d5ee2b2ab4f ("nvmet-rdma: support max(16KB, PAGE_SIZE) inline data")
 Cc: stable@vger.kernel.org
-Fixes: 1eb380caf527 ("nvmet: Introduce nvmet_sq_create() and nvmet_cq_create()")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Suggested-by: Keith Busch <kbusch@kernel.org>
+Reported-by: Bryam Vargas <hexlabsecurity@proton.me>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/target/rdma.c |   18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -935,7 +935,7 @@ u16 nvmet_sq_create(struct nvmet_ctrl *c
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -667,7 +667,8 @@ static void nvmet_rdma_release_rsp(struc
+ 	if (rsp->n_rdma)
+ 		nvmet_rdma_rw_ctx_destroy(rsp);
  
- 	status = nvmet_check_sqid(ctrl, sqid, true);
- 	if (status != NVME_SC_SUCCESS)
--		return status;
-+		goto ctrl_put;
+-	if (rsp->req.sg != rsp->cmd->inline_sg)
++	if (rsp->req.sg < rsp->cmd->inline_sg ||
++	    rsp->req.sg >= rsp->cmd->inline_sg + queue->dev->inline_page_count)
+ 		nvmet_req_free_sgls(&rsp->req);
  
- 	ret = nvmet_sq_init(sq, cq);
- 	if (ret) {
+ 	if (unlikely(!list_empty_careful(&queue->rsp_wr_wait_list)))
+@@ -822,24 +823,25 @@ static void nvmet_rdma_write_data_done(s
+ static void nvmet_rdma_use_inline_sg(struct nvmet_rdma_rsp *rsp, u32 len,
+ 		u64 off)
+ {
+-	int sg_count = num_pages(len);
++	u64 page_off = off % PAGE_SIZE;
++	u64 page_idx = off / PAGE_SIZE;
++	int sg_count = num_pages(page_off + len);
+ 	struct scatterlist *sg;
+ 	int i;
+ 
+-	sg = rsp->cmd->inline_sg;
++	sg = &rsp->cmd->inline_sg[page_idx];
+ 	for (i = 0; i < sg_count; i++, sg++) {
+ 		if (i < sg_count - 1)
+ 			sg_unmark_end(sg);
+ 		else
+ 			sg_mark_end(sg);
+-		sg->offset = off;
+-		sg->length = min_t(int, len, PAGE_SIZE - off);
++		sg->offset = page_off;
++		sg->length = min_t(u64, len, PAGE_SIZE - page_off);
+ 		len -= sg->length;
+-		if (!i)
+-			off = 0;
++		page_off = 0;
+ 	}
+ 
+-	rsp->req.sg = rsp->cmd->inline_sg;
++	rsp->req.sg = &rsp->cmd->inline_sg[page_idx];
+ 	rsp->req.sg_cnt = sg_count;
+ }
+ 
 
 
