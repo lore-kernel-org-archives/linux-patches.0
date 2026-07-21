@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B020C46D098;
-	Tue, 21 Jul 2026 19:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3739D46D098;
+	Tue, 21 Jul 2026 19:26:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661962; cv=none; b=sSNQiA4C0Ehlu+i3wIOg8NqFV/O8axOS4oSO7Dz4BVUMRdNho9ZlBjEsvf9zbBrHAMFQph96CDrAjzcnlCG0HomHJO1rNKfyqrqaJn5exdnJOqqHd6F24axCcz1ZDuYXbz51hDNXMKkdt1p75jeagiJipdcAfzSt1DhpLn5ylm4=
+	t=1784661965; cv=none; b=laGLZ1/lnsmbEhbyWV2JAPnIU2LT4yyNIXKjs5Q7QPwWAMWaDjLxDxH3PJO6ibv202/9RoZCuVp/R9Or8UpkpwYy91gzU8UgUO5+TigF5Q1t8okey5fYV9icMEsOgE5Y0zIZ1Cf1Xd8A0EjmkH2rJ8WZjnTiZUJUWFuxYU8bmTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661962; c=relaxed/simple;
-	bh=GhqnJWGHcn1gDZ26BE+e1HGOWL3O5CFfEo9UgZvGJI4=;
+	s=arc-20240116; t=1784661965; c=relaxed/simple;
+	bh=gTnwX+qZAlC05qs2GnapVL7z8UxH3tghtalx88EZOQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IJD6SfBOs5DR925PWCG5TwuSUjAQo+Ggv02zLucqA9s/yfnr/1bu36NGA6n4hKUlo3kNNzSK2qmJk1p4lUvaRmkXg3POp0YDswdbRxfE3FtTsfQ4zpZ0NAFNcoIQdhgecCXAg2Mxu2iNJ9ribNrWMhOydJ8krYnyJRQjSY+qQC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zj5MVKon; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pe1BHZpj3LTg32ynhBY+NDSJ8zlR9Zk8wG8WiaFV+0xVaBf+AxAS2QDVYImH4FJfZezjVJoH2xxvOlF8xijY+qzoTC60Bc1CmGOQP3TtV+QwStFn1szayZ4zhAtUMuW25DRkWLn24aI9XcqjdLYwqFm7lcBtrf0DvvH6l7O94uA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kn4roOxP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zj5MVKon"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF081F000E9;
-	Tue, 21 Jul 2026 19:26:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kn4roOxP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D52B1F000E9;
+	Tue, 21 Jul 2026 19:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661961;
-	bh=PoZ5DBfYIfqCTHsS+4Jl9+8SLb3EFiWoX79kamCBfCo=;
+	s=korg; t=1784661964;
+	bh=2WbkMomA2YrNn/1o8CVK4x6UQRGBotzVE8lh79Fxd0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zj5MVKonmqKYtGN/53/P1dV4uPsIbA57pVk3eZYdfyVemg7zSiTg5l8P+4RI6tpFp
-	 Bhuw7fLSo9Lx7Ya4Jg8KSxf103Vk5pYNuBonHDVXiqYobSkl4N1/1t5EWvB8E3jl2u
-	 LKAynd0IacfpPCqqKJEpCwDXdjVjmq1+9a5d80t8=
+	b=kn4roOxPFedDxL28Udtsg6QCou8i00wORXzFBogA88I4GnkxVE3CwXTih5069mEx5
+	 0xDnJjOWhbQixbsD8+ht0vxxQZ788UY2v2K0KZOmL4JicYugLrSO+YP5UR1A7IjKtQ
+	 jsR/XRNs3Nb+YvLbcNk5ksIruyQ+bheHn87rBFWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
+	Pengjie Zhang <zhangpengjie2@huawei.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0263/1276] ACPI: IPMI: Fix message kref handling on dead device
-Date: Tue, 21 Jul 2026 17:11:46 +0200
-Message-ID: <20260721152451.969074005@linuxfoundation.org>
+Subject: [PATCH 6.12 0264/1276] cpufreq: Documentation: fix conservative governor freq_step description
+Date: Tue, 21 Jul 2026 17:11:47 +0200
+Message-ID: <20260721152451.991209869@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,53 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Pengjie Zhang <zhangpengjie2@huawei.com>
 
-[ Upstream commit 63320db6a5d84ec3fed8b3d36ba5244d07ddd108 ]
+[ Upstream commit 03120e1425262c7d11f93362a88e579a1720390b ]
 
-acpi_ipmi_space_handler() takes an extra reference on tx_msg before
-checking whether the selected IPMI device is dead. The reference
-belongs to the tx_msg_list entry and is normally dropped by
-ipmi_cancel_tx_msg() or ipmi_flush_tx_msg() after the message is removed
-from the list.
+The conservative governor documentation incorrectly states that setting
+freq_step to 0 will use the default 5% frequency step. In reality, since
+at least commit 8e677ce83bf4 ("[CPUFREQ] conservative: fixup governor to
+function more like ondemand logic"), freq_step=0 has always caused the
+governor to skip frequency updates entirely.
 
-On the dead-device path, the message has not been queued yet, but the
-error path still calls ipmi_msg_release() directly. That bypasses
-kref_put() and frees tx_msg while the queued-message reference is still
-recorded in the kref count.
+Correct the documentation to reflect the actual behavior: freq_step=0
+disables frequency changes by the governor entirely.
 
-Take the queued-message reference only after the dead-device check
-succeeds, immediately before adding tx_msg to the list.
-
-Fixes: 7b9844772237 ("ACPI / IPMI: Add reference counting for ACPI IPMI transfers")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://patch.msgid.link/20260603163108.2149359-1-dbgh9129@gmail.com
+Fixes: 2a0e49279850 ("cpufreq: User/admin documentation update and consolidation")
+Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+[ rjw: Subject adjustment ]
+Link: https://patch.msgid.link/20260603055635.1549943-1-zhangpengjie2@huawei.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_ipmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/admin-guide/pm/cpufreq.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/acpi_ipmi.c b/drivers/acpi/acpi_ipmi.c
-index 5fba4dab5d0886..c672abc3a6dbbe 100644
---- a/drivers/acpi/acpi_ipmi.c
-+++ b/drivers/acpi/acpi_ipmi.c
-@@ -550,7 +550,6 @@ acpi_ipmi_space_handler(u32 function, acpi_physical_address address,
- 		return AE_TYPE;
- 	}
+diff --git a/Documentation/admin-guide/pm/cpufreq.rst b/Documentation/admin-guide/pm/cpufreq.rst
+index 0818f248374137..0c3f7247e3a349 100644
+--- a/Documentation/admin-guide/pm/cpufreq.rst
++++ b/Documentation/admin-guide/pm/cpufreq.rst
+@@ -573,8 +573,8 @@ This governor exposes the following tunables:
+ 	100 (5 by default).
  
--	acpi_ipmi_msg_get(tx_msg);
- 	mutex_lock(&driver_data.ipmi_lock);
- 	/* Do not add a tx_msg that can not be flushed. */
- 	if (ipmi_device->dead) {
-@@ -558,6 +557,7 @@ acpi_ipmi_space_handler(u32 function, acpi_physical_address address,
- 		ipmi_msg_release(tx_msg);
- 		return AE_NOT_EXIST;
- 	}
-+	acpi_ipmi_msg_get(tx_msg);
- 	spin_lock_irqsave(&ipmi_device->tx_msg_lock, flags);
- 	list_add_tail(&tx_msg->head, &ipmi_device->tx_msg_list);
- 	spin_unlock_irqrestore(&ipmi_device->tx_msg_lock, flags);
+ 	This is how much the frequency is allowed to change in one go.  Setting
+-	it to 0 will cause the default frequency step (5 percent) to be used
+-	and setting it to 100 effectively causes the governor to periodically
++	it to 0 disables frequency changes by the governor entirely and setting
++	it to 100 effectively causes the governor to periodically
+ 	switch the frequency between the ``scaling_min_freq`` and
+ 	``scaling_max_freq`` policy limits.
+ 
 -- 
 2.53.0
 
