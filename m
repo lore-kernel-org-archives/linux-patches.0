@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FB83AF676;
-	Tue, 21 Jul 2026 20:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8553AF676;
+	Tue, 21 Jul 2026 20:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666823; cv=none; b=Qy6Sf26yfKVa5w7GN/iLKu2EI0d1jjy+zr4Cf4ITJQoxYiGFilHZ9I86PmNC+C0C3WYivtYnR+0fAnlo3dWkaMMeZU0bhTmAMdRsS/4+ngWxbTlDTccv65I/+mHPAZZ3tniyo01uAXTu6N0Sv9y5ctApuS7PV2Mdp+EvE6LrUok=
+	t=1784666825; cv=none; b=bjifOgLA4qjGnMVt1uIDHrpvWya8xZO7W18RhbwsFH2MQnR+/hRwiZLSjD/Eawr0cwUdk2GGKBmFaxi+xcdFyMmduB1plvblmXJ80hbF6ce4Ad9gNgSRVLzIbPVmkhMZvXt2tRqU6MK6meORUqd5VZIFewe3JSgRgD9hmchYnyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666823; c=relaxed/simple;
-	bh=e8MubSpjgYiReIOsXQ6AkLgiwNiv4GPpUtB5GOhZedw=;
+	s=arc-20240116; t=1784666825; c=relaxed/simple;
+	bh=QyTorFusi42hsjZ+QSYbWb/cnm8qLjTVlYIJxyfmowo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a90OKcge09384ZQfb+2odjlye1VrQqZOoeGiJWB++HvhEca+dUBWDHRIt9rKad+RMXG09B9H3wPgTPZd8j44YyiUvU5XwLnEdekkGnYLEucSMDC89omU3OMOKFxAfnk2DwizffOiZDoow8uDLLxuKxmw84E/XEjqKFE5camEQzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ciiXaU5R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j5Z6zbrf3uB5YfpITbVWbT+OabYYxj7XUgPLj0/GFoJbFRmGPk2/YM2qy+p5K026qP2rNvWNEWxdV0Xg9Ah/W2E/UldAQd4MW+YkVA1z2yVAH2WYtxptErTneHhMJFdYBfukwqpr7CCknIEBh+/Tt3gZj+Ptwmd9XEMhjKt75iA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kK4N6LZY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ciiXaU5R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E141F00A3A;
-	Tue, 21 Jul 2026 20:47:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kK4N6LZY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97EB51F000E9;
+	Tue, 21 Jul 2026 20:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666821;
-	bh=/bfghSaNWaowgw7TblajliUKwYdPpZbbgsb10Jg7MVs=;
+	s=korg; t=1784666824;
+	bh=VjqSR30P2QhAzDof0gbmG0QMsvz3e18IuZgvN5xYQas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ciiXaU5RmOpn1vT4AO9BiXqbdJdRanN8Rw9QVp3tyRMRUdGX4eeL6441ExTj+XVrX
-	 PFYK4cX2Nu03GLx1DUNuNgDYBvGLJE6aZrP382f/P5vavnBHv0TcxpYdJJiRTDUc/n
-	 JF80fBz7IaQiInk27Jb5PQh3cdo+7Gttga22KyI0=
+	b=kK4N6LZY+BSuBafBsOnyt/NomiEUM1EmiVIRAab0TnFTKOsfb5aI6uij3Ii64M4f9
+	 4V+iN4Dy6zWuLNB1MyPRChCSx3alyVUV0ah/GRz5JOv1uBSki/L8XrpttgavQAzv8o
+	 Y6HSeJQgIdlTs4Jg4dy+s4ovSUdRGX0o57LkOn/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <groeck@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn.topel@intel.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0785/1266] veth: fix NAPI leak in XDP enable error path
-Date: Tue, 21 Jul 2026 17:20:22 +0200
-Message-ID: <20260721152459.429307766@linuxfoundation.org>
+Subject: [PATCH 6.6 0786/1266] net/sched: cls_api: Handle TC_ACT_CONSUMED in tcf_qevent_handle
+Date: Tue, 21 Jul 2026 17:20:23 +0200
+Message-ID: <20260721152459.451436418@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,68 +47,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 6739027cb72da26890edd424c77080d187b2a92e ]
+[ Upstream commit a8a02897f2b479127db261de05cbf0c28b98d159 ]
 
-During XDP enablement in veth, if xdp_rxq_info_reg() or
-xdp_rxq_info_reg_mem_model() fails, the driver rolls back the changes.
+tcf_classify() can return TC_ACT_CONSUMED while the skb is held by the
+defragmentation engine (e.g. act_ct on out-of-order fragments). When
+that happens the skb is no longer owned by the caller and must not be
+touched again.
 
-However, the rollback loop:
-	for (i--; i >= start; i--) {
+tcf_qevent_handle() did not handle TC_ACT_CONSUMED: it fell through the
+switch and returned the skb to the caller as if classification had
+passed. The only qdisc that wires up qevents today is RED, via three call sites
+(qe_mark on RED_PROB_MARK/HARD_MARK, qe_early_drop on congestion_drop)
+red_enqueue() was continuing to operate on an skb it no longer owns  in this
+case -- enqueueing it, dropping it, or updating statistics. Resulting in a UAF.
 
-decrements the loop index 'i' before the first iteration. This
-correctly skips unregistering the rxq for the failed index 'i' (as
-registration failed or was already cleaned up), but it also
-erroneously skips calling netif_napi_deli() for rq[i].xdp_napi.
+  tc qdisc add dev eth0 root handle 1: red ... qevent early_drop block 10
+  tc filter add block 10 ... action ct
 
-Since netif_napi_add() was already called for index 'i', this leaves
-a dangling napi_struct in the device's napi_list. When the veth
-device is later destroyed, the freed queue memory (which contains the
-leaked NAPI structure) can be reused.
+  (with ct defrag enabled and traffic that produces out-of-order
+  fragments, e.g. a fragmented UDP stream)
 
-The subsequent device teardown iterates the NAPI list and
-corrupts the reallocated memory, leading to UAF.
+Handle TC_ACT_CONSUMED in tcf_qevent_handle() the same way the ingress
+and egress fast paths do: treat it as stolen and return NULL without
+touching the skb. Unlike the TC_ACT_STOLEN case, the skb must not be
+dropped/freed here, as it is no longer owned by us.
 
-Fix this by explicitly deleting the NAPI association for the failed
-index 'i' before rolling back the successfully configured queues.
-
-Fixes: b02e5a0ebb17 ("xsk: Propagate napi_id to XDP socket Rx path")
-Reported-by: Guenter Roeck <groeck@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Björn Töpel <bjorn.topel@intel.com>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Cc: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://patch.msgid.link/20260622111825.88337-1-edumazet@google.com
+Fixes: 3f14b377d01d ("net/sched: act_ct: fix skb leak and crash on ooo frags")
+Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260620130749.226642-1-jhs@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/sched/cls_api.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index 2b3b0beb55c88b..d85a11e9477f04 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -1159,6 +1159,8 @@ static int veth_enable_xdp_range(struct net_device *dev, int start, int end,
- err_reg_mem:
- 	xdp_rxq_info_unreg(&priv->rq[i].xdp_rxq);
- err_rxq_reg:
-+	if (!napi_already_on)
-+		netif_napi_del(&priv->rq[i].xdp_napi);
- 	for (i--; i >= start; i--) {
- 		struct veth_rq *rq = &priv->rq[i];
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 45124fd64d6b48..2c3af83c01c4f6 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -3971,6 +3971,9 @@ struct sk_buff *tcf_qevent_handle(struct tcf_qevent *qe, struct Qdisc *sch, stru
+ 		skb_do_redirect(skb);
+ 		*ret = __NET_XMIT_STOLEN;
+ 		return NULL;
++	case TC_ACT_CONSUMED:
++		*ret = __NET_XMIT_STOLEN;
++		return NULL;
+ 	}
  
+ 	return skb;
 -- 
 2.53.0
 
