@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134B239A7FD;
-	Tue, 21 Jul 2026 18:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFDE364959;
+	Tue, 21 Jul 2026 18:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659952; cv=none; b=Ko+BLTpCpc15jSY3FdWBMcWkElfT47lXl+kGbOlw/ycgzr0VJ283dt0DWHnofnoqiPW9D6HpgHjz3URd1rIJI+nsExPFDFmb6IDDvU8Xp5jCGoIr/V6+MCccjotVxgEXTcTd6jSt6eaDAbBFk3SoyWg5LUPx2wRwAUBlGLX1BgI=
+	t=1784659954; cv=none; b=SQfi+M+X3fNHfsdNOqsR3CawAWXtenZxl4X32EW/1Wv7wC52AGMzhbmDhog+6etBkiZoC31BKHOGK63NADUKyxhANN2gbtQqDcR13b+noblkrZfZKNakK+zDXsA78TyCW4/ny4oa8+LI+VepOTvwgQOumXxHRa9RjhxxP++Vp94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659952; c=relaxed/simple;
-	bh=bDERo2Y/qsJD/NXYxsMJ5xJJDOuTI39AIGLUOWfc5TY=;
+	s=arc-20240116; t=1784659954; c=relaxed/simple;
+	bh=si/8HhxmJIRbcLAlTRyYKG6VNeQF47PwTqUpLz2fjLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sB9Tpfb9LK8ng3BDggHUwnSLxC1kpDGE0scdyBg90Pp7Fn/I/tRxWN3RSC83d5tO+GeO/JcFCXmpu7RZX3oIzUv6DdjeM/3iDPPSLG8MTTrZW34Bh0Wa990c3QhRkcFIhmxwmvlV2P5ymProf24O5cfV1ASMJjC/kdOMrg+hE1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbghFvMK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MbP+v3F7zAk3P95xEIp7oiRGPE6SWxEZmr8JI19F5msVgYvK0U6QTd97AKL2rVxgRXByC+8Jv6uO96kAVwmUxs15TNLpcpT4YTrINXpEBmlAEQgqlttGmZGpKFXVs9/seLywWQ80X2F3TWI4wZpHWBIpH/YUq5bodvQWCH0RdwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NVVrNei; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbghFvMK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 796361F000E9;
-	Tue, 21 Jul 2026 18:52:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NVVrNei"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DBE1F000E9;
+	Tue, 21 Jul 2026 18:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659951;
-	bh=w53UglwzplAW31wEhDGvkbaZWBp4ltqgHVpHetl5Pf4=;
+	s=korg; t=1784659953;
+	bh=P1EmgDqTcDwjeCm0XA4ujd/SaJITIiTV2/vvP2qNiR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GbghFvMKQarzmJJm/pTN8+l5JT3u1B3Cbw/5vGjf3C8jvl2xuCgKwc9+cXUYVWNw1
-	 OXg9/ObcNYvhcZRCQpAtIYAz1Qw4Avg2HuPZF0Ci1M1rurzt4+PaRxOHMcMgP9H5gT
-	 1zGxA/NOOe5yCeeRCxY7q7TX6+tEGJt3HTDb0LaE=
+	b=2NVVrNeigklCeZqsDaga2/8k27G1oWzwh1yTSjtY30X7cOqd/zdv976WSN35BkSby
+	 UNkYae2sib9p38b/SqDl+Ojr5uFIJ/ElcqdI0YzhsAeqzLxuho9F5Tt03k+Fs29sin
+	 GeaDC+Oefwk8vsqX/QuqxYPCxOb9ggwfgfdvIEl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Meghana Malladi <m-malladi@ti.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0796/2077] net: ti: icssg-prueth: Fix AF_XDP fill ring alloc and wakeup condition
-Date: Tue, 21 Jul 2026 17:07:49 +0200
-Message-ID: <20260721152611.569018881@linuxfoundation.org>
+Subject: [PATCH 7.1 0797/2077] net: ti: icssg: Use undirected TX tag for native XDP in HSR offload mode
+Date: Tue, 21 Jul 2026 17:07:50 +0200
+Message-ID: <20260721152611.591855886@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,78 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Meghana Malladi <m-malladi@ti.com>
 
-[ Upstream commit dfb787f7d157f97ba91344b584d33481f572530e ]
+[ Upstream commit bcbf73d98195577a89e788179843f6d0c66244a5 ]
 
-emac_rx_packet_zc() calls prueth_rx_alloc_zc() with count (frames
-received in the current NAPI poll) as the allocation budget.  Two
-problems arise from this:
+emac_xmit_xdp_frame() always sets the CPPI5 descriptor destination
+tag to emac->port_id, which directs the PRU firmware to transmit
+the frame on that specific slave port only.  In HSR offload mode
+this bypasses the firmware's HSR duplication logic: the frame goes
+out on one ring leg and never appears on the other, breaking HSR
+redundancy for XDP_TX paths.
 
-1. When the CPPI5 descriptor pool is exhausted (avail_desc == 0,
-   FDQ already holds the maximum number of descriptors), count > 0
-   still triggers allocation attempts that all fail, spamming the
-   kernel log with "rx push: failed to allocate descriptor" at
-   high packet rates.
+icssg_ndo_start_xmit() already handles this correctly: when HSR
+offload mode is active and NETIF_F_HW_HSR_DUP is set it substitutes
+PRUETH_UNDIRECTED_PKT_DST_TAG (port 0) so the PRU duplicates the
+frame to both slave ports.  It also sets PRUETH_UNDIRECTED_PKT_TAG_INS
+in epib[1] when NETIF_F_HW_HSR_TAG_INS is set so the PRU inserts the
+HSR sequence tag, which XDP_TX frames lack (the tag is stripped by
+the PRU on RX before the frame reaches the XDP program).
 
-2. The XSK wakeup condition "ret < count" is wrong when avail_desc
-   is zero: ret == 0 and count can be up to 64, so the condition is
-   always true.  This causes ~200 spurious ndo_xsk_wakeup() calls
-   per second even when the FDQ is already full, wasting CPU cycles
-   in repeated NAPI invocations that process zero frames.
+Apply the same logic in emac_xmit_xdp_frame() so XDP_TX frames in
+HSR mode are treated identically to skb TX via hsr0.
 
-Fix both by introducing alloc_budget = min(budget, avail_desc):
-- When avail_desc == 0 no allocation is attempted, avoiding pool
-  exhaustion errors.  The wakeup condition "ret < alloc_budget"
-  evaluates to 0 < 0 == false, correctly clearing the wakeup flag
-  so the hardware IRQ re-arms NAPI without spurious kicks.
-- In steady state avail_desc == count <= budget, so alloc_budget
-  == count and behaviour is unchanged.
-- After a dry-ring stall (count == 0, avail_desc > 0), alloc_budget
-  > 0 causes new descriptors to be posted to the FDQ so the hardware
-  can resume receiving immediately.
-
-Fixes: 7a64bb388df3 ("net: ti: icssg-prueth: Add AF_XDP zero copy for RX")
+Fixes: 62aa3246f462 ("net: ti: icssg-prueth: Add XDP support")
 Signed-off-by: Meghana Malladi <m-malladi@ti.com>
-Link: https://patch.msgid.link/20260611185744.2498070-2-m-malladi@ti.com
+Link: https://patch.msgid.link/20260611185744.2498070-3-m-malladi@ti.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/icssg/icssg_common.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/ti/icssg/icssg_common.c | 21 ++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/ti/icssg/icssg_common.c b/drivers/net/ethernet/ti/icssg/icssg_common.c
-index a28a608f9bf4b9..55a696912811f6 100644
+index 55a696912811f6..ede32f266729ee 100644
 --- a/drivers/net/ethernet/ti/icssg/icssg_common.c
 +++ b/drivers/net/ethernet/ti/icssg/icssg_common.c
-@@ -927,6 +927,7 @@ static int emac_rx_packet_zc(struct prueth_emac *emac, u32 flow_id,
- 	struct cppi5_host_desc_t *desc_rx;
- 	struct prueth_swdata *swdata;
+@@ -696,6 +696,7 @@ u32 emac_xmit_xdp_frame(struct prueth_emac *emac,
  	dma_addr_t desc_dma, buf_dma;
-+	int avail_desc, alloc_budget;
- 	struct xdp_buff *xdp;
- 	int xdp_status = 0;
- 	int count = 0;
-@@ -993,16 +994,13 @@ static int emac_rx_packet_zc(struct prueth_emac *emac, u32 flow_id,
- 	if (xdp_status & ICSSG_XDP_REDIR)
- 		xdp_do_flush();
+ 	struct prueth_swdata *swdata;
+ 	struct page *page;
++	u32 dst_tag_id;
+ 	u32 *epib;
+ 	int ret;
  
--	/* Allocate xsk buffers from the pool for the "count" number of
--	 * packets processed in order to be able to receive more packets.
--	 */
--	ret = prueth_rx_alloc_zc(emac, count);
-+	avail_desc = k3_cppi_desc_pool_avail(rx_chn->desc_pool);
-+	alloc_budget = min_t(int, budget, avail_desc);
+@@ -737,9 +738,25 @@ u32 emac_xmit_xdp_frame(struct prueth_emac *emac,
+ 
+ 	/* set dst tag to indicate internal qid at the firmware which is at
+ 	 * bit8..bit15. bit0..bit7 indicates port num for directed
+-	 * packets in case of switch mode operation
++	 * packets in case of switch mode operation and port num 0
++	 * for undirected packets in case of HSR offload mode.
++	 *
++	 * XDP_TX frames arrive on a slave port with the HSR tag already
++	 * stripped by the PRU firmware.  Like skb TX via hsr0, they must
++	 * be sent as undirected so the PRU duplicates them to both ports
++	 * and re-inserts the HSR sequence tag.
+ 	 */
+-	cppi5_desc_set_tags_ids(&first_desc->hdr, 0, (emac->port_id | (q_idx << 8)));
++	dst_tag_id = emac->port_id | (q_idx << 8);
 +
-+	ret = prueth_rx_alloc_zc(emac, alloc_budget);
- 
- 	if (xsk_uses_need_wakeup(rx_chn->xsk_pool)) {
--		/* If the user space doesn't provide enough buffers then it must
--		 * explicitly wake up the kernel when new buffers are available
--		 */
--		if (ret < count)
-+		if (ret < alloc_budget)
- 			xsk_set_rx_need_wakeup(rx_chn->xsk_pool);
- 		else
- 			xsk_clear_rx_need_wakeup(rx_chn->xsk_pool);
++	if (emac->prueth->is_hsr_offload_mode &&
++	    (ndev->features & NETIF_F_HW_HSR_DUP))
++		dst_tag_id = PRUETH_UNDIRECTED_PKT_DST_TAG;
++
++	if (emac->prueth->is_hsr_offload_mode &&
++	    (ndev->features & NETIF_F_HW_HSR_TAG_INS))
++		epib[1] |= PRUETH_UNDIRECTED_PKT_TAG_INS;
++
++	cppi5_desc_set_tags_ids(&first_desc->hdr, 0, dst_tag_id);
+ 	k3_udma_glue_tx_dma_to_cppi5_addr(tx_chn->tx_chn, &buf_dma);
+ 	cppi5_hdesc_attach_buf(first_desc, buf_dma, xdpf->len, buf_dma, xdpf->len);
+ 	swdata = cppi5_hdesc_get_swdata(first_desc);
 -- 
 2.53.0
 
