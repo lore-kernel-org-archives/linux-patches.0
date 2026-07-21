@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550AF42F71D;
-	Tue, 21 Jul 2026 21:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4383B8412;
+	Tue, 21 Jul 2026 21:41:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670080; cv=none; b=jx/ikh/IzEx+gbnWIJKdxh/gUURKOJcU1uRQWAyPDwPeJ8bjJghsuuFD6Y5E9AolZgZqkkMhq3zFfYcBludaK6h66tj3BeOK7nlsMpGiLpvpvhxu178v0a3EB9PdfJ3Iw4HbfyurT84/hN1SEM3UAPcf4s23i58AYcHXW+IcHHU=
+	t=1784670083; cv=none; b=HGVCbt7AhAlj6a/kd26RwWe12XqqgB/z4n/YCZx/o1t0vjB8gYbyIfbVrm0djwdEP2FKAmoIbDv2ECTwP5eOTiBdZsDp7reuzetqOcMmolNaDmcp6q+fr0+8sJGANzW6ZZRKJAvsBPkSon6V/KvyS2/VLL41aXNwGzdQ8XGRSas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670080; c=relaxed/simple;
-	bh=F3B3+wuZ95pYhkQ6n5vy7ZdY3AXtihZUaCgLzO+2nY0=;
+	s=arc-20240116; t=1784670083; c=relaxed/simple;
+	bh=ncq+1boDj1q7IiQ0tv3IYk0/xXXItYnp6F3ZtvyHn8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ptHnQEJBeSMSyNzJXGoIr4vu2QnQzwStJ7phnsum35FIg5coliIOSJU1NS/1GhC2N2aQO+Pg+cYJ+DX88/b3y9HEJDpmaWy4zqt69PrypIHIkfqFdm8Fucg9Q3EaZimDj2Pi8TmPXdRiDUK3FlK+vYVSIuGhj8uQ4YxfQeUNgHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7uO/8JA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MeSvYFGcb5H404Wpzyf3VBwAlJ7t0K4jSVQsFYxcGsuS5H1CRsqOoOs9YhGJr++J6lMZIvRqXN7r7UtIwEA3Z5OGBOWSMvDXP4lp4QdiSjAlFw8WFI1tPGxwbgdjiOAYVxiDIg7UsbC5dAKHbJNuD71aQZzPfVNcg+2gbFtN+AY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BBe2n9uy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7uO/8JA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA071F000E9;
-	Tue, 21 Jul 2026 21:41:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BBe2n9uy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6153D1F000E9;
+	Tue, 21 Jul 2026 21:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670079;
-	bh=yibUkDxRWv0Heel7xA/O4KwiPxmSnr0WrwngbXr0HfA=;
+	s=korg; t=1784670081;
+	bh=kN1mc/M8F9iVhhjgkQZBCPzrHrJKVEiVARtIR2H6l1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v7uO/8JArHx3j9WNX+oa9t47x+0nBgSGcNUyHbB4I5ebPqZ2tU39fzDH8OMD+w+gX
-	 Af7CxupSV33wwrZze2gCHHj77EaM+B1Y462I/g27u2CUJT57RqWWWNL+QtgcRcf6Ol
-	 LVZwR/nM44Zv4KlgA/FlBoT34XmL9V8i3l+TR+S8=
+	b=BBe2n9uyGI15Ig9xq1YZaZRcTO1evD9xEfgVEs+EhZT0ieZBK3iOxn5WMStIDemdB
+	 YczWzqcJH/wTDjhL57P1SnbB+PU0GkWXYG2vtxyrXbHRhEwIm1T7wIEIXxcxy5T4dF
+	 uvHO2/9Vh/6Mi9rjJvQ+fWeFsfby/WZ5DjDEDTj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Hari Prasath Gujulan Elango <gehariprasath@ti.com>,
-	Nishanth Menon <nm@ti.com>
-Subject: [PATCH 6.1 0753/1067] soc: ti: k3-ringacc: Fix access mode for k3_ringacc_ring_pop_tail_io/proxy
-Date: Tue, 21 Jul 2026 17:22:34 +0200
-Message-ID: <20260721152441.418171691@linuxfoundation.org>
+	Wang Jun <1742789905@qq.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>
+Subject: [PATCH 6.1 0754/1067] soc: fsl: qe: panic on ioremap() failure in qe_reset()
+Date: Tue, 21 Jul 2026 17:22:35 +0200
+Message-ID: <20260721152441.440936358@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,45 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Wang Jun <1742789905@qq.com>
 
-commit b920352cfd2b0fcd1249ff006618c939b64fc8f7 upstream.
+commit a0fe29d20e7822182e12324905af5115c1b3aed3 upstream.
 
-k3_ringacc_ring_pop_tail_io() and k3_ringacc_ring_pop_tail_proxy()
-incorrectly use K3_RINGACC_ACCESS_MODE_POP_HEAD instead of
-K3_RINGACC_ACCESS_MODE_POP_TAIL. This will result in ring elements being
-popped in the reverse order of that which the caller expects. Fix this.
+When ioremap() fails in qe_reset(), the global pointer qe_immr remains
+NULL, leading to a subsequent NULL pointer dereference when the pointer
+is accessed. Since this happens early in the boot process, a failure to
+map a few bytes of I/O memory indicates a fatal error from which the
+system cannot recover.
 
-Fixes: 3277e8aa2504 ("soc: ti: k3: add navss ringacc driver")
+Follow the same pattern as qe_sdma_init() and panic immediately when
+ioremap() fails. This avoids a silent NULL pointer dereference later
+and makes the error explicit.
+
+Fixes: 986585385131 ("[POWERPC] Add QUICC Engine (QE) infrastructure")
 Cc: stable@vger.kernel.org
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Hari Prasath Gujulan Elango <gehariprasath@ti.com>
-Link: https://patch.msgid.link/20260501124129.362192-1-s-vadapalli@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Wang Jun <1742789905@qq.com>
+Link: https://lore.kernel.org/r/tencent_FED49CF5331CC0C7910618883332A08E2606@qq.com
+[chleroy: Rearranged change to reduce churn]
+Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/ti/k3-ringacc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/soc/fsl/qe/qe.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/soc/ti/k3-ringacc.c
-+++ b/drivers/soc/ti/k3-ringacc.c
-@@ -997,7 +997,7 @@ static int k3_ringacc_ring_pop_head_prox
- static int k3_ringacc_ring_pop_tail_proxy(struct k3_ring *ring, void *elem)
- {
- 	return k3_ringacc_ring_access_proxy(ring, elem,
--					    K3_RINGACC_ACCESS_MODE_POP_HEAD);
-+					    K3_RINGACC_ACCESS_MODE_POP_TAIL);
- }
+--- a/drivers/soc/fsl/qe/qe.c
++++ b/drivers/soc/fsl/qe/qe.c
+@@ -88,6 +88,9 @@ void qe_reset(void)
+ 	if (qe_immr == NULL)
+ 		qe_immr = ioremap(get_qe_base(), QE_IMMAP_SIZE);
  
- static int k3_ringacc_ring_access_io(struct k3_ring *ring, void *elem,
-@@ -1068,7 +1068,7 @@ static int k3_ringacc_ring_pop_io(struct
- static int k3_ringacc_ring_pop_tail_io(struct k3_ring *ring, void *elem)
- {
- 	return k3_ringacc_ring_access_io(ring, elem,
--					 K3_RINGACC_ACCESS_MODE_POP_HEAD);
-+					 K3_RINGACC_ACCESS_MODE_POP_TAIL);
- }
++	if (!qe_immr)
++		panic("QE:ioremap failed!");
++
+ 	qe_snums_init();
  
- /*
+ 	qe_issue_cmd(QE_RESET, QE_CR_SUBBLOCK_INVALID,
 
 
