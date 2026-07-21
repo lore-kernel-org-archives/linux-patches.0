@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96CB043B3DA;
-	Tue, 21 Jul 2026 22:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B00439904;
+	Tue, 21 Jul 2026 22:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671881; cv=none; b=p2iCWOaxNPMYpViiTgUTFfJcR08FKv8hcyI/QjGzygPmsis9MRjR4JoIJVbA+eFQ1NtyrhrBnyydLa4xL2g20LZ/L1FVxzIcLyl6gq6GmXzikoYHKsivbSFjbuY+Oq4kS6XbNn0B/G76FPtbZ7HVBBxKpa17UYFvu6q3SLxA15Y=
+	t=1784671884; cv=none; b=AHzey1ZlYtAsOkOJEj568O1cNzZ/wSd02PPxfEdB/WGoxbd4sQ/cmG8Bq/k9TmZn3EtS5FU4dnOb54fGtEiX7E5nSGL6ZIu6Q5LZDKErJazmuIlFs8PXk2wFIyOjvEhESpB9ivWIHznfT/0FLkQNjBsuEfPSmfNKTR2JJsmcsis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671881; c=relaxed/simple;
-	bh=xCPhSp9Si0Jt6/9FrOk8P1znyfLJwTyjrBOufkXoK4U=;
+	s=arc-20240116; t=1784671884; c=relaxed/simple;
+	bh=LN3X4ECugfNoYqrCt8bHXtnObardadc8G7J7H816uXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ShiruVbfYUqRwsjvGmaOCy4iP6rl6mH0S11bXvGgHtW08R3q2KsPukqJJpfU2pH4EmlTAH+f47EM1kXHUbg2ZN1sE5/v7iehbKIn+Z8Rqg3hhKjXI7LU/vH5KzpUuY+UI80y3AfMAEE2t+cjQ41a2TQrN3hCOuH5hglJR8zrRVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1iUJ2Ak; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LMpNhmfMjFqbYQ/Z5OLlrv1w50kFdrYAYiiGsD1jQJA9Cr+wXwIntCoQC/BYIPeb1Vm1pQUwPdawHtu4CUSqBgs8EDW9gZUqassXlruA2eEt9ymRLdecPqPwX3ovj7DypFxAlJSjH/C91VfjXjwgizcgAy5RpfbJDs5yQLJHk5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpDACNDv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1iUJ2Ak"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0808D1F000E9;
-	Tue, 21 Jul 2026 22:11:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpDACNDv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FFC61F000E9;
+	Tue, 21 Jul 2026 22:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671880;
-	bh=6G5jqs0XygqJ0rDnc7QDTeFLkJQTbj9COR/4kMa10vw=;
+	s=korg; t=1784671883;
+	bh=np43O/etOIdXEx62kQ2js1UbdlhVpqAbzNgemUcVa+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I1iUJ2AkeF5fpUZ8cITwBR3YcDTuZXmemfA0LfMdMsW9qNnAHMYGfsgVFVV293Mbn
-	 dPo4wmtSQiTjfLLxfgfwDHu2VfeL/Irn8HhFxAWOry6gAfkMlErlR4uWSWdkNGAAOI
-	 OtDBjbuR2uCeJEOKG7iOVBoDwvOE8Bn4f/j8WzGs=
+	b=DpDACNDvK6B32yIejF3dQrfux4stfJRAEUSkmRrJg2WPSPQZpwVG+vVdZnp+s1lOr
+	 eV26uWhlzaK8LNBqiwzPWRqVUpKCJHHLTFjQi5MU1v1f7dHtbpFoCc8zdENy29YPsd
+	 /48lV8MipXq4RowgUSuPuHLsBZeopShHVUdiqBMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 415/843] perf symbols: Fix signed overflow in sysfs__read_build_id() size check
-Date: Tue, 21 Jul 2026 17:20:50 +0200
-Message-ID: <20260721152415.372600980@linuxfoundation.org>
+Subject: [PATCH 5.15 416/843] perf symbols: Bounds-check .gnu_debuglink section data
+Date: Tue, 21 Jul 2026 17:20:51 +0200
+Message-ID: <20260721152415.394683974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -46,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
@@ -55,64 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 6eaa8ee3e2abe5112e80e94c27196bb175689469 ]
+[ Upstream commit 9c74f0aab398cb32ab250401f323c0fdc9a3a496 ]
 
-sysfs__read_build_id() reads ELF note headers from sysfs files.  The
-note's namesz and descsz fields are used to compute the skip size:
+filename__read_debuglink() copies .gnu_debuglink section data into a
+caller-provided buffer via:
 
-    int n = namesz + descsz;
-    if (n > (int)sizeof(bf))
+    strncpy(debuglink, data->d_buf, size);
 
-Both namesz and descsz are size_t from NOTE_ALIGN() of 32-bit note
-header fields.  Their sum can exceed INT_MAX, overflowing the signed
-int n to a negative value.  The check n > sizeof(bf) then evaluates
-false (negative < positive in signed comparison), and read(fd, bf, n)
-reinterprets the negative n as a huge size_t count — the kernel writes
-up to MAX_RW_COUNT bytes into the 8192-byte stack buffer.
+where size is PATH_MAX.  If the ELF section is smaller than size and
+lacks a null terminator, strncpy reads past data->d_buf into adjacent
+memory.  A malformed ELF file can trigger this, potentially causing a
+segfault or leaking heap data.
 
-In practice the overflow is bounded by the sysfs file's actual size,
-so a real sysfs notes file won't trigger it organically.  But crafted
-input (e.g. via a mounted debugfs/sysfs image) could.
+Additionally, strncpy does not guarantee null termination when the
+source fills the buffer.
 
-Fix by validating namesz and descsz individually against the buffer
-size before summing, and change n to size_t to avoid the signed
-overflow entirely.
+Replace with an explicit memcpy bounded by both the output buffer
+size and the actual section data size (data->d_size), followed by
+explicit null termination.
 
-Fixes: f1617b40596cb341 ("perf symbols: Record the build_ids of kernel modules too")
+Fixes: e5a1845fc0aeca85 ("perf symbols: Split out util/symbol-elf.c")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
 Cc: Namhyung Kim <namhyung@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-elf.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ tools/perf/util/symbol-elf.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-index bbc3a150597a47..e3ae6c30b6e74e 100644
+index e3ae6c30b6e74e..7a9b6d8a551f2e 100644
 --- a/tools/perf/util/symbol-elf.c
 +++ b/tools/perf/util/symbol-elf.c
-@@ -694,14 +694,17 @@ int sysfs__read_build_id(const char *filename, struct build_id *bid)
- 			} else if (read(fd, bf, descsz) != (ssize_t)descsz)
- 				break;
- 		} else {
--			int n = namesz + descsz;
-+			size_t n;
+@@ -791,7 +791,14 @@ int filename__read_debuglink(const char *filename, char *debuglink,
+ 		goto out_elf_end;
  
--			if (n > (int)sizeof(bf)) {
-+			/* int sum of namesz+descsz can overflow negative, bypassing size check */
-+			if (namesz > sizeof(bf) || descsz > sizeof(bf) - namesz) {
- 				n = sizeof(bf);
- 				pr_debug("%s: truncating reading of build id in sysfs file %s: n_namesz=%u, n_descsz=%u.\n",
- 					 __func__, filename, nhdr.n_namesz, nhdr.n_descsz);
-+			} else {
-+				n = namesz + descsz;
- 			}
--			if (read(fd, bf, n) != n)
-+			if (read(fd, bf, n) != (ssize_t)n)
- 				break;
- 		}
- 	}
+ 	/* the start of this section is a zero-terminated string */
+-	strncpy(debuglink, data->d_buf, size);
++	if (data->d_size > 0) {
++		size_t len = min(size - 1, data->d_size);
++
++		memcpy(debuglink, data->d_buf, len);
++		debuglink[len] = '\0';
++	} else {
++		debuglink[0] = '\0';
++	}
+ 
+ 	err = 0;
+ 
 -- 
 2.53.0
 
