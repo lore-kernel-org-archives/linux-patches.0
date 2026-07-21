@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 857B9326D44;
-	Tue, 21 Jul 2026 18:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43F3269CE6;
+	Tue, 21 Jul 2026 18:00:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656818; cv=none; b=hrb6p/RUCOmRA1HVoSYrDTqfWF1sxj/sB6VS3F2BOOagJ0Fb1X713CVr7rpc/ZpIvqCp1YuMFF7cCl2kn42eWB1WDca2C+7+3Bpw+fRLqWQgVKkH6dYqyUoO6Unvfq4TKRpGV7trrmLT5s1ByKNyFgWAwMpn1HnaxyHiAtPL+aQ=
+	t=1784656821; cv=none; b=UBq4PPbmo8xmnXVZtaEof3KKT3kuPNCkoavwKnZtY8105uvmIYLG6SIOz9joA0U0YLv+QM05R7cxroN0DzhgXHCIu8nD+ZHZyPJ8LH0CnijlGr1cbYK5F6i11yZIhG9l4/xz1wyqfDbJ9H2ekcXn6fbwFma2XwiN3nKFK0uxe5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656818; c=relaxed/simple;
-	bh=KDOVvVmKwfd+CSuBHEajpF8K7/oFkQ3Z48DOO55J9jo=;
+	s=arc-20240116; t=1784656821; c=relaxed/simple;
+	bh=wISsZg84PuTOvvl5nHNFssRTV9aUD9PocapDR6OtMC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ux76H69BQj1jwy3iX+e8V6HO2dXA5fvvZ0jveTzaLOiqnv2pIAKW/QrdN13Y1VERxJCI5v1SpDfbVVWxmK2FX9kYdU/1gTIAJQtxnJWmt9D8d92kof2eOf5VYZlL164WLhdvkzo0rqGgprLlWiYPIm1HM6BlN6J21lr6AqHIt4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uP+jv4YX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T/MrhnuBnohLMA0aBIRr5g61VuRzzzRz9l5U+glkjfm/5K0i2fYE0/Mjc8YLE1yQsis/z7H6NKMw8oQLfsnYLj/3FmTS5FBFPZloJMzaAhwoxoQnCw1znfpFQ5rCFlufD1A2poRx/w9h5L3++ZpKN7JslFFXl2GhjvDHd1aOJ6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijfuXbf9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uP+jv4YX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D1B1F000E9;
-	Tue, 21 Jul 2026 18:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijfuXbf9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55ED41F000E9;
+	Tue, 21 Jul 2026 18:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656817;
-	bh=4Q7jHUYGVYnczkTJ4juf9b9/HSXn/6eJxnGmMQNYlOo=;
+	s=korg; t=1784656819;
+	bh=SxBGwCgRS4k3Ec46uoJgyTRHt66R54PE32xpZGfRC9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uP+jv4YX242imGqqBO4jxDDK2vxk3lR6HqlNMqmf8vR9bZPzuyEn5fexvQr/r26wS
-	 YQLrC9mVItBBQRu0YKDOWw9Wuseu4BCvvmXjd7XRwuFvOpI19eKQ+LjgdsKa55ctBq
-	 nscnNb7NNl+x50bnt2gxkuZ/q2hu9Ev0VSvo5wZM=
+	b=ijfuXbf9U2l2giNbOVBiROfRZKbjMrypcmTyzy0bWWUBHb73UJiyxKTc4lpJ64ypn
+	 CCi6jcq4ra0T8vSfQ2jqaXyuD04E1+FPw448OtV2RgjwXmlZQZmPZqw+DAnUJsPKqu
+	 uVLOCi2Rn1T0P1uYfRyiS/dIY18QNP7e5m7vIlzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Sun Jian <sun.jian.kdev@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0513/1611] bpf: Run generic devmap egress prog on private skb
-Date: Tue, 21 Jul 2026 17:10:29 +0200
-Message-ID: <20260721152526.885268206@linuxfoundation.org>
+Subject: [PATCH 6.18 0531/1611] ALSA: seq: oss: Serialize readq reset state with q->lock
+Date: Tue, 21 Jul 2026 17:10:47 +0200
+Message-ID: <20260721152527.294428776@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -48,70 +45,201 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sun Jian <sun.jian.kdev@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 6001896f00984d317fb75160ba05c4a885fbe2a0 ]
+[ Upstream commit 49ce92d207820f588b0406add82f053decfbe5d9 ]
 
-Generic XDP devmap multi redirect uses skb_clone() for intermediate
-destinations and sends the last destination with the original skb. This
-can leave multiple destinations sharing the same packet data.
+snd_seq_oss_readq_clear() resets qlen, head, and tail without
+q->lock even though the normal reader and producer paths serialize the
+same ring state under that spinlock. A reset can therefore race
+snd_seq_oss_readq_free() or snd_seq_oss_readq_put_event() and leave
+stale records in the queue, drop freshly queued ones, or report the
+wrong readiness after wakeup. KCSAN reports a data race between
+snd_seq_oss_readq_clear() and snd_seq_oss_readq_free().
 
-This becomes visible after generic devmap egress-program support was
-added: a devmap egress program may mutate packet data, and another
-destination sharing the same data can observe that mutation.
+Take q->lock while clearing the ring and resetting input_time. Factor
+the enqueue logic into a caller-locked helper so
+snd_seq_oss_readq_put_timestamp() updates its suppression state under
+the same lock instead of racing the reset path.
 
-Native XDP broadcast redirect does not have this issue because
-xdpf_clone() copies the frame data for each destination. Generic XDP
-should provide the same per-destination isolation before running a
-devmap egress program.
+The buggy scenario involves two paths, with each column showing the
+order within that path:
 
-Fix this by making cloned skbs private before running the generic devmap
-egress program. Use skb_copy() instead of skb_unshare() so allocation
-failure does not consume the skb and the existing caller error paths keep
-their ownership semantics.
+reset path:                      locked readq updater:
+1. snd_seq_oss_reset() or        1. A reader or callback producer
+   release reaches                  takes q->lock on the same queue.
+   snd_seq_oss_readq_clear().
+2. snd_seq_oss_readq_clear()     2. The updater tests or modifies
+   resets qlen, head, tail,         qlen, head, and tail.
+   and input_time.
+3. snd_seq_oss_readq_clear()     3. The updater completes its
+   wakes sleepers on                read-modify-write sequence.
+   q->midi_sleep.
+4. Without q->lock, the reset    4. The resulting ring state drives
+   can overlap the locked           later reads and readiness.
+   update.
 
-Fixes: 2ea5eabaf04a ("bpf: devmap: Implement devmap prog execution for generic XDP")
-Suggested-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
-Link: https://lore.kernel.org/r/20260612114032.244616-2-sun.jian.kdev@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+KCSAN reports:
+
+BUG: KCSAN: data-race in snd_seq_oss_readq_clear /
+snd_seq_oss_readq_free
+
+write to 0xffff8881069fe608 of 4 bytes by task 120516 on cpu 0:
+  snd_seq_oss_readq_free+0x6c/0x80
+  snd_seq_oss_read+0xcb/0x250
+  odev_read+0x38/0x60
+  vfs_read+0xff/0x600
+  ksys_read+0xb4/0x140
+  __x64_sys_read+0x46/0x60
+  do_syscall_64+0xbb/0x2f0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+read to 0xffff8881069fe608 of 4 bytes by task 120517 on cpu 1:
+  snd_seq_oss_readq_clear+0x1f/0x90
+  snd_seq_oss_reset+0xa7/0xf0
+  snd_seq_oss_ioctl+0x6f6/0x7e0
+  odev_ioctl+0x56/0xc0
+  __x64_sys_ioctl+0xd1/0x120
+  do_syscall_64+0xbb/0x2f0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+value changed: 0x00000001 -> 0x00000000
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/20260614004801.3507773-1-zzzccc427@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/devmap.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ sound/core/seq/oss/seq_oss_readq.c | 77 ++++++++++++++++++++----------
+ 1 file changed, 52 insertions(+), 25 deletions(-)
 
-diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
-index 5b9eac5342a90d..dc7b859e8bbfda 100644
---- a/kernel/bpf/devmap.c
-+++ b/kernel/bpf/devmap.c
-@@ -710,6 +710,18 @@ int dev_map_generic_redirect(struct bpf_dtab_netdev *dst, struct sk_buff *skb,
- 	if (unlikely(err))
- 		return err;
+diff --git a/sound/core/seq/oss/seq_oss_readq.c b/sound/core/seq/oss/seq_oss_readq.c
+index bbaf72e70b3593..b7cdb1c61f2651 100644
+--- a/sound/core/seq/oss/seq_oss_readq.c
++++ b/sound/core/seq/oss/seq_oss_readq.c
+@@ -73,13 +73,17 @@ snd_seq_oss_readq_delete(struct seq_oss_readq *q)
+ void
+ snd_seq_oss_readq_clear(struct seq_oss_readq *q)
+ {
+-	if (q->qlen) {
+-		q->qlen = 0;
+-		q->head = q->tail = 0;
++	scoped_guard(spinlock_irqsave, &q->lock) {
++		if (q->qlen) {
++			q->qlen = 0;
++			q->head = 0;
++			q->tail = 0;
++		}
++		q->input_time = (unsigned long)-1;
+ 	}
++
+ 	/* if someone sleeping, wake'em up */
+ 	wake_up(&q->midi_sleep);
+-	q->input_time = (unsigned long)-1;
+ }
  
-+	if (dst->xdp_prog && skb_cloned(skb)) {
-+		struct sk_buff *nskb;
+ /*
+@@ -136,11 +140,11 @@ int snd_seq_oss_readq_sysex(struct seq_oss_readq *q, int dev,
+ /*
+  * copy an event to input queue:
+  * return zero if enqueued
++ * caller must hold lock
+  */
+-int
+-snd_seq_oss_readq_put_event(struct seq_oss_readq *q, union evrec *ev)
++static int snd_seq_oss_readq_put_event_locked(struct seq_oss_readq *q,
++					      union evrec *ev)
+ {
+-	guard(spinlock_irqsave)(&q->lock);
+ 	if (q->qlen >= q->maxlen - 1)
+ 		return -ENOMEM;
+ 
+@@ -148,12 +152,27 @@ snd_seq_oss_readq_put_event(struct seq_oss_readq *q, union evrec *ev)
+ 	q->tail = (q->tail + 1) % q->maxlen;
+ 	q->qlen++;
+ 
+-	/* wake up sleeper */
+-	wake_up(&q->midi_sleep);
+-
+ 	return 0;
+ }
+ 
++/*
++ * copy an event to input queue:
++ * return zero if enqueued
++ */
++int
++snd_seq_oss_readq_put_event(struct seq_oss_readq *q, union evrec *ev)
++{
++	int rc;
 +
-+		nskb = skb_copy(skb, GFP_ATOMIC);
-+		if (!nskb)
-+			return -ENOMEM;
-+
-+		nskb->mac_len = skb->mac_len;
-+		consume_skb(skb);
-+		skb = nskb;
++	scoped_guard(spinlock_irqsave, &q->lock) {
++		rc = snd_seq_oss_readq_put_event_locked(q, ev);
++		if (!rc)
++			wake_up(&q->midi_sleep);
 +	}
 +
- 	/* Redirect has already succeeded semantically at this point, so we just
- 	 * return 0 even if packet is dropped. Helper below takes care of
- 	 * freeing skb.
++	return rc;
++}
++
+ 
+ /*
+  * pop queue
+@@ -209,23 +228,31 @@ snd_seq_oss_readq_poll(struct seq_oss_readq *q, struct file *file, poll_table *w
+ int
+ snd_seq_oss_readq_put_timestamp(struct seq_oss_readq *q, unsigned long curt, int seq_mode)
+ {
+-	if (curt != q->input_time) {
+-		union evrec rec;
+-		memset(&rec, 0, sizeof(rec));
+-		switch (seq_mode) {
+-		case SNDRV_SEQ_OSS_MODE_SYNTH:
+-			rec.echo = (curt << 8) | SEQ_WAIT;
+-			snd_seq_oss_readq_put_event(q, &rec);
+-			break;
+-		case SNDRV_SEQ_OSS_MODE_MUSIC:
+-			rec.t.code = EV_TIMING;
+-			rec.t.cmd = TMR_WAIT_ABS;
+-			rec.t.time = curt;
+-			snd_seq_oss_readq_put_event(q, &rec);
+-			break;
++	int queued = 0;
++
++	scoped_guard(spinlock_irqsave, &q->lock) {
++		if (curt != q->input_time) {
++			union evrec rec;
++
++			memset(&rec, 0, sizeof(rec));
++			switch (seq_mode) {
++			case SNDRV_SEQ_OSS_MODE_SYNTH:
++				rec.echo = (curt << 8) | SEQ_WAIT;
++				queued = !snd_seq_oss_readq_put_event_locked(q, &rec);
++				break;
++			case SNDRV_SEQ_OSS_MODE_MUSIC:
++				rec.t.code = EV_TIMING;
++				rec.t.cmd = TMR_WAIT_ABS;
++				rec.t.time = curt;
++				queued = !snd_seq_oss_readq_put_event_locked(q, &rec);
++				break;
++			}
++			q->input_time = curt;
+ 		}
+-		q->input_time = curt;
+ 	}
++	if (queued)
++		wake_up(&q->midi_sleep);
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
