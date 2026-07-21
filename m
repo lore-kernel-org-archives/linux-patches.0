@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2613EBF02;
-	Tue, 21 Jul 2026 17:35:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FBAB46A61C;
+	Tue, 21 Jul 2026 17:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655328; cv=none; b=WImb+Xwo1Ei12Mui7c+h8D48yQ9cFcgHYyko5c5GhCQmLVEOefltyrslCd4fU/yKvv63jFrWD/qF8mbN7ZwC5ke/fTJbKGIlwhFctcEqwqvA3H4UMu+mltCNilTNPXW4qshBCjuQPN2MC+dpYzyql+mdr7jwh1ogy0KBL9SJFCw=
+	t=1784655331; cv=none; b=P/Kb4Jzf/+xcUDwZaQftTkneKs4Px/+Jo+kG62I+as5et5JiQcL0RczKsHptW5+0677V64ob3ToMl6Az6ha8horSBudgN5VxbkD2UprSWHF/EQM9bsBZWRhAOAwv6QurFpYKPdR1H17IpdgtK1tdi3LRSaf1NUswlhg51R/jsEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655328; c=relaxed/simple;
-	bh=cO6ElW2VHjdqON5JHJbep+g21b920BmAt1F+2kOYAI8=;
+	s=arc-20240116; t=1784655331; c=relaxed/simple;
+	bh=MFZMfbebD9O90lyRtUEg3E+WHwK3VvdGEXXC1HZMeOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nrWb1hdqky3O6wmztvEWHBiZjcLU11fdMBoQ8HrzSKNBXZ7XZsoGqhlMpT+i6f18gO2t2fEeD39QbsegsGrGfTnc9vIXoQIiYyR1MSPc7Fze2pZmHId6yvd7BFeCXSYaOJhIvOREbIL62+ZRE1VZSgYcH21F1yTI7lVMKSivsQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0o8Cu5LS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AZklGGVSGJLfTl7q/+hH6C6j7LtLtE0ymmiURz5yH/5QeovC3l9x2UHRpGQfKkYs1KvOruCDVbyq9GUgcDlezW8GRtOxEb091v3ZQNddsY1iXfRWZeft+yfyx7ZXrnp3MLMfR8Wv+Zm6b+buWovom1U255D023JZ5uFOBl20PD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gq7CCL0T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0o8Cu5LS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FBF51F000E9;
-	Tue, 21 Jul 2026 17:35:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gq7CCL0T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C754D1F000E9;
+	Tue, 21 Jul 2026 17:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655327;
-	bh=7qoFpTdsqVM46sX9BoBXxt4ekqGoilTm3nt12qqCQJ0=;
+	s=korg; t=1784655330;
+	bh=ggrPEDmL018Idpl3Clq/4oglyF3m8z07USzm+S0sB+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0o8Cu5LSsw6/daLJdt+Rh6PR3gE11g6Bm9bb5qWVLE2xPwjLbJ0oxcuI7kCY6X9JL
-	 IMrcyIXJ2y/u5d3al5qnAXncJJDGbjUqxYTODsZuuDjn5Ec7I8u2lSX3dI82AUkXwn
-	 T4QH/2MOTKiqFWnZTApvuYfoSj+S5Iad7TVQDAZ4=
+	b=gq7CCL0TFrh0uxGQOZMupDaOk1OL7nALENQDCOyqK4xSIsDmftAOnLembD9iIr8Rp
+	 Nxyjdm3yJj8TAnS1Mf6Lg2KE4anjpANVyCiA9DpLNp7GinYvquaUMATsl9Xb43c7cC
+	 Kr+y7Ws8bWmn1AWeDLNJqv/D5bLdezTjEbuJ2UK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Luke Wang <ziniu.wang_1@nxp.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 7.1 2043/2077] mmc: sdhci-esdhc-imx: fix resume error handling
-Date: Tue, 21 Jul 2026 17:28:36 +0200
-Message-ID: <20260721152640.883956500@linuxfoundation.org>
+	Sun Jian <sun.jian.kdev@gmail.com>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Eduard Zingerman <eddyz87@gmail.com>
+Subject: [PATCH 7.1 2044/2077] bpf: Reject negative const offsets for buffer pointers
+Date: Tue, 21 Jul 2026 17:28:37 +0200
+Message-ID: <20260721152640.905751962@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,63 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luke Wang <ziniu.wang_1@nxp.com>
+From: Sun Jian <sun.jian.kdev@gmail.com>
 
-commit e27c946b589c53520409a0956b33d52ef7a0898f upstream.
+commit fd4cfa8c8f9a17cdec0539334d28754bc1d8a5d9 upstream.
 
-Check pm_runtime_force_resume() return value in resume. If it fails
-(clock enable failure), return immediately since accessing hardware
-registers on an unclocked device would cause a kernel panic.
+The verifier rejects variable offsets for PTR_TO_TP_BUFFER and PTR_TO_BUF
+accesses, but it currently accepts a constant negative offset produced by
+pointer arithmetic.
 
-The early return intentionally skips enable_irq() and
-sdhci_disable_irq_wakeups() because the IRQ handler reads
-SDHCI_INT_STATUS, which would also fault without clocks. The PM runtime
-usage counter leak only affects this already-broken device instance and
-is an acceptable tradeoff to preserve system stability.
+Commit 022ac0750883 ("bpf: use reg->var_off instead of reg->off for
+pointers") moved constant pointer offsets from reg->off to reg->var_off.
+However, __check_buffer_access() continued to check only the instruction
+offset. An access with reg->var_off equal to -8 and an instruction offset
+of zero therefore passes verification.
 
-Remove the return value check for mmc_gpio_set_cd_wake(host->mmc, false)
-since disable_irq_wake() called internally always returns 0.
+For writable raw tracepoints, the access end is also calculated from the
+unsigned reg->var_off.value. An eight-byte access starting at -8 wraps
+the calculated end to zero, allowing the program to load and attach
+without increasing max_tp_access.
 
-Also return 0 explicitly on the success path instead of propagating
-stale return values.
+After ensuring that reg->var_off is constant, calculate the effective
+access start using signed arithmetic and reject it when it is negative.
+Use the validated start to calculate the access end for both
+PTR_TO_TP_BUFFER and PTR_TO_BUF.
 
-Fixes: 676a83855614 ("mmc: host: sdhci-esdhc-imx: refactor the system PM logic")
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Fixes: 022ac0750883 ("bpf: use reg->var_off instead of reg->off for pointers")
+Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
+Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Cc: stable@vger.kernel.org # 5.2.0
+Link: https://patch.msgid.link/20260714093846.18159-2-sun.jian.kdev@gmail.com
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-esdhc-imx.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/bpf/verifier.c |   31 +++++++++++++++++++------------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
 
---- a/drivers/mmc/host/sdhci-esdhc-imx.c
-+++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -2123,12 +2123,12 @@ static int sdhci_esdhc_resume(struct dev
- 			dev_warn(dev, "Failed to restore pinctrl state\n");
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -5559,14 +5559,11 @@ static int check_max_stack_depth(struct
+ static int __check_buffer_access(struct bpf_verifier_env *env,
+ 				 const char *buf_info,
+ 				 const struct bpf_reg_state *reg,
+-				 int regno, int off, int size)
++				 int regno, int off, int size,
++				 u32 *access_end)
+ {
+-	if (off < 0) {
+-		verbose(env,
+-			"R%d invalid %s buffer access: off=%d, size=%d\n",
+-			regno, buf_info, off, size);
+-		return -EACCES;
+-	}
++	s64 start;
++
+ 	if (!tnum_is_const(reg->var_off)) {
+ 		char tn_buf[48];
+ 
+@@ -5577,6 +5574,15 @@ static int __check_buffer_access(struct
+ 		return -EACCES;
  	}
  
--	pm_runtime_force_resume(dev);
--
--	ret = mmc_gpio_set_cd_wake(host->mmc, false);
-+	ret = pm_runtime_force_resume(dev);
- 	if (ret)
- 		return ret;
- 
-+	mmc_gpio_set_cd_wake(host->mmc, false);
++	start = (s64)reg->var_off.value + off;
++	if (start < 0) {
++		verbose(env,
++			"R%d invalid negative %s buffer offset: off=%d, var_off=%lld\n",
++			regno, buf_info, off, (s64)reg->var_off.value);
++		return -EACCES;
++	}
 +
- 	/* re-initialize hw state in case it's lost in low power mode */
- 	sdhci_esdhc_imx_hwinit(host);
- 
-@@ -2155,7 +2155,7 @@ static int sdhci_esdhc_resume(struct dev
- 
- 	pm_runtime_put_autosuspend(dev);
- 
--	return ret;
-+	return 0;
++	*access_end = start + size;
+ 	return 0;
  }
  
- static int sdhci_esdhc_runtime_suspend(struct device *dev)
+@@ -5584,14 +5590,14 @@ static int check_tp_buffer_access(struct
+ 				  const struct bpf_reg_state *reg,
+ 				  int regno, int off, int size)
+ {
++	u32 access_end;
+ 	int err;
+ 
+-	err = __check_buffer_access(env, "tracepoint", reg, regno, off, size);
++	err = __check_buffer_access(env, "tracepoint", reg, regno, off, size, &access_end);
+ 	if (err)
+ 		return err;
+ 
+-	env->prog->aux->max_tp_access = max(reg->var_off.value + off + size,
+-					    env->prog->aux->max_tp_access);
++	env->prog->aux->max_tp_access = max(access_end, env->prog->aux->max_tp_access);
+ 
+ 	return 0;
+ }
+@@ -5603,13 +5609,14 @@ static int check_buffer_access(struct bp
+ 			       u32 *max_access)
+ {
+ 	const char *buf_info = type_is_rdonly_mem(reg->type) ? "rdonly" : "rdwr";
++	u32 access_end;
+ 	int err;
+ 
+-	err = __check_buffer_access(env, buf_info, reg, regno, off, size);
++	err = __check_buffer_access(env, buf_info, reg, regno, off, size, &access_end);
+ 	if (err)
+ 		return err;
+ 
+-	*max_access = max(reg->var_off.value + off + size, *max_access);
++	*max_access = max(access_end, *max_access);
+ 
+ 	return 0;
+ }
 
 
