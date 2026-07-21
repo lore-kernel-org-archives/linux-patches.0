@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A6E3E49C4;
-	Tue, 21 Jul 2026 19:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378923E49C4;
+	Tue, 21 Jul 2026 19:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660418; cv=none; b=Str4gWeSv0Jj9mz7cTVCGYnznDWy4YAGQZdO+noz7h2FI4LerlrzpMABB3IHnTPLobEA/OWfSsgiiTgpQ/sTnpO1VPNSeDH89oVFsbCTipTkQJ0QCye64xGhd/6VE3FHPyZBtjka4b0Vkny3BJKrs/t1FQknNu924rEtiJux/U8=
+	t=1784660421; cv=none; b=Wn5uN7WItBA0F6Y8tpfv8oyy7lsYgkxDTJkEC9UqRqVKMo5yNXseKLCy+lpp3HQXKjjcO001hEy1g2SJ+YrsF/RzsohjS7jUPvaOtMPOBst+A2LG50KUl8lR0Y+ZNkHXUYgU9uxg8Pdfm5Waee8uRTVao9LxQ3yhcEy3t8jx5HY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660418; c=relaxed/simple;
-	bh=SpbC6Ymxfn5AtbK2lKqOK1SKCxwPm0tJKyNxOPvG0oA=;
+	s=arc-20240116; t=1784660421; c=relaxed/simple;
+	bh=UP/nDyhzWTf5skWmM3NOztHqRB4TYMxrBq7TxBZMIhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gxSqDPyO5YVUOavQH7x6tcrZGm73cxWGV1/jq0t/dIh1Y1TthL15Vq6JUjt/zx3K2tqoDHMWiR0Ts17n8TmvwxHXqBPooaq1ncdccyp60esOzt+ewDTnhDZ9aJyr39uMzJciDcxI/fdPd/Epb5mHvkHgFE5nAqBtJsEEjKUvbyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m488rfcq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sQ7SFYwYFIIpsb0/1Gbk03k4f03nLGVLiSmxgJfayUaxLWAf/7FCgT6dlKWU+ay3c7M5j3S32zLhxq/BoQ6eMB5bczfZmZl8TXSxkER8/q57DXnW0AUOYWeeGDlwlu/5HiCCO04efoKYLB5SnKgLpwG6YdA3ODpAF5n82Nf1TwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7GWXRCu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m488rfcq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE151F000E9;
-	Tue, 21 Jul 2026 19:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7GWXRCu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C361F000E9;
+	Tue, 21 Jul 2026 19:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660417;
-	bh=Cp62viXpvjpBtjI1tlNJp7IffVQXTeDSuKAUSpxLClo=;
+	s=korg; t=1784660420;
+	bh=4xM7JNDBcPqufNGDsr+41B0Ssfd0AKFXUkd7jmxhqC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m488rfcqHrap9mnXCwhjySEc8SzkunExwEat1Nvs4DCo9TFVx2eQAImnamUquU0U8
-	 RPvcxfH6Ql2wkcbYUw3WswRAU0NPn0Kj7zdhcLy7hkPYh1Hn0zBuGDtcM3YRfgkxUo
-	 LMdKpgiI/RcAvj+x4eczpPgNTlx2VVtYbgo4Ltt8=
+	b=j7GWXRCuSP0RF3JXBSq+FmQ7xbjOV91gG67Tq1xQW+5MgyNH5gbRNCnF5jSY2GlQa
+	 MGUSgJ04NcTs1jmrd7J/vAuNvVZASS7kjhtQfksc6nuK2zLvjyD3TMzRbQccPKxVTI
+	 J/GEfs3XKSEa2fhAw4rRr1XmJtzBu+a2wV0HMpMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Shuvam Pandey <shuvampandey1@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0965/2077] xprtrdma: Use sendctx DMA state for Send signaling
-Date: Tue, 21 Jul 2026 17:10:38 +0200
-Message-ID: <20260721152615.585346801@linuxfoundation.org>
+Subject: [PATCH 7.1 0974/2077] PCI: meson: Propagate devm_add_action_or_reset() failure
+Date: Tue, 21 Jul 2026 17:10:47 +0200
+Message-ID: <20260721152615.791795659@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,87 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Shuvam Pandey <shuvampandey1@gmail.com>
 
-[ Upstream commit 2797ae7c929610fb2d2303a996a08173fa096730 ]
+[ Upstream commit b12341b98d5ac52f48ca1390e1e371aed81346c8 ]
 
-Send signaling matters only when the prepared Send has page
-mappings to unmap. Today that test is expressed indirectly with
-rl_kref, because the Send-side reference is taken only for Sends
-with mapped SGEs.
+meson_pcie_probe_clock() enables a clock and then registers a devres
+action to disable it during teardown. If devm_add_action_or_reset()
+fails, it runs the action immediately, disabling the clock.
 
-Split the SGE DMA unmap loop into its own helper and use
-sc_unmap_count directly for the signaling decision. This keeps the
-current behavior but removes one dependency on the old rl_kref
-semantics before the request lifetime rules are changed.
+The return value is currently ignored, so on that failure path,
+meson_pcie_probe_clock() returns the disabled clock and probe continues.
+Return the error so the existing probe error path unwinds normally.
 
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
-Stable-dep-of: e786233d2e0b ("xprtrdma: Decouple req recycling from RPC completion")
+Fixes: 9c0ef6d34fdbf ("PCI: amlogic: Add the Amlogic Meson PCIe controller driver")
+Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/177909148011.9588.6639767953842842291@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/frwr_ops.c |  2 +-
- net/sunrpc/xprtrdma/rpc_rdma.c | 22 +++++++++++++---------
- 2 files changed, 14 insertions(+), 10 deletions(-)
+ drivers/pci/controller/dwc/pci-meson.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtrdma/frwr_ops.c b/net/sunrpc/xprtrdma/frwr_ops.c
-index 7f79a0a2601e65..e5c71cf705a33a 100644
---- a/net/sunrpc/xprtrdma/frwr_ops.c
-+++ b/net/sunrpc/xprtrdma/frwr_ops.c
-@@ -474,7 +474,7 @@ int frwr_send(struct rpcrdma_xprt *r_xprt, struct rpcrdma_req *req)
- 		++num_wrs;
+diff --git a/drivers/pci/controller/dwc/pci-meson.c b/drivers/pci/controller/dwc/pci-meson.c
+index 0694084f612b79..8d495bcc3a41ae 100644
+--- a/drivers/pci/controller/dwc/pci-meson.c
++++ b/drivers/pci/controller/dwc/pci-meson.c
+@@ -204,7 +204,9 @@ static inline struct clk *meson_pcie_probe_clock(struct device *dev,
+ 		return ERR_PTR(ret);
  	}
  
--	if ((kref_read(&req->rl_kref) > 1) || num_wrs > ep->re_send_count) {
-+	if (req->rl_sendctx->sc_unmap_count || num_wrs > ep->re_send_count) {
- 		send_wr->send_flags |= IB_SEND_SIGNALED;
- 		ep->re_send_count = min_t(unsigned int, ep->re_send_batch,
- 					  num_wrs - ep->re_send_count);
-diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
-index 0e0f219747109f..16b9987858d683 100644
---- a/net/sunrpc/xprtrdma/rpc_rdma.c
-+++ b/net/sunrpc/xprtrdma/rpc_rdma.c
-@@ -477,19 +477,11 @@ static void rpcrdma_sendctx_done(struct kref *kref)
- 	rep->rr_rxprt->rx_stats.reply_waits_for_send++;
+-	devm_add_action_or_reset(dev, meson_pcie_disable_clock, clk);
++	ret = devm_add_action_or_reset(dev, meson_pcie_disable_clock, clk);
++	if (ret)
++		return ERR_PTR(ret);
+ 
+ 	return clk;
  }
- 
--/**
-- * rpcrdma_sendctx_unmap - DMA-unmap Send buffer
-- * @sc: sendctx containing SGEs to unmap
-- *
-- */
--void rpcrdma_sendctx_unmap(struct rpcrdma_sendctx *sc)
-+static void rpcrdma_sendctx_dma_unmap(struct rpcrdma_sendctx *sc)
- {
- 	struct rpcrdma_regbuf *rb = sc->sc_req->rl_sendbuf;
- 	struct ib_sge *sge;
- 
--	if (!sc->sc_unmap_count)
--		return;
--
- 	/* The first two SGEs contain the transport header and
- 	 * the inline buffer. These are always left mapped so
- 	 * they can be cheaply re-used.
-@@ -498,7 +490,19 @@ void rpcrdma_sendctx_unmap(struct rpcrdma_sendctx *sc)
- 	     ++sge, --sc->sc_unmap_count)
- 		ib_dma_unmap_page(rdmab_device(rb), sge->addr, sge->length,
- 				  DMA_TO_DEVICE);
-+}
-+
-+/**
-+ * rpcrdma_sendctx_unmap - DMA-unmap Send buffer
-+ * @sc: sendctx containing SGEs to unmap
-+ *
-+ */
-+void rpcrdma_sendctx_unmap(struct rpcrdma_sendctx *sc)
-+{
-+	if (!sc->sc_unmap_count)
-+		return;
- 
-+	rpcrdma_sendctx_dma_unmap(sc);
- 	kref_put(&sc->sc_req->rl_kref, rpcrdma_sendctx_done);
- }
- 
 -- 
 2.53.0
 
