@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF90D3D1CCA;
-	Tue, 21 Jul 2026 17:08:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6030F3161BF;
+	Tue, 21 Jul 2026 17:08:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653706; cv=none; b=mQUfFs57T8raoqsSjBhcSs3cHP9okTt5EoT66Uy6/8txNxH7HITzkVjEu/MkKZ9P9uubOUuiiceJ1VdcZXqkkVSDLZF+4PRPhjeQVWmUYdvWAFP2l6EaTulPfHFU8kraHI2UeyIh/Wzkb8rN+Y1hI519FmvKLP1xWOmFAn7ir6g=
+	t=1784653709; cv=none; b=T2QkgwNGWOx+/UVT3GvOHFQIXel7C1ZcXuaXlQSdSbi1DPUH0delBLweFhohm1kyUsjWksZHK/VjHSqPDenJuduj7PvJxyDAnBLz3lTK+oe8BlaDvXDYRLAHYqXxvL1pHj97JvNI1tIszJ67htWOewqQyjpzv4JdWgNDZ4eeUBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653706; c=relaxed/simple;
-	bh=/4pkQmr8ZgxLVSAKJLJcoY5IW3ZlowPXO27YJdPzI8g=;
+	s=arc-20240116; t=1784653709; c=relaxed/simple;
+	bh=Z0TyRaQWnJiPQ1Eg7FFvOeXjitCWeBGOcmSnU8zCz3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sKU3W4LDwSEcSCAaIox6PM8gZYKcGe/VGKUWRkSU/3TATFcsaW8oS3K1Vt5IEr3IFePSFjABTQ/HeE7oRmAlivLbovyRUyY0pa+XEl3t1dZWj6xp2WteFRF9SDbd0+SZosARJWM0Pn/Q/fQX5Vnjix0+Bf0mbZhe+ySRV5ukUSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hNS6jei4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qALXniTrE3PGHISc700K5cFAmcybafMzCPqf27lmPKBYu2EhZRqZW789nYvmhx+ZLEb6hiUJpNF5HLO4pbEeyZq+zd4HvjO8k1g0Xe/g+UU5BvmzWwUrb1sZ/V+IESnims0xE+vchXIOXJD7Z2E8EoYqWgqyfh2nk134NOr4k88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEuXAdds; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hNS6jei4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E61A41F000E9;
-	Tue, 21 Jul 2026 17:08:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEuXAdds"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88FB81F000E9;
+	Tue, 21 Jul 2026 17:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653705;
-	bh=VtZecq02bgvTubddJV+vqQ1wUkw7t+SJ5KwebWvozR8=;
+	s=korg; t=1784653708;
+	bh=Z/AE6Gt6Z6DqQv4JR4vS1LUaxuyI4sP4ztL3DsGEVMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hNS6jei45XbIIaWD7+EqitbstpZJPrzf0Ulbb0RoIznD5EGHe4UEqhbQNROG2YcKi
-	 tWF1KJCG5QCz7/MzBXYhfvSlkRmTstU6T2rW70Ij8tDjIoHRmgOgQk/76Tts8G3toZ
-	 mPcMRT/SpNRjPP0EzLmG5yhIKLf22H4bRuJAsbk4=
+	b=tEuXAddsApVhmkD4JUNcK7uHhZFjXBLx3DNEcxpgLUTRkqT0TSy38X9A6MCOF418v
+	 3UdRhgnYaGj/OKrptPvguTF7+jokyij1S8XvTrytINgR0bDCY9o7MOizlN+u7wfdNb
+	 Lakf9OkmKlmv2JiRhpq4gSnRCDT5m+7kJAK/3fos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Wu <wufengwufengwufeng@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1426/2077] netfilter: xt_rateest: fix u64 truncation in xt_rateest_mt()
-Date: Tue, 21 Jul 2026 17:18:19 +0200
-Message-ID: <20260721152626.440476729@linuxfoundation.org>
+Subject: [PATCH 7.1 1386/2077] afs: Fix the volume AFS_VOLUME_RM_TREE is set on
+Date: Tue, 21 Jul 2026 17:17:39 +0200
+Message-ID: <20260721152625.506698976@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,37 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Wu <wufengwufengwufeng@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 444853cd438201007da5359821adcc2995655ab1 ]
+[ Upstream commit 56b4e4b26f84411d880f968a539207b0a8889c8c ]
 
-On links faster than ~34 Gbps, where byte rate may exceed 2^32-1
-(~ 4.3 GBps), the comparison result becomes incorrect because the
-truncated value no longer reflects the actual estimator rate.
+Fix afs_insert_volume_into_cell() to set AFS_VOLUME_RM_TREE on the volume
+replaced, not the new volume, as it's now removed from the cell's volume
+tree.  This will cause the old volume to be removed from the tree twice and
+the new volume never to be removed.
 
-Fix by changing the local variables to u64.
-
-Fixes: 1c0d32fde5bd ("net_sched: gen_estimator: complete rewrite of rate estimators")
-Signed-off-by: Feng Wu <wufengwufengwufeng@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 9a6b294ab496 ("afs: Fix use-after-free due to get/remove race in volume tree")
+Closes: https://sashiko.dev/#/patchset/20260618074903.2374756-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260622090856.2746629-21-dhowells@redhat.com
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_rateest.c | 2 +-
+ fs/afs/volume.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/xt_rateest.c b/net/netfilter/xt_rateest.c
-index b1d736c15fcbe5..7c05b63425784e 100644
---- a/net/netfilter/xt_rateest.c
-+++ b/net/netfilter/xt_rateest.c
-@@ -16,7 +16,7 @@ xt_rateest_mt(const struct sk_buff *skb, struct xt_action_param *par)
- {
- 	const struct xt_rateest_match_info *info = par->matchinfo;
- 	struct gnet_stats_rate_est64 sample = {0};
--	u_int32_t bps1, bps2, pps1, pps2;
-+	u64 bps1, bps2, pps1, pps2;
- 	bool ret = true;
+diff --git a/fs/afs/volume.c b/fs/afs/volume.c
+index 9ae5c8ad2e04b4..4f79d25ec37f4b 100644
+--- a/fs/afs/volume.c
++++ b/fs/afs/volume.c
+@@ -40,7 +40,7 @@ static struct afs_volume *afs_insert_volume_into_cell(struct afs_cell *cell,
+ 				goto found;
+ 			}
  
- 	gen_estimator_read(&info->est1->rate_est, &sample);
+-			set_bit(AFS_VOLUME_RM_TREE, &volume->flags);
++			set_bit(AFS_VOLUME_RM_TREE, &p->flags);
+ 			rb_replace_node_rcu(&p->cell_node, &volume->cell_node, &cell->volumes);
+ 		}
+ 	}
 -- 
 2.53.0
 
