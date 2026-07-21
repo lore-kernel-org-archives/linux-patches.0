@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349553368B8;
-	Tue, 21 Jul 2026 17:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D758A403AFB;
+	Tue, 21 Jul 2026 17:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655806; cv=none; b=Io6hGBnOdInJaOLWNdUpNlVaAtrIljsxqTQMAAB0U33U5Q1R1LVavcGNdD4jMFsiVTtVWnUzCaYLsqRkxHMmAvc+OSwLe2+AlHzd7FlekZxffPHq461AtbybOiVTGwZ/wUA2C5j3uZvyeSPaQhLuoc6kuHb8nXvJmY+cA6ug2rU=
+	t=1784655809; cv=none; b=UOK3ZbuxPUvCm0nPJ4gkBbZrjHaboz+MiUpKjLddKDNcOvsD8UA3kW2lJM2d3e47Z15v2Htr+rJx0c00jAl3hBUqjGHm5aMlOsncMQjQ806SUynGJiL/zxoGAPwNDPR9A1ee6gJn/pXxYtBZorumBK2okybvb9siBWWNCF69oZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655806; c=relaxed/simple;
-	bh=KABRrfZ/Wg7zCK73rREfkXbOlkzG6mMLzuoM3I2bKGc=;
+	s=arc-20240116; t=1784655809; c=relaxed/simple;
+	bh=TgYRk8F8H6/9VOEACpGdmDfu288nb4Ib+oqHZ35xnww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SRFRcI1C08+gr8RKwA5tAtFOU4ORGgKX9QWteFm1cjtN/3dZRIx+rBUf1/Gc7wVhPL88UCvtWfrviOsxGPXK085El3DcMGliNpFxhzenp6IGhCnuYq6QK22+bt6jvxYndryKQlo/ilzV4T5qDSbHkVjIz6C1F7rV7qQoWyoDKk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8kcSobi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uwed/uGdzW964Bn82/qXpIekfL5SLrXmqOGJ3dpzNBA0Q0Ps9e/mN6XH31avRP7bZytnxRZA5VOnDOPt8QRlEgA/Djv6e163nD2EPhhY55MDgsFp12m79WpkF3HjS1GYsXQ2OWQM44BRXoG2+Ew+8sTvcqzycCIe1UWp1O7J/58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LprfG9B0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8kcSobi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9446C1F00A3A;
-	Tue, 21 Jul 2026 17:43:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LprfG9B0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 419E01F000E9;
+	Tue, 21 Jul 2026 17:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655805;
-	bh=k/XIgrkc6su2EuLiusOi2WcuhI4rEjdfrnN6x2wC9BM=;
+	s=korg; t=1784655807;
+	bh=A6NQBYPvKgUMBQStkCT+Gou3l3gMXRoMIL8atm8eciI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D8kcSobi8HVhRaoz7WDZaPdU1RIpL35T8v9IN9Wb7FHg5x+U07yjIiH5f2wH92n9i
-	 CQ62s7z4tdeAChussDXGKZiZEQmzhok7JRk5F4FZk2+2JqEF7LgxVwWg9YYeIHgQah
-	 BPZ6+9QsdMB5W/b/qL4RFdt6KkM1sR7bHryCvy08=
+	b=LprfG9B06Z4DYxIDNixjK0HDC3nQdK+jYqMF7F4DVVSRZuf9JlEUUomMB72sQrsiN
+	 qnXuZVsRB6c5L6YbNa1gavBBt8iBMIVYoGQDxiQd+kkKSq2mgBe/jndYJXx1Wvy/3o
+	 +DD3ULTXMhG83x6TWKno/qUZH0103eGTh/qq4D7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
-	"Kevin Hilman (TI)" <khilman@baylibre.com>,
+	Lin He <helin52@huawei.com>,
+	Yongbang Shi <shiyongbang@huawei.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0095/1611] ARM: dts: am335x-sl50: Fix audio bitclock and frame master endpoint
-Date: Tue, 21 Jul 2026 17:03:31 +0200
-Message-ID: <20260721152516.982199726@linuxfoundation.org>
+Subject: [PATCH 6.18 0142/1611] drm/hisilicon/hibmc: move display contrl config to hibmc_probe()
+Date: Tue, 21 Jul 2026 17:04:18 +0200
+Message-ID: <20260721152518.069245937@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,48 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+From: Lin He <helin52@huawei.com>
 
-[ Upstream commit 2bc564f46b00dc4f4331fc337277ff3f5fac8a4e ]
+[ Upstream commit de2a56c71f9b223922ea8fe0192d3c1fa2954608 ]
 
-The cpu_endpoint in mcasp0 specifies the TLV320AIC3106 codec as the
-bitclock and frame master, but the phandles point to the codec's port
-node (codec_port) rather than its endpoint node (codec_endpoint).
+If there's no VGA output, this encoder modeset won't be called, which
+will cause displaying data from GPU being cut off. It's actually a
+common display config for DP and VGA, so move the vdac encoder modeset
+to driver load stage.
 
-audio-graph-card calls simple_util_parse_daifmt() with ep_codec set to
-the endpoint node (codec_endpoint). The function resolves the
-bitclock-master phandle and checks whether it equals ep_codec. Since
-codec_port is the parent of codec_endpoint, not the endpoint itself, the
-comparison always evaluates to false. This causes the mcasp0 CPU side to
-be silently configured as bitclock and frame master instead of the codec,
-which is the opposite of the intended configuration.
+Removed invalid bit configurations from `hibmc_display_ctrl`
 
-Fix by pointing bitclock-master and frame-master to codec_endpoint.
-
-Fixes: e5f89dbdebc5 ("ARM: dts: am335x-sl50: use audio-graph-card for sound")
-Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
-Link: https://patch.msgid.link/20260325223411.123666-1-jihed.chaibi.dev@gmail.com
-Signed-off-by: Kevin Hilman (TI) <khilman@baylibre.com>
+Fixes: 5294967f4ae4 ("drm/hisilicon/hibmc: Add support for VDAC")
+Signed-off-by: Lin He <helin52@huawei.com>
+Signed-off-by: Yongbang Shi <shiyongbang@huawei.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260509032302.2057227-4-shiyongbang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/ti/omap/am335x-sl50.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c   | 11 ++++++++++
+ .../gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c  | 22 -------------------
+ 2 files changed, 11 insertions(+), 22 deletions(-)
 
-diff --git a/arch/arm/boot/dts/ti/omap/am335x-sl50.dts b/arch/arm/boot/dts/ti/omap/am335x-sl50.dts
-index 1dc4e344efd63e..c5259eb7d21c7e 100644
---- a/arch/arm/boot/dts/ti/omap/am335x-sl50.dts
-+++ b/arch/arm/boot/dts/ti/omap/am335x-sl50.dts
-@@ -558,8 +558,8 @@ cpu_endpoint: endpoint {
- 			remote-endpoint = <&codec_endpoint>;
+diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
+index 481e5e62c30bf1..99b36de1fe1370 100644
+--- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
++++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
+@@ -215,6 +215,15 @@ void hibmc_set_current_gate(struct hibmc_drm_private *priv, unsigned int gate)
+ 	writel(gate, mmio + gate_reg);
+ }
  
- 			dai-format = "dsp_b";
--			bitclock-master = <&codec_port>;
--			frame-master = <&codec_port>;
-+			bitclock-master = <&codec_endpoint>;
-+			frame-master = <&codec_endpoint>;
- 			bitclock-inversion;
- 			clocks = <&audio_mclk>;
- 		};
++static void hibmc_display_ctrl(struct hibmc_drm_private *priv)
++{
++	u32 reg;
++
++	reg = readl(priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
++	reg |= HIBMC_DISPLAY_CONTROL_PANELDATE(1);
++	writel(reg, priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
++}
++
+ static void hibmc_hw_config(struct hibmc_drm_private *priv)
+ {
+ 	u32 reg;
+@@ -246,6 +255,8 @@ static void hibmc_hw_config(struct hibmc_drm_private *priv)
+ 	reg |= HIBMC_MSCCTL_LOCALMEM_RESET(1);
+ 
+ 	writel(reg, priv->mmio + HIBMC_MISC_CTRL);
++
++	hibmc_display_ctrl(priv);
+ }
+ 
+ static int hibmc_hw_map(struct hibmc_drm_private *priv)
+diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c
+index 2fcfa3246fd124..b9bd6d33fb0f7b 100644
+--- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c
++++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c
+@@ -88,26 +88,6 @@ static const struct drm_connector_funcs hibmc_connector_funcs = {
+ 	.atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
+ };
+ 
+-static void hibmc_encoder_mode_set(struct drm_encoder *encoder,
+-				   struct drm_display_mode *mode,
+-				   struct drm_display_mode *adj_mode)
+-{
+-	u32 reg;
+-	struct drm_device *dev = encoder->dev;
+-	struct hibmc_drm_private *priv = to_hibmc_drm_private(dev);
+-
+-	reg = readl(priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
+-	reg |= HIBMC_DISPLAY_CONTROL_FPVDDEN(1);
+-	reg |= HIBMC_DISPLAY_CONTROL_PANELDATE(1);
+-	reg |= HIBMC_DISPLAY_CONTROL_FPEN(1);
+-	reg |= HIBMC_DISPLAY_CONTROL_VBIASEN(1);
+-	writel(reg, priv->mmio + HIBMC_DISPLAY_CONTROL_HISILE);
+-}
+-
+-static const struct drm_encoder_helper_funcs hibmc_encoder_helper_funcs = {
+-	.mode_set = hibmc_encoder_mode_set,
+-};
+-
+ int hibmc_vdac_init(struct hibmc_drm_private *priv)
+ {
+ 	struct drm_device *dev = &priv->dev;
+@@ -130,8 +110,6 @@ int hibmc_vdac_init(struct hibmc_drm_private *priv)
+ 		goto err;
+ 	}
+ 
+-	drm_encoder_helper_add(encoder, &hibmc_encoder_helper_funcs);
+-
+ 	ret = drm_connector_init_with_ddc(dev, connector,
+ 					  &hibmc_connector_funcs,
+ 					  DRM_MODE_CONNECTOR_VGA,
 -- 
 2.53.0
 
