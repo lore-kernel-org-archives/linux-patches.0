@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86160403EA1;
-	Tue, 21 Jul 2026 22:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B8639768C;
+	Tue, 21 Jul 2026 22:16:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672164; cv=none; b=IzL5OvrAE+rN8RnTaBuIDxmG4I7craEV8a2Ly1v/SdPtAfIw80ywUUN9G3In1n/njXv53UOwtTStPTqWUiMQu9G++hPzEbnUpR8qgK/Iw/rVNK7QNjT2k29KU7zAF/xrfy8QRdTNC4wUTG6ZeLjIPqcNTa8KiW8zRFCpp4MCaeM=
+	t=1784672167; cv=none; b=g91JzOs0kMr1qfVb+NxpxFeXA+tDv29DD/lFHbhrY7Jh7hoxv4JcRB5wlerwsmkcIUfXkLpS0nyAvvW0QyfCYNhLZDbSybfVKqKf0yG2pdlOT1aG46OSZrAcVUK1qym9uZIJu99j7ZkNjLwzHzjjSbLEcmZtSpy57uLqFi4FBoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672164; c=relaxed/simple;
-	bh=nzV33Tps/u7f3ksoguRWAis/VdRmfw/Wx1K6LJmaCfA=;
+	s=arc-20240116; t=1784672167; c=relaxed/simple;
+	bh=lonbwLpQLlNPbPogPcz1H6sIIidyjX6uL/6NwlbkVb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lCV7wwce9l0tSe/TOYHp+6YZWRexwxG/gRZb71kTsQBEgU3+KGTuTX96Fce8IQyNRl/YFmjgQGjMh7SEgj0c2NvVxBfv7JDzYLEESU1Fdn8W8zY7581wuTAs/REHfaEeZmugY2nhnra0LS1xuVvMwDUri6jW5CO8mlHpCIzO4gA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNtVtGB3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eD8doitKk1COlhtqk+LBBs23AKsl3EULAPwsclxkEHCd5xGPjmAuJgPaawVew7CEUj6CtFB7zOXQ65RT76Qs+DrbdnkQySLRZAY/9UKsSDGyTUODC5D5Wthg4ruJk+gZyOcrrZjx6RVpCTs6jMrWYdEfv6NyUrx5rlvAF8GrWQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Udsk4aez; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNtVtGB3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB56F1F000E9;
-	Tue, 21 Jul 2026 22:16:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Udsk4aez"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DC41F000E9;
+	Tue, 21 Jul 2026 22:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672163;
-	bh=rIpioAq9B6loJjsGrkxTLln3NHuu7WTrNspTwZ4MgBs=;
+	s=korg; t=1784672166;
+	bh=DIcUOMZXPEnqh7Vel2l9p9sdQXvH17tWrvWq9+HLDWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XNtVtGB3O5Xfc8NysHyaUtRJqQhMD6nctIHjPmum65J0hEseSuV+AsN6CmiHxfNOc
-	 uwg1B7JCJNxCWqQV14Vj7ozOCi1hwmF5ECZ5c/yyedw3oDD/F/tq5EHqMw3GeuM8QU
-	 R5uBkQDR2epz1QV1Tqt8R8AbDxjWlSfA13bGzdf0=
+	b=Udsk4aezn9FNa/WHk8EYRtqqwv7pBSwTPkN5k0GXhANlXrtXctS4SjOpaB0qZRJFx
+	 CdptSXfEfZ4NmUH11AY4kIOX2YI1RIWVSFgmxXUhEB2CO7+5GWA032OKwxqAXLJLUJ
+	 K5atXEUxYD26FtsAlxDYs9rqqP51xMX/jjxMIh5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhixing Chen <running910@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 521/843] netfilter: ip6tables: mark malformed IPv6 extension headers for hotdrop
-Date: Tue, 21 Jul 2026 17:22:36 +0200
-Message-ID: <20260721152417.751104745@linuxfoundation.org>
+Subject: [PATCH 5.15 495/843] ipv6: remove RTNL protection from inet6_dump_fib()
+Date: Tue, 21 Jul 2026 17:22:10 +0200
+Message-ID: <20260721152417.169186663@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,74 +52,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhixing Chen <running910@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 43ccc20b5a733226417832cf16ef45322e594990 ]
+[ Upstream commit 5fc68320c1fb3c7d456ddcae0b4757326a043e6f ]
 
-The ah, hbh and rt matches check that the fixed extension header is
-present, then use the header length field to derive the advertised
-extension header length for matching.
+No longer hold RTNL while calling inet6_dump_fib().
 
-For the ah match, add the missing advertised-length check. For hbh
-and rt, update the existing advertised-length checks. In all three
-cases, set hotdrop to true before returning false when the advertised
-extension header length exceeds the available skb data.
+Also change return value for a completed dump,
+so that NLMSG_DONE can be appended to current skb,
+saving one recvmsg() system call.
 
-Returning false treats the packet as a rule mismatch. Set hotdrop to
-true and drop malformed packets so they cannot bypass rules intended
-to drop packets with these IPv6 extension headers.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Zhixing Chen <running910@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20240329183053.644630-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 9facb861dc6b ("ipv6: fib6: fix NULL deref in fib6_walk_continue() on multi-batch dump")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/netfilter/ip6t_ah.c  | 5 +++++
- net/ipv6/netfilter/ip6t_hbh.c | 1 +
- net/ipv6/netfilter/ip6t_rt.c  | 3 ++-
- 3 files changed, 8 insertions(+), 1 deletion(-)
+ net/ipv6/ip6_fib.c | 51 +++++++++++++++++++++++-----------------------
+ 1 file changed, 26 insertions(+), 25 deletions(-)
 
-diff --git a/net/ipv6/netfilter/ip6t_ah.c b/net/ipv6/netfilter/ip6t_ah.c
-index 70da2f2ce064ca..1258783ed87629 100644
---- a/net/ipv6/netfilter/ip6t_ah.c
-+++ b/net/ipv6/netfilter/ip6t_ah.c
-@@ -56,6 +56,11 @@ static bool ah_mt6(const struct sk_buff *skb, struct xt_action_param *par)
+diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
+index ba8fc26b86142f..3dbc6d582325c6 100644
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -620,23 +620,22 @@ static int inet6_dump_fib(struct sk_buff *skb, struct netlink_callback *cb)
+ 	struct rt6_rtnl_dump_arg arg = {
+ 		.filter.dump_exceptions = true,
+ 		.filter.dump_routes = true,
+-		.filter.rtnl_held = true,
++		.filter.rtnl_held = false,
+ 	};
+ 	const struct nlmsghdr *nlh = cb->nlh;
+ 	struct net *net = sock_net(skb->sk);
+-	unsigned int h, s_h;
+ 	unsigned int e = 0, s_e;
++	struct hlist_head *head;
+ 	struct fib6_walker *w;
+ 	struct fib6_table *tb;
+-	struct hlist_head *head;
+-	int res = 0;
++	unsigned int h, s_h;
++	int err = 0;
+ 
++	rcu_read_lock();
+ 	if (cb->strict_check) {
+-		int err;
+-
+ 		err = ip_valid_fib_dump_req(net, nlh, &arg.filter, cb);
+ 		if (err < 0)
+-			return err;
++			goto unlock;
+ 	} else if (nlmsg_len(nlh) >= sizeof(struct rtmsg)) {
+ 		struct rtmsg *rtm = nlmsg_data(nlh);
+ 
+@@ -651,8 +650,10 @@ static int inet6_dump_fib(struct sk_buff *skb, struct netlink_callback *cb)
+ 		 * 1. allocate and initialize walker.
+ 		 */
+ 		w = kzalloc(sizeof(*w), GFP_ATOMIC);
+-		if (!w)
+-			return -ENOMEM;
++		if (!w) {
++			err = -ENOMEM;
++			goto unlock;
++		}
+ 		w->func = fib6_dump_node;
+ 		cb->args[2] = (long)w;
+ 
+@@ -672,46 +673,46 @@ static int inet6_dump_fib(struct sk_buff *skb, struct netlink_callback *cb)
+ 		tb = fib6_get_table(net, arg.filter.table_id);
+ 		if (!tb) {
+ 			if (rtnl_msg_family(cb->nlh) != PF_INET6)
+-				goto out;
++				goto unlock;
+ 
+ 			NL_SET_ERR_MSG_MOD(cb->extack, "FIB table does not exist");
+-			return -ENOENT;
++			err = -ENOENT;
++			goto unlock;
+ 		}
+ 
+ 		if (!cb->args[0]) {
+-			res = fib6_dump_table(tb, skb, cb);
+-			if (!res)
++			err = fib6_dump_table(tb, skb, cb);
++			if (!err)
+ 				cb->args[0] = 1;
+ 		}
+-		goto out;
++		goto unlock;
  	}
  
- 	hdrlen = ipv6_authlen(ah);
-+	if (skb->len - ptr < hdrlen) {
-+		/* Packet smaller than its length field */
-+		par->hotdrop = true;
-+		return false;
-+	}
+ 	s_h = cb->args[0];
+ 	s_e = cb->args[1];
  
- 	pr_debug("IPv6 AH LEN %u %u ", hdrlen, ah->hdrlen);
- 	pr_debug("RES %04X ", ah->reserved);
-diff --git a/net/ipv6/netfilter/ip6t_hbh.c b/net/ipv6/netfilter/ip6t_hbh.c
-index 450dd53846a2f7..6d1a5d2026a678 100644
---- a/net/ipv6/netfilter/ip6t_hbh.c
-+++ b/net/ipv6/netfilter/ip6t_hbh.c
-@@ -75,6 +75,7 @@ hbh_mt6(const struct sk_buff *skb, struct xt_action_param *par)
- 	hdrlen = ipv6_optlen(oh);
- 	if (skb->len - ptr < hdrlen) {
- 		/* Packet smaller than it's length field */
-+		par->hotdrop = true;
- 		return false;
+-	rcu_read_lock();
+ 	for (h = s_h; h < FIB6_TABLE_HASHSZ; h++, s_e = 0) {
+ 		e = 0;
+ 		head = &net->ipv6.fib_table_hash[h];
+ 		hlist_for_each_entry_rcu(tb, head, tb6_hlist) {
+ 			if (e < s_e)
+ 				goto next;
+-			res = fib6_dump_table(tb, skb, cb);
+-			if (res != 0)
+-				goto out_unlock;
++			err = fib6_dump_table(tb, skb, cb);
++			if (err != 0)
++				goto out;
+ next:
+ 			e++;
+ 		}
  	}
+-out_unlock:
+-	rcu_read_unlock();
++out:
+ 	cb->args[1] = e;
+ 	cb->args[0] = h;
+-out:
+-	res = res < 0 ? res : skb->len;
+-	if (res <= 0)
++
++unlock:
++	rcu_read_unlock();
++	if (err <= 0)
+ 		fib6_dump_end(cb);
+-	return res;
++	return err;
+ }
  
-diff --git a/net/ipv6/netfilter/ip6t_rt.c b/net/ipv6/netfilter/ip6t_rt.c
-index 5561bd9cea8185..278b52752f3645 100644
---- a/net/ipv6/netfilter/ip6t_rt.c
-+++ b/net/ipv6/netfilter/ip6t_rt.c
-@@ -56,7 +56,8 @@ static bool rt_mt6(const struct sk_buff *skb, struct xt_action_param *par)
+ void fib6_metric_set(struct fib6_info *f6i, int metric, u32 val)
+@@ -2466,7 +2467,7 @@ int __init fib6_init(void)
+ 		goto out_kmem_cache_create;
  
- 	hdrlen = ipv6_optlen(rh);
- 	if (skb->len - ptr < hdrlen) {
--		/* Pcket smaller than its length field */
-+		/* Packet smaller than its length field */
-+		par->hotdrop = true;
- 		return false;
- 	}
+ 	ret = rtnl_register_module(THIS_MODULE, PF_INET6, RTM_GETROUTE, NULL,
+-				   inet6_dump_fib, 0);
++				   inet6_dump_fib, RTNL_FLAG_DUMP_UNLOCKED);
+ 	if (ret)
+ 		goto out_unregister_subsys;
  
 -- 
 2.53.0
