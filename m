@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B284307AD;
-	Tue, 21 Jul 2026 22:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E8F4307AD;
+	Tue, 21 Jul 2026 22:29:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672996; cv=none; b=LkX2KpMVQwYiBFMOutptLxZFoFOvrUWWqNwqiWT4XrrTfWxa13GDG1B4okQ/i3C/14K/1/QIJfym6cBGl0keGjbc/9yop/ziMcfS+NyTuSw1QItEcXnm+fGHRMP4BBdIpAxf9IrwSsVRtFciVX1B+S2+5LLa7cAVFR0imvInVAQ=
+	t=1784672998; cv=none; b=btx5K2LZcCBdyi/068PtpNX05XdMGISfA820tLTgVmcNgZA3txo2W+NPvN0uuaqe/0AvLlh8OOhpTOYoezfe+jPfBJfDsYVJX1cBcWBjODw5ZAQaY4oJWJR7kIyu6IpAPyzFhw2AmTeZuz+Mso3wFyoN3b7jB2a670XxVFYWKbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672996; c=relaxed/simple;
-	bh=kF9BaKVGCHq2A27NEobV5OxlRulRWVlYCVzTw+TdKA0=;
+	s=arc-20240116; t=1784672998; c=relaxed/simple;
+	bh=IKoXWe46OE8D9ec1ndmR1qYpQ1cEcC13RSr7Lx2Wss4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZLQfzlYE050Ry20nlb4Ucfn1bLymtP3l3TbCFFsh5m3/noAC1BvRo+4wCvTadwhaRoCvuVFxGQL9whkfkdp3g/NPvCTTUWfGw4+IpMFzkQNif5ODph74g6JWTvVpQ8Yg/Ml27F7ct4BE++s89r4aPk+NXSLgE2wI7FWF9bdcdZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yssdP59u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tg78sysDDTzmN9QZ/Kvz0hR7nW41+IN0k8sFDhOsWbMMQBUfFTDYntsfxdoKjkhsRJJ5U15DpjxgT08aCWBnfhdxJ9TwKy8f9f2EBc0WlGoj5ZtP5uS2sn+XhSoSuAGj5Y25UjjWQ3WwYkeHOv7A/jC4vujx4zg7pj1cjJVMNBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjPBQzDo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yssdP59u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F29E1F000E9;
-	Tue, 21 Jul 2026 22:29:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjPBQzDo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E848C1F000E9;
+	Tue, 21 Jul 2026 22:29:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672994;
-	bh=z30TvAsoiJtP+ug+iDqId2dg4hAcRlCb7DSvd0m6X/A=;
+	s=korg; t=1784672997;
+	bh=DUIuA50x0o4H6TH+eyrs5VD06oRu587gVATw/Zt2WpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yssdP59utEIh+qE4kjXbc1mrUS3W03ogEOK59EUvRn+xQeZgfFXUsK64JGv5OaKOf
-	 aytxTyAFeqhLiyVHg4d8Lfv9WXUbbhk7fmz/D9eyzriSKqp9sK6IdoVYJORqCykWrg
-	 MoRvTpDPmlWKkGftiXHvDMNxC/chIgztH1n742Po=
+	b=OjPBQzDoQObkXxj+w19GamuechsPLiMpNcP1WeOGjWaVYtcLpqLev576ANYS8cZ2i
+	 LTxOWEDgMDSnKTz7Nt0kxsQYGdmPEKeEKCH4b1Y8f7buKekLnx0xWjj8jO475c7jqE
+	 e60sIE+CeoWCgq3EMlJxdFJQ1fKT582/vlQKRXX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Oliver Upton <oupton@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 5.15 835/843] KVM: Move kvm_io_bus_get_dev() locking responsibilities to callers
-Date: Tue, 21 Jul 2026 17:27:50 +0200
-Message-ID: <20260721152424.864100156@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Christian Eggers <ceggers@arri.de>
+Subject: [PATCH 5.15 836/843] Bluetooth: L2CAP: Fix regressions caused by reusing ident
+Date: Tue, 21 Jul 2026 17:27:51 +0200
+Message-ID: <20260721152424.885128629@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,79 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 3a07249981629ace483ebbef81ef6b34c2d2afec upstream.
+commit 761fb8ec8778f0caf2bba5a41e3cff1ea86974f3 upstream.
 
-kvm_io_bus_get_dev() returns a device that is only matched by the
-address, and nothing else. This can cause a lifetime issue if
-the matched device is not the expected type, as by the time
-the caller can introspect the object, it might be gone (the srcu
-lock having been dropped).
+This attempt to fix regressions caused by reusing ident which apparently
+is not handled well on certain stacks causing the stack to not respond to
+requests, so instead of simple returning the first unallocated id this
+stores the last used tx_ident and then attempt to use the next until all
+available ids are exausted and then cycle starting over to 1.
 
-Given that there is only a single user of this helper, the simplest
-option is to move the locking responsibility to the caller, which
-can keep the srcu lock held for as long as it wants.
-
-Note that this aligns with other kvm_io_bus*() helpers, which
-already require the srcu lock to be held by the callers.
-
-Reported-by: Will Deacon <will@kernel.org>
-Fixes: 8a39d00670f07 ("KVM: kvm_io_bus: Add kvm_io_bus_get_dev() call")
-Link: https://lore.kernel.org/all/20260626111344.802555-1-maz@kernel.org
-Cc: stable@vger.kernel.org
-Reviewed-by: Oliver Upton <oupton@kernel.org>
-Link: https://patch.msgid.link/20260627105105.1005990-1-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221120
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221177
+Fixes: 6c3ea155e5ee ("Bluetooth: L2CAP: Fix not tracking outstanding TX ident")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Tested-by: Christian Eggers <ceggers@arri.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c |    2 ++
- virt/kvm/kvm_main.c            |   16 +++++-----------
- 2 files changed, 7 insertions(+), 11 deletions(-)
+ include/net/bluetooth/l2cap.h |    1 +
+ net/bluetooth/l2cap_core.c    |   29 ++++++++++++++++++++++++++---
+ 2 files changed, 27 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/kvm/vgic/vgic-its.c
-+++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -713,6 +713,8 @@ struct vgic_its *vgic_msi_to_its(struct
+--- a/include/net/bluetooth/l2cap.h
++++ b/include/net/bluetooth/l2cap.h
+@@ -692,6 +692,7 @@ struct l2cap_conn {
+ 	struct sk_buff		*rx_skb;
+ 	__u32			rx_len;
+ 	struct ida		tx_ida;
++	__u8			tx_ident;
  
- 	address = (u64)msi->address_hi << 32 | msi->address_lo;
+ 	struct sk_buff_head	pending_rx;
+ 	struct work_struct	pending_rx_work;
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -939,16 +939,39 @@ int l2cap_chan_check_security(struct l2c
  
-+	guard(srcu)(&kvm->srcu);
-+
- 	kvm_io_dev = kvm_io_bus_get_dev(kvm, KVM_MMIO_BUS, address);
- 	if (!kvm_io_dev)
- 		return ERR_PTR(-EINVAL);
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -5222,25 +5222,19 @@ struct kvm_io_device *kvm_io_bus_get_dev
- 					 gpa_t addr)
+ static int l2cap_get_ident(struct l2cap_conn *conn)
  {
- 	struct kvm_io_bus *bus;
--	int dev_idx, srcu_idx;
--	struct kvm_io_device *iodev = NULL;
-+	int dev_idx;
- 
--	srcu_idx = srcu_read_lock(&kvm->srcu);
-+	lockdep_assert_held(&kvm->srcu);
- 
- 	bus = srcu_dereference(kvm->buses[bus_idx], &kvm->srcu);
- 	if (!bus)
--		goto out_unlock;
-+		return NULL;
- 
- 	dev_idx = kvm_io_bus_get_first_dev(bus, addr, 1);
- 	if (dev_idx < 0)
--		goto out_unlock;
-+		return NULL;
- 
--	iodev = bus->range[dev_idx].dev;
++	u8 max;
++	int ident;
++
+ 	/* LE link does not support tools like l2ping so use the full range */
+ 	if (conn->hcon->type == LE_LINK)
+-		return ida_alloc_range(&conn->tx_ida, 1, 255, GFP_ATOMIC);
 -
--out_unlock:
--	srcu_read_unlock(&kvm->srcu, srcu_idx);
--
--	return iodev;
-+	return bus->range[dev_idx].dev;
++		max = 255;
+ 	/* Get next available identificator.
+ 	 *    1 - 128 are used by kernel.
+ 	 *  129 - 199 are reserved.
+ 	 *  200 - 254 are used by utilities like l2ping, etc.
+ 	 */
+-	return ida_alloc_range(&conn->tx_ida, 1, 128, GFP_ATOMIC);
++	else
++		max = 128;
++
++	/* Allocate ident using min as last used + 1 (cyclic) */
++	ident = ida_alloc_range(&conn->tx_ida, READ_ONCE(conn->tx_ident) + 1,
++				max, GFP_ATOMIC);
++	/* Force min 1 to start over */
++	if (ident <= 0) {
++		ident = ida_alloc_range(&conn->tx_ida, 1, max, GFP_ATOMIC);
++		if (ident <= 0) {
++			/* If all idents are in use, log an error, this is
++			 * extremely unlikely to happen and would indicate a bug
++			 * in the code that idents are not being freed properly.
++			 */
++			BT_ERR("Unable to allocate ident: %d", ident);
++			return 0;
++		}
++	}
++
++	WRITE_ONCE(conn->tx_ident, ident);
++
++	return ident;
  }
- EXPORT_SYMBOL_GPL(kvm_io_bus_get_dev);
  
+ static void l2cap_send_cmd(struct l2cap_conn *conn, u8 ident, u8 code, u16 len,
 
 
