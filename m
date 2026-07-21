@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80AEE46A610;
-	Tue, 21 Jul 2026 15:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85ED146C4CF;
+	Tue, 21 Jul 2026 15:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649120; cv=none; b=QCk8Lh/D1Y2EUZ0NSEsvb2W/UMCvJMukwET2D+i0VczrKwyjR/eqz5H+gQhCiLibrpla6Wt1LMItbyFh8LPp1mZ9qiShJSkZ9If8/H4XPMl3bdqQud1w/tWts4IiRtA4rtV7+NPG+ZuBeJeyMrPzOnVmD3ENp7iHju3VQbTYsV8=
+	t=1784649123; cv=none; b=DoG0gGiaS02m/gJGg2ToNUbMLcTTPibytkqyRib9aXL9jUTNK7n+4DxvF19SxVV4VT/6pvDT/wz2UuUeE7eAmkNlgKorfILb7QbQKFBUEnQqKvwdu+/6O4VfgiGhjaRh933UEO0bZiFPc85WA7e3bluKyHmYOFbF7YjvitvMDP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649120; c=relaxed/simple;
-	bh=FpI4Pioko5SMjA9vgg36HTHiKRMS3hVJwu370tRK1jw=;
+	s=arc-20240116; t=1784649123; c=relaxed/simple;
+	bh=HuoZM/9tM4z1+lIuAogivMmfHVHQtw+VKri6xvzwzAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a9F3QniRvwTA1lH62CnZLpKd5XpjARQwHNGHX0tJvX98wW2mCLuUeTc6P4zmNzH2JkDyvc7tEZJ26H416Do7kz716ZYVhYaGgspiaAQKCMCyJmJKkfUonhQ+46ytQptYHF6whqWerVVw5sTXh0IYpx1ArXOIvmmmygFyg9LD7zM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2KwvxZUu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qg+lNVTFUFF4IJV37QI+LIzltlUvyzHjnm55t1g0jqVlvebI32y/mw3rs7GOWrqXpwBX7IdCmpBlOmo+3IVLhLJD5I3xdPzeTkr4iGTUmvvu0IJXFBvVGSUXuH4q4oTEZn3cH3oiClKgcG4l4dXsCSt5vkET23s+iklie5aakMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kk7FjAcj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2KwvxZUu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C70771F000E9;
-	Tue, 21 Jul 2026 15:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kk7FjAcj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9B01F00A3A;
+	Tue, 21 Jul 2026 15:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649118;
-	bh=/1GOXeTFoyqvWVstXvjjSacmfSpUQ/fyln7uQDH7vk8=;
+	s=korg; t=1784649121;
+	bh=tTIY2U1jKdQCL3EZpBjkY2Io29RNlEf/tKNChRVzxVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2KwvxZUuNFVz8ntBWJA9/rjsDqUcqfmoJJBZ42fTlNAv3oEWYJzxu0Rdc07vmVGWc
-	 killUoJkB/sZqFjAQ94oUj69J2gIqAFQXPc2eL3uZ3a+CKz441bdEIG/iaP6uKsDxh
-	 hYgHXNIb2RGSDB6ZVw2oDDbOdF4+gKjXw3yPFlaQ=
+	b=Kk7FjAcj2EaoH/CzNJW5xIqRcvt24VxBAqivN0SyP0RDtdtKiwKRVkqrBCiw1vFUO
+	 8MAit/acltOaF/PrxzZvMgVxlBwSq5yYRmv9s2mxj4ou3zISqcuQO5O+DhXs+6UzXz
+	 JxJolgqGuhEQURhbHdjSEdA4xoKXUu4G5690gh6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
+	John Madieu <john.madieu.xa@bp.renesas.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0413/2077] spi: imx: replace dmaengine_terminate_all() with dmaengine_terminate_sync()
-Date: Tue, 21 Jul 2026 17:01:26 +0200
-Message-ID: <20260721152602.475010421@linuxfoundation.org>
+Subject: [PATCH 7.1 0414/2077] ASoC: rsnd: Fix RSND_SOC_MASK width to single nibble
+Date: Tue, 21 Jul 2026 17:01:27 +0200
+Message-ID: <20260721152602.499895378@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,78 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Song <carlos.song@nxp.com>
+From: John Madieu <john.madieu.xa@bp.renesas.com>
 
-[ Upstream commit 4503b2fe761c2bfd33ed043d9b9deec0d1eb40e0 ]
+[ Upstream commit c0758279367e9d82eb7d7b4959718d7d32e96b7d ]
 
-dmaengine_terminate_all() has been deprecated, so replace it with
-dmaengine_terminate_sync().
+RSND_SOC_MASK was defined as (0xFF << 4), spanning bits 4-11. This is
+wider than needed since only nibble B (bits 7:4) is used for SoC
+identifiers. Narrow it to (0xF << 4) to match the intended single-nibble
+allocation and prevent overlap with bits 8-11 which will be used by
+upcoming RZ series flags.
 
-Fixes: ba9b28652c75 ("spi: imx: enable DMA mode for target operation")
-Fixes: a450c8b77f92 ("spi: imx: handle DMA submission errors with dma_submit_error()")
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Link: https://patch.msgid.link/20260525062928.3191821-1-carlos.song@oss.nxp.com
+No functional change, since the only current user (RSND_SOC_E) fits
+within a single nibble.
+
+Fixes: ba164a49f8f7 ("ASoC: rsnd: src: Avoid a potential deadlock")
+Signed-off-by: John Madieu <john.madieu.xa@bp.renesas.com>
+Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/20260525110230.4014435-3-john.madieu.xa@bp.renesas.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-imx.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ sound/soc/renesas/rcar/rsnd.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
-index 480d1e8b281f19..ae9912905c67ad 100644
---- a/drivers/spi/spi-imx.c
-+++ b/drivers/spi/spi-imx.c
-@@ -1774,8 +1774,8 @@ static int spi_imx_dma_submit(struct spi_imx_data *spi_imx,
- 							transfer_timeout);
- 		if (!time_left) {
- 			dev_err(spi_imx->dev, "I/O Error in DMA TX\n");
--			dmaengine_terminate_all(controller->dma_tx);
--			dmaengine_terminate_all(controller->dma_rx);
-+			dmaengine_terminate_sync(controller->dma_tx);
-+			dmaengine_terminate_sync(controller->dma_rx);
- 			return -ETIMEDOUT;
- 		}
+diff --git a/sound/soc/renesas/rcar/rsnd.h b/sound/soc/renesas/rcar/rsnd.h
+index 04c70690f7a258..3e666125959b47 100644
+--- a/sound/soc/renesas/rcar/rsnd.h
++++ b/sound/soc/renesas/rcar/rsnd.h
+@@ -624,7 +624,7 @@ struct rsnd_priv {
+ #define RSND_GEN2	(2 << 0)
+ #define RSND_GEN3	(3 << 0)
+ #define RSND_GEN4	(4 << 0)
+-#define RSND_SOC_MASK	(0xFF << 4)
++#define RSND_SOC_MASK	(0xF << 4)
+ #define RSND_SOC_E	(1 << 4) /* E1/E2/E3 */
  
-@@ -1784,7 +1784,7 @@ static int spi_imx_dma_submit(struct spi_imx_data *spi_imx,
- 		if (!time_left) {
- 			dev_err(&controller->dev, "I/O Error in DMA RX\n");
- 			spi_imx->devtype_data->reset(spi_imx);
--			dmaengine_terminate_all(controller->dma_rx);
-+			dmaengine_terminate_sync(controller->dma_rx);
- 			return -ETIMEDOUT;
- 		}
- 	} else {
-@@ -1793,15 +1793,15 @@ static int spi_imx_dma_submit(struct spi_imx_data *spi_imx,
- 		if (wait_for_completion_interruptible(&spi_imx->dma_tx_completion) ||
- 		    READ_ONCE(spi_imx->target_aborted)) {
- 			dev_dbg(spi_imx->dev, "I/O Error in DMA TX interrupted\n");
--			dmaengine_terminate_all(controller->dma_tx);
--			dmaengine_terminate_all(controller->dma_rx);
-+			dmaengine_terminate_sync(controller->dma_tx);
-+			dmaengine_terminate_sync(controller->dma_rx);
- 			return -EINTR;
- 		}
- 
- 		if (wait_for_completion_interruptible(&spi_imx->dma_rx_completion) ||
- 		    READ_ONCE(spi_imx->target_aborted)) {
- 			dev_dbg(spi_imx->dev, "I/O Error in DMA RX interrupted\n");
--			dmaengine_terminate_all(controller->dma_rx);
-+			dmaengine_terminate_sync(controller->dma_rx);
- 			return -EINTR;
- 		}
- 
-@@ -1818,9 +1818,9 @@ static int spi_imx_dma_submit(struct spi_imx_data *spi_imx,
- 	return 0;
- 
- dmaengine_terminate_tx:
--	dmaengine_terminate_all(controller->dma_tx);
-+	dmaengine_terminate_sync(controller->dma_tx);
- dmaengine_terminate_rx:
--	dmaengine_terminate_all(controller->dma_rx);
-+	dmaengine_terminate_sync(controller->dma_rx);
- 
- 	return -EINVAL;
- }
+ 	/*
 -- 
 2.53.0
 
