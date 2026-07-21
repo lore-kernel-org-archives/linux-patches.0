@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88B6471401;
-	Tue, 21 Jul 2026 17:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76943471401;
+	Tue, 21 Jul 2026 17:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656287; cv=none; b=Wq4G9PcE5WXW6fenwOopetCcuNfARK8sRgmB6LyBJxm5PrmCs77O52QyZP65qXY4LDUQrLI14UWxPT+5RUhc2NyzWQmdmTNlMybtYm+S6tTv4ov5hp8f3jL3F9iPmcLsD5KrLA5vTTixke+VcZit3Y81CQftar6WLETsMrnWQrY=
+	t=1784656290; cv=none; b=aMZVtj2E4mqGaT3N5F3GjDLNFSy+SIdD0ip1Rhz3NCryM7N8IM+9kWczwY1VcMhWM9xNIxXGIsMzQQKuh/nmUATPivJvVPoo2Cws9d/BNuLy6ypIDePWNH20S+3dNpcH4xh9Ag/R4ovSg8HQHwo1NBxcmaGNZBnIPhmRj+pLoiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656287; c=relaxed/simple;
-	bh=t/uOhgY5yYrk3sHvarFI3GZ4dI1zxyyZmCvhFXMkhcg=;
+	s=arc-20240116; t=1784656290; c=relaxed/simple;
+	bh=3Gtco67zeA43O38ETlAD4XXk2A5H25ZFcgLOlAoN/C8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tjp+aXEUSlJo2DGiis0ZfPXHmQofwJ2NJpNYgRsTIBmdAoRdVSCzs5YNTi1TnV2rEZ6hK2jVkS99jVBPIkc3DRHkBGvLNPPZ33d8PYCjnv26+JhiZ6bDte48ivv1LszO/fLpIkYNjdQWvjWkU3mslGOd8FqDZ5WUV5F+GklAQio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WteMVfru; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RR0IzwPE1bz+aAOA+oG7lWoZQZWCXBa9COLZS+gKQCISSJWvpRsG44492Bv6SpzzjSAvg3d0uSJAv2isNpx453V6nC5krHAchjMIF+k/iyPuJZGaCaFMMhQ+utqhCVe0vR34FPDoENQQrBLIIa5IcL1wqp71zKzS3pmgiugTqmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjNr0E9z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WteMVfru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA3A1F000E9;
-	Tue, 21 Jul 2026 17:51:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjNr0E9z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D80251F000E9;
+	Tue, 21 Jul 2026 17:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656286;
-	bh=zTFty6OrDZ9tebjrXfRrmVQOVzkQJdXZEqDBWmRfLGQ=;
+	s=korg; t=1784656289;
+	bh=OYKhfDD3b1AY+hW+RiuF5bsYfkZN11xKorL5o+Uwh+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WteMVfruB1kS6i47mgJMz6jAYREbeABk9TlYMRWMfUwBKThMIKaXioajFmSESReC5
-	 xwSzFFxmymNHKsdBz32A7fAqoJKekwi79JRO47NUho8hErmXSBAsQi2NUtXpSO6dFd
-	 /9/viMAJccCG3j/BTiOzXWqOPa+KJtjG8GCImGbM=
+	b=hjNr0E9zzbPwGdvRNRTxEARWAkEi3ZgcWRlok1rjYBxkRbwwgZ5mehXrs7r5Mi1eN
+	 RKOnpm6Bx5Id2HxdFAcqnrUiffOM8LAUipmGyoF/oEgjYJy/xVXuvgeQjQudqGy0xQ
+	 NXdr4nplLzVAqYjDLwnXv3JFlRyQ+fsxVptfaF9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0287/1611] libbpf: Skip hash computation when loader generation failed
-Date: Tue, 21 Jul 2026 17:06:43 +0200
-Message-ID: <20260721152521.516060431@linuxfoundation.org>
+Subject: [PATCH 6.18 0288/1611] libbpf: Skip endianness swap when loader generation failed
+Date: Tue, 21 Jul 2026 17:06:44 +0200
+Message-ID: <20260721152521.539050616@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,59 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 3c5e2f1a85844abbb65df4694f5ebad0a13e219c ]
+[ Upstream commit 41300d032a1b1d91a3ed996ad21905463e344beb ]
 
-bpf_gen__finish() calls compute_sha_update_offsets() gated only on
-the gen_hash option, without first consulting gen->error. On a failed
-generation this is buggy: a failed realloc_data_buf() sets gen->data_start
-to NULL (leaving gen->data_cur dangling), so compute_sha_update_offsets()
-runs libbpf_sha256() over a NULL buffer with a bogus length; a failed
-realloc_insn_buf() likewise sets gen->insn_start to NULL and the hash
-immediates get patched through that NULL base.
+bpf_gen__prog_load() byte-swaps the program insns and the {func,line}_info
+and CO-RE relo blobs in place for cross-endian targets. The blob offsets
+come from add_data(), which returns 0 on failure: realloc_data_buf() either
+frees and NULLs gen->data_start (realloc OOM) or returns early on an
+already-latched gen->error, leaving a stale, possibly too-small buffer.
 
-The computed program is discarded in either case, since the following
-"if (!gen->error)" block does not publish opts->insns once an error is
-set. Thus, skip the hash pass when generation has already failed.
+Neither bswap site checked for this. With gen->swapped_endian set and a
+failed generation, "gen->data_start + off" becomes NULL + 0. Guard the
+same way via !gen->error so they are skipped once generation has failed.
 
-Fixes: ea923080c145 ("libbpf: Embed and verify the metadata hash in the loader")
+Fixes: 8ca3323dce43 ("libbpf: Support creating light skeleton of either endianness")
 Reported-by: sashiko <sashiko@sashiko.dev>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260529094119.307264-2-daniel@iogearbox.net
+Link: https://lore.kernel.org/r/20260529162829.315921-1-daniel@iogearbox.net
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/gen_loader.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tools/lib/bpf/gen_loader.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
-index cd5c2543f54d85..b2e8b4224640f8 100644
+index b2e8b4224640f8..637b26d1100bbd 100644
 --- a/tools/lib/bpf/gen_loader.c
 +++ b/tools/lib/bpf/gen_loader.c
-@@ -398,13 +398,12 @@ int bpf_gen__finish(struct bpf_gen *gen, int nr_progs, int nr_maps)
- 			      blob_fd_array_off(gen, i));
- 	emit(gen, BPF_MOV64_IMM(BPF_REG_0, 0));
- 	emit(gen, BPF_EXIT_INSN());
--	if (OPTS_GET(gen->opts, gen_hash, false))
--		compute_sha_update_offsets(gen);
--
--	pr_debug("gen: finish %s\n", errstr(gen->error));
- 	if (!gen->error) {
- 		struct gen_loader_opts *opts = gen->opts;
+@@ -1054,7 +1054,7 @@ void bpf_gen__prog_load(struct bpf_gen *gen,
+ 		 prog_idx, prog_type, insns_off, insn_cnt, license_off);
  
-+		if (OPTS_GET(opts, gen_hash, false))
-+			compute_sha_update_offsets(gen);
-+
- 		opts->insns = gen->insn_start;
- 		opts->insns_sz = gen->insn_cur - gen->insn_start;
- 		opts->data = gen->data_start;
-@@ -419,6 +418,7 @@ int bpf_gen__finish(struct bpf_gen *gen, int nr_progs, int nr_maps)
- 				bpf_insn_bswap(insn++);
- 		}
- 	}
-+	pr_debug("gen: finish %s\n", errstr(gen->error));
- 	return gen->error;
- }
+ 	/* convert blob insns to target endianness */
+-	if (gen->swapped_endian) {
++	if (gen->swapped_endian && !gen->error) {
+ 		struct bpf_insn *insn = gen->data_start + insns_off;
+ 		int i;
  
+@@ -1092,7 +1092,7 @@ void bpf_gen__prog_load(struct bpf_gen *gen,
+ 		 sizeof(struct bpf_core_relo));
+ 
+ 	/* convert all info blobs to target endianness */
+-	if (gen->swapped_endian)
++	if (gen->swapped_endian && !gen->error)
+ 		info_blob_bswap(gen, func_info, line_info, core_relos, load_attr);
+ 
+ 	libbpf_strlcpy(attr.prog_name, prog_name, sizeof(attr.prog_name));
 -- 
 2.53.0
 
