@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71DE2F25E4;
-	Tue, 21 Jul 2026 20:04:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691E546D56D;
+	Tue, 21 Jul 2026 20:05:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664301; cv=none; b=o0/3zsncAhWKeD7JpFywdVJ9zGFyyNp9HPk8560Hmyn/D2ueJQPChakaE/VPzwx/88QLdbJcAtbLdpLM+q5qtf1u4YsxR/AEn9q81BQ89SxR8z3AHeuMG0ZTpX3QYFClDogyfECXXL/fjiKaO4+SXatlUWLDy87K7AxfWLGA8hM=
+	t=1784664303; cv=none; b=Q1p3SeHjNBIHgp1huYZEwzpQoORCZ6xR+pikX+dvNrheAN8o2KMjZiZU1rF0GWSFdCxdunh1TwJ1JcNUJNSfTkp2LJv8dWu3TCEI1AX61XIhB4FGS0Hjamm1gidbDbCg1S6j31ptFMVb4CFtnuUdcI3Axs2oISKPWljv7SyEC/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664301; c=relaxed/simple;
-	bh=4Tn9mSmoog8SgSXAmRc0OHn2oU/oMTqixW0cGjWq4zc=;
+	s=arc-20240116; t=1784664303; c=relaxed/simple;
+	bh=ZJZanmYtXT4M0gIv5SntTPLRN604Ldw/kq1u8vLJbog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AS17iCxLZm8ifQZYxYnbeS/4nmtxLe/oF79apD1cjWt2uhCwlzbAwgLMxnL3sJh1i0QWKNoK2X5lurSndCwXsVijELMQLEi3Qr0h+a3q+cfgjOrlulCuyCdyPPz4KQOgdDPAweHmB2nSKNu2KFZ8HA/dpyqhcbIvG7U5iNgjIE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bWeBUYKo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TlbIpl53D8Ht4OHvrpRhB0AZ3u6XnPdkM6w31tkZXsVDG0fafyS8W7iYF4DLwH5xQ66ezmZzvmvwX47DXLDLdFY2xViD3sB1WQHMtOAK1dhA5NuOtBbwmSrTNERi44NgKP6wi4+EQEX39ntGX7cI03LkOomW6Hy/vNY925okSYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9CkN2hf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bWeBUYKo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 568161F000E9;
-	Tue, 21 Jul 2026 20:04:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9CkN2hf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D4B1F000E9;
+	Tue, 21 Jul 2026 20:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664299;
-	bh=TyEpVE0sIpPNz40YM7akeX6mrghm4Y8EUeObRNu7mCk=;
+	s=korg; t=1784664302;
+	bh=13c+OHQX9egE8PGvmY8WnqoHXwa/VchDyM3g63BbYiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bWeBUYKoxeVgiyKAx5RPQYaqau6YDJ770la4MaGtOGo11fjwoKpjqKscSbfKsQeiy
-	 eJ1rHL1Aqq4UR3Qj/XgZjTSYZiL8IQblxgDiLkSqCu0JDDxXdbkjpYXWWLahqxqNjF
-	 PzojlukoYPBS03jet0UXIlwEalCj2OxrpGu3cz/E=
+	b=U9CkN2hfeEeM5DNceuOBcO/lgEZY6+FKvhxVCGhMBOMiQfoU1SOz+lCAyKuAc6E5r
+	 fQkvgSdIxQWhRwcd8qZBCkMdLSvEWeVTNrso6i3Ehy1B1DhpBLAq0IncbkxwmaGKIF
+	 xQPK+338bsMoJ3EHCeMabNzTpW4p5tzvW6sibfsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahesh Vaidya <mahesh.vaidya@altera.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	"Subhransu S. Prusty" <subhransu.sekhar.prusty@altera.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1146/1276] PCI: altera: Fix resource leaks on probe failure
-Date: Tue, 21 Jul 2026 17:26:29 +0200
-Message-ID: <20260721152511.653503377@linuxfoundation.org>
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 6.12 1147/1276] PCI: controller: Use dev_fwnode() instead of of_fwnode_handle()
+Date: Tue, 21 Jul 2026 17:26:30 +0200
+Message-ID: <20260721152511.676852520@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,96 +52,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahesh Vaidya <mahesh.vaidya@altera.com>
+From: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
 
-[ Upstream commit 7a94138caeb27f3c49c1dbd93bf422098925bb28 ]
+[ Upstream commit a103d2dede5683dabbac2c3374bc24b6a9434478 ]
 
-The chained IRQ handler is set during probe, but is only removed during the
-driver remove(). If pci_host_probe() fails, the handler and INTx IRQ
-domain remain set even though the devm-managed host bridge storage
-containing struct altera_pcie will be released, leaving the handler with
-a stale data pointer.
+All irq_domain functions now accept fwnode instead of of_node. But many
+PCI controllers still extract dev to of_node and then of_node to fwnode.
 
-Interrupts are also enabled before pci_host_probe() is called. If probe
-fails after that point, the controller interrupt source should be disabled
-before the chained handler and INTx domain are removed.
+Instead, clean this up and simply use the dev_fwnode() helper to extract
+fwnode directly from dev. Internally, it still does dev => of_node =>
+fwnode steps, but it's now hidden from the users.
 
-So set the chained handler only after the INTx domain has been created.
-Disable controller interrupts during IRQ teardown, and tear the IRQ setup
-down if pci_host_probe() fails.
+In the case of altera, this also removes an unused 'node' variable that is
+only used when CONFIG_OF is enabled:
 
-Fixes: c63aed7334c2 ("PCI: altera: Use pci_host_probe() to register host")
-Signed-off-by: Mahesh Vaidya <mahesh.vaidya@altera.com>
-[mani: commit log]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Subhransu S. Prusty <subhransu.sekhar.prusty@altera.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260430204330.3121003-3-mahesh.vaidya@altera.com
+  drivers/pci/controller/pcie-altera.c: In function 'altera_pcie_init_irq_domain':
+  drivers/pci/controller/pcie-altera.c:855:29: error: unused variable 'node' [-Werror=unused-variable]
+    855 |         struct device_node *node = dev->of_node;
+
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>	# altera
+[bhelgaas: squash together, rebase to precede msi-parent]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20250521163329.2137973-1-arnd@kernel.org
+Link: https://patch.msgid.link/20250611104348.192092-16-jirislaby@kernel.org
+Link: https://patch.msgid.link/20250723065907.1841758-1-jirislaby@kernel.org
+Stable-dep-of: f865a57896bd ("PCI: mediatek: Fix IRQ domain leak when port fails to enable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-altera.c |   28 ++++++++++++++++++++++++++--
- 1 file changed, 26 insertions(+), 2 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware-host.c    |    2 +-
+ drivers/pci/controller/mobiveil/pcie-mobiveil-host.c |    8 +++-----
+ drivers/pci/controller/pcie-altera-msi.c             |    2 +-
+ drivers/pci/controller/pcie-altera.c                 |    3 +--
+ drivers/pci/controller/pcie-mediatek-gen3.c          |    4 ++--
+ drivers/pci/controller/pcie-mediatek.c               |    2 +-
+ drivers/pci/controller/pcie-xilinx-dma-pl.c          |    2 +-
+ drivers/pci/controller/pcie-xilinx-nwl.c             |    2 +-
+ drivers/pci/controller/plda/pcie-plda-host.c         |    2 +-
+ 9 files changed, 12 insertions(+), 15 deletions(-)
 
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -227,7 +227,7 @@ static const struct irq_domain_ops dw_pc
+ int dw_pcie_allocate_domains(struct dw_pcie_rp *pp)
+ {
+ 	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+-	struct fwnode_handle *fwnode = of_node_to_fwnode(pci->dev->of_node);
++	struct fwnode_handle *fwnode = dev_fwnode(pci->dev);
+ 
+ 	pp->irq_domain = irq_domain_create_linear(fwnode, pp->num_vectors,
+ 					       &dw_pcie_msi_domain_ops, pp);
+--- a/drivers/pci/controller/mobiveil/pcie-mobiveil-host.c
++++ b/drivers/pci/controller/mobiveil/pcie-mobiveil-host.c
+@@ -435,7 +435,7 @@ static const struct irq_domain_ops msi_d
+ static int mobiveil_allocate_msi_domains(struct mobiveil_pcie *pcie)
+ {
+ 	struct device *dev = &pcie->pdev->dev;
+-	struct fwnode_handle *fwnode = of_node_to_fwnode(dev->of_node);
++	struct fwnode_handle *fwnode = dev_fwnode(dev);
+ 	struct mobiveil_msi *msi = &pcie->rp.msi;
+ 
+ 	mutex_init(&msi->lock);
+@@ -461,13 +461,11 @@ static int mobiveil_allocate_msi_domains
+ static int mobiveil_pcie_init_irq_domain(struct mobiveil_pcie *pcie)
+ {
+ 	struct device *dev = &pcie->pdev->dev;
+-	struct device_node *node = dev->of_node;
+ 	struct mobiveil_root_port *rp = &pcie->rp;
+ 
+ 	/* setup INTx */
+-	rp->intx_domain = irq_domain_add_linear(node, PCI_NUM_INTX,
+-						&intx_domain_ops, pcie);
+-
++	rp->intx_domain = irq_domain_create_linear(dev_fwnode(dev), PCI_NUM_INTX, &intx_domain_ops,
++						   pcie);
+ 	if (!rp->intx_domain) {
+ 		dev_err(dev, "Failed to get a INTx IRQ domain\n");
+ 		return -ENOMEM;
+--- a/drivers/pci/controller/pcie-altera-msi.c
++++ b/drivers/pci/controller/pcie-altera-msi.c
+@@ -164,7 +164,7 @@ static const struct irq_domain_ops msi_d
+ 
+ static int altera_allocate_domains(struct altera_msi *msi)
+ {
+-	struct fwnode_handle *fwnode = of_node_to_fwnode(msi->pdev->dev.of_node);
++	struct fwnode_handle *fwnode = dev_fwnode(&msi->pdev->dev);
+ 
+ 	msi->inner_domain = irq_domain_add_linear(NULL, msi->num_of_vectors,
+ 					     &msi_domain_ops, msi);
 --- a/drivers/pci/controller/pcie-altera.c
 +++ b/drivers/pci/controller/pcie-altera.c
-@@ -679,8 +679,18 @@ static int altera_pcie_init_irq_domain(s
- 	return 0;
- }
- 
-+static void altera_pcie_disable_irq(struct altera_pcie *pcie)
-+{
-+	if (pcie->pcie_data->version == ALTERA_PCIE_V1 ||
-+	    pcie->pcie_data->version == ALTERA_PCIE_V2) {
-+		/* Disable all P2A interrupts */
-+		cra_writel(pcie, 0, P2A_INT_ENABLE);
-+	}
-+}
-+
- static void altera_pcie_irq_teardown(struct altera_pcie *pcie)
+@@ -666,10 +666,9 @@ static void altera_pcie_isr(struct irq_d
+ static int altera_pcie_init_irq_domain(struct altera_pcie *pcie)
  {
-+	altera_pcie_disable_irq(pcie);
- 	irq_set_chained_handler_and_data(pcie->irq, NULL, NULL);
- 	irq_domain_remove(pcie->irq_domain);
- }
-@@ -705,7 +715,6 @@ static int altera_pcie_parse_dt(struct a
- 	if (pcie->irq < 0)
- 		return pcie->irq;
+ 	struct device *dev = &pcie->pdev->dev;
+-	struct device_node *node = dev->of_node;
  
--	irq_set_chained_handler_and_data(pcie->irq, altera_pcie_isr, pcie);
- 	return 0;
- }
+ 	/* Setup INTx */
+-	pcie->irq_domain = irq_domain_add_linear(node, PCI_NUM_INTX,
++	pcie->irq_domain = irq_domain_create_linear(dev_fwnode(dev), PCI_NUM_INTX,
+ 					&intx_domain_ops, pcie);
+ 	if (!pcie->irq_domain) {
+ 		dev_err(dev, "Failed to get a INTx IRQ domain\n");
+--- a/drivers/pci/controller/pcie-mediatek-gen3.c
++++ b/drivers/pci/controller/pcie-mediatek-gen3.c
+@@ -695,8 +695,8 @@ static int mtk_pcie_init_irq_domains(str
+ 	/* Setup MSI */
+ 	mutex_init(&pcie->lock);
  
-@@ -790,6 +799,12 @@ static int altera_pcie_probe(struct plat
- 		return ret;
- 	}
+-	pcie->msi_bottom_domain = irq_domain_add_linear(node, PCIE_MSI_IRQS_NUM,
+-				  &mtk_msi_bottom_domain_ops, pcie);
++	pcie->msi_bottom_domain = irq_domain_create_linear(dev_fwnode(dev), PCIE_MSI_IRQS_NUM,
++							   &mtk_msi_bottom_domain_ops, pcie);
+ 	if (!pcie->msi_bottom_domain) {
+ 		dev_err(dev, "failed to create MSI bottom domain\n");
+ 		ret = -ENODEV;
+--- a/drivers/pci/controller/pcie-mediatek.c
++++ b/drivers/pci/controller/pcie-mediatek.c
+@@ -488,7 +488,7 @@ static struct msi_domain_info mtk_msi_do
  
-+	/*
-+	 * The chained handler uses pcie->irq_domain, so set it only after the
-+	 * INTx domain has been created.
-+	 */
-+	irq_set_chained_handler_and_data(pcie->irq, altera_pcie_isr, pcie);
-+
- 	/* clear all interrupts */
- 	cra_writel(pcie, P2A_INT_STS_ALL, P2A_INT_STATUS);
- 	/* enable all interrupts */
-@@ -800,7 +815,16 @@ static int altera_pcie_probe(struct plat
- 	bridge->busnr = pcie->root_bus_nr;
- 	bridge->ops = &altera_pcie_ops;
+ static int mtk_pcie_allocate_msi_domains(struct mtk_pcie_port *port)
+ {
+-	struct fwnode_handle *fwnode = of_node_to_fwnode(port->pcie->dev->of_node);
++	struct fwnode_handle *fwnode = dev_fwnode(port->pcie->dev);
  
--	return pci_host_probe(bridge);
-+	ret = pci_host_probe(bridge);
-+	if (ret)
-+		goto err_teardown_irq;
-+
-+	return 0;
-+
-+err_teardown_irq:
-+	altera_pcie_irq_teardown(pcie);
-+
-+	return ret;
- }
+ 	mutex_init(&port->lock);
  
- static void altera_pcie_remove(struct platform_device *pdev)
+--- a/drivers/pci/controller/pcie-xilinx-dma-pl.c
++++ b/drivers/pci/controller/pcie-xilinx-dma-pl.c
+@@ -470,7 +470,7 @@ static int xilinx_pl_dma_pcie_init_msi_i
+ 	struct device *dev = port->dev;
+ 	struct xilinx_msi *msi = &port->msi;
+ 	int size = BITS_TO_LONGS(XILINX_NUM_MSI_IRQS) * sizeof(long);
+-	struct fwnode_handle *fwnode = of_node_to_fwnode(port->dev->of_node);
++	struct fwnode_handle *fwnode = dev_fwnode(port->dev);
+ 
+ 	msi->dev_domain = irq_domain_add_linear(NULL, XILINX_NUM_MSI_IRQS,
+ 						&dev_msi_domain_ops, port);
+--- a/drivers/pci/controller/pcie-xilinx-nwl.c
++++ b/drivers/pci/controller/pcie-xilinx-nwl.c
+@@ -495,7 +495,7 @@ static int nwl_pcie_init_msi_irq_domain(
+ {
+ #ifdef CONFIG_PCI_MSI
+ 	struct device *dev = pcie->dev;
+-	struct fwnode_handle *fwnode = of_node_to_fwnode(dev->of_node);
++	struct fwnode_handle *fwnode = dev_fwnode(dev);
+ 	struct nwl_msi *msi = &pcie->msi;
+ 
+ 	msi->dev_domain = irq_domain_add_linear(NULL, INT_PCI_MSI_NR,
+--- a/drivers/pci/controller/plda/pcie-plda-host.c
++++ b/drivers/pci/controller/plda/pcie-plda-host.c
+@@ -150,7 +150,7 @@ static struct msi_domain_info plda_msi_d
+ static int plda_allocate_msi_domains(struct plda_pcie_rp *port)
+ {
+ 	struct device *dev = port->dev;
+-	struct fwnode_handle *fwnode = of_node_to_fwnode(dev->of_node);
++	struct fwnode_handle *fwnode = dev_fwnode(dev);
+ 	struct plda_msi *msi = &port->msi;
+ 
+ 	mutex_init(&port->msi.lock);
 
 
