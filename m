@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1112DECDF;
-	Tue, 21 Jul 2026 18:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C6F8471271;
+	Tue, 21 Jul 2026 18:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657474; cv=none; b=fnE709oMn6LEdLLikES8cJROTW0S+YhP2flAc48W0BgQdwillHV/M6bCtIVZbEYfr5WubDJ2s0HINXVK0de5EOAYSB2FaCk+0EdhUJo98y23URTuC+HExFlMEAeMx4ERvzEK639LrwDFmfwNhl7iIg8JzFKSdeJa/D51TGlr6yM=
+	t=1784657477; cv=none; b=VIAirUSnEu2Xug2tqVVmWWtuOYtKcFdV9jopC8eGYlDxIGy0Qm3hgGnwu7Fvleyvd8gbaIHvkbd1hVH5iV9UNe+VNCftIq8RcRpRBgyOtQEh3I204x2YJ9u/U1GTqzrGQIuzr2+cLzPC2xNnJDAKQ/uuACPs63NF9eZZlN0VrCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657474; c=relaxed/simple;
-	bh=XGWk+sbXG/PA/syq48tzQX4/qKlzkeoXHS0OZESKYC4=;
+	s=arc-20240116; t=1784657477; c=relaxed/simple;
+	bh=MkfvUX6jF8ONRwSPNN3AXu7pgqvWZegKHcIXslSwduM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uJjc1WnecLRxv2PfZFUJaicmKM+67gLuVLtn1EBir4OWZFrJVLxfm0wgMU0y9kd8paJPq8kYM5/uzUFS+0Ixqv/un7bMjQ09Y5wmgBZEwUDc17H/aT4qCBVkBHVN5003r0VkU6yMPTqx3femBYDyqc8OJ52upr+82ZLw5+6Vabc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GE6TjeuA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FWCYmZwLCdeXk7JJz/REDIpOpWIb+Z2weS3V40LOlbSZUlSW22vjkWZZ126foHGqsyCaLZol4hsLJcAvop1ACHZeArxu4BikBdzJcMdo6PnDJYzt9cgkCME60dlL0jd+XIFUT9e6AlIsD5iu2AaFnQ90frEzPk5/w7i+slmy4Cs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aSmNYTjC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GE6TjeuA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4251F000E9;
-	Tue, 21 Jul 2026 18:11:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aSmNYTjC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D2E1F000E9;
+	Tue, 21 Jul 2026 18:11:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657473;
-	bh=RcxRLLXeJJ/AAQYgwu3YjW165m+4r/IEvDrutapE73o=;
+	s=korg; t=1784657476;
+	bh=JlnanKeyhbAF7oIOhvSDYAmTthH/IM+Wg4ZIK5f1As4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GE6TjeuApKoc+S1JljV36RPS9DuBBpEojpKtDtrJ+OTXazfjw8Ybte7gCgWS4g7G5
-	 NtScL1emRhZ2Sy7M5kasWT9u/qHfH1VR+L1v6vzeEB0uN04qwBVFLn/O+9HRUjdQ8f
-	 N9Zv2xs/J1FWQsVfaTF4dBOgxz140upCVV4mjgXw=
+	b=aSmNYTjCDT3AL3Npz38YdLCD/VNQj0ijRU1EyNPNbCElyLoWGsHTvKb14mCO2gSnY
+	 P6cI9dKpyRWP/WlxLfUhbcZhB6BoRtWKk+jIzq28JXkjooGgn2w0O4h11pbrHMzHio
+	 fitG7UiMhdCLgzbtuceLz7zwFjD1Auf3T+pKp+sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Zhang Yanmin <yanmin_zhang@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0777/1611] perf tools: Use snprintf() for root_dir path construction
-Date: Tue, 21 Jul 2026 17:14:53 +0200
-Message-ID: <20260721152532.864351809@linuxfoundation.org>
+Subject: [PATCH 6.18 0778/1611] perf hwmon: Fix fd check to accept fd 0 in hwmon_pmu__describe_items()
+Date: Tue, 21 Jul 2026 17:14:54 +0200
+Message-ID: <20260721152532.886678448@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,54 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 7b0df6f4d498b1608afccfd6dffb264e6da91693 ]
+[ Upstream commit cfafef390ca9c753b34c7e97b5abee4cab0ce270 ]
 
-get_kernel_version() in machine.c and dso__load_guest_kernel_sym() in
-symbol.c use sprintf() to construct paths by prepending root_dir to
-"/proc/version" and "/proc/kallsyms" respectively.  Both write into
-PATH_MAX stack buffers, but root_dir comes from --guestmount or KVM
-configuration and is not length-checked.  A root_dir at or near
-PATH_MAX causes a stack buffer overflow.
+hwmon_pmu__describe_items() checks 'if (fd > 0)' after openat(), which
+incorrectly rejects fd 0.  While fd 0 is normally stdin, if stdin has
+been closed (common in daemon/service contexts), the kernel reuses fd 0
+for the next open.  With fd > 0, the sysfs file is not read and the fd
+is leaked.
 
-Switch to snprintf() with sizeof(path) to prevent overflow.
+Change to 'if (fd >= 0)' to match the standard openat() error check.
 
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Fixes: a1645ce12adb6c9c ("perf: 'perf kvm' tool for monitoring guest performance from host")
-Cc: Zhang Yanmin <yanmin_zhang@linux.intel.com>
+Fixes: 53cc0b351ec99278 ("perf hwmon_pmu: Add a tool PMU exposing events from hwmon in sysfs")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Ian Rogers <irogers@google.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 2 +-
- tools/perf/util/symbol.c  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/hwmon_pmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index 1de644fe91a873..50f5f2b2ae530c 100644
---- a/tools/perf/util/machine.c
-+++ b/tools/perf/util/machine.c
-@@ -1319,7 +1319,7 @@ static char *get_kernel_version(const char *root_dir)
- 	char *name, *tmp;
- 	const char *prefix = "Linux version ";
+diff --git a/tools/perf/util/hwmon_pmu.c b/tools/perf/util/hwmon_pmu.c
+index c3bc9e427cdbb7..900868b6f8919d 100644
+--- a/tools/perf/util/hwmon_pmu.c
++++ b/tools/perf/util/hwmon_pmu.c
+@@ -435,7 +435,7 @@ static size_t hwmon_pmu__describe_items(struct hwmon_pmu *hwm, char *out_buf, si
+ 			hwmon_item_strs[bit],
+ 			is_alarm ? "_alarm" : "");
+ 		fd = openat(dir, buf, O_RDONLY);
+-		if (fd > 0) {
++		if (fd >= 0) {
+ 			ssize_t read_len = read(fd, buf, sizeof(buf) - 1);
  
--	sprintf(version, "%s/proc/version", root_dir);
-+	snprintf(version, sizeof(version), "%s/proc/version", root_dir);
- 	file = fopen(version, "r");
- 	if (!file)
- 		return NULL;
-diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
-index 7535a78b7fd235..7d4c6d7cdc60d7 100644
---- a/tools/perf/util/symbol.c
-+++ b/tools/perf/util/symbol.c
-@@ -2166,7 +2166,7 @@ static int dso__load_guest_kernel_sym(struct dso *dso, struct map *map)
- 		if (!kallsyms_filename)
- 			return -1;
- 	} else {
--		sprintf(path, "%s/proc/kallsyms", machine->root_dir);
-+		snprintf(path, sizeof(path), "%s/proc/kallsyms", machine->root_dir);
- 		kallsyms_filename = path;
- 	}
- 
+ 			while (read_len > 0 && buf[read_len - 1] == '\n')
 -- 
 2.53.0
 
