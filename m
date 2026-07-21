@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6993C73F6;
-	Tue, 21 Jul 2026 22:47:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9D2439908;
+	Tue, 21 Jul 2026 22:47:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674058; cv=none; b=BGxR6024NQMWFMFqIB+ykeI4hnzexx1EmEFlNr/zAuhntu2y9V7a2anljzHIjFL6B+PBifCCtmeQKVPCUBs/7Rk1+3x3d5uUOuprAStCreyFFoYOGei7/3C1AMcalpdXum3oa5XUNK1i4L3+PdRmGyLiUU4rDKi0xLQkm2LCMKI=
+	t=1784674063; cv=none; b=FZf2dIpPMw6kttiJqYkw7tlOHELWk36uuSXEjaxRUp4LQPJD/O7My5HYNDrcymOmm+JYlT1lDaMieaDxsEJ1AndEbWhKl3tW6De4g9hcjSL6gIaxWwsPRiNvavLemtBP9CH8mHe3n1+yiIAnlzDiJJSMG09+IelU1RxgBswQqC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674058; c=relaxed/simple;
-	bh=8gpxP3W1NhLQNizil9qBuWnKs2n+qiMXIjbvXeHykac=;
+	s=arc-20240116; t=1784674063; c=relaxed/simple;
+	bh=0nC4DdKiWdV5TW3eUiCgcN3HBjEMVCt2Gnr1WrZ4EQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kTJcWW5A/ko6uGrXeQ19rxsVIEJKIT1DfjFtEUhHC/jdRGVo3jEIYQl1F9sthjkV06YyKGXW7XoxBJPZIXW2hvy+fjm3Dpnmu0CJBReT+mZLxU2lvFA9tDuiThZOoN0VOI9RtdDEpqUh0EITaJkGhCwwGUTqFvbucMjh2zmrykk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GsovtnOJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LG19OSUu9/3zvAO227X1U1yAEHRVa6H6r2lq2pJB+225TpBQaL1bUSIzT91kSqlFDKekXnbAEwQZGXJr00ClVtPebyVZJi4UhANFNeZSFFUy6IFlUEWzN0RA0wAc7aKB3HgcskyqxO2K3k7inhbFGAs3QgDayN2NvmymVxXu5k0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYwBRymF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GsovtnOJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ACB31F00A3A;
-	Tue, 21 Jul 2026 22:47:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYwBRymF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59521F000E9;
+	Tue, 21 Jul 2026 22:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674056;
-	bh=Vylfs2i7/cjmiXZie4REVeA8WHrne8tFZ46mZjHL220=;
+	s=korg; t=1784674059;
+	bh=u5rkAESFA8okXUE5kqtgb8TB2VMbsaI044poWUZyLVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GsovtnOJOmIoY+6QmcYlXvS7WKC6ME2AUPM3/AQK3raDAD40aMEN7/FMACvVJyKhL
-	 RrqwTIxT711AyMz28YS1iMJkU5zMRnFSGdBcze1JHv+4zAcUwpRl5tzSK1k9vIri09
-	 0/bKZD/5LJlLGYmaci4xqt8DXEbZ4za/cr20b6eo=
+	b=JYwBRymFKa7ftHfZNudMoPwrj1x7664rpO54qVfwQYTl9HLBy97uiUGoovLMvr3gb
+	 r0bVFBqPpYYvtpl/ZOhDOjjFYvA7TYwakdLMgiQNtk2Di7KBAcn5ZhZHSohytfb8p/
+	 G9Tny/2I4lswktkXnJCZt81XztBc+A9p46mK1lNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Jamie Bainbridge <jamie.bainbridge@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Magnus Lindholm <linmag7@gmail.com>,
+	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 396/699] qede: fix off-by-one in BD ring consumption on build_skb failure
-Date: Tue, 21 Jul 2026 17:22:35 +0200
-Message-ID: <20260721152404.629862777@linuxfoundation.org>
+Subject: [PATCH 5.10 361/699] alpha/PCI: Fix __pci_mmap_fits() overflow for zero-length BARs
+Date: Tue, 21 Jul 2026 17:22:00 +0200
+Message-ID: <20260721152403.836048866@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -46,67 +48,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-[ Upstream commit a0a558ca7e75b49e71f8c545c30e8c005e6e4e2f ]
+[ Upstream commit 802a3b3f470b9bc1148f26e01fc9cbfeb4dfcb57 ]
 
-qede_rx_build_skb() and qede_tpa_rx_build_skb() do not check for a
-NULL return from qede_build_skb(). When it returns NULL under memory
-pressure, the functions still consume a BD from the ring before
-returning NULL. The callers then recycle additional BDs, resulting in
-one extra BD being consumed (off-by-one). This desynchronizes the BD
-ring, which can corrupt DMA page reference counts and lead to SLUB
-freelist corruption.
+Currently, __pci_mmap_fits() computes the BAR size using
+"pci_resource_len() - 1", which wraps to a large value when the BAR length
+is zero, causing the bounds check to incorrectly succeed.
 
-Commit 4e910dbe3650 ("qede: confirm skb is allocated before using")
-added a NULL check inside qede_build_skb() to prevent a NULL pointer
-dereference, but did not address the missing NULL checks in the
-callers, making this off-by-one reachable.
+Add an early return for empty resources.
 
-Fix this by adding NULL checks for the return value of
-qede_build_skb() in both qede_rx_build_skb() and
-qede_tpa_rx_build_skb(), returning NULL immediately before any BD ring
-manipulation.
-
-Fixes: 8a8633978b84 ("qede: Add build_skb() support.")
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Jamie Bainbridge <jamie.bainbridge@gmail.com>
-Link: https://patch.msgid.link/20260630164623.3152625-1-syoshida@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 10a0ef39fbd1 ("PCI/alpha: pci sysfs resources")
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Magnus Lindholm <linmag7@gmail.com>
+Tested-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Acked-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://patch.msgid.link/20260508043543.217179-15-kwilczynski@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qede/qede_fp.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/alpha/kernel/pci-sysfs.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qede/qede_fp.c b/drivers/net/ethernet/qlogic/qede/qede_fp.c
-index a632de208a7dc6..02b866a49633c0 100644
---- a/drivers/net/ethernet/qlogic/qede/qede_fp.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_fp.c
-@@ -770,6 +770,9 @@ qede_tpa_rx_build_skb(struct qede_dev *edev,
- 	struct sk_buff *skb;
+diff --git a/arch/alpha/kernel/pci-sysfs.c b/arch/alpha/kernel/pci-sysfs.c
+index f1fd9543067424..cc0b0d3c52f2f1 100644
+--- a/arch/alpha/kernel/pci-sysfs.c
++++ b/arch/alpha/kernel/pci-sysfs.c
+@@ -37,12 +37,16 @@ static int hose_mmap_page_range(struct pci_controller *hose,
+ static int __pci_mmap_fits(struct pci_dev *pdev, int num,
+ 			   struct vm_area_struct *vma, int sparse)
+ {
++	resource_size_t len = pci_resource_len(pdev, num);
+ 	unsigned long nr, start, size;
+ 	int shift = sparse ? 5 : 0;
  
- 	skb = qede_build_skb(rxq, bd, len, pad);
-+	if (unlikely(!skb))
-+		return NULL;
++	if (!len)
++		return 0;
 +
- 	bd->page_offset += rxq->rx_buf_seg_size;
+ 	nr = vma_pages(vma);
+ 	start = vma->vm_pgoff;
+-	size = ((pci_resource_len(pdev, num) - 1) >> (PAGE_SHIFT - shift)) + 1;
++	size = ((len - 1) >> (PAGE_SHIFT - shift)) + 1;
  
- 	if (bd->page_offset == PAGE_SIZE) {
-@@ -817,6 +820,8 @@ qede_rx_build_skb(struct qede_dev *edev,
- 	}
- 
- 	skb = qede_build_skb(rxq, bd, len, pad);
-+	if (unlikely(!skb))
-+		return NULL;
- 
- 	if (unlikely(qede_realloc_rx_buffer(rxq, bd))) {
- 		/* Incr page ref count to reuse on allocation failure so
+ 	if (start < size && size - start >= nr)
+ 		return 1;
 -- 
 2.53.0
 
