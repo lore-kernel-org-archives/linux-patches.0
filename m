@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22BB4582EA;
-	Tue, 21 Jul 2026 21:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63572448D03;
+	Tue, 21 Jul 2026 21:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668091; cv=none; b=kec1Awr6zyuSfLA/WDisSLhmoUSehOlsLDhr/El//y84dI08Ia3PCRckiJzzEuN55uj6kkDtYkPNBqvatG/YV2Jzij87/mPlb+HmyRsRPw8MJd1K+UXS+KdULOMvxoB0hpQBttv3um32QroUSeWBk8Xxa0Nx0BHdSnJnyk+KTPI=
+	t=1784668093; cv=none; b=E0+ItlDK8XgtlEesUH88IiiMnkRVv8dLt49YKyCLhMKHE6DMtpqFaan7NrDLuWuNaAWfhWw7FvEybY3o8SSTVcH4t+hsZXNvuhJiOQiTAJq52iNiCgZjRHv62PmDlUAt2Pd7lcD9bLjGav0wB4KUt1+dV4jQ7nTQTQ4a/Dbi/hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668091; c=relaxed/simple;
-	bh=IByCI1glBVzSClIUZ4N5semrq/IQ+p9SVgtvdDN96bU=;
+	s=arc-20240116; t=1784668093; c=relaxed/simple;
+	bh=ygisRYkrN2IpHhW2zcqGKOSfmt8LI0YBL2hyjgKFbO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cqqsqpdVSj21uz1Ybai7fP55CjLbBa93j6AVka7SPo0vFGDafe115exkXnO/8ixwCItOJ3v7uWmCUWpkUv6B2yaLzF7Xn+2HT89x+IIEPxBJ5VQn4D0wx7y4u2aCH9WbXOFvKPoQH2m3Uu6G/j+/GGGXFqLujQKK7zdnWTIRIWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JkcPw4gu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YcmH9S7txFvv5IR/yCYTy4GAA/bwPNcTM6ZoFsWNxwMZ1apY0eqtRT9YvULXvd3HF2ZsG7sjoYqv4vgmiom7gsdv9wLGP5WS69CIoTdCfWz1UD6geoLAVjrZI8kitMW/w4rI7T/2fKRUkK0/eF3QNfw0HggOyagq6c7A6EvNXzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQThdzoY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JkcPw4gu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BE11F00A3A;
-	Tue, 21 Jul 2026 21:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQThdzoY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9FD21F000E9;
+	Tue, 21 Jul 2026 21:08:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668089;
-	bh=iw3Bs32tuMWAFX7ZqEs06g2Je+og4MEgrxB9NgXJH6o=;
+	s=korg; t=1784668092;
+	bh=/ZG1OiIOfu222EzRmjho7D5wQnRSWQsng5pa8ahZA0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JkcPw4guoE0u23G6Mwave34GS7Y7Sa5SEm6x8ipZoEJni3A5E4iNvNVismr8rI0VD
-	 E7rAltu78CAElFQBJhDtYDlLMUg+Gz0JKLk1tw5UK3nTcDmItm+GFKnMsSzHMO/aGa
-	 E0/JcDUlGL4kM3yuNGBszF46q2/uXfgCTFCL9nSE=
+	b=aQThdzoY20b8+sV9PYD6kk5jN7EcP8Axm9Lqy1EqAmcln//xcud8shD5OuQfmsScg
+	 MVAz4j2p02HuT8iv7UZGMPTFyMCpGbg5liwWs0FyupwEoZuJNQz1mCo9SXEcpLo3So
+	 Bg567x1QQzW9EU1XvPEy4JkyE7g/xCjojdXsGiMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org,
 	carnil@debian.org
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Quentin Schulz <quentin.schulz@cherry.de>,
 	Wentao Guan <guanwentao@uniontech.com>
-Subject: [PATCH 6.1 0043/1067] eventpoll: drop vestigial __ prefix from ep_remove_{file,epi}()
-Date: Tue, 21 Jul 2026 17:10:44 +0200
-Message-ID: <20260721152425.520515443@linuxfoundation.org>
+Subject: [PATCH 6.1 0044/1067] eventpoll: rename ep_remove_safe() back to ep_remove()
+Date: Tue, 21 Jul 2026 17:10:45 +0200
+Message-ID: <20260721152425.544881301@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -54,64 +54,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 0feaf644f7180c4a91b6b405a881afbfd958f1cf ]
+[ Upstream commit 0bade234723e40e4937be912e105785d6a51464e ]
 
-With __ep_remove() gone, the double-underscore on __ep_remove_file()
-and __ep_remove_epi() no longer contrasts with a __-less parent and
-just reads as noise. Rename both to ep_remove_file() and
-ep_remove_epi(). No functional change.
+The current name is just confusing and doesn't clarify anything.
 
+Link: https://patch.msgid.link/20260423-work-epoll-uaf-v1-4-2470f9eec0f5@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Stable-dep-of: a6dc643c6931 ("eventpoll: fix ep_remove struct eventpoll / struct file UAF")
 Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
 Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/eventpoll.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/eventpoll.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 --- a/fs/eventpoll.c
 +++ b/fs/eventpoll.c
-@@ -719,7 +719,7 @@ static void ep_free(struct eventpoll *ep
-  * Called with &file->f_lock held,
-  * returns with it released
+@@ -771,7 +771,7 @@ static bool ep_remove_epi(struct eventpo
+ /*
+  * ep_remove variant for callers owing an additional reference to the ep
   */
--static void __ep_remove_file(struct eventpoll *ep, struct epitem *epi,
-+static void ep_remove_file(struct eventpoll *ep, struct epitem *epi,
- 			     struct file *file)
+-static void ep_remove_safe(struct eventpoll *ep, struct epitem *epi)
++static void ep_remove(struct eventpoll *ep, struct epitem *epi)
  {
- 	struct epitems_head *to_free = NULL;
-@@ -743,7 +743,7 @@ static void __ep_remove_file(struct even
- 	free_ephead(to_free);
- }
+ 	struct file *file = epi->ffd.file;
  
--static bool __ep_remove_epi(struct eventpoll *ep, struct epitem *epi)
-+static bool ep_remove_epi(struct eventpoll *ep, struct epitem *epi)
- {
- 	lockdep_assert_held(&ep->mtx);
+@@ -818,7 +818,7 @@ static void ep_clear_and_put(struct even
  
-@@ -789,9 +789,9 @@ static void ep_remove_safe(struct eventp
- 		spin_unlock(&file->f_lock);
- 		return;
+ 	/*
+ 	 * Walks through the whole tree and try to free each "struct epitem".
+-	 * Note that ep_remove_safe() will not remove the epitem in case of a
++	 * Note that ep_remove() will not remove the epitem in case of a
+ 	 * racing eventpoll_release_file(); the latter will do the removal.
+ 	 * At this point we are sure no poll callbacks will be lingering around.
+ 	 * Since we still own a reference to the eventpoll struct, the loop can't
+@@ -827,7 +827,7 @@ static void ep_clear_and_put(struct even
+ 	for (rbp = rb_first_cached(&ep->rbr); rbp; rbp = next) {
+ 		next = rb_next(rbp);
+ 		epi = rb_entry(rbp, struct epitem, rbn);
+-		ep_remove_safe(ep, epi);
++		ep_remove(ep, epi);
+ 		cond_resched();
  	}
--	__ep_remove_file(ep, epi, file);
-+	ep_remove_file(ep, epi, file);
  
--	if (__ep_remove_epi(ep, epi))
-+	if (ep_remove_epi(ep, epi))
- 		WARN_ON_ONCE(ep_refcount_dec_and_test(ep));
- }
+@@ -1505,21 +1505,21 @@ static int ep_insert(struct eventpoll *e
+ 		mutex_unlock(&tep->mtx);
  
-@@ -1013,8 +1013,8 @@ again:
- 		ep_unregister_pollwait(ep, epi);
+ 	/*
+-	 * ep_remove_safe() calls in the later error paths can't lead to
++	 * ep_remove() calls in the later error paths can't lead to
+ 	 * ep_free() as the ep file itself still holds an ep reference.
+ 	 */
+ 	ep_get(ep);
  
- 		spin_lock(&file->f_lock);
--		__ep_remove_file(ep, epi, file);
--		dispose = __ep_remove_epi(ep, epi);
-+		ep_remove_file(ep, epi, file);
-+		dispose = ep_remove_epi(ep, epi);
+ 	/* now check if we've created too many backpaths */
+ 	if (unlikely(full_check && reverse_path_check())) {
+-		ep_remove_safe(ep, epi);
++		ep_remove(ep, epi);
+ 		return -EINVAL;
+ 	}
  
- 		mutex_unlock(&ep->mtx);
+ 	if (epi->event.events & EPOLLWAKEUP) {
+ 		error = ep_create_wakeup_source(epi);
+ 		if (error) {
+-			ep_remove_safe(ep, epi);
++			ep_remove(ep, epi);
+ 			return error;
+ 		}
+ 	}
+@@ -1543,7 +1543,7 @@ static int ep_insert(struct eventpoll *e
+ 	 * high memory pressure.
+ 	 */
+ 	if (unlikely(!epq.epi)) {
+-		ep_remove_safe(ep, epi);
++		ep_remove(ep, epi);
+ 		return -ENOMEM;
+ 	}
  
+@@ -2222,7 +2222,7 @@ int do_epoll_ctl(int epfd, int op, int f
+ 			 * The eventpoll itself is still alive: the refcount
+ 			 * can't go to zero here.
+ 			 */
+-			ep_remove_safe(ep, epi);
++			ep_remove(ep, epi);
+ 			error = 0;
+ 		} else {
+ 			error = -ENOENT;
 
 
