@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6FCF44AB6A;
-	Tue, 21 Jul 2026 22:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8CE4071DE;
+	Tue, 21 Jul 2026 22:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673260; cv=none; b=Mc+mcrDB+XbrcII46vmwkczfwkw9fw/dhYxgrFWfeyHzCylRnFh4xtuviGyWNu49OBxEzoBDkl497V73H2ES3nV5FuUWcnuIGvcdOKY2ZlZd5CKD3BMz/GVNIEcfqBElmd7q+7TmdrLYn1KTu+OaRahTTiQs7fOhbq8JtNQBgyc=
+	t=1784673262; cv=none; b=Phtm7DTFeo9ub9oQ1FcBqNzfGFiB8SC+tZk/sHsNOaCNI8UQodZnRoKKBrIgakJEQv6RC8yKnMbcDAcWldLF6NWIbK3YPHVcNvCQWqV3t6XxZqIq7tmeqfA9gAXKD822I2SP+ESJ0EhGP8z+HoFnk515zAniKyAAZ3xN5CUlyqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673260; c=relaxed/simple;
-	bh=K++Bu3L3i6CB3qvRRYJ5pZIqrSz7JrFkdCawdPAZTKo=;
+	s=arc-20240116; t=1784673262; c=relaxed/simple;
+	bh=kyoc+c51kYBUOUf/1TinC3+vzKBCM7zr8bsG7VqSjII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K3+j6dN63qB7rNEoRaA3YA9A8xQ6xSyVMcPs5aTSJJT4W653KG/I40dKV+5vP4Y9WbITbealy3J8qK0KJ2p+gUq7Nt0013/nflbHixr0UNKk1KoR1ZYoQbHa+aJzeO/CTbLz9V107QWnYacCZEwLbL/q+0wXQM4WS4d9w/94DDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTiQ3GgQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Th5MrTjeS16wPeulK4Zv/VyTryD1hJ7Z9QfIYRcnidqB3wsRm7lO1uG3939xqDAW0V/2MwINEUvKQuGNEPGiY/3oiZqY1mj8yx18y7B8rsyRT2NY0zrOLGyHyqhDiRGtRFzZ1qGNKHkcnqzJxi5YS15DnkAgH3sbHwcLrRpgVT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t6txZDor; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTiQ3GgQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591821F000E9;
-	Tue, 21 Jul 2026 22:34:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6txZDor"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39751F00A3A;
+	Tue, 21 Jul 2026 22:34:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673258;
-	bh=Ka0DvgvZvlJ1aJHsxPEaEacgxw4h1j43W/OpwuM+xfU=;
+	s=korg; t=1784673261;
+	bh=ZWOoAhchvqebHZWJhpu2E4XcbDOZZYycxAjO/OU7CE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KTiQ3GgQ8lw8g21teGXfu9/Pr/Oej+9WdQMx1SQ/bca2coEp1sV5wURqIr/DxYt7z
-	 82/4AdOt7q2NHnQquuq9TnGHdv+aZD+HWk7Y0oytPa1jL5isIi3vUxKDiPGiujdmgl
-	 lVR/rZZIcE6vsUJVb3eySSdmncuSqAmaLyO2ruTo=
+	b=t6txZDor//Bxx4zlnv+5liI3PwnIJR4+MZ4hqkB4/h+uLEK5g5GHm27yICqcIPQiT
+	 Z7QfFgRtkPCVppniYsfmMuoN4SSGczoxHKtYMuaaw+Vj8Gz23Xapx6szLbqGcCS354
+	 VZcwlgP6Y5hGalPp5ddQ+Tvz0UJ/i6jwOPeC32zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 096/699] net: usb: kalmia: bound RX frame length in kalmia_rx_fixup()
-Date: Tue, 21 Jul 2026 17:17:35 +0200
-Message-ID: <20260721152357.867714827@linuxfoundation.org>
+	Jared Baldridge <jrb@expunge.us>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.10 097/699] usb: cdc_acm: Add quirk for Uniden BC125AT scanner
+Date: Tue, 21 Jul 2026 17:17:36 +0200
+Message-ID: <20260721152357.889933335@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,53 +50,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Jared Baldridge <jrb@expunge.us>
 
-commit 47b6bcef6e679593d2e86e04ee72c46a4e2f7139 upstream.
+commit 6eba58568f6cc3ff8515a00b05e258d8cfb72b72 upstream.
 
-kalmia_rx_fixup() computes usb_packet_length = skb->len - (2 *
-KALMIA_HEADER_LENGTH) as a u16, guarded only by a pre-loop check that
-skb->len is at least KALMIA_HEADER_LENGTH, which is 6. A device can
-deliver a short bulk-IN frame with skb->len in the 6 to 11 range, or
-leave a short trailing remainder on a later loop iteration. Either case
-underflows usb_packet_length to about 65530.
+Uniden BC125AT radio scanner has a USB interface which fails to work
+with the cdc_acm driver:
+ usb 1-1: new full-speed USB device number 2 using uhci_hcd
+ cdc_acm 1-1:1.0: Zero length descriptor references
+ cdc_acm 1-1:1.0: probe with driver cdc_acm failed with error -22
+ usbcore: registered new interface driver cdc_acm
 
-That bypasses the usb_packet_length < ether_packet_length truncation path.
-The device-supplied ether_packet_length, a le16 up to 65535 read from
-header_start[2], then drives a memcmp() and the following skb_trim() and
-skb_pull() past the end of the rx buffer. The rx buffer is hard_mtu * 10,
-which is 14000 bytes. That is an out of bounds read.
+Adding the NO_UNION_NORMAL quirk for the device fixes the issue:
 
-Require both the start and end framing headers to be present before
-subtracting them, on every loop iteration.
+ usb 1-1: new full-speed USB device number 2 using uhci_hcd
+ cdc_acm 1-1:1.0: ttyACM0: USB ACM device
+ usbcore: registered new interface driver cdc_acm
 
-Fixes: d40261236e8e ("net/usb: Add Samsung Kalmia driver for Samsung GT-B3730")
-Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/178211531778.2216480.12637613349790980750@maoyixie.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+`lsusb -v` of the device:
+
+ Bus 001 Device 002: ID 1965:0017 Uniden Corporation BC125AT
+ Negotiated speed: Full Speed (12Mbps)
+ Device Descriptor:
+   bLength                18
+   bDescriptorType         1
+   bcdUSB               2.00
+   bDeviceClass            2 Communications
+   bDeviceSubClass         0 [unknown]
+   bDeviceProtocol         0
+   bMaxPacketSize0        64
+   idVendor           0x1965 Uniden Corporation
+   idProduct          0x0017 BC125AT
+   bcdDevice            0.01
+   iManufacturer           1 Uniden America Corp.
+   iProduct                2 BC125AT
+   iSerial                 3 0001
+   bNumConfigurations      1
+   Configuration Descriptor:
+     bLength                 9
+     bDescriptorType         2
+     wTotalLength       0x0030
+     bNumInterfaces          2
+     bConfigurationValue     1
+     iConfiguration          0
+     bmAttributes         0x80
+       (Bus Powered)
+     MaxPower              500mA
+     Interface Descriptor:
+       bLength                 9
+       bDescriptorType         4
+       bInterfaceNumber        0
+       bAlternateSetting       0
+       bNumEndpoints           1
+       bInterfaceClass         2 Communications
+       bInterfaceSubClass      2 Abstract (modem)
+       bInterfaceProtocol      0
+       iInterface              0
+       Endpoint Descriptor:
+         bLength                 7
+         bDescriptorType         5
+         bEndpointAddress     0x87  EP 7 IN
+         bmAttributes            3
+           Transfer Type            Interrupt
+           Synch Type               None
+           Usage Type               Data
+         wMaxPacketSize     0x0008  1x 8 bytes
+         bInterval              10
+     Interface Descriptor:
+       bLength                 9
+       bDescriptorType         4
+       bInterfaceNumber        1
+       bAlternateSetting       0
+       bNumEndpoints           2
+       bInterfaceClass        10 CDC Data
+       bInterfaceSubClass      0 [unknown]
+       bInterfaceProtocol      0
+       iInterface              0
+       Endpoint Descriptor:
+         bLength                 7
+         bDescriptorType         5
+         bEndpointAddress     0x81  EP 1 IN
+         bmAttributes            2
+           Transfer Type            Bulk
+           Synch Type               None
+           Usage Type               Data
+         wMaxPacketSize     0x0040  1x 64 bytes
+         bInterval               0
+       Endpoint Descriptor:
+         bLength                 7
+         bDescriptorType         5
+         bEndpointAddress     0x02  EP 2 OUT
+         bmAttributes            2
+           Transfer Type            Bulk
+           Synch Type               None
+           Usage Type               Data
+         wMaxPacketSize     0x0040  1x 64 bytes
+         bInterval               0
+ Device Status:     0x0000
+   (Bus Powered)
+
+Signed-off-by: Jared Baldridge <jrb@expunge.us>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20260530221959.612526-1-jrb@expunge.us
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/kalmia.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/usb/class/cdc-acm.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/usb/kalmia.c
-+++ b/drivers/net/usb/kalmia.c
-@@ -276,6 +276,14 @@ kalmia_rx_fixup(struct usbnet *dev, stru
- 				"Received header: %6phC. Package length: %i\n",
- 				header_start, skb->len - KALMIA_HEADER_LENGTH);
- 
-+		/* both framing headers must be present before we subtract
-+		 * them, otherwise usb_packet_length underflows and the
-+		 * device-supplied ether_packet_length drives an out of bounds
-+		 * access below
-+		 */
-+		if (skb->len < 2 * KALMIA_HEADER_LENGTH)
-+			return 0;
-+
- 		/* subtract start header and end header */
- 		usb_packet_length = skb->len - (2 * KALMIA_HEADER_LENGTH);
- 		ether_packet_length = get_unaligned_le16(&header_start[2]);
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -1788,6 +1788,9 @@ static const struct usb_device_id acm_id
+ 	{ USB_DEVICE(0x1901, 0x0006), /* GE Healthcare Patient Monitor UI Controller */
+ 	.driver_info = DISABLE_ECHO, /* DISABLE ECHO in termios flag */
+ 	},
++	{ USB_DEVICE(0x1965, 0x0017), /* Uniden BC125AT */
++	.driver_info = NO_UNION_NORMAL, /* has no union descriptor */
++	},
+ 	{ USB_DEVICE(0x1965, 0x0018), /* Uniden UBC125XLT */
+ 	.driver_info = NO_UNION_NORMAL, /* has no union descriptor */
+ 	},
 
 
