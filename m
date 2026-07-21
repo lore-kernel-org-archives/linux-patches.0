@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6DD1AF0BB;
-	Tue, 21 Jul 2026 19:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE121AF0BB;
+	Tue, 21 Jul 2026 19:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662229; cv=none; b=fAsuEwBWUlkgeBBZ0bLBHjnTKv2qCw1SwjlJnb6zvGWQpvdBF/qEbDxGCjUQy4dMkjbBWIA1QS5X5N25Cl6+cNsoC5+pmatMy+rEV61BK6pXfRZ8TCJrvtQcX3iCz7UdzvM82vIVK6HSpXCg0h2V8558YemWHMQuiGiX01/0lvk=
+	t=1784662232; cv=none; b=Bd0TFuCx9k17ShuEtEVhIs1V/mnkY55mpfbg1pMA8w4eYbZCzjT8HEiZS5p3xD6BxjrigwuhMzFf+JE5vsebZ7v+M6tLCxwRFuwBaScN6gfmPS4Qg2i2wZqbnhuBk+bwYfCHyJeTt/8QOVA3DrbIdbQaZsg3EVuYgO+JOjBNl7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662229; c=relaxed/simple;
-	bh=WLZ7B6fqSB+D8+QGYUs24QuozHT88XkU6Q2xGnheSbY=;
+	s=arc-20240116; t=1784662232; c=relaxed/simple;
+	bh=UX76qzcOj3La5CPFy2ypyUlAV01NIJt3hz4MttGKYM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QuMMkFMiqMpkWcEYWfdVxhxHer8QzQ6StEn566PBTi3kYaFaJEAOHNzDW1JYztUrhEt5NwoNAawBhUpFLk3sZ1TvZ6xx2H63oYvnTEQyWPG76IHRTud6FaR/ViqgtHcm+Zxn8cHyDsMrOWeNBYZ/F6i6UwV/TP2CgZYNuv3QVkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=euLWRdhf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hM34DJyN7swneRUcUurdsv6gJmCsJrZeBAo7yymRbbqUY7FRFim7DBOUqyrIWe+LxMCvCJELGSDsfeN2arUHSApBOVpdAw48ymKOsiLLH7aFGSrYAgUpfFxZmtOs0EtUO1aDK+IoFoD3qF8Hkkk3c6YvnYZqJ+0nWeDzcWMqMnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwpIgFeJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="euLWRdhf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F9E1F000E9;
-	Tue, 21 Jul 2026 19:30:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwpIgFeJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131D31F000E9;
+	Tue, 21 Jul 2026 19:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662227;
-	bh=N2mPUtHQYFunriZUmOyR2Bmr0UXD/NI3uBK/0552ftI=;
+	s=korg; t=1784662230;
+	bh=1uml04gNOr9s3Y10SOLKxMNr+MiOmISqmKnJ4M0Fvt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=euLWRdhfkNYDF7ZhtIJT5GGSgk5Q4KS05bM6TMvVzCafclwDU1fDJkdPUBsEvenyX
-	 R6og/ofBGtr4TduqPkIOA+kKQpfxUMo4nyfomlc4JoYlbBW5E5Cugjvb/ibFv64u4s
-	 KT+yePRqkhhCUl4SY0QTTz+6EMPrMq4NZEzQRQwE=
+	b=CwpIgFeJfY3hTLStxo5fuaoXDMgX8LPuuIdGXV0wDil/AsZjmqrjVxUEGdadP1Idw
+	 +xhOTRp/VuYIn/Fo/0eYKkChuCTXX0xUWDsPUdAlgaYF7xGW4fVDTvJfKtQdDe9XpU
+	 h/rcc5ZDPhCgsmAQ5Lz/PIAsxwON1bcQFWgQycms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Milena Olech <milena.olech@intel.com>,
-	Jiri Pirko <jiri@nvidia.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Ivan Vecera <ivecera@redhat.com>,
 	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0363/1276] dpll: add reference sync get/set
-Date: Tue, 21 Jul 2026 17:13:26 +0200
-Message-ID: <20260721152454.230999025@linuxfoundation.org>
+Subject: [PATCH 6.12 0364/1276] dpll: Allow associating dpll pin with a firmware node
+Date: Tue, 21 Jul 2026 17:13:27 +0200
+Message-ID: <20260721152454.253558564@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -54,428 +54,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 58256a26bfb37a94738dd65618b1f31f460f8d91 ]
+[ Upstream commit d0f4771e2befbe8de3a16a564c6bbd1d5502cec3 ]
 
-Define function for reference sync pin registration and callback ops to
-set/get current feature state.
+Extend the DPLL core to support associating a DPLL pin with a firmware
+node. This association is required to allow other subsystems (such as
+network drivers) to locate and request specific DPLL pins defined in
+the Device Tree or ACPI.
 
-Implement netlink handler to fill netlink messages with reference sync
-pin configuration of capable pins (pin-get).
+* Add a .fwnode field to the struct dpll_pin
+* Introduce dpll_pin_fwnode_set() helper to allow the provider driver
+  to associate a pin with a fwnode after the pin has been allocated
+* Introduce fwnode_dpll_pin_find() helper to allow consumers to search
+  for a registered DPLL pin using its associated fwnode handle
+* Ensure the fwnode reference is properly released in dpll_pin_put()
 
-Implement netlink handler to call proper ops and configure reference
-sync pin state (pin-set).
-
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Milena Olech <milena.olech@intel.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
-Link: https://patch.msgid.link/20250626135219.1769350-3-arkadiusz.kubalewski@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Link: https://patch.msgid.link/20260203174002.705176-2-ivecera@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 32239d600236 ("dpll: fix stale iteration in dpll_pin_on_pin_unregister()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dpll/dpll_core.c    |  45 +++++++++
- drivers/dpll/dpll_core.h    |   2 +
- drivers/dpll/dpll_netlink.c | 190 ++++++++++++++++++++++++++++++++----
- drivers/dpll/dpll_netlink.h |   2 +
- include/linux/dpll.h        |  13 +++
- 5 files changed, 233 insertions(+), 19 deletions(-)
+ drivers/dpll/dpll_core.c | 49 ++++++++++++++++++++++++++++++++++++++++
+ drivers/dpll/dpll_core.h |  2 ++
+ include/linux/dpll.h     | 11 +++++++++
+ 3 files changed, 62 insertions(+)
 
 diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
-index cafb8832219d01..8879a72351561b 100644
+index 8879a72351561b..f04ed7195cadd6 100644
 --- a/drivers/dpll/dpll_core.c
 +++ b/drivers/dpll/dpll_core.c
-@@ -502,6 +502,7 @@ dpll_pin_alloc(u64 clock_id, u32 pin_idx, struct module *module,
- 	refcount_set(&pin->refcount, 1);
- 	xa_init_flags(&pin->dpll_refs, XA_FLAGS_ALLOC);
- 	xa_init_flags(&pin->parent_refs, XA_FLAGS_ALLOC);
-+	xa_init_flags(&pin->ref_sync_pins, XA_FLAGS_ALLOC);
- 	ret = xa_alloc_cyclic(&dpll_pin_xa, &pin->id, pin, xa_limit_32b,
- 			      &dpll_pin_xa_id, GFP_KERNEL);
- 	if (ret < 0)
-@@ -510,6 +511,7 @@ dpll_pin_alloc(u64 clock_id, u32 pin_idx, struct module *module,
- err_xa_alloc:
- 	xa_destroy(&pin->dpll_refs);
- 	xa_destroy(&pin->parent_refs);
-+	xa_destroy(&pin->ref_sync_pins);
- 	dpll_pin_prop_free(&pin->prop);
- err_pin_prop:
- 	kfree(pin);
-@@ -591,6 +593,7 @@ void dpll_pin_put(struct dpll_pin *pin)
- 		xa_erase(&dpll_pin_xa, pin->id);
- 		xa_destroy(&pin->dpll_refs);
+@@ -10,6 +10,7 @@
+ 
+ #include <linux/device.h>
+ #include <linux/err.h>
++#include <linux/property.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
+ 
+@@ -595,12 +596,60 @@ void dpll_pin_put(struct dpll_pin *pin)
  		xa_destroy(&pin->parent_refs);
-+		xa_destroy(&pin->ref_sync_pins);
+ 		xa_destroy(&pin->ref_sync_pins);
  		dpll_pin_prop_free(&pin->prop);
++		fwnode_handle_put(pin->fwnode);
  		kfree_rcu(pin, rcu);
  	}
-@@ -655,11 +658,26 @@ dpll_pin_register(struct dpll_device *dpll, struct dpll_pin *pin,
+ 	mutex_unlock(&dpll_lock);
  }
- EXPORT_SYMBOL_GPL(dpll_pin_register);
- 
-+static void dpll_pin_ref_sync_pair_del(u32 ref_sync_pin_id)
-+{
-+	struct dpll_pin *pin, *ref_sync_pin;
-+	unsigned long i;
-+
-+	xa_for_each(&dpll_pin_xa, i, pin) {
-+		ref_sync_pin = xa_load(&pin->ref_sync_pins, ref_sync_pin_id);
-+		if (ref_sync_pin) {
-+			xa_erase(&pin->ref_sync_pins, ref_sync_pin_id);
-+			__dpll_pin_change_ntf(pin);
-+		}
-+	}
-+}
-+
- static void
- __dpll_pin_unregister(struct dpll_device *dpll, struct dpll_pin *pin,
- 		      const struct dpll_pin_ops *ops, void *priv, void *cookie)
- {
- 	ASSERT_DPLL_PIN_REGISTERED(pin);
-+	dpll_pin_ref_sync_pair_del(pin->id);
- 	dpll_xa_ref_pin_del(&dpll->pin_refs, pin, ops, priv, cookie);
- 	dpll_xa_ref_dpll_del(&pin->dpll_refs, dpll, ops, priv, cookie);
- 	if (xa_empty(&pin->dpll_refs))
-@@ -779,6 +797,33 @@ void dpll_pin_on_pin_unregister(struct dpll_pin *parent, struct dpll_pin *pin,
- }
- EXPORT_SYMBOL_GPL(dpll_pin_on_pin_unregister);
+ EXPORT_SYMBOL_GPL(dpll_pin_put);
  
 +/**
-+ * dpll_pin_ref_sync_pair_add - create a reference sync signal pin pair
-+ * @pin: pin which produces the base frequency
-+ * @ref_sync_pin: pin which produces the sync signal
++ * dpll_pin_fwnode_set - set dpll pin firmware node reference
++ * @pin: pointer to a dpll pin
++ * @fwnode: firmware node handle
 + *
-+ * Once pins are paired, the user-space configuration of reference sync pair
-+ * is possible.
++ * Set firmware node handle for the given dpll pin.
++ */
++void dpll_pin_fwnode_set(struct dpll_pin *pin, struct fwnode_handle *fwnode)
++{
++	mutex_lock(&dpll_lock);
++	fwnode_handle_put(pin->fwnode); /* Drop fwnode previously set */
++	pin->fwnode = fwnode_handle_get(fwnode);
++	mutex_unlock(&dpll_lock);
++}
++EXPORT_SYMBOL_GPL(dpll_pin_fwnode_set);
++
++/**
++ * fwnode_dpll_pin_find - find dpll pin by firmware node reference
++ * @fwnode: reference to firmware node
++ *
++ * Get existing object of a pin that is associated with given firmware node
++ * reference.
++ *
 + * Context: Acquires a lock (dpll_lock)
 + * Return:
-+ * * 0 on success
-+ * * negative - error value
++ * * valid dpll_pin pointer on success
++ * * NULL when no such pin exists
 + */
-+int dpll_pin_ref_sync_pair_add(struct dpll_pin *pin,
-+			       struct dpll_pin *ref_sync_pin)
++struct dpll_pin *fwnode_dpll_pin_find(struct fwnode_handle *fwnode)
 +{
-+	int ret;
++	struct dpll_pin *pin, *ret = NULL;
++	unsigned long index;
 +
 +	mutex_lock(&dpll_lock);
-+	ret = xa_insert(&pin->ref_sync_pins, ref_sync_pin->id,
-+			ref_sync_pin, GFP_KERNEL);
-+	__dpll_pin_change_ntf(pin);
++	xa_for_each(&dpll_pin_xa, index, pin) {
++		if (pin->fwnode == fwnode) {
++			ret = pin;
++			refcount_inc(&ret->refcount);
++			break;
++		}
++	}
 +	mutex_unlock(&dpll_lock);
 +
 +	return ret;
 +}
-+EXPORT_SYMBOL_GPL(dpll_pin_ref_sync_pair_add);
-+
- static struct dpll_device_registration *
- dpll_device_registration_first(struct dpll_device *dpll)
- {
-diff --git a/drivers/dpll/dpll_core.h b/drivers/dpll/dpll_core.h
-index 2b6d8ef1cdf36c..93c68e78b3515c 100644
---- a/drivers/dpll/dpll_core.h
-+++ b/drivers/dpll/dpll_core.h
-@@ -44,6 +44,7 @@ struct dpll_device {
-  * @module:		module of creator
-  * @dpll_refs:		hold referencees to dplls pin was registered with
-  * @parent_refs:	hold references to parent pins pin was registered with
-+ * @ref_sync_pins:	hold references to pins for Reference SYNC feature
-  * @prop:		pin properties copied from the registerer
-  * @rclk_dev_name:	holds name of device when pin can recover clock from it
-  * @refcount:		refcount
-@@ -56,6 +57,7 @@ struct dpll_pin {
- 	struct module *module;
- 	struct xarray dpll_refs;
- 	struct xarray parent_refs;
-+	struct xarray ref_sync_pins;
- 	struct dpll_pin_properties prop;
- 	refcount_t refcount;
- 	struct rcu_head rcu;
-diff --git a/drivers/dpll/dpll_netlink.c b/drivers/dpll/dpll_netlink.c
-index fc0280dcddd107..d81ac5d8a0fa5c 100644
---- a/drivers/dpll/dpll_netlink.c
-+++ b/drivers/dpll/dpll_netlink.c
-@@ -48,6 +48,24 @@ dpll_msg_add_dev_parent_handle(struct sk_buff *msg, u32 id)
- 	return 0;
- }
- 
-+static bool dpll_pin_available(struct dpll_pin *pin)
-+{
-+	struct dpll_pin_ref *par_ref;
-+	unsigned long i;
-+
-+	if (!xa_get_mark(&dpll_pin_xa, pin->id, DPLL_REGISTERED))
-+		return false;
-+	xa_for_each(&pin->parent_refs, i, par_ref)
-+		if (xa_get_mark(&dpll_pin_xa, par_ref->pin->id,
-+				DPLL_REGISTERED))
-+			return true;
-+	xa_for_each(&pin->dpll_refs, i, par_ref)
-+		if (xa_get_mark(&dpll_device_xa, par_ref->dpll->id,
-+				DPLL_REGISTERED))
-+			return true;
-+	return false;
-+}
-+
- /**
-  * dpll_msg_add_pin_handle - attach pin handle attribute to a given message
-  * @msg: pointer to sk_buff message to attach a pin handle
-@@ -387,6 +405,47 @@ dpll_msg_add_pin_esync(struct sk_buff *msg, struct dpll_pin *pin,
- 	return -EMSGSIZE;
- }
- 
-+static int
-+dpll_msg_add_pin_ref_sync(struct sk_buff *msg, struct dpll_pin *pin,
-+			  struct dpll_pin_ref *ref,
-+			  struct netlink_ext_ack *extack)
-+{
-+	const struct dpll_pin_ops *ops = dpll_pin_ops(ref);
-+	struct dpll_device *dpll = ref->dpll;
-+	void *pin_priv, *ref_sync_pin_priv;
-+	struct dpll_pin *ref_sync_pin;
-+	enum dpll_pin_state state;
-+	struct nlattr *nest;
-+	unsigned long index;
-+	int ret;
-+
-+	pin_priv = dpll_pin_on_dpll_priv(dpll, pin);
-+	xa_for_each(&pin->ref_sync_pins, index, ref_sync_pin) {
-+		if (!dpll_pin_available(ref_sync_pin))
-+			continue;
-+		ref_sync_pin_priv = dpll_pin_on_dpll_priv(dpll, ref_sync_pin);
-+		if (WARN_ON(!ops->ref_sync_get))
-+			return -EOPNOTSUPP;
-+		ret = ops->ref_sync_get(pin, pin_priv, ref_sync_pin,
-+					ref_sync_pin_priv, &state, extack);
-+		if (ret)
-+			return ret;
-+		nest = nla_nest_start(msg, DPLL_A_PIN_REFERENCE_SYNC);
-+		if (!nest)
-+			return -EMSGSIZE;
-+		if (nla_put_s32(msg, DPLL_A_PIN_ID, ref_sync_pin->id))
-+			goto nest_cancel;
-+		if (nla_put_s32(msg, DPLL_A_PIN_STATE, state))
-+			goto nest_cancel;
-+		nla_nest_end(msg, nest);
-+	}
-+	return 0;
-+
-+nest_cancel:
-+	nla_nest_cancel(msg, nest);
-+	return -EMSGSIZE;
-+}
-+
- static bool dpll_pin_is_freq_supported(struct dpll_pin *pin, u32 freq)
- {
- 	int fs;
-@@ -529,6 +588,10 @@ dpll_cmd_pin_get_one(struct sk_buff *msg, struct dpll_pin *pin,
- 	if (ret)
- 		return ret;
- 	ret = dpll_msg_add_pin_esync(msg, pin, ref, extack);
-+	if (ret)
-+		return ret;
-+	if (!xa_empty(&pin->ref_sync_pins))
-+		ret = dpll_msg_add_pin_ref_sync(msg, pin, ref, extack);
- 	if (ret)
- 		return ret;
- 	if (xa_empty(&pin->parent_refs))
-@@ -618,24 +681,6 @@ __dpll_device_change_ntf(struct dpll_device *dpll)
- 	return dpll_device_event_send(DPLL_CMD_DEVICE_CHANGE_NTF, dpll);
- }
- 
--static bool dpll_pin_available(struct dpll_pin *pin)
--{
--	struct dpll_pin_ref *par_ref;
--	unsigned long i;
--
--	if (!xa_get_mark(&dpll_pin_xa, pin->id, DPLL_REGISTERED))
--		return false;
--	xa_for_each(&pin->parent_refs, i, par_ref)
--		if (xa_get_mark(&dpll_pin_xa, par_ref->pin->id,
--				DPLL_REGISTERED))
--			return true;
--	xa_for_each(&pin->dpll_refs, i, par_ref)
--		if (xa_get_mark(&dpll_device_xa, par_ref->dpll->id,
--				DPLL_REGISTERED))
--			return true;
--	return false;
--}
--
- /**
-  * dpll_device_change_ntf - notify that the dpll device has been changed
-  * @dpll: registered dpll pointer
-@@ -698,7 +743,7 @@ int dpll_pin_delete_ntf(struct dpll_pin *pin)
- 	return dpll_pin_event_send(DPLL_CMD_PIN_DELETE_NTF, pin);
- }
- 
--static int __dpll_pin_change_ntf(struct dpll_pin *pin)
-+int __dpll_pin_change_ntf(struct dpll_pin *pin)
- {
- 	return dpll_pin_event_send(DPLL_CMD_PIN_CHANGE_NTF, pin);
- }
-@@ -863,6 +908,108 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
- 	return ret;
- }
- 
-+static int
-+dpll_pin_ref_sync_state_set(struct dpll_pin *pin,
-+			    unsigned long ref_sync_pin_idx,
-+			    const enum dpll_pin_state state,
-+			    struct netlink_ext_ack *extack)
-+
-+{
-+	struct dpll_pin_ref *ref, *failed;
-+	const struct dpll_pin_ops *ops;
-+	enum dpll_pin_state old_state;
-+	struct dpll_pin *ref_sync_pin;
-+	struct dpll_device *dpll;
-+	unsigned long i;
-+	int ret;
-+
-+	ref_sync_pin = xa_find(&pin->ref_sync_pins, &ref_sync_pin_idx,
-+			       ULONG_MAX, XA_PRESENT);
-+	if (!ref_sync_pin) {
-+		NL_SET_ERR_MSG(extack, "reference sync pin not found");
-+		return -EINVAL;
-+	}
-+	if (!dpll_pin_available(ref_sync_pin)) {
-+		NL_SET_ERR_MSG(extack, "reference sync pin not available");
-+		return -EINVAL;
-+	}
-+	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
-+	ASSERT_NOT_NULL(ref);
-+	ops = dpll_pin_ops(ref);
-+	if (!ops->ref_sync_set || !ops->ref_sync_get) {
-+		NL_SET_ERR_MSG(extack, "reference sync not supported by this pin");
-+		return -EOPNOTSUPP;
-+	}
-+	dpll = ref->dpll;
-+	ret = ops->ref_sync_get(pin, dpll_pin_on_dpll_priv(dpll, pin),
-+				ref_sync_pin,
-+				dpll_pin_on_dpll_priv(dpll, ref_sync_pin),
-+				&old_state, extack);
-+	if (ret) {
-+		NL_SET_ERR_MSG(extack, "unable to get old reference sync state");
-+		return ret;
-+	}
-+	if (state == old_state)
-+		return 0;
-+	xa_for_each(&pin->dpll_refs, i, ref) {
-+		ops = dpll_pin_ops(ref);
-+		dpll = ref->dpll;
-+		ret = ops->ref_sync_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
-+					ref_sync_pin,
-+					dpll_pin_on_dpll_priv(dpll,
-+							      ref_sync_pin),
-+					state, extack);
-+		if (ret) {
-+			failed = ref;
-+			NL_SET_ERR_MSG_FMT(extack, "reference sync set failed for dpll_id:%u",
-+					   dpll->id);
-+			goto rollback;
-+		}
-+	}
-+	__dpll_pin_change_ntf(pin);
-+
-+	return 0;
-+
-+rollback:
-+	xa_for_each(&pin->dpll_refs, i, ref) {
-+		if (ref == failed)
-+			break;
-+		ops = dpll_pin_ops(ref);
-+		dpll = ref->dpll;
-+		if (ops->ref_sync_set(pin, dpll_pin_on_dpll_priv(dpll, pin),
-+				      ref_sync_pin,
-+				      dpll_pin_on_dpll_priv(dpll, ref_sync_pin),
-+				      old_state, extack))
-+			NL_SET_ERR_MSG(extack, "set reference sync rollback failed");
-+	}
-+	return ret;
-+}
-+
-+static int
-+dpll_pin_ref_sync_set(struct dpll_pin *pin, struct nlattr *nest,
-+		      struct netlink_ext_ack *extack)
-+{
-+	struct nlattr *tb[DPLL_A_PIN_MAX + 1];
-+	enum dpll_pin_state state;
-+	u32 sync_pin_id;
-+
-+	nla_parse_nested(tb, DPLL_A_PIN_MAX, nest,
-+			 dpll_reference_sync_nl_policy, extack);
-+	if (!tb[DPLL_A_PIN_ID]) {
-+		NL_SET_ERR_MSG(extack, "sync pin id expected");
-+		return -EINVAL;
-+	}
-+	sync_pin_id = nla_get_u32(tb[DPLL_A_PIN_ID]);
-+
-+	if (!tb[DPLL_A_PIN_STATE]) {
-+		NL_SET_ERR_MSG(extack, "sync pin state expected");
-+		return -EINVAL;
-+	}
-+	state = nla_get_u32(tb[DPLL_A_PIN_STATE]);
-+
-+	return dpll_pin_ref_sync_state_set(pin, sync_pin_id, state, extack);
-+}
++EXPORT_SYMBOL_GPL(fwnode_dpll_pin_find);
 +
  static int
- dpll_pin_on_pin_state_set(struct dpll_pin *pin, u32 parent_idx,
- 			  enum dpll_pin_state state,
-@@ -1169,6 +1316,11 @@ dpll_pin_set_from_nlattr(struct dpll_pin *pin, struct genl_info *info)
- 			if (ret)
- 				return ret;
- 			break;
-+		case DPLL_A_PIN_REFERENCE_SYNC:
-+			ret = dpll_pin_ref_sync_set(pin, a, info->extack);
-+			if (ret)
-+				return ret;
-+			break;
- 		}
- 	}
- 
-diff --git a/drivers/dpll/dpll_netlink.h b/drivers/dpll/dpll_netlink.h
-index a9cfd55f57fc42..dd28b56d27c56d 100644
---- a/drivers/dpll/dpll_netlink.h
-+++ b/drivers/dpll/dpll_netlink.h
-@@ -11,3 +11,5 @@ int dpll_device_delete_ntf(struct dpll_device *dpll);
- int dpll_pin_create_ntf(struct dpll_pin *pin);
- 
- int dpll_pin_delete_ntf(struct dpll_pin *pin);
-+
-+int __dpll_pin_change_ntf(struct dpll_pin *pin);
+ __dpll_pin_register(struct dpll_device *dpll, struct dpll_pin *pin,
+ 		    const struct dpll_pin_ops *ops, void *priv, void *cookie)
+diff --git a/drivers/dpll/dpll_core.h b/drivers/dpll/dpll_core.h
+index 93c68e78b3515c..2b71824f10adbc 100644
+--- a/drivers/dpll/dpll_core.h
++++ b/drivers/dpll/dpll_core.h
+@@ -42,6 +42,7 @@ struct dpll_device {
+  * @pin_idx:		index of a pin given by dev driver
+  * @clock_id:		clock_id of creator
+  * @module:		module of creator
++ * @fwnode:		optional reference to firmware node
+  * @dpll_refs:		hold referencees to dplls pin was registered with
+  * @parent_refs:	hold references to parent pins pin was registered with
+  * @ref_sync_pins:	hold references to pins for Reference SYNC feature
+@@ -55,6 +56,7 @@ struct dpll_pin {
+ 	u32 pin_idx;
+ 	u64 clock_id;
+ 	struct module *module;
++	struct fwnode_handle *fwnode;
+ 	struct xarray dpll_refs;
+ 	struct xarray parent_refs;
+ 	struct xarray ref_sync_pins;
 diff --git a/include/linux/dpll.h b/include/linux/dpll.h
-index 81f7b623d0ba67..673bae6cdd5817 100644
+index 673bae6cdd5817..003c003a1b4c5c 100644
 --- a/include/linux/dpll.h
 +++ b/include/linux/dpll.h
-@@ -91,6 +91,16 @@ struct dpll_pin_ops {
- 			 const struct dpll_device *dpll, void *dpll_priv,
- 			 struct dpll_pin_esync *esync,
- 			 struct netlink_ext_ack *extack);
-+	int (*ref_sync_set)(const struct dpll_pin *pin, void *pin_priv,
-+			    const struct dpll_pin *ref_sync_pin,
-+			    void *ref_sync_pin_priv,
-+			    const enum dpll_pin_state state,
-+			    struct netlink_ext_ack *extack);
-+	int (*ref_sync_get)(const struct dpll_pin *pin, void *pin_priv,
-+			    const struct dpll_pin *ref_sync_pin,
-+			    void *ref_sync_pin_priv,
-+			    enum dpll_pin_state *state,
-+			    struct netlink_ext_ack *extack);
- };
+@@ -16,6 +16,7 @@
+ struct dpll_device;
+ struct dpll_pin;
+ struct dpll_pin_esync;
++struct fwnode_handle;
  
- struct dpll_pin_frequency {
-@@ -190,6 +200,9 @@ int dpll_pin_on_pin_register(struct dpll_pin *parent, struct dpll_pin *pin,
- void dpll_pin_on_pin_unregister(struct dpll_pin *parent, struct dpll_pin *pin,
- 				const struct dpll_pin_ops *ops, void *priv);
- 
-+int dpll_pin_ref_sync_pair_add(struct dpll_pin *pin,
-+			       struct dpll_pin *ref_sync_pin);
+ struct dpll_device_ops {
+ 	int (*mode_get)(const struct dpll_device *dpll, void *dpll_priv,
+@@ -154,6 +155,8 @@ void dpll_netdev_pin_clear(struct net_device *dev);
+ size_t dpll_netdev_pin_handle_size(const struct net_device *dev);
+ int dpll_netdev_add_pin_handle(struct sk_buff *msg,
+ 			       const struct net_device *dev);
 +
- int dpll_device_change_ntf(struct dpll_device *dpll);
++struct dpll_pin *fwnode_dpll_pin_find(struct fwnode_handle *fwnode);
+ #else
+ static inline void
+ dpll_netdev_pin_set(struct net_device *dev, struct dpll_pin *dpll_pin) { }
+@@ -169,6 +172,12 @@ dpll_netdev_add_pin_handle(struct sk_buff *msg, const struct net_device *dev)
+ {
+ 	return 0;
+ }
++
++static inline struct dpll_pin *
++fwnode_dpll_pin_find(struct fwnode_handle *fwnode)
++{
++	return NULL;
++}
+ #endif
  
- int dpll_pin_change_ntf(struct dpll_pin *pin);
+ struct dpll_device *
+@@ -194,6 +203,8 @@ void dpll_pin_unregister(struct dpll_device *dpll, struct dpll_pin *pin,
+ 
+ void dpll_pin_put(struct dpll_pin *pin);
+ 
++void dpll_pin_fwnode_set(struct dpll_pin *pin, struct fwnode_handle *fwnode);
++
+ int dpll_pin_on_pin_register(struct dpll_pin *parent, struct dpll_pin *pin,
+ 			     const struct dpll_pin_ops *ops, void *priv);
+ 
 -- 
 2.53.0
 
