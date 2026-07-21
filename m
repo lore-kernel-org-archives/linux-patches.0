@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5F346AA89;
-	Tue, 21 Jul 2026 15:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEA446AA8F;
+	Tue, 21 Jul 2026 15:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648451; cv=none; b=HU7CinJ8s964O3SxCNyqnu66ccbt6nwR5tMhPZViJpbI0LSAC0YZOcxurPFovxg/9jCUNdWP8dNXhEGzVGEMWNmf7tjxfA1i05MfO9YCR+N/s62ThiH88iP0fquEwMc9IteGos3XLhRdV76U/u6pdKgyT7guj5P0LHHrpQlhk9I=
+	t=1784648454; cv=none; b=W4AI/P2ezXioiHG6wYd3aruo3h9LAVqPZ8moIr6cLhODe0OuMwehNhQB4Osgxt30VsYpfWZyHgCVCBqQd+JUMsO7DRIQjfGlhtvI1N7NGxGReA2KBSUlnPs888X9fuXDOd5b6baA+F4W6DjiYURBCwcxvVFjEajjhrTUM3ePPKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648451; c=relaxed/simple;
-	bh=QyVP3NGDpvAJ0amTdoZzXw3FH6eZa+WlYSaLMU02brY=;
+	s=arc-20240116; t=1784648454; c=relaxed/simple;
+	bh=mczS0OAECFDOH0CiYiiQi7hZVVQyzzl1VORsJcdDhP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k6lXDXr3lFvYbSI1yA0hipHYnV30CbyERwASoOMKHxkD5UUCkPcNuotfnR8efFKdRK0M89FRv4h1EyTxrgT0GLCZdyqWymciEa+nyd/gCj3vqkW6YNhYKOeg+dA3KwFIGcD/qA70yWStUXVZ5TvHCpFTcAIwr3Ldo/J6OElCAcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VCGNtElN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nt/DudRr3yC3H/IHTY0H4z0kVPZQiRxvPWYaD+pg+wA8teey5vNaWk1Ye7aSCWQkLUtJI1s8Uj5QpO17DoP3FEs1U+eNPBfR/h1uTMrHo8hU8PVB2kaRfGZbanbxPXxyR+WWx8MnWrS2Cz5iX5U+DWVMpJVlh6RE+AQpIx1atWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtJmSOf0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCGNtElN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7571F000E9;
-	Tue, 21 Jul 2026 15:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtJmSOf0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6101F000E9;
+	Tue, 21 Jul 2026 15:40:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648449;
-	bh=qEREF8e5ZPdbJsnaejFtEttqdcQ/WbADD/826lSzXMg=;
+	s=korg; t=1784648452;
+	bh=NZ775ebvifW4fNn8uAMfavhw6Uz9T/qz+CPwiwXPB+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VCGNtElN9zOZjULkfa2qFesIKvFEaAexGDIuVGvnNmV0J6IZUfKSJ7hw274ua0PQM
-	 rAiCtsNHiKPmzS3VLFDHb3N0dx49+bAt5VelPSgw95B7eH85+0Li75CQ0SHAd/PAk7
-	 1bsMMql00HOX5aCjiNfLmnIl0ejl4rpRIQzBhYQ8=
+	b=PtJmSOf0HA2NjFBtZYzmmutVX+3BgCgPFcqfjsLZHQS232hGZRJB2oLxoEyFnx84v
+	 VwI9fP+A/zqmtOjvOG6gjeObR2ARZYQgisMgbln8ga4Te8KqQERpTXM/djjZTpkm1q
+	 xjXcqGDEBUVuvh+VJRr29TrQ6kmA5Qe07SmfPM90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin He <helin52@huawei.com>,
-	Yongbang Shi <shiyongbang@huawei.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0204/2077] drm/hisilicon/hibmc: use clock to look up the PLL value
-Date: Tue, 21 Jul 2026 16:57:57 +0200
-Message-ID: <20260721152557.493112711@linuxfoundation.org>
+Subject: [PATCH 7.1 0178/2077] arm64: dts: qcom: lemans: Move PCIe devices into soc node
+Date: Tue, 21 Jul 2026 16:57:31 +0200
+Message-ID: <20260721152556.881916953@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,154 +52,731 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin He <helin52@huawei.com>
+From: Shawn Guo <shengchao.guo@oss.qualcomm.com>
 
-[ Upstream commit 99ef3a4f1c1813cabd50bb3e8522e85e00838bb2 ]
+[ Upstream commit 8222873cd4698627c08bffb2e40ba6f5a008fe32 ]
 
-In the past, we use width and height to look up our PLL value.
-But actually the actual clock check is also necessnary. There are
-some resolutions that width and height same, but its clock different.
-Add the clock check when using pll_table to determine the PLL value.
+These PCIe devices with MMIO address should be inside soc node rather
+than outside.
 
-Fixes: da52605eea8f ("drm/hisilicon/hibmc: Add support for display engine")
-Signed-off-by: Lin He <helin52@huawei.com>
-Signed-off-by: Yongbang Shi <shiyongbang@huawei.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260509032302.2057227-5-shiyongbang@huawei.com
+Fixes: 489f14be0e0a ("arm64: dts: qcom: sa8775p: Add pcie0 and pcie1 nodes")
+Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260331090147.18522-1-shengchao.guo@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/hisilicon/hibmc/hibmc_drm_de.c    | 80 +++++++++++--------
- 1 file changed, 45 insertions(+), 35 deletions(-)
+ arch/arm64/boot/dts/qcom/lemans.dtsi | 692 +++++++++++++--------------
+ 1 file changed, 346 insertions(+), 346 deletions(-)
 
-diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
-index 89bed78f14666a..db7fce4e8cc344 100644
---- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
-+++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
-@@ -32,26 +32,43 @@ struct hibmc_display_panel_pll {
- struct hibmc_dislay_pll_config {
- 	u64 hdisplay;
- 	u64 vdisplay;
-+	int clock;
- 	u32 pll1_config_value;
- 	u32 pll2_config_value;
- };
+diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
+index fe6e7635182307..5dd271e7108d7a 100644
+--- a/arch/arm64/boot/dts/qcom/lemans.dtsi
++++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
+@@ -2694,6 +2694,352 @@ mmss_noc: interconnect@17a0000 {
+ 			qcom,bcm-voters = <&apps_bcm_voter>;
+ 		};
  
- static const struct hibmc_dislay_pll_config hibmc_pll_table[] = {
--	{640, 480, CRT_PLL1_HS_25MHZ, CRT_PLL2_HS_25MHZ},
--	{800, 600, CRT_PLL1_HS_40MHZ, CRT_PLL2_HS_40MHZ},
--	{1024, 768, CRT_PLL1_HS_65MHZ, CRT_PLL2_HS_65MHZ},
--	{1152, 864, CRT_PLL1_HS_80MHZ_1152, CRT_PLL2_HS_80MHZ},
--	{1280, 768, CRT_PLL1_HS_80MHZ, CRT_PLL2_HS_80MHZ},
--	{1280, 720, CRT_PLL1_HS_74MHZ, CRT_PLL2_HS_74MHZ},
--	{1280, 960, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
--	{1280, 1024, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
--	{1440, 900, CRT_PLL1_HS_106MHZ, CRT_PLL2_HS_106MHZ},
--	{1600, 900, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
--	{1600, 1200, CRT_PLL1_HS_162MHZ, CRT_PLL2_HS_162MHZ},
--	{1920, 1080, CRT_PLL1_HS_148MHZ, CRT_PLL2_HS_148MHZ},
--	{1920, 1200, CRT_PLL1_HS_193MHZ, CRT_PLL2_HS_193MHZ},
-+	{640, 480, 25000, CRT_PLL1_HS_25MHZ, CRT_PLL2_HS_25MHZ},
-+	{800, 600, 40000, CRT_PLL1_HS_40MHZ, CRT_PLL2_HS_40MHZ},
-+	{1024, 768, 65000, CRT_PLL1_HS_65MHZ, CRT_PLL2_HS_65MHZ},
-+	{1152, 864, 78750, CRT_PLL1_HS_80MHZ_1152, CRT_PLL2_HS_80MHZ},
-+	{1280, 768, 80000, CRT_PLL1_HS_80MHZ, CRT_PLL2_HS_80MHZ},
-+	{1280, 720, 74375, CRT_PLL1_HS_74MHZ, CRT_PLL2_HS_74MHZ},
-+	{1280, 960, 108000, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
-+	{1280, 1024, 108000, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
-+	{1440, 900, 105952, CRT_PLL1_HS_106MHZ, CRT_PLL2_HS_106MHZ},
-+	{1600, 900, 108000, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
-+	{1600, 1200, 162500, CRT_PLL1_HS_162MHZ, CRT_PLL2_HS_162MHZ},
-+	{1920, 1080, 148750, CRT_PLL1_HS_148MHZ, CRT_PLL2_HS_148MHZ},
-+	{1920, 1200, 193750, CRT_PLL1_HS_193MHZ, CRT_PLL2_HS_193MHZ},
- };
- 
-+static int hibmc_get_best_clock_idx(const struct drm_display_mode *mode)
-+{
-+	int i, diff;
++		pcie0: pcie@1c00000 {
++			compatible = "qcom,pcie-sa8775p";
++			reg = <0x0 0x01c00000 0x0 0x3000>,
++			      <0x0 0x40000000 0x0 0xf20>,
++			      <0x0 0x40000f20 0x0 0xa8>,
++			      <0x0 0x40001000 0x0 0x4000>,
++			      <0x0 0x40100000 0x0 0x100000>,
++			      <0x0 0x01c03000 0x0 0x1000>;
++			reg-names = "parf", "dbi", "elbi", "atu", "config", "mhi";
++			device_type = "pci";
 +
-+	for (i = 0; i < ARRAY_SIZE(hibmc_pll_table); i++) {
-+		if (hibmc_pll_table[i].hdisplay == mode->hdisplay &&
-+		    hibmc_pll_table[i].vdisplay == mode->vdisplay) {
-+			diff = abs(mode->clock - hibmc_pll_table[i].clock);
-+			if (diff < mode->clock / 100) /* tolerance 1/100 */
-+				return i;
-+		}
-+	}
++			#address-cells = <3>;
++			#size-cells = <2>;
++			ranges = <0x01000000 0x0 0x00000000 0x0 0x40200000 0x0 0x100000>,
++				 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1fd00000>;
++			bus-range = <0x00 0xff>;
 +
-+	return -MODE_CLOCK_RANGE;
-+}
++			dma-coherent;
 +
- static int hibmc_plane_atomic_check(struct drm_plane *plane,
- 				    struct drm_atomic_state *state)
- {
-@@ -214,19 +231,15 @@ static enum drm_mode_status
- hibmc_crtc_mode_valid(struct drm_crtc *crtc,
- 		      const struct drm_display_mode *mode)
- {
--	size_t i = 0;
- 	int vrefresh = drm_mode_vrefresh(mode);
- 
- 	if (vrefresh < 59 || vrefresh > 61)
- 		return MODE_NOCLOCK;
- 
--	for (i = 0; i < ARRAY_SIZE(hibmc_pll_table); i++) {
--		if (hibmc_pll_table[i].hdisplay == mode->hdisplay &&
--		    hibmc_pll_table[i].vdisplay == mode->vdisplay)
--			return MODE_OK;
--	}
-+	if (hibmc_get_best_clock_idx(mode) >= 0)
-+		return MODE_OK;
- 
--	return MODE_BAD;
-+	return MODE_CLOCK_RANGE;
- }
- 
- static u32 format_pll_reg(void)
-@@ -281,23 +294,20 @@ static void set_vclock_hisilicon(struct drm_device *dev, u64 pll)
- 	writel(val, priv->mmio + CRT_PLL1_HS);
- }
- 
--static void get_pll_config(u64 x, u64 y, u32 *pll1, u32 *pll2)
-+static void get_pll_config(struct drm_display_mode *mode, u32 *pll1, u32 *pll2)
- {
--	size_t i;
--	size_t count = ARRAY_SIZE(hibmc_pll_table);
++			linux,pci-domain = <0>;
++			num-lanes = <2>;
++
++			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 309 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 313 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 374 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "msi0",
++					  "msi1",
++					  "msi2",
++					  "msi3",
++					  "msi4",
++					  "msi5",
++					  "msi6",
++					  "msi7",
++					  "global";
++			#interrupt-cells = <1>;
++			interrupt-map-mask = <0 0 0 0x7>;
++			interrupt-map = <0 0 0 1 &intc GIC_SPI 434 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 2 &intc GIC_SPI 435 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 3 &intc GIC_SPI 438 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 4 &intc GIC_SPI 439 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
++				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
++				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
++				 <&gcc GCC_PCIE_0_SLV_AXI_CLK>,
++				 <&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>;
++
++			clock-names = "aux",
++				      "cfg",
++				      "bus_master",
++				      "bus_slave",
++				      "slave_q2a";
++
++			assigned-clocks = <&gcc GCC_PCIE_0_AUX_CLK>;
++			assigned-clock-rates = <19200000>;
++
++			interconnects = <&pcie_anoc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>,
++					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_0 0>;
++			interconnect-names = "pcie-mem", "cpu-pcie";
++
++			iommu-map = <0x0 &pcie_smmu 0x0000 0x1>,
++				    <0x100 &pcie_smmu 0x0001 0x1>;
++
++			resets = <&gcc GCC_PCIE_0_BCR>,
++				 <&gcc GCC_PCIE_0_LINK_DOWN_BCR>;
++			reset-names = "pci",
++				      "link_down";
++
++			power-domains = <&gcc PCIE_0_GDSC>;
++
++			phys = <&pcie0_phy>;
++			phy-names = "pciephy";
++
++			eq-presets-8gts = /bits/ 16 <0x5555 0x5555>;
++			eq-presets-16gts = /bits/ 8 <0x55 0x55>;
++
++			status = "disabled";
++
++			pcieport0: pcie@0 {
++				device_type = "pci";
++				reg = <0x0 0x0 0x0 0x0 0x0>;
++				bus-range = <0x01 0xff>;
++
++				#address-cells = <3>;
++				#size-cells = <2>;
++				ranges;
++			};
++		};
++
++		pcie0_ep: pcie-ep@1c00000 {
++			compatible = "qcom,sa8775p-pcie-ep";
++			reg = <0x0 0x01c00000 0x0 0x3000>,
++			      <0x0 0x40000000 0x0 0xf20>,
++			      <0x0 0x40000f20 0x0 0xa8>,
++			      <0x0 0x40001000 0x0 0x4000>,
++			      <0x0 0x40200000 0x0 0x1fe00000>,
++			      <0x0 0x01c03000 0x0 0x1000>,
++			      <0x0 0x40005000 0x0 0x2000>;
++			reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
++				    "mmio", "dma";
++
++			clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
++				<&gcc GCC_PCIE_0_CFG_AHB_CLK>,
++				<&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
++				<&gcc GCC_PCIE_0_SLV_AXI_CLK>,
++				<&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>;
++
++			clock-names = "aux",
++				      "cfg",
++				      "bus_master",
++				      "bus_slave",
++				      "slave_q2a";
++
++			interrupts = <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 630 IRQ_TYPE_LEVEL_HIGH>;
++
++			interrupt-names = "global", "doorbell", "dma";
++
++			interconnects = <&pcie_anoc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>,
++					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_0 0>;
++			interconnect-names = "pcie-mem", "cpu-pcie";
++
++			dma-coherent;
++			iommus = <&pcie_smmu 0x0000 0x7f>;
++			resets = <&gcc GCC_PCIE_0_BCR>;
++			reset-names = "core";
++			power-domains = <&gcc PCIE_0_GDSC>;
++			phys = <&pcie0_phy>;
++			phy-names = "pciephy";
++			num-lanes = <2>;
++			linux,pci-domain = <0>;
++
++			status = "disabled";
++		};
++
++		pcie0_phy: phy@1c04000 {
++			compatible = "qcom,sa8775p-qmp-gen4x2-pcie-phy";
++			reg = <0x0 0x1c04000 0x0 0x2000>;
++
++			clocks = <&gcc GCC_PCIE_0_PHY_AUX_CLK>,
++				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
++				 <&gcc GCC_PCIE_CLKREF_EN>,
++				 <&gcc GCC_PCIE_0_PHY_RCHNG_CLK>,
++				 <&gcc GCC_PCIE_0_PIPE_CLK>,
++				 <&gcc GCC_PCIE_0_PIPEDIV2_CLK>;
++			clock-names = "aux",
++				      "cfg_ahb",
++				      "ref",
++				      "rchng",
++				      "pipe",
++				      "pipediv2";
++
++			assigned-clocks = <&gcc GCC_PCIE_0_PHY_RCHNG_CLK>;
++			assigned-clock-rates = <100000000>;
++
++			resets = <&gcc GCC_PCIE_0_PHY_BCR>;
++			reset-names = "phy";
++
++			#clock-cells = <0>;
++			clock-output-names = "pcie_0_pipe_clk";
++
++			#phy-cells = <0>;
++
++			status = "disabled";
++		};
++
++		pcie1: pcie@1c10000 {
++			compatible = "qcom,pcie-sa8775p";
++			reg = <0x0 0x01c10000 0x0 0x3000>,
++			      <0x0 0x60000000 0x0 0xf20>,
++			      <0x0 0x60000f20 0x0 0xa8>,
++			      <0x0 0x60001000 0x0 0x4000>,
++			      <0x0 0x60100000 0x0 0x100000>,
++			      <0x0 0x01c13000 0x0 0x1000>;
++			reg-names = "parf", "dbi", "elbi", "atu", "config", "mhi";
++			device_type = "pci";
++
++			#address-cells = <3>;
++			#size-cells = <2>;
++			ranges = <0x01000000 0x0 0x00000000 0x0 0x60200000 0x0 0x100000>,
++				 <0x02000000 0x0 0x60300000 0x0 0x60300000 0x0 0x1fd00000>;
++			bus-range = <0x00 0xff>;
++
++			dma-coherent;
++
++			linux,pci-domain = <1>;
++			num-lanes = <4>;
++
++			interrupts = <GIC_SPI 519 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 518 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "msi0",
++					  "msi1",
++					  "msi2",
++					  "msi3",
++					  "msi4",
++					  "msi5",
++					  "msi6",
++					  "msi7",
++					  "global";
++			#interrupt-cells = <1>;
++			interrupt-map-mask = <0 0 0 0x7>;
++			interrupt-map = <0 0 0 1 &intc GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 2 &intc GIC_SPI 149 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 3 &intc GIC_SPI 150 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 4 &intc GIC_SPI 151 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
++				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
++				 <&gcc GCC_PCIE_1_MSTR_AXI_CLK>,
++				 <&gcc GCC_PCIE_1_SLV_AXI_CLK>,
++				 <&gcc GCC_PCIE_1_SLV_Q2A_AXI_CLK>;
++
++			clock-names = "aux",
++				      "cfg",
++				      "bus_master",
++				      "bus_slave",
++				      "slave_q2a";
++
++			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
++			assigned-clock-rates = <19200000>;
++
++			interconnects = <&pcie_anoc MASTER_PCIE_1 0 &mc_virt SLAVE_EBI1 0>,
++					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_1 0>;
++			interconnect-names = "pcie-mem", "cpu-pcie";
++
++			iommu-map = <0x0 &pcie_smmu 0x0080 0x1>,
++				    <0x100 &pcie_smmu 0x0081 0x1>;
++
++			resets = <&gcc GCC_PCIE_1_BCR>,
++				 <&gcc GCC_PCIE_1_LINK_DOWN_BCR>;
++			reset-names = "pci",
++				      "link_down";
++
++			power-domains = <&gcc PCIE_1_GDSC>;
++
++			phys = <&pcie1_phy>;
++			phy-names = "pciephy";
++
++			eq-presets-8gts = /bits/ 16 <0x5555 0x5555 0x5555 0x5555>;
++			eq-presets-16gts = /bits/ 8 <0x55 0x55 0x55 0x55>;
++
++			status = "disabled";
++
++			pcie@0 {
++				device_type = "pci";
++				reg = <0x0 0x0 0x0 0x0 0x0>;
++				bus-range = <0x01 0xff>;
++
++				#address-cells = <3>;
++				#size-cells = <2>;
++				ranges;
++			};
++		};
++
++		pcie1_ep: pcie-ep@1c10000 {
++			compatible = "qcom,sa8775p-pcie-ep";
++			reg = <0x0 0x01c10000 0x0 0x3000>,
++			      <0x0 0x60000000 0x0 0xf20>,
++			      <0x0 0x60000f20 0x0 0xa8>,
++			      <0x0 0x60001000 0x0 0x4000>,
++			      <0x0 0x60200000 0x0 0x1fe00000>,
++			      <0x0 0x01c13000 0x0 0x1000>,
++			      <0x0 0x60005000 0x0 0x2000>;
++			reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
++				    "mmio", "dma";
++
++			clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
++				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
++				 <&gcc GCC_PCIE_1_MSTR_AXI_CLK>,
++				 <&gcc GCC_PCIE_1_SLV_AXI_CLK>,
++				 <&gcc GCC_PCIE_1_SLV_Q2A_AXI_CLK>;
++
++			clock-names = "aux",
++				      "cfg",
++				      "bus_master",
++				      "bus_slave",
++				      "slave_q2a";
++
++			interrupts = <GIC_SPI 518 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 152 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 474 IRQ_TYPE_LEVEL_HIGH>;
++
++			interrupt-names = "global", "doorbell", "dma";
++
++			interconnects = <&pcie_anoc MASTER_PCIE_1 0 &mc_virt SLAVE_EBI1 0>,
++					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_1 0>;
++			interconnect-names = "pcie-mem", "cpu-pcie";
++
++			dma-coherent;
++			iommus = <&pcie_smmu 0x80 0x7f>;
++			resets = <&gcc GCC_PCIE_1_BCR>;
++			reset-names = "core";
++			power-domains = <&gcc PCIE_1_GDSC>;
++			phys = <&pcie1_phy>;
++			phy-names = "pciephy";
++			num-lanes = <4>;
++			linux,pci-domain = <1>;
++
++			status = "disabled";
++		};
++
++		pcie1_phy: phy@1c14000 {
++			compatible = "qcom,sa8775p-qmp-gen4x4-pcie-phy";
++			reg = <0x0 0x1c14000 0x0 0x4000>;
++
++			clocks = <&gcc GCC_PCIE_1_PHY_AUX_CLK>,
++				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
++				 <&gcc GCC_PCIE_CLKREF_EN>,
++				 <&gcc GCC_PCIE_1_PHY_RCHNG_CLK>,
++				 <&gcc GCC_PCIE_1_PIPE_CLK>,
++				 <&gcc GCC_PCIE_1_PIPEDIV2_CLK>;
++			clock-names = "aux",
++				      "cfg_ahb",
++				      "ref",
++				      "rchng",
++				      "pipe",
++				      "pipediv2";
++
++			assigned-clocks = <&gcc GCC_PCIE_1_PHY_RCHNG_CLK>;
++			assigned-clock-rates = <100000000>;
++
++			resets = <&gcc GCC_PCIE_1_PHY_BCR>;
++			reset-names = "phy";
++
++			#clock-cells = <0>;
++			clock-output-names = "pcie_1_pipe_clk";
++
++			#phy-cells = <0>;
++
++			status = "disabled";
++		};
++
+ 		ufs_mem_hc: ufshc@1d84000 {
+ 			compatible = "qcom,sa8775p-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
+ 			reg = <0x0 0x01d84000 0x0 0x3000>;
+@@ -8601,350 +8947,4 @@ turing_llm_tpdm_out: endpoint {
+ 			};
+ 		};
+ 	};
 -
--	for (i = 0; i < count; i++) {
--		if (hibmc_pll_table[i].hdisplay == x &&
--		    hibmc_pll_table[i].vdisplay == y) {
--			*pll1 = hibmc_pll_table[i].pll1_config_value;
--			*pll2 = hibmc_pll_table[i].pll2_config_value;
--			return;
--		}
-+	int idx;
-+
-+	idx = hibmc_get_best_clock_idx(mode);
-+	if (idx < 0) {
-+		/* if found none, we use default value */
-+		*pll1 = CRT_PLL1_HS_25MHZ;
-+		*pll2 = CRT_PLL2_HS_25MHZ;
-+		return;
- 	}
- 
--	/* if found none, we use default value */
--	*pll1 = CRT_PLL1_HS_25MHZ;
--	*pll2 = CRT_PLL2_HS_25MHZ;
-+	*pll1 = hibmc_pll_table[idx].pll1_config_value;
-+	*pll2 = hibmc_pll_table[idx].pll2_config_value;
- }
- 
- /*
-@@ -319,7 +329,7 @@ static u32 display_ctrl_adjust(struct drm_device *dev,
- 	x = mode->hdisplay;
- 	y = mode->vdisplay;
- 
--	get_pll_config(x, y, &pll1, &pll2);
-+	get_pll_config(mode, &pll1, &pll2);
- 	writel(pll2, priv->mmio + CRT_PLL2_HS);
- 	set_vclock_hisilicon(dev, pll1);
- 
+-	pcie0: pcie@1c00000 {
+-		compatible = "qcom,pcie-sa8775p";
+-		reg = <0x0 0x01c00000 0x0 0x3000>,
+-		      <0x0 0x40000000 0x0 0xf20>,
+-		      <0x0 0x40000f20 0x0 0xa8>,
+-		      <0x0 0x40001000 0x0 0x4000>,
+-		      <0x0 0x40100000 0x0 0x100000>,
+-		      <0x0 0x01c03000 0x0 0x1000>;
+-		reg-names = "parf", "dbi", "elbi", "atu", "config", "mhi";
+-		device_type = "pci";
+-
+-		#address-cells = <3>;
+-		#size-cells = <2>;
+-		ranges = <0x01000000 0x0 0x00000000 0x0 0x40200000 0x0 0x100000>,
+-			 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1fd00000>;
+-		bus-range = <0x00 0xff>;
+-
+-		dma-coherent;
+-
+-		linux,pci-domain = <0>;
+-		num-lanes = <2>;
+-
+-		interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 309 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 313 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 374 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>;
+-		interrupt-names = "msi0",
+-				  "msi1",
+-				  "msi2",
+-				  "msi3",
+-				  "msi4",
+-				  "msi5",
+-				  "msi6",
+-				  "msi7",
+-				  "global";
+-		#interrupt-cells = <1>;
+-		interrupt-map-mask = <0 0 0 0x7>;
+-		interrupt-map = <0 0 0 1 &intc GIC_SPI 434 IRQ_TYPE_LEVEL_HIGH>,
+-				<0 0 0 2 &intc GIC_SPI 435 IRQ_TYPE_LEVEL_HIGH>,
+-				<0 0 0 3 &intc GIC_SPI 438 IRQ_TYPE_LEVEL_HIGH>,
+-				<0 0 0 4 &intc GIC_SPI 439 IRQ_TYPE_LEVEL_HIGH>;
+-
+-		clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
+-			 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
+-			 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
+-			 <&gcc GCC_PCIE_0_SLV_AXI_CLK>,
+-			 <&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>;
+-
+-		clock-names = "aux",
+-			      "cfg",
+-			      "bus_master",
+-			      "bus_slave",
+-			      "slave_q2a";
+-
+-		assigned-clocks = <&gcc GCC_PCIE_0_AUX_CLK>;
+-		assigned-clock-rates = <19200000>;
+-
+-		interconnects = <&pcie_anoc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>,
+-				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_0 0>;
+-		interconnect-names = "pcie-mem", "cpu-pcie";
+-
+-		iommu-map = <0x0 &pcie_smmu 0x0000 0x1>,
+-			    <0x100 &pcie_smmu 0x0001 0x1>;
+-
+-		resets = <&gcc GCC_PCIE_0_BCR>,
+-			 <&gcc GCC_PCIE_0_LINK_DOWN_BCR>;
+-		reset-names = "pci",
+-			      "link_down";
+-
+-		power-domains = <&gcc PCIE_0_GDSC>;
+-
+-		phys = <&pcie0_phy>;
+-		phy-names = "pciephy";
+-
+-		eq-presets-8gts = /bits/ 16 <0x5555 0x5555>;
+-		eq-presets-16gts = /bits/ 8 <0x55 0x55>;
+-
+-		status = "disabled";
+-
+-		pcieport0: pcie@0 {
+-			device_type = "pci";
+-			reg = <0x0 0x0 0x0 0x0 0x0>;
+-			bus-range = <0x01 0xff>;
+-
+-			#address-cells = <3>;
+-			#size-cells = <2>;
+-			ranges;
+-		};
+-	};
+-
+-	pcie0_ep: pcie-ep@1c00000 {
+-		compatible = "qcom,sa8775p-pcie-ep";
+-		reg = <0x0 0x01c00000 0x0 0x3000>,
+-		      <0x0 0x40000000 0x0 0xf20>,
+-		      <0x0 0x40000f20 0x0 0xa8>,
+-		      <0x0 0x40001000 0x0 0x4000>,
+-		      <0x0 0x40200000 0x0 0x1fe00000>,
+-		      <0x0 0x01c03000 0x0 0x1000>,
+-		      <0x0 0x40005000 0x0 0x2000>;
+-		reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
+-			    "mmio", "dma";
+-
+-		clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
+-			<&gcc GCC_PCIE_0_CFG_AHB_CLK>,
+-			<&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
+-			<&gcc GCC_PCIE_0_SLV_AXI_CLK>,
+-			<&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>;
+-
+-		clock-names = "aux",
+-			      "cfg",
+-			      "bus_master",
+-			      "bus_slave",
+-			      "slave_q2a";
+-
+-		interrupts = <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 630 IRQ_TYPE_LEVEL_HIGH>;
+-
+-		interrupt-names = "global", "doorbell", "dma";
+-
+-		interconnects = <&pcie_anoc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>,
+-				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_0 0>;
+-		interconnect-names = "pcie-mem", "cpu-pcie";
+-
+-		dma-coherent;
+-		iommus = <&pcie_smmu 0x0000 0x7f>;
+-		resets = <&gcc GCC_PCIE_0_BCR>;
+-		reset-names = "core";
+-		power-domains = <&gcc PCIE_0_GDSC>;
+-		phys = <&pcie0_phy>;
+-		phy-names = "pciephy";
+-		num-lanes = <2>;
+-		linux,pci-domain = <0>;
+-
+-		status = "disabled";
+-	};
+-
+-	pcie0_phy: phy@1c04000 {
+-		compatible = "qcom,sa8775p-qmp-gen4x2-pcie-phy";
+-		reg = <0x0 0x1c04000 0x0 0x2000>;
+-
+-		clocks = <&gcc GCC_PCIE_0_PHY_AUX_CLK>,
+-			 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
+-			 <&gcc GCC_PCIE_CLKREF_EN>,
+-			 <&gcc GCC_PCIE_0_PHY_RCHNG_CLK>,
+-			 <&gcc GCC_PCIE_0_PIPE_CLK>,
+-			 <&gcc GCC_PCIE_0_PIPEDIV2_CLK>;
+-		clock-names = "aux",
+-			      "cfg_ahb",
+-			      "ref",
+-			      "rchng",
+-			      "pipe",
+-			      "pipediv2";
+-
+-		assigned-clocks = <&gcc GCC_PCIE_0_PHY_RCHNG_CLK>;
+-		assigned-clock-rates = <100000000>;
+-
+-		resets = <&gcc GCC_PCIE_0_PHY_BCR>;
+-		reset-names = "phy";
+-
+-		#clock-cells = <0>;
+-		clock-output-names = "pcie_0_pipe_clk";
+-
+-		#phy-cells = <0>;
+-
+-		status = "disabled";
+-	};
+-
+-	pcie1: pcie@1c10000 {
+-		compatible = "qcom,pcie-sa8775p";
+-		reg = <0x0 0x01c10000 0x0 0x3000>,
+-		      <0x0 0x60000000 0x0 0xf20>,
+-		      <0x0 0x60000f20 0x0 0xa8>,
+-		      <0x0 0x60001000 0x0 0x4000>,
+-		      <0x0 0x60100000 0x0 0x100000>,
+-		      <0x0 0x01c13000 0x0 0x1000>;
+-		reg-names = "parf", "dbi", "elbi", "atu", "config", "mhi";
+-		device_type = "pci";
+-
+-		#address-cells = <3>;
+-		#size-cells = <2>;
+-		ranges = <0x01000000 0x0 0x00000000 0x0 0x60200000 0x0 0x100000>,
+-			 <0x02000000 0x0 0x60300000 0x0 0x60300000 0x0 0x1fd00000>;
+-		bus-range = <0x00 0xff>;
+-
+-		dma-coherent;
+-
+-		linux,pci-domain = <1>;
+-		num-lanes = <4>;
+-
+-		interrupts = <GIC_SPI 519 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 518 IRQ_TYPE_LEVEL_HIGH>;
+-		interrupt-names = "msi0",
+-				  "msi1",
+-				  "msi2",
+-				  "msi3",
+-				  "msi4",
+-				  "msi5",
+-				  "msi6",
+-				  "msi7",
+-				  "global";
+-		#interrupt-cells = <1>;
+-		interrupt-map-mask = <0 0 0 0x7>;
+-		interrupt-map = <0 0 0 1 &intc GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>,
+-				<0 0 0 2 &intc GIC_SPI 149 IRQ_TYPE_LEVEL_HIGH>,
+-				<0 0 0 3 &intc GIC_SPI 150 IRQ_TYPE_LEVEL_HIGH>,
+-				<0 0 0 4 &intc GIC_SPI 151 IRQ_TYPE_LEVEL_HIGH>;
+-
+-		clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
+-			 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
+-			 <&gcc GCC_PCIE_1_MSTR_AXI_CLK>,
+-			 <&gcc GCC_PCIE_1_SLV_AXI_CLK>,
+-			 <&gcc GCC_PCIE_1_SLV_Q2A_AXI_CLK>;
+-
+-		clock-names = "aux",
+-			      "cfg",
+-			      "bus_master",
+-			      "bus_slave",
+-			      "slave_q2a";
+-
+-		assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
+-		assigned-clock-rates = <19200000>;
+-
+-		interconnects = <&pcie_anoc MASTER_PCIE_1 0 &mc_virt SLAVE_EBI1 0>,
+-				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_1 0>;
+-		interconnect-names = "pcie-mem", "cpu-pcie";
+-
+-		iommu-map = <0x0 &pcie_smmu 0x0080 0x1>,
+-			    <0x100 &pcie_smmu 0x0081 0x1>;
+-
+-		resets = <&gcc GCC_PCIE_1_BCR>,
+-			 <&gcc GCC_PCIE_1_LINK_DOWN_BCR>;
+-		reset-names = "pci",
+-			      "link_down";
+-
+-		power-domains = <&gcc PCIE_1_GDSC>;
+-
+-		phys = <&pcie1_phy>;
+-		phy-names = "pciephy";
+-
+-		eq-presets-8gts = /bits/ 16 <0x5555 0x5555 0x5555 0x5555>;
+-		eq-presets-16gts = /bits/ 8 <0x55 0x55 0x55 0x55>;
+-
+-		status = "disabled";
+-
+-		pcie@0 {
+-			device_type = "pci";
+-			reg = <0x0 0x0 0x0 0x0 0x0>;
+-			bus-range = <0x01 0xff>;
+-
+-			#address-cells = <3>;
+-			#size-cells = <2>;
+-			ranges;
+-		};
+-	};
+-
+-	pcie1_ep: pcie-ep@1c10000 {
+-		compatible = "qcom,sa8775p-pcie-ep";
+-		reg = <0x0 0x01c10000 0x0 0x3000>,
+-		      <0x0 0x60000000 0x0 0xf20>,
+-		      <0x0 0x60000f20 0x0 0xa8>,
+-		      <0x0 0x60001000 0x0 0x4000>,
+-		      <0x0 0x60200000 0x0 0x1fe00000>,
+-		      <0x0 0x01c13000 0x0 0x1000>,
+-		      <0x0 0x60005000 0x0 0x2000>;
+-		reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
+-			    "mmio", "dma";
+-
+-		clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
+-			 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
+-			 <&gcc GCC_PCIE_1_MSTR_AXI_CLK>,
+-			 <&gcc GCC_PCIE_1_SLV_AXI_CLK>,
+-			 <&gcc GCC_PCIE_1_SLV_Q2A_AXI_CLK>;
+-
+-		clock-names = "aux",
+-			      "cfg",
+-			      "bus_master",
+-			      "bus_slave",
+-			      "slave_q2a";
+-
+-		interrupts = <GIC_SPI 518 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 152 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 474 IRQ_TYPE_LEVEL_HIGH>;
+-
+-		interrupt-names = "global", "doorbell", "dma";
+-
+-		interconnects = <&pcie_anoc MASTER_PCIE_1 0 &mc_virt SLAVE_EBI1 0>,
+-				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_1 0>;
+-		interconnect-names = "pcie-mem", "cpu-pcie";
+-
+-		dma-coherent;
+-		iommus = <&pcie_smmu 0x80 0x7f>;
+-		resets = <&gcc GCC_PCIE_1_BCR>;
+-		reset-names = "core";
+-		power-domains = <&gcc PCIE_1_GDSC>;
+-		phys = <&pcie1_phy>;
+-		phy-names = "pciephy";
+-		num-lanes = <4>;
+-		linux,pci-domain = <1>;
+-
+-		status = "disabled";
+-	};
+-
+-	pcie1_phy: phy@1c14000 {
+-		compatible = "qcom,sa8775p-qmp-gen4x4-pcie-phy";
+-		reg = <0x0 0x1c14000 0x0 0x4000>;
+-
+-		clocks = <&gcc GCC_PCIE_1_PHY_AUX_CLK>,
+-			 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
+-			 <&gcc GCC_PCIE_CLKREF_EN>,
+-			 <&gcc GCC_PCIE_1_PHY_RCHNG_CLK>,
+-			 <&gcc GCC_PCIE_1_PIPE_CLK>,
+-			 <&gcc GCC_PCIE_1_PIPEDIV2_CLK>;
+-		clock-names = "aux",
+-			      "cfg_ahb",
+-			      "ref",
+-			      "rchng",
+-			      "pipe",
+-			      "pipediv2";
+-
+-		assigned-clocks = <&gcc GCC_PCIE_1_PHY_RCHNG_CLK>;
+-		assigned-clock-rates = <100000000>;
+-
+-		resets = <&gcc GCC_PCIE_1_PHY_BCR>;
+-		reset-names = "phy";
+-
+-		#clock-cells = <0>;
+-		clock-output-names = "pcie_1_pipe_clk";
+-
+-		#phy-cells = <0>;
+-
+-		status = "disabled";
+-	};
+ };
 -- 
 2.53.0
 
