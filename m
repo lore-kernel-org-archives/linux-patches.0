@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE82335555;
-	Tue, 21 Jul 2026 15:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E2946AA71;
+	Tue, 21 Jul 2026 15:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648782; cv=none; b=Ev3OwRCBdrkmnrYFHF5+xlcA/5vDM5xpZ139uv0VPk+UDSRNpDTYzaeSwpm3oI28+zSNKtT5vjgWpKPntAZttQusS39bB4KSjf1Yb+PFiukUe2/0EVzJoyaa3jpIDu1ZIjqnkdOSkT3EjN259TwDHCNJe/02P0eVzVQpto4suYg=
+	t=1784648784; cv=none; b=pxTp4+REA3JJ29LLCT2cyNs3KxtAr+RHG915GX+/wFYu3njazK7A4uTh5vOXTWQxNoGD21c60jWHCqnQdIxY8P9NHZ9riIPIbykjSwSaUE6rEqg7RotBP8TVD5zGqRolqcMeYNZGol55EwMS0MT3wCia6/l2Sd2Wu2AMpRRgOio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648782; c=relaxed/simple;
-	bh=IOgEWu6ZJfcCXxIeP9/JjmWlNOc3T+1B3A19YeDT59Y=;
+	s=arc-20240116; t=1784648784; c=relaxed/simple;
+	bh=blDeyNcnnnB+fsc9y5DOgxN+oKz8zWroo/ueEjGi6j8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PA//ogcxF3EiWaZjfknpEaOv1g3hkf7Yqijm9EOv3Q4rX8SASvBnBTfopmkDcIbiCQG0mR5CEL6Xy8hZJVWhhzkY/2ww2BDiZ8pOrimx2hgUdfTVGjjCLyJvIwWSfle+zxGI18g+65YAClj44PbuoXj6oDj1tAZw1Vj7YwPxpRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ee5QbYVo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eMwIzA7YIIHihjA+M68Xmq5cgKIZVLXftRfVtIQHaO75HC9VAA2aaamKhJeo0vMFYWFlbcaY9DImJgxzNT+R41kz+G6OV9g/jUF4vluZDiC9oB4dQ6ImcJsPSQWBAXVp2prx+FM2BiYkN3V+4S07EyYXs6j4IiXyuFn5KVE2Fl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9xDnuZx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ee5QbYVo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606151F00A3A;
-	Tue, 21 Jul 2026 15:46:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9xDnuZx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05EFF1F000E9;
+	Tue, 21 Jul 2026 15:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648780;
-	bh=X63p6fCxosZWe12moBib3HHg7le+YjLDoJlcUJ7s0Ks=;
+	s=korg; t=1784648783;
+	bh=uM6UImhAPglHXvEteBIYVghqrOrM9CWBeAAPLO7jJ48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ee5QbYVo3mCdFkoOIL8Locuub5zw/Vpv5Iq7WeTK4dlRJA4tO8fXMRa4Qy3c3FqQg
-	 uRT/XD98+vC9nOoh81GBSYmjrBRQc/AtwbcHCWoCPEULOJNjZ7lIl9xzJb+7KagS5l
-	 Q/gqhiAoJDe3Jal1QcnNC9DYJeBkVG8+6yycNCLA=
+	b=R9xDnuZxeOObt/4IWTANZry8sxr5zdlLO96sXbw6wFd97c1nXabL1X9K2Plhpk89M
+	 e6X9tgNoNlYgX6kEXfwzelrQt2CWr54Oz+JPszpgpFhAP3XEr/TgEmihKMXz21HB43
+	 XAV8NfLZEByXrv2vY0KgO4UYrXwPekgE02e6YM+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia He <justin.he@arm.com>,
-	David Disseldorp <ddiss@suse.de>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0330/2077] init/initramfs_test: wait_for_initramfs() before running
-Date: Tue, 21 Jul 2026 17:00:03 +0200
-Message-ID: <20260721152600.466677833@linuxfoundation.org>
+Subject: [PATCH 7.1 0331/2077] nvmet-tcp: fix page fragment cache leak in error path
+Date: Tue, 21 Jul 2026 17:00:04 +0200
+Message-ID: <20260721152600.491226896@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,83 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia He <justin.he@arm.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit ec3f4e0443a61e68092ac07111f16dd4ca89ddb4 ]
+[ Upstream commit 4dae393956093c807212918fd91a8fc70df15338 ]
 
-initramfs_test_extract() and friends call unpack_to_rootfs() from a
-kunit kthread while do_populate_rootfs() may still be running
-asynchronously from rootfs_initcall. unpack_to_rootfs() keeps its
-parser state in module-static variables (victim, byte_count, state,
-this_header, header_buf, name_buf, ...), so the two writers corrupt
-each other.
+In nvmet_tcp_alloc_queue(), when a connection is closed during the
+allocation process (e.g., nvmet_tcp_set_queue_sock() returns -ENOTCONN),
+the error handling jumps to out_destroy_sq and then to out_ida_remove
+without draining the page fragment cache.
 
-On arm64 v7.0-rc5+ this oopses early in boot:
+Although nvmet_tcp_free_cmd() is called in some error paths to release
+individual page fragments, the underlying page cache reference held by
+queue->pf_cache is never released. The first allocation using pf_cache
+is the call to nvmet_tcp_alloc_cmd() for queue->connect, which happens
+after ida_alloc() returns successfully. This results in a page leak each
+time a connection fails during allocation, which could lead to memory
+exhaustion over time if connections are repeatedly opened and closed.
 
-  Unable to handle kernel paging request at virtual address ffff80018f9f0ffc
-  pc : do_reset+0x3c/0x98
-  Call trace:
-   do_reset
-   initramfs_test_extract
-   kunit_try_run_case
-  Initramfs unpacking failed: junk within compressed archive
+Fix this by calling page_frag_cache_drain() before freeing the queue
+structure in the out_ida_remove label.
 
-do_reset() faults because 'victim' was overwritten by the boot-time
-unpacker; the boot unpacker meanwhile logs the bogus "junk within
-compressed archive" on the real initrd because the test wrecked its
-state machine.
-
-Add a .suite_init callback that calls wait_for_initramfs() so the async
-unpack is quiescent before the first case runs. suite_init runs once per
-suite rather than before every individual test case.
-
-Fixes: 83c0b27266ec ("initramfs_test: kunit tests for initramfs unpacking")
-Signed-off-by: Jia He <justin.he@arm.com>
-Link: https://patch.msgid.link/20260519093937.1064628-1-justin.he@arm.com
-Reviewed-by: David Disseldorp <ddiss@suse.de>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/initramfs_test.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/nvme/target/tcp.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/init/initramfs_test.c b/init/initramfs_test.c
-index 2ce38d9a8fd0fa..a4c06ec3436899 100644
---- a/init/initramfs_test.c
-+++ b/init/initramfs_test.c
-@@ -3,7 +3,9 @@
- #include <linux/fcntl.h>
- #include <linux/file.h>
- #include <linux/fs.h>
-+#include <linux/init.h>
- #include <linux/init_syscalls.h>
-+#include <linux/initrd.h>
- #include <linux/stringify.h>
- #include <linux/timekeeping.h>
- #include "initramfs_internal.h"
-@@ -510,8 +512,21 @@ static struct kunit_case __refdata initramfs_test_cases[] = {
- 	{},
- };
- 
--static struct kunit_suite initramfs_test_suite = {
-+static int __init initramfs_test_init(struct kunit_suite *suite)
-+{
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 20f150d17a9625..57a6da696fa0b0 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -1999,6 +1999,12 @@ static void nvmet_tcp_alloc_queue(struct nvmet_tcp_port *port,
+ 	nvmet_tcp_free_cmd(&queue->connect);
+ out_ida_remove:
+ 	ida_free(&nvmet_tcp_queue_ida, queue->idx);
 +	/*
-+	 * unpack_to_rootfs() uses module-static state (victim, byte_count,
-+	 * state, ...). The boot-time async do_populate_rootfs() may still be
-+	 * running, so wait for it to finish before we call unpack_to_rootfs()
-+	 * from the test thread, otherwise the two writers race and crash.
++	 * Drain the page fragment cache if any allocations were done.
++	 * The first allocation using pf_cache is nvmet_tcp_alloc_cmd()
++	 * for queue->connect after ida_alloc().
 +	 */
-+	wait_for_initramfs();
-+	return 0;
-+}
-+
-+static struct kunit_suite __refdata initramfs_test_suite = {
- 	.name = "initramfs",
-+	.suite_init = initramfs_test_init,
- 	.test_cases = initramfs_test_cases,
- };
- kunit_test_init_section_suites(&initramfs_test_suite);
++	page_frag_cache_drain(&queue->pf_cache);
+ out_sock:
+ 	fput(queue->sock->file);
+ out_free_queue:
 -- 
 2.53.0
 
