@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604073346A6;
-	Tue, 21 Jul 2026 18:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068441474CC;
+	Tue, 21 Jul 2026 18:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659344; cv=none; b=tPdO6PodC4btAtRC2stq/9hkuAePFRc7FZnIAChxrpXQui4/mv2HbEidaZoZJ2nJYMmXaEvo/D3i/prnsGnJhJWFjCDJGaQ/OeVLnRpefIP/ArpgXjhmgkzD3L/Bf2+uYcBBR8x/9s/rkbBjwWKCQ9pzyTwziIPJmhdEi9VHqKo=
+	t=1784659347; cv=none; b=ERqDCs+g2J+FYR6JKz7tNJWvIZQs6B3HO1/7+wUz+XZ1rNPQFdyheo5PNG+xRtsmpDYOu22kmhxt/ldyBgxpOzFClzckeC8kbCHcKCp0Yqog0yk4rxyb1PoxQGMBvsOlnnwlUjLftXaP9438D3lJUXY+n8O75S/iIAg7bceO5PM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659344; c=relaxed/simple;
-	bh=Js8ypaKiXCUIxxAtFEF7aXGTnxfdIiHIW2ed6JgH/AA=;
+	s=arc-20240116; t=1784659347; c=relaxed/simple;
+	bh=hg8dher7Ie5yVf0o/YsRa2U0QwnW4DDxQsGbGyfWwzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RlJUZbo1kqj1vT9MixK3uWo6E2Vf9W8XGtSVFHxnw13gvo8OOQQ8sUgRZS/EV5XkA/HjN4suNh21gv/SZI+E/OTjWKcug4AWlb00UbOuhM2hpNWqxWQogH/lbvol3AWHDdkkdMCXJsJ6K2Iqtg0ShLLP1/ggQHZWxmHRBe3csh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DYzxP6xo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hkU+HCvynkc7knBfmqtm4OU1CKVQSg5Qh6FdcC0VmIQUlSh9I1ahn+j7Qh/NHa1/LsngMK2TURnqz5nzdPKFwIoA1OQTNZUe6zknNZ8bQDse+UXOmnzhaJBm1ljLNK24djYaYddEDKI/8IX61ZbrpY+DkE/sH2Tj8Z/rqL7ddNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YbK3uQ/L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DYzxP6xo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C100D1F000E9;
-	Tue, 21 Jul 2026 18:42:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YbK3uQ/L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D81D1F000E9;
+	Tue, 21 Jul 2026 18:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659343;
-	bh=EFv0waVZWMlxJn0aj8dHJkZO4SowLTLpZsYIfdlPpqM=;
+	s=korg; t=1784659345;
+	bh=kvdtLY7Nu8vXBXLwtD6+mFhTSrQnV+x/pCeiWY4Q+5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DYzxP6xo9Lt3edsyZteqKvaMVlYvQax9ex5fr/HhWnkvHw+zGTcQLSqzyis9dGQ6U
-	 +UuCGepz//UyiwUAOLQJ75b3IrhRyiUTKU2EaU419E6xLGcDJaRAKlVEssIzuCSUMS
-	 O9Xu1eEwPOFBswL02KgCOZ07i+N5Q7ocXaKb629k=
+	b=YbK3uQ/LSHcHAr9qH4Y1gDX6Y47hC03pPgu1k4y9PQZCydsSgHw7rrC7mTOfmCHya
+	 TIufkh7NUHh/1LbC8QV92SE3GsHHEdkTNzugz3+UYZDGxKrikA4XWn5zDZQvSxZQ1e
+	 wP0XLz28wjQv8OXDiad4XKN660FMB3k7XiZrYYjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 1442/1611] orangefs: keep the readdir entry size 64-bit in fill_from_part()
-Date: Tue, 21 Jul 2026 17:25:58 +0200
-Message-ID: <20260721152547.882895441@linuxfoundation.org>
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 1443/1611] net/mlx5: HWS, fix matcher leak on resize target setup failure
+Date: Tue, 21 Jul 2026 17:25:59 +0200
+Message-ID: <20260721152547.906420698@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,51 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit 18227a6bc98bd0ba96ed3ce9d5b28776a5a28dfc upstream.
+commit bb09d0e64ecaa0aa0f7d1133a1696ed74dead295 upstream.
 
-fill_from_part() computes the size of a directory entry in size_t but
-stores it in a __u32. An entry length near U32_MAX wraps it to a small
-value, bypasses the bounds check, and is then used to index the entry,
-reading far past the directory part -- an out-of-bounds read that oopses
-the kernel.
+hws_bwc_matcher_move() allocates a replacement matcher before setting it
+as the resize target. If mlx5hws_matcher_resize_set_target() fails, the
+replacement matcher is not attached anywhere and is leaked.
 
-Compute the size as a u64 so it cannot truncate; the bounds check then
-rejects the entry. The trailer is supplied by the userspace client.
+Fix the leak by destroying the replacement matcher before returning from
+the resize-target failure path.
 
-Fixes: 480e3e532e31 ("orangefs: support very large directories")
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1.1.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have a
+mlx5 HWS-capable device to test with, no runtime testing was able to be
+performed.
+
+Fixes: 2111bb970c78 ("net/mlx5: HWS, added backward-compatible API handling")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260619-b4-disp-50d2bd59-v1-1-ce332969b4a2@proton.me
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Acked-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260629064049.3852759-1-dawei.feng@seu.edu.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/orangefs/dir.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/orangefs/dir.c
-+++ b/fs/orangefs/dir.c
-@@ -190,7 +190,8 @@ static int fill_from_part(struct orangef
- {
- 	const int offset = sizeof(struct orangefs_readdir_response_s);
- 	struct orangefs_khandle *khandle;
--	__u32 *len, padlen;
-+	__u32 *len;
-+	u64 padlen;
- 	loff_t i;
- 	char *s;
- 	i = ctx->pos & ~PART_MASK;
-@@ -214,8 +215,8 @@ static int fill_from_part(struct orangef
- 		 * len is the size of the string itself.  padlen is the
- 		 * total size of the encoded string.
- 		 */
--		padlen = (sizeof *len + *len + 1) +
--		    (8 - (sizeof *len + *len + 1)%8)%8;
-+		padlen = (u64)sizeof *len + *len + 1;
-+		padlen += (8 - padlen % 8) % 8;
- 		if (part->len < i + padlen + sizeof *khandle)
- 			goto next;
- 		s = (void *)part + offset + i + sizeof *len;
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc.c
+@@ -205,6 +205,7 @@ static int hws_bwc_matcher_move(struct m
+ 	ret = mlx5hws_matcher_resize_set_target(old_matcher, new_matcher);
+ 	if (ret) {
+ 		mlx5hws_err(ctx, "Rehash error: failed setting resize target\n");
++		mlx5hws_matcher_destroy(new_matcher);
+ 		return ret;
+ 	}
+ 
 
 
