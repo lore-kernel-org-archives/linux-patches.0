@@ -1,149 +1,151 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C432F175A81;
-	Tue, 21 Jul 2026 23:01:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5131F3B7B97
+	for <patches@lists.linux.dev>; Tue, 21 Jul 2026 23:15:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674880; cv=none; b=eZaR+bHvGSYfC/EwpHFH7y76K+niah8yhcCNi9xNInM7plPkXorOS394Nq90BW6wT5W3J+pEUivcpVp7KUfsIf/yhmDAEN1ihk9VMKldXiA1n7XyAPyM7mZWo5GUMdpCo+HNFd1qO9/9dL5QBK+VGn+MnNNtM1lSzBNWEXqxLDM=
+	t=1784675738; cv=none; b=Tcx+4OTNom18lzDEp7UC3Iy6hJ+xWRUViKgM6GyRmClL4DfrDpCwavam3ZceDz1GyDx49R7en45xzxFYymve93R+4kuz1dkLV1FZ2G2ZzFfM7jOCBi3zo5UJVg2ATlnUUAN4Q9YGWfq4phOmJBJkzZ2l7c9h3e5stZtGhiRNePA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674880; c=relaxed/simple;
-	bh=rwko+QHKAQ3tjfIy9RBIg21bLK3G8OtewYbWGiK7TwA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FMKacNZAU5JJjYp8qhoQNSIMFwyyXYnZmaYs+f4ZWqgbOA/8iIAM95Bze8iv30F/9sn3U9MhQnn7y2dJeDfTB9nscsle+Y+QzqFKvRtu5cjNy9Ya6HGAGS8lF+tOn304ue4xwGjrTGx2fb0qNCPnINM1Pwd1+duKAROkYv5HII0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtkgXYee; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784675738; c=relaxed/simple;
+	bh=y2UVFUxvy2L9aIkUM6mMxH7oE+Puamsfkx8pg0jYhns=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W2D64iyp1orwvP9RJvMNIsNESUEwh6lowR+BgWRIlrVH5HzODq8ye3H8G7F7FfTwa66qX1gVuGvr/3wjUe/TFAm0sZncsJic7S1AKH5MmauXCl0ulp9njvXWJMGOejBZdSDibFW9jV5PVSFLiEOWxZJBC76k3c4VwGALvXYhpX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=Volllrk7; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtkgXYee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34B031F000E9;
-	Tue, 21 Jul 2026 23:01:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674878;
-	bh=7o7N2T2BsS8RG2SkXS4iaSJAAnad4jBBKyg1AIOQb0Y=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PtkgXYee72MU8BIU+AoDTbQ6L5lCtB8QhEA/r2LWr+6QyOBrpGytdgXam2zVmpHXc
-	 D5zi9i7PpIp13rWMVTWVDFtD6yW7LZ2X73lbgtPJmXefclUuFh2fNTgT4UCem1+1Ix
-	 svdeAIVNYlQBrklwCY3+I1u9zoktzjWrdg2HBq7s=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 678/699] crypto: atmel-sha204a - drop hwrng quality reduction for ATSHA204A
-Date: Tue, 21 Jul 2026 17:27:17 +0200
-Message-ID: <20260721152411.063585366@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
-References: <20260721152355.667394603@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="Volllrk7"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id C9DE040E014C;
+	Tue, 21 Jul 2026 23:15:33 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id Z1o9V2myMvNs; Tue, 21 Jul 2026 23:15:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1784675723; bh=7C9wZZCXayvCebsEvJpttlEJY0Ks91HF7m5xE3Iw4Ik=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Volllrk7auzrXsRF9csOSnAMTFYt3OrFW3mkOcxfkNjEOXNJ1PyBJJiMrrgLG3ioV
+	 3dGEA5EfxzQGyjt6amGdnVLBe8OlJcntiDUcp2aB6VN/2ztz5bHo+xvSkkwANcSBRv
+	 lECJgcN3LUb2FqblR/Y4i4vR3m9uZniWlx3zdVeJ3bz5GDpY+Yt8CEvVo/F1tnTIrU
+	 PW3zH05LjOnCtGLPQL22VTKYgnzJfte/WDHp51a3q4GCIFUEZwsTr50lzJZZHzz2j/
+	 w7cnWEoIwtS3FwOVZR6FOrKSloeySktoBlBH9s+FEnN36GP0MrG4on9I5d+bT7O1eB
+	 tZbIbdVX0H344QMxMuH0CGQQZRG27LcnfFoRGD2bXicM1EFVraQCJJ9wEUyHkGx1jJ
+	 X4Gl9RE5t6HPMdLJkM3laL9+EDzUpeZjsWqRlW+2i8DWtKOQI2i6hRCxuFlanKyAPB
+	 G0v+EEcxQIMod5FA7YgGddf6aWCsyuGsaeMvkm6VlSEjYcKw//c1ds95toRlct5/ut
+	 Mfe5TJZTcXYbswsRWPPzSEY7QOAGyQj4tT5LqGQI6jD1UL44aVYKKExJaIQXZyZ3Uj
+	 rKBLSrWzd4Ri0s+f85coR4cbewnaq0yCm5t3+TOnsSyehCuAosSiMdUa0M2AdrGptW
+	 cA+o2hCx6jqaokrCpWjjr390=
+Received: from stx.tnic (unknown [IPv6:2600:1700:38ca:c00::2b])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 1723F40E00C3;
+	Tue, 21 Jul 2026 23:15:06 +0000 (UTC)
+Date: Tue, 21 Jul 2026 16:15:02 -0700
+From: Borislav Petkov <bp@alien8.de>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: tony.luck@intel.com, james.morse@arm.com, Dave.Martin@arm.com,
+	babu.moger@amd.com, tglx@linutronix.de, dave.hansen@linux.intel.com,
+	x86@kernel.org, hpa@zytor.com, ben.horgan@arm.com,
+	fustini@kernel.org, fenghuay@nvidia.com, peternewman@google.com,
+	yu.c.chen@intel.com, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v5 02/10] x86/resctrl: Protect against bad shift
+Message-ID: <20260721231502.GGal_9dvrdG9NdUkA4@fat_crate.local>
+References: <cover.1782857711.git.reinette.chatre@intel.com>
+ <bc6ec5102227b4617265e015ce84335a8e902bc6.1782857711.git.reinette.chatre@intel.com>
+ <20260721015959.GEal7SnxxR8D3801cr@fat_crate.local>
+ <2184678d-1b67-4d2f-94a3-c4bb22823cd6@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2184678d-1b67-4d2f-94a3-c4bb22823cd6@intel.com>
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+On Tue, Jul 21, 2026 at 09:14:20AM -0700, Reinette Chatre wrote:
+> Hi Boris,
+> 
+> On 7/20/26 6:59 PM, Borislav Petkov wrote:
+> > On Tue, Jun 30, 2026 at 09:27:02PM -0700, Reinette Chatre wrote:
+> >> diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+> >> index bca782050198..9b9495174041 100644
+> >> --- a/arch/x86/kernel/cpu/resctrl/core.c
+> >> +++ b/arch/x86/kernel/cpu/resctrl/core.c
+> >> @@ -247,7 +247,11 @@ static __init bool __rdt_get_mem_config_amd(struct rdt_resource *r)
+> >>  
+> >>  	cpuid_count(0x80000020, subleaf, &eax, &ebx, &ecx, &edx);
+> >>  	hw_res->num_closid = edx + 1;
+> >> -	r->membw.max_bw = 1 << eax;
+> >> +	if (BITS_PER_TYPE(r->membw.max_bw) <= eax) {
+> >> +		pr_warn("Unable to support hardware's maximum bandwidth\n");
+> >> +		return false;
+> >> +	}
+> >> +	r->membw.max_bw = BIT(eax);
+> > 
+> > Why?
+> > 
+> > Why go all the effort if the field can be 64 bits?
+> > 
+> > Why not make max_bw u64 and handle *all* possible values naturally?
+> > 
+> 
+> resctrl does not support values larger than u32.
+> 
+> The value represented by max_bw provides the upper limit of control values that
+> user space can configure via the schemata file, which in turn represents the
+> control value programmed to hardware.
+>
+> u32 is expected in several places:
+> - Parsing of user input in bw_validate() is done via kstrtou32() placing result in
+>   "u32 bw". It is this value that is compared against max_bw and would thus need to
+>   change as a consequence.
+> - Parsing of user input to schemata file via parse_bw() places parsed bandwidth in
+>   "u32 bw_val".
+> - Upon successful parsing the control value is staged by resctrl fs in
+>   resctrl_staged_config::new_ctrl that is u32.
+> - On receipt of programming request from resctrl fs, the x86 architectural specific
+>   code programs the control value to rdt_hw_ctrl_domain::ctrl_val[] that are u32.
+> 
+> resctrl, from fs to x86 architecture and now also MPAM, would thus require changes to
+> support these AMD systems. If I get the math right this will be systems that support 
+> 1073741823.875GB/s and up?
+> 
+> If resctrl is required to support AMD hardware that can return up to 64bits here
+> then that requires more changes than what I am able to take on at this time. From
+> my side I prefer to stick to this resctrl safeguard for the scenario and leave support
+> for this hardware to AMD.
 
-------------------
+So that bandwidth limit thing is read from those L3QOS_BW_CONTROL_n MSRs which
+have
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+BW_LEN-1:0 as the range which is the bandwidth limit, at
+BW_LEN there's the unlimited bandwidth limit
 
-[ Upstream commit ea5e57cc97185329dcc5ebdcaae7e1500bf0ad0b ]
+and that BW_LEN is read from CPUID.
 
-Commit 8006aff15516 ("crypto: atmel-sha204a - Set hwrng quality to
-lowest possible") reduced the hwrng quality to 1 based on a review by
-Bill Cox [1]. However, despite its title, the review only tested the
-ATSHA204, not the ATSHA204A.
+And that is, kinda 12, right now.
 
-In the same thread, Atmel engineer Landon Cox wrote "this behavior has
-been eliminated entirely"[2] in the ATSHA204A and "this problem does not
-affect the ATECC108 or the ATECC108A (or the ATSHA204A)"[3].
+And your worry is that some day that limit BW_LEN might go over 31?
 
-According to the official ATSHA204A datasheet [4], the device contains a
-high-quality hardware RNG that combines its output with an internal seed
-value stored in EEPROM or SRAM to generate random numbers. The device
-also implements all security functions using SHA-256, and the driver
-uses the chip's Random command in seed-update mode.
+Which your math shows how absurd this is.
 
-Keep 'quality = 1' for ATSHA204, but drop the explicit hwrng quality
-reduction for ATSHA204A and fall back to the hwrng core default.
+So what are we actually fixing here?
 
-[1] https://www.metzdowd.com/pipermail/cryptography/2014-December/023858.html
-[2] https://www.metzdowd.com/pipermail/cryptography/2014-December/023852.html
-[3] https://www.metzdowd.com/pipermail/cryptography/2014-December/023886.html
-[4] https://ww1.microchip.com/downloads/en/DeviceDoc/ATSHA204A-Data-Sheet-40002025A.pdf
+Something some AI hallucinated that it might be possible at some point in the
+very distant, dark future?
 
-Fixes: 8006aff15516 ("crypto: atmel-sha204a - Set hwrng quality to lowest possible")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/crypto/atmel-sha204a.c |   19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+Thx.
 
---- a/drivers/crypto/atmel-sha204a.c
-+++ b/drivers/crypto/atmel-sha204a.c
-@@ -18,6 +18,12 @@
- #include <linux/workqueue.h>
- #include "atmel-i2c.h"
- 
-+/*
-+ * According to review by Bill Cox [1], the ATSHA204 has very low entropy.
-+ * [1] https://www.metzdowd.com/pipermail/cryptography/2014-December/023858.html
-+ */
-+static const unsigned short atsha204_quality = 1;
-+
- static void atmel_sha204a_rng_done(struct atmel_i2c_work_data *work_data,
- 				   void *areq, int status)
- {
-@@ -96,6 +102,7 @@ static int atmel_sha204a_probe(struct i2
- 			       const struct i2c_device_id *id)
- {
- 	struct atmel_i2c_client_priv *i2c_priv;
-+	const unsigned short *quality;
- 	int ret;
- 
- 	ret = atmel_i2c_probe(client, id);
-@@ -109,11 +116,9 @@ static int atmel_sha204a_probe(struct i2
- 	i2c_priv->hwrng.name = dev_name(&client->dev);
- 	i2c_priv->hwrng.read = atmel_sha204a_rng_read;
- 
--	/*
--	 * According to review by Bill Cox [1], this HWRNG has very low entropy.
--	 * [1] https://www.metzdowd.com/pipermail/cryptography/2014-December/023858.html
--	 */
--	i2c_priv->hwrng.quality = 1;
-+	quality = i2c_get_match_data(client);
-+	if (quality)
-+		i2c_priv->hwrng.quality = *quality;
- 
- 	ret = devm_hwrng_register(&client->dev, &i2c_priv->hwrng);
- 	if (ret)
-@@ -138,14 +143,14 @@ static int atmel_sha204a_remove(struct i
- }
- 
- static const struct of_device_id atmel_sha204a_dt_ids[] __maybe_unused = {
--	{ .compatible = "atmel,atsha204", },
-+	{ .compatible = "atmel,atsha204", .data = &atsha204_quality },
- 	{ .compatible = "atmel,atsha204a", },
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, atmel_sha204a_dt_ids);
- 
- static const struct i2c_device_id atmel_sha204a_id[] = {
--	{ "atsha204" },
-+	{ "atsha204", (kernel_ulong_t)&atsha204_quality },
- 	{ "atsha204a" },
- 	{ /* sentinel */ }
- };
+-- 
+Regards/Gruss,
+    Boris.
 
-
+https://people.kernel.org/tglx/notes-about-netiquette
