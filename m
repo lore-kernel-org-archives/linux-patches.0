@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC91A46A5F6;
-	Tue, 21 Jul 2026 17:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188D547A857;
+	Tue, 21 Jul 2026 17:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656415; cv=none; b=XbQz98idqh0IOZMKblGQzk5p1TJoTJqfuSU++uJRQ9xfnew+RnnrWrkL3RpmgBNQOxW2AO5Z00UCjW2fVD6a9IT5PntR7piNQ6ulOYbsNbzNyPA3HvTYtpeMiXdPA/hnV5DY3cms0Ek++c6iKPZ7wC220YoUz1QGtTJRtkLEMZI=
+	t=1784656417; cv=none; b=f7yALEj6WZVKj0kJTuJkZCyB+ztOTLWolI55KMV705gHA4eG4W2oZOU2m05qxKvtutOZehJ1E6x8f+3k9QHOvuSsMwwjC7evDGuX4PYYzzoKA/fLgc5bVYhXJ8auo+LZ/B7ntiNFe+HFYc6ZTnzo3rBxH+tLizuo/hq1MtFmwHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656415; c=relaxed/simple;
-	bh=x3x/CJduGOXfT9q5fkHhGkxD9QWOUXXBbrGhpiBjhHs=;
+	s=arc-20240116; t=1784656417; c=relaxed/simple;
+	bh=fEBmjJYDlHt/nQGfh8TcRSjf+9dIbXprkFoTIzpQJ2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JFqvX8pFWQ1voa9QD2eI4yf8Ejuy7NaaP38H+Kx8YLG6/mhGgW6D5BLO7tOypZIFvRj2Te8W6eV18iYzcAFGfLv4eMj/ZIZR8fedxl1tSYZY6jhemhvZpWNkLT0h3zHqj9U+RYlg5srhV2dVl7rSBiK0eG3Wvl0YufUYRoQNgTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtAgMPDZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LCttkN50B57klWKZVyX7xwZl+wtfD2uCRZVp2eMvSvIfIBkZTy3RVPfa5VVaUgmP9qlQRC+JUNxMoFS6QOkIenlRaHOCTYTXMqkf8R7ewP/ZBQLo2pWFipmHqanp7EWv6MXSMQegVh8OtjXoLeGGjG7Xol6fKcP+ZdUwbdAANhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1IxKvGcs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtAgMPDZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52AE1F000E9;
-	Tue, 21 Jul 2026 17:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1IxKvGcs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E5361F000E9;
+	Tue, 21 Jul 2026 17:53:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656413;
-	bh=wciCwEYoId0F9wCUfcpGBnqXQ3kxx2oFzMcqECtFOdQ=;
+	s=korg; t=1784656416;
+	bh=OwGjn24Yl5f5VnUGWDV8VAvuQi/+pM3wJh+oLKJXZJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TtAgMPDZqImelPfEBO/L9HjEKvKFq8ipQKwqVZnq8vCuONZkBHqCOYoZb8q1dH2LD
-	 x/daNTHqGBKiJvJIWBStMTn0MM1ZGXhPQMbu60o8jlqzVfYvKBfmPPcnroqs1wJ5sh
-	 L1Wo4uO4JPqElNqs7eVCwxSlcI05G/TYYK1tJIQs=
+	b=1IxKvGcshmJH2DAGUiDNNB6W0/hE2tvzFtRNXnsU24DD24AvcJQNJ8viYEmLKPt3w
+	 Je0WO2hjK8Peg9NPB6fX5jlXssQNX3splhTulCYMxnmZaDOdaRIPNJJWK/DPZBzWBn
+	 ZGajz+tVPMVn+hgFJyHZhvpyzNmQD/KFkx10eTjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	sashiko-bot@kernel.org,
+	Baolu Lu <baolu.lu@linux.intel.com>,
+	Pranjal Shrivastava <praan@google.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0335/1611] lib: kunit_iov_iter: repeatedly call alloc_pages_bulk()
-Date: Tue, 21 Jul 2026 17:07:31 +0200
-Message-ID: <20260721152522.636320683@linuxfoundation.org>
+Subject: [PATCH 6.18 0326/1611] iommu/vt-d: Fix RB-tree corruption in probe error path
+Date: Tue, 21 Jul 2026 17:07:22 +0200
+Message-ID: <20260721152522.424686367@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -46,63 +47,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Pranjal Shrivastava <praan@google.com>
 
-[ Upstream commit 9ac9a08e4ac4bc063e56e1aff266c5e8aa5c6c03 ]
+[ Upstream commit 43bd9e6d5513cb1edbafdeef146a1edc3aaced56 ]
 
-alloc_pages_bulk() is not guaranteed to return all requested pages in a
-single call.
+The info->node RB-tree member is zero-initialized via kzalloc. If
+a device does not support ATS, the device_rbtree_insert() call is
+skipped. If a subsequent probe step fails, the error path jumps to
+device_rbtree_remove(), which misinterprets the zeroed node as
+a tree root and corrupts the device RB-tree.
 
-Call it repeatedly until all pages have been allocated or no more progress
-is being made.
+Fix this by explicitly initializing the RB-node as empty using
+RB_CLEAR_NODE() during initialization and guarding the removal with
+RB_EMPTY_NODE().
 
-Link: https://lore.kernel.org/20260526-kunit_iov_iter-alloc_bulk-v2-1-24fbcd995c61@weissschuh.net
-Fixes: 2d71340ff1d4 ("iov_iter: Kunit tests for copying to/from an iterator")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Cc: "Christian A. Ehrhardt" <lk@c--e.de>
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4f1492efb495 ("iommu/vt-d: Revert ATS timing change to fix boot failure")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/all/20260525205628.CD4431F000E9@smtp.kernel.org/
+Suggested-by: Baolu Lu <baolu.lu@linux.intel.com>
+Signed-off-by: Pranjal Shrivastava <praan@google.com>
+Link: https://lore.kernel.org/r/20260531170254.60493-2-praan@google.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/tests/kunit_iov_iter.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/iommu/intel/iommu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/lib/tests/kunit_iov_iter.c b/lib/tests/kunit_iov_iter.c
-index 43e63bf4c09568..0ee92536e5e7bf 100644
---- a/lib/tests/kunit_iov_iter.c
-+++ b/lib/tests/kunit_iov_iter.c
-@@ -50,14 +50,22 @@ static void *__init iov_kunit_create_buffer(struct kunit *test,
- 					    size_t npages)
- {
- 	struct page **pages;
--	unsigned long got;
-+	unsigned long got, last;
- 	void *buffer;
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index db0cf436c83954..cee1851b692452 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -164,7 +164,10 @@ static void device_rbtree_remove(struct device_domain_info *info)
+ 	unsigned long flags;
  
- 	pages = kzalloc_objs(struct page *, npages, GFP_KERNEL);
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, pages);
- 	*ppages = pages;
- 
--	got = alloc_pages_bulk(GFP_KERNEL, npages, pages);
-+	got = 0;
-+	while (true) {
-+		last = got;
-+		got = alloc_pages_bulk(GFP_KERNEL, npages, pages);
-+
-+		if (last == got || got == npages)
-+			break;
+ 	spin_lock_irqsave(&iommu->device_rbtree_lock, flags);
+-	rb_erase(&info->node, &iommu->device_rbtree);
++	if (!RB_EMPTY_NODE(&info->node)) {
++		rb_erase(&info->node, &iommu->device_rbtree);
++		RB_CLEAR_NODE(&info->node);
 +	}
-+
- 	if (got != npages) {
- 		release_pages(pages, got);
- 		kvfree(pages);
+ 	spin_unlock_irqrestore(&iommu->device_rbtree_lock, flags);
+ }
+ 
+@@ -3787,6 +3790,7 @@ static struct iommu_device *intel_iommu_probe_device(struct device *dev)
+ 
+ 	info->dev = dev;
+ 	info->iommu = iommu;
++	RB_CLEAR_NODE(&info->node);
+ 	if (dev_is_pci(dev)) {
+ 		if (ecap_dev_iotlb_support(iommu->ecap) &&
+ 		    pci_ats_supported(pdev) &&
 -- 
 2.53.0
 
