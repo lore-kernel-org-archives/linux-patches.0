@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCAD3B9DA5;
-	Tue, 21 Jul 2026 20:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6216438FEE;
+	Tue, 21 Jul 2026 20:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666968; cv=none; b=Myef3cUfteiRo3fNthIrPOGH+qdywuHjQAw7n+NQQpJ3Z4tsGM/d2dmA/rT8uA/WKum4qXfzrGf4BJTodHdXxxSRPVuAs9hTDM59RtxYgbPEc5qUEUzg3XJAKcP35Wx01J4GcH3Iyf6WXAnAg3jH4Lgjy94rMiRo0wbnwEkut3c=
+	t=1784666972; cv=none; b=fng69mwT7VJ28jK1sNuYfCrS8Eiq5YFpoBH1ZuexKRWb6JDHajoXy6zK4NfBRVJc3kMtM0+lt2YONNnVAVAWyVVZcmQpCwdE9MDpfkHImTgoNBM68U9Jf+n1CZKbspGc3gfgoTsuT+sCqCw4MrX5By0UPF2L5yujwob4Cc+wO18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666968; c=relaxed/simple;
-	bh=74GoWo3SAtis16m6uM+m6WucbSX5c2+fhncdOY4qB1Q=;
+	s=arc-20240116; t=1784666972; c=relaxed/simple;
+	bh=04fEMBzwDycgFqdQvBaHzUxiR3wQdSrih5M5gM8EJFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KkSgVlgRUtr9RPkXx8j+3jT2IYox+mIIM0QOefMDgIT6cDL7/im+Bof/x3+UM0dKJj0X0h8bYOkAlfrZaYSEuLalqmI8Bqgmdd4akHq1m5sL8ehGQvmOs3HxZswkLR3DXoDMiXsisUCVUc5AZO95PJW/memlmim4Zgn6wn09A1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1eOQc0Sl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IGWntc8PvRKzSqUrI2ZvYYYW9R+4io4yq+EPIwZ2YYQgAOI5XFwsDI07tP587uG2X/w8eXVaS5h9gasUHg0z1pcROxZmlH/HHy4jc+Fnkk57Ewl6vDqlGSP0bgVEqtMCnT6cgher+Io1QSUTcEap2vYKTvaLQsSPLk8aSBSr5KA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vf/wb7xs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1eOQc0Sl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11B01F000E9;
-	Tue, 21 Jul 2026 20:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vf/wb7xs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57ACD1F000E9;
+	Tue, 21 Jul 2026 20:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666967;
-	bh=cX1puHiZzwvLAtl23tI5hkvB4J8gv3BS2JEAFpOSJys=;
+	s=korg; t=1784666969;
+	bh=9Ks3wtjT6hZjO+Lz10Bc6dkixb8fYL4PxGo5s50BwKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1eOQc0Sl7FvS9HGch3Pt6qcH4meiOFwtC63mzZcKdgmf8MTe1B9dWZHlR5z4P/rJG
-	 zGplqyekNT7mcR+0+YAl9xM3LMbuFro4djMrT/ZBU6umNC+aIHuEcvMetjFdW60LUw
-	 6AQyknAClMlfz90fcCf5NTXxxqHkp9QBd9xdrWvk=
+	b=vf/wb7xsYC1s6DHJ2vt/97ouXVX+SQg4PanqA8DetF9vIuWQrHWHBzngYEz7iyP/+
+	 E6jHm0ZCN5A+YyFGFecwCGI1EszE+SAidXsN26UOI+dZa/RlYVq9/qFHExD0rkwNEF
+	 e19UhRaHWZ+Vel9ZuZC/rLsRPL8bvV49QKBp6M4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Timur Tabi <ttabi@nvidia.com>,
-	Mark Brown <broonie@kernel.org>,
+	Wang Yan <wangyan01@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0884/1266] regulator: core: regulator_lock_two() should test for EDEADLK not EDEADLOCK
-Date: Tue, 21 Jul 2026 17:22:01 +0200
-Message-ID: <20260721152501.631115421@linuxfoundation.org>
+Subject: [PATCH 6.6 0885/1266] selftests/net: fix EVP_MD_CTX leak in tcp_mmap
+Date: Tue, 21 Jul 2026 17:22:02 +0200
+Message-ID: <20260721152501.654534840@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -45,69 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Tabi <ttabi@nvidia.com>
+From: Wang Yan <wangyan01@kylinos.cn>
 
-[ Upstream commit d38f8bd771c4999b797d7074b348cf201414bd34 ]
+[ Upstream commit f4ef35efbb49527293309f668ea73ec5de9b8e7a ]
 
-Compare against -EDEADLK, which is what ww_mutex_lock() actually
-returns and what every other deadlock check in this file already uses.
+In tcp_mmap.c, both child_thread() and main() allocate an EVP_MD_CTX
+via EVP_MD_CTX_new() when integrity checking is enabled, but neither
+function releases the context.  child_thread() misses the free in its
+common cleanup block, and main() returns without freeing the context.
 
-Function regulator_lock_two() acquires two regulators via
-regulator_lock_nested() -> ww_mutex_lock().  On contention,
-ww_mutex_lock() returns -EDEADLK, which is the caller's signal to drop
-the lock it holds and retry the acquisition in the canonical order.
+This results in a SHA256 context leak on every run that uses the
+‑i (integrity) option.  Add the missing EVP_MD_CTX_free() calls to
+the appropriate cleanup paths to fix the leak.
 
-However, regulator_lock_two() tests the return value against -EDEADLOCK
-rather than -EDEADLK.  On most architectures, EDEADLK and EDEADLOCK are
-the same value, so the comparison happens to be correct and the bug is
-invisible.  But on MIPS, SPARC, and PowerPC, those two errors have
-different values.  The test is wrong: a genuine -EDEADLK backoff no
-longer matches -EDEADLOCK, so instead of unlocking and retrying, the
-code falls into WARN_ON(ret) and returns with only one of the two
-regulators locked.
-
-In practice, this is a bug only on MIPS, because the regulator core is
-not built or used on the other two platforms.
-
-In general, EDEADLK is preferred over EDEADLOCK for new code.
-
-Fixes: cba6cfdc7c3f ("regulator: core: Avoid lockdep reports when resolving supplies")
-Signed-off-by: Timur Tabi <ttabi@nvidia.com>
-Link: https://patch.msgid.link/20260708235722.2953579-1-ttabi@nvidia.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 5c5945dc695c ("selftests/net: Add SHA256 computation over data sent in tcp_mmap")
+Signed-off-by: Wang Yan <wangyan01@kylinos.cn>
+Link: https://patch.msgid.link/20260702025949.442523-1-wangyan01@kylinos.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/tcp_mmap.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 0eadf6dc30e231..3f352d1c64b7d1 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -228,7 +228,7 @@ static void regulator_lock_two(struct regulator_dev *rdev1,
- 	ret = regulator_lock_nested(rdev1, ww_ctx);
- 	WARN_ON(ret);
- 	ret = regulator_lock_nested(rdev2, ww_ctx);
--	if (ret != -EDEADLOCK) {
-+	if (ret != -EDEADLK) {
- 		WARN_ON(ret);
- 		goto exit;
+diff --git a/tools/testing/selftests/net/tcp_mmap.c b/tools/testing/selftests/net/tcp_mmap.c
+index 4fcce5150850dd..2544ae35d07a83 100644
+--- a/tools/testing/selftests/net/tcp_mmap.c
++++ b/tools/testing/selftests/net/tcp_mmap.c
+@@ -313,6 +313,8 @@ void *child_thread(void *arg)
+ 				tcp_info_get_rcv_mss(fd));
  	}
-@@ -244,7 +244,7 @@ static void regulator_lock_two(struct regulator_dev *rdev1,
- 		swap(held, contended);
- 		ret = regulator_lock_nested(contended, ww_ctx);
- 
--		if (ret != -EDEADLOCK) {
-+		if (ret != -EDEADLK) {
- 			WARN_ON(ret);
- 			break;
- 		}
+ error:
++	if (ctx)
++		EVP_MD_CTX_free(ctx);
+ 	munmap(buffer, buffer_sz);
+ 	close(fd);
+ 	if (zflg)
+@@ -606,6 +608,8 @@ int main(int argc, char *argv[])
+ 		EVP_DigestFinal_ex(ctx, digest, &digest_len);
+ 		send(fd, digest, (size_t)SHA256_DIGEST_LENGTH, 0);
+ 	}
++	if (ctx)
++		EVP_MD_CTX_free(ctx);
+ 	close(fd);
+ 	munmap(buffer, buffer_sz);
+ 	return 0;
 -- 
 2.53.0
 
