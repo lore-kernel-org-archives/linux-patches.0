@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B700538910F;
-	Tue, 21 Jul 2026 18:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AA72DF3EA;
+	Tue, 21 Jul 2026 18:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660235; cv=none; b=inTBIZmUoHKmJDXClzY8fm3a4ZZBcRoRmOvvVTMrFXH7/nYXV5abS4A8nM1ZfAa6V4pOetITCpbdfHVyPIJg9kDHBr9x6AFf50g4OX7E4UeTu4U71NQv5/x2Xlz4hsbUgBh+XsIEirV9/Z3N5Xi2ZdAdgIpmjWcYZywXVB+QLs0=
+	t=1784660238; cv=none; b=D3VPqISC/PQrpw6WPU05CXBbO9xJnRCcoQhzZlYHLqVL99BoeHYmhPrlK5cH0CiVW1udI/tFhZ2qIMdTJ+qdOC17nseDpJwaLYJrPm6+fXfb1sP8fnirmSl7Li9nCnC0ElBT6dCbXEor5j6dI8VHC1TYMtP1yozPIqEmV9WlMRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660235; c=relaxed/simple;
-	bh=47xAqdaIB+C8W/7rI1kSbOdjYcVDKVEecicQx7m1Wow=;
+	s=arc-20240116; t=1784660238; c=relaxed/simple;
+	bh=obg+NQaQs9s1mzXSu0rZ+rY2Qunte73iqxJXp2E70AM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kzkMZgEPGDKS9Iits9Fn+aQDK0/sXsjmuNJB/qzdYsVZ9ldQoXzxfI8zuhnlH9dhBiH6k0AFTZQAcotS5iuipTMXWXdbjBbzzDoJ1HYEOIV9QtksrM5sw7erC90Or0Z3EdT1RzeHrrRWJT9ZcmjhYML93OiH6yQyPUCQwtt5tf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDXTuncG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sCGlvz1NgeK3suzv+AEj/5gBtA3IKf3G6TT6pcH0Ks2Utx+wFpr7JuhE3VtkCqlythXc0uDVxlixs8CVJP/jXPPo6gr7nQhQD77tG2RIS/y++MKHUA8FWdh9t8LzlkhxRj8O5EiXmy6Jc0MkRJn7Qa3Nff8CNyXYZRIEJlWaa/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RiqscD64; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDXTuncG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A3C1F000E9;
-	Tue, 21 Jul 2026 18:57:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RiqscD64"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5EA61F000E9;
+	Tue, 21 Jul 2026 18:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660234;
-	bh=mIwiC/Yst+PtLgibCCfxLI1lwks8rLBrerNNxEoXEk0=;
+	s=korg; t=1784660237;
+	bh=pE7cRdE4pqjUnKnFbda90sRq3OMty/EJ9LHc7itJa5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZDXTuncGhw7gHD2Bz9sPG1F7YZRfGq6dkjDGNH8giuAN+LoM0EQxyzgftwfvdlYmY
-	 yl4Zdr2NR0PztQ6p9y0G4ahr7Z+wosVGefKMs4frA93ISr/E+YhHxBiFcoX4UhNsNq
-	 QlpOHJKHT5h7etIvGjl8GSPzkscgoztOTEyZqD/A=
+	b=RiqscD64eyFSRlJ/68zpjiz8APdPprkwHzILPqn8JwBeMM56n85jbyDsxuKxrGJ4F
+	 QSnsFkqL6IQHnuRrQvccIRMqM44DCYdakEPC3/lvX20w0QxMS4g8NGlk/5Fsn2lBLA
+	 CxboWcd+/UPIowHkxwQ0fUwQXBESSdSg2fDfpkMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0902/2077] PCI: qcom: Disable ASPM L0s for SA8775P
-Date: Tue, 21 Jul 2026 17:09:35 +0200
-Message-ID: <20260721152614.093683193@linuxfoundation.org>
+Subject: [PATCH 7.1 0903/2077] timers/migration: Update stale @online doc to @available
+Date: Tue, 21 Jul 2026 17:09:36 +0200
+Message-ID: <20260721152614.116726388@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,51 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+From: Zhan Xusheng <zhanxusheng@xiaomi.com>
 
-[ Upstream commit 29f692985819f4089f02a86e151a72f6d4cdd90d ]
+[ Upstream commit 45a13ba52c82dbec9715222c51e629e85daa37d7 ]
 
-Due to a hardware issue, L0s is not properly supported by the PCIe
-controller on the SA8775p SoC. If enabled, the L0s to L0 transition
-triggers below correctable AER errors and may also affect link stability:
+Commit 8312cab5ff47 ("timers/migration: Rename 'online' bit to
+'available'") renamed the 'online' field of struct tmigr_cpu to
+'available'. The kernel doc comment above the struct still describes the
+old field name.
 
-  pcieport 0000:00:00.0: PME: Signaling with IRQ 332
-  pcieport 0000:00:00.0: AER: enabled with IRQ 332
-  pcieport 0000:00:00.0: AER: Correctable error message received from 0000:01:00.0
-  pci 0000:01:00.0: PCIe Bus Error: severity=Correctable, type=Data Link Layer, (Transmitter ID)
-  pci 0000:01:00.0:   device [17cb:1103] error status/mask=00001000/0000e000
-  pci 0000:01:00.0:    [12] Timeout
-  pcieport 0000:00:00.0: AER: Multiple Correctable error message received from 0000:01:00.0
-  pcieport 0000:00:00.0: PCIe Bus Error: severity=Correctable, type=Data Link Layer, (Transmitter ID)
-  pcieport 0000:00:00.0:   device [17cb:0115] error status/mask=00001000/0000e000
-  pcieport 0000:00:00.0:    [12] Timeout
+Update it to reflect the actual field name and use the 'available' wording
+in the description.
 
-Hence, disable L0s for the SA8775p SoC to allow it to properly function
-by sacrificing a little bit of power saving.
-
-Fixes: 58d0d3e032b3 ("PCI: qcom-ep: Add support for SA8775P SOC")
-Assisted-by: Claude:claude-4-6-sonnet
-Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
-[mani: commit log, corrected fixes tag]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260419093934.1223027-1-shengchao.guo@oss.qualcomm.com
+Fixes: 8312cab5ff47 ("timers/migration: Rename 'online' bit to 'available'")
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260526022106.1302279-1-zhanxusheng@xiaomi.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/time/timer_migration.h | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 8604aa564dce67..2af75739797512 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1473,6 +1473,7 @@ static const struct qcom_pcie_cfg cfg_1_9_0 = {
- static const struct qcom_pcie_cfg cfg_1_34_0 = {
- 	.ops = &ops_1_9_0,
- 	.override_no_snoop = true,
-+	.no_l0s = true,
- };
- 
- static const struct qcom_pcie_cfg cfg_2_1_0 = {
+diff --git a/kernel/time/timer_migration.h b/kernel/time/timer_migration.h
+index 70879cde6fdd01..4c0073f3d3212e 100644
+--- a/kernel/time/timer_migration.h
++++ b/kernel/time/timer_migration.h
+@@ -75,15 +75,17 @@ struct tmigr_group {
+ /**
+  * struct tmigr_cpu - timer migration per CPU group
+  * @lock:		Lock protecting the tmigr_cpu group information
+- * @online:		Indicates whether the CPU is online; In deactivate path
+- *			it is required to know whether the migrator in the top
+- *			level group is to be set offline, while a timer is
+- *			pending. Then another online CPU needs to be notified to
+- *			take over the migrator role. Furthermore the information
+- *			is required in CPU hotplug path as the CPU is able to go
+- *			idle before the timer migration hierarchy hotplug AP is
+- *			reached. During this phase, the CPU has to handle the
++ * @available:		Indicates whether the CPU is available for handling
++ *			global timers. In the deactivate path it is required to
++ *			know whether the migrator in the top level group is to
++ *			be set offline, while a timer is pending. Then another
++ *			available CPU needs to be notified to take over the
++ *			migrator role. Furthermore the information is required
++ *			in the CPU hotplug path as the CPU is able to go idle
++ *			before the timer migration hierarchy hotplug callback is
++ *			reached.  During this phase, the CPU has to handle the
+  *			global timers on its own and must not act as a migrator.
++
+  * @idle:		Indicates whether the CPU is idle in the timer migration
+  *			hierarchy
+  * @remote:		Is set when timers of the CPU are expired remotely
 -- 
 2.53.0
 
