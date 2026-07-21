@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE68256C84;
-	Tue, 21 Jul 2026 15:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993A643551C;
+	Tue, 21 Jul 2026 15:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649346; cv=none; b=JGn/8rccj0vQb4rhUOh/J2w1q/D7pWbqDG97E76M7JXNDrAp9gTgnfKaAvdUGWWuYWT7Y85Y3ctY7VihGz1AbxNRMRRkmrqg2ZvK/0BmiB7oZYM30hOtdCYpDfWrix8Q/N0KrNkdLQ34xK/3qkzAG0i7bGQmauHGZq0mOALsF+M=
+	t=1784649348; cv=none; b=WnnzwHOV8CscA+UpPYHyWP4IeonGBkMz12jcOFbR/DLwODE25ky/X8fbCiLpKpqcCNhpbHDjoKlDlSzDsDartPOLMW24wp3k4v5MZdYdmo13OlNQdruSIcFI4HNuyCYRZs9ecum5RUDxVzGCJqLWr+edEC/+PHciTYSvU6RCxF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649346; c=relaxed/simple;
-	bh=4EewT398jBIUDLNDtz5Jm3EpGTDgaMisyDpCpITQLk8=;
+	s=arc-20240116; t=1784649348; c=relaxed/simple;
+	bh=JcetWXieKALcwl3JPeuxPvJqT1t2b+aM/uP/zx3oOdw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WCGlHdtWQU6Zab02HhN2/sDWtNkVIhpNyJD2LcbAdNE1TTTvlHGpC+hX5ZkZ9YhnaBLYeTT39NjIy9/degoQZNDmHbhh7ZQ02fkHKa6H+H8goPDiTOcFGnJhMoeHApPYXvHNvVf6OeYPLQvAVk6U25WomC322pogjlgRoZY/ZVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1lNsJnR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GzQjv2+iB09LUjaoAmJ/rAu/gn+jzOT6tCAh/saBc9XVWcXqPtH/2O3tK8ZAsyfvGAc/7FIp+I+N65tLxUfzgRqKLg9ig7RgvwyzD3rZz6YR5SfeohAEtjov8wpS82za6puGCOD7GKH9sCld/T2DxtG3ANnSLdCk1OMzzwCaR6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2vSAczW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1lNsJnR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627A61F00A3A;
-	Tue, 21 Jul 2026 15:55:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2vSAczW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A94C1F000E9;
+	Tue, 21 Jul 2026 15:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649344;
-	bh=9+3LUv44tkntEFb1h7MfLrRZq7xzFK2OInnAGVnKqGs=;
+	s=korg; t=1784649347;
+	bh=YNkZgxjHAqVh0w1lp0hNJ2dsHbiQXeb9PL/V5P7LIeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V1lNsJnRfYXzXx7rN+JFFlic/5Dn0uZYeU6+H8/EGjFYnYx/hyYTgi9/awDFoi4fc
-	 2ochDx3JUyGsQPGcU30IgMMu4bYJyShUNCXkgEinRmh/8flncUkFfELPeW23F4JST3
-	 hv7HyObKjPlaPcB6IZCAs8D5VtEOZX45328T9q7s=
+	b=g2vSAczW0DIWlAfH/XZzRY3vZsF3U4owGXNG4DaBbx+YKlsKt/SFEecGp879zVTTH
+	 MY+rQQb5XfCxLFFNaNxot0Ni/JNVe5T/BXthrsRjiGFXC/RGmg4dfEgwGqmCsMVw23
+	 IDFMXQo+s5IitjOi25s+tpgFPHeu1tKZDhjaxorA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony W Wang-oc <TonyWWang-oc@zhaoxin.com>,
+	Pengjie Zhang <zhangpengjie2@huawei.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0541/2077] ACPI: processor: Add cpuidle driver check in acpi_processor_register_idle_driver()
-Date: Tue, 21 Jul 2026 17:03:34 +0200
-Message-ID: <20260721152605.570455129@linuxfoundation.org>
+Subject: [PATCH 7.1 0542/2077] cpufreq: Documentation: fix conservative governor freq_step description
+Date: Tue, 21 Jul 2026 17:03:35 +0200
+Message-ID: <20260721152605.593351573@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,52 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony W Wang-oc <TonyWWang-oc@zhaoxin.com>
+From: Pengjie Zhang <zhangpengjie2@huawei.com>
 
-[ Upstream commit 66c62e6773c54ce5233eb21c6d48999c3747bd13 ]
+[ Upstream commit 03120e1425262c7d11f93362a88e579a1720390b ]
 
-Commit 7a8c994cbb2d ("ACPI: processor: idle: Optimize ACPI idle
-driver registration") moved the ACPI idle driver registration to
-acpi_processor_driver_init(), but it didn't check whether a cpuidle
-driver was already registered.
+The conservative governor documentation incorrectly states that setting
+freq_step to 0 will use the default 5% frequency step. In reality, since
+at least commit 8e677ce83bf4 ("[CPUFREQ] conservative: fixup governor to
+function more like ondemand logic"), freq_step=0 has always caused the
+governor to skip frequency updates entirely.
 
-For example, on Intel platforms, if the intel_idle driver is already
-loaded, the code would still evaluate the _CST object in the ACPI
-table and attempt to register the acpi_idle driver. This registration
-would fail with -EBUSY due to the existing check in cpuidle_register_driver.
+Correct the documentation to reflect the actual behavior: freq_step=0
+disables frequency changes by the governor entirely.
 
-Add a check at the beginning of acpi_processor_register_idle_driver()
-to avoid unnecessary _CST evaluate and potential registration failures.
-
-Fixes: 7a8c994cbb2d ("ACPI: processor: idle: Optimize ACPI idle driver registration")
-Signed-off-by: Tony W Wang-oc <TonyWWang-oc@zhaoxin.com>
-Link: https://patch.msgid.link/20260608190359.3254-1-TonyWWang-oc@zhaoxin.com
+Fixes: 2a0e49279850 ("cpufreq: User/admin documentation update and consolidation")
+Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+[ rjw: Subject adjustment ]
+Link: https://patch.msgid.link/20260603055635.1549943-1-zhangpengjie2@huawei.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_idle.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ Documentation/admin-guide/pm/cpufreq.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
-index ee5facccbe10c5..390ab5f1d31378 100644
---- a/drivers/acpi/processor_idle.c
-+++ b/drivers/acpi/processor_idle.c
-@@ -1355,6 +1355,15 @@ void acpi_processor_register_idle_driver(void)
- 	int ret = -ENODEV;
- 	int cpu;
+diff --git a/Documentation/admin-guide/pm/cpufreq.rst b/Documentation/admin-guide/pm/cpufreq.rst
+index fdca59c955dcc9..8831cface58552 100644
+--- a/Documentation/admin-guide/pm/cpufreq.rst
++++ b/Documentation/admin-guide/pm/cpufreq.rst
+@@ -586,8 +586,8 @@ This governor exposes the following tunables:
+ 	100 (5 by default).
  
-+	/*
-+	 * If a cpuidle driver is already registered, there is no need to
-+	 * evaluate _CST or attempt to register the ACPI idle driver.
-+	 */
-+	if (cpuidle_get_driver()) {
-+		pr_debug("cpuidle driver %pS already registered.\n", cpuidle_get_driver());
-+		return;
-+	}
-+
- 	acpi_processor_update_max_cstate();
+ 	This is how much the frequency is allowed to change in one go.  Setting
+-	it to 0 will cause the default frequency step (5 percent) to be used
+-	and setting it to 100 effectively causes the governor to periodically
++	it to 0 disables frequency changes by the governor entirely and setting
++	it to 100 effectively causes the governor to periodically
+ 	switch the frequency between the ``scaling_min_freq`` and
+ 	``scaling_max_freq`` policy limits.
  
- 	/*
 -- 
 2.53.0
 
