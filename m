@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C8D3F825C;
-	Tue, 21 Jul 2026 17:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360823D3321;
+	Tue, 21 Jul 2026 17:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654387; cv=none; b=l1GVfPWch38JX6oMrA09S5RzXCbY90JfY59FZ+WkkZwZgeESd5l8+w15Yy8pYnLVKiQrOGTL0sk77deL/giCd0MAtNWCkfFnkO01P//vb7BF0JphPnPDkN67KDaqbL5Rj7zKhz0aHrwSGR8jSl9KsyDzQTNq4y4GHr0YOm1z5WI=
+	t=1784654390; cv=none; b=fG+M5tHSBIvySXP/B79mHu1ltGohQh81bQW48CYNN/9hgLJ6qA3rJzBDWaA7fDmMmerHN/tmJRxUDW+G9Li9QEe3sJIOZix08pIl5DBkn3eib47RLzYxX9b0JWdBgZfI7PHgavZ7y+d3A0l3wS8/Kq+NyuWV5FrielchKPrsRrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654387; c=relaxed/simple;
-	bh=nQ2Pcl8qnP+Kzj64TSrutakog2/h7F7i1pEO7L6O00U=;
+	s=arc-20240116; t=1784654390; c=relaxed/simple;
+	bh=aIoMtj+Ig0FjI3cJ1xJLB1jAOO2EpUubmnKM2Fzhbmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kP4HgV2T28U9SQQO6Z7vjrZGxoFbUtguPwPtjuubfD895d8MRwjs6M0Z+FbWojUGKP3I17k3QubnV+mDKpzGH0Q0ktLj4sDvbeoKzNt43HiHSgxw6wOOOVMnDGHD0JyGIRsQ0RZCH8JYxxWIJwC8TKIboAtaPiD9rhTycu9wk94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SFzEYqE7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SH2gYT9xtmI/O9fyhI0gLK8jLESOpVAwO4NFN+ihk1/lho9e5uMGt4HkrZDfWNmDsaqFjHJjoUS+RNMmyq06vYdfyYY7tuUvUv9FlPiZnygmKyyvzH2aBOs13XQVUQUCQE/JpRptUgn4zlEXkqOjEIhr+TP/JfJogRL9VULZR+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tiRJuQMQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFzEYqE7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE45F1F000E9;
-	Tue, 21 Jul 2026 17:19:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiRJuQMQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A0D1F000E9;
+	Tue, 21 Jul 2026 17:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654386;
-	bh=mrOPPZoR4zvLy8K130TBXzKgvU4xo0BrO47huF+6oUU=;
+	s=korg; t=1784654389;
+	bh=8oO6NWHtGK1oT7lXtAOBn1IakoisDux1xiOkK1Ym4pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SFzEYqE7BLvaOQMTSzrfa2GLydtnWIO7++Ro2fZ2THmzRuLUanyMgEUlS0uJlXA34
-	 j1GR4uNx4KCNfZzkzVkD6Stiw3BOaN2hYDzQXOEJmmz4zvsll/7DkYuuCMYL3u7zet
-	 3TO+UW5wpTC+sXmsS+S557UMsWqCMX1Tq32JdtaM=
+	b=tiRJuQMQA2MYX7AllTQARMs82+2653VCYMSVvM13JCkZRdSrXi5P9MEYqETDPfani
+	 y+mnwKt0bMPKs6BJDAPercZDXwbY1YkOquv+6Ye4i1hSg74KJmK5hV5QiAK4cNotIk
+	 8WtQAm/3pvntvrxndFYBCmFh3MlQ3p4q8LPhX6Tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hyunchul Lee <hyc.lee@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.1 1685/2077] ntfs: add bounds check before accessing EA entries
-Date: Tue, 21 Jul 2026 17:22:38 +0200
-Message-ID: <20260721152632.494512898@linuxfoundation.org>
+Subject: [PATCH 7.1 1686/2077] ntfs: not change 0-byte $DATA attribute to non-resident
+Date: Tue, 21 Jul 2026 17:22:39 +0200
+Message-ID: <20260721152632.518871936@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,55 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Hyunchul Lee <hyc.lee@gmail.com>
 
-commit 937282f7d15b593d0be765fa2ced164130ec87f7 upstream.
+commit 0aad21570197973af4a1b25b3fb8ed3aeb9e7670 upstream.
 
-in ntfs_ea_lookup and ntfs_listxattr, this verifies that there is enough
-space in the EA entry before accessing the next_entry_offset field of
-the EA entry.
+When ntfs_resident_attr_resize() cannot grow a resident attribute in
+place, it retries after converting other resident attributes to
+non-resident to free space in the MFT recrord.
+
+Do not select zero-length resident $DATA attributes for this conversion.
+fsck treats 0-byte non-resident $DATA attribute as corruptions.
 
 Cc: stable@vger.kernel.org # v7.1
 Signed-off-by: Hyunchul Lee <hyc.lee@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs/ea.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ fs/ntfs/attrib.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/ntfs/ea.c
-+++ b/fs/ntfs/ea.c
-@@ -53,11 +53,11 @@ static int ntfs_ea_lookup(char *ea_buf,
- 	loff_t offset, p_ea_size;
- 	unsigned int next;
+--- a/fs/ntfs/attrib.c
++++ b/fs/ntfs/attrib.c
+@@ -4621,10 +4621,12 @@ attr_resize_again:
+ 	while (!(err = ntfs_attr_lookup(AT_UNUSED, NULL, 0, 0, 0, NULL, 0, ctx))) {
+ 		struct inode *tvi;
+ 		struct attr_record *a;
++		u32 value_len;
  
--	if (ea_buf_size < sizeof(struct ea_attr))
--		goto out;
--
- 	offset = 0;
- 	do {
-+		if (ea_buf_size - offset < sizeof(struct ea_attr))
-+			break;
-+
- 		p_ea = (const struct ea_attr *)&ea_buf[offset];
- 		next = le32_to_cpu(p_ea->next_entry_offset);
- 		p_ea_size = next ? next : (ea_buf_size - offset);
-@@ -479,13 +479,13 @@ ssize_t ntfs_listxattr(struct dentry *de
- 	if (ea_info_qsize > ea_buf_size || ea_info_qsize == 0)
- 		goto out;
+ 		a = ctx->attr;
+ 		if (a->non_resident || a->type == AT_ATTRIBUTE_LIST)
+ 			continue;
++		value_len = le32_to_cpu(a->data.resident.value_length);
  
--	if (ea_info_qsize < sizeof(struct ea_attr)) {
--		err = -EIO;
--		goto out;
--	}
--
- 	offset = 0;
- 	do {
-+		if (ea_info_qsize - offset < sizeof(struct ea_attr)) {
-+			err = -EIO;
-+			goto out;
-+		}
-+
- 		p_ea = (const struct ea_attr *)&ea_buf[offset];
- 		next = le32_to_cpu(p_ea->next_entry_offset);
- 		ea_size = next ? next : (ea_info_qsize - offset);
+ 		if (ntfs_attr_can_be_non_resident(vol, a->type))
+ 			continue;
+@@ -4636,6 +4638,8 @@ attr_resize_again:
+ 		if (le32_to_cpu(a->length) <= (sizeof(struct attr_record) - sizeof(s64)) +
+ 				((a->name_length * sizeof(__le16) + 7) & ~7) + 8)
+ 			continue;
++		if (a->type == AT_DATA && !value_len)
++			continue;
+ 
+ 		if (a->type == AT_DATA)
+ 			tvi = ntfs_iget(sb, base_ni->mft_no);
+@@ -4648,8 +4652,7 @@ attr_resize_again:
+ 			continue;
+ 		}
+ 
+-		if (ntfs_attr_make_non_resident(NTFS_I(tvi),
+-		    le32_to_cpu(ctx->attr->data.resident.value_length))) {
++		if (ntfs_attr_make_non_resident(NTFS_I(tvi), value_len)) {
+ 			iput(tvi);
+ 			continue;
+ 		}
 
 
