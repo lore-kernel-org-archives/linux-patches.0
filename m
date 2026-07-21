@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BE917A2F6;
-	Tue, 21 Jul 2026 19:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B91429CDF;
+	Tue, 21 Jul 2026 19:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661461; cv=none; b=JQ5PVMaVdOTCk3Upff+xlSJT2mXu+islEvUV14M1tiwqZFCp26HrncOAchqRPgYaZz8hz+81UVTN2dzlqUAROZGuCasn7Yf/zPag96Szkl9tSnQBL8Pt3STbJh/mTFaungFo1W336KCLsEhYI2MBIDrUoQw99RtYS4hqc4YenR8=
+	t=1784661464; cv=none; b=aFdjNIcFO9rrOP5u7xuezCAsLd/WWOqn0U8dr+6Ut3wmkiFSV++NsBum/wjY4QTtA9i80WGKaWki/bk2Clz5zX5WVJ+ZYYfBwVbIKVF+oE8vHWtBiRHY+qN4x/xRzwnh5zVI4C9ElIIbC7qhDWRiBrK59m6oHc/NzUb8PAnTycg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661461; c=relaxed/simple;
-	bh=K6myNvMN7NTCKISqZfhPyVS9iDYf9fERUMJlCs6UU/o=;
+	s=arc-20240116; t=1784661464; c=relaxed/simple;
+	bh=Zt812k1JgMhe/aFM1Z4ov2JBIF8i17FdajN4OeP2JZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=prWiJ9fZfuZIyTZjNVcEV5uHD/M3k1QzcHfyF5vgPLScxb7oo42haSO3gWcT+GVw64mbkpbiTWBg551Tv7qVo6uwrqvCPAOr+bUebUrAZilHNfIDdz2PbC7itK1t+k3dip4QIcu50cxWkF48ZbHGQzYa8Q+AW9mzdCJzEFsHRxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3827YDN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c+xOc0aiWc/l+3XJQErDVd3KzJRzzBfBTfaNJldn9sokA5OcIoenvCuDBwh/AlbaZUoLxDL2GttTSFT+IX9lUWXTwpME5La9f9wMmCqabHV2solzY2agiWXhu8i48+VWTaq4F/buEB0+1W8I7CblX9U2YusrntEvg38uilsbgAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jCGi9RGB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3827YDN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48921F000E9;
-	Tue, 21 Jul 2026 19:17:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jCGi9RGB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703661F000E9;
+	Tue, 21 Jul 2026 19:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661460;
-	bh=ViV3TP4S06V/QdAyBdwpMAWf4YMOmNof0r49e8eCPKI=;
+	s=korg; t=1784661463;
+	bh=A6OZqDxDkDXjG4lVfNyA/F4r6ykpRcBmWEkD1apigms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G3827YDNbatwxI9X1Zk5Rv1Xsj2xwHOalcmCKP1akdINNWHovyv54UAb4qRcuT8zu
-	 UNrOJaB2kIK2x0ot0u//XpiU5HQdNdgCSL0y6M9nqEF6oaeDfT6+ISuGIIusFP63w+
-	 cFBuPku5hmIi2JuAwNqNCwQ+gjdxRfEjKKKqBIkE=
+	b=jCGi9RGBwPUXMLDJVpiPx3Y5RYOcbh3iTIV3CH7WgRV4V1A8//l9rJYynGkpMoBIF
+	 J8bVZjoHdFw/dWoXVRUpJukJySdk6Ir2CchGtRmhtZSM/Gj8DYr+1v8Apk9nn+9t+K
+	 Hh0Jvf/dl3q3Uvnc5z1qWLBbhbEBlsbFl0bqEKsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Thierry Reding <treding@nvidia.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0074/1276] arm64: tegra: Fix Tegra234 MGBE PTP clock
-Date: Tue, 21 Jul 2026 17:08:37 +0200
-Message-ID: <20260721152447.751198991@linuxfoundation.org>
+Subject: [PATCH 6.12 0075/1276] dt-bindings: pinctrl: nvidia,tegra234: Add missing required block
+Date: Tue, 21 Jul 2026 17:08:38 +0200
+Message-ID: <20260721152447.773844859@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,65 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jon Hunter <jonathanh@nvidia.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 8f0cc929a4bad534c5a860a53d88912cf16d9c9c ]
+[ Upstream commit 61b5deb5a968f7a82124f9b2591a6a151ed7273a ]
 
-The Tegra MGBE PTP clock is incorrectly named as 'ptp-ref' and not
-'ptp_ref' and this causing the initialisation of the PTP clock to fail.
-The device-tree binding doc for the device and the Tegra MGBE driver
-have been updated to use the correct name and so update the device-tree
-for Tegra234 as well.
+Binding should require 'reg' property, because address space cannot be
+missing in the hardware and is already needed by the Linux drivers.
+Require also 'compatible' by convention, although it is not strictly
+necessary.
 
-Fixes: 610cdf3186bc ("arm64: tegra: Add MGBE nodes on Tegra234")
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Fixes: 857982138b79 ("dt-bindings: pinctrl: Document Tegra234 pin controllers")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra234.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../bindings/pinctrl/nvidia,tegra234-pinmux-aon.yaml          | 4 ++++
+ .../devicetree/bindings/pinctrl/nvidia,tegra234-pinmux.yaml   | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra234.dtsi b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-index 2601b43b2d8cad..75428e70a69252 100644
---- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-@@ -3529,7 +3529,7 @@ ethernet@6800000 {
- 				 <&bpmp TEGRA234_CLK_MGBE0_RX_PCS_M>,
- 				 <&bpmp TEGRA234_CLK_MGBE0_RX_PCS>,
- 				 <&bpmp TEGRA234_CLK_MGBE0_TX_PCS>;
--			clock-names = "mgbe", "mac", "mac-divider", "ptp-ref", "rx-input-m",
-+			clock-names = "mgbe", "mac", "mac-divider", "ptp_ref", "rx-input-m",
- 				      "rx-input", "tx", "eee-pcs", "rx-pcs-input", "rx-pcs-m",
- 				      "rx-pcs", "tx-pcs";
- 			resets = <&bpmp TEGRA234_RESET_MGBE0_MAC>,
-@@ -3571,7 +3571,7 @@ ethernet@6900000 {
- 				 <&bpmp TEGRA234_CLK_MGBE1_RX_PCS_M>,
- 				 <&bpmp TEGRA234_CLK_MGBE1_RX_PCS>,
- 				 <&bpmp TEGRA234_CLK_MGBE1_TX_PCS>;
--			clock-names = "mgbe", "mac", "mac-divider", "ptp-ref", "rx-input-m",
-+			clock-names = "mgbe", "mac", "mac-divider", "ptp_ref", "rx-input-m",
- 				      "rx-input", "tx", "eee-pcs", "rx-pcs-input", "rx-pcs-m",
- 				      "rx-pcs", "tx-pcs";
- 			resets = <&bpmp TEGRA234_RESET_MGBE1_MAC>,
-@@ -3613,7 +3613,7 @@ ethernet@6a00000 {
- 				 <&bpmp TEGRA234_CLK_MGBE2_RX_PCS_M>,
- 				 <&bpmp TEGRA234_CLK_MGBE2_RX_PCS>,
- 				 <&bpmp TEGRA234_CLK_MGBE2_TX_PCS>;
--			clock-names = "mgbe", "mac", "mac-divider", "ptp-ref", "rx-input-m",
-+			clock-names = "mgbe", "mac", "mac-divider", "ptp_ref", "rx-input-m",
- 				      "rx-input", "tx", "eee-pcs", "rx-pcs-input", "rx-pcs-m",
- 				      "rx-pcs", "tx-pcs";
- 			resets = <&bpmp TEGRA234_RESET_MGBE2_MAC>,
-@@ -3655,7 +3655,7 @@ ethernet@6b00000 {
- 				 <&bpmp TEGRA234_CLK_MGBE3_RX_PCS_M>,
- 				 <&bpmp TEGRA234_CLK_MGBE3_RX_PCS>,
- 				 <&bpmp TEGRA234_CLK_MGBE3_TX_PCS>;
--			clock-names = "mgbe", "mac", "mac-divider", "ptp-ref", "rx-input-m",
-+			clock-names = "mgbe", "mac", "mac-divider", "ptp_ref", "rx-input-m",
- 				      "rx-input", "tx", "eee-pcs", "rx-pcs-input", "rx-pcs-m",
- 				      "rx-pcs", "tx-pcs";
- 			resets = <&bpmp TEGRA234_RESET_MGBE3_MAC>,
+diff --git a/Documentation/devicetree/bindings/pinctrl/nvidia,tegra234-pinmux-aon.yaml b/Documentation/devicetree/bindings/pinctrl/nvidia,tegra234-pinmux-aon.yaml
+index db8224dfba2c1b..56fb9cf763ef7f 100644
+--- a/Documentation/devicetree/bindings/pinctrl/nvidia,tegra234-pinmux-aon.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/nvidia,tegra234-pinmux-aon.yaml
+@@ -58,6 +58,10 @@ patternProperties:
+                     drive_soc_gpio27_pee6, drive_ao_retention_n_pee2,
+                     drive_vcomp_alert_pee1, drive_hdmi_cec_pgg0 ]
+ 
++required:
++  - compatible
++  - reg
++
+ unevaluatedProperties: false
+ 
+ examples:
+diff --git a/Documentation/devicetree/bindings/pinctrl/nvidia,tegra234-pinmux.yaml b/Documentation/devicetree/bindings/pinctrl/nvidia,tegra234-pinmux.yaml
+index f5a3a881dec4f0..bd305a34eee2b2 100644
+--- a/Documentation/devicetree/bindings/pinctrl/nvidia,tegra234-pinmux.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/nvidia,tegra234-pinmux.yaml
+@@ -115,6 +115,10 @@ patternProperties:
+                     drive_sdmmc1_dat2_pj4, drive_sdmmc1_dat1_pj3,
+                     drive_sdmmc1_dat0_pj2 ]
+ 
++required:
++  - compatible
++  - reg
++
+ unevaluatedProperties: false
+ 
+ examples:
 -- 
 2.53.0
 
