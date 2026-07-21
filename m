@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D461840B116;
-	Tue, 21 Jul 2026 15:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB2146A5FA;
+	Tue, 21 Jul 2026 15:30:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784647828; cv=none; b=twrvSUS3fiKlteRGkkXCsyUIjue0XQaSGD8rul8zievSiJDDdKK/UJoGZp8SSaLU/tDn4x/fwraCYFFE0cMSqrCJG5aUnhYRRg97HX92cmaG9FnVaLZHYccd+sUUL2w9PljAWGymN8AZdLjUHY5Ui5cWITdxoA0LyZrEN9AceiM=
+	t=1784647830; cv=none; b=awEFHK5KvkJNCFibZCB0ldekH6opCUrbpfK0KBARGkunUjT3PteChkBOEav/xdf1TRXGHFRFTXnRlvJu6L3HIVrrP2WkDkfRdvLOiBvBaOqblffql4lU5fjeHhjDBpveU+wj85CmZ7mMlF4b5iBgx4Ov7xZ2S1J+6pemHoHbMgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784647828; c=relaxed/simple;
-	bh=idyESsrNLZxGwr/rPfHBF9JnhTo/53/+9rM4BYdgy4o=;
+	s=arc-20240116; t=1784647830; c=relaxed/simple;
+	bh=nN8n5Un0KRA56S/8cfdKHtE5o/xTWgE5Rodw/brETkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IqUIp9Wp+pt1v3+XQg6SzC3vBNCk4Edr9ArZmRfHQQ+0Av8qwYCi0nfJUtgvCO1goORb4md7mw8h7rFXyRMwok43N3pnWAo/9neZ7OFOgZhLSa9u6ThLqMUgsjHqaVLwXZLmMgm7BnUIliaVlEDVG8e9QsRJ9Hacr7HFHcU+Obw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iO2pkDje; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ER0oQJrxesSUPSxfH7Enz0PuJEPOOute837K1Ed4Bpy2Pu8Xt6Fmb1tntqtRBl5jvSBWrY4ta4HIEKQw1+KgStSrnIb1NwfeW3AK4LpmGJrm1sJmpowGvEsZtF8GR4VgVPpVv2vIv9e55/TacWiuaKGltkmxQ8CLl+c9LugZJHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JfTdCTaD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iO2pkDje"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D371F000E9;
-	Tue, 21 Jul 2026 15:30:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JfTdCTaD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C371F00A3A;
+	Tue, 21 Jul 2026 15:30:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784647825;
-	bh=fehUr5ntdLpFfaYVV7oXycMqgZI3rUM4btPQJSY9USE=;
+	s=korg; t=1784647828;
+	bh=5iIlorhjw7VP1Dbx0nAe/9hh0F5YAmzOGFc01Zt2vYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iO2pkDjeMAQ9urkqQUf8Mb45u+9jWuuoS9cMjNCU+FWDQmRhO+yPNTk0PUgYkMijY
-	 BNEC2J1lJEeSdX6m5ktleaxmFvWd+ZJbhHfYfU1B1dIA6RYORH0YwKwTMqzPVhVqUV
-	 ihrWCORUDDXRI4vLyNxZ/FA3jZboLtxzlPJw1Tgc=
+	b=JfTdCTaDNV85p4mDxQecKjfQGlJ1Owk53l9oDBsyJPyOacyNcrIFWrjmAI5uGq8nq
+	 lLx9Jx+1mUL7IfnFwN3JpJVJePH3C+DKuS6sQFii5xSefbjy+6LI3yiB2KlrJ77rEE
+	 xNdWu+BPGe5jjVoqxnvH6kJZuUl6ppO1sTefe2Iw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
-	Corentin LABBE <clabbe.montjoie@gmail.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0003/2077] crypto: sun4i-ss - Remove insecure and unused rng_alg
-Date: Tue, 21 Jul 2026 16:54:36 +0200
-Message-ID: <20260721152552.741240965@linuxfoundation.org>
+Subject: [PATCH 5.10 003/699] nfsd: reset write verifier on deferred writeback errors
+Date: Tue, 21 Jul 2026 17:16:02 +0200
+Message-ID: <20260721152355.751070745@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
-References: <20260721152552.646164743@linuxfoundation.org>
+In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
+References: <20260721152355.667394603@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,318 +47,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit b2c41fa9dd8fc740c489e060b199165771f268d1 upstream.
+commit 2090b05803faab8a9fa62fbff871007862cac1b7 upstream.
 
-Remove sun4i_ss_rng, as it is insecure and unused:
+nfsd_vfs_write() and nfsd_commit() both call filemap_check_wb_err() to
+detect deferred writeback errors, but neither rotates the server's write
+verifier (nn->writeverf) when this check fails. Every other
+durable-storage-failure path in these functions calls
+commit_reset_write_verifier() before returning an error.
 
-- It has multiple vulnerabilities.  sun4i_ss_prng_seed() is missing
-  locking and has a buffer overflow.  sun4i_ss_prng_generate() fails to
-  fill the entire buffer with cryptographic random bytes, because it
-  rounds the destination length down and also doesn't actually wait for
-  the hardware to be ready before pulling bytes from it.
+The missing rotation means clients holding UNSTABLE write data under the
+current verifier will COMMIT, receive the unchanged verifier back, and
+conclude their data is durable — silently dropping data that failed
+writeback. This violates the UNSTABLE+COMMIT durability contract
+(RFC 1813 §3.3.7, RFC 8881 §18.32).
 
-- No user of this code is known.  It's usable only theoretically via the
-  "rng" algorithm type of AF_ALG.  But userspace actually just uses the
-  actual Linux RNG (/dev/random etc) instead.  And rng_algs don't
-  contribute entropy to the actual Linux RNG either.  (This may have
-  been confused with hwrng, which does contribute entropy.)
+Add commit_reset_write_verifier() calls at both filemap_check_wb_err()
+error sites, matching the pattern used by adjacent error paths in the
+same functions. The helper already filters -EAGAIN and -ESTALE
+internally, so the calls are unconditionally safe.
 
-The sun4i_ss_prng_seed() buffer overflow was reported by Tianchu Chen
-and discovered by Atuin - Automated Vulnerability Discovery Engine
-
-There's no point in fixing all these vulnerabilities individually when
-this is unused code, so let's just remove it.
-
-Fixes: b8ae5c7387ad ("crypto: sun4i-ss - support the Security System PRNG")
+Reported-by: Chris Mason <clm@meta.com>
+Fixes: 555dbf1a9aac ("nfsd: Replace use of rwsem with errseq_t")
 Cc: stable@vger.kernel.org
-Reported-by: Tianchu Chen <flynnnchen@tencent.com>
-Closes: https://lore.kernel.org/r/af749a8447bd7f0e9dd26ca6c87e9c6afecb09d9@linux.dev/
-Acked-by: Corentin LABBE <clabbe.montjoie@gmail.com>
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Assisted-by: kres:claude-opus-4-6
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+[ cel: open-code the reset; commit_reset_write_verifier() is v6.7 ]
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/configs/sunxi_defconfig              |  1 -
- drivers/crypto/allwinner/Kconfig              |  8 ---
- drivers/crypto/allwinner/sun4i-ss/Makefile    |  1 -
- .../crypto/allwinner/sun4i-ss/sun4i-ss-core.c | 36 ----------
- .../crypto/allwinner/sun4i-ss/sun4i-ss-prng.c | 69 -------------------
- drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h  | 20 ------
- 6 files changed, 135 deletions(-)
- delete mode 100644 drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c
+ fs/nfsd/vfs.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/configs/sunxi_defconfig b/arch/arm/configs/sunxi_defconfig
-index a83d29fed17563..f4b8d8f7dbefbb 100644
---- a/arch/arm/configs/sunxi_defconfig
-+++ b/arch/arm/configs/sunxi_defconfig
-@@ -170,7 +170,6 @@ CONFIG_ROOT_NFS=y
- CONFIG_NLS_CODEPAGE_437=y
- CONFIG_NLS_ISO8859_1=y
- CONFIG_CRYPTO_DEV_SUN4I_SS=y
--CONFIG_CRYPTO_DEV_SUN4I_SS_PRNG=y
- CONFIG_CRYPTO_DEV_SUN8I_CE=y
- CONFIG_CRYPTO_DEV_SUN8I_SS=y
- CONFIG_DMA_CMA=y
-diff --git a/drivers/crypto/allwinner/Kconfig b/drivers/crypto/allwinner/Kconfig
-index 7270e5fbc57387..1048f8e95ba803 100644
---- a/drivers/crypto/allwinner/Kconfig
-+++ b/drivers/crypto/allwinner/Kconfig
-@@ -25,14 +25,6 @@ config CRYPTO_DEV_SUN4I_SS
- 	  To compile this driver as a module, choose M here: the module
- 	  will be called sun4i-ss.
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index 19468142486671..c8eebd03784a21 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -1149,8 +1149,11 @@ nfsd_vfs_write(struct svc_rqst *rqstp, struct svc_fh *fhp, struct nfsd_file *nf,
+ 	nfsd_stats_io_write_add(nn, exp, *cnt);
+ 	fsnotify_modify(file);
+ 	host_err = filemap_check_wb_err(file->f_mapping, since);
+-	if (host_err < 0)
++	if (host_err < 0) {
++		nfsd_reset_write_verifier(nn);
++		trace_nfsd_writeverf_reset(nn, rqstp, host_err);
+ 		goto out_nfserr;
++	}
  
--config CRYPTO_DEV_SUN4I_SS_PRNG
--	bool "Support for Allwinner Security System PRNG"
--	depends on CRYPTO_DEV_SUN4I_SS
--	select CRYPTO_RNG
--	help
--	  Select this option if you want to provide kernel-side support for
--	  the Pseudo-Random Number Generator found in the Security System.
--
- config CRYPTO_DEV_SUN4I_SS_DEBUG
- 	bool "Enable sun4i-ss stats"
- 	depends on CRYPTO_DEV_SUN4I_SS
-diff --git a/drivers/crypto/allwinner/sun4i-ss/Makefile b/drivers/crypto/allwinner/sun4i-ss/Makefile
-index c0a2797d316827..06a9ae81f9f808 100644
---- a/drivers/crypto/allwinner/sun4i-ss/Makefile
-+++ b/drivers/crypto/allwinner/sun4i-ss/Makefile
-@@ -1,4 +1,3 @@
- # SPDX-License-Identifier: GPL-2.0-only
- obj-$(CONFIG_CRYPTO_DEV_SUN4I_SS) += sun4i-ss.o
- sun4i-ss-y += sun4i-ss-core.o sun4i-ss-hash.o sun4i-ss-cipher.o
--sun4i-ss-$(CONFIG_CRYPTO_DEV_SUN4I_SS_PRNG) += sun4i-ss-prng.o
-diff --git a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-core.c b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-core.c
-index 58a76e2ba64e25..35ef0930e77f1a 100644
---- a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-core.c
-+++ b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-core.c
-@@ -213,23 +213,6 @@ static struct sun4i_ss_alg_template ss_algs[] = {
- 		}
- 	}
- },
--#ifdef CONFIG_CRYPTO_DEV_SUN4I_SS_PRNG
--{
--	.type = CRYPTO_ALG_TYPE_RNG,
--	.alg.rng = {
--		.base = {
--			.cra_name		= "stdrng",
--			.cra_driver_name	= "sun4i_ss_rng",
--			.cra_priority		= 300,
--			.cra_ctxsize		= 0,
--			.cra_module		= THIS_MODULE,
--		},
--		.generate               = sun4i_ss_prng_generate,
--		.seed                   = sun4i_ss_prng_seed,
--		.seedsize               = SS_SEED_LEN / BITS_PER_BYTE,
--	}
--},
--#endif
- };
- 
- static int sun4i_ss_debugfs_show(struct seq_file *seq, void *v)
-@@ -247,12 +230,6 @@ static int sun4i_ss_debugfs_show(struct seq_file *seq, void *v)
- 				   ss_algs[i].stat_req, ss_algs[i].stat_opti, ss_algs[i].stat_fb,
- 				   ss_algs[i].stat_bytes);
+ 	if (stable && use_wgather) {
+ 		host_err = wait_for_concurrent_writes(file);
+@@ -1286,6 +1289,10 @@ nfsd_commit(struct svc_rqst *rqstp, struct svc_fh *fhp, struct nfsd_file *nf,
+ 			nfsd_copy_write_verifier(verf, nn);
+ 			err2 = filemap_check_wb_err(nf->nf_file->f_mapping,
+ 						    since);
++			if (err2 < 0) {
++				nfsd_reset_write_verifier(nn);
++				trace_nfsd_writeverf_reset(nn, rqstp, err2);
++			}
+ 			err = nfserrno(err2);
  			break;
--		case CRYPTO_ALG_TYPE_RNG:
--			seq_printf(seq, "%s %s reqs=%lu tsize=%lu\n",
--				   ss_algs[i].alg.rng.base.cra_driver_name,
--				   ss_algs[i].alg.rng.base.cra_name,
--				   ss_algs[i].stat_req, ss_algs[i].stat_bytes);
--			break;
- 		case CRYPTO_ALG_TYPE_AHASH:
- 			seq_printf(seq, "%s %s reqs=%lu\n",
- 				   ss_algs[i].alg.hash.halg.base.cra_driver_name,
-@@ -471,13 +448,6 @@ static int sun4i_ss_probe(struct platform_device *pdev)
- 				goto error_alg;
- 			}
- 			break;
--		case CRYPTO_ALG_TYPE_RNG:
--			err = crypto_register_rng(&ss_algs[i].alg.rng);
--			if (err) {
--				dev_err(ss->dev, "Fail to register %s\n",
--					ss_algs[i].alg.rng.base.cra_name);
--			}
--			break;
- 		}
- 	}
- 
-@@ -497,9 +467,6 @@ static int sun4i_ss_probe(struct platform_device *pdev)
- 		case CRYPTO_ALG_TYPE_AHASH:
- 			crypto_unregister_ahash(&ss_algs[i].alg.hash);
- 			break;
--		case CRYPTO_ALG_TYPE_RNG:
--			crypto_unregister_rng(&ss_algs[i].alg.rng);
--			break;
- 		}
- 	}
- error_pm:
-@@ -520,9 +487,6 @@ static void sun4i_ss_remove(struct platform_device *pdev)
- 		case CRYPTO_ALG_TYPE_AHASH:
- 			crypto_unregister_ahash(&ss_algs[i].alg.hash);
- 			break;
--		case CRYPTO_ALG_TYPE_RNG:
--			crypto_unregister_rng(&ss_algs[i].alg.rng);
--			break;
- 		}
- 	}
- 
-diff --git a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c
-deleted file mode 100644
-index 491fcb7b81b40b..00000000000000
---- a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c
-+++ /dev/null
-@@ -1,69 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0-or-later
--#include "sun4i-ss.h"
--
--int sun4i_ss_prng_seed(struct crypto_rng *tfm, const u8 *seed,
--		       unsigned int slen)
--{
--	struct sun4i_ss_alg_template *algt;
--	struct rng_alg *alg = crypto_rng_alg(tfm);
--
--	algt = container_of(alg, struct sun4i_ss_alg_template, alg.rng);
--	memcpy(algt->ss->seed, seed, slen);
--
--	return 0;
--}
--
--int sun4i_ss_prng_generate(struct crypto_rng *tfm, const u8 *src,
--			   unsigned int slen, u8 *dst, unsigned int dlen)
--{
--	struct sun4i_ss_alg_template *algt;
--	struct rng_alg *alg = crypto_rng_alg(tfm);
--	int i, err;
--	u32 v;
--	u32 *data = (u32 *)dst;
--	const u32 mode = SS_OP_PRNG | SS_PRNG_CONTINUE | SS_ENABLED;
--	size_t len;
--	struct sun4i_ss_ctx *ss;
--	unsigned int todo = (dlen / 4) * 4;
--
--	algt = container_of(alg, struct sun4i_ss_alg_template, alg.rng);
--	ss = algt->ss;
--
--	err = pm_runtime_resume_and_get(ss->dev);
--	if (err < 0)
--		return err;
--
--	if (IS_ENABLED(CONFIG_CRYPTO_DEV_SUN4I_SS_DEBUG)) {
--		algt->stat_req++;
--		algt->stat_bytes += todo;
--	}
--
--	spin_lock_bh(&ss->slock);
--
--	writel(mode, ss->base + SS_CTL);
--
--	while (todo > 0) {
--		/* write the seed */
--		for (i = 0; i < SS_SEED_LEN / BITS_PER_LONG; i++)
--			writel(ss->seed[i], ss->base + SS_KEY0 + i * 4);
--
--		/* Read the random data */
--		len = min_t(size_t, SS_DATA_LEN / BITS_PER_BYTE, todo);
--		readsl(ss->base + SS_TXFIFO, data, len / 4);
--		data += len / 4;
--		todo -= len;
--
--		/* Update the seed */
--		for (i = 0; i < SS_SEED_LEN / BITS_PER_LONG; i++) {
--			v = readl(ss->base + SS_KEY0 + i * 4);
--			ss->seed[i] = v;
--		}
--	}
--
--	writel(0, ss->base + SS_CTL);
--	spin_unlock_bh(&ss->slock);
--
--	pm_runtime_put(ss->dev);
--
--	return 0;
--}
-diff --git a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h
-index 6c5d4aa6453c7f..f7d1c79ac677d8 100644
---- a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h
-+++ b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h
-@@ -31,8 +31,6 @@
- #include <crypto/internal/skcipher.h>
- #include <crypto/aes.h>
- #include <crypto/internal/des.h>
--#include <crypto/internal/rng.h>
--#include <crypto/rng.h>
- 
- #define SS_CTL            0x00
- #define SS_KEY0           0x04
-@@ -62,10 +60,6 @@
- 
- /* SS_CTL configuration values */
- 
--/* PRNG generator mode - bit 15 */
--#define SS_PRNG_ONESHOT		(0 << 15)
--#define SS_PRNG_CONTINUE	(1 << 15)
--
- /* IV mode for hash */
- #define SS_IV_ARBITRARY		(1 << 14)
- 
-@@ -94,14 +88,10 @@
- #define SS_OP_3DES		(2 << 4)
- #define SS_OP_SHA1		(3 << 4)
- #define SS_OP_MD5		(4 << 4)
--#define SS_OP_PRNG		(5 << 4)
- 
- /* Data end bit - bit 2 */
- #define SS_DATA_END		(1 << 2)
- 
--/* PRNG start bit - bit 1 */
--#define SS_PRNG_START		(1 << 1)
--
- /* SS Enable bit - bit 0 */
- #define SS_DISABLED		(0 << 0)
- #define SS_ENABLED		(1 << 0)
-@@ -128,9 +118,6 @@
- #define SS_RXFIFO_EMP_INT_ENABLE	(1 << 2)
- #define SS_TXFIFO_AVA_INT_ENABLE	(1 << 0)
- 
--#define SS_SEED_LEN 192
--#define SS_DATA_LEN 160
--
- /*
-  * struct ss_variant - Describe SS hardware variant
-  * @sha1_in_be:		The SHA1 digest is given by SS in BE, and so need to be inverted.
-@@ -151,9 +138,6 @@ struct sun4i_ss_ctx {
- 	char buf[4 * SS_RX_MAX];/* buffer for linearize SG src */
- 	char bufo[4 * SS_TX_MAX]; /* buffer for linearize SG dst */
- 	spinlock_t slock; /* control the use of the device */
--#ifdef CONFIG_CRYPTO_DEV_SUN4I_SS_PRNG
--	u32 seed[SS_SEED_LEN / BITS_PER_LONG];
--#endif
- 	struct dentry *dbgfs_dir;
- 	struct dentry *dbgfs_stats;
- };
-@@ -164,7 +148,6 @@ struct sun4i_ss_alg_template {
- 	union {
- 		struct skcipher_alg crypto;
- 		struct ahash_alg hash;
--		struct rng_alg rng;
- 	} alg;
- 	struct sun4i_ss_ctx *ss;
- 	unsigned long stat_req;
-@@ -231,6 +214,3 @@ int sun4i_ss_des_setkey(struct crypto_skcipher *tfm, const u8 *key,
- 			unsigned int keylen);
- int sun4i_ss_des3_setkey(struct crypto_skcipher *tfm, const u8 *key,
- 			 unsigned int keylen);
--int sun4i_ss_prng_generate(struct crypto_rng *tfm, const u8 *src,
--			   unsigned int slen, u8 *dst, unsigned int dlen);
--int sun4i_ss_prng_seed(struct crypto_rng *tfm, const u8 *seed, unsigned int slen);
+ 		case -EINVAL:
 -- 
 2.53.0
 
