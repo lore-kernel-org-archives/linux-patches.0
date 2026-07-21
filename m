@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D2A43302F;
-	Tue, 21 Jul 2026 19:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C73C43302F;
+	Tue, 21 Jul 2026 19:57:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663846; cv=none; b=cXkE1TsrECRtOMO9OUOIw49MesCCYL+hI395hzS4z8Q5dNupw9GNDh0alN8t3AlrRlDRl1pdHrr2gPUDgmH1NGIiE/bFbnxTobRx5Wn7YpTHN61MbCczW0YMqJgW1/g3OwSPcx2mUdEZLtZvQ7V8Ipzne9e3N0XWHGqeL//OpvE=
+	t=1784663849; cv=none; b=LgxFUXHDHmaSYFBx2TrtthO+17c8M7Al5mTBBvEv6eLK9D850T4vWQoLoFP5qikOzc7bXzRPJKZHPGoVfrMLNRvmY2mxNaBPqGeCosP5gUS0Xon1aMUIyNq7AkuqUDfFelxZr19YdLdclwGHol7Cjik1oUQSMCUn+NfpWa72jeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663846; c=relaxed/simple;
-	bh=6Gar+6WzbMRJ+DDawshjYt9R6GytcRn1RJcTTUqEXYc=;
+	s=arc-20240116; t=1784663849; c=relaxed/simple;
+	bh=2Qc1inGkN3nrpATF/w85nvyirb37Bg7KFg+Pdtt3qFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PEMawF6fialZFLCp0Ow9ji5yeyXDb5gTRXxaAbtwNireLIDPeoxpqibVqiYHGZC5jotYuTjZjJKBF1FSanIwvOIvY4Mj+O2PNq2gAyL/syL4uxwPZe3//D987WAZEMrH1T08vZS8joBEiqjt0hwR07WcemT1P26LauDuy1Vyowk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUpERRN+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rpoF7Q8SOw7RW6XhMlCWmeFIiuSuCrcD3QX3IK6Knk7rT+ekcLB8bpCYjOoj2V1a++XWr64Qy9i7vgTgCsKeAAZiQycfjtXSnhd9cXP/K0pZfkK0eVtiRuHziAXcgu+hZf5qYMAHeTFXHuaZJZlbRQjhl+5oSQFuZIjjSk1lMQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D5Td79s0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUpERRN+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FE41F00A3A;
-	Tue, 21 Jul 2026 19:57:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5Td79s0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71DE51F000E9;
+	Tue, 21 Jul 2026 19:57:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663845;
-	bh=tAUMwIEO3EoKDVUp60GG1aarbPlupPc2TAgeJpwRPV0=;
+	s=korg; t=1784663847;
+	bh=Pl7m+DfYqoGLHoAbk9cZE2xHtYRCN5Kqc/0opxJt1FY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VUpERRN+JAqTcNJ2AEKb4OigbmqBQS52QpMZWwl/gTzTa3zCXjoPWj/IDdePq+wpK
-	 TmjmBW8He8xytMe2zcvbW5aAO8eRgIfrj9oQ6vGNTuLhpfoaLVIxRRWj25ng1KYN45
-	 lxU2USL1nAs+ruWuxQEc3SMjJ1ti4AsdqgCUHA3k=
+	b=D5Td79s0VqlLtBc7cHWf9B9+tmhUK//cOCPU8qPLPv8uWKiEoetzkhnjyH5aLn6Qw
+	 uDknWNRbb0PeVOpYposwTH5eOTDDKu/DETQVhlNBF+JicpA4T4XZhHKy4W2xa3sirP
+	 y1nBvoa7j20jNbYMMfiFPAeLtNexLTaEaucKsBGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.12 0978/1276] i2c: mlxbf: Fix use-after-free in mlxbf_i2c_init_resource()
-Date: Tue, 21 Jul 2026 17:23:41 +0200
-Message-ID: <20260721152507.906024905@linuxfoundation.org>
+	Paul Greenwalt <paul.greenwalt@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Alexander Nowlin <alexander.nowlin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.12 0979/1276] ice: fix ice_init_link() error return preventing probe
+Date: Tue, 21 Jul 2026 17:23:42 +0200
+Message-ID: <20260721152507.927928690@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,39 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Paul Greenwalt <paul.greenwalt@intel.com>
 
-commit 71356737a7a55c76fee847563e3d33f8e6dc6b6d upstream.
+commit eb509638686b0f8a98a0dd9c809f6a8db4d73a45 upstream.
 
-If devm_platform_get_and_ioremap_resource() returns an error,
-mlxbf_i2c_init_resource() frees tmp_res before reading tmp_res->io to
-get the error code. This results in a use-after-free.
+ice_init_link() can return an error status from ice_update_link_info()
+or ice_init_phy_user_cfg(), causing probe to fail.
 
-Save the error code before freeing tmp_res.
+An incorrect NVM update procedure can result in link/PHY errors, and
+the recommended resolution is to update the NVM using the correct
+procedure. If the driver fails probe due to link errors, the user
+cannot update the NVM to recover. The link/PHY errors logged are
+non-fatal: they are already annotated as 'not a fatal error if this
+fails'.
 
-Fixes: b5b5b32081cd ("i2c: mlxbf: I2C SMBus driver for Mellanox BlueField SoC")
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Cc: <stable@vger.kernel.org> # v5.10+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260714150808.85045-1-xuanqiang.luo@linux.dev
+Since none of the errors inside ice_init_link() should prevent probe
+from completing, convert it to void and remove the error check in the
+caller. All failures are already logged; callers have no meaningful
+recovery path for link init errors.
+
+Fixes: 5b246e533d01 ("ice: split probe into smaller functions")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paul Greenwalt <paul.greenwalt@intel.com>
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-mlxbf.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_main.c |   16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
---- a/drivers/i2c/busses/i2c-mlxbf.c
-+++ b/drivers/i2c/busses/i2c-mlxbf.c
-@@ -1082,8 +1082,10 @@ static int mlxbf_i2c_init_resource(struc
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -4943,16 +4943,14 @@ static void ice_init_wakeup(struct ice_p
+ 	device_set_wakeup_enable(ice_pf_to_dev(pf), false);
+ }
  
- 	tmp_res->io = devm_platform_get_and_ioremap_resource(pdev, type, &tmp_res->params);
- 	if (IS_ERR(tmp_res->io)) {
-+		int ret = PTR_ERR(tmp_res->io);
-+
- 		devm_kfree(dev, tmp_res);
--		return PTR_ERR(tmp_res->io);
-+		return ret;
+-static int ice_init_link(struct ice_pf *pf)
++static void ice_init_link(struct ice_pf *pf)
+ {
+ 	struct device *dev = ice_pf_to_dev(pf);
+ 	int err;
+ 
+ 	err = ice_init_link_events(pf->hw.port_info);
+-	if (err) {
++	if (err)
+ 		dev_err(dev, "ice_init_link_events failed: %d\n", err);
+-		return err;
+-	}
+ 
+ 	/* not a fatal error if this fails */
+ 	err = ice_init_nvm_phy_type(pf->hw.port_info);
+@@ -4986,8 +4984,6 @@ static int ice_init_link(struct ice_pf *
+ 	} else {
+ 		set_bit(ICE_FLAG_NO_MEDIA, pf->flags);
  	}
+-
+-	return err;
+ }
  
- 	tmp_res->type = type;
+ static int ice_init_pf_sw(struct ice_pf *pf)
+@@ -5119,13 +5115,11 @@ static int ice_init(struct ice_pf *pf)
+ 
+ 	ice_init_wakeup(pf);
+ 
+-	err = ice_init_link(pf);
+-	if (err)
+-		goto err_init_link;
++	ice_init_link(pf);
+ 
+ 	err = ice_send_version(pf);
+ 	if (err)
+-		goto err_init_link;
++		goto err_deinit_pf_sw;
+ 
+ 	ice_verify_cacheline_size(pf);
+ 
+@@ -5144,7 +5138,7 @@ static int ice_init(struct ice_pf *pf)
+ 
+ 	return 0;
+ 
+-err_init_link:
++err_deinit_pf_sw:
+ 	ice_deinit_pf_sw(pf);
+ err_init_pf_sw:
+ 	ice_dealloc_vsis(pf);
 
 
