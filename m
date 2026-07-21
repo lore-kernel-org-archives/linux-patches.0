@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BACE472F70;
-	Tue, 21 Jul 2026 17:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DA0472F7F;
+	Tue, 21 Jul 2026 17:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656150; cv=none; b=frS8smVf4g0SLDRwvBW23Mq8W+H6S+7ECGeDd7+tBVngR8UbbYqmHG3Aa3mCnclZe8x8mrNeG4QDOpov3OJxNAkrnQoHvBIvfX7Zi2+w2aIWZxAGOs7Kxqzurc4jGdGKMAotJ4HrvrMtHU0tM5b4HWrF4eU9PA8Raj485pxocrM=
+	t=1784656153; cv=none; b=GMAKPOALSvjwG+E4mIGh2AAp9C+E5rRs0DXXBA2ZLBlS+u1wqW8Y4oNGxG6hNY+64aJjV7eadN9446WBvRl6GqMOrWbGzaEf3dlDV/OKnZyPu7Y0b9oDzFrOSrlNlAvcF4ucT2ixhin6HYiHlVM/g7EpLn2COk/zzQ6tCt3v2OI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656150; c=relaxed/simple;
-	bh=kP7sz5kG0b7WjMV2GcnMmHLeBUDLQy1KMO945yzH3ns=;
+	s=arc-20240116; t=1784656153; c=relaxed/simple;
+	bh=q5unhgAKuk6xUR4+DxmP0CmONNDIBdsQZvNTNMzkqV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JnJUxK/pgwgksbasK6vwoEWiji4ajcibmtqqtr7cnqY9+deTXtQmgIPh/yU27WI/lZjVAhsehqktA+rJsapeE1yOtpED7cVwGv3ZMxApJduPN54aveTGfhzGyoHBvX+hpe1ECgwSXNdHuGKNuVxxtEq9XidKG5v4d/1MDkgAQ2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cos4XONA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q6JSjvddc6pvmb4xuazliytgAmIkoCXalf6eycC7REZWxQ70kVcAQpRyAqhESW1yluhG5Of0iq4/Y49JofPpnfNZgRk+J1SJgfFVLjW1A9NuqcE9k2JbYwKbfcOpkzhxJJ7q6GuIubQlcMSluwurTj9EaRa+Xx/ar5HHUwjrZ+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lm5GOJKA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cos4XONA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73621F000E9;
-	Tue, 21 Jul 2026 17:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lm5GOJKA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67AD21F000E9;
+	Tue, 21 Jul 2026 17:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656149;
-	bh=zJ3GV+hssoq4l6mWWpTrfIRuSBk+O3ayXSrr+PPqowQ=;
+	s=korg; t=1784656151;
+	bh=jINV50DyaF9hR5R8DaefSuYP5M0lFVvSjMsKFVokgL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cos4XONAZZwn8AK4oSSANKkuVxfqNxKr0orEJQ2BBnCYUy8AMchjvrMawQDm3Y9yc
-	 A65NLqJnsDv4G/ya/FBIANBrvjiIb72y4FPNxqP1+Otx9ZZemhRcjYRdktrr07flMg
-	 vUbEgNwmF/rs9Zra/M9O9XTJATXCEeFiPWX1WMMk=
+	b=lm5GOJKAHJ5Uka9uvDj/9FIP8dq8Dl2CMt4cQi0Gi1CYrmOfNdQeWrzckSMKReVWI
+	 48dOcAMx2sUR9/kOYoyfTPZwHlS6RBYD5o503nFT48dNcSoVJYYiDYUAPdZNEluMZR
+	 k5SkACxi7cgipsthyMRVMwNjEI6rqo0WPqqOcauA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
 	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0276/1611] media: qcom: venus: drop extra padding in NV12 raw size calculation
-Date: Tue, 21 Jul 2026 17:06:32 +0200
-Message-ID: <20260721152521.261750973@linuxfoundation.org>
+Subject: [PATCH 6.18 0277/1611] media: qcom: venus: relax encoder frame/blur dimension steps on v4
+Date: Tue, 21 Jul 2026 17:06:33 +0200
+Message-ID: <20260721152521.285166877@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,40 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Renjiang Han <renjiang.han@oss.qualcomm.com>
 
-[ Upstream commit e1c9adabb268cc5d56723b7df1da49e59070f309 ]
+[ Upstream commit 35428ae3a6a40912f1f7b47bb6c65f1a63d0b8f8 ]
 
-get_framesize_raw_nv12() currently adds SZ_4K to the UV plane size and an
-additional SZ_8K to the total buffer size. This inflates the calculated
-sizeimage and leads userspace to over-allocate buffers without a clear
-requirement.
+Encoder HFI capabilities on v4 advertise a 16-pixel step for frame and
+blur dimensions. This is overly restrictive and can cause userspace caps
+negotiation to fail even for valid resolutions.
 
-Remove the extra SZ_4K/SZ_8K padding and compute the NV12 size as the sum
-of Y and UV planes, keeping the final ALIGN(size, SZ_4K) intact.
+Relax the advertised step size to 1 and keep alignment enforcement in
+buffer layout and size calculations.
 
-Fixes: e1cb72de702ad ("media: venus: helpers: move frame size calculations on common place")
+Fixes: 8b88cabef404e ("media: venus: hfi_plat_v4: Populate codecs and capabilities for v4")
 Signed-off-by: Renjiang Han <renjiang.han@oss.qualcomm.com>
 Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
 Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/helpers.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../platform/qcom/venus/hfi_platform_v4.c     | 20 +++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index 2e4363f8223171..7f370caacd9f8d 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -954,8 +954,8 @@ static u32 get_framesize_raw_nv12(u32 width, u32 height)
- 	uv_sclines = ALIGN(((height + 1) >> 1), 16);
- 
- 	y_plane = y_stride * y_sclines;
--	uv_plane = uv_stride * uv_sclines + SZ_4K;
--	size = y_plane + uv_plane + SZ_8K;
-+	uv_plane = uv_stride * uv_sclines;
-+	size = y_plane + uv_plane;
- 
- 	return ALIGN(size, SZ_4K);
- }
+diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v4.c b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
+index cda888b56b5d48..e0b3652bb44093 100644
+--- a/drivers/media/platform/qcom/venus/hfi_platform_v4.c
++++ b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
+@@ -136,8 +136,8 @@ static const struct hfi_plat_caps caps[] = {
+ 	.codec = HFI_VIDEO_CODEC_H264,
+ 	.domain = VIDC_SESSION_TYPE_ENC,
+ 	.cap_bufs_mode_dynamic = true,
+-	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 16},
+-	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 16},
++	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 1},
++	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 1},
+ 	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
+ 	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
+ 	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
+@@ -173,8 +173,8 @@ static const struct hfi_plat_caps caps[] = {
+ 	.codec = HFI_VIDEO_CODEC_HEVC,
+ 	.domain = VIDC_SESSION_TYPE_ENC,
+ 	.cap_bufs_mode_dynamic = true,
+-	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 16},
+-	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 16},
++	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 1},
++	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 1},
+ 	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
+ 	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
+ 	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
+@@ -195,8 +195,8 @@ static const struct hfi_plat_caps caps[] = {
+ 	.caps[19] = {HFI_CAPABILITY_RATE_CONTROL_MODES, 0x1000001, 0x1000005, 1},
+ 	.caps[20] = {HFI_CAPABILITY_COLOR_SPACE_CONVERSION, 0, 2, 1},
+ 	.caps[21] = {HFI_CAPABILITY_ROTATION, 1, 4, 90},
+-	.caps[22] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 16},
+-	.caps[23] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 16},
++	.caps[22] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 1},
++	.caps[23] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 1},
+ 	.num_caps = 24,
+ 	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_6 | HFI_HEVC_TIER_HIGH0},
+ 	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_6 | HFI_HEVC_TIER_HIGH0},
+@@ -210,8 +210,8 @@ static const struct hfi_plat_caps caps[] = {
+ 	.codec = HFI_VIDEO_CODEC_VP8,
+ 	.domain = VIDC_SESSION_TYPE_ENC,
+ 	.cap_bufs_mode_dynamic = true,
+-	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 16},
+-	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 16},
++	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 1},
++	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 1},
+ 	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
+ 	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
+ 	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
+@@ -229,8 +229,8 @@ static const struct hfi_plat_caps caps[] = {
+ 	.caps[16] = {HFI_CAPABILITY_P_FRAME_QP, 0, 127, 1},
+ 	.caps[17] = {HFI_CAPABILITY_MAX_WORKMODES, 1, 2, 1},
+ 	.caps[18] = {HFI_CAPABILITY_RATE_CONTROL_MODES, 0x1000001, 0x1000005, 1},
+-	.caps[19] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 16},
+-	.caps[20] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 16},
++	.caps[19] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 1},
++	.caps[20] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 1},
+ 	.caps[21] = {HFI_CAPABILITY_COLOR_SPACE_CONVERSION, 0, 2, 1},
+ 	.caps[22] = {HFI_CAPABILITY_ROTATION, 1, 4, 90},
+ 	.num_caps = 23,
 -- 
 2.53.0
 
