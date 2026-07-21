@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB5A46D0A2;
-	Tue, 21 Jul 2026 18:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16FE946D0A7;
+	Tue, 21 Jul 2026 18:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658104; cv=none; b=ufChd9scmjJi56YBAWlAZvr9GLTanugEqwaxnGhSHpKMIG1nnxfOtSSUOKZhRh+HJEQAmN12wTwIeqCvxzJwsg4pQqtdbzAQcVWgj3RjE58aArV5g6LKXqFBkiM/utLfEqGwyUPkydKrRC51uhsSM999q9rmfYNof9pVG3bp9pY=
+	t=1784658107; cv=none; b=HxgYVvSNIoJ41E7KxK76tBSQWk99XGejA0y+gIP9xqEWPq4otbYpnC/2ebd1P4dfk5R/nhaB3UR7sinq75sLJ/VM5s8/2v5QOsxrwKKr7B+MLJgb/UbpPqr9y1qxlSq3+2zvJe+snjaTkf/JX5EDAtPD6cJd/q9LTaf670C9/Ss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658104; c=relaxed/simple;
-	bh=9j05C6ujpwbszH7QSh+rtESoaZtFUfGxK+oaT7/hcwE=;
+	s=arc-20240116; t=1784658107; c=relaxed/simple;
+	bh=w32sgFpsI5r3Yihdoa05DegUBDOq6s8GRuRTpO3RFio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nf/xHkKdIm0uhHCMpLYcweKHI6F5sKsH9Hly1HXUJdUi5VRPcm2yI3Q+XBA/RvTVggxz/oKO4wPBZeD8ZXyiyXPtmyMf3/c5r7SHyJUe5apzUpxSQ878JqB67bM/PYIVD5dLBkjspOqTp3HX22ShkLIq8iSUBbR2aFo3QoisWs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFVw7kZY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gvQF0t4DuodfoY5+PFbkWu/sKtlwxGxvr+JE1+izIR3D5VykYA7nIOQmdPbeUeha/tDehE9woet2haI6l/jnyBrYrg6Ylyizv7ZcfSOa5F32wRrj0B6UusQyAA0mZQ0sN4JTn2rZfUqBLQ3yBaw5WTpFFjtpEpWX26OQG008OMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1QbsoWQy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFVw7kZY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59211F000E9;
-	Tue, 21 Jul 2026 18:21:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1QbsoWQy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81BB71F000E9;
+	Tue, 21 Jul 2026 18:21:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658103;
-	bh=x49Q7av7HMaI9gm4JRpWl4Vd68NEkoSm0pokRLtaF2E=;
+	s=korg; t=1784658106;
+	bh=cvKXETF1rzpHnuGt23hFkEzBGK9Lq/ZuTFT706VntvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YFVw7kZYOZBcvYJogak1UVu2qfyCDGtwXFuzegmQ9T2znqG0f58jC4ovlHvGdfUW3
-	 SX6trNdAmNmNDSKmELPTk7OI27wQmjU0YHka4hy2sKFPRK3UO5nyxFenrSAhOJWPqz
-	 5XpuTjGx6AkzkVSvHKv4odTWmfSqQ63kijjqMijE=
+	b=1QbsoWQyjV/L4ru8IRYOEM+qxs2QqxGGFWwI0liN7bQ2KC/qKTxPLa31tYy++e/1p
+	 NrpHCtyXqpCh4EcleXJ2HBJskpDFquMLjHWHy2g4PcBRQ8Z4vAtzCIBmHpj9Za/+qw
+	 8DB6aIx/oVRSJE2/eab6TpY3gW8wtybq33xd4Ij0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Morduan Zang <zhangdandan@uniontech.com>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1015/1611] iomap: guard io_size EOF trim against concurrent truncate underflow
-Date: Tue, 21 Jul 2026 17:18:51 +0200
-Message-ID: <20260721152538.224167065@linuxfoundation.org>
+Subject: [PATCH 6.18 1016/1611] netfs: Fix netfs_create_write_req() to handle async cache object creation
+Date: Tue, 21 Jul 2026 17:18:52 +0200
+Message-ID: <20260721152538.246519783@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,65 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Morduan Zang <zhangdandan@uniontech.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 55ec50d046c03b3724741957f7b007856e36dbe7 ]
+[ Upstream commit dbd6f56d975b23241b7bbb11bb8f562af548a0aa ]
 
-iomap: fix zero padding data issue in concurrent append writes
-changed ioend accounting so that io_size tracks only valid data
-within EOF.  This trims io_size when a writeback range extends
-past end_pos:
+netfs_create_write_req() will skip caching if the fscache cookie is
+disabled, but this is a problem because async cache object creation might
+not have got far enough yet that has been enabled - thereby causing the
+call to fscache_begin_write_operation() to be skipped.
 
-    ioend->io_size += map_len;
-    if (ioend->io_offset + ioend->io_size > end_pos)
-        ioend->io_size = end_pos - ioend->io_offset;
+Fix this by removing the checks on the cookie and delegating this to
+fscache_begin_write_operation().
 
-However, if end_pos ends up below ioend->io_offset, the subtraction
-becomes negative and is stored in size_t io_size, causing an unsigned
-wrap to a huge value.  This can happen when writeback continues past
-byte-level EOF up to a block-aligned range, or when a concurrent
-truncate shrinks the file after end_pos was sampled in
-iomap_writeback_handle_eof().
-
-A wrapped io_size can mislead append detection and corrupt
-completion-time size handling, since filesystem end_io paths consume
-io_size for decisions such as on-disk EOF updates and unwritten/COW
-completion ranges.
-
-Fix this by clamping io_size to zero when EOF has moved to or before
-the ioend start offset.  This preserves the original intent of trimming
-io_size to valid in-EOF data while avoiding the underflow.
-
-Fixes: 51d20d1dacbe ("iomap: fix zero padding data issue in concurrent append writes")
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Morduan Zang <zhangdandan@uniontech.com>
-Link: https://patch.msgid.link/9E38E2659B47DC2A+20260624062622.337469-1-zhangdandan@uniontech.com
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Fixes: 7b589a9b45ae ("netfs: Fix handling of USE_PGPRIV2 and WRITE_TO_CACHE flags")
+Closes: https://sashiko.dev/#/patchset/20260624115737.2964520-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260625140640.3116900-3-dhowells@redhat.com
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/ioend.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/netfs/write_issue.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/iomap/ioend.c b/fs/iomap/ioend.c
-index fb26cfd9c4cc3a..6c75fbf4d5af46 100644
---- a/fs/iomap/ioend.c
-+++ b/fs/iomap/ioend.c
-@@ -239,8 +239,12 @@ ssize_t iomap_add_to_ioend(struct iomap_writepage_ctx *wpc, struct folio *folio,
- 	 * appending writes.
- 	 */
- 	ioend->io_size += map_len;
--	if (ioend->io_offset + ioend->io_size > end_pos)
--		ioend->io_size = end_pos - ioend->io_offset;
-+	if (ioend->io_offset + ioend->io_size > end_pos) {
-+		if (ioend->io_offset >= end_pos)
-+			ioend->io_size = 0;
-+		else
-+			ioend->io_size = end_pos - ioend->io_offset;
-+	}
+diff --git a/fs/netfs/write_issue.c b/fs/netfs/write_issue.c
+index 03d170b9022b7d..26289849343037 100644
+--- a/fs/netfs/write_issue.c
++++ b/fs/netfs/write_issue.c
+@@ -106,7 +106,7 @@ struct netfs_io_request *netfs_create_write_req(struct address_space *mapping,
+ 	_enter("R=%x", wreq->debug_id);
  
- 	wbc_account_cgroup_owner(wpc->wbc, folio, map_len);
- 	return map_len;
+ 	ictx = netfs_inode(wreq->inode);
+-	if (is_cacheable && netfs_is_cache_enabled(ictx))
++	if (is_cacheable)
+ 		fscache_begin_write_operation(&wreq->cache_resources, netfs_i_cookie(ictx));
+ 	if (rolling_buffer_init(&wreq->buffer, wreq->debug_id, ITER_SOURCE) < 0)
+ 		goto nomem;
 -- 
 2.53.0
 
