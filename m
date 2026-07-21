@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B20436BC6;
-	Tue, 21 Jul 2026 19:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E6B446839;
+	Tue, 21 Jul 2026 19:55:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663704; cv=none; b=NlrXfC38XpgKNb87cEci0LkY9ADC9/e8NYoKuF8LsyF74JbYjuL9pjrxyzEeCw0a3wU54N4Ta78pLGWzZRlA/ExYmFUWaBPxqVCSvQ+FkJCbpSaIpLgKTejnaly4Cfgt4gpW38WIW883UMUOzfyoMZUWssGXc824fcnKul47tpA=
+	t=1784663707; cv=none; b=N8fonqRWUkabkNksrGfbjcy1s8CgseVNoxThwhdOSORCg6s4E6lXennMknQREFh2aBJg9J/ESUc8WPiuxiqxE+ctq7vIiOxaJiPlGQZxT/l9xud9ZMIlecrYJmbLwfXGSgVXEGseVWrouwjrD1lIRXkb/ZkUQVAlXi9nlrXHLP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663704; c=relaxed/simple;
-	bh=H/gCwIgfRQGtAemahnUlVKWQdpMbpXHxC41/8jfe+Mo=;
+	s=arc-20240116; t=1784663707; c=relaxed/simple;
+	bh=6Qh1D/BK3waEj16bzn5N1qgdsUWm0p1umfh3Ht8XJ6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ofoqwUwJiS4VNcOSFcvq4omL5EDmoC5zxkgAGM/eCfMBmgACxgCjO5Q7xM+B2RA4y5VkJnlk40ra9gwXgsVY3ZUb9WhTLdP3TMECeZkULBlK7sVbQ4t4N4mDPOmic9EMphV67s0IRrJ48cFP4dL++YsI7Xja5Qjv3CYsvWZUMVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hX+9y2ou; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VEJT14nH2OxIk6F087HcT/MjjIoZ+RYsPRIWS3ZhhDoy0sby9TJx+VMqNeTB12AxcGwBwVw/8mxmFIDHMluI63/oaW3h90NjRL+iS2xe9BSMV4mhCRFETLwtQsNoLHe9suzZ4I/ezdA4F8VjCC+ysO+P9RcM9bYmBix0ax1oxiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zuHy3XIr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hX+9y2ou"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FA31F000E9;
-	Tue, 21 Jul 2026 19:55:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zuHy3XIr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59DCF1F000E9;
+	Tue, 21 Jul 2026 19:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663703;
-	bh=SOIJmH5Lq1CKVFBWLqCc91rqLWaoTECDmsdr9j6xBos=;
+	s=korg; t=1784663705;
+	bh=CsdmFEFkSEqce6q14QTe5Mdih3GA8tSTV3E+5S8MLOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hX+9y2ouU1dHSYleTquvtQCdGL9sCwnVUb8nmTs2bm2QnN54b8dsfvtvsQvUqGq9A
-	 hjfxJf7h8u3s1RSLd5WOv382Z7o1DULLZLg/ATvxQlsXnwkwFGzMcguxZXvfLZutpF
-	 wJp8GwXkwGL6xxkhMQTyE49saWz42gMj6rajiEgc=
+	b=zuHy3XIr+bUq8grSrDmkcHwCJkPnNw89RzJ2SRlrXuLGRP0qoFLkSLGci54/VgN8r
+	 56tz5FAaPQlSJy8bQ+wADhBJ/K21E5UkItwWDWdQphcc8fQeyTAk0Ps0qKaHwWhI6e
+	 nvbQEwnwOeVkOr0OpxeGa1mhntNl5OzDO67mlexw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Sandipan Das <sandipan.das@amd.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH 6.12 0879/1276] perf/x86/amd/lbr: Fix kernel address leakage
-Date: Tue, 21 Jul 2026 17:22:02 +0200
-Message-ID: <20260721152505.721498221@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+Subject: [PATCH 6.12 0880/1276] cpufreq: intel_pstate: Set non-turbo capacity to HWP_GUARANTEED_PERF()
+Date: Tue, 21 Jul 2026 17:22:03 +0200
+Message-ID: <20260721152505.743732331@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,63 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 2a892294b83f541115c94b0bb637f39bef187657 upstream.
+commit 27d80e0f8b8dff97503fc0061754b1d3800cb961 upstream.
 
-A user-only branch stack can contain branches that originate from
-the kernel. As a result, kernel addresses are exposed to user space
-even when PERF_SAMPLE_BRANCH_USER is requested. On AMD processors
-supporting X86_FEATURE_AMD_LBR_V2, perf can still report SYSRET/ERET
-entries for which the branch-from addresses are in the kernel.
+Setting cpu->capacity_perf to cpu->pstate.max_pstate_physical in the
+"no turbo" case is inconsistent with what happens elsewhere in the
+driver and causes arch_scale_cpu_capacity() to be incorrect.  It also
+skews arch_scale_freq_capacity() which ends up differing from 1024 for
+the guaranteed P-state.
 
-E.g.
+Address that by setting capacity_perf to HWP_GUARANTEED_PERF() in the
+"no turbo" case.
 
-  $ perf record -e cycles -o - -j any,save_type,u -- \
-        perf bench syscall basic --loop 1000 | \
-        perf script -i - -F brstack|tr ' ' '\n'| \
-        grep -E '0x[89a-f][0-9a-f]{15}'
-
-  ...
-  0xffffffff81001268/0x717a90a38f1a/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a39157/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a2c628/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a41b60/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a260db/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a90a260db/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a8bef1c30/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  0xffffffff81001268/0x717a8e4d3c90/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
-  ...
-
-The reason is that the hardware filter only considers the privilege
-level applicable to the branch target. Extend software filtering to
-also validate the branch-from addresses against br_sel, so that any
-branch record whose branch-from address is in the kernel is dropped
-when PERF_SAMPLE_BRANCH_USER is requested.
-
-Fixes: f4f925dae741 ("perf/x86/amd/lbr: Add LbrExtV2 hardware branch filter support")
-Reported-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: stable@vger.kernel.org
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://patch.msgid.link/a898a29725f6b2f30518354cdc2e432db66c43cf.1783680119.git.sandipan.das@amd.com
+Fixes: 929ebc93ccaa ("cpufreq: intel_pstate: Set asymmetric CPU capacity on hybrid systems")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Tested-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/12928972.O9o76ZdvQC@rafael.j.wysocki
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/amd/lbr.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/cpufreq/intel_pstate.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/x86/events/amd/lbr.c
-+++ b/arch/x86/events/amd/lbr.c
-@@ -124,7 +124,8 @@ static void amd_pmu_lbr_filter(void)
- 		}
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -964,12 +964,14 @@ static void hybrid_clear_cpu_capacity(un
  
- 		/* If type does not correspond, then discard */
--		if (type == X86_BR_NONE || (br_sel & type) != type) {
-+		if (type == X86_BR_NONE || (br_sel & type) != type ||
-+		    (!(br_sel & X86_BR_KERNEL) && kernel_ip(cpuc->lbr_entries[i].from))) {
- 			cpuc->lbr_entries[i].from = 0;	/* mark invalid */
- 			compress = true;
- 		}
+ static void hybrid_get_capacity_perf(struct cpudata *cpu)
+ {
++	u64 hwp_cap = READ_ONCE(cpu->hwp_cap_cached);
++
+ 	if (READ_ONCE(global.no_turbo)) {
+-		cpu->capacity_perf = cpu->pstate.max_pstate_physical;
++		cpu->capacity_perf = HWP_GUARANTEED_PERF(hwp_cap);
+ 		return;
+ 	}
+ 
+-	cpu->capacity_perf = HWP_HIGHEST_PERF(READ_ONCE(cpu->hwp_cap_cached));
++	cpu->capacity_perf = HWP_HIGHEST_PERF(hwp_cap);
+ }
+ 
+ static void hybrid_set_capacity_of_cpus(void)
 
 
