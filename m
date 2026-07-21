@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FFB042DFEC;
-	Tue, 21 Jul 2026 19:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36EAC42DA53;
+	Tue, 21 Jul 2026 19:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662265; cv=none; b=nbB7eh6KmYvlxD5ESIqrT8by9N6gI6YztHII5TNQdtyBTbbKL0bo6HwqXBFoI2xteMUBylzX0ivXK3OVaexu/78w3U8nHjiLHnkMkvTCZR+NtCtWf252DFWL2lkmWsH+OiFh2UoR0rhGeAUPRUPBhKLP2FLp4npjTV/6Zj4yPe8=
+	t=1784662268; cv=none; b=gIlJ4uKGufMtQRIch3c1VFMRbhtV9aJhSPB3hOwmRFCgZYMLlBrFiXnB7FAgLSX/mbjsn4u/rkIER9wML0glE1M98I1nnAGwNLz0MIR01Fspfhetisf0CmI0VjAM6b0KGYPPXEik5+gdUiItqfLvc+1zpbNZlMY8yYgxz66HLFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662265; c=relaxed/simple;
-	bh=oiksjmdxSGpMQyrl8HOredcvc22rbzzzyXUM9vQv9uQ=;
+	s=arc-20240116; t=1784662268; c=relaxed/simple;
+	bh=dijFlJ7bV3a1Jt/LuiMqCQbrOXSUQ3y67BPt84kiyEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DHu+RuOLWrfb3+aDgC16zpRaQJzkviOk1kawT2v4q2HU565aiT0eMumbo9/5Sqgm9S+gDU2wFtY2KGKVUtXhzVdSFuOzo3uAX7BzMdemZDMFlinQqlrixFRyM8Y+tD2earxbhvgsO6XexoIwouNkRNtRZO5A0F/mxfVwlzbgEyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bETZVBSb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XFgB+As0kyrL/HJyy2puHtXaDew/v5EHIu57uVwypuyzjdDlFzxDdfASY7Nyh9XFAwFgLN6/tI7NwagQzmIvZ6Hg/sSmki/laOn/kP+EljmNAMC5K/dwC3vq/AY5VV4Fw140Xqyz+AeUBVoC0GhfLOZEFHTImMivRajcE3Jqtzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LiV5kw5Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bETZVBSb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02BCA1F000E9;
-	Tue, 21 Jul 2026 19:31:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LiV5kw5Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CFBA1F000E9;
+	Tue, 21 Jul 2026 19:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662264;
-	bh=6muS9XVMlzPCjOdxjkxJ/W2b3lQd30Bmq95B/VpuHao=;
+	s=korg; t=1784662267;
+	bh=fMpxVKP1HVQVg9js1Ox8qyrO9HUQ3/pnSWcHs7IDNQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bETZVBSbj0GyYccwIJPXj3myYmwpGxmNz+/VkjA2GPJdyBFFreAdZM884VyTOSvhj
-	 QbjEMmoOkShCsqe26TH2W1Mz+XGUOGWCBtPGV4enpz5QhvrMWyLcMGGoUkcE/w3aWs
-	 fpoQuoLFzZ4HHwDOC6y/0O1hnacejrInb2Eyy4p8=
+	b=LiV5kw5Q/c817lLhgv2/Ayuq2/IGm0CsOHAeMGQXCQJYBZGW/lvQvgXj6/HjloX1C
+	 u5jzqTwH8z7kTVpGJfj9sw7M87ofbWHLA/Hub5XvkExKMCOLgGNRcAq3qg+L898qE5
+	 DJhgVMwCQH+uF0znp74md/95dA7r2oG/B2AcHkPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0380/1276] selftests/bpf: Fix typo in verify_umulti_link_info
-Date: Tue, 21 Jul 2026 17:13:43 +0200
-Message-ID: <20260721152454.608630062@linuxfoundation.org>
+Subject: [PATCH 6.12 0381/1276] selftests/bpf: Initialize operation name before use
+Date: Tue, 21 Jul 2026 17:13:44 +0200
+Message-ID: <20260721152454.631601238@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,36 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit df29003c55115737a8fb4f8a60c6c2bba4c4a484 ]
+[ Upstream commit 55ffbe8a15b1254f44d56952fb425a10e3f15c31 ]
 
-We verify info.uprobe_multi.flags against wrong kprobe-multi flag
-(BPF_F_KPROBE_MULTI_RETURN). It's the same value as the correct
-flag (BPF_F_UPROBE_MULTI_RETURN), so there's not functional change.
+ASAN reports stack-buffer-overflow due to the uninitialized op_name.
 
-Fixes: 147c69307bcf ("selftests/bpf: Add link_info test for uprobe_multi link")
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20260611114230.950379-8-jolsa@kernel.org
+Initialize it to fix the issue.
+
+Fixes: 054b6c7866c7 ("selftests/bpf: Add verifier log tests for BPF_BTF_LOAD command")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+Link: https://lore.kernel.org/r/20260602-tools_build_fix_zero_init_bpf_only-v2-6-c76e5250ea1c@arm.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/fill_link_info.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/bpf/prog_tests/verifier_log.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/fill_link_info.c b/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
-index e59af2aa660166..d6b50f73bae2bd 100644
---- a/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
-+++ b/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
-@@ -455,7 +455,7 @@ verify_umulti_link_info(int fd, bool retprobe, __u64 *offsets,
+diff --git a/tools/testing/selftests/bpf/prog_tests/verifier_log.c b/tools/testing/selftests/bpf/prog_tests/verifier_log.c
+index 8337c6bc5b95b6..abc473c3741f53 100644
+--- a/tools/testing/selftests/bpf/prog_tests/verifier_log.c
++++ b/tools/testing/selftests/bpf/prog_tests/verifier_log.c
+@@ -317,6 +317,7 @@ static void verif_btf_log_subtest(bool bad_btf)
+ 	res = load_btf(&opts, true);
+ 	ASSERT_EQ(res, -ENOSPC, "half_log_fd");
+ 	ASSERT_EQ(strlen(logs.buf), 24, "log_fixed_25");
++	strscpy(op_name, "log_fixed", sizeof(op_name));
+ 	ASSERT_STRNEQ(logs.buf, logs.reference, 24, op_name);
  
- 		ASSERT_EQ(info.uprobe_multi.pid, getpid(), "info.uprobe_multi.pid");
- 		ASSERT_EQ(info.uprobe_multi.count, 3, "info.uprobe_multi.count");
--		ASSERT_EQ(info.uprobe_multi.flags & BPF_F_KPROBE_MULTI_RETURN,
-+		ASSERT_EQ(info.uprobe_multi.flags & BPF_F_UPROBE_MULTI_RETURN,
- 			  retprobe, "info.uprobe_multi.flags.retprobe");
- 		ASSERT_EQ(info.uprobe_multi.path_size, strlen(path) + 1, "info.uprobe_multi.path_size");
- 		ASSERT_STREQ(path_buf, path, "info.uprobe_multi.path");
+ 	/* validate rolling verifier log logic: try all variations of log buf
 -- 
 2.53.0
 
