@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC0343FD1E;
-	Tue, 21 Jul 2026 22:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDA5434E2F;
+	Tue, 21 Jul 2026 22:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672138; cv=none; b=Hf43pljCRTILKBaEfdXBN15RsfwgXZGFzZQlwEyTVCVrU4P+BdH3FLuQhx39u9/KZFg2IxvmZC+zUoIsipnNavJPG0g1v4VsiEkPnVWZ7jaPl+jE6xZN1oMKMXx79rU3PBN75gJLa9iCO0xFNlwEzdJG8SdPupXyW5vjoKmxKP4=
+	t=1784672141; cv=none; b=ClBCqDiEojzNeSJpTztNYRpeS9QsaCz1dGGfn+kTqu+9QiP9QX8B8J5Ii+2YFrTLVMWDiK0+ymcYwW7PWpUAsuDFtZpinNSceumFOUAXh+T0e0xbIuvLfVycIcCm3XY51Mg8meWkWS5pg9qn8p3SLeD+L+nflY6aDpgbqtht0+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672138; c=relaxed/simple;
-	bh=m+kzAbtxkk+JtllfhyMm4Xmh9oSdud8o0+i9LV/unpo=;
+	s=arc-20240116; t=1784672141; c=relaxed/simple;
+	bh=HAa5X0pyJPqqywsFmzO1YyRPb9MX5CRHzlZf128K9tg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SMP5J9JJcNrVQanduJoDPtQx5D+4D+DnhdLATJwlnYidv5EIJk3Odcgx5NkpGLYmbrsb0HYy2GraobUHOeeWliPDUsOMArwlRQLwtFF65oekLpqfDLwnlX3a/erOoD9usBMWhq4IZEN0MYKyCMgnSXZlZDLZDdBoWgpVXxKCuHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PY5HF3+D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WEZVVNOjJD04krRtRVf2+f+lZr0RBOXFX0cMbpbSoZ9wzag/kHBbXeH+wn/dycpP0T0V4eCszxqlwvT46WYe/6+wFm7g+GEX+m5iztHgxNFKLdPfg13RHeTqw8JOYLTJTzzCMQwOxSFJ7ztGQBeCoRxGyD1jIVGxJO/r8SNS/Vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfRPD2qW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PY5HF3+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9385B1F000E9;
-	Tue, 21 Jul 2026 22:15:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfRPD2qW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BF61F000E9;
+	Tue, 21 Jul 2026 22:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672137;
-	bh=B9e5YBSjSpx6Xpz6R57f11FpCxdiBOd6afWAPQYraqE=;
+	s=korg; t=1784672139;
+	bh=4drRA+T0vyYFshy5OkeZYKgIl7QFepOCjJW8FA2abj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PY5HF3+DLI5hpCqqGU56DR/vR54Kf4ZPoFzJXhsPlGbeFnLxe9kOPha84akZ1enL2
-	 m4lss5WngWqKcx6y6LCypPFuUoDfQbo9e0/QeW4fCN3OqafEhSmuQ3Vlgufh+BNMf6
-	 0bWO76/qolD1udcBa5jh+28TVr6NYYVFVcZifMKg=
+	b=nfRPD2qWEyk399OvckHeKHw6FoJA9VNCpItt+trJaYeW9i1j/+oGCITlRSnRzMhXv
+	 zHyi7jcJ4V68++zRpZRZ4DcU038RAJLXiAmHqoodS5ZGgBZzgiholazVVtCcjlTpzw
+	 5WGMtwMEctk/2D34kK0YqzWg+FsIJjtXZWbgjXb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Donald Hunter <donald.hunter@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 494/843] inet: allow ip_valid_fib_dump_req() to be called with RTNL or RCU
-Date: Tue, 21 Jul 2026 17:22:09 +0200
-Message-ID: <20260721152417.146311260@linuxfoundation.org>
+Subject: [PATCH 5.15 512/843] afs: Fix unchecked-length string display in debug statement
+Date: Tue, 21 Jul 2026 17:22:27 +0200
+Message-ID: <20260721152417.549744369@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,145 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 22e36ea9f5d7707ae3d64c497d172f4ef735c353 ]
+[ Upstream commit 903d37c97228258da71e092f8b4ab260ce81497d ]
 
-Add a new field into struct fib_dump_filter, to let callers
-tell if they use RTNL locking or RCU.
+Fix afs_extract_vlserver_list() to limit the length of the displayed
+string in a debug statement().
 
-This is used in the following patch, when inet_dump_fib()
-no longer holds RTNL.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 9facb861dc6b ("ipv6: fib6: fix NULL deref in fib6_walk_continue() on multi-batch dump")
+Fixes: 0a5143f2f89c ("afs: Implement VL server rotation")
+Closes: https://sashiko.dev/#/patchset/20260618074903.2374756-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260622090856.2746629-22-dhowells@redhat.com
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_fib.h    |  1 +
- net/ipv4/fib_frontend.c | 15 +++++++++++----
- net/ipv4/ipmr.c         |  4 +++-
- net/ipv6/ip6_fib.c      |  7 +++++--
- net/ipv6/ip6mr.c        |  4 +++-
- net/mpls/af_mpls.c      |  4 +++-
- 6 files changed, 26 insertions(+), 9 deletions(-)
+ fs/afs/vl_list.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/ip_fib.h b/include/net/ip_fib.h
-index 718b9799d77d78..9bfb6c59a75d19 100644
---- a/include/net/ip_fib.h
-+++ b/include/net/ip_fib.h
-@@ -261,6 +261,7 @@ struct fib_dump_filter {
- 	bool			filter_set;
- 	bool			dump_routes;
- 	bool			dump_exceptions;
-+	bool			rtnl_held;
- 	unsigned char		protocol;
- 	unsigned char		rt_type;
- 	unsigned int		flags;
-diff --git a/net/ipv4/fib_frontend.c b/net/ipv4/fib_frontend.c
-index ced6bd48bb4168..09814e2acc03a1 100644
---- a/net/ipv4/fib_frontend.c
-+++ b/net/ipv4/fib_frontend.c
-@@ -918,7 +918,8 @@ int ip_valid_fib_dump_req(struct net *net, const struct nlmsghdr *nlh,
- 	struct rtmsg *rtm;
- 	int err, i;
+diff --git a/fs/afs/vl_list.c b/fs/afs/vl_list.c
+index 631ee7e0629dc1..2761ac3ab0076f 100644
+--- a/fs/afs/vl_list.c
++++ b/fs/afs/vl_list.c
+@@ -192,6 +192,8 @@ struct afs_vlserver_list *afs_extract_vlserver_list(struct afs_cell *cell,
  
--	ASSERT_RTNL();
-+	if (filter->rtnl_held)
-+		ASSERT_RTNL();
+ 	b += sizeof(*hdr);
+ 	while (end - b >= sizeof(bs)) {
++		int nlen;
++
+ 		bs.name_len	= afs_extract_le16(&b);
+ 		bs.priority	= afs_extract_le16(&b);
+ 		bs.weight	= afs_extract_le16(&b);
+@@ -201,10 +203,12 @@ struct afs_vlserver_list *afs_extract_vlserver_list(struct afs_cell *cell,
+ 		bs.protocol	= *b++;
+ 		bs.nr_addrs	= *b++;
  
- 	if (nlh->nlmsg_len < nlmsg_msg_size(sizeof(*rtm))) {
- 		NL_SET_ERR_MSG(extack, "Invalid header for FIB dump request");
-@@ -963,7 +964,10 @@ int ip_valid_fib_dump_req(struct net *net, const struct nlmsghdr *nlh,
++		nlen = min3(bs.name_len, end - b, 255);
++
+ 		_debug("extract %u %u %u %u %u %u %*.*s",
+ 		       bs.name_len, bs.priority, bs.weight,
+ 		       bs.port, bs.protocol, bs.nr_addrs,
+-		       bs.name_len, bs.name_len, b);
++		       bs.name_len, nlen, b);
+ 
+ 		if (end - b < bs.name_len)
  			break;
- 		case RTA_OIF:
- 			ifindex = nla_get_u32(tb[i]);
--			filter->dev = __dev_get_by_index(net, ifindex);
-+			if (filter->rtnl_held)
-+				filter->dev = __dev_get_by_index(net, ifindex);
-+			else
-+				filter->dev = dev_get_by_index_rcu(net, ifindex);
- 			if (!filter->dev)
- 				return -ENODEV;
- 			break;
-@@ -985,8 +989,11 @@ EXPORT_SYMBOL_GPL(ip_valid_fib_dump_req);
- 
- static int inet_dump_fib(struct sk_buff *skb, struct netlink_callback *cb)
- {
--	struct fib_dump_filter filter = { .dump_routes = true,
--					  .dump_exceptions = true };
-+	struct fib_dump_filter filter = {
-+		.dump_routes = true,
-+		.dump_exceptions = true,
-+		.rtnl_held = true,
-+	};
- 	const struct nlmsghdr *nlh = cb->nlh;
- 	struct net *net = sock_net(skb->sk);
- 	unsigned int h, s_h;
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index c9a633559258ce..5e582eab1ea190 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -2576,7 +2576,9 @@ static int ipmr_rtm_getroute(struct sk_buff *in_skb, struct nlmsghdr *nlh,
- 
- static int ipmr_rtm_dumproute(struct sk_buff *skb, struct netlink_callback *cb)
- {
--	struct fib_dump_filter filter = {};
-+	struct fib_dump_filter filter = {
-+		.rtnl_held = true,
-+	};
- 	int err;
- 
- 	if (cb->strict_check) {
-diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
-index 7d09193c144453..ba8fc26b86142f 100644
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -617,8 +617,11 @@ static int fib6_dump_table(struct fib6_table *table, struct sk_buff *skb,
- 
- static int inet6_dump_fib(struct sk_buff *skb, struct netlink_callback *cb)
- {
--	struct rt6_rtnl_dump_arg arg = { .filter.dump_exceptions = true,
--					 .filter.dump_routes = true };
-+	struct rt6_rtnl_dump_arg arg = {
-+		.filter.dump_exceptions = true,
-+		.filter.dump_routes = true,
-+		.filter.rtnl_held = true,
-+	};
- 	const struct nlmsghdr *nlh = cb->nlh;
- 	struct net *net = sock_net(skb->sk);
- 	unsigned int h, s_h;
-diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
-index ee094645c7ceae..909a2bc2a020d8 100644
---- a/net/ipv6/ip6mr.c
-+++ b/net/ipv6/ip6mr.c
-@@ -2490,7 +2490,9 @@ static void mrt6msg_netlink_event(struct mr_table *mrt, struct sk_buff *pkt)
- static int ip6mr_rtm_dumproute(struct sk_buff *skb, struct netlink_callback *cb)
- {
- 	const struct nlmsghdr *nlh = cb->nlh;
--	struct fib_dump_filter filter = {};
-+	struct fib_dump_filter filter = {
-+		.rtnl_held = true,
-+	};
- 	int err;
- 
- 	if (cb->strict_check) {
-diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
-index 2de9fb785c394b..b111778bcc3547 100644
---- a/net/mpls/af_mpls.c
-+++ b/net/mpls/af_mpls.c
-@@ -2187,7 +2187,9 @@ static int mpls_dump_routes(struct sk_buff *skb, struct netlink_callback *cb)
- 	const struct nlmsghdr *nlh = cb->nlh;
- 	struct net *net = sock_net(skb->sk);
- 	struct mpls_route __rcu **platform_label;
--	struct fib_dump_filter filter = {};
-+	struct fib_dump_filter filter = {
-+		.rtnl_held = true,
-+	};
- 	unsigned int flags = NLM_F_MULTI;
- 	size_t platform_labels;
- 	unsigned int index;
 -- 
 2.53.0
 
