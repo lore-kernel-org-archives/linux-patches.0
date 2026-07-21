@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA78439908;
-	Tue, 21 Jul 2026 21:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D027432E97;
+	Tue, 21 Jul 2026 21:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668249; cv=none; b=qohAMMb0FPaXCMayBkWXFjOQqYn3un+Q4+u//HJcfaiUT7h+r2CyJ0L0o5mT6t5/H4z4i5QjzIdsQ6RbEFfMNnhVSLSEIZg44dXOvHNhx2lw/jQJyh0tXYd15osKKrUIuRTKUjsQUdrCmvZcfo0l++d+gtAnEIsPNy8G8awE3xc=
+	t=1784668252; cv=none; b=S04cbUXk1EXMk/uxgHia4H7p+vQu8H2R2bXdAyQTL7y1N95+aWP+2VGNI50j2yIq0f7EC3QoL+GHyX7fRgQNSVM6H4FtZvGSlpNzDUtXs/POCPtvgvCoyBqJMnPza5dby2y3Qt7IbVkTsyA4tbjOnSXYu4x4R3xSUtdZ5YAuNig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668249; c=relaxed/simple;
-	bh=prfo4ysZOr+Efr4zKDq7839RGBw3hRmCgkvS9DikH+A=;
+	s=arc-20240116; t=1784668252; c=relaxed/simple;
+	bh=whR9t2zYTTzaQdq1djPIt/zJQmWUmuSo+mpnlwRUvr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pL/9aK8x5Ee5A3otgKjl35b6dBkg/ieMA2E56hQCzlCK3QXhmoSCDFYQxkY+/nKtvxAWTDIPz/oGPIAthNpSFsCsJHEBbY5x3c2VTOg0YoY/U0H2MMeWXV3SI7F3hfknjMPdk8OLyMDZ0A0FazvCifQgHy50n65fZVcSTmWJVi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mE+fjwfd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gOzVH42FvbUlEDcvLO1p22mbX3IGdXsQsQpcKEy/IhbphXDi26NMQKwBlaD6K3X2z4m0cInPVAVqhaP7ygNl0PRigwMz/jgTtvIXY7//oxbT8VYeux5rAoTHAcmOrFC/msRhMAOkbWynTK4ead+Lm8i8FqsLyFOGzS7Tn4mvB+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krfyVEg9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mE+fjwfd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B28CF1F000E9;
-	Tue, 21 Jul 2026 21:10:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krfyVEg9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6BF1F000E9;
+	Tue, 21 Jul 2026 21:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668248;
-	bh=XUrL7JPYRKTMlnzQJQGKw/X7S7AGh9xyAbo0XONXgSs=;
+	s=korg; t=1784668250;
+	bh=JOjBWfEF5VTpSNCYEFHXiFwpJZt9gjxkFd20liaRTHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mE+fjwfdsklG4QYa5DIGDanuuxxBB7dXqfAoIIF9QoJGmwDs/AvfxGxDRgmaQeRfV
-	 XZI3tviiZIKd4eEWuepSDv9wL0xePGQFE8wluF/5eAF6fBaeDN/gvE4GHyS2uSdLNK
-	 +IFk2s+hrN+5+mQbMONhWHHyPabty1xzQ/42y4PY=
+	b=krfyVEg9flke5WkJobGACAG8UXYds2KThGSLUiXEmgdlXscJvp9O54PmXuFFwPqra
+	 Piv5koCNNmCefGLadMIJbHNzZ1yNMNGXmQr65rfxZ33IVdBXQoWGUQ20SlXdGLfUbK
+	 cILTDhgmIDfEZjZU6Xz14x1QJ8+LnsK3nAvgMfJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.1 0060/1067] iio: event: Fix event FIFO reset race
-Date: Tue, 21 Jul 2026 17:11:01 +0200
-Message-ID: <20260721152425.910790806@linuxfoundation.org>
+	Jonas Jelonek <jelonek.jonas@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0051/1067] MIPS: smp: report dying CPU to RCU in stop_this_cpu()
+Date: Tue, 21 Jul 2026 17:10:52 +0200
+Message-ID: <20260721152425.706368708@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -46,80 +44,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lars-Peter Clausen <lars@metafoo.de>
+From: Jonas Jelonek <jelonek.jonas@gmail.com>
 
-commit af791d295737ea6b6ff2c8d8488462a49c14af01 upstream.
+commit 9f3f3bdc6d9dac1a5a8262ee7ad0f2ff1527a7e7 upstream.
 
-`iio_event_getfd()` creates the event file descriptor with
-`anon_inode_getfd()`, which allocates a new fd, creates the anonymous
-file and installs it in the process fd table before returning to the
-caller.
+smp_send_stop() parks all secondary CPUs in stop_this_cpu(). The function
+marks the CPU offline for the scheduler via set_cpu_online(false) but
+never informs RCU, so RCU keeps expecting a quiescent state from CPUs
+that are now spinning forever with interrupts disabled.
 
-The IIO code resets the event FIFO after `anon_inode_getfd()` has returned,
-but before `IIO_GET_EVENT_FD_IOCTL` has copied the fd number to userspace.
-But since fd tables are shared between threads, another thread can guess
-the newly allocated fd number and issue a `read()` on it as soon as the fd
-has been installed.
+As long as nothing waits for an RCU grace period after smp_send_stop()
+this is harmless, which is why it went unnoticed. Since commit
+91840be8f710 ("irq_work: Fix use-after-free in irq_work_single() on PREEMPT_RT")
+however, irq_work_sync() calls synchronize_rcu() on architectures without
+an irq_work self-IPI, i.e. where arch_irq_work_has_interrupt() returns
+false. That is the asm-generic default used by MIPS. Any irq_work_sync()
+issued in the reboot/shutdown path after smp_send_stop() then blocks on
+a grace period that can never complete, hanging the reboot:
 
-This means the `kfifo_to_user()` in `iio_event_chrdev_read()` can run in
-parallel with the `kfifo_reset_out()` in `iio_event_getfd()`.
+  WARNING: CPU: 0 PID: 15 at kernel/irq_work.c:144 irq_work_queue_on
+  ...
+  rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
+  rcu: Offline CPU 1 blocking current GP.
+  rcu: Offline CPU 2 blocking current GP.
+  rcu: Offline CPU 3 blocking current GP.
 
-The kfifo documentation says that `kfifo_reset_out()` is only safe when it
-is called from the reader thread and there is only one concurrent reader.
-Otherwise it is dangerous and must be handled in the same way as
-`kfifo_reset()`.
+This issue was noticed on several Realtek MIPS switch SoCs (MIPS
+interAptiv) and came up during kernel bump downstream in OpenWrt from
+6.18.33 to 6.18.34, after the backport of the patch to the 6.18 stable
+branch. The patch also has been backported all the way back to 6.1.
 
-If that happens, `kfifo_to_user()` can advance the FIFO `out` index based
-on state from before the reset, after the reset has already moved the `out`
-index to the current `in` index. That can leave the FIFO with an `out`
-index past the `in` index. A later `read()` can then see an underflowed
-FIFO length and copy more data than the event FIFO buffer contains. This
-can result in an out-of-bounds read and leak adjacent kernel memory to
-userspace.
+Call rcu_report_dead() once interrupts are disabled, mirroring the
+generic CPU-hotplug offline path, so RCU stops waiting on the parked CPUs
+and grace periods can still complete. MIPS shuts down all CPUs here
+without going through the CPU-hotplug mechanism, so this report is not
+otherwise issued. Reporting a dying CPU to RCU outside the regular hotplug
+offline path is not unprecedented: arm64 does the same in cpu_die_early().
+There it is an exception for a CPU that was coming online and is aborting
+bringup, rather than the default shutdown action as on MIPS.
 
-Move the FIFO reset before `anon_inode_getfd()`. At that point the event fd is
-marked busy, but the new fd has not been installed yet, so userspace cannot
-access it while the FIFO is reset.
+Note: this differs from the upstream commit in that it calls
+rcu_report_dead(smp_processor_id()) instead of rcutree_report_cpu_dead().
+The latter, along with the rcutree_report_cpu_dead() name, was introduced
+by commit 448e9f34d91d ("rcu: Standardize explicit CPU-hotplug calls")
+in v6.7; on this kernel the equivalent function is still named
+rcu_report_dead() and takes an explicit CPU argument.
 
-Fixes: b91accafbb10 ("iio:event: Fix and cleanup locking")
-Reported-by: Codex:gpt-5.5
-Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 91840be8f710 ("irq_work: Fix use-after-free in irq_work_single() on PREEMPT_RT")
+Signed-off-by: Jonas Jelonek <jelonek.jonas@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/industrialio-event.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/mips/kernel/smp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iio/industrialio-event.c
-+++ b/drivers/iio/industrialio-event.c
-@@ -207,6 +207,8 @@ static int iio_event_getfd(struct iio_de
- 		goto unlock;
- 	}
+diff --git a/arch/mips/kernel/smp.c b/arch/mips/kernel/smp.c
+index 002c91fcb842ec..06030533bcfacd 100644
+--- a/arch/mips/kernel/smp.c
++++ b/arch/mips/kernel/smp.c
+@@ -19,6 +19,7 @@
+ #include <linux/sched/mm.h>
+ #include <linux/cpumask.h>
+ #include <linux/cpu.h>
++#include <linux/rcupdate.h>
+ #include <linux/err.h>
+ #include <linux/ftrace.h>
+ #include <linux/irqdomain.h>
+@@ -392,6 +393,7 @@ static void stop_this_cpu(void *dummy)
+ 	set_cpu_online(smp_processor_id(), false);
+ 	calculate_cpu_foreign_map();
+ 	local_irq_disable();
++	rcu_report_dead(smp_processor_id());
+ 	while (1);
+ }
  
-+	kfifo_reset_out(&ev_int->det_events);
-+
- 	iio_device_get(indio_dev);
- 
- 	fd = anon_inode_getfd("iio:event", &iio_event_chrdev_fileops,
-@@ -214,10 +216,7 @@ static int iio_event_getfd(struct iio_de
- 	if (fd < 0) {
- 		clear_bit(IIO_BUSY_BIT_POS, &ev_int->flags);
- 		iio_device_put(indio_dev);
--	} else {
--		kfifo_reset_out(&ev_int->det_events);
- 	}
--
- unlock:
- 	mutex_unlock(&indio_dev->mlock);
- 	return fd;
+-- 
+2.53.0
+
 
 
