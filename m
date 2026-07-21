@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98B0224B05;
-	Tue, 21 Jul 2026 22:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE0E3C10AB;
+	Tue, 21 Jul 2026 22:46:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673991; cv=none; b=AJEGGf+jkTJeK9roola2mSiunXXVoABfLlFdBIlI3Wd2FYFuu47hnDbEMJHuoqEkASl2HxyhVa5Heb9YDjavcR6XafSPUhDb974Z8miK5fkoQ85t9Ec+wWdHGJvc/Kh44jMheeW6Lvt5ftf2w/PyCex16gJULRhxaDI6he8b9GI=
+	t=1784673994; cv=none; b=sEp7h2JxG89Fqse1eT5tRH4Oa8x9bIundSFpWs9hxCWyodqkIfqmu5u2q/5cB0/JA2MdR9/bpzGiyTaljDxHgTpWlmFWQLN4H1TXD0HeJNJy3q0JsmvOz/JjkUuLkydG59aoHdWTneclBv36tYRMBf9kH17iGth/qfGqPTuUusA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673991; c=relaxed/simple;
-	bh=MMydbikZawMBFCn5fG0ayl8FP2qOtxPgMdZ1Dej3O9A=;
+	s=arc-20240116; t=1784673994; c=relaxed/simple;
+	bh=aATNWJupBOuUSvrmKxdVfc8q6vDmIEaGlxim+SPA13M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VtdpIiIMk/L1GOYMdcC9iSHEHVADbYDveWtP1bgGRYpnqCv/ZGDngTecZXgH7m6tbzrRm3QpuSCQX+w+az/8Kio+5f7bLw97YhBkmkIKs3q/atwJDOETu0fJCLSjTfPcuJzQO8nAWwVaQ4ubPd0X0fs+DJ5wWfQgAcMVsRZudWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PPOIYcHy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HuhT6onKrfD4UOSpVObZqSPioadXyhHHuiOk4FlzR1zR1l9p2yvMgWopdeM8ZqBE31uOcrx2zOzuNqzqde980GItvsuAg143/YoEZPA8E8FyeoE5oy301M8MQdGEVaikvoQEWSTaz1kKVlBelFxG6yCH/EWeJbVX0hFpZifSFos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAppZPew; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PPOIYcHy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA6C1F000E9;
-	Tue, 21 Jul 2026 22:46:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAppZPew"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A171F000E9;
+	Tue, 21 Jul 2026 22:46:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673990;
-	bh=rSY9rmYdHjKG/ah0vUGA5qvorYDd038oNPqjjMBMrso=;
+	s=korg; t=1784673993;
+	bh=6ThVrZEaRZMaEViB4Yq2vegmDPyLFrcrp1laXnd4iP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PPOIYcHyCTu1Ahe3iUkK6aMM3WVwirxjrhhLLivOwl1ttrQicG9moWzzdGSdW02Kg
-	 4rbz4UbnyZuhg9ZyD4XZG6oXiG7YMbAheZ6HFB8PHLiSkrTDhCdp+c5JCFvthilVLJ
-	 egkCTqKs1Zb0Fi+m4TUr37oYnVG2H8wqCxuOsEzg=
+	b=lAppZPewa9Px9c9yz4QbBzZllCu/zj9ONSb/DGc04zm+iEZjqi2OzLG+/5XlzhkUg
+	 D6KvLBiMzv2ceg5G0mkRHgnV4/xFMZi/aZhypvs270C4+qxJ2kUGcphU9s9AFGPskh
+	 r9OavailiZSDCPpdgn9odquV5Pz3WnOW9xNfX5eY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 373/699] spi: sh-msiof: abort transfers when reset times out
-Date: Tue, 21 Jul 2026 17:22:12 +0200
-Message-ID: <20260721152404.108369130@linuxfoundation.org>
+Subject: [PATCH 5.10 374/699] gpio: mvebu: fail probe if gpiochip registration fails
+Date: Tue, 21 Jul 2026 17:22:13 +0200
+Message-ID: <20260721152404.129902669@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -53,60 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 6dbaa4d288432c697cea47028480481b8b29bd6a ]
+[ Upstream commit 479e91fc92416a4d54d2b3150aa1e4550d9cc759 ]
 
-sh_msiof_spi_reset_regs() asserts TX/RX reset and polls until the reset
-bits clear, but the poll result is ignored. sh_msiof_transfer_one() can
-therefore continue programming a transfer after the controller did not
-leave reset.
+mvebu_gpio_probe() registers the GPIO chip with
+devm_gpiochip_add_data() but ignores the return value. If registration
+fails, probe continues and leaves later code operating on a GPIO chip
+that was never published to gpiolib.
 
-Return the reset poll result from the helper and abort the transfer on
-timeout, matching the existing transfer path's error-return style.
+Return the registration error so the device fails probe cleanly.
 
-Fixes: fedd6940682a ("spi: sh-msiof: Add reset of registers before starting transfer")
+Fixes: fefe7b092345 ("gpio: introduce gpio-mvebu driver for Marvell SoCs")
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260623135834.55442-1-pengpeng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20260624131645.86884-1-pengpeng@iscas.ac.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sh-msiof.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpio/gpio-mvebu.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
-index f1ca8b5356bcfd..6c026b193548a6 100644
---- a/drivers/spi/spi-sh-msiof.c
-+++ b/drivers/spi/spi-sh-msiof.c
-@@ -243,7 +243,7 @@ static irqreturn_t sh_msiof_spi_irq(int irq, void *data)
- 	return IRQ_HANDLED;
- }
+diff --git a/drivers/gpio/gpio-mvebu.c b/drivers/gpio/gpio-mvebu.c
+index 2ab34a8e6273df..0f8b042d5369f2 100644
+--- a/drivers/gpio/gpio-mvebu.c
++++ b/drivers/gpio/gpio-mvebu.c
+@@ -1193,7 +1193,10 @@ static int mvebu_gpio_probe(struct platform_device *pdev)
+ 		BUG();
+ 	}
  
--static void sh_msiof_spi_reset_regs(struct sh_msiof_spi_priv *p)
-+static int sh_msiof_spi_reset_regs(struct sh_msiof_spi_priv *p)
- {
- 	u32 mask = SICTR_TXRST | SICTR_RXRST;
- 	u32 data;
-@@ -252,8 +252,8 @@ static void sh_msiof_spi_reset_regs(struct sh_msiof_spi_priv *p)
- 	data |= mask;
- 	sh_msiof_write(p, SICTR, data);
+-	devm_gpiochip_add_data(&pdev->dev, &mvchip->chip, mvchip);
++	err = devm_gpiochip_add_data(&pdev->dev, &mvchip->chip, mvchip);
++	if (err)
++		return dev_err_probe(&pdev->dev, err,
++				     "failed to register gpiochip\n");
  
--	readl_poll_timeout_atomic(p->mapbase + SICTR, data, !(data & mask), 1,
--				  100);
-+	return readl_poll_timeout_atomic(p->mapbase + SICTR, data,
-+					 !(data & mask), 1, 100);
- }
- 
- static const u32 sh_msiof_spi_div_array[] = {
-@@ -923,7 +923,9 @@ static int sh_msiof_transfer_one(struct spi_controller *ctlr,
- 	int ret;
- 
- 	/* reset registers */
--	sh_msiof_spi_reset_regs(p);
-+	ret = sh_msiof_spi_reset_regs(p);
-+	if (ret)
-+		return ret;
- 
- 	/* setup clocks (clock already enabled in chipselect()) */
- 	if (!spi_controller_is_slave(p->ctlr))
+ 	/* Some MVEBU SoCs have simple PWM support for GPIO lines */
+ 	if (IS_ENABLED(CONFIG_PWM)) {
 -- 
 2.53.0
 
