@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06982399015;
-	Tue, 21 Jul 2026 22:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965F643F08A;
+	Tue, 21 Jul 2026 22:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674433; cv=none; b=IULDt9iq1A7Zaup3Pv1qJyczkbBl6ZYVaXUjEV/S08QqoIT9Na+F7oYqBTLLXj1vcYrusITpivWGD2N5EnPwqEfqROT1SwDpuRwAj//3jk8siCwgzn4zSpGMFJrsIY5qAidXtD/JzhD6PIJxvhwo/QVb/mUJN8P7ViHbLd2yMf4=
+	t=1784674435; cv=none; b=Ommj2ofifYkDBGh2hDbpAkc2gRfZeUisLpqEYvgjui5KWCnKwuqsOyqmiHZShNxBv5z9o38lKiNqqioOcAZ2884w+fB41V+drt1d3GH+szEd6VZlUDhDpymyjTShlL9LsZ5C/j9tgTvivtDEs1cUsvqmd85udY4hACBBeBELlXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674433; c=relaxed/simple;
-	bh=LWF0CCnJUj5mN25n+nETCgRHb2AzgZ6WgKAvVAd5hRE=;
+	s=arc-20240116; t=1784674435; c=relaxed/simple;
+	bh=iQEJtVoqYYuQDVHhKI0EpKTBNzO8dlzCzjlcTAowmns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NKfbTZ+P5pVHQiNbjn4WarVg8ZS4luI0fk+tOAMvQZi0VwcFJe/BMJM3hCPM7x7JWe+i2O7CkYvu4u7BB5AUkv6WhsJxV+yGTjn6ThU3adbl+w+Sg93bO0xQERc1G9i3BFTvC01LYxhhn6RkgtCFzHq6cQfhH+D1Ez6BEcPqERQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gx/s3aqg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GaPIvIwV14Yd6DjwpIAcjedBnRmH5X53ZZ5RzVXjjjNc0LFU0obhc3hLBWDIvUuJyGYElN++Q5a8ACw2YSYSPY0JiPP63/r7fhaWYmOsVFm5d8vAi2yG71suHDe2Bh3YurVJe5WOkf1JxxGli5uD5Gc1UkC5lERqsPII09BC4y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5RH9kUW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gx/s3aqg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63A721F00A3A;
-	Tue, 21 Jul 2026 22:53:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5RH9kUW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081EF1F00A3A;
+	Tue, 21 Jul 2026 22:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674431;
-	bh=6e5VwdarFYM4SVGHfwE+NpCTGbRkhbLFdTq4pRH2AU4=;
+	s=korg; t=1784674434;
+	bh=UMSLdTjbEtDn4Ieo03f9bhGbxTAYJFRT8PHy+smdk7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gx/s3aqgK1C86Vi3TchoaZLkpifQS6QV4T0S/7K9EA0pR6MHKR/FWQn+qWiBNH44w
-	 MmDwLTc1MdUWAhuMDoS0qNjwMQ+ypQxudn5KpiDr+zMLAkR9HtLNLoSFRNTyAyM3pM
-	 J0CmcqZgvnf4XF/GsjUx7mbO8Y3KL2/0Rgxv9mNc=
+	b=x5RH9kUWsGuVACC+9KOuOVj+8y+BTLSzcTjPIiXlsKcEEMFtgguz470pmddTwwRhI
+	 0LtWwAWDUwtzwi7bUdcq/x8gQINMKbyjdjD5lfTx3RToAN+O/neGFHcUVtMe+7ukmu
+	 zGlmQ/5q44LVnc8nzqvdjr/GZMbvRQ2iGEm0s3g0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Shivam Kumar <kumar.shivam43666@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 537/699] nvmet-tcp: check INIT_FAILED before nvmet_req_uninit in digest error path
-Date: Tue, 21 Jul 2026 17:24:56 +0200
-Message-ID: <20260721152407.812011909@linuxfoundation.org>
+Subject: [PATCH 5.10 538/699] batman-adv: retrieve ethhdr after potential skb realloc on RX
+Date: Tue, 21 Jul 2026 17:24:57 +0200
+Message-ID: <20260721152407.835679630@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,48 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivam Kumar <kumar.shivam43666@gmail.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit 4606467a75cfc16721937272ed29462a750b60c8 upstream.
+commit 035e1fed892d3d06002a73ff73668f618a514644 upstream.
 
-In nvmet_tcp_try_recv_ddgst(), when a data digest mismatch is detected,
-nvmet_req_uninit() is called unconditionally. However, if the command
-arrived via the nvmet_tcp_handle_req_failure() path, nvmet_req_init()
-had returned false and percpu_ref_tryget_live() was never executed. The
-unconditional percpu_ref_put() inside nvmet_req_uninit() then causes a
-refcount underflow, leading to a WARNING in
-percpu_ref_switch_to_atomic_rcu, a use-after-free diagnostic, and
-eventually a permanent workqueue deadlock.
+pskb_may_pull() in batadv_interface_rx() could reallocate the buffer behind
+the skb. Variables which were pointing to the old buffer need to be
+reassigned to avoid an use-after-free.
 
-Check cmd->flags & NVMET_TCP_F_INIT_FAILED before calling
-nvmet_req_uninit(), matching the existing pattern in
-nvmet_tcp_execute_request().
+This was done correctly for the VLAN header but missed for the ethernet
+header which is later used for the TT and AP isolation handling.
 
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Shivam Kumar <kumar.shivam43666@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-[shivam: inlined nvmet_tcp_finish_cmd() at the fix site for 5.10.y]
-Signed-off-by: Shivam Kumar <kumar.shivam43666@gmail.com>
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
+Fixes: c78296665c3d ("batman-adv: Check skb size before using encapsulated ETH+VLAN header")
+[ move from mesh- to soft-interface.c ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/batman-adv/soft-interface.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index 4bd82e9b113ff5..3d9a830950ef26 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -1227,7 +1227,9 @@ static int nvmet_tcp_try_recv_ddgst(struct nvmet_tcp_queue *queue)
- 			queue->idx, cmd->req.cmd->common.command_id,
- 			queue->pdu.cmd.hdr.type, le32_to_cpu(cmd->recv_ddgst),
- 			le32_to_cpu(cmd->exp_ddgst));
--		nvmet_tcp_finish_cmd(cmd);
-+		if (!(cmd->flags & NVMET_TCP_F_INIT_FAILED))
-+			nvmet_req_uninit(&cmd->req);
-+		nvmet_tcp_free_cmd_buffers(cmd);
- 		nvmet_tcp_fatal_error(queue);
- 		ret = -EPROTO;
- 		goto out;
+diff --git a/net/batman-adv/soft-interface.c b/net/batman-adv/soft-interface.c
+index c8c62b0cd54c76..8b4a8e80c0a320 100644
+--- a/net/batman-adv/soft-interface.c
++++ b/net/batman-adv/soft-interface.c
+@@ -454,6 +454,7 @@ void batadv_interface_rx(struct net_device *soft_iface,
+ 		if (!pskb_may_pull(skb, VLAN_ETH_HLEN))
+ 			goto dropped;
+ 
++		ethhdr = eth_hdr(skb);
+ 		vhdr = skb_vlan_eth_hdr(skb);
+ 
+ 		/* drop batman-in-batman packets to prevent loops */
 -- 
 2.53.0
 
