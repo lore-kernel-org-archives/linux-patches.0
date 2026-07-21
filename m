@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF193B9950;
-	Tue, 21 Jul 2026 21:14:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411A33C8716;
+	Tue, 21 Jul 2026 21:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668469; cv=none; b=MDmhJmmnijH0P11tpvN/LbR16oldhu4RHpCGTaRInCUpora5mgok9UDS3EfBfJI5ZT1IKPOLMD3He10/Sp/R5zJvjui2C5+YVl5b58nrJ/sytucKEMmvn7QKylDZjcsxvfkaUYoJLH2HJ124ZxRrZ1mA51J61JaQVh6Y8kmg/cc=
+	t=1784668474; cv=none; b=gS1fU2A44qGf0/R78bd2K/w7L3498Skox/UiFie/dqGGe/n3POIJMjcnfffXpucIx25Ir6aJDVpAOo4upxhuZGWoiIEAm4MhQaoAyw9rDm8HYahin3ncBhhVLPF5rzsalh9b6dWYliJzgMWchL5LA5DSx0k8fkwTMsC4jAB77zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668469; c=relaxed/simple;
-	bh=H0qM2FjFmpYOusEJ2nDlW3FTk1N2IU8dwKNPJV1JnO8=;
+	s=arc-20240116; t=1784668474; c=relaxed/simple;
+	bh=IifNg57dsNau+SfVCfF4xL3/wfLWINO51hXQ6HfiyDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HDemoeQyU8ZLeUHIEzXHmOmJL8CaocbCzzzoWoA0IqrlMQcCKb6kSeVa4u788/fQavQoDKWspIcj2FwluBSDvieYO1Fn0FAD1eG4E0fCSTN1NmbBmEzojj6kzLpZwiUdsEoiOvhrAHbIS6CG0fgg4qZNJwXswCPhoctSdyfAn3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMtkA41y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lAtWDS0QlcoBFT3FRJW/lMVG0uzYE+YWETOmDodSHQjHZJD4vKAwDoSUEO11jOdYkTMI1uc+JLEFIWZ6rsI5bE/MQAvvfiUC1qrFYzRsMR4aqRGX3vEeJi9ul2T9f5O19MRls3wFzteMrWStkRttmkgXjAG9jv4/mVRGKM/Bd3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClX5Mb8j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMtkA41y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67BAA1F000E9;
-	Tue, 21 Jul 2026 21:14:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClX5Mb8j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77801F00A3A;
+	Tue, 21 Jul 2026 21:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668467;
-	bh=zblOxA8llqzctEbfCzlpFw/ko4mM2a4qELnbiyk2N6Q=;
+	s=korg; t=1784668473;
+	bh=52uXBBekyYdaijVt4I2L8r9CXL2+ixnbZ0TV+to0MPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oMtkA41ycBmpBTfxvvNpFl/NvI/tZwWadjwH2L8xCc0zQS4+FCJMAS0JonTjUsJAz
-	 KLY6j/NP6Q8MOW5mSKcBhF9LFx0Jf4vauvZTn0yLARqPh2BfySODa+MXF1leU58M4A
-	 53tQKuxuYbAh4/zpuirfSHoRdSnTN6t82U2Ma2Sk=
+	b=ClX5Mb8jWkoVqwItKYqiQbSoVCJxHVFCr7siQ81Igy4k4Wp9arIC/OQJ6xDIfVwo1
+	 Yr8P0EKI87OVAXMmpveH0IjnKouC63j2LJph3XE+UCHhPY84DP7Y12E0WAYzUMLr2B
+	 faujw2f/WfazV/q2vpZWgfD+4bdsMZbR6880V4HQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 0185/1067] USB: serial: digi_acceleport: fix write buffer corruption
-Date: Tue, 21 Jul 2026 17:13:06 +0200
-Message-ID: <20260721152428.733098846@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Xu Rao <raoxu@uniontech.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.1 0187/1067] USB: usb-storage: ene_ub6250: restore media-ready check
+Date: Tue, 21 Jul 2026 17:13:08 +0200
+Message-ID: <20260721152428.778440177@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -49,74 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 24ca1fea8f2753bf33e1d458ec1ae5d9b7796a65 upstream.
+commit 5fc3f333c001f1e308bbcdeecdec0d054d24338b upstream.
 
-The digi_write_inb_command() is supposed to wait for the write urb to
-become available or return an error, but instead it updates the transfer
-buffer and tries to resubmit the urb on timeout.
+Commit 1892bf90677a ("USB: usb-storage: Fix use of bitfields for
+hardware data in ene_ub6250.c") converted the media status fields from
+bitfields to bit masks.
 
-To make things worse, for commands like break control where no timeout
-is used, the driver would corrupt the urb immediately due to a broken
-jiffies comparison (on 32-bit machines this takes five minutes of uptime
-to trigger due to INITIAL_JIFFIES).
+The original ene_transport() test called ene_init() only when neither
+media type was ready:
 
-Fix this by adding the missing return on timeout and waiting
-indefinitely when no timeout has been specified as intended.
+        !(sd_ready || ms_ready)
 
-This issue was (sort of) flagged by Sashiko when reviewing an unrelated
-change to the driver.
+The converted test became:
 
-Link: https://sashiko.dev/#/patchset/20260610132232.356139-1-johan%40kernel.org?part=11
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+        !sd_ready || ms_ready
+
+This is not equivalent. Restore the original semantics by testing that
+both ready bits are clear before calling ene_init().
+
+Fixes: 1892bf90677a ("USB: usb-storage: Fix use of bitfields for hardware data in ene_ub6250.c")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/F42641386E32404F+20260626070607.4119527-1-raoxu@uniontech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/digi_acceleport.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/usb/storage/ene_ub6250.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/serial/digi_acceleport.c
-+++ b/drivers/usb/serial/digi_acceleport.c
-@@ -433,20 +433,22 @@ static int digi_write_inb_command(struct
- 	int len;
- 	struct digi_port *priv = usb_get_serial_port_data(port);
- 	unsigned char *data = port->write_urb->transfer_buffer;
-+	unsigned long expire;
- 	unsigned long flags;
+--- a/drivers/usb/storage/ene_ub6250.c
++++ b/drivers/usb/storage/ene_ub6250.c
+@@ -2306,7 +2306,8 @@ static int ene_transport(struct scsi_cmn
  
- 	dev_dbg(&port->dev, "digi_write_inb_command: TOP: port=%d, count=%d\n",
- 		priv->dp_port_num, count);
- 
- 	if (timeout)
--		timeout += jiffies;
--	else
--		timeout = ULONG_MAX;
-+		expire = jiffies + timeout;
- 
- 	spin_lock_irqsave(&priv->dp_port_lock, flags);
- 	while (count > 0 && ret == 0) {
--		while (priv->dp_write_urb_in_use &&
--		       time_before(jiffies, timeout)) {
-+		while (priv->dp_write_urb_in_use) {
-+			if (timeout && time_after(jiffies, expire)) {
-+				ret = -ETIMEDOUT;
-+				break;
-+			}
- 			cond_wait_interruptible_timeout_irqrestore(
- 				&priv->write_wait, DIGI_RETRY_TIMEOUT,
- 				&priv->dp_port_lock, flags);
-@@ -455,6 +457,9 @@ static int digi_write_inb_command(struct
- 			spin_lock_irqsave(&priv->dp_port_lock, flags);
- 		}
- 
-+		if (ret)
-+			break;
-+
- 		/* len must be a multiple of 4 and small enough to */
- 		/* guarantee the write will send buffered data first, */
- 		/* so commands are in order with data and not split */
+ 	/*US_DEBUG(usb_stor_show_command(us, srb)); */
+ 	scsi_set_resid(srb, 0);
+-	if (unlikely(!(info->SD_Status & SD_Ready) || (info->MS_Status & MS_Ready)))
++	if (unlikely(!(info->SD_Status & SD_Ready) &&
++		     !(info->MS_Status & MS_Ready)))
+ 		result = ene_init(us);
+ 	if (result == USB_STOR_XFER_GOOD) {
+ 		result = USB_STOR_TRANSPORT_ERROR;
 
 
