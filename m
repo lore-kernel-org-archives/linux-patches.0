@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25F544AB60;
-	Tue, 21 Jul 2026 21:25:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D19744AB68;
+	Tue, 21 Jul 2026 21:25:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669135; cv=none; b=M3MrPLXPQk2zLC6fkzGytxbHEu9iJaPVZOPPm3EHW44m464Nk0vgsSp37lF1kWDnr5mSXa6hdWS3Farj0WXMOtOh6fzUug1o5DaiWwOf9PwI3C5o2y3pbj2kF4HrIYXnQY1padTfi/9tYi3P2oBlwuc+vQ1JN0Kz2+xLxmNLgQE=
+	t=1784669138; cv=none; b=HNTRymy5ws2I95gBqNSpp34Wnol49oWqq5yV23tStB8v6iimydqrbjT2vpQdye4LGGvL0vvq/gUyl34/rZq+kODTJTWmfPLwBu/l0/ouEiIncSn2C8nOIvfbOoNTlkyQ/49h51tVRWPaM3h8erl1W5t9SSZxKN6bBBInPCuxLvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669135; c=relaxed/simple;
-	bh=hZrCPoj0avTh0JCGwqV6ZG8wGZtZbnrYksGvasBQALI=;
+	s=arc-20240116; t=1784669138; c=relaxed/simple;
+	bh=ZHquuAa2dYmpNLJsJnWQT0Mdq5PnXJgPm7MzYvxlcyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SB+pI//FIBekQ3X+x0vvx56faRWItF7O5/aUpyaOHkeXKHVs93m1nSnq70W0737kw1YEa2p5WYItU/qPrkrJgmxo18FgPiTx6hzRg4MthK6+lV+BH/Hv4TJ0yGp4RKdtOZzzBH+7qWnjTO0ez6UynEFDobUWcRYdCrRSQkno0oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tU8qGyoE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iilwviRqnyW51JD/27Oc3B6BRwH20VDPvs1OoZUvlNwGa0C0B+6nDZGzmTo+rM86UjmGGhK24TJ/JfX8T3ibgdLn9Eit/u/GwFiaFz9NVGvic9pkiahVRuZLGIRA2Qpb4DzbIctDbzkJGRPa/ag1pw8zqirAigLh1MFMlw+RjUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSvzHyhH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tU8qGyoE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B3D1F000E9;
-	Tue, 21 Jul 2026 21:25:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSvzHyhH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F0A1F00A3F;
+	Tue, 21 Jul 2026 21:25:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669134;
-	bh=GExJClK/XdcvGYOyXfOoXH8A3wmxFHP2o5O1/LElQPQ=;
+	s=korg; t=1784669137;
+	bh=IJiyhgc1RbrhLrO93+7DYhkQPKvS7AGFfkuuzC7YvY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tU8qGyoEYfef3nSLsw4VPu8YRwVlN/E9oYrhfrEPkJsVO32QcWKZ2dUumhkPL5khn
-	 sXjkEOqZyWWyH+zpKOrhw9FSpyM8OF/qawduyg+RAoPzjrxwXyZW72uzOuwGjw9k7t
-	 LZB3JabNgMB11TzEchsWWrxY/nZB+6IfJZQ+yIDw=
+	b=FSvzHyhHV9DV+BM0kNboULSJdSIgWMY1kI0x8X6s7sAZb3ChaOXNQ0TIRcPPqJKI0
+	 p88ZndtvJGGg+vfJsoZG+VXxK6+UbWhPWDGtXevkqdH9yvMYzwSJg7MjHQ4uihP/V9
+	 +QqgH4clBl+P2nPjhZcgTMsDNMKnhVEkRMYQKlrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Samuel Moelius <sam.moelius@trailofbits.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0441/1067] crypto: marvell/octeontx - fix DMA cleanup using wrong loop index
-Date: Tue, 21 Jul 2026 17:17:22 +0200
-Message-ID: <20260721152434.480589525@linuxfoundation.org>
+Subject: [PATCH 6.1 0424/1067] Bluetooth: hci: validate codec capability element length
+Date: Tue, 21 Jul 2026 17:17:05 +0200
+Message-ID: <20260721152434.106982154@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,37 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Samuel Moelius <sam.moelius@trailofbits.com>
 
-[ Upstream commit 7891c64c0520519782470ba29bac8a5761e295d8 ]
+[ Upstream commit c38fbcdc407925c7088f7e5f11c1fff73d2d35a2 ]
 
-The sg_cleanup path used list[i] instead of list[j] when unmapping DMA
-buffers, leaking successfully mapped entries and repeatedly unmapping
-the failed one.
+Read Local Codec Capabilities returns a sequence of capability elements.
+Each element starts with a one-byte length followed by that many payload
+bytes.
 
-Fixes: 10b4f09491bf ("crypto: marvell - add the Virtual Function driver for CPT")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+hci_read_codec_capabilities() checks that the skb contains the length
+byte, but then validates only caps->len against the remaining skb
+length.  A malformed controller response with one remaining byte and
+caps->len set to one passes that check even though the element needs two
+bytes.  The parser then records a two-byte capability and copies one
+byte beyond the advertised response payload into the codec list.
+
+Validate the full element size, including the length byte, before adding
+it to the accumulated capability length.  This preserves all well-formed
+capability elements and drops only truncated controller responses.
+
+Fixes: 8961987f3f5f ("Bluetooth: Enumerate local supported codec and cache details")
+Assisted-by: Codex:gpt-5.5-cyber-preview
+Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/marvell/octeontx/otx_cptvf_reqmgr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_codec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/marvell/octeontx/otx_cptvf_reqmgr.c b/drivers/crypto/marvell/octeontx/otx_cptvf_reqmgr.c
-index c80baf1ad90b2f..89030e2711ce41 100644
---- a/drivers/crypto/marvell/octeontx/otx_cptvf_reqmgr.c
-+++ b/drivers/crypto/marvell/octeontx/otx_cptvf_reqmgr.c
-@@ -157,8 +157,8 @@ static inline int setup_sgio_components(struct pci_dev *pdev,
- sg_cleanup:
- 	for (j = 0; j < i; j++) {
- 		if (list[j].dma_addr) {
--			dma_unmap_single(&pdev->dev, list[i].dma_addr,
--					 list[i].size, DMA_BIDIRECTIONAL);
-+			dma_unmap_single(&pdev->dev, list[j].dma_addr,
-+					 list[j].size, DMA_BIDIRECTIONAL);
- 		}
- 
- 		list[j].dma_addr = 0;
+diff --git a/net/bluetooth/hci_codec.c b/net/bluetooth/hci_codec.c
+index 3cc135bb1d30ca..5bc5003c387c66 100644
+--- a/net/bluetooth/hci_codec.c
++++ b/net/bluetooth/hci_codec.c
+@@ -100,7 +100,7 @@ static void hci_read_codec_capabilities(struct hci_dev *hdev, __u8 transport,
+ 				caps = (void *)skb->data;
+ 				if (skb->len < sizeof(*caps))
+ 					goto error;
+-				if (skb->len < caps->len)
++				if (skb->len < sizeof(caps->len) + caps->len)
+ 					goto error;
+ 				len += sizeof(caps->len) + caps->len;
+ 				skb_pull(skb,  sizeof(caps->len) + caps->len);
 -- 
 2.53.0
 
