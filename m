@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4D13B8412;
-	Tue, 21 Jul 2026 21:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F307434409;
+	Tue, 21 Jul 2026 21:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670225; cv=none; b=ZnHly9gNt4nyqzR1Kg5yACZr2PWyna7YayCrlZIOGw+wrtrDPPce4OIvmDIeLq5VqzTHxwdXpcghtVxrt7oE7Yxj2r/59zdlx4sqBIFOxqBStXGOrxmllTFKnpp+Y8hlzkjU+619EZZx67pAdqfMqQTe2SuyeqCbiulSMTLGjxQ=
+	t=1784670228; cv=none; b=bECKUCWGZmZtBPmgoDDzJkSeQHI+QxArJGz1C0gH2FSnz302QL91E348qMIneldtwkoie0EOPczaiRn/b1ARldBPS5FU6Gz+tS9/T27uatkMAhZKAMXKrTipySZ67eD8Ty3VSRTdui7j/y09VbVbvj+qKAJ5aQQeOhQoHUUNxWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670225; c=relaxed/simple;
-	bh=u2XlRUv2Ia6Kp6wMd5ayLlxjMrMK7RsUt56FWHQ+KD0=;
+	s=arc-20240116; t=1784670228; c=relaxed/simple;
+	bh=OqTwXbRNu2+hYRb98DIVJ5KtPxk8LH+RFiKG5Wi+xCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P9z1SH6Vzxn9oigO2dReTzeH5DC2r/C00i7P+fHpWRWQP++H66l34Q0hekc33QcPVNxtHQzpgTvKI/N3zeIcg1NeKe5LoCocUC50LRM8Ql0yPos/fGA5PYZqMdNao3gyGZxpb831RXVnC/+2wz5gHFh0O3JXfgTpVB3apdkGSNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDr82NO7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vED2MHAUqJkXL19YkP/mDpyiF1OxshcTEbmTmNRP4mFis3IubriOtnUdhnTvqOepiCV129PGGyy4xG2tlUqeeAhEmOF/uggf+va5bBoToKlrAEPfMqkhqPeYztawaGwDhnQkjBL+sLwtDVAew63gM+iCX+MVZylrbYRBJaFgKK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QoaOnA6p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDr82NO7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36FE51F000E9;
-	Tue, 21 Jul 2026 21:43:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QoaOnA6p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DA61F000E9;
+	Tue, 21 Jul 2026 21:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670224;
-	bh=7TPBK9PgIZlKnUq87Y/DonmQ/H7W/OycNuXf0aL6j60=;
+	s=korg; t=1784670227;
+	bh=nI38BetpzVP2hN6PpYUU9TRAyoknLpZFpGUxialRG14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mDr82NO7LK4l6FjVS0QldA2wR1Ce/kopUQaDtwVyBJIrarQTAkUunkMiskzxFToHv
-	 YfyteIrXWOZveqH3H3kNZvkPMC3OsP/JKnmgGG1/2cy3q1ZL13YmXKaRPnCai5JaIJ
-	 nXDikGTEELTlwzlK2sln89VtjzjptGcAL03seDzs=
+	b=QoaOnA6poOzaShA+lVDx6eKWjLm3eUyRrjHu5vNV33JAZwFd5Zv9Lrxml5CVv1BAr
+	 UWFk3uOUkqXKkA8CDS/+ZpOKOYUQMWGGDaiUF2Gsd2lNCnp4TJed6dOS/HbAxbZCbI
+	 ATfTWY+nyjti4JvdxP1EGXFtQO0OU9bkAuEBznAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Justin Tee <justin.tee@broadcom.com>,
+	Xu Rao <raoxu@uniontech.com>,
+	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 0853/1067] scsi: lpfc: Fix memory leak in lpfc_sli4_driver_resource_setup()
-Date: Tue, 21 Jul 2026 17:24:14 +0200
-Message-ID: <20260721152443.624580558@linuxfoundation.org>
+Subject: [PATCH 6.1 0854/1067] scsi: sg: Report request-table problems when any status is set
+Date: Tue, 21 Jul 2026 17:24:15 +0200
+Message-ID: <20260721152443.647135530@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,43 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 1bd28625e25be549ee7c47532e7c3ef91c682410 upstream.
+commit 1d3a742afeb761eaead774691bde1ced699e9a5d upstream.
 
-The memory allocated for mboxq using mempool_alloc() is not freed in
-some of the early exit error paths. Fix that by moving the
-mempool_free() call to an earlier point after last use.
+SG_GET_REQUEST_TABLE reports per-request diagnostic state through
+sg_req_info::problem. The field is meant to indicate whether there is an
+error to report for a completed request.
 
-Fixes: d79c9e9d4b3d ("scsi: lpfc: Support dynamic unbounded SGL lists on G7 hardware.")
+sg_fill_request_table() currently combines masked_status, host_status
+and driver_status with bitwise AND. This only reports a problem when all
+three status fields are non-zero at the same time. A normal target check
+condition, for example, has masked_status set while host_status and
+driver_status may both be zero, so the request is incorrectly reported
+as clean.
+
+Use the same condition as sg_new_read(), which sets SG_INFO_CHECK when
+any of the three status fields is non-zero.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Reviewed-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://patch.msgid.link/20260707065304.949135-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/54B60C19F7DB8889+20260707030845.970018-1-raoxu@uniontech.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/lpfc/lpfc_init.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/scsi/sg.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/drivers/scsi/lpfc/lpfc_init.c
-+++ b/drivers/scsi/lpfc/lpfc_init.c
-@@ -8175,6 +8175,7 @@ lpfc_sli4_driver_resource_setup(struct l
- 			}
- 		}
- 	}
-+	mempool_free(mboxq, phba->mbox_mem_pool);
- 
- 	lpfc_nvme_mod_param_dep(phba);
- 
-@@ -8333,8 +8334,6 @@ lpfc_sli4_driver_resource_setup(struct l
- 		goto out_free_sg_dma_buf;
- 	}
- 
--	mempool_free(mboxq, phba->mbox_mem_pool);
--
- 	/* Verify OAS is supported */
- 	lpfc_sli4_oas_verify(phba);
- 
+--- a/drivers/scsi/sg.c
++++ b/drivers/scsi/sg.c
+@@ -866,10 +866,9 @@ sg_fill_request_table(Sg_fd *sfp, sg_req
+ 		if (val >= SG_MAX_QUEUE)
+ 			break;
+ 		rinfo[val].req_state = srp->done + 1;
+-		rinfo[val].problem =
+-			srp->header.masked_status &
+-			srp->header.host_status &
+-			srp->header.driver_status;
++		rinfo[val].problem = srp->header.masked_status ||
++					     srp->header.host_status ||
++					     srp->header.driver_status;
+ 		if (srp->done)
+ 			rinfo[val].duration =
+ 				srp->header.duration;
 
 
