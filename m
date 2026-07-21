@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628993C276E;
-	Tue, 21 Jul 2026 17:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C726B403AEA;
+	Tue, 21 Jul 2026 17:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655038; cv=none; b=r8+DzwajZqYfkVpLPM5dL2l670kklnRy35UNusjvVLvboTAAdZoh1M3029ZtK0PwBVHAQT/y5gfsvEGsjZfN31R3OyHRwjqfUk8CyQxcJ9ZxBnFd/V/XezYxEEUOltMTYo+0HHy5ydFlHJWNrfVj89dQwok7lfBG+qLendQg2qA=
+	t=1784655040; cv=none; b=QK3CtNLECumL7tANvCohNq6KB/TXGtuWGqGXAYJyrJhVE/+i12swP1AzQIl8jNtrxWfkuznHyTgrCDQyyyQLlLSxygPFVLhkHs3oYrhFDnpdwAVwpVAH068kjesKuCEQFkSzbIzyLqucHe1qEIOjJJlx9CCebikmHFE7NQSypg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655038; c=relaxed/simple;
-	bh=tl4BoRsvJRQm0AODN+BN9QjJ3MNRyYRwnnEzOQLX6jU=;
+	s=arc-20240116; t=1784655040; c=relaxed/simple;
+	bh=f6MoXAmXzrgMP7fyvdJ/Z+p+QI3jB8ftWkYULrP0DGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ywk39hgDYGfvPvbkgMCjazn1uRfDoj6+q/fSCfh4w8sU9AFcH3FA1hDqFZ9ScgQiInpL7J9pNjaGotvElfxoYLlofwNvln/Ws9o/ctdIB4wnZKqwa0Zq6J5BqmJ0QF3TTiStqhon7sVsxQV8BmKfVYvSDOHRwtQKB1MJOvbvskk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYM55y3l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l1dTdo6Fibz8bvG7imDqH16kkBkl6/O1JVI/HIa4TMggSvQ2l6MdT0ndPbvhV7UNECFleMaN/VXjJPym0NlfIA2IKy9u+kX6ONIQuGR8ajtw5vnGvw1FdvPN3HF9bkkltlbmHmQvEfqhskluswc5cvYjD+iVo9aH6hJdCgCPPkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VzGI94zK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYM55y3l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7631F00A3E;
-	Tue, 21 Jul 2026 17:30:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VzGI94zK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38AEA1F000E9;
+	Tue, 21 Jul 2026 17:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655037;
-	bh=bU2rP9Ecauzby/feK09oOE59V/LybelplZun5bJDCoQ=;
+	s=korg; t=1784655039;
+	bh=D4Ofz7Gq5W2rk67dRP8uFdSaJBW3LdJ/uX7zUWUG/N0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tYM55y3lW+xLiG0UnSAOEdxzwAN+j1q/I+++zBz0FHWyFkwvp/Xoa0ynPJfeO9gTE
-	 KOe4eWgCAOydRl+u5KBSYOa/vTXXpMOEDo+/HjogODL5bP89T79hy9rJzTwnbW1lkf
-	 150Gi9HHxzyoFtnFNA86F9CJpU8/iVgRqrU+EFsU=
+	b=VzGI94zKKk4CyUP1v/tMyP4w/3DgOzfzg7ayc/5qTuU59ga+Qrf9jyNoAZ/E5pYWB
+	 rbeOoQiTXswvJ8ZyHSD05Me5YteMymfMSxhzxMGskNyGMQq0K08L/NZQtsdGqrcvup
+	 xoOx19JVajM1zqRhIS18f2VtX/58mlw3o8ksRAAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Daniel Gibson <daniel@gibson.sh>
-Subject: [PATCH 7.1 1930/2077] platform/x86/amd/pmc: Avoid logging "(null)" for DMI values
-Date: Tue, 21 Jul 2026 17:26:43 +0200
-Message-ID: <20260721152638.232019502@linuxfoundation.org>
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.1 1931/2077] net/sched: sch_teql: move rcu_read_lock()/spin_lock() from _bh variants
+Date: Tue, 21 Jul 2026 17:26:44 +0200
+Message-ID: <20260721152638.255891389@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,55 +44,124 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Gibson <daniel@gibson.sh>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-commit a0738abd042f7406edd2175a819cf2e66388ed97 upstream.
+commit 6301f6a34ed86fe6f3b7b3211ea069f3677fc559 upstream.
 
-dmi_get_system_info(...) can return NULL. Using that as %s arguments
-of dev_info() would log "(null)" (as part of a message like
-'... System Vendor: "(null)", Product Name: "(null)" ...'), which may
-be confusing for users.
+This is a followup based on sashiko comments [1] on commit e5b811fe7931
+("net/sched: sch_teql: Introduce slaves_lock to avoid race condition and UAF")
 
-Use Elvis operator to print "(Unknown)" instead.
+Use plain rcu_read_lock()/spin_lock() in teql_master_xmit() instead of the
+_bh variants, since ndo_start_xmit is already invoked with BH disabled
+by the core stack and the _bh primitives can warn in_hardirq() when xmit
+is reached through netpoll or a softirq xmit path with hard IRQs disabled.
 
-Fixes: 428b9fd2dce5 ("platform/x86/amd/pmc: Add delay_suspend module parameter")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202606251540.Nr2BtaNu-lkp@intel.com/
-Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Daniel Gibson <daniel@gibson.sh>
-Link: https://patch.msgid.link/20260626220210.1761783-2-daniel@gibson.sh
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Moves rcu_read_lock() after restart: label + adds rcu_read_unlock() before
+goto restart (fixes the unbounded RCU hold across retries)
+
+[1] https://sashiko.dev/#/patchset/20260628111229.669751-1-jhs%40mojatatu.com
+
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Fixes: e5b811fe7931 ("net/sched: sch_teql: Introduce slaves_lock to avoid race condition and UAF")
+Link: https://patch.msgid.link/20260630150922.238714-1-jhs@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd/pmc/pmc.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/sched/sch_teql.c |   27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
---- a/drivers/platform/x86/amd/pmc/pmc.c
-+++ b/drivers/platform/x86/amd/pmc/pmc.c
-@@ -660,11 +660,11 @@ static bool amd_pmc_want_suspend_delay(s
- 	} else if (delay_suspend == 1) {
- 		if (!intermediate_wakeup)
- 			dev_info(pdev->dev, "Delaying suspend by 2.5s because delay_suspend=1. If this solves problems on your machine, please report this whole line to: platform-driver-x86@vger.kernel.org so it can be automatically detected as affected in the future. System Vendor: \"%s\" Product Name: \"%s\" Product Family: \"%s\" Board Vendor: \"%s\" Board Name: \"%s\"\n",
--				 dmi_get_system_info(DMI_SYS_VENDOR),
--				 dmi_get_system_info(DMI_PRODUCT_NAME),
--				 dmi_get_system_info(DMI_PRODUCT_FAMILY),
--				 dmi_get_system_info(DMI_BOARD_VENDOR),
--				 dmi_get_system_info(DMI_BOARD_NAME));
-+				 dmi_get_system_info(DMI_SYS_VENDOR) ?: "(Unknown)",
-+				 dmi_get_system_info(DMI_PRODUCT_NAME) ?: "(Unknown)",
-+				 dmi_get_system_info(DMI_PRODUCT_FAMILY) ?: "(Unknown)",
-+				 dmi_get_system_info(DMI_BOARD_VENDOR) ?: "(Unknown)",
-+				 dmi_get_system_info(DMI_BOARD_NAME) ?: "(Unknown)");
- 		return true;
+--- a/net/sched/sch_teql.c
++++ b/net/sched/sch_teql.c
+@@ -311,14 +311,14 @@ static netdev_tx_t teql_master_xmit(stru
+ 	int subq = skb_get_queue_mapping(skb);
+ 	struct sk_buff *skb_res = NULL;
+ 
+-	rcu_read_lock_bh();
+-
+-	start = rcu_dereference_bh(master->slaves);
+-
+ restart:
+ 	nores = 0;
+ 	busy = 0;
+ 
++	rcu_read_lock();
++
++	start = rcu_dereference(master->slaves);
++
+ 	q = start;
+ 	if (!q)
+ 		goto drop;
+@@ -345,17 +345,17 @@ restart:
+ 				    netdev_start_xmit(skb, slave, slave_txq, false) ==
+ 				    NETDEV_TX_OK) {
+ 					__netif_tx_unlock(slave_txq);
+-					spin_lock_bh(&master->slaves_lock);
++					spin_lock(&master->slaves_lock);
+ 					if (rcu_dereference_protected(master->slaves,
+ 								      lockdep_is_held(&master->slaves_lock)) == q)
+ 						rcu_assign_pointer(master->slaves,
+ 								   rcu_dereference_protected(NEXT_SLAVE(q),
+ 											     lockdep_is_held(&master->slaves_lock)));
+-					spin_unlock_bh(&master->slaves_lock);
++					spin_unlock(&master->slaves_lock);
+ 					netif_wake_queue(dev);
+ 					master->tx_packets++;
+ 					master->tx_bytes += length;
+-					rcu_read_unlock_bh();
++					rcu_read_unlock();
+ 					return NETDEV_TX_OK;
+ 				}
+ 				__netif_tx_unlock(slave_txq);
+@@ -364,37 +364,38 @@ restart:
+ 				busy = 1;
+ 			break;
+ 		case 1:
+-			spin_lock_bh(&master->slaves_lock);
++			spin_lock(&master->slaves_lock);
+ 			if (rcu_dereference_protected(master->slaves,
+ 						      lockdep_is_held(&master->slaves_lock)) == q)
+ 				rcu_assign_pointer(master->slaves,
+ 						   rcu_dereference_protected(NEXT_SLAVE(q),
+ 									     lockdep_is_held(&master->slaves_lock)));
+-			spin_unlock_bh(&master->slaves_lock);
+-			rcu_read_unlock_bh();
++			spin_unlock(&master->slaves_lock);
++			rcu_read_unlock();
+ 			return NETDEV_TX_OK;
+ 		default:
+ 			nores = 1;
+ 			break;
+ 		}
+ 		__skb_pull(skb, skb_network_offset(skb));
+-	} while ((q = rcu_dereference_bh(NEXT_SLAVE(q))) != start);
++	} while ((q = rcu_dereference(NEXT_SLAVE(q))) != start);
+ 
+ 	if (nores && skb_res == NULL) {
+ 		skb_res = skb;
++		rcu_read_unlock();
+ 		goto restart;
  	}
- 	return false;
+ 
+ 	if (busy) {
+ 		netif_stop_queue(dev);
+-		rcu_read_unlock_bh();
++		rcu_read_unlock();
+ 		return NETDEV_TX_BUSY;
+ 	}
+ 	master->tx_errors++;
+ 
+ drop:
+ 	master->tx_dropped++;
+-	rcu_read_unlock_bh();
++	rcu_read_unlock();
+ 	dev_kfree_skb(skb);
+ 	return NETDEV_TX_OK;
+ }
 
 
