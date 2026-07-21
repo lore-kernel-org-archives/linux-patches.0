@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CAB03C4B93;
-	Tue, 21 Jul 2026 21:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFE13BBFC0;
+	Tue, 21 Jul 2026 21:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667611; cv=none; b=B+Q/Lk/cu5lD3yk/JUoZSFZsvIvm7FbBRZEta9lWtLdFX7L452W5W4YSwUqHDZxD1gMhOAaQVaO7XWPrRxDYjbSZI0UEHqL93Ekk+8U31MxaLm+jNg+KhB0yLdtyIbw9L4ijxxETznBsuTzt8Np44871/kqo9BooibsbUvzvYpw=
+	t=1784667614; cv=none; b=jvw7uKq2cRrteC1xp+Np8+rmF/7nZ9bQKgPXVAaZnCew82utF5izL/rVY81xMqc2OPoSAZJA7EmJ7o2LEerdWI3KZVx1Y7SwxeST6SdfIgQYxGj80GH5ghIcOOjpDuWaU0cSCAswO6DAwtnMM+oz5NzLD/U61x5aoGfypq3fZGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667611; c=relaxed/simple;
-	bh=LI+EsP2AhEMZcDkARLJfdVhowG8uReYnbSg48E+1qOo=;
+	s=arc-20240116; t=1784667614; c=relaxed/simple;
+	bh=q3W2ccOkl6969LDA8TfwQAzcT3Yc+hrGA6Fo2SIhENo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p+n5gxMLypNms/7zcnktbLCOo9CF68fIsf+9UU9MPDmHCDGcE8CW7/gXSqsrEFBhu7xMt4mDWHQJjMGBKM0R9M607LhL1n75M4nm2SrNMoWyq0wvThNoMoxv0jNrOockwnGhJSf41oipXwYu0VrK5NwFFCJinb10jM9rtYc6FGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLC7+TXO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MTORxcPE/Uv7ezOpxuP8sRhfYzPi/Juh0aLY1zFwVJ/WECUpkNlm+1bWBEqN0nwLvKT39T53frCAxPw9SqV1JOVuF/tu1e6tccSCZrqIfbSEK0QfNmJxBTC7ZhlmSrSvRhOKpOUN+PVk8gw+hiOJhti59WTN+yk4cnlv31zG8Ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ow8emfCv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLC7+TXO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D0F1F000E9;
-	Tue, 21 Jul 2026 21:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ow8emfCv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DD91F000E9;
+	Tue, 21 Jul 2026 21:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667610;
-	bh=bUiET+kyfdZSAjp9MJO8coqg+kb4wqmhNwbH1nQDY3Q=;
+	s=korg; t=1784667612;
+	bh=stkvM4gHXrp3rhot4sRVRlorLRcvPkuVu0N+oc0fSQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GLC7+TXOtREsMp9mE2QHlJuoLppuxa/dwjYfmiHVqzJIIr/maxDpuox44nxHXgX6n
-	 6X43FvFCzSPsPP5yqVMr1azdtq+0gI1Om+R9HVfUu9F74cyniDjIjnXIJ7A4OgM6a1
-	 JMBNSf91YerSanTpWWu5kzBidprfcgwLcCe4GIUw=
+	b=Ow8emfCv5DLBj55GBSxRRa+hZL4I4h5HjxC8vTH5mhxV6oUvGL9Ujz6vNVdVXJTmN
+	 jJKhHqc8PRzbPnfE/zQ67DmdBCVpprFNtBvxK96KWcLaORrTO8L3vvpljreqOPua1W
+	 bivNDzv/RYI9MUgTc44TlGuwjIaN0HcClw+o7rrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.6 1126/1266] pmdomain: imx: Fix i.MX8MP VC8000E power up sequence
-Date: Tue, 21 Jul 2026 17:26:03 +0200
-Message-ID: <20260721152506.993011068@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.6 1127/1266] powerpc/pseries: fix memory leak on krealloc failure in papr_init
+Date: Tue, 21 Jul 2026 17:26:04 +0200
+Message-ID: <20260721152507.016010056@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,85 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 25e252bcf1593b420b12a7231d9dd64b885a2ae2 upstream.
+commit bd83c98b988d2c560531084e296dbfb530aff829 upstream.
 
-Per errata[1]:
-ERR050531: VPU_NOC power down handshake may hang during VC8000E/VPUMIX
-power up/down cycling.
-Description: VC8000E reset de-assertion edge and AXI clock may have a
-timing issue.
-Workaround: Set bit2 (vc8000e_clk_en) of BLK_CLK_EN_CSR to 0 to gate off
-both AXI clock and VC8000E clock sent to VC8000E and AXI clock sent to
-VPU_NOC m_v_2 interface during VC8000E power up(VC8000E reset is
-de-asserted by HW)
+When krealloc() fails, free the original esi_buf before returning to
+avoid a memory leak.
 
-Add a bool variable is_errata_err050531 in
-'struct imx8m_blk_ctrl_domain_data' to represent whether the workaround
-is needed. If is_errata_err050531 is true, first clear the clk before
-powering up gpc, then enable the clk after powering up gpc.
-
-[1] https://www.nxp.com/webapp/Download?colCode=IMX8MP_1P33A
-
-Fixes: a1a5f15f7f6cb ("soc: imx: imx8m-blk-ctrl: add i.MX8MP VPU blk ctrl")
+Fixes: 3c14b73454cf ("powerpc/pseries: Interface to represent PAPR firmware attributes")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260614142356.658212-2-thorsten.blum@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/imx/imx8m-blk-ctrl.c |   19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ arch/powerpc/platforms/pseries/papr_platform_attributes.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
---- a/drivers/pmdomain/imx/imx8m-blk-ctrl.c
-+++ b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
-@@ -54,6 +54,15 @@ struct imx8m_blk_ctrl_domain_data {
- 	 * register.
- 	 */
- 	u32 mipi_phy_rst_mask;
-+
-+	/*
-+	 * VC8000E reset de-assertion edge and AXI clock may have a timing issue.
-+	 * Workaround: Set bit2 (vc8000e_clk_en) of BLK_CLK_EN_CSR to 0 to gate off
-+	 * both AXI clock and VC8000E clock sent to VC8000E and AXI clock sent to
-+	 * VPU_NOC m_v_2 interface during VC8000E power up(VC8000E reset is
-+	 * de-asserted by HW)
-+	 */
-+	bool is_errata_err050531;
- };
+--- a/arch/powerpc/platforms/pseries/papr_platform_attributes.c
++++ b/arch/powerpc/platforms/pseries/papr_platform_attributes.c
+@@ -271,11 +271,9 @@ retry:
+ 		esi_buf_size = ESI_HDR_SIZE + (CURR_MAX_ESI_ATTRS * max_esi_attrs);
  
- #define DOMAIN_MAX_CLKS 4
-@@ -108,7 +117,11 @@ static int imx8m_blk_ctrl_power_on(struc
- 		dev_err(bc->dev, "failed to enable clocks\n");
- 		goto bus_put;
+ 		temp_esi_buf = krealloc(esi_buf, esi_buf_size, GFP_KERNEL);
+-		if (temp_esi_buf)
+-			esi_buf = temp_esi_buf;
+-		else
+-			return -ENOMEM;
+-
++		if (!temp_esi_buf)
++			goto out_free_esi_buf;
++		esi_buf = temp_esi_buf;
+ 		goto retry;
  	}
--	regmap_set_bits(bc->regmap, BLK_CLK_EN, data->clk_mask);
-+
-+	if (data->is_errata_err050531)
-+		regmap_clear_bits(bc->regmap, BLK_CLK_EN, data->clk_mask);
-+	else
-+		regmap_set_bits(bc->regmap, BLK_CLK_EN, data->clk_mask);
- 
- 	/* power up upstream GPC domain */
- 	ret = pm_runtime_get_sync(domain->power_dev);
-@@ -117,6 +130,9 @@ static int imx8m_blk_ctrl_power_on(struc
- 		goto clk_disable;
- 	}
- 
-+	if (data->is_errata_err050531)
-+		regmap_set_bits(bc->regmap, BLK_CLK_EN, data->clk_mask);
-+
- 	/* wait for reset to propagate */
- 	udelay(5);
- 
-@@ -510,6 +526,7 @@ static const struct imx8m_blk_ctrl_domai
- 		.clk_mask = BIT(2),
- 		.path_names = (const char *[]){"vc8000e"},
- 		.num_paths = 1,
-+		.is_errata_err050531 = true,
- 	},
- };
  
 
 
