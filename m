@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF3144AB7B;
-	Tue, 21 Jul 2026 22:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7916543C063;
+	Tue, 21 Jul 2026 22:01:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671283; cv=none; b=XB8ZBnPS1/8I/AcXYaO49p6MnLCQOE5/+iEBYCLVcpAzelffLYI+mfvqFglAG7X+90Lz1Njqm6Kicp7/wnYzz0MyxBV4ZMYeYnndsXkue8CiXIbLjzSTjc3fJLRdmk6RtxmI/tHTXkwdkPKz9xFf6l8hr+rkM0Sk+37F2TINxhM=
+	t=1784671285; cv=none; b=Mc0U6yO8evZdI73sOsf928q0l1U3KWapiLT8Ir2r8i8n8KnPZjfyx1m0Gd6rVARxlaXcg8Xs0utvyijES4SnW7R44oeo3tL+b4Z3lgBvfzW4MI8fRdraL3225vUIY8yHUFZqIt0GNR0P5rDBUerYzOjIWmDQzo2KDxmBpOwEdC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671283; c=relaxed/simple;
-	bh=XVCIP3bb+QVPvLkouJ5nomSHbvuFzsLh8NcBQcrI/4k=;
+	s=arc-20240116; t=1784671285; c=relaxed/simple;
+	bh=9wc6zj1Ij4cQZP1MocQPADC1ow3CEbaDQ+giUCyiIF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H6WTGuTPt1Rp3DKP0k6Tb8i1j91XAOVTgO4uIFWz+k75b7pWEd4r/are4CwGKcKvXnDMrFzbkveGzIOvqgVYYo9FAzjIb8qPfEvwOi/EBDZWrxqZ2nCZ9Lxm7aOk90Sbmps/2Nw1+NeHO5dSP3F25iUAkjYCKa8rKDJFUuWcjkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=he9qfMvg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UTx2SOFApwRktnR8uApwSXPqOv/N15cI2WY6NnQKmqeBDs+x/pOnnDyWMWGOFY9AgUJ3x/SQkqUJAk00q80qHh1LuceMgd6YvsVN2Ts8qn1eLJmi1vbPDRxXSBVkiMx57YBWvzvHnN4Lf3GYIL5dmBuBp1L0evAtdwgF+qel9d4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTGIm6Y+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="he9qfMvg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C8B1F00A3A;
-	Tue, 21 Jul 2026 22:01:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTGIm6Y+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DECD71F000E9;
+	Tue, 21 Jul 2026 22:01:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671281;
-	bh=31GI+5/ZF5lftd9IhaLBhkwrq405xwftt4FU6agOd4w=;
+	s=korg; t=1784671284;
+	bh=5URK7IkGdRjBiSPGM9GVNZcGECbutYDPyw95/rrqvLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=he9qfMvgKt/3XpgN1c5RXrAzYzsWnZk/FehKlfX/km/sdMp8/GKKYCt8FEaZQdctP
-	 MiWpGCv1W8+yZuTyFYxGxNyQo2l4H+If6aZGEw2Rz5cdzVHkxuJu46sM0hVPoaWyLy
-	 Ez5j7u5wWC6GVO0a/yJpI+xNeBP5Vik930aYTzT8=
+	b=HTGIm6Y+1vuzcHnFfCvbyekKVtr3R41HnZlNl2x+6CKHrnv+FcYur/zG5qDeK4TDj
+	 WVhcMO1E2pQciIMJb8csoVDlZik5XzCqnVHXzGjlk3bsjzTE8xfzPxlToXlb1far3L
+	 j+uAT0IjOAPQ4rt+FdAPm+45zb1sisyrWO4cB1EE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fuchs <fuchsfl@gmail.com>,
+	sashiko-bot@kernel.org,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 188/843] Input: maplemouse - fix NULL pointer dereference in open()
-Date: Tue, 21 Jul 2026 17:17:03 +0200
-Message-ID: <20260721152410.244341812@linuxfoundation.org>
+Subject: [PATCH 5.15 189/843] Input: mms114 - fix multi-touch slot corruption
+Date: Tue, 21 Jul 2026 17:17:04 +0200
+Message-ID: <20260721152410.267420920@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,62 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fuchs <fuchsfl@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit ee89db004238bd0b034f2a6176e175561658750b upstream.
+commit adea84ee6cdea611146c4251d3c1616f5a09feca upstream.
 
-Commit 555c765b0cc2 ("Input: mouse - drop unnecessary calls to
-input_set_drvdata") dropped the input_set_drvdata() call in probe
-because the data appeared to be unused. However, dc_mouse_open() and
-dc_mouse_close() were using maple_get_drvdata(to_maple_dev(&dev->dev)).
-This appears to be accessing the data attached to an instance of
-maple_device structure, while in reality this actually retrieves driver
-data from the input device's embedded struct device (doing invalid
-conversion of input device structure to maple device). After
-input_set_drvdata() was removed, that lookup started returning NULL and
-opening the input device dereferences mse->mdev.
+If the touchscreen controller reports a touch ID of 0, the driver
+calculates the slot ID as touch->id - 1, which underflows to UINT_MAX.
+This is passed to input_mt_slot() as -1.
 
-Restore input_set_drvdata() and convert open() and close() to use
-input_get_drvdata() so the dependency is no longer hidden.
+Since the input core ignores negative slot values, the active slot remains
+unchanged. The driver then reports the touch coordinates for the previously
+active slot, corrupting its state.
 
-Fixes: 6b3480855aad ("maple: input: fix up maple mouse driver")
-Fixes: 555c765b0cc2 ("Input: mouse - drop unnecessary calls to input_set_drvdata")
-Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
-Link: https://patch.msgid.link/20260628230715.2982552-1-fuchsfl@gmail.com
+Fix this by rejecting touch reports with ID 0.
+
+Fixes: 07b8481d4aff ("Input: add MELFAS mms114 touchscreen driver")
 Cc: stable@vger.kernel.org
+Reported-by: sashiko-bot@kernel.org
+Assisted-by: Antigravity:gemini-3.5-flash
+Link: https://patch.msgid.link/20260704060115.353049-1-dmitry.torokhov@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/maplemouse.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/input/touchscreen/mms114.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/mouse/maplemouse.c
-+++ b/drivers/input/mouse/maplemouse.c
-@@ -48,7 +48,7 @@ static void dc_mouse_callback(struct map
+--- a/drivers/input/touchscreen/mms114.c
++++ b/drivers/input/touchscreen/mms114.c
+@@ -162,7 +162,7 @@ static void mms114_process_mt(struct mms
+ 	unsigned int x;
+ 	unsigned int y;
  
- static int dc_mouse_open(struct input_dev *dev)
- {
--	struct dc_mouse *mse = maple_get_drvdata(to_maple_dev(&dev->dev));
-+	struct dc_mouse *mse = input_get_drvdata(dev);
- 
- 	maple_getcond_callback(mse->mdev, dc_mouse_callback, HZ/50,
- 		MAPLE_FUNC_MOUSE);
-@@ -58,7 +58,7 @@ static int dc_mouse_open(struct input_de
- 
- static void dc_mouse_close(struct input_dev *dev)
- {
--	struct dc_mouse *mse = maple_get_drvdata(to_maple_dev(&dev->dev));
-+	struct dc_mouse *mse = input_get_drvdata(dev);
- 
- 	maple_getcond_callback(mse->mdev, dc_mouse_callback, 0,
- 		MAPLE_FUNC_MOUSE);
-@@ -88,6 +88,7 @@ static int probe_maple_mouse(struct devi
- 	mse->dev = input_dev;
- 	mse->mdev = mdev;
- 
-+	input_set_drvdata(input_dev, mse);
- 	input_dev->evbit[0] = BIT_MASK(EV_KEY) | BIT_MASK(EV_REL);
- 	input_dev->keybit[BIT_WORD(BTN_MOUSE)] = BIT_MASK(BTN_LEFT) |
- 		BIT_MASK(BTN_RIGHT) | BIT_MASK(BTN_MIDDLE);
+-	if (touch->id > MMS114_MAX_TOUCH) {
++	if (touch->id == 0 || touch->id > MMS114_MAX_TOUCH) {
+ 		dev_err(&client->dev, "Wrong touch id (%d)\n", touch->id);
+ 		return;
+ 	}
 
 
