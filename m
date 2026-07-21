@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCAEC408039;
-	Tue, 21 Jul 2026 19:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B020C46D098;
+	Tue, 21 Jul 2026 19:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661959; cv=none; b=jwv6u5a/l34ALEjEDY4Gej4dai9wcB9id3p+rN7195fIUP1CR9M1n10Km1fKRA4ah3I2TMUJKO59ZkeuPJmPbXt3r3UOEJhn2jcvw9d1taSyj9/AZ+7nFAFxJ2+hXX7wI9P5eNZ5ogqipYvEAargD4Q03xscNGCIrVpNW/GG/f4=
+	t=1784661962; cv=none; b=sSNQiA4C0Ehlu+i3wIOg8NqFV/O8axOS4oSO7Dz4BVUMRdNho9ZlBjEsvf9zbBrHAMFQph96CDrAjzcnlCG0HomHJO1rNKfyqrqaJn5exdnJOqqHd6F24axCcz1ZDuYXbz51hDNXMKkdt1p75jeagiJipdcAfzSt1DhpLn5ylm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661959; c=relaxed/simple;
-	bh=33pgDXm+3gErc3u7ZnqPMDoUKND5ro7lbtP1PhuU078=;
+	s=arc-20240116; t=1784661962; c=relaxed/simple;
+	bh=GhqnJWGHcn1gDZ26BE+e1HGOWL3O5CFfEo9UgZvGJI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VvOljtWNI+Ko9pZBQqlfIikSig925PS//g+IlrhnPjosI9htuyaJmKZpDAW/dNPFPosFXclgvNwUpnoGOAu/FlRNfo6vBfUd5GdospHf5hDrhNc+9fL5jx8OATpcWR1LKx8fmvAScSF0LZpi0SKLEkTc9UOr65xGZ9AYF+xlSlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7SgyPJp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IJD6SfBOs5DR925PWCG5TwuSUjAQo+Ggv02zLucqA9s/yfnr/1bu36NGA6n4hKUlo3kNNzSK2qmJk1p4lUvaRmkXg3POp0YDswdbRxfE3FtTsfQ4zpZ0NAFNcoIQdhgecCXAg2Mxu2iNJ9ribNrWMhOydJ8krYnyJRQjSY+qQC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zj5MVKon; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7SgyPJp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E31B1F00A3A;
-	Tue, 21 Jul 2026 19:25:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zj5MVKon"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF081F000E9;
+	Tue, 21 Jul 2026 19:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661958;
-	bh=6Jw3qSVXUI6iuG5fHnMiZEIGDHoqooQyw0/isMQ0S6E=;
+	s=korg; t=1784661961;
+	bh=PoZ5DBfYIfqCTHsS+4Jl9+8SLb3EFiWoX79kamCBfCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K7SgyPJpQaV89Lm2Y9ZXUvbmOEoKECIIoSQD1CQ5w3mH2vYIPjzdq0kxhJtWh523E
-	 zUtae0+wnx3pmNcqiRnfkPc9nM4V5DTRX7Sf+MpQqmH27D4sBdMLLKyc1w0/njzBXh
-	 G93WwW3+nkbDnb/hxFOvPq1fTZVX3tql1r7Bti+A=
+	b=zj5MVKonmqKYtGN/53/P1dV4uPsIbA57pVk3eZYdfyVemg7zSiTg5l8P+4RI6tpFp
+	 Bhuw7fLSo9Lx7Ya4Jg8KSxf103Vk5pYNuBonHDVXiqYobSkl4N1/1t5EWvB8E3jl2u
+	 LKAynd0IacfpPCqqKJEpCwDXdjVjmq1+9a5d80t8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0262/1276] ALSA: seq: Clear variable event pointer on read
-Date: Tue, 21 Jul 2026 17:11:45 +0200
-Message-ID: <20260721152451.947345263@linuxfoundation.org>
+Subject: [PATCH 6.12 0263/1276] ACPI: IPMI: Fix message kref handling on dead device
+Date: Tue, 21 Jul 2026 17:11:46 +0200
+Message-ID: <20260721152451.969074005@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,46 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 705dd6dcbc0ea87351c660c1a6443f85f1001c76 ]
+[ Upstream commit 63320db6a5d84ec3fed8b3d36ba5244d07ddd108 ]
 
-snd_seq_read() copies a queued variable-length event header to userspace
-before expanding the payload. Queued variable-length events use
-SNDRV_SEQ_EXT_CHAINED internally, and data.ext.ptr points at the first
-extension cell.
+acpi_ipmi_space_handler() takes an extra reference on tx_msg before
+checking whether the selected IPMI device is dead. The reference
+belongs to the tx_msg_list entry and is normally dropped by
+ipmi_cancel_tx_msg() or ipmi_flush_tx_msg() after the message is removed
+from the list.
 
-The read side strips SNDRV_SEQ_EXT_* bits from data.ext.len before the
-copy, but it leaves data.ext.ptr untouched. A userspace sequencer client
-can therefore write a direct variable event to itself and read back the
-extension-cell kernel address from the returned header.
+On the dead-device path, the message has not been queued yet, but the
+error path still calls ipmi_msg_release() directly. That bypasses
+kref_put() and frees tx_msg while the queued-message reference is still
+recorded in the kref count.
 
-Clear the temporary header pointer before copy_to_user(). The original
-queued event remains unchanged and is still passed to
-snd_seq_expand_var_event(), so payload expansion keeps using the
-internal chain.
+Take the queued-message reference only after the dead-device check
+succeeds, immediately before adding tx_msg to the list.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Link: https://patch.msgid.link/20260607004129.61345-1-kylebot@openai.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 7b9844772237 ("ACPI / IPMI: Add reference counting for ACPI IPMI transfers")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Link: https://patch.msgid.link/20260603163108.2149359-1-dbgh9129@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_clientmgr.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/acpi/acpi_ipmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/core/seq/seq_clientmgr.c b/sound/core/seq/seq_clientmgr.c
-index 0ddf84b36c13f7..18755d26662766 100644
---- a/sound/core/seq/seq_clientmgr.c
-+++ b/sound/core/seq/seq_clientmgr.c
-@@ -488,6 +488,7 @@ static ssize_t snd_seq_read(struct file *file, char __user *buf, size_t count,
+diff --git a/drivers/acpi/acpi_ipmi.c b/drivers/acpi/acpi_ipmi.c
+index 5fba4dab5d0886..c672abc3a6dbbe 100644
+--- a/drivers/acpi/acpi_ipmi.c
++++ b/drivers/acpi/acpi_ipmi.c
+@@ -550,7 +550,6 @@ acpi_ipmi_space_handler(u32 function, acpi_physical_address address,
+ 		return AE_TYPE;
+ 	}
  
- 			memcpy(&tmpev, &cell->event, aligned_size);
- 			tmpev.data.ext.len &= ~SNDRV_SEQ_EXT_MASK;
-+			tmpev.data.ext.ptr = NULL;
- 			if (copy_to_user(buf, &tmpev, aligned_size)) {
- 				err = -EFAULT;
- 				break;
+-	acpi_ipmi_msg_get(tx_msg);
+ 	mutex_lock(&driver_data.ipmi_lock);
+ 	/* Do not add a tx_msg that can not be flushed. */
+ 	if (ipmi_device->dead) {
+@@ -558,6 +557,7 @@ acpi_ipmi_space_handler(u32 function, acpi_physical_address address,
+ 		ipmi_msg_release(tx_msg);
+ 		return AE_NOT_EXIST;
+ 	}
++	acpi_ipmi_msg_get(tx_msg);
+ 	spin_lock_irqsave(&ipmi_device->tx_msg_lock, flags);
+ 	list_add_tail(&tx_msg->head, &ipmi_device->tx_msg_list);
+ 	spin_unlock_irqrestore(&ipmi_device->tx_msg_lock, flags);
 -- 
 2.53.0
 
