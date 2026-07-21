@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BD0415F1A;
-	Tue, 21 Jul 2026 19:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A246471257;
+	Tue, 21 Jul 2026 19:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662741; cv=none; b=SDmTTWypbgMfR62oBI6q4+bykR3qgbsLfftXoKlLyqhU8z/j2zuzAh/VmYezkVmuJ/iCKlqDfCCx+CFB6MH8QV+js8QRGhHx3BmSuQQk1AAGyW4JaunQz90tkCwQg2oYjSLCV9D5Oki5CFVfAY7XRD/6xQvgDSQoW0f0s+l5BIc=
+	t=1784662744; cv=none; b=rlPKe7jydPBEYSQwWQSJu34gZW9p72r5gMK2a8mMRqjf3z9b1lwY/f6dVVgDHHsiJ3rz/SjuZ/UtsgCt6/uoA1X66lRxFiqwGCRdEYNcdo2f6s205jOYkpimzyWGeOwgyeeJFznCl+QAABm6k944eMmSyP0LmDrGszP5scHJiyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662741; c=relaxed/simple;
-	bh=PkLmXGyRuEndCMr6u4aKNTSVpujmS1P4FtdKfxodvUs=;
+	s=arc-20240116; t=1784662744; c=relaxed/simple;
+	bh=lbomb85HucHIYc9iDT9g57gPI8aMZKk+ZL/uxLsH3VY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fGx1MM/lLVGtWgQf3WP+HFmRDqbvuSdmit12kxbncO0hbqrf9qgRkpW6BwnPHFx8c5N3Ldtxmw5FqVQK+iHqcAz6xfSPSYpgsxMfb/Mq/GcueZzLkawUHegft2oq2TIZ40yaqKfH3ApPybqDUwPEU0ftcBe9vq3ydXmsRLna0rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqrKjCJY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UrHguX2E4zQOjmOjdxQZxAh99rZjjZluYvnK/Kcuz3/K/r/29q9lNOTD2zucUYV+J6Q+IakWFeb6D0LVcjs7PMtIe/fh2+ZRHzUCwNfkQQyfO0OAgu7g6L15FHhi7vYfdIH+P1fDPCBHrW6LB4E3eLu5bR/nOtydLtgtMRuiJzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVBB48yG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqrKjCJY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C080B1F000E9;
-	Tue, 21 Jul 2026 19:38:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVBB48yG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ADA81F000E9;
+	Tue, 21 Jul 2026 19:39:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662740;
-	bh=mBlwbs9KajQk/8Qr6PFxzvzh6HSXPKSs5R03Utatcxs=;
+	s=korg; t=1784662743;
+	bh=zzVSGlLJzoqS7WTegvsWyjV1pE2aH2IDSUtVe83OY1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yqrKjCJY4mZXTlrS8TCDi4uRQjYqSPYNfok5MlVkPnKel7ri86YY71I1Kc0dI9kdf
-	 yc9T5nQrQjqcTY0y01KBFLLSDXhLkBvB9vlQVS5sx3AjW4VOVFyZQKQXURC27yh+Eg
-	 KWwNQK4DnOsHozTQXkNoer7tkVyPu/N4OeHMLi8k=
+	b=TVBB48yGpMa+A57eojuY6WIzoNUx3DNOj4XtE+3ugVDPlsczNWXuxN2QGFJmz5ojf
+	 H8TPYj21Y0Be1ABKwwrcK0MlHzd0UTqHyf69FIu7Pl0hTk7tUYTTGJToETbr83KOeo
+	 2AhDGrIjcWm0+11gZCwaRnmWFx9phuWAanVnvmUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0552/1276] perf symbols: Fix bswap copy-paste error for 32-bit ELF p_filesz
-Date: Tue, 21 Jul 2026 17:16:35 +0200
-Message-ID: <20260721152458.473486488@linuxfoundation.org>
+Subject: [PATCH 6.12 0561/1276] drm/i915: clear CRTC color blob pointers after dropping refs
+Date: Tue, 21 Jul 2026 17:16:44 +0200
+Message-ID: <20260721152458.673978261@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,49 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 081b387c7397498c583b1ba7c2fdaf4c6da6b538 ]
+[ Upstream commit 31f077088e0faae6be8377741f356dea1b94ba46 ]
 
-filename__read_build_id() byte-swaps 32-bit ELF program headers on
-cross-endian files, but line 178 passes p_offset to bswap_32() instead
-of p_filesz:
+intel_crtc_put_color_blobs() drops the CRTC color blob references, but
+leaves the corresponding pointers unchanged.
 
-  hdrs.phdr32[i].p_filesz = bswap_32(hdrs.phdr32[i].p_offset);
+This can matter in intel_crtc_prepare_cleared_state(), which frees the
+old CRTC hw state before calling intel_dp_tunnel_atomic_clear_stream_bw().
+The latter can fail while looking up the DP tunnel group state, for
+example with -EDEADLK.
 
-This clobbers p_filesz with the already-swapped p_offset value.  The
-64-bit path on line 182 is correct and swaps p_filesz from p_filesz.
+If that happens, the function returns without completing the cleared
+state preparation. The failed atomic state will then be cleared by the
+atomic core and intel_crtc_free_hw_state() can be called again for the
+same state, dropping the same blob references again.
 
-The consequence is that the PT_NOTE segment read uses the wrong size,
-which can cause either a short read (missing the build-id) or an
-oversized read (reading past the segment into adjacent data).
+Clear the blob pointers after dropping the references so repeated cleanup
+of the same CRTC hw state is safe.
 
-Fix by swapping the correct field.
-
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Fixes: fef8f648bb47726d ("perf symbol: Fix use-after-free in filename__read_build_id")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Ian Rogers <irogers@google.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 77fcf58df15e ("drm/i915/dp_tunnel: Fix error handling when clearing stream BW in atomic state")
+Suggested-by: Imre Deak <imre.deak@intel.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Imre Deak <imre.deak@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://patch.msgid.link/20260612035310.3013066-1-lgs201920130244@gmail.com
+(cherry picked from commit d5005addb5f68e8a0edce249506757bdc9e3d8c8)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-minimal.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_atomic.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tools/perf/util/symbol-minimal.c b/tools/perf/util/symbol-minimal.c
-index 12ef02bbf2eea8..68f5a2622bd8bc 100644
---- a/tools/perf/util/symbol-minimal.c
-+++ b/tools/perf/util/symbol-minimal.c
-@@ -168,7 +168,7 @@ int filename__read_build_id(const char *filename, struct build_id *bid)
- 			if (elf32) {
- 				hdrs.phdr32[i].p_type = bswap_32(hdrs.phdr32[i].p_type);
- 				hdrs.phdr32[i].p_offset = bswap_32(hdrs.phdr32[i].p_offset);
--				hdrs.phdr32[i].p_filesz = bswap_32(hdrs.phdr32[i].p_offset);
-+				hdrs.phdr32[i].p_filesz = bswap_32(hdrs.phdr32[i].p_filesz);
- 			} else {
- 				hdrs.phdr64[i].p_type = bswap_32(hdrs.phdr64[i].p_type);
- 				hdrs.phdr64[i].p_offset = bswap_64(hdrs.phdr64[i].p_offset);
+diff --git a/drivers/gpu/drm/i915/display/intel_atomic.c b/drivers/gpu/drm/i915/display/intel_atomic.c
+index 12d6ed94075142..c1da487e88957d 100644
+--- a/drivers/gpu/drm/i915/display/intel_atomic.c
++++ b/drivers/gpu/drm/i915/display/intel_atomic.c
+@@ -290,6 +290,12 @@ static void intel_crtc_put_color_blobs(struct intel_crtc_state *crtc_state)
+ 
+ 	drm_property_blob_put(crtc_state->pre_csc_lut);
+ 	drm_property_blob_put(crtc_state->post_csc_lut);
++
++	crtc_state->hw.degamma_lut = NULL;
++	crtc_state->hw.gamma_lut = NULL;
++	crtc_state->hw.ctm = NULL;
++	crtc_state->pre_csc_lut = NULL;
++	crtc_state->post_csc_lut = NULL;
+ }
+ 
+ void intel_crtc_free_hw_state(struct intel_crtc_state *crtc_state)
 -- 
 2.53.0
 
