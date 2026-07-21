@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4832D47607B;
-	Tue, 21 Jul 2026 18:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E4A476CE9;
+	Tue, 21 Jul 2026 18:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659503; cv=none; b=YoTAGCuZl4UWYA3xtz5J01hXErL3wVeW7gIer30ipg0t4eBSvyDSdhVMYVyMXr704jnB316STeXaet51ZORMadyMbyfnlxQQHydBHCGxg8vCJ6Pllq2TiUZ5jxMhT2AwWdynyq08dM/ueLSSUaI5Gl6VE7wcBvqYGlD48KzsvV0=
+	t=1784659507; cv=none; b=c5N88Zfk0OvNSKN5ixuZt6/5f8+RKIu/CV778KQEfeiuNSZurMpgSCsa4UOYbKanGalVQqX4BiBw3wdmHnqFmBgpKFNRko84ztUnRun1zeFY4u3nhnZn74TtvO3+RGWYzt6TqOkb2CaYVppspCnHl5zeEIr+R98CRQaRZO+aUt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659503; c=relaxed/simple;
-	bh=4500fEQirSr2TxyhAX9i7Dht9lnRDs0+ZkULsfG5tEc=;
+	s=arc-20240116; t=1784659507; c=relaxed/simple;
+	bh=AXorVycnPkkQ9G8DoI2yl6tHG9fjgba1oqwt7bdWZIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DXA4IrjZlKOL4/Wsu6ju9GyYhcT6PjXWn/6DOeTnlvqWvqflMZx7GTIcdNcBbiDJu64ho60NXU3Lk33UjLC27CBxkeWVEt4FLxqDm7KcwKgIg52r1Q7VEPw/GYVK+1u1CfyafC72xEt9OFDELiA/pYbSTH4elGsDwae0UJ1Jpf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deRzCmb0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hns/oCS99FMgmezFTuKgEjIar25uh0en9UCwpHLWLzi3LEe4IGMh4UmitzRbmR0jcxwMSIIdG/94onGYynD2IpVTTkJzaDXno0CF73hcFayX6Xhh+HiCgZZesqQTsmdGMVuq7bk2XmWMqCwG4UtGRvFzCRriAZ+Mb0LzKWeQWVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ddYXBiF6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deRzCmb0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8A71F00A3A;
-	Tue, 21 Jul 2026 18:45:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddYXBiF6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 517161F00A3A;
+	Tue, 21 Jul 2026 18:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659502;
-	bh=2cEAHwq7L9vUTsRq166sADHdZgIMc4cp2Vlu938avt0=;
+	s=korg; t=1784659504;
+	bh=00ZaFAJoUSq05i9KRm97vuqKSIILxAgBmGO5U7TzuNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=deRzCmb0Pvd6MYYnjf7yIlN7YOx9EE7ebKLv0Fu29kmCdO5ftWjJlqXLprGVDYvWP
-	 aEa7UIADbcjPKzxC5E8bYWCSl8lI8CaFLOM2wUfMS2W+Cbxp3S0bsdm3b2XSaby7iL
-	 6oh54adDuQ/Qj5p9D1WllVx5h/Dwq24F490NVPP4=
+	b=ddYXBiF6B4jgj+QAeG56kW2E0+NjHrRSwGfBLb6BvXIzzn1iMjnMHm/9K9L0O9cBk
+	 5yIOC7lvTJdQkkdp8QrJ4js3JBB1S1J99C8elR1tjVJO/KQLPzVhAdvto6ZAKObbzE
+	 mNs462GHPvmKH6A+ZsPG/J1y2TO2fpCy+QTnxja0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Siwei Zhang <oss@fourdim.xyz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	David Howells <dhowells@redhat.com>,
+	Steve French <sfrench@samba.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Enzo Matsumiya <ematsumiya@suse.de>,
+	linux-cifs@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1546/1611] Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_new_connection_cb()
-Date: Tue, 21 Jul 2026 17:27:42 +0200
-Message-ID: <20260721152550.225044775@linuxfoundation.org>
+Subject: [PATCH 6.18 1547/1611] cifs: SMB1 split: Rename cifstransport.c
+Date: Tue, 21 Jul 2026 17:27:43 +0200
+Message-ID: <20260721152550.249021429@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,539 +57,1182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siwei Zhang <oss@fourdim.xyz>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 6fef032af0092ed5ccb767239a9ac1bc38c08a40 ]
+[ Upstream commit b09eab52b307df58a36f34d047378053a2e13e13 ]
 
-l2cap_sock_new_connection_cb() returned l2cap_pi(sk)->chan after
-release_sock(parent). Once the parent lock is dropped the newly
-enqueued child socket sk is reachable via the accept queue, so another
-task can accept and free it before the callback dereferences sk,
-resulting in a use-after-free.
+Rename cifstransport.c to smb1transport.c in order to give consistent names
+SMB1-specific files.
 
-Rework the ->new_connection() op so the core, rather than the callback,
-owns the child channel's lifetime. The op now receives a pre-allocated
-new_chan and returns an errno instead of allocating and returning a
-channel. l2cap_new_connection() allocates the child channel and links
-it into the conn list via __l2cap_chan_add() before invoking the
-callback, so the conn-list reference keeps the channel alive once
-release_sock(parent) exposes the socket to other tasks.
-
-Channel configuration that was duplicated in l2cap_sock_init() and the
-various new_connection callbacks is consolidated into
-l2cap_chan_set_defaults(), which now inherits from the parent channel
-when one is supplied.
-
-Fixes: 8ffb929098a5 ("Bluetooth: Remove parent socket usage from l2cap_core.c")
-Cc: stable@kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Steve French <sfrench@samba.org>
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: Enzo Matsumiya <ematsumiya@suse.de>
+cc: linux-cifs@vger.kernel.org
+cc: linux-fsdevel@vger.kernel.org
+cc: linux-kernel@vger.kernel.org
+Acked-by: Enzo Matsumiya <ematsumiya@suse.de>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: c6394bcaf254 ("ksmbd: use opener credentials for FSCTL mutations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/l2cap.h |   10 ++--
- net/bluetooth/6lowpan.c       |   18 -------
- net/bluetooth/l2cap_core.c    |   78 ++++++++++++++++++++++++++-----
- net/bluetooth/l2cap_sock.c    |  103 +++++++++++++++++++-----------------------
- net/bluetooth/smp.c           |   27 ++---------
- 5 files changed, 127 insertions(+), 109 deletions(-)
+ fs/smb/client/Makefile                             | 5 ++++-
+ fs/smb/client/{cifstransport.c => smb1transport.c} | 0
+ fs/smb/client/Makefile        |    5 
+ fs/smb/client/cifstransport.c |  565 ------------------------------------------
+ fs/smb/client/smb1transport.c |  565 ++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 569 insertions(+), 566 deletions(-)
+ rename fs/smb/client/{cifstransport.c => smb1transport.c} (100%)
 
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -620,7 +620,8 @@ struct l2cap_chan {
- struct l2cap_ops {
- 	char			*name;
+--- a/fs/smb/client/Makefile
++++ b/fs/smb/client/Makefile
+@@ -32,6 +32,9 @@ cifs-$(CONFIG_CIFS_SMB_DIRECT) += smbdir
  
--	struct l2cap_chan	*(*new_connection) (struct l2cap_chan *chan);
-+	int			(*new_connection)(struct l2cap_chan *chan,
-+						  struct l2cap_chan *new_chan);
- 	int			(*recv) (struct l2cap_chan * chan,
- 					 struct sk_buff *skb);
- 	void			(*teardown) (struct l2cap_chan *chan, int err);
-@@ -885,9 +886,10 @@ static inline __u16 __next_seq(struct l2
- 	return (seq + 1) % (chan->tx_win_max + 1);
- }
+ cifs-$(CONFIG_CIFS_ROOT) += cifsroot.o
  
--static inline struct l2cap_chan *l2cap_chan_no_new_connection(struct l2cap_chan *chan)
-+static inline int l2cap_chan_no_new_connection(struct l2cap_chan *chan,
-+					       struct l2cap_chan *new_chan)
- {
--	return NULL;
-+	return -EOPNOTSUPP;
- }
+-cifs-$(CONFIG_CIFS_ALLOW_INSECURE_LEGACY) += smb1ops.o cifssmb.o cifstransport.o
++cifs-$(CONFIG_CIFS_ALLOW_INSECURE_LEGACY) += \
++	cifssmb.o \
++	smb1ops.o \
++	smb1transport.o
  
- static inline int l2cap_chan_no_recv(struct l2cap_chan *chan, struct sk_buff *skb)
-@@ -964,7 +966,7 @@ int l2cap_chan_send(struct l2cap_chan *c
- void l2cap_chan_busy(struct l2cap_chan *chan, int busy);
- void l2cap_chan_rx_avail(struct l2cap_chan *chan, ssize_t rx_avail);
- int l2cap_chan_check_security(struct l2cap_chan *chan, bool initiator);
--void l2cap_chan_set_defaults(struct l2cap_chan *chan);
-+void l2cap_chan_set_defaults(struct l2cap_chan *chan, struct l2cap_chan *pchan);
- int l2cap_ertm_init(struct l2cap_chan *chan);
- void l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan);
- void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan);
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -632,7 +632,7 @@ static struct l2cap_chan *chan_create(vo
- 	if (!chan)
- 		return NULL;
- 
--	l2cap_chan_set_defaults(chan);
-+	l2cap_chan_set_defaults(chan, NULL);
- 
- 	chan->chan_type = L2CAP_CHAN_CONN_ORIENTED;
- 	chan->mode = L2CAP_MODE_LE_FLOWCTL;
-@@ -745,21 +745,6 @@ static inline void chan_ready_cb(struct
- 	ifup(dev->netdev);
- }
- 
--static inline struct l2cap_chan *chan_new_conn_cb(struct l2cap_chan *pchan)
+ cifs-$(CONFIG_CIFS_COMPRESSION) += compress.o compress/lz77.o
+--- a/fs/smb/client/cifstransport.c
++++ /dev/null
+@@ -1,565 +0,0 @@
+-// SPDX-License-Identifier: LGPL-2.1
+-/*
+- *
+- *   Copyright (C) International Business Machines  Corp., 2002,2008
+- *   Author(s): Steve French (sfrench@us.ibm.com)
+- *   Jeremy Allison (jra@samba.org) 2006.
+- *
+- */
+-
+-#include <linux/fs.h>
+-#include <linux/list.h>
+-#include <linux/gfp.h>
+-#include <linux/wait.h>
+-#include <linux/net.h>
+-#include <linux/delay.h>
+-#include <linux/freezer.h>
+-#include <linux/tcp.h>
+-#include <linux/bvec.h>
+-#include <linux/highmem.h>
+-#include <linux/uaccess.h>
+-#include <linux/processor.h>
+-#include <linux/mempool.h>
+-#include <linux/sched/signal.h>
+-#include <linux/task_io_accounting_ops.h>
+-#include "cifspdu.h"
+-#include "cifsglob.h"
+-#include "cifsproto.h"
+-#include "cifs_debug.h"
+-#include "smb2proto.h"
+-#include "smbdirect.h"
+-#include "compress.h"
+-
+-/* Max number of iovectors we can use off the stack when sending requests. */
+-#define CIFS_MAX_IOV_SIZE 8
+-
+-static struct mid_q_entry *
+-alloc_mid(const struct smb_hdr *smb_buffer, struct TCP_Server_Info *server)
 -{
--	struct l2cap_chan *chan;
+-	struct mid_q_entry *temp;
 -
--	chan = chan_create();
--	if (!chan)
+-	if (server == NULL) {
+-		cifs_dbg(VFS, "%s: null TCP session\n", __func__);
 -		return NULL;
+-	}
 -
--	chan->ops = pchan->ops;
+-	temp = mempool_alloc(cifs_mid_poolp, GFP_NOFS);
+-	memset(temp, 0, sizeof(struct mid_q_entry));
+-	kref_init(&temp->refcount);
+-	spin_lock_init(&temp->mid_lock);
+-	temp->mid = get_mid(smb_buffer);
+-	temp->pid = current->pid;
+-	temp->command = cpu_to_le16(smb_buffer->Command);
+-	cifs_dbg(FYI, "For smb_command %d\n", smb_buffer->Command);
+-	/* easier to use jiffies */
+-	/* when mid allocated can be before when sent */
+-	temp->when_alloc = jiffies;
+-	temp->server = server;
 -
--	BT_DBG("chan %p pchan %p", chan, pchan);
+-	/*
+-	 * The default is for the mid to be synchronous, so the
+-	 * default callback just wakes up the current task.
+-	 */
+-	get_task_struct(current);
+-	temp->creator = current;
+-	temp->callback = cifs_wake_up_task;
+-	temp->callback_data = current;
 -
--	return chan;
+-	atomic_inc(&mid_count);
+-	temp->mid_state = MID_REQUEST_ALLOCATED;
+-	return temp;
 -}
 -
- static void unregister_dev(struct lowpan_btle_dev *dev)
- {
- 	struct hci_dev *hdev = READ_ONCE(dev->hdev);
-@@ -889,7 +874,6 @@ static long chan_get_sndtimeo_cb(struct
- 
- static const struct l2cap_ops bt_6lowpan_chan_ops = {
- 	.name			= "L2CAP 6LoWPAN channel",
--	.new_connection		= chan_new_conn_cb,
- 	.recv			= chan_recv_cb,
- 	.close			= chan_close_cb,
- 	.state_change		= chan_state_change_cb,
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -525,7 +525,10 @@ void l2cap_chan_put(struct l2cap_chan *c
- }
- EXPORT_SYMBOL_GPL(l2cap_chan_put);
- 
--void l2cap_chan_set_defaults(struct l2cap_chan *chan)
-+/* Initialise @chan with default values, inheriting from the parent channel
-+ * @pchan when it is given.
-+ */
-+void l2cap_chan_set_defaults(struct l2cap_chan *chan, struct l2cap_chan *pchan)
- {
- 	chan->fcs  = L2CAP_FCS_CRC16;
- 	chan->max_tx = L2CAP_DEFAULT_MAX_TX;
-@@ -539,6 +542,31 @@ void l2cap_chan_set_defaults(struct l2ca
- 	chan->retrans_timeout = L2CAP_DEFAULT_RETRANS_TO;
- 	chan->monitor_timeout = L2CAP_DEFAULT_MONITOR_TO;
- 
-+	if (pchan) {
-+		BT_DBG("chan %p pchan %p", chan, pchan);
-+
-+		chan->chan_type = pchan->chan_type;
-+		chan->imtu = pchan->imtu;
-+		chan->omtu = pchan->omtu;
-+		chan->mode = pchan->mode;
-+		chan->fcs = pchan->fcs;
-+		chan->max_tx = pchan->max_tx;
-+		chan->tx_win = pchan->tx_win;
-+		chan->tx_win_max = pchan->tx_win_max;
-+		chan->sec_level = pchan->sec_level;
-+		chan->conf_state = pchan->conf_state;
-+		chan->flags = pchan->flags;
-+		chan->tx_credits = pchan->tx_credits;
-+		chan->rx_credits = pchan->rx_credits;
-+
-+		if (chan->chan_type == L2CAP_CHAN_FIXED) {
-+			chan->scid = pchan->scid;
-+			chan->dcid = pchan->scid;
-+		}
-+
-+		return;
-+	}
-+
- 	chan->conf_state = 0;
- 	set_bit(CONF_NOT_COMPLETE, &chan->conf_state);
- 
-@@ -4027,6 +4055,38 @@ static inline int l2cap_command_rej(stru
- 	return 0;
- }
- 
-+/* Allocate and initialise a channel for an incoming connection.
-+ *
-+ * The channel inherits its configuration from @pchan and is linked into @conn
-+ * before ->new_connection() runs, so the conn list reference keeps it alive if
-+ * the callback exposes it (e.g. via the socket accept queue) before this
-+ * returns. The l2cap_chan_create() reference is taken over by the subsystem on
-+ * success and dropped here on failure.
-+ */
-+static struct l2cap_chan *l2cap_new_connection(struct l2cap_conn *conn,
-+					       struct l2cap_chan *pchan)
-+{
-+	struct l2cap_chan *chan;
-+
-+	chan = l2cap_chan_create();
-+	if (!chan)
-+		return NULL;
-+
-+	l2cap_chan_set_defaults(chan, pchan);
-+	chan->ops = pchan->ops;
-+
-+	__l2cap_chan_add(conn, chan);
-+
-+	if (pchan->ops->new_connection &&
-+	    pchan->ops->new_connection(pchan, chan) < 0) {
-+		l2cap_chan_del(chan, 0);
-+		l2cap_chan_put(chan);
-+		return NULL;
-+	}
-+
-+	return chan;
-+}
-+
- static void l2cap_connect(struct l2cap_conn *conn, struct l2cap_cmd_hdr *cmd,
- 			  u8 *data, u8 rsp_code)
- {
-@@ -4073,7 +4133,7 @@ static void l2cap_connect(struct l2cap_c
- 		goto response;
- 	}
- 
--	chan = pchan->ops->new_connection(pchan);
-+	chan = l2cap_new_connection(conn, pchan);
- 	if (!chan)
- 		goto response;
- 
-@@ -4091,8 +4151,6 @@ static void l2cap_connect(struct l2cap_c
- 	chan->psm  = psm;
- 	chan->dcid = scid;
- 
--	__l2cap_chan_add(conn, chan);
+-int
+-smb_send(struct TCP_Server_Info *server, struct smb_hdr *smb_buffer,
+-	 unsigned int smb_buf_length)
+-{
+-	struct kvec iov[2];
+-	struct smb_rqst rqst = { .rq_iov = iov,
+-				 .rq_nvec = 2 };
 -
- 	dcid = chan->scid;
- 
- 	__set_chan_timer(chan, chan->ops->get_sndtimeo(chan));
-@@ -4984,7 +5042,7 @@ static int l2cap_le_connect_req(struct l
- 		goto response_unlock;
- 	}
- 
--	chan = pchan->ops->new_connection(pchan);
-+	chan = l2cap_new_connection(conn, pchan);
- 	if (!chan) {
- 		result = L2CAP_CR_LE_NO_MEM;
- 		goto response_unlock;
-@@ -4999,8 +5057,6 @@ static int l2cap_le_connect_req(struct l
- 	chan->omtu = mtu;
- 	chan->remote_mps = mps;
- 
--	__l2cap_chan_add(conn, chan);
+-	iov[0].iov_base = smb_buffer;
+-	iov[0].iov_len = 4;
+-	iov[1].iov_base = (char *)smb_buffer + 4;
+-	iov[1].iov_len = smb_buf_length;
 -
- 	l2cap_le_flowctl_init(chan, __le16_to_cpu(req->credits));
- 
- 	dcid = chan->scid;
-@@ -5208,7 +5264,7 @@ static inline int l2cap_ecred_conn_req(s
- 			continue;
- 		}
- 
--		chan = pchan->ops->new_connection(pchan);
-+		chan = l2cap_new_connection(conn, pchan);
- 		if (!chan) {
- 			result = L2CAP_CR_LE_NO_MEM;
- 			continue;
-@@ -5223,8 +5279,6 @@ static inline int l2cap_ecred_conn_req(s
- 		chan->omtu = mtu;
- 		chan->remote_mps = mps;
- 
--		__l2cap_chan_add(conn, chan);
+-	return __smb_send_rqst(server, 1, &rqst);
+-}
 -
- 		l2cap_ecred_init(chan, __le16_to_cpu(req->credits));
- 
- 		/* Init response */
-@@ -7502,14 +7556,12 @@ static void l2cap_connect_cfm(struct hci
- 			goto next;
- 
- 		l2cap_chan_lock(pchan);
--		chan = pchan->ops->new_connection(pchan);
-+		chan = l2cap_new_connection(conn, pchan);
- 		if (chan) {
- 			bacpy(&chan->src, &hcon->src);
- 			bacpy(&chan->dst, &hcon->dst);
- 			chan->src_type = bdaddr_src_type(hcon);
- 			chan->dst_type = dst_type;
--
--			__l2cap_chan_add(conn, chan);
- 		}
- 
- 		l2cap_chan_unlock(pchan);
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -45,7 +45,8 @@ static struct bt_sock_list l2cap_sk_list
- static const struct proto_ops l2cap_sock_ops;
- static void l2cap_sock_init(struct sock *sk, struct sock *parent);
- static struct sock *l2cap_sock_alloc(struct net *net, struct socket *sock,
--				     int proto, gfp_t prio, int kern);
-+				     int proto, gfp_t prio, int kern,
-+				     struct l2cap_chan *chan);
- static void l2cap_sock_cleanup_listen(struct sock *parent);
- 
- bool l2cap_is_socket(struct socket *sock)
-@@ -1256,6 +1257,23 @@ done:
- 	return err;
- }
- 
-+/* Release the sock's ref on chan and clear the pointer so that the ref is
-+ * dropped exactly once even if both l2cap_sock_kill() and
-+ * l2cap_sock_destruct() run. Setting chan->data to NULL first stops any other
-+ * task from dereferencing the now-dead sock pointer.
-+ */
-+static void l2cap_sock_put_chan(struct sock *sk)
-+{
-+	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
-+
-+	if (!chan)
-+		return;
-+
-+	chan->data = NULL;
-+	l2cap_pi(sk)->chan = NULL;
-+	l2cap_chan_put(chan);
-+}
-+
- /* Kill socket (only if zapped and orphan)
-  * Must be called on unlocked socket, with l2cap channel lock.
-  */
-@@ -1266,13 +1284,9 @@ static void l2cap_sock_kill(struct sock
- 
- 	BT_DBG("sk %p state %s", sk, state_to_string(sk->sk_state));
- 
--	/* Sock is dead, so set chan data to NULL, avoid other task use invalid
--	 * sock pointer.
--	 */
--	l2cap_pi(sk)->chan->data = NULL;
--	/* Kill poor orphan */
-+	l2cap_sock_put_chan(sk);
- 
--	l2cap_chan_put(l2cap_pi(sk)->chan);
-+	/* Kill poor orphan */
- 	sock_set_flag(sk, SOCK_DEAD);
- 	sock_put(sk);
- }
-@@ -1515,12 +1529,13 @@ static void l2cap_sock_cleanup_listen(st
- 	}
- }
- 
--static struct l2cap_chan *l2cap_sock_new_connection_cb(struct l2cap_chan *chan)
-+static int l2cap_sock_new_connection_cb(struct l2cap_chan *chan,
-+					struct l2cap_chan *new_chan)
- {
- 	struct sock *sk, *parent = chan->data;
- 
- 	if (!parent)
--		return NULL;
-+		return -EINVAL;
- 
- 	lock_sock(parent);
- 
-@@ -1528,25 +1543,28 @@ static struct l2cap_chan *l2cap_sock_new
- 	if (sk_acceptq_is_full(parent)) {
- 		BT_DBG("backlog full %d", parent->sk_ack_backlog);
- 		release_sock(parent);
--		return NULL;
-+		return -ENOBUFS;
- 	}
- 
- 	sk = l2cap_sock_alloc(sock_net(parent), NULL, BTPROTO_L2CAP,
--			      GFP_ATOMIC, 0);
-+			      GFP_ATOMIC, 0, new_chan);
- 	if (!sk) {
- 		release_sock(parent);
--		return NULL;
--        }
-+		return -ENOMEM;
-+	}
- 
- 	bt_sock_reclassify_lock(sk, BTPROTO_L2CAP);
- 
- 	l2cap_sock_init(sk, parent);
- 
-+	/* The conn list reference taken by l2cap_new_connection() keeps new_chan
-+	 * alive once release_sock() lets another task free this socket.
-+	 */
- 	bt_accept_enqueue(parent, sk, false);
- 
- 	release_sock(parent);
- 
--	return l2cap_pi(sk)->chan;
-+	return 0;
- }
- 
- static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
-@@ -1844,10 +1862,7 @@ static void l2cap_sock_destruct(struct s
- 
- 	BT_DBG("sk %p", sk);
- 
--	if (l2cap_pi(sk)->chan) {
--		l2cap_pi(sk)->chan->data = NULL;
--		l2cap_chan_put(l2cap_pi(sk)->chan);
+-static int allocate_mid(struct cifs_ses *ses, struct smb_hdr *in_buf,
+-			struct mid_q_entry **ppmidQ)
+-{
+-	spin_lock(&ses->ses_lock);
+-	if (ses->ses_status == SES_NEW) {
+-		if ((in_buf->Command != SMB_COM_SESSION_SETUP_ANDX) &&
+-			(in_buf->Command != SMB_COM_NEGOTIATE)) {
+-			spin_unlock(&ses->ses_lock);
+-			return -EAGAIN;
+-		}
+-		/* else ok - we are setting up session */
 -	}
-+	l2cap_sock_put_chan(sk);
- 
- 	list_for_each_entry_safe(rx_busy, next, &l2cap_pi(sk)->rx_busy, list) {
- 		kfree_skb(rx_busy->skb);
-@@ -1880,30 +1895,12 @@ static void l2cap_sock_init(struct sock
- 	BT_DBG("sk %p", sk);
- 
- 	if (parent) {
--		struct l2cap_chan *pchan = l2cap_pi(parent)->chan;
 -
- 		sk->sk_type = parent->sk_type;
- 		bt_sk(sk)->flags = bt_sk(parent)->flags;
- 
--		chan->chan_type = pchan->chan_type;
--		chan->imtu = pchan->imtu;
--		chan->omtu = pchan->omtu;
--		chan->conf_state = pchan->conf_state;
--		chan->mode = pchan->mode;
--		chan->fcs  = pchan->fcs;
--		chan->max_tx = pchan->max_tx;
--		chan->tx_win = pchan->tx_win;
--		chan->tx_win_max = pchan->tx_win_max;
--		chan->sec_level = pchan->sec_level;
--		chan->flags = pchan->flags;
--		chan->tx_credits = pchan->tx_credits;
--		chan->rx_credits = pchan->rx_credits;
+-	if (ses->ses_status == SES_EXITING) {
+-		/* check if SMB session is bad because we are setting it up */
+-		if (in_buf->Command != SMB_COM_LOGOFF_ANDX) {
+-			spin_unlock(&ses->ses_lock);
+-			return -EAGAIN;
+-		}
+-		/* else ok - we are shutting down session */
+-	}
+-	spin_unlock(&ses->ses_lock);
 -
--		if (chan->chan_type == L2CAP_CHAN_FIXED) {
--			chan->scid = pchan->scid;
--			chan->dcid = pchan->scid;
+-	*ppmidQ = alloc_mid(in_buf, ses->server);
+-	if (*ppmidQ == NULL)
+-		return -ENOMEM;
+-	spin_lock(&ses->server->mid_queue_lock);
+-	list_add_tail(&(*ppmidQ)->qhead, &ses->server->pending_mid_q);
+-	spin_unlock(&ses->server->mid_queue_lock);
+-	return 0;
+-}
+-
+-struct mid_q_entry *
+-cifs_setup_async_request(struct TCP_Server_Info *server, struct smb_rqst *rqst)
+-{
+-	int rc;
+-	struct smb_hdr *hdr = (struct smb_hdr *)rqst->rq_iov[0].iov_base;
+-	struct mid_q_entry *mid;
+-
+-	if (rqst->rq_iov[0].iov_len != 4 ||
+-	    rqst->rq_iov[0].iov_base + 4 != rqst->rq_iov[1].iov_base)
+-		return ERR_PTR(-EIO);
+-
+-	/* enable signing if server requires it */
+-	if (server->sign)
+-		hdr->Flags2 |= SMBFLG2_SECURITY_SIGNATURE;
+-
+-	mid = alloc_mid(hdr, server);
+-	if (mid == NULL)
+-		return ERR_PTR(-ENOMEM);
+-
+-	rc = cifs_sign_rqst(rqst, server, &mid->sequence_number);
+-	if (rc) {
+-		release_mid(mid);
+-		return ERR_PTR(rc);
+-	}
+-
+-	return mid;
+-}
+-
+-/*
+- *
+- * Send an SMB Request.  No response info (other than return code)
+- * needs to be parsed.
+- *
+- * flags indicate the type of request buffer and how long to wait
+- * and whether to log NT STATUS code (error) before mapping it to POSIX error
+- *
+- */
+-int
+-SendReceiveNoRsp(const unsigned int xid, struct cifs_ses *ses,
+-		 char *in_buf, int flags)
+-{
+-	int rc;
+-	struct kvec iov[1];
+-	struct kvec rsp_iov;
+-	int resp_buf_type;
+-
+-	iov[0].iov_base = in_buf;
+-	iov[0].iov_len = get_rfc1002_length(in_buf) + 4;
+-	flags |= CIFS_NO_RSP_BUF;
+-	rc = SendReceive2(xid, ses, iov, 1, &resp_buf_type, flags, &rsp_iov);
+-	cifs_dbg(NOISY, "SendRcvNoRsp flags %d rc %d\n", flags, rc);
+-
+-	return rc;
+-}
+-
+-int
+-cifs_check_receive(struct mid_q_entry *mid, struct TCP_Server_Info *server,
+-		   bool log_error)
+-{
+-	unsigned int len = get_rfc1002_length(mid->resp_buf) + 4;
+-
+-	dump_smb(mid->resp_buf, min_t(u32, 92, len));
+-
+-	/* convert the length into a more usable form */
+-	if (server->sign) {
+-		struct kvec iov[2];
+-		int rc = 0;
+-		struct smb_rqst rqst = { .rq_iov = iov,
+-					 .rq_nvec = 2 };
+-
+-		iov[0].iov_base = mid->resp_buf;
+-		iov[0].iov_len = 4;
+-		iov[1].iov_base = (char *)mid->resp_buf + 4;
+-		iov[1].iov_len = len - 4;
+-		/* FIXME: add code to kill session */
+-		rc = cifs_verify_signature(&rqst, server,
+-					   mid->sequence_number);
+-		if (rc)
+-			cifs_server_dbg(VFS, "SMB signature verification returned error = %d\n",
+-				 rc);
+-	}
+-
+-	/* BB special case reconnect tid and uid here? */
+-	return map_and_check_smb_error(mid, log_error);
+-}
+-
+-struct mid_q_entry *
+-cifs_setup_request(struct cifs_ses *ses, struct TCP_Server_Info *ignored,
+-		   struct smb_rqst *rqst)
+-{
+-	int rc;
+-	struct smb_hdr *hdr = (struct smb_hdr *)rqst->rq_iov[0].iov_base;
+-	struct mid_q_entry *mid;
+-
+-	if (rqst->rq_iov[0].iov_len != 4 ||
+-	    rqst->rq_iov[0].iov_base + 4 != rqst->rq_iov[1].iov_base)
+-		return ERR_PTR(-EIO);
+-
+-	rc = allocate_mid(ses, hdr, &mid);
+-	if (rc)
+-		return ERR_PTR(rc);
+-	rc = cifs_sign_rqst(rqst, ses->server, &mid->sequence_number);
+-	if (rc) {
+-		delete_mid(mid);
+-		return ERR_PTR(rc);
+-	}
+-	return mid;
+-}
+-
+-int
+-SendReceive2(const unsigned int xid, struct cifs_ses *ses,
+-	     struct kvec *iov, int n_vec, int *resp_buf_type /* ret */,
+-	     const int flags, struct kvec *resp_iov)
+-{
+-	struct smb_rqst rqst;
+-	struct kvec s_iov[CIFS_MAX_IOV_SIZE], *new_iov;
+-	int rc;
+-
+-	if (n_vec + 1 > CIFS_MAX_IOV_SIZE) {
+-		new_iov = kmalloc_array(n_vec + 1, sizeof(struct kvec),
+-					GFP_KERNEL);
+-		if (!new_iov) {
+-			/* otherwise cifs_send_recv below sets resp_buf_type */
+-			*resp_buf_type = CIFS_NO_BUFFER;
+-			return -ENOMEM;
+-		}
+-	} else
+-		new_iov = s_iov;
+-
+-	/* 1st iov is a RFC1001 length followed by the rest of the packet */
+-	memcpy(new_iov + 1, iov, (sizeof(struct kvec) * n_vec));
+-
+-	new_iov[0].iov_base = new_iov[1].iov_base;
+-	new_iov[0].iov_len = 4;
+-	new_iov[1].iov_base += 4;
+-	new_iov[1].iov_len -= 4;
+-
+-	memset(&rqst, 0, sizeof(struct smb_rqst));
+-	rqst.rq_iov = new_iov;
+-	rqst.rq_nvec = n_vec + 1;
+-
+-	rc = cifs_send_recv(xid, ses, ses->server,
+-			    &rqst, resp_buf_type, flags, resp_iov);
+-	if (n_vec + 1 > CIFS_MAX_IOV_SIZE)
+-		kfree(new_iov);
+-	return rc;
+-}
+-
+-int
+-SendReceive(const unsigned int xid, struct cifs_ses *ses,
+-	    struct smb_hdr *in_buf, struct smb_hdr *out_buf,
+-	    int *pbytes_returned, const int flags)
+-{
+-	int rc = 0;
+-	struct mid_q_entry *midQ;
+-	unsigned int len = be32_to_cpu(in_buf->smb_buf_length);
+-	struct kvec iov = { .iov_base = in_buf, .iov_len = len };
+-	struct smb_rqst rqst = { .rq_iov = &iov, .rq_nvec = 1 };
+-	struct cifs_credits credits = { .value = 1, .instance = 0 };
+-	struct TCP_Server_Info *server;
+-
+-	if (ses == NULL) {
+-		cifs_dbg(VFS, "Null smb session\n");
+-		return -EIO;
+-	}
+-	server = ses->server;
+-	if (server == NULL) {
+-		cifs_dbg(VFS, "Null tcp session\n");
+-		return -EIO;
+-	}
+-
+-	spin_lock(&server->srv_lock);
+-	if (server->tcpStatus == CifsExiting) {
+-		spin_unlock(&server->srv_lock);
+-		return -ENOENT;
+-	}
+-	spin_unlock(&server->srv_lock);
+-
+-	/* Ensure that we do not send more than 50 overlapping requests
+-	   to the same server. We may make this configurable later or
+-	   use ses->maxReq */
+-
+-	if (len > CIFSMaxBufSize + MAX_CIFS_HDR_SIZE - 4) {
+-		cifs_server_dbg(VFS, "Invalid length, greater than maximum frame, %d\n",
+-				len);
+-		return -EIO;
+-	}
+-
+-	rc = wait_for_free_request(server, flags, &credits.instance);
+-	if (rc)
+-		return rc;
+-
+-	/* make sure that we sign in the same order that we send on this socket
+-	   and avoid races inside tcp sendmsg code that could cause corruption
+-	   of smb data */
+-
+-	cifs_server_lock(server);
+-
+-	rc = allocate_mid(ses, in_buf, &midQ);
+-	if (rc) {
+-		cifs_server_unlock(server);
+-		/* Update # of requests on wire to server */
+-		add_credits(server, &credits, 0);
+-		return rc;
+-	}
+-
+-	rc = cifs_sign_smb(in_buf, server, &midQ->sequence_number);
+-	if (rc) {
+-		cifs_server_unlock(server);
+-		goto out;
+-	}
+-
+-	midQ->mid_state = MID_REQUEST_SUBMITTED;
+-
+-	rc = smb_send(server, in_buf, len);
+-	cifs_save_when_sent(midQ);
+-
+-	if (rc < 0)
+-		server->sequence_number -= 2;
+-
+-	cifs_server_unlock(server);
+-
+-	if (rc < 0)
+-		goto out;
+-
+-	rc = wait_for_response(server, midQ);
+-	if (rc != 0) {
+-		send_cancel(server, &rqst, midQ);
+-		spin_lock(&midQ->mid_lock);
+-		if (midQ->callback) {
+-			/* no longer considered to be "in-flight" */
+-			midQ->callback = release_mid;
+-			spin_unlock(&midQ->mid_lock);
+-			add_credits(server, &credits, 0);
+-			return rc;
+-		}
+-		spin_unlock(&midQ->mid_lock);
+-	}
+-
+-	rc = cifs_sync_mid_result(midQ, server);
+-	if (rc != 0) {
+-		add_credits(server, &credits, 0);
+-		return rc;
+-	}
+-
+-	if (!midQ->resp_buf || !out_buf ||
+-	    midQ->mid_state != MID_RESPONSE_READY) {
+-		rc = -EIO;
+-		cifs_server_dbg(VFS, "Bad MID state?\n");
+-		goto out;
+-	}
+-
+-	*pbytes_returned = get_rfc1002_length(midQ->resp_buf);
+-	memcpy(out_buf, midQ->resp_buf, *pbytes_returned + 4);
+-	rc = cifs_check_receive(midQ, server, 0);
+-out:
+-	delete_mid(midQ);
+-	add_credits(server, &credits, 0);
+-
+-	return rc;
+-}
+-
+-/* We send a LOCKINGX_CANCEL_LOCK to cause the Windows
+-   blocking lock to return. */
+-
+-static int
+-send_lock_cancel(const unsigned int xid, struct cifs_tcon *tcon,
+-			struct smb_hdr *in_buf,
+-			struct smb_hdr *out_buf)
+-{
+-	int bytes_returned;
+-	struct cifs_ses *ses = tcon->ses;
+-	LOCK_REQ *pSMB = (LOCK_REQ *)in_buf;
+-
+-	/* We just modify the current in_buf to change
+-	   the type of lock from LOCKING_ANDX_SHARED_LOCK
+-	   or LOCKING_ANDX_EXCLUSIVE_LOCK to
+-	   LOCKING_ANDX_CANCEL_LOCK. */
+-
+-	pSMB->LockType = LOCKING_ANDX_CANCEL_LOCK|LOCKING_ANDX_LARGE_FILES;
+-	pSMB->Timeout = 0;
+-	pSMB->hdr.Mid = get_next_mid(ses->server);
+-
+-	return SendReceive(xid, ses, in_buf, out_buf,
+-			&bytes_returned, 0);
+-}
+-
+-int
+-SendReceiveBlockingLock(const unsigned int xid, struct cifs_tcon *tcon,
+-	    struct smb_hdr *in_buf, struct smb_hdr *out_buf,
+-	    int *pbytes_returned)
+-{
+-	int rc = 0;
+-	int rstart = 0;
+-	struct mid_q_entry *midQ;
+-	struct cifs_ses *ses;
+-	unsigned int len = be32_to_cpu(in_buf->smb_buf_length);
+-	struct kvec iov = { .iov_base = in_buf, .iov_len = len };
+-	struct smb_rqst rqst = { .rq_iov = &iov, .rq_nvec = 1 };
+-	unsigned int instance;
+-	struct TCP_Server_Info *server;
+-
+-	if (tcon == NULL || tcon->ses == NULL) {
+-		cifs_dbg(VFS, "Null smb session\n");
+-		return -EIO;
+-	}
+-	ses = tcon->ses;
+-	server = ses->server;
+-
+-	if (server == NULL) {
+-		cifs_dbg(VFS, "Null tcp session\n");
+-		return -EIO;
+-	}
+-
+-	spin_lock(&server->srv_lock);
+-	if (server->tcpStatus == CifsExiting) {
+-		spin_unlock(&server->srv_lock);
+-		return -ENOENT;
+-	}
+-	spin_unlock(&server->srv_lock);
+-
+-	/* Ensure that we do not send more than 50 overlapping requests
+-	   to the same server. We may make this configurable later or
+-	   use ses->maxReq */
+-
+-	if (len > CIFSMaxBufSize + MAX_CIFS_HDR_SIZE - 4) {
+-		cifs_tcon_dbg(VFS, "Invalid length, greater than maximum frame, %d\n",
+-			      len);
+-		return -EIO;
+-	}
+-
+-	rc = wait_for_free_request(server, CIFS_BLOCKING_OP, &instance);
+-	if (rc)
+-		return rc;
+-
+-	/* make sure that we sign in the same order that we send on this socket
+-	   and avoid races inside tcp sendmsg code that could cause corruption
+-	   of smb data */
+-
+-	cifs_server_lock(server);
+-
+-	rc = allocate_mid(ses, in_buf, &midQ);
+-	if (rc) {
+-		cifs_server_unlock(server);
+-		return rc;
+-	}
+-
+-	rc = cifs_sign_smb(in_buf, server, &midQ->sequence_number);
+-	if (rc) {
+-		delete_mid(midQ);
+-		cifs_server_unlock(server);
+-		return rc;
+-	}
+-
+-	midQ->mid_state = MID_REQUEST_SUBMITTED;
+-	rc = smb_send(server, in_buf, len);
+-	cifs_save_when_sent(midQ);
+-
+-	if (rc < 0)
+-		server->sequence_number -= 2;
+-
+-	cifs_server_unlock(server);
+-
+-	if (rc < 0) {
+-		delete_mid(midQ);
+-		return rc;
+-	}
+-
+-	/* Wait for a reply - allow signals to interrupt. */
+-	rc = wait_event_interruptible(server->response_q,
+-		(!(midQ->mid_state == MID_REQUEST_SUBMITTED ||
+-		   midQ->mid_state == MID_RESPONSE_RECEIVED)) ||
+-		((server->tcpStatus != CifsGood) &&
+-		 (server->tcpStatus != CifsNew)));
+-
+-	/* Were we interrupted by a signal ? */
+-	spin_lock(&server->srv_lock);
+-	if ((rc == -ERESTARTSYS) &&
+-		(midQ->mid_state == MID_REQUEST_SUBMITTED ||
+-		 midQ->mid_state == MID_RESPONSE_RECEIVED) &&
+-		((server->tcpStatus == CifsGood) ||
+-		 (server->tcpStatus == CifsNew))) {
+-		spin_unlock(&server->srv_lock);
+-
+-		if (in_buf->Command == SMB_COM_TRANSACTION2) {
+-			/* POSIX lock. We send a NT_CANCEL SMB to cause the
+-			   blocking lock to return. */
+-			rc = send_cancel(server, &rqst, midQ);
+-			if (rc) {
+-				delete_mid(midQ);
+-				return rc;
+-			}
+-		} else {
+-			/* Windows lock. We send a LOCKINGX_CANCEL_LOCK
+-			   to cause the blocking lock to return. */
+-
+-			rc = send_lock_cancel(xid, tcon, in_buf, out_buf);
+-
+-			/* If we get -ENOLCK back the lock may have
+-			   already been removed. Don't exit in this case. */
+-			if (rc && rc != -ENOLCK) {
+-				delete_mid(midQ);
+-				return rc;
+-			}
 -		}
 -
-+		/* Channel configuration is inherited from the parent by
-+		 * l2cap_new_connection().
-+		 */
- 		security_sk_clone(parent, sk);
- 	} else {
- 		switch (sk->sk_type) {
-@@ -1929,7 +1926,7 @@ static void l2cap_sock_init(struct sock
- 			chan->mode = L2CAP_MODE_BASIC;
- 		}
- 
--		l2cap_chan_set_defaults(chan);
-+		l2cap_chan_set_defaults(chan, NULL);
- 	}
- 
- 	/* Default config options */
-@@ -1948,10 +1945,10 @@ static struct proto l2cap_proto = {
- };
- 
- static struct sock *l2cap_sock_alloc(struct net *net, struct socket *sock,
--				     int proto, gfp_t prio, int kern)
-+				     int proto, gfp_t prio, int kern,
-+				     struct l2cap_chan *chan)
- {
- 	struct sock *sk;
--	struct l2cap_chan *chan;
- 
- 	sk = bt_sock_alloc(net, sock, &l2cap_proto, proto, prio, kern);
- 	if (!sk)
-@@ -1962,16 +1959,7 @@ static struct sock *l2cap_sock_alloc(str
- 
- 	INIT_LIST_HEAD(&l2cap_pi(sk)->rx_busy);
- 
--	chan = l2cap_chan_create();
--	if (!chan) {
--		sk_free(sk);
--		if (sock)
--			sock->sk = NULL;
--		return NULL;
+-		rc = wait_for_response(server, midQ);
+-		if (rc) {
+-			send_cancel(server, &rqst, midQ);
+-			spin_lock(&midQ->mid_lock);
+-			if (midQ->callback) {
+-				/* no longer considered to be "in-flight" */
+-				midQ->callback = release_mid;
+-				spin_unlock(&midQ->mid_lock);
+-				return rc;
+-			}
+-			spin_unlock(&midQ->mid_lock);
+-		}
+-
+-		/* We got the response - restart system call. */
+-		rstart = 1;
+-		spin_lock(&server->srv_lock);
+-	}
+-	spin_unlock(&server->srv_lock);
+-
+-	rc = cifs_sync_mid_result(midQ, server);
+-	if (rc != 0)
+-		return rc;
+-
+-	/* rcvd frame is ok */
+-	if (out_buf == NULL || midQ->mid_state != MID_RESPONSE_READY) {
+-		rc = -EIO;
+-		cifs_tcon_dbg(VFS, "Bad MID state?\n");
+-		goto out;
 -	}
 -
--	l2cap_chan_hold(chan);
--
-+	/* The sock takes ownership of the caller's reference on chan. */
- 	l2cap_pi(sk)->chan = chan;
- 
- 	return sk;
-@@ -1981,6 +1969,7 @@ static int l2cap_sock_create(struct net
- 			     int kern)
- {
- 	struct sock *sk;
-+	struct l2cap_chan *chan;
- 
- 	BT_DBG("sock %p", sock);
- 
-@@ -1995,10 +1984,16 @@ static int l2cap_sock_create(struct net
- 
- 	sock->ops = &l2cap_sock_ops;
- 
--	sk = l2cap_sock_alloc(net, sock, protocol, GFP_ATOMIC, kern);
--	if (!sk)
-+	chan = l2cap_chan_create();
-+	if (!chan)
- 		return -ENOMEM;
- 
-+	sk = l2cap_sock_alloc(net, sock, protocol, GFP_ATOMIC, kern, chan);
-+	if (!sk) {
-+		l2cap_chan_put(chan);
-+		return -ENOMEM;
+-	*pbytes_returned = get_rfc1002_length(midQ->resp_buf);
+-	memcpy(out_buf, midQ->resp_buf, *pbytes_returned + 4);
+-	rc = cifs_check_receive(midQ, server, 0);
+-out:
+-	delete_mid(midQ);
+-	if (rstart && rc == -EACCES)
+-		return -ERESTARTSYS;
+-	return rc;
+-}
+--- /dev/null
++++ b/fs/smb/client/smb1transport.c
+@@ -0,0 +1,565 @@
++// SPDX-License-Identifier: LGPL-2.1
++/*
++ *
++ *   Copyright (C) International Business Machines  Corp., 2002,2008
++ *   Author(s): Steve French (sfrench@us.ibm.com)
++ *   Jeremy Allison (jra@samba.org) 2006.
++ *
++ */
++
++#include <linux/fs.h>
++#include <linux/list.h>
++#include <linux/gfp.h>
++#include <linux/wait.h>
++#include <linux/net.h>
++#include <linux/delay.h>
++#include <linux/freezer.h>
++#include <linux/tcp.h>
++#include <linux/bvec.h>
++#include <linux/highmem.h>
++#include <linux/uaccess.h>
++#include <linux/processor.h>
++#include <linux/mempool.h>
++#include <linux/sched/signal.h>
++#include <linux/task_io_accounting_ops.h>
++#include "cifspdu.h"
++#include "cifsglob.h"
++#include "cifsproto.h"
++#include "cifs_debug.h"
++#include "smb2proto.h"
++#include "smbdirect.h"
++#include "compress.h"
++
++/* Max number of iovectors we can use off the stack when sending requests. */
++#define CIFS_MAX_IOV_SIZE 8
++
++static struct mid_q_entry *
++alloc_mid(const struct smb_hdr *smb_buffer, struct TCP_Server_Info *server)
++{
++	struct mid_q_entry *temp;
++
++	if (server == NULL) {
++		cifs_dbg(VFS, "%s: null TCP session\n", __func__);
++		return NULL;
 +	}
 +
- 	l2cap_sock_init(sk, NULL);
- 	bt_sock_link(&l2cap_sk_list, sk);
- 	return 0;
---- a/net/bluetooth/smp.c
-+++ b/net/bluetooth/smp.c
-@@ -3234,34 +3234,19 @@ static const struct l2cap_ops smp_chan_o
- 	.get_sndtimeo		= l2cap_chan_no_get_sndtimeo,
- };
- 
--static inline struct l2cap_chan *smp_new_conn_cb(struct l2cap_chan *pchan)
-+static inline int smp_new_conn_cb(struct l2cap_chan *chan,
-+				  struct l2cap_chan *new_chan)
- {
--	struct l2cap_chan *chan;
--
--	BT_DBG("pchan %p", pchan);
--
--	chan = l2cap_chan_create();
--	if (!chan)
--		return NULL;
--
--	chan->chan_type	= pchan->chan_type;
--	chan->ops	= &smp_chan_ops;
--	chan->scid	= pchan->scid;
--	chan->dcid	= chan->scid;
--	chan->imtu	= pchan->imtu;
--	chan->omtu	= pchan->omtu;
--	chan->mode	= pchan->mode;
-+	new_chan->ops = &smp_chan_ops;
- 
- 	/* Other L2CAP channels may request SMP routines in order to
- 	 * change the security level. This means that the SMP channel
- 	 * lock must be considered in its own category to avoid lockdep
- 	 * warnings.
- 	 */
--	atomic_set(&chan->nesting, L2CAP_NESTING_SMP);
--
--	BT_DBG("created chan %p", chan);
-+	atomic_set(&new_chan->nesting, L2CAP_NESTING_SMP);
- 
--	return chan;
++	temp = mempool_alloc(cifs_mid_poolp, GFP_NOFS);
++	memset(temp, 0, sizeof(struct mid_q_entry));
++	kref_init(&temp->refcount);
++	spin_lock_init(&temp->mid_lock);
++	temp->mid = get_mid(smb_buffer);
++	temp->pid = current->pid;
++	temp->command = cpu_to_le16(smb_buffer->Command);
++	cifs_dbg(FYI, "For smb_command %d\n", smb_buffer->Command);
++	/* easier to use jiffies */
++	/* when mid allocated can be before when sent */
++	temp->when_alloc = jiffies;
++	temp->server = server;
++
++	/*
++	 * The default is for the mid to be synchronous, so the
++	 * default callback just wakes up the current task.
++	 */
++	get_task_struct(current);
++	temp->creator = current;
++	temp->callback = cifs_wake_up_task;
++	temp->callback_data = current;
++
++	atomic_inc(&mid_count);
++	temp->mid_state = MID_REQUEST_ALLOCATED;
++	return temp;
++}
++
++int
++smb_send(struct TCP_Server_Info *server, struct smb_hdr *smb_buffer,
++	 unsigned int smb_buf_length)
++{
++	struct kvec iov[2];
++	struct smb_rqst rqst = { .rq_iov = iov,
++				 .rq_nvec = 2 };
++
++	iov[0].iov_base = smb_buffer;
++	iov[0].iov_len = 4;
++	iov[1].iov_base = (char *)smb_buffer + 4;
++	iov[1].iov_len = smb_buf_length;
++
++	return __smb_send_rqst(server, 1, &rqst);
++}
++
++static int allocate_mid(struct cifs_ses *ses, struct smb_hdr *in_buf,
++			struct mid_q_entry **ppmidQ)
++{
++	spin_lock(&ses->ses_lock);
++	if (ses->ses_status == SES_NEW) {
++		if ((in_buf->Command != SMB_COM_SESSION_SETUP_ANDX) &&
++			(in_buf->Command != SMB_COM_NEGOTIATE)) {
++			spin_unlock(&ses->ses_lock);
++			return -EAGAIN;
++		}
++		/* else ok - we are setting up session */
++	}
++
++	if (ses->ses_status == SES_EXITING) {
++		/* check if SMB session is bad because we are setting it up */
++		if (in_buf->Command != SMB_COM_LOGOFF_ANDX) {
++			spin_unlock(&ses->ses_lock);
++			return -EAGAIN;
++		}
++		/* else ok - we are shutting down session */
++	}
++	spin_unlock(&ses->ses_lock);
++
++	*ppmidQ = alloc_mid(in_buf, ses->server);
++	if (*ppmidQ == NULL)
++		return -ENOMEM;
++	spin_lock(&ses->server->mid_queue_lock);
++	list_add_tail(&(*ppmidQ)->qhead, &ses->server->pending_mid_q);
++	spin_unlock(&ses->server->mid_queue_lock);
 +	return 0;
- }
- 
- static const struct l2cap_ops smp_root_chan_ops = {
-@@ -3332,7 +3317,7 @@ create_chan:
- 
- 	l2cap_add_scid(chan, cid);
- 
--	l2cap_chan_set_defaults(chan);
-+	l2cap_chan_set_defaults(chan, NULL);
- 
- 	if (cid == L2CAP_CID_SMP) {
- 		u8 bdaddr_type;
++}
++
++struct mid_q_entry *
++cifs_setup_async_request(struct TCP_Server_Info *server, struct smb_rqst *rqst)
++{
++	int rc;
++	struct smb_hdr *hdr = (struct smb_hdr *)rqst->rq_iov[0].iov_base;
++	struct mid_q_entry *mid;
++
++	if (rqst->rq_iov[0].iov_len != 4 ||
++	    rqst->rq_iov[0].iov_base + 4 != rqst->rq_iov[1].iov_base)
++		return ERR_PTR(-EIO);
++
++	/* enable signing if server requires it */
++	if (server->sign)
++		hdr->Flags2 |= SMBFLG2_SECURITY_SIGNATURE;
++
++	mid = alloc_mid(hdr, server);
++	if (mid == NULL)
++		return ERR_PTR(-ENOMEM);
++
++	rc = cifs_sign_rqst(rqst, server, &mid->sequence_number);
++	if (rc) {
++		release_mid(mid);
++		return ERR_PTR(rc);
++	}
++
++	return mid;
++}
++
++/*
++ *
++ * Send an SMB Request.  No response info (other than return code)
++ * needs to be parsed.
++ *
++ * flags indicate the type of request buffer and how long to wait
++ * and whether to log NT STATUS code (error) before mapping it to POSIX error
++ *
++ */
++int
++SendReceiveNoRsp(const unsigned int xid, struct cifs_ses *ses,
++		 char *in_buf, int flags)
++{
++	int rc;
++	struct kvec iov[1];
++	struct kvec rsp_iov;
++	int resp_buf_type;
++
++	iov[0].iov_base = in_buf;
++	iov[0].iov_len = get_rfc1002_length(in_buf) + 4;
++	flags |= CIFS_NO_RSP_BUF;
++	rc = SendReceive2(xid, ses, iov, 1, &resp_buf_type, flags, &rsp_iov);
++	cifs_dbg(NOISY, "SendRcvNoRsp flags %d rc %d\n", flags, rc);
++
++	return rc;
++}
++
++int
++cifs_check_receive(struct mid_q_entry *mid, struct TCP_Server_Info *server,
++		   bool log_error)
++{
++	unsigned int len = get_rfc1002_length(mid->resp_buf) + 4;
++
++	dump_smb(mid->resp_buf, min_t(u32, 92, len));
++
++	/* convert the length into a more usable form */
++	if (server->sign) {
++		struct kvec iov[2];
++		int rc = 0;
++		struct smb_rqst rqst = { .rq_iov = iov,
++					 .rq_nvec = 2 };
++
++		iov[0].iov_base = mid->resp_buf;
++		iov[0].iov_len = 4;
++		iov[1].iov_base = (char *)mid->resp_buf + 4;
++		iov[1].iov_len = len - 4;
++		/* FIXME: add code to kill session */
++		rc = cifs_verify_signature(&rqst, server,
++					   mid->sequence_number);
++		if (rc)
++			cifs_server_dbg(VFS, "SMB signature verification returned error = %d\n",
++				 rc);
++	}
++
++	/* BB special case reconnect tid and uid here? */
++	return map_and_check_smb_error(mid, log_error);
++}
++
++struct mid_q_entry *
++cifs_setup_request(struct cifs_ses *ses, struct TCP_Server_Info *ignored,
++		   struct smb_rqst *rqst)
++{
++	int rc;
++	struct smb_hdr *hdr = (struct smb_hdr *)rqst->rq_iov[0].iov_base;
++	struct mid_q_entry *mid;
++
++	if (rqst->rq_iov[0].iov_len != 4 ||
++	    rqst->rq_iov[0].iov_base + 4 != rqst->rq_iov[1].iov_base)
++		return ERR_PTR(-EIO);
++
++	rc = allocate_mid(ses, hdr, &mid);
++	if (rc)
++		return ERR_PTR(rc);
++	rc = cifs_sign_rqst(rqst, ses->server, &mid->sequence_number);
++	if (rc) {
++		delete_mid(mid);
++		return ERR_PTR(rc);
++	}
++	return mid;
++}
++
++int
++SendReceive2(const unsigned int xid, struct cifs_ses *ses,
++	     struct kvec *iov, int n_vec, int *resp_buf_type /* ret */,
++	     const int flags, struct kvec *resp_iov)
++{
++	struct smb_rqst rqst;
++	struct kvec s_iov[CIFS_MAX_IOV_SIZE], *new_iov;
++	int rc;
++
++	if (n_vec + 1 > CIFS_MAX_IOV_SIZE) {
++		new_iov = kmalloc_array(n_vec + 1, sizeof(struct kvec),
++					GFP_KERNEL);
++		if (!new_iov) {
++			/* otherwise cifs_send_recv below sets resp_buf_type */
++			*resp_buf_type = CIFS_NO_BUFFER;
++			return -ENOMEM;
++		}
++	} else
++		new_iov = s_iov;
++
++	/* 1st iov is a RFC1001 length followed by the rest of the packet */
++	memcpy(new_iov + 1, iov, (sizeof(struct kvec) * n_vec));
++
++	new_iov[0].iov_base = new_iov[1].iov_base;
++	new_iov[0].iov_len = 4;
++	new_iov[1].iov_base += 4;
++	new_iov[1].iov_len -= 4;
++
++	memset(&rqst, 0, sizeof(struct smb_rqst));
++	rqst.rq_iov = new_iov;
++	rqst.rq_nvec = n_vec + 1;
++
++	rc = cifs_send_recv(xid, ses, ses->server,
++			    &rqst, resp_buf_type, flags, resp_iov);
++	if (n_vec + 1 > CIFS_MAX_IOV_SIZE)
++		kfree(new_iov);
++	return rc;
++}
++
++int
++SendReceive(const unsigned int xid, struct cifs_ses *ses,
++	    struct smb_hdr *in_buf, struct smb_hdr *out_buf,
++	    int *pbytes_returned, const int flags)
++{
++	int rc = 0;
++	struct mid_q_entry *midQ;
++	unsigned int len = be32_to_cpu(in_buf->smb_buf_length);
++	struct kvec iov = { .iov_base = in_buf, .iov_len = len };
++	struct smb_rqst rqst = { .rq_iov = &iov, .rq_nvec = 1 };
++	struct cifs_credits credits = { .value = 1, .instance = 0 };
++	struct TCP_Server_Info *server;
++
++	if (ses == NULL) {
++		cifs_dbg(VFS, "Null smb session\n");
++		return -EIO;
++	}
++	server = ses->server;
++	if (server == NULL) {
++		cifs_dbg(VFS, "Null tcp session\n");
++		return -EIO;
++	}
++
++	spin_lock(&server->srv_lock);
++	if (server->tcpStatus == CifsExiting) {
++		spin_unlock(&server->srv_lock);
++		return -ENOENT;
++	}
++	spin_unlock(&server->srv_lock);
++
++	/* Ensure that we do not send more than 50 overlapping requests
++	   to the same server. We may make this configurable later or
++	   use ses->maxReq */
++
++	if (len > CIFSMaxBufSize + MAX_CIFS_HDR_SIZE - 4) {
++		cifs_server_dbg(VFS, "Invalid length, greater than maximum frame, %d\n",
++				len);
++		return -EIO;
++	}
++
++	rc = wait_for_free_request(server, flags, &credits.instance);
++	if (rc)
++		return rc;
++
++	/* make sure that we sign in the same order that we send on this socket
++	   and avoid races inside tcp sendmsg code that could cause corruption
++	   of smb data */
++
++	cifs_server_lock(server);
++
++	rc = allocate_mid(ses, in_buf, &midQ);
++	if (rc) {
++		cifs_server_unlock(server);
++		/* Update # of requests on wire to server */
++		add_credits(server, &credits, 0);
++		return rc;
++	}
++
++	rc = cifs_sign_smb(in_buf, server, &midQ->sequence_number);
++	if (rc) {
++		cifs_server_unlock(server);
++		goto out;
++	}
++
++	midQ->mid_state = MID_REQUEST_SUBMITTED;
++
++	rc = smb_send(server, in_buf, len);
++	cifs_save_when_sent(midQ);
++
++	if (rc < 0)
++		server->sequence_number -= 2;
++
++	cifs_server_unlock(server);
++
++	if (rc < 0)
++		goto out;
++
++	rc = wait_for_response(server, midQ);
++	if (rc != 0) {
++		send_cancel(server, &rqst, midQ);
++		spin_lock(&midQ->mid_lock);
++		if (midQ->callback) {
++			/* no longer considered to be "in-flight" */
++			midQ->callback = release_mid;
++			spin_unlock(&midQ->mid_lock);
++			add_credits(server, &credits, 0);
++			return rc;
++		}
++		spin_unlock(&midQ->mid_lock);
++	}
++
++	rc = cifs_sync_mid_result(midQ, server);
++	if (rc != 0) {
++		add_credits(server, &credits, 0);
++		return rc;
++	}
++
++	if (!midQ->resp_buf || !out_buf ||
++	    midQ->mid_state != MID_RESPONSE_READY) {
++		rc = -EIO;
++		cifs_server_dbg(VFS, "Bad MID state?\n");
++		goto out;
++	}
++
++	*pbytes_returned = get_rfc1002_length(midQ->resp_buf);
++	memcpy(out_buf, midQ->resp_buf, *pbytes_returned + 4);
++	rc = cifs_check_receive(midQ, server, 0);
++out:
++	delete_mid(midQ);
++	add_credits(server, &credits, 0);
++
++	return rc;
++}
++
++/* We send a LOCKINGX_CANCEL_LOCK to cause the Windows
++   blocking lock to return. */
++
++static int
++send_lock_cancel(const unsigned int xid, struct cifs_tcon *tcon,
++			struct smb_hdr *in_buf,
++			struct smb_hdr *out_buf)
++{
++	int bytes_returned;
++	struct cifs_ses *ses = tcon->ses;
++	LOCK_REQ *pSMB = (LOCK_REQ *)in_buf;
++
++	/* We just modify the current in_buf to change
++	   the type of lock from LOCKING_ANDX_SHARED_LOCK
++	   or LOCKING_ANDX_EXCLUSIVE_LOCK to
++	   LOCKING_ANDX_CANCEL_LOCK. */
++
++	pSMB->LockType = LOCKING_ANDX_CANCEL_LOCK|LOCKING_ANDX_LARGE_FILES;
++	pSMB->Timeout = 0;
++	pSMB->hdr.Mid = get_next_mid(ses->server);
++
++	return SendReceive(xid, ses, in_buf, out_buf,
++			&bytes_returned, 0);
++}
++
++int
++SendReceiveBlockingLock(const unsigned int xid, struct cifs_tcon *tcon,
++	    struct smb_hdr *in_buf, struct smb_hdr *out_buf,
++	    int *pbytes_returned)
++{
++	int rc = 0;
++	int rstart = 0;
++	struct mid_q_entry *midQ;
++	struct cifs_ses *ses;
++	unsigned int len = be32_to_cpu(in_buf->smb_buf_length);
++	struct kvec iov = { .iov_base = in_buf, .iov_len = len };
++	struct smb_rqst rqst = { .rq_iov = &iov, .rq_nvec = 1 };
++	unsigned int instance;
++	struct TCP_Server_Info *server;
++
++	if (tcon == NULL || tcon->ses == NULL) {
++		cifs_dbg(VFS, "Null smb session\n");
++		return -EIO;
++	}
++	ses = tcon->ses;
++	server = ses->server;
++
++	if (server == NULL) {
++		cifs_dbg(VFS, "Null tcp session\n");
++		return -EIO;
++	}
++
++	spin_lock(&server->srv_lock);
++	if (server->tcpStatus == CifsExiting) {
++		spin_unlock(&server->srv_lock);
++		return -ENOENT;
++	}
++	spin_unlock(&server->srv_lock);
++
++	/* Ensure that we do not send more than 50 overlapping requests
++	   to the same server. We may make this configurable later or
++	   use ses->maxReq */
++
++	if (len > CIFSMaxBufSize + MAX_CIFS_HDR_SIZE - 4) {
++		cifs_tcon_dbg(VFS, "Invalid length, greater than maximum frame, %d\n",
++			      len);
++		return -EIO;
++	}
++
++	rc = wait_for_free_request(server, CIFS_BLOCKING_OP, &instance);
++	if (rc)
++		return rc;
++
++	/* make sure that we sign in the same order that we send on this socket
++	   and avoid races inside tcp sendmsg code that could cause corruption
++	   of smb data */
++
++	cifs_server_lock(server);
++
++	rc = allocate_mid(ses, in_buf, &midQ);
++	if (rc) {
++		cifs_server_unlock(server);
++		return rc;
++	}
++
++	rc = cifs_sign_smb(in_buf, server, &midQ->sequence_number);
++	if (rc) {
++		delete_mid(midQ);
++		cifs_server_unlock(server);
++		return rc;
++	}
++
++	midQ->mid_state = MID_REQUEST_SUBMITTED;
++	rc = smb_send(server, in_buf, len);
++	cifs_save_when_sent(midQ);
++
++	if (rc < 0)
++		server->sequence_number -= 2;
++
++	cifs_server_unlock(server);
++
++	if (rc < 0) {
++		delete_mid(midQ);
++		return rc;
++	}
++
++	/* Wait for a reply - allow signals to interrupt. */
++	rc = wait_event_interruptible(server->response_q,
++		(!(midQ->mid_state == MID_REQUEST_SUBMITTED ||
++		   midQ->mid_state == MID_RESPONSE_RECEIVED)) ||
++		((server->tcpStatus != CifsGood) &&
++		 (server->tcpStatus != CifsNew)));
++
++	/* Were we interrupted by a signal ? */
++	spin_lock(&server->srv_lock);
++	if ((rc == -ERESTARTSYS) &&
++		(midQ->mid_state == MID_REQUEST_SUBMITTED ||
++		 midQ->mid_state == MID_RESPONSE_RECEIVED) &&
++		((server->tcpStatus == CifsGood) ||
++		 (server->tcpStatus == CifsNew))) {
++		spin_unlock(&server->srv_lock);
++
++		if (in_buf->Command == SMB_COM_TRANSACTION2) {
++			/* POSIX lock. We send a NT_CANCEL SMB to cause the
++			   blocking lock to return. */
++			rc = send_cancel(server, &rqst, midQ);
++			if (rc) {
++				delete_mid(midQ);
++				return rc;
++			}
++		} else {
++			/* Windows lock. We send a LOCKINGX_CANCEL_LOCK
++			   to cause the blocking lock to return. */
++
++			rc = send_lock_cancel(xid, tcon, in_buf, out_buf);
++
++			/* If we get -ENOLCK back the lock may have
++			   already been removed. Don't exit in this case. */
++			if (rc && rc != -ENOLCK) {
++				delete_mid(midQ);
++				return rc;
++			}
++		}
++
++		rc = wait_for_response(server, midQ);
++		if (rc) {
++			send_cancel(server, &rqst, midQ);
++			spin_lock(&midQ->mid_lock);
++			if (midQ->callback) {
++				/* no longer considered to be "in-flight" */
++				midQ->callback = release_mid;
++				spin_unlock(&midQ->mid_lock);
++				return rc;
++			}
++			spin_unlock(&midQ->mid_lock);
++		}
++
++		/* We got the response - restart system call. */
++		rstart = 1;
++		spin_lock(&server->srv_lock);
++	}
++	spin_unlock(&server->srv_lock);
++
++	rc = cifs_sync_mid_result(midQ, server);
++	if (rc != 0)
++		return rc;
++
++	/* rcvd frame is ok */
++	if (out_buf == NULL || midQ->mid_state != MID_RESPONSE_READY) {
++		rc = -EIO;
++		cifs_tcon_dbg(VFS, "Bad MID state?\n");
++		goto out;
++	}
++
++	*pbytes_returned = get_rfc1002_length(midQ->resp_buf);
++	memcpy(out_buf, midQ->resp_buf, *pbytes_returned + 4);
++	rc = cifs_check_receive(midQ, server, 0);
++out:
++	delete_mid(midQ);
++	if (rstart && rc == -EACCES)
++		return -ERESTARTSYS;
++	return rc;
++}
 
 
