@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05AA42D76B;
-	Tue, 21 Jul 2026 19:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FEE411691;
+	Tue, 21 Jul 2026 19:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660654; cv=none; b=aRKE3Gx/XkODwuxWHd12CyFkWomV8CYNY8u8tyf1X+9Zx7Vv2zhGr/8zFFHTH0BjxiiSD/rsEnLoxbt4RtIY8/PZNTQERN5FtSIMWLQyqajIJxvhTWMAGna3i8Ndb5J4GGVBj1ZFq9+Bw4E2xQFm+qxyMv6+nvdIHSDia2BX+uE=
+	t=1784660656; cv=none; b=nL08pn8mQvf4okyd+C6/6LhwttFOQnkGxopVYmJeNi/i4dE6ReDfN7BXZJ0rgbj755h5ZE+/0hSnkt3wL5zD2k4Kv7aMTTz3ssjLmu2uN4eHp5rpEo/aiVKcAUNI7ukPaf7E7oaFmpPwA3AWa2paGCXE1c1HGLy0/C2avkstKJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660654; c=relaxed/simple;
-	bh=3vGzLPkh01qIreL7lzsEd1yfPFHboRRnuDp5KBGVDU4=;
+	s=arc-20240116; t=1784660656; c=relaxed/simple;
+	bh=gE2C1fAmJv3fn990tcD3Vo/J7ORjnqg29KmXt5717Bk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=drKNbRt1/RPhbzo5Xtivcdqtd3SSiNd1vtTo+9c2U4o326ejLgWmI9uDVPt5UPbrz6NVF9ezKsa+ZIl+WFttPjXxqrZdqGFljknlmiGlo4upLjFOHZ+lqjTTP/EZ5+XTFJozkhZcogt9Ww4wdApRc9Hk1M7j4ArOBwmqf4cdbAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zGtwBNz7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jKFm9Vf9SZKVsQOmtqim0itOXm6cleh3acT4IYSPP2kOjv/XVlbwcmHNkdq0FqYcCQtkZmg9ZDqk4kacbgDSJz2C88u/exgMVAcIWnVy9PH0JCPMeoddljfECVzMsjKIkgt4ke3fP6sANFgHd4Mgrenr4mIZRVH8y3mEhrgGkck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k904EbkP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zGtwBNz7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615721F000E9;
-	Tue, 21 Jul 2026 19:04:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k904EbkP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055791F000E9;
+	Tue, 21 Jul 2026 19:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660652;
-	bh=WWNsz3CH4nab44zPQJjGpTHXWVmBJ/oNSe1E0eAy4Bs=;
+	s=korg; t=1784660655;
+	bh=2kIY9JoYTz9jnFObSdgxoKkwkUsG+Nj9gxtBLYxnYF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zGtwBNz7vTzZxApT3J21uo1sWoOkBCvilQtoaMgPvahKlzdagwNlLbLRMC/v4+Rvu
-	 3ju4rafvM9AVBj6tGROeqo853L2gYa+FUHBW6lUTHnoKDo/e56zPkdWp0OB5DFL5mq
-	 uMQ9iKMb/HiGoBEYYLmxpy6hvGF8Jy9Q0h6Pmuuk=
+	b=k904EbkPDPNDpC8OTmQDYfewQGFWnNParSpDAaviecoKoHw0YtXGLvsMzwRM6Kn0s
+	 bZwAJknTU0KoHeGLrKf1HiXWkob0jWRTE8dpfStJHBHc8AvpNC4mKhMd4AxaH1YzPj
+	 ZWiyDoGRNaf53N74M1jlOGtVBYQUtOpMO5F8WAQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1017/2077] perf hwmon: Guard label read against empty or failed reads
-Date: Tue, 21 Jul 2026 17:11:30 +0200
-Message-ID: <20260721152616.808580160@linuxfoundation.org>
+Subject: [PATCH 7.1 1018/2077] perf tools: Use snprintf() in dso__read_running_kernel_build_id()
+Date: Tue, 21 Jul 2026 17:11:31 +0200
+Message-ID: <20260721152616.833087760@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,46 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 34d3d93fac6d92237cb9d730ca04c37ed361c7a6 ]
+[ Upstream commit 2ea64782a428bed74f595961e651ceb8c4c5bf22 ]
 
-hwmon_pmu__read_events() reads label files with read() into a stack
-buffer, strips trailing newlines, then checks buf[0] == '\0'.  When
-read() returns 0 (empty file) or -1 (error), the buffer is never
-written, so buf[0] reads uninitialized stack memory.  If the garbage
-byte is non-zero, the code falls through to strdup(buf) which copies
-arbitrary stack data as the label string.
+dso__read_running_kernel_build_id() uses sprintf() to format a sysfs
+path from machine->root_dir into a PATH_MAX buffer.  If root_dir is
+close to PATH_MAX in length, appending "/sys/kernel/notes" (18 bytes)
+overflows the stack buffer.
 
-Fix by checking read_len <= 0 before accessing buf contents, closing
-the fd and skipping the entry.
+Switch to snprintf() with sizeof(path) to prevent the overflow.
 
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Fixes: 53cc0b351ec99278 ("perf hwmon_pmu: Add a tool PMU exposing events from hwmon in sysfs")
-Cc: Ian Rogers <irogers@google.com>
+Fixes: cdd059d731eeb466 ("perf tools: Move dso_* related functions into dso object")
+Cc: Jiri Olsa <jolsa@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/hwmon_pmu.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ tools/perf/util/dso.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/hwmon_pmu.c b/tools/perf/util/hwmon_pmu.c
-index bdcbe887579a1f..efd3067a2e5910 100644
---- a/tools/perf/util/hwmon_pmu.c
-+++ b/tools/perf/util/hwmon_pmu.c
-@@ -295,8 +295,11 @@ static int hwmon_pmu__read_events(struct hwmon_pmu *pmu)
- 			while (read_len > 0 && buf[read_len - 1] == '\n')
- 				read_len--;
+diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
+index 99199c68d9b5cb..7200722464e719 100644
+--- a/tools/perf/util/dso.c
++++ b/tools/perf/util/dso.c
+@@ -1772,7 +1772,7 @@ void dso__read_running_kernel_build_id(struct dso *dso, struct machine *machine)
  
--			if (read_len > 0)
--				buf[read_len] = '\0';
-+			if (read_len <= 0) {
-+				close(fd);
-+				continue;
-+			}
-+			buf[read_len] = '\0';
- 
- 			if (buf[0] == '\0') {
- 				pr_debug("hwmon_pmu: empty label file %s %s\n",
+ 	if (machine__is_default_guest(machine))
+ 		return;
+-	sprintf(path, "%s/sys/kernel/notes", machine->root_dir);
++	snprintf(path, sizeof(path), "%s/sys/kernel/notes", machine->root_dir);
+ 	sysfs__read_build_id(path, &bid);
+ 	dso__set_build_id(dso, &bid);
+ }
 -- 
 2.53.0
 
