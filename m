@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887C4417D67;
-	Tue, 21 Jul 2026 19:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323F746D549;
+	Tue, 21 Jul 2026 19:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661162; cv=none; b=UlxquZHNrJ9ApH97Yi8I4hWES0QUFiYqBkVsCtTsXmewlkwTQvXc0+18O58C2yLu61DLzNM1KyfFHgI7JZ9T3i9zq8aRxIeXUZcQMhyEJqEOe0pcaEHpTlP/GRzjEHaBueHaTigSFYPTYUW4wnlUw2OLtivB3a9hPLFMjbj6DkA=
+	t=1784661165; cv=none; b=dqQdRd4AKN68R3lZVM7e+b6rGVnoFf7mKICD1RKt/F5PuNukfW83uFIcxkw7VeQ1k+qO6wMHjtU34qMiVDtKTGgH2goWW3bV5ZIcpfSIOdIUnJRPi1vdSfuX3PCZNa+37jcTcRNFvLso0cMomMXtWPtHUd0XwW/G3KOdonVZKDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661162; c=relaxed/simple;
-	bh=iU/35VAOg5Eq8cLj0419dJ++L+V30/XSS3m8NKP+zvg=;
+	s=arc-20240116; t=1784661165; c=relaxed/simple;
+	bh=QfGqD+bKn1HHjXSvK/2l651pTmz7lxAWivTS6SwcFhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=smG5yo1ou0OEsfscnKW3EM3bJ9KeK5pdRlnhQals8Don7GAT8zS9eUtluBHLATOLuZZQ49/E9CdGu1XssXotKtGEmX3V7VSieNYMKFzNGcZvUzFjmFYIjRHqn9gYiYJshDhTsJHa26l9Mbrh/tJwj3yUVBQpDW69B0/rnS1MnWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xZNHZDB0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TOzs9LnGJ04gklY0+wGV5dHJoBHvttfoAVsmJqsVJpdAQ5xgPPVt0P+ar3ZoTxeZK/RwAtpRyqiAUSLixf35xldzjkrjrv7eLtiXnMPl96Y1kEYp4dgyE/i6E5YfYWmF7Fc2CdRRweBm3z96sNsJEW+oU+5/TdHdCcbsETV1gbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AWw2JOVz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xZNHZDB0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2331F000E9;
-	Tue, 21 Jul 2026 19:12:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AWw2JOVz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 932541F000E9;
+	Tue, 21 Jul 2026 19:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661161;
-	bh=TF6tgweOIxgcjam60yX6h5W+NjEXzhow25wuQl6ThEk=;
+	s=korg; t=1784661164;
+	bh=gqMQ+Vrv0NUf+Xd26jCTRw8Eko1RvhINOzk2Au2aGdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xZNHZDB09/tnzqtHhz1GfT3Y+fbyCBoR6CrkKIX1XrhIF1g/FdsfpoTgwbUfMDBvC
-	 R8MIydlWo6+Ep7bl87dmZxgyLGbOkFyPU675+pXWEAuXap36aeXbXVaGk9Uo30430S
-	 Y0NhOOAeM48YTa9un/lYZySGOE07owZcjoZYncq0=
+	b=AWw2JOVz24XL3uzNStBoL4ACPWmavZwDOgEak/pDz7zeynLMCj3qoe3432dYXHcRm
+	 hk/Cr/RpmbCozCE4DnTp5huqnF/HtF+1KMBlqBwd8sy5BZ+i9wX5HdyaNwyuX2y/uZ
+	 xxyPiMjlxtG5/6iogha8IU1eYR5FG0DUomRZ8kYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schuchmann <schuchmann@schleissheimer.de>,
-	Nicolai Buchwitz <nb@tipi-net.de>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1255/2077] net: usb: lan78xx: restore VLAN and hash filters after link up
-Date: Tue, 21 Jul 2026 17:15:28 +0200
-Message-ID: <20260721152622.416111734@linuxfoundation.org>
+Subject: [PATCH 7.1 1256/2077] net: lwtunnel: Drop skb metadata before LWT encapsulation
+Date: Tue, 21 Jul 2026 17:15:29 +0200
+Message-ID: <20260721152622.439021358@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,127 +51,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Jakub Sitnicki <jakub@cloudflare.com>
 
-[ Upstream commit 5c12248673c76f10ab900f70724c5da288c7efa5 ]
+[ Upstream commit c00320b0e355c4bf0ae4743a53b4180fea237546 ]
 
-Configured VLANs intermittently stop receiving traffic after a link
-down/up cycle, e.g. when the network cable is unplugged and plugged back
-in. VLAN filtering stays enabled but all VLAN-tagged frames are dropped
-until a VLAN is added or removed again.
+skb metadata is meant for passing information between XDP and TC. It lives
+in the skb headroom, immediately before skb->data. LWT programs cannot
+access the __sk_buff->data_meta pseudo-pointer to metadata.
 
-The LAN7801 datasheet (DS00002123E) states:
+However, LWT encapsulation prepends outer headers, moving skb->data back
+over the headroom where the metadata sits. On an RX-originated (forwarded)
+packet that still carries XDP metadata this goes wrong in two different
+ways, depending on the encap type:
 
-  "A portion of the MAC operates on clocks generated by the Ethernet
-   PHY. During a PHY reset event, this portion of the MAC is designed to
-   not be taken out of reset until the PHY clocks are operational"
-  (section 8.10, MAC Reset Watchdog Timer)
+1. Non-BPF LWT encaps (mpls, seg6, ioam6 ...) call skb_push()/skb_pull()
+   and silently overwrite the metadata that sits in the headroom.
 
-  "After a reset event, the RFE will automatically initialize the
-   contents of the VHF to 0h."
-  (section 7.1.4, VHF Organization)
+2) BPF LWT xmit calls bpf_skb_change_head(), which uses skb_data_move().
+   That helper expects metadata immediately before skb->data. But since
+   the IP output path runs LWT xmit before neighbour output has built
+   the outgoing L2 header, for forwarded packets skb->data points at the
+   L3 header while skb_mac_header() still points at the old L2 header.
+   skb_data_move() sees metadata ending at skb_mac_header(), not before
+   skb->data, warns and clears metadata:
 
-Thus a link down/up cycle stops and restarts the PHY clock, resets the
-PHY-clocked portion of the MAC, and the RFE clears its VLAN/DA hash
-filter (VHF) memory. The VHF holds both the VLAN filter table and the
-multicast hash table, but the driver never reprograms either from its
-shadow copy once the link is back, so both stay empty.
+  WARNING: CPU: 21 PID: 454557 at include/linux/skbuff.h:4609 skb_data_move+0x47/0x90
+  CPU: 21 UID: 0 PID: 454557 Comm: napi/iconduit-g Tainted: G           O        6.18.21 #1
+  RIP: 0010:skb_data_move+0x47/0x90
+  Call Trace:
+   <IRQ>
+   bpf_skb_change_head+0xe6/0x1a0
+   bpf_prog_...+0x213/0x2e3
+   run_lwt_bpf.isra.0+0x1d3/0x360
+   bpf_xmit+0x46/0xe0
+   lwtunnel_xmit+0xa1/0xf0
+   ip_finish_output2+0x1e7/0x5e0
+   ip_output+0x63/0x100
+   __netif_receive_skb_one_core+0x85/0xa0
+   process_backlog+0x9c/0x150
+   __napi_poll+0x2b/0x190
+   net_rx_action+0x40b/0x7f0
+   handle_softirqs+0xd2/0x270
+   do_softirq+0x3f/0x60
+   </IRQ>
 
-Reprogram the VLAN filter and multicast hash tables on link up.
+That is what happens, as for how to fix it - a received packet that
+carries metadata can reach an encap through any of the three LWT
+redirect modes:
 
-Reported-by: Sven Schuchmann <schuchmann@schleissheimer.de>
-Closes: https://lore.kernel.org/netdev/BEZP281MB224501E38B30BFDC4BD3D364D9E32@BEZP281MB2245.DEUP281.PROD.OUTLOOK.COM/T/#u
-Tested-by: Sven Schuchmann <schuchmann@schleissheimer.de>
-Fixes: 55d7de9de6c3 ("Microchip's LAN7800 family USB 2/3 to 10/100/1000 Ethernet device driver")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20260622102911.484045-1-nb@tipi-net.de
+  LWTUNNEL_STATE_INPUT_REDIRECT
+   ip6_rcv_finish
+     dst_input
+       lwtunnel_input
+
+  LWTUNNEL_STATE_OUTPUT_REDIRECT
+   ip6_rcv_finish
+     dst_input
+       ip6_forward
+         ip6_forward_finish
+           dst_output
+             lwtunnel_output
+
+  LWTUNNEL_STATE_XMIT_REDIRECT
+   ip6_rcv_finish
+     dst_input
+       ip6_forward
+         ip6_forward_finish
+           dst_output
+             ip6_output
+               ip6_finish_output
+                 ip6_finish_output2
+                   lwtunnel_xmit
+
+Every encap funnels through the three LWT dispatch helpers, so drop the
+metadata there, right before handing the skb to the encap op. This
+single chokepoint covers all encap types and all three redirect modes:
+
+  - lwtunnel_input():  seg6, rpl, ila, seg6_local
+  - lwtunnel_output(): ioam6
+  - lwtunnel_xmit():   mpls, LWT BPF xmit
+
+Alternatively, we could clear the metadata right after TC ingress hook.
+That would require a compromise, however. Metadata would become
+inaccessible from TC egress (in setups where it actually reaches the
+hook it tact, that is without any L2 tunnels on path).
+
+Fixes: 8989d328dfe7 ("net: Helper to move packet data and metadata after skb_push/pull")
+Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://patch.msgid.link/20260619-bpf-lwt-drop-skb-metadata-v3-1-71d6a33ab76b@cloudflare.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 37 +++++++++++++++++++++++++++++++------
- 1 file changed, 31 insertions(+), 6 deletions(-)
+ net/core/lwtunnel.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index bcf293ea1bd388..c4cebacabcb534 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -1452,6 +1452,15 @@ static inline u32 lan78xx_hash(char addr[ETH_ALEN])
- 	return (ether_crc(ETH_ALEN, addr) >> 23) & 0x1ff;
- }
- 
-+static int lan78xx_write_mchash_table(struct lan78xx_net *dev)
-+{
-+	struct lan78xx_priv *pdata = (struct lan78xx_priv *)(dev->data[0]);
-+
-+	return lan78xx_dataport_write(dev, DP_SEL_RSEL_VLAN_DA_,
-+				      DP_SEL_VHF_VLAN_LEN,
-+				      DP_SEL_VHF_HASH_LEN, pdata->mchash_table);
-+}
-+
- static void lan78xx_deferred_multicast_write(struct work_struct *param)
- {
- 	struct lan78xx_priv *pdata =
-@@ -1462,9 +1471,7 @@ static void lan78xx_deferred_multicast_write(struct work_struct *param)
- 	netif_dbg(dev, drv, dev->net, "deferred multicast write 0x%08x\n",
- 		  pdata->rfe_ctl);
- 
--	ret = lan78xx_dataport_write(dev, DP_SEL_RSEL_VLAN_DA_,
--				     DP_SEL_VHF_VLAN_LEN,
--				     DP_SEL_VHF_HASH_LEN, pdata->mchash_table);
-+	ret = lan78xx_write_mchash_table(dev);
- 	if (ret < 0)
- 		goto multicast_write_done;
- 
-@@ -1557,6 +1564,7 @@ static void lan78xx_set_multicast(struct net_device *netdev)
- }
- 
- static void lan78xx_rx_urb_submit_all(struct lan78xx_net *dev);
-+static int lan78xx_write_vlan_table(struct lan78xx_net *dev);
- 
- static int lan78xx_mac_reset(struct lan78xx_net *dev)
- {
-@@ -2514,6 +2522,17 @@ static void lan78xx_mac_link_up(struct phylink_config *config,
- 	if (ret < 0)
- 		goto link_up_fail;
- 
-+	/* The RFE clears the VLAN/DA hash filter (VHF) on a link down/up
-+	 * cycle, so reprogram both tables from their shadow copies.
-+	 */
-+	ret = lan78xx_write_vlan_table(dev);
-+	if (ret < 0)
-+		goto link_up_fail;
-+
-+	ret = lan78xx_write_mchash_table(dev);
-+	if (ret < 0)
-+		goto link_up_fail;
-+
- 	netif_start_queue(net);
- 
- 	return;
-@@ -3065,14 +3084,20 @@ static int lan78xx_set_features(struct net_device *netdev,
- 	return lan78xx_write_reg(dev, RFE_CTL, pdata->rfe_ctl);
- }
- 
-+static int lan78xx_write_vlan_table(struct lan78xx_net *dev)
-+{
-+	struct lan78xx_priv *pdata = (struct lan78xx_priv *)(dev->data[0]);
-+
-+	return lan78xx_dataport_write(dev, DP_SEL_RSEL_VLAN_DA_, 0,
-+				      DP_SEL_VHF_VLAN_LEN, pdata->vlan_table);
-+}
-+
- static void lan78xx_deferred_vlan_write(struct work_struct *param)
- {
- 	struct lan78xx_priv *pdata =
- 			container_of(param, struct lan78xx_priv, set_vlan);
--	struct lan78xx_net *dev = pdata->dev;
- 
--	lan78xx_dataport_write(dev, DP_SEL_RSEL_VLAN_DA_, 0,
--			       DP_SEL_VHF_VLAN_LEN, pdata->vlan_table);
-+	lan78xx_write_vlan_table(pdata->dev);
- }
- 
- static int lan78xx_vlan_rx_add_vid(struct net_device *netdev,
+diff --git a/net/core/lwtunnel.c b/net/core/lwtunnel.c
+index f9d76d85d04fd0..b01a395d9a9660 100644
+--- a/net/core/lwtunnel.c
++++ b/net/core/lwtunnel.c
+@@ -350,6 +350,8 @@ int lwtunnel_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 	rcu_read_lock();
+ 	ops = rcu_dereference(lwtun_encaps[lwtstate->type]);
+ 	if (likely(ops && ops->output)) {
++		/* Encap pushes outer headers over the metadata; drop it. */
++		skb_metadata_clear(skb);
+ 		dev_xmit_recursion_inc();
+ 		ret = ops->output(net, sk, skb);
+ 		dev_xmit_recursion_dec();
+@@ -404,6 +406,8 @@ int lwtunnel_xmit(struct sk_buff *skb)
+ 	rcu_read_lock();
+ 	ops = rcu_dereference(lwtun_encaps[lwtstate->type]);
+ 	if (likely(ops && ops->xmit)) {
++		/* Encap pushes outer headers over the metadata; drop it. */
++		skb_metadata_clear(skb);
+ 		dev_xmit_recursion_inc();
+ 		ret = ops->xmit(skb);
+ 		dev_xmit_recursion_dec();
+@@ -455,6 +459,8 @@ int lwtunnel_input(struct sk_buff *skb)
+ 	rcu_read_lock();
+ 	ops = rcu_dereference(lwtun_encaps[lwtstate->type]);
+ 	if (likely(ops && ops->input)) {
++		/* Encap pushes outer headers over the metadata; drop it. */
++		skb_metadata_clear(skb);
+ 		dev_xmit_recursion_inc();
+ 		ret = ops->input(skb);
+ 		dev_xmit_recursion_dec();
 -- 
 2.53.0
 
