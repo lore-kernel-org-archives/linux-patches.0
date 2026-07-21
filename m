@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634C544AB9B;
-	Tue, 21 Jul 2026 21:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B2144AB6A;
+	Tue, 21 Jul 2026 21:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668896; cv=none; b=ACQjYFLnw31mlKxDNeEi7yBB2Qra/27G69FeSP/V3EyYde1Gfsz7TBO4NX2vRD4sVQrHKqtTjsETM1SsMEvZOGCpr1dqVWyCtE/hUQauUgcczxhnjJtTkNc9eIiXPw5AXIYnAehoXUhcBqjzD77eVmtTlmoT682KIuaxvZGGcd4=
+	t=1784668899; cv=none; b=rgDjIse1a7hTk61k2ITW737kTyZzozPzbE1YWA1n7GTRJxkdb0BqNgYsGozMOx4wOOYsQ664uzLnje45RQ7HMjsNWFzZ+FKBtZfT0GAzVvmWtHcmT29Tfi15QdHct1C4SU1wlx7cm7CqDX5wz/FNI33ou5a2iZpYl3L2TE6MeUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668896; c=relaxed/simple;
-	bh=DtIE8pavyDXxmetN3EZT2E3jJ9QGw+YWtRN8kQgkeHE=;
+	s=arc-20240116; t=1784668899; c=relaxed/simple;
+	bh=Rc+O8snW8ixft2nghwAdzlOuTRRa1uiXJEi0dubhqDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q0ZQuV5C8b+WYhyCSIU8Xz+qQl27VhC49Q/m98XBY9FVhHjY9AlNBROeOq+jNgZqxzvZmsBAuknqR9H25fFrthFyPho8O+Uy0wCVJtV8X3oM6DAtLScwB9MLUL+5teVUL3nRfMDExxUSocFj6KFrhl0HQcE+nYkHDC2vpuhNs0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jzWZy8Rr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JY1ZbEZKGrWS8e9CKU6OCGmpF15962XGGBlfNpxR0ifK0OXyyFGt2SzH7O3hbuQeh2NUEpaU2YPUyAF5yei15MPDM8mBbtmvsHUyumsCE20lLDZZZGsBUlONTYmhDDqKhyJOupWX7mWlpYaZx5TCzMb2+UqlJBT+Oy9IEGqHKDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gm86QowQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzWZy8Rr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9DAC1F000E9;
-	Tue, 21 Jul 2026 21:21:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gm86QowQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CCF51F000E9;
+	Tue, 21 Jul 2026 21:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668895;
-	bh=8QTZisSdapRS7w/Ck3iKxFBO2XYisY75TLCZRnVsMkY=;
+	s=korg; t=1784668897;
+	bh=rdo9/v4spHhoiqxEv/xepbtiQo0dgSqNOeZtYV4NLBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jzWZy8RrTwfGrLrEr7z9BWZPS9lavtqBvFa+oluEOJ0kksfu0q+Efv8u7MAdcRSU3
-	 lEZ7ZKndlQw39bk4QZvtUl9Pp7G25P12KzSc7IuFA54RDDY2E/Ns4sUne7osoRMKEq
-	 5ZtevIORodX0LLu0fyr9VZSfWqbIIAmFELXKUHig=
+	b=Gm86QowQlboOAOqLLoXZheYY4hfDQaNtcxVmNgKtYht0vWtIze0hrnfAfHuVGAra5
+	 7F3rlPD2z7arUOmiiseNY3P2Nknd0lrkFjtYyr/zd2lLEvSetPsrM2qyTHB7z35t5z
+	 39Deo3Mhuxs20uyGwlKThzyt9OL5b8ruOGM6dF38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Dan Carpenter <error27@gmail.com>,
+	Alexandre Bounine <alex.bou9@gmail.com>,
+	Chul Kim <chul.kim@idt.com>,
+	Matt Porter <mporter@kernel.crashing.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0332/1067] MIPS: Fix big-endian stack argument fetching in o32 wrapper
-Date: Tue, 21 Jul 2026 17:15:33 +0200
-Message-ID: <20260721152432.022836699@linuxfoundation.org>
+Subject: [PATCH 6.1 0350/1067] rapidio/tsi721: prevent a bad dereference in tsi721_db_dpc()
+Date: Tue, 21 Jul 2026 17:15:51 +0200
+Message-ID: <20260721152432.431634475@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,59 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 8e0780d30b1b51248e42895b7acc7a20f147b40b ]
+[ Upstream commit fc15e3a30ddd950f009c76765331783b9af94a87 ]
 
-Fix an issue in call_o32() where the upper 32-bit half of incoming n64
-stack arguments is fetched and used for outgoing o32 stack arguments on
-big-endian platforms.
+With a list_for_each() loop, if we don't find the item we are looking for
+in the list, then the loop exits with the iterator, which is "dbell" in
+this loop, pointing to invalid memory.
 
-This code was adapted from arch/mips/dec/prom/call_o32.S which was meant
-for a little-endian platform only and therefore using 32-bit loads from
-64-bit stack slot locations holding incoming stack arguments resulted in
-correct values being retrieved for data that is expected to be 32-bit.
+This code uses the "found" variable to determine if we have found the
+doorbell we are looking for or not.  However, the problem that the "found"
+variable needs to be set to false at the start of each iteration,
+otherwise after the first correct doorbell, then everything is marked as
+found.
 
-This works on little-endian platforms where the lower 32-bit half of the
-64-bit value is located at every 64-bit stack slot location.  However on
-big-endian platforms the lower 32-bit half is instead located at offset
-4 from every 64-bit stack slot location.
+Reset the "found" to false at the start of the iteration and move the
+variable inside the loop.
 
-So to fix the issue the offset of 4 would have to be used on big-endian
-platforms only, or alternatively a 64-bit load from the 64-bit stack
-slot location can be used across the board, as the subsequent 32-bit
-store to the corresponding outgoing stack argument slot will correctly
-truncate the value and cause no unpredictable result.  We already take
-advantage of this architectural feature for the incoming arguments held
-in $a6 and $a7 registers, since the o32 wrapper does not know how many
-incoming arguments there are and consequently propagates incoming data
-which may not be 32-bit.
-
-Since this code is generally supposed to be used with the stack located
-in cached memory there is no extra overhead expected for 64-bit loads as
-opposed to 32-bit ones, so pick this variant for code simplicity.
-
-Fixes: 231a35d37293 ("[MIPS] RM: Collected changes")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Link: https://lore.kernel.org/af2WHMZiqMwdYveO@stanley.mountain
+Fixes: 48618fb4e522 ("RapidIO: add mport driver for Tsi721 bridge")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Cc: Alexandre Bounine <alex.bou9@gmail.com>
+Cc: Chul Kim <chul.kim@idt.com>
+Cc: Matt Porter <mporter@kernel.crashing.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/fw/lib/call_o32.S | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rapidio/devices/tsi721.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/mips/fw/lib/call_o32.S b/arch/mips/fw/lib/call_o32.S
-index ee856709e0b600..77533cfbdfc10b 100644
---- a/arch/mips/fw/lib/call_o32.S
-+++ b/arch/mips/fw/lib/call_o32.S
-@@ -74,7 +74,7 @@ NESTED(call_o32, O32_FRAMESZ, ra)
- 		PTR_LA		t1,6*O32_SZREG(fp)
- 		li		t2,O32_ARGC-6
- 1:
--		lw		t3,(t0)
-+		ld		t3,(t0)
- 		REG_ADDU	t0,SZREG
- 		sw		t3,(t1)
- 		REG_SUBU	t2,1
+diff --git a/drivers/rapidio/devices/tsi721.c b/drivers/rapidio/devices/tsi721.c
+index b3134744fb55c0..c5acfaeceba124 100644
+--- a/drivers/rapidio/devices/tsi721.c
++++ b/drivers/rapidio/devices/tsi721.c
+@@ -384,7 +384,6 @@ static void tsi721_db_dpc(struct work_struct *work)
+ 						    idb_work);
+ 	struct rio_mport *mport;
+ 	struct rio_dbell *dbell;
+-	int found = 0;
+ 	u32 wr_ptr, rd_ptr;
+ 	u64 *idb_entry;
+ 	u32 regval;
+@@ -402,6 +401,8 @@ static void tsi721_db_dpc(struct work_struct *work)
+ 	rd_ptr = ioread32(priv->regs + TSI721_IDQ_RP(IDB_QUEUE)) % IDB_QSIZE;
+ 
+ 	while (wr_ptr != rd_ptr) {
++		int found = 0;
++
+ 		idb_entry = (u64 *)(priv->idb_base +
+ 					(TSI721_IDB_ENTRY_SIZE * rd_ptr));
+ 		rd_ptr++;
 -- 
 2.53.0
 
