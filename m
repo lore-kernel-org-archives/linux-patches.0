@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C7B3EF672;
-	Tue, 21 Jul 2026 17:17:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226BA40314E;
+	Tue, 21 Jul 2026 17:17:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654236; cv=none; b=rLPj+eOhzwoCCZ+RT4NCsZvqhLgmfF/9xGCy4cwFitpcbmpNeNUvlxuxgi2IXuXG6HN/3tC0dXzoiPubMQTHSnRPC2IjnbzuD013mmRtRR5NWRxRIL3RB45JekKQ/lFQEC+Y398GpTrmv+1jmAZrWPPfHiyaw3Kpb1gyHV6m8oE=
+	t=1784654239; cv=none; b=sWFY1DA9aqMX5KMVUBomD0UtuQMMyBuLhHS3faagL96X92gd+dvKjq12ADaWnQfaWcDNutMnO9I0cIJ8gLTXIYh+XRfn0Sr9LOfbvs8rkWaXXFEA2sn8dNxfEieCeo98xAR5rHjKdJM3KCw/p65eJgSD91r/yQkAKo7an77ANCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654236; c=relaxed/simple;
-	bh=sy56G/rRXMX8nv9EoMkigNls09z9aRmzX2wui6keTfo=;
+	s=arc-20240116; t=1784654239; c=relaxed/simple;
+	bh=URvSE88Yx08ckalM/69VY2MqXifrEbXHuozGnByZzpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QuI1aYHcXIbpKs0tAOAZQkYPwxmTqDogquoBmJ3F8oqeOBYMZQTLWpdSH7V9EJLt9UrQs1Fblq64MJgQRuzBarXoAzZBi2CVYysE3QYn5Lw8SQYtPRNLyacL+Ew5vg+KPQWxnFIBu0DaBTgoYi5uAa9L6lpdjgy5Tgw9xohMs90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbYmwxev; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k1gvy9X8a4R9Sm6mJabfVPowdiNHSeK6V5hxb3HBnw1E6jrbvvvRsvxPB5NHu8Y9qLPZzMZThjhb4UEUHmiNQhIJG2U+g7Q6kXlIb4B5wyRhugi3EuiFNN6oinbBUOltJp2ERpaXmpPGEp8rhU5eWFlTUNwQNx15fX6pestZUcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+iskwXj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbYmwxev"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2CF1F000E9;
-	Tue, 21 Jul 2026 17:17:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+iskwXj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F981F000E9;
+	Tue, 21 Jul 2026 17:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654235;
-	bh=923nfgNefhhGA7+5Xr/z4S+iptm69zdBvrufcVtj3Jk=;
+	s=korg; t=1784654238;
+	bh=GjJXEnhcxJOHgD1J7FVNzDb9/tLrwGowuRytNMe0Wvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TbYmwxevwKEhMoTEXDZ/BaHKBJGcjbrvMIeyl0xigDjpFZejSqeo4obb9zbHB46Yg
-	 jIq/NcbsWd58wmWJBs3KGDa0k0HFD1OvRzIGV2xPkdDf32Lf7Wepm/TYphiV8TidjE
-	 SOw3Mag2ePRZuAYuAjWoGux6/nVsFCZcbl7DqfmY=
+	b=V+iskwXj7W/O7sy7EYGveLZyAEZPgQXWXlC2uYArkGY3KsvzuDF65Uan6S1Q3/vkm
+	 QFZqht66BDTPxSUSx1KPNjQ60SZcGxNxOn6lpUfiU86h+UlgPLAQ/zh0hg4T0mUJzs
+	 BeTf9zEvXnFJSYUKqhfqxBGvp3AaPIb+slyhg6ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Ma <aaron.ma@canonical.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Srikanth Aithal <Srikanth.Aithal@amd.com>,
+	"Tycho Andersen (AMD)" <tycho@kernel.org>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
 	stable@kernel.org
-Subject: [PATCH 7.1 1629/2077] x86/video: Only fall back to vga_default_device() without screen info
-Date: Tue, 21 Jul 2026 17:21:42 +0200
-Message-ID: <20260721152631.178018651@linuxfoundation.org>
+Subject: [PATCH 7.1 1630/2077] x86/virt/sev: Revert "Drop WBINVD before setting MSR_AMD64_SYSCFG_SNP_EN"
+Date: Tue, 21 Jul 2026 17:21:43 +0200
+Message-ID: <20260721152631.200389336@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,73 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Tycho Andersen (AMD) <tycho@kernel.org>
 
-commit 596b3678326d3d1aed7c19423b6746f1ce09688a upstream.
+commit 4c2509f3b79756679a02bea649c6a7501b58f52c upstream.
 
-Some multi GPU systems may have a VGA compatible device, but that might not be
-used for display.  If due to enumeration order this device is found before the
-one actually used for display then multiple devices may show the boot_display
-attribute, confusing userspace.
+Revert
 
-When screen info is valid, use it exclusively to find the primary device so
-that only the device backing the framebuffer is reported.  Only when no
-framebuffer has been set up does it make sense to fall back to the default VGA
-device.  This ensures at most one primary graphics device, preferably the one
-with the framebuffer.
+  99cf1fb58e68 ("x86/virt/sev: Drop WBINVD before setting MSR_AMD64_SYSCFG_SNP_EN").
 
-Fixes: ad90860bd10ee ("fbcon: Use screen info to find primary device")
-Closes: https://lore.kernel.org/linux-pci/20260618081803.2790848-1-aaron.ma@canonical.com/#t
-Reported-by: Aaron Ma <aaron.ma@canonical.com>
-Suggested-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Section 8.8 of the SNP spec says:
+
+  Before invoking SNP_INIT_EX with INIT_RMP set to 1, software must ensure
+  that no CPUs contain dirty cache lines for the memory containing the RMP.
+
+Cachelines can be moved from cache to cache in a dirty state. The
+wbinvd_on_all_cpus() before SNP_INIT_EX flushes the caches for each CPU, but
+if the IPIs for WBINVD race with this dirty cacheline movement, it is possible
+that they may not get flushed, violating the firmware requirement.
+
+Doing wbinvd_on_all_cpus() before setting SNPEn is safer since the RMP
+table is not yet in use.
+
+  [ Heroically bisected by Srikanth. ]
+  [ bp: Massage commit message. ]
+
+Fixes: 99cf1fb58e68 ("x86/virt/sev: Drop WBINVD before setting MSR_AMD64_SYSCFG_SNP_EN")
+Reported-by: Srikanth Aithal <Srikanth.Aithal@amd.com>
+Signed-off-by: Tycho Andersen (AMD) <tycho@kernel.org>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Tested-by: Aaron Ma <aaron.ma@canonical.com>
+Tested-by: Srikanth Aithal <Srikanth.Aithal@amd.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
 Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/20260623141505.1816786-1-mario.limonciello@amd.com
+Link: https://patch.msgid.link/20260707150033.2364758-1-tycho@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/video/video-common.c |   23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ arch/x86/virt/svm/sev.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/video/video-common.c
-+++ b/arch/x86/video/video-common.c
-@@ -43,21 +43,26 @@ bool video_is_primary_device(struct devi
- 	if (!pci_is_display(pdev))
- 		return false;
+--- a/arch/x86/virt/svm/sev.c
++++ b/arch/x86/virt/svm/sev.c
+@@ -527,6 +527,8 @@ void snp_prepare(void)
  
--	if (pdev == vga_default_device())
--		return true;
--
- #ifdef CONFIG_SCREEN_INFO
- 	numres = screen_info_resources(si, res, ARRAY_SIZE(res));
--	for (i = 0; i < numres; ++i) {
--		if (!(res[i].flags & IORESOURCE_MEM))
--			continue;
-+	if (numres > 0) {
-+		for (i = 0; i < numres; ++i) {
-+			if (!(res[i].flags & IORESOURCE_MEM))
-+				continue;
+ 	cpus_read_lock();
+ 
++	wbinvd_on_all_cpus();
 +
-+			if (pci_find_resource(pdev, &res[i]))
-+				return true;
-+		}
- 
--		if (pci_find_resource(pdev, &res[i]))
--			return true;
-+		return false;
- 	}
- #endif
- 
--	return false;
-+	/*
-+	 * No framebuffer was set up by the firmware/bootloader, so fall back
-+	 * to the default VGA device.
-+	 */
-+	return pdev == vga_default_device();
- }
- EXPORT_SYMBOL(video_is_primary_device);
- 
+ 	/*
+ 	 * MtrrFixDramModEn is not shared between threads on a core,
+ 	 * therefore it must be set on all CPUs prior to enabling SNP.
 
 
