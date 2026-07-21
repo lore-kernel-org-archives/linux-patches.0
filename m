@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F1F471246;
-	Tue, 21 Jul 2026 19:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AB8E395D8E;
+	Tue, 21 Jul 2026 19:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660725; cv=none; b=P7mt6mKTYJ29hPnNWR5PWwfXIpub378RKdgroMf1XD5gshYO1LdmcxCkpwr5e+rQ9bf8iQUUWF3pk5v4DdE6bVjZbFWznGI1t0yw3vbmnnPzmlZ8JlOjTdsm1aOKv+En+A4X6AHK4dTo/cgOU9oiQcLu2hsbJZi6FOi5vPkOsJU=
+	t=1784660728; cv=none; b=rDMZlstT+mwMMJjRYI1+ZAco9EOldqkSufo8Anr0nFpByONf7UuuzFwvs4JJpo8u7s/dHKqzquazvEM+WeCvREmFEzQ0FB8UoqWnjYJVUuQZCL1DkcqbwO8CAnfaJVWfXp7OTVX1gCISPZUJol5ykL297DYb+QUUeJB9vMsLXVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660725; c=relaxed/simple;
-	bh=tR5Ngzy4m5M46iZzQAck9GvyIrrNDKkzaKdeE7e8xyI=;
+	s=arc-20240116; t=1784660728; c=relaxed/simple;
+	bh=bcv2nf9Nqt/80cxiNwX+Y2YhEs20Nltg2KigtaMG6iA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=db8ghI/afhnmzs0ybXt75nEa5P6b51U0TYgopUf0PP5myGc7AqN3H1yURezirV5134vYEso/ztsqO1jpNuRcHocYFEbqngDtZTcfQZ+EGCa8U4Pkub6IaI5ItkJbek1OFzsDMOq3HppNIjuHiAAYi6rYXMyS8gWeRMaWLiS2uhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hh0PVJO6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cFcm3SpFqKmhm6/bmwZKQOTKx2M5J8CRUDzfu7lrp8LiudP/OeyNJSwgvwX+VuvJedmwG0s/L/+r9s5w2XjcEjno6eyAoAF9FqH4wAis2c8CFZVvOFODXsttjXzns76HNWpBuJmh3AiTETFpBCvTihgzTyZ9lAkU+ouTZsVYPe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8wS9MJa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hh0PVJO6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A0A41F000E9;
-	Tue, 21 Jul 2026 19:05:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8wS9MJa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B18B71F000E9;
+	Tue, 21 Jul 2026 19:05:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660724;
-	bh=G3EdM8T11q0jEhiNsuZe2IbLMfs10vLmh/Nl54rD8Rc=;
+	s=korg; t=1784660727;
+	bh=J2/A011pAXlELXVN6PztaRxZrAe4SLUJ1VBNjSTm4q8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hh0PVJO6iq9RdtuBLGlgV0+k/CsgsTC97SDancXB0hXdHhXiCBOpmgT/6c1MR7ig9
-	 ebOYS1hXTG0aUEm4yVBwC4VpFzwO9XHFIVRHIBhf0cAKfZRQfz2lm+0LvpNOXrjFZ5
-	 AnWDI4S31WLxF6Das/LVLpLoGoSvo9BQSBc1v1g4=
+	b=p8wS9MJatL9nn77asgLfwawB0xTbMUC9ScKr0s4T2e2V7fV38V9rq+W6XytDLrSyJ
+	 vMyNLOD0NGvalohlly0AnEZwVWCBiSs0sLmNTfqzwk+X8KfeyjgK1NFKxJG2UNPIos
+	 viKgjhVfQ4Ty8AfFYydgBnN2MS/pukzNdoF+GLaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1087/2077] i3c: master: Update dev_nack_retry_count under maintenance lock
-Date: Tue, 21 Jul 2026 17:12:40 +0200
-Message-ID: <20260721152618.462112095@linuxfoundation.org>
+Subject: [PATCH 7.1 1088/2077] i3c: master: Add missing runtime PM get in dev_nack_retry_count_store()
+Date: Tue, 21 Jul 2026 17:12:41 +0200
+Message-ID: <20260721152618.485471033@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,64 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit ab5f9c5cb527c03790a92142ad368881a9100aaf ]
+[ Upstream commit 79ce29e100ab3de0cad66eb48d32a7de4043e2ae ]
 
-Protect master->dev_nack_retry_count against concurrent sysfs updates
-by updating it while holding the bus maintenance lock.
+Ensure the device is runtime resumed while updating the retry
+configuration to avoid accessing the controller while suspended.
 
-Consequently, combine adjacent return statements into one.
+Call i3c_master_rpm_get() before accessing the controller in
+dev_nack_retry_count_store() and release it with
+i3c_master_rpm_put() afterwards.
 
-For consistency, read dev_nack_retry_count while holding the bus normaluse
-lock.
-
-Fixes: b58f47eb39268 ("i3c: add sysfs entry and attribute for Device NACK Retry count")
+Fixes: 990c149c61ee4 ("i3c: master: Introduce optional Runtime PM support")
 Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260616113752.196140-2-adrian.hunter@intel.com
+Link: https://patch.msgid.link/20260616113752.196140-3-adrian.hunter@intel.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/i3c/master.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 7952a38ebc3787..4d8e1d724c52ef 100644
+index 4d8e1d724c52ef..74c04e19f86c59 100644
 --- a/drivers/i3c/master.c
 +++ b/drivers/i3c/master.c
-@@ -742,7 +742,14 @@ static DEVICE_ATTR_RW(hotjoin);
- static ssize_t dev_nack_retry_count_show(struct device *dev,
- 					 struct device_attribute *attr, char *buf)
- {
--	return sysfs_emit(buf, "%u\n", dev_to_i3cmaster(dev)->dev_nack_retry_count);
-+	struct i3c_bus *i3cbus = dev_to_i3cbus(dev);
-+	ssize_t ret;
-+
-+	i3c_bus_normaluse_lock(i3cbus);
-+	ret = sysfs_emit(buf, "%u\n", dev_to_i3cmaster(dev)->dev_nack_retry_count);
-+	i3c_bus_normaluse_unlock(i3cbus);
-+
-+	return ret;
- }
+@@ -765,12 +765,18 @@ static ssize_t dev_nack_retry_count_store(struct device *dev,
+ 	if (ret)
+ 		return ret;
  
- static ssize_t dev_nack_retry_count_store(struct device *dev,
-@@ -760,14 +767,11 @@ static ssize_t dev_nack_retry_count_store(struct device *dev,
- 
++	ret = i3c_master_rpm_get(master);
++	if (ret)
++		return ret;
++
  	i3c_bus_maintenance_lock(i3cbus);
  	ret = master->ops->set_dev_nack_retry(master, val);
-+	if (!ret)
-+		master->dev_nack_retry_count = val;
+ 	if (!ret)
+ 		master->dev_nack_retry_count = val;
  	i3c_bus_maintenance_unlock(i3cbus);
  
--	if (ret)
--		return ret;
--
--	master->dev_nack_retry_count = val;
--
--	return count;
-+	return ret ?: count;
++	i3c_master_rpm_put(master);
++
+ 	return ret ?: count;
  }
  
- static DEVICE_ATTR_RW(dev_nack_retry_count);
 -- 
 2.53.0
 
