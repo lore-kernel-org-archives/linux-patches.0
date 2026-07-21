@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C15401A18;
-	Tue, 21 Jul 2026 17:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29805375AC3;
+	Tue, 21 Jul 2026 17:22:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654529; cv=none; b=HL/7BVmVenSKt/yhtOYjc2Ecf6oZafJAMoHjcZ3Q0QqYoFYDPZFavalIUnmoXWV4NO4a9MSBna4fENUOrteAHv5KBdoWAa6G9YJam8+T1yxJqL/b2rAhTTaQ8JjaXDUiNJQBkNvoQo5CMZdSBcu481bsXbU9ay1yrpDJ4SnD6yw=
+	t=1784654532; cv=none; b=bBNRJc4MyItQjClcYNKHjPYqRz8MeatNxUade9YMkECX6Uwhgp9hoBghFY/dWSTmPTrZHO9CJAcW7WG2dvEuP0qNhVIezolEBdaD5JZQwRKg6KYzeAx9nzV44PqVhCOvARJMlzE4dnhztJIWoiaiPiL0lZzcg7uXDeTik1k4CUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654529; c=relaxed/simple;
-	bh=xwYkAzfUff2tJlxfYGBnsDFZWjhkEtaNNCiGenH0UPw=;
+	s=arc-20240116; t=1784654532; c=relaxed/simple;
+	bh=/jbAwXIv7laScPJgZghZIB4f/KdkGKhTy68Vhs1ULTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rrJi7N/oAf019RVXK0OYMn9lwxK9To2KEGYgYQ7xVewKJNsp8xdDBVtlO3WV+E0brA7XgWqwHyZ6iE92BA1odMLXoEimExrf1Dkg28aQpOGlUiLWZLx6juZlV3zribxYa7ov8ktkRp/ZMgzNaFt4Nlgbe7XZGC890dRvVZ7TBc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8e01BHK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r1gckxcCccx6UrjOYgqZlF5PBKqxFfnwMho1OUFsfUMprmtP1q86ZCAGcNdzCwpOAFn5dJvvOVi4F1S5wlwWEa5oiJjwiCvT7KpuFo2G0hhrAI/I3gFXD/19w3kjPj96s9ckzjQ2pUJqJlgKPi4ouHNI6rnZnrC5sdufLNfzg84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNm8ZioA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8e01BHK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04AA1F00A3D;
-	Tue, 21 Jul 2026 17:22:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNm8ZioA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8641F000E9;
+	Tue, 21 Jul 2026 17:22:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654528;
-	bh=GFXT+Eq/dwg9L146RNFSMZ3oFwvzo41MP41n30m5mKg=;
+	s=korg; t=1784654531;
+	bh=CJgQTKlwqCNZgJmUrnKgvilSAZXiINXhBWrRd5TInJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g8e01BHKjleDccfNmMBsWkklx4zg+nFUoFYLSXScTKmUKd/LzYGPUrlHkPw2HgiFY
-	 eqc+TdCdLIjPRJ2U4+sIn/ADBG5XpLLwQ0dHxtbJaVhVYmMGKU4nLHEus53rQrZk61
-	 xEummnTUDhaNzNpgONdOaz6qhEmcWG/Zv32gIcnw=
+	b=YNm8ZioAZTGjhGwenroQcMgRWVqBsNKpg7hooCPkLUUJPrhK0EPiAyAfwG7h1uEGD
+	 JhI7cuwFnikjdIXcmBjyTHZTPKWlI+ZEOzhcHLx4d4lLqZp2muiJk0OcGc6ieHTCGL
+	 GaxjK5yXbdvqc+S0GkkJGWmNnsQz/PrbFozgdnrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Breno Leitao <leitao@debian.org>
-Subject: [PATCH 7.1 1738/2077] 9p: skip nlink update in cacheless mode to fix WARN_ON
-Date: Tue, 21 Jul 2026 17:23:31 +0200
-Message-ID: <20260721152633.741492396@linuxfoundation.org>
+	Chris Morgan <macromorgan@hotmail.com>,
+	Alexey Charkov <alchark@flipper.net>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 7.1 1739/2077] power: supply: bq257xx: Fix VSYSMIN clamping logic
+Date: Tue, 21 Jul 2026 17:23:32 +0200
+Message-ID: <20260721152633.764709861@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,71 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Alexey Charkov <alchark@flipper.net>
 
-commit 574aa0b4799470ac814479f1138d19efe6262255 upstream.
+commit b6c6b9260a92dacef6edef8e93bc2767b86b1dfe upstream.
 
-v9fs_dec_count() unconditionally calls drop_nlink() on regular files,
-even when the inode's nlink is already zero. In cacheless mode the
-client refetches inode metadata from the server (the source of truth)
-on every operation, so by the time v9fs_remove() returns, the locally
-cached nlink may already reflect the post-unlink value:
+The minimal system voltage (VSYSMIN) is meant to protect the battery from
+dangerous over-discharge. When the device tree provides a value for the
+minimum design voltage of the battery, the user should not be allowed to
+set a lower VSYSMIN, as that would defeat the purpose of this protection.
 
-  1. Client initiates unlink, server processes it and sets nlink to 0
-  2. Client refetches inode metadata (nlink=0) before unlink returns
-  3. Client's v9fs_remove() completes successfully
-  4. Client calls v9fs_dec_count() which calls drop_nlink() on nlink=0
+Flip the clamping logic when setting VSYSMIN to ensure that battery design
+voltage is respected.
 
-This race is easily triggered under heavy unlink workloads, such as
-stress-ng's unlink stressor, producing the following warning:
-
-  WARNING: fs/inode.c:417 at drop_nlink+0x4c/0xc8
-  Call trace:
-   drop_nlink+0x4c/0xc8
-   v9fs_remove+0x1e0/0x250 [9p]
-   v9fs_vfs_unlink+0x20/0x38 [9p]
-   vfs_unlink+0x13c/0x258
-   ...
-
-In cacheless mode the server is authoritative and the inode is on its
-way out, so locally adjusting nlink buys nothing. Skip v9fs_dec_count()
-entirely when neither CACHE_META nor CACHE_LOOSE is set, which both
-avoids the warning and removes a class of nlink races (two concurrent
-unlinkers observing nlink > 0 and both calling drop_nlink()) that an
-nlink == 0 guard alone would only narrow rather than close.
-
-Fixes: ac89b2ef9b55 ("9p: don't maintain dir i_nlink if the exported fs doesn't either")
 Cc: stable@vger.kernel.org
-Suggested-by: Dominique Martinet <asmadeus@codewreck.org>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Message-ID: <20260421-9p-v2-1-48762d294fad@debian.org>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: 1cc017b7f9c7 ("power: supply: bq257xx: Add support for BQ257XX charger")
+Tested-by: Chris Morgan <macromorgan@hotmail.com>
+Signed-off-by: Alexey Charkov <alchark@flipper.net>
+Link: https://patch.msgid.link/20260603-bq25792-v7-2-d487bed276d0@flipper.net
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/9p/vfs_inode.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/power/supply/bq257xx_charger.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/fs/9p/vfs_inode.c
-+++ b/fs/9p/vfs_inode.c
-@@ -488,10 +488,19 @@ static int v9fs_at_to_dotl_flags(int fla
-  * - ext4 (with dir_nlink feature enabled) sets nlink to 1 if a dir has more
-  *   than EXT4_LINK_MAX (65000) links.
+--- a/drivers/power/supply/bq257xx_charger.c
++++ b/drivers/power/supply/bq257xx_charger.c
+@@ -128,9 +128,8 @@ static int bq25703_get_min_vsys(struct b
+  * @vsys: voltage value to set in uV.
   *
-+ * In cacheless mode the server is the source of truth for nlink and the
-+ * inode is going away immediately, so locally adjusting i_nlink buys
-+ * nothing and races with concurrent metadata fetches that may already
-+ * have observed the post-unlink value (nlink == 0).
-+ *
-  * @inode: inode whose nlink is being dropped
+  * This function takes a requested minimum system voltage value, clamps
+- * it between the minimum supported value by the charger and a user
+- * defined minimum system value, and then writes the value to the
+- * appropriate register.
++ * it between the user defined minimum system value and the maximum supported
++ * value by the charger, and then writes the value to the appropriate register.
+  *
+  * Return: Returns 0 on success or error if an error occurs.
   */
- static void v9fs_dec_count(struct inode *inode)
- {
-+	struct v9fs_session_info *v9ses = v9fs_inode2v9ses(inode);
-+
-+	if (!(v9ses->cache & (CACHE_META | CACHE_LOOSE)))
-+		return;
- 	if (!S_ISDIR(inode->i_mode) || inode->i_nlink > 2)
- 		drop_nlink(inode);
- }
+@@ -139,7 +138,7 @@ static int bq25703_set_min_vsys(struct b
+ 	unsigned int reg;
+ 	int vsys_min = pdata->vsys_min;
+ 
+-	vsys = clamp(vsys, BQ25703_MINVSYS_MIN_UV, vsys_min);
++	vsys = clamp(vsys, vsys_min, BQ25703_MINVSYS_MAX_UV);
+ 	reg = ((vsys - BQ25703_MINVSYS_MIN_UV) / BQ25703_MINVSYS_STEP_UV);
+ 	reg = FIELD_PREP(BQ25703_MINVSYS_MASK, reg);
+ 
 
 
