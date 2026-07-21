@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F307434409;
-	Tue, 21 Jul 2026 21:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183C13B8407;
+	Tue, 21 Jul 2026 21:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670228; cv=none; b=bECKUCWGZmZtBPmgoDDzJkSeQHI+QxArJGz1C0gH2FSnz302QL91E348qMIneldtwkoie0EOPczaiRn/b1ARldBPS5FU6Gz+tS9/T27uatkMAhZKAMXKrTipySZ67eD8Ty3VSRTdui7j/y09VbVbvj+qKAJ5aQQeOhQoHUUNxWY=
+	t=1784670231; cv=none; b=tS2b6f+4+jlfvPzBbi5sCaE695Xuq95KPKSUtXTkY7kvK0XFwLNSmF0f8pAo8KCRgxsgI0dntv6i5Vgy+RZ7q5SUEE+sfRFywC5V75/cxv4ts6vDjvplb69NO47gkp/1Ny7QbrHntCKWAkFdoyaq6sbIFKvPrikZ+WfOpYPldrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670228; c=relaxed/simple;
-	bh=OqTwXbRNu2+hYRb98DIVJ5KtPxk8LH+RFiKG5Wi+xCo=;
+	s=arc-20240116; t=1784670231; c=relaxed/simple;
+	bh=VB0uQuW+P9ljIKH/P5YjX9k/JDrQ7xLCpo8VQVjYGiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vED2MHAUqJkXL19YkP/mDpyiF1OxshcTEbmTmNRP4mFis3IubriOtnUdhnTvqOepiCV129PGGyy4xG2tlUqeeAhEmOF/uggf+va5bBoToKlrAEPfMqkhqPeYztawaGwDhnQkjBL+sLwtDVAew63gM+iCX+MVZylrbYRBJaFgKK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QoaOnA6p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CxdtgQ1useKrvV1xucyHDKX8JwmBOT7tGciVei5NC5YcPDRHnQiZrDr3q1vqwhYTrHomJl5lkPS0zkb519p6mzh0Eq96Y0ln7Udvx2Jd8koxHU3l8gM4BtGbeTxByBD0vsAAlq9B2MNLTGosydXxxx3GhkUOJGc3vK59qftTtso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jVDExV3S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QoaOnA6p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DA61F000E9;
-	Tue, 21 Jul 2026 21:43:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVDExV3S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6441F000E9;
+	Tue, 21 Jul 2026 21:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670227;
-	bh=nI38BetpzVP2hN6PpYUU9TRAyoknLpZFpGUxialRG14=;
+	s=korg; t=1784670230;
+	bh=l3LuoYIBvCXkSTeQ0VcGAzcvYBoAOhB6b2mKzpntBks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QoaOnA6poOzaShA+lVDx6eKWjLm3eUyRrjHu5vNV33JAZwFd5Zv9Lrxml5CVv1BAr
-	 UWFk3uOUkqXKkA8CDS/+ZpOKOYUQMWGGDaiUF2Gsd2lNCnp4TJed6dOS/HbAxbZCbI
-	 ATfTWY+nyjti4JvdxP1EGXFtQO0OU9bkAuEBznAQ=
+	b=jVDExV3S1B8oVDo65RHRpQXsiLtNdqYmwhjzuwVmG+Ahr5pwYORClPa2SbzZMfQmV
+	 X06RpmBWb2pVFSxhYS9h/W8oLoBxyKqMSfcxDWDcOn6n1pjPdsTvnQnLfsJxZxGnUT
+	 hoahYStfXixTPRWHH9JjbDQkS2JMA+4zVJ4WwaUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Juergen Gross <jgross@suse.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 0854/1067] scsi: sg: Report request-table problems when any status is set
-Date: Tue, 21 Jul 2026 17:24:15 +0200
-Message-ID: <20260721152443.647135530@linuxfoundation.org>
+Subject: [PATCH 6.1 0855/1067] scsi: xen: scsiback: Free the command tag on the TMR submit-failure path
+Date: Tue, 21 Jul 2026 17:24:16 +0200
+Message-ID: <20260721152443.669555850@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,49 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 1d3a742afeb761eaead774691bde1ced699e9a5d upstream.
+commit 66aefc277ebb796ec285d550305535dc3fc0179f upstream.
 
-SG_GET_REQUEST_TABLE reports per-request diagnostic state through
-sg_req_info::problem. The field is meant to indicate whether there is an
-error to report for a completed request.
+scsiback_device_action() obtains a command tag in
+scsiback_get_pend_req() and submits a task-management request with
+target_submit_tmr(). When target_submit_tmr() fails it returns < 0 and
+scsiback jumps to the err: label, which sends a response but frees
+nothing, leaking the tag.
 
-sg_fill_request_table() currently combines masked_status, host_status
-and driver_status with bitwise AND. This only reports a problem when all
-three status fields are non-zero at the same time. A normal target check
-condition, for example, has masked_status set while host_status and
-driver_status may both be zero, so the request is incorrectly reported
-as clean.
+Impact: a pvSCSI guest can leak the command tags of a LUN's session,
+stopping the LUN, by issuing VSCSIIF_ACT_SCSI_ABORT or RESET requests
+whenever target_submit_tmr() fails.
 
-Use the same condition as sg_new_read(), which sets SG_INFO_CHECK when
-any of the three status fields is non-zero.
+transport_generic_free_cmd() cannot be used here. By the time
+target_submit_tmr() returns an error it has already run
+__target_init_cmd() (so se_cmd->cmd_kref is one, not zero), and on its
+target_get_sess_cmd() error path it has freed se_cmd->se_tmr_req via
+core_tmr_release_req() while leaving SCF_SCSI_TMR_CDB set and the
+pointer dangling. Letting the command release run target_free_cmd_mem()
+would then double-free se_tmr_req.
 
+Use the same helper, which returns just the tag, on this path too.
+
+Fixes: 2dbcdf33dbf6 ("xen-scsiback: Convert to percpu_ida tag allocation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/54B60C19F7DB8889+20260707030845.970018-1-raoxu@uniontech.com
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://patch.msgid.link/20260611123046.2323342-3-michael.bommarito@gmail.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sg.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/xen/xen-scsiback.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/sg.c
-+++ b/drivers/scsi/sg.c
-@@ -866,10 +866,9 @@ sg_fill_request_table(Sg_fd *sfp, sg_req
- 		if (val >= SG_MAX_QUEUE)
- 			break;
- 		rinfo[val].req_state = srp->done + 1;
--		rinfo[val].problem =
--			srp->header.masked_status &
--			srp->header.host_status &
--			srp->header.driver_status;
-+		rinfo[val].problem = srp->header.masked_status ||
-+					     srp->header.host_status ||
-+					     srp->header.driver_status;
- 		if (srp->done)
- 			rinfo[val].duration =
- 				srp->header.duration;
+--- a/drivers/xen/xen-scsiback.c
++++ b/drivers/xen/xen-scsiback.c
+@@ -640,7 +640,7 @@ static void scsiback_device_action(struc
+ 	return;
+ 
+ err:
+-	scsiback_do_resp_with_sense(NULL, err, 0, pending_req);
++	scsiback_resp_and_free(pending_req, err);
+ }
+ 
+ /*
 
 
