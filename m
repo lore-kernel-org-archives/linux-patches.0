@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA79A223708;
-	Tue, 21 Jul 2026 17:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52834223708;
+	Tue, 21 Jul 2026 17:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654834; cv=none; b=fQN2leaUDJ+8p7FN4S0cmq4Yjn+tP70E2RUxBMt7H/swp2fRBYwWtUTUHDtRDanCI2gIdNzV2TbAEi/7uboLRQCgjKebrZsWXnfuiCejcFMW6eqrxfMG9bAWvnVxW8heo64lC3nSTmPwX5KQrZOje7EZAF69BFcEyUJOOIZKJCg=
+	t=1784654837; cv=none; b=ibbPXeHOv0NNbYD88H2/9Y7ZmbL3iaYeVk+usBqvY4FyqrQMh/GWMoujrTL1vvXrQfRqXKsYQooUJHkVkKWm434wds60JXkdEfbYPgG2/5/SYjw0c455tpsMvYCT9rbWg6rghYpbtIFm6TB8Ok4Cgn1A5prvB5Y2dzZEB77/yIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654834; c=relaxed/simple;
-	bh=BzGBAXM4bfvRLZ0igW746pTKxP6WHEJLcUJsPx2WhDw=;
+	s=arc-20240116; t=1784654837; c=relaxed/simple;
+	bh=5CVFTr9ylqCfQmm4+qjICioHoJYiGjrqy4ee2f0AQX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gU2h92sqH7pSI9SZGHQIyIHDlZ2Yil1r846rfzcVC6XTtvQjr0od+Ck2/zdqkXl19M7HVpeH4/FyjmaLKYjh/3iSRPKOBYMT6CFOozwJf53Y9MslPWpINsB4q2U+z/vDrFAxRrR/HroaBTxsB8YE4U/MUSqyq2r1y2XHbvaVNRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ORiC3QEw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bKhmua7vYl2wu3HD92cdYN0jTUDwHMsKORwSblBLl964IlNu6Z3LZadBpd48KEsgC2ewHI3KofEdig/uJTNTaMvXso2/2RTSN0aFFC+Ljk57agzURllLJyedkCoPHTRbLf7lYsbF7X0BYW/DrIhrRdOO1/lydh1R/UoPtSORA+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O9P+teLj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ORiC3QEw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1691F000E9;
-	Tue, 21 Jul 2026 17:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O9P+teLj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8DC91F000E9;
+	Tue, 21 Jul 2026 17:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654833;
-	bh=0kSV6xu6ACaA+MTiZXwESmCT+LDopXDhw0R3Mn7fLIU=;
+	s=korg; t=1784654836;
+	bh=wdfaQGs4TLVP1Q5wdEL4olYfuu1quDHKsXi7HQP5tb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ORiC3QEwqhEk5zwBkTym3Rm1FeR7ctHRPw5c4XWsprdY64C0r18OhiodEJp/RMQ67
-	 wue2kRfwYBFzZehUvR4lrZ6diM/ulXAQS4fzO4TXy2AJ615NdVv6IcXD/BwzNDeAm+
-	 vgM0veePmh9JwfSzYb0V3YygLyLJ74+8kOYPwXcI=
+	b=O9P+teLj1wKDEovguQjPj0q6ya8b64d1sMoeE5TOuznNczjj6MTladKDj0xNhystM
+	 C9DK8FHO1YnwLdVbgriselWz9rC9KvDvqXbMpRFyrrFC6IB6/mxQeLAo5qE61+cIHk
+	 4Oak3UTtFZfOlVkwlI41iZ4NjDfMgyPgszrT12MQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.1 1856/2077] dm-integrity: dont increment hash_offset twice
-Date: Tue, 21 Jul 2026 17:25:29 +0200
-Message-ID: <20260721152636.511239896@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Sami Tolvanen <samitolvanen@google.com>
+Subject: [PATCH 7.1 1857/2077] dm-verity: fix buffer overflow in FEC calculation
+Date: Tue, 21 Jul 2026 17:25:30 +0200
+Message-ID: <20260721152636.536268979@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -43,6 +44,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
@@ -51,31 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit edf025f083854f80032b73a1aad69a3c90db236f upstream.
+commit 31d6e6c0ba8d5a7bd59660035a089307100c5e8e upstream.
 
-hash_offset is already incremented in the loop "for (i = 0; i < to_copy;
-i++, ts--)". Do not increment it again.
+There's a buffer overflow in dm-verity-fec:
+
+if (neras && *neras <= v->fec->roots)
+	fio->erasures[(*neras)++] = i;
+
+This allows *neras to reach roots + 1 (the post-increment pushes it past
+roots). This value is then passed as no_eras to decode_rs8(). Inside the
+RS decoder (lib/reed_solomon/decode_rs.c:113-121), the erasure locator
+polynomial loop writes lambda[j] where j can reach nroots + 1 — one
+element past the end of lambda[] (which is sized nroots + 1, valid
+indices 0..nroots). The out-of-bounds write lands on syn[0], corrupting
+the syndrome buffer.
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-4.6
-Fixes: 84597a44a9d8 ("dm-integrity: dm integrity: add optional discard support")
+Assisted-by: Claude:claude-opus-4-6
 Cc: stable@vger.kernel.org
+Fixes: a739ff3f543a ("dm verity: add support for forward error correction")
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/md/dm-verity-fec.c |    4 ++--
+ drivers/md/dm-verity-fec.h |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -1480,9 +1480,6 @@ thorough_test:
- 			*metadata_offset = 0;
+--- a/drivers/md/dm-verity-fec.c
++++ b/drivers/md/dm-verity-fec.c
+@@ -220,7 +220,7 @@ static int fec_read_bufs(struct dm_verit
+ 				     PTR_ERR(bbuf));
+ 
+ 			/* assume the block is corrupted */
+-			if (neras && *neras <= v->fec->roots)
++			if (neras && *neras < v->fec->roots)
+ 				fio->erasures[(*neras)++] = i;
+ 
+ 			continue;
+@@ -238,7 +238,7 @@ static int fec_read_bufs(struct dm_verit
+ 			 * skip if we have already found the theoretical
+ 			 * maximum number (i.e. fec->roots) of erasures
+ 			 */
+-			if (neras && *neras <= v->fec->roots &&
++			if (neras && *neras < v->fec->roots &&
+ 			    fec_is_erasure(v, io, want_digest, bbuf))
+ 				fio->erasures[(*neras)++] = i;
  		}
- 
--		if (unlikely(!is_power_of_2(ic->tag_size)))
--			hash_offset = (hash_offset + to_copy) % ic->tag_size;
--
- 		total_size -= to_copy;
- 	} while (unlikely(total_size));
- 
+--- a/drivers/md/dm-verity-fec.h
++++ b/drivers/md/dm-verity-fec.h
+@@ -47,7 +47,7 @@ struct dm_verity_fec {
+ /* per-bio data */
+ struct dm_verity_fec_io {
+ 	struct rs_control *rs;	/* Reed-Solomon state */
+-	int erasures[DM_VERITY_FEC_MAX_ROOTS + 1]; /* erasures for decode_rs8 */
++	int erasures[DM_VERITY_FEC_MAX_ROOTS]; /* erasures for decode_rs8 */
+ 	u8 *output;		/* buffer for corrected output */
+ 	unsigned int level;		/* recursion level */
+ 	unsigned int nbufs;		/* number of buffers allocated */
 
 
