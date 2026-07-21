@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EED946EF7A;
-	Tue, 21 Jul 2026 19:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A5F41A547;
+	Tue, 21 Jul 2026 19:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661995; cv=none; b=hTHoUHQ/z/SDCy05n3gN2cJYMOCF8U5daKJ8AYciCfWr0+uHBkrhH7V5H2sxWH64EqjyqPegjqDt3uNBHXbwOaH9hX1VWyq7w0XpNt+pIVUafC1w4Qa0FZq05W9pMQSxfDETOorKRFo5TM9/Cus5/6smEpxxHnGSZ50rvMJkNlQ=
+	t=1784661997; cv=none; b=Pp6VgEH07r1vRSjKvbxaFCQE7Ux9BdZSR3bgn+6i+ejNzUP2nxdRzhtQXaNN52SqOp2CaHcWsllp6bPJp6/LC6ma6Ab0rrWS00wbQIba6N7+2dZah3UaXj4pHV8HzXn4MnmaGRKwzZMEhDjsWJLhfgkf3rXdM895ap/GrcPid/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661995; c=relaxed/simple;
-	bh=ecZkZEpZMZ+cx1M9wyeIv9tUj5kieqklucLamjfR7YI=;
+	s=arc-20240116; t=1784661997; c=relaxed/simple;
+	bh=VxGPjq58uF3L/TId/4nmebLVUZ19ISepOQX/Db3bHJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZU4LRlbg1Xa6z5MWu1zBmFu3HPIrm5AoMxusxqSloZ/MbH1vpofP0BJzcfMTli7zDgJaiyRwbsR9BgFJdp1wExli3RnPxyJWhDhYtRav02g8N3BjvirsxD75Wvy1zL+Y9fQM0OtYmMkh4gxViWuLdFMZqgcWUT4DULHWfPT0ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGwKbUQa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d1Yi8zaEAMoTAQXLLlPsDhcXbGhrXYVAAxPW2c+r/wbeKisM5K/gb9ucu/2VX/V8hRhkvTGDmp9Suf9qYAX7zIu9zvvNNSI4fbkke4qePqTVdRYJEhaGRZEe40r79JCKXwUpyEhRzhFiS/egU7s1+pB2IQbLsWWfrRZj/kOTc4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qvTnFrJz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGwKbUQa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE881F000E9;
-	Tue, 21 Jul 2026 19:26:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvTnFrJz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31CA41F000E9;
+	Tue, 21 Jul 2026 19:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661993;
-	bh=wGtH8PtC939p/i88QhaNixDkj34qGiHLz2OdAy48hHo=;
+	s=korg; t=1784661995;
+	bh=ry+H2ywAfaauk5C/ZZfmCVUC3SjeE76MG5A5Sp9PpaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hGwKbUQaOjg3/zq9tgS50fDS95I0Zw8jcaMEkjadJkNHEUbFzrYKbXwxtyvZfGuMN
-	 WiEfBU72+lXNNLUIAdqSnAtIwveeuqpidpHUHPZxbAP1bbCfdVJAYa8QTI+p802hKU
-	 IL5DkTaGHL8H/fqSGWdSzCIizcb7ypO7BgfZzlio=
+	b=qvTnFrJz6Hbe7AY0d4vDcUmwrCSOdJWA2eMoaktptCOgEShQLhMhOejoCo/FQJc3b
+	 oePN/O/UMQxECP4EaShqAatK2XiHklVhypbmlSYrx8G6sgjkQLq5RW+VPJvCFe0mKA
+	 ygZmLcFfoJ+FqoQmkB7DXkFRrKpwjIv8zwTUzmIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amber Lin <Amber.Lin@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0234/1276] drm/amdkfd: always resume_all after suspend_all
-Date: Tue, 21 Jul 2026 17:11:17 +0200
-Message-ID: <20260721152451.327597687@linuxfoundation.org>
+Subject: [PATCH 6.12 0235/1276] ocfs2: rebase copied fsdlm LVB pointers in locking_state
+Date: Tue, 21 Jul 2026 17:11:18 +0200
+Message-ID: <20260721152451.349477927@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,67 +58,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit 56ae73c92e200e630c2bdf1e98c88b86c8483b37 ]
+[ Upstream commit 93612d48fa42b3d1a637eb9279e15281c611c000 ]
 
-Need to restore any good queues even if the suspend_all
-failed for some.  Always run remove_queue as that will
-schedule a GPU reset is removing the queue fails.
+The locking_state debugfs iterator snapshots struct ocfs2_lock_res by
+value under ocfs2_dlm_tracking_lock and later formats that copy in
+ocfs2_dlm_seq_show().  That is fine for the inline fields, but the
+userspace fsdlm stack stores the LVB through lksb_fsdlm.sb_lvbptr.  Once
+the iterator drops the tracking lock, a copied non-NULL sb_lvbptr still
+points into the original lockres owner, so teardown can free that
+container before the debugfs dump walks the raw LVB bytes.
 
-v2: move resume_all after remove
+Rebase the copied sb_lvbptr to the copied l_lksb before dumping the raw
+LVB.  The seq snapshot already carries the inline LVB storage reserved in
+struct ocfs2_dlm_lksb, so the debugfs reader can dump the copied bytes
+without borrowing the original lockres lifetime.
 
-Fixes: eb067d65c33e ("drm/amdkfd: Update BadOpcode Interrupt handling with MES")
-Reviewed-by: Amber Lin <Amber.Lin@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The buggy scenario involves two paths, with each column showing the order
+within that path:
+
+locking_state reader:                  lockres teardown:
+1. ocfs2_dlm_seq_start()/next()        1. file release or another owner
+   copies struct ocfs2_lock_res           teardown reaches
+2. ocfs2_dlm_seq_show() formats           ocfs2_lock_res_free()
+   the copied row                      2. the lockres is removed from the
+3. ocfs2_dlm_lvb() follows the            tracking list
+   copied sb_lvbptr                   3. the owner frees the original
+                                          lockres container
+
+Validation reproduced this kernel report:
+KASAN slab-use-after-free in ocfs2_dlm_seq_show+0x1bd/0x430
+RIP: 0033:0x7f8ec4b1e29d
+The buggy address belongs to the object at ffff88810a1e0800 which belongs
+to the cache kmalloc-1k of size 1024
+The buggy address is located 368 bytes inside of freed 1024-byte region
+[ffff88810a1e0800, ffff88810a1e0c00)
+Read of size 1
+Call trace:
+  dump_stack_lvl+0x66/0xa0
+  print_report+0xce/0x630
+  ocfs2_dlm_seq_show+0x1bd/0x430 (fs/ocfs2/dlmglue.c:3137)
+  srso_alias_return_thunk+0x5/0xfbef5
+  __virt_addr_valid+0x19f/0x330
+  kasan_report+0xe0/0x110
+  seq_read_iter+0x29d/0x790
+  seq_read+0x20a/0x280
+  find_held_lock+0x2b/0x80
+  rcu_read_unlock+0x18/0x70
+  full_proxy_read+0x9e/0xd0
+  vfs_read+0x12c/0x590
+  ksys_read+0xd2/0x170
+  do_user_addr_fault+0x65a/0x890
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Allocated by task stack:
+  kasan_save_stack+0x33/0x60
+  kasan_save_track+0x14/0x30
+  __kasan_kmalloc+0xaa/0xb0
+  ocfs2_file_open+0x13e/0x300
+  do_dentry_open+0x233/0x7f0
+  vfs_open+0x5a/0x1b0
+  path_openat+0x66d/0x1540
+  do_file_open+0x186/0x2b0
+  do_sys_openat2+0xce/0x150
+  __x64_sys_openat+0xd0/0x140
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Freed by task stack:
+  kasan_save_stack+0x33/0x60
+  kasan_save_track+0x14/0x30
+  kasan_save_free_info+0x3b/0x60
+  __kasan_slab_free+0x5f/0x80
+  kfree+0x313/0x590
+  ocfs2_file_release+0x138/0x260
+  __fput+0x1df/0x4b0
+  fput_close_sync+0xd2/0x170
+  __x64_sys_close+0x55/0x90
+  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Link: https://lore.kernel.org/20260525041726.4112882-1-rollkingzzc@gmail.com
+Fixes: cf4d8d75d8ab ("ocfs2: add fsdlm to stackglue")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/amdkfd/kfd_device_queue_manager.c | 20 ++++++-------------
- 1 file changed, 6 insertions(+), 14 deletions(-)
+ fs/ocfs2/dlmglue.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-index e19f088c7dcf06..9035eebe9cd63b 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-@@ -2925,32 +2925,24 @@ int kfd_dqm_suspend_bad_queue_mes(struct kfd_node *knode, u32 pasid, u32 doorbel
+diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
+index 764ecbd5ad41dd..7c8990531b0271 100644
+--- a/fs/ocfs2/dlmglue.c
++++ b/fs/ocfs2/dlmglue.c
+@@ -3135,6 +3135,22 @@ static void *ocfs2_dlm_seq_next(struct seq_file *m, void *v, loff_t *pos)
+  *	- Add last pr/ex unlock times and first lock wait time in usecs
+  */
+ #define OCFS2_DLM_DEBUG_STR_VERSION 4
++
++/*
++ * The debug iterator snapshots lockres by value, so a userspace-stack LVB
++ * pointer copied from the original lockres must be rebased to the copied
++ * lksb before the dump walks the raw bytes.
++ */
++static void ocfs2_dlm_seq_rebase_lvb(struct ocfs2_lock_res *lockres)
++{
++	if (!ocfs2_stack_supports_plocks())
++		return;
++
++	if (lockres->l_lksb.lksb_fsdlm.sb_lvbptr)
++		lockres->l_lksb.lksb_fsdlm.sb_lvbptr =
++			(char *)&lockres->l_lksb + sizeof(struct dlm_lksb);
++}
++
+ static int ocfs2_dlm_seq_show(struct seq_file *m, void *v)
+ {
+ 	int i;
+@@ -3192,6 +3208,7 @@ static int ocfs2_dlm_seq_show(struct seq_file *m, void *v)
+ 		   lockres->l_blocking);
  
- 		list_for_each_entry(q, &qpd->queues_list, list) {
- 			if (q->doorbell_id == doorbell_id && q->properties.is_active) {
--				ret = suspend_all_queues_mes(dqm);
--				if (ret) {
--					dev_err(dev, "Suspending all queues failed");
--					goto out;
--				}
-+				/* suspend all queues will save any good queues and mark the rest as bad */
-+				suspend_all_queues_mes(dqm);
- 
- 				q->properties.is_evicted = true;
- 				q->properties.is_active = false;
- 				decrement_queue_count(dqm, qpd, q);
- 
-+				/* this will remove the bad queue and sched a GPU reset if needed */
- 				ret = remove_queue_mes(dqm, q, qpd);
--				if (ret) {
--					dev_err(dev, "Removing bad queue failed");
--					goto out;
--				}
--
--				ret = resume_all_queues_mes(dqm);
- 				if (ret)
--					dev_err(dev, "Resuming all queues failed");
--
-+					dev_err(dev, "Removing bad queue failed");
-+				/* resume the good queues */
-+				resume_all_queues_mes(dqm);
- 				break;
- 			}
- 		}
- 	}
- 
--out:
- 	dqm_unlock(dqm);
- 	return ret;
- }
+ 	/* Dump the raw LVB */
++	ocfs2_dlm_seq_rebase_lvb(lockres);
+ 	lvb = ocfs2_dlm_lvb(&lockres->l_lksb);
+ 	for(i = 0; i < DLM_LVB_LEN; i++)
+ 		seq_printf(m, "0x%x\t", lvb[i]);
 -- 
 2.53.0
 
