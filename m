@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B4346E01C;
-	Tue, 21 Jul 2026 18:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65973D1CCA;
+	Tue, 21 Jul 2026 18:03:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656998; cv=none; b=Wn0rxWyou+vvHtOzXUWox32eZRoH6q00pOWPg2HjgpPfxCMh/JJ7lKqJpOEGMytDU7ld8g1NswmTeHrHw12x8DGBMmTxOn4ChlNA5SnOCmECJK3umywf8JsPF5fgt03pN4BXxhhs51T6cVKa15rDU/VqVhSGX3vyWeZy0j3D0ho=
+	t=1784657001; cv=none; b=LC1iKUbzWQBfSbk7bCMn7IgPg1OmsGUOh8kBsXcjEqvZbar5bdxqVC3DrwrQA9TQlWH3fnv1f+ldsaWbLT+jWhbBzqa80aReDDJC0dhwJ97R+qjxQ/Wy6sxuZpcm/hvyFfuzSnw95KE0t85cySOW+Z0iyFZN03xXUDeAA+z4yzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656998; c=relaxed/simple;
-	bh=SN3meadoW6VNAly+quR01Mfry2fZD62xUyXZuP4HqMM=;
+	s=arc-20240116; t=1784657001; c=relaxed/simple;
+	bh=0gy/Lw8eq43IRuLsRTFdE/p2FjBxaEE5LzCWlzgS3XY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NS6h0+lyYhg+XAa3S4DGlfTUrSsm/Bn3ONf2ToKmFccVkvVXZMtJM41C7TFnpiSaIJGjgU0bzmGMzc0mtPBoHTRXOoI2UE1/RZgZ6LWoSH2SO/376iX026YvHkrLjaFx5DSo34qtgVmBh8Eb5knv98v1toh50oEvu7yUuePpLyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4gRa5dS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=udLsNOTrp4sE5tvc9BK3dL694sBMTLvBvWajfmNRMdVwFgaYyKxu/PaUWCvJg29cZqGcflWEXlc1scTJx7nb1gIcHfDcfJZ3HYh0YgdazWiZAxaHf/35o+6xjiQ1nLSav/TkeLb9QPlknTCg8sFEpG9aF9LeyyHntID4qxnFpWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/Km63v0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4gRa5dS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD071F000E9;
-	Tue, 21 Jul 2026 18:03:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/Km63v0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8371F000E9;
+	Tue, 21 Jul 2026 18:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656997;
-	bh=J2QWrc9p0ygbt3Uzm+NjhJt9iWZnbaf2AfKoU+JO2S4=;
+	s=korg; t=1784656999;
+	bh=w6yHuAAQJ9pZhQbFV5zpe51v4TqBiwPiAk29CtOGcV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o4gRa5dSxUHafUq+jEf9iDWLaTbY4e3XX+YpTggkmEqUxsqCWYPCJ9wack1e2moEq
-	 CbzdUjaJeaT1l7CiIdYxlMHTyX04IfprWM44glWWOGePqfOU7zBwJjNgvjW7vwDljn
-	 PzOAWkzeoaD+qh5T8higS4E6pZJuuSBJ8pObCrOw=
+	b=W/Km63v0/ulxyAvikZs/7WbDgX4GwYO/2ettnZCdd62688AtyMsvEtKIddYsWl56P
+	 i2qtSiI0B6xmH1NLa+SKWzp58Z3NKCQ4oSAPH1xWNAvaSs15A5G9Oa9C93ZfVhLu/m
+	 HZFyhZ4pQBKmQVuytStc2/9U1KCoziIYz0HgysJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0561/1611] ksmbd: fix use-after-free in same_client_has_lease()
-Date: Tue, 21 Jul 2026 17:11:17 +0200
-Message-ID: <20260721152527.995697822@linuxfoundation.org>
+Subject: [PATCH 6.18 0597/1611] perf pmu: Skip test on Arm64 when #slots is zero
+Date: Tue, 21 Jul 2026 17:11:53 +0200
+Message-ID: <20260721152528.814312253@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,56 +58,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 65b655f65c3ca1ab5d598d3832bb0ff531725858 ]
+[ Upstream commit 2e2ba7d1ea554ee6e9e751a53eebf3e9270b0670 ]
 
-same_client_has_lease() returns an opinfo pointer from ci->m_op_list
-after dropping ci->m_lock without taking a reference.
+Some Arm64 PMUs expose 'caps/slots' as 0 when the slot count is not
+implemented, tool_pmu__read_event() currently returns false for this,
+so metrics that reference #slots are reported as syntax error.
 
-smb_grant_oplock() then dereferences that pointer in copy_lease() and
-when checking breaking_cnt. A concurrent close can remove the old lease
-from ci->m_op_list and drop the last reference before the caller uses
-the returned pointer, leading to a use-after-free.
+Since the commit 3a61fd866ef9 ("perf expr: Return -EINVAL for syntax
+error in expr__find_ids()"), these syntax errors are populated as
+failures and make the PMU metric test fail:
 
-Take a reference when same_client_has_lease() selects an existing lease,
-drop any previous match while scanning, and release the returned
-reference in smb_grant_oplock() after copying the lease state.
+    9.3: Parsing of PMU event table metrics:
+    --- start ---
+    ...
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+    Found metric 'backend_bound'
+    metric expr 100 * (stall_slot_backend / (#slots * cpu_cycles)) for backend_bound
+    parsing metric: 100 * (stall_slot_backend / (#slots * cpu_cycles))
+    Failure to read '#slots'
+    literal: #slots = nan
+    syntax error
+    Fail to parse metric or group `backend_bound'
+
+    ...
+    ---- end(-1) ----
+    9.3: Parsing of PMU event table metrics    : FAILED!
+
+This commit introduces a new function is_expected_broken_metric() to
+identify broken metrics, and treats metrics containing "#slots" as
+expected broken when #slots == 0 on Arm64 platforms.
+
+Fixes: 3a61fd866ef9aaa1 ("perf expr: Return -EINVAL for syntax error in expr__find_ids()")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/oplock.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/perf/tests/pmu-events.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index 6454c7a4baa450..fc2ee00cfd8100 100644
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -531,7 +531,12 @@ static struct oplock_info *same_client_has_lease(struct ksmbd_inode *ci,
+diff --git a/tools/perf/tests/pmu-events.c b/tools/perf/tests/pmu-events.c
+index 95fd9f671a22b5..5adac4f7d94cc5 100644
+--- a/tools/perf/tests/pmu-events.c
++++ b/tools/perf/tests/pmu-events.c
+@@ -15,6 +15,7 @@
+ #include "util/expr.h"
+ #include "util/hashmap.h"
+ #include "util/parse-events.h"
++#include "util/tool_pmu.h"
+ #include "metricgroup.h"
+ #include "stat.h"
  
- 		ret = compare_guid_key(opinfo, client_guid, lctx->lease_key);
- 		if (ret) {
-+			if (!atomic_inc_not_zero(&opinfo->refcount))
-+				continue;
-+			if (m_opinfo)
-+				opinfo_put(m_opinfo);
- 			m_opinfo = opinfo;
+@@ -837,6 +838,26 @@ struct metric {
+ 	struct metric_ref metric_ref;
+ };
+ 
++static bool is_expected_broken_metric(const struct pmu_metric *pm)
++{
++	if (!strcmp(pm->metric_name, "M1") || !strcmp(pm->metric_name, "M2") ||
++	    !strcmp(pm->metric_name, "M3"))
++		return true;
 +
- 			/* skip upgrading lease about breaking lease */
- 			if (atomic_read(&opinfo->breaking_cnt))
- 				continue;
-@@ -1249,6 +1254,7 @@ int smb_grant_oplock(struct ksmbd_work *work, int req_op_level, u64 pid,
- 			if (atomic_read(&m_opinfo->breaking_cnt))
- 				opinfo->o_lease->flags =
- 					SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE;
-+			opinfo_put(m_opinfo);
- 			goto out;
- 		}
- 	}
++#if defined(__aarch64__)
++	/*
++	 * Arm64 platforms may return "#slots == 0", which is treated as a
++	 * syntax error by the parser. Don't test these metrics when running
++	 * on such platforms.
++	 */
++	if (strstr(pm->metric_expr, "#slots") &&
++	    !tool_pmu__cpu_slots_per_cycle())
++		return true;
++#endif
++
++	return false;
++}
++
+ static int test__parsing_callback(const struct pmu_metric *pm,
+ 				  const struct pmu_metrics_table *table,
+ 				  void *data)
+@@ -872,8 +893,7 @@ static int test__parsing_callback(const struct pmu_metric *pm,
+ 
+ 	err = metricgroup__parse_groups_test(evlist, table, pm->metric_name);
+ 	if (err) {
+-		if (!strcmp(pm->metric_name, "M1") || !strcmp(pm->metric_name, "M2") ||
+-		    !strcmp(pm->metric_name, "M3")) {
++		if (is_expected_broken_metric(pm)) {
+ 			(*failures)--;
+ 			pr_debug("Expected broken metric %s skipping\n", pm->metric_name);
+ 			err = 0;
 -- 
 2.53.0
 
