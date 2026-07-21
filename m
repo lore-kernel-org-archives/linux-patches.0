@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23E6388E40;
-	Tue, 21 Jul 2026 19:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D03388E40;
+	Tue, 21 Jul 2026 19:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661077; cv=none; b=Eg/i2jN01VIGxs4WGXrHKLNuPnr730T9qtXAlXkN1OcDNR3+1E2mFwjyEK/dK4V2z/P3BVOhWJburay7L2nlgPljoetL8r9qjqAyiHCuOSOUbnZsmsPwcRlLzPrhaPQrPS+HfUoINvGAhhcsQfqDs4WUDTjC7SkVXLorRS3XWE0=
+	t=1784661080; cv=none; b=FBYA6EXZA+UKOEx7IV5fVjtdIEAHg5+1F1JuNgELvBK4tlUL3FLFEoPVi+IMgfHMOqbpf7vEKmjSKChtYwuSisHYSjVvPJHRqa4EZBDw7Lt0nx6/UZ1LAh+7jyKHCCIRKR1inj9p2pyzuI6AQ5xbbG92nDTYZVxU0HFugcOrAx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661077; c=relaxed/simple;
-	bh=FoyOBB0cWRB5IupZLzqRo0YW52dukpm2qSz0ldrLR3Y=;
+	s=arc-20240116; t=1784661080; c=relaxed/simple;
+	bh=okntFbA0W1OwcR0hR3yWdcCUqOTEkQ9rkzaH9JnkyPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RH8WUDTAR3QyflD/ca3pKQ4s4M+5WKJmdUcdLscCxOCQ7YpX5wNp9gNNVRbShUqrutMNlMgScuYg++YXJ2bncAmVKECfjSxgoK/FUYr27izIj37ILqZnad2HB0uFfx8xtbNvbQ730TPG9j7/HKOk0onwEdoHPpnsr/77vMTVcH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzX4F18h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tluohKW415XrW6rT/Bdm6/5RqiF4w+EOPQSA3byfWwZ3+/dPzGyra74gOaqLygOTQE4U2HjfFuyz7kupAKq92vN44ZwY2WIFy6zcvSEgQXjr+LjnERMYEEUXi1DVk30bIyYIzB3gYbjeRJVRPgeE52dwKtU2a7wtplUX9TziHBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wCKPCoHy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzX4F18h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4365C1F000E9;
-	Tue, 21 Jul 2026 19:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wCKPCoHy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8B21F000E9;
+	Tue, 21 Jul 2026 19:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661076;
-	bh=+UCZKV2Z1oHgh6f+9kChCJAF+junAg6K1J+JyBMgTfI=;
+	s=korg; t=1784661079;
+	bh=p6i52TpJqhvNqQr71wZrD91nVBRdhZLKL0/Mzp6KwVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EzX4F18h5Zj7V/Qm5Lpbtg+1u4/VR8WI/qYBEtt7unzZw/wthCFSKrqdku85U7ElV
-	 ofAGj5BKpGy2UOx15ATbDcG2Bo/GkgfzMQIFRSEqSeVOmRXW2aIM5X8C75/iOtLqCu
-	 oGDtK0gML3EXprhmgSD40/s8/UJJZ+115Pa8t2P4=
+	b=wCKPCoHy9YtcEk4X57ykww+l4CJkuC936BfGlQdQZEf+7zw/8O7Y8ktH36TfZyO3t
+	 kIWMU523D7HgqIoelZBeMMLF0ndP98lC1wPRQThaZVDUey937xUlPAbqewM98wqSaa
+	 vpoxx5g8kcT442B0P0ixlmoWLieHzQCbe26YS5J0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chen Cheng <chencheng@fnnas.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1222/2077] ipv4: fib: Dont ignore error route in local/main tables.
-Date: Tue, 21 Jul 2026 17:14:55 +0200
-Message-ID: <20260721152621.636323011@linuxfoundation.org>
+Subject: [PATCH 7.1 1223/2077] md/raid5: use stripe state snapshot in break_stripe_batch_list()
+Date: Tue, 21 Jul 2026 17:14:56 +0200
+Message-ID: <20260721152621.658808799@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,77 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Chen Cheng <chencheng@fnnas.com>
 
-[ Upstream commit b72f0db64205d9ce462038ba995d5d31eff32dc1 ]
+[ Upstream commit 9b249f5ffbeda24c57e6c56ed896c5ca4fc70549 ]
 
-When CONFIG_IP_MULTIPLE_TABLES is enabled but no rule is added,
-fib_lookup() performs route lookup directly on two tables.
+The patch just suppress KCSAN noise. No functional change.
 
-Since the first lookup does not properly bail out, the result
-of an error route in the merged local/main table could be
-overwritten by another route in the default table:
+RAID-5 can group multi full-stripe-write aka stripe_head into a
+batch aka batch_list, with one head_sh leading them. Call
+break_stripe_batch_list() when the batch is finished, or,
+a stripe has to be dropped out of the batch.
 
-  # unshare -n
-  # ip link set lo up
-  # ip route add 192.168.0.0/24 dev lo table 253
-  # ip route add unreachable 192.168.0.0/24
-  # ip route get 192.168.0.1
-  192.168.0.1 dev lo table default uid 0
-      cache <local>
+break_stripe_batch_list() reads stripe state several times while
+request paths can update thost state words concurrently with
+lockless bitops, which reported by KCSAN.
 
-Once a random rule is added, the error route is respected:
+Use a snapshot to guarantees that the value used for
+warning, copying, and handle checks is internally consistent
+at current read moment.
 
-  # ip rule add table 0
-  # ip rule del table 0
-  # ip route get 192.168.0.1
-  RTNETLINK answers: No route to host
+KCSAN report:
+==============================================
+BUG: KCSAN: data-race in __add_stripe_bio / break_stripe_batch_list
 
-Let's fix the inconsistent behaviour.
+write (marked) to 0xffff8e89d4f0b988 of 8 bytes by task 4323 on cpu 3:
+  __add_stripe_bio+0x35e/0x400
+  raid5_make_request+0x6ac/0x2930
+  md_handle_request+0x4a2/0xa40
+  md_submit_bio+0x109/0x1a0
+  __submit_bio+0x2ec/0x390
+  submit_bio_noacct_nocheck+0x457/0x710
+  submit_bio_noacct+0x2a7/0xc20
+  submit_bio+0x56/0x250
+  blkdev_direct_IO+0x54c/0xda0
+  blkdev_write_iter+0x38f/0x570
+  aio_write+0x22b/0x490
+  io_submit_one+0xa51/0xf70
 
-Fixes: f4530fa574df ("ipv4: Avoid overhead when no custom FIB rules are installed.")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260619212753.3367244-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+read to 0xffff8e89d4f0b988 of 8 bytes by task 4290 on cpu 4:
+  break_stripe_batch_list+0x3ce/0x480
+  handle_stripe_clean_event+0x720/0x9b0
+  handle_stripe+0x32fb/0x4500
+  handle_active_stripes.isra.0+0x6e0/0xa50
+  raid5d+0x7e0/0xba0
+
+Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+Link: https://patch.msgid.link/20260618134748.1168360-1-chencheng@fnnas.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Stable-dep-of: 55b77337bdd0 ("md/raid5: avoid R5_Overlap races while breaking stripe batches")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_fib.h | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/md/raid5.c | 45 ++++++++++++++++++++++++++-------------------
+ 1 file changed, 26 insertions(+), 19 deletions(-)
 
-diff --git a/include/net/ip_fib.h b/include/net/ip_fib.h
-index 541da2dde6266d..040eed88fc672e 100644
---- a/include/net/ip_fib.h
-+++ b/include/net/ip_fib.h
-@@ -375,7 +375,7 @@ static inline int fib_lookup(struct net *net, struct flowi4 *flp,
- 			     struct fib_result *res, unsigned int flags)
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 0d76e82f4506e6..133d5e5f0dce57 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -4837,31 +4837,35 @@ static void break_stripe_batch_list(struct stripe_head *head_sh,
  {
- 	struct fib_table *tb;
--	int err = -ENETUNREACH;
-+	int err = -EAGAIN;
+ 	struct stripe_head *sh, *next;
+ 	int i;
++	unsigned long state;
  
- 	flags |= FIB_LOOKUP_NOREF;
- 	if (net->ipv4.fib_has_custom_rules)
-@@ -389,17 +389,16 @@ static inline int fib_lookup(struct net *net, struct flowi4 *flp,
- 	if (tb)
- 		err = fib_table_lookup(tb, flp, res, flags);
+ 	list_for_each_entry_safe(sh, next, &head_sh->batch_list, batch_list) {
  
--	if (!err)
-+	if (err != -EAGAIN)
- 		goto out;
+ 		list_del_init(&sh->batch_list);
  
- 	tb = rcu_dereference_rtnl(net->ipv4.fib_default);
- 	if (tb)
- 		err = fib_table_lookup(tb, flp, res, flags);
+-		WARN_ONCE(sh->state & ((1 << STRIPE_ACTIVE) |
+-					  (1 << STRIPE_SYNCING) |
+-					  (1 << STRIPE_REPLACED) |
+-					  (1 << STRIPE_DELAYED) |
+-					  (1 << STRIPE_BIT_DELAY) |
+-					  (1 << STRIPE_FULL_WRITE) |
+-					  (1 << STRIPE_BIOFILL_RUN) |
+-					  (1 << STRIPE_COMPUTE_RUN)  |
+-					  (1 << STRIPE_DISCARD) |
+-					  (1 << STRIPE_BATCH_READY) |
+-					  (1 << STRIPE_BATCH_ERR)),
+-			"stripe state: %lx\n", sh->state);
+-		WARN_ONCE(head_sh->state & ((1 << STRIPE_DISCARD) |
+-					      (1 << STRIPE_REPLACED)),
+-			"head stripe state: %lx\n", head_sh->state);
++		state = READ_ONCE(sh->state);
++		WARN_ONCE(state & ((1 << STRIPE_ACTIVE) |
++				   (1 << STRIPE_SYNCING) |
++				   (1 << STRIPE_REPLACED) |
++				   (1 << STRIPE_DELAYED) |
++				   (1 << STRIPE_BIT_DELAY) |
++				   (1 << STRIPE_FULL_WRITE) |
++				   (1 << STRIPE_BIOFILL_RUN) |
++				   (1 << STRIPE_COMPUTE_RUN)  |
++				   (1 << STRIPE_DISCARD) |
++				   (1 << STRIPE_BATCH_READY) |
++				   (1 << STRIPE_BATCH_ERR)),
++			"stripe state: %lx\n", state);
++
++		state = READ_ONCE(head_sh->state);
++		WARN_ONCE(state & ((1 << STRIPE_DISCARD) |
++				   (1 << STRIPE_REPLACED)),
++			"head stripe state: %lx\n", state);
  
--out:
- 	if (err == -EAGAIN)
- 		err = -ENETUNREACH;
--
-+out:
- 	rcu_read_unlock();
+ 		set_mask_bits(&sh->state, ~(STRIPE_EXPAND_SYNC_FLAGS |
+ 					    (1 << STRIPE_PREREAD_ACTIVE) |
+ 					    (1 << STRIPE_ON_UNPLUG_LIST)),
+-			      head_sh->state & (1 << STRIPE_INSYNC));
++			      state & (1 << STRIPE_INSYNC));
  
- 	return err;
+ 		sh->check_state = head_sh->check_state;
+ 		sh->reconstruct_state = head_sh->reconstruct_state;
+@@ -4874,8 +4878,9 @@ static void break_stripe_batch_list(struct stripe_head *head_sh,
+ 			sh->dev[i].flags = head_sh->dev[i].flags &
+ 				(~((1 << R5_WriteError) | (1 << R5_Overlap)));
+ 		}
+-		if (handle_flags == 0 ||
+-		    sh->state & handle_flags)
++
++		state = READ_ONCE(sh->state);
++		if (handle_flags == 0 || (state & handle_flags))
+ 			set_bit(STRIPE_HANDLE, &sh->state);
+ 		raid5_release_stripe(sh);
+ 	}
+@@ -4885,7 +4890,9 @@ static void break_stripe_batch_list(struct stripe_head *head_sh,
+ 	for (i = 0; i < head_sh->disks; i++)
+ 		if (test_and_clear_bit(R5_Overlap, &head_sh->dev[i].flags))
+ 			wake_up_bit(&head_sh->dev[i].flags, R5_Overlap);
+-	if (head_sh->state & handle_flags)
++
++	state = READ_ONCE(head_sh->state);
++	if (state & handle_flags)
+ 		set_bit(STRIPE_HANDLE, &head_sh->state);
+ }
+ 
 -- 
 2.53.0
 
