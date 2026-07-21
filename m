@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C83C471409;
-	Tue, 21 Jul 2026 17:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88B6471401;
+	Tue, 21 Jul 2026 17:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656285; cv=none; b=mqb5V1+LED6a9I9hYlW4XrP65fy0sl0/6qjt0OeawCJDrjaSMyy7kjiDOOzSpJcpLdlC1AsinBR22W3oVkA++HwfZ0lkubVNVet0GlGaQMf26wBrD0Wzapqxguu7RFrVwAC06/Hkhp96vfcsRwoVvfOBs3nNVNacmlkey1FGhvM=
+	t=1784656287; cv=none; b=Wq4G9PcE5WXW6fenwOopetCcuNfARK8sRgmB6LyBJxm5PrmCs77O52QyZP65qXY4LDUQrLI14UWxPT+5RUhc2NyzWQmdmTNlMybtYm+S6tTv4ov5hp8f3jL3F9iPmcLsD5KrLA5vTTixke+VcZit3Y81CQftar6WLETsMrnWQrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656285; c=relaxed/simple;
-	bh=qRXs6gEj2RCCVRrSwZ67qr3bcLciCN6i7c2PCN6WkdA=;
+	s=arc-20240116; t=1784656287; c=relaxed/simple;
+	bh=t/uOhgY5yYrk3sHvarFI3GZ4dI1zxyyZmCvhFXMkhcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fK8bye8k86u1WNXkPHjAgT8bXBngVLUHBnvaqjXEZCjoxCKOdvy/PLu3Farv0qLdW5WsEBxYEjL18PK0suqRWr1nqr0D4lDTS8cb5AZxUOmhFPvafbTB1MZ47K48Dzg0EvGtnLoxZISw+qy1kzH+w2eGS4FoBoYoxv44AGbYDDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNzt4Bog; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tjp+aXEUSlJo2DGiis0ZfPXHmQofwJ2NJpNYgRsTIBmdAoRdVSCzs5YNTi1TnV2rEZ6hK2jVkS99jVBPIkc3DRHkBGvLNPPZ33d8PYCjnv26+JhiZ6bDte48ivv1LszO/fLpIkYNjdQWvjWkU3mslGOd8FqDZ5WUV5F+GklAQio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WteMVfru; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNzt4Bog"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841551F000E9;
-	Tue, 21 Jul 2026 17:51:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WteMVfru"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA3A1F000E9;
+	Tue, 21 Jul 2026 17:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656284;
-	bh=1PfzzCZkvd0zkv/UcEjxUc1/4Xnb1uAmiidzmZF+0iI=;
+	s=korg; t=1784656286;
+	bh=zTFty6OrDZ9tebjrXfRrmVQOVzkQJdXZEqDBWmRfLGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MNzt4Bog6f2sVXLA/PLvP5Xy28R1+E9MfV95YtyexAZfY3YXr9jJ4Y152dnKhVnte
-	 BB3faPwD9DFwtrwYh3LgRdX4MbL/Yxf7W0HaAL5iPZiKKUP67/vc+UM5tpbY1e+AsP
-	 37jZbo5FZ7Mpm9UDZ8KKLFZ3qebhz00tPvMnFjHA=
+	b=WteMVfruB1kS6i47mgJMz6jAYREbeABk9TlYMRWMfUwBKThMIKaXioajFmSESReC5
+	 xwSzFFxmymNHKsdBz32A7fAqoJKekwi79JRO47NUho8hErmXSBAsQi2NUtXpSO6dFd
+	 /9/viMAJccCG3j/BTiOzXWqOPa+KJtjG8GCImGbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
-	Lorenzo Colitti <lorenzo@google.com>,
-	Yuyang Huang <yuyanghuang@google.com>,
+	sashiko <sashiko@sashiko.dev>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0286/1611] selftests/bpf: add verification for BPF_PROG_QUERY attr size boundaries
-Date: Tue, 21 Jul 2026 17:06:42 +0200
-Message-ID: <20260721152521.492507532@linuxfoundation.org>
+Subject: [PATCH 6.18 0287/1611] libbpf: Skip hash computation when loader generation failed
+Date: Tue, 21 Jul 2026 17:06:43 +0200
+Message-ID: <20260721152521.516060431@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -47,114 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuyang Huang <yuyanghuang@google.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 5add3a4ad1a3bc15404e8bd338813ed0a636f5c9 ]
+[ Upstream commit 3c5e2f1a85844abbb65df4694f5ebad0a13e219c ]
 
-Add a new selftest to verify that the BPF syscall (specifically
-BPF_PROG_QUERY) correctly handles different user-declared attribute sizes.
+bpf_gen__finish() calls compute_sha_update_offsets() gated only on
+the gen_hash option, without first consulting gen->error. On a failed
+generation this is buggy: a failed realloc_data_buf() sets gen->data_start
+to NULL (leaving gen->data_cur dangling), so compute_sha_update_offsets()
+runs libbpf_sha256() over a NULL buffer with a bogus length; a failed
+realloc_insn_buf() likewise sets gen->insn_start to NULL and the hash
+immediates get patched through that NULL base.
 
-Specifically, verify that:
-- For cgroup queries, a query with a size that covers 'prog_cnt' but is
-  smaller than 'revision' (OLD_QUERY_SIZE) succeeds, but does not write
-  to 'revision' (verifying backward compatibility).
-- A query with full size (FULL_QUERY_SIZE) succeeds and writes both
-  'prog_cnt' and 'revision'.
+The computed program is discarded in either case, since the following
+"if (!gen->error)" block does not publish opts->insns once an error is
+set. Thus, skip the hash pass when generation has already failed.
 
-Fixes: 120933984460 ("bpf: Implement mprog API on top of existing cgroup progs")
-Cc: Maciej Żenczykowski <maze@google.com>
-Cc: Lorenzo Colitti <lorenzo@google.com>
-Signed-off-by: Yuyang Huang <yuyanghuang@google.com>
-Link: https://lore.kernel.org/r/20260531075600.4058207-3-yuyanghuang@google.com
+Fixes: ea923080c145 ("libbpf: Embed and verify the metadata hash in the loader")
+Reported-by: sashiko <sashiko@sashiko.dev>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20260529094119.307264-2-daniel@iogearbox.net
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/prog_tests/bpf_attr_size.c  | 69 +++++++++++++++++++
- 1 file changed, 69 insertions(+)
- create mode 100644 tools/testing/selftests/bpf/prog_tests/bpf_attr_size.c
+ tools/lib/bpf/gen_loader.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_attr_size.c b/tools/testing/selftests/bpf/prog_tests/bpf_attr_size.c
-new file mode 100644
-index 00000000000000..32159dc64da8b0
---- /dev/null
-+++ b/tools/testing/selftests/bpf/prog_tests/bpf_attr_size.c
-@@ -0,0 +1,69 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/* Copyright (c) 2026 Google LLC */
-+#include <linux/bpf.h>
-+#include <unistd.h>
-+#include <sys/syscall.h>
-+#include <test_progs.h>
-+#include <cgroup_helpers.h>
-+#include "cgroup_skb_direct_packet_access.skel.h"
+diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
+index cd5c2543f54d85..b2e8b4224640f8 100644
+--- a/tools/lib/bpf/gen_loader.c
++++ b/tools/lib/bpf/gen_loader.c
+@@ -398,13 +398,12 @@ int bpf_gen__finish(struct bpf_gen *gen, int nr_progs, int nr_maps)
+ 			      blob_fd_array_off(gen, i));
+ 	emit(gen, BPF_MOV64_IMM(BPF_REG_0, 0));
+ 	emit(gen, BPF_EXIT_INSN());
+-	if (OPTS_GET(gen->opts, gen_hash, false))
+-		compute_sha_update_offsets(gen);
+-
+-	pr_debug("gen: finish %s\n", errstr(gen->error));
+ 	if (!gen->error) {
+ 		struct gen_loader_opts *opts = gen->opts;
+ 
++		if (OPTS_GET(opts, gen_hash, false))
++			compute_sha_update_offsets(gen);
 +
-+#define OLD_QUERY_SIZE		offsetofend(union bpf_attr, query.prog_cnt)
-+#define FULL_QUERY_SIZE		offsetofend(union bpf_attr, query.revision)
-+
-+static void test_query_size_boundaries(void)
-+{
-+	struct cgroup_skb_direct_packet_access *skel;
-+	struct bpf_link *link = NULL;
-+	union bpf_attr attr;
-+	int cg_fd = -1;
-+	int err;
-+
-+	skel = cgroup_skb_direct_packet_access__open_and_load();
-+	if (!ASSERT_OK_PTR(skel, "skel_load"))
-+		return;
-+
-+	cg_fd = test__join_cgroup("/attr_size_cg");
-+	if (!ASSERT_GE(cg_fd, 0, "join_cgroup"))
-+		goto cleanup;
-+
-+	link = bpf_program__attach_cgroup(skel->progs.direct_packet_access,
-+					  cg_fd);
-+	if (!ASSERT_OK_PTR(link, "cg_attach"))
-+		goto cleanup;
-+
-+	memset(&attr, 0, sizeof(attr));
-+	attr.query.target_fd = cg_fd;
-+	attr.query.attach_type = BPF_CGROUP_INET_INGRESS;
-+	attr.query.revision = 0xdeadbeefdeadbeefULL;
-+
-+	err = syscall(__NR_bpf, BPF_PROG_QUERY, &attr, OLD_QUERY_SIZE);
-+	if (ASSERT_OK(err, "query_old_size")) {
-+		ASSERT_EQ(attr.query.prog_cnt, 1, "prog_cnt_written_old");
-+		ASSERT_EQ(attr.query.revision, 0xdeadbeefdeadbeefULL,
-+			  "revision_not_written_old");
-+	}
-+
-+	memset(&attr, 0, sizeof(attr));
-+	attr.query.target_fd = cg_fd;
-+	attr.query.attach_type = BPF_CGROUP_INET_INGRESS;
-+
-+	err = syscall(__NR_bpf, BPF_PROG_QUERY, &attr, FULL_QUERY_SIZE);
-+	if (!ASSERT_OK(err, "query_full_size"))
-+		goto cleanup;
-+
-+	ASSERT_EQ(attr.query.prog_cnt, 1, "prog_cnt_written");
-+	ASSERT_GT(attr.query.revision, 0, "revision_written");
-+
-+cleanup:
-+	if (link)
-+		bpf_link__destroy(link);
-+	if (cg_fd >= 0)
-+		close(cg_fd);
-+	cgroup_skb_direct_packet_access__destroy(skel);
-+}
-+
-+void test_bpf_attr_size(void)
-+{
-+	if (test__start_subtest("query_size_boundaries"))
-+		test_query_size_boundaries();
-+}
+ 		opts->insns = gen->insn_start;
+ 		opts->insns_sz = gen->insn_cur - gen->insn_start;
+ 		opts->data = gen->data_start;
+@@ -419,6 +418,7 @@ int bpf_gen__finish(struct bpf_gen *gen, int nr_progs, int nr_maps)
+ 				bpf_insn_bswap(insn++);
+ 		}
+ 	}
++	pr_debug("gen: finish %s\n", errstr(gen->error));
+ 	return gen->error;
+ }
+ 
 -- 
 2.53.0
 
