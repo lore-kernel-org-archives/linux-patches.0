@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0EF939733E;
-	Tue, 21 Jul 2026 22:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347BB39733E;
+	Tue, 21 Jul 2026 22:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674592; cv=none; b=CN+0a+4svQzZP731SpESjhaXeOV0uay4HVU1P+Xh8kWLPNyitDTlsIYd35KKjQBXg8wVmwBEYGHdljAGvb8K26GE985klc+uu/6FoOEaAxtSM7xB1pJdLa0hItKJuxaLCaUcH3kpZ8pGygFXAyI7UkVSotIrwXO799UntaqFtCQ=
+	t=1784674595; cv=none; b=Jx7Fj8gmazbeJ7UFyJdbHDnkJbrCSvDrnHEQkbC0N6Mtrs+T8tA6mHV7Y1bnhR2jJ35SGlQ6nuK9vvpocRDEnKgAyr7cnh1Q05JGwDtlieC2UpRRkpk7QS1+LZE7zOJEIQsNCW37S633Bia5KpC7I+W6/lccfRX1IJCYjRxoQcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674592; c=relaxed/simple;
-	bh=DURbs3tsiEKzzwKguyqRq2dccXYCZ7mMP8n/UkoQdWc=;
+	s=arc-20240116; t=1784674595; c=relaxed/simple;
+	bh=qjLhZPMNPxcdwt1mhtj95AvlRpZjJ7wFnuZwakwG/SQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WfoQaB8qEcDzIfJQYk0fMHPUKfmDgTj2adDUH++yTdOkmXSTnh44GY4OjLpgG4vooyzSPD5ynwpAiNRcr9LwaQVYKDTrMbIDABrJQLFoOgI4XrMP3hvQwuO9X0UwGblG2sHUnP75dskUfJgVWgWa464reNtwuT+nTZROEn3xA/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oM89sI8Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r231+PH8t+Gw20+8/JAdpxIfJF/cMdZlol7PpVPg7KcvWlWIqeMpyf6iEV2mYla+3P6quHpZRv0GOvg0nwUN2zImPedsaR1T8vn/5jmPCpA6+f6mWnDvoY04CYwOTlYV/nih2uq1fCC8GJss51TjqboUrS6d/9WnrJTUdgiz/Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uuOoa5oQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oM89sI8Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34B41F000E9;
-	Tue, 21 Jul 2026 22:56:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uuOoa5oQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA0D1F000E9;
+	Tue, 21 Jul 2026 22:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674591;
-	bh=KmWa9PM3PsHGWrjvCHjVgUydll545phlqHyFqnJ+OkQ=;
+	s=korg; t=1784674594;
+	bh=IffvZ3TBXCADAoQBksO9VzIre9itEaD26xrpNdDNew4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oM89sI8YApZm3pRaJbxR9n5UODC7sFSP5mq2OlmRUdYzChvGKJiI8U3zUjJxtoODQ
-	 YtDnbScc1YYH5cyOKXSLs7EyW1MOFiQSwBYfm+gerswt0IvCj0szKUgQGsA1XZP1Hk
-	 LaBCSOhI5wXfuxtxDkAaCQLDhlXi7N7N3WQmL4Oo=
+	b=uuOoa5oQBPqmjZ2256WIv5kZt3UJUHgqoVBdMIDycWvA7i88ROtz6MGWp2Z0T8mQ9
+	 7CtM7AYakZnp3pTBr4LqIP8QF1xq79xIYe7lHyX4T1EOeMwkzc2HfUQqTxug7QaH2c
+	 FVxawBmxR7PTu39jAQYd136cGfBV2G7+2nT8Wy4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>,
+	Mahesh Vaidya <mahesh.vaidya@altera.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	"Subhransu S. Prusty" <subhransu.sekhar.prusty@altera.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 600/699] binder: fix UAF in binder_free_transaction()
-Date: Tue, 21 Jul 2026 17:25:59 +0200
-Message-ID: <20260721152409.265908767@linuxfoundation.org>
+Subject: [PATCH 5.10 601/699] PCI: altera: Fix resource leaks on probe failure
+Date: Tue, 21 Jul 2026 17:26:00 +0200
+Message-ID: <20260721152409.286481045@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,96 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Mahesh Vaidya <mahesh.vaidya@altera.com>
 
-[ Upstream commit f223d27a546c1e1f48d38fd67760e78f068fe8c4 ]
+[ Upstream commit 7a94138caeb27f3c49c1dbd93bf422098925bb28 ]
 
-In binder_free_transaction(), the t->to_proc is read under the t->lock.
-However, once the t->lock is dropped, the to_proc can die in parallel.
-This leads to a use-after-free error when we attempt to acquire its
-inner lock right afterwards:
+The chained IRQ handler is set during probe, but is only removed during the
+driver remove(). If pci_host_probe() fails, the handler and INTx IRQ
+domain remain set even though the devm-managed host bridge storage
+containing struct altera_pcie will be released, leaving the handler with
+a stale data pointer.
 
-  ==================================================================
-  BUG: KASAN: slab-use-after-free in _raw_spin_lock+0xe4/0x1a0
-  Write of size 4 at addr ffff00001125da70 by task B/672
+Interrupts are also enabled before pci_host_probe() is called. If probe
+fails after that point, the controller interrupt source should be disabled
+before the chained handler and INTx domain are removed.
 
-  CPU: 20 UID: 0 PID: 672 Comm: B Not tainted 7.1.0-rc6-00284-g8e65320d91cd #4 PREEMPT
-  Hardware name: linux,dummy-virt (DT)
-  Call trace:
-   _raw_spin_lock+0xe4/0x1a0
-   binder_free_transaction+0x8c/0x320
-   binder_send_failed_reply+0x21c/0x2f8
-   binder_thread_release+0x488/0x7e0
-   binder_ioctl+0x12c0/0x29a0
-  [...]
+So set the chained handler only after the INTx domain has been created.
+Disable controller interrupts during IRQ teardown, and tear the IRQ setup
+down if pci_host_probe() fails.
 
-  Allocated by task 675:
-   __kmalloc_cache_noprof+0x174/0x444
-   binder_open+0x118/0xb70
-   do_dentry_open+0x374/0x1040
-   vfs_open+0x58/0x3bc
-  [...]
-
-  Freed by task 212:
-   __kasan_slab_free+0x58/0x80
-   kfree+0x1a0/0x4a4
-   binder_proc_dec_tmpref+0x32c/0x5e0
-   binder_deferred_func+0xc48/0x104c
-   process_one_work+0x53c/0xbc0
-  [...]
-  ==================================================================
-
-To prevent this, pin the target thread (t->to_thread) to guarantee the
-target process remains alive. Undelivered transactions without a target
-thread are already safe, as the target process can only be the current
-context in those paths.
-
-Cc: stable <stable@kernel.org>
-Reported-by: Alice Ryhl <aliceryhl@google.com>
-Closes: https://lore.kernel.org/all/aikJKVuny_eOivwN@google.com/
-Fixes: a370003cc301 ("binder: fix possible UAF when freeing buffer")
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260619185233.2194678-2-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c63aed7334c2 ("PCI: altera: Use pci_host_probe() to register host")
+Signed-off-by: Mahesh Vaidya <mahesh.vaidya@altera.com>
+[mani: commit log]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Subhransu S. Prusty <subhransu.sekhar.prusty@altera.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260430204330.3121003-3-mahesh.vaidya@altera.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/pci/controller/pcie-altera.c |   28 ++++++++++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -1909,10 +1909,19 @@ static void binder_free_txn_fixups(struc
+--- a/drivers/pci/controller/pcie-altera.c
++++ b/drivers/pci/controller/pcie-altera.c
+@@ -685,8 +685,18 @@ static int altera_pcie_init_irq_domain(s
+ 	return 0;
+ }
  
- static void binder_free_transaction(struct binder_transaction *t)
++static void altera_pcie_disable_irq(struct altera_pcie *pcie)
++{
++	if (pcie->pcie_data->version == ALTERA_PCIE_V1 ||
++	    pcie->pcie_data->version == ALTERA_PCIE_V2) {
++		/* Disable all P2A interrupts */
++		cra_writel(pcie, 0, P2A_INT_ENABLE);
++	}
++}
++
+ static void altera_pcie_irq_teardown(struct altera_pcie *pcie)
  {
-+	struct binder_thread *target_thread;
- 	struct binder_proc *target_proc;
++	altera_pcie_disable_irq(pcie);
+ 	irq_set_chained_handler_and_data(pcie->irq, NULL, NULL);
+ 	irq_domain_remove(pcie->irq_domain);
+ }
+@@ -711,7 +721,6 @@ static int altera_pcie_parse_dt(struct a
+ 	if (pcie->irq < 0)
+ 		return pcie->irq;
  
- 	spin_lock(&t->lock);
- 	target_proc = t->to_proc;
-+	target_thread = t->to_thread;
-+	/*
-+	 * Pin target_thread to keep target_proc alive. Undelivered
-+	 * transactions with !target_thread are safe, as target_proc
-+	 * can only be the current context there.
-+	 */
-+	if (target_thread)
-+		atomic_inc(&target_thread->tmp_ref);
- 	spin_unlock(&t->lock);
+-	irq_set_chained_handler_and_data(pcie->irq, altera_pcie_isr, pcie);
+ 	return 0;
+ }
  
- 	if (target_proc) {
-@@ -1921,6 +1930,10 @@ static void binder_free_transaction(stru
- 			t->buffer->transaction = NULL;
- 		binder_inner_proc_unlock(target_proc);
+@@ -796,6 +805,12 @@ static int altera_pcie_probe(struct plat
+ 		return ret;
  	}
+ 
++	/*
++	 * The chained handler uses pcie->irq_domain, so set it only after the
++	 * INTx domain has been created.
++	 */
++	irq_set_chained_handler_and_data(pcie->irq, altera_pcie_isr, pcie);
 +
-+	if (target_thread)
-+		binder_thread_dec_tmpref(target_thread);
+ 	/* clear all interrupts */
+ 	cra_writel(pcie, P2A_INT_STS_ALL, P2A_INT_STATUS);
+ 	/* enable all interrupts */
+@@ -806,7 +821,16 @@ static int altera_pcie_probe(struct plat
+ 	bridge->busnr = pcie->root_bus_nr;
+ 	bridge->ops = &altera_pcie_ops;
+ 
+-	return pci_host_probe(bridge);
++	ret = pci_host_probe(bridge);
++	if (ret)
++		goto err_teardown_irq;
 +
- 	/*
- 	 * If the transaction has no target_proc, then
- 	 * t->buffer->transaction has already been cleared.
++	return 0;
++
++err_teardown_irq:
++	altera_pcie_irq_teardown(pcie);
++
++	return ret;
+ }
+ 
+ static int altera_pcie_remove(struct platform_device *pdev)
 
 
