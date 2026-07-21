@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7108F3BE156;
-	Tue, 21 Jul 2026 21:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC1444AB6D;
+	Tue, 21 Jul 2026 21:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669519; cv=none; b=mRJVFuVLPh6+5xGrpQZDkgTqXXGpWC9elAB+AgnHDZ+3wVCe2VNYU9ro456jkVtqLJeuQxgmtbHzIlPlylAUatoUU7OU/Wa5p4CTEOS7dA3TkH/g4H8noslvLB3FN2n4XjKvPyKn6hjmIScmY6TyWDvEDji6USK2bQPsR0u1Q0E=
+	t=1784669522; cv=none; b=HQAZmu0HO91zqJlEke/n9exLdAf15qOlJji77iKAZ6GIQ7c+7jMVQ3sEi3L5lWLzFwmkh3gjquDY4Mc4vuNAtgIvJcZewERdbfXBD6kC5dI0tKOscxJZUxUax9oNZjmIrAmZ3ZFhXIILmcyjxA8hRhpPn76aIgHY7Z53CAe14c4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669519; c=relaxed/simple;
-	bh=P0nm/zqd9tHbFY01y4iOgWpVKyTBvpSZYFfNxOjMNXM=;
+	s=arc-20240116; t=1784669522; c=relaxed/simple;
+	bh=nHMRYLuWkS20ySTvlQSd0KxCm7Cec3lJlCAy9LeyccI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N3z722+sABSyUUywKDZaQ2zvBB0gEn5XJomK5NLGAqa/JrSRb5/nj9/OI1zNM5q1qqbLg6I+rf3jnmE5wgDX9e9zuZC0Yr9F2NGXXW2YOOb2bDjPR9VpfIZCOpejnfr+yuC+AxARH9NlUFazdiAWUP/UinchcJa+ISkKUNk/dtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GkzGwIJT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mvDPoKcXN4x4obuNaSKAByGFry5gnhPHtKAjtoFfunU/fK3sY5visB7QZyjurNFeQA6ZlULM2LImXzhKZNLTOxXL1EplJArxqP526U8IDvYXjpJ8zBslx9X+fLx6Qqy357JoMJgYD4JLcQk43PATTD88pvDMjs7uV0hjPD6PwC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lWI9iAAu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GkzGwIJT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FDE1F000E9;
-	Tue, 21 Jul 2026 21:31:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lWI9iAAu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E9B1F000E9;
+	Tue, 21 Jul 2026 21:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669517;
-	bh=Zf1T5sXK8ShM3SjO4rSrimsVnvQ80C+u6ToIV1NBL/A=;
+	s=korg; t=1784669520;
+	bh=IWkrP4clSREmiDMwH9j40CWBivF1A+1clbvb4v/F/7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GkzGwIJT1SslzllmB3f+tP92Gsn7JZZow4GVJpQEVUzdY2ECOO+Fw2Jv0TZPHmMAJ
-	 nijhWZiUwJ3u1wGg9tfOmpw3+biijC42dbuJ84T96Vtvj++t749NgK9d85lNJ5mczZ
-	 aWd9a1u+c+9XPvuXbTCEVh5ttw0zh99DzNMZKEWU=
+	b=lWI9iAAu49bkl+n67nWqA/3rkYhpacoochtPOb40bM5QOo2/Il1OM8GwIyyqvwZ/X
+	 ITVOXXjFD7iNbhiyg7Nu6xJ86rizvkjmihZQv74F1KjgsF2QS8TyWazoYpDRJ7gFj2
+	 pP37WwnrlNwOyL0YvH6cTkjvXV+MMV1SZPzGe0pI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Bui Quang Minh <minhquangbui99@gmail.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0585/1067] virtio-net: fix len check in receive_big()
-Date: Tue, 21 Jul 2026 17:19:46 +0200
-Message-ID: <20260721152437.692197004@linuxfoundation.org>
+Subject: [PATCH 6.1 0586/1067] dpaa2-switch: fix VLAN upper check not rejecting bridge join
+Date: Tue, 21 Jul 2026 17:19:47 +0200
+Message-ID: <20260721152437.714566398@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -55,64 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit 9e5ad06ea826322ce8c58b4a68442a96f600c3c4 ]
+[ Upstream commit ed2294f94e34e97342850c40b320833d881c3819 ]
 
-receive_big() bounds the device-announced length by
-(big_packets_num_skbfrags + 1) * PAGE_SIZE.  That is still too loose:
-add_recvbuf_big() sets sg[1] to start at offset
-sizeof(struct padded_vnet_hdr) into the first page, so the chain
-actually carries hdr_len + (PAGE_SIZE - sizeof(padded_vnet_hdr)) +
-big_packets_num_skbfrags * PAGE_SIZE bytes -- 20 bytes less than the
-check allows for the common hdr_len == 12 case.
+The blamed commit refactored the prechangeupper event handling but
+failed to actually return an error in case
+dpaa2_switch_prevent_bridging_with_8021q_upper() detected a 802.1q upper
+on a port which tries to join a bridge. Fix this by returning err
+instead of 0.
 
-A malicious virtio backend can announce a len in that gap.  page_to_skb()
-then walks one frag past the page chain, storing a NULL page->private
-into skb_shinfo()->frags[MAX_SKB_FRAGS], which is both an out-of-bounds
-write past the static frag array and a NULL frag handed up the rx path.
-
-Bound len by the size add_recvbuf_big() actually advertised.
-
-Fixes: 0c716703965f ("virtio-net: fix received length check in big packets")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Bui Quang Minh <minhquangbui99@gmail.com>
-Link: https://patch.msgid.link/20260616042837.2249468-1-xmei5@asu.edu
+Fixes: 45035febc495 ("net: dpaa2-switch: refactor prechangeupper sanity checks")
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://patch.msgid.link/20260616105430.3725910-1-ioana.ciornei@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 2fb00df795d4ab..9bbb26efb82573 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -945,15 +945,18 @@ static struct sk_buff *receive_big(struct net_device *dev,
- 				   struct virtnet_rq_stats *stats)
- {
- 	struct page *page = buf;
-+	unsigned long max_len;
- 	struct sk_buff *skb;
- 
-+	max_len = (vi->big_packets_num_skbfrags + 1) * PAGE_SIZE -
-+		  sizeof(struct padded_vnet_hdr) + vi->hdr_len;
-+
- 	/* Make sure that len does not exceed the size allocated in
- 	 * add_recvbuf_big.
- 	 */
--	if (unlikely(len > (vi->big_packets_num_skbfrags + 1) * PAGE_SIZE)) {
-+	if (unlikely(len > max_len)) {
- 		pr_debug("%s: rx error: len %u exceeds allocated size %lu\n",
--			 dev->name, len,
--			 (vi->big_packets_num_skbfrags + 1) * PAGE_SIZE);
-+			 dev->name, len, max_len);
- 		goto err;
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+index 510a018978d9ac..c8478fdcb3aa5f 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+@@ -2186,7 +2186,7 @@ dpaa2_switch_prechangeupper_sanity_checks(struct net_device *netdev,
+ 	if (err) {
+ 		NL_SET_ERR_MSG_MOD(extack,
+ 				   "Cannot join a bridge while VLAN uppers are present");
+-		return 0;
++		return err;
  	}
  
+ 	return 0;
 -- 
 2.53.0
 
