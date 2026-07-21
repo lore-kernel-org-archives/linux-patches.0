@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4B946C4AE;
-	Tue, 21 Jul 2026 15:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67D84D90AA;
+	Tue, 21 Jul 2026 15:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649449; cv=none; b=gTaRow2nCNvkNPO1B+yGuYK6oz2+X+PGlNIRNEVAsMoeaG42fULoHDXOD5uGMRePBaXFAwil2mp6sckJRmAdnV2OVQWPkHxgAJM/wkq1u5suOurgmdhQU9Ly6aYKEHjV6B9DSD6L3/ZZOnSR4zyXFa/gG/0yWffdtOzH/k6L4c4=
+	t=1784649452; cv=none; b=Jpe+1mAwpe001X/GPMmNkMGSg/BmAW6H/8HEn8Nblg5bH6y4iiq+6q2JwFPXyWGXt7y0HMEoePpE6ftsjCy1WYdmsEKXtRGmN98UY8IQsyjoitd9e1SATXr+p4kqc44C2fW3QZQPGIrD+29tcgdcm0FcXgEtJ4UCkGqz8W0mCJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649449; c=relaxed/simple;
-	bh=XFVGcLMDBvNK5JpM/UcOF8aRJgo7GXPuUQEYMjRxQzg=;
+	s=arc-20240116; t=1784649452; c=relaxed/simple;
+	bh=r7JYPnsvb6jqaapxaz3riMvI4MYiIwaV+U/wJmGX0yk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZElsqL6rxNrQ+PYdBt00Td0CgVkkz9+vpdMhD5HUGgffktln/ctkaHjZANJCWwQyVk85PtNN3nCcjr453Qy6hxHMZhJNv8TJfWwHSKUL966M1w2WlpivcPq3cR3hrdSCTATCYKNsKzmYz+7S4KDm0zHGqX000k3HZ/Onj+3YeyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lS096/2w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PDp7BR/3osnWP590iSQdf26eZoKzbBKCXr6EX3cexCN/fy1mhqMHTCyVNelm5IXSVOhSij7e8uQPSR6upr/YwvMYvHBZP/wJkDI+JwfWiFRNGU7UqCjgS6/INqDh4bjnNk2S42PGrtiOVh7ZKp4088ZsASuDDyWJcQVfe6nvxZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVNjbzGC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lS096/2w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7471F000E9;
-	Tue, 21 Jul 2026 15:57:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVNjbzGC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377831F000E9;
+	Tue, 21 Jul 2026 15:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649448;
-	bh=yRXJFRPGI08gpqMekV2lxPZHbX7/lXEkrhhIFb/Gxk0=;
+	s=korg; t=1784649450;
+	bh=SfkIWp//xOqPzuiIvlPN0EJHOY1FE2Sj1zCnXnP7erg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lS096/2wj9CQg+xeCiDCw6x89fWCcCpTcrQ2Vdwx6Ug+s+wmLYoAmVmlDlAWKGU94
-	 qns31xRWKkIE8kS98vmCFgDU7LTcMtqO/c7mAW/LEjxJ2vwU2R/eLs0BTUYu6yiwaz
-	 nj2/jKu68ItKJzOWPAS9sKvUPgtARmtvmctrBtfo=
+	b=xVNjbzGCPY8nUeOwYl57/u205/7FUG0yk8nz6Cs8DUtvrTx1K8NouGAG2f8RE5y39
+	 3NiOM2DBnn7jIdrx9UuwI3vdlfRsDXbHYRbUcG0sf+x/CoBs/ZJJZaAIeHLUy6WhOp
+	 Jy3YpKSSTTEY4Zfj52whBOcUEJL3UUef0kDpH2D4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0581/2077] wifi: mt76: mt7996: add missing max_remain_on_channel_duration
-Date: Tue, 21 Jul 2026 17:04:14 +0200
-Message-ID: <20260721152606.513760483@linuxfoundation.org>
+Subject: [PATCH 7.1 0582/2077] wifi: mt76: mt7996: Fix NULL pointer dereference in mt7996_init_tx_queues()
+Date: Tue, 21 Jul 2026 17:04:15 +0200
+Message-ID: <20260721152606.537798439@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,60 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit ac41612e0044fa29cf9bc45b6808dda6d87ac2da ]
+[ Upstream commit 6794edb55b5f5ef834e03b0b241b1a8b725f82c0 ]
 
-Having this unset breaks remain-on-channel and mgmt TX.
-Move setting it to mt76 core to keep it in one place.
+When MT76_NPU and CONFIG_NET_MEDIATEK_SOC_WED are enabled and
+mt76 detects properly the Airoha NPU SoC, mt7996_init_tx_queues() will
+dereference a NULL WED pointer.
+Fix the issue by always passing the WED pointer from mt7996_dma_init().
 
-Fixes: 69d54ce7491d0 ("wifi: mt76: mt7996: switch to single multi-radio wiphy")
-Link: https://patch.msgid.link/20260324154904.2555603-2-nbd@nbd.name
+Fixes: cd7951f242a7 ("wifi: mt76: mt7996: Integrate MT7990 dma configuration for NPU")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260418-mt7996-dma-init-npu-fix-v1-1-6b8dcffbcb57@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mac80211.c    | 2 ++
- drivers/net/wireless/mediatek/mt76/mt7615/init.c | 1 -
- drivers/net/wireless/mediatek/mt76/mt792x_core.c | 1 -
- 3 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
-index b78b4cd206e064..dd09ef1bd0c25a 100644
---- a/drivers/net/wireless/mediatek/mt76/mac80211.c
-+++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
-@@ -449,6 +449,8 @@ mt76_phy_init(struct mt76_phy *phy, struct ieee80211_hw *hw)
- 	wiphy_ext_feature_set(wiphy, NL80211_EXT_FEATURE_AIRTIME_FAIRNESS);
- 	wiphy_ext_feature_set(wiphy, NL80211_EXT_FEATURE_AQL);
- 
-+	if (!wiphy->max_remain_on_channel_duration)
-+		wiphy->max_remain_on_channel_duration = 5000;
- 	if (!wiphy->available_antennas_tx)
- 		wiphy->available_antennas_tx = phy->antenna_mask;
- 	if (!wiphy->available_antennas_rx)
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/init.c b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-index 42e11ba1206ee8..e437e088b2e913 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-@@ -195,7 +195,6 @@ mt7615_check_offload_capability(struct mt7615_dev *dev)
- 		ieee80211_hw_set(hw, SUPPORTS_DYNAMIC_PS);
- 
- 		wiphy->flags &= ~WIPHY_FLAG_4ADDR_STATION;
--		wiphy->max_remain_on_channel_duration = 5000;
- 		wiphy->features |= NL80211_FEATURE_SCHED_SCAN_RANDOM_MAC_ADDR |
- 				   NL80211_FEATURE_SCAN_RANDOM_MAC_ADDR |
- 				   WIPHY_FLAG_HAS_REMAIN_ON_CHANNEL |
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_core.c b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
-index 152cfcca2f908a..5a5d7534830bba 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x_core.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
-@@ -657,7 +657,6 @@ int mt792x_init_wiphy(struct ieee80211_hw *hw)
- 				 BIT(NL80211_IFTYPE_P2P_CLIENT) |
- 				 BIT(NL80211_IFTYPE_P2P_GO) |
- 				 BIT(NL80211_IFTYPE_P2P_DEVICE);
--	wiphy->max_remain_on_channel_duration = 5000;
- 	wiphy->max_scan_ie_len = MT76_CONNAC_SCAN_IE_LEN;
- 	wiphy->max_scan_ssids = 4;
- 	wiphy->max_sched_scan_plan_interval =
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/dma.c b/drivers/net/wireless/mediatek/mt76/mt7996/dma.c
+index 8f5d297dafce23..3d9353811a02eb 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/dma.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/dma.c
+@@ -683,7 +683,7 @@ int mt7996_dma_init(struct mt7996_dev *dev)
+ 		ret = mt7996_init_tx_queues(&dev->phy, MT_TXQ_ID(0),
+ 					    MT7996_NPU_TX_RING_SIZE,
+ 					    MT_TXQ_RING_BASE(0) + hif1_ofs,
+-					    NULL);
++					    wed);
+ 	else
+ 		ret = mt7996_init_tx_queues(&dev->phy,
+ 					    MT_TXQ_ID(dev->mphy.band_idx),
 -- 
 2.53.0
 
