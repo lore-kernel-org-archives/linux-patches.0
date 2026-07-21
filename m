@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE6944AB9E;
-	Tue, 21 Jul 2026 21:41:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830CF44AB8A;
+	Tue, 21 Jul 2026 21:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670062; cv=none; b=tCUsSd0HLmCQRkS16AjVzwwgK3XwxzEcxJYtOwL5zjehdgVDVX2vnIJd8bkZmuECdOHNmzyU4os3OsDKwpp23PpbieLRQ8UtwYPS4temIiQrtyShxgIB2aOMMM/V+juaOSVmxqcBKeO2vwlB35pDBHS3caT4dbJ+K4KAXKOMtgA=
+	t=1784670064; cv=none; b=O6lZmjanV/QS8wobZP/b5JhoSmrLXigfXRHAbc9a627iv8kewCHlx/tWaKABEcz1dNMJqvIB1wwl5PfNMOcjSFuRQe4P1OQZd9TbynUkuzt/1EvGOUEPhOei54m9sbR3Nef1g2sq7k8Tm+WrAoJEEm3wDJWDXvHerKJuJYK+orw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670062; c=relaxed/simple;
-	bh=+ULjG3LK0MMZYB14qv/8NqHK/+kMfP4qaI8EA39M+iA=;
+	s=arc-20240116; t=1784670064; c=relaxed/simple;
+	bh=9ZpqPXnDq+7OaGHYwvplmT9gJZr2XzcvNDPifGicCx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f/zaf//eMu5UUeCpAo+i1z9izxQE77fFS7HaZp5B1faO2F6TFQaZeVa8W/3QfD1FKaCIXFvixwQTxj2PSNcrJ6diOheHWzbpUfWCja8TxGDZGfkInyrbzVB4RyS3ETNXh8GZq7iFFhFyOMAC4djcbf7Y/DJklYddaBXz7DcMkTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ivu5mat6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=et+r06LWdI4mBCT9nx3nwSfsfKBS7Lp8Aw6EmTzFyw2e1Alaia/9qrYnuynVSlR0wLTp4ZHLnvIop3DQXrA9jX78uB2z6V+wOVI7iHBub1wKiOx/kc9SdDgT/ekBJXtpm5ixHEN+YDT5+f0Nx7mjgpsZYHGDovEszF0vYicVh68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eKksffOC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ivu5mat6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4990B1F000E9;
-	Tue, 21 Jul 2026 21:41:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKksffOC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E99971F000E9;
+	Tue, 21 Jul 2026 21:41:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670060;
-	bh=3pZxDTVbfksuJuDz3bpAtrQf5ZvT9faZHIGo1O9EA6M=;
+	s=korg; t=1784670063;
+	bh=77l9bfYuYzsTZkY2EvcWuoeRd4oaw3I6ebBKTzfRDpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ivu5mat6RSvE1FSgCg7aPgV82uZowZkjQjvXpBhcEJrh4vW4ugcVgaUjXN++Y50Po
-	 5zeV8jpWZAwV+XiszHB7CW+CmZ2UpjgRYDq6RAuCQRstvgq/BLI3KNF+o5psKH7vEi
-	 HTVrGJDyOrP73RIJj3nHTaTQbO0T024/UBtFZfDo=
+	b=eKksffOC18+kCY8bO3ZiDMYTGmLuhT3JwgmC3I+7e3o2wokLhGRkJanggqLPlpzoN
+	 WN1Dt3lPDLdAPdz1jflVCuzWboEd7BY1ddD48/Newk/O5euOjs96NdqFwqPpsYUx0N
+	 OTKHagHJG8mOczr1gjBXigt5hsddGge5kPijZtak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.1 0788/1067] fs/ntfs3: bound copy_lcns dp->page_lcns[] index in analysis pass
-Date: Tue, 21 Jul 2026 17:23:09 +0200
-Message-ID: <20260721152442.193081977@linuxfoundation.org>
+Subject: [PATCH 6.1 0789/1067] fs/ntfs3: bound attr_off in UpdateResidentValue against data_off
+Date: Tue, 21 Jul 2026 17:23:10 +0200
+Message-ID: <20260721152442.215244961@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,116 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit 5e7b598660cfa8e5af172cf4c65cffc126333307 upstream.
+commit d1570c48f49a693974d000251030370ee2e83539 upstream.
 
-In log_replay()'s analysis pass, after find_dp() returns a
-valid DIR_PAGE_ENTRY for the (target_attr, target_vcn) tuple,
-the copy_lcns block walks lrh->lcns_follow further entries:
+In do_action()'s UpdateResidentValue case (fslog.c:3307),
+lrh->attr_off and lrh->redo_len come from the on-disk LRH.
+When they satisfy aoff + dlen < attr->res.data_off, the
+assignment
 
-	t16 = le16_to_cpu(lrh->lcns_follow);
-	for (i = 0; i < t16; i++) {
-	    size_t j = (size_t)(le64_to_cpu(lrh->target_vcn) -
-	                        le64_to_cpu(dp->vcn));
-	    dp->page_lcns[j + i] = lrh->page_lcns[i];
-	}
+	attr->res.data_size = cpu_to_le32(aoff + dlen - data_off);
 
-find_dp() only validates that target_vcn falls within
-[dp->vcn, dp->vcn + dp->lcns_follow), i.e., that the FIRST
-cluster is covered.  The walk through the further entries is
-not bounded against dp->lcns_follow.  For a malformed LRH
-where target_vcn = dp->vcn + dp->lcns_follow - 1 and
-lrh->lcns_follow > 1, the i > 0 writes overflow the dp's
-allocated page_lcns[] array.
+underflows to ~4 GiB (e.g. 0xFFFFFFF9 when aoff=0x10, dlen=1,
+data_off=0x18).  Subsequent code that reads attr->res.data_size
+to walk the resident attribute payload would then read up to
+4 GiB past the 1024-byte MFT record allocation.
 
-Add the missing j + lrh->lcns_follow <= dp->lcns_follow guard.
+The existing mi_enum_attr() defense in fs/ntfs3/record.c:287
+catches the corrupted data_size on the next attribute walk
+and fails the mount, but only on the path that walks all
+attributes.  A read site that picks an attribute by name and
+reads its data_size without re-validating is not covered.
+Validate aoff against data_off and asize at the source.
 
-Reproduced under UML+KASAN on mainline 8d90b09e6741 as a
-slab-out-of-bounds write of size 8 from log_replay+0x68d4 on
-the mount path.
-
-This is distinct from Pavitra Jha's 2026-05-02 patch
-("fs/ntfs3: validate lcns_follow in log_replay conversion",
-<20260502154252.164586-1-jhapavitra98@gmail.com>) which
-addresses the separate version-0 dirty-page-table conversion
-path's memmove(&dp->vcn, ...) call.  The two fixes are
-complementary; both should land.
+Reproduced under UML+KASAN on mainline 8d90b09e6741 via
+pr_warn-only probe: with aoff=0x10 and data_off=0x18, the
+post-assignment data_size is 0xfffffff9 (mount then fails
+at -22 from mi_enum_attr).
 
 Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4-7
 Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-[almaz.alexandrovich@paragon-software.com: clang-formatted the changes,
-fixed conflicts]
+[almaz.alexandrovich@paragon-software.com: clang-formatted the changes]
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |   46 +++++++++++++++++++++++++++++-----------------
- 1 file changed, 29 insertions(+), 17 deletions(-)
+ fs/ntfs3/fslog.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 --- a/fs/ntfs3/fslog.c
 +++ b/fs/ntfs3/fslog.c
-@@ -3368,8 +3368,8 @@ move_data:
+@@ -3316,6 +3316,17 @@ skip_load_parent:
+ 		nsize = ALIGN(nsize, 8);
+ 		data_off = le16_to_cpu(attr->res.data_off);
  
- 		if (run_get_highest_vcn(le64_to_cpu(attr->nres.svcn),
- 					attr_run(attr),
--				        le32_to_cpu(attr->size) - 
--				                le16_to_cpu(attr->nres.run_off),	
-+					le32_to_cpu(attr->size) -
-+						le16_to_cpu(attr->nres.run_off),
- 					&t64)) {
- 			goto dirty_vol;
- 		}
-@@ -4563,22 +4563,34 @@ copy_lcns:
- 		 * whole routine a loop, case Lcns do not fit below.
- 		 */
- 		t16 = le16_to_cpu(lrh->lcns_follow);
--                t32 = le32_to_cpu(dp->lcns_follow);
--                if (le64_to_cpu(lrh->target_vcn) < le64_to_cpu(dp->vcn)) {
--                        err = -EINVAL;
--                        goto out;
--                }
--
--                for (i = 0; i < t16; i++) {
--                        size_t j = (size_t)(le64_to_cpu(lrh->target_vcn) -
--                                            le64_to_cpu(dp->vcn));
--                        if (j >= t32 || i >= t32 - j) {
--                                err = -EINVAL;
--                                goto out;
--                        }
--                        dp->page_lcns[j + i] = lrh->page_lcns[i];
--                }
-+		t32 = le32_to_cpu(dp->lcns_follow);
-+		if (le64_to_cpu(lrh->target_vcn) < le64_to_cpu(dp->vcn)) {
-+			err = -EINVAL;
-+			goto out;
-+		}
-+
 +		/*
-+         * find_dp() only validates that target_vcn is the first
-+         * cluster covered by dp.  The walk through lrh->lcns_follow
-+         * further entries must stay within the allocated
-+         * dp->page_lcns[] array, which is sized by dp->lcns_follow.
-+         */
-+		if (le64_to_cpu(lrh->target_vcn) - le64_to_cpu(dp->vcn) + t16 >
-+		    le32_to_cpu(dp->lcns_follow)) {
-+			err = -EINVAL;
-+			log->set_dirty = true;
-+			goto out;
-+		}
- 
-+		for (i = 0; i < t16; i++) {
-+			size_t j = (size_t)(le64_to_cpu(lrh->target_vcn) -
-+					    le64_to_cpu(dp->vcn));
-+			if (j >= t32 || i >= t32 - j) {
-+				err = -EINVAL;
-+				goto out;
-+			}
-+			dp->page_lcns[j + i] = lrh->page_lcns[i];
-+		}
- 		goto next_log_record_analyze;
- 
- 	case DeleteDirtyClusters: {
++		 * aoff comes from the on-disk lrh->attr_off.  Forbid
++		 * writes that begin below the resident attribute's
++		 * data_off (which would overwrite the resident header),
++		 * and forbid aoff + dlen < data_off, which would make
++		 * the data_size assignment below underflow to ~4 GiB.
++		 */
++		if (aoff < data_off || aoff + dlen < data_off ||
++		    aoff + dlen > asize)
++			goto dirty_vol;
++
+ 		if (nsize < asize) {
+ 			memmove(Add2Ptr(attr, aoff), data, dlen);
+ 			data = NULL; // To skip below memmove().
 
 
