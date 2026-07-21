@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC3C44AB99;
-	Tue, 21 Jul 2026 21:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7108F3BE156;
+	Tue, 21 Jul 2026 21:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669516; cv=none; b=aiD3j09gTlFQkP34/fbh5GLxuQuua5K7to30buNxKWMfOk2EzDkvEjbyqjBz/LTp8qvrweIqA+7LntbzXLM1ume98JHlVS4WeJUxj8QEgfoGCuCJDMEDd7Z2jn38P+53nDhJD+Q1RPTMHoGtghT8VrsFSrzALcpW8D2h4Vy3F0E=
+	t=1784669519; cv=none; b=mRJVFuVLPh6+5xGrpQZDkgTqXXGpWC9elAB+AgnHDZ+3wVCe2VNYU9ro456jkVtqLJeuQxgmtbHzIlPlylAUatoUU7OU/Wa5p4CTEOS7dA3TkH/g4H8noslvLB3FN2n4XjKvPyKn6hjmIScmY6TyWDvEDji6USK2bQPsR0u1Q0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669516; c=relaxed/simple;
-	bh=YG2ID6lnCjiREuDkgFp3248rEvpgqX9cVU+EFqegr5g=;
+	s=arc-20240116; t=1784669519; c=relaxed/simple;
+	bh=P0nm/zqd9tHbFY01y4iOgWpVKyTBvpSZYFfNxOjMNXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R3eeP8IZX8HkeuUDeM5I1dRzFB4SiPCozDt3MQJBbf/vCR/O4eDopZnV7Plr5r/DHm/9fz53LH7BJX1KU6X1mOLYZmfiPkr58Hba/5P/xRicF9FExioxfztyl7K0Kb9nqdHnQHX97Jm2Kau8chtBkAWN2o/OskG25s6lzx6l8HQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ahtazTSF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N3z722+sABSyUUywKDZaQ2zvBB0gEn5XJomK5NLGAqa/JrSRb5/nj9/OI1zNM5q1qqbLg6I+rf3jnmE5wgDX9e9zuZC0Yr9F2NGXXW2YOOb2bDjPR9VpfIZCOpejnfr+yuC+AxARH9NlUFazdiAWUP/UinchcJa+ISkKUNk/dtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GkzGwIJT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ahtazTSF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C611F000E9;
-	Tue, 21 Jul 2026 21:31:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GkzGwIJT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FDE1F000E9;
+	Tue, 21 Jul 2026 21:31:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669515;
-	bh=5Acw1kpYfX39pcvd6rKdrNWp6zhky7eTrSiRzwkbaPw=;
+	s=korg; t=1784669517;
+	bh=Zf1T5sXK8ShM3SjO4rSrimsVnvQ80C+u6ToIV1NBL/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ahtazTSFaUaroT6+/ef0g7vFLraF1FUXmHVhvN+leoqwLdZUju9jWY/ceSJSXo9/h
-	 xUmOidS9V2eThXXNg6Tm2TqQy6bQ0g256Fk4jXHtufvdAf1WftYVJ8RTtzjrjRms6e
-	 v3idHdHLloSst5/pSW5sTZK3w7tpIW1LY+zYtkjc=
+	b=GkzGwIJT1SslzllmB3f+tP92Gsn7JZZow4GVJpQEVUzdY2ECOO+Fw2Jv0TZPHmMAJ
+	 nijhWZiUwJ3u1wGg9tfOmpw3+biijC42dbuJ84T96Vtvj++t749NgK9d85lNJ5mczZ
+	 aWd9a1u+c+9XPvuXbTCEVh5ttw0zh99DzNMZKEWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
 	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
+	Bui Quang Minh <minhquangbui99@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0584/1067] virtio_ring: introduce dma sync api for virtqueue
-Date: Tue, 21 Jul 2026 17:19:45 +0200
-Message-ID: <20260721152437.669216384@linuxfoundation.org>
+Subject: [PATCH 6.1 0585/1067] virtio-net: fix len check in receive_big()
+Date: Tue, 21 Jul 2026 17:19:46 +0200
+Message-ID: <20260721152437.692197004@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,131 +55,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 8bd2f71054bd0bc997833e9825143672eb7e2801 ]
+[ Upstream commit 9e5ad06ea826322ce8c58b4a68442a96f600c3c4 ]
 
-These API has been introduced:
+receive_big() bounds the device-announced length by
+(big_packets_num_skbfrags + 1) * PAGE_SIZE.  That is still too loose:
+add_recvbuf_big() sets sg[1] to start at offset
+sizeof(struct padded_vnet_hdr) into the first page, so the chain
+actually carries hdr_len + (PAGE_SIZE - sizeof(padded_vnet_hdr)) +
+big_packets_num_skbfrags * PAGE_SIZE bytes -- 20 bytes less than the
+check allows for the common hdr_len == 12 case.
 
-* virtqueue_dma_need_sync
-* virtqueue_dma_sync_single_range_for_cpu
-* virtqueue_dma_sync_single_range_for_device
+A malicious virtio backend can announce a len in that gap.  page_to_skb()
+then walks one frag past the page chain, storing a NULL page->private
+into skb_shinfo()->frags[MAX_SKB_FRAGS], which is both an out-of-bounds
+write past the static frag array and a NULL frag handed up the rx path.
 
-These APIs can be used together with the premapped mechanism to sync the
-DMA address.
+Bound len by the size add_recvbuf_big() actually advertised.
 
-Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Message-Id: <20230810123057.43407-12-xuanzhuo@linux.alibaba.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Stable-dep-of: 9e5ad06ea826 ("virtio-net: fix len check in receive_big()")
+Fixes: 0c716703965f ("virtio-net: fix received length check in big packets")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Bui Quang Minh <minhquangbui99@gmail.com>
+Link: https://patch.msgid.link/20260616042837.2249468-1-xmei5@asu.edu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_ring.c | 76 ++++++++++++++++++++++++++++++++++++
- include/linux/virtio.h       |  8 ++++
- 2 files changed, 84 insertions(+)
+ drivers/net/virtio_net.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
-index 25c9ecae60aaaf..c0534f01b459a9 100644
---- a/drivers/virtio/virtio_ring.c
-+++ b/drivers/virtio/virtio_ring.c
-@@ -2995,4 +2995,80 @@ int virtqueue_dma_mapping_error(struct virtqueue *_vq, dma_addr_t addr)
- }
- EXPORT_SYMBOL_GPL(virtqueue_dma_mapping_error);
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 2fb00df795d4ab..9bbb26efb82573 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -945,15 +945,18 @@ static struct sk_buff *receive_big(struct net_device *dev,
+ 				   struct virtnet_rq_stats *stats)
+ {
+ 	struct page *page = buf;
++	unsigned long max_len;
+ 	struct sk_buff *skb;
  
-+/**
-+ * virtqueue_dma_need_sync - check a dma address needs sync
-+ * @_vq: the struct virtqueue we're talking about.
-+ * @addr: DMA address
-+ *
-+ * Check if the dma address mapped by the virtqueue_dma_map_* APIs needs to be
-+ * synchronized
-+ *
-+ * return bool
-+ */
-+bool virtqueue_dma_need_sync(struct virtqueue *_vq, dma_addr_t addr)
-+{
-+	struct vring_virtqueue *vq = to_vvq(_vq);
++	max_len = (vi->big_packets_num_skbfrags + 1) * PAGE_SIZE -
++		  sizeof(struct padded_vnet_hdr) + vi->hdr_len;
 +
-+	if (!vq->use_dma_api)
-+		return false;
-+
-+	return dma_need_sync(vring_dma_dev(vq), addr);
-+}
-+EXPORT_SYMBOL_GPL(virtqueue_dma_need_sync);
-+
-+/**
-+ * virtqueue_dma_sync_single_range_for_cpu - dma sync for cpu
-+ * @_vq: the struct virtqueue we're talking about.
-+ * @addr: DMA address
-+ * @offset: DMA address offset
-+ * @size: buf size for sync
-+ * @dir: DMA direction
-+ *
-+ * Before calling this function, use virtqueue_dma_need_sync() to confirm that
-+ * the DMA address really needs to be synchronized
-+ *
-+ */
-+void virtqueue_dma_sync_single_range_for_cpu(struct virtqueue *_vq,
-+					     dma_addr_t addr,
-+					     unsigned long offset, size_t size,
-+					     enum dma_data_direction dir)
-+{
-+	struct vring_virtqueue *vq = to_vvq(_vq);
-+	struct device *dev = vring_dma_dev(vq);
-+
-+	if (!vq->use_dma_api)
-+		return;
-+
-+	dma_sync_single_range_for_cpu(dev, addr, offset, size,
-+				      DMA_BIDIRECTIONAL);
-+}
-+EXPORT_SYMBOL_GPL(virtqueue_dma_sync_single_range_for_cpu);
-+
-+/**
-+ * virtqueue_dma_sync_single_range_for_device - dma sync for device
-+ * @_vq: the struct virtqueue we're talking about.
-+ * @addr: DMA address
-+ * @offset: DMA address offset
-+ * @size: buf size for sync
-+ * @dir: DMA direction
-+ *
-+ * Before calling this function, use virtqueue_dma_need_sync() to confirm that
-+ * the DMA address really needs to be synchronized
-+ */
-+void virtqueue_dma_sync_single_range_for_device(struct virtqueue *_vq,
-+						dma_addr_t addr,
-+						unsigned long offset, size_t size,
-+						enum dma_data_direction dir)
-+{
-+	struct vring_virtqueue *vq = to_vvq(_vq);
-+	struct device *dev = vring_dma_dev(vq);
-+
-+	if (!vq->use_dma_api)
-+		return;
-+
-+	dma_sync_single_range_for_device(dev, addr, offset, size,
-+					 DMA_BIDIRECTIONAL);
-+}
-+EXPORT_SYMBOL_GPL(virtqueue_dma_sync_single_range_for_device);
-+
- MODULE_LICENSE("GPL");
-diff --git a/include/linux/virtio.h b/include/linux/virtio.h
-index b16e77ff2b3e56..82a29db54e7d17 100644
---- a/include/linux/virtio.h
-+++ b/include/linux/virtio.h
-@@ -216,4 +216,12 @@ void virtqueue_dma_unmap_single_attrs(struct virtqueue *_vq, dma_addr_t addr,
- 				      size_t size, enum dma_data_direction dir,
- 				      unsigned long attrs);
- int virtqueue_dma_mapping_error(struct virtqueue *_vq, dma_addr_t addr);
-+
-+bool virtqueue_dma_need_sync(struct virtqueue *_vq, dma_addr_t addr);
-+void virtqueue_dma_sync_single_range_for_cpu(struct virtqueue *_vq, dma_addr_t addr,
-+					     unsigned long offset, size_t size,
-+					     enum dma_data_direction dir);
-+void virtqueue_dma_sync_single_range_for_device(struct virtqueue *_vq, dma_addr_t addr,
-+						unsigned long offset, size_t size,
-+						enum dma_data_direction dir);
- #endif /* _LINUX_VIRTIO_H */
+ 	/* Make sure that len does not exceed the size allocated in
+ 	 * add_recvbuf_big.
+ 	 */
+-	if (unlikely(len > (vi->big_packets_num_skbfrags + 1) * PAGE_SIZE)) {
++	if (unlikely(len > max_len)) {
+ 		pr_debug("%s: rx error: len %u exceeds allocated size %lu\n",
+-			 dev->name, len,
+-			 (vi->big_packets_num_skbfrags + 1) * PAGE_SIZE);
++			 dev->name, len, max_len);
+ 		goto err;
+ 	}
+ 
 -- 
 2.53.0
 
