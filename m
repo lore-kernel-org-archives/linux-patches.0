@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C00A449B2A;
-	Tue, 21 Jul 2026 17:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB86449B2A;
+	Tue, 21 Jul 2026 17:56:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656586; cv=none; b=Z4KZaIJZ7eElAH3CtX3X79JiN3t3adRUCZzjQoI5RxJd9B4cJ7RyzDqI/2pvJQPAL0vjf5WfOHKZEWU8ghSzORte+mDJPc3fub2Vbzl1TgPRTFBJzOZ+e9beImt3di+JLweLC8/OYyazakg0qbDP0JrUYyjDBM6JbjXM1sGdrIY=
+	t=1784656588; cv=none; b=bps17hjxeqREp8+Wfv373eu61EQ4ST6Rzy39qVJqtGdvs7y+g4PxNO+5RDi+WOwCYhA7k/5cpVxTW+lS3aJY+Y1NlMvIfXCsM6YrylyNw/antAUtQEbHVkxSbjvsFTHLl+DW9VYc5j/OAChFCewc531sfy2kqx/yGk+q5C7wZBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656586; c=relaxed/simple;
-	bh=6NNyrxfH7jFtxyipQ5JRvK6U8zKJFyoEADkZ4TTw7lA=;
+	s=arc-20240116; t=1784656588; c=relaxed/simple;
+	bh=uI0izHzNe398gEAuRQH4Ix6Q/tw375Hp4SfZUqKs2Ko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GeflSgV6e1gqv+b88DY95pRM0j/J/MIBXzv/A3ghK8e9BNQdNwL2jRQKQ2b6deVAlO5WI2+Zw5t9dmh5cBG8ggO8/F826aeNhRQ7dxK4jnyw/r3Nr9RTTTURZjGcDbSeV6xAcUJrkB3QlpgP/Te3WDutCXRAZz9ZTsl4/gOIcCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nBmJ227i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m42KGr7gjmVbzWT75cSlx8K0C69rv1ERRmQAXpGPy3ezs7ntVwdQ71O3ICoWJVBVdMTZW7l1b70GlUmjMTT/SKZC+60UUATZ2W8CSrsEkcjrdleV/sdkqphiZRxakEqLfPl19Lpm1yD0emiB0YPsSRDTQO/d14B+RvDA6OmW7L4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFpcVD2l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBmJ227i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC461F000E9;
-	Tue, 21 Jul 2026 17:56:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFpcVD2l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4015D1F000E9;
+	Tue, 21 Jul 2026 17:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656585;
-	bh=yZoIAzIBedOMzlxBF9TQ2FV8evERTI1wmZgciDNjEho=;
+	s=korg; t=1784656587;
+	bh=X6VCfjhVY2OM3kx816hrPnyqbBBjWzmVlkcr0GU7X+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nBmJ227iYUs5QylR9hg6I8qmXt50cyOchqYovP81I/we7GHq1iT2MX93hNZtIna9L
-	 in7s/4NcN+Hyhba+l96STr0joRpHu1ZU9WfmJUFXkdozlNGcqXaauvt2mhcMVsQ4w0
-	 wse1k7WslF9Nqdc4s5byU1ZuD/7EAXbveBYdCrGU=
+	b=jFpcVD2llVsDroQoIOT/yrRx5XK03qpy0ldbjNkv2MBOEtKdFbW9CDFqA9aPWUuj8
+	 KJHtoxkIR3ai18+atAfuCn1v7JX9BgnJnqdqA44G0hT7tOtXpFtUMORbmwEvckgIk4
+	 jGC/rUCVRFPJnuw+FZ4VK3NlgHZxtSwyh9GlPxZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0443/1611] ASoC: cs35l56: Fix missing calls to wm_adsp2_remove()
-Date: Tue, 21 Jul 2026 17:09:19 +0200
-Message-ID: <20260721152525.254236400@linuxfoundation.org>
+Subject: [PATCH 6.18 0444/1611] ASoC: cs35l56: Dont leave parent IRQ disabled if system_suspend fails
+Date: Tue, 21 Jul 2026 17:09:20 +0200
+Message-ID: <20260721152525.280195498@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,21 +53,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 85f7bf03632bfcdd6cedfb3945b7e387d9487d73 ]
+[ Upstream commit 53cebeb017164254cde5e31c94d8deef9e4fff97 ]
 
-Call wm_adsp2_remove() in cs35l56_remove() and the error path of
-cs35l56_common_probe().
+In cs35l56_system_suspend() re-enable the parent IRQ if the call to
+pm_runtime_force_suspend() returns an error.
 
-Depends on commit 7d3fb78b5503 ("ASoC: wm_adsp: Fix NULL dereference
-when removing firmware controls").
-
-The call to wm_halo_init() during driver probe should be paired with
-a call to wm_adsp2_remove() but this was missing. The consequence
-would be a memory leak of the control lists in the cs_dsp driver.
-
-Fixes: e49611252900 ("ASoC: cs35l56: Add driver for Cirrus Logic CS35L56")
+Fixes: f9dc6b875ec0 ("ASoC: cs35l56: Add basic system suspend handling")
 Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260610093432.557375-2-rf@opensource.cirrus.com
+Link: https://patch.msgid.link/20260610105556.612830-1-rf@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -75,34 +68,30 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
-index 193adba0cd1a41..f6d61bdfd24efc 100644
+index f6d61bdfd24efc..7b57ef2336ea8d 100644
 --- a/sound/soc/codecs/cs35l56.c
 +++ b/sound/soc/codecs/cs35l56.c
-@@ -1437,11 +1437,14 @@ int cs35l56_common_probe(struct cs35l56_private *cs35l56)
- 					      cs35l56_dai, ARRAY_SIZE(cs35l56_dai));
- 	if (ret < 0) {
- 		dev_err_probe(cs35l56->base.dev, ret, "Register codec failed\n");
--		goto err;
-+		goto err_remove_wm_adsp;
- 	}
+@@ -1057,6 +1057,7 @@ static int __maybe_unused cs35l56_runtime_resume_i2c_spi(struct device *dev)
+ int cs35l56_system_suspend(struct device *dev)
+ {
+ 	struct cs35l56_private *cs35l56 = dev_get_drvdata(dev);
++	int ret;
  
- 	return 0;
+ 	dev_dbg(dev, "system_suspend\n");
  
-+err_remove_wm_adsp:
-+	wm_adsp2_remove(&cs35l56->dsp);
+@@ -1072,7 +1073,11 @@ int cs35l56_system_suspend(struct device *dev)
+ 	if (cs35l56->base.irq)
+ 		disable_irq(cs35l56->base.irq);
+ 
+-	return pm_runtime_force_suspend(dev);
++	ret = pm_runtime_force_suspend(dev);
++	if ((ret < 0) && cs35l56->base.irq)
++		enable_irq(cs35l56->base.irq);
 +
- err:
- 	gpiod_set_value_cansleep(cs35l56->base.reset_gpio, 0);
- 	regulator_bulk_disable(ARRAY_SIZE(cs35l56->supplies), cs35l56->supplies);
-@@ -1544,6 +1547,8 @@ void cs35l56_remove(struct cs35l56_private *cs35l56)
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(cs35l56_system_suspend);
  
- 	destroy_workqueue(cs35l56->dsp_wq);
- 
-+	wm_adsp2_remove(&cs35l56->dsp);
-+
- 	pm_runtime_dont_use_autosuspend(cs35l56->base.dev);
- 	pm_runtime_suspend(cs35l56->base.dev);
- 	pm_runtime_disable(cs35l56->base.dev);
 -- 
 2.53.0
 
