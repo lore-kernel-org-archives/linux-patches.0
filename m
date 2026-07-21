@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46BD476CD7;
-	Tue, 21 Jul 2026 17:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC91A46A5F6;
+	Tue, 21 Jul 2026 17:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656412; cv=none; b=pv1ofVEGIJkjGMZklaionU6QVvUsVOXpGLTu7d4Mgi2NLUBnNhoTWDNbbxLu0pnZY+uxD284aa6gKh/bosTVSisrL4MiW9nyYe1HEGVc+br8YsRQle21qU3TFIPkfXDlV/uJYiUKcGJ27ABt5eU+A/n+e5ZedBeuxxctomYOUcg=
+	t=1784656415; cv=none; b=XbQz98idqh0IOZMKblGQzk5p1TJoTJqfuSU++uJRQ9xfnew+RnnrWrkL3RpmgBNQOxW2AO5Z00UCjW2fVD6a9IT5PntR7piNQ6ulOYbsNbzNyPA3HvTYtpeMiXdPA/hnV5DY3cms0Ek++c6iKPZ7wC220YoUz1QGtTJRtkLEMZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656412; c=relaxed/simple;
-	bh=6+C+FaqZHCyA/4YEFJbjQXbJuMFfW0pZSqpyvrWmhdg=;
+	s=arc-20240116; t=1784656415; c=relaxed/simple;
+	bh=x3x/CJduGOXfT9q5fkHhGkxD9QWOUXXBbrGhpiBjhHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fpwc9uvhTDndbDJPdXtxqaSLdh3OarHtIOO/e5OV8XqP35gogXW2Epln79cDQWlXTn5wn0s40gqaeZ6rOrOsRp+YexLZ272o4w1HuWulAn5Dhuldnzx7fMJud902sWJZdzzelLVWuXyhNLDp/u9ImB7B6wNuoXN40TKpTEpKiP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1/Ym0GTa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JFqvX8pFWQ1voa9QD2eI4yf8Ejuy7NaaP38H+Kx8YLG6/mhGgW6D5BLO7tOypZIFvRj2Te8W6eV18iYzcAFGfLv4eMj/ZIZR8fedxl1tSYZY6jhemhvZpWNkLT0h3zHqj9U+RYlg5srhV2dVl7rSBiK0eG3Wvl0YufUYRoQNgTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtAgMPDZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/Ym0GTa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DDDD1F00A3E;
-	Tue, 21 Jul 2026 17:53:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtAgMPDZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52AE1F000E9;
+	Tue, 21 Jul 2026 17:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656410;
-	bh=A2dvRscgLhsxbb3sYivkFtd9S0jUeACffh9c7zYBjqQ=;
+	s=korg; t=1784656413;
+	bh=wciCwEYoId0F9wCUfcpGBnqXQ3kxx2oFzMcqECtFOdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1/Ym0GTaGnD7gg6qw5fqDwFcVTTJacmX7B2k708KAp8+4Gb3go12Y8T9egR3tboji
-	 hXEPPYh1uGVDzMFls1MczcxbV+C1Vx0aRI0GkPkoIBdx9YpPVybIqymbW2AkM8Hg9b
-	 bns0jvhcgWC/mBDn2R7bp0SjCllQX5WsU1CLjxbo=
+	b=TtAgMPDZqImelPfEBO/L9HjEKvKFq8ipQKwqVZnq8vCuONZkBHqCOYoZb8q1dH2LD
+	 x/daNTHqGBKiJvJIWBStMTn0MM1ZGXhPQMbu60o8jlqzVfYvKBfmPPcnroqs1wJ5sh
+	 L1Wo4uO4JPqElNqs7eVCwxSlcI05G/TYYK1tJIQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	"Christian A. Ehrhardt" <lk@c--e.de>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0334/1611] ocfs2: rebase copied fsdlm LVB pointers in locking_state
-Date: Tue, 21 Jul 2026 17:07:30 +0200
-Message-ID: <20260721152522.614405781@linuxfoundation.org>
+Subject: [PATCH 6.18 0335/1611] lib: kunit_iov_iter: repeatedly call alloc_pages_bulk()
+Date: Tue, 21 Jul 2026 17:07:31 +0200
+Message-ID: <20260721152522.636320683@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,144 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 93612d48fa42b3d1a637eb9279e15281c611c000 ]
+[ Upstream commit 9ac9a08e4ac4bc063e56e1aff266c5e8aa5c6c03 ]
 
-The locking_state debugfs iterator snapshots struct ocfs2_lock_res by
-value under ocfs2_dlm_tracking_lock and later formats that copy in
-ocfs2_dlm_seq_show().  That is fine for the inline fields, but the
-userspace fsdlm stack stores the LVB through lksb_fsdlm.sb_lvbptr.  Once
-the iterator drops the tracking lock, a copied non-NULL sb_lvbptr still
-points into the original lockres owner, so teardown can free that
-container before the debugfs dump walks the raw LVB bytes.
+alloc_pages_bulk() is not guaranteed to return all requested pages in a
+single call.
 
-Rebase the copied sb_lvbptr to the copied l_lksb before dumping the raw
-LVB.  The seq snapshot already carries the inline LVB storage reserved in
-struct ocfs2_dlm_lksb, so the debugfs reader can dump the copied bytes
-without borrowing the original lockres lifetime.
+Call it repeatedly until all pages have been allocated or no more progress
+is being made.
 
-The buggy scenario involves two paths, with each column showing the order
-within that path:
-
-locking_state reader:                  lockres teardown:
-1. ocfs2_dlm_seq_start()/next()        1. file release or another owner
-   copies struct ocfs2_lock_res           teardown reaches
-2. ocfs2_dlm_seq_show() formats           ocfs2_lock_res_free()
-   the copied row                      2. the lockres is removed from the
-3. ocfs2_dlm_lvb() follows the            tracking list
-   copied sb_lvbptr                   3. the owner frees the original
-                                          lockres container
-
-Validation reproduced this kernel report:
-KASAN slab-use-after-free in ocfs2_dlm_seq_show+0x1bd/0x430
-RIP: 0033:0x7f8ec4b1e29d
-The buggy address belongs to the object at ffff88810a1e0800 which belongs
-to the cache kmalloc-1k of size 1024
-The buggy address is located 368 bytes inside of freed 1024-byte region
-[ffff88810a1e0800, ffff88810a1e0c00)
-Read of size 1
-Call trace:
-  dump_stack_lvl+0x66/0xa0
-  print_report+0xce/0x630
-  ocfs2_dlm_seq_show+0x1bd/0x430 (fs/ocfs2/dlmglue.c:3137)
-  srso_alias_return_thunk+0x5/0xfbef5
-  __virt_addr_valid+0x19f/0x330
-  kasan_report+0xe0/0x110
-  seq_read_iter+0x29d/0x790
-  seq_read+0x20a/0x280
-  find_held_lock+0x2b/0x80
-  rcu_read_unlock+0x18/0x70
-  full_proxy_read+0x9e/0xd0
-  vfs_read+0x12c/0x590
-  ksys_read+0xd2/0x170
-  do_user_addr_fault+0x65a/0x890
-  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-Allocated by task stack:
-  kasan_save_stack+0x33/0x60
-  kasan_save_track+0x14/0x30
-  __kasan_kmalloc+0xaa/0xb0
-  ocfs2_file_open+0x13e/0x300
-  do_dentry_open+0x233/0x7f0
-  vfs_open+0x5a/0x1b0
-  path_openat+0x66d/0x1540
-  do_file_open+0x186/0x2b0
-  do_sys_openat2+0xce/0x150
-  __x64_sys_openat+0xd0/0x140
-  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-Freed by task stack:
-  kasan_save_stack+0x33/0x60
-  kasan_save_track+0x14/0x30
-  kasan_save_free_info+0x3b/0x60
-  __kasan_slab_free+0x5f/0x80
-  kfree+0x313/0x590
-  ocfs2_file_release+0x138/0x260
-  __fput+0x1df/0x4b0
-  fput_close_sync+0xd2/0x170
-  __x64_sys_close+0x55/0x90
-  do_syscall_64+0x115/0x6a0 (arch/x86/entry/syscall_64.c:87)
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Link: https://lore.kernel.org/20260525041726.4112882-1-rollkingzzc@gmail.com
-Fixes: cf4d8d75d8ab ("ocfs2: add fsdlm to stackglue")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
+Link: https://lore.kernel.org/20260526-kunit_iov_iter-alloc_bulk-v2-1-24fbcd995c61@weissschuh.net
+Fixes: 2d71340ff1d4 ("iov_iter: Kunit tests for copying to/from an iterator")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Cc: "Christian A. Ehrhardt" <lk@c--e.de>
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dlmglue.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ lib/tests/kunit_iov_iter.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
-index 92a6149da9c102..8ade51f7ffa8bb 100644
---- a/fs/ocfs2/dlmglue.c
-+++ b/fs/ocfs2/dlmglue.c
-@@ -3134,6 +3134,22 @@ static void *ocfs2_dlm_seq_next(struct seq_file *m, void *v, loff_t *pos)
-  *	- Add last pr/ex unlock times and first lock wait time in usecs
-  */
- #define OCFS2_DLM_DEBUG_STR_VERSION 4
-+
-+/*
-+ * The debug iterator snapshots lockres by value, so a userspace-stack LVB
-+ * pointer copied from the original lockres must be rebased to the copied
-+ * lksb before the dump walks the raw bytes.
-+ */
-+static void ocfs2_dlm_seq_rebase_lvb(struct ocfs2_lock_res *lockres)
-+{
-+	if (!ocfs2_stack_supports_plocks())
-+		return;
-+
-+	if (lockres->l_lksb.lksb_fsdlm.sb_lvbptr)
-+		lockres->l_lksb.lksb_fsdlm.sb_lvbptr =
-+			(char *)&lockres->l_lksb + sizeof(struct dlm_lksb);
-+}
-+
- static int ocfs2_dlm_seq_show(struct seq_file *m, void *v)
+diff --git a/lib/tests/kunit_iov_iter.c b/lib/tests/kunit_iov_iter.c
+index 43e63bf4c09568..0ee92536e5e7bf 100644
+--- a/lib/tests/kunit_iov_iter.c
++++ b/lib/tests/kunit_iov_iter.c
+@@ -50,14 +50,22 @@ static void *__init iov_kunit_create_buffer(struct kunit *test,
+ 					    size_t npages)
  {
- 	int i;
-@@ -3191,6 +3207,7 @@ static int ocfs2_dlm_seq_show(struct seq_file *m, void *v)
- 		   lockres->l_blocking);
+ 	struct page **pages;
+-	unsigned long got;
++	unsigned long got, last;
+ 	void *buffer;
  
- 	/* Dump the raw LVB */
-+	ocfs2_dlm_seq_rebase_lvb(lockres);
- 	lvb = ocfs2_dlm_lvb(&lockres->l_lksb);
- 	for(i = 0; i < DLM_LVB_LEN; i++)
- 		seq_printf(m, "0x%x\t", lvb[i]);
+ 	pages = kzalloc_objs(struct page *, npages, GFP_KERNEL);
+ 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, pages);
+ 	*ppages = pages;
+ 
+-	got = alloc_pages_bulk(GFP_KERNEL, npages, pages);
++	got = 0;
++	while (true) {
++		last = got;
++		got = alloc_pages_bulk(GFP_KERNEL, npages, pages);
++
++		if (last == got || got == npages)
++			break;
++	}
++
+ 	if (got != npages) {
+ 		release_pages(pages, got);
+ 		kvfree(pages);
 -- 
 2.53.0
 
