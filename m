@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A73D42DA53;
-	Tue, 21 Jul 2026 19:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4249146D098;
+	Tue, 21 Jul 2026 19:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662033; cv=none; b=YI7V2ikmhidhvc+1YF560fEj6nHai0/YMhiKrhx+YKQMKJ/JB3s7MaTquSV2lVqC4UwRPI1Hk0LQIHtctPt+40MI5YjT2ZoHSD6pjk/KRKjML6xIilYkn72T99PhhrpmkatJ1USYEabbVinPUspwIAqGflwTExR6c/Jovq0A8FM=
+	t=1784662036; cv=none; b=BIrx67HjoP1kx76uu/ktVaDgS8idHlEYAdh8HLAdukyA/MBEvJg4gRYu2v6zPDm+VRSNlHD79qEMWYASBXLhVwwtTtJxT72vweAK7u58mwzPWjq7I6UUF4N0NqlXsG6xhcu79ZxrN3w7pIflKpP7SUcx/4Pfq8E5/8TYxCviL2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662033; c=relaxed/simple;
-	bh=Rvw4Cwstd5SOBDPC315vGpX0mnQ2+TMaRDnZa7A3A+M=;
+	s=arc-20240116; t=1784662036; c=relaxed/simple;
+	bh=ENfXIYVGQNrdoqZ5T/wV3yk1iOh6VRDEi5Kt2grQEco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FoCiPGDTXTStC8lrZCZcpqOf4Pr8Voeh7n1wvo0/7Q3ISt28RTeLr6oZxMlywVVc0zSalM3QekGERIpNoY+AnNizTtDlE9d2gMez2t0e0TAI0Puo4l2AF/QcoxYuCbIOffE0rjS2mFEwEW4Z7pe+zX1o+H1vVq4X6grQ2rSMzpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/RCdrK7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NcwSnq0mlvMaD+aefix8wP4pvUyOAVCqobxWch/JlsNJfxxNIyYEIaHbn/NGbzMGOl7PG8l0j7Thzc6HKUNfJ5gWs8Oz2s8UFVbA51gcZ74PQzdPWKJzCRgNqou1ahaLk3pcEQMUvq0l1pqM1ZdPLKDbufjDTwNRqY4OdvWAcR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fmc0LmRL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/RCdrK7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C08481F000E9;
-	Tue, 21 Jul 2026 19:27:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fmc0LmRL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697141F000E9;
+	Tue, 21 Jul 2026 19:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662032;
-	bh=/+7CwpjCY23Ng3JnTXJ9uojKCv3ZFkCpEYc8iYALa7g=;
+	s=korg; t=1784662034;
+	bh=SpslLoFFTFFJL13ovr3nsGotF/M5AwofbALXBs9N/hc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W/RCdrK7K7TYnMQCCkLi704Wcn9hMgtuKiRjDRq3EH4sS/XKN+vx7oxMPf+t4hUS7
-	 zEsQKV8C4kpRQXXeS70KmFYdFSt6RWqCkkcHUMGFDHv7sd8v0Uca+4ctZCvn0S1wcR
-	 s4WChrFWhawqH6QBQPZnRtjXwrFWWq4N+Dp+NrDI=
+	b=Fmc0LmRL9xbeWck+ueH9JVNFEhSbTaqzkbGkGhqax+bXC/AfRVkQozKMhoDewcUr+
+	 Y1niznFItInqZvFp8z7o2UsUKXpQaK23p4jaSk4jioUFaTZg1QWJnJ/6mc5SXe6qvy
+	 mpqJNXai21PpBq+qdKYM7rsO+EjLvuffuGR+G/9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>,
+	Luca Leonardo Scorcia <l.scorcia@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0292/1276] btrfs: zoned: dont account data relocation space-info in statfs free space
-Date: Tue, 21 Jul 2026 17:12:15 +0200
-Message-ID: <20260721152452.623911475@linuxfoundation.org>
+Subject: [PATCH 6.12 0275/1276] pinctrl: mediatek: mt8516: Fix Schmitt trigger register offset of pins 34-39
+Date: Tue, 21 Jul 2026 17:11:58 +0200
+Message-ID: <20260721152452.233424635@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,40 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Luca Leonardo Scorcia <l.scorcia@gmail.com>
 
-[ Upstream commit 52416a27aabc43eab3792fd0ca9f5dabeab58f31 ]
+[ Upstream commit 1c3044cab23a056ea28da47da1cdd667a39df0b8 ]
 
-Don't account the free space in a data relocation space-info sub-group as
-usable free space in statfs.
+The correct Schmitt trigger register offset for pins 34-39 is 0xA00.
 
-This is misleading as no user allocations can be made in this space-info
-sub-group. It is only a target for relocation.
-
-Fixes: f92ee31e031c ("btrfs: introduce btrfs_space_info sub-group")
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Luca Leonardo Scorcia <l.scorcia@gmail.com>
+Fixes: 264667112ef0 ("pinctrl: mediatek: Add MT8516 Pinctrl driver")
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/super.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pinctrl/mediatek/pinctrl-mt8516.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
-index 833602511f62d4..21419bc33863be 100644
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -1732,7 +1732,8 @@ static int btrfs_statfs(struct dentry *dentry, struct kstatfs *buf)
- 	int mixed = 0;
- 
- 	list_for_each_entry(found, &fs_info->space_info, list) {
--		if (found->flags & BTRFS_BLOCK_GROUP_DATA) {
-+		if (found->flags & BTRFS_BLOCK_GROUP_DATA &&
-+		    found->subgroup_id != BTRFS_SUB_GROUP_DATA_RELOC) {
- 			int i;
- 
- 			total_free_data += found->disk_total - found->disk_used;
+diff --git a/drivers/pinctrl/mediatek/pinctrl-mt8516.c b/drivers/pinctrl/mediatek/pinctrl-mt8516.c
+index abda75d4354e28..68d6638e7f4b18 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-mt8516.c
++++ b/drivers/pinctrl/mediatek/pinctrl-mt8516.c
+@@ -244,7 +244,7 @@ static const struct mtk_pin_ies_smt_set mt8516_smt_set[] = {
+ 	MTK_PIN_IES_SMT_SPEC(24, 25, 0xA00, 12),
+ 	MTK_PIN_IES_SMT_SPEC(26, 30, 0xA00, 0),
+ 	MTK_PIN_IES_SMT_SPEC(31, 33, 0xA00, 1),
+-	MTK_PIN_IES_SMT_SPEC(34, 39, 0xA900, 2),
++	MTK_PIN_IES_SMT_SPEC(34, 39, 0xA00, 2),
+ 	MTK_PIN_IES_SMT_SPEC(40, 40, 0xA10, 11),
+ 	MTK_PIN_IES_SMT_SPEC(41, 43, 0xA00, 10),
+ 	MTK_PIN_IES_SMT_SPEC(44, 47, 0xA00, 11),
 -- 
 2.53.0
 
