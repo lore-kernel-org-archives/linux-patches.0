@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE2C38C2A0;
-	Tue, 21 Jul 2026 20:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7862A3BED63;
+	Tue, 21 Jul 2026 20:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666978; cv=none; b=RWfBQFH2Jq8SluyuZ2BThQZjd9fz4fb36M7O/KjroqaEhogp6n8D0ULbotvrZeOjq7XbHrs/hjnIfkR9ASuhRSSOszI7XilC9xeDbz/Ono29pG8P6jbo4QJf+43OUvbyZ0ew4JDIpWk3CdmB1BsYBDHBI8wh25ePdq7J4IdzW7w=
+	t=1784666981; cv=none; b=aMYSc1Y+Z0OvyJYWgo97/aF7D1aozLrB9LLOK58FcnIE2YbLnwjMxnLMJILtiPub+0De8brCqxIriezgP4RJPti06hTH+RR+vf7keIDqurIBUTUyApvtlAC2QDYHA3UqH4ARG4lkkMi6vml0bLuQRn20F894BZI5IH/WWKYtaLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666978; c=relaxed/simple;
-	bh=h4jSAmDxB26BLr/a2RLy8YGiuqyIryh8ZTlMg127FFM=;
+	s=arc-20240116; t=1784666981; c=relaxed/simple;
+	bh=qiLEC/HJjyOJy9f6RR0MXeakt7H/dIlO4N7CJWeYM18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QVou271N6XQnPAEdfd2l0degz2dWxaD6Z+00K3qGuMCYjbg023LaqP7C5HaVm/7i9f3HASq1vrDcdzEa0Xp+daanhmWSGaSzrvWJ1taiq7ZW064tyZKyRBmfNdDKPx4KvQd1sukyHFTpZbMG4fucHpiK6NFnkCG5p/w3vgGIDlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TYnGP0eB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TwDk0akE2VXQB+GUqSGliIMPx4oByPxsOk1CGfz1DbtY0Lf3tfn7TDfAlug9smlywEYV7naW7bzPRbv9OuiSkbrPDDxjS8PlLqJ1Gw+J3k95alyjEWB/ty2pNRaUYeVHesmyITbPPhmDWG4wIr7M7f/uJ/U5w8oC9Shsgwzzrsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Bp05EbQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TYnGP0eB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9E41F000E9;
-	Tue, 21 Jul 2026 20:49:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Bp05EbQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D53121F00A3A;
+	Tue, 21 Jul 2026 20:49:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666977;
-	bh=U5QYxUt1v3Vc/Ks+5NmI5d+L+QI6k39JOCJW5gGMalA=;
+	s=korg; t=1784666980;
+	bh=H7EGNy72+nPFuzfmE+X8MbPS0tjVQz5uoc7UCw8og+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TYnGP0eBsuNFkokBZE9XU8/RbIG3N2Qu/MgxIxHpUkxRNCJtPLvuFFXYeYZcIIdAP
-	 jRROtXBdkGOyRcnHlofI5w/I9tuLRFJixq4SGC8Ip0dxl7NZXZoe8TSkrRg2xje20p
-	 RZ0hVSZbTCzjkmSGN8nMwntmkOixzLqSa4QJzcso=
+	b=0Bp05EbQ7I4pJIf+qltAFvviRag5Mv7JE97x5CbVFZQb3aqvQVjPVsKt+ZC0/ZR9/
+	 oS1/KQSvoxutwAphuvcD5zxPielmLM6HPCUUT8b/H5qyaqXhrM0BlyLs/lPUkzbFKz
+	 ssOvfVWe8YnFFP/OC9bkYQa03DMwUK4Aik2RNNAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0888/1266] smb: client: fix overflow in passthrough ioctl bounds check
-Date: Tue, 21 Jul 2026 17:22:05 +0200
-Message-ID: <20260721152501.720261969@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 0889/1266] mlxsw: fix refcount leak in mlxsw_sp_port_lag_join()
+Date: Tue, 21 Jul 2026 17:22:06 +0200
+Message-ID: <20260721152501.742478964@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,50 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit a4f27ad055392fa164f5649e89a3637b033c5fcc ]
+commit 41c8c1d65b32beacd8d916a22457b4f6e47f45af upstream.
 
-smb2_ioctl_query_info() validates the PASSTHRU_FSCTL response payload
-before copying it to userspace.
+When mlxsw_sp_port_lag_index_get() fails, mlxsw_sp_port_lag_join()
+returns an error without releasing the lag reference obtained by
+the earlier mlxsw_sp_lag_get().  All other error paths in the
+function jump to the cleanup label that ends with
+mlxsw_sp_lag_put(), so this is a single missed release.
 
-The payload offset and length both come from 32-bit fields. The bounds
-check currently adds OutputOffset and qi.input_buffer_length directly, so
-the addition can wrap in 32-bit arithmetic before the result is compared
-against the response buffer length.
+Fix the leak by replacing the bare 'return err' with a goto to the
+existing error cleanup label, which will drop the reference safely.
 
-A malicious server can use a large OutputOffset and a small OutputCount
-to make the wrapped sum pass the bounds check. The later copy_to_user()
-then reads from io_rsp + OutputOffset, outside the response buffer.
-
-Use size_add() for the offset plus length check so overflow is treated as
-out of bounds.
-
-Fixes: 2b1116bbe898 ("CIFS: Use common error handling code in smb2_ioctl_query_info()")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 0d65fc13042f ("mlxsw: spectrum: Implement LAG port join/leave")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260609083709.209743-1-vulab@iscas.ac.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 084804bab5cfc7..8d152c3a24481d 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -1728,8 +1728,8 @@ smb2_ioctl_query_info(const unsigned int xid,
- 		if (le32_to_cpu(io_rsp->OutputCount) < qi.input_buffer_length)
- 			qi.input_buffer_length = le32_to_cpu(io_rsp->OutputCount);
- 		if (qi.input_buffer_length > 0 &&
--		    le32_to_cpu(io_rsp->OutputOffset) + qi.input_buffer_length
--		    > rsp_iov[1].iov_len) {
-+		     size_add(le32_to_cpu(io_rsp->OutputOffset),
-+			     qi.input_buffer_length) > rsp_iov[1].iov_len) {
- 			rc = -EFAULT;
- 			goto out;
- 		}
--- 
-2.53.0
-
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
+@@ -4427,7 +4427,7 @@ static int mlxsw_sp_port_lag_join(struct
+ 
+ 	err = mlxsw_sp_port_lag_index_get(mlxsw_sp, lag_id, &port_index);
+ 	if (err)
+-		return err;
++		goto err_lag_uppers_bridge_join;
+ 
+ 	err = mlxsw_sp_lag_uppers_bridge_join(mlxsw_sp_port, lag_dev,
+ 					      extack);
 
 
