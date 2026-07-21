@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F95415F14;
-	Tue, 21 Jul 2026 19:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAAE3FE356;
+	Tue, 21 Jul 2026 19:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661577; cv=none; b=FpgUse8lzzhuoOL2R/CdQCxLxipIS7xmu95qNSuPTU8rnMLh2zvyVMe1koTZc0rafyLOtM6J773AoeBXARiW59DFEDHkMdblVULsbavYWhZoesA7iIDndNwrUkYYAHZhg9rC+t+F0kTEjWMscezQ1LnIC8F4ue+Tx5sbM32ln1k=
+	t=1784661580; cv=none; b=TDhGY15TfY/q/eQ9duLMPZd6xAzCJlj6QKeYJFsgRltslrwUv9v9m8gsMix1O1jXnMENjvvF2K/t6VWLwZjlTAu02Do1Y/UCGXb/MyberbIsfzkQdcaV6JrKMaUH/dUEFt32XuiOVSATk0l+64O2pAf7Wbe0Zezux1DK/TI3BnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661577; c=relaxed/simple;
-	bh=OGm6+6jepLgMNb0Jn03d6Q6O0ZpaJzKLXqDrK/X4mq4=;
+	s=arc-20240116; t=1784661580; c=relaxed/simple;
+	bh=XDxMluJEfQTY/9ieXe9BEm/xG1uyRm9VnHCnNQN9Ca4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eoD/Chx38f7R9w+6ZjMtK/q7yYkhF/3B7R5xpGOq3zSzDHSL5q1wHGLRjcA5Gg5OkxtaVj+z/GS+TlVoDTKqrVJVVvoy00bq8MMYD7wEzlw5dSMOuH+THMTAHxEHb97IQ0sIgCuQBg2uLmv8gYjZgcTnJSIUGxbkFGPRmFyZpCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UsLhCC1J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kpS0b0AOznDHxNJkI6EcxZvaoLfEiOH6wEOu2RBOcrhfwJ3SbutLQsrOZKmlfRqItr7/szb0NX3tjH356oxTRm3LEVDXUkmR3Wdd6KKVU9eTsNsg/cJBk9fx2UB1uPpQMVQxfRml3qTq56bOz+8Nj2s6zkmp8XH1Pr5v91u8Duc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsGqlxYa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UsLhCC1J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BDD81F00A3A;
-	Tue, 21 Jul 2026 19:19:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsGqlxYa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28101F000E9;
+	Tue, 21 Jul 2026 19:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661576;
-	bh=tqM1XnwM5daVN9v0ldn4n0e4hPGxYLoRFm8mqKFbqgg=;
+	s=korg; t=1784661579;
+	bh=AvJ5Su/5tIrMH5AZucxREApVDxR5Rz2iYmIq5r6NAc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UsLhCC1J2+iD/FOsz4TPzX7PPszHFk9y2czMUN6nH/7hvaZbZDSV+qgeEZ5rkF9bT
-	 npapHAti8p/oCjq+dXevtqw3O0+w+90flxmh3OJN26MRsb0r0Ae8JHBqlObU4TEoMj
-	 6xBM5zRCt7IbToC/Y+OkgwUDXMq8mmUVNdZJwxFM=
+	b=SsGqlxYaQvJoWYjZ57040+1WqZBsSIcCHDGy4kwvELriU6ByPNwvEocz4pHyB1JKc
+	 OXu8ORVq+xV+yiH1V67wn3z7U7Cx4S/8u1wkU3Arx1LOoQ/AWMqw8/ev00kGoIKFtP
+	 Z2UOa3uY1wgsjDAlhj1r0YuXcPGVRABwP5nv5NF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danilo Krummrich <dakr@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0092/1276] drm/gpuvm: take refcount on DRM device
-Date: Tue, 21 Jul 2026 17:08:55 +0200
-Message-ID: <20260721152448.155434584@linuxfoundation.org>
+Subject: [PATCH 6.12 0119/1276] net/sched: sch_htb: annotate data-races (I)
+Date: Tue, 21 Jul 2026 17:09:22 +0200
+Message-ID: <20260721152448.765077533@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,61 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c2d72717e0a9dd01c6a1bac61a1462a8e04bd179 ]
+[ Upstream commit e54c33503bf7cebb1c1790251ce90f1252678081 ]
 
-Currently GPUVM relies on the owner implicitly holding a refcount to the
-drm device, and it does not implicitly take a refcount on the drm
-device. This design is error-prone, so take a refcount on the device.
+htb_dump() runs without holding qdisc spinlock.
 
-Suggested-by: Danilo Krummrich <dakr@kernel.org>
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Fixes: 546ca4d35dcc ("drm/gpuvm: convert WARN() to drm_WARN() variants")
-Link: https://patch.msgid.link/20260416-gpuvm-drm-dev-get-v1-1-f3bc06571e73@google.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Add missing READ_ONCE()/WRITE_ONCE() annotations around
+q->overlimits and q->direct_pkts.
+
+Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260514095935.3926276-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_gpuvm.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/sched/sch_htb.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_gpuvm.c b/drivers/gpu/drm/drm_gpuvm.c
-index 0321820e9bab77..2515cff3348571 100644
---- a/drivers/gpu/drm/drm_gpuvm.c
-+++ b/drivers/gpu/drm/drm_gpuvm.c
-@@ -25,6 +25,7 @@
-  *
-  */
+diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
+index f43f6ae8469235..49f4599be14b6a 100644
+--- a/net/sched/sch_htb.c
++++ b/net/sched/sch_htb.c
+@@ -568,7 +568,7 @@ htb_change_class_mode(struct htb_sched *q, struct htb_class *cl, s64 *diff)
  
-+#include <drm/drm_drv.h>
- #include <drm/drm_gpuvm.h>
+ 	if (new_mode == HTB_CANT_SEND) {
+ 		cl->overlimits++;
+-		q->overlimits++;
++		WRITE_ONCE(q->overlimits, q->overlimits + 1);
+ 	}
  
- #include <linux/interval_tree_generic.h>
-@@ -1019,6 +1020,7 @@ drm_gpuvm_init(struct drm_gpuvm *gpuvm, const char *name,
- 	gpuvm->drm = drm;
- 	gpuvm->r_obj = r_obj;
+ 	if (cl->prio_activity) {	/* not necessary: speed optimization */
+@@ -628,7 +628,7 @@ static int htb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		/* enqueue to helper queue */
+ 		if (q->direct_queue.qlen < q->direct_qlen) {
+ 			__qdisc_enqueue_tail(skb, &q->direct_queue);
+-			q->direct_pkts++;
++			WRITE_ONCE(q->direct_pkts, q->direct_pkts + 1);
+ 		} else {
+ 			return qdisc_drop(skb, sch, to_free);
+ 		}
+@@ -1209,12 +1209,12 @@ static int htb_dump(struct Qdisc *sch, struct sk_buff *skb)
+ 	struct nlattr *nest;
+ 	struct tc_htb_glob gopt;
  
-+	drm_dev_get(drm);
- 	drm_gem_object_get(r_obj);
+-	sch->qstats.overlimits = q->overlimits;
++	sch->qstats.overlimits = READ_ONCE(q->overlimits);
+ 	/* Its safe to not acquire qdisc lock. As we hold RTNL,
+ 	 * no change can happen on the qdisc parameters.
+ 	 */
  
- 	drm_gpuvm_warn_check_overflow(gpuvm, start_offset, range);
-@@ -1060,13 +1062,15 @@ static void
- drm_gpuvm_free(struct kref *kref)
- {
- 	struct drm_gpuvm *gpuvm = container_of(kref, struct drm_gpuvm, kref);
-+	struct drm_device *drm = gpuvm->drm;
- 
- 	drm_gpuvm_fini(gpuvm);
- 
--	if (drm_WARN_ON(gpuvm->drm, !gpuvm->ops->vm_free))
-+	if (drm_WARN_ON(drm, !gpuvm->ops->vm_free))
- 		return;
- 
- 	gpuvm->ops->vm_free(gpuvm);
-+	drm_dev_put(drm);
- }
- 
- /**
+-	gopt.direct_pkts = q->direct_pkts;
++	gopt.direct_pkts = READ_ONCE(q->direct_pkts);
+ 	gopt.version = HTB_VER;
+ 	gopt.rate2quantum = q->rate2quantum;
+ 	gopt.defcls = q->defcls;
 -- 
 2.53.0
 
