@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1E544AB62;
-	Tue, 21 Jul 2026 21:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276C244AB6E;
+	Tue, 21 Jul 2026 21:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670853; cv=none; b=qS3nGT6kl+jrZj6fog/W1SjrYRiZEhOtSuvZhey0ggMSIw0UJKm4qsKgM/bW9RtcjfEwm0uDASglhr8xjUsZWsI6wbSZr6hqFLmqALT3qZAb8RluuuK0Gzm55H3NB18KlxxYazTRTyXpQsX4YXWB2ALr7/5+qcu7ynjYEtwltdw=
+	t=1784670857; cv=none; b=ZbbNsrVh2LfX+Ylj4IYC0UQY6je1vzAHo6whrmqFevaQfVehksoAlhIZ0KKqACkOWN6k6nE+548B13jHNStwTKmH5/XBjj5yx0Okp3cD/ALp+MWuCzI9GG7VBPqI3bavXoi+DXo9XQZ/+jk0EfvF/jwzCHCQ5sPqh+eH+NjeZSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670853; c=relaxed/simple;
-	bh=duxw/cZi3zIu409MfDBjuOKsvot7SN7thspv96gYeq4=;
+	s=arc-20240116; t=1784670857; c=relaxed/simple;
+	bh=NUkXjmEHAZLaxYPa37JYyC4Jmy4ioeajUjqWRaeydm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WyAnMBlkctnzVd0CVbEzKxeubePtwQiyICtM+F0sbd146E3mkgUaH1aiXaqx1cz7qtalgzLaF7IiB0rZH6lPtIOL4yiYg7h+FhiO+uchIsJtTrxEa1LSzZ3vz/IPo+NZCANpSRILpMVH7YL1JXcdamXZg50ufn8yoJzOd7LPOcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LUgmVfMy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ny0/7WNCI3DS8McPuXIaF+7mplbnA3RZOdX8yw8XLmU3sfrIRRCd2ON7Elg0xQJkYlywoHdrgne/8C7jR6SsJBUP9wm2CmgMoZ6EgjlaRqLo2IW9niaiRDS81y1JLFeidcdUCfUCBM+8H5/YywzGEDKcFwy2LAT0tew39VvnCJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYKiwA8F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LUgmVfMy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEBFC1F000E9;
-	Tue, 21 Jul 2026 21:54:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYKiwA8F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC0C1F000E9;
+	Tue, 21 Jul 2026 21:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670852;
-	bh=mlc0Psc/UoulhSDWzOB7tua4yBHJcj1KVsFCBZ/wCwM=;
+	s=korg; t=1784670855;
+	bh=zO3eP1Sff7gNOpLOsUt8WLHXQOfz7xHBPU9pAzYSExU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LUgmVfMyn3kDux8RpUNiJRGk18L/qm51f4ztsuSBCGQkGEJpToJK9zoPuvzS4+oGJ
-	 ktcsYV8Z1XQcZifY2oTHHfp5lZifVpqn2ICMCFm7GzVw/xO/XWw7sYzM48Ymd0txp5
-	 cX6OCiNvFFYsAX35IhUd+5g6Su6sxW7j0nOqb88s=
+	b=FYKiwA8FwpLxI7c9JImFgWAzOoqZhLe0imiBWqICNprtQVjt4xVkos4wTOq8ORvLx
+	 g0g8/tkoYjJ17gt66RMrOh0rjfQ9bUAexskvwXINCLz6DdmDpqQB6oTyl0yJCoOmMn
+	 icSX4LqjQ2LBwmF07VHseg8zUd3fsKNjMPFPy6x8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wenjie Qi <qiwenjie@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 025/843] f2fs: validate compress cache inode only when enabled
-Date: Tue, 21 Jul 2026 17:14:20 +0200
-Message-ID: <20260721152406.531223910@linuxfoundation.org>
+Subject: [PATCH 5.15 026/843] f2fs: adjust zone capacity when considering valid block count
+Date: Tue, 21 Jul 2026 17:14:21 +0200
+Message-ID: <20260721152406.554400474@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -53,54 +51,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjie Qi <qwjhust@gmail.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-[ Upstream commit 5073c66a96a9c23c0c2533ed4ed06e42f9021208 ]
+[ Upstream commit 074b5ea2900ea8e40f8e7a3fd37e0a55ad3d5874 ]
 
-F2FS_COMPRESS_INO() uses NM_I(sbi)->max_nid as the synthetic inode
-number for the compressed page cache inode. That inode only exists when
-the compress_cache mount option is enabled.
+This patch fixes counting unusable blocks set by zone capacity when
+checking the valid block count in a section.
 
-When compress_cache is disabled, max_nid is outside the valid inode
-range. A corrupted directory entry that points to ino == max_nid should
-therefore be rejected by f2fs_check_nid_range(). However, is_meta_ino()
-currently treats F2FS_COMPRESS_INO() as a meta inode unconditionally,
-so f2fs_iget() bypasses do_read_inode() and its nid range check, and
-instantiates a fake internal inode instead.
-
-Gate the compressed cache inode case on COMPRESS_CACHE, matching
-f2fs_init_compress_inode(). With compress_cache disabled, ino ==
-max_nid now follows the normal inode path and is rejected as an
-out-of-range nid.
-
-Cc: stable@kernel.org
-Fixes: 6ce19aff0b8c ("f2fs: compress: add compress_inode to cache compressed blocks")
-Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: 4275b59673eb ("f2fs: fix to round down start offset of fallocate for pin file")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/inode.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/f2fs/debug.c   |    2 +-
+ fs/f2fs/file.c    |    6 +++---
+ fs/f2fs/gc.c      |    4 ++--
+ fs/f2fs/segment.c |    7 +++----
+ fs/f2fs/segment.h |    8 ++++----
+ 5 files changed, 13 insertions(+), 14 deletions(-)
 
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -498,8 +498,13 @@ static int do_read_inode(struct inode *i
+--- a/fs/f2fs/debug.c
++++ b/fs/f2fs/debug.c
+@@ -39,7 +39,7 @@ void f2fs_update_sit_info(struct f2fs_sb
  
- static bool is_meta_ino(struct f2fs_sb_info *sbi, unsigned int ino)
- {
--	return ino == F2FS_NODE_INO(sbi) || ino == F2FS_META_INO(sbi) ||
--		ino == F2FS_COMPRESS_INO(sbi);
-+	if (ino == F2FS_NODE_INO(sbi) || ino == F2FS_META_INO(sbi))
-+		return true;
-+#ifdef CONFIG_F2FS_FS_COMPRESSION
-+	if (test_opt(sbi, COMPRESS_CACHE) && ino == F2FS_COMPRESS_INO(sbi))
-+		return true;
-+#endif
-+	return false;
- }
+ 	bimodal = 0;
+ 	total_vblocks = 0;
+-	blks_per_sec = BLKS_PER_SEC(sbi);
++	blks_per_sec = CAP_BLKS_PER_SEC(sbi);
+ 	hblks_per_sec = blks_per_sec / 2;
+ 	for (segno = 0; segno < MAIN_SEGS(sbi); segno += sbi->segs_per_sec) {
+ 		vblocks = get_valid_blocks(sbi, segno, true);
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -1694,7 +1694,7 @@ static int expand_inode_data(struct inod
+ 		return 0;
  
- struct inode *f2fs_iget(struct super_block *sb, unsigned long ino)
+ 	if (f2fs_is_pinned_file(inode)) {
+-		block_t sec_blks = BLKS_PER_SEC(sbi);
++		block_t sec_blks = CAP_BLKS_PER_SEC(sbi);
+ 		block_t sec_len = roundup(map.m_len, sec_blks);
+ 
+ 		map.m_len = sec_blks;
+@@ -2547,7 +2547,7 @@ do_more:
+ 			ret = -EAGAIN;
+ 		goto out;
+ 	}
+-	range->start += BLKS_PER_SEC(sbi);
++	range->start += CAP_BLKS_PER_SEC(sbi);
+ 	if (range->start <= end)
+ 		goto do_more;
+ out:
+@@ -2672,7 +2672,7 @@ static int f2fs_defragment_range(struct
+ 		goto out;
+ 	}
+ 
+-	sec_num = DIV_ROUND_UP(total, BLKS_PER_SEC(sbi));
++	sec_num = DIV_ROUND_UP(total, CAP_BLKS_PER_SEC(sbi));
+ 
+ 	/*
+ 	 * make sure there are enough free section for LFS allocation, this can
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -461,7 +461,7 @@ static void atgc_lookup_victim(struct f2
+ 	unsigned long long age, u, accu;
+ 	unsigned long long max_mtime = sit_i->dirty_max_mtime;
+ 	unsigned long long min_mtime = sit_i->dirty_min_mtime;
+-	unsigned int sec_blocks = BLKS_PER_SEC(sbi);
++	unsigned int sec_blocks = CAP_BLKS_PER_SEC(sbi);
+ 	unsigned int vblocks;
+ 	unsigned int dirty_threshold = max(am->max_candidate_count,
+ 					am->candidate_ratio *
+@@ -1445,7 +1445,7 @@ next_step:
+ 		 */
+ 		if ((gc_type == BG_GC && has_not_enough_free_secs(sbi, 0, 0)) ||
+ 			(!force_migrate && get_valid_blocks(sbi, segno, true) ==
+-							BLKS_PER_SEC(sbi)))
++							CAP_BLKS_PER_SEC(sbi)))
+ 			return submitted;
+ 
+ 		if (check_valid_map(sbi, segno, off) == 0)
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -833,7 +833,7 @@ static void __locate_dirty_segment(struc
+ 				get_valid_blocks(sbi, segno, true);
+ 
+ 			f2fs_bug_on(sbi, unlikely(!valid_blocks ||
+-					valid_blocks == BLKS_PER_SEC(sbi)));
++					valid_blocks == CAP_BLKS_PER_SEC(sbi)));
+ 
+ 			if (!IS_CURSEC(sbi, secno))
+ 				set_bit(secno, dirty_i->dirty_secmap);
+@@ -869,7 +869,7 @@ static void __remove_dirty_segment(struc
+ 			unsigned int secno = GET_SEC_FROM_SEG(sbi, segno);
+ 
+ 			if (!valid_blocks ||
+-					valid_blocks == BLKS_PER_SEC(sbi)) {
++					valid_blocks == CAP_BLKS_PER_SEC(sbi)) {
+ 				clear_bit(secno, dirty_i->dirty_secmap);
+ 				return;
+ 			}
+@@ -4679,7 +4679,6 @@ static void init_dirty_segmap(struct f2f
+ 	struct free_segmap_info *free_i = FREE_I(sbi);
+ 	unsigned int segno = 0, offset = 0, secno;
+ 	block_t valid_blocks, usable_blks_in_seg;
+-	block_t blks_per_sec = BLKS_PER_SEC(sbi);
+ 
+ 	while (1) {
+ 		/* find dirty segment based on free segmap */
+@@ -4708,7 +4707,7 @@ static void init_dirty_segmap(struct f2f
+ 		valid_blocks = get_valid_blocks(sbi, segno, true);
+ 		secno = GET_SEC_FROM_SEG(sbi, segno);
+ 
+-		if (!valid_blocks || valid_blocks == blks_per_sec)
++		if (!valid_blocks || valid_blocks == CAP_BLKS_PER_SEC(sbi))
+ 			continue;
+ 		if (IS_CURSEC(sbi, secno))
+ 			continue;
+--- a/fs/f2fs/segment.h
++++ b/fs/f2fs/segment.h
+@@ -605,10 +605,10 @@ static inline bool has_not_enough_free_s
+ 					get_pages(sbi, F2FS_DIRTY_DENTS) +
+ 					get_pages(sbi, F2FS_DIRTY_IMETA);
+ 	unsigned int total_dent_blocks = get_pages(sbi, F2FS_DIRTY_DENTS);
+-	unsigned int node_secs = total_node_blocks / BLKS_PER_SEC(sbi);
+-	unsigned int dent_secs = total_dent_blocks / BLKS_PER_SEC(sbi);
+-	unsigned int node_blocks = total_node_blocks % BLKS_PER_SEC(sbi);
+-	unsigned int dent_blocks = total_dent_blocks % BLKS_PER_SEC(sbi);
++	unsigned int node_secs = total_node_blocks / CAP_BLKS_PER_SEC(sbi);
++	unsigned int dent_secs = total_dent_blocks / CAP_BLKS_PER_SEC(sbi);
++	unsigned int node_blocks = total_node_blocks % CAP_BLKS_PER_SEC(sbi);
++	unsigned int dent_blocks = total_dent_blocks % CAP_BLKS_PER_SEC(sbi);
+ 	unsigned int free, need_lower, need_upper;
+ 
+ 	if (unlikely(is_sbi_flag_set(sbi, SBI_POR_DOING)))
 
 
