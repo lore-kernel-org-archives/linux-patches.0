@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07D13B1EFC;
-	Tue, 21 Jul 2026 20:40:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487983B2FC0;
+	Tue, 21 Jul 2026 20:40:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666412; cv=none; b=HHcbo7e1m3NojufZoxNaLq90MzpnVycFF8fshvXFMrloxEZOu8x67QxJa7IUN2TLIO5ETdF49cZLTKVIQtlYAPyM7RnoCubGaKMzs4diQZ13iPNBizYugEjSUgibWoFI4mrv8YKOhgi+HJ2uuTf1popudvd8of4T3YhUepDDV7o=
+	t=1784666415; cv=none; b=PHQAU29cna5wBeJeOcRzmMDYAzYsJQqKD9iKcd9g65nTuuKhbo1+aNItjudChVCBL7jFs8sBfLYm761LxMEPbP2sR/MqJsvXeMjkNFAsjcPrnE7a1g9tmv9HmFA0yy2Nn8TfyzexUD4wrbBL6tDBB61iprwRjMqHKq1gRXA7EJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666412; c=relaxed/simple;
-	bh=bfttq908rf2RPH2L7J0TbQRXRh+ORlsEj0k+91LkLSg=;
+	s=arc-20240116; t=1784666415; c=relaxed/simple;
+	bh=NEk7SuQ1rWsX0kniePhzNk1sC9mqp6zcnwl8T+B0FxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YQoCk8RpU9OO+gYVWlN29BOP+AKlpEVhAaPVqeZp9Fh53QyEgMtZTv3LvbmDd372PgKaueYFyONm681M33tSk0lwEJzj8kpA28gBLWJ0gNMKL/H2NywIKuxgNG5ZxulqVateGXM9h/qoGQORxgFuB9pq9g6Qbcm0weyqjcV9bKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X43e9nbk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=phHMSZZh6Etpe+v3kW5GP94lEheuYbm6v4Xqcu5jmLs1z/Uk/0kL8jiH9JqOf5xrUsloLWi0tBIte+uXd5mbQybWAKeQl9zi+P6cf5fQ4ozHq9MzEwQwi8YTQj5xn+vghJ74zA+HqAQKZ23ALb29UOWPEHnLCdMowN0llnvyRi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOZf6VSO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X43e9nbk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C331F000E9;
-	Tue, 21 Jul 2026 20:40:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOZf6VSO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADEF51F000E9;
+	Tue, 21 Jul 2026 20:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666411;
-	bh=NnElIeqjH3jj6oiXcRk0N0REjtIev+Xg+SURCM5+2CU=;
+	s=korg; t=1784666414;
+	bh=0cnRTOzkryOW/DsQ2Rbk9AZXuBR/j2NCz4sME5pH6hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X43e9nbk9r+Z7AAloon9I3s3IA3zPkPimO4+sY5kLawDoB7GmfatEFm0NDzlXQcyo
-	 vXzEEhSkmbR9u3VYzTZsf/kFskXHOZo1MsdYGAAyAg2TLgHpw9rTV/SMVjTfl34Hsk
-	 e88HaF4BJfJ+4vOzsLMa4Xp8b4JsEbdycvZKT71o=
+	b=uOZf6VSOTnLWTGJuBCbYU3KEARWofJWlkAmtKsDpJZj9gv98sls58skfwwjRIgObZ
+	 sOfjDFacQzOOq0t65c2aJ9as//gLLNXIc8IQmePU+dyG4fJw5BRhPBmmchyD2/cX0m
+	 YHP4BQc+GQZ5ptyg2NRh+V+to/+qciZCrbgqhJL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Mason <clm@meta.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0672/1266] xprtrdma: Resize reply buffers before reposting receives
-Date: Tue, 21 Jul 2026 17:18:29 +0200
-Message-ID: <20260721152456.896574971@linuxfoundation.org>
+Subject: [PATCH 6.6 0673/1266] xprtrdma: Fix bcall rep leak and unbounded peek
+Date: Tue, 21 Jul 2026 17:18:30 +0200
+Message-ID: <20260721152456.918963694@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,121 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Chris Mason <clm@meta.com>
 
-[ Upstream commit 234c0ff695ef3ffb656931000e6b823d0c2f30fd ]
+[ Upstream commit c7653d5cebc8492c77ec0415b5e9c0fb3e644bc6 ]
 
-Commit 0e13dd9ea8be ("xprtrdma: Remove temp allocation of
-rpcrdma_rep objects") made rpcrdma_rep objects survive disconnects.
-That is normally fine, but it also means their receive regbufs keep
-the size they had when they were first allocated.
+rpcrdma_is_bcall() decodes a reply's first words to decide whether
+the frame is a backchannel call. Two issues in that decode path
+let a short or malformed reply leak the receive buffer and drain
+the Receive queue.
 
-Each rep's receive buffer is sized to ep->re_inline_recv when the rep
-is created. rpcrdma_ep_create() resets that threshold to the
-rdma_max_inline_read ceiling for every new endpoint, and the connect
-handshake then shrinks it to the peer's advertised inline send size.
-A rep allocated under a smaller negotiated threshold keeps that size:
-on disconnect, rpcrdma_xprt_disconnect() drains and DMA-unmaps the
-surviving reps but does not free or resize them.
+First, the speculative peek
 
-The threshold can come back larger on the next connection. The first
-peer may supply no RPC-over-RDMA CM private data, defaulting its send
-size to 1024, while the reconnect target is an ordinary server
-offering 4096; or, with rdma_max_inline_read raised above its default,
-the reconnect target may advertise a larger svcrdma_max_req_size than
-the first. rpcrdma_post_recvs() then reposts a surviving rep whose SGE
-length is still the old, smaller value, and a larger inline Reply hits
-a receive length error and forces another disconnect.
+    p = xdr_inline_decode(xdr, 0);
+    /* five p++ reads follow */
 
-The undersized rep returns to the free list when its failed Receive
-flushes, so the following reconnect reposts the same rep and fails the
-same way. The transport flaps without making forward progress for as
-long as the peer keeps advertising the larger inline size.
+asks xdr_inline_decode() for zero bytes, which returns xdr->p
+without consulting xdr->end. The five subsequent __be32 reads can
+then walk up to 20 bytes past the wire payload into stale regbuf
+contents and misclassify the reply as a backchannel call.
 
-This is local/admin-triggerable rather than remote-triggerable: a local
-administrator must create and maintain the NFS/RDMA mount, while the
-server or reconnect target has to advertise a larger inline send size
-and return a reply that uses it.
+Second, after the post-peek
 
-Fix this by checking each rep before it is reposted. If the receive
-regbuf is smaller than the current endpoint's inline receive size,
-reallocate it on the current RDMA device's NUMA node and reinitialize
-the rep's xdr_buf before DMA-mapping and posting the Receive WR.
+    p = xdr_inline_decode(xdr, 3 * sizeof(*p));
+    if (unlikely(!p))
+            return true;
 
-Fixes: 0e13dd9ea8be ("xprtrdma: Remove temp allocation of rpcrdma_rep objects")
+the short-header arm returns true without calling
+rpcrdma_bc_receive_call(). The contract with the caller is that a
+true return transfers ownership of rep to the backchannel path:
+
+    rpcrdma_reply_handler()
+      if (rpcrdma_is_bcall(r_xprt, rep))
+              return;        /* bare return, skips out_post */
+      ...
+    out_post:
+      rpcrdma_post_recvs(r_xprt, credits + ...);
+
+Because rpcrdma_bc_receive_call() never ran, no one took rep, but
+rpcrdma_reply_handler still bare-returns past rpcrdma_rep_put()
+and rpcrdma_post_recvs(). The rep, with its persistently
+DMA-mapped receive buffer, is orphaned on rb_all_reps and freed
+only at transport teardown. This completion reposts nothing, so
+its slot is reclaimed only when a later forward-channel reply
+reaches out_post and rpcrdma_post_recvs() allocates a fresh rep to
+backfill; absent that traffic the Receive queue drains and the
+peer's Sends draw RNR NAKs.
+
+Fix by consulting xdr->end after the zero-length peek so the five
+__be32 reads cannot run unless 20 bytes of wire payload remain. A
+byte-precise comparison against xdr->end is required because a
+non-4-aligned receive rounds the stream's word count up past the
+true payload. Also return false from the short-header arm so the
+reply falls through the normal out_norqst cleanup chain
+(rpcrdma_rep_put() plus rpcrdma_post_recvs()).
+
+Fixes: 41c8f70f5a3d ("xprtrdma: Harden backchannel call decoding")
+Assisted-by: kres:claude-opus-4-7
+Signed-off-by: Chris Mason <clm@meta.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/verbs.c | 31 ++++++++++++++++++++++++++++++-
- 1 file changed, 30 insertions(+), 1 deletion(-)
+ net/sunrpc/xprtrdma/rpc_rdma.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index 106a8d3638f1d6..c2718732801b3c 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -81,6 +81,8 @@ rpcrdma_regbuf_alloc_node(size_t size, enum dma_data_direction direction,
- 			  int node);
- static struct rpcrdma_regbuf *
- rpcrdma_regbuf_alloc(size_t size, enum dma_data_direction direction);
-+static bool rpcrdma_regbuf_realloc_node(struct rpcrdma_regbuf *rb,
-+					size_t size, gfp_t flags, int node);
- static void rpcrdma_regbuf_dma_unmap(struct rpcrdma_regbuf *rb);
- static void rpcrdma_regbuf_free(struct rpcrdma_regbuf *rb);
+diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
+index 0473d920f71c1b..51e70c767dace2 100644
+--- a/net/sunrpc/xprtrdma/rpc_rdma.c
++++ b/net/sunrpc/xprtrdma/rpc_rdma.c
+@@ -1133,6 +1133,8 @@ rpcrdma_is_bcall(struct rpcrdma_xprt *r_xprt, struct rpcrdma_rep *rep)
  
-@@ -1306,10 +1308,16 @@ rpcrdma_regbuf_alloc(size_t size, enum dma_data_direction direction)
-  * returned, @rb is left untouched.
-  */
- bool rpcrdma_regbuf_realloc(struct rpcrdma_regbuf *rb, size_t size, gfp_t flags)
-+{
-+	return rpcrdma_regbuf_realloc_node(rb, size, flags, NUMA_NO_NODE);
-+}
-+
-+static bool rpcrdma_regbuf_realloc_node(struct rpcrdma_regbuf *rb,
-+					size_t size, gfp_t flags, int node)
- {
- 	void *buf;
- 
--	buf = kmalloc(size, flags);
-+	buf = kmalloc_node(size, flags, node);
- 	if (!buf)
- 		return false;
- 
-@@ -1321,6 +1329,23 @@ bool rpcrdma_regbuf_realloc(struct rpcrdma_regbuf *rb, size_t size, gfp_t flags)
- 	return true;
- }
- 
-+static bool rpcrdma_rep_resize(struct rpcrdma_xprt *r_xprt,
-+			       struct rpcrdma_rep *rep)
-+{
-+	struct rpcrdma_regbuf *rb = rep->rr_rdmabuf;
-+	struct rpcrdma_ep *ep = r_xprt->rx_ep;
-+	size_t size = ep->re_inline_recv;
-+
-+	if (likely(rdmab_length(rb) >= size))
-+		return true;
-+	if (!rpcrdma_regbuf_realloc_node(rb, size, XPRTRDMA_GFP_FLAGS,
-+					 ibdev_to_node(ep->re_id->device)))
+ 	/* Peek at stream contents without advancing. */
+ 	p = xdr_inline_decode(xdr, 0);
++	if ((char *)xdr->end - (char *)p < 5 * XDR_UNIT)
 +		return false;
-+
-+	xdr_buf_init(&rep->rr_hdrbuf, rdmab_data(rb), rdmab_length(rb));
-+	return true;
-+}
-+
- /**
-  * __rpcrdma_regbuf_dma_map - DMA-map a regbuf
-  * @r_xprt: controlling transport instance
-@@ -1404,6 +1429,10 @@ void rpcrdma_post_recvs(struct rpcrdma_xprt *r_xprt, int needed)
- 			break;
- 		/* I1: a rep on rb_free_reps must carry no rqst pointer. */
- 		WARN_ON_ONCE(rep->rr_rqst);
-+		if (!rpcrdma_rep_resize(r_xprt, rep)) {
-+			rpcrdma_rep_put(buf, rep);
-+			break;
-+		}
- 		if (!rpcrdma_regbuf_dma_map(r_xprt, rep->rr_rdmabuf)) {
- 			rpcrdma_rep_put(buf, rep);
- 			break;
+ 
+ 	/* Chunk lists */
+ 	if (xdr_item_is_present(p++))
+@@ -1157,7 +1159,7 @@ rpcrdma_is_bcall(struct rpcrdma_xprt *r_xprt, struct rpcrdma_rep *rep)
+ 	 */
+ 	p = xdr_inline_decode(xdr, 3 * sizeof(*p));
+ 	if (unlikely(!p))
+-		return true;
++		return false;
+ 
+ 	rpcrdma_bc_receive_call(r_xprt, rep);
+ 	return true;
 -- 
 2.53.0
 
