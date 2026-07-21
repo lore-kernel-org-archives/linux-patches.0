@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F53244AB6A;
-	Tue, 21 Jul 2026 22:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E293D16EF;
+	Tue, 21 Jul 2026 22:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673141; cv=none; b=sINq/TaQf7vtp1xIKEVK05RcujJJWiCfSx3IFY6AP2JHQUTuBLlTcsqHxsJXo4D7LiOdxKErnrgHRC4V6ibWlvMO5mMQl6bj5THKwkek8QhsYZ0hAlw0mtTxemF7oa4CkCUASX4RabDjvYq/4UaRAZ25pifyyrvHPNr5ThUGTIA=
+	t=1784673144; cv=none; b=CUCzW7FhGeYKpAo7I1TgxQVaUT2JqnPjj9KSdAgeikKlDOJyn1e23qCkFkBa3iJgTu46Ym6BBAbvr9awjppWTDklAdkgUZ6CJ7T+zs1rVdXeoiGwiYPdyOBxStKZqfHrn0FcIuTcqO3G27Su0gXo1tSjDY189/Prrm3fJ5Eb7n8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673141; c=relaxed/simple;
-	bh=D07WKO34i4YRY8UrC/gekbHcmB9DAlCGDuZfmqCAACU=;
+	s=arc-20240116; t=1784673144; c=relaxed/simple;
+	bh=F6+9rwrb/yWbKaTRJFCmMqnujrxl3GcQKvD/OXWv2m8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gLMy2FZmwr3nNvet2AyH4U1I54kTukHgKbX9M9X6/x3U8QSZa/582TIwluEtM5zwylLa8pyHh96W9cIZXj3uPHazysSZLss6qoyDIQFrstzxR70sB95JjmBCsI8VHp7pMFY6/oCeH0EBNo5n8t+lcbD+1AVtxI07U6T18ookbe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhOUxV2Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RDwwPJJueuM8XHwuknDFfnnNiadibdL+fwpgSyMhaTX8d+aJm3Ntzj5a4Dl+WFpYKP7JBM9jJkxVBAgJmUyt9AWx5SXBsCgReeNYo8yOzAhlKaq6OUrpIX//V4PI9cvOieo1VRUvHfg6GIQYYfijS/5y4hHRFsnD8CVCYAzLn2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3L7YGWt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhOUxV2Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F1B61F000E9;
-	Tue, 21 Jul 2026 22:32:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3L7YGWt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4050F1F000E9;
+	Tue, 21 Jul 2026 22:32:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673140;
-	bh=LFWJnQMXbW670JD0ZlZMdm4eJpruYgbqgrkbfoPB1B8=;
+	s=korg; t=1784673142;
+	bh=PaSFVravNxCSY7r9xqUkxv3e01hn+v+qPn8sCnvkh+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LhOUxV2ZTAWwqQGGfhHfzzzFX4Z2fw9zT/iAvb0P6Remi5PXv5MKGRGVyPpKo9HYb
-	 SMs8fDT46gpqD76Iho4AuncU0tyMKRmPuQ6L0EGXbFjI6nSmKaLZgDnD2CqrZfrXFl
-	 2M3fBR9d9P33hAmIsw3fbOInmhDnKLE+/E5y1juU=
+	b=E3L7YGWtZ6XqCdlqlQuX6XBgyfMco1CMFTQsLMq8zPOkmJr9CQ7SwgnSAcK8MfmJh
+	 9s4kZNGqU8QKGKK77kc0UBCrmZ73znNUV4aMpnpz1AxfoPDjSViS0JE7PutnvkbOzF
+	 uS3ZCgBlJ6Axyo/OGF8HpLvBkLF0UEKjyJrochAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Zhao Dongdong <zhaodongdong@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 051/699] ALSA: caiaq: fix out-of-bounds read in the Traktor Kontrol S4 input parser
-Date: Tue, 21 Jul 2026 17:16:50 +0200
-Message-ID: <20260721152356.862117747@linuxfoundation.org>
+Subject: [PATCH 5.10 052/699] ALSA: es1938: check snd_ctl_new1() return value
+Date: Tue, 21 Jul 2026 17:16:51 +0200
+Message-ID: <20260721152356.884290246@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,51 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Zhao Dongdong <zhaodongdong@kylinos.cn>
 
-commit f7f3f9fd81e7adbaa12c2e62ee07f0e094a543fd upstream.
+commit 1edd1f02dddd20aeb6066ded41017615766ea42f upstream.
 
-snd_usb_caiaq_tks4_dispatch() decodes the Traktor Kontrol S4 input
-stream in fixed 16-byte (TKS4_MSGBLOCK_SIZE) message blocks. On every
-iteration it advances buf and subtracts the block size while looping on
-"while (len)".
+snd_ctl_new1() can return NULL when memory allocation fails.
+snd_es1938_mixer() does not check the return value before dereferencing
+the pointer, which can lead to a NULL pointer dereference.
 
-len is urb->actual_length. That value is supplied by the device and is
-not guaranteed to be a multiple of 16. When a final short block leaves
-len between 1 and 15, the loop runs once more, reads up to buf[15], and
-then does "len -= TKS4_MSGBLOCK_SIZE". As len is unsigned this underflows
-to a huge value. The loop then keeps iterating and walking buf far past
-the end of the 512-byte ep4_in_buf, reading out of bounds until a bogus
-block id happens to be hit.
+Add a NULL check after snd_ctl_new1() and return -ENOMEM if it fails.
 
-Iterate only while a full message block is available. This stops the
-unsigned underflow and silently drops any trailing partial block, which
-carries no complete control value anyway.
-
-The sibling endpoint-4 parsers are not affected. The Traktor Kontrol X1
-and Maschine arms in snd_usb_caiaq_ep4_reply_dispatch() floor
-urb->actual_length before dispatching.
-
-Fixes: 15c5ab607045 ("ALSA: snd-usb-caiaq: Add support for Traktor Kontrol S4")
+Assisted-by: Opencode:DeepSeek-V4-Flash
 Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Link: https://patch.msgid.link/178176259547.3343534.2724779296835237429@maoyixie.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
+Link: https://patch.msgid.link/tencent_E0DC65165FDF2C8982BAFB6794B854B53B0A@qq.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/caiaq/input.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/es1938.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/usb/caiaq/input.c
-+++ b/sound/usb/caiaq/input.c
-@@ -330,7 +330,7 @@ static void snd_usb_caiaq_tks4_dispatch(
- {
- 	struct device *dev = caiaqdev_to_dev(cdev);
- 
--	while (len) {
-+	while (len >= TKS4_MSGBLOCK_SIZE) {
- 		unsigned int i, block_id = (buf[0] << 8) | buf[1];
- 
- 		switch (block_id) {
+--- a/sound/pci/es1938.c
++++ b/sound/pci/es1938.c
+@@ -1718,6 +1718,8 @@ static int snd_es1938_mixer(struct es193
+ 	for (idx = 0; idx < ARRAY_SIZE(snd_es1938_controls); idx++) {
+ 		struct snd_kcontrol *kctl;
+ 		kctl = snd_ctl_new1(&snd_es1938_controls[idx], chip);
++		if (!kctl)
++			return -ENOMEM;
+ 		switch (idx) {
+ 			case 0:
+ 				chip->master_volume = kctl;
 
 
