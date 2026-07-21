@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26012404BE9;
-	Tue, 21 Jul 2026 17:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4F5403AFB;
+	Tue, 21 Jul 2026 17:29:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654980; cv=none; b=bfmADWR79qvJDGi0BFtReIisLl4W2il/vdZKMb5Peq0t6cJxPV43kPMoYaArl3A8ShlB9r9PkQQsI2TolpleYznZG20suPNzcgWKT0bF2/uwDIVwGS9Pcjfi4b7NDiSdtVtMXxjBHiJMPz8hFEUNBZBJNSHOGxlgzHjgl1hnC8s=
+	t=1784654983; cv=none; b=pjhip3j1l8oUsXOFcXE5ggLapI70bnM0aZiQZEbzNuYTSVF05g3g1+3mG6ggp+NMbTWQOr7b5+Ijlbx5IEP8eY5kD9SOWDP6iehbFo3kdaJ7sbgj2jr2Q1F6v61VcK/X7uEEWK6H9Y/bhrcycI+bwqn+Bq5h1RP+xRIjd6UriiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654980; c=relaxed/simple;
-	bh=WOu4j2Gs81zRsOcQzFVy59wO3pCBoRMNhub81HtYLio=;
+	s=arc-20240116; t=1784654983; c=relaxed/simple;
+	bh=/gviS18HnmgEmgvLyoKaxVQCCo/e+IzqtdBnC7Mwtno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TStuBXpmoF8q0rLCofYKTxNhc7XEu26OuE92IFHpzwhFDEtf4ZqshIxkQvdZFo0L7a0/jefo73hcEDceUU+g8M9Thu86YhYKkgtM53akp0wrVI8iM/PTIyJofhZlLSdNkYEyKrZR4QbHfZRRnPvOOsWiCI8FtOjDVfyhzQG+FLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSNUkT5S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bqBqUkJ/np8dawpUm/J+3D+A5GgYHuVa7EgsjalslISUgHAhqv9meddfG8s+hdZubmq3TF7CkLgrg7uXcHUvdaZW3V3m2jZ3/59YdGyT9CB9SBbAwFEbJh38FPOKxyVzukuE9CXob8GQAYMSQ3cX5nexuIbyD8ujWSKM9/telE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6QeplmT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSNUkT5S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 909591F000E9;
-	Tue, 21 Jul 2026 17:29:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6QeplmT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 315CB1F000E9;
+	Tue, 21 Jul 2026 17:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654979;
-	bh=ojhH45kSlka9EmBXx1vUXO9dVaEwECckzyuYnwLlZSQ=;
+	s=korg; t=1784654981;
+	bh=b6BFYT7PsA5FgbmbUbJ9omc4UwD3MQVO3Hy4awfxjzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jSNUkT5Sz8GPkSgEQH/CNXrpA99qkQ4bsHcOWyGXNCfiwXTEPQKzhfSnBDX9unHVb
-	 1yG4zMrAx3eZk8ZnwopNhNwWlWQzdncVVo+PsYQE+Mfr0/fRIfmGYoqR/shZHIEmU8
-	 Yvu5oLO3biPM0EJeaJhMg2NZM69S9vqmm2JkBRrU=
+	b=v6QeplmTtLalDgzSygXjOPW2q5/BgxOg14B4hiy+K2blbeOsOJsGmRyrPo5rQQRrD
+	 EA5xQWHZSeF5FZhzAVhKzlK5L6avVObAk0JMJNqPaDIgnGdSqLKeP/xw4SiVfqVO+K
+	 duHFm50MPCXvVHXmQemaJZe/12MYUmQWpL0ogtmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philippe Schenker <philippe.schenker@impulsing.ch>,
-	Simon Horman <horms@kernel.org>,
-	danishanwar@ti.com,
-	rogerq@kernel.org,
-	linux-arm-kernel@lists.infradead.org,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 1910/2077] net: ethernet: ti: icssg: guard PA stat lookups
-Date: Tue, 21 Jul 2026 17:26:23 +0200
-Message-ID: <20260721152637.769243690@linuxfoundation.org>
+Subject: [PATCH 7.1 1911/2077] net: wwan: t7xx: destroy DMA pool on CLDMA late init failure
+Date: Tue, 21 Jul 2026 17:26:24 +0200
+Message-ID: <20260721152637.791911601@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,102 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philippe Schenker <philippe.schenker@impulsing.ch>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 27b9daba50609335db6ca81e4cccf50ded21ec76 upstream.
+commit 2bd6f26d4ce1e87de4d736b1e8896daf3acf1c0e upstream.
 
-icssg_ndo_get_stats64() unconditionally calls emac_get_stat_by_name()
-with FW PA stat names regardless of whether the PA stats block is
-present on the hardware.  emac_get_stat_by_name() already guards the
-PA stats lookup with `if (emac->prueth->pa_stats)`; when that pointer
-is NULL the lookup falls through to netdev_err() and returns -EINVAL.
-Because ndo_get_stats64 is polled regularly by the networking stack
-this produces thousands of log entries of the form:
+t7xx_cldma_late_init() creates md_ctrl->gpd_dmapool before
+initializing the TX and RX rings. If any ring initialization
+fails, the error path frees the already initialized rings but
+leaves the DMA pool allocated.
 
-  icssg-prueth icssg1-eth end0: Invalid stats FW_RX_ERROR
+Destroy md_ctrl->gpd_dmapool on the late-init failure path
+to avoid leaking the DMA pool.
 
-A secondary consequence is that the int(-EINVAL) return value is
-implicitly widened to a near-ULLONG_MAX unsigned value when accumulated
-into the __u64 fields of rtnl_link_stats64, silently corrupting the
-rx_errors, rx_dropped and tx_dropped counters reported by `ip -s link`.
-
-Every other PA-aware code path in the driver is already guarded with
-the same `if (emac->prueth->pa_stats)` check.  Apply the same guard
-here.
-
-Fixes: 0d15a26b247d ("net: ti: icssg-prueth: Add ICSSG FW Stats")
-Signed-off-by: Philippe Schenker <philippe.schenker@impulsing.ch>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
-Cc: danishanwar@ti.com
-Cc: rogerq@kernel.org
-Cc: linux-arm-kernel@lists.infradead.org
+Fixes: 39d439047f1d ("net: wwan: t7xx: Add control DMA interface")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260618093037.3448858-1-dev@pschenker.ch
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260621031714.3605022-1-haoxiang_li2024@163.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ti/icssg/icssg_common.c |   49 +++++++++++++++------------
- 1 file changed, 28 insertions(+), 21 deletions(-)
+ drivers/net/wwan/t7xx/t7xx_hif_cldma.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/ethernet/ti/icssg/icssg_common.c
-+++ b/drivers/net/ethernet/ti/icssg/icssg_common.c
-@@ -1651,28 +1651,35 @@ void icssg_ndo_get_stats64(struct net_de
- 	stats->rx_over_errors = emac_get_stat_by_name(emac, "rx_over_errors");
- 	stats->multicast      = emac_get_stat_by_name(emac, "rx_multicast_frames");
+--- a/drivers/net/wwan/t7xx/t7xx_hif_cldma.c
++++ b/drivers/net/wwan/t7xx/t7xx_hif_cldma.c
+@@ -1063,6 +1063,9 @@ err_free_tx_ring:
+ 	while (i--)
+ 		t7xx_cldma_ring_free(md_ctrl, &md_ctrl->tx_ring[i], DMA_TO_DEVICE);
  
--	stats->rx_errors  = ndev->stats.rx_errors +
--			    emac_get_stat_by_name(emac, "FW_RX_ERROR") +
--			    emac_get_stat_by_name(emac, "FW_RX_EOF_SHORT_FRMERR") +
--			    emac_get_stat_by_name(emac, "FW_RX_B0_DROP_EARLY_EOF") +
--			    emac_get_stat_by_name(emac, "FW_RX_EXP_FRAG_Q_DROP") +
--			    emac_get_stat_by_name(emac, "FW_RX_FIFO_OVERRUN");
--	stats->rx_dropped = ndev->stats.rx_dropped +
--			    emac_get_stat_by_name(emac, "FW_DROPPED_PKT") +
--			    emac_get_stat_by_name(emac, "FW_INF_PORT_DISABLED") +
--			    emac_get_stat_by_name(emac, "FW_INF_SAV") +
--			    emac_get_stat_by_name(emac, "FW_INF_SA_DL") +
--			    emac_get_stat_by_name(emac, "FW_INF_PORT_BLOCKED") +
--			    emac_get_stat_by_name(emac, "FW_INF_DROP_TAGGED") +
--			    emac_get_stat_by_name(emac, "FW_INF_DROP_PRIOTAGGED") +
--			    emac_get_stat_by_name(emac, "FW_INF_DROP_NOTAG") +
--			    emac_get_stat_by_name(emac, "FW_INF_DROP_NOTMEMBER");
-+	stats->rx_errors  = ndev->stats.rx_errors;
-+	stats->rx_dropped = ndev->stats.rx_dropped;
- 	stats->tx_errors  = ndev->stats.tx_errors;
--	stats->tx_dropped = ndev->stats.tx_dropped +
--			    emac_get_stat_by_name(emac, "FW_RTU_PKT_DROP") +
--			    emac_get_stat_by_name(emac, "FW_TX_DROPPED_PACKET") +
--			    emac_get_stat_by_name(emac, "FW_TX_TS_DROPPED_PACKET") +
--			    emac_get_stat_by_name(emac, "FW_TX_JUMBO_FRM_CUTOFF");
-+	stats->tx_dropped = ndev->stats.tx_dropped;
++	dma_pool_destroy(md_ctrl->gpd_dmapool);
++	md_ctrl->gpd_dmapool = NULL;
 +
-+	if (!emac->prueth->pa_stats)
-+		return;
-+
-+	stats->rx_errors  +=
-+			emac_get_stat_by_name(emac, "FW_RX_ERROR") +
-+			emac_get_stat_by_name(emac, "FW_RX_EOF_SHORT_FRMERR") +
-+			emac_get_stat_by_name(emac, "FW_RX_B0_DROP_EARLY_EOF") +
-+			emac_get_stat_by_name(emac, "FW_RX_EXP_FRAG_Q_DROP") +
-+			emac_get_stat_by_name(emac, "FW_RX_FIFO_OVERRUN");
-+	stats->rx_dropped +=
-+			emac_get_stat_by_name(emac, "FW_DROPPED_PKT") +
-+			emac_get_stat_by_name(emac, "FW_INF_PORT_DISABLED") +
-+			emac_get_stat_by_name(emac, "FW_INF_SAV") +
-+			emac_get_stat_by_name(emac, "FW_INF_SA_DL") +
-+			emac_get_stat_by_name(emac, "FW_INF_PORT_BLOCKED") +
-+			emac_get_stat_by_name(emac, "FW_INF_DROP_TAGGED") +
-+			emac_get_stat_by_name(emac, "FW_INF_DROP_PRIOTAGGED") +
-+			emac_get_stat_by_name(emac, "FW_INF_DROP_NOTAG") +
-+			emac_get_stat_by_name(emac, "FW_INF_DROP_NOTMEMBER");
-+	stats->tx_dropped +=
-+			emac_get_stat_by_name(emac, "FW_RTU_PKT_DROP") +
-+			emac_get_stat_by_name(emac, "FW_TX_DROPPED_PACKET") +
-+			emac_get_stat_by_name(emac, "FW_TX_TS_DROPPED_PACKET") +
-+			emac_get_stat_by_name(emac, "FW_TX_JUMBO_FRM_CUTOFF");
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(icssg_ndo_get_stats64);
  
 
 
