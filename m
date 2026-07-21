@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF16844AB91;
-	Tue, 21 Jul 2026 21:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7AD3B994F;
+	Tue, 21 Jul 2026 21:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670299; cv=none; b=tqqWeDZhysDGjRGfF1XQxfCSEGVUZG5uZg7O8nQ24DbgMENrvFGvsHv4D0pbRnvNdZP3vsIE6iSGPhSisbKKpoWzYRp1wm76dCgYaXYuZUXeN95anIvD2BOGmBW3YNBnggkNWdVy31bFL6sLuSmB5sJa+CElBeJU9SoCNravAQw=
+	t=1784670302; cv=none; b=QbE+7CFluenqzG2Dx7vh6qMEbm+afv2v9x970lJSeho8waMWYQA/czB5eDNCQe1bAkgzeYTA/RLBXEqFghoPtdvWXRq/zoeHrf7ImCJ9CziHuLpAdhGaqMhcJpWrJTYmLFzg5EvFXYSBrFm8GJdLM0W2O/QIsD1iRDxPUn+cGlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670299; c=relaxed/simple;
-	bh=AbaAHjy/U31l5AXQ5S63854uX/PTympawm3VMeGNeNM=;
+	s=arc-20240116; t=1784670302; c=relaxed/simple;
+	bh=42d3LxrXeoQyojqeuMzORyaRJzmjHg01UfttmP64PY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VzpvF+1pNYAn5lrdtR27aOzt/qD4m4TMy8264XH3SVGlNVbmKCYjfMwtk2ISZ1MxAqsmkAaTqHKnkW5Hng2TQMwrLUEp+Z0pmfSVLg42AK7YIee1n+X15eHUNOs8RS9qUkEyM5p2vH31uaGdUv5FEmxQbVf+ljxgr/WxWNP4gjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HyRXqA+o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QFd0L78PqXTHL1f3hwA3jxkRFhNln7LXAExmS5nK7XpH6NmNmPPiG1IKwO57PWCdhbAQSr2AV8TlUxlxDVvwiiI++whKHrwC9cTA/Lsr/cGVsTxNJZfcRzd8sAQHNZ/BzXvkKTstvQnaoz/NFxVK2Q0LIoYlQvM3b9lJ2Ex7LjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mLn+0RTl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HyRXqA+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 317D51F000E9;
-	Tue, 21 Jul 2026 21:44:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mLn+0RTl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F163A1F000E9;
+	Tue, 21 Jul 2026 21:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670298;
-	bh=USz90L+j56QlcqQxCg7Wi3N9ODwlqq/eK60bV2eic3w=;
+	s=korg; t=1784670301;
+	bh=i01mNUE+9P5gyU/PVA2JjRpI1EYGK6aBQpwDkF8/KsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HyRXqA+ohpKwt1LZqiJiivEMXj98vqOHnzcI6JIxOWiLKO7GCMVdDAfdTaKLsqeto
-	 CRYakVujoyJ/QML6zpAKBhlf7QPv9F5g2HQPLLE11Sm2nXCGN7JrLTGGCc4iGlpoG3
-	 1q3zYeJXJNJ+FGIDYEHG8azjo45U//3nc2LUC8gQ=
+	b=mLn+0RTlDhKM8PzKDb1gz1WGxB0JZhMnAv4EYSehiTCpK8h6oqfh0/OwqojHVxUrR
+	 kB8mR0leHs5Z2AqWfol0Vid9IyOC046HfNzoAPlLhIiuLSF2CkjUH2/hJViu5xbWxE
+	 7Ri199I/JW2crI27DdVh/T+sWxEHVY6QAkw8LyvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Arthur Kiyanovski <akiyano@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 0878/1067] net: ixp4xx_hss: fix duplicate HDLC netdev allocation
-Date: Tue, 21 Jul 2026 17:24:39 +0200
-Message-ID: <20260721152444.173947124@linuxfoundation.org>
+Subject: [PATCH 6.1 0879/1067] net: ena: clean up XDP TX queues when regular TX setup fails
+Date: Tue, 21 Jul 2026 17:24:40 +0200
+Message-ID: <20260721152444.195245782@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,54 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit db818b0e8af7bac16860116a19c341a63d6677b4 upstream.
+commit 1bd6676254b4ab6acd44b662b5e92822c036463a upstream.
 
-ixp4xx_hss_probe() allocates two HDLC netdevs. The first one is stored
-in ndev, initialized, and registered with register_hdlc_device(). The
-second one is stored in port->netdev and later used by the remove path
-for unregister_hdlc_device() and free_netdev().
+create_queues_with_size_backoff() creates XDP TX queues before setting
+up the regular TX path. If the subsequent allocation or creation of
+regular TX queues fails, the error handling paths omit the teardown of the
+XDP TX queues, leading to a resource leak.
 
-This means that the registered netdev is not the same object that is
-unregistered and freed on remove. It also leaks the first allocation if
-the second alloc_hdlcdev() call fails, and the first allocation is not
-checked before ndev is used.
+Fix this by explicitly destroying the XDP TX queue subset at the two
+missing failure points.
 
-Older code allocated the HDLC netdev only once and stored the same object
-in both the local variable and port->netdev. The buggy conversion split
-this into two alloc_hdlcdev() calls. A later rename changed the local
-variable name to ndev, but the underlying mismatch remained.
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1-rc7.
 
-Fix this by allocating the HDLC netdev only once and assigning the same
-object to port->netdev.
+An x86_64 allyesconfig build showed no new warnings. As we do not have
+an ENA device to test with, no runtime testing was able to be performed.
 
-Fixes: 99ebe65eb9c0 ("net: ixp4xx_hss: move out assignment in if condition")
+Fixes: 548c4940b9f1 ("net: ena: Implement XDP_TX action")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260622043015.643637-1-haoxiang_li2024@163.com
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Arthur Kiyanovski <akiyano@amazon.com>
+Tested-by: Arthur Kiyanovski <akiyano@amazon.com>
+Link: https://patch.msgid.link/20260616142424.4005130-1-dawei.feng@seu.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wan/ixp4xx_hss.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c |   23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wan/ixp4xx_hss.c
-+++ b/drivers/net/wan/ixp4xx_hss.c
-@@ -1487,11 +1487,11 @@ static int ixp4xx_hss_probe(struct platf
- 				     "unable to get CLK internal GPIO\n");
- 
- 	ndev = alloc_hdlcdev(port);
--	port->netdev = alloc_hdlcdev(port);
--	if (!port->netdev) {
-+	if (!ndev) {
- 		err = -ENOMEM;
- 		goto err_plat;
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -1257,6 +1257,18 @@ static void ena_destroy_all_tx_queues(st
  	}
-+	port->netdev = ndev;
+ }
  
- 	SET_NETDEV_DEV(ndev, &pdev->dev);
- 	hdlc = dev_to_hdlc(ndev);
++static void ena_destroy_xdp_tx_queues(struct ena_adapter *adapter)
++{
++	u16 ena_qid;
++	int i;
++
++	for (i = adapter->xdp_first_ring;
++	     i < adapter->xdp_first_ring + adapter->xdp_num_queues; i++) {
++		ena_qid = ENA_IO_TXQ_IDX(i);
++		ena_com_destroy_io_queue(adapter->ena_dev, ena_qid);
++	}
++}
++
+ static void ena_destroy_all_rx_queues(struct ena_adapter *adapter)
+ {
+ 	u16 ena_qid;
+@@ -2618,14 +2630,21 @@ static int create_queues_with_size_backo
+ 		rc = ena_setup_tx_resources_in_range(adapter,
+ 						     0,
+ 						     adapter->num_io_queues);
+-		if (rc)
++		if (rc) {
++			ena_destroy_xdp_tx_queues(adapter);
++			ena_free_all_io_tx_resources_in_range(adapter,
++							      adapter->xdp_first_ring,
++							      adapter->xdp_num_queues);
+ 			goto err_setup_tx;
++		}
+ 
+ 		rc = ena_create_io_tx_queues_in_range(adapter,
+ 						      0,
+ 						      adapter->num_io_queues);
+-		if (rc)
++		if (rc) {
++			ena_destroy_xdp_tx_queues(adapter);
+ 			goto err_create_tx_queues;
++		}
+ 
+ 		rc = ena_setup_all_rx_resources(adapter);
+ 		if (rc)
 
 
