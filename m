@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F810407CCF;
-	Tue, 21 Jul 2026 18:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E523546D570;
+	Tue, 21 Jul 2026 18:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658892; cv=none; b=PTCWVsFmWxjQG0ka674l+e1OC9ipwm4ynRSaHljNL0Uw3v6MDEQsTksseHUZWVwU356Ka0E7IFc0LHMUGSP8gY1d8Z8HeGxOwwx4MICRiIeh/QxXBKvlJDdl9l/uG+ke0htSvOl9rGutEhOHhvd98lpCO7Lg8oTVD87y1n393Zw=
+	t=1784658895; cv=none; b=UA8uIAx1bx/Jyg614J+H2Kn5Uj3VjCkObovtf9iRjSPjBFJXruIWQCqLpfgvOcT+kxEmQLDYctr47rDwcgfMTeI2rl8hihD6RY4ZigjdbswaYVJA3a814Gtm+O7jqAyR05EXK2pAirgIlo79ApqjydcYzjG7HSVORrbQCcGm5Ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658892; c=relaxed/simple;
-	bh=rX8Sme/ZjwM0pNhDAKqNCCofnGWgi5mEENr2M8o9ArI=;
+	s=arc-20240116; t=1784658895; c=relaxed/simple;
+	bh=pcJNWlhXmCpjWxil7pgjImsR27wf/5dO4bG3fRYgwrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dbQhAjzBQXzugsAw5BPVo8zu3i30bOZurdfqG6djhmGLE1x2LQDw9OwBuJn7yYMFNZyZkR7+kX7+U+/5xjTabaorqniL6asOFdTqYInjvdAg96BHaK1oj396gz/ouGUU7YF8CnEAd8hVrff5tgHnWyGVGbF7l9GUQf5AUqjuQqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IpyAd/Jp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=iFCo37sfEFffk6MaDzR8mCow8KLdQv4uSVEtn6adBrAYRmNiISbeH+tYtqAVI64n9E3t4nW94juU5f55SSGy4RcJ+0bB9cbLUkR1RnSYDcWBqTsOxBFz5u2hQlG/4Bb52xRjAJsU6PR8NUditPgy3wFj8Ae/x0JjvEcfuUTmoKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t69arozC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IpyAd/Jp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824681F000E9;
-	Tue, 21 Jul 2026 18:34:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t69arozC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23A261F000E9;
+	Tue, 21 Jul 2026 18:34:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658891;
-	bh=/F1xUMoQNvuSjbYZtVXie43XbEbJ5jYFAtKElqq/jN0=;
+	s=korg; t=1784658893;
+	bh=iYm74ru6A/L/yHNvDtZyWLKPxVq8ZBrkwzl9I2YhO9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IpyAd/JpyqtC1gCaAQOrMl3HbfPTRy2DMlzaSWhWvlu4Seq1K7+5I6+KbpSbPCY/Y
-	 7UrfMDRojbsyr+EurNiinjXz1Z7a9qSgM2GxCt4a2g2yAgY5KC806UlFHFkpP9hj6H
-	 xapqQ4zCsHJqQGarJpPUxmbYlXnz6lIelEe39eQA=
+	b=t69arozCYByuvmqo+y3shO4/PN3PRHIpI6XIAdMKJvXbUccHuPT6QCWlwhuQkSMF3
+	 LTf88eVMWpKatUGPCxZy14L29RY0RGG7faNIAtHce/qCi1/zwQs6pJ+eoTbUHN0YqV
+	 Muaweu7MmNKAKYLhxcmMNYNBW5excKm6xR8+ybjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 6.18 1316/1611] xen/gntdev: fix error handling in ioctl
-Date: Tue, 21 Jul 2026 17:23:52 +0200
-Message-ID: <20260721152545.056739649@linuxfoundation.org>
+	Sindre Henriksen <sindrehenriksen93@gmail.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Daniel Gibson <daniel@gibson.sh>
+Subject: [PATCH 6.18 1299/1611] platform/x86/amd/pmc: Delay suspend for some Lenovo Laptops
+Date: Tue, 21 Jul 2026 17:23:35 +0200
+Message-ID: <20260721152544.663328032@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -44,67 +47,168 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Daniel Gibson <daniel@gibson.sh>
 
-commit 45ca1afe2fd14c04e37227e79d3f8455831d8408 upstream.
+commit 9b9e60dd31da054a37d601e9fcabdfd8a2bff354 upstream.
 
-When gntdev_ioctl_map_grant_ref() fails to copy the operation result
-back to userspace after successfully adding the mapping to the list,
-the error path returns -EFAULT without releasing the reference
-acquired by gntdev_alloc_map(). The mapping remains in priv->maps
-with a refcount of 1, causing a memory leak and a dangling list
-entry.
+Some IdeaPad Slim 3 devices and similar with AMD CPUs have a
+nonfunctional keyboard and lid switch after s2idle.
 
-Additionally, gntdev_add_map() may modify map->index to avoid overlap
-with existing mappings. Therefore, the index returned to userspace
-must be obtained after gntdev_add_map() completes.
+It helps to delay suspend by 2.5 seconds so the EC has some time
+to do whatever it needs to get done before suspend - unfortunately
+at least on my 16ABR8 waking it with a timer (wakealarm) still
+triggers the issue, but at least normal resume via keypress or
+lid works fine. On the 14ARP10 wakealarm has been reported to also
+work fine with this patch.
 
-Fix this by holding the mutex across gntdev_add_map(), retrieving
-the correct index, and copy_to_user(). If copy_to_user() fails,
-remove the mapping from the list and release the reference while
-still holding the lock.
+This issue has been reported for many different devices, this patch
+has been tested with the Zen3-based IdeaPad Slim 3 16ABR8 (82XR)
+and the Zen3+-based IdeaPad Slim 3 14ARP10 (83K6) and IdeaPad Slim 3
+15ARP10 (83MM).
 
+Reported-by: Sindre Henriksen <sindrehenriksen93@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221383
+Tested-by: Sindre Henriksen <sindrehenriksen93@gmail.com>
+Suggested-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Daniel Gibson <daniel@gibson.sh>
 Cc: stable@vger.kernel.org
-
-Fix these issues by properly handling all error cases.
-
-Fixes: 1401c00e59ea ("xen/gntdev: convert priv->lock to a mutex")
-Fixes: 68b025c813c2 ("xen-gntdev: Add reference counting to maps")
-
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260622112541.38194-1-vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260611150426.3683372-3-daniel@gibson.sh
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/gntdev.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/platform/x86/amd/pmc/pmc-quirks.c |   39 ++++++++++++++++++++++++++++++
+ drivers/platform/x86/amd/pmc/pmc.c        |   24 +++++++++++++++++-
+ drivers/platform/x86/amd/pmc/pmc.h        |    1 
+ 3 files changed, 63 insertions(+), 1 deletion(-)
 
---- a/drivers/xen/gntdev.c
-+++ b/drivers/xen/gntdev.c
-@@ -676,11 +676,15 @@ static long gntdev_ioctl_map_grant_ref(s
- 	mutex_lock(&priv->lock);
- 	gntdev_add_map(priv, map);
- 	op.index = map->index << PAGE_SHIFT;
--	mutex_unlock(&priv->lock);
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -18,6 +18,7 @@
+ struct quirk_entry {
+ 	u32 s2idle_bug_mmio;
+ 	bool spurious_8042;
++	bool need_suspend_delay;
+ };
  
--	if (copy_to_user(u, &op, sizeof(op)) != 0)
-+	if (copy_to_user(u, &op, sizeof(op)) != 0) {
-+		list_del(&map->next);
-+		mutex_unlock(&priv->lock);
-+		gntdev_put_map(priv, map);
- 		return -EFAULT;
-+	}
+ static struct quirk_entry quirk_s2idle_bug = {
+@@ -33,6 +34,10 @@ static struct quirk_entry quirk_s2idle_s
+ 	.spurious_8042 = true,
+ };
  
-+	mutex_unlock(&priv->lock);
- 	return 0;
++static struct quirk_entry quirk_s2idle_need_suspend_delay = {
++	.need_suspend_delay = true,
++};
++
+ static const struct dmi_system_id fwbug_list[] = {
+ 	{
+ 		.ident = "L14 Gen2 AMD",
+@@ -203,6 +208,35 @@ static const struct dmi_system_id fwbug_
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82XQ"),
+ 		}
+ 	},
++	/* https://bugzilla.kernel.org/show_bug.cgi?id=221383 */
++	{
++		.ident = "Zen3-based IdeaPad Slim and similar",
++		.driver_data = &quirk_s2idle_need_suspend_delay,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			/*
++			 * Note: there are also some Zen2-based 82X* devices that
++			 * need different quirks, they're already handled above
++			 */
++			DMI_MATCH(DMI_PRODUCT_NAME, "82X"),
++		}
++	},
++	{
++		.ident = "Zen3+-based IdeaPad Slim and similar",
++		.driver_data = &quirk_s2idle_need_suspend_delay,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83K"),
++		}
++	},
++	{
++		.ident = "IdeaPad Slim 3 15ARP10 (83MM)",
++		.driver_data = &quirk_s2idle_need_suspend_delay,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83MM"),
++		}
++	},
+ 	/* https://bugzilla.kernel.org/show_bug.cgi?id=221273 */
+ 	{
+ 		.ident = "Thinkpad L14 Gen3",
+@@ -356,6 +390,11 @@ void amd_pmc_process_restore_quirks(stru
+ 		amd_pmc_skip_nvme_smi_handler(dev->quirks->s2idle_bug_mmio);
  }
  
++bool amd_pmc_quirk_need_suspend_delay(struct amd_pmc_dev *dev)
++{
++	return dev->quirks && dev->quirks->need_suspend_delay;
++}
++
+ void amd_pmc_quirks_init(struct amd_pmc_dev *dev)
+ {
+ 	const struct dmi_system_id *dmi_id;
+--- a/drivers/platform/x86/amd/pmc/pmc.c
++++ b/drivers/platform/x86/amd/pmc/pmc.c
+@@ -611,6 +611,27 @@ static bool amd_pmc_intermediate_wakeup_
+ 	return get_metrics_table(pdev, &table) == 0 && table.s0i3_last_entry_status;
+ }
+ 
++static bool amd_pmc_want_suspend_delay(struct amd_pmc_dev *pdev)
++{
++	/*
++	 * Some Lenovo Laptops (like different IdeaPad 3 Slims) need some
++	 * me-time before sleeping or they get uncooperative after waking
++	 * up and don't send events for keyboard and lid switch anymore.
++	 *
++	 * Unfortunately this doesn't entirely fix the problem: It can still
++	 * happen when resuming with a timer (wakealarm), but at least the
++	 * more common usecases (wakeup by opening lid or pressing a key)
++	 * work fine with this workaround.
++	 *
++	 * See https://bugzilla.kernel.org/show_bug.cgi?id=221383
++	 */
++	if (!disable_workarounds && amd_pmc_quirk_need_suspend_delay(pdev)) {
++		dev_info(pdev->dev, "Delaying suspend by 2.5s to avoid platform bug\n");
++		return true;
++	}
++	return false;
++}
++
+ static void amd_pmc_s2idle_prepare(void)
+ {
+ 	struct amd_pmc_dev *pdev = &pmc;
+@@ -647,7 +668,8 @@ static void amd_pmc_s2idle_check(void)
+ 	struct amd_pmc_dev *pdev = &pmc;
+ 	int rc;
+ 
+-	if (amd_pmc_intermediate_wakeup_need_delay(pdev))
++	if (amd_pmc_intermediate_wakeup_need_delay(pdev) ||
++	    amd_pmc_want_suspend_delay(pdev))
+ 		msleep(2500);
+ 
+ 	/* Dump the IdleMask before we add to the STB */
+--- a/drivers/platform/x86/amd/pmc/pmc.h
++++ b/drivers/platform/x86/amd/pmc/pmc.h
+@@ -147,6 +147,7 @@ enum amd_pmc_def {
+ };
+ 
+ void amd_pmc_process_restore_quirks(struct amd_pmc_dev *dev);
++bool amd_pmc_quirk_need_suspend_delay(struct amd_pmc_dev *dev);
+ void amd_pmc_quirks_init(struct amd_pmc_dev *dev);
+ void amd_mp2_stb_init(struct amd_pmc_dev *dev);
+ void amd_mp2_stb_deinit(struct amd_pmc_dev *dev);
 
 
