@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACF1443E3C;
-	Tue, 21 Jul 2026 22:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C715B43E075;
+	Tue, 21 Jul 2026 22:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672196; cv=none; b=KBleZsPZ5mvZ07LQI38vECfni3nwoWSGp/QZGkJOGkTKQ8/Sx+iylWazPrPqR/FH24F+22WJw4ScfX5f27/6aXI2ZXImy2IbRRO2lIfxdb8wzBl+mV/IOleR8RJPveoQleh/IcWsn3QQJ+HZEbWFMMyDQ7tWLJHsHVB5LZ2gWe4=
+	t=1784672198; cv=none; b=BM8osFu8WIruug3gqeQM/n1f29PP41DgUiOVp3p6BwrS57OFHbWOe3VUq97ZKirW/2uVyvXmT5ZcIYlaU8nckZCVshsadP/3XLI2oJXxtRvl342/ULdHVqAdR422xJg1qihBFI22o6XmIKN0HLvPM+4mYNDuLnAmxapNivVd+kM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672196; c=relaxed/simple;
-	bh=WJoMkLRMDpmaF7EnhsMLMO8HabxcyHgAxqAeqxKti/w=;
+	s=arc-20240116; t=1784672198; c=relaxed/simple;
+	bh=LRcvEPqtNhTCWxHpSVPXk8+GlWbZ8yRWsLQ2mqzZuOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ofseW96NoxMuG4EpQLt5X4CtFzL7uGPQ8nCO3OXEmWH3B9AW2OnqZSHkz58X2EtSKfMYGy6YqGzUywrQeq2BBxI3x+DvLI4KlKS9wfLsA4Ma/dxw+UoE4SDKDqnJlV0eAUbJin7tSXZAAadhgNYxdkaCAPD2Auu46jaHUFlySGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfXiZxfc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ur5qf1xe7VhHiJ6jf7DyofOYb/eao0/wi5/6aQLdwM1eifXq3+mjEdCJp9oI3EH+PEQcB8zRkKf5a8YL/6oeK6oAs8bSQBJkpzjfTnblnSfUeMrKnDGtQxSFoym5DvMHISqGhXbAow3lg6dFaJC4mqXERFaUj2cn2Ny0WtsZoaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wbEqzHCB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfXiZxfc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E2FD1F000E9;
-	Tue, 21 Jul 2026 22:16:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wbEqzHCB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380F51F000E9;
+	Tue, 21 Jul 2026 22:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672195;
-	bh=jc7GA2zajlxYHc6aJaCW6dJrv1QbgHBhLfDtmjp0Boo=;
+	s=korg; t=1784672197;
+	bh=ZovoiwqldwiIiNLoRPblTwBsyHBNKYRuKAyR8bWZLqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UfXiZxfcvLnGD5BZ6og6+Jo7YHekMltlWN1SXRqjiFxYxp8U/7fP6Igi3E2lHkd34
-	 KcLTtgecifv4MaD72fKdzPopUcjOKQk7VxM7CQFpnf6XcigAqBhv7tQNdrOqcSYXwE
-	 P8YpA05KDP9oWvm0CpeQ++4SAZ8qSLFQnLwqSUTY=
+	b=wbEqzHCBypoWN61XPIgD6ZtZjHQHoXHh8v3R/sAN9EJBRWIWBXNyZqNLyudFjv9A+
+	 fjF0Ewn2yQR8dTacs6EypAE/1VIr/d0YkkiVgxFQPD5g+u1l/Wh6qb5NaV/EO4omTm
+	 GDTucUjtgMSOj0Bx/WKiB/CCTRd0ycu8XIeYwlSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengfei Zhang <zhangfeionline@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Rakesh Babu <rsaladi2@marvell.com>,
+	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 496/843] ipv6: fib6: fix NULL deref in fib6_walk_continue() on multi-batch dump
-Date: Tue, 21 Jul 2026 17:22:11 +0200
-Message-ID: <20260721152417.191908355@linuxfoundation.org>
+Subject: [PATCH 5.15 532/843] octeontx2-af: debugfs: Add channel and channel mask.
+Date: Tue, 21 Jul 2026 17:22:47 +0200
+Message-ID: <20260721152417.998618419@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,93 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengfei Zhang <zhangfeionline@gmail.com>
+From: Rakesh Babu <rsaladi2@marvell.com>
 
-[ Upstream commit 9facb861dc6b9b9ea9793ef5032a9a826f7a4229 ]
+[ Upstream commit 9716a40a0f482b91af485b1130cca19441243177 ]
 
-inet6_dump_fib() saves its progress in cb->args[1] as a positional
-index within the current hash chain.  Between batches, a concurrent
-fib6_new_table() can insert a new table at the chain head, shifting
-all existing entries.  The saved index then lands on a different
-table, causing fib6_dump_table() to set w->root to the wrong table
-while w->node still points into the previous one.
-fib6_walk_continue() dereferences w->node->parent (NULL) and panics:
+This patch is to dispaly channel and channel_mask for each RX
+interface of NPC MCAM rule.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000008
-  RIP: 0010:fib6_walk_continue+0x6e/0x170
-  Call Trace:
-   <TASK>
-   fib6_dump_table.isra.0+0xc5/0x240
-   inet6_dump_fib+0xf6/0x420
-   rtnl_dumpit+0x30/0xa0
-   netlink_dump+0x15b/0x460
-   netlink_recvmsg+0x1d6/0x2a0
-   ____sys_recvmsg+0x17a/0x190
-
-Fix by storing tb->tb6_id in cb->args[1] instead of a positional
-index.  On resume, skip entries until the id matches; a concurrent
-head-insert can never match the saved id, so the walker always
-resumes on the correct table.
-
-Fixes: 1b43af5480c3 ("[IPV6]: Increase number of possible routing tables to 2^32")
-Signed-off-by: Pengfei Zhang <zhangfeionline@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260625070517.965597-1-zhangfeionline@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Rakesh Babu <rsaladi2@marvell.com>
+Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 235acadd3105 ("octeontx2-pf: check DMAC extraction support before filtering")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_fib.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/npc.h         | 4 ++++
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c | 2 ++
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c  | 3 +++
+ 3 files changed, 9 insertions(+)
 
-diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
-index 3dbc6d582325c6..cb3de8e39e3379 100644
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -624,12 +624,12 @@ static int inet6_dump_fib(struct sk_buff *skb, struct netlink_callback *cb)
- 	};
- 	const struct nlmsghdr *nlh = cb->nlh;
- 	struct net *net = sock_net(skb->sk);
--	unsigned int e = 0, s_e;
- 	struct hlist_head *head;
- 	struct fib6_walker *w;
- 	struct fib6_table *tb;
- 	unsigned int h, s_h;
- 	int err = 0;
-+	u32 s_id;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/npc.h b/drivers/net/ethernet/marvell/octeontx2/af/npc.h
+index bac083c5c27854..857b8b85f550c1 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/npc.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/npc.h
+@@ -8,6 +8,8 @@
+ #ifndef NPC_H
+ #define NPC_H
  
- 	rcu_read_lock();
- 	if (cb->strict_check) {
-@@ -689,23 +689,22 @@ static int inet6_dump_fib(struct sk_buff *skb, struct netlink_callback *cb)
- 	}
- 
- 	s_h = cb->args[0];
--	s_e = cb->args[1];
-+	s_id = cb->args[1];
- 
--	for (h = s_h; h < FIB6_TABLE_HASHSZ; h++, s_e = 0) {
--		e = 0;
-+	for (h = s_h; h < FIB6_TABLE_HASHSZ; h++, s_id = 0) {
- 		head = &net->ipv6.fib_table_hash[h];
- 		hlist_for_each_entry_rcu(tb, head, tb6_hlist) {
--			if (e < s_e)
--				goto next;
-+			if (s_id && tb->tb6_id != s_id)
-+				continue;
++#define NPC_KEX_CHAN_MASK	0xFFFULL
 +
-+			s_id = 0;
-+			cb->args[1] = tb->tb6_id;
- 			err = fib6_dump_table(tb, skb, cb);
- 			if (err != 0)
- 				goto out;
--next:
--			e++;
- 		}
- 	}
- out:
--	cb->args[1] = e;
- 	cb->args[0] = h;
+ enum NPC_LID_E {
+ 	NPC_LID_LA = 0,
+ 	NPC_LID_LB,
+@@ -598,6 +600,8 @@ struct rvu_npc_mcam_rule {
+ 	u8 default_rule;
+ 	bool enable;
+ 	bool vfvlan_cfg;
++	u16 chan;
++	u16 chan_mask;
+ };
  
- unlock:
+ #endif /* NPC_H */
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+index e201827529513c..a3dcb013f22de8 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+@@ -2484,6 +2484,8 @@ static int rvu_dbg_npc_mcam_show_rules(struct seq_file *s, void *unused)
+ 				seq_printf(s, "VF%d", vf);
+ 			}
+ 			seq_puts(s, "\n");
++			seq_printf(s, "\tchannel: 0x%x\n", iter->chan);
++			seq_printf(s, "\tchannel_mask: 0x%x\n", iter->chan_mask);
+ 		}
+ 
+ 		rvu_dbg_npc_mcam_show_action(s, iter);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
+index 750aaa1676878e..64654bd1188459 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
+@@ -1112,6 +1112,9 @@ static int npc_install_flow(struct rvu *rvu, int blkaddr, u16 target,
+ 	rule->default_rule = req->default_rule;
+ 	rule->owner = owner;
+ 	rule->enable = enable;
++	rule->chan_mask = write_req.entry_data.kw_mask[0] & NPC_KEX_CHAN_MASK;
++	rule->chan = write_req.entry_data.kw[0] & NPC_KEX_CHAN_MASK;
++	rule->chan &= rule->chan_mask;
+ 	if (is_npc_intf_tx(req->intf))
+ 		rule->intf = pfvf->nix_tx_intf;
+ 	else
 -- 
 2.53.0
 
