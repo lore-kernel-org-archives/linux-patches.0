@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77CC13ED3B2;
-	Tue, 21 Jul 2026 19:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CCD63ED3B2;
+	Tue, 21 Jul 2026 19:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661761; cv=none; b=EKfuac26cqFUECwn5aHp8YqIl0a3FRDnMg+xOcGbW+YJ/EV7VIZL8yTJiEkhuuTlxXFTEEF7phNO9yxyu2WWTbUptGeoG+vm21VWzpdSRG6bpBggahTUAEv8eC808fywo2t2cj6nCh5lR9OZVjJJmcAeOS599KzUrZa/PsRveeg=
+	t=1784661764; cv=none; b=jNGvw3f8NhjNdhSYhEg5jb8qxdC0p82vmeDQHRJK987dBeeySRXFLkvlEAymuNXMwc3sZFlrvTAbVtOp5maGIMsy3ngOFzzHqujvTvNcyjqWkmD2L2qJ7d6MDI+o9o/dBhdfN5ZJXNr/zPgahtOj/QOwAAvitOOd1DEA5KDZ/Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661761; c=relaxed/simple;
-	bh=Bm+2TTx52TeArQnPHfSx2cgD8345PKvkyOfANzNqgAI=;
+	s=arc-20240116; t=1784661764; c=relaxed/simple;
+	bh=UAwrDCatF2N+6xWGPlHry37ly1orZJ1S5R6uzuBBnFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KcDKHKWhOA3V+3ooSF568yzFlxmhfb8quH7gmExe1dga3cn5NO2oy+eFvoeE7ONexlQD27c1icAVQRPv9ym4DJmkt0vC2W7U5WIQJhwNPBRa6IFlvJJ3bvUEEyzbskpN6KQWLX3cRyVfp52JImxr1ZjjV9bHRziCoypcOK2xTsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0yta49r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HY7+7vHp5Ra5SFZbrhdh0mtQFNefT0B6jYGvsEaReAb970//8QPaK0GNVhd2QwNmKZJYW6onAkORBj26x7AWYffSg5JS+D//G+/iWB4YaHvIj0PHMhs+7lAypIW0lS1l/UxhPZxaahAuDMuA4LoX4v9Gyf1UGNdXEOCLm08BitA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AP9nF0EV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0yta49r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3471F000E9;
-	Tue, 21 Jul 2026 19:22:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AP9nF0EV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8300F1F000E9;
+	Tue, 21 Jul 2026 19:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661760;
-	bh=NwqrRtSS/YCm5yUx3lctpHWDcz9fk5hGes29bfsW+4c=;
+	s=korg; t=1784661763;
+	bh=JfxoFqnegD+zBEx/P+tkCb7S5/tH8Gq4gCPxFP7vnZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K0yta49rxM2RtJbRh+c4gsscbSaDPOd+4fMPjoEhpCoe/aaZo3usbo0+zbph8+wvB
-	 HDpDiu9JC46+2XO16SrJlx6FrHccntptQfItN/PI03MTj0TsZs+3LGLBdRMBMZZ7MQ
-	 Lu9eeNttHR9HM4yvC1ossxadKKvYHxjIsJH5AnQY=
+	b=AP9nF0EV0vRCoatgJZnbhw7kxUsGGtUCK1h09aJEHP6tVYE+cXEB5x83Nf4bYDW+P
+	 ljoe46s2sRLdBIa+UTp/J5T31NJXwnTbqMv7XWd0KHFF9+xtlui1KTE7LMnukuSJS6
+	 YeRwmH6+AhQeEaIj9KhP3jvyliyxxVDMTfCRCVpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Mark Brown <broonie@kernel.org>,
+	Timur Tabi <ttabi@nvidia.com>,
+	Lyude Paul <lyude@redhat.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0135/1276] regulator: dt-bindings: mt6359: Drop regulator-name pattern restrictions
-Date: Tue, 21 Jul 2026 17:09:38 +0200
-Message-ID: <20260721152449.122987478@linuxfoundation.org>
+Subject: [PATCH 6.12 0182/1276] drm/nouveau/bios: specify correct display fuse register for Ampere and Ada
+Date: Tue, 21 Jul 2026 17:10:25 +0200
+Message-ID: <20260721152450.167235644@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,115 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Timur Tabi <ttabi@nvidia.com>
 
-[ Upstream commit cdc517688ffa2c30a64a20b558a9ecbf046c70f1 ]
+[ Upstream commit c1cf2d5db80ce91a85855bbaf4da85ff603e089a ]
 
-The name of the regulator should match what the board design specifies
-for the power rail. There should be no limitations on what the name can
-be, and they definitely don't always follow the PMIC's own names.
+The NV_FUSE_STATUS_OPT_DISPLAY register is used to determine whether
+the GPU has display hardware.  The current code that normally reads
+this register is instead hard-coded to check for GA100 vs later GPUs.
+Since this function is called only on pre-Hopper GPUs, and this
+if-statement applies only to GA100 and later, the check works
+because GA100 is the only non-display Ampere and Ada GPU.
 
-Drop the restrictions on regulator-name.
+However, there actually is a register that can be read, so we should
+use it.
 
-Fixes: 8771456635d5 ("dt-bindings: regulator: Add document for MT6359 regulator")
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://patch.msgid.link/20260514091520.2718987-3-wenst@chromium.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: a34632482f1e ("drm/nouveau/bios/ga10[024]: initial support")
+Signed-off-by: Timur Tabi <ttabi@nvidia.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20260430223838.2530778-8-ttabi@nvidia.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/regulator/mt6359-regulator.yaml  | 43 -------------------
- 1 file changed, 43 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowramin.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml b/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml
-index d6b3b5a5c0b346..5e4b1e74179500 100644
---- a/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml
-+++ b/Documentation/devicetree/bindings/regulator/mt6359-regulator.yaml
-@@ -18,84 +18,41 @@ patternProperties:
-   "^buck_v(s1|gpu11|modem|pu|core|s2|pa|proc2|proc1|core_sshub)$":
-     type: object
-     $ref: regulator.yaml#
--
--    properties:
--      regulator-name:
--        pattern: "^v(s1|gpu11|modem|pu|core|s2|pa|proc2|proc1|core_sshub)$"
--
-     unevaluatedProperties: false
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowramin.c b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowramin.c
+index 023ddc7c5399a4..a295e94e4cb88d 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowramin.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadowramin.c
+@@ -65,13 +65,14 @@ pramin_init(struct nvkm_bios *bios, const char *name)
  
-   "^ldo_v(ibr|rf12|usb|camio|efuse|xo22)$":
-     type: object
-     $ref: regulator.yaml#
--
--    properties:
--      regulator-name:
--        pattern: "^v(ibr|rf12|usb|camio|efuse|xo22)$"
--
-     unevaluatedProperties: false
- 
-   "^ldo_v(rfck|emc|a12|a09|ufs|bbck)$":
-     type: object
-     $ref: regulator.yaml#
--
--    properties:
--      regulator-name:
--        pattern: "^v(rfck|emc|a12|a09|ufs|bbck)$"
--
-     unevaluatedProperties: false
- 
-   "^ldo_vcn(18|13|33_1_bt|13_1_wifi|33_2_bt|33_2_wifi)$":
-     type: object
-     $ref: regulator.yaml#
--
--    properties:
--      regulator-name:
--        pattern: "^vcn(18|13|33_1_bt|13_1_wifi|33_2_bt|33_2_wifi)$"
--
-     unevaluatedProperties: false
- 
-   "^ldo_vsram_(proc2|others|md|proc1|others_sshub)$":
-     type: object
-     $ref: regulator.yaml#
--
--    properties:
--      regulator-name:
--        pattern: "^vsram_(proc2|others|md|proc1|others_sshub)$"
--
-     unevaluatedProperties: false
- 
-   "^ldo_v(fe|bif|io)28$":
-     type: object
-     $ref: regulator.yaml#
--
--    properties:
--      regulator-name:
--        pattern: "^v(fe|bif|io)28$"
--
-     unevaluatedProperties: false
- 
-   "^ldo_v(aud|io|aux|rf|m)18$":
-     type: object
-     $ref: regulator.yaml#
--
--    properties:
--      regulator-name:
--        pattern: "^v(aud|io|aux|rf|m)18$"
--
-     unevaluatedProperties: false
- 
-   "^ldo_vsim[12]$":
-     type: object
-     $ref: regulator.yaml#
--
--    properties:
--      regulator-name:
--        pattern: "^vsim[12]$"
--
--    required:
--      - regulator-name
--
-     unevaluatedProperties: false
- 
- additionalProperties: false
+ 	/* we can't get the bios image pointer without PDISP */
+ 	if (device->card_type >= GA100)
+-		addr = device->chipset == 0x170; /*XXX: find the fuse reg for this */
++		addr = nvkm_rd32(device, 0x820c04);
+ 	else
+ 	if (device->card_type >= GM100)
+ 		addr = nvkm_rd32(device, 0x021c04);
+ 	else
+ 	if (device->card_type >= NV_C0)
+ 		addr = nvkm_rd32(device, 0x022500);
++
+ 	if (addr & 0x00000001) {
+ 		nvkm_debug(subdev, "... display disabled\n");
+ 		return ERR_PTR(-ENODEV);
 -- 
 2.53.0
 
