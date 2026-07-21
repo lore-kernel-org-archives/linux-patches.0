@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F23357CEB;
-	Tue, 21 Jul 2026 21:35:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDFBE35C69D;
+	Tue, 21 Jul 2026 21:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669744; cv=none; b=JpwuZ6Y4XRjKbVyJ3AoyXjcPZYplXxooNrwBiWcpEfrrlWfoALvy9W/u3w6mKiAvxQM0wWhVbuuYqa1VdIvfocakH1uMdDWmAI0KTa3PC5wYCh48eBr0CCuloLkbirHuzKf5w8RAFDiyIbgdPV5lsWLExwtb4KUsjVM8pj2Yrps=
+	t=1784669746; cv=none; b=G3t2kPwEvmnDX+TlwVhhjpeJPZ2C4RFN8ruF14ndmXf1EbJc9oMLIvxUV3oYtEHXUBMyFbWhaSPlfqSzRxzobiwvLlaVxLFeJcQ2KnFjWhQyMSGhlCwkOt5c4lMY2Oba0DiWW4ErVLgKKcxVVwYeCiYjUQSWr4B1oNVnYg/qycM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669744; c=relaxed/simple;
-	bh=wS3K+o5euoyf8oTsxi5/94JxQ5Q+sC1nFXT847M4DPk=;
+	s=arc-20240116; t=1784669746; c=relaxed/simple;
+	bh=ob/2g/iNCLYfUFmRf8YJJFtvBBYSEBse9qdpnvVKeqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TkYWJi88ZSfcItuiZutdMb1wrjBX/CQxTkxenmcuc7o5tAA2elV3QMOgz9cACtqu5n+bCXxW2k6yg6q7BKpSIcJwKPyargYXjhZvrJwDNduiH7KUvVckz0NVUoswU4C7j3OrHAz2JZdTSItil8yJicObIT2NuKPzN50wsmYINq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QS9qPAyh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lHeTlkeKKgeeKVNBPUAe1oTQDpi8kYkcPxBp6LK6kHQfGdFMLzdyPU2GW/DNSjZYOzHbihtXiHrisaKNEoWr9IwvPUcVMzQwMFgTBLVJm9cPpZyRDHUdJI3EN+V9qGG1YqF2EPrKmX8rP42mUbpUAub7llOCyUTE3UKQSvzUXjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBbGeZML; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QS9qPAyh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0561F000E9;
-	Tue, 21 Jul 2026 21:35:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBbGeZML"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7E71F000E9;
+	Tue, 21 Jul 2026 21:35:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669743;
-	bh=WGqAjNmLSrn3PRyPvja+NKbtbW3DBVWZ/iMWVar50M4=;
+	s=korg; t=1784669745;
+	bh=OGJ1NYekPHAPBVePvAWso8P74ONgdLzDDVD7R8MNz4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QS9qPAyhsxtkaBhyw6jaFU8+ZqMsPDaAF2IysX+nwLLz0gaoZkiEVQYBH0xXh24xW
-	 qRfyqi1sBzD4RlbaA+9lUcwG6Zxiag8KUm+XNSvL7Eb2hXemav83a2PmmNwYKz8o1H
-	 MOS9rb5LHGoF4YBTeJoZwMXtNPHKa24mdbgmlJRw=
+	b=FBbGeZMLeZ3XCn+ZxQy0nfgBcZKiWfhN4waDSI7KBzqwSZwTAJPmN50Fd3pRwBj9T
+	 Q7kg4fJUidGu/UtmO4q4o0MYBzEgKGWirT59M2fg3t+8UeIaZTFatB1Mq4cOrq+pmy
+	 ZTefOcWJfxLESRm9J54eGGl8UDvxbqZKYA4Y17qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
 	David Howells <dhowells@redhat.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
 	linux-afs@lists.infradead.org,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0671/1067] afs: use kvfree() to free memory allocated by kvcalloc()
-Date: Tue, 21 Jul 2026 17:21:12 +0200
-Message-ID: <20260721152439.607165038@linuxfoundation.org>
+Subject: [PATCH 6.1 0672/1067] afs: Fix callback service message parsers to pass through -EAGAIN
+Date: Tue, 21 Jul 2026 17:21:13 +0200
+Message-ID: <20260721152439.628538087@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -54,43 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit cb39654926f8e7a08ecc1dcb3941628855275940 ]
+[ Upstream commit 0f36469d7ce98b362934113c550d08bb0c784231 ]
 
-op->more_files is allocated with kvcalloc() but released via
-afs_put_operation(), which uses kfree() internally. This mismach prevents
-the resource from being released properly and may lead to undefined
-behavior.
+The AFS filesystem client uses an rxrpc server to listen for callback
+notifications.  Each callback call type handler has a delivery function
+that parses the incoming request stream, and this should return -EAGAIN the
+last packet hasn't yet been seen, but all currently queued received data is
+consumed.  afs_extract_data() does this, but the -EAGAIN return is switched
+to 0 inadvertantly
 
-Fix this by using kvfree() to free op->more_files to match its allocation
-method.
+Fix callback service message parsers to pass through -EAGAIN
 
-Fixes: e49c7b2f6de7 ("afs: Build an abstraction around an "operation" concept")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Fixes: d001648ec7cf ("rxrpc: Don't expose skbs to in-kernel users [ver #2]")
+Closes: https://sashiko.dev/#/patchset/20260609081738.770127-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260622090856.2746629-8-dhowells@redhat.com
+Link: https://patch.msgid.link/20260622090856.2746629-14-dhowells@redhat.com
 cc: Marc Dionne <marc.dionne@auristor.com>
 cc: linux-afs@lists.infradead.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/fs_operation.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/afs/cmservice.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/afs/fs_operation.c b/fs/afs/fs_operation.c
-index 7a3803ce3a2297..4316cce855cd7c 100644
---- a/fs/afs/fs_operation.c
-+++ b/fs/afs/fs_operation.c
-@@ -240,7 +240,7 @@ int afs_put_operation(struct afs_operation *op)
- 		for (i = 0; i < op->nr_files - 2; i++)
- 			if (op->more_files[i].put_vnode)
- 				iput(&op->more_files[i].vnode->netfs.inode);
--		kfree(op->more_files);
-+		kvfree(op->more_files);
- 	}
+diff --git a/fs/afs/cmservice.c b/fs/afs/cmservice.c
+index 7dcd59693a0c2f..986defdf5bb1a3 100644
+--- a/fs/afs/cmservice.c
++++ b/fs/afs/cmservice.c
+@@ -388,7 +388,6 @@ static int afs_deliver_cb_init_call_back_state3(struct afs_call *call)
+ 		ret = afs_extract_data(call, false);
+ 		switch (ret) {
+ 		case 0:		break;
+-		case -EAGAIN:	return 0;
+ 		default:	return ret;
+ 		}
  
- 	afs_end_cursor(&op->ac);
+@@ -501,7 +500,6 @@ static int afs_deliver_cb_probe_uuid(struct afs_call *call)
+ 		ret = afs_extract_data(call, false);
+ 		switch (ret) {
+ 		case 0:		break;
+-		case -EAGAIN:	return 0;
+ 		default:	return ret;
+ 		}
+ 
 -- 
 2.53.0
 
