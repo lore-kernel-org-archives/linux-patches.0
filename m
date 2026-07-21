@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81B21F3D56;
-	Tue, 21 Jul 2026 17:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48EDA376A06;
+	Tue, 21 Jul 2026 17:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653735; cv=none; b=u/P7rfdYmManUFGhcqJKgCE0i4XtyjumFdFOeGLbSj7a2dSf1XHGtzN3hPWBEo0oHYkyrGB+Fhho1HmCpwVLfB82TmJx7dkdUFxgXPSZkXCLSt6KwXCq/I8UOUMRzGd5kNmBgOBO/n0EhUBz9Ini0u4CSWwfrqsmOEfRiJG9RUE=
+	t=1784653738; cv=none; b=Oggt995YCa8a5R0O33MWhcd/TpkfScNHJLQ8PFoEhiPabizH7bZWX8ZFnA5oXOrF8cgnA499URGlHT/xhET8mu9JbYmYgdEPLYiKXZEjydtkpon+Y6+LOKUa2zqJusRiQCshCLtH+3EyexP54IXe79Zm65+lyIMzi+2wUtmV5tY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653735; c=relaxed/simple;
-	bh=uC5+m1rP7LREcg/rb0h+QEOfAZIcPARQ3A8+WSB9vdI=;
+	s=arc-20240116; t=1784653738; c=relaxed/simple;
+	bh=nwwmZEQJgK1ogmfNcZGPE7+iYE1tcolGcLcOS48EFDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HMXwwGEQgCJeX0ooI5uFel71lzL3dJ1ZINN0Qk26TuptsbfCYS2ix7iq9g0FyQ3NyZhmruAYITeN5vgfkQJkry1aQkpT4Xog6SoH0S2UWWzocRkj/48xBLP72LDb6K7+nSJ6nBAJ4iuqQVRS/n7TOxr/ozCaC7NQxqrdv8WZWjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2VxcyWUi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NnWu2IMxOb/kvfAUl/4rXkHnbFRJnNM/xvBiYZs13oEOALT9yCBCLjEKw+tonER+v5z9A6lJND+XP7AEjtmWjJvELh3A5N++OLbKx6wpNKOasgMmrS8babVYwfQ2Azybiy94zk6uwYHuSyGhklSNMD/YyAUs9cUlIjkHi1gJcP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BBPspVVH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2VxcyWUi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1856C1F000E9;
-	Tue, 21 Jul 2026 17:08:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BBPspVVH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B051B1F000E9;
+	Tue, 21 Jul 2026 17:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653734;
-	bh=ULAzkH1wx1PnJIXH0btJ9lTITahGOEygEpfS8Cqj+KE=;
+	s=korg; t=1784653737;
+	bh=WPOBIn15ljtw3MxmW7+On338aEy3SiGhiKzNyqxMYAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2VxcyWUieXelJ3Brk4omuzXGQ7h9EKrYNlOlVzhwmUZXxax7tBuxdFPERuyNiGIhn
-	 acJ1f6dqoTtMu6VvRKCLitagM5UWcI3FLCA86wLWgLZJSApiEh3axstpCFx5DAZBr3
-	 ocJgM1oc1N9ldI1+aPGFJWkmU8IFbOTd6CCA88qw=
+	b=BBPspVVHv3Zl2iSMkablhOmF4wWaavcjxXhlZ+NfcPXr0M2/9BGzI2/8dOVyiYD8i
+	 akhDi0i5GAWpZ/3Mi0nQwjblv11RXLwfi742YzfiRRdtr7O1XwR1BGdkp+1cRateVX
+	 ANQul6tSTQ6gQukhSv0lejNBKvF8JRQSSJ9sdqPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Vicente Bergas <vicencb@gmail.com>,
+	Damon Ding <damon.ding@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1440/2077] net/mlx5e: TC, skip peer flow cleanup when LAG seq is unavailable
-Date: Tue, 21 Jul 2026 17:18:33 +0200
-Message-ID: <20260721152626.769434006@linuxfoundation.org>
+Subject: [PATCH 7.1 1441/2077] drm/bridge: analogix_dp: Fix PE/VS value shift mismatch during link training
+Date: Tue, 21 Jul 2026 17:18:34 +0200
+Message-ID: <20260721152626.793662008@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,73 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Damon Ding <damon.ding@rock-chips.com>
 
-[ Upstream commit 7bed4af0ced82948d660205efecd551ef8bc3912 ]
+[ Upstream commit 6bb8898f702385d363dc2c513a1efa62807f8068 ]
 
-mlx5_lag_get_dev_seq() will return error when the peer isn't in the LAG
-or when no device is marked as master. Result bad memory access and kernel
-crash[1].
+VS/PE values returned by drm_dp_get_adjust_request_voltage() and
+drm_dp_get_adjust_request_pre_emphasis() are already encoded to their
+native DPCD register bit positions. However, DPCD_VOLTAGE_SWING_SET /
+DPCD_PRE_EMPHASIS_SET macros perform an extra internal shift. Feeding
+the raw offset-bearing values directly leads to overlapping bitfields
+and invalid lane training configuration, causing link training failures
+and black screen.
 
-Hence, skip the peer when lookup fails.
+Add right shift using DP_TRAIN_*_SHIFT constants to strip the DPCD bit
+offsets before passing values to the SET macros and subsequent checks.
+Apply this fix for both clock recovery and adjust training code paths.
 
-Note: In case there are peer flows, they are cleaned before LAG cleared
-the master mark.
-
-[1]
-RIP: 0010:mlx5e_tc_del_fdb_peers_flow+0x3d/0x350 [mlx5_core]
-Call Trace:
- <TASK>
- mlx5e_tc_clean_fdb_peer_flows+0xc1/0x130 [mlx5_core]
- mlx5_esw_offloads_unpair+0x3a/0x400 [mlx5_core]
- mlx5_esw_offloads_devcom_event+0xee/0x360 [mlx5_core]
- mlx5_devcom_send_event+0x7a/0x140 [mlx5_core]
- mlx5_esw_offloads_devcom_cleanup+0x2f/0x90 [mlx5_core]
- mlx5e_tc_esw_cleanup+0x28/0xf0 [mlx5_core]
- mlx5e_rep_tc_cleanup+0x19/0x30 [mlx5_core]
- mlx5e_cleanup_uplink_rep_tx+0x36/0x40 [mlx5_core]
- mlx5e_cleanup_rep_tx+0x55/0x60 [mlx5_core]
- mlx5e_detach_netdev+0x96/0xf0 [mlx5_core]
- mlx5e_netdev_change_profile+0x5b/0x120 [mlx5_core]
- mlx5e_netdev_attach_nic_profile+0x1b/0x30 [mlx5_core]
- mlx5e_vport_rep_unload+0xdd/0x110 [mlx5_core]
- __esw_offloads_unload_rep+0x81/0xb0 [mlx5_core]
- mlx5_eswitch_unregister_vport_reps+0x1d7/0x220 [mlx5_core]
- mlx5e_rep_remove+0x22/0x30 [mlx5_core]
- device_release_driver_internal+0x194/0x1f0
- bus_remove_device+0xe8/0x1b0
- device_del+0x159/0x3c0
- mlx5_rescan_drivers_locked+0xbc/0x2d0 [mlx5_core]
- mlx5_unregister_device+0x54/0x80 [mlx5_core]
- mlx5_uninit_one+0x73/0x130 [mlx5_core]
- remove_one+0x78/0xe0 [mlx5_core]
- pci_device_remove+0x39/0xa0
-
-Fixes: 971b28accc09 ("net/mlx5: LAG, replace mlx5_get_dev_index with LAG sequence number")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260630112917.698313-4-tariqt@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Vicente Bergas <vicencb@gmail.com>
+Closes: https://lore.kernel.org/all/CAAMcf8D-d+5n=H44KeKBSqWY42m+o32W+mO-r15VqWNyYhJL7Q@mail.gmail.com/
+Fixes: d84b087c7662 ("drm/bridge: analogix_dp: Apply DP helper APIs to get adjusted voltages and pre-emphasises")
+Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
+Link: https://lore.kernel.org/all/CAAMcf8D-d+5n=H44KeKBSqWY42m+o32W+mO-r15VqWNyYhJL7Q@mail.gmail.com/
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20260623023506.309858-1-damon.ding@rock-chips.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_tc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/bridge/analogix/analogix_dp_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-index a9001d1c902ff1..8b5a421a22a37a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-@@ -5526,6 +5526,9 @@ void mlx5e_tc_clean_fdb_peer_flows(struct mlx5_eswitch *esw)
+diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+index 8dee5f2fbde516..00fe1f7893fba3 100644
+--- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
++++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+@@ -306,7 +306,9 @@ static void analogix_dp_get_adjust_training_lane(struct analogix_dp_device *dp,
+ 	lane_count = dp->link_train.lane_count;
+ 	for (lane = 0; lane < lane_count; lane++) {
+ 		voltage_swing = drm_dp_get_adjust_request_voltage(link_status, lane);
++		voltage_swing >>= DP_TRAIN_VOLTAGE_SWING_SHIFT;
+ 		pre_emphasis = drm_dp_get_adjust_request_pre_emphasis(link_status, lane);
++		pre_emphasis >>= DP_TRAIN_PRE_EMPHASIS_SHIFT;
+ 		training_lane = DPCD_VOLTAGE_SWING_SET(voltage_swing) |
+ 				DPCD_PRE_EMPHASIS_SET(pre_emphasis);
  
- 	mlx5_devcom_for_each_peer_entry(devcom, peer_esw, pos) {
- 		i = mlx5_lag_get_dev_seq(peer_esw->dev);
-+		if (i < 0)
-+			continue;
-+
- 		list_for_each_entry_safe(flow, tmp, &esw->offloads.peer_flows[i], peer[i])
- 			mlx5e_tc_del_fdb_peers_flow(flow);
- 	}
+@@ -352,7 +354,9 @@ static int analogix_dp_process_clock_recovery(struct analogix_dp_device *dp)
+ 	for (lane = 0; lane < lane_count; lane++) {
+ 		training_lane = analogix_dp_get_lane_link_training(dp, lane);
+ 		voltage_swing = drm_dp_get_adjust_request_voltage(link_status, lane);
++		voltage_swing >>= DP_TRAIN_VOLTAGE_SWING_SHIFT;
+ 		pre_emphasis = drm_dp_get_adjust_request_pre_emphasis(link_status, lane);
++		pre_emphasis >>= DP_TRAIN_PRE_EMPHASIS_SHIFT;
+ 
+ 		if (DPCD_VOLTAGE_SWING_GET(training_lane) == voltage_swing &&
+ 		    DPCD_PRE_EMPHASIS_GET(training_lane) == pre_emphasis)
 -- 
 2.53.0
 
