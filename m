@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0557C476079;
-	Tue, 21 Jul 2026 21:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E07387588;
+	Tue, 21 Jul 2026 21:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667688; cv=none; b=rrrxaWFHayqwc4tr3VIBge1m4XgbvWkaANCdPGFKS8xSstl7y5WAK6hZ+bEKIA65AzSyRl3g6Ffeu46n6kh5LzVp2bD8yBP8xtPUY0XtUEFP6xoE9MMBdFEcBWoByRnYkdFi2ysVtkCJOnBoVMlrQ7/JjiYNcrRQ5MqPFhiK5l4=
+	t=1784667691; cv=none; b=lmkLM/A5ZEH7odWEQUnccB/cj96JBLRFGCMaMEnWptV6YpGB2FJuu8bXOj/fVTQV8VPw9FyxK65QcUp+1gP86KYWQ29NdNxXGFf2eCWdxlr49NQx1T0DxZlQMLw4R0xVBRiCxWqAeQYcW2wzLnC1LBnq04N2HfiznWIRQ2kLfbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667688; c=relaxed/simple;
-	bh=JU1z16y3U9dQ+1m5KnfRN1eDEnzqmWuSPGU01F7AvG0=;
+	s=arc-20240116; t=1784667691; c=relaxed/simple;
+	bh=N1hFgdnj25Ew3DuKCwQ2tPy9aSodsNHlcuweJ49fV4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VOZtHUYjmtPbPP3IJy0DO3e53VF9CqfhztlWRZXQ2iw1r04gH1/yb9y1VluzqHx191OdzLTLbdtwQX1duOWU1Vm5sydEIGrXDx49XgvUEQn66GfUyBqJEkel1UDurWEvwNMXqLAkhIE7MKStsCC1CzspLNl5CzRv1dqF6azXhVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4uokciG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bNskU5ZhGrlx839eJXbtwARPxs+oWA2p4DbdK/cwSBo0NoQRoQolESaf8YsjHDmvZn2yde9BBZyigtNIF9UBqrNqXqOXtTh/qsXP4xZv9HDLYmLrJ1GLEBJSyjIpgVyCxc5hPVc2V2VUvj0gikef5TQUNu85jYmXwzrOTTrU3TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11q/2sNJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4uokciG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 696071F000E9;
-	Tue, 21 Jul 2026 21:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11q/2sNJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F781F000E9;
+	Tue, 21 Jul 2026 21:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667686;
-	bh=jB8H142H/h80m8Hy2d/xeEvQfYgTmLSt7qxq1HBt4V0=;
+	s=korg; t=1784667689;
+	bh=2GH2nZ4icxGkT1B65vquwGUexvMpOpGAT0aRzUkPb1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o4uokciG9kHrevMfELJ64O/OZ1TcDxjO57OhVxvjsv66hrof24oeS1bldB/fXay8v
-	 DZIG4KSceJgLK2wrN6sWDY9c+I6IGIiJ7JGzjAvv/i80YfqL2abDXZ1dfHh1Gz4QcG
-	 DMqDqQvYsrvtHZmhpeQee/IFUp0XxRrA/61eBxCc=
+	b=11q/2sNJv2DLJKgLAOroOZ/S58FN+wAVDWf9/e5LvymW7PNO5da+FyUF2NTGqpn9Y
+	 vEeNv2I4we80Iw2gXzXNpSYBBuEVb9QQiyq/pJ5c80lMDv7rbRkVRM/mrFQz6DCeGl
+	 PFNaMQmMdvuTuh/u6YILY71xbv2ulIqKM+RvUryA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 1112/1266] net: wwan: iosm: bound device offsets in the MUX downlink decoder
-Date: Tue, 21 Jul 2026 17:25:49 +0200
-Message-ID: <20260721152506.686193319@linuxfoundation.org>
+Subject: [PATCH 6.6 1103/1266] net: liquidio: fix BAR resource leak on PF number failure
+Date: Tue, 21 Jul 2026 17:25:40 +0200
+Message-ID: <20260721152506.485437941@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,130 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 526b8ef54668780c8f69e0211c342763d5dcbad1 upstream.
+commit c63ee62a3c4ac1a1542f4c1a4b87e2f41df5a496 upstream.
 
-mux_dl_adb_decode() walks a chain of aggregated datagram tables using
-offsets and lengths taken from the modem. first_table_index,
-next_table_index, table_length, datagram_index and datagram_length are
-all device supplied le values. Only first_table_index was checked, and
-only for being non zero. The decoder then formed adth = block +
-adth_index and read the table header and the datagram entries with no
-bound against the received skb. A modem that reports an index or a
-length past the downlink buffer makes the decoder read out of bounds.
+If cn23xx_get_pf_num() fails, the function returns without
+unmapping either BAR. Unmap both BARs before returning from
+the error path.
 
-The buffer is IPC_MEM_MAX_DL_MUX_LITE_BUF_SIZE and skb->len is at most
-that, so skb->len is the real limit, but none of these in band offsets
-were checked against it.
+Found by manual code review.
 
-The table chain is also followed with no forward progress check. The loop
-takes the next table from adth->next_table_index and stops only when that
-reaches zero. A modem can stage two tables that point at each other, so
-the loop never ends. It runs in softirq and clones the skb on every pass.
-
-Validate every device offset and length against skb->len before use.
-The block header must fit. Each table header, on entry and after every
-next_table_index, must lie inside the skb. The datagram table must fit.
-Each datagram index and length must stay inside the skb. The header
-padding must not exceed the datagram length so the receive length does
-not wrap. Require each next_table_index to move forward so the chain
-cannot cycle.
-
-This was reproduced under KASAN as a slab out of bounds read on a normal
-downlink receive once the iosm net device is up.
-
-Fixes: 1f52d7b62285 ("net: wwan: iosm: Enable M.2 7360 WWAN card support")
-Suggested-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Fixes: 0c45d7fe12c7 ("liquidio: fix use of pf in pass-through mode in a virtual machine")
 Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/178236824878.3259367.5389624724479864947@maoyixie.com
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Link: https://patch.msgid.link/20260624064013.2809570-1-haoxiang_li2024@163.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wwan/iosm/iosm_ipc_mux_codec.c |   40 +++++++++++++++++++++--------
- 1 file changed, 30 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/cavium/liquidio/cn23xx_pf_device.c |   18 ++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
---- a/drivers/net/wwan/iosm/iosm_ipc_mux_codec.c
-+++ b/drivers/net/wwan/iosm/iosm_ipc_mux_codec.c
-@@ -553,19 +553,21 @@ static int mux_dl_process_dg(struct iosm
- 	u32 packet_offset, i, rc, dg_len;
+--- a/drivers/net/ethernet/cavium/liquidio/cn23xx_pf_device.c
++++ b/drivers/net/ethernet/cavium/liquidio/cn23xx_pf_device.c
+@@ -1332,18 +1332,14 @@ int setup_cn23xx_octeon_pf_device(struct
+ 	if (octeon_map_pci_barx(oct, 1, MAX_BAR1_IOREMAP_SIZE)) {
+ 		dev_err(&oct->pci_dev->dev, "%s CN23XX BAR1 map failed\n",
+ 			__func__);
+-		octeon_unmap_pci_barx(oct, 0);
+-		return 1;
++		goto err_unmap_bar0;
+ 	}
  
- 	for (i = 0; i < nr_of_dg; i++, dg++) {
--		if (le32_to_cpu(dg->datagram_index)
--				< sizeof(struct mux_adbh))
-+		u32 dg_index = le32_to_cpu(dg->datagram_index);
+ 	if (cn23xx_get_pf_num(oct) != 0)
+-		return 1;
++		goto err_unmap_bar1;
+ 
+-	if (cn23xx_sriov_config(oct)) {
+-		octeon_unmap_pci_barx(oct, 0);
+-		octeon_unmap_pci_barx(oct, 1);
+-		return 1;
+-	}
++	if (cn23xx_sriov_config(oct))
++		goto err_unmap_bar1;
+ 
+ 	octeon_write_csr64(oct, CN23XX_SLI_MAC_CREDIT_CNT, 0x3F802080802080ULL);
+ 
+@@ -1374,6 +1370,12 @@ int setup_cn23xx_octeon_pf_device(struct
+ 	oct->coproc_clock_rate = 1000000ULL * cn23xx_coprocessor_clock(oct);
+ 
+ 	return 0;
 +
-+		dg_len = le16_to_cpu(dg->datagram_length);
-+
-+		if (dg_index < sizeof(struct mux_adbh))
- 			goto dg_error;
++err_unmap_bar1:
++	octeon_unmap_pci_barx(oct, 1);
++err_unmap_bar0:
++	octeon_unmap_pci_barx(oct, 0);
++	return 1;
+ }
+ EXPORT_SYMBOL_GPL(setup_cn23xx_octeon_pf_device);
  
--		/* Is the packet inside of the ADB */
--		if (le32_to_cpu(dg->datagram_index) >=
--					le32_to_cpu(adbh->block_length)) {
-+		/* Is the packet inside of the ADB and the received skb ? */
-+		if (dg_index >= le32_to_cpu(adbh->block_length) ||
-+		    dg_index >= skb->len ||
-+		    dg_len > skb->len - dg_index ||
-+		    dl_head_pad_len >= dg_len) {
- 			goto dg_error;
- 		} else {
--			packet_offset =
--				le32_to_cpu(dg->datagram_index) +
--				dl_head_pad_len;
--			dg_len = le16_to_cpu(dg->datagram_length);
-+			packet_offset = dg_index + dl_head_pad_len;
- 			/* Pass the packet to the netif layer. */
- 			rc = ipc_mux_net_receive(ipc_mux, if_id, ipc_mux->wwan,
- 						 packet_offset,
-@@ -589,12 +591,16 @@ static void mux_dl_adb_decode(struct ios
- 	struct mux_adbh *adbh;
- 	struct mux_adth *adth;
- 	int nr_of_dg, if_id;
--	u32 adth_index;
-+	u32 adth_index, prev_index = 0;
- 	u8 *block;
- 
- 	block = skb->data;
- 	adbh = (struct mux_adbh *)block;
- 
-+	/* The block header itself must fit in the received skb. */
-+	if (skb->len < sizeof(struct mux_adbh))
-+		goto adb_decode_err;
-+
- 	/* Process the aggregated datagram tables. */
- 	adth_index = le32_to_cpu(adbh->first_table_index);
- 
-@@ -606,6 +612,16 @@ static void mux_dl_adb_decode(struct ios
- 
- 	/* Loop through mixed session tables. */
- 	while (adth_index) {
-+		/* The table header must lie within the received skb, and the
-+		 * chain must move forward so a modem cannot make the loop
-+		 * cycle between two tables.
-+		 */
-+		if (adth_index <= prev_index ||
-+		    adth_index < sizeof(struct mux_adbh) ||
-+		    adth_index > skb->len - sizeof(struct mux_adth))
-+			goto adb_decode_err;
-+		prev_index = adth_index;
-+
- 		/* Get the reference to the table header. */
- 		adth = (struct mux_adth *)(block + adth_index);
- 
-@@ -629,6 +645,10 @@ static void mux_dl_adb_decode(struct ios
- 		if (le16_to_cpu(adth->table_length) < sizeof(struct mux_adth))
- 			goto adb_decode_err;
- 
-+		/* The whole datagram table must fit in the received skb. */
-+		if (le16_to_cpu(adth->table_length) > skb->len - adth_index)
-+			goto adb_decode_err;
-+
- 		/* Calculate the number of datagrams. */
- 		nr_of_dg = (le16_to_cpu(adth->table_length) -
- 					sizeof(struct mux_adth)) /
 
 
