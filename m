@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48A5402B8F;
-	Tue, 21 Jul 2026 17:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635B447255B;
+	Tue, 21 Jul 2026 17:58:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656694; cv=none; b=GkAEyxCXclLVL+hgBKyFxqP7z8DvBxlq4bpDW/IJU1EgdYxuvFRLQHICX/xvbcoiI5zr2aUbs56Z7qvYGhpJ35/RTfOQXc12OV9SHqHNjr7mvobjbUFAp282F8QGgL8+nLsYpJK/QEI240+C50R9BuljddqGCunxGwLIOGG8U24=
+	t=1784656696; cv=none; b=DG3QYB3gVXgVHTCErPCjEcp9VmECobyfAZmMjeEjhNxs2G6bpVmPaY2DvwlgC3K19cQFsz5/g/LUue1Ao3LdzRrc40LBHifdtoYyF91r/9FiiA159ZkeEAMHjww8cCp3sISE/UvzSr3ZMVwSmSnkY1xhNZEIEDQ6jllnMXvPgIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656694; c=relaxed/simple;
-	bh=jJGjxZCARKtoQqn7hFlUTz0heH3udeaa9cOViQEIpdg=;
+	s=arc-20240116; t=1784656696; c=relaxed/simple;
+	bh=DMFkwvck/M8AgTn09rTxydGetdQVgzUVh80TeyFpaMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sjb7zswYQORPTJeajBiIUKO0NML2aqL7yOds2F8syDSJP1UvoqYBnAznTrBGKIyuna1SwIoqKbqx1RLtrJdHZg4g40rx38ywWryJLc0hJLOKqs44Akq4tPd+OtSTSTN586Ft9qEbpSXcW/Bp7UgdAh3ungPUSNfIYjahgzrozWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W1YnwPos; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZqQDyH4aZJ5HidAvy771vPLtRotAVgwedObiFSeRWo8sChcFa7F+KoXFcm3anFe6iK62WbCEz10vQ16C6YbBWbATjUmYyt/yeVVCX2egOZcmbSJRQZTgdo7VCrCvOhyKPjERheRT+DBb6L+QqQPOwR0hIlTW3DAuNjm6DSdT034=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0jOegUux; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W1YnwPos"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857991F000E9;
-	Tue, 21 Jul 2026 17:58:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0jOegUux"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256561F00A3D;
+	Tue, 21 Jul 2026 17:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656687;
-	bh=vr5EXYee2T9qjIk90r9qY5PwUDmKGiyGJXcxNi4Ur1g=;
+	s=korg; t=1784656689;
+	bh=tQw2Idic92ulHX3uOR/OdsyW6DD+kDyBpg6OhBU/mBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W1YnwPosXn6i7y6e2gia5XRg5+tVGHoFEu0RJ0NF43K5iviPKHplC5ECZYiQsExDU
-	 9mcGItMfFlssFkCJ0JDps9CHiWqlif4NDkTLppxv3fYbuOoh99ARi+UYa5ekZSkjy2
-	 sHtpp6Hv7I2qfQtHRCcFpQoUAJMKz5zYOdyfB9kc=
+	b=0jOegUuxq95GCCvLJTT39Gxqbk8RmRQSPBcENuYFhCsGbTwx/owgR18SdfKpCkloE
+	 tAcHbteC5TWLB2odQijhklJ204tnLYlbUJluJ+8wb6ySdz8sFtkHH1w0XZYoauK5/j
+	 7mfcaSwiLs3IX4gl4JovgMSAeqRqqlW/jzs8FLrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0482/1611] net/sched: cls_flow: Dont expose folded kernel pointers
-Date: Tue, 21 Jul 2026 17:09:58 +0200
-Message-ID: <20260721152526.173324088@linuxfoundation.org>
+Subject: [PATCH 6.18 0483/1611] net: fib_rules: Dont dump dying fib_rule in fib_rules_dump().
+Date: Tue, 21 Jul 2026 17:09:59 +0200
+Message-ID: <20260721152526.196712750@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,71 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit f294fc71c4a0fa4964f6428a1b4e7929c1d83125 ]
+[ Upstream commit 2821e85c058f81c9948a2fb1a634f7b47457d51c ]
 
-The flow classifier falls back to addr_fold() for fields that are missing
-from packet headers. In map mode, userspace controls mask, xor, rshift,
-addend and divisor, and can observe the resulting classid through class
-statistics. This allows a tc classifier in a user/network namespace to
-recover the 32-bit folded value of skb->sk, skb_dst() or skb_nfct().
+rocker_router_fib_event() calls fib_rule_get() during RCU dump.
 
-Align with standard kernel practices for pointer hashing and replace the
-XOR folding with a keyed siphash (which is cryptographically secure)
+If the fib_rule is dying, refcount_inc() will complain about it.
 
-Fixes: e5dfb815181f ("[NET_SCHED]: Add flow classifier")
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Tested-by: Kyle Zeng <kylebot@openai.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260610101839.14135-1-jhs@mojatatu.com
+Let's call refcount_inc_not_zero() in fib_rules_dump().
+
+Fixes: 5d7bfd141924 ("ipv4: fib_rules: Dump FIB rules when registering FIB notifier")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260610061744.2030996-3-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_flow.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ include/net/fib_rules.h | 5 +++++
+ net/core/fib_rules.c    | 6 +++++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_flow.c b/net/sched/cls_flow.c
-index edf1252c1fde75..9b472578bf75f4 100644
---- a/net/sched/cls_flow.c
-+++ b/net/sched/cls_flow.c
-@@ -21,6 +21,7 @@
- #include <net/inet_sock.h>
+diff --git a/include/net/fib_rules.h b/include/net/fib_rules.h
+index 6e68e359ad18c2..7dee0ae616e322 100644
+--- a/include/net/fib_rules.h
++++ b/include/net/fib_rules.h
+@@ -111,6 +111,11 @@ static inline void fib_rule_get(struct fib_rule *rule)
+ 	refcount_inc(&rule->refcnt);
+ }
  
- #include <net/pkt_cls.h>
-+#include <linux/siphash.h>
- #include <net/ip.h>
- #include <net/route.h>
- #include <net/flow_dissector.h>
-@@ -57,11 +58,15 @@ struct flow_filter {
- 	struct rcu_work		rwork;
- };
- 
-+static siphash_aligned_key_t flow_keys_secret __read_mostly;
++static inline bool fib_rule_get_safe(struct fib_rule *rule)
++{
++	return refcount_inc_not_zero(&rule->refcnt);
++}
 +
- static inline u32 addr_fold(void *addr)
+ static inline void fib_rule_put(struct fib_rule *rule)
  {
--	unsigned long a = (unsigned long)addr;
--
--	return (a & 0xFFFFFFFF) ^ (BITS_PER_LONG > 32 ? a >> 32 : 0);
-+#ifdef CONFIG_64BIT
-+	return (u32)siphash_1u64((u64)addr, &flow_keys_secret);
-+#else
-+	return (u32)siphash_1u32((u32)addr, &flow_keys_secret);
-+#endif
- }
+ 	if (refcount_dec_and_test(&rule->refcnt))
+diff --git a/net/core/fib_rules.c b/net/core/fib_rules.c
+index 8ca634964e363c..cf374c20873258 100644
+--- a/net/core/fib_rules.c
++++ b/net/core/fib_rules.c
+@@ -349,7 +349,7 @@ int fib_rules_lookup(struct fib_rules_ops *ops, struct flowi *fl,
  
- static u32 flow_get_src(const struct sk_buff *skb, const struct flow_keys *flow)
-@@ -596,6 +601,7 @@ static int flow_init(struct tcf_proto *tp)
- 		return -ENOBUFS;
- 	INIT_LIST_HEAD(&head->filters);
- 	rcu_assign_pointer(tp->root, head);
-+	net_get_random_once(&flow_keys_secret, sizeof(flow_keys_secret));
- 	return 0;
- }
- 
+ 		if (err != -EAGAIN) {
+ 			if ((arg->flags & FIB_LOOKUP_NOREF) ||
+-			    likely(refcount_inc_not_zero(&rule->refcnt))) {
++			    likely(fib_rule_get_safe(rule))) {
+ 				arg->rule = rule;
+ 				goto out;
+ 			}
+@@ -410,8 +410,12 @@ int fib_rules_dump(struct net *net, struct notifier_block *nb, int family,
+ 	if (!ops)
+ 		return -EAFNOSUPPORT;
+ 	list_for_each_entry_rcu(rule, &ops->rules_list, list) {
++		if (!fib_rule_get_safe(rule))
++			continue;
++
+ 		err = call_fib_rule_notifier(nb, FIB_EVENT_RULE_ADD,
+ 					     rule, family, extack);
++		fib_rule_put(rule);
+ 		if (err)
+ 			break;
+ 	}
 -- 
 2.53.0
 
