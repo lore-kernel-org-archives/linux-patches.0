@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A57F46EF88;
-	Tue, 21 Jul 2026 20:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467502DA76C;
+	Tue, 21 Jul 2026 20:17:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665075; cv=none; b=tFtChV9ZumjHUolYiUsPeP0b1hQhozDkW1cn/MUnIyrT3KpFOUBmAXBBFHZ4SQWUogsxjfTy6ONxd7YUgvLD021Z6h9ZWFZ3nYryz3VhxvhnzUc0NyXYyY7twNcSp+1uCrnVn2JfFmYSnwCuy3/BtvQb4K2JOQywq1mhFIycBRU=
+	t=1784665078; cv=none; b=rXTjQhLKJ5qPHTb/3cxSzN+/2sK6Oo+/InDYgGpAkmjxZf/VsCdshRwmK98QA/2emzxQlkO+bqz6DF9IXMKvldOREUBESoXHbUMFFV9DRWBSaMzaXiiGy3M+7c4oyNhsFMagMDGsXMCjAkuTDl1gclyuZMD61pi+B7mqsPk1qv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665075; c=relaxed/simple;
-	bh=jXbZPa6YapHVYgEJEL6Dic7wQLer6z46hqMPPRDIFvE=;
+	s=arc-20240116; t=1784665078; c=relaxed/simple;
+	bh=Q0Zk0IR0TkI9P+CJ2xqX3xWIZtega5If6iw+/hoMCBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eqinwRcBjXDvWFAOJBgHk5s7K7VgMz8rkfBdZosI6TFJefunTy0wf6CgkBr8VvzjMefCvY2rWGbN2daogpui9DVqpn2eghkxPVDCITc/9ATw8idytzYaZ6hXLw/2fGSIVnMv70W/k2TsvHlgzkUq7OwxZcty/N5jYV/ByAIphnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkSiFkqQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E2JG7b8dOqgt0hOr82FX1ZROW3g7X2qY7v+F1Qm30QbR/ioCOScmK4Ljocwel7/cGogj7Jr6/uh6LwodJBb9KPUvBhzFWmSCNhqwj3oOB6RapGBc6YGqUI+L136T5nVM1FeIez7ZMV/I0FmCXp15r2sveklCuBsxPShmo9u3i+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADcN+EuZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkSiFkqQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AD881F000E9;
-	Tue, 21 Jul 2026 20:17:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADcN+EuZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1091F000E9;
+	Tue, 21 Jul 2026 20:17:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665074;
-	bh=tpikDl8Ipl4qqcVOS8zMUFxtwzo8W7OdliaVZ0kiGhs=;
+	s=korg; t=1784665077;
+	bh=zaRKP4k/u9udsWEkxaXiZbwl61g2olLhpV65aLuhR1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mkSiFkqQZ3pwJAIBrOOmeWTMDp38hh3RSDApn8x1p1xRLC9XyBMeRz4E9PVpw44Dy
-	 jTzvlq6JcSd/0FJ23YvdTqVsLzvE1j/mT/p1DH9lk1z0b+19AA+oVSNY0t2OMT5TQb
-	 tLV+93+7i33wVFeOFJt7lzNHr0+xx2bSgq2Rs96Q=
+	b=ADcN+EuZ+NK5++rJ5YsnmTTGJLNNCCCgaSENlaWs9wLZwtMuv2m11TqTrJsOH5Xfn
+	 /cqtUYIwGnPJlzb6l4JLTyfXBklfHIFw/+PDWeNbFvkdr5S8/6BqCiOTUMtumtrx0g
+	 wjKrBkChMTKlxu/pwBxBcqbaBtEPwy+GKu73tJEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Dave Chinner <david@fromorbit.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 0166/1266] mm: shrinker: fix NULL pointer dereference in debugfs
-Date: Tue, 21 Jul 2026 17:10:03 +0200
-Message-ID: <20260721152445.521073409@linuxfoundation.org>
+	Pratham Gupta <pratham36gupta@gmail.com>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.6 0167/1266] netfilter: ctnetlink: use nf_ct_exp_net() in expectation dump
+Date: Tue, 21 Jul 2026 17:10:04 +0200
+Message-ID: <20260721152445.542426829@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,73 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Zheng <zhengqi.arch@bytedance.com>
+From: Pratham Gupta <pratham36gupta@gmail.com>
 
-commit e30453c61e185e914fde83c650e268067b140218 upstream.
+commit a7f57320bbbc67e347bf5fff4b4a9bab980d5956 upstream.
 
-shrinker_debugfs_add() creates both "count" and "scan" debugfs files
-unconditionally.
+Commit 02a3231b6d82 ("netfilter: nf_conntrack_expect: store netns and zone in expectation")
+introduced exp->net so RCU-only expectation paths no longer need to
+dereference exp->master for netns lookups.
 
-That assumes every shrinker implements both count_objects() and
-scan_objects(), which is not guaranteed.  For example, the xen-backend
-shrinker sets count_objects() but leaves scan_objects() NULL, so writing
-to its scan file calls through a NULL function pointer and panics the
-kernel:
+Commit 3db5647984de ("netfilter: nf_conntrack_expect: skip expectations in other netns via proc")
+updated the proc path accordingly, but ctnetlink_exp_dump_table() still
+compares against nf_ct_net(exp->master).
 
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-RIP: 0010:0x0
-Code: Unable to access opcode bytes at 0xffffffffffffffd6.
-Call Trace:
- <TASK>
- shrinker_debugfs_scan_write+0x12e/0x270
- full_proxy_write+0x5f/0x90
- vfs_write+0xde/0x420
- ? filp_flush+0x75/0x90
- ? filp_close+0x1d/0x30
- ? do_dup2+0xb8/0x120
- ksys_write+0x68/0xf0
- ? filp_flush+0x75/0x90
- do_syscall_64+0xb3/0x5b0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Use nf_ct_exp_net(exp) here as well so the netlink dump path matches
+the rest of the March 2026 expectation netns/RCU cleanup.
 
-The count path has the same issue in principle if a shrinker omits
-count_objects().
-
-To fix it, only create "count" and "scan" debugfs files when the
-corresponding callbacks are present.
-
-Link: https://lore.kernel.org/20260617090052.27325-1-qi.zheng@linux.dev
-Fixes: bbf535fd6f06 ("mm: shrinkers: add scan interface for shrinker debugfs")
-Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: Dave Chinner <david@fromorbit.com>
-Cc: Qi Zheng <zhengqi.arch@bytedance.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 02a3231b6d82 ("netfilter: nf_conntrack_expect: store netns and zone in expectation")
+Cc: stable@vger.kernel.org
+Signed-off-by: Pratham Gupta <pratham36gupta@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shrinker_debug.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ net/netfilter/nf_conntrack_netlink.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/shrinker_debug.c
-+++ b/mm/shrinker_debug.c
-@@ -198,10 +198,12 @@ int shrinker_debugfs_add(struct shrinker
- 	}
- 	shrinker->debugfs_entry = entry;
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -3148,7 +3148,7 @@ restart:
+ 			if (l3proto && exp->tuple.src.l3num != l3proto)
+ 				continue;
  
--	debugfs_create_file("count", 0440, entry, shrinker,
--			    &shrinker_debugfs_count_fops);
--	debugfs_create_file("scan", 0220, entry, shrinker,
--			    &shrinker_debugfs_scan_fops);
-+	if (shrinker->count_objects)
-+		debugfs_create_file("count", 0440, entry, shrinker,
-+				    &shrinker_debugfs_count_fops);
-+	if (shrinker->scan_objects)
-+		debugfs_create_file("scan", 0220, entry, shrinker,
-+				    &shrinker_debugfs_scan_fops);
- 	return 0;
- }
+-			if (!net_eq(nf_ct_net(exp->master), net))
++			if (!net_eq(nf_ct_exp_net(exp), net))
+ 				continue;
  
+ 			if (cb->args[1]) {
 
 
