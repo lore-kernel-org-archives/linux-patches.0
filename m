@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD9547253F;
-	Tue, 21 Jul 2026 20:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19843471425;
+	Tue, 21 Jul 2026 20:27:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665673; cv=none; b=sn7YeESnuhaYeE22zmhL5RF/sWYIu2pZH6Fg/RovF0fMOo2lLr8XJEXjUIrDOhJdDTbPMFBQhM88hSiKnWumn0ng5mGAzKvgGXYZWjB2Vocx2Z0bDTeSVytu1E0EZd0UBJD6jZC1XC4m7sFfDXgY1n5cCs1m6mmpZ+1VrdwaHeI=
+	t=1784665676; cv=none; b=af8jjurbduUuOcQKR4ywMgXA633YalZ14HtW48bqxfMv0TKTlLVjx1f+cTwl2exGqC5W5hjkQY8/VgwRz3xtR0StOsmXLYAt2fHSBNFN6yrdtUO7cmZJyOP96GWThVekUOEadIorsGMo2J46D6d7ziFyzTdn+FfK3x4OCZnXjKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665673; c=relaxed/simple;
-	bh=UALnmIm22UCECqS1om8YyhoaK4rYagQed4BLL8dSv0k=;
+	s=arc-20240116; t=1784665676; c=relaxed/simple;
+	bh=EqFaSOqerj8UuI7ZzH+VEAB5O4GjtD7aHWk6SRhGpzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DgLJIperc2nAABj/YTVkYeXx8cShgaOY/fvK8MIIEPyeKBiH7DtWGvTLBW6Qb4ZyGVdE+5KtPlBQK6FCIws5A2Mt7J9LMwB98fAxkcvNtx04hGQTDgpcMfoHSezF0MfRLqfiPyAtDZnRFxLx0pGzjhX6Sj5f90VxffetTSjt34E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tlwj6Fyv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CGnGpfPUkLrlXc0i8UbGJJGrLBFRusBtcPpFVbS4Cyp8xqh7JL5GwgyoxT6qYx0GlI8kdUJHEf7IyPbhPJsiBsTmszSnli9Ja2bhI8zrVYcmvrA1BuUotEK1lzSgnJJW/6RIwGHG+jSGiKzjn9jrdpj3ziPgGF7OZuR3hgtC98g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nnbLv6vd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tlwj6Fyv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 796CC1F000E9;
-	Tue, 21 Jul 2026 20:27:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nnbLv6vd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318B61F00A3A;
+	Tue, 21 Jul 2026 20:27:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665671;
-	bh=15UrIJl3btCXyO6WfqNLF+FSJiPOjSwbnG2sRNS62iU=;
+	s=korg; t=1784665673;
+	bh=CzPHwFF9cKzoU9MAxiMZYKFcLu7hAjVgYX3CxjFEclE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tlwj6Fyv7/2sEQeQH+GpYvdjZvwjcB75aH9wAqwRUP6T63DKcwdmg7heUW7lE/KBj
-	 SHV3ZsaVUQvgAYiHQ9cwqC6AIOD2LEtaBf95qOxBUxd+YhUwGe1HeAf1pjX2uUw/At
-	 KNn73KYkyRe7DZsph8xR0fuMsX5vBKG/hsn7zz7I=
+	b=nnbLv6vdY/1ftWSH2ZymBq+taiRSwzWF10CdJ24vXuS6AJtsx15ZEibauApLbddQE
+	 kgi4z2NVp2Y6w05A0z/3UMAmrKkxqPjogowTk3MxpQE+d0OSawDyrgwqDflErP981k
+	 IEZStgO2QuMQEf4tQTWw18bdmpgl0E12kgM/3jB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Wei Wang <wei.w.wang@hotmail.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0392/1266] iommu/amd: Fix a stale comment about which legacy mode is user visible
-Date: Tue, 21 Jul 2026 17:13:49 +0200
-Message-ID: <20260721152450.598623214@linuxfoundation.org>
+Subject: [PATCH 6.6 0393/1266] arm64: dts: mediatek: mt8192-asurada: Move PCIe DMA bounce buffer to host
+Date: Tue, 21 Jul 2026 17:13:50 +0200
+Message-ID: <20260721152450.621289914@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,45 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 4bf53c2d0c08bbdaa32f2114281f1ddab61902bf ]
+[ Upstream commit 533275a4b5240a2bf2c592bd4536560388306d26 ]
 
-Update a stale comment about which of the legacy modes is visible to the
-user, i.e. can be forced via amd_iommu_intr=legacy.
+The DMA bounce buffer is attached to the PCIe host controller, i.e. all
+PCIe DMA transfers should use it.
 
-Fixes: b74aa02d7a30 ("iommu/amd: Fix legacy interrupt remapping for x2APIC-enabled system")
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Wei Wang <wei.w.wang@hotmail.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Move it from the PCIe (WiFi) device node down to the PCIe host
+controller node.
+
+Fixes: 0dca9f0b3e63 ("arm64: dts: mediatek: asurada: Enable PCIe and add WiFi")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/amd_iommu_types.h | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
-index 2571a782b7b61d..d81defd49949ce 100644
---- a/drivers/iommu/amd/amd_iommu_types.h
-+++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -926,12 +926,13 @@ static inline int get_hpet_devid(int id)
- }
+diff --git a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
+index 54e3ec168fa9a4..0788db329b785e 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
+@@ -494,6 +494,7 @@ flash@0 {
+ &pcie {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pcie_pins>;
++	memory-region = <&wifi_restricted_dma_region>;
  
- enum amd_iommu_intr_mode_type {
--	AMD_IOMMU_GUEST_IR_LEGACY,
--
--	/* This mode is not visible to users. It is used when
--	 * we cannot fully enable vAPIC and fallback to only support
--	 * legacy interrupt remapping via 128-bit IRTE.
-+	/*
-+	 * The legacy format mode is not visible to users to prevent the user
-+	 * from crashing x2APIC systems, which for all intents and purposes
-+	 * require 128-bit IRTEs.   The legacy format will be forced as needed
-+	 * when hardware doesn't support 128-bit IRTEs.
- 	 */
-+	AMD_IOMMU_GUEST_IR_LEGACY,
- 	AMD_IOMMU_GUEST_IR_LEGACY_GA,
- 	AMD_IOMMU_GUEST_IR_VAPIC,
+ 	pcie0: pcie@0,0 {
+ 		device_type = "pci";
+@@ -508,7 +509,6 @@ pcie0: pcie@0,0 {
+ 		wifi: wifi@0,0 {
+ 			reg = <0x10000 0 0 0 0x100000>,
+ 			      <0x10000 0 0x100000 0 0x100000>;
+-			memory-region = <&wifi_restricted_dma_region>;
+ 		};
+ 	};
  };
 -- 
 2.53.0
