@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED9544607D;
-	Tue, 21 Jul 2026 19:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B47F3A4F4B;
+	Tue, 21 Jul 2026 19:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663325; cv=none; b=To7AUoXepHlKkGVYIrEKtQSznyWKUbE/v7K+tqhYMJ0Ksgpb6KvUOGEoBHx1KxvYHjGiQP/1xbGiPHTqHMHJgHRkSIYXgmgFI+ZyRobkgWB4D393C2PqUOTuwjmYrW/zcJ6hEvg/Q4kwYi2KUcJOlP9S/JKm4YQolfE4xARPIS8=
+	t=1784663328; cv=none; b=QHTn36zeYHPMFMpNpJsR0K+MYzRJwHAk5HFTV5ZoFbRE+2MiAytMfuuRqtqMS7Mgm/Ej7yJG9t53s4kwkBBecWR/PhhUke6HwJo5sK6SSpTcOYNG5y7DQ9AUOS3Ln3ROd/IjJ4Zkumav1EvQJ1ajDbm/puSjujSO3ZjiPQ7v7+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663325; c=relaxed/simple;
-	bh=ITpI1PuoCymTgn4uR/nLoP+AjPDkv5rcw0Ca/gRnHSA=;
+	s=arc-20240116; t=1784663328; c=relaxed/simple;
+	bh=eFwaLvrtpG4+tc8qSzR2nwN5KgQ454Vfg/eyzl2cbnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OqPwh4c/1zfl2ydN8UsdvmpqxXAfUCX1r35omGhDSE4LncTxLPyLUA7Ego2W2Gs/+bKDJ4RJ9Vin9A37IoAFc5CjxVbFhc9SzmWbLJI0Tru4Rim8ND7BKvYqFpv2lnQVnHzAj1fJ9atGng6oZDRBQb0ngE0l5ATISdZJp3+qTZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJU9iZfl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q9B3cwgCOLDfV+kUJLnJK8sZ+IDzu0qRFn+o1OLwuy9VjGmVuXidY2M6bkYWnpTzGLgH1Iq5Vr+DTxeX5z+t4w3/3VXgYgcXUk9gT6oGMvFRx6LLbxoy3r7RaX1j6sRPo5ayKgy8xGtCd/qnSH4KajzwGtWodBw69TMa8FhOXdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uuZcEj3M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJU9iZfl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F21B1F000E9;
-	Tue, 21 Jul 2026 19:48:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uuZcEj3M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C8771F000E9;
+	Tue, 21 Jul 2026 19:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663324;
-	bh=0+ZuaBb1vS46rfKHs7JGtIrrm/0TemxhtSCZ6vMgqBY=;
+	s=korg; t=1784663326;
+	bh=EN221SazqPa67IwtHkLxGNJfNzKNrKwX41em3zGBwoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GJU9iZfljJNE7M8v32EAEQF8X/bXmZMkGuBeIoslcm+zzgGzCmLFa6x7bGYEGP8bW
-	 ZXL0CqQIrHSS28x5939DntRKwxQvJERI+WX44kPEmqQUA99Ce4QhjmUgGcft31EK+I
-	 MhT8w8PbqLfg7SMzauvnEh0Xtg5ObLkwNTNoTwQ0=
+	b=uuZcEj3M8uhdh0rAy4GdkO2yhYdQ15L/oAI+qoElikEdBUGcxC1TOt9HWzZfryiu5
+	 kNoo+f5gF+HWphifXubdo7bbt3lkl4MHfF8Gh1WC2GkkITyXQE/4FG5JZ220lMKcF2
+	 1OdLQ9ruJOj6z+CECGMOgJJ6zZAheYkCFWlNGd7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Wang <hui.wang@canonical.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Chuck Lever <cel@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0778/1276] ring-buffer: Fix event length with forced 8-byte alignment
-Date: Tue, 21 Jul 2026 17:20:21 +0200
-Message-ID: <20260721152503.487754422@linuxfoundation.org>
+Subject: [PATCH 6.12 0779/1276] net/tls: Consume empty data records in tls_sw_read_sock()
+Date: Tue, 21 Jul 2026 17:20:22 +0200
+Message-ID: <20260721152503.509944397@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,65 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Wang <hui.wang@canonical.com>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit c37e0a4b79a6bbb96ce5ffe279d7c001e20529e0 ]
+[ Upstream commit 3be28e2c9cd0230cb51fd4967df095273afd3848 ]
 
-When RB_FORCE_8BYTE_ALIGNMENT is true, rb_calculate_event_length()
-reserves the space of event->array[0] for placing the data length and
-rb_update_event() stores the data length in event->array[0]
-accordingly. As a result the whole event length will add extra 4 bytes
-for sizeof(event.array[0]) unconditionally.
+A peer may send a zero-length TLS application_data record; TLS 1.3
+explicitly permits these as a traffic-analysis countermeasure (RFC
+8446, Section 5.1). After decryption such a record has full_len ==
+0. tls_sw_read_sock() hands it to the read_actor, which has no
+payload to consume and returns zero. The loop treats a zero return
+as backpressure (used <= 0), requeues the skb at the head of
+rx_list, and stops. rx_list is serviced head-first on the next
+call, so the empty record is dequeued, fails the same way, and is
+requeued again; every later record on the connection is blocked
+behind it.
 
-But ring_buffer_event_length() only subtracts the
-sizeof(event->array[0]) for events larger than RB_MAX_SMALL_DATA +
-sizeof(event->array[0]). As a result, small events on architectures
-with RB_FORCE_8BYTE_ALIGNMENT=true report a data length that is 4
-bytes larger than expected.
+tls_sw_recvmsg() does not stall on this: a zero-length data record
+copies nothing and falls through to consume_skb(). Mirror that in
+the read_sock() path by recognizing an empty data record before
+the actor runs, consuming it, and continuing.
 
-To fix it, add the RB_FORCE_8BYTE_ALIGNMENT as a condition to subtract
-the size of that length field whenever RB_FORCE_8BYTE_ALIGNMENT is
-true.
-
-This issue is observed in a riscv64 kernel with
-CONFIG_HAVE_64BIT_ALIGNED_ACCESS set to y, when we run ftrace selftest
-trace_marker_raw.tc, we get the weird log: for cases where the id is
-1..100, the number of data field is 8*N, but once id exceeds 100, the
-number of data field becomes 8*N+4:
- # 1 buf: 58 00 00 00 80 5e d1 63 (number of data field is 8*1)
- ...
- # a buf: 58 ...                  (number of data field is 8*2)
- ...
- # 64 buf: 58 ...                 (number of data field is 8*13)
- # 65 buf: 58 ...                 (number of data field is 8*13+4)
-
-After applying this change, the number of data field keeps being 8*N+4
-consistently.
-
-Link: https://patch.msgid.link/20260607072431.125633-2-hui.wang@canonical.com
-Fixes: 2271048d1b3b ("ring-buffer: Do 8 byte alignment for 64 bit that can not handle 4 byte align")
-Signed-off-by: Hui Wang <hui.wang@canonical.com>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 662fbcec32f4 ("net/tls: implement ->read_sock()")
+Signed-off-by: Chuck Lever <cel@kernel.org>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20260630191551.875664-1-cel@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/tls/tls_sw.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 4deeb613c556a7..fcd2363d1296b6 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -277,7 +277,8 @@ unsigned ring_buffer_event_length(struct ring_buffer_event *event)
- 	if (event->type_len > RINGBUF_TYPE_DATA_TYPE_LEN_MAX)
- 		return length;
- 	length -= RB_EVNT_HDR_SIZE;
--	if (length > RB_MAX_SMALL_DATA + sizeof(event->array[0]))
-+	if (length > RB_MAX_SMALL_DATA + sizeof(event->array[0]) ||
-+	    RB_FORCE_8BYTE_ALIGNMENT)
-                 length -= sizeof(event->array[0]);
- 	return length;
- }
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index d3eab47b47ea65..2b875369d52326 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -2391,6 +2391,17 @@ int tls_sw_read_sock(struct sock *sk, read_descriptor_t *desc,
+ 			goto read_sock_requeue;
+ 		}
+ 
++		/* An empty data record (legal in TLS 1.3) gives a zero
++		 * read_actor return, indistinguishable from the consumer
++		 * stalling; the used <= 0 path would requeue it at the
++		 * head of rx_list and block all later records. Consume it
++		 * here instead.
++		 */
++		if (rxm->full_len == 0) {
++			consume_skb(skb);
++			continue;
++		}
++
+ 		used = read_actor(desc, skb, rxm->offset, rxm->full_len);
+ 		if (used <= 0) {
+ 			if (!copied)
 -- 
 2.53.0
 
