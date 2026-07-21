@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F28C44AB6D;
-	Tue, 21 Jul 2026 21:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056B044AB6D;
+	Tue, 21 Jul 2026 21:19:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668748; cv=none; b=Y3vtWb/tLt5n0GnxiZeLt1FlCOx4cQ1qZbTwuGk4lyNMiH+rwZDCNmRtQgtAXhpKEsfd8ExoTwKeFtqiO4ZvorSGTabrxsE1v/vlX6SyG3lkqbU/kKPFhSWz2dJckizNLy7eFZF8KN1fLyvEHLNW33N0sQCc9W1Injzpy93V2OU=
+	t=1784668751; cv=none; b=XWZzWWYDsbu2h+L4hoL2Nnh9dCkfiJ604v8XFWkjodKS2IW+0K48cUBg090w9+bqd5+g322KwZHv/PK5hCNOWvPCy4WwgUp+QMkjaKRvJ+PPxDp4QZ4ONJSI4cIgLHXEGlnatS6XFxa4bruKIs7h5fgskyqoP9h9qYUeCaaHf1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668748; c=relaxed/simple;
-	bh=1bxYmMEa/VlsDnKaeUvVc79K5A+BMA1OF+fxRmZxRpI=;
+	s=arc-20240116; t=1784668751; c=relaxed/simple;
+	bh=XEHd2f9ANo9HWml93TOgkI9DXKISVak/Lo+/6XA584A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N7RtwU7CzAtHcrnqM+5l9K3V5ewY7CcSJLDEruZvY6QFv+d84veAAlCKikjhKmLqIUe8Tdt+DBfyi4KmkENJx/oohmPbsRoS3L9N7PXPe1lnuMY0pDQGypr+bn8EhQ2JxdXqcUEC1sZ5bxMZkN65cbnnhzZYdeEua4zt0DYQUoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRJpyOR/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SfTCBnCIUI2P9enkygx6AQK/CkKaxwwpz8TQ51dUQ4XifzhyLtK+c6KXF/iSc4235m41q6IlMgOwhkMBwDngOKf+H4vhbOJA+RJn5uVUm7vGIdmYzP+2B8tZLXlr2lUJ4ohD4UrJ1KgBjgcbJkp3hhBmwl+PmA1VZjEGfCtbGJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IwW2JW8E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRJpyOR/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C4F1F000E9;
-	Tue, 21 Jul 2026 21:19:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IwW2JW8E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4D81F000E9;
+	Tue, 21 Jul 2026 21:19:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668747;
-	bh=zByUnNpCqhbNL6zugLCizfWwBmUTpjk8zOc4DsJmPv0=;
+	s=korg; t=1784668749;
+	bh=OseQ3Z0EDCN1hvXveN5k85l/bg7J+P/dwxiFeiYzsKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tRJpyOR/Ywdq23a5bKbo4desQt6LoG6uSxsSjs8vMf8HpmPHQ8Wxy8yejniwQLuAq
-	 qRa5npXaqtVdXtQJ+KzjYbD3g6Y6S8mevnvCSUKGRm+C6MAgI81jwnFKvUtzGsGQHY
-	 AeGbjb0O/kYCqx6svecn5do2jYonoOggozMNznyQ=
+	b=IwW2JW8E28aKUU5cNT4N0Hid3rCL4tRN8Tv15eEygaxtOFcOTZnL9dBPhAwdd3FA7
+	 mgS1hNRGNyp15BdnmPSIe1ShfK1T3poVjNx2ONkNN2zaJmNIu5yuCBrw3WD7HBQotI
+	 DaDYAKRWKMY0jh+WQA2WnAyLSKzku045m8fLC5rU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Andre Przywara <andre.przywara@arm.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Weixin Guo <2298701336@qq.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0294/1067] pinctrl: sunxi: fix regulator leak in sunxi_pmx_request() error path
-Date: Tue, 21 Jul 2026 17:14:55 +0200
-Message-ID: <20260721152431.179282228@linuxfoundation.org>
+Subject: [PATCH 6.1 0295/1067] arm64: dts: rockchip: fix rk809 interrupt pin on rk3566-roc-pc
+Date: Tue, 21 Jul 2026 17:14:56 +0200
+Message-ID: <20260721152431.201202789@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,38 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Weixin Guo <2298701336@qq.com>
 
-[ Upstream commit 334f7bcbdc79dc8e5b938ac3372453a5368221cf ]
+[ Upstream commit 460bac478c5fe69054ffc60d607bba03bcaf909b ]
 
-In the error path of sunxi_pmx_request(), the code calls
-regulator_put(s_reg->regulator) to release the regulator. However,
-s_reg->regulator is only assigned after a successful regulator_enable().
-This causes a memory leak: the regulator obtained via regulator_get()
-is never properly released when regulator_enable() fails.
+The RK809 PMIC interrupt pin on the Firefly ROC-RK3566-PC (Station M2)
+is physically connected to GPIO0_A3 (RK_PA3) according to the board's
+schematic.
 
-Fixes: dc1445584177 ("pinctrl: sunxi: Fix and simplify pin bank regulator handling")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Andre Przywara <andre.przywara@arm.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Currently, the PMIC node incorrectly specifies RK_PA7 for the interrupt,
+which prevents the PMIC from correctly signaling interrupts. (Note that
+the pinctrl node 'pmic_int' correctly configures RK_PA3).
+
+Fix this by updating the interrupts property to use RK_PA3.
+
+Fixes: 30ac9b4e25d8 ("arm64: dts: rockchip: add dts for Firefly Station M2 rk3566")
+Signed-off-by: Weixin Guo <2298701336@qq.com>
+Link: https://patch.msgid.link/tencent_5035EEE630C845B1B51DEA4284DE23DCCE06@qq.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/sunxi/pinctrl-sunxi.c | 2 +-
+ arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/sunxi/pinctrl-sunxi.c b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
-index df2e721297fc9d..508aa911c8d995 100644
---- a/drivers/pinctrl/sunxi/pinctrl-sunxi.c
-+++ b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
-@@ -878,7 +878,7 @@ static int sunxi_pmx_request(struct pinctrl_dev *pctldev, unsigned offset)
- 	return 0;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts b/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts
+index 9fd262334d77da..fcc6bbf5696f45 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts
+@@ -208,7 +208,7 @@ rk809: pmic@20 {
+ 		compatible = "rockchip,rk809";
+ 		reg = <0x20>;
+ 		interrupt-parent = <&gpio0>;
+-		interrupts = <RK_PA7 IRQ_TYPE_LEVEL_LOW>;
++		interrupts = <RK_PA3 IRQ_TYPE_LEVEL_LOW>;
+ 		clock-output-names = "rk808-clkout1", "rk808-clkout2";
  
- out:
--	regulator_put(s_reg->regulator);
-+	regulator_put(reg);
- 
- 	return ret;
- }
+ 		pinctrl-names = "default";
 -- 
 2.53.0
 
