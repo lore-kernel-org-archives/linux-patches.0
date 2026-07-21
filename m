@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1248C44AB9F;
-	Tue, 21 Jul 2026 22:36:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE74844AB9F;
+	Tue, 21 Jul 2026 22:36:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673403; cv=none; b=aFjbLRNV5L21Qu9VEuwJZa/RbmGpSts4deIT66cxSpyGIg6V6K0EeQNMqdW+ulyAlyz7Yi+sU81KqjAZXy5n+N7NDqEATbInNt+YijYsxhBNSCMb0eLCdNRdeVwrTe4UgGC2B4L2F9gLWbBb8KXBnzqZ5jFCP5u1pjviwfwKuiY=
+	t=1784673405; cv=none; b=pNCdWrjW5UvQl0Y2fwVEXHVsuEsXyo8Mw3NeVguJklqYdEELXilZr3YNWU1qyWZHZaxmcWs+hwiDX31ZNHzMiZfc85+MDCEhP1eQmpUwUdkum3MtaVnkNhf874S6bpQrbDNziZcWnwWbVJv1zd2wCQLjid1Ioswi35USquw7lXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673403; c=relaxed/simple;
-	bh=7+oNEcwXgmCWuMFGgxzv8er82nXoMb8U482vyKWbj50=;
+	s=arc-20240116; t=1784673405; c=relaxed/simple;
+	bh=9VwK6bDNW5b0WI639/tlVkW+NzJWcYTf0N7pTAWv/d0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BDaz4lXH1slF/G3juJ3B6BAZ1kEP30wYpuwSnxySJ54V1sk1JoOSoRikBgSDa39+p0ysK9Ru/llE9+3R2WmldY9+4XcAg9F/eJCq8nAlykYP34q6S3+ZqhBJXlAdNoBlDJp11OF/TKrXT9RcOY9ulCEcVIJnA+CG123ldu5dFeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kg+9P7LG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q4A5In3jrxqLCa8PKgnFah131CxPhvYFLzrSVyjU/q6EfFrfC02RdSHTYOA5NTAqzCu00KEssx7f22jP1rd6fC7S0eOxqVUPYN2kS5ZS9ELsi0jl7APLxeF2NNJqKEidAEifLdjFjpmvFL5M0GTqmjBZtrnH4U8A9yENA6EI61Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pB6mZrfV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kg+9P7LG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F1E1F000E9;
-	Tue, 21 Jul 2026 22:36:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pB6mZrfV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC981F00A3A;
+	Tue, 21 Jul 2026 22:36:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673402;
-	bh=l8Wlb3cYitpE+Ru30AN1eUFftfbI5HSBvZZH92h1Taw=;
+	s=korg; t=1784673404;
+	bh=MjZEzEybBrYtOSPc/6Y6a4TBArOlz60mhIykh/qT3qI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kg+9P7LG2YuvXgx4tnEBxRF825M7P+pcKgsGrptIL6xCg+UEqp60paTbd4Ev3G1VV
-	 xXJ71m+J1Pm9RXrlXAGLXkGIgSTgSYRTArSP+nbwVQmRFYtciJUJgJplKkJt+ycjWB
-	 LTqJAJaKhYjcAgDmpYxhIfmXG+33AReNsHngMMBA=
+	b=pB6mZrfVbmkz6F5ZUsbjKjGae9yn3OGINUKJsfh2oMq9Givzey+8zcq9tPLqvBwUj
+	 hhsnFwJDnRW0UOkMcQ8l+BBiKfbyG+G5hWvU4ek+3X9fovM1+8OgGHTpPdXEYXAxwM
+	 KH7B9G44d++h3fkcd5G/r7LxI9aRBe9dNwnnvGAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
+	Florian Fuchs <fuchsfl@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 149/699] Input: touchwin - reset the packet index on every complete packet
-Date: Tue, 21 Jul 2026 17:18:28 +0200
-Message-ID: <20260721152359.067525272@linuxfoundation.org>
+Subject: [PATCH 5.10 150/699] Input: maplemouse - fix NULL pointer dereference in open()
+Date: Tue, 21 Jul 2026 17:18:29 +0200
+Message-ID: <20260721152359.088471571@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,64 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Florian Fuchs <fuchsfl@gmail.com>
 
-commit 478cdd736f2ce3114f90e775d7358136d3977b94 upstream.
+commit ee89db004238bd0b034f2a6176e175561658750b upstream.
 
-tw_interrupt() accumulates each non-zero serial byte into a fixed
-three-byte buffer with a running index that is only reset once a full
-packet has been received *and* the device's two Y bytes agree:
+Commit 555c765b0cc2 ("Input: mouse - drop unnecessary calls to
+input_set_drvdata") dropped the input_set_drvdata() call in probe
+because the data appeared to be unused. However, dc_mouse_open() and
+dc_mouse_close() were using maple_get_drvdata(to_maple_dev(&dev->dev)).
+This appears to be accessing the data attached to an instance of
+maple_device structure, while in reality this actually retrieves driver
+data from the input device's embedded struct device (doing invalid
+conversion of input device structure to maple device). After
+input_set_drvdata() was removed, that lookup started returning NULL and
+opening the input device dereferences mse->mdev.
 
-	tw->data[tw->idx++] = data;
-	if (tw->idx == TW_LENGTH && tw->data[1] == tw->data[2]) {
-		...
-		tw->idx = 0;
-	}
+Restore input_set_drvdata() and convert open() and close() to use
+input_get_drvdata() so the dependency is no longer hidden.
 
-The reset is gated on tw->data[1] == tw->data[2], a value the device
-controls.  A malicious, malfunctioning or counterfeit Touchwindow
-peripheral can stream non-zero bytes whose 2nd and 3rd bytes differ: the
-index reaches TW_LENGTH without the equality holding, is never reset, and
-keeps growing, so tw->data[tw->idx++] walks off the end of the three-byte
-array and the rest of the heap-allocated struct tw, one attacker-chosen
-byte at a time -- an unbounded, device-driven heap out-of-bounds write.
-
-Reset the index on every completed packet and report an event only when
-the two Y bytes match, like the other serio touchscreen drivers do.
-
-Fixes: 11ea3173d5f2 ("Input: add driver for Touchwin serial touchscreens")
+Fixes: 6b3480855aad ("maple: input: fix up maple mouse driver")
+Fixes: 555c765b0cc2 ("Input: mouse - drop unnecessary calls to input_set_drvdata")
+Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
+Link: https://patch.msgid.link/20260628230715.2982552-1-fuchsfl@gmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260613-b4-disp-69921bfd-v1-1-82c036899959@proton.me
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/touchwin.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/input/mouse/maplemouse.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/input/touchscreen/touchwin.c
-+++ b/drivers/input/touchscreen/touchwin.c
-@@ -63,12 +63,15 @@ static irqreturn_t tw_interrupt(struct s
- 	if (data) {		/* touch */
- 		tw->touched = 1;
- 		tw->data[tw->idx++] = data;
--		/* verify length and that the two Y's are the same */
--		if (tw->idx == TW_LENGTH && tw->data[1] == tw->data[2]) {
--			input_report_abs(dev, ABS_X, tw->data[0]);
--			input_report_abs(dev, ABS_Y, tw->data[1]);
--			input_report_key(dev, BTN_TOUCH, 1);
--			input_sync(dev);
-+		/* a full packet ends the accumulation, valid or not */
-+		if (tw->idx == TW_LENGTH) {
-+			/* report only if the two Y's are the same */
-+			if (tw->data[1] == tw->data[2]) {
-+				input_report_abs(dev, ABS_X, tw->data[0]);
-+				input_report_abs(dev, ABS_Y, tw->data[1]);
-+				input_report_key(dev, BTN_TOUCH, 1);
-+				input_sync(dev);
-+			}
- 			tw->idx = 0;
- 		}
- 	} else if (tw->touched) {	/* untouch */
+--- a/drivers/input/mouse/maplemouse.c
++++ b/drivers/input/mouse/maplemouse.c
+@@ -48,7 +48,7 @@ static void dc_mouse_callback(struct map
+ 
+ static int dc_mouse_open(struct input_dev *dev)
+ {
+-	struct dc_mouse *mse = maple_get_drvdata(to_maple_dev(&dev->dev));
++	struct dc_mouse *mse = input_get_drvdata(dev);
+ 
+ 	maple_getcond_callback(mse->mdev, dc_mouse_callback, HZ/50,
+ 		MAPLE_FUNC_MOUSE);
+@@ -58,7 +58,7 @@ static int dc_mouse_open(struct input_de
+ 
+ static void dc_mouse_close(struct input_dev *dev)
+ {
+-	struct dc_mouse *mse = maple_get_drvdata(to_maple_dev(&dev->dev));
++	struct dc_mouse *mse = input_get_drvdata(dev);
+ 
+ 	maple_getcond_callback(mse->mdev, dc_mouse_callback, 0,
+ 		MAPLE_FUNC_MOUSE);
+@@ -88,6 +88,7 @@ static int probe_maple_mouse(struct devi
+ 	mse->dev = input_dev;
+ 	mse->mdev = mdev;
+ 
++	input_set_drvdata(input_dev, mse);
+ 	input_dev->evbit[0] = BIT_MASK(EV_KEY) | BIT_MASK(EV_REL);
+ 	input_dev->keybit[BIT_WORD(BTN_MOUSE)] = BIT_MASK(BTN_LEFT) |
+ 		BIT_MASK(BTN_RIGHT) | BIT_MASK(BTN_MIDDLE);
 
 
