@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659CF42CAFB;
-	Tue, 21 Jul 2026 20:17:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 042D2434E3B;
+	Tue, 21 Jul 2026 20:17:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665062; cv=none; b=BbLPEwfXOy40FK4+smm6kRY0pxeaUsT6x9X0TgEFr3IUv2Rr1M56goO4iQmhoo8ZUIm5OivIj/zlI1wayzHx7OXgJBP4F9NwQPHaGCC7Uqhz/2XUxdUoyfPIPSSosGzAAnNuZG8sMoHDeorSgVQWTvizWL40BZuSslPhkdHSRV0=
+	t=1784665066; cv=none; b=m3bpbdHhbluzTCxmDC9z6g+yVGe1Q8LxjTMaH/uIelFWTPQ3QlNQWGxklmw0Rx4vB693tFWPVQPcKo4Cb28CiPGG5Dq2hqPtpnYJqt6VxoEPS8B4yOEoJLf7De0kQrzifHMWs+sjBkowexfNaBYjlBoya8c3/VfMqWmTo1KMF5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665062; c=relaxed/simple;
-	bh=/dJdXEnCD+sLHSCfp4i5r6Na8YVRqjm2VRTx9PNrDkk=;
+	s=arc-20240116; t=1784665066; c=relaxed/simple;
+	bh=uVp7x0YX9wowDbgd/pbEvI5tA7ChD710BWU+cdpLE+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y6N2ZdX+DYDZfayGtEgJAIJOTTYF3Mw3CWJzuvMW+Qb+dcAMDMZKBOkb3ivUZuEiV5vd3UvxwHol8f6z6feb9+EchtDgjhzhUZxlItAQCE+taM7GookAORMHwTgMszcxf43ASPPQuMxAZDNWxBOPkNFaobLRhi7rdqhK3Zp1t3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ekGZTPgL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T91VRGmKFlCAxUxwDadhRmQny90mmSIeGOTudKHlad04ffhJV6nLF52PgtsDz4AoHtL/WD/zqFAGi9X8NFzLfwIx2CaulwvzmdhDMRKidbVKiI26fCzmpD3VgzYLe38jkPhYZT5N+y+Ic85VjgXw03vSdt7Tr/svPvNXfTmW/Ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=01okcrxR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ekGZTPgL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC711F000E9;
-	Tue, 21 Jul 2026 20:17:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01okcrxR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67DFE1F000E9;
+	Tue, 21 Jul 2026 20:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665061;
-	bh=zhHDXKMZW6BSpBgH4o+gQvU6DINg8s0WVhiwFl4djm0=;
+	s=korg; t=1784665063;
+	bh=mWGLVmk3G3Lyy43RUKLHlyC4hbarj8OUMgo0qJeOuWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ekGZTPgLApkHIgMOq1zFyRcZ2PuBC6HjSER8gxSySD6TEpXTRDsKK8N+8wmMLIAtq
-	 G+n8/T3qWfs8AOXFFcaIxwDU0RHot0cwBmysEPODWdo9QXyUB1H9M0tFLeTCv0XXNt
-	 aT2Q5gU1LuOoxqX4DwM/KbEJCw9Lw1V+hnGTjNws=
+	b=01okcrxRHEhnbZ9lPaaJhkOjISXdsXvQKztg2eHrKe9VZ4NKb+VFizUqTnJEl0wbm
+	 Ml0f3GbqyIVUjt6uctWzH+7xOhZUn/qVk+/Bp8Spi9UGtLBpk5Untbw4GOVIAOr46k
+	 kHSGVyX9QBEgCa7zLUhzCFTAKWKTPmJFWpp8xbyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 0162/1266] io_uring/io-wq: re-check IO_WQ_BIT_EXIT for each linked work item
-Date: Tue, 21 Jul 2026 17:09:59 +0200
-Message-ID: <20260721152445.431131509@linuxfoundation.org>
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	stable <stable@kernel.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 0136/1266] USB: chaoskey: Fix slab-use-after-free in chaoskey_release()
+Date: Tue, 21 Jul 2026 17:09:33 +0200
+Message-ID: <20260721152444.850116130@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,54 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 29bef9934b2521f787bb15dd1985d4c0d12ae02a upstream.
+commit abf76d3239dee97b66e7241ad04811f1ce562e28 upstream.
 
-commit 10dc95939817 ("io_uring/io-wq: check IO_WQ_BIT_EXIT inside work
-run loop") fixed the obvious case where io_worker_handle_work() took one
-exit-bit snapshot before draining pending work, but the fix stops one
-level too early.
+The chaoskey driver has a use-after-free bug in its release routine.
+If the user closes the device file after the USB device has been
+unplugged, a debugging log statement will try to access the
+usb_interface structure after it has been deallocated:
 
-io_worker_handle_work() now re-checks IO_WQ_BIT_EXIT in its outer work
-run loop, yet it still snapshots that bit once before processing a whole
-dependent linked-work chain. If io_wq_exit_start() sets IO_WQ_BIT_EXIT
-after the first linked item has started, the remaining linked items can
-still reuse stale do_kill = false, skip IO_WQ_WORK_CANCEL, and continue
-running after exit has begun.
+	BUG: KASAN: slab-use-after-free in dev_driver_string (drivers/base/core.c:2406)
+	Read of size 8 at addr ffff888168e8a0b8 by task chaoskey_raw_re/10106
 
-Move the check further inside, so it covers linked items too. Note: this
-is a syzbot special as it loves setting up tons of slow linked work on
-weird devices like msr that take forever to read, and immediately close
-the ring. Exit then takes a long time.
+	Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+	Call Trace:
+	 <TASK>
+	 dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+	 print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+	 kasan_report (mm/kasan/report.c:595)
+	 dev_driver_string (drivers/base/core.c:2406)
+	 __dynamic_dev_dbg (lib/dynamic_debug.c:906)
+	 chaoskey_release (drivers/usb/misc/chaoskey.c:323)
+	 __fput (fs/file_table.c:510)
+	 fput_close_sync (fs/file_table.c:615)
+	 __x64_sys_close (fs/open.c:1507 fs/open.c:1492 fs/open.c:1492)
+	 do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
+	 entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
 
-Fixes: 10dc95939817 ("io_uring/io-wq: check IO_WQ_BIT_EXIT inside work run loop")
-Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260527172203.2043962-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+The driver's last reference to the interface structure is dropped in
+the chaoskey_free() routine, so the code must not use the interface --
+even in a debugging statement -- after that routine returns.
+(Exception: If we know that another reference is held by someone else,
+such as the device core while the disconnect routine runs, there's no
+problem.  Thanks to Johan Hovold for pointing this out.)
+
+Since the bad access is part of an unimportant debugging statement,
+we can fix the problem simply by removing the whole statement.
+
+Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Closes: https://lore.kernel.org/linux-usb/20EC9664-054E-438B-B411-2145D347F97B@gmail.com/
+Tested-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 66e3e591891d ("usb: Add driver for Altus Metrum ChaosKey device (v2)")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/bb5b1dc6-eb59-43e1-8d26-51e658e88bbe@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/misc/chaoskey.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -556,7 +556,6 @@ static void io_worker_handle_work(struct
- 	struct io_wq *wq = worker->wq;
- 
- 	do {
--		bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
- 		struct io_wq_work *work;
- 
- 		/*
-@@ -592,6 +591,7 @@ static void io_worker_handle_work(struct
- 
- 		/* handle a whole dependent link */
- 		do {
-+			bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
- 			struct io_wq_work *next_hashed, *linked;
- 			unsigned int hash = io_get_work_hash(work);
+--- a/drivers/usb/misc/chaoskey.c
++++ b/drivers/usb/misc/chaoskey.c
+@@ -320,7 +320,6 @@ bail:
+ 	mutex_unlock(&dev->lock);
+ destruction:
+ 	mutex_unlock(&chaoskey_list_lock);
+-	usb_dbg(interface, "release success");
+ 	return rv;
+ }
  
 
 
