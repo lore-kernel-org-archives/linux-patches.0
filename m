@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761AD347BC6;
-	Tue, 21 Jul 2026 22:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA22F347BC6;
+	Tue, 21 Jul 2026 22:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674275; cv=none; b=PMyd77TYcv84YzPF8ywMHgpMNOmHNoadQ0ScYmttj9sZ74twb8uP2PXaKCsvZ/HJ+bmqZ3SUpHMZKv6kZjvc4tgC1MkDrhSAa+YVLvZSwITpYmAX8RsiTDXzBNCiAwrAU5pqvRHf/SqP6eTNDXX0YjyIqOV3q8jkkdGpj/V9kaQ=
+	t=1784674277; cv=none; b=FSx/pc8StmrG7FKh3os5hQcxG9mK4eS86FtEAi0kI6gTVv2gKaPwTM4RSh/VZDxxFNfI7fgaNRBYiiKpuU65MF2Evf0tPHz+13ew0SlIeB5Nu7GRvUANcgO6LACKJWXiIR7Dp/SKv+pLYsHChG6AZ/5UoYkce9CToscu2ljNGWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674275; c=relaxed/simple;
-	bh=Z5ISxcIROp+l/bxmO/atmOyhLsTpL4Jxp3WZnraJbfU=;
+	s=arc-20240116; t=1784674277; c=relaxed/simple;
+	bh=3oVcyNePPrcKJiRNiYjUWL0ZD5wYHYNQjtXAczZVK6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KcXcEJnsgQa0kvf2JQD7UDVxFRHz27VMQG3cpT6yY2Bh2Eatol/lMCH4A4gGoA7CVxebsJDG9zbBk6WCVGdwYeuwyCGdx3kzaV9TLkhU2y9tU73dQ0P9rsZ5IN+G5/t0UX3oPIFMwfPGrg2lurajX2DqUqSRFcgKdv9RhpHd3ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C1BWaian; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LllvtA7vNdqh0z+HynbwCLM1rrRLRtVEDFkROP3BB0uh4ORxatQwuR5Uu54OCEmRGrzelx6Bczm/SLo3feJoL/Nelx04t40urzVdisxVEIDeWNwRIpH2e34eQgj8lt5dzevG2IaQbzWTrqGezHQIyHl+rr9Zlw8nfQ80t0LZvxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yuCYs1c8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C1BWaian"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 768881F000E9;
-	Tue, 21 Jul 2026 22:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yuCYs1c8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BAF41F000E9;
+	Tue, 21 Jul 2026 22:51:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674274;
-	bh=gG1k/sKpF676+jbDZHo+mTteK1Mh1wrWRHnoTq2fRnk=;
+	s=korg; t=1784674276;
+	bh=K7ZCQzpWFQdWsjX19KdH1wlJugCPxUwETDED+slfxo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C1BWaianXL26O7d6etFlbeHXNNEsV1YCae5ZaOiXP3gFhgLtHRYP9fOT7tKWhzqh/
-	 JU+KDmOFN+VGI90W/M/M5nCTQsKxXW5VvL5FdzDUbdC+TYL3puXyFwZ73+opAnQb4H
-	 EykdGaKZaFTcrpFXPGm9tQAP2S+qE1b9nj5pL/FE=
+	b=yuCYs1c8JB8fd4APOmCuNuslvMjoQ10AC4wc6DVD4RoHXwuzrhfh4W2jWeF/oS4CS
+	 aMHqjex6vwSsJ9qQxWhge1z80E/dWE+CkQqrShVFtJLYo/MiJvfLQBjv4jUPXaY8IT
+	 tMeFABqjMY3nfny/qGWr1MRRwpfcdhGRULqGvRhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>
-Subject: [PATCH 5.10 452/699] gpu: host1x: Fix device reference leak in host1x_device_parse_dt() error path
-Date: Tue, 21 Jul 2026 17:23:31 +0200
-Message-ID: <20260721152405.898749124@linuxfoundation.org>
+	WenTao Liang <vulab@iscas.ac.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 5.10 479/699] power: supply: charger-manager: fix refcount leak in is_full_charged()
+Date: Tue, 21 Jul 2026 17:23:58 +0200
+Message-ID: <20260721152406.506280025@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,45 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: WenTao Liang <vulab@iscas.ac.cn>
 
-commit e75717f9aec04355777be41070890c6a815c76df upstream.
+commit 4373cfa38ead58f980362c841b0d0bdf8c4d956c upstream.
 
-After device_initialize(), the embedded struct device in struct
-host1x_device should be released through the device core with
-put_device().
+In is_full_charged(), power_supply_get_by_name() is called to
+obtain a reference to the fuel_gauge power supply. If the
+voltage check (uV >= desc->fullbatt_uV) succeeds, the function
+returns true directly without releasing the reference, leaking
+the refcount.
 
-In host1x_device_add(), if host1x_device_parse_dt() fails, the current
-error path frees the object directly with kfree(device). That bypasses
-the normal device lifetime handling and leaks the reference held on the
-embedded struct device.
+Fix this by setting a flag and jumping to the out label where
+power_supply_put() properly drops the reference.
 
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
-
-Fix this by using put_device() in the host1x_device_parse_dt() failure
-path.
-
-Fixes: f4c5cf88fbd50 ("gpu: host1x: Provide a proper struct bus_type")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Acked-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260413141526.2961841-1-lgs201920130244@gmail.com
+Fixes: e132fc6bb89b ("power: supply: charger-manager: Make decisions focussed on battery status")
+Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260611005322.53096-1-vulab@iscas.ac.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/host1x/bus.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/charger-manager.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/host1x/bus.c
-+++ b/drivers/gpu/host1x/bus.c
-@@ -441,7 +441,7 @@ static int host1x_device_add(struct host
- 
- 	err = host1x_device_parse_dt(device, driver);
- 	if (err < 0) {
--		kfree(device);
-+		put_device(&device->dev);
- 		return err;
+--- a/drivers/power/supply/charger-manager.c
++++ b/drivers/power/supply/charger-manager.c
+@@ -302,8 +302,10 @@ static bool is_full_charged(struct charg
+ 			if (cm->battery_status == POWER_SUPPLY_STATUS_FULL
+ 					&& desc->fullbatt_vchkdrop_uV)
+ 				uV += desc->fullbatt_vchkdrop_uV;
+-			if (uV >= desc->fullbatt_uV)
+-				return true;
++			if (uV >= desc->fullbatt_uV) {
++				is_full = true;
++				goto out;
++			}
+ 		}
  	}
  
 
