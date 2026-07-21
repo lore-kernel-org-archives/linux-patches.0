@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2EA1A239A;
-	Tue, 21 Jul 2026 15:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDB340B101;
+	Tue, 21 Jul 2026 15:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648990; cv=none; b=msC+Ym9E93FbkBa/FfggmzI/EmZwQ9Y1lzGFnzGkd8HFIsvWqymlupOGFPuZUJ5hQ82BNNLjWP/E9GXw27UMpO4w9ZYq+gDlfOBx/L1TPy8/+PO0Pcs4ZZTQu/NtXwDj6gZ2nNudZHkViJBKzd2BhrtX9dbf/2ZxG+oy1THX7L4=
+	t=1784648992; cv=none; b=L94LVNL31umzpagt1pbPNho9QDDHjZ2fkQvQNxSqC+kajx7JLzJqMZo8L7JNakVkP+Buosw9/voRXCyNOreAgSkq23tN++MFtINE4jIjhXTDyTZUgdG5yJ6VXRLFPQmM37v7ZGdEYQuHepZLHP6JltxV8dJClbFKhQAZP9uKUKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648990; c=relaxed/simple;
-	bh=Asd515wrJr+QSmHHhbBjcXWxpWQxyDeaD4Ekt30DXUU=;
+	s=arc-20240116; t=1784648992; c=relaxed/simple;
+	bh=AuxxasNn02NGvumV4CM85af2lmkFhr9eZK4YjI+ogOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bJMoTzBhUxvKBWz/uCXtkMC+6fC7vovwRtNUZdqIE4EWVh/u10/8T0XxIMvKHwoTBTOfsOcX4DHf5rFzAhquM0WWkT9ncDlvwohTDJe0fzDCd2dnOW3kNC3zgI9FNjqd0BTCscoAL3yq9Tp3aq3HThpJJY3s067/QJy6bcj3i58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ew3NmOBQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AXs91Qv8T8QSRJO63uUSE2FIdT2LmmLbxGJLKhiAG2DPL5AzhRdCyFb8vm+gor9Qd0zQ494Vyq13fB/V/dDYvW4ws/DzCW+vrMZ7Cf0MPisc5QOm+c3TTLnRLa6QfL/a1mL3pjaPDFaA9sL0byh6IMlkLZ7APADlIo8Fe/6J/nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udRaKR9l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ew3NmOBQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FDE31F000E9;
-	Tue, 21 Jul 2026 15:49:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udRaKR9l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A02E1F000E9;
+	Tue, 21 Jul 2026 15:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648988;
-	bh=6sLK24z0valqm1c9cQMkcdWeKceqQEXzJn3Zw1smMWg=;
+	s=korg; t=1784648991;
+	bh=kH3+Zky0tfOkW6LeRDgvGh7f1jkgb95r16PhsJOoo/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ew3NmOBQP4ALbrdkU5ss+oTEUDoRAyp7tJT1qW9gvziGWBPJ5MKpTMBjX5w8SH4Gj
-	 s/nxTaNYBQ7HOAJHon+Iif5I4glOJA8lDytjPpmKVL3kaCigAB1rfTss1oFuRwsuJp
-	 c1bp7fZW8xS2UKyUTShT1q0N07qGruklIm2tAY1k=
+	b=udRaKR9lZuQgMCQKt6eLAAywXuY5JVzlSUsud4O0g5j3bH3sB8ctmhmuT7F1p1L/A
+	 wdYzY81z19AfHdf5blUsEnI0l0ghYIsCSkAr1Dq+1F1Fnh9wzqRtwq+0jGkmSn6M/S
+	 Eb6t4W9bCWoK3nk6hCNzVlOYtNNB33gA/z3BDL1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko <sashiko@sashiko.dev>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Aleksander Jan Bajkowski <olek2@wp.pl>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0406/2077] libbpf: Skip endianness swap when loader generation failed
-Date: Tue, 21 Jul 2026 17:01:19 +0200
-Message-ID: <20260721152602.295826299@linuxfoundation.org>
+Subject: [PATCH 7.1 0366/2077] crypto: inside-secure/eip93 - Add check for devm_request_threaded_irq
+Date: Tue, 21 Jul 2026 17:00:39 +0200
+Message-ID: <20260721152601.320442749@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,52 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit 41300d032a1b1d91a3ed996ad21905463e344beb ]
+[ Upstream commit 85a61bf9145d4097c740ffcf3aa832d930a8913b ]
 
-bpf_gen__prog_load() byte-swaps the program insns and the {func,line}_info
-and CO-RE relo blobs in place for cross-endian targets. The blob offsets
-come from add_data(), which returns 0 on failure: realloc_data_buf() either
-frees and NULLs gen->data_start (realloc OOM) or returns early on an
-already-latched gen->error, leaving a stale, possibly too-small buffer.
+As the potential failure of the devm_request_threaded_irq(),
+it should be better to check the return value and return
+error if fails.
 
-Neither bswap site checked for this. With gen->swapped_endian set and a
-failed generation, "gen->data_start + off" becomes NULL + 0. Guard the
-same way via !gen->error so they are skipped once generation has failed.
-
-Fixes: 8ca3323dce43 ("libbpf: Support creating light skeleton of either endianness")
-Reported-by: sashiko <sashiko@sashiko.dev>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260529162829.315921-1-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 9739f5f93b78 ("crypto: eip93 - Add Inside Secure SafeXcel EIP-93 crypto engine support")
+Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/gen_loader.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/inside-secure/eip93/eip93-main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
-index e2fe841a56698b..e63a01101e2d85 100644
---- a/tools/lib/bpf/gen_loader.c
-+++ b/tools/lib/bpf/gen_loader.c
-@@ -1053,7 +1053,7 @@ void bpf_gen__prog_load(struct bpf_gen *gen,
- 		 prog_idx, prog_type, insns_off, insn_cnt, license_off);
+diff --git a/drivers/crypto/inside-secure/eip93/eip93-main.c b/drivers/crypto/inside-secure/eip93/eip93-main.c
+index 7dccfdeb7b11c0..276839e1a515fc 100644
+--- a/drivers/crypto/inside-secure/eip93/eip93-main.c
++++ b/drivers/crypto/inside-secure/eip93/eip93-main.c
+@@ -433,6 +433,8 @@ static int eip93_crypto_probe(struct platform_device *pdev)
+ 	ret = devm_request_threaded_irq(eip93->dev, eip93->irq, eip93_irq_handler,
+ 					NULL, IRQF_ONESHOT,
+ 					dev_name(eip93->dev), eip93);
++	if (ret)
++		return ret;
  
- 	/* convert blob insns to target endianness */
--	if (gen->swapped_endian) {
-+	if (gen->swapped_endian && !gen->error) {
- 		struct bpf_insn *insn = gen->data_start + insns_off;
- 		int i;
- 
-@@ -1091,7 +1091,7 @@ void bpf_gen__prog_load(struct bpf_gen *gen,
- 		 sizeof(struct bpf_core_relo));
- 
- 	/* convert all info blobs to target endianness */
--	if (gen->swapped_endian)
-+	if (gen->swapped_endian && !gen->error)
- 		info_blob_bswap(gen, func_info, line_info, core_relos, load_attr);
- 
- 	libbpf_strlcpy(attr.prog_name, prog_name, sizeof(attr.prog_name));
+ 	eip93->ring = devm_kcalloc(eip93->dev, 1, sizeof(*eip93->ring), GFP_KERNEL);
+ 	if (!eip93->ring)
 -- 
 2.53.0
 
