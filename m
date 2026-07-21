@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A9F399015;
-	Tue, 21 Jul 2026 22:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3976643C7AE;
+	Tue, 21 Jul 2026 22:55:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674504; cv=none; b=jJN6Cp1VJcIJiY4rdgdLuA6X4itlupkvVEOwipQp/znx8rWKNU+JzM7mUSqYQYfJdthrAkmCEF48SCaSE4s9OavtoU3h01dhs9EKI0UjqTd2AVmWrgEZNnFr3bUFpWTZISRda3Cq4mt4PNxbyXGbyht2AvHkvZnpIwgLPXgHNtc=
+	t=1784674507; cv=none; b=bZLCg2/QxtVaTufdvtbd8ydjx1dMaKdbek8jy/ybvaOZWrhrJNlFgfAKIIH7LHbr+tO4pBGJyfjg/o0kcWYHhVdGiB2/pXNfGin1nT4rl4r4DpXCftggN1b/qlfAAyudh8K48MrGz/D6+DAB0HQPYC8SeCtNMCW0SyKEnS9GkUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674504; c=relaxed/simple;
-	bh=Ah4FPjE+o3zbz/4Cs2/bjGuTKtdXEjqP/V5xFr5XLa8=;
+	s=arc-20240116; t=1784674507; c=relaxed/simple;
+	bh=lTO/AAxtQPz6XCu+Lv6QiYRcg+Lw6As+C3C8HAaCzIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mKsk0oJJBTSLHPv093M87SOnsGNufJfitwYM+JNxXi9tcvmVZye//wCs6eYbzyjpxABgRnX8wbXsS1Z7LibI0w07Yxfpt4QehNmv0i/+wcidvAmCymGmuHtKy3SBl2glKYVjuDroc1J0X1j5+tdqI8rY7USlaUgc8Hr+chy41jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPQyzd2g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kpe2dOCieSdFOHS9KdcCBzliSCUM8BcLSDr47ij+8BsPTayEfCIU+7q27YtJIlVrzi+P9CpWXMpnMlqyltePZgyXGlsKFv5+LEIwSZZKVX1+7fj6do9bWgAmiq2rtsW+owYkVNTFhOTUhWDD2dghKcZ/cS0ILT4gLSQHLRDuR+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2rEMT8Hy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPQyzd2g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4541F000E9;
-	Tue, 21 Jul 2026 22:55:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2rEMT8Hy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903541F000E9;
+	Tue, 21 Jul 2026 22:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674503;
-	bh=xXpWcT8KumRAZ+G8lC38z6dXzNNBXDazg17oRKR+Lxc=;
+	s=korg; t=1784674506;
+	bh=058q62oAFurT7alpTgevL1Icc8WBl7zUwfC1jioQdag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UPQyzd2glhWr+CTD5tmufEDPP0v8Hbvf7My4/1QtuwbxzLtzDf6hvtE6KSp0rU5HO
-	 9RgYBUuYYyMHXsxjf/zJ1JUDdM4pCMXddKqAJJKbBGvD2JmaC1yGYWCCQX6PNXMuDz
-	 OzH/2mlljnzGDIUKZvcHAIYkAS1ecIsvMV0pMI2Q=
+	b=2rEMT8Hy86V/s4/jNwNTNLr4dV4LLzADXulZjGAwsQRHtMDFpKP8c777YwdlQ/ZmV
+	 hnY7g3qoOHtufpmdXUlMeNVUBewo1mplnejJd8+T21h8vzsB0kPypb4Q35udbG175S
+	 pubefoqaUfHm65cJAKxf+Go+B+V8ELmU7Qj19hGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 5.10 566/699] ipvs: fix more places with wrong ipv6 transport offsets
-Date: Tue, 21 Jul 2026 17:25:25 +0200
-Message-ID: <20260721152408.475763219@linuxfoundation.org>
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Robby Cai <robby.cai@nxp.com>,
+	Guoniu Zhou <guoniu.zhou@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 5.10 567/699] reset: imx7: Correct polarity of MIPI CSI resets on i.MX8MQ
+Date: Tue, 21 Jul 2026 17:25:26 +0200
+Message-ID: <20260721152408.498589658@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,82 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Robby Cai <robby.cai@nxp.com>
 
-commit b3fe4cbd583895987935a9bdad01c8f9d3a02310 upstream.
+commit 71827776667f4e4677a4fa806bcfb24d4b8dd9d7 upstream.
 
-Sashiko reports for more incorrect IPv6 transport offsets.
+On i.MX8MQ, the MIPI CSI reset lines are active-low and not self-clearing.
+Writing '0' asserts reset and it remains asserted until explicitly
+deasserted by software.
 
-The app code for TCP was assuming IPv4 network header
-even after the ipvsh argument was provided. This can
-cause problems with apps over IPv6. As for the only
-official app in the kernel tree (FTP) this problem is
-harmless because we use Netfilter to mangle the FTP
-ports and we do not adjust the TCP seq numbers.
+This driver previously treated the MIPI CSI reset signals as active-high,
+which led to incorrect reset assert/deassert sequencing. This issue was
+exposed by commit 6d79bb8fd2aa ("media: imx8mq-mipi-csi2: Explicitly
+release reset").
 
-Also, provide correct offset of the ICMPV6 header in
-ip_vs_out_icmp_v6() for correct checksum checks when
-the IPv6 packet has extension headers.
+Fix this by reflecting the correct reset polarity and ensuring proper
+reset handling.
 
-Fixes: d12e12299a69 ("ipvs: add ipv6 support to ftp")
-Fixes: 2a3b791e6e11 ("IPVS: Add/adjust Netfilter hook functions and helpers for v6")
-Cc: stable@vger.kernel.org
-Link: https://sashiko.dev/#/patchset/20260706101624.69471-1-zhaoyz24%40mails.tsinghua.edu.cn
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: c979dbf59987 ("reset: imx7: Add support for i.MX8MQ IP block variant")
+Cc: stable@vger.kernel.org # 6d79bb8fd2aa: media: imx8mq-mipi-csi2: Explicitly release reset
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Robby Cai <robby.cai@nxp.com>
+Reviewed-by: Guoniu Zhou <guoniu.zhou@oss.nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_app.c  |   10 ++++------
- net/netfilter/ipvs/ip_vs_core.c |    3 +--
- 2 files changed, 5 insertions(+), 8 deletions(-)
+ drivers/reset/reset-imx7.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/netfilter/ipvs/ip_vs_app.c
-+++ b/net/netfilter/ipvs/ip_vs_app.c
-@@ -362,14 +362,13 @@ static inline int app_tcp_pkt_out(struct
- 				  struct ip_vs_iphdr *ipvsh)
- {
- 	int diff;
--	const unsigned int tcp_offset = ip_hdrlen(skb);
- 	struct tcphdr *th;
- 	__u32 seq;
+--- a/drivers/reset/reset-imx7.c
++++ b/drivers/reset/reset-imx7.c
+@@ -236,6 +236,12 @@ static int imx8mq_reset_set(struct reset
  
--	if (skb_ensure_writable(skb, tcp_offset + sizeof(*th)))
-+	if (skb_ensure_writable(skb, ipvsh->len + sizeof(*th)))
- 		return 0;
- 
--	th = (struct tcphdr *)(skb_network_header(skb) + tcp_offset);
-+	th = (struct tcphdr *)(skb_network_header(skb) + ipvsh->len);
- 
- 	/*
- 	 *	Remember seq number in case this pkt gets resized
-@@ -439,14 +438,13 @@ static inline int app_tcp_pkt_in(struct
- 				 struct ip_vs_iphdr *ipvsh)
- {
- 	int diff;
--	const unsigned int tcp_offset = ip_hdrlen(skb);
- 	struct tcphdr *th;
- 	__u32 seq;
- 
--	if (skb_ensure_writable(skb, tcp_offset + sizeof(*th)))
-+	if (skb_ensure_writable(skb, ipvsh->len + sizeof(*th)))
- 		return 0;
- 
--	th = (struct tcphdr *)(skb_network_header(skb) + tcp_offset);
-+	th = (struct tcphdr *)(skb_network_header(skb) + ipvsh->len);
- 
- 	/*
- 	 *	Remember seq number in case this pkt gets resized
---- a/net/netfilter/ipvs/ip_vs_core.c
-+++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -1053,8 +1053,7 @@ static int ip_vs_out_icmp_v6(struct netn
- 	snet.in6 = ciph.saddr.in6;
- 	offset = ciph.len;
- 	return handle_response_icmp(AF_INET6, skb, &snet, ciph.protocol, cp,
--				    pp, offset, sizeof(struct ipv6hdr),
--				    hooknum);
-+				    pp, offset, ipvsh->len, hooknum);
- }
- #endif
- 
+ 	case IMX8MQ_RESET_PCIE_CTRL_APPS_EN:
+ 	case IMX8MQ_RESET_PCIE2_CTRL_APPS_EN:
++	case IMX8MQ_RESET_MIPI_CSI1_CORE_RESET:
++	case IMX8MQ_RESET_MIPI_CSI1_PHY_REF_RESET:
++	case IMX8MQ_RESET_MIPI_CSI1_ESC_RESET:
++	case IMX8MQ_RESET_MIPI_CSI2_CORE_RESET:
++	case IMX8MQ_RESET_MIPI_CSI2_PHY_REF_RESET:
++	case IMX8MQ_RESET_MIPI_CSI2_ESC_RESET:
+ 	case IMX8MQ_RESET_MIPI_DSI_PCLK_RESET_N:
+ 	case IMX8MQ_RESET_MIPI_DSI_ESC_RESET_N:
+ 	case IMX8MQ_RESET_MIPI_DSI_DPI_RESET_N:
 
 
