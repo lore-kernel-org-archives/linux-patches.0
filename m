@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA38B46E014;
-	Tue, 21 Jul 2026 17:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4570946D0A0;
+	Tue, 21 Jul 2026 17:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656201; cv=none; b=aE6C3jYaE3QViwSjBXuc7ayf04qDHLN58fERTpJJ/wI1U/2aipL3hURod2k9RX2s6TDozL0dd+huqGjy20Zf7lE6sHxZ9x1KRYMQWuacZfYxSbvc4+0PAwNzA9fyYCDxquNRbd4A3pt1yHqGbdIG5nfhkauHQBvmCCrhaDFN/oU=
+	t=1784656203; cv=none; b=G/e8LV5BGVeVBSNiYK73H1dkqYNPxdtpPzq0+UlHoRaW7RbA1M3sHwMxqRh72RAqAfilp8Wry4/5Khjm0ubY7GeKk8BvyHdf6LhQlu4mopaZBcLlvN7SsqCFEk0WHoky95UcmRXxBU+sACIxonMnrdonz99XnuJ1XSP2LSafESE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656201; c=relaxed/simple;
-	bh=gttgPfzCOTPv/nQqepe7f5tGynxs9+1d0ezadPt3MqM=;
+	s=arc-20240116; t=1784656203; c=relaxed/simple;
+	bh=15wD2hx5X2+ErwnnDbtWhGYSAXQjRLXMPdpSdN/tKwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RugGqWWSRrkYxSW2J5XtVwTONeupT9Z7jbJKYb5LBzihgewmh7xqcBcocFka1RzY0ahD22S8m+GawuZMP9hsaxsUVIzpPXBWFms3t1G0ELrVvlmSaJoGcrRkgD/bcuieXGo640jv+CwJ9Ld0zml/an+9+bz8e2s1tBj5V7i0aiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fHKOTRVw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UOgfwP30a7FaYsc8miRtnLIxMbkhnJTPgNAtZ4TWFpquzrhusiIrwu7Z3e4ZG1mLoDWC6Fv0vSh48qL+6cJUlYOL82SpzxWaufggslZM++RKoOqeVSaK0pLHpGmmn7grfm3hmL33gZAP4lzJ1mIi+t5uavJx2MKw9iHD5uZ9UrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJuBjNAK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fHKOTRVw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297CA1F000E9;
-	Tue, 21 Jul 2026 17:49:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJuBjNAK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D207F1F000E9;
+	Tue, 21 Jul 2026 17:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656199;
-	bh=KU8W+cKuk5HfpxLtUWGsPABOwo12vfH7d/mvYFhod0w=;
+	s=korg; t=1784656202;
+	bh=WO3t5FKhMrkTi2z6LV+M4DZuo+wX2X9yTAwlhve2DXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fHKOTRVwW1yOQgcwkP8HK6dXySy0Qs54dvqrNhmTNvQEEoKryrRkUWfdTJp3r2tJw
-	 GCXQtWGClfLPESlhi/IvIxNnrDO+07dywhXDI8Wl1osiCnBeOsUfShmjv3z7qdJPso
-	 0SZPz6q/1gHoMib6RKJG40ICgYameRTgQ1EmSbO4=
+	b=KJuBjNAK5j/NCs4H3qBKfYcvIrnf1gNyAKneTGRLcacmThyMNUQU55pjXIRIkOPyC
+	 Z2aySzUFZdKDOIMiGAi3LEIz1lFnoDqeH/G63SRDlHODCoYSkh7FOd+zmxz9W9RWI4
+	 0/oq9EP16dJ4x+ADuUlBBMtUbEsCh687RwvR2X08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0298/1611] ARM: imx31: Fix IIM mapping leak in revision check
-Date: Tue, 21 Jul 2026 17:06:54 +0200
-Message-ID: <20260721152521.775198562@linuxfoundation.org>
+Subject: [PATCH 6.18 0299/1611] x86/cpu: Keep the PROCESSOR_SELECT menu together
+Date: Tue, 21 Jul 2026 17:06:55 +0200
+Message-ID: <20260721152521.799293063@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,56 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit ccb4b54b8ecf1ebafef96d538cd6c5c8455bb390 ]
+[ Upstream commit 1df61a8b2d01c560822a0421f2a76af7fda34c1f ]
 
-mx31_read_cpu_rev() maps the IIM registers with of_iomap() to read the
-silicon revision, but returns without unmapping the MMIO mapping.
+Having a stray kconfig symbol in the middle of the PROCESSOR_SELECT menu
+(this symbol plus its dependent symbols) causes the menu dependencies
+not to be displayed correctly in "make {menu,n,g,x}config".
 
-Keep the normalized revision value in a local variable and route the
-return path through iounmap() after the revision register has been read.
+Move the BROADCAST_TLB_FLUSH symbol away from the PROCESSOR_SELECT menu
+so that the list of processors is displayed correctly.
 
-Fixes: 3172225d45bd ("ARM: imx31: Retrieve the IIM base address from devicetree")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Fixes: 767ae437a32d ("x86/mm: Add INVLPGB feature and Kconfig entry")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://patch.msgid.link/20260519173526.10985-1-rdunlap@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-imx/cpu-imx31.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/x86/Kconfig.cpu | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm/mach-imx/cpu-imx31.c b/arch/arm/mach-imx/cpu-imx31.c
-index 35c544924e5095..e81ef9e36a1fab 100644
---- a/arch/arm/mach-imx/cpu-imx31.c
-+++ b/arch/arm/mach-imx/cpu-imx31.c
-@@ -36,6 +36,7 @@ static int mx31_read_cpu_rev(void)
- 	void __iomem *iim_base;
- 	struct device_node *np;
- 	u32 i, srev;
-+	int rev = IMX_CHIP_REVISION_UNKNOWN;
+diff --git a/arch/x86/Kconfig.cpu b/arch/x86/Kconfig.cpu
+index f928cf6e32524e..755d64bb9d2652 100644
+--- a/arch/x86/Kconfig.cpu
++++ b/arch/x86/Kconfig.cpu
+@@ -358,10 +358,6 @@ menuconfig PROCESSOR_SELECT
+ 	  This lets you choose what x86 vendor support code your kernel
+ 	  will include.
  
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx31-iim");
- 	iim_base = of_iomap(np, 0);
-@@ -48,13 +49,17 @@ static int mx31_read_cpu_rev(void)
+-config BROADCAST_TLB_FLUSH
+-	def_bool y
+-	depends on CPU_SUP_AMD && 64BIT
+-
+ config CPU_SUP_INTEL
+ 	default y
+ 	bool "Support Intel processors" if PROCESSOR_SELECT
+@@ -482,3 +478,7 @@ config CPU_SUP_VORTEX_32
+ 	  makes the kernel a tiny bit smaller.
  
- 	for (i = 0; i < ARRAY_SIZE(mx31_cpu_type); i++)
- 		if (srev == mx31_cpu_type[i].srev) {
-+			rev = mx31_cpu_type[i].rev;
- 			imx_print_silicon_rev(mx31_cpu_type[i].name,
- 						mx31_cpu_type[i].rev);
--			return mx31_cpu_type[i].rev;
-+			goto out;
- 		}
- 
- 	imx_print_silicon_rev("i.MX31", IMX_CHIP_REVISION_UNKNOWN);
--	return IMX_CHIP_REVISION_UNKNOWN;
+ 	  If unsure, say N.
 +
-+out:
-+	iounmap(iim_base);
-+	return rev;
- }
- 
- int mx31_revision(void)
++config BROADCAST_TLB_FLUSH
++	def_bool y
++	depends on CPU_SUP_AMD && 64BIT
 -- 
 2.53.0
 
