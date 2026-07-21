@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E4E39EF16;
-	Tue, 21 Jul 2026 15:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D531A239A;
+	Tue, 21 Jul 2026 15:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649024; cv=none; b=RGhvwGvNYX61rVr+PoFXEeWN82P83JUoGNhNxpeutATKLrljJik4lFdaBF4LsZjPWgYPz0SbqtidniPySo/VqpWidO77Q//edlK04LrxMCSloPkvT1GY5IZGF/ChEnjhnYF/4o25It3WaD294AeDWOJpWqPyt7kF1BcVz/VoE08=
+	t=1784649027; cv=none; b=UNRlvsYc9QRxAiwqXF79O6hARBadayH/+P35suTqF991ct0T7yivrMd0hTeg2O/s1J++v0BTScmAfqaU0PbW0OBHrlJrwaJ/6VXd+CkGi+pZ4HN/GA6VsmEFLhPimC3qMilojze/o+RsjjtGW17vO9Os417OhjsUzM/LDkZxVvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649024; c=relaxed/simple;
-	bh=19Wwl0vPutal1ZKL00raanei90dldpxQRMHu+EsS1fE=;
+	s=arc-20240116; t=1784649027; c=relaxed/simple;
+	bh=UdrXHpoWshLV6J+wxdJGCFFfh08q1usWctpY+6Flnt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u04cZZRPrc2dhH0b7hBha185Zr8OiZLD6TZIZBjLQuN52iivL3GCN7l/1bLtdlzWe1N6Kt0xcjOvAp0Tar7bdgat9pGU4HNWBjy5jtqvR4XPTao6BdbgqgJiWNgKpp9sgoptmH94EwycFcYgnEj7Y3JZrAzEfz88ke9f080IKpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z2oEHmMz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aknkCHK7KrORnjJHr278QBbTefJNIVlfTou9mCXsrRJnShR/4OOV0Ig58EyG/DahW2uhCkoddXY3FqkCJt04mA42uc4W7o62II/Dg66u+TeZAYMKm0V2M73AVkvXcsj4mnu5fIauEG4iZ3j4Ul7oyf+ZkU2u/3KPeyygX4bop+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ArpE6CqG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z2oEHmMz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEDA61F000E9;
-	Tue, 21 Jul 2026 15:50:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ArpE6CqG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A4461F000E9;
+	Tue, 21 Jul 2026 15:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649023;
-	bh=Cm43xDtV6KrAusNcIrAYZAiL/8dfvO6kpDoA3qhFkOI=;
+	s=korg; t=1784649026;
+	bh=QDGwaooPbp+HU5BYdbd2g9fKbLgXc7PBqli2SODG8Vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z2oEHmMz/WtM9fEyn4BPrUmNcEDVDSPLqHC/fUGugIf/SIepX66+4CUfdfw0A3ZCL
-	 kFDVJB5slXQ18HmO8ddCEmo99RvvJhr+5fWldyt4hU6trZgiWAvHVbYnb5OUI6qHUq
-	 iH4HyBKgta+79ev+AXDbbzk4r2zblBn+6zOhFY3w=
+	b=ArpE6CqG21PFJ1e+zZ94wLFS4ZDRiV0V4DBf53+b+tM88QtXrI2OxoP1pP7Z4SwIc
+	 B7drDOMo34y2etUx4N7mOlIpixxnarGJ6cH9iY5Orc7GLFpaZdnaFpv7L/MfPtWJG8
+	 /xI4ZZKG3kiOPVj2K8ZVxkP3hEJEfydC4y/FL64U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Hannes Reinecke <hare@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0422/2077] ata: libata: Fix ata_exec_internal()
-Date: Tue, 21 Jul 2026 17:01:35 +0200
-Message-ID: <20260721152602.693663455@linuxfoundation.org>
+Subject: [PATCH 7.1 0423/2077] ACPI: button: Fix lid_device value leak past driver removal
+Date: Tue, 21 Jul 2026 17:01:36 +0200
+Message-ID: <20260721152602.718598427@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,71 +50,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit aa0ae1c35f7b3e9afed2324bed5f5c87ad55b92c ]
+[ Upstream commit f8600e0d1ac60e6eac34bc9c7e8cf78f7a4c368f ]
 
-Some but not all ata_exec_internal() calls happen from the context of
-the ATA error handler. Commit c0c362b60e25 ("libata: implement cross-port
-EH exclusion") added ata_eh_release() and ata_eh_acquire() calls in
-ata_exec_internal(). Calling these functions is necessary if the caller
-holds the eh_mutex but is not allowed if the caller doesn't hold that
-mutex. Fix this by only calling ata_eh_release() and ata_eh_acquire() if
-the caller holds the eh_mutex. An example of an indirect caller of
-ata_exec_internal() that does not hold the eh_mutex is
-ata_host_register().
+Static variable lid_device is set when the ACPI button driver probes
+the last lid device (under the assumptions that there will be only
+one lid device in the system) and never cleared, but in principle it
+should be reset when the driver unbinds from the lid device pointed
+to by it.
 
-Fixes: c0c362b60e25 ("libata: implement cross-port EH exclusion")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Address that and add locking that is needed to clear and set that
+variable safely.
+
+Fixes: 7e12715ecc47 ("ACPI button: provide lid status functions")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/6281379.lOV4Wx5bFT@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-core.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/acpi/button.c | 26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index 3d0027ec33c2a2..3e19a00a92393f 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -1540,6 +1540,7 @@ unsigned int ata_exec_internal(struct ata_device *dev, struct ata_taskfile *tf,
+diff --git a/drivers/acpi/button.c b/drivers/acpi/button.c
+index d80276368b810f..5df470eea7540c 100644
+--- a/drivers/acpi/button.c
++++ b/drivers/acpi/button.c
+@@ -182,7 +182,6 @@ struct acpi_button {
+ 	bool gpe_enabled;
+ };
+ 
+-static struct acpi_device *lid_device;
+ static long lid_init_state = -1;
+ 
+ static unsigned long lid_report_interval __read_mostly = 500;
+@@ -378,9 +377,29 @@ static int acpi_button_remove_fs(struct acpi_button *button)
+ 	return 0;
+ }
+ 
++static struct acpi_device *lid_device;
++static DEFINE_MUTEX(acpi_lid_lock);
++
++static void acpi_lid_save(struct acpi_device *adev)
++{
++	guard(mutex)(&acpi_lid_lock);
++
++	lid_device = adev;
++}
++
++static void acpi_lid_forget(struct acpi_device *adev)
++{
++	guard(mutex)(&acpi_lid_lock);
++
++	if (lid_device == adev)
++		lid_device = NULL;
++}
++
+ /* Driver Interface */
+ int acpi_lid_open(void)
  {
- 	struct ata_link *link = dev->link;
- 	struct ata_port *ap = link->ap;
-+	const bool owns_eh_mutex = ap->host->eh_owner == current;
- 	u8 command = tf->command;
- 	struct ata_queued_cmd *qc;
- 	struct scatterlist sgl;
-@@ -1617,11 +1618,25 @@ unsigned int ata_exec_internal(struct ata_device *dev, struct ata_taskfile *tf,
- 		}
++	guard(mutex)(&acpi_lid_lock);
++
+ 	if (!lid_device)
+ 		return -ENODEV;
+ 
+@@ -674,7 +693,7 @@ static int acpi_button_probe(struct platform_device *pdev)
+ 		 * This assumes there's only one lid device, or if there are
+ 		 * more we only care about the last one...
+ 		 */
+-		lid_device = device;
++		acpi_lid_save(device);
  	}
  
--	ata_eh_release(ap);
-+	if (owns_eh_mutex) {
-+		/*
-+		 * To prevent that the compiler complains about the
-+		 * ata_eh_release() call below.
-+		 */
-+		__acquire(&ap->host->eh_mutex);
-+		ata_eh_release(ap);
-+	}
+ 	pr_info("%s [%s]\n", name, acpi_device_bid(device));
+@@ -696,6 +715,9 @@ static void acpi_button_remove(struct platform_device *pdev)
+ 	struct acpi_button *button = platform_get_drvdata(pdev);
+ 	struct acpi_device *adev = button->adev;
  
- 	rc = wait_for_completion_timeout(&wait, msecs_to_jiffies(timeout));
- 
--	ata_eh_acquire(ap);
-+	if (owns_eh_mutex) {
-+		ata_eh_acquire(ap);
-+		/*
-+		 * To prevent that the compiler complains about the above
-+		 * ata_eh_acquire() call.
-+		 */
-+		__release(&ap->host->eh_mutex);
-+	}
- 
- 	ata_sff_flush_pio_task(ap);
- 
++	if (button->type == ACPI_BUTTON_TYPE_LID)
++		acpi_lid_forget(adev);
++
+ 	switch (adev->device_type) {
+ 	case ACPI_BUS_TYPE_POWER_BUTTON:
+ 		acpi_remove_fixed_event_handler(ACPI_EVENT_POWER_BUTTON,
 -- 
 2.53.0
 
