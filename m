@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D7F33A9FC;
-	Tue, 21 Jul 2026 22:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CAB35C6AC;
+	Tue, 21 Jul 2026 22:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673628; cv=none; b=N5BcbuIOSRjUr6H7EVS4PkZKo429ESVsquZz4/wnf4BboHDCnM9prEnIfkgCZ9yoajOZ1zOa7aevs//6t2w2OlZhBdhwZBz2ZF8vArydGfv0zetfZatZMu9c40mBKvZKjy+xdl2IqM6JAlBN8SZZumWjSrhybpNSoszha4DxVro=
+	t=1784673631; cv=none; b=s5Li87Sb8RZv15socZR7LxfTQ8DXNHrsmC2xaK3KympsT7BWWZCh3xOmedDwfG4OUwuakVWdqYruw+hxA9O4bs1345CtT0aLD2LDf8FKAqc0NTMggnWvFi0FSPCnX8veMFxbrqQ936JHFfPsnbTzhDHpzk5n27nmPOWVrbq+5tM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673628; c=relaxed/simple;
-	bh=VVHQ6OR/Q6bvlCpk2X0kRsJp5bmViXA9sfzy6OQqahk=;
+	s=arc-20240116; t=1784673631; c=relaxed/simple;
+	bh=1Ipq0iEP7K8hZT/MKF84s9I28jvgFOKDFXCLsFn2TN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nBSyrQx3gTAInNubMJXbVbvbQjMMO4bRl9wrPhFxReBpGnB02GMIWhNNARH8NsMf2gZBdCdPmTKnA197zyKKNrntDjCqRD47991/JuO6l6ZasKair3+8uakEQRp2evVfGDNV7BEYRGT9Z7mT4wpk0chz6fimWpQbUNVj06b0/20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MeAd/sKZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qmlA+YM4OiWpoHUMuhecnfHISKhkRq7DhDEt3Wn4tHzTxY+BSswxRzjKwxrqKexEbmetOtlieCA+5M3kan5O98ph++mejXKkW2S3pFBEcAKj+2A931EdCmb4P323OyMoXEGu9RlzvdbwgseeqD6c8+lt7Nh4YWo6sbciyPTAq70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TpxUcye+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeAd/sKZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9FF91F000E9;
-	Tue, 21 Jul 2026 22:40:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TpxUcye+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DFE71F000E9;
+	Tue, 21 Jul 2026 22:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673627;
-	bh=kGx6CoMe+yGdEJldNtm7VS+kWCvdt/t7ibNt67BeGM8=;
+	s=korg; t=1784673629;
+	bh=8ifUwq9r7RJ+Ki1d82BwbOR7dAHFwmuv6Uj/5oFarGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MeAd/sKZ4PLEoDIfHZ+DFUeyiLLLF4L+XMcVrIPwIE/67mU97EMiOhxAUibzoY2KI
-	 21AI3SX/hfBKhliwi2tf8wktc9FLAZK61456U2pY/Avb8GNpev4PyCAYQghRJwpk7+
-	 LXYvRn60TKFV126Z26NTMfMJbEZJXC6V2IjzqPRE=
+	b=TpxUcye+t1KdeMB+hM3EP+dIY3xSVV25YC6AJJYdQnu0OnLbQVuZHlJ69vi96iuKH
+	 hGlHJkGQxare1xQUzfzbUCtXV0uozkLJIXnYjSV8yh8MvHQXHc4EVZXtJawFRHP6mx
+	 DeEWZ/7YM1uR7xpDmU5tIdNq2fHnZPtjW/8BU+sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <leon.huangfu@shopee.com>,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 235/699] bpf: Update transport_header when encapsulating UDP tunnel in lwt
-Date: Tue, 21 Jul 2026 17:19:54 +0200
-Message-ID: <20260721152400.999977241@linuxfoundation.org>
+Subject: [PATCH 5.10 236/699] wifi: wcn36xx: fix OOB read from firmware count in PRINT_REG_INFO indication
+Date: Tue, 21 Jul 2026 17:19:55 +0200
+Message-ID: <20260721152401.023247526@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,69 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 82d7d0adbc678064543e9d254864f6b4ea4a388c ]
+[ Upstream commit df2187acfca6c6cca372c5d35f42394d9c270b09 ]
 
-Currently, bpf_lwt_push_ip_encap() does not update skb->transport_header.
-When a driver, e.g. ice, reuses the stale skb->transport_header to
-offload checksum computation to NIC hardware, VxLAN packets encapsulated
-by bpf_lwt_push_encap() helper may be dropped due to incorrect checksum.
+The firmware-controlled rsp->count field is used as the loop bound for
+indexing into the flexible rsp->regs[] array without validation against
+the message length. A count exceeding the actual data causes out-of-
+bounds reads from the heap-allocated message buffer.
 
-Update skb->transport_header in bpf_lwt_push_ip_encap() whenever the
-encapsulated packet uses UDP, so checksum offload works correctly.
+Add a check that count fits within the received message.
 
-Fixes: 52f278774e79 ("bpf: implement BPF_LWT_ENCAP_IP mode in bpf_lwt_push_encap")
-Cc: Leon Hwang <leon.huangfu@shopee.com>
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Link: https://lore.kernel.org/r/20260602150931.49629-2-leon.hwang@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 43efa3c0f241 ("wcn36xx: Implement print_reg indication")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260421135018.352774-3-tristmd@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/lwt_bpf.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/wireless/ath/wcn36xx/smd.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/core/lwt_bpf.c b/net/core/lwt_bpf.c
-index f6c327c7badb4c..8c41532b4fe8fb 100644
---- a/net/core/lwt_bpf.c
-+++ b/net/core/lwt_bpf.c
-@@ -589,6 +589,7 @@ static int handle_gso_encap(struct sk_buff *skb, bool ipv4, int encap_len)
- 
- int bpf_lwt_push_ip_encap(struct sk_buff *skb, void *hdr, u32 len, bool ingress)
- {
-+	bool is_udp_tunnel;
- 	struct iphdr *iph;
- 	bool ipv4;
- 	int err;
-@@ -602,10 +603,16 @@ int bpf_lwt_push_ip_encap(struct sk_buff *skb, void *hdr, u32 len, bool ingress)
- 		ipv4 = true;
- 		if (unlikely(len < iph->ihl * 4))
- 			return -EINVAL;
-+		is_udp_tunnel = iph->protocol == IPPROTO_UDP;
-+		if (unlikely(is_udp_tunnel && len < iph->ihl * 4 + sizeof(struct udphdr)))
-+			return -EINVAL;
- 	} else if (iph->version == 6) {
- 		ipv4 = false;
- 		if (unlikely(len < sizeof(struct ipv6hdr)))
- 			return -EINVAL;
-+		is_udp_tunnel = ((struct ipv6hdr *)iph)->nexthdr == NEXTHDR_UDP;
-+		if (unlikely(is_udp_tunnel && len < sizeof(struct ipv6hdr) + sizeof(struct udphdr)))
-+			return -EINVAL;
- 	} else {
- 		return -EINVAL;
+diff --git a/drivers/net/wireless/ath/wcn36xx/smd.c b/drivers/net/wireless/ath/wcn36xx/smd.c
+index 7f00cb6f5e16b3..900ee1e8ffdd3e 100644
+--- a/drivers/net/wireless/ath/wcn36xx/smd.c
++++ b/drivers/net/wireless/ath/wcn36xx/smd.c
+@@ -2697,6 +2697,12 @@ static int wcn36xx_smd_print_reg_info_ind(struct wcn36xx *wcn,
+ 		return -EIO;
  	}
-@@ -627,6 +634,11 @@ int bpf_lwt_push_ip_encap(struct sk_buff *skb, void *hdr, u32 len, bool ingress)
- 	if (ingress)
- 		skb_postpush_rcsum(skb, iph, len);
- 	skb_reset_network_header(skb);
-+	if (is_udp_tunnel) {
-+		size_t iph_sz = ipv4 ? iph->ihl * 4 : sizeof(struct ipv6hdr);
-+
-+		skb_set_transport_header(skb, skb_network_offset(skb) + iph_sz);
+ 
++	if (rsp->count > (len - sizeof(*rsp)) / sizeof(rsp->regs[0])) {
++		wcn36xx_warn("Truncated print reg info indication: count %u, len %zu\n",
++			     rsp->count, len);
++		return -EIO;
 +	}
- 	memcpy(skb_network_header(skb), hdr, len);
- 	bpf_compute_data_pointers(skb);
- 	skb_clear_hash(skb);
++
+ 	wcn36xx_dbg(WCN36XX_DBG_HAL,
+ 		    "reginfo indication, scenario: 0x%x reason: 0x%x\n",
+ 		    rsp->scenario, rsp->reason);
 -- 
 2.53.0
 
