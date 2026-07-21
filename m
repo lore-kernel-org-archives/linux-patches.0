@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1441372B5E;
-	Tue, 21 Jul 2026 17:24:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CCC19049B;
+	Tue, 21 Jul 2026 17:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654666; cv=none; b=Pn0/rCNJLGC0GzdtAscB1x0ed4ZxcwuvUSU0ZA1cGgVlZQSzRx2t0n2A+XwqXklZ+WXCHWDhw2SrJD1V787Fc0Qin7VEJ7zpmA6nLiVHsae69zpezr603FYm4poQzXBQxyx3ZWj+cXikyxDunMZ0NiwQ3/sBOsxP4f2Hwy5OFg8=
+	t=1784654668; cv=none; b=r0/d/MHNlyJu8HQ/TcCbIXoiMDEaaKrGAeDcwetKvZZ6zyQ10RIAp5qhI+pWSJzn5SrActBmXzcvNuyC3PbOSET+/eIUo0TNFrnoStVvCqwAVYrsUb0rwiIa/XCsDWr//WxDd8AWhl6GZnv7AUegaPLsGAFVdrwfhLmjvomGgT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654666; c=relaxed/simple;
-	bh=KZ896LbQYc2atWK26n2961qk7GBjT0+g6IkV0ybUEhQ=;
+	s=arc-20240116; t=1784654668; c=relaxed/simple;
+	bh=7YjEcHeLB21o+bOqawvkS4j+HE1cCrSFGdpRHsjmVvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ARe3uJGN4/3sBOnvYTyIllNv+SYHmWBHnZPCPu5cCL1Wogi0CXkQrHbwDTOwsQeN0Fn0nqyGfmsLswsLN58+u8ZbGWU8cyJ2H91n1s9B4+p2z6lB5qi38Et5sPPcnCKdmblP52nyu3grtxEGbqFrE/25VLEokxuQirwKfnXock0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7TZMDnT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M/IB4FwGo2FbwiPxZL+rHLMUyuDM/5pMEZpxV486jPb6J3dIJMgEfjaFtmVUsZKZajSb8XiHw7FvSc1mN+Xv9md5rr/mpFNz2KZvpftr3hJ9hl0AfNzP2IqvzvtQht443PNlkDWe1FVR1p3+krTBzUR1z+BoGBuB62+lBkXc2rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6QncXqZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7TZMDnT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63D1E1F000E9;
-	Tue, 21 Jul 2026 17:24:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6QncXqZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A51F1F000E9;
+	Tue, 21 Jul 2026 17:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654664;
-	bh=yeSEKbYMOkG+q59uL4OZzjZirwciZguue7adm4DvB3E=;
+	s=korg; t=1784654667;
+	bh=vJ5gNBLOM5RzJnbI82fVlWqTKYvg8hZFE6QCbSBFjl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E7TZMDnT2eM9Btzw8+hK1LJpZvBKLcx33Y2U3CNIoqkREP0YWmAEFz2Bnz5P74sgZ
-	 xB3wnlGgD3wZDGaGSBwsARGXWMMEItLSXrBKkm6O6Jb6DR7aoh8wAuz6qsi9yRAdUG
-	 xN2imqGMMVRogQ52Jr0PxtFHaoc+rlPjA0jdDk14=
+	b=T6QncXqZyakxR2MUkwZ3mz/fJRtVrL5MnOp/QrnodITJ2Xkw+eZ3OqwPGz2MKZSHT
+	 f4xqcbQre0zHzyQ7Ua47OznXbMq9YEnTdOOWq6wkDMXrTVH12ZoTZ7YDN8HN+1pnba
+	 N4BQTCznelgLrZIlGaV7pQ/DX1+pG0vHw00rSFm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Hashimov <security@auditcode.ai>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.1 1790/2077] ksmbd: fix integer overflow in set_file_allocation_info()
-Date: Tue, 21 Jul 2026 17:24:23 +0200
-Message-ID: <20260721152634.966673226@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.1 1755/2077] ocfs2: reject non-inline dinodes with i_size and zero i_clusters
+Date: Tue, 21 Jul 2026 17:23:48 +0200
+Message-ID: <20260721152634.138830062@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,104 +57,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 1c0ae3df692ea2a4ce992f786346154e75a3f0d5 upstream.
+commit 7ebc672fab7a76e1e47e0f2fc1ee48118d27fde4 upstream.
 
-set_file_allocation_info() converts the client-supplied
-FILE_ALLOCATION_INFORMATION::AllocationSize into a 512-byte block
-count with:
+On a volume mounted without OCFS2_FEATURE_INCOMPAT_SPARSE_ALLOC, a
+non-inline regular file with non-zero i_size and zero i_clusters is
+structurally malformed: the extent map declares no allocated clusters yet
+the size header claims content exists.  Keep rejecting that shape, but
+express it through a shared predicate so the same invariant is available
+to normal inode reads and online filecheck.
 
-	alloc_blks = (le64_to_cpu(file_alloc_info->AllocationSize) + 511) >> 9;
+The same zero-cluster shape is also malformed for non-inline directories.
+ocfs2 directory growth allocates backing storage before advancing i_size,
+and ocfs2_dir_foreach_blk_el() later walks until ctx->pos reaches
+i_size_read(inode).  A forged directory dinode with a huge i_size and no
+clusters would repeatedly fail on holes while advancing through the
+claimed size.
 
-AllocationSize is a fully client-controlled __le64 field; the only
-validation performed by the caller (smb2_set_info_file(), case
-FILE_ALLOCATION_INFORMATION) is that the fixed buffer is at least
-sizeof(struct smb2_file_alloc_info) == 8 bytes. The value itself is
-never range-checked before this arithmetic.
+Sparse regular files remain exempt: on sparse-alloc volumes, truncate can
+legitimately grow i_size without allocating clusters.  System inodes and
+inline-data dinodes also retain their separate storage rules.
 
-When AllocationSize is close to U64_MAX (e.g. 0xffffffffffffffff),
-"AllocationSize + 511" wraps around mod 2^64 to a small number
-(0xffffffffffffffff + 511 = 510), so alloc_blks becomes 0. Since any
-existing regular file has stat.blocks > 0, the function then takes
-the "shrink" branch and calls:
+Mirror the check in ocfs2_filecheck_validate_inode_block() as well.
+filecheck reports through its own error namespace, so malformed
+size/cluster state is logged as a filecheck invalid-inode result rather
+than via ocfs2_error(), but it must not proceed into
+ocfs2_populate_inode().
 
-	ksmbd_vfs_truncate(work, fp, alloc_blks * 512);   /* == 0 */
-
-silently truncating the file to size 0, even though the client asked
-to grow the allocation to (what looks like) the maximum possible
-size. The trailing "if (size < alloc_blks * 512) i_size_write(inode,
-size);" restore is guarded by a comparison that is never true once
-alloc_blks == 0, so the truncation is not undone. This lets an
-authenticated SMB client that already holds an open handle with
-FILE_WRITE_DATA on a file silently truncate that same file to size 0
-via a single crafted SET_INFO(FILE_ALLOCATION_INFORMATION) request
-advertising a near-U64_MAX AllocationSize, even though the request
-asks to grow the file's allocation rather than shrink it. This is a
-functional/data-loss bug, not a privilege-boundary
-violation: the same client could already truncate the file via
-FILE_END_OF_FILE_INFORMATION or a plain write.
-
-Fix it by validating AllocationSize against MAX_LFS_FILESIZE, the
-same upper bound the VFS itself uses to reject unrepresentable file
-sizes, before doing the "+511" rounding, and rejecting oversized
-values with -EINVAL. Bounding AllocationSize to
-MAX_LFS_FILESIZE - 511 guarantees the "+511" addition cannot wrap,
-and that the subsequent "alloc_blks * 512" values passed to
-vfs_fallocate() and ksmbd_vfs_truncate() stay within a representable
-loff_t as well.
-
-No legitimate SMB client asks for an allocation size anywhere near
-2^64 bytes, so this only rejects a value that was previously
-silently misinterpreted as zero.
-
-Runtime-verified on a v6.19 KASAN test stand: sending SET_INFO
-(FILE_ALLOCATION_INFORMATION) with AllocationSize = 0xffffffffffffffff
-against ksmbd now returns -EINVAL and leaves the target file's size
-unchanged, where the unpatched kernel truncated it from 4096 to 0
-bytes.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Assisted-by: AuditCode-AI:2026.07
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Link: https://lore.kernel.org/20260519110404.1803902-4-michael.bommarito@gmail.com
+Fixes: b657c95c1108 ("ocfs2: Wrap inode block reads in a dedicated function.")
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://sashiko.dev/#/patchset/20260517111015.3187935-1-michael.bommarito%40gmail.com
+Assisted-by: Claude:claude-opus-4-7
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ fs/ocfs2/inode.c |   60 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 60 insertions(+)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -6382,6 +6382,7 @@ static int set_file_allocation_info(stru
- 	 */
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -82,6 +82,24 @@ static bool ocfs2_dinode_has_unexpected_
+ 	return !S_ISCHR(mode) && !S_ISBLK(mode) && di->id1.dev1.i_rdev != 0;
+ }
  
- 	loff_t alloc_blks;
-+	u64 alloc_size;
- 	struct inode *inode;
- 	struct kstat stat;
- 	int rc;
-@@ -6397,7 +6398,19 @@ static int set_file_allocation_info(stru
- 	if (rc)
- 		return rc;
- 
--	alloc_blks = (le64_to_cpu(file_alloc_info->AllocationSize) + 511) >> 9;
-+	/*
-+	 * AllocationSize is fully client-controlled (the caller only
-+	 * validates the fixed 8-byte buffer length). Reject values that
-+	 * would overflow the "round up to 512-byte blocks" conversion
-+	 * below instead of silently wrapping it to a tiny block count,
-+	 * which would truncate the file to a size the client never
-+	 * asked for.
-+	 */
-+	alloc_size = le64_to_cpu(file_alloc_info->AllocationSize);
-+	if (alloc_size > MAX_LFS_FILESIZE - 511)
-+		return -EINVAL;
++static bool ocfs2_dinode_has_size_without_clusters(struct super_block *sb,
++						   struct ocfs2_dinode *di)
++{
++	umode_t mode = le16_to_cpu(di->i_mode);
 +
-+	alloc_blks = (alloc_size + 511) >> 9;
- 	inode = file_inode(fp->filp);
++	if (le32_to_cpu(di->i_flags) & OCFS2_SYSTEM_FL)
++		return false;
++	if (le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_DATA_FL)
++		return false;
++	if (!le64_to_cpu(di->i_size) || le32_to_cpu(di->i_clusters))
++		return false;
++
++	if (S_ISDIR(mode))
++		return true;
++
++	return !ocfs2_sparse_alloc(OCFS2_SB(sb)) && S_ISREG(mode);
++}
++
+ void ocfs2_set_inode_flags(struct inode *inode)
+ {
+ 	unsigned int flags = OCFS2_I(inode)->ip_attr;
+@@ -1563,6 +1581,33 @@ int ocfs2_validate_inode_block(struct su
+ 		goto bail;
+ 	}
  
- 	if (alloc_blks > stat.blocks) {
++	/*
++	 * Non-inline directories must not have i_size without allocated
++	 * clusters: directory growth adds storage before advancing i_size,
++	 * and readdir walks i_size block-by-block.  A forged directory
++	 * with zero clusters and a huge i_size would repeatedly fault on
++	 * holes while advancing through the claimed size.
++	 *
++	 * Non-inline regular files have the same invariant on non-sparse
++	 * volumes.  Sparse regular files are different: truncate can
++	 * legitimately grow i_size without allocating clusters, so keep
++	 * the sparse-alloc carveout for S_IFREG only.  System inodes and
++	 * inline-data dinodes have their own storage rules.
++	 */
++	if (ocfs2_dinode_has_size_without_clusters(sb, di)) {
++		if (S_ISDIR(le16_to_cpu(di->i_mode)))
++			rc = ocfs2_error(sb,
++					 "Invalid dinode #%llu: directory i_size %llu with i_clusters 0 and no inline-data flag\n",
++					 (unsigned long long)bh->b_blocknr,
++					 (unsigned long long)le64_to_cpu(di->i_size));
++		else
++			rc = ocfs2_error(sb,
++					 "Invalid dinode #%llu: regular file i_size %llu with i_clusters 0 and no inline-data flag on non-sparse volume\n",
++					 (unsigned long long)bh->b_blocknr,
++					 (unsigned long long)le64_to_cpu(di->i_size));
++		goto bail;
++	}
++
+ 	if (le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_DATA_FL) {
+ 		struct ocfs2_inline_data *data = &di->id2.i_data;
+ 
+@@ -1767,6 +1812,21 @@ static int ocfs2_filecheck_validate_inod
+ 		     le16_to_cpu(di->i_mode),
+ 		     (unsigned long long)le64_to_cpu(di->id1.dev1.i_rdev));
+ 		rc = -OCFS2_FILECHECK_ERR_INVALIDINO;
++		goto bail;
++	}
++
++	if (ocfs2_dinode_has_size_without_clusters(sb, di)) {
++		if (S_ISDIR(le16_to_cpu(di->i_mode)))
++			mlog(ML_ERROR,
++			     "Filecheck: invalid dinode #%llu: directory i_size %llu with i_clusters 0 and no inline-data flag\n",
++			     (unsigned long long)bh->b_blocknr,
++			     (unsigned long long)le64_to_cpu(di->i_size));
++		else
++			mlog(ML_ERROR,
++			     "Filecheck: invalid dinode #%llu: regular file i_size %llu with i_clusters 0 and no inline-data flag on non-sparse volume\n",
++			     (unsigned long long)bh->b_blocknr,
++			     (unsigned long long)le64_to_cpu(di->i_size));
++		rc = -OCFS2_FILECHECK_ERR_INVALIDINO;
+ 	}
+ 
+ bail:
 
 
