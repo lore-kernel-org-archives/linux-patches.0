@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC14376A0B;
-	Tue, 21 Jul 2026 21:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5403B776C;
+	Tue, 21 Jul 2026 21:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669434; cv=none; b=srD1fjlquyB7Jtbg/X45cgF4cMEmlIEooOqQJyGEWg00U5X26PoNVfvhFfKDng1yehUTRfxuHyDwPU3WxOdwBr1jTp3q0Jhm3hWNDzpCRYZfD9YugVuAoKM4wZPAJWjKHWXpEHm8wKhocVo5Ot1grHe7jyy5QhNc5deDVhC8N7w=
+	t=1784669437; cv=none; b=M/rlkJfF0C1JLT6xLo1JXfWBssat8xsxjxLPl6eT/qeojOVfgYZnnFf0FflqeFu7SHtfTUibn6XWTP9g5Fp59uNy7Klqv9oASueE8yxsKvwONeKkKCs2VHFHb5QbNWaOLGNMMcyZmFUKQ+t+U7+JUs/UAmldZi2jiGxKTJuyeHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669434; c=relaxed/simple;
-	bh=+TiaMJ4G4jIijNn1Od5CL+rd/ioGPnSiPY2DoNwMKF8=;
+	s=arc-20240116; t=1784669437; c=relaxed/simple;
+	bh=T24mauHkFd4o1CuUMsyLAG6LrQG/XIkRUd5c4AN5ayI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UKgViJaWOyLtYvw6lu8o7BhFB8Rw3dR/nOY75Ea/C/hI4BOLUOWnG5/w798ziYq1rAqcUONVXRobdLNvl2cf9g5Mjp9Xh6Sm8uBF6Gq9cb+5RlefLGV4qqQoQmEpAmBfiFzGTq0YKOqEaVF5X47QAF3kj9jHOCr4x3++1RTpiHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qqbm/Ayu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=exXE+K2ecY44Xl+BQ70DzTTjfuwnosbkB26B4ivoKItOJ61/HhdAhZuxRBlSs18052U/LjWI9r1HBt9VpOS81VVnkpoLpW2RpR7vjAF7TOht+vpPIpiEL8Fy+KuxwBxY2iifcyrUtaTDdYO/kY4drDm9o2xVeLCmHWELzkI1FqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nc2OZUhY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qqbm/Ayu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95881F000E9;
-	Tue, 21 Jul 2026 21:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nc2OZUhY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66A9C1F000E9;
+	Tue, 21 Jul 2026 21:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669433;
-	bh=C+cdwvD2+/ozjkVRMeaZcuqVDQYXyTK3HL8oKPFhzJI=;
+	s=korg; t=1784669435;
+	bh=+sNX9lxlFra6H3S5i09KocTI8jEYY5gcIg1X4BJFdm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qqbm/AyuIsdcqGEtneb+cM92swMoLmqLtYBfgWOQdv/4jpoZQjmYtJSdXP1yvAVgM
-	 w9P7tYtQh41+XqVNyFCeRvX9+o2M1h5lQIhhDhMqzmSka5Vkd6fEuKg2ahIsrZHzuU
-	 poz3tJ69kaUxxE0fAdUpNdOjb1aumvuwUFa8dodU=
+	b=Nc2OZUhYR2jxwBgA0Eaosgy656R66z4fwOvgUfSIqFaccG0CplLmCLx5LhLuFMVoy
+	 N74gzupyWr2NXwku62KyG5THI2RgLTazpgGlMPCyY9y8uS9XGN/Vd55H0dIafqBh83
+	 JqW9JXcfmhnqcK7JUQ1l9jyF31x9irL8ZbJJ4GC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
 	John Johansen <john.johansen@canonical.com>,
-	Paul Moore <paul@paul-moore.com>,
-	James Morris <jmorris@namei.org>,
-	"Serge E. Hallyn" <serge@hallyn.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0552/1067] security/apparmor/apparmorfs.c: conditionally compile get_loaddata_common_ref()
-Date: Tue, 21 Jul 2026 17:19:13 +0200
-Message-ID: <20260721152436.957696462@linuxfoundation.org>
+Subject: [PATCH 6.1 0553/1067] apparmor: check label build before no_new_privs test
+Date: Tue, 21 Jul 2026 17:19:14 +0200
+Message-ID: <20260721152436.980007068@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -54,52 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Morton <akpm@linux-foundation.org>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit d62d9bfe050f44f772d05a32079dba3e3523ab2a ]
+[ Upstream commit a58cafd38b46fb1a2220e2fbbcfe291ea75fa147 ]
 
-Some config did this:
+aa_change_profile() builds a replacement label with
+fn_label_build_in_scope() before the no_new_privs subset check. The build
+helper can fail and return NULL or an ERR_PTR, but the result was passed
+to aa_label_is_unconfined_subset() before the existing IS_ERR_OR_NULL()
+check.
 
-security/apparmor/apparmorfs.c:177:28: warning: 'get_loaddata_common_ref' defined but not used [-Wunused-function]
-  177 | static struct aa_loaddata *get_loaddata_common_ref(struct aa_common_ref *ref)
+Reuse the existing target-label build failure handling immediately after
+the build. This preserves the current audit handling while preventing the
+subset helper from dereferencing an invalid label.
 
-get_loaddata_common_ref() is only used if
-CONFIG_SECURITY_APPARMOR_EXPORT_BINARY=y.
-
-(Or of course move the function into that block if maintainers perfer)
-
-Fixes: 8e135b8aee5a0 ("apparmor: fix race between freeing data and fs accessing it")
-Cc: John Johansen <john.johansen@canonical.com>
-Cc: Paul Moore <paul@paul-moore.com>
-Cc: James Morris <jmorris@namei.org>
-Cc: "Serge E. Hallyn" <serge@hallyn.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: e00b02bb6ac2a ("apparmor: move change_profile mediation to using labels")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/apparmorfs.c | 2 ++
- 1 file changed, 2 insertions(+)
+ security/apparmor/domain.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
-index ff84ce10ca67e9..1476517ddef11b 100644
---- a/security/apparmor/apparmorfs.c
-+++ b/security/apparmor/apparmorfs.c
-@@ -174,6 +174,7 @@ static struct aa_proxy *get_proxy_common_ref(struct aa_common_ref *ref)
- 	return NULL;
- }
+diff --git a/security/apparmor/domain.c b/security/apparmor/domain.c
+index 91689d34d2811d..b4fa5abd60667c 100644
+--- a/security/apparmor/domain.c
++++ b/security/apparmor/domain.c
+@@ -1405,6 +1405,8 @@ int aa_change_profile(const char *fqname, int flags)
+ 		new = fn_label_build_in_ns(label, profile, GFP_KERNEL,
+ 					   aa_get_label(target),
+ 					   aa_get_label(&profile->label));
++		if (IS_ERR_OR_NULL(new))
++			goto build_fail;
+ 		/*
+ 		 * no new privs prevents domain transitions that would
+ 		 * reduce restrictions.
+@@ -1422,16 +1424,8 @@ int aa_change_profile(const char *fqname, int flags)
+ 		/* only transition profiles in the current ns */
+ 		if (stack)
+ 			new = aa_label_merge(label, target, GFP_KERNEL);
+-		if (IS_ERR_OR_NULL(new)) {
+-			info = "failed to build target label";
+-			if (!new)
+-				error = -ENOMEM;
+-			else
+-				error = PTR_ERR(new);
+-			new = NULL;
+-			perms.allow = 0;
+-			goto audit;
+-		}
++		if (IS_ERR_OR_NULL(new))
++			goto build_fail;
+ 		error = aa_replace_current_label(new);
+ 	} else {
+ 		if (new) {
+@@ -1443,6 +1437,17 @@ int aa_change_profile(const char *fqname, int flags)
+ 		error = aa_set_current_onexec(target, stack);
+ 	}
  
-+#ifdef CONFIG_SECURITY_APPARMOR_EXPORT_BINARY
- static struct aa_loaddata *get_loaddata_common_ref(struct aa_common_ref *ref)
- {
- 	if (ref)
-@@ -181,6 +182,7 @@ static struct aa_loaddata *get_loaddata_common_ref(struct aa_common_ref *ref)
- 						      count));
- 	return NULL;
- }
-+#endif
- 
- static void aa_put_common_ref(struct aa_common_ref *ref)
- {
++	goto audit;
++
++build_fail:
++	info = "failed to build target label";
++	if (!new)
++		error = -ENOMEM;
++	else
++		error = PTR_ERR(new);
++	new = NULL;
++	perms.allow = 0;
++
+ audit:
+ 	error = fn_for_each_in_ns(label, profile,
+ 			aa_audit_file(profile, &perms, op, request, auditname,
 -- 
 2.53.0
 
