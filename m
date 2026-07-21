@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB36546D546;
-	Tue, 21 Jul 2026 17:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2094246C4D1;
+	Tue, 21 Jul 2026 17:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655155; cv=none; b=dHzGIur/QW0rlOJ0yjHa605q93uVJxY646rGA/9KVmnZ6pJTUFfl8nsC0j1Z0z3EIsCRcDNYk4YcWfqIjsU1zHrevQw3qnr9OsQuNhIM8mBVg4WMmJBvAGMLhvTsg7dlILLPfskl3y+zX8gxVi6puGNYvTy705qqLCA8V25gDg4=
+	t=1784655157; cv=none; b=VhEUDNNE2Owo67bz2t5cNmcG0q9BxVMvkjfiVtK22ZiyzjDf0ApNUgRFlnMFGNgZm2UXs99VRhH7kT5CUziWm0bvQgrP8bRbqQIA9Oj8Z5QClLNC9O3hZzstmbT9x5flsETR6NWDZ1rjyfNxOj9CpQRu01jFdQ/Kt0V75OB4rbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655155; c=relaxed/simple;
-	bh=bhUteKE1+IuD0Lnu5zXKp8epnSPp9qEbUT5YejxSP+M=;
+	s=arc-20240116; t=1784655157; c=relaxed/simple;
+	bh=KSuO/hf5SCLRJMJvQPBr1Vj01WvdF3Cax1i3KrLICRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fgVV8xw4o/hpxPvr2yB0M5KsJBppFlSKCT0hjnsH7Uxzh2H5t/ot4S7m1FVyZzBBlvWkcHji/AYmKXRoNl9D/7ujJelDcnQoUep7dAsyO8vzpcJ0LfANBGq/oHPJEs9n6kGTydHLvu10fzmOnXm5WDnn1c8OCMT2mnDx6Lu1O1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yt6JtWTs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XK5OA0KNioF6BkvhD/HQ7nbkz84qsH9p31gaomfrhPqssYuFbWyyyawfx7LoIqjujKMP1wmW80dzZitQnHtqKO8AZ6ofTKplmdADhCzNRjp1bKnl0vLaELVSizUARjEezGA5WcxwPBVA1d8uDF/Lx58cj7X0W3gpR6XB6eFoPMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1Aly2rs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yt6JtWTs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6A841F000E9;
-	Tue, 21 Jul 2026 17:32:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1Aly2rs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866B61F000E9;
+	Tue, 21 Jul 2026 17:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655153;
-	bh=ggFoc+OT4AQWHagWf3x+Vsv19EEvvfqBDlhCmpmczDQ=;
+	s=korg; t=1784655156;
+	bh=lIt4dTlxUB2TezJerCdYyWcQA+e7D0ekYoyT+gfHS7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yt6JtWTs5LaacrcvSHW5eknheuH0B2L6XUR+0WI9pBkZ6yGv4HAmZKY7t6QHEnDmm
-	 MkEsA9CBPxa4q6uSw5wol3d9YmbK3Yn2c5EIjPYbf4gTWzSfc1P5r3VNaS5X5oCjiX
-	 X3kcBFV3JxBTlEHbK5u/MYkfNm4q/Q06KW7rqxZA=
+	b=Z1Aly2rsBNPq4hUTehAbNW7s6NWCIwwGcoz5KDrD2Jp2Dr96WJ6SebFwLUbOIpbbN
+	 xk85zBSMkCS5IM4+bC0h923k3+OYuVc0kQHssD0//B2/QZupUuXz1m1/tDbNTi5L+k
+	 RCzP2T+gY0V3UFvfn07uHqiZ3kipo+PW5+7S2Zao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Julian Anastasov <ja@ssi.bg>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 7.1 1975/2077] ipvs: use parsed transport offset in SCTP state lookup
-Date: Tue, 21 Jul 2026 17:27:28 +0200
-Message-ID: <20260721152639.290150551@linuxfoundation.org>
+	Matt Fleming <mfleming@cloudflare.com>,
+	Corey Minyard <corey@minyard.net>
+Subject: [PATCH 7.1 1940/2077] ipmi: Fix user refcount underflow in event delivery
+Date: Tue, 21 Jul 2026 17:26:53 +0200
+Message-ID: <20260721152638.465308600@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -56,83 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Matt Fleming <mfleming@cloudflare.com>
 
-commit 2f75c0faa3361b28e36cc0512b3299e163e25789 upstream.
+commit 6aa9e61c46465d231e9beddf56af7effd71be682 upstream.
 
-set_sctp_state() reads the SCTP chunk header again in order to drive the
-IPVS SCTP state table. For IPv6 it computes the offset with
-sizeof(struct ipv6hdr), while the surrounding IPVS code uses iph.len from
-ip_vs_fill_iph_skb(), where ipv6_find_hdr() has already skipped
-extension headers and found the real transport header.
+ipmi_alloc_recv_msg(user) takes the temporary user reference owned by the
+receive message, and ipmi_free_recv_msg() drops it again. If event delivery
+fails after allocating receive messages for earlier users,
+handle_read_event_rsp() rolls those messages back with
+ipmi_free_recv_msg().
 
-This makes the state machine read from the wrong offset for IPv6 SCTP
-packets that carry extension headers. For example, an INIT packet with an
-8-byte destination options header can be scheduled correctly by
-sctp_conn_schedule(), but set_sctp_state() reads the first byte of the
-SCTP verification tag as a DATA chunk type. The connection then moves
-from NONE to ESTABLISHED instead of INIT1, gets the longer established
-timeout, and updates the active/inactive destination counters
-incorrectly. This happens even though the SCTP handshake has not
-completed.
+That rollback path still drops user->refcount explicitly after freeing each
+message. The extra put can free a user that remains linked on intf->users,
+so later event delivery may dereference a freed user or trip refcount_t's
+addition-on-zero warning when ipmi_alloc_recv_msg() tries to acquire
+another reference.
 
-Use the parsed transport offset passed down from ip_vs_set_state() for
-the SCTP chunk-header lookup. For IPv4 and IPv6 packets without
-extension headers this preserves the existing offset.
+Remove the stale explicit put and the now-dead user assignment. Keep the
+list_del() and ipmi_free_recv_msg() calls; they are the required rollback
+operations.
 
-Fixes: 2906f66a5682 ("ipvs: SCTP Trasport Loadbalancing Support")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/netdev/20260705123040.35755-1-zhaoyz24@mails.tsinghua.edu.cn/
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: Claude Code:GLM-5.2
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: b52da4054ee0 ("ipmi: Rework user message limit handling")
+Cc: stable@vger.kernel.org # v6.18+
+Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
+Message-ID: <20260521130628.3641050-1-matt@readmodwrite.com>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_proto_sctp.c |   15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ drivers/char/ipmi/ipmi_msghandler.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
-@@ -372,20 +372,15 @@ static const char *sctp_state_name(int s
- 
- static inline void
- set_sctp_state(struct ip_vs_proto_data *pd, struct ip_vs_conn *cp,
--		int direction, const struct sk_buff *skb)
-+		int direction, const struct sk_buff *skb,
-+		unsigned int iph_len)
- {
- 	struct sctp_chunkhdr _sctpch, *sch;
- 	unsigned char chunk_type;
- 	int event, next_state;
--	int ihl, cofs;
--
--#ifdef CONFIG_IP_VS_IPV6
--	ihl = cp->af == AF_INET ? ip_hdrlen(skb) : sizeof(struct ipv6hdr);
--#else
--	ihl = ip_hdrlen(skb);
--#endif
-+	int cofs;
- 
--	cofs = ihl + sizeof(struct sctphdr);
-+	cofs = iph_len + sizeof(struct sctphdr);
- 	sch = skb_header_pointer(skb, cofs, sizeof(_sctpch), &_sctpch);
- 	if (sch == NULL)
- 		return;
-@@ -472,7 +467,7 @@ sctp_state_transition(struct ip_vs_conn
- 		unsigned int iph_len)
- {
- 	spin_lock_bh(&cp->lock);
--	set_sctp_state(pd, cp, direction, skb);
-+	set_sctp_state(pd, cp, direction, skb, iph_len);
- 	spin_unlock_bh(&cp->lock);
- }
- 
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -4477,10 +4477,8 @@ static int handle_read_event_rsp(struct
+ 			mutex_unlock(&intf->users_mutex);
+ 			list_for_each_entry_safe(recv_msg, recv_msg2, &msgs,
+ 						 link) {
+-				user = recv_msg->user;
+ 				list_del(&recv_msg->link);
+ 				ipmi_free_recv_msg(recv_msg);
+-				kref_put(&user->refcount, free_ipmi_user);
+ 			}
+ 			/*
+ 			 * We couldn't allocate memory for the
 
 
