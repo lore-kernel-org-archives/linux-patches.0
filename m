@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4FCC434E2C;
-	Tue, 21 Jul 2026 20:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C9C434E2C;
+	Tue, 21 Jul 2026 20:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664258; cv=none; b=s5r/xsO2d4qnK81XBxp0rkMwf/54yIZsUCcffhq4PC36k2rAfSNXIV9Zk1JUbCno2qj5BpWzTdODlj4mvX3GdPQcwHoKShVZ337gpb6nEoxgNBUUDZO+TgpERR0jXaz8HDpjKuFmZOC1Q/RvWakvB7p2EiFDHP93lr4Ws2sFkBc=
+	t=1784664261; cv=none; b=h+idLcGS+oSdIoSQGt5Cwu2g6QXB0kiQ1o+2nSudyNH3YB2KlUyJ86852zpPpQm+IsxcXPCFzi9gRnhFYcy5xUCMWDyWcetg7QWZ7oZ5tnspY8myUDBTRl4lzn8/HaSkG3UWvqB0bvJcJMHH80lcJZsc6VcoMngmvUDSaWaDciw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664258; c=relaxed/simple;
-	bh=SCiS/iMgVc7eu8+oybwJhs13+x+Xji5ybrm4kNBU4r0=;
+	s=arc-20240116; t=1784664261; c=relaxed/simple;
+	bh=eAe0VnRovFSoEOgRtbghumDJTZJ/jJqmx5YUWH2Ce4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BqlSwbdmdlJwEi4Ku0hFNhPTtzB4loEL8GsC0xPl60YJCy7ixEzYz71O2UI1NdOA7vLkRlPZCudMHJo5sRFhxEBH/EIWVIgnN4uFku3R2emkty4fZCxAjtl6VcpcikxWpuNdp9aGcWmuE7DmF9H9M+ISIzQVvC+Ce7koaUV8AhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C8apQ9Aw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gSc21iBESzkp0FGS58I2Dr7Qbrwck2NYeItkDPQbOYunX56AwDMIzIQ7Y5FCNltD5L5HyCVF0lufPtT2v0Bvl08ZvQ7ISEFOxPljgPM1K3L1m3EAghb3BflZ6IlJ3mM49IZ3siMxh+TNsji6dhbw9S4OaolBHwwZnmyj79V7J5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0SyMaq49; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8apQ9Aw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35AD81F000E9;
-	Tue, 21 Jul 2026 20:04:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0SyMaq49"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8541F000E9;
+	Tue, 21 Jul 2026 20:04:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664257;
-	bh=5f1cNqbrFEwtFyGq5B+loqLsvEkvzn0YpYlcBRuhbNk=;
+	s=korg; t=1784664260;
+	bh=Zr4fRuAGq8iObImuqQhv9Et/BbMisOdL5rUdNoTscQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C8apQ9AwvCXFaOzdwBbNv/J+6lgST/11Edfye1ZTX7KDBgZunHfJMPEiYJS6QlgvW
-	 pQGWYCVP+vxEgv6+TrHMin6PDo/b5htIsvT54Ws67nr0xYkApxkJEx/NiklvXGH9/m
-	 dCEclCuKA3dFhge2TH+sCQuIx7G+7Dor6OR3qOeA=
+	b=0SyMaq495PbmIkx6+2kU3dDerix1SIKvlpZw2cKBDMQw1Qv1qTLKwkM1jbw0+UUCE
+	 oFxkv4Lb6o/oXTWzjDJgUHFwXpZuCox1+/vvvvhYEULAh71viEMKi44qA7VQd1ATGo
+	 ahcdtDacrVIaK5z4G+T1LT6U/2pm7hItqrW7ge/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1132/1276] ACPI: NFIT: core: Fix acpi_nfit_init() error cleanup
-Date: Tue, 21 Jul 2026 17:26:15 +0200
-Message-ID: <20260721152511.327584908@linuxfoundation.org>
+Subject: [PATCH 6.12 1133/1276] ACPI: driver: Check ACPI_COMPANION() against NULL during probe
+Date: Tue, 21 Jul 2026 17:26:16 +0200
+Message-ID: <20260721152511.350203165@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,105 +54,139 @@ Content-Transfer-Encoding: 8bit
 
 From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 38bf27511ef41bffebd157ec3eba41fc89ba59cd ]
+[ Upstream commit e4865a56d013e86e46ea6acea15bb6eae01898ff ]
 
-If acpi_nfit_init() fails after adding the acpi_desc object to the
-acpi_descs list, that object is never removed from that list because
-the acpi_nfit_shutdown() devm action is not added for the NFIT device
-in that case.  Next, the acpi_nfit_init() failure causes
-acpi_nfit_probe() to fail, the acpi_desc object is freed, and a
-dangling pointer is left behind in the acpi_descs.  Any subsequent
-ACPI Machine Check Exception will trigger nfit_handle_mce() which
-iterates over acpi_descs and so a use-after-free will occur.
+Since every platform driver can be forced to match a device that doesn't
+match its list of device IDs because of device_match_driver_override(),
+platform drivers that rely on the existence of a device's ACPI companion
+object should verify its presence.
 
-Moreover, if acpi_nfit_probe() returns 0 after installing a notify
-handler for the NFIT device and without allocating the acpi_desc
-object and setting the NFIT device's driver data pointer, the
-acpi_desc object will be allocated by acpi_nfit_update_notify()
-and acpi_nfit_init() will be called to initialize it.  Regardless
-of whether or not acpi_nfit_init() fails in that case, the
-acpi_nfit_shutdown() devm action is not added for the NFIT device
-and acpi_desc is never removed from the acpi_descs list.  If the
-acpi_desc object is freed subsequently on driver removal, any
-subsequent ACPI MCE will lead to a use-after-free like in the
-previous case.
+Accordingly, add requisite ACPI_COMPANION() or ACPI_HANDLE() checks
+against NULL to 13 platform drivers handling core ACPI devices.
 
-To address the first issue mentioned above, make acpi_nfit_probe()
-call acpi_nfit_shutdown() directly on acpi_nfit_init() failures and
-to address the other one, add a remove callback to the driver and
-make it call acpi_nfit_shutdown().  Also, since it is now possible to
-pass NULL to acpi_nfit_shutdown() or the acpi_desc object passed to it
-may not have been initialized, add checks against NULL for acpi_desc and
-its nvdimm_bus field to that function and make acpi_nfit_unregister()
-clear the latter after unregistering the NVDIMM bus.
+Also change the value returned by the ACPI thermal zone driver when
+the device's ACPI companion is not present to -ENODEV for consistency
+with the other drivers.
 
-Fixes: a61fe6f7902e ("nfit, tools/testing/nvdimm: unify common init for acpi_nfit_desc")
-Fixes: fbabd829fe76 ("acpi, nfit: fix module unload vs workqueue shutdown race")
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: All applicable <stable@vger.kernel.org>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/1963615.tdWV9SEqCh@rafael.j.wysocki
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/4516068.ejJDZkT8p0@rafael.j.wysocki
+Cc: 7.0+ <stable@vger.kernel.org> # 7.0+
+Stable-dep-of: 18a00ed0e718 ("ACPI: NFIT: core: Fix possible deadlock and missing notifications")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/nfit/core.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/acpi/ac.c            |    6 +++++-
+ drivers/acpi/acpi_pad.c      |    6 +++++-
+ drivers/acpi/acpi_tad.c      |    6 +++++-
+ drivers/acpi/pfr_telemetry.c |    6 +++++-
+ drivers/acpi/pfr_update.c    |    6 +++++-
+ drivers/acpi/thermal.c       |    2 +-
+ 6 files changed, 26 insertions(+), 6 deletions(-)
 
---- a/drivers/acpi/nfit/core.c
-+++ b/drivers/acpi/nfit/core.c
-@@ -3061,6 +3061,8 @@ static void acpi_nfit_unregister(void *d
- 	struct acpi_nfit_desc *acpi_desc = data;
+--- a/drivers/acpi/ac.c
++++ b/drivers/acpi/ac.c
+@@ -203,11 +203,15 @@ static const struct dmi_system_id ac_dmi
  
- 	nvdimm_bus_unregister(acpi_desc->nvdimm_bus);
-+	/* The nvdimm_bus object may have been freed, so clear the pointer. */
-+	acpi_desc->nvdimm_bus = NULL;
- }
- 
- int acpi_nfit_init(struct acpi_nfit_desc *acpi_desc, void *data, acpi_size sz)
-@@ -3301,7 +3303,10 @@ static void acpi_nfit_remove_notify_hand
- void acpi_nfit_shutdown(void *data)
+ static int acpi_ac_probe(struct platform_device *pdev)
  {
- 	struct acpi_nfit_desc *acpi_desc = data;
--	struct device *bus_dev = to_nvdimm_bus_dev(acpi_desc->nvdimm_bus);
-+	struct device *bus_dev;
+-	struct acpi_device *adev = ACPI_COMPANION(&pdev->dev);
+ 	struct power_supply_config psy_cfg = {};
++	struct acpi_device *adev;
+ 	struct acpi_ac *ac;
+ 	int result;
+ 
++	adev = ACPI_COMPANION(&pdev->dev);
++	if (!adev)
++		return -ENODEV;
 +
-+	if (!acpi_desc || !acpi_desc->nvdimm_bus)
-+		return;
+ 	ac = kzalloc(sizeof(struct acpi_ac), GFP_KERNEL);
+ 	if (!ac)
+ 		return -ENOMEM;
+--- a/drivers/acpi/acpi_pad.c
++++ b/drivers/acpi/acpi_pad.c
+@@ -427,9 +427,13 @@ static void acpi_pad_notify(acpi_handle
  
- 	/*
- 	 * Destruct under acpi_desc_lock so that nfit_handle_mce does not
-@@ -3316,6 +3321,7 @@ void acpi_nfit_shutdown(void *data)
- 	mutex_unlock(&acpi_desc->init_mutex);
- 	cancel_delayed_work_sync(&acpi_desc->dwork);
+ static int acpi_pad_probe(struct platform_device *pdev)
+ {
+-	struct acpi_device *adev = ACPI_COMPANION(&pdev->dev);
++	struct acpi_device *adev;
+ 	acpi_status status;
  
-+	bus_dev = to_nvdimm_bus_dev(acpi_desc->nvdimm_bus);
- 	/*
- 	 * Bounce the nvdimm bus lock to make sure any in-flight
- 	 * acpi_nfit_ars_rescan() submissions have had a chance to
-@@ -3393,9 +3399,14 @@ static int acpi_nfit_add(struct acpi_dev
- 				sz - sizeof(struct acpi_table_nfit));
- 
- 	if (rc)
--		return rc;
-+		acpi_nfit_shutdown(acpi_desc);
- 
--	return devm_add_action_or_reset(dev, acpi_nfit_shutdown, acpi_desc);
-+	return rc;
-+}
++	adev = ACPI_COMPANION(&pdev->dev);
++	if (!adev)
++		return -ENODEV;
 +
-+static void acpi_nfit_remove(struct acpi_device *adev)
-+{
-+	acpi_nfit_shutdown(dev_get_drvdata(&adev->dev));
- }
+ 	strscpy(acpi_device_name(adev), ACPI_PROCESSOR_AGGREGATOR_DEVICE_NAME);
+ 	strscpy(acpi_device_class(adev), ACPI_PROCESSOR_AGGREGATOR_CLASS);
  
- static void acpi_nfit_update_notify(struct device *dev, acpi_handle handle)
-@@ -3482,6 +3493,7 @@ static struct acpi_driver acpi_nfit_driv
- 	.ids = acpi_nfit_ids,
- 	.ops = {
- 		.add = acpi_nfit_add,
-+		.remove = acpi_nfit_remove,
- 	},
- };
+--- a/drivers/acpi/acpi_tad.c
++++ b/drivers/acpi/acpi_tad.c
+@@ -588,12 +588,16 @@ static void acpi_tad_remove(struct platf
+ static int acpi_tad_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+-	acpi_handle handle = ACPI_HANDLE(dev);
+ 	struct acpi_tad_driver_data *dd;
++	acpi_handle handle;
+ 	acpi_status status;
+ 	unsigned long long caps;
+ 	int ret;
  
++	handle = ACPI_HANDLE(dev);
++	if (!handle)
++		return -ENODEV;
++
+ 	ret = acpi_install_cmos_rtc_space_handler(handle);
+ 	if (ret < 0) {
+ 		dev_info(dev, "Unable to install space handler\n");
+--- a/drivers/acpi/pfr_telemetry.c
++++ b/drivers/acpi/pfr_telemetry.c
+@@ -363,10 +363,14 @@ static void pfrt_log_put_idx(void *data)
+ 
+ static int acpi_pfrt_log_probe(struct platform_device *pdev)
+ {
+-	acpi_handle handle = ACPI_HANDLE(&pdev->dev);
+ 	struct pfrt_log_device *pfrt_log_dev;
++	acpi_handle handle;
+ 	int ret;
+ 
++	handle = ACPI_HANDLE(&pdev->dev);
++	if (!handle)
++		return -ENODEV;
++
+ 	if (!acpi_has_method(handle, "_DSM")) {
+ 		dev_dbg(&pdev->dev, "Missing _DSM\n");
+ 		return -ENODEV;
+--- a/drivers/acpi/pfr_update.c
++++ b/drivers/acpi/pfr_update.c
+@@ -505,10 +505,14 @@ static void pfru_put_idx(void *data)
+ 
+ static int acpi_pfru_probe(struct platform_device *pdev)
+ {
+-	acpi_handle handle = ACPI_HANDLE(&pdev->dev);
+ 	struct pfru_device *pfru_dev;
++	acpi_handle handle;
+ 	int ret;
+ 
++	handle = ACPI_HANDLE(&pdev->dev);
++	if (!handle)
++		return -ENODEV;
++
+ 	if (!acpi_has_method(handle, "_DSM")) {
+ 		dev_dbg(&pdev->dev, "Missing _DSM\n");
+ 		return -ENODEV;
+--- a/drivers/acpi/thermal.c
++++ b/drivers/acpi/thermal.c
+@@ -789,7 +789,7 @@ static int acpi_thermal_add(struct acpi_
+ 	int i;
+ 
+ 	if (!device)
+-		return -EINVAL;
++		return -ENODEV;
+ 
+ 	tz = kzalloc(sizeof(struct acpi_thermal), GFP_KERNEL);
+ 	if (!tz)
 
 
