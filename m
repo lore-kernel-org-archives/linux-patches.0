@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5501B37E310;
-	Tue, 21 Jul 2026 22:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17735231829;
+	Tue, 21 Jul 2026 22:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673602; cv=none; b=XptZplMnM59BpTQ5+HktTBPx+sNiRx6rlaVACJak8AUc7D4kDJbLy1482p5p6Znp273objatxFbGZr19r9RqCzjbDVdoSmUvQN2Sqpbon379m30zesyF81kRQkpX743IvNBKTvACFfxdacNUXTaWyf+Radhfc599LNzYcT1L5vY=
+	t=1784673605; cv=none; b=YgBGldsVfcQgJiDSwkPpfM0yXbBtBxlwRWXDMd9IcTbR5og3M219XqdKeKYkdp9GKaM60wfaxAnufYdWkzH42B13I2q+uxuRy5AyVZNof815YVg2S08wTs/oTk1Zcu48gGiN/ksmopl+TH0OCE8XxzED6JziBaMHP0uM2Z+4xvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673602; c=relaxed/simple;
-	bh=/3+vAxEP53IiMNOLNraq0DAgAkryEt3wt1N2fsWPLC0=;
+	s=arc-20240116; t=1784673605; c=relaxed/simple;
+	bh=kq66z4eEFDifXmeJHYE9rfHh/NHbSTUDJ6b132LQQcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pqcAI04BqeV3nbihQ4PD4OKmHfS5Aq45TWuzOKktjYMo3JNJJBekyJ1d/rOdneNM6GBeu35dcNjdvM+OUcsfRyEsXjTyxtAQxJWYY8hmisCubUwYB379S0ZdBvPtXRhDwU0A90L74c4zsMt2bJWnuKzdLCF32maLK+hZFaCmk+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVEb+7i2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RehN5AzTworxNcnwuD3uy2Ns3P0rzuKz3U/e4bcSzGYlXYMuxf07tm9aFI0+t9gluVDZd7/rdKIkpHUda2/OXNuUT6DqOstKCRKjm4N/RcVi5NQ19imzOYciQzOLSw7gCTr7F1Vqoorg4CqnBfKtJIMdfs/JPW+W4uVkQP5UcLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ve5xNkgW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVEb+7i2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF0B1F000E9;
-	Tue, 21 Jul 2026 22:40:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ve5xNkgW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785A51F000E9;
+	Tue, 21 Jul 2026 22:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673601;
-	bh=CEySsfXIxd4eJUZGclkgGlBWNKc/fdnzV1GaAx9olgc=;
+	s=korg; t=1784673604;
+	bh=hnDWGme9JrNO1+AEIr4iz5LkB6qvfgfAhAH+2CxtKRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aVEb+7i2RQ7ELqcGXGf3KcsE4PVhv27VYNgM64wBk/K26RVNbl+bITiUtc7GxDyAf
-	 ryDr2yUjAJvflXA+LOQP1fMsGIijNbtJ3L8iufa//kspNZ6wXCGiNt9vw5lxuFKLIx
-	 EiOZ0QmdK08gXsd+1ZiIqz7MgFbiV5Dbo7X43Bes=
+	b=ve5xNkgW9PR/T8IP9Rcsf+1iYJoeu1ce6vdNUj1BzswzMAO6adPnNXKjz20GWzEnj
+	 pqHYOm2d7R2Nv+W1vZDKoAaCM/8A5CewJWZkfQJH8PzqFu6g2C2RWtKGW7wU10eSXe
+	 YnrsK530SEgIt1d/0Oud9dv2uL6JctcRMbRPAhvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Lukas Wunner <lukas@wunner.de>,
-	Vitaly Chikunov <vt@altlinux.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 180/699] crypto: ecrdsa - fix unknown OID check in ecrdsa_param_curve
-Date: Tue, 21 Jul 2026 17:18:59 +0200
-Message-ID: <20260721152359.758153497@linuxfoundation.org>
+Subject: [PATCH 5.10 181/699] crypto: asymmetric_keys - fix OOB read in pefile_digest_pe_contents
+Date: Tue, 21 Jul 2026 17:19:00 +0200
+Message-ID: <20260721152359.781244253@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -53,38 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 2d7b2cfc59998baf5e8622a24dc28f69a5212e06 ]
+[ Upstream commit f7dd32c5179d7755de18e21d5674b08f9e5cb180 ]
 
-The ->curve_oid check in ecrdsa_param_curve() rejects the valid enum
-value 0 (OID_id_dsa_with_sha1), but look_up_OID() returns OID__NR on
-lookup failure. Compare ->curve_oid with OID__NR instead to ensure that
-only unknown OIDs return -EINVAL.
+pefile_digest_pe_contents() computes the trailing-data hash length as
+pelen - (hashed_bytes + certs_size). A crafted PE can make the addition
+exceed pelen, causing the unsigned subtraction to underflow to ~4 GiB.
+This is passed to crypto_shash_update() which reads out of bounds and
+panics on unmapped vmalloc guard pages.
 
-Fixes: 0d7a78643f69 ("crypto: ecrdsa - add EC-RDSA (GOST 34.10) algorithm")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Vitaly Chikunov <vt@altlinux.org>
+ BUG: unable to handle page fault for address: ffffc900038d8000
+ Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+ RIP: 0010:sha256_blocks_generic (lib/crypto/sha256.c:152)
+ Call Trace:
+  <TASK>
+  __sha256_update (lib/crypto/sha256.c:208)
+  crypto_sha256_update (crypto/sha256.c:142)
+  verify_pefile_signature (crypto/asymmetric_keys/verify_pefile.c:436)
+  kexec_kernel_verify_pe_sig (kernel/kexec_file.c:151)
+  __do_sys_kexec_file_load (kernel/kexec_file.c:406)
+  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+  </TASK>
+ Kernel panic - not syncing: Fatal exception
+
+Validate that the addition does not overflow and the result does not
+exceed pelen before the subtraction. Return -ELIBBAD on failure.
+
+Fixes: af316fc442ef ("pefile: Digest the PE binary and compare to the PKCS#7 data")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/ecrdsa.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ crypto/asymmetric_keys/verify_pefile.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/crypto/ecrdsa.c b/crypto/ecrdsa.c
-index 0a970261b107d9..bfb6dbfb4598f0 100644
---- a/crypto/ecrdsa.c
-+++ b/crypto/ecrdsa.c
-@@ -153,7 +153,7 @@ int ecrdsa_param_curve(void *context, size_t hdrlen, unsigned char tag,
- 	struct ecrdsa_ctx *ctx = context;
+diff --git a/crypto/asymmetric_keys/verify_pefile.c b/crypto/asymmetric_keys/verify_pefile.c
+index 22beaf2213a224..7e5b392dcac79a 100644
+--- a/crypto/asymmetric_keys/verify_pefile.c
++++ b/crypto/asymmetric_keys/verify_pefile.c
+@@ -305,6 +305,8 @@ static int pefile_digest_pe_contents(const void *pebuf, unsigned int pelen,
  
- 	ctx->curve_oid = look_up_OID(value, vlen);
--	if (!ctx->curve_oid)
-+	if (ctx->curve_oid == OID__NR)
- 		return -EINVAL;
- 	ctx->curve = get_curve_by_oid(ctx->curve_oid);
- 	return 0;
+ 	if (pelen > hashed_bytes) {
+ 		tmp = hashed_bytes + ctx->certs_size;
++		if (tmp <= hashed_bytes || pelen < tmp)
++			return -ELIBBAD;
+ 		ret = crypto_shash_update(desc,
+ 					  pebuf + hashed_bytes,
+ 					  pelen - tmp);
 -- 
 2.53.0
 
