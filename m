@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68693433BAC;
-	Tue, 21 Jul 2026 19:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14E946EF9A;
+	Tue, 21 Jul 2026 19:59:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663955; cv=none; b=gnk34yyWs87wlb4tZr+Z/0HimtO8brR915lrZXRz4XZ6yMFaszh9X/WbDNAkGY+idLQITXxKF6scztN30kS0TB5Z0m+a7W5Dd68cpI/clyEZmM6+xHTj+YOo1lopUPcWlNQg/n0KK21YhnN2GHm1dFMyLufWvsMy8UlA1+Uas9s=
+	t=1784663958; cv=none; b=CvNJjEn/ojrj4T7j3rpJ5AtN5uW3cB5rKS9T9SDrn0ac8PxJB8JUdAtkYa2sbB0G9kyyVUvMrKHCQXFxzAfqtCghgjzSZItm801J/6pqa3jhIzKkQi2YhMeUq7BHW99zy5ZI+9caV3yp0fy3536O/3ofEgfJq/SxPtLiFeEh38s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663955; c=relaxed/simple;
-	bh=jpg0AXZu8s6s7Uzb24oceNJOjmM5hlHLoNtg8W66c2k=;
+	s=arc-20240116; t=1784663958; c=relaxed/simple;
+	bh=9BLzY53T0t18RDOi7uzwg77rYCTw10H0gUY12c+HBxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q01uqfU4k710nSBn0IeZXTRySIfQOO3u6dr0uG9fLNQBI0S04BLJpWASPnXB4/jHEJBZOuAg7OxfP01PMLIfzFTfX/upeBCunuYXNaVWyO7UM9zjuvMtvL9cZDw04ilU9X7098rZLCRa9tQ2mWDgKlibHjDk4OPja+vRlFlGP1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jbli/d0w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G22Vc6BtUaD5SOOg0MwwXTwsz02kTfagV5PwFwvUdqh9Q3KeN5YX6bY5gKxqbLnl3TbOMJyhx74CB/K4llpf55geuyZgmhlZ+Elbj7YTMcShYpIJJrb9hzcOfAPngazDyZFyUqRSGXg9ehnJDmpZWrwEHNx8M8XgXY47qSRdH6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWcmNcjO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jbli/d0w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D4F1F000E9;
-	Tue, 21 Jul 2026 19:59:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWcmNcjO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB551F000E9;
+	Tue, 21 Jul 2026 19:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663954;
-	bh=5vJmjQqHn0ZtvIKzikMogM2MehBEA0p8htQq8ajdehQ=;
+	s=korg; t=1784663956;
+	bh=OlU2oseQOvSlmYD+N0MM2UYKFTZsmuzRhgAWogEBAZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jbli/d0wf1DagQLbD9yUM0fXWC/Gp159mXpLSl+SrU7iIFoH/UylJDYhYOpt82Uc9
-	 qmu6Jym4vTvv72xS6tNuGGL75a0dZ4mb27rZdlX1Jn+FCOwpk7kzihl4qrP6+wUGpO
-	 36RTEFvZxwO+fCCPzl748JTZbia8rtTu9NWxTODc=
+	b=eWcmNcjOt0axWUAdWtlXVo553ABMEpLQWnnQWgirMxCt2eu+/Ml/A9Ka24J/zu+sp
+	 tOolv4Lwh698oeWBi+RBrwOmCk/2pSXln9ci+TjuMFDjxMsgzNk2isd3syccN+FO4N
+	 UBd5f1s+nbKXTG4l1sw1O2mddtAd1CgsktI5la68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Joshua Crofts <joshua.crofts1@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 0975/1276] hwmon: (ltc2992) add missing select REGMAP_I2C to Kconfig
-Date: Tue, 21 Jul 2026 17:23:38 +0200
-Message-ID: <20260721152507.837893069@linuxfoundation.org>
+Subject: [PATCH 6.12 0976/1276] hwmon: (max6697) add missing select REGMAP_I2C to Kconfig
+Date: Tue, 21 Jul 2026 17:23:39 +0200
+Message-ID: <20260721152507.860841691@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,16 +52,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Joshua Crofts <joshua.crofts1@gmail.com>
 
-commit a35a6f1b20100057c66b7be5a8f6864661c3945c upstream.
+commit ed576f2f4eef8cbe2c110da503825a8dc4717030 upstream.
 
-The Kconfig entry for the LTC2992 sensor doesn't contain a
+The Kconfig entry for the MAX6697 sensor doesn't contain a
 `select REGMAP_I2C` parameter, causing build failures if regmap
 isn't selected previously during the build process.
 
-Fixes: b0bd407e94b0 ("hwmon: (ltc2992) Add support")
+Fixes: 3a2a8cc3fe24 ("hwmon: (max6697) Convert to use regmap")
 Cc: stable@vger.kernel.org
 Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Link: https://lore.kernel.org/r/20260629-add-kconfig-deps-v1-2-8104df929b1a@gmail.com
+Link: https://lore.kernel.org/r/20260629-add-kconfig-deps-v1-3-8104df929b1a@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -70,13 +70,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/hwmon/Kconfig
 +++ b/drivers/hwmon/Kconfig
-@@ -1014,6 +1014,7 @@ config SENSORS_LTC2992
- 	tristate "Linear Technology LTC2992"
+@@ -1259,6 +1259,7 @@ config SENSORS_MAX6650
+ config SENSORS_MAX6697
+ 	tristate "Maxim MAX6697 and compatibles"
  	depends on I2C
- 	depends on GPIOLIB
 +	select REGMAP_I2C
  	help
- 	  If you say yes here you get support for Linear Technology LTC2992
- 	  I2C System Monitor. The LTC2992 measures current, voltage, and
+ 	  If you say yes here you get support for MAX6581, MAX6602, MAX6622,
+ 	  MAX6636, MAX6689, MAX6693, MAX6694, MAX6697, MAX6698, and MAX6699
 
 
