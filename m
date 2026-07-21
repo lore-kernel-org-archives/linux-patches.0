@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE34A42DFEC;
-	Tue, 21 Jul 2026 19:31:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10FD42DFEC;
+	Tue, 21 Jul 2026 19:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662310; cv=none; b=Hgm1bcMRtbNiCRyXXFB5PEajPGSNjusdBzS9n7j7P54jKejKwMfdKVk2FUsV1JVc2zGn1S2F2DjLM8Pw56fVOrRRasEhPAZSvZuWTdnqkDIxPyYK1CrYe4HGLC31YKTYcIOffEmhQb1Vbef99cRAAmhL/qHEaPeG/KV8G9OQmqY=
+	t=1784662313; cv=none; b=cHrxjqUTK81ocyuDBvG8fxJSGWpGqyp5w07D/DjAbD4n5WXHprntQSHj2s1sWk/t88Zc3EZIpVH/tM3O6G8mBD2SJEcncjCXMD3JJYlU2BCLlxfvH3B8KlFfL6E0CIeIeylWYgpV7Vq90SZ/WWOCxv7jkr5gpizFEwHN0r3APdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662310; c=relaxed/simple;
-	bh=olsS+tNkxD32FRje5UDdhjduqH2IatLOfk6BqB+qjIU=;
+	s=arc-20240116; t=1784662313; c=relaxed/simple;
+	bh=l2jPpUg6tmgz89fOPQxmT+XkwIlzXl8ozFirPfnPApE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hGMXrNqluCDawlD8Iri0nC/3pHzvbuNPJL5jQIRQ882+w9EAuaTTSiJCbdCEDhAKhoVgL7dhN9Nz1SGdPlsZg87s7HvdKlP/+Fhn7MXWDldYPFef/C+Os7HY8zzh/66l38qt4qGS/y7MpFB1Yq/Or3z8350cU+S/zvOFCMH7NLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMANdL+2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uEjRcoE9/m4r9hmdj08eMyDXlTw8DThNiTSprS4qmyLO4vxGUsJLygMHbJYYV2M0E6lvO6V3kFn25dzxXU2nctYsocKogkPxUgmO/G/o4U0l4H7l/J7oFEyF+LPhUTbBd2oBa4OevGtC5MIF0CyTcPS7ivRnNJvgmFvq8U1eTDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CjbGckqq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMANdL+2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 316331F00A3A;
-	Tue, 21 Jul 2026 19:31:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjbGckqq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E271F000E9;
+	Tue, 21 Jul 2026 19:31:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662309;
-	bh=uisYmv1NQVdDy/klIFbZq9xYNPJYBP9/TVZlPRY/f+4=;
+	s=korg; t=1784662312;
+	bh=H7D/vBk+lqm8MiFrT0ZmiPGacmMFRzVq4SGeciS9oy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bMANdL+2T1MczmCcN23+wM4ftxqOz1IpGPx6Xe91hyxAvkVK3rLYz21iQuezQlSQI
-	 LgcXVKrWVFXN25pK47ClYIKgiFu/ZXd/ABt8Dzug21ETmvtCUYa5+vWNAmILQbTM0k
-	 n+pp7TQsYRPRuL5rIFfqb/lnTWvD909ZE4iF2Odw=
+	b=CjbGckqq1LgCvE/CV8x5bhaJ6SW7/tkya5lwphjpX0pOS5XaZ6gagumsyigygarAc
+	 /nl7gAjI1FO5cgM6vCW4iC3rDu82r3r3fgum9kKBnkNnAkoXejacMN1pAos1oVdzPS
+	 2fqXDxshZc5hoPrtjSe66Nff/baFgE7mJ/LQWVnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0369/1276] dpll: send delete notification before unregister in on-pin rollback
-Date: Tue, 21 Jul 2026 17:13:32 +0200
-Message-ID: <20260721152454.365835797@linuxfoundation.org>
+Subject: [PATCH 6.12 0396/1276] net: ethernet: oa_tc6: mdiobus->parent initialized with NULL
+Date: Tue, 21 Jul 2026 17:13:59 +0200
+Message-ID: <20260721152454.966559457@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,47 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Grzegorz Nitka <grzegorz.nitka@intel.com>
+From: Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>
 
-[ Upstream commit e83b403eb142be18d223fc599c0ac45519053671 ]
+[ Upstream commit a221d3f7e3f3ea6a3b4bc511cf2a59242daa06e1 ]
 
-The rollback path in dpll_pin_on_pin_register() called
-__dpll_pin_unregister() before dpll_pin_delete_ntf(). When the
-unregister dropped the pin's last DPLL reference it cleared the
-DPLL_REGISTERED mark in dpll_pin_xa, so the subsequent
-dpll_pin_event_send() failed dpll_pin_available() and aborted with
--ENODEV. As a result userspace was never notified of the rollback
-deletion and remained out of sync with the kernel.
+As "dev" pointer in oa_tc6 structure is never initialized,
+mbiobus->parent was initialized with NULL.  This change
+fixes it by initializing it with device pointer of spi.
 
-Send the delete notification first, matching the order used by
-dpll_pin_unregister() and dpll_pin_on_pin_unregister().
-
-Fixes: 9d71b54b65b1 ("dpll: netlink: Add DPLL framework base functions")
-Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
-Link: https://patch.msgid.link/20260607183045.1213735-5-grzegorz.nitka@intel.com
+Fixes: 8f9bf857e43b ("net: ethernet: oa_tc6: implement internal PHY initialization")
+Signed-off-by: Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>
+Link: https://patch.msgid.link/20260611-level-trigger-v5-2-4533a9e85ce2@onsemi.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dpll/dpll_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/oa_tc6.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
-index 241d0e906a6e81..9fdfb7617126c7 100644
---- a/drivers/dpll/dpll_core.c
-+++ b/drivers/dpll/dpll_core.c
-@@ -937,9 +937,9 @@ int dpll_pin_on_pin_register(struct dpll_pin *parent, struct dpll_pin *pin,
- dpll_unregister:
- 	xa_for_each(&parent->dpll_refs, i, ref)
- 		if (i < stop) {
-+			dpll_pin_delete_ntf(pin);
- 			__dpll_pin_unregister(ref->dpll, pin, ops, priv,
- 					      parent);
--			dpll_pin_delete_ntf(pin);
- 		}
- 	dpll_xa_ref_pin_del(&pin->parent_refs, parent, ops, priv, pin);
- unlock:
--- 
-2.53.0
-
+--- a/drivers/net/ethernet/oa_tc6.c
++++ b/drivers/net/ethernet/oa_tc6.c
+@@ -107,7 +107,6 @@
+ 
+ /* Internal structure for MAC-PHY drivers */
+ struct oa_tc6 {
+-	struct device *dev;
+ 	struct net_device *netdev;
+ 	struct phy_device *phydev;
+ 	struct mii_bus *mdiobus;
+@@ -518,7 +517,7 @@ static int oa_tc6_mdiobus_register(struc
+ 	tc6->mdiobus->read_c45 = oa_tc6_mdiobus_read_c45;
+ 	tc6->mdiobus->write_c45 = oa_tc6_mdiobus_write_c45;
+ 	tc6->mdiobus->name = "oa-tc6-mdiobus";
+-	tc6->mdiobus->parent = tc6->dev;
++	tc6->mdiobus->parent = &tc6->spi->dev;
+ 
+ 	snprintf(tc6->mdiobus->id, ARRAY_SIZE(tc6->mdiobus->id), "%s",
+ 		 dev_name(&tc6->spi->dev));
 
 
