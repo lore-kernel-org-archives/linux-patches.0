@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E765395266;
-	Tue, 21 Jul 2026 18:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127671CAA6D;
+	Tue, 21 Jul 2026 18:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657829; cv=none; b=WWtacF/ZYUFyZ82Yabz1GSua1zFF3gjW5cZm+UAVW//qdoeYqbijJX4QpmE7soyKJC5ksUkksT4UAr+AoZWdnO7uJC99nN4REuf3dVr4qUyvLzVcWw0kYHOBUTyQhBcAlJWy8frFA50HbEMDO0q31uP2jZul1qJ2bT6IR1AAan8=
+	t=1784657832; cv=none; b=kmWtCXmhoZqntRZhN2rB+KvRQ04qdeLGPnUcr9hyIGXJ3EYjVJbpxn97j/GteF8pONtGR3xRje7ANSZPhFFyHn0hhME0gkBc53gUW3jwzFIey/4IZqUi22WZhvuympab7ismJ5Ac2P5+UIVs3aEUzIul31+jc7qt3GBQ6D8oNto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657829; c=relaxed/simple;
-	bh=eATErBR4bNtSYW4bOR/JH6Ap5vCDNmMul+yV/Y3nDNI=;
+	s=arc-20240116; t=1784657832; c=relaxed/simple;
+	bh=rhV/Qiqs1SRsj2sVMPf8dCrhYQCIfMshHESDg+FTraw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GyGHPWhGyx/JNo1M+5rKFym16+ocecYRRc6weLqFbD3uDysnkg7Fc1u+oTtEDTBFnj0oX6At1mPoLiIbYVPtq7z8NLRprXdooedosArc0HJ6N5y6VC5iK23YszVvxhBbSlUgYXsUu1RYGAfes8JVlLKt9Kovi/u6cbeBJ9eNbQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=anIJAan5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=depnXYcWOl7YTfCHwnTNeuys6ckEC3DbsREM8IjFOaytcNwi3vWqZp3/oiQnKjMPWh+0kCrvav1TDlBqTu5b9+nXLQav4jVryFe4uN/ILqRdULGp4Ak+Ufrn2JnJXXHUTNDwCejxjjty6LIkwDhdEo+rtf1KKgparSPdAm/yUA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XSFG09lv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="anIJAan5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39A01F000E9;
-	Tue, 21 Jul 2026 18:17:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XSFG09lv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDB81F000E9;
+	Tue, 21 Jul 2026 18:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657828;
-	bh=nPJWU6uDW/5/1T7vFr0BUfdubwsE8IV7wPymwVRpbSI=;
+	s=korg; t=1784657830;
+	bh=jrnW4r/jC88wO8VZIL/jj+zXm5AhGHFUHsScEFmauvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=anIJAan5GtLvcnrm0OUh6IGBvWryZuMk2sn9YqMCMi7t0YUW/NS4L58+donTASgY2
-	 6FBVSNdZhWAdlHav7OvCEY6NTfd48rFb9DfkQ/ZgI/X8KKnLLIK538UYEz8XfFFKpY
-	 jPVgLW53iobebs2d7JMjWIFzb1prIDJRgvbbpG+g=
+	b=XSFG09lvc7v0fPES037alpqRbUPyBIpwTQKXZL2HNDBtbe9qXMXg3xgA+rPIdorFx
+	 DoSA0LuBifc5H2altbCPi1CSP3ZTgac+K3NI90F5BVtpC9FRnqepduG+ewA+VtZUvh
+	 VUlVtI8HD3Evkcv+k7Gxhv5J1AH2StrKcfOpT3pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0912/1611] net, bpf: check master for NULL in xdp_master_redirect()
-Date: Tue, 21 Jul 2026 17:17:08 +0200
-Message-ID: <20260721152535.901103108@linuxfoundation.org>
+Subject: [PATCH 6.18 0913/1611] net: do not acquire dev->tx_global_lock in netdev_watchdog_up()
+Date: Tue, 21 Jul 2026 17:17:09 +0200
+Message-ID: <20260721152535.923139232@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,66 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e82d8cc4321c373dc46e741cd2dfdaa7921fddb7 ]
+[ Upstream commit d09a78a2a469e4fab75108325efb813c49520809 ]
 
-xdp_master_redirect() dereferences the result of
-netdev_master_upper_dev_get_rcu() without a NULL check, but that helper
-returns NULL when the receiving device has no upper-master adjacency.
+Marek Szyprowski reported a deadlock during system resume when virtio_net
+driver is used.
 
-The reach guard only checks netif_is_bond_slave(). On bond slave release
-bond_upper_dev_unlink() drops the upper-master adjacency before clearing
-IFF_SLAVE, so an XDP_TX reaching xdp_master_redirect() in that window
-still passes netif_is_bond_slave() while master is already NULL, and
-faults on master->flags at offset 0xb0:
+The deadlock occurs because netif_device_attach() is called while holding
+dev->tx_global_lock (via netif_tx_lock_bh() in virtnet_restore_up()).
+netif_device_attach() calls __netdev_watchdog_up(), which now also tries
+to acquire dev->tx_global_lock to synchronize with dev_watchdog().
 
-  BUG: kernel NULL pointer dereference, address: 00000000000000b0
-  RIP: 0010:xdp_master_redirect (net/core/filter.c:4432)
-  Call Trace:
-   xdp_master_redirect (net/core/filter.c:4432)
-   bpf_prog_run_generic_xdp (include/net/xdp.h:700)
-   do_xdp_generic (net/core/dev.c:5608)
-   __netif_receive_skb_one_core (net/core/dev.c:6204)
-   process_backlog (net/core/dev.c:6319)
-   __napi_poll (net/core/dev.c:7729)
-   net_rx_action (net/core/dev.c:7792)
-   handle_softirqs (kernel/softirq.c:622)
-   __dev_queue_xmit (include/linux/bottom_half.h:33)
-   packet_sendmsg (net/packet/af_packet.c:3082)
-   __sys_sendto (net/socket.c:2252)
-  Kernel panic - not syncing: Fatal exception in interrupt
+This recursive lock acquisition results in a deadlock.
 
-The missing check dates back to the original code; commit 1921f91298d1
-("net, bpf: fix null-ptr-deref in xdp_master_redirect() for down master")
-later added the master->flags read where the fault now lands but kept the
-unconditional deref. Check master for NULL before use; a NULL master is
-treated the same as one that is not up.
+Fix this by removing the tx_global_lock acquisition from netdev_watchdog_up().
 
-Fixes: 879af96ffd72 ("net, core: Add support for XDP redirection to slave device")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260620201531.180123-1-xmei5@asu.edu
+The critical state (watchdog_timer and watchdog_ref_held) is already
+protected by dev->watchdog_lock, which was introduced in the blamed commit.
+
+Fixes: 8eed5519e496 ("net: watchdog: fix refcount tracking races")
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Closes: https://lore.kernel.org/netdev/a443376e-5187-4268-93b3-58047ef113a8@samsung.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260622110108.69541-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_generic.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index a3e6cd9c4a78bc..42385e79043131 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -4424,7 +4424,7 @@ u32 xdp_master_redirect(struct xdp_buff *xdp)
- 	struct net_device *master, *slave;
+diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
+index d44cee56a58e38..34573c9b8a5ebe 100644
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -569,9 +569,8 @@ void netdev_watchdog_up(struct net_device *dev)
+ 		return;
+ 	if (dev->watchdog_timeo <= 0)
+ 		dev->watchdog_timeo = 5*HZ;
+-	spin_lock_bh(&dev->tx_global_lock);
  
- 	master = netdev_master_upper_dev_get_rcu(xdp->rxq->dev);
--	if (unlikely(!(master->flags & IFF_UP)))
-+	if (unlikely(!master || !(master->flags & IFF_UP)))
- 		return XDP_ABORTED;
- 	slave = master->netdev_ops->ndo_xdp_get_xmit_slave(master, xdp);
- 	if (slave && slave != xdp->rxq->dev) {
+-	spin_lock(&dev->watchdog_lock);
++	spin_lock_bh(&dev->watchdog_lock);
+ 	if (!mod_timer(&dev->watchdog_timer,
+ 		       round_jiffies(jiffies + dev->watchdog_timeo))) {
+ 		if (!dev->watchdog_ref_held) {
+@@ -580,9 +579,7 @@ void netdev_watchdog_up(struct net_device *dev)
+ 			dev->watchdog_ref_held = true;
+ 		}
+ 	}
+-	spin_unlock(&dev->watchdog_lock);
+-
+-	spin_unlock_bh(&dev->tx_global_lock);
++	spin_unlock_bh(&dev->watchdog_lock);
+ }
+ EXPORT_SYMBOL_GPL(netdev_watchdog_up);
+ 
 -- 
 2.53.0
 
