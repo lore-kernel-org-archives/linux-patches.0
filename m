@@ -1,36 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D5D40860E;
-	Tue, 21 Jul 2026 18:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65E546EF94;
+	Tue, 21 Jul 2026 18:32:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658743; cv=none; b=jzIKGDMsQq5pCdxJAEiWz5QQEDU7gLNHe51UFYYeUHj2lz2GQvbpv9qp38qJ+QRBWLebUfHUalJJxeVZAxMR5xnFAG8X3rE0JK6pKHRQ1h7xJC4I/TGDUl0Fh9+RfVNKEpi41uoLeJQFaZYjHg5Zq+9AIbaFc3455Zkp20yk96U=
+	t=1784658745; cv=none; b=UQS63r2tE6/z/Rml2V32OW6UEnndOS1zf6Kk5eQqjCaJRPcEb2mDN78D9VjGMEYeG/Pc/HbQnOqEKmg48MygMvhN/pa5Vc1VqhYSObN3s54Co6Xpzg6eaMBRP2cuS2xxVQJ8VwV1c7ccA4loSVNzDMfambiTzWhvu0YV/HQX7g0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658743; c=relaxed/simple;
-	bh=OHwrDk7W9v7cwfheeH/dQdPtwsFWW0wYHoSpNjdQP8I=;
+	s=arc-20240116; t=1784658745; c=relaxed/simple;
+	bh=Y6zl5/5XCD5u4j7ZhivEr9XCYfSO7oxZIQ46V0lKGUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BisYN5TP2L5fredtIE5EQBqv3svJbu6RUerRklFagb6rH2p9wE5jHvbVKMnZVOlhzoWNOlpkZBbOiNgCbAKh3JeDmJpuBKTLA8V8bWZLkvkMCFc9eiY5TrJULx194Ce0xy4tgef4hhgcQ+Uu15BlaT8NnEbJJJBhO140TwY4+w0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Df6dIZ0U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=abMQk2sZmjUHlAledxTwNd4sbQ1qvY5x2SdRWHhMulPJz4FUiCILpVpMoQmpOI5fCxreYV3UKKDvkdvCcC/3a/p83BMKKxUtjsOGuYNbMlL10TupTyoCZHgKmg2ECWk3zHuUzqbem0guALzZMtTtyYP3C57yac4EZaN4RB/7sFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yd5rlhIW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Df6dIZ0U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900831F000E9;
-	Tue, 21 Jul 2026 18:32:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yd5rlhIW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10D8E1F000E9;
+	Tue, 21 Jul 2026 18:32:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658742;
-	bh=h1f/AuwSzBdYp6iaTvW26T1h6cD3XlW29SdVMnDP/0I=;
+	s=korg; t=1784658744;
+	bh=Q8aCgBlMwIV1gvv8TdiPYithNKiV1aswqsBVLoJcUy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Df6dIZ0Ux1dQF1w/An0bJBwWv+/RLSUuxkoV5PsYiifirtWiSkAP92m0JXksSEHPQ
-	 iFaO7glsD5b2SmEdByWafd/ljyU7ThIX34UW+QshOL8Skq88c/tJNjOQsotJOWwuoc
-	 WxSEMa+BvqpV+EDXzOb1ytyqAjIlcNpJL03egyzM=
+	b=yd5rlhIWLPjF9p6hYVH638b/zsiyL4WPZt+UjW2fewIyAR/sh0eZVN9L7mgVFQN73
+	 fJ4SJSTbqnHD3HxjpemPtVHROIBWVipiIhegG+IKsysLbvMFzQuzs1uuwFeV99rVPy
+	 FBvi5Ekz6G9t6ylhQ5cBDlFwkoTT0p7IvlGTEtVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.18 1204/1611] batman-adv: frag: free unfragmentable packet
-Date: Tue, 21 Jul 2026 17:22:00 +0200
-Message-ID: <20260721152542.515981477@linuxfoundation.org>
+	Kiryl Shutsemau <kas@kernel.org>,
+	Sashiko AI review <sashiko-bot@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Peter Xu <peterx@redhat.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 1252/1611] fs/proc/task_mmu: fix hugetlb self-deadlock in pagemap_scan_pte_hole()
+Date: Tue, 21 Jul 2026 17:22:48 +0200
+Message-ID: <20260721152543.606312656@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -49,39 +59,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Kiryl Shutsemau (Meta) <kas@kernel.org>
 
-commit 6b628425aed49a1c7a4ffc997583840fc582d32b upstream.
+commit e92d92bbafb264dc0518d52b846a3c07ed8d523f upstream.
 
-The caller of batadv_frag_send_packet() assume that the skb provided to the
-function are always consumed. But the pre-check for an empty payload or the
-zero fragment size returned an error without any further actions.
+A PAGEMAP_SCAN ioctl requesting PM_SCAN_WP_MATCHING on a hugetlb VMA hangs
+the calling thread, unkillably, as soon as the scan reaches an unpopulated
+part of the range:
 
-A failed pre-check must use the same error handling code as the rest of the
-function.
+  do_pagemap_scan()
+    walk_page_range()
+      walk_hugetlb_range()
+        hugetlb_vma_lock_read()           # take the vma lock for read ...
+        pagemap_scan_pte_hole()           # ... ->pte_hole() for a hole
+          uffd_wp_range()
+            change_protection()
+              hugetlb_change_protection()
+                hugetlb_vma_lock_write()  # ... and block taking it for write
 
-Cc: stable@vger.kernel.org
-Fixes: ee75ed88879a ("batman-adv: Fragment and send skbs larger than mtu")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+walk_hugetlb_range() holds the hugetlb vma lock for read across the whole
+walk.  A present entry goes to ->hugetlb_entry(); an unpopulated one goes
+to ->pte_hole(), i.e.  pagemap_scan_pte_hole().  To write-protect the hole
+that handler calls uffd_wp_range(), which on a hugetlb VMA reaches
+hugetlb_change_protection() and takes the same vma lock for write.  The
+thread then blocks in down_write() waiting for the read lock it is itself
+holding.
+
+The populated path avoids this: pagemap_scan_hugetlb_entry()
+write-protects the entry inline under the page-table lock and never enters
+hugetlb_change_protection().
+
+Do the same for holes.  Fault in the page table and install the uffd-wp
+marker directly with make_uffd_wp_huge_pte() under the page-table lock,
+rather than routing through uffd_wp_range().  That is the same sequence
+hugetlb_change_protection() runs for an unpopulated entry, minus the vma
+write lock -- which is safe to skip because PMD sharing is disabled on
+uffd-wp VMAs (hugetlb_unshare_all_pmds() runs at registration), leaving
+nothing for that lock to serialise against.
+
+Link: https://lore.kernel.org/20260529172331.356655-4-kas@kernel.org
+Fixes: 52526ca7fdb9 ("fs/proc/task_mmu: implement IOCTL to get and optionally clear info about PTEs")
+Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
+Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
+Assisted-by: Claude:claude-opus-4-8
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Balbir Singh <balbirs@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/fragmentation.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/proc/task_mmu.c |   59 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 58 insertions(+), 1 deletion(-)
 
---- a/net/batman-adv/fragmentation.c
-+++ b/net/batman-adv/fragmentation.c
-@@ -516,8 +516,10 @@ int batadv_frag_send_packet(struct sk_bu
- 	mtu = min_t(unsigned int, mtu, BATADV_FRAG_MAX_FRAG_SIZE);
- 	max_fragment_size = mtu - header_size;
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -2851,8 +2851,62 @@ out_unlock:
  
--	if (skb->len == 0 || max_fragment_size == 0)
--		return -EINVAL;
-+	if (skb->len == 0 || max_fragment_size == 0) {
-+		ret = -EINVAL;
-+		goto free_skb;
+ 	return ret;
+ }
++
++/*
++ * Write-protect the unpopulated hugetlb entries covering [addr, end) by
++ * installing uffd-wp markers inline, exactly as pagemap_scan_hugetlb_entry()
++ * does for populated entries.
++ *
++ * walk_hugetlb_range() currently calls ->pte_hole() once per huge page, so the
++ * loop normally runs a single iteration; it is written to cover the full range
++ * in case the walker ever coalesces adjacent holes.
++ *
++ * The obvious route -- uffd_wp_range() -> hugetlb_change_protection() --
++ * cannot be used here: it takes hugetlb_vma_lock_write(), but the page-table
++ * walker (walk_hugetlb_range()) already holds hugetlb_vma_lock_read() on the
++ * same VMA, so the scanning thread would deadlock against itself. PMD sharing
++ * is disabled on uffd-wp VMAs (hugetlb_unshare_all_pmds() at registration), so
++ * the vma lock guards nothing that matters for these entries anyway.
++ */
++static int pagemap_scan_hugetlb_hole_wp(struct vm_area_struct *vma,
++					unsigned long addr, unsigned long end)
++{
++	struct hstate *h = hstate_vma(vma);
++	unsigned long psize = huge_page_size(h);
++	struct mm_struct *mm = vma->vm_mm;
++	spinlock_t *ptl;
++	pte_t *ptep;
++	pte_t pte;
++
++	for (addr = ALIGN_DOWN(addr, psize); addr < end; addr += psize) {
++		ptep = huge_pte_alloc(mm, vma, addr, psize);
++		if (!ptep)
++			return -ENOMEM;
++
++		i_mmap_lock_write(vma->vm_file->f_mapping);
++		ptl = huge_pte_lock(h, mm, ptep);
++		pte = huge_ptep_get(mm, addr, ptep);
++		make_uffd_wp_huge_pte(vma, addr, ptep, pte);
++		/*
++		 * A none entry has no cached translation, so installing the
++		 * marker needs no TLB flush. Flush only if a fault populated
++		 * the entry between huge_pte_alloc() and the page table lock.
++		 */
++		if (!huge_pte_none(pte))
++			flush_hugetlb_tlb_range(vma, addr, addr + psize);
++		spin_unlock(ptl);
++		i_mmap_unlock_write(vma->vm_file->f_mapping);
 +	}
++
++	return 0;
++}
+ #else
+ #define pagemap_scan_hugetlb_entry NULL
++static int pagemap_scan_hugetlb_hole_wp(struct vm_area_struct *vma,
++					unsigned long addr, unsigned long end)
++{
++	return 0;
++}
+ #endif
  
- 	num_fragments = (skb->len - 1) / max_fragment_size + 1;
- 	max_fragment_size = (skb->len - 1) / num_fragments + 1;
+ static int pagemap_scan_pte_hole(unsigned long addr, unsigned long end,
+@@ -2872,7 +2926,10 @@ static int pagemap_scan_pte_hole(unsigne
+ 	if (~p->arg.flags & PM_SCAN_WP_MATCHING)
+ 		return ret;
+ 
+-	err = uffd_wp_range(vma, addr, end - addr, true);
++	if (is_vm_hugetlb_page(vma))
++		err = pagemap_scan_hugetlb_hole_wp(vma, addr, end);
++	else
++		err = uffd_wp_range(vma, addr, end - addr, true);
+ 	if (err < 0)
+ 		ret = err;
+ 
 
 
