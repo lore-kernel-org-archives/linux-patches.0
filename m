@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6647746A611;
-	Tue, 21 Jul 2026 16:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12BD846C4B9;
+	Tue, 21 Jul 2026 16:01:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649715; cv=none; b=HF9Linz4w0gfNG018qbXV66zqR3+EN4CCNiHDPrL3aioRjS7jFD/2a05IGqI1CxnRopsCC4yAB2md/0Iy1VZthDTqGYIHmwSA1wmoXiY4AQabbrrRmqRjtFZ7f5evd8UAtyN3AfRC82OILRUnYEgjBC/6xOgFaAVgqgN+msrRbM=
+	t=1784649717; cv=none; b=ON4EL+4bHTzXCJ6zWyIj9Gsv7vJIpMB6SK59mr9rh89ZJ6dhxn4ATc/AvFbYsVhskwwedmjJnNDxTzNYr7nqeoJWtmoZ3/UsQcs71bKGfIYTuw/+q/UzUSnv898VwHOEzLhiGOQi5e45nQq3zdcD7ZhOWKOhcLy74Gigm5KEZJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649715; c=relaxed/simple;
-	bh=AEiQt4i4H+1L7VJ3c7K89CKfROBuQs5TZ0qsB1UI194=;
+	s=arc-20240116; t=1784649717; c=relaxed/simple;
+	bh=aXUzyoFeH2gr8NHbE0kycalszapdk2+K+3VFckNaNvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p95jXcGAo4JVp23oGLlRG4TsrDBnM2YBdcVPiIQzYrrm0KHRUPCHveq7bOZdJIJPo10x4BBZVklOr+6eY7hjNtMzxh0T1LQF3Lb27bd8bT+I6rKEdeJT+N4NB8QvQ2IQwm/odsPZVUrkwBRQsxfLed/1KMl7HStYkmCh3Y7+uMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nAwS7ibW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QjUIK/lseXF3tesSDPWaZy3z9C6ted4Kz8W2OoB3nDyTGkIoMfoLGrKjRotos3v+3QZm/JliEpDcEbGYeSojEQWZ7NOh70Kr6LosEF0paRP20GG6oKNhNoQrg/LDj5TyOw6K5W6gu85OTAFycTkMsyO3266qFMxNCkfnNTlMDoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKQfnkT4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nAwS7ibW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA3D1F000E9;
-	Tue, 21 Jul 2026 16:01:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKQfnkT4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778E41F00A3A;
+	Tue, 21 Jul 2026 16:01:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649713;
-	bh=3iu+DZ+Vw03vANr0fadnvQsw/7d6yuerL/Y6ACQrtUA=;
+	s=korg; t=1784649716;
+	bh=avOEIrJt7BeQsX2b+EqUBoM9HGWgnG3bGeDepyqkMaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nAwS7ibWM3euQL0om9WEuEbFu/TFDwkzL6v+qtANgQirmECOZcpTrl8BWaD5XisqI
-	 XEHKJHg475OzWIxUHHrLAr1ZLQ9AF7dbYpM47WVqRtQJXTa1J2zizkhnbNjSAdU+bl
-	 HvMNmsrA1N9nH0ywiwZqe3tAlobt5EsBWzQeTxz4=
+	b=oKQfnkT449pwT//EHjSHwyD/1BSkFS82TzMKjPBv9EFoyh3RRYDzr2EOcugTAjXKh
+	 IMgXBWgb6c0E5+XOFNLf+ndFgC/71MKDuEQUryjD15E/0UMeajzp9a6QhjHyszmJa6
+	 kFekqSz+m4qteuTCjUgdbokV9EEnehADfSrghfo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0679/2077] Bluetooth: eir: Fix stack OOB write when prepending the Flags AD
-Date: Tue, 21 Jul 2026 17:05:52 +0200
-Message-ID: <20260721152608.812868035@linuxfoundation.org>
+Subject: [PATCH 7.1 0644/2077] hwmon: (gpd-fan): Initialize EC before registering hwmon device
+Date: Tue, 21 Jul 2026 17:05:17 +0200
+Message-ID: <20260721152607.996456048@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,73 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 6f5fb689fdf80bdd143f22a502f9eb1f3c85e286 ]
+[ Upstream commit a8a444917fe5d30a9787f41cc179f55fc5f559d3 ]
 
-eir_create_adv_data() builds the advertising data into a fixed-size
-buffer ("size", 31 for the legacy path). It may prepend a 3-byte "Flags"
-AD structure (LE_AD_NO_BREDR on an LE-only controller) and then copies
-the per-instance data without checking that it still fits:
+Move the gpd_init_ec() call to before devm_hwmon_device_register_with_info
+in the probe function. With the previous ordering the hwmon device was
+registered and exposed to userspace before the EC initialization
+completes, creating a window where sysfs reads could return invalid values.
 
-	memcpy(ptr, adv->adv_data, adv->adv_data_len);
+Some buggy firmware won't initialize EC properly on boot. Before its
+initialization, reading RPM will always return 0, and writing PWM will have
+no effect. So move gpd_init_ec to before hwmon device register.
 
-tlv_data_max_len() only reserves those 3 bytes when the user-supplied
-flags carry a managed-flags bit, so an instance added with flags == 0 is
-accepted with adv_data_len up to the full buffer. At advertise time the
-flags are still prepended, and the memcpy() writes 3 + adv_data_len
-bytes into the size-byte buffer:
-
-  BUG: KASAN: stack-out-of-bounds in eir_create_adv_data (net/bluetooth/eir.c:301)
-  Write of size 31 at addr ffff88800a547bdc by task kworker/u9:0/65
-  Workqueue: hci0 hci_cmd_sync_work
-   __asan_memcpy (mm/kasan/shadow.c:106)
-   eir_create_adv_data (net/bluetooth/eir.c:301)
-   hci_update_adv_data_sync (net/bluetooth/hci_sync.c:1310)
-   hci_schedule_adv_instance_sync (net/bluetooth/hci_sync.c:1817)
-   hci_cmd_sync_work (net/bluetooth/hci_sync.c:332)
-  This frame has 1 object:
-   [32, 64) 'cp'
-
-The "Flags" structure is added by the kernel, not requested by
-userspace, so only prepend it when it fits together with the instance
-advertising data; when there is no room for both, drop the flags rather
-than the user-provided data.
-
-Reachable by a local user with CAP_NET_ADMIN owning an LE-only
-controller on the legacy advertising path.
-
-Fixes: b44133ff03be ("Bluetooth: Support the "discoverable" adv flag")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 0ab88e239439 ("hwmon: add GPD devices sensor driver")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://lore.kernel.org/r/4be3734b135c8013157979ab5e80c7ee51243ddd.1781055639.git.xiaopei01@kylinos.cn
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: 1fb4397509bd ("hwmon: (gpd-fan): fix race condition between device removal and sysfs access")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/eir.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/hwmon/gpd-fan.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/eir.c b/net/bluetooth/eir.c
-index 3f72111ba651f9..1de5f9df6eec00 100644
---- a/net/bluetooth/eir.c
-+++ b/net/bluetooth/eir.c
-@@ -283,10 +283,12 @@ u8 eir_create_adv_data(struct hci_dev *hdev, u8 instance, u8 *ptr, u8 size)
- 		if (!flags)
- 			flags |= mgmt_get_adv_discov_flags(hdev);
+diff --git a/drivers/hwmon/gpd-fan.c b/drivers/hwmon/gpd-fan.c
+index 7284babd4f5c96..745b3fb9e3a49d 100644
+--- a/drivers/hwmon/gpd-fan.c
++++ b/drivers/hwmon/gpd-fan.c
+@@ -643,6 +643,7 @@ static int gpd_fan_probe(struct platform_device *pdev)
  
--		/* If flags would still be empty, then there is no need to
--		 * include the "Flags" AD field".
-+		/* Only add the "Flags" if it fits together with the instance
-+		 * advertising data; drop it rather than overflow the buffer.
- 		 */
--		if (flags && (ad_len + eir_precalc_len(1) <= size)) {
-+		if (flags &&
-+		    (ad_len + eir_precalc_len(1) +
-+		     (adv ? adv->adv_data_len : 0) <= size)) {
- 			ptr[0] = 0x02;
- 			ptr[1] = EIR_FLAGS;
- 			ptr[2] = flags;
+ 	dev_set_drvdata(dev, data);
+ 
++	gpd_init_ec(data);
+ 	hwdev = devm_hwmon_device_register_with_info(dev,
+ 						     DRIVER_NAME,
+ 						     data,
+@@ -651,9 +652,6 @@ static int gpd_fan_probe(struct platform_device *pdev)
+ 	if (IS_ERR(hwdev))
+ 		return dev_err_probe(dev, PTR_ERR(hwdev),
+ 				     "Failed to register hwmon device\n");
+-
+-	gpd_init_ec(data);
+-
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
