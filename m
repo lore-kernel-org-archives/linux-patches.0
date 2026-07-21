@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EEA4472F71;
-	Tue, 21 Jul 2026 17:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D17472F70;
+	Tue, 21 Jul 2026 17:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656139; cv=none; b=irbGf3ApSWjo/ftaAaOQZcBU/SLu6S1YyOrpPE6RCFDHO97fND8goIjgEMEoxb2qb0dtlkO66r8OfTeoWZbpZW9akS9bM7fWS9mHSsbnsI+se/SxXkhEzlCjILoHH+3XvTYlKrdUH/DHekhJmuL4AJrZDR6fUT3hp2TJVoO50Tk=
+	t=1784656142; cv=none; b=tS1dGmzZGb6IsqsBfu76EG/potcCSSuPjDKWVL3EY45N+TrZwZpZ2pNFF1HM+wlSEvP6GczPZm7NMWx6OCfZUP0w0DonpgobE+tbU+cPQ19F015oLZ2AjcNVG5dUDj3N6kardRqkQ3PyOkxkZ7BchhkKkHfdVPEMtmdc1nIaen4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656139; c=relaxed/simple;
-	bh=kXzWNS1GUR+6MdREsIKltbWHcMjQfKjBu8h87ybxwLo=;
+	s=arc-20240116; t=1784656142; c=relaxed/simple;
+	bh=WI6d5fnjAWPfPvJtLU6gKdsjHelcQDyjLpglj8jJRCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ywazw40vBEx6GTvdEtWf91vXxGn3MESyzAqN0iwfSZ6tACly/j+MiUMicakvDIXujJJBtkWSOl0jbfNYzArzYe3RDcvKwSEnW2uUhBYK0Y14z6kgmWT2xEJ9Ls277dwSwt14v/tUdG7+ZN78kOinLp6AlbOqXo0HRtq0/uNfl1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tLtvNZE5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VY1X3K2A3bblWOYeeyGXu4YtRaHliPNOlxSxUE6oVj2LqmZVAdidjFy10NSRn7pMWdMcF0BmwMRxsbdRcwSLucIN/GP74bsoaPWgs68Pqn5kulSQJjG+M7T0jENN40YH+qVVxVx3JWhp4akejmsHZw7U61rLodL2tnMxMtx6keo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBeSoUKQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tLtvNZE5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7DC81F00A3D;
-	Tue, 21 Jul 2026 17:48:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBeSoUKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0D11F00A3D;
+	Tue, 21 Jul 2026 17:49:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656138;
-	bh=gsvqclEAO18Yo7xINfiX1RkmQQb7SBL1X/2hHbiDbZY=;
+	s=korg; t=1784656141;
+	bh=M7+A+Rbi9h9xX7y3CbY+gYgGhF2nvIrA9NedSiUegsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tLtvNZE5enVhFm3olzIymwPRWGMmtJSO+Uk58uml74g/6aALJt2fgKdilBfpgAyHj
-	 QwWfWaskLUPFG+h+DXaMmBTAs0KnEdaEudh4TRFdeNDJwvEEsRngZJ9xNeRgcJPtTO
-	 Ywu0iRjxznKd6yTa/jD2EmaRcrGwctMznUuReu/I=
+	b=oBeSoUKQIoVFllJS3tIChsWePTnbLBOG90NrxZPFHRkXMC9zMQhGyd3LSlGhG460s
+	 t/BFHmIdVC8E2vYHXTcxJqiTBn3vpGjscwGWm9E7c3ghkpNezlAEfm3yOQRCJMEpdu
+	 efam+ZrSQIP2FT2Rctdq3aM1qH41BL3afd8Lf6dc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	John Garry <john.g.garry@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0273/1611] RDMA/rxe: Fix TOCTOU heap overflow in get_srq_wqe
-Date: Tue, 21 Jul 2026 17:06:29 +0200
-Message-ID: <20260721152521.191319348@linuxfoundation.org>
+Subject: [PATCH 6.18 0238/1611] nvme-multipath: fix flex array size in struct nvme_ns_head
+Date: Tue, 21 Jul 2026 17:05:54 +0200
+Message-ID: <20260721152520.366871146@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,58 +55,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristmd@gmail.com>
+From: Nilay Shroff <nilay@linux.ibm.com>
 
-[ Upstream commit 22b8fbded65b8c441b634a185f8da67657df6c50 ]
+[ Upstream commit 001e57554de81aa79c25c18fd53911d8a415c304 ]
 
-get_srq_wqe() reads wqe->dma.num_sge from the shared receive queue
-buffer, which is mapped into userspace. It validates num_sge against
-max_sge, but then re-reads the same field to calculate the memcpy
-size. A concurrent userspace thread can modify num_sge between
-validation and use, causing a heap buffer overflow when copying the
-WQE into qp->resp.srq_wqe.
+struct nvme_ns_head contains a flexible array member, current_path[],
+which is indexed using the NUMA node ID:
+head->current_path[numa_node_id()]
 
-Read num_sge into a local variable and use it for both the bounds
-check and the size calculation.
+The structure is currently allocated as:
+size = sizeof(struct nvme_ns_head) +
+       (num_possible_nodes() * sizeof(struct nvme_ns *));
+head = kzalloc(size, GFP_KERNEL);
 
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Link: https://patch.msgid.link/r/20260518215040.1598586-2-tristan@talencesecurity.com
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+This allocation assumes that NUMA node IDs are sequential and densely
+packed from 0 .. num_possible_nodes() - 1. While this assumption holds
+on many systems, it is not always true on some architectures such as
+powerpc.
+
+On some powerpc systems, NUMA node IDs can be sparse. For example:
+NUMA:
+  NUMA node(s):              6
+  NUMA node0 CPU(s):         80-159
+  NUMA node8 CPU(s):         0-79
+  NUMA node252 CPU(s):
+  NUMA node253 CPU(s):
+  NUMA node254 CPU(s):
+  NUMA node255 CPU(s):
+
+That is, the possible/online NUMA node IDs are: 0, 8, 252, 253, 254, 255
+In this case: num_possible_nodes() = 6
+
+So memory is allocated for only 6 entries in current_path[]. However,
+the array is later indexed using the actual NUMA node ID. As a result,
+accesses such as:
+head->current_path[8] or
+head->current_path[252]
+goes out of bounds, leading to the following KASAN splat:
+
+==================================================================
+BUG: KASAN: slab-out-of-bounds in nvme_mpath_revalidate_paths+0x22c/0x290 [nvme_core]
+Write of size 8 at addr c00020003bda35b8 by task kworker/u641:2/1997
+
+CPU: 1 UID: 0 PID: 1997 Comm: kworker/u641:2 Not tainted 7.1.0-rc5-dirty #14 PREEMPT(lazy)
+Hardware name: 8335-GTH POWER9 0x4e1202 opal:skiboot-v6.5.3-35-g1851b2a06 PowerNV
+Workqueue: async async_run_entry_fn
+Call Trace:
+[c000200037fa7510] [c0000000021c23d4] dump_stack_lvl+0x88/0xdc (unreliable)
+[c000200037fa7540] [c0000000009fda90] print_report+0x22c/0x67c
+[c000200037fa7630] [c0000000009fd508] kasan_report+0x108/0x220
+[c000200037fa7740] [c0000000009fff48] __asan_store8+0xe8/0x120
+[c000200037fa7760] [c008000018e76474] nvme_mpath_revalidate_paths+0x22c/0x290 [nvme_core]
+[c000200037fa7800] [c008000018e6556c] nvme_update_ns_info+0x4a4/0x5e0 [nvme_core]
+[c000200037fa7a50] [c008000018e66270] nvme_alloc_ns+0x6d8/0x1a70 [nvme_core]
+[c000200037fa7c20] [c008000018e679fc] nvme_scan_ns+0x3f4/0x630 [nvme_core]
+[c000200037fa7d10] [c00000000031f22c] async_run_entry_fn+0x9c/0x3a0
+[c000200037fa7db0] [c0000000002fa544] process_one_work+0x414/0xa10
+[c000200037fa7ec0] [c0000000002fbf00] worker_thread+0x320/0x640
+[c000200037fa7f80] [c00000000030d0f8] kthread+0x278/0x290
+[c000200037fa7fe0] [c00000000000ded8] start_kernel_thread+0x14/0x18
+
+Allocated by task 1997 on cpu 1 at 35.928317s:
+
+The buggy address belongs to the object at c00020003bda3000
+ which belongs to the cache kmalloc-rnd-15-2k of size 2048
+The buggy address is located 16 bytes to the right of
+ allocated 1448-byte region [c00020003bda3000, c00020003bda35a8)
+
+The buggy address belongs to the physical page:
+
+Memory state around the buggy address:
+ c00020003bda3480: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ c00020003bda3500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>c00020003bda3580: 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc fc
+                                        ^
+ c00020003bda3600: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ c00020003bda3680: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+==================================================================
+
+Fix this by allocating the flexible array using nr_node_ids instead
+of num_possible_nodes(). Since nr_node_ids represents the maximum
+possible NUMA node IDs, indexing current_path[] using numa_node_id()
+becomes safe even on systems with sparse node IDs.
+
+Fixes: f333444708f8 ("nvme: take node locality into account when selecting a path")
+Tested-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_resp.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/nvme/host/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
-index 09ba21d0f3c4fe..12669297468890 100644
---- a/drivers/infiniband/sw/rxe/rxe_resp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_resp.c
-@@ -263,6 +263,7 @@ static enum resp_states get_srq_wqe(struct rxe_qp *qp)
- 	struct rxe_recv_wqe *wqe;
- 	struct ib_event ev;
- 	unsigned int count;
-+	unsigned int num_sge;
- 	size_t size;
- 	unsigned long flags;
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 9a0071bd791c85..7b6b42b20641b0 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3890,7 +3890,7 @@ static struct nvme_ns_head *nvme_alloc_ns_head(struct nvme_ctrl *ctrl,
+ 	int ret = -ENOMEM;
  
-@@ -278,12 +279,13 @@ static enum resp_states get_srq_wqe(struct rxe_qp *qp)
- 	}
+ #ifdef CONFIG_NVME_MULTIPATH
+-	size += num_possible_nodes() * sizeof(struct nvme_ns *);
++	size += nr_node_ids * sizeof(struct nvme_ns *);
+ #endif
  
- 	/* don't trust user space data */
--	if (unlikely(wqe->dma.num_sge > srq->rq.max_sge)) {
-+	num_sge = wqe->dma.num_sge;
-+	if (unlikely(num_sge > srq->rq.max_sge)) {
- 		spin_unlock_irqrestore(&srq->rq.consumer_lock, flags);
- 		rxe_dbg_qp(qp, "invalid num_sge in SRQ entry\n");
- 		return RESPST_ERR_MALFORMED_WQE;
- 	}
--	size = sizeof(*wqe) + wqe->dma.num_sge*sizeof(struct rxe_sge);
-+	size = sizeof(*wqe) + num_sge * sizeof(struct rxe_sge);
- 	memcpy(&qp->resp.srq_wqe, wqe, size);
- 
- 	qp->resp.wqe = &qp->resp.srq_wqe.wqe;
+ 	head = kzalloc(size, GFP_KERNEL);
 -- 
 2.53.0
 
