@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4332B43901B;
-	Tue, 21 Jul 2026 22:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7BA44604A;
+	Tue, 21 Jul 2026 22:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672646; cv=none; b=I+gyVUsHmBElFLCcF7mmh9/N4f858VOMkFoFlsrRP65MTTzCDpnnC6jAys/yhilkxCxbaZo1yQgxjrLuIxedADbl2sQfB92/kIZhxJdTLQreLLX8ADVZTe3P40ev6oy8mtvVOhrUsiCWYUjEhSE29gomBNhTvRIdQJfa9uA5AGc=
+	t=1784672649; cv=none; b=qVnY45OQAqDSbLZXDxDFlbrXOfzzdM0m9MHJcHWW+KloZHcxz8mzs+Q8RVpOYoWY0/Y5j+OfuhEo6Gc9euj1PMnPK203GEiIcV0UfDf+ui686ktmq7TEER38x3VSX31U+86v89CHqP6JuTcid8wy+DjaKz9Q33Ha0wPeONjgAr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672646; c=relaxed/simple;
-	bh=peS7T21gnLZ/qYdzsl6hRAV9O5xreoxBF3H9bU2JegM=;
+	s=arc-20240116; t=1784672649; c=relaxed/simple;
+	bh=+H9+Frd5+ERkfrlsCoZFv+k05940Alfayw6srlWXgaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d5PDtSJO5bcZxSLnTe0eI3eMk35X3NV+3zDPk8jtjGQGW9kKgVA60Qb2LtuunCt57nvljkntOuNWTMZ7Ft48P+l/CW1bAnie3eS58AmaIJarBtpHLPqWCTpPXwLIxTirJsnZYdiewgAL1XKCtUbQedBtzGQ/ShmkXOqQBSOKBxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cTmIoM/V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mu49bc9qJSPmk9s1Ub4W2ygD5Aj/v6Ysi4UyxpVLhhDcN51QmAxGvFBoto2+1witDBgbir3LUsQzdDGjwLKtsgWTvRS/D20GYlGgHNeNtzfoVhhMnCr3SJUSjxwbkP48XkT1BrRjnqciu9Qvk5gd7NoVC0WnDks7Zv5IZhY+ObY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFku/Sx4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cTmIoM/V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A998F1F000E9;
-	Tue, 21 Jul 2026 22:24:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFku/Sx4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA561F000E9;
+	Tue, 21 Jul 2026 22:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672645;
-	bh=PTKjbYnYditAdKa2wez4ICuEvWiBxfuUjT9w2uGs0Ug=;
+	s=korg; t=1784672647;
+	bh=azgGHrbXNJB6wT+y5d9ixQMWm3w1O1jTnPOV1E5uu1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cTmIoM/V5I1SA2nwYQMS80/nHB+CDPwCyZYWHUZehl5CMwMCrpt6RBdsJauWIkd+i
-	 upGOuVKANGKKzvyfwsFDc2Mki308D/idBN65vaY0TXnmW+1izwrwbED5YKNAswSg3V
-	 6vzaHKwVJ9xle7ssLkAac/FwznahzY8XbU0cjdtw=
+	b=dFku/Sx4gp6FGjDNWlYOApMAC5gvCE7NjwoGcmyB8uGqNNaBBaV2fpZaOdPIdkXMp
+	 7qaExkHj8yZ8EEdHaGpN5Blc4u1gh9oumwv4oIzSPOoyUHWP79JdQksXVojhfS0Q8Y
+	 knvbyOpJ0wAb0ZT2xzqEmtwATPcP9fNY3C8pslDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+36256deb69a588e9290e@syzkaller.appspotmail.com,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 703/843] mac802154: remove interfaces with RCU list deletion
-Date: Tue, 21 Jul 2026 17:25:38 +0200
-Message-ID: <20260721152421.863025531@linuxfoundation.org>
+Subject: [PATCH 5.15 704/843] llc: fix SAP refcount leak in llc_ui_autobind()
+Date: Tue, 21 Jul 2026 17:25:39 +0200
+Message-ID: <20260721152421.885928966@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -53,43 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-commit 539dfcf69105d8d3d4d677b71de6e5ede2e6dfa0 upstream.
+commit 660667cd406648bbaffbd5c0d897c2263a852f11 upstream.
 
-Queue wake, stop, and disable paths walk local->interfaces under RCU.
-The bulk hardware teardown path removes entries with list_del(), so an
-asynchronous transmit completion can follow a poisoned list node in
-ieee802154_wake_queue().
+llc_ui_autobind() opens a SAP after choosing a dynamic LSAP.
+llc_sap_open() returns a reference owned by the caller, and
+llc_sap_add_socket() takes a second reference for the socket's
+membership in the SAP hash tables.
 
-Use list_del_rcu() as in the single-interface removal path. The following
-unregister_netdevice() waits for in-flight RCU readers before freeing the
-netdevice, so no separate grace-period wait is needed.
+llc_ui_bind() drops the caller's reference after adding the socket,
+but llc_ui_autobind() keeps it. When the socket is closed,
+llc_sap_remove_socket() releases only the socket reference, leaving
+the SAP on llc_sap_list with sk_count == 0.
 
-Fixes: 592dfbfc72f5 ("mac820154: move interface unregistration into iface")
-Reported-by: syzbot+36256deb69a588e9290e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=36256deb69a588e9290e
+This is user-visible because repeated autobind and close cycles can consume
+all dynamic SAP values and make later autobinds fail with -EUSERS.
+
+Drop the caller's reference after a successful autobind, matching
+llc_ui_bind()'s ownership model.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://patch.msgid.link/20260701164222.9094-1-alhouseenyousef@gmail.com
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Link: https://patch.msgid.link/20260630194856.1036497-1-shuangpeng.kernel@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac802154/iface.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/llc/af_llc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/mac802154/iface.c
-+++ b/net/mac802154/iface.c
-@@ -705,7 +705,7 @@ void ieee802154_remove_interfaces(struct
- 
- 	mutex_lock(&local->iflist_mtx);
- 	list_for_each_entry_safe(sdata, tmp, &local->interfaces, list) {
--		list_del(&sdata->list);
-+		list_del_rcu(&sdata->list);
- 
- 		unregister_netdevice(sdata->dev);
- 	}
+--- a/net/llc/af_llc.c
++++ b/net/llc/af_llc.c
+@@ -316,6 +316,7 @@ static int llc_ui_autobind(struct socket
+ 	/* assign new connection to its SAP */
+ 	llc_sap_add_socket(sap, sk);
+ 	sock_reset_flag(sk, SOCK_ZAPPED);
++	llc_sap_put(sap);
+ 	rc = 0;
+ out:
+ 	dev_put(dev);
 
 
