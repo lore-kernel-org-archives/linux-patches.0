@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E81D471268;
-	Tue, 21 Jul 2026 20:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A0E471268;
+	Tue, 21 Jul 2026 20:09:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664584; cv=none; b=sYwzP2bY6GA31oI/2ot/0aMqDDg81iIF6A3xcRrdX18xPBHje9yRAi+b+mHJQzpAJN4WDbQm3+cJF2AEZYMeEBhfQ5YvYjacdTug4nEwGAJ2HY/9bw3cwwcZ0feL0oP9OoCSE20MFJOFqN2h2HA/1/n65ej+94NyVY0kuYm3sF8=
+	t=1784664587; cv=none; b=qF3JDunuM7iGDvAz6FVd9k9B90QTGgCH0liS5+UYD+FZq3jsoACkJQh5pCdlKx03a5jM/E9MQsgspmvr9PNKH480BnMuRhg8PegkB54OSQ10uTN9TzZPYnxFq7KUgGXdlGK8x+/6pNWyZPs1Ext9pcbXtjd8x8hyONq78Nzxufc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664584; c=relaxed/simple;
-	bh=49x21NpcSJvZURIqdT9UkSLtoFgnR7QXFNDLICFQFT0=;
+	s=arc-20240116; t=1784664587; c=relaxed/simple;
+	bh=oE4xM51dpquhYf5Tt7jI2hRszKzI00kTmIPZIzHkITY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SRPfUcJpVfR3Tyhw1fs6jACW95pJL9A7bf/ydxRddcl3QL8nR62IrXXjF+V0qsss1Q2EMpg+QO5mLotQeeYUkF/NvWX3oBCWBDJailjufl8B+9vuNCFD2cn/dR2c464nekRfJyGrFKSQ2myt6HHPo5L1+WQyvFHJOuUjwQqUDe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4gOnD5e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JoD3FMY/r3a9XdGuEpQPOku2lZDHRE++xBKZAmk9wAs55b6MWYNWMbilnNkZoP2EGi6qZWWYx1QaGwKh2bLoASfpym4eeF3k9XVkJOrjtHmkqFp5KNzxEYirrEPoPDkJKqF0lWS9TaD3jHHIfFRRf3gBuUglgP0jyEGT8Mvt0pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T04Gok+z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4gOnD5e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04E31F000E9;
-	Tue, 21 Jul 2026 20:09:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T04Gok+z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B60D1F000E9;
+	Tue, 21 Jul 2026 20:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664583;
-	bh=k8RNVRc7B3z0O5UtQ9rzVdNUxaUmuvUDEei7Uaxiwt0=;
+	s=korg; t=1784664585;
+	bh=fgkfuVfAGHHWrLq+u0fYmC4RHHSij+BV/8BaRpLZID4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U4gOnD5eGAgUMM6zXOIhaKhxeB7FTfhSzSb6lVfNmRIXqy5tdLGrxmzdbI9Ef3RpF
-	 0qA+zzkx9maD6Zf6fQhErEfa/aAsoYIE4y2BAYUQpo0Eh440Uc1HUFcUxJC/C+wZ7Y
-	 gZkld2JusqdTq1PGfKuYa5mBaNsKgbP/kzw9eFD8=
+	b=T04Gok+z5d26Mt1+tgFHDbKKAth/BpBj98PLvr2SuLn5iTTPDz6C/2Tro7GA1fWfB
+	 BXS5eGHvQKcoZjuYxJFfPoCb779uhPortwbajHwjd6xTa9npIGrZzxN9NYHPXuXOWe
+	 for6D0E8b0Uu4CQom2o+Aov8DzAiDIVFDBK40ohs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Easwar Hariharan <eahariha@linux.microsoft.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.12 1256/1276] jiffies: Cast to unsigned long in secs_to_jiffies() conversion
-Date: Tue, 21 Jul 2026 17:28:19 +0200
-Message-ID: <20260721152514.200189151@linuxfoundation.org>
+	syzbot+76a6f18e3af82e84f264@syzkaller.appspotmail.com,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.12 1257/1276] afs: Fix afs_atcell_get_link() to check if ws_cell is unset first
+Date: Tue, 21 Jul 2026 17:28:20 +0200
+Message-ID: <20260721152514.222094098@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,39 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Easwar Hariharan <eahariha@linux.microsoft.com>
+From: David Howells <dhowells@redhat.com>
 
-commit bb2784d9ab49587ba4fbff37a319fff2924db289 upstream.
+commit 0307d16f3610eb29ad0b7529846de7d62fed60ca upstream.
 
-While converting users of msecs_to_jiffies(), lkp reported that some range
-checks would always be true because of the mismatch between the implied int
-value of secs_to_jiffies() vs the unsigned long return value of the
-msecs_to_jiffies() calls it was replacing.
+Fix afs_atcell_get_link() to check if the workstation cell is unset before
+doing the RCU pathwalk bit where we dereference that.
 
-Fix this by casting the secs_to_jiffies() input value to unsigned long.
-
-Fixes: b35108a51cf7ba ("jiffies: Define secs_to_jiffies()")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20250130192701.99626-1-eahariha@linux.microsoft.com
-Closes: https://lore.kernel.org/oe-kbuild-all/202501301334.NB6NszQR-lkp@intel.com/
+Fixes: 823869e1e616 ("afs: Fix afs_atcell_get_link() to handle RCU pathwalk")
+Reported-by: syzbot+76a6f18e3af82e84f264@syzkaller.appspotmail.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/2481796.1742296819@warthog.procyon.org.uk
+Tested-by: syzbot+76a6f18e3af82e84f264@syzkaller.appspotmail.com
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/jiffies.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/afs/dynroot.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/include/linux/jiffies.h
-+++ b/include/linux/jiffies.h
-@@ -537,7 +537,7 @@ static __always_inline unsigned long mse
-  *
-  * Return: jiffies value
-  */
--#define secs_to_jiffies(_secs) ((_secs) * HZ)
-+#define secs_to_jiffies(_secs) (unsigned long)((_secs) * HZ)
+--- a/fs/afs/dynroot.c
++++ b/fs/afs/dynroot.c
+@@ -209,6 +209,9 @@ static const char *afs_atcell_get_link(s
+ 	const char *name;
+ 	bool dotted = vnode->fid.vnode == 3;
  
- extern unsigned long __usecs_to_jiffies(const unsigned int u);
- #if !(USEC_PER_SEC % HZ)
++	if (!rcu_access_pointer(net->ws_cell))
++		return ERR_PTR(-ENOENT);
++
+ 	if (!dentry) {
+ 		/* We're in RCU-pathwalk. */
+ 		cell = rcu_dereference(net->ws_cell);
+@@ -220,9 +223,6 @@ static const char *afs_atcell_get_link(s
+ 		return name;
+ 	}
+ 
+-	if (!rcu_access_pointer(net->ws_cell))
+-		return ERR_PTR(-ENOENT);
+-
+ 	down_read(&net->cells_lock);
+ 
+ 	cell = rcu_dereference_protected(net->ws_cell, lockdep_is_held(&net->cells_lock));
 
 
