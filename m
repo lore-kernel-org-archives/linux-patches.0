@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D6A444719;
-	Tue, 21 Jul 2026 22:24:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FE835C694;
+	Tue, 21 Jul 2026 22:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672652; cv=none; b=RfNqs+0lRplr4SWksDum0o0svHbI2/ZIJcFvhIQK80vqk6OHJMiYK56oMb0n3Dk5DK4y3QOp0059OihumDnYmWn3ivGsH/EtSoOTS93/0OtdSfGlkVvcE5jj8OdRFNbq1NnQxM/AxXjN/EWbj7MPZWS+ZrLa1EnqMdQi9cxBjhk=
+	t=1784672654; cv=none; b=Xw/0AdUJFkCNZ3KtwkrJ1CQZnWk4eIlkmRdiavEqa8aP7qrGZVn1llx5+iFzJxI0ujDSUqHqeK0hk8exHGytJx7O35510d7f0A25xht/NJ0crqlwROZSkXGKsuEU+EIz3aI0+DzuXHs3UNtlT1deNBqIVloNA/sZrBH1dUrHvu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672652; c=relaxed/simple;
-	bh=oVuX9TXKQ/y4wOgfr+sW71Lv4r3XzLXUsBKKta5ib4A=;
+	s=arc-20240116; t=1784672654; c=relaxed/simple;
+	bh=M0aE5HxvE1pSD6o7RdVgx79LKxVLfv7jBC5y5VatKwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PYhQO50LVLE0aSlhiI0Dr+12HWVJm4TLJxQ+83eRN8J3pb/wDzd3KtqprirJodeTY18su1WQ/IMdLe6QBAjLn0XD9lCTI4uuwmbJbh0QV33YdQpupo+NHWzIbVZWXl+FRjV4rY0lFJFhkQ98pit0GpTaftIIx41WX1zrMDDTMkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IfFhEOvR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W4iGChRsljYEd9rZK7bHtMvZPZP0rz0phiLd5p4wIlruiIK7epDTL0qpDNCgPp0e3dG7J2J2g00ejAOj90HLypL7izoffFqV0H4Ne5SQFYzU5ARYqdZaSQ0fgluzJTsgyuKzcDwAh9Dfgbq4cvEnisdiEm8fBJt6neD2YoxgODQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F4/I7KLI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IfFhEOvR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5DE71F000E9;
-	Tue, 21 Jul 2026 22:24:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F4/I7KLI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8423D1F000E9;
+	Tue, 21 Jul 2026 22:24:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672650;
-	bh=p5137O/qZoSifigGHouF9z91jWC0inh1fmQ9iA1gjLo=;
+	s=korg; t=1784672653;
+	bh=MDPTsmjAlLb7S+9kBSlsVkrdotrLN8jOWNVxh4L4MNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IfFhEOvRnCJ5ErwQpMohO7vaadX/wRZcFvstCi4F04mxcUaP58oFGxSgc6j4KshYt
-	 w9z7Xew7U+Z2xSS3XFAVAUjIXUFRfGEiYSjXxZFcJc9nHdA1iU9fAbTEB6tiU1kzN3
-	 JjTONEoSNewaSSfSmcHc02+GRZl5Huqhz2i6sWHY=
+	b=F4/I7KLIxqJFjiMlLi6YMcvFVUdAoIeAwtLVfqaROTjsI90tHlFhedUZJHWAOI39h
+	 qQahmF8e3lUbzADePHOQyty6CWzELQC57ElaiI4pNepWaMDA5TBQ0jE8gjCA/cG4F2
+	 XYZL1tjsmGI6C84CZqlaJP9BUnFyxniFgMy5YKBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,11 +33,10 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Xuewei Feng <fengxw06@126.com>,
 	Qi Li <qli01@tsinghua.edu.cn>,
 	Ke Xu <xuke@tsinghua.edu.cn>,
-	Julian Anastasov <ja@ssi.bg>,
 	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 5.15 705/843] ipvs: use parsed transport offset in SCTP state lookup
-Date: Tue, 21 Jul 2026 17:25:40 +0200
-Message-ID: <20260721152421.908442806@linuxfoundation.org>
+Subject: [PATCH 5.15 706/843] ipvs: reset full ip_vs_seq structs in ip_vs_conn_new
+Date: Tue, 21 Jul 2026 17:25:41 +0200
+Message-ID: <20260721152421.931551428@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -58,81 +57,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-commit 2f75c0faa3361b28e36cc0512b3299e163e25789 upstream.
+commit 2975324d164c552b028632f107b567302863b7f6 upstream.
 
-set_sctp_state() reads the SCTP chunk header again in order to drive the
-IPVS SCTP state table. For IPv6 it computes the offset with
-sizeof(struct ipv6hdr), while the surrounding IPVS code uses iph.len from
-ip_vs_fill_iph_skb(), where ipv6_find_hdr() has already skipped
-extension headers and found the real transport header.
+Commit 9a05475cebdd ("ipvs: avoid kmem_cache_zalloc in
+ip_vs_conn_new") changed ip_vs_conn_new() to allocate an ip_vs_conn
+object with kmem_cache_alloc().  The function then initializes many
+fields explicitly, but only resets in_seq.delta and out_seq.delta in the
+two struct ip_vs_seq members.
 
-This makes the state machine read from the wrong offset for IPv6 SCTP
-packets that carry extension headers. For example, an INIT packet with an
-8-byte destination options header can be scheduled correctly by
-sctp_conn_schedule(), but set_sctp_state() reads the first byte of the
-SCTP verification tag as a DATA chunk type. The connection then moves
-from NONE to ESTABLISHED instead of INIT1, gets the longer established
-timeout, and updates the active/inactive destination counters
-incorrectly. This happens even though the SCTP handshake has not
-completed.
+That leaves init_seq and previous_delta uninitialized.  This is normally
+harmless while the corresponding IP_VS_CONN_F_IN_SEQ or
+IP_VS_CONN_F_OUT_SEQ flag is clear.  For connections learned from a sync
+message, however, ip_vs_proc_conn() preserves those flags from
+IP_VS_CONN_F_BACKUP_MASK and passes opt=NULL when the message omits
+IPVS_OPT_SEQ_DATA.  In that case the new connection can be hashed with
+SEQ flags set but with the rest of in_seq/out_seq still containing stale
+slab data.
 
-Use the parsed transport offset passed down from ip_vs_set_state() for
-the SCTP chunk-header lookup. For IPv4 and IPv6 packets without
-extension headers this preserves the existing offset.
+When a packet for such a connection is later handled by an IPVS
+application helper, vs_fix_seq() and vs_fix_ack_seq() use
+previous_delta and init_seq to rewrite TCP sequence numbers.  A malformed
+sync message can therefore make forwarded packets carry stale slab bytes
+in their TCP seq/ack numbers, and can also corrupt the forwarded TCP
+flow.
 
-Fixes: 2906f66a5682 ("ipvs: SCTP Trasport Loadbalancing Support")
+Reset both struct ip_vs_seq members completely before publishing the
+connection.  This matches the existing "reset struct ip_vs_seq" comment
+and keeps the sequence-adjustment gates inactive unless valid sequence
+data is installed later.
+
+Fixes: 9a05475cebdd ("ipvs: avoid kmem_cache_zalloc in ip_vs_conn_new")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/netdev/20260705123040.35755-1-zhaoyz24@mails.tsinghua.edu.cn/
 Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
 Reported-by: Ao Wang <wangao@seu.edu.cn>
 Reported-by: Xuewei Feng <fengxw06@126.com>
 Reported-by: Qi Li <qli01@tsinghua.edu.cn>
 Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: Claude Code:GLM-5.2
+Assisted-by: Claude-Code:GLM-5.2
 Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Acked-by: Julian Anastasov <ja@ssi.bg>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_proto_sctp.c |   15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ net/netfilter/ipvs/ip_vs_conn.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
-@@ -372,20 +372,15 @@ static const char *sctp_state_name(int s
+--- a/net/netfilter/ipvs/ip_vs_conn.c
++++ b/net/netfilter/ipvs/ip_vs_conn.c
+@@ -996,8 +996,8 @@ ip_vs_conn_new(const struct ip_vs_conn_p
+ 	cp->app = NULL;
+ 	cp->app_data = NULL;
+ 	/* reset struct ip_vs_seq */
+-	cp->in_seq.delta = 0;
+-	cp->out_seq.delta = 0;
++	memset(&cp->in_seq, 0, sizeof(cp->in_seq));
++	memset(&cp->out_seq, 0, sizeof(cp->out_seq));
  
- static inline void
- set_sctp_state(struct ip_vs_proto_data *pd, struct ip_vs_conn *cp,
--		int direction, const struct sk_buff *skb)
-+		int direction, const struct sk_buff *skb,
-+		unsigned int iph_len)
- {
- 	struct sctp_chunkhdr _sctpch, *sch;
- 	unsigned char chunk_type;
- 	int event, next_state;
--	int ihl, cofs;
--
--#ifdef CONFIG_IP_VS_IPV6
--	ihl = cp->af == AF_INET ? ip_hdrlen(skb) : sizeof(struct ipv6hdr);
--#else
--	ihl = ip_hdrlen(skb);
--#endif
-+	int cofs;
- 
--	cofs = ihl + sizeof(struct sctphdr);
-+	cofs = iph_len + sizeof(struct sctphdr);
- 	sch = skb_header_pointer(skb, cofs, sizeof(_sctpch), &_sctpch);
- 	if (sch == NULL)
- 		return;
-@@ -472,7 +467,7 @@ sctp_state_transition(struct ip_vs_conn
- 		unsigned int iph_len)
- {
- 	spin_lock_bh(&cp->lock);
--	set_sctp_state(pd, cp, direction, skb);
-+	set_sctp_state(pd, cp, direction, skb, iph_len);
- 	spin_unlock_bh(&cp->lock);
- }
- 
+ 	atomic_inc(&ipvs->conn_count);
+ 	if (flags & IP_VS_CONN_F_NO_CPORT)
 
 
