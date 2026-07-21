@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43B63B6BE3;
-	Tue, 21 Jul 2026 20:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5103B1ECC;
+	Tue, 21 Jul 2026 20:44:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666639; cv=none; b=OqrxSkeompFXdt5b4gtgB8se8PVOBNK9zuARqikO44irpVwRq+CF4+qZ1IT1YmYLWuinCK8ByBZ+IUjhuWReiII/V6rjnH1ZBIFlSqCeKvQWtFIgoxlfwKg4Gywurr5/uOAhgCNzu5UBO6Fa2vw+GHP0/Zs+l5VVbVLxlXy5rJM=
+	t=1784666642; cv=none; b=kbNpkUBIIPWxjqFn2lVIdherncLe2vKJbCb2mn7g7Gqn7X5DJF45FKxvxgH+Bp5LfVxBXN1pr3tx6p/aUD64W6qVTr37G/PlgrUWwPptqB7yNkB2XSTHp5KrksRlSgPm0+WANR0mp7FReNCsdFCzVItnaO13zg33pVjDPAr/xpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666639; c=relaxed/simple;
-	bh=qDJVftTHYgY2CSy5qMFKSdAs2pNEPLwcf5NGaEkng2w=;
+	s=arc-20240116; t=1784666642; c=relaxed/simple;
+	bh=Z5t3pTzOpE98JOKPHJYWPVASrrIdCGjrXgQZFH/3a2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t28vkkgLLmj5j6aJ3TXtcW0E6YBXvUhZwMt1p8rVin4CEKHWcO7Bu3BH/n54oa3msKUPW3vz2Q2t43z44VHlVod/TS78FVfGAsXyVn0pcAB5QgENdS68jatJCTiy0cO0cPZVWjn2CHtWPgi4+Ue7TguNgAZA4GVjEoj4mMNruPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbmZbvFL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=T5pb1fECIwuJ4vAOerAMnew+ZfNay358d1vtcfv1wDCEyjUGpxyygbM860/VfDEQFaGBjYW8Ai+aZ7ZBaBJDizoJ99pWWwTCOl+zw7u6Kv+7A/JMORqxIRxDpdi18lHJWVYAiZOhmwTn0aQPQH9AFLbxvFUELWfpiQS7G7O7N9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLq1ADMv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbmZbvFL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C1D81F000E9;
-	Tue, 21 Jul 2026 20:43:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLq1ADMv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC381F000E9;
+	Tue, 21 Jul 2026 20:44:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666638;
-	bh=vZaQvJ5JLPM11iLLF2393UZcM2OV7g9SWnqe3oXY7u8=;
+	s=korg; t=1784666641;
+	bh=K9LDYEv8tEHyccjP4b2c2sz6W+26aBEJ0fKNk/+w8h0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TbmZbvFLidfFXSzaWas9q+WznaqLzlc5IFmlbtkklocWlukHpRt4+5ZRvyOzJ6HAu
-	 alA1Y4L0H/ZSkWfsrIRtLxRyYZ/2Ceuyr6JBDSaM8XhlGnZHz6+6sc2B2vD0cmpgbH
-	 B0sRKJyFJ/CfAdeujn7zbUPNxAJ3EOcSfpGD9ln0=
+	b=gLq1ADMvd38qocaZonrSz8fC9kbhy+Tnmxmqbbp5cuED0BzVVX0SYDHTKmry9U+Q7
+	 jGulwAgAxIbGuzMTRdXoP07HjDApquXp/kIx2786CU8SQsPUMPyaehFqvPiZJGBUGT
+	 4JAO8vmV7cO34PJv6lXJ8nGIUZ5PeVEq6L9VHaiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luis Gerhorst <luis.gerhorst@fau.de>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>,
+	Avinash Duduskar <avinash.duduskar@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0759/1266] bpf: Fix stack slot index in nospec checks
-Date: Tue, 21 Jul 2026 17:19:56 +0200
-Message-ID: <20260721152458.851787039@linuxfoundation.org>
+Subject: [PATCH 6.6 0760/1266] bpf: zero-initialize the fib lookup flow struct
+Date: Tue, 21 Jul 2026 17:19:57 +0200
+Message-ID: <20260721152458.872951796@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -48,55 +46,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
+From: Avinash Duduskar <avinash.duduskar@gmail.com>
 
-[ Upstream commit d1d53aa30ab3b5ae89161c9cc840b3f7489ad386 ]
+[ Upstream commit 0dfcb68a6a5ac517b22dff6a1f01cb4f126dfc57 ]
 
-check_stack_write_fixed_off() computes the byte slot for a fixed-offset
-stack write as -off - 1, and records each written byte in slot_type[] with
-(slot - i) % BPF_REG_SIZE.
+bpf_ipv4_fib_lookup() and bpf_ipv6_fib_lookup() build the flow key on
+the stack with a bare "struct flowi4 fl4;" / "struct flowi6 fl6;" and
+fill it field by field, but never set flowi4_l3mdev / flowi6_l3mdev.
 
-The Spectre v4 sanitization pre-check uses slot_type[i] instead. For a
-4-byte write at fp-8 after the lower half of fp-8 has been zeroed, the
-pre-check scans bytes 0..3 and sees STACK_ZERO while the actual write updates
-bytes 7..4. That can leave the second half-slot write without nospec_result
-even though the bytes being overwritten still require sanitization.
+On the non-DIRECT path the lookup goes through the fib rules whenever the
+netns has custom rules, which a VRF installs:
 
-Use the same slot index in the sanitization pre-check that the write path uses
-when updating slot_type[].
+	bpf_ipv4_fib_lookup() -> fib_lookup() -> __fib_lookup()
+	  -> l3mdev_update_flow()   reads !fl->flowi_l3mdev
+	  -> fib_rules_lookup() -> fib_rule_match()
+	       -> l3mdev_fib_rule_match()   uses fl->flowi_l3mdev
 
-Fixes: 2039f26f3aca ("bpf: Fix leakage due to insufficient speculative store bypass mitigation")
-Acked-by: Luis Gerhorst <luis.gerhorst@fau.de>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Signed-off-by: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
-Link: https://lore.kernel.org/r/20260618-f01-11-stack-nospec-slot-index-v3-1-780297041721@mails.tsinghua.edu.cn
+l3mdev_update_flow() resolves the l3mdev master from the ingress device
+only while the field is still zero. Left at a nonzero stack value the
+resolution is skipped, and l3mdev_fib_rule_match() then tests that value
+as an ifindex, so the VRF master is not resolved and the rule fails to
+match: an ingress enslaved to a VRF can fail to select its table. FIB
+rules matching on an L3 master device (l3mdev_fib_rule_iif_match()/
+_oif_match()) read the same value, so an "ip rule iif/oif <vrf>"
+mismatches the same way.
+
+Zero-initialize the whole flow struct rather than adding one more
+field assignment, so any flowi field added later is covered too.
+ip_route_input_slow() likewise zeroes the field before its input lookup.
+
+CONFIG_INIT_STACK_ALL_ZERO masks this by default, but it depends on
+compiler support (CC_HAS_AUTO_VAR_INIT_ZERO), so INIT_STACK_NONE builds,
+including older toolchains that fall back to it, are exposed. Built with
+INIT_STACK_ALL_PATTERN, a plain bpf_fib_lookup (no VLAN, no DIRECT) over a
+VRF slave whose destination is routed only in the VRF table returns
+BPF_FIB_LKUP_RET_NOT_FWDED, and resolves with this patch. On the default
+config the lookup succeeds either way, so ordinary testing does not catch
+the bug.
+
+Fixes: 40867d74c374 ("net: Add l3mdev index to flow struct and avoid oif reset for port devices")
+Signed-off-by: Avinash Duduskar <avinash.duduskar@gmail.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://lore.kernel.org/r/20260617224719.1428599-1-avinash.duduskar@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/core/filter.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index f638b2d3a42fbc..1da0092122c1db 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -4672,7 +4672,8 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- 		bool sanitize = reg && is_spillable_regtype(reg->type);
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 3e01ce9f01dfd0..5bbad21c7757c3 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -5955,7 +5955,7 @@ static int bpf_ipv4_fib_lookup(struct net *net, struct bpf_fib_lookup *params,
+ 	struct neighbour *neigh;
+ 	struct net_device *dev;
+ 	struct fib_result res;
+-	struct flowi4 fl4;
++	struct flowi4 fl4 = {};
+ 	u32 mtu = 0;
+ 	int err;
  
- 		for (i = 0; i < size; i++) {
--			u8 type = state->stack[spi].slot_type[i];
-+			u8 type = state->stack[spi].slot_type[(slot - i) %
-+							      BPF_REG_SIZE];
- 
- 			if (type != STACK_MISC && type != STACK_ZERO) {
- 				sanitize = true;
+@@ -6092,7 +6092,7 @@ static int bpf_ipv6_fib_lookup(struct net *net, struct bpf_fib_lookup *params,
+ 	struct neighbour *neigh;
+ 	struct net_device *dev;
+ 	struct inet6_dev *idev;
+-	struct flowi6 fl6;
++	struct flowi6 fl6 = {};
+ 	int strict = 0;
+ 	int oif, err;
+ 	u32 mtu = 0;
 -- 
 2.53.0
 
