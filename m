@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77551145B27;
-	Tue, 21 Jul 2026 17:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4AB2E736D;
+	Tue, 21 Jul 2026 17:23:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654634; cv=none; b=lUS62FY0aNhPcAhUbENR3a3VPVVRK136D65JfZtAlLBqB2evHeFDcBfz7COycr9sd47Ovr0/j72Kf/cZuIKVTZzjNBaNS7qfTby/f6DJYPu/Q1BwGVmQlEbjMMiezJd3xRLeSjGnDEsPlUWgZJIUn+npK7poD3TF8AtDXzLx8aA=
+	t=1784654637; cv=none; b=IsJZMMgYB2A20A650wfMZ0gubL8OzdrdVH54BEIxkIpvaUw/xicgG4WYagJovCHhi+OA7lhh6Jkmbo8txHfhvi8iaDL9eAcDM3u8YKshDT+LKxbQwjeza17OC121k13W8xfydE8NYH4goiqoOSgPAkTTedzYN8omkRvBg1cmmlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654634; c=relaxed/simple;
-	bh=8i5eU2tdUDkXeWgLhyf4bHQHLknxL8loMV+5T7ko+sk=;
+	s=arc-20240116; t=1784654637; c=relaxed/simple;
+	bh=vuZfKRaS0Jrt3Jt0Z7bMDrluDsEu+L4XuewijMMobGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tKMKYUIFFYOA+qSx4G0TRZs4bRWJSwVR3EqG/99rAFBC/fH5vis9Is7lfXnQbXOdb15VGuY8HFMJtpjVKfHTy41GCvebnqjrJraUeyfg/LUQZLQNxOxARkxjwzFQSKkTbWwxvVwpX6rY+zZcdcKahaMffeoetDExDHCaiLqyd8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TcFHnZ/C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=h75iMbZRznejgVJoj2aVmn/lVH5yJgF/rqBKkCHJgYIU5DOMQ47LYY0tUhYhu55u8+dEesuGQ4d1Wct/aqUm1C27fCEpYBxUUsDYRalOsy4yEEssdeD+nIJCWMAIEG72AZL0exC2+BSN1zMTL3gnwvNLjBsWCDz184ez25c2aiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izrFIMN+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TcFHnZ/C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD881F000E9;
-	Tue, 21 Jul 2026 17:23:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izrFIMN+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828BA1F000E9;
+	Tue, 21 Jul 2026 17:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654633;
-	bh=hEqMWVz+AUHkeA0NaAi4o9JFWSfJkv38LAECmhsRmSA=;
+	s=korg; t=1784654636;
+	bh=W5DIRbR42miRTgkH2zZ3KBMWKoaHibBFYOBYnbhgPpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TcFHnZ/CjCviJPOSYwKma4pfv0XB+zTanLpVgeXjDZA54tXyadaX0tIp5MvQR5an8
-	 PhtiuxIX2dm8V0y2rCjorY4eH2LYCRh4tOJLEJjgmpG8CKKRrwbLe2zW0cEG8U2LlJ
-	 WZXUdJoS2qml3L4mvgSC8IJl2aS2OAQDhb2ZNB38=
+	b=izrFIMN+wGV35jpuxQbK5OZqURDW4G2Q2AE+R+qW41XbAhXRg9TnoUwIMsKzHaPlX
+	 lRbH/loZfS459J5U3WHdrpBNzwHJjYLqym9EzCjae5vs71miGZ+WdLnIrBSeh9MlJo
+	 52/aAXspMiE3SI3LvxqEgnQBpMOh/RIXqD2iiC1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhaoJinming <zhaojinming@uniontech.com>,
+	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 7.1 1779/2077] platform/x86/intel/tpmi: use cleanup helpers in mem_write()
-Date: Tue, 21 Jul 2026 17:24:12 +0200
-Message-ID: <20260721152634.709932201@linuxfoundation.org>
+Subject: [PATCH 7.1 1780/2077] platform/x86: dell-laptop: fix missing cleanups in init error path
+Date: Tue, 21 Jul 2026 17:24:13 +0200
+Message-ID: <20260721152634.732537068@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,102 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhaoJinming <zhaojinming@uniontech.com>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-commit a221557958e3a82d8565729d445a7385963f30b6 upstream.
+commit 6e9cab2247e5b243ae2d907ce7c948a8a9c8d61a upstream.
 
-In mem_write(), the temporary array returned by
-parse_int_array_user() must be released on all exit paths.
-Convert the array variable to use cleanup.h scope-based
-cleanup so it is freed automatically on return.
+dell_init() initializes several resources after dell_setup_rfkill(),
+including the optional touchpad LED, keyboard backlight LED, battery
+hook, debugfs directory and dell-laptop notifier.
 
-This also moves the array declaration next to
-parse_int_array_user() as required by cleanup.h usage
-guidelines.
+If a later LED or backlight registration fails, the error path only
+tears down the battery hook and rfkill resources. This leaves the
+notifier, debugfs directory, keyboard backlight LED and optional
+touchpad LED registered after dell_init() returns an error.
 
-Fixes: 8e0a2fc68ec3 ("platform/x86/intel/tpmi: Use 32 bit aligned address for debugfs mem write")
+Add the missing cleanup calls before tearing down rfkill.
+
+Fixes: 9c656b07997f ("platform/x86: dell-*: Call new led hw_changed API on kbd brightness change")
+Fixes: 037accfa14b2 ("dell-laptop: Add debugfs support")
+Fixes: 2d8b90be4f1c ("dell-laptop: support Synaptics/Alps touchpad led")
+Fixes: 6cff8d60aa0a ("platform: x86: dell-laptop: Add support for keyboard backlight")
 Cc: stable@vger.kernel.org
-Signed-off-by: ZhaoJinming <zhaojinming@uniontech.com>
-Link: https://patch.msgid.link/20260521130848.2860219-1-zhaojinming@uniontech.com
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Link: https://patch.msgid.link/20260609081419.1995169-1-lihaoxiang@isrc.iscas.ac.cn
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/vsec_tpmi.c | 25 +++++++++----------------
- 1 file changed, 9 insertions(+), 16 deletions(-)
+ drivers/platform/x86/dell/dell-laptop.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/platform/x86/intel/vsec_tpmi.c b/drivers/platform/x86/intel/vsec_tpmi.c
-index 8c4e2474b30c..3b76cccb975f 100644
---- a/drivers/platform/x86/intel/vsec_tpmi.c
-+++ b/drivers/platform/x86/intel/vsec_tpmi.c
-@@ -50,6 +50,7 @@
- #include <linux/auxiliary_bus.h>
- #include <linux/bitfield.h>
- #include <linux/debugfs.h>
-+#include <linux/cleanup.h>
- #include <linux/delay.h>
- #include <linux/intel_tpmi.h>
- #include <linux/intel_vsec.h>
-@@ -473,7 +474,7 @@ static ssize_t mem_write(struct file *file, const char __user *userbuf, size_t l
- 	struct seq_file *m = file->private_data;
- 	struct intel_tpmi_pm_feature *pfs = m->private;
- 	u32 addr, value, punit, size;
--	u32 num_elems, *array;
-+	u32 num_elems;
- 	void __iomem *mem;
- 	int ret;
- 
-@@ -481,15 +482,14 @@ static ssize_t mem_write(struct file *file, const char __user *userbuf, size_t l
- 	if (!size)
- 		return -EIO;
- 
-+	u32 *array __free(kfree) = NULL;
- 	ret = parse_int_array_user(userbuf, len, (int **)&array);
- 	if (ret < 0)
- 		return ret;
- 
- 	num_elems = *array;
--	if (num_elems != 3) {
--		ret = -EINVAL;
--		goto exit_write;
--	}
-+	if (num_elems != 3)
-+		return -EINVAL;
- 
- 	punit = array[1];
- 	addr = array[2];
-@@ -498,15 +498,11 @@ static ssize_t mem_write(struct file *file, const char __user *userbuf, size_t l
- 	if (!IS_ALIGNED(addr, sizeof(u32)))
- 		return -EINVAL;
- 
--	if (punit >= pfs->pfs_header.num_entries) {
--		ret = -EINVAL;
--		goto exit_write;
--	}
-+	if (punit >= pfs->pfs_header.num_entries)
-+		return -EINVAL;
- 
--	if (addr >= size) {
--		ret = -EINVAL;
--		goto exit_write;
--	}
-+	if (addr >= size)
-+		return -EINVAL;
- 
- 	mutex_lock(&tpmi_dev_lock);
- 
-@@ -525,9 +521,6 @@ static ssize_t mem_write(struct file *file, const char __user *userbuf, size_t l
- unlock_mem_write:
- 	mutex_unlock(&tpmi_dev_lock);
- 
--exit_write:
--	kfree(array);
--
- 	return ret;
- }
- 
--- 
-2.55.0
-
+--- a/drivers/platform/x86/dell/dell-laptop.c
++++ b/drivers/platform/x86/dell/dell-laptop.c
+@@ -2551,7 +2551,12 @@ fail_backlight:
+ 	if (mute_led_registered)
+ 		led_classdev_unregister(&mute_led_cdev);
+ fail_led:
++	dell_laptop_unregister_notifier(&dell_laptop_notifier);
++	debugfs_remove_recursive(dell_laptop_dir);
+ 	dell_battery_exit();
++	kbd_led_exit();
++	if (quirks && quirks->touchpad_led)
++		touchpad_led_exit();
+ 	dell_cleanup_rfkill();
+ fail_rfkill:
+ 	platform_device_del(platform_device);
 
 
