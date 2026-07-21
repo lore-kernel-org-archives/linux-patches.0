@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA8C47125D;
-	Tue, 21 Jul 2026 18:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B4D471255;
+	Tue, 21 Jul 2026 18:12:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657519; cv=none; b=SbCugZ9D527wpXwqaySISS9gL3tb2VQ40hPWycXt/MJ4MKzUlF6374yJrL8jOF2amLGVd2EaWz1D2f2EqTq5POXYPsDsDYzO/17Ysakj7aCElFw1silVJkkWSTVTHHjQj5YgZpqQFx8x39HIbNDJddvq9QOFw8B2JZnL4lB6iRA=
+	t=1784657522; cv=none; b=Rcg9A0eC9wyV4JfFrwFBVlNTbptxXkhwsH3+0ePIEf+JcIYl5SToWfu1hBb8tVInTL18ywVzzTkULpldRLW+tpS25M7SXyetdukIMpNoE4jbNwZuChMWCJvioOnNZk7ko0w5/28vwGT1f8U9L1lN0bn60vq51Y9pd0Q1Wfb8b5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657519; c=relaxed/simple;
-	bh=cXZsXHx1tJS8usAilhCgdt+FZO/RNXsLlTuV9xbomsQ=;
+	s=arc-20240116; t=1784657522; c=relaxed/simple;
+	bh=I41+mi3X3nrhd/xJM+ew3Bd+GQaffyA9e8Bl+EfHKLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ifZJzoBJYR45mZksprove5vvq+pDrwkPoAlo8NhXGFtJolh1PlARpQe36u9H+2j8UUbqrs9OFTL4DHPTyUGJDEmtBmAq36qtm6NLaS5JvgM/GELBI2+47p/vgakdCAiIfq1GXVz/7SbLGmwteHZiQNdoWfWq1KT4Inqyzp4Nkok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HXJ4LcPU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JsxsvL41Q06a1VY1lSTxcsLdLHWP0mwFb8j6rU6/hpa0K0PLAmmLmiBdO7u5ZDsg2KCRMWptfmYahcSTZsMrp7PLJM5yMItenfbMgHM2gN0p9Xqtx6v+FJOTSciMnyzz+wFpx14kwDsFnXDkVVWKIG5Rl5CiovR78H2JNprJvi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLVbyVlo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HXJ4LcPU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD6F1F000E9;
-	Tue, 21 Jul 2026 18:11:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLVbyVlo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9556C1F000E9;
+	Tue, 21 Jul 2026 18:12:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657518;
-	bh=ThIEEEtBxGMxOukIXaqyU+sow+29ptb58rDyNBU8zGM=;
+	s=korg; t=1784657520;
+	bh=VMvWza2SzAoticiTwZDYz+4Au2R+n8UHvZkkB8Ib1tQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HXJ4LcPUvpUABoXH74XwrV7DK7RQEygNaXxNZOdKDkfHs1HgJUxc6WdjVNu/zJhwK
-	 ezXLRIK4U0+awcfJkNQAVouurrT0BtHcdXHk01APUv4ayRSgRf7jHufxQqOav0lvW+
-	 q/w7sr6WPdwj3psVgRtos0UpRd/cRGsg5xDHdh0k=
+	b=pLVbyVloB2Bs+LAP0pgBoUD53Ej/WHRHav3zNXEjCF7LMAm2JlqJmyh0yBqjZf+dp
+	 rSBf3ewg+xKAZWCsy2qpIvNLRK3o/M8KHh6vOnpsMYOzwpDOASRSFsphxHu79SO2Z/
+	 iN4ubMRp13OcqMWoKN2WFnn2gMdA9ccs9SewaA+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	Manuel Diewald <manuel.diewald@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0742/1611] apparmor: fix NULL pointer dereference in unpack_pdb
-Date: Tue, 21 Jul 2026 17:14:18 +0200
-Message-ID: <20260721152532.066383016@linuxfoundation.org>
+Subject: [PATCH 6.18 0789/1611] i3c: master: Update dev_nack_retry_count under maintenance lock
+Date: Tue, 21 Jul 2026 17:15:05 +0200
+Message-ID: <20260721152533.136584030@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,35 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Georgia Garcia <georgia.garcia@canonical.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 7681ca43d2b1c776e62fe77e3167835fb1ab8319 ]
+[ Upstream commit ab5f9c5cb527c03790a92142ad368881a9100aaf ]
 
-pdb->dfa could be NULL if unpack_dfa fails, causing a NULL pointer
-dereference.
+Protect master->dev_nack_retry_count against concurrent sysfs updates
+by updating it while holding the bus maintenance lock.
 
-Fixes: 2e12c5f06017 ("apparmor: add additional flags to extended permission.")
-Signed-off-by: Georgia Garcia <georgia.garcia@canonical.com>
-Signed-off-by: Manuel Diewald <manuel.diewald@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Consequently, combine adjacent return statements into one.
+
+For consistency, read dev_nack_retry_count while holding the bus normaluse
+lock.
+
+Fixes: b58f47eb39268 ("i3c: add sysfs entry and attribute for Device NACK Retry count")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260616113752.196140-2-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy_unpack.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i3c/master.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
-index b0e18dd8d512bf..3ae58f476c0817 100644
---- a/security/apparmor/policy_unpack.c
-+++ b/security/apparmor/policy_unpack.c
-@@ -804,7 +804,7 @@ static int unpack_pdb(struct aa_ext *e, struct aa_policydb **policy,
- 	}
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index f0ff305642bf0c..90743266cd85f5 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -744,7 +744,14 @@ static DEVICE_ATTR_RW(hotjoin);
+ static ssize_t dev_nack_retry_count_show(struct device *dev,
+ 					 struct device_attribute *attr, char *buf)
+ {
+-	return sysfs_emit(buf, "%u\n", dev_to_i3cmaster(dev)->dev_nack_retry_count);
++	struct i3c_bus *i3cbus = dev_to_i3cbus(dev);
++	ssize_t ret;
++
++	i3c_bus_normaluse_lock(i3cbus);
++	ret = sysfs_emit(buf, "%u\n", dev_to_i3cmaster(dev)->dev_nack_retry_count);
++	i3c_bus_normaluse_unlock(i3cbus);
++
++	return ret;
+ }
  
- 	/* accept2 is in some cases being allocated, even with perms */
--	if (pdb->perms && !pdb->dfa->tables[YYTD_ID_ACCEPT2]) {
-+	if (pdb->dfa && pdb->perms && !pdb->dfa->tables[YYTD_ID_ACCEPT2]) {
- 		/* add dfa flags table missing in v2 */
- 		u32 noents = pdb->dfa->tables[YYTD_ID_ACCEPT]->td_lolen;
- 		u16 tdflags = pdb->dfa->tables[YYTD_ID_ACCEPT]->td_flags;
+ static ssize_t dev_nack_retry_count_store(struct device *dev,
+@@ -762,14 +769,11 @@ static ssize_t dev_nack_retry_count_store(struct device *dev,
+ 
+ 	i3c_bus_maintenance_lock(i3cbus);
+ 	ret = master->ops->set_dev_nack_retry(master, val);
++	if (!ret)
++		master->dev_nack_retry_count = val;
+ 	i3c_bus_maintenance_unlock(i3cbus);
+ 
+-	if (ret)
+-		return ret;
+-
+-	master->dev_nack_retry_count = val;
+-
+-	return count;
++	return ret ?: count;
+ }
+ 
+ static DEVICE_ATTR_RW(dev_nack_retry_count);
 -- 
 2.53.0
 
