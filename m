@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD25472524;
-	Tue, 21 Jul 2026 18:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D6847254E;
+	Tue, 21 Jul 2026 18:31:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658669; cv=none; b=jKLVE8Fzhv5WdCVsR6/yDrtvLwD3mKPbbIXMTABmm3nDG/GM56SpkKVnGWZXVk4bBnZbto1V73n2TTlDciT4sPg5Cy3bKhqlouGp6l4MnvMgI3ZMenvHFPlOsFgtthoB4GX9Q+y0WbGeUhqdulI6u48nYEEbsVy47mzkvqV/4PQ=
+	t=1784658672; cv=none; b=j6afsV8PY+F7ipcPUAQLWQhOP3EjK+k5FEy4YX49xY7TlhR0ROJzsduw7EiRA1wbGJEZru9SHyCaQpchcdZh3xsmsMGl7STa18QwiRfX5iZNRvEH69Cnqdpwh+/d9aJHifcSrVXvQs+4d5gWSHmq5guKVUz0B1Co6JVnnLb9MhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658669; c=relaxed/simple;
-	bh=yF1EVqb+DTma3gKQkQ5fpf1OYabUjh6PVRlQBcuYc9Q=;
+	s=arc-20240116; t=1784658672; c=relaxed/simple;
+	bh=wIZipTNRh/LZOEJQKnUMIGwSYUQu8JkGWl5dYPaBgYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=svhICcHpu18n1/xWFa+ELnVgYfgV1bdHUKhheoXxw45Q97KhJvfbUhqJmdxweGmUquIiixknWWEaR5uPWdGzANZFPxZybVW6khNS0tOvfITJFefPzhGrCbZlQE2apKtxindf/uu00jbTkRGBSnGkuBZwu89mbheSYi/ovS5mbqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ygh/7P3h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DxtMBhaqGjLpaMv3ax7AE/nc0uNfBzC0z4yLIxEK0mR54oN8lELRG9FgWqz9+8WnLE5XhqC0vluh+JFPKYNccu6O/q1HSdiMpYxCSrqLhYru5zg4E+9JVmrYOhtf/QgBco3+JaDZCwcoS0HnifrOeND1E9+3fMd8p84oc0exy78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0LjQ67Ck; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ygh/7P3h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880DA1F00A3D;
-	Tue, 21 Jul 2026 18:31:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LjQ67Ck"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F4B1F000E9;
+	Tue, 21 Jul 2026 18:31:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658668;
-	bh=n+VNTWGo/7C7fh9t4m+m114aY5LViqyLyHANlmjOh6E=;
+	s=korg; t=1784658670;
+	bh=KCNRxTDZl+4m2obyabTG4qqwhQW7OKG2qy1wYYgu8qQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ygh/7P3hKKqnB8lTjkvX1XQOhPS7zWmFWKFhCopD8v3z6sCnlcKVpWWAzkHErCLsx
-	 VAm5PxZ7Zpp2r66cNapPuzkQrFglO4AF870V/vHeNN7QzfO4FErjQ62bBinSclgHXP
-	 piSOqxBJGrK0zMAwj6seFKmuLLBjWhPzgVV8Qyyg=
+	b=0LjQ67Ckc2gQT6a4Z6qpn1OWT0cEGqpcItRHfvc8CeK9MjqV7B04P3VGQ9OrlixBV
+	 4BHB1nsCzdRFN9A0w86OtAPQfDiH5thitKuWNFId/MZki+VbYqXYlxSe0PlzF6Srjh
+	 8NOtEOg6B2NOqCQDC3sDWbNK4nUC3TTnQA1Xwn/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dzmitry Sankouski <dsankouski@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.18 1230/1611] power: supply: max17042: fix OF node reference imbalance
-Date: Tue, 21 Jul 2026 17:22:26 +0200
-Message-ID: <20260721152543.105911987@linuxfoundation.org>
+	syzbot+226c1f947186f8fef796@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	David Hildenbrand <david@kernel.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	Mina Almasry <almasrymina@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 1231/1611] mm/hugetlb: fix hugetlb cgroup rsvd charge/uncharge mismatch
+Date: Tue, 21 Jul 2026 17:22:27 +0200
+Message-ID: <20260721152543.128969193@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,39 +55,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit 68d234144b7dffd1f50b07ba74d0d6e833ef43a4 upstream.
+commit 15807d0ddde37407af72859426b654f3d1972b00 upstream.
 
-The driver reuses the OF node of the parent multi-function device but
-fails to take another reference to balance the one dropped by the
-platform bus code when unbinding the MFD and deregistering the child
-devices.
+In alloc_hugetlb_folio(), a single h_cg pointer is used for both the rsvd
+and non-rsvd hugetlb cgroup charges.  When map_chg is set,
+hugetlb_cgroup_charge_cgroup_rsvd() stores the charged cgroup in h_cg, but
+the immediately following hugetlb_cgroup_charge_cgroup() overwrites h_cg
+with the non-rsvd cgroup pointer.
 
-Fix this by using the intended helper for reusing OF nodes.
+As a result, hugetlb_cgroup_commit_charge_rsvd() stores the wrong
+(non-rsvd) cgroup pointer into the folio's rsvd slot.
 
-Fixes: 0cd4f1f77ad4 ("power: supply: max17042: add platform driver variant")
-Cc: stable@vger.kernel.org	# 6.14
-Cc: Dzmitry Sankouski <dsankouski@gmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260407123338.2677375-1-johan@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+When the folio is later freed, free_huge_folio() unconditionally calls
+both hugetlb_cgroup_uncharge_folio() and
+hugetlb_cgroup_uncharge_folio_rsvd().  The rsvd uncharge reads back the
+wrong cgroup from the folio and decrements a counter that was never
+charged for that cgroup, causing a page_counter underflow:
+
+  page_counter underflow: -512 nr_pages=512
+  WARNING: mm/page_counter.c:61 at page_counter_cancel
+
+Fix this by introducing a separate h_cg_rsvd pointer exclusively for the
+rsvd charge path, keeping the rsvd and non-rsvd charges fully independent
+through their charge, commit, and error uncharge paths.
+
+Link: https://lore.kernel.org/20260328065534.346053-1-kartikey406@gmail.com
+Fixes: 08cf9faf7558 ("hugetlb_cgroup: support noreserve mappings")
+Reported-by: syzbot+226c1f947186f8fef796@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=226c1f947186f8fef796
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Mina Almasry <almasrymina@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/max17042_battery.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/hugetlb.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/power/supply/max17042_battery.c
-+++ b/drivers/power/supply/max17042_battery.c
-@@ -1165,7 +1165,8 @@ static int max17042_platform_probe(struc
- 	if (!i2c)
- 		return -EINVAL;
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -2959,6 +2959,7 @@ struct folio *alloc_hugetlb_folio(struct
+ 	map_chg_state map_chg;
+ 	int ret, idx;
+ 	struct hugetlb_cgroup *h_cg = NULL;
++	struct hugetlb_cgroup *h_cg_rsvd = NULL;
+ 	gfp_t gfp = htlb_alloc_mask(h) | __GFP_RETRY_MAYFAIL;
  
--	dev->of_node = dev->parent->of_node;
-+	device_set_of_node_from_dev(dev, dev->parent);
-+
- 	id = platform_get_device_id(pdev);
- 	irq = platform_get_irq(pdev, 0);
+ 	idx = hstate_index(h);
+@@ -3009,7 +3010,7 @@ struct folio *alloc_hugetlb_folio(struct
+ 	 */
+ 	if (map_chg) {
+ 		ret = hugetlb_cgroup_charge_cgroup_rsvd(
+-			idx, pages_per_huge_page(h), &h_cg);
++			idx, pages_per_huge_page(h), &h_cg_rsvd);
+ 		if (ret)
+ 			goto out_subpool_put;
+ 	}
+@@ -3051,7 +3052,7 @@ struct folio *alloc_hugetlb_folio(struct
+ 	 */
+ 	if (map_chg) {
+ 		hugetlb_cgroup_commit_charge_rsvd(idx, pages_per_huge_page(h),
+-						  h_cg, folio);
++						  h_cg_rsvd, folio);
+ 	}
  
+ 	spin_unlock_irq(&hugetlb_lock);
+@@ -3106,7 +3107,7 @@ out_uncharge_cgroup:
+ out_uncharge_cgroup_reservation:
+ 	if (map_chg)
+ 		hugetlb_cgroup_uncharge_cgroup_rsvd(idx, pages_per_huge_page(h),
+-						    h_cg);
++						    h_cg_rsvd);
+ out_subpool_put:
+ 	/*
+ 	 * put page to subpool iff the quota of subpool's rsv_hpages is used
 
 
