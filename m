@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157BC46DFF5;
-	Tue, 21 Jul 2026 18:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE106471265;
+	Tue, 21 Jul 2026 18:36:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659018; cv=none; b=cM6bts0w/C3X2+pmhRsWNZDhHmSSy3rLfF3stdnR31cZk5fHtMXd3ICqs7UYLJC0TwGwA6/Aa9wsvX3ohR5bFoh9rgRLocEk1c4SO9PUMKwNZTgeuvxDuXm0K8Q7AEANsDeMjY3A8HMwGu8RgrX1u/18zwtK5cEM37yHudcjjKE=
+	t=1784659021; cv=none; b=gzE/EPUQCkPypCbrMk2wjTrBxAj60kRXd7kvejEXAu8bA2NXPLqoZQAMVml0sXw6EIp8lWig+p8pSW7aMHLNGRKd34RBLjGzbprXsAfySPDD0pIm2wHMXeYvulXOMtq3RR3fIWMJ1zoBx7Mz3I8A4nuWwhdSCxPtDc3EdikC7Fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659018; c=relaxed/simple;
-	bh=pt/zL6da4uLeJof38EYKDeDNuvWVO2z5Wc7xTl1lZ+k=;
+	s=arc-20240116; t=1784659021; c=relaxed/simple;
+	bh=LYzWbWce1lkiG0MUJHDneWfly1HgxggkcWNUplWwp3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kWx2CrtZ2DGvn1sKo18W/yGT4nUbS4xXyhv03ZkF53ckXta0Il1SQAZFDg3zDcZkiEr6GFixYwylqPuYY1M1F9ftJVOub5vBKNc0H1h1QJN6CP7zOpd8dpD6Xv9dWBBCOQSkrCqp+TKz9fj992oWOX3qa+Hcgnm81xPgmLbXPZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkhGOLcU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=kAmU9R39oUQMKYI4hS7NjlJMh9gsrLw0Ft5sULwM4dmAXNFa/ZxDLkjitwf1nfHJcj3a/5Rdy9iwU7Tp9fYLe42ixg0YfD6K9Y1rtT5IKq0K6mWeZTr7zDCZjtCunuQKcvXM8oNj3KqtOJYFp12UNGkvXRYGeoy01LIKtrmN6PU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ad8n1Dlt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkhGOLcU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9B61F000E9;
-	Tue, 21 Jul 2026 18:36:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ad8n1Dlt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 449E01F000E9;
+	Tue, 21 Jul 2026 18:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659016;
-	bh=6KbQfBOjCv5YpFmNqtJLy4KVUUlhErS9DUhKbA5lnLs=;
+	s=korg; t=1784659019;
+	bh=6QUhaLKExui1o68n7zXk0jHJOrIr/iOXzzs8tpaxP1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VkhGOLcUqjfeISx68nKCviKskQpFe7kiJ/nin2rqFHxCqu6SJOZSTGEpeyYM2xYx+
-	 whZgl/vPfJhUSlSKwTiKCCSm10eEk6+DPQwU0rGERMdlGyqSZF+5NlcYL/7jYASsuJ
-	 pw1I23Imv529nJNqrhI0iAcv7rOzPIF00EBy7HGY=
+	b=Ad8n1DltRUfeumLq7gSc8vdfx9MSf8T6wdFkthpbIygnuXyxjBJrRfv6cZANrTlZg
+	 kZh2Sd+ElUx9jG/GzPkfD7fiiu7Q7c1YYwWX3wMDsri3viRlexVgbzCrlrXXO2aE6y
+	 o0v/3PZ1QQWWOTrO0siHnxL8DiMBitqmXz87bHXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Genjian Zhang <zhanggenjian@kylinos.cn>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.18 1345/1611] dm thin metadata: fix superblock refcount leak on snapshot shadow failure
-Date: Tue, 21 Jul 2026 17:24:21 +0200
-Message-ID: <20260721152545.708482867@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Lizhi Hou <lizhi.hou@amd.com>
+Subject: [PATCH 6.18 1363/1611] accel/amdxdna: Fix use-after-free in amdxdna_gem_dmabuf_mmap()
+Date: Tue, 21 Jul 2026 17:24:39 +0200
+Message-ID: <20260721152546.111079893@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -44,44 +44,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Genjian Zhang <zhanggenjian@kylinos.cn>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 4b22d0801fadfcae2e106e6ba32e49439c7c7ebf upstream.
+commit 63bbf9ac5dde2ba85e7b39d0a0b7d540e6252ba4 upstream.
 
-__reserve_metadata_snap() increments THIN_SUPERBLOCK_LOCATION in the
-metadata space map before shadowing it. When dm_tm_shadow_block()
-fails, a reference is leaked in the metadata space map.
+When vm_insert_pages() fails, the error path calls vma->vm_ops->close(vma)
+which internally calls drm_gem_vm_close() → drm_gem_object_put(),
+releasing the GEM object reference acquired at the start of the function.
+However, the close_vma label then falls through to put_obj, which calls
+drm_gem_object_put() a second time on the same object.
 
-Fix by adding the missing dm_sm_dec_block().
+If the first put releases the last reference, the object is freed and the
+second put accesses freed memory, causing a use-after-free.
 
-Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Fixes: cc8394d86f04 ("dm thin: provide userspace access to pool metadata")
+Fix by returning directly from close_vma instead of falling through to
+put_obj, since the close handler already performs all necessary cleanup
+including the object put.
+
 Cc: stable@vger.kernel.org
+Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260625113239.49764-1-vulab@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-thin-metadata.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/accel/amdxdna/amdxdna_gem.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/md/dm-thin-metadata.c
-+++ b/drivers/md/dm-thin-metadata.c
-@@ -1353,8 +1353,10 @@ static int __reserve_metadata_snap(struc
- 	dm_sm_inc_block(pmd->metadata_sm, THIN_SUPERBLOCK_LOCATION);
- 	r = dm_tm_shadow_block(pmd->tm, THIN_SUPERBLOCK_LOCATION,
- 			       &sb_validator, &copy, &inc);
--	if (r)
-+	if (r) {
-+		dm_sm_dec_block(pmd->metadata_sm, THIN_SUPERBLOCK_LOCATION);
- 		return r;
-+	}
+--- a/drivers/accel/amdxdna/amdxdna_gem.c
++++ b/drivers/accel/amdxdna/amdxdna_gem.c
+@@ -374,6 +374,7 @@ static int amdxdna_gem_dmabuf_mmap(struc
  
- 	BUG_ON(!inc);
- 
+ close_vma:
+ 	vma->vm_ops->close(vma);
++	return ret;
+ put_obj:
+ 	drm_gem_object_put(gobj);
+ 	return ret;
 
 
