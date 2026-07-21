@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D933E49F0;
-	Tue, 21 Jul 2026 17:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8112E46D0A6;
+	Tue, 21 Jul 2026 17:36:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655399; cv=none; b=KECVhIr3b0LYxkObBrGGUXSi5/YsZ5vWRsSvNy90DkpcLg2Q4HrqkHbkCApqjycUx/ZvisB+fMGEoxJ90R7Jig2HjfkOPjqFO14HGi+4Id53toTodB8Ev3KsLes6fbFnbGZov1L9teyJjbi7lzlNdO0rAjuFp81e8w2fMPwivnQ=
+	t=1784655402; cv=none; b=HbLGi/BvkQkgPZeJGI9lXcTllzbo0VOsRwipp2HsNOxOpdZFDevdf206CJRqkl7aNXq9YZlZaW5Jo+zGQ2Yu0gq3wYZQx2Gjg9k3IjuU7bwWw1yBcdWIZUHCzagkbfPMzL808FYWJGDijJ5F0+iH4wC96/aHkXrAL06QyTgu+tM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655399; c=relaxed/simple;
-	bh=ozYXv/1PK6iEnQbONvy4olFRZbHmYjDKwFeCDvp88EE=;
+	s=arc-20240116; t=1784655402; c=relaxed/simple;
+	bh=h+DEUfWWMQizim2nSZ6Az7HF1v/pbDms0s2eCkZ3TI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=npUDnu7aOcpvDYJqw4H63PTlUJMmah9Fv9oJiCQezNrMbhhL+ZLw85cfHD7tZ8eJfLuGTHKCfI9HcOrE9VJ4fH77bivqycxmlcNYW6nCSQQqac1dxk7MMDtRf1b4SjmL+zoeJUXufpHTJ+JX0dMei0SBroEVobnJJlxo1Js5wqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Gak+Aus; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nAPWev8COlJJW2W+YiIZoZhCjvZoKqnzg05UnxwWt+7vIcGyy9XU6mnDE1uDYEStp5Yo0g/RBG80dk6EA2hX+A4J+TEOGVzSTJoKBy25t8y0Jih/9ksHzEZoVlHsZXXAiCdjVhIBQQg/XM1u3nn7cz9CwN9qnybYtjHYxZnomog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UpbPiyBg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Gak+Aus"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456601F000E9;
-	Tue, 21 Jul 2026 17:36:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UpbPiyBg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39641F000E9;
+	Tue, 21 Jul 2026 17:36:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655398;
-	bh=qXEZTeq5cq322THJ6z+5z082RauNeCLv/sxuU9ImxwM=;
+	s=korg; t=1784655401;
+	bh=lmrG6DnkU9hc3VpLK/6mBoVeZj+LgOqAGloDwGdRuhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Gak+Auslxh5UY+dnwLSU5+CypIqnKBQtSZUz+lTHCQUkCTNoueW2OU1/zf4BQoWp
-	 JwsYaApZfDw2N9JLTle1745Cshf/A3TE56PhyAStq6+5sJCU0JNBeoxN7f0WpvrgKM
-	 lChhzXNaJzeAd8tJeH7WjCc4QrUunb7G8TLSOdwI=
+	b=UpbPiyBg8LdroO7Tt38R1DrOJrZzwf255JukD36+HEx/VS6e2d1GXOAuDvCbckw+z
+	 HBF0t6uXGDlKguLyO1jCExdwTFOrKYcKdIRiIqLDF03sSzczr5rzbz7Y9lX/AT+CuM
+	 PIEw5znDKcX6Y2lsLdUa9TJYava5X8yfJmiRgp18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vz@kernel.org>,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 7.1 2032/2077] mtd: rawnand: lpc32xx_mlc: fail DMA transfers on timeout
-Date: Tue, 21 Jul 2026 17:28:25 +0200
-Message-ID: <20260721152640.626959511@linuxfoundation.org>
+	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 2068/2077] liveupdate: validate session type before performing operation
+Date: Tue, 21 Jul 2026 17:29:01 +0200
+Message-ID: <20260721152641.478666319@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,74 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: "Pratyush Yadav (Google)" <pratyush@kernel.org>
 
-commit dbf590b662695b16fbf5917ef129697be4410ea9 upstream.
+[ Upstream commit 507e3b479f9c6d85135eb5e1a77fb3fddb259ad8 ]
 
-lpc32xx_xmit_dma() starts a DMA transfer and waits up to one second
-for its completion, but it ignores the wait result and returns success
-after unmapping the buffer.
+The sessions ioctls are not applicable to all session types. PRESERVE_FD
+is only applicable to outgoing sessions. RETRIEVE_FD and FINISH are only
+valid for incoming session. Calling a incoming ioctl on an outgoing
+session is invalid and can cause file handlers to run into unexpected
+errors.
 
-A timed out read can therefore return success with incomplete data, and
-a timed out write can continue the NAND operation without proof that the
-DMA payload reached the controller.
+For example, a user can create a (outgoing) session, preserve a memfd,
+and then immediately do a retrieve without doing a kexec in between.
+This would result in memfd's retrieve handler to run. The handlers
+expects to be called from a post-kexec context, and will try to do a
+kho_restore_vmalloc() or kho_restore_folio() to try and restore memory.
 
-Terminate the DMA channel on timeout, unmap the scatterlist through the
-existing cleanup path, and return -ETIMEDOUT to the NAND read/write
-callers. Initialize the shared cleanup-path result before using it for
-dmaengine_prep_slave_sg() failures.
+KHO catches this (thanks to KHO_PAGE_MAGIC) and returns an error, but
+since this is considered an internal error and KHO throws out a bunch of
+WARN()s.
 
-Fixes: 70f7cb78ec53 ("mtd: add LPC32xx MLC NAND driver")
+Associate a type with each ioctl op and validate the type in
+luo_session_ioctl() before dispatching the ioctl handler to make sure
+the op is being called for the right session type.
+
+Fixes: 16cec0d26521 ("liveupdate: luo_session: add ioctls for file preservation")
 Cc: stable@vger.kernel.org
-Reviewed-by: Vladimir Zapolskiy <vz@kernel.org>
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
+Link: https://patch.msgid.link/20260519122428.2378446-1-pratyush@kernel.org
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/lpc32xx_mlc.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ kernel/liveupdate/luo_session.c |   37 ++++++++++++++++++++++++++++++++-----
+ 1 file changed, 32 insertions(+), 5 deletions(-)
 
---- a/drivers/mtd/nand/raw/lpc32xx_mlc.c
-+++ b/drivers/mtd/nand/raw/lpc32xx_mlc.c
-@@ -396,6 +396,7 @@ static int lpc32xx_xmit_dma(struct mtd_i
- 	struct lpc32xx_nand_host *host = nand_get_controller_data(chip);
- 	struct dma_async_tx_descriptor *desc;
- 	int flags = DMA_CTRL_ACK | DMA_PREP_INTERRUPT;
-+	unsigned long time_left;
- 	int res;
+--- a/kernel/liveupdate/luo_session.c
++++ b/kernel/liveupdate/luo_session.c
+@@ -330,32 +330,58 @@ union ucmd_buffer {
+ 	struct liveupdate_session_retrieve_fd retrieve;
+ };
  
- 	sg_init_one(&host->sgl, mem, len);
-@@ -410,6 +411,7 @@ static int lpc32xx_xmit_dma(struct mtd_i
- 				       flags);
- 	if (!desc) {
- 		dev_err(mtd->dev.parent, "Failed to prepare slave sg\n");
-+		res = -ENXIO;
- 		goto out1;
++/* Type of sessions the ioctl applies to. */
++enum luo_ioctl_type {
++	LUO_IOCTL_INCOMING,
++	LUO_IOCTL_OUTGOING,
++	LUO_IOCTL_ALL,
++};
++
+ struct luo_ioctl_op {
+ 	unsigned int size;
+ 	unsigned int min_size;
+ 	unsigned int ioctl_num;
++	enum luo_ioctl_type type;
+ 	int (*execute)(struct luo_session *session, struct luo_ucmd *ucmd);
+ };
+ 
+-#define IOCTL_OP(_ioctl, _fn, _struct, _last)                                  \
++#define IOCTL_OP(_ioctl, _fn, _struct, _last, _type)                           \
+ 	[_IOC_NR(_ioctl) - LIVEUPDATE_CMD_SESSION_BASE] = {                    \
+ 		.size = sizeof(_struct) +                                      \
+ 			BUILD_BUG_ON_ZERO(sizeof(union ucmd_buffer) <          \
+ 					  sizeof(_struct)),                    \
+ 		.min_size = offsetofend(_struct, _last),                       \
+ 		.ioctl_num = _ioctl,                                           \
++		.type = _type,                                                 \
+ 		.execute = _fn,                                                \
  	}
  
-@@ -420,7 +422,13 @@ static int lpc32xx_xmit_dma(struct mtd_i
- 	dmaengine_submit(desc);
- 	dma_async_issue_pending(host->dma_chan);
+ static const struct luo_ioctl_op luo_session_ioctl_ops[] = {
+ 	IOCTL_OP(LIVEUPDATE_SESSION_FINISH, luo_session_finish,
+-		 struct liveupdate_session_finish, reserved),
++		 struct liveupdate_session_finish, reserved, LUO_IOCTL_INCOMING),
+ 	IOCTL_OP(LIVEUPDATE_SESSION_PRESERVE_FD, luo_session_preserve_fd,
+-		 struct liveupdate_session_preserve_fd, token),
++		 struct liveupdate_session_preserve_fd, token, LUO_IOCTL_OUTGOING),
+ 	IOCTL_OP(LIVEUPDATE_SESSION_RETRIEVE_FD, luo_session_retrieve_fd,
+-		 struct liveupdate_session_retrieve_fd, token),
++		 struct liveupdate_session_retrieve_fd, token, LUO_IOCTL_INCOMING),
+ };
  
--	wait_for_completion_timeout(&host->comp_dma, msecs_to_jiffies(1000));
-+	time_left = wait_for_completion_timeout(&host->comp_dma,
-+						msecs_to_jiffies(1000));
-+	if (!time_left) {
-+		dmaengine_terminate_sync(host->dma_chan);
-+		res = -ETIMEDOUT;
-+		goto out1;
++static bool luo_ioctl_type_valid(struct luo_session *session,
++				 const struct luo_ioctl_op *op)
++{
++	switch (op->type) {
++	case LUO_IOCTL_INCOMING:
++		/* Retrieved is only set on incoming sessions */
++		return session->retrieved;
++	case LUO_IOCTL_OUTGOING:
++		return !session->retrieved;
++	case LUO_IOCTL_ALL:
++		return true;
 +	}
++
++	/* Catch-all. */
++	return false;
++}
++
+ static long luo_session_ioctl(struct file *filep, unsigned int cmd,
+ 			      unsigned long arg)
+ {
+@@ -380,6 +406,8 @@ static long luo_session_ioctl(struct fil
+ 	op = &luo_session_ioctl_ops[nr - LIVEUPDATE_CMD_SESSION_BASE];
+ 	if (op->ioctl_num != cmd)
+ 		return -ENOIOCTLCMD;
++	if (!luo_ioctl_type_valid(session, op))
++		return -EINVAL;
+ 	if (ucmd.user_size < op->min_size)
+ 		return -EINVAL;
  
- 	dma_unmap_sg(host->dma_chan->device->dev, &host->sgl, 1,
- 		     DMA_BIDIRECTIONAL);
-@@ -428,7 +436,7 @@ static int lpc32xx_xmit_dma(struct mtd_i
- out1:
- 	dma_unmap_sg(host->dma_chan->device->dev, &host->sgl, 1,
- 		     DMA_BIDIRECTIONAL);
--	return -ENXIO;
-+	return res;
+@@ -659,4 +687,3 @@ err_undo:
+ 
+ 	return err;
  }
- 
- static int lpc32xx_read_page(struct nand_chip *chip, uint8_t *buf,
+-
 
 
