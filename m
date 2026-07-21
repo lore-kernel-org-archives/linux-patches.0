@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8220446D0AC;
-	Tue, 21 Jul 2026 17:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6FE446839;
+	Tue, 21 Jul 2026 17:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655307; cv=none; b=CO3YHAS59KGlEhj4S2ieYllySdaA9QMr6VYDqq3u8BS8F3C5dMLoL97X1LSX3yqaYlttbgxnucfKa+2ZK1zjEauBBaRpyjnq0UtWQ1CqOE6KXc4Kz9eKL6Pz46LOoxP4PmdIrxri0rwWiQ2af0jw7IWgsfYvbKY5vb3xibV2x7Y=
+	t=1784655310; cv=none; b=tU9ARSDDpPs7JYkMCjvdNbC8ybkdFD2DdLwixPVyrZOTTdRI8SfzAodfXAjD3+kJreejmUWV7uwSfwjKsYq2Rlzy5IVtgI2w8V9LXmx6IFreOp/9CBuKjKu7WOwqe4Y3IcwjiDJSwJFKdC1mrTEocaulB0gPyjlV+Jr6tfA+FP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655307; c=relaxed/simple;
-	bh=puoayWbAtbuJkx7hMY3HnTcSicOXyZ7XruigFWlURas=;
+	s=arc-20240116; t=1784655310; c=relaxed/simple;
+	bh=1zVN/lzOeMMbHMZBEhLwSlpB6Aw57zqUGNM0A04+gxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M7Dg9kHRNx04yixUtztI83s5xGkajd3Bnr9SyHty967TVt3vxyX/cmhiimGkKAZeMHZrWelsMgdRMwMjx8HFmLYhlddgx5DIbqGCjiw2tqT+lHSSo1mkhxyVQGQjMehWolDGmK8osWrb3hlvWksBwBQH13ab5unReSKrY3cXp/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7a3DhHI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bBCjsaqm+cfX6VvZlhtTTIqr35DhEwMzvgmIcS6Bwws51YI3XdfisfeyTUIen1eVxy8qrmolVSZg3egYyTOnDIU1QP/VkX0SFDT1AWapLBhMupF5B1FELOxaFU1/yHnBtrMNGjsRec6ANLPxq0Ak+Yla3YeZmLwAsNe6ezDReO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQ0fuFB6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7a3DhHI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97071F000E9;
-	Tue, 21 Jul 2026 17:35:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQ0fuFB6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36CF1F000E9;
+	Tue, 21 Jul 2026 17:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655306;
-	bh=DYDubQk3nMsuKUnHGexoRn1LgzdVz8KoQrac1TmERkY=;
+	s=korg; t=1784655309;
+	bh=RFdwJloW3Fp4IbQN4ROI3j/Cm0+HVfHPhM3eJk1sGb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f7a3DhHIUDaTjGmuduyrCwqKn1Itw/i0RmJnWIQRGyjoelPBdBtBnR/a/P+vvw4Rp
-	 Bg4aOOOpx0ApcGF8VTIV4P+eu5wIktV2NNcz1GcdnwlbICd8ceXZqTF3/XaID+NsBi
-	 Mgk9b24l8PqjR/snEEOVtui07KjzANLz5d9xvFNk=
+	b=MQ0fuFB6YgDQYbIh0N1e/gxP5gwPkfX1Bawwr7ag5PPNJmcVhtSyoYiPokB9wwABx
+	 xzMT4Rmv1LcIu4SBD7UCAcoaWDdTOTZn4tVr4IMCsq5WaSoxdFWFmrsHX1UtnaIMyA
+	 qcYyKUKygd1lnLCb81aTCBlMFftAUC0PyKoiS3I8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Wang <hui.wang@canonical.com>,
-	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 7.1 1992/2077] selftests/rseq: Fix a building error for riscv arch
-Date: Tue, 21 Jul 2026 17:27:45 +0200
-Message-ID: <20260721152639.695236540@linuxfoundation.org>
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Chen Yu <yu.c.chen@intel.com>,
+	Ben Horgan <ben.horgan@arm.com>,
+	stable@kernel.org
+Subject: [PATCH 7.1 1983/2077] fs/resctrl: Free mon_data structures on rdt_get_tree() failure
+Date: Tue, 21 Jul 2026 17:27:36 +0200
+Message-ID: <20260721152639.482756405@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,48 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Wang <hui.wang@canonical.com>
+From: Tony Luck <tony.luck@intel.com>
 
-commit a2ac823d8a228e392bc6a79ea63b550ab84a55b2 upstream.
+commit ca0676ae2e1a23ac3e858224fc630b99f9e216ea upstream.
 
-RISC-V rseq selftests include asm/fence.h from tools/arch/riscv,
-but the rseq Makefile only adds tools/include in the CFLAGS, this
-results in the building failure both for native and cross build:
+If mkdir_mondata_all() or a subsequent call in rdt_get_tree() fails, the
+mon_data structures allocated by mon_get_kn_priv() are leaked.
 
-    In file included from rseq.h:131,
-                     from rseq.c:37:
-    rseq-riscv.h:11:10: fatal error: asm/fence.h: No such file or directory
+Add mon_put_kn_priv() to the out_mongrp error path to free the mon_data
+structures.
 
-To fix it, add the matching tools/arch/$(ARCH)/include path in the
-CFLAGS and derive ARCH from SUBARCH for standalone native builds where
-ARCH is not set.
-
-Fixes: c92786e179e0 ("KVM: riscv: selftests: Use the existing RISCV_FENCE macro in `rseq-riscv.h`")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hui Wang <hui.wang@canonical.com>
-Link: https://patch.msgid.link/20260707082348.36896-1-hui.wang@canonical.com
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Fixes: 2a6566038544 ("x86/resctrl: Expand the width of domid by replacing mon_data_bits")
+Closes: https://lore.kernel.org/lkml/5d38c1fb-8f91-472b-8897-24b2f50c772b@intel.com/
+Reported-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Reviewed-by: Ben Horgan <ben.horgan@arm.com>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/433623b7e3316ffd52323255d1aa4f156ad97cb1.1783377598.git.reinette.chatre@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/rseq/Makefile |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/resctrl/rdtgroup.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/tools/testing/selftests/rseq/Makefile
-+++ b/tools/testing/selftests/rseq/Makefile
-@@ -5,9 +5,13 @@ CLANG_FLAGS += -no-integrated-as
- endif
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -74,6 +74,8 @@ static int rdtgroup_setup_root(struct rd
  
- top_srcdir = ../../../..
-+include $(top_srcdir)/scripts/subarch.include
-+ARCH ?= $(SUBARCH)
-+LINUX_TOOL_ARCH_INCLUDE = $(top_srcdir)/tools/arch/$(ARCH)/include
+ static void rdtgroup_destroy_root(void);
  
- CFLAGS += -O2 -Wall -g -I./ $(KHDR_INCLUDES) -L$(OUTPUT) -Wl,-rpath=./ \
--	  $(CLANG_FLAGS) -I$(top_srcdir)/tools/include
-+	  $(CLANG_FLAGS) -I$(top_srcdir)/tools/include \
-+	  -I$(LINUX_TOOL_ARCH_INCLUDE)
- LDLIBS += -lpthread -ldl
++static void mon_put_kn_priv(void);
++
+ struct dentry *debugfs_resctrl;
  
- # Own dependencies because we only want to build against 1st prerequisite, but
+ /*
+@@ -2895,6 +2897,7 @@ out_mondata:
+ 		kernfs_remove(kn_mondata);
+ out_mongrp:
+ 	if (resctrl_arch_mon_capable()) {
++		mon_put_kn_priv();
+ 		rdtgroup_unassign_cntrs(&rdtgroup_default);
+ 		kernfs_remove(kn_mongrp);
+ 	}
 
 
