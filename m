@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F148B46C4B1;
-	Tue, 21 Jul 2026 15:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9824E256C84;
+	Tue, 21 Jul 2026 15:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649355; cv=none; b=mtG9ThgMRVyE5cFE66y9blS60vDku1aBwdZFfmhDe+ECPXF0FlObEmBdlHo7CagrbTOTtUs8oZRZ9T1KY0Kbrr3l2a+DEArTRDW/fHyB4ppn60IZ7Ls+zbNwfgpRQB04FbCAYl/4UN1zQdJzhKignNKzmALsOIAFyH190FnvvgU=
+	t=1784649356; cv=none; b=eam0c27dSJolS4OQ1pVRBbiwZmdfJzngmzxI4WSrF/twt8cC7MJ/+qbdFuV0rXojvyyzRtpbvG5deEaKXDWJuOtpWXQvreZT4M3CC4jKiaT41MDosDrUDvDRC5tPCjnTwIcaHmWiRGummi7372Wu90ogtIUreU15vhWky1CgObE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649355; c=relaxed/simple;
-	bh=najQ70ls0Di1ZGIIQbZX/8y6j//l/ICcVXK/nlVGwM0=;
+	s=arc-20240116; t=1784649356; c=relaxed/simple;
+	bh=Oj27dsdioZPsN+9Pm5vcaFm+e8AJiJOpC8/nIodQzlc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cdwCWzhPECW+zCqMdKobZF5+UqiAGH4ijlEoIJxvQhxFZtm7JY38uh4Z4rl5IoVN91fjhwfk8o+zG6doBfhQyDh1WGl4FJ5IEH7r08bPFgEg9uEHZ1l+rKU6y5Ym/Ap/L8KyzoCgeFZcEQh3Wl/GRgXczKiS027bfG3CT+CwxaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TdOd4jQ9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qqO3DgO4jN2vkvmAus/7cJUHOsGW2t+mwabWezO/kzoGUNyrkS58uuIjW1qGk78dQY/xVY3wvSidRnffMT/MaZjglWup6rs3u/9cxH1qH2Sm4ZBYNKWr42jvlzLBVb83ih4HvnOs+wDMc4OTz9kb+sodYc/UX1XtET6gb5ndwn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZPm3l6Ev; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TdOd4jQ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B5D1F00A3A;
-	Tue, 21 Jul 2026 15:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPm3l6Ev"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A0781F000E9;
+	Tue, 21 Jul 2026 15:55:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649352;
-	bh=BFSxPvTBUgQfqbYCg80IItLbw/pdSeI38y8KF+vA2rY=;
+	s=korg; t=1784649355;
+	bh=6bCldRsBM7dflKEH+OPuwAW8/IDC5vFM+sejlwKO3r4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TdOd4jQ9Fl1BwR8mmXzGUTFgbrBEgn1UuiE2Asv8OQnOt3IXMXpMFoAlcQcFyJFmj
-	 bqKCm/4R+LW2uqYaBAx/0laOUDfMc6EzHIaWikM+Y58kx1uNiRaOFSK+lB5ecXupTl
-	 tmHyJR5Quel3dG3/TsZzDiszyQgUpmG2O7CbVhVE=
+	b=ZPm3l6EvqjJl0KXXSOP3bpUrCTg7fZ5IJbULIVldc4yzrTA2QRkxbQ/vAwwzsxdWF
+	 41gO6RIPjfGtqmKw8GaQO3RgBAyIyk5chowcmepCScWUwC6x7x1lKLrc2H05ywIDhf
+	 0jcfOCQZGX1KKPXBtT0nHuL1PzKWsqbbhLkxLhfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Harmstone <mark@harmstone.com>,
-	David Sterba <dsterba@suse.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0544/2077] btrfs: dont force DIO writes to be serialized
-Date: Tue, 21 Jul 2026 17:03:37 +0200
-Message-ID: <20260721152605.640966624@linuxfoundation.org>
+Subject: [PATCH 7.1 0545/2077] ntfs: validate resident attribute lists and harden the validator
+Date: Tue, 21 Jul 2026 17:03:38 +0200
+Message-ID: <20260721152605.666087425@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,125 +52,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Harmstone <mark@harmstone.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 14f9161e872072075284b8afa4c3f929e199a0f6 ]
+[ Upstream commit 7d19e1ffee084c4f7d321a360c14ba43404f7cc8 ]
 
-Before btrfs switched to the new mount API in 2023, we were setting
-SB_NOSEC in btrfs_mount_root(). This flag tells the VFS that the
-filesystem may have files which don't have security xattrs, enabling it
-to do some optimizations.
+A base inode's $ATTRIBUTE_LIST is sanity-checked by load_attribute_list()
+only on the non-resident path; ntfs_read_locked_inode() copies a *resident*
+attribute list into ni->attr_list with a plain memcpy() and no validation
+at all. Every subsequent walk of ni->attr_list --
+ntfs_external_attr_find(), ntfs_inode_attach_all_extents() and
+ntfs_attrlist_need() -- then trusts the entries are well-formed and reads
+attr_list_entry fixed-header fields
+(lowest_vcn at offset 8, mft_reference at offset 16, and the name) with
+bounds that assume validation already happened. A crafted resident
+attribute list therefore reaches those walks unvalidated and can drive
+out-of-bounds reads of the attribute-list buffer.
 
-Unfortunately this was missed in the transition, meaning that IS_NOSEC
-will always return false for a btrfs inode. This means that
-btrfs_direct_write() calls will always get the inode lock exclusively,
-meaning that DIO writes to the same file will be serialized.
+load_attribute_list() itself reads ale->name_offset (offset 7),
+ale->mft_reference (offset 16) and the name length under only an
+"al < al_start + size" bound, so its own validation loop can over-read the
+fixed header of a truncated trailing entry by a few bytes.
 
-On my machine, this one-line change results in a ~59% improvement in DIO
-throughput:
+Factor the per-entry validation into ntfs_attr_list_entry_is_valid(),
+which requires each entry's fixed header (offsetof(struct
+attr_list_entry, name)) to be in range before any field is dereferenced,
+that ale->length is a multiple of 8 covering the fixed header plus the
+name, and that the entry is in use and carries a live MFT reference.
+ntfs_attr_list_is_valid() walks the buffer with it and checks the entries
+tile it exactly. Use the list validator in load_attribute_list()
+(replacing the open-coded loop, closing its own over-read) and on the
+resident path in ntfs_read_locked_inode() (which previously skipped
+validation entirely); patches 2/3 reuse the per-entry helper at the other
+two attribute-list walks.
 
-Before patch:
-
-  test: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=io_uring, iodepth=64
-  ...
-  fio-3.39
-  Starting 32 processes
-  test: Laying out IO file (1 file / 1024MiB)
-  Jobs: 32 (f=32): [w(32)][100.0%][w=764MiB/s][w=195k IOPS][eta 00m:00s]
-  test: (groupid=0, jobs=32): err= 0: pid=586: Wed Apr 22 13:03:04 2026
-    write: IOPS=202k, BW=787MiB/s (826MB/s)(46.1GiB/60012msec); 0 zone resets
-     bw (  KiB/s): min=498714, max=1199892, per=100.00%, avg=806659.03, stdev=4229.94, samples=3808
-     iops        : min=124677, max=299971, avg=201661.82, stdev=1057.49, samples=3808
-    cpu          : usr=0.32%, sys=1.27%, ctx=8329204, majf=0, minf=1163
-    IO depths    : 1=0.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=100.0%
-       submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-       complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
-       issued rwts: total=0,12094328,0,0 short=0,0,0,0 dropped=0,0,0,0
-       latency   : target=0, window=0, percentile=100.00%, depth=64
-
-  Run status group 0 (all jobs):
-    WRITE: bw=787MiB/s (826MB/s), 787MiB/s-787MiB/s (826MB/s-826MB/s), io=46.1GiB (49.5GB), run=60012-60012msec
-
-After patch:
-
-  test: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=io_uring, iodepth=64
-  ...
-  fio-3.39
-  Starting 32 processes
-  test: Laying out IO file (1 file / 1024MiB)
-  Jobs: 32 (f=32): [w(32)][100.0%][w=1255MiB/s][w=321k IOPS][eta 00m:00s]
-  test: (groupid=0, jobs=32): err= 0: pid=572: Wed Apr 22 13:13:46 2026
-    write: IOPS=320k, BW=1250MiB/s (1311MB/s)(73.3GiB/60003msec); 0 zone resets
-     bw (  MiB/s): min=  619, max= 2289, per=100.00%, avg=1251.28, stdev= 9.64, samples=3808
-     iops        : min=158538, max=586025, avg=320320.80, stdev=2468.97, samples=3808
-    cpu          : usr=0.35%, sys=11.50%, ctx=1584847, majf=0, minf=1160
-    IO depths    : 1=0.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=100.0%
-       submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-       complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
-       issued rwts: total=0,19203309,0,0 short=0,0,0,0 dropped=0,0,0,0
-       latency   : target=0, window=0, percentile=100.00%, depth=64
-
-  Run status group 0 (all jobs):
-    WRITE: bw=1250MiB/s (1311MB/s), 1250MiB/s-1250MiB/s (1311MB/s-1311MB/s), io=73.3GiB (78.7GB), run=60003-60003msec
-
-The script to reproduce that:
-
-  #!/bin/bash
-  mkfs.btrfs -f /dev/nvme0n1
-  mount /dev/nvme0n1 /mnt/test
-  mkdir /mnt/test/nocow
-  chattr +C /mnt/test/nocow
-  fio /root/test.fio
-
-  # cat /root/test.fio
-  [global]
-  rw=randwrite
-  ioengine=io_uring
-  iodepth=64
-  size=1g
-  direct=1
-  startdelay=20
-  force_async=4
-  ramp_time=5
-  runtime=60
-  group_reporting=1
-  numjobs=32
-  time_based
-  disk_util=0
-  clat_percentiles=0
-  disable_lat=1
-  disable_clat=1
-  disable_slat=1
-  filename=/mnt/test/nocow/fiofile
-  [test]
-  name=test
-  bs=4k
-  stonewall
-
-This was on a VM with 8 cores and 8GB of RAM, with a real NVMe exposed
-through PCI passthrough. The figures for XFS and ext4 in comparison are
-both about ~3GB/s.
-
-Fixes: ad21f15b0f79 ("btrfs: switch to the new mount API")
-Signed-off-by: Mark Harmstone <mark@harmstone.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 1e9ea7e04472 ("Revert "fs: Remove NTFS classic"")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/super.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ntfs/attrib.c | 78 ++++++++++++++++++++++++++++++++++++++----------
+ fs/ntfs/attrib.h |  4 +++
+ fs/ntfs/inode.c  |  6 ++++
+ 3 files changed, 73 insertions(+), 15 deletions(-)
 
-diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
-index b26aa9169e8388..64514d600eec71 100644
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -1873,6 +1873,7 @@ static int btrfs_get_tree_super(struct fs_context *fc)
- 	fs_info->fs_devices = fs_devices;
- 	mutex_unlock(&uuid_mutex);
+diff --git a/fs/ntfs/attrib.c b/fs/ntfs/attrib.c
+index 421c6cdcbb5307..abc0add6f0c446 100644
+--- a/fs/ntfs/attrib.c
++++ b/fs/ntfs/attrib.c
+@@ -843,11 +843,71 @@ char *ntfs_attr_name_get(const struct ntfs_volume *vol, const __le16 *uname,
+ 	return NULL;
+ }
  
-+	fc->sb_flags |= SB_NOSEC;
++/*
++ * ntfs_attr_list_entry_is_valid - sanity check one $ATTRIBUTE_LIST entry
++ * @ale:	the attribute-list entry to check
++ * @al_end:	end of the attribute-list buffer @ale lives in
++ *
++ * Verify that @ale is a well-formed attr_list_entry wholly contained in
++ * [.., @al_end): its fixed header must lie in range before any field is
++ * dereferenced, its length must be a multiple of 8 that covers the fixed
++ * header plus the name, the name must lie within the buffer, the entry must
++ * be in use and carry a live MFT reference.  Return true if valid.
++ */
++bool ntfs_attr_list_entry_is_valid(const struct attr_list_entry *ale,
++				   const u8 *al_end)
++{
++	const u8 *al = (const u8 *)ale;
++	u16 ale_len;
++
++	/* The fixed header must be in bounds before it is parsed. */
++	if (al + offsetof(struct attr_list_entry, name) > al_end)
++		return false;
++	ale_len = le16_to_cpu(ale->length);
++	/* On-disk entries are 8-byte aligned (see struct attr_list_entry). */
++	if (ale_len & 7)
++		return false;
++	if (ale->name_offset != sizeof(struct attr_list_entry))
++		return false;
++	if ((u32)ale->name_offset +
++	    (u32)ale->name_length * sizeof(__le16) > ale_len ||
++	    al + ale_len > al_end)
++		return false;
++	if (ale->type == AT_UNUSED)
++		return false;
++	if (MSEQNO_LE(ale->mft_reference) == 0)
++		return false;
++	return true;
++}
++
++/*
++ * ntfs_attr_list_is_valid - sanity check an in-memory $ATTRIBUTE_LIST
++ * @al_start:	start of the attribute list buffer
++ * @size:	length of the attribute list in bytes
++ *
++ * Verify that [@al_start, @al_start + @size) is a sequence of valid
++ * attr_list_entry records (see ntfs_attr_list_entry_is_valid()) that tile the
++ * buffer exactly.  Return true if valid, false otherwise.
++ */
++bool ntfs_attr_list_is_valid(const u8 *al_start, s64 size)
++{
++	const u8 *al = al_start;
++	const u8 *al_end = al_start + size;
++
++	while (al < al_end) {
++		const struct attr_list_entry *ale =
++				(const struct attr_list_entry *)al;
++
++		if (!ntfs_attr_list_entry_is_valid(ale, al_end))
++			return false;
++		al += le16_to_cpu(ale->length);
++	}
++	return al == al_end;
++}
++
+ int load_attribute_list(struct ntfs_inode *base_ni, u8 *al_start, const s64 size)
+ {
+ 	struct inode *attr_vi = NULL;
+-	u8 *al;
+-	struct attr_list_entry *ale;
  
- 	sb = sget_fc(fc, btrfs_fc_test_super, set_anon_super_fc);
- 	if (IS_ERR(sb)) {
+ 	if (!al_start || size <= 0)
+ 		return -EINVAL;
+@@ -869,19 +929,7 @@ int load_attribute_list(struct ntfs_inode *base_ni, u8 *al_start, const s64 size
+ 	}
+ 	iput(attr_vi);
+ 
+-	for (al = al_start; al < al_start + size; al += le16_to_cpu(ale->length)) {
+-		ale = (struct attr_list_entry *)al;
+-		if (ale->name_offset != sizeof(struct attr_list_entry))
+-			break;
+-		if (le16_to_cpu(ale->length) <= ale->name_offset + ale->name_length ||
+-		    al + le16_to_cpu(ale->length) > al_start + size)
+-			break;
+-		if (ale->type == AT_UNUSED)
+-			break;
+-		if (MSEQNO_LE(ale->mft_reference) == 0)
+-			break;
+-	}
+-	if (al != al_start + size) {
++	if (!ntfs_attr_list_is_valid(al_start, size)) {
+ 		ntfs_error(base_ni->vol->sb, "Corrupt attribute list, mft = %llu",
+ 			   base_ni->mft_no);
+ 		return -EIO;
+diff --git a/fs/ntfs/attrib.h b/fs/ntfs/attrib.h
+index f7acc7986b090d..e2224fbfaabe95 100644
+--- a/fs/ntfs/attrib.h
++++ b/fs/ntfs/attrib.h
+@@ -71,6 +71,10 @@ int ntfs_attr_lookup(const __le32 type, const __le16 *name,
+ 		const u32 name_len, const u32 ic,
+ 		const s64 lowest_vcn, const u8 *val, const u32 val_len,
+ 		struct ntfs_attr_search_ctx *ctx);
++bool ntfs_attr_list_entry_is_valid(const struct attr_list_entry *ale,
++				   const u8 *al_end);
++bool ntfs_attr_list_is_valid(const u8 *al_start, s64 size);
++
+ int load_attribute_list(struct ntfs_inode *base_ni,
+ 			       u8 *al_start, const s64 size);
+ 
+diff --git a/fs/ntfs/inode.c b/fs/ntfs/inode.c
+index 360bebd1ee3fe6..a5f7400fd19dc4 100644
+--- a/fs/ntfs/inode.c
++++ b/fs/ntfs/inode.c
+@@ -848,6 +848,12 @@ static int ntfs_read_locked_inode(struct inode *vi)
+ 					a->data.resident.value_offset),
+ 					le32_to_cpu(
+ 					a->data.resident.value_length));
++			/* A resident list is not validated on load; check it now. */
++			if (!ntfs_attr_list_is_valid(ni->attr_list,
++						     ni->attr_list_size)) {
++				ntfs_error(vi->i_sb, "Corrupt attribute list.");
++				goto unm_err_out;
++			}
+ 		}
+ 	}
+ skip_attr_list_load:
 -- 
 2.53.0
 
