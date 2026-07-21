@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BEBF367B92;
-	Tue, 21 Jul 2026 22:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9540367B63;
+	Tue, 21 Jul 2026 22:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673610; cv=none; b=i73AXZ3t1kN9ah7Syra9Jb9mjlvT2b8Q5CT4Ny+MxSY/X8edmj1n3IkgduZBGPReMrcDWviBXx5049cweklK8NwA7h/E2GmIkrE+d3UewHS0WowI1PqmrMvIV+OZkPsrrpwGqdCenHZR4lUTrkd7I1S3M4WUxXp+aW4ByZJNDRU=
+	t=1784673612; cv=none; b=GHpQWdbfqd8iKja3gUj0o6qGzzdPtHGNq1p1Dr60mCTymzh/5pK/VQQzLQqs9PadH59+pezhWek//4CEoyGTdLeDem9EZvvZlixKeXBsAyruabpUxT2HSfck1nPTwm6KlV/IvoqFd3ShHmWoMptA9FX157F9r9tgU8kziX2LoeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673610; c=relaxed/simple;
-	bh=Py7ysGZP7BrMbQOvWBo9D0VZqOROeb9tv/KtVFI2ojc=;
+	s=arc-20240116; t=1784673612; c=relaxed/simple;
+	bh=2xRd80r7xgfo7ayvgcujt9/pa8UCSY6aLBzPS/WBzHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VKMwmJDxnZ6OAMxXSwDC6I9JfxApsWsroFy0D6Ys5QeiPOYkWb4sG9h0LQpjS4xg4NQh/R7Ph6iEhgmCzZbFRazP7dazmrA2+DJOOd6GInbl2Iu4KRCAPlQs7jGbVTPdoaCzeb3pQS1tY5y5kOyl9jL1p8MX5lRKgPE6UsuvLRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LFsx2sA1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HowDdXSNNxy64SAg2lxvmMjzeQ0ZU+d7nsk51iDw8Q+GvnkIvwN1XAaLVFFi3PrFIWP+v+9abqNKe+OhcIjQPN1+QWUxLl120wd8OtCZkFXpgku4wkGVluOydViiKnqrUZM3GxzJlgWzcB9EbqjLugPMSBTNu+I5UzJtbHeiheU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSoLYGHv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LFsx2sA1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09FD1F000E9;
-	Tue, 21 Jul 2026 22:40:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSoLYGHv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4248E1F000E9;
+	Tue, 21 Jul 2026 22:40:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673609;
-	bh=iQFzK4qc7uhse574MapjHk57joOyqc6Ht7k2pSUHY18=;
+	s=korg; t=1784673611;
+	bh=7FPfJKH9P3017mHQJ6ZlM3w/XrqsTJITqCYBcgukpT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LFsx2sA12oIc7uYHAimPp3UaX0Moqz4rxqmHBvcD9pPgHVAmX/wUfnyvbchQsXhdM
-	 Of3oxfVKCoVhQVYLCua+9+WUg/sK9v8ACxakpnMmR0XxHUchyrI0QETg3lupuzmEnd
-	 XmN2lRsUEhdGSuxMLBITad0yl0ipxRZqySvrtCg4=
+	b=VSoLYGHvWImdNQ3T+jGIZDBBfWw9FBxMQ4nCbJLV4IBO+xyWHZqv5dzEUB3c4smFY
+	 1X7rJRdVwAEtz8HPWS2Wr9/OhPQrN2MXv6v3SZTUni08T+eiNAEhR49FyVB2syKyvl
+	 7eVBniljct0qIr9RJsj/+EJoN7bKU6p3au8MsYPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 220/699] ARM: imx31: Fix IIM mapping leak in revision check
-Date: Tue, 21 Jul 2026 17:19:39 +0200
-Message-ID: <20260721152400.663340555@linuxfoundation.org>
+Subject: [PATCH 5.10 229/699] ocfs2: reject FITRIM ranges shorter than a cluster
+Date: Tue, 21 Jul 2026 17:19:48 +0200
+Message-ID: <20260721152400.864919868@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,56 +58,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit ccb4b54b8ecf1ebafef96d538cd6c5c8455bb390 ]
+[ Upstream commit ca1afd88f5eaaff9168e1466e5401385edf59543 ]
 
-mx31_read_cpu_rev() maps the IIM registers with of_iomap() to read the
-silicon revision, but returns without unmapping the MMIO mapping.
+ocfs2_trim_mainbm() trims the global bitmap in cluster units, but its
+too-short range validation only checks sb->s_blocksize.
 
-Keep the normalized revision value in a local variable and route the
-return path through iounmap() after the revision register has been read.
+On filesystems with a cluster size larger than the block size, a FITRIM
+range that is at least one block but shorter than one cluster is accepted
+and shifted down to len == 0.  The later start + len - 1 and len -= ...
+arithmetic then underflows and can drive trimming past the requested
+range.
 
-Fixes: 3172225d45bd ("ARM: imx31: Retrieve the IIM base address from devicetree")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Reject ranges shorter than s_clustersize instead.  That preserves the
+existing -EINVAL behavior for requests that cannot discard even one
+allocation unit and keeps zero-cluster trims out of the group walk.
+
+Link: https://lore.kernel.org/20260528151247.361854-1-rollkingzzc@gmail.com
+Fixes: aa89762c5480 ("ocfs2: return EINVAL if the given range to discard is less than block size")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-imx/cpu-imx31.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/ocfs2/alloc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-imx/cpu-imx31.c b/arch/arm/mach-imx/cpu-imx31.c
-index 35c544924e5095..e81ef9e36a1fab 100644
---- a/arch/arm/mach-imx/cpu-imx31.c
-+++ b/arch/arm/mach-imx/cpu-imx31.c
-@@ -36,6 +36,7 @@ static int mx31_read_cpu_rev(void)
- 	void __iomem *iim_base;
- 	struct device_node *np;
- 	u32 i, srev;
-+	int rev = IMX_CHIP_REVISION_UNKNOWN;
+diff --git a/fs/ocfs2/alloc.c b/fs/ocfs2/alloc.c
+index 82593871c4e1fd..a1c50a44961a6f 100644
+--- a/fs/ocfs2/alloc.c
++++ b/fs/ocfs2/alloc.c
+@@ -7541,7 +7541,7 @@ int ocfs2_trim_mainbm(struct super_block *sb, struct fstrim_range *range)
+ 	len = range->len >> osb->s_clustersize_bits;
+ 	minlen = range->minlen >> osb->s_clustersize_bits;
  
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx31-iim");
- 	iim_base = of_iomap(np, 0);
-@@ -48,13 +49,17 @@ static int mx31_read_cpu_rev(void)
+-	if (minlen >= osb->bitmap_cpg || range->len < sb->s_blocksize)
++	if (minlen >= osb->bitmap_cpg || range->len < osb->s_clustersize)
+ 		return -EINVAL;
  
- 	for (i = 0; i < ARRAY_SIZE(mx31_cpu_type); i++)
- 		if (srev == mx31_cpu_type[i].srev) {
-+			rev = mx31_cpu_type[i].rev;
- 			imx_print_silicon_rev(mx31_cpu_type[i].name,
- 						mx31_cpu_type[i].rev);
--			return mx31_cpu_type[i].rev;
-+			goto out;
- 		}
- 
- 	imx_print_silicon_rev("i.MX31", IMX_CHIP_REVISION_UNKNOWN);
--	return IMX_CHIP_REVISION_UNKNOWN;
-+
-+out:
-+	iounmap(iim_base);
-+	return rev;
- }
- 
- int mx31_revision(void)
+ 	trace_ocfs2_trim_mainbm(start, len, minlen);
 -- 
 2.53.0
 
