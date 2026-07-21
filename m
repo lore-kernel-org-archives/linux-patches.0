@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285AA3B1EFC;
-	Tue, 21 Jul 2026 20:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8AF2D8376;
+	Tue, 21 Jul 2026 20:38:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666323; cv=none; b=Czo7sFcqJGJg35UyBvc70BvUsEkgtI1irs/oGtDXWQmtVZCnDr5Dxvq4VA5LPYHQTWEH3RLnSqJlXp0ZvQXKMNygEO8R4I7dNcAbmyJv78kNrAMAytKM/WrK1yxoKU6vuyjjY+Y2qrP8wkjnztG4Q20WuGaJrc84buaN8BYa3AI=
+	t=1784666325; cv=none; b=O24myzOwmeTmoAG0O6jKC+nptaXHOXUoh7Ri3kckQYhU8Cgu0N6uSp2hUXuH8OhKoIHZbAmFZr7K11Z2PSFbjOhqcAZEqki9oQMDkKp6mrt2rGwpGzH/cVklUwr8m7ZT8kGGQUTkkr/0O6x+pnN76Sy3tJhpn6xJUq7XZ9EsuXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666323; c=relaxed/simple;
-	bh=lfdGjObl9EdyrG2IrRbk8J7x/tOLqXtdNb7Gz4EhU+A=;
+	s=arc-20240116; t=1784666325; c=relaxed/simple;
+	bh=NaR6J2582Lmq9Ndhj3GmeJXbQWzbLeRrnnuQ7f44UEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=up39M38IPbaBabmaMCfaCoIYY6A7Ns1Pzz9jmKH1OeQWhlBEEezB4IEq1epUSZtbvg/R0GxBnAq05YsQx1FqWb7uQwT3mzIDtGDFtnWXAVvcnjleg1PddSUhFssh2ot8gh03pREHvPMt8scQOtis+k5lSIOvRY5Y+a4adueFoYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaaxlgeB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NxpRymbdQ3XaP51fr5dlRmsK9UkUX0EcHQF91KNBuwJyRYth8eKMNCnCfqW36CbhQugDH5EPMbaR2Gb5d6sQKTHujb4XezBG3Q1W92bqN/geR05QgRo0jkhkYsrmJJtaU8HagcsfVD6vZACwAnDKixStpo+tZHMaqPZraMAhHko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jtGfBcvZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaaxlgeB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68D4C1F000E9;
-	Tue, 21 Jul 2026 20:38:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jtGfBcvZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258E51F000E9;
+	Tue, 21 Jul 2026 20:38:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666321;
-	bh=RC2/kb1Zu3Xv3dRRtAIGXN8+XtvwMYYScv60wcUCMvM=;
+	s=korg; t=1784666324;
+	bh=8PBNZ6VISr5ikmUCDjyefxxlZmCBGW74IL9leKRDbNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WaaxlgeB5Cj33tQg345swmEMHt0vEfGCvG8DM+J6Bu82of39sdw+lbpvlbcXtM7E2
-	 L1e256iP8dCugj15fcja92nI6KtS71+DBLHTKxXcOkl//fWWccfVB3OT62enkJIgNt
-	 Lt2VdjjsixAlk5B8rJQepGcLxmh77rUfQPeFbc0E=
+	b=jtGfBcvZC0Yn07RwMcL/YXwSMYgUeC7eichZw7+2roDVUSr8N9fVRZRlvBiAD3bL4
+	 XCxYc/IcB0Jhhwdgtp0GXNsOfbTV+kEydHhv1Pco/8oiRZQI/MdxuSVtJ3MftaNp8H
+	 yeDo0LuQrPLx48lbwDUfjVWSwCxE7eX7DDI9JDyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	sashiko-bot@kernel.org
-Subject: [PATCH 6.6 0637/1266] perf sched: Replace BUG_ON on invalid CPU with graceful skip
-Date: Tue, 21 Jul 2026 17:17:54 +0200
-Message-ID: <20260721152456.109948111@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0638/1266] perf sched: Fix NULL dereference in latency_runtime_event
+Date: Tue, 21 Jul 2026 17:17:55 +0200
+Message-ID: <20260721152456.132752457@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -55,80 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 1e2c83f732deb329ebce23e26cbc482f4c4bf194 ]
+[ Upstream commit 8cbca8a480e15f6326ce94287570993f27a4b2d5 ]
 
-latency_switch_event(), latency_runtime_event(), and map_switch_event()
-use BUG_ON(cpu >= MAX_CPUS || cpu < 0) to validate the sample CPU.
-When PERF_SAMPLE_CPU is absent from the sample type,
-evsel__parse_sample() initializes sample->cpu to (u32)-1.  Casting
-this to int yields -1, which triggers the BUG_ON and aborts perf sched.
+latency_runtime_event() passes the return value of
+machine__findnew_thread() directly to thread_atoms_search() at line
+1216, before checking for NULL at line 1220.  thread_atoms_search()
+calls pid_cmp() which dereferences the thread pointer via
+thread__tid(), causing a NULL pointer dereference if the allocation
+fails.
 
-The central CPU validation in perf_session__deliver_event() intentionally
-preserves the (u32)-1 sentinel for downstream tools like perf script
-and perf inject, so leaf callbacks must handle it themselves.
+All other callers of thread_atoms_search() in this file
+(latency_switch_event, latency_wakeup_event,
+latency_migrate_task_event) correctly check for NULL first.
 
-Replace the three BUG_ON calls with graceful skips using pr_warning(),
-matching the existing pattern in process_sched_switch_event() and
-process_sched_runtime_event() earlier in the same file.  Include the
-file offset for cross-referencing with perf report -D.
+Move the atoms assignment after the NULL check to match the pattern
+used by the other callers.
 
-Reported-by: sashiko-bot@kernel.org # Running on a local machine
-Reviewed-by: Ian Rogers <irogers@google.com>
+Fixes: b91fc39f4ad7 ("perf machine: Protect the machine->threads with a rwlock")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 8cbca8a480e1 ("perf sched: Fix NULL dereference in latency_runtime_event")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+ tools/perf/builtin-sched.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 942fde8a1d52e3..9e9bb19f0bc98b 100644
+index 9e9bb19f0bc98b..6df0d1252f197f 100644
 --- a/tools/perf/builtin-sched.c
 +++ b/tools/perf/builtin-sched.c
-@@ -1154,7 +1154,12 @@ static int latency_switch_event(struct perf_sched *sched,
+@@ -1223,13 +1223,15 @@ static int latency_runtime_event(struct perf_sched *sched,
+ 	const u32 pid	   = evsel__intval(evsel, sample, "pid");
+ 	const u64 runtime  = evsel__intval(evsel, sample, "runtime");
+ 	struct thread *thread = machine__findnew_thread(machine, -1, pid);
+-	struct work_atoms *atoms = thread_atoms_search(&sched->atom_root, thread, &sched->cmp_pid);
++	struct work_atoms *atoms;
+ 	u64 timestamp = sample->time;
  	int cpu = sample->cpu, err = -1;
- 	s64 delta;
  
--	BUG_ON(cpu >= MAX_CPUS || cpu < 0);
-+	/* perf.data is untrusted input — CPU may be absent or corrupted */
-+	if (cpu >= MAX_CPUS || cpu < 0) {
-+		pr_warning("WARNING: at offset %#" PRIx64 ": out-of-bound sample CPU %d, skipping sample\n",
-+			   sample->file_offset, cpu);
-+		return 0;
-+	}
- 
- 	timestamp0 = sched->cpu_last_switched[cpu];
- 	sched->cpu_last_switched[cpu] = timestamp;
-@@ -1225,7 +1230,13 @@ static int latency_runtime_event(struct perf_sched *sched,
  	if (thread == NULL)
  		return -1;
  
--	BUG_ON(cpu >= MAX_CPUS || cpu < 0);
-+	/* perf.data is untrusted input — CPU may be absent or corrupted */
-+	if (cpu >= MAX_CPUS || cpu < 0) {
-+		pr_warning("WARNING: at offset %#" PRIx64 ": out-of-bound sample CPU %d, skipping sample\n",
-+			   sample->file_offset, cpu);
-+		err = 0;
-+		goto out_put;
-+	}
- 	if (!atoms) {
- 		if (thread_atoms_insert(sched, thread))
- 			goto out_put;
-@@ -1596,7 +1607,12 @@ static int map_switch_event(struct perf_sched *sched, struct evsel *evsel,
- 	const char *color = PERF_COLOR_NORMAL;
- 	char stimestamp[32];
- 
--	BUG_ON(this_cpu.cpu >= MAX_CPUS || this_cpu.cpu < 0);
-+	/* perf.data is untrusted input — CPU may be absent or corrupted */
-+	if (this_cpu.cpu >= MAX_CPUS || this_cpu.cpu < 0) {
-+		pr_warning("WARNING: at offset %#" PRIx64 ": out-of-bound sample CPU %d, skipping sample\n",
-+			   sample->file_offset, this_cpu.cpu);
-+		return 0;
-+	}
- 
- 	if (this_cpu.cpu > sched->max_cpu.cpu)
- 		sched->max_cpu = this_cpu;
++	atoms = thread_atoms_search(&sched->atom_root, thread, &sched->cmp_pid);
++
+ 	/* perf.data is untrusted input — CPU may be absent or corrupted */
+ 	if (cpu >= MAX_CPUS || cpu < 0) {
+ 		pr_warning("WARNING: at offset %#" PRIx64 ": out-of-bound sample CPU %d, skipping sample\n",
 -- 
 2.53.0
 
