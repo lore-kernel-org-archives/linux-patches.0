@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2A23BB680;
-	Tue, 21 Jul 2026 22:44:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39ACA3E121A;
+	Tue, 21 Jul 2026 22:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673857; cv=none; b=e+jYR0S82XzdchvfwHptmHE4zyivaXdg57O2w2JAIoAnGnzvLOTEFJ7ydFsFWbTZ4znUcV+dYZ/Gb8DXr+YMXbzJrpmvmfDXpP3ulkXQIgA+zwIZ8AWRyb2BICMk4rhgZ6FyPen5B89wd4VqN0pHpVQou0UieGXlAomlTFGH+EU=
+	t=1784673860; cv=none; b=lc6h6+czAZ76oOOEH++0EML+G85Og+R2IrtIVQH2qU91xfzKJtLUZlukAoOUAa0+0zvy6n55OwNrvChPEhcvPSF6uPKk6MzrlEQNZxRzNnRAk+MgddRxAAeoBp+CelEGlko09pT23ak+vc7KCi6jr41WOS9ihre+eHHeviAW1Mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673857; c=relaxed/simple;
-	bh=CMBM1rGlnN1eFeUMnofLnEfvPOdLtrl6q3buTeeylh0=;
+	s=arc-20240116; t=1784673860; c=relaxed/simple;
+	bh=0oS9dD88XGDfuy3JKC/bzcai2c+mO0YOEk0dFXIqcpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=buRk6tO0xQgJJcL1PRYuzVHNztzOtwo+X9y8Q1SJWfTQku9t5saRukiNAPphtmfO+aeilPBx2xhbKhYYPeCx4AKFfgeWjZGx7ibIu90tS4QPBgJT+lNi/Ae9vrooJxm9NkbO+xBQDnKVvXvvb160GB2z/u8/R9RRB0v/OEmsoiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUSF7OoV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=N+jmY+xpBjovlX1n6jiYqvjiKTuKiHmO34oyFVtKUz5kTZa/79491lgoJSP9BgUv8c432QVj5G+lzgaZvlLzQYpbJb6bdWHq0ztkTYadO2mQxmDuDQM/G6AthYE/B7SPr1QilJn1mDWOokCuvSra6fYjS5wwJkEosUz2Ls/a0Mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b1gQ3l59; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUSF7OoV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F01B81F000E9;
-	Tue, 21 Jul 2026 22:44:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b1gQ3l59"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 938151F000E9;
+	Tue, 21 Jul 2026 22:44:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673856;
-	bh=nooYK8oB7cYDg1XDCORZKjw7MV7//jFzs9wSeKWiz5k=;
+	s=korg; t=1784673859;
+	bh=SgCKFUR5WfcWuqwAYdRrTXyFzQTyiXUPddVkjSV885E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NUSF7OoVfNGKW34aXicC/6Sg9tEwcApQlYNBYjWo9IHoe4DSB9pEZLlQTBOWzwLpT
-	 6El4T9bJudX+nLPZRP176xDbcIHLO8XIDT6UYDrH3WIXSsLo6CY7o11omO3J+VPh2o
-	 B+OIEf99d+NIeFvFXD0hZSRYu2BuYCGKLkms2VAQ=
+	b=b1gQ3l59bl/f6jmyudyYlwhnFVRLra0LqmPeYFht5GWRHvvuLD+YZw82KCbZLxaAb
+	 UFeeCnKx0wmCZ4bMWVFPIo6DqasfxePffBRKcxwUDgwbTAlahS2jovdi3JtflhKmf4
+	 4Vyq41ey0n2Q6tlrCxfdBUNZhELEv5sqVvjxPClY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Ryder Lee <ryder.lee@mediatek.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 322/699] perf symbols: Add bounds checks to read_build_id() note iteration in minimal build
-Date: Tue, 21 Jul 2026 17:21:21 +0200
-Message-ID: <20260721152402.956168208@linuxfoundation.org>
+Subject: [PATCH 5.10 323/699] PCI: mediatek: Fix possible truncation in mtk_pcie_parse_port()
+Date: Tue, 21 Jul 2026 17:21:22 +0200
+Message-ID: <20260721152402.978946555@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -46,70 +45,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Ryder Lee <ryder.lee@mediatek.com>
 
-[ Upstream commit 52e582e316c48c53bb3082c29f7862ebc554087e ]
+[ Upstream commit ab4a4043db1fcc4fd4c5745c5be8caf053502e29 ]
 
-symbol-minimal.c's read_build_id() iterates ELF notes with the same
-pattern as symbol-elf.c's elf_read_build_id(): pointer arithmetic
-driven by n_namesz and n_descsz from 32-bit note header fields,
-without validating that the name and desc fit within the note section
-data.  A malformed ELF file with oversized note sizes causes
-out-of-bounds reads past the section data buffer.
+As reported by the W=1 warning below, content of the 'name' variable might
+get truncated with the existing size of 10 bytes. Though it is not
+practically possible to exceed the 10 bytes size, increase it to 20 to
+silence the warning for a clean W=1 build:
 
-Add the same bounds check as the libelf path: validate namesz and
-descsz individually against remaining data before advancing the
-pointer, avoiding size_t overflow on 32-bit.
+  $ make W=1 drivers/pci/controller/pcie-mediatek.o
+    CALL    scripts/checksyscalls.sh
+    DESCEND objtool
+    INSTALL libsubcmd_headers
+    CC      drivers/pci/controller/pcie-mediatek.o
+  drivers/pci/controller/pcie-mediatek.c: In function ‘mtk_pcie_parse_port’:
+  drivers/pci/controller/pcie-mediatek.c:963:43: error: ‘%d’ directive output may be truncated writing between 1 and 10 bytes into a region of size 6 [-Werror=format-truncation=]
+    963 |         snprintf(name, sizeof(name), "port%d", slot);
+	|                                           ^~
+  drivers/pci/controller/pcie-mediatek.c:963:38: note: directive argument in the range [0, 2147483647]
+    963 |         snprintf(name, sizeof(name), "port%d", slot);
+	|                                      ^~~~~~~~
+  drivers/pci/controller/pcie-mediatek.c:963:9: note: ‘snprintf’ output between 6 and 15 bytes into a destination of size 10
+    963 |         snprintf(name, sizeof(name), "port%d", slot);
+	|         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Fixes: b691f64360ecec49 ("perf symbols: Implement poor man's ELF parser")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
+[mani: commit log]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/b835e360b42c5e0994f9301a34dbdf140a8d3ef5.1772493898.git.ryder.lee@mediatek.com
+Stable-dep-of: ebc1d9906894 ("PCI: mediatek: Use actual physical address instead of virt_to_phys()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-minimal.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/pci/controller/pcie-mediatek.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/symbol-minimal.c b/tools/perf/util/symbol-minimal.c
-index f9eb0bee7f157a..cd3bef5644a0b6 100644
---- a/tools/perf/util/symbol-minimal.c
-+++ b/tools/perf/util/symbol-minimal.c
-@@ -1,3 +1,4 @@
-+#include "debug.h"
- #include "dso.h"
- #include "symbol.h"
- #include "symsrc.h"
-@@ -45,7 +46,7 @@ static int read_build_id(void *note_data, size_t note_len, struct build_id *bid,
- 	ptr = note_data;
- 	while (ptr < (note_data + note_len)) {
- 		const char *name;
--		size_t namesz, descsz;
-+		size_t namesz, descsz, remaining;
+diff --git a/drivers/pci/controller/pcie-mediatek.c b/drivers/pci/controller/pcie-mediatek.c
+index c33335f3f8e249..3679bc7ab078af 100644
+--- a/drivers/pci/controller/pcie-mediatek.c
++++ b/drivers/pci/controller/pcie-mediatek.c
+@@ -914,7 +914,7 @@ static int mtk_pcie_parse_port(struct mtk_pcie *pcie,
+ 	struct mtk_pcie_port *port;
+ 	struct device *dev = pcie->dev;
+ 	struct platform_device *pdev = to_platform_device(dev);
+-	char name[10];
++	char name[20];
+ 	int err;
  
- 		nhdr = ptr;
- 		if (need_swap) {
-@@ -57,6 +58,14 @@ static int read_build_id(void *note_data, size_t note_len, struct build_id *bid,
- 		namesz = NOTE_ALIGN(nhdr->n_namesz);
- 		descsz = NOTE_ALIGN(nhdr->n_descsz);
- 
-+		/* validate individually to avoid size_t overflow on 32-bit */
-+		remaining = note_data + note_len - ptr - sizeof(*nhdr);
-+		if (namesz > remaining || descsz > remaining - namesz) {
-+			pr_warning("%s: oversized note: n_namesz=%u, n_descsz=%u\n",
-+				   __func__, nhdr->n_namesz, nhdr->n_descsz);
-+			break;
-+		}
-+
- 		ptr += sizeof(*nhdr);
- 		name = ptr;
- 		ptr += namesz;
+ 	port = devm_kzalloc(dev, sizeof(*port), GFP_KERNEL);
 -- 
 2.53.0
 
