@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1144946AA80;
-	Tue, 21 Jul 2026 15:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABD746AA70;
+	Tue, 21 Jul 2026 15:38:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648303; cv=none; b=GUz9SxsxrAG00jFb0kCzmMYSKdIiwNtSmMLPSqW3MLTtlGZS57QHUwGS2MrLqm6UxPQ4lQNj60fA8C20Je4leokeFBhF+gSS/2e2QMgSWDUQaQe/ZI944sLQBX/CG9iNN1W/+W1wQTMSK/s8BjTY4Y0w0yHszibBF1XQL8YTxQI=
+	t=1784648305; cv=none; b=sgNeVLoijhCPCwSni7YE7nONsnRmwHiAgKsQx4RWIG0qyHiVKKq3iyGW/i/tUs1zQlbQEFHpP3RZoo2vmpOgYlDT9cWZNo0KmIbuBEac3eSnyNGPKpcwsMABxDQeZGKInRr7q5dkZ75o31C4POzJOIWhDacgG1V9Z8NA0Qavfr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648303; c=relaxed/simple;
-	bh=8GHy+FoPy7/hJ0CzDFD+APq/VOHRS9gPn2q736IeKGw=;
+	s=arc-20240116; t=1784648305; c=relaxed/simple;
+	bh=gshopEm5vrfZDNEIcZf7Q86QpcWpHYmJ91rqFTnp60k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nm85LBzKwG3aPsxEPcFP2s9Hd/mwNtVhXQi5dqjuOxFihPzLtqbtnyRujdasYdl0YW5332cxJjCmKZwsWnAafYMdViXtxLkmmJ4UKh8pj6SYP41XquW2zMqf+zAEMS26vugc7gEcNTFYTBe6Srmpr17xGMmTzhC75sQba2L9YqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wkur2/OV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VvKhFASU+IQBkQCMQiwEZfaWtOVNMrVGA30ZwDvrYkwkjC5LX+CeTkEZPr4IsWUSoX0eIxgM1l26ED57keCgDtRuifRybna7fCpobJhvkiufEptIcYqi+ZMBOIahzXCKLDduwz1HdF2UT6R+rVtjRs9Vm+Q8G2+lVpVJTeHR2no=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiTkMcuF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wkur2/OV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A1E1F00A3A;
-	Tue, 21 Jul 2026 15:38:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiTkMcuF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8431F000E9;
+	Tue, 21 Jul 2026 15:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648302;
-	bh=ngEtBjEnICjKo0JXFve7zFVIRcGFWkyXATpSrsqiH/0=;
+	s=korg; t=1784648304;
+	bh=uU/23pZsHULQKm6eutSOsdwYvTzV8DkLC+6nY698UQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wkur2/OVqdOlbxJVMeGsLPVmeHxWhcZ/hYAZNYXb7ax1TwQftU5VqBzt7r/Ho9x1c
-	 OQTowv25Mu4lOGDZrgYoiXZgtG5Tv31iDYIyfnw0DLpnFsTHAdUltW6LQRU0osBNz0
-	 kT2Iq7rHNeg0AWQ+7HNZJd8jtfGoPoDzqehRVDg4=
+	b=UiTkMcuFbAc+OM7YMkB/IZ3xdkepS6eCAkdsXT0KqY0SfzSeqjfPB/YRnzoJFPwXp
+	 3Rdc2biH9P8Lk/w8vji50iOB4u0bkt89WtLKHXTARMa5XdsETvX75PXQwkq2H9p2Lv
+	 W0mAP4S9sEjZKfvE9DnlJzIRhXXGd4xb5orfVJBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Brian Norris <briannorris@chromium.org>,
 	Douglas Anderson <dianders@chromium.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0148/2077] ARM: dts: rockchip: Add #{address,size}-cells to Chromium-based /firmware
-Date: Tue, 21 Jul 2026 16:57:01 +0200
-Message-ID: <20260721152556.175480246@linuxfoundation.org>
+Subject: [PATCH 7.1 0149/2077] arm64: dts: rockchip: Add #{address,size}-cells to Chromium-based /firmware
+Date: Tue, 21 Jul 2026 16:57:02 +0200
+Message-ID: <20260721152556.199456861@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,25 +55,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Brian Norris <briannorris@chromium.org>
 
-[ Upstream commit 98461edf564a35ee00a97a64f5463eaece586546 ]
+[ Upstream commit 0b74f1a037672980c477bbe6b3848fb5341eb4f1 ]
 
 Chromium/Depthcharge bootloaders may dynamically add a few device nodes
 to a system's DTB under a /firmware node. A typical DT looks something
 like the following:
 
-/ {
-	firmware {
-		ranges;
+  ## From a RK3399 Gru/Kevin Chromebook:
+  # find /sys/firmware/devicetree/base/firmware
+  /sys/firmware/devicetree/base/firmware
+  /sys/firmware/devicetree/base/firmware/coreboot
+  /sys/firmware/devicetree/base/firmware/coreboot/ram-code
+  /sys/firmware/devicetree/base/firmware/coreboot/compatible
+  /sys/firmware/devicetree/base/firmware/coreboot/board-id
+  /sys/firmware/devicetree/base/firmware/coreboot/reg
+  /sys/firmware/devicetree/base/firmware/coreboot/name
+  /sys/firmware/devicetree/base/firmware/chromeos
+  /sys/firmware/devicetree/base/firmware/chromeos/readonly-firmware-version
+  /sys/firmware/devicetree/base/firmware/chromeos/active-ec-firmware
+  /sys/firmware/devicetree/base/firmware/chromeos/firmware-version
+  /sys/firmware/devicetree/base/firmware/chromeos/nonvolatile-context-storage
+  /sys/firmware/devicetree/base/firmware/chromeos/vboot-shared-data
+  /sys/firmware/devicetree/base/firmware/chromeos/nonvolatile-context-size
+  /sys/firmware/devicetree/base/firmware/chromeos/nonvolatile-context-offset
+  /sys/firmware/devicetree/base/firmware/chromeos/hardware-id
+  /sys/firmware/devicetree/base/firmware/chromeos/compatible
+  /sys/firmware/devicetree/base/firmware/chromeos/firmware-type
+  /sys/firmware/devicetree/base/firmware/chromeos/fmap-offset
+  /sys/firmware/devicetree/base/firmware/chromeos/name
+  /sys/firmware/devicetree/base/firmware/ranges
+  /sys/firmware/devicetree/base/firmware/name
 
-		coreboot {
-			compatible = "coreboot";
-			reg = <...>;
-			...;
-		};
-	};
-};
-
-Notably, the /firmware node has an empty 'ranges', but does not have
+The /firmware node has an empty 'ranges', but does not have
 address/size-cells.
 
 Commit 6e5773d52f4a ("of/address: Fix WARN when attempting translating
@@ -98,33 +112,34 @@ Closes: https://lore.kernel.org/all/aeKlYzTiL0OB1y3g@google.com/
 Fixes: 6e5773d52f4a ("of/address: Fix WARN when attempting translating non-translatable addresses")
 Signed-off-by: Brian Norris <briannorris@chromium.org>
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
-[On RK288-based Chromebooks there is no real other way than to load the
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+[On RK3399-based Chromebooks there is no real other way than to load the
  DTB  together with its kernel when running a mainline kernel and as the
  whole line is EOL, there also won't be any updates to the bootloader that
  could fix that issue there.]
-Link: https://patch.msgid.link/20260428200712.2660635-3-briannorris@chromium.org
+Link: https://patch.msgid.link/20260428200712.2660635-2-briannorris@chromium.org
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/rockchip/rk3288-veyron.dtsi | 5 +++++
+ arch/arm64/boot/dts/rockchip/rk3399-gru.dtsi | 5 +++++
  1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm/boot/dts/rockchip/rk3288-veyron.dtsi b/arch/arm/boot/dts/rockchip/rk3288-veyron.dtsi
-index 2d6cf08d00f906..ca8e8e73507819 100644
---- a/arch/arm/boot/dts/rockchip/rk3288-veyron.dtsi
-+++ b/arch/arm/boot/dts/rockchip/rk3288-veyron.dtsi
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-gru.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-gru.dtsi
+index 7eca1da78cffab..2f9e39671efc05 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-gru.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399-gru.dtsi
 @@ -18,6 +18,11 @@ chosen {
  		stdout-path = "serial2:115200n8";
  	};
  
 +	firmware {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
++		#address-cells = <2>;
++		#size-cells = <2>;
 +	};
 +
  	/*
- 	 * The default coreboot on veyron devices ignores memory@0 nodes
- 	 * and would instead create another memory node.
+ 	 * Power Tree
+ 	 *
 -- 
 2.53.0
 
