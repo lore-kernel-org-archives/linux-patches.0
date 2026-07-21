@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD60746A5F7;
-	Tue, 21 Jul 2026 19:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53ED446EF60;
+	Tue, 21 Jul 2026 19:53:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663595; cv=none; b=OyKlWKDgd29PHJnAQS+iGgQgFwY6wInnZ8j1Q3sKc11GonMmZ3z7M8+IazuaqczzcOREvpbZBTFZtEUvY71jgErl4A+QQkDndl7Xt4MW3s7scgrcx95Ts5U8OX+GR5J7gFH5Q7d53KJI333/j57/TZObnc3ZypXk9bcOmsNKGz0=
+	t=1784663598; cv=none; b=fKC15aWCsi7IYCLBiviPRbCX2Yb1CwG45duIChUzUaG+yZv2PxKuFtvyJfUqn72bMNad1CGK7X3WatRsvzKtuyA4fxAC30dMFYwV4jCaELVIS8R+2fwf/4SBkmCDixEE/nUhSyxmdPSgAA0RfsEnHWyQUbH7SyV1INnR3X+ygi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663595; c=relaxed/simple;
-	bh=Ggj+v0KMRA2TjV8NuuzQ1UPHOJKM8f/9g9WeOsAlrs8=;
+	s=arc-20240116; t=1784663598; c=relaxed/simple;
+	bh=F2jPucXL3CW/yJicYIVZLVYyjwvPgYdyzP4KR1jem40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QFCW5IU33/S6rK9p98Uj1y+ryLJsgV4NfdwuFRIQ37UyhEL+RfxSnmCn7O83WeGUfiVCszuMLpzOMHRLcEwXP0JaEpcWrNCrGGzK4XJtZgdDZZcknS1PEPrRdc3bGID29+IXfMXM2r77ExJKgGJ+vM4hPLHs9ShTvzHzTnvpEnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wqc49+5q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZnAS3k/deOb1qZq8/mracBznEBk+xM4uE8s/gIJcqe/Q/TiD6EJhicbXdK8T870+3xPSLbg4fAdOUmwqk7fwr2LqkQtdl6kWpqPE0yWosPoSeTuzmQoEq+VUoSai7GfuAwddXasdz1D5oKCNt61AJBo7x81GYD2PTsTF1Uc009M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLuVjcu+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wqc49+5q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5ED1F000E9;
-	Tue, 21 Jul 2026 19:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLuVjcu+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F441F000E9;
+	Tue, 21 Jul 2026 19:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663594;
-	bh=nlw3dt74C0m0jc3r/YKNW2LAXUoZ7sWpZuexIsPrJaw=;
+	s=korg; t=1784663597;
+	bh=5AvswsWvgFSXXr8PQW6aujjkptz0LI2b2BB8Hdcl03o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wqc49+5q1NfLueUnuTTTTDKUjy7jJ0t7080UjhGAPSOPRGEdNEEKDbhoTKRJmfJt9
-	 HxkFfimw6UZJDRcmZEwfDz03pN8udlajBU+e+UMKfOiGZHrs5KeKEOO6y9FDn3qqNn
-	 LAOu/Ml1aGO89s6Myxnif6r1ZgZliumGYEI6O5Hg=
+	b=oLuVjcu+VfnCQPtpsKy9CMThmVVBZAKB1WWLgrNYiZb10JScmWEhZNukDxSTieh3w
+	 3t0HtTLE0D+pb60g+2BcKh8eTZ9R6j39gtxAQPVDfWTpwmx4E1BHKutlMMwkts8WkU
+	 4hYGd9IW3owkBPBbT8mKgMK1n5yW5juhPKBn8FZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.12 0875/1276] mfd: sm501: Fix reference leak on failed device registration
-Date: Tue, 21 Jul 2026 17:21:58 +0200
-Message-ID: <20260721152505.634053005@linuxfoundation.org>
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 6.12 0884/1276] batman-adv: dat: acquire ARP hw source only after skb realloc
+Date: Tue, 21 Jul 2026 17:22:07 +0200
+Message-ID: <20260721152505.833019860@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,52 +49,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit 8c2f0b42fc252e1bf1c7746447091a468e784ca1 upstream.
+commit 48067b2ae4504500a7093d9e1e16b42e70330480 upstream.
 
-When platform_device_register() fails in sm501_register_device(), the
-embedded struct device in pdev has already been initialized by
-device_initialize(), but the failure path only reports the error and
-returns without dropping the device reference for the current platform
-device:
+The pskb_may_pull() called by batadv_get_vid() could reallocate the buffer
+behind the skb. Variables which were pointing to the old buffer need to be
+reassigned to avoid an use-after-free.
 
-  sm501_register_device()
-    -> platform_device_register(pdev)
-       -> device_initialize(&pdev->dev)
-       -> setup_pdev_dma_masks(pdev)
-       -> platform_device_add(pdev)
-
-This leads to a reference leak when platform_device_register() fails.
-Fix this by calling platform_device_put() before returning the error.
-
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
-
-Fixes: b6d6454fdb66f ("[PATCH] mfd: SM501 core driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260415162627.3558789-1-lgs201920130244@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: b61ec31c8575 ("batman-adv: Snoop DHCPACKs for DAT")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/sm501.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/batman-adv/distributed-arp-table.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/mfd/sm501.c
-+++ b/drivers/mfd/sm501.c
-@@ -747,9 +747,11 @@ static int sm501_register_device(struct
- 	if (ret >= 0) {
- 		dev_dbg(sm->dev, "registered %s\n", pdev->name);
- 		list_add_tail(&smdev->list, &sm->devices);
--	} else
-+	} else {
- 		dev_err(sm->dev, "error registering %s (%d)\n",
- 			pdev->name, ret);
-+		platform_device_put(pdev);
-+	}
+--- a/net/batman-adv/distributed-arp-table.c
++++ b/net/batman-adv/distributed-arp-table.c
+@@ -1757,6 +1757,7 @@ void batadv_dat_snoop_incoming_dhcp_ack(
+ 	struct ethhdr *ethhdr;
+ 	__be32 ip_src, yiaddr;
+ 	unsigned short vid;
++	int hdr_size_tmp;
+ 	__be16 proto;
+ 	u8 *hw_src;
  
- 	return ret;
- }
+@@ -1773,8 +1774,10 @@ void batadv_dat_snoop_incoming_dhcp_ack(
+ 	if (!batadv_dat_check_dhcp_ack(skb, proto, &ip_src, chaddr, &yiaddr))
+ 		return;
+ 
++	hdr_size_tmp = hdr_size;
++	vid = batadv_dat_get_vid(skb, &hdr_size_tmp);
++	ethhdr = (struct ethhdr *)(skb->data + hdr_size);
+ 	hw_src = ethhdr->h_source;
+-	vid = batadv_dat_get_vid(skb, &hdr_size);
+ 
+ 	batadv_dat_entry_add(bat_priv, yiaddr, chaddr, vid);
+ 	batadv_dat_entry_add(bat_priv, ip_src, hw_src, vid);
 
 
