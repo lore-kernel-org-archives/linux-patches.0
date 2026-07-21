@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4ED443C7AE;
-	Tue, 21 Jul 2026 21:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E50415F10;
+	Tue, 21 Jul 2026 21:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669848; cv=none; b=QWT2c7J1PEg9cuOhE4HpMPRyTZBCXxZ9lZ7lfieOEz9c2qNGqm10/3vtkK3Gki1VAoD2JU/MNJ1TkhzvUokK70iMUvBEVu7m9cZ88z0F/py2gW0+6H5wZPYo9oyvKSA38KD9429HLXE/JF3PlqUqgYtOEzuBpvdPDo2T3hhZ0do=
+	t=1784669850; cv=none; b=QLBnLsHcOBaG1MuNd8mCay6DuuWvbrIX3gv7tBhlvCHDn5rhz2HrjC8HXeReYVcv9uHJGSkEPy+zP384Rf/kvQ6Cuv8eQpk+hArrh1Qd3f2GlQFPD2UD37Tt52asvFr1RESV1tR4Zcy56U4GcYsFvpsUAFmCjZpPxLLVAGbBbWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669848; c=relaxed/simple;
-	bh=DQrSAAzkb63H4tsoF2X8yhdoCIH4hb86jACb2RdsVc4=;
+	s=arc-20240116; t=1784669850; c=relaxed/simple;
+	bh=E1i3us7jY9RmLYzqhxRnkEL/o2GYSjQxrY753S06mj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sxWi3uPP7cs/K0RlrDQqPJt3iVcImi69o+08yRYCBW0lC+Xyo6pKU3Ll2TACYUo4zwi2oD5L2IX9zrncmzMkzpuJaZPvf1gINO6QCm1li7HtY5IO85gHbwcRYJBQV8zG4K+icQfxbQReqTPWv1zmWZc35lpgKAyhVD04VJRAK9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSUfy73e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZZ5B3A5AQ/nkZcNF/DPPKXRBgDTRHLity329KhFzbIVrwKLN/JPOAWR8HCerP9x3fYjQ49ISjViU9tSG7FzfX4hyTI/4ttqIo7HGI3OiK4uMUlCnqCHUn+pjtPAJqDMzfEgrZMWgnkAr2EKghqi7aZ3CPKcMYyvEFNfrGzvhtdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZoFH5XrP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSUfy73e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147011F000E9;
-	Tue, 21 Jul 2026 21:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZoFH5XrP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42911F000E9;
+	Tue, 21 Jul 2026 21:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669846;
-	bh=QnGO8Nb5+lDW1fl5G2mKH9rxc2P2pbuEQ5Dpt28V3vE=;
+	s=korg; t=1784669849;
+	bh=583rVlwhl8vRL8b3bKziclpyXKTVKrmlfHEWcuZecC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MSUfy73euaBOJvR3HRPuvzVPxboFCG+AuwcjERMbdvzKObsjsNXaNKt+T6sdF/8Rg
-	 1pFuX2GNjzyhSd5NDTBj4kJ4hJ15ftwsoRtzMPkaWthK+yvHa4+3AEo9i9pw2SqQ+1
-	 hEzHDMbLjzRTmixIYN4wGOj625wgsjNhWCy9cffQ=
+	b=ZoFH5XrP4VZ3R8FwrhbHn3gd163QcFoIbfplhSGEPrXe9ESEBvXztKM4MtoC3lVJW
+	 GPlfGzsz/vzACCn15lIoHRx9dK62JSY1u/HHRCnZZQ5T9qeTaJbl3uku2ZkflM4cpj
+	 9CGKOASvA2fNevtSTbbiiZKIYziqHaShySGXME+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <swboyd@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
+	Timur Tabi <ttabi@nvidia.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0710/1067] regulator: core: Make regulator_lock_two() logic easier to follow
-Date: Tue, 21 Jul 2026 17:21:51 +0200
-Message-ID: <20260721152440.475048871@linuxfoundation.org>
+Subject: [PATCH 6.1 0711/1067] regulator: core: regulator_lock_two() should test for EDEADLK not EDEADLOCK
+Date: Tue, 21 Jul 2026 17:21:52 +0200
+Message-ID: <20260721152440.496533117@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,76 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Timur Tabi <ttabi@nvidia.com>
 
-[ Upstream commit 37473397b852f556d8b9428ccbfd51886037842d ]
+[ Upstream commit d38f8bd771c4999b797d7074b348cf201414bd34 ]
 
-The regulator_lock_two() function could be made clearer in the case of
-lock contention by having a local variable for each of the held and
-contended locks. Let's do that. At the same time, let's use the swap()
-function instead of open coding it.
+Compare against -EDEADLK, which is what ww_mutex_lock() actually
+returns and what every other deadlock check in this file already uses.
 
-This change is expected to be a no-op and simply improves code
-clarity.
+Function regulator_lock_two() acquires two regulators via
+regulator_lock_nested() -> ww_mutex_lock().  On contention,
+ww_mutex_lock() returns -EDEADLK, which is the caller's signal to drop
+the lock it holds and retry the acquisition in the canonical order.
 
-Suggested-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/CAE-0n53Eb1BeDPmjBycXUaQAF4ppiAM6UDWje_jiB9GAmR8MMw@mail.gmail.com
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20230413173359.1.I1ae92b25689bd6579952e6d458b79f5f8054a0c9@changeid
+However, regulator_lock_two() tests the return value against -EDEADLOCK
+rather than -EDEADLK.  On most architectures, EDEADLK and EDEADLOCK are
+the same value, so the comparison happens to be correct and the bug is
+invisible.  But on MIPS, SPARC, and PowerPC, those two errors have
+different values.  The test is wrong: a genuine -EDEADLK backoff no
+longer matches -EDEADLOCK, so instead of unlocking and retrying, the
+code falls into WARN_ON(ret) and returns with only one of the two
+regulators locked.
+
+In practice, this is a bug only on MIPS, because the regulator core is
+not built or used on the other two platforms.
+
+In general, EDEADLK is preferred over EDEADLOCK for new code.
+
+Fixes: cba6cfdc7c3f ("regulator: core: Avoid lockdep reports when resolving supplies")
+Signed-off-by: Timur Tabi <ttabi@nvidia.com>
+Link: https://patch.msgid.link/20260708235722.2953579-1-ttabi@nvidia.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: d38f8bd771c4 ("regulator: core: regulator_lock_two() should test for EDEADLK not EDEADLOCK")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 31 ++++++++++++-------------------
- 1 file changed, 12 insertions(+), 19 deletions(-)
+ drivers/regulator/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index d55a80f05d31ab..2b8e210daa6a3d 100644
+index 2b8e210daa6a3d..ae1a52e1842453 100644
 --- a/drivers/regulator/core.c
 +++ b/drivers/regulator/core.c
-@@ -219,7 +219,7 @@ static void regulator_lock_two(struct regulator_dev *rdev1,
- 			       struct regulator_dev *rdev2,
- 			       struct ww_acquire_ctx *ww_ctx)
- {
--	struct regulator_dev *tmp;
-+	struct regulator_dev *held, *contended;
- 	int ret;
- 
- 	ww_acquire_init(ww_ctx, &regulator_ww_class);
-@@ -233,25 +233,18 @@ static void regulator_lock_two(struct regulator_dev *rdev1,
+@@ -228,7 +228,7 @@ static void regulator_lock_two(struct regulator_dev *rdev1,
+ 	ret = regulator_lock_nested(rdev1, ww_ctx);
+ 	WARN_ON(ret);
+ 	ret = regulator_lock_nested(rdev2, ww_ctx);
+-	if (ret != -EDEADLOCK) {
++	if (ret != -EDEADLK) {
+ 		WARN_ON(ret);
  		goto exit;
  	}
+@@ -244,7 +244,7 @@ static void regulator_lock_two(struct regulator_dev *rdev1,
+ 		swap(held, contended);
+ 		ret = regulator_lock_nested(contended, ww_ctx);
  
-+	held = rdev1;
-+	contended = rdev2;
- 	while (true) {
--		/*
--		 * Start of loop: rdev1 was locked and rdev2 was contended.
--		 * Need to unlock rdev1, slowly lock rdev2, then try rdev1
--		 * again.
--		 */
--		regulator_unlock(rdev1);
--
--		ww_mutex_lock_slow(&rdev2->mutex, ww_ctx);
--		rdev2->ref_cnt++;
--		rdev2->mutex_owner = current;
--		ret = regulator_lock_nested(rdev1, ww_ctx);
--
--		if (ret == -EDEADLOCK) {
--			/* More contention; swap which needs to be slow */
--			tmp = rdev1;
--			rdev1 = rdev2;
--			rdev2 = tmp;
--		} else {
-+		regulator_unlock(held);
-+
-+		ww_mutex_lock_slow(&contended->mutex, ww_ctx);
-+		contended->ref_cnt++;
-+		contended->mutex_owner = current;
-+		swap(held, contended);
-+		ret = regulator_lock_nested(contended, ww_ctx);
-+
-+		if (ret != -EDEADLOCK) {
+-		if (ret != -EDEADLOCK) {
++		if (ret != -EDEADLK) {
  			WARN_ON(ret);
  			break;
  		}
