@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B59415F10;
-	Tue, 21 Jul 2026 21:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1CE35C6B3;
+	Tue, 21 Jul 2026 21:48:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670499; cv=none; b=g5KAbOAep9bN3BBfO5olwStmoJuOOoT2iDDI11TpDKrKxCY/HmZs4lZte2n0iU3ZJqRGMC7FCzwEueu8v/O97lW6nCp0Pj/r13LNf5I0QPA6VWUwaSSw/hMZowBTGF+xEQ6ehqoULx06svf4NKyorWrqgtWjbbpO510o35g2d14=
+	t=1784670502; cv=none; b=b+dZgNxEJExRii9uk9qS5Tp8oF6FFzpVhhq+8wJ4AywyEc+oKPdui/BGPiIvdagmsVbpZVNnAC864Nbui7QnR7GMSJD0jVzCEZaD5YB7RRohYpv5GbNQJLknLfhwnyddSUz/tZqw+Nj9DeKPUzxw8dC3ZqY7TmMCjkI3socqqnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670499; c=relaxed/simple;
-	bh=D9TCDYvN2/Jq0o6oYlsw4ZUGBb09Km0BI9qGdwVVw68=;
+	s=arc-20240116; t=1784670502; c=relaxed/simple;
+	bh=pEOtKc9XznjEXNd4bl2G3QOxsNiKDd7jyrsLjpVclto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AbiCZkZobKqGHJov+NIbC1CHqFsND02jxctci9xP45b7Tke2/PUtz3d8vt3xLkHtkhoP6uVKqq6I47dJrgdMvjw4G/CQlqaE9Q+vmAjY5zantd1BDGcdOhOpeD3WDiMo+IQaw/HD6tj6KKjIKInOdqGqrUHfVtuonlXY23bc3ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DIr0gqfU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o7nSR+d7vC12F/hzOt2UTxBaKtLrIJTjKATxCYMfezbv2Pvvlao86tI0Jivfk9d7uc9J/lctPAER5nrEiCLvbLE/SFcfN8mbGuk/yvmyln5JPPysIe7ZnrPyjZ/ZThJiKplJkcc/Vc+qtZRiczboH6ZWgeL+nPdxYR2Gc7P4Qes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PD7rwKzt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DIr0gqfU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148131F000E9;
-	Tue, 21 Jul 2026 21:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PD7rwKzt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94AF1F000E9;
+	Tue, 21 Jul 2026 21:48:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670497;
-	bh=943GK3A3T1sd1XjaH9nqR7hi40LDy3zzC9L2oItnAUk=;
+	s=korg; t=1784670500;
+	bh=h6Jvcdcf+BWl6Sqkete9ewI0C6aISLU8YC2PEWMqvjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DIr0gqfU+f/3UXSeyvyFiUd5s0re3zzAnCGmZ9VKpeVKMi/Z+VtmKeeqSYEUfJBeG
-	 dBgkDxU088RMBi9Y/QF9Y89t7zY1LnHEk/7Su+g1jbcb3Y2mikiIxb03iJb6xsf0QZ
-	 0cU6YoPeNBpFcLNkKACyK6wjruoUURCeyp0k/Rtk=
+	b=PD7rwKzt8OX6jr2KGS6J/mkzL/loup/3Zk9TDxyKpGeHlKYMbbiguyZFB+KV+dsO5
+	 atV8EsvvIklQTy7T7v7TwvfMfx/RnydwtkDLzrOFafTzYseJL05e6lSkQS5epPArf1
+	 udGjw4fHVJK3vsyBeH8b2p5gIj4PcEy+OhfM7hKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Williamson <alex.williamson@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Alex Williamson <alex@shazbot.org>,
+	Mahesh Vaidya <mahesh.vaidya@altera.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	"Subhransu S. Prusty" <subhransu.sekhar.prusty@altera.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0955/1067] vfio/pci: Latch disable_idle_d3 per device
-Date: Tue, 21 Jul 2026 17:25:56 +0200
-Message-ID: <20260721152445.904728883@linuxfoundation.org>
+Subject: [PATCH 6.1 0956/1067] PCI: altera: Fix resource leaks on probe failure
+Date: Tue, 21 Jul 2026 17:25:57 +0200
+Message-ID: <20260721152445.928523254@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,151 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Williamson <alex.williamson@nvidia.com>
+From: Mahesh Vaidya <mahesh.vaidya@altera.com>
 
-[ Upstream commit 4575e9aac5336d1365138c0284773bf8da4b1fa3 ]
+[ Upstream commit 7a94138caeb27f3c49c1dbd93bf422098925bb28 ]
 
-When disable_idle_d3 was introduced in vfio-pci, it directly manipulated
-the device power state with pci_set_power_state().  There were no
-refcounts to maintain or balanced operations, we could unconditionally
-bring the device to D0 and conditionally move it to D3hot.  Therefore
-the module parameter was made writable.
+The chained IRQ handler is set during probe, but is only removed during the
+driver remove(). If pci_host_probe() fails, the handler and INTx IRQ
+domain remain set even though the devm-managed host bridge storage
+containing struct altera_pcie will be released, leaving the handler with
+a stale data pointer.
 
-Later, in commit c61302aa48f7 ("vfio/pci: Move module parameters to
-vfio_pci.c"), as part of the vfio-pci-core split, the writable aspect
-of the module parameter was nullified.  The parameter value could still
-be changed through sysfs, but the vfio-pci driver latched the values
-into vfio-pci-core globals at module init.  Loading the vfio-pci module,
-or unloading and reloading, with non-default or different values could
-change the globals relative to existing devices bound to vfio-pci
-variant drivers.
+Interrupts are also enabled before pci_host_probe() is called. If probe
+fails after that point, the controller interrupt source should be disabled
+before the chained handler and INTx domain are removed.
 
-Runtime PM was introduced in commit 7ab5e10eda02 ("vfio/pci: Move the
-unused device into low power state with runtime PM"), which marks the
-point where power states became refcounted.  PM get and put operations
-need to be balanced, but the same module operations noted above can
-change the global variables relative to those devices already bound to
-vfio-pci variant drivers.  This introduces a window where PM operations
-can now become unbalanced.
+So set the chained handler only after the INTx domain has been created.
+Disable controller interrupts during IRQ teardown, and tear the IRQ setup
+down if pci_host_probe() fails.
 
-To resolve this with a narrow footprint for stable backports, the
-disable_idle_d3 flag is latched into the vfio_pci_core_device at the
-time of initialization, such that the device always operates with a
-consistent value.
-
-NB. vfio_pci_dev_set_try_reset() now unconditionally raises the
-runtime PM usage count around bus reset to account for disable_idle_d3
-becoming a per-device rather than global flag.  When this flag is set,
-the additional get/put pair is harmless and allows continued use of the
-shared vfio_pci_dev_set_pm_runtime_get() helper.
-
-Fixes: 7ab5e10eda02 ("vfio/pci: Move the unused device into low power state with runtime PM")
+Fixes: c63aed7334c2 ("PCI: altera: Use pci_host_probe() to register host")
+Signed-off-by: Mahesh Vaidya <mahesh.vaidya@altera.com>
+[mani: commit log]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Subhransu S. Prusty <subhransu.sekhar.prusty@altera.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20260615191241.688297-2-alex.williamson@nvidia.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+Link: https://patch.msgid.link/20260430204330.3121003-3-mahesh.vaidya@altera.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/pci/vfio_pci_core.c |   19 ++++++++++---------
- include/linux/vfio_pci_core.h    |    1 +
- 2 files changed, 11 insertions(+), 9 deletions(-)
+ drivers/pci/controller/pcie-altera.c |   28 ++++++++++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
 
---- a/drivers/vfio/pci/vfio_pci_core.c
-+++ b/drivers/vfio/pci/vfio_pci_core.c
-@@ -472,7 +472,7 @@ int vfio_pci_core_enable(struct vfio_pci
- 	u16 cmd;
- 	u8 msix_pos;
- 
--	if (!disable_idle_d3) {
-+	if (!vdev->disable_idle_d3) {
- 		ret = pm_runtime_resume_and_get(&pdev->dev);
- 		if (ret < 0)
- 			return ret;
-@@ -547,7 +547,7 @@ out_free_state:
- out_disable_device:
- 	pci_disable_device(pdev);
- out_power:
--	if (!disable_idle_d3)
-+	if (!vdev->disable_idle_d3)
- 		pm_runtime_put(&pdev->dev);
- 	return ret;
+--- a/drivers/pci/controller/pcie-altera.c
++++ b/drivers/pci/controller/pcie-altera.c
+@@ -681,8 +681,18 @@ static int altera_pcie_init_irq_domain(s
+ 	return 0;
  }
-@@ -674,7 +674,7 @@ out:
- 	vfio_pci_dev_set_try_reset(vdev->vdev.dev_set);
  
- 	/* Put the pm-runtime usage counter acquired during enable */
--	if (!disable_idle_d3)
-+	if (!vdev->disable_idle_d3)
- 		pm_runtime_put(&pdev->dev);
- }
- EXPORT_SYMBOL_GPL(vfio_pci_core_disable);
-@@ -2091,6 +2091,8 @@ int vfio_pci_core_init_dev(struct vfio_d
- 	INIT_LIST_HEAD(&vdev->sriov_pfs_item);
- 	init_rwsem(&vdev->memory_lock);
- 
-+	vdev->disable_idle_d3 = disable_idle_d3;
++static void altera_pcie_disable_irq(struct altera_pcie *pcie)
++{
++	if (pcie->pcie_data->version == ALTERA_PCIE_V1 ||
++	    pcie->pcie_data->version == ALTERA_PCIE_V2) {
++		/* Disable all P2A interrupts */
++		cra_writel(pcie, 0, P2A_INT_ENABLE);
++	}
++}
 +
+ static void altera_pcie_irq_teardown(struct altera_pcie *pcie)
+ {
++	altera_pcie_disable_irq(pcie);
+ 	irq_set_chained_handler_and_data(pcie->irq, NULL, NULL);
+ 	irq_domain_remove(pcie->irq_domain);
+ }
+@@ -707,7 +717,6 @@ static int altera_pcie_parse_dt(struct a
+ 	if (pcie->irq < 0)
+ 		return pcie->irq;
+ 
+-	irq_set_chained_handler_and_data(pcie->irq, altera_pcie_isr, pcie);
  	return 0;
  }
- EXPORT_SYMBOL_GPL(vfio_pci_core_init_dev);
-@@ -2183,7 +2185,7 @@ int vfio_pci_core_register_device(struct
  
- 	dev->driver->pm = &vfio_pci_core_pm_ops;
- 	pm_runtime_allow(dev);
--	if (!disable_idle_d3)
-+	if (!vdev->disable_idle_d3)
- 		pm_runtime_put(dev);
- 
- 	ret = vfio_register_group_dev(&vdev->vdev);
-@@ -2192,7 +2194,7 @@ int vfio_pci_core_register_device(struct
- 	return 0;
- 
- out_power:
--	if (!disable_idle_d3)
-+	if (!vdev->disable_idle_d3)
- 		pm_runtime_get_noresume(dev);
- 
- 	pm_runtime_forbid(dev);
-@@ -2212,7 +2214,7 @@ void vfio_pci_core_unregister_device(str
- 	vfio_pci_vf_uninit(vdev);
- 	vfio_pci_vga_uninit(vdev);
- 
--	if (!disable_idle_d3)
-+	if (!vdev->disable_idle_d3)
- 		pm_runtime_get_noresume(&vdev->pdev->dev);
- 
- 	pm_runtime_forbid(&vdev->pdev->dev);
-@@ -2527,7 +2529,7 @@ static void vfio_pci_dev_set_try_reset(s
- 	 * state. Increment the usage count for all the devices in the dev_set
- 	 * before reset and decrement the same after reset.
- 	 */
--	if (!disable_idle_d3 && vfio_pci_dev_set_pm_runtime_get(dev_set))
-+	if (vfio_pci_dev_set_pm_runtime_get(dev_set))
- 		return;
- 
- 	if (!pci_reset_bus(pdev))
-@@ -2537,8 +2539,7 @@ static void vfio_pci_dev_set_try_reset(s
- 		if (reset_done)
- 			cur->needs_reset = false;
- 
--		if (!disable_idle_d3)
--			pm_runtime_put(&cur->pdev->dev);
-+		pm_runtime_put(&cur->pdev->dev);
+@@ -792,6 +801,12 @@ static int altera_pcie_probe(struct plat
+ 		return ret;
  	}
+ 
++	/*
++	 * The chained handler uses pcie->irq_domain, so set it only after the
++	 * INTx domain has been created.
++	 */
++	irq_set_chained_handler_and_data(pcie->irq, altera_pcie_isr, pcie);
++
+ 	/* clear all interrupts */
+ 	cra_writel(pcie, P2A_INT_STS_ALL, P2A_INT_STATUS);
+ 	/* enable all interrupts */
+@@ -802,7 +817,16 @@ static int altera_pcie_probe(struct plat
+ 	bridge->busnr = pcie->root_bus_nr;
+ 	bridge->ops = &altera_pcie_ops;
+ 
+-	return pci_host_probe(bridge);
++	ret = pci_host_probe(bridge);
++	if (ret)
++		goto err_teardown_irq;
++
++	return 0;
++
++err_teardown_irq:
++	altera_pcie_irq_teardown(pcie);
++
++	return ret;
  }
  
---- a/include/linux/vfio_pci_core.h
-+++ b/include/linux/vfio_pci_core.h
-@@ -80,6 +80,7 @@ struct vfio_pci_core_device {
- 	bool			needs_pm_restore:1;
- 	bool			pm_intx_masked:1;
- 	bool			pm_runtime_engaged:1;
-+	bool			disable_idle_d3:1;
- 	bool			sriov_active;
- 	struct pci_saved_state	*pci_saved_state;
- 	struct pci_saved_state	*pm_save;
+ static int altera_pcie_remove(struct platform_device *pdev)
 
 
