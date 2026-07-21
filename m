@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBFB544AB91;
-	Tue, 21 Jul 2026 22:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9129135C694;
+	Tue, 21 Jul 2026 22:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673231; cv=none; b=sl5M0actYoz1IL3CHweaSt76BeurN+5+MP0qH1c+fFa4vDbts9Lkswg7aeir8VEHQfzRnpGbMC3oSYJRlxnrdSA2HQrQzXR4uc5WkYBYd/oLGeVS3xe61I/bGkD7Lhf95aVzgJZakylbbVi66wifr7B3mBFEuMP5gSlQqycPCLo=
+	t=1784673233; cv=none; b=ktrxKZ9sNsVDK9apWPawjPipgH0AWAwnuvGWBYrNy4D02jZvIJcL861euYGJ2hUo39r4TQGDmjRDCqG9FP63XvbQiTXRqalnTrv0AaezkLGLz88JyvWqAqmCnVCYPCnUqlzHmn/qUVnzywHMC0R/c83WlZQl8N+JarrO9nuHVo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673231; c=relaxed/simple;
-	bh=MMEAGLWkdyVUW5e53QQoaiAj+qLIfaulAFPRDTCLm1k=;
+	s=arc-20240116; t=1784673233; c=relaxed/simple;
+	bh=H7rRhI3xdk3Qjx9y2S/UwjNjNYXpRNHmu5xUI1jSQ8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c+AH5ke2Pru/vRLjoKD3J5E/PCWqBo4rMO91SRNGsKmarFh6k2Ivy+8NexyaEpYJyNkh6n/O8jGTn7PtMbI0Jq9uAXQtOdhcgwpp5JvdC6ADgUsJfhbPPtW4FCHH/HSlM3QwausHEr8Kb4xn/T0BKExwO7Vx6quS6j1E75DuZyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPvsdbLC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hy7MqhbY4XLZTS+k/jLDGC5zFnLYxYtmA3j1LmGWNpXCtGx+pG8zxSX3dvEcBq9qEGNJ1j39o+Uoa4R6olo/FuwGVRfSycNVL3AA68hyVV68iFOXW/RmOKNTzK2tSrh3lyw/0yT3DbYZxIPU8hJm8NI47z3JzcKjbI5LmaSo4GE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTrXIhpY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPvsdbLC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57CF21F000E9;
-	Tue, 21 Jul 2026 22:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTrXIhpY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E771F000E9;
+	Tue, 21 Jul 2026 22:33:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673229;
-	bh=xJvVz4U/BRwb78nrqoZ2SdIhQy7CyUkH57myt7ceNuo=;
+	s=korg; t=1784673232;
+	bh=BSvI8UEYC+BBCUbAkT0WosJct5iZ1hckN0BDBHX1ZZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pPvsdbLCT4VvnLwy8ILSq8QCe/paryIzXR0lpKjf4Q/dxk84VSPtatn59dIqH4P/4
-	 BuGMOWk2v5JtL7TWZpHCyuhChR6Z7kEd/fiYjDcSXAapfMoEVCmi9Gz2OI97htOV9s
-	 xv8EpLGLnMYXAqTL8TpH/SnYLHre03Cj4cbJI0kc=
+	b=QTrXIhpYbqkWTJ0OVUpRnOKFstJfTBEfDpkWxNJl2IyhjcPSwrwswRBPdBYd5R2f3
+	 pUfSwAfCkyVZBcc6EJMeEbP4e6VYNojtES0Ng8uQsHJ3x10NMUtaa/AD1FHTA92RpA
+	 LpFmHkAsWy2b4pOazBhUEC2pIzwC/5wV2rBAfEPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Stepan Ionichev <sozdayvek@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 5.10 040/699] iio: event: Fix event FIFO reset race
-Date: Tue, 21 Jul 2026 17:16:39 +0200
-Message-ID: <20260721152356.615245075@linuxfoundation.org>
+Subject: [PATCH 5.10 041/699] iio: gyro: bmg160: bail out when bandwidth/filter is not in table
+Date: Tue, 21 Jul 2026 17:16:40 +0200
+Message-ID: <20260721152356.637411143@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -46,80 +46,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lars-Peter Clausen <lars@metafoo.de>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-commit af791d295737ea6b6ff2c8d8488462a49c14af01 upstream.
+commit 8320c77e67382d5d55d77043a5f60a867d408a2b upstream.
 
-`iio_event_getfd()` creates the event file descriptor with
-`anon_inode_getfd()`, which allocates a new fd, creates the anonymous
-file and installs it in the process fd table before returning to the
-caller.
+bmg160_get_filter() walks bmg160_samp_freq_table[] looking for the entry
+matching the bw_bits value read from the chip:
 
-The IIO code resets the event FIFO after `anon_inode_getfd()` has returned,
-but before `IIO_GET_EVENT_FD_IOCTL` has copied the fd number to userspace.
-But since fd tables are shared between threads, another thread can guess
-the newly allocated fd number and issue a `read()` on it as soon as the fd
-has been installed.
+	for (i = 0; i < ARRAY_SIZE(bmg160_samp_freq_table); ++i) {
+		if (bmg160_samp_freq_table[i].bw_bits == bw_bits)
+			break;
+	}
+	*val = bmg160_samp_freq_table[i].filter;
 
-This means the `kfifo_to_user()` in `iio_event_chrdev_read()` can run in
-parallel with the `kfifo_reset_out()` in `iio_event_getfd()`.
+If no entry matches, i ends up equal to the array size and the next line
+reads one slot past the end. bmg160_set_filter() has the same shape, driven
+by 'val' instead of bw_bits.
 
-The kfifo documentation says that `kfifo_reset_out()` is only safe when it
-is called from the reader thread and there is only one concurrent reader.
-Otherwise it is dangerous and must be handled in the same way as
-`kfifo_reset()`.
+smatch flags both:
 
-If that happens, `kfifo_to_user()` can advance the FIFO `out` index based
-on state from before the reset, after the reset has already moved the `out`
-index to the current `in` index. That can leave the FIFO with an `out`
-index past the `in` index. A later `read()` can then see an underflowed
-FIFO length and copy more data than the event FIFO buffer contains. This
-can result in an out-of-bounds read and leak adjacent kernel memory to
-userspace.
+  drivers/iio/gyro/bmg160_core.c:204 bmg160_get_filter() error:
+  buffer overflow 'bmg160_samp_freq_table' 7 <= 7
+  drivers/iio/gyro/bmg160_core.c:222 bmg160_set_filter() error:
+  buffer overflow 'bmg160_samp_freq_table' 7 <= 7
 
-Move the FIFO reset before `anon_inode_getfd()`. At that point the event fd is
-marked busy, but the new fd has not been installed yet, so userspace cannot
-access it while the FIFO is reset.
+Return -EINVAL when no entry matches.
 
-Fixes: b91accafbb10 ("iio:event: Fix and cleanup locking")
-Reported-by: Codex:gpt-5.5
-Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+The set_filter() path is reachable from userspace via the sysfs
+in_anglvel_filter_low_pass_3db_frequency interface, so userspace can
+trivially trigger the out-of-bounds read with a value that is not in
+bmg160_samp_freq_table[].filter.
+
+Fixes: 22b46c45fb9b ("iio:gyro:bmg160 Gyro Sensor driver")
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/industrialio-event.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/iio/gyro/bmg160_core.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/iio/industrialio-event.c
-+++ b/drivers/iio/industrialio-event.c
-@@ -205,6 +205,8 @@ int iio_event_getfd(struct iio_dev *indi
- 		goto unlock;
+--- a/drivers/iio/gyro/bmg160_core.c
++++ b/drivers/iio/gyro/bmg160_core.c
+@@ -203,6 +203,9 @@ static int bmg160_get_filter(struct bmg1
+ 			break;
  	}
  
-+	kfifo_reset_out(&ev_int->det_events);
++	if (i == ARRAY_SIZE(bmg160_samp_freq_table))
++		return -EINVAL;
 +
- 	iio_device_get(indio_dev);
+ 	*val = bmg160_samp_freq_table[i].filter;
  
- 	fd = anon_inode_getfd("iio:event", &iio_event_chrdev_fileops,
-@@ -212,10 +214,7 @@ int iio_event_getfd(struct iio_dev *indi
- 	if (fd < 0) {
- 		clear_bit(IIO_BUSY_BIT_POS, &ev_int->flags);
- 		iio_device_put(indio_dev);
--	} else {
--		kfifo_reset_out(&ev_int->det_events);
+ 	return ret ? ret : IIO_VAL_INT;
+@@ -220,6 +223,9 @@ static int bmg160_set_filter(struct bmg1
+ 			break;
  	}
--
- unlock:
- 	mutex_unlock(&indio_dev->mlock);
- 	return fd;
+ 
++	if (i == ARRAY_SIZE(bmg160_samp_freq_table))
++		return -EINVAL;
++
+ 	ret = regmap_write(data->regmap, BMG160_REG_PMU_BW,
+ 			   bmg160_samp_freq_table[i].bw_bits);
+ 	if (ret < 0) {
 
 
