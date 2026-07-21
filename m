@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B43C44AB98;
-	Tue, 21 Jul 2026 21:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DA1367B92;
+	Tue, 21 Jul 2026 21:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670896; cv=none; b=jJDIxU3AhQbZibcL93ul2Dw0fkYo17z9eO8XAF39WuR8KKJb+UNlMc5gm0iMMhwE4uCpz7GH7GBv3K2TxhReeqNqgwwEyifOaJrl82JTNnHoNXxrsNyrtlD4mi5fXlG34RnnGCwjwmQglJo9ZY8TKF6QgJcOqs2vQ4XlcJbrpbU=
+	t=1784670898; cv=none; b=RZJlsdxFc5Sgkw8IV1paHJTIjhn1l9VEKNvP7kEtT638ZUPLg0YX3YhUpsBkh2bSa0Z0y7MTR7sBg2DI2QCFqf2IB5qMJvS//3oImRAqVePVAPcHdnhpE6sbyvUT/VXY3L0zE1HGjrPIPiXj/B/FT4NGkNQndH3OrhbJCoXC7hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670896; c=relaxed/simple;
-	bh=opo0cXX0E7a2nO9xBDnvYAZNF2AbbnSUacslg/3bjSY=;
+	s=arc-20240116; t=1784670898; c=relaxed/simple;
+	bh=KIKHLDzf+TvqC5rYYFfrNfhVMaxniqLOEjMsaHv9COw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uGaFV6j1RvO+ii//pndGMYF4MNXFp7HmlUKaXkVrB3HLNVdbuMPFTrWj9Cqaq4/HCnA6FX/XOp2UgxO/in9NHLwXYpgULfP0SKfZm7BqI2Lli4cl9Cjv9PmzGLMoIY7O3yYLUiilcWGliBtgC5cTuED3n4VbvYHbJaIPSMAYXZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jI2rJMgj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uCRI7r1ewauA4baUdNMpmL8faD8TmdssLOH6XD+a9mGKjhatjEP3SCuwfDzGIXtu0hQQTHTQ4RciItWj2E2+0MsISWuxnQrs1sJqLscKWhdsqyKyyCxwjc6VDEXwJNKFGzbsZo53yOpZahkNmU5BtPd65n/KxurgXV4m9ZEpQh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2qKjfvWi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jI2rJMgj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9124E1F000E9;
-	Tue, 21 Jul 2026 21:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2qKjfvWi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3833C1F000E9;
+	Tue, 21 Jul 2026 21:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670895;
-	bh=87SL75LW+R2J3MfSwdTW6B+/bcK+1JpRi0sGw9ZQI9Y=;
+	s=korg; t=1784670897;
+	bh=iipHJsbnOQDrOfj2ypQB4HGwIbSSbkUmXwDslKr1XJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jI2rJMgji5fnKQGb4fEc9W15vUkBhWZaJh225YbJL8+knamFBmg0BpGz5DTrlsNnL
-	 8qGNr9OO4K+HuAf8GTlC93pnqpiU1jdkaQkKHd5Bddw+Tp03yuAQyLbfZ4V6wX836C
-	 6cp5PY09UtBeiMFrRXhB9YI+7ATJZTab7tKM2/uA=
+	b=2qKjfvWiRFMFMgI9sJc5xjeE6DztkBJVIQS3PXnUf+4RMDG7/C+7SWPupoeQYPjzA
+	 SJVexnHIqYafL69S8SlSgRwbTUMgtXaplcrj7o9+s0lg+9uf3VRUQc5KWYqVXkhFwQ
+	 HnZ+6RStHeD2vA/ujqreDiUJ+TUOBbTWWnnA9X+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hem Parekh <hemparekh1596@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Taeyang Lee <0wn@theori.io>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 042/843] ksmbd: fix out-of-bounds read in smb_check_perm_dacl()
-Date: Tue, 21 Jul 2026 17:14:37 +0200
-Message-ID: <20260721152406.924913014@linuxfoundation.org>
+Subject: [PATCH 5.15 043/843] perf/core: Detach event groups during remove_on_exec
+Date: Tue, 21 Jul 2026 17:14:38 +0200
+Message-ID: <20260721152406.948172562@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,63 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hem Parekh <hemparekh1596@gmail.com>
+From: Taeyang Lee <0wn@theori.io>
 
-[ Upstream commit 1ef06004ed4bd6d3ed8c840d9d1a376b66d4935b ]
+[ Upstream commit 037a3c43edfb597665dd34457cd22b14692f2ba3 ]
 
-The permission-check ACE walk in smb_check_perm_dacl() validates the ACE
-header size and caps sid.num_subauth at SID_MAX_SUB_AUTHORITIES, but it
-never checks that ace->size is actually large enough to contain
-num_subauth sub-authorities before compare_sids() dereferences them.
+perf_event_remove_on_exec() removes events by calling
+perf_event_exit_event(). For top-level events, this removes the event from
+the context without DETACH_GROUP.
 
-CIFS_SID_BASE_SIZE covers the SID header up to but excluding the
-sub_auth[] array, and offsetof(struct smb_ace, sid) is the ACE header,
-so the existing guards only guarantee the 8-byte SID base, i.e. zero
-sub-authorities. compare_sids() then reads ace->sid.sub_auth[i] for
-i < min(local_sid->num_subauth, ace->sid.num_subauth). The local
-comparison SIDs (sid_everyone, sid_unix_NFS_mode, and the id_to_sid()
-result) always have at least one sub-authority, and an attacker controls
-the ACE revision and authority bytes (which lie within the in-bounds SID
-base), so they can match one of those SIDs and force the sub_auth read.
+This can leave inconsistent group state when a removed event is a group
+leader and the group contains siblings without remove_on_exec. If the group
+was active, the surviving siblings can remain active and attached to the
+removed leader's sibling list, but are no longer represented by a valid
+group leader on the PMU context active lists.
 
-A crafted ACE with size == 16 and num_subauth >= 1 placed at the tail of
-the security descriptor therefore causes a heap out-of-bounds read of up
-to SID_MAX_SUB_AUTHORITIES * sizeof(__le32) bytes past the pntsd
-allocation. The security descriptor is loaded by ksmbd_vfs_get_sd_xattr()
-into a buffer sized exactly to the on-disk data (kzalloc(sd_size) in
-ndr_decode_v4_ntacl()), so the read lands past the allocation. The
-malformed descriptor can be stored verbatim via SMB2_SET_INFO (the DACL
-is not normalised before being written to the security.NTACL xattr) and
-the read fires on a subsequent SMB2_CREATE access check, making this
-reachable by an authenticated client on a share that uses ACL xattrs.
+A later close of the removed leader uses DETACH_GROUP and can promote the
+still-active siblings from this stale group state. The next schedule-in can
+then add an already-linked active_list entry again, corrupting the PMU
+context active list.
 
-Add the missing num_subauth-versus-ace_size check, mirroring the
-identical guards already present in the sibling parsers parse_dacl() and
-smb_inherit_dacl().
+With DEBUG_LIST enabled, this is caught as a list_add double-add in
+merge_sched_in().
 
-Fixes: d07b26f39246 ("ksmbd: require minimum ACE size in smb_check_perm_dacl()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hem Parekh <hemparekh1596@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fix this by detaching group relationships when remove_on_exec removes an
+event. This preserves the existing task-exit behavior, while ensuring
+surviving siblings are ungrouped before the removed event leaves the context.
+
+Fixes: 2e498d0a74e5 ("perf: Add support for event removal on exec")
+Signed-off-by: Taeyang Lee <0wn@theori.io>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/ai65GgZcC0LAlWLG@Taeyangs-MacBook-Pro.local
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smbacl.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/events/core.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
---- a/fs/ksmbd/smbacl.c
-+++ b/fs/ksmbd/smbacl.c
-@@ -1299,7 +1299,9 @@ int smb_check_perm_dacl(struct ksmbd_con
- 			break;
- 		aces_size -= ace_size;
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 156221bd56615c..9b01cfeb3a0663 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -4422,7 +4422,8 @@ static void perf_event_enable_on_exec(int ctxn)
  
--		if (ace->sid.num_subauth > SID_MAX_SUB_AUTHORITIES)
-+		if (ace->sid.num_subauth > SID_MAX_SUB_AUTHORITIES ||
-+		    ace_size < offsetof(struct smb_ace, sid) + CIFS_SID_BASE_SIZE +
-+			      sizeof(__le32) * ace->sid.num_subauth)
- 			break;
+ static void perf_remove_from_owner(struct perf_event *event);
+ static void perf_event_exit_event(struct perf_event *event,
+-				  struct perf_event_context *ctx);
++				  struct perf_event_context *ctx,
++				  unsigned long detach_flags);
  
- 		if (!compare_sids(&sid, &ace->sid) ||
+ /*
+  * Removes all events from the current task that have been marked
+@@ -4454,7 +4455,7 @@ static void perf_event_remove_on_exec(int ctxn)
+ 
+ 		modified = true;
+ 
+-		perf_event_exit_event(event, ctx);
++		perf_event_exit_event(event, ctx, DETACH_GROUP);
+ 	}
+ 
+ 	raw_spin_lock_irqsave(&ctx->lock, flags);
+@@ -13024,10 +13025,11 @@ static void sync_child_event(struct perf_event *child_event)
+ }
+ 
+ static void
+-perf_event_exit_event(struct perf_event *event, struct perf_event_context *ctx)
++perf_event_exit_event(struct perf_event *event,
++		      struct perf_event_context *ctx,
++		      unsigned long detach_flags)
+ {
+ 	struct perf_event *parent_event = event->parent;
+-	unsigned long detach_flags = 0;
+ 
+ 	if (parent_event) {
+ 		/*
+@@ -13042,7 +13044,7 @@ perf_event_exit_event(struct perf_event *event, struct perf_event_context *ctx)
+ 		 * Do destroy all inherited groups, we don't care about those
+ 		 * and being thorough is better.
+ 		 */
+-		detach_flags = DETACH_GROUP | DETACH_CHILD;
++		detach_flags |= DETACH_GROUP | DETACH_CHILD;
+ 		mutex_lock(&parent_event->child_mutex);
+ 	}
+ 
+@@ -13127,7 +13129,7 @@ static void perf_event_exit_task_context(struct task_struct *child, int ctxn)
+ 	perf_event_task(child, child_ctx, 0);
+ 
+ 	list_for_each_entry_safe(child_event, next, &child_ctx->event_list, event_entry)
+-		perf_event_exit_event(child_event, child_ctx);
++		perf_event_exit_event(child_event, child_ctx, 0);
+ 
+ 	mutex_unlock(&child_ctx->mutex);
+ 
+-- 
+2.53.0
+
 
 
