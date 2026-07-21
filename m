@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC85446F4B9;
-	Tue, 21 Jul 2026 19:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAD546EF76;
+	Tue, 21 Jul 2026 19:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660582; cv=none; b=MDzUB5eAHtvDxwkcElWn7HNFhPzvT9KO9DeODzKBM0tVRSIqdAI6yeD3kA6fP34UZSkx1wFBvcOBJ0I6sLbxK9PVy0lv+kHWqOl1AW0kNakScOYWCDePsHgG43mqa0G60/4lpCtfWAMR13cjhB0egPJL9iwafDmLdFp/IzrYkaI=
+	t=1784660584; cv=none; b=mvkrj2IpNHSufTq+FMCHKXSqSq4Va8NNrJSghzgdCgg3TMmasyRxfEhEUMOhs554BkBmo5me5x2/1kbJwimdT0n00PDar7WUU4EWwYVdGuWIw3Wgm4ypKsye02ehtDjcdPJOqaQ5ufYzzO8JYvdQSYAlo0cCikOFYDXDf4gORMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660582; c=relaxed/simple;
-	bh=/aYd8O0nFTShNLZm/6jctUVO+FhHNIRQv56/J/2pwUk=;
+	s=arc-20240116; t=1784660584; c=relaxed/simple;
+	bh=bfhgLsTVZcwDNTEodU6inkIr73P1Ooxv8ClTov42XvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=geHTYmQU9BuqbMe4BsEmWEqzKifdm9e/cxFrtrgNw0nlTIuTWUpQwIsJkBMjkO9CtAHVeHo0mV7LSWky6DaqXucdkvITNHzE629dsPkDPLeNwKcqARzYatqT7zZPUT9EUeTVL6tBG2F61ZoumerJRZhAyUUHj6oi/32PnFLjXT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qnD80uoR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n3iNjobibWZn/KbqC1X0CaAYDW3wOXguAXYsysM6TGYTVl9N8vxwJk5ZFjTY4ALjcq2MxjScqAXXG48ozD8ntlhBD5Af875xpoZQPE1vOuxtoYebpIiEJoPzWQx3jyktG0vrl7uw7VDpVYwoAJdGWkIb9vnhSKD9CASkjvrkLZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fsKzYjvB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qnD80uoR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 951B41F00A3A;
-	Tue, 21 Jul 2026 19:02:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fsKzYjvB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F77F1F000E9;
+	Tue, 21 Jul 2026 19:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660579;
-	bh=kCsrA8rNk/4hvYN4qYVgOPCe5bsEJAEWoubDGkiDG/U=;
+	s=korg; t=1784660581;
+	bh=6pkwvmO/lPoNtgzkKtWEf22ZfMLjyYj3LzYTkk/U/Qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qnD80uoRE0TQdvEmKRYKiwqeauKur6sjxZWpiHLS3yxjpE7OWWKL8KoJpMtktBDQh
-	 F4eOm7bcdwveqq//cN1sOEWm9NlR1HVRaqnosBlLgg/O6vitZ8jnK4wDF/2nQAXwnz
-	 vHLsMHlMTG4pI4leH+7YEjH23/7Zhm2XLQ9O/+fU=
+	b=fsKzYjvBKp7xiFU0ZazAVWfparhRSnAnG/d9nJMqzPiq8clkjJwXmi5r7JWTcsLZm
+	 bxwCSCgBZMua+IOUNZsrzSzvCbo7Nt6E7IlYNFomUl6kRkB4u7xff5jYBtLskBv3ew
+	 yoKXllUIReOni+Ss9ur+QrZk2+OxZ3e0104AfY6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Andreas Larsson <andreas@gaisler.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1033/2077] sparc: Avoid -Wunused-but-set-parameter in clear_user_page()
-Date: Tue, 21 Jul 2026 17:11:46 +0200
-Message-ID: <20260721152617.179670636@linuxfoundation.org>
+Subject: [PATCH 7.1 1034/2077] Documentation: ABI: sysfs-class-reboot-mode-reboot_modes: fix doc warnings
+Date: Tue, 21 Jul 2026 17:11:47 +0200
+Message-ID: <20260721152617.203669393@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,63 +46,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 9bc0bd9617964804dc02e6ee2413af42c4a50d6b ]
+[ Upstream commit a888754e51e915731c8974c4d6d62709facb35d3 ]
 
-The loop in clear_user_pages() iterates over all pages and calls
-clear_user_page() for each of them. During the loop "vaddr" is modified.
-However on sparc clear_user() is a macro which does not use "vaddr".
-The compiler sees a variable which is modified but never used and emits
-a warning for that:
+Repair the docs build warnings in this file by unindenting the description,
+adding blank lines, and using `` to quote *arg.
 
-	include/linux/highmem.h: In function 'clear_user_pages':
-	include/linux/highmem.h:234:63: warning: parameter 'vaddr' set but not used [-Wunused-but-set-parameter=]
-		static inline void clear_user_pages(void *addr, unsigned long vaddr,
+WARNING: Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes:36: abi_sys_class_reboot_mode_driver_reboot_modes doesn't have a description
+Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes:1: ERROR: Unexpected indentation. [docutils]
+Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes:1: ERROR: Unexpected indentation. [docutils]
+Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes:1: WARNING: Inline emphasis start-string without end-string. [docutils]
+Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes:1: ERROR: Unexpected indentation. [docutils]
 
-Other architectures use an inline function for clear_user_page() which
-avoids the warning. This is not possible on sparc, as
-sparc_flush_page_to_ram() is not yet declared where clear_user_page() is
-defined. Including cacheflush_32.h will trigger recursive and lots of
-other issues.
-
-So hide the warning with a cast to (void) instead.
-
-While we are here, do the same for copy_user_page().
-
-Fixes: 62a9f5a85b98 ("mm: introduce clear_pages() and clear_user_pages()")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+Fixes: d3da03025e6d ("Documentation: ABI: Add sysfs-class-reboot-mode-reboot_modes")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260426232705.422938-1-rdunlap@infradead.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sparc/include/asm/page_32.h | 2 ++
- 1 file changed, 2 insertions(+)
+ .../testing/sysfs-class-reboot-mode-reboot_modes    | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/arch/sparc/include/asm/page_32.h b/arch/sparc/include/asm/page_32.h
-index c1bccbedf567ec..9f0b54f709088f 100644
---- a/arch/sparc/include/asm/page_32.h
-+++ b/arch/sparc/include/asm/page_32.h
-@@ -20,10 +20,12 @@
- #define clear_user_page(addr, vaddr, page)	\
- 	do { 	clear_page(addr);		\
- 		sparc_flush_page_to_ram(page);	\
-+		(void)(vaddr);			\
- 	} while (0)
- #define copy_user_page(to, from, vaddr, page)	\
- 	do {	copy_page(to, from);		\
- 		sparc_flush_page_to_ram(page);	\
-+		(void)(vaddr);			\
- 	} while (0)
+diff --git a/Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes b/Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes
+index a16c54ab841bb4..4306966b7fcc33 100644
+--- a/Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes
++++ b/Documentation/ABI/testing/sysfs-class-reboot-mode-reboot_modes
+@@ -2,33 +2,36 @@ What:		/sys/class/reboot-mode/<driver>/reboot_modes
+ Date:		March 2026(TBD)
+ KernelVersion:	TBD
+ Contact:	linux-pm@vger.kernel.org
+-		Description:
++Description:
+ 		This interface exposes the reboot-mode arguments
+ 		registered with the reboot-mode framework. It is
+ 		a read-only interface and provides a space
+ 		separated list of reboot-mode arguments supported
+ 		on the current platform.
+ 		Example:
++
+ 		 recovery fastboot bootloader
  
- /* The following structure is used to hold the physical
+ 		The exact sysfs path may vary depending on the
+ 		name of the driver that registers the arguments.
+-		Example:
++		Example::
++
+ 		 /sys/class/reboot-mode/nvmem-reboot-mode/reboot_modes
+ 		 /sys/class/reboot-mode/syscon-reboot-mode/reboot_modes
+ 		 /sys/class/reboot-mode/qcom-pon/reboot_modes
+ 
+ 		The supported arguments can be used by userspace to
+ 		invoke device reset using the standard reboot() system
+-		call interface, with the "argument" as string to "*arg"
+-		parameter along with LINUX_REBOOT_CMD_RESTART2.
++		call interface, with the "argument" as string to ``*arg``
++		parameter along with ``LINUX_REBOOT_CMD_RESTART2``.
+ 
+ 		A driver can expose the supported arguments by
+ 		registering them with the reboot-mode framework
+ 		using the property names that follow the
+ 		mode-<argument> format.
+ 		Example:
+-		 mode-bootloader, mode-recovery.
++
++		 mode-bootloader, mode-recovery
+ 
+ 		This attribute is useful for scripts or initramfs
+ 		logic that need to programmatically determine
 -- 
 2.53.0
 
