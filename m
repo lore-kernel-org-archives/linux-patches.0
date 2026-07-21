@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5BD46D2B3;
-	Tue, 21 Jul 2026 17:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81B21F3D56;
+	Tue, 21 Jul 2026 17:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653733; cv=none; b=iB5OLHlvMrsiyTzR0gpX28myBdTxXXro4hFrqyb3w/VPZ20D7wPYu6V1ZyIprMf8y1B8gGqM4LgvHWUoYT1mHhKH1t6mz/I+V1KkV+/yCv//XB2snT/dEMV1aZyMIjSIVi/GL87T5M4bIF7in9PaYqlLCrRzjhbsQty1O3u8m6I=
+	t=1784653735; cv=none; b=u/P7rfdYmManUFGhcqJKgCE0i4XtyjumFdFOeGLbSj7a2dSf1XHGtzN3hPWBEo0oHYkyrGB+Fhho1HmCpwVLfB82TmJx7dkdUFxgXPSZkXCLSt6KwXCq/I8UOUMRzGd5kNmBgOBO/n0EhUBz9Ini0u4CSWwfrqsmOEfRiJG9RUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653733; c=relaxed/simple;
-	bh=KebQdQa5jcV2Y4DiNwR/SBJzEqQyzD1JpfgZVweQwNg=;
+	s=arc-20240116; t=1784653735; c=relaxed/simple;
+	bh=uC5+m1rP7LREcg/rb0h+QEOfAZIcPARQ3A8+WSB9vdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nh/KkzfwZsVxmD70/EO95M6PWPeqsv9sPqsQFKofGtH/7Ua9JfuOlSt5MV/6NZAvq6Ykabc/a5o8dzIFRpKl9q4kKnGY8RaUcwh/on1d16sXInQndAnVYDFQGABbScfeE69F+kxGzjEop6E/1vQ38ibjoI/Ka6C/nJxGiFJIbZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tx7aFfr6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HMXwwGEQgCJeX0ooI5uFel71lzL3dJ1ZINN0Qk26TuptsbfCYS2ix7iq9g0FyQ3NyZhmruAYITeN5vgfkQJkry1aQkpT4Xog6SoH0S2UWWzocRkj/48xBLP72LDb6K7+nSJ6nBAJ4iuqQVRS/n7TOxr/ozCaC7NQxqrdv8WZWjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2VxcyWUi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tx7aFfr6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 704BC1F000E9;
-	Tue, 21 Jul 2026 17:08:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2VxcyWUi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1856C1F000E9;
+	Tue, 21 Jul 2026 17:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653731;
-	bh=BNhJcikuSk1lmzUpbwVGWS/4hX1mhg4dStLgmXJhpg8=;
+	s=korg; t=1784653734;
+	bh=ULAzkH1wx1PnJIXH0btJ9lTITahGOEygEpfS8Cqj+KE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tx7aFfr6Gj0OX+2LyiVsHyoodwKCLjCZs5MJYQBplXj4qYWnmURj6ll5Dxpl/9fDS
-	 sDfpiexdWEBpK0PSROpI/KZYBChf5njhe7acu3XYO1GP8T5SXEgbBGyxM4ugpGrK/Z
-	 y/qIXTACutoNENcurNQOGVMzcuPA57pp9fpC5UyY=
+	b=2VxcyWUieXelJ3Brk4omuzXGQ7h9EKrYNlOlVzhwmUZXxax7tBuxdFPERuyNiGIhn
+	 acJ1f6dqoTtMu6VvRKCLitagM5UWcI3FLCA86wLWgLZJSApiEh3axstpCFx5DAZBr3
+	 ocJgM1oc1N9ldI1+aPGFJWkmU8IFbOTd6CCA88qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1439/2077] net/mlx5: LAG, MPESW, Fix missing complete() on devcom error
-Date: Tue, 21 Jul 2026 17:18:32 +0200
-Message-ID: <20260721152626.746632194@linuxfoundation.org>
+Subject: [PATCH 7.1 1440/2077] net/mlx5e: TC, skip peer flow cleanup when LAG seq is unavailable
+Date: Tue, 21 Jul 2026 17:18:33 +0200
+Message-ID: <20260721152626.769434006@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -55,51 +55,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit d4b85f9a668b9c44216bb78daf4ec1a915cc92d1 ]
+[ Upstream commit 7bed4af0ced82948d660205efecd551ef8bc3912 ]
 
-mlx5_mpesw_work() returned without calling complete() when
-mlx5_lag_get_devcom_comp() returned NULL. A caller that queued the
-work and waited on mpesww->comp would block indefinitely.
+mlx5_lag_get_dev_seq() will return error when the peer isn't in the LAG
+or when no device is marked as master. Result bad memory access and kernel
+crash[1].
 
-Funnel the early-return path through a new "complete" label so the
-waiter is always woken.
+Hence, skip the peer when lookup fails.
 
-Fixes: b430c1b4f63b ("net/mlx5: Replace global mlx5_intf_lock with HCA devcom component lock")
+Note: In case there are peer flows, they are cleaned before LAG cleared
+the master mark.
+
+[1]
+RIP: 0010:mlx5e_tc_del_fdb_peers_flow+0x3d/0x350 [mlx5_core]
+Call Trace:
+ <TASK>
+ mlx5e_tc_clean_fdb_peer_flows+0xc1/0x130 [mlx5_core]
+ mlx5_esw_offloads_unpair+0x3a/0x400 [mlx5_core]
+ mlx5_esw_offloads_devcom_event+0xee/0x360 [mlx5_core]
+ mlx5_devcom_send_event+0x7a/0x140 [mlx5_core]
+ mlx5_esw_offloads_devcom_cleanup+0x2f/0x90 [mlx5_core]
+ mlx5e_tc_esw_cleanup+0x28/0xf0 [mlx5_core]
+ mlx5e_rep_tc_cleanup+0x19/0x30 [mlx5_core]
+ mlx5e_cleanup_uplink_rep_tx+0x36/0x40 [mlx5_core]
+ mlx5e_cleanup_rep_tx+0x55/0x60 [mlx5_core]
+ mlx5e_detach_netdev+0x96/0xf0 [mlx5_core]
+ mlx5e_netdev_change_profile+0x5b/0x120 [mlx5_core]
+ mlx5e_netdev_attach_nic_profile+0x1b/0x30 [mlx5_core]
+ mlx5e_vport_rep_unload+0xdd/0x110 [mlx5_core]
+ __esw_offloads_unload_rep+0x81/0xb0 [mlx5_core]
+ mlx5_eswitch_unregister_vport_reps+0x1d7/0x220 [mlx5_core]
+ mlx5e_rep_remove+0x22/0x30 [mlx5_core]
+ device_release_driver_internal+0x194/0x1f0
+ bus_remove_device+0xe8/0x1b0
+ device_del+0x159/0x3c0
+ mlx5_rescan_drivers_locked+0xbc/0x2d0 [mlx5_core]
+ mlx5_unregister_device+0x54/0x80 [mlx5_core]
+ mlx5_uninit_one+0x73/0x130 [mlx5_core]
+ remove_one+0x78/0xe0 [mlx5_core]
+ pci_device_remove+0x39/0xa0
+
+Fixes: 971b28accc09 ("net/mlx5: LAG, replace mlx5_get_dev_index with LAG sequence number")
 Signed-off-by: Shay Drory <shayd@nvidia.com>
 Reviewed-by: Mark Bloch <mbloch@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260630112917.698313-3-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260630112917.698313-4-tariqt@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_tc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
-index 2cb44084e239a3..97334b563c2427 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
-@@ -118,8 +118,10 @@ static void mlx5_mpesw_work(struct work_struct *work)
- 	struct mlx5_lag *ldev = mpesww->lag;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+index a9001d1c902ff1..8b5a421a22a37a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+@@ -5526,6 +5526,9 @@ void mlx5e_tc_clean_fdb_peer_flows(struct mlx5_eswitch *esw)
  
- 	devcom = mlx5_lag_get_devcom_comp(ldev);
--	if (!devcom)
--		return;
-+	if (!devcom) {
-+		mpesww->result = -ENODEV;
-+		goto complete;
-+	}
- 
- 	mlx5_devcom_comp_lock(devcom);
- 	mutex_lock(&ldev->lock);
-@@ -135,6 +137,7 @@ static void mlx5_mpesw_work(struct work_struct *work)
- unlock:
- 	mutex_unlock(&ldev->lock);
- 	mlx5_devcom_comp_unlock(devcom);
-+complete:
- 	complete(&mpesww->comp);
- }
- 
+ 	mlx5_devcom_for_each_peer_entry(devcom, peer_esw, pos) {
+ 		i = mlx5_lag_get_dev_seq(peer_esw->dev);
++		if (i < 0)
++			continue;
++
+ 		list_for_each_entry_safe(flow, tmp, &esw->offloads.peer_flows[i], peer[i])
+ 			mlx5e_tc_del_fdb_peers_flow(flow);
+ 	}
 -- 
 2.53.0
 
