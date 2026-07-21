@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2A6470138;
-	Tue, 21 Jul 2026 19:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EBEC46D2CE;
+	Tue, 21 Jul 2026 19:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663071; cv=none; b=d6woqh/VnIws7yKHQ/JRmMt7yhV6zlzSXzm/zlD9Jh5Xvr9F/XF+V42HEH+Fu+pxQXDQzY3/dFWoaHMo775ncsKOs8jxGe5lLZx8IHTYMlXdcxCux8Keduzd3M3QN6mgJLalK6urt8OFpLyfg6njGJ1f9J7Es+XK4PzSH2oaBO4=
+	t=1784663074; cv=none; b=P0lJDdzoeQ1arIroOofv6FHj2CTlQXZadDyS5dK1MjzF3H8VzUv5RxAOXfRpCNUKsgIHhdUIXxaNyTGK9CVdnwGtaUPgEco3pG/rhhHTvhdo7YEuzdCoWt7/2XX+yu1MXdJlBqyWoLnicAQvk1lhadm8JMEc3hAA1NQh8B/YgGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663071; c=relaxed/simple;
-	bh=RIQypqWn5xWcg+J2ayq5R6p3eGAwGQYo5lym/w0q5Zk=;
+	s=arc-20240116; t=1784663074; c=relaxed/simple;
+	bh=XhUFuPjXuDGUJ5L1FHxrmkuwA2ya6uV9dv03zRTYrzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u5d+yqJYO0PxgIS3z0TOUD438KkjJ1HaQycK3KvwdhLY4bUeSPnSN4/VCEiLzAhk9Za1eWhFMXmI2VY7ltO0QUv1tZV2froqEVxKCRNDuxr+h7tcJx1VMu/Xg+s9BwdsNcph/XmC2cMlF0UzPiy89Mp8/GmKGduFjyKj/C74oJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ye1PWtzS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RJL0L/M/EXRG1glVdPbnq1B/Ga0SOhXysKDf7covLv1HUL3jxQKMgyZjWgMLPCjJ/IrF7+oRTsFGhHb0238IK5q8gKGRSuvlCsCA3zHYzw1KBpxjeAmdh/qw9NzvZkWPpcoK4WRGK/lJWa/qiGH2x3otkXfOkg9jdwpkj4XeJUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pBMcRxAL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ye1PWtzS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2C281F000E9;
-	Tue, 21 Jul 2026 19:44:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pBMcRxAL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8537A1F000E9;
+	Tue, 21 Jul 2026 19:44:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663070;
-	bh=fsVm1eQHLggrWRe93JoCscMetCc7N/LkwVKXKakb4+c=;
+	s=korg; t=1784663073;
+	bh=NfTwPfKhl4131bA68/L5HwQphfjuBa29LQSZ8awgfaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ye1PWtzSslZoTKfd5hO9NNMc2DlOXdg5P2bWdzycYlYWS1LCShAhDu2oMtX0ZuBtv
-	 SYDEDCVnu9dcIcmQVTzlh1b+/b1pm1IdLsCmHQEAJ5X+S39BWM8V8U9kjbH3a7i6Li
-	 SyV8G5Nt33VZldeJpX3/pkE7bye1CROx66ahUHF8=
+	b=pBMcRxALGkOACsmcmjFdWSdBrjIaxj81BWdb5Gp+DCZL61mkFWBy02nEja5YXvotD
+	 S95x0PXcRlQ81Xu9a1REpEi/bg/lj2ohGivNcJjxM51RqTSxq8TEM4pTRNDgCVvaSJ
+	 mVHXY8+3dNfOuzAwxNlHh+WYBg/odPODHrjvj2KM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingshuang Fu <fuqingshuang@kylinos.cn>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0647/1276] gpio: davinci: fix IRQ domain leak on devm_kzalloc failure
-Date: Tue, 21 Jul 2026 17:18:10 +0200
-Message-ID: <20260721152500.589080325@linuxfoundation.org>
+Subject: [PATCH 6.12 0683/1276] net: hns3: use hns3_get_ae_dev() helper to reduce the unnecessary middle layer conversion
+Date: Tue, 21 Jul 2026 17:18:46 +0200
+Message-ID: <20260721152501.381496449@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,46 +52,299 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingshuang Fu <fuqingshuang@kylinos.cn>
+From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit 4e8eb6952aa6749726c6c3763ae0032a6332c24f ]
+[ Upstream commit 2031f01394b2cc73538b3eeec191ffb03a1de5a0 ]
 
-In davinci_gpio_irq_setup(), after successfully creating an IRQ domain
-with irq_domain_create_legacy(), a subsequent devm_kzalloc() failure
-in the bank loop causes the function to return -ENOMEM without
-removing the IRQ domain.
+There are too many indirection layers in the HNS3 driver code.
+This issue was previously discussed with the maintainer,
+who suggested adding a helper function to fix the issue.
+In fact, the hns3_get_ae_dev() helper is already defined
+and can fix this issue.
 
-Unlike devm-managed resources, irq_domain_create_legacy() does not
-auto-clean up on probe failure, so the domain is leaked.
+This patch uses hns3_get_ae_dev() helper to reduce the unnecessary
+middle layer conversion. Apply it to the whole HNS3 driver.
+The former discusstion can be checked from the link.
 
-Fix by calling irq_domain_remove() before returning on allocation
-failure.
-
-Fixes: b5cf3fd827d2 ("gpio: davinci: Redesign driver to accommodate ngpios in one gpio chip")
-Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
-Link: https://patch.msgid.link/20260623023106.117229-1-fffsqian@163.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patchwork.kernel.org/project/netdevbpf/patch/20230310081404.947-1-lanhao@huawei.com/
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/20250623040043.857782-3-shaojijie@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: c711f6d1cee9 ("net: hns3: fix permanent link down deadlock after reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-davinci.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../ethernet/hisilicon/hns3/hns3_debugfs.c    |  8 ++---
+ .../net/ethernet/hisilicon/hns3/hns3_enet.c   | 12 +++----
+ .../ethernet/hisilicon/hns3/hns3_ethtool.c    | 36 +++++++++----------
+ 3 files changed, 28 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/gpio/gpio-davinci.c b/drivers/gpio/gpio-davinci.c
-index 76b58c70b2577f..6d12a65b075288 100644
---- a/drivers/gpio/gpio-davinci.c
-+++ b/drivers/gpio/gpio-davinci.c
-@@ -552,8 +552,10 @@ static int davinci_gpio_irq_setup(struct platform_device *pdev)
- 				       sizeof(struct
- 					      davinci_gpio_irq_data),
- 					      GFP_KERNEL);
--		if (!irqdata)
-+		if (!irqdata) {
-+			irq_domain_remove(chips->irq_domain);
- 			return -ENOMEM;
-+		}
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
+index 4e5d8bc39a1bf3..4f6ed7c7ee6899 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
+@@ -684,7 +684,7 @@ static int hns3_dbg_rx_queue_info(struct hnae3_handle *h,
+ 				  char *buf, int len)
+ {
+ 	char data_str[ARRAY_SIZE(rx_queue_info_items)][HNS3_DBG_DATA_STR_LEN];
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(h->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(h);
+ 	char *result[ARRAY_SIZE(rx_queue_info_items)];
+ 	struct hns3_nic_priv *priv = h->priv;
+ 	char content[HNS3_DBG_INFO_LEN];
+@@ -789,7 +789,7 @@ static int hns3_dbg_tx_queue_info(struct hnae3_handle *h,
+ 				  char *buf, int len)
+ {
+ 	char data_str[ARRAY_SIZE(tx_queue_info_items)][HNS3_DBG_DATA_STR_LEN];
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(h->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(h);
+ 	char *result[ARRAY_SIZE(tx_queue_info_items)];
+ 	struct hns3_nic_priv *priv = h->priv;
+ 	char content[HNS3_DBG_INFO_LEN];
+@@ -1034,7 +1034,7 @@ static int hns3_dbg_tx_bd_info(struct hns3_dbg_data *d, char *buf, int len)
+ static void
+ hns3_dbg_dev_caps(struct hnae3_handle *h, char *buf, int len, int *pos)
+ {
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(h->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(h);
+ 	unsigned long *caps = ae_dev->caps;
+ 	u32 i, state;
  
- 		irqdata->regs = g;
- 		irqdata->bank_num = bank;
+@@ -1364,7 +1364,7 @@ hns3_dbg_common_file_init(struct hnae3_handle *handle, u32 cmd)
+ 
+ int hns3_dbg_init(struct hnae3_handle *handle)
+ {
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(handle->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(handle);
+ 	const char *name = pci_name(handle->pdev);
+ 	int ret;
+ 	u32 i;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+index 803da392c8efef..ba21e8b2d00be1 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+@@ -548,9 +548,9 @@ void hns3_set_vector_coalesce_rx_ql(struct hns3_enet_tqp_vector *tqp_vector,
+ static void hns3_vector_coalesce_init(struct hns3_enet_tqp_vector *tqp_vector,
+ 				      struct hns3_nic_priv *priv)
+ {
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(priv->ae_handle->pdev);
+ 	struct hns3_enet_coalesce *tx_coal = &tqp_vector->tx_group.coal;
+ 	struct hns3_enet_coalesce *rx_coal = &tqp_vector->rx_group.coal;
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(priv->ae_handle);
+ 	struct hns3_enet_coalesce *ptx_coal = &priv->tx_coal;
+ 	struct hns3_enet_coalesce *prx_coal = &priv->rx_coal;
+ 
+@@ -1315,7 +1315,7 @@ static int hns3_get_l4_protocol(struct sk_buff *skb, u8 *ol4_proto,
+ static bool hns3_tunnel_csum_bug(struct sk_buff *skb)
+ {
+ 	struct hns3_nic_priv *priv = netdev_priv(skb->dev);
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(priv->ae_handle->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(priv->ae_handle);
+ 	union l4_hdr_info l4;
+ 
+ 	/* device version above V3(include V3), the hardware can
+@@ -1515,7 +1515,7 @@ static int hns3_handle_vtags(struct hns3_enet_ring *tx_ring,
+ 	 * VLAN enabled, only one VLAN header is allowed in skb, otherwise it
+ 	 * will cause RAS error.
+ 	 */
+-	ae_dev = pci_get_drvdata(handle->pdev);
++	ae_dev = hns3_get_ae_dev(handle);
+ 	if (unlikely(skb_vlan_tagged_multi(skb) &&
+ 		     ae_dev->dev_version <= HNAE3_DEVICE_VERSION_V2 &&
+ 		     handle->port_base_vlan_state ==
+@@ -4761,7 +4761,7 @@ static int hns3_nic_init_vector_data(struct hns3_nic_priv *priv)
+ 
+ static void hns3_nic_init_coal_cfg(struct hns3_nic_priv *priv)
+ {
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(priv->ae_handle->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(priv->ae_handle);
+ 	struct hns3_enet_coalesce *tx_coal = &priv->tx_coal;
+ 	struct hns3_enet_coalesce *rx_coal = &priv->rx_coal;
+ 
+@@ -5265,7 +5265,7 @@ static void hns3_info_show(struct hns3_nic_priv *priv)
+ static void hns3_set_cq_period_mode(struct hns3_nic_priv *priv,
+ 				    enum dim_cq_period_mode mode, bool is_tx)
+ {
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(priv->ae_handle->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(priv->ae_handle);
+ 	struct hnae3_handle *handle = priv->ae_handle;
+ 	int i;
+ 
+@@ -5303,7 +5303,7 @@ void hns3_cq_period_mode_init(struct hns3_nic_priv *priv,
+ 
+ static void hns3_state_init(struct hnae3_handle *handle)
+ {
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(handle->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(handle);
+ 	struct net_device *netdev = handle->kinfo.netdev;
+ 	struct hns3_nic_priv *priv = netdev_priv(netdev);
+ 
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c b/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c
+index 6715222aeb661e..ae220f49df64f8 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_ethtool.c
+@@ -86,7 +86,7 @@ static int hns3_get_sset_count(struct net_device *netdev, int stringset);
+ static int hns3_lp_setup(struct net_device *ndev, enum hnae3_loop loop, bool en)
+ {
+ 	struct hnae3_handle *h = hns3_get_handle(ndev);
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(h->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(h);
+ 	int ret;
+ 
+ 	if (!h->ae_algo->ops->set_loopback ||
+@@ -171,7 +171,7 @@ static void hns3_lp_setup_skb(struct sk_buff *skb)
+ 	 * the purpose of mac or serdes selftest.
+ 	 */
+ 	handle = hns3_get_handle(ndev);
+-	ae_dev = pci_get_drvdata(handle->pdev);
++	ae_dev = hns3_get_ae_dev(handle);
+ 	if (ae_dev->dev_version < HNAE3_DEVICE_VERSION_V2)
+ 		ethh->h_dest[5] += HNS3_NIC_LB_DST_MAC_ADDR;
+ 	eth_zero_addr(ethh->h_source);
+@@ -692,7 +692,7 @@ static void hns3_get_pauseparam(struct net_device *netdev,
+ 				struct ethtool_pauseparam *param)
+ {
+ 	struct hnae3_handle *h = hns3_get_handle(netdev);
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(h->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(h);
+ 
+ 	if (!test_bit(HNAE3_DEV_SUPPORT_PAUSE_B, ae_dev->caps))
+ 		return;
+@@ -706,7 +706,7 @@ static int hns3_set_pauseparam(struct net_device *netdev,
+ 			       struct ethtool_pauseparam *param)
+ {
+ 	struct hnae3_handle *h = hns3_get_handle(netdev);
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(h->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(h);
+ 
+ 	if (!test_bit(HNAE3_DEV_SUPPORT_PAUSE_B, ae_dev->caps))
+ 		return -EOPNOTSUPP;
+@@ -751,7 +751,7 @@ static int hns3_get_link_ksettings(struct net_device *netdev,
+ 				   struct ethtool_link_ksettings *cmd)
+ {
+ 	struct hnae3_handle *h = hns3_get_handle(netdev);
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(h->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(h);
+ 	const struct hnae3_ae_ops *ops;
+ 	u8 module_type;
+ 	u8 media_type;
+@@ -861,7 +861,7 @@ static int hns3_set_link_ksettings(struct net_device *netdev,
+ 				   const struct ethtool_link_ksettings *cmd)
+ {
+ 	struct hnae3_handle *handle = hns3_get_handle(netdev);
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(handle->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(handle);
+ 	const struct hnae3_ae_ops *ops = handle->ae_algo->ops;
+ 	int ret;
+ 
+@@ -932,7 +932,7 @@ static u32 hns3_get_rss_key_size(struct net_device *netdev)
+ static u32 hns3_get_rss_indir_size(struct net_device *netdev)
+ {
+ 	struct hnae3_handle *h = hns3_get_handle(netdev);
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(h->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(h);
+ 
+ 	return ae_dev->dev_specs.rss_ind_tbl_size;
+ }
+@@ -954,7 +954,7 @@ static int hns3_set_rss(struct net_device *netdev,
+ 			struct netlink_ext_ack *extack)
+ {
+ 	struct hnae3_handle *h = hns3_get_handle(netdev);
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(h->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(h);
+ 
+ 	if (!h->ae_algo->ops->set_rss)
+ 		return -EOPNOTSUPP;
+@@ -1024,7 +1024,7 @@ static int hns3_set_reset(struct net_device *netdev, u32 *flags)
+ {
+ 	enum hnae3_reset_type rst_type = HNAE3_NONE_RESET;
+ 	struct hnae3_handle *h = hns3_get_handle(netdev);
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(h->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(h);
+ 	const struct hnae3_ae_ops *ops = h->ae_algo->ops;
+ 	const struct hns3_reset_type_map *rst_type_map;
+ 	enum ethtool_reset_flags rst_flags;
+@@ -1189,7 +1189,7 @@ static int hns3_set_tx_push(struct net_device *netdev, u32 tx_push)
+ {
+ 	struct hns3_nic_priv *priv = netdev_priv(netdev);
+ 	struct hnae3_handle *h = hns3_get_handle(netdev);
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(h->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(h);
+ 	u32 old_state = test_bit(HNS3_NIC_STATE_TX_PUSH_ENABLE, &priv->state);
+ 
+ 	if (!test_bit(HNAE3_DEV_SUPPORT_TX_PUSH_B, ae_dev->caps) && tx_push)
+@@ -1377,7 +1377,7 @@ static int hns3_check_gl_coalesce_para(struct net_device *netdev,
+ 				       struct ethtool_coalesce *cmd)
+ {
+ 	struct hnae3_handle *handle = hns3_get_handle(netdev);
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(handle->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(handle);
+ 	u32 rx_gl, tx_gl;
+ 
+ 	if (cmd->rx_coalesce_usecs > ae_dev->dev_specs.max_int_gl) {
+@@ -1449,7 +1449,7 @@ static int hns3_check_ql_coalesce_param(struct net_device *netdev,
+ 					struct ethtool_coalesce *cmd)
+ {
+ 	struct hnae3_handle *handle = hns3_get_handle(netdev);
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(handle->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(handle);
+ 
+ 	if ((cmd->tx_max_coalesced_frames || cmd->rx_max_coalesced_frames) &&
+ 	    !ae_dev->dev_specs.int_ql_max) {
+@@ -1473,7 +1473,7 @@ hns3_check_cqe_coalesce_param(struct net_device *netdev,
+ 			      struct kernel_ethtool_coalesce *kernel_coal)
+ {
+ 	struct hnae3_handle *handle = hns3_get_handle(netdev);
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(handle->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(handle);
+ 
+ 	if ((kernel_coal->use_cqe_mode_tx || kernel_coal->use_cqe_mode_rx) &&
+ 	    !hnae3_ae_dev_cq_supported(ae_dev)) {
+@@ -1649,7 +1649,7 @@ static void hns3_get_fec_stats(struct net_device *netdev,
+ 			       struct ethtool_fec_stats *fec_stats)
+ {
+ 	struct hnae3_handle *handle = hns3_get_handle(netdev);
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(handle->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(handle);
+ 	const struct hnae3_ae_ops *ops = handle->ae_algo->ops;
+ 
+ 	if (!hnae3_ae_dev_fec_stats_supported(ae_dev) || !ops->get_fec_stats)
+@@ -1700,7 +1700,7 @@ static int hns3_get_fecparam(struct net_device *netdev,
+ 			     struct ethtool_fecparam *fec)
+ {
+ 	struct hnae3_handle *handle = hns3_get_handle(netdev);
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(handle->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(handle);
+ 	const struct hnae3_ae_ops *ops = handle->ae_algo->ops;
+ 	u8 fec_ability;
+ 	u8 fec_mode;
+@@ -1725,7 +1725,7 @@ static int hns3_set_fecparam(struct net_device *netdev,
+ 			     struct ethtool_fecparam *fec)
+ {
+ 	struct hnae3_handle *handle = hns3_get_handle(netdev);
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(handle->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(handle);
+ 	const struct hnae3_ae_ops *ops = handle->ae_algo->ops;
+ 	u32 fec_mode;
+ 
+@@ -1747,7 +1747,7 @@ static int hns3_get_module_info(struct net_device *netdev,
+ #define HNS3_SFF_8636_V1_3 0x03
+ 
+ 	struct hnae3_handle *handle = hns3_get_handle(netdev);
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(handle->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(handle);
+ 	const struct hnae3_ae_ops *ops = handle->ae_algo->ops;
+ 	struct hns3_sfp_type sfp_type;
+ 	int ret;
+@@ -1797,7 +1797,7 @@ static int hns3_get_module_eeprom(struct net_device *netdev,
+ 				  struct ethtool_eeprom *ee, u8 *data)
+ {
+ 	struct hnae3_handle *handle = hns3_get_handle(netdev);
+-	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(handle->pdev);
++	struct hnae3_ae_dev *ae_dev = hns3_get_ae_dev(handle);
+ 	const struct hnae3_ae_ops *ops = handle->ae_algo->ops;
+ 
+ 	if (ae_dev->dev_version < HNAE3_DEVICE_VERSION_V2 ||
 -- 
 2.53.0
 
