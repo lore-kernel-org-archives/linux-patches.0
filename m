@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149F346E00C;
-	Tue, 21 Jul 2026 19:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74FD46F4A9;
+	Tue, 21 Jul 2026 19:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662095; cv=none; b=nF3URmTYmo96BfNFBfz/QBZeCOWOMtKDN85Er89K54e79s+0gJym62KCsrjBGAYI32w0RZcijWHxPbEUoh0VVYPffeijlfWw9zlSzh3bmf9v9ejhGrubEZKttqcWlbmDjzVCdqahFslgBAzw6YVmIK4PINUeQDyjpk7oaqlIp7M=
+	t=1784662099; cv=none; b=GHk6Qbc4RejfE2yfU+O8Q9wwkd3pz6Hychzmor9I9H8f8gGJmwL5VzMOE/12cvAXI963lwyJOBQXO/ROMhe0erIZ/8W/xfSWmy73PO2cHYxAOMorhP2uSWnA+86CbO2Mo0/Ehk6yIVCQKbZ85YwunXwT7L2Ph4m1z/4npWFa9gU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662095; c=relaxed/simple;
-	bh=qBvk2ajybXGNGCzGHO/+eZd4AkjwdfDz+6wxXUgT3Rk=;
+	s=arc-20240116; t=1784662099; c=relaxed/simple;
+	bh=1LYQA34mVtj/tW8XhW1vdVLeiLnjF7ljl162yMruBcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m/kXydQNMh5brbBMKih3kt+D3zyA6fap65a2HHXHjbodcf4lN/JSOIb0fRTpcpIpa8RXZzu/ER/wwZt9GqS+InlLb/HcJN9epakf9PUHPtC+QpRg45DdXtluTgZZoz4xneyOY4gQmU+CkeAygR0/9BUo9NxXeQsuCKa6OAfBCng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TScAJbKP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aldQFELZqkEvJ/wGzyc23pTsDSOwyfIW10vz4J5wMYQg4rg0N3Zg9VvQO8pUANBHt8hU+w8QKM9MVWFwtXp4iEC1C85GwjVQJOpEcSky0TniLbZOw4G4My2J10wLFwn1/zP9PxOhr/E1uWyFI6XjxKb2/9HstW0USEgHTmdtH2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ol9bElRO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TScAJbKP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146181F000E9;
-	Tue, 21 Jul 2026 19:28:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ol9bElRO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52C4C1F00A3D;
+	Tue, 21 Jul 2026 19:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662087;
-	bh=1I8R9gz7qUO4RB0+DMLO4QiCjDY7fmcGQMyer/JMATU=;
+	s=korg; t=1784662092;
+	bh=0xo2ybPT67NfHiutGO/0KKthRAXPZKMwU1PbNO9OoE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TScAJbKP22E4QMs3/3DgiUT4rwxPL+16O3Glz8z75YQ5RqZVy/ziqUmx/YmZ3HsN/
-	 PyCE4OBeVZ0o6//WmiRrAUbEhYIKQ+EuOZSXS4Si329668s7se4pszL7mQR929IAOy
-	 Z8oG9bDe7e2xXte69d2FlATvFNjanaNbyd1m9CyA=
+	b=ol9bElROHWrYWZxlvturSZfCI4b5CV6QmLVtWXH8ANsIfC5QDY8/BOhhYSzyLtKTN
+	 Dog2+Dc+cGlB/TpIa2Z18iVXus+RPep53RHa667djSw1fvhkJN6mOoOEwj1+Q9rz8Z
+	 OGwSO7F3JvNarhTTpwMC+5hcDzJCzyzGBBzP+6AQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Hui Zhu <zhuhui@kylinos.cn>,
+	Dev Jain <dev.jain@arm.com>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0311/1276] cxl/test: Fix integer overflow in mock LSA bounds checks
-Date: Tue, 21 Jul 2026 17:12:34 +0200
-Message-ID: <20260721152453.052352235@linuxfoundation.org>
+Subject: [PATCH 6.12 0277/1276] vmalloc: fix NULL pointer dereference in is_vm_area_hugepages()
+Date: Tue, 21 Jul 2026 17:12:00 +0200
+Message-ID: <20260721152452.277715720@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,54 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Hui Zhu <zhuhui@kylinos.cn>
 
-[ Upstream commit 81eafcada109b653977c4dfbd2b6a72470025a01 ]
+[ Upstream commit c55dd3b46c1208d6d2ea737a8aefef4aa4c70cb8 ]
 
-Pre-existing issue discovered by sashiko-bot.
+find_vm_area() can return NULL if the given address is not a valid vmalloc
+area.  Check the return value before dereferencing it to avoid a kernel
+crash.
 
-mock_get_lsa() and mock_set_lsa() validate the requested LSA range with
-"offset + length > LSA_SIZE". Both offset and length are u32 and, in
-mock_get_lsa(), both are taken directly from the user-supplied payload.
-The addition is evaluated modulo 2^32, so a large offset combined with a
-small length wraps around and passes the check.
-
-Rewrite the checks to first bound offset, then compare length against the
-remaining LSA size.
-
-Suggested-by: sashiko-bot
-Fixes: 7d3eb23c4ccf ("tools/testing/cxl: Introduce a mock memory device + driver")
-Link: https://lore.kernel.org/linux-cxl/20260605143748.235271F00893@smtp.kernel.org/
-Assisted-by: Claude:claude-opus-4-8
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/20260529014130.671291-1-hui.zhu@linux.dev
+Fixes: 121e6f3258fe ("mm/vmalloc: hugepage vmalloc mappings")
+Signed-off-by: Hui Zhu <zhuhui@kylinos.cn>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/cxl/test/mem.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/vmalloc.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/cxl/test/mem.c b/tools/testing/cxl/test/mem.c
-index 71916e0e1546e8..15eeb1e5f0097b 100644
---- a/tools/testing/cxl/test/mem.c
-+++ b/tools/testing/cxl/test/mem.c
-@@ -1015,7 +1015,7 @@ static int mock_get_lsa(struct cxl_mockmem_data *mdata,
- 		return -EINVAL;
- 	offset = le32_to_cpu(get_lsa->offset);
- 	length = le32_to_cpu(get_lsa->length);
--	if (offset + length > LSA_SIZE)
-+	if (offset > LSA_SIZE || length > LSA_SIZE - offset)
- 		return -EINVAL;
- 	if (length > cmd->size_out)
- 		return -EINVAL;
-@@ -1035,7 +1035,7 @@ static int mock_set_lsa(struct cxl_mockmem_data *mdata,
- 		return -EINVAL;
- 	offset = le32_to_cpu(set_lsa->offset);
- 	length = cmd->size_in - sizeof(*set_lsa);
--	if (offset + length > LSA_SIZE)
-+	if (offset > LSA_SIZE || length > LSA_SIZE - offset)
- 		return -EINVAL;
- 
- 	memcpy(lsa + offset, &set_lsa->data[0], length);
+diff --git a/include/linux/vmalloc.h b/include/linux/vmalloc.h
+index 1fce4f60677066..cb6fd04c6a510d 100644
+--- a/include/linux/vmalloc.h
++++ b/include/linux/vmalloc.h
+@@ -245,7 +245,9 @@ static inline bool is_vm_area_hugepages(const void *addr)
+ 	 * allocated in the vmalloc layer.
+ 	 */
+ #ifdef CONFIG_HAVE_ARCH_HUGE_VMALLOC
+-	return find_vm_area(addr)->page_order > 0;
++	struct vm_struct *area = find_vm_area(addr);
++
++	return area && area->page_order > 0;
+ #else
+ 	return false;
+ #endif
 -- 
 2.53.0
 
