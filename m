@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7094429CDF;
-	Tue, 21 Jul 2026 19:17:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636E03EEAC7;
+	Tue, 21 Jul 2026 19:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661450; cv=none; b=CirSAzJBc+7hNNxIedSz6utf7cm24zj6U5SGwm6am9llbH8ak819PD9rwaBGVtmPGGBUEbQn6JyUQuFVPhLedY6L/V9ItZTWK8g58LwDBWwPTJSspD7A1nakGawMXl0cV28WegkjdC8+uFE4AYZLHwwjLryASEWR6QHseU0jU+0=
+	t=1784661453; cv=none; b=DWU5p2IdLFTG4ZowpQMcFi74uuFDVojEMUtMSEYZZjVOEULyGZoe2ayUOK13bAG5XlG0SFLgVwSszHL2/90f2duN3APG3B4elJ2/9KkK/8vfS4ujfG9pqvp6uWwbl5F/PBmKYzBwQdBNP1AHXNnef0IBkmDES0rFmelWzW7WgXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661450; c=relaxed/simple;
-	bh=J0X8gtaGhXLQvfAfAzzXjheDAD8+EohexC/2MNGE38g=;
+	s=arc-20240116; t=1784661453; c=relaxed/simple;
+	bh=NqtEKBjM+8emVX6PYADvu+32U/wGqtYpBmGccNPxF48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MQkrZ2Yk/zMfi1TS9/SdIbd6gI+V5/SgkqDPpCLJAMHamu6O+GvBa+ycdRfqWSqg1mmMCki+aUcKPeYLmIQzkI4aez+yNstxQEkvdGnXETL+TYVPha1vs85Bp9ZY2pjNdlQMirco5AaxZx2zyZCKCJdxqN5MhllU4LRkheOYUxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaFjkZ8C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aN3DBhZQKRX44zbjtgtfWFiQwQKcRgG28RNsD8GFc6Rou++oqRILP/2tgFCEXVsW4jQQX2vtB2xlRZh+u0GTwHgp8wiCs0nsffeRWbsNF4KZVjDtJ9fuo/Y32/L0gH0PHDDx+M5IaKGxpapRCL+5LXAIypjqRnZ2DuE44gu/m0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ykRXlbYZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaFjkZ8C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2356B1F000E9;
-	Tue, 21 Jul 2026 19:17:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ykRXlbYZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89F81F000E9;
+	Tue, 21 Jul 2026 19:17:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661449;
-	bh=uqXo4Z5tkKunz6i3eKQxKm/N/Rh92xrjY/1wKIyYKyw=;
+	s=korg; t=1784661452;
+	bh=myuOleNJ52ZCBCm+nKia6XJsIamfz3Ay/wiNyfsXZmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aaFjkZ8CtwOkK6UPhGOdCH+T4owsl6AwQQpoFQDzc2UYvN3hNuzvG2P3AmP220l9d
-	 7l1A+52ep5mN5ydVhgWvwwpBR/dnAXuGklqr7v0Bina4UsDy0GVEk3jBkb+OSBqp4s
-	 MdyEGaMhNrzlgaAaM6T3bPze/UeMK0bDVT7ng9h8=
+	b=ykRXlbYZmfhuaTeyKzwoezlI8qzH55GEAGHC1u89TzpqZspXkaCP8INr/HbNMLngX
+	 L85a1ElMhQBxKdv9hwZ91rr4SgQoP0RoFiwayJq9a1XP0YuiusSyRsqBi0oX6/tE+K
+	 HBvFHKxV3smBp5p6jnOi/oQ9rZBsbPTdpjP7l3Aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0071/1276] arm64: dts: qcom: sc8180x: Fix phy simple_bus_reg warning
-Date: Tue, 21 Jul 2026 17:08:34 +0200
-Message-ID: <20260721152447.681296589@linuxfoundation.org>
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Yunke Cao <yunkec@google.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.12 0045/1276] media: uvcvideo: Relax the constrains for interpolating the hw clock
+Date: Tue, 21 Jul 2026 17:08:08 +0200
+Message-ID: <20260721152447.096068772@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,40 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit f319a5fc998e29699d325af0e461721b3768eeec ]
+commit 1719d78f832dda8dd3f09a867ba74e05d6f11308 upstream.
 
-Correct the unit address of phy node in Qualcomm SC8180x SoC DTSI to fix
-W=1 DTC warning:
+In the initial version we set the min value to 250msec. Looks like
+100msec can also provide a good value.
 
-  sc8180x.dtsi:2650.31-2695.5: Warning (simple_bus_reg): /soc@0/phy@88ee000: simple-bus unit address format error, expected "88ed000"
+Now that we are at it, add a macro to make it cleaner.
 
-Fixes: 35e3a9c1afce ("arm64: dts: qcom: sc8180x: switch USB+DP QMP PHYs to new bindings")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260405-dts-qcom-w-1-fixes-v2-4-1f2c7b74a93f@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 6243c83be6ee8 ("media: uvcvideo: Allow hw clock updates with buffers not full")
+Cc: stable@vger.kernel.org
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Tested-by: Yunke Cao <yunkec@google.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://patch.msgid.link/20260513-uvc-hwtimestamp-v3-3-7a64838b0b02@chromium.org
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/uvc/uvc_video.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index 60f71b49026153..6ca9fba74c08ba 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -2637,7 +2637,7 @@ usb_mp_qmpphy1: phy@88ec000 {
- 			status = "disabled";
- 		};
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -489,6 +489,13 @@ static int uvc_commit_video(struct uvc_s
+  * Clocks and timestamps
+  */
  
--		usb_sec_qmpphy: phy@88ee000 {
-+		usb_sec_qmpphy: phy@88ed000 {
- 			compatible = "qcom,sc8180x-qmp-usb3-dp-phy";
- 			reg = <0 0x088ed000 0 0x3000>;
++/*
++ * The accuracy of the hardware timestamping depends on having enough data to
++ * interpolate between the different clock domains. This value is sof cycles,
++ * this is, milliseconds.
++ */
++#define UVC_MIN_HW_TIMESTAMP_DIFF 100
++
+ static inline ktime_t uvc_video_get_time(void)
+ {
+ 	if (uvc_clock_param == CLOCK_MONOTONIC)
+@@ -849,13 +856,13 @@ void uvc_video_clock_update(struct uvc_s
+ 	 * buffer, but RAM is expensive these days, specially the infinitely
+ 	 * big.
+ 	 *
+-	 * The value of 1/4th of a second was determined by running Android's
+-	 * CTS on different devices.
++	 * The value of UVC_MIN_HW_TIMESTAMP_DIFF was determined by running
++	 * Android's CTS on different devices.
+ 	 *
+-	 * dev_sof runs at 1KHz, and we have a fixed point precision of
+-	 * 16 bits.
++	 * y1 and y2 are dev_sof with a fixed point precision of 16 bits.
+ 	 */
+-	if (clock->size != clock->count && (y2 - y1) < ((1000 / 4) << 16))
++	if (clock->size != clock->count &&
++	    (y2 - y1) < (UVC_MIN_HW_TIMESTAMP_DIFF << 16))
+ 		goto done;
  
--- 
-2.53.0
-
+ 	y = (u64)(y2 - y1) * (1ULL << 31) + (u64)y1 * (u64)x2
 
 
