@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C323AFAEC;
-	Tue, 21 Jul 2026 20:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8993368A5;
+	Tue, 21 Jul 2026 20:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667119; cv=none; b=r9v/ZEFhOLeIkgjjKt+NUxdP4AjPrU21CkwaKnE+lwrZPmar8YWQSBRPIdqvxBUoysy0PcKKVooJEfRVonZK4K4J9+OGGcbQzjZMXsoiMSB4Xl15fMHiZrd4rL4yHMIptaqsjxmazg2V3v5FZXgGu98GhtOTqk1tm9EoMInIb9k=
+	t=1784667121; cv=none; b=OPGp6L6WqkoggJw6M0Y8pF6Nxf2f7xSvFe0aCc94rIumfG1nt+L8LSYjxCvhnuBfqWM8a72MYa1wOAxqE6eczv0gZRL0fhBALFwQPuRJIdBgh98YS0vOk436czFiHbB0Sp/PlzMuvzSgMr8pB7q9dwLtMYhBLVZr8aK5XRFNEow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667119; c=relaxed/simple;
-	bh=nn97cI9aivX3x9vMWFyk0GckA2dZKBKI8XKULBuqiJQ=;
+	s=arc-20240116; t=1784667121; c=relaxed/simple;
+	bh=d7ES6wBYUs8p2WtmYaBSK5RRrke95RDg2vDpN6RFdbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qjchIU8/VEjDFG2pLxMflrQAAmwQqrpFCkfET5klZuWYDP0V0IiCqyGxwmy+cXTKPAVdZ+cHSR08vGLlTlOUM3HyRVa5+eEIMXfsNeAISarg62G8ct2PAXSdze6+PGlHjgXs583Ad1/n8hKiXLge89D3pjYKUh7oa68uK7UwLdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMO/yutH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P9aZ7Ok+M9ooKLxqQZuAOl4xUzoG6RT60p/E93tQOWF0hmuz5uGuBpYwCTgLwI3r2h9CXQL8FB5k5Hd8nJy2CGRoih6JWQ6LFcU5uenbtGSFpb8OXcgd17rFJ/6Dt54Mj1u/HNc0OFrEw9ayiVpp5EpvrxDJxK4WR5jG/RlDPrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxmZFry7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMO/yutH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42EFD1F000E9;
-	Tue, 21 Jul 2026 20:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxmZFry7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3971F000E9;
+	Tue, 21 Jul 2026 20:51:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667117;
-	bh=pPNW1D0OLe6S6/gH70dTh4eBvehnRlvfp2l3r5cvmvs=;
+	s=korg; t=1784667120;
+	bh=PcwA9Vc7+6aCX4b73zJ0C5VIOQmvE6I8eQvovjTh29I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lMO/yutHi0iiXNR4SCI1957RPqClRUPwUDMJn+GBn6UtkbGfrY0++k1/T4tpGX/WY
-	 HvkZsAvzDI4dRP06F7OxuDzh7wz9cKCi05npZ94hb/6ioUXeKeutA8cV3MZ5N9UdyQ
-	 nNhqvPTFb6xbcRhVzQGziqdvqmtt6XzM3Sata+EM=
+	b=wxmZFry7pOzO7kWPfrJQHAT/PsUhBdi9NAdtFP835Uyu4i5DBCzuA3hxdm0FcYnuf
+	 YGdtV5HKTK9W3m2b86l0b21y/jFJ/Pjq16NafiAv5no1aAheGsUd6YLFYhEUImF/xY
+	 xVn2D6WHcQjuxER8wvZ5dn6VOhbf8AlqvCHF14F4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet MEMIS <dev@unknownbbqr.xyz>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	stable@kernel.org
-Subject: [PATCH 6.6 0940/1266] tools/power/x86/intel-speed-select: Harden daemon pidfile open
-Date: Tue, 21 Jul 2026 17:22:57 +0200
-Message-ID: <20260721152502.868338144@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Ingo Molnar <mingo@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>
+Subject: [PATCH 6.6 0941/1266] x86/boot: Validate console=uart8250 baud rate to fix early boot hang
+Date: Tue, 21 Jul 2026 17:22:58 +0200
+Message-ID: <20260721152502.889092525@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,54 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet MEMIS <dev@unknownbbqr.xyz>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 607af438e6430893a822964c841a1994b33acccc upstream.
+commit ffa0aa5b625fe0bed7463ac613f8b06676ff4542 upstream.
 
-Avoid symlink-based pidfile clobbering by opening the pidfile with
-O_NOFOLLOW and validating it with fstat() before locking/writing.
+When the baud rate is empty, 0, invalid, or overflows to 0 when stored
+as an int, the system will hang during early boot because of a division
+by zero in early_serial_init().
 
-The daemon currently uses a fixed pidfile path under /tmp. A local
-unprivileged user can pre-create a symlink at that path and cause a
-root-run daemon instance to write into an attacker-chosen file.
+Fall back to DEFAULT_BAUD when the resulting baud rate is 0 to prevent
+an early system hang.
 
-Fixes: 7fd786dfbd2c ("tools/power/x86/intel-speed-select: OOB daemon mode")
-Signed-off-by: Ali Ahmet MEMIS <dev@unknownbbqr.xyz>
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Cc: stable@kernel.org
+Fixes: ce0aa5dd20e4 ("x86, setup: Make the setup code also accept console=uart8250")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260713194924.126472-3-thorsten.blum@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/power/x86/intel-speed-select/isst-daemon.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/x86/boot/early_serial_console.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/tools/power/x86/intel-speed-select/isst-daemon.c
-+++ b/tools/power/x86/intel-speed-select/isst-daemon.c
-@@ -147,6 +147,7 @@ static void daemonize(char *rundir, char
+--- a/arch/x86/boot/early_serial_console.c
++++ b/arch/x86/boot/early_serial_console.c
+@@ -117,7 +117,7 @@ static unsigned int probe_baud(int port)
+ static void parse_console_uart8250(void)
  {
- 	int pid, sid, i;
- 	char str[10];
-+	struct stat st;
- 	struct sigaction sig_actions;
- 	sigset_t sig_set;
- 	int ret;
-@@ -199,11 +200,17 @@ static void daemonize(char *rundir, char
- 	if (ret == -1)
- 		exit(EXIT_FAILURE);
+ 	char optstr[64], *options;
+-	int baud = DEFAULT_BAUD;
++	int baud;
+ 	int port = 0;
  
--	pid_file_handle = open(pidfile, O_RDWR | O_CREAT, 0600);
-+	pid_file_handle = open(pidfile, O_RDWR | O_CREAT | O_NOFOLLOW, 0600);
- 	if (pid_file_handle == -1) {
- 		/* Couldn't open lock file */
- 		exit(1);
- 	}
-+
-+	if (fstat(pid_file_handle, &st) == -1)
-+		exit(1);
-+
-+	if (!S_ISREG(st.st_mode))
-+		exit(1);
- 	/* Try to lock file */
- #ifdef LOCKF_SUPPORT
- 	if (lockf(pid_file_handle, F_TLOCK, 0) == -1) {
+ 	/*
+@@ -136,10 +136,13 @@ static void parse_console_uart8250(void)
+ 	else
+ 		return;
+ 
+-	if (options && (options[0] == ','))
+-		baud = simple_strtoull(options + 1, &options, 0);
+-	else
++	if (options && (options[0] == ',')) {
++		baud = simple_strtoull(options + 1, NULL, 0);
++		if (!baud)
++			baud = DEFAULT_BAUD;
++	} else {
+ 		baud = probe_baud(port);
++	}
+ 
+ 	if (port)
+ 		early_serial_init(port, baud);
 
 
