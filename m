@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3759335DA40;
-	Tue, 21 Jul 2026 19:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1EC235DA40;
+	Tue, 21 Jul 2026 19:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662387; cv=none; b=lrE8A4MNWx/TuYK+63F8pvaPRPywOx05xvXq68I+/hpmGN16Fu7rrafitc3LQoy9yHgdfDlLF7SHxjfnSOfL5ZmYfiz/zatfrYx9MJlXwejv6vBihB8uxcahn6PQwgSjWExXdS4DAmMvQbl+NREtAvlufqy5tJfRLf97YS3eY7o=
+	t=1784662389; cv=none; b=nWZIBozwlJ2xSt+zjVRCj4ZDYNErvxTFRp95LnyiRyPo79GweZS/rF/RzkYuIERFn2vUGyLKnBYhLevkwf4yeDNJ//6HkAG0P/fYZl91jcXD4cAFx0T/4ZtelVLaXe/7cSn4j9DPKeUhYLJwQvElB4rcgDNBZFe36Uzy09qJSKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662387; c=relaxed/simple;
-	bh=2I/s97JDKT4QCTZ2PiXzdGr7EanQN0BLEqKbxYMktP8=;
+	s=arc-20240116; t=1784662389; c=relaxed/simple;
+	bh=puni2tKkMfJBQmI53kSGiRgzSnbwNk4YhQ+aHrSTD6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ednEtKEcPxHy7l6cWYupcA0XZT1sgVwV2Zs49UC5GZnrVrR6KbMfSyDG0SLFGVfKyTUGDwjiVTneZaN8wGa+BdnhLeWi6V3/5txr0TLNCmuRiwdomsVHFHZ+OeW7Mh+/KHjgc9HTx0HRwT55X4nlNkXTnpsIDYPX6E9KG20w/CU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mmq0dIq7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W12ppWi+RUbntOfO1pT57/68kuXrh5qy75UQkZnXR7PWCq3NhlP/rtzQXp5aU33WCy19/I86vQmyrQiYtwJ2SAGEDvNiEiOPw5hSqYTARW1qBUJw/i+ZlkT2QLnoj54RtlRxIHI/isQiawuC9VBnpkJgpvUDsyY8vX7hEjKF+B8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tSZgnaYk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mmq0dIq7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2C01F000E9;
-	Tue, 21 Jul 2026 19:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tSZgnaYk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F1A1F000E9;
+	Tue, 21 Jul 2026 19:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662386;
-	bh=0q6l5c/hYjOmrCs3FJFk8JAivI6ikGrPSeOfOmsBX3Q=;
+	s=korg; t=1784662388;
+	bh=dSwiMsC/r/rxkKSIk9QcpRZD5d5taRXfwB8jJ4IGvzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mmq0dIq76GWYYnPeyY2L1DB/FfarZyIymcbVHFNq6RVIe7RkQrUPlhsGNWv/crczN
-	 Fj2YSN3E3JOhSWTg2D5356ffQfVgvBUUjSvDv1uM6p6qUkfytFfuTlZcanvYaoNshH
-	 2XjXBHV0fTf1wvtnULxar0LYblPcx6cIhqTPXoo8=
+	b=tSZgnaYk7INUNKIVAuqmJ7YNc59XKbrvRqRHShyTwAATF0MlmESHOqkzkjzPKB5Dg
+	 4CAVd7vSrzwJ60Gs1kPRMoTQOHZ8njwD9FBPGrtE2Bp36g7SECHFWe6W5nRx3RLKTC
+	 u6WwyNQqKG7JbdO3dgmCxk1S+CthdkpcGeBS2XSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Yu <qiang.yu@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0426/1276] PCI: qcom: Set max OPP before DBI access during resume
-Date: Tue, 21 Jul 2026 17:14:29 +0200
-Message-ID: <20260721152455.637241543@linuxfoundation.org>
+Subject: [PATCH 6.12 0427/1276] phy: phy-can-transceiver: Check driver match and driver data against NULL
+Date: Tue, 21 Jul 2026 17:14:30 +0200
+Message-ID: <20260721152455.658388363@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,106 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Yu <qiang.yu@oss.qualcomm.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 5dc31cd4a91a7f006d23efa97a5594a7e3ac7790 ]
+[ Upstream commit ebee9004cc0200b2b708ebf7ac625d35c71c049f ]
 
-During resume, qcom_pcie_icc_opp_update() may access DBI registers before
-the OPP votes are restored, triggering NoC errors.
+Every platform driver can be forced to match a device that doesn't
+match its list of device IDs because of device_match_driver_override()
+so platform drivers that rely on the existence of a device's driver
+data need to verify its presence.
 
-Set the PCIe controller to the maximum OPP first in resume_noirq(), then
-proceed with link/DBI accesses. The OPP is later updated again based on
-the actual link bandwidth requirements.
+Accordingly, add requisite match and driver data checks against NULL
+to the driver where they are missing.
 
-Introduce a helper to reuse the max-OPP setup code and share it with
-probe().
-
-Fixes: 5b6272e0efd5 ("PCI: qcom: Add OPP support to scale performance")
-Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-[mani: commit log and error log rewording]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260416-setmaxopp-v1-1-6a74e2d945a0@oss.qualcomm.com
+Fixes: a4a86d273ff1 ("phy: phy-can-transceiver: Add support for generic CAN transceiver driver")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20260513220336.369628-2-andriy.shevchenko@linux.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 42 ++++++++++++++++----------
- 1 file changed, 26 insertions(+), 16 deletions(-)
+ drivers/phy/phy-can-transceiver.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 5d27cd149f5120..533782940f2e21 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1508,6 +1508,22 @@ static void qcom_pcie_icc_opp_update(struct qcom_pcie *pcie)
- 	}
- }
+diff --git a/drivers/phy/phy-can-transceiver.c b/drivers/phy/phy-can-transceiver.c
+index ee4ce42496985d..95a02705bf2ad9 100644
+--- a/drivers/phy/phy-can-transceiver.c
++++ b/drivers/phy/phy-can-transceiver.c
+@@ -111,6 +111,9 @@ static int can_transceiver_phy_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
  
-+static int qcom_pcie_set_max_opp(struct device *dev)
-+{
-+	unsigned long max_freq = ULONG_MAX;
-+	struct dev_pm_opp *opp;
-+	int ret;
+ 	match = of_match_node(can_transceiver_phy_ids, pdev->dev.of_node);
++	if (!match || !match->data)
++		return -ENODEV;
 +
-+	opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
-+	if (IS_ERR(opp))
-+		return PTR_ERR(opp);
-+
-+	ret = dev_pm_opp_set_opp(dev, opp);
-+	dev_pm_opp_put(opp);
-+
-+	return ret;
-+}
-+
- static int qcom_pcie_link_transition_count(struct seq_file *s, void *data)
- {
- 	struct qcom_pcie *pcie = (struct qcom_pcie *)dev_get_drvdata(s->private);
-@@ -1573,9 +1589,7 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
- static int qcom_pcie_probe(struct platform_device *pdev)
- {
- 	const struct qcom_pcie_cfg *pcie_cfg;
--	unsigned long max_freq = ULONG_MAX;
- 	struct device *dev = &pdev->dev;
--	struct dev_pm_opp *opp;
- 	struct qcom_pcie *pcie;
- 	struct dw_pcie_rp *pp;
- 	struct resource *res;
-@@ -1658,21 +1672,9 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 	 * probe(), OPP will be updated using qcom_pcie_icc_opp_update().
- 	 */
- 	if (!ret) {
--		opp = dev_pm_opp_find_freq_floor(dev, &max_freq);
--		if (IS_ERR(opp)) {
--			ret = PTR_ERR(opp);
--			dev_err_probe(pci->dev, ret,
--				      "Unable to find max freq OPP\n");
--			goto err_pm_runtime_put;
--		} else {
--			ret = dev_pm_opp_set_opp(dev, opp);
--		}
--
--		dev_pm_opp_put(opp);
-+		ret = qcom_pcie_set_max_opp(dev);
- 		if (ret) {
--			dev_err_probe(pci->dev, ret,
--				      "Failed to set OPP for freq %lu\n",
--				      max_freq);
-+			dev_err_probe(dev, ret, "Failed to set max OPP\n");
- 			goto err_pm_runtime_put;
- 		}
+ 	drvdata = match->data;
  
-@@ -1803,6 +1805,14 @@ static int qcom_pcie_resume_noirq(struct device *dev)
- 	int ret;
- 
- 	if (pm_suspend_target_state != PM_SUSPEND_MEM) {
-+		if (pcie->use_pm_opp) {
-+			ret = qcom_pcie_set_max_opp(dev);
-+			if (ret) {
-+				dev_err(dev, "Failed to set max OPP: %d\n", ret);
-+				return ret;
-+			}
-+		}
-+
- 		ret = icc_enable(pcie->icc_cpu);
- 		if (ret) {
- 			dev_err(dev, "Failed to enable CPU-PCIe interconnect path: %d\n", ret);
+ 	if (of_property_read_bool(dev->of_node, "mux-states")) {
 -- 
 2.53.0
 
