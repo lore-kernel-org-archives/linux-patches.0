@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CA046C4B5;
-	Tue, 21 Jul 2026 16:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156BA2DC76A;
+	Tue, 21 Jul 2026 16:00:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649621; cv=none; b=RwWhtIc4zia08rmUXDYyMmVGsmYRvevflMosHotgsoYk0RpSzofHwyHzQ4nzDqAZ/WdBsSWVLOpZ5bAq5ZhMUPUalhRuzHC5BfLsZeGyYXaKEZm4sxZR4kpmF0/i5ZSzEK7KkBKSqEKMTxyevsuWxLS7Cp5So0nLSkTLCoUljwo=
+	t=1784649624; cv=none; b=YDDpa615dFeCcPhdUTY4R4Q+LfbhxT92n2MtE2Orv6t6mCdLEKce5huvjkD4cELmebQ59Iq+wJ5OykfBFQwa/9hQE+FkmqXQ/Wer/p6HR/FeELt02ZXdYZMdiGnRZLe/tEHWxaCWhbwiX3io8eIZC5vyj0MTe3vz2sSU9sr3ESg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649621; c=relaxed/simple;
-	bh=sJskEiMJF38jhBqUiBAQNKbUdM4AZ44/E1miyplM3Xc=;
+	s=arc-20240116; t=1784649624; c=relaxed/simple;
+	bh=kX5QpUc665BNAcp6hli/nGgTQbI7Yen9RdfyeWwzKQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hJGYmd/0+Qa/p9lorQCB4gbwuWhxCX3yooAJArcYbGreVNndXSc52TAvIT+cqmfiTjmfApKpXArdxYw7pKBl0/PwVRYJ/GUp9apKzwgBs4w4oYh/z+77PQ9kEl2qowtjiBZy84AgHaAyPqsFg8UJfzIc2y/FQTsiJ65VnrLb6e0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtPKAngl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W9lEcwJ0rh4hdyTNMFWPtQzYDdH8XAOgV41LJRrlmx3049kimYCaOA/Oj4qgA9A+lHHvbnmA1Y+oYsDyveoZx+eqxBwkSQgAoyXLId7B1AiBdU7gVJXPV3A3m5P/eDMj7OtQ7tbqYiaLaY0plteNyA3FEnJ7lwscf60IEdSpZI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qizX9J1C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtPKAngl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8DA31F000E9;
-	Tue, 21 Jul 2026 16:00:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qizX9J1C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5A61F000E9;
+	Tue, 21 Jul 2026 16:00:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649620;
-	bh=+GikJuas7LhU6ZR5iCGwdBTKzeW7DKTxvDWyoD0o/2k=;
+	s=korg; t=1784649623;
+	bh=wJr9ugRhSfzihteW3sLd7SGFOlYf9n3zCv3nITdQ+Hc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FtPKAnglfcK3J3DBYpKaDXso4V4P4ep1E3YN2TYQmOk1oKmq3p8WdXarFgQlPa5Wm
-	 5fN/x58nM2GfPK/f456yOsePpKCYQGKHbmN8kP/VAxkx3DfTnF1xRYBFPbwOfXOtIe
-	 M58G4WGR+lWjZMeJs0xjeFgOSiHPPSNy/TyNGuJU=
+	b=qizX9J1CkC/BlvWy2AlYzTJvVYkeEb8z2I72V9XC8VnZquV1NyJkr0I8edtSz8vpx
+	 +h3mAzqmUJ8A7Xj+leXPdPQmQ9FHr5mj9rQcs/abVKyIVLEU64H1m5H5olAQGA11E9
+	 v6cHPDIExEG7YgnBEcv/DDcalu6wn/da33aVjrf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	linux-arm-kernel@lists.infradead.org,
-	Russell King <linux@armlinux.org.uk>,
-	Helge Deller <deller@gmx.de>,
+	Ryder Lee <ryder.lee@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0602/2077] fbdev/arm: Export acorndata_8x8 font symbol for bootloader
-Date: Tue, 21 Jul 2026 17:04:35 +0200
-Message-ID: <20260721152607.005716965@linuxfoundation.org>
+Subject: [PATCH 7.1 0593/2077] wifi: mt76: mt7915: fix potential tx_retries underflow
+Date: Tue, 21 Jul 2026 17:04:26 +0200
+Message-ID: <20260721152606.796578503@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,64 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Ryder Lee <ryder.lee@mediatek.com>
 
-[ Upstream commit 470ea955a18c76eeb10ca11ffcb2fe923bfc5515 ]
+[ Upstream commit 05e72b6167970043348bfbe8f72a3b67a38a9f1c ]
 
-The text display code used in the Risc PC kernel image decompression
-code uses arch/arm/boot/compressed/font.c, which includes
-lib/fonts/font_acorn_8x8.c, which further includes <linux/font.h>.
+When FIELD_GET returns 0 for the retry count, subtracting 1 causes
+an unsigned integer underflow, resulting in tx_retries becoming a
+very large value (0xFFFFFFFF for u32).
 
-Since commit 97df8960240a ("lib/fonts: Provide helpers for calculating
-glyph pitch and size") <linux/font.h> contains inline functions that
-require __do_div64, which is not linked into the ARM kernel
-decompressor. This makes Risc PC zImages fail to build.
+Fix by checking if count is non-zero before subtracting 1.
 
-Resolve this issue by defining the BOOTLOADER symbol and use it to avoid
-a static declaration of the acorndata_8x8 symbol. That way it can be
-referenced by the arm bootloader, and other static math functions and
-symbols (like __do_div64) stay static and don't get unneccesary included
-in the ARM kernel bootloader decompressor object file.
-
-Fixes: 97df8960240a ("lib/fonts: Provide helpers for calculating glyph pitch and size")
-Reported-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: Russell King <linux@armlinux.org.uk>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 943e4fb96e6f ("wifi: mt76: mt7915: report tx retries/failed counts for non-WED path")
+Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
+Link: https://patch.msgid.link/20260605113306.3485554-1-ryder.lee@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/compressed/Makefile | 2 +-
- lib/fonts/font_acorn_8x8.c        | 5 +++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/mac.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm/boot/compressed/Makefile b/arch/arm/boot/compressed/Makefile
-index a159120d1e42e2..e3f550d6285786 100644
---- a/arch/arm/boot/compressed/Makefile
-+++ b/arch/arm/boot/compressed/Makefile
-@@ -157,4 +157,4 @@ $(obj)/piggy_data: $(obj)/../Image FORCE
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+index cec2c4208255fd..334c19ab2b22ca 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+@@ -912,16 +912,16 @@ mt7915_mac_tx_free(struct mt7915_dev *dev, void *data, int len)
+ 		}
  
- $(obj)/piggy.o: $(obj)/piggy_data
+ 		if (!mtk_wed_device_active(&mdev->mmio.wed) && wcid) {
+-			u32 tx_retries = 0, tx_failed = 0;
++			u32 tx_retries = 0, tx_failed = 0, count;
  
--CFLAGS_font.o := -Dstatic=
-+CFLAGS_font.o := -DBOOTLOADER
-diff --git a/lib/fonts/font_acorn_8x8.c b/lib/fonts/font_acorn_8x8.c
-index 36c51016769d41..4ff52c79f8c4d6 100644
---- a/lib/fonts/font_acorn_8x8.c
-+++ b/lib/fonts/font_acorn_8x8.c
-@@ -5,7 +5,12 @@
- 
- #define FONTDATAMAX 2048
- 
-+#ifdef BOOTLOADER
-+/* The acorndata_8x8 symbol is needed by the ARM bootloader too. */
-+const struct font_data acorndata_8x8 = {
-+#else
- static const struct font_data acorndata_8x8 = {
-+#endif
- { 0, 0, FONTDATAMAX, 0 }, {
- /* 00 */  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* ^@ */
- /* 01 */  0x7e, 0x81, 0xa5, 0x81, 0xbd, 0x99, 0x81, 0x7e, /* ^A */
+ 			if (v3 && (info & MT_TX_FREE_MPDU_HEADER_V3)) {
+-				tx_retries =
+-					FIELD_GET(MT_TX_FREE_COUNT_V3, info) - 1;
++				count = FIELD_GET(MT_TX_FREE_COUNT_V3, info);
++				tx_retries = count ? count - 1 : 0;
+ 				tx_failed = tx_retries +
+ 					!!FIELD_GET(MT_TX_FREE_STAT_V3, info);
+ 			} else if (!v3 && (info & MT_TX_FREE_MPDU_HEADER)) {
+-				tx_retries =
+-					FIELD_GET(MT_TX_FREE_COUNT, info) - 1;
++				count = FIELD_GET(MT_TX_FREE_COUNT, info);
++				tx_retries = count ? count - 1 : 0;
+ 				tx_failed = tx_retries +
+ 					!!FIELD_GET(MT_TX_FREE_STAT, info);
+ 			}
 -- 
 2.53.0
 
