@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3771446D545;
-	Tue, 21 Jul 2026 15:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0715446D55E;
+	Tue, 21 Jul 2026 15:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648665; cv=none; b=PwTYYpLaQhWRgZ7rb//Ur++RPy6TQMPQI4f5bMl19pNE0TOWIY+DBrpK9xMYk+GNzbET8eVn9SWfNR72cbeEC+2vFQfsEoVxy4viO7Pu9rkgHpzmNN1GvrK3Sn7R+Ujmv/pSF1BYciXKXlFDXGRcterdZMCBpn0tOBFwhDDRXf0=
+	t=1784648668; cv=none; b=Eq72CVs8yIqW4PyWrxU4WW4KARrn7Nrg91dXTxGbVmLNwTNLrv0kRUj87VGjJRIUtVO+iP8/9ncAxh9xL+ZHo+4esZhkBTM1Ly9wW3Aj5xuDZgemp97rpzjUoRgyZohemseaU7DjeVs6Q2nz6HDu8tGjHL1gzVhLH8dHfwBsE6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648665; c=relaxed/simple;
-	bh=plx9JP+873Wm88hAhYYz8iYLRUwRLvrINyYRSx0B4pk=;
+	s=arc-20240116; t=1784648668; c=relaxed/simple;
+	bh=EymVPuw0vmRyfcT0UDwxPmkzsqML1R1uzR6732usRw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CVPfuNL+quhceMzCD3p/56Le4LStFomfMkDTaHs0zs2eS0mSu6iz2nAOw1A4Ril/xfGPNagFMlYFok/aY5NEBavbaU9pQTYdbc9KphzkJHeytPzTKvnLMlUtxz+zf4BlsgQ/fnT0XoBr8RWAzxXCOFDVLH2ML9jgpUdyFYHcvKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FymJixG8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MQVUQkfEZwP+iD9S0VZmYSW2FvgkZ8Vq451j/4oXlCXKpXmaYPkkAjuRrCkM4TuUCoONtIbF6ySfO2OQO/0AhWSjyqoPhtQBgsgYRltfpWeuJNSRl8CNCJXqMHwgcVZOWMJl987b/UmlyW8qd8I0gTeZ9dd0ErqAzkDG0ab+Uuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hE1cCLJv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FymJixG8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E6841F000E9;
-	Tue, 21 Jul 2026 15:44:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hE1cCLJv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCA81F000E9;
+	Tue, 21 Jul 2026 15:44:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648664;
-	bh=6FJU7K0Rthw3Jj5NFrmz+BG4oFkRKO3JhpwHl7ZSzxQ=;
+	s=korg; t=1784648666;
+	bh=dFV4VSwKZAfkyz2E4pynuqS/CAxvIkA9Y0wREVcD/J0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FymJixG8oRpVLFji5entzyTNKmgYZKaz7ggF13XvhdG/En6eB+oGi3blLsIX4AZWj
-	 ocOOB4P3/kCp0IuN3s/WMGSK2fYtSTxANIGuMKXzrAqbk3D1phlrwW/HkTCzIcm6tv
-	 rFwIHKyX/r5uSSsr5HBnHqNHW6RIxNiBu0f4saLc=
+	b=hE1cCLJvl+VLVpK7i29zOh5W2uai4MOfhhH0ykZJoYiTmdztir8FmbCqQ9+KuHDed
+	 f85tcWK4EJyPjKk+8HRgYepsa0uOL60Rhibi/FTGT4zuzK+UV0LZJqve4LUQom0FqU
+	 K2VzuifKmh8hPqthh6JJbifg/WnXWO6/GTzqY3uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Lifeng Zheng <zhenglifeng1@huawei.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Pengjie Zhang <zhangpengjie2@huawei.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0286/2077] cpufreq: Documentation: fix sampling_down_factor range
-Date: Tue, 21 Jul 2026 16:59:19 +0200
-Message-ID: <20260721152559.426481565@linuxfoundation.org>
+Subject: [PATCH 7.1 0287/2077] cpufreq: conservative: Simplify frequency limit handling
+Date: Tue, 21 Jul 2026 16:59:20 +0200
+Message-ID: <20260721152559.448004639@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,39 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengjie Zhang <zhangpengjie2@huawei.com>
+From: Lifeng Zheng <zhenglifeng1@huawei.com>
 
-[ Upstream commit 85524e651d20944399322d46fb97960337831d43 ]
+[ Upstream commit 3494dff89779b73a6c70481c982e0e96d336454a ]
 
-The ondemand governor implementation accepts sampling_down_factor values
-from 1 to 100000 via MAX_SAMPLING_DOWN_FACTOR, but the documentation in
-admin-guide/pm/cpufreq.rst still says the valid range is 1 to 100.
+cs_dbs_update() performs explicit checks against policy->min/max
+before updating the target frequency. These checks are redundant as
+__cpufreq_driver_target() already clamps the requested frequency to
+the valid policy limits.
 
-Update the documentation to match the actual code.
+Remove the unnecessary boundary checks and simplify the update logic.
 
-Fixes: 2a0e49279850 ("cpufreq: User/admin documentation update and consolidation")
+This also fixes an issue introduced by commit 00bfe05889e9 ("cpufreq:
+conservative: Decrease frequency faster for deferred updates"), where
+stale target comparisons could cause frequency updates to be skipped
+entirely after deferred adjustments.
+
+Closes: https://lore.kernel.org/all/20260421123545.1745998-1-zhenglifeng1@huawei.com/
+Fixes: 00bfe05889e9 ("cpufreq: conservative: Decrease frequency faster for deferred updates")
+Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Co-developed-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
-Link: https://patch.msgid.link/20260518133457.2408463-1-zhangpengjie2@huawei.com
+Link: https://patch.msgid.link/292e6d937890f135e30ec0d2107eaad47cb9a976.1779423281.git.viresh.kumar@linaro.org
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/pm/cpufreq.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/cpufreq_conservative.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/Documentation/admin-guide/pm/cpufreq.rst b/Documentation/admin-guide/pm/cpufreq.rst
-index dbe6d23a5d671d..fdca59c955dcc9 100644
---- a/Documentation/admin-guide/pm/cpufreq.rst
-+++ b/Documentation/admin-guide/pm/cpufreq.rst
-@@ -516,7 +516,7 @@ This governor exposes the following tunables:
- 	of those tasks above 0 and set this attribute to 1.
+diff --git a/drivers/cpufreq/cpufreq_conservative.c b/drivers/cpufreq/cpufreq_conservative.c
+index df01d33993d824..0b32ae28ec857f 100644
+--- a/drivers/cpufreq/cpufreq_conservative.c
++++ b/drivers/cpufreq/cpufreq_conservative.c
+@@ -103,10 +103,6 @@ static unsigned int cs_dbs_update(struct cpufreq_policy *policy)
+ 	if (load > dbs_data->up_threshold) {
+ 		dbs_info->down_skip = 0;
  
- ``sampling_down_factor``
--	Temporary multiplier, between 1 (default) and 100 inclusive, to apply to
-+	Temporary multiplier, between 1 (default) and 100000 inclusive, to apply to
- 	the ``sampling_rate`` value if the CPU load goes above ``up_threshold``.
+-		/* if we are already at full speed then break out early */
+-		if (requested_freq == policy->max)
+-			goto out;
+-
+ 		requested_freq += freq_step;
+ 		if (requested_freq > policy->max)
+ 			requested_freq = policy->max;
+@@ -124,13 +120,7 @@ static unsigned int cs_dbs_update(struct cpufreq_policy *policy)
  
- 	This causes the next execution of the governor's worker routine (after
+ 	/* Check for frequency decrease */
+ 	if (load < cs_tuners->down_threshold) {
+-		/*
+-		 * if we cannot reduce the frequency anymore, break out early
+-		 */
+-		if (requested_freq == policy->min)
+-			goto out;
+-
+-		if (requested_freq > freq_step)
++		if (requested_freq > policy->min + freq_step)
+ 			requested_freq -= freq_step;
+ 		else
+ 			requested_freq = policy->min;
 -- 
 2.53.0
 
