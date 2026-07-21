@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04DE403EA1;
-	Tue, 21 Jul 2026 23:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B026434409;
+	Tue, 21 Jul 2026 23:01:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674864; cv=none; b=Q6HBl66WQFOlq37Ul41EwmQzVI/Igg4kkWEK3Yf1oC+4ko2kQ22eBIaqUbsKt4J7vDTeOqQuMCJagDuVqU0+OnKmNuazuHA1alUu5u/IZZikht7R6s0B7wda3juOaA0DLNtzgELARCf1iJOteSwna84WMB3xk1TJg5CEuqI0n/M=
+	t=1784674866; cv=none; b=MUSX5q+mT23pTzuqiv+Lfk6BGAGah408OP9IfEjIV30rrR5uAVg620z63Q/lfEhwTc0yu0GZkBgR4CpPdpeN4iGVYYGVqCrMXB5cTdyyEUk6/zoZfFY3XnLpnuXBgdgb+U3hN5jdnWBmu5zGeCvYst803p5LbrzX+0tA7ks75sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674864; c=relaxed/simple;
-	bh=S3lQx7mSzh410KFjMBzDvkTLuLa/EKdQgOChMgYLNxs=;
+	s=arc-20240116; t=1784674866; c=relaxed/simple;
+	bh=m3eyMqqhabY80f9GSGkGsr3cvikrxV03hMebGbzFcqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VwXTOSNgAj5KcYFMn623SaKj1aIBhWboET2WZZpRfEgKZXdcj5uSdo+OP7H4AD5jGxemlgEnUCrKSCKFuosPLztn8TUAHZXqlk2YHDI58O2IJcJ4cyiPKlDdtK3UsIzy3Dd+9NVw7Rjfa+mVc+MbDJIe91hUtOiWg+nNo79CMa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqhAk0YO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I5xN01I+0CqaF22G2P7OAteJdnrXjoNwKquLlu41SmGdS7OVNVyKwZj6zkmThHPub6Blg/IOqFDWMIgf1nAMOZ/XVfP8XyTuksZf2y5IL9AD9E8E2AeiWeoKIU35tAXvjxEV2QFPRI65wQvCb9SpJy+zo4ptNqWtYs0H55edizg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EyXnmklF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqhAk0YO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C0151F000E9;
-	Tue, 21 Jul 2026 23:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EyXnmklF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ACBB1F000E9;
+	Tue, 21 Jul 2026 23:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674862;
-	bh=u/WYdVc1g+6Q62HFn48N1R5s4wohWZJwDpzRaf6etR4=;
+	s=korg; t=1784674865;
+	bh=d80Xpk8b5XxFOSGmv53AzJydE8QkzZh3UYo35XR/At8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QqhAk0YOIWv7H2cinQVVJt91ph5LY53B7DbtS7Uo4jz1b12DIfoSsc0MmI0wRCDBJ
-	 wXpvn5RV0qOOqWWfSNM7uQrBRJQpTkVfXuMQdX8mahMpA7tcsTeMW02hdLi35rb05W
-	 M5l8QmlNEjMXMs8sKabqInZY2ys8hISTT3B8o71I=
+	b=EyXnmklFJ2Anq7Cm42wYdc6nvc3UvKe0P0ZmE2g0nP/h3q0SwAWLMDzgDaJ8SVhu2
+	 U/HP6CU0Dj7YuHBQRrFtzEsXzxbLBgk4Z9YkRtU4YBZV5PSn9Bm5HUHmaS6KnoC/Aw
+	 MNLeQK6r8jvf/wBPVso1aLHzak5PP6g5cAZpgjeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Laurent M Coquerel <laurent.m.coquerel@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Florian Westphal <fw@strlen.de>,
+	Paul Moore <paul@paul-moore.com>,
+	Ricardo Robaina <rrobaina@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 682/699] crypto: qat - validate RSA CRT component lengths
-Date: Tue, 21 Jul 2026 17:27:21 +0200
-Message-ID: <20260721152411.158112345@linuxfoundation.org>
+Subject: [PATCH 5.10 683/699] audit: add audit_log_nf_skb helper function
+Date: Tue, 21 Jul 2026 17:27:22 +0200
+Message-ID: <20260721152411.182912464@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -53,84 +52,293 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: Ricardo Robaina <rrobaina@redhat.com>
 
-[ Upstream commit b3ac78756588059729b9195fcc9f4b37d54057a5 ]
+[ Upstream commit f19590b07cb620be1fcd5474c49515e21a05d406 ]
 
-The generic RSA key parser (rsa_helper.c) bounds each CRT component (p,
-q, dp, dq, qinv) by the modulus size n_sz, but qat_rsa_setkey_crt()
-allocates half-size DMA buffers (key_sz / 2) and right-aligns each
-component with:
+Netfilter code (net/netfilter/nft_log.c and net/netfilter/xt_AUDIT.c)
+have to be kept in sync. Both source files had duplicated versions of
+audit_ip4() and audit_ip6() functions, which can result in lack of
+consistency and/or duplicated work.
 
-    memcpy(dst + half_key_sz - len, src, len)
+This patch adds a helper function in audit.c that can be called by
+netfilter code commonly, aiming to improve maintainability and
+consistency.
 
-When a CRT component is larger than half_key_sz the subtraction
-underflows and memcpy writes past the DMA buffer, causing memory
-corruption.
-
-Add a len > half_key_sz check next to the existing !len check for each
-of the five CRT components so the driver falls back to the non-CRT path
-instead of writing out of bounds.
-
-Fixes: 879f77e9071f ("crypto: qat - Add RSA CRT mode")
-Cc: stable@vger.kernel.org
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Reviewed-by: Laurent M Coquerel <laurent.m.coquerel@intel.com>
-Tested-by: Laurent M Coquerel <laurent.m.coquerel@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Suggested-by: Florian Westphal <fw@strlen.de>
+Suggested-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Ricardo Robaina <rrobaina@redhat.com>
+Acked-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Stable-dep-of: 65dfde57d1e2 ("audit: fix potential integer overflow in audit_log_n_hex()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/qat/qat_common/qat_asym_algs.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/linux/audit.h    |    8 +++++
+ kernel/audit.c           |   64 +++++++++++++++++++++++++++++++++++++++++++++++
+ net/netfilter/nft_log.c  |   58 ------------------------------------------
+ net/netfilter/xt_AUDIT.c |   58 ------------------------------------------
+ 4 files changed, 74 insertions(+), 114 deletions(-)
 
---- a/drivers/crypto/qat/qat_common/qat_asym_algs.c
-+++ b/drivers/crypto/qat/qat_common/qat_asym_algs.c
-@@ -1030,7 +1030,7 @@ static void qat_rsa_setkey_crt(struct qa
- 	ptr = rsa_key->p;
- 	len = rsa_key->p_sz;
- 	qat_rsa_drop_leading_zeros(&ptr, &len);
--	if (!len)
-+	if (!len || len > half_key_sz)
- 		goto err;
- 	ctx->p = dma_alloc_coherent(dev, half_key_sz, &ctx->dma_p, GFP_KERNEL);
- 	if (!ctx->p)
-@@ -1041,7 +1041,7 @@ static void qat_rsa_setkey_crt(struct qa
- 	ptr = rsa_key->q;
- 	len = rsa_key->q_sz;
- 	qat_rsa_drop_leading_zeros(&ptr, &len);
--	if (!len)
-+	if (!len || len > half_key_sz)
- 		goto free_p;
- 	ctx->q = dma_alloc_coherent(dev, half_key_sz, &ctx->dma_q, GFP_KERNEL);
- 	if (!ctx->q)
-@@ -1052,7 +1052,7 @@ static void qat_rsa_setkey_crt(struct qa
- 	ptr = rsa_key->dp;
- 	len = rsa_key->dp_sz;
- 	qat_rsa_drop_leading_zeros(&ptr, &len);
--	if (!len)
-+	if (!len || len > half_key_sz)
- 		goto free_q;
- 	ctx->dp = dma_alloc_coherent(dev, half_key_sz, &ctx->dma_dp,
- 				     GFP_KERNEL);
-@@ -1064,7 +1064,7 @@ static void qat_rsa_setkey_crt(struct qa
- 	ptr = rsa_key->dq;
- 	len = rsa_key->dq_sz;
- 	qat_rsa_drop_leading_zeros(&ptr, &len);
--	if (!len)
-+	if (!len || len > half_key_sz)
- 		goto free_dp;
- 	ctx->dq = dma_alloc_coherent(dev, half_key_sz, &ctx->dma_dq,
- 				     GFP_KERNEL);
-@@ -1076,7 +1076,7 @@ static void qat_rsa_setkey_crt(struct qa
- 	ptr = rsa_key->qinv;
- 	len = rsa_key->qinv_sz;
- 	qat_rsa_drop_leading_zeros(&ptr, &len);
--	if (!len)
-+	if (!len || len > half_key_sz)
- 		goto free_dq;
- 	ctx->qinv = dma_alloc_coherent(dev, half_key_sz, &ctx->dma_qinv,
- 				       GFP_KERNEL);
+--- a/include/linux/audit.h
++++ b/include/linux/audit.h
+@@ -186,6 +186,8 @@ extern void		    audit_log_lost(const ch
+ 
+ extern int audit_log_task_context(struct audit_buffer *ab);
+ extern void audit_log_task_info(struct audit_buffer *ab);
++extern int audit_log_nf_skb(struct audit_buffer *ab,
++			    const struct sk_buff *skb, u8 nfproto);
+ 
+ extern int		    audit_update_lsm_rules(void);
+ 
+@@ -251,6 +253,12 @@ static inline int audit_log_task_context
+ static inline void audit_log_task_info(struct audit_buffer *ab)
+ { }
+ 
++static inline int audit_log_nf_skb(struct audit_buffer *ab,
++				   const struct sk_buff *skb, u8 nfproto)
++{
++	return 0;
++}
++
+ static inline kuid_t audit_get_loginuid(struct task_struct *tsk)
+ {
+ 	return INVALID_UID;
+--- a/kernel/audit.c
++++ b/kernel/audit.c
+@@ -59,6 +59,8 @@
+ #include <linux/freezer.h>
+ #include <linux/pid_namespace.h>
+ #include <net/netns/generic.h>
++#include <net/ip.h>
++#include <net/ipv6.h>
+ 
+ #include "audit.h"
+ 
+@@ -2304,6 +2306,68 @@ void audit_log_path_denied(int type, con
+ 	audit_log_end(ab);
+ }
+ 
++int audit_log_nf_skb(struct audit_buffer *ab,
++		     const struct sk_buff *skb, u8 nfproto)
++{
++	/* find the IP protocol in the case of NFPROTO_BRIDGE */
++	if (nfproto == NFPROTO_BRIDGE) {
++		switch (eth_hdr(skb)->h_proto) {
++		case htons(ETH_P_IP):
++			nfproto = NFPROTO_IPV4;
++			break;
++		case htons(ETH_P_IPV6):
++			nfproto = NFPROTO_IPV6;
++			break;
++		default:
++			goto unknown_proto;
++		}
++	}
++
++	switch (nfproto) {
++	case NFPROTO_IPV4: {
++		struct iphdr iph;
++		const struct iphdr *ih;
++
++		ih = skb_header_pointer(skb, skb_network_offset(skb),
++					sizeof(iph), &iph);
++		if (!ih)
++			return -ENOMEM;
++
++		audit_log_format(ab, " saddr=%pI4 daddr=%pI4 proto=%hhu",
++				 &ih->saddr, &ih->daddr, ih->protocol);
++		break;
++	}
++	case NFPROTO_IPV6: {
++		struct ipv6hdr iph;
++		const struct ipv6hdr *ih;
++		u8 nexthdr;
++		__be16 frag_off;
++
++		ih = skb_header_pointer(skb, skb_network_offset(skb),
++					sizeof(iph), &iph);
++		if (!ih)
++			return -ENOMEM;
++
++		nexthdr = ih->nexthdr;
++		ipv6_skip_exthdr(skb, skb_network_offset(skb) + sizeof(iph),
++				 &nexthdr, &frag_off);
++
++		audit_log_format(ab, " saddr=%pI6c daddr=%pI6c proto=%hhu",
++				 &ih->saddr, &ih->daddr, nexthdr);
++		break;
++	}
++	default:
++		goto unknown_proto;
++	}
++
++	return 0;
++
++unknown_proto:
++	audit_log_format(ab, " saddr=? daddr=? proto=?");
++	return -EPFNOSUPPORT;
++}
++EXPORT_SYMBOL(audit_log_nf_skb);
++
+ /* global counter which is incremented every time something logs in */
+ static atomic_t session_id = ATOMIC_INIT(0);
+ 
+--- a/net/netfilter/nft_log.c
++++ b/net/netfilter/nft_log.c
+@@ -26,46 +26,10 @@ struct nft_log {
+ 	char			*prefix;
+ };
+ 
+-static bool audit_ip4(struct audit_buffer *ab, struct sk_buff *skb)
+-{
+-	struct iphdr _iph;
+-	const struct iphdr *ih;
+-
+-	ih = skb_header_pointer(skb, skb_network_offset(skb), sizeof(_iph), &_iph);
+-	if (!ih)
+-		return false;
+-
+-	audit_log_format(ab, " saddr=%pI4 daddr=%pI4 proto=%hhu",
+-			 &ih->saddr, &ih->daddr, ih->protocol);
+-
+-	return true;
+-}
+-
+-static bool audit_ip6(struct audit_buffer *ab, struct sk_buff *skb)
+-{
+-	struct ipv6hdr _ip6h;
+-	const struct ipv6hdr *ih;
+-	u8 nexthdr;
+-	__be16 frag_off;
+-
+-	ih = skb_header_pointer(skb, skb_network_offset(skb), sizeof(_ip6h), &_ip6h);
+-	if (!ih)
+-		return false;
+-
+-	nexthdr = ih->nexthdr;
+-	ipv6_skip_exthdr(skb, skb_network_offset(skb) + sizeof(_ip6h), &nexthdr, &frag_off);
+-
+-	audit_log_format(ab, " saddr=%pI6c daddr=%pI6c proto=%hhu",
+-			 &ih->saddr, &ih->daddr, nexthdr);
+-
+-	return true;
+-}
+-
+ static void nft_log_eval_audit(const struct nft_pktinfo *pkt)
+ {
+ 	struct sk_buff *skb = pkt->skb;
+ 	struct audit_buffer *ab;
+-	int fam = -1;
+ 
+ 	if (!audit_enabled)
+ 		return;
+@@ -76,27 +40,7 @@ static void nft_log_eval_audit(const str
+ 
+ 	audit_log_format(ab, "mark=%#x", skb->mark);
+ 
+-	switch (nft_pf(pkt)) {
+-	case NFPROTO_BRIDGE:
+-		switch (eth_hdr(skb)->h_proto) {
+-		case htons(ETH_P_IP):
+-			fam = audit_ip4(ab, skb) ? NFPROTO_IPV4 : -1;
+-			break;
+-		case htons(ETH_P_IPV6):
+-			fam = audit_ip6(ab, skb) ? NFPROTO_IPV6 : -1;
+-			break;
+-		}
+-		break;
+-	case NFPROTO_IPV4:
+-		fam = audit_ip4(ab, skb) ? NFPROTO_IPV4 : -1;
+-		break;
+-	case NFPROTO_IPV6:
+-		fam = audit_ip6(ab, skb) ? NFPROTO_IPV6 : -1;
+-		break;
+-	}
+-
+-	if (fam == -1)
+-		audit_log_format(ab, " saddr=? daddr=? proto=-1");
++	audit_log_nf_skb(ab, skb, nft_pf(pkt));
+ 
+ 	audit_log_end(ab);
+ }
+--- a/net/netfilter/xt_AUDIT.c
++++ b/net/netfilter/xt_AUDIT.c
+@@ -28,46 +28,10 @@ MODULE_ALIAS("ip6t_AUDIT");
+ MODULE_ALIAS("ebt_AUDIT");
+ MODULE_ALIAS("arpt_AUDIT");
+ 
+-static bool audit_ip4(struct audit_buffer *ab, struct sk_buff *skb)
+-{
+-	struct iphdr _iph;
+-	const struct iphdr *ih;
+-
+-	ih = skb_header_pointer(skb, skb_network_offset(skb), sizeof(_iph), &_iph);
+-	if (!ih)
+-		return false;
+-
+-	audit_log_format(ab, " saddr=%pI4 daddr=%pI4 proto=%hhu",
+-			 &ih->saddr, &ih->daddr, ih->protocol);
+-
+-	return true;
+-}
+-
+-static bool audit_ip6(struct audit_buffer *ab, struct sk_buff *skb)
+-{
+-	struct ipv6hdr _ip6h;
+-	const struct ipv6hdr *ih;
+-	u8 nexthdr;
+-	__be16 frag_off;
+-
+-	ih = skb_header_pointer(skb, skb_network_offset(skb), sizeof(_ip6h), &_ip6h);
+-	if (!ih)
+-		return false;
+-
+-	nexthdr = ih->nexthdr;
+-	ipv6_skip_exthdr(skb, skb_network_offset(skb) + sizeof(_ip6h), &nexthdr, &frag_off);
+-
+-	audit_log_format(ab, " saddr=%pI6c daddr=%pI6c proto=%hhu",
+-			 &ih->saddr, &ih->daddr, nexthdr);
+-
+-	return true;
+-}
+-
+ static unsigned int
+ audit_tg(struct sk_buff *skb, const struct xt_action_param *par)
+ {
+ 	struct audit_buffer *ab;
+-	int fam = -1;
+ 
+ 	if (audit_enabled == AUDIT_OFF)
+ 		goto errout;
+@@ -77,27 +41,7 @@ audit_tg(struct sk_buff *skb, const stru
+ 
+ 	audit_log_format(ab, "mark=%#x", skb->mark);
+ 
+-	switch (xt_family(par)) {
+-	case NFPROTO_BRIDGE:
+-		switch (eth_hdr(skb)->h_proto) {
+-		case htons(ETH_P_IP):
+-			fam = audit_ip4(ab, skb) ? NFPROTO_IPV4 : -1;
+-			break;
+-		case htons(ETH_P_IPV6):
+-			fam = audit_ip6(ab, skb) ? NFPROTO_IPV6 : -1;
+-			break;
+-		}
+-		break;
+-	case NFPROTO_IPV4:
+-		fam = audit_ip4(ab, skb) ? NFPROTO_IPV4 : -1;
+-		break;
+-	case NFPROTO_IPV6:
+-		fam = audit_ip6(ab, skb) ? NFPROTO_IPV6 : -1;
+-		break;
+-	}
+-
+-	if (fam == -1)
+-		audit_log_format(ab, " saddr=? daddr=? proto=-1");
++	audit_log_nf_skb(ab, skb, xt_family(par));
+ 
+ 	audit_log_end(ab);
+ 
 
 
