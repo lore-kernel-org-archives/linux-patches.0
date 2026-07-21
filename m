@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869FF46C4CA;
-	Tue, 21 Jul 2026 17:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B5F3E49F5;
+	Tue, 21 Jul 2026 17:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654916; cv=none; b=tV8YiLqnwWPfgQ4o3sd7O4RUAzbbOfjwNCG5TJRHWlOgESw5IyQxltJQapyn7CNr7/InqqYeoVcZwcQi0KpkOXtG0HbUxAh1sXqDxUNf4nvKf4Kj5vZ2y3Vfxdz1ruw+sv0YVVwceG3cJWYuSObDWkZaJi5i4YGiQgKWkmVSEQ8=
+	t=1784654919; cv=none; b=jbxnU/ubhq2186x1hbbQrHH/UKaQDwh3bljxd8Pz2BA314+n0/BBy8Px7skcLSU1egYWfVVICs9+Npc+6jXEqpV3MNa6PtNYdZ6iW0EuHgXPbxJRkBqtd3VLN7tch0Ucyh4RLswtLk4zclcLVL8Kv0Wo5S7WWnoZHoxgQ80ZTFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654916; c=relaxed/simple;
-	bh=CEF7EIL0Yqs4+mDpryfUXEKX8pr+WCQcbYOHbfC2QIQ=;
+	s=arc-20240116; t=1784654919; c=relaxed/simple;
+	bh=E5wQ1rP0Md6oxd83BDrDqt015ajgzwXWuacsgb8SUJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NEvZOctFdqN44yvD/SASy13klfnmGykPMTXnd9JvhMs735b0vwY9tgX7GOz+6o+ooOTctHbU+IOXxIe175QDfeEv5Zwizohvp50HFE1TNudZ4F/fUP9de/KGQ21uM5zUQsjDMaTJVhmwIp88g+7jrOplkQGk3CVd7sqgWLGN3vY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bp0H+T5k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=marKWWg8mpD/IOAj5me7nbSRSPu8FfRsV280NE7uGuoIMIaacDP0L2nyDsrxZkwyMN+N6NRdgEFLTY6DwVRKlkQ2cVJadhHiIbPd14SeX+dBcjCTt/9JGLDEG+Huet1lfNy8vphggtGifZQm9f8BHtSK5OLdhy6px8HoEkgvN1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KRyxiT71; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bp0H+T5k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE09E1F000E9;
-	Tue, 21 Jul 2026 17:28:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KRyxiT71"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91AFD1F000E9;
+	Tue, 21 Jul 2026 17:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654915;
-	bh=UTTHcIsGybl3yNas9ZvFzKB8+H46NBdA9CYGvm4fWJw=;
+	s=korg; t=1784654918;
+	bh=oL3zEYt2cxMDjmVieKVG08VBJbmXFNDxEwSYxGE6yzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bp0H+T5kAAOFQH4HuprbJNhcT9tpB580bfcfxGR+ax4eMEK0emHwgpXlz1GuWUefH
-	 stRNVMIAtwqPTyDbZe/5z5qW81alXUolbfumKJLdUtb8mKhdTr0mvDh0McXV9DXa8G
-	 +kO98P2QJv5Awo6ARUwORKcO/TQ1UwO/ibdcNeBk=
+	b=KRyxiT71vHY3zigOOF4fObqBTwIw5r9wD9XPMm5TSzW1f4lM1lrj6Uutstr6gb7eR
+	 aYhi1fp6UO/gW809jjryNbpfIFdh/HIUXU6JUNPsmRXVGfIQ+h6PyHxE4FpaQej2Vn
+	 kbZCnlGnxAJj6x2VrLncbICN3hX6iUAlMiEGmsZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sashiko bot <sashiko-bot@kernel.org>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 7.1 1884/2077] Input: ims-pcu - add response length checks
-Date: Tue, 21 Jul 2026 17:25:57 +0200
-Message-ID: <20260721152637.158268072@linuxfoundation.org>
+Subject: [PATCH 7.1 1885/2077] Input: ims-pcu - fix DMA mapping violation in line setup
+Date: Tue, 21 Jul 2026 17:25:58 +0200
+Message-ID: <20260721152637.180836735@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,14 +52,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 48c9d92fd4ee3a8f5d2cb46c802a0eff8e67c79c upstream.
+commit 8adf4289d945e8990e4336436a97da71d21d2cae upstream.
 
-The driver processes response data from device buffers without verifying
-that the device actually sent enough data. This can lead to
-out-of-bounds reads or processing stale data.
+In ims_pcu_line_setup(), the driver uses pcu->cmd_buf as a transfer
+buffer for usb_control_msg(). However, pcu->cmd_buf is embedded in the
+struct ims_pcu allocation, which violates DMA mapping rules regarding
+cacheline alignment.
 
-Add checks for the expected response length before accessing the
-buffers.
+Use a heap-allocated buffer for the line coding data instead.
 
 Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
 Cc: stable@vger.kernel.org
@@ -68,181 +68,29 @@ Assisted-by: Gemini:gemini-3.1-pro
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/ims-pcu.c |   87 ++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 81 insertions(+), 6 deletions(-)
+ drivers/input/misc/ims-pcu.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 --- a/drivers/input/misc/ims-pcu.c
 +++ b/drivers/input/misc/ims-pcu.c
-@@ -407,7 +407,16 @@ static void ims_pcu_destroy_gamepad(stru
- 
- static void ims_pcu_report_events(struct ims_pcu *pcu)
+@@ -1841,11 +1841,16 @@ static void ims_pcu_stop_io(struct ims_p
+ static int ims_pcu_line_setup(struct ims_pcu *pcu)
  {
--	u32 data = get_unaligned_be32(&pcu->read_buf[3]);
-+	u32 data;
+ 	struct usb_host_interface *interface = pcu->ctrl_intf->cur_altsetting;
+-	struct usb_cdc_line_coding *line = (void *)pcu->cmd_buf;
++	struct usb_cdc_line_coding *line __free(kfree) =
++				kmalloc(sizeof(*line), GFP_KERNEL);
+ 	int error;
+ 
+-	memset(line, 0, sizeof(*line));
++	if (!line)
++		return -ENOMEM;
 +
-+	/* 6-axis setting (1 byte) + button data + checksum */
-+	if (pcu->read_pos < IMS_PCU_DATA_OFFSET + 1 + sizeof(data) + 1) {
-+		dev_warn(pcu->dev, "Short buttons report: %d bytes\n",
-+			 pcu->read_pos);
-+		return;
-+	}
-+
-+	data = get_unaligned_be32(&pcu->read_buf[IMS_PCU_DATA_OFFSET + 1]);
+ 	line->dwDTERate = cpu_to_le32(57600);
++	line->bCharFormat = USB_CDC_1_STOP_BITS;
++	line->bParityType = USB_CDC_NO_PARITY;
+ 	line->bDataBits = 8;
  
- 	ims_pcu_buttons_report(pcu, data & ~IMS_PCU_GAMEPAD_MASK);
- 	if (pcu->gamepad)
-@@ -687,11 +696,19 @@ static int __ims_pcu_execute_bl_command(
- 		return error;
- 	}
- 
--	if (expected_response && pcu->cmd_buf[2] != expected_response) {
--		dev_err(pcu->dev,
--			"Unexpected response from bootloader: 0x%02x, wanted 0x%02x\n",
--			pcu->cmd_buf[2], expected_response);
--		return -EINVAL;
-+	if (expected_response) {
-+		if (pcu->cmd_buf_len < 3) {
-+			dev_err(pcu->dev, "Short response from bootloader: %d bytes\n",
-+				pcu->cmd_buf_len);
-+			return -EIO;
-+		}
-+
-+		if (pcu->cmd_buf[2] != expected_response) {
-+			dev_err(pcu->dev,
-+				"Unexpected response from bootloader: 0x%02x, wanted 0x%02x\n",
-+				pcu->cmd_buf[2], expected_response);
-+			return -EINVAL;
-+		}
- 	}
- 
- 	return 0;
-@@ -719,6 +736,12 @@ static int ims_pcu_get_info(struct ims_p
- 		return error;
- 	}
- 
-+	if (pcu->cmd_buf_len < IMS_PCU_DATA_OFFSET + IMS_PCU_SET_INFO_SIZE + 1) {
-+		dev_err(pcu->dev, "Short GET_INFO response: %d bytes\n",
-+			pcu->cmd_buf_len);
-+		return -EIO;
-+	}
-+
- 	memcpy(pcu->part_number,
- 	       &pcu->cmd_buf[IMS_PCU_INFO_PART_OFFSET],
- 	       sizeof(pcu->part_number));
-@@ -816,6 +839,12 @@ static int ims_pcu_verify_block(struct i
- 		return error;
- 	}
- 
-+	if (pcu->cmd_buf_len < IMS_PCU_BL_DATA_OFFSET + sizeof(*fragment) + len + 1) {
-+		dev_err(pcu->dev, "Short READ_APP response: %d bytes\n",
-+			pcu->cmd_buf_len);
-+		return -EIO;
-+	}
-+
- 	fragment = (void *)&pcu->cmd_buf[IMS_PCU_BL_DATA_OFFSET];
- 	if (get_unaligned_le32(&fragment->addr) != addr ||
- 	    fragment->len != len) {
-@@ -1010,6 +1039,10 @@ ims_pcu_backlight_get_brightness(struct
- 			 error);
- 		/* Assume the LED is OFF */
- 		brightness = LED_OFF;
-+	} else if (pcu->cmd_buf_len < IMS_PCU_DATA_OFFSET + 2 + 1) {
-+		dev_err(pcu->dev, "Short GET_BRIGHTNESS response: %d bytes\n",
-+			pcu->cmd_buf_len);
-+		brightness = LED_OFF;
- 	} else {
- 		brightness =
- 			get_unaligned_le16(&pcu->cmd_buf[IMS_PCU_DATA_OFFSET]);
-@@ -1286,6 +1319,12 @@ static int ims_pcu_read_ofn_config(struc
- 	if (error)
- 		return error;
- 
-+	if (pcu->cmd_buf_len < OFN_REG_RESULT_OFFSET + 2 + 1) {
-+		dev_err(pcu->dev, "Short OFN_GET_CONFIG response: %d bytes\n",
-+			pcu->cmd_buf_len);
-+		return -EIO;
-+	}
-+
- 	result = (s16)get_unaligned_le16(pcu->cmd_buf + OFN_REG_RESULT_OFFSET);
- 	if (result < 0)
- 		return -EIO;
-@@ -1306,6 +1345,12 @@ static int ims_pcu_write_ofn_config(stru
- 	if (error)
- 		return error;
- 
-+	if (pcu->cmd_buf_len < OFN_REG_RESULT_OFFSET + 2 + 1) {
-+		dev_err(pcu->dev, "Short OFN_SET_CONFIG response: %d bytes\n",
-+			pcu->cmd_buf_len);
-+		return -EIO;
-+	}
-+
- 	result = (s16)get_unaligned_le16(pcu->cmd_buf + OFN_REG_RESULT_OFFSET);
- 	if (result < 0)
- 		return -EIO;
-@@ -1844,6 +1889,12 @@ static int ims_pcu_get_device_info(struc
- 		return error;
- 	}
- 
-+	if (pcu->cmd_buf_len < IMS_PCU_DATA_OFFSET + 6 + 1) {
-+		dev_err(pcu->dev, "Short GET_FW_VERSION response: %d bytes\n",
-+			pcu->cmd_buf_len);
-+		return -EIO;
-+	}
-+
- 	snprintf(pcu->fw_version, sizeof(pcu->fw_version),
- 		 "%02d%02d%02d%02d.%c%c",
- 		 pcu->cmd_buf[2], pcu->cmd_buf[3], pcu->cmd_buf[4], pcu->cmd_buf[5],
-@@ -1856,6 +1907,12 @@ static int ims_pcu_get_device_info(struc
- 		return error;
- 	}
- 
-+	if (pcu->cmd_buf_len < IMS_PCU_DATA_OFFSET + 6 + 1) {
-+		dev_err(pcu->dev, "Short GET_BL_VERSION response: %d bytes\n",
-+			pcu->cmd_buf_len);
-+		return -EIO;
-+	}
-+
- 	snprintf(pcu->bl_version, sizeof(pcu->bl_version),
- 		 "%02d%02d%02d%02d.%c%c",
- 		 pcu->cmd_buf[2], pcu->cmd_buf[3], pcu->cmd_buf[4], pcu->cmd_buf[5],
-@@ -1868,6 +1925,12 @@ static int ims_pcu_get_device_info(struc
- 		return error;
- 	}
- 
-+	if (pcu->cmd_buf_len < IMS_PCU_DATA_OFFSET + 1 + 1) {
-+		dev_err(pcu->dev, "Short RESET_REASON response: %d bytes\n",
-+			pcu->cmd_buf_len);
-+		return -EIO;
-+	}
-+
- 	snprintf(pcu->reset_reason, sizeof(pcu->reset_reason),
- 		 "%02x", pcu->cmd_buf[IMS_PCU_DATA_OFFSET]);
- 
-@@ -1894,6 +1957,12 @@ static int ims_pcu_identify_type(struct
- 		return error;
- 	}
- 
-+	if (pcu->cmd_buf_len < IMS_PCU_DATA_OFFSET + 1 + 1) {
-+		dev_err(pcu->dev, "Short GET_DEVICE_ID response: %d bytes\n",
-+			pcu->cmd_buf_len);
-+		return -EIO;
-+	}
-+
- 	*device_id = pcu->cmd_buf[IMS_PCU_DATA_OFFSET];
- 	dev_dbg(pcu->dev, "Detected device ID: %d\n", *device_id);
- 
-@@ -1985,6 +2054,12 @@ static int ims_pcu_init_bootloader_mode(
- 		return error;
- 	}
- 
-+	if (pcu->cmd_buf_len < IMS_PCU_DATA_OFFSET + 15 + 4 + 1) {
-+		dev_err(pcu->dev, "Short QUERY_DEVICE response: %d bytes\n",
-+			pcu->cmd_buf_len);
-+		return -EIO;
-+	}
-+
- 	pcu->fw_start_addr =
- 		get_unaligned_le32(&pcu->cmd_buf[IMS_PCU_DATA_OFFSET + 11]);
- 	pcu->fw_end_addr =
+ 	error = usb_control_msg(pcu->udev, usb_sndctrlpipe(pcu->udev, 0),
 
 
