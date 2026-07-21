@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591373B2D00;
-	Tue, 21 Jul 2026 20:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F262EBB8D;
+	Tue, 21 Jul 2026 20:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666107; cv=none; b=M4vwUNqgQfQuG2ZMXn5fdTUlZIt3NqaboVRDg+LnWxwOR/HE1zii5vc30VE6FmPxMR+Zeugj61pDKw3mlCB7o1wjj3f3RekCKgTe/AyzwUM184QsrGe153tMqz2ZjWYy9yoN6iXxO+yZaHofTF0NncQtk9v5QyysmuE8DTPL1Cs=
+	t=1784666110; cv=none; b=PBi5xnxN0VmvQVeCPj0/GpiodtW6ycRW0I+n0Dn2xAb41BItyOAQ+MlpK9yh/E0rcfoLHYp0WZwbHSQLNQiAZvnif0LbNunU0irHW2RnvRsVEdbK/fMr/IGqCLPxVS7qHSLwBQwwrX2T4du54lHii/tT4qybmPPsM/0EtXzs/jM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666107; c=relaxed/simple;
-	bh=R3iHTZ+hbi4mgWkJnEFcanqqGpkqHQUWHv39/AUtonc=;
+	s=arc-20240116; t=1784666110; c=relaxed/simple;
+	bh=ivTOPiflcGBwYswXF7FJpYyGjCc2feruW46ATuaKCDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jlwGUG8JwzRYTHD5+kDI3wvPYxMFhPFdN9r6Mi9seJ9aL4NdZ9OpIkcCgV8KKe488GMT0CoEP9j3/ja1qXANQr2s5YlngqACUGQWGUVWoBox6SSwCbg16aUrvXyaAdmoSQ5BNUBw0rRGj3Ff5SzpLJva69CahENKX3A7ey8R6FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2CZmZOFi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u64q1x2/Ri60Uzv4+tq/jM2fYJEScR4DNsjjLaPK0Yh99CCpjIVQ89wwrWvWGdHn60YM8cEGKX8NF2krASbwRdhWQa8uBlH1/fQf2KaFVntnP+J4dNR9rx+rhBJYyR8uVnVIGz3zl9qDMhXfb9UH5mzZmfsQXyPnstu9W/SEhQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xRu9bldS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2CZmZOFi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B91941F000E9;
-	Tue, 21 Jul 2026 20:35:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xRu9bldS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69CDA1F000E9;
+	Tue, 21 Jul 2026 20:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666106;
-	bh=E9bKdnvWxoAGkQnQwaZeERZEWoPw/3SslGKFPIcT9UM=;
+	s=korg; t=1784666108;
+	bh=pciLcrodaKUz47WICGcFm66hi5x48V4LT9lVg+7H0xQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2CZmZOFi+XSUHO2qFMVUMXY3MYWg70hqVRx07DDM2+MPw4NjafBg8rZX+VLGCvcQu
-	 /5XkFB6nK8S2wmVbtyDz7X+4Ik3wfkWpajJVmIBMdzK89NKTuLAI2b9GyrGOC8x87e
-	 tY6mWe9iWWJqCP4liMBZ5ONYTkhubfA/7JX+DqJA=
+	b=xRu9bldSv+8Dn9TQVL4Gx1RlVJTGOyBnpCgWHnbdEAAIVmkgr0cD6fTAffTIhLQ+O
+	 PRYxheLLCkwRkDpdnZ5fkgC+15oA84V4+1Uthj9dTgl8MXtQ/sDaU5ctWuaurNl73u
+	 A8fPiGSIAiWDDNxCWNtrXIHSgwx1Nz6FYH1+0TJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Samuel Moelius <sam.moelius@trailofbits.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0503/1266] wifi: wcn36xx: fix heap overflow from oversized firmware HAL response
-Date: Tue, 21 Jul 2026 17:15:40 +0200
-Message-ID: <20260721152453.102277963@linuxfoundation.org>
+Subject: [PATCH 6.6 0551/1266] Bluetooth: vhci: validate devcoredump state before side effects
+Date: Tue, 21 Jul 2026 17:16:28 +0200
+Message-ID: <20260721152454.195499166@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,42 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Samuel Moelius <sam.moelius@trailofbits.com>
 
-[ Upstream commit 88a240d86d3d64521f9194abe185ac71cc74d0bd ]
+[ Upstream commit 88c2404a3c59c3126453919388dbd5ed98ed01bd ]
 
-The firmware response dispatcher copies all synchronous HAL responses
-into the 4096-byte hal_buf without validating the response length. A
-response exceeding WCN36XX_HAL_BUF_SIZE causes a heap buffer overflow
-with firmware-controlled content.
+The VHCI force_devcoredump debugfs hook accepts a small test record from
+userspace. It validates the requested terminal state only after
+registering, initializing and appending a Bluetooth devcoredump.
 
-Add a bounds check on the response length.
+As a result, an invalid state returns -EINVAL but still leaves queued
+devcoredump work behind. With a non-zero timeout field, the rejected
+write can still emit a devcoredump after the timeout expires.
 
-Fixes: 8e84c2582169 ("wcn36xx: mac80211 driver for Qualcomm WCN3660/WCN3680 hardware")
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260421135018.352774-2-tristmd@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Reject unsupported states before allocating the skb or changing the HCI
+devcoredump state machine.
+
+Fixes: ab4e4380d4e1 ("Bluetooth: Add vhci devcoredump support")
+Assisted-by: Codex:gpt-5.5-cyber-preview
+Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/wcn36xx/smd.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/bluetooth/hci_vhci.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/wcn36xx/smd.c b/drivers/net/wireless/ath/wcn36xx/smd.c
-index 17e1919d1cd828..daab434b19d581 100644
---- a/drivers/net/wireless/ath/wcn36xx/smd.c
-+++ b/drivers/net/wireless/ath/wcn36xx/smd.c
-@@ -3353,6 +3353,10 @@ int wcn36xx_smd_rsp_process(struct rpmsg_device *rpdev,
- 	case WCN36XX_HAL_EXIT_IMPS_RSP:
- 	case WCN36XX_HAL_UPDATE_CHANNEL_LIST_RSP:
- 	case WCN36XX_HAL_ADD_BCN_FILTER_RSP:
-+		if (len > WCN36XX_HAL_BUF_SIZE) {
-+			wcn36xx_warn("HAL response too large: %d\n", len);
-+			break;
-+		}
- 		memcpy(wcn->hal_buf, buf, len);
- 		wcn->hal_rsp_len = len;
- 		complete(&wcn->hal_rsp_compl);
+diff --git a/drivers/bluetooth/hci_vhci.c b/drivers/bluetooth/hci_vhci.c
+index 0935045051699f..c0588fe110a2d4 100644
+--- a/drivers/bluetooth/hci_vhci.c
++++ b/drivers/bluetooth/hci_vhci.c
+@@ -337,7 +337,17 @@ static ssize_t force_devcd_write(struct file *file, const char __user *user_buf,
+ 	if (copy_from_user(&dump_data, user_buf, count))
+ 		return -EFAULT;
+ 
++	switch (dump_data.state) {
++	case HCI_DEVCOREDUMP_DONE:
++	case HCI_DEVCOREDUMP_ABORT:
++	case HCI_DEVCOREDUMP_TIMEOUT:
++		break;
++	default:
++		return -EINVAL;
++	}
++
+ 	data_size = count - offsetof(struct devcoredump_test_data, data);
++
+ 	skb = alloc_skb(data_size, GFP_ATOMIC);
+ 	if (!skb)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
