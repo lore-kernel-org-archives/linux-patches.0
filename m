@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69C741A547;
-	Tue, 21 Jul 2026 19:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A73D42DA53;
+	Tue, 21 Jul 2026 19:27:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662031; cv=none; b=ZDKS1GSxmc3RUuXFgNRE+rJquQQi7PQ1NcnlgNdEejMj2divaapJ4dASt8vKMSqOAOsCgnZlKJbtXdSGeSeHUrLF98APx9H5mM27Q5scGVUIEJ/V0VgcbJATh9mAiu7Or5kK5r2ZByndjq3yl5zdbwX749Pgu6vime0kePca+4s=
+	t=1784662033; cv=none; b=YI7V2ikmhidhvc+1YF560fEj6nHai0/YMhiKrhx+YKQMKJ/JB3s7MaTquSV2lVqC4UwRPI1Hk0LQIHtctPt+40MI5YjT2ZoHSD6pjk/KRKjML6xIilYkn72T99PhhrpmkatJ1USYEabbVinPUspwIAqGflwTExR6c/Jovq0A8FM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662031; c=relaxed/simple;
-	bh=TLADmBmCCHPJNGxhAdIcHYPl3JgiKFmXDDFDHfVK7Pc=;
+	s=arc-20240116; t=1784662033; c=relaxed/simple;
+	bh=Rvw4Cwstd5SOBDPC315vGpX0mnQ2+TMaRDnZa7A3A+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FIqSiONPaZm0ULSoiLMEISWy6EWN67rhWia6oVsm0uSKDty3TjiFMiqEFQmmN7zc7uBq/J7EboGMct1xJ4qCupEmzvZdSCEPJEFa17jmoiYXHnAoMIlzYKjYrhHerh4Vx+3RZIk9pO2MqXK/a2o1sgPEpBviEW0KlyJBuBh2c6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMDVFXXj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FoCiPGDTXTStC8lrZCZcpqOf4Pr8Voeh7n1wvo0/7Q3ISt28RTeLr6oZxMlywVVc0zSalM3QekGERIpNoY+AnNizTtDlE9d2gMez2t0e0TAI0Puo4l2AF/QcoxYuCbIOffE0rjS2mFEwEW4Z7pe+zX1o+H1vVq4X6grQ2rSMzpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/RCdrK7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMDVFXXj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267551F000E9;
-	Tue, 21 Jul 2026 19:27:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/RCdrK7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C08481F000E9;
+	Tue, 21 Jul 2026 19:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662029;
-	bh=rVrYyJmLdZUxWckmjc8Mm1cGDO9r5oe26CU6IjAAklY=;
+	s=korg; t=1784662032;
+	bh=/+7CwpjCY23Ng3JnTXJ9uojKCv3ZFkCpEYc8iYALa7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aMDVFXXje0a/IIFhH6keC4lXG8uPBRoK3sDBGMSse9ziqqzj3Cnv8A/f7oN30Zp7B
-	 kuPsI4f7OkySnez9CEi7UdoYuifBy4k3leAwEpIODy5NAGYkwMOQBGeZL8886BhVgs
-	 F+0S0dMlVxpvJckdTeLQixpQr1BmaaJVGHCPoQ/c=
+	b=W/RCdrK7K7TYnMQCCkLi704Wcn9hMgtuKiRjDRq3EH4sS/XKN+vx7oxMPf+t4hUS7
+	 zEsQKV8C4kpRQXXeS70KmFYdFSt6RWqCkkcHUMGFDHv7sd8v0Uca+4ctZCvn0S1wcR
+	 s4WChrFWhawqH6QBQPZnRtjXwrFWWq4N+Dp+NrDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Boris Burkov <boris@bur.io>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0291/1276] hwmon: (it87) Clamp negative values to zero in set_fan()
-Date: Tue, 21 Jul 2026 17:12:14 +0200
-Message-ID: <20260721152452.599158887@linuxfoundation.org>
+Subject: [PATCH 6.12 0292/1276] btrfs: zoned: dont account data relocation space-info in statfs free space
+Date: Tue, 21 Jul 2026 17:12:15 +0200
+Message-ID: <20260721152452.623911475@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,48 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 7f8581c70a3bd50a932d3d2d253e99c5ec3eda74 ]
+[ Upstream commit 52416a27aabc43eab3792fd0ca9f5dabeab58f31 ]
 
-set_fan() parses user input with kstrtol() and passes the resulting
-value to FAN16_TO_REG() on chips with 16-bit fan support.
+Don't account the free space in a data relocation space-info sub-group as
+usable free space in statfs.
 
-Negative fan speeds are not meaningful and should be rejected before
-conversion. Worst scenario, one may be able to abuse undefined
-behaviour of signed overflow to possibly induce rpm * 2 == 0 in
-FAN16_TO_REG(), thus causing a division by zero.
+This is misleading as no user allocations can be made in this space-info
+sub-group. It is only a target for relocation.
 
-Instead, clamp val < 0 to zero and keep the conversion in its valid
-input domain, avoiding unsafe arithmetic in the register conversion
-path.
-
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: 17d648bf5786 ("it87: Add support for the IT8716F")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://lore.kernel.org/r/20260529141839.1639287-1-n.zhandarovich@fintech.ru
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: f92ee31e031c ("btrfs: introduce btrfs_space_info sub-group")
+Reviewed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/it87.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/btrfs/super.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/it87.c b/drivers/hwmon/it87.c
-index 5cfb98a0512f00..c0c9826d44a2e5 100644
---- a/drivers/hwmon/it87.c
-+++ b/drivers/hwmon/it87.c
-@@ -1401,6 +1401,9 @@ static ssize_t set_fan(struct device *dev, struct device_attribute *attr,
- 	if (kstrtol(buf, 10, &val) < 0)
- 		return -EINVAL;
+diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
+index 833602511f62d4..21419bc33863be 100644
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -1732,7 +1732,8 @@ static int btrfs_statfs(struct dentry *dentry, struct kstatfs *buf)
+ 	int mixed = 0;
  
-+	if (val < 0)
-+		val = 0;
-+
- 	err = it87_lock(data);
- 	if (err)
- 		return err;
+ 	list_for_each_entry(found, &fs_info->space_info, list) {
+-		if (found->flags & BTRFS_BLOCK_GROUP_DATA) {
++		if (found->flags & BTRFS_BLOCK_GROUP_DATA &&
++		    found->subgroup_id != BTRFS_SUB_GROUP_DATA_RELOC) {
+ 			int i;
+ 
+ 			total_free_data += found->disk_total - found->disk_used;
 -- 
 2.53.0
 
