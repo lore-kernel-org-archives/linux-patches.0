@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08D135C682;
-	Tue, 21 Jul 2026 22:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BF235C68B;
+	Tue, 21 Jul 2026 22:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671531; cv=none; b=dcNjIjaHn5jDwfB1IQE7szP3uH1sygl8ILrSUtcKTxwl5vdHq3ZNbpAOwJwuHCelHPqp4RXcJDyQOCPRC2dGDaXTfVQ7OR23ftWmV+1+0+C1yzB9fp9ezc491w/BF9MgneZXNZW5zekgLbyZm6wEIJflj6cflB4OcyvIgQxApuk=
+	t=1784671534; cv=none; b=kQCzl4KFq+VlhxWPophoxBli6tdwD3+zJ5rAdzu0motntTVfoXiWMPNl0Mij6nc5VUqjEEswTZ1RW2VhmIfvGvOaIQvI+6q5LwDclPZXG2jE+OVCWc+6qXh+PrMRpW2nAquoX1Tr0jBRT6pUtpQyH9W3rKAsHLK8OgrtL9Sn7Zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671531; c=relaxed/simple;
-	bh=KifhvUL7a3V1BIq3Mp2p3dqF1Pypt8w0ff66ixCoBcw=;
+	s=arc-20240116; t=1784671534; c=relaxed/simple;
+	bh=9YrfTBpNG2pJ8vZ99g0RxvTnv95MUWnNkD0RUhItwKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=emKkgguhH0xKcMFoNWyTuR2KLX3ybMh/oD4M6s1pheDW97Fx+m/gdIhohe+0vSDzaWNhgorJKYTs6Vj2P/kPWUDIbGcZ9lHWgzgTzLj1whLqsNE2ymNghR5pEXk3JqToJrhQVNFMyFC3wKeL+CwFkxHUcvu9JzfHeXUIANTVcNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KU7TONsz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KgyNoOMqfrvUNl/1p/5XtBkhihDFlK+2w7ggbPkksQ3VAiq2NCMFF2m9BoKCNL4txegA5HIUAshQutTm2IPioKGdGWa/b/wDLfn8SAhuxN6Mj5tAhlM0+OW4W9/ed+eIB1xCvL9t2K+JXh5wwDKldABYbokudm6sKhTNw+nbOyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mCDxAQm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KU7TONsz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416B01F000E9;
-	Tue, 21 Jul 2026 22:05:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mCDxAQm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF521F000E9;
+	Tue, 21 Jul 2026 22:05:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671529;
-	bh=WcOEbJwOXbV2LALBqbcyDORHgrkovnF7qgnzWi3a6AQ=;
+	s=korg; t=1784671532;
+	bh=x7td15Pw8K9ZWsFFWCUwUIjKRNT9OS63561fBqsOlUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KU7TONsz8vQjdFRN0b+0HXmQ/uOVg+0T/KA2kwSqlq9eSgbkM09oEhnU9+VGC2Z83
-	 mngxs9QgqbG0dGa08XgBR2pwZC8lww2q/OzTsi1FpkLIWedUEVpuDhM3yOJnjwNEc6
-	 TLx5gplaXlvWYGIhZvnakjInP4KAlrNNtekYcSXQ=
+	b=1mCDxAQmXmTessgKPqhdmgs39MKc+xNmOdwzPIgjCwI6sFUh7H7Gs2uySFTuRnrbO
+	 mpeg1+Di4IimznT6TfnRQn+9Cukj2JxoVv/3YPdUaQQOElnRWRir9+sipjoSXqrKVt
+	 Rm2Ej9CKF0rMs1I1EThGpLX0ru+WWE1TE0nEUE2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Renjiang Han <renjiang.han@oss.qualcomm.com>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
+	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	John Garry <john.g.garry@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 282/843] media: qcom: venus: relax encoder frame/blur dimension steps on v4
-Date: Tue, 21 Jul 2026 17:18:37 +0200
-Message-ID: <20260721152412.369801247@linuxfoundation.org>
+Subject: [PATCH 5.15 265/843] nvme-multipath: fix flex array size in struct nvme_ns_head
+Date: Tue, 21 Jul 2026 17:18:20 +0200
+Message-ID: <20260721152411.985781637@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,85 +55,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Renjiang Han <renjiang.han@oss.qualcomm.com>
+From: Nilay Shroff <nilay@linux.ibm.com>
 
-[ Upstream commit 35428ae3a6a40912f1f7b47bb6c65f1a63d0b8f8 ]
+[ Upstream commit 001e57554de81aa79c25c18fd53911d8a415c304 ]
 
-Encoder HFI capabilities on v4 advertise a 16-pixel step for frame and
-blur dimensions. This is overly restrictive and can cause userspace caps
-negotiation to fail even for valid resolutions.
+struct nvme_ns_head contains a flexible array member, current_path[],
+which is indexed using the NUMA node ID:
+head->current_path[numa_node_id()]
 
-Relax the advertised step size to 1 and keep alignment enforcement in
-buffer layout and size calculations.
+The structure is currently allocated as:
+size = sizeof(struct nvme_ns_head) +
+       (num_possible_nodes() * sizeof(struct nvme_ns *));
+head = kzalloc(size, GFP_KERNEL);
 
-Fixes: 8b88cabef404e ("media: venus: hfi_plat_v4: Populate codecs and capabilities for v4")
-Signed-off-by: Renjiang Han <renjiang.han@oss.qualcomm.com>
-Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+This allocation assumes that NUMA node IDs are sequential and densely
+packed from 0 .. num_possible_nodes() - 1. While this assumption holds
+on many systems, it is not always true on some architectures such as
+powerpc.
+
+On some powerpc systems, NUMA node IDs can be sparse. For example:
+NUMA:
+  NUMA node(s):              6
+  NUMA node0 CPU(s):         80-159
+  NUMA node8 CPU(s):         0-79
+  NUMA node252 CPU(s):
+  NUMA node253 CPU(s):
+  NUMA node254 CPU(s):
+  NUMA node255 CPU(s):
+
+That is, the possible/online NUMA node IDs are: 0, 8, 252, 253, 254, 255
+In this case: num_possible_nodes() = 6
+
+So memory is allocated for only 6 entries in current_path[]. However,
+the array is later indexed using the actual NUMA node ID. As a result,
+accesses such as:
+head->current_path[8] or
+head->current_path[252]
+goes out of bounds, leading to the following KASAN splat:
+
+==================================================================
+BUG: KASAN: slab-out-of-bounds in nvme_mpath_revalidate_paths+0x22c/0x290 [nvme_core]
+Write of size 8 at addr c00020003bda35b8 by task kworker/u641:2/1997
+
+CPU: 1 UID: 0 PID: 1997 Comm: kworker/u641:2 Not tainted 7.1.0-rc5-dirty #14 PREEMPT(lazy)
+Hardware name: 8335-GTH POWER9 0x4e1202 opal:skiboot-v6.5.3-35-g1851b2a06 PowerNV
+Workqueue: async async_run_entry_fn
+Call Trace:
+[c000200037fa7510] [c0000000021c23d4] dump_stack_lvl+0x88/0xdc (unreliable)
+[c000200037fa7540] [c0000000009fda90] print_report+0x22c/0x67c
+[c000200037fa7630] [c0000000009fd508] kasan_report+0x108/0x220
+[c000200037fa7740] [c0000000009fff48] __asan_store8+0xe8/0x120
+[c000200037fa7760] [c008000018e76474] nvme_mpath_revalidate_paths+0x22c/0x290 [nvme_core]
+[c000200037fa7800] [c008000018e6556c] nvme_update_ns_info+0x4a4/0x5e0 [nvme_core]
+[c000200037fa7a50] [c008000018e66270] nvme_alloc_ns+0x6d8/0x1a70 [nvme_core]
+[c000200037fa7c20] [c008000018e679fc] nvme_scan_ns+0x3f4/0x630 [nvme_core]
+[c000200037fa7d10] [c00000000031f22c] async_run_entry_fn+0x9c/0x3a0
+[c000200037fa7db0] [c0000000002fa544] process_one_work+0x414/0xa10
+[c000200037fa7ec0] [c0000000002fbf00] worker_thread+0x320/0x640
+[c000200037fa7f80] [c00000000030d0f8] kthread+0x278/0x290
+[c000200037fa7fe0] [c00000000000ded8] start_kernel_thread+0x14/0x18
+
+Allocated by task 1997 on cpu 1 at 35.928317s:
+
+The buggy address belongs to the object at c00020003bda3000
+ which belongs to the cache kmalloc-rnd-15-2k of size 2048
+The buggy address is located 16 bytes to the right of
+ allocated 1448-byte region [c00020003bda3000, c00020003bda35a8)
+
+The buggy address belongs to the physical page:
+
+Memory state around the buggy address:
+ c00020003bda3480: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ c00020003bda3500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>c00020003bda3580: 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc fc
+                                        ^
+ c00020003bda3600: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ c00020003bda3680: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+==================================================================
+
+Fix this by allocating the flexible array using nr_node_ids instead
+of num_possible_nodes(). Since nr_node_ids represents the maximum
+possible NUMA node IDs, indexing current_path[] using numa_node_id()
+becomes safe even on systems with sparse node IDs.
+
+Fixes: f333444708f8 ("nvme: take node locality into account when selecting a path")
+Tested-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/qcom/venus/hfi_platform_v4.c     | 20 +++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/nvme/host/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v4.c b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-index 3f7f5277a50e1e..932204968e4d83 100644
---- a/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-+++ b/drivers/media/platform/qcom/venus/hfi_platform_v4.c
-@@ -135,8 +135,8 @@ static const struct hfi_plat_caps caps[] = {
- 	.codec = HFI_VIDEO_CODEC_H264,
- 	.domain = VIDC_SESSION_TYPE_ENC,
- 	.cap_bufs_mode_dynamic = true,
--	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 16},
--	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 16},
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 1},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 1},
- 	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
- 	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
- 	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
-@@ -172,8 +172,8 @@ static const struct hfi_plat_caps caps[] = {
- 	.codec = HFI_VIDEO_CODEC_HEVC,
- 	.domain = VIDC_SESSION_TYPE_ENC,
- 	.cap_bufs_mode_dynamic = true,
--	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 16},
--	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 16},
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 1},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 1},
- 	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
- 	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
- 	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
-@@ -194,8 +194,8 @@ static const struct hfi_plat_caps caps[] = {
- 	.caps[19] = {HFI_CAPABILITY_RATE_CONTROL_MODES, 0x1000001, 0x1000005, 1},
- 	.caps[20] = {HFI_CAPABILITY_COLOR_SPACE_CONVERSION, 0, 2, 1},
- 	.caps[21] = {HFI_CAPABILITY_ROTATION, 1, 4, 90},
--	.caps[22] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 16},
--	.caps[23] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 16},
-+	.caps[22] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 1},
-+	.caps[23] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 1},
- 	.num_caps = 24,
- 	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_6 | HFI_HEVC_TIER_HIGH0},
- 	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_6 | HFI_HEVC_TIER_HIGH0},
-@@ -209,8 +209,8 @@ static const struct hfi_plat_caps caps[] = {
- 	.codec = HFI_VIDEO_CODEC_VP8,
- 	.domain = VIDC_SESSION_TYPE_ENC,
- 	.cap_bufs_mode_dynamic = true,
--	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 16},
--	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 16},
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 96, 4096, 1},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 96, 4096, 1},
- 	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 1, 36864, 1},
- 	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 120000000, 1},
- 	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
-@@ -228,8 +228,8 @@ static const struct hfi_plat_caps caps[] = {
- 	.caps[16] = {HFI_CAPABILITY_P_FRAME_QP, 0, 127, 1},
- 	.caps[17] = {HFI_CAPABILITY_MAX_WORKMODES, 1, 2, 1},
- 	.caps[18] = {HFI_CAPABILITY_RATE_CONTROL_MODES, 0x1000001, 0x1000005, 1},
--	.caps[19] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 16},
--	.caps[20] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 16},
-+	.caps[19] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 1},
-+	.caps[20] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 1},
- 	.caps[21] = {HFI_CAPABILITY_COLOR_SPACE_CONVERSION, 0, 2, 1},
- 	.caps[22] = {HFI_CAPABILITY_ROTATION, 1, 4, 90},
- 	.num_caps = 23,
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index f3071bd11fdd39..f1bd1fe72db77c 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3744,7 +3744,7 @@ static struct nvme_ns_head *nvme_alloc_ns_head(struct nvme_ctrl *ctrl,
+ 	int ret = -ENOMEM;
+ 
+ #ifdef CONFIG_NVME_MULTIPATH
+-	size += num_possible_nodes() * sizeof(struct nvme_ns *);
++	size += nr_node_ids * sizeof(struct nvme_ns *);
+ #endif
+ 
+ 	head = kzalloc(size, GFP_KERNEL);
 -- 
 2.53.0
 
