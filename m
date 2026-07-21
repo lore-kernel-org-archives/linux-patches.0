@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF73C3ED3B2;
-	Tue, 21 Jul 2026 15:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB50256C84;
+	Tue, 21 Jul 2026 15:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649390; cv=none; b=bKejt18ddE3Fa5aI6m5A2E+cotUc07dK1UzcB8JdtTkMKxgTcfwIDmGNvPQ2gvg3XkaW/XT3xmRWiTIVXjOLRnvKZZCGDH0Qg97C547GAJ4ci2e8Q87etf0ICPGNCfA5PJGtgf46eymTQdV2lpT2tGbpRrJc2HX2ss5z/IwHIKo=
+	t=1784649393; cv=none; b=KBnaMDJL857CnWkJFHIJ0GmKu5zherYyxR4E3KNbssC2irpWfwi/1HEtgo+XpZo3RFAIhvU1VZtG9Hnlkw3jgYfuVmKqGumNmipLvcWEWTD3bxnBxgXSRE5nYIe8pqYh3xb34j2m3a/n0BVCjaJI2rs+xZImPbrJvsL18tgmy3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649390; c=relaxed/simple;
-	bh=mY+2nIbnQ/iZe/qBYCaY27xtriuBJgeGBz0UdCApjsM=;
+	s=arc-20240116; t=1784649393; c=relaxed/simple;
+	bh=iSU4FZEW4cKpxlOuidwYpZg07Whk9pYDoHvuPJPzDbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hJRbc/r3uz+kAokZVKrlc7BkB1Gznc99pnptGfesP5rYljyxGnqTmwLNa2s3wmhVGi7sM2mz9ZgrRSArwwGg31qi8jkp35+qVZHR+14fAoc1DLvmFdFYRYf5vcgeIFJnc1oBUzT4fM9KTZ+nh0KYaKhD0MMATdunrcLSLUdul/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V11pU/HF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kLKorIGEbfOw1++vU9h7OG8pHJ6qBYKgZhlauJ3YjTU1eLJEC2KoqGwglkJHb1D9e9ZAwgfey+BYpPo1VlvH9M6V3WG1tBpVudNpp+85neHXEepy10mdTweCcxXFLm2Mq3YvDlRsxk9n1fSMFOl/cUw8Q6L8tKw0CC3/UJEiP4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vKjLJXgl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V11pU/HF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51C031F000E9;
-	Tue, 21 Jul 2026 15:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKjLJXgl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82521F000E9;
+	Tue, 21 Jul 2026 15:56:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649389;
-	bh=uybwoMA79/JvzOutASlUjemmotgRKf8HDZeqhYU80qA=;
+	s=korg; t=1784649392;
+	bh=xi3JKCcO91erZ7BC5x4Zf5LPhODxvwqVhxxLR1jQ67s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V11pU/HFMZZx5ZX3bAT7BJ/ZqerwrsQ4laC1zzHhvcoTdKAL52V643FuKRz75J7+o
-	 ZvlkviFkzCnA9n0vy1ruUorjSlvE6hLrvx0I/NYBDnaNwe28bKKnC/Q6iBtawnqd0y
-	 MLOPZM4882uiZTm9N31si3atfMWiZZmSDSqOaxmE=
+	b=vKjLJXgliShk/WFL7UYHAFYNWDfmUdBf4CGv3k+RVf1wliOrZZy+lK0XjBqkumJ41
+	 XdLx4BO4UmeGpwWMAolmxGVXhv6ojqLxvFqHdhyWMUqidRGgEnJ65v86UA9Bz82swI
+	 GbNjxVHC9XqoSbn6P/+rsdpOsRxgKfQ3WGiVMYK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sneh Mankad <sneh.mankad@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Linus Walleij <linusw@kernel.org>,
+	David Disseldorp <ddiss@suse.de>,
+	Lee Duncan <lduncan@suse.com>,
+	John Garry <john.g.garry@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0561/2077] pinctrl: qcom: Fix resolving register base address from device node
-Date: Tue, 21 Jul 2026 17:03:54 +0200
-Message-ID: <20260721152606.043790400@linuxfoundation.org>
+Subject: [PATCH 7.1 0562/2077] scsi: target: Fix hexadecimal CHAP_I handling
+Date: Tue, 21 Jul 2026 17:03:55 +0200
+Message-ID: <20260721152606.067157169@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,71 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+From: David Disseldorp <ddiss@suse.de>
 
-[ Upstream commit 4e31ab47997540d0ff4c9de801741bed03c1ab3f ]
+[ Upstream commit 7e161211f1dd5288b4ea802b30e70ef919ebc3da ]
 
-Commit 56ffb63749f4 ("pinctrl: qcom: add multi TLMM region option parameter")
-added reg-names property based register reading. However multiple platforms
-are not using the reg-names as they have only single TLMM register region.
+A mutual CHAP handshake requires target processing of an initiator-sent
+CHAP_I identifier. The RFC 3720 specification states:
 
-Commit tried to handle this using the default_region module parameter,
-however this condition is unreachable as the error return precedes it by
-just checking if reg-names property exists or not, making it impossible
-to use tlmm-test for the SoCs (x1e80100) which don't have reg-names
-property in TLMM device.
+  11.1.4.  Challenge Handshake Authentication Protocol (CHAP)
+  ...
+  CHAP_A=<A> CHAP_I=<I> CHAP_C=<C>
+  ...
+  Where N, (A,A1,A2), I, C, and R are (correspondingly) the Name,
+  Algorithm, Identifier, Challenge, and Response as defined in
+  [RFC1994], N is a text string, A,A1,A2, and I are numbers
 
-Fix this by moving the default_region check at the start of the
-tlmm_reg_base().
+CHAP_I parsing currently calls extract_param(), which returns the
+@identifier string (stripped of any 0b/0B or 0x/0X prefix) and a @type
+which indicates DECIMAL, HEX, or BASE64 encoding (based on any stripped
+prefix).
 
-Fixes: 56ffb63749f4 ("pinctrl: qcom: add multi TLMM region option parameter")
-Signed-off-by: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Any HEX encoded CHAP_I string is further processed via:
+
+  ret = kstrtoul(&identifier[2], 0, &id);
+
+This is incorrect for two reasons:
+
+ * The @identifier string has already been stripped of the 0x/0X prefix,
+   so skipping the first two bytes omits part of the number.
+
+ * The kstrtoul() call specifies a base of 0, which will see
+   &identifier[2] parsed as a decimal, unless a '0x' or (octal) '0' is
+   erroneously present at that offset.
+
+Fix this by passing the (zero-offset) identifier string to kstrtoul()
+along with a base=16 parameter. Also add an explicit error handler for
+BASE64 encoding.
+
+Hex-encoded CHAP_I handling can be testing using the libiscsi EncodedI
+test linked below.
+
+Reported-by: Sashiko (gemini/gemini-3.1-pro-preview)
+Link: https://sashiko.dev/#/patchset/20260521151121.808477-1-hossu.alexandru%40gmail.com
+Link: https://github.com/sahlberg/libiscsi/pull/473
+Fixes: 85db7391310b ("scsi: target: iscsi: Validate CHAP_R length before base64 decode")
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+Reviewed-by: Lee Duncan <lduncan@suse.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Link: https://patch.msgid.link/20260605122019.24146-2-ddiss@suse.de
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/tlmm-test.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ drivers/target/iscsi/iscsi_target_auth.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/qcom/tlmm-test.c b/drivers/pinctrl/qcom/tlmm-test.c
-index 7d7fff538755a2..4ac96538a417fc 100644
---- a/drivers/pinctrl/qcom/tlmm-test.c
-+++ b/drivers/pinctrl/qcom/tlmm-test.c
-@@ -581,6 +581,9 @@ static int tlmm_reg_base(struct device_node *tlmm, struct resource *res)
- 	int ret;
- 	int i;
- 
-+	if (!strcmp(tlmm_reg_name, "default_region"))
-+		return of_address_to_resource(tlmm, 0, res);
-+
- 	count = of_property_count_strings(tlmm, "reg-names");
- 	if (count <= 0) {
- 		pr_err("failed to find tlmm reg name\n");
-@@ -597,18 +600,14 @@ static int tlmm_reg_base(struct device_node *tlmm, struct resource *res)
- 		return -EINVAL;
+diff --git a/drivers/target/iscsi/iscsi_target_auth.c b/drivers/target/iscsi/iscsi_target_auth.c
+index a3ad2d244dbee1..5858cc3089796e 100644
+--- a/drivers/target/iscsi/iscsi_target_auth.c
++++ b/drivers/target/iscsi/iscsi_target_auth.c
+@@ -438,9 +438,11 @@ static int chap_server_compute_hash(
  	}
  
--	if (!strcmp(tlmm_reg_name, "default_region")) {
--		ret = of_address_to_resource(tlmm, 0, res);
--	} else {
--		for (i = 0; i < count; i++) {
--			if (!strcmp(reg_names[i], tlmm_reg_name)) {
--				ret = of_address_to_resource(tlmm, i, res);
--				break;
--			}
-+	for (i = 0; i < count; i++) {
-+		if (!strcmp(reg_names[i], tlmm_reg_name)) {
-+			ret = of_address_to_resource(tlmm, i, res);
-+			break;
- 		}
--		if (i == count)
--			ret = -EINVAL;
- 	}
-+	if (i == count)
+ 	if (type == HEX)
+-		ret = kstrtoul(&identifier[2], 0, &id);
++		ret = kstrtoul(identifier, 16, &id);
++	else if (type == DECIMAL)
++		ret = kstrtoul(identifier, 10, &id);
+ 	else
+-		ret = kstrtoul(identifier, 0, &id);
 +		ret = -EINVAL;
  
- 	kfree(reg_names);
- 
+ 	if (ret < 0) {
+ 		pr_err("kstrtoul() failed for CHAP identifier: %d\n", ret);
 -- 
 2.53.0
 
