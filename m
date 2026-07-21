@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E2043E073;
-	Tue, 21 Jul 2026 21:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A5F43C7D7;
+	Tue, 21 Jul 2026 21:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668223; cv=none; b=d2PNbovgMFl8ctLRUQqlh7r/YyLupF8Um81zYEwR/cJ5EGyQn0SHQZ+hDqthewhXkmoe9GcwSyjyw9YG95mRBGVVO3TaaKbas8O9em2Il8ZxUGwjlS0eTs6w28aRoUYrE9wepWO6zfHzCf8/HTJ2r/RXzjfBvz0rqQ1wvC/9csM=
+	t=1784668227; cv=none; b=funrYeQjN4/SKzh51bIMS00TmSkDyjpkRjWVfr9rEIMFY+p7DqieUJejWCFKxmXdlHW3UizcssUw97ZnibeYinjZStAuZP5Wo5CObgNTrQOU28QKx/SoaYD/rhU9QbmvbInIVmI7YwF7BEy6kPPeFCxxY9j3fiNEHgws4W2o2n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668223; c=relaxed/simple;
-	bh=6V6832+HxdzXxRhbzydQQVxr9GB10HcA245JM+WAiys=;
+	s=arc-20240116; t=1784668227; c=relaxed/simple;
+	bh=FtrKXzZ9dPcUI2Qp+YgmkA7luAYGKGHxf8qc6FVut2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DRSJHRWRgRuKRnM07S3XaKOZGw/iQpF8dDtbpuztafbZUiUNSzfHco6u+UTJ2RKzsCNeJnYTP2CyJKykPgOYrYZhiYHrqxg4fdfpxHCgkpi9jv2h6QqIIQJ68xNcqhN5sJenHly1p/4NTLXPtt/rG4YWcf1uKz3Qo4D4qYcXH5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/q1VZWP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mlUk8a3EHTFnpPTIKudWNIrc6fPTERKCRZ4o8jpsdxsQYycARDV/qr7VoIMcUe49jMHGya+U/WNp0h1GbYpOa5vm5LBHsoUx/Rr0Sl7ZEc0HWclVDIgmP+XTnv7fjtWAVt9koo98IB2WmyoBSNdo0AIHHSlLhDo/544AxdvQEos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eY0AWgm9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/q1VZWP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5201C1F000E9;
-	Tue, 21 Jul 2026 21:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eY0AWgm9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDBE71F000E9;
+	Tue, 21 Jul 2026 21:10:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668221;
-	bh=1jRUBQc4j1mUGs7UpyftYvuUbBsWFe+5jnBkBM5ZJuc=;
+	s=korg; t=1784668224;
+	bh=/R4kX3I8cieR+eO2ChqqUvuylte9YtUsy5/TH/7ltl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q/q1VZWP/FAZgRFXBlW7qYnpkJYnxfKz7h/HltdYHenwi0rnrCq5akjw1LH79gbLw
-	 KNdRYdX1VZqr1ehpnQv4XDJQxobwe9IXzFL3KTFnOCDhVTinkKHeDkQMGM3acvkV2f
-	 B0WqYcwX7i5ptNKXTgF99eUS/505a9WTfWBCnLTY=
+	b=eY0AWgm9LAOGLWkLiZ+RSdaoyRbjhwJBzcPKHTHe+4Z+y4ybseURVPqUZOrffT5f4
+	 NEVGCcsAMOBYreiL/cSNDNX9Umt6JWF5DN1Ob3KO4xYV7klAocjtaSvLsNodK3bjK+
+	 j44Ovm0hV+4g07H+WO+Ps8cBjTyiuTV6KWr9IXx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Lianqin Hu <hulianqin@vivo.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.1 0092/1067] usb: xhci: Fix sleep in atomic context in xhci_free_streams()
-Date: Tue, 21 Jul 2026 17:11:33 +0200
-Message-ID: <20260721152426.641302014@linuxfoundation.org>
+	Mahesh Vaidya <mahesh.vaidya@altera.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	"Subhransu S. Prusty" <subhransu.sekhar.prusty@altera.com>
+Subject: [PATCH 6.1 0093/1067] PCI: altera: Do not dispose parent IRQ mapping
+Date: Tue, 21 Jul 2026 17:11:34 +0200
+Message-ID: <20260721152426.665403495@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -45,93 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: 胡连勤 <hulianqin@vivo.com>
+From: Mahesh Vaidya <mahesh.vaidya@altera.com>
 
-commit 42c37c4b75d38b51d84f31a8e29427f5e06a7c2a upstream.
+commit 5ef4bac02189bee0b7c170e352d7a38e13fe9678 upstream.
 
-When a USB device with active stream endpoints is disconnected,
-xhci_free_streams() is called from the hub_event workqueue to
-free the stream resources.  It calls xhci_free_stream_info()
-while holding xhci->lock with irqs disabled.
+altera_pcie_irq_teardown() calls irq_dispose_mapping() on pcie->irq.
+However, pcie->irq is the parent IRQ returned by platform_get_irq(), not
+the mapping created by Altera INTx irq_domain.
 
-xhci_free_stream_info() invokes xhci_free_stream_ctx(), which
-calls dma_free_coherent() for large stream context arrays.
+The Altera driver only sets the chained handler on the parent IRQ. It
+should detach that handler during teardown, but it should not dispose the
+parent IRQ mapping, which belongs to the parent interrupt controller's
+irq_domain.
 
-dma_free_coherent() can sleep (e.g. via vunmap), triggering
-a BUG when called from atomic context.
+Drop irq_dispose_mapping(pcie->irq) from the teardown path.
 
-Call trace:
- dma_free_attrs+0x174/0x220
- xhci_free_stream_info+0xd0/0x11c
- xhci_free_streams+0x278/0x37c
- usb_free_streams+0x98/0xc0
- usb_unbind_interface+0x1b8/0x2f8
- device_release_driver_internal+0x1d4/0x2cc
- device_release_driver+0x18/0x28
- bus_remove_device+0x160/0x1a4
- device_del+0x1ec/0x350
- usb_disable_device+0x98/0x214
- usb_disconnect+0xf0/0x35c
- hub_event+0xab4/0x19ec
- process_one_work+0x278/0x63c
+Note that during irqchip remove(), the child IRQs should've disposed. But
+since the chained handler itself is removed, there is no way the stale
+child IRQs (if exists) could fire. So it is safe here.
 
-Fix this by saving the stream_info pointers and clearing the
-ep references under the lock, then calling xhci_free_stream_info()
-outside the lock where sleeping is allowed.
-
-Fixes: 8df75f42f8e6 ("USB: xhci: Add memory allocation for USB3 bulk streams.")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260703144033.483286-3-mathias.nyman@linux.intel.com
+Fixes: ec15c4d0d5d2 ("PCI: altera: Allow building as module")
+Signed-off-by: Mahesh Vaidya <mahesh.vaidya@altera.com>
+[mani: added a note about IRQ disposal]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Subhransu S. Prusty <subhransu.sekhar.prusty@altera.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260430204330.3121003-2-mahesh.vaidya@altera.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/pci/controller/pcie-altera.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -3723,6 +3723,7 @@ static int xhci_free_streams(struct usb_
- 	struct xhci_virt_device *vdev;
- 	struct xhci_command *command;
- 	struct xhci_input_control_ctx *ctrl_ctx;
-+	struct xhci_stream_info *stream_info[EP_CTX_PER_DEV];
- 	unsigned int ep_index;
- 	unsigned long flags;
- 	u32 changed_ep_bitmask;
-@@ -3783,10 +3784,15 @@ static int xhci_free_streams(struct usb_
- 	if (ret < 0)
- 		return ret;
- 
-+	/*
-+	 * dma_free_coherent() called by xhci_free_stream_info() may sleep,
-+	 * so save stream_info pointers and clear references under lock,
-+	 * then free the memory outside lock.
-+	 */
- 	spin_lock_irqsave(&xhci->lock, flags);
- 	for (i = 0; i < num_eps; i++) {
- 		ep_index = xhci_get_endpoint_index(&eps[i]->desc);
--		xhci_free_stream_info(xhci, vdev->eps[ep_index].stream_info);
-+		stream_info[i] = vdev->eps[ep_index].stream_info;
- 		vdev->eps[ep_index].stream_info = NULL;
- 		/* FIXME Unset maxPstreams in endpoint context and
- 		 * update deq ptr to point to normal string ring.
-@@ -3796,6 +3802,9 @@ static int xhci_free_streams(struct usb_
- 	}
- 	spin_unlock_irqrestore(&xhci->lock, flags);
- 
-+	for (i = 0; i < num_eps; i++)
-+		xhci_free_stream_info(xhci, stream_info[i]);
-+
- 	return 0;
+--- a/drivers/pci/controller/pcie-altera.c
++++ b/drivers/pci/controller/pcie-altera.c
+@@ -685,7 +685,6 @@ static void altera_pcie_irq_teardown(str
+ {
+ 	irq_set_chained_handler_and_data(pcie->irq, NULL, NULL);
+ 	irq_domain_remove(pcie->irq_domain);
+-	irq_dispose_mapping(pcie->irq);
  }
  
+ static int altera_pcie_parse_dt(struct altera_pcie *pcie)
 
 
