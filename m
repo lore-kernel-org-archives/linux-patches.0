@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B3D46A615;
-	Tue, 21 Jul 2026 15:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3837944607D;
+	Tue, 21 Jul 2026 15:47:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648832; cv=none; b=UptIViCARf6OhrQRJOQI0zLqqe38+OZRPY7p4J/81U9hb84mjsx+Z4nsdpDwkjWUGA5ZXFJvVMygz1jjSHqvDJykEvKxDQtlsYHsaJoRUA6PkyyLOu17Gk88YytqpYffs7qRKJZZvTwEEjpp4QCCoFwCNf17ecL7wY2gCklUnYY=
+	t=1784648835; cv=none; b=PMlujCO/em1zEXCantYbmkHkmwY/qzH2nxQmJT8nlEs9U4F7zaBjl11wkD+miiToe7wV4g0hEd1sFEL+PFI/Ogwb6Cp3duoW2R5z547MKvOql+RO1z6HkPUht22P1TRNEcFJ2mjg2Zv3hbXh6sJY5r2d0yjok9Vu1k0lv3dTCLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648832; c=relaxed/simple;
-	bh=dmGco3QDRNJgmhOul/fR6HN257wXbAehWV2lvmmweio=;
+	s=arc-20240116; t=1784648835; c=relaxed/simple;
+	bh=NeACuUH/tFwtZArK8dxj/QbnPGnIigMotKC72AUnc6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jpkGE/3brdZGMoBYbhtkuKshbxHQIIor1BHfg1MdgAts8701bnGMGOcIsn+Exh28pChNUpKAfb4kRaVTCZIk9Hg3bm4DStHo1tpfsjm+MIezz3JAEGpMQtfJ1A36dl5xUDGjDRrn39o3cKifu/fTLftTe1hRTB/YqNXLfr3jATs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZqSwYI4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J5ciU156caK7hYlfRvlOM1SBGbkziEz5C3kMV1J03GLo/B8TdF7TxuehLnsUj9Kde7pRSD7xUV++S2gK9VdMjKaNXMGVWiMeYAOD/nvHwsAe5vb9rNhw4v3/75KiPFVBFeOCMkfURDbygKZFlUdjvjM0ZPuRSozA1C1/vZ1ZIyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fj5urFA/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZqSwYI4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40921F000E9;
-	Tue, 21 Jul 2026 15:47:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fj5urFA/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E8501F000E9;
+	Tue, 21 Jul 2026 15:47:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648831;
-	bh=XjRH3WL0fEPFxuMilB9zoEDgLdM8ZiUarKhuVkXYFRk=;
+	s=korg; t=1784648834;
+	bh=iGSzCNSUvo6Ec6NqG8cF58F1YVMIopC05AbcLQiCtP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tZqSwYI4CLpyMqLXDc1SWjOGzugOYRXmNNCwSyyaQA9VYxZQCp8NJXjIMSIy0bp7i
-	 yOJB7R11yQStT0rPApTwu52BXtDiCdfnFWKeNsk1E+zPHJGF8K3vLHMLfDQrt1bpMI
-	 yfVy8UphXR+/7eznYnQkblA5vJNeJGgTb4xqHqeA=
+	b=Fj5urFA/3ocHWt9fGJ2vmS12Ay+2P16v6bhtKskh7ss5HSdhWJNeU+xyrHwAuuyix
+	 XmzlOyzbVoocsxXf4tTr7i2KHELKsU8om5M/cTABpXPpUKaeudU5/cQWTUVFA9WCIp
+	 eixoFJ8YrP0mOClkELusXhTWwjN9aR7jQUuYZRK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
 	Mikko Perttunen <mperttunen@nvidia.com>,
 	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0347/2077] drm/tegra: dc: Fix device node reference leak in tegra_dc_has_output()
-Date: Tue, 21 Jul 2026 17:00:20 +0200
-Message-ID: <20260721152600.876776721@linuxfoundation.org>
+Subject: [PATCH 7.1 0348/2077] gpu: host1x: Fix iommu_map_sgtable() return value check
+Date: Tue, 21 Jul 2026 17:00:21 +0200
+Message-ID: <20260721152600.901078032@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,45 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Mikko Perttunen <mperttunen@nvidia.com>
 
-[ Upstream commit 63a3998d792ab5c45304bf879e385a31fa923b61 ]
+[ Upstream commit 18f74762013a4b6aa6f905c4459e0f506f9c5c7b ]
 
-The of_for_each_phandle() macro increments the reference count of the
-device node it iterates over. If the loop exits early, the reference must
-be released manually.
+Commit "iommu: return full error code from iommu_map_sg[_atomic]()"
+changed iommu_map_sgtable() to return an ssize_t and negative values
+in error cases, rather than a size_t and a zero.
 
-In tegra_dc_has_output(), the function returns true immediately when a
-match is found, failing to release the current node's reference.
+pin_job() also was incorrectly assigning to 'int', which could cause
+overflows into negative values.
 
-Fix this by adding a call to of_node_put() before returning from the loop.
+Update pin_job() to correctly check for errors from iommu_map_sgtable.
 
-Fixes: c57997bce423 ("drm/tegra: sor: Add Tegra186 support")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Acked-by: Mikko Perttunen <mperttunen@nvidia.com>
+Fixes: ad8f36e4b6b1 ("iommu: return full error code from iommu_map_sg[_atomic]()")
+Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
 Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260128-dc-v1-1-a88205826301@gmail.com
+Link: https://patch.msgid.link/20260421-iommu_map_sgtable-return-v1-1-fb484c07d2a1@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tegra/dc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/host1x/job.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/tegra/dc.c b/drivers/gpu/drm/tegra/dc.c
-index 06370b7e0e5678..c6734a87ef0aff 100644
---- a/drivers/gpu/drm/tegra/dc.c
-+++ b/drivers/gpu/drm/tegra/dc.c
-@@ -101,8 +101,10 @@ bool tegra_dc_has_output(struct tegra_dc *dc, struct device *dev)
- 	int err;
+diff --git a/drivers/gpu/host1x/job.c b/drivers/gpu/host1x/job.c
+index 3ed49e1fd93322..70bda32f1ff488 100644
+--- a/drivers/gpu/host1x/job.c
++++ b/drivers/gpu/host1x/job.c
+@@ -235,6 +235,8 @@ static unsigned int pin_job(struct host1x *host, struct host1x_job *job)
+ 		}
  
- 	of_for_each_phandle(&it, err, np, "nvidia,outputs", NULL, 0)
--		if (it.node == dev->of_node)
-+		if (it.node == dev->of_node) {
-+			of_node_put(it.node);
- 			return true;
-+		}
+ 		if (host->domain) {
++			ssize_t map_err;
++
+ 			for_each_sgtable_sg(map->sgt, sg, j)
+ 				gather_size += sg->length;
  
- 	return false;
- }
+@@ -248,11 +250,11 @@ static unsigned int pin_job(struct host1x *host, struct host1x_job *job)
+ 				goto put;
+ 			}
+ 
+-			err = iommu_map_sgtable(host->domain, iova_dma_addr(&host->iova, alloc),
+-						map->sgt, IOMMU_READ);
+-			if (err == 0) {
++			map_err = iommu_map_sgtable(host->domain, iova_dma_addr(&host->iova, alloc),
++						    map->sgt, IOMMU_READ);
++			if (map_err < 0) {
+ 				__free_iova(&host->iova, alloc);
+-				err = -EINVAL;
++				err = map_err;
+ 				goto put;
+ 			}
+ 
 -- 
 2.53.0
 
