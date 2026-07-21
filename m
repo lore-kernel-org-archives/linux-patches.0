@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF28C3F2101;
-	Tue, 21 Jul 2026 18:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 506A53F2101;
+	Tue, 21 Jul 2026 18:55:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660147; cv=none; b=jlRGxloO+K5TSFsT1CCMVF9hdGIa9mSc9ljZCNEB1p4zmVf3gOPLjUK6/XbAOFe6hy81xzkng9xv3CsAvIDQ1By0P0sS3L7hWRKRskk/goAB7zpCHwOQDAX3koIp5tlyTC/3Kk7JLIVvB2XPUhEwbGl8u86quLi/abBV5J5oqB4=
+	t=1784660149; cv=none; b=qZy/cEt3O0iWRLoDVxiBKxep5hSnlLounYu22Hv7LfS8IQsdp824/PsaO9Jb+OhAPI0Gk1RNA0BRBBO6CHNqn3MidEurh+hsg0M9bYxksm6n8vdxpqhKiA45KGbIhwIfI0a+vVfg6aHjhwuEWWCENp9lPXCNq/a9gAtPpWitjUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660147; c=relaxed/simple;
-	bh=8YTJzZG0fXZmKPkf2xTIcHYlefXvfhniYQ2GitSaRWM=;
+	s=arc-20240116; t=1784660149; c=relaxed/simple;
+	bh=bNSKUDvl+qjBSLTNCvEt/scT4FmrkOns5TeSUwUolSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VsFdjToVeM+PbhupTaNO09QMJVY76G1NXSNyfgew/xQctu2gVwYUxkOzwxZ7ZiphGdOK3WaBuBPtfd/8TTrVNjc0gjdeClWsKdrNtIDhYJBqp98r4kaIHA/OE+mXB3AyoZZimFQ4fA+9U6rPjsbxWvELs+0jkXYvpHSfovZQkBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=apx1kE9Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cqsHTIJsYpiZJrKvFmTiWNrsejE2SdDuQFhj1U31LfeyVAINKGHOZQh0uVW2MBVUaU07iVQKM9kffSztywKcI/OlbbT/cvZfdKTVinQ+usHI4KDdXMl2fY5Yr+UX/ATbMSZtyrWNZ56TcK6rGxUcMvezcgnZRYqy7ZMOXMI8yjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=veh4lPCU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="apx1kE9Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41BCB1F000E9;
-	Tue, 21 Jul 2026 18:55:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="veh4lPCU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC2F81F00A3A;
+	Tue, 21 Jul 2026 18:55:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660145;
-	bh=tEiADCAflLJvnpIddm//R0BEchxNlokur2RF2YvTQmQ=;
+	s=korg; t=1784660148;
+	bh=khU1qHO+Mf7hfPakPE42j7W3D4FUpY7evsShmwn0AYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=apx1kE9Z1Gfz5MZ4eiL5AFdHuqKC0yy/3aC1lsWtFfcuza0sXaZygPmcg0HIi3Sjo
-	 jsQ9mX9/v3vzVgsMpbXOD5nwlcdfAq3145rIGat7mELrsijEzP4rlOrFz5NcOzgVBw
-	 azZXwibCS+JpLlLmHXRbvcLfEq7jG55GjRmtN08k=
+	b=veh4lPCU0IsZ/daccHzFNuo1m8E31BVOz2yIn87mCSLKX+69IKEvyM+TeF11TQs7K
+	 op8Cwz0MWtt7R5OxC4g1mC+hAQCr19pMFfwwFfzbDuIFBeRG3u6eWFbKMTEBuqY8nJ
+	 JGHC7x/LTdr+VJgIlRewqo0YZZBa+GiRvsNjJzwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Sandipan Das <sandipan.das@amd.com>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0867/2077] phy: phy-can-transceiver: Check driver match and driver data against NULL
-Date: Tue, 21 Jul 2026 17:09:00 +0200
-Message-ID: <20260721152613.238690687@linuxfoundation.org>
+Subject: [PATCH 7.1 0868/2077] perf pmu-events AMD: Switch l2_itlb_misses to bp_l1_tlb_miss_l2_tlb_miss.all
+Date: Tue, 21 Jul 2026 17:09:01 +0200
+Message-ID: <20260721152613.263601923@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,41 +60,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit ebee9004cc0200b2b708ebf7ac625d35c71c049f ]
+[ Upstream commit 41a543c86d110073275e5294852d692e5faf6b3b ]
 
-Every platform driver can be forced to match a device that doesn't
-match its list of device IDs because of device_match_driver_override()
-so platform drivers that rely on the existence of a device's driver
-data need to verify its presence.
+l2_itlb_misses is a valid legacy cache event name, hence allowing it
+in all_events in metric.py. l2_itlb_misses was also a json event for
+AMD zen1, zen2 and zen3.
 
-Accordingly, add requisite match and driver data checks against NULL
-to the driver where they are missing.
+For zen4, zen5 and zen6 the checking that metric events are within the
+json was skipping l2_itlb_misses as it is a valid legacy event, however,
+the PMU driver lacks the event mapping causing it to be a bad event when
+used in the metric.
 
-Fixes: a4a86d273ff1 ("phy: phy-can-transceiver: Add support for generic CAN transceiver driver")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260513220336.369628-2-andriy.shevchenko@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Add bp_l1_tlb_miss_l2_tlb_miss.all as the l2 itlb miss event (bp =
+branch predictor, the AMD way to say itlb), so that is used in
+preference to l2_itlb_misses when the event exists.
+
+Remove l2_itlb_misses from metric.py as the legacy event isn't used by
+any metrics and having it is error prone for newer AMD zen models.
+
+Fixes: e596f329668ec2b5 ("perf jevents: Add itlb metric group for AMD")
+Reviewed-by: Sandipan Das <sandipan.das@amd.com>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/phy-can-transceiver.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/perf/pmu-events/amd_metrics.py | 2 +-
+ tools/perf/pmu-events/metric.py      | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/phy/phy-can-transceiver.c b/drivers/phy/phy-can-transceiver.c
-index 2b52e47f247a2b..1808f903c05707 100644
---- a/drivers/phy/phy-can-transceiver.c
-+++ b/drivers/phy/phy-can-transceiver.c
-@@ -162,6 +162,9 @@ static int can_transceiver_phy_probe(struct platform_device *pdev)
- 	int err, i, num_ch = 1;
+diff --git a/tools/perf/pmu-events/amd_metrics.py b/tools/perf/pmu-events/amd_metrics.py
+index e2defaffde3e6b..971f6e7af1f828 100755
+--- a/tools/perf/pmu-events/amd_metrics.py
++++ b/tools/perf/pmu-events/amd_metrics.py
+@@ -268,7 +268,7 @@ def AmdDtlb() -> Optional[MetricGroup]:
+ def AmdItlb():
+     global _zen_model
+     l2h = Event("bp_l1_tlb_miss_l2_tlb_hit", "bp_l1_tlb_miss_l2_hit")
+-    l2m = Event("l2_itlb_misses")
++    l2m = Event("bp_l1_tlb_miss_l2_tlb_miss.all", "l2_itlb_misses",)
+     l2r = l2h + l2m
  
- 	match = of_match_node(can_transceiver_phy_ids, pdev->dev.of_node);
-+	if (!match || !match->data)
-+		return -ENODEV;
-+
- 	drvdata = match->data;
- 	if (drvdata->flags & CAN_TRANSCEIVER_DUAL_CH)
- 		num_ch = 2;
+     itlb_l1_mg = None
+diff --git a/tools/perf/pmu-events/metric.py b/tools/perf/pmu-events/metric.py
+index 585454828c2fe9..ac582db785fc10 100644
+--- a/tools/perf/pmu-events/metric.py
++++ b/tools/perf/pmu-events/metric.py
+@@ -25,7 +25,6 @@ def LoadEvents(directory: str) -> None:
+       "cycles",
+       "duration_time",
+       "instructions",
+-      "l2_itlb_misses",
+   }
+   for file in os.listdir(os.fsencode(directory)):
+     filename = os.fsdecode(file)
 -- 
 2.53.0
 
