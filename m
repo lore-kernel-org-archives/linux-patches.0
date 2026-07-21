@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C544443B4A2;
-	Tue, 21 Jul 2026 20:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665F03B995D;
+	Tue, 21 Jul 2026 20:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666974; cv=none; b=ZKz0sfbjXyXAJFfEs0zC8zichcgMBSk3TTx4II54Mad4q6j9opsy/cnU8ekn+jJ0Zw0w/5bZv48V4QCVs8Gaf44STJf9SEPATMFcsxg0KTxYfRVUpeslWtPCJREtXvQ4x/xpyV1qIlYrrcl/9kEP1FtjYTsEIXpoRDwixZMh710=
+	t=1784666976; cv=none; b=Y+TRfH1SbMaaGgRaZjKdtLlXDhWcmiP8L+1oQFi+Q+VglTGXRp9st2fENdbsdbKYR/f5qckTjI1/ahMkrh1t7jYMhaVc/yfz5KQgbV44pp+yHz6CMeHXB4ZZJIGENrUopYMp4BnZ7YqzDseGxxag3CIR40BqJfX2UtQSdkYzHF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666974; c=relaxed/simple;
-	bh=rovW+s5RcEqx4u4I8PzbxRmMc0JJIZaR2WrNGNpRBVs=;
+	s=arc-20240116; t=1784666976; c=relaxed/simple;
+	bh=KkFp//VI6tAU+euIza73u0NkFv7QQ2bQVWpgeUy45HI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=odp6rpQ/mn/e5SVlzXzm0zZY3WO8UxbzLXQZdeGOXuR54aAYHsBUPSqIJHKEMYTLHqkC8nBv4aQ2ohekkLN/y5AL3yBkG6JaHNBf+rAt5NkHpWepGqFOsdr708RqE6thh1WT/QjaTQGtQuhdp8F35mxl+an5nyzZMnAcLdwu44s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQ8Z81+d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AbaOMTFxzbRDKGCHw7UAlUkQwKBvkWIwM8JGERDKOWAKPG8WVn3dtESOvbYlF5zK5DcH3yRoEIbjY/UgVg4KfPfEZ9G2S81mtgkzaF8BeVp6pQrKIIJEFnyY8oAUyt6Plsz0zyoEBO++TpW3wx5rwwiDnzP0WOFuSJf8jxLvcYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmBJUKBZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQ8Z81+d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7AA1F00A3A;
-	Tue, 21 Jul 2026 20:49:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmBJUKBZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970151F000E9;
+	Tue, 21 Jul 2026 20:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666972;
-	bh=AiLrczxQW8gKjWU2KEKVta7Ky8zcEgU1ExkCfymi5k0=;
+	s=korg; t=1784666975;
+	bh=hPdW7LZXNlCcktYcu2KN3n0CkNZ+QeaTJ1Y5CszTiaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pQ8Z81+dS4ogVsRCzYLRn42+jo0ps2nHYU7Cl9PZFxZJX+7lkR48Vv5fS2HUYB8Rr
-	 jPwm2s5QLv0E4GtjK4AoE27jAcD9FppmGY4x6ZyRAA4dKRIFIUfFV2rQDRkBN1r8ZN
-	 s0o0WVjdmedhnZeyahl7COY2PlZ7J/wA8OZpQFAM=
+	b=wmBJUKBZCnV1RV3PES00z4gGPLzKYz4tAAEAzTiazZWU3YxcqguA8Rgz7kpjsGnyU
+	 oHdLtbPf3LymCxWhhUz/8wJUQHnmO4goUp0k14aoWdQI4OmtRZgpLL+XKxRtUdgZY3
+	 5M9Uoibc/KvafkZNUrUH4Um2aR4BUTMfSMUq+a/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Simon Horman <horms@kernel.org>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Harman Kalra <hkalra@marvell.com>,
+	Nitin Shetty J <nshettyj@marvell.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0886/1266] net/mlx5: Fix L3 tunnel entropy refcount leak
-Date: Tue, 21 Jul 2026 17:22:03 +0200
-Message-ID: <20260721152501.675899736@linuxfoundation.org>
+Subject: [PATCH 6.6 0887/1266] octeontx2-af: fix VF bringup affecting PF promiscuous state
+Date: Tue, 21 Jul 2026 17:22:04 +0200
+Message-ID: <20260721152501.698415119@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,44 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Harman Kalra <hkalra@marvell.com>
 
-[ Upstream commit c914307e1d41c2cb7bcdcbfde4cd2f214f6aa027 ]
+[ Upstream commit fabb881df322da25442f98d23f5fa371e3c78ec4 ]
 
-mlx5_tun_entropy_refcount_inc() counts both VXLAN and L2-to-L3
-tunnel reformat entries as entropy-enabling users. The matching
-decrement path only handled VXLAN, leaving L2-to-L3 tunnel entries
-counted after release.
+Mbox handling of nix_set_rx_mode for a VF with promiscuous and
+all_multi flags set to false causes deletion of the PF's promiscuous
+and allmulti MCAM rules. This occurs because the APIs that
+enable/disable these rules operate only on the PF, even when the
+mbox request is made via a VF interface.
 
-Handle MLX5_REFORMAT_TYPE_L2_TO_L3_TUNNEL in
-mlx5_tun_entropy_refcount_dec() as well so the enabling entry
-refcount remains balanced.
+Guard both rvu_npc_enable_allmulti_entry() and
+rvu_npc_enable_promisc_entry() disable paths with an is_vf() check so
+that a VF bringing up or tearing down its interface cannot inadvertently
+clear the PF's MCAM rules.
 
-Fixes: f828ca6a2fb6 ("net/mlx5e: Add support for hw encapsulation of MPLS over UDP")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260703141423.1723-1-lirongqing@baidu.com
+Fixes: 967db3529eca ("octeontx2-af: add support for multicast/promisc packet replication feature")
+Signed-off-by: Harman Kalra <hkalra@marvell.com>
+Signed-off-by: Nitin Shetty J <nshettyj@marvell.com>
+Link: https://patch.msgid.link/20260702045616.3002773-2-nshettyj@marvell.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c
-index 4571c56ec3c9b2..97f6097d4c705f 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/port_tun.c
-@@ -176,7 +176,8 @@ void mlx5_tun_entropy_refcount_dec(struct mlx5_tun_entropy *tun_entropy,
- 				   int reformat_type)
- {
- 	mutex_lock(&tun_entropy->lock);
--	if (reformat_type == MLX5_REFORMAT_TYPE_L2_TO_VXLAN)
-+	if (reformat_type == MLX5_REFORMAT_TYPE_L2_TO_VXLAN ||
-+	    reformat_type == MLX5_REFORMAT_TYPE_L2_TO_L3_TUNNEL)
- 		tun_entropy->num_enabling_entries--;
- 	else if (reformat_type == MLX5_REFORMAT_TYPE_L2_TO_NVGRE &&
- 		 --tun_entropy->num_disabling_entries == 0)
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+index 0703b0d8df783e..095c339166b515 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+@@ -4121,7 +4121,7 @@ int rvu_mbox_handler_nix_set_rx_mode(struct rvu *rvu, struct nix_rx_mode *req,
+ 		rvu_npc_install_allmulti_entry(rvu, pcifunc, nixlf,
+ 					       pfvf->rx_chan_base);
+ 	} else {
+-		if (!nix_rx_multicast)
++		if (!nix_rx_multicast && !is_vf(pcifunc))
+ 			rvu_npc_enable_allmulti_entry(rvu, pcifunc, nixlf, false);
+ 	}
+ 
+@@ -4131,7 +4131,7 @@ int rvu_mbox_handler_nix_set_rx_mode(struct rvu *rvu, struct nix_rx_mode *req,
+ 					      pfvf->rx_chan_base,
+ 					      pfvf->rx_chan_cnt);
+ 	else
+-		if (!nix_rx_multicast)
++		if (!nix_rx_multicast && !is_vf(pcifunc))
+ 			rvu_npc_enable_promisc_entry(rvu, pcifunc, nixlf, false);
+ 
+ 	return 0;
 -- 
 2.53.0
 
