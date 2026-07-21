@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB15471262;
-	Tue, 21 Jul 2026 18:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117E1471264;
+	Tue, 21 Jul 2026 18:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659413; cv=none; b=twrpVU8RBVYBZdeIcugCfgvQ3itrtXX/k/9IvDDL/fAR22nqceSkgKOiH90cb+FFZAuJ64rlRRKiaYOoXCAdrFjrlrbbfeJ1UOeo6YrPk2pvmRp6volc6k2nEK8X9MCMlxOFDt2uUSXn870yQx8jz8SrnHCNO4dfAuc/4mrgWnQ=
+	t=1784659416; cv=none; b=JS8p1LcCcGmuAbuVHlsQooY9a4KNy8/EabrwYduhJw2irrwYTnK+osd80WUf3P+pbGAu0AVmV3cz3Thfnq+EP3YhNNWJk1gRM6evYWA1Z9N9+B9Vg89QDahjcHmm3B23wT+5h9TEtMyGpRoiNALJOtRGfJPUBkIVNQqgIthk3Hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659413; c=relaxed/simple;
-	bh=6duaVTeSeQzg4GJUZCszhB6VcVZ6PrjwWc+ta866IHQ=;
+	s=arc-20240116; t=1784659416; c=relaxed/simple;
+	bh=rgyPebtPzHmmMw4jP7o3P6N8Tv1xnZZetV6GYEmN0kI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FSgfoqHgyolSVjzdLtflAtmBvJe7iuWXE1th0FfmA8pfRpwqJHtRx9H9h+qr4Pf+IqBqc19/6BxK4a1aV9bM9A/beHKqtRLOu1sVcGYYR/r596ZaX8U0OXsrNeslryAho+fFYfNO0VnZn8g1JH9yCz5Ur4M7ELvnoluVJn/TJGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNeXRlOk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c32QirEYHOtlHRuTMO5WP3OGP3RPRozxLKFQ/yWBA2Gg0d4hYAyadVr9xsL5vjkGWOfI/Eh+GPHU7DEHHs3UHjFy1bMztok8d1HgF0WL+b19hiJ1xcLmORD1TWN6fKdxwDHRqePgrCiP7gGA/tKdvFlK77HUBHag5JcUxpyRiGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PGO2PbD6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNeXRlOk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D67061F000E9;
-	Tue, 21 Jul 2026 18:43:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PGO2PbD6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788101F000E9;
+	Tue, 21 Jul 2026 18:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659412;
-	bh=/xA6hzBbz6qDhJS2fXPxvyZ/SeepwUr55kN6aFlaE3A=;
+	s=korg; t=1784659415;
+	bh=RgH2cgfY0cf14it+XEELHnp3qZxyFY48eo09paDZP/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nNeXRlOktm055bP7WELLmfhGchsnX7EJuQvBiYIJtwLqra5tzNi5Wipdy1f+bECrY
-	 OYGVa7Kyr7rtbOp9QKn9RD9ffA3pRqasC3ptT35hF5y4CnALrHw+NpaxBsdLdqY0f7
-	 wD128UA9JbtwFvr6GNmcDKQwCwUKzdvn2aJ3GyIM=
+	b=PGO2PbD6Tj0jZuMzrNUFxtoGSmw8FfX8wzxN06OBpYX7z4w2LpxtpkhILXYbuHpWZ
+	 yB3SObb84J4m/UPqTw3lyPCvVoDc+xau4XRGirABOlIQcZU+37TOCWo7xJxVH4LGfZ
+	 6pLk2lx3pvn1C4VaDpZy/Wfyo0B5ODZWCewhiqh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Luke Wang <ziniu.wang_1@nxp.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 1511/1611] mmc: sdhci-esdhc-imx: disable irq during suspend to fix unhandled interrupt
-Date: Tue, 21 Jul 2026 17:27:07 +0200
-Message-ID: <20260721152549.429053298@linuxfoundation.org>
+	Abhishek Ojha <Abhishek.ojha@savoirfairelinux.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 1485/1611] regulator: ltc3676: Fix incorrect IRQSTAT bit offsets
+Date: Tue, 21 Jul 2026 17:26:41 +0200
+Message-ID: <20260721152548.847758641@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,67 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luke Wang <ziniu.wang_1@nxp.com>
+From: Abhishek Ojha <Abhishek.ojha@savoirfairelinux.com>
 
-commit 9d87eaf985cef9581b6ed99b461b38e8cd666480 upstream.
+commit 50dce2e2f84b56d8b4b406d97a1543709e8a87f5 upstream.
 
-When using WIFI out-of-band wakeup, an "irq xxx: nobody cared" warning
-occurs. This happens because the usdhc interrupt is not disabled during
-system suspend when device_may_wakeup() returns false.
+The LTC3676_IRQSTAT_* bit definitions do not match the IRQSTAT
+(Interrupt Request Status) register layout documented in Table 15
+of the LTC3676/LTC3676-1 datasheet:
 
-The sequence of events leading to this issue:
-1. System enters suspend without disabling usdhc interrupt
-(because device_may_wakeup() returns false for usdhc device)
-2. WIFI out-of-band wakeup triggers system resume via GPIO interrupt
-3. WIFI sends a Card interrupt before usdhc has fully resumed
-4. usdhc is still in runtime suspend state and cannot handle the
-interrupt properly
-5. The unhandled interrupt triggers "nobody cared" warning
+  bit 0 - Pushbutton Status Active
+  bit 1 - Hard Reset Occurred
+  bit 2 - PGOOD Timeout Occurred
+  bit 3 - Undervoltage Warning
+  bit 4 - Undervoltage Standby (Fault) Occurred
+  bit 5 - Overtemperature Warning
+  bit 6 - Overtemperature Standby (Fault) Occurred
+  bit 7 - Reserved
 
-Fix this by unconditionally disabling the usdhc interrupt during suspend
-and re-enabling it during resume, regardless of the wakeup capability.
-This ensures no interrupts are processed during the suspend/resume
-transition.
+The driver instead defines these starting at bit 3, one bit higher
+than the datasheet specifies, which causes ltc3676_regulator_isr()
+to check the wrong status bits and misreport (or miss) PGOOD
+timeout, undervoltage and thermal warning/fault conditions.
 
-Fixes: 676a83855614 ("mmc: host: sdhci-esdhc-imx: refactor the system PM logic")
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Haibo Chen <haibo.chen@nxp.com>
-Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
+Fix the bit offsets to match the datasheet.
+
+Fixes: 37b918a034fe ("regulator: Add LTC3676 support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Abhishek Ojha <Abhishek.ojha@savoirfairelinux.com>
+Link: https://patch.msgid.link/20260715170408.295552-1-Abhishek.ojha@savoirfairelinux.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-esdhc-imx.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/regulator/ltc3676.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/mmc/host/sdhci-esdhc-imx.c
-+++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -2054,9 +2054,10 @@ static int sdhci_esdhc_suspend(struct de
- 	if (mmc_card_keep_power(host->mmc) && esdhc_is_usdhc(imx_data))
- 		sdhc_esdhc_tuning_save(host);
+--- a/drivers/regulator/ltc3676.c
++++ b/drivers/regulator/ltc3676.c
+@@ -45,11 +45,11 @@
+ #define LTC3676_DVBxA_REF_SELECT	BIT(5)
+ #define LTC3676_DVBxB_PGOOD_MASK	BIT(5)
  
-+	/* The irqs of imx are not shared. It is safe to disable */
-+	disable_irq(host->irq);
-+
- 	if (device_may_wakeup(dev)) {
--		/* The irqs of imx are not shared. It is safe to disable */
--		disable_irq(host->irq);
- 		ret = sdhci_enable_irq_wakeups(host);
- 		if (!ret)
- 			dev_warn(dev, "Failed to enable irq wakeup\n");
-@@ -2107,10 +2108,10 @@ static int sdhci_esdhc_resume(struct dev
- 	/* re-initialize hw state in case it's lost in low power mode */
- 	sdhci_esdhc_imx_hwinit(host);
+-#define LTC3676_IRQSTAT_PGOOD_TIMEOUT	BIT(3)
+-#define LTC3676_IRQSTAT_UNDERVOLT_WARN	BIT(4)
+-#define LTC3676_IRQSTAT_UNDERVOLT_FAULT	BIT(5)
+-#define LTC3676_IRQSTAT_THERMAL_WARN	BIT(6)
+-#define LTC3676_IRQSTAT_THERMAL_FAULT	BIT(7)
++#define LTC3676_IRQSTAT_PGOOD_TIMEOUT	BIT(2)
++#define LTC3676_IRQSTAT_UNDERVOLT_WARN	BIT(3)
++#define LTC3676_IRQSTAT_UNDERVOLT_FAULT	BIT(4)
++#define LTC3676_IRQSTAT_THERMAL_WARN	BIT(5)
++#define LTC3676_IRQSTAT_THERMAL_FAULT	BIT(6)
  
--	if (host->irq_wake_enabled) {
-+	if (host->irq_wake_enabled)
- 		sdhci_disable_irq_wakeups(host);
--		enable_irq(host->irq);
--	}
-+
-+	enable_irq(host->irq);
- 
- 	/*
- 	 * restore the saved tuning delay value for the device which keep
+ enum ltc3676_reg {
+ 	LTC3676_SW1,
 
 
