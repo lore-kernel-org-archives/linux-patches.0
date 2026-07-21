@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38FB356746;
-	Tue, 21 Jul 2026 19:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B20436BC6;
+	Tue, 21 Jul 2026 19:55:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663702; cv=none; b=If24JmsUviIPMNTLPl4BZkPIPki50MzZ5VXHHL8b9NoHQguq2kAYRhW2c2eGlQ68GYKp0UzGsraGPDFOLXJRbvkjmaJhguSzO7yPPwM8350K1v8ts4Yuq8EuD9zdfbMo/vy02gz68svT+Mmu9hIjOmjWlbA5kIVyE2PnSQUymTU=
+	t=1784663704; cv=none; b=NlrXfC38XpgKNb87cEci0LkY9ADC9/e8NYoKuF8LsyF74JbYjuL9pjrxyzEeCw0a3wU54N4Ta78pLGWzZRlA/ExYmFUWaBPxqVCSvQ+FkJCbpSaIpLgKTejnaly4Cfgt4gpW38WIW883UMUOzfyoMZUWssGXc824fcnKul47tpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663702; c=relaxed/simple;
-	bh=eOxzk+dXM7pmd8XOdnuViI8fQOniBzcyIsLVj5DOsfQ=;
+	s=arc-20240116; t=1784663704; c=relaxed/simple;
+	bh=H/gCwIgfRQGtAemahnUlVKWQdpMbpXHxC41/8jfe+Mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WMcXMq7e5IBOqSuRcTlaE48spCj0FuFcdMr0FdCeqMA78UeZ7DjhnBmJq+rYW8RmAGbIWJrLEbymlHXLNIc9hMkAZMdhVSfFwiYRhblBgoCcCCGCSigyj0GliIu4n9IraW/A8+m1yg4QINy1wwvpwKW6K6WmydIvhr0s1fNtlwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RL96edqL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ofoqwUwJiS4VNcOSFcvq4omL5EDmoC5zxkgAGM/eCfMBmgACxgCjO5Q7xM+B2RA4y5VkJnlk40ra9gwXgsVY3ZUb9WhTLdP3TMECeZkULBlK7sVbQ4t4N4mDPOmic9EMphV67s0IRrJ48cFP4dL++YsI7Xja5Qjv3CYsvWZUMVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hX+9y2ou; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RL96edqL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174291F000E9;
-	Tue, 21 Jul 2026 19:54:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hX+9y2ou"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FA31F000E9;
+	Tue, 21 Jul 2026 19:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663700;
-	bh=Kn4YxMo3obJXl/VXnB61N7LKFBIVI73/031zByiaLCA=;
+	s=korg; t=1784663703;
+	bh=SOIJmH5Lq1CKVFBWLqCc91rqLWaoTECDmsdr9j6xBos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RL96edqLrPeVvr/mcG6UMcO5M9H0C3IJVPov68BCaiV8VNEOf6FiZcGTtuokdci2f
-	 Mm76cFQE9g0fDm/zz+xTXSHqsgFLJQaaxoHKHCiHkr5RPDSUVqNbkcIR3mwQFU7+R4
-	 m++IFYjtrkpD4Qs4wEOgGKLwQfLgX3sAiNPo90H4=
+	b=hX+9y2ouU1dHSYleTquvtQCdGL9sCwnVUb8nmTs2bm2QnN54b8dsfvtvsQvUqGq9A
+	 hjfxJf7h8u3s1RSLd5WOv382Z7o1DULLZLg/ATvxQlsXnwkwFGzMcguxZXvfLZutpF
+	 wJp8GwXkwGL6xxkhMQTyE49saWz42gMj6rajiEgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.12 0920/1276] fs/ntfs3: add depth limit to indx_find_buffer to prevent stack overflow
-Date: Tue, 21 Jul 2026 17:22:43 +0200
-Message-ID: <20260721152506.624566080@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	Sandipan Das <sandipan.das@amd.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 6.12 0879/1276] perf/x86/amd/lbr: Fix kernel address leakage
+Date: Tue, 21 Jul 2026 17:22:02 +0200
+Message-ID: <20260721152505.721498221@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,81 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Sandipan Das <sandipan.das@amd.com>
 
-commit 1ebd684b8f627f75bc3e03f8b2ad8400fd1f02cd upstream.
+commit 2a892294b83f541115c94b0bb637f39bef187657 upstream.
 
-indx_find_buffer() recursively descends the B+ tree index with no depth
-limit.  A crafted NTFS image with circular index node references causes
-unbounded recursion, overflowing the kernel stack and panicking the
-system.
+A user-only branch stack can contain branches that originate from
+the kernel. As a result, kernel addresses are exposed to user space
+even when PERF_SAMPLE_BRANCH_USER is requested. On AMD processors
+supporting X86_FEATURE_AMD_LBR_V2, perf can still report SYSRET/ERET
+entries for which the branch-from addresses are in the kernel.
 
-This is reachable by mounting a malicious NTFS filesystem (e.g. from a
-USB drive via desktop automount) and deleting a file whose index entry
-triggers the rebalancing fallback path in indx_delete_entry().
+E.g.
 
-Add a depth parameter and bail out with -EINVAL when it reaches the
-fnd->nodes array bound, matching the constraint already enforced by
-fnd_push() in indx_find().
+  $ perf record -e cycles -o - -j any,save_type,u -- \
+        perf bench syscall basic --loop 1000 | \
+        perf script -i - -F brstack|tr ' ' '\n'| \
+        grep -E '0x[89a-f][0-9a-f]{15}'
 
-The related function indx_find() was previously patched for a similar
-infinite-loop issue (commit 1732053c8a6b), but indx_find_buffer() was
-missed.
+  ...
+  0xffffffff81001268/0x717a90a38f1a/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a90a39157/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a90a2c628/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a90a41b60/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a90a260db/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a90a260db/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a8bef1c30/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  0xffffffff81001268/0x717a8e4d3c90/M/-/-/0/ERET/NON_SPEC_CORRECT_PATH
+  ...
 
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+The reason is that the hardware filter only considers the privilege
+level applicable to the branch target. Extend software filtering to
+also validate the branch-from addresses against br_sel, so that any
+branch record whose branch-from address is in the kernel is dropped
+when PERF_SAMPLE_BRANCH_USER is requested.
+
+Fixes: f4f925dae741 ("perf/x86/amd/lbr: Add LbrExtV2 hardware branch filter support")
+Reported-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://patch.msgid.link/a898a29725f6b2f30518354cdc2e432db66c43cf.1783680119.git.sandipan.das@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/index.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ arch/x86/events/amd/lbr.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -2014,13 +2014,21 @@ out1:
- static struct indx_node *indx_find_buffer(struct ntfs_index *indx,
- 					  struct ntfs_inode *ni,
- 					  const struct INDEX_ROOT *root,
--					  __le64 vbn, struct indx_node *n)
-+					  __le64 vbn, struct indx_node *n,
-+					  int depth)
- {
- 	int err;
- 	const struct NTFS_DE *e;
- 	struct indx_node *r;
- 	const struct INDEX_HDR *hdr = n ? &n->index->ihdr : &root->ihdr;
- 
-+	/*
-+	 * Limit recursion depth to prevent stack overflow from crafted
-+	 * images.  Use the same bound as the fnd->nodes array (20).
-+	 */
-+	if (depth > ARRAY_SIZE(((struct ntfs_fnd *)NULL)->nodes))
-+		return ERR_PTR(-EINVAL);
-+
- 	/* Step 1: Scan one level. */
- 	for (e = hdr_first_de(hdr);; e = hdr_next_de(hdr, e)) {
- 		if (!e)
-@@ -2041,7 +2049,8 @@ static struct indx_node *indx_find_buffe
- 			if (err)
- 				return ERR_PTR(err);
- 
--			r = indx_find_buffer(indx, ni, root, vbn, n);
-+			r = indx_find_buffer(indx, ni, root, vbn, n,
-+					     depth + 1);
- 			if (r)
- 				return r;
+--- a/arch/x86/events/amd/lbr.c
++++ b/arch/x86/events/amd/lbr.c
+@@ -124,7 +124,8 @@ static void amd_pmu_lbr_filter(void)
  		}
-@@ -2446,7 +2455,7 @@ int indx_delete_entry(struct ntfs_index
  
- 		fnd_clear(fnd);
- 
--		in = indx_find_buffer(indx, ni, root, sub_vbn, NULL);
-+		in = indx_find_buffer(indx, ni, root, sub_vbn, NULL, 0);
- 		if (IS_ERR(in)) {
- 			err = PTR_ERR(in);
- 			goto out;
+ 		/* If type does not correspond, then discard */
+-		if (type == X86_BR_NONE || (br_sel & type) != type) {
++		if (type == X86_BR_NONE || (br_sel & type) != type ||
++		    (!(br_sel & X86_BR_KERNEL) && kernel_ip(cpuc->lbr_entries[i].from))) {
+ 			cpuc->lbr_entries[i].from = 0;	/* mark invalid */
+ 			compress = true;
+ 		}
 
 
