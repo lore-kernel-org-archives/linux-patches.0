@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942633EEAC7;
-	Tue, 21 Jul 2026 19:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED8033ADB0;
+	Tue, 21 Jul 2026 19:09:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660961; cv=none; b=DNZ08ABsnJ6RrD7OxPhXWb56a58XRnnpvWOwXPcYJXF9DgSQfpximuNtg8Ed+qKZsEDhOo+3U8j8Mbaeiud4/6zSw1iOiH+ID99SuWoK7bEq63pLOjT+xW4cMAks+s7nlORoJmMCJj2+4p6ql88+iaS5PmtBwpKatvx6hSb8cyo=
+	t=1784660964; cv=none; b=QU+y9Sn5H9YnRlW6WumQeySOa42sEk641Ev3XvPlpERJMfrLsiblltpL6uI/K231pnefP1GY8jWg4gMwp6ZOsfYWX8Aii1ciBQs6IgGilD3JiLDMXdd70BlI/W21Cmv4ueTss9qybMPTOcc5U834DMjgS691vzfS9kOaCl9NwG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660961; c=relaxed/simple;
-	bh=pPvQ2xAlHLb5xj2in2aAuaiddf2S9bQWshbXBndp1Kw=;
+	s=arc-20240116; t=1784660964; c=relaxed/simple;
+	bh=ixKD82ouBNpBstbN5NyRaJAzhjjChE6xXNQksAD+iqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=peoklZKnKmxUApZMVRknar2QFC9+RobrQXoaozypgGXvMlDU/tGvEBWWggtPu3SqX5kg7YJtUmISpF+A2BCkDJDcuPI/SnofojM7sRSJZkk4SurI+t4OBXtPwrGR/R5mR7dMQlQgUEfZfWQlXHxbv3hjx4U0XMtfdZrSe6ha5LM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uegADGUs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L/Xu8Ws5ZiAk3ugBIHxMRJyN+Vno9RAa5D5Os0XZNZ//pOpAOhH3yquuhPMd9jWeDzrzdcOMZ8fbBRcrs7zBbwP2QVtYkqHeVGxKdFoiwPLEB3EMz4QGEbgYICapszqOtPwyVBwiQ+pvgjdlhDazFU6ZblFoW+1oWmJO2vevbUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQtJYAch; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uegADGUs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5831F000E9;
-	Tue, 21 Jul 2026 19:09:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQtJYAch"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93CB11F000E9;
+	Tue, 21 Jul 2026 19:09:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660960;
-	bh=m+QPwAWUni6IFWu4DoUE+MZ5JBNPv7ECUy/aMeX43S4=;
+	s=korg; t=1784660963;
+	bh=AzO9W6he5U69tOVP89tGZFUTuJDI8A5pAr1JWEzcWsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uegADGUsbdErJ6yLghz1y+q8X2gy3Jq4tHqQq9pEZA/Ktht6TTk9RIO7UvQj3RniH
-	 HQ+PthHcJETvWF33N+MyGUm0daW53vePc/NTVeVKvM75s2jeBO1plGf95ypk063CxV
-	 ivocodnAW7QapddHJFMYtf3/o1BJN7JzX3U3zAIk=
+	b=yQtJYAchwYufqkib8doUgjXEnRLa6w/oxzd+9ApI5SvlcIU8p8GUfbNNqWT1VjcVk
+	 xZ9AIipvLhR5J6/BYN8n6URiKB8XpEkLEd99ZtpDH6n36kGhGmYNXdUERNEKYv/kbO
+	 IlbF37luZSbiQbUFUmjXaw9mlQbt3tqahPckjY2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayen Yan <win847@gmail.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1178/2077] net: ethernet: mtk_ppe: Fix rhashtable leak in mtk_ppe_init error paths
-Date: Tue, 21 Jul 2026 17:14:11 +0200
-Message-ID: <20260721152620.605352431@linuxfoundation.org>
+Subject: [PATCH 7.1 1179/2077] octeontx2-af: npc: cn20k: fix NPC defrag
+Date: Tue, 21 Jul 2026 17:14:12 +0200
+Message-ID: <20260721152620.628821634@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,53 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayen Yan <win847@gmail.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 41782770be567abc6509169d0ffdada31c783a66 ]
+[ Upstream commit 48b67c0e8af65acd59d81ddaedd3442b5e4c27b7 ]
 
-In mtk_ppe_init(), when accounting is enabled, the error paths for
-dmam_alloc_coherent(mib) and devm_kzalloc(acct) failures return NULL
-directly, bypassing the err_free_l2_flows label that destroys the
-rhashtable initialized earlier.
+npc_defrag_alloc_free_slots() always passed NPC_MCAM_KEY_X2 into
+__npc_subbank_alloc(), which must match sb->key_type, so defrag never
+allocated replacement slots on X4 banks. Pass the subbank key type for
+bank 0, and only extend the search into bank 1 for X2 (X4 MCAM indices
+are confined to b0b..b0t).
 
-While this leak only occurs during probe (not runtime) and the leaked
-memory is minimal (an empty rhash table), fixing it ensures proper
-error path cleanup consistency.
-
-Fix by changing the two return NULL statements to goto err_free_l2_flows.
-
-Fixes: 603ea5e7ffa7 ("net: ethernet: mtk_eth_soc: fix memory leak in error path")
-Signed-off-by: Wayen Yan <win847@gmail.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/178167550101.2217645.14579307712717502425@gmail.com
+Fixes: 645c6e3c1999 ("octeontx2-af: npc: cn20k: virtual index support")
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260617102149.1309913-1-rkannoth@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_ppe.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/cn20k/npc.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_ppe.c b/drivers/net/ethernet/mediatek/mtk_ppe.c
-index 18279e2a7022ef..8451dc3fd00aa2 100644
---- a/drivers/net/ethernet/mediatek/mtk_ppe.c
-+++ b/drivers/net/ethernet/mediatek/mtk_ppe.c
-@@ -918,7 +918,7 @@ struct mtk_ppe *mtk_ppe_init(struct mtk_eth *eth, void __iomem *base, int index)
- 		mib = dmam_alloc_coherent(ppe->dev, MTK_PPE_ENTRIES * sizeof(*mib),
- 					  &ppe->mib_phys, GFP_KERNEL);
- 		if (!mib)
--			return NULL;
-+			goto err_free_l2_flows;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cn20k/npc.c b/drivers/net/ethernet/marvell/octeontx2/af/cn20k/npc.c
+index fe8c4ffcd8f738..5dfdfbabfaddc2 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/cn20k/npc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/cn20k/npc.c
+@@ -3542,15 +3542,18 @@ static int npc_defrag_alloc_free_slots(struct rvu *rvu,
+ 	alloc_cnt2 = 0;
  
- 		ppe->mib_table = mib;
+ 	rc = __npc_subbank_alloc(rvu, sb,
+-				 NPC_MCAM_KEY_X2, sb->b0b,
++				 f->key_type, sb->b0b,
+ 				 sb->b0t,
+ 				 NPC_MCAM_LOWER_PRIO,
+ 				 false, cnt, save, cnt, true,
+ 				 &alloc_cnt1);
  
-@@ -926,7 +926,7 @@ struct mtk_ppe *mtk_ppe_init(struct mtk_eth *eth, void __iomem *base, int index)
- 				    GFP_KERNEL);
- 
- 		if (!acct)
--			return NULL;
-+			goto err_free_l2_flows;
- 
- 		ppe->acct_table = acct;
- 	}
+-	if (alloc_cnt1 < cnt) {
++	/* X4 entries only occupy bank 0 (b0b..b0t); see npc_subbank_idx_2_mcam_idx().
++	 * X2 uses both halves of the subbank, so spill into bank 1 if needed.
++	 */
++	if (alloc_cnt1 < cnt && f->key_type == NPC_MCAM_KEY_X2) {
+ 		rc = __npc_subbank_alloc(rvu, sb,
+-					 NPC_MCAM_KEY_X2, sb->b1b,
++					 f->key_type, sb->b1b,
+ 					 sb->b1t,
+ 					 NPC_MCAM_LOWER_PRIO,
+ 					 false, cnt - alloc_cnt1,
 -- 
 2.53.0
 
