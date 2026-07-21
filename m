@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056B044AB6D;
-	Tue, 21 Jul 2026 21:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C93D44AB6A;
+	Tue, 21 Jul 2026 21:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668751; cv=none; b=XWZzWWYDsbu2h+L4hoL2Nnh9dCkfiJ604v8XFWkjodKS2IW+0K48cUBg090w9+bqd5+g322KwZHv/PK5hCNOWvPCy4WwgUp+QMkjaKRvJ+PPxDp4QZ4ONJSI4cIgLHXEGlnatS6XFxa4bruKIs7h5fgskyqoP9h9qYUeCaaHf1A=
+	t=1784668753; cv=none; b=ajIVenMzy89X7Y0cKTtbmPKwS8jpbWXTWMK1YaC8T3EB7pOfKj6RwxKm1jVRQJpR2vxrY9arANZH5ZYPBpMZOHQhnhPa2soArziRZduEKmPyCUkKGE+fhgWEN9QiNJHvGNjQmtsUBUpLnF9AZPi0VAB75GjeEms0e8Xy1hDIPH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668751; c=relaxed/simple;
-	bh=XEHd2f9ANo9HWml93TOgkI9DXKISVak/Lo+/6XA584A=;
+	s=arc-20240116; t=1784668753; c=relaxed/simple;
+	bh=jfmn/mNik03I9m0uSVCOrPoGGguz6JNJD9/MjIoq+6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SfTCBnCIUI2P9enkygx6AQK/CkKaxwwpz8TQ51dUQ4XifzhyLtK+c6KXF/iSc4235m41q6IlMgOwhkMBwDngOKf+H4vhbOJA+RJn5uVUm7vGIdmYzP+2B8tZLXlr2lUJ4ohD4UrJ1KgBjgcbJkp3hhBmwl+PmA1VZjEGfCtbGJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IwW2JW8E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LbRdAnaKwoOURD7JhgMLgZ/pZBLsLyDl7rlh02/faHULfVCFtFNOq8JzHAXp3C3KmWEwwlLxnX5sp78pfppgR6LhIlKvrfRO7sOnvhUIE801XG8dV5v30nzXgNB3d5y1pDOhzm9sV1xZHVw8aCAYuyuxotAu/qUrBkirdDkrma8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YpxX1d7i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IwW2JW8E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4D81F000E9;
-	Tue, 21 Jul 2026 21:19:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YpxX1d7i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE5B1F000E9;
+	Tue, 21 Jul 2026 21:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668749;
-	bh=OseQ3Z0EDCN1hvXveN5k85l/bg7J+P/dwxiFeiYzsKw=;
+	s=korg; t=1784668752;
+	bh=gXeB/eO4CoDVn4b3YvMJjoJyRx/zZs7n89BNporZjVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IwW2JW8E28aKUU5cNT4N0Hid3rCL4tRN8Tv15eEygaxtOFcOTZnL9dBPhAwdd3FA7
-	 mgS1hNRGNyp15BdnmPSIe1ShfK1T3poVjNx2ONkNN2zaJmNIu5yuCBrw3WD7HBQotI
-	 DaDYAKRWKMY0jh+WQA2WnAyLSKzku045m8fLC5rU=
+	b=YpxX1d7iez/x8OyrmzpTYqmwsWq55+SZyIr6WiXyv/OccExxJDDzC+HOlxPDBoz0w
+	 /MYi4p2Wt+B4rvg0PzsT3U+es+3HvYzX5lRe2HllvHWjAn6lf6cmx+NI0BiOYg6Qj9
+	 FE7jWV7X1tTGsowIVjXrFTF9yPsHHrU6Q6gFMZJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weixin Guo <2298701336@qq.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0295/1067] arm64: dts: rockchip: fix rk809 interrupt pin on rk3566-roc-pc
-Date: Tue, 21 Jul 2026 17:14:56 +0200
-Message-ID: <20260721152431.201202789@linuxfoundation.org>
+Subject: [PATCH 6.1 0296/1067] vxlan: Fix potential null-ptr-deref in vxlan_gro_prepare_receive().
+Date: Tue, 21 Jul 2026 17:14:57 +0200
+Message-ID: <20260721152431.222602828@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,42 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weixin Guo <2298701336@qq.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 460bac478c5fe69054ffc60d607bba03bcaf909b ]
+[ Upstream commit 30a45c0bffdd62350261e2f2689fdba426a33578 ]
 
-The RK809 PMIC interrupt pin on the Firefly ROC-RK3566-PC (Station M2)
-is physically connected to GPIO0_A3 (RK_PA3) according to the board's
-schematic.
+udp_tunnel_sock_release() could set sk->sk_user_data to NULL
+while vxlan_gro_prepare_receive() is running.
 
-Currently, the PMIC node incorrectly specifies RK_PA7 for the interrupt,
-which prevents the PMIC from correctly signaling interrupts. (Note that
-the pinctrl node 'pmic_int' correctly configures RK_PA3).
+Let's check if rcu_dereference_sk_user_data() is NULL after
+skb_gro_remcsum_init().
 
-Fix this by updating the interrupts property to use RK_PA3.
-
-Fixes: 30ac9b4e25d8 ("arm64: dts: rockchip: add dts for Firefly Station M2 rk3566")
-Signed-off-by: Weixin Guo <2298701336@qq.com>
-Link: https://patch.msgid.link/tencent_5035EEE630C845B1B51DEA4284DE23DCCE06@qq.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 5602c48cf875 ("vxlan: change vxlan to use UDP socket GRO")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260502031401.3557229-7-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/vxlan/vxlan_core.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts b/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts
-index 9fd262334d77da..fcc6bbf5696f45 100644
---- a/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3566-roc-pc.dts
-@@ -208,7 +208,7 @@ rk809: pmic@20 {
- 		compatible = "rockchip,rk809";
- 		reg = <0x20>;
- 		interrupt-parent = <&gpio0>;
--		interrupts = <RK_PA7 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts = <RK_PA3 IRQ_TYPE_LEVEL_LOW>;
- 		clock-output-names = "rk808-clkout1", "rk808-clkout2";
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index 9d7ebf8aa79f66..4f689fe2f8c5a1 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -727,14 +727,18 @@ static struct vxlanhdr *vxlan_gro_prepare_receive(struct sock *sk,
+ 						  struct sk_buff *skb,
+ 						  struct gro_remcsum *grc)
+ {
+-	struct sk_buff *p;
+ 	struct vxlanhdr *vh, *vh2;
+ 	unsigned int hlen, off_vx;
+-	struct vxlan_sock *vs = rcu_dereference_sk_user_data(sk);
++	struct vxlan_sock *vs;
++	struct sk_buff *p;
+ 	__be32 flags;
  
- 		pinctrl-names = "default";
+ 	skb_gro_remcsum_init(grc);
+ 
++	vs = rcu_dereference_sk_user_data(sk);
++	if (!vs)
++		return NULL;
++
+ 	off_vx = skb_gro_offset(skb);
+ 	hlen = off_vx + sizeof(*vh);
+ 	vh = skb_gro_header(skb, hlen, off_vx);
 -- 
 2.53.0
 
