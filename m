@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7533035C6A3;
-	Tue, 21 Jul 2026 21:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC77418A48;
+	Tue, 21 Jul 2026 21:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670265; cv=none; b=bguuHpWdUq69sAfR3yvdcpawfinMZFARuWr46z7/yYIZwAa2uS2FXuLwFLoUhScrRItTXOkLtyQ1lNATmivwlpu6YY2OH/vu+1CXba9Bc/9k1LhwP70UVPRXd6I3vgGWf0iboAulp1mCtK+ImtR2VH8mHRJmJYQj51qgKd+e+w0=
+	t=1784670270; cv=none; b=XJbHyko8PPP+1ljaO09fW8w7h9CCuHiBr3uBWsmUzc3LE2zE7fkGhsMGWqzRDPkmIM793n6FDajQQM3MZ4jwZVaYrXwIMtHnGFInRixBLnefNye9mban+s+60BEutDnTjt0HZan4CytAQ7XEG/JmRpGYthKGEQAjOWFpa7dwnlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670265; c=relaxed/simple;
-	bh=3Ed9pxNnDnwQMgtBx+3dagJaA9G5V+njON4uv+ZLGLQ=;
+	s=arc-20240116; t=1784670270; c=relaxed/simple;
+	bh=zyEFauH9JYmatEY1NdehdwtdIrGYI++2l4jIbdye9Ak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6qfuzRtVeckbd9FnRsTsP+ocye9bGzpZxb6Ui98Hbo6QzOb383yVucB51fHicKdcIZ06U2EA1QnXeoY8vqa7HVIO8O/7YVXkWCf9xNL7QDOoh474yu3/LgTIoS4O3M4JDduaxaovdz3wDY3aSqEureQCzHAysMRnAw4tRY6pxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C1sb68Lq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cGrUe+PCWcL0P1/JoqmLiuHljzkz2dSF4e6W6v/KBru/BOAbqNFmW/0Cdnl3FT6gpYDEdiqQuAkdfoEH9lMLU9XtQLxKKHTeACKtBr9h3nMqS3Lsf4sWucPHYd/xVfZ+9KIuuYzVWcAEy+mHE7HZl7pnK6frO34bJsJXSGSef8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z0AMngGG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C1sb68Lq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A541F000E9;
-	Tue, 21 Jul 2026 21:44:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z0AMngGG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 807F71F00A3D;
+	Tue, 21 Jul 2026 21:44:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670264;
-	bh=pWeXe51G/qVyqazc44M0E20KBzFVdcU1bmdpWexpfpY=;
+	s=korg; t=1784670267;
+	bh=Pwx6yJaCiHfR6Z+jCdoXEnDu6pYNzj1dTXY3VGp+2kY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C1sb68LqiH50VGf6yR36tlnuuu48o+YbNqJTmL6cfx0HeeHHLRFhy0TaCSPsBaHQK
-	 hl24QbgooIRFay7+Tq7DcwmW71DvHsOs7F1d1hI6qv9iuSUMt5W0Q2Rx6kcAdoAaJx
-	 gWgWq4GhXF9Rfmu5uSi8ieK1NBvU3uM67ESeP6AA=
+	b=Z0AMngGGlrUO1eY4QuNf4lB8M8rYbIieEhQqx4iHBYXp1ONOKA7uxceFz8QvwqFR0
+	 K4O4ZJ7/Cgk0GK5RaSMen/uxc4lEzepSkgHcN4g77LBg38U5HK7KVqAxT5b8aWoPnI
+	 Y5gzrVZwPADVsPSsvR4Ko3S22aprN8TRmEj7EMPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 0867/1067] Input: ims-pcu - fix potential infinite loop in CDC union descriptor parsing
-Date: Tue, 21 Jul 2026 17:24:28 +0200
-Message-ID: <20260721152443.934422774@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 0841/1067] net: sparx5: unregister blocking notifier on init failure
+Date: Tue, 21 Jul 2026 17:24:02 +0200
+Message-ID: <20260721152443.362752673@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -49,41 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit d4579af29e67ca8722db0a1194227f8015c8981d upstream.
+commit 483be61b4a9a6df3b7cb277e8f189e082dee4cb8 upstream.
 
-The driver parses CDC union descriptors in ims_pcu_get_cdc_union_desc()
-by iterating through the extra descriptor data. However, it does not
-verify that the bLength of each descriptor is at least 2. A malicious
-device could provide a descriptor with bLength = 0, leading to an
-infinite loop in the driver.
+sparx5_register_notifier_blocks() registers the switchdev blocking
+notifier before allocating the ordered workqueue. If the workqueue
+allocation fails, the error path unregisters the switchdev and netdevice
+notifiers, but leaves the blocking notifier registered.
 
-Add a check to ensure bLength is at least 2 before proceeding with
-parsing.
+Add a separate error label for the workqueue allocation failure path and
+unregister the switchdev blocking notifier there.
 
-Fixes: 628329d52474 (Input: add IMS Passenger Control Unit driver)
+Fixes: d6fce5141929 ("net: sparx5: add switching support")
 Cc: stable@vger.kernel.org
-Assisted-by: Gemini:gemini-3.1-pro
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260623115714.2192074-1-haoxiang_li2024@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/ims-pcu.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/input/misc/ims-pcu.c
-+++ b/drivers/input/misc/ims-pcu.c
-@@ -1675,8 +1675,9 @@ ims_pcu_get_cdc_union_desc(struct usb_in
- 	while (buflen >= sizeof(*union_desc)) {
- 		union_desc = (struct usb_cdc_union_desc *)buf;
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c
+@@ -740,11 +740,13 @@ int sparx5_register_notifier_blocks(stru
+ 	sparx5_owq = alloc_ordered_workqueue("sparx5_order", 0);
+ 	if (!sparx5_owq) {
+ 		err = -ENOMEM;
+-		goto err_switchdev_blocking_nb;
++		goto err_alloc_workqueue;
+ 	}
  
--		if (union_desc->bLength > buflen) {
--			dev_err(&intf->dev, "Too large descriptor\n");
-+		if (union_desc->bLength < 2 || union_desc->bLength > buflen) {
-+			dev_err(&intf->dev, "Invalid descriptor length: %d\n",
-+				union_desc->bLength);
- 			return NULL;
- 		}
+ 	return 0;
  
++err_alloc_workqueue:
++	unregister_switchdev_blocking_notifier(&s5->switchdev_blocking_nb);
+ err_switchdev_blocking_nb:
+ 	unregister_switchdev_notifier(&s5->switchdev_nb);
+ err_switchdev_nb:
 
 
