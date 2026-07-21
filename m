@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A3B43E06E;
-	Tue, 21 Jul 2026 22:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2F143C7AE;
+	Tue, 21 Jul 2026 22:55:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674499; cv=none; b=Y5L0F4Yr4tklt/Lptj/RBDSl26kYSnSSU6IkV/XHxvl5gJ8GOf2PEeMRgn1r6cindr/BLn35/sa3ZIUxCykJaI/CK8OxFpFGlLx4ztbJOmxnesa4K7gBacV9BhIS1CMJqN17hO6jZaTkStrbj2B+bccEjDnbLBsdSgZTEcjqFGs=
+	t=1784674502; cv=none; b=QWOnBqRLo29HVpb0R2rxNHGDhLQuY3byhsJqBl1uClacO4HG3txmr9kz67pLqErFmaDT+0EPqZpxFH7e2SmZ0AllKdxtBbHp9YkjoRIcYLvEY2jf08Qd4pNHr12je7H3WDh75eItPxN9SJv8igBw5iD0caGhg6NtqhcAx4Cp+Ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674499; c=relaxed/simple;
-	bh=tGNGRtd1qu04/aZ/PVL7aztDHDbqn7PBbDJa2aj+C9w=;
+	s=arc-20240116; t=1784674502; c=relaxed/simple;
+	bh=PmRha5RuDEJloiNsugCZ4N3iYA8kPon0oGJqNuBx/pA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cmZjYqeq7AV90VIaAeyVf7oOt95TG7gLs2q1GGGq94jAHr75gLCob56uzfiMiP9Vb8QeJQwKAi2W8BWVlbwGDmu0oMmDHOWrssvdX03fdnyISlBWdxvncW9TDpsBPoPEw7FIxNDnWlVnPC4qdKHlfbqEvF1QI82VnXii3sP9bwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MXanXKKh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cV8nCmP+OopkAATuZwJQRrHkXoZP2Q1jHJlbEWf78cz75okWv70aewNZI3tzE2NgH9+FG2fbnjztIx+Vt909n2I4xH2PQREJ45pDT9xhgs1QjIbIF+hoTWBTJO0Bg6Qrryj8bPbAqlt9oZ55Ps8k9jwdGI9PUzyr40UmtZRO1Ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8ie0Mrw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MXanXKKh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D681F000E9;
-	Tue, 21 Jul 2026 22:54:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8ie0Mrw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC351F000E9;
+	Tue, 21 Jul 2026 22:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674498;
-	bh=wAK42WBNevg6NXCscAV7QRXMd/WEtvPk1GGI4vdSOmQ=;
+	s=korg; t=1784674500;
+	bh=KVSYlXaOuj8PsO0NbI0nAsbsHFBwOFuUzeCq+8+2+3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MXanXKKhSQ1l8Kwuk8MPEdzADk/BOeiz9t1Z2m9sJCG8VI91dG2dyYbiNZ+Xr1rg/
-	 3gO+wH7XxldwFA6ItHWFCcbSLzvWWgvB1OK5Hzr3Mx1ZzVHhEJinAxkky7asC4+//G
-	 O1gvKgLCUUf2SOz7TLPLxp8WFA04nyR3S/Hky6zQ=
+	b=M8ie0MrwboFRNz2k8MCQw9Y/xd+ysGvfHfDTQtz06VX219IyRkSzTsEX8mTQiFIOJ
+	 qWPNTHkZxwPVICSSTCb5pY0ZMwzR6UAHyehDtpMkjcshJnagYZDbUXpMdhBeCx4NCT
+	 lkte4sezvbDzSXoDxLuZIQDLNgm/SC8RxlwVMsuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Raphael Tiovalen <jamestiotio@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 564/699] macsec: fix promiscuity refcount leak in macsec_dev_open()
-Date: Tue, 21 Jul 2026 17:25:23 +0200
-Message-ID: <20260721152408.432269760@linuxfoundation.org>
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 5.10 565/699] memstick: ms_block: reject a card that reports too many blocks
+Date: Tue, 21 Jul 2026 17:25:24 +0200
+Message-ID: <20260721152408.454398913@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,61 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Raphael Tiovalen <jamestiotio@gmail.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit 7410d11460eb90d6c9281162ccc6a128534d897d upstream.
+commit 718178f524b98bc920d74bc771aed823c8b81425 upstream.
 
-When a MACsec interface with IFF_PROMISC set is brought up on top of a
-device that has hardware offload enabled, macsec_dev_open() first calls
-dev_set_promiscuity(real_dev, 1) and then propagates the open to the
-offload device. If that propagation fails, the error path jumps to the
-clear_allmulti label, which only reverts allmulti and the unicast
-address. The promiscuity taken on the lower device is never dropped, so
-real_dev is left permanently stuck in promiscuous mode. Its promiscuity
-count can no longer be balanced from software.
+msb_ftl_initialize() computes the zone count from the card block count
+with no bound:
 
-Add a clear_promisc label that drops the promiscuity reference and
-route the two offload failure paths to it. The dev_set_promiscuity()
-failure itself still jumps to clear_allmulti, since on that failure the
-count was not incremented.
+	msb->zone_count = msb->block_count / MS_BLOCKS_IN_ZONE;
+	...
+	for (i = 0; i < msb->zone_count; i++)
+		msb->free_block_count[i] = MS_BLOCKS_IN_ZONE;
 
-Fixes: 3cf3227a21d1 ("net: macsec: hardware offloading infrastructure")
+msb->block_count is a card value. msb_read_boot_blocks() reads
+number_of_blocks from the card boot page and byte swaps it.
+free_block_count is a fixed int[MS_MAX_ZONES]. MS_MAX_ZONES is 16, so the
+valid indices are 0 to 15. The init loop above indexes it by zone_count.
+msb_mark_block_used() and msb_mark_block_unused() index it by
+pba / MS_BLOCKS_IN_ZONE, for pba up to block_count - 1. A card may report
+up to 65535 blocks. A block_count above 8192 (MS_MAX_ZONES *
+MS_BLOCKS_IN_ZONE) lets the pba index reach 16. That writes past
+free_block_count[] and corrupts struct msb_data. A larger count runs the
+init loop past the end too.
+
+A real Memory Stick has at most 16 zones. So it has at most 8192 blocks.
+msb_ftl_initialize() now rejects a card that reports more than
+MS_MAX_ZONES * MS_BLOCKS_IN_ZONE blocks.
+
+Fixes: 0ab30494bc4f ("memstick: add support for legacy memorysticks")
 Cc: stable@vger.kernel.org
-Signed-off-by: James Raphael Tiovalen <jamestiotio@gmail.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20260705113629.187490-1-jamestiotio@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/macsec.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/memstick/core/ms_block.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -3560,19 +3560,22 @@ static int macsec_dev_open(struct net_de
- 		ops = macsec_get_ops(netdev_priv(dev), &ctx);
- 		if (!ops) {
- 			err = -EOPNOTSUPP;
--			goto clear_allmulti;
-+			goto clear_promisc;
- 		}
+--- a/drivers/memstick/core/ms_block.c
++++ b/drivers/memstick/core/ms_block.c
+@@ -1333,6 +1333,10 @@ static int msb_ftl_initialize(struct msb
+ 		return 0;
  
- 		ctx.secy = &macsec->secy;
- 		err = macsec_offload(ops->mdo_dev_open, &ctx);
- 		if (err)
--			goto clear_allmulti;
-+			goto clear_promisc;
- 	}
+ 	msb->zone_count = msb->block_count / MS_BLOCKS_IN_ZONE;
++	if (msb->block_count > MS_MAX_ZONES * MS_BLOCKS_IN_ZONE) {
++		pr_err("Too many blocks: %d\n", msb->block_count);
++		return -EINVAL;
++	}
+ 	msb->logical_block_count = msb->zone_count * 496 - 2;
  
- 	if (netif_carrier_ok(real_dev))
- 		netif_carrier_on(dev);
- 
- 	return 0;
-+clear_promisc:
-+	if (dev->flags & IFF_PROMISC)
-+		dev_set_promiscuity(real_dev, -1);
- clear_allmulti:
- 	if (dev->flags & IFF_ALLMULTI)
- 		dev_set_allmulti(real_dev, -1);
+ 	msb->used_blocks_bitmap = bitmap_zalloc(msb->block_count, GFP_KERNEL);
 
 
