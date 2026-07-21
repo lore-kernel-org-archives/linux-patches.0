@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DDD3E49F5;
-	Tue, 21 Jul 2026 22:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873823B42CB;
+	Tue, 21 Jul 2026 22:50:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674203; cv=none; b=hFY30nyeU9C5AUrAtJWqIHf75KEJaxJUeaJc1lUye3i0kcS+/D++6W1dl12jKX0ye3Gl4f3vXkxPMxpDc7u22H1601qaVUcPmF5Akqk9QiFl21WPgK0JOGFAGKFPKgFGlVx3yFRiRLTPnkXXZfdZgHjFK9KaeFWs9TmCZ0rIsTQ=
+	t=1784674207; cv=none; b=nRHTfYaG2W3ii5K589kWN4wcXiIx2rVnjqaA2jk98i8oo/PpPsarRfdAj78jsdT2s7PLcJ+nPe7WfPzw03Ft2tqIE3+lWhVGkWWiO/226kiYJ/pRyHVM0tl6+g+vmRmGQ35e+HlduQnkRtm5Wrrn8Xs+VRcQ6i3esY1jIIXohZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674203; c=relaxed/simple;
-	bh=TFj41qaA3Usmd+CyCZVmsO6wCgg0OS6sVGrMno1SpFc=;
+	s=arc-20240116; t=1784674207; c=relaxed/simple;
+	bh=Xfl35ZmcTqDLuFxY1BXQsi2EdoHvAlG6en/0y3wsqpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o+54SuZ5c+kQkBJ0ZCN/5LcLqwitRttPxQkv5Jl/fBtUS0pKL36rCnc1GB/ww3u/19bWIcxbv2QqYY2UsrVojrC+09MNsG3/a7jX9ByKWp1CrkjIWHka/ZQyHruAw15N3S4lEIzzoVlhzCap6rgh2W9TdKC9BwgvybMmH7q3GpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=irT1nGxD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EWwnX5DFBuH9K5BJeipo9lPolocJ76qSGGb5FV+C46zDKvmwiGmKT+dtKH6mfZaIGQp+Gg66Uzktnnc+018lT1G9CXZpqTWJCdECVQGHsGrG2w2Jf8Ge3pl2cdkF2F7tAswjGxxGbMSV+GvJAFJCDbnFdYscoK3xilBpLB9r8Go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yczurn+I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="irT1nGxD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F01D11F000E9;
-	Tue, 21 Jul 2026 22:50:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yczurn+I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B9AB1F000E9;
+	Tue, 21 Jul 2026 22:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674202;
-	bh=aiudIqJocu7CkB27BnRLTXG3iB6FMP36z8SpCMJfgiA=;
+	s=korg; t=1784674205;
+	bh=947n79D7KXKvUwnUpyvcBbvKM1WSNwVGxqM4NbmExs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=irT1nGxDjl/7D9PYbZhZAqZ2KtIseXDJx6QvM9hIwMtcuumfAv8Q4xtyTisONc6PK
-	 S0Nsae5FdfUA5L7sBDMEgEo5fcm/yHXjyu3Go42sCncqhHvmGueRYAvJrxFVRqKwFX
-	 yYRRpqCKrNvgEJ2d5L359z7ps6W2cA0jDtMK3h7Q=
+	b=yczurn+IAf0L0O9OgVBeNm5VUYKm/iQqhch0eU0OQ4LtyjbF+oXApD9VErsOa9vdB
+	 cNmheNuMsKpLdbQMrWM1LpPzYo7f/WIHmAWofCLHe17peWjjMJ8zxUVcG7OrdqgNH2
+	 lpqakRYHb3QN55rQ0LwYRojSbg0SURc94JBnAt8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <sam.moelius@trailofbits.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Taehee Yoo <ap420073@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 409/699] net/sched: cake: reject overhead values that underflow length
-Date: Tue, 21 Jul 2026 17:22:48 +0200
-Message-ID: <20260721152404.921519174@linuxfoundation.org>
+Subject: [PATCH 5.10 410/699] mld: convert from timer to delayed work
+Date: Tue, 21 Jul 2026 17:22:49 +0200
+Message-ID: <20260721152404.942641998@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -46,57 +46,433 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Samuel Moelius <sam.moelius@trailofbits.com>
+From: Taehee Yoo <ap420073@gmail.com>
 
-[ Upstream commit b7f97cae7ec1b6c3c32843c42be218690d310467 ]
+[ Upstream commit 2d9a93b4902be6a5504b5941dd15e9cd776aadca ]
 
-CAKE accepts signed overhead values and stores them in an s16, but the
-adjusted packet length calculation uses unsigned arithmetic.  A negative
-effective length can therefore wrap to a large value.
+mcast.c has several timers for delaying works.
+Timer's expire handler is working under atomic context so it can't use
+sleepable things such as GFP_KERNEL, mutex, etc.
+In order to use sleepable APIs, it converts from timers to delayed work.
+But there are some critical sections, which is used by both process
+and BH context. So that it still uses spin_lock_bh() and rwlock.
 
-Such configurations make rate accounting depend on integer wraparound
-rather than on the packet size userspace intended to model.  A static
-netlink lower bound is not enough because packets reaching CAKE can be
-smaller than any reasonable manual-overhead allowance.
-
-Fold the signed overhead adjustment into the existing datapath MPU clamp
-so negative adjusted lengths are clamped before link-layer framing
-adjustments.
-
-Fixes: a729b7f0bd5b ("sch_cake: Add overhead compensation support to the rate shaper")
-Assisted-by: Codex:gpt-5.5-cyber-preview
-Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20260702000758.297407.e5c888d9d99d.cake-overhead-underflow@trailofbits.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Suggested-by: Cong Wang <xiyou.wangcong@gmail.com>
+Signed-off-by: Taehee Yoo <ap420073@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 9b26518b6896 ("ipv6: mcast: Fix potential UAF in MLD delayed work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_cake.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ include/net/if_inet6.h |   8 +--
+ net/ipv6/mcast.c       | 140 +++++++++++++++++++++++------------------
+ 2 files changed, 83 insertions(+), 65 deletions(-)
 
-diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
-index 2be03c8d13cb01..45b175e53aac03 100644
---- a/net/sched/sch_cake.c
-+++ b/net/sched/sch_cake.c
-@@ -1381,10 +1381,7 @@ static u32 cake_calc_overhead(struct cake_sched_data *q, u32 len, u32 off)
- 	if (q->min_netlen > len)
- 		q->min_netlen = len;
+diff --git a/include/net/if_inet6.h b/include/net/if_inet6.h
+index d4d7f4d52b1524..0d2788bc65d28a 100644
+--- a/include/net/if_inet6.h
++++ b/include/net/if_inet6.h
+@@ -124,7 +124,7 @@ struct ifmcaddr6 {
+ 	unsigned int		mca_sfmode;
+ 	unsigned char		mca_crcount;
+ 	unsigned long		mca_sfcount[2];
+-	struct timer_list	mca_timer;
++	struct delayed_work	mca_work;
+ 	unsigned int		mca_flags;
+ 	int			mca_users;
+ 	refcount_t		mca_refcnt;
+@@ -183,9 +183,9 @@ struct inet6_dev {
+ 	unsigned long		mc_qri;		/* Query Response Interval */
+ 	unsigned long		mc_maxdelay;
  
--	len += q->rate_overhead;
--
--	if (len < q->rate_mpu)
--		len = q->rate_mpu;
-+	len = max((s32)len + q->rate_overhead, (s32)q->rate_mpu);
+-	struct timer_list	mc_gq_timer;	/* general query timer */
+-	struct timer_list	mc_ifc_timer;	/* interface change timer */
+-	struct timer_list	mc_dad_timer;	/* dad complete mc timer */
++	struct delayed_work	mc_gq_work;	/* general query work */
++	struct delayed_work	mc_ifc_work;	/* interface change work */
++	struct delayed_work	mc_dad_work;	/* dad complete mc work */
  
- 	if (q->atm_mode == CAKE_ATM_ATM) {
- 		len += 47;
+ 	struct ifacaddr6	*ac_list;
+ 	rwlock_t		lock;
+diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
+index 9fb5077f8e9a7e..023ff680ee6044 100644
+--- a/net/ipv6/mcast.c
++++ b/net/ipv6/mcast.c
+@@ -29,7 +29,6 @@
+ #include <linux/socket.h>
+ #include <linux/sockios.h>
+ #include <linux/jiffies.h>
+-#include <linux/times.h>
+ #include <linux/net.h>
+ #include <linux/in.h>
+ #include <linux/in6.h>
+@@ -42,6 +41,7 @@
+ #include <linux/slab.h>
+ #include <linux/pkt_sched.h>
+ #include <net/mld.h>
++#include <linux/workqueue.h>
+ 
+ #include <linux/netfilter.h>
+ #include <linux/netfilter_ipv6.h>
+@@ -67,14 +67,13 @@ static int __mld2_query_bugs[] __attribute__((__unused__)) = {
+ 	BUILD_BUG_ON_ZERO(offsetof(struct mld2_grec, grec_mca) % 4)
+ };
+ 
++static struct workqueue_struct *mld_wq;
+ static struct in6_addr mld2_all_mcr = MLD2_ALL_MCR_INIT;
+ 
+ static void igmp6_join_group(struct ifmcaddr6 *ma);
+ static void igmp6_leave_group(struct ifmcaddr6 *ma);
+-static void igmp6_timer_handler(struct timer_list *t);
++static void mld_mca_work(struct work_struct *work);
+ 
+-static void mld_gq_timer_expire(struct timer_list *t);
+-static void mld_ifc_timer_expire(struct timer_list *t);
+ static void mld_ifc_event(struct inet6_dev *idev);
+ static void mld_add_delrec(struct inet6_dev *idev, struct ifmcaddr6 *pmc);
+ static void mld_del_delrec(struct inet6_dev *idev, struct ifmcaddr6 *pmc);
+@@ -713,7 +712,7 @@ static void igmp6_group_dropped(struct ifmcaddr6 *mc)
+ 		igmp6_leave_group(mc);
+ 
+ 	spin_lock_bh(&mc->mca_lock);
+-	if (del_timer(&mc->mca_timer))
++	if (cancel_delayed_work(&mc->mca_work))
+ 		refcount_dec(&mc->mca_refcnt);
+ 	spin_unlock_bh(&mc->mca_lock);
+ }
+@@ -854,7 +853,7 @@ static struct ifmcaddr6 *mca_alloc(struct inet6_dev *idev,
+ 	if (!mc)
+ 		return NULL;
+ 
+-	timer_setup(&mc->mca_timer, igmp6_timer_handler, 0);
++	INIT_DELAYED_WORK(&mc->mca_work, mld_mca_work);
+ 
+ 	mc->mca_addr = *addr;
+ 	mc->idev = idev; /* reference taken by caller */
+@@ -1027,48 +1026,48 @@ bool ipv6_chk_mcast_addr(struct net_device *dev, const struct in6_addr *group,
+ 	return rv;
+ }
+ 
+-static void mld_gq_start_timer(struct inet6_dev *idev)
++static void mld_gq_start_work(struct inet6_dev *idev)
+ {
+ 	unsigned long tv = prandom_u32() % idev->mc_maxdelay;
+ 
+ 	idev->mc_gq_running = 1;
+-	if (!mod_timer(&idev->mc_gq_timer, jiffies+tv+2))
++	if (!mod_delayed_work(mld_wq, &idev->mc_gq_work, tv + 2))
+ 		in6_dev_hold(idev);
+ }
+ 
+-static void mld_gq_stop_timer(struct inet6_dev *idev)
++static void mld_gq_stop_work(struct inet6_dev *idev)
+ {
+ 	idev->mc_gq_running = 0;
+-	if (del_timer(&idev->mc_gq_timer))
++	if (cancel_delayed_work(&idev->mc_gq_work))
+ 		__in6_dev_put(idev);
+ }
+ 
+-static void mld_ifc_start_timer(struct inet6_dev *idev, unsigned long delay)
++static void mld_ifc_start_work(struct inet6_dev *idev, unsigned long delay)
+ {
+ 	unsigned long tv = prandom_u32() % delay;
+ 
+-	if (!mod_timer(&idev->mc_ifc_timer, jiffies+tv+2))
++	if (!mod_delayed_work(mld_wq, &idev->mc_ifc_work, tv + 2))
+ 		in6_dev_hold(idev);
+ }
+ 
+-static void mld_ifc_stop_timer(struct inet6_dev *idev)
++static void mld_ifc_stop_work(struct inet6_dev *idev)
+ {
+ 	idev->mc_ifc_count = 0;
+-	if (del_timer(&idev->mc_ifc_timer))
++	if (cancel_delayed_work(&idev->mc_ifc_work))
+ 		__in6_dev_put(idev);
+ }
+ 
+-static void mld_dad_start_timer(struct inet6_dev *idev, unsigned long delay)
++static void mld_dad_start_work(struct inet6_dev *idev, unsigned long delay)
+ {
+ 	unsigned long tv = prandom_u32() % delay;
+ 
+-	if (!mod_timer(&idev->mc_dad_timer, jiffies+tv+2))
++	if (!mod_delayed_work(mld_wq, &idev->mc_dad_work, tv + 2))
+ 		in6_dev_hold(idev);
+ }
+ 
+-static void mld_dad_stop_timer(struct inet6_dev *idev)
++static void mld_dad_stop_work(struct inet6_dev *idev)
+ {
+-	if (del_timer(&idev->mc_dad_timer))
++	if (cancel_delayed_work(&idev->mc_dad_work))
+ 		__in6_dev_put(idev);
+ }
+ 
+@@ -1080,21 +1079,20 @@ static void igmp6_group_queried(struct ifmcaddr6 *ma, unsigned long resptime)
+ {
+ 	unsigned long delay = resptime;
+ 
+-	/* Do not start timer for these addresses */
++	/* Do not start work for these addresses */
+ 	if (ipv6_addr_is_ll_all_nodes(&ma->mca_addr) ||
+ 	    IPV6_ADDR_MC_SCOPE(&ma->mca_addr) < IPV6_ADDR_SCOPE_LINKLOCAL)
+ 		return;
+ 
+-	if (del_timer(&ma->mca_timer)) {
++	if (cancel_delayed_work(&ma->mca_work)) {
+ 		refcount_dec(&ma->mca_refcnt);
+-		delay = ma->mca_timer.expires - jiffies;
++		delay = ma->mca_work.timer.expires - jiffies;
+ 	}
+ 
+ 	if (delay >= resptime)
+ 		delay = prandom_u32() % resptime;
+ 
+-	ma->mca_timer.expires = jiffies + delay;
+-	if (!mod_timer(&ma->mca_timer, jiffies + delay))
++	if (!mod_delayed_work(mld_wq, &ma->mca_work, delay))
+ 		refcount_inc(&ma->mca_refcnt);
+ 	ma->mca_flags |= MAF_TIMER_RUNNING;
+ }
+@@ -1305,10 +1303,10 @@ static int mld_process_v1(struct inet6_dev *idev, struct mld_msg *mld,
+ 	if (v1_query)
+ 		mld_set_v1_mode(idev);
+ 
+-	/* cancel MLDv2 report timer */
+-	mld_gq_stop_timer(idev);
+-	/* cancel the interface change timer */
+-	mld_ifc_stop_timer(idev);
++	/* cancel MLDv2 report work */
++	mld_gq_stop_work(idev);
++	/* cancel the interface change work */
++	mld_ifc_stop_work(idev);
+ 	/* clear deleted report items */
+ 	mld_clear_delrec(idev);
+ 
+@@ -1398,7 +1396,7 @@ int igmp6_event_query(struct sk_buff *skb)
+ 			if (mlh2->mld2q_nsrcs)
+ 				return -EINVAL; /* no sources allowed */
+ 
+-			mld_gq_start_timer(idev);
++			mld_gq_start_work(idev);
+ 			return 0;
+ 		}
+ 		/* mark sources to include, if group & source-specific */
+@@ -1482,14 +1480,14 @@ int igmp6_event_report(struct sk_buff *skb)
+ 		return -ENODEV;
+ 
+ 	/*
+-	 *	Cancel the timer for this group
++	 *	Cancel the work for this group
+ 	 */
+ 
+ 	read_lock_bh(&idev->lock);
+ 	for (ma = idev->mc_list; ma; ma = ma->next) {
+ 		if (ipv6_addr_equal(&ma->mca_addr, &mld->mld_mca)) {
+ 			spin_lock(&ma->mca_lock);
+-			if (del_timer(&ma->mca_timer))
++			if (cancel_delayed_work(&ma->mca_work))
+ 				refcount_dec(&ma->mca_refcnt);
+ 			ma->mca_flags &= ~(MAF_LAST_REPORTER|MAF_TIMER_RUNNING);
+ 			spin_unlock(&ma->mca_lock);
+@@ -2100,21 +2098,23 @@ void ipv6_mc_dad_complete(struct inet6_dev *idev)
+ 		mld_send_initial_cr(idev);
+ 		idev->mc_dad_count--;
+ 		if (idev->mc_dad_count)
+-			mld_dad_start_timer(idev,
+-					    unsolicited_report_interval(idev));
++			mld_dad_start_work(idev,
++					   unsolicited_report_interval(idev));
+ 	}
+ }
+ 
+-static void mld_dad_timer_expire(struct timer_list *t)
++static void mld_dad_work(struct work_struct *work)
+ {
+-	struct inet6_dev *idev = from_timer(idev, t, mc_dad_timer);
++	struct inet6_dev *idev = container_of(to_delayed_work(work),
++					      struct inet6_dev,
++					      mc_dad_work);
+ 
+ 	mld_send_initial_cr(idev);
+ 	if (idev->mc_dad_count) {
+ 		idev->mc_dad_count--;
+ 		if (idev->mc_dad_count)
+-			mld_dad_start_timer(idev,
+-					    unsolicited_report_interval(idev));
++			mld_dad_start_work(idev,
++					   unsolicited_report_interval(idev));
+ 	}
+ 	in6_dev_put(idev);
+ }
+@@ -2413,12 +2413,12 @@ static void igmp6_join_group(struct ifmcaddr6 *ma)
+ 	delay = prandom_u32() % unsolicited_report_interval(ma->idev);
+ 
+ 	spin_lock_bh(&ma->mca_lock);
+-	if (del_timer(&ma->mca_timer)) {
++	if (cancel_delayed_work(&ma->mca_work)) {
+ 		refcount_dec(&ma->mca_refcnt);
+-		delay = ma->mca_timer.expires - jiffies;
++		delay = ma->mca_work.timer.expires - jiffies;
+ 	}
+ 
+-	if (!mod_timer(&ma->mca_timer, jiffies + delay))
++	if (!mod_delayed_work(mld_wq, &ma->mca_work, delay))
+ 		refcount_inc(&ma->mca_refcnt);
+ 	ma->mca_flags |= MAF_TIMER_RUNNING | MAF_LAST_REPORTER;
+ 	spin_unlock_bh(&ma->mca_lock);
+@@ -2455,25 +2455,29 @@ static void igmp6_leave_group(struct ifmcaddr6 *ma)
+ 	}
+ }
+ 
+-static void mld_gq_timer_expire(struct timer_list *t)
++static void mld_gq_work(struct work_struct *work)
+ {
+-	struct inet6_dev *idev = from_timer(idev, t, mc_gq_timer);
++	struct inet6_dev *idev = container_of(to_delayed_work(work),
++					      struct inet6_dev,
++					      mc_gq_work);
+ 
+ 	idev->mc_gq_running = 0;
+ 	mld_send_report(idev, NULL);
+ 	in6_dev_put(idev);
+ }
+ 
+-static void mld_ifc_timer_expire(struct timer_list *t)
++static void mld_ifc_work(struct work_struct *work)
+ {
+-	struct inet6_dev *idev = from_timer(idev, t, mc_ifc_timer);
++	struct inet6_dev *idev = container_of(to_delayed_work(work),
++					      struct inet6_dev,
++					      mc_ifc_work);
+ 
+ 	mld_send_cr(idev);
+ 	if (idev->mc_ifc_count) {
+ 		idev->mc_ifc_count--;
+ 		if (idev->mc_ifc_count)
+-			mld_ifc_start_timer(idev,
+-					    unsolicited_report_interval(idev));
++			mld_ifc_start_work(idev,
++					   unsolicited_report_interval(idev));
+ 	}
+ 	in6_dev_put(idev);
+ }
+@@ -2483,22 +2487,23 @@ static void mld_ifc_event(struct inet6_dev *idev)
+ 	if (mld_in_v1_mode(idev))
+ 		return;
+ 	idev->mc_ifc_count = idev->mc_qrv;
+-	mld_ifc_start_timer(idev, 1);
++	mld_ifc_start_work(idev, 1);
+ }
+ 
+-static void igmp6_timer_handler(struct timer_list *t)
++static void mld_mca_work(struct work_struct *work)
+ {
+-	struct ifmcaddr6 *ma = from_timer(ma, t, mca_timer);
++	struct ifmcaddr6 *ma = container_of(to_delayed_work(work),
++					    struct ifmcaddr6, mca_work);
+ 
+ 	if (mld_in_v1_mode(ma->idev))
+ 		igmp6_send(&ma->mca_addr, ma->idev->dev, ICMPV6_MGM_REPORT);
+ 	else
+ 		mld_send_report(ma->idev, ma);
+ 
+-	spin_lock(&ma->mca_lock);
++	spin_lock_bh(&ma->mca_lock);
+ 	ma->mca_flags |=  MAF_LAST_REPORTER;
+ 	ma->mca_flags &= ~MAF_TIMER_RUNNING;
+-	spin_unlock(&ma->mca_lock);
++	spin_unlock_bh(&ma->mca_lock);
+ 	ma_put(ma);
+ }
+ 
+@@ -2534,12 +2539,12 @@ void ipv6_mc_down(struct inet6_dev *idev)
+ 	for (i = idev->mc_list; i; i = i->next)
+ 		igmp6_group_dropped(i);
+ 
+-	/* Should stop timer after group drop. or we will
+-	 * start timer again in mld_ifc_event()
++	/* Should stop work after group drop. or we will
++	 * start work again in mld_ifc_event()
+ 	 */
+-	mld_ifc_stop_timer(idev);
+-	mld_gq_stop_timer(idev);
+-	mld_dad_stop_timer(idev);
++	mld_ifc_stop_work(idev);
++	mld_gq_stop_work(idev);
++	mld_dad_stop_work(idev);
+ 	read_unlock_bh(&idev->lock);
+ }
+ 
+@@ -2576,11 +2581,11 @@ void ipv6_mc_init_dev(struct inet6_dev *idev)
+ 	write_lock_bh(&idev->lock);
+ 	spin_lock_init(&idev->mc_lock);
+ 	idev->mc_gq_running = 0;
+-	timer_setup(&idev->mc_gq_timer, mld_gq_timer_expire, 0);
++	INIT_DELAYED_WORK(&idev->mc_gq_work, mld_gq_work);
+ 	idev->mc_tomb = NULL;
+ 	idev->mc_ifc_count = 0;
+-	timer_setup(&idev->mc_ifc_timer, mld_ifc_timer_expire, 0);
+-	timer_setup(&idev->mc_dad_timer, mld_dad_timer_expire, 0);
++	INIT_DELAYED_WORK(&idev->mc_ifc_work, mld_ifc_work);
++	INIT_DELAYED_WORK(&idev->mc_dad_work, mld_dad_work);
+ 	ipv6_mc_reset(idev);
+ 	write_unlock_bh(&idev->lock);
+ }
+@@ -2593,7 +2598,7 @@ void ipv6_mc_destroy_dev(struct inet6_dev *idev)
+ {
+ 	struct ifmcaddr6 *i;
+ 
+-	/* Deactivate timers */
++	/* Deactivate works */
+ 	ipv6_mc_down(idev);
+ 	mld_clear_delrec(idev);
+ 
+@@ -2760,7 +2765,7 @@ static int igmp6_mc_seq_show(struct seq_file *seq, void *v)
+ 		   &im->mca_addr,
+ 		   im->mca_users, im->mca_flags,
+ 		   (im->mca_flags&MAF_TIMER_RUNNING) ?
+-		   jiffies_to_clock_t(im->mca_timer.expires-jiffies) : 0);
++		   jiffies_to_clock_t(im->mca_work.timer.expires - jiffies) : 0);
+ 	return 0;
+ }
+ 
+@@ -2999,7 +3004,19 @@ static struct pernet_operations igmp6_net_ops = {
+ 
+ int __init igmp6_init(void)
+ {
+-	return register_pernet_subsys(&igmp6_net_ops);
++	int err;
++
++	err = register_pernet_subsys(&igmp6_net_ops);
++	if (err)
++		return err;
++
++	mld_wq = create_workqueue("mld");
++	if (!mld_wq) {
++		unregister_pernet_subsys(&igmp6_net_ops);
++		return -ENOMEM;
++	}
++
++	return err;
+ }
+ 
+ int __init igmp6_late_init(void)
+@@ -3010,6 +3027,7 @@ int __init igmp6_late_init(void)
+ void igmp6_cleanup(void)
+ {
+ 	unregister_pernet_subsys(&igmp6_net_ops);
++	destroy_workqueue(mld_wq);
+ }
+ 
+ void igmp6_late_cleanup(void)
 -- 
 2.53.0
 
