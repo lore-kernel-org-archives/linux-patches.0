@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F40346EC78;
-	Tue, 21 Jul 2026 18:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A31D46EC9A;
+	Tue, 21 Jul 2026 18:22:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658134; cv=none; b=IkQ5vlSMXP8Abm7Kl7bnxqWS5UY13iKJI0xPQJymvvKKmwzwEfEdbpdWvrDVozyPF5vyrZqXvCahYrC8oA+HMJsZMDY09nII1OsFjnpYSvuw/mPEP0m1wesKkWs6BQs4yV9Co06vvbXd3p3KIwCf8F6TCuJPGNtIRTWXjPgxvQQ=
+	t=1784658136; cv=none; b=jduQfCF3JoasbP2nYyVyxxhTUOz+rqc7QEu/CSalH5dasVfIt2me5hO93bDIU9XxI6Oq5+B5Dq+ts4yP3+BcCqHIu9Z0+nE3UQo5UiJaRk+2BOnDjhka4R/YrMOyixpgubjFMkgUPNrbVJnJ9sMKVt5igjk8MSKc19ngQbyjrHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658134; c=relaxed/simple;
-	bh=7u4wC8kmoy+AFLXudIGIT8lZjfNCVL7fv62N+XBH7RA=;
+	s=arc-20240116; t=1784658136; c=relaxed/simple;
+	bh=RoHsd0PYb01OUTU3O2C50bWL5aAumltOj6A0QLAPzRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qnRh8MK3cWFRKcLmJI4tKtKxTTSvkVN9zYcSPDOkv3U+TRZZOSZ7piBAdVr8/43rsWM7lgHE00Qiq0j75BGrjSNfAQq6vx3UyCpxyGwH+z7rH2U2q8zhSlQ/IsgkjbbTncASaeCmvjyfoBkXFMAwJTD1t1q7AjE9fgZMJrWydH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uAWPbd3p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S8TB0WgOQYz8/xvDtuvUXvzoXbm2Vo0gtmaJjtCyc2tnUV3QiJupMldhEQ/xdazxFEFA2Av7mOBN1nV/YbLx6bYmK5rx4B3O191+9GITby4A7OxghinwJwnHdV3LVIMevx2G054J2C6F6J1tPoroV3wKOojUU2rQhmuO6pwEwY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NlDOG4Ed; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uAWPbd3p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 009AA1F00A3A;
-	Tue, 21 Jul 2026 18:22:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NlDOG4Ed"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA631F000E9;
+	Tue, 21 Jul 2026 18:22:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658132;
-	bh=qObtmyOMEgkZDUVxJkdeZMkGBzQ4gzV53hmh8HClJI8=;
+	s=korg; t=1784658135;
+	bh=3IdJyO8A+pu8nmVaBb4y18zHRZtcdtKG/LvBDklC388=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uAWPbd3pSoXqNRz6WLy7yjy5iN1bjsIl7U2qPBDKm9QxCB++yUTP2m7c9G1vvKhg3
-	 4a5PQ2G/HR/HZA6MxZeRUZXlItu1g23sS72yeIfGIIpri+9j1EVW+LHszPwC6tzZxe
-	 w6PQK7r623pJXC2cuMfs8D8ehI8vk6vd/rz/W1Ug=
+	b=NlDOG4EdK+k+nyWDc7KBqG2OKr0cveLOs2QgQGpwAYr/Cs7eWVK+Htjc8pUv/GEL/
+	 wV2eJnuV40f5KEOTRDGSV/QpMTH6aZpQCIS1bl4TLTwm4oXZ431MiTb5Du9nV/ob1o
+	 7nNSSwftzqIMEAgc8K9ksF6UBF5y8Zp9Q0h2+pvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgiy Osokin <g.osokin@auroraos.dev>,
+	Lee Jones <lee@kernel.org>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1029/1611] HID: picolcd: prevent NULL pointer dereference in picolcd_send_and_wait()
-Date: Tue, 21 Jul 2026 17:19:05 +0200
-Message-ID: <20260721152538.544319425@linuxfoundation.org>
+Subject: [PATCH 6.18 1030/1611] HID: core: Fix OOB read in hid_get_report for numbered reports
+Date: Tue, 21 Jul 2026 17:19:06 +0200
+Message-ID: <20260721152538.567272794@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,44 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Georgiy Osokin <g.osokin@auroraos.dev>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 0021eb09041f021c079be1022934a280f7f176c0 ]
+[ Upstream commit af1a9b65ebe8a948eda805c14b78d4d0767cb1b5 ]
 
-In picolcd_send_and_wait(), an integer overflow of the signed loop counter
-'k' can theoretically lead to a NULL pointer dereference of 'raw_data'.
-If the loop executes more than INT_MAX times, 'k' becomes negative,
-making the condition 'k < size' true even when 'size' is 0.
+When a caller passes a size of 0 to hid_report_raw_event() for a
+numbered report, the function originally called hid_get_report() before
+performing any size validation.
 
-Change the type of 'k' to 'unsigned int' to prevent the overflow and
-eliminate the out-of-bounds access.
+Inside hid_get_report(), if the report is numbered (report_enum->numbered
+is true), it unconditionally dereferences data[0] to extract the report ID.
+With a size of 0, this results in an out-of-bounds read or kernel panic.
 
-Found by Linux Verification Center (linuxtesting.org) with the Svace static
-analysis tool.
+Fix this by moving the numbered report size validation check before the
+call to hid_get_report(), ensuring that size is at least 1 before
+dereferencing the data pointer.
 
-[jkosina@suse.com: extended hash length]
-Fixes: fabdbf2fd22fa17 ("HID: picoLCD: split driver code")
-Signed-off-by: Georgiy Osokin <g.osokin@auroraos.dev>
+Fixes: 2c85c61d1332 ("HID: pass the buffer size to hid_report_raw_event")
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-picolcd_core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hid/hid-core.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/hid/hid-picolcd_core.c b/drivers/hid/hid-picolcd_core.c
-index 297103be338157..282f11ec5df741 100644
---- a/drivers/hid/hid-picolcd_core.c
-+++ b/drivers/hid/hid-picolcd_core.c
-@@ -72,7 +72,8 @@ struct picolcd_pending *picolcd_send_and_wait(struct hid_device *hdev,
- 	struct picolcd_pending *work;
- 	struct hid_report *report = picolcd_out_report(report_id, hdev);
- 	unsigned long flags;
--	int i, j, k;
-+	int i, j;
-+	unsigned int k;
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index 6a1600af30e20b..4df51bbd0d54ca 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -2041,6 +2041,13 @@ int hid_report_raw_event(struct hid_device *hid, enum hid_report_type type, u8 *
+ 	u8 *cdata = data;
+ 	int ret = 0;
  
- 	if (!report || !data)
- 		return NULL;
++	if (report_enum->numbered && (size < 1 || bufsize < 1)) {
++		hid_warn_ratelimited(hid,
++				     "Event data for numbered report is too short (%d vs %zu)\n",
++				     size, bufsize);
++		return -EINVAL;
++	}
++
+ 	report = hid_get_report(report_enum, data);
+ 	if (!report)
+ 		return 0;
 -- 
 2.53.0
 
