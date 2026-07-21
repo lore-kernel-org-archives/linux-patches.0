@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6718737DE97;
-	Tue, 21 Jul 2026 18:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D51946D080;
+	Tue, 21 Jul 2026 18:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657876; cv=none; b=DHN/XV7HcdDCGljTK1/+86rEZY6jfVIx8Kmik4bX8JEH63qo/U/Xt0Uxznt8njzQ/z1o0bnMNDbKlVNzqNT4FktDjbBOVUlz7LP/HQKYPYdAj1eXKNGQsvKNjUJLvFwxaGbTSPT1P+vurXmPsTOKP5qBokBO1ZbuM/V7/I6/0Z4=
+	t=1784657879; cv=none; b=WDEFIJIMuaaiwWv0Yym4azkgkcbXcuaN1pWZx6XAmBgUy5mPNKDOI094/b0Lqj5LP0/0ioCaidWR3ckxysdkLUcNlzW0LjNyPnh1uID/xJ9FVRak809VJrkTQoEQokDVhlefXBEMM0J3x3afe3xeyrYtJ4dVkLeXAb6FDUYINBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657876; c=relaxed/simple;
-	bh=kbWuZHZufrmhF5ZKMJakYwtggplEbSf9D10/hx3d2VQ=;
+	s=arc-20240116; t=1784657879; c=relaxed/simple;
+	bh=PWWvLzLrHFzrFPYkTr/6bVDbsq8a5mLoK6ro1O1Is24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KYROM4X73nH5xJmPNZo41UHCDEORgKRvBJJ9PAIT+0YEWy/eurso+XW6KLeFAhyYyNdq/W5cFWTd0TUZAW6jGpfuwMC6aoSJks3l/UQVC4JOb8U6lqtRMtCyifMW9OpIPnrqLFhsqqHQ8UNAuOR27WIuxJNjC1ZT2+DLInL/ayc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kd2rLR7P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UtvyAYR6LJDAg6xMrInRw7uTEBbMZzWvZzNExrL/QgiFS0yCWekEx9drVfeUDMcwHaJcD+zqTRZMc2yEzrp1uVURQxz1syUqnuRD61LL5K+XBptR+O8JBy8hPnemgybhFGByXu2iS4yCi2d+EYMTwSSDiiMr0uEEhvnIVAbrGdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wl0AG0hy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kd2rLR7P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F76B1F00A3E;
-	Tue, 21 Jul 2026 18:17:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wl0AG0hy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C78DA1F000E9;
+	Tue, 21 Jul 2026 18:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657870;
-	bh=nXFvns+41E/6825R33pW617mNqARcnZ3+LGripVyTE0=;
+	s=korg; t=1784657873;
+	bh=SEh2RFh5/AqpvJoZrs+5RcqWlm+qYsu7SGnpB2CwLAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kd2rLR7PsSE5mBq51WF6Lb3nnQdsNd45rYmZJK+IJAN+DWPyHbuXk+CJnjlhEBHrs
-	 7RxDbLN9lzkhUNXnYkGYIVjIo4XnE4oUiklbqQ0mnRrx449jptJwdaa2Cu35BXauD6
-	 Md8bOLhyvfRPg90inFWAccHdCHhMy8vZuaLYb15M=
+	b=Wl0AG0hyEb8ZQvOFgoVKkm5+94rIA/NAkiUCU5h6/hY8EBMBlL1woXv7Uw1vShIOv
+	 UwCOE31PnNoFpVqBv70GhPC4tVjDtc1ZzqxynoWY5tTpVMogW7phb4uNeNMDxgck4p
+	 5zoWNg1mAydYQSrkNAX7QNiqdksjauKGNALfQJBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Lukasz Czapnik <lukasz.czapnik@intel.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0885/1611] ice: fix FDIR CTRL VSI resource leak in ice_reset_all_vfs()
-Date: Tue, 21 Jul 2026 17:16:41 +0200
-Message-ID: <20260721152535.297260339@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.18 0886/1611] ice: fix AQ error code comparison in ice_set_pauseparam()
+Date: Tue, 21 Jul 2026 17:16:42 +0200
+Message-ID: <20260721152535.319271055@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,44 +54,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+From: Lukasz Czapnik <lukasz.czapnik@intel.com>
 
-[ Upstream commit ebbe8868cf473f698e0fbaf436d2618b2bcda806 ]
+[ Upstream commit 2bf7744bc3221a63b95c76c94eab1dad832fa401 ]
 
-Resetting all VFs causes resource leak on VFs with FDIR filters
-enabled as CTRL VSIs are only invalidated and not freed. Fix by using
-ice_vf_ctrl_vsi_release() instead of ice_vf_ctrl_invalidate_vsi() which
-aligns behavior with the ice_reset_vf() function.
+Fix unreachable code: the conditionals in ice_set_pauseparam() used
+the bitwise-AND operator suggesting aq_failures is a bitmap, but it
+is actually an enum, making the third condition logically unreachable.
 
-Reproduction:
-  echo 1 > /sys/class/net/$pf/device/sriov_numvfs
-  ethtool -N $vf flow-type ether proto 0x9000 action 0
-  echo 1 > /sys/class/net/$pf/device/reset
+Replace the if-else ladder with a switch statement.  Also move the
+aq_failures initialization to the variable declaration and remove the
+redundant zeroing from ice_set_fc().
 
-Fixes: da62c5ff9dcd ("ice: Add support for per VF ctrl VSI enabling")
-Signed-off-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Fixes: fcea6f3da546 ("ice: Add stats and ethtool support")
+Signed-off-by: Lukasz Czapnik <lukasz.czapnik@intel.com>
 Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_vf_lib.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_common.c  |  1 -
+ drivers/net/ethernet/intel/ice/ice_ethtool.c | 12 ++++++++----
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.c b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-index e53a1e4247cb12..4f86412a9c0c3a 100644
---- a/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-@@ -801,7 +801,7 @@ void ice_reset_all_vfs(struct ice_pf *pf)
- 		 * setup only when VF creates its first FDIR rule.
- 		 */
- 		if (vf->ctrl_vsi_idx != ICE_NO_VSI)
--			ice_vf_ctrl_invalidate_vsi(vf);
-+			ice_vf_ctrl_vsi_release(vf);
+diff --git a/drivers/net/ethernet/intel/ice/ice_common.c b/drivers/net/ethernet/intel/ice/ice_common.c
+index 4dcc3b41800b36..f71e45ab809e0f 100644
+--- a/drivers/net/ethernet/intel/ice/ice_common.c
++++ b/drivers/net/ethernet/intel/ice/ice_common.c
+@@ -3919,7 +3919,6 @@ ice_set_fc(struct ice_port_info *pi, u8 *aq_failures, bool ena_auto_link_update)
+ 	if (!pi || !aq_failures)
+ 		return -EINVAL;
  
- 		ice_vf_pre_vsi_rebuild(vf);
- 		if (ice_vf_rebuild_vsi(vf)) {
+-	*aq_failures = 0;
+ 	hw = pi->hw;
+ 
+ 	pcaps = kzalloc(sizeof(*pcaps), GFP_KERNEL);
+diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+index 912bcf9fce52d2..ce0f8106dcd4eb 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
++++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+@@ -3488,7 +3488,7 @@ ice_set_pauseparam(struct net_device *netdev, struct ethtool_pauseparam *pause)
+ 	struct ice_vsi *vsi = np->vsi;
+ 	struct ice_hw *hw = &pf->hw;
+ 	struct ice_port_info *pi;
+-	u8 aq_failures;
++	u8 aq_failures = 0;
+ 	bool link_up;
+ 	u32 is_an;
+ 	int err;
+@@ -3559,18 +3559,22 @@ ice_set_pauseparam(struct net_device *netdev, struct ethtool_pauseparam *pause)
+ 	/* Set the FC mode and only restart AN if link is up */
+ 	err = ice_set_fc(pi, &aq_failures, link_up);
+ 
+-	if (aq_failures & ICE_SET_FC_AQ_FAIL_GET) {
++	switch (aq_failures) {
++	case ICE_SET_FC_AQ_FAIL_GET:
+ 		netdev_info(netdev, "Set fc failed on the get_phy_capabilities call with err %d aq_err %s\n",
+ 			    err, libie_aq_str(hw->adminq.sq_last_status));
+ 		err = -EAGAIN;
+-	} else if (aq_failures & ICE_SET_FC_AQ_FAIL_SET) {
++		break;
++	case ICE_SET_FC_AQ_FAIL_SET:
+ 		netdev_info(netdev, "Set fc failed on the set_phy_config call with err %d aq_err %s\n",
+ 			    err, libie_aq_str(hw->adminq.sq_last_status));
+ 		err = -EAGAIN;
+-	} else if (aq_failures & ICE_SET_FC_AQ_FAIL_UPDATE) {
++		break;
++	case ICE_SET_FC_AQ_FAIL_UPDATE:
+ 		netdev_info(netdev, "Set fc failed on the get_link_info call with err %d aq_err %s\n",
+ 			    err, libie_aq_str(hw->adminq.sq_last_status));
+ 		err = -EAGAIN;
++		break;
+ 	}
+ 
+ 	return err;
 -- 
 2.53.0
 
