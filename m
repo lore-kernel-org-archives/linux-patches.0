@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A594363081;
-	Tue, 21 Jul 2026 17:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF44B175A74;
+	Tue, 21 Jul 2026 17:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655551; cv=none; b=XmZ45DYNdH3ypJxWLhPXXd5ztIfgHpjOODAvtvJE/ESp4NVm1ylrhtALsOJkLCkIlYDSzDYxz2gscMXnWMhOfEDVTFtd82Bq6znqQ9+Q7nJ8wTA0VoyR91xb0vaJ+mGcQ0GfUgl6QkgaZ0x0Jm2dD20o5wt+iGYXiBQoOA5wvq4=
+	t=1784655553; cv=none; b=A1OhbYDb0tpY4HYl49RPAt5wdA0qtSKHOKFb/r0tMVa1Y0StiLEqsxTBDykCElNQULonHP+oNLZmm0tTLoO/IYJ9BdLNxW0myq/vOrZlkRdDDQHT2WlPq+DFArOO03vvvQCr2sA8uUD1EmSYOOJtrkybZyi/AiNACKm6ha4XrNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655551; c=relaxed/simple;
-	bh=fS+lO4xnNKKsZPyKIS+haCRks2eC5Bupf+cON6feZX8=;
+	s=arc-20240116; t=1784655553; c=relaxed/simple;
+	bh=HsbHC28rBbaQvtqyOujFzYMFVvctjgpvKLLX3nyH+yE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GC7KnSIu2c7vKsiwp9d7yA02z/ytTAPHZWH4N++ynnayjpZROhjGtgQXooMtq3evwGNy9wtK5aINvDnOKseg1HY4733AraRQiMZqWlNmKgH5DAdDRsIRvSRVqQHaGCJjFxukh/lp+BCOPX6d4k2m+MSm2EiSjGZbBhVUPHjrBag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fwcHW3ls; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sPUVHYMnkjb1mDxSn7gbAw6z941K01sdsmRN/4O38C/ZemhnhCg+xUiNF+lp8pLeRXOpmA5HAiwA7cV1sxs4Wn+cBurh8znVkZiWpb4Z7CDTqzwCo1ymK0f1FR8euw+9nmeuKMVC01OGiRmXM2x39HkDtS65uu7kWqZbuYcWktA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rKVMDjof; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fwcHW3ls"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA4F1F000E9;
-	Tue, 21 Jul 2026 17:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rKVMDjof"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6768D1F000E9;
+	Tue, 21 Jul 2026 17:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655549;
-	bh=PkMuuJabT/9pJ26hVA1NlPnxjqO7ZVgKxt0D9EtWuEU=;
+	s=korg; t=1784655551;
+	bh=QTQKXDy571mOPrMlUHFbKZQAbC0eJnADZnoM1C+3lJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fwcHW3lsGei4ZFs2qKwLQiiKJqlRpKlR18AouaAYaJiSZENlDcsMXrjZBc1gVUbpm
-	 PK11udf7j5ni7sr0JRzSyiRAlLqrKgEsLUAYP43+tKBrMBqMALPrdqPd8z9701KE7g
-	 ssjvzLS1dl0j0FycqCd7fQAFvslRrd1LMUHAOF6E=
+	b=rKVMDjofBxgMCAnDA+hEszS5lCvoTZTReKwutU6aDFCdq3UdD08T4CryE6E0pONTT
+	 d2qw6j2xNq+u4vDwl9C+YEW4Hrbh2KtkIo+pOQLXDljq8u/zJzmw2XE/l3DXQD8WWe
+	 Xu7ZP2bHbatEGy3Hg/QLEMU/BhPO4QI+v7iHnpmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
-	Corentin LABBE <clabbe.montjoie@gmail.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0009/1611] crypto: sun4i-ss - Remove insecure and unused rng_alg
-Date: Tue, 21 Jul 2026 17:02:05 +0200
-Message-ID: <20260721152514.992669361@linuxfoundation.org>
+Subject: [PATCH 6.18 0010/1611] media: uvcvideo: Fix deadlock if uvc_status_stop is called from async_ctrl.work
+Date: Tue, 21 Jul 2026 17:02:06 +0200
+Message-ID: <20260721152515.016593096@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,312 +54,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-commit b2c41fa9dd8fc740c489e060b199165771f268d1 upstream.
+[ Upstream commit 6d27f92c54ce28cfbd2a8a479a96d6f4a781b7d2 ]
 
-Remove sun4i_ss_rng, as it is insecure and unused:
+If a UVC camera has an asynchronous control, uvc_status_stop may be
+called from async_ctrl.work:
 
-- It has multiple vulnerabilities.  sun4i_ss_prng_seed() is missing
-  locking and has a buffer overflow.  sun4i_ss_prng_generate() fails to
-  fill the entire buffer with cryptographic random bytes, because it
-  rounds the destination length down and also doesn't actually wait for
-  the hardware to be ready before pulling bytes from it.
+uvc_ctrl_status_event_work()
+    uvc_ctrl_status_event()
+        uvc_ctrl_clear_handle()
+	    uvc_pm_put()
+	        uvc_status_put()
+		    uvc_status_stop()
+		        cancel_work_sync()
 
-- No user of this code is known.  It's usable only theoretically via the
-  "rng" algorithm type of AF_ALG.  But userspace actually just uses the
-  actual Linux RNG (/dev/random etc) instead.  And rng_algs don't
-  contribute entropy to the actual Linux RNG either.  (This may have
-  been confused with hwrng, which does contribute entropy.)
+This will cause a deadlock, since cancel_work_sync will wait for
+uvc_ctrl_status_event_work to complete before returning.
 
-The sun4i_ss_prng_seed() buffer overflow was reported by Tianchu Chen
-and discovered by Atuin - Automated Vulnerability Discovery Engine
+Fix this by returning early from uvc_status_stop if we are currently in
+the work function. flush_status now remains false until uvc_status_start
+is called again, ensuring that uvc_ctrl_status_event_work won't resubmit
+the URB.
 
-There's no point in fixing all these vulnerabilities individually when
-this is unused code, so let's just remove it.
-
-Fixes: b8ae5c7387ad ("crypto: sun4i-ss - support the Security System PRNG")
+Fixes: a32d9c41bdb8 ("media: uvcvideo: Make power management granular")
 Cc: stable@vger.kernel.org
-Reported-by: Tianchu Chen <flynnnchen@tencent.com>
-Closes: https://lore.kernel.org/r/af749a8447bd7f0e9dd26ca6c87e9c6afecb09d9@linux.dev/
-Acked-by: Corentin LABBE <clabbe.montjoie@gmail.com>
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Closes: https://lore.kernel.org/all/6733bdfb-3e88-479f-8956-ab09c04c433e@linux.dev/
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Link: https://patch.msgid.link/20260316155823.1855434-1-sean.anderson@linux.dev
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Tested-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/configs/sunxi_defconfig              |  1 -
- drivers/crypto/allwinner/Kconfig              |  8 ---
- drivers/crypto/allwinner/sun4i-ss/Makefile    |  1 -
- .../crypto/allwinner/sun4i-ss/sun4i-ss-core.c | 36 ----------
- .../crypto/allwinner/sun4i-ss/sun4i-ss-prng.c | 69 -------------------
- drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h  | 20 ------
- 6 files changed, 135 deletions(-)
- delete mode 100644 drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c
+ drivers/media/usb/uvc/uvc_status.c | 28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/arch/arm/configs/sunxi_defconfig b/arch/arm/configs/sunxi_defconfig
-index a83d29fed17563..f4b8d8f7dbefbb 100644
---- a/arch/arm/configs/sunxi_defconfig
-+++ b/arch/arm/configs/sunxi_defconfig
-@@ -170,7 +170,6 @@ CONFIG_ROOT_NFS=y
- CONFIG_NLS_CODEPAGE_437=y
- CONFIG_NLS_ISO8859_1=y
- CONFIG_CRYPTO_DEV_SUN4I_SS=y
--CONFIG_CRYPTO_DEV_SUN4I_SS_PRNG=y
- CONFIG_CRYPTO_DEV_SUN8I_CE=y
- CONFIG_CRYPTO_DEV_SUN8I_SS=y
- CONFIG_DMA_CMA=y
-diff --git a/drivers/crypto/allwinner/Kconfig b/drivers/crypto/allwinner/Kconfig
-index b8e75210a0e315..06ea0e9fe6f22f 100644
---- a/drivers/crypto/allwinner/Kconfig
-+++ b/drivers/crypto/allwinner/Kconfig
-@@ -24,14 +24,6 @@ config CRYPTO_DEV_SUN4I_SS
- 	  To compile this driver as a module, choose M here: the module
- 	  will be called sun4i-ss.
+diff --git a/drivers/media/usb/uvc/uvc_status.c b/drivers/media/usb/uvc/uvc_status.c
+index 231cfee8e7c2c4..7de074006c6a96 100644
+--- a/drivers/media/usb/uvc/uvc_status.c
++++ b/drivers/media/usb/uvc/uvc_status.c
+@@ -316,6 +316,16 @@ static int uvc_status_start(struct uvc_device *dev, gfp_t flags)
+ 	if (!dev->int_urb)
+ 		return 0;
  
--config CRYPTO_DEV_SUN4I_SS_PRNG
--	bool "Support for Allwinner Security System PRNG"
--	depends on CRYPTO_DEV_SUN4I_SS
--	select CRYPTO_RNG
--	help
--	  Select this option if you want to provide kernel-side support for
--	  the Pseudo-Random Number Generator found in the Security System.
--
- config CRYPTO_DEV_SUN4I_SS_DEBUG
- 	bool "Enable sun4i-ss stats"
- 	depends on CRYPTO_DEV_SUN4I_SS
-diff --git a/drivers/crypto/allwinner/sun4i-ss/Makefile b/drivers/crypto/allwinner/sun4i-ss/Makefile
-index c0a2797d316827..06a9ae81f9f808 100644
---- a/drivers/crypto/allwinner/sun4i-ss/Makefile
-+++ b/drivers/crypto/allwinner/sun4i-ss/Makefile
-@@ -1,4 +1,3 @@
- # SPDX-License-Identifier: GPL-2.0-only
- obj-$(CONFIG_CRYPTO_DEV_SUN4I_SS) += sun4i-ss.o
- sun4i-ss-y += sun4i-ss-core.o sun4i-ss-hash.o sun4i-ss-cipher.o
--sun4i-ss-$(CONFIG_CRYPTO_DEV_SUN4I_SS_PRNG) += sun4i-ss-prng.o
-diff --git a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-core.c b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-core.c
-index 58a76e2ba64e25..35ef0930e77f1a 100644
---- a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-core.c
-+++ b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-core.c
-@@ -213,23 +213,6 @@ static struct sun4i_ss_alg_template ss_algs[] = {
- 		}
- 	}
- },
--#ifdef CONFIG_CRYPTO_DEV_SUN4I_SS_PRNG
--{
--	.type = CRYPTO_ALG_TYPE_RNG,
--	.alg.rng = {
--		.base = {
--			.cra_name		= "stdrng",
--			.cra_driver_name	= "sun4i_ss_rng",
--			.cra_priority		= 300,
--			.cra_ctxsize		= 0,
--			.cra_module		= THIS_MODULE,
--		},
--		.generate               = sun4i_ss_prng_generate,
--		.seed                   = sun4i_ss_prng_seed,
--		.seedsize               = SS_SEED_LEN / BITS_PER_BYTE,
--	}
--},
--#endif
- };
++	/*
++	 * If the previous uvc_status_stop() call was from the async work,
++	 * the work may still be running. Wait for it to finish before we submit
++	 * the urb.
++	 */
++	flush_work(&dev->async_ctrl.work);
++
++	/* Clear the flush status if we were previously stopped. */
++	smp_store_release(&dev->flush_status, false);
++
+ 	return usb_submit_urb(dev->int_urb, flags);
+ }
  
- static int sun4i_ss_debugfs_show(struct seq_file *seq, void *v)
-@@ -247,12 +230,6 @@ static int sun4i_ss_debugfs_show(struct seq_file *seq, void *v)
- 				   ss_algs[i].stat_req, ss_algs[i].stat_opti, ss_algs[i].stat_fb,
- 				   ss_algs[i].stat_bytes);
- 			break;
--		case CRYPTO_ALG_TYPE_RNG:
--			seq_printf(seq, "%s %s reqs=%lu tsize=%lu\n",
--				   ss_algs[i].alg.rng.base.cra_driver_name,
--				   ss_algs[i].alg.rng.base.cra_name,
--				   ss_algs[i].stat_req, ss_algs[i].stat_bytes);
--			break;
- 		case CRYPTO_ALG_TYPE_AHASH:
- 			seq_printf(seq, "%s %s reqs=%lu\n",
- 				   ss_algs[i].alg.hash.halg.base.cra_driver_name,
-@@ -471,13 +448,6 @@ static int sun4i_ss_probe(struct platform_device *pdev)
- 				goto error_alg;
- 			}
- 			break;
--		case CRYPTO_ALG_TYPE_RNG:
--			err = crypto_register_rng(&ss_algs[i].alg.rng);
--			if (err) {
--				dev_err(ss->dev, "Fail to register %s\n",
--					ss_algs[i].alg.rng.base.cra_name);
--			}
--			break;
- 		}
- 	}
+@@ -336,6 +346,15 @@ static void uvc_status_stop(struct uvc_device *dev)
+ 	 */
+ 	smp_store_release(&dev->flush_status, true);
  
-@@ -497,9 +467,6 @@ static int sun4i_ss_probe(struct platform_device *pdev)
- 		case CRYPTO_ALG_TYPE_AHASH:
- 			crypto_unregister_ahash(&ss_algs[i].alg.hash);
- 			break;
--		case CRYPTO_ALG_TYPE_RNG:
--			crypto_unregister_rng(&ss_algs[i].alg.rng);
--			break;
- 		}
- 	}
- error_pm:
-@@ -520,9 +487,6 @@ static void sun4i_ss_remove(struct platform_device *pdev)
- 		case CRYPTO_ALG_TYPE_AHASH:
- 			crypto_unregister_ahash(&ss_algs[i].alg.hash);
- 			break;
--		case CRYPTO_ALG_TYPE_RNG:
--			crypto_unregister_rng(&ss_algs[i].alg.rng);
--			break;
- 		}
- 	}
++	/*
++	 * If we are called from the event work function, the URB is guaranteed
++	 * to not be in flight as it has completed and has not been resubmitted.
++	 * There's no need to cancel the work (which would deadlock), or to kill
++	 * the URB.
++	 */
++	if (current_work() == &w->work)
++		return;
++
+ 	/*
+ 	 * Cancel any pending asynchronous work. If any status event was queued,
+ 	 * process it synchronously.
+@@ -354,15 +373,6 @@ static void uvc_status_stop(struct uvc_device *dev)
+ 	 */
+ 	if (cancel_work_sync(&w->work))
+ 		uvc_ctrl_status_event(w->chain, w->ctrl, w->data);
+-
+-	/*
+-	 * From this point, there are no events on the queue and the status URB
+-	 * is dead. No events will be queued until uvc_status_start() is called.
+-	 * The barrier is needed to make sure that flush_status is visible to
+-	 * uvc_ctrl_status_event_work() when uvc_status_start() will be called
+-	 * again.
+-	 */
+-	smp_store_release(&dev->flush_status, false);
+ }
  
-diff --git a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c
-deleted file mode 100644
-index 491fcb7b81b40b..00000000000000
---- a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss-prng.c
-+++ /dev/null
-@@ -1,69 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0-or-later
--#include "sun4i-ss.h"
--
--int sun4i_ss_prng_seed(struct crypto_rng *tfm, const u8 *seed,
--		       unsigned int slen)
--{
--	struct sun4i_ss_alg_template *algt;
--	struct rng_alg *alg = crypto_rng_alg(tfm);
--
--	algt = container_of(alg, struct sun4i_ss_alg_template, alg.rng);
--	memcpy(algt->ss->seed, seed, slen);
--
--	return 0;
--}
--
--int sun4i_ss_prng_generate(struct crypto_rng *tfm, const u8 *src,
--			   unsigned int slen, u8 *dst, unsigned int dlen)
--{
--	struct sun4i_ss_alg_template *algt;
--	struct rng_alg *alg = crypto_rng_alg(tfm);
--	int i, err;
--	u32 v;
--	u32 *data = (u32 *)dst;
--	const u32 mode = SS_OP_PRNG | SS_PRNG_CONTINUE | SS_ENABLED;
--	size_t len;
--	struct sun4i_ss_ctx *ss;
--	unsigned int todo = (dlen / 4) * 4;
--
--	algt = container_of(alg, struct sun4i_ss_alg_template, alg.rng);
--	ss = algt->ss;
--
--	err = pm_runtime_resume_and_get(ss->dev);
--	if (err < 0)
--		return err;
--
--	if (IS_ENABLED(CONFIG_CRYPTO_DEV_SUN4I_SS_DEBUG)) {
--		algt->stat_req++;
--		algt->stat_bytes += todo;
--	}
--
--	spin_lock_bh(&ss->slock);
--
--	writel(mode, ss->base + SS_CTL);
--
--	while (todo > 0) {
--		/* write the seed */
--		for (i = 0; i < SS_SEED_LEN / BITS_PER_LONG; i++)
--			writel(ss->seed[i], ss->base + SS_KEY0 + i * 4);
--
--		/* Read the random data */
--		len = min_t(size_t, SS_DATA_LEN / BITS_PER_BYTE, todo);
--		readsl(ss->base + SS_TXFIFO, data, len / 4);
--		data += len / 4;
--		todo -= len;
--
--		/* Update the seed */
--		for (i = 0; i < SS_SEED_LEN / BITS_PER_LONG; i++) {
--			v = readl(ss->base + SS_KEY0 + i * 4);
--			ss->seed[i] = v;
--		}
--	}
--
--	writel(0, ss->base + SS_CTL);
--	spin_unlock_bh(&ss->slock);
--
--	pm_runtime_put(ss->dev);
--
--	return 0;
--}
-diff --git a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h
-index 6c5d4aa6453c7f..f7d1c79ac677d8 100644
---- a/drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h
-+++ b/drivers/crypto/allwinner/sun4i-ss/sun4i-ss.h
-@@ -31,8 +31,6 @@
- #include <crypto/internal/skcipher.h>
- #include <crypto/aes.h>
- #include <crypto/internal/des.h>
--#include <crypto/internal/rng.h>
--#include <crypto/rng.h>
- 
- #define SS_CTL            0x00
- #define SS_KEY0           0x04
-@@ -62,10 +60,6 @@
- 
- /* SS_CTL configuration values */
- 
--/* PRNG generator mode - bit 15 */
--#define SS_PRNG_ONESHOT		(0 << 15)
--#define SS_PRNG_CONTINUE	(1 << 15)
--
- /* IV mode for hash */
- #define SS_IV_ARBITRARY		(1 << 14)
- 
-@@ -94,14 +88,10 @@
- #define SS_OP_3DES		(2 << 4)
- #define SS_OP_SHA1		(3 << 4)
- #define SS_OP_MD5		(4 << 4)
--#define SS_OP_PRNG		(5 << 4)
- 
- /* Data end bit - bit 2 */
- #define SS_DATA_END		(1 << 2)
- 
--/* PRNG start bit - bit 1 */
--#define SS_PRNG_START		(1 << 1)
--
- /* SS Enable bit - bit 0 */
- #define SS_DISABLED		(0 << 0)
- #define SS_ENABLED		(1 << 0)
-@@ -128,9 +118,6 @@
- #define SS_RXFIFO_EMP_INT_ENABLE	(1 << 2)
- #define SS_TXFIFO_AVA_INT_ENABLE	(1 << 0)
- 
--#define SS_SEED_LEN 192
--#define SS_DATA_LEN 160
--
- /*
-  * struct ss_variant - Describe SS hardware variant
-  * @sha1_in_be:		The SHA1 digest is given by SS in BE, and so need to be inverted.
-@@ -151,9 +138,6 @@ struct sun4i_ss_ctx {
- 	char buf[4 * SS_RX_MAX];/* buffer for linearize SG src */
- 	char bufo[4 * SS_TX_MAX]; /* buffer for linearize SG dst */
- 	spinlock_t slock; /* control the use of the device */
--#ifdef CONFIG_CRYPTO_DEV_SUN4I_SS_PRNG
--	u32 seed[SS_SEED_LEN / BITS_PER_LONG];
--#endif
- 	struct dentry *dbgfs_dir;
- 	struct dentry *dbgfs_stats;
- };
-@@ -164,7 +148,6 @@ struct sun4i_ss_alg_template {
- 	union {
- 		struct skcipher_alg crypto;
- 		struct ahash_alg hash;
--		struct rng_alg rng;
- 	} alg;
- 	struct sun4i_ss_ctx *ss;
- 	unsigned long stat_req;
-@@ -231,6 +214,3 @@ int sun4i_ss_des_setkey(struct crypto_skcipher *tfm, const u8 *key,
- 			unsigned int keylen);
- int sun4i_ss_des3_setkey(struct crypto_skcipher *tfm, const u8 *key,
- 			 unsigned int keylen);
--int sun4i_ss_prng_generate(struct crypto_rng *tfm, const u8 *src,
--			   unsigned int slen, u8 *dst, unsigned int dlen);
--int sun4i_ss_prng_seed(struct crypto_rng *tfm, const u8 *seed, unsigned int slen);
+ int uvc_status_resume(struct uvc_device *dev)
 -- 
 2.53.0
 
