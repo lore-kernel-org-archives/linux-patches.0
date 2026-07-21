@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C9C434E2C;
-	Tue, 21 Jul 2026 20:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F193470435;
+	Tue, 21 Jul 2026 20:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664261; cv=none; b=h+idLcGS+oSdIoSQGt5Cwu2g6QXB0kiQ1o+2nSudyNH3YB2KlUyJ86852zpPpQm+IsxcXPCFzi9gRnhFYcy5xUCMWDyWcetg7QWZ7oZ5tnspY8myUDBTRl4lzn8/HaSkG3UWvqB0bvJcJMHH80lcJZsc6VcoMngmvUDSaWaDciw=
+	t=1784664264; cv=none; b=Q5ZXV8IRnGGCn+OHTsa3HPYNBKaErsEPSWTrjgaqAJAwHogE5BVxywKLHGgj8IkFSfRq+JnD0alajQAkNO9Ter9wYz/ufNqaxwBEp19eAKA8ZmRnWef4uiAp3/eYenMQH6lrfgSVGYrfwQuJLOEM1CLNWGeHe2APDu/+aiG8C5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664261; c=relaxed/simple;
-	bh=eAe0VnRovFSoEOgRtbghumDJTZJ/jJqmx5YUWH2Ce4U=;
+	s=arc-20240116; t=1784664264; c=relaxed/simple;
+	bh=UvZS6YmVyys1JAOmljpJr5HlZf+bXhNViyrNeXBd+v0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gSc21iBESzkp0FGS58I2Dr7Qbrwck2NYeItkDPQbOYunX56AwDMIzIQ7Y5FCNltD5L5HyCVF0lufPtT2v0Bvl08ZvQ7ISEFOxPljgPM1K3L1m3EAghb3BflZ6IlJ3mM49IZ3siMxh+TNsji6dhbw9S4OaolBHwwZnmyj79V7J5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0SyMaq49; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nbju3ISyG1dw7caHs228PVGpxJ8Pi+UAeEztD1EU8+7t01uTd9t3fgP6YCdIkaTnCQwODDS34mXsXxiTTmiUl2skMrx4sPa/axG69zc5qqPkNGJD/RQ55HwDi86awtfvQg99eQo/IGOY/lCKZ3SPOqP9oDVkyhbykDIfX72J2Xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axkA+abL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0SyMaq49"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8541F000E9;
-	Tue, 21 Jul 2026 20:04:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axkA+abL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74AEF1F000E9;
+	Tue, 21 Jul 2026 20:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664260;
-	bh=Zr4fRuAGq8iObImuqQhv9Et/BbMisOdL5rUdNoTscQE=;
+	s=korg; t=1784664263;
+	bh=Nz2bSyabQx4UjTSQ8mu3c2aHnIcwxc3y+SXlS0sPCGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0SyMaq495PbmIkx6+2kU3dDerix1SIKvlpZw2cKBDMQw1Qv1qTLKwkM1jbw0+UUCE
-	 oFxkv4Lb6o/oXTWzjDJgUHFwXpZuCox1+/vvvvhYEULAh71viEMKi44qA7VQd1ATGo
-	 ahcdtDacrVIaK5z4G+T1LT6U/2pm7hItqrW7ge/8=
+	b=axkA+abLqDUHQxvgrka+LXdOIXwsw+pOgLXYPOhyrGOmlcOJ6aZ2bWADhGaGVXkZD
+	 2ASsqxTTHIqnkbZ/D/wUAhhguKmTHnOXkD1uzGwKuCvvSofEhN8BD68JsmK/dhpj8K
+	 MC54mEkvihvyvHGXG9Ngg1iE1OYbH/3yKNQaF8+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1133/1276] ACPI: driver: Check ACPI_COMPANION() against NULL during probe
-Date: Tue, 21 Jul 2026 17:26:16 +0200
-Message-ID: <20260721152511.350203165@linuxfoundation.org>
+Subject: [PATCH 6.12 1134/1276] ACPI: bus: Introduce devm_acpi_install_notify_handler()
+Date: Tue, 21 Jul 2026 17:26:17 +0200
+Message-ID: <20260721152511.373717706@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -54,139 +52,118 @@ Content-Transfer-Encoding: 8bit
 
 From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit e4865a56d013e86e46ea6acea15bb6eae01898ff ]
+[ Upstream commit ca70ce555a1eb8edf5fb1d5575f1fe19c9ae17f4 ]
 
-Since every platform driver can be forced to match a device that doesn't
-match its list of device IDs because of device_match_driver_override(),
-platform drivers that rely on the existence of a device's ACPI companion
-object should verify its presence.
+Introduce devm_acpi_install_notify_handler() for installing an ACPI
+notify handler managed by devres that will be removed automatically on
+driver detach.
 
-Accordingly, add requisite ACPI_COMPANION() or ACPI_HANDLE() checks
-against NULL to 13 platform drivers handling core ACPI devices.
+It installs the notify handler on the device object in the ACPI
+namespace that corresponds to the owner device's ACPI companion, if
+present (an error is returned if the owner device doesn't have an ACPI
+companion).
 
-Also change the value returned by the ACPI thermal zone driver when
-the device's ACPI companion is not present to -ENODEV for consistency
-with the other drivers.
+Currently, there is no way to manually remove the notify handler
+installed by it because none of its users brought on subsequently
+will need to do that.
 
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/4516068.ejJDZkT8p0@rafael.j.wysocki
-Cc: 7.0+ <stable@vger.kernel.org> # 7.0+
+[ rjw: Kerneldoc comment refinement ]
+Link: https://patch.msgid.link/2268031.irdbgypaU6@rafael.j.wysocki
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Stable-dep-of: 18a00ed0e718 ("ACPI: NFIT: core: Fix possible deadlock and missing notifications")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/ac.c            |    6 +++++-
- drivers/acpi/acpi_pad.c      |    6 +++++-
- drivers/acpi/acpi_tad.c      |    6 +++++-
- drivers/acpi/pfr_telemetry.c |    6 +++++-
- drivers/acpi/pfr_update.c    |    6 +++++-
- drivers/acpi/thermal.c       |    2 +-
- 6 files changed, 26 insertions(+), 6 deletions(-)
+ drivers/acpi/bus.c      |   66 ++++++++++++++++++++++++++++++++++++++++++++++++
+ include/acpi/acpi_bus.h |    2 +
+ 2 files changed, 68 insertions(+)
 
---- a/drivers/acpi/ac.c
-+++ b/drivers/acpi/ac.c
-@@ -203,11 +203,15 @@ static const struct dmi_system_id ac_dmi
+--- a/drivers/acpi/bus.c
++++ b/drivers/acpi/bus.c
+@@ -622,6 +622,72 @@ void acpi_dev_remove_notify_handler(stru
+ }
+ EXPORT_SYMBOL_GPL(acpi_dev_remove_notify_handler);
  
- static int acpi_ac_probe(struct platform_device *pdev)
- {
--	struct acpi_device *adev = ACPI_COMPANION(&pdev->dev);
- 	struct power_supply_config psy_cfg = {};
++struct acpi_notify_handler_devres {
++	acpi_notify_handler handler;
++	u32 handler_type;
++};
++
++static void devm_acpi_notify_handler_release(struct device *dev, void *res)
++{
++	struct acpi_notify_handler_devres *dr = res;
++
++	acpi_dev_remove_notify_handler(ACPI_COMPANION(dev), dr->handler_type,
++				       dr->handler);
++}
++
++/**
++ * devm_acpi_install_notify_handler - Install an ACPI notify handler for a
++ * 				      managed device
++ * @dev: Device to install a notify handler for
++ * @handler_type: Type of the notify handler
++ * @handler: Handler function to install
++ * @context: Data passed back to the handler function
++ *
++ * This function performs the same function as acpi_dev_install_notify_handler()
++ * called for the ACPI companion of @dev with the same @handler_type, @handler,
++ * and @context arguments, but the ACPI notify handler installed by it will be
++ * automatically removed on driver detach.
++ *
++ * Callers should ensure that all resources used by @handler have been allocated
++ * prior to invoking this function, in which case those resources should be
++ * devres-managed so that they won't be released before the notify handler
++ * removal.  Otherwise, special synchronization between @handler and the
++ * management of those resources is required.
++ *
++ * When the request fails, an error message is printed.  Don't add extra error
++ * messages at the call sites.
++ *
++ * Return: 0 on success or a negative error number.
++ */
++int devm_acpi_install_notify_handler(struct device *dev, u32 handler_type,
++				     acpi_notify_handler handler, void *context)
++{
++	struct acpi_notify_handler_devres *dr;
 +	struct acpi_device *adev;
- 	struct acpi_ac *ac;
- 	int result;
- 
-+	adev = ACPI_COMPANION(&pdev->dev);
++	int ret;
++
++	adev = ACPI_COMPANION(dev);
 +	if (!adev)
-+		return -ENODEV;
++		return dev_err_probe(dev, -ENODEV, "No ACPI companion in %s()\n", __func__);
 +
- 	ac = kzalloc(sizeof(struct acpi_ac), GFP_KERNEL);
- 	if (!ac)
- 		return -ENOMEM;
---- a/drivers/acpi/acpi_pad.c
-+++ b/drivers/acpi/acpi_pad.c
-@@ -427,9 +427,13 @@ static void acpi_pad_notify(acpi_handle
- 
- static int acpi_pad_probe(struct platform_device *pdev)
- {
--	struct acpi_device *adev = ACPI_COMPANION(&pdev->dev);
-+	struct acpi_device *adev;
- 	acpi_status status;
- 
-+	adev = ACPI_COMPANION(&pdev->dev);
-+	if (!adev)
-+		return -ENODEV;
++	dr = devres_alloc(devm_acpi_notify_handler_release, sizeof(*dr), GFP_KERNEL);
++	if (!dr)
++		return -ENOMEM;
 +
- 	strscpy(acpi_device_name(adev), ACPI_PROCESSOR_AGGREGATOR_DEVICE_NAME);
- 	strscpy(acpi_device_class(adev), ACPI_PROCESSOR_AGGREGATOR_CLASS);
- 
---- a/drivers/acpi/acpi_tad.c
-+++ b/drivers/acpi/acpi_tad.c
-@@ -588,12 +588,16 @@ static void acpi_tad_remove(struct platf
- static int acpi_tad_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
--	acpi_handle handle = ACPI_HANDLE(dev);
- 	struct acpi_tad_driver_data *dd;
-+	acpi_handle handle;
- 	acpi_status status;
- 	unsigned long long caps;
- 	int ret;
- 
-+	handle = ACPI_HANDLE(dev);
-+	if (!handle)
-+		return -ENODEV;
++	ret = acpi_dev_install_notify_handler(adev, handler_type, handler, context);
++	if (ret) {
++		devres_free(dr);
++		return dev_err_probe(dev, ret, "Failed to install an ACPI notify handler\n");
++	}
 +
- 	ret = acpi_install_cmos_rtc_space_handler(handle);
- 	if (ret < 0) {
- 		dev_info(dev, "Unable to install space handler\n");
---- a/drivers/acpi/pfr_telemetry.c
-+++ b/drivers/acpi/pfr_telemetry.c
-@@ -363,10 +363,14 @@ static void pfrt_log_put_idx(void *data)
- 
- static int acpi_pfrt_log_probe(struct platform_device *pdev)
- {
--	acpi_handle handle = ACPI_HANDLE(&pdev->dev);
- 	struct pfrt_log_device *pfrt_log_dev;
-+	acpi_handle handle;
- 	int ret;
- 
-+	handle = ACPI_HANDLE(&pdev->dev);
-+	if (!handle)
-+		return -ENODEV;
++	dr->handler = handler;
++	dr->handler_type = handler_type;
++	devres_add(dev, dr);
 +
- 	if (!acpi_has_method(handle, "_DSM")) {
- 		dev_dbg(&pdev->dev, "Missing _DSM\n");
- 		return -ENODEV;
---- a/drivers/acpi/pfr_update.c
-+++ b/drivers/acpi/pfr_update.c
-@@ -505,10 +505,14 @@ static void pfru_put_idx(void *data)
- 
- static int acpi_pfru_probe(struct platform_device *pdev)
- {
--	acpi_handle handle = ACPI_HANDLE(&pdev->dev);
- 	struct pfru_device *pfru_dev;
-+	acpi_handle handle;
- 	int ret;
- 
-+	handle = ACPI_HANDLE(&pdev->dev);
-+	if (!handle)
-+		return -ENODEV;
++	return 0;
++}
++EXPORT_SYMBOL_GPL(devm_acpi_install_notify_handler);
 +
- 	if (!acpi_has_method(handle, "_DSM")) {
- 		dev_dbg(&pdev->dev, "Missing _DSM\n");
- 		return -ENODEV;
---- a/drivers/acpi/thermal.c
-+++ b/drivers/acpi/thermal.c
-@@ -789,7 +789,7 @@ static int acpi_thermal_add(struct acpi_
- 	int i;
+ /* Handle events targeting \_SB device (at present only graceful shutdown) */
  
- 	if (!device)
--		return -EINVAL;
-+		return -ENODEV;
- 
- 	tz = kzalloc(sizeof(struct acpi_thermal), GFP_KERNEL);
- 	if (!tz)
+ #define ACPI_SB_NOTIFY_SHUTDOWN_REQUEST 0x81
+--- a/include/acpi/acpi_bus.h
++++ b/include/acpi/acpi_bus.h
+@@ -625,6 +625,8 @@ int acpi_dev_install_notify_handler(stru
+ void acpi_dev_remove_notify_handler(struct acpi_device *adev,
+ 				    u32 handler_type,
+ 				    acpi_notify_handler handler);
++int devm_acpi_install_notify_handler(struct device *dev, u32 handler_type,
++				     acpi_notify_handler handler, void *context);
+ extern int acpi_notifier_call_chain(struct acpi_device *, u32, u32);
+ extern int register_acpi_notifier(struct notifier_block *);
+ extern int unregister_acpi_notifier(struct notifier_block *);
 
 
