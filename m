@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3093B9950;
-	Tue, 21 Jul 2026 21:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741D93B9D9D;
+	Tue, 21 Jul 2026 21:32:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669538; cv=none; b=jd1T15d7js7sZq2MApVL4z5X9MML0qUy90adOrBEr5PHnqy9swLauKVWBEuGZsRccc+5b9APOHcWkr6gybnsgu+nC9z3pmmskp5yXZeLRItAGDQ0OYpIt1K0GYYptoeEmM+6tELFjgFMXtUZJSN8xA88T/16NZUw8BW8XJJx0CE=
+	t=1784669540; cv=none; b=dW4PwOaEK5KXzgTjfpBCJwZV25S1U9N5CAvVBZehcmfA4w8uqqfbsq95gF9Vk4serNjD3tnLN9j6oThH7uZT7PnTBcUo1HFeWAEWnAyPoeMJ8C5elYhoS8x1F2d3LZMIS+AWqclCobMEm9BviYx3HPBhcGpj9b8OdTwo0Y5ihV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669538; c=relaxed/simple;
-	bh=WPoRPZhrRr3hkoTxgXOSWcGLC29cTLKSTWjf6a8u8Ys=;
+	s=arc-20240116; t=1784669540; c=relaxed/simple;
+	bh=VFiCika2OTRJ4XH76lOMcsxLgkaua1DxlR2MMdkF/UI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P+9E5Uyx7ot6kjQLMsHa7LyWZPSF7ns9+f5RTHTlpA8Sr00CvfUEsmi2VyznXNAhVa/SiKka+67uZf2eofb7EnhaE9s8dC/TfJQ9uc/vZu/GEEXhZKuKlwXnitLkKLY9OaCv8EXKTnG49p5u3OXCcVaU2UK2YO/3qib56WYxaWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K1Qy7UCg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=neyy0Phyvx8sUX9Fzsp5MjaW/VYW9RfhscX6VLZYW6Pw6Mm94UZOCy35gUgxSzPcds0uVRTgCvflRco1Nihh3lEuTkLfQF3lkrBco2/DrD5UDppksijOlSauVGxoX55VL/gYD74WBN2s7RNn1uk5WbIcO5A8bsZxm1ztM8vffMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MfOaW6vz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K1Qy7UCg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E081F000E9;
-	Tue, 21 Jul 2026 21:32:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MfOaW6vz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0791F000E9;
+	Tue, 21 Jul 2026 21:32:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669536;
-	bh=9MqYidyS7d6MiShoPdSISpWdp8zKyWCmV/6T1Sz5BZw=;
+	s=korg; t=1784669539;
+	bh=JLJr6+II+GnI9bXmLdlQ8fj2vqsizZa9C9F1Fzwai60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K1Qy7UCgg10VCecjBVw+UAk4qxpaUmIa7aKV2R0H5RY1XHduAz6AjkvI8CrjB++qT
-	 +HsymC+9wfVuO9SNuifd02OUlIB1DziRxXKQR+lIZrY9o8nNQY8Xq8P2I6o6k1HGr1
-	 EZXZuBktiuDVf4U9fi5hDFdVnJDFHBfCO2mIROik=
+	b=MfOaW6vzfKRge6SfIyrWOh4TDkbrb8R9aJpuywz9TQRqtd5I0IQnoQCpDTnYx9Gwt
+	 NG1SJlH3ALH1EUZtOyTZV0MlBhrhltmJLydIp8D+tsIhNEBT3xFeS6w7fCQnX0h2zT
+	 Uv2SgNfWexSDaPzhaJ4jTOEU9k4GaOrhNzZ85GvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Ivan Abramov <i.abramov@mt-integration.ru>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0591/1067] ACPI: IPMI: Fix inverted interface check in ipmi_bmc_gone()
-Date: Tue, 21 Jul 2026 17:19:52 +0200
-Message-ID: <20260721152437.826180787@linuxfoundation.org>
+Subject: [PATCH 6.1 0592/1067] ieee802154: Remove WARN_ON() in cfg802154_pernet_exit()
+Date: Tue, 21 Jul 2026 17:19:53 +0200
+Message-ID: <20260721152437.847847947@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,59 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Ivan Abramov <i.abramov@mt-integration.ru>
 
-[ Upstream commit 71b57aca295d61276a60e131d8f62b0cc7cf1a35 ]
+[ Upstream commit e69ed6fc9fb3b386b5fcdb9f51623f122cee2ebd ]
 
-Before commit a1a69b297e47 ("ACPI / IPMI: Fix race caused by the
-unprotected ACPI IPMI user"), ipmi_bmc_gone() skipped entries whose
-interface number did not match the SMI being removed, then killed the
-matching entry:
+There's no need to call WARN_ON() in cfg802154_pernet_exit(), since
+every point of failure in cfg802154_switch_netns() is covered with
+WARN_ON(), so remove it.
 
-	if (ipmi_device->ipmi_ifnum != iface)
-		continue;
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-	__ipmi_dev_kill(ipmi_device);
-
-That commit folded the removal block into the existing non-match test
-while converting the object lifetime handling, but left the comparison
-unchanged. The old != meant "continue past this entry"; after the
-refactor it meant "kill this entry".
-
-As a result, a single ACPI IPMI interface is never removed when its SMI
-disappears. If multiple interfaces are tracked, the first interface
-whose number differs from iface is removed instead, while the interface
-that actually disappeared remains on driver_data.ipmi_devices. The
-stale entry is not marked dead and can continue to be selected for ACPI
-IPMI transactions. It can also prevent the same ACPI handle from being
-registered again.
-
-Change the comparison to == so ipmi_bmc_gone() removes exactly the
-interface reported as gone by the SMI watcher. This restores the
-pre-a1a69b297e47 behavior and is the correct interface matching logic.
-
-Fixes: a1a69b297e47 ("ACPI / IPMI: Fix race caused by the unprotected ACPI IPMI user")
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/B486593E06E6F6E0+20260616093621.1039943-1-raoxu@uniontech.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 66e5c2672cd1 ("ieee802154: add netns support")
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
+Link: https://lore.kernel.org/20250403101935.991385-4-i.abramov@mt-integration.ru
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_ipmi.c | 2 +-
+ net/ieee802154/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpi_ipmi.c b/drivers/acpi/acpi_ipmi.c
-index 148d9486106cad..acecb7f86fd976 100644
---- a/drivers/acpi/acpi_ipmi.c
-+++ b/drivers/acpi/acpi_ipmi.c
-@@ -485,7 +485,7 @@ static void ipmi_bmc_gone(int iface)
- 	mutex_lock(&driver_data.ipmi_lock);
- 	list_for_each_entry_safe(iter, temp,
- 				 &driver_data.ipmi_devices, head) {
--		if (iter->ipmi_ifnum != iface) {
-+		if (iter->ipmi_ifnum == iface) {
- 			ipmi_device = iter;
- 			__ipmi_dev_kill(iter);
- 			break;
+diff --git a/net/ieee802154/core.c b/net/ieee802154/core.c
+index de259b5170ab17..b3b89a1cd2a4c1 100644
+--- a/net/ieee802154/core.c
++++ b/net/ieee802154/core.c
+@@ -324,7 +324,7 @@ static void __net_exit cfg802154_pernet_exit(struct net *net)
+ 	rtnl_lock();
+ 	list_for_each_entry(rdev, &cfg802154_rdev_list, list) {
+ 		if (net_eq(wpan_phy_net(&rdev->wpan_phy), net))
+-			WARN_ON(cfg802154_switch_netns(rdev, &init_net));
++			cfg802154_switch_netns(rdev, &init_net);
+ 	}
+ 	rtnl_unlock();
+ }
 -- 
 2.53.0
 
