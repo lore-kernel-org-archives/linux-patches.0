@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8553B9930;
-	Tue, 21 Jul 2026 21:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD701439904;
+	Tue, 21 Jul 2026 21:47:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670451; cv=none; b=BC3hfDaMvNO0nx3xPS2/UGwKw5xAZLtg9AjxPunkHP5XfbKiH6uKkjCIxQCnsSjxWvmoKaIMurNXJC6viVk1ZR3BiJlNFYulJFvNrpyrbus7SgUXKVswW5+0EeguIuuD9uTFEARdLnol4xWaWvuF2Vt4RLepKC0STtCe8e8jnr0=
+	t=1784670454; cv=none; b=gDtt46Ed0YMAa4r7R/3JF/y1eiact5NYGOiVg8INKxbLsvnGLSNjTpZ8YafAB8yycjNmNvquuB8VB6Ty08FYHHzLb4wRA7FBN5ZemLbe+TxhHr4dFt9Wbx9lAsIIignVXflRihwMfYvc/S8hWkPEO+Yht8mq8b9LoqedYKq8TO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670451; c=relaxed/simple;
-	bh=1HWiwSrFASUAuyPIFTLnkFUyZo14RlUCsFfcKM7eR8M=;
+	s=arc-20240116; t=1784670454; c=relaxed/simple;
+	bh=/wHE8YCbYxaHfSUf312eW6kdDEM89wxKEU6UXfusW2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YOC9iAM/jC7gkUlgCMbBfSwIg3FBFw/5BhQ9IRvo/eul9PaqCt2EU0VAIjnscRpBnsQAv874OYZ8f30TLd03pGng+DzSh21OCj+8bohdbraJG+yjeYayE4txVjWaMBBjbPsq0XyjeS8HTOegH3WqLZxZhjeW79v9cbRK17jlPl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E/d3xBTi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tt4+rl2jsuR7WNVjsjcxfnXnr9Q4xvvfKsk1esQ2X5jjpNX6spBJn4LFZ5yqLdyD/zet9n7+cx+IKEy1d/PIy2awt4Zs0nmrjrHDTu5UvCD7f4JFRRe1yQpEhpiSMqPgwr1jJZ/aeXAQ6Zmz4XMHbzMBAxLjh4HL7uOC4PoHpXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jx0dHH6y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E/d3xBTi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B781F000E9;
-	Tue, 21 Jul 2026 21:47:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jx0dHH6y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E641F000E9;
+	Tue, 21 Jul 2026 21:47:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670449;
-	bh=u5yY1qbPumdAwmPbzf+S4v17Go6pEYgkJObexloCbB8=;
+	s=korg; t=1784670452;
+	bh=0VHiWgUlceRER96EAXS0m9iUYY2j2gLafz8Hgq++0g4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E/d3xBTisdRdmUyEhu00fOSRMmtNziRRFXAZQoaqggTaoNFnpw++cpmXmHXWrnB4e
-	 1wxkeIamfbyBMQVVtKJ19MR2tVBo1NXT4RennauK5bO3pdCeJ7eBxsIFTUEZnzFdGN
-	 S3NOWIPQ0t+SV0BefZbrZt4ANf0mjQXrXqER3OKI=
+	b=jx0dHH6yUBU13PIj6GOXnIw7RIRnJ4VpIVgqFRC6L61sJP0O1B7AUM+3V0mIu+ncC
+	 LMcrrrBouxjrTEcXPttgqq7wODKfgokR7AouYo/yJE5HISqLFjHoZoLKeDJFIvGPeP
+	 JI8rCnVVmhoeEHYTt6GyyFlxcYrxUtetixnM4fRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianyang Zhang <zhangtianyang@loongson.cn>,
-	Hongchen Zhang <zhanghongchen@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 0893/1067] LoongArch: Fix missing dirty page tracking in {pte,pmd}_wrprotect()
-Date: Tue, 21 Jul 2026 17:24:54 +0200
-Message-ID: <20260721152444.508813335@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>
+Subject: [PATCH 6.1 0884/1067] ieee802154: admin-gate legacy LLSEC dump operations
+Date: Tue, 21 Jul 2026 17:24:45 +0200
+Message-ID: <20260721152444.305360391@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,82 +50,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongchen Zhang <zhanghongchen@loongson.cn>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 018e9828eb523c638fa3d9bdf0fd4956b74555b2 upstream.
+commit 9c1e0b6d49471a712511d23fc9d06901561135e8 upstream.
 
-When hardware page table walker (PTW) is enabled on LoongArch, the CPU
-may set _PAGE_DIRTY directly in the page table entry during a write TLB
-miss, without going through the software TLB store handler. The software
-TLB store handler (tlbex.S:254) sets both _PAGE_DIRTY and_PAGE_MODIFIED
-together:
+In net/ieee802154/netlink.c, the legacy IEEE802154_NL family ops table
+builds the LLSEC dump entries (LLSEC_LIST_KEY, LLSEC_LIST_DEV,
+LLSEC_LIST_DEVKEY, LLSEC_LIST_SECLEVEL) with IEEE802154_DUMP() which
+sets no .flags, so generic netlink runs them ungated. The modern
+nl802154 family admin-gates the equivalent reads via
+NL802154_CMD_GET_SEC_KEY and friends with .flags = GENL_ADMIN_PERM.
 
-    ori t0, t0, (_PAGE_VALID | _PAGE_DIRTY | _PAGE_MODIFIED)
+Any local uid that can open AF_NETLINK / NETLINK_GENERIC can resolve
+the "802.15.4 MAC" family and dump LLSEC_LIST_KEY on any wpan netdev
+that has an LLSEC key installed; the dump handler writes the raw
+16-byte AES-128 key bytes (IEEE802154_ATTR_LLSEC_KEY_BYTES, copied
+verbatim from struct ieee802154_llsec_key.key) into the reply.
+Recovering the AES key compromises 802.15.4 LLSEC link confidentiality
+and authenticity, since LLSEC uses CCM* and the same key authenticates
+and encrypts frames.
 
-Since hardware PTW only sets _PAGE_DIRTY, the software-only bit, i.e.
-_PAGE_MODIFIED is left unchanged. This creates a window where a PTE has
-_PAGE_DIRTY set (hardware knows the page is dirty) but _PAGE_MODIFIED
-clear (software is unaware).
+Impact: any local uid with no capabilities can read the raw 16-byte
+AES-128 LLSEC key from the kernel keytable on any wpan netdev that has
+an administrator-installed LLSEC key, by issuing an LLSEC_LIST_KEY
+dump on the legacy IEEE802154_NL generic-netlink family.
 
-When fork()/clone() triggers copy-on-write, __copy_present_ptes() calls
-pte_wrprotect(), which unconditionally clears both the _PAGE_WRITE and
-_PAGE_DIRTY bits:
+Introduce IEEE802154_DUMP_PRIV() mirroring IEEE802154_DUMP() but
+setting .flags = GENL_ADMIN_PERM, and use it for the four LLSEC dump
+entries. LIST_PHY and LIST_IFACE retain IEEE802154_DUMP() because the
+modern nl802154 family exposes their equivalents to unprivileged
+readers by design (NL802154_CMD_GET_WPAN_PHY and
+NL802154_CMD_GET_INTERFACE carry "can be retrieved by unprivileged
+users" annotations).
 
-    pte_val(pte) &= ~(_PAGE_WRITE | _PAGE_DIRTY);
-
-Since _PAGE_MODIFIED was never set, the dirtiness information is lost
-completely. Subsequently, when memory pressure triggers page reclaim,
-page_mkclean() / try_to_unmap() sees the page as clean (i.e. pte_dirty()
-returns false) and the page may be freed without writeback, causing data
-corruption.
-
-Fix this by propagating the _PAGE_DIRTY bit to the _PAGE_MODIFIED bit in
-both pte_wrprotect() and pmd_wrprotect() before clearing writeable bits:
-
-    if (pte_val(pte) & _PAGE_DIRTY)
-        pte_val(pte) |= _PAGE_MODIFIED;
-
-The pmd_wrprotect() fix handles the CONFIG_TRANSPARENT_HUGEPAGE case,
-where pmd entries need the same treatment.
-
-This ensures the software dirty tracking bit (checked by pte_dirty() and
-pmd_dirty(), which read both the _PAGE_DIRTY and _PAGE_MODIFIED bits) is
-preserved across fork COW write-protection.
-
-The issue was found by the LTP madvise09 test case, which exercises page
-reclaim after "madvise(MADV_FREE), write and fork" operation sequence on
-private anonymous mappings.
-
+Fixes: 3e9c156e2c21 ("ieee802154: add netlink interfaces for llsec")
 Cc: stable@vger.kernel.org
-Fixes: 09cfefb7fa70 ("LoongArch: Add memory management")
-Co-developed-by: Tianyang Zhang <zhangtianyang@loongson.cn>
-Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
-Signed-off-by: Hongchen Zhang <zhanghongchen@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://lore.kernel.org/20260520141640.1149513-2-michael.bommarito@gmail.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/pgtable.h |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/ieee802154/ieee802154.h |    8 ++++++++
+ net/ieee802154/netlink.c    |   16 ++++++++--------
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
---- a/arch/loongarch/include/asm/pgtable.h
-+++ b/arch/loongarch/include/asm/pgtable.h
-@@ -365,6 +365,8 @@ static inline pte_t pte_mkwrite(pte_t pt
+--- a/net/ieee802154/ieee802154.h
++++ b/net/ieee802154/ieee802154.h
+@@ -23,6 +23,14 @@ void ieee802154_nl_exit(void);
+ 		.dumpit	= _dump,			\
+ 	}
  
- static inline pte_t pte_wrprotect(pte_t pte)
- {
-+	if (pte_val(pte) & _PAGE_DIRTY)
-+		pte_val(pte) |= _PAGE_MODIFIED;
- 	pte_val(pte) &= ~(_PAGE_WRITE | _PAGE_DIRTY);
- 	return pte;
- }
-@@ -468,6 +470,8 @@ static inline pmd_t pmd_mkwrite(pmd_t pm
++#define IEEE802154_DUMP_PRIV(_cmd, _func, _dump)	\
++	{						\
++		.cmd	= _cmd,				\
++		.doit	= _func,			\
++		.dumpit	= _dump,			\
++		.flags	= GENL_ADMIN_PERM,		\
++	}
++
+ struct genl_info;
  
- static inline pmd_t pmd_wrprotect(pmd_t pmd)
- {
-+	if (pmd_val(pmd) & _PAGE_DIRTY)
-+		pmd_val(pmd) |= _PAGE_MODIFIED;
- 	pmd_val(pmd) &= ~(_PAGE_WRITE | _PAGE_DIRTY);
- 	return pmd;
- }
+ struct sk_buff *ieee802154_nl_create(int flags, u8 req);
+--- a/net/ieee802154/netlink.c
++++ b/net/ieee802154/netlink.c
+@@ -98,20 +98,20 @@ static const struct genl_small_ops ieee8
+ 	IEEE802154_OP(IEEE802154_SET_MACPARAMS, ieee802154_set_macparams),
+ 	IEEE802154_OP(IEEE802154_LLSEC_GETPARAMS, ieee802154_llsec_getparams),
+ 	IEEE802154_OP(IEEE802154_LLSEC_SETPARAMS, ieee802154_llsec_setparams),
+-	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_KEY, NULL,
+-			ieee802154_llsec_dump_keys),
++	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_KEY, NULL,
++			     ieee802154_llsec_dump_keys),
+ 	IEEE802154_OP(IEEE802154_LLSEC_ADD_KEY, ieee802154_llsec_add_key),
+ 	IEEE802154_OP(IEEE802154_LLSEC_DEL_KEY, ieee802154_llsec_del_key),
+-	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_DEV, NULL,
+-			ieee802154_llsec_dump_devs),
++	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_DEV, NULL,
++			     ieee802154_llsec_dump_devs),
+ 	IEEE802154_OP(IEEE802154_LLSEC_ADD_DEV, ieee802154_llsec_add_dev),
+ 	IEEE802154_OP(IEEE802154_LLSEC_DEL_DEV, ieee802154_llsec_del_dev),
+-	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_DEVKEY, NULL,
+-			ieee802154_llsec_dump_devkeys),
++	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_DEVKEY, NULL,
++			     ieee802154_llsec_dump_devkeys),
+ 	IEEE802154_OP(IEEE802154_LLSEC_ADD_DEVKEY, ieee802154_llsec_add_devkey),
+ 	IEEE802154_OP(IEEE802154_LLSEC_DEL_DEVKEY, ieee802154_llsec_del_devkey),
+-	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_SECLEVEL, NULL,
+-			ieee802154_llsec_dump_seclevels),
++	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_SECLEVEL, NULL,
++			     ieee802154_llsec_dump_seclevels),
+ 	IEEE802154_OP(IEEE802154_LLSEC_ADD_SECLEVEL,
+ 		      ieee802154_llsec_add_seclevel),
+ 	IEEE802154_OP(IEEE802154_LLSEC_DEL_SECLEVEL,
 
 
