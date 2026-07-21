@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB6D3C276E;
-	Tue, 21 Jul 2026 17:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93977403AFB;
+	Tue, 21 Jul 2026 17:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655226; cv=none; b=GvKh8qfEFkjCcQv8EI7+10ANPTYJNvjGwSaPGOpbHWS1atFJMF2O3GnZkQyaD4slBvqz3gWFizmgk8nVck1O6TyRKDrb4EPb0FPy+ZfDVn3JiI80JG+cuvQkAKNGmtDFstEJVOG+ud300S0amKjRxmaJEwojjcj8tTCmkLmrIg4=
+	t=1784655228; cv=none; b=la13jv2sGFxNx/mwsmV1MeT8rqR64vVlI9hS0S/+/n4uVFlaWiTO5Ykyrvr83Z2pP3KrpgXefKwm4mxt80nATgBrnjP7NbMRRUp1Koav0Ey++hbJoWxnIH8TnqvQ4cNCpx4UAlh+bCO2FU9kz77fRYHinlo4c0rK3+UP+PCO7jA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655226; c=relaxed/simple;
-	bh=/KtmiFoOW5pjGGDYKKR5oQejuJPpAKvvShKvHZ6w2QU=;
+	s=arc-20240116; t=1784655228; c=relaxed/simple;
+	bh=UwoM6f0UkjIcd+33VN+l5uHDhGwiOaUTbDwfp9Azopw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SG4VRRSTEB4P9LvkrwzNw40RURstpE9EztJq6V0BftiUivuxkYdLzzILLRBzod0NNWZLm3oxA+p4HXtPZvlObgoHxHT8mBlM07b4uWBlTpZ57jPuyOfPVL+b956eskqe1v7scRgBCYUgH7KL59L3WgkQiSUOXixw3XE9G6wKLBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Oi2ZkXe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iZ/p4uJkvuRX0KhsRzEbyceqeJt04OjFaRY7c7eJhjzeQJtAvJPfY4aJmwL3uetErdHoBYPdTQduTIvGOqeqWGZGwDSAozaeiKV2AplFC09MkC+PXrAIEsDr83G7Zl9JqdrJvivQ1KIAsncZw8f1pcg/W3ceR6MK9V0O7247UIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oDXHXSD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Oi2ZkXe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4FE1F000E9;
-	Tue, 21 Jul 2026 17:33:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oDXHXSD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0602D1F000E9;
+	Tue, 21 Jul 2026 17:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655224;
-	bh=RZIu2Lhc8TgeoTLNvnYEDSfd8kG4ox0C+cp7uFtrJTg=;
+	s=korg; t=1784655227;
+	bh=zyhYwokdKa/qjQSyLtoT25lmxjJx1llk90gBhOQ3ayQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Oi2ZkXeLgUp5sojgAOoNBXTUJ271h47W7La/LWgfS98erCeZVMyGqS/7Eld7DgDq
-	 TyinHc4E9ZmbJlcUDugPIVt+XDhWQBwKVJpUiY8zyne5mIDuEMu9vxhhShnG9PpF8G
-	 vspFLLTmgoeIAy/dvRvaOm4RiA5g1qUAvILEVScw=
+	b=0oDXHXSDCmHx7Hr5NpMVEwZito1jdM5M3QHizn2MfxsV4cQ+JSSOmYZjBtYB98yUH
+	 wM2YJHRxF2iOa/OM3HRaaBF0sR/Y3EDIY8nr4gqLENPNAu2sMIy41gGL/l1IjqlZaa
+	 bN/gYV025ApBKJsclJuK/9F4PPhhMLwhJMm1fC9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Rafael Beims <rafael.beims@toradex.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.1 2003/2077] wifi: rt2x00: avoid full teardown before work setup in probe
-Date: Tue, 21 Jul 2026 17:27:56 +0200
-Message-ID: <20260721152639.957498877@linuxfoundation.org>
+Subject: [PATCH 7.1 2004/2077] wifi: mwifiex: fix roaming to different channel in host_mlme mode
+Date: Tue, 21 Jul 2026 17:27:57 +0200
+Message-ID: <20260721152639.979851005@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,75 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Rafael Beims <rafael.beims@toradex.com>
 
-commit 536fb3d739d75a03cb318c0c6fe799425cfea501 upstream.
+commit a707e4127c0f893c7a7703500ab56297a5bd2d51 upstream.
 
-rt2x00lib_probe_dev() uses the full rt2x00lib_remove_dev() teardown for
-all probe failures. However, drv_data allocation and workqueue allocation
-can fail before intf_work, autowakeup_work and sleep_work have been
-initialized.
+When host MLME is enabled, mwifiex_cfg80211_authenticate() transmits the
+authentication frame on a remain-on-channel (ROC) reservation so that the
+frame is sent on the target BSS's channel. The ROC is only configured
+when priv->auth_flag is zero.
 
-Do not enter the full remove path until the probe has reached the point
-where those work items are set up. Return directly for drv_data allocation
-failure, and use a small early cleanup path for workqueue allocation
-failure.
+priv->auth_flag is set to HOST_MLME_AUTH_PENDING when the auth frame is
+queued and advances to HOST_MLME_AUTH_DONE once authentication
+completes. It is only cleared back to zero on a disconnect, deauth or
+timeout path; nothing clears it when an association succeeds. It therefore
+stays at HOST_MLME_AUTH_DONE for the whole connected session.
 
-This issue was found by our static analysis tool and then confirmed by
-manual review of rt2x00lib_probe_dev() and rt2x00lib_remove_dev(). The
-early probe exits should not call a common teardown path that assumes the
-later work setup has already completed.
+When the station later roams to a BSS on a different channel, the next
+authentication finds auth_flag != 0, skips the ROC setup, and the auth
+frame is transmitted on the currently-associated channel instead of the
+target's channel. Authentication times out on the new AP and the device
+stays connected to the original AP.
 
-A QEMU PoC forced alloc_ordered_workqueue() to fail before the work
-initializers are reached. The resulting fail path entered
-rt2x00lib_remove_dev(), and DEBUG_OBJECTS reported invalid work drains with
-rt2x00lib_probe_dev() and rt2x00lib_remove_dev() in the stack.
+Gate the ROC setup on HOST_MLME_AUTH_PENDING instead of on auth_flag
+being completely clear. This re-arms the remain-on-channel for every new
+authentication attempt, while still suppressing a redundant ROC during
+the multi-frame SAE exchange, where auth_flag stays PENDING between the
+commit and confirm frames.
 
-Fixes: 1ebbc48520a0 ("rt2x00: Introduce concept of driver data in struct rt2x00_dev.")
-Fixes: 0439f5367c8d ("rt2x00: Move TX/RX work into dedicated workqueue")
+This change was tested in 3 different devices:
+Verdin AM62 (IW412 SD-UART) - (16.92.21.p142)
+Verdin iMX8MM (W8997 SD-SD) - (16.68.1.p197)
+Verdin iMX8MP (W8997 SD-UART) - (16.92.21.p137)
+
+There following loop tests were performed:
+1) force roaming between two AP's, one 5GHz and one 2.4GHz, same
+SSID. Use wpa_cli to trigger the roaming behavior, sleep 2s
+between iterations.
+2) force a disconnection to AP 1 and a connection to AP 2, test
+scan. Use wpa_cli to trigger the connection changes, sleep 2s
+between iterations.
+
+Each test ran in each device for at least 3 hours.
+
+Fixes: 36995892c271 ("wifi: mwifiex: add host mlme for client mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260619073104.1809161-1-runyu.xiao@seu.edu.cn
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Rafael Beims <rafael.beims@toradex.com>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://patch.msgid.link/20260610150021.1018611-1-rafael@beims.me
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ralink/rt2x00/rt2x00dev.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/cfg80211.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
-@@ -1388,7 +1388,7 @@ int rt2x00lib_probe_dev(struct rt2x00_de
- 			                      GFP_KERNEL);
- 		if (!rt2x00dev->drv_data) {
- 			retval = -ENOMEM;
--			goto exit;
-+			return retval;
- 		}
+--- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
++++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
+@@ -4333,7 +4333,7 @@ mwifiex_cfg80211_authenticate(struct wip
+ 		return -EOPNOTSUPP;
  	}
  
-@@ -1422,7 +1422,7 @@ int rt2x00lib_probe_dev(struct rt2x00_de
- 	    alloc_ordered_workqueue("%s", 0, wiphy_name(rt2x00dev->hw->wiphy));
- 	if (!rt2x00dev->workqueue) {
- 		retval = -ENOMEM;
--		goto exit;
-+		goto exit_free_drv_data;
- 	}
- 
- 	INIT_WORK(&rt2x00dev->intf_work, rt2x00lib_intf_scheduled);
-@@ -1495,6 +1495,14 @@ exit:
- 	rt2x00lib_remove_dev(rt2x00dev);
- 
- 	return retval;
-+
-+exit_free_drv_data:
-+	clear_bit(DEVICE_STATE_PRESENT, &rt2x00dev->flags);
-+
-+	kfree(rt2x00dev->drv_data);
-+	rt2x00dev->drv_data = NULL;
-+
-+	return retval;
- }
- EXPORT_SYMBOL_GPL(rt2x00lib_probe_dev);
- 
+-	if (!priv->auth_flag) {
++	if (!(priv->auth_flag & HOST_MLME_AUTH_PENDING)) {
+ 		ret = mwifiex_remain_on_chan_cfg(priv, HostCmd_ACT_GEN_SET,
+ 						 req->bss->channel,
+ 						 AUTH_TX_DEFAULT_WAIT_TIME);
 
 
