@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89003ACA5D;
-	Tue, 21 Jul 2026 23:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807E243935B;
+	Tue, 21 Jul 2026 23:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674872; cv=none; b=VK+zh41hiLFrRIQ9KKQ5g3tXURcDhWVqHqUbpLtQh0ajEZ4RtSUxtXcZVWt6abbSDeY9+C6Q8hsSAiA7hI8VX4fnmetfi3h+DT5ns5N5xYRYM2o353vKE+WtJ4gOG/68zETKo9O3TIPSc02TNHrJmLV1Cfbe3/pXw/tPag3puxA=
+	t=1784674874; cv=none; b=bB9hfPowJj5lp04g0qlRnXJO8F5ibydKtQn5JnJTFiuLTfVT6fmLx6ShAY+HHhHS+Y5Qs0w0LmMLfE2MuoOUw6KjMNk27C8vJiOrwLevYo9eUJLgn1VAnNzzDNmrZ6sOcuodM1EmQWoFb76laOeLw94VfaYhzjyFsdCQKVPdVDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674872; c=relaxed/simple;
-	bh=paYvdJPL+72f2uzDwAuOscOibj1ox3nRaW0OhwKiG8s=;
+	s=arc-20240116; t=1784674874; c=relaxed/simple;
+	bh=FTq0DbWKwNX9q0jm+0YlIA09GneIpFQTfetr506yye8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QEc+dRVdkH9m4PfO+UIzDCQAXQymCPmReDkjIsJNVfeSzoAUB41//uF28gBhI3CabLg2DpuVbt4T/v3mnQ0KrCQ+1cC0GPGnhVdDjrA4ARVPdUJO5q+oSbBBzvCmIlCZeFPCpQBuPKVokjzAvyUmeZEAxRS7s3IAM+ue1tCpNaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qudUH0NX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T9i6fNdc9MI+1dT1owQ4MxBiZnbTx5uJDoHqyD2A2uWIv33uOxdeHDqaYhpWf7Uf/Hl7qo8JZ1CrJJdib0XlFD1dg09fVduFPYZQbf6NcqfjlN++zv7mfWALwzYs63ITjVQbhxgWJFpIf01h1/idRP2fA3l4xft/2PmQboBqm8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u0Wq06nk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qudUH0NX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A06E1F000E9;
-	Tue, 21 Jul 2026 23:01:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u0Wq06nk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60E81F000E9;
+	Tue, 21 Jul 2026 23:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674870;
-	bh=jMhOPB83hEHFyZmmt0v8A1E/85V0bCTLdH02HU0sN3o=;
+	s=korg; t=1784674873;
+	bh=dzYXAoI7GZhjgc4Kq5jut+EEgUZaVqqq2o96t2qktMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qudUH0NXP1Q1taDLJnyV33Bm59TmIcobVbqjwBB6ln1EWeKETg49bbhEOGdkui+Qr
-	 +4EMaR84YwOJqci7UapyAqVtNjDTbT2yTkk64ypHJm/ZdJlfIY+a33eUgXuKkxNyAa
-	 AJeowYDv7LzaRjOCpjJN8sAXNHPhUqz+vhiWmiyY=
+	b=u0Wq06nklrGNw7eIXZPA9DY+ITgDfk1i5rQYwHXXTTa4xudA4qCleAsn5nc4Oq8l0
+	 58smtU6ozJqmdXUVaL4R+nmToPYQkvPcmKYYsgVLUyzfSLSnWA+wR3ZI/ZLLPf362U
+	 lW0CdlGcJQwWU/tJs8Jrm7dDqnR8hGq1zq0c8sOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 5.10 685/699] posix-cpu-timers: Use u64 multiplication in update_rlimit_cpu()
-Date: Tue, 21 Jul 2026 17:27:24 +0200
-Message-ID: <20260721152411.229827025@linuxfoundation.org>
+	Will Deacon <will@kernel.org>,
+	Oliver Upton <oupton@kernel.org>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 5.10 686/699] KVM: Move kvm_io_bus_get_dev() locking responsibilities to callers
+Date: Tue, 21 Jul 2026 17:27:25 +0200
+Message-ID: <20260721152411.250375086@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,53 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 26aff38fefb1d6cd87e22525f41cc8f1aa61b24f upstream.
+commit 3a07249981629ace483ebbef81ef6b34c2d2afec upstream.
 
-update_rlimit_cpu() converts the RLIMIT_CPU value to nanoseconds with
+kvm_io_bus_get_dev() returns a device that is only matched by the
+address, and nothing else. This can cause a lifetime issue if
+the matched device is not the expected type, as by the time
+the caller can introspect the object, it might be gone (the srcu
+lock having been dropped).
 
-        u64 nsecs = rlim_new * NSEC_PER_SEC;
+Given that there is only a single user of this helper, the simplest
+option is to move the locking responsibility to the caller, which
+can keep the srcu lock held for as long as it wants.
 
-On 32-bit kernels both rlim_new (unsigned long) and NSEC_PER_SEC
-(1000000000L) are 32-bit, so the multiplication is performed in unsigned
-long and truncated for rlim_new > 4 seconds before being widened to u64.
+Note that this aligns with other kvm_io_bus*() helpers, which
+already require the srcu lock to be held by the callers.
 
-The same file already casts to u64 for the matching computation in
-check_process_timers():
-
-        u64 softns = (u64)soft * NSEC_PER_SEC;
-
-As a result, the truncated value is installed into the CPUCLOCK_PROF
-expiry cache (nextevt), causing the process CPU timer to be programmed
-to fire prematurely for any RLIMIT_CPU soft limit >= 5 seconds. The
-actual SIGXCPU/SIGKILL decision in check_process_timers() already casts
-to u64 and is therefore correct, so limit enforcement is not broken;
-only the expiry-cache programming is wrong. Apply the same cast here so
-both paths convert rlim_cur identically.
-
-64-bit kernels are unaffected.
-
-Fixes: 858cf3a8c599 ("timers/itimer: Convert internal cputime_t units to nsec")
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reported-by: Will Deacon <will@kernel.org>
+Fixes: 8a39d00670f07 ("KVM: kvm_io_bus: Add kvm_io_bus_get_dev() call")
+Link: https://lore.kernel.org/all/20260626111344.802555-1-maz@kernel.org
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260616112017.1681372-1-zhanxusheng@xiaomi.com
+Reviewed-by: Oliver Upton <oupton@kernel.org>
+Link: https://patch.msgid.link/20260627105105.1005990-1-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/posix-cpu-timers.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kvm/vgic/vgic-its.c |   15 +++++++++++----
+ virt/kvm/kvm_main.c            |   16 +++++-----------
+ 2 files changed, 16 insertions(+), 15 deletions(-)
 
---- a/kernel/time/posix-cpu-timers.c
-+++ b/kernel/time/posix-cpu-timers.c
-@@ -37,7 +37,7 @@ void posix_cputimers_group_init(struct p
-  */
- void update_rlimit_cpu(struct task_struct *task, unsigned long rlim_new)
- {
--	u64 nsecs = rlim_new * NSEC_PER_SEC;
-+	u64 nsecs = (u64)rlim_new * NSEC_PER_SEC;
+--- a/arch/arm64/kvm/vgic/vgic-its.c
++++ b/arch/arm64/kvm/vgic/vgic-its.c
+@@ -704,6 +704,8 @@ struct vgic_its *vgic_msi_to_its(struct
+ 	u64 address;
+ 	struct kvm_io_device *kvm_io_dev;
+ 	struct vgic_io_device *iodev;
++	struct vgic_its *its = NULL;
++	int srcu_idx;
  
- 	spin_lock_irq(&task->sighand->siglock);
- 	set_process_cpu_timer(task, CPUCLOCK_PROF, &nsecs, NULL);
+ 	if (!vgic_has_its(kvm))
+ 		return ERR_PTR(-ENODEV);
+@@ -713,18 +715,23 @@ struct vgic_its *vgic_msi_to_its(struct
+ 
+ 	address = (u64)msi->address_hi << 32 | msi->address_lo;
+ 
++	srcu_idx = srcu_read_lock(&kvm->srcu);
++
+ 	kvm_io_dev = kvm_io_bus_get_dev(kvm, KVM_MMIO_BUS, address);
+ 	if (!kvm_io_dev)
+-		return ERR_PTR(-EINVAL);
++		goto out;
+ 
+ 	if (kvm_io_dev->ops != &kvm_io_gic_ops)
+-		return ERR_PTR(-EINVAL);
++		goto out;
+ 
+ 	iodev = container_of(kvm_io_dev, struct vgic_io_device, dev);
+ 	if (iodev->iodev_type != IODEV_ITS)
+-		return ERR_PTR(-EINVAL);
++		goto out;
+ 
+-	return iodev->its;
++	its = iodev->its;
++out:
++	srcu_read_unlock(&kvm->srcu, srcu_idx);
++	return its ?: ERR_PTR(-EINVAL);
+ }
+ 
+ /*
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -4558,25 +4558,19 @@ struct kvm_io_device *kvm_io_bus_get_dev
+ 					 gpa_t addr)
+ {
+ 	struct kvm_io_bus *bus;
+-	int dev_idx, srcu_idx;
+-	struct kvm_io_device *iodev = NULL;
++	int dev_idx;
+ 
+-	srcu_idx = srcu_read_lock(&kvm->srcu);
++	lockdep_assert_held(&kvm->srcu);
+ 
+ 	bus = srcu_dereference(kvm->buses[bus_idx], &kvm->srcu);
+ 	if (!bus)
+-		goto out_unlock;
++		return NULL;
+ 
+ 	dev_idx = kvm_io_bus_get_first_dev(bus, addr, 1);
+ 	if (dev_idx < 0)
+-		goto out_unlock;
++		return NULL;
+ 
+-	iodev = bus->range[dev_idx].dev;
+-
+-out_unlock:
+-	srcu_read_unlock(&kvm->srcu, srcu_idx);
+-
+-	return iodev;
++	return bus->range[dev_idx].dev;
+ }
+ EXPORT_SYMBOL_GPL(kvm_io_bus_get_dev);
+ 
 
 
