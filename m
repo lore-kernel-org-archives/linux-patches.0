@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3FB23B47D3;
-	Tue, 21 Jul 2026 20:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56313B2FC0;
+	Tue, 21 Jul 2026 20:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666074; cv=none; b=p7H3mz2ubbpgrFTIQvuhSTGaaNf7f2sZsW4/FnkgVEdQTSy9Yrq6cpcTkM12kRxnWNKm5iN4TexOF8nFqnXYBytbu5sbvYYUcG5JuS+3QIVLQCtji5uPndVWvl5KLhPnRWzy48d9zLWn1v4smaPmbPCTbAnfl4FJHvQxZ2ZMu1k=
+	t=1784666076; cv=none; b=Plodiim1aNTMdaXFLHdtxFqYwweOqdrWIPz4xYCBdTUdbz0tKt2lyAZmIwY/Xwm7Rat5unAZC+uQ/d95dEORH1E4tJEIak9zasrLRIsiM2Dn/7gch2nIZw3YLHSOrT7dI5Skrj13YSsRgwcb2FZmBsW2StHkaH8HS1Ao58GSKaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666074; c=relaxed/simple;
-	bh=pQ2MTLBzW+KXImZcC/ofo2rEYA6dVCIiaTPVKcPfOOA=;
+	s=arc-20240116; t=1784666076; c=relaxed/simple;
+	bh=zFen/VkXo3QGgFrniwgBb0cbYbYRmc7EowBlxv0CB34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZJYXEZR9vdsS6GuXuFvpUbd/1HaY62R9QjesW+VEG9cmUdNYyzQ9MyYoOjc/QAJyhOvc6ctNlcY7YoUtDMT7nIAJxYG7UqIynSGBvK6r8YaUqAE+o4iF6dCnAcOsLFH18tq6IBXokEbPLPGz1FzVw57eh1bEurs0dvYZWFzBaNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ox8Il/Bh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B40T9J5WIlrt5bt9lyVySYoYTbVu40RTaf4oiEQPjaFZAUWo8gspPFGorA/smgiJm0UQafq5uC12igROOPGwwjPLFuEF9wgmFBa6oZqRvkp6D3ubeyCCVuO5zmTiwrk1swEr2fscB9TGz4040LGoLoQZatLJD6xPEyXppK/ygSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuK3Don0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ox8Il/Bh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5D41F00A3A;
-	Tue, 21 Jul 2026 20:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuK3Don0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C0D1F000E9;
+	Tue, 21 Jul 2026 20:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666071;
-	bh=uWoljDjxqnbYgcjgtsRf/uZKi7gorPryb32hGbMyx8E=;
+	s=korg; t=1784666074;
+	bh=YnPkXeix0U5Yd4eJ1mE/Z5YCjLjygDD9EGuNaoZS5KU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ox8Il/BhpCQyT5mmAcu8DF12difMTTzHKr+L6K5VHY695TapzMwWwWhvqnATQbSTx
-	 U/qJkhHi+CKURcYUlyB8b+JCrhhtMeFevPwzu0Fkb/axW6TWqiaHAS4Pxjo8w69HQx
-	 HkamyEs5wn7z61gOVqPi6NBpcy2pxMNK2SuYeEH8=
+	b=tuK3Don0FExeAcMLdSRkRUhEkQtyCbQ3M1Jv16iSmVzeo/2XqoBmoTzAG8owXlcwe
+	 gKnO4OnnMoPWpnRWPK2R/xw65E5XTthI2jinImsG3BiD+bUstMxfanxdwM4oZKaPaU
+	 aA3EvEyiWfEyRe/XmVeqX4H8Pa6zkrGKg5C4F/nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rui Qi <qirui.001@bytedance.com>,
-	Paul Walmsley <pjw@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Leon Hwang <leon.hwang@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0507/1266] riscv: stacktrace: Remove bogus -0x4 offset in non-FP walk_stackframe
-Date: Tue, 21 Jul 2026 17:15:44 +0200
-Message-ID: <20260721152453.193314856@linuxfoundation.org>
+Subject: [PATCH 6.6 0543/1266] selftests/bpf: Fix bpf_iter/task_vma test
+Date: Tue, 21 Jul 2026 17:16:20 +0200
+Message-ID: <20260721152454.017006552@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,60 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rui Qi <qirui.001@bytedance.com>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit 8ac35bac70e7e581d673b76878f7691cdadc33b8 ]
+[ Upstream commit 2e8ad1ff712d2a397e407c9fde60901f68d077dc ]
 
-In the non-frame-pointer version of walk_stackframe, each value read
-from the stack is treated as a potential return address and has 0x4
-subtracted before being used as the program counter. This was intended
-to convert the return address (the instruction after a call) back to
-the call site, but it is incorrect:
+For selftest bpf_iter/task_vma, I got a failure like below on my qemu run:
 
-1. RISC-V has variable-length instructions due to the RVC (compressed
-   instruction) extension. A call instruction can be either 4 bytes
-   (regular) or 2 bytes (compressed, e.g. c.jal). Subtracting a fixed
-   0x4 assumes all call instructions are 4 bytes, which is wrong for
-   compressed instructions.
+test_task_vma_common:FAIL:compare_output unexpected compare_output:
+    actual
+    '561593546000-561593585000r--p0000000000:241256579534/root/devshare/bpf-next/tools/testing/selftests/bpf/test_progs'
+    != expected
+    '561593546000-561593585000r--p0000000000:245551546830/root/devshare/bpf-next/tools/testing/selftests/bpf/test_progs'
 
-2. Stack traces conventionally report return addresses, not call sites.
-   Other architectures (ARM64, x86, ARM) do not subtract instruction
-   size from return addresses in their stack unwinding code.
+Further debugging found out file->f_inode->i_ino value may exceed 32bit,
+e.g., i_ino = 0x14c2eae35, but the format string is '%u'. This caused
+inode mismatch between bpf iter and proc result.
 
-3. The frame-pointer version of walk_stackframe already dropped the
-   -0x4 offset. Commit b785ec129bd9 ("riscv/ftrace: Add
-   HAVE_FUNCTION_GRAPH_RET_ADDR_PTR support") replaced "pc =
-   frame->ra - 0x4" with ftrace_graph_ret_addr(), and the commit
-   message explicitly noted that "the original calculation, pc =
-   frame->ra - 4, is buggy when the instruction at the return address
-   happened to be a compressed inst." The non-FP version was simply
-   overlooked.
+Fix the issue by using format string '%llu' to accommodate 64bit i_ino.
 
-Remove the bogus -0x4 offset to match the FP version and the
-conventions used by other architectures.
-
-Fixes: 5d8544e2d007 ("RISC-V: Generic library routines and assembly")
-Signed-off-by: Rui Qi <qirui.001@bytedance.com>
-Link: https://patch.msgid.link/20260603115329.791603-2-qirui.001@bytedance.com
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Fixes: e8168840e16c ("selftests/bpf: Add test for bpf_iter_task_vma")
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Acked-by: Leon Hwang <leon.hwang@linux.dev>
+Link: https://lore.kernel.org/r/20260610051831.1346659-1-yonghong.song@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/stacktrace.c | 2 +-
+ tools/testing/selftests/bpf/progs/bpf_iter_task_vma.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
-index 124ad8fe626fbe..aa0b2f284dca91 100644
---- a/arch/riscv/kernel/stacktrace.c
-+++ b/arch/riscv/kernel/stacktrace.c
-@@ -129,7 +129,7 @@ void notrace walk_stackframe(struct task_struct *task,
- 	while (!kstack_end(ksp)) {
- 		if (__kernel_text_address(pc) && unlikely(!fn(arg, pc)))
- 			break;
--		pc = READ_ONCE_NOCHECK(*ksp++) - 0x4;
-+		pc = READ_ONCE_NOCHECK(*ksp++);
- 	}
- }
+diff --git a/tools/testing/selftests/bpf/progs/bpf_iter_task_vma.c b/tools/testing/selftests/bpf/progs/bpf_iter_task_vma.c
+index dd923dc637d5c6..97f7e8d5b6c9d5 100644
+--- a/tools/testing/selftests/bpf/progs/bpf_iter_task_vma.c
++++ b/tools/testing/selftests/bpf/progs/bpf_iter_task_vma.c
+@@ -52,7 +52,7 @@ SEC("iter/task_vma") int proc_maps(struct bpf_iter__task_vma *ctx)
+ 		bpf_d_path(&file->f_path, d_path_buf, D_PATH_BUF_SIZE);
  
+ 		BPF_SEQ_PRINTF(seq, "%08llx ", vma->vm_pgoff << 12);
+-		BPF_SEQ_PRINTF(seq, "%02x:%02x %u", MAJOR(dev), MINOR(dev),
++		BPF_SEQ_PRINTF(seq, "%02x:%02x %llu", MAJOR(dev), MINOR(dev),
+ 			       file->f_inode->i_ino);
+ 		BPF_SEQ_PRINTF(seq, "\t%s\n", d_path_buf);
+ 	} else {
 -- 
 2.53.0
 
