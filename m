@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A68364959;
-	Tue, 21 Jul 2026 18:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BDC47127A;
+	Tue, 21 Jul 2026 18:43:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659384; cv=none; b=Nf9q6v0qqu8Ra4veYwCaoyQ2Lo13Xgo+RSEXrUnC9ZlL1IH87gxSuD00wyTgXmiPFDwWO720TtrDPWjk5TQmy/PHNmIlP1zEltg1Z1PHaYH6+Mrr8ODZtFFcYB88UT9ERuMSMMFzpPiP89t2ucOBoIvgVV2KxjP+TID2yEYiyXQ=
+	t=1784659386; cv=none; b=GWGmANYPFjBHrJJplGV4APB8DrWr7+f6LvKiUqXM2dxPKu/GjDtvc18XTYkRKxWCYci32hMILw7gYO+ktvpQQmwCsMxP50AULrvHCj5Xw1e9Ko+asN0tpSWfShOWi0obwnj4rw2pCC6HdkwyUMYklbOfVgdD0dQSqsC1JHB+HFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659384; c=relaxed/simple;
-	bh=CKhii8wII3z9QpdOKBZZL80I9BQyTQtwl7QbFerbjV0=;
+	s=arc-20240116; t=1784659386; c=relaxed/simple;
+	bh=JzCY6I7/DKtl2cmBtllP0qi0D/wAXB24log74vWKyAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qvKFXLdvquMPLBSP1oJk0+iGPbqn88uVXrLmc67C8D6BoiqMar65ZVM98IMyOoO+DS8B/khuNU8gWtxWTBZFYdTj2DSs2hH5rkL9ofXKxKmdUAA/uUCTO3WJ3T41nfp/FAQz+LDtGLu4CV2OIyOBsiw8XyzHvkU9ebmX6gazuWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bnFV0lg7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GDb0UUvDmbPdQMBf5tPUg1NXEBJyvpB4OMDFmKMTmwOjGzQN5zXiO+uFhE1IMW6bQVszvggqdzORKiqgLWEzJJZSiNHr9CEQ1eOiVzSXQoMs3r2gukS2iNf1qvPduaV2CGGG+LdE0NNtt1DEssC5LwsUhn2LIOM0d8xZQsDT22s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pYslwBnM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnFV0lg7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C8F11F000E9;
-	Tue, 21 Jul 2026 18:43:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pYslwBnM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441311F000E9;
+	Tue, 21 Jul 2026 18:43:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659383;
-	bh=XTs/Mkd/HZYYf51OkH9qoLkFmsClG330yMjJWhaBqk4=;
+	s=korg; t=1784659385;
+	bh=6eMVPlTiHXHc1maKeraQrWTWPpCsidJ19SjJ+mHGq0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bnFV0lg7+/8tDN67EioExuKj4YurufVO5bNmGBR7lupcpFPOQUtIzR8V0KYCGjrsc
-	 cyyeH/xeYS5yUfhuHQGYfq0ZQ3qoSDgEDvM26VzLkeN76jQmYF1H51rcGYyMrdlEhU
-	 4JBgFT2R1/Xk3unXaXVoA0uTD2WQ/1A2DfQNAWCg=
+	b=pYslwBnM3HKaqSddy24ZQmeKDiZ3jRhVzOc2CHyRzMrQkv6uvKgb9/kdslVnOmAvv
+	 Ax2eBLv77naBTPGKoWyQI8DNyn4hwwVqyvhY8HvoKzdb7EUEglw143Q65Q6Mf0kY20
+	 jYAdSkbj7UT8/eF9/sWSHJAV4FjoEurqVw+fldc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.18 1501/1611] mtd: mchp23k256: use SPI match data for chip caps
-Date: Tue, 21 Jul 2026 17:26:57 +0200
-Message-ID: <20260721152549.204103088@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Paul Walmsley <pjw@kernel.org>
+Subject: [PATCH 6.18 1484/1611] riscv: vdso: Do not use LTO for the vDSO
+Date: Tue, 21 Jul 2026 17:26:40 +0200
+Message-ID: <20260721152548.825751481@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -44,44 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-commit d322e40f4edf92bf0ca329e5aa4ae1c0316feb38 upstream.
+commit ad6dcfa023762e37962f77ee48e752b7570e9440 upstream.
 
-The driver stores chip capacity information in both the OF match table
-and the SPI id table. Probe currently uses of_device_get_match_data(),
-so a non-OF SPI modalias match falls back to mchp23k256_caps even when
-the SPI id table selected a different part.
+With LTO enabled the compiler assumes that the vDSO functions are not
+used and optimizes them away completely. Currently this happens to
+__vdso_clock_getres(), __vdso_clock_gettime(), __vdso_getrandom(),
+__vdso_gettimeofday() and __vdso_riscv_hwprobe().
 
-Use spi_get_device_match_data() so SPI id-table driver_data is consumed
-when OF match data is absent. This keeps the existing default fallback
-while avoiding the wrong MTD geometry for id-table-only matches.
+Disable LTO for the vDSO, as these functions are hand-optimized anyways.
 
-Fixes: 4379075a870b ("mtd: mchp23k256: Add support for mchp23lcv1024")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202606301855.WvkSC4kD-lkp@intel.com/
+Fixes: 021d23428bdb ("RISC-V: build: Allow LTO to be selected")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Link: https://patch.msgid.link/20260701-riscv-vdso-lto-v1-1-89db0cd82077@linutronix.de
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/devices/mchp23k256.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/kernel/vdso/Makefile |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/mtd/devices/mchp23k256.c
-+++ b/drivers/mtd/devices/mchp23k256.c
-@@ -188,7 +188,7 @@ static int mchp23k256_probe(struct spi_d
+--- a/arch/riscv/kernel/vdso/Makefile
++++ b/arch/riscv/kernel/vdso/Makefile
+@@ -49,9 +49,9 @@ CPPFLAGS_vdso.lds += -DHAS_VGETTIMEOFDAY
+ endif
  
- 	data = dev_get_platdata(&spi->dev);
+ # Disable -pg to prevent insert call site
+-CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS)
+-CFLAGS_REMOVE_getrandom.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS)
+-CFLAGS_REMOVE_hwprobe.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS)
++CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS) $(CC_FLAGS_LTO)
++CFLAGS_REMOVE_getrandom.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS) $(CC_FLAGS_LTO)
++CFLAGS_REMOVE_hwprobe.o = $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS) $(CC_FLAGS_LTO)
  
--	flash->caps = of_device_get_match_data(&spi->dev);
-+	flash->caps = spi_get_device_match_data(spi);
- 	if (!flash->caps)
- 		flash->caps = &mchp23k256_caps;
- 
+ # Force dependency
+ $(obj)/vdso.o: $(obj)/vdso.so
 
 
