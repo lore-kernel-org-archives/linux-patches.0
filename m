@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30C644AB60;
-	Tue, 21 Jul 2026 21:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F5A44AB6E;
+	Tue, 21 Jul 2026 21:19:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668740; cv=none; b=WGBE04o0E5W0VjsR/6UAznC0pbHaF19GR5nSnLg2Ak5Jstn+cVbkap/kKkGMst2vTlC2uF4e61tafyxRfTY4v/kwRWZCmjfNfwb+6GJaxV6fnFq06ZLOGsIakU4ATYq/PT1r61X59lQYfZR3tFDibOLiNEVLLlIRfBlaIVIRp2U=
+	t=1784668743; cv=none; b=dotPalw06RQUVqV6sKxF7S47j+mtlBtQ95h+1cj/ZYlejlOyB6LiWhThRurGJIC+bu/+WRxrbCARmLgewcjRTj1kzHoDktTR66k42uHJIFgiFH+O7B9qrQjVMxT+l6V/nUPckVoY6zcKSczNHdKecDgfPYn4PwoB/vLhEerYTD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668740; c=relaxed/simple;
-	bh=V4ESkN7k+tB6KVzWgPzpccNnjD10IqqwimcFzc7skck=;
+	s=arc-20240116; t=1784668743; c=relaxed/simple;
+	bh=7ti9TZhfTNzgLHjcbK4P7+iymfzBxCmrrfdJIPHI6mI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X8pXEWhmsxd1Y3r+4xx2G2l1xOlSPyn+xAMktKLwKGxC6UNBzElDndH784C6nJ16a8i6ylHzxpSu8RMW3WUWyZGoCNgm24NXoB2ewxQXQoS1vRKZuMtQnPqPv36uDA5TbWiMsFGbsoEyQbivjbbuTY6mlUT5PajskA5NVzMzzOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ipf9UfaQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ID/NgE5Cn4FQKE8unAmOCD0eglTNE46p6q7jyTUr3Geid0j/PhzuRr/ZruQHAaHRvtB2QVr3MV7RNbq3gcvXVndIWy0COJIJDzOTLSJ0uZpMR2iA4apyqWscs51sPGTh1HDRr3zAF7xRVvo3hkcgE19HFT2weguqXyPvWSQSf9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qtYDHP64; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ipf9UfaQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1553A1F000E9;
-	Tue, 21 Jul 2026 21:18:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qtYDHP64"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B66881F000E9;
+	Tue, 21 Jul 2026 21:19:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668739;
-	bh=SPdWGDJbElf7SM/TIUw1arBxszqKBQ+nf+ZKDVlexrU=;
+	s=korg; t=1784668742;
+	bh=Bm1bM/MwfAcRISKXUVaFbUqKKjgm+wQu887zyjQXURI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ipf9UfaQH/tVLkLqFhQ0StjBuT/DVqf3H2YO6kZza+dbzkTlEh18/ZCeaZ8DMeiCr
-	 7S9F0ipV90KwoTpaz+pVrDKCWLX5rLWNT49cP3l5aSaUhIOFslYIJOGe2maD44pkSr
-	 UddB2ZD7tGAu84jXMXHmms4dtcuYzPATdGaKV5Zk=
+	b=qtYDHP64eVHCigxCm9POkUDu+R9kFKYcXnZw1IxUFFPSe4JPVP9pP3IOL8nkGq4Sx
+	 s3xxp4Wp8eCgwCoAVUASi4LHbq5ipu6tXB3P/fnE3NAp6RlL05s22xqJp4nOwWb772
+	 D6jX5zXSWO1bWIgR3kfDO6hBNUEov9GK5MVBeH5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.1 0247/1067] RDMA/siw: bound Read Response placement to the RREAD length
-Date: Tue, 21 Jul 2026 17:14:08 +0200
-Message-ID: <20260721152430.124516557@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 0238/1067] Input: goodix - clamp the device-reported contact count
+Date: Tue, 21 Jul 2026 17:13:59 +0200
+Message-ID: <20260721152429.925261569@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,65 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 7d29f7e9dbd844cae4d3e559cf78324b9642fd6b upstream.
+commit 5ed62a96e06be4e94b8296b7932afee550a70e04 upstream.
 
-In drivers/infiniband/sw/siw/siw_qp_rx.c, siw_proc_rresp() places each
-inbound Read Response DDP segment at sge->laddr + wqe->processed and then
-accumulates wqe->processed, but it never checks the running total against
-the sink buffer length on continuation segments. siw_check_sge() resolves
-and validates the sink memory only on the first fragment (the if (!*mem)
-branch), and siw_rresp_check_ntoh() compares the cumulative length against
-wqe->bytes only on the final segment (the !frx->more_ddp_segs guard).
+goodix_ts_read_input_report() copies the number of touch points reported
+by the device into an on-stack buffer
 
-A connected siw peer that answers an outstanding RREAD with Read Response
-segments that keep the DDP Last flag clear, carrying more total payload
-than the RREAD requested, drives wqe->processed past the validated sink
-buffer; the next siw_rx_data() call writes out of bounds at
-sge->laddr + wqe->processed. siw runs iWARP over ordinary routable TCP,
-so the peer is the remote end of an established RDMA connection and needs
-no local privilege.
+	u8 point_data[2 + GOODIX_MAX_CONTACT_SIZE * GOODIX_MAX_CONTACTS];
 
-Bound every segment before placement, exactly as siw_proc_send() and
-siw_proc_write() already do for their tagged and untagged paths, and
-terminate the connection with a base-or-bounds DDP error when the
-Read Response would overrun the sink buffer.
+which is sized for at most GOODIX_MAX_CONTACTS (10) contacts. The only
+runtime check bounds the per-interrupt count against ts->max_touch_num,
+but that value is taken verbatim from a 4-bit field of the device
+configuration block and is never clamped:
 
-This is the second receive-path length fix for this file. A separate
-change rejects an MPA FPDU length that underflows the per-fragment
-remainder in the header decode; that guard does not cover this case,
-because here each individual segment length is self-consistent and only
-the accumulated placement offset overruns the buffer.
+	ts->max_touch_num = ts->config[MAX_CONTACTS_LOC] & 0x0f;
 
-Fixes: 8b6a361b8c48 ("rdma/siw: receive path")
-Link: https://patch.msgid.link/r/20260602194700.2273758-1-michael.bommarito@gmail.com
+The nibble can be 0..15, so a malfunctioning, malicious or counterfeit
+controller (or an attacker tampering with the I2C bus) can advertise up
+to 15 contacts. goodix_ts_read_input_report() then accepts a touch_num
+of up to 15 and the second goodix_i2c_read() writes
+ts->contact_size * (touch_num - 1) bytes past the one-contact header into
+point_data - up to 30 bytes (45 with the 9-byte report format) beyond the
+92-byte buffer: a stack out-of-bounds write.
+
+Clamp max_touch_num to GOODIX_MAX_CONTACTS, the number of contacts
+point_data[] is sized for, when reading it from the configuration.
+
+Fixes: a7ac7c95d468 ("Input: goodix - use max touch number from device config")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260612-b4-disp-6844625d-v1-1-df0aed080c9d@proton.me
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_rx.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/input/touchscreen/goodix.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/infiniband/sw/siw/siw_qp_rx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_rx.c
-@@ -848,6 +848,15 @@ int siw_proc_rresp(struct siw_qp *qp)
+--- a/drivers/input/touchscreen/goodix.c
++++ b/drivers/input/touchscreen/goodix.c
+@@ -1074,7 +1074,8 @@ static void goodix_read_config(struct go
  	}
- 	mem_p = *mem;
  
-+	if (unlikely(wqe->processed + srx->fpdu_part_rem > wqe->bytes)) {
-+		siw_dbg_qp(qp, "rresp len: %d + %d > %d\n",
-+			   wqe->processed, srx->fpdu_part_rem, wqe->bytes);
-+		wqe->wc_status = SIW_WC_LOC_LEN_ERR;
-+		siw_init_terminate(qp, TERM_ERROR_LAYER_DDP,
-+				   DDP_ETYPE_TAGGED_BUF,
-+				   DDP_ECODE_T_BASE_BOUNDS, 0);
-+		return -EINVAL;
-+	}
- 	bytes = min(srx->fpdu_part_rem, srx->skb_new);
+ 	ts->int_trigger_type = ts->config[TRIGGER_LOC] & 0x03;
+-	ts->max_touch_num = ts->config[MAX_CONTACTS_LOC] & 0x0f;
++	ts->max_touch_num = min(ts->config[MAX_CONTACTS_LOC] & 0x0f,
++				GOODIX_MAX_CONTACTS);
  
- 	if (mem_p->mem_obj == NULL)
+ 	x_max = get_unaligned_le16(&ts->config[RESOLUTION_LOC]);
+ 	y_max = get_unaligned_le16(&ts->config[RESOLUTION_LOC + 2]);
 
 
