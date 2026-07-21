@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670D539A7FD;
-	Tue, 21 Jul 2026 18:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B2739A7FD;
+	Tue, 21 Jul 2026 18:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658568; cv=none; b=U0eCw9VOH4vY1inOD+66+VI3xn6qAYq9U0ozS4IxIlyplnm8O1JuXaIdK6G/zIh54/VlmrnUeMKCcBIuVGv9mHbZeKRdJJxCaOb2kutoaWWBJghIJkeHY6+bfrDHr+Q3uoknQoQF8/okb1JEsbAQWdB++Qb0R3cTjqi89fp2Cq4=
+	t=1784658570; cv=none; b=ioWXetgbolVjhlI5wABC8DPRCXyARFas0rLiSw8lJJPj22hxwmauyL4RM7DVk4aJD2PflOTXBKA3vM6ruLX5IObNCkt1WvAZLuIRhbVJZZSBwg+w0FaIquHC+U8E2LeSLpqUCxLKlhRGVUerZK2Xd4sTRcWRtngOErsJnVUpWSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658568; c=relaxed/simple;
-	bh=0mITuGnIW2cxh4iSM1NITfN1JbIuSDbtcFCXs2vzgXE=;
+	s=arc-20240116; t=1784658570; c=relaxed/simple;
+	bh=exohFkUU87YZNe/Dr4Lu7PRR2iOJd7jXHCN7Tuf7LAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bNNXIiCCgtcqbZoePzkf8GCLyIzb6IH0eWDn7nlsbGlq8DV6nA2SUVxiXJPyuUvH6hJJfXw+aO8fRblYtJuywyxYDo2iu4UVaTsd/NlX/XdOTVpEXuuXT/8eFufHT3f9+YnXaDHlTqAMmjmPXDGk3EVvpXKSsRnLT7zzuglri10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uhGdOJ9l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wbnnq9JEYHi7pz59SOQkWmyKpq9yFF81ewDCgFOWnb4jUqkqqdBjzaH2vrYxkLRwEjT/i7F2CtFE1ltUFVMI1rzxbVMyKIBFuPJkSNLh6WuT7n60Pu7VpuZkdwA9gTj9Aiv7zgJbDfDa2w6NXT+YSVQbS1T+QdFsB71MWabCOj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hpei4T2s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhGdOJ9l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC8C1F00A3A;
-	Tue, 21 Jul 2026 18:29:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hpei4T2s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7762A1F000E9;
+	Tue, 21 Jul 2026 18:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658566;
-	bh=yAGzQ3+duL7fMlozm9AkHaXdvavY23Gv8LTTCrFwQug=;
+	s=korg; t=1784658569;
+	bh=mrcvus04elYNNyD7/elgB7p+832YI/idCqdJgqlf1f8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uhGdOJ9lfCScpG02x1KfzU318+l7Mqa+sTgJXfSgF14QzfprHzSQuX98LK5b9LuhH
-	 gXmX1P9++rqaI1AyvKM70+xk2y/DwZoJZXucs99eLRSreflGmID2TCtKM+R8iEXkrT
-	 tK/EL+WWpw06b4G7mg0BbCrNpxWWkEC3VRMk2npo=
+	b=Hpei4T2sjW5MLl7HE+NharCY89eiZZOOG4oa/YN4UkqZc0fVsshH3xKk+UURi3lZ7
+	 3Tkv6OI1MN/+0Yr6xRvixCbCVRcWKS/P1Px6DETw2N6SQ26rYX1jPdlTfDj0JHBu0P
+	 PfdRxwr9Cu6fPS0b2cQXWUuESrNaitG4hrsLQ1bQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Hongyan Xia <hongyan.xia@transsion.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.18 1191/1611] cpufreq: schedutil: Fix uncleared need_freq_update on the .adjust_perf() path
-Date: Tue, 21 Jul 2026 17:21:47 +0200
-Message-ID: <20260721152542.222568905@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+Subject: [PATCH 6.18 1192/1611] cpufreq: intel_pstate: Set non-turbo capacity to HWP_GUARANTEED_PERF()
+Date: Tue, 21 Jul 2026 17:21:48 +0200
+Message-ID: <20260721152542.244442756@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,58 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 9ef450ca74e43dacf9a2a15db7a851052c78dcf0 upstream.
+commit 27d80e0f8b8dff97503fc0061754b1d3800cb961 upstream.
 
-The need_freq_update flag makes sugov_should_update_freq() return true
-regardless of the rate_limit_us throttling, and is cleared in
-sugov_update_next_freq(). sugov_update_single_freq() and
-sugov_update_shared() go through that helper, so the flag does not
-persist there.
+Setting cpu->capacity_perf to cpu->pstate.max_pstate_physical in the
+"no turbo" case is inconsistent with what happens elsewhere in the
+driver and causes arch_scale_cpu_capacity() to be incorrect.  It also
+skews arch_scale_freq_capacity() which ends up differing from 1024 for
+the guaranteed P-state.
 
-However, sugov_update_single_perf(), used by drivers implementing the
-.adjust_perf() callback (e.g. intel_pstate or amd-pstate in passive
-mode) calls cpufreq_driver_adjust_perf() directly and never goes through
-sugov_update_next_freq(), so the need_freq_update flag is not cleared in
-that path.
+Address that by setting capacity_perf to HWP_GUARANTEED_PERF() in the
+"no turbo" case.
 
-Before commit 75da043d8f88 ("cpufreq/sched: Set need_freq_update in
-ignore_dl_rate_limit()"), this was effectively harmless because
-sugov_should_update_freq() still honored the rate limit even when
-need_freq_update was set. After that change, the flag forces
-sugov_should_update_freq() to always return true, so once set, it
-stays effective indefinitely on the .adjust_perf() path.
-
-As a result, cpufreq_driver_adjust_perf() gets called on every scheduler
-utilization update (with the runqueue lock held) rather than being
-throttled by rate_limit_us, even if the driver itself may skip redundant
-hardware updates.
-
-Clear need_freq_update at the end of the adjust_perf path as well.
-
-Fixes: 75da043d8f88 ("cpufreq/sched: Set need_freq_update in ignore_dl_rate_limit()")
-Signed-off-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Reviewed-by: Hongyan Xia <hongyan.xia@transsion.com>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Cc: All applicable <stable@vger.kernel.org>
-[ rjw: Subject and changelog edits ]
-Link: https://patch.msgid.link/20260616154733.2405236-1-zhongqiu.han@oss.qualcomm.com
+Fixes: 929ebc93ccaa ("cpufreq: intel_pstate: Set asymmetric CPU capacity on hybrid systems")
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Tested-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/12928972.O9o76ZdvQC@rafael.j.wysocki
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/cpufreq_schedutil.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/cpufreq/intel_pstate.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/kernel/sched/cpufreq_schedutil.c
-+++ b/kernel/sched/cpufreq_schedutil.c
-@@ -486,6 +486,7 @@ static void sugov_update_single_perf(str
- 	cpufreq_driver_adjust_perf(sg_policy->policy, sg_cpu->bw_min,
- 				   sg_cpu->util, max_cap);
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -1054,12 +1054,14 @@ static void hybrid_clear_cpu_capacity(un
  
-+	sg_policy->need_freq_update = false;
- 	sg_policy->last_freq_update_time = time;
+ static void hybrid_get_capacity_perf(struct cpudata *cpu)
+ {
++	u64 hwp_cap = READ_ONCE(cpu->hwp_cap_cached);
++
+ 	if (READ_ONCE(global.no_turbo)) {
+-		cpu->capacity_perf = cpu->pstate.max_pstate_physical;
++		cpu->capacity_perf = HWP_GUARANTEED_PERF(hwp_cap);
+ 		return;
+ 	}
+ 
+-	cpu->capacity_perf = HWP_HIGHEST_PERF(READ_ONCE(cpu->hwp_cap_cached));
++	cpu->capacity_perf = HWP_HIGHEST_PERF(hwp_cap);
  }
  
+ static void hybrid_set_capacity_of_cpus(void)
 
 
