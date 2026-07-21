@@ -1,47 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96750415F20;
-	Tue, 21 Jul 2026 18:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25FD63D0907;
+	Tue, 21 Jul 2026 18:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657095; cv=none; b=T7VHT1bRMAN1OQKb4c6bS8bSDIZkfUDtdi4LRMspMwkAGGAaj47yFb4+wYVCdtzKXK+jIfyha8P7XizG763iUhXrhR1VkpD37Ib4fhBt6XwR6GYRjjenoxYkYdgOFd4cct90E9Bjkra6+J/kzzzUYIY1yAzfiizjPEb5aknP5y0=
+	t=1784657098; cv=none; b=dGTr7xUpaCUUdtHB2fa20HdETlYjTMPHaZYWSFDuelHZt1cj4tLRrP6xnZGzTtdU4XIQf94Ws2Ca3+qrzg2ondF14Ch8DmC6+Oan1D566UGDdwF23aUyNpQuGIXB/IVgKENxxus5iriTDQptw3AfiT15xbxUMjOEMcNi4SFXHVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657095; c=relaxed/simple;
-	bh=DMDfbZOvcuF12Z6jlM1N1Ht8lbZc1ZcCurr/GIjrkK0=;
+	s=arc-20240116; t=1784657098; c=relaxed/simple;
+	bh=Dw/dnlPf2iAuyp0GHmawhgrpCS3/gQzPPljARPLeZBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gH529tj7vHSyWmFkP2W14Dhxd3mwiHWMMp8x3rCsd0ysZTr4s7nb0LShQqwcv7HYvLMpxO5YQrrIchEWdbtAl9YBOVfbPol473fYIV/9u1Mcrk8T/PbtT54A+OjBvkeq/e8FsI7oZjRUDnR5JkikCDkgVFY9UArfPlQUl10W+Ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CcBUbWkq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HKB0VwnifFZxafzGtLNR3N/INWm4ojUj+0i5ztbQ3+//61g6b/hq+VUrKAr+urlPAh2/FAPKFZP77OQDjaG4EKSqihCmryY/fIDIdw0x1ZKRCoY8dxq2xVSm0pO6t/inyPjBUdlTnUFpOrswhDAqHITjgz0+FUJH4aGoS7GXAS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5c4Uwja; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CcBUbWkq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F4361F000E9;
-	Tue, 21 Jul 2026 18:04:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5c4Uwja"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC041F000E9;
+	Tue, 21 Jul 2026 18:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657094;
-	bh=gna6SFZrKeCQGp3aMlA05/OdyVjydU0spb0psMBo5Vg=;
+	s=korg; t=1784657097;
+	bh=xgkzS2H+LFQRfAjO48nha6iVtBZloUc4cI1DT1V22MU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CcBUbWkqCykvjAkQPLVuZawXWkhbvQ9xMIRy8VM19b6Ptr52bHgMXSRhORHohtDSt
-	 xmDAZyPVhitvm3EjK0qXOQ4C044evJBH2AR0JRpKJXayp5eeXzJFanYt/RoO63IJ/I
-	 b218wF15unwlkZQnTc+mVwLx5tK+MUXzqn7AK0vk=
+	b=x5c4UwjaCkY9Us+3i2llKzhz4o+iszRVO+GjlMMk8/oMnF2jdxZUAKKd8425QZvjt
+	 2XKPPV32JE/gFr0Uwf/CmmIOyigZ3rlY2IqweSg7GfAgLi8Av+mMRKtTMliSu8Qnye
+	 OJF64ZQrcOYjUzVTKcHM50ZOi1iNozDk83WcmL7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rui Qi <qirui.001@bytedance.com>,
+	James Clark <james.clark@linaro.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
 	Ian Rogers <irogers@google.com>,
 	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
 	Jiri Olsa <jolsa@kernel.org>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Peter Zijlstra <peterz@infradead.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0634/1611] perf: Fix off-by-one stack buffer overflow in kallsyms__parse()
-Date: Tue, 21 Jul 2026 17:12:30 +0200
-Message-ID: <20260721152529.648256077@linuxfoundation.org>
+Subject: [PATCH 6.18 0635/1611] perf annotate: Fix crashes on empty annotate windows
+Date: Tue, 21 Jul 2026 17:12:31 +0200
+Message-ID: <20260721152529.671411570@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -60,61 +59,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rui Qi <qirui.001@bytedance.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit 68018df3f55eba96a20dd703f5f276a6518f4963 ]
+[ Upstream commit 74802634e4a7e556429417963a8cbda27dd8b4b3 ]
 
-In kallsyms__parse(), the loop reading symbol names iterates with i <
-sizeof(symbol_name), which allows i to reach sizeof(symbol_name) upon
-loop exit. The subsequent symbol_name[i] = '\0' then writes one byte
-past the end of the stack-allocated symbol_name[] array.
+Annotate can open with an empty window if the disassembly tool fails.
+After the linked change, the TUI started assuming there was a current
+annotation line and could assert or segfault in the seek, refresh, and
+source-toggle paths.
 
-Fix this by changing the loop bound to KSYM_NAME_LEN, so the null
-terminator always lands within the array. The overflow is triggerable by
-a kallsyms entry with a symbol name of KSYM_NAME_LEN+1 or more
-characters (e.g., long Rust mangled names or a malicious
-/proc/kallsyms).
+Handle empty annotate windows explicitly: set the asm entry count before
+resetting the browser, return early when refreshing an empty list, and
+ignore source line toggle when there is no current annotation line.
 
-Fixes: 53df2b9344128984 ("libsymbols kallsyms: Parse using io api")
-Signed-off-by: Rui Qi <qirui.001@bytedance.com>
+Fixes the following when opening an annotation:
+
+  perf: ui/browser.c:125: ui_browser__list_head_seek: Assertion `pos != NULL' failed.
+  Aborted
+
+Fixes: e201757f7a0a901e ("perf annotate: Fix source code annotate with objdump")
+Assisted-by: GitHub Copilot:GPT-5.4
+Signed-off-by: James Clark <james.clark@linaro.org>
 Acked-by: Namhyung Kim <namhyung@kernel.org>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
 Cc: Ian Rogers <irogers@google.com>
 Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
 Cc: Jiri Olsa <jolsa@kernel.org>
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Peter Zijlstra <peterz@infradead.org>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/symbol/kallsyms.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/perf/ui/browser.c           | 3 +++
+ tools/perf/ui/browsers/annotate.c | 5 ++++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/symbol/kallsyms.c b/tools/lib/symbol/kallsyms.c
-index e335ac2b9e1972..d64bd9cc82a90e 100644
---- a/tools/lib/symbol/kallsyms.c
-+++ b/tools/lib/symbol/kallsyms.c
-@@ -60,7 +60,7 @@ int kallsyms__parse(const char *filename, void *arg,
- 			read_to_eol(&io);
- 			continue;
- 		}
--		for (i = 0; i < sizeof(symbol_name); i++) {
-+		for (i = 0; i < KSYM_NAME_LEN; i++) {
- 			ch = io__get_char(&io);
- 			if (ch < 0 || ch == '\n')
- 				break;
-@@ -68,6 +68,9 @@ int kallsyms__parse(const char *filename, void *arg,
- 		}
- 		symbol_name[i]  = '\0';
+diff --git a/tools/perf/ui/browser.c b/tools/perf/ui/browser.c
+index dc88427b4ae5af..321187b204d38d 100644
+--- a/tools/perf/ui/browser.c
++++ b/tools/perf/ui/browser.c
+@@ -513,6 +513,9 @@ unsigned int ui_browser__list_head_refresh(struct ui_browser *browser)
+ 	struct list_head *head = browser->entries;
+ 	int row = 0;
  
-+		if (i == KSYM_NAME_LEN)
-+			read_to_eol(&io);
++	if (browser->nr_entries == 0)
++		return 0;
 +
- 		err = process_symbol(arg, symbol_name, symbol_type, start);
- 		if (err)
- 			break;
+ 	if (browser->top == NULL || browser->top == browser->entries)
+                 browser->top = ui_browser__list_head_filter_entries(browser, head->next);
+ 
+diff --git a/tools/perf/ui/browsers/annotate.c b/tools/perf/ui/browsers/annotate.c
+index 8fe699f985423e..97f92512f136d1 100644
+--- a/tools/perf/ui/browsers/annotate.c
++++ b/tools/perf/ui/browsers/annotate.c
+@@ -449,6 +449,9 @@ static bool annotate_browser__toggle_source(struct annotate_browser *browser,
+ 	struct annotation_line *al;
+ 	off_t offset = browser->b.index - browser->b.top_idx;
+ 
++	if (browser->b.nr_entries == 0)
++		return false;
++
+ 	browser->b.seek(&browser->b, offset, SEEK_CUR);
+ 	al = list_entry(browser->b.top, struct annotation_line, node);
+ 
+@@ -542,8 +545,8 @@ static void annotate_browser__show_full_location(struct ui_browser *browser)
+ static void ui_browser__init_asm_mode(struct ui_browser *browser)
+ {
+ 	struct annotation *notes = browser__annotation(browser);
+-	ui_browser__reset_index(browser);
+ 	browser->nr_entries = notes->src->nr_asm_entries;
++	ui_browser__reset_index(browser);
+ }
+ 
+ static int sym_title(struct symbol *sym, struct map *map, char *title,
 -- 
 2.53.0
 
