@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8B438399A;
-	Tue, 21 Jul 2026 17:15:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76483BED24;
+	Tue, 21 Jul 2026 17:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654122; cv=none; b=GmlkV2xxGmugcPM9J5GGBECthzlo18I9ut4T0OvLuQaR3hD51oNu7ntjur3PMfY6sX0ZCmQa/2ChnW8t+fNrDH69Cb3i97BRKGdo2ye2lhVSvem6Ywx6c+29eTpNgcRbwBSkuHZfvN4ZFViqBufMGaxUp9+tzigpEWhLAM0ss90=
+	t=1784654124; cv=none; b=rgmTVMW5Fn30v5S31zeB28ocPM/DBQQhYCJSiSmO2BfO/z4sRLxwbTazMX56n+28eXCgzzm1knwyJr2oy9h6miPw7195eK4mAy8B1xgI/2KU9U+BUlRbtPsGsmstfAtbpotJFXp1XmJ86RSfGqjSmCQG0ixSv4SjA8RIaiAz8D4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654122; c=relaxed/simple;
-	bh=3/CNlRsorFLRfU139IQU+l5Ui9799QY3geGz6JWocRc=;
+	s=arc-20240116; t=1784654124; c=relaxed/simple;
+	bh=KIT061B68TM6nFfEG6bRdyHbx09I+G1b3otu1nPHOME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zsspn78qa9f6REJVjtJYehA7ehfLsJvO+e/AZLL8Y4q2OqxP8RVk2k/At0b4GTn1EUsjbkvzo8wEtrTomJ4xa/Hl3rGCS0gJ9eM8ikqNf+OAeninQ8AHfTPr48JZw+GsQg3LH5/oWVl0A2Z+D4IzO0J590YF75rHC0f5g0QWet8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HBwPgCFh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Uk5AQU5h+aIf+ZpV/lMbXpr+pyOSnzNuXVvbpzlo1BxfYGmSZdYhM3TKj+9Jf3ePFXDC79cQqzxxLipgKA42HrLRKtcap9oBpSiZj15zuZGmAcxKG/dWDBmsmzwh2Xnnq5QaU6Co+O46oTUTwl/N07wm6MroEWp7Jbz8rPDwpEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrtFwH/W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HBwPgCFh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66C51F000E9;
-	Tue, 21 Jul 2026 17:15:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrtFwH/W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AFC31F000E9;
+	Tue, 21 Jul 2026 17:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654121;
-	bh=ucIsXhqJyRx0O8ChOW78i/EVe3oFbouxrlmqLoMmYX0=;
+	s=korg; t=1784654123;
+	bh=KPkngZmjHWinakRhZ9UHII5vSRSZ5CPOWc3jaKhQdAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HBwPgCFhKPQ56MohF/J2xdznVwcGY/zzbm2Zlc7U+C6q4+Bs6f/4FlWT17xLGn3A9
-	 V2uvuRXOJLmxW9fLdM0TGuzyxANp0cVr4iS3bol/PfBZDn61hjI89ww0Lpj8NOM2R2
-	 fa4a4y0Hp8JNDHmbc+sfJ89G9w6VMFDeBBcIOMrA=
+	b=IrtFwH/WPUT68E4bnb3EcKngB0JdDb6Dkq7vbqWCh/lJ51/d2qrn29QC4jZs2xjy9
+	 5W5dnHDa16cEfSORMe/+VJOtC8H1UHSDDZuxuHXj8UzBCHHXSScHPlcDVD5iiRJGg6
+	 j0+IxMl0XM+/GxeEUNc1sw6nnd1iv5uid/rTkBV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minh Nguyen <minhnguyen.080505@gmail.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 7.1 1568/2077] KVM: nVMX: Put vmcs12 pages if nested VM-Enter fails due to invalid guest state
-Date: Tue, 21 Jul 2026 17:20:41 +0200
-Message-ID: <20260721152629.763326298@linuxfoundation.org>
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 7.1 1586/2077] fbdev: s3fb: fix potential memory leak in s3_pci_probe()
+Date: Tue, 21 Jul 2026 17:20:59 +0200
+Message-ID: <20260721152630.180244605@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,44 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit 2f2312c422fd2695da772cecb30c69994b795964 upstream.
+commit 3b0ed04bc852887a9164e1bbf521652e8ef3eb92 upstream.
 
-Put all vmcs12 pages if KVM synthesizes a nested VM-Exit due to invalid
-guest while emulating VMLAUNCH or VMRESUME.  The invalid guest state path
-doesn't use nested_vmx_vmexit() as that API is intended to be used if and
-only if L2 is active, and the open coded equivalent neglects to put the
-vmcs12 pages.  Failure to put the vmcs12 pages leaks any pinned pages
-(and/or mappings) if L1 retries VMLAUNCH/VMRESUME.
+In s3_pci_probe(), the memory allocated for modelist using
+fb_videomode_to_modelist() is not freed in subsequent error paths.
+Fix that by calling fb_destroy_modelist()
 
-Note, the !from_vmenter scenario doesn't suffer the same problem, as
-vmx_get_nested_state_pages() only gets/pins/maps the vmcs12 pages if L2 is
-active, i.e. if a "full" VM-Exit is guaranteed before KVM will retry
-getting vmcs12 pages.
-
-Fixes: 96c66e87deee ("KVM/nVMX: Use kvm_vcpu_map when mapping the virtual APIC page")
-Fixes: 3278e0492554 ("KVM/nVMX: Use kvm_vcpu_map when mapping the posted interrupt descriptor table")
-Fixes: fe1911aa443e ("KVM: nVMX: Use kvm_vcpu_map() to get/pin vmcs12's APIC-access page")
-Reported-by: Minh Nguyen <minhnguyen.080505@gmail.com>
+Fixes: 86c0f043a737 ("s3fb: add DDC support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/nested.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/video/fbdev/s3fb.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -3747,6 +3747,8 @@ vmentry_fail_vmexit:
- 	if (!from_vmentry)
- 		return NVMX_VMENTRY_VMEXIT;
- 
-+	nested_put_vmcs12_pages(vcpu);
-+
- 	load_vmcs12_host_state(vcpu, vmcs12);
- 	vmcs12->vm_exit_reason = exit_reason.full;
- 	if (enable_shadow_vmcs || nested_vmx_is_evmptr12_valid(vmx))
+--- a/drivers/video/fbdev/s3fb.c
++++ b/drivers/video/fbdev/s3fb.c
+@@ -1446,6 +1446,7 @@ err_reg_fb:
+ err_alloc_cmap:
+ err_find_mode:
+ #ifdef CONFIG_FB_S3_DDC
++	fb_destroy_modelist(&info->modelist);
+ 	if (par->ddc_registered)
+ 		i2c_del_adapter(&par->ddc_adapter);
+ 	if (par->mmio)
 
 
