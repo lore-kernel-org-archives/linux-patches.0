@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6776546A610;
-	Tue, 21 Jul 2026 15:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0663955F4;
+	Tue, 21 Jul 2026 15:58:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649504; cv=none; b=Bvve2ncGsDQAnP31MYAiu6y0LfftH0mFFEVR9s7RYcdcC9gOaT5YI4svqJJJfxXrH+M8oHGFwQIueHY4Goyd/yKP67uFjwiAJHzDX6GCkYVc7djT1IYlzbYYnDloWUoSJUVyr3Nks82gPpyKyHdgS1M2sVKYJ68gVos0TG6llbU=
+	t=1784649507; cv=none; b=DGCSyQdSvF2Q7TpqVkPKeeC3oceLUnJRno+JTqBV21Fy9RkC9WOag1c3Ta0QeXGJl2rnsxx9mRiMFAGU0ecGg5hjaycF/OszC8zxN8+Ej3q+EMGLyLi5WDhvCx8mX8cXETSJ/XHruRV8lmiBAInqeiXh9xlSoDL3XAVA/i+6Y8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649504; c=relaxed/simple;
-	bh=LWRIke1nQ+nmJqYhR0cyKxscJTTAPqcjmtCKQxxFZas=;
+	s=arc-20240116; t=1784649507; c=relaxed/simple;
+	bh=bI0VqIG+Ao6V5ow2qjYU9++ljsFe5/uldhKkP/NVbLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rJqKmX1OxEhcTNDNrGoNXspPco1gDv67RV81lijiy2hyKrAoTJGkGWmS1Wkup7seVarJGqElntJ/9sjL5jrI8KE3jnWcObul246y+NLIcgbKqAjk+Hgou7yW9ffH4Ruy6WXfGJtKiovYBQguBVIupGX7E/5SoeFQ/6P3CYDvrWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EVvlpwL3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q4mARi62Zwg7NsRMPTc2UCgPgfq9DXPIIQha31fe9ro3NSaIWOeLwcXkejXvXEtxnswQcCy5USFZau2mvFHGT6Zdz9d5QbNP+KP0xWp4huqmEW3s4IKm9QA3SwikAxapTJg3LQldRvdtz9GYQvQKTwcaEdzZH+xJS9i6udhTVYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fr7jlpyh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EVvlpwL3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF6B1F000E9;
-	Tue, 21 Jul 2026 15:58:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fr7jlpyh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F3A1F000E9;
+	Tue, 21 Jul 2026 15:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649503;
-	bh=8QZdw6+KQ1OlyjvbkJF0+diT+GFfDZbZIf5o4/SslAg=;
+	s=korg; t=1784649506;
+	bh=0KlipjN+E/G0MeHN6cVXS2WlXmPBeRlpM2ONMEaV06E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EVvlpwL3FIlpD3BzhzkY61ddl2/aIg9SqmYdDqxOASHcyl8zhp2xA0cPSvC22vDzX
-	 5BTJO8AbrhBcPyy3oiCpat/ydYmMthpEW2TJkcf5GSrmZOCTzq81MAOU7GWJ8iby8O
-	 UvbRUcuR2C87ncvEFeinNfEIrm7jHv3LefR+XDEs=
+	b=fr7jlpyhVzddBxBmiuqFY9uxy+/HM6Ob+V9y5wAIRen+uK/QLB8AiwqErfXksAZ0N
+	 G6NW3KxAPnobSkfqe2iDrChQVT0BIsBNrKkY/sD/D+oPNL4RnWTvpqSAmQauoo9aGy
+	 ad/NgTWdgtoKiYvzdtG/Y5p1t2Pr/SKvqxF8OSHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Sumit Gupta <sumitg@nvidia.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
+	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0604/2077] memory: tegra186-emc: stop borrowing MC aggregate hook for EMC
-Date: Tue, 21 Jul 2026 17:04:37 +0200
-Message-ID: <20260721152607.056065436@linuxfoundation.org>
+Subject: [PATCH 7.1 0605/2077] vfs: add FS_USERNS_DELEGATABLE flag and set it for NFS
+Date: Tue, 21 Jul 2026 17:04:38 +0200
+Message-ID: <20260721152607.080070303@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,67 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumit Gupta <sumitg@nvidia.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 2e05f3d6005d9aa3e2e423d2471f290d9ccbe3d2 ]
+[ Upstream commit c5d6cac28646b0d5d81ef632be748ae93c1f36c7 ]
 
-tegra186_emc_interconnect_init() copies the MC's ICC aggregate hook
-into the EMC provider.  That hook (tegra234_mc_icc_aggregate /
-tegra264_mc_icc_aggregate) uses container_of() to recover 'mc',
-which is only valid when the icc_provider is embedded in struct
-tegra_mc.  For an EMC node the provider is embedded in struct
-tegra186_emc, so 'mc' points into unrelated memory.
+Commit e1c5ae59c0f2 ("fs: don't allow non-init s_user_ns for filesystems
+without FS_USERNS_MOUNT") prevents the mount of any filesystem inside a
+container that doesn't have FS_USERNS_MOUNT set.
 
-This stayed harmless until commit faafd6ca7e6e ("memory: tegra:
-make icc_set_bw return zero if BWMGR not supported") added an
-unconditional read of mc->bwmgr_mrq_supported at the top of the
-hook.  UBSAN catches the stray load on every EMC aggregation:
+This broke NFS mounts in our containerized environment. We have a daemon
+somewhat like systemd-mountfsd running in the init_ns. A process does a
+fsopen() inside the container and passes it to the daemon via unix
+socket.
 
-  UBSAN: invalid-load in drivers/memory/tegra/tegra234.c:1104:9
-  load of value 112 is not a valid value for type '_Bool'
+The daemon then vets that the request is for an allowed NFS server and
+performs the mount. This now fails because the fc->user_ns is set to the
+value in the container and NFS doesn't set FS_USERNS_MOUNT.  We don't
+want to add FS_USERNS_MOUNT to NFS since that would allow the container
+to mount any NFS server (even malicious ones).
 
-No functional impact in practice, since the hook's only other mc
-dereference (mc->num_channels) sits inside a
-TEGRA_ICC_MC_CPU_CLUSTER* branch that EMC nodes never enter.
+Add a new FS_USERNS_DELEGATABLE flag, and enable it on NFS.
 
-Fix this by setting the EMC provider's aggregate hook to
-icc_std_aggregate, instead of borrowing the MC's hook.  The MC
-providers continue using their own aggregate hooks, where
-container_of() correctly resolves to struct tegra_mc.
-
-Reported-by: Jon Hunter <jonathanh@nvidia.com>
-Fixes: 9a38cb27668e ("memory: tegra: Add interconnect support for DRAM scaling in Tegra234")
-Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20260527140127.49172-2-sumitg@nvidia.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Fixes: e1c5ae59c0f2 ("fs: don't allow non-init s_user_ns for filesystems without FS_USERNS_MOUNT")
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260129-twmount-v1-1-4874ed2a15c4@kernel.org
+Acked-by: Anna Schumaker <anna.schumaker@oracle.com>
+Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/tegra/tegra186-emc.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/nfs/fs_context.c |  8 ++++++--
+ fs/super.c          | 11 ++++++-----
+ include/linux/fs.h  |  1 +
+ 3 files changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/memory/tegra/tegra186-emc.c b/drivers/memory/tegra/tegra186-emc.c
-index 03ebab6fbe68fe..f71265b303b976 100644
---- a/drivers/memory/tegra/tegra186-emc.c
-+++ b/drivers/memory/tegra/tegra186-emc.c
-@@ -258,15 +258,13 @@ static int tegra186_emc_icc_get_init_bw(struct icc_node *node, u32 *avg, u32 *pe
- 
- static int tegra186_emc_interconnect_init(struct tegra186_emc *emc)
- {
--	struct tegra_mc *mc = dev_get_drvdata(emc->dev->parent);
--	const struct tegra_mc_soc *soc = mc->soc;
- 	struct icc_node *node;
+diff --git a/fs/nfs/fs_context.c b/fs/nfs/fs_context.c
+index c105882edd16e7..1967de7d1dff97 100644
+--- a/fs/nfs/fs_context.c
++++ b/fs/nfs/fs_context.c
+@@ -1769,7 +1769,9 @@ struct file_system_type nfs_fs_type = {
+ 	.init_fs_context	= nfs_init_fs_context,
+ 	.parameters		= nfs_fs_parameters,
+ 	.kill_sb		= nfs_kill_super,
+-	.fs_flags		= FS_RENAME_DOES_D_MOVE|FS_BINARY_MOUNTDATA,
++	.fs_flags		= FS_RENAME_DOES_D_MOVE	|
++				  FS_BINARY_MOUNTDATA	|
++				  FS_USERNS_DELEGATABLE,
+ };
+ MODULE_ALIAS_FS("nfs");
+ EXPORT_SYMBOL_GPL(nfs_fs_type);
+@@ -1781,7 +1783,9 @@ struct file_system_type nfs4_fs_type = {
+ 	.init_fs_context	= nfs_init_fs_context,
+ 	.parameters		= nfs_fs_parameters,
+ 	.kill_sb		= nfs_kill_super,
+-	.fs_flags		= FS_RENAME_DOES_D_MOVE|FS_BINARY_MOUNTDATA,
++	.fs_flags		= FS_RENAME_DOES_D_MOVE	|
++				  FS_BINARY_MOUNTDATA	|
++				  FS_USERNS_DELEGATABLE,
+ };
+ MODULE_ALIAS_FS("nfs4");
+ MODULE_ALIAS("nfs4");
+diff --git a/fs/super.c b/fs/super.c
+index 378e81efe643bd..97df9e574d8bf5 100644
+--- a/fs/super.c
++++ b/fs/super.c
+@@ -741,12 +741,13 @@ struct super_block *sget_fc(struct fs_context *fc,
  	int err;
  
- 	emc->provider.dev = emc->dev;
- 	emc->provider.set = tegra186_emc_icc_set_bw;
- 	emc->provider.data = &emc->provider;
--	emc->provider.aggregate = soc->icc_ops->aggregate;
-+	emc->provider.aggregate = icc_std_aggregate;
- 	emc->provider.xlate = tegra186_emc_of_icc_xlate;
- 	emc->provider.get_bw = tegra186_emc_icc_get_init_bw;
- 
+ 	/*
+-	 * Never allow s_user_ns != &init_user_ns when FS_USERNS_MOUNT is
+-	 * not set, as the filesystem is likely unprepared to handle it.
+-	 * This can happen when fsconfig() is called from init_user_ns with
+-	 * an fs_fd opened in another user namespace.
++	 * Never allow s_user_ns != &init_user_ns when FS_USERNS_MOUNT or
++	 * FS_USERNS_DELEGATABLE is not set, as the filesystem is likely
++	 * unprepared to handle it. This can happen when fsconfig() is called
++	 * from init_user_ns with an fs_fd opened in another user namespace.
+ 	 */
+-	if (user_ns != &init_user_ns && !(fc->fs_type->fs_flags & FS_USERNS_MOUNT)) {
++	if (user_ns != &init_user_ns &&
++	    !(fc->fs_type->fs_flags & (FS_USERNS_MOUNT | FS_USERNS_DELEGATABLE))) {
+ 		errorfc(fc, "VFS: Mounting from non-initial user namespace is not allowed");
+ 		return ERR_PTR(-EPERM);
+ 	}
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index f93b216149cc92..0f5f022e6e7bc7 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -2281,6 +2281,7 @@ struct file_system_type {
+ #define FS_MGTIME		64	/* FS uses multigrain timestamps */
+ #define FS_LBS			128	/* FS supports LBS */
+ #define FS_POWER_FREEZE		256	/* Always freeze on suspend/hibernate */
++#define FS_USERNS_DELEGATABLE	1024	/* Can be mounted inside userns from outside */
+ #define FS_RENAME_DOES_D_MOVE	32768	/* FS will handle d_move() during rename() internally. */
+ 	int (*init_fs_context)(struct fs_context *);
+ 	const struct fs_parameter_spec *parameters;
 -- 
 2.53.0
 
