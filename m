@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149913B9930;
-	Tue, 21 Jul 2026 21:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BC435C699;
+	Tue, 21 Jul 2026 21:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670904; cv=none; b=UwMCbL/W2J8sxLChggO+lvDvgczr3ozoSYml+HjDslKIck084mJea6z5mP+mzZfQYIpl+6xfiwEYUWFPQY6qDJISKFxpvopY3EUT+Ckxk7CNkYFDVHQXEXYkE1RqEaBgmC1N+VBl+pp8gBGPG5sidPsKow2Nu534a/dycYg+z60=
+	t=1784670906; cv=none; b=s1/5Ji6IQEK8AyOyYlf0Up2wMDeKqctiGFlIUxpNLr2Zv0LhHkGbDaxK+nizFrWYlg4TxQm4LY+0Z0wJIGk+eZlPB50YhXH6so1emWIyp5J0WQwZbqSdGjuaskoYvEmnFJHNZTzae8z6jUDWOWm5cXejv0XzFR+prDod7Lzc5D0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670904; c=relaxed/simple;
-	bh=57XWhT1TtH6T0slNQbS6riCW2TUgoBo/0Ay1jp952Is=;
+	s=arc-20240116; t=1784670906; c=relaxed/simple;
+	bh=C4X+uYRoCQQstN1350pbXMgt9lsRHEw0MsicCYO5BqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A4EneysOiU6wwZmsfdpv1wGF+4XjQsR8fjI1gztTKXSZD++JAoiy4TL7yF7ZYap7I22ci2M03FFx0Ykcs1uFlM44S7gi2N7ir2oOFBxzxOtkN+GhigZlGM6PE1Xh5ykRb4Mq0LfmFujsUUjO7upJD3EhWY7c6bOOvjFQ5nRQhrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AfqIaahk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KMrKMMsbUhIa4oEhE75lMPgmoqRx1sIWwQ62A3FxFl+VVcoDMB2lNVS6u/KM2KSW3zyybf8Z4uVlzggWIHMiUDsUKWTzd4qFeAquCFpGbZ0YeIAkjfgYaMkhcV2ddHxgG0oyEb2W8R1BZ70syZ5T5O3NvgeZT0FdR+7vsIWJ1kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Abbjz9Cf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AfqIaahk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A05B1F000E9;
-	Tue, 21 Jul 2026 21:55:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Abbjz9Cf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243441F000E9;
+	Tue, 21 Jul 2026 21:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670903;
-	bh=zZoQnkT3coWygGD0KG7j4vuQ20RofLG8ly/cyituF08=;
+	s=korg; t=1784670905;
+	bh=hjiYx6qSwoFGBmWEETwXoJhqE34xReAd3sB9DuKk/QI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AfqIaahkRvvN4qV37G/KdGvGUqepAEZLSB7Qa8uDcsdLZ7BIOcdEBoi5eSLV2QM1l
-	 U1CPx1strmXy0UsG8vhnXdWVKKlEcxbrWIvk/EPIt+09NaNjp+wC3ZqIVcBiZQ5U3N
-	 yZRWYqpHqMcOzIrqOGiKBdK2ePS7VDuojKojwMgw=
+	b=Abbjz9CfVSJaAuuNb7pKr+sUlQVhOUXkBtf/5OrRRj5OpJMCT51mb5GJ2ik+gtGrJ
+	 AzoOf1tBH6dRIM5JEPkxt2AvUoLuCEmae7dWL8NfdEmoIXcsiZOMGyu8q0lB0Qd/Jo
+	 HF+7dLPOkbs573Z7lrOyVfAsrlPAAqg1mJMvyZyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+78147abe6c524f183ee9@syzkaller.appspotmail.com,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 045/843] locking/rtmutex: Skip remove_waiter() when waiter is not enqueued
-Date: Tue, 21 Jul 2026 17:14:40 +0200
-Message-ID: <20260721152406.993733332@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Griffin Kroah-Hartman <griffin@kroah.com>
+Subject: [PATCH 5.15 046/843] usb: gadget: function: rndis: add length check to response query
+Date: Tue, 21 Jul 2026 17:14:41 +0200
+Message-ID: <20260721152407.017264328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,72 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-[ Upstream commit 40a25d59e85b3c8709ac2424d44f65610467871e ]
+commit 95f90eea070837f7c72207d5520f805bdefc3bc5 upstream.
 
-syzbot triggered the following splat in remove_waiter() via
-FUTEX_CMP_REQUEUE_PI:
+Add variable representations for BufLength and BufOffset in
+rndis_query_response(), and perform a length check on them.
 
-  KASAN: null-ptr-deref in range [0x0000000000000a88-0x0000000000000a8f]
-   class_raw_spinlock_constructor
-   remove_waiter+0x159/0x1200 kernel/locking/rtmutex.c:1561
-   rt_mutex_start_proxy_lock+0x103/0x120
-   futex_requeue+0x10e4/0x20d0
-   __x64_sys_futex+0x34f/0x4d0
+This is identical to how rndis_set_response() handles these parameters.
 
-task_blocks_on_rt_mutex() does not arm the waiter upon deadlock detection,
-leaving waiter->task nil, where 3bfdc63936dd ("rtmutex: Use waiter::task instead
-of current in remove_waiter()") made this fatal.
-
-Furthermore, rt_mutex_start_proxy_lock() should not be calling into remove_waiter()
-upon a successfully grabbing the rtmutex. 1a1fb985f2e2 ("futex: Handle early deadlock
-return correctly"), moved the remove_waiter() out of __rt_mutex_start_proxy_lock()
-(where 'ret' was only ever 0 or < 0) into the wrapper. Tighten this check to
-account for try_to_take_rt_mutex().
-
-Fixes: 3bfdc63936dd ("rtmutex: Use waiter::task instead of current in remove_waiter()")
-Reported-by: syzbot+78147abe6c524f183ee9@syzkaller.appspotmail.com
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/all/69f114ac.050a0220.ac8b.0003.GAE@google.com/
-Link: https://patch.msgid.link/20260507112913.1019537-1-dave@stgolabs.net
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Assisted-by: gkh_clanker_2000
+Cc: stable <stable@kernel.org>
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Link: https://patch.msgid.link/20260708-usb-gadget-rndis-v1-1-e77e026dcc6a@kroah.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/locking/rtmutex.c     | 3 +++
- kernel/locking/rtmutex_api.c | 2 +-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/rndis.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/locking/rtmutex.c b/kernel/locking/rtmutex.c
-index f79c9286c7c0c1..2118f8928eb7cb 100644
---- a/kernel/locking/rtmutex.c
-+++ b/kernel/locking/rtmutex.c
-@@ -1513,6 +1513,9 @@ static void __sched remove_waiter(struct rt_mutex_base *lock,
+--- a/drivers/usb/gadget/function/rndis.c
++++ b/drivers/usb/gadget/function/rndis.c
+@@ -591,6 +591,7 @@ static int rndis_init_response(struct rn
+ static int rndis_query_response(struct rndis_params *params,
+ 				rndis_query_msg_type *buf)
+ {
++	u32 BufLength, BufOffset;
+ 	rndis_query_cmplt_type *resp;
+ 	rndis_resp_t *r;
  
- 	lockdep_assert_held(&lock->wait_lock);
+@@ -598,6 +599,13 @@ static int rndis_query_response(struct r
+ 	if (!params->dev)
+ 		return -ENOTSUPP;
  
-+	if (!waiter_task) /* never enqueued */
-+		return;
++	BufLength = le32_to_cpu(buf->InformationBufferLength);
++	BufOffset = le32_to_cpu(buf->InformationBufferOffset);
++	if ((BufLength > RNDIS_MAX_TOTAL_SIZE) ||
++	    (BufOffset > RNDIS_MAX_TOTAL_SIZE) ||
++	    (BufOffset + 8 >= RNDIS_MAX_TOTAL_SIZE))
++		return -EINVAL;
 +
- 	raw_spin_lock(&waiter_task->pi_lock);
- 	rt_mutex_dequeue(lock, waiter);
- 	waiter_task->pi_blocked_on = NULL;
-diff --git a/kernel/locking/rtmutex_api.c b/kernel/locking/rtmutex_api.c
-index 56d1938cb52a1f..c4e191340c59b3 100644
---- a/kernel/locking/rtmutex_api.c
-+++ b/kernel/locking/rtmutex_api.c
-@@ -322,7 +322,7 @@ int __sched rt_mutex_start_proxy_lock(struct rt_mutex_base *lock,
+ 	/*
+ 	 * we need more memory:
+ 	 * gen_ndis_query_resp expects enough space for
+@@ -614,10 +622,8 @@ static int rndis_query_response(struct r
+ 	resp->RequestID = buf->RequestID; /* Still LE in msg buffer */
  
- 	raw_spin_lock_irq(&lock->wait_lock);
- 	ret = __rt_mutex_start_proxy_lock(lock, waiter, task);
--	if (unlikely(ret))
-+	if (unlikely(ret < 0))
- 		remove_waiter(lock, waiter);
- 	raw_spin_unlock_irq(&lock->wait_lock);
- 
--- 
-2.53.0
-
+ 	if (gen_ndis_query_resp(params, le32_to_cpu(buf->OID),
+-			le32_to_cpu(buf->InformationBufferOffset)
+-					+ 8 + (u8 *)buf,
+-			le32_to_cpu(buf->InformationBufferLength),
+-			r)) {
++				BufOffset + 8 + (u8 *)buf,
++				BufLength, r)) {
+ 		/* OID not supported */
+ 		resp->Status = cpu_to_le32(RNDIS_STATUS_NOT_SUPPORTED);
+ 		resp->MessageLength = cpu_to_le32(sizeof *resp);
 
 
