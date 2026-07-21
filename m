@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822EA3EEAC7;
-	Tue, 21 Jul 2026 19:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403C346D2D5;
+	Tue, 21 Jul 2026 19:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661113; cv=none; b=oW2zJ3JajmQRvNPK/3JKI394GWThIuCy+CU/StftVeIQNLk6FSSNL3d7P9DNnNHv4kEHaWExstmYiBLawu97DhSQKfB6w7/QbvN5TYEQy6IqFEuBt4WCytDnZQqBxRUWd2azaMjHi83zKBV4IHXwvAq9zLuHa+f7NK1WwAz5Uhk=
+	t=1784661116; cv=none; b=RYjHiZLVKdqIumehSbddIg+Lcscw6HHcztQ/PIh1isBrwEHHFAIqLLLo/GlUeD39np94DDTOqQfJuEu0+ztHeeL+GaD4SfU5aNjt2itN/kuUS2yVvWLdNvNEr89EBca3Mg6YwWu/04ymEthyu47fF3jElO5F2sPRWTDdLbmW7FE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661113; c=relaxed/simple;
-	bh=b1a1+2F3NlSnLVPm2KGCsrRbJBKhXsyYjFVMalLlZvI=;
+	s=arc-20240116; t=1784661116; c=relaxed/simple;
+	bh=yUvNK90crxUNcv5rV8kdV0GxU71icT3IJmXbIxCle9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OHL+kOG0QTjIYDjOhgGD2gbOa85zzLsv53fk8wIvlFnkRbP2w5+xshFKWc+OIGuq6PgRgyn9BMdIZJLwZ2305Czpy5onZopOw+NjZWCtkAp7KHz3rviRnVVcYyGITdxFEBMVFVJnf1MJeT4nMzI/gAhlX5QRHS/k4logXrV14l0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4ICHMOU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oITF2BMhSWuwdXOq3e4m4a89eg65qMYK+UlZEwmvKEC0hBJhJ9E2tZEmfQa+YgIbW7xbNJiKikqwBsGL2wREYzpUBVViyQG70qMt0Bg77oIVSApTu2y9MBaUFnFeJ5XM5xx/vJmNSvrbsaPcjhqKzfwaZFWmhxCr8VAPV9KYLjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yU52KJPf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4ICHMOU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E538F1F000E9;
-	Tue, 21 Jul 2026 19:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yU52KJPf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F8931F000E9;
+	Tue, 21 Jul 2026 19:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661111;
-	bh=+mrZKUZ4e3Xwrkc3dMdjSa7UX1u7BI0Rai8cTswn64g=;
+	s=korg; t=1784661114;
+	bh=0wLO4KwW9C3+KNA08LLPle2ySEsYZ+KTiOUOymWSw/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C4ICHMOUKgc1ndesj87un9qjs+5tKcGVxpaUyePJO9NXovaTsv1+xirtovRiyXodY
-	 h8gfrtWF01C0C4luOG1YQqrejK0R6EzSLuPPwlOrp5f2UwkuUxb2MLLoKC3MZJ8rIJ
-	 do3yKl+OcthcNEIWutLAKA8EDocqeRs6wwEb+SIw=
+	b=yU52KJPfY0ReZyCy73P7+UDxXa55FzEZQpbD+8GPK4wFOYuoHt3ra37G2prdV6d8H
+	 +oiM+0iEvG8JLCJz9YqisJS+gaVoZFs28r22la2i0d03qJTy7wzQu+IcR9fOKMQgJg
+	 POpkniSD380/mZX/ETfmGOphw+EqWMAe/OtTTSHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1234/2077] netfilter: conntrack: check NULL when retrieving ct extension
-Date: Tue, 21 Jul 2026 17:15:07 +0200
-Message-ID: <20260721152621.918547550@linuxfoundation.org>
+Subject: [PATCH 7.1 1199/2077] drm/edid: fix OOB read in drm_parse_tiled_block()
+Date: Tue, 21 Jul 2026 17:14:32 +0200
+Message-ID: <20260721152621.092421432@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,711 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit e3cd138e560764299965fba5ec5240281a7faca2 ]
+[ Upstream commit faaa1e1155833e7d4ce7e3cfaf64c0d636b190db ]
 
-nf_ct_ext_find() might return NULL if ct extension is not found.
+drm_parse_tiled_block() casts the DisplayID block to a
+struct displayid_tiled_block and reads the full fixed layout up to
+tile->topology_id[7] without checking block->num_bytes. The DisplayID
+iterator only validates the declared payload length, so a crafted EDID
+can advertise a tiled-display block (tag DATA_BLOCK_TILED_DISPLAY, or
+DATA_BLOCK_2_TILED_DISPLAY_TOPOLOGY for v2.0) with a small num_bytes at
+the end of a DisplayID extension. The read then runs past the end of the
+exact-sized kmemdup()'d EDID allocation, a heap out-of-bounds read.
 
-Add also the null checks to:
+Reject blocks shorter than the spec's 22-byte tiled payload before
+reading the fixed struct, as drm_parse_vesa_mso_data() already does.
 
-- nfct_help()
-- nfct_help_data()
-- nfct_seqadj()
-- nfct_nat()
+  BUG: KASAN: slab-out-of-bounds in drm_edid_connector_update
+  Read of size 2 at addr ffff888010077700 by task exploit/147
+   dump_stack_lvl (lib/dump_stack.c:94 ...)
+   print_report (mm/kasan/report.c:378 ...)
+   kasan_report (mm/kasan/report.c:595)
+   drm_edid_connector_update (drivers/gpu/drm/drm_edid.c:7581)
+   bochs_connector_helper_get_modes (drivers/gpu/drm/tiny/bochs.c:574)
+   drm_helper_probe_single_connector_modes (drivers/gpu/drm/drm_probe_helper.c:426)
+   status_store (drivers/gpu/drm/drm_sysfs.c:219)
+   ...
+   vfs_write (fs/read_write.c:595 fs/read_write.c:688)
+   ksys_write (fs/read_write.c:740)
 
-This is defensive, for safety reasons.
-
-nf_ct_ext_find() used to return NULL if the extension is stale for
-unconfirmed conntracks if the genid validation fails.
-
-Skip NULL check in nf_nat_inet_fn() given this is valid to be NULL
-for non-initialized ct nat extensions.
-
-While at it, fetch ct helper area in nf_ct_expect_related_report() only
-once and pass it on to other ancilliary functions. Replace WARN_ON()
-by WARN_ON_ONCE() in nf_ct_unlink_expect_report().
-
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 979c13114c0b ("netfilter: nf_conntrack_expect: store master_tuple in expectation")
+Fixes: 40d9b043a89e ("drm/connector: store tile information from displayid (v3)")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patch.msgid.link/20260615184737.899892-1-xmei5@asu.edu
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_conntrack_helper.h |  2 +
- net/ipv4/netfilter/nf_nat_h323.c            | 12 ++++++
- net/ipv4/netfilter/nf_nat_pptp.c            | 14 +++++--
- net/netfilter/nf_conntrack_broadcast.c      |  3 ++
- net/netfilter/nf_conntrack_expect.c         | 33 +++++++++--------
- net/netfilter/nf_conntrack_ftp.c            |  6 +++
- net/netfilter/nf_conntrack_h323_main.c      | 18 +++++++++
- net/netfilter/nf_conntrack_pptp.c           |  9 +++++
- net/netfilter/nf_conntrack_proto_gre.c      |  9 +++++
- net/netfilter/nf_conntrack_sane.c           |  3 ++
- net/netfilter/nf_conntrack_seqadj.c         | 17 ++++++---
- net/netfilter/nf_conntrack_sip.c            | 41 ++++++++++++++++++++-
- net/netfilter/nf_nat_sip.c                  | 12 ++++++
- net/netfilter/nfnetlink_cthelper.c          |  6 +++
- 14 files changed, 158 insertions(+), 27 deletions(-)
+ drivers/gpu/drm/drm_edid.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/include/net/netfilter/nf_conntrack_helper.h b/include/net/netfilter/nf_conntrack_helper.h
-index 18dfb3a287cf1f..295c9d2a08907f 100644
---- a/include/net/netfilter/nf_conntrack_helper.h
-+++ b/include/net/netfilter/nf_conntrack_helper.h
-@@ -134,6 +134,8 @@ static inline void *nfct_help_data(const struct nf_conn *ct)
- 	struct nf_conn_help *help;
+diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+index 404208bf23a6b4..df3c25bac761da 100644
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -7575,6 +7575,14 @@ static void drm_parse_tiled_block(struct drm_connector *connector,
+ 	u8 num_v_tile, num_h_tile;
+ 	struct drm_tile_group *tg;
  
- 	help = nf_ct_ext_find(ct, NF_CT_EXT_HELPER);
-+	if (!help)
-+		return NULL;
- 
- 	return (void *)help->data;
- }
-diff --git a/net/ipv4/netfilter/nf_nat_h323.c b/net/ipv4/netfilter/nf_nat_h323.c
-index 10e1b0837731b7..183e8a3ff2babd 100644
---- a/net/ipv4/netfilter/nf_nat_h323.c
-+++ b/net/ipv4/netfilter/nf_nat_h323.c
-@@ -100,6 +100,9 @@ static int set_sig_addr(struct sk_buff *skb, struct nf_conn *ct,
- 	__be16 port;
- 	union nf_inet_addr addr;
- 
-+	if (!info)
-+		return -1;
-+
- 	for (i = 0; i < count; i++) {
- 		if (get_h225_addr(ct, *data, &taddr[i], &addr, &port)) {
- 			if (addr.ip == ct->tuplehash[dir].tuple.src.u3.ip &&
-@@ -184,6 +187,9 @@ static int nat_rtp_rtcp(struct sk_buff *skb, struct nf_conn *ct,
- 	int i;
- 	u_int16_t nated_port;
- 
-+	if (!info)
-+		return -1;
-+
- 	/* Set expectations for NAT */
- 	rtp_exp->saved_proto.udp.port = rtp_exp->tuple.dst.u.udp.port;
- 	rtp_exp->expectfn = nf_nat_follow_master;
-@@ -325,6 +331,9 @@ static int nat_h245(struct sk_buff *skb, struct nf_conn *ct,
- 	int dir = CTINFO2DIR(ctinfo);
- 	u_int16_t nated_port = ntohs(port);
- 
-+	if (!info)
-+		return -1;
-+
- 	/* Set expectations for NAT */
- 	exp->saved_proto.tcp.port = exp->tuple.dst.u.tcp.port;
- 	exp->expectfn = nf_nat_follow_master;
-@@ -404,6 +413,9 @@ static int nat_q931(struct sk_buff *skb, struct nf_conn *ct,
- 	u_int16_t nated_port = ntohs(port);
- 	union nf_inet_addr addr;
- 
-+	if (!info)
-+		return -1;
-+
- 	/* Set expectations for NAT */
- 	exp->saved_proto.tcp.port = exp->tuple.dst.u.tcp.port;
- 	exp->expectfn = ip_nat_q931_expect;
-diff --git a/net/ipv4/netfilter/nf_nat_pptp.c b/net/ipv4/netfilter/nf_nat_pptp.c
-index fab357cc855944..fed5249001a498 100644
---- a/net/ipv4/netfilter/nf_nat_pptp.c
-+++ b/net/ipv4/netfilter/nf_nat_pptp.c
-@@ -53,11 +53,13 @@ static void pptp_nat_expected(struct nf_conn *ct,
- 	struct nf_conn_nat *nat;
- 
- 	nat = nf_ct_nat_ext_add(ct);
--	if (WARN_ON_ONCE(!nat))
-+	if (!nat)
- 		return;
- 
- 	nat_pptp_info = &nat->help.nat_pptp_info;
- 	ct_pptp_info = nfct_help_data(master);
-+	if (!ct_pptp_info)
++	/* tiled block payload per spec: cap 1 + topo 3 + size 4 + bezel 5 + id 9 = 22 */
++	if (block->num_bytes < 22) {
++		drm_dbg_kms(connector->dev,
++			    "[CONNECTOR:%d:%s] Unexpected tiled block size %u\n",
++			    connector->base.id, connector->name, block->num_bytes);
 +		return;
- 
- 	/* And here goes the grand finale of corrosion... */
- 	if (exp->dir == IP_CT_DIR_ORIGINAL) {
-@@ -132,11 +134,13 @@ pptp_outbound_pkt(struct sk_buff *skb,
- 	__be16 new_callid;
- 	unsigned int cid_off;
- 
--	if (WARN_ON_ONCE(!nat))
-+	if (!nat)
- 		return NF_DROP;
- 
- 	nat_pptp_info = &nat->help.nat_pptp_info;
- 	ct_pptp_info = nfct_help_data(ct);
-+	if (!ct_pptp_info)
-+		return NF_DROP;
- 
- 	new_callid = ct_pptp_info->pns_call_id;
- 
-@@ -204,11 +208,13 @@ pptp_exp_gre(struct nf_conntrack_expect *expect_orig,
- 	struct nf_ct_pptp_master *ct_pptp_info;
- 	struct nf_nat_pptp *nat_pptp_info;
- 
--	if (WARN_ON_ONCE(!nat))
-+	if (!nat)
- 		return;
- 
- 	nat_pptp_info = &nat->help.nat_pptp_info;
- 	ct_pptp_info = nfct_help_data(ct);
-+	if (!ct_pptp_info)
-+		return;
- 
- 	/* save original PAC call ID in nat_info */
- 	nat_pptp_info->pac_call_id = ct_pptp_info->pac_call_id;
-@@ -241,7 +247,7 @@ pptp_inbound_pkt(struct sk_buff *skb,
- 	__be16 new_pcid;
- 	unsigned int pcid_off;
- 
--	if (WARN_ON_ONCE(!nat))
-+	if (!nat)
- 		return NF_DROP;
- 
- 	nat_pptp_info = &nat->help.nat_pptp_info;
-diff --git a/net/netfilter/nf_conntrack_broadcast.c b/net/netfilter/nf_conntrack_broadcast.c
-index 75e53fde6b2974..400119b6320e72 100644
---- a/net/netfilter/nf_conntrack_broadcast.c
-+++ b/net/netfilter/nf_conntrack_broadcast.c
-@@ -29,6 +29,9 @@ int nf_conntrack_broadcast_help(struct sk_buff *skb,
- 	struct nf_conn_help *help = nfct_help(ct);
- 	__be32 mask = 0;
- 
-+	if (!help)
-+		goto out;
-+
- 	/* we're only interested in locally generated packets */
- 	if (skb->sk == NULL || !net_eq(nf_ct_net(ct), sock_net(skb->sk)))
- 		goto out;
-diff --git a/net/netfilter/nf_conntrack_expect.c b/net/netfilter/nf_conntrack_expect.c
-index 8e943efbdf0a52..5c9b17835c280b 100644
---- a/net/netfilter/nf_conntrack_expect.c
-+++ b/net/netfilter/nf_conntrack_expect.c
-@@ -52,8 +52,7 @@ void nf_ct_unlink_expect_report(struct nf_conntrack_expect *exp,
- 	struct nf_conntrack_net *cnet;
- 
- 	lockdep_nfct_expect_lock_held();
--	WARN_ON(!master_help);
--	WARN_ON(timer_pending(&exp->timeout));
-+	WARN_ON_ONCE(timer_pending(&exp->timeout));
- 
- 	hlist_del_rcu(&exp->hnode);
- 
-@@ -61,7 +60,8 @@ void nf_ct_unlink_expect_report(struct nf_conntrack_expect *exp,
- 	cnet->expect_count--;
- 
- 	hlist_del_rcu(&exp->lnode);
--	master_help->expecting[exp->class]--;
-+	if (master_help)
-+		master_help->expecting[exp->class]--;
- 
- 	nf_ct_expect_event_report(IPEXP_DESTROY, exp, portid, report);
- 	nf_ct_expect_put(exp);
-@@ -405,10 +405,10 @@ void nf_ct_expect_put(struct nf_conntrack_expect *exp)
- }
- EXPORT_SYMBOL_GPL(nf_ct_expect_put);
- 
--static void nf_ct_expect_insert(struct nf_conntrack_expect *exp)
-+static void nf_ct_expect_insert(struct nf_conntrack_expect *exp,
-+				struct nf_conn_help *master_help)
- {
- 	struct nf_conntrack_net *cnet;
--	struct nf_conn_help *master_help = nfct_help(exp->master);
- 	struct nf_conntrack_helper *helper;
- 	struct net *net = nf_ct_exp_net(exp);
- 	unsigned int h = nf_ct_expect_dst_hash(net, &exp->tuple);
-@@ -436,10 +436,9 @@ static void nf_ct_expect_insert(struct nf_conntrack_expect *exp)
- }
- 
- /* Race with expectations being used means we could have none to find; OK. */
--static void evict_oldest_expect(struct nf_conn *master,
-+static void evict_oldest_expect(struct nf_conn_help *master_help,
- 				struct nf_conntrack_expect *new)
- {
--	struct nf_conn_help *master_help = nfct_help(master);
- 	struct nf_conntrack_expect *exp, *last = NULL;
- 
- 	hlist_for_each_entry(exp, &master_help->expectations, lnode) {
-@@ -452,13 +451,12 @@ static void evict_oldest_expect(struct nf_conn *master,
- }
- 
- static inline int __nf_ct_expect_check(struct nf_conntrack_expect *expect,
-+				       struct nf_conn_help *master_help,
- 				       unsigned int flags)
- {
- 	const struct nf_conntrack_expect_policy *p;
- 	struct nf_conntrack_expect *i;
- 	struct nf_conntrack_net *cnet;
--	struct nf_conn *master = expect->master;
--	struct nf_conn_help *master_help = nfct_help(master);
- 	struct nf_conntrack_helper *helper;
- 	struct net *net = nf_ct_exp_net(expect);
- 	struct hlist_node *next;
-@@ -467,10 +465,6 @@ static inline int __nf_ct_expect_check(struct nf_conntrack_expect *expect,
- 
- 	lockdep_nfct_expect_lock_held();
- 
--	if (!master_help) {
--		ret = -ESHUTDOWN;
--		goto out;
--	}
- 	h = nf_ct_expect_dst_hash(net, &expect->tuple);
- 	hlist_for_each_entry_safe(i, next, &nf_ct_expect_hash[h], hnode) {
- 		if (master_matches(i, expect, flags) &&
-@@ -493,7 +487,7 @@ static inline int __nf_ct_expect_check(struct nf_conntrack_expect *expect,
- 		p = &helper->expect_policy[expect->class];
- 		if (p->max_expected &&
- 		    master_help->expecting[expect->class] >= p->max_expected) {
--			evict_oldest_expect(master, expect);
-+			evict_oldest_expect(master_help, expect);
- 			if (master_help->expecting[expect->class]
- 						>= p->max_expected) {
- 				ret = -EMFILE;
-@@ -514,14 +508,21 @@ static inline int __nf_ct_expect_check(struct nf_conntrack_expect *expect,
- int nf_ct_expect_related_report(struct nf_conntrack_expect *expect,
- 				u32 portid, int report, unsigned int flags)
- {
-+	struct nf_conn_help *master_help;
- 	int ret;
- 
- 	spin_lock_bh(&nf_conntrack_expect_lock);
--	ret = __nf_ct_expect_check(expect, flags);
-+	master_help = nfct_help(expect->master);
-+	if (!master_help) {
-+		ret = -ESHUTDOWN;
-+		goto out;
 +	}
 +
-+	ret = __nf_ct_expect_check(expect, master_help, flags);
- 	if (ret < 0)
- 		goto out;
+ 	w = tile->tile_size[0] | tile->tile_size[1] << 8;
+ 	h = tile->tile_size[2] | tile->tile_size[3] << 8;
  
--	nf_ct_expect_insert(expect);
-+	nf_ct_expect_insert(expect, master_help);
- 
- 	nf_ct_expect_event_report(IPEXP_NEW, expect, portid, report);
- 	spin_unlock_bh(&nf_conntrack_expect_lock);
-diff --git a/net/netfilter/nf_conntrack_ftp.c b/net/netfilter/nf_conntrack_ftp.c
-index b21da0c7884584..6e3c06de8a6eb5 100644
---- a/net/netfilter/nf_conntrack_ftp.c
-+++ b/net/netfilter/nf_conntrack_ftp.c
-@@ -381,6 +381,9 @@ static int help(struct sk_buff *skb,
- 	int found = 0, ends_in_nl;
- 	nf_nat_ftp_hook_fn *nf_nat_ftp;
- 
-+	if (!ct_ftp_info)
-+		return NF_DROP;
-+
- 	/* Until there's been traffic both ways, don't look in packets. */
- 	if (ctinfo != IP_CT_ESTABLISHED &&
- 	    ctinfo != IP_CT_ESTABLISHED_REPLY) {
-@@ -542,6 +545,9 @@ static int nf_ct_ftp_from_nlattr(struct nlattr *attr, struct nf_conn *ct)
- {
- 	struct nf_ct_ftp_master *ftp = nfct_help_data(ct);
- 
-+	if (!ftp)
-+		return -ENOENT;
-+
- 	/* This conntrack has been injected from user-space, always pick up
- 	 * sequence tracking. Otherwise, the first FTP command after the
- 	 * failover breaks.
-diff --git a/net/netfilter/nf_conntrack_h323_main.c b/net/netfilter/nf_conntrack_h323_main.c
-index ebae9fdab89780..7f189dceb3c4d7 100644
---- a/net/netfilter/nf_conntrack_h323_main.c
-+++ b/net/netfilter/nf_conntrack_h323_main.c
-@@ -76,6 +76,9 @@ static int get_tpkt_data(struct sk_buff *skb, unsigned int protoff,
- 	int tpktlen;
- 	int tpktoff;
- 
-+	if (!info)
-+		return 0;
-+
- 	/* Get TCP header */
- 	th = skb_header_pointer(skb, protoff, sizeof(_tcph), &_tcph);
- 	if (th == NULL)
-@@ -1191,6 +1194,9 @@ static int expect_q931(struct sk_buff *skb, struct nf_conn *ct,
- 	union nf_inet_addr addr;
- 	struct nf_conntrack_expect *exp;
- 
-+	if (!info)
-+		return -1;
-+
- 	/* Look for the first related address */
- 	for (i = 0; i < count; i++) {
- 		if (get_h225_addr(ct, *data, &taddr[i], &addr, &port) &&
-@@ -1307,6 +1313,9 @@ static int process_rrq(struct sk_buff *skb, struct nf_conn *ct,
- 	const struct nfct_h323_nat_hooks *nathook;
- 	int ret;
- 
-+	if (!info)
-+		return -1;
-+
- 	pr_debug("nf_ct_ras: RRQ\n");
- 
- 	ret = expect_q931(skb, ct, ctinfo, protoff, data,
-@@ -1345,6 +1354,9 @@ static int process_rcf(struct sk_buff *skb, struct nf_conn *ct,
- 	int ret;
- 	struct nf_conntrack_expect *exp;
- 
-+	if (!info)
-+		return -1;
-+
- 	pr_debug("nf_ct_ras: RCF\n");
- 
- 	nathook = rcu_dereference(nfct_h323_nat_hook);
-@@ -1395,6 +1407,9 @@ static int process_urq(struct sk_buff *skb, struct nf_conn *ct,
- 	int dir = CTINFO2DIR(ctinfo);
- 	int ret;
- 
-+	if (!info)
-+		return -1;
-+
- 	pr_debug("nf_ct_ras: URQ\n");
- 
- 	nathook = rcu_dereference(nfct_h323_nat_hook);
-@@ -1429,6 +1444,9 @@ static int process_arq(struct sk_buff *skb, struct nf_conn *ct,
- 	__be16 port;
- 	union nf_inet_addr addr;
- 
-+	if (!info)
-+		return 0;
-+
- 	pr_debug("nf_ct_ras: ARQ\n");
- 
- 	nathook = rcu_dereference(nfct_h323_nat_hook);
-diff --git a/net/netfilter/nf_conntrack_pptp.c b/net/netfilter/nf_conntrack_pptp.c
-index ed567a1cf7fd7e..776505a78e6456 100644
---- a/net/netfilter/nf_conntrack_pptp.c
-+++ b/net/netfilter/nf_conntrack_pptp.c
-@@ -198,6 +198,9 @@ pptp_inbound_pkt(struct sk_buff *skb, unsigned int protoff,
- 	u_int16_t msg;
- 	__be16 cid = 0, pcid = 0;
- 
-+	if (!info)
-+		return NF_DROP;
-+
- 	msg = ntohs(ctlh->messageType);
- 	pr_debug("inbound control message %s\n", pptp_msg_name(msg));
- 
-@@ -325,6 +328,9 @@ pptp_outbound_pkt(struct sk_buff *skb, unsigned int protoff,
- 	u_int16_t msg;
- 	__be16 cid = 0, pcid = 0;
- 
-+	if (!info)
-+		return NF_DROP;
-+
- 	msg = ntohs(ctlh->messageType);
- 	pr_debug("outbound control message %s\n", pptp_msg_name(msg));
- 
-@@ -443,6 +449,9 @@ conntrack_pptp_help(struct sk_buff *skb, unsigned int protoff,
- 	int ret;
- 	u_int16_t msg;
- 
-+	if (!info)
-+		return NF_DROP;
-+
- #if IS_ENABLED(CONFIG_NF_NAT)
- 	if (!nf_ct_is_confirmed(ct) && (ct->status & IPS_NAT_MASK)) {
- 		struct nf_conn_nat *nat = nf_ct_ext_find(ct, NF_CT_EXT_NAT);
-diff --git a/net/netfilter/nf_conntrack_proto_gre.c b/net/netfilter/nf_conntrack_proto_gre.c
-index 473658259f1a2b..616ab1e2fc5edc 100644
---- a/net/netfilter/nf_conntrack_proto_gre.c
-+++ b/net/netfilter/nf_conntrack_proto_gre.c
-@@ -131,6 +131,9 @@ bool nf_ct_gre_keymap_add(struct nf_conn *ct,
- 	struct nf_ct_gre_keymap *km_orig, *km_repl;
- 	bool ret = false;
- 
-+	if (!ct_pptp_info)
-+		return false;
-+
- 	km_orig = kmalloc_obj(*km_orig, GFP_ATOMIC);
- 	if (!km_orig)
- 		return false;
-@@ -187,6 +190,9 @@ void nf_ct_gre_keymap_destroy(struct nf_conn *ct)
- 	struct nf_ct_pptp_master *ct_pptp_info = nfct_help_data(ct);
- 	enum ip_conntrack_dir dir;
- 
-+	if (!ct_pptp_info)
-+		return;
-+
- 	pr_debug("entering for ct %p\n", ct);
- 
- 	spin_lock_bh(&keymap_lock);
-@@ -389,6 +395,9 @@ void gre_pptp_destroy_siblings(struct nf_conn *ct)
- 	const struct nf_ct_pptp_master *ct_pptp_info = nfct_help_data(ct);
- 	struct nf_conntrack_tuple t;
- 
-+	if (!ct_pptp_info)
-+		return;
-+
- 	nf_ct_gre_keymap_destroy(ct);
- 
- 	/* try original (pns->pac) tuple */
-diff --git a/net/netfilter/nf_conntrack_sane.c b/net/netfilter/nf_conntrack_sane.c
-index a7f7b07ba0c2b7..39085acf7a7185 100644
---- a/net/netfilter/nf_conntrack_sane.c
-+++ b/net/netfilter/nf_conntrack_sane.c
-@@ -74,6 +74,9 @@ static int help(struct sk_buff *skb,
- 		struct sane_reply_net_start repl;
- 	} buf;
- 
-+	if (!ct_sane_info)
-+		return NF_DROP;
-+
- 	/* Until there's been traffic both ways, don't look in packets. */
- 	if (ctinfo != IP_CT_ESTABLISHED &&
- 	    ctinfo != IP_CT_ESTABLISHED_REPLY)
-diff --git a/net/netfilter/nf_conntrack_seqadj.c b/net/netfilter/nf_conntrack_seqadj.c
-index b7e99f34dfce86..220216a4edc513 100644
---- a/net/netfilter/nf_conntrack_seqadj.c
-+++ b/net/netfilter/nf_conntrack_seqadj.c
-@@ -18,9 +18,12 @@ int nf_ct_seqadj_init(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
- 		return 0;
- 
- 	spin_lock_bh(&ct->lock);
--	set_bit(IPS_SEQ_ADJUST_BIT, &ct->status);
--
- 	seqadj = nfct_seqadj(ct);
-+	if (!seqadj) {
-+		spin_unlock_bh(&ct->lock);
-+		return 0;
-+	}
-+	set_bit(IPS_SEQ_ADJUST_BIT, &ct->status);
- 	this_way = &seqadj->seq[dir];
- 	this_way->offset_before	 = off;
- 	this_way->offset_after	 = off;
-@@ -39,10 +42,8 @@ int nf_ct_seqadj_set(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
- 	if (off == 0)
- 		return 0;
- 
--	if (unlikely(!seqadj)) {
--		WARN_ONCE(1, "Missing nfct_seqadj_ext_add() setup call\n");
-+	if (unlikely(!seqadj))
- 		return 0;
--	}
- 
- 	set_bit(IPS_SEQ_ADJUST_BIT, &ct->status);
- 
-@@ -125,6 +126,9 @@ static unsigned int nf_ct_sack_adjust(struct sk_buff *skb,
- 	struct nf_conn_seqadj *seqadj = nfct_seqadj(ct);
- 	unsigned int dir, optoff, optend;
- 
-+	if (!seqadj)
-+		return 0;
-+
- 	optoff = protoff + sizeof(struct tcphdr);
- 	optend = protoff + tcph->doff * 4;
- 
-@@ -175,6 +179,9 @@ int nf_ct_seq_adjust(struct sk_buff *skb,
- 	struct nf_ct_seqadj *this_way, *other_way;
- 	int res = 1;
- 
-+	if (!seqadj)
-+		return 0;
-+
- 	this_way  = &seqadj->seq[dir];
- 	other_way = &seqadj->seq[!dir];
- 
-diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
-index 2c78a3e1dab5e5..c606d1f60b5895 100644
---- a/net/netfilter/nf_conntrack_sip.c
-+++ b/net/netfilter/nf_conntrack_sip.c
-@@ -887,6 +887,9 @@ static int refresh_signalling_expectation(struct nf_conn *ct,
- 	struct hlist_node *next;
- 	int found = 0;
- 
-+	if (!help)
-+		return 0;
-+
- 	spin_lock_bh(&nf_conntrack_expect_lock);
- 	hlist_for_each_entry_safe(exp, next, &help->expectations, lnode) {
- 		if (exp->class != SIP_EXPECT_SIGNALLING ||
-@@ -910,6 +913,9 @@ static void flush_expectations(struct nf_conn *ct, bool media)
- 	struct nf_conntrack_expect *exp;
- 	struct hlist_node *next;
- 
-+	if (!help)
-+		return;
-+
- 	spin_lock_bh(&nf_conntrack_expect_lock);
- 	hlist_for_each_entry_safe(exp, next, &help->expectations, lnode) {
- 		if ((exp->class != SIP_EXPECT_SIGNALLING) ^ media)
-@@ -940,6 +946,11 @@ static int set_expected_rtp_rtcp(struct sk_buff *skb, unsigned int protoff,
- 	u_int16_t base_port;
- 	__be16 rtp_port, rtcp_port;
- 	const struct nf_nat_sip_hooks *hooks;
-+	struct nf_conn_help *help;
-+
-+	help = nfct_help(ct);
-+	if (!help)
-+		return NF_DROP;
- 
- 	saddr = NULL;
- 	if (sip_direct_media) {
-@@ -1002,7 +1013,7 @@ static int set_expected_rtp_rtcp(struct sk_buff *skb, unsigned int protoff,
- 		exp = __nf_ct_expect_find(net, nf_ct_zone(ct), &tuple);
- 
- 		if (!exp || exp->master == ct ||
--		    exp->helper != nfct_help(ct)->helper ||
-+		    exp->helper != help->helper ||
- 		    exp->class != class)
- 			break;
- #if IS_ENABLED(CONFIG_NF_NAT)
-@@ -1227,6 +1238,9 @@ static int process_invite_response(struct sk_buff *skb, unsigned int protoff,
- 	struct nf_conn *ct = nf_ct_get(skb, &ctinfo);
- 	struct nf_ct_sip_master *ct_sip_info = nfct_help_data(ct);
- 
-+	if (!ct_sip_info)
-+		return NF_DROP;
-+
- 	if ((code >= 100 && code <= 199) ||
- 	    (code >= 200 && code <= 299))
- 		return process_sdp(skb, protoff, dataoff, dptr, datalen, cseq);
-@@ -1244,6 +1258,9 @@ static int process_update_response(struct sk_buff *skb, unsigned int protoff,
- 	struct nf_conn *ct = nf_ct_get(skb, &ctinfo);
- 	struct nf_ct_sip_master *ct_sip_info = nfct_help_data(ct);
- 
-+	if (!ct_sip_info)
-+		return NF_DROP;
-+
- 	if ((code >= 100 && code <= 199) ||
- 	    (code >= 200 && code <= 299))
- 		return process_sdp(skb, protoff, dataoff, dptr, datalen, cseq);
-@@ -1261,6 +1278,9 @@ static int process_prack_response(struct sk_buff *skb, unsigned int protoff,
- 	struct nf_conn *ct = nf_ct_get(skb, &ctinfo);
- 	struct nf_ct_sip_master *ct_sip_info = nfct_help_data(ct);
- 
-+	if (!ct_sip_info)
-+		return NF_DROP;
-+
- 	if ((code >= 100 && code <= 199) ||
- 	    (code >= 200 && code <= 299))
- 		return process_sdp(skb, protoff, dataoff, dptr, datalen, cseq);
-@@ -1279,6 +1299,9 @@ static int process_invite_request(struct sk_buff *skb, unsigned int protoff,
- 	struct nf_ct_sip_master *ct_sip_info = nfct_help_data(ct);
- 	unsigned int ret;
- 
-+	if (!ct_sip_info)
-+		return NF_DROP;
-+
- 	flush_expectations(ct, true);
- 	ret = process_sdp(skb, protoff, dataoff, dptr, datalen, cseq);
- 	if (ret == NF_ACCEPT)
-@@ -1316,11 +1339,15 @@ static int process_register_request(struct sk_buff *skb, unsigned int protoff,
- 	union nf_inet_addr *saddr, daddr;
- 	const struct nf_nat_sip_hooks *hooks;
- 	struct nf_conntrack_helper *helper;
-+	struct nf_conn_help *help;
- 	__be16 port;
- 	u8 proto;
- 	unsigned int expires = 0;
- 	int ret;
- 
-+	if (!ct_sip_info)
-+		return NF_DROP;
-+
- 	/* Expected connections can not register again. */
- 	if (ct->status & IPS_EXPECTED)
- 		return NF_ACCEPT;
-@@ -1366,7 +1393,11 @@ static int process_register_request(struct sk_buff *skb, unsigned int protoff,
- 		goto store_cseq;
- 	}
- 
--	helper = rcu_dereference(nfct_help(ct)->helper);
-+	help = nfct_help(ct);
-+	if (!help)
-+		return NF_DROP;
-+
-+	helper = rcu_dereference(help->helper);
- 	if (!helper)
- 		return NF_DROP;
- 
-@@ -1421,6 +1452,9 @@ static int process_register_response(struct sk_buff *skb, unsigned int protoff,
- 	unsigned int expires = 0;
- 	int in_contact = 0, ret;
- 
-+	if (!ct_sip_info)
-+		return NF_DROP;
-+
- 	/* According to RFC 3261, "UAs MUST NOT send a new registration until
- 	 * they have received a final response from the registrar for the
- 	 * previous one or the previous REGISTER request has timed out".
-@@ -1550,6 +1584,9 @@ static int process_sip_request(struct sk_buff *skb, unsigned int protoff,
- 	union nf_inet_addr addr;
- 	__be16 port;
- 
-+	if (!ct_sip_info)
-+		return NF_DROP;
-+
- 	/* Many Cisco IP phones use a high source port for SIP requests, but
- 	 * listen for the response on port 5060.  If we are the local
- 	 * router for one of these phones, save the port number from the
-diff --git a/net/netfilter/nf_nat_sip.c b/net/netfilter/nf_nat_sip.c
-index 00838c0cc5bb28..67c04d8143ab91 100644
---- a/net/netfilter/nf_nat_sip.c
-+++ b/net/netfilter/nf_nat_sip.c
-@@ -106,6 +106,9 @@ static int map_addr(struct sk_buff *skb, unsigned int protoff,
- 	union nf_inet_addr newaddr;
- 	__be16 newport;
- 
-+	if (!ct_sip_info)
-+		return 0;
-+
- 	if (nf_inet_addr_cmp(&ct->tuplehash[dir].tuple.src.u3, addr) &&
- 	    ct->tuplehash[dir].tuple.src.u.udp.port == port) {
- 		newaddr = ct->tuplehash[!dir].tuple.dst.u3;
-@@ -158,6 +161,9 @@ static unsigned int nf_nat_sip(struct sk_buff *skb, unsigned int protoff,
- 	__be16 port;
- 	int request, in_header;
- 
-+	if (!ct_sip_info)
-+		return NF_DROP;
-+
- 	/* Basic rules: requests and responses. */
- 	if (strncasecmp(*dptr, "SIP/2.0", strlen("SIP/2.0")) != 0) {
- 		if (ct_sip_parse_request(ct, *dptr, *datalen,
-@@ -326,6 +332,9 @@ static void nf_nat_sip_expected(struct nf_conn *ct,
- 	int range_set_for_snat = 0;
- 	struct nf_nat_range2 range;
- 
-+	if (!help)
-+		return;
-+
- 	/* This must be a fresh one. */
- 	BUG_ON(ct->status & IPS_NAT_DONE_MASK);
- 
-@@ -390,6 +399,9 @@ static unsigned int nf_nat_sip_expect(struct sk_buff *skb, unsigned int protoff,
- 	char buffer[INET6_ADDRSTRLEN + sizeof("[]:nnnnn")];
- 	unsigned int buflen;
- 
-+	if (!ct_sip_info)
-+		return NF_DROP;
-+
- 	/* Connection will come from reply */
- 	if (nf_inet_addr_cmp(&ct->tuplehash[dir].tuple.src.u3,
- 			     &ct->tuplehash[!dir].tuple.dst.u3))
-diff --git a/net/netfilter/nfnetlink_cthelper.c b/net/netfilter/nfnetlink_cthelper.c
-index a74078ced52da6..96fc65414502cf 100644
---- a/net/netfilter/nfnetlink_cthelper.c
-+++ b/net/netfilter/nfnetlink_cthelper.c
-@@ -101,6 +101,9 @@ nfnl_cthelper_from_nlattr(struct nlattr *attr, struct nf_conn *ct)
- 	struct nf_conn_help *help = nfct_help(ct);
- 	const struct nf_conntrack_helper *helper;
- 
-+	if (!help)
-+		return -EINVAL;
-+
- 	if (attr == NULL)
- 		return -EINVAL;
- 
-@@ -118,6 +121,9 @@ nfnl_cthelper_to_nlattr(struct sk_buff *skb, const struct nf_conn *ct)
- 	const struct nf_conn_help *help = nfct_help(ct);
- 	const struct nf_conntrack_helper *helper;
- 
-+	if (!help)
-+		return 0;
-+
- 	helper = rcu_dereference(help->helper);
- 	if (helper && helper->data_len &&
- 	    nla_put(skb, CTA_HELP_INFO, helper->data_len, &help->data))
 -- 
 2.53.0
 
