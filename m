@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED73D471268;
-	Tue, 21 Jul 2026 20:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2CD471268;
+	Tue, 21 Jul 2026 20:06:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664375; cv=none; b=r2Nvi+pjYqiQU1JjE7xEcr0X8F+A93iIikfaLAQhAB+j77eX3qxj5sX/8nOjQ17hfQwj9Ld//Gj8224kjas68KOMf3lvQAEN6o8L2b3fHv+73QGrGmt45kF4ZFAHCw79Jw3S1x2mjrZo2/KwWqSWLP8nzSa36RUKasTLibEbwrY=
+	t=1784664377; cv=none; b=AWOlf0WVLyu76UGPpsrAlMRMAXHp7Ml7v4XREDrREqZZZ+KIYzqLJxwJ8ISCBavAcUxNgtJXzwJCtnK+boUE21V6accgUTC4KB13c8ogTMVF97q2oUYRjPtr/1DxEesa83eGauPqXZDd3FCOyPLpMR5et/16BYn3EUqpqog6wLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664375; c=relaxed/simple;
-	bh=pY6GGFRWMmpot7Txr6K3ODXrvnHmPku9cToQ+AJM+BM=;
+	s=arc-20240116; t=1784664377; c=relaxed/simple;
+	bh=ol4z/DZqcugCWb9rmg0b1Jyq6t6TFT6xrYP19+F9gJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LaTMJ9gHyc0NK2uFspWKZyVxUPhaehe1AjBwqU7ljbVzLfCzd7IJsKeBrbMKjyRA2pCUIm+DCKxrwtfyZkT3NTqxVcJ7y0EtrkfHNzZzciFJKGBPS5wH215xqNlN/hdmjWh/jJPR1/DM5W9pfwVAlDIm+c66AtIZP8VDcHpObqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IA89ca/o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aNphP+NoptsQBsnkTTkaxQOZifC5P2utwicijyREAHgR91mHyFJ0KzgEGdS4Rkdv+IIB377RtUszjwSbFZnZaTDaebCra6tY1kCvUPaHhBScFGegxW0aXAJbaguAOhWKBFu+1FlqcZHXkIzAydZz22X8FEjWiV2gxbZhRd3JR/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQmahOyL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IA89ca/o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C9E1F000E9;
-	Tue, 21 Jul 2026 20:06:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQmahOyL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D1D1F000E9;
+	Tue, 21 Jul 2026 20:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664373;
-	bh=tg+Jlthvgya5I3BIe9nHeOXYT7T0DHtFnbCqL0b2Des=;
+	s=korg; t=1784664376;
+	bh=bAKJdNvsCtqEmeEdvo4zUci5eN3rqSjZcId2hH980eQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IA89ca/ogavu5RXtiEsAA9KBLGMidBuvQplJ1MjOQm6n6iUL3sMARM9Xk3W1JrsF2
-	 1mvjeR96m9Dw7cOfLmwS5sbHj4o4+tbq3xl/bZcG2Vo3GOVYHYmk9yJu/fZisrRXMk
-	 rA6pJ67EbcL2YWzglPYJq37UfO0yScWMXAIriD+M=
+	b=QQmahOyLtSb3iDHcgsl/ZQ/U7nkedKZIxmD8sfnAWVHiCrhxW/wLUYktOk9X2My7y
+	 m0pxlOpls08Ln/n/Oawct3iMzsrfeshn25yOVMNBUd6t7k+VxdlQ06QxBCJGZnomMv
+	 ZDPR9hIxEqAR1ixg9ltv1rWLla6g9WsC9f/pDzCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Siwei Zhang <oss@fourdim.xyz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
+	syzbot+e12bd9ca48157add237a@syzkaller.appspotmail.com,
+	Barry Song <baohua@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Hugh Dickins <hughd@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Kairui Song <ryncsn@gmail.com>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1176/1276] Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_new_connection_cb()
-Date: Tue, 21 Jul 2026 17:26:59 +0200
-Message-ID: <20260721152512.346682108@linuxfoundation.org>
+Subject: [PATCH 6.12 1177/1276] mm: swap_cgroup: fix NULL deref in lookup_swap_cgroup_id on swapless host
+Date: Tue, 21 Jul 2026 17:27:00 +0200
+Message-ID: <20260721152512.370202838@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,539 +61,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siwei Zhang <oss@fourdim.xyz>
+From: "Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>
 
-[ Upstream commit 6fef032af0092ed5ccb767239a9ac1bc38c08a40 ]
+[ Upstream commit 63b02a9409cb5180398491b093e48bcb5315f5fb ]
 
-l2cap_sock_new_connection_cb() returned l2cap_pi(sk)->chan after
-release_sock(parent). Once the parent lock is dropped the newly
-enqueued child socket sk is reachable via the accept queue, so another
-task can accept and free it before the callback dereferences sk,
-resulting in a use-after-free.
+lookup_swap_cgroup_id() passes swap_cgroup_ctrl[type].map to
+__swap_cgroup_id_lookup() without checking that the type was ever
+registered via swap_cgroup_swapon().  On a swapless host every ctrl->map
+is NULL, so __swap_cgroup_id_lookup() dereferences NULL + a scaled
+swp_offset().
 
-Rework the ->new_connection() op so the core, rather than the callback,
-owns the child channel's lifetime. The op now receives a pre-allocated
-new_chan and returns an errno instead of allocating and returning a
-channel. l2cap_new_connection() allocates the child channel and links
-it into the conn list via __l2cap_chan_add() before invoking the
-callback, so the conn-list reference keeps the channel alive once
-release_sock(parent) exposes the socket to other tasks.
+Since commit bea67dcc5eea ("mm: attempt to batch free swap entries for
+zap_pte_range()"), zap_pte_range() -> swap_pte_batch() calls
+lookup_swap_cgroup_id() on any non-present, non-none PTE that decodes as a
+real swap entry, without first validating it against swap_info[].  A
+single PTE corrupted into a type-0 swap entry takes the host down at
+process exit.
 
-Channel configuration that was duplicated in l2cap_sock_init() and the
-various new_connection callbacks is consolidated into
-l2cap_chan_set_defaults(), which now inherits from the parent channel
-when one is supplied.
+We hit this in production on a swapless 6.12.58 host: ~1s of
+"get_swap_device: Bad swap file entry 3f800204222bb" (do_swap_page() being
+correctly defensive about the same entry) followed by
 
-Fixes: 8ffb929098a5 ("Bluetooth: Remove parent socket usage from l2cap_core.c")
-Cc: stable@kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  BUG: unable to handle page fault for address: 000003f800204220
+  RIP: 0010:lookup_swap_cgroup_id+0x2b/0x60
+  Call Trace:
+   swap_pte_batch+0xbf/0x230
+   zap_pte_range+0x4c8/0x780
+   unmap_page_range+0x190/0x3e0
+   exit_mmap+0xd9/0x3c0
+   do_exit+0x20c/0x4b0
+
+syzbot has reported the identical stack.
+
+The source of the PTE corruption is a separate bug; this change makes the
+teardown path as robust as the fault path already is.  Every other caller
+of lookup_swap_cgroup_id() is downstream of a get_swap_device() that has
+already validated the entry, so the new branch is cold.
+
+Link: https://lore.kernel.org/20260504-swap-cgroup-fix-7-0-v1-1-f53ff41ee553@linux.dev
+Fixes: bea67dcc5eea ("mm: attempt to batch free swap entries for zap_pte_range()")
+Signed-off-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+Reported-by: syzbot+e12bd9ca48157add237a@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/69859728.050a0220.3b3015.0033.GAE@google.com
+Assisted-by: Claude:unspecified
+Cc: Barry Song <baohua@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Kairui Song <ryncsn@gmail.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/l2cap.h |   10 ++--
- net/bluetooth/6lowpan.c       |   18 -------
- net/bluetooth/l2cap_core.c    |   78 ++++++++++++++++++++++++++-----
- net/bluetooth/l2cap_sock.c    |  103 +++++++++++++++++++-----------------------
- net/bluetooth/smp.c           |   27 ++---------
- 5 files changed, 127 insertions(+), 109 deletions(-)
+ mm/swap_cgroup.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -620,7 +620,8 @@ struct l2cap_chan {
- struct l2cap_ops {
- 	char			*name;
- 
--	struct l2cap_chan	*(*new_connection) (struct l2cap_chan *chan);
-+	int			(*new_connection)(struct l2cap_chan *chan,
-+						  struct l2cap_chan *new_chan);
- 	int			(*recv) (struct l2cap_chan * chan,
- 					 struct sk_buff *skb);
- 	void			(*teardown) (struct l2cap_chan *chan, int err);
-@@ -884,9 +885,10 @@ static inline __u16 __next_seq(struct l2
- 	return (seq + 1) % (chan->tx_win_max + 1);
- }
- 
--static inline struct l2cap_chan *l2cap_chan_no_new_connection(struct l2cap_chan *chan)
-+static inline int l2cap_chan_no_new_connection(struct l2cap_chan *chan,
-+					       struct l2cap_chan *new_chan)
- {
--	return NULL;
-+	return -EOPNOTSUPP;
- }
- 
- static inline int l2cap_chan_no_recv(struct l2cap_chan *chan, struct sk_buff *skb)
-@@ -962,7 +964,7 @@ int l2cap_chan_send(struct l2cap_chan *c
- void l2cap_chan_busy(struct l2cap_chan *chan, int busy);
- void l2cap_chan_rx_avail(struct l2cap_chan *chan, ssize_t rx_avail);
- int l2cap_chan_check_security(struct l2cap_chan *chan, bool initiator);
--void l2cap_chan_set_defaults(struct l2cap_chan *chan);
-+void l2cap_chan_set_defaults(struct l2cap_chan *chan, struct l2cap_chan *pchan);
- int l2cap_ertm_init(struct l2cap_chan *chan);
- void l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan);
- void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan);
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -631,7 +631,7 @@ static struct l2cap_chan *chan_create(vo
- 	if (!chan)
- 		return NULL;
- 
--	l2cap_chan_set_defaults(chan);
-+	l2cap_chan_set_defaults(chan, NULL);
- 
- 	chan->chan_type = L2CAP_CHAN_CONN_ORIENTED;
- 	chan->mode = L2CAP_MODE_LE_FLOWCTL;
-@@ -744,21 +744,6 @@ static inline void chan_ready_cb(struct
- 	ifup(dev->netdev);
- }
- 
--static inline struct l2cap_chan *chan_new_conn_cb(struct l2cap_chan *pchan)
--{
--	struct l2cap_chan *chan;
--
--	chan = chan_create();
--	if (!chan)
--		return NULL;
--
--	chan->ops = pchan->ops;
--
--	BT_DBG("chan %p pchan %p", chan, pchan);
--
--	return chan;
--}
--
- static void unregister_dev(struct lowpan_btle_dev *dev)
- {
- 	struct hci_dev *hdev = READ_ONCE(dev->hdev);
-@@ -900,7 +885,6 @@ static long chan_get_sndtimeo_cb(struct
- 
- static const struct l2cap_ops bt_6lowpan_chan_ops = {
- 	.name			= "L2CAP 6LoWPAN channel",
--	.new_connection		= chan_new_conn_cb,
- 	.recv			= chan_recv_cb,
- 	.close			= chan_close_cb,
- 	.state_change		= chan_state_change_cb,
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -525,7 +525,10 @@ void l2cap_chan_put(struct l2cap_chan *c
- }
- EXPORT_SYMBOL_GPL(l2cap_chan_put);
- 
--void l2cap_chan_set_defaults(struct l2cap_chan *chan)
-+/* Initialise @chan with default values, inheriting from the parent channel
-+ * @pchan when it is given.
-+ */
-+void l2cap_chan_set_defaults(struct l2cap_chan *chan, struct l2cap_chan *pchan)
- {
- 	chan->fcs  = L2CAP_FCS_CRC16;
- 	chan->max_tx = L2CAP_DEFAULT_MAX_TX;
-@@ -539,6 +542,31 @@ void l2cap_chan_set_defaults(struct l2ca
- 	chan->retrans_timeout = L2CAP_DEFAULT_RETRANS_TO;
- 	chan->monitor_timeout = L2CAP_DEFAULT_MONITOR_TO;
- 
-+	if (pchan) {
-+		BT_DBG("chan %p pchan %p", chan, pchan);
-+
-+		chan->chan_type = pchan->chan_type;
-+		chan->imtu = pchan->imtu;
-+		chan->omtu = pchan->omtu;
-+		chan->mode = pchan->mode;
-+		chan->fcs = pchan->fcs;
-+		chan->max_tx = pchan->max_tx;
-+		chan->tx_win = pchan->tx_win;
-+		chan->tx_win_max = pchan->tx_win_max;
-+		chan->sec_level = pchan->sec_level;
-+		chan->conf_state = pchan->conf_state;
-+		chan->flags = pchan->flags;
-+		chan->tx_credits = pchan->tx_credits;
-+		chan->rx_credits = pchan->rx_credits;
-+
-+		if (chan->chan_type == L2CAP_CHAN_FIXED) {
-+			chan->scid = pchan->scid;
-+			chan->dcid = pchan->scid;
-+		}
-+
-+		return;
-+	}
-+
- 	chan->conf_state = 0;
- 	set_bit(CONF_NOT_COMPLETE, &chan->conf_state);
- 
-@@ -3969,6 +3997,38 @@ static inline int l2cap_command_rej(stru
- 	return 0;
- }
- 
-+/* Allocate and initialise a channel for an incoming connection.
-+ *
-+ * The channel inherits its configuration from @pchan and is linked into @conn
-+ * before ->new_connection() runs, so the conn list reference keeps it alive if
-+ * the callback exposes it (e.g. via the socket accept queue) before this
-+ * returns. The l2cap_chan_create() reference is taken over by the subsystem on
-+ * success and dropped here on failure.
-+ */
-+static struct l2cap_chan *l2cap_new_connection(struct l2cap_conn *conn,
-+					       struct l2cap_chan *pchan)
-+{
-+	struct l2cap_chan *chan;
-+
-+	chan = l2cap_chan_create();
-+	if (!chan)
-+		return NULL;
-+
-+	l2cap_chan_set_defaults(chan, pchan);
-+	chan->ops = pchan->ops;
-+
-+	__l2cap_chan_add(conn, chan);
-+
-+	if (pchan->ops->new_connection &&
-+	    pchan->ops->new_connection(pchan, chan) < 0) {
-+		l2cap_chan_del(chan, 0);
-+		l2cap_chan_put(chan);
-+		return NULL;
-+	}
-+
-+	return chan;
-+}
-+
- static void l2cap_connect(struct l2cap_conn *conn, struct l2cap_cmd_hdr *cmd,
- 			  u8 *data, u8 rsp_code)
- {
-@@ -4015,7 +4075,7 @@ static void l2cap_connect(struct l2cap_c
- 		goto response;
- 	}
- 
--	chan = pchan->ops->new_connection(pchan);
-+	chan = l2cap_new_connection(conn, pchan);
- 	if (!chan)
- 		goto response;
- 
-@@ -4033,8 +4093,6 @@ static void l2cap_connect(struct l2cap_c
- 	chan->psm  = psm;
- 	chan->dcid = scid;
- 
--	__l2cap_chan_add(conn, chan);
--
- 	dcid = chan->scid;
- 
- 	__set_chan_timer(chan, chan->ops->get_sndtimeo(chan));
-@@ -4932,7 +4990,7 @@ static int l2cap_le_connect_req(struct l
- 		goto response_unlock;
- 	}
- 
--	chan = pchan->ops->new_connection(pchan);
-+	chan = l2cap_new_connection(conn, pchan);
- 	if (!chan) {
- 		result = L2CAP_CR_LE_NO_MEM;
- 		goto response_unlock;
-@@ -4947,8 +5005,6 @@ static int l2cap_le_connect_req(struct l
- 	chan->omtu = mtu;
- 	chan->remote_mps = mps;
- 
--	__l2cap_chan_add(conn, chan);
--
- 	l2cap_le_flowctl_init(chan, __le16_to_cpu(req->credits));
- 
- 	dcid = chan->scid;
-@@ -5156,7 +5212,7 @@ static inline int l2cap_ecred_conn_req(s
- 			continue;
- 		}
- 
--		chan = pchan->ops->new_connection(pchan);
-+		chan = l2cap_new_connection(conn, pchan);
- 		if (!chan) {
- 			result = L2CAP_CR_LE_NO_MEM;
- 			continue;
-@@ -5171,8 +5227,6 @@ static inline int l2cap_ecred_conn_req(s
- 		chan->omtu = mtu;
- 		chan->remote_mps = mps;
- 
--		__l2cap_chan_add(conn, chan);
--
- 		l2cap_ecred_init(chan, __le16_to_cpu(req->credits));
- 
- 		/* Init response */
-@@ -7440,14 +7494,12 @@ static void l2cap_connect_cfm(struct hci
- 			goto next;
- 
- 		l2cap_chan_lock(pchan);
--		chan = pchan->ops->new_connection(pchan);
-+		chan = l2cap_new_connection(conn, pchan);
- 		if (chan) {
- 			bacpy(&chan->src, &hcon->src);
- 			bacpy(&chan->dst, &hcon->dst);
- 			chan->src_type = bdaddr_src_type(hcon);
- 			chan->dst_type = dst_type;
--
--			__l2cap_chan_add(conn, chan);
- 		}
- 
- 		l2cap_chan_unlock(pchan);
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -45,7 +45,8 @@ static struct bt_sock_list l2cap_sk_list
- static const struct proto_ops l2cap_sock_ops;
- static void l2cap_sock_init(struct sock *sk, struct sock *parent);
- static struct sock *l2cap_sock_alloc(struct net *net, struct socket *sock,
--				     int proto, gfp_t prio, int kern);
-+				     int proto, gfp_t prio, int kern,
-+				     struct l2cap_chan *chan);
- static void l2cap_sock_cleanup_listen(struct sock *parent);
- 
- bool l2cap_is_socket(struct socket *sock)
-@@ -1243,6 +1244,23 @@ done:
- 	return err;
- }
- 
-+/* Release the sock's ref on chan and clear the pointer so that the ref is
-+ * dropped exactly once even if both l2cap_sock_kill() and
-+ * l2cap_sock_destruct() run. Setting chan->data to NULL first stops any other
-+ * task from dereferencing the now-dead sock pointer.
-+ */
-+static void l2cap_sock_put_chan(struct sock *sk)
-+{
-+	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
-+
-+	if (!chan)
-+		return;
-+
-+	chan->data = NULL;
-+	l2cap_pi(sk)->chan = NULL;
-+	l2cap_chan_put(chan);
-+}
-+
- /* Kill socket (only if zapped and orphan)
-  * Must be called on unlocked socket, with l2cap channel lock.
+--- a/mm/swap_cgroup.c
++++ b/mm/swap_cgroup.c
+@@ -161,8 +161,14 @@ unsigned short swap_cgroup_record(swp_en
   */
-@@ -1253,13 +1271,9 @@ static void l2cap_sock_kill(struct sock
- 
- 	BT_DBG("sk %p state %s", sk, state_to_string(sk->sk_state));
- 
--	/* Sock is dead, so set chan data to NULL, avoid other task use invalid
--	 * sock pointer.
--	 */
--	l2cap_pi(sk)->chan->data = NULL;
--	/* Kill poor orphan */
-+	l2cap_sock_put_chan(sk);
- 
--	l2cap_chan_put(l2cap_pi(sk)->chan);
-+	/* Kill poor orphan */
- 	sock_set_flag(sk, SOCK_DEAD);
- 	sock_put(sk);
- }
-@@ -1502,12 +1516,13 @@ static void l2cap_sock_cleanup_listen(st
- 	}
- }
- 
--static struct l2cap_chan *l2cap_sock_new_connection_cb(struct l2cap_chan *chan)
-+static int l2cap_sock_new_connection_cb(struct l2cap_chan *chan,
-+					struct l2cap_chan *new_chan)
+ unsigned short lookup_swap_cgroup_id(swp_entry_t ent)
  {
- 	struct sock *sk, *parent = chan->data;
- 
- 	if (!parent)
--		return NULL;
-+		return -EINVAL;
- 
- 	lock_sock(parent);
- 
-@@ -1515,25 +1530,28 @@ static struct l2cap_chan *l2cap_sock_new
- 	if (sk_acceptq_is_full(parent)) {
- 		BT_DBG("backlog full %d", parent->sk_ack_backlog);
- 		release_sock(parent);
--		return NULL;
-+		return -ENOBUFS;
- 	}
- 
- 	sk = l2cap_sock_alloc(sock_net(parent), NULL, BTPROTO_L2CAP,
--			      GFP_ATOMIC, 0);
-+			      GFP_ATOMIC, 0, new_chan);
- 	if (!sk) {
- 		release_sock(parent);
--		return NULL;
--        }
-+		return -ENOMEM;
-+	}
- 
- 	bt_sock_reclassify_lock(sk, BTPROTO_L2CAP);
- 
- 	l2cap_sock_init(sk, parent);
- 
-+	/* The conn list reference taken by l2cap_new_connection() keeps new_chan
-+	 * alive once release_sock() lets another task free this socket.
-+	 */
- 	bt_accept_enqueue(parent, sk, false);
- 
- 	release_sock(parent);
- 
--	return l2cap_pi(sk)->chan;
-+	return 0;
- }
- 
- static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
-@@ -1831,10 +1849,7 @@ static void l2cap_sock_destruct(struct s
- 
- 	BT_DBG("sk %p", sk);
- 
--	if (l2cap_pi(sk)->chan) {
--		l2cap_pi(sk)->chan->data = NULL;
--		l2cap_chan_put(l2cap_pi(sk)->chan);
--	}
-+	l2cap_sock_put_chan(sk);
- 
- 	list_for_each_entry_safe(rx_busy, next, &l2cap_pi(sk)->rx_busy, list) {
- 		kfree_skb(rx_busy->skb);
-@@ -1866,30 +1881,12 @@ static void l2cap_sock_init(struct sock
- 	BT_DBG("sk %p", sk);
- 
- 	if (parent) {
--		struct l2cap_chan *pchan = l2cap_pi(parent)->chan;
--
- 		sk->sk_type = parent->sk_type;
- 		bt_sk(sk)->flags = bt_sk(parent)->flags;
- 
--		chan->chan_type = pchan->chan_type;
--		chan->imtu = pchan->imtu;
--		chan->omtu = pchan->omtu;
--		chan->conf_state = pchan->conf_state;
--		chan->mode = pchan->mode;
--		chan->fcs  = pchan->fcs;
--		chan->max_tx = pchan->max_tx;
--		chan->tx_win = pchan->tx_win;
--		chan->tx_win_max = pchan->tx_win_max;
--		chan->sec_level = pchan->sec_level;
--		chan->flags = pchan->flags;
--		chan->tx_credits = pchan->tx_credits;
--		chan->rx_credits = pchan->rx_credits;
--
--		if (chan->chan_type == L2CAP_CHAN_FIXED) {
--			chan->scid = pchan->scid;
--			chan->dcid = pchan->scid;
--		}
--
-+		/* Channel configuration is inherited from the parent by
-+		 * l2cap_new_connection().
-+		 */
- 		security_sk_clone(parent, sk);
- 	} else {
- 		switch (sk->sk_type) {
-@@ -1915,7 +1912,7 @@ static void l2cap_sock_init(struct sock
- 			chan->mode = L2CAP_MODE_BASIC;
- 		}
- 
--		l2cap_chan_set_defaults(chan);
-+		l2cap_chan_set_defaults(chan, NULL);
- 	}
- 
- 	/* Default config options */
-@@ -1934,10 +1931,10 @@ static struct proto l2cap_proto = {
- };
- 
- static struct sock *l2cap_sock_alloc(struct net *net, struct socket *sock,
--				     int proto, gfp_t prio, int kern)
-+				     int proto, gfp_t prio, int kern,
-+				     struct l2cap_chan *chan)
- {
- 	struct sock *sk;
--	struct l2cap_chan *chan;
- 
- 	sk = bt_sock_alloc(net, sock, &l2cap_proto, proto, prio, kern);
- 	if (!sk)
-@@ -1948,16 +1945,7 @@ static struct sock *l2cap_sock_alloc(str
- 
- 	INIT_LIST_HEAD(&l2cap_pi(sk)->rx_busy);
- 
--	chan = l2cap_chan_create();
--	if (!chan) {
--		sk_free(sk);
--		if (sock)
--			sock->sk = NULL;
--		return NULL;
--	}
--
--	l2cap_chan_hold(chan);
--
-+	/* The sock takes ownership of the caller's reference on chan. */
- 	l2cap_pi(sk)->chan = chan;
- 
- 	return sk;
-@@ -1967,6 +1955,7 @@ static int l2cap_sock_create(struct net
- 			     int kern)
- {
- 	struct sock *sk;
-+	struct l2cap_chan *chan;
- 
- 	BT_DBG("sock %p", sock);
- 
-@@ -1981,10 +1970,16 @@ static int l2cap_sock_create(struct net
- 
- 	sock->ops = &l2cap_sock_ops;
- 
--	sk = l2cap_sock_alloc(net, sock, protocol, GFP_ATOMIC, kern);
--	if (!sk)
-+	chan = l2cap_chan_create();
-+	if (!chan)
- 		return -ENOMEM;
- 
-+	sk = l2cap_sock_alloc(net, sock, protocol, GFP_ATOMIC, kern, chan);
-+	if (!sk) {
-+		l2cap_chan_put(chan);
-+		return -ENOMEM;
-+	}
++	struct swap_cgroup_ctrl *ctrl;
 +
- 	l2cap_sock_init(sk, NULL);
- 	bt_sock_link(&l2cap_sk_list, sk);
- 	return 0;
---- a/net/bluetooth/smp.c
-+++ b/net/bluetooth/smp.c
-@@ -3234,34 +3234,19 @@ static const struct l2cap_ops smp_chan_o
- 	.get_sndtimeo		= l2cap_chan_no_get_sndtimeo,
- };
- 
--static inline struct l2cap_chan *smp_new_conn_cb(struct l2cap_chan *pchan)
-+static inline int smp_new_conn_cb(struct l2cap_chan *chan,
-+				  struct l2cap_chan *new_chan)
- {
--	struct l2cap_chan *chan;
--
--	BT_DBG("pchan %p", pchan);
--
--	chan = l2cap_chan_create();
--	if (!chan)
--		return NULL;
--
--	chan->chan_type	= pchan->chan_type;
--	chan->ops	= &smp_chan_ops;
--	chan->scid	= pchan->scid;
--	chan->dcid	= chan->scid;
--	chan->imtu	= pchan->imtu;
--	chan->omtu	= pchan->omtu;
--	chan->mode	= pchan->mode;
-+	new_chan->ops = &smp_chan_ops;
- 
- 	/* Other L2CAP channels may request SMP routines in order to
- 	 * change the security level. This means that the SMP channel
- 	 * lock must be considered in its own category to avoid lockdep
- 	 * warnings.
- 	 */
--	atomic_set(&chan->nesting, L2CAP_NESTING_SMP);
--
--	BT_DBG("created chan %p", chan);
-+	atomic_set(&new_chan->nesting, L2CAP_NESTING_SMP);
- 
--	return chan;
-+	return 0;
+ 	if (mem_cgroup_disabled())
+ 		return 0;
++
++	ctrl = &swap_cgroup_ctrl[swp_type(ent)];
++	if (unlikely(!ctrl->map))
++		return 0;
+ 	return lookup_swap_cgroup(ent, NULL)->id;
  }
  
- static const struct l2cap_ops smp_root_chan_ops = {
-@@ -3332,7 +3317,7 @@ create_chan:
- 
- 	l2cap_add_scid(chan, cid);
- 
--	l2cap_chan_set_defaults(chan);
-+	l2cap_chan_set_defaults(chan, NULL);
- 
- 	if (cid == L2CAP_CID_SMP) {
- 		u8 bdaddr_type;
 
 
