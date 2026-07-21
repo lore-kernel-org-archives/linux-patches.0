@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E29235201C;
-	Tue, 21 Jul 2026 21:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0A044AB72;
+	Tue, 21 Jul 2026 21:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668563; cv=none; b=NO4YMZcp8DIdOix6+4LOLi0do9IvlPTjZNo8F14wWuXTF2ujWiDlIMBPLfOpcgE6weAsCYSIwpqLQpfWFAY8cKEfNzVJWvwFb/zAvAa5yyINFtjd+2tJq2OvW+J4WU1Hl//QXgD7O+lVHk0xvCcF8kqX2H7x0TbbWT3/Xty2Y80=
+	t=1784668566; cv=none; b=qob4ayuRaiKL1mlbyFbdP/pmlgaSk2wmHFdOTgROq8J3tti48m5lvuVNqzm1cB0+UX3jrBiYojq/wDAje+ZDfHDxD8BmjIRJxduLG2yDLdBsHSokCvQBy6xzz1vZhHn3Qur/yYeS9jhkBk/toE0viPOfPXWyUwgT7A9lhkm+iYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668563; c=relaxed/simple;
-	bh=5SUjxJzezsg1pQiKkrKflFseAud35LPeQIAfIfpRFOM=;
+	s=arc-20240116; t=1784668566; c=relaxed/simple;
+	bh=GH3yhJBvKvXLC6osf8gBEk4Yv6/5Ux8rCSSgQvKMfyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r2L7YQix9TIqvIeehGhGSIok0qomIEjbRqux+ywdFOcqDoYMLuyP3SDYvbCvTTwV9KjlhOf1xs9n0iDKivH3W7b7pasCZQKmKm1bMcxruFYA4B1is62kcMguj/XLLi5MTEeLIgsE4cagVVDAX6w+oIzIiGDcCwYwKpgpZSJb7GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tu5i8rhv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QEOpdU8DI3vxKtBg/vQAAZLgJREAq4vr5ZqBVoOlVmJjabHIxXTZgP0NaN4X0zXp+2kNRAaus+8v57QL6ef5Lt/jdF+herOP7p6paT1PUGIESG/iNM4K7mfq888dhb4kqip9si/qWsXaCpgs6BZmEB8PXvxeM+bbPbS3pVIzwbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IhmEehcC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tu5i8rhv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82FFF1F000E9;
-	Tue, 21 Jul 2026 21:15:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IhmEehcC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311171F00A3A;
+	Tue, 21 Jul 2026 21:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668560;
-	bh=gTDPv4eRc4P/xbxpxigXj3tvZxfWJHnuq9WaBuWnKkI=;
+	s=korg; t=1784668562;
+	bh=omJJxgubGJCtEvUNSuIHkO+0Ft1hwskLp6zeQ4T6EGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tu5i8rhvsJd57bD/r4OFASB8xw/6AcJkmDsKV4uD3TspK8ulNMuJ15wq1w8DwbAYL
-	 1ZYi3M1FJNE0LAAEar900sRe+IOKN0ZzsdhhMceczUZy3DRBxfCVNSXcMotHDtZOHF
-	 WHS8ZpOARovBbOjgYk3aihQ6gG+jSAbPDwGpZAy0=
+	b=IhmEehcCk8jrvYcBdOSJzQUUOoiY0r3cVMBE79Tb4tNaWMxd2xrVbUt2N60oUvyXH
+	 qN27mTsZ4OjW6Ml72l7Ub18dbgp8HaHlxsDIV9HQMTvq8fRbVOOH2mW1JVvCkdKziN
+	 U3LNJRLKJrXGjLVvXSCTqWzM9FzoSpbd/ZCWiEww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 0221/1067] spi: fsl-lpspi: terminate the RX channel on TX prepare failure path
-Date: Tue, 21 Jul 2026 17:13:42 +0200
-Message-ID: <20260721152429.540495600@linuxfoundation.org>
+	Vasily Khoruzhick <vasilykh@arista.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Subject: [PATCH 6.1 0222/1067] EDAC/i10nm: Dont fail probing if ADXL is missing
+Date: Tue, 21 Jul 2026 17:13:43 +0200
+Message-ID: <20260721152429.564878284@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,39 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Song <carlos.song@nxp.com>
+From: Vasily Khoruzhick <vasilykh@arista.com>
 
-commit 01980b5da56e573d62798d0ff6c86bcaa2b22cbe upstream.
+commit e360a6d65bb46c527a5909430a31d640cdd5036e upstream.
 
-When dmaengine_prep_slave_sg() fails for the TX channel, the error path
-terminates the TX DMA channel but leaves the RX channel running. Since
-the RX channel was already submitted and issued prior to preparing
-the TX descriptor, returning -EINVAL causes the SPI core to unmap the
-DMA buffers while the RX DMA engine continues writing to them, leading
-to potential memory corruption or use-after-free.
+ADXL is not present in Coreboot- or Slimbootloader-based BIOSes and as
+result, the driver fails to probe there.
 
-Terminate the RX channel before returning on the TX prepare failure path.
+Since commit 2738c69a8813 ("EDAC/i10nm: Add driver decoder for Ice Lake
+and Tremont CPUs"), i10nm_edac supports driver decoder. Switch to driver
+decoding when ADXL is not present.
 
-Fixes: 09c04466ce7e ("spi: lpspi: add dma mode support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Link: https://patch.msgid.link/20260525062357.3191349-3-carlos.song@oss.nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Vasily Khoruzhick <vasilykh@arista.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Cc: stable@vger.kernel.org # v6.1+
+Link: https://patch.msgid.link/20260414181735.87023-1-anarsoul@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-lpspi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/edac/i10nm_base.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -577,7 +577,7 @@ static int fsl_lpspi_dma_transfer(struct
- 				tx->sgl, tx->nents, DMA_MEM_TO_DEV,
- 				DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
- 	if (!desc_tx) {
--		dmaengine_terminate_sync(controller->dma_tx);
-+		dmaengine_terminate_sync(controller->dma_rx);
- 		return -EINVAL;
+--- a/drivers/edac/i10nm_base.c
++++ b/drivers/edac/i10nm_base.c
+@@ -76,6 +76,7 @@ static struct res_config *res_cfg;
+ static int retry_rd_err_log;
+ static int decoding_via_mca;
+ static bool mem_cfg_2lm;
++static bool no_adxl;
+ 
+ static u32 offsets_scrub_icx[]  = {0x22c60, 0x22c54, 0x22c5c, 0x22c58, 0x22c28, 0x20ed8};
+ static u32 offsets_scrub_spr[]  = {0x22c60, 0x22c54, 0x22f08, 0x22c58, 0x22c28, 0x20ed8};
+@@ -826,8 +827,14 @@ static int __init i10nm_init(void)
  	}
+ 
+ 	rc = skx_adxl_get();
+-	if (rc)
+-		goto fail;
++	if (rc) {
++		/* Decoding errors via MCA banks for 2LM isn't supported yet */
++		if (rc != -ENODEV || mem_cfg_2lm)
++			goto fail;
++		i10nm_printk(KERN_INFO, "ADXL not found, falling back to MCA-based decoding.\n");
++		no_adxl = true;
++		decoding_via_mca = true;
++	}
+ 
+ 	opstate_init();
+ 	mce_register_decode_chain(&i10nm_mce_dec);
+@@ -861,7 +868,8 @@ static void __exit i10nm_exit(void)
+ 
+ 	teardown_i10nm_debug();
+ 	mce_unregister_decode_chain(&i10nm_mce_dec);
+-	skx_adxl_put();
++	if (!no_adxl)
++		skx_adxl_put();
+ 	skx_remove();
+ }
  
 
 
