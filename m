@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B3444AB9F;
-	Tue, 21 Jul 2026 22:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22490224B05;
+	Tue, 21 Jul 2026 22:58:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674704; cv=none; b=HY3ohlESMkg4IEcYxq1TzMtVhWm5bm6gPU99D4zP5nUdgJdnGHHMTdsOxNFKovochmumDpOS1cjam5Sv8sljamRiqNRFd6oRw6/n/QURxLKFgQYpkL1ABuIo2kOEYpHwQKl2Lrw4zJo8n5LXiOxcdzdTOC9X/qb51aDRw0MzdUo=
+	t=1784674707; cv=none; b=Dd6TAjgG1DksSPaBNQem7io8lWmAqP1pbYwtMS45o+lKo8Wi41pk3kVyQPZngak6p6ubYKbinnkjEd/7M8eXFwVtI4w/w6U7TrQLoRsQvKzkhK6XyAskmR9UFKovIKq0hq+CU2l8qsCHtoauz0gabfr9CARThX2fDMBtkeRuh4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674704; c=relaxed/simple;
-	bh=cSvmu33AzhkE9WuAqf/LXh4OH2238ibv/i8mk9d+rxg=;
+	s=arc-20240116; t=1784674707; c=relaxed/simple;
+	bh=6bB7eo1Z64+Jq7uOmAZFdER3IaorzBcDMqZxELHfKXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l7F/eT4CLpAAFIThVq7IDQxs/Bcj4TbXblXRBNqEH91+svjnrZQmbwcozqp8Q+saCTTEm/DKB1bLnDrH+9BiqyUz3PXYq/e6A5Z4+n/ygrUtzXG3Ej0lXUNqJwVI0E4N4CbQRU4sjRjAgyPq3L2aUErphrrDgCPQOxoH75drdsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IkRlCtFb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GRTq0QzpCZG6JGTi+ieYG/hiiimwWoSz72jbRO/yz16GrIZ1e0BZlDLsFOIzkCy88RnwlUH0MZ7FmtQKpyFiytuqjHvxirIwcPuv0wYQNV7T3EtAoxuEGFGi1kFY4Dsa4v770VZNqL84KXCNoqNpy6nuHxxPauHx+cMTwHy3+8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gvz5pmhc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IkRlCtFb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E32BF1F000E9;
-	Tue, 21 Jul 2026 22:58:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvz5pmhc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893141F000E9;
+	Tue, 21 Jul 2026 22:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674703;
-	bh=4r46L3Zdd1hXLyBYdkrHZrALdVtzKFsFh2wY4BxAJKw=;
+	s=korg; t=1784674706;
+	bh=XvKW2jI9eIDT74Sb0QJsoC3fxH/AEEchTzJ96t++i90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IkRlCtFbFS6DQsTOFhW2ELIGyGUYFa4d9FMRRT9jN0GOGbQlgsmNzNGXRNyoXfET1
-	 GYnLvzXwdej04tdQDaEUwu5vSnnYzPMXbGT2F+6pjipHe3GjZoOVFTVmt0R48haDZj
-	 v4px79i8oEW3e2nxdk4G92ol0kFn+xEyRu4veb78=
+	b=gvz5pmhc5XSA7I8w4UDbkedGiEXOYlM63LEQvlcHHFMWVXDkTJD84hCb6dl7JQycS
+	 960yu4vYjpHyHPFicUD7aEANqOr156bN0rDJ+2PKXofBels/EwDkPYqF9psye8Pxlv
+	 UbmevsObeHHdAZU4HyEny1XoUkOaOSgSIPA24l3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
+	Norbert Manthey <nmanthey@amazon.de>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 642/699] smb: client: Fix next buffer leak in receive_encrypted_standard()
-Date: Tue, 21 Jul 2026 17:26:41 +0200
-Message-ID: <20260721152410.232972398@linuxfoundation.org>
+Subject: [PATCH 5.10 643/699] smb: client: mask server-provided mode to 07777 in modefromsid
+Date: Tue, 21 Jul 2026 17:26:42 +0200
+Message-ID: <20260721152410.255966148@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,53 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Norbert Manthey <nmanthey@amazon.de>
 
-[ Upstream commit 1c6267a1d5cf4c73b656f8181b310cbbb3e4767b ]
+[ Upstream commit e3d9c7160d483fc8f9e225aafad8ecbbc43f3151 ]
 
-receive_encrypted_standard() allocates next_buffer before checking
-whether the number of compound PDUs already reached MAX_COMPOUND. If
-the limit check fails, the function returns immediately and the newly
-allocated next_buffer is not assigned to server->smallbuf/server->bigbuf,
-making it leaked.
+When modefromsid is active, parse_dacl() applies the server-provided
+sub_auth[2] value from the NFS mode SID to cf_mode without masking to
+07777. Apply the correct masking, same as in the read path.
 
-Move the MAX_COMPOUND check before allocating next_buffer.
-
-Fixes: b24df3e30cbf ("cifs: update receive_encrypted_standard to handle compounded responses")
+Fixes: e2f8fbfb8d09c ("cifs: get mode bits from special sid on stat")
+Signed-off-by: Norbert Manthey <nmanthey@amazon.de>
+Assisted-by: Kiro:claude-opus-4.6
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/smb2ops.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ fs/cifs/cifsacl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -4961,6 +4961,12 @@ receive_encrypted_standard(struct TCP_Se
- one_more:
- 	shdr = (struct smb2_hdr *)buf;
- 	next_cmd = le32_to_cpu(shdr->NextCommand);
-+
-+	if (*num_mids >= MAX_COMPOUND) {
-+		cifs_server_dbg(VFS, "too many PDUs in compound\n");
-+		return -1;
-+	}
-+
- 	if (next_cmd) {
- 		if (WARN_ON_ONCE(next_cmd > pdu_length))
- 			return -1;
-@@ -4984,10 +4990,6 @@ one_more:
- 		mid_entry->resp_buf_size = server->pdu_size;
- 	}
- 
--	if (*num_mids >= MAX_COMPOUND) {
--		cifs_server_dbg(VFS, "too many PDUs in compound\n");
--		return -1;
--	}
- 	bufs[*num_mids] = buf;
- 	mids[(*num_mids)++] = mid_entry;
- 
+--- a/fs/cifs/cifsacl.c
++++ b/fs/cifs/cifsacl.c
+@@ -767,7 +767,7 @@ static void parse_dacl(struct cifs_acl *
+ 				 */
+ 				fattr->cf_mode &= ~07777;
+ 				fattr->cf_mode |=
+-					le32_to_cpu(ppace[i]->sid.sub_auth[2]);
++					le32_to_cpu(ppace[i]->sid.sub_auth[2]) & 07777;
+ 				break;
+ 			} else if (compare_sids(&(ppace[i]->sid), pownersid) == 0)
+ 				access_flags_to_mode(ppace[i]->access_req,
 
 
