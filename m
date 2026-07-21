@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F270246EF91;
-	Tue, 21 Jul 2026 19:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97F146F4AB;
+	Tue, 21 Jul 2026 19:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661256; cv=none; b=VHqUoomAltBgW05CMUccUCmjZUY/gFTXW4CpkrMmo5z2KyYxoDGatOSgwpKs+vZYpDTWZppy+Qi+B7+wBab4k6L6ZOnMtAlOTEwJYbu59uRHzTjlvan3l4P0PoXRfgKKzFynxUOiA9q24VyP/IlConhgAkwqcXmxTbOE7kN0css=
+	t=1784661259; cv=none; b=gO2iNsEIggpltCzjh3Z28W8Dm+r/D6gWHXD3qZyabN4IfF+qni9NFsNVM/z3KDg8snU/B5ZvorhML75cbS5TQOauh7SmnbPNPqUBBRb5qRAxP1t76/tyrJL4hk56Bst57jpw2FmGVvQBfreBt5CyLynFIAsy/4uNYyAE93d5Gnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661256; c=relaxed/simple;
-	bh=vmAZwGxntjCUxY4uTJ/mSl8JHQL9GsnMAuwhrtm+9Bg=;
+	s=arc-20240116; t=1784661259; c=relaxed/simple;
+	bh=xxfgTcTvfE3Dx9QVjgA0ZUwEdWXnAtmzJi9GE41HxII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YVndl+O614oku1trMjZg2Ow8SjBzqiVoSe9gwz6daeL28ECE5A7wNT94a3Hgq+xwbZ5MZSWjEG04Twq64cAuysnTCXXeHPexl08+0lb2C83dxVTRo8H2+N5OmHZEiisYPXe3kWL5rba5OxpVVtDSbZN8z+i4FJV4KUAWp7dkjx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f27YZBcn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Mb0t38YYf8W+19No/KbAio3EXCJ58AbhsfSphEaVq6nPnqoHJsC04k1AF8ezY4QJ79568C4P56iPeXitzkMQ+gypZF/MGB64JZn+IUVDwC7iTGnHSNvt/uCMUCRcc2aGjwyhCV5aWD3IX5Ol4qwdqxAGYX6onUpGU3A/KI4pHKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opYfFlco; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f27YZBcn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8951F00A3A;
-	Tue, 21 Jul 2026 19:14:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opYfFlco"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A54CF1F000E9;
+	Tue, 21 Jul 2026 19:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661253;
-	bh=xJj7m935gMSN4Qxal/4E+/FqxX1ptHT5gSrp2KmHX5M=;
+	s=korg; t=1784661256;
+	bh=veFfC9J4fc8jdh+h4TiXyN48ai/LPyMpflrGy5OccrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f27YZBcnKLt1WDjDYDA9+LJvp8EfYdvpsSIAwq+hF1mHQtuy3l81l7CEJ4cwGI9Yb
-	 ADuaxDH03sw603/Av5JkY3eNro0zs3R5WXtEKnZ/iHgWeK3/YgEjMRR3/3mPZGbaTS
-	 0Hzj3btr2DQTFdJD7NBEjOVkMnWtWlp+UN2m/41o=
+	b=opYfFlco6qKAWwHo3eY8KwoV0VbZEU2qkZZV1Tlm3gt1LDf4uI7A9r2c68z1aJjq9
+	 i8q27WelUbwonZOyu57PDQb4BOxZonP5YjJ2gx30AfhcUD2h8moXT8NFrGcSnMtTC0
+	 Qow4D/41s6siqnCkXdTYDXAQyYMsxbqjyspG0dF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Magnus Lindholm <linmag7@gmail.com>,
+	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1287/2077] net: stmmac: dwmac-spacemit: Fix wrong irq definition
-Date: Tue, 21 Jul 2026 17:16:00 +0200
-Message-ID: <20260721152623.175187799@linuxfoundation.org>
+Subject: [PATCH 7.1 1247/2077] alpha/PCI: Add security_locked_down() check to pci_mmap_resource()
+Date: Tue, 21 Jul 2026 17:15:20 +0200
+Message-ID: <20260721152622.225228233@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,44 +48,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Inochi Amaoto <inochiama@gmail.com>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-[ Upstream commit bf5cd5d4ca423d348e01b3bbcdccd0e02b1b408b ]
+[ Upstream commit 78a228f0aa0e9eba31955950c8a40a9945e2c8bb ]
 
-The current irq definition of the wake irq and the lpi irq
-is wrong, replace them with the right number and name.
+Currently, Alpha's pci_mmap_resource() does not check
+security_locked_down(LOCKDOWN_PCI_ACCESS) before allowing userspace to mmap
+PCI BARs.
 
-Fixes: 30f0ba420ed3 ("net: stmmac: Add glue layer for Spacemit K3 SoC")
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260623074637.503864-3-inochiama@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The generic version has had this check since commit eb627e17727e ("PCI:
+Lock down BAR access when the kernel is locked down") to prevent DMA
+attacks when the kernel is locked down.
+
+Add the same check to Alpha's pci_mmap_resource().
+
+Fixes: eb627e17727e ("PCI: Lock down BAR access when the kernel is locked down")
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Magnus Lindholm <linmag7@gmail.com>
+Tested-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Acked-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://patch.msgid.link/20260508043543.217179-12-kwilczynski@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/alpha/kernel/pci-sysfs.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c
-index 3bfb6d49be6c0c..322bdf167a4a68 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-spacemit.c
-@@ -22,8 +22,8 @@
- #define CTRL_PHY_INTF_RMII		FIELD_PREP(CTRL_PHY_INTF_MODE, 0)
- #define CTRL_PHY_INTF_RGMII		FIELD_PREP(CTRL_PHY_INTF_MODE, 1)
- #define CTRL_PHY_INTF_MII		FIELD_PREP(CTRL_PHY_INTF_MODE, 3)
--#define CTRL_WAKE_IRQ_EN		BIT(9)
--#define CTRL_PHY_IRQ_EN			BIT(12)
-+#define CTRL_LPI_IRQ_EN			BIT(9)
-+#define CTRL_WAKE_IRQ_EN		BIT(12)
+diff --git a/arch/alpha/kernel/pci-sysfs.c b/arch/alpha/kernel/pci-sysfs.c
+index 3048758304b57a..2324720c3e83fb 100644
+--- a/arch/alpha/kernel/pci-sysfs.c
++++ b/arch/alpha/kernel/pci-sysfs.c
+@@ -11,6 +11,7 @@
+  */
  
- /* dline register bits */
- #define RGMII_RX_DLINE_EN		BIT(0)
+ #include <linux/sched.h>
++#include <linux/security.h>
+ #include <linux/stat.h>
+ #include <linux/slab.h>
+ #include <linux/pci.h>
+@@ -71,7 +72,11 @@ static int pci_mmap_resource(struct kobject *kobj,
+ 	struct resource *res = attr->private;
+ 	enum pci_mmap_state mmap_type;
+ 	struct pci_bus_region bar;
+-	int i;
++	int i, ret;
++
++	ret = security_locked_down(LOCKDOWN_PCI_ACCESS);
++	if (ret)
++		return ret;
+ 
+ 	for (i = 0; i < PCI_STD_NUM_BARS; i++)
+ 		if (res == &pdev->resource[i])
 -- 
 2.53.0
 
