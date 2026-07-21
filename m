@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868633BD63B;
-	Tue, 21 Jul 2026 22:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881263BD63B;
+	Tue, 21 Jul 2026 22:07:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671621; cv=none; b=C5qloY13YDZypPoTjndJHK9dJtquVkw3g4yp810M5WnMkkuyNpbcPkwiA2Ne1f6hzvxq8eu8AP2EhHaQuNtnvIASdAQutH+mVFA0+Nf0qoOzfAMMZTugsut4QSrPehrbKAdt4ocUjBILg2gfB64n12c3zdg5nK5HBPcFW6cwc+A=
+	t=1784671623; cv=none; b=R/xJRRDAYyc8BlffzuVjloWiIlvDw0Xwq68giSM2uUWYXJjqPnnrXQcbTSh27p1z03e6EO1rTMgm1fSLTHZgM0jXOsn6ijc1BTLYYefmW5l3JJRq1j9mtVlOMyFLtgcWCfI6mTcpYE7rPFWXuFIdXVAYyd0VYqMxkB6rhgaCK0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671621; c=relaxed/simple;
-	bh=pbabhaO+ZElQtvLdDHsCdLtKq9F5G86G+e5dJmxWHQg=;
+	s=arc-20240116; t=1784671623; c=relaxed/simple;
+	bh=CdYiBhUHDLn4P2NZaB/uBzr8iT9YLAKbppdoAdPK+tM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c8E/sn1+hWNBlHjoprDzygddJdMHXHO1aWbiUKlYsc+JGtnTMuX/JZqaz8DIDwGZzHH0fuBKnZQcAnRx/CBlSnKt/wiqICS8er1Qgn29MCuemPKR+Vfp8BdXo0jkuVHVEyd97XJMjE0yzdhKzUmvRC9QiAwpUF9Egm9i3nGY1Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVX9b7Dt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qjEJqkEYJwvecCaJ6qwmqwSrsYob89D6V0MYAqdwCgPpI1DrRN3yrECxop16ur4RjD9u/asmmddPMYwApuAsoBfBXcI+jYT/SZb02CHDzlZXj/bqFhibdsHwT72igmOLxydgAx2CoZg19lggSfKRZA8Uq9GET+m/JSMVeSbULVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXYBUlV1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVX9b7Dt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B1381F000E9;
-	Tue, 21 Jul 2026 22:06:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXYBUlV1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 169561F000E9;
+	Tue, 21 Jul 2026 22:07:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671619;
-	bh=xzW/W9fl+fgN7B+ZcqBJDeBpU3uYitxMwVaf2IYe24M=;
+	s=korg; t=1784671622;
+	bh=80UDLAOk9enSReztSFnPk6qjwuvmkn45KqHuEdMbA7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PVX9b7DtJ/Eb+OMmtuT3cLaxqcYVYT2jxDL0HxSD7n5WdqO+XKtT5tRUiSTlvcLej
-	 /Z1yD6Oory7vhx1nI8fBBV5DLM4ggn6xga+s0+nTlMuCKQd5QvlnnRd/KGxVnWDEjS
-	 3Bj8BZ6K6XK4VhSPiOzpgcgiBt1F63hPMkSTI3Lo=
+	b=LXYBUlV1UdGEIjx6kR3Z8vFoH3zarc0yfFuNGTo4noKJpwIOoCFXp1NgleAFA7jSt
+	 g6K/xUN5x9px+zzLVRD9vvYx0EWmxUNgsFaqsacd8BpxCHRpKhGJnPJXT1mSNfMwDl
+	 qS8i8m5tj+PLFwMaOpJlGTwKw+pPZeP+3ZEWlAkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Mykyta Yatsenko <yatsenko@meta.com>,
-	Carlos Llamas <cmllamas@google.com>,
+	kernel test robot <lkp@intel.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 272/843] libbpf: Fix UAF in strset__add_str()
-Date: Tue, 21 Jul 2026 17:18:27 +0200
-Message-ID: <20260721152412.142322595@linuxfoundation.org>
+Subject: [PATCH 5.15 263/843] mips: n64: add __iomem for writel call
+Date: Tue, 21 Jul 2026 17:18:18 +0200
+Message-ID: <20260721152411.942535890@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,167 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit b23705e6afb6ac4ae6d220dcb35975698667dd76 ]
+[ Upstream commit 579f5329d5df2dbcf4bb5ef398701c2501d24892 ]
 
-strset_add_str_mem() might reallocate the strset data buffer in order to
-accommodate the provided string 's'. However, if 's' points to a string
-already present in the buffer, it becomes dangling after the realloc.
-This leads to a use-after-free when attempting to memcpy() the string
-into the new buffer.
+sparse: incorrect type in argument 2 (different address spaces) @@
+expected void volatile [noderef] __iomem *mem @@
+got unsigned int [usertype] *
 
-One scenario that triggers this problematic path is when resolve_btfids
-attempts to patch kfunc prototypes using existing BTF parameter names:
-
- | resolve_btfids: function bpf_list_push_back_impl already exists in BTF
- | Segmentation fault (core dumped)
-
-Compiling resolve_btfids with fsanitize=address generates a detailed
-report of the UAF:
-
- | =================================================================
- | ERROR: AddressSanitizer: heap-use-after-free on address 0x7f4c4a500bd4
- | ==1507892==ERROR: AddressSanitizer: heap-use-after-free on address 0x7f4c4a500bd4 at pc 0x55d25155a2a8 bp 0x7ffcef879060 sp 0x7ffcef878818
- | READ of size 5 at 0x7f4c4a500bd4 thread T0
- |     #0 0x55d25155a2a7 in memcpy (tools/bpf/resolve_btfids/resolve_btfids+0xcf2a7)
- |     #1 0x55d2515d708e in strset__add_str tools/lib/bpf/strset.c:162:2
- |     #2 0x55d2515c730b in btf__add_str tools/lib/bpf/btf.c:2109:8
- |     #3 0x55d2515c9020 in btf__add_func_param tools/lib/bpf/btf.c:3108:14
- |     #4 0x55d25159f0b5 in process_kfunc_with_implicit_args tools/bpf/resolve_btfids/main.c:1196:9
- |     #5 0x55d25159e004 in btf2btf tools/bpf/resolve_btfids/main.c:1229:9
- |     #6 0x55d25159cee7 in main tools/bpf/resolve_btfids/main.c:1535:6
- |     #7 0x7f4c78e29f76 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
- |     #8 0x7f4c78e2a026 in __libc_start_main csu/../csu/libc-start.c:360:3
- |     #9 0x55d2514bb860 in _start (tools/bpf/resolve_btfids/resolve_btfids+0x30860)
- |
- | 0x7f4c4a500bd4 is located 13268 bytes inside of 2829000-byte region [0x7f4c4a4fd800,0x7f4c4a7b02c8)
- | freed by thread T0 here:
- |     #0 0x55d25155b700 in realloc (tools/bpf/resolve_btfids/resolve_btfids+0xd0700)
- |     #1 0x55d2515c426c in libbpf_reallocarray tools/lib/bpf/./libbpf_internal.h:220:9
- |     #2 0x55d2515c426c in libbpf_add_mem tools/lib/bpf/btf.c:224:13
- |
- | previously allocated by thread T0 here:
- |     #0 0x55d25155b2e3 in malloc (tools/bpf/resolve_btfids/resolve_btfids+0xd02e3)
- |     #1 0x55d2515d6e7d in strset__new tools/lib/bpf/strset.c:58:20
-
-While resolve_btfids could be refactored to avoid this call path, let's
-instead fix this issue at the source in strset__add_str() and avoid
-similar scenarios.
-
-Let's check if set->strs_data was reallocated and whether 's' points to
-an internal string within the old strset buffer. In such case, 's' is
-reconstructed to point to the new buffer.
-
-While already here, also fix strset__find_str() which suffers from the
-same problem by factoring out the common operations into a new helper
-function strset_str_append().
-
-Fixes: 90d76d3ececc ("libbpf: Extract internal set-of-strings datastructure APIs")
-Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-Suggested-by: Mykyta Yatsenko <yatsenko@meta.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260523162722.2718940-1-cmllamas@google.com
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202105261445.AcvPd2EE-lkp@intel.com/
+Fixes: baec970aa5ba ("mips: Add N64 machine type")
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/strset.c | 62 ++++++++++++++++++++++++++++--------------
- 1 file changed, 41 insertions(+), 21 deletions(-)
+ arch/mips/n64/init.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/strset.c b/tools/lib/bpf/strset.c
-index ea655318153f26..88c36f585f8850 100644
---- a/tools/lib/bpf/strset.c
-+++ b/tools/lib/bpf/strset.c
-@@ -107,6 +107,41 @@ static void *strset_add_str_mem(struct strset *set, size_t add_sz)
- 			      set->strs_data_len, set->strs_data_max_len, add_sz);
- }
+diff --git a/arch/mips/n64/init.c b/arch/mips/n64/init.c
+index dfbd864f466700..66ec28ab41f321 100644
+--- a/arch/mips/n64/init.c
++++ b/arch/mips/n64/init.c
+@@ -50,7 +50,7 @@ void __init prom_init(void)
  
-+static long strset_str_append(struct strset *set, const char *s)
-+{
-+	uintptr_t old_data = (uintptr_t)set->strs_data;
-+	size_t old_data_len = set->strs_data_len;
-+	uintptr_t old_s = (uintptr_t)s;
-+	long len = strlen(s) + 1;
-+	void *p;
-+
-+	/*
-+	 * Hashmap keys are always offsets within set->strs_data, so to even
-+	 * look up some string from the "outside", we need to first append it
-+	 * at the end, so that it can be addressed with an offset. Luckily,
-+	 * until set->strs_data_len is incremented, that string is just a piece
-+	 * of garbage for the rest of the code, so no harm, no foul. On the
-+	 * other hand, if the string is unique, it's already appended and
-+	 * ready to be used, only a simple set->strs_data_len increment away.
-+	 */
-+	p = strset_add_str_mem(set, len);
-+	if (!p)
-+		return -ENOMEM;
-+
-+	/*
-+	 * The set->strs_data might have reallocated and if 's' pointed
-+	 * to an internal string within the old buffer, then it became
-+	 * dangling and needs to be reconstructed before the copy.
-+	 */
-+	if (old_data && old_data != (uintptr_t)set->strs_data &&
-+	    old_s >= old_data && old_s < old_data + old_data_len)
-+		s = set->strs_data + (old_s - old_data);
-+
-+	memcpy(p, s, len);
-+
-+	return len;
-+}
-+
- /* Find string offset that corresponds to a given string *s*.
-  * Returns:
-  *   - >0 offset into string data, if string is found;
-@@ -116,16 +151,12 @@ static void *strset_add_str_mem(struct strset *set, size_t add_sz)
- int strset__find_str(struct strset *set, const char *s)
+ #define W 320
+ #define H 240
+-#define REG_BASE ((u32 *) CKSEG1ADDR(0x4400000))
++#define REG_BASE ((u32 __iomem *) CKSEG1ADDR(0x4400000))
+ 
+ static void __init n64rdp_write_reg(const u8 reg, const u32 value)
  {
- 	long old_off, new_off, len;
--	void *p;
- 
--	/* see strset__add_str() for why we do this */
--	len = strlen(s) + 1;
--	p = strset_add_str_mem(set, len);
--	if (!p)
--		return -ENOMEM;
-+	len = strset_str_append(set, s);
-+	if (len < 0)
-+		return len;
- 
- 	new_off = set->strs_data_len;
--	memcpy(p, s, len);
- 
- 	if (hashmap__find(set->strs_hash, (void *)new_off, (void **)&old_off))
- 		return old_off;
-@@ -142,24 +173,13 @@ int strset__find_str(struct strset *set, const char *s)
- int strset__add_str(struct strset *set, const char *s)
- {
- 	long old_off, new_off, len;
--	void *p;
- 	int err;
- 
--	/* Hashmap keys are always offsets within set->strs_data, so to even
--	 * look up some string from the "outside", we need to first append it
--	 * at the end, so that it can be addressed with an offset. Luckily,
--	 * until set->strs_data_len is incremented, that string is just a piece
--	 * of garbage for the rest of the code, so no harm, no foul. On the
--	 * other hand, if the string is unique, it's already appended and
--	 * ready to be used, only a simple set->strs_data_len increment away.
--	 */
--	len = strlen(s) + 1;
--	p = strset_add_str_mem(set, len);
--	if (!p)
--		return -ENOMEM;
-+	len = strset_str_append(set, s);
-+	if (len < 0)
-+		return len;
- 
- 	new_off = set->strs_data_len;
--	memcpy(p, s, len);
- 
- 	/* Now attempt to add the string, but only if the string with the same
- 	 * contents doesn't exist already (HASHMAP_ADD strategy). If such
 -- 
 2.53.0
 
