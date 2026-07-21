@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51DF7376A06;
-	Tue, 21 Jul 2026 17:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE37C3D1CCA;
+	Tue, 21 Jul 2026 17:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653437; cv=none; b=aCKQy589XtWzgwEUlirrXQGsThCwr+WGaYWiSuhm6r0gUwLrEgYqNY8VCa61MNrGmL/DwgcC6npn+Nm3K2feOELxLR9bpts4hDkMhR9nWnxvg8IHOultEO/Opj/Poa8Bfibd/VIaUj9Txx5XwQfYxMlhng3nKiqOCd8PABOS560=
+	t=1784653439; cv=none; b=H+Yp95u5EKVVFwkG/Sn78hjmtlwkj/C3F6J3cBVE+/B0MXMtJw9tIKmtQIusfh+9pfyzLI/ZrcsIJk3qtHZxs4yQE22v4sfRIivNuq7nCugl+WgPIIyt4u8ZHC/IVjaeMgh37z0b5GtXTwfylJaVOcJkmCDJl6ltuVA8vYwznPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653437; c=relaxed/simple;
-	bh=YAS5ixqZzgbZ8cnkAvsVQzoZn10xxJo6G3m+t3lBAAk=;
+	s=arc-20240116; t=1784653439; c=relaxed/simple;
+	bh=/UjWbjUyzGWNgUQlb3RkbP9UB5JtybXb0QPjBHUdK9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t8D56hNeWiZgu3HP8JmImrznzNQW/Uyo7sHR9Rw2lGkeU/s0xUboaBu1YPJZbBvBo+Ve6VXXdEcNhofVlQ7dcuHKc99kdcjDQUgq6cvdD04EcKc4O89j+miYEYschlFUdW3VXc5z77LZ1wjNTx0mPr2a5dzcan9a2NojEddsbHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YU/Dkz8Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ioTOhke+A9ShswZaNTJPOJzC23eZ0aU6YQZYmF3oTYkM/kVEla2rQt5wI75ihVp9YHbb3pZ/JETW0tYMxDM1l7SwdiRa/xvnDFg4t6TieUklZ5qefvkffeMFvEFGdJPefJ/cgPMUMHkiniCL2hkzE1WeVP9GgrtZrUEPPY7SM/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iqa8iU0x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YU/Dkz8Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FAF21F000E9;
-	Tue, 21 Jul 2026 17:03:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iqa8iU0x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBB121F000E9;
+	Tue, 21 Jul 2026 17:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653435;
-	bh=jeoubqM13H6zD3YTna/nMlrB1RfplXoYYZnDmOM5D24=;
+	s=korg; t=1784653438;
+	bh=0/PUdLSfVebKJLdSMfrnh0nDKs3kbVGrTLfO6Sr75Es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YU/Dkz8QBdSZQ5TGiruoUuxy3PX6gMZKK3YLToEPfQP15l24W9bnUZZrGmYhijrEl
-	 2j2RqeRe1yG0lTMBgcYFJR7x/6pJ7oCF+QR+gZIJIogMQI5w67InJlY7FhQ9RJsHuO
-	 uUujQABzg6xRHSq8p/JzeaUVkurhzXED+KoFqTQw=
+	b=Iqa8iU0xkVN9qb2w6+qVFRAmVAGlIqitNV0Zq5HKkobkzV/5n7ZbzTh3189IAXpN7
+	 rCFkgmJf8PBGtK5xQWWplD89QfUuv+i5r3PPaCsYWyvJzRnndf1e+NxXE4bbDi47I0
+	 2KkzzTAJTzXnWRnU/Ef/oxi64KWMOrkytcmMg2Ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1325/2077] hwmon: adm1275: Prevent reading uninitialized stack
-Date: Tue, 21 Jul 2026 17:16:38 +0200
-Message-ID: <20260721152624.068210780@linuxfoundation.org>
+Subject: [PATCH 7.1 1326/2077] hwmon: (pmbus) Fix passing events to regulator core
+Date: Tue, 21 Jul 2026 17:16:39 +0200
+Message-ID: <20260721152624.091560815@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,58 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 553f9517813912a5ab661af5504485d96824a61c ]
+[ Upstream commit 9ef7dacd44216bf5ea05c8aef49eba4d145f4047 ]
 
-While adding support for the ROHM BD127X0 hot-swap controllers, sashiko
-reported an error in device-name comparison, which can lead to reading
-uninitialized stack memory.
+Sashiko reports:
 
-Quoting Sashiko:
+Commit 754bd2b4a084 ("hwmon: (pmbus/core) Protect regulator operations with
+mutex") introduced a worker to batch regulator events over time using
+atomic_or(). The delayed worker then passes the combined bitmask unmodified
+to regulator_notifier_call_chain().
 
-This is a pre-existing issue, but I noticed that just before this block in
-adm1275_probe(), there might be an out-of-bounds stack read:
+The core regulator subsystem's regulator_handle_critical() function
+evaluates the event parameter using a strict switch statement. If
+multiple distinct faults occur before the worker runs (e.g.,
+REGULATOR_EVENT_UNDER_VOLTAGE | REGULATOR_EVENT_OVER_CURRENT), the combined
+bitmask fails to match any case. This leaves the reason as NULL and
+completely bypasses the critical hw_protection_trigger().
 
-    ret = i2c_smbus_read_block_data(client, PMBUS_MFR_MODEL, block_buffer);
-    if (ret < 0) { ... }
-    for (mid = adm1275_id; mid->name[0]; mid++) {
-            if (!strncasecmp(mid->name, block_buffer, strlen(mid->name)))
-                    break;
-    }
+Fix the problem by passing events bit by bit to the regulator event
+handler.
 
-Since i2c_smbus_read_block_data() reads up to 32 bytes into the
-uninitialized stack array block_buffer without appending a null
-terminator, strncasecmp() could read past the valid bytes returned in ret.
-
-For example, if the device returns a shorter string like "adm12", checking
-it against "adm1275" up to the length of "adm1275" will continue reading
-into uninitialized stack bounds.
-
-Prevent reading uninitialized memory by zeroing the stack array.
-
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: 87102808d039 ("hwmon: (pmbus/adm1275) Validate device ID")
-Link: https://lore.kernel.org/r/c8ad38e0cdb347261c6245de2b7965e747f28d22.1782458224.git.mazziesaccount@gmail.com
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 754bd2b4a084 ("hwmon: (pmbus/core) Protect regulator operations with mutex")
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/adm1275.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/pmbus/pmbus_core.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
-index bc2a6a07dc3e2e..43baa5ded35e50 100644
---- a/drivers/hwmon/pmbus/adm1275.c
-+++ b/drivers/hwmon/pmbus/adm1275.c
-@@ -512,7 +512,7 @@ static int adm1275_enable_vout_temp(struct adm1275_data *data,
- static int adm1275_probe(struct i2c_client *client)
- {
- 	s32 (*config_read_fn)(const struct i2c_client *client, u8 reg);
--	u8 block_buffer[I2C_SMBUS_BLOCK_MAX + 1];
-+	u8 block_buffer[I2C_SMBUS_BLOCK_MAX + 1] = {0};
- 	int config, device_config;
- 	int ret;
- 	struct pmbus_driver_info *info;
+diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+index 8123a568af40d5..3143b9e0316c46 100644
+--- a/drivers/hwmon/pmbus/pmbus_core.c
++++ b/drivers/hwmon/pmbus/pmbus_core.c
+@@ -3347,18 +3347,23 @@ static void pmbus_regulator_notify_worker(struct work_struct *work)
+ 	int i, j;
+ 
+ 	for (i = 0; i < data->info->pages; i++) {
+-		int event;
++		unsigned int event;
+ 
+ 		event = atomic_xchg(&data->regulator_events[i], 0);
+ 		if (!event)
+ 			continue;
+ 
+ 		for (j = 0; j < data->info->num_regulators; j++) {
+-			if (i == rdev_get_id(data->rdevs[j])) {
++			if (i != rdev_get_id(data->rdevs[j]))
++				continue;
++			while (event) {
++				unsigned int _event = BIT(__ffs(event));
++
+ 				regulator_notifier_call_chain(data->rdevs[j],
+-							      event, NULL);
+-				break;
++							      _event, NULL);
++				event &= ~_event;
+ 			}
++			break;
+ 		}
+ 	}
+ }
 -- 
 2.53.0
 
