@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EED62E736D;
-	Tue, 21 Jul 2026 17:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708FD40096A;
+	Tue, 21 Jul 2026 17:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654430; cv=none; b=hii5KXI/sdpPMwmnOtM7SM/kBm1lAFS/QiAC7QSyUYwK5baqMRmzeRzdxDa09Zqyx3PMnq78lCoOchSFLnD3wBYAasNMOZW+KOLn4SFWXfq5BubZRVitXbce5mHUwYv3+MII8kXSJSwfBktTeykVcX7hxim+yR8jsphotvhQtKM=
+	t=1784654432; cv=none; b=UxOwbLD7FJp7V35qFT1SZ9kVZmwueqY1mXBEesO5kMksxoSHWdaUQKbKUoSmZVFOOXqPRybVnca6TNsCZ/dS+R+9S/S07Oj3bA/SfdCs8ldPurmexncek1piKexoUnn1QqKPczswQoWjp+B2P/zOovwnMNFhcu5BooDIJ3TC8oI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654430; c=relaxed/simple;
-	bh=OMLYkfkwzyRF5F1D3HSP9oPTus5w98vRrE2sZwJiYGM=;
+	s=arc-20240116; t=1784654432; c=relaxed/simple;
+	bh=2Vfj0TAKBnEjj8Wae9oiUdEfNzhhfqPTr3Z1V0EJ8Dk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPFE6y4LqOag7hJ7xPRYXIPFzcO558/pSsj/6L+/Iejfbn1xWtnB3ND42kiVhcjK1p2kxGqfQHA+yoie8hhEQoi+EW3G5IBQOFiTM16IhxS68SBFeLd2z3DKKcRY8sLJ5Qc1nCFmlGPBQrF+KHk8LKw4CK4SXIT2Rp74ltwjmdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCWztSwy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t/4Ig1jBhjYXzMh5VYnMEUWzofM4m55edKsJVYCpVmlVJu1ew5f/gmJE1OJbSilWQJqFhjyUnZZFMv1xeLyxDdGCtuis34RYBjUzzIapz8ZWPo2QhZAD02blrGme0sDvqJKkUTS0Unt0MxnmmArZFvrmWWSx2ZgtezQPnhPPFJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ncux4R80; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCWztSwy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D87E1F000E9;
-	Tue, 21 Jul 2026 17:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ncux4R80"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D55081F000E9;
+	Tue, 21 Jul 2026 17:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654428;
-	bh=4+TSTdt/yyBXA3vd++9fRjkByQenmRBJsKY5DlM0fJs=;
+	s=korg; t=1784654431;
+	bh=yZCu8ryIqKlCBC1wn1tyJ6tWoMIDLNO2h/aY1qaZTcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TCWztSwynxOsCTMF1f4SIgHfEKwdZIWNcd4I1R2CZDlXfFX985rJ0bMA0ELgY4aN1
-	 3t6lKZn4k0mfpufFSopr9V/sAYg5/y9YMM9Mgm33NZhUIH1EJgtwkaZ/GPRuqwW8Na
-	 bIOVnBvS6PPSFj9FTRhvO1EmoxdLFmfjjgocIXek=
+	b=ncux4R80HNY0BDe8Yubgx62bD5Yf7oVE2DlgO5s5R1sUuNDgg9kruLLPQoWEtOxW/
+	 CUNf7I1i6eF0BBacnWLGXIYkVTxc1E8i5hp5oSNyDxgT+zjbi/GVFwtU3GbSxtClXi
+	 FdJMF6B0FoC5JHPEl4idw+uECaX9HBxVn498ARpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	DaeMyung Kang <charsyam@gmail.com>,
 	Hyunchul Lee <hyc.lee@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.1 1699/2077] ntfs: validate resident index root values on lookup
-Date: Tue, 21 Jul 2026 17:22:52 +0200
-Message-ID: <20260721152632.833568002@linuxfoundation.org>
+Subject: [PATCH 7.1 1700/2077] ntfs: reject non-resident records for resident-only attributes
+Date: Tue, 21 Jul 2026 17:22:53 +0200
+Message-ID: <20260721152632.858556004@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,29 +53,31 @@ Content-Transfer-Encoding: 8bit
 
 From: DaeMyung Kang <charsyam@gmail.com>
 
-commit fcf5bf0e8570798970e3ae8c95d04765ba2c5b97 upstream.
+commit 097cdfd0a55df5af82c9753833f39a8bfadbcfcb upstream.
 
-Resident $INDEX_ROOT values carry index header fields that callers
-consume after lookup. Some callers already validate parts of the layout
-before walking entries, but those checks are scattered and do not cover
-all root header invariants, such as entries_offset alignment and lower
-bound, index_length, and allocated_size consistency.
+The shared lookup-time attribute validator rejects non-resident
+$FILE_NAME and $VOLUME_NAME records because their formats require
+resident values and callers handle returned records as resident
+attributes. Other resident-only attribute types still pass through the
+generic non-resident mapping-pairs checks.
 
-The resident root resize paths now keep these header fields consistent
-while the value size changes: ntfs_ir_truncate() lowers
-index.allocated_size before shrinking the resident value, and
-ntfs_ir_reparent() grows the resident value before publishing a larger
-root header. Lookup-time validation can therefore cover these invariants
-without tripping over the driver's own resize paths.
+That leaves real resident/non-resident union confusion paths. Inode load
+looks up $STANDARD_INFORMATION and then reads data.resident.value_offset
+without checking a->non_resident. ntfs_inode_sync_standard_information()
+does the same when updating the standard information value.
+ntfs_write_volume_flags() also looks up $VOLUME_INFORMATION and reads
+data.resident.value_offset directly. $INDEX_ROOT callers in dir.c and
+index.c depend on the same lookup contract before consuming the resident
+index root value.
 
-Add $INDEX_ROOT to the minimum resident value size table and validate the
-resident index header fields before returning the attribute from lookup.
-Require 8-byte aligned index header fields, a sane entries_offset, an
-index_length within allocated_size, allocated_size within the resident
-value, and enough entry space for at least an index entry header.
-
-The shared validator already rejects non-resident records for
-resident-only attribute types, including $INDEX_ROOT.
+Reject non-resident records for all resident-only attribute types in the
+shared validator. Keep the existing $FILE_NAME and $VOLUME_NAME behavior,
+but factor it through a helper and extend it to
+$STANDARD_INFORMATION, $OBJECT_ID, $VOLUME_INFORMATION, $INDEX_ROOT, and
+$EA_INFORMATION. For $OBJECT_ID and $EA_INFORMATION this is contract
+hardening for resident-only formats; this patch only rejects the
+non-resident form and does not add new resident value validation for
+those types.
 
 Cc: stable@vger.kernel.org # v7.1
 Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
@@ -83,62 +85,42 @@ Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs/attrib.c |   31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ fs/ntfs/attrib.c |   18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
 --- a/fs/ntfs/attrib.c
 +++ b/fs/ntfs/attrib.c
-@@ -588,6 +588,8 @@ static u32 ntfs_resident_attr_min_value_
- 			sizeof(__le16) * 1;
- 	case AT_VOLUME_INFORMATION:
- 		return sizeof(struct volume_information);
-+	case AT_INDEX_ROOT:
-+		return sizeof(struct index_root);
- 	case AT_EA_INFORMATION:
- 		return sizeof(struct ea_information);
- 	default:
-@@ -615,6 +617,31 @@ static bool ntfs_volume_name_attr_value_
- 	return value_length <= NTFS_MAX_LABEL_LEN * sizeof(__le16);
+@@ -597,6 +597,22 @@ static u32 ntfs_resident_attr_min_value_
+ 	}
  }
  
-+static bool ntfs_index_root_attr_value_is_valid(const u8 *value, const u32 value_length)
++static bool ntfs_attr_type_is_resident_only(const __le32 type)
 +{
-+	const struct index_root *ir;
-+	u32 index_size;
-+	u32 entries_offset;
-+	u32 index_length;
-+	u32 allocated_size;
-+
-+	ir = (const struct index_root *)value;
-+	index_size = value_length - offsetof(struct index_root, index);
-+	entries_offset = le32_to_cpu(ir->index.entries_offset);
-+	index_length = le32_to_cpu(ir->index.index_length);
-+	allocated_size = le32_to_cpu(ir->index.allocated_size);
-+
-+	if ((entries_offset | index_length | allocated_size) & 7 ||
-+	    entries_offset < sizeof(struct index_header) ||
-+	    entries_offset > index_length ||
-+	    index_length > allocated_size ||
-+	    allocated_size > index_size ||
-+	    index_length - entries_offset < sizeof(struct index_entry_header))
++	switch (type) {
++	case AT_STANDARD_INFORMATION:
++	case AT_FILE_NAME:
++	case AT_OBJECT_ID:
++	case AT_VOLUME_NAME:
++	case AT_VOLUME_INFORMATION:
++	case AT_INDEX_ROOT:
++	case AT_EA_INFORMATION:
++		return true;
++	default:
 +		return false;
-+
-+	return true;
++	}
 +}
 +
- struct ntfs_resident_attr_value {
- 	const u8 *data;
- 	u32 len;
-@@ -688,6 +715,10 @@ static bool ntfs_attr_value_is_valid(str
- 		if (!ntfs_volume_name_attr_value_is_valid(value.len))
- 			goto corrupt;
- 		break;
-+	case AT_INDEX_ROOT:
-+		if (!ntfs_index_root_attr_value_is_valid(value.data, value.len))
-+			goto corrupt;
-+		break;
- 	}
- 	return true;
+ static bool ntfs_file_name_attr_value_is_valid(const u8 *value, const u32 value_length)
+ {
+ 	const struct file_name_attr *fn;
+@@ -692,7 +708,7 @@ static bool ntfs_attr_value_is_valid(str
+ 	u32 min_len;
  
+ 	if (a->non_resident) {
+-		if (a->type == AT_FILE_NAME || a->type == AT_VOLUME_NAME)
++		if (ntfs_attr_type_is_resident_only(a->type))
+ 			goto corrupt;
+ 		if (!ntfs_non_resident_attr_value_is_valid(a))
+ 			goto corrupt;
 
 
