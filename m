@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF213AA4F9;
-	Tue, 21 Jul 2026 22:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0223C1400;
+	Tue, 21 Jul 2026 22:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673665; cv=none; b=HK0teO/zF4U9PVifSXCLvG/wmbey8EcsOIda66BnrN+y8JRw93BYKL/59cu0anhwTUV4xN/KIFpX4e3LCsirrJNOyXKB7Ypc09RyQCkSvBpRXlwcxQpqrHM1+9GmKnQV0qCYRZ0RkPWw0PRsAJFhVueD7tN/bAgoAz2DyDA5iPI=
+	t=1784673667; cv=none; b=WOGHSIPh5g/u2j2wdBIUoPF/zUZjS885NwjtN1Z1C73pTOcqYsYrOrMMYxPp9nI8FxnAR2UI+2bgz16JlCU2d2ZLkFbQxYtgDi1Kh8hYB4LiVQ96GGcB8jQRfGOEs7U+P0ot1jw3/BJbGOni86anHkIRwr/Z/ukgDjjbdEwimg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673665; c=relaxed/simple;
-	bh=tvO6AE4BOymnFcOjFHq+hv4luGT/M6UZ2GKna3AP5TI=;
+	s=arc-20240116; t=1784673667; c=relaxed/simple;
+	bh=YoYNZUoW3qK8njDkErxLWULT6RwKEcIY/bKAmzBd31E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RZCFkzDO3YdKZrnx155/DfpEXtONghbseCI5IM16WJkBhzf2FMJDR59bif4feZuQAxcox6QXJtvx+ixhM9uLGs8s+2AbzZNQQZKtOapc+IEk5+SByLsegULbVEG9pqM4CoZInyosiT7CBSTwsLj/e+RjbGAbUj+XY7aDf4LYjL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZnRPZVx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YQEU5MgqooRIsbHV7hItGz8NE9eK+HaFrDYsgtH462cAQ1+eTASgDOT3FgzCzeuPDyePZwdwfhR9yG2XdNjJ1Ep1JJTaEKNM/P7JSgtGZUqcEsTiBr5uTxEs7agCfozqmCqIqVbUp2xA7N/3/d6U/XeC/cAX/fqr4BdSZZEIOfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=No8ipNob; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZnRPZVx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922601F000E9;
-	Tue, 21 Jul 2026 22:41:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="No8ipNob"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B23E1F000E9;
+	Tue, 21 Jul 2026 22:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673664;
-	bh=A/d/dyubfae4rrO5Rx1bjHxeKG8jjWWgBkcyVXi1zFg=;
+	s=korg; t=1784673666;
+	bh=j9Iwu2Qb/4Qz+MHW1z7DjySEslAG2A7RIDCgLfGu6Kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qZnRPZVxtAWuemRX/nZkmqL7qq0Y3AaL9IQrDUAICgkEzKscSb5vlHgBTnT+EsSkH
-	 1o9DGRc/ZzfAW/1Bp7M4lLYTdmGE9ApM6tBsBuMN4OGNVGvYaAMBM+SjRXrjHFmKBS
-	 PPEF4/mzGuP6zuRWiBSEHn5busB1LR6dlg/elHQY=
+	b=No8ipNobNTIXz8VrCzqVfFl6iObeSSUNQoDoDgfFEe71S4dBFZaRRXINUr1h5VD1b
+	 qXyYocVMBSUBbNjLe+5RG7U1DVVhDWwk2ItQVF1eFkQzDCwabHJ3roFXt6vD5Mor0E
+	 cmsvFj6KdxEooWX/f7he1puWzryZVfO45u5WPvkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 248/699] IB/mlx4: Fill in the access_flags if IB_MR_REREG_ACCESS is not specified
-Date: Tue, 21 Jul 2026 17:20:07 +0200
-Message-ID: <20260721152401.293363413@linuxfoundation.org>
+Subject: [PATCH 5.10 222/699] scsi: pm8001: Fix error code in non_fatal_log_show()
+Date: Tue, 21 Jul 2026 17:19:41 +0200
+Message-ID: <20260721152400.707803929@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,77 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit bade9a3150d44ed20b8c6484c4c8a943b7289abb ]
+[ Upstream commit 1b6f03b7ae9ee27054c55bb55a69d05555a78516 ]
 
-Sashiko noticed mlx4 was using whatever random access flags were provided
-when IB_MR_REREG_ACCESS is not used. Since IB_MR_REREG_TRANS needs
-access_flags it used the random ones which means it doesn't work sensibly
-if userspace provides only IB_MR_REREG_TRANS.
+The non_fatal_log_show() function is supposed to return negative error
+codes on failure.  But because the error codes are saved in a u32 and
+then cast to signed long, they end up being high positive values instead
+of negative.  Remove the intermediary u32 variable to fix this bug.
 
-Keep track of the current access_flag of the MR and use it if the user
-does not specify one.
-
-Also fixup a little confusion around mmr.access, it is the HW access flags
-so the convert_access() was missing. But nothing reads this by the time
-rereg_mr can happen.
-
-Fixes: 9376932d0c26 ("IB/mlx4_ib: Add support for user MR re-registration")
-Link: https://patch.msgid.link/r/0-v1-29ca7a402625+ddd6-mlx4_rereg_flags_jgg@nvidia.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: dba2cc03b9db ("scsi: pm80xx: sysfs attribute for non fatal dump")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
+Link: https://patch.msgid.link/ahs-bEsBJH0KhnsX@stanley.mountain
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx4/mlx4_ib.h | 1 +
- drivers/infiniband/hw/mlx4/mr.c      | 9 +++++++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/scsi/pm8001/pm8001_ctl.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx4/mlx4_ib.h b/drivers/infiniband/hw/mlx4/mlx4_ib.h
-index 58df06492d69e4..a6470e407ff762 100644
---- a/drivers/infiniband/hw/mlx4/mlx4_ib.h
-+++ b/drivers/infiniband/hw/mlx4/mlx4_ib.h
-@@ -136,6 +136,7 @@ struct mlx4_ib_mr {
- 	dma_addr_t		page_map;
- 	u32			npages;
- 	u32			max_pages;
-+	int			access_flags;
- 	struct mlx4_mr		mmr;
- 	struct ib_umem	       *umem;
- 	size_t			page_map_size;
-diff --git a/drivers/infiniband/hw/mlx4/mr.c b/drivers/infiniband/hw/mlx4/mr.c
-index 0f303e8aa13776..27c3be0bd7b969 100644
---- a/drivers/infiniband/hw/mlx4/mr.c
-+++ b/drivers/infiniband/hw/mlx4/mr.c
-@@ -439,6 +439,7 @@ struct ib_mr *mlx4_ib_reg_user_mr(struct ib_pd *pd, u64 start, u64 length,
- 	if (err)
- 		goto err_mr;
+diff --git a/drivers/scsi/pm8001/pm8001_ctl.c b/drivers/scsi/pm8001/pm8001_ctl.c
+index d5d5965fa7a0e9..467f77664efb90 100644
+--- a/drivers/scsi/pm8001/pm8001_ctl.c
++++ b/drivers/scsi/pm8001/pm8001_ctl.c
+@@ -588,10 +588,7 @@ static DEVICE_ATTR(fatal_log, S_IRUGO, pm8001_ctl_fatal_log_show, NULL);
+ static ssize_t non_fatal_log_show(struct device *cdev,
+ 	struct device_attribute *attr, char *buf)
+ {
+-	u32 count;
+-
+-	count = pm80xx_get_non_fatal_dump(cdev, attr, buf);
+-	return count;
++	return pm80xx_get_non_fatal_dump(cdev, attr, buf);
+ }
+ static DEVICE_ATTR_RO(non_fatal_log);
  
-+	mr->access_flags = access_flags;
- 	mr->ibmr.rkey = mr->ibmr.lkey = mr->mmr.key;
- 	mr->ibmr.page_size = 1U << shift;
- 
-@@ -496,6 +497,8 @@ int mlx4_ib_rereg_user_mr(struct ib_mr *mr, int flags,
- 
- 		if (err)
- 			goto release_mpt_entry;
-+	} else {
-+		mr_access_flags = mmr->access_flags;
- 	}
- 
- 	if (flags & IB_MR_REREG_TRANS) {
-@@ -537,8 +540,10 @@ int mlx4_ib_rereg_user_mr(struct ib_mr *mr, int flags,
- 	 * return a failure. But dereg_mr will free the resources.
- 	 */
- 	err = mlx4_mr_hw_write_mpt(dev->dev, &mmr->mmr, pmpt_entry);
--	if (!err && flags & IB_MR_REREG_ACCESS)
--		mmr->mmr.access = mr_access_flags;
-+	if (!err && flags & IB_MR_REREG_ACCESS) {
-+		mmr->access_flags = mr_access_flags;
-+		mmr->mmr.access = convert_access(mr_access_flags);
-+	}
- 
- release_mpt_entry:
- 	mlx4_mr_hw_put_mpt(dev->dev, pmpt_entry);
 -- 
 2.53.0
 
