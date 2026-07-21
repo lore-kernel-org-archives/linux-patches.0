@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71CB415F16;
-	Tue, 21 Jul 2026 20:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7754307AD;
+	Tue, 21 Jul 2026 20:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665110; cv=none; b=JgwglBjP5RhwDkNzFLsIvR1IRJEnVTBQEfGLsJu7jtxAmtMpJp8rMNJx/tPcpgrFM4uE9I62ti5BeuzIoA2Wv7Lm/uwxApA/Gg8gSWTQdBPlvMtS2Sa1KZ/quSzZzuy7kd37/FAH5/+9rT1BSixVJ+M+RxX+sT/o8mUZ3vZdLV0=
+	t=1784665112; cv=none; b=HQAL/IDb1yOPWGT68/PbylnLRlNZBEX3Z8tZFCQezv521rTc+JbPiSugQr5zqI52ZwGROrV1MRPnSUIjtSdLrDbODR38E6RNq6dq6o75CtsyFgJ6XGhBl36GG8eyynATxAj36LgVWSSWM/MAjAZ+6oFwnUVmPzo12soNfcgfwGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665110; c=relaxed/simple;
-	bh=6D7oLPzh8pChBMp0lyTO7c2Y8LYuLGmIqiADfChM9LA=;
+	s=arc-20240116; t=1784665112; c=relaxed/simple;
+	bh=VSKLPhrVTExFNvV0IKcBph8ze2EVebQn1hw8aFpZ26Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dbkLy8FXlPBF0C7Eq57t5iQ9/LAk15azA2pITjgABBlyB+KgTkBuqOx4fbjKsJSRWGabaIvo0BD5C18cBWjfuK9pSs6OUHig9lHP12C94sEXVzmYXpQiHtM1+JUSO1mV8vhfWw+4Yzubsmts4NGpP1bw/eANpj4J+Xr8FsudS/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWIrtYcB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bpkplJzvb6deNdEX1+BMnwXnWSFtVmH4LsNtRVI3Xd+iaMFUqQs/mjid2iwhgtVoliEaeqJKgIgsRusmU0qtIcoR3W3xOTTbxwgVnsJXcvwJ1iFxsQPGMxT/HYNfqbqsEAxk2bfsQSAwkxeFoeZINYKmiVBoseQrmKwNbuY82x0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ae24DVit; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWIrtYcB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4997E1F000E9;
-	Tue, 21 Jul 2026 20:18:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ae24DVit"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E81CE1F000E9;
+	Tue, 21 Jul 2026 20:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665108;
-	bh=HpNJMhUeM//SsZ69/rWIqyo/foRbfticamAKzDwblrE=;
+	s=korg; t=1784665111;
+	bh=3wJlvPvpf/J2LE0HpY5Z3HjRDHVuVx+cI7WutHM/6kU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HWIrtYcB8QkOZsqxXCFCXx+poMZSUlX9zrvEgZ55pSedcDifD6jVO2B+YfT/ZxwbB
-	 DeRggNvwg6lIcjdhWZc1WfROOWyuW7q4/yLXLxpuS3EM1ybW6X+P00hCqeBR0KxDW/
-	 MkbI2Rg8pWWtu4MKo6cpZkqtZyXyM3I6pDVgDfcU=
+	b=ae24DVitT4oJQqKaHxGSyzJn7qmU6eimLi6ZLH+UlPRxFEPNb7YRpIsjmWuTfb1a1
+	 urNFyok0LzbKVjSuErrjqTG3VL0vdsiZAblFiEFjIRt9bB/lhlRiBEXeJpGA3cceVD
+	 LSFCnZvOxxZJKffWJj7oDAUeMtw1gpYwuKcwHLu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c1e9aedbd913fadad617@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <Kartikey406@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0178/1266] fs/ntfs3: fix missing run load for vcn0 in attr_data_get_block_locked()
-Date: Tue, 21 Jul 2026 17:10:15 +0200
-Message-ID: <20260721152445.791032351@linuxfoundation.org>
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Alexander Aring <aahringo@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 0138/1266] 6lowpan: fix NHC entry use-after-free on error path
+Date: Tue, 21 Jul 2026 17:09:35 +0200
+Message-ID: <20260721152444.894986705@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,71 +56,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit d7ea8495fd307b58f8867acd81a1b40075b1d3ba ]
+commit 1720db928e5a58ca7d75ac1d514c3b73fd7061a7 upstream.
 
-When a compressed or sparse attribute has its clusters frame-aligned,
-vcn is rounded down to the frame start using cmask, which can result
-in vcn != vcn0. In this case, vcn and vcn0 may reside in different
-attribute segments.
+lowpan_nhc_do_uncompression() looks up an NHC descriptor while holding
+lowpan_nhc_lock.  If the descriptor has no uncompress callback, the error
+path drops the lock before printing nhc->name.
 
-The code already handles the case where vcn is in a different segment
-by loading its runs before allocation. However, it fails to load runs
-for vcn0 when vcn0 resides in a different segment than vcn. This causes
-run_lookup_entry() to return SPARSE_LCN for vcn0 since its segment was
-never loaded into the in-memory run list, triggering the WARN_ON(1).
+lowpan_nhc_del() removes descriptors under the same lock and then relies
+on synchronize_net() before the owning module can be unloaded.  That only
+waits for net RX RCU readers.  lowpan_header_decompress() is also exported
+and can be reached from callers that are not necessarily covered by the net
+core RX critical section, for example the Bluetooth 6LoWPAN L2CAP receive
+path.
 
-Fix this by adding a missing check for vcn0 after the existing vcn
-segment check. If vcn0 falls outside the current segment range
-[svcn, evcn1), find and load the attribute segment containing vcn0
-before performing the run lookup.
+This leaves a race where one task drops lowpan_nhc_lock in the error path,
+another task unregisters and frees the matching descriptor after
+synchronize_net() returns, and the first task then dereferences nhc->name
+for the warning.
 
-The following scenario triggers the bug:
-  attr_data_get_block_locked()
-    vcn = vcn0 & cmask        <- vcn != vcn0 after frame alignment
-    load runs for vcn segment <- vcn0 segment not loaded!
-    attr_allocate_clusters()  <- allocation succeeds
-    run_lookup_entry(vcn0)    <- vcn0 not in run -> SPARSE_LCN
-    WARN_ON(1)                <- bug fires here!
+With the post-unlock window widened, KASAN reports:
 
-Reported-by: syzbot+c1e9aedbd913fadad617@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c1e9aedbd913fadad617
-Fixes: c380b52f6c57 ("fs/ntfs3: Change new sparse cluster processing")
-Signed-off-by: Deepanshu Kartikey <Kartikey406@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  BUG: KASAN: slab-use-after-free in lowpan_nhc_do_uncompression+0x1f4/0x220
+  Read of size 8
+  lowpan_nhc_do_uncompression
+  lowpan_header_decompress
+
+Fix this by printing the warning before dropping lowpan_nhc_lock, so the
+descriptor name is read while unregister is still excluded.  The malformed
+packet is still rejected with -ENOTSUPP.
+
+Fixes: 92aa7c65d295 ("6lowpan: add generic nhc layer interface")
+Cc: stable@vger.kernel.org
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Acked-by: Alexander Aring <aahringo@redhat.com>
+Link: https://patch.msgid.link/20260609080054.4541-1-zhaoyz24@mails.tsinghua.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/attrib.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ net/6lowpan/nhc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
-index 8f033e30e0d799..a590c541861332 100644
---- a/fs/ntfs3/attrib.c
-+++ b/fs/ntfs3/attrib.c
-@@ -1045,6 +1045,20 @@ int attr_data_get_block(struct ntfs_inode *ni, CLST vcn, CLST clen, CLST *lcn,
- 			if (err)
- 				goto out;
+--- a/net/6lowpan/nhc.c
++++ b/net/6lowpan/nhc.c
+@@ -117,9 +117,9 @@ int lowpan_nhc_do_uncompression(struct s
+ 				return ret;
+ 			}
+ 		} else {
+-			spin_unlock_bh(&lowpan_nhc_lock);
+ 			netdev_warn(dev, "received nhc id for %s which is not implemented.\n",
+ 				    nhc->name);
++			spin_unlock_bh(&lowpan_nhc_lock);
+ 			return -ENOTSUPP;
  		}
-+
-+		if (vcn0 < svcn || evcn1 <= vcn0) {
-+			struct ATTRIB *attr2;
-+
-+			attr2 = ni_find_attr(ni, attr_b, &le_b, ATTR_DATA, NULL,
-+					       0, &vcn0, &mi);
-+			if (!attr2) {
-+				err = -EINVAL;
-+				goto out;
-+			}
-+			err = attr_load_runs(attr2, ni, run, NULL);
-+			if (err)
-+				goto out;
-+		}
- 	}
- 
- 	if (vcn + to_alloc > asize)
--- 
-2.53.0
-
+ 	} else {
 
 
