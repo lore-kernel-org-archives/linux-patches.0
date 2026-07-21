@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1ADA430CE3;
-	Tue, 21 Jul 2026 22:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC4342DFEC;
+	Tue, 21 Jul 2026 22:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674246; cv=none; b=Gg5zDOvj855u8PkyAYokdU2P/9M5MdL0OZ6en5M8Wfp3uJcWMlZnO4XVNfLOTe1MaXgWFJKvGNSgqzsJbUQm7aX86OlFLwGxq5lXMk5MHnIPbxvTuqH/E9cJw1L67kO0LpfQtyuZRXKPXjQ1On8vQv35WwkHS21AJD5AH1ZvSWA=
+	t=1784674248; cv=none; b=gtcCP5asDpP9tRsDKcDMmndvhsGTD1Snd6MMcVjKdbwaOSnOlpeHtPReXGRf4FEwjDJX7lVqHPdA06LvLHbJmS+onj5dA8lW+9Be8+qdyMrZ/wU/rzQNUNWbP0GFPWCWCfA/3il5hWI9awHx2UThmVweSCqm3wmw8JYCtK9qWro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674246; c=relaxed/simple;
-	bh=HaFNHDOv6XTZoIKyzJDqMGNoACvSYKCVr4ZFz6s3hLY=;
+	s=arc-20240116; t=1784674248; c=relaxed/simple;
+	bh=WIBgnav9bXPjWr9XHpFXZM9kn+9xUdYJ5gyRifekB8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QoclYminchUhcDZgkaiqY7R58LEuAz/aXbD5CWA2c5e7WDtaf/WBFr3pnM+CKN+j370yJmLzpI1Dwj+2fdKkRjJrKpmEOdm2zBYpLniLoU4/TKPd11UAzeCUUU3cmm8eFK/IPI2BD0UVuwwQLEgZYyDsPOaoWtULzaYkHOs3+2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCFagsq7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NaB5UIaGq/iFvmvaep3n+HSCe9K9q7zRh0OZIezWRLt+Q9R7nEWgmBv74MwEMInT/Sb1JyKN8YfIL3TUaTEgBQwgfptgovQNOcWriNockUbH3L/VlcrDQE7AI3jLXIgp57aBKE8pWOfSa0V7z4iYn3p5gsrWYRPJQldLzZw7FC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMKj01lX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCFagsq7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425AB1F00A3E;
-	Tue, 21 Jul 2026 22:50:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMKj01lX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E084D1F000E9;
+	Tue, 21 Jul 2026 22:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674244;
-	bh=Ovjfu1yEhzbShDJm2T/HmqZmC/cBsSJlXCcFAjcVFsY=;
+	s=korg; t=1784674247;
+	bh=xAxCBoQ9h+usBWi2Mr02Nzi8rCYFB0UmmY8xs4jwstg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GCFagsq7G0hsTk3B30RqF5/pY6DWCMy7PESnWYKAr2aOtXtIYXUd/2xAaxFMzPWnn
-	 vaP/JbHzMlShElVEvxxm646Tp5DzBTovORu/eBlRVqPRA/lJ6cNo4k1/TReGWq/bIs
-	 gbHENBxWhMOnu6R+BNh2e8an7PZHgcG1STvclgm4=
+	b=yMKj01lX1FiQYJh22tZCpvk/A4nfE3+BZBm2AR6ufeGpyaKtObD5mpcdj/clE2YRG
+	 5qaLi9AcHol69EVTUHDrmWd/Ax0kjODfDaNenKraqX6gEk2zjwC+gS+7LmDZqw9ANg
+	 aE0U56GSIU9LimVEvnT8qenVCgAVwP7ABcc738X8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 5.10 451/699] netfilter: bridge: fix stale prevhdr pointer in br_ip6_fragment()
-Date: Tue, 21 Jul 2026 17:23:30 +0200
-Message-ID: <20260721152405.876905339@linuxfoundation.org>
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 5.10 469/699] batman-adv: tt: prevent TVLV OOB check overflow
+Date: Tue, 21 Jul 2026 17:23:48 +0200
+Message-ID: <20260721152406.276274643@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,78 +49,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit 86f3ce81dd2b4b0aa2c3016c989a943e4b1b643d upstream.
+commit 7a581d9aaba8c82bd6177fa36b2588eea77f6e2b upstream.
 
-br_ip6_fragment() gets prevhdr, a pointer into the skb head, from
-ip6_find_1stfragopt(), then calls skb_checksum_help().  For a cloned skb
-skb_checksum_help() reallocates the head via pskb_expand_head(), leaving
-prevhdr dangling.  It is later dereferenced in ip6_frag_next(), causing a
-use-after-free write.
+A TT unicast TVLV contains the number of VLANs stored in it. This number is
+an u16 and gets multiplied by the size of the struct
+batadv_tvlv_tt_vlan_data (8 bytes). The size can therefore overflow the u16
+used to store the tt_vlan_len. All additional safety checks to prevent
+out-of-bounds access of the TVLV buffer are invalid due to this overflow.
 
-Save prevhdr's offset before skb_checksum_help() and recompute it after,
-like commit ef0efcd3bd3f ("ipv6: Fix dangling pointer when ipv6
-fragment").
+Using size_t prevents this overflow and ensures that the safety checks
+compare against the actual buffer requirements.
 
-  BUG: KASAN: slab-use-after-free in ip6_frag_next (net/ipv6/ip6_output.c:857)
-  Write of size 1 at addr ffff888013ff5016 by task exploit/141
-  Call Trace:
-   ...
-   kasan_report (mm/kasan/report.c:595)
-   ip6_frag_next (net/ipv6/ip6_output.c:857)
-   br_ip6_fragment (net/ipv6/netfilter.c:212)
-   nf_ct_bridge_post (net/bridge/netfilter/nf_conntrack_bridge.c:407)
-   nf_hook_slow (net/netfilter/core.c:619)
-   br_forward_finish (net/bridge/br_forward.c:66)
-   __br_forward (net/bridge/br_forward.c:115)
-   maybe_deliver (net/bridge/br_forward.c:191)
-   br_flood (net/bridge/br_forward.c:245)
-   br_handle_frame_finish (net/bridge/br_input.c:229)
-   br_handle_frame (net/bridge/br_input.c:442)
-   ...
-   packet_sendmsg (net/packet/af_packet.c:3114)
-   ...
-   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-  Kernel panic - not syncing: Fatal exception in interrupt
-
-Fixes: 764dd163ac92 ("netfilter: nf_conntrack_bridge: add support for IPv6")
 Cc: stable@vger.kernel.org
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/netfilter.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/batman-adv/translation-table.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/ipv6/netfilter.c
-+++ b/net/ipv6/netfilter.c
-@@ -122,7 +122,7 @@ int br_ip6_fragment(struct net *net, str
- 	ktime_t tstamp = skb->tstamp;
- 	struct ip6_frag_state state;
- 	u8 *prevhdr, nexthdr = 0;
--	unsigned int mtu, hlen;
-+	unsigned int mtu, hlen, nexthdr_offset;
- 	int hroom, err = 0;
- 	__be32 frag_id;
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -4338,7 +4338,8 @@ static int batadv_tt_tvlv_unicast_handle
+ 					     u16 tvlv_value_len)
+ {
+ 	struct batadv_tvlv_tt_data *tt_data;
+-	u16 tt_vlan_len, tt_num_entries;
++	u16 tt_num_entries;
++	size_t tt_vlan_len;
+ 	char tt_flag;
+ 	bool ret;
  
-@@ -131,6 +131,7 @@ int br_ip6_fragment(struct net *net, str
- 		goto blackhole;
- 	hlen = err;
- 	nexthdr = *prevhdr;
-+	nexthdr_offset = prevhdr - skb_network_header(skb);
- 
- 	mtu = skb->dev->mtu;
- 	if (frag_max_size > mtu ||
-@@ -149,6 +150,7 @@ int br_ip6_fragment(struct net *net, str
- 	    (err = skb_checksum_help(skb)))
- 		goto blackhole;
- 
-+	prevhdr = skb_network_header(skb) + nexthdr_offset;
- 	hroom = LL_RESERVED_SPACE(skb->dev);
- 	if (skb_has_frag_list(skb)) {
- 		unsigned int first_len = skb_pagelen(skb);
 
 
