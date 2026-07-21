@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB9F1A683A;
-	Tue, 21 Jul 2026 20:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA1B1A683A;
+	Tue, 21 Jul 2026 20:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664023; cv=none; b=RSatsLK8h9yh52hv1oHyvAgbV6YKCtgPeaKbPwSze8Wtx5ZrDAm6e6yCGp03p/7r+HtiHpFa1AZYA8fJm1DYxOmjbLOBf1rh6CsNqvDDLcuc16mluO4bdkL6W2yg/Z+T1HrPAszoNLpKOLiVIPyDCe5/UV8zbTEsQ6CvldVx4Xg=
+	t=1784664025; cv=none; b=esF2OF5Yv0Dvkumxf/ReHks2IdS6ZEJZqedHDnr0Cwx7QQDdQSyJxL0XNe+DZc5bcM+JxCr+YZSQ41Izx+YiDe1WbTsouB5ks1xw+vaWkcZaqa6xVqWGk7UVjfX+8HRokq1949nfsEki8bGS1ymCHhmen3H2qaM0UH0oGNhyxQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664023; c=relaxed/simple;
-	bh=B7I5BykW9o7kuxC/Ef+8667DbPb0ygHtVN4p9SfzYJk=;
+	s=arc-20240116; t=1784664025; c=relaxed/simple;
+	bh=cV5ptbs9zylQxWPJeIHdySo1DVPZ465nlALJxEgMg4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o6o/tIPBbqZ6RGm4AuMl/AgAKG0wa2q6kZ+1cpYLCmhwX5AEKKYVMYiT1CsqP8ujZnGmG5iqBSbd7Gmac0IZnHgyqqew8Fw3Hb0QcG+ZFRP/262fczQxXKI6Bh34gO3wcehlL8Mv3ZKyFnSKZukqU8+RDQWUh+4nVqwNHFkrR2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3cehrl0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d5pRYcZ5RgEL/qOP4336H3ZqIXJwP60Z3NuqMwI5R/ucCoswO5LIigWeQD2EVNHXB0tIQGGV2WBVN5S2jn3kFrTWdFphOG8IlHB8NjWK77QPgyJZ1djAbZgYiUjyRmTh+CPUzHLxTL8fICe1x9j5/qAODnfpo7zBHe8Webn7iWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L8/eBjnL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3cehrl0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668A91F000E9;
-	Tue, 21 Jul 2026 20:00:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L8/eBjnL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9891F000E9;
+	Tue, 21 Jul 2026 20:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664021;
-	bh=jY/ee1H2ND68u0V2aFkviduomZ6I01EqUUyjCbin3/M=;
+	s=korg; t=1784664024;
+	bh=qj1GHYnky/JREazZsSlfJIU6GWfVvRd5j9VU7VSBr6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I3cehrl0ji4Grq4hBZz8PO4M+oH1J3iezzjesjbzzrGlm7u4SpufY5MrUUeN2rJbW
-	 Z96csfuc3SdQnueAOpTjq16U3T6WnHUFfqvPY+xN17q8Tzd2RpC4B7d4gTBYsnRmqh
-	 SYf6PBbRga6GK0vpgPzm8H/yNUAPCdStreayXSY8=
+	b=L8/eBjnLvEanr2DNV25uCZttQYOsNI7bVtrLNS/SrBByQtDn3o4/hARvFvWyxUSqQ
+	 PohXVL8pLbORMBppDlea3ewDM3Ykc4weHQupD8Z0Ep+22rXvfZkpBdHc0RtxIcWji3
+	 jy8wSeQArwobqkuDiYDHww/faJQ1eb37McwaUVHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Don Brace <don.brace@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.12 1016/1276] scsi: hpsa: Fix DMA mapping leak on IOACCEL2 reset path
-Date: Tue, 21 Jul 2026 17:24:19 +0200
-Message-ID: <20260721152508.737838645@linuxfoundation.org>
+	Paul Louvel <paul.louvel@bootlin.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.12 1043/1276] gpio-f7188x: Add support for NCT6126D version B
+Date: Tue, 21 Jul 2026 17:24:46 +0200
+Message-ID: <20260721152509.325761985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,39 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Paul Louvel <paul.louvel@bootlin.com>
 
-commit e166bafc483e927150cb9b5f286c9191ea0df84e upstream.
+commit 9a6c0b6ea12746d50cf53d59a7e05fd83f974bda upstream.
 
-If phys_disk->in_reset is set, the function returns directly without
-undoing the resources acquired for the command. Add the missing error
-cleanup by unmapping the IOACCEL2 SG chain block when needed, unmapping
-the SCSI command, and dropping the outstanding IOACCEL command count
-before returning.
+The Nuvoton NCT6126D Super-I/O is available in two hardware revisions.
+According to the manufacturer datasheet revision 2.4, version A reports
+chip ID 0xD283, while version B reports chip ID 0xD284.
 
-Fixes: c5dfd106414f ("scsi: hpsa: correct device resets")
+The driver currently only recognizes only the version A ID. Version B
+only contains hardware fixes unrelated to the GPIO functionality, so it
+can be supported by simply adding its chip ID without any other driver
+changes.
+
+Fixes: 3002b8642f01 ("gpio-f7188x: fix chip name and pin count on Nuvoton chip")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Acked-by: Don Brace <don.brace@microchip.com>
-Link: https://patch.msgid.link/20260622160028.1240496-1-haoxiang_li2024@163.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+
+Signed-off-by: Paul Louvel <paul.louvel@bootlin.com>
+Link: https://patch.msgid.link/20260629-gpio-f7188x-nct6126d-version-b-v1-1-a06226c02a2d@bootlin.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/hpsa.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpio/gpio-f7188x.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/hpsa.c
-+++ b/drivers/scsi/hpsa.c
-@@ -5031,6 +5031,10 @@ static int hpsa_scsi_ioaccel2_queue_comm
+--- a/drivers/gpio/gpio-f7188x.c
++++ b/drivers/gpio/gpio-f7188x.c
+@@ -48,7 +48,8 @@
+ /*
+  * Nuvoton devices.
+  */
+-#define SIO_NCT6126D_ID		0xD283  /* NCT6126D chipset ID */
++#define SIO_NCT6126D_VER_A_ID		0xD283  /* NCT6126D version A chipset ID */
++#define SIO_NCT6126D_VER_B_ID		0xD284  /* NCT6126D version B chipset ID */
  
- 	if (phys_disk->in_reset) {
- 		cmd->result = DID_RESET << 16;
-+		atomic_dec(&phys_disk->ioaccel_cmds_out);
-+		scsi_dma_unmap(cmd);
-+		if (use_sg > h->ioaccel_maxsg)
-+			hpsa_unmap_ioaccel2_sg_chain_block(h, cp);
- 		return -1;
- 	}
+ #define SIO_LD_GPIO_NUVOTON	0x07	/* GPIO logical device */
  
+@@ -559,7 +560,8 @@ static int __init f7188x_find(int addr,
+ 	case SIO_F81865_ID:
+ 		sio->type = f81865;
+ 		break;
+-	case SIO_NCT6126D_ID:
++	case SIO_NCT6126D_VER_A_ID:
++	case SIO_NCT6126D_VER_B_ID:
+ 		sio->device = SIO_LD_GPIO_NUVOTON;
+ 		sio->type = nct6126d;
+ 		break;
 
 
