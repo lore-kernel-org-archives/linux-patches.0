@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27448471257;
-	Tue, 21 Jul 2026 19:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3B947127E;
+	Tue, 21 Jul 2026 19:43:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663010; cv=none; b=XD+H4p/A+3jxGH04HnzXQTUyTAT8HU5vLyjmAU7HhHnG7f53tJ6hjAfDpSayN143SkWT6shAFP+Q2FNBUwKTMim+dIveS9SF1Mv2ZgZfnvBdnJ3t6Oshjj3IvV9PGwCKMPKt87ItNuVmK8sjPCyNIOuSdSvfQCpOV0bIgu/iwsU=
+	t=1784663013; cv=none; b=pWN78yawm+f+faXTsa3khnQ1IwOpL9pg1BfQmFbg5sccFrXOffAuviZBVwdHdnSu3NVvrU43mfti+YJYQWBwTuZF6UpuonEkwemKxSfr1GJL7bLl1t0p5cq0JhbAIt0+kK4Xh0oLonuu28PC628VyfVmFvrW0l0VPyLuoizIjIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663010; c=relaxed/simple;
-	bh=xnmhJZPha+WIrh8dHdsKcpOtMvZ62Y3W3jcMnCya/mk=;
+	s=arc-20240116; t=1784663013; c=relaxed/simple;
+	bh=mFgGCzrrF8Q6ElJPvuTTbX/M+Hb1yUj+kKd+DtDv6Fk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=josZ5qeYPMtgfCPbW0t8pYmmQWKqBjAeb/GdeY+4gsKc4DPqTCUdCKPlFoAiPfZWw9mPD1Yvl+BzXDVFeEtHjhEROJda0ZE6yz/fifHjksJbMsdc3XWa5+P0/Umuq5lj97JWo27ZhcnCdOEQ8zico3cyKkKB1RoL05QrvoNiFy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMGs/bqB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iCImeIPKGTIOBjVAgaR8iQAxdBwtCDhGhe3AVGLNEVsL0D4sDI7k1NaRoi2dsDO0hrsXGun0OWdsAlQORn3Nj6aKKG4cdKhRnGFb9ao7srHdrOP5IrrRTzvIu+MbLk69RpQlLTdsjGpnHqnPr9v+ZNTVB+dXcDQ8x3G8j+ExLcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oA188lLA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMGs/bqB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCAC1F000E9;
-	Tue, 21 Jul 2026 19:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oA188lLA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477521F000E9;
+	Tue, 21 Jul 2026 19:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663009;
-	bh=VyOdfw0lnlsYII1kOop/fmK7kTzwxK9whPKeU+hRXVE=;
+	s=korg; t=1784663011;
+	bh=spYoTyt/5czSnjIVeZsM0isA7SUZi+0l1BGrRrpVC0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pMGs/bqB8MfazQ/q3yUx6pvqA3eseqIkAXKBR9rM0IOWbIv5sJrujP8aqG0/Pj9RT
-	 tFPab9/hxC0Yo+kxpVdRMKXXt/21P5492CKbsVdNBuXx+6qIckgDKVf9qVQTSjQ9xo
-	 eoDd91XOidkQKpET1v8tbPayfnlnLs0Z2AoqWQM4=
+	b=oA188lLA8Z60t3hxfcZ745zSesF3wPoDitGT1wlWxxM1W9d14IjSwRJ5MdEm35I0I
+	 BEVtHdP6qw3U+KFSLve+TJ1AVtoAfvQG+2FnuH4WS2XUK39omgckRLyERm7UyGcUcZ
+	 bqsK4ow7gwVxbhmDfoMSjbkGn9GVWkforct7laW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0662/1276] rtnetlink: Add assertion helpers for per-netns RTNL.
-Date: Tue, 21 Jul 2026 17:18:25 +0200
-Message-ID: <20260721152500.921028429@linuxfoundation.org>
+Subject: [PATCH 6.12 0645/1276] netfilter: nft_synproxy: stop bypassing the priv->info snapshot
+Date: Tue, 21 Jul 2026 17:18:08 +0200
+Message-ID: <20260721152500.543622099@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,130 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 844e5e7e656d3a7a904fd5607f8491d6fd01db8e ]
+[ Upstream commit 11d4bc4e26fb66040a5b5d95e9abf37deac2b1fc ]
 
-Once an RTNL scope is converted with rtnl_net_lock(), we will replace
-RTNL helper functions inside the scope with the following per-netns
-alternatives:
+nft_synproxy_eval_v4() and nft_synproxy_eval_v6() already take a
+whole-object READ_ONCE() snapshot of the shared priv->info state before
+building the SYNACK reply, but nft_synproxy_tcp_options() still masks
+opts->options with priv->info.options from the live shared object.
 
-  ASSERT_RTNL()           -> ASSERT_RTNL_NET(net)
-  rcu_dereference_rtnl(p) -> rcu_dereference_rtnl_net(net, p)
+When a named synproxy object is updated concurrently with SYN traffic,
+the eval path can then mix mss and timestamp handling from the local
+snapshot with an options mask taken from a newer configuration, so one
+SYNACK no longer reflects a coherent synproxy configuration.
 
-Note that the per-netns helpers are equivalent to the conventional
-helpers unless CONFIG_DEBUG_NET_SMALL_RTNL is enabled.
+Use info->options so nft_synproxy_tcp_options() stays on the same local
+snapshot that the eval path already copied from priv->info.
 
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 17dc3b245de4 ("ipv6: fix missing notification for ignore_routes_with_linkdown")
+Fixes: ee394f96ad75 ("netfilter: nft_synproxy: add synproxy stateful object support")
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rtnetlink.h | 45 +++++++++++++++++++++++++++++++++++----
- net/core/rtnetlink.c      | 12 +++++++++++
- 2 files changed, 53 insertions(+), 4 deletions(-)
+ net/netfilter/nft_synproxy.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/rtnetlink.h b/include/linux/rtnetlink.h
-index 067098030ad2c6..465ea34c9210de 100644
---- a/include/linux/rtnetlink.h
-+++ b/include/linux/rtnetlink.h
-@@ -54,6 +54,10 @@ extern atomic_t dev_unreg_count;
- extern struct rw_semaphore pernet_ops_rwsem;
- extern struct rw_semaphore net_rwsem;
- 
-+#define ASSERT_RTNL() \
-+	WARN_ONCE(!rtnl_is_locked(), \
-+		  "RTNL: assertion failed at %s (%d)\n", __FILE__,  __LINE__)
-+
- #ifdef CONFIG_PROVE_LOCKING
- extern bool lockdep_rtnl_is_held(void);
- #else
-@@ -101,6 +105,22 @@ void __rtnl_net_unlock(struct net *net);
- void rtnl_net_lock(struct net *net);
- void rtnl_net_unlock(struct net *net);
- int rtnl_net_lock_cmp_fn(const struct lockdep_map *a, const struct lockdep_map *b);
-+
-+bool rtnl_net_is_locked(struct net *net);
-+
-+#define ASSERT_RTNL_NET(net)						\
-+	WARN_ONCE(!rtnl_net_is_locked(net),				\
-+		  "RTNL_NET: assertion failed at %s (%d)\n",		\
-+		  __FILE__,  __LINE__)
-+
-+bool lockdep_rtnl_net_is_held(struct net *net);
-+
-+#define rcu_dereference_rtnl_net(net, p)				\
-+	rcu_dereference_check(p, lockdep_rtnl_net_is_held(net))
-+#define rtnl_net_dereference(net, p)					\
-+	rcu_dereference_protected(p, lockdep_rtnl_net_is_held(net))
-+#define rcu_replace_pointer_rtnl_net(net, rp, p)			\
-+	rcu_replace_pointer(rp, p, lockdep_rtnl_net_is_held(net))
- #else
- static inline void __rtnl_net_lock(struct net *net) {}
- static inline void __rtnl_net_unlock(struct net *net) {}
-@@ -114,6 +134,27 @@ static inline void rtnl_net_unlock(struct net *net)
+diff --git a/net/netfilter/nft_synproxy.c b/net/netfilter/nft_synproxy.c
+index 4d3e5a31b4125d..ad3e7d27f02e9d 100644
+--- a/net/netfilter/nft_synproxy.c
++++ b/net/netfilter/nft_synproxy.c
+@@ -23,14 +23,13 @@ static const struct nla_policy nft_synproxy_policy[NFTA_SYNPROXY_MAX + 1] = {
+ static void nft_synproxy_tcp_options(struct synproxy_options *opts,
+ 				     const struct tcphdr *tcp,
+ 				     struct synproxy_net *snet,
+-				     struct nf_synproxy_info *info,
+-				     const struct nft_synproxy *priv)
++				     struct nf_synproxy_info *info)
  {
- 	rtnl_unlock();
- }
-+
-+static inline void ASSERT_RTNL_NET(struct net *net)
-+{
-+	ASSERT_RTNL();
-+}
-+
-+static inline void *rcu_dereference_rtnl_net(struct net *net, void *p)
-+{
-+	return rcu_dereference_rtnl(p);
-+}
-+
-+static inline void *rtnl_net_dereference(struct net *net, void *p)
-+{
-+	return rtnl_dereference(p);
-+}
-+
-+static inline void *rcu_replace_pointer_rtnl_net(struct net *net,
-+						 void *rp, void *p)
-+{
-+	return rcu_replace_pointer_rtnl(rp, p);
-+}
- #endif
+ 	this_cpu_inc(snet->stats->syn_received);
+ 	if (tcp->ece && tcp->cwr)
+ 		opts->options |= NF_SYNPROXY_OPT_ECN;
  
- static inline struct netdev_queue *dev_ingress_queue(struct net_device *dev)
-@@ -143,10 +184,6 @@ void rtnetlink_init(void);
- void __rtnl_unlock(void);
- void rtnl_kfree_skbs(struct sk_buff *head, struct sk_buff *tail);
+-	opts->options &= priv->info.options;
++	opts->options &= info->options;
+ 	opts->mss_encode = opts->mss_option;
+ 	opts->mss_option = info->mss;
+ 	if (opts->options & NF_SYNPROXY_OPT_TIMESTAMP)
+@@ -55,7 +54,7 @@ static void nft_synproxy_eval_v4(const struct nft_synproxy *priv,
  
--#define ASSERT_RTNL() \
--	WARN_ONCE(!rtnl_is_locked(), \
--		  "RTNL: assertion failed at %s (%d)\n", __FILE__,  __LINE__)
--
- extern int ndo_dflt_fdb_dump(struct sk_buff *skb,
- 			     struct netlink_callback *cb,
- 			     struct net_device *dev,
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 5b29f6ce12bc4a..4df35e2d988f53 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -235,6 +235,18 @@ int rtnl_net_lock_cmp_fn(const struct lockdep_map *a, const struct lockdep_map *
+ 	if (tcp->syn) {
+ 		/* Initial SYN from client */
+-		nft_synproxy_tcp_options(opts, tcp, snet, &info, priv);
++		nft_synproxy_tcp_options(opts, tcp, snet, &info);
+ 		synproxy_send_client_synack(net, skb, tcp, opts);
+ 		consume_skb(skb);
+ 		regs->verdict.code = NF_STOLEN;
+@@ -86,7 +85,7 @@ static void nft_synproxy_eval_v6(const struct nft_synproxy *priv,
  
- 	return rtnl_net_cmp_locks(net_a, net_b);
- }
-+
-+bool rtnl_net_is_locked(struct net *net)
-+{
-+	return rtnl_is_locked() && mutex_is_locked(&net->rtnl_mutex);
-+}
-+EXPORT_SYMBOL(rtnl_net_is_locked);
-+
-+bool lockdep_rtnl_net_is_held(struct net *net)
-+{
-+	return lockdep_rtnl_is_held() && lockdep_is_held(&net->rtnl_mutex);
-+}
-+EXPORT_SYMBOL(lockdep_rtnl_net_is_held);
- #endif
- 
- static struct rtnl_link __rcu *__rcu *rtnl_msg_handlers[RTNL_FAMILY_MAX + 1];
+ 	if (tcp->syn) {
+ 		/* Initial SYN from client */
+-		nft_synproxy_tcp_options(opts, tcp, snet, &info, priv);
++		nft_synproxy_tcp_options(opts, tcp, snet, &info);
+ 		synproxy_send_client_synack_ipv6(net, skb, tcp, opts);
+ 		consume_skb(skb);
+ 		regs->verdict.code = NF_STOLEN;
 -- 
 2.53.0
 
