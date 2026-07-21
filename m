@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB9C44AB96;
-	Tue, 21 Jul 2026 21:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8D936212F;
+	Tue, 21 Jul 2026 21:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668650; cv=none; b=KRp7U+vNG1+iZLHqG0seHdYXq4Iv7EJyHRc+91BOGXPgWvbxjFaQ6aVS113gjF2UHAVsMaoF2us5rwjfBapyuc7iU2aTAAzOuo1dNxzRbiL7CUAbtrQpGb0fO4nL0Wq0wh5pH+V5ZiKc4NT4bulu4tBoUuPQvmlPQcwsk3qjlGQ=
+	t=1784668651; cv=none; b=SYDrs+ML+VgHTXj71Th2lFQmmfhJPVLKqh8zOBaZN2qIb5U31jxxVhRySos1EE4ja5g74dozZQ34+fB5eBMWlHNMVD4qwZVpKgjKDM+yOgBe9foLmoCDRE21tErKh6vLhY+XmzH4cN19ueALn9hG0Og+TiLFr2PMihetmK7vWBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668650; c=relaxed/simple;
-	bh=sag95abAdBiPmp46GugBoXq185Y41YHRNex2zhIWQUQ=;
+	s=arc-20240116; t=1784668651; c=relaxed/simple;
+	bh=qIhP6iCZRCT95gmwKahj+sMYKO3p2gbUFaUiOg/UOJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PqqM1hF3Nixqk4XKDDfZfa///5viMbZW3dpbQ2pi1qlE+KM9DuLth7Ux2B4rFEhJff17Z0L6+QmWtoTeR2WEZvMdsNXGSUpzMVoEEOKuD7vHqxP+SwwlGFDhFkOnxce39AHnkZQANiG58hynnjtZK6433W2CGrHhTYq0uL+RznU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zx31VF2l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=deraitlwCcxjEYOkEUO/0N/2USlwX8OZvbgRREODihpBf3DHqNCW56dnErtMRhWlRtYNt7ut6kB6EdWq5plbUGKi4pZIWyod/zzE+Fz/E1RCDaMkaz23Ovm3aAKmi6mQcezMEZLItVqFcsjAavvBxsXTLH5/h2f8UZlAcCEZG1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1DuZRWT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zx31VF2l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9513B1F000E9;
-	Tue, 21 Jul 2026 21:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1DuZRWT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C36F1F00A3D;
+	Tue, 21 Jul 2026 21:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668647;
-	bh=2h1T3JUPKaArMOwPdVEiBYrlzNSHpHSE90Gt9Ptevc0=;
+	s=korg; t=1784668649;
+	bh=XsVtsR+rndHHB0fVahdVian6vUUB+LvhrrcOM75Qlr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zx31VF2lf9eVHrv89nrShcVcFAWNwfVOEAKObK2r8K37bZfyfTwIiQv3FFDb/5STL
-	 ZQZTRN4zx9/R4s9u+TTTE3acbZpJIaqkBUOdlMY4mPW+gnQ5CImXMQ5KGqjTFW9KcR
-	 7n7nYysirs6yruCtnNKjVox5j1H+bLHCeqRaKRQQ=
+	b=O1DuZRWTkOyf7MX0nYRxibKENED9EJTmajy9LkJWdF586Hp2/hwTlO/kFxdHGfxEw
+	 YcHli11WyYnVdwtr7RW0ZNhKniJxdMwtSOdqnr9EwYIRxGECUv043Vbna5YTvMVdKF
+	 C01GdhrNramCcJgOzxX0O4W2zUnPuXJ0KNmffRD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shashank A P <shashank.ap@samsung.com>,
-	Jan Kara <jack@suse.cz>,
+	=?UTF-8?q?Muhammet=20Kaan=20KILIN=C3=87?= <muhammetkaankilinc@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0256/1067] fs: quota: create dedicated workqueue for quota_release_work
-Date: Tue, 21 Jul 2026 17:14:17 +0200
-Message-ID: <20260721152430.325621769@linuxfoundation.org>
+Subject: [PATCH 6.1 0257/1067] crypto: algif_skcipher - force synchronous processing on trees without ctx->state
+Date: Tue, 21 Jul 2026 17:14:18 +0200
+Message-ID: <20260721152430.347300737@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -45,98 +44,117 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shashank A P <shashank.ap@samsung.com>
+From: Muhammet Kaan KILINÇ <muhammetkaankilinc@gmail.com>
 
-commit 72b7ceca857f38a8ca7c5629feffc63769638974 upstream.
+The AIO/async path in skcipher_recvmsg() passes the socket-wide ctx->iv
+directly into the skcipher request. After io_submit() the socket lock is
+dropped and the request is processed asynchronously, so a concurrent
+sendmsg(ALG_SET_IV) can overwrite ctx->iv and make the in-flight request
+run under an attacker-controlled IV. For CTR/stream modes this is
+IV/keystream reuse and lets an unprivileged user recover the plaintext of
+a concurrent operation.
 
-There is a kernel panic due to WARN_ONCE when panic_on_warn is set.
+Snapshotting ctx->iv into per-request storage for the async path is not
+sufficient. For ciphers with statesize == 0 - which includes cbc and ctr -
+the MSG_MORE inter-chunk IV chaining is carried solely by the in-place
+req->iv writeback, which a snapshot redirects into per-request memory that
+af_alg_free_resources() releases on completion, silently producing wrong
+output. Writing the IV back from the completion callback instead is not
+possible either: that would require lock_sock() there, but the callback can
+run in softirq/atomic context, so it must not sleep.
 
-This issue occurs when writeback is triggered due to sync call for an
-opened file(ie, writeback reason is WB_REASON_SYNC). When f2fs balance
-is needed at sync path, flush for quota_release_work is triggered.
-By default quota_release_work is queued to "events_unbound" queue which
-does not have WQ_MEM_RECLAIM flag. During f2fs balance "writeback"
-workqueue tries to flush quota_release_work causing kernel panic due to
-MEM_RECLAIM flag mismatch errors.
+Make the operation synchronous instead, which removes both the IV race and
+any writeback race. This is equivalent to the upstream resolution, commit
+fcc77d33a34c ("net: Remove support for AIO on sockets"), which removed the
+AIO socket path across net/ entirely and so produces the same end state for
+this file. This patch deviates from that commit deliberately: rather than
+removing AIO socket support tree-wide, which would be far too invasive for
+stable, it removes only the AIO branch in crypto/algif_skcipher.c.
+io_submit() now completes synchronously; AF_ALG async is rarely used in
+practice.
 
-This patch creates dedicated workqueue with WQ_MEM_RECLAIM flag
-for work quota_release_work.
+The -EIOCBQUEUED check in skcipher_recvmsg() is now dead but harmless,
+and is left alone to keep the fix minimal.
 
-------------[ cut here ]------------
-WARNING: CPU: 4 PID: 14867 at kernel/workqueue.c:3721 check_flush_dependency+0x13c/0x148
-Call trace:
- check_flush_dependency+0x13c/0x148
- __flush_work+0xd0/0x398
- flush_delayed_work+0x44/0x5c
- dquot_writeback_dquots+0x54/0x318
- f2fs_do_quota_sync+0xb8/0x1a8
- f2fs_write_checkpoint+0x3cc/0x99c
- f2fs_gc+0x190/0x750
- f2fs_balance_fs+0x110/0x168
- f2fs_write_single_data_page+0x474/0x7dc
- f2fs_write_data_pages+0x7d0/0xd0c
- do_writepages+0xe0/0x2f4
- __writeback_single_inode+0x44/0x4ac
- writeback_sb_inodes+0x30c/0x538
- wb_writeback+0xf4/0x440
- wb_workfn+0x128/0x5d4
- process_scheduled_works+0x1c4/0x45c
- worker_thread+0x32c/0x3e8
- kthread+0x11c/0x1b0
- ret_from_fork+0x10/0x20
-Kernel panic - not syncing: kernel: panic_on_warn set ...
+Tested on 6.6.y: attacker IV injection dropped from 2296/200000 to 0/200000
+after the change; MSG_MORE chunked CTR output bit-identical to single-shot.
 
-Fixes: ac6f420291b3 ("quota: flush quota_release_work upon quota writeback")
-CC: stable@vger.kernel.org
-Signed-off-by: Shashank A P <shashank.ap@samsung.com>
-Link: https://patch.msgid.link/20250901092905.2115-1-shashank.ap@samsung.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Reported-by: Muhammet Kaan KILINÇ <muhammetkaankilinc@gmail.com>
+Fixes: e870456d8e7c ("crypto: algif_skcipher - overhaul memory management")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Muhammet Kaan KILINÇ <muhammetkaankilinc@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/quota/dquot.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ crypto/algif_skcipher.c | 49 +++++++++++++++--------------------------
+ 1 file changed, 18 insertions(+), 31 deletions(-)
 
-diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
-index 0aa0ed754f2e09..f296872efda9e7 100644
---- a/fs/quota/dquot.c
-+++ b/fs/quota/dquot.c
-@@ -163,6 +163,9 @@ static struct quota_module_name module_names[] = INIT_QUOTA_MODULE_NAMES;
- /* SLAB cache for dquot structures */
- static struct kmem_cache *dquot_cachep;
+diff --git a/crypto/algif_skcipher.c b/crypto/algif_skcipher.c
+index 8b314260929fbb..6a1a71284fe823 100644
+--- a/crypto/algif_skcipher.c
++++ b/crypto/algif_skcipher.c
+@@ -107,37 +107,24 @@ static int _skcipher_recvmsg(struct socket *sock, struct msghdr *msg,
+ 	skcipher_request_set_crypt(&areq->cra_u.skcipher_req, areq->tsgl,
+ 				   areq->first_rsgl.sgl.sg, len, ctx->iv);
  
-+/* workqueue for work quota_release_work*/
-+static struct workqueue_struct *quota_unbound_wq;
-+
- int register_quota_format(struct quota_format_type *fmt)
- {
- 	spin_lock(&dq_list_lock);
-@@ -916,7 +919,7 @@ void dqput(struct dquot *dquot)
- 	put_releasing_dquots(dquot);
- 	atomic_dec(&dquot->dq_count);
- 	spin_unlock(&dq_list_lock);
--	queue_delayed_work(system_unbound_wq, &quota_release_work, 1);
-+	queue_delayed_work(quota_unbound_wq, &quota_release_work, 1);
- }
- EXPORT_SYMBOL(dqput);
+-	if (msg->msg_iocb && !is_sync_kiocb(msg->msg_iocb)) {
+-		/* AIO operation */
+-		sock_hold(sk);
+-		areq->iocb = msg->msg_iocb;
+-
+-		/* Remember output size that will be generated. */
+-		areq->outlen = len;
+-
+-		skcipher_request_set_callback(&areq->cra_u.skcipher_req,
+-					      CRYPTO_TFM_REQ_MAY_SLEEP,
+-					      af_alg_async_cb, areq);
+-		err = ctx->enc ?
+-			crypto_skcipher_encrypt(&areq->cra_u.skcipher_req) :
+-			crypto_skcipher_decrypt(&areq->cra_u.skcipher_req);
+-
+-		/* AIO operation in progress */
+-		if (err == -EINPROGRESS)
+-			return -EIOCBQUEUED;
+-
+-		sock_put(sk);
+-	} else {
+-		/* Synchronous operation */
+-		skcipher_request_set_callback(&areq->cra_u.skcipher_req,
+-					      CRYPTO_TFM_REQ_MAY_SLEEP |
+-					      CRYPTO_TFM_REQ_MAY_BACKLOG,
+-					      crypto_req_done, &ctx->wait);
+-		err = crypto_wait_req(ctx->enc ?
+-			crypto_skcipher_encrypt(&areq->cra_u.skcipher_req) :
+-			crypto_skcipher_decrypt(&areq->cra_u.skcipher_req),
+-						 &ctx->wait);
+-	}
++	/*
++	 * Force synchronous processing.  The async (AIO) path passed the
++	 * socket-wide ctx->iv into the request, which the worker
++	 * dereferenced after the socket lock was dropped, letting a
++	 * concurrent sendmsg(ALG_SET_IV) inject an attacker IV.  Mainline
++	 * removed the AIO socket path in commit fcc77d33a34c ("net: Remove
++	 * support for AIO on sockets"); these stable trees lack the
++	 * per-request ctx->state used by newer kernels, so the minimal safe
++	 * fix is to always complete synchronously.
++	 */
++	skcipher_request_set_callback(&areq->cra_u.skcipher_req,
++				      CRYPTO_TFM_REQ_MAY_SLEEP |
++				      CRYPTO_TFM_REQ_MAY_BACKLOG,
++				      crypto_req_done, &ctx->wait);
++	err = crypto_wait_req(ctx->enc ?
++		crypto_skcipher_encrypt(&areq->cra_u.skcipher_req) :
++		crypto_skcipher_decrypt(&areq->cra_u.skcipher_req),
++				      &ctx->wait);
  
-@@ -3091,6 +3094,11 @@ static int __init dquot_init(void)
- 	if (register_shrinker(&dqcache_shrinker, "dquota-cache"))
- 		panic("Cannot register dquot shrinker");
  
-+	quota_unbound_wq = alloc_workqueue("quota_events_unbound",
-+					   WQ_UNBOUND | WQ_MEM_RECLAIM, WQ_MAX_ACTIVE);
-+	if (!quota_unbound_wq)
-+		panic("Cannot create quota_unbound_wq\n");
-+
- 	return 0;
- }
- fs_initcall(dquot_init);
+ free:
 -- 
 2.53.0
 
