@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A023D356A12;
-	Tue, 21 Jul 2026 19:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421B4356A12;
+	Tue, 21 Jul 2026 19:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661328; cv=none; b=mQY5ytI+7ieYJxCEcYDcfXrF6WCx8V+Zc5gT8LkcaO5oWyK09Yl0RwK7nTuhAgEXxEjKcqgThf0Y0O/e5bLsPleS6Rv39SGD9qyJmlW2vkGsk9VkyPwwkZJ+gPGl9UzlklnK7vuxdO10AqBeYa+EXfA7u/1arSFYiqP89rR2EKc=
+	t=1784661331; cv=none; b=J/awxEVfmZ3UU2RaJa9fVYix4T2kBIyMEred4Da4sCyTFB7qnSZTPda8Mc+qQVDS+Rcxz9MZNPy2Izg+u/G/jUY4EnusJE5yqbHPJrYAnNgt6pifhhrYgrc+sFR+m41f1Hne6thB+WDfj29sEoIAGG8dsT+1I82Y1Pi5uXRklVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661328; c=relaxed/simple;
-	bh=ZpXvHTX/zyD+1eO0JFL3juYig7zu5AgUJW3gyNMjIn4=;
+	s=arc-20240116; t=1784661331; c=relaxed/simple;
+	bh=fas1ZULNdjY1fsTwkfUqboQkM9OyE90qod98RMIz/pI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=maWx6vFVq7Se98wS16wu81eVYnsEtyog8SqyHya3RLr38TPW8J742wbdftkIUbHtkdX5/lrVDXaYgOmJqxDGwNv4Stt5muHRoVrvOpiVw5tkW7O8TdfHPq6Zw8skS73vsedQAfGDyltfR7hihoImTbJigHNiX5QNRu72klFg8ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VDBaXmn1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sAvq27d8cT09oMYGqHFDZGgN+hTWQS5uNmxfJPpuEhryaGXSuBWx0H+XnfXEmzTc5jfm9VEnH0LOhX6jARTOJeVAZv6I8lKkzR7b84kSbSgsbQeHi+KILkFcmC26H9g0gUEvmZbi93GPZGIRxice6PQyi2yLV5Bd3hDKlSG4kbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDXGfV5W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VDBaXmn1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1383C1F000E9;
-	Tue, 21 Jul 2026 19:15:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDXGfV5W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A91C01F000E9;
+	Tue, 21 Jul 2026 19:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661327;
-	bh=0QaQuDzrKAx+zdykKlEv/9b+WdPBpHdeOUb5ftl1n9k=;
+	s=korg; t=1784661330;
+	bh=kE5WFWii9zT21xQJPMRdxjE1jRpW5TlgrA5LNbuPdhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VDBaXmn1SUfcewIn/jhfpsDPE4vJ3Vsg+4Vzl38a/u3oe8i2ab0QsIBbk3wdGuHT8
-	 rQSGXt9GdnY4W9D7QP2at6Tfq3BzF01WR2BLWaGPh0INI4emAV/PZGFNZXdRy53py9
-	 cYSgrdqYyg6MyWL4JOfu00C+7qXleKB5bRKUy8rA=
+	b=QDXGfV5W15hCfRecMb96dWYFXLcPjaIh2OLQE/sCRtK4Gi1alSNMIazgq7bnKb6oz
+	 ZHnpwZalznYAGtlf5KmaCgatbHiVr+ttXM4cXnyTv2GUi0FktSMFzJ9Cdla58IMSgr
+	 DLVch0NIP0mNilrEBwbpjdKCh+hGh8eSYuXVQGa0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@intel.com>,
-	Seth Forshee <sforshee@kernel.org>,
-	Eric Hagberg <ehagberg@janestreet.com>,
-	Stephen Dolan <sdolan@janestreet.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Heiko Stuebner <heiko.stuebner@cherry.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0025/1276] x86/mm: Fix check/use ordering in switch_mm_irqs_off()
-Date: Tue, 21 Jul 2026 17:07:48 +0200
-Message-ID: <20260721152446.645026330@linuxfoundation.org>
+Subject: [PATCH 6.12 0026/1276] net: dropreason: Gather SOCKET_ drop reasons.
+Date: Tue, 21 Jul 2026 17:07:49 +0200
+Message-ID: <20260721152446.669137376@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,95 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Dolan <sdolan@janestreet.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-This is a stable-specific fix. There is no single upstream commit to
-cherry-pick; the equivalent mainline fix is commit 83b0177a6c48
-("x86/mm: Fix SMP ordering in switch_mm_irqs_off()"), which is in
-v6.18 but does not apply to these trees because the surrounding code
-was refactored.
+[ Upstream commit 454d402481d45af79ee7eea7e64bce02bbbe9766 ]
 
-The backports of commit fea4e317f9e7 ("x86/mm: Eliminate window where
-TLB flushes may be inadvertently skipped") -- the fix for
-CVE-2025-37964 -- to the 6.1, 6.6 and 6.12 trees ended up with two
-code blocks in the wrong order relative to mainline. The fix depends
-on setting cpu_tlbstate.loaded_mm to LOADED_MM_SWITCHING *before*
-reading tlb_gen, so that a concurrent TLB shootdown either sees
-LOADED_MM_SWITCHING and sends the IPI, or the switching CPU sees the
-updated tlb_gen. In the stable trees the write of LOADED_MM_SWITCHING
-was placed after the tlb_gen read, so the race window fea4e317f9e7 was
-meant to close is still open and CVE-2025-37964 is unfixed there:
-a process can be left running with stale TLB entries, which typically
-manifests as rare, hard-to-bisect memory corruption or segfaults.
+The following patch adds a new drop reason starting with
+the SOCKET_ prefix.
 
-This has been confirmed by several independent parties:
+Let's gather the existing SOCKET_ reasons.
 
-  - reproduced on 6.1.y/6.6.y/6.12.y with the test program in [1],
-    and confirmed fixed by this patch
-  - Seth Forshee saw segfaults on 6.12.y within ~30 minutes of running
-    a test workload; with this patch it ran 18 hours cleanly [2]
-  - Greg Thelen reports 6.6.y- and 6.12.y-based test failures fixed by
-    this patch [3]
+Note that the order is not part of uAPI.
 
-Dave Hansen acked the patch [4] and has no objection to it going into
-stable [5].
-
-The patch below is against 6.12.y; the identical change applies to
-6.1.y and 6.6.y. (The cpumask_test_cpu()/smp_mb() portion of the
-mainline fix is not needed here because commit 209954cbc7d0
-("x86/mm/tlb: Update mm_cpumask lazily") was never backported to these
-trees.)
-
-[1] https://lore.kernel.org/lkml/CAHDw0oGd0B4=uuv8NGqbUQ_ZVmSheU2bN70e4QhFXWvuAZdt2w@mail.gmail.com/
-[2] https://lore.kernel.org/lkml/aZYWXe739XUJrBld@do-x1carbon/
-[3] https://lore.kernel.org/lkml/CAHH2K0brx9omC9QYyB6Lio3t_1Lf8v=VaFoiaG23UgQ-aec89Q@mail.gmail.com/
-[4] https://lore.kernel.org/lkml/281e8018-5506-4a79-8775-e0de7e58b95f@intel.com/
-[5] https://lore.kernel.org/lkml/86421ee5-5332-46c2-bb48-d40310b818be@intel.com/
-
-Fixes: fea4e317f9e7 ("x86/mm: Eliminate window where TLB flushes may be inadvertently skipped")  # 6.1.y/6.6.y/6.12.y backports
-Acked-by: Dave Hansen <dave.hansen@intel.com>
-Tested-by: Seth Forshee <sforshee@kernel.org>
-Tested-by: Eric Hagberg <ehagberg@janestreet.com>
-Signed-off-by: Stephen Dolan <sdolan@janestreet.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250116053441.5758-2-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Heiko Stuebner <heiko.stuebner@cherry.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/tlb.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ include/net/dropreason-core.h | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/mm/tlb.c b/arch/x86/mm/tlb.c
-index 8629d90fdcd922..ed182831063c27 100644
---- a/arch/x86/mm/tlb.c
-+++ b/arch/x86/mm/tlb.c
-@@ -606,6 +606,14 @@ void switch_mm_irqs_off(struct mm_struct *unused, struct mm_struct *next,
- 		 */
- 		cond_mitigation(tsk);
- 
-+		/*
-+		 * Indicate that CR3 is about to change. nmi_uaccess_okay()
-+		 * and others are sensitive to the window where mm_cpumask(),
-+		 * CR3 and cpu_tlbstate.loaded_mm are not all in sync.
-+		 */
-+		this_cpu_write(cpu_tlbstate.loaded_mm, LOADED_MM_SWITCHING);
-+		barrier();
-+
- 		/*
- 		 * Stop remote flushes for the previous mm.
- 		 * Skip kernel threads; we never send init_mm TLB flushing IPIs,
-@@ -623,14 +631,6 @@ void switch_mm_irqs_off(struct mm_struct *unused, struct mm_struct *next,
- 		next_tlb_gen = atomic64_read(&next->context.tlb_gen);
- 
- 		choose_new_asid(next, next_tlb_gen, &new_asid, &need_flush);
--
--		/*
--		 * Indicate that CR3 is about to change. nmi_uaccess_okay()
--		 * and others are sensitive to the window where mm_cpumask(),
--		 * CR3 and cpu_tlbstate.loaded_mm are not all in sync.
-- 		 */
--		this_cpu_write(cpu_tlbstate.loaded_mm, LOADED_MM_SWITCHING);
--		barrier();
- 	}
- 
- 	new_lam = mm_lam_cr3_mask(next);
+diff --git a/include/net/dropreason-core.h b/include/net/dropreason-core.h
+index 02e7be19b0428f..76311b3ebfc890 100644
+--- a/include/net/dropreason-core.h
++++ b/include/net/dropreason-core.h
+@@ -6,9 +6,10 @@
+ #define DEFINE_DROP_REASON(FN, FNe)	\
+ 	FN(NOT_SPECIFIED)		\
+ 	FN(NO_SOCKET)			\
++	FN(SOCKET_FILTER)		\
++	FN(SOCKET_RCVBUFF)		\
+ 	FN(PKT_TOO_SMALL)		\
+ 	FN(TCP_CSUM)			\
+-	FN(SOCKET_FILTER)		\
+ 	FN(UDP_CSUM)			\
+ 	FN(NETFILTER_DROP)		\
+ 	FN(OTHERHOST)			\
+@@ -18,7 +19,6 @@
+ 	FN(UNICAST_IN_L2_MULTICAST)	\
+ 	FN(XFRM_POLICY)			\
+ 	FN(IP_NOPROTO)			\
+-	FN(SOCKET_RCVBUFF)		\
+ 	FN(PROTO_MEM)			\
+ 	FN(TCP_AUTH_HDR)		\
+ 	FN(TCP_MD5NOTFOUND)		\
+@@ -124,12 +124,14 @@ enum skb_drop_reason {
+ 	 * 3) no valid child socket during 3WHS process
+ 	 */
+ 	SKB_DROP_REASON_NO_SOCKET,
++	/** @SKB_DROP_REASON_SOCKET_FILTER: dropped by socket filter */
++	SKB_DROP_REASON_SOCKET_FILTER,
++	/** @SKB_DROP_REASON_SOCKET_RCVBUFF: socket receive buff is full */
++	SKB_DROP_REASON_SOCKET_RCVBUFF,
+ 	/** @SKB_DROP_REASON_PKT_TOO_SMALL: packet size is too small */
+ 	SKB_DROP_REASON_PKT_TOO_SMALL,
+ 	/** @SKB_DROP_REASON_TCP_CSUM: TCP checksum error */
+ 	SKB_DROP_REASON_TCP_CSUM,
+-	/** @SKB_DROP_REASON_SOCKET_FILTER: dropped by socket filter */
+-	SKB_DROP_REASON_SOCKET_FILTER,
+ 	/** @SKB_DROP_REASON_UDP_CSUM: UDP checksum error */
+ 	SKB_DROP_REASON_UDP_CSUM,
+ 	/** @SKB_DROP_REASON_NETFILTER_DROP: dropped by netfilter */
+@@ -160,8 +162,6 @@ enum skb_drop_reason {
+ 	SKB_DROP_REASON_XFRM_POLICY,
+ 	/** @SKB_DROP_REASON_IP_NOPROTO: no support for IP protocol */
+ 	SKB_DROP_REASON_IP_NOPROTO,
+-	/** @SKB_DROP_REASON_SOCKET_RCVBUFF: socket receive buff is full */
+-	SKB_DROP_REASON_SOCKET_RCVBUFF,
+ 	/**
+ 	 * @SKB_DROP_REASON_PROTO_MEM: proto memory limitation, such as
+ 	 * udp packet drop out of udp_memory_allocated.
 -- 
 2.53.0
 
