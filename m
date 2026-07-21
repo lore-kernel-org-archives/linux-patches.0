@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA6E35C6B8;
-	Tue, 21 Jul 2026 21:30:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FE335C6A2;
+	Tue, 21 Jul 2026 21:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669458; cv=none; b=m1JkjD01Y4B0rAaZddbcx3KoqICUz9OhUrlWjz80mof3EujwvgWSX/RjCQ+WQLTD6p8oRJqcGRbKEpu+7SuXlH1ogzImiunwK4Y+n2S5nzNmowUHtF88tqbf4SiXQW2uLnxA5j1LLqXSA6fgH9Ul0TRCX9WOh06elAi3QqxzfOU=
+	t=1784669461; cv=none; b=AUbFlXDvoR4XIA2XD874lNKFdpOFvBIeZ6HsKbVa5bRbNmovwuVATbax5S3f0FlA7IMNWf9cgu8QMc58IT1OvpwsiKzacFhTcy2JZloEqqojyUTp2/gK/UTFa+Ahfa6hyQtAJp2loUCoND9BnPmc1Jmmpzo8N7wogA9cJ4j8lyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669458; c=relaxed/simple;
-	bh=OMIlLwnMDM/V3pKlI9Wc6oXcasqY3VO35jPlt0PL6Ow=;
+	s=arc-20240116; t=1784669461; c=relaxed/simple;
+	bh=XF4dqPWeCX4H59CWoqQ0KijLy1eKb8CMropazfsbMpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N4nuEP3P2zXUgJk/0HpS1vwie6C6NJRzGHh/H0VCbpuCWL42HC7LcKWfEjvNPzsPxcmml1eF8/3g64d3AAV1iZBIyxViASNJxN+DUZavLZseXUe406xxX4E8Hrvd9d/2f1Z15l/+Mft0r0yV9A/psAyQDHngOfcVzXhPSB3Pjjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwKUw/tR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ouF0OUFop/jpkAPlTDvCGloVNGEPeOKhpFc6GiXC9xlMYf9tqcNQVWWdlzMfqs8RTht0/RjwPwFtLgIuL8XaTzvj+2AmkgOenikT/SlnK8PEaFL0OXCdw4sEKVXGlC0s8BNGtxZwDfhhhh6+gwc/VYbHksE5FKNuS8qsc+wbnm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUl8uNZP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwKUw/tR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892001F000E9;
-	Tue, 21 Jul 2026 21:30:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUl8uNZP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40A181F00AC4;
+	Tue, 21 Jul 2026 21:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669457;
-	bh=LsFBkNK4yGReeyeaA9U2H/F9QNBNVn8lJCD8P85XdCM=;
+	s=korg; t=1784669459;
+	bh=cjW67AZn62Cgd6Glo7paGdcpInVQ1exWDa/Enagk0w8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nwKUw/tRtrKmfm9sdxsfn7KvbyVdIQIXalvrDiKcqXe8McTuA5BtpWi9iCFebu2IS
-	 t6gFKjoB9bbW0hBA0IyVMT2hdaYkzrWaOAnh+BHmCI5NvRvzpXNRabjMOffB3gyB3q
-	 /8edSAYKTUjrzzodX36sNlVETuuhiO9c7nFkrRiU=
+	b=AUl8uNZPh7os7XR+sanH+ofnU8E+tCmfiloa+59TAmDPZsK1QwPiFtwlwnpR/JoL4
+	 RiZ9hQqndb0bisyjSdwz5NClsaW4ZAbPkblx8RIgLM11oXEPzOB5ndRVzNRMT4rzFH
+	 wnrZKz0Qw8CvKYNAoYr1GUjNMqF4EBrJt82eaHNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0560/1067] apparmor: fix label can not be immediately before a declaration
-Date: Tue, 21 Jul 2026 17:19:21 +0200
-Message-ID: <20260721152437.133519833@linuxfoundation.org>
+Subject: [PATCH 6.1 0520/1067] NFSv4/flexfiles: honor FF_FLAGS_NO_IO_THRU_MDS on fatal DS connect errors
+Date: Tue, 21 Jul 2026 17:18:41 +0200
+Message-ID: <20260721152436.244192785@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -45,54 +45,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-[ Upstream commit 1ed40bd525c00d22af666016af9aef7167f8085f ]
+[ Upstream commit 7a375cafc14ed151508f908ea5681caf0a9cc1d6 ]
 
-Fix error reported by kernel test robot
+Commit f06bedfa62d5 ("pNFS/flexfiles: don't attempt pnfs on fatal DS
+errors") teaches ff_layout_{read,write}_pagelist() to return
+PNFS_NOT_ATTEMPTED when nfs4_ff_layout_prepare_ds() fails with a
+nfs_error_is_fatal() errno (e.g. -ETIMEDOUT from a SOFTCONN connect
+deadline, -ENOMEM, -ERESTARTSYS), so that the client gives up instead
+of spinning.  pnfs_do_{read,write}() then dispatches the I/O through
+pnfs_{read,write}_through_mds() → nfs_pageio_reset_{read,write}_mds().
 
-security/apparmor/policy.c:1381:2: error: a label can only be part of
-a statement and a declaration is not a statement
+That fallback is unconditional and silently violates FF_FLAGS_NO_IO_THRU_MDS:
+when the layout segment carries the flag (typically single-mirror
+appliance layouts where MDS I/O is explicitly forbidden), the
+out_failed: path's \`&& !ds_fatal_error\` clause overrides the flag's
+short-circuit through ff_layout_avoid_mds_available_ds() and routes
+the I/O to the MDS file handle anyway.
 
-All errors (new ones prefixed by >>):
+This is reachable in practice during a data-server restart: SOFTCONN
+exhaustion produces -ETIMEDOUT, which is fatal per nfs_error_is_fatal(),
+which triggers PNFS_NOT_ATTEMPTED, which silently goes to MDS.
 
-   security/apparmor/policy.c: In function 'aa_replace_profiles':
->> security/apparmor/policy.c:1381:2: error: a label can only be part
-   of a statement and a declaration is not a statement
-     ssize_t udata_sz = udata->size;
-     ^~~~~
+Preserve the upstream "don't spin on fatal errors" intent for layouts
+that permit MDS fallback.  For layouts with FF_FLAGS_NO_IO_THRU_MDS
+set, mark the layout for return and request PNFS_TRY_AGAIN instead;
+if the server cannot supply a usable layout the failure now surfaces
+cleanly via pnfs_update_layout(), rather than via silent MDS I/O that
+contradicts the flag.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202606150525.npax8WiH-lkp@intel.com/
-Fixes: 7b42f95813dc9 ("apparmor: fix potential UAF in aa_replace_profiles")
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Fixes: f06bedfa62d5 ("pNFS/flexfiles: don't attempt pnfs on fatal DS errors")
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
-index 0ceb2a381f8f37..257ca96a3d0678 100644
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -1152,9 +1152,10 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
- 	mutex_unlock(&ns->lock);
- 
- out:
-+	aa_put_ns(ns);
-+
- 	ssize_t udata_sz = udata->size;
- 
--	aa_put_ns(ns);
- 	aa_put_profile_loaddata(udata);
- 	kfree(ns_name);
- 
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index 01378fb1958451..46e72a7ed15144 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -1902,6 +1902,14 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
+ out_failed:
+ 	if (ff_layout_avoid_mds_available_ds(lseg) && !ds_fatal_error)
+ 		return PNFS_TRY_AGAIN;
++	if (ff_layout_no_fallback_to_mds(lseg)) {
++		/*
++		 * FF_FLAGS_NO_IO_THRU_MDS: force fresh LAYOUTGET,
++		 * never fall through to MDS I/O.
++		 */
++		pnfs_error_mark_layout_for_return(hdr->inode, lseg);
++		return PNFS_TRY_AGAIN;
++	}
+ 	trace_pnfs_mds_fallback_read_pagelist(hdr->inode,
+ 			hdr->args.offset, hdr->args.count,
+ 			IOMODE_READ, NFS_I(hdr->inode)->layout, lseg);
+@@ -1973,6 +1981,14 @@ ff_layout_write_pagelist(struct nfs_pgio_header *hdr, int sync)
+ out_failed:
+ 	if (ff_layout_avoid_mds_available_ds(lseg) && !ds_fatal_error)
+ 		return PNFS_TRY_AGAIN;
++	if (ff_layout_no_fallback_to_mds(lseg)) {
++		/*
++		 * FF_FLAGS_NO_IO_THRU_MDS: force fresh LAYOUTGET,
++		 * never fall through to MDS I/O.
++		 */
++		pnfs_error_mark_layout_for_return(hdr->inode, lseg);
++		return PNFS_TRY_AGAIN;
++	}
+ 	trace_pnfs_mds_fallback_write_pagelist(hdr->inode,
+ 			hdr->args.offset, hdr->args.count,
+ 			IOMODE_RW, NFS_I(hdr->inode)->layout, lseg);
 -- 
 2.53.0
 
