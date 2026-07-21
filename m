@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255D840B112;
-	Tue, 21 Jul 2026 17:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC9F46A5FD;
+	Tue, 21 Jul 2026 17:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655894; cv=none; b=LHzJe+FUw/PsLACEfNI2jdeluVN/cOMA6dnI/HJIDN4Hb79898GKJzKnmQxl7OJYamt1sFNgebmZuszdJ5Ped/MVJZ67g3RCtf+VRK5BOKu9eN4jieVK18sD9FhTuf0uhGXfdJmEnbiOD/yZQoCk87eemtRdmty+ati9RfJj+2Q=
+	t=1784655896; cv=none; b=Yu4Qty8dZPC/PwRR+x2bqNV14k0mVSa8/ytRsaWu1p8qanGGot7Gb4zws5O9FNeBygs2vG94mJwt08B2GvBIS9J5JgrlTKAvTweKwD5zAPQxMpF6PCdStYCVqp2gomL6rVWIVvqlDVU6HbFQs6DWnyMM9aqmKkYH3ATJCbSy8Pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655894; c=relaxed/simple;
-	bh=U3nuXhzyvKZwLSgDvheSPWweab2adfTZeKFoso6yaNc=;
+	s=arc-20240116; t=1784655896; c=relaxed/simple;
+	bh=OtlvJnDrftchIs4h/LKhida6wmdXPd1bsGhpp/PPkyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jHc1XcTd/lWi1YWZ5yPT+l4eWKPm6CUP3gFlUY7h91WCjU01WCrPK/T7OQIPqDJ+yiN/8wSDndnShq0uG1kjYWeaV3k5nqQthlfCcfw1Qr62G1vvrDHoU5zu2ct07nl8vhbNpxiC7zbkrbW3ZHBGtXla81OA3uUuNT3gmCsn7yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FH8UZJxF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tVVXJkZj5GOljpu7S9vL/7Bm/SeXs/h1LcF4TL+GAs8sgwMAHgkuokAzOHgT57CWWy45QgEs5vVoISy2/fk+7PGPwYnIH4B7aYcVQh5kAAvv8o2lEb/B24vFB5A2gu4Qzf1/X3ukPK1uoBR4ZDUJ6o3rbGexsZmZxo7NpkmBBg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2nygpYV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FH8UZJxF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E3CA1F000E9;
-	Tue, 21 Jul 2026 17:44:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2nygpYV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6CED1F000E9;
+	Tue, 21 Jul 2026 17:44:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655892;
-	bh=74+ZXTxyplXSgP2UQRrS9ZvtMlzfd0DcpoRZu9u2U34=;
+	s=korg; t=1784655895;
+	bh=9HZVaD+VQrRudV6cjqJpUyH5NqscOxul8eSlI+k6ZQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FH8UZJxFGDbl8qKR9/0+a1Z8/dm3VAdDZaCwkxVgzv3qP+PeAVTbJwjPL4/ZZu16z
-	 ubi3e8XPdExXhhr/Kpt4NlI4cX35py9dMNmRVUdS+EkU7icNftgLOOZ2HKQiurQ/Pa
-	 VK94cTggDCb0DL66ljxyMXyAzWgr6Kat6CneDlhc=
+	b=x2nygpYVuTD3M/IfP/nkBobhkbSTwYf9+D7hD3dZ9fASRgehCHpXIuwHD8rwMs2r5
+	 KizTOkUubh8y//+Mjkt0upeScZdUu5EcsQ61p02R0N37Zm+DB8QQ7KvZMEvY0+q/5J
+	 3RHekMZ1miOf45bonhOm0tuM6MWs7EVBAqHplpW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0180/1611] net/sched: sch_drr: annotate data-races around cl->deficit
-Date: Tue, 21 Jul 2026 17:04:56 +0200
-Message-ID: <20260721152518.968265364@linuxfoundation.org>
+Subject: [PATCH 6.18 0145/1611] thermal: hwmon: Fix critical temperature attribute removal
+Date: Tue, 21 Jul 2026 17:04:21 +0200
+Message-ID: <20260721152518.139254879@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,63 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit c67b104fd7982162885c5e43057ca761006748e2 ]
+[ Upstream commit c2114dbda05354dbcf4dfbb30a2c623e8611c43a ]
 
-drr_dump_class_stats() runs without qdisc spinlock held.
+Since the return value of thermal_zone_crit_temp_valid() depends on
+the behavior of the thermal zone .get_crit_temp() callback which
+may change over time in theory, thermal_remove_hwmon_sysfs() may
+attempt to remove a critical temperature attribute that has not
+been created, passing a pointer to an uninitialized attribute
+structure to device_remove_file().
 
-Add missing READ_ONCE()/WRITE_ONCE() annotations around cl->deficit.
+To avoid that, set a flag in struct thermal_hwmon_temp after creating
+a critical temperature attribute and use the value of that flag to
+decide whether or not the attribute needs to be removed.
 
-Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260519094618.2632073-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e8db5d6736a7 ("thermal: hwmon: Make the check for critical temp valid consistent")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/2437056.ElGaqSPkdT@rafael.j.wysocki
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_drr.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/thermal/thermal_hwmon.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_drr.c b/net/sched/sch_drr.c
-index 9b6d79bd873712..44686fd1c27497 100644
---- a/net/sched/sch_drr.c
-+++ b/net/sched/sch_drr.c
-@@ -270,7 +270,7 @@ static int drr_dump_class_stats(struct Qdisc *sch, unsigned long arg,
+diff --git a/drivers/thermal/thermal_hwmon.c b/drivers/thermal/thermal_hwmon.c
+index 64cc3ab949fed4..c68b27b2fb0274 100644
+--- a/drivers/thermal/thermal_hwmon.c
++++ b/drivers/thermal/thermal_hwmon.c
+@@ -40,6 +40,7 @@ struct thermal_hwmon_temp {
+ 	struct thermal_zone_device *tz;
+ 	struct thermal_hwmon_attr temp_input;	/* hwmon sys attr */
+ 	struct thermal_hwmon_attr temp_crit;	/* hwmon sys attr */
++	bool temp_crit_present;
+ };
  
- 	memset(&xstats, 0, sizeof(xstats));
- 	if (qlen)
--		xstats.deficit = cl->deficit;
-+		xstats.deficit = READ_ONCE(cl->deficit);
- 
- 	if (gnet_stats_copy_basic(d, NULL, &cl->bstats, true) < 0 ||
- 	    gnet_stats_copy_rate_est(d, &cl->rate_est) < 0 ||
-@@ -362,7 +362,7 @@ static int drr_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 
- 	if (!cl_is_active(cl)) {
- 		list_add_tail(&cl->alist, &q->active);
--		cl->deficit = cl->quantum;
-+		WRITE_ONCE(cl->deficit, cl->quantum);
+ static LIST_HEAD(thermal_hwmon_list);
+@@ -191,6 +192,8 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
+ 					    &temp->temp_crit.attr);
+ 		if (result)
+ 			goto unregister_input;
++
++		temp->temp_crit_present = true;
  	}
  
- 	sch->qstats.backlog += len;
-@@ -389,7 +389,7 @@ static struct sk_buff *drr_dequeue(struct Qdisc *sch)
- 
- 		len = qdisc_pkt_len(skb);
- 		if (len <= cl->deficit) {
--			cl->deficit -= len;
-+			WRITE_ONCE(cl->deficit, cl->deficit - len);
- 			skb = qdisc_dequeue_peeked(cl->qdisc);
- 			if (unlikely(skb == NULL))
- 				goto out;
-@@ -403,7 +403,7 @@ static struct sk_buff *drr_dequeue(struct Qdisc *sch)
- 			return skb;
- 		}
- 
--		cl->deficit += cl->quantum;
-+		WRITE_ONCE(cl->deficit, cl->deficit + cl->quantum);
- 		list_move_tail(&cl->alist, &q->active);
+ 	mutex_lock(&thermal_hwmon_list_lock);
+@@ -235,7 +238,7 @@ void thermal_remove_hwmon_sysfs(struct thermal_zone_device *tz)
  	}
- out:
+ 
+ 	device_remove_file(hwmon->device, &temp->temp_input.attr);
+-	if (thermal_zone_crit_temp_valid(tz))
++	if (temp->temp_crit_present)
+ 		device_remove_file(hwmon->device, &temp->temp_crit.attr);
+ 
+ 	mutex_lock(&thermal_hwmon_list_lock);
 -- 
 2.53.0
 
