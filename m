@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F145740244D;
-	Tue, 21 Jul 2026 17:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974FA3FE650;
+	Tue, 21 Jul 2026 17:30:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655004; cv=none; b=l5e9LBGOm4vZpqjswOxV0QeigMGX/4iDatrMkTidxzgz5CnyVcm9+zghUd8o7Gr6nZWJkSOLwdQ8WlBKSWHT81pEVCQ7EKJo6zCGSLmc7SL3Qv7y7gj6H8pQKEtaSGTKAkPEeJXkgtquqgxtddtXrMn9ZcQrRqD33SgZNGK49QY=
+	t=1784655006; cv=none; b=ePqdNIxWN94duJOEYctBuLeS3ry3SoWaQNhYuuY83mCczyCOIuKjvEOGRz1ATb9DBIbeitRKLMWf1/0tjSn7G8f8vDiKgc+bY+3LGFEaPrp0FxHkKkgX8HvUz6Kc5BOCv2ZeaMveielFMYOhrl/AdeEj55mQImoFENThRfqn7O0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655004; c=relaxed/simple;
-	bh=ns/U4HuU2swwHjy/xPSVrGDGiIqIyIT5MwwftOuvqdk=;
+	s=arc-20240116; t=1784655006; c=relaxed/simple;
+	bh=r7KCJmQ5P0n1gakrGbP1htZLwQZyJ78R0WdTrFDZM4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KO00FgMuOh6WTkMBA/TJHHr3qcmmLscF9yC51AZzpxY0bzEaMSfz1NW+ztrhvfh86DFfPrCLkKUg5PWBwouC6VodPe87qjz672j27bALe/ZDldR4cUEz+UGXHgzagI4rqmS3jEYlCwUiEGuSP4xZ68yEbdgN+soNE+dBOcOnbpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wWRQKISD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gY0bVly7Ep2386wQpDrRUBhTm00xsMAYXoVKpg+MUmOEbVALjVb+/Vz02zwP2dhoY6h1Q7hZgaBRnuLC2eIZori1mTGepDS3WCVQe17eQkNt28iBrpuaoNpEehpkYCiczqbVp7TYaXX9XyfYUvIya8LXvgcp4E0VfdtqQSJa5lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kG/kEehL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wWRQKISD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6400A1F000E9;
-	Tue, 21 Jul 2026 17:30:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kG/kEehL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C141F000E9;
+	Tue, 21 Jul 2026 17:30:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655002;
-	bh=XpJ+2w7Q4n39Q+cMjDrfgm9s5BRmY4Go+U4tgYrzwgo=;
+	s=korg; t=1784655005;
+	bh=p0e00KkJ3NXu2bVJP0pce77gwfT2HCaOPAZUmlDF+M8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wWRQKISDRpCLGdSCJfFDbrmNoj3gIiszG7quqU/3Xkg5b9V/A4bzWexfqyVpu7mKo
-	 igb0cQoLUMi2Ms7ZWzFqfn50BbnwnHa4EztLiIN3xTbsID8AI0fED8hODWc79/U1kS
-	 z+fl97iJSYubxklnproInhC7eM/S4Rf1DdouVhVw=
+	b=kG/kEehLY80BZUlk553o2hRh7HQmMb2pvK2+GIn9q5hX3H6yBpBFIb7G0vl/peHf2
+	 968+SXKdu3p21ABKq0xWR1a540tUO5myNOOx4XlEeGFIp2l+Wtpd0nk3bHWDG0B5PJ
+	 fp56c+T2O//cimiF83GEBhU6GmECIyOLvJpH3i0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Liang <shaw.leon@gmail.com>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 1919/2077] net: ip6_gre: require CAP_NET_ADMIN in the device netns for changelink
-Date: Tue, 21 Jul 2026 17:26:32 +0200
-Message-ID: <20260721152637.976763695@linuxfoundation.org>
+Subject: [PATCH 7.1 1893/2077] net/mlx5e: macsec: fix use-after-free of metadata_dst on RX SC delete
+Date: Tue, 21 Jul 2026 17:26:06 +0200
+Message-ID: <20260721152637.370297000@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,54 +51,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit f00a50876d2818bd6dc86fa98b3ef360884c53c8 upstream.
+commit de74d8fd10291763d97b218f09adcc7513c975e4 upstream.
 
-ip6gre_changelink() and ip6erspan_changelink() operate on at most two
-netns, dev_net(dev) and the tunnel link netns t->net. They differ once
-the device is created in or moved to a netns other than the one the
-request runs in. The rtnl changelink path checks CAP_NET_ADMIN only
-against dev_net(dev), so a caller privileged there but not in t->net can
-rewrite a tunnel that lives in t->net.
+When an offloaded MACsec RX SC is deleted, macsec_del_rxsc_ctx() freed
+the per-SC metadata_dst with metadata_dst_free(), which kfree()s the
+object unconditionally and ignores the dst reference count. The RX
+datapath in mlx5e_macsec_offload_handle_rx_skb() looks up the SC under
+rcu_read_lock() via xa_load(), takes a reference with dst_hold() and
+attaches the dst to the skb with skb_dst_set(). A reader that already
+obtained the rx_sc pointer can race with the delete path and operate on
+freed memory.
 
-Gate both ops on rtnl_dev_link_net_capable() at their top, before any
-attribute is parsed.
+Fix the owner side by dropping the reference with dst_release() instead
+of freeing unconditionally, and convert the RX datapath to
+dst_hold_safe() so a reader racing the SC delete cannot attach a dst
+whose last reference was just dropped; only attach it when a reference
+was actually taken.
 
-Reported-by: Xiao Liang <shaw.leon@gmail.com>
-Closes: https://lore.kernel.org/netdev/CABAhCOSzP1vaThGV35_VnsRCb=87_CPjPVsTHbq905k8A+BuUg@mail.gmail.com/
-Fixes: 690afc165bb3 ("net: ip6_gre: fix moving ip6gre between namespaces")
+mlx5e_macsec_add_rxsc() also published sc_xarray_element via xa_alloc()
+before rx_sc->md_dst was allocated and initialised, so a datapath reader
+that looked the SC up by fs_id could observe rx_sc with md_dst still
+NULL or, on weakly-ordered architectures, a non-NULL md_dst pointer
+whose contents were not yet visible. NULL-check the xa_load() result and
+md_dst on the datapath, and reorder add_rxsc() so the xa_alloc() publish
+happens only after md_dst is fully initialised; the xarray RCU publish
+then pairs with the rcu_read_lock()/xa_load() in the datapath.
+
+Note: macsec_del_rxsc_ctx() also kfree()s rx_sc->sc_xarray_element
+without an RCU grace period while the same datapath reads it under
+rcu_read_lock(); that is a separate pre-existing issue left to a
+follow-up patch.
+
+Found by 0sec automated security-research tooling (https://0sec.ai).
+
+Fixes: b7c9400cbc48 ("net/mlx5e: Implement MACsec Rx data path using MACsec skb_metadata_dst")
 Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260612085941.3158249-6-maoyixie.tju@gmail.com
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260627223059.29917-1-doruk@0sec.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_gre.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c |   47 ++++++++------
+ 1 file changed, 28 insertions(+), 19 deletions(-)
 
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -2047,6 +2047,9 @@ static int ip6gre_changelink(struct net_
- 	struct ip6gre_net *ign = net_generic(t->net, ip6gre_net_id);
- 	struct __ip6_tnl_parm p;
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
+@@ -714,34 +714,43 @@ static int mlx5e_macsec_add_rxsc(struct
+ 	}
  
-+	if (!rtnl_dev_link_net_capable(dev, t->net))
-+		return -EPERM;
-+
- 	t = ip6gre_changelink_common(dev, tb, data, &p, extack);
- 	if (IS_ERR(t))
- 		return PTR_ERR(t);
-@@ -2266,6 +2269,9 @@ static int ip6erspan_changelink(struct n
- 	struct __ip6_tnl_parm p;
- 	struct ip6gre_net *ign;
+ 	sc_xarray_element->rx_sc = rx_sc;
+-	err = xa_alloc(&macsec->sc_xarray, &sc_xarray_element->fs_id, sc_xarray_element,
+-		       XA_LIMIT(1, MLX5_MACEC_RX_FS_ID_MAX), GFP_KERNEL);
+-	if (err) {
+-		if (err == -EBUSY)
+-			netdev_err(ctx->netdev,
+-				   "MACsec offload: unable to create entry for RX SC (%d Rx SCs already allocated)\n",
+-				   MLX5_MACEC_RX_FS_ID_MAX);
+-		goto destroy_sc_xarray_elemenet;
+-	}
  
-+	if (!rtnl_dev_link_net_capable(dev, t->net))
-+		return -EPERM;
+ 	rx_sc->md_dst = metadata_dst_alloc(0, METADATA_MACSEC, GFP_KERNEL);
+ 	if (!rx_sc->md_dst) {
+ 		err = -ENOMEM;
+-		goto erase_xa_alloc;
++		goto destroy_sc_xarray_elemenet;
+ 	}
+ 
+ 	rx_sc->sci = ctx_rx_sc->sci;
+ 	rx_sc->active = ctx_rx_sc->active;
+-	list_add_rcu(&rx_sc->rx_sc_list_element, rx_sc_list);
+-
+ 	rx_sc->sc_xarray_element = sc_xarray_element;
+ 	rx_sc->md_dst->u.macsec_info.sci = rx_sc->sci;
 +
- 	ign = net_generic(t->net, ip6gre_net_id);
- 	t = ip6gre_changelink_common(dev, tb, data, &p, extack);
- 	if (IS_ERR(t))
++	/*
++	 * Publish the fully-initialised SC last: xa_alloc() makes
++	 * sc_xarray_element->rx_sc (and rx_sc->md_dst) reachable from the RX
++	 * datapath via xa_load().  Doing it only after md_dst is allocated and
++	 * initialised pairs with the rcu_read_lock()/xa_load() in
++	 * mlx5e_macsec_offload_handle_rx_skb(), so a reader can never observe
++	 * a non-NULL md_dst with uninitialised contents.
++	 */
++	err = xa_alloc(&macsec->sc_xarray, &sc_xarray_element->fs_id, sc_xarray_element,
++		       XA_LIMIT(1, MLX5_MACEC_RX_FS_ID_MAX), GFP_KERNEL);
++	if (err) {
++		if (err == -EBUSY)
++			netdev_err(ctx->netdev,
++				   "MACsec offload: unable to create entry for RX SC (%d Rx SCs already allocated)\n",
++				   MLX5_MACEC_RX_FS_ID_MAX);
++		goto destroy_md_dst;
++	}
++
++	list_add_rcu(&rx_sc->rx_sc_list_element, rx_sc_list);
+ 	mutex_unlock(&macsec->lock);
+ 
+ 	return 0;
+ 
+-erase_xa_alloc:
+-	xa_erase(&macsec->sc_xarray, sc_xarray_element->fs_id);
++destroy_md_dst:
++	dst_release(&rx_sc->md_dst->dst);
+ destroy_sc_xarray_elemenet:
+ 	kfree(sc_xarray_element);
+ destroy_rx_sc:
+@@ -829,7 +838,7 @@ static void macsec_del_rxsc_ctx(struct m
+ 	 */
+ 	list_del_rcu(&rx_sc->rx_sc_list_element);
+ 	xa_erase(&macsec->sc_xarray, rx_sc->sc_xarray_element->fs_id);
+-	metadata_dst_free(rx_sc->md_dst);
++	dst_release(&rx_sc->md_dst->dst);
+ 	kfree(rx_sc->sc_xarray_element);
+ 	kfree_rcu_mightsleep(rx_sc);
+ }
+@@ -1695,10 +1704,10 @@ void mlx5e_macsec_offload_handle_rx_skb(
+ 
+ 	rcu_read_lock();
+ 	sc_xarray_element = xa_load(&macsec->sc_xarray, fs_id);
+-	rx_sc = sc_xarray_element->rx_sc;
+-	if (rx_sc) {
+-		dst_hold(&rx_sc->md_dst->dst);
+-		skb_dst_set(skb, &rx_sc->md_dst->dst);
++	rx_sc = sc_xarray_element ? sc_xarray_element->rx_sc : NULL;
++	if (rx_sc && rx_sc->md_dst) {
++		if (dst_hold_safe(&rx_sc->md_dst->dst))
++			skb_dst_set(skb, &rx_sc->md_dst->dst);
+ 	}
+ 
+ 	rcu_read_unlock();
 
 
