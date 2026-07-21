@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE29397E9A;
-	Tue, 21 Jul 2026 17:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69CDA3D1CCA;
+	Tue, 21 Jul 2026 17:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653712; cv=none; b=QKekhpVRW/HAZO2UjCc7QCQZdhZLvDoxLokhLSv1XUGYT5vXF4ClezO5zz4W2BpMaj269BVmV1ruu2BDPAnuz0+LlySW2o+D/yPrLq3o/Sl0JHAJDfuDFn3gglpvoagu7Tk6oOM5p4pw2fgr5m8Ul+XZBWCjtcHZ12Miv25wJF0=
+	t=1784653714; cv=none; b=nxNCsIX6GPejkknOnQp9R6OUDDbXnpFjIyiWhFsFAQSbs8M8dF3u3s8PmsFwr+TPnxEklxq3W30SpsVQQebT6bqcLpQ4+5g2oj4WrvKEK82M8qRYvO6bBkiYBJGBOxJxgmuXj+H/gquN6Mm9qgF9jnKjUdHlPOe+PvI4djWHPbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653712; c=relaxed/simple;
-	bh=d9c9jLr9NXgzsrw6DDJyhK2JfwjSk1xZl0CL3hzESGU=;
+	s=arc-20240116; t=1784653714; c=relaxed/simple;
+	bh=kY+zNbGPO3tHaPsyvjy2WUYHMIiZnOEzct7fm0Fusvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JQjREFC/S1gD8bndj+8bozr9GlBEE+HPkEyJk4/5KVsNhkBPTplUx9wS2n+vxD9jgBz5jfMJGHmYBeFRoqbob0Y4IQpQdqYQ1+Qc33jqFU8ZVyg9ARy1A8q83Y2hGRdGO3AJFRE9r70x4fLV2y33T2Rqk03BLZxzzJ5ZzMPQdyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pOeNdSBa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r634uj797Ph6PNDE7VuQaT/lspuG3up5ibefjTqQKWMEO5SjpfHxRxPFusmDiQY+Oc1Gg+rKjqnpL576tqVXfcgkTobB2xEx773hqXOViDC2oM91OutTSxgur3G79bYq3DWGPsNPFyoS21bMpuhfmcWSOXC80DtoLtzhfxv1uKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQUwu8Xu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pOeNdSBa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 314721F00A3A;
-	Tue, 21 Jul 2026 17:08:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQUwu8Xu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6621F00A3A;
+	Tue, 21 Jul 2026 17:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653710;
-	bh=s7WLy0o8gf+XlLXBqjBIVNzIkTfxwMcBqeq12wy88UQ=;
+	s=korg; t=1784653713;
+	bh=TBvXiANtybHFZdijn0SGOrgMraA6rjxFYNII3AbPXus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pOeNdSBaf7QQp7afXyvuB/mgxiWUwJxLZByIlT/PVlTHHZQ1TgKnQniU+JX1NVuLB
-	 +MC/EYcrMQXbtqgvBf9tIJDbrNbqsGzEDgumW4zquGx4jahZM8in5YsuXEVEGLCcGL
-	 sEV0GLgEpyvA76H8YZwrgLfyOCYswzZBo1uq3Nb0=
+	b=WQUwu8XuETFsQu+tUitqtUoRtNe0+P3NhZe8rp3Zkbmoum+tuSkhdiakBTacunG5d
+	 UoVS7ktMxfAgePYjvpD2+eIdDlIA6raqwRpNCfakix+zj1KVCpcWIBogUhAO1zR6QN
+	 p1nuTq85sojIGdkYbH3yxXayBmUVUwZo4kavLzmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
+	Fengnan Chang <changfengnan@bytedance.com>,
+	Christoph Hellwig <hch@lst.de>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1387/2077] afs: Fix unchecked-length string display in debug statement
-Date: Tue, 21 Jul 2026 17:17:40 +0200
-Message-ID: <20260721152625.529913207@linuxfoundation.org>
+Subject: [PATCH 7.1 1388/2077] iomap: release pages on atomic dio size mismatch
+Date: Tue, 21 Jul 2026 17:17:41 +0200
+Message-ID: <20260721152625.553493707@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,52 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Fengnan Chang <changfengnan@bytedance.com>
 
-[ Upstream commit 903d37c97228258da71e092f8b4ab260ce81497d ]
+[ Upstream commit 681e452683b69a8e1a571cba0f238f8ceacf55d2 ]
 
-Fix afs_extract_vlserver_list() to limit the length of the displayed
-string in a debug statement().
+If bio_iov_iter_get_pages() or the bounce helper succeeds but builds a
+short bio, the REQ_ATOMIC size check rejects it before submission.  The
+old error path only dropped the bio reference, leaving any pages already
+attached to the bio unreleased.
 
-Fixes: 0a5143f2f89c ("afs: Implement VL server rotation")
-Closes: https://sashiko.dev/#/patchset/20260618074903.2374756-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260622090856.2746629-22-dhowells@redhat.com
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
+Release or unbounce the pages before falling through to out_put_bio on
+this error path.
+
+This bug was reported by sashiko:
+https://sashiko.dev/#/patchset/20260608073134.95964-1-changfengnan%40bytedance.com
+
+Fixes: 9e0933c21c12 ("fs: iomap: Atomic write support")
+Signed-off-by: Fengnan Chang <changfengnan@bytedance.com>
+Link: https://patch.msgid.link/20260612044041.10677-1-changfengnan@bytedance.com
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/vl_list.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/iomap/direct-io.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/afs/vl_list.c b/fs/afs/vl_list.c
-index 003889cf0f18dc..0dc1b005f554f4 100644
---- a/fs/afs/vl_list.c
-+++ b/fs/afs/vl_list.c
-@@ -200,6 +200,8 @@ struct afs_vlserver_list *afs_extract_vlserver_list(struct afs_cell *cell,
+diff --git a/fs/iomap/direct-io.c b/fs/iomap/direct-io.c
+index b36ee619cdcdda..9fedf367c3ebe6 100644
+--- a/fs/iomap/direct-io.c
++++ b/fs/iomap/direct-io.c
+@@ -369,7 +369,7 @@ static ssize_t iomap_dio_bio_iter_one(struct iomap_iter *iter,
+ 	 */
+ 	if ((op & REQ_ATOMIC) && WARN_ON_ONCE(ret != iomap_length(iter))) {
+ 		ret = -EINVAL;
+-		goto out_put_bio;
++		goto out_bio_release_pages;
+ 	}
  
- 	b += sizeof(*hdr);
- 	while (end - b >= sizeof(bs)) {
-+		int nlen;
-+
- 		bs.name_len	= afs_extract_le16(&b);
- 		bs.priority	= afs_extract_le16(&b);
- 		bs.weight	= afs_extract_le16(&b);
-@@ -209,10 +211,12 @@ struct afs_vlserver_list *afs_extract_vlserver_list(struct afs_cell *cell,
- 		bs.protocol	= *b++;
- 		bs.nr_addrs	= *b++;
+ 	if (iter->iomap.flags & IOMAP_F_INTEGRITY) {
+@@ -393,6 +393,11 @@ static ssize_t iomap_dio_bio_iter_one(struct iomap_iter *iter,
+ 	iomap_dio_submit_bio(iter, dio, bio, pos);
+ 	return ret;
  
-+		nlen = min3(bs.name_len, end - b, 255);
-+
- 		_debug("extract %u %u %u %u %u %u %*.*s",
- 		       bs.name_len, bs.priority, bs.weight,
- 		       bs.port, bs.protocol, bs.nr_addrs,
--		       bs.name_len, bs.name_len, b);
-+		       bs.name_len, nlen, b);
- 
- 		if (end - b < bs.name_len)
- 			break;
++out_bio_release_pages:
++	if (dio->flags & IOMAP_DIO_BOUNCE)
++		bio_iov_iter_unbounce(bio, true, false);
++	else
++		bio_release_pages(bio, false);
+ out_put_bio:
+ 	bio_put(bio);
+ 	return ret;
 -- 
 2.53.0
 
