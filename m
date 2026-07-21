@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6710E46D098;
-	Tue, 21 Jul 2026 19:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E66F408634;
+	Tue, 21 Jul 2026 19:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661986; cv=none; b=qBRv0Kg+r/SefjZu/o7/MXoW7NEnexuiTE0GcFtHkp20/eSUvcFhZMcB1bH4wMQmP2+sleTJds/ARaW2WE9pnuvcuWhs1uaAeSY67ML/6lHwf3cxMiYdcAqDj0V/AD+g4rRPXVQFHKQvthnExIdzLMxysu7QM9M4dVy1hKXSF4A=
+	t=1784661989; cv=none; b=nO/hXoo2TgF60ibzLEiFGJGrBG5IjqAUkPoHxL0qWsbw4I1Ef6HZcnd4ke98EfCs3Yn/O2doBqbvSNKyCddJuUBXqZfWbQb95KpxxHMTtzIkMabMxo8olbX664coWtsuC3nYtDMkyPbFmPYocn+6FAwuFUolO7gUnbCzp/ABZ+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661986; c=relaxed/simple;
-	bh=WKKNxeyvoj36N0ByMaCrOU354BE0ij8cBcZq47mRDQw=;
+	s=arc-20240116; t=1784661989; c=relaxed/simple;
+	bh=Fuf38TQ1l9ryNKDdQTRCQSJF18ADkxnxHngOMXbz2Rk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ig+0IXu0gSEhnGcJYCvrYWsErk6VJD5S+5je5IHYmtiKLA14GTjDIvqvcGs1/Qvz7bstaAKrnwGGbvJXr4Otu7935N5vx0L/4jnsVsmYfrL9pk2AUlC1LUWBjEc3w/oezVpuuJ3XJ8q4XtzdMfCKCQTfCzukETUx0C94+XnA5dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RpfERNXZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VZ59QLCAa3uBdn1MTfgo/Jicn0qyYJfBafBWHkepPbf40iDC+2UASUSAPBUH7kV+Av1nHx2VY6Kyyx+j93+uLj4priX69jNK/3anz36yQ+B0O6NCvmTDkgorjsgzoWOYGd/ZtljMwZzkhk9VE4ZkZSi9B44FJuyU6Ld21zj4qIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+Py++7R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RpfERNXZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD2A1F000E9;
-	Tue, 21 Jul 2026 19:26:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+Py++7R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F481F000E9;
+	Tue, 21 Jul 2026 19:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661985;
-	bh=XOvfpbdiXFRPFHYsafB3adqply1J6My41t2sWPwG2Sg=;
+	s=korg; t=1784661988;
+	bh=VJjWNmqpKcO3DV8J+dtqUm3GP9imppp/m59sjkUmYHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RpfERNXZ0L39t5simf5P1siPHdmwN0dgicKxiZv+6pLQu9wQi9CfksrigNyjNGlLA
-	 6aFirbQRhWD7y4K+18YJwOQTpKM7t7eo2JCXWefE6pJDe9MCRCYKnUAGK5V8OveFIh
-	 4AXYFddF3jKrWy+ipqz4EdHNOwUjMARgHz+FN1rs=
+	b=m+Py++7ROI6mQ7z4WrcpFUrvFbKTrJ0otIshwy9VVPbohw6HgVlVm5Q0h37iLKC7t
+	 xB9uEV09kwCAK/H254HuIPycrC9+RBcH9yZRJNN6W5B1kqfcrbjvf6sxYbNjckDCBI
+	 T3DpmovAQgz8fOcqvXzJW7PkO0wQUFVcgr8cRZeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0271/1276] configfs: fix lockless traversals of ->s_children
-Date: Tue, 21 Jul 2026 17:11:54 +0200
-Message-ID: <20260721152452.143676675@linuxfoundation.org>
+Subject: [PATCH 6.12 0272/1276] watchdog: unregister PM notifier on watchdog unregister
+Date: Tue, 21 Jul 2026 17:11:55 +0200
+Message-ID: <20260721152452.166221251@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,151 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 9b9e8bb81c41fd27e7b57a1c936fde140548535f ]
+[ Upstream commit a298c7302ee9584a7a1ac1e8acbede8d98ab51a4 ]
 
-Having the parent directory locked protects entries from removal
-by another thread, but it does *not* protect cursors from being
-moved around by lseek() - or freed, for that matter.
+watchdog_register_device() registers wdd->pm_nb when
+WDOG_NO_PING_ON_SUSPEND is set, but watchdog_unregister_device() does not
+remove it. This leaves an embedded notifier block on the PM notifier chain
+after the watchdog device has been unregistered.
 
-Fixes: 6f6107640625 ("configfs: Introduce configfs_dirent_lock")
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+A later suspend/resume notification can then call watchdog_pm_notifier()
+with a stale watchdog_device pointer, or at minimum after wdd->wd_data has
+been cleared by watchdog_dev_unregister().
+
+Unregister the PM notifier before tearing down the watchdog device.
+
+Fixes: 60bcd91aafd2 ("watchdog: introduce watchdog_dev_suspend/resume")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Link: https://lore.kernel.org/r/20260601192005.1970805-1-dbgh9129@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/configfs/dir.c | 54 +++++++++++++++++++++++++++++++++++------------
- 1 file changed, 41 insertions(+), 13 deletions(-)
+ drivers/watchdog/watchdog_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
-index 47123ac17b0573..248d70b26f3d07 100644
---- a/fs/configfs/dir.c
-+++ b/fs/configfs/dir.c
-@@ -225,15 +225,16 @@ static int configfs_dirent_exists(struct configfs_dirent *parent_sd,
- {
- 	struct configfs_dirent * sd;
+diff --git a/drivers/watchdog/watchdog_core.c b/drivers/watchdog/watchdog_core.c
+index aff2c3912ead69..fd7161a5da332b 100644
+--- a/drivers/watchdog/watchdog_core.c
++++ b/drivers/watchdog/watchdog_core.c
+@@ -382,6 +382,9 @@ static void __watchdog_unregister_device(struct watchdog_device *wdd)
+ 	if (test_bit(WDOG_STOP_ON_REBOOT, &wdd->status))
+ 		unregister_reboot_notifier(&wdd->reboot_nb);
  
-+	spin_lock(&configfs_dirent_lock);
- 	list_for_each_entry(sd, &parent_sd->s_children, s_sibling) {
- 		if (sd->s_element) {
--			const unsigned char *existing = configfs_get_name(sd);
--			if (strcmp(existing, new))
--				continue;
--			else
-+			if (strcmp(configfs_get_name(sd), new) == 0) {
-+				spin_unlock(&configfs_dirent_lock);
- 				return -EEXIST;
-+			}
- 		}
- 	}
-+	spin_unlock(&configfs_dirent_lock);
- 
- 	return 0;
- }
-@@ -551,11 +552,28 @@ static void configfs_detach_rollback(struct dentry *dentry)
- 			configfs_detach_rollback(sd->s_dentry);
- }
- 
-+/*
-+ * Find the next non-cursor.  configfs_dirent_lock held by caller.
-+ */
-+static struct configfs_dirent *next_dirent(struct configfs_dirent *parent,
-+					   struct configfs_dirent *last)
-+{
-+	struct configfs_dirent *s;
++	if (test_bit(WDOG_NO_PING_ON_SUSPEND, &wdd->status))
++		unregister_pm_notifier(&wdd->pm_nb);
 +
-+	s = list_prepare_entry(last, &parent->s_children, s_sibling);
-+
-+	list_for_each_entry_continue(s, &parent->s_children, s_sibling) {
-+		if (s->s_element)
-+			return s;
-+	}
-+	return NULL;
-+}
-+
- static void detach_attrs(struct config_item * item)
- {
- 	struct dentry * dentry = dget(item->ci_dentry);
--	struct configfs_dirent * parent_sd;
--	struct configfs_dirent * sd, * tmp;
-+	struct configfs_dirent *parent_sd;
-+	struct configfs_dirent *sd, *next;
- 
- 	if (!dentry)
- 		return;
-@@ -564,15 +582,19 @@ static void detach_attrs(struct config_item * item)
- 		 dentry->d_name.name);
- 
- 	parent_sd = dentry->d_fsdata;
--	list_for_each_entry_safe(sd, tmp, &parent_sd->s_children, s_sibling) {
--		if (!sd->s_element || !(sd->s_type & CONFIGFS_NOT_PINNED))
-+
-+	spin_lock(&configfs_dirent_lock);
-+	for (sd = next_dirent(parent_sd, NULL); sd; sd = next) {
-+		next = next_dirent(parent_sd, sd);
-+		if (!(sd->s_type & CONFIGFS_NOT_PINNED))
- 			continue;
--		spin_lock(&configfs_dirent_lock);
- 		list_del_init(&sd->s_sibling);
- 		spin_unlock(&configfs_dirent_lock);
- 		configfs_drop_dentry(sd, dentry);
- 		configfs_put(sd);
-+		spin_lock(&configfs_dirent_lock);
- 	}
-+	spin_unlock(&configfs_dirent_lock);
- 
- 	/**
- 	 * Drop reference from dget() on entrance.
-@@ -631,18 +653,20 @@ static void detach_groups(struct config_group *group)
- 	struct dentry * dentry = dget(group->cg_item.ci_dentry);
- 	struct dentry *child;
- 	struct configfs_dirent *parent_sd;
--	struct configfs_dirent *sd, *tmp;
-+	struct configfs_dirent *sd, *next;
- 
- 	if (!dentry)
- 		return;
- 
- 	parent_sd = dentry->d_fsdata;
--	list_for_each_entry_safe(sd, tmp, &parent_sd->s_children, s_sibling) {
--		if (!sd->s_element ||
--		    !(sd->s_type & CONFIGFS_USET_DEFAULT))
-+	spin_lock(&configfs_dirent_lock);
-+	for (sd = next_dirent(parent_sd, NULL); sd; sd = next) {
-+		next = next_dirent(parent_sd, sd);
-+		if (!(sd->s_type & CONFIGFS_USET_DEFAULT))
- 			continue;
- 
- 		child = sd->s_dentry;
-+		spin_unlock(&configfs_dirent_lock);
- 
- 		inode_lock(d_inode(child));
- 
-@@ -654,7 +678,9 @@ static void detach_groups(struct config_group *group)
- 
- 		d_delete(child);
- 		dput(child);
-+		spin_lock(&configfs_dirent_lock);
- 	}
-+	spin_unlock(&configfs_dirent_lock);
- 
- 	/**
- 	 * Drop reference from dget() on entrance.
-@@ -1106,6 +1132,7 @@ configfs_find_subsys_dentry(struct configfs_dirent *root_sd,
- 	struct configfs_dirent *p;
- 	struct configfs_dirent *ret = NULL;
- 
-+	spin_lock(&configfs_dirent_lock);
- 	list_for_each_entry(p, &root_sd->s_children, s_sibling) {
- 		if (p->s_type & CONFIGFS_DIR &&
- 		    p->s_element == subsys_item) {
-@@ -1113,6 +1140,7 @@ configfs_find_subsys_dentry(struct configfs_dirent *root_sd,
- 			break;
- 		}
- 	}
-+	spin_unlock(&configfs_dirent_lock);
- 
- 	return ret;
+ 	watchdog_dev_unregister(wdd);
+ 	ida_free(&watchdog_ida, wdd->id);
  }
 -- 
 2.53.0
