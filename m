@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD701439904;
-	Tue, 21 Jul 2026 21:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397D9415F1C;
+	Tue, 21 Jul 2026 21:47:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670454; cv=none; b=gDtt46Ed0YMAa4r7R/3JF/y1eiact5NYGOiVg8INKxbLsvnGLSNjTpZ8YafAB8yycjNmNvquuB8VB6Ty08FYHHzLb4wRA7FBN5ZemLbe+TxhHr4dFt9Wbx9lAsIIignVXflRihwMfYvc/S8hWkPEO+Yht8mq8b9LoqedYKq8TO4=
+	t=1784670456; cv=none; b=Sr784YeOU4w8U4Va29nkldg8syNbnRaUlKxk0LcDO+X2Ga362SX8Fvrojvr60MXGiVMg6/OYuZxJEPqQxZr4gl9Tx9S806HqL1swQX7jLAG+KTOQgJ9VbO3DQGQA9w6HhVrF/8leVlrZra1Te+StQeYQgRDTDx96CQLDFBzRst4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670454; c=relaxed/simple;
-	bh=/wHE8YCbYxaHfSUf312eW6kdDEM89wxKEU6UXfusW2E=;
+	s=arc-20240116; t=1784670456; c=relaxed/simple;
+	bh=o6YBTWaZU/Zc1NQLEk7F7Ut/ciuY8MvkKv5+SKXvO7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tt4+rl2jsuR7WNVjsjcxfnXnr9Q4xvvfKsk1esQ2X5jjpNX6spBJn4LFZ5yqLdyD/zet9n7+cx+IKEy1d/PIy2awt4Zs0nmrjrHDTu5UvCD7f4JFRRe1yQpEhpiSMqPgwr1jJZ/aeXAQ6Zmz4XMHbzMBAxLjh4HL7uOC4PoHpXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jx0dHH6y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EWg7e14rg6lVd7WDJw4yHifvavuDfgBd3UKty388kp2GKUdhX8Anghh69wlZ+U2fm+SKrIDDn0mHQgqTNzhuMCSnOmEuiS0XoYoEgHkS8hfPyDh2q/nq3VLWLRrz2TYSpNxFBQej8bh4VgwyLBQo9Hsn8gkBPOL44QTLv68p/xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BsKVK2GH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jx0dHH6y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E641F000E9;
-	Tue, 21 Jul 2026 21:47:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BsKVK2GH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A023A1F000E9;
+	Tue, 21 Jul 2026 21:47:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670452;
-	bh=0VHiWgUlceRER96EAXS0m9iUYY2j2gLafz8Hgq++0g4=;
+	s=korg; t=1784670455;
+	bh=5PjJ33/Y1rBMk39PWQ67lITq/ncHG3u/rbGfo/hEtIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jx0dHH6yUBU13PIj6GOXnIw7RIRnJ4VpIVgqFRC6L61sJP0O1B7AUM+3V0mIu+ncC
-	 LMcrrrBouxjrTEcXPttgqq7wODKfgokR7AouYo/yJE5HISqLFjHoZoLKeDJFIvGPeP
-	 JI8rCnVVmhoeEHYTt6GyyFlxcYrxUtetixnM4fRk=
+	b=BsKVK2GHSxKFCd1KeaTW6AVF6RMAL1dF+wsZJ9RynbpzBy3vtHowF4qktsvYqmjpT
+	 tiT4YIGfin7zb8TXPbXuYRC4fsP0tSIhkMiyJohhR66BHDup/2D75L27RHq0YO9RUD
+	 X8hMeGC2CezJeDGjErELOZFljYSX1Zh0/IEvglCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>
-Subject: [PATCH 6.1 0884/1067] ieee802154: admin-gate legacy LLSEC dump operations
-Date: Tue, 21 Jul 2026 17:24:45 +0200
-Message-ID: <20260721152444.305360391@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.1 0932/1067] mtd: onenand: samsung: report DMA completion timeouts
+Date: Tue, 21 Jul 2026 17:25:33 +0200
+Message-ID: <20260721152445.380051520@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,98 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 9c1e0b6d49471a712511d23fc9d06901561135e8 upstream.
+commit d03a19bd6c7f86b99ca8fb61a6ec2345cee1d9d6 upstream.
 
-In net/ieee802154/netlink.c, the legacy IEEE802154_NL family ops table
-builds the LLSEC dump entries (LLSEC_LIST_KEY, LLSEC_LIST_DEV,
-LLSEC_LIST_DEVKEY, LLSEC_LIST_SECLEVEL) with IEEE802154_DUMP() which
-sets no .flags, so generic netlink runs them ungated. The modern
-nl802154 family admin-gates the equivalent reads via
-NL802154_CMD_GET_SEC_KEY and friends with .flags = GENL_ADMIN_PERM.
+The S5PC110 OneNAND DMA helpers have bounded waits for transfer
+completion. The polling helper falls out of its timeout loop and returns
+success, and the IRQ helper ignores wait_for_completion_timeout().
 
-Any local uid that can open AF_NETLINK / NETLINK_GENERIC can resolve
-the "802.15.4 MAC" family and dump LLSEC_LIST_KEY on any wpan netdev
-that has an LLSEC key installed; the dump handler writes the raw
-16-byte AES-128 key bytes (IEEE802154_ATTR_LLSEC_KEY_BYTES, copied
-verbatim from struct ieee802154_llsec_key.key) into the reply.
-Recovering the AES key compromises 802.15.4 LLSEC link confidentiality
-and authenticity, since LLSEC uses CCM* and the same key authenticates
-and encrypts frames.
+Return -ETIMEDOUT when the DMA transfer-done bit or completion does not
+arrive before the timeout so callers can treat the buffer transfer as
+failed.
 
-Impact: any local uid with no capabilities can read the raw 16-byte
-AES-128 LLSEC key from the kernel keytable on any wpan netdev that has
-an administrator-installed LLSEC key, by issuing an LLSEC_LIST_KEY
-dump on the legacy IEEE802154_NL generic-netlink family.
-
-Introduce IEEE802154_DUMP_PRIV() mirroring IEEE802154_DUMP() but
-setting .flags = GENL_ADMIN_PERM, and use it for the four LLSEC dump
-entries. LIST_PHY and LIST_IFACE retain IEEE802154_DUMP() because the
-modern nl802154 family exposes their equivalents to unprivileged
-readers by design (NL802154_CMD_GET_WPAN_PHY and
-NL802154_CMD_GET_INTERFACE carry "can be retrieved by unprivileged
-users" annotations).
-
-Fixes: 3e9c156e2c21 ("ieee802154: add netlink interfaces for llsec")
+Fixes: e23abf4b7743 ("mtd: OneNAND: S5PC110: Implement DMA interrupt method")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://lore.kernel.org/20260520141640.1149513-2-michael.bommarito@gmail.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ieee802154/ieee802154.h |    8 ++++++++
- net/ieee802154/netlink.c    |   16 ++++++++--------
- 2 files changed, 16 insertions(+), 8 deletions(-)
+ drivers/mtd/nand/onenand/onenand_samsung.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/net/ieee802154/ieee802154.h
-+++ b/net/ieee802154/ieee802154.h
-@@ -23,6 +23,14 @@ void ieee802154_nl_exit(void);
- 		.dumpit	= _dump,			\
- 	}
+--- a/drivers/mtd/nand/onenand/onenand_samsung.c
++++ b/drivers/mtd/nand/onenand/onenand_samsung.c
+@@ -554,6 +554,9 @@ static int s5pc110_dma_poll(dma_addr_t d
+ 	} while (!(status & S5PC110_DMA_TRANS_STATUS_TD) &&
+ 		time_before(jiffies, timeout));
  
-+#define IEEE802154_DUMP_PRIV(_cmd, _func, _dump)	\
-+	{						\
-+		.cmd	= _cmd,				\
-+		.doit	= _func,			\
-+		.dumpit	= _dump,			\
-+		.flags	= GENL_ADMIN_PERM,		\
-+	}
++	if (!(status & S5PC110_DMA_TRANS_STATUS_TD))
++		return -ETIMEDOUT;
 +
- struct genl_info;
+ 	writel(S5PC110_DMA_TRANS_CMD_TDC, base + S5PC110_DMA_TRANS_CMD);
  
- struct sk_buff *ieee802154_nl_create(int flags, u8 req);
---- a/net/ieee802154/netlink.c
-+++ b/net/ieee802154/netlink.c
-@@ -98,20 +98,20 @@ static const struct genl_small_ops ieee8
- 	IEEE802154_OP(IEEE802154_SET_MACPARAMS, ieee802154_set_macparams),
- 	IEEE802154_OP(IEEE802154_LLSEC_GETPARAMS, ieee802154_llsec_getparams),
- 	IEEE802154_OP(IEEE802154_LLSEC_SETPARAMS, ieee802154_llsec_setparams),
--	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_KEY, NULL,
--			ieee802154_llsec_dump_keys),
-+	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_KEY, NULL,
-+			     ieee802154_llsec_dump_keys),
- 	IEEE802154_OP(IEEE802154_LLSEC_ADD_KEY, ieee802154_llsec_add_key),
- 	IEEE802154_OP(IEEE802154_LLSEC_DEL_KEY, ieee802154_llsec_del_key),
--	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_DEV, NULL,
--			ieee802154_llsec_dump_devs),
-+	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_DEV, NULL,
-+			     ieee802154_llsec_dump_devs),
- 	IEEE802154_OP(IEEE802154_LLSEC_ADD_DEV, ieee802154_llsec_add_dev),
- 	IEEE802154_OP(IEEE802154_LLSEC_DEL_DEV, ieee802154_llsec_del_dev),
--	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_DEVKEY, NULL,
--			ieee802154_llsec_dump_devkeys),
-+	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_DEVKEY, NULL,
-+			     ieee802154_llsec_dump_devkeys),
- 	IEEE802154_OP(IEEE802154_LLSEC_ADD_DEVKEY, ieee802154_llsec_add_devkey),
- 	IEEE802154_OP(IEEE802154_LLSEC_DEL_DEVKEY, ieee802154_llsec_del_devkey),
--	IEEE802154_DUMP(IEEE802154_LLSEC_LIST_SECLEVEL, NULL,
--			ieee802154_llsec_dump_seclevels),
-+	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_SECLEVEL, NULL,
-+			     ieee802154_llsec_dump_seclevels),
- 	IEEE802154_OP(IEEE802154_LLSEC_ADD_SECLEVEL,
- 		      ieee802154_llsec_add_seclevel),
- 	IEEE802154_OP(IEEE802154_LLSEC_DEL_SECLEVEL,
+ 	return 0;
+@@ -608,7 +611,9 @@ static int s5pc110_dma_irq(dma_addr_t ds
+ 
+ 	writel(S5PC110_DMA_TRANS_CMD_TR, base + S5PC110_DMA_TRANS_CMD);
+ 
+-	wait_for_completion_timeout(&onenand->complete, msecs_to_jiffies(20));
++	if (!wait_for_completion_timeout(&onenand->complete,
++					 msecs_to_jiffies(20)))
++		return -ETIMEDOUT;
+ 
+ 	return 0;
+ }
 
 
