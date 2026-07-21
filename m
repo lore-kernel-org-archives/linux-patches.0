@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8653B52FF;
-	Tue, 21 Jul 2026 22:13:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CD634B1A6;
+	Tue, 21 Jul 2026 22:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672014; cv=none; b=SKWraPfQqbH+QtQxQrf4bmheFKMoXrzrLk9G6AsNTWTS9/HLzBQ9sEa3l903gGtc2IIQKARFnYojbCRld1LUg+rm0uo1Tpk0AwkhHnVqkIG07jAzfc7M6wsR3zlHq073hZ1nUaMDxxZpx4Y1k9rTw4h86S2m9LGn0a1lWufpbUs=
+	t=1784672017; cv=none; b=MZVyntStNWuPnS9tZNJ9KweJ+HYkxLz4DqwlvYJgmhonXt4DbMRqt7IUL2/roEXpsJ9Y3Xo2hgWmVs6in/LZ/S7prBArd/65y2k5hu+KaBUz/y7YZ3JoCTOk8Go+PxR+PevRkX02ADg3z7/ga6rnIRKdzE7R+kH2SiFn+OjzBMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672014; c=relaxed/simple;
-	bh=kabwmLGYScUX3pXat9nMZ3BYjV1fTQIS5SjOpwpp99c=;
+	s=arc-20240116; t=1784672017; c=relaxed/simple;
+	bh=8Us0TWz09azUTrNvL9OfdYmxkG9PdBNc5OXOrr6KfJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TWF0UydHbrbOukBTApKCMyzAdXCwFO3e47h3a8XkYvjH/z8xahJ1jyHWffKb0uY1+aojkyzyB46vjHif7vJ18A5Mj1iZCxrz6RMkRvxTeL8ArcK6w9BXcul+lGvJp4BD4VJloAR3SpfvQlSr7otIhl7lGUPRi/rffWA84pv5M/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rAucmLq8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LeFtJ3nn1niiIIKQhI41IBKo2/ZLyoT9zRBE6cy1bEznPmEUgAL5KMQwoRSfPaqzKZLGvWfaIQ3A5DJe0t1kj+ovEFrQKOUpoU2kLkalkTZaIN60jKR1kJyd6dgopKB4as8u7vH0DLK2z4nrNrvtix1UjWZtY1xQcFaVBC7dV1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0eR/dwK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rAucmLq8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93ED1F000E9;
-	Tue, 21 Jul 2026 22:13:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0eR/dwK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AACC1F000E9;
+	Tue, 21 Jul 2026 22:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672013;
-	bh=eHBfXj6/lijdlhgt8PGLCl1OPEMlBCfmGvenxBld6Rg=;
+	s=korg; t=1784672015;
+	bh=r5FHfGzq2nUd/LeJV+Ml90XAUby68qiBoguiSVnIsQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rAucmLq80gBVffD8z8WQwSHK78tXc7iobLC9KQ6QL7bXHwtaYcKYhc9VpEn72nvwB
-	 kqNIuyFk8KFSrFPcXfkyAfV3OuL/CxG/4YzzLGXJjqYORr+QIEvbXAKLAji3dwaUot
-	 BxTyIY+Lt6mi/Da67eXbfdZioqb3yE93/tCni7y4=
+	b=p0eR/dwKeyqfEFtXDCjPHBHR3AGmVEzEYKQM1MXRDnwIq8vft2dGHDmhpuj1/cPLT
+	 RoeyUZ2weMhjK58AaDR2nsAEs3deqKwYIx4Vy9VT674+JyB35dFfKQKwCpsCwU4hVo
+	 9etaQBceLshHVXTaJoLL0SuDh+yEsgOwuvwdk/T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 465/843] ipv6: Fix null-ptr-deref in fib6_nh_mtu_change().
-Date: Tue, 21 Jul 2026 17:21:40 +0200
-Message-ID: <20260721152416.496676585@linuxfoundation.org>
+Subject: [PATCH 5.15 466/843] ipv4: fib: Dont ignore error route in local/main tables.
+Date: Tue, 21 Jul 2026 17:21:41 +0200
+Message-ID: <20260721152416.519992107@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -54,59 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 46c3b8191aad3d032776bf3bebf03efdf5f4b905 ]
+[ Upstream commit b72f0db64205d9ce462038ba995d5d31eff32dc1 ]
 
-fib6_nh_mtu_change() re-fetches idev via __in6_dev_get(arg->dev) and
-dereferences idev->cnf.mtu6 without a NULL check. addrconf_ifdown()
-clears dev->ip6_ptr with RCU_INIT_POINTER() after rt6_disable_ip() has
-released tb6_lock, so the RA-driven MTU walk can observe a NULL idev and
-oops. The caller rt6_mtu_change_route() guards its own __in6_dev_get(),
-but this re-fetch is unguarded; nexthop-backed routes survive
-addrconf_ifdown()'s flush, so the walk still reaches it after ip6_ptr is
-nulled.
+When CONFIG_IP_MULTIPLE_TABLES is enabled but no rule is added,
+fib_lookup() performs route lookup directly on two tables.
 
-Return 0 when idev is NULL, matching rt6_mtu_change_route() and the
-fib6_mtu() fix in commit 5ad509c1fdad ("ipv6: Fix null-ptr-deref in
-fib6_mtu().").
+Since the first lookup does not properly bail out, the result
+of an error route in the merged local/main table could be
+overwritten by another route in the default table:
 
-  Oops: general protection fault, ... KASAN: null-ptr-deref in range
-        [0x00000000000002a8-0x00000000000002af]
-  RIP: 0010:fib6_nh_mtu_change+0x203/0x990
-   rt6_mtu_change_route+0x141/0x1d0
-   __fib6_clean_all+0xd0/0x160
-   rt6_mtu_change+0xb4/0x100
-   ndisc_router_discovery+0x24b5/0x2cb0
-   icmpv6_rcv+0x12e9/0x1710
-   ipv6_rcv+0x39b/0x410
+  # unshare -n
+  # ip link set lo up
+  # ip route add 192.168.0.0/24 dev lo table 253
+  # ip route add unreachable 192.168.0.0/24
+  # ip route get 192.168.0.1
+  192.168.0.1 dev lo table default uid 0
+      cache <local>
 
-Fixes: c0b220cf7d80 ("ipv6: Refactor exception functions")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Once a random rule is added, the error route is respected:
+
+  # ip rule add table 0
+  # ip rule del table 0
+  # ip route get 192.168.0.1
+  RTNETLINK answers: No route to host
+
+Let's fix the inconsistent behaviour.
+
+Fixes: f4530fa574df ("ipv4: Avoid overhead when no custom FIB rules are installed.")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260619045334.2427073-1-xmei5@asu.edu
+Link: https://patch.msgid.link/20260619212753.3367244-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/net/ip_fib.h | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 907b3282924678..cb1cf7d5946ff4 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -4941,6 +4941,9 @@ static int fib6_nh_mtu_change(struct fib6_nh *nh, void *_arg)
- 		struct inet6_dev *idev = __in6_dev_get(arg->dev);
- 		u32 mtu = f6i->fib6_pmtu;
+diff --git a/include/net/ip_fib.h b/include/net/ip_fib.h
+index 9f6e2a476dc280..718b9799d77d78 100644
+--- a/include/net/ip_fib.h
++++ b/include/net/ip_fib.h
+@@ -366,7 +366,7 @@ static inline int fib_lookup(struct net *net, struct flowi4 *flp,
+ 			     struct fib_result *res, unsigned int flags)
+ {
+ 	struct fib_table *tb;
+-	int err = -ENETUNREACH;
++	int err = -EAGAIN;
  
-+		if (!idev)
-+			return 0;
-+
- 		if (mtu >= arg->mtu ||
- 		    (mtu < arg->mtu && mtu == idev->cnf.mtu6))
- 			fib6_metric_set(f6i, RTAX_MTU, arg->mtu);
+ 	flags |= FIB_LOOKUP_NOREF;
+ 	if (net->ipv4.fib_has_custom_rules)
+@@ -380,17 +380,16 @@ static inline int fib_lookup(struct net *net, struct flowi4 *flp,
+ 	if (tb)
+ 		err = fib_table_lookup(tb, flp, res, flags);
+ 
+-	if (!err)
++	if (err != -EAGAIN)
+ 		goto out;
+ 
+ 	tb = rcu_dereference_rtnl(net->ipv4.fib_default);
+ 	if (tb)
+ 		err = fib_table_lookup(tb, flp, res, flags);
+ 
+-out:
+ 	if (err == -EAGAIN)
+ 		err = -ENETUNREACH;
+-
++out:
+ 	rcu_read_unlock();
+ 
+ 	return err;
 -- 
 2.53.0
 
