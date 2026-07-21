@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBFA3B7B6B;
-	Tue, 21 Jul 2026 20:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03AD33B83FE;
+	Tue, 21 Jul 2026 20:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667373; cv=none; b=CnwNg6VTpPM8q5nJ9M0a8H49elryWT8FW78QqNzjupzwkpw8ipHZWvgnQp4ZvfR2KmiMml8TZIrzQ9O5jAX1P2Ue3CULM64zKGoJj9jx6iBLGAF4d9SVPIWgqHm2Gq2LypC6hCB/Zr4ehfhYt1XDny6qcrSH6gvkbMFSpAP0R9o=
+	t=1784667375; cv=none; b=hhMw/a4Vjm0Jby3uYfxRLflYPnyu7v+vija2KJTess8f8EN14Pl6ANR/Qwiq43oCunvQif8pPJ/q1o3gEK0Kms9BmSWUcXGAPJSK59fgdiQDh/oLQxcsEWiN27Ie1+8ipdxLdzs8VWRGqOOIRENLQU8cZ7B7QLqp2zT2HuZMibM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667373; c=relaxed/simple;
-	bh=9bSy4SMRFrEShC9N3Z3d7fmgzV5bIGOv8S+v8DqTJKU=;
+	s=arc-20240116; t=1784667375; c=relaxed/simple;
+	bh=6RHHjvTS4u0Z9y4Q28G5wRr6NdrRJ9OHVDWSLV/5m7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V5lUmrIYBlqkB5CARTCuRJ5LWIcytfthgYF/EOrqWxH2hCioZRnnVdkz3cevgFu/jsCW1wWT1xTw9q5dPi1h5hN0T2qTEMj9Fy56LTgdsoVdnFc8pyCGa9DeXzJkOrZD6cQwQLcTuDNjUcW36RL4LNqMjOHYHxc4BYY1ceLiSZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9FyrkVf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JRAUkepQnuupsYVwp6qMhPaxmWqluIHmT4nMVxaOgjftVvX8Wh2Wz1uUILiLlQbChKed8vo69QKL+R4S1ehG6BDb7V2Ki3SXx/QKI43ecDudnk3Nx/QI4VxcA3CbNRynycQsSrp9vF9BJwT1e1HfPXgTfhQBIMhxs58uICCGSeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gY5HTfIX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9FyrkVf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1371F000E9;
-	Tue, 21 Jul 2026 20:56:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gY5HTfIX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F941F00A3A;
+	Tue, 21 Jul 2026 20:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667368;
-	bh=H5hC9x6xxXla2K2Q7ZE9Wo9ylB7R3Ruav50uxDJjegk=;
+	s=korg; t=1784667373;
+	bh=6QO9RC9OWMaQzB9JnxIXO5sDOKkChSjKhdhBYeNtZ1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e9FyrkVfxWRdWz6gqAy6PL6h+50AJdUM0DW+irQLUwYpcTiMSaHHanK9MIBbFCrc7
-	 CIx4bBMSV9DD74bh3VSf+KOm77Iw+2Pa7XCf7vY22NVJA0eR6CiIKr4+0BfFUtuctM
-	 Mdelh56QGhKiUah1fNL4YIxCEtVy4cQEkeZqa4O0=
+	b=gY5HTfIXM1cTbAvIKsE5EK1T5JF34TMhLlqczTgfathfF/Ic4Ohd9uWx2thYAU7GE
+	 4f1wQSsGBq4/XGYYce4ulIpz1iF+bi8wXFLnjdA+pkwV8OkAkPkBphemd+cUnTziYU
+	 goZa1pJXDBWNQ7705A38L0J4BSbAe/fbig5NTYHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Bryam Vargas <hexlabsecurity@proton.me>
-Subject: [PATCH 6.6 1035/1266] nvmet-rdma: handle inline data with a nonzero offset
-Date: Tue, 21 Jul 2026 17:24:32 +0200
-Message-ID: <20260721152504.984503768@linuxfoundation.org>
+	Nico Yip <zdi-disclosures@trendmicro.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.6 1037/1266] can: isotp: use unconditional synchronize_rcu() in isotp_release()
+Date: Tue, 21 Jul 2026 17:24:34 +0200
+Message-ID: <20260721152505.027603517@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,89 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit 48c0162f647bb47e6084ffbc71b8f213f5e2f4f8 upstream.
+commit 9b1a02e0d980ac6b0e36a90378f847062f81d7e4 upstream.
 
-nvmet_rdma_use_inline_sg() maps the host-controlled inline data offset
-into the per-command inline scatterlist.  The bounds check admits any
-offset with off + len <= inline_data_size, but the mapping still assumes
-the data begins in the first inline page:
+isotp_notify() unregisters the (RCU) CAN filters via can_rx_unregister()
+and clears so->bound without waiting for a grace period. isotp_release()
+uses so->bound to decide whether it needs to call synchronize_rcu()
+before cancelling so->rxtimer, so when NETDEV_UNREGISTER runs first it
+skips that synchronize_rcu() and can cancel the timer while an
+in-flight isotp_rcv() is still executing and about to re-arm it via
+isotp_send_fc(), leading to a use-after-free timer callback on the
+freed socket.
 
-	sg->offset = off;
-	sg->length = min_t(int, len, PAGE_SIZE - off);
+sakisho-bot remarked a problem with rtnl_lock held in isotp_notify(),
+therefore make isotp_release() always call synchronize_rcu() before
+cancelling the timers, regardless of so->bound. This still closes the
+original race (isotp_notify() clearing so->bound without waiting for
+in-flight isotp_rcv() callers before isotp_release() cancels the RX
+timer) without adding any RCU wait to the netdevice notifier path.
 
-When a port is configured with inline_data_size > PAGE_SIZE (settable up
-to max(SZ_16K, PAGE_SIZE)), an offset in (PAGE_SIZE, inline_data_size]
-makes "PAGE_SIZE - off" underflow, so sg->length is set to ~4 GiB and
-the block backend reads far past the first inline page.  num_pages(len)
-also ignores the offset, so an in-bounds offset whose [off, off+len)
-span crosses a page boundary under-counts the scatterlist.
-
-Map the offset properly: split it into a page index and an in-page
-offset, start the scatterlist at that page, and size the page count from
-page_off + len.  Because the request scatterlist may now start at
-inline_sg[page_idx] rather than inline_sg[0], generalize the inline-SGL
-identity test in nvmet_rdma_release_rsp() to a range test; otherwise the
-persistent inline scatterlist is mistaken for an allocated one and
-nvmet_req_free_sgls() frees an inline page (and warns in
-free_large_kmalloc()).
-
-Fixes: 0d5ee2b2ab4f ("nvmet-rdma: support max(16KB, PAGE_SIZE) inline data")
-Cc: stable@vger.kernel.org
-Suggested-by: Keith Busch <kbusch@kernel.org>
-Reported-by: Bryam Vargas <hexlabsecurity@proton.me>
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 14a4696bc311 ("can: isotp: isotp_release(): omit unintended hrtimer restart on socket release")
+Closes: https://lore.kernel.org/linux-can/20260707085210.6B6C01F000E9@smtp.kernel.org/
+Reported-by: Nico Yip <zdi-disclosures@trendmicro.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260712-isotp-fixes-v10-1-793a1b1ce17f@hartkopp.net
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/rdma.c |   18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ net/can/isotp.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -666,7 +666,8 @@ static void nvmet_rdma_release_rsp(struc
- 	if (rsp->n_rdma)
- 		nvmet_rdma_rw_ctx_destroy(rsp);
- 
--	if (rsp->req.sg != rsp->cmd->inline_sg)
-+	if (rsp->req.sg < rsp->cmd->inline_sg ||
-+	    rsp->req.sg >= rsp->cmd->inline_sg + queue->dev->inline_page_count)
- 		nvmet_req_free_sgls(&rsp->req);
- 
- 	if (unlikely(!list_empty_careful(&queue->rsp_wr_wait_list)))
-@@ -821,24 +822,25 @@ static void nvmet_rdma_write_data_done(s
- static void nvmet_rdma_use_inline_sg(struct nvmet_rdma_rsp *rsp, u32 len,
- 		u64 off)
- {
--	int sg_count = num_pages(len);
-+	u64 page_off = off % PAGE_SIZE;
-+	u64 page_idx = off / PAGE_SIZE;
-+	int sg_count = num_pages(page_off + len);
- 	struct scatterlist *sg;
- 	int i;
- 
--	sg = rsp->cmd->inline_sg;
-+	sg = &rsp->cmd->inline_sg[page_idx];
- 	for (i = 0; i < sg_count; i++, sg++) {
- 		if (i < sg_count - 1)
- 			sg_unmark_end(sg);
- 		else
- 			sg_mark_end(sg);
--		sg->offset = off;
--		sg->length = min_t(int, len, PAGE_SIZE - off);
-+		sg->offset = page_off;
-+		sg->length = min_t(u64, len, PAGE_SIZE - page_off);
- 		len -= sg->length;
--		if (!i)
--			off = 0;
-+		page_off = 0;
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -1215,11 +1215,18 @@ static int isotp_release(struct socket *
+ 						  SINGLE_MASK(so->txid),
+ 						  isotp_rcv_echo, sk);
+ 				dev_put(dev);
+-				synchronize_rcu();
+ 			}
+ 		}
  	}
  
--	rsp->req.sg = rsp->cmd->inline_sg;
-+	rsp->req.sg = &rsp->cmd->inline_sg[page_idx];
- 	rsp->req.sg_cnt = sg_count;
- }
- 
++	/* Always wait for a grace period before touching the timers below.
++	 * A concurrent NETDEV_UNREGISTER may have already unregistered our
++	 * filters and cleared so->bound in isotp_notify() without waiting
++	 * for in-flight isotp_rcv() callers to finish, so this call must not
++	 * be skipped just because so->bound is already 0 here.
++	 */
++	synchronize_rcu();
++
+ 	hrtimer_cancel(&so->txfrtimer);
+ 	hrtimer_cancel(&so->txtimer);
+ 	hrtimer_cancel(&so->rxtimer);
 
 
