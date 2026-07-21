@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF78415F23;
-	Tue, 21 Jul 2026 22:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC2B3C1081;
+	Tue, 21 Jul 2026 22:09:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671742; cv=none; b=crVSZWhbaL+BeLAE5pueuvF931Co+3+QTAelM+LK2Zk9+BV8pgOebyBsHqws125YwVjlAq0d6atev1UEJnHScgFsgEL/dA10WKoU5tZsEAB74iy+nhbhH7vH+Rzq2xnDj+PIGmxOzMPO/qzyGlFU2gjYxizdt9MaB8PDW34Acig=
+	t=1784671745; cv=none; b=sqkJwbZxqMMyuEaOZvMmnSCj17BFl1pEdnIX8ZgYVdyDHuzgHw5q18nlPW+Nn1WraJLLe4V1B13x5VgSu13xcHcEEXA2OFTmoz9nt1Ya5WEPRGDthfhB5QMUWEEUvD+g6Rlu0y6w65RqtjD/P2Fq5ZaStxxC4PboA7Xhp961Ljk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671742; c=relaxed/simple;
-	bh=M9Rkh8afBQUg58kYMqkjlWjOGhdNL5974KyZ3/PTAYY=;
+	s=arc-20240116; t=1784671745; c=relaxed/simple;
+	bh=4uBCGNWYBdlNVMNdnHVgbTFa9yQao9txD3/d4VqQotc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=epktvrWa0xyL4RUZyQc6Bc7dHP/qqVGwvD+s0caQtZqWK/rGW2nlL045Uc5jH0RqfgnUpuE8of7XXmB5jmLt3AyQWwETpMgrrUu45KoZTJniA0Wskwg13a9loFR+R3s1Kkse7xNB2c87+lda3o3NYuq6WiwajEpmj57ozlpTzk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQz8MDhA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FoAYPfFKEfMFCchLtWuF8FT9MFvLQhP522ZReiQnwMNCCm0d3s9B8a9I+2Y45lAKg2zfPxgsHjvqM7TtELMwDz84kIqqffKONtQM8imlFvd+jh2nKybCPtg5PIAdqolFNEDVcrhZxo2upO9piJEEvLlJUezElmRPsra30kErkbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKsPESyp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQz8MDhA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A795D1F00A3A;
-	Tue, 21 Jul 2026 22:09:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKsPESyp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B8A1F000E9;
+	Tue, 21 Jul 2026 22:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671741;
-	bh=cBTfq6Y1C65zR/6dj60oUqshsrERMPCp9FzsvP5iTQg=;
+	s=korg; t=1784671743;
+	bh=lO4/EPIEF+5ilGDOM3APL242UwX7p779PbRglEHa9Ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JQz8MDhAP/b60GrxI6WaImdR4qficky5CnvFH1m9XpnZDZqvabtVWfykR5gaT7HKz
-	 fHTlHfvTUsJXBubLPJspr4F82j8V/VxTu80jpq8wEbr3NYC6f0xQUSJj8HK8umE4m2
-	 gI8vlVqJdNrSGJf8S82BQAK4Y91aeYSjzaLtFNjM=
+	b=PKsPESypjQWyXSP1fM8wO1r0mWCs9EkwUKmLAXajLQ5uIpucf3M7FWsy/YdIA1sRh
+	 Dh2W+9UAIVbdKizVTbAW7CfLhfsxjspLRejqFW0MlbNns6sxFqBUNEt0Vwt0DYeSSC
+	 mZzAZed+iZYyGb0JY1ED1LWPEVK4nIfh/uFPUEnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 318/843] configfs: fix lockless traversals of ->s_children
-Date: Tue, 21 Jul 2026 17:19:13 +0200
-Message-ID: <20260721152413.174440435@linuxfoundation.org>
+Subject: [PATCH 5.15 309/843] ALSA: seq: Introduce SNDRV_SEQ_IOCTL_USER_PVERSION ioctl
+Date: Tue, 21 Jul 2026 17:19:04 +0200
+Message-ID: <20260721152412.976459258@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,152 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 9b9e8bb81c41fd27e7b57a1c936fde140548535f ]
+[ Upstream commit afb72505e4614a2ccefe3440d37dec3a2273c330 ]
 
-Having the parent directory locked protects entries from removal
-by another thread, but it does *not* protect cursors from being
-moved around by lseek() - or freed, for that matter.
+For the future extension of ALSA sequencer ABI, introduce a new ioctl
+SNDRV_SEQ_IOCTL_USER_PVERSION.  This is similar like the ioctls used
+in PCM and other interfaces, for an application to specify its
+supporting ABI version.
 
-Fixes: 6f6107640625 ("configfs: Introduce configfs_dirent_lock")
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+The use of this ioctl will be mandatory for the upcoming UMP support.
+
+Reviewed-by: Jaroslav Kysela <perex@perex.cz>
+Link: https://lore.kernel.org/r/20230523075358.9672-25-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 705dd6dcbc0e ("ALSA: seq: Clear variable event pointer on read")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/configfs/dir.c | 54 +++++++++++++++++++++++++++++++++++------------
- 1 file changed, 41 insertions(+), 13 deletions(-)
+ include/uapi/sound/asequencer.h | 1 +
+ sound/core/seq/seq_clientmgr.c  | 8 ++++++++
+ sound/core/seq/seq_clientmgr.h  | 1 +
+ sound/core/seq/seq_compat.c     | 1 +
+ 4 files changed, 11 insertions(+)
 
-diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
-index afe2b802eb3193..01c9d54833b300 100644
---- a/fs/configfs/dir.c
-+++ b/fs/configfs/dir.c
-@@ -225,15 +225,16 @@ static int configfs_dirent_exists(struct configfs_dirent *parent_sd,
- {
- 	struct configfs_dirent * sd;
+diff --git a/include/uapi/sound/asequencer.h b/include/uapi/sound/asequencer.h
+index dbd60f48b4b011..742efdcdf7301e 100644
+--- a/include/uapi/sound/asequencer.h
++++ b/include/uapi/sound/asequencer.h
+@@ -577,6 +577,7 @@ struct snd_seq_query_subs {
+ #define SNDRV_SEQ_IOCTL_CLIENT_ID	_IOR ('S', 0x01, int)
+ #define SNDRV_SEQ_IOCTL_SYSTEM_INFO	_IOWR('S', 0x02, struct snd_seq_system_info)
+ #define SNDRV_SEQ_IOCTL_RUNNING_MODE	_IOWR('S', 0x03, struct snd_seq_running_info)
++#define SNDRV_SEQ_IOCTL_USER_PVERSION	_IOW('S', 0x04, int)
  
-+	spin_lock(&configfs_dirent_lock);
- 	list_for_each_entry(sd, &parent_sd->s_children, s_sibling) {
- 		if (sd->s_element) {
--			const unsigned char *existing = configfs_get_name(sd);
--			if (strcmp(existing, new))
--				continue;
--			else
-+			if (strcmp(configfs_get_name(sd), new) == 0) {
-+				spin_unlock(&configfs_dirent_lock);
- 				return -EEXIST;
-+			}
- 		}
- 	}
-+	spin_unlock(&configfs_dirent_lock);
- 
+ #define SNDRV_SEQ_IOCTL_GET_CLIENT_INFO	_IOWR('S', 0x10, struct snd_seq_client_info)
+ #define SNDRV_SEQ_IOCTL_SET_CLIENT_INFO	_IOW ('S', 0x11, struct snd_seq_client_info)
+diff --git a/sound/core/seq/seq_clientmgr.c b/sound/core/seq/seq_clientmgr.c
+index 2d707afa1ef1cd..21be1a2660a3a2 100644
+--- a/sound/core/seq/seq_clientmgr.c
++++ b/sound/core/seq/seq_clientmgr.c
+@@ -1159,6 +1159,12 @@ static int snd_seq_ioctl_pversion(struct snd_seq_client *client, void *arg)
  	return 0;
  }
-@@ -551,11 +552,28 @@ static void configfs_detach_rollback(struct dentry *dentry)
- 			configfs_detach_rollback(sd->s_dentry);
- }
  
-+/*
-+ * Find the next non-cursor.  configfs_dirent_lock held by caller.
-+ */
-+static struct configfs_dirent *next_dirent(struct configfs_dirent *parent,
-+					   struct configfs_dirent *last)
++static int snd_seq_ioctl_user_pversion(struct snd_seq_client *client, void *arg)
 +{
-+	struct configfs_dirent *s;
-+
-+	s = list_prepare_entry(last, &parent->s_children, s_sibling);
-+
-+	list_for_each_entry_continue(s, &parent->s_children, s_sibling) {
-+		if (s->s_element)
-+			return s;
-+	}
-+	return NULL;
++	client->user_pversion = *(unsigned int *)arg;
++	return 0;
 +}
 +
- static void detach_attrs(struct config_item * item)
+ static int snd_seq_ioctl_client_id(struct snd_seq_client *client, void *arg)
  {
- 	struct dentry * dentry = dget(item->ci_dentry);
--	struct configfs_dirent * parent_sd;
--	struct configfs_dirent * sd, * tmp;
-+	struct configfs_dirent *parent_sd;
-+	struct configfs_dirent *sd, *next;
+ 	int *client_id = arg;
+@@ -2086,6 +2092,7 @@ static const struct ioctl_handler {
+ 	int (*func)(struct snd_seq_client *client, void *arg);
+ } ioctl_handlers[] = {
+ 	{ SNDRV_SEQ_IOCTL_PVERSION, snd_seq_ioctl_pversion },
++	{ SNDRV_SEQ_IOCTL_USER_PVERSION, snd_seq_ioctl_user_pversion },
+ 	{ SNDRV_SEQ_IOCTL_CLIENT_ID, snd_seq_ioctl_client_id },
+ 	{ SNDRV_SEQ_IOCTL_SYSTEM_INFO, snd_seq_ioctl_system_info },
+ 	{ SNDRV_SEQ_IOCTL_RUNNING_MODE, snd_seq_ioctl_running_mode },
+@@ -2226,6 +2233,7 @@ int snd_seq_create_kernel_client(struct snd_card *card, int client_index,
+ 	client->accept_input = 1;
+ 	client->accept_output = 1;
+ 	client->data.kernel.card = card;
++	client->user_pversion = SNDRV_SEQ_VERSION;
+ 		
+ 	va_start(args, name_fmt);
+ 	vsnprintf(client->name, sizeof(client->name), name_fmt, args);
+diff --git a/sound/core/seq/seq_clientmgr.h b/sound/core/seq/seq_clientmgr.h
+index 8cdd0ee53fb1f6..31b988785ca23c 100644
+--- a/sound/core/seq/seq_clientmgr.h
++++ b/sound/core/seq/seq_clientmgr.h
+@@ -35,6 +35,7 @@ struct snd_seq_client {
+ 	snd_seq_client_type_t type;
+ 	unsigned int accept_input: 1,
+ 		accept_output: 1;
++	unsigned int user_pversion;
+ 	char name[64];		/* client name */
+ 	int number;		/* client number */
+ 	unsigned int filter;	/* filter flags */
+diff --git a/sound/core/seq/seq_compat.c b/sound/core/seq/seq_compat.c
+index 54723566ce2428..c0ce6236dc7f1d 100644
+--- a/sound/core/seq/seq_compat.c
++++ b/sound/core/seq/seq_compat.c
+@@ -81,6 +81,7 @@ static long snd_seq_ioctl_compat(struct file *file, unsigned int cmd, unsigned l
  
- 	if (!dentry)
- 		return;
-@@ -564,15 +582,19 @@ static void detach_attrs(struct config_item * item)
- 		 dentry->d_name.name);
- 
- 	parent_sd = dentry->d_fsdata;
--	list_for_each_entry_safe(sd, tmp, &parent_sd->s_children, s_sibling) {
--		if (!sd->s_element || !(sd->s_type & CONFIGFS_NOT_PINNED))
-+
-+	spin_lock(&configfs_dirent_lock);
-+	for (sd = next_dirent(parent_sd, NULL); sd; sd = next) {
-+		next = next_dirent(parent_sd, sd);
-+		if (!(sd->s_type & CONFIGFS_NOT_PINNED))
- 			continue;
--		spin_lock(&configfs_dirent_lock);
- 		list_del_init(&sd->s_sibling);
- 		spin_unlock(&configfs_dirent_lock);
- 		configfs_drop_dentry(sd, dentry);
- 		configfs_put(sd);
-+		spin_lock(&configfs_dirent_lock);
- 	}
-+	spin_unlock(&configfs_dirent_lock);
- 
- 	/**
- 	 * Drop reference from dget() on entrance.
-@@ -621,18 +643,20 @@ static void detach_groups(struct config_group *group)
- 	struct dentry * dentry = dget(group->cg_item.ci_dentry);
- 	struct dentry *child;
- 	struct configfs_dirent *parent_sd;
--	struct configfs_dirent *sd, *tmp;
-+	struct configfs_dirent *sd, *next;
- 
- 	if (!dentry)
- 		return;
- 
- 	parent_sd = dentry->d_fsdata;
--	list_for_each_entry_safe(sd, tmp, &parent_sd->s_children, s_sibling) {
--		if (!sd->s_element ||
--		    !(sd->s_type & CONFIGFS_USET_DEFAULT))
-+	spin_lock(&configfs_dirent_lock);
-+	for (sd = next_dirent(parent_sd, NULL); sd; sd = next) {
-+		next = next_dirent(parent_sd, sd);
-+		if (!(sd->s_type & CONFIGFS_USET_DEFAULT))
- 			continue;
- 
- 		child = sd->s_dentry;
-+		spin_unlock(&configfs_dirent_lock);
- 
- 		inode_lock(d_inode(child));
- 
-@@ -644,7 +668,9 @@ static void detach_groups(struct config_group *group)
- 
- 		d_delete(child);
- 		dput(child);
-+		spin_lock(&configfs_dirent_lock);
- 	}
-+	spin_unlock(&configfs_dirent_lock);
- 
- 	/**
- 	 * Drop reference from dget() on entrance.
-@@ -1096,6 +1122,7 @@ configfs_find_subsys_dentry(struct configfs_dirent *root_sd,
- 	struct configfs_dirent *p;
- 	struct configfs_dirent *ret = NULL;
- 
-+	spin_lock(&configfs_dirent_lock);
- 	list_for_each_entry(p, &root_sd->s_children, s_sibling) {
- 		if (p->s_type & CONFIGFS_DIR &&
- 		    p->s_element == subsys_item) {
-@@ -1103,6 +1130,7 @@ configfs_find_subsys_dentry(struct configfs_dirent *root_sd,
- 			break;
- 		}
- 	}
-+	spin_unlock(&configfs_dirent_lock);
- 
- 	return ret;
- }
+ 	switch (cmd) {
+ 	case SNDRV_SEQ_IOCTL_PVERSION:
++	case SNDRV_SEQ_IOCTL_USER_PVERSION:
+ 	case SNDRV_SEQ_IOCTL_CLIENT_ID:
+ 	case SNDRV_SEQ_IOCTL_SYSTEM_INFO:
+ 	case SNDRV_SEQ_IOCTL_GET_CLIENT_INFO:
 -- 
 2.53.0
 
