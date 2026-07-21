@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60386435532;
-	Tue, 21 Jul 2026 22:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF78D435532;
+	Tue, 21 Jul 2026 22:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671808; cv=none; b=Aq9rQkxylFJM5VbVzS1zNz/muSEUcG0p57jUtBJU4rxejtAezKDonxyoaYDGJmqM9vCPzKX7Wcq6jGg06ccdGzUFPXNtFDdpiNyLZ+CcG+pRf4pDcV4RmeyaZZZD0vVaIHsuHhhIgYLYMzweSxZh6kxLTly2T8SrNGG2uzxLhxM=
+	t=1784671810; cv=none; b=ga0qZ7lfoVZKQXTOWvUg7VNvvWwpWiiO/TjIQ963EHf6BSaaddLmG2uMMwFqujR3hXDzNWQsP5qqFfTpKH1dKQ3ekWSQOoZWYVDAjIOUo9uQ/3XNCCOyxbzY/eCOFvVGDjIX7jlr4pKSZvf07/sX0F6HxyDpjf992i84NnKBk1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671808; c=relaxed/simple;
-	bh=OrvbZeBW4CZ/CtWHjekAAJr6UImrS3crwqO8RyzO7hw=;
+	s=arc-20240116; t=1784671810; c=relaxed/simple;
+	bh=Y/olvngm4JGAqbvsgvn0jOR6m3Vr0LKEqxPdGq7T+4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gab/CU048eJ4GcmnSRDmHhf1TWr8U7wZkrxGsw6SQ+tpmlTyziS1Ql/nCCGokSRYpyuv9/px2SFTJZOU9QC7+gEG6KT8OBtD6LkMvn7TcScPC65jmd4P5LSi4BGzlBeDzTMev7XcOZDXrccoQwBGFtQfnTPZrjr87S9lDmC12zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMtSP1h8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tD6CT5l9AY9BYUXvqs9Ck2EmL8Ng5V9lZOtppRSX940IKzzSJq1g5kj+eV2U5G5K5YtKdQ6f/cKWE6mwsHnSX4fbK96MED5gRTSmzxea/ahZ27fU6Ccrv3CqBmsyKNN7Dm50ByeFm8X3kex38HOTROQJzpy5vaW9kba9/+8UOTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WIkP8pna; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMtSP1h8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7516C1F000E9;
-	Tue, 21 Jul 2026 22:10:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WIkP8pna"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FBCB1F000E9;
+	Tue, 21 Jul 2026 22:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671807;
-	bh=2Z+skCLmerUGb746NHDlj2VcWhsUEO7OAala7TOsaiM=;
+	s=korg; t=1784671809;
+	bh=QkW5brTpHFytfVt07NvKjQx8G0g0jJBKWoC3y12ORSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hMtSP1h8sMYNlJAQUj0BQziQtJXy8sGtmE1+DE0PKyxpBnR6ccHSRgaD0dK3RWfyU
-	 hIe9oz5vm98dYOqW+n7nVgEMzpGZV6d7SVLfgjM4y9CoRPcpWqNZBD0+c6dqIM8i3w
-	 Ofzs9O6xWFrvVtEbdIjRebVlptZWdB9v2zJWYHmg=
+	b=WIkP8pnaX4CsKVRRDFM6S244J/i3DPXkqkaXK7HcftiBqKXruW0t0XDFAlawQVf88
+	 1t9dILmhVYz+BHJluRAiENrJJ77V/u8YOomfySH1rvJ8q7v+OaxV4UQSBbg9Czc8mA
+	 3nnGqJKcKDNsyj9Kiz5UNs/Y6Q0KJ/aLHrsq0Kdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Joshua Crofts <joshua.crofts1@gmail.com>,
 	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 385/843] iio: light: si1133: reset counter to prevent race condition
-Date: Tue, 21 Jul 2026 17:20:20 +0200
-Message-ID: <20260721152414.698142630@linuxfoundation.org>
+Subject: [PATCH 5.15 386/843] iio: light: si1133: prevent race condition on timeout
+Date: Tue, 21 Jul 2026 17:20:21 +0200
+Message-ID: <20260721152414.720753996@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -54,16 +54,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Joshua Crofts <joshua.crofts1@gmail.com>
 
-[ Upstream commit 0a5f45ed2342aabae1e32c72558d15be28940a95 ]
+[ Upstream commit 8c50a95ceb230d17801758a9e41ffbbbe46f8b4d ]
 
-Sashiko reported a potential race condition happening when the driver
-returns an errno after a timeout in the si1133_command() function. The
-premature exit causes the hardware and software counters to become out
-of sync by not updating data->rsp_seq, therefore the internal hardware
-counter keeps incrementing.
+Sashiko reported a bug where the si1133_command exits on timeout
+without halting the sensor or masking the interrupt. If the sensor
+completes the command later, any subsequent command to the sensor
+will cause the IRQ handler to complete immediately, returning stale
+data to the driver all while the command hasn't finished yet, shifting
+all potential reads in the future.
 
-Fix this by adding a call to si1133_cmd_reset_counter() before returning
-from timeout.
+Fix this by masking the IRQ if wait_for_completion_timeout() fails.
+When initiating a new command, do a dummy read of the IRQ_STATUS
+register and turn the IRQ back on.
 
 Fixes: e01e7eaf37d8 ("iio: light: introduce si1133")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
@@ -73,25 +75,37 @@ Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/si1133.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/iio/light/si1133.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/iio/light/si1133.c b/drivers/iio/light/si1133.c
-index f8c9b2cc322e8d..17ee203d16a274 100644
+index 17ee203d16a274..d207a928b1f823 100644
 --- a/drivers/iio/light/si1133.c
 +++ b/drivers/iio/light/si1133.c
-@@ -427,6 +427,11 @@ static int si1133_command(struct si1133_data *data, u8 cmd)
- 			dev_warn(dev,
- 				 "Failed to read command 0x%02x, ret=%d\n",
- 				 cmd, err);
-+			/*
-+			 * Reset counter on err to prevent software and hardware
-+			 * counters being out of sync.
-+			 */
-+			si1133_cmd_reset_counter(data);
+@@ -395,8 +395,14 @@ static int si1133_command(struct si1133_data *data, u8 cmd)
+ 
+ 	expected_seq = (data->rsp_seq + 1) & SI1133_MAX_CMD_CTR;
+ 
+-	if (cmd == SI1133_CMD_FORCE)
++	if (cmd == SI1133_CMD_FORCE) {
++		/* Flush pending IRQs from a previous timeout. */
++		regmap_read(data->regmap, SI1133_REG_IRQ_STATUS, &resp);
++		regmap_write(data->regmap, SI1133_REG_IRQ_ENABLE,
++			     SI1133_IRQ_CHANNEL_ENABLE);
++
+ 		reinit_completion(&data->completion);
++	}
+ 
+ 	err = regmap_write(data->regmap, SI1133_REG_COMMAND, cmd);
+ 	if (err) {
+@@ -409,6 +415,7 @@ static int si1133_command(struct si1133_data *data, u8 cmd)
+ 		/* wait for irq */
+ 		if (!wait_for_completion_timeout(&data->completion,
+ 			msecs_to_jiffies(SI1133_COMPLETION_TIMEOUT_MS))) {
++			regmap_write(data->regmap, SI1133_REG_IRQ_ENABLE, 0);
+ 			err = -ETIMEDOUT;
  			goto out;
  		}
- 	}
 -- 
 2.53.0
 
