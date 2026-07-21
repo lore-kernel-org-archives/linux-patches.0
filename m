@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B4A3FE356;
-	Tue, 21 Jul 2026 20:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3DAB3783D4;
+	Tue, 21 Jul 2026 20:29:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665791; cv=none; b=qUhh17PqB2Jn06IYyKARozCSqhvEAcPJvMB1VcbWXFBH3KFGqLTKlu8+qRyT8MnmKnxXr65wDNZN37U1OanCouOJq2C7swpBT/pJOr5lemzU3OprePfpQ6sU0CMzUPTMEnEze+BVs8nkmRIgfNQ6UfW2G5FTxTzuUpC5UvYqMKk=
+	t=1784665794; cv=none; b=YW80uLO7tT2KQcJKC6ZIQmN/RZ/gl5ZWEmjPsyxVDWgnYNec9UJd7/Nqh+L7vfGzu69/f36X801jZHRUvtowkfA5juHiz2dpfyTudfzUmzOZOiSSmetdA0jB/GODjXgfMJiZ0rUYKSVh8qzqEb8Qj406KC2rgsQ1n+STwSyyoOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665791; c=relaxed/simple;
-	bh=XpWCrf9SOJFHSpbc41IXtneYoJrKNnHERLmXM+8kTYY=;
+	s=arc-20240116; t=1784665794; c=relaxed/simple;
+	bh=dM7NZE3oTffIvWilZ7bu0o2P74X0XPm3vmht70wnels=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TigDsy5Gp6IRs6UEY/JjzKpnRzix9MaMkYnrqxNAU86ROU4wcYmsJxntH0jNcVT5ZnTlJZSDlMDMreNJRsNCsEnWhsCC2USVLeYKwfzLTr1wRBDFoSCEYNfUijBNI5Ab76/u3QhB56O4E46n+wYPaQZiSHmOwnbB9vWt6y33MeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RDDbtY9Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CYIu58I/TYvSZhfOquStxXvN4OXZX4z0fDUYhqVNh2Gt/MD8SuJhYPOV8QwoUmiM05p/JSQgb3me8vjxXqDIQsUDuUNoo0j5MMoEiKfh+9KUIwNLDmhQvHmgaPZSrD/QbpcFclbdAacJKmbDGJeavyIGDilopneE26RClV9vKno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCyc/NRC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RDDbtY9Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA9441F000E9;
-	Tue, 21 Jul 2026 20:29:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCyc/NRC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640A31F000E9;
+	Tue, 21 Jul 2026 20:29:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665790;
-	bh=SBq6/ZJCoFgbVi9QOX8yagqj5FIyoNUJnLz0Zbl+8MY=;
+	s=korg; t=1784665792;
+	bh=V/ZyWjYeuznv/Mrmeg6fGm17GEu4fJJ5N2RrXbwQRfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RDDbtY9ZEKl6EYc5igT97FwOIMheN7RC+5LGM9Y+lGhV+vcECPNjbwVbYEP9xwUfv
-	 US3GkzHSgqYUzwoVURheTzTmoqbPGYcenMoVTxPZx3PjMrDq8iGWMYy1WZBECQASFm
-	 gFyc+aOACkoWV2g0D0oQhncRensJnGzCg4XL/hYo=
+	b=CCyc/NRCOvAObcrItG3zgmb31QufVFnBLmdC2NePegJ4Mayy5il8qo9UzvMBraX21
+	 IuCw0mzdxKIqSspe3ItJlHoiaG8ADjkUFSGKuN6FbaPKFls7xTDZPwTOD5L8L+AHKj
+	 hNQsJ392n9Fl5K9jB8mfQ/v1qJGNnGh0VqMzvju4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Rosen Penev <rosenp@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Pratyush Yadav <pratyush@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0437/1266] mips: n64: add __iomem for writel call
-Date: Tue, 21 Jul 2026 17:14:34 +0200
-Message-ID: <20260721152451.618657580@linuxfoundation.org>
+Subject: [PATCH 6.6 0438/1266] mtd: spi-nor: Drop duplicate Kconfig dependency
+Date: Tue, 21 Jul 2026 17:14:35 +0200
+Message-ID: <20260721152451.640416027@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,37 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 579f5329d5df2dbcf4bb5ef398701c2501d24892 ]
+[ Upstream commit a6470e2162e9c3779a4bd6ff3bed1b81d796e46e ]
 
-sparse: incorrect type in argument 2 (different address spaces) @@
-expected void volatile [noderef] __iomem *mem @@
-got unsigned int [usertype] *
+I do not think the MTD dependency is needed twice. This is likely a
+duplicate coming from a former rebase when the spi-nor core got cleaned
+up a while ago. Remove the extra line.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202105261445.AcvPd2EE-lkp@intel.com/
-Fixes: baec970aa5ba ("mips: Add N64 machine type")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: b35b9a10362d ("mtd: spi-nor: Move m25p80 code in spi-nor.c")
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Michael Walle <mwalle@kernel.org>
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/n64/init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/spi-nor/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/mips/n64/init.c b/arch/mips/n64/init.c
-index dfbd864f466700..66ec28ab41f321 100644
---- a/arch/mips/n64/init.c
-+++ b/arch/mips/n64/init.c
-@@ -50,7 +50,7 @@ void __init prom_init(void)
- 
- #define W 320
- #define H 240
--#define REG_BASE ((u32 *) CKSEG1ADDR(0x4400000))
-+#define REG_BASE ((u32 __iomem *) CKSEG1ADDR(0x4400000))
- 
- static void __init n64rdp_write_reg(const u8 reg, const u32 value)
- {
+diff --git a/drivers/mtd/spi-nor/Kconfig b/drivers/mtd/spi-nor/Kconfig
+index 24cd25de2b8b71..fd05a24d64a96f 100644
+--- a/drivers/mtd/spi-nor/Kconfig
++++ b/drivers/mtd/spi-nor/Kconfig
+@@ -1,7 +1,6 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ menuconfig MTD_SPI_NOR
+ 	tristate "SPI NOR device support"
+-	depends on MTD
+ 	depends on MTD && SPI_MASTER
+ 	select SPI_MEM
+ 	help
 -- 
 2.53.0
 
