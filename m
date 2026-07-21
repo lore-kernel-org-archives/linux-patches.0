@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CEB433BCE;
-	Tue, 21 Jul 2026 19:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7EF43644B3;
+	Tue, 21 Jul 2026 19:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662524; cv=none; b=NGaUZ6yUS5lB7w8nYwAONSzONdbjmMVut2Kzrkvl7OWzs2zEdNUPHizIp31Yn7VpqkCCko6FHN0bgEFgH/At5ObB790NMb0942Z5yLyz04qc+1R+Wnn3DOgsYhLa2lQ8ytis08K/Guouv9sc4vTQ4PbkFtzP1XB2cKGWPUvJ6/o=
+	t=1784662526; cv=none; b=di+xBOgcpYlQw5qGdR5HbullZQZVJxnS3ghpBv/6zlzH9aYejknJYGZ5fMOfsRHkcjFQe2lbGjaMBFmLr3J39aCVj/dBVKX+q5sD9SyHX1sImxb7FQrugmSqRgy2heZi5YrwdFdII2pJfuCMmloFt9LTRZrcqcMi+5O6S2m902M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662524; c=relaxed/simple;
-	bh=fFGa58F2cJ1aOw88S0INTxJCckgZUs48G3tXLSlBpR4=;
+	s=arc-20240116; t=1784662526; c=relaxed/simple;
+	bh=uqdOLYxF20h4tlUqva5zFkCckHDZxRmomxC2wDIbF5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MtAeCdVaK7sXS3aRq8b9o/QkuikVWQ8qxJWRTMYHNa0f7FeB8EkQaB22+TsQJqMNv7WwQv+hmxtzXl0V9NvzPp1Osthm4ozgEjC3CGC1QBjdpuVm1Y09tZKABl5ppqgBhE1g2cJBJHrmcc+o9jR04PNGIHU69Ymg1mQUYdsMDZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bT7nid11; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jdJ5oQqSsRU3YkY9XN6+64afNSuJzwGG5UUAOgLV3o5yhyj70gLtL8GFxdZP0LS+udU5yhNrAvrkFWDsRu5UM5Ccnljy1bDrsug722of8iWPfiaIpwMUgpSi6s1c40SlaBo1BlnnFiXLDAzgjwXmstWShMfj4oRtfjeXq/jjW/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jovsA+Ti; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bT7nid11"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A2B41F000E9;
-	Tue, 21 Jul 2026 19:35:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jovsA+Ti"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2513E1F000E9;
+	Tue, 21 Jul 2026 19:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662522;
-	bh=Uv9R0cbpqmvhmlt3Py2dMa2hSBiyXNxM133KF0ADDdc=;
+	s=korg; t=1784662525;
+	bh=iXq6I3NbtdPl0SLK1Aggu1qCkNI+ue0kTDFZfU0doqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bT7nid11wNJRkdyVQ/1ktGAFIak39lqwjFdbRgmgwc/iY8fm88L6IJiOoiA88Hpxp
-	 VU/u/A/YI/Iae31Q6EOjfVGdrKPgpN+SMooXGQmXfDEakcL7jcB5wtvV3vA7ajE/8l
-	 Ep2OMkpUuhfGOhDcIJUiXoKE3mMII/6yDp2KLrlY=
+	b=jovsA+Ti0DJQXgiNPyKijBLHbbb6aRit8DLOZ93vFjmNL7nIK2KRY2/3T/4gJU/q+
+	 WE1VGobjl8qks36T/BU0ecCW4xZnyE0VQcmWYZxCTIgtm9qMXhNG/XC/iXbyV8y4aa
+	 ttw/fUhyphLq1AMwZDd7qTMQSwUKnxuiGCmb8Rd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0478/1276] dmaengine: Fix possible use after free
-Date: Tue, 21 Jul 2026 17:15:21 +0200
-Message-ID: <20260721152456.800425469@linuxfoundation.org>
+Subject: [PATCH 6.12 0461/1276] perf sched: Fix NULL dereference in latency_runtime_event
+Date: Tue, 21 Jul 2026 17:15:04 +0200
+Message-ID: <20260721152456.419188684@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,45 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 92f853f0645aebf1d05d333e97ab7c342ace1892 ]
+[ Upstream commit 8cbca8a480e15f6326ce94287570993f27a4b2d5 ]
 
-In dma_release_channel(), check chan->device->privatecnt after call
-dma_chan_put(). However, dma_chan_put() call dma_device_put() which could
-release the last reference of the device if the DMA provider is already
-gone and hence free it.
+latency_runtime_event() passes the return value of
+machine__findnew_thread() directly to thread_atoms_search() at line
+1216, before checking for NULL at line 1220.  thread_atoms_search()
+calls pid_cmp() which dereferences the thread pointer via
+thread__tid(), causing a NULL pointer dereference if the allocation
+fails.
 
-Fixes it by moving dma_chan_put() after the check.
+All other callers of thread_atoms_search() in this file
+(latency_switch_event, latency_wakeup_event,
+latency_migrate_task_event) correctly check for NULL first.
 
-Fixes: 0f571515c332 ("dmaengine: Add privatecnt to revert DMA_PRIVATE property")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260424-dma-dmac-handle-vunmap-v4-1-90f43412fdc0@analog.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Move the atoms assignment after the NULL check to match the pattern
+used by the other callers.
+
+Fixes: b91fc39f4ad7 ("perf machine: Protect the machine->threads with a rwlock")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dmaengine.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/perf/builtin-sched.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index c1357d7f3dc6ca..e241b7b01233e5 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -905,11 +905,12 @@ void dma_release_channel(struct dma_chan *chan)
- 	mutex_lock(&dma_list_mutex);
- 	WARN_ONCE(chan->client_count != 1,
- 		  "chan reference count %d != 1\n", chan->client_count);
--	dma_chan_put(chan);
- 	/* drop PRIVATE cap enabled by __dma_request_channel() */
- 	if (--chan->device->privatecnt == 0)
- 		dma_cap_clear(DMA_PRIVATE, chan->device->cap_mask);
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index 00d50c356e43c1..12db6fe6e05a6a 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -1214,13 +1214,15 @@ static int latency_runtime_event(struct perf_sched *sched,
+ 	const u32 pid	   = evsel__intval(evsel, sample, "pid");
+ 	const u64 runtime  = evsel__intval(evsel, sample, "runtime");
+ 	struct thread *thread = machine__findnew_thread(machine, -1, pid);
+-	struct work_atoms *atoms = thread_atoms_search(&sched->atom_root, thread, &sched->cmp_pid);
++	struct work_atoms *atoms;
+ 	u64 timestamp = sample->time;
+ 	int cpu = sample->cpu, err = -1;
  
-+	dma_chan_put(chan);
+ 	if (thread == NULL)
+ 		return -1;
+ 
++	atoms = thread_atoms_search(&sched->atom_root, thread, &sched->cmp_pid);
 +
- 	if (chan->slave) {
- 		sysfs_remove_link(&chan->dev->device.kobj, DMA_SLAVE_NAME);
- 		sysfs_remove_link(&chan->slave->kobj, chan->name);
+ 	/* perf.data is untrusted input — CPU may be absent or corrupted */
+ 	if (cpu >= MAX_CPUS || cpu < 0) {
+ 		pr_warning("WARNING: at offset %#" PRIx64 ": out-of-bound sample CPU %d, skipping sample\n",
 -- 
 2.53.0
 
