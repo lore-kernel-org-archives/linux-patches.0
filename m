@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978D42DF3EA;
-	Tue, 21 Jul 2026 18:53:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5724E2DBF75;
+	Tue, 21 Jul 2026 18:53:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659991; cv=none; b=mLgltHQnEizOLoutyT1Apz1z014wl7Lqz2aR1NK2GVyAELG9jF4AK24ryDue2clkrvBX/WL1iuDmRlngI9syFurYebqMuimsKVZrpQX7RtlBkwENzuO3fSEO8cn+uR3hfL5sYuXhkVUrar6APtlpZYGrVTGD2VL1+qfBDNl14MI=
+	t=1784659994; cv=none; b=eoz2Jxi8q6ern9FrpxIi7CkKlY93PchHKgM2VJDhHP4VEwm4aDHe+dSHwfygC4Om2+tUhxPF0FV7/iHV/SKUtfWDctGtSp/oLyyfQFqd4AL1cTZXop+vCA8yeREog8nXI4bcqEOIeFL4vcD7+mx6YOGFXOsrYLeAfEX2QnYP4Ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659991; c=relaxed/simple;
-	bh=YqCNTl/6yYgceykWGTuauHZLUZrplr2gRrLyV6z/kQE=;
+	s=arc-20240116; t=1784659994; c=relaxed/simple;
+	bh=kYb+gDtmaDE7+aUarwWkUwZ2AWXQ0QnxDqr9KsMSGFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BqQTtkK7ZwQfJMiJt2QE/y4NG9/4FYpMYh0KqoLMeCaZ6TZrMbIdSm0BcE3eq/yi+haCZyUu9CnlGoHuXziJFQoJ9Qxr/67QD2x69eMGE+GdgaWQ3qTB4pM0MJGnRMQTVbnTU7cJrRrytAIevAUAc7PYL2Bve8hCIunJP1ZuZmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uh/Yh9Mn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EV6hxLw5lJXi01FoKlu0SVrkF8oKZVNerBtM0cLrFscYN3h4uLoP9bGpB+ekGqqBGI+wUxqE/T2fPABUw1KgbIbdHyz2R5+FiVth8jE9/dsprcMe64N8aaGe7Hh7KXER6wwgREGlOJqa3AhglVx9BJyafZalSGcSiNkaKer1kOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uz2j0BRS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uh/Yh9Mn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090751F000E9;
-	Tue, 21 Jul 2026 18:53:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uz2j0BRS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72901F00A3F;
+	Tue, 21 Jul 2026 18:53:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659990;
-	bh=Ix8qP1cIYOnteun4sQABHPfszU0tcjJQHab9Nj42YsM=;
+	s=korg; t=1784659993;
+	bh=bEPMM/+i3xFmjkdmoeAeNXleDQSM47GTTN91lPKHPwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uh/Yh9MnbRcByx3u4avhL0NOJTjKy0ZjSQ4SL9lwD5jj/iP0LdBWYwKcjzkRu2HGM
-	 TZm8zkZT+fQ8ExLtovZ57l8WTBeyd6auCa3M1rKS6Iyo8VKvhCBfok1MGve6X2eWdL
-	 rp9hcars6Yna27a2Fs8p4Y029JTnQhjrMEHmEO9k=
+	b=Uz2j0BRSQ3fiXEScIZtIQBYBFzajh7Ztr/8bYv7TrREE0mWgQf/pOdA62pE9FnS0T
+	 b2wttadFryhBSJ9hzOAEkwKiWou2JEoLk15OfAs8srFZVwLdKB8UdCufFxuNsGiQ8R
+	 uMiUK/4PCe/xyBdJAZ/aQkygG/PRLWXy3WYHv2RY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0809/2077] RDMA/bnxt_re: Enhance dbr usecnt logic in doorbell uapis
-Date: Tue, 21 Jul 2026 17:08:02 +0200
-Message-ID: <20260721152611.875265403@linuxfoundation.org>
+Subject: [PATCH 7.1 0810/2077] RDMA/bnxt_re: Support doorbells for app allocated QPs
+Date: Tue, 21 Jul 2026 17:08:03 +0200
+Message-ID: <20260721152611.899683580@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,90 +54,207 @@ Content-Transfer-Encoding: 8bit
 
 From: Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>
 
-[ Upstream commit 73607410f4f1b0d5c3d0af2d70a79c265482a0e3 ]
+[ Upstream commit 7e812673a948395675e9893e75b0fc60d19bbf27 ]
 
-The current logic in the doorbell cleanup function is not
-sufficient for a change in a subsequent patch, that fails
-doorbell remove operation in some conditions. The cleanup
-should facilitate freeing of the dbr object when the caller
-may not retry the teardown operation (implicit teardown:
-process-exit/driver-removal).
+App allocated QPs can use a separate doorbell for each QP.
+This doorbell region can be passed through a new driver specific
+DBR_HANDLE attribute, during QP creation. When this attribute
+is set, associate the QP with the given doorbell region.
 
-Extend this counter to use kref mechanism so that the dbr
-object gets freed (via kref callback) when there are no more
-references to it, rather than directly freeing it in the
-cleanup uapi.
+While the QP holds a reference to the dbr, the dbr itself
+cannot be destroyed and is rejected with EBUSY error.
 
-Link: https://patch.msgid.link/r/20260519150041.7251-7-sriharsha.basavapatna@broadcom.com
+Link: https://patch.msgid.link/r/20260519150041.7251-9-sriharsha.basavapatna@broadcom.com
 Signed-off-by: Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>
 Reviewed-by: Selvin Xavier <selvin.xavier@broadcom.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Stable-dep-of: dc95931b7e13 ("RDMA/bnxt_re: Add a max slot check for SQ")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.h |  3 ++-
- drivers/infiniband/hw/bnxt_re/uapi.c     | 16 +++++++++++++---
- 2 files changed, 15 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 35 ++++++++++++++++++++----
+ drivers/infiniband/hw/bnxt_re/ib_verbs.h |  1 +
+ drivers/infiniband/hw/bnxt_re/uapi.c     | 24 ++++++++++++++++
+ include/uapi/rdma/bnxt_re-abi.h          |  4 +++
+ 4 files changed, 59 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.h b/drivers/infiniband/hw/bnxt_re/ib_verbs.h
-index 08f71a94d55d7b..13dac48ed453e8 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.h
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.h
-@@ -167,7 +167,7 @@ struct bnxt_re_dbr_obj {
- 	struct bnxt_re_dev *rdev;
- 	struct bnxt_qplib_dpi dpi;
- 	struct bnxt_re_user_mmap_entry *entry;
--	atomic_t usecnt; /* QPs using this dbr */
-+	struct kref usecnt; /* 1 (uobject) + n (QPs using this dbr) */
- };
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index 2aaf9093b612d6..0f30e551415945 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -1024,6 +1024,9 @@ int bnxt_re_destroy_qp(struct ib_qp *ib_qp, struct ib_udata *udata)
+ 	if (rc)
+ 		ibdev_err(&rdev->ibdev, "Failed to destroy HW QP");
  
- struct bnxt_re_flow {
-@@ -308,4 +308,5 @@ void bnxt_re_unlock_cqs(struct bnxt_re_qp *qp, unsigned long flags);
- struct bnxt_re_user_mmap_entry*
- bnxt_re_mmap_entry_insert(struct bnxt_re_ucontext *uctx, u64 mem_offset,
- 			  enum bnxt_re_mmap_flag mmap_flag, u64 *offset);
-+void bnxt_re_dbr_kref_release(struct kref *ref);
- #endif /* __BNXT_RE_IB_VERBS_H__ */
-diff --git a/drivers/infiniband/hw/bnxt_re/uapi.c b/drivers/infiniband/hw/bnxt_re/uapi.c
-index 61ddfa94c1aa1a..058f76f9b679b1 100644
---- a/drivers/infiniband/hw/bnxt_re/uapi.c
-+++ b/drivers/infiniband/hw/bnxt_re/uapi.c
-@@ -369,6 +369,7 @@ static int UVERBS_HANDLER(BNXT_RE_METHOD_DBR_ALLOC)(struct uverbs_attr_bundle *a
++	if (qp->dbr_obj)
++		kref_put(&qp->dbr_obj->usecnt, bnxt_re_dbr_kref_release);
++
+ 	if (rdma_is_kernel_res(&qp->ib_qp.res)) {
+ 		flags = bnxt_re_lock_cqs(qp);
+ 		bnxt_qplib_clean_qp(&qp->qplib_qp);
+@@ -1191,7 +1194,8 @@ static int bnxt_re_get_psn_bytes(struct bnxt_re_dev *rdev,
+ static int bnxt_re_init_user_qp(struct bnxt_re_dev *rdev, struct bnxt_re_pd *pd,
+ 				struct bnxt_re_qp *qp, struct bnxt_re_ucontext *cntx,
+ 				struct bnxt_re_qp_req *ureq,
+-				bool fixed_que_attr)
++				bool fixed_que_attr,
++				struct bnxt_re_dbr_obj *dbr_obj)
+ {
+ 	struct bnxt_qplib_qp *qplib_qp;
+ 	struct ib_umem *umem;
+@@ -1234,8 +1238,11 @@ static int bnxt_re_init_user_qp(struct bnxt_re_dev *rdev, struct bnxt_re_pd *pd,
+ 		goto rqfail;
+ 
+ done:
++	if (dbr_obj)
++		qplib_qp->dpi = &dbr_obj->dpi;
++	else
++		qplib_qp->dpi = &cntx->dpi;
+ 	qplib_qp->qp_handle = ureq->qp_handle;
+-	qplib_qp->dpi = &cntx->dpi;
+ 	qplib_qp->is_user = true;
+ 	return 0;
+ 
+@@ -1689,7 +1696,8 @@ static void bnxt_re_qp_calculate_msn_psn_size(struct bnxt_re_qp *qp,
+ static int bnxt_re_init_qp_attr(struct bnxt_re_qp *qp, struct bnxt_re_pd *pd,
+ 				struct ib_qp_init_attr *init_attr,
+ 				struct bnxt_re_ucontext *uctx,
+-				struct bnxt_re_qp_req *ureq)
++				struct bnxt_re_qp_req *ureq,
++				struct bnxt_re_dbr_obj *dbr_obj)
+ {
+ 	struct bnxt_qplib_dev_attr *dev_attr;
+ 	struct bnxt_qplib_qp *qplqp;
+@@ -1755,7 +1763,8 @@ static int bnxt_re_init_qp_attr(struct bnxt_re_qp *qp, struct bnxt_re_pd *pd,
+ 		bnxt_re_adjust_gsi_sq_attr(qp, init_attr, uctx);
+ 
+ 	if (uctx) { /* This will update DPI and qp_handle */
+-		rc = bnxt_re_init_user_qp(rdev, pd, qp, uctx, ureq, fixed_que_attr);
++		rc = bnxt_re_init_user_qp(rdev, pd, qp, uctx, ureq, fixed_que_attr,
++					  dbr_obj);
+ 		if (rc)
+ 			return rc;
+ 	}
+@@ -1891,7 +1900,9 @@ static int bnxt_re_add_unique_gid(struct bnxt_re_dev *rdev)
+ int bnxt_re_create_qp(struct ib_qp *ib_qp, struct ib_qp_init_attr *qp_init_attr,
+ 		      struct ib_udata *udata)
+ {
++	struct bnxt_re_dbr_obj *dbr_obj = NULL;
+ 	struct bnxt_qplib_dev_attr *dev_attr;
++	struct uverbs_attr_bundle *attrs;
+ 	struct bnxt_re_ucontext *uctx;
+ 	struct bnxt_re_qp_req ureq;
+ 	struct bnxt_re_dev *rdev;
+@@ -1912,6 +1923,17 @@ int bnxt_re_create_qp(struct ib_qp *ib_qp, struct ib_qp_init_attr *qp_init_attr,
+ 		rc = ib_copy_validate_udata_in_cm(udata, ureq, qp_handle, 0);
+ 		if (rc)
+ 			return rc;
++
++		attrs = rdma_udata_to_uverbs_attr_bundle(udata);
++		if (uverbs_attr_is_valid(attrs,
++					 BNXT_RE_CREATE_QP_ATTR_DBR_HANDLE)) {
++			dbr_obj = uverbs_attr_get_obj(attrs,
++						      BNXT_RE_CREATE_QP_ATTR_DBR_HANDLE);
++			if (IS_ERR(dbr_obj))
++				return PTR_ERR(dbr_obj);
++			kref_get(&dbr_obj->usecnt);
++			qp->dbr_obj = dbr_obj;
++		}
  	}
  
- 	obj->rdev = rdev;
-+	kref_init(&obj->usecnt);
- 	uobj->object = obj;
- 	uverbs_finalize_uobj_create(attrs, BNXT_RE_ALLOC_DBR_HANDLE);
+ 	rc = bnxt_re_test_qp_limits(rdev, qp_init_attr, dev_attr);
+@@ -1921,7 +1943,8 @@ int bnxt_re_create_qp(struct ib_qp *ib_qp, struct ib_qp_init_attr *qp_init_attr,
+ 	}
  
-@@ -391,15 +392,24 @@ static int UVERBS_HANDLER(BNXT_RE_METHOD_DBR_ALLOC)(struct uverbs_attr_bundle *a
- 	return ret;
+ 	qp->rdev = rdev;
+-	rc = bnxt_re_init_qp_attr(qp, pd, qp_init_attr, uctx, &ureq);
++	rc = bnxt_re_init_qp_attr(qp, pd, qp_init_attr, uctx, &ureq,
++				  dbr_obj);
+ 	if (rc)
+ 		goto fail;
+ 
+@@ -1991,6 +2014,8 @@ int bnxt_re_create_qp(struct ib_qp *ib_qp, struct ib_qp_init_attr *qp_init_attr,
+ 	bnxt_qplib_free_qp_res(&rdev->qplib_res, &qp->qplib_qp);
+ 	bnxt_re_qp_free_umem(qp);
+ fail:
++	if (dbr_obj)
++		kref_put(&dbr_obj->usecnt, bnxt_re_dbr_kref_release);
+ 	return rc;
  }
  
-+void bnxt_re_dbr_kref_release(struct kref *ref)
-+{
-+	struct bnxt_re_dbr_obj *obj =
-+		container_of(ref, struct bnxt_re_dbr_obj, usecnt);
-+	struct bnxt_re_dev *rdev = obj->rdev;
-+
-+	rdma_user_mmap_entry_remove(&obj->entry->rdma_entry);
-+	bnxt_qplib_free_uc_dpi(&rdev->qplib_res, &obj->dpi);
-+	kfree(obj);
-+}
-+
- static int bnxt_re_dbr_cleanup(struct ib_uobject *uobject,
- 			       enum rdma_remove_reason why,
- 			       struct uverbs_attr_bundle *attrs)
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.h b/drivers/infiniband/hw/bnxt_re/ib_verbs.h
+index 13dac48ed453e8..cdc403bf9e5d64 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.h
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.h
+@@ -96,6 +96,7 @@ struct bnxt_re_qp {
+ 	struct bnxt_re_cq	*scq;
+ 	struct bnxt_re_cq	*rcq;
+ 	struct dentry		*dentry;
++	struct bnxt_re_dbr_obj *dbr_obj; /* doorbell region */
+ };
+ 
+ struct bnxt_re_cq {
+diff --git a/drivers/infiniband/hw/bnxt_re/uapi.c b/drivers/infiniband/hw/bnxt_re/uapi.c
+index 058f76f9b679b1..65539f6bacb6bd 100644
+--- a/drivers/infiniband/hw/bnxt_re/uapi.c
++++ b/drivers/infiniband/hw/bnxt_re/uapi.c
+@@ -409,6 +409,15 @@ static int bnxt_re_dbr_cleanup(struct ib_uobject *uobject,
  {
  	struct bnxt_re_dbr_obj *obj = uobject->object;
--	struct bnxt_re_dev *rdev = obj->rdev;
  
--	rdma_user_mmap_entry_remove(&obj->entry->rdma_entry);
--	bnxt_qplib_free_uc_dpi(&rdev->qplib_res, &obj->dpi);
-+	kref_put(&obj->usecnt, bnxt_re_dbr_kref_release);
++	/* If it is being destroyed explicitly while QPs still hold a
++	 * reference (> 1), reject it with EBUSY. If no QP references
++	 * or implicit teardown (process exit, driver removal), drop
++	 * the uobject reference unconditionally. The object gets freed
++	 * (bnxt_re_dbr_kref_release) when the usecnt goes to zero.
++	 */
++	if (why == RDMA_REMOVE_DESTROY && kref_read(&obj->usecnt) > 1)
++		return -EBUSY;
++
+ 	kref_put(&obj->usecnt, bnxt_re_dbr_kref_release);
  	return 0;
  }
+@@ -469,11 +478,26 @@ DECLARE_UVERBS_NAMED_METHOD(BNXT_RE_METHOD_GET_DEFAULT_DBR,
+ DECLARE_UVERBS_GLOBAL_METHODS(BNXT_RE_OBJECT_DEFAULT_DBR,
+ 			      &UVERBS_METHOD(BNXT_RE_METHOD_GET_DEFAULT_DBR));
  
++ADD_UVERBS_ATTRIBUTES_SIMPLE(
++	bnxt_re_qp_create,
++	UVERBS_OBJECT_QP,
++	UVERBS_METHOD_QP_CREATE,
++	UVERBS_ATTR_IDR(BNXT_RE_CREATE_QP_ATTR_DBR_HANDLE,
++			BNXT_RE_OBJECT_DBR,
++			UVERBS_ACCESS_READ,
++			UA_OPTIONAL));
++
++const struct uapi_definition bnxt_re_create_qp_defs[] = {
++	UAPI_DEF_CHAIN_OBJ_TREE(UVERBS_OBJECT_QP, &bnxt_re_qp_create),
++	{},
++};
++
+ const struct uapi_definition bnxt_re_uapi_defs[] = {
+ 	UAPI_DEF_CHAIN_OBJ_TREE_NAMED(BNXT_RE_OBJECT_ALLOC_PAGE),
+ 	UAPI_DEF_CHAIN_OBJ_TREE_NAMED(BNXT_RE_OBJECT_NOTIFY_DRV),
+ 	UAPI_DEF_CHAIN_OBJ_TREE_NAMED(BNXT_RE_OBJECT_GET_TOGGLE_MEM),
+ 	UAPI_DEF_CHAIN_OBJ_TREE_NAMED(BNXT_RE_OBJECT_DBR),
+ 	UAPI_DEF_CHAIN_OBJ_TREE_NAMED(BNXT_RE_OBJECT_DEFAULT_DBR),
++	UAPI_DEF_CHAIN(bnxt_re_create_qp_defs),
+ 	{}
+ };
+diff --git a/include/uapi/rdma/bnxt_re-abi.h b/include/uapi/rdma/bnxt_re-abi.h
+index db8400f2ce3bc5..4da8cda337dcbd 100644
+--- a/include/uapi/rdma/bnxt_re-abi.h
++++ b/include/uapi/rdma/bnxt_re-abi.h
+@@ -138,6 +138,10 @@ struct bnxt_re_qp_req {
+ 	__u32 sq_npsn;
+ };
+ 
++enum bnxt_re_create_qp_attrs {
++	BNXT_RE_CREATE_QP_ATTR_DBR_HANDLE = UVERBS_ID_DRIVER_NS_WITH_UHW,
++};
++
+ struct bnxt_re_qp_resp {
+ 	__u32 qpid;
+ 	__u32 rsvd;
 -- 
 2.53.0
 
