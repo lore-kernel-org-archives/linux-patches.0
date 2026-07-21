@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA78646C4DA;
-	Tue, 21 Jul 2026 17:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4225A326D44;
+	Tue, 21 Jul 2026 17:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655836; cv=none; b=bWWAIDoYx2Zh1lkqRYelpl7eweoZ0SPfBxK9bRKcQdhvOtFxGLxeRnLtmqEFQzlwT5LJPlZTzSFSElZRd+TdNlqoiWHQGqoKJWTC3GhosPmh0ULlnG4m4zz2wkghvuDeJ1TP7B6oWNASYE0dxq9HfTeuWoy1W5tOgKAG6xHm3sc=
+	t=1784655838; cv=none; b=rAkxs3slkv4i4tZ1ObPJII8xd/343jmeFmNsrh2PollmXTKeeGJdWkD9kUa0R65zjzQEwKc0k1NXIdmxeBnV3myKP0Os71hYG4TlkPy1vtXn/ZIzxtHE2MXkfcHbYH8FUi8Ie29jy8FBZiZxXqcuIF1M+g4JMf2dqRyuVugGyrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655836; c=relaxed/simple;
-	bh=hPdIoMEssMmZE3FjDF6CkkR5m3C2gmQrgNQ2nugADUs=;
+	s=arc-20240116; t=1784655838; c=relaxed/simple;
+	bh=bf9GBEuLrpLkUvuhYaD069wJaCmNQAGFLmZOpumC98o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dEo8iSLr5iCBnYRfW5el26C1LdUtIUoBqocyxuVO5SlVRvsRqvMctDwweJJkm/tHDQvcdVRm1d89dNVow/1wpD1ieexh/YurDQipaANsOxGDMpuxDcd7tD6dwM4b829Jet7FN4EM3GRVstoFZjNFPUvyk7iVhKFCsjqf1Sa37m8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=auBmlR+S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LQmLNbRhJppiZjB2wOUJhrhaU9GRQaBsnn7k3eMoD0l8twqVQmQE/IYBYLVwIwSACZrMyogJbXZbTiLHmCF9Xb51pBWGkI7SKtWEdXnXgM2RGVJg6uyqmYuLRVXVY4ckz1wrgX3JuituIWIxZGzMuadIfpEvajQYD8RU2AB8mQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z5XS8pZn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="auBmlR+S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102831F000E9;
-	Tue, 21 Jul 2026 17:43:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z5XS8pZn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A951D1F000E9;
+	Tue, 21 Jul 2026 17:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655834;
-	bh=vZ9h40sY2FSaYLRESjZWaEpK9cnTt778Q8GTeM2AC+U=;
+	s=korg; t=1784655837;
+	bh=CijTTOcSV524vR1Ueld1tu9FMkHuqK4z+VoxHPyIJRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=auBmlR+SAKYhJ2CLfU39QzF/fAhFdO5ivOfvvJOwYbRA0zWh73lxXduASX/100+pB
-	 7Tfi7yDftaAVcEzZT4ahH1R96AJ1zJ+i+nXW5iuqxgncCwQ9fq8bLHY1psbnr7byI1
-	 m1WXRoPuekIS9QIEfvEZSJ+pGcEPY7ICQc9Ug0Qg=
+	b=Z5XS8pZn40+YP6XG0GmtKF5E5AfrNPBU77nkzE//XFqHnbgCAiwuNNmoXG9LEkKDD
+	 VGHbC1YAClRN/ohgBEdu0xoyxoRNIdK4xFYjjFWCWHQEOV05KJe0EwPau6Qh8YIO0O
+	 Igo9Bj7RSh6lQMVLTaAZxZnLLOW4c95m3pm5tETM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Erik Kurzinger <ekurzinger@gmail.com>,
+	Lin He <helin52@huawei.com>,
+	Yongbang Shi <shiyongbang@huawei.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0160/1611] drm/syncobj: Fix memory leak in drm_syncobj_find_fence()
-Date: Tue, 21 Jul 2026 17:04:36 +0200
-Message-ID: <20260721152518.482887219@linuxfoundation.org>
+Subject: [PATCH 6.18 0143/1611] drm/hisilicon/hibmc: use clock to look up the PLL value
+Date: Tue, 21 Jul 2026 17:04:19 +0200
+Message-ID: <20260721152518.092576883@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,50 +52,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liviu Dudau <liviu.dudau@arm.com>
+From: Lin He <helin52@huawei.com>
 
-[ Upstream commit e5b93bd6fdb92aa5e4689715d7e8487d9ce66a38 ]
+[ Upstream commit 99ef3a4f1c1813cabd50bb3e8522e85e00838bb2 ]
 
-Commit 18226ba52159 ("drm/syncobj: reject invalid flags in
-drm_syncobj_find_fence") forgot to take into account the fact that
-drm_syncobj_find() takes a reference to syncobj and returns early
-without dropping the reference, leading to memory leaks.
+In the past, we use width and height to look up our PLL value.
+But actually the actual clock check is also necessnary. There are
+some resolutions that width and height same, but its clock different.
+Add the clock check when using pll_table to determine the PLL value.
 
-Fixes: 18226ba52159 ("drm/syncobj: reject invalid flags in drm_syncobj_find_fence")
-Reported by: Sam Spencer <sam.spencer@arm.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Acked-by: Erik Kurzinger <ekurzinger@gmail.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://lore.kernel.org/all/20260507144425.2488057-1-liviu.dudau@arm.com
+Fixes: da52605eea8f ("drm/hisilicon/hibmc: Add support for display engine")
+Signed-off-by: Lin He <helin52@huawei.com>
+Signed-off-by: Yongbang Shi <shiyongbang@huawei.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260509032302.2057227-5-shiyongbang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_syncobj.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ .../gpu/drm/hisilicon/hibmc/hibmc_drm_de.c    | 80 +++++++++++--------
+ 1 file changed, 45 insertions(+), 35 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_syncobj.c b/drivers/gpu/drm/drm_syncobj.c
-index 7eb2cdbc574a02..c0cb7d79672d84 100644
---- a/drivers/gpu/drm/drm_syncobj.c
-+++ b/drivers/gpu/drm/drm_syncobj.c
-@@ -442,13 +442,15 @@ int drm_syncobj_find_fence(struct drm_file *file_private,
- 	u64 timeout = nsecs_to_jiffies64(DRM_SYNCOBJ_WAIT_FOR_SUBMIT_TIMEOUT);
- 	int ret;
+diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
+index 89bed78f14666a..db7fce4e8cc344 100644
+--- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
++++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
+@@ -32,26 +32,43 @@ struct hibmc_display_panel_pll {
+ struct hibmc_dislay_pll_config {
+ 	u64 hdisplay;
+ 	u64 vdisplay;
++	int clock;
+ 	u32 pll1_config_value;
+ 	u32 pll2_config_value;
+ };
  
--	if (flags & ~DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT)
--		return -EINVAL;
--
- 	if (!syncobj)
- 		return -ENOENT;
+ static const struct hibmc_dislay_pll_config hibmc_pll_table[] = {
+-	{640, 480, CRT_PLL1_HS_25MHZ, CRT_PLL2_HS_25MHZ},
+-	{800, 600, CRT_PLL1_HS_40MHZ, CRT_PLL2_HS_40MHZ},
+-	{1024, 768, CRT_PLL1_HS_65MHZ, CRT_PLL2_HS_65MHZ},
+-	{1152, 864, CRT_PLL1_HS_80MHZ_1152, CRT_PLL2_HS_80MHZ},
+-	{1280, 768, CRT_PLL1_HS_80MHZ, CRT_PLL2_HS_80MHZ},
+-	{1280, 720, CRT_PLL1_HS_74MHZ, CRT_PLL2_HS_74MHZ},
+-	{1280, 960, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
+-	{1280, 1024, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
+-	{1440, 900, CRT_PLL1_HS_106MHZ, CRT_PLL2_HS_106MHZ},
+-	{1600, 900, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
+-	{1600, 1200, CRT_PLL1_HS_162MHZ, CRT_PLL2_HS_162MHZ},
+-	{1920, 1080, CRT_PLL1_HS_148MHZ, CRT_PLL2_HS_148MHZ},
+-	{1920, 1200, CRT_PLL1_HS_193MHZ, CRT_PLL2_HS_193MHZ},
++	{640, 480, 25000, CRT_PLL1_HS_25MHZ, CRT_PLL2_HS_25MHZ},
++	{800, 600, 40000, CRT_PLL1_HS_40MHZ, CRT_PLL2_HS_40MHZ},
++	{1024, 768, 65000, CRT_PLL1_HS_65MHZ, CRT_PLL2_HS_65MHZ},
++	{1152, 864, 78750, CRT_PLL1_HS_80MHZ_1152, CRT_PLL2_HS_80MHZ},
++	{1280, 768, 80000, CRT_PLL1_HS_80MHZ, CRT_PLL2_HS_80MHZ},
++	{1280, 720, 74375, CRT_PLL1_HS_74MHZ, CRT_PLL2_HS_74MHZ},
++	{1280, 960, 108000, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
++	{1280, 1024, 108000, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
++	{1440, 900, 105952, CRT_PLL1_HS_106MHZ, CRT_PLL2_HS_106MHZ},
++	{1600, 900, 108000, CRT_PLL1_HS_108MHZ, CRT_PLL2_HS_108MHZ},
++	{1600, 1200, 162500, CRT_PLL1_HS_162MHZ, CRT_PLL2_HS_162MHZ},
++	{1920, 1080, 148750, CRT_PLL1_HS_148MHZ, CRT_PLL2_HS_148MHZ},
++	{1920, 1200, 193750, CRT_PLL1_HS_193MHZ, CRT_PLL2_HS_193MHZ},
+ };
  
--	/* Waiting for userspace with locks help is illegal cause that can
-+	if (flags & ~DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT) {
-+		ret = -EINVAL;
-+		goto out;
++static int hibmc_get_best_clock_idx(const struct drm_display_mode *mode)
++{
++	int i, diff;
++
++	for (i = 0; i < ARRAY_SIZE(hibmc_pll_table); i++) {
++		if (hibmc_pll_table[i].hdisplay == mode->hdisplay &&
++		    hibmc_pll_table[i].vdisplay == mode->vdisplay) {
++			diff = abs(mode->clock - hibmc_pll_table[i].clock);
++			if (diff < mode->clock / 100) /* tolerance 1/100 */
++				return i;
++		}
 +	}
 +
-+	/* Waiting for userspace with locks held is illegal cause that can
- 	 * trivial deadlock with page faults for example. Make lockdep complain
- 	 * about it early on.
- 	 */
++	return -MODE_CLOCK_RANGE;
++}
++
+ static int hibmc_plane_atomic_check(struct drm_plane *plane,
+ 				    struct drm_atomic_state *state)
+ {
+@@ -214,19 +231,15 @@ static enum drm_mode_status
+ hibmc_crtc_mode_valid(struct drm_crtc *crtc,
+ 		      const struct drm_display_mode *mode)
+ {
+-	size_t i = 0;
+ 	int vrefresh = drm_mode_vrefresh(mode);
+ 
+ 	if (vrefresh < 59 || vrefresh > 61)
+ 		return MODE_NOCLOCK;
+ 
+-	for (i = 0; i < ARRAY_SIZE(hibmc_pll_table); i++) {
+-		if (hibmc_pll_table[i].hdisplay == mode->hdisplay &&
+-		    hibmc_pll_table[i].vdisplay == mode->vdisplay)
+-			return MODE_OK;
+-	}
++	if (hibmc_get_best_clock_idx(mode) >= 0)
++		return MODE_OK;
+ 
+-	return MODE_BAD;
++	return MODE_CLOCK_RANGE;
+ }
+ 
+ static u32 format_pll_reg(void)
+@@ -281,23 +294,20 @@ static void set_vclock_hisilicon(struct drm_device *dev, u64 pll)
+ 	writel(val, priv->mmio + CRT_PLL1_HS);
+ }
+ 
+-static void get_pll_config(u64 x, u64 y, u32 *pll1, u32 *pll2)
++static void get_pll_config(struct drm_display_mode *mode, u32 *pll1, u32 *pll2)
+ {
+-	size_t i;
+-	size_t count = ARRAY_SIZE(hibmc_pll_table);
+-
+-	for (i = 0; i < count; i++) {
+-		if (hibmc_pll_table[i].hdisplay == x &&
+-		    hibmc_pll_table[i].vdisplay == y) {
+-			*pll1 = hibmc_pll_table[i].pll1_config_value;
+-			*pll2 = hibmc_pll_table[i].pll2_config_value;
+-			return;
+-		}
++	int idx;
++
++	idx = hibmc_get_best_clock_idx(mode);
++	if (idx < 0) {
++		/* if found none, we use default value */
++		*pll1 = CRT_PLL1_HS_25MHZ;
++		*pll2 = CRT_PLL2_HS_25MHZ;
++		return;
+ 	}
+ 
+-	/* if found none, we use default value */
+-	*pll1 = CRT_PLL1_HS_25MHZ;
+-	*pll2 = CRT_PLL2_HS_25MHZ;
++	*pll1 = hibmc_pll_table[idx].pll1_config_value;
++	*pll2 = hibmc_pll_table[idx].pll2_config_value;
+ }
+ 
+ /*
+@@ -319,7 +329,7 @@ static u32 display_ctrl_adjust(struct drm_device *dev,
+ 	x = mode->hdisplay;
+ 	y = mode->vdisplay;
+ 
+-	get_pll_config(x, y, &pll1, &pll2);
++	get_pll_config(mode, &pll1, &pll2);
+ 	writel(pll2, priv->mmio + CRT_PLL2_HS);
+ 	set_vclock_hisilicon(dev, pll1);
+ 
 -- 
 2.53.0
 
