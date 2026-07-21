@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A9C3EEAC7;
-	Tue, 21 Jul 2026 19:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC5046DFED;
+	Tue, 21 Jul 2026 19:13:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661202; cv=none; b=SLSKVvXl5jLVTTnsucJ56ZoGFlKZV0VLovoHstTv2eCuwTAxRx4u5yStoagLpyf4NBKiYQcH9fbzLw9g3tZ/CiEQqgE0zIhZtlbZhnn7kMLgEcIeZVNYnoL2CUP63rYj86OjWAnKFrfOvLhPRYxSd6R/9iBb+3R3HjyxYczuDBU=
+	t=1784661204; cv=none; b=LC0ERcvC1vSkt56t20MhT30xSISMpW2fC59FoXEtlUQGQclRQsbpJ9CYKKUZJHZpubTOlDHmCLSQe++P8mnC0k3VcmWagMevbboySW5Ae/lI2Q7SXK6ycCrbdvGrFxPEuxlGKele0tS6q/8zdb0TeepIuRPMtgATeChKCWquxDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661202; c=relaxed/simple;
-	bh=iV9zAQYG53R3X5UajP/mlkE0Oxpq9DhUw1jLqb9mQhM=;
+	s=arc-20240116; t=1784661204; c=relaxed/simple;
+	bh=FUTD2zChEBCTsctqviTHMdTlQ30S2wy2uesYX7+Wmv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hXQgTYOSAmqCjo54aH+w7UZsiQDSaA0uhVdy/1o+nnCp3YRBgqcd0mZz8d8j0uSVANxo8l3E8CxFJCpPN+EvLbnygPxYE7JGVfyXLhfr1UB7ryOeqvy3EA38oL+OJI3s8FgnSSbUWjmMJEY/n7y9aQWft9kGngI4/S1Ibd6EqLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DelJ1//b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p8hFpQZ/X5nzzKpN9v+8Gcn3J44gJXXz3tuS46Zeaa2iHrQQ0UQ2te3ccaaPL+06pqGGBGEsewwFdtLHNMbk3Pl90Pgbda0OI6XiQM4x4E9k6l3clxC1KlBP7wCeEchJJDMM4EknXxQhtm79dRmga5NmRzsWYD0ZpG7ss1f4Yog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jP1YfDb1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DelJ1//b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9F01F000E9;
-	Tue, 21 Jul 2026 19:13:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jP1YfDb1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120851F000E9;
+	Tue, 21 Jul 2026 19:13:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661200;
-	bh=xxmSRyoCfN5qMRFAZWqNd6RSxfSrlNorzZ57a0fKCfc=;
+	s=korg; t=1784661203;
+	bh=15dgFMvyCmEtwvzcFOUCRssw3h36Zw6g65/UgR/wBhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DelJ1//buxnpsXkdzHk1asL1abNtGBgv8xZVn4rCm6qGcLDPkbU86A4c3Hnu598XG
-	 2/q9S3ls/SypDE/MPKXIYKwC1kht3ZbGcd/W0apKJxi2VUuCcmG0uE7GrDeWVPrNKm
-	 pehCUcx2BD6qUN9wYNyvQ2PdZ7RkF1Gn7c8mzt1k=
+	b=jP1YfDb1nM+/viv1f5dkc8kBq/Qdpq/NQxOF1d7qb/WWidxF8VKFMh9WtBACFtPuQ
+	 HQe+DIFLHTZc9r9BGx52eUyYtk4H0xsxqXG6Dvi1gaNV6aXqShC/TtIJNfKpMMCuK8
+	 NRawKEryC3BL0OxYO/GNHUzFGC5K+FfCy80kAO1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	lihuisong@huawei.com,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Huiwen He <hehuiwen@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1269/2077] ACPI: processor_idle: Mark LPI enter functions as __cpuidle
-Date: Tue, 21 Jul 2026 17:15:42 +0200
-Message-ID: <20260721152622.749964955@linuxfoundation.org>
+Subject: [PATCH 7.1 1270/2077] smb/client: preserve errors from smb2_set_sparse()
+Date: Tue, 21 Jul 2026 17:15:43 +0200
+Message-ID: <20260721152622.771699426@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,75 +52,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit 956ca5d72c76504824c8eb601879da9476973e15 ]
+[ Upstream commit 2a4b3d2db5c6fcdba889baf7b2ae5661b0beac89 ]
 
-When function tracing or Kprobes is enabled, entering an ACPI Low
-Power Idle (LPI) state triggers the following RCU splat:
+smb2_set_sparse() converts every FSCTL_SET_SPARSE failure to false and
+marks sparse support as broken for the share. Callers therefore report
+EOPNOTSUPP even for errors such as ENOSPC or EACCES, and later sparse
+operations remain disabled until the share is unmounted.
 
-  RCU not on for: acpi_idle_lpi_enter+0x4/0xd8
-  WARNING: CPU: 8 PID: 0 at include/linux/trace_recursion.h:162 function_trace_call+0x1e8/0x228
+Return the SMB2 ioctl error directly. Set broken_sparse_sup only for
+EOPNOTSUPP, which indicates that the server does not support the request.
 
-The acpi_idle_lpi_enter() function is invoked within the cpuidle
-path after RCU has already been disabled for the current local CPU.
-Consequently, ftrace's function_trace_call() expects RCU to be
-actively watching before recording trace data, emitting a warning
-if it is not.
+Update smb3_punch_hole() to propagate the error returned by
+smb2_set_sparse().
 
-Fix this by annotating acpi_idle_lpi_enter(), the generic __weak
-stub, and the RISC-V implementation of acpi_processor_ffh_lpi_enter()
-with __cpuidle. This moves these functions into the '.cpuidle.text'
-section, implicitly disabling ftrace instrumentation (notrace) along
-this sensitive path and preventing trace-induced RCU warnings during
-idle entry.
-
-Fixes: a36a7fecfe60 ("ACPI / processor_idle: Add support for Low Power Idle(LPI) states")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Acked-by: lihuisong@huawei.com
-Link: https://patch.msgid.link/20260616072617.2272-1-lirongqing@baidu.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 3d1a3745d8ca ("Add sparse file support to SMB2/SMB3 mounts")
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_idle.c | 4 ++--
- drivers/acpi/riscv/cpuidle.c  | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ fs/smb/client/smb2ops.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
-index 390ab5f1d31378..4482cf28f56aee 100644
---- a/drivers/acpi/processor_idle.c
-+++ b/drivers/acpi/processor_idle.c
-@@ -1143,7 +1143,7 @@ static int acpi_processor_get_lpi_info(struct acpi_processor *pr)
- 	return 0;
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index ce34b3fbfca3dc..10664380f351aa 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -2117,8 +2117,9 @@ smb2_sync_write(const unsigned int xid, struct cifs_fid *pfid,
  }
  
--int __weak acpi_processor_ffh_lpi_enter(struct acpi_lpi_state *lpi)
-+int __weak __cpuidle acpi_processor_ffh_lpi_enter(struct acpi_lpi_state *lpi)
+ /* Set or clear the SPARSE_FILE attribute based on value passed in setsparse */
+-static bool smb2_set_sparse(const unsigned int xid, struct cifs_tcon *tcon,
+-		struct cifsFileInfo *cfile, struct inode *inode, __u8 setsparse)
++static int smb2_set_sparse(const unsigned int xid, struct cifs_tcon *tcon,
++			   struct cifsFileInfo *cfile, struct inode *inode,
++			   __u8 setsparse)
  {
- 	return -ENODEV;
- }
-@@ -1156,7 +1156,7 @@ int __weak acpi_processor_ffh_lpi_enter(struct acpi_lpi_state *lpi)
-  *
-  * Return: 0 for success or negative value for error
-  */
--static int acpi_idle_lpi_enter(struct cpuidle_device *dev,
-+static int __cpuidle acpi_idle_lpi_enter(struct cpuidle_device *dev,
- 			       struct cpuidle_driver *drv, int index)
- {
- 	struct acpi_processor *pr;
-diff --git a/drivers/acpi/riscv/cpuidle.c b/drivers/acpi/riscv/cpuidle.c
-index 624f9bbdb58c47..c76dbabff702e6 100644
---- a/drivers/acpi/riscv/cpuidle.c
-+++ b/drivers/acpi/riscv/cpuidle.c
-@@ -66,7 +66,7 @@ int acpi_processor_ffh_lpi_probe(unsigned int cpu)
- 	return acpi_cpu_init_idle(cpu);
+ 	struct cifsInodeInfo *cifsi;
+ 	int rc;
+@@ -2127,31 +2128,31 @@ static bool smb2_set_sparse(const unsigned int xid, struct cifs_tcon *tcon,
+ 
+ 	/* if file already sparse don't bother setting sparse again */
+ 	if ((cifsi->cifsAttrs & FILE_ATTRIBUTE_SPARSE_FILE) && setsparse)
+-		return true; /* already sparse */
++		return 0; /* already sparse */
+ 
+ 	if (!(cifsi->cifsAttrs & FILE_ATTRIBUTE_SPARSE_FILE) && !setsparse)
+-		return true; /* already not sparse */
++		return 0; /* already not sparse */
+ 
+ 	/*
+ 	 * Can't check for sparse support on share the usual way via the
+ 	 * FS attribute info (FILE_SUPPORTS_SPARSE_FILES) on the share
+ 	 * since Samba server doesn't set the flag on the share, yet
+ 	 * supports the set sparse FSCTL and returns sparse correctly
+-	 * in the file attributes. If we fail setting sparse though we
+-	 * mark that server does not support sparse files for this share
+-	 * to avoid repeatedly sending the unsupported fsctl to server
+-	 * if the file is repeatedly extended.
++	 * in the file attributes. If the server returns EOPNOTSUPP, mark
++	 * that sparse files are not supported on this share to avoid
++	 * repeatedly sending the unsupported FSCTL.
+ 	 */
+ 	if (tcon->broken_sparse_sup)
+-		return false;
++		return -EOPNOTSUPP;
+ 
+ 	rc = SMB2_ioctl(xid, tcon, cfile->fid.persistent_fid,
+ 			cfile->fid.volatile_fid, FSCTL_SET_SPARSE,
+ 			&setsparse, 1, CIFSMaxBufSize, NULL, NULL);
+ 	if (rc) {
+-		tcon->broken_sparse_sup = true;
++		if (rc == -EOPNOTSUPP)
++			tcon->broken_sparse_sup = true;
+ 		cifs_dbg(FYI, "set sparse rc = %d\n", rc);
+-		return false;
++		return rc;
+ 	}
+ 
+ 	if (setsparse)
+@@ -2159,7 +2160,7 @@ static bool smb2_set_sparse(const unsigned int xid, struct cifs_tcon *tcon,
+ 	else
+ 		cifsi->cifsAttrs &= (~FILE_ATTRIBUTE_SPARSE_FILE);
+ 
+-	return true;
++	return 0;
  }
  
--int acpi_processor_ffh_lpi_enter(struct acpi_lpi_state *lpi)
-+int __cpuidle acpi_processor_ffh_lpi_enter(struct acpi_lpi_state *lpi)
- {
- 	u32 state = lpi->address;
+ static int
+@@ -3483,10 +3484,9 @@ static long smb3_punch_hole(struct file *file, struct cifs_tcon *tcon,
  
+ 	/* Need to make file sparse, if not already, before freeing range. */
+ 	/* Consider adding equivalent for compressed since it could also work */
+-	if (!smb2_set_sparse(xid, tcon, cfile, inode, set_sparse)) {
+-		rc = -EOPNOTSUPP;
++	rc = smb2_set_sparse(xid, tcon, cfile, inode, set_sparse);
++	if (rc)
+ 		goto out;
+-	}
+ 
+ 	filemap_invalidate_lock(inode->i_mapping);
+ 	/*
 -- 
 2.53.0
 
