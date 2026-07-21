@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C19147127E;
-	Tue, 21 Jul 2026 21:08:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5014582C8;
+	Tue, 21 Jul 2026 21:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668134; cv=none; b=jlFyheEXyPFHGVgm5cZYU8Pp1DRdyYiBzr3+dzOQye98nISK0KCIE9y13EGwkxvDJDvcUQHZWexoeRlgKmYxeGQdv91x9Gh9db5X+AMmjjhvRPdYYDX5YYNnRrtapxJqSQol7Cg3j8MOtzBvO4nX4G1ZFlpqYAPFYxqKz87ttXA=
+	t=1784668135; cv=none; b=nUid+m+wh89FBbj/hTCGXyPH5jeaXaJS6AJ8Oj2YGGuEq2FAh24tvRblFyuvcjf5BEszjh5y2AyedwC4xxCEzOSE4sEKNgbjhLOSJGAkpjUnwVR6+kGeK8lqu6jPrFdtAQW6nt+JgL8/dNjkAN1MHhabU8EEhLO6yZw0VEwtYrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668134; c=relaxed/simple;
-	bh=NnYp6nNvyveGYkkloj+dGTwhLlsXKdQF2BHQG0vFlS4=;
+	s=arc-20240116; t=1784668135; c=relaxed/simple;
+	bh=hy1N44p2JZUKOp22AT79d/BkaZWjf+hl5lB5dgKdWfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WdYrWzm+FUwUX8xF8HvgQzB3jNHfxHO+BqD7yxTMo7CvqPw72lkTneu2vqD+rQkau3blzajn/GL3PNtWUVwXMZe4hZyn4i8ampakv/D1ZJyjmFxsZN3ZokK4E+3dNTA8zqrkXqhatFMiRpYiSlYI+6RjvC5gkbDUuOB6qDVSE4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIA5VXne; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mfYBbmbiR17X0FZ801VEerPtExYlZf6VA5YfzwmNF42mcPGrhW0Cx1W7kxS/j92dn0O8uFTnatQOw1hbHHA3VP2pCETd6qMEHdtkp7dYKz01pj/qngw0hSxzZOJm5ra1dAsQfepreSNmLVjZolotKksVrAc8uX5W1VvkCQmj5l0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Du4jCnYN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIA5VXne"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAE01F000E9;
-	Tue, 21 Jul 2026 21:08:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Du4jCnYN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E531C1F00A3A;
+	Tue, 21 Jul 2026 21:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668129;
-	bh=+1VkxW1eixH3ZsZp+1KzxxuKNcsmrVL/7Rzr1dvR35Y=;
+	s=korg; t=1784668134;
+	bh=BxtUKMxdcdpHGuiTrl2EXEID2RpXcMyPn0OjEjbItOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dIA5VXne8thm1dDSaH3UWL6Dcz2hy1vJIVPl/bOg3Q9ufmFi3Kd2k1Me/L5plmkFe
-	 ws3s0nfC8lIagbvh9+hTFtimT+vZPySMnCBck7foV6YO6jXSBh8CzKQmrINzgVbRQq
-	 ZGbqBKkfqnIfSUZZFTBxVsU66wcHl/e/YnWW9kS8=
+	b=Du4jCnYNsSkiujsvjysTiGL56NJS0zhCcgiMbmBKaRVCT2CkQ7RV5K6xxiHD316Ht
+	 4OKuxa7AIzhXe6NMOBI/Ux7y9yJRDtCszFHCrOgKbmD7cb7afw8D9Li3OEz3frKMsX
+	 Iz3nRzKMBghIuM5cWzCYljqXxPqHUaNrdiBpdsTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Griffin Kroah-Hartman <griffin@kroah.com>
-Subject: [PATCH 6.1 0052/1067] usb: gadget: function: rndis: add length check to response query
-Date: Tue, 21 Jul 2026 17:10:53 +0200
-Message-ID: <20260721152425.728875527@linuxfoundation.org>
+	Stepan Ionichev <sozdayvek@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 6.1 0062/1067] iio: gyro: bmg160: wait full startup time after mode change at probe
+Date: Tue, 21 Jul 2026 17:11:03 +0200
+Message-ID: <20260721152425.955443674@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,60 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-commit 95f90eea070837f7c72207d5520f805bdefc3bc5 upstream.
+commit 088fcb9b567f8723074ad9eb1bf5cb46f8a0096b upstream.
 
-Add variable representations for BufLength and BufOffset in
-rndis_query_response(), and perform a length check on them.
+bmg160_chip_init() calls bmg160_set_mode(BMG160_MODE_NORMAL) and
+then waits only 500-1000 us. Per the BMG160 datasheet
+(BST-BMG160-DS000-07 Rev. 1.0, May 2013), the start-up and wake-up
+times (tsu, twusm) are 30 ms.
 
-This is identical to how rndis_set_response() handles these parameters.
+The same file already waits BMG160_MAX_STARTUP_TIME_MS (80 ms)
+in bmg160_runtime_resume() after the same set_mode(NORMAL)
+operation. The 500 us value at probe was likely a unit mix-up;
+the old comment said "500 ms" while the code used microseconds.
 
-Assisted-by: gkh_clanker_2000
-Cc: stable <stable@kernel.org>
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Link: https://patch.msgid.link/20260708-usb-gadget-rndis-v1-1-e77e026dcc6a@kroah.com
+Reuse the same constant via msleep() and add a code comment
+explaining the datasheet basis for the wait. Without this,
+register writes that follow the mode change can hit the chip
+before it is ready.
+
+Fixes: 22b46c45fb9b ("iio:gyro:bmg160 Gyro Sensor driver")
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/rndis.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/iio/gyro/bmg160_core.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/function/rndis.c
-+++ b/drivers/usb/gadget/function/rndis.c
-@@ -591,6 +591,7 @@ static int rndis_init_response(struct rn
- static int rndis_query_response(struct rndis_params *params,
- 				rndis_query_msg_type *buf)
- {
-+	u32 BufLength, BufOffset;
- 	rndis_query_cmplt_type *resp;
- 	rndis_resp_t *r;
+--- a/drivers/iio/gyro/bmg160_core.c
++++ b/drivers/iio/gyro/bmg160_core.c
+@@ -268,8 +268,14 @@ static int bmg160_chip_init(struct bmg16
+ 	if (ret < 0)
+ 		return ret;
  
-@@ -598,6 +599,13 @@ static int rndis_query_response(struct r
- 	if (!params->dev)
- 		return -ENOTSUPP;
+-	/* Wait upto 500 ms to be ready after changing mode */
+-	usleep_range(500, 1000);
++	/*
++	 * Wait for the chip to be ready after switching to normal mode.
++	 * The BMG160 datasheet (BST-BMG160-DS000-07 Rev. 1.0, May 2013)
++	 * specifies a start-up / wake-up time (tsu, twusm) of 30 ms; use
++	 * BMG160_MAX_STARTUP_TIME_MS (80 ms) as a safety margin, matching
++	 * what bmg160_runtime_resume() already does.
++	 */
++	msleep(BMG160_MAX_STARTUP_TIME_MS);
  
-+	BufLength = le32_to_cpu(buf->InformationBufferLength);
-+	BufOffset = le32_to_cpu(buf->InformationBufferOffset);
-+	if ((BufLength > RNDIS_MAX_TOTAL_SIZE) ||
-+	    (BufOffset > RNDIS_MAX_TOTAL_SIZE) ||
-+	    (BufOffset + 8 >= RNDIS_MAX_TOTAL_SIZE))
-+		return -EINVAL;
-+
- 	/*
- 	 * we need more memory:
- 	 * gen_ndis_query_resp expects enough space for
-@@ -614,10 +622,8 @@ static int rndis_query_response(struct r
- 	resp->RequestID = buf->RequestID; /* Still LE in msg buffer */
- 
- 	if (gen_ndis_query_resp(params, le32_to_cpu(buf->OID),
--			le32_to_cpu(buf->InformationBufferOffset)
--					+ 8 + (u8 *)buf,
--			le32_to_cpu(buf->InformationBufferLength),
--			r)) {
-+				BufOffset + 8 + (u8 *)buf,
-+				BufLength, r)) {
- 		/* OID not supported */
- 		resp->Status = cpu_to_le32(RNDIS_STATUS_NOT_SUPPORTED);
- 		resp->MessageLength = cpu_to_le32(sizeof *resp);
+ 	/* Set Bandwidth */
+ 	ret = bmg160_set_bw(data, BMG160_DEF_BW);
 
 
