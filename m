@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77289471254;
-	Tue, 21 Jul 2026 18:04:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD5B471257;
+	Tue, 21 Jul 2026 18:04:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657048; cv=none; b=AlMbTcOeE1F7i4JpoQak++eKuTdOOVjD3kf6ivhAsJ+vNUvWiKv5cllSj0ac8dkj8q/wzT5RakDMEO3NM8ttL6Pyc5UpvXVrFVD2mrF4dAM0ykl7rsrFdqrnsNDN1+ojRaLfwY69BCIvm+2O2setaCVbzRdKcMbRLOr4UOzIECA=
+	t=1784657051; cv=none; b=kmFKQqMsqavgOjzN+ZHQ9/VQjy1Dvq6uZi2MEgPTOzNTzErinJTOcUVNWLhsiMufsk/O2DsaUvR2UxwsM+czzs4l8qjIV63ZoC/iyuRPO6VPMxaiQJrgXb6j4IOUJztYxBpb5bLG8PaoSQDLSgVAJYDjxPOoeop37Upzhdghgzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657048; c=relaxed/simple;
-	bh=ge93vOn0UO3C8wja2Lb8wm4V0cHgoG3uHUQU0pGM28A=;
+	s=arc-20240116; t=1784657051; c=relaxed/simple;
+	bh=3ea2hj8mwfD/u0qdZDQjzYUH/kXNhUXYFGahfz8Dlds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W7x9D1sfK1VQ6F5R2rodR/Ms86R4FuoTqViPi2KABzvGVl+T3TIpM6BjCvL751I2PhM8fKdAx+lLVo4Ji7bcHNB1Q8lFU0na3J9UIz+Kk3x89iS693FNNMXZkNVGppxL+9YFMrhNUYXSrGNRLb0DPxEXKKhVcRBB1EThB4/UYbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPBBiFhe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gSy0+/NQrZ545ed3MwrAnWJNT14ijmrch8cRPse4SrQYXxBCUdmXK1zKU/gfKf1UdpLHyehFruN53q3iAUGTH40SpkJrGETQzKcY+wttY0Q4B8DB0KgTFrMur6bfTcVZ8p9Ipf95PIBRNbDr+kTsSzS73D0TxFWogrvDnpaBuTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFVba96C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPBBiFhe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8981F000E9;
-	Tue, 21 Jul 2026 18:04:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFVba96C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 865C61F000E9;
+	Tue, 21 Jul 2026 18:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657047;
-	bh=9yefy2hewo8nJCMt8E1QSL/LoS4jxhPVagbdjD+/KNY=;
+	s=korg; t=1784657050;
+	bh=zRBr5IDiLlmQakChZvOVn9voyd8VAQnUFJjQEyXLYUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WPBBiFhewNdlYs7ZbrbfC1oYbDHv7kPJuusONz1v322B6ppfWqEeI7KV4k3kL403X
-	 LjmHvnF94JoD8qirhS7bQD55fuRfO4raBI2qjTNupeQbGIZeOHLTXxitSZw2D1efSS
-	 IDXxDpa4rwlxZ5q2AVGfZH6OXsE34lNESorRj4Ww=
+	b=VFVba96CW8xYS7B0i2WhmJjgnAyexi57sYnQG8WeE7g5teWad0DYxk0oD0gJgxqS2
+	 mO8+2uRWb2qPSjDrVo4A4aTIK87FY+obmbcr/+lYu7ZtY+QFYktsjMAfizbWdWY8kJ
+	 CyZufOkoyQN72n5y2O6T81hTBkUf7aTbMJr85QJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0618/1611] PCI: qcom: Disable ASPM L0s for SA8775P
-Date: Tue, 21 Jul 2026 17:12:14 +0200
-Message-ID: <20260721152529.286706572@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Wang Nan <wangnan0@huawei.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	sashiko-bot@kernel.org
+Subject: [PATCH 6.18 0619/1611] perf header: Sanity check HEADER_EVENT_DESC attr.size before swap
+Date: Tue, 21 Jul 2026 17:12:15 +0200
+Message-ID: <20260721152529.309919501@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -45,57 +49,142 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 29f692985819f4089f02a86e151a72f6d4cdd90d ]
+[ Upstream commit 944f65c8b8231d26d4db6be67bcb641142603cb4 ]
 
-Due to a hardware issue, L0s is not properly supported by the PCIe
-controller on the SA8775p SoC. If enabled, the L0s to L0 transition
-triggers below correctable AER errors and may also affect link stability:
+read_event_desc() reads nre (event count), sz (attr size), and nr
+(IDs per event) from the file and uses them to control allocations
+and loops without validating them against the section size.
 
-  pcieport 0000:00:00.0: PME: Signaling with IRQ 332
-  pcieport 0000:00:00.0: AER: enabled with IRQ 332
-  pcieport 0000:00:00.0: AER: Correctable error message received from 0000:01:00.0
-  pci 0000:01:00.0: PCIe Bus Error: severity=Correctable, type=Data Link Layer, (Transmitter ID)
-  pci 0000:01:00.0:   device [17cb:1103] error status/mask=00001000/0000e000
-  pci 0000:01:00.0:    [12] Timeout
-  pcieport 0000:00:00.0: AER: Multiple Correctable error message received from 0000:01:00.0
-  pcieport 0000:00:00.0: PCIe Bus Error: severity=Correctable, type=Data Link Layer, (Transmitter ID)
-  pcieport 0000:00:00.0:   device [17cb:0115] error status/mask=00001000/0000e000
-  pcieport 0000:00:00.0:    [12] Timeout
+A crafted perf.data could trigger large allocations or many loop
+iterations before __do_read() eventually rejects the reads.
 
-Hence, disable L0s for the SA8775p SoC to allow it to properly function
-by sacrificing a little bit of power saving.
+Add bounds checks in read_event_desc():
+- Reject sz smaller than PERF_ATTR_SIZE_VER0.
+- Require at least one event (nre > 0).
+- Check that nre events fit in the remaining section, using the
+  minimum per-event footprint of sz + sizeof(u32).
+- Pre-swap attr->size to native byte order, then reject values
+  below PERF_ATTR_SIZE_VER0 or above sz before calling
+  perf_event__attr_swap() to prevent heap out-of-bounds access.
+- Handle ABI0 (attr.size == 0): substitute PERF_ATTR_SIZE_VER0,
+  and on native-endian files write the value back so
+  free_event_desc() does not treat the zero as its end-of-array
+  sentinel (it iterates while attr.size != 0).  The swap path
+  skips the write-back — perf_event__attr_swap() has its own
+  ABI0 fallback that sets VER0 after swapping.
+- Check that nr IDs fit in the remaining section before allocating.
 
-Fixes: 58d0d3e032b3 ("PCI: qcom-ep: Add support for SA8775P SOC")
-Assisted-by: Claude:claude-4-6-sonnet
-Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
-[mani: commit log, corrected fixes tag]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260419093934.1223027-1-shengchao.guo@oss.qualcomm.com
+Fixes: b30b61729246 ("perf tools: Fix a problem when opening old perf.data with different byte order")
+Reported-by: sashiko-bot@kernel.org # Running on a local machine
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Wang Nan <wangnan0@huawei.com>
+Assisted-by: Claude:claude-opus-4.6-1m
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/util/header.c | 54 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index a70911a9567535..fbdb5a92647851 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1438,6 +1438,7 @@ static const struct qcom_pcie_cfg cfg_1_9_0 = {
- static const struct qcom_pcie_cfg cfg_1_34_0 = {
- 	.ops = &ops_1_9_0,
- 	.override_no_snoop = true,
-+	.no_l0s = true,
- };
+diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
+index 4e12be579140aa..131fdbe9cefda5 100644
+--- a/tools/perf/util/header.c
++++ b/tools/perf/util/header.c
+@@ -1919,9 +1919,28 @@ static struct evsel *read_event_desc(struct feat_fd *ff)
+ 	if (do_read_u32(ff, &nre))
+ 		goto error;
  
- static const struct qcom_pcie_cfg cfg_2_1_0 = {
++	/* Size of each of the nre attributes. */
+ 	if (do_read_u32(ff, &sz))
+ 		goto error;
+ 
++	/*
++	 * Require at least one event with an attr no smaller than the
++	 * first published struct, and reject sz values where
++	 * sz + sizeof(u32) would overflow size_t (possible on 32-bit)
++	 * or nre == UINT32_MAX where nre + 1 wraps to 0 in the calloc.
++	 *
++	 * The minimum section footprint per event is sz bytes for the
++	 * attr plus a u32 for the id count, check that nre events fit.
++	 */
++	if (!nre || sz < PERF_ATTR_SIZE_VER0 ||
++	    sz > ff->size || (size_t)sz > SIZE_MAX - sizeof(u32) ||
++	    nre == UINT32_MAX ||
++	    nre > (ff->size - ff->offset) / (sz + sizeof(u32))) {
++		pr_err("Invalid HEADER_EVENT_DESC: nre=%u sz=%u (min %d)\n",
++		       nre, sz, PERF_ATTR_SIZE_VER0);
++		goto error;
++	}
++
+ 	/* buffer to hold on file attr struct */
+ 	buf = malloc(sz);
+ 	if (!buf)
+@@ -1937,6 +1956,9 @@ static struct evsel *read_event_desc(struct feat_fd *ff)
+ 		msz = sz;
+ 
+ 	for (i = 0, evsel = events; i < nre; evsel++, i++) {
++		struct perf_event_attr *attr = buf;
++		u32 attr_size;
++
+ 		evsel->core.idx = i;
+ 
+ 		/*
+@@ -1946,6 +1968,32 @@ static struct evsel *read_event_desc(struct feat_fd *ff)
+ 		if (__do_read(ff, buf, sz))
+ 			goto error;
+ 
++		/* Reject before attr_swap to prevent OOB via bswap_safe() */
++		attr_size = ff->ph->needs_swap ? bswap_32(attr->size) : attr->size;
++		/* ABI0: size == 0 means the producer didn't set it */
++		if (!attr_size) {
++			attr_size = PERF_ATTR_SIZE_VER0;
++			/*
++			 * Write back so free_event_desc() doesn't
++			 * treat this event as the end-of-array sentinel
++			 * (it iterates while attr.size != 0).
++			 *
++			 * Only for native — the swap path must NOT
++			 * write native-endian VER0 here because
++			 * perf_event__attr_swap() would re-swap it
++			 * to 0x40000000, defeating bswap_safe() bounds.
++			 * perf_event__attr_swap() has its own ABI0
++			 * fallback that sets VER0 after swapping.
++			 */
++			if (!ff->ph->needs_swap)
++				attr->size = attr_size;
++		}
++		if (attr_size < PERF_ATTR_SIZE_VER0 || attr_size > sz) {
++			pr_err("Event %d attr.size (%u) invalid (min: %d, max: %u)\n",
++			       i, attr_size, PERF_ATTR_SIZE_VER0, sz);
++			goto error;
++		}
++
+ 		if (ff->ph->needs_swap)
+ 			perf_event__attr_swap(buf);
+ 
+@@ -1967,6 +2015,12 @@ static struct evsel *read_event_desc(struct feat_fd *ff)
+ 		if (!nr)
+ 			continue;
+ 
++		/* Prevent oversized allocation from crafted nr */
++		if (nr > (ff->size - ff->offset) / sizeof(*id)) {
++			pr_err("Event %d: id count %u exceeds remaining section\n", i, nr);
++			goto error;
++		}
++
+ 		id = calloc(nr, sizeof(*id));
+ 		if (!id)
+ 			goto error;
 -- 
 2.53.0
 
