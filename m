@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9934189DA;
-	Tue, 21 Jul 2026 21:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCDDB3C1081;
+	Tue, 21 Jul 2026 21:53:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670795; cv=none; b=K8R4Qk4cuVp5y+m4AHzwW+CA7QaIJQqycHTJ2tr7sb1QOlAh/w23403gFSQEXk43mHUax5pcpUeIbTjzMiGCd4m8s4udy2O0aXvoHCOAm/ktlKXIToHb+q8BuaIdFYFx5dNZ4Eb5HibtqCcqJ/GJRpP2N4mfOJRy3+qfw8da/D0=
+	t=1784670797; cv=none; b=DcexnMcLFsKOC2u0avsC0dZ60ncKJCNK8Avz8Smwcqa1ce8MH25fYo5Db1EzP1scl/U33AT7N5zv2H4a1SbJOaxqLhNwCB6yUniUeIfC/RLklKszCkh+8icc+M9BWEnm/KEux0yBmZ8qxNsI7xbtOs+bMuUmoX0d4y2CKqFNDXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670795; c=relaxed/simple;
-	bh=60jWjUMTk/Q5ugfp6oMBpUPJJyRKK9yMCCXzA00+kBM=;
+	s=arc-20240116; t=1784670797; c=relaxed/simple;
+	bh=8sLYXyVxXrQEaKXV6UYbZy18I6CvtFOpyZ44AB+fGIA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jQsm7mlxnuv2HYnOoApaC+GUlNex5xGFcr88RLSGvfNdV0JWWqdANLE8N+Cmt90U/Ab+Ms00fzHvEI9boaMwRZU5ZFNt3ocumJGrLSMP58eo4OHUkK/F71QF0hXon5bhcZVqEc5BtMyZaJZW8taAlN0F/ewNswc6NASiEkgGOeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Puav7yHe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dfcWxOk7ir/R8umWklupQwrXfvS+vx7rU6vb8J7LmaO3g1podYUmGFHbKoWvCNks+FJtAA+j37HgeCp8ALqxhSsFpXbYcYBSXgoX+xxZ3B3AMRHPBriumpjRAsCDbTMXel6EZIfY1dHNk5l/BtoS72LN/5L+BDWFcSTnxn4U1hY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=seB0SFfF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Puav7yHe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45311F000E9;
-	Tue, 21 Jul 2026 21:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="seB0SFfF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494D41F000E9;
+	Tue, 21 Jul 2026 21:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670794;
-	bh=NY5QDWU7ehJBgsYPAAhCfxaD1Kybhe4m1SvsR1/GyZo=;
+	s=korg; t=1784670796;
+	bh=K2SlSThwlLPz7e9uAG5zYYV1fKR9m6c7iGygYJY4Zec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Puav7yHeSrgQ228T1eNr9oAj3fg71MwsFPIaODl4yfIpL+6RFo5vHq/XPi0fDjugY
-	 P0HiijQuiA1xbNHAQPfUNlQLEvOpNLswp7hNw6+dym4voiFWvQryxaMDl/r+xIx9dl
-	 fPSRBPqhYrBWtssLJSwf363ASMXp5KzjArHsxedM=
+	b=seB0SFfFKF+Y3wtfzy+RsZTdm0QYIWT7S4AyAUf0ngSBWb8nd2I5+37MKKfKVq9vN
+	 ck4FiHaH+BVDUPm3YrtDsiGslwKQTjpBx7nJtQB483CBdL3BCi4bJd2ay0uQzvjfvq
+	 r6Ii4ge4mMA2wUmA9ZUftH4LIEjwTXU+caCg/eTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 1065/1067] ALSA: seq: Check UMP support for midi_version change
-Date: Tue, 21 Jul 2026 17:27:46 +0200
-Message-ID: <20260721152448.411460766@linuxfoundation.org>
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 6.1 1066/1067] iio: imu: inv_icm42600: fix timestamp clock period by using lower value
+Date: Tue, 21 Jul 2026 17:27:47 +0200
+Message-ID: <20260721152448.432741277@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -49,46 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-commit 8765429279e7d3d68d39ace5f84af2815174bb1e upstream.
+commit 8b0b864c11a2e2ada470f9d5010e1c2bf1eceef2 upstream.
 
-When the kernel is built without UMP support but a user-space app
-requires the midi_version > 0, the kernel should return an error.
-Otherwise user-space assumes as if it were possible to deal,
-eventually hitting serious errors later.
+Clock period value is used for computing periods of sampling. There is
+no need for it to be higher than the maximum odr, otherwise we are
+losing precision in the computation for nothing.
 
-Fixes: 46397622a3fa ("ALSA: seq: Add UMP support")
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241231145358.21946-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Switch clock period value to maximum odr period (8kHz).
+
+Fixes: 0ecc363ccea7 ("iio: make invensense timestamp module generic")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/seq/seq_clientmgr.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c |    4 ++--
+ drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c  |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/sound/core/seq/seq_clientmgr.c
-+++ b/sound/core/seq/seq_clientmgr.c
-@@ -1329,10 +1329,16 @@ static int snd_seq_ioctl_set_client_info
- 	if (client->type != client_info->type)
- 		return -EINVAL;
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
+@@ -720,10 +720,10 @@ struct iio_dev *inv_icm42600_accel_init(
+ 		return ERR_PTR(-ENOMEM);
  
--	/* check validity of midi_version field */
--	if (client->user_pversion >= SNDRV_PROTOCOL_VERSION(1, 0, 3) &&
--	    client_info->midi_version > SNDRV_SEQ_CLIENT_UMP_MIDI_2_0)
--		return -EINVAL;
-+	if (client->user_pversion >= SNDRV_PROTOCOL_VERSION(1, 0, 3)) {
-+		/* check validity of midi_version field */
-+		if (client_info->midi_version > SNDRV_SEQ_CLIENT_UMP_MIDI_2_0)
-+			return -EINVAL;
-+
-+		/* check if UMP is supported in kernel */
-+		if (!IS_ENABLED(CONFIG_SND_SEQ_UMP) &&
-+		    client_info->midi_version > 0)
-+			return -EINVAL;
-+	}
+ 	/*
+-	 * clock period is 32kHz (31250ns)
++	 * clock period is 8kHz (125000ns)
+ 	 * jitter is +/- 2% (20 per mille)
+ 	 */
+-	ts_chip.clock_period = 31250;
++	ts_chip.clock_period = 125000;
+ 	ts_chip.jitter = 20;
+ 	ts_chip.init_period = inv_icm42600_odr_to_period(st->conf.accel.odr);
+ 	ts = iio_priv(indio_dev);
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
+@@ -731,10 +731,10 @@ struct iio_dev *inv_icm42600_gyro_init(s
+ 		return ERR_PTR(-ENOMEM);
  
- 	/* fill the info fields */
- 	if (client_info->name[0])
+ 	/*
+-	 * clock period is 32kHz (31250ns)
++	 * clock period is 8kHz (125000ns)
+ 	 * jitter is +/- 2% (20 per mille)
+ 	 */
+-	ts_chip.clock_period = 31250;
++	ts_chip.clock_period = 125000;
+ 	ts_chip.jitter = 20;
+ 	ts_chip.init_period = inv_icm42600_odr_to_period(st->conf.accel.odr);
+ 	ts = iio_priv(indio_dev);
 
 
