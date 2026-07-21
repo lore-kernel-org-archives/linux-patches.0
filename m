@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF1A3368A2;
-	Tue, 21 Jul 2026 18:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F3D38399A;
+	Tue, 21 Jul 2026 18:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658310; cv=none; b=uy2vWMs0FbOd1iVWGrJZeEShpq/EUjYPl1OGnSll/iatm33JyyZDpxo1rccJAiQMW2bQXrjDUj6dAnPmLvur6X943xw7NSh807mbau87MpFRyl39lxOkQIUt/IVwHaOzLDlKOKbWAMaD7iT7OlBMWIxJ4jHNpT5F+Zm/CZJtDtg=
+	t=1784658313; cv=none; b=RbKWLAo10dnyTou7E2+am1+Qu9+5y6cwVgDAF17FyAvlPMAbODBrWozT2/iGUPxnISKj76BBZezjYfvkQi/SkE0ffVFdOWSesjAIE3reGJ1BFHIzyvHYVvtwJegz/2cgE+2NAqL64t/dreIhDb46bD4VXtXoEkznExWhXlySL34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658310; c=relaxed/simple;
-	bh=P3GCAYR1PbnrBX4+1OEuGQKcdiv6k8gbNqTLmJz7Zf0=;
+	s=arc-20240116; t=1784658313; c=relaxed/simple;
+	bh=j/gU4i2rF0oemecDcrO1dGh+aAq+uU+RRZcjzc2iR3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EPqQ5tdgOM8bfHkoca1LVVL2Em9c4HD0cJMQOpFEgOdHjWD1uGC3xMOiYE9egHEvitvfdq4R8Dninr40RENn+8VF+9hU80H6v9Qlz3Serpxn9AkuN8e8qeBlJizl/liYz7pg9xLwgTjsZcyfvI8Grb06ETi9X2zbYS01zDCdpQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=my4K91Mp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C/lAv/s8sErlk4VlD0QznoNu/RrTHCxFJLd+0NHnkrIxnpHXs9mnJpON6PXM8AHZATL+pS3Gk7Y73E54eko64D6hB25LMOxzVlHpv3i3ca+YleUDDNsiwuJ+VtAGZnCzHbnBmhZhrsmtWsGlKZ+7O2jmVaXf/I7MRLWzN5OFcx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xiuX6+EI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="my4K91Mp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1561F000E9;
-	Tue, 21 Jul 2026 18:25:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xiuX6+EI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766FB1F000E9;
+	Tue, 21 Jul 2026 18:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658309;
-	bh=PO5Ytjz/Lv6m1g92ivYN/FLvAy7fn++MNeGemxCEpOI=;
+	s=korg; t=1784658312;
+	bh=AaiZPqCUXHLW7WY/Ptim5JuO7doNOn9EWJROWMcz1PY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=my4K91MpwrxXbb95d4b3qlWz76BiJueToHTXp6g4K6qB79/UkVy0LLkSIeeVE+ckg
-	 Y/75g3MlLk+BXxbOUIulh/kBFqb/rV+uzj03+la2BtDbVf4PLiuJ6/iNH8J1kX2xpC
-	 tHhJUZllu9lSEIQcw9c5PGRNjivLUVw18zY5vthc=
+	b=xiuX6+EIIDGmVzJXnKRKUC5SgxRaWp5U3Lqx1MaAwUcWSlizpMNXMJ/J6fAICA4VX
+	 hnNdUUXSWvDW5EZp3L0FJ6NE8r4vhwD5DwrGC9Q42bD5dk/iBhxVvO3bq3zgtK8pPj
+	 H80/8CRCGCW2qbj1jiqps7/pftOKjUdZBvaocN/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1068/1611] drm/v3d: Reject invalid indirect BO handle in indirect CSD setup
-Date: Tue, 21 Jul 2026 17:19:44 +0200
-Message-ID: <20260721152539.430273794@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Przemyslaw Korba <przemyslaw.korba@intel.com>,
+	Samuel Salin <Samuel.salin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.18 1095/1611] idpf: add padding to PTP virtchnl structures
+Date: Tue, 21 Jul 2026 17:20:11 +0200
+Message-ID: <20260721152540.047475901@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -45,51 +47,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Przemyslaw Korba <przemyslaw.korba@intel.com>
 
-[ Upstream commit 2f8b8593c7832fad655290cef9e99af05b1b52b3 ]
+commit d1e8f9fd6b98307bc8d2863c7baa465d8a5a43be upstream.
 
-v3d_get_cpu_indirect_csd_params() looks up the indirect buffer object
-from a userspace-supplied handle but never checks the result. A bogus
-or stale handle makes drm_gem_object_lookup() return NULL, which is
-then stored in info->indirect and only dereferenced later when the
-indirect CSD job runs, turning a userspace mistake into a NULL pointer
-dereference in the kernel.
+Add padding to virtchnl2 PTP structures to match the Control Plane
+expected message sizes:
+* virtchnl2_ptp_get_dev_clk_time: 8 -> 16 bytes
+* virtchnl2_ptp_set_dev_clk_time: 8 -> 16 bytes
+* virtchnl2_ptp_get_cross_time: 16 -> 24 bytes
 
-Bail out with -ENOENT as soon as the lookup fails, so the bad handle is
-rejected at submission time.
+The FW expects the above sizes and PTP negotiation fails due to the
+mismatch. Previously neither the FW nor the driver checked message/reply
+sizes strictly, so the problem appeared only after recent validation
+improvements.
 
-Fixes: 18b8413b25b7 ("drm/v3d: Create a CPU job extension for a indirect CSD job")
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Link: https://patch.msgid.link/20260703-v3d-cpu-job-fixes-v3-2-bc51b1f3eeb5@igalia.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+reproduction steps:
+ptp4l -i <pf> -m
+Observe: failed to open /dev/ptp0: Permission denied
+
+Fixes: bf27283ba594 ("virtchnl: add PTP virtchnl definitions")
+Cc: stable@vger.kernel.org
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Signed-off-by: Przemyslaw Korba <przemyslaw.korba@intel.com>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/v3d/v3d_submit.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/intel/idpf/virtchnl2.h | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/v3d/v3d_submit.c b/drivers/gpu/drm/v3d/v3d_submit.c
-index 95b9e68b0dfe5e..1274e6010bea2f 100644
---- a/drivers/gpu/drm/v3d/v3d_submit.c
-+++ b/drivers/gpu/drm/v3d/v3d_submit.c
-@@ -462,6 +462,8 @@ v3d_get_cpu_indirect_csd_params(struct drm_file *file_priv,
- 	       sizeof(indirect_csd.wg_uniform_offsets));
+diff --git a/drivers/net/ethernet/intel/idpf/virtchnl2.h b/drivers/net/ethernet/intel/idpf/virtchnl2.h
+index 02ae447cc24a..39fea65c075c 100644
+--- a/drivers/net/ethernet/intel/idpf/virtchnl2.h
++++ b/drivers/net/ethernet/intel/idpf/virtchnl2.h
+@@ -1572,13 +1572,15 @@ VIRTCHNL2_CHECK_STRUCT_LEN(16, virtchnl2_ptp_get_vport_tx_tstamp_latches);
+  * struct virtchnl2_ptp_get_dev_clk_time - Associated with message
+  *					   VIRTCHNL2_OP_PTP_GET_DEV_CLK_TIME.
+  * @dev_time_ns: Device clock time value in nanoseconds
++ * @pad: Padding for future extensions
+  *
+  * PF/VF sends this message to receive the time from the main timer.
+  */
+ struct virtchnl2_ptp_get_dev_clk_time {
+ 	__le64 dev_time_ns;
++	u8 pad[8];
+ };
+-VIRTCHNL2_CHECK_STRUCT_LEN(8, virtchnl2_ptp_get_dev_clk_time);
++VIRTCHNL2_CHECK_STRUCT_LEN(16, virtchnl2_ptp_get_dev_clk_time);
  
- 	info->indirect = drm_gem_object_lookup(file_priv, indirect_csd.indirect);
-+	if (!info->indirect)
-+		return -ENOENT;
+ /**
+  * struct virtchnl2_ptp_get_cross_time: Associated with message
+@@ -1586,26 +1588,30 @@ VIRTCHNL2_CHECK_STRUCT_LEN(8, virtchnl2_ptp_get_dev_clk_time);
+  * @sys_time_ns: System counter value expressed in nanoseconds, read
+  *		 synchronously with device time
+  * @dev_time_ns: Device clock time value expressed in nanoseconds
++ * @pad: Padding for future extensions
+  *
+  * PF/VF sends this message to receive the cross time.
+  */
+ struct virtchnl2_ptp_get_cross_time {
+ 	__le64 sys_time_ns;
+ 	__le64 dev_time_ns;
++	u8 pad[8];
+ };
+-VIRTCHNL2_CHECK_STRUCT_LEN(16, virtchnl2_ptp_get_cross_time);
++VIRTCHNL2_CHECK_STRUCT_LEN(24, virtchnl2_ptp_get_cross_time);
  
- 	return v3d_setup_csd_jobs_and_bos(file_priv, v3d, &indirect_csd.submit,
- 					  &info->job, &info->clean_job,
+ /**
+  * struct virtchnl2_ptp_set_dev_clk_time: Associated with message
+  *					  VIRTCHNL2_OP_PTP_SET_DEV_CLK_TIME.
+  * @dev_time_ns: Device time value expressed in nanoseconds to set
++ * @pad: Padding for future extensions
+  *
+  * PF/VF sends this message to set the time of the main timer.
+  */
+ struct virtchnl2_ptp_set_dev_clk_time {
+ 	__le64 dev_time_ns;
++	u8 pad[8];
+ };
+-VIRTCHNL2_CHECK_STRUCT_LEN(8, virtchnl2_ptp_set_dev_clk_time);
++VIRTCHNL2_CHECK_STRUCT_LEN(16, virtchnl2_ptp_set_dev_clk_time);
+ 
+ /**
+  * struct virtchnl2_ptp_adj_dev_clk_fine: Associated with message
 -- 
-2.53.0
+2.55.0
 
 
 
