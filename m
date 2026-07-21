@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079BC3B7B64;
-	Tue, 21 Jul 2026 20:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B6030D3FF;
+	Tue, 21 Jul 2026 20:54:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667243; cv=none; b=dIqg13rNp1zGCivYRozP8IFcNL3OVnr3GnfaBSJy0XIjHfuWta/klQw/Q9dAg8a6ueBp/QQCaDnLzMG2tjI0Z7WiuriV5I+Y0W5hDtbBOoFtjdePGFXmd4J654ceXj+MosxpJIoRvQJ44F0KFdzN+5WmH3H7tc7i3Bdi4UG0NbQ=
+	t=1784667245; cv=none; b=GzxFqF0iLFGnzHoIo4vl514McWlWmR2A59970tObjy0t4r3kl2XkPf4FbyJaDUXLmJX8wvLr02LLmqzbVp4laCMNyRK51Yjw4uX9Q7Z5aS2yYSEsLsbPs4YCHYFlKHLA9cOGBNgyxu1a0KH9HI0Ymik029+mtg+nDfkylIxCnXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667243; c=relaxed/simple;
-	bh=pp1lR3IH3xjqXSGISXSYQbYuh+KI3XXPVhbl/xG7C1A=;
+	s=arc-20240116; t=1784667245; c=relaxed/simple;
+	bh=TaF5CYStGS0tu2kuk9Tjrm7f3M3oBklfATd+z+mWLAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T05GDM9TAdXIqVdjWO+rEwb9/8+IYsMJphf2NggIQqPFAV1c7HbHis9tAKnL9t6N61yC/b9ATBGTae6dDTi8V4oHQI6jKZxU4M3L6y4x7tZcSgH5lxKHxRQ0QUtsNA7z7R+iri6l2Aw3XcHPKwk/8tkb0fWEiJAKPaIfL7X6djQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eL6Dp5Vn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iRCCkytwx3ZWqxFINvbQZA4a1KOJXTiQnERo1+zEm3nDCrjrBYX4/THXKesBY1VvKWIKHB9zlF1/baJ1xyirQocHjpczcWmsU7m8gBqmuZJMwLuwQvlxtQvT8sQ1vyVWYDTOr+hPJ80L3qvo3NqIeWLZcoyqw6bq8zCtC8EjcGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGCrYXDh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eL6Dp5Vn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DCF41F000E9;
-	Tue, 21 Jul 2026 20:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGCrYXDh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155D61F000E9;
+	Tue, 21 Jul 2026 20:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667241;
-	bh=hyyjObVbcrC7LHeWDi/kBKJ6KeLjo/+Ovw01snoF9Ag=;
+	s=korg; t=1784667244;
+	bh=imIuv3LChIwI74/DFxR9GrBbR6gmH/iI+Neg9OiMNSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eL6Dp5VnWGcxb+2Tc0YR5NaSgH1A5FYTB7Jpni7CAwfdsmC3La6rDVQzC4iXjQBW2
-	 xQ9kXudpLd2ACJqtH2mvs0s5MeqTqxi0a7sqLWoGyUtnEoh9O7lVnfJHLaUFGijyhI
-	 XGP9f6A3ownqYlC4Rz+MMmydF9sdmjmRlghr6ciE=
+	b=sGCrYXDhfxB0VSDlSLm5fN8DELl8E9dkFuagO0urx+QiJX4UHlaAVFL8yZsO6ed4x
+	 gAOjMDbsqhgiGTN+KPtW9yuqikOsGtoE+EKsXCnjfNIsaJOurO++ItwZ0rh6RY1Hji
+	 FEd0I0AhSAiv5q3oryXg+VINDeOn4HIug7q+RUAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WenTao Liang <vulab@iscas.ac.cn>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.6 0987/1266] power: supply: charger-manager: fix refcount leak in is_full_charged()
-Date: Tue, 21 Jul 2026 17:23:44 +0200
-Message-ID: <20260721152503.921294491@linuxfoundation.org>
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.6 0988/1266] mips: sched: Fix CPUMASK_OFFSTACK memory corruption
+Date: Tue, 21 Jul 2026 17:23:45 +0200
+Message-ID: <20260721152503.944069964@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,43 +50,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WenTao Liang <vulab@iscas.ac.cn>
+From: Aaron Tomlin <atomlin@atomlin.com>
 
-commit 4373cfa38ead58f980362c841b0d0bdf8c4d956c upstream.
+commit 98e37db4a34d3af3fb2f4648295c25b5e40b20e3 upstream.
 
-In is_full_charged(), power_supply_get_by_name() is called to
-obtain a reference to the fuel_gauge power supply. If the
-voltage check (uV >= desc->fullbatt_uV) succeeds, the function
-returns true directly without releasing the reference, leaking
-the refcount.
+This patch addresses a critical memory management flaw. When
+CONFIG_CPUMASK_OFFSTACK is enabled, cpumask_var_t is a pointer.
+Consequently, sizeof(new_mask) evaluates to the pointer size, causing
+copy_from_user() to clobber the mask pointer. Furthermore, the old
+logic performed copy_from_user() before allocating the mask.
 
-Fix this by setting a flag and jumping to the out label where
-power_supply_put() properly drops the reference.
+Fix this by allocating new_mask first. To handle variable-sized user
+masks correctly, use cpumask_size() to truncate overly large user masks
+or pad undersized masks with zeros before copying the data directly into
+the allocated buffer.
 
+Fixes: 295cbf6d63165 ("[MIPS] Move FPU affinity code into separate file.")
 Cc: stable@vger.kernel.org
-Fixes: e132fc6bb89b ("power: supply: charger-manager: Make decisions focussed on battery status")
-Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260611005322.53096-1-vulab@iscas.ac.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Aaron Tomlin <atomlin@atomlin.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/charger-manager.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/mips/kernel/mips-mt-fpaff.c |   28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
---- a/drivers/power/supply/charger-manager.c
-+++ b/drivers/power/supply/charger-manager.c
-@@ -302,8 +302,10 @@ static bool is_full_charged(struct charg
- 			if (cm->battery_status == POWER_SUPPLY_STATUS_FULL
- 					&& desc->fullbatt_vchkdrop_uV)
- 				uV += desc->fullbatt_vchkdrop_uV;
--			if (uV >= desc->fullbatt_uV)
--				return true;
-+			if (uV >= desc->fullbatt_uV) {
-+				is_full = true;
-+				goto out;
-+			}
- 		}
+--- a/arch/mips/kernel/mips-mt-fpaff.c
++++ b/arch/mips/kernel/mips-mt-fpaff.c
+@@ -70,11 +70,16 @@ asmlinkage long mipsmt_sys_sched_setaffi
+ 	struct task_struct *p;
+ 	int retval;
+ 
+-	if (len < sizeof(new_mask))
+-		return -EINVAL;
+-
+-	if (copy_from_user(&new_mask, user_mask_ptr, sizeof(new_mask)))
+-		return -EFAULT;
++	if (!alloc_cpumask_var(&new_mask, GFP_KERNEL))
++		return -ENOMEM;
++	if (len < cpumask_size())
++		cpumask_clear(new_mask);
++	else if (len > cpumask_size())
++		len = cpumask_size();
++	if (copy_from_user(new_mask, user_mask_ptr, len)) {
++		retval = -EFAULT;
++		goto out_free_new_mask;
++	}
+ 
+ 	cpus_read_lock();
+ 	rcu_read_lock();
+@@ -83,7 +88,8 @@ asmlinkage long mipsmt_sys_sched_setaffi
+ 	if (!p) {
+ 		rcu_read_unlock();
+ 		cpus_read_unlock();
+-		return -ESRCH;
++		retval = -ESRCH;
++		goto out_free_new_mask;
  	}
+ 
+ 	/* Prevent p going away */
+@@ -94,13 +100,9 @@ asmlinkage long mipsmt_sys_sched_setaffi
+ 		retval = -ENOMEM;
+ 		goto out_put_task;
+ 	}
+-	if (!alloc_cpumask_var(&new_mask, GFP_KERNEL)) {
+-		retval = -ENOMEM;
+-		goto out_free_cpus_allowed;
+-	}
+ 	if (!alloc_cpumask_var(&effective_mask, GFP_KERNEL)) {
+ 		retval = -ENOMEM;
+-		goto out_free_new_mask;
++		goto out_free_cpus_allowed;
+ 	}
+ 	if (!check_same_owner(p) && !capable(CAP_SYS_NICE)) {
+ 		retval = -EPERM;
+@@ -141,13 +143,13 @@ asmlinkage long mipsmt_sys_sched_setaffi
+ 	}
+ out_unlock:
+ 	free_cpumask_var(effective_mask);
+-out_free_new_mask:
+-	free_cpumask_var(new_mask);
+ out_free_cpus_allowed:
+ 	free_cpumask_var(cpus_allowed);
+ out_put_task:
+ 	put_task_struct(p);
+ 	cpus_read_unlock();
++out_free_new_mask:
++	free_cpumask_var(new_mask);
+ 	return retval;
+ }
  
 
 
