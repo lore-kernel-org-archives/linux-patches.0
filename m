@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DEB382385;
-	Tue, 21 Jul 2026 22:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B410D43C063;
+	Tue, 21 Jul 2026 22:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674665; cv=none; b=Ea8YwbNDDp4wJt2xscuQGPX1DtpvKj1NqEpuAwVB2csoQmRoZxy1GdW/NZ0FMRQj+Htlk8Cgi62FpPi35+UEbmSquKpisy2iV3tsLjuOg3UKsjzu023R1Ts30NZHt3EoIw1mufb/BPC3f/A1WQV/Jsu86W0IgsRt+n62j9ZpWmk=
+	t=1784674668; cv=none; b=RSAlnSUG8MYnB6YPRBH65+1jcwTOY3fS4IcGXd7keMEMX/Xo3htYx5PlenIy/3CEtyUSAGcMUkbIFJvuRFQxPyDMzwf75ZZqZBWAagIReBfb3QdDtH1S1Js2d4+Xm8sZnPmttLAjmVKKjuYK/z6h9LLqVj0683Zsig03A9kI0Hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674665; c=relaxed/simple;
-	bh=zqrLgoVN6XyN4DdaQNt+NKnfpyR0PBJ18Ij+9I7oL/M=;
+	s=arc-20240116; t=1784674668; c=relaxed/simple;
+	bh=GHBuU21U+cLZHH8WEfbl36OKSqBYVIURwYRCLYzoOt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nIDdE9vndDx+NYwaWkDNDUA/dJHnBBGzBZUajEnKo3drPt+AUnRvBnk8TA5M/AOMQZ1WfBdjrUGJ7hvJUkAQljXD/rljRIj+7KdvEG5dfgsgESeGg9Ahy1DdzvizNiMXh5qXC7M/k4Nw9UmDD1QSfyHS0c5Dbbq7stNjZFq4gW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rp/XW0sS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cHxMHm0Qs7r86mcPHaaVaeJFMeqPXYY9IWenLeqETujNK2sgkMCKq2nrlGEOhvQhqb1fJUqZvCgT8/kStcFmfRlt96BxiuVaqgCXXaChSWLpHHSviL9H6uVs7Am3OO4B1mtLmzQekVeiKWYiWEcfMkW7wz2XnDURWYTGzG7YQEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gurgF1JK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rp/XW0sS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672321F000E9;
-	Tue, 21 Jul 2026 22:57:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gurgF1JK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ABF01F000E9;
+	Tue, 21 Jul 2026 22:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674663;
-	bh=cIyDSFBc3xbPFilMsUyPBZQeqqDdO4+TWrj7uqF/Zdw=;
+	s=korg; t=1784674666;
+	bh=gBLFM6+1Lh5pbsBQvsdiIcK8Z8M6EQb6rqNCEY4u08M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rp/XW0sSLCXXcnWF1tJnBLufSYnRzVMqz4/TYkCqFLVQB7Z/LNXj0s21oxMgdE9C0
-	 f2FRUSZVBVrHdo8XVBdR3wD426omUJk+WSWebwVqSbaixd0CQFOQoza9BUSdyGaFGn
-	 //v5/mHUhixgQ2Tq3svwNCbK4Jo6b90uSBuaarh0=
+	b=gurgF1JKrjfAHl+hb7xOlPVFF3ZE350zHSstACIsPsbr0tEZSixiVobDU77vHq9w2
+	 sBV3/8mpbmsS9Tdbw0y7UZ2m2WVQXvADeygIL5EY8Pqt1/k/brn2VJHV2+26O8eWgA
+	 xc+YLrN96/3ksfKoIHhMVeJbjjJ8z3TUNuYzq8RY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 5.10 625/699] PCI: controller: Use dev_fwnode() instead of of_fwnode_handle()
-Date: Tue, 21 Jul 2026 17:26:24 +0200
-Message-ID: <20260721152409.842542884@linuxfoundation.org>
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 626/699] PCI: mediatek: Convert bool to single quirks entry and bitmap
+Date: Tue, 21 Jul 2026 17:26:25 +0200
+Message-ID: <20260721152409.866756514@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,127 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit a103d2dede5683dabbac2c3374bc24b6a9434478 ]
+[ Upstream commit 04305367fab7ec9c98eeba315ad09c8b20abce93 ]
 
-All irq_domain functions now accept fwnode instead of of_node. But many
-PCI controllers still extract dev to of_node and then of_node to fwnode.
+To clean Mediatek SoC PCIe struct, convert all the bool to a bitmap and
+use a single quirks to reference all the values. This permits cleaner
+addition of new quirk without having to define a new bool in the struct.
 
-Instead, clean this up and simply use the dev_fwnode() helper to extract
-fwnode directly from dev. Internally, it still does dev => of_node =>
-fwnode steps, but it's now hidden from the users.
-
-In the case of altera, this also removes an unused 'node' variable that is
-only used when CONFIG_OF is enabled:
-
-  drivers/pci/controller/pcie-altera.c: In function 'altera_pcie_init_irq_domain':
-  drivers/pci/controller/pcie-altera.c:855:29: error: unused variable 'node' [-Werror=unused-variable]
-    855 |         struct device_node *node = dev->of_node;
-
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>	# altera
-[bhelgaas: squash together, rebase to precede msi-parent]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20250521163329.2137973-1-arnd@kernel.org
-Link: https://patch.msgid.link/20250611104348.192092-16-jirislaby@kernel.org
-Link: https://patch.msgid.link/20250723065907.1841758-1-jirislaby@kernel.org
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20251020111121.31779-4-ansuelsmth@gmail.com
 Stable-dep-of: f865a57896bd ("PCI: mediatek: Fix IRQ domain leak when port fails to enable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-host.c    |    2 +-
- drivers/pci/controller/mobiveil/pcie-mobiveil-host.c |    8 +++-----
- drivers/pci/controller/pcie-altera-msi.c             |    2 +-
- drivers/pci/controller/pcie-altera.c                 |    3 +--
- drivers/pci/controller/pcie-mediatek.c               |    2 +-
- drivers/pci/controller/pcie-xilinx-nwl.c             |    2 +-
- 6 files changed, 8 insertions(+), 11 deletions(-)
+ drivers/pci/controller/pcie-mediatek.c |   25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
---- a/drivers/pci/controller/dwc/pcie-designware-host.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-@@ -233,7 +233,7 @@ static const struct irq_domain_ops dw_pc
- int dw_pcie_allocate_domains(struct pcie_port *pp)
- {
- 	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
--	struct fwnode_handle *fwnode = of_node_to_fwnode(pci->dev->of_node);
-+	struct fwnode_handle *fwnode = dev_fwnode(pci->dev);
- 
- 	pp->irq_domain = irq_domain_create_linear(fwnode, pp->num_vectors,
- 					       &dw_pcie_msi_domain_ops, pp);
---- a/drivers/pci/controller/mobiveil/pcie-mobiveil-host.c
-+++ b/drivers/pci/controller/mobiveil/pcie-mobiveil-host.c
-@@ -452,7 +452,7 @@ static const struct irq_domain_ops msi_d
- static int mobiveil_allocate_msi_domains(struct mobiveil_pcie *pcie)
- {
- 	struct device *dev = &pcie->pdev->dev;
--	struct fwnode_handle *fwnode = of_node_to_fwnode(dev->of_node);
-+	struct fwnode_handle *fwnode = dev_fwnode(dev);
- 	struct mobiveil_msi *msi = &pcie->rp.msi;
- 
- 	mutex_init(&msi->lock);
-@@ -478,13 +478,11 @@ static int mobiveil_allocate_msi_domains
- static int mobiveil_pcie_init_irq_domain(struct mobiveil_pcie *pcie)
- {
- 	struct device *dev = &pcie->pdev->dev;
--	struct device_node *node = dev->of_node;
- 	struct mobiveil_root_port *rp = &pcie->rp;
- 
- 	/* setup INTx */
--	rp->intx_domain = irq_domain_add_linear(node, PCI_NUM_INTX,
--						&intx_domain_ops, pcie);
--
-+	rp->intx_domain = irq_domain_create_linear(dev_fwnode(dev), PCI_NUM_INTX, &intx_domain_ops,
-+						   pcie);
- 	if (!rp->intx_domain) {
- 		dev_err(dev, "Failed to get a INTx IRQ domain\n");
- 		return -ENOMEM;
---- a/drivers/pci/controller/pcie-altera-msi.c
-+++ b/drivers/pci/controller/pcie-altera-msi.c
-@@ -173,7 +173,7 @@ static const struct irq_domain_ops msi_d
- 
- static int altera_allocate_domains(struct altera_msi *msi)
- {
--	struct fwnode_handle *fwnode = of_node_to_fwnode(msi->pdev->dev.of_node);
-+	struct fwnode_handle *fwnode = dev_fwnode(&msi->pdev->dev);
- 
- 	msi->inner_domain = irq_domain_add_linear(NULL, msi->num_of_vectors,
- 					     &msi_domain_ops, msi);
---- a/drivers/pci/controller/pcie-altera.c
-+++ b/drivers/pci/controller/pcie-altera.c
-@@ -672,10 +672,9 @@ static void altera_pcie_isr(struct irq_d
- static int altera_pcie_init_irq_domain(struct altera_pcie *pcie)
- {
- 	struct device *dev = &pcie->pdev->dev;
--	struct device_node *node = dev->of_node;
- 
- 	/* Setup INTx */
--	pcie->irq_domain = irq_domain_add_linear(node, PCI_NUM_INTX,
-+	pcie->irq_domain = irq_domain_create_linear(dev_fwnode(dev), PCI_NUM_INTX,
- 					&intx_domain_ops, pcie);
- 	if (!pcie->irq_domain) {
- 		dev_err(dev, "Failed to get a INTx IRQ domain\n");
 --- a/drivers/pci/controller/pcie-mediatek.c
 +++ b/drivers/pci/controller/pcie-mediatek.c
-@@ -497,7 +497,7 @@ static struct msi_domain_info mtk_msi_do
+@@ -141,21 +141,29 @@
+ struct mtk_pcie_port;
  
- static int mtk_pcie_allocate_msi_domains(struct mtk_pcie_port *port)
- {
--	struct fwnode_handle *fwnode = of_node_to_fwnode(port->pcie->dev->of_node);
-+	struct fwnode_handle *fwnode = dev_fwnode(port->pcie->dev);
+ /**
++ * enum mtk_pcie_quirks - MTK PCIe quirks
++ * @MTK_PCIE_FIX_CLASS_ID: host's class ID needed to be fixed
++ * @MTK_PCIE_FIX_DEVICE_ID: host's device ID needed to be fixed
++ */
++enum mtk_pcie_quirks {
++	MTK_PCIE_FIX_CLASS_ID = BIT(0),
++	MTK_PCIE_FIX_DEVICE_ID = BIT(1),
++};
++
++/**
+  * struct mtk_pcie_soc - differentiate between host generations
+- * @need_fix_class_id: whether this host's class ID needed to be fixed or not
+- * @need_fix_device_id: whether this host's device ID needed to be fixed or not
+  * @device_id: device ID which this host need to be fixed
+  * @ops: pointer to configuration access functions
+  * @startup: pointer to controller setting functions
+  * @setup_irq: pointer to initialize IRQ functions
++ * @quirks: PCIe device quirks.
+  */
+ struct mtk_pcie_soc {
+-	bool need_fix_class_id;
+-	bool need_fix_device_id;
+ 	unsigned int device_id;
+ 	struct pci_ops *ops;
+ 	int (*startup)(struct mtk_pcie_port *port);
+ 	int (*setup_irq)(struct mtk_pcie_port *port, struct device_node *node);
++	enum mtk_pcie_quirks quirks;
+ };
  
- 	mutex_init(&port->lock);
+ /**
+@@ -710,7 +718,7 @@ static int mtk_pcie_startup_port_v2(stru
+ 	writel(val, port->base + PCIE_RST_CTRL);
  
---- a/drivers/pci/controller/pcie-xilinx-nwl.c
-+++ b/drivers/pci/controller/pcie-xilinx-nwl.c
-@@ -515,7 +515,7 @@ static int nwl_pcie_init_msi_irq_domain(
- {
- #ifdef CONFIG_PCI_MSI
- 	struct device *dev = pcie->dev;
--	struct fwnode_handle *fwnode = of_node_to_fwnode(dev->of_node);
-+	struct fwnode_handle *fwnode = dev_fwnode(dev);
- 	struct nwl_msi *msi = &pcie->msi;
+ 	/* Set up vendor ID and class code */
+-	if (soc->need_fix_class_id) {
++	if (soc->quirks & MTK_PCIE_FIX_CLASS_ID) {
+ 		val = PCI_VENDOR_ID_MEDIATEK;
+ 		writew(val, port->base + PCIE_CONF_VEND_ID);
  
- 	msi->dev_domain = irq_domain_add_linear(NULL, INT_PCI_MSI_NR,
+@@ -718,7 +726,7 @@ static int mtk_pcie_startup_port_v2(stru
+ 		writew(val, port->base + PCIE_CONF_CLASS_ID);
+ 	}
+ 
+-	if (soc->need_fix_device_id)
++	if (soc->quirks & MTK_PCIE_FIX_DEVICE_ID)
+ 		writew(soc->device_id, port->base + PCIE_CONF_DEVICE_ID);
+ 
+ 	/* 100ms timeout value should be enough for Gen1/2 training */
+@@ -1206,19 +1214,18 @@ static const struct mtk_pcie_soc mtk_pci
+ };
+ 
+ static const struct mtk_pcie_soc mtk_pcie_soc_mt7622 = {
+-	.need_fix_class_id = true,
+ 	.ops = &mtk_pcie_ops_v2,
+ 	.startup = mtk_pcie_startup_port_v2,
+ 	.setup_irq = mtk_pcie_setup_irq,
++	.quirks = MTK_PCIE_FIX_CLASS_ID,
+ };
+ 
+ static const struct mtk_pcie_soc mtk_pcie_soc_mt7629 = {
+-	.need_fix_class_id = true,
+-	.need_fix_device_id = true,
+ 	.device_id = PCI_DEVICE_ID_MEDIATEK_7629,
+ 	.ops = &mtk_pcie_ops_v2,
+ 	.startup = mtk_pcie_startup_port_v2,
+ 	.setup_irq = mtk_pcie_setup_irq,
++	.quirks = MTK_PCIE_FIX_CLASS_ID | MTK_PCIE_FIX_DEVICE_ID,
+ };
+ 
+ static const struct of_device_id mtk_pcie_ids[] = {
 
 
