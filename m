@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D468242FCC9;
-	Tue, 21 Jul 2026 19:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FBD42FCC9;
+	Tue, 21 Jul 2026 19:41:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662900; cv=none; b=Qx/dg6OZ4BmNWEAtwMKOVT+C9eVMmk9+7CRNcr/JONCKpKpJcuKBzM3U+T7Pez+F95oNYH1ndc8Ejdf2um888llQ5hMPMJAbdJhRfo50xdeAoyb0sfLdNIwmjZvppRwzIF2B9RO4QQxbmDtLWgRlUG74LsktwEFWCFkt5Ntp9qc=
+	t=1784662902; cv=none; b=ES6F+EJExzD3Msqo2q8zUP52C1Tuo1PVRDI/YHlIDo2Yagllha+zpFy2PYfz+4q8PtQCi1mdHzcjmq+eGEfzXaSGbnMSKW3bfi0iwq0S4hrL973HZpIp+F5ePhmCmjtsuqd4xPXQ+3zAhVJ9cbAnV3PcNU+SD3aUtFEe3FJD9cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662900; c=relaxed/simple;
-	bh=xK/fn5rqBenbk9B1vN/swPSEf7iAUxAyF7dJwqoJGbA=;
+	s=arc-20240116; t=1784662902; c=relaxed/simple;
+	bh=uMWU1uTaroGcSrSL8j+y9Mw5QQv0H+Hmv7IxjT6n7aw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JaZY959SRESX3Pq6LL6HJuZgySTbPfkHX2RNwqI5gdFxcPzYXF0EsVIpL00bJZhQoizKylcSaZPGxWiuErtDQphW9ZCXclo8zAGM6r1EhfHC2vEvNjI+V7EYcB+SQqinNos58Vsbu2/7vmqNWeVo3DDgcQUsIJAVXb6YETfojgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MEWSv0EL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PwAxEniIYAMiQsPqCbAT0YO+hs5zlg/Di5Besn1RSLlVbXTODvPK2BBdrm7Q7WiTQxiZGeBmzp3LqnD/IaBzRyaEjG35K0Wi1fxG7904SFObp4a6buuvVQODyBzKCSqQxasQ/3/3ScGsOZzYt8NCiXfJqhbAU3yIFvhC+KTwic0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlntoQvn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MEWSv0EL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4548B1F00A3F;
-	Tue, 21 Jul 2026 19:41:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlntoQvn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB551F000E9;
+	Tue, 21 Jul 2026 19:41:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662898;
-	bh=5A34HOhnSP6j01hB2EHSj9rA9ULeV8iOJMm8oXYdcUs=;
+	s=korg; t=1784662901;
+	bh=mV7H1OBgEqtRePmkMwBzl6fc1VnBaoRR48jUbN47lD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MEWSv0ELzeFggSwc01dUplBkACMpIaO6XHcOwpSsmHmGAlEWkUz5qgI7al5gBOhlN
-	 nQdD/b0qNQd5qBhMOclDPtTh45+e7lx6MImMqLKnfsPN6EcJY5SiUkuaHxTvIqQ51X
-	 IkGqSp3Y7hxo20hUYUtThjjr1PEBIeSabiZqVRdg=
+	b=UlntoQvnX/nODTLf6RgvekmcjbRlpgtBI7kSordxD5Nda3YRZathpXAS3lOeCjzIJ
+	 UReOWytI5YYHC0C74hYYmiJrwCAWjYBRaQPJt9ILgyDb2JEwLlAU+fmIJo+x/XSYi5
+	 Cuyqg7jZ0hZDKo/XnVdjIUO0/9zc4sHv0KGP5AC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yichong Chen <chenyichong@uniontech.com>,
-	Quentin Monnet <qmo@kernel.org>,
+	Avinash Duduskar <avinash.duduskar@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0619/1276] bpftool: Fix vmlinux BTF leak in cgroup commands
-Date: Tue, 21 Jul 2026 17:17:42 +0200
-Message-ID: <20260721152459.961376515@linuxfoundation.org>
+Subject: [PATCH 6.12 0620/1276] bpf: zero-initialize the fib lookup flow struct
+Date: Tue, 21 Jul 2026 17:17:43 +0200
+Message-ID: <20260721152459.982401062@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -46,84 +46,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: Avinash Duduskar <avinash.duduskar@gmail.com>
 
-[ Upstream commit bda6a7308ef8e79cfbb7d09e48e1c7ffaa522269 ]
+[ Upstream commit 0dfcb68a6a5ac517b22dff6a1f01cb4f126dfc57 ]
 
-bpftool cgroup show and tree call libbpf_find_kernel_btf() to
-resolve attach_btf names, but never release the returned BTF object.
+bpf_ipv4_fib_lookup() and bpf_ipv6_fib_lookup() build the flow key on
+the stack with a bare "struct flowi4 fl4;" / "struct flowi6 fl6;" and
+fill it field by field, but never set flowi4_l3mdev / flowi6_l3mdev.
 
-For cgroup tree, do_show_tree_fn() is called once for each cgroup
-visited by nftw(). When more than one cgroup has attached programs,
-each callback overwrites btf_vmlinux with a new object and loses the
-previous allocation.
+On the non-DIRECT path the lookup goes through the fib rules whenever the
+netns has custom rules, which a VRF installs:
 
-Load vmlinux BTF only once during a tree walk and release it when
-cgroup show or tree completes. Reset btf_vmlinux_id at the same time
-so batch mode starts with clean state.
+	bpf_ipv4_fib_lookup() -> fib_lookup() -> __fib_lookup()
+	  -> l3mdev_update_flow()   reads !fl->flowi_l3mdev
+	  -> fib_rules_lookup() -> fib_rule_match()
+	       -> l3mdev_fib_rule_match()   uses fl->flowi_l3mdev
 
-Fixes: 596f5fb2ea2a ("bpftool: implement cgroup tree for BPF_LSM_CGROUP")
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Reviewed-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/r/24357C69B4405079+20260617090117.280222-1-chenyichong@uniontech.com
+l3mdev_update_flow() resolves the l3mdev master from the ingress device
+only while the field is still zero. Left at a nonzero stack value the
+resolution is skipped, and l3mdev_fib_rule_match() then tests that value
+as an ifindex, so the VRF master is not resolved and the rule fails to
+match: an ingress enslaved to a VRF can fail to select its table. FIB
+rules matching on an L3 master device (l3mdev_fib_rule_iif_match()/
+_oif_match()) read the same value, so an "ip rule iif/oif <vrf>"
+mismatches the same way.
+
+Zero-initialize the whole flow struct rather than adding one more
+field assignment, so any flowi field added later is covered too.
+ip_route_input_slow() likewise zeroes the field before its input lookup.
+
+CONFIG_INIT_STACK_ALL_ZERO masks this by default, but it depends on
+compiler support (CC_HAS_AUTO_VAR_INIT_ZERO), so INIT_STACK_NONE builds,
+including older toolchains that fall back to it, are exposed. Built with
+INIT_STACK_ALL_PATTERN, a plain bpf_fib_lookup (no VLAN, no DIRECT) over a
+VRF slave whose destination is routed only in the VRF table returns
+BPF_FIB_LKUP_RET_NOT_FWDED, and resolves with this patch. On the default
+config the lookup succeeds either way, so ordinary testing does not catch
+the bug.
+
+Fixes: 40867d74c374 ("net: Add l3mdev index to flow struct and avoid oif reset for port devices")
+Signed-off-by: Avinash Duduskar <avinash.duduskar@gmail.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://lore.kernel.org/r/20260617224719.1428599-1-avinash.duduskar@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/cgroup.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ net/core/filter.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/bpf/bpftool/cgroup.c b/tools/bpf/bpftool/cgroup.c
-index 4189c9d74fb062..f4aa711c7fb1e5 100644
---- a/tools/bpf/bpftool/cgroup.c
-+++ b/tools/bpf/bpftool/cgroup.c
-@@ -74,6 +74,13 @@ static unsigned int query_flags;
- static struct btf *btf_vmlinux;
- static __u32 btf_vmlinux_id;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 80aa924d3e649d..6450aa2ea44efc 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -6007,7 +6007,7 @@ static int bpf_ipv4_fib_lookup(struct net *net, struct bpf_fib_lookup *params,
+ 	struct neighbour *neigh;
+ 	struct net_device *dev;
+ 	struct fib_result res;
+-	struct flowi4 fl4;
++	struct flowi4 fl4 = {};
+ 	u32 mtu = 0;
+ 	int err;
  
-+static void free_btf_vmlinux(void)
-+{
-+	btf__free(btf_vmlinux);
-+	btf_vmlinux = NULL;
-+	btf_vmlinux_id = 0;
-+}
-+
- static enum bpf_attach_type parse_attach_type(const char *str)
- {
- 	const char *attach_type_str;
-@@ -384,6 +391,8 @@ static int do_show(int argc, char **argv)
- 	if (json_output)
- 		jsonw_end_array(json_wtr);
- 
-+	free_btf_vmlinux();
-+
- exit_cgroup:
- 	close(cgroup_fd);
- exit:
-@@ -433,7 +442,9 @@ static int do_show_tree_fn(const char *fpath, const struct stat *sb,
- 		printf("%s\n", fpath);
- 	}
- 
--	btf_vmlinux = libbpf_find_kernel_btf();
-+	if (!btf_vmlinux)
-+		btf_vmlinux = libbpf_find_kernel_btf();
-+
- 	for (i = 0; i < ARRAY_SIZE(cgroup_attach_types); i++)
- 		show_bpf_progs(cgroup_fd, cgroup_attach_types[i], ftw->level);
- 
-@@ -536,6 +547,7 @@ static int do_show_tree(int argc, char **argv)
- 	if (json_output)
- 		jsonw_end_array(json_wtr);
- 
-+	free_btf_vmlinux();
- 	free(cgroup_alloced);
- 
- 	return ret;
+@@ -6147,7 +6147,7 @@ static int bpf_ipv6_fib_lookup(struct net *net, struct bpf_fib_lookup *params,
+ 	struct neighbour *neigh;
+ 	struct net_device *dev;
+ 	struct inet6_dev *idev;
+-	struct flowi6 fl6;
++	struct flowi6 fl6 = {};
+ 	int strict = 0;
+ 	int oif, err;
+ 	u32 mtu = 0;
 -- 
 2.53.0
 
