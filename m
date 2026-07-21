@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DB932B132;
-	Tue, 21 Jul 2026 19:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365E142DA53;
+	Tue, 21 Jul 2026 19:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662046; cv=none; b=Obz/exD5MnPq4I7wwm9vmJdmN/rDa7a2nQ+7sbJLfW8ChisaiWZYzrp0J5M/40sGQAyTp401vB6Pl/cnG9yOTLLkNtm2mDXj2B0i7zCHE1mpIoLUjGjKL+D6xMsPcD0Eu4B5KBpwIpXOqKOCmF6X1tvEbmvZijeHgYiIuMywMh4=
+	t=1784662049; cv=none; b=mPhsnAHovBYrygVdmbBQGpdeGLcLKJHlnIDv7GctBDuYnlIuBbf7nSpHrp8MP4eQ/SXqb8ekaeXQIcxXkp9TZ51IOuV/Z7lNBKO0zGlLIKlNwGF0p9uZo3OtakzuIKA8HcGx8U9mvf/H33ffKNhakvhQWatpBbhdNDZHnFVPM1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662046; c=relaxed/simple;
-	bh=mvdPqelJnHyLi1QJ9DaOD0XCDve9ppIka61vVbbaWN0=;
+	s=arc-20240116; t=1784662049; c=relaxed/simple;
+	bh=ViaFko4Y2e1B87iQ9dYo8CNNOxBWj3dxAwP8hidjUXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fSzUFDtneDGwLzPi1GzLijXoq2XpXnn1wrO6JoS1Hy/3RcEvCI9BYk/oBun5tzMXngMBzJwMDYrt0mlyltgR0BEACompNEN3bRm1jNMn40mFCfCPfy4aIlFuxdtxl5PqREa8CoVGd9ut6FqwnOYx+DZsyGdkjCb1tEV9pnierv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oizOb4Tj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NboOy2hQ81NlsAXW1MPBRD4zY47yD1DsGuiRIzQ+gNZlEKfv+SAi4G4IZ0Z6GnKsWT8e7+AaiMZSMYOqGXWBEzVxkUkZTEMwXQ/z6HFM50kjyrUlGvGder5kSdepRtx2f6Vsoq62tj7SiL86qzMfpYFK4ePEPz9waqtI5gwVCd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6UmcFRL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oizOb4Tj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA7B41F00A3A;
-	Tue, 21 Jul 2026 19:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6UmcFRL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92DBC1F000E9;
+	Tue, 21 Jul 2026 19:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662045;
-	bh=FNT0ottbo3jpHOgVCAKYHD8Q8QVYpZBk944U5A25w0A=;
+	s=korg; t=1784662048;
+	bh=zkeQFDVI8cYJGTNL3EjfOMnwFKYGNWv21fDf/6/o3qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oizOb4Tj6Z/qd3aFSuXw61wV7NMktWl0/JtpJaosyqsc0OETT555dw2DDLBhEr+JZ
-	 t1XMGYmnFOiWLRjhqQ/HEAIAtxTwmsjysrZ/o8Rfr0RzMUZDSPRPHmf+Qr/4/38xRv
-	 7/YOhTwWZiTeFsWCNemb0MnRq+yey8qo8jFEyDWE=
+	b=X6UmcFRLguyMFKfWe/HKIdIRFFKm2HtFRZSttTYSQ73sgEqb/iiTUsBlFRtiQNnZ0
+	 PWF1mhJ7ZI9vISFfiUORde7UuKS31a7nwc3fGazLXhPLIlMaE84jBABi66v7tO1qTU
+	 TV9atC19Y7qGEr9hV1WX6oRPHf8vk7c/IPIg43A8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Val Packett <val@packett.cool>,
+	Luca Weiss <luca.weiss@fairphone.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0296/1276] spi: meson-spifc: fix runtime PM leak on remove
-Date: Tue, 21 Jul 2026 17:12:19 +0200
-Message-ID: <20260721152452.714970281@linuxfoundation.org>
+Subject: [PATCH 6.12 0297/1276] ASoC: codecs: aw88261: fix incorrect masks for boost regs
+Date: Tue, 21 Jul 2026 17:12:20 +0200
+Message-ID: <20260721152452.737996880@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,40 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit 606c0826bd90384a54571c0c5475ca41f50164ea ]
+[ Upstream commit 79c053a1ff9d3ab31cefbc791e8d7816ba830491 ]
 
-pm_runtime_get_sync() increments the runtime PM usage counter even when it
-returns an error. meson_spifc_remove() uses it to resume the controller
-before disabling runtime PM, but never drops the usage counter again.
+The boost-related register fields used in aw88261_reg_force_set use the
+exact same definitions as the rest of the fields, where the mask must be
+inverted when passing it to regmap_update_bits, but they weren't
+inverted here.
 
-Balance the get with pm_runtime_put_noidle() after disabling runtime PM,
-matching the teardown pattern used by other SPI controller drivers.
-
-Found by static analysis. I do not have hardware to test this.
-
-Fixes: c3e4bc5434d2 ("spi: meson: Add support for Amlogic Meson SPIFC")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Link: https://patch.msgid.link/20260609052647.5-1-ruoyuw560@gmail.com
+Fixes: 028a2ae25691 ("ASoC: codecs: Add aw88261 amplifier driver")
+Signed-off-by: Val Packett <val@packett.cool>
+Tested-by: Luca Weiss <luca.weiss@fairphone.com>
+Link: https://patch.msgid.link/20260529200550.529719-7-val@packett.cool
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-meson-spifc.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/aw88261.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/spi/spi-meson-spifc.c b/drivers/spi/spi-meson-spifc.c
-index fd8b26dd4a792a..8d155f753fd723 100644
---- a/drivers/spi/spi-meson-spifc.c
-+++ b/drivers/spi/spi-meson-spifc.c
-@@ -352,6 +352,7 @@ static void meson_spifc_remove(struct platform_device *pdev)
- {
- 	pm_runtime_get_sync(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
-+	pm_runtime_put_noidle(&pdev->dev);
- }
- 
- #ifdef CONFIG_PM_SLEEP
+diff --git a/sound/soc/codecs/aw88261.c b/sound/soc/codecs/aw88261.c
+index 38f362b022aa36..999461885a62ec 100644
+--- a/sound/soc/codecs/aw88261.c
++++ b/sound/soc/codecs/aw88261.c
+@@ -283,22 +283,22 @@ static void aw88261_reg_force_set(struct aw88261 *aw88261)
+ 	if (aw88261->frcset_en == AW88261_FRCSET_ENABLE) {
+ 		/* set FORCE_PWM */
+ 		regmap_update_bits(aw88261->regmap, AW88261_BSTCTRL3_REG,
+-				AW88261_FORCE_PWM_MASK, AW88261_FORCE_PWM_FORCEMINUS_PWM_VALUE);
++				~AW88261_FORCE_PWM_MASK, AW88261_FORCE_PWM_FORCEMINUS_PWM_VALUE);
+ 		/* set BOOST_OS_WIDTH */
+ 		regmap_update_bits(aw88261->regmap, AW88261_BSTCTRL5_REG,
+-				AW88261_BST_OS_WIDTH_MASK, AW88261_BST_OS_WIDTH_50NS_VALUE);
++				~AW88261_BST_OS_WIDTH_MASK, AW88261_BST_OS_WIDTH_50NS_VALUE);
+ 		/* set BURST_LOOPR */
+ 		regmap_update_bits(aw88261->regmap, AW88261_BSTCTRL6_REG,
+-				AW88261_BST_LOOPR_MASK, AW88261_BST_LOOPR_340K_VALUE);
++				~AW88261_BST_LOOPR_MASK, AW88261_BST_LOOPR_340K_VALUE);
+ 		/* set RSQN_DLY */
+ 		regmap_update_bits(aw88261->regmap, AW88261_BSTCTRL7_REG,
+-				AW88261_RSQN_DLY_MASK, AW88261_RSQN_DLY_35NS_VALUE);
++				~AW88261_RSQN_DLY_MASK, AW88261_RSQN_DLY_35NS_VALUE);
+ 		/* set BURST_SSMODE */
+ 		regmap_update_bits(aw88261->regmap, AW88261_BSTCTRL8_REG,
+-				AW88261_BURST_SSMODE_MASK, AW88261_BURST_SSMODE_FAST_VALUE);
++				~AW88261_BURST_SSMODE_MASK, AW88261_BURST_SSMODE_FAST_VALUE);
+ 		/* set BST_BURST */
+ 		regmap_update_bits(aw88261->regmap, AW88261_BSTCTRL9_REG,
+-				AW88261_BST_BURST_MASK, AW88261_BST_BURST_30MA_VALUE);
++				~AW88261_BST_BURST_MASK, AW88261_BST_BURST_30MA_VALUE);
+ 	} else {
+ 		dev_dbg(aw88261->aw_pa->dev, "needn't set reg value");
+ 	}
 -- 
 2.53.0
 
