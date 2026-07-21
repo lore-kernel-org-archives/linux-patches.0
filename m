@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8710D35C6AC;
-	Tue, 21 Jul 2026 21:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C94535C6AD;
+	Tue, 21 Jul 2026 21:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669344; cv=none; b=LvCgPU1IeP7fazp3/he77ibxEjnyNEInC66Rb5WSJJ0R9cx+MgpXm7ngA3+HH4QR+kqhfgRdljvbZcM8npu7dE1jDI7wYTzXrrXtEtioldLBCMV52BCSPv8KL+EKG8w89wPUCA7zPeSU9HLXOSUAlQ2Y6YEBGmyoTiF6mLiyBh4=
+	t=1784669348; cv=none; b=B/RCqZeHzhJeAx1K/S1FFV5xt49EcaGAahhWuC0hrDcNKgArtydnP6gXYuxAD3vodl54fa03PF+5vzNjBY/ZmZgC8Z1NkDrPRMl0K0sxmCODU7+MS/hJV6fFBBxUgGUPxtEcnAB2ZGSvrXdTdIJ9RvmzpNDyEQt8vdCqv3LTIcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669344; c=relaxed/simple;
-	bh=ZvuG3Ya3vJnP+kVPoredXl6XHcj3Op8N/eCjHurE0Xg=;
+	s=arc-20240116; t=1784669348; c=relaxed/simple;
+	bh=QB+mOgXfVerDMxxxQohPFvrYWHhwimHaGuLwBOJ8kic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j6hwOLLwJxp4PWa+pmy4eF9K2fn/kY4pZz2dGeDl3n5hf6uB0Obf5dVtxQPFE/WES6PrBxrkfADvAMafy31Wq1gpmSWxAxzBD7X+0tibvbAOTlq254XP8et4L1ZGlIyrF9PHQIBP6eeRl/Rtw2+fLskHWhMhViNwAhB9lUVN1XE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JeWu4KVf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GFwggag7K68xhZRp9E6Uzq9ZbI5HGtryvCKdv0xaHxAwaLXziGmYgRFwWyl0ZRnRk8AAetT3wMxLR8WBpUghcr1O6M6QxYc1ZtUhLI9lJ5KPSP0eofKNpLjFnGpQYD4s4RrIdqX55iExp2JAkrOsJDTsgyrWlYRrI+5Jv8l8wgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UxfMd1/k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JeWu4KVf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD591F000E9;
-	Tue, 21 Jul 2026 21:28:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UxfMd1/k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C671F000E9;
+	Tue, 21 Jul 2026 21:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669340;
-	bh=SotsTIa8nPK7CAfSlj6BhH7gOSbSLlPBySFLAvtilNk=;
+	s=korg; t=1784669345;
+	bh=/bBnLDiG2kAc7FKqB6YkSEwLRXFOuwKkq9PNGwra2dU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JeWu4KVf6zYYoGMYDL4bitvrRCNaioBj0NRFc1pvGC3ki3Nmm+SCx1I/6/AsbUlp2
-	 jP0VIY3pfXB1iNkfnrJzZ4s2TpSPk8iW0LTNHglDZ9OPgDVrxbMlYDK8el2t8yj+gY
-	 kM09NDdSRVJIKVIg+M8RMe1zFK3miiIDTDWVNnzQ=
+	b=UxfMd1/kmH/qfnGkSwHSp8/yNa0uz461WFrx1n0D17K7pMOuKFQLq2oec8KEHSNaH
+	 BIM2jNJN4bvh7ch9NOm1/KROLZ2Vwd9Fdn5nOXMN4QsEPtpgheQRvCiomzg4oOcJCo
+	 p21OLqQtPZi/jfYL6Of7FMs9g/Y9fnDbn3OE+6iE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0474/1067] coresight: etm4x: Correct TRCVMIDCCTLR1 save and restore
-Date: Tue, 21 Jul 2026 17:17:55 +0200
-Message-ID: <20260721152435.219177839@linuxfoundation.org>
+Subject: [PATCH 6.1 0476/1067] PCI: Introduce named defines for PCI ROM
+Date: Tue, 21 Jul 2026 17:17:57 +0200
+Message-ID: <20260721152435.262830296@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -46,51 +47,105 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 0ec0a8785d21f63db520bd9d2a67c55e855d36a8 ]
+[ Upstream commit 113e86bc58a918f85d250723436a4d541a873358 ]
 
-It is a typo to use trcvmidcctlr0 to save and restore TRCVMIDCCTLR1.
-Use trcvmidcctlr1 instead.
+Convert the magic numbers associated with PCI ROM into named
+definitions. Some of these definitions will be used in the second
+fix patch.
 
-Fixes: f5bd523690d2 ("coresight: etm4x: Convert all register accesses")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260408-arm_cs_fix_trcvmidcctlr1_typo-v1-1-6a5695363b46@arm.com
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Link: https://patch.msgid.link/20260508082128.3344255-2-kanie@linux.alibaba.com
+Stable-dep-of: 538796b807fc ("PCI: Check ROM header and data structure addr before accessing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/rom.c | 40 ++++++++++++++++++++++++++++------------
+ 1 file changed, 28 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index 0616efc7cb198f..b2c55cc45a11f7 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -1758,7 +1758,7 @@ static int __etm4_cpu_save(struct etmv4_drvdata *drvdata)
+diff --git a/drivers/pci/rom.c b/drivers/pci/rom.c
+index e18d3a4383ba6b..d4a141bd148b4b 100644
+--- a/drivers/pci/rom.c
++++ b/drivers/pci/rom.c
+@@ -5,13 +5,28 @@
+  * (C) Copyright 2004 Jon Smirl <jonsmirl@yahoo.com>
+  * (C) Copyright 2004 Silicon Graphics, Inc. Jesse Barnes <jbarnes@sgi.com>
+  */
++
++#include <linux/bits.h>
+ #include <linux/kernel.h>
+ #include <linux/export.h>
+ #include <linux/pci.h>
++#include <linux/sizes.h>
+ #include <linux/slab.h>
  
- 	state->trcvmidcctlr0 = etm4x_read32(csa, TRCVMIDCCTLR0);
- 	if (drvdata->numvmidc > 4)
--		state->trcvmidcctlr0 = etm4x_read32(csa, TRCVMIDCCTLR1);
-+		state->trcvmidcctlr1 = etm4x_read32(csa, TRCVMIDCCTLR1);
+ #include "pci.h"
  
- 	state->trcclaimset = etm4x_read32(csa, TRCCLAIMCLR);
- 
-@@ -1884,7 +1884,7 @@ static void __etm4_cpu_restore(struct etmv4_drvdata *drvdata)
- 
- 	etm4x_relaxed_write32(csa, state->trcvmidcctlr0, TRCVMIDCCTLR0);
- 	if (drvdata->numvmidc > 4)
--		etm4x_relaxed_write32(csa, state->trcvmidcctlr0, TRCVMIDCCTLR1);
-+		etm4x_relaxed_write32(csa, state->trcvmidcctlr1, TRCVMIDCCTLR1);
- 
- 	etm4x_relaxed_write32(csa, state->trcclaimset, TRCCLAIMSET);
- 
++#define PCI_ROM_HEADER_SIZE			0x1A
++#define PCI_ROM_POINTER_TO_DATA_STRUCT		0x18
++#define PCI_ROM_LAST_IMAGE_INDICATOR		0x15
++#define PCI_ROM_LAST_IMAGE_INDICATOR_BIT	BIT(7)
++#define PCI_ROM_IMAGE_LEN			0x10
++#define PCI_ROM_IMAGE_SECTOR_SIZE		SZ_512
++#define PCI_ROM_IMAGE_SIGNATURE			0xAA55
++
++/* Data structure signature is "PCIR" in ASCII representation */
++#define PCI_ROM_DATA_STRUCT_SIGNATURE		0x52494350
++#define PCI_ROM_DATA_STRUCT_LEN			0x0A
++
+ /**
+  * pci_enable_rom - enable ROM decoding for a PCI device
+  * @pdev: PCI device to enable
+@@ -91,26 +106,27 @@ static size_t pci_get_rom_size(struct pci_dev *pdev, void __iomem *rom,
+ 	do {
+ 		void __iomem *pds;
+ 		/* Standard PCI ROMs start out with these bytes 55 AA */
+-		if (readw(image) != 0xAA55) {
+-			pci_info(pdev, "Invalid PCI ROM header signature: expecting 0xaa55, got %#06x\n",
+-				 readw(image));
++		if (readw(image) != PCI_ROM_IMAGE_SIGNATURE) {
++			pci_info(pdev, "Invalid PCI ROM header signature: expecting %#06x, got %#06x\n",
++				 PCI_ROM_IMAGE_SIGNATURE, readw(image));
+ 			break;
+ 		}
+-		/* get the PCI data structure and check its "PCIR" signature */
+-		pds = image + readw(image + 24);
+-		if (readl(pds) != 0x52494350) {
+-			pci_info(pdev, "Invalid PCI ROM data signature: expecting 0x52494350, got %#010x\n",
+-				 readl(pds));
++		/* Get the PCI data structure and check its "PCIR" signature */
++		pds = image + readw(image + PCI_ROM_POINTER_TO_DATA_STRUCT);
++		if (readl(pds) != PCI_ROM_DATA_STRUCT_SIGNATURE) {
++			pci_info(pdev, "Invalid PCI ROM data signature: expecting %#010x, got %#010x\n",
++				 PCI_ROM_DATA_STRUCT_SIGNATURE, readl(pds));
+ 			break;
+ 		}
+-		last_image = readb(pds + 21) & 0x80;
+-		length = readw(pds + 16);
+-		image += length * 512;
++		last_image = readb(pds + PCI_ROM_LAST_IMAGE_INDICATOR) &
++				   PCI_ROM_LAST_IMAGE_INDICATOR_BIT;
++		length = readw(pds + PCI_ROM_IMAGE_LEN);
++		image += length * PCI_ROM_IMAGE_SECTOR_SIZE;
+ 		/* Avoid iterating through memory outside the resource window */
+ 		if (image >= rom + size)
+ 			break;
+ 		if (!last_image) {
+-			if (readw(image) != 0xAA55) {
++			if (readw(image) != PCI_ROM_IMAGE_SIGNATURE) {
+ 				pci_info(pdev, "No more image in the PCI ROM\n");
+ 				break;
+ 			}
 -- 
 2.53.0
 
