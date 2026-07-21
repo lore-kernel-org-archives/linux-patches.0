@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88087471252;
-	Tue, 21 Jul 2026 19:09:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4908E411661;
+	Tue, 21 Jul 2026 19:09:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660990; cv=none; b=TEgaNiFOjNZPLpJ1NLVRmCN77ItA8KTh0/hudFPDCoLAu+Mv5c0iQb4IHWZTyB4VwpRreNVHENiF2AGgT1XiIbUeQ7lF7lcYqWJx6PG2BYAqhI/NgyhbSyxtI5GxdZH5TfQQukTvd1wVoQ2/F+WyVJtdMs2fl2L6u9E6xSsi8b0=
+	t=1784660993; cv=none; b=lD5maeMl1Dz0VkdCf+4h7lqIWRDKkkPWiLnarMBhFZy4hOvdtqHd8FpuPNTBrWTl9FQTPjNU+PuTauZLtyv/dCAsOnvS324PWnXaddPaeKkcrGAt3rPnutqUG7qnIlWZOd7SjqHaRl3u4p2hf2ogYJ/MshNRBvKRTAekfMP4HuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660990; c=relaxed/simple;
-	bh=LPlm67sk75cNh5UH9vnkLn3mqU1b770FBO7GfvltN1c=;
+	s=arc-20240116; t=1784660993; c=relaxed/simple;
+	bh=nhIvYLgskoTpvg0BdNaB52g/RE2537syE5cY/dmzpMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KOo+LdR9QixP5ZALov2tWM7uSEyvi+xOYTa5493+Ay8ayeJlQ26Nve2e9j8bYsPVICJwKfk8TcX9vGgEFJjmarEKH80Bk1lVasVn39etpRY+0SwkrhLhmAobIPtVHxdjU60tudLvuIA92K640LcItzOv/muWtBSqu7BvS6fYgRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G+F3XBeE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dw8lVvBR+KBFU5IWAkqe6OC3VBkceUk6LSiEYuSn2jdIDqAM1ka9me1u7nAD/793aYkzGvPMFgVQDoYNStWWs6S2HJe3b3mhXIi9Cf8EbDnQ3BwhMFBUsu/DzCDd+6tLnvozLDthD5FLw+F7L2teyYPrWsfE5iwattCAucb+iW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QdI7BMC9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+F3XBeE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5121F000E9;
-	Tue, 21 Jul 2026 19:09:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QdI7BMC9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A93E51F000E9;
+	Tue, 21 Jul 2026 19:09:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660989;
-	bh=7r4XhsGLiZI6SES63zdhXg+VJBvcfPAklWgYTBlBL5E=;
+	s=korg; t=1784660992;
+	bh=WCm0qWZ7s7WMQG2AJldL/2hKfqDKShk/Ggk7QtSQoY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G+F3XBeEEJ52uFguPSPdNZXd/0Zv27bRIGSMbmX4Z5eEDuTjV3U9i5naPH8yALT5J
-	 +vQ1wk5iMzLgRUm84pTXj7mPFVkJo2oMpGVBtkbE9g9kzvu+5B6OMQGBfzSgBtRXy4
-	 ciigtZwIi7LhLwSvYULtcavoVwkT27w4CxXxMCJs=
+	b=QdI7BMC9nJnFRfbxELSDaVVb0GMR/skrGDqBpHVlHYleskrslzXpQ6e2sDyB76oZ8
+	 0HAAnWyRw9IZxPzmUT6ARAra9azUCgefgg4PYxzWVG5iw90bmoIBSssYROjO1qf1F8
+	 mz0oCjKfrEdbohMdOjK70AVHyAgeIGogArlr4u4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Antoni Pokusinski <apokusinski01@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1188/2077] dpaa2-switch: do not accept VLAN uppers while bridged
-Date: Tue, 21 Jul 2026 17:14:21 +0200
-Message-ID: <20260721152620.839753316@linuxfoundation.org>
+Subject: [PATCH 7.1 1189/2077] rtc: abx80x: fix the RTC_VL_CLR clearing all status flags
+Date: Tue, 21 Jul 2026 17:14:22 +0200
+Message-ID: <20260721152620.862854558@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,52 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Antoni Pokusinski <apokusinski01@gmail.com>
 
-[ Upstream commit d07d80b6a129a44538cda1549b7acf95154fb197 ]
+[ Upstream commit 419719c514252a2dbb2e2976f564c83417dd6d0a ]
 
-The dpaa2-switch driver does not support VLAN uppers while its ports are
-bridged. This scenario tried to be prevented by rejecting a bridge join
-while VLAN uppers exist but the reverse order was still possible.
+The RTC_VL_CLR ioctl intends to clear only the battery low flag (BLF),
+however the current implementation writes 0 to the status register,
+clearing all status bits.
 
-This patches adds a check so that the dpaa2-switch also does not accept
-VLAN uppers while bridged.
+Fix this by writing back the masked status value so that only BLF is
+cleared, preserving other status flags.
 
-Fixes: f48298d3fbfa ("staging: dpaa2-switch: move the driver out of staging")
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://patch.msgid.link/20260618092813.432535-2-ioana.ciornei@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ffe1c5a2d427 ("rtc: abx80x: Implement RTC_VL_READ,CLR ioctls")
+Signed-off-by: Antoni Pokusinski <apokusinski01@gmail.com>
+Link: https://patch.msgid.link/20260415160610.127155-2-apokusinski01@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/rtc/rtc-abx80x.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-index 46ae81c2fa013a..fa4e4f47978234 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-@@ -2198,6 +2198,7 @@ dpaa2_switch_prechangeupper_sanity_checks(struct net_device *netdev,
- static int dpaa2_switch_port_prechangeupper(struct net_device *netdev,
- 					    struct netdev_notifier_changeupper_info *info)
- {
-+	struct ethsw_port_priv *port_priv;
- 	struct netlink_ext_ack *extack;
- 	struct net_device *upper_dev;
- 	int err;
-@@ -2216,6 +2217,13 @@ static int dpaa2_switch_port_prechangeupper(struct net_device *netdev,
+diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
+index 00d7de64ed3e72..008a70baa69fea 100644
+--- a/drivers/rtc/rtc-abx80x.c
++++ b/drivers/rtc/rtc-abx80x.c
+@@ -545,7 +545,8 @@ static int abx80x_ioctl(struct device *dev, unsigned int cmd, unsigned long arg)
  
- 		if (!info->linking)
- 			dpaa2_switch_port_pre_bridge_leave(netdev);
-+	} else if (is_vlan_dev(upper_dev)) {
-+		port_priv = netdev_priv(netdev);
-+		if (port_priv->fdb->bridge_dev) {
-+			NL_SET_ERR_MSG_MOD(extack,
-+					   "Cannot accept VLAN uppers while bridged");
-+			return -EOPNOTSUPP;
-+		}
- 	}
+ 		status &= ~ABX8XX_STATUS_BLF;
  
- 	return 0;
+-		tmp = i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS, 0);
++		tmp = i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS,
++						status);
+ 		if (tmp < 0)
+ 			return tmp;
+ 
 -- 
 2.53.0
 
