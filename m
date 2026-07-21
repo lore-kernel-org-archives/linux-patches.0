@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A246471257;
-	Tue, 21 Jul 2026 19:39:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B775C42A7B5;
+	Tue, 21 Jul 2026 19:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662744; cv=none; b=rlPKe7jydPBEYSQwWQSJu34gZW9p72r5gMK2a8mMRqjf3z9b1lwY/f6dVVgDHHsiJ3rz/SjuZ/UtsgCt6/uoA1X66lRxFiqwGCRdEYNcdo2f6s205jOYkpimzyWGeOwgyeeJFznCl+QAABm6k944eMmSyP0LmDrGszP5scHJiyE=
+	t=1784662746; cv=none; b=QZwQc2JQOXIjHlo76AWNvYkPx3ENA75dU6Ohux0UDKQywpfK9LDRGPbDFLmom0CKbTo9C9bhXiGa/+lP7hk+lA+YkOtf/4Yd6H1texpJvHtm5xNiVAD3QvQMfpfuZpHCTsHYWUOR6W9BtVIVsoOGCop+M5HH5ou8Dt5jmI7LvZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662744; c=relaxed/simple;
-	bh=lbomb85HucHIYc9iDT9g57gPI8aMZKk+ZL/uxLsH3VY=;
+	s=arc-20240116; t=1784662746; c=relaxed/simple;
+	bh=KHFA2CEGp3ZevF5FEc1Egrj8Fr+5o5cz8e0C01md67s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UrHguX2E4zQOjmOjdxQZxAh99rZjjZluYvnK/Kcuz3/K/r/29q9lNOTD2zucUYV+J6Q+IakWFeb6D0LVcjs7PMtIe/fh2+ZRHzUCwNfkQQyfO0OAgu7g6L15FHhi7vYfdIH+P1fDPCBHrW6LB4E3eLu5bR/nOtydLtgtMRuiJzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVBB48yG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=byPExf2w9sWM6YZzMAtEf8U0WZazXYzpSTIV4roVDN3HqdtR30IQor+lGNqOXoLdhbeFlMxalqZqXpUYqQEYQHUw3E8EI6gB0mgb87/ZRLAdIpzfR7/u8P5UQjwaDEpPcSFTeHKH/z7UZ3Cn1AnOUZ9aht08mTG4UX6t+Wiwyd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOmGTXc0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVBB48yG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ADA81F000E9;
-	Tue, 21 Jul 2026 19:39:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOmGTXc0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 288641F000E9;
+	Tue, 21 Jul 2026 19:39:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662743;
-	bh=zzVSGlLJzoqS7WTegvsWyjV1pE2aH2IDSUtVe83OY1o=;
+	s=korg; t=1784662745;
+	bh=aBuZGBwtVhpoGRsW1YumtSDXYNjAWXvIeJdeR3OCP7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TVBB48yGpMa+A57eojuY6WIzoNUx3DNOj4XtE+3ugVDPlsczNWXuxN2QGFJmz5ojf
-	 H8TPYj21Y0Be1ABKwwrcK0MlHzd0UTqHyf69FIu7Pl0hTk7tUYTTGJToETbr83KOeo
-	 2AhDGrIjcWm0+11gZCwaRnmWFx9phuWAanVnvmUE=
+	b=wOmGTXc0xUy38Fxi7sVkkB3K67a2ac8NmwUXE0/T9GvFNC8TkyCHbmdIn+5FJsVBQ
+	 z6Bzp2vH/D3Nt+QgjYvz4F+NsOVSCbn9FISu4YiWlgCUN/Gt2FMPP5aMr+gls6DWe0
+	 j9M9wOzRYteCDqcThWGVcJTErHLzhLYdIfex68W0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Deak <imre.deak@intel.com>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0561/1276] drm/i915: clear CRTC color blob pointers after dropping refs
-Date: Tue, 21 Jul 2026 17:16:44 +0200
-Message-ID: <20260721152458.673978261@linuxfoundation.org>
+Subject: [PATCH 6.12 0562/1276] spi: dw: fix wrong BAUDR setting after resume
+Date: Tue, 21 Jul 2026 17:16:45 +0200
+Message-ID: <20260721152458.695904750@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,56 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit 31f077088e0faae6be8377741f356dea1b94ba46 ]
+[ Upstream commit 66b6605bcea7af7aca3d1d858b9c5f14903f9f9a ]
 
-intel_crtc_put_color_blobs() drops the CRTC color blob references, but
-leaves the corresponding pointers unchanged.
+After resuming from suspend to ram, spi transfer stops working. Further
+debugging shows that the BAUDR register isn't correctly set, this is
+due to dws->current_freq doesn't match the HW BAUDR setting,
+specifically, the dws->current_freq equals to speed_hz, but BAUDR is 0.
+so the dw_spi_set_clk() in below code won't be called:
 
-This can matter in intel_crtc_prepare_cleared_state(), which frees the
-old CRTC hw state before calling intel_dp_tunnel_atomic_clear_stream_bw().
-The latter can fail while looking up the DP tunnel group state, for
-example with -EDEADLK.
+        if (dws->current_freq != speed_hz) {
+                dw_spi_set_clk(dws, clk_div);
+                dws->current_freq = speed_hz;
+        }
 
-If that happens, the function returns without completing the cleared
-state preparation. The failed atomic state will then be cleared by the
-atomic core and intel_crtc_free_hw_state() can be called again for the
-same state, dropping the same blob references again.
+The mismatch comes from dw_spi_shutdown_chip() when suspending.
+Fix this mismatch by setting dws->current_freq to 0 as well when
+clearing BAUDR reg in dw_spi_shutdown_chip().
 
-Clear the blob pointers after dropping the references so repeated cleanup
-of the same CRTC hw state is safe.
-
-Fixes: 77fcf58df15e ("drm/i915/dp_tunnel: Fix error handling when clearing stream BW in atomic state")
-Suggested-by: Imre Deak <imre.deak@intel.com>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Imre Deak <imre.deak@intel.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patch.msgid.link/20260612035310.3013066-1-lgs201920130244@gmail.com
-(cherry picked from commit d5005addb5f68e8a0edce249506757bdc9e3d8c8)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: e24c74527207 ("spi: controller driver for Designware SPI core")
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Link: https://patch.msgid.link/20260612002835.5240-1-jszhang@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_atomic.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/spi/spi-dw.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_atomic.c b/drivers/gpu/drm/i915/display/intel_atomic.c
-index 12d6ed94075142..c1da487e88957d 100644
---- a/drivers/gpu/drm/i915/display/intel_atomic.c
-+++ b/drivers/gpu/drm/i915/display/intel_atomic.c
-@@ -290,6 +290,12 @@ static void intel_crtc_put_color_blobs(struct intel_crtc_state *crtc_state)
- 
- 	drm_property_blob_put(crtc_state->pre_csc_lut);
- 	drm_property_blob_put(crtc_state->post_csc_lut);
-+
-+	crtc_state->hw.degamma_lut = NULL;
-+	crtc_state->hw.gamma_lut = NULL;
-+	crtc_state->hw.ctm = NULL;
-+	crtc_state->pre_csc_lut = NULL;
-+	crtc_state->post_csc_lut = NULL;
+diff --git a/drivers/spi/spi-dw.h b/drivers/spi/spi-dw.h
+index fc267c6437ae09..8a3c085c85e078 100644
+--- a/drivers/spi/spi-dw.h
++++ b/drivers/spi/spi-dw.h
+@@ -282,6 +282,7 @@ static inline void dw_spi_shutdown_chip(struct dw_spi *dws)
+ {
+ 	dw_spi_enable_chip(dws, 0);
+ 	dw_spi_set_clk(dws, 0);
++	dws->current_freq = 0;
  }
  
- void intel_crtc_free_hw_state(struct intel_crtc_state *crtc_state)
+ extern void dw_spi_set_cs(struct spi_device *spi, bool enable);
 -- 
 2.53.0
 
