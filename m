@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C97246A5F6;
-	Tue, 21 Jul 2026 17:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394BD46AA89;
+	Tue, 21 Jul 2026 17:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654877; cv=none; b=B+rfqvzyZwDzY89PpaE1R3K1JoieNXzukJCxC92KFb59itG0jfL/ZnDrhT19fVTcDZjCq6Gh77He83nNDJ2uBNNHJXMbV2r1UjiSQ08j9j0SNnRIiDeDiU/SM6EkMjYotcBfBZn86uFA81E5tSorYuvqjUlQ6nBoYuJf7bl9Jwg=
+	t=1784654879; cv=none; b=M94jHsMoigh6bCrn4ufQgpuakWj4MD/Bie7oe2tK9vslXIgUSsfEugL98Fx6oUvIcnd0i72pbiAvK1nBY4wWh7mgehvXvfjPGWhRvyxImALDcR9EhcQiE0w2GbMy5WGc/Y7tsGaypb33c4sKyopJ+3HwOgUphpJEwPiasnuSpIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654877; c=relaxed/simple;
-	bh=sRy7Aq5ZHoC7NqbW+R2fH2KcmOQZhHvJVuCAKqLI6RU=;
+	s=arc-20240116; t=1784654879; c=relaxed/simple;
+	bh=bkEgIq62/VQVIhXnSEGOJj3eXFfrjkQSukwpyr67k7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dTOt7zxjs+7Zja8ZcW42B7qJ4U8oLUxZczOUUuF3yRKqDIymlDUVuoLWs/d+8nOse7n583S0g01RYcfRo/aucutMt5pNdwrX8Fw7UxLvhMIBKWS/E/zZaEWFrWGIAmzZYvDjhqvMhFoxJHmlMZqH4gsJimQo5BxWtim+p5AM0Cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UaCvU10v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nno6aSH/0b/f7eC3hP0zvHX+cmo6srNA3kDy7X80hK2Ek7FPInJvvWV8h11mtj90rnbtJ3F2mWdJQb14pmgQq5lvwszc7B9Whm09uDfLfky7lo+ToUCIGLDlKCZdErDMzXPXtv63rrBmoWIk7RwdLs/MQXhN+LUJJmqDJPJQF6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJSJ9fiy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UaCvU10v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA2851F00A3A;
-	Tue, 21 Jul 2026 17:27:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJSJ9fiy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 634F01F000E9;
+	Tue, 21 Jul 2026 17:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654873;
-	bh=LOkfnTFJDqTMevm7jsdsBNqcCpFWx09Q9Im1f/UMSwE=;
+	s=korg; t=1784654875;
+	bh=IyA1EUx/OQ8sIBCNsDJuZZ+5fpCsui9AgwVBAkISoGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UaCvU10vh7sv8NLNmxjD0IZhuLBFz7XMvE/bs0NpNy6C33EOlBbxT8Wd5DFFeYxg5
-	 NsgrZ94pujs8GSpdT/MVFZ9a5johyA2Ngilp/j2iHnkzU6HTj1gNKTe9FUFyU1l+te
-	 szwZRhZT2hqGv8osk/FJ5bV2yX7gXK52+sMGEakY=
+	b=SJSJ9fiynIjr3x5HOBniafh+utsRbHgOZjRqRnwMbckAhnEKPP6jHcR4MO39lJeis
+	 PucIyH3dayf3CaJpgCo9LXTwo/l7YIwnSjgTpBK/jqgudkA17KvHXIRAAgWWoWd6IE
+	 BqO6GQ2tqgEXyxH5pBKb3DDYDFi2QzPV6dnxpPL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Don Brace <don.brace@microchip.com>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Justin Tee <justin.tee@broadcom.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 7.1 1870/2077] scsi: hpsa: Fix DMA mapping leak on IOACCEL2 reset path
-Date: Tue, 21 Jul 2026 17:25:43 +0200
-Message-ID: <20260721152636.839719067@linuxfoundation.org>
+Subject: [PATCH 7.1 1871/2077] scsi: lpfc: Fix memory leak in lpfc_sli4_driver_resource_setup()
+Date: Tue, 21 Jul 2026 17:25:44 +0200
+Message-ID: <20260721152636.863846668@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,39 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit e166bafc483e927150cb9b5f286c9191ea0df84e upstream.
+commit 1bd28625e25be549ee7c47532e7c3ef91c682410 upstream.
 
-If phys_disk->in_reset is set, the function returns directly without
-undoing the resources acquired for the command. Add the missing error
-cleanup by unmapping the IOACCEL2 SG chain block when needed, unmapping
-the SCSI command, and dropping the outstanding IOACCEL command count
-before returning.
+The memory allocated for mboxq using mempool_alloc() is not freed in
+some of the early exit error paths. Fix that by moving the
+mempool_free() call to an earlier point after last use.
 
-Fixes: c5dfd106414f ("scsi: hpsa: correct device resets")
+Fixes: d79c9e9d4b3d ("scsi: lpfc: Support dynamic unbounded SGL lists on G7 hardware.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Acked-by: Don Brace <don.brace@microchip.com>
-Link: https://patch.msgid.link/20260622160028.1240496-1-haoxiang_li2024@163.com
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://patch.msgid.link/20260707065304.949135-1-nihaal@cse.iitm.ac.in
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/hpsa.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/scsi/lpfc/lpfc_init.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/scsi/hpsa.c
-+++ b/drivers/scsi/hpsa.c
-@@ -5017,6 +5017,10 @@ static int hpsa_scsi_ioaccel2_queue_comm
- 
- 	if (phys_disk->in_reset) {
- 		cmd->result = DID_RESET << 16;
-+		atomic_dec(&phys_disk->ioaccel_cmds_out);
-+		scsi_dma_unmap(cmd);
-+		if (use_sg > h->ioaccel_maxsg)
-+			hpsa_unmap_ioaccel2_sg_chain_block(h, cp);
- 		return -1;
+--- a/drivers/scsi/lpfc/lpfc_init.c
++++ b/drivers/scsi/lpfc/lpfc_init.c
+@@ -8189,6 +8189,7 @@ lpfc_sli4_driver_resource_setup(struct l
+ 		mempool_free(mboxq, phba->mbox_mem_pool);
+ 		goto out_free_bsmbx;
  	}
++	mempool_free(mboxq, phba->mbox_mem_pool);
+ 
+ 	/*
+ 	 * 1 for cmd, 1 for rsp, NVME adds an extra one
+@@ -8311,8 +8312,6 @@ lpfc_sli4_driver_resource_setup(struct l
+ 		goto out_free_sg_dma_buf;
+ 	}
+ 
+-	mempool_free(mboxq, phba->mbox_mem_pool);
+-
+ 	/* Verify OAS is supported */
+ 	lpfc_sli4_oas_verify(phba);
  
 
 
