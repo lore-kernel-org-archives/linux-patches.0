@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CC8388E40;
-	Tue, 21 Jul 2026 19:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3989539A7FD;
+	Tue, 21 Jul 2026 19:08:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660878; cv=none; b=lj0Ah9daf+KfhzMaYiczbEpEbSagtMQSnnRQLyLUBnVzXomvdVfq23hAHRHK5Dq2xWgjaxQID23H5If52jl9Fh39BoAHeOtO7FOtHHGtXYWHg/2FcKaXBsVu02hNUlwa/b/Za0/25VULBkzuZZ/VEPACPOai6JCEpvdNGghwhF4=
+	t=1784660881; cv=none; b=cqO6h+8IL5adBIFaBQz4lzcLztfLtI5dQZFFfj/6kywM8ij8i+nzsHP+uaUu0XVxRAex/Kwz0Czcip2fEipM5rkvlcJba3Lu02TtWoKTU/YOGOypewwd44heygzjPq7c1v26B/I/2/B8kGQJG4IDNVt9TyJxgImG4z4v2G5O6yQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660878; c=relaxed/simple;
-	bh=4dXwCqu/I2y3/ken2NoRLD44/VlsZxtzOhkLBmTtLPg=;
+	s=arc-20240116; t=1784660881; c=relaxed/simple;
+	bh=STzDG2SCZG/D/m0PdbFRr4j+n6TmNIrSbj4Sj9KKRh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=koElCBALLaRIyWuSg5xreuQav1tJUK8i6eF1LXg9EFJfZDOjQ9RfmIaas8asZV4Xiaetdepjy4PImHJmTeQCFWV9oMuJmM93KVqgTpcH56M+od4dg8jsMiXMi+4i/cSpQSDA5BeGxD/Eh8BHJuydwcI56Dphw9hmkvCfN8AsBCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XsbjX7R5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=begHhHVNez2erst8gBH1YV+zV7Gw66yec8aZZbRS/t6cVed53OmuNQsGRxuT5LT6AwC4YgXJ7WZILiZWAz9jshwK2iACC3caNlhQCMQxa7Rysr0eJQiLUXCigST9iyazE0Lo2XDVLc4uEfctjHW2cd6wcgmOyWzjqtLPUQmgIr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wI0snYkt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XsbjX7R5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0362E1F000E9;
-	Tue, 21 Jul 2026 19:07:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wI0snYkt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ED1C1F000E9;
+	Tue, 21 Jul 2026 19:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660877;
-	bh=V2qSRv5giMEbC1aVGJHXB8G6bP4tAdt1HHsO6fLOm5I=;
+	s=korg; t=1784660880;
+	bh=M5Bw38Fb8JwJ5dmHTF0K4JBn6EJupcKVW+c7s9/1HiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XsbjX7R5PjGpCWcUL6aycspoG+GDzD0NA7BZ9NnJ0Ey/2H3F+SaUuSO79spapPYEC
-	 YWVFl4cDy5xWwWqc+cY+dxukn1avv2q3fooIcapdmFn/YgaXE2b0YecfjWCfehd8J7
-	 u3tIl5j+ua5kllIuuHADFZ0fSb6dcAWwPzO7BzLE=
+	b=wI0snYktKez7EDh02+utXAcc4aJkSnllAogFK0vUxt1GnoUqTZZ7npM5zNhYd6WvG
+	 YMMuT7a0He8EKNJo2M2DSkmF1zWB3XbUZXZu0L5uviDrL00OvAMiSivCQJi7ZHvKBT
+	 tCdZA/LHnURZEnoURqQR/lfbQKlDtJUvv7rZipyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	sashiko-bot <sashiko-bot@kernel.org>,
 	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
 	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1144/2077] md/raid1: honor REQ_NOWAIT when waiting for behind writes
-Date: Tue, 21 Jul 2026 17:13:37 +0200
-Message-ID: <20260721152619.804983718@linuxfoundation.org>
+Subject: [PATCH 7.1 1145/2077] md/raid1: free r1_bio when REQ_NOWAIT is set and read would block on retry
+Date: Tue, 21 Jul 2026 17:13:38 +0200
+Message-ID: <20260721152619.827520373@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,162 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
 
-[ Upstream commit a286cb88ddb26c5f4377859d8e77233d9181eb82 ]
+[ Upstream commit 69ad6ce47f9bf2b9fe0ed69b042db993d33bbf12 ]
 
-raid1 supports REQ_NOWAIT reads by avoiding waits in the barrier path
-through wait_read_barrier(). However, a read can still block on a
-WriteMostly device when the array uses a bitmap and there are
-outstanding behind writes.
+When a read is retried, raid1_read_request() may be called with a
+pre-allocated r1_bio. If wait_read_barrier() fails for a REQ_NOWAIT
+read, the bio is completed and the function returns immediately. In this
+case the existing r1_bio is leaked.
 
-In that case raid1 unconditionally calls wait_behind_writes(), which
-may sleep until all behind writes complete. As a result, a REQ_NOWAIT
-read can block despite the caller explicitly requesting non-blocking
-behavior.
-
-This ensures that raid1 consistently honors REQ_NOWAIT reads across all
-paths that may otherwise wait for behind writes.
+This fixes a leak of pre-allocated r1_bio structures for retried reads.
 
 Fixes: 5aa705039c4f ("md: raid1 add nowait support")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260611083514.754922-1-abd.masalkhi@gmail.com?part=1
 Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-Link: https://patch.msgid.link/20260611083514.754922-1-abd.masalkhi@gmail.com
+Link: https://patch.msgid.link/20260611101350.759154-1-abd.masalkhi@gmail.com
 Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-bitmap.c   |  9 +++++++--
- drivers/md/md-bitmap.h   |  2 +-
- drivers/md/md-llbitmap.c | 13 ++++++++-----
- drivers/md/md.c          |  2 +-
- drivers/md/raid1.c       | 10 +++++++---
- 5 files changed, 24 insertions(+), 12 deletions(-)
+ drivers/md/raid1.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index 028b9ca8ce52db..1206e31f323ad8 100644
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -2063,18 +2063,23 @@ static void bitmap_end_behind_write(struct mddev *mddev)
- 		 bitmap->mddev->bitmap_info.max_write_behind);
- }
- 
--static void bitmap_wait_behind_writes(struct mddev *mddev)
-+static bool bitmap_wait_behind_writes(struct mddev *mddev, bool nowait)
- {
- 	struct bitmap *bitmap = mddev->bitmap;
- 
- 	/* wait for behind writes to complete */
- 	if (bitmap && atomic_read(&bitmap->behind_writes) > 0) {
-+		if (nowait)
-+			return false;
-+
- 		pr_debug("md:%s: behind writes in progress - waiting to stop.\n",
- 			 mdname(mddev));
- 		/* need to kick something here to make sure I/O goes? */
- 		wait_event(bitmap->behind_wait,
- 			   atomic_read(&bitmap->behind_writes) == 0);
- 	}
-+
-+	return true;
- }
- 
- static void bitmap_destroy(struct mddev *mddev)
-@@ -2084,7 +2089,7 @@ static void bitmap_destroy(struct mddev *mddev)
- 	if (!bitmap) /* there was no bitmap */
- 		return;
- 
--	bitmap_wait_behind_writes(mddev);
-+	bitmap_wait_behind_writes(mddev, false);
- 	if (!test_bit(MD_SERIALIZE_POLICY, &mddev->flags))
- 		mddev_destroy_serial_pool(mddev, NULL);
- 
-diff --git a/drivers/md/md-bitmap.h b/drivers/md/md-bitmap.h
-index 214f623c7e790b..f46674bdfeb918 100644
---- a/drivers/md/md-bitmap.h
-+++ b/drivers/md/md-bitmap.h
-@@ -98,7 +98,7 @@ struct bitmap_operations {
- 
- 	void (*start_behind_write)(struct mddev *mddev);
- 	void (*end_behind_write)(struct mddev *mddev);
--	void (*wait_behind_writes)(struct mddev *mddev);
-+	bool (*wait_behind_writes)(struct mddev *mddev, bool nowait);
- 
- 	md_bitmap_fn *start_write;
- 	md_bitmap_fn *end_write;
-diff --git a/drivers/md/md-llbitmap.c b/drivers/md/md-llbitmap.c
-index 1adc5b11782164..5a4e2abaa75770 100644
---- a/drivers/md/md-llbitmap.c
-+++ b/drivers/md/md-llbitmap.c
-@@ -1574,16 +1574,19 @@ static void llbitmap_end_behind_write(struct mddev *mddev)
- 		wake_up(&llbitmap->behind_wait);
- }
- 
--static void llbitmap_wait_behind_writes(struct mddev *mddev)
-+static bool llbitmap_wait_behind_writes(struct mddev *mddev, bool nowait)
- {
- 	struct llbitmap *llbitmap = mddev->bitmap;
- 
--	if (!llbitmap)
--		return;
-+	if (llbitmap && atomic_read(&llbitmap->behind_writes) > 0) {
-+		if (nowait)
-+			return false;
- 
--	wait_event(llbitmap->behind_wait,
--		   atomic_read(&llbitmap->behind_writes) == 0);
-+		wait_event(llbitmap->behind_wait,
-+			   atomic_read(&llbitmap->behind_writes) == 0);
-+	}
- 
-+	return true;
- }
- 
- static ssize_t bits_show(struct mddev *mddev, char *page)
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 518d1d9c22031f..6d1ddbdbbf8d29 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -7049,7 +7049,7 @@ EXPORT_SYMBOL_GPL(md_stop_writes);
- static void mddev_detach(struct mddev *mddev)
- {
- 	if (md_bitmap_enabled(mddev, false))
--		mddev->bitmap_ops->wait_behind_writes(mddev);
-+		mddev->bitmap_ops->wait_behind_writes(mddev, false);
- 	if (mddev->pers && mddev->pers->quiesce && !is_md_suspended(mddev)) {
- 		mddev->pers->quiesce(mddev, 1);
- 		mddev->pers->quiesce(mddev, 0);
 diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index eb72dd31380ab3..9a3df3cb7bdfe8 100644
+index 9a3df3cb7bdfe8..1f67e4efa09afb 100644
 --- a/drivers/md/raid1.c
 +++ b/drivers/md/raid1.c
-@@ -1341,6 +1341,7 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
- 	int max_sectors;
- 	int rdisk;
- 	bool r1bio_existed = !!r1_bio;
-+	bool nowait = bio->bi_opf & REQ_NOWAIT;
- 
- 	/*
- 	 * An md cloned bio indicates we are in the error path.
-@@ -1360,8 +1361,7 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
- 	 * Still need barrier for READ in case that whole
- 	 * array is frozen.
+@@ -1363,6 +1363,12 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
  	 */
--	if (!wait_read_barrier(conf, bio->bi_iter.bi_sector,
--				bio->bi_opf & REQ_NOWAIT)) {
-+	if (!wait_read_barrier(conf, bio->bi_iter.bi_sector, nowait)) {
+ 	if (!wait_read_barrier(conf, bio->bi_iter.bi_sector, nowait)) {
  		bio_wouldblock_error(bio);
++
++		if (r1bio_existed) {
++			set_bit(R1BIO_Returned, &r1_bio->state);
++			raid_end_bio_io(r1_bio);
++		}
++
  		return;
  	}
-@@ -1402,7 +1402,11 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
- 		 * over-take any writes that are 'behind'
- 		 */
- 		mddev_add_trace_msg(mddev, "raid1 wait behind writes");
--		mddev->bitmap_ops->wait_behind_writes(mddev);
-+		if (!mddev->bitmap_ops->wait_behind_writes(mddev, nowait)) {
-+			bio_wouldblock_error(bio);
-+			set_bit(R1BIO_Returned, &r1_bio->state);
-+			goto err_handle;
-+		}
- 	}
  
- 	if (max_sectors < bio_sectors(bio)) {
 -- 
 2.53.0
 
