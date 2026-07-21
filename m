@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D414C9567;
-	Tue, 21 Jul 2026 15:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F3F46C4C2;
+	Tue, 21 Jul 2026 15:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649428; cv=none; b=HwTVjHKAhMxLiMb5/IiwT5n3x8t0KM7umouMrsCcycOSKBuphldnigZJ4O5/mkFp66GTKYSoU2JS4SzeR5GhXjXOvHT/XrLlNmG5KyKPF77hLTKydxwderr5YIF/LSfzlyScVvM3GinqeTUpyR7uz+i+awUx3JWWioWf/bezecw=
+	t=1784649431; cv=none; b=TDBZQkg752Wup76k2DfPlxAax5+MudeDicYlJaNXpnvkZyXNlY2rfqSVg7y8PybUDiZAizF5uojjEA6tn5LH6s+PJGXQ4K0+rDBK7mTeu3jHtUN900jrd6NLu8w2Lj+K1LqF+g8PFojPGF1sROM0/DMF9fAyH1HyAZuEgb7ygVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649428; c=relaxed/simple;
-	bh=cpPTrI+WuCvJJxGmlprEb7rPKkt+rouiL7jUU3TsFl8=;
+	s=arc-20240116; t=1784649431; c=relaxed/simple;
+	bh=m5WNVWQwj9kpedDDJQ9ovoA7UtQURxe7NDF1P93D2mE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ogMsVcr6I8rEv/9SSRf3sTuxrRmeLEy8WT9ojPRbb31SdFopTSb9/pu7DsNzkcO/zfNBGKPSTgNfo7/FlkzZfwVt0QTMOw/8HJzAMosULCMoCjBeDb/5OU7bncCFqAAglJXBxEEgUPo7oePlLGFhzixnRc6w8rAh/id+PKVikdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mejcxkgv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JVFjz8K9h9efFhCiXn/ahAPIrHqMJKdvlER/WSal/k3K3rkycxf6zQqJ4+MGNYWuHSwZi+XsZxj92J5yamOs7U8LK39KYGRx/XDKGZYro3/zE9Nj9YjkDZNoC65xnA8/AWGOnoVCmXyfypwooO2J5SW+u6Sd8ChIwWIUsINFHtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vcBfYiKQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mejcxkgv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574B31F00A3A;
-	Tue, 21 Jul 2026 15:57:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vcBfYiKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019121F000E9;
+	Tue, 21 Jul 2026 15:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649426;
-	bh=N/hzsOoImkArUGyerUl7cnAkh/RdZwF6CVeKk1zJrQc=;
+	s=korg; t=1784649429;
+	bh=IfOhwwHa+/g84hGLW/c0hxbWcsiZoi2CJ2JJ3yVDcpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mejcxkgvHD2HbJluQLLrpXZCNCXLsQj1sxF//DhnCvy3wJhjfR7N8CUSgKMTS41nS
-	 hLkeJnKmLPdQ2OUPGESFF6yupi3pG+c3xuCfcyEaspWGiYdsZdyXCjPK6tFA6U9oUe
-	 QTY2AmfZMQtIOg4RD27NVdKKJx0Yd6AY1dv6Y+HI=
+	b=vcBfYiKQc/BoQjSmbnWBzKgM4JDZDlV6iRXMEO8AO6OrTCA7JnPdYWlt6YeXvlhOn
+	 T68PkUVYfFC9X4DWJuhu1LTqw6LLJu17DhNIEog8DeXK8l+Cou3Cc8gzq5JkSk4DiC
+	 A/e3JE5usVLQzUdsWrd+gvMUBIPNyfDQlQr5kaD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Alexandru Gagniuc <mr.nuke.me@gmail.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0574/2077] remoteproc: qcom_q6v5_wcss: drop redundant wcss_q6_bcr_reset
-Date: Tue, 21 Jul 2026 17:04:07 +0200
-Message-ID: <20260721152606.346124273@linuxfoundation.org>
+Subject: [PATCH 7.1 0575/2077] hwspinlock: qcom: avoid uninitialized struct members
+Date: Tue, 21 Jul 2026 17:04:08 +0200
+Message-ID: <20260721152606.369936010@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,99 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 6ad61d0acd41044a949e84f96a5f8e02284d350f ]
+[ Upstream commit 8752c396ce3b2136b3d4c906fe103f6efb6782d9 ]
 
-The wcss_q6_bcr_reset used on QCS404, and wcss_q6_reset used on IPQ
-are the same. "BCR reset" is redundant, and likely a mistake. Use the
-documented "wcss_q6_reset" instead. Drop ".wcss_q6_reset_required"
-from the descriptor, since all targets now need it.
+The reg_field is allocated on stack, so using the REG_FIELD macro will
+ensure that unused members do not have uninitialized values.
 
-This changes the bindings expectations, however, it actually fixes the
-driver to consume the intended ones (qcom,q6v5.txt), which lists
-"wcss_q6_reset" and *not* "wcss_q6_bcr_reset"
-
-Fixes: 0af65b9b915e ("remoteproc: qcom: wcss: Add non pas wcss Q6 support for QCS404")
-
+Fixes: 19a0f61224d2 ("hwspinlock: qcom: Add support for Qualcomm HW Mutex block")
+Link: https://sashiko.dev/#/patchset/20260319105947.6237-1-wsa%2Brenesas%40sang-engineering.com
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
-Link: https://lore.kernel.org/r/20251208223315.3540680-1-mr.nuke.me@gmail.com
+Link: https://lore.kernel.org/r/20260512091339.31085-2-wsa+renesas@sang-engineering.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_wcss.c | 23 +++++------------------
- 1 file changed, 5 insertions(+), 18 deletions(-)
+ drivers/hwspinlock/qcom_hwspinlock.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
-index c27200159a88a2..b391724cfd08e1 100644
---- a/drivers/remoteproc/qcom_q6v5_wcss.c
-+++ b/drivers/remoteproc/qcom_q6v5_wcss.c
-@@ -96,7 +96,6 @@ struct wcss_data {
- 	unsigned int crash_reason_smem;
- 	u32 version;
- 	bool aon_reset_required;
--	bool wcss_q6_reset_required;
- 	const char *ssr_name;
- 	const char *sysmon_name;
- 	int ssctl_id;
-@@ -134,7 +133,6 @@ struct q6v5_wcss {
- 	struct reset_control *wcss_aon_reset;
- 	struct reset_control *wcss_reset;
- 	struct reset_control *wcss_q6_reset;
--	struct reset_control *wcss_q6_bcr_reset;
+diff --git a/drivers/hwspinlock/qcom_hwspinlock.c b/drivers/hwspinlock/qcom_hwspinlock.c
+index 0390979fd765d0..712003a4640cc1 100644
+--- a/drivers/hwspinlock/qcom_hwspinlock.c
++++ b/drivers/hwspinlock/qcom_hwspinlock.c
+@@ -202,7 +202,6 @@ static struct regmap *qcom_hwspinlock_probe_mmio(struct platform_device *pdev,
+ static int qcom_hwspinlock_probe(struct platform_device *pdev)
+ {
+ 	struct hwspinlock_device *bank;
+-	struct reg_field field;
+ 	struct regmap *regmap;
+ 	size_t array_size;
+ 	u32 stride;
+@@ -224,9 +223,7 @@ static int qcom_hwspinlock_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, bank);
  
- 	struct qcom_q6v5 q6v5;
+ 	for (i = 0; i < QCOM_MUTEX_NUM_LOCKS; i++) {
+-		field.reg = base + i * stride;
+-		field.lsb = 0;
+-		field.msb = 31;
++		struct reg_field field = REG_FIELD(base + i * stride, 0, 31);
  
-@@ -309,7 +307,7 @@ static int q6v5_wcss_qcs404_power_on(struct q6v5_wcss *wcss)
- 		return ret;
- 
- 	/* Remove reset to the WCNSS QDSP6SS */
--	reset_control_deassert(wcss->wcss_q6_bcr_reset);
-+	reset_control_deassert(wcss->wcss_q6_reset);
- 
- 	/* Enable Q6SSTOP_AHBFABRIC_CBCR clock */
- 	ret = clk_prepare_enable(wcss->ahbfabric_cbcr_clk);
-@@ -803,19 +801,10 @@ static int q6v5_wcss_init_reset(struct q6v5_wcss *wcss,
- 		return PTR_ERR(wcss->wcss_reset);
- 	}
- 
--	if (desc->wcss_q6_reset_required) {
--		wcss->wcss_q6_reset = devm_reset_control_get_exclusive(dev, "wcss_q6_reset");
--		if (IS_ERR(wcss->wcss_q6_reset)) {
--			dev_err(wcss->dev, "unable to acquire wcss_q6_reset\n");
--			return PTR_ERR(wcss->wcss_q6_reset);
--		}
--	}
--
--	wcss->wcss_q6_bcr_reset = devm_reset_control_get_optional_exclusive(dev,
--							"wcss_q6_bcr_reset");
--	if (IS_ERR(wcss->wcss_q6_bcr_reset)) {
--		dev_err(wcss->dev, "unable to acquire wcss_q6_bcr_reset\n");
--		return PTR_ERR(wcss->wcss_q6_bcr_reset);
-+	wcss->wcss_q6_reset = devm_reset_control_get_exclusive(dev, "wcss_q6_reset");
-+	if (IS_ERR(wcss->wcss_q6_reset)) {
-+		dev_err(wcss->dev, "unable to acquire wcss_q6_reset\n");
-+		return PTR_ERR(wcss->wcss_q6_reset);
- 	}
- 
- 	return 0;
-@@ -1062,7 +1051,6 @@ static const struct wcss_data wcss_ipq8074_res_init = {
- 	.firmware_name = "IPQ8074/q6_fw.mdt",
- 	.crash_reason_smem = WCSS_CRASH_REASON,
- 	.aon_reset_required = true,
--	.wcss_q6_reset_required = true,
- 	.ops = &q6v5_wcss_ipq8074_ops,
- 	.requires_force_stop = true,
- };
-@@ -1072,7 +1060,6 @@ static const struct wcss_data wcss_qcs404_res_init = {
- 	.firmware_name = "wcnss.mdt",
- 	.version = WCSS_QCS404,
- 	.aon_reset_required = false,
--	.wcss_q6_reset_required = false,
- 	.ssr_name = "mpss",
- 	.sysmon_name = "wcnss",
- 	.ssctl_id = 0x12,
+ 		bank->lock[i].priv = devm_regmap_field_alloc(&pdev->dev,
+ 							     regmap, field);
 -- 
 2.53.0
 
