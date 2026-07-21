@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CD5472F8C;
-	Tue, 21 Jul 2026 17:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237B3472F8C;
+	Tue, 21 Jul 2026 17:49:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656158; cv=none; b=uxW/SWw1EMU8Fou4cTS4SILol4JEyJw8mp39KJNOeBgEa1ulli8Qr2NNG/aGLrYRTxhN9kAF5QM9YwEQSAsAsOtnL9Hn8fBYQ23eOfl55eQSrrjU/BD5iZ3J3OWt1L+8fFoROlf1wx+buUuwzPu1TqTfMBD4NBV+0uzztT0BbNA=
+	t=1784656161; cv=none; b=ZwH1Ud29ES3NEbXriunHGlAB5yFT/ay40vOZnSLy9TrYOsXWeRXc2g14rIN4LTwfEW/4Ex2Ol6Ko9r6WFp01RVj0nUGfnl3f6YwXlKdZ9/r+JidEeyfBnAMwIm4CnjT02BdxrdFBmyrGQySRt3HAGh+5aqEXe1DvUMCLsYfiny8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656158; c=relaxed/simple;
-	bh=ksSREv/Vgnn9gPZv6xi8+AQdZJslshGZbWlFxA3N+Z8=;
+	s=arc-20240116; t=1784656161; c=relaxed/simple;
+	bh=SwlCJQr8EfeDRMUkqsDZIfTaeo8yEg3pOR0Ctd5Obfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r27tNl0XcxEvrTMrwjflCM+kwwzzBCba/FnqXVr7600Jr0G9qTeDLFOVuHw2IaQWi2MU1Kmnyfj0GzBynVvCfqPZOiaQKhwuYqEK1+iDtR6RCwjkGVlCTEBaUwXJ+TW6eNP3LIY5fHLuzI/jrZRNEcQC/uZcmLcAsDezD7bwqtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMLs2wcj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e+BkOKOMEsRTzwLatnp0G8Cv2mVlmluy48iZoW7XXhJhOi2iWPhGi/55ICT/vej6VBNy84pcYaSPb1a+r112lVVrH2m1DihBaqeRAfMV4t6JLucDR6TILhW0MNXoOZxo24jHQdwYZchqiEvZR8sarFMOiLxoVj8WSlUKnPuu34Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iwu8kg7k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMLs2wcj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79361F000E9;
-	Tue, 21 Jul 2026 17:49:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iwu8kg7k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534A51F000E9;
+	Tue, 21 Jul 2026 17:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656157;
-	bh=ZzNBm4DTHP0rhH8INe6DEHufMd/9afgb1OMySTqNulI=;
+	s=korg; t=1784656159;
+	bh=JL99RI++cbqQFXBR5bJCrrhRwOgT5km8kTXWrox8+Tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OMLs2wcjzHBbVsW6J3KKRMpFg3zjne4/z5znFfnV0GTvIZtkyJ88ikpflH22OR+1k
-	 ailyeNBvV7aDCQCyB4IM6XqWCf70dMQ9YrWJ6cBUobLn9bIUQErek1E/aOFW7hN5Tk
-	 jjyM3QuhvvJSsvFNP6vMaLkgDsEZc2C1JjODBFeY=
+	b=Iwu8kg7kb2nIhD3kwIgngHbRjGO7MCkZoD6wwzPrj7V3aUJwpT6QGWG0MFmPUNED8
+	 EcYLo61XttSfrD7Dwu9OxtROlbKukG6vYb5b2yqeB6ng3+dpKK7ejUWSMiDT787stx
+	 HHswgAcqczgPfOfcZu5F9mTDenWak4nUERo9Gwvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Sung-woo Kim <iam@sung-woo.kim>,
+	Christoph Hellwig <hch@lst.de>,
+	Mateusz Nowicki <mateusz.nowicki@posteo.net>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0279/1611] amba: use generic driver_override infrastructure
-Date: Tue, 21 Jul 2026 17:06:35 +0200
-Message-ID: <20260721152521.331879585@linuxfoundation.org>
+Subject: [PATCH 6.18 0239/1611] nvme-pci: fix out-of-bounds access in nvme_setup_descriptor_pools
+Date: Tue, 21 Jul 2026 17:05:55 +0200
+Message-ID: <20260721152520.390109183@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,128 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Mateusz Nowicki <mateusz.nowicki@posteo.net>
 
-[ Upstream commit 1947229f5f2a8d4ecf8c971aca68a1242bb7b37c ]
+[ Upstream commit a192b8cfa447e1b3701a13434a31c392b2e7ed29 ]
 
-When a driver is probed through __driver_attach(), the bus' match()
-callback is called without the device lock held, thus accessing the
-driver_override field without a lock, which can cause a UAF.
+nvme_setup_descriptor_pools() indexes dev->descriptor_pools[] using the
+numa_node forwarded from hctx->numa_node by its single caller,
+nvme_init_hctx_common().  On a non-NUMA kernel hctx->numa_node is
+NUMA_NO_NODE (-1).  Because the parameter was declared 'unsigned', the
+value becomes UINT_MAX and the index walks off the array (sized to
+nr_node_ids), faulting during nvme_alloc_ns() and leaving the namespace
+without a /dev node.
 
-Fix this by using the driver-core driver_override infrastructure taking
-care of proper locking internally.
+Reproduces on any NVMe controller probed by a CONFIG_NUMA=n kernel:
 
-Note that calling match() from __driver_attach() without the device lock
-held is intentional. [1]
+  BUG: unable to handle page fault for address: ffff889101603d38
+  RIP: 0010:nvme_init_hctx_common+0x5a/0x190 [nvme]
+  Call Trace:
+   nvme_init_hctx+0x10/0x20 [nvme]
+   nvme_alloc_ns+0x9e/0xa10 [nvme_core]
+   nvme_scan_ns+0x301/0x3b0 [nvme_core]
+   nvme_scan_ns_async+0x23/0x30 [nvme_core]
 
-Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
-Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
-Fixes: 3cf385713460 ("ARM: 8256/1: driver coamba: add device binding path 'driver_override'")
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20260505133935.3772495-2-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Switch the parameter to int and fall back to node 0 when it is
+NUMA_NO_NODE; node 0 is always present.
+
+Fixes: d977506f8863 ("nvme-pci: make PRP list DMA pools per-NUMA-node")
+Link: https://lore.kernel.org/r/20260309062840.2937858-2-iam@sung-woo.kim
+Reported-by: Sung-woo Kim <iam@sung-woo.kim>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Mateusz Nowicki <mateusz.nowicki@posteo.net>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/amba/bus.c       | 37 ++++++-------------------------------
- include/linux/amba/bus.h |  5 -----
- 2 files changed, 6 insertions(+), 36 deletions(-)
+ drivers/nvme/host/pci.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/amba/bus.c b/drivers/amba/bus.c
-index 74e34a07ef72fb..d58f9550f8775d 100644
---- a/drivers/amba/bus.c
-+++ b/drivers/amba/bus.c
-@@ -82,33 +82,6 @@ static void amba_put_disable_pclk(struct amba_device *pcdev)
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 8c66fd23a143c1..489583393b8451 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -431,11 +431,16 @@ static bool nvme_dbbuf_update_and_check_event(u16 value, __le32 *dbbuf_db,
  }
  
- 
--static ssize_t driver_override_show(struct device *_dev,
--				    struct device_attribute *attr, char *buf)
--{
--	struct amba_device *dev = to_amba_device(_dev);
--	ssize_t len;
--
--	device_lock(_dev);
--	len = sprintf(buf, "%s\n", dev->driver_override);
--	device_unlock(_dev);
--	return len;
--}
--
--static ssize_t driver_override_store(struct device *_dev,
--				     struct device_attribute *attr,
--				     const char *buf, size_t count)
--{
--	struct amba_device *dev = to_amba_device(_dev);
--	int ret;
--
--	ret = driver_set_override(_dev, &dev->driver_override, buf, count);
--	if (ret)
--		return ret;
--
--	return count;
--}
--static DEVICE_ATTR_RW(driver_override);
--
- #define amba_attr_func(name,fmt,arg...)					\
- static ssize_t name##_show(struct device *_dev,				\
- 			   struct device_attribute *attr, char *buf)	\
-@@ -126,7 +99,6 @@ amba_attr_func(resource, "\t%016llx\t%016llx\t%016lx\n",
- static struct attribute *amba_dev_attrs[] = {
- 	&dev_attr_id.attr,
- 	&dev_attr_resource.attr,
--	&dev_attr_driver_override.attr,
- 	NULL,
- };
- ATTRIBUTE_GROUPS(amba_dev);
-@@ -209,10 +181,11 @@ static int amba_match(struct device *dev, const struct device_driver *drv)
+ static struct nvme_descriptor_pools *
+-nvme_setup_descriptor_pools(struct nvme_dev *dev, unsigned numa_node)
++nvme_setup_descriptor_pools(struct nvme_dev *dev, int numa_node)
  {
- 	struct amba_device *pcdev = to_amba_device(dev);
- 	const struct amba_driver *pcdrv = to_amba_driver(drv);
-+	int ret;
+-	struct nvme_descriptor_pools *pools = &dev->descriptor_pools[numa_node];
++	struct nvme_descriptor_pools *pools;
+ 	size_t small_align = NVME_SMALL_POOL_SIZE;
  
- 	mutex_lock(&pcdev->periphid_lock);
- 	if (!pcdev->periphid) {
--		int ret = amba_read_periphid(pcdev);
-+		ret = amba_read_periphid(pcdev);
++	if (numa_node == NUMA_NO_NODE)
++		numa_node = 0;
++
++	pools = &dev->descriptor_pools[numa_node];
++
+ 	if (pools->small)
+ 		return pools; /* already initialized */
  
- 		/*
- 		 * Returning any error other than -EPROBE_DEFER from bus match
-@@ -230,8 +203,9 @@ static int amba_match(struct device *dev, const struct device_driver *drv)
- 	mutex_unlock(&pcdev->periphid_lock);
- 
- 	/* When driver_override is set, only bind to the matching driver */
--	if (pcdev->driver_override)
--		return !strcmp(pcdev->driver_override, drv->name);
-+	ret = device_match_driver_override(dev, drv);
-+	if (ret >= 0)
-+		return ret;
- 
- 	return amba_lookup(pcdrv->id_table, pcdev) != NULL;
- }
-@@ -439,6 +413,7 @@ static const struct dev_pm_ops amba_pm = {
- const struct bus_type amba_bustype = {
- 	.name		= "amba",
- 	.dev_groups	= amba_dev_groups,
-+	.driver_override = true,
- 	.match		= amba_match,
- 	.uevent		= amba_uevent,
- 	.probe		= amba_probe,
-diff --git a/include/linux/amba/bus.h b/include/linux/amba/bus.h
-index 9946276aff7377..6c54d5c0d21f7f 100644
---- a/include/linux/amba/bus.h
-+++ b/include/linux/amba/bus.h
-@@ -71,11 +71,6 @@ struct amba_device {
- 	unsigned int		cid;
- 	struct amba_cs_uci_id	uci;
- 	unsigned int		irq[AMBA_NR_IRQS];
--	/*
--	 * Driver name to force a match.  Do not set directly, because core
--	 * frees it.  Use driver_set_override() to set or clear it.
--	 */
--	const char		*driver_override;
- };
- 
- struct amba_driver {
 -- 
 2.53.0
 
