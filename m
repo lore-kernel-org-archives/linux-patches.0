@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C2638399A;
-	Tue, 21 Jul 2026 17:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50653EF672;
+	Tue, 21 Jul 2026 17:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654207; cv=none; b=JU48qGZ+bGKRecnww7ojzwDS13FCdRVZykshqwd3bmEpV66LgOMiP9ZyFzIB3Cs2rzPMzBdMuH7HXs0b/PEPt7lqHMM6mKOF7dOawQnqmuRflKVYjpGpzOh+KbJC0gY0D6VSOQejAKnZbObHT0Y4C9kpp1YAgYJvM0oXKPN3Luo=
+	t=1784654210; cv=none; b=f/N9sW3zAh+kku+zGwCuWQWTOmfxYCQRRV7zQSdaXzoXH1zkvTnLRFD+kjbANj3YbdBWIoj0c0KpVfxnG60f0ReMezKbg3Miud1CVt8jb8qEQMO7HZHkHy9/zaoKSC1kkik+JGZJmvy28M3c2hRzIblQFAwzDXJcJIqh3A3h8IA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654207; c=relaxed/simple;
-	bh=4ZBLHNThIIrTUV2OW6fjSZN6UAEyeU02LdW4KZ04rZk=;
+	s=arc-20240116; t=1784654210; c=relaxed/simple;
+	bh=EB+x13KUNriWUSh9VQaZN6pMsJlqOlQMv18ShBWPf8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HVzauHwStbvXdc0x74uuvmuFUEnhkHQzwmIA9L+ZKYELCKnuW1VslD+WOkkIFMvZ8kZxVBJ5rLf21KVrrzeMRKNFLg0hqSRqYAP58K14Z2AsUDzZGHr8DfpPkOztBstNQTSo18p0qXY3NO+qojybLNxvfToaD0m4daebpRaDpyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fST5qqUA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s6qwgP/ovZPQrFFfg3R6vvTdov/H0eF/29QefYuLxNejdasGel5mVVoyHJbqghAuFs02We4qQaKiZJp/9ALJFw0kF6xM014CP6XGqLlD7ta0J1ojNujF8upSzcioN2LpZdoBJJ3V89n1ef79urj+G7SJKQ10aIjdt9BPXxZke4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jW5IEyW8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fST5qqUA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897FF1F000E9;
-	Tue, 21 Jul 2026 17:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jW5IEyW8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E3A1F00A3A;
+	Tue, 21 Jul 2026 17:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654206;
-	bh=wuyqnUCAb6GPi39Ci02XfawjcgUDDSbeM755XxqLW4c=;
+	s=korg; t=1784654208;
+	bh=/R8NiLHk7+A+/0d/AkK9mu0DjmaNqQlfCe4jKNo6ZvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fST5qqUAfdtOhBIla/Pj4yY4rKkCk8YccsLAsAQo76DbIHbfgrz99T2m/oxeJQdGP
-	 Y5d5R1sDurPM02Rp5KFZlIg6W2jVWg9ZALHh0sL/1VGBTVaR6rU4r3g2sEO4pa9I6W
-	 MzkRh5kPUEUvIyK1uD/5GOKYhZUF8aTgPjqE+FQw=
+	b=jW5IEyW8J1j+ZSBT2SmcEISvoPwqpYMuX/T2/arHZi9t4u38Fs2J63BYsqtFMolU0
+	 ByQlevJVCU1teAuYbLWRZwlrqA38jMfnvquqZGnLs57khEosrIywQhD3Rz/qSOT1lt
+	 +sq6rP19KdrboNbioK2dkthZXpmVjiirHAmRVv2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhong Wang <wangzhong.c0ss4ck@bytedance.com>,
-	Xuanqing Shi <shixuanqing.11@bytedance.com>,
-	Weiming Shi <bestswngs@gmail.com>,
+	Oliver Upton <oupton@kernel.org>,
 	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 7.1 1574/2077] KVM: arm64: nv: Fix SPSR_EL2 restore in kvm_hyp_handle_mops()
-Date: Tue, 21 Jul 2026 17:20:47 +0200
-Message-ID: <20260721152629.903793846@linuxfoundation.org>
+Subject: [PATCH 7.1 1575/2077] KVM: arm64: nv: Respect read-only PFN when mapping L1 VNCR
+Date: Tue, 21 Jul 2026 17:20:48 +0200
+Message-ID: <20260721152629.926818102@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,60 +50,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Oliver Upton <oupton@kernel.org>
 
-commit ff1022c3de46753eb7eba2f6efd990569e66ff95 upstream.
+commit 2684e02bac41c5220f6c1ab2bdcc957b71812977 upstream.
 
-kvm_hyp_handle_mops() resets the single-step state machine as part of
-rewinding state for a MOPS exception by modifying vcpu_cpsr() and
-writing the result directly into hardware.
+KVM currently maps the L1 VNCR into the host stage-1 by relying entirely
+on the permissions of the guest stage-1. At the same time, it is
+entirely possible that the backing PFN is read-only (e.g. RO memslot),
+meaning that the L1 VNCR should use at most a read-only mapping.
 
-In the case of nested virtualization, vcpu_cpsr() is a synthetic value
-such that the rest of KVM can deal with vEL2 cleanly. That means the
-value requires translation before being written into hardware, which is
-unfortunately missing from the MOPS handler.
+Cache the writability of the PFN in the VNCR TLB and use it to constrain
+the resulting fixmap permissions. Promote VNCR permission faults to an
+SEA in the case where the guest attempts to write to a read-only
+endpoint. Conveniently, this also plugs a page leak found by Sashiko [*]
+resulting from the early return for a read-only PFN.
 
-Fix it by directly modifying SPSR_EL2 and avoiding the synthetic state
-altogether, which will be resynchronized on the next 'full' exit back
-to KVM.
-
-Fixes: 2de451a329cf ("KVM: arm64: Add handler for MOPS exceptions")
-Reported-by: Zhong Wang <wangzhong.c0ss4ck@bytedance.com>
-Reported-by: Xuanqing Shi <shixuanqing.11@bytedance.com>
-Link: https://lore.kernel.org/all/ajE4lHQevXNHpl1M@Air.local/
 Cc: stable@vger.kernel.org
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20260617040820.2194831-2-bestswngs@gmail.com
+Fixes: 2a359e072596 ("KVM: arm64: nv: Handle mapping of VNCR_EL2 at EL2")
+Link: https://lore.kernel.org/kvm/20260608082603.16AEC1F00893@smtp.kernel.org/
+Signed-off-by: Oliver Upton <oupton@kernel.org>
+Link: https://patch.msgid.link/20260618234207.1063941-2-oupton@kernel.org
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/hyp/include/hyp/switch.h |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ arch/arm64/kvm/nested.c |   36 ++++++++++++++++++++++++++----------
+ 1 file changed, 26 insertions(+), 10 deletions(-)
 
---- a/arch/arm64/kvm/hyp/include/hyp/switch.h
-+++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
-@@ -448,16 +448,19 @@ static inline bool __populate_fault_info
+--- a/arch/arm64/kvm/nested.c
++++ b/arch/arm64/kvm/nested.c
+@@ -24,6 +24,7 @@ struct vncr_tlb {
+ 	struct s1_walk_result	wr;
  
- static inline bool kvm_hyp_handle_mops(struct kvm_vcpu *vcpu, u64 *exit_code)
- {
-+	u64 spsr;
+ 	u64			hpa;
++	bool			hpa_writable;
+ 
+ 	/* -1 when not mapped on a CPU */
+ 	int			cpu;
+@@ -1315,7 +1316,7 @@ static int kvm_translate_vncr(struct kvm
+ 	if (!*is_gmem) {
+ 		pfn = __kvm_faultin_pfn(memslot, gfn, write_fault ? FOLL_WRITE : 0,
+ 					&writable, &page);
+-		if (is_error_noslot_pfn(pfn) || (write_fault && !writable))
++		if (is_error_noslot_pfn(pfn))
+ 			return -EFAULT;
+ 	} else {
+ 		ret = kvm_gmem_get_pfn(vcpu->kvm, memslot, gfn, &pfn, &page, NULL);
+@@ -1324,6 +1325,8 @@ static int kvm_translate_vncr(struct kvm
+ 					      write_fault, false, false);
+ 			return ret;
+ 		}
 +
- 	*vcpu_pc(vcpu) = read_sysreg_el2(SYS_ELR);
- 	arm64_mops_reset_regs(vcpu_gp_regs(vcpu), vcpu->arch.fault.esr_el2);
- 	write_sysreg_el2(*vcpu_pc(vcpu), SYS_ELR);
++		writable = !(memslot->flags & KVM_MEM_READONLY);
+ 	}
  
- 	/*
- 	 * Finish potential single step before executing the prologue
--	 * instruction.
-+	 * instruction. Modify the hardware SPSR_EL2 directly, as vcpu_cpsr()
-+	 * may hold a synthetic (vEL2) value for a guest hypervisor.
- 	 */
--	*vcpu_cpsr(vcpu) &= ~DBG_SPSR_SS;
--	write_sysreg_el2(*vcpu_cpsr(vcpu), SYS_SPSR);
-+	spsr = read_sysreg_el2(SYS_SPSR);
-+	write_sysreg_el2(spsr & ~DBG_SPSR_SS, SYS_SPSR);
+ 	scoped_guard(write_lock, &vcpu->kvm->mmu_lock) {
+@@ -1334,28 +1337,41 @@ static int kvm_translate_vncr(struct kvm
  
- 	return true;
+ 		vt->gva = va;
+ 		vt->hpa = pfn << PAGE_SHIFT;
++		vt->hpa_writable = writable;
+ 		vt->valid = true;
+ 		vt->cpu = -1;
+ 
+ 		kvm_make_request(KVM_REQ_MAP_L1_VNCR_EL2, vcpu);
+-		kvm_release_faultin_page(vcpu->kvm, page, false, vt->wr.pw);
++		kvm_release_faultin_page(vcpu->kvm, page, false, vt->wr.pw && vt->hpa_writable);
+ 	}
+ 
+-	if (vt->wr.pw)
++	if (vt->wr.pw && vt->hpa_writable)
+ 		mark_page_dirty(vcpu->kvm, gfn);
+ 
+ 	return 0;
  }
+ 
+-static void inject_vncr_perm(struct kvm_vcpu *vcpu)
++static void handle_vncr_perm(struct kvm_vcpu *vcpu)
+ {
+ 	struct vncr_tlb *vt = vcpu->arch.vncr_tlb;
+ 	u64 esr = kvm_vcpu_get_esr(vcpu);
++	u64 fsc;
++
++	/*
++	 * Promote to an external abort if the stage-1 permits writes but the
++	 * HPA is read-only (e.g. RO memslot).
++	 */
++	if (kvm_is_write_fault(vcpu) && vt->wr.pw && !vt->hpa_writable)
++		fsc = ESR_ELx_FSC_EXTABT;
++	/*
++	 * Otherwise, inject a permission fault using the guest's translation
++	 * level rather than the host's.
++	 */
++	else
++		fsc = ESR_ELx_FSC_PERM_L(vt->wr.level);
+ 
+-	/* Adjust the fault level to reflect that of the guest's */
+ 	esr &= ~ESR_ELx_FSC;
+-	esr |= FIELD_PREP(ESR_ELx_FSC,
+-			  ESR_ELx_FSC_PERM_L(vt->wr.level));
++	esr |= FIELD_PREP(ESR_ELx_FSC, fsc);
+ 
+ 	kvm_inject_nested_sync(vcpu, esr);
+ }
+@@ -1389,7 +1405,7 @@ int kvm_handle_vncr_abort(struct kvm_vcp
+ 		return kvm_handle_guest_sea(vcpu);
+ 
+ 	if (esr_fsc_is_permission_fault(esr)) {
+-		inject_vncr_perm(vcpu);
++		handle_vncr_perm(vcpu);
+ 	} else if (esr_fsc_is_translation_fault(esr)) {
+ 		bool valid, is_gmem = false;
+ 		int ret;
+@@ -1437,7 +1453,7 @@ int kvm_handle_vncr_abort(struct kvm_vcp
+ 			break;
+ 		case -EPERM:
+ 			/* Hack to deal with POE until we get kernel support */
+-			inject_vncr_perm(vcpu);
++			handle_vncr_perm(vcpu);
+ 			break;
+ 		case 0:
+ 			break;
+@@ -1481,7 +1497,7 @@ static void kvm_map_l1_vncr(struct kvm_v
+ 
+ 	vt->cpu = smp_processor_id();
+ 
+-	if (vt->wr.pw && vt->wr.pr)
++	if (vt->hpa_writable && vt->wr.pw && vt->wr.pr)
+ 		prot = PAGE_KERNEL;
+ 	else if (vt->wr.pr)
+ 		prot = PAGE_KERNEL_RO;
 
 
