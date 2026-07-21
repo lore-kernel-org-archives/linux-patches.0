@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D0F2EBB8D;
-	Tue, 21 Jul 2026 20:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2793B47DF;
+	Tue, 21 Jul 2026 20:55:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667351; cv=none; b=FWQ+5gSDllY4zTDg680dafffNTi68K4nIrov81rtCwOXwEUxY9IZ9Dq/2aoIjtNPsGfFChFaxMFjzPxHtPD8Se3RHOTPPmPUjDoAv8a15KEgU8oXQLSo0yG//et53eAnJmZgydw3+pfjA/N3P+j1NpwE59E9snE/AYLf9j7354s=
+	t=1784667353; cv=none; b=rttvzC5r2l+vkQal5Q7zhR4RE98RSbM+TxOsOIrqbiiH4WVrvJz1Dhadc5NDTuiMKj4UBU7+f8JtvFgB8bieABfUZwlaS42vlHazXa8cOP2p4U3w2ws6fjAHyJYTdMVnZdxQLNC4kORYWK6KQHhvuj6/uq7vyjgOJ1ev/mqa5sU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667351; c=relaxed/simple;
-	bh=PAoIoZRLnbTOtJbF8+Lue9++HsqkUWjDEYTU3QMigKw=;
+	s=arc-20240116; t=1784667353; c=relaxed/simple;
+	bh=LdRsxgBkvfubITPnMKuuELRL8vriijwKnLsuzkdtsqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lKteECludonlPvA31uuYjGAuNLa3LEPe3sMXX6vk3jPi6zr/BRa55nfHrO0v9e5JH/FDOV2aDxznrf7KbZTh/yB+/s8iJCSgGqB7m10Bxv684KkZ0hbI1+dSKTenCX1LJy9SXylOKjOcQXGDCxyi6iGBDBwnKDUvIIQNZwLyn6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iv2p3hB9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YcKaWmtBnb/HWtUpqgq0n8NuWMypKLAnxhZ2GM9cT3JXM+SX9aHiWsmP/zO42jZQdjeWUSTYV1l+jV7GbzdiRX6AVCqgB8QVl+f8Pc+4qUADlud21Q0WiS999/V/aqOXcPRzIGGfNAGuNdOjmZOm9I4tdsapjm+DkdeGlfTGQAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GB8ZhUSf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iv2p3hB9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC861F000E9;
-	Tue, 21 Jul 2026 20:55:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GB8ZhUSf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F871F000E9;
+	Tue, 21 Jul 2026 20:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667349;
-	bh=8HfSUdE/M22WiKV3y/Tyj/aFRr6KczekWZ5hbMFruoA=;
+	s=korg; t=1784667352;
+	bh=d1C/Qpfm0iyesa4KnSMSJ+cCucSJsMaKgFtarbq3M8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iv2p3hB9kXu3BprBMVeCcQc5+ISHRIrgJa3P+p7FmIR6PYRJwTibPtrkNdYjE17QF
-	 j2qBhMTgpp3gD7JJqT0bQRqxcjwCaYVcm9EK9J0OT69P4brmrcphLtl0RhQYxtdYo8
-	 h46RLGbGZ27NvmT46Wujv7iBK2E90eWxj0gdz9Tw=
+	b=GB8ZhUSfXF+mI0H2zOPhfZnHpkebMPa0YkQcnv/aYbPRflJeFoVBuRHKCCkjzYyNX
+	 BuXRLR+oz43JrqB+5a9IqLiLZNLtNr5kM5xkYUlL1yqieEwLxsDmi6tCqsNz+hXU93
+	 Sz3KIKtLT9Kl/QdMC1gyC/KgS+d5+f9sZwrmLntw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Liang <shaw.leon@gmail.com>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 1029/1266] xfrm: xfrm_interface: require CAP_NET_ADMIN in the device netns for changelink
-Date: Tue, 21 Jul 2026 17:24:26 +0200
-Message-ID: <20260721152504.851839074@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.6 1030/1266] tpm: fix event_size output in tpm1_binary_bios_measurements_show
+Date: Tue, 21 Jul 2026 17:24:27 +0200
+Message-ID: <20260721152504.873410040@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,44 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 095515d89b19b6cc19dfcdc846f97403ed1ebce3 upstream.
+commit 1a58f6115bfb34eabcc7de8a3a9745b219179781 upstream.
 
-xfrmi_changelink() operates on at most two netns, dev_net(dev) and the
-interface link netns xi->net. They differ once the device is created in
-or moved to a netns other than the one the request runs in. The rtnl
-changelink path checks CAP_NET_ADMIN only against dev_net(dev), so a
-caller privileged there but not in xi->net can rewrite an interface that
-lives in xi->net.
+Commit 186d124f07da ("tpm_eventlog.c: fix binary_bios_measurements")
+split the output to write the endian-converted event header first and
+then the variable-length event data.
 
-Gate xfrmi_changelink() on rtnl_dev_link_net_capable() at its top,
-before any attribute is parsed.
+However, the split was at sizeof(struct tcpa_event) - 1, even though
+event_data was a zero-length array, and later a flexible array member,
+both of which already excluded the event data.
 
-Reported-by: Xiao Liang <shaw.leon@gmail.com>
-Closes: https://lore.kernel.org/netdev/CABAhCOSzP1vaThGV35_VnsRCb=87_CPjPVsTHbq905k8A+BuUg@mail.gmail.com/
-Fixes: f203b76d7809 ("xfrm: Add virtual xfrm interfaces")
-Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260612085941.3158249-8-maoyixie.tju@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Therefore, the current code writes the first three bytes of event_size
+from the endian-converted header and then the last byte from the raw
+header, which can emit a corrupted event_size on PPC64, where
+do_endian_conversion() maps to be32_to_cpu().
+
+Split one byte later to write the full endian-converted header first,
+followed by the variable-length event->event_data.
+
+Fixes: 186d124f07da ("tpm_eventlog.c: fix binary_bios_measurements")
+Cc: stable@vger.kernel.org # v5.10+
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_interface_core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/char/tpm/eventlog/tpm1.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/xfrm/xfrm_interface_core.c
-+++ b/net/xfrm/xfrm_interface_core.c
-@@ -874,6 +874,9 @@ static int xfrmi_changelink(struct net_d
- 	struct net *net = xi->net;
- 	struct xfrm_if_parms p = {};
+--- a/drivers/char/tpm/eventlog/tpm1.c
++++ b/drivers/char/tpm/eventlog/tpm1.c
+@@ -236,12 +236,12 @@ static int tpm1_binary_bios_measurements
  
-+	if (!rtnl_dev_link_net_capable(dev, net))
-+		return -EPERM;
-+
- 	xfrmi_netlink_parms(data, &p);
- 	if (!p.if_id) {
- 		NL_SET_ERR_MSG(extack, "if_id must be non zero");
+ 	temp_ptr = (char *) &temp_event;
+ 
+-	for (i = 0; i < (sizeof(struct tcpa_event) - 1) ; i++)
++	for (i = 0; i < sizeof(struct tcpa_event); i++)
+ 		seq_putc(m, temp_ptr[i]);
+ 
+ 	temp_ptr = (char *) v;
+ 
+-	for (i = (sizeof(struct tcpa_event) - 1);
++	for (i = sizeof(struct tcpa_event);
+ 	     i < (sizeof(struct tcpa_event) + temp_event.event_size); i++)
+ 		seq_putc(m, temp_ptr[i]);
+ 
 
 
