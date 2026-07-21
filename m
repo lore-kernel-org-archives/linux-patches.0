@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C4E46EF63;
-	Tue, 21 Jul 2026 18:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1681D37DE97;
+	Tue, 21 Jul 2026 18:22:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658141; cv=none; b=E/FzEuNWf49kfomiuNbJPl1MvknJenRI/j5dSqo02oHKIvQUKcVvLzKeCMR85HkN4dgIqXLrmbbu6+DlGB7AndVjAIDM4+o+auDixCO9a2Bc46SDxLLCuXts5G+DAvpF0yhckxgYlj3g2Lel1CPi1MYxjfsiZ26DsrkZE+n+YwI=
+	t=1784658144; cv=none; b=CSya+1gwaS9goNkzYA9S7Oq3wOCApUk45Fd4at9B07PJtakzSNDUrmrS9EdU3mRa8cuqqA4BOOOqP7E84j845xF1VhN6h2SjRzayx1peV1t7cMavg1SXNCXYrBsRmGVMnPr068nvi48oeanm65Gsqqc9XGFklVBtOjZrH4gL/+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658141; c=relaxed/simple;
-	bh=ubVVsMrTMAIy05U8yBUspJWJR1+idYz/UCKdWfyk5mI=;
+	s=arc-20240116; t=1784658144; c=relaxed/simple;
+	bh=casQ4AnTWML6x2/EPfvaOeu/EbwGwC64lpFsmISaIVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bf4jasEvelfzJIH8DxLvegMrMI5pQbXRin23XUDGhdoKNFtmgyTAO96ZPp3c3BZCIzxJ+YoFaR7/EJDzm/JBAMeEiJLIaDH8cPWwHGoTm1wp7MZoa6Kgdg5GIzbMfp76MLkKJluOhRwlHXhAZazUP5aVcQx7UQr7D1EpYb72NAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=00SFi+wf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZvcNIU1rWfxvS0tom9BfQ/nyUFxTSktY5Xsc8ojs7RLvvT82P4kb3DH4XNWsAoSNgVI4ijFKO7skIoUgcK9kiLOGx/7x5vTNQEvaR7+2RE2J/d/SXufDq9JgSliDTZDMrjdyQdSqe6i0nCVj1J/LJPM0cwan2t8LEKXEqR827cQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rHLEssBk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00SFi+wf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7DD21F00A3D;
-	Tue, 21 Jul 2026 18:22:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rHLEssBk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF541F000E9;
+	Tue, 21 Jul 2026 18:22:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658140;
-	bh=ErFCSSagJyYP6rOLj2BJXnPanztQSg/TAm2l1sfltrQ=;
+	s=korg; t=1784658143;
+	bh=KVfXog0DAT+H70LijK98gqKuySFKh6S5XsLuPUDiDSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=00SFi+wf8FwUq0L9pHaKmtsJoMg8mQ2MfIQDIAA1UhqBRPFo6XZw421iXX0VA7wuQ
-	 cJi8Rwr2zs4AXv6mH5nhZvw9i7Bk9i+0Ei3oWuyvx7QN7oThDCsXD8QBHA6mCIbxSR
-	 hLChAaNgH/fP0Fe8E2cvg8BjkZ9ft0wjMudyn1Xg=
+	b=rHLEssBk3doGtKmss54vpK/g5un6sneuNVB+98hAtQm6hRamCCcGiUT08FR15Z5CE
+	 viztTDYg98T/BFho0uYEbjyZrWQ2xoIzrzefoUy3Mpi86uJ/UJUAE+Az+tkupHuup4
+	 6+2leAmV8kiCeRway0zuNSnbAT4cP7YCF5oDwXQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>,
 	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1032/1611] HID: bpf: Fix hid_bpf_get_data() range check
-Date: Tue, 21 Jul 2026 17:19:08 +0200
-Message-ID: <20260721152538.613277370@linuxfoundation.org>
+Subject: [PATCH 6.18 1033/1611] selftests/hid: Load only requested struct_ops maps
+Date: Tue, 21 Jul 2026 17:19:09 +0200
+Message-ID: <20260721152538.636394155@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,57 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
 
-[ Upstream commit 2d044049421dd48212b28646a850749d4a2d57fa ]
+[ Upstream commit 5aad55011a37d999cf99d14bafb6a093a1a70466 ]
 
-hid_bpf_get_data() returns a pointer into the HID-BPF context data when
-the caller-provided offset and size fit inside ctx->allocated_size.
+The HID selftest skeleton contains several struct_ops maps, but each test
+usually wants to load only the programs named by that test.
 
-The current check adds rdwr_buf_size and offset before comparing the
-result against ctx->allocated_size. Since both values are unsigned, a
-very large size can wrap the sum below ctx->allocated_size and make the
-helper return a pointer even though the requested range is not contained
-in the backing buffer.
+load_programs() disabled auto-attach for all maps, but left struct_ops
+autocreate enabled. libbpf can enable autoload for programs referenced by
+autocreated struct_ops maps, so an unrelated program can be loaded and fail
+even when the current test does not use it.
 
-Use check_add_overflow() to reject wrapped range ends before comparing
-the requested range end against ctx->allocated_size.
+Disable autocreate for all struct_ops maps by default, then re-enable it
+only for the maps selected by the test before loading the skeleton.
 
-Fixes: 658ee5a64fcf ("HID: bpf: allocate data memory for device_event BPF programs")
 Signed-off-by: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
+Fixes: f64c1a459339 ("selftests/hid: disable struct_ops auto-attach")
 Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/bpf/hid_bpf_dispatch.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/testing/selftests/hid/hid_bpf.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/hid/bpf/hid_bpf_dispatch.c b/drivers/hid/bpf/hid_bpf_dispatch.c
-index eb9f40c988d02b..e6cf551b41e8e7 100644
---- a/drivers/hid/bpf/hid_bpf_dispatch.c
-+++ b/drivers/hid/bpf/hid_bpf_dispatch.c
-@@ -17,6 +17,7 @@
- #include <linux/kfifo.h>
- #include <linux/minmax.h>
- #include <linux/module.h>
-+#include <linux/overflow.h>
- #include "hid_bpf_dispatch.h"
+diff --git a/tools/testing/selftests/hid/hid_bpf.c b/tools/testing/selftests/hid/hid_bpf.c
+index 1e979fb3542bab..269256e1decd84 100644
+--- a/tools/testing/selftests/hid/hid_bpf.c
++++ b/tools/testing/selftests/hid/hid_bpf.c
+@@ -86,6 +86,20 @@ static void load_programs(const struct test_program programs[],
+ 	self->skel = hid__open();
+ 	ASSERT_OK_PTR(self->skel) TEARDOWN_LOG("Error while calling hid__open");
  
- const struct hid_ops *hid_ops;
-@@ -296,13 +297,15 @@ __bpf_kfunc __u8 *
- hid_bpf_get_data(struct hid_bpf_ctx *ctx, unsigned int offset, const size_t rdwr_buf_size)
- {
- 	struct hid_bpf_ctx_kern *ctx_kern;
-+	size_t end;
++	/*
++	 * Disable all struct_ops maps by default so libbpf does not autoload
++	 * programs referenced by maps that are unrelated to the current test.
++	 */
++	bpf_object__for_each_map(iter_map, *self->skel->skeleton->obj) {
++		if (bpf_map__type(iter_map) == BPF_MAP_TYPE_STRUCT_OPS) {
++			err = bpf_map__set_autocreate(iter_map, false);
++			ASSERT_OK(err) TH_LOG("can not disable struct_ops map '%s'",
++					      bpf_map__name(iter_map));
++		}
++
++		bpf_map__set_autoattach(iter_map, false);
++	}
++
+ 	for (int i = 0; i < progs_count; i++) {
+ 		struct bpf_program *prog;
+ 		struct bpf_map *map;
+@@ -102,6 +116,10 @@ static void load_programs(const struct test_program programs[],
+ 		ASSERT_OK_PTR(map) TH_LOG("can not find struct_ops by name '%s'",
+ 					  programs[i].name + 4);
  
- 	if (!ctx)
- 		return NULL;
++		err = bpf_map__set_autocreate(map, true);
++		ASSERT_OK(err) TH_LOG("can not enable struct_ops map '%s'",
++				      programs[i].name + 4);
++
+ 		/* hid_id is the first field of struct hid_bpf_ops */
+ 		ops_hid_id = bpf_map__initial_value(map, NULL);
+ 		ASSERT_OK_PTR(ops_hid_id) TH_LOG("unable to retrieve struct_ops data");
+@@ -109,13 +127,6 @@ static void load_programs(const struct test_program programs[],
+ 		*ops_hid_id = self->hid.hid_id;
+ 	}
  
- 	ctx_kern = container_of(ctx, struct hid_bpf_ctx_kern, ctx);
+-	/* we disable the auto-attach feature of all maps because we
+-	 * only want the tested one to be manually attached in the next
+-	 * call to bpf_map__attach_struct_ops()
+-	 */
+-	bpf_object__for_each_map(iter_map, *self->skel->skeleton->obj)
+-		bpf_map__set_autoattach(iter_map, false);
+-
+ 	err = hid__load(self->skel);
+ 	ASSERT_OK(err) TH_LOG("hid_skel_load failed: %d", err);
  
--	if (rdwr_buf_size + offset > ctx->allocated_size)
-+	if (check_add_overflow(rdwr_buf_size, offset, &end) ||
-+	    end > ctx->allocated_size)
- 		return NULL;
- 
- 	return ctx_kern->data + offset;
 -- 
 2.53.0
 
