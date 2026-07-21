@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B90403AFB;
-	Tue, 21 Jul 2026 17:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C7D46C4C7;
+	Tue, 21 Jul 2026 17:29:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654943; cv=none; b=uZ496hL1hKqbGUfnkhbRBYwOX+ly0HlKmzQ0xWDJgFt5VX40iGgbxk72tHMqTT3RwRMnKNkG2+/9BeccnFVivCPJPiorjTahko6NwCmVv6zc+BRSYdZ76vkI0T22S3BOOl7wEkeBxzDi8IsM+EC7TTMPBdeAalQKUKJyPjLIRMw=
+	t=1784654946; cv=none; b=oHc4mCxb3zDWD4S3Hkzbbqe+fVubZxO4zeKtrGQAekTcUqztMOafImLRBaHtZplA0dLD7HpKMwWH2q7Uyam398UiSEDTjy5NFY+mMmgujlG4yWuyavPqIP9o1QevyTWHQ9amixINE9qz5NfPk/yMagkRSVdsI2qJhpF+HRLhSv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654943; c=relaxed/simple;
-	bh=0KPynoMBvq+85F/ajbpLM1bChAuE8FzZD59Pq8cK95M=;
+	s=arc-20240116; t=1784654946; c=relaxed/simple;
+	bh=8OyPhsyiAPBS9lvCxXvzm+gcuh8CiRVPCmaQRyLbWH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lZ+QmO4mDdoP0Sk6iabOBFEyNzVr44TS9I0Jt0bYHVKNLMm9vido1KtL22g5qQqdd7/VHYjTtkZ5bdjnI5RqJsPCC8JfF0eWTQGUFZn9Yn6cxRTUnKx0ktPKkY2CcoRu9Czm0GeoO4wuZQ4In6F2JBGsI+0H09O/8uLiksIUA/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UDU2Jq9o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uj7uSI3hVp8bi/mh3cLEOOsUyE6SmrrA603exvOm2Z9kUfU3tNydeg5n4atXLeZI5IOtiYNf25Dy2awEgTRg54PFcrEd3w+eR3nfEd4PQBAOndenLlWus9Pld1t0Zim15ylQ2J9LJ1e2FjcNFvBbHECRP3Cnv9SU6L2PLOPqCkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1/kbzL0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UDU2Jq9o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 814511F000E9;
-	Tue, 21 Jul 2026 17:29:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1/kbzL0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E7D01F000E9;
+	Tue, 21 Jul 2026 17:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654942;
-	bh=E1AzbnR6AYrU2FfrxDaymEIPUPRLbMM4pwyP1sRVE0s=;
+	s=korg; t=1784654944;
+	bh=aiDiRFuWqIuzhKIZuiqr90bgd0Qcg50aI+6IBzFT+BE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UDU2Jq9oMvGFfqrUHxDpQYU0PC0jwSI6X9Qebw5+xzEYfXgPmEdEAkc0jt8gkwC/v
-	 JkR2ECbz50dJSAc13YBiI81qUy1FSIsMdDuMfzP1uKBOYsfF7oU9S+sGh/zZlnFxGr
-	 cz3SwQbI1Sga6pem8aQwCNE9GfLH2BuJ8AvjmfGw=
+	b=v1/kbzL0x7N4/Ry8SohlJD3+roenlNIRbrg76nNlCUKQnIEhNJZTdOONXjXcGr0Gn
+	 gYWZhOT01fWtEnqycUHzNWT131pz2JbUf8EIoKw9Q7tgnczsqjZKvrAdky+qwZPuTy
+	 dqtiDBgHnq/PHIA6HOcd+t0U6B5UJB7ahJaNed8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Blechschmidt <iblech@speicherleck.de>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Ondrej Kozina <okozina@redhat.com>
-Subject: [PATCH 7.1 1852/2077] dm: avoid leaking the callers thread keyring via the table device file
-Date: Tue, 21 Jul 2026 17:25:25 +0200
-Message-ID: <20260721152636.418087320@linuxfoundation.org>
+	Genjian Zhang <zhanggenjian@kylinos.cn>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 7.1 1843/2077] dm thin metadata: fix superblock refcount leak on snapshot shadow failure
+Date: Tue, 21 Jul 2026 17:25:16 +0200
+Message-ID: <20260721152636.207013535@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,68 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ingo Blechschmidt <iblech@speicherleck.de>
+From: Genjian Zhang <zhanggenjian@kylinos.cn>
 
-commit 981ccd97f7153d310dfa92a534525bbaf46752c2 upstream.
+commit 4b22d0801fadfcae2e106e6ba32e49439c7c7ebf upstream.
 
-The refactoring in commit a28d893eb327 ("md: port block device access to file")
-accidentally causes the caller's thread keyring to be kept alive long
-beyond the caller's lifetime.
+__reserve_metadata_snap() increments THIN_SUPERBLOCK_LOCATION in the
+metadata space map before shadowing it. When dm_tm_shadow_block()
+fails, a reference is leaked in the metadata space map.
 
-As a result, "cryptsetup luksSuspend" silently fails to wipe the
-LUKS volume key from memory.
+Fix by adding the missing dm_sm_dec_block().
 
-In detail: "cryptsetup luksOpen" uses its supposedly ephemeral thread
-keyring to pass the volume key to the kernel. dm-crypt's
-crypt_set_keyring_key() copies the key material into its own
-crypt_config structure and then drops its own reference to the key in
-the keyring with key_put().
-
-With this fix, restoring pre-v6.9 behavior, the copy in the thread
-keyring is then promptly garbage collected, such that exactly one copy
-of the volume key remains. This single copy is correctly wiped from
-memory on "cryptsetup luksSuspend".
-
-Without this fix, the thread keyring and the volume key in it remains.
-This second copy is only freed on "luksClose". "luksSuspend" neither
-knows about this copy nor has any way to remove it, so the key remains
-recoverable from RAM after a suspend that is documented to have wiped it.
-
-This fix should not introduce new security problems, as the code is
-anyway gated by CAP_SYS_ADMIN. The device-mapper core, not the calling
-task, is the legitimate owner of this long-lived file.
-
-Fixes: a28d893eb327 ("md: port block device access to file")
-Closes: https://gitlab.com/cryptsetup/cryptsetup/-/work_items/993
-Link: https://www.speicherleck.de/iblech/cryptsetup-luksSuspend-issue-reproduction/
-Signed-off-by: Ingo Blechschmidt <iblech@speicherleck.de>
+Signed-off-by: Genjian Zhang <zhanggenjian@kylinos.cn>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: cc8394d86f04 ("dm thin: provide userspace access to pool metadata")
 Cc: stable@vger.kernel.org
-Tested-by: Ondrej Kozina <okozina@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/md/dm-thin-metadata.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -735,7 +735,16 @@ static struct table_device *open_table_d
- 		return ERR_PTR(-ENOMEM);
- 	refcount_set(&td->count, 1);
+--- a/drivers/md/dm-thin-metadata.c
++++ b/drivers/md/dm-thin-metadata.c
+@@ -1353,8 +1353,10 @@ static int __reserve_metadata_snap(struc
+ 	dm_sm_inc_block(pmd->metadata_sm, THIN_SUPERBLOCK_LOCATION);
+ 	r = dm_tm_shadow_block(pmd->tm, THIN_SUPERBLOCK_LOCATION,
+ 			       &sb_validator, &copy, &inc);
+-	if (r)
++	if (r) {
++		dm_sm_dec_block(pmd->metadata_sm, THIN_SUPERBLOCK_LOCATION);
+ 		return r;
++	}
  
--	bdev_file = bdev_file_open_by_dev(dev, mode, _dm_claim_ptr, NULL);
-+	/*
-+	 * Open the backing device with kernel rather than caller
-+	 * credentials. Otherwise the caller's credentials would be
-+	 * pinned in bdev_file->f_cred until the table device is closed.
-+	 * That would keep the caller's thread keyring alive long beyond the
-+	 * lifetime of the caller, breaking userspace expectation (e.g.
-+	 * cryptsetup(8) leaking the LUKS volume key).
-+	 */
-+	scoped_with_kernel_creds()
-+		bdev_file = bdev_file_open_by_dev(dev, mode, _dm_claim_ptr, NULL);
- 	if (IS_ERR(bdev_file)) {
- 		r = PTR_ERR(bdev_file);
- 		goto out_free_td;
+ 	BUG_ON(!inc);
+ 
 
 
