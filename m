@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0B03346A6;
-	Tue, 21 Jul 2026 17:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7713346A6;
+	Tue, 21 Jul 2026 17:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655619; cv=none; b=gBqtLZOU6k2p/O4vP87PeQfS34a8f0or2iiAxJueNPcwnfrgqB2V2MEzWYKZ7ujzqttVr66AsW8y/6FMOf1NJqJsrEXFkH+j1tZMIsy/FZywmCMIHTQE2MIesKB00cqJN3ZJBqhoFVH+EK8gVTbmpeOpdmjG8IzYr3VQ8ueRCq4=
+	t=1784655622; cv=none; b=lzYFwNYrzqjabzNIaCNh7segNDdpSwgtkScrQv5tgnZA0JbL7x+NvJtc6M9VKr7Vg5jmJ37rPWV080k+BBRyFkH6odDzPhEQN5RBiVZaQlrRlZ0Ox6jEzKjrDC6pplZRPB5YgzbMnfNp5/yy+l8cuNBTzmDrCSctwi6Y/0yu6TY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655619; c=relaxed/simple;
-	bh=vMWZD3viHcAetXmCLaWNb3JUAejULGdMQezOkjoVbAM=;
+	s=arc-20240116; t=1784655622; c=relaxed/simple;
+	bh=g2ql3nEnrEYmzjAWqmIyeekw8E+1FugkQhEp9Paxa7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AWe67AexQV2FQ6BRgWFjaEtwwqv+BP2alu5GJnJ3NYalbQZdPgVC9T/rzOaGxPB29s2BQ19pf5U8oTVlPQ48JGhz7PiewQWjBrY3LWeWFWHdrb9adq5hW+fM/qeaL9wl6zXezFFWpdRDcBw2Zr4Y70OJTPA/+rxYpk9sqwcSfh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SulXK3BY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k6Nt0zqoy5/Y7NnknxuvZ6EB4zh2Zb1jZxHGTp8nV1G3M/VNPQfeVFz5pbTeDccDqu+mp8BtagevDODHNgx/tAw5LYBin1W/K00Ay82GK/jW4kzXhJU1nbWt1pZHGm2KMVaxG3VxYaUCLZFeBfCxbamPtC3fAEoM4aNydAojMrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sk1ayCEB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SulXK3BY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913251F000E9;
-	Tue, 21 Jul 2026 17:40:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sk1ayCEB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA431F000E9;
+	Tue, 21 Jul 2026 17:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655618;
-	bh=TJgxGxutMsP+lAgiA4vCAXahTL+WbWMXCfxDp/IV0ro=;
+	s=korg; t=1784655620;
+	bh=bPmus93MZWI/pnDPqrP+sGZjKic3UbvnubIGe0DEvFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SulXK3BYORScCAiA+eGDdc48tet0jwr2kJB7sTtOd/G2Geel8X/EmnWNHLGUI4oSS
-	 2FRRw7wUSWE7j6AtTs6vvE/OJchAhOAx+aUc/9QiBJB7q67Ygj/g6wL5CQkdvb5NGp
-	 9nvLX5UcrAM4mbRenWrX/xZvxK/o+tU6NzzQ3zns=
+	b=sk1ayCEB4yP0GOQAaJNpTNP9t6dl4u8Hb/JSQj08ccBkYv5ByKJ7tAwaZT6O/2sBe
+	 hMkklsGjT0+C0hQWvGfXmzkdr2UnPBTKT6G3iDSf1rca5+Lyp7j8pCLVyLqRw7lWI8
+	 NIsiwgrVM7/tMwNT/nNsxT3OzjpCUm8eXb4mZkzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diederik de Haas <diederik@cknow-tech.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0077/1611] arm64: dts: rockchip: Fix gmac0 reset pin for NanoPi R5S
-Date: Tue, 21 Jul 2026 17:03:13 +0200
-Message-ID: <20260721152516.573257473@linuxfoundation.org>
+	Matvey Kovalev <matvey.kovalev@ispras.ru>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.18 0051/1611] afs: fix NULL pointer dereference in afs_get_tree()
+Date: Tue, 21 Jul 2026 17:02:47 +0200
+Message-ID: <20260721152515.971830127@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,53 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diederik de Haas <diederik@cknow-tech.com>
+From: Matvey Kovalev <matvey.kovalev@ispras.ru>
 
-[ Upstream commit c83c4a09d4c01c91d6c52d6d4d77a06892a3e83b ]
+commit 0b70716081c6462be9b2928ad736d0d527b09678 upstream.
 
-According to the NanoPi R5S 2204 schematic on page 6, GPIO0_C4 is for
-GMAC0_INT/PMEB_GPIO0_C4, while GPIO0_C5 is for GMAC0_RSTn_GPIO0_C5.
-While the 'reset-gpios' property was set correctly, the corresponding
-pinctrl didn't match that.
+afs_alloc_sbi() uses kzalloc for memory allocation. And, if
+ctx->dyn_root is not null, as->cell and as->volume are null.
+In trace_afs_get_tree() they are dereferenced.
 
-Next to fixing the pinctrl definition, also change the node name and
-phandle to match what is used in the schematic.
+KASAN error message:
 
-Fixes: c6629b9a6738 ("arm64: dts: rockchip: Add FriendlyElec Nanopi R5S")
-Signed-off-by: Diederik de Haas <diederik@cknow-tech.com>
-Link: https://patch.msgid.link/20260401131551.734456-2-diederik@cknow-tech.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+CPU: 2 PID: 18478 Comm: syz-executor.7 Not tainted 5.10.246-syzkaller #0
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1
+04/01/2014
+RIP: 0010:perf_trace_afs_get_tree+0x1d9/0x550
+include/trace/events/afs.h:1365
+
+Call Trace:
+trace_afs_get_tree include/trace/events/afs.h:1365 [inline]
+afs_get_tree+0x922/0x1350 fs/afs/super.c:599
+vfs_get_tree+0x8e/0x300 fs/super.c:1572
+do_new_mount fs/namespace.c:3011 [inline]
+path_mount+0x14a5/0x2220 fs/namespace.c:3341
+do_mount fs/namespace.c:3354 [inline]
+__do_sys_mount fs/namespace.c:3562 [inline]
+__se_sys_mount fs/namespace.c:3539 [inline]
+__x64_sys_mount+0x283/0x300 fs/namespace.c:3539
+ do_syscall_64+0x33/0x50 arch/x86/entry/common.c:46
+entry_SYSCALL_64_after_hwframe+0x67/0xd1
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 80548b03991f5 ("afs: Add more tracepoints")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matvey Kovalev <matvey.kovalev@ispras.ru>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260622090856.2746629-4-dhowells@redhat.com
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dts | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/afs/super.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dts b/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dts
-index 718d1a2da8e568..90ce6f0e1dcff7 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-nanopi-r5s.dts
-@@ -98,7 +98,7 @@ &mdio0 {
- 	rgmii_phy0: ethernet-phy@1 {
- 		compatible = "ethernet-phy-ieee802.3-c22";
- 		reg = <1>;
--		pinctrl-0 = <&eth_phy0_reset_pin>;
-+		pinctrl-0 = <&gmac0_rstn_gpio0_c5_pin>;
- 		pinctrl-names = "default";
- 	};
- };
-@@ -132,8 +132,8 @@ &pcie3x2 {
+--- a/fs/afs/super.c
++++ b/fs/afs/super.c
+@@ -587,7 +587,8 @@ static int afs_get_tree(struct fs_contex
+ 	}
  
- &pinctrl {
- 	gmac0 {
--		eth_phy0_reset_pin: eth-phy0-reset-pin {
--			rockchip,pins = <0 RK_PC4 RK_FUNC_GPIO &pcfg_pull_up>;
-+		gmac0_rstn_gpio0_c5_pin: gmac0-rstn-gpio0-c5-pin {
-+			rockchip,pins = <0 RK_PC5 RK_FUNC_GPIO &pcfg_pull_up>;
- 		};
- 	};
+ 	fc->root = dget(sb->s_root);
+-	trace_afs_get_tree(as->cell, as->volume);
++	if (!ctx->dyn_root)
++		trace_afs_get_tree(as->cell, as->volume);
+ 	_leave(" = 0 [%p]", sb);
+ 	return 0;
  
--- 
-2.53.0
-
 
 
