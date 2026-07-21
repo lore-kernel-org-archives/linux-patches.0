@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19843471425;
-	Tue, 21 Jul 2026 20:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DD446D0A0;
+	Tue, 21 Jul 2026 20:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665676; cv=none; b=af8jjurbduUuOcQKR4ywMgXA633YalZ14HtW48bqxfMv0TKTlLVjx1f+cTwl2exGqC5W5hjkQY8/VgwRz3xtR0StOsmXLYAt2fHSBNFN6yrdtUO7cmZJyOP96GWThVekUOEadIorsGMo2J46D6d7ziFyzTdn+FfK3x4OCZnXjKw=
+	t=1784665677; cv=none; b=J7HZBMNUvdR0ds+iGapWvlgXm5Fyp5w8ops+JfM6MDpaHHBiZefI+uHcIExonHqH/LL2NTA1+7/DkYh0y/RqiXSwK6n2j9GG87S2SPt6uSRMVXQRTGm4p7Z4JoMZfGbBRMqz08KDiMLG8aqKkGhNsWTweKk+59rmT8j9ig0++/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665676; c=relaxed/simple;
-	bh=EqFaSOqerj8UuI7ZzH+VEAB5O4GjtD7aHWk6SRhGpzs=;
+	s=arc-20240116; t=1784665677; c=relaxed/simple;
+	bh=sLWfBEABSeWK4bLAqBZuhtTNOP6LdcTuEsR2ZqB8n2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CGnGpfPUkLrlXc0i8UbGJJGrLBFRusBtcPpFVbS4Cyp8xqh7JL5GwgyoxT6qYx0GlI8kdUJHEf7IyPbhPJsiBsTmszSnli9Ja2bhI8zrVYcmvrA1BuUotEK1lzSgnJJW/6RIwGHG+jSGiKzjn9jrdpj3ziPgGF7OZuR3hgtC98g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nnbLv6vd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DRaay1PGOwvniwR4KenUHaldB0R2EP1tq/8cg6XHrG3SmN1FvJGxeoyat2fPsCFisoJdi9xIeZIJKaPBdijvdaCrp3zD4NGM3VXCaPcRniwy07uueEYO2KS+B31jscYbNyrFaZ6XBFpub8Q0KLroi76Pwp5EbS+kQJ1hfSsgwjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxpXWWHY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nnbLv6vd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318B61F00A3A;
-	Tue, 21 Jul 2026 20:27:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxpXWWHY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D10D51F000E9;
+	Tue, 21 Jul 2026 20:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665673;
-	bh=CzPHwFF9cKzoU9MAxiMZYKFcLu7hAjVgYX3CxjFEclE=;
+	s=korg; t=1784665676;
+	bh=qIhm3o/WhBvwnenvmlGuXXB7/Vsio2PkgJ5CZ7DbIEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nnbLv6vdY/1ftWSH2ZymBq+taiRSwzWF10CdJ24vXuS6AJtsx15ZEibauApLbddQE
-	 kgi4z2NVp2Y6w05A0z/3UMAmrKkxqPjogowTk3MxpQE+d0OSawDyrgwqDflErP981k
-	 IEZStgO2QuMQEf4tQTWw18bdmpgl0E12kgM/3jB0=
+	b=DxpXWWHY3XmphX+rIvsFLrY4SBduberZ6wi+0xKAIhrklPUIFT41ASe5jMp+JNIm3
+	 Kwi+FfiL4AUYpxQsNnPOYayddtIZl5nVAvsSaZEROR0/HXVQv9pUjVhkl0W0oEmqY0
+	 nJNZ8CT3b7gMLluqdHCzxcCcu9fmIvEREmEhm3aQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	David Heidelberg <david@ixit.cz>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0393/1266] arm64: dts: mediatek: mt8192-asurada: Move PCIe DMA bounce buffer to host
-Date: Tue, 21 Jul 2026 17:13:50 +0200
-Message-ID: <20260721152450.621289914@linuxfoundation.org>
+Subject: [PATCH 6.6 0367/1266] arm64: dts: qcom: sdm845-mezzanine: Fix camss ports unit_address_vs_reg warning
+Date: Tue, 21 Jul 2026 17:13:24 +0200
+Message-ID: <20260721152450.039264881@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,44 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 533275a4b5240a2bf2c592bd4536560388306d26 ]
+[ Upstream commit f20a82aacd7f381084391a8d1f0f58defa91974c ]
 
-The DMA bounce buffer is attached to the PCIe host controller, i.e. all
-PCIe DMA transfers should use it.
+Add necessary properties for ports node in SDM845 DB845c Navigation
+mezzanine overlay to fix W=1 DTC warning:
 
-Move it from the PCIe (WiFi) device node down to the PCIe host
-controller node.
+sdm845-db845c-navigation-mezzanine.dtso:19.10-24.5: Warning (unit_address_vs_reg): /fragment@0/__overlay__/ports/port@0: node has a unit name, but no reg or ranges property
 
-Fixes: 0dca9f0b3e63 ("arm64: dts: mediatek: asurada: Enable PCIe and add WiFi")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 30df676a31b7 ("arm64: dts: qcom: sdm845-db845c-navigation-mezzanine: Convert mezzanine riser to dtso")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260405-dts-qcom-w-1-fixes-v2-5-1f2c7b74a93f@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso    | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
-index 54e3ec168fa9a4..0788db329b785e 100644
---- a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
-@@ -494,6 +494,7 @@ flash@0 {
- &pcie {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pcie_pins>;
-+	memory-region = <&wifi_restricted_dma_region>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
+index 51f1a4883ab8f0..df1907560c525c 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
+@@ -16,7 +16,12 @@
+ 	status = "okay";
  
- 	pcie0: pcie@0,0 {
- 		device_type = "pci";
-@@ -508,7 +509,6 @@ pcie0: pcie@0,0 {
- 		wifi: wifi@0,0 {
- 			reg = <0x10000 0 0 0 0x100000>,
- 			      <0x10000 0 0x100000 0 0x100000>;
--			memory-region = <&wifi_restricted_dma_region>;
- 		};
- 	};
- };
+ 	ports {
++		#address-cells = <1>;
++		#size-cells = <0>;
++
+ 		port@0 {
++			reg = <0>;
++
+ 			csiphy0_ep: endpoint {
+ 				data-lanes = <0 1 2 3>;
+ 				remote-endpoint = <&ov8856_ep>;
 -- 
 2.53.0
 
