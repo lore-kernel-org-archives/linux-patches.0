@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C2F46AA80;
-	Tue, 21 Jul 2026 15:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69E146AA80;
+	Tue, 21 Jul 2026 15:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648361; cv=none; b=cIiU01L0AphgN1wzs9mIDwkPsIcuXNHWIgXJv1FuV0Ur63rAi5huom0BqYSy7WM5aqAnS1xVC/2vNyL8YNCYyacRbDjQ3rQwYGH/SfM8rd/yWaG0Sb2p1GzbJrgk5F0Vn274HvlATaPbcSqcmtJMCl+nD7A7KbvuNDz1JeBjIBc=
+	t=1784648364; cv=none; b=a4/uuUoovQiUEdkscXBfoOvrHef7/UnxLZVLROqXP35Bt5Z2wjwFjLBDJZuxa6a3QUJCiRsg5NnMJPfPMBKwQf12v5kyO0gurpVX1M43yZku8NpGgwamlZqIQElBYzkxDIBPCRVx5CbxVsuPVJJpc25RyAmhMZRvEOBWLtDtbRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648361; c=relaxed/simple;
-	bh=1r5AvaHis7twZZwRxDAORWDHX33UqBzYZtu9p+KRn+A=;
+	s=arc-20240116; t=1784648364; c=relaxed/simple;
+	bh=0N6qUggegRDtX6B6RXaKUL3LC1clleSzobbGasmSBzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L6PJNt59o01iWRrPsvA3KMU1gc3a+nCzyYdW4bcYeUEJ/5XvyIMtO2EVZJjIxw6mefLjY+jUpPbG2t22yda7YyOHCkmTBnTcAsgT2Cth57ZkgLuIPw9ey3lxNBvPIsvxmAPxkMQkrFnjFnfsmFnQ5CWhZ+phaXCehvQtpMExUy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFC1gJ+E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bf1oooZrYKyzi9TAg4Pca3fl8STf3vvjma+AKvml10wjWni3gpurVsPifwAVGEp1ME4kKPVK94Z09b97Z9tbZ80/CCyLM21ySkfU0Y17KAynYZAu6TXOp9iGSBbxgggMEyQAEyafVyq1G0nGsg+8GGFXWoDJ0hQ2LVf5qgbLlUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X3BduZgG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFC1gJ+E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00C01F000E9;
-	Tue, 21 Jul 2026 15:39:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X3BduZgG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF831F000E9;
+	Tue, 21 Jul 2026 15:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648360;
-	bh=PzcaLbaW7Tz8jrilCCwzr01iwnxbJZZrMbWwi9lclwg=;
+	s=korg; t=1784648362;
+	bh=rZqz0HGjq9sIpB8+SPUJuHyGkHRhrCDXxXkUYk77LSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UFC1gJ+Ede2UwMaHfa9B6eY9bNdiyFsTwGeGhbwpP5vU64MsT6QJKJdrPw8yehzlk
-	 rb5qs5aVdIKuT1sEDLOzWZvkkurXeHZBPeqdO9d2FY1kbMjTm1MicnM3FWdfjDM4em
-	 yXhtd0gvCTvZHNUU1SVOAYSDoNI2VxVWev9Dy2ME=
+	b=X3BduZgG0/ThQdvCdv8Xy5d2GOyKvb+Bj3tJjlH01VT+L1LuvgH7X6nGeAQwaXlT7
+	 rXArxdxtJnT4EFd1ePPI8vPFAS+zFAPt2LMcZqpivAsAyeVZemMhRErXaOd6dXM5m5
+	 ywUpXPMUk7mFcJqN6EBHeqXdU2zbiuPJCNd3/yUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0168/2077] ARM: multi_v7_defconfig: Correct QCOM_RPMH and QCOM_RPMHPD
-Date: Tue, 21 Jul 2026 16:57:21 +0200
-Message-ID: <20260721152556.653679263@linuxfoundation.org>
+Subject: [PATCH 7.1 0169/2077] accel/amdxdna: Fix clflush buffer size
+Date: Tue, 21 Jul 2026 16:57:22 +0200
+Message-ID: <20260721152556.677001646@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,44 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 02802b40c31d2f2cfc94716189cfaf610930c589 ]
+[ Upstream commit ada61841caede131cc626f6cd28a60904296f248 ]
 
-QCOM_RPMH and QCOM_RPMHPD can be build only as modules when
-QCOM_COMMAND_DB is module itself.
+The firmware is told the buffer is req.buf_size bytes. It may read/write
+the entire region. If the CPU only flushes a subset, the remaining cache
+lines could contain stale data, causing the device to see garbage.
 
-Fixes: 1c25ca9bb5c5 ("ARM: multi_v7_defconfig: enable more Qualcomm drivers")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 6e87001fe19f ("accel/amdxdna: Adjust size for copy_to_user()")
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260507040207.178111-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/configs/multi_v7_defconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/accel/amdxdna/aie2_message.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
-index bcc9aabc120283..aad12026b20d28 100644
---- a/arch/arm/configs/multi_v7_defconfig
-+++ b/arch/arm/configs/multi_v7_defconfig
-@@ -1155,7 +1155,7 @@ CONFIG_QCOM_COMMAND_DB=m
- CONFIG_QCOM_GSBI=y
- CONFIG_QCOM_OCMEM=m
- CONFIG_QCOM_RMTFS_MEM=m
--CONFIG_QCOM_RPMH=y
-+CONFIG_QCOM_RPMH=m
- CONFIG_QCOM_SMEM=y
- CONFIG_QCOM_SMD_RPM=y
- CONFIG_QCOM_SMP2P=y
-@@ -1170,7 +1170,7 @@ CONFIG_KEYSTONE_NAVIGATOR_DMA=y
- CONFIG_TI_PRUSS=m
- CONFIG_RASPBERRYPI_POWER=y
- CONFIG_QCOM_CPR=y
--CONFIG_QCOM_RPMHPD=y
-+CONFIG_QCOM_RPMHPD=m
- CONFIG_QCOM_RPMPD=y
- CONFIG_ROCKCHIP_PM_DOMAINS=y
- CONFIG_TI_SCI_PM_DOMAINS=y
+diff --git a/drivers/accel/amdxdna/aie2_message.c b/drivers/accel/amdxdna/aie2_message.c
+index 0a619e55902b58..30289680660646 100644
+--- a/drivers/accel/amdxdna/aie2_message.c
++++ b/drivers/accel/amdxdna/aie2_message.c
+@@ -390,7 +390,7 @@ int aie2_query_status(struct amdxdna_dev_hdl *ndev, char __user *buf,
+ 	req.num_cols = hweight32(aie_bitmap);
+ 	req.aie_bitmap = aie_bitmap;
+ 
+-	drm_clflush_virt_range(buff_addr, size); /* device can access */
++	drm_clflush_virt_range(buff_addr, req.dump_buff_size); /* device can access */
+ 	ret = aie_send_mgmt_msg_wait(&ndev->aie, &msg);
+ 	if (ret) {
+ 		XDNA_ERR(xdna, "Error during NPU query, status %d", ret);
+@@ -442,7 +442,7 @@ int aie2_query_telemetry(struct amdxdna_dev_hdl *ndev,
+ 	req.buf_size = buf_sz;
+ 	req.type = header->type;
+ 
+-	drm_clflush_virt_range(addr, size); /* device can access */
++	drm_clflush_virt_range(addr, req.buf_size); /* device can access */
+ 	ret = aie_send_mgmt_msg_wait(&ndev->aie, &msg);
+ 	if (ret) {
+ 		XDNA_ERR(xdna, "Query telemetry failed, status %d", ret);
+@@ -1186,7 +1186,7 @@ int aie2_query_app_health(struct amdxdna_dev_hdl *ndev, u32 context_id,
+ 	req.context_id = context_id;
+ 	req.buf_size = buf_size;
+ 
+-	drm_clflush_virt_range(buf, sizeof(*report));
++	drm_clflush_virt_range(buf, req.buf_size);
+ 	ret = aie_send_mgmt_msg_wait(&ndev->aie, &msg);
+ 	if (ret) {
+ 		XDNA_ERR(xdna, "Get app health failed, ret %d status 0x%x", ret, resp.status);
 -- 
 2.53.0
 
