@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DD143F4AF;
-	Tue, 21 Jul 2026 21:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF0944102D;
+	Tue, 21 Jul 2026 21:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668000; cv=none; b=qFjk4XcmK6PRMr6snvmTSAF1gGP+/SfOTWLZtiseJ0BdIPQc5l0m6zakqI3Ja+YF1rRRhPhrwXOC8jA17Yqy8Mh2RwI9YM2s62alZ7VUuGKyYDeLdObO7NJYw9o0x/sSulTmxjUTpKJpxNUeMQOgjo0P6y5LEKSIGCH6f8DSpjo=
+	t=1784668003; cv=none; b=NQ6zqJN4HekvGetojxKJaGzpjLD8ZRd+iScoiWP3SsnRhIXmp/WyeR6I55wH00X6R0vfFiA/4jksSy/a4BIg8t5JcRQTxT4R3umJDSDAsmwQRTBMrmZWjmbNtiEqzuY0HyrOML0g1kurtijnMuLnBk/2kuN1pA8Le8CRXN8BWQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668000; c=relaxed/simple;
-	bh=TnBmeKZopx34ksAqRLO6W5e4JQC9aItu1o6ltgWLZWw=;
+	s=arc-20240116; t=1784668003; c=relaxed/simple;
+	bh=lnayKCvmlgF0H7HarW2W8JyE2WnDBIBj1LI3ujBQmE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BJ2vLhiDYnR5DS2HQVviLYCOqNjflow1Bnn/Nm2KlGeeab0b3WiQRWW/xcoVY5W5e0KsFS9fAuXG+UPZ0Hs/jswZLfnBmjg55JxsdGq9Wqt+4nzQ/ay+f5IU4vyeAeCr6wKoi/2rjaeU/v/T9n8jWY6ixmllYnsqVdvc8A6+skg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxH/PoEV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uDyfp7XM34UvzT2nBWKnND0B4XghslWqfBBaCvmhuBqQXWxDiPkZZ+AChxAtIA6CA32D0vXCBTiMShMz5MDe23Wf1x8Ow/3XdCyQCO11hFVd2z9RyNdlPRrwRKR2hkQeQJeRRrxqcyeUkocMmOpDQPnoMnbOeCjI6pAKAs2FVFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrixrG1T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxH/PoEV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978F61F000E9;
-	Tue, 21 Jul 2026 21:06:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrixrG1T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2831F000E9;
+	Tue, 21 Jul 2026 21:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667999;
-	bh=ubaXOqEO5W9M1mNSu6JWOXSX/HvjWA/z9jpQm6elK+g=;
+	s=korg; t=1784668001;
+	bh=zOc5ZKmyNQjp8XWFjoHZYHr+nArzNpI72MAG4PsScRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bxH/PoEVm5hbd5wB7XnEALl8Ux/8nN3KZHgcLuZtBPnFojbGM0rLyd1udMTWmREvl
-	 Y8D5BqQpGCVLFEBeS1zbRo6wNSJCApJwfE4VhX1UO3s8+kf9dvTzvjz5FhJFheMbrn
-	 FEmmwvd4pqKELYjqYEAOVNkjSC8lBKWOyOhguD9U=
+	b=WrixrG1TPJWeec16uPZq9l6iMUoS5UQre4SB0c9pOXNVMYityyV1US4eNmW1jV1Qw
+	 Uh9yFnzCoKgGDUmCpC22NH8xDLbAgGTFAvESltScdmTUxT5rAado4rG2O7CQOGUxa6
+	 cq2/aVYxYRlBlpnJzvWP0E/IXYtVhJvb43LUiGoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	XIAO WU <xiaowu.417@qq.com>,
-	Siwei Zhang <oss@fourdim.xyz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1250/1266] Bluetooth: hci_conn: Fix null ptr deref in hci_abort_conn()
-Date: Tue, 21 Jul 2026 17:28:07 +0200
-Message-ID: <20260721152509.793813179@linuxfoundation.org>
+Subject: [PATCH 6.6 1241/1266] exfat: rename argument name for exfat_move_file and exfat_rename_file
+Date: Tue, 21 Jul 2026 17:27:58 +0200
+Message-ID: <20260721152509.587787516@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,278 +52,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siwei Zhang <oss@fourdim.xyz>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-[ Upstream commit 12917f591cea1af36087dba5b9ec888652f0b42a ]
+[ Upstream commit 06a2b0b3b490a6103376652c01c3ac6e8e22e654 ]
 
-hci_abort_conn() read hci_skb_event(hdev->sent_cmd) when a connection
-was pending, but hdev->sent_cmd can be NULL while req_status is still
-HCI_REQ_PEND, leading to a NULL pointer dereference and a general
-protection fault from the hci_rx_work() receive path.
+In this exfat implementation, the relationship between inode and ei
+is ei=EXFAT_I(inode). However, in the arguments of exfat_move_file()
+and exfat_rename_file(), argument 'inode' indicates the parent
+directory, but argument 'ei' indicates the target file to be renamed.
+They do not have the above relationship, which is not friendly to code
+readers.
 
-Instead of inspecting hdev->sent_cmd, track the in-flight create
-connection command with a new per-connection HCI_CONN_CREATE flag and
-route all cancellation through hci_cancel_connect_sync(), which
-dispatches to a dedicated per-type cancel function. The create command
-is in exactly one of two states: still queued, or in flight. The cancel
-function holds cmd_sync_work_lock across the whole decision: the worker
-takes this lock to dequeue every entry, so while it is held a queued
-command cannot start running and an in-flight command cannot complete
-and let the next command become pending. This keeps the flag test and
-hci_cmd_sync_cancel() atomic with respect to the worker, so a queued
-command is simply dequeued, and an in-flight command owned by this
-connection is cancelled without the risk of cancelling an unrelated
-command that became pending in the meantime. CIS uses the same flag
-mechanism via HCI_CONN_CREATE_CIS but cannot be dequeued per-connection.
+So this commit renames 'inode' to 'parent_inode', making the argument
+name match its role.
 
-hci_acl_create_conn_sync() and hci_le_create_conn_sync() clear
-HCI_CONN_CREATE after the create command completes, but the command
-status handler can free conn via hci_conn_del() (for example when the
-controller rejects the connection) while the worker is still blocked on
-the connection complete event. Hold a reference on conn across the
-create command so the flag can be cleared without a use-after-free.
-
-Fixes: a13f316e90fd ("Bluetooth: hci_conn: Consolidate code for aborting connections")
-Cc: stable@vger.kernel.org
-Suggested-by: XIAO WU <xiaowu.417@qq.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Stable-dep-of: 942296784b2a ("exfat: preserve benign secondary entries during rename and move")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/hci_core.h |    1 
- net/bluetooth/hci_conn.c         |   21 ------
- net/bluetooth/hci_sync.c         |  133 ++++++++++++++++++++++++++++++++++-----
- 3 files changed, 123 insertions(+), 32 deletions(-)
+ fs/exfat/namei.c |   36 +++++++++++++++++++-----------------
+ 1 file changed, 19 insertions(+), 17 deletions(-)
 
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -957,6 +957,7 @@ enum {
- 	HCI_CONN_AUTH_FAILURE,
- 	HCI_CONN_PER_ADV,
- 	HCI_CONN_BIG_CREATED,
-+	HCI_CONN_CREATE,
- 	HCI_CONN_CREATE_CIS,
- 	HCI_CONN_BIG_SYNC,
- 	HCI_CONN_BIG_SYNC_FAILED,
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -2910,26 +2910,11 @@ int hci_abort_conn(struct hci_conn *conn
- 
- 	conn->abort_reason = reason;
- 
--	/* If the connection is pending check the command opcode since that
--	 * might be blocking on hci_cmd_sync_work while waiting its respective
--	 * event so we need to hci_cmd_sync_cancel to cancel it.
--	 *
--	 * hci_connect_le serializes the connection attempts so only one
--	 * connection can be in BT_CONNECT at time.
-+	/* Cancel the connect attempt. A return of 0 means the create command
-+	 * was still queued and got dequeued, so there is nothing to disconnect.
- 	 */
--	if (conn->state == BT_CONNECT && READ_ONCE(hdev->req_status) == HCI_REQ_PEND) {
--		switch (hci_skb_event(hdev->sent_cmd)) {
--		case HCI_EV_CONN_COMPLETE:
--		case HCI_EV_LE_CONN_COMPLETE:
--		case HCI_EV_LE_ENHANCED_CONN_COMPLETE:
--		case HCI_EVT_LE_CIS_ESTABLISHED:
--			hci_cmd_sync_cancel(hdev, ECANCELED);
--			break;
--		}
--	/* Cancel connect attempt if still queued/pending */
--	} else if (!hci_cancel_connect_sync(hdev, conn)) {
-+	if (!hci_cancel_connect_sync(hdev, conn))
- 		return 0;
--	}
- 
- 	/* Run immediately if on cmd_sync_work since this may be called
- 	 * as a result to MGMT_OP_DISCONNECT/MGMT_OP_UNPAIR which does
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -6557,6 +6557,11 @@ static int hci_le_create_conn_sync(struc
- 
- 	bt_dev_dbg(hdev, "conn %p", conn);
- 
-+	/* Hold a reference so conn stays valid for the HCI_CONN_CREATE
-+	 * clear_bit() at done.
-+	 */
-+	hci_conn_get(conn);
-+
- 	clear_bit(HCI_CONN_SCANNING, &conn->flags);
- 	conn->state = BT_CONNECT;
- 
-@@ -6569,6 +6574,7 @@ static int hci_le_create_conn_sync(struc
- 		    hdev->le_scan_type == LE_SCAN_ACTIVE &&
- 		    !hci_dev_test_flag(hdev, HCI_LE_SIMULTANEOUS_ROLES)) {
- 			hci_conn_del(conn);
-+			hci_conn_put(conn);
- 			return -EBUSY;
- 		}
- 
-@@ -6614,6 +6620,12 @@ static int hci_le_create_conn_sync(struc
- 					     &own_addr_type);
- 	if (err)
- 		goto done;
-+
-+	/* Mark create connection in flight so hci_cancel_connect_sync() can
-+	 * cancel it while blocking on the connection complete event.
-+	 */
-+	set_bit(HCI_CONN_CREATE, &conn->flags);
-+
- 	/* Send command LE Extended Create Connection if supported */
- 	if (use_ext_conn(hdev)) {
- 		err = hci_le_ext_create_conn_sync(hdev, conn, own_addr_type);
-@@ -6649,11 +6661,14 @@ static int hci_le_create_conn_sync(struc
- 				       conn->conn_timeout, NULL);
- 
- done:
-+	clear_bit(HCI_CONN_CREATE, &conn->flags);
-+
- 	if (err == -ETIMEDOUT)
- 		hci_le_connect_cancel_sync(hdev, conn, 0x00);
- 
- 	/* Re-enable advertising after the connection attempt is finished. */
- 	hci_resume_advertising_sync(hdev);
-+	hci_conn_put(conn);
+--- a/fs/exfat/namei.c
++++ b/fs/exfat/namei.c
+@@ -1015,15 +1015,15 @@ unlock:
  	return err;
  }
  
-@@ -6932,10 +6947,25 @@ static int hci_acl_create_conn_sync(stru
- 	else
- 		cp.role_switch = 0x00;
- 
--	return __hci_cmd_sync_status_sk(hdev, HCI_OP_CREATE_CONN,
--					sizeof(cp), &cp,
--					HCI_EV_CONN_COMPLETE,
--					conn->conn_timeout, NULL);
-+	/* Hold a reference so conn stays valid for the HCI_CONN_CREATE
-+	 * clear_bit() below.
-+	 */
-+	hci_conn_get(conn);
-+
-+	/* Mark create connection in flight so hci_cancel_connect_sync() can
-+	 * cancel it while blocking on the connection complete event.
-+	 */
-+	set_bit(HCI_CONN_CREATE, &conn->flags);
-+
-+	err = __hci_cmd_sync_status_sk(hdev, HCI_OP_CREATE_CONN,
-+				       sizeof(cp), &cp,
-+				       HCI_EV_CONN_COMPLETE,
-+				       conn->conn_timeout, NULL);
-+
-+	clear_bit(HCI_CONN_CREATE, &conn->flags);
-+	hci_conn_put(conn);
-+
-+	return err;
- }
- 
- int hci_connect_acl_sync(struct hci_dev *hdev, struct hci_conn *conn)
-@@ -6981,20 +7011,95 @@ int hci_connect_le_sync(struct hci_dev *
- 				       create_le_conn_complete);
- }
- 
--int hci_cancel_connect_sync(struct hci_dev *hdev, struct hci_conn *conn)
-+static int hci_acl_cancel_create_conn_sync(struct hci_dev *hdev,
-+					   struct hci_conn *conn)
-+{
-+	struct hci_cmd_sync_work_entry *entry;
-+	int err = -EBUSY;
-+
-+	/* cmd_sync_work_lock makes the HCI_CONN_CREATE test and the cancel
-+	 * atomic against the worker, which takes this lock to dequeue every
-+	 * entry: while it is held no other command can become pending, so
-+	 * hci_cmd_sync_cancel() cannot cancel an unrelated command.
-+	 */
-+	mutex_lock(&hdev->cmd_sync_work_lock);
-+
-+	/* In flight: this connection owns the pending request, cancel it. */
-+	if (test_bit(HCI_CONN_CREATE, &conn->flags)) {
-+		hci_cmd_sync_cancel(hdev, ECANCELED);
-+		goto unlock;
-+	}
-+
-+	/* Still queued: a successful dequeue means it never started, so there
-+	 * is nothing to disconnect.
-+	 */
-+	entry = _hci_cmd_sync_lookup_entry(hdev, hci_acl_create_conn_sync, conn,
-+					   NULL);
-+	if (entry) {
-+		_hci_cmd_sync_cancel_entry(hdev, entry, -ECANCELED);
-+		err = 0;
-+	}
-+
-+unlock:
-+	mutex_unlock(&hdev->cmd_sync_work_lock);
-+	return err;
-+}
-+
-+static int hci_le_cancel_create_conn_sync(struct hci_dev *hdev,
-+					  struct hci_conn *conn)
+-static int exfat_rename_file(struct inode *inode, struct exfat_chain *p_dir,
++static int exfat_rename_file(struct inode *parent_inode, struct exfat_chain *p_dir,
+ 		int oldentry, struct exfat_uni_name *p_uniname,
+ 		struct exfat_inode_info *ei)
  {
--	if (conn->state != BT_OPEN)
--		return -EINVAL;
-+	struct hci_cmd_sync_work_entry *entry;
-+	int err = -EBUSY;
-+
-+	/* cmd_sync_work_lock keeps the HCI_CONN_CREATE test and the cancel
-+	 * atomic against the cmd_sync worker.
-+	 */
-+	mutex_lock(&hdev->cmd_sync_work_lock);
-+
-+	if (test_bit(HCI_CONN_CREATE, &conn->flags)) {
-+		hci_cmd_sync_cancel(hdev, ECANCELED);
-+		goto unlock;
-+	}
+ 	int ret, num_old_entries, num_new_entries;
+ 	struct exfat_dentry *epold, *epnew;
+-	struct super_block *sb = inode->i_sb;
++	struct super_block *sb = parent_inode->i_sb;
+ 	struct buffer_head *new_bh, *old_bh;
+-	int sync = IS_DIRSYNC(inode);
++	int sync = IS_DIRSYNC(parent_inode);
  
-+	entry = _hci_cmd_sync_lookup_entry(hdev, hci_le_create_conn_sync, conn,
-+					   create_le_conn_complete);
-+	if (entry) {
-+		_hci_cmd_sync_cancel_entry(hdev, entry, -ECANCELED);
-+		err = 0;
-+	}
-+
-+unlock:
-+	mutex_unlock(&hdev->cmd_sync_work_lock);
-+	return err;
-+}
-+
-+static int hci_cis_cancel_create_conn_sync(struct hci_dev *hdev,
-+					   struct hci_conn *conn)
-+{
-+	/* LE Create CIS is shared by the whole CIG and cannot be dequeued
-+	 * per-connection, so only an in-flight command can be cancelled.
-+	 * cmd_sync_work_lock keeps the test and the cancel atomic against the
-+	 * cmd_sync worker.
-+	 */
-+	mutex_lock(&hdev->cmd_sync_work_lock);
-+
-+	if (test_bit(HCI_CONN_CREATE_CIS, &conn->flags))
-+		hci_cmd_sync_cancel(hdev, ECANCELED);
-+
-+	mutex_unlock(&hdev->cmd_sync_work_lock);
-+	return -EBUSY;
-+}
-+
-+int hci_cancel_connect_sync(struct hci_dev *hdev, struct hci_conn *conn)
-+{
- 	switch (conn->type) {
- 	case ACL_LINK:
--		return !hci_cmd_sync_dequeue_once(hdev,
--						  hci_acl_create_conn_sync,
--						  conn, NULL);
-+		return hci_acl_cancel_create_conn_sync(hdev, conn);
- 	case LE_LINK:
--		return !hci_cmd_sync_dequeue_once(hdev, hci_le_create_conn_sync,
--						  conn, create_le_conn_complete);
-+		return hci_le_cancel_create_conn_sync(hdev, conn);
-+	case CIS_LINK:
-+		return hci_cis_cancel_create_conn_sync(hdev, conn);
-+	default:
-+		return -ENOENT;
- 	}
--
--	return -ENOENT;
+ 	epold = exfat_get_dentry(sb, p_dir, oldentry, &old_bh);
+ 	if (!epold)
+@@ -1041,8 +1041,8 @@ static int exfat_rename_file(struct inod
+ 	if (num_old_entries < num_new_entries) {
+ 		int newentry;
+ 
+-		newentry =
+-			exfat_find_empty_entry(inode, p_dir, num_new_entries);
++		newentry = exfat_find_empty_entry(parent_inode, p_dir,
++				num_new_entries);
+ 		if (newentry < 0)
+ 			return newentry; /* -EIO or -ENOSPC */
+ 
+@@ -1073,12 +1073,12 @@ static int exfat_rename_file(struct inod
+ 		brelse(old_bh);
+ 		brelse(new_bh);
+ 
+-		ret = exfat_init_ext_entry(inode, p_dir, newentry,
++		ret = exfat_init_ext_entry(parent_inode, p_dir, newentry,
+ 			num_new_entries, p_uniname);
+ 		if (ret)
+ 			return ret;
+ 
+-		exfat_remove_entries(inode, p_dir, oldentry, 0,
++		exfat_remove_entries(parent_inode, p_dir, oldentry, 0,
+ 			num_old_entries);
+ 		ei->dir = *p_dir;
+ 		ei->entry = newentry;
+@@ -1090,10 +1090,10 @@ static int exfat_rename_file(struct inod
+ 		exfat_update_bh(old_bh, sync);
+ 		brelse(old_bh);
+ 
+-		exfat_remove_entries(inode, p_dir, oldentry,
++		exfat_remove_entries(parent_inode, p_dir, oldentry,
+ 			ES_IDX_FIRST_FILENAME + 1, num_old_entries);
+ 
+-		ret = exfat_init_ext_entry(inode, p_dir, oldentry,
++		ret = exfat_init_ext_entry(parent_inode, p_dir, oldentry,
+ 			num_new_entries, p_uniname);
+ 		if (ret)
+ 			return ret;
+@@ -1101,13 +1101,13 @@ static int exfat_rename_file(struct inod
+ 	return 0;
  }
+ 
+-static int exfat_move_file(struct inode *inode, struct exfat_chain *p_olddir,
++static int exfat_move_file(struct inode *parent_inode, struct exfat_chain *p_olddir,
+ 		int oldentry, struct exfat_chain *p_newdir,
+ 		struct exfat_uni_name *p_uniname, struct exfat_inode_info *ei)
+ {
+ 	int ret, newentry, num_new_entries, num_old_entries;
+ 	struct exfat_dentry *epmov, *epnew;
+-	struct super_block *sb = inode->i_sb;
++	struct super_block *sb = parent_inode->i_sb;
+ 	struct buffer_head *mov_bh, *new_bh;
+ 
+ 	epmov = exfat_get_dentry(sb, p_olddir, oldentry, &mov_bh);
+@@ -1124,7 +1124,8 @@ static int exfat_move_file(struct inode
+ 	if (num_new_entries < 0)
+ 		return num_new_entries;
+ 
+-	newentry = exfat_find_empty_entry(inode, p_newdir, num_new_entries);
++	newentry = exfat_find_empty_entry(parent_inode, p_newdir,
++			num_new_entries);
+ 	if (newentry < 0)
+ 		return newentry; /* -EIO or -ENOSPC */
+ 
+@@ -1137,7 +1138,7 @@ static int exfat_move_file(struct inode
+ 		epnew->dentry.file.attr |= cpu_to_le16(ATTR_ARCHIVE);
+ 		ei->attr |= ATTR_ARCHIVE;
+ 	}
+-	exfat_update_bh(new_bh, IS_DIRSYNC(inode));
++	exfat_update_bh(new_bh, IS_DIRSYNC(parent_inode));
+ 	brelse(mov_bh);
+ 	brelse(new_bh);
+ 
+@@ -1151,16 +1152,17 @@ static int exfat_move_file(struct inode
+ 	}
+ 
+ 	*epnew = *epmov;
+-	exfat_update_bh(new_bh, IS_DIRSYNC(inode));
++	exfat_update_bh(new_bh, IS_DIRSYNC(parent_inode));
+ 	brelse(mov_bh);
+ 	brelse(new_bh);
+ 
+-	ret = exfat_init_ext_entry(inode, p_newdir, newentry, num_new_entries,
+-		p_uniname);
++	ret = exfat_init_ext_entry(parent_inode, p_newdir, newentry,
++		num_new_entries, p_uniname);
+ 	if (ret)
+ 		return ret;
+ 
+-	exfat_remove_entries(inode, p_olddir, oldentry, 0, num_old_entries);
++	exfat_remove_entries(parent_inode, p_olddir, oldentry, 0,
++		num_old_entries);
+ 
+ 	exfat_chain_set(&ei->dir, p_newdir->dir, p_newdir->size,
+ 		p_newdir->flags);
 
 
