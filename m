@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F05472543;
-	Tue, 21 Jul 2026 20:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631EB47010D;
+	Tue, 21 Jul 2026 20:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665502; cv=none; b=tL2Uln6rSV1A6N8aYcszxM6Gcu7IDH9uNX5icdjC7INVw/MmebQq3K1aEVdZG+O2veXkVNhL59LV/DxbcfaswuGPSdeZ/a+gc24oFnIc7Kaz5U+idRdWvh9z99loEioCMownQgFIjgH1NpmuU2K9svQc0O/rL2iryfYgDx2pMkE=
+	t=1784665505; cv=none; b=Zvyfsp6emQzuQTT6C6Wq6APVYNWHFT3Or/TBTmpHcvR+xfrhTXJQWo/pryUxg6J2RHXf0q9n+m13IEvVurLJM4bmWyQPT90b3MNGGdTQLvLwchU5hGJ5J7G+tWSPb2+0UnL2SpnxqjIXi9EtEDLyLJZu73dY1VE2FATKGUk2M0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665502; c=relaxed/simple;
-	bh=tfkj0cps2HOuZBU6zv68d29COK1ZVWmaQk/VsL4c2P4=;
+	s=arc-20240116; t=1784665505; c=relaxed/simple;
+	bh=TSQxsprCpdke0nB3tCrxZgx7J5r8hWeD3ssIwI2DUlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JnZNke2BoAWI4A8gxvgmdJN+4QztfStQCS232YDx4GA6il71cCxK+nNXM1RLgy9Zt601vNS+oGGH1K0lvk+/Afv14/PdydAtemHwWa3DRC379KylMNm8pEyZKCZcCwTIYXgdTM/weLojtMqVMfirs/VqJ0hfXnOoPjBV+H4jzPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NofzXx/G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uTmz30zwd4WHv1Jfrf3WvVW2CVQm/fMGEbBZB1k60MHkOZdp4LXmFYFBiNvZFiLN7B1wqBxl4xS9VRdTo1WrhzlQ80RBqaBAXM6Bcmc9yO/+qrBXY+U5c8rM5Emhui4t2nlVojCw+0WTVi5wyLS7U9GL/0JAEVk0AFZ04eonKUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2C31+e4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NofzXx/G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28DC51F000E9;
-	Tue, 21 Jul 2026 20:25:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2C31+e4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84931F000E9;
+	Tue, 21 Jul 2026 20:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665501;
-	bh=7ssswHmd5pYO2Kuy/tPqASOyFMjP7cW745rdxFDB9F0=;
+	s=korg; t=1784665504;
+	bh=HRcmhW5kYNFpou/h+3M2n2ad1Z0fd2FqrbB9u0/gr+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NofzXx/G+8UWZ/ruYyXzxgZ8i9i7qWB+4wRb9h6t4WQzpflxNE4ouj/ASklzvvBQk
-	 vp8dGV8qBisecgunCKkt5qZqSispX0XJU1ktQ4IZyE70c7L+r+Qozfa1j7QEaJybgq
-	 a5kuZA37hT3T0Eht9+S7VS9w2od2187iAjOO7laA=
+	b=M2C31+e4LTmpKmtcygkSN2GK+4kOPnBfj5WN0EwEAu1auOC2adVOo+pu2x7EBV6nD
+	 udcXBxcYNEnldv4w13TgTXytAMqdR8lexkIsjqkS+rxhaMJqJHVoMoe0j2HrRW/DwC
+	 NHX9J2t7rZHPFbwqiHUZulivBwgLejGuSwEWcnJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Muhammet=20Kaan=20KILIN=C3=87?= <muhammetkaankilinc@gmail.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Fuad Tabba <tabba@google.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0329/1266] crypto: algif_skcipher - force synchronous processing on trees without ctx->state
-Date: Tue, 21 Jul 2026 17:12:46 +0200
-Message-ID: <20260721152449.195958203@linuxfoundation.org>
+Subject: [PATCH 6.6 0330/1266] KVM: arm64: Bound used_lrs when flushing the pKVM hyp vCPU
+Date: Tue, 21 Jul 2026 17:12:47 +0200
+Message-ID: <20260721152449.216956960@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -44,117 +47,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammet Kaan KILINÇ <muhammetkaankilinc@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-The AIO/async path in skcipher_recvmsg() passes the socket-wide ctx->iv
-directly into the skcipher request. After io_submit() the socket lock is
-dropped and the request is processed asynchronously, so a concurrent
-sendmsg(ALG_SET_IV) can overwrite ctx->iv and make the in-flight request
-run under an attacker-controlled IV. For CTR/stream modes this is
-IV/keystream reuse and lets an unprivileged user recover the plaintext of
-a concurrent operation.
+commit 8cc8bbbfab14c22c5551d0dd19b208a44b141c76 upstream.
 
-Snapshotting ctx->iv into per-request storage for the async path is not
-sufficient. For ciphers with statesize == 0 - which includes cbc and ctr -
-the MSG_MORE inter-chunk IV chaining is carried solely by the in-place
-req->iv writeback, which a snapshot redirects into per-request memory that
-af_alg_free_resources() releases on completion, silently producing wrong
-output. Writing the IV back from the completion callback instead is not
-possible either: that would require lock_sock() there, but the callback can
-run in softirq/atomic context, so it must not sleep.
+flush_hyp_vcpu() copies the host vGIC state into the hyp's private vCPU
+on every run. The vGIC list register save and restore use used_lrs as
+their loop bound and expect it to stay within the number of implemented
+list registers. While this is generally the case, flush_hyp_vcpu()
+copies vgic_v3 verbatim and does not enforce this, so a value provided
+by the host is used at EL2 to index vgic_lr[] and access ICH_LR<n>_EL2
+(host -> EL2).
 
-Make the operation synchronous instead, which removes both the IV race and
-any writeback race. This is equivalent to the upstream resolution, commit
-fcc77d33a34c ("net: Remove support for AIO on sockets"), which removed the
-AIO socket path across net/ entirely and so produces the same end state for
-this file. This patch deviates from that commit deliberately: rather than
-removing AIO socket support tree-wide, which would be far too invasive for
-stable, it removes only the AIO branch in crypto/algif_skcipher.c.
-io_submit() now completes synchronously; AF_ALG async is rarely used in
-practice.
+Fix by clamping used_lrs to the number of implemented list registers
+after the copy, as the trusted path already does in
+vgic_flush_lr_state(). The number of implemented list registers is
+constant after init, so it is replicated once from
+kvm_vgic_global_state.nr_lr into hyp_gicv3_nr_lr rather than read on
+every entry.
 
-The -EIOCBQUEUED check in skcipher_recvmsg() is now dead but harmless,
-and is left alone to keep the fix minimal.
-
-Tested on 6.6.y: attacker IV injection dropped from 2296/200000 to 0/200000
-after the change; MSG_MORE chunked CTR output bit-identical to single-shot.
-
-Reported-by: Muhammet Kaan KILINÇ <muhammetkaankilinc@gmail.com>
-Fixes: e870456d8e7c ("crypto: algif_skcipher - overhaul memory management")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Muhammet Kaan KILINÇ <muhammetkaankilinc@gmail.com>
+Cc: stable@vger.kernel.org
+Fixes: be66e67f1750 ("KVM: arm64: Use the pKVM hyp vCPU structure in handle___kvm_vcpu_run()")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reviewed-by: Fuad Tabba <tabba@google.com>
+Tested-by: Fuad Tabba <tabba@google.com>
+Link: https://patch.msgid.link/20260606175614.83273-3-imv4bel@gmail.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+[ tabba: adjust context in flush_hyp_vcpu() and kvm_hyp.h ]
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/algif_skcipher.c | 49 +++++++++++++++--------------------------
- 1 file changed, 18 insertions(+), 31 deletions(-)
+ arch/arm64/include/asm/kvm_hyp.h   | 1 +
+ arch/arm64/kvm/arm.c               | 2 ++
+ arch/arm64/kvm/hyp/nvhe/hyp-main.c | 9 +++++++++
+ 3 files changed, 12 insertions(+)
 
-diff --git a/crypto/algif_skcipher.c b/crypto/algif_skcipher.c
-index e31b1da58dba41..b12df4544d0bbb 100644
---- a/crypto/algif_skcipher.c
-+++ b/crypto/algif_skcipher.c
-@@ -107,37 +107,24 @@ static int _skcipher_recvmsg(struct socket *sock, struct msghdr *msg,
- 	skcipher_request_set_crypt(&areq->cra_u.skcipher_req, areq->tsgl,
- 				   areq->first_rsgl.sgl.sgt.sgl, len, ctx->iv);
+diff --git a/arch/arm64/include/asm/kvm_hyp.h b/arch/arm64/include/asm/kvm_hyp.h
+index 51cd106cd840a0..1b209efac97287 100644
+--- a/arch/arm64/include/asm/kvm_hyp.h
++++ b/arch/arm64/include/asm/kvm_hyp.h
+@@ -146,5 +146,6 @@ extern u64 kvm_nvhe_sym(id_aa64smfr0_el1_sys_val);
+ extern unsigned long kvm_nvhe_sym(__icache_flags);
+ extern unsigned int kvm_nvhe_sym(kvm_arm_vmid_bits);
+ extern unsigned int kvm_nvhe_sym(kvm_host_sve_max_vl);
++extern unsigned int kvm_nvhe_sym(hyp_gicv3_nr_lr);
  
--	if (msg->msg_iocb && !is_sync_kiocb(msg->msg_iocb)) {
--		/* AIO operation */
--		sock_hold(sk);
--		areq->iocb = msg->msg_iocb;
--
--		/* Remember output size that will be generated. */
--		areq->outlen = len;
--
--		skcipher_request_set_callback(&areq->cra_u.skcipher_req,
--					      CRYPTO_TFM_REQ_MAY_SLEEP,
--					      af_alg_async_cb, areq);
--		err = ctx->enc ?
--			crypto_skcipher_encrypt(&areq->cra_u.skcipher_req) :
--			crypto_skcipher_decrypt(&areq->cra_u.skcipher_req);
--
--		/* AIO operation in progress */
--		if (err == -EINPROGRESS)
--			return -EIOCBQUEUED;
--
--		sock_put(sk);
--	} else {
--		/* Synchronous operation */
--		skcipher_request_set_callback(&areq->cra_u.skcipher_req,
--					      CRYPTO_TFM_REQ_MAY_SLEEP |
--					      CRYPTO_TFM_REQ_MAY_BACKLOG,
--					      crypto_req_done, &ctx->wait);
--		err = crypto_wait_req(ctx->enc ?
--			crypto_skcipher_encrypt(&areq->cra_u.skcipher_req) :
--			crypto_skcipher_decrypt(&areq->cra_u.skcipher_req),
--						 &ctx->wait);
--	}
-+	/*
-+	 * Force synchronous processing.  The async (AIO) path passed the
-+	 * socket-wide ctx->iv into the request, which the worker
-+	 * dereferenced after the socket lock was dropped, letting a
-+	 * concurrent sendmsg(ALG_SET_IV) inject an attacker IV.  Mainline
-+	 * removed the AIO socket path in commit fcc77d33a34c ("net: Remove
-+	 * support for AIO on sockets"); these stable trees lack the
-+	 * per-request ctx->state used by newer kernels, so the minimal safe
-+	 * fix is to always complete synchronously.
-+	 */
-+	skcipher_request_set_callback(&areq->cra_u.skcipher_req,
-+				      CRYPTO_TFM_REQ_MAY_SLEEP |
-+				      CRYPTO_TFM_REQ_MAY_BACKLOG,
-+				      crypto_req_done, &ctx->wait);
-+	err = crypto_wait_req(ctx->enc ?
-+		crypto_skcipher_encrypt(&areq->cra_u.skcipher_req) :
-+		crypto_skcipher_decrypt(&areq->cra_u.skcipher_req),
-+				      &ctx->wait);
+ #endif /* __ARM64_KVM_HYP_H__ */
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 3ae529e967c7fb..e49ead6d005cc4 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -2026,6 +2026,8 @@ static int __init init_subsystems(void)
+ 	switch (err) {
+ 	case 0:
+ 		vgic_present = true;
++		if (static_branch_unlikely(&kvm_vgic_global_state.gicv3_cpuif))
++			kvm_nvhe_sym(hyp_gicv3_nr_lr) = kvm_vgic_global_state.nr_lr;
+ 		break;
+ 	case -ENODEV:
+ 	case -ENXIO:
+diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+index 350d1775a5ce88..aa6c486667e706 100644
+--- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
++++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+@@ -22,6 +22,9 @@
  
+ DEFINE_PER_CPU(struct kvm_nvhe_init_params, kvm_init_params);
  
- free:
++/* Number of implemented GICv3 LRs. Used by flush_hyp_vcpu(). */
++unsigned int hyp_gicv3_nr_lr;
++
+ void __kvm_hyp_host_forward_smc(struct kvm_cpu_context *host_ctxt);
+ 
+ static void flush_hyp_vcpu(struct pkvm_hyp_vcpu *hyp_vcpu)
+@@ -46,6 +49,12 @@ static void flush_hyp_vcpu(struct pkvm_hyp_vcpu *hyp_vcpu)
+ 	hyp_vcpu->vcpu.arch.vsesr_el2	= host_vcpu->arch.vsesr_el2;
+ 
+ 	hyp_vcpu->vcpu.arch.vgic_cpu.vgic_v3 = host_vcpu->arch.vgic_cpu.vgic_v3;
++
++	/* Bound used_lrs by the number of implemented list registers. */
++	hyp_vcpu->vcpu.arch.vgic_cpu.vgic_v3.used_lrs =
++		min_t(unsigned int,
++		      hyp_vcpu->vcpu.arch.vgic_cpu.vgic_v3.used_lrs,
++		      hyp_gicv3_nr_lr);
+ }
+ 
+ static void sync_hyp_vcpu(struct pkvm_hyp_vcpu *hyp_vcpu)
 -- 
 2.53.0
 
