@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD2744AB8E;
-	Tue, 21 Jul 2026 22:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7143B42CB;
+	Tue, 21 Jul 2026 22:50:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674232; cv=none; b=UXeL0OisR0Fg88ZY/FF2rssaReoWYjG4X6TtPKtJhLqR9WCOmpFJmOyRuy5yuxrPkdbgLMNuaUrarGgBl7DJLTQFEwxSl66w86WDnyFU0Gd8bsgeiFGqW9zJl4D93REE/pCsDE+ieOTGEDxINahADjz3ixHsa5k8c/tOmYg9sx8=
+	t=1784674235; cv=none; b=E7AaGDFsiWFHEb8vU79H+sYpL2snrSrqnHD0Rhg9nFvP0rvmw9Ru4ht2WhKXSxrNCm73ZkBIVYZd1N2dobWgcbzBatFwi47g7lRAjUNnAZnO4BVnzC8CFIHvq8cYDvzDo6uAVxG/u61jkOBmeeWCuNicO9UGFujo9H2/rh77ZzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674232; c=relaxed/simple;
-	bh=ith04Fv+k8N2sKgNOBfuwIoxxwCdAk6UiOFen3gJsfk=;
+	s=arc-20240116; t=1784674235; c=relaxed/simple;
+	bh=1nTdRnDMq5pXJzLMCWhVeQ33mdKos3bvmmahOYluu9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=McyFKAn30ZP6gJRkcUZLTNulJYnLMKlT5T9PVvj6Nx2wYM25PRXFfdNLUCzGf+UF+zmUpqhMf8qSgS/eQvkAhSCUMYLsuukTjoDnaC9p7qLeAT/LYf0738m2qh9TVo3sT2KL4Ekpn4qN5KfZVXOw8vZPjeQhkRCHJQxrV77iwT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXVY+OyZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WVUDs2cT/626ZFDo6Xxa/DJN+r5wwko0vw2FDfSdvyZ/T2KXblX7xQ1s4FxDmRsDt+3o66nUH1t2mp+M1+5eEBETc9Xroqgxk0edEeZanWQoHvnZd5mWKRMVM8KDsALBr3LJ3nfYXVrXvEcbBj43l109MadFM+eBW2sZ3Ga7maA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JGvzd0a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXVY+OyZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CDD1F000E9;
-	Tue, 21 Jul 2026 22:50:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JGvzd0a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEF4B1F000E9;
+	Tue, 21 Jul 2026 22:50:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674231;
-	bh=jU4/75HXfQsoZv4oHVnpSqJ+/rZESy1hLnHe9V9FSUY=;
+	s=korg; t=1784674234;
+	bh=xLwykwzKjWkbGGmihOTae4JYuptXsnqZqUjoEagZTrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fXVY+OyZYnlNWsXH+SIAjU7pioK+6GQ8/uqLZES2Li8Wi3c3s+/xjPAMCgOhwRRms
-	 mrdTc0dJ2bxnkQICBeWw2mWqr6ljhYclFJQ+fKPHz9G8COLyWmYIVSUDazEcN+TDEZ
-	 PldAkSt+OFFr4LBcP9OdiQC5q9WmituxpXunMi1Q=
+	b=2JGvzd0aR4IFafdaPkH5clLZjA+wY7yoaTtqLLSJP4IRP20vkAdqTwS7WJunw9vmV
+	 KKPMiUF3tYXLJomWYWW/eUOEQMLIk4cvhJpwEcZU/PAy2kzZHW2pbnj072TGQfsDKZ
+	 pmlmijiN5SiilJ6kM7RtH9IQ2yLwYNH9bb0rwrAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 5.10 464/699] batman-adv: dat: fix tie-break for candidate selection
-Date: Tue, 21 Jul 2026 17:23:43 +0200
-Message-ID: <20260721152406.163514175@linuxfoundation.org>
+Subject: [PATCH 5.10 465/699] batman-adv: tt: avoid request storms during pending request
+Date: Tue, 21 Jul 2026 17:23:44 +0200
+Message-ID: <20260721152406.184964630@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,40 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 98052bdaf6ac1639a63ffc10244eeeab1f62ed2b upstream.
+commit 27c7d40008231ae4140d35501b60087a9de2d2c3 upstream.
 
-The original version of the candidate selection for DAT attempted to
-compare both candidate and max_orig_node to identify which has the smaller
-MAC address. This comparison is required as tie-break when a hash collision
-happened.
+batadv_send_tt_request() allocates a tt_req_node when none exists for the
+destination originator node. This should prevent that a multiple TT
+requests are send at the same time to an originator.
 
-But the used function returned 0 when the function was not equal and a
-non-zero value when it was equal. As result, the actually selected
-node was dependent on the order of entries in the orig_hash and not
-actually on the mac addresses. The last originator in the hash collision
-would always win.
+But if allocation of the send buffer failed, this request must be cleaned
+up again. But indicator for such a failure is "ret == false". But the
+actual implementation is checking for "ret == true".
 
-To have a proper ordering, it must diff the actual MAC address bytes and
-reject the candidate when the diff is not smaller than 0.
+The check must be inverted to not loose the information about the TT
+request directly after it was attempted to be sent out. This should avoid
+potential request storms.
 
 Cc: stable@vger.kernel.org
-Fixes: 785ea1144182 ("batman-adv: Distributed ARP Table - create DHT helper functions")
+Fixes: 335fbe0f5d25 ("batman-adv: tvlv - convert tt query packet to use tvlv unicast packets")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/distributed-arp-table.c |    2 +-
+ net/batman-adv/translation-table.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/batman-adv/distributed-arp-table.c
-+++ b/net/batman-adv/distributed-arp-table.c
-@@ -548,7 +548,7 @@ static bool batadv_is_orig_node_eligible
- 	 * the one with the lowest address
- 	 */
- 	if (tmp_max == max && max_orig_node &&
--	    batadv_compare_eth(candidate->orig, max_orig_node->orig))
-+	    memcmp(candidate->orig, max_orig_node->orig, ETH_ALEN) >= 0)
- 		goto out;
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -3260,7 +3260,7 @@ out:
+ 	if (primary_if)
+ 		batadv_hardif_put(primary_if);
  
- 	ret = true;
+-	if (ret && tt_req_node) {
++	if (!ret && tt_req_node) {
+ 		spin_lock_bh(&bat_priv->tt.req_list_lock);
+ 		if (!hlist_unhashed(&tt_req_node->list)) {
+ 			hlist_del_init(&tt_req_node->list);
 
 
