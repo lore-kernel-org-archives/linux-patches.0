@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CAD46D2B3;
-	Tue, 21 Jul 2026 17:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95CB246D2B3;
+	Tue, 21 Jul 2026 17:40:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655605; cv=none; b=HcIfUJDZEv+f8UWMETEp4IjSHKOwtvyVCdIRzHfnsvM6zB1n3hzZflao5qXPLiFe/mZfXxcR5cKigbL5kDYPXlLOFkzSN4HBycnhGoP9PB0GMf+ET9uNRYn5C3LP9dsr82GAfqHw84ZevQHFOljSIf0oFKu8Lp8ynorBQmfUobg=
+	t=1784655608; cv=none; b=qK4/czLnmT7faCSATZLbF0zEMwyCsPultRhGP4siZ5YgTWi2Q/ewI61v5Y2VMSmzIpGjjCyCitkkASZPqnLQfN5ZP1HoXlKCJfwYnluKU2fYT21tRswId0m8aUbqvRDkcTuOX46LGrz9rqkXQOrHkjpuFJ/1+FAGOBAkDzR8de0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655605; c=relaxed/simple;
-	bh=OaaE3IVekJM5l7HfFQx9tXNESdhEELVuUHR2nVqd4bM=;
+	s=arc-20240116; t=1784655608; c=relaxed/simple;
+	bh=b9VDzJYJDOIc2dA+FMfClUMHcOSsBrXK/C34ATa0v8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n0uEu+E0uzvjn8zV97wDg/tBnrl66LgRZH163ClCIXtuq9mWf0hDo+iKzUr356udsSot6oSGeNbdRtfBHNx3RcVi+uzlKBTRCqnvGNcs1KNsM9D5cvpuAoKcKzQqZGyJuP1GrpX422c52q9QX/RFUAk7lUqgLT/xCfD88DJODe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h5x/LX9G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D3BHcamt54Qi+NUgyXt5DnZkrPdUKrj+1Eo5jGHz2EIemXj3SaELEaORkPhaz7pR7vXbouhfWhCNkSgKNGAEnhpavGCoor13Gb76nH4irYSP6vKn6WhNCS440uEHwFUW5FiqlcEK0M3H7nFwGD1GzrLC6is5F+tMHgk2BIqDBbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBm0SkDy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5x/LX9G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495B31F000E9;
-	Tue, 21 Jul 2026 17:40:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBm0SkDy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0393C1F000E9;
+	Tue, 21 Jul 2026 17:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655604;
-	bh=RSq77zD7MuZtRzk0mHFcxcUni22VVN+VjoUDk9kJ8ko=;
+	s=korg; t=1784655607;
+	bh=9vgHdZx+ZOSmPyDvuvLfeeH/106yBf/k/J+8JeS+lU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h5x/LX9GP+Bs7gd9SX+ZUBN1KCJ0Y368ruRkM2vD0LuRmcHhPxf8nWmG4R7TgAASM
-	 chx7QaBMMPtnR53ZYBCfguwqFoLA9tQyb1iVWXZl7MrEN9bu/Nz+NxR5jlB5d/Am+J
-	 y48ZrRLI5fw29NdcG0ESLBrR0qNev+T7Yl375BVI=
+	b=XBm0SkDydMHDscxxEzfbXpKsHRUjVjzC+LsmAT1xEfMFWwJv16lvgPKsKnldBDFpI
+	 +Vmdc+vnQuuW40otZxScHenCSWtYDYVzueM6U6SQDIfp3fXwIKCjGjQQP/bJQCisHo
+	 9a1vU//DpgaCi3xiFhCCEachBd4Sc/D0iOlg8Y20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Gregory Bell <grbell@redhat.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0072/1611] drm/amd/pm: remove trailing semicolon from AMDGPU_PM_POLICY_ATTR macro
-Date: Tue, 21 Jul 2026 17:03:08 +0200
-Message-ID: <20260721152516.455965728@linuxfoundation.org>
+Subject: [PATCH 6.18 0073/1611] selftests/bpf: Use local type for flow_offload_tuple_rhash in xdp_flowtable
+Date: Tue, 21 Jul 2026 17:03:09 +0200
+Message-ID: <20260721152516.478120319@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,53 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Gregory Bell <grbell@redhat.com>
 
-[ Upstream commit 0d892afb52d2b940d891b6b52dc9f04debef2d81 ]
+[ Upstream commit ac985e7bf840e34a8dafe0808cc571fd85896c30 ]
 
-macros should not include a trailing semicolon as per kernel coding
-style (checkpatch.pl warning).
+Define flow_offload_tuple_rhash___local and use it in place of the
+forward-declared kernel type for the bpf_xdp_flow_lookup kfunc return
+type and tuplehash variable. This is consistent with how
+bpf_flowtable_opts___local is already handled in the same file and
+avoids relying on a forward declaration of the struct.
 
-move the semicolon from the macro definition to the invocation sites instead.
-
-checkpatch.pl logs:
-WARNING: macros should not use a trailing semicolon
-+#define AMDGPU_PM_POLICY_ATTR(_name, _id)                                  \
-+       static struct amdgpu_pm_policy_attr pm_policy_attr_##_name = {     \
-+               .dev_attr = __ATTR(_name, 0644, amdgpu_get_pm_policy_attr, \
-+                                  amdgpu_set_pm_policy_attr),             \
-+               .id = PP_PM_POLICY_##_id,                                  \
-+       };
-
-Fixes: 4d154b1ca580 ("drm/amd/pm: Add support for DPM policies")
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: eeb23b54e447 ("selftests/bpf: fix compilation failure when CONFIG_NF_FLOW_TABLE=m")
+Signed-off-by: Gregory Bell <grbell@redhat.com>
+Link: https://lore.kernel.org/r/20260417154122.2558890-2-grbell@redhat.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/amdgpu_pm.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/bpf/progs/xdp_flowtable.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/amdgpu_pm.c b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-index a7e6d7854b7b2c..0d72118a12b4cc 100644
---- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-@@ -2463,12 +2463,12 @@ static ssize_t amdgpu_set_pm_policy_attr(struct device *dev,
- 		.dev_attr = __ATTR(_name, 0644, amdgpu_get_pm_policy_attr, \
- 				   amdgpu_set_pm_policy_attr),             \
- 		.id = PP_PM_POLICY_##_id,                                  \
--	};
-+	}
+diff --git a/tools/testing/selftests/bpf/progs/xdp_flowtable.c b/tools/testing/selftests/bpf/progs/xdp_flowtable.c
+index 7fdc7b23ee7498..e67daa02749d54 100644
+--- a/tools/testing/selftests/bpf/progs/xdp_flowtable.c
++++ b/tools/testing/selftests/bpf/progs/xdp_flowtable.c
+@@ -15,7 +15,10 @@ struct bpf_flowtable_opts___local {
+ 	s32 error;
+ };
  
- #define AMDGPU_PM_POLICY_ATTR_VAR(_name) pm_policy_attr_##_name.dev_attr.attr
+-struct flow_offload_tuple_rhash *
++struct flow_offload_tuple_rhash___local {
++};
++
++struct flow_offload_tuple_rhash___local *
+ bpf_xdp_flow_lookup(struct xdp_md *, struct bpf_fib_lookup *,
+ 		    struct bpf_flowtable_opts___local *, u32) __ksym;
  
--AMDGPU_PM_POLICY_ATTR(soc_pstate, SOC_PSTATE)
--AMDGPU_PM_POLICY_ATTR(xgmi_plpd, XGMI_PLPD)
-+AMDGPU_PM_POLICY_ATTR(soc_pstate, SOC_PSTATE);
-+AMDGPU_PM_POLICY_ATTR(xgmi_plpd, XGMI_PLPD);
- 
- static struct attribute *pm_policy_attrs[] = {
- 	&AMDGPU_PM_POLICY_ATTR_VAR(soc_pstate),
+@@ -67,7 +70,7 @@ int xdp_flowtable_do_lookup(struct xdp_md *ctx)
+ {
+ 	void *data_end = (void *)(long)ctx->data_end;
+ 	struct bpf_flowtable_opts___local opts = {};
+-	struct flow_offload_tuple_rhash *tuplehash;
++	struct flow_offload_tuple_rhash___local *tuplehash;
+ 	struct bpf_fib_lookup tuple = {
+ 		.ifindex = ctx->ingress_ifindex,
+ 	};
 -- 
 2.53.0
 
