@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0FB46AA80;
-	Tue, 21 Jul 2026 15:38:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707F346AA80;
+	Tue, 21 Jul 2026 15:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648295; cv=none; b=bzZPJeX/JaCwR8/PcylaN3nFELGxsxd1er92KEW9MWnv6z22+1K8R6h/ocAUz/59MOc8Jw6uYQ0Er62Y8xcFX0B+A+q2BodcqV/CNNCFROE8oEn806nlRxHKkiabYFboScMoSl805GIZxOsRX0ALpCBS/ME7oBFw9fPiSlIDKEw=
+	t=1784648300; cv=none; b=X0B/08ze0PyVFlEaEHLVIWKCnqUlQUzQnM5m58gw6BGhmnAh+0Bscdw5f+mT64+xFN0nOOdr4Uy6Jun2X2aqcGy6EiCK6L0W2tFLY1WOW46cjTFgWVIRfMrdk4F1y1yD+55OMCDjO7LTO2qhec/gZBbRvk1a7XFjgvcbWPh0YNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648295; c=relaxed/simple;
-	bh=wM+Uh3cbKmGPDgFpjYJI7Gl14mfiR1jYUTzW6eDJPyU=;
+	s=arc-20240116; t=1784648300; c=relaxed/simple;
+	bh=5uOy+Nj3vrAlzxiQs23HEFLJlRV6hiFFM06KSjYVEmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XkXuyxhGg3FhXHD20pa7hcq7CyBvjmxXsmyUlfgRRWvd5El5UXUCu4aJpK8arytgVkCCv23oNeQReqmDohrcHt5mytYkR1e/nebwa8QE3bt7Z7B3pPXH9GYMwoE0iF368dEHHzZf9VHE15LVId3zvt2Aqv7eJu0BY7ZRcpCGiGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eyy0/zYL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KS8nxtkJIne71g/4O804YIaExA7cHCh8uJDwyiE5QwBEhkESNveU/xpx7ukrd7ndODHgxRkIU9tCQsf1edS+oAcoMVTMEULqn60S0XEf5nsmUiFz9cpvD46rFpD5upXbs8nOuuaIF1nzAoUfcHCzTKnJsujvZVoU4qOQI16P0rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0KTqSjHT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eyy0/zYL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B971F000E9;
-	Tue, 21 Jul 2026 15:38:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0KTqSjHT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62811F00A3A;
+	Tue, 21 Jul 2026 15:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648294;
-	bh=scWdh2zn8pxCb6joLSG9OuKjA09UinMGzQwuMdDPcUc=;
+	s=korg; t=1784648299;
+	bh=K12LBXILhpFSDDB2jtNu90fgaTR5AnzBn5VJTZHL3Ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Eyy0/zYL+4T6SyDvG+Xp5pkruFRu65tkymIUwibI/LC9wkkE/HkBAtpcnF6UUe4ut
-	 iEoZbnhFS63hbzCNe23Ead2o3Cyu2DMbAXwdmy2n4goSf75JHwNM4pHRQTS/Dnk+Iu
-	 LvFg2XXZ1QthQAvw20ONYcRU6MvMkhcMz68kDrLc=
+	b=0KTqSjHTbGqkbGzvICSbOquRg6hbL395/1NieiU2SQov4ktIHhHll9GDu6jbiGGQr
+	 bLGpzHbKA+iWhNc/439ZoVyOYgR6Mzwz7U1bgbXUD6vXO3JGM3DsH3ZGl7IUAfhKz0
+	 5vMkdkJan7XMlU3FZ9JQ7gnQ0jkbedGO86B8q0PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Song Liu <song@kernel.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0146/2077] riscv: dts: microchip: fix pic64gx gpio interrupt-cells
-Date: Tue, 21 Jul 2026 16:56:59 +0200
-Message-ID: <20260721152556.129448069@linuxfoundation.org>
+Subject: [PATCH 7.1 0130/2077] klp-build: Fix hang on out-of-date .config
+Date: Tue, 21 Jul 2026 16:56:43 +0200
+Message-ID: <20260721152555.759901038@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,52 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 48c7771b3c792b153872a2eff67e4cbcb77e4054 ]
+[ Upstream commit cc39ccce7d5bc623100f07dcda070cef1bf690f6 ]
 
-As the pic64gx devicetree files got added in parallel to the
-GPIO interrupt-cells being fixed for PolarFire SoC, they didn't get
-changed to the correct values. Fix them now.
+If .config is out of date with the kernel source, 'make syncconfig'
+hangs while waiting for user input on new config options.  Detect the
+mismatch and return an error.
 
-Fixes: 7219d20f9f421 ("riscv: dts: microchip: add pic64gx and its curiosity kit")
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Fixes: 6f93f7b06810 ("livepatch/klp-build: Fix inconsistent kernel version")
+Acked-by: Song Liu <song@kernel.org>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/boot/dts/microchip/pic64gx.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ scripts/livepatch/klp-build | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/boot/dts/microchip/pic64gx.dtsi b/arch/riscv/boot/dts/microchip/pic64gx.dtsi
-index ed4623b29920e0..e6a24cc5715fad 100644
---- a/arch/riscv/boot/dts/microchip/pic64gx.dtsi
-+++ b/arch/riscv/boot/dts/microchip/pic64gx.dtsi
-@@ -494,7 +494,7 @@ gpio0: gpio@20120000 {
- 			reg = <0x0 0x20120000 0x0 0x1000>;
- 			interrupt-parent = <&irqmux>;
- 			interrupt-controller;
--			#interrupt-cells = <1>;
-+			#interrupt-cells = <2>;
- 			interrupts = <0>, <1>, <2>, <3>,
- 				     <4>, <5>, <6>, <7>,
- 				     <8>, <9>, <10>, <11>,
-@@ -511,7 +511,7 @@ gpio1: gpio@20121000 {
- 			reg = <0x0 0x20121000 0x0 0x1000>;
- 			interrupt-parent = <&irqmux>;
- 			interrupt-controller;
--			#interrupt-cells = <1>;
-+			#interrupt-cells = <2>;
- 			interrupts = <32>, <33>, <34>, <35>,
- 				     <36>, <37>, <38>, <39>,
- 				     <40>, <41>, <42>, <43>,
-@@ -530,7 +530,7 @@ gpio2: gpio@20122000 {
- 			reg = <0x0 0x20122000 0x0 0x1000>;
- 			interrupt-parent = <&irqmux>;
- 			interrupt-controller;
--			#interrupt-cells = <1>;
-+			#interrupt-cells = <2>;
- 			interrupts = <64>, <65>, <66>, <67>,
- 				     <68>, <69>, <70>, <71>,
- 				     <72>, <73>, <74>, <75>,
+diff --git a/scripts/livepatch/klp-build b/scripts/livepatch/klp-build
+index 0ad7e663131420..e19d93b78fcba0 100755
+--- a/scripts/livepatch/klp-build
++++ b/scripts/livepatch/klp-build
+@@ -306,7 +306,12 @@ set_kernelversion() {
+ 
+ 	stash_file "$file"
+ 
+-	kernelrelease="$(cd "$SRC" && make syncconfig &>/dev/null && make -s kernelrelease)"
++	if [[ -n "$(make -s listnewconfig 2>/dev/null)" ]]; then
++		die ".config mismatch, check your .config or run 'make olddefconfig'"
++	fi
++	make syncconfig &>/dev/null || die "make syncconfig failed"
++
++	kernelrelease="$(make -s kernelrelease)"
+ 	[[ -z "$kernelrelease" ]] && die "failed to get kernel version"
+ 
+ 	sed -i "2i echo $kernelrelease; exit 0" scripts/setlocalversion
 -- 
 2.53.0
 
