@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88EC284662;
-	Tue, 21 Jul 2026 19:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA15356746;
+	Tue, 21 Jul 2026 19:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663277; cv=none; b=RAMsYZobOxeteCZtBRVHvpQu08qqDY+xnoQYFR0iNAAn1BNW6JP2fDRSJt79o5YCqKpJhpWHAqaPDwWezB+NOILfaP0aRJJ7VyCHJVd0/r2Ck5L8Q2+nNJ9japEof6fGKW7fcANZ4ei4CDlWCR3YBrDjFJj8z5hULkiMb/PX1dM=
+	t=1784663280; cv=none; b=czqD2k9UlZbidSyPabA3iBR0bzPAcSmSJa4+e+LtcAacGqiU4AlnctS3VqnYP6WHTDovEclg3MYVW5+OqiTijSg8mxHGebrfd65gh2oqS3mBObVawK9+ZDAv3WhyB6CyxK17y1wuXeswdEMJ3VuW5TL2xmbpXQ6zY1pzUC9Jk0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663277; c=relaxed/simple;
-	bh=4P6HaZz8ZCsyKCNtZQuvmtLaqE9QLLDseEWzHw9VYsY=;
+	s=arc-20240116; t=1784663280; c=relaxed/simple;
+	bh=N0v8y9FYUzKJV/mJWf1ac5FYWZ6VzhHC7A8+GVbIjj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c0sKhYZEHoQaLIrU2nT0I8cOyTEMMbqBYgDD8pWygjI38AaNGuf552vchkYtxQWVIsE/I6gdZ34HOmkivsQ58xx5tA99yz42t7X1W73wOaWjSnhR2w+UWMeRSvTS8zV0YUOeIx+FPNCr1niqmDfKgrVUNvE7xpQc7EhqPRb+zx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gp2RkTIw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BeR6FUQrRcLMHhT7atAG31ny8YH4qnyfKv93sDujRJMRxfSqL/slwsY/GEUeCo8G60b9u6546k+sIQhE0O0Q3ZR/yKl8MbZdWKH5XxgjRNvJU6Bf8OtIBwSC4BiFfdxLGkzvz+QQ8FzDE3YHtwY4t7fLeTKmarman5Bp2l5+6MI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AT7A6+bb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gp2RkTIw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD231F000E9;
-	Tue, 21 Jul 2026 19:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AT7A6+bb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F7B1F000E9;
+	Tue, 21 Jul 2026 19:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663276;
-	bh=sCtqol7zVifsh9Jxvco2Uj/F/098HapxQRbTP28VHO4=;
+	s=korg; t=1784663279;
+	bh=TKFkYRte49BQZHRR9hRUvH0++44SLa0DPjdu2H3jqxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gp2RkTIwcK3JdK+lgbhRUSGLKVcbzN2ML0SuQWzOZ0BNIP7JfaBUx8K3cQIynlf2Y
-	 Mn90E+m44CdW8yEjPaErnrFvkfH4j/h23mclyz9hV9DFs+aPnBnD7CYW7tXT28KZ0b
-	 nYVWq4TT1t+y3izgyOwbNgjJSZkuy1XmoZVRFRPg=
+	b=AT7A6+bbsUElo4PY0j3fOEEBD4WDcoSXDIxHlDxJ9lvfbPxgx7Q51vjbojFt8R8wk
+	 TEeljPWWkdSnnLm+4zg57rl27EYQXgbp0vZZs8Wk2/mbwF55TSx3CYoPm1NIP1gzEB
+	 elft7SKzGABuG24eNIWbuUev7kWcSMsStYLjF/dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Wu <wufengwufengwufeng@gmail.com>,
+	Zhixing Chen <running910@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0762/1276] netfilter: xt_rateest: fix u64 truncation in xt_rateest_mt()
-Date: Tue, 21 Jul 2026 17:20:05 +0200
-Message-ID: <20260721152503.128858047@linuxfoundation.org>
+Subject: [PATCH 6.12 0763/1276] netfilter: ip6tables: mark malformed IPv6 extension headers for hotdrop
+Date: Tue, 21 Jul 2026 17:20:06 +0200
+Message-ID: <20260721152503.150785297@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,37 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Wu <wufengwufengwufeng@gmail.com>
+From: Zhixing Chen <running910@gmail.com>
 
-[ Upstream commit 444853cd438201007da5359821adcc2995655ab1 ]
+[ Upstream commit 43ccc20b5a733226417832cf16ef45322e594990 ]
 
-On links faster than ~34 Gbps, where byte rate may exceed 2^32-1
-(~ 4.3 GBps), the comparison result becomes incorrect because the
-truncated value no longer reflects the actual estimator rate.
+The ah, hbh and rt matches check that the fixed extension header is
+present, then use the header length field to derive the advertised
+extension header length for matching.
 
-Fix by changing the local variables to u64.
+For the ah match, add the missing advertised-length check. For hbh
+and rt, update the existing advertised-length checks. In all three
+cases, set hotdrop to true before returning false when the advertised
+extension header length exceeds the available skb data.
 
-Fixes: 1c0d32fde5bd ("net_sched: gen_estimator: complete rewrite of rate estimators")
-Signed-off-by: Feng Wu <wufengwufengwufeng@gmail.com>
+Returning false treats the packet as a rule mismatch. Set hotdrop to
+true and drop malformed packets so they cannot bypass rules intended
+to drop packets with these IPv6 extension headers.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Zhixing Chen <running910@gmail.com>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_rateest.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/netfilter/ip6t_ah.c  | 5 +++++
+ net/ipv6/netfilter/ip6t_hbh.c | 1 +
+ net/ipv6/netfilter/ip6t_rt.c  | 3 ++-
+ 3 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/xt_rateest.c b/net/netfilter/xt_rateest.c
-index b1d736c15fcbe5..7c05b63425784e 100644
---- a/net/netfilter/xt_rateest.c
-+++ b/net/netfilter/xt_rateest.c
-@@ -16,7 +16,7 @@ xt_rateest_mt(const struct sk_buff *skb, struct xt_action_param *par)
- {
- 	const struct xt_rateest_match_info *info = par->matchinfo;
- 	struct gnet_stats_rate_est64 sample = {0};
--	u_int32_t bps1, bps2, pps1, pps2;
-+	u64 bps1, bps2, pps1, pps2;
- 	bool ret = true;
+diff --git a/net/ipv6/netfilter/ip6t_ah.c b/net/ipv6/netfilter/ip6t_ah.c
+index 70da2f2ce064ca..1258783ed87629 100644
+--- a/net/ipv6/netfilter/ip6t_ah.c
++++ b/net/ipv6/netfilter/ip6t_ah.c
+@@ -56,6 +56,11 @@ static bool ah_mt6(const struct sk_buff *skb, struct xt_action_param *par)
+ 	}
  
- 	gen_estimator_read(&info->est1->rate_est, &sample);
+ 	hdrlen = ipv6_authlen(ah);
++	if (skb->len - ptr < hdrlen) {
++		/* Packet smaller than its length field */
++		par->hotdrop = true;
++		return false;
++	}
+ 
+ 	pr_debug("IPv6 AH LEN %u %u ", hdrlen, ah->hdrlen);
+ 	pr_debug("RES %04X ", ah->reserved);
+diff --git a/net/ipv6/netfilter/ip6t_hbh.c b/net/ipv6/netfilter/ip6t_hbh.c
+index 450dd53846a2f7..6d1a5d2026a678 100644
+--- a/net/ipv6/netfilter/ip6t_hbh.c
++++ b/net/ipv6/netfilter/ip6t_hbh.c
+@@ -75,6 +75,7 @@ hbh_mt6(const struct sk_buff *skb, struct xt_action_param *par)
+ 	hdrlen = ipv6_optlen(oh);
+ 	if (skb->len - ptr < hdrlen) {
+ 		/* Packet smaller than it's length field */
++		par->hotdrop = true;
+ 		return false;
+ 	}
+ 
+diff --git a/net/ipv6/netfilter/ip6t_rt.c b/net/ipv6/netfilter/ip6t_rt.c
+index 5561bd9cea8185..278b52752f3645 100644
+--- a/net/ipv6/netfilter/ip6t_rt.c
++++ b/net/ipv6/netfilter/ip6t_rt.c
+@@ -56,7 +56,8 @@ static bool rt_mt6(const struct sk_buff *skb, struct xt_action_param *par)
+ 
+ 	hdrlen = ipv6_optlen(rh);
+ 	if (skb->len - ptr < hdrlen) {
+-		/* Pcket smaller than its length field */
++		/* Packet smaller than its length field */
++		par->hotdrop = true;
+ 		return false;
+ 	}
+ 
 -- 
 2.53.0
 
