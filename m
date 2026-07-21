@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3CB037647B;
-	Tue, 21 Jul 2026 17:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9616819049B;
+	Tue, 21 Jul 2026 17:25:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654737; cv=none; b=T5wTKHm58N0SqTE9QUU+fqp4RA3mViKY3wccP0FiX0Yzd71YLPYz/i2wVS7zIo5XH8g4um6V7rNZSULHkbICM6ErLhs04oWPKNsRcfjnxhG33vf7/OQHb+Qqi7TE6hqRhcbdf52nIC7iog+lghF4S9eQ0/7suuHMjKPg2ZyEM8k=
+	t=1784654740; cv=none; b=Bf6vqMzyJWmpTXNJv2yV+GiGi4RRHlP608qQhQaVTLShy7l7EFOAQu0fbAsssrTIlG852w5FJMGR7GOl3GtCx1/N1nD4AVlrTWWEaEH/MorF3sIIux+81+1lpvuIf7Cv2eTqqEXWK4RRJqGWuxEKkaTSz+rx6e5OpbLAe484acc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654737; c=relaxed/simple;
-	bh=DHtC8Ii96dA2QONmtOF+wuLzxUw+nSdOKmQxf0KvxlY=;
+	s=arc-20240116; t=1784654740; c=relaxed/simple;
+	bh=Kg9nSUsHccNK6xLA54cNCldKaDD57ntps/LOnHIqJME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i06io+0/9oSdnT59ld/jVW6cIHEiI24Td1TahljckAlqaBi/QL4QXikYuIJ2Fzu0e2Zgx2tuPADu8E7WfqyEALiIqzQncQFlTJCPoX61U8j/p4p9SmSeNmHrd7ceOUj1/5HmoibY7wResfLdh9JeHBGobesLXEoCTerr06DkQVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7+Ov8Ww; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tPc+H+a122XQbkPWD9hG2HQRX0LtI8Wlcxm73RSGU1+s8CUGEJ29CQMlXj8blE5r7pBjDq2V2pIDqmaWHjx/tyIThecBe2bBw1v+Z7xUiAVEwFsqjH8gVGOzJ2dfnoW8kpzKB0KcS+LBx02+hS58dFkqhccLn+QVAR+0iIDi7r4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ckaou6Mw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7+Ov8Ww"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 661E11F000E9;
-	Tue, 21 Jul 2026 17:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ckaou6Mw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 092F31F000E9;
+	Tue, 21 Jul 2026 17:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654735;
-	bh=BNVft/NLW2OxTRQjzbjk/TmZPExjRzgSuwkynSLw08w=;
+	s=korg; t=1784654738;
+	bh=wXQDoCtSwLwnZPor3XnzbamwvD9+lQjMzwTAvA/t/+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n7+Ov8WwMS8M2yW5/+epjufNexe7sDJufelPXMavFjiMb/D9en0scUqf32y7wlWLo
-	 eS31P7zYOGe+w7onfNqYCexbT2KWSow3zDT5MTAL4SEOf3EPpfrQTwjKocw4ACirzm
-	 oBe+5+N5aSw69StKXPO46KwBo0XDRev/bW4TuFA0=
+	b=ckaou6MwpakmOsFbV3av9Y2xe5zrXPI7biuMXhZXM4T31oP/OeIAuCs1t8znFGNfD
+	 DXbqlwxbm/Yf9HUrSmCuzOw2YItHFaLaoX5ywyncQe6KXBblJVES0y6ZmYtO5waxXq
+	 W27LVHmRnJvQEbiiLwiOljjGDAcqnDMQBxPTfpwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Souvik Banerjee <souvik@amlalabs.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.1 1818/2077] ovl: use linked upper dentry in copy-up tmpfile
-Date: Tue, 21 Jul 2026 17:24:51 +0200
-Message-ID: <20260721152635.626198347@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 7.1 1819/2077] can: esd_usb: kill anchored URBs before freeing netdevs
+Date: Tue, 21 Jul 2026 17:24:52 +0200
+Message-ID: <20260721152635.649725096@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,107 +44,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Souvik Banerjee <souvik@amlalabs.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit e348eecd4d8fa8d18a5157ff59f7be1dc59c5928 upstream.
+commit c43122fef328a70045fe7621c06de6b2b8e19264 upstream.
 
-ovl_copy_up_tmpfile() stores the disconnected O_TMPFILE dentry as the
-overlay's upper dentry reference via ovl_inode_update().  vfs_tmpfile()
-allocated this dentry via d_alloc(parentpath->dentry, &slash_name), so
-d_name is "/" and d_parent is c->workdir.  Local upper filesystems
-(ext4, btrfs, xfs, ...) immediately rename it to "#<inum>" via
-d_mark_tmpfile() inside their ->tmpfile() op; FUSE and virtiofs do
-not, so both fields stay that way.  Neither identifies the destination
-directory and filename where ovl_do_link() actually linked the file.
+esd_usb_disconnect() frees each CAN netdev with free_candev() inside
+its per-netdev loop and only calls unlink_all_urbs(dev) afterwards.
+The per-netdev private data (struct esd_usb_net_priv) is embedded in
+the net_device allocation returned by alloc_candev(), so once
+free_candev() has run, dev->nets[i] points to freed memory.
+unlink_all_urbs() then dereferences the freed dev->nets[i] to kill the
+per-netdev TX anchor (usb_kill_anchored_urbs(&priv->tx_submitted)),
+clear active_tx_jobs, and reset priv->tx_contexts[].
 
-When the upper filesystem implements ->d_revalidate() (e.g. FUSE or
-virtiofs), ovl_revalidate_real() calls it with the dentry's parent
-inode and a snapshot of d_name.  The server tries to look up "/" inside
-c->workdir, fails, and overlayfs reports -ESTALE.
+Reorder the teardown so the anchored URBs are killed before the netdevs
+are freed, matching other CAN/USB drivers in the same directory such as
+ems_usb, usb_8dev and mcba_usb, which unregister, then unlink, then
+free: unregister the netdevs first (which stops their TX queues), call
+unlink_all_urbs(dev) once, then free the netdevs.
 
-This causes persistent ESTALE errors for any file that was copied up via
-the tmpfile path, breaking dpkg, apt, and other tools that do
-rename-over-existing on overlayfs with a FUSE/virtiofs upper.
+This issue was found by an in-house static analysis tool.
 
-Before commit 6b52243f633e ("ovl: fold copy-up helpers into callers"),
-the tmpfile copy-up path used a dedicated helper ovl_link_tmpfile()
-that captured the linked destination dentry returned by ovl_do_link():
-
-    err = ovl_do_link(temp, udir, upper);
-    ...
-    if (!err)
-        *newdentry = dget(upper);
-
-and published it via ovl_inode_update(d_inode(c->dentry), newdentry).
-The fold inlined ovl_do_link() into ovl_copy_up_tmpfile() but dropped
-the dget(upper) capture, and rewrote the publish line as
-ovl_inode_update(d_inode(c->dentry), dget(temp)) — where temp is the
-disconnected O_TMPFILE dentry.
-
-Fix by keeping a reference to the linked destination dentry after
-ovl_do_link() succeeds, and publishing that dentry at the existing
-ovl_inode_update() call site.  The non-tmpfile/workdir path continues to
-publish the renamed temporary dentry.
-
-Reproducer:
-  - Mount overlayfs with virtiofs (or a FUSE fs whose server advertises
-    FUSE_TMPFILE) as upper
-  - Run: dpkg -i <any .deb>
-  - Observe: "error installing new file '...': Stale file handle"
-
-Fixes: 6b52243f633e ("ovl: fold copy-up helpers into callers")
-Cc: stable@vger.kernel.org # v4.20+
-Signed-off-by: Souvik Banerjee <souvik@amlalabs.com>
-Link: https://patch.msgid.link/20260501232735.2610824-1-souvik@amlalabs.com
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 96d8e90382dc ("can: Add driver for esd CAN-USB/2 device")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260709164159.497640-1-fanwu01@zju.edu.cn
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/copy_up.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/can/usb/esd_usb.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -853,7 +853,7 @@ static int ovl_copy_up_tmpfile(struct ov
- {
- 	struct ovl_fs *ofs = OVL_FS(c->dentry->d_sb);
- 	struct inode *udir = d_inode(c->destdir);
--	struct dentry *temp, *upper;
-+	struct dentry *temp, *upper, *newdentry = NULL;
- 	struct file *tmpfile;
- 	int err;
- 
-@@ -889,6 +889,14 @@ static int ovl_copy_up_tmpfile(struct ov
- 	err = PTR_ERR(upper);
- 	if (!IS_ERR(upper)) {
- 		err = ovl_do_link(ofs, temp, udir, upper);
-+		if (!err) {
-+			/*
-+			 * Record the linked dentry -- not the disconnected
-+			 * O_TMPFILE dentry -- so that ->d_revalidate() on
-+			 * the upper fs sees the real parent/name.
-+			 */
-+			newdentry = dget(upper);
+--- a/drivers/net/can/usb/esd_usb.c
++++ b/drivers/net/can/usb/esd_usb.c
+@@ -1390,10 +1390,13 @@ static void esd_usb_disconnect(struct us
+ 				netdev = dev->nets[i]->netdev;
+ 				netdev_info(netdev, "unregister\n");
+ 				unregister_netdev(netdev);
+-				free_candev(netdev);
+ 			}
+ 		}
+ 		unlink_all_urbs(dev);
++		for (i = 0; i < dev->net_count; i++) {
++			if (dev->nets[i])
++				free_candev(dev->nets[i]->netdev);
 +		}
- 		end_creating(upper);
+ 		kfree(dev);
  	}
- 
-@@ -903,7 +911,7 @@ static int ovl_copy_up_tmpfile(struct ov
- 
- 	if (!c->metacopy)
- 		ovl_set_upperdata(d_inode(c->dentry));
--	ovl_inode_update(d_inode(c->dentry), dget(temp));
-+	ovl_inode_update(d_inode(c->dentry), newdentry);
- 
- out:
- 	ovl_end_write(c->dentry);
+ }
 
 
