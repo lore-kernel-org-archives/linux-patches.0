@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AAC44AB62;
-	Tue, 21 Jul 2026 21:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC01D44AB60;
+	Tue, 21 Jul 2026 21:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669091; cv=none; b=cf2aWPqAqcMM1RA/dujFXBjMgYiGXWVetpbURrPfX6cr0Xb+aPO3qJgzFHU55cQwlFa44O6h8Obnr1G2zQZPG2RG91J1CRt5YV6RH/w+CmfHJ3DxOmgNXDhZzxIfPmYYx9exZbUbfRQ1B4YiAOg88ejpzeTeHT/6ZdWmeUwqvO4=
+	t=1784669093; cv=none; b=NcYj8TTjj2F0+jUhTIu9d9hPvur6lAdGiyKcUB/+bdEWc/qLgPCk2j6aO23x6KDSQJKDPwJAYTHJzR+r48F3RoZZKGRRqjVEjKT0NcnGAVeBWDY0z3lCLYn8OGdBJsqR2HHsjE1hBU8EOJ3H+OjGUYzRWdlYJpw7uIw4BIAmgXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669091; c=relaxed/simple;
-	bh=+AZcSVHnu40MQ6/rJYulKAWCDHRWL0LPTHbVhvzToLA=;
+	s=arc-20240116; t=1784669093; c=relaxed/simple;
+	bh=H261A6hBbZX0BGrWIVbCVJM4z4GuldiozTKzRbBo1kM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vz8ZLC0OzhD1IlO2PhVDVW0u9anPR5farjc1pIu5m8f/Ct93Gn8TcsvxgNiyRZHaicj6Sfm0AwcGCwuMzEV20FDyIRcJdYGdbTUFKUAajNECUJRQa5k7nUREbERBwcP5D/cbc7o+SnG18l0QwnaT2WdbrwwqlSEhfPap9ofsZqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWZ6v+3S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t/v0PG4QuixnK9263RtIiakxMqAXovlqqHvguRKMf7ytozMnrB1z9cC/4qpdJ+xviD/ZIcBe9jqhOnVhXbNWjDlHuA4XfSfdl4BRI9Go3bRmIvf2j5k0rsR+oZZEmDX9LqJscNkYMV+Gddk8O7KcutBaE7XT0YCuELRtE4dITdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SIFHusGx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWZ6v+3S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6F31F000E9;
-	Tue, 21 Jul 2026 21:24:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SIFHusGx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F2F1F000E9;
+	Tue, 21 Jul 2026 21:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669089;
-	bh=0JMROPqAPX9K9jJgEKnTm6I8LKDEQ/xARYMux9FksWE=;
+	s=korg; t=1784669092;
+	bh=Y5YYlwrL/iadTdEb+JGY+EF0CVAqJF2IpbBbBtHEfSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HWZ6v+3SPE84sHsVUOFm8rHO0+saJ+FJt8UpCYn6o7+js/y56zO3hZ5OO0x4A2tLc
-	 ul80UNOnBPKQaMHCxTfEtQJTCZH2c7GokQHNCqYUqvjW9i7S1l5NX9m9AhtaTLoTpQ
-	 7CTBh+ujUwoxSONzMxqlTfofZnbv6H9bYXKQSVIY=
+	b=SIFHusGxHsc0X33g9D9wbyl8QSo+0w7OuOirOVtazWuOvdBtSM/Om2XIuxmuiP3OB
+	 J9Ws4VIxwu4cSivsFbdD+cgDYytSBc2VvLOmkb1mxG7q/FcP9uvPsCvOdR8v64tqNv
+	 oZ/2zAqsq/sj7Mb4kAP64FNcQyUJIlsn2Oe7lbks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <malin89@huawei.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0421/1067] bpf: Tighten cgroup storage cookie checks for prog arrays
-Date: Tue, 21 Jul 2026 17:17:02 +0200
-Message-ID: <20260721152434.040001074@linuxfoundation.org>
+Subject: [PATCH 6.1 0381/1067] netfilter: nfnetlink_osf: fix mss parsing on big-endian architectures
+Date: Tue, 21 Jul 2026 17:16:22 +0200
+Message-ID: <20260721152433.155361327@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,48 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 10627ddc0167aab5c1c390a10ef461e9937aba08 ]
+[ Upstream commit a625c94144c9b66d32e1f374f909f38db46161c1 ]
 
-The fix in commit abad3d0bad72 ("bpf: Fix oob access in cgroup local
-storage") is still incomplete. The prog-array compatibility check
-treats a program with no cgroup storage as compatible with any stored
-storage cookie. This allows a storage-less program to bridge a tail
-call chain between an entry program and a storage-using callee even
-though cgroup local storage at runtime still follows the caller's
-context, that is, A -> B(no storage) -> C(storage) path.
+The MSS calculation in nf_osf_match_one() manually shifts bytes to
+construct a 16-bit value before passing it to ntohs().
 
-Requiring exact cookie equality would break the legitimate case of a
-storage-less leaf program being tail called from a storage-using one.
-Instead, only accept a zero storage cookie if the program cannot
-perform tail calls itself. This keeps A -> B(no storage) working
-while rejecting the A -> B(no storage) -> C(storage) bridge.
+This works on little-endian hosts but it does not work on big-endian as
+the bytes are being always shifted and set in the same way for all
+architectures.
 
-Fixes: abad3d0bad72 ("bpf: Fix oob access in cgroup local storage")
-Reported-by: Lin Ma <malin89@huawei.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20260610105539.705887-1-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Use get_unaligned_be16() to fix this on big-endian systems. It also
+simplifies the code.
+
+Fixes: 11eeef41d5f6 ("netfilter: passive OS fingerprint xtables match")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nfnetlink_osf.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 6924f86a8a3ff1..77044d4a80cc16 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -2159,7 +2159,7 @@ bool bpf_prog_map_compatible(struct bpf_map *map,
- 			cookie = aux->cgroup_storage[i] ?
- 				 aux->cgroup_storage[i]->cookie : 0;
- 			ret = map->owner->storage_cookie[i] == cookie ||
--			      !cookie;
-+			      (!cookie && !aux->tail_call_reachable);
- 		}
- 		if (ret &&
- 		    map->owner->attach_func_proto != aux->attach_func_proto) {
+diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
+index 6d3dfbeb398cb4..b61656cb0f3eb5 100644
+--- a/net/netfilter/nfnetlink_osf.c
++++ b/net/netfilter/nfnetlink_osf.c
+@@ -95,11 +95,7 @@ static bool nf_osf_match_one(const struct sk_buff *skb,
+ 
+ 			switch (*optp) {
+ 			case OSFOPT_MSS:
+-				mss = optp[3];
+-				mss <<= 8;
+-				mss |= optp[2];
+-
+-				mss = ntohs((__force __be16)mss);
++				mss = get_unaligned_be16(&optp[2]);
+ 				break;
+ 			case OSFOPT_TS:
+ 				break;
 -- 
 2.53.0
 
