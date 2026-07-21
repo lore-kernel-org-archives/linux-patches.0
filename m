@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF8446AA71;
-	Tue, 21 Jul 2026 15:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B9146AA82;
+	Tue, 21 Jul 2026 15:40:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648411; cv=none; b=k1TyrsJSpVsS3Gp51uTGZE4LJvBbVmIPa0kKJxBA1G43UoTvPaH+hYBgxSjTKz8uhCk3CD710g+LUwDmhz/O+1XZLihFOLjYi97eooJNH90xXSDJc+wqoWgp11RkxWE3yor6NWxuU88TEK4BUMnTsOKjKkvrXekKQo17aL533U4=
+	t=1784648414; cv=none; b=F3n0ltEs47hyjWDekwJ0PW9SaM1DI++6DIFoScMvkNQp3PZH/Lflm3O6m7uPvyivsNgakf5Mv6Fy5TN8MMk3YkZmOiOF2AycG0eShosEqA6NBv6qa4H7xV6cZGtvYjVJoNCOMYe4zgLgfGYf8UZuxoIskTvVhJTRkP3s4A2viBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648411; c=relaxed/simple;
-	bh=sBogQOsWWCwgqjsaQ7fx4lLgHSxz3ULJFONDmoFERsI=;
+	s=arc-20240116; t=1784648414; c=relaxed/simple;
+	bh=rQ4ILOxWvpP45V1EuZ5pvUyANQvX6noHKX/AudrLMec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dn9aVowwHp5pUFXk36KjyXouW48dJuZEgslO/nVS/xNwj5HgQB7YzK8mYDW7k6UV6VJYW5YK1K1OkvE4Vn3G51DhJX0BdvbA7MqZI3Gce2Qcomk8RzLwxFHBpPbRaZBMH8bX1sup5bnADPNadmA5CQBDPuW+uqHrfUwpVQeTSuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNwNzcEu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XRKsmjGOTzdUQDDD5F1o3nn48yQsVv6kXjob/g0Rg64XmP8l2CgWB3jRiIO0rNglbTsoUdMehj7W2loxJphgCzub7MsmOwWoPx2T5gCc3yR2CgyyBqtURLmDxFOnRADtKbP8Tx701Pix9FQLWIaywbUWtmmANff/IYm4AH/P/g8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rMHK+/Ig; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNwNzcEu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4B11F000E9;
-	Tue, 21 Jul 2026 15:40:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rMHK+/Ig"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C7721F000E9;
+	Tue, 21 Jul 2026 15:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648410;
-	bh=h8cyIS8ZF+Bg5HGU7yYf1DVUEmQAPsZ95rqwpBlSxZw=;
+	s=korg; t=1784648412;
+	bh=SSwfVF8mpoZihYx/MhKKNyNDNOpCuAK64YqaAhzew1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lNwNzcEu/6JhsaeNcOoL0OsjFxPc5CqNWdWnfzDU3KmNLCbfkY1B2etrqOmv9E/sB
-	 A53EyJI1nmfS3arGBayAlgTL5PLCpnot8Dnz319zQGXDcgvotY7FkNH0EAcj/RuYpX
-	 fT4MKwkxIKf9j4U/woZ21qH1jEThA/0Vt6hYwFw0=
+	b=rMHK+/Igmfy/mHuEKNFIVoA/09RsZSAYj5GMDzwT4NUsl8Vop4AQrmWcew1SLSEcD
+	 d2PkMu40QEzE5rcjgfmSy8gJmKK/MaJBsW6zv25mBRGv/ycs3yWBwp6U2DLhFYlh8O
+	 bIoMebQArP7MkLOiPFDnTX9VAXapdKIx+sRKsPY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0190/2077] arm64: dts: qcom: glymur-crd: Drop forced host mode for USB SS0 and SS1
-Date: Tue, 21 Jul 2026 16:57:43 +0200
-Message-ID: <20260721152557.166975794@linuxfoundation.org>
+Subject: [PATCH 7.1 0191/2077] arm64: dts: qcom: glymur: Mark USB SS1 and SS2 as role-switch capable
+Date: Tue, 21 Jul 2026 16:57:44 +0200
+Message-ID: <20260721152557.189808453@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,45 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit d9dc254945756b44fa6f61b9cbd4adf0413c6a6f ]
+[ Upstream commit 347fa2fa64e1cef0c7897522896c0c66e734c82b ]
 
-The two USB Type-C ports on Glymur CRD are dual-role capable.
+Like USB SS0, the USB SS1 and SS2 controllers on Glymur also support
+USB role switching.
 
-Do not force their controllers into host mode. Drop the explicit
-'dr_mode = "host"' properties so they can use their default OTG mode
-instead.
+Describe this by adding the 'usb-role-switch' property to both controllers.
 
-Fixes: c8b63029455b ("arm64: dts: qcom: glymur-crd: Enable USB support")
+Fixes: 4eee57dd4df9 ("arm64: dts: qcom: glymur: Add USB related nodes")
 Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260415-dts-qcom-glymur-usb-role-switch-fix-v1-2-409e1a257f1f@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260415-dts-qcom-glymur-usb-role-switch-fix-v1-1-409e1a257f1f@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/glymur-crd.dts | 4 ----
- 1 file changed, 4 deletions(-)
+ arch/arm64/boot/dts/qcom/glymur.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/glymur-crd.dts b/arch/arm64/boot/dts/qcom/glymur-crd.dts
-index 35aaf09e4e2b47..c98dfb3941fa36 100644
---- a/arch/arm64/boot/dts/qcom/glymur-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/glymur-crd.dts
-@@ -322,8 +322,6 @@ reset-n-pins {
- };
+diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
+index 7283d45ca259a8..780708a9d8d45f 100644
+--- a/arch/arm64/boot/dts/qcom/glymur.dtsi
++++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
+@@ -3920,6 +3920,8 @@ usb_1: usb@a800000 {
+ 			snps,dis_u2_susphy_quirk;
+ 			snps,dis_enblslpm_quirk;
  
- &usb_0 {
--	dr_mode = "host";
--
- 	status = "okay";
- };
++			usb-role-switch;
++
+ 			status = "disabled";
  
-@@ -353,8 +351,6 @@ &usb_0_qmpphy_out {
- };
+ 			ports {
+@@ -3993,6 +3995,8 @@ usb_2: usb@a000000 {
+ 			snps,dis_u2_susphy_quirk;
+ 			snps,dis_enblslpm_quirk;
  
- &usb_1 {
--	dr_mode = "host";
--
- 	status = "okay";
- };
++			usb-role-switch;
++
+ 			status = "disabled";
  
+ 			ports {
 -- 
 2.53.0
 
