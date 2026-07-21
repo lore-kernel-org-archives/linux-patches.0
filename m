@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADB140926D;
-	Tue, 21 Jul 2026 18:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1AE4071E3;
+	Tue, 21 Jul 2026 18:58:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660335; cv=none; b=mubGHYt85szeDKicBXxROZ8nhf4NhIkFjMvDJbLGtw2q8ZwjezNlhW0YMqSj6dC1aospZAuG2bt5V6ias9/U0XRcp7YYQ+NRozIY46znjXEA0ir1xR5qQbN9KGxsoaN1i8lu6MkClozE/tnG9UXtNyKDiLWQHAJkjYPc/HTS7bU=
+	t=1784660336; cv=none; b=azeLzTXN5CKAdplXjHDqPSlF5rlLQ8cke8+HFpEyQIKvzBwn980grqfSsAYEWD65h7JIdTQHMr9CUHnwuGEPbZoc2TYaG7+ph6eGnfPJT/IFnWLJd2D0u1K645R8gwCT6hbh5DZ+TCArmF+hcsEnG0n5OiQMvocj56eynkFlzZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660335; c=relaxed/simple;
-	bh=hM4SKsyzNAZdQ69LoEOPcgtUtxjxGGonxxQoHwBUxeQ=;
+	s=arc-20240116; t=1784660336; c=relaxed/simple;
+	bh=B4SFLrz6MNFw/2Id1hE8lkZwr/OtDAeHPDsR/T6zRBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GeX/rmy/hKvTtZAf13DugXk9hsMnAaUo5ahrsR7RQ4b+Dk7m/PyzwL6ZozLsgQDB9bj8Y4pTTmK4J+xzUNndKyw74WvQVfH4RZeCEaNyytM7jYBVUqIT+bD4eDmgq13CDaji2MTg5KsaodcUMgGIziOmNNYiF8/2TeKI++KCDFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HlnJ451W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I3ivtKwub1naBlFcSuhfhcsVWPTKO6LKDwPoY3web2tB857B1N7TG/p9Fi1ush+z2ZfYC6eQJR6zKRvFnKtnx5O0o2iPvaBhCV731xorUau8eDrRdGJZwDsdJlkbIzCbhpBdK4TPhKlrfHksvH7p2mY+RpITdQoyGJnyHKG5PQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=foNCz6q2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HlnJ451W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A89481F000E9;
-	Tue, 21 Jul 2026 18:58:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="foNCz6q2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D0201F00A3A;
+	Tue, 21 Jul 2026 18:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660332;
-	bh=1z8Fvd5daRtNoYD4r0Nh0cwyyro0Dle76nz4KypBdxw=;
+	s=korg; t=1784660334;
+	bh=EE6YO0Mc3l3RIZNQ1eBvsGAe6r8VrSuQYCHoozFEOjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HlnJ451WbIa4c+w7Ig5uSxLvPn4AIiJD3v3nL1k8PVe6rcKPkXgC1dRYz6Gc1VL5Y
-	 DpAhaOyE7tu9t9p3sfvygxddo7Xp/wydwXdS2SxzTsI1/XskCY4/Daafn1rHjmD5gy
-	 T4VQlG6n6Mn/2GPlprnLKp0FGCqcWIC4ZdqXpRoI=
+	b=foNCz6q2gyLjGLwo8t3xGiZf6dj6ihPAPLL7SVTZX9B5l+oMakUpJ5aFg2MK97Srv
+	 NqgxrX1j+DPhRqeIxOWphdaHmQY94EksQw1lBXd4HHVizm2Qp9tqvRmPAkYRmuaixu
+	 jtOCti2r4pG0cRwkL29VnGRsQC9i4zEIkA51w0Ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
 	Jiri Olsa <jolsa@kernel.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0940/2077] perf stat: Bounds-check CPU index in topology aggregation callbacks
-Date: Tue, 21 Jul 2026 17:10:13 +0200
-Message-ID: <20260721152614.988155279@linuxfoundation.org>
+Subject: [PATCH 7.1 0941/2077] perf c2c: Bounds-check CPU and node IDs before bitmap and array access
+Date: Tue, 21 Jul 2026 17:10:14 +0200
+Message-ID: <20260721152615.011277592@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -56,96 +55,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 52e69b1c5b606b513d403dd4addc784c27a0c8e2 ]
+[ Upstream commit 65117c3da50f749f4c22eb7a7effc53453dff57f ]
 
-Six perf_env__get_*_aggr_by_cpu() functions access env->cpu[cpu.cpu]
-after only checking cpu.cpu != -1.  env->cpu[] is allocated with
-env->nr_cpus_avail entries, so a CPU index from an untrusted perf.data
-file that exceeds that count causes an out-of-bounds heap read.
+c2c_he__set_cpu() passes sample->cpu directly to __set_bit(cpu, cpuset)
+after only checking for the (u32)-1 sentinel.  The cpuset bitmap is
+allocated with c2c.cpus_cnt bits (from env->nr_cpus_avail), so a crafted
+perf.data with CPU IDs exceeding that count causes out-of-bounds heap
+writes.
 
-Replace the != -1 guard with >= 0 && < env->nr_cpus_avail in all six
-functions.  The >= 0 check also catches -1 and any other negative values
-that could bypass the old check.
+c2c_he__set_node() similarly passes the node ID from mem2node__node()
+to __set_bit(node, nodeset) after only checking for negative values.
+The nodeset bitmap is sized to c2c.nodes_cnt (from env->nr_numa_nodes),
+so a node ID exceeding that causes OOB writes.
 
-Affected functions:
-  - perf_env__get_socket_aggr_by_cpu()
-  - perf_env__get_die_aggr_by_cpu()
-  - perf_env__get_cache_aggr_by_cpu()
-  - perf_env__get_cluster_aggr_by_cpu()
-  - perf_env__get_core_aggr_by_cpu()
-  - perf_env__get_cpu_aggr_by_cpu()
+process_sample_event() indexes c2c.cpu2node[cpu] and
+c2c_he->node_stats[node] without bounds checking.  Both arrays are
+sized to c2c.cpus_cnt and c2c.nodes_cnt respectively.
 
-Fixes: 68d702f7a120 ("perf stat report: Add support to initialize aggr_map from file")
+Add bounds checks in all three paths:
+  - c2c_he__set_cpu(): return if sample->cpu >= c2c.cpus_cnt
+  - c2c_he__set_node(): return if node >= c2c.nodes_cnt
+  - process_sample_event(): clamp cpu to 0 if >= cpus_cnt,
+    guard node_stats access with bounds check
+
+Fixes: 1e181b92a2da ("perf c2c report: Add 'node' sort key")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Ian Rogers <irogers@google.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
 Cc: Namhyung Kim <namhyung@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-stat.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ tools/perf/builtin-c2c.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
-index 99d7db372b4808..9a045811c4197c 100644
---- a/tools/perf/builtin-stat.c
-+++ b/tools/perf/builtin-stat.c
-@@ -1638,7 +1638,8 @@ static struct aggr_cpu_id perf_env__get_socket_aggr_by_cpu(struct perf_cpu cpu,
- 	struct perf_env *env = data;
- 	struct aggr_cpu_id id = aggr_cpu_id__empty();
+diff --git a/tools/perf/builtin-c2c.c b/tools/perf/builtin-c2c.c
+index 72a7802775ee96..e2a7ffd4192e47 100644
+--- a/tools/perf/builtin-c2c.c
++++ b/tools/perf/builtin-c2c.c
+@@ -241,6 +241,10 @@ static void c2c_he__set_cpu(struct c2c_hist_entry *c2c_he,
+ 		      "WARNING: no sample cpu value"))
+ 		return;
  
--	if (cpu.cpu != -1)
-+	/* env->cpu[] has env->nr_cpus_avail entries; reject untrusted indices */
-+	if (cpu.cpu >= 0 && cpu.cpu < env->nr_cpus_avail)
- 		id.socket = env->cpu[cpu.cpu].socket_id;
++	/* cpuset bitmap has c2c.cpus_cnt bits from env->nr_cpus_avail */
++	if (sample->cpu >= (unsigned int)c2c.cpus_cnt)
++		return;
++
+ 	__set_bit(sample->cpu, c2c_he->cpuset);
+ }
  
- 	return id;
-@@ -1649,7 +1650,7 @@ static struct aggr_cpu_id perf_env__get_die_aggr_by_cpu(struct perf_cpu cpu, voi
- 	struct perf_env *env = data;
- 	struct aggr_cpu_id id = aggr_cpu_id__empty();
+@@ -258,6 +262,10 @@ static void c2c_he__set_node(struct c2c_hist_entry *c2c_he,
+ 	if (WARN_ONCE(node < 0, "WARNING: failed to find node\n"))
+ 		return;
  
--	if (cpu.cpu != -1) {
-+	if (cpu.cpu >= 0 && cpu.cpu < env->nr_cpus_avail) {
- 		/*
- 		 * die_id is relative to socket, so start
- 		 * with the socket ID and then add die to
-@@ -1705,7 +1706,7 @@ static struct aggr_cpu_id perf_env__get_cache_aggr_by_cpu(struct perf_cpu cpu,
- 	struct perf_env *env = data;
- 	struct aggr_cpu_id id = aggr_cpu_id__empty();
++	/* nodeset bitmap has c2c.nodes_cnt bits from env->nr_numa_nodes */
++	if (node >= c2c.nodes_cnt)
++		return;
++
+ 	__set_bit(node, c2c_he->nodeset);
  
--	if (cpu.cpu != -1) {
-+	if (cpu.cpu >= 0 && cpu.cpu < env->nr_cpus_avail) {
- 		u32 cache_level = (perf_stat.aggr_level) ?: stat_config.aggr_level;
+ 	if (c2c_he->paddr != sample->phys_addr) {
+@@ -386,7 +394,12 @@ static int process_sample_event(const struct perf_tool *tool __maybe_unused,
+ 		 * Doing node stats only for single callchain data.
+ 		 */
+ 		int cpu = sample->cpu == (unsigned int) -1 ? 0 : sample->cpu;
+-		int node = c2c.cpu2node[cpu];
++		int node;
++
++		/* cpu2node[] has c2c.cpus_cnt entries; large u32 wraps signed negative */
++		if (cpu < 0 || cpu >= c2c.cpus_cnt)
++			cpu = 0;
++		node = c2c.cpu2node[cpu];
  
- 		id.socket = env->cpu[cpu.cpu].socket_id;
-@@ -1722,7 +1723,7 @@ static struct aggr_cpu_id perf_env__get_cluster_aggr_by_cpu(struct perf_cpu cpu,
- 	struct perf_env *env = data;
- 	struct aggr_cpu_id id = aggr_cpu_id__empty();
+ 		c2c_hists = he__get_c2c_hists(he, c2c.cl_sort, 2, machine->env);
+ 		if (!c2c_hists) {
+@@ -405,7 +418,9 @@ static int process_sample_event(const struct perf_tool *tool __maybe_unused,
+ 		c2c_he = container_of(he, struct c2c_hist_entry, he);
+ 		c2c_add_stats(&c2c_he->stats, &stats);
+ 		c2c_add_stats(&c2c_hists->stats, &stats);
+-		c2c_add_stats(&c2c_he->node_stats[node], &stats);
++		/* node_stats[] has c2c.nodes_cnt entries */
++		if (node >= 0 && node < c2c.nodes_cnt)
++			c2c_add_stats(&c2c_he->node_stats[node], &stats);
  
--	if (cpu.cpu != -1) {
-+	if (cpu.cpu >= 0 && cpu.cpu < env->nr_cpus_avail) {
- 		id.socket = env->cpu[cpu.cpu].socket_id;
- 		id.die = env->cpu[cpu.cpu].die_id;
- 		id.cluster = env->cpu[cpu.cpu].cluster_id;
-@@ -1736,7 +1737,7 @@ static struct aggr_cpu_id perf_env__get_core_aggr_by_cpu(struct perf_cpu cpu, vo
- 	struct perf_env *env = data;
- 	struct aggr_cpu_id id = aggr_cpu_id__empty();
+ 		compute_stats(c2c_he, &stats, sample->weight);
  
--	if (cpu.cpu != -1) {
-+	if (cpu.cpu >= 0 && cpu.cpu < env->nr_cpus_avail) {
- 		/*
- 		 * core_id is relative to socket, die and cluster, we need a
- 		 * global id. So we set socket, die id, cluster id and core id.
-@@ -1755,7 +1756,7 @@ static struct aggr_cpu_id perf_env__get_cpu_aggr_by_cpu(struct perf_cpu cpu, voi
- 	struct perf_env *env = data;
- 	struct aggr_cpu_id id = aggr_cpu_id__empty();
- 
--	if (cpu.cpu != -1) {
-+	if (cpu.cpu >= 0 && cpu.cpu < env->nr_cpus_avail) {
- 		/*
- 		 * core_id is relative to socket and die,
- 		 * we need a global id. So we set
 -- 
 2.53.0
 
