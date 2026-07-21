@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F287E46C4DA;
-	Tue, 21 Jul 2026 15:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DA246A602;
+	Tue, 21 Jul 2026 15:42:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648575; cv=none; b=Skp2LegrOg7aaOyOHxGgDmD85tVaFUoUeg8nNIUr5qTM70Bs9K4JTueE4yz90VSzC6ZMgYxSCCAPG+fIMSIL4QlUxRy6z5YPZ0ATudHTO4vldOZ3niHFBGcQ862AI0CLlLLNtFUWdBHRljT7NoncF8x43OIGg4d6y0bPYpsDMI0=
+	t=1784648577; cv=none; b=qKbOYMAPlmTDbPbwy+pAkm/EenAlSuZO2GkOZ0L44Kvv4g20vv6UniGhlF/BslvU3xgCzhkKuQHEc4kFuAGt1gGDxcu1bdw8ugjCk/jhP4VVn5p+5YI08p2vf9xhzLh2c/qdUOn+I7eG1liV5hl7254PB7x7Bxmj7BfzQ7jaBnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648575; c=relaxed/simple;
-	bh=LkZHLcVfPw+z/bo/GB/L+nLaMDSesFkDvDgAnbY/Dd4=;
+	s=arc-20240116; t=1784648577; c=relaxed/simple;
+	bh=WUYRSk318Q4M6Z84R2tVGiATRUaZf/+jbDza/FwsI08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MqgohUjFDPdIORQxrposdk1+PJViuUEbahz+komCBjrqKRZpEWXXQU5dCid6VI7nWSDzon8TPSlsVLdGJ+1kc89E2o0rD6BPI6tvFHHHacXZYs9hKHkffFS6PHUAyLJE6AYbOmFSRXp6kNHxusJsW3peg6H5+VKCLhOKI79wilI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1YUDkZNv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T9/uoMFIYk67+vNryoQCAxOEw32njnq4KMhH+mLR1xNXSLfn2GwMlx9SSGFEsdRFUVUYyMudHuqz93K7n22veoaVvcMqT8sGERu3fWjqr3O2IX4dnucUdmawpEKQNHoBapt3eHGDL5sH6HKsLNk679EuGlmPtIWnv8TMf6/DYlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ha+SMpsV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1YUDkZNv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6415D1F000E9;
-	Tue, 21 Jul 2026 15:42:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ha+SMpsV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1051F00A3A;
+	Tue, 21 Jul 2026 15:42:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648573;
-	bh=EU4SHDcgUAVRAU9TW/3zTAn63Vz6kmfh0jclif39+bs=;
+	s=korg; t=1784648576;
+	bh=JU0zcw5S0hY3xcw8d4wap9+OwYd3AS46ETPR5J2HHlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1YUDkZNv6Ihl14Xg0bg7JxvnJRy/RCpHBDD0TU6D2SIGjpluoIFo/aRAsUHRYora4
-	 UOvuW5dS5q8V3XWzyyhvnBa33/vq64LuXK5eDKoP/aoxiuMRD9JfzMDx25hJg1mj14
-	 PkvMhBH5vetS6vqb1ErcPpsder3Dk3ifldhg/9Ik=
+	b=Ha+SMpsVHF9uAr1b+I+w2wF0JyAL0HwmiCp6pteSnrs05sa3AFpH84YNjDxEMlLVD
+	 NwCi27/uW0bz+YTZeX8mY4ElZ6i+hs9Dhx8t3onZqg2W8dTMIvltXn76/2NYuS1ppQ
+	 4Pn75AZP12ouKJhjeUfAclZI3KXrDeFWTgw6BqEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	NeilBrown <neil@brown.name>,
+	Tejun Heo <tj@kernel.org>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0224/2077] RDMA/mlx5: Fix devx subscribe-event unwind NULL dereference
-Date: Tue, 21 Jul 2026 16:58:17 +0200
-Message-ID: <20260721152557.963120030@linuxfoundation.org>
+Subject: [PATCH 7.1 0251/2077] sysfs: clamp show() return value in sysfs_kf_read()
+Date: Tue, 21 Jul 2026 16:58:44 +0200
+Message-ID: <20260721152558.600639453@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,101 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 43f8f7946814c8e5f464518246fdbc69b6e32326 ]
+[ Upstream commit 454257f6d124a92342dcbb7710c03dd6ef96c731 ]
 
-MLX5_IB_METHOD_DEVX_SUBSCRIBE_EVENT() links event_sub into sub_list
-before initializing the fields used by the shared error path.
+sysfs_kf_seq_show() defends against buggy show() callbacks that return
+larger than PAGE_SIZE by clamping the value and printing a warning.
+sysfs_kf_read(), the prealloc variant, has no such defense.
 
-If eventfd_ctx_fdget() then fails, the unwind path dereferences
-event_sub->ev_file in uverbs_uobject_put() and calls
-subscribe_event_xa_dealloc() with an unset xa_key_level1.
+The only current in-tree user of __ATTR_PREALLOC is drivers/md/md.c,
+whose show() callbacks are well-behaved, so this is hardening against
+future drivers doing foolish things and out-of-tree code doing even more
+foolish things.
 
-subscribe_event_xa_alloc() creates the XA entry exactly once for a given
-key_level1, on the first occurrence of that key. The unwind path must
-therefore call subscribe_event_xa_dealloc() exactly once for it as well.
-
-Enforce that by adding devx_key_in_sub_list() and calling
-subscribe_event_xa_dealloc() only when the last matching pending entry is
-being cleaned up.
-
-Fixes: 759738537142 ("IB/mlx5: Enable subscription for device events over DEVX")
-Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
-Link: https://patch.msgid.link/20260428224319.37682-1-prathameshdeshpande7@gmail.com
-Reviewed-by: Yishai Hadas <yishaih@nvidia.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Cc: NeilBrown <neil@brown.name>
+Cc: Tejun Heo <tj@kernel.org>
+Fixes: 2b75869bba67 ("sysfs/kernfs: allow attributes to request write buffer be pre-allocated.")
+Assisted-by: gregkh_clanker_t1000
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patch.msgid.link/2026052000-drove-unicycle-d61b@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/devx.c | 30 +++++++++++++++++++++++-------
- 1 file changed, 23 insertions(+), 7 deletions(-)
+ fs/sysfs/file.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/infiniband/hw/mlx5/devx.c b/drivers/infiniband/hw/mlx5/devx.c
-index 645ebcc0832d7f..c2ae5a14047115 100644
---- a/drivers/infiniband/hw/mlx5/devx.c
-+++ b/drivers/infiniband/hw/mlx5/devx.c
-@@ -1913,6 +1913,17 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_OBJ_ASYNC_QUERY)(
- 	return err;
- }
- 
-+static bool devx_key_in_sub_list(struct list_head *list, u32 key_level1)
-+{
-+	struct devx_event_subscription *s;
-+
-+	list_for_each_entry(s, list, event_list)
-+		if (s->xa_key_level1 == key_level1)
-+			return true;
-+
-+	return false;
-+}
-+
- static void
- subscribe_event_xa_dealloc(struct mlx5_devx_event_table *devx_event_table,
- 			   u32 key_level1,
-@@ -2160,10 +2171,17 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_SUBSCRIBE_EVENT)(
- 
- 		event_sub = kzalloc_obj(*event_sub);
- 		if (!event_sub) {
-+			if (!devx_key_in_sub_list(&sub_list, key_level1))
-+				subscribe_event_xa_dealloc(devx_event_table,
-+							   key_level1,
-+							   obj,
-+							   obj_id);
- 			err = -ENOMEM;
- 			goto err;
- 		}
- 
-+		event_sub->ev_file = ev_file;
-+		event_sub->xa_key_level1 = key_level1;
- 		list_add_tail(&event_sub->event_list, &sub_list);
- 		uverbs_uobject_get(&ev_file->uobj);
- 		if (use_eventfd) {
-@@ -2178,9 +2196,6 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_SUBSCRIBE_EVENT)(
- 		}
- 
- 		event_sub->cookie = cookie;
--		event_sub->ev_file = ev_file;
--		/* May be needed upon cleanup the devx object/subscription */
--		event_sub->xa_key_level1 = key_level1;
- 		event_sub->xa_key_level2 = obj_id;
- 		INIT_LIST_HEAD(&event_sub->obj_list);
- 	}
-@@ -2225,10 +2240,11 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_SUBSCRIBE_EVENT)(
- 	list_for_each_entry_safe(event_sub, tmp_sub, &sub_list, event_list) {
- 		list_del(&event_sub->event_list);
- 
--		subscribe_event_xa_dealloc(devx_event_table,
--					   event_sub->xa_key_level1,
--					   obj,
--					   obj_id);
-+		if (!devx_key_in_sub_list(&sub_list, event_sub->xa_key_level1))
-+			subscribe_event_xa_dealloc(devx_event_table,
-+						   event_sub->xa_key_level1,
-+						   obj,
-+						   obj_id);
- 
- 		if (event_sub->eventfd)
- 			eventfd_ctx_put(event_sub->eventfd);
+diff --git a/fs/sysfs/file.c b/fs/sysfs/file.c
+index 5709cede1d7568..25b44fe171a329 100644
+--- a/fs/sysfs/file.c
++++ b/fs/sysfs/file.c
+@@ -120,6 +120,10 @@ static ssize_t sysfs_kf_read(struct kernfs_open_file *of, char *buf,
+ 	len = ops->show(kobj, of->kn->priv, buf);
+ 	if (len < 0)
+ 		return len;
++	if (len >= (ssize_t)PAGE_SIZE) {
++		printk("fill_read_buffer: %pS returned bad count\n", ops->show);
++		len = PAGE_SIZE - 1;
++	}
+ 	if (pos) {
+ 		if (len <= pos)
+ 			return 0;
 -- 
 2.53.0
 
