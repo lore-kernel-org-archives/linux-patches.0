@@ -1,55 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC65B38757B;
-	Tue, 21 Jul 2026 18:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A5E46D0B8;
+	Tue, 21 Jul 2026 18:09:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657398; cv=none; b=jkYXJKbIlmyh7tthJmu8MBByt0thpXMV5eAWxYP1DWBWdo9QVuCVHSgWF0Vk8c25V2BDNAREjXtBleYVxbbq9iICVQckwJavCaqpGV1Z6+OJsiyiTJCK7gIz7NhWTr0Gu2biP8c1p2j2TePSAoiQ5Ym63LNUrfO6B4guLjzUYG8=
+	t=1784657400; cv=none; b=AnDQrpC8icP4Vk95VJapTzAm9UwPEj1mE33otbd/+sVYxQtdoURYjIH18kNvwwwYeP68LSp9IXtT1we+A08aGJvdmJuyasbn1l+hd+0m4jY3cDUsXnXwsJ8O3Xi2dHOa9gvvQhykcNSwbW6LQ3G54+9yLvaBM/6m/bPUT7bAxPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657398; c=relaxed/simple;
-	bh=FiPjXK+Matdj+jruLNLc2RMDZtPsPcAK/Kj8aONsBuU=;
+	s=arc-20240116; t=1784657400; c=relaxed/simple;
+	bh=YOFglvFl2aZp8YCg/sLEqssc96wnx34Wlp9cWFJNCZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r49vtaDG3Gpc9s9/yyo2mxtDEmedzzgzpU1Ajsv/0yneSxONoovSygvYtmdEL0al7DYj8EiEolhUrjbZv917f23Ve7At7kmjjsm/lFOcsW5fpzcTsU0HHQYwCSVoUqb0qbnnI7+1m5ua4IQNPultHC6xrpv41hOiX/2tJmHDNOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XDB3136q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bebP6Z1sTnx71OKbBk0dgIY5Ai2Bxgj6mOy2PFpZJ/KGMCngZECOlZqOOsb9QhaZZ7dx1xCEo06u9gAl78E0jktYnSPb7emA1PsSacQFeZ7yEb93j3Qb+SV5vGGKJWBI+fMN5yVm/iXE+zGxAf4tY46/1z3a04r72VDOubKDL0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G4SW1GJ/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDB3136q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD0B1F000E9;
-	Tue, 21 Jul 2026 18:09:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4SW1GJ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C52E1F00A3D;
+	Tue, 21 Jul 2026 18:09:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657393;
-	bh=VlKNgWWAThZ+zIxYcwlRz/hmn1n3rr53iLlxzEe+HDA=;
+	s=korg; t=1784657398;
+	bh=KoCBkI7AIXr9ixJa9N3ZGMLiXMN0dla2PDgv0tUzWv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XDB3136qGRVio/ySGpnroFrzgYYbMEWbDh9iEjuIjj9A/JTzwzwlEIX4BboDhhx70
-	 VYhGjLCBwIPj8RANZlGBJjUL7PkIu7BgNmhTgPjdN76F8n37Wikh/ZlkNB9bFDt+JA
-	 wJ3QOZCHVpVzCOrRElp3RIxyQIQKw9of0tcuEARY=
+	b=G4SW1GJ/2XpynJQBd6fMP19MgR6gvFysUXwaG0wE1YG/TRw8SM5SziA0Ap063lFu1
+	 EQyo+7rfbNlM7FwsLUoayYu36+sqXrrRGHQWzZaBi1u+9Oap4uo3Bo1FHc8CN5+nZf
+	 9od2BXZyVmZ7e5FZVFl3GQ9FwgbJHDq9kC8F6UAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@linaro.org>,
-	Jens Remus <jremus@linux.ibm.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Bill Wendling <morbo@google.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Hendrik Brueckner <brueckner@linux.ibm.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jan Polensky <japo@linux.ibm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Justin Stitt <justinstitt@google.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0705/1611] perf s390: Fix TEXTREL in Python extension by compiling as PIC
-Date: Tue, 21 Jul 2026 17:13:41 +0200
-Message-ID: <20260721152531.238048475@linuxfoundation.org>
+Subject: [PATCH 6.18 0743/1611] apparmor: remove or add symlinks to rawdata according to export_binary
+Date: Tue, 21 Jul 2026 17:14:19 +0200
+Message-ID: <20260721152532.088531688@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -68,64 +51,218 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Remus <jremus@linux.ibm.com>
+From: Georgia Garcia <georgia.garcia@canonical.com>
 
-[ Upstream commit 49f5f6ae67dec54014584bb3126a5a94f14e2a5c ]
+[ Upstream commit 59fe6fbc4cd45582bc8893de0a382a36562317b3 ]
 
-On s390 the Python extension build fails as follows when using a linker
-that is configured to treat text relocations (TEXTREL) in shared
-libraries as error by default:
+When the export_binary parameter is set, then rawdata is available and
+there should be a symbolic link for the rawdata in the profile
+directory in apparmorfs. If the parameter is unset, then the symlinks
+should not exist.
 
-  GEN     python/perf.cpython-314-s390x-linux-gnu.so
-/usr/bin/ld.bfd: error: read-only segment has dynamic relocations
+The issue arises when changing the value of export_binary on runtime
+and replacing profiles. If export_binary was set when the profile was
+originally loaded, then changed to 0 and the profile was reloaded,
+then the symbolic links would still exist but would return ENOENT
+because the rawdata no longer exists.
 
-This occurrs because util/llvm-c-helpers.o is erroneously built from
-util/llvm-c-helpers.cpp without compiler option -fPIC but linked into
-the shared library (via libperf-util.a(perf-util-in.o)).
+On the opposite side, if export_binary was unset when the profile was
+originally loaded, then changed to 1 and the profile was reloaded,
+then the symbolic links would not exist, even though the rawdata does.
 
-On s390, object files must be compiled as position-indepedent code (PIC)
-in order to be linked into shared libraries.  Commit a9a3f1d18a6c ("perf
-s390: Always build with -fPIC") added compiler option -fPIC to CFLAGS
-for s390, which is used in C compiles.  Add -fPIC to CXXFLAGS for s390
-as well, so that it is also used in C++ compiles.
-
-Fixes: a9a3f1d18a6c9ccf ("perf s390: Always build with -fPIC")
-Reported-by: Thomas Richter <tmricht@linux.ibm.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Jens Remus <jremus@linux.ibm.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Hendrik Brueckner <brueckner@linux.ibm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jan Polensky <japo@linux.ibm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <nick.desaulniers+lkml@gmail.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: d61c57fde8191 ("apparmor: make export of raw binary profile to userspace optional")
+Signed-off-by: Georgia Garcia <georgia.garcia@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Makefile.config | 1 +
- 1 file changed, 1 insertion(+)
+ security/apparmor/apparmorfs.c         | 102 +++++++++++++++++++------
+ security/apparmor/include/apparmorfs.h |  12 +++
+ security/apparmor/policy.c             |  15 ++++
+ 3 files changed, 104 insertions(+), 25 deletions(-)
 
-diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
-index 2dd5f5a60568d0..8ae13809f68b2e 100644
---- a/tools/perf/Makefile.config
-+++ b/tools/perf/Makefile.config
-@@ -110,6 +110,7 @@ endif
+diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
+index 921daf31267abb..11a92680dcc1a5 100644
+--- a/security/apparmor/apparmorfs.c
++++ b/security/apparmor/apparmorfs.c
+@@ -1759,6 +1759,80 @@ static const struct inode_operations rawdata_link_abi_iops = {
+ static const struct inode_operations rawdata_link_data_iops = {
+ 	.get_link	= rawdata_get_link_data,
+ };
++
++/*
++ * Requires: @profile->ns->lock held
++ */
++void __aa_remove_rawdata_symlink_dents(struct aa_profile *profile)
++{
++	aafs_remove(profile->dents[AAFS_PROF_RAW_HASH]);
++	profile->dents[AAFS_PROF_RAW_HASH] = NULL;
++	aafs_remove(profile->dents[AAFS_PROF_RAW_ABI]);
++	profile->dents[AAFS_PROF_RAW_ABI] = NULL;
++	aafs_remove(profile->dents[AAFS_PROF_RAW_DATA]);
++	profile->dents[AAFS_PROF_RAW_DATA] = NULL;
++}
++
++static inline int create_symlink_dent(struct aa_profile *profile,
++				      const char *name,
++				      enum aafs_prof_type type,
++				      const struct inode_operations *iops)
++{
++	struct dentry *dent = NULL;
++	struct dentry *dir = prof_dir(profile);
++
++	if (profile->dents[type])
++		return 0;
++
++	dent = aafs_create(name, S_IFLNK | 0444, dir,
++			   &profile->label.proxy->count, NULL, NULL, iops);
++	if (IS_ERR(dent))
++		return PTR_ERR(dent);
++
++	profile->dents[type] = dent;
++	return 0;
++}
++
++/*
++ * Requires: @profile->ns->lock held
++ */
++int __aa_create_rawdata_symlink_dents(struct aa_profile *profile)
++{
++	int error;
++
++	if (!profile ||
++	    (profile->dents[AAFS_PROF_RAW_HASH] &&
++	     profile->dents[AAFS_PROF_RAW_ABI] &&
++	     profile->dents[AAFS_PROF_RAW_DATA]))
++		return 0;
++
++	if (!profile->rawdata)
++		return 0;
++
++	if (aa_g_hash_policy) {
++		error = create_symlink_dent(profile, "raw_sha256",
++					    AAFS_PROF_RAW_HASH,
++					    &rawdata_link_sha256_iops);
++		if (error)
++			return error;
++	}
++
++	error = create_symlink_dent(profile, "raw_abi",
++				    AAFS_PROF_RAW_ABI,
++				    &rawdata_link_abi_iops);
++	if (error)
++		return error;
++
++
++	error = create_symlink_dent(profile, "raw_data",
++				    AAFS_PROF_RAW_DATA,
++				    &rawdata_link_data_iops);
++	if (error)
++		return error;
++
++	return 0;
++}
++
+ #endif /* CONFIG_SECURITY_APPARMOR_EXPORT_BINARY */
  
- ifeq ($(ARCH),s390)
-   CFLAGS += -fPIC
-+  CXXFLAGS += -fPIC
- endif
+ /*
+@@ -1834,31 +1908,9 @@ int __aafs_profile_mkdir(struct aa_profile *profile, struct dentry *parent)
+ 		profile->dents[AAFS_PROF_HASH] = dent;
+ 	}
  
- ifeq ($(ARCH),mips)
+-#ifdef CONFIG_SECURITY_APPARMOR_EXPORT_BINARY
+-	if (profile->rawdata) {
+-		if (aa_g_hash_policy) {
+-			dent = aafs_create("raw_sha256", S_IFLNK | 0444, dir,
+-					   &profile->label.proxy->count, NULL,
+-					   NULL, &rawdata_link_sha256_iops);
+-			if (IS_ERR(dent))
+-				goto fail;
+-			profile->dents[AAFS_PROF_RAW_HASH] = dent;
+-		}
+-		dent = aafs_create("raw_abi", S_IFLNK | 0444, dir,
+-				   &profile->label.proxy->count, NULL, NULL,
+-				   &rawdata_link_abi_iops);
+-		if (IS_ERR(dent))
+-			goto fail;
+-		profile->dents[AAFS_PROF_RAW_ABI] = dent;
+-
+-		dent = aafs_create("raw_data", S_IFLNK | 0444, dir,
+-				   &profile->label.proxy->count, NULL, NULL,
+-				   &rawdata_link_data_iops);
+-		if (IS_ERR(dent))
+-			goto fail;
+-		profile->dents[AAFS_PROF_RAW_DATA] = dent;
+-	}
+-#endif /*CONFIG_SECURITY_APPARMOR_EXPORT_BINARY */
++	error = __aa_create_rawdata_symlink_dents(profile);
++	if (error)
++		goto fail2;
+ 
+ 	list_for_each_entry(child, &profile->base.profiles, base.list) {
+ 		error = __aafs_profile_mkdir(child, prof_child_dir(profile));
+diff --git a/security/apparmor/include/apparmorfs.h b/security/apparmor/include/apparmorfs.h
+index 1e94904f68d905..9224497736fdfd 100644
+--- a/security/apparmor/include/apparmorfs.h
++++ b/security/apparmor/include/apparmorfs.h
+@@ -118,6 +118,8 @@ struct aa_loaddata;
+ #ifdef CONFIG_SECURITY_APPARMOR_EXPORT_BINARY
+ void __aa_fs_remove_rawdata(struct aa_loaddata *rawdata);
+ int __aa_fs_create_rawdata(struct aa_ns *ns, struct aa_loaddata *rawdata);
++void __aa_remove_rawdata_symlink_dents(struct aa_profile *profile);
++int __aa_create_rawdata_symlink_dents(struct aa_profile *profile);
+ #else
+ static inline void __aa_fs_remove_rawdata(struct aa_loaddata *rawdata)
+ {
+@@ -129,6 +131,16 @@ static inline int __aa_fs_create_rawdata(struct aa_ns *ns,
+ {
+ 	return 0;
+ }
++
++static inline void __aa_remove_rawdata_symlink_dents(struct aa_profile *profile)
++{
++	/* empty stub */
++}
++
++static inline int __aa_create_rawdata_symlink_dents(struct aa_profile *profile)
++{
++	return 0;
++}
+ #endif /* CONFIG_SECURITY_APPARMOR_EXPORT_BINARY */
+ 
+ #endif /* __AA_APPARMORFS_H */
+diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
+index 6762124521aa03..f44cd6ac9b7b46 100644
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -1329,6 +1329,16 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
+ 			goto skip;
+ 		}
+ 
++		if (!aa_g_export_binary) {
++			if (ent->old && ent->old->rawdata &&
++			    ent->old->dents[AAFS_LOADDATA_DIR]) {
++				/* remove rawdata symlinks because the symlink
++				 * target will be removed
++				 */
++				__aa_remove_rawdata_symlink_dents(ent->old);
++			}
++		}
++
+ 		/*
+ 		 * TODO: finer dedup based on profile range in data. Load set
+ 		 * can differ but profile may remain unchanged
+@@ -1339,6 +1349,11 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
+ 		if (ent->old) {
+ 			share_name(ent->old, ent->new);
+ 			__replace_profile(ent->old, ent->new);
++			if (aa_g_export_binary) {
++				/* recreate rawdata symlinks */
++				if (!ent->old->rawdata)
++					__aa_create_rawdata_symlink_dents(ent->new);
++			}
+ 		} else {
+ 			struct list_head *lh;
+ 
 -- 
 2.53.0
 
