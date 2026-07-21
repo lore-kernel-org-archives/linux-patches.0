@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AAE1357CEB;
-	Tue, 21 Jul 2026 21:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EADD4432E97;
+	Tue, 21 Jul 2026 21:42:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670176; cv=none; b=IHaVx5QZzoBu/0yisMPkv2Eq5mZPcaM0oRj5rQoQ6Frsvjfc0S9NN+3Aqhx18KtRm6M8jYKkR/nuTDIbmYtifyoYQ7LLfmI93QZwjTVXF2WMDhW0hzWMJ19+glfXoUEkcbKx3zOTersAfEX7TZke62GfMGSaDPjBGOeIrOypGn0=
+	t=1784670178; cv=none; b=h7zhpCnPp4HnPkdfuQCXp7Mhs0Kn4bEOKy9QuHEEEKECwb/Omza8VurVEUX2NkbjriAKppEiJHcYCt34OFVw5/cA4jE/DyvCRUj+hECPCMf2sawRIwHZUVr5ja5H81m0S/LSpwqIbLhj+whoFQTsC7KaT9WT+YuG7sV1tCkUSzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670176; c=relaxed/simple;
-	bh=LEwf6wkkZYteU6SimwMJqjVdQXnTk/Ffzi1yXmvDOjI=;
+	s=arc-20240116; t=1784670178; c=relaxed/simple;
+	bh=9wMRs5PvI+s4jnrZ3GMYD2Xgl1Q+mxkyA9jIbBbWGho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r8nSH9M9HQ67Nw3s/M+Th6IidGDs8lXDVDQS5pm6hjRtC8uUDgt8b8RTnHBCeAZt5/cUFPwTFsnHuwrgBgZUJHu5ue2Kvzejl58gMP3vThBXL1WZau/iPOb5LSfwHaz2Z7WL+VzG8UeWUC6ntmNwsMoAiUJWFxU2flU5Nu7ljy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzjaDK6v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F1BktKHPLxZK4+NUJ5KN6w9a24fRaDOR0oZduB8+eLPYB34lbKl6kx0Z3wjmMquMHCx/1/wuhJvx1iQ1IgJY1OKkQ3QhJKWTqj5HEdKFGX/jEk8/SJpvRzVzUA8tl3vkKJn+mW6fcsnF+tFaWXwnlGs7hnWcwv9AHyjjvgqTEY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kd2R+bRu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzjaDK6v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15BB1F000E9;
-	Tue, 21 Jul 2026 21:42:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kd2R+bRu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B5711F000E9;
+	Tue, 21 Jul 2026 21:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670174;
-	bh=tPOurwidOp5rzc66yLPVf9+9Hbjz062RcnTPcXQhlBg=;
+	s=korg; t=1784670176;
+	bh=daVHeb5u6exZoTdBXWNUqmDv5bdQb8fBPOcUbhO0iWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nzjaDK6v+NCM2xV3WOQQHCrWQzcP8EUUutORPb5QLNt12lZGDpOEDbn7cedtDTgn0
-	 XZgg3WJ0hdu9K/4lDSi/YzLAwIt+pGDUxEnZ2d0Yom4fvB2MLVFWRyBzWOYcM0lVuN
-	 HfAhsAzUDNpx0bD2e5dLK04HIZHoWllNqhRy/XCo=
+	b=Kd2R+bRupjaci2Utm6oPDwqFZUPBStJEF2rAr06ZevNHSvgyCcbrVEdv1nNDAagLV
+	 jacy9lQfsKX3GNg/2aMNhF0M63SX4dL0+R1esgAPaiTzxu2bYHjpGdBjBw7I5gmtZJ
+	 8udJYEq96rbhjappo5XPT4RD7Up3cyDwKN3rMJPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WenTao Liang <vulab@iscas.ac.cn>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.1 0796/1067] power: supply: charger-manager: fix refcount leak in is_full_charged()
-Date: Tue, 21 Jul 2026 17:23:17 +0200
-Message-ID: <20260721152442.368683905@linuxfoundation.org>
+	Sangyun Kim <sangyun.kim@snu.ac.kr>,
+	Kyungwook Boo <bookyungwook@gmail.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 0832/1067] spi: uniphier: Fix completion initialization order before devm_request_irq()
+Date: Tue, 21 Jul 2026 17:23:53 +0200
+Message-ID: <20260721152443.162478116@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,43 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WenTao Liang <vulab@iscas.ac.cn>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-commit 4373cfa38ead58f980362c841b0d0bdf8c4d956c upstream.
+commit f3ad1c87d8201e54b66bd6072442f0b5d5a308ee upstream.
 
-In is_full_charged(), power_supply_get_by_name() is called to
-obtain a reference to the fuel_gauge power supply. If the
-voltage check (uV >= desc->fullbatt_uV) succeeds, the function
-returns true directly without releasing the reference, leaking
-the refcount.
+The driver calls devm_request_irq() before initializing the completion
+used by the interrupt handler. Because the interrupt may occur immediately
+after devm_request_irq(), the handler may execute before init_completion().
 
-Fix this by setting a flag and jumping to the out label where
-power_supply_put() properly drops the reference.
+This may result in calling complete() on an uninitialized completion,
+causing undefined behavior. This has been observed with KASAN.
 
+Fix this by initializing the completion before registering the IRQ.
+
+Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
+Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
+Fixes: 5ba155a4d4cc ("spi: add SPI controller driver for UniPhier SoC")
 Cc: stable@vger.kernel.org
-Fixes: e132fc6bb89b ("power: supply: charger-manager: Make decisions focussed on battery status")
-Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260611005322.53096-1-vulab@iscas.ac.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://patch.msgid.link/20260616011223.201357-1-hayashi.kunihiko@socionext.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/charger-manager.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/spi/spi-uniphier.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/power/supply/charger-manager.c
-+++ b/drivers/power/supply/charger-manager.c
-@@ -302,8 +302,10 @@ static bool is_full_charged(struct charg
- 			if (cm->battery_status == POWER_SUPPLY_STATUS_FULL
- 					&& desc->fullbatt_vchkdrop_uV)
- 				uV += desc->fullbatt_vchkdrop_uV;
--			if (uV >= desc->fullbatt_uV)
--				return true;
-+			if (uV >= desc->fullbatt_uV) {
-+				is_full = true;
-+				goto out;
-+			}
- 		}
+--- a/drivers/spi/spi-uniphier.c
++++ b/drivers/spi/spi-uniphier.c
+@@ -659,6 +659,8 @@ static int uniphier_spi_probe(struct pla
+ 	priv->host = host;
+ 	priv->is_save_param = false;
+ 
++	init_completion(&priv->xfer_done);
++
+ 	priv->base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+ 	if (IS_ERR(priv->base)) {
+ 		ret = PTR_ERR(priv->base);
+@@ -686,8 +688,6 @@ static int uniphier_spi_probe(struct pla
+ 		goto out_host_put;
  	}
  
+-	init_completion(&priv->xfer_done);
+-
+ 	clk_rate = clk_get_rate(priv->clk);
+ 
+ 	host->max_speed_hz = DIV_ROUND_UP(clk_rate, SSI_MIN_CLK_DIVIDER);
 
 
