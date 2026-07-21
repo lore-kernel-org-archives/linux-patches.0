@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C023844AB6A;
-	Tue, 21 Jul 2026 21:20:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E9844AB9E;
+	Tue, 21 Jul 2026 21:20:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668803; cv=none; b=qCiweO+rOQjyJPp/ZqfqL1KmCKKvkvbvAsz7+K3HuQKtT5zacNUptEGbby+QnJ6vZseUkK7GUaRhZB27u/aDXYYv/cldzrb+HGAmbF/VQdRIOIS0WryvqFxklyrqchTNUXkUh9ZUsN81AizHxw+3m7XabTLsr4gQIh32JQkdiq4=
+	t=1784668806; cv=none; b=GDzvmE/vd1OlFDhTLyH5nbLBuDBHLvpYTrSqc0ef7EC0B5onQuHmKa/6u4pyxC+asV0OktFz/a/lafMS8Wf85Fedk5uFV1+IwkZi0+PxPzQ3AmAOO5Gc59AvSq8cGX7kgSQJ9roLEo4SccHwzZ1fWRA6OuT+YyNeD+rXooPrhHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668803; c=relaxed/simple;
-	bh=jgkbXfavJVr2Xh1WpjxTetfeBPMw7DaAstjuMxRTEZ4=;
+	s=arc-20240116; t=1784668806; c=relaxed/simple;
+	bh=DRCyzx/q/KDKf01r02dxR9PYZ0XDHo6D648IzMG2/+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ibk09TEsYeZ8KsgHu5pD7iZsF5Hlu00OBSl1jhbu6fYjOAYGOkzkEwJtL9F7rnxK6Pa+sZAy5sOVW8SP2ApuLwKTke7d71k4CPYiKtg3snxT5dLjbBgeccN9qInoz7UQY/gRvYod/hdmtd4oAr52jaSTaGEg4AnfZ49GdIxAc7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjTJBK6f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E4WpNO7/6AJFKe4YSHD4fZkVWbHxF8Mpr+SHQ2X2uJYJVJwtll9gKlaLx3LyLB4DhDe6XnRu1LTXcrLfoBIg19aUS3aB5tByuZ5IYdmSpR+fgFZOuh18D+nFW1P4ZFluqoYviCly/OuRdA9Lb4UHxrN/ZettGBexkwvlQXNjr+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBKvrSK+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjTJBK6f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 586DB1F000E9;
-	Tue, 21 Jul 2026 21:20:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBKvrSK+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC82C1F000E9;
+	Tue, 21 Jul 2026 21:20:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668802;
-	bh=J34BJOBwn9VFcEWoz/hI+AO328aPc0xfVaHag5VtUg0=;
+	s=korg; t=1784668805;
+	bh=YbYA/LahTmZeQ6chj7Y5V8diL3qiIWaNRQbiS12V4+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hjTJBK6fqJpVobv7swDaKbvWHVOncfgGp5y8/0sKFLHqnB8PzorgMDFEBFyR4hI/Q
-	 4IU6cJ8qIx02bZE7fHTrrOonh2oVLamLOztma+P6gX3ZkxQaQRUfdNey6WIIaoe4ov
-	 fWostgA95hKL44MjN6WjdGvltXfLqGjFn9obzbAU=
+	b=hBKvrSK+zBPEBfZZazD0kctT94QyigL7UB4nQv5rCQmOCorPqutZ6skwD5fNmiUhk
+	 73Ad6U7Vme+u3pboZLy+LjK+f/AXi6thctxmGZsFzjtLhwtl2MRR86ztG9xcj6bl9K
+	 stj2fs/twr3jKCOP+PerBp9Q7mDNrZNfwLy6YlaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	"Carlos Bilbao (Lambda)" <carlos.bilbao@kernel.org>,
+	Sara Venkatesh <sarajvenkatesh@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0287/1067] wifi: rtw88: fix OOB read from firmware RX descriptor exceeding DMA buffer
-Date: Tue, 21 Jul 2026 17:14:48 +0200
-Message-ID: <20260721152431.022135442@linuxfoundation.org>
+Subject: [PATCH 6.1 0314/1067] RDMA/srpt: fix integer overflow in immediate data length check
+Date: Tue, 21 Jul 2026 17:15:15 +0200
+Message-ID: <20260721152431.617596889@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,45 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Sara Venkatesh <sarajvenkatesh@gmail.com>
 
-[ Upstream commit 6e76e9ed273dfb4b3333a5ebbb94958cc5752ab6 ]
+[ Upstream commit eb4ecdf631fe00e8020bf461503cb9b7017ed796 ]
 
-In rtw_pci_rx_napi(), new_len is computed as the sum of pkt_len (14-bit
-descriptor field, max 16383) and pkt_offset (drv_info_sz + shift, both
-firmware-controlled). The result can exceed RTK_PCI_RX_BUF_SIZE (11478),
-causing an out-of-bounds read from the pre-allocated DMA buffer when
-skb_put_data copies new_len bytes. The USB transport already validates
-this (rtw_usb_rx_data_put checks against RTW_USB_MAX_RECVBUF_SZ); the
-PCIe path does not.
+imm_buf->len is a user-controlled uint32_t received from the network.
+Adding it to imm_data_offset without overflow checking allows a
+malicious initiator to send len=0xFFFFFFFF, causing req_size to wrap
+around to a small value, bypassing the bounds check, and subsequently
+passing a ~4GB length to sg_init_one().
 
-Add a check that new_len does not exceed the DMA buffer size.
+Use check_add_overflow() to detect wrapping before the comparison.
 
-Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260421111434.3389674-1-tristmd@gmail.com
+Fixes: 5dabcd0456d7 ("RDMA/srpt: Add support for immediate data")
+Reported-by: Carlos Bilbao (Lambda) <carlos.bilbao@kernel.org>
+Signed-off-by: Sara Venkatesh <sarajvenkatesh@gmail.com>
+Link: https://patch.msgid.link/20260504080036.3482415-1-sarajvenkatesh@gmail.com
+Reviewed-by: Carlos Bilbao (Lambda) <carlos.bilbao@kernel.org>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/pci.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/infiniband/ulp/srpt/ib_srpt.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/pci.c b/drivers/net/wireless/realtek/rtw88/pci.c
-index ba0842e911c1ad..cdb2d2d3ca9ac1 100644
---- a/drivers/net/wireless/realtek/rtw88/pci.c
-+++ b/drivers/net/wireless/realtek/rtw88/pci.c
-@@ -1108,6 +1108,11 @@ static u32 rtw_pci_rx_napi(struct rtw_dev *rtwdev, struct rtw_pci *rtwpci,
- 		 * discard the frame if none available
- 		 */
- 		new_len = pkt_stat.pkt_len + pkt_offset;
-+		if (unlikely(new_len > RTK_PCI_RX_BUF_SIZE)) {
-+			rtw_dbg(rtwdev, RTW_DBG_RX,
-+				"oversized RX packet: %u\n", new_len);
-+			goto next_rp;
-+		}
- 		new = dev_alloc_skb(new_len);
- 		if (WARN_ONCE(!new, "rx routine starvation\n"))
- 			goto next_rp;
+diff --git a/drivers/infiniband/ulp/srpt/ib_srpt.c b/drivers/infiniband/ulp/srpt/ib_srpt.c
+index 33c099e5efc5ec..e9ce57a730c023 100644
+--- a/drivers/infiniband/ulp/srpt/ib_srpt.c
++++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
+@@ -1129,9 +1129,10 @@ static int srpt_get_desc_tbl(struct srpt_recv_ioctx *recv_ioctx,
+ 		struct srp_imm_buf *imm_buf = srpt_get_desc_buf(srp_cmd);
+ 		void *data = (void *)srp_cmd + imm_data_offset;
+ 		uint32_t len = be32_to_cpu(imm_buf->len);
+-		uint32_t req_size = imm_data_offset + len;
++		uint32_t req_size;
+ 
+-		if (req_size > srp_max_req_size) {
++		if (check_add_overflow((uint32_t)imm_data_offset, len, &req_size) ||
++		    req_size > srp_max_req_size) {
+ 			pr_err("Immediate data (length %d + %d) exceeds request size %d\n",
+ 			       imm_data_offset, len, srp_max_req_size);
+ 			return -EINVAL;
 -- 
 2.53.0
 
