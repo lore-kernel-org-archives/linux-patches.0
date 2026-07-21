@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E6E1474CC;
-	Tue, 21 Jul 2026 18:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFDD471262;
+	Tue, 21 Jul 2026 18:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657495; cv=none; b=mVrxSnatLz1aTyxSiXq2vQEpU2856yq6vW8fl2HQt3Vs0sJp4ihS14Y5gvmi0Q43603OfBezYHlBWddGhg2UlLrOgJKGuh+KpzIbbf8tOTrMs0RSNWOha6TRa0atEE390qfQUGXKkRMGhl9a8tDRMLXVHcHrF8ubvcVKfktBMRk=
+	t=1784657498; cv=none; b=oArz8aeeZVEli/UEIk1rFPwU62L0ylEzPaFsf6mBHcJEu6BKbKFTjV4HuO+8ocoPNxJ2W6D1hgeTv8/QjcCBcUwqDHeq+UhMusseN8hDLO9/qmwLN/dpvhnMBeqiR+tRqBSmHe9NWfsEscFxRFqncCIlX+l1rwJ746ASbpzP4vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657495; c=relaxed/simple;
-	bh=2PI9/lC9axaFr1DZ9YVc237hYGJ/6YUUHhnjwbpQIdY=;
+	s=arc-20240116; t=1784657498; c=relaxed/simple;
+	bh=gpTdKF4YCamQC9caLGIgWy37rC9lb41AupJ97PiaY3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kTlEYsB3HWsuDxe76l66YcqtRDzITSoSGk92QKVX3nxyoNfEJvJetv0ZkjrNYrXgzXTFH7KQxKrD4JEGgMD8+HaKD1U3ElawWLo5+Dgv21Kt6qjGyIh3MLUzdzubPr40l2IzQF1uMt8t/SrFZTPs1wtyQi7sckyQT9Cr+7QkY84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JeoS2Vs2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SW1choY3zi0rGEdliyvhIzyWoAJEJ5QEh5mSPulsLzsbj46CiF1Lwwrx3wHOtY3wIs85Q/mkg7eHEybkkD3vz4O8GHOKzUT2UIUYKXBgfjUlFHL+gXXBoajzMB3zolNGn4v2OmyKjivmGy5MATK1qRWR+6ghuxXPM5L1NXP2R04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0KArzW+U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JeoS2Vs2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7511F000E9;
-	Tue, 21 Jul 2026 18:11:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0KArzW+U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C961F000E9;
+	Tue, 21 Jul 2026 18:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657494;
-	bh=I0X+I1clVJ9tIiTMXDNZ88QvuM3oM3TfrHcsuVj84SU=;
+	s=korg; t=1784657497;
+	bh=tJHUgNjVGwM68v4VLEZUG1y9RJQPLHSBtD2GiSeEmkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JeoS2Vs2tHVs4N7xIk7C9KWWcUiS/afQOTt90GV2oqADvae2of6ZSNmIeYc6PBqCR
-	 f8HU4WADJrNJUgr3yRyDsnlcqNVFkFAg7WDHnSQki/WiuZXrjdXgV7hMyDUFIh+2cv
-	 CxrJyp71XPRvuwOKpcJgIwvVyKdpiQUHfi38XFSw=
+	b=0KArzW+UShCzZDitgZdKKUMCcb6/2hwb8QPIJnT14IoqrlitH1Tb0fthDvt5Spm4q
+	 hxKXk9EPMtmGWzfmdvmrRaQnqPDweYPmDWY6AwI2SseCPTr3SblHEmpWTNgXKyDR0x
+	 Y4meR+kH74CU3Bayb14Yokp36Sp4vBVRvzr1NRYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	James Clark <james.clark@arm.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0784/1611] perf cs-etm: Reject CPU IDs that would overflow signed comparison
-Date: Tue, 21 Jul 2026 17:15:00 +0200
-Message-ID: <20260721152533.018855480@linuxfoundation.org>
+Subject: [PATCH 6.18 0785/1611] gpio: mlxbf3: fail probe if gpiochip registration fails
+Date: Tue, 21 Jul 2026 17:15:01 +0200
+Message-ID: <20260721152533.041744834@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,58 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 542e88a4c6f7b6edd1326ce767d4cb3c2ea9d61d ]
+[ Upstream commit 0482862a90169f4daaba0ed31a85d8304bf51e04 ]
 
-metadata[j][CS_ETM_CPU] is a u64 from perf.data, but the comparison
-with max_cpu casts it to (int).  A crafted value like 0xFFFFFFFF becomes
--1 after the cast, which compares less than max_cpu (0), so the queue
-array is never sized to accommodate it.  When the value is later passed
-to cs_etm__get_queue(), it indexes queue_array with the original large
-value, causing an out-of-bounds access.
+mlxbf3_gpio_probe() logs a devm_gpiochip_add_data() failure but still
+returns success. That leaves the platform device bound even though the
+GPIO chip was not registered.
 
-Validate that CS_ETM_CPU fits in an int before using it in the signed
-comparison.
+Return the registration error so probe failure matches the missing
+gpiochip state.
 
-Fixes: 57880a7966be510c ("perf: cs-etm: Allocate queues for all CPUs")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: James Clark <james.clark@arm.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: cd33f216d241 ("gpio: mlxbf3: Add gpio driver support")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260615091918.43333-1-pengpeng@iscas.ac.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-mlxbf3.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
-index f939eb9edf7c7f..4e5b38db7b01be 100644
---- a/tools/perf/util/cs-etm.c
-+++ b/tools/perf/util/cs-etm.c
-@@ -6,6 +6,7 @@
-  * Author: Mathieu Poirier <mathieu.poirier@linaro.org>
-  */
+diff --git a/drivers/gpio/gpio-mlxbf3.c b/drivers/gpio/gpio-mlxbf3.c
+index 4770578269bae8..566326644a2c12 100644
+--- a/drivers/gpio/gpio-mlxbf3.c
++++ b/drivers/gpio/gpio-mlxbf3.c
+@@ -255,7 +255,8 @@ static int mlxbf3_gpio_probe(struct platform_device *pdev)
  
-+#include <limits.h>
- #include <linux/bitfield.h>
- #include <linux/bitops.h>
- #include <linux/coresight-pmu.h>
-@@ -3479,7 +3480,13 @@ int cs_etm__process_auxtrace_info_full(union perf_event *event,
- 			goto err_free_metadata;
- 		}
+ 	ret = devm_gpiochip_add_data(dev, gc, gs);
+ 	if (ret)
+-		dev_err_probe(dev, ret, "Failed adding memory mapped gpiochip\n");
++		return dev_err_probe(dev, ret,
++				     "Failed adding memory mapped gpiochip\n");
  
--		if ((int) metadata[j][CS_ETM_CPU] > max_cpu)
-+		/* CPU id comes from perf.data and must fit max_cpu + 1 without overflow */
-+		if (metadata[j][CS_ETM_CPU] >= INT_MAX) {
-+			err = -EINVAL;
-+			goto err_free_metadata;
-+		}
-+
-+		if ((int)metadata[j][CS_ETM_CPU] > max_cpu)
- 			max_cpu = metadata[j][CS_ETM_CPU];
- 	}
- 
+ 	return 0;
+ }
 -- 
 2.53.0
 
