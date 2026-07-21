@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFCD31397;
-	Tue, 21 Jul 2026 15:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E5846AA62;
+	Tue, 21 Jul 2026 15:34:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648095; cv=none; b=mUCFnRXO854GUaBbVk+ReFmSyehr1JEqEbMujGMM3kMh4knRwjTjXwj1hblz/SJtWDoiUBJTOMvBeGHmvyCj3n9QMJrj8F+Akf75qPgTqnPibSluFDDuDOEozJvIpcmUNmZu8Ab2ytxgvDSfL8k3nEFWAOxw1XvhIpr2j1x1GnE=
+	t=1784648098; cv=none; b=baa04LVGrwHQf0O8lBY7smMGkUPChny44tXLQE4DV5Hb+nnq6mQVR+mk/vfuMn29RxParVG0j/aao9wZzoE3Eni6y5H/NYcHCyREQ46whHZIRRtq+FWw6CmtHCkn+xtmTSzmh5UcuH/ftm8QWqqd2S8wehMk+U3rNwe6HqFcbpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648095; c=relaxed/simple;
-	bh=sGTLWpEproYniZC18Y2o0mDoNgi9vLynQfxEs5iszHA=;
+	s=arc-20240116; t=1784648098; c=relaxed/simple;
+	bh=tgf3IINaJRG1TT40EuNNlpcCcZSxZIUT5M25/0FSo1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jAzYzUNcUAKVfmvx5aA8Rr8qiVAYGcM1Kt9Zis2yX/APoCx2bXQ6U7Sjq4mYQ9lapFedvk79vH28cKE2SoSJ1e1B3ggRAKlMQn4XaYq76nN0HnDATGlFD+ABYSdJVt36AN3PZlRthzeg8/jxVCLsiKqDspmC/CydF3u0L/+9VUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yHyyTtS1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a1TBQArWb19zYo9wB316L7QfyYLTjSZc+VaFh58wq+A1xStD+zKvfBiK8t4UK2by/+cPHvyN2K6tAuKe7OKoJvDmrCDFQ34TBFdLJ4Rsxwtbp2Izxby3+Q44LHrt1HgWhe2pfhyRezagoH/OAhB7CZzOqPndcD8VwJdWvBRQ1hY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dsHy5qmR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yHyyTtS1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50CFB1F00A3A;
-	Tue, 21 Jul 2026 15:34:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dsHy5qmR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBC11F00A3A;
+	Tue, 21 Jul 2026 15:34:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648094;
-	bh=hNXY9AjVncQ0k+MqjtXrg3zfFSXQHwifMxSKHE41ewE=;
+	s=korg; t=1784648097;
+	bh=bzAOAgjp/gwituKzIL4MwZ/MIGsrU7fRNcMnTbAe3+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yHyyTtS1DdGpys1W9ZXZEkrzNUpAJVXG/Mtna/8Qzxq7UceU0+JhTcVfDBfNYfz5X
-	 9uHeH4M5gu/7Id8Xpq5KOYXQPt4ghvdMpHRhDwPi41zwqBlMgAHHD+7MiJIi0cyaNX
-	 3Imco7DtHjB+rD7OtFU/uLI08Y78xRJEyOqQaIUY=
+	b=dsHy5qmR/HP2HuwKDeoajulQqv+BAH9vseWKy7Ik/pqfhQV4PVEIR8o8N8WLKIt5U
+	 Ii/VfsfjfLmuXus4Rj3DtyO85elGM7FZxa6OApol+u5ov4l++b1rMRGgrv4krWf5kY
+	 /Z1xnlmn5tnaH++xZDKNQIyWglmg0heRcWlMMzwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoine Tenart <atenart@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alan Maguire <alan.maguire@oracle.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0069/2077] libbpf: Fix deduplication of typedef with base definitions
-Date: Tue, 21 Jul 2026 16:55:42 +0200
-Message-ID: <20260721152554.318359703@linuxfoundation.org>
+Subject: [PATCH 7.1 0070/2077] drm/amd/pm: remove trailing semicolon from AMDGPU_PM_POLICY_ATTR macro
+Date: Tue, 21 Jul 2026 16:55:43 +0200
+Message-ID: <20260721152554.343136267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,54 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit 0831b110eb4591e4ad8c5fd0d8f0f3f9979a5ff5 ]
+[ Upstream commit 0d892afb52d2b940d891b6b52dc9f04debef2d81 ]
 
-When deduplicating definitions for a module, typedef defined in the base
-are not removed. This is because the hash used for base types differs
-from the one used in the deduplication logic in btf_dedup_struct_type.
+macros should not include a trailing semicolon as per kernel coding
+style (checkpatch.pl warning).
 
-This was introduced by the referenced commit when moving the typedef
-deduplication logic handling from btf_dedup_ref_type to
-btf_dedup_struct_type, as this also changed the hash logic
-(btf_hash_common to btf_hash_typedef).
+move the semicolon from the macro definition to the invocation sites instead.
 
-This also impacts other types referencing those typedef (e.g. const). In
-my test, the BTF section size of the openvswitch module went from 31KB
-to 45KB.
+checkpatch.pl logs:
+WARNING: macros should not use a trailing semicolon
++#define AMDGPU_PM_POLICY_ATTR(_name, _id)                                  \
++       static struct amdgpu_pm_policy_attr pm_policy_attr_##_name = {     \
++               .dev_attr = __ATTR(_name, 0644, amdgpu_get_pm_policy_attr, \
++                                  amdgpu_set_pm_policy_attr),             \
++               .id = PP_PM_POLICY_##_id,                                  \
++       };
 
-Fixes: 3781413465df ("libbpf: Fix BTF dedup to support recursive typedef definitions").
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Tested-by: Alan Maguire <alan.maguire@oracle.com>
-Reviewed-by: Alan Maguire <alan.maguire@oracle.com>
-Link: https://lore.kernel.org/bpf/20260417083319.32716-1-atenart@kernel.org
+Fixes: 4d154b1ca580 ("drm/amd/pm: Add support for DPM policies")
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/amdgpu_pm.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
-index ceb57b46a8782a..771aeaa0262b29 100644
---- a/tools/lib/bpf/btf.c
-+++ b/tools/lib/bpf/btf.c
-@@ -4578,12 +4578,14 @@ static int btf_dedup_prep(struct btf_dedup *d)
- 		case BTF_KIND_RESTRICT:
- 		case BTF_KIND_PTR:
- 		case BTF_KIND_FWD:
--		case BTF_KIND_TYPEDEF:
- 		case BTF_KIND_FUNC:
- 		case BTF_KIND_FLOAT:
- 		case BTF_KIND_TYPE_TAG:
- 			h = btf_hash_common(t);
- 			break;
-+		case BTF_KIND_TYPEDEF:
-+			h = btf_hash_typedef(t);
-+			break;
- 		case BTF_KIND_INT:
- 		case BTF_KIND_DECL_TAG:
- 			h = btf_hash_int_decl_tag(t);
+diff --git a/drivers/gpu/drm/amd/pm/amdgpu_pm.c b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+index 736304e73ca4d1..024bfdb7c1571c 100644
+--- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+@@ -2505,12 +2505,12 @@ static ssize_t amdgpu_set_pm_policy_attr(struct device *dev,
+ 		.dev_attr = __ATTR(_name, 0644, amdgpu_get_pm_policy_attr, \
+ 				   amdgpu_set_pm_policy_attr),             \
+ 		.id = PP_PM_POLICY_##_id,                                  \
+-	};
++	}
+ 
+ #define AMDGPU_PM_POLICY_ATTR_VAR(_name) pm_policy_attr_##_name.dev_attr.attr
+ 
+-AMDGPU_PM_POLICY_ATTR(soc_pstate, SOC_PSTATE)
+-AMDGPU_PM_POLICY_ATTR(xgmi_plpd, XGMI_PLPD)
++AMDGPU_PM_POLICY_ATTR(soc_pstate, SOC_PSTATE);
++AMDGPU_PM_POLICY_ATTR(xgmi_plpd, XGMI_PLPD);
+ 
+ static struct attribute *pm_policy_attrs[] = {
+ 	&AMDGPU_PM_POLICY_ATTR_VAR(soc_pstate),
 -- 
 2.53.0
 
