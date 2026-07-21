@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C602DEA74;
-	Tue, 21 Jul 2026 18:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6954407CCF;
+	Tue, 21 Jul 2026 18:54:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660039; cv=none; b=mD+qsTyRm52Xw8ptixBgkJWP3Sm2gKbO6ht4Yasju2SFtznLRoJEatRqaO6eFSQHDoFKBRo+9DMbPVCy74Jk5S22ymeivAtLQo0FARXRGyAd188y/VVnZtnvgLtL0+XS9+qGxE7OalVrIgrNxlviKx1cZBuL2ziHXzYqpfYiNdI=
+	t=1784660042; cv=none; b=H66/OhFO/vhFuGxhUBPCmJLPMhNL9E/OZF+kdxUTzLB6oJJ2eWlikRneFNGs9gzB1bBNmkRasBnK2t5X0pwBu1JeemYRuKBYKQ/igCzNAfGupNiBkl701wRl8u9p5oJm6DgRkiiLQK9XYRluo7DSlsjfUl1R3oKE06bBoykp5N8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660039; c=relaxed/simple;
-	bh=Ne0e67veMLY+Y2OHwJ9b1cMcLSDSyQJHbgFPWaRpw7E=;
+	s=arc-20240116; t=1784660042; c=relaxed/simple;
+	bh=tr4pAXy0RtRNI0ZrOBQt54WonV7QMQlhVy/41Wrw224=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DC+3PXHYS6DvpnTJSMKNfC8hiY9YbUNLKDxL8/qa/u/nF0hkRscmu0zN9NgugyG/QWUZDz2DZpHBP9m4Khv5MW/DTYbA+cEau7dCOgwBzaO+Ae/xIXBxgQkDTbPkmM3jbZgJYiME9pAHmV5JmClDshGE3b0NLkvKaO2ugEZoIeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYkOcDEQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WUjx8a6Ocg9hQgB8sixJv+ZS3WKt2v2sJqNzrskVIOX19vpXiglfE+AJ9IaiACZACx5wimnMkpiJTZIQoyb5aew24kktHwZFeWjHw9/5qc3vIHOeLD5FXlxW1dibdUYVEdCT1Uglid+tYTZUCtxdJFmHTFj+AEsqEm5SBVgXm6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qnXDRurZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYkOcDEQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7040F1F000E9;
-	Tue, 21 Jul 2026 18:53:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qnXDRurZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C441F000E9;
+	Tue, 21 Jul 2026 18:53:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660037;
-	bh=G2PxHGCqCEbhREk1jjx7NrJA4Yn6b3tm5Pf9dWVueCA=;
+	s=korg; t=1784660040;
+	bh=CLnLh7OczJ+PG5emE4HTWKWH/XRE7MxXe3uVTl03hpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AYkOcDEQkmPVCLLD/yrcuSNwbC5AbuH5JfI6B7qnxLpX5KURSwBQCN0+hR21bSdQp
-	 9rv24S7/bLXVqS7IA3FLub6cHm3MMqPrHANLeweUKzGgZ4aQI8eUxUTzR/ZY0udvCC
-	 6BooDzO9ICnCjkz4QXrEMxHQGKDebWaLgjHNEw1I=
+	b=qnXDRurZuwOZQf7SIsXYyC1MverK7XGqzwyF1WCjO/TKlGXKLP7Pyi5DU8EYmmhhb
+	 O1t/Aq3QxR8lIs0AvPkvwlocTgUJNVCzgSTPPiya37RmaEHGImRCNvbikUZsnBX78P
+	 pmqmCmww/A3Jn8W4ZI4ooVF/bdm69ZlxnTMP7oQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Xinyu Ma <mmmxny@gmail.com>,
+	syzbot+9307c991a6d07ce6e6d8@syzkaller.appspotmail.com,
 	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	Kuniyuki Iwashima <kuniyu@google.com>,
-	Weiming Shi <bestswngs@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0785/2077] bpf, sockmap: reject overflowing copy + len in bpf_msg_push_data()
-Date: Tue, 21 Jul 2026 17:07:38 +0200
-Message-ID: <20260721152611.310598217@linuxfoundation.org>
+Subject: [PATCH 7.1 0786/2077] sockmap: Fix use-after-free in udp_bpf_recvmsg()
+Date: Tue, 21 Jul 2026 17:07:39 +0200
+Message-ID: <20260721152611.333627180@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -56,60 +55,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 0c0a8ed85349dae298712d79cb276acfeb794d82 ]
+[ Upstream commit c010995b29c8939c6aa69e3cb26f8dbee163d156 ]
 
-When the scatterlist ring is full or nearly full, bpf_msg_push_data()
-enters a copy fallback path and computes copy + len for the page
-allocation size. Since len comes from BPF with arg3_type = ARG_ANYTHING
-and both are u32, a crafted len can wrap the sum to a small value,
-causing an undersized allocation followed by an out-of-bounds memcpy.
+syzbot reported use-after-free of struct sk_msg in sk_msg_recvmsg(). [0]
 
- BUG: unable to handle page fault for address: ffffed104089a402
- Oops: Oops: 0000 [#1] SMP KASAN NOPTI
- Call Trace:
-  __asan_memcpy (mm/kasan/shadow.c:105)
-  bpf_msg_push_data (net/core/filter.c:2852 net/core/filter.c:2788)
-  bpf_prog_9ed8b5711920a7d7+0x2e/0x36
-  sk_psock_msg_verdict (net/core/skmsg.c:934)
-  tcp_bpf_sendmsg (net/ipv4/tcp_bpf.c:421 net/ipv4/tcp_bpf.c:584)
-  __sys_sendto (net/socket.c:2206)
-  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+sk_msg_recvmsg() peeks sk_msg from psock->ingress_msg under a lock,
+but its processing is lockless.
 
-Add an overflow check before the allocation.
+Thus, sk_msg_recvmsg() must be serialised by callers, otherwise
+multiple threads could touch the same sk_msg.
 
-Link: https://lore.kernel.org/all/20260424155913.A19FDC19425@smtp.kernel.org
-Fixes: 6fff607e2f14 ("bpf: sk_msg program helper bpf_msg_push_data")
-Tested-by: Xiang Mei <xmei5@asu.edu>
-Tested-by: Xinyu Ma <mmmxny@gmail.com>
+For example, TCP uses lock_sock(), and AF_UNIX uses unix_sk(sk)->iolock.
+
+Initially, udp_bpf_recvmsg() had used lock_sock(), but the cited
+commit removed it.
+
+Let's serialise sk_msg_recvmsg() with lock_sock() in udp_bpf_recvmsg().
+
+Note that holding spin_lock_bh(&sk->sk_receive_queue.lock) is not
+an option due to copy_page_to_iter() in sk_msg_recvmsg().
+
+[0]:
+BUG: KASAN: slab-use-after-free in sk_msg_recvmsg+0xb54/0xc30 net/core/skmsg.c:428
+Read of size 4 at addr ffff88814cdcf000 by task syz.0.24/6020
+
+CPU: 1 UID: 0 PID: 6020 Comm: syz.0.24 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 01/13/2026
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0xba/0x230 mm/kasan/report.c:482
+ kasan_report+0x117/0x150 mm/kasan/report.c:595
+ sk_msg_recvmsg+0xb54/0xc30 net/core/skmsg.c:428
+ udp_bpf_recvmsg+0x4bd/0xe00 net/ipv4/udp_bpf.c:84
+ inet_recvmsg+0x260/0x270 net/ipv4/af_inet.c:891
+ sock_recvmsg_nosec net/socket.c:1078 [inline]
+ sock_recvmsg+0x1a8/0x270 net/socket.c:1100
+ ____sys_recvmsg+0x1e6/0x4a0 net/socket.c:2812
+ ___sys_recvmsg+0x215/0x590 net/socket.c:2854
+ do_recvmmsg+0x334/0x800 net/socket.c:2949
+ __sys_recvmmsg net/socket.c:3023 [inline]
+ __do_sys_recvmmsg net/socket.c:3046 [inline]
+ __se_sys_recvmmsg net/socket.c:3039 [inline]
+ __x64_sys_recvmmsg+0x198/0x250 net/socket.c:3039
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xe2/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fb319f9aeb9
+Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fb31ad97028 EFLAGS: 00000246 ORIG_RAX: 000000000000012b
+RAX: ffffffffffffffda RBX: 00007fb31a216090 RCX: 00007fb319f9aeb9
+RDX: 0000000000000001 RSI: 0000200000000400 RDI: 0000000000000004
+RBP: 00007fb31a008c1f R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000040000021 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007fb31a216128 R14: 00007fb31a216090 R15: 00007ffe21dd0a98
+ </TASK>
+
+Allocated by task 6019:
+ kasan_save_stack mm/kasan/common.c:57 [inline]
+ kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
+ poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
+ __kasan_kmalloc+0x93/0xb0 mm/kasan/common.c:415
+ kasan_kmalloc include/linux/kasan.h:263 [inline]
+ __kmalloc_cache_noprof+0x3d1/0x6e0 mm/slub.c:5780
+ kmalloc_noprof include/linux/slab.h:957 [inline]
+ kzalloc_noprof include/linux/slab.h:1094 [inline]
+ alloc_sk_msg net/core/skmsg.c:510 [inline]
+ sk_psock_skb_ingress_self+0x60/0x350 net/core/skmsg.c:612
+ sk_psock_verdict_apply net/core/skmsg.c:1038 [inline]
+ sk_psock_verdict_recv+0x7d9/0x8d0 net/core/skmsg.c:1236
+ udp_read_skb+0x73e/0x7e0 net/ipv4/udp.c:2045
+ sk_psock_verdict_data_ready+0x12d/0x550 net/core/skmsg.c:1257
+ __udp_enqueue_schedule_skb+0xc54/0x10b0 net/ipv4/udp.c:1789
+ __udp_queue_rcv_skb net/ipv4/udp.c:2346 [inline]
+ udp_queue_rcv_one_skb+0xac5/0x19c0 net/ipv4/udp.c:2475
+ __udp4_lib_mcast_deliver+0xc06/0xcf0 net/ipv4/udp.c:2585
+ __udp4_lib_rcv+0x10f6/0x2620 net/ipv4/udp.c:2724
+ ip_protocol_deliver_rcu+0x282/0x440 net/ipv4/ip_input.c:207
+ ip_local_deliver_finish+0x3bb/0x6f0 net/ipv4/ip_input.c:241
+ NF_HOOK+0x336/0x3c0 include/linux/netfilter.h:318
+ dst_input include/net/dst.h:474 [inline]
+ ip_sublist_rcv_finish+0x221/0x2a0 net/ipv4/ip_input.c:584
+ ip_list_rcv_finish net/ipv4/ip_input.c:628 [inline]
+ ip_sublist_rcv+0x5c6/0xa70 net/ipv4/ip_input.c:644
+ ip_list_rcv+0x3f1/0x450 net/ipv4/ip_input.c:678
+ __netif_receive_skb_list_ptype net/core/dev.c:6195 [inline]
+ __netif_receive_skb_list_core+0x7e5/0x810 net/core/dev.c:6242
+ __netif_receive_skb_list net/core/dev.c:6294 [inline]
+ netif_receive_skb_list_internal+0x995/0xcf0 net/core/dev.c:6385
+ netif_receive_skb_list+0x54/0x410 net/core/dev.c:6437
+ xdp_recv_frames net/bpf/test_run.c:269 [inline]
+ xdp_test_run_batch net/bpf/test_run.c:350 [inline]
+ bpf_test_run_xdp_live+0x1946/0x1cf0 net/bpf/test_run.c:379
+ bpf_prog_test_run_xdp+0x81c/0x1160 net/bpf/test_run.c:1396
+ bpf_prog_test_run+0x2c7/0x340 kernel/bpf/syscall.c:4703
+ __sys_bpf+0x5cb/0x920 kernel/bpf/syscall.c:6182
+ __do_sys_bpf kernel/bpf/syscall.c:6274 [inline]
+ __se_sys_bpf kernel/bpf/syscall.c:6272 [inline]
+ __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:6272
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xe2/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Freed by task 6021:
+ kasan_save_stack mm/kasan/common.c:57 [inline]
+ kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
+ kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:584
+ poison_slab_object mm/kasan/common.c:253 [inline]
+ __kasan_slab_free+0x5c/0x80 mm/kasan/common.c:285
+ kasan_slab_free include/linux/kasan.h:235 [inline]
+ slab_free_hook mm/slub.c:2540 [inline]
+ slab_free mm/slub.c:6674 [inline]
+ kfree+0x1be/0x650 mm/slub.c:6882
+ kfree_sk_msg include/linux/skmsg.h:385 [inline]
+ sk_msg_recvmsg+0xaa8/0xc30 net/core/skmsg.c:483
+ udp_bpf_recvmsg+0x4bd/0xe00 net/ipv4/udp_bpf.c:84
+ inet_recvmsg+0x260/0x270 net/ipv4/af_inet.c:891
+ sock_recvmsg_nosec net/socket.c:1078 [inline]
+ sock_recvmsg+0x1a8/0x270 net/socket.c:1100
+ ____sys_recvmsg+0x1e6/0x4a0 net/socket.c:2812
+ ___sys_recvmsg+0x215/0x590 net/socket.c:2854
+ do_recvmmsg+0x334/0x800 net/socket.c:2949
+ __sys_recvmmsg net/socket.c:3023 [inline]
+ __do_sys_recvmmsg net/socket.c:3046 [inline]
+ __se_sys_recvmmsg net/socket.c:3039 [inline]
+ __x64_sys_recvmmsg+0x198/0x250 net/socket.c:3039
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xe2/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: 9f2470fbc4cb ("skmsg: Improve udp_bpf_recvmsg() accuracy")
+Reported-by: syzbot+9307c991a6d07ce6e6d8@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/69922ac9.a70a0220.2c38d7.00e0.GAE@google.com/
 Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
 Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
 Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/20260615021959.140010-2-jiayuan.chen@linux.dev
+Link: https://lore.kernel.org/r/20260615021959.140010-5-jiayuan.chen@linux.dev
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv4/udp_bpf.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 83fcc64afa206b..f159a21e92588d 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2834,6 +2834,9 @@ BPF_CALL_4(bpf_msg_push_data, struct sk_msg *, msg, u32, start,
- 	if (!space || (space == 1 && start != offset))
- 		copy = msg->sg.data[i].length;
+diff --git a/net/ipv4/udp_bpf.c b/net/ipv4/udp_bpf.c
+index 9f33b07b148131..ad57c4c9eaab6f 100644
+--- a/net/ipv4/udp_bpf.c
++++ b/net/ipv4/udp_bpf.c
+@@ -50,7 +50,9 @@ static int udp_msg_wait_data(struct sock *sk, struct sk_psock *psock,
+ 	sk_set_bit(SOCKWQ_ASYNC_WAITDATA, sk);
+ 	ret = udp_msg_has_data(sk, psock);
+ 	if (!ret) {
++		release_sock(sk);
+ 		wait_woken(&wait, TASK_INTERRUPTIBLE, timeo);
++		lock_sock(sk);
+ 		ret = udp_msg_has_data(sk, psock);
+ 	}
+ 	sk_clear_bit(SOCKWQ_ASYNC_WAITDATA, sk);
+@@ -79,6 +81,7 @@ static int udp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 		goto out;
+ 	}
  
-+	if (unlikely(copy + len < copy))
-+		return -EINVAL;
++	lock_sock(sk);
+ msg_bytes_ready:
+ 	copied = sk_msg_recvmsg(sk, psock, msg, len, flags);
+ 	if (!copied) {
+@@ -90,11 +93,17 @@ static int udp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 		if (data) {
+ 			if (psock_has_data(psock))
+ 				goto msg_bytes_ready;
 +
- 	page = alloc_pages(__GFP_NOWARN | GFP_ATOMIC | __GFP_COMP,
- 			   get_order(copy + len));
- 	if (unlikely(!page))
++			release_sock(sk);
++
+ 			ret = sk_udp_recvmsg(sk, msg, len, flags);
+ 			goto out;
+ 		}
+ 		copied = -EAGAIN;
+ 	}
++
++	release_sock(sk);
++
+ 	ret = copied;
+ out:
+ 	sk_psock_put(sk, psock);
 -- 
 2.53.0
 
