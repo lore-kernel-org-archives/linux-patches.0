@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACF344607D;
-	Tue, 21 Jul 2026 19:08:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634DA46EF88;
+	Tue, 21 Jul 2026 19:08:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660907; cv=none; b=BmgXXU5TJhF/83fbwxZqZ1t4xckIzteeoy+KcHWzqoEhmiZBo3FNKEAkshT9ozsIkFQU3uYeyE8HpPrIhbaSWhZvxNazSf3qx6kwxqHfqdkFTjupusdk3uudUab1M3+w0RQ5EubPhOg/7gWpn0dFrkIHzEdUvkiaM/0IDIouzNU=
+	t=1784660910; cv=none; b=hgaX1sW5rthq+2jt8gQJ9OdXRYpOzRsdxtJcGalFnLFa34AhC8mEaSsgLf+OvI9/6Rj2i1ary2s/54klNNA7Ri3M/y4PrI/5gIKQM5HKAyIBacqOlh9DYo6DVkyreRsYVU2Vf77s2DWpZCqvpn2JWgcPJWqT1HhyLw3jXjVdPdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660907; c=relaxed/simple;
-	bh=IT2JNViFxs9iG2oA77bHwH5fA7mVJgxFTiD/AhxzNnQ=;
+	s=arc-20240116; t=1784660910; c=relaxed/simple;
+	bh=yGDmWeDqmolPsN05bl068rgVOaX+SbuLBe5gc6+vfic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=goxdtbu+LAAaBnBbfBUmqYlkUfNk+EloDb25aH+4lbJk4AjRMxdJp0YMOmJtGdEjDzn1p/RuTj9hU8O95ak1ZTHSlN/ufS5/bSEIFH80eGUw/LYpNutIEmQiAqpZLbZs1ibWM+IPROcP277HN6+XIgptUlHuqn4RE2IAhBhkAks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0tzlzgQ5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HhTxhAR0q1ar8T9dTQjswqfAQv9hiNVncIcYsH4wfwOAWDDE9vbiEAZE8JVlE1hCwTy3+5q3HRPpR87AoQxlIq6qf1sVDaYgCGgCsbxjiroo2QL7zMmGDj4KyMg3BCrlNH8MWbWciNKha0raUgvVk47IyM+zhqG+t2ayY+3x+Lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JAH46zQc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0tzlzgQ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D2601F000E9;
-	Tue, 21 Jul 2026 19:08:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JAH46zQc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F521F000E9;
+	Tue, 21 Jul 2026 19:08:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660906;
-	bh=R1HkCGp4k0/xeHSVSnt6hr/d8FuxUUCH/eKjGCvGTpA=;
+	s=korg; t=1784660909;
+	bh=4a0J3PjW5ab8Af2BoFyLTec+1Filb5MIlWL7C8MU14c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0tzlzgQ5QORa1nvqVyP0GTnwaWMbeht0x4Z5c/kB0cQr0uEVZwKUxZ9tZM6SGd3ZC
-	 E/jmwXDDraI2qzCjzRGsIQLCYC3gVHmoDKy9uErMpjymw1W0CFnBMtc6YYeXhr12Cf
-	 WIcp/nzKylDlqEjbXb2GtnChfw+h87ifa/BsQhTo=
+	b=JAH46zQc0UtXfHiVGfKbn6TJpt4cVgdqqHxNogNYe3+foHUKsMevNLkUqxrIOx6AI
+	 X2GZhjp6rMBwQQl5fm/qD8QNA6MBWDiJkIBpL9sFxT24DhcMNDmLsR7F9niYC2JLnR
+	 9jenp9xnhtHv4NGSkypDjHb1hmo2MRjt/veZfNis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunxiang Li <Yunxiang.Li@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Florian Westphal <fw@strlen.de>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1103/2077] drm/amdkfd: Avoid double-unpin of DOORBELL/MMIO BOs on free
-Date: Tue, 21 Jul 2026 17:12:56 +0200
-Message-ID: <20260721152618.835284234@linuxfoundation.org>
+Subject: [PATCH 7.1 1151/2077] netfilter: nft_meta_bridge: add validate callback for get operations
+Date: Tue, 21 Jul 2026 17:13:44 +0200
+Message-ID: <20260721152619.972711876@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,78 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunxiang Li <Yunxiang.Li@amd.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 3f0cc1735273a57c5116710cf0202e12152f59cc ]
+[ Upstream commit bff1c8b49a9cb5c04af20f4e7d43bf4af5863bc6 ]
 
-amdgpu_amdkfd_gpuvm_free_memory_of_gpu() unpinned DOORBELL and MMIO
-remap BOs (which are pinned at allocation time) before checking whether
-the BO is still mapped to the GPU. When the BO is still mapped, the
-function returns -EBUSY and leaves the BO alive, but it has already
-been unpinned. The BO is then unpinned again when it is finally freed
-during process teardown, triggering a ttm_bo_unpin() underflow warning:
+Blamed commit added NFT_META_BRI_IIFHWADDR to the set validate callback,
+yet this is a get operation.
 
-  WARNING: CPU: 18 PID: 15066 at ttm/ttm_bo.c:650 amdttm_bo_unpin+0x6d/0x80 [amdttm]
-  Workqueue: kfd_process_wq kfd_process_wq_release [amdgpu]
-  RIP: 0010:amdttm_bo_unpin+0x6d/0x80 [amdttm]
-  Call Trace:
-   amdgpu_bo_unpin+0x1a/0x90 [amdgpu]
-   amdgpu_amdkfd_gpuvm_unpin_bo+0x31/0xb0 [amdgpu]
-   amdgpu_amdkfd_gpuvm_free_memory_of_gpu+0x3bf/0x460 [amdgpu]
-   kfd_process_free_outstanding_kfd_bos+0xd4/0x170 [amdgpu]
-   kfd_process_wq_release+0x109/0x1b0 [amdgpu]
-   process_one_work+0x1e2/0x3b0
-   worker_thread+0x50/0x3a0
-   kthread+0xdd/0x100
-   ret_from_fork+0x29/0x50
+Add a get validate callback and move the NFT_META_BRI_IIFHWADDR key
+there.
 
-Move the unpin after the mapped_to_gpu_memory check so it only happens
-once we are committed to freeing the BO.
+AFAICS this is harmless, NFT_META_BRI_IIFHWADDR can deal with a NULL
+input device and the set handler ignores a NFT_META_BRI_IIFHWADDR
+operation, but it allows to read 4 bytes off bridge skb->cb[].
 
-Fixes: d25e35bc26c3 ("drm/amdgpu: Pin MMIO/DOORBELL BO's in GTT  domain")
-Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 927c5b2defb9b09856444d94bebfd056a002bd75)
+Fixes: cbd2257dc96e ("netfilter: nft_meta_bridge: introduce NFT_META_BRI_IIFHWADDR support")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ include/net/netfilter/nft_meta.h       |  2 ++
+ net/bridge/netfilter/nft_meta_bridge.c | 19 ++++++++++++++++++-
+ net/netfilter/nft_meta.c               |  5 +++--
+ 3 files changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-index 72a5a29e63f6da..abc31948896924 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -1914,13 +1914,6 @@ int amdgpu_amdkfd_gpuvm_free_memory_of_gpu(
+diff --git a/include/net/netfilter/nft_meta.h b/include/net/netfilter/nft_meta.h
+index f74e63290603d9..6cf1d910bbf8da 100644
+--- a/include/net/netfilter/nft_meta.h
++++ b/include/net/netfilter/nft_meta.h
+@@ -40,6 +40,8 @@ void nft_meta_set_eval(const struct nft_expr *expr,
+ void nft_meta_set_destroy(const struct nft_ctx *ctx,
+ 			  const struct nft_expr *expr);
  
- 	mutex_lock(&mem->lock);
++int nft_meta_get_validate(const struct nft_ctx *ctx,
++			  const struct nft_expr *expr);
+ int nft_meta_set_validate(const struct nft_ctx *ctx,
+ 			  const struct nft_expr *expr);
  
--	/* Unpin MMIO/DOORBELL BO's that were pinned during allocation */
--	if (mem->alloc_flags &
--	    (KFD_IOC_ALLOC_MEM_FLAGS_DOORBELL |
--	     KFD_IOC_ALLOC_MEM_FLAGS_MMIO_REMAP)) {
--		amdgpu_amdkfd_gpuvm_unpin_bo(mem->bo);
--	}
--
- 	mapped_to_gpu_memory = mem->mapped_to_gpu_memory;
- 	is_imported = mem->is_imported;
- 	mutex_unlock(&mem->lock);
-@@ -1934,6 +1927,15 @@ int amdgpu_amdkfd_gpuvm_free_memory_of_gpu(
- 		return -EBUSY;
- 	}
+diff --git a/net/bridge/netfilter/nft_meta_bridge.c b/net/bridge/netfilter/nft_meta_bridge.c
+index 219c4068026026..3d95f68e0906ab 100644
+--- a/net/bridge/netfilter/nft_meta_bridge.c
++++ b/net/bridge/netfilter/nft_meta_bridge.c
+@@ -107,12 +107,30 @@ static int nft_meta_bridge_get_init(const struct nft_ctx *ctx,
+ 					NULL, NFT_DATA_VALUE, len);
+ }
  
-+	/* At this point the BO is guaranteed to be freed, so unpin the
-+	 * MMIO/DOORBELL BOs that were pinned during allocation.
-+	 */
-+	if (mem->alloc_flags &
-+	    (KFD_IOC_ALLOC_MEM_FLAGS_DOORBELL |
-+	     KFD_IOC_ALLOC_MEM_FLAGS_MMIO_REMAP)) {
-+		amdgpu_amdkfd_gpuvm_unpin_bo(mem->bo);
++static int nft_meta_bridge_get_validate(const struct nft_ctx *ctx,
++					const struct nft_expr *expr)
++{
++	struct nft_meta *priv = nft_expr_priv(expr);
++	unsigned int hooks;
++
++	switch (priv->key) {
++	case NFT_META_BRI_IIFHWADDR:
++		hooks = 1 << NF_BR_PRE_ROUTING;
++		break;
++	default:
++		return nft_meta_get_validate(ctx, expr);
 +	}
 +
- 	/* Make sure restore workers don't access the BO any more */
- 	mutex_lock(&process_info->lock);
- 	if (!list_empty(&mem->validate_list))
++	return nft_chain_validate_hooks(ctx->chain, hooks);
++}
++
+ static struct nft_expr_type nft_meta_bridge_type;
+ static const struct nft_expr_ops nft_meta_bridge_get_ops = {
+ 	.type		= &nft_meta_bridge_type,
+ 	.size		= NFT_EXPR_SIZE(sizeof(struct nft_meta)),
+ 	.eval		= nft_meta_bridge_get_eval,
+ 	.init		= nft_meta_bridge_get_init,
++	.validate	= nft_meta_bridge_get_validate,
+ 	.dump		= nft_meta_get_dump,
+ };
+ 
+@@ -168,7 +186,6 @@ static int nft_meta_bridge_set_validate(const struct nft_ctx *ctx,
+ 
+ 	switch (priv->key) {
+ 	case NFT_META_BRI_BROUTE:
+-	case NFT_META_BRI_IIFHWADDR:
+ 		hooks = 1 << NF_BR_PRE_ROUTING;
+ 		break;
+ 	default:
+diff --git a/net/netfilter/nft_meta.c b/net/netfilter/nft_meta.c
+index 5b25851381e524..db937d66210d91 100644
+--- a/net/netfilter/nft_meta.c
++++ b/net/netfilter/nft_meta.c
+@@ -635,8 +635,8 @@ static int nft_meta_get_validate_xfrm(const struct nft_ctx *ctx)
+ #endif
+ }
+ 
+-static int nft_meta_get_validate(const struct nft_ctx *ctx,
+-				 const struct nft_expr *expr)
++int nft_meta_get_validate(const struct nft_ctx *ctx,
++			  const struct nft_expr *expr)
+ {
+ 	const struct nft_meta *priv = nft_expr_priv(expr);
+ 
+@@ -652,6 +652,7 @@ static int nft_meta_get_validate(const struct nft_ctx *ctx,
+ 
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(nft_meta_get_validate);
+ 
+ int nft_meta_set_validate(const struct nft_ctx *ctx,
+ 			  const struct nft_expr *expr)
 -- 
 2.53.0
 
