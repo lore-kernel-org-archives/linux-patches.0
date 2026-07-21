@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177EB46A5F3;
-	Tue, 21 Jul 2026 15:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9F740B11B;
+	Tue, 21 Jul 2026 15:46:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648795; cv=none; b=jlaj1f58+f+svZYyP0H7vcfdSv1MhXlyG4qIDHgpmUPpmwU98gjxtv4DJQ83ck4a7iYXXJnRjcxUUQEIbPkjLyrpnmobQ5JI8U+tmjnM+DeJlzdtPMQmpMJvhjjEkLczyjA2HOEKH/cIl+F9rdUIKjO5ufrmpqUkJDGKTZQPjZQ=
+	t=1784648797; cv=none; b=V1RDXvZxRVjAAjm5WXirQKQ6l4cB7gyPgCA8XQzbSvUOgpRFVIRWC+6eJ7Q3WelyGH+x/Ulc5T+VcXKL4tFWum8iJafN1QdpWKp0ElOSeilKNPIwhVcduppX7kOolPS/T1nJA8VHtbfUpn/IkptgInHjLRWRR/nSIsUnJZzeaII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648795; c=relaxed/simple;
-	bh=jALZQ4eucvoQTQ8Y67pQPLMTthYOcxuhqgJenS9t+uE=;
+	s=arc-20240116; t=1784648797; c=relaxed/simple;
+	bh=/p5FxDEq86VjcpJFPAd7Iz7OGXU++6UXB3XzY6Su9GQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uSUcwlJIPVMWM/0x+pxtcRmb5vlv0ZvY13ULUWn1EtpSyZwZUgURavKxnPYYK1T7IdjQwDh8+h9bJDCOypTdam0mLeCJmy8F+CKoUJnZO7LdsjWOV6XTcAS163QhOsuY/bbYCSjs0VMqRThaDMwmsLihEvBwkNJZKJ6suaTOb6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qOaW0S0R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h5dbWwXgdl0FhrBtf/sBPbD/mway94d8OwP10OKp3o2XvZaE3W7CNaZheLI4KhxQ5+ug5n3fRt0wDBFDThlpZs1NFzZn2vWpV0LgTQwTS4nK1EB3O6GaYNtXEbbHFMKJlx1INDHibpYHoHZ4/YhRupcMAU7a3vhq/nw3wmRehsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2EyqmbE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qOaW0S0R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9351F000E9;
-	Tue, 21 Jul 2026 15:46:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2EyqmbE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20CBA1F000E9;
+	Tue, 21 Jul 2026 15:46:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648794;
-	bh=5h1iiAQpZmzDbd/IcMygFWDcIriSW1r3/Uh2YpyBc5Y=;
+	s=korg; t=1784648796;
+	bh=+BuR6/0XIM2qGjYY/Q3WJlNVHXsxjanzfXXPf6ctNm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qOaW0S0Ri5Kz62e1M8+qnMn93xXyf8KvNGH8kiOCDIBhc17vr04bFuZh8Xl+gajad
-	 2u7Xk4xuPv0a2cbio2nr8GZk8Q79vpOI7i8RGt7+q9T/7Ygp7eXB8mqxdr/IZiLFAw
-	 PgFSW2fUVGmgoKQ/tFnMLQZ/lqp6NADuITIQiDSI=
+	b=e2EyqmbEiFH9beZyqB3JsL8+UHMLULHtdZJRlB/wD6Vk0y2xjTcCHqyVmdNN02KK0
+	 QT/Zif0/0dLc0AOkTapw9h8gMC/MvNMxVH2pLXZD+lx9PaK2tk66kGq95HQfvdxTss
+	 H8dwTLEN927QbNRoT65LQErnBKTsbF5+zd+O/Trc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sung-woo Kim <iam@sung-woo.kim>,
-	Christoph Hellwig <hch@lst.de>,
-	Mateusz Nowicki <mateusz.nowicki@posteo.net>,
-	Keith Busch <kbusch@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0334/2077] nvme-pci: fix out-of-bounds access in nvme_setup_descriptor_pools
-Date: Tue, 21 Jul 2026 17:00:07 +0200
-Message-ID: <20260721152600.561738872@linuxfoundation.org>
+Subject: [PATCH 7.1 0335/2077] workqueue: drop spurious * from print_worker_info() fn declaration
+Date: Tue, 21 Jul 2026 17:00:08 +0200
+Message-ID: <20260721152600.585065812@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,65 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mateusz Nowicki <mateusz.nowicki@posteo.net>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit a192b8cfa447e1b3701a13434a31c392b2e7ed29 ]
+[ Upstream commit 611583a76ea97991b0f65ec1ff099eac7fe0bae4 ]
 
-nvme_setup_descriptor_pools() indexes dev->descriptor_pools[] using the
-numa_node forwarded from hctx->numa_node by its single caller,
-nvme_init_hctx_common().  On a non-NUMA kernel hctx->numa_node is
-NUMA_NO_NODE (-1).  Because the parameter was declared 'unsigned', the
-value becomes UINT_MAX and the index walks off the array (sized to
-nr_node_ids), faulting during nvme_alloc_ns() and leaving the namespace
-without a /dev node.
+print_worker_info() declares its local 'fn' as work_func_t * but
+worker->current_func has type work_func_t (a function pointer). The
+extra level of indirection is wrong and only happens to be harmless
+today because every supported Linux architecture has
+sizeof(work_func_t) == sizeof(work_func_t *):
+copy_from_kernel_nofault() reads the correct number of bytes by
+accident, and %ps still resolves the printed address because the
+stored value is the function address regardless of declared type.
 
-Reproduces on any NVMe controller probed by a CONFIG_NUMA=n kernel:
+On any future ABI where sizeof(void (*)()) differs from
+sizeof(void *), the nofault copy would transfer the wrong number of
+bytes and the subsequent %ps would print an incorrect address.
 
-  BUG: unable to handle page fault for address: ffff889101603d38
-  RIP: 0010:nvme_init_hctx_common+0x5a/0x190 [nvme]
-  Call Trace:
-   nvme_init_hctx+0x10/0x20 [nvme]
-   nvme_alloc_ns+0x9e/0xa10 [nvme_core]
-   nvme_scan_ns+0x301/0x3b0 [nvme_core]
-   nvme_scan_ns_async+0x23/0x30 [nvme_core]
+Match the field type so the intent is explicit and the code does not
+silently rely on equal pointer sizes.
 
-Switch the parameter to int and fall back to node 0 when it is
-NUMA_NO_NODE; node 0 is always present.
-
-Fixes: d977506f8863 ("nvme-pci: make PRP list DMA pools per-NUMA-node")
-Link: https://lore.kernel.org/r/20260309062840.2937858-2-iam@sung-woo.kim
-Reported-by: Sung-woo Kim <iam@sung-woo.kim>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Mateusz Nowicki <mateusz.nowicki@posteo.net>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 3d1cb2059d93 ("workqueue: include workqueue info when printing debug dump of a worker task")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ kernel/workqueue.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index b5f84620067899..0de6844ca56c0c 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -587,11 +587,16 @@ static bool nvme_dbbuf_update_and_check_event(u16 value, __le32 *dbbuf_db,
- }
- 
- static struct nvme_descriptor_pools *
--nvme_setup_descriptor_pools(struct nvme_dev *dev, unsigned numa_node)
-+nvme_setup_descriptor_pools(struct nvme_dev *dev, int numa_node)
+diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+index 33b721a9af0223..bd79b3b5ca878f 100644
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -6310,7 +6310,7 @@ EXPORT_SYMBOL_GPL(set_worker_desc);
+  */
+ void print_worker_info(const char *log_lvl, struct task_struct *task)
  {
--	struct nvme_descriptor_pools *pools = &dev->descriptor_pools[numa_node];
-+	struct nvme_descriptor_pools *pools;
- 	size_t small_align = NVME_SMALL_POOL_SIZE;
- 
-+	if (numa_node == NUMA_NO_NODE)
-+		numa_node = 0;
-+
-+	pools = &dev->descriptor_pools[numa_node];
-+
- 	if (pools->small)
- 		return pools; /* already initialized */
- 
+-	work_func_t *fn = NULL;
++	work_func_t fn = NULL;
+ 	char name[WQ_NAME_LEN] = { };
+ 	char desc[WORKER_DESC_LEN] = { };
+ 	struct pool_workqueue *pwq = NULL;
 -- 
 2.53.0
 
