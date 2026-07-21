@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9227335201C;
-	Tue, 21 Jul 2026 21:28:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0501D376A0B;
+	Tue, 21 Jul 2026 21:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669322; cv=none; b=G1PqhmePTnQfAKz3Nt0VZKTVB8wkz6BDbEH5Td9GqhytYjyBooIpLtoSD7gQYvQncPKtv18qVyi1u+/pXqC6HfyQz8whe6SC1hKEu8MqbxUuAKnqB2662FpjObIvomBWF0ACwQbayy8XonQfMhCkYgjTtMEKjkwaImKzaSiSoX4=
+	t=1784669325; cv=none; b=Rs34Qu/cIZE+0SZOwouh4MWrUYxPReJe88ckjkK857NySHTpw5mSla93gQ/tLkGcAMwtK8S7cxt8uUxc/n5zvUBkslks69Qj7O2+3oNaBu2z9ZB3Dn3g2JJSgf13ng7mCKUO1PwZ66Q/5i9w1tw7K+f/Opl4HO2Se9Q78LtygRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669322; c=relaxed/simple;
-	bh=D9WijTQ7rrf5Zx4jQeimj0XCBVGjYsx8g6xp39IM4rI=;
+	s=arc-20240116; t=1784669325; c=relaxed/simple;
+	bh=UESV4Cc6LhrhDk9t+uYGqy3n7kGPy93B+64ABRDk5xo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mDBD9o4VIJVlz/TOX2b9FXJ+vc0PD46iWwQXCC5dBI6sK1AIrgHw36jcCZoLaZ+Z8kZ180CmT8faTjcTm0lFRP6yA8xWkldkkn7Diz60anztplJDO3xnTcc/HVqPBFikmTcoSDOaroEtzeN/7PqIkl3XWZqmMmiuI1sVFXOCSJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QfU8q9y5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oltgGE8oCPgqsFVsrTMxPy3ZbCQfhUQLFuLV7nXdcu5Gjpjo69YTAhpNd9Oy5BwGZJiaUVM2CgJ1BS1gKIOkOu5SgX/FdUrRkYqIJzI8BQofdgzPl5iGjtvEXdeK5AebrFRqJpaqL8nod0KXJJqcELuvVVUBAiYEMFSPFoKXu5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/jkrnN/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QfU8q9y5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9ED1F000E9;
-	Tue, 21 Jul 2026 21:28:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/jkrnN/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30ECD1F00A3A;
+	Tue, 21 Jul 2026 21:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669316;
-	bh=RafJ7IhhA/6EHxmDb0/tLrdQm16llfgOr4kU/J2s3IM=;
+	s=korg; t=1784669318;
+	bh=dZBErJyM6dAJZRNA0CB8PEVqpyNXNvWqzeAcssmDEVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QfU8q9y5WCCMaJOl7d+DiBi/TxAJpWXRPWU5pgmBQCIWs3xy3aMUgvBlTUo0ll3B8
-	 dMFiU82bXvN3zKM9G/GZ1PEb706NFp3VMzBiIJhRLxKRH2vXYjycdaUyaXIDZgIwEd
-	 gsfRBzbmPlnxX4wV5frbY/gAEZHdVMtsu8W1mxG4=
+	b=T/jkrnN/P95OM9Fmndoo79Ui0DA2RHyyqDrvBAgoCpNtriNdbDzETIVW9hgCO/yNa
+	 atqxqJs3cUFU/8IRCnlLmMm6BRUm29p9K+LvS5LDCu9fFfHz1gfyG8hzhIEycfGWKv
+	 AN8ahQzdK8UesP/St3ew2fTKzcEvLlF41CCDsBRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Alexandru Hossu <hossu.alexandru@gmail.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0472/1067] staging: nvec: fix use-after-free in nvec_rx_completed()
-Date: Tue, 21 Jul 2026 17:17:53 +0200
-Message-ID: <20260721152435.174873493@linuxfoundation.org>
+Subject: [PATCH 6.1 0508/1067] perf c2c: Fix use-after-free in he__get_c2c_hists() error path
+Date: Tue, 21 Jul 2026 17:18:29 +0200
+Message-ID: <20260721152435.979307534@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,55 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Hossu <hossu.alexandru@gmail.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 26813881181deb3a32fbb59eadb2599cbe8423f6 ]
+[ Upstream commit 5e5e6196d737c5be03d20647428316b36621608d ]
 
-In nvec_rx_completed(), when an incomplete RX transfer is detected,
-nvec_msg_free() is called to return the message back to the pool by
-clearing its 'used' atomic flag. Immediately after this, the code
-accesses nvec->rx->data[0] to check the message type.
+he__get_c2c_hists() assigns c2c_he->hists before calling
+c2c_hists__init().  If init fails, the error path calls free(hists)
+but leaves c2c_he->hists pointing to freed memory.  On teardown,
+c2c_he_free() finds the non-NULL pointer and calls
+hists__delete_entries() on it, causing a use-after-free.
 
-Since nvec_msg_free() marks the pool slot as available via atomic_set(),
-any concurrent or subsequent call to nvec_msg_alloc() could claim that
-same slot and overwrite its data[] array. Reading nvec->rx->data[0] after
-freeing the message is therefore a use-after-free.
+Set c2c_he->hists to NULL before freeing so teardown skips the
+already-freed allocation.
 
-Fix this by saving the message type byte before calling nvec_msg_free(),
-then using the saved value for the battery quirk check.
-
-Fixes: d6bdcf2e1019 ("staging: nvec: Add battery quirk to ignore incomplete responses")
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
-Link: https://patch.msgid.link/20260427081713.3401874-2-hossu.alexandru@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b2252ae67b687d2b ("perf c2c report: Decode c2c_stats for hist entries")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/nvec/nvec.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/perf/builtin-c2c.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/staging/nvec/nvec.c b/drivers/staging/nvec/nvec.c
-index b3f114cb00dc86..46d26e3870d3de 100644
---- a/drivers/staging/nvec/nvec.c
-+++ b/drivers/staging/nvec/nvec.c
-@@ -489,6 +489,8 @@ static void nvec_tx_completed(struct nvec_chip *nvec)
- static void nvec_rx_completed(struct nvec_chip *nvec)
- {
- 	if (nvec->rx->pos != nvec_msg_size(nvec->rx)) {
-+		unsigned char msg_type = nvec->rx->data[0];
-+
- 		dev_err(nvec->dev, "RX incomplete: Expected %u bytes, got %u\n",
- 			(uint)nvec_msg_size(nvec->rx),
- 			(uint)nvec->rx->pos);
-@@ -497,7 +499,7 @@ static void nvec_rx_completed(struct nvec_chip *nvec)
- 		nvec->state = 0;
+diff --git a/tools/perf/builtin-c2c.c b/tools/perf/builtin-c2c.c
+index a9190458d2d500..bfba131693bed5 100644
+--- a/tools/perf/builtin-c2c.c
++++ b/tools/perf/builtin-c2c.c
+@@ -216,6 +216,7 @@ he__get_c2c_hists(struct hist_entry *he,
  
- 		/* Battery quirk - Often incomplete, and likes to crash */
--		if (nvec->rx->data[0] == NVEC_BAT)
-+		if (msg_type == NVEC_BAT)
- 			complete(&nvec->ec_transfer);
- 
- 		return;
+ 	ret = c2c_hists__init(hists, sort, nr_header_lines);
+ 	if (ret) {
++		c2c_he->hists = NULL;
+ 		free(hists);
+ 		return NULL;
+ 	}
 -- 
 2.53.0
 
