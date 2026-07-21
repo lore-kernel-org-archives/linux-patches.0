@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E6F4248DC;
-	Tue, 21 Jul 2026 19:52:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D3E3368A5;
+	Tue, 21 Jul 2026 19:52:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663551; cv=none; b=MZvyieliVCgUi3AOD3KQeM7X/nsfdc/J1bOn8/dapct5d89nlazSEN3E97dHy10Q3f0RFC/9zbpWTUEkWHbV3jjgh8uwiCybkeBF2A3p6PIpRHI7p2x2HRhDpNOSKLf/Fer5F/oNrEALOHDSeeXFevD36TVeEI9ZRPn6lI+0w2o=
+	t=1784663553; cv=none; b=iU5gsfPuyQ8l8NFMq6kMGAIm9vvZmNW92OEpMbh2WEOiiTYxMn/BBXxdydxDlBR3/tbgCAprnQza+zVDwDFHLlfTHX7g8aY0wv6Qw2GmIh0YgoGI5fKtuJp4YEYU1OHo4i4yGFA2VZ7I2c3mX5fFFP2PYcgIuI1bo+3V4VGXSZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663551; c=relaxed/simple;
-	bh=KyxlG+TDymWnwp7YwX4PB6aOCYtugBGg77AzOcx3Jno=;
+	s=arc-20240116; t=1784663553; c=relaxed/simple;
+	bh=JmW4PUVGnCZubkbHtCRWOtQA82nv1CqYQ/rvM1SaWIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HUUOUZMCwo1Sm4GMX6J80Cb4hgv0a53mrNWbBhXdqWGtA8Wg+vHI2vvDoKI9yIla1lCnDRoxZcqTbpd0t3rE8JjUkpCcJsGzaER54khZk2qzugnxmkhZRCejyCnK4tzjOjHYWAa1PaVoVCgTf+AW2IxVuXcIo+/aKs961suc5is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gtf7OxIH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cMkK3fSXEyQOgOfIePfqUR9Jm5Bdt8NDhE2XvzW6HMIjLEJEVu3ww9yx/ArRq2ZIY+Bm3J2NJGzxSa+kGzuQ0DDgp0eUU8YDBH+2zWwhjhP9YZ/Y1B7vYGGzycYntUbBYNJ3OxeCtyaF8WNSNP2khtgI6ZUBd86WTOrFAPuMovM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kiwBZrJF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gtf7OxIH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC0B1F000E9;
-	Tue, 21 Jul 2026 19:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kiwBZrJF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17FA1F000E9;
+	Tue, 21 Jul 2026 19:52:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663549;
-	bh=Jy58ewbBA0WYtB2c+84ZBEk2UzxPeEF0EQm2FjdGuX4=;
+	s=korg; t=1784663552;
+	bh=JvyvgarDXArXHrHaE4kNR4HbNi4q/GHG8qAh4h2B/AA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gtf7OxIH18zBDS6pZvodYtPBJqOlvH3Icj+Tq5bAFFuS7f7VRd/BPVG5fgvlxvCQ4
-	 j+iKlC2UWy3kcGUgqhz0I7iNmAVAkSwtweLWLDpFdp1Hw4kIOMbnFPg0unEGgUpMcq
-	 jBLHMBp+c++DpT+qI2/vsW9LFK3nER3g1WG7TLsg=
+	b=kiwBZrJFOijDCmhDZmac9e1yVYLakIvhFj0knGUE3FjZtjW67KTrF4PHpDqSg/gXf
+	 oDuwG7syNTpDvg0aiupA+xUyYtRxEOYx5J+uUXaHxgGfoiCV88YX+0avXlIsAhwImm
+	 OCpBcLNQOzqSO1ra94ol/M/lKu8bhxhLeMoMfTg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Qi Li <qli01@tsinghua.edu.cn>,
 	Ke Xu <xuke@tsinghua.edu.cn>,
 	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.12 0864/1276] netfilter: nf_conncount: fix zone comparison in tuple dedup
-Date: Tue, 21 Jul 2026 17:21:47 +0200
-Message-ID: <20260721152505.386554103@linuxfoundation.org>
+Subject: [PATCH 6.12 0865/1276] netfilter: ecache: fix inverted time_after() check
+Date: Tue, 21 Jul 2026 17:21:48 +0200
+Message-ID: <20260721152505.408096927@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -57,44 +57,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-commit f62c41b4910e65da396ec9a8c40c1fe7fe82e449 upstream.
+commit b06163ce52ec0561f202fbfb9b08090cb61f512e upstream.
 
-The "already exists" dedup logic in __nf_conncount_add() decides
-whether a connection has already been counted and can be skipped instead
-of incrementing the connlimit count.  It compares the conntrack zone of a
-list entry with the zone of the connection being added using
-nf_ct_zone_id() and nf_ct_zone_equal(), passing conn->zone.dir or
-zone->dir as the direction argument.
+ecache_work_evict_list() redelivers DESTROY events for conntracks that
+were moved to the per-netns dying_list after event delivery failed.  It
+sets a 10ms deadline:
 
-Those helpers take enum ip_conntrack_dir values: IP_CT_DIR_ORIGINAL is 0
-and IP_CT_DIR_REPLY is 1.  However, zone->dir is a u8 bitmask:
-NF_CT_ZONE_DIR_ORIG is 1, NF_CT_ZONE_DIR_REPL is 2 and
-NF_CT_DEFAULT_ZONE_DIR is 3.  Passing that bitmask as the enum direction
-shifts the meaning of every non-zero value.  An ORIG-only zone passes 1
-and is tested as REPLY, while REPL-only and default zones pass 2 or 3 and
-test bits beyond the valid direction range.  In those cases
-nf_ct_zone_id() can fall back to NF_CT_DEFAULT_ZONE_ID instead of using
-the real zone id, so different zones can be treated as equal and dedup
-collapses to tuple equality alone.
+    stop = jiffies + ECACHE_MAX_JIFFIES
 
-nf_conncount stores and compares the original-direction tuple for a
-connection.  If an skb already has an attached conntrack entry,
-get_ct_or_tuple_from_skb() explicitly copies
-ct->tuplehash[IP_CT_DIR_ORIGINAL].tuple, regardless of the packet's
-ctinfo.  Therefore the zone comparison in the tuple dedup path must use
-IP_CT_DIR_ORIGINAL as well; the zone direction bitmask describes where a
-zone id applies, not which direction this conncount tuple represents.
+but then tests:
 
-Fix the two dedup comparisons by passing IP_CT_DIR_ORIGINAL directly.
-Do not special-case NF_CT_DEFAULT_ZONE_DIR and do not compare raw zone
-ids: using the existing helpers with IP_CT_DIR_ORIGINAL preserves the
-direction-aware NF_CT_DEFAULT_ZONE_ID fallback.  A default bidirectional
-zone contains the ORIG bit, so it naturally returns the real zone id;
-reply-only zones continue to fall back for original-direction tuple
-comparisons.
+    time_after(stop, jiffies)
 
-Fixes: 21ba8847f857 ("netfilter: nf_conncount: Fix garbage collection with zones")
-Fixes: b36e4523d4d5 ("netfilter: nf_conncount: fix garbage collection confirm race")
+This condition is true while the deadline is still in the future, so the
+worker returns STATE_RESTART after the first successful redelivery in the
+usual case.  ecache_work() maps STATE_RESTART to delay 0, which turns the
+redelivery path into one dying conntrack per workqueue dispatch and makes
+the sent > 16 batching/cond_resched() path effectively unreachable.
+
+A conntrack netlink listener whose receive queue is congested can make
+DESTROY event delivery fail with -ENOBUFS.  With sustained conntrack
+churn, entries then accumulate on the dying_list and are only drained at
+the degraded one-entry-per-dispatch rate once delivery succeeds again,
+wasting CPU on back-to-back workqueue reschedules and prolonging
+conntrack memory/resource pressure.
+
+In a KASAN QEMU test with CONFIG_NF_CONNTRACK_EVENTS=y and
+nf_conntrack.enable_hooks=1, a congested DESTROY listener caused 8192
+nf_ct_delete() calls to return false and move entries to the dying_list.
+After closing the listener, the unfixed kernel needed 7670 ecache_work()
+entries to destroy 7669 conntracks.  With this change, the same 8192
+entries were destroyed by 2 ecache_work() entries.
+
+Swap the comparison so the worker restarts only after the deadline has
+expired.
+
+Fixes: 2ed3bf188b33 ("netfilter: ecache: use dedicated list for event redelivery")
 Cc: stable@vger.kernel.org
 Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
@@ -107,30 +105,19 @@ Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conncount.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/netfilter/nf_conntrack_ecache.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/netfilter/nf_conncount.c
-+++ b/net/netfilter/nf_conncount.c
-@@ -207,8 +207,8 @@ check_connections:
- 			/* Not found, but might be about to be confirmed */
- 			if (PTR_ERR(found) == -EAGAIN) {
- 				if (nf_ct_tuple_equal(&conn->tuple, &tuple) &&
--				    nf_ct_zone_id(&conn->zone, conn->zone.dir) ==
--				    nf_ct_zone_id(zone, zone->dir))
-+				    nf_ct_zone_id(&conn->zone, IP_CT_DIR_ORIGINAL) ==
-+				    nf_ct_zone_id(zone, IP_CT_DIR_ORIGINAL))
- 					goto out_put; /* already exists */
- 			} else {
- 				collect++;
-@@ -219,7 +219,7 @@ check_connections:
- 		found_ct = nf_ct_tuplehash_to_ctrack(found);
+--- a/net/netfilter/nf_conntrack_ecache.c
++++ b/net/netfilter/nf_conntrack_ecache.c
+@@ -77,7 +77,7 @@ next:
+ 		hlist_nulls_del_rcu(&ct->tuplehash[IP_CT_DIR_ORIGINAL].hnnode);
+ 		hlist_nulls_add_head(&ct->tuplehash[IP_CT_DIR_REPLY].hnnode, &evicted_list);
  
- 		if (nf_ct_tuple_equal(&conn->tuple, &tuple) &&
--		    nf_ct_zone_equal(found_ct, zone, zone->dir)) {
-+		    nf_ct_zone_equal(found_ct, zone, IP_CT_DIR_ORIGINAL)) {
- 			/*
- 			 * We should not see tuples twice unless someone hooks
- 			 * this into a table without "-p tcp --syn".
+-		if (time_after(stop, jiffies)) {
++		if (time_after(jiffies, stop)) {
+ 			ret = STATE_RESTART;
+ 			break;
+ 		}
 
 
