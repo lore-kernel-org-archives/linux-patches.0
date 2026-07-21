@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A9A3B1034;
-	Tue, 21 Jul 2026 20:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9193B1ECC;
+	Tue, 21 Jul 2026 20:34:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666080; cv=none; b=OsreKvHmcXFXolttw8KECbYwg5yKrxCBYzGOkyM0UXOF4qFonOI9s497OiMuK5ab+IHPSij4ey3So0PTAiVHceDSjL+vt2ocNWDHmYc1NJIeKzZhoW1wTdjWPqyS+IhVcFeNKZv+auVPoZc1hjTrOz1AKTQLaUHuGVO0D2rMO4U=
+	t=1784666086; cv=none; b=So5L6c5p101c+TccnenZrxr8CIMdc5NuAY5gnl9FPYjUFnCaBLauDplbNLL1kaCRSFvd/+v+lg+dZWrC8N9UtZFRRQ3Nf0GQJIUJrvTtL6USHHKArBjwplVuSB3rSwvaZat7wBetCAHEtKIOxXyvKedKz5fVjv3eN1b0gA4kjkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666080; c=relaxed/simple;
-	bh=L1uOlmjHLP/nh+54Rftp29xXKmHPCs1lklxc35mX/4o=;
+	s=arc-20240116; t=1784666086; c=relaxed/simple;
+	bh=VL5YkoMcDOhncISEqJduD7/A3tfTyHzG+90pdy0x/3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hbkw0T+zdLQcELJrmZa693Lvw+/crGJK2ReNR2W0Fp7vGXmZqCT3Vj5ys7FRLLiEfezE1AS7HzHMsovS+ExlpkK6UzM3a2XlOwrnQATGNyERjrS9SwG2i2wgpWQnYFG6h3d7yHB2fAv0qhY03nDuYjQLJRWaBMcbhYIpr1TTl7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HpXTAIRl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J5kBaLuZSNKba02s17vFrxIuKZnwA8UhT1lprJbNUxdJ62vOt/DV8EhG1QKLV+/1lb2YCP8BQUlxWLQvFxInUm21Zvmf3XGt2hIW8BJky/iR2yDKgZSbkBspUAeo2vxRikLLG1C3aGyFdwYtKa08I/LIFY/PKCQNBQCbZhUqS1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/0ofTWy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HpXTAIRl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427211F000E9;
-	Tue, 21 Jul 2026 20:34:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/0ofTWy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852541F00A3A;
+	Tue, 21 Jul 2026 20:34:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666079;
-	bh=5a1Uno7eBu59z6Sd/8Z63y22IKYiwCKZNHeaEmRAi4A=;
+	s=korg; t=1784666085;
+	bh=DtgK0sCdeSimxENOH82oD6V3xERtX8RCWwbKsJ962JE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HpXTAIRlPPFWT09v6iVvhQJhg584c/U/Cg34p5mam9BaavVHFrW6d3Z1tEkTenqiB
-	 GYEDQWH82gteHFzQA5kNoeZkKHmbnPtngsTACCEqFKMRIJRwa2yv9gPxChBMlbNPow
-	 K8/4sEFM5HY9jmozHqyzPgtRJBhYN7ELWZ8qY1lg=
+	b=z/0ofTWympghjWQgg+xC5ML9rgOk3MVFW9+eV5lj4EBenuGnzK1SK0AUjFJtxvtty
+	 7G5yCjYp09DFoy6q4HgtsZcuTnK6gxIS6gd3a2TtOkPsxG4MChFUyKDl129EDv5sqW
+	 aJ23Ggaa8XTC/Fe2fOyIsbLjW6jW+bD5c585q7Bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Lin Ma <malin89@huawei.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0545/1266] cxl/test: Zero out LSA backing memory to avoid leaking to user
-Date: Tue, 21 Jul 2026 17:16:22 +0200
-Message-ID: <20260721152454.061577087@linuxfoundation.org>
+Subject: [PATCH 6.6 0547/1266] bpf: Tighten cgroup storage cookie checks for prog arrays
+Date: Tue, 21 Jul 2026 17:16:24 +0200
+Message-ID: <20260721152454.107337566@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,38 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 60f065dbaf46e65830da62a0041761f0c039e086 ]
+[ Upstream commit 10627ddc0167aab5c1c390a10ef461e9937aba08 ]
 
-Memory through vmalloc() is not zeroed out. When this memory is copied
-into output payload, it leaks memory content to user. Use vzalloc()
-instead to zero out the memory.
+The fix in commit abad3d0bad72 ("bpf: Fix oob access in cgroup local
+storage") is still incomplete. The prog-array compatibility check
+treats a program with no cgroup storage as compatible with any stored
+storage cookie. This allows a storage-less program to bridge a tail
+call chain between an entry program and a storage-using callee even
+though cgroup local storage at runtime still follows the caller's
+context, that is, A -> B(no storage) -> C(storage) path.
 
-Suggested-by: sashiko-bot
-Link: https://lore.kernel.org/linux-cxl/20260605173146.2B9A31F00893@smtp.kernel.org/
-Fixes: 7d3eb23c4ccf ("tools/testing/cxl: Introduce a mock memory device + driver")
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260605184426.4070913-1-dave.jiang@intel.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Requiring exact cookie equality would break the legitimate case of a
+storage-less leaf program being tail called from a storage-using one.
+Instead, only accept a zero storage cookie if the program cannot
+perform tail calls itself. This keeps A -> B(no storage) working
+while rejecting the A -> B(no storage) -> C(storage) bridge.
+
+Fixes: abad3d0bad72 ("bpf: Fix oob access in cgroup local storage")
+Reported-by: Lin Ma <malin89@huawei.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20260610105539.705887-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/cxl/test/mem.c | 2 +-
+ kernel/bpf/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/cxl/test/mem.c b/tools/testing/cxl/test/mem.c
-index 6d4ffcce326dff..718f943ab3570f 100644
---- a/tools/testing/cxl/test/mem.c
-+++ b/tools/testing/cxl/test/mem.c
-@@ -1396,7 +1396,7 @@ static int cxl_mock_mem_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 	dev_set_drvdata(dev, mdata);
- 
--	mdata->lsa = vmalloc(LSA_SIZE);
-+	mdata->lsa = vzalloc(LSA_SIZE);
- 	if (!mdata->lsa)
- 		return -ENOMEM;
- 	mdata->fw = vmalloc(FW_SIZE);
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 4669a57265ad75..9fa984ee076bcc 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -2365,7 +2365,7 @@ static bool __bpf_prog_map_compatible(struct bpf_map *map,
+ 			cookie = aux->cgroup_storage[i] ?
+ 				 aux->cgroup_storage[i]->cookie : 0;
+ 			ret = map->owner->storage_cookie[i] == cookie ||
+-			      !cookie;
++			      (!cookie && !aux->tail_call_reachable);
+ 		}
+ 		if (ret &&
+ 		    map->owner->attach_func_proto != aux->attach_func_proto) {
 -- 
 2.53.0
 
