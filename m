@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9026A44AB7B;
-	Tue, 21 Jul 2026 22:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C5B44AB7B;
+	Tue, 21 Jul 2026 22:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671781; cv=none; b=FYpyn4nNtRcocGNMOjJhbx6/xoYzX4QLKBLJq7IT+O6QRPXFANP0t7G69g67rMUZgQ2JdTWUbM2suf5K5nGyyhs2rgkeSNI40IJukjqHVpWIG0a7vx08FvjQ2uYVowiv3OJjxz+oTqNPeqaca6Caq04uzUqvvlLlfyEiicTSE5U=
+	t=1784671784; cv=none; b=FOENVrhdsR7GEUN44vLMJOH0WDVlWFKoi4A4RF7/xbRypPm6+JCbc4a0RYyY35cQmRTfWwXNl5v2RWtzf2xWO8Wax3RHDEyWkIy3iydfw3YGo5vjL/0GsgmBOzbZexNo4KBFMaWLy7IXqGqEQjU/7w84ymFT8+tudDVAPqSH7yM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671781; c=relaxed/simple;
-	bh=X6f72MtyJCDXmlf21yrhhis/cOQyO002QMK4lE6QQ0g=;
+	s=arc-20240116; t=1784671784; c=relaxed/simple;
+	bh=tS4ChF+qylyfBZNQs9yewfnlY8w1GsNc/LNeEXbuo4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Zy4PcK82tGMiVXQGHtp+UpH+zujhvaDT+LX7hYHVIlgDHOEaEMre+EparjuQZs1m/Qzh9NgplkEKR9VULpwPK5tVfMQ+sb8lLhM4VRR69aKywmLMcbXJO1v86LmYIKuxuxcKprPtuAQzcvGi6Gz1uDIEGUa3qyzoZQfLW00WrmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBkTGM2R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=FvBczwksVXRRRu5VXMTsvU/+J8AVhnHcdBB9hdaJ+mRmbkceohpg7USU0sy28HxtL1dPS//2AQ0mPcQ/xpKD3+R3Ij6X4DcE90pu+jK9f0yg6ac1HaLTbYEluP61iRGXVaQjYAg8BVwQeMfra4S3Y0QPVQdFYZ/zoV4jf7RY4mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvtisXfM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBkTGM2R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0295A1F000E9;
-	Tue, 21 Jul 2026 22:09:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvtisXfM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BEF1F000E9;
+	Tue, 21 Jul 2026 22:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671780;
-	bh=AkmBnGoEEGY9GNKdPj+uIHipvxQs1V0UO1azDWCkcDw=;
+	s=korg; t=1784671783;
+	bh=K7Vy65wXLvb/pRULg2hxKwS+hcQrOxQfyj2fTqIHWQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OBkTGM2RwTceTQo461UHkrDtQgGdJECSHDeuO2ryYGZNAmJRl5vhaTVDbLWFm+gBz
-	 0SEMreF5XCJ4bbMDwtq5jprP/0aTYNM6oJsKW7xWUORMpU8gaZxl1PUB/qA9qHR8vL
-	 vQ2A3KCF0mANLAKV3/n1jn1hyc60GVEgInyuBp18=
+	b=cvtisXfMrJXZCDfYEN4lfaUzJELAf7OpW+2sgpHnU5KUbKi2LuZHA89hsEQxVWuD2
+	 TIrX6bzpyR0+HX3M6T+5LcX8Il+OVCtP//heSm+wBMfsB6fe5WT+OoKZ8Sf24YyBB8
+	 /9E9Hw6dUEZPujbP/JkP8Y/108Z5RkiCMVtZEfM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 376/843] x86/platform/olpc: xo15: Drop wakeup source on driver removal
-Date: Tue, 21 Jul 2026 17:20:11 +0200
-Message-ID: <20260721152414.493880061@linuxfoundation.org>
+Subject: [PATCH 5.15 377/843] platform/x86: xo15-ebook: Fix wakeup source and GPE handling
+Date: Tue, 21 Jul 2026 17:20:12 +0200
+Message-ID: <20260721152414.518278778@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -54,33 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit cc966553e6ff0849978b5754531b768b0ff54985 ]
+[ Upstream commit b2fc2c6ebbd2d49935c8960755d8170faead2159 ]
 
-Prevent leaking a wakeup source object after removing the driver by
-adding appropriate cleanup code to its remove callback function.
+The device_set_wakeup_enable() call in ebook_switch_add() doesn't
+actually do anything because power.can_wakeup is not set for ACPI
+device objects.  Moreover, had it done anything, it would have
+registered a wakeup source object that wouldn't have been used
+going forward and that wakeup source would have been leaked after
+driver removal because ebook_switch_remove() doesn't clean it up.
+Accordingly, remove that call from ebook_switch_add().
 
-Fixes: a0f30f592d2d ("x86, olpc: Add XO-1.5 SCI driver")
+Also prevent leaking an enabled ACPI GPE after removing the driver by
+adding appropriate cleanup code to ebook_switch_remove().
+
+Fixes: 89ca11771a4b ("OLPC XO-1.5 ebook switch driver")
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2069931.usQuhbGJ8B@rafael.j.wysocki
+Link: https://patch.msgid.link/1966125.tdWV9SEqCh@rafael.j.wysocki
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/platform/olpc/olpc-xo15-sci.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/xo15-ebook.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/platform/olpc/olpc-xo15-sci.c b/arch/x86/platform/olpc/olpc-xo15-sci.c
-index 994a229cb79fe1..76ba025a545c79 100644
---- a/arch/x86/platform/olpc/olpc-xo15-sci.c
-+++ b/arch/x86/platform/olpc/olpc-xo15-sci.c
-@@ -185,6 +185,7 @@ static int xo15_sci_add(struct acpi_device *device)
+diff --git a/drivers/platform/x86/xo15-ebook.c b/drivers/platform/x86/xo15-ebook.c
+index 97440462aa258a..6413bb8fe26df9 100644
+--- a/drivers/platform/x86/xo15-ebook.c
++++ b/drivers/platform/x86/xo15-ebook.c
+@@ -38,6 +38,7 @@ MODULE_DEVICE_TABLE(acpi, ebook_device_ids);
+ struct ebook_switch {
+ 	struct input_dev *input;
+ 	char phys[32];			/* for input device */
++	bool gpe_enabled;
+ };
  
- static int xo15_sci_remove(struct acpi_device *device)
+ static int ebook_send_state(struct acpi_device *device)
+@@ -131,7 +132,7 @@ static int ebook_switch_add(struct acpi_device *device)
+ 		/* Button's GPE is run-wake GPE */
+ 		acpi_enable_gpe(device->wakeup.gpe_device,
+ 				device->wakeup.gpe_number);
+-		device_set_wakeup_enable(&device->dev, true);
++		button->gpe_enabled = true;
+ 	}
+ 
+ 	return 0;
+@@ -147,6 +148,10 @@ static int ebook_switch_remove(struct acpi_device *device)
  {
-+	device_init_wakeup(&device->dev, false);
- 	acpi_disable_gpe(NULL, xo15_sci_gpe);
- 	acpi_remove_gpe_handler(NULL, xo15_sci_gpe, xo15_sci_gpe_handler);
- 	cancel_work_sync(&sci_work);
+ 	struct ebook_switch *button = acpi_driver_data(device);
+ 
++	if (button->gpe_enabled)
++		acpi_disable_gpe(device->wakeup.gpe_device,
++				 device->wakeup.gpe_number);
++
+ 	input_unregister_device(button->input);
+ 	kfree(button);
+ 	return 0;
 -- 
 2.53.0
 
