@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A28471265;
-	Tue, 21 Jul 2026 20:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51D0471265;
+	Tue, 21 Jul 2026 20:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664314; cv=none; b=axSNuYfE17KxJ2bDPQr5OMyiwd0R25DxiZ2pYJoe5Vl66YoTInmwvA2y5vDyj0ZmPldJxDBApLFHWSoUOqsHXDxVvtGKK7IKdmDwo2N5/J8bssHdAJf8l16/Te+NWWIzvj081ak9B3/LpigQeKkcQZbtSruKNK13kXGG7Jajero=
+	t=1784664317; cv=none; b=ZREb2zDAt2irFS0F7+4g0vW9bjTPN5S0zFB3uS1QE9fF0IXZ+QVPPCGqvkqT3wbGG+mUwjQK5mldP/oEagRb/tOsGJk2QfTrr1RjYEO/fqH5KJacl58xx/eFyr9tqNVSypfmn8jE2MCCcTCEUl0ZSPIQHyJ9u/YusynJY/5fbqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664314; c=relaxed/simple;
-	bh=NCl0fTYkKjgTK7PEsnZ5GoU9VfzmYLvCxPrQi3GEIDM=;
+	s=arc-20240116; t=1784664317; c=relaxed/simple;
+	bh=bog2hBA6YqvENKBvjGqMhM6a8c2y45yeotS5kFjs2cQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WDmHS96X/93TBno12+tqBn5Fq2T+sjKG5JSl+yx0IWScjvgaMxF3+SAzWxeyTygvDHgvj9yilLuFtNLlq1PARNuI0MILrv0TkfZBIIFJ72aNC9+jd4bUriN7OEW7xmZARpMqG1fUI2HoVtwepSm5STf2DbXJS4TnAH14+VwIah0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xgyj4kPY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FtMX86LYtfzDa1cV6joO8RPMRy5+Pn7RDTKoXaAA9k8qO5mUUg1wGJySmVLAUDUf+54JA9gUtREoVRjByjHv5aI6eYhkkMwbuTK564doh0S6e24MUCz2onvMDVZNXQiv/zpsTpo5W6fCPfMnJoaRm5olvXyp03T6y9a/KQa0Yas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vkk9dkvC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xgyj4kPY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E91C1F000E9;
-	Tue, 21 Jul 2026 20:05:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vkk9dkvC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1671F1F000E9;
+	Tue, 21 Jul 2026 20:05:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664312;
-	bh=04VfapykkdC18A24BR7tzIGbpHA/Jl/Wp2t+wgsHUZA=;
+	s=korg; t=1784664315;
+	bh=kQw2OgJX1Xg47+HhBjZm/VURhkS/Ao5YGbvayfDI9dM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xgyj4kPYiKnOJ/PMauzE/3k9Y7oZu2JsDyPGUs+9y5MX8HgjZfVXTOaMVQII3Jms4
-	 cJUdl4Np21rR/FuI1nIWXWDKBpnfgsHRvj7KA3mZpElCtIeF0YMLDkVb4j82eTkLF0
-	 cQAM9OJJTQvTU51NmJWmEew1cNKHF7u7V0A4aj1w=
+	b=vkk9dkvCLOGQRYzSzV8n/3sGNsqd4EqzkjE1KaExCu1eb/AjItHT49DkRhEd6bjTY
+	 Cja6dv8OB7O95DdJfWpwxrc/ojIku+n+xlAiSkmTkzwcGhEsT4H4u0Pkdjdx7oanFf
+	 VoR7BCGS0rXc/+gbakvoJSjvPznJb+mjWdh5nKyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Caleb James DeLisle <cjd@cjdns.fr>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1151/1276] PCI: mediatek: Fix IRQ domain leak when port fails to enable
-Date: Tue, 21 Jul 2026 17:26:34 +0200
-Message-ID: <20260721152511.764661361@linuxfoundation.org>
+	Asim Viladi Oglu Manizada <manizada@pm.me>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	Aaron Conole <aconole@redhat.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 1111/1276] net: openvswitch: reject oversized nested action attrs
+Date: Tue, 21 Jul 2026 17:25:54 +0200
+Message-ID: <20260721152510.856142757@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,201 +53,393 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Asim Viladi Oglu Manizada <manizada@pm.me>
 
-[ Upstream commit f865a57896bd92d7662eb2818d8f48872e2cbbc7 ]
+commit 3f1f755366687d051174739fb99f7d560202f60b upstream.
 
-When mtk_pcie_enable_port() fails, mtk_pcie_port_free() removes the port
-from pcie->ports and frees the port structure. However, the IRQ domains set
-up earlier by mtk_pcie_init_irq_domain() are never freed.
+Open vSwitch stores generated flow actions as nlattrs, whose nla_len
+field is u16. Commit a1e64addf3ff ("net: openvswitch: remove
+misbehaving actions length check") allowed the total sw_flow_actions
+stream to grow beyond 64 KiB, which is valid, but also removed the last
+guard preventing a generated nested action attribute from exceeding
+U16_MAX.
 
-Fix this by refactoring mtk_pcie_irq_teardown() into a per-port helper,
-mtk_pcie_irq_teardown_port(), and calling it from mtk_pcie_setup() when
-mtk_pcie_enable_port() fails. Since the IRQ teardown must only happen in
-the probe error path (during resume, child devices may have active MSI
-mappings and the NOIRQ context prohibits sleeping locks),
-mtk_pcie_enable_port() is changed to return an error code so callers can
-distinguish the two paths and act accordingly.
+An oversized generated container can thus be closed with a truncated
+nla_len. A later dump or teardown then walks a structurally different
+stream than the one that was validated. In particular, an oversized
+nested CLONE/CT action may cause subsequent bytes in the generated
+stream to be interpreted as independent actions.
 
-This issue was reported by Sashiko while reviewing the EcoNet EN7528 SoC
-support series.
+Keep the larger total-action-stream behavior, but make nested action
+close reject generated containers that do not fit in nla_len, and return
+the error through all callers. For recursive SAMPLE, CLONE, DEC_TTL, and
+CHECK_PKT_LEN builders, trim resource-owning action-list tails in reverse
+construction order before discarding failed wrappers, so resources copied
+into the rejected tails are released before the wrappers are removed.
 
-Fixes: b099631df160 ("PCI: mediatek: Add controller support for MT2712 and MT7622")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Cc: stable@vger.kernel.org # 5.10
-Cc: Caleb James DeLisle <cjd@cjdns.fr>
-Link: https://patch.msgid.link/20260521174617.17692-1-mani@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Most failed outer wrappers are discarded by truncating actions_len after
+child resources have been released. CHECK_PKT_LEN also trims its parent
+after branch resources are gone. SET/TUNNEL close failures unwind their
+known tun_dst ownership directly, and SET_TO_MASKED has no external
+ownership and truncates on close failure.
+
+Fixes: a1e64addf3ff ("net: openvswitch: remove misbehaving actions length check")
+Cc: stable@vger.kernel.org
+Assisted-by: avom-custom-harness:gpt-5.5-qwen3.6-mod-mix
+Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
+Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/20260706094336.38639-1-manizada@pm.me
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-mediatek.c |   75 +++++++++++++++++++++------------
- 1 file changed, 48 insertions(+), 27 deletions(-)
+ net/openvswitch/flow_netlink.c |  201 ++++++++++++++++++++++++++++++++---------
+ 1 file changed, 157 insertions(+), 44 deletions(-)
 
---- a/drivers/pci/controller/pcie-mediatek.c
-+++ b/drivers/pci/controller/pcie-mediatek.c
-@@ -13,7 +13,7 @@
- #include <linux/iopoll.h>
- #include <linux/irq.h>
- #include <linux/irqchip/chained_irq.h>
--#include <linux/irqchip/irq-msi-lib.h>
-+#include "../../irqchip/irq-msi-lib.h"
- #include <linux/irqdomain.h>
- #include <linux/kernel.h>
- #include <linux/mfd/syscon.h>
-@@ -491,7 +491,6 @@ static const struct msi_parent_ops mtk_m
- 	.required_flags		= MTK_MSI_FLAGS_REQUIRED,
- 	.supported_flags	= MTK_MSI_FLAGS_SUPPORTED,
- 	.bus_select_token	= DOMAIN_BUS_PCI_MSI,
--	.chip_flags		= MSI_CHIP_FLAG_SET_ACK,
- 	.prefix			= "MTK-",
- 	.init_dev_msi_info	= msi_lib_init_dev_msi_info,
- };
-@@ -505,13 +504,18 @@ static int mtk_pcie_allocate_msi_domains
- 		.ops		= &msi_domain_ops,
- 		.host_data	= port,
- 		.size		= MTK_MSI_IRQS_NUM,
-+		.hwirq_max	= MTK_MSI_IRQS_NUM,
-+		.bus_token	= DOMAIN_BUS_PCI_MSI,
-+		.domain_flags	= IRQ_DOMAIN_FLAG_MSI_PARENT,
- 	};
- 
--	port->inner_domain = msi_create_parent_irq_domain(&info, &mtk_msi_parent_ops);
--	if (!port->inner_domain) {
-+	port->inner_domain = irq_domain_instantiate(&info);
-+	if (IS_ERR(port->inner_domain)) {
- 		dev_err(port->pcie->dev, "failed to create IRQ domain\n");
-+		port->inner_domain = NULL;
- 		return -ENOMEM;
- 	}
-+	port->inner_domain->msi_parent_ops = &mtk_msi_parent_ops;
- 
- 	return 0;
- }
-@@ -530,23 +534,27 @@ static void mtk_pcie_enable_msi(struct m
- 	writel(val, port->base + PCIE_INT_MASK);
+--- a/net/openvswitch/flow_netlink.c
++++ b/net/openvswitch/flow_netlink.c
+@@ -2496,13 +2496,56 @@ static inline int add_nested_action_star
+ 	return used;
  }
  
--static void mtk_pcie_irq_teardown(struct mtk_pcie *pcie)
-+static void mtk_pcie_irq_teardown_port(struct mtk_pcie_port *port)
+-static inline void add_nested_action_end(struct sw_flow_actions *sfa,
+-					 int st_offset)
++static inline int add_nested_action_end(struct sw_flow_actions *sfa,
++					int st_offset)
  {
--	struct mtk_pcie_port *port, *tmp;
-+	irq_set_chained_handler_and_data(port->irq, NULL, NULL);
- 
--	list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
--		irq_set_chained_handler_and_data(port->irq, NULL, NULL);
-+	if (port->irq_domain)
-+		irq_domain_remove(port->irq_domain);
- 
--		if (port->irq_domain)
--			irq_domain_remove(port->irq_domain);
-+	if (IS_ENABLED(CONFIG_PCI_MSI)) {
-+		if (port->inner_domain)
-+			irq_domain_remove(port->inner_domain);
-+	}
- 
--		if (IS_ENABLED(CONFIG_PCI_MSI)) {
--			if (port->inner_domain)
--				irq_domain_remove(port->inner_domain);
--		}
-+	irq_dispose_mapping(port->irq);
-+}
- 
--		irq_dispose_mapping(port->irq);
--	}
-+static void mtk_pcie_irq_teardown(struct mtk_pcie *pcie)
-+{
-+	struct mtk_pcie_port *port, *tmp;
+-	struct nlattr *a = (struct nlattr *) ((unsigned char *)sfa->actions +
+-							       st_offset);
++	struct nlattr *a;
++	u32 attr_len;
 +
-+	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
-+		mtk_pcie_irq_teardown_port(port);
- }
- 
- static int mtk_pcie_intx_map(struct irq_domain *domain, unsigned int irq,
-@@ -829,7 +837,7 @@ static int mtk_pcie_startup_port(struct
- 	return 0;
- }
- 
--static void mtk_pcie_enable_port(struct mtk_pcie_port *port)
-+static int mtk_pcie_enable_port(struct mtk_pcie_port *port)
- {
- 	struct mtk_pcie *pcie = port->pcie;
- 	struct device *dev = pcie->dev;
-@@ -838,7 +846,7 @@ static void mtk_pcie_enable_port(struct
- 	err = clk_prepare_enable(port->sys_ck);
- 	if (err) {
- 		dev_err(dev, "failed to enable sys_ck%d clock\n", port->slot);
--		goto err_sys_clk;
-+		return err;
- 	}
- 
- 	err = clk_prepare_enable(port->ahb_ck);
-@@ -886,11 +894,15 @@ static void mtk_pcie_enable_port(struct
- 		goto err_phy_on;
- 	}
- 
--	if (!pcie->soc->startup(port))
--		return;
-+	err = pcie->soc->startup(port);
-+	if (err) {
-+		dev_info(dev, "Port%d link down\n", port->slot);
-+		goto err_soc_startup;
-+	}
- 
--	dev_info(dev, "Port%d link down\n", port->slot);
++	if (WARN_ON_ONCE(st_offset < 0 ||
++			 (u32)st_offset > sfa->actions_len))
++		return -EINVAL;
++
++	attr_len = sfa->actions_len - (u32)st_offset;
++	if (WARN_ON_ONCE(attr_len < NLA_HDRLEN))
++		return -EINVAL;
++
++	if (attr_len > U16_MAX)
++		return -EMSGSIZE;
++
++	a = (struct nlattr *)((u8 *)sfa->actions + st_offset);
++	a->nla_len = attr_len;
 +	return 0;
- 
-+err_soc_startup:
- 	phy_power_off(port->phy);
- err_phy_on:
- 	phy_exit(port->phy);
-@@ -906,8 +918,8 @@ err_aux_clk:
- 	clk_disable_unprepare(port->ahb_ck);
- err_ahb_clk:
- 	clk_disable_unprepare(port->sys_ck);
--err_sys_clk:
--	mtk_pcie_port_free(port);
++}
 +
++/* Free the generated action-list tail at @start and truncate it.
++ * If @nested, @start points to its containing nlattr header.
++ */
++static void ovs_nla_trim(struct sw_flow_actions *sfa, int start, bool nested)
++{
++	const struct nlattr *actions;
++	u32 len;
++
++	if (start < 0)
++		return;
++
++	if (WARN_ON_ONCE((u32)start > sfa->actions_len))
++		return;
+ 
+-	a->nla_len = sfa->actions_len - st_offset;
++	actions = (const struct nlattr *)((u8 *)sfa->actions + start);
++	len = sfa->actions_len - (u32)start;
++
++	if (nested) {
++		if (len < NLA_HDRLEN)
++			goto out;
++
++		actions = (const struct nlattr *)((u8 *)actions + NLA_HDRLEN);
++		len -= NLA_HDRLEN;
++	}
++
++	ovs_nla_free_nested_actions(actions, len);
++out:
++	sfa->actions_len = start;
+ }
+ 
+ static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
+@@ -2522,6 +2565,7 @@ static int validate_and_copy_sample(stru
+ 	const struct nlattr *attrs[OVS_SAMPLE_ATTR_MAX + 1];
+ 	const struct nlattr *probability, *actions;
+ 	const struct nlattr *a;
++	int actions_start;
+ 	int rem, start, err;
+ 	struct sample_arg arg;
+ 
+@@ -2565,18 +2609,27 @@ static int validate_and_copy_sample(stru
+ 	err = ovs_nla_add_action(sfa, OVS_SAMPLE_ATTR_ARG, &arg, sizeof(arg),
+ 				 log);
+ 	if (err)
+-		return err;
++		goto err;
+ 
++	actions_start = (*sfa)->actions_len;
+ 	err = __ovs_nla_copy_actions(net, actions, key, sfa,
+ 				     eth_type, vlan_tci, mpls_label_count, log,
+ 				     depth + 1);
+ 
+ 	if (err)
+-		return err;
++		goto err_free;
+ 
+-	add_nested_action_end(*sfa, start);
++	err = add_nested_action_end(*sfa, start);
++	if (err)
++		goto err_free;
+ 
+ 	return 0;
++
++err_free:
++	ovs_nla_trim(*sfa, actions_start, false);
++err:
++	(*sfa)->actions_len = start;
 +	return err;
  }
  
- static int mtk_pcie_parse_port(struct mtk_pcie *pcie,
-@@ -1083,8 +1095,13 @@ static int mtk_pcie_setup(struct mtk_pci
- 		return err;
+ static int validate_and_copy_dec_ttl(struct net *net,
+@@ -2624,18 +2677,31 @@ static int validate_and_copy_dec_ttl(str
+ 		return start;
  
- 	/* enable each port, and then check link status */
--	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
--		mtk_pcie_enable_port(port);
-+	list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
-+		err = mtk_pcie_enable_port(port);
-+		if (err) {
-+			mtk_pcie_irq_teardown_port(port);
-+			mtk_pcie_port_free(port);
-+		}
+ 	action_start = add_nested_action_start(sfa, OVS_DEC_TTL_ATTR_ACTION, log);
+-	if (action_start < 0)
+-		return action_start;
++	if (action_start < 0) {
++		err = action_start;
++		goto err;
 +	}
  
- 	/* power down PCIe subsys if slots are all empty (link down) */
- 	if (list_empty(&pcie->ports))
-@@ -1186,14 +1203,18 @@ static int mtk_pcie_resume_noirq(struct
+ 	err = __ovs_nla_copy_actions(net, actions, key, sfa, eth_type,
+ 				     vlan_tci, mpls_label_count, log,
+ 				     depth + 1);
+ 	if (err)
+-		return err;
++		goto err_free;
+ 
+-	add_nested_action_end(*sfa, action_start);
+-	add_nested_action_end(*sfa, start);
++	err = add_nested_action_end(*sfa, action_start);
++	if (err)
++		goto err_free;
++
++	err = add_nested_action_end(*sfa, start);
++	if (err)
++		goto err_free;
+ 	return 0;
++
++err_free:
++	ovs_nla_trim(*sfa, action_start, true);
++err:
++	(*sfa)->actions_len = start;
++	return err;
+ }
+ 
+ static int validate_and_copy_clone(struct net *net,
+@@ -2646,6 +2712,7 @@ static int validate_and_copy_clone(struc
+ 				   u32 mpls_label_count, bool log, bool last,
+ 				   u32 depth)
  {
- 	struct mtk_pcie *pcie = dev_get_drvdata(dev);
- 	struct mtk_pcie_port *port, *tmp;
-+	int err;
++	int actions_start;
+ 	int start, err;
+ 	u32 exec;
  
- 	if (list_empty(&pcie->ports))
- 		return 0;
+@@ -2661,17 +2728,26 @@ static int validate_and_copy_clone(struc
+ 	err = ovs_nla_add_action(sfa, OVS_CLONE_ATTR_EXEC, &exec,
+ 				 sizeof(exec), log);
+ 	if (err)
+-		return err;
++		goto err;
  
- 	clk_prepare_enable(pcie->free_ck);
++	actions_start = (*sfa)->actions_len;
+ 	err = __ovs_nla_copy_actions(net, attr, key, sfa,
+ 				     eth_type, vlan_tci, mpls_label_count, log,
+ 				     depth + 1);
+ 	if (err)
+-		return err;
++		goto err_free;
  
--	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
--		mtk_pcie_enable_port(port);
-+	list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
-+		err = mtk_pcie_enable_port(port);
-+		if (err)
-+			mtk_pcie_port_free(port);
+-	add_nested_action_end(*sfa, start);
++	err = add_nested_action_end(*sfa, start);
++	if (err)
++		goto err_free;
+ 
+ 	return 0;
++
++err_free:
++	ovs_nla_trim(*sfa, actions_start, false);
++err:
++	(*sfa)->actions_len = start;
++	return err;
+ }
+ 
+ void ovs_match_init(struct sw_flow_match *match,
+@@ -2763,20 +2839,20 @@ static int validate_and_copy_set_tun(con
+ 	tun_dst = metadata_dst_alloc(key.tun_opts_len, METADATA_IP_TUNNEL,
+ 				     GFP_KERNEL);
+ 
+-	if (!tun_dst)
+-		return -ENOMEM;
++	if (!tun_dst) {
++		err = -ENOMEM;
++		goto err;
 +	}
  
- 	/* In case of EP was removed while system suspend. */
- 	if (list_empty(&pcie->ports))
+ 	err = dst_cache_init(&tun_dst->u.tun_info.dst_cache, GFP_KERNEL);
+-	if (err) {
+-		dst_release((struct dst_entry *)tun_dst);
+-		return err;
+-	}
++	if (err)
++		goto err_free_tun_dst;
+ 
+ 	a = __add_action(sfa, OVS_KEY_ATTR_TUNNEL_INFO, NULL,
+ 			 sizeof(*ovs_tun), log);
+ 	if (IS_ERR(a)) {
+-		dst_release((struct dst_entry *)tun_dst);
+-		return PTR_ERR(a);
++		err = PTR_ERR(a);
++		goto err_free_tun_dst;
+ 	}
+ 
+ 	ovs_tun = nla_data(a);
+@@ -2797,8 +2873,16 @@ static int validate_and_copy_set_tun(con
+ 	ip_tunnel_info_opts_set(tun_info,
+ 				TUN_METADATA_OPTS(&key, key.tun_opts_len),
+ 				key.tun_opts_len, dst_opt_type);
+-	add_nested_action_end(*sfa, start);
++	err = add_nested_action_end(*sfa, start);
++	if (WARN_ON_ONCE(err))
++		goto err_free_tun_dst;
++
++	return 0;
+ 
++err_free_tun_dst:
++	dst_release((struct dst_entry *)tun_dst);
++err:
++	(*sfa)->actions_len = start;
+ 	return err;
+ }
+ 
+@@ -2971,7 +3055,7 @@ static int validate_set(const struct nla
+ 
+ 	/* Convert non-masked non-tunnel set actions to masked set actions. */
+ 	if (!masked && key_type != OVS_KEY_ATTR_TUNNEL) {
+-		int start, len = key_len * 2;
++		int err, start, len = key_len * 2;
+ 		struct nlattr *at;
+ 
+ 		*skip_copy = true;
+@@ -2983,8 +3067,11 @@ static int validate_set(const struct nla
+ 			return start;
+ 
+ 		at = __add_action(sfa, key_type, NULL, len, log);
+-		if (IS_ERR(at))
+-			return PTR_ERR(at);
++		if (IS_ERR(at)) {
++			err = PTR_ERR(at);
++			(*sfa)->actions_len = start;
++			return err;
++		}
+ 
+ 		memcpy(nla_data(at), nla_data(ovs_key), key_len); /* Key. */
+ 		memset(nla_data(at) + key_len, 0xff, key_len);    /* Mask. */
+@@ -2994,7 +3081,11 @@ static int validate_set(const struct nla
+ 
+ 			mask->ipv6_label &= htonl(0x000FFFFF);
+ 		}
+-		add_nested_action_end(*sfa, start);
++		err = add_nested_action_end(*sfa, start);
++		if (WARN_ON_ONCE(err)) {
++			(*sfa)->actions_len = start;
++			return err;
++		}
+ 	}
+ 
+ 	return 0;
+@@ -3039,7 +3130,8 @@ static int validate_and_copy_check_pkt_l
+ 	const struct nlattr *acts_if_greater, *acts_if_lesser_eq;
+ 	struct nlattr *a[OVS_CHECK_PKT_LEN_ATTR_MAX + 1];
+ 	struct check_pkt_len_arg arg;
+-	int nested_acts_start;
++	int greater_acts_start = -1;
++	int lesser_acts_start = -1;
+ 	int start, err;
+ 
+ 	err = nla_parse_deprecated_strict(a, OVS_CHECK_PKT_LEN_ATTR_MAX,
+@@ -3074,37 +3166,58 @@ static int validate_and_copy_check_pkt_l
+ 	err = ovs_nla_add_action(sfa, OVS_CHECK_PKT_LEN_ATTR_ARG, &arg,
+ 				 sizeof(arg), log);
+ 	if (err)
+-		return err;
++		goto err_free;
+ 
+-	nested_acts_start = add_nested_action_start(sfa,
+-		OVS_CHECK_PKT_LEN_ATTR_ACTIONS_IF_LESS_EQUAL, log);
+-	if (nested_acts_start < 0)
+-		return nested_acts_start;
++	lesser_acts_start =
++		add_nested_action_start(sfa,
++					OVS_CHECK_PKT_LEN_ATTR_ACTIONS_IF_LESS_EQUAL,
++					log);
++	if (lesser_acts_start < 0) {
++		err = lesser_acts_start;
++		goto err_free;
++	}
+ 
+ 	err = __ovs_nla_copy_actions(net, acts_if_lesser_eq, key, sfa,
+ 				     eth_type, vlan_tci, mpls_label_count, log,
+ 				     depth + 1);
+ 
+ 	if (err)
+-		return err;
++		goto err_free;
+ 
+-	add_nested_action_end(*sfa, nested_acts_start);
++	err = add_nested_action_end(*sfa, lesser_acts_start);
++	if (err)
++		goto err_free;
+ 
+-	nested_acts_start = add_nested_action_start(sfa,
+-		OVS_CHECK_PKT_LEN_ATTR_ACTIONS_IF_GREATER, log);
+-	if (nested_acts_start < 0)
+-		return nested_acts_start;
++	greater_acts_start =
++		add_nested_action_start(sfa,
++					OVS_CHECK_PKT_LEN_ATTR_ACTIONS_IF_GREATER,
++					log);
++	if (greater_acts_start < 0) {
++		err = greater_acts_start;
++		goto err_free;
++	}
+ 
+ 	err = __ovs_nla_copy_actions(net, acts_if_greater, key, sfa,
+ 				     eth_type, vlan_tci, mpls_label_count, log,
+ 				     depth + 1);
+ 
+ 	if (err)
+-		return err;
++		goto err_free;
++
++	err = add_nested_action_end(*sfa, greater_acts_start);
++	if (err)
++		goto err_free;
+ 
+-	add_nested_action_end(*sfa, nested_acts_start);
+-	add_nested_action_end(*sfa, start);
++	err = add_nested_action_end(*sfa, start);
++	if (err)
++		goto err_free;
+ 	return 0;
++
++err_free:
++	ovs_nla_trim(*sfa, greater_acts_start, true);
++	ovs_nla_trim(*sfa, lesser_acts_start, true);
++	ovs_nla_trim(*sfa, start, false);
++	return err;
+ }
+ 
+ static int validate_psample(const struct nlattr *attr)
 
 
