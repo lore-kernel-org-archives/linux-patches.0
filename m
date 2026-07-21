@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3723D19049B;
-	Tue, 21 Jul 2026 17:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48CB3FBEA5;
+	Tue, 21 Jul 2026 17:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654175; cv=none; b=bDMXiQg2MVXQPXg5qwrGYamU49xmav627Wv6VXzj/jqM16pctXlETqalUhQwr0bEjT83cJEbgYEzL5ynRe/sbX6z+XFAO40wmeVBdP+zv3Gyen6MgcBTAXZy4zgz5Rws3cVd6r2Te8TxhBIlct826VUm5m7k2deyyMUiQAlaRRw=
+	t=1784654178; cv=none; b=j3ToswF/UY43TuBoXvhaSkJYjk7JKsvQZIO4PHLF3aYTAQhmcSKPtY+wIkyJp+AC9O5CGKuZhfzsfkgUYC8wI3NUdWbobvWhbxgSBCDuTRc33uUgyAzldXLpJJd3zDFrRLKVmVxR+gHvHDcqzUtEb9RQswvDRhBvKVw3x8Q8MLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654175; c=relaxed/simple;
-	bh=Vzqng4qxpvRaXSJKsiZFgLMkMCQBE66LZCohzJqTXAY=;
+	s=arc-20240116; t=1784654178; c=relaxed/simple;
+	bh=QAxPbLOxeygH5XdtrRwEx69wcv3kfrqK1suc5RY1leQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r8ZbbwonLB0FHpjXMDig4h46OFccAAV92sm/O7jp4hZBz1IvDD/FRYeKM/kCASFV3SjZfutnZLrkVonKbOdU5/YQt1wEsSxK9ckmvjgLobWEPRi/2t2i82CASwy1345hO/sczZ6dnUjg8yMlPPWL9sSfc6ulO1TPz22XQfg6HmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=miPuVKlW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HEjXeLyyOmHcb+3ALuyOddS8RRxV0sbMCX+h5yg1Vlzsle6nXZ+L+SW2lj/ZTrVovdClirXQ2eH7s0mq8xLyMZ9cYuArNtQcWdHWfSXyXZgHBYu9uxCZS2jzDpAuPI+cLzNpnSKnCgeFRHrJuV7mVGzvtZsd+NGbpkiZbm/iSlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ThOlnkdo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="miPuVKlW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A457E1F000E9;
-	Tue, 21 Jul 2026 17:16:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ThOlnkdo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 564361F000E9;
+	Tue, 21 Jul 2026 17:16:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654174;
-	bh=M9JKK6MYFtpXVJc8+sfJqWjLts+2FaLrHhXuyW8UoSA=;
+	s=korg; t=1784654176;
+	bh=KOF7ay98nOxcDFFBNniz9oIfCiMzS+cxN3eVEM6fX2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=miPuVKlWuFTBjeWfgg0J2S6QciblcOCNwcIW0HgBl+a4jeyvHNgtR/POScUj6Nm65
-	 /HZ9pBQwlPcLLbcxpT1GCdmExQ82lu9WTMTkYXxacziaC6E8l4bFZx822Li9lqX7uN
-	 f/vxeNNZDSdqfBTfJZJojbNXEVNExmtI1T/Km5Q0=
+	b=ThOlnkdocIm5/zw4eq/5ODvVNbwtXC8YTF9TAUWTDcj1jUPmVB0pyNcegb/GxEIEp
+	 HRyre8wYYDLsQUBAo07AE3339+X/a4nsV1SEme+aiOQU1JO/xL6vKWnBZqmgDK8zTF
+	 OICY/IdgBN3Ym+dMUgHtjxGGPS1zB4/D0EV+VImE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Haoze Xie <royenheart@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 7.1 1604/2077] netfilter: nf_queue: pin bridge device while NFQUEUE holds fake dst
-Date: Tue, 21 Jul 2026 17:21:17 +0200
-Message-ID: <20260721152630.603395280@linuxfoundation.org>
+	Theodor Arsenij Larionov-Trichkine <theodorlarionov@gmail.com>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 7.1 1605/2077] netfilter: nft_fib: reject fib expression on the netdev egress hook
+Date: Tue, 21 Jul 2026 17:21:18 +0200
+Message-ID: <20260721152630.626128970@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -56,116 +50,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoze Xie <royenheart@gmail.com>
+From: Theodor Arsenij Larionov-Trichkine <theodorlarionov@gmail.com>
 
-commit c9c9b37f8c5505224e8d206184df3bb668ee00cf upstream.
+commit d07955dd34ecae17d35d8c7d0a273a3fba653a8c upstream.
 
-The br_netfilter fake rtable is embedded in struct net_bridge and is
-attached to bridged packets with skb_dst_set_noref(). If such a packet is
-queued to NFQUEUE, __nf_queue() upgrades that fake dst with
-skb_dst_force().
+A fib expression in a netdev egress base chain dereferences nft_in(pkt),
+NULL on the transmit path, causing a NULL pointer dereference at eval.
+nft_fib_validate() masks the hook with NF_INET_* values, but netdev hook
+numbers are a separate enum that aliases them (NF_NETDEV_EGRESS ==
+NF_INET_LOCAL_IN), so an egress chain passes validation and then faults.
 
-At that point the queued skb can hold a real dst reference after bridge
-teardown has started. The problem is not that every bridged packet needs
-its own dst reference. The problem is that NFQUEUE can keep the bridge
-private fake dst alive after unregister begins.
+Add nft_fib_netdev_validate() that limits each result/flag to the netdev
+hook where the device it reads exists: the input-device cases (OIF,
+OIFNAME, ADDRTYPE with F_IIF) to ingress, the output-device case (ADDRTYPE
+with F_OIF) to egress, ADDRTYPE with no device flag to both. Also restrict
+nft_fib_validate() to NFPROTO_IPV4/IPV6/INET so its NF_INET_* masks are
+not applied to another family's hooks.
 
-Fix this by keeping the bridge fake dst model unchanged and pinning the
-bridge master device only while the packet sits in NFQUEUE. Record the
-bridge device in nf_queue_entry when the queued skb carries a bridge fake
-dst, take a device reference for the queue lifetime, and drop it when the
-queue entry is freed.
-
-Also make sure queued entries are reaped when that bridge device goes
-down, and drop the redundant nf_bridge_info_exists() test from the fake
-dst detection.
-
-This keeps netdev_priv(br->dev) alive until verdict completion, so the
-embedded fake rtable and its metrics backing storage cannot be freed out
-from under dst_release(). It also avoids the constant refcount bump and
-avoids using ipv4-specific dst helpers for IPv6 bridge traffic.
-
-Fixes: 34666d467cbf ("netfilter: bridge: move br_netfilter out of the core")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Haoze Xie <royenheart@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 42df6e1d221d ("netfilter: Introduce egress hook")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/netfilter-devel/ajxsjcDOnwllMfoR@strlen.de/
+Signed-off-by: Theodor Arsenij Larionov-Trichkine <theodorlarionov@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_queue.h |    1 +
- net/netfilter/nf_queue.c         |   14 ++++++++++++++
- net/netfilter/nfnetlink_queue.c  |    3 +++
- 3 files changed, 18 insertions(+)
+ net/netfilter/nft_fib.c        |    9 +++++++++
+ net/netfilter/nft_fib_netdev.c |   29 ++++++++++++++++++++++++++++-
+ 2 files changed, 37 insertions(+), 1 deletion(-)
 
---- a/include/net/netfilter/nf_queue.h
-+++ b/include/net/netfilter/nf_queue.h
-@@ -18,6 +18,7 @@ struct nf_queue_entry {
- 	unsigned int		id;
- 	unsigned int		hook_index;	/* index in hook_entries->hook[] */
- #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
-+	struct net_device	*bridge_dev;
- 	struct net_device	*physin;
- 	struct net_device	*physout;
- #endif
---- a/net/netfilter/nf_queue.c
-+++ b/net/netfilter/nf_queue.c
-@@ -68,6 +68,7 @@ static void nf_queue_entry_release_refs(
- 		nf_queue_sock_put(state->sk);
+--- a/net/netfilter/nft_fib.c
++++ b/net/netfilter/nft_fib.c
+@@ -31,6 +31,15 @@ int nft_fib_validate(const struct nft_ct
+ 	const struct nft_fib *priv = nft_expr_priv(expr);
+ 	unsigned int hooks;
  
- #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
-+	dev_put(entry->bridge_dev);
- 	dev_put(entry->physin);
- 	dev_put(entry->physout);
- #endif
-@@ -84,6 +85,8 @@ static void __nf_queue_entry_init_physde
- {
- #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
- 	const struct sk_buff *skb = entry->skb;
-+	struct dst_entry *dst = skb_dst(skb);
-+	struct net_device *dev = NULL;
- 
- 	if (nf_bridge_info_exists(skb)) {
- 		entry->physin = nf_bridge_get_physindev(skb, entry->state.net);
-@@ -92,6 +95,16 @@ static void __nf_queue_entry_init_physde
- 		entry->physin = NULL;
- 		entry->physout = NULL;
- 	}
++	switch (ctx->family) {
++	case NFPROTO_IPV4:
++	case NFPROTO_IPV6:
++	case NFPROTO_INET:
++		break;
++	default:
++		return -EOPNOTSUPP;
++	}
 +
-+	if (entry->state.pf == NFPROTO_BRIDGE &&
-+	    dst && (dst->flags & DST_FAKE_RTABLE))
-+		dev = dst_dev_rcu(dst);
-+
-+	/* Must hold a reference on the bridge device: dst_hold() protects
-+	 * the dst itself, but the fake rtable is embedded in bridge-private
-+	 * storage that netdevice teardown can free independently.
-+	 */
-+	entry->bridge_dev = dev;
- #endif
+ 	switch (priv->result) {
+ 	case NFT_FIB_RESULT_OIF:
+ 	case NFT_FIB_RESULT_OIFNAME:
+--- a/net/netfilter/nft_fib_netdev.c
++++ b/net/netfilter/nft_fib_netdev.c
+@@ -50,6 +50,33 @@ static void nft_fib_netdev_eval(const st
+ 	regs->verdict.code = NFT_BREAK;
  }
  
-@@ -108,6 +121,7 @@ bool nf_queue_entry_get_refs(struct nf_q
- 	dev_hold(state->out);
- 
- #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
-+	dev_hold(entry->bridge_dev);
- 	dev_hold(entry->physin);
- 	dev_hold(entry->physout);
- #endif
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -1270,6 +1270,9 @@ dev_cmp(struct nf_queue_entry *entry, un
- 
- 	if (physinif == ifindex || physoutif == ifindex)
- 		return 1;
++static int nft_fib_netdev_validate(const struct nft_ctx *ctx,
++				   const struct nft_expr *expr)
++{
++	const struct nft_fib *priv = nft_expr_priv(expr);
++	unsigned int hooks;
 +
-+	if (entry->bridge_dev && entry->bridge_dev->ifindex == ifindex)
-+		return 1;
- #endif
- 	if (entry->skb_dev && entry->skb_dev->ifindex == ifindex)
- 		return 1;
++	switch (priv->result) {
++	case NFT_FIB_RESULT_OIF:
++	case NFT_FIB_RESULT_OIFNAME:
++		hooks = (1 << NF_NETDEV_INGRESS);
++		break;
++	case NFT_FIB_RESULT_ADDRTYPE:
++		if (priv->flags & NFTA_FIB_F_IIF)
++			hooks = (1 << NF_NETDEV_INGRESS);
++		else if (priv->flags & NFTA_FIB_F_OIF)
++			hooks = (1 << NF_NETDEV_EGRESS);
++		else
++			hooks = (1 << NF_NETDEV_INGRESS) |
++				(1 << NF_NETDEV_EGRESS);
++		break;
++	default:
++		return -EINVAL;
++	}
++
++	return nft_chain_validate_hooks(ctx->chain, hooks);
++}
++
+ static struct nft_expr_type nft_fib_netdev_type;
+ static const struct nft_expr_ops nft_fib_netdev_ops = {
+ 	.type		= &nft_fib_netdev_type,
+@@ -57,7 +84,7 @@ static const struct nft_expr_ops nft_fib
+ 	.eval		= nft_fib_netdev_eval,
+ 	.init		= nft_fib_init,
+ 	.dump		= nft_fib_dump,
+-	.validate	= nft_fib_validate,
++	.validate	= nft_fib_netdev_validate,
+ };
+ 
+ static struct nft_expr_type nft_fib_netdev_type __read_mostly = {
 
 
