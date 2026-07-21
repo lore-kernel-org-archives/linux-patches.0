@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447A543B490;
-	Tue, 21 Jul 2026 22:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E70A3B52FF;
+	Tue, 21 Jul 2026 22:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671929; cv=none; b=r07216wmus0cOoR251jrXFHGKl1ydQJ2n4NX/JZQuuyssHAF77D5CU0lMMc5iiJgAUfcP2BBf80Ejcposoqfrh69D+CO2zsiCRfE3guA9+e5vLWoEb1mISPP8cqt5VytT5jX49x2MIPfDQ0xF80Bdv8bmVRO+DD6RDmFfzX9vlM=
+	t=1784671932; cv=none; b=tqZH/AnrIYrZWZL2uRP4p3IJWWuQXa7Av0yzngzfTC8a06Tcan1VT/HDGX3PMniFrE9eKl4+BNiJuWcgSzrD7u5km40pWWnDXJC3EQfURSs0R9nienISByh7hKKw3fp/aZNwx1cDWi6Pb6aIs3HimR9R5silmmMS3n41ZJpTm3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671929; c=relaxed/simple;
-	bh=p2rzMjFHNHSOTnmgZViSoaWpHqGrK0hKgoasPWnvg68=;
+	s=arc-20240116; t=1784671932; c=relaxed/simple;
+	bh=fYTlYwS88g9Rt9QCeYN536Ox4yVlN1Vfjz2d8d8VGiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lXxOHbq6Sbal7mAFIK54cy4gf32cG5MlzDyaThvrIQLYUWOwmLMOIG/DPcEf3mttiFFx2FDFh9QztmJ4y44HwiVMdWIDNhJON3kPB2nYKuWBCLejBedKGGIUC95GCphim2rRMokvY5WX9OWT579dZPijs3RQu0ezFwbS54qSEIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+XYCZcj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X3K9HhimZXY6ObLbw/CFFDXhUK6w2KdU3ldm3FAHSZL9WT8uiHhM1zI7olTXLGNRM8fdBpfiGudEsHPfwnPEdDKiKyZDYbWlzRPgaPLdnB37DpLvShe5tDZsdr8Zi0jM3wPvJENE3S4u0dsOCSwMkYhIoNzGo9LHMxU3aecvwCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B50XkV+G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+XYCZcj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A4BD1F000E9;
-	Tue, 21 Jul 2026 22:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B50XkV+G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C5B1F000E9;
+	Tue, 21 Jul 2026 22:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671928;
-	bh=NZJb8pY+6mReGP3RXXBP//i4LEmnArIYulGXpMrTenk=;
+	s=korg; t=1784671930;
+	bh=Qgu6Ggl6LRJGA4nJbH97wBtI5yNdcssVpbkDPFkqa24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T+XYCZcjIQWQrtXjdAhvQ1IDPbtlQmoFfxAxGOYfnr2qsjQ7RY2w0UXkDPqMP+R14
-	 DKpH8dDLag+dLgRPQFxIaLGnxGx3wyrGD8qr0QdF150o1y5CKC3xC62PXLx2Ml5t95
-	 KhJbCouxqHYdJ+gnEPKmb+J6Kq/QdRqhRN7WJFzA=
+	b=B50XkV+GdkIBw8PsOM7HzAut49fCKaClUDVUm5a8lMMZrdmAZvnYjrm3LwAcRQazI
+	 P9h9uZwtGG89C7KU+hJRxAoyrYqxXR+5a1khlXVlzWv1sPEedqHZkMqvHm5umqM+lK
+	 fXc3WScOil4eU4fmDn38P9iZPOTD/eXgoCsnOz0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tyler Hicks <code@thicks.com>,
-	Ryan Lee <ryan.lee@canonical.com>,
 	Zygmunt Krynicki <me@zygoon.pl>,
 	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 431/843] apparmor: aa_getprocattr free procattr leak on format failure
-Date: Tue, 21 Jul 2026 17:21:06 +0200
-Message-ID: <20260721152415.730357576@linuxfoundation.org>
+Subject: [PATCH 5.15 432/843] apparmor: put secmark label after secid lookup
+Date: Tue, 21 Jul 2026 17:21:07 +0200
+Message-ID: <20260721152415.752704305@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -55,38 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Zygmunt Krynicki <me@zygoon.pl>
 
-[ Upstream commit fea23bf73f0cae8ccb1d0684e4a3003874771f41 ]
+[ Upstream commit 340372688bb87da45ff8d4e2f82ccfd1b64c65ff ]
 
-aa_getprocattr() allocates the output string before rendering the label
-into it. If the second aa_label_snxprint() call fails, the function
-returned without freeing that allocation.
+apparmor_secmark_init() parses a configured secmark label to obtain its
+secid.  aa_label_strn_parse() returns a refcounted label, but the success
+path kept that reference after copying the secid.
 
-Free and clear the output pointer on the uncommon formatting failure path
-before dropping the namespace reference.
-
-Fixes: 76a1d263aba3 ("apparmor: switch getprocattr to using label_print fns()")
-Reviewed-by: Tyler Hicks <code@thicks.com>
-Reviewed-by: Ryan Lee <ryan.lee@canonical.com>
+Fixes: ab9f2115081a ("apparmor: Allow filtering based on secmark policy")
 Signed-off-by: Zygmunt Krynicki <me@zygoon.pl>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/procattr.c | 2 ++
- 1 file changed, 2 insertions(+)
+ security/apparmor/net.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/security/apparmor/procattr.c b/security/apparmor/procattr.c
-index c929bf4a3df1c0..3beb0915892a16 100644
---- a/security/apparmor/procattr.c
-+++ b/security/apparmor/procattr.c
-@@ -56,6 +56,8 @@ int aa_getprocattr(struct aa_label *label, char **string)
- 				FLAG_SHOW_MODE | FLAG_VIEW_SUBNS |
- 				FLAG_HIDDEN_UNCONFINED);
- 	if (len < 0) {
-+		kfree(*string);
-+		*string = NULL;
- 		aa_put_ns(current_ns);
- 		return len;
- 	}
+diff --git a/security/apparmor/net.c b/security/apparmor/net.c
+index abdce5e52b026c..3bfdadaa133709 100644
+--- a/security/apparmor/net.c
++++ b/security/apparmor/net.c
+@@ -208,6 +208,7 @@ static int apparmor_secmark_init(struct aa_secmark *secmark)
+ 		return PTR_ERR(label);
+ 
+ 	secmark->secid = label->secid;
++	aa_put_label(label);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
