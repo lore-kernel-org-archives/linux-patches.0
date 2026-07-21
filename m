@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8915C35C1AE;
-	Tue, 21 Jul 2026 18:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D3B35C1AE;
+	Tue, 21 Jul 2026 18:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658618; cv=none; b=LhowUesFb/PZ1LKsJ7RTFX8XBYb2WzUJD2XpGnwIEzGYd3nQnAldcG+AVJATVqVCp/Pw7A8c/cTjplvyt+8xjI4yrdHhHp6cni6uJh6P0nSWLPXk2eMG/CF22PakGg9oFKHGIyOhsCj0l5xPmPwXBurfwlOCeD7BwHPLNVIbnnA=
+	t=1784658621; cv=none; b=DBxYYAti3NShp/h3rOTEM5UPfwMl1szduS1v4y8+0mZpCBDgyUvd2ZnOZ6J6X/Ic7h8T8aZYqEh48PYiFv2H3DQQFVUTRt6oPQxnOqWSszDOVhaQRi8TZcXKY7+JooHDiAUJmAF5rs+ZDxspt//h0CU3R6Uu07Ipo3sM0XOGZ3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658618; c=relaxed/simple;
-	bh=7TusS/1Th+q4jO223ta/lhS4xjz0efoVxWqa3bjZyFk=;
+	s=arc-20240116; t=1784658621; c=relaxed/simple;
+	bh=/uBmg5Yw0E6pfmAz/vVtmzgsp1YJ+M2KaMwHmDpTVNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bRDEiVjguG+w9dEvYJXApJcr+m33dT6LJ+nXRVSDUnihQQFKDJkCVg831StsJ723KWauEHVjoRmbJdL/ak3Ox4W6qP2H1QqfgqumgxKlyu5KlHNjIeWxjVjHRFv7mBPfQSLP2qJ/9j9VVJ1annRu88SjojGBYtnK5kzxG0JhlU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8yX5URq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I1jUFHwcSvLNZLFamIMoxXS2rWhR9LVPKpAbEeo5SAjP+ByqFbm247O4hUq56yovfycrO+g5salbAM+as7s0qDwrI3Q2pryfu1Xa02q+hCnbRxAbMXLCCgMacFZqDe7uJv/xJ3wSf+1x2yL09GYfzXOc2OtnkHCavttpra9toOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdiL+Kpt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8yX5URq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA1D81F00A3A;
-	Tue, 21 Jul 2026 18:30:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdiL+Kpt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABBE81F000E9;
+	Tue, 21 Jul 2026 18:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658617;
-	bh=TnGLcMWolFcDha+uuyMKU3IyT8fOjgS84HKuFcQwrP0=;
+	s=korg; t=1784658620;
+	bh=NBKCatd0nDnhHAlIO7+tZaib8Dvye99bTn5kP9A9DAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z8yX5URqlFCKADZDnP3y/UX/v6yGvyehjMRNNpt2pXCEGx66db6jeW+WEpm9fpeBZ
-	 eVxvUYjfbbcpP3aekzExn2+grSq5y+lyMtIs+jCtaApRMvV54MZsc5kUgIezalTKCL
-	 uwBXTjRG2W2mqGY3Yb4VqSb2loyqq5GlDSqKElXI=
+	b=EdiL+KptTh9mzRTbxGD2ytXoq9ttg2/IGvEZs7gebGaIKpleLak+C8U5CYGRS53L1
+	 C/7sjU8quADq986CacwkxGluPdDSATBVgD0TB7kD0JspqIq0VmkXUN+czedUOC9yf1
+	 9aEvoB+W1vUCI6DWRSdI1wJIRhYfQRNyWoBRcceY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 1158/1611] ASoC: SOF: ipc3-control: Fix heap overflow in bytes_ext put/get
-Date: Tue, 21 Jul 2026 17:21:14 +0200
-Message-ID: <20260721152541.470106821@linuxfoundation.org>
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 6.18 1205/1611] batman-adv: clean untagged VLAN on netdev registration failure
+Date: Tue, 21 Jul 2026 17:22:01 +0200
+Message-ID: <20260721152542.538457891@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,96 +49,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit fd46668d538993218eea19c6925c868ac0f2630c upstream.
+commit 8669a550c752d86baebc5fdc83b8ff35c4372c0e upstream.
 
-The ipc_control_data buffer is allocated as kzalloc(max_size), where
-max_size covers the entire struct sof_ipc_ctrl_data including its
-flexible array payload. However, the bounds checks in bytes_ext_put
-and _bytes_ext_get compared user data lengths against max_size
-directly, ignoring that cdata->data sits at an offset of
-sizeof(struct sof_ipc_ctrl_data) bytes into the allocation.
+When an mesh interface is registered, it creates an untagged struct
+batadv_meshif_vlan on top of it via the NETDEV_REGISTER notifier. But in
+this process, another receiver of this notification can veto the
+registration. The netdev registration will be aborted because of this veto.
 
-This allowed writing up to sizeof(struct sof_ipc_ctrl_data) bytes past
-the end of the heap buffer from unprivileged userspace via the ALSA TLV
-kcontrol interface, and similarly allowed over-reading adjacent heap
-data on the get path.
+The register_netdevice() call will try to clean up the net_device using
+unregister_netdevice_queue() - which only uses the .priv_destructor to
+free private resources. In this situation, .dellink will not be called.
 
-Fix all bounds checks to subtract sizeof(*cdata) from max_size so they
-reflect the actual space available at the cdata->data offset. Also fix
-the error-path restore in bytes_ext_put which wrote to cdata->data
-instead of cdata, causing the same overflow.
+The cleanup of the untagged batadv_meshif_vlan must thefore be done in the
+destructor to avoid a leak of this object.
 
-Fixes: 67ec2a091630 ("ASoC: SOF: Add bytes_ext control IPC ops for IPC3")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20260609083458.31193-7-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 5d2c05b21337 ("batman-adv: add per VLAN interface attribute framework")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc3-control.c |   27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ net/batman-adv/main.c           |    8 ++++++++
+ net/batman-adv/mesh-interface.c |   13 ++-----------
+ net/batman-adv/mesh-interface.h |    2 ++
+ 3 files changed, 12 insertions(+), 11 deletions(-)
 
---- a/sound/soc/sof/ipc3-control.c
-+++ b/sound/soc/sof/ipc3-control.c
-@@ -398,9 +398,17 @@ static int sof_ipc3_bytes_ext_put(struct
- 	}
+--- a/net/batman-adv/main.c
++++ b/net/batman-adv/main.c
+@@ -245,6 +245,7 @@ err_orig:
+ void batadv_mesh_free(struct net_device *mesh_iface)
+ {
+ 	struct batadv_priv *bat_priv = netdev_priv(mesh_iface);
++	struct batadv_meshif_vlan *vlan;
  
- 	/* be->max is coming from topology */
--	if (header.length > scontrol->max_size) {
--		dev_err_ratelimited(scomp->dev, "Bytes data size %d exceeds max %zu\n",
--				    header.length, scontrol->max_size);
-+	if (header.length > scontrol->max_size - sizeof(*cdata)) {
-+		dev_err_ratelimited(scomp->dev, "Bytes data size %u exceeds max %zu\n",
-+				    header.length, scontrol->max_size - sizeof(*cdata));
-+		return -EINVAL;
+ 	atomic_set(&bat_priv->mesh_state, BATADV_MESH_DEACTIVATING);
+ 
+@@ -259,6 +260,13 @@ void batadv_mesh_free(struct net_device
+ 
+ 	batadv_mcast_free(bat_priv);
+ 
++	/* destroy the "untagged" VLAN */
++	vlan = batadv_meshif_vlan_get(bat_priv, BATADV_NO_FLAGS);
++	if (vlan) {
++		batadv_meshif_destroy_vlan(bat_priv, vlan);
++		batadv_meshif_vlan_put(vlan);
 +	}
 +
-+	/* Ensure the data is large enough to contain the ABI header */
-+	if (header.length < sizeof(struct sof_abi_hdr)) {
-+		dev_err_ratelimited(scomp->dev,
-+				    "Bytes data size %u less than ABI header %zu\n",
-+				    header.length, sizeof(struct sof_abi_hdr));
- 		return -EINVAL;
+ 	/* Free the TT and the originator tables only after having terminated
+ 	 * all the other depending components which may use these structures for
+ 	 * their purposes.
+--- a/net/batman-adv/mesh-interface.c
++++ b/net/batman-adv/mesh-interface.c
+@@ -593,8 +593,8 @@ int batadv_meshif_create_vlan(struct bat
+  * @bat_priv: the bat priv with all the mesh interface information
+  * @vlan: the object to remove
+  */
+-static void batadv_meshif_destroy_vlan(struct batadv_priv *bat_priv,
+-				       struct batadv_meshif_vlan *vlan)
++void batadv_meshif_destroy_vlan(struct batadv_priv *bat_priv,
++				struct batadv_meshif_vlan *vlan)
+ {
+ 	/* explicitly remove the associated TT local entry because it is marked
+ 	 * with the NOPURGE flag
+@@ -1089,22 +1089,13 @@ static int batadv_meshif_newlink(struct
+ static void batadv_meshif_destroy_netlink(struct net_device *mesh_iface,
+ 					  struct list_head *head)
+ {
+-	struct batadv_priv *bat_priv = netdev_priv(mesh_iface);
+ 	struct batadv_hard_iface *hard_iface;
+-	struct batadv_meshif_vlan *vlan;
+ 
+ 	while (!list_empty(&mesh_iface->adj_list.lower)) {
+ 		hard_iface = netdev_adjacent_get_private(mesh_iface->adj_list.lower.next);
+ 		batadv_hardif_disable_interface(hard_iface);
  	}
  
-@@ -436,7 +444,7 @@ static int sof_ipc3_bytes_ext_put(struct
- 	}
+-	/* destroy the "untagged" VLAN */
+-	vlan = batadv_meshif_vlan_get(bat_priv, BATADV_NO_FLAGS);
+-	if (vlan) {
+-		batadv_meshif_destroy_vlan(bat_priv, vlan);
+-		batadv_meshif_vlan_put(vlan);
+-	}
+-
+ 	unregister_netdevice_queue(mesh_iface, head);
+ }
  
- 	/* be->max has been verified to be >= sizeof(struct sof_abi_hdr) */
--	if (cdata->data->size > scontrol->max_size - sizeof(struct sof_abi_hdr)) {
-+	if (cdata->data->size > scontrol->max_size - sizeof(*cdata) - sizeof(struct sof_abi_hdr)) {
- 		dev_err_ratelimited(scomp->dev, "Mismatch in ABI data size (truncated?)\n");
- 		goto err_restore;
- 	}
-@@ -452,7 +460,7 @@ static int sof_ipc3_bytes_ext_put(struct
- err_restore:
- 	/* If we have an issue, we restore the old, valid bytes control data */
- 	if (scontrol->old_ipc_control_data) {
--		memcpy(cdata->data, scontrol->old_ipc_control_data, scontrol->max_size);
-+		memcpy(cdata, scontrol->old_ipc_control_data, scontrol->max_size);
- 		kfree(scontrol->old_ipc_control_data);
- 		scontrol->old_ipc_control_data = NULL;
- 	}
-@@ -491,10 +499,13 @@ static int _sof_ipc3_bytes_ext_get(struc
- 	}
- 
- 	/* check data size doesn't exceed max coming from topology */
--	if (cdata->data->size > scontrol->max_size - sizeof(struct sof_abi_hdr)) {
--		dev_err_ratelimited(scomp->dev, "User data size %d exceeds max size %zu\n",
-+	if (cdata->data->size > scontrol->max_size - sizeof(*cdata) -
-+				sizeof(struct sof_abi_hdr)) {
-+		dev_err_ratelimited(scomp->dev,
-+				    "User data size %u exceeds max size %zu\n",
- 				    cdata->data->size,
--				    scontrol->max_size - sizeof(struct sof_abi_hdr));
-+				    scontrol->max_size - sizeof(*cdata) -
-+				    sizeof(struct sof_abi_hdr));
- 		return -EINVAL;
- 	}
- 
+--- a/net/batman-adv/mesh-interface.h
++++ b/net/batman-adv/mesh-interface.h
+@@ -21,6 +21,8 @@ void batadv_interface_rx(struct net_devi
+ bool batadv_meshif_is_valid(const struct net_device *net_dev);
+ extern struct rtnl_link_ops batadv_link_ops;
+ int batadv_meshif_create_vlan(struct batadv_priv *bat_priv, unsigned short vid);
++void batadv_meshif_destroy_vlan(struct batadv_priv *bat_priv,
++				struct batadv_meshif_vlan *vlan);
+ void batadv_meshif_vlan_release(struct kref *ref);
+ struct batadv_meshif_vlan *batadv_meshif_vlan_get(struct batadv_priv *bat_priv,
+ 						  unsigned short vid);
 
 
