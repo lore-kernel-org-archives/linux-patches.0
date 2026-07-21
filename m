@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6E543CEF9;
-	Tue, 21 Jul 2026 22:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F2339733E;
+	Tue, 21 Jul 2026 22:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674459; cv=none; b=W4FwVOiHqlnfzDBTbRqP0vwkWeF3R0ciD4OrBaTc393uLysUfuPpfTWy9ZMEaxSwSBo4m28QaOwZqLyIWKyjRYw7CiEAfN3Cxo779yD3AGnAhSEJRlt97ZFHJj8561SWsR8/GgqjAPkfWumbEovg971VzTv9z+abSOydztbd9mM=
+	t=1784674462; cv=none; b=fmNbjQJGcK3792nsAxD6K7DtTUKO16iX9m3d1KGd+SwxOtj2F/LqXm4oZGLcifOqZWHHsvQrzlxkAWE1NAewz+70GEW/z/f8X/6QSBoFAGbOWQ1Ge/4CUfqlV9ud4T2Y8GUSPMQt+xrJTFxO76N3HEdb3xT7FeStBIEV1XzowqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674459; c=relaxed/simple;
-	bh=B/i+Rhc7ZR/4DYlHkVc1SdQTma6YYfY8dJFa7S0gcxk=;
+	s=arc-20240116; t=1784674462; c=relaxed/simple;
+	bh=7V2CAI0Ij8VAcWeuRGeSIeDFilYCVKGV5hqwBCq7OiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AFaw/lL6RV6D8/i4h8SwTfua/Ll3qPNO9N9iPFyCS2qNiQjlPcuwWW/7ss4FtghdCNprSnzhFLZSvmJ8vbDmZ9g4fkNE9hy88LfEmL2+TmsOdbsf15JFf/pExybDkVmvzPblNsQo2JRhQhEK8vSG5Cwv2CquCDPd7UGboFmBY6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eSPSoTtd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SwN5UA5jq907dap4bhx2qD+5a6YAYj0yYAlacmguH3tfDfqgp8Xp6i55NF99fphRkx8eWMJM67B60i/UF/XQYzYOcD7i8O+3dnhLRSo76plfgQJNXsqQLx8uZmFc2ECn7Mqjsba/3QImfEmMhvywNm0ehusu4iN5IC4iT486gHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqDWGTws; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eSPSoTtd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D27C1F000E9;
-	Tue, 21 Jul 2026 22:54:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqDWGTws"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD5E1F00A3A;
+	Tue, 21 Jul 2026 22:54:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674458;
-	bh=K7xkAsdq+/NJPw0oSrdOFvTwCEJ7nIeXgrQTCGjg/oI=;
+	s=korg; t=1784674461;
+	bh=yV6jBfqUzvpNFN52JFbL3uDbq+8YBdgE7viD2mMdHVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eSPSoTtd2hNqyNK25Y4E6zpMvEyOczRV9vG4dDuZAhUaeq0v7wyVol/3h1cfB3xQt
-	 F/NchRKPAPQRojJyR8KA3jtZUEBusSAl+8UNsY9iKT7W8TuGPZRxSk3UDnZ+2eeRTu
-	 QMrFdqc8mUqIY08/NnurHfCYk7MtmMhovb3w4aZc=
+	b=bqDWGTwsVQ4dFnyRez+/C6aefvlzJbbn0hlWgCaB5QhtRJgqpiOnZdSNe/IZku3o6
+	 oojHdmr+8EoAwwEJNn0vAvcHRWAYaIekJIWRQhdVgT+djeaHCOB8JQt4MPL0T5YZ+n
+	 nqjUUrp/3f+g9066I6fH7nTi9BCEscf56ObRy9vY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 542/699] bnx2x: fix potential memory leak in bnx2x_alloc_mem_bp()
-Date: Tue, 21 Jul 2026 17:25:01 +0200
-Message-ID: <20260721152407.930278867@linuxfoundation.org>
+	HyeongJun An <sammiee5311@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.10 551/699] hwmon: (asus_atk0110) Check package count before accessing element
+Date: Tue, 21 Jul 2026 17:25:10 +0200
+Message-ID: <20260721152408.132286763@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,43 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit a986fde914d88af47eb78fd29c5d1af7952c3500 upstream.
+commit e2735b39f044bad7bf2017aef248935525bc0b97 upstream.
 
-If the allocation of fp[i].tpa_info fails, the error path will not free
-the struct bnx2x_fastpath allocated earlier, as it is not linked to the
-bp structure yet. Fix that by linking it immediately after allocation.
+atk_ec_present() walks the management group package returned by the GGRP
+ACPI method and, for each sub-package, reads its first element:
 
+	id = &obj->package.elements[0];
+	if (id->type != ACPI_TYPE_INTEGER)
+
+without checking that the sub-package is non-empty.  ACPICA allocates the
+element array with exactly package.count entries, so for a sub-package
+with a zero count this reads past the allocation.
+
+The sibling function atk_debugfs_ggrp_open() performs the same access but
+skips empty packages with a package.count check first.  Add the same
+check to atk_ec_present() so a malformed firmware package cannot trigger
+an out-of-bounds read.
+
+Fixes: 9e6eba610c2e ("hwmon: (asus_atk0110) Enable the EC")
 Cc: stable@vger.kernel.org
-Fixes: 15192a8cf8a8 ("bnx2x: Split the FP structure")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260620062402.89549-1-nihaal@cse.iitm.ac.in
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://lore.kernel.org/r/20260619122746.721981-1-sammiee5311@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/hwmon/asus_atk0110.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-@@ -4740,6 +4740,7 @@ int bnx2x_alloc_mem_bp(struct bnx2x *bp)
- 	fp = kcalloc(bp->fp_array_size, sizeof(*fp), GFP_KERNEL);
- 	if (!fp)
- 		goto alloc_err;
-+	bp->fp = fp;
- 	for (i = 0; i < bp->fp_array_size; i++) {
- 		fp[i].tpa_info =
- 			kcalloc(ETH_MAX_AGGREGATION_QUEUES_E1H_E2,
-@@ -4748,8 +4749,6 @@ int bnx2x_alloc_mem_bp(struct bnx2x *bp)
- 			goto alloc_err;
- 	}
+--- a/drivers/hwmon/asus_atk0110.c
++++ b/drivers/hwmon/asus_atk0110.c
+@@ -1037,6 +1037,9 @@ static int atk_ec_present(struct atk_dat
+ 		if (obj->type != ACPI_TYPE_PACKAGE)
+ 			continue;
  
--	bp->fp = fp;
--
- 	/* allocate sp objs */
- 	bp->sp_objs = kcalloc(bp->fp_array_size, sizeof(struct bnx2x_sp_objs),
- 			      GFP_KERNEL);
++		if (!obj->package.count)
++			continue;
++
+ 		id = &obj->package.elements[0];
+ 		if (id->type != ACPI_TYPE_INTEGER)
+ 			continue;
 
 
