@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B500471246;
-	Tue, 21 Jul 2026 19:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C215146EF8C;
+	Tue, 21 Jul 2026 19:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660715; cv=none; b=PFeOJyrRjBA3pQHfJvWaYNT+BgiofdL2lvTadqB4KDQUku3jBdaoIpT1SD/6GVrwcH/cCFAvMlGuzIz1ON/B+03YoDdko3uyIszZ4AyDwflmZpaqsIUoVwpuYwDW23U7+6xj1a7DGjMcdcjkjuMTOLFUjwdJjsr3BD9JVRhfmMk=
+	t=1784660718; cv=none; b=ZvakV4XBCrNggHWQsQDsbo0dSpVffPuZXKpu6sWRrJeYYkfinWg17Pu8IWn7vd7sitENQoGe63oaDVfUqCyiyKfOoOpH4mtdptTvWj7p8oqnjdhIw2Xn4QsKduy+WebIvvgkSCyt1yU5TNejHFYTCXTL4Xwb3WlriPRvD/0fMi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660715; c=relaxed/simple;
-	bh=vRsq6749X9AL8QI1L1p3v687Zy3nWKxyqAmhHXPZhC8=;
+	s=arc-20240116; t=1784660718; c=relaxed/simple;
+	bh=eKjwgnCC9CARKsThHLwURNskbhnei77jZurU0cz8WPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D5xO/DEY9Q7j70Mb4xo1J1V8Fwsl04d7QBGDa1ykrslWZajwGDNTHJKMcp7pvDJbGyoh6l2kqHV9pS0YmVXVLUoV0nyPal+gLyQz8/JpQBaPaKNDSVZkmynj35+MWDvhB+FK7Op0P7F8Lmx78SsARauKtRuq3Wgj2eszplHDkUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOnBp3Ru; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TCZEWStE50IPDxTrn37mcmMDl26oxD+Lkqumy7ek6tAZ6Ad90TKpTAUUfVQoBZO++jrvs2ibxlNZXG0n8JyYd+5fPhXqo3rwLfOEKMoPtEoQyyaQqYDFQ3rGti4RKltKx2k9E10wIV5NcbxeKWcIfbUNPOhHLBBBB+NLggKuiIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tKVjAG0W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOnBp3Ru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90C7E1F000E9;
-	Tue, 21 Jul 2026 19:05:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tKVjAG0W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA8A1F000E9;
+	Tue, 21 Jul 2026 19:05:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660714;
-	bh=cEUatnxa6Ad8+jUrKip4fZFhCSnW0mTZM0GqM+rIkOg=;
+	s=korg; t=1784660716;
+	bh=9D2ZTWF/WyLDZZwIvMtBdMHelmWcpDaMOG5YVQCPd8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jOnBp3RuaabB18DYYgmLHRCeILK+nNQPWMiYURFqTWZbQIfy1/MLtA8RwQVILQziu
-	 j8O+tDJ0Np24SHo9J7fJwI+huZw7fsZ28JWi7YwS2scCbfr8zbN3/X4F3LA/dlxBai
-	 0alyDCJSHMMrpU6V4EE/31WLx2q1/A/Gs1howfGI=
+	b=tKVjAG0WISx5zsMp+FGmUakvrHwfy7bqGEY82GpEm8Q1C2p3zB0USNFRhjQJ9kMOW
+	 T0erWZTzq05yG0uD5I2ACOnmqD/LS35RmXq5AMUKTsijl/eofcqE/VIEbCnO4/9LNo
+	 NQ+nEid9rhbtU9kGAm/HHZOpj5T1ps/VAm2uvCZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Deak <imre.deak@intel.com>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Matt Atwood <matthew.s.atwood@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	intel-xe@lists.freedesktop.org,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1084/2077] drm/i915: clear CRTC color blob pointers after dropping refs
-Date: Tue, 21 Jul 2026 17:12:37 +0200
-Message-ID: <20260721152618.390810915@linuxfoundation.org>
+Subject: [PATCH 7.1 1085/2077] drm/xe: Fix wa_oob codegen recipe for external module builds
+Date: Tue, 21 Jul 2026 17:12:38 +0200
+Message-ID: <20260721152618.413872507@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,62 +48,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-[ Upstream commit 31f077088e0faae6be8377741f356dea1b94ba46 ]
+[ Upstream commit 92dc59ab2a09097cdf249e0288ff9b69261761c6 ]
 
-intel_crtc_put_color_blobs() drops the CRTC color blob references, but
-leaves the corresponding pointers unchanged.
+When building with 'make M=drivers/gpu/drm/xe modules', kbuild invokes
+scripts/Makefile.build with obj=., causing $(obj) to expand to '.'.
+Make normalizes './xe_gen_wa_oob' to 'xe_gen_wa_oob' when constructing
+the $^ automatic variable (target name normalization), so the recipe
+command becomes just 'xe_gen_wa_oob ...' without any path prefix, and
+the shell cannot find the tool.
 
-This can matter in intel_crtc_prepare_cleared_state(), which frees the
-old CRTC hw state before calling intel_dp_tunnel_atomic_clear_stream_bw().
-The latter can fail while looking up the DP tunnel group state, for
-example with -EDEADLK.
+Fix by replacing $^ with explicit $(obj)/xe_gen_wa_oob and
+$(src)/<rules-file> references in both wa_oob recipe commands.
+In recipe strings, make does not apply target name normalization, so
+$(obj)/xe_gen_wa_oob correctly expands to './xe_gen_wa_oob' and the
+shell can execute it. This matches the pattern already used by other
+DRM drivers (e.g. radeon's mkregtable).
 
-If that happens, the function returns without completing the cleared
-state preparation. The failed atomic state will then be cleared by the
-atomic core and intel_crtc_free_hw_state() can be called again for the
-same state, dropping the same blob references again.
-
-Clear the blob pointers after dropping the references so repeated cleanup
-of the same CRTC hw state is safe.
-
-Fixes: 77fcf58df15e ("drm/i915/dp_tunnel: Fix error handling when clearing stream BW in atomic state")
-Suggested-by: Imre Deak <imre.deak@intel.com>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Imre Deak <imre.deak@intel.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patch.msgid.link/20260612035310.3013066-1-lgs201920130244@gmail.com
-(cherry picked from commit d5005addb5f68e8a0edce249506757bdc9e3d8c8)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: f037e0b78e6d ("drm/xe: add xe_device_wa infrastructure")
+Cc: Matt Atwood <matthew.s.atwood@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: intel-xe@lists.freedesktop.org
+Assisted-by: GitHub_Copilot:claude-sonnet-4.6
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://patch.msgid.link/20260604074501.172129-1-thomas.hellstrom@linux.intel.com
+(cherry picked from commit 3a11a63cc16660d514ff584e7551589655337e87)
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_atomic.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/xe/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_atomic.c b/drivers/gpu/drm/i915/display/intel_atomic.c
-index 71b7325917b6e6..a16e1cb7d41e51 100644
---- a/drivers/gpu/drm/i915/display/intel_atomic.c
-+++ b/drivers/gpu/drm/i915/display/intel_atomic.c
-@@ -289,6 +289,12 @@ static void intel_crtc_put_color_blobs(struct intel_crtc_state *crtc_state)
+diff --git a/drivers/gpu/drm/xe/Makefile b/drivers/gpu/drm/xe/Makefile
+index 03242e8b3d876c..de36c8b640bafc 100644
+--- a/drivers/gpu/drm/xe/Makefile
++++ b/drivers/gpu/drm/xe/Makefile
+@@ -16,14 +16,14 @@ subdir-ccflags-y += -I$(obj) -I$(src)
+ hostprogs := xe_gen_wa_oob
+ generated_oob := $(obj)/generated/xe_wa_oob.c $(obj)/generated/xe_wa_oob.h
+ quiet_cmd_wa_oob = GEN     $(notdir $(generated_oob))
+-      cmd_wa_oob = mkdir -p $(@D); $^ $(generated_oob)
++      cmd_wa_oob = mkdir -p $(@D); $(obj)/xe_gen_wa_oob $(src)/xe_wa_oob.rules $(generated_oob)
+ $(obj)/generated/%_wa_oob.c $(obj)/generated/%_wa_oob.h: $(obj)/xe_gen_wa_oob \
+ 		 $(src)/xe_wa_oob.rules
+ 	$(call cmd,wa_oob)
  
- 	drm_property_blob_put(crtc_state->pre_csc_lut);
- 	drm_property_blob_put(crtc_state->post_csc_lut);
-+
-+	crtc_state->hw.degamma_lut = NULL;
-+	crtc_state->hw.gamma_lut = NULL;
-+	crtc_state->hw.ctm = NULL;
-+	crtc_state->pre_csc_lut = NULL;
-+	crtc_state->post_csc_lut = NULL;
- }
- 
- void intel_crtc_free_hw_state(struct intel_crtc_state *crtc_state)
+ generated_device_oob := $(obj)/generated/xe_device_wa_oob.c $(obj)/generated/xe_device_wa_oob.h
+ quiet_cmd_device_wa_oob = GEN	$(notdir $(generated_device_oob))
+-      cmd_device_wa_oob = mkdir -p $(@D); $^ $(generated_device_oob)
++      cmd_device_wa_oob = mkdir -p $(@D); $(obj)/xe_gen_wa_oob $(src)/xe_device_wa_oob.rules $(generated_device_oob)
+ $(obj)/generated/%_device_wa_oob.c $(obj)/generated/%_device_wa_oob.h: $(obj)/xe_gen_wa_oob \
+ 		 $(src)/xe_device_wa_oob.rules
+ 	$(call cmd,device_wa_oob)
 -- 
 2.53.0
 
