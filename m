@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9B346AA6B;
-	Tue, 21 Jul 2026 15:39:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2478446AA92;
+	Tue, 21 Jul 2026 15:39:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648374; cv=none; b=X+nhlDapQm9C4nkZbeIuWwXvWkffR/ShYSh4QEEipTZvF8RHadRxu6TASn/G0JyYg3Yu7DvUEaGW57ePgETwm9Diq59jDVugjVAc/kr9Pmz+7RHt1+h4ei5Q0hDp5D3OQtFWhNECxwu2206lJpyXEQIMptnh7ZDXYdMmnQoJ4rg=
+	t=1784648377; cv=none; b=ZOcl/MVb8HjESkekjWp69QKlkqrzme+6FV4Foghf3GcvNAOjBnWfJz3+jg248g/wDl9dpyHxN9AvbrTUiNfUs9exeKCsRef1YM/wbal63SaHoUiyGNYueMV94FDDyi9Pv0q4mFkUk7EBWoFaV2dU6WaSPKW5+nQ+oVrBuR7f+w0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648374; c=relaxed/simple;
-	bh=oc+1SGshiQRuhVB2M3Kdcwg09gR9ALODWl/m/WpX3SU=;
+	s=arc-20240116; t=1784648377; c=relaxed/simple;
+	bh=Yq7PIXKFH1w8hW9NkeEiUiCvHLCO2OhBSuTX8IIRi0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P06qQDQmkOcjjSZsp/U117dSDV8Wohocu/FrYI+OlOaKVQOBgk6g73RJm7Xxm/JmRFVMme1Eb9aMOl5GqCQTQedu35F4H5QuJkPZ3j7/IlRe1Mhg90YqVgAqFI20haPIUxiwm7dgYsA9+eBc34rJHOaiAl2WyFJFZeEhKLmW6w8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZIXlBiv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=npbFDihMsUJ6l1cd6dgvqlWEcNEmQPT/WmnVXNoBtu4pfnijl/wm71zBfr3Uq1cJJ4wSqcn2al4aMmjlh2EzWOnz8LOYuDBY1TziNO42cnIHlVgdTWUyb066i9rYElw8O70zmz8K11H2B7y3lp5KueAFujFf1hGxk01D9l5JHdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGyEBFgC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZIXlBiv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B496F1F000E9;
-	Tue, 21 Jul 2026 15:39:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGyEBFgC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2EB1F000E9;
+	Tue, 21 Jul 2026 15:39:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648373;
-	bh=lcIZptcOvj4d9eipSUxfNNFLg4ntoDiFk6o1TUy8wxg=;
+	s=korg; t=1784648375;
+	bh=QPk8SUNt00gkvPDtKpC8rvcQdFKrVoY6ZtwN6h0BNVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jZIXlBivPIYAfVWTSgAK2cBVuaHY/UX21dWbOLBHpp7TZ4IEK8UjnfEWS7CR8fGZI
-	 5yL3LMmKqM06zvT+LW9LxALb0xM/biuVA18motika/E/v3WVaArEc3996G0Paf08yb
-	 8G4NM4J8TkbinLfJGT9nz6D35MNWW2vrkDLi8Qws=
+	b=GGyEBFgCvovo2BqfbHEq/emkSS4Pg/Y6Xybqe3TjrRmP2YAoWio9kp/xSO7c7/W8k
+	 1S+dOiIXvXYQibAg82Y81tNVY+65DNDrdfbDouGVFBrh11Me5klxXVPPm5DNWdIaV1
+	 EcIq93xmaqo5b4wybEkQzCsmM/1Ywh4OdBYLUijg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0173/2077] ntb: Use consistent DMA attributes when freeing DMA mappings
-Date: Tue, 21 Jul 2026 16:57:26 +0200
-Message-ID: <20260721152556.766648143@linuxfoundation.org>
+Subject: [PATCH 7.1 0174/2077] media: qcom: camss: vfe: fix PIX subdev naming on VFE lite
+Date: Tue, 21 Jul 2026 16:57:27 +0200
+Message-ID: <20260721152556.789845338@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,51 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
 
-[ Upstream commit 9d625aa2ebd445868955719e0abcf695b43f9318 ]
+[ Upstream commit c97e797a64cdfe4acecff831b4285418d2815893 ]
 
-The counterpart of dma_alloc_attrs() is dma_free_attrs(), which must
-receive the same DMA attributes used during allocation. The code
-previously used dma_free_coherent(), which does not accept or apply any
-DMA attributes.
+VFE lite hardware does not provide a functional PIX path, but after
+the per sub-device type resource changes the PIX subdev name is still
+assigned unconditionally.
 
-Fixes: 061a785a114f ("ntb: Force physically contiguous allocation of rx ring buffers")
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20260501-dma-attrs-debug-v2-2-8dbac75cd501@nvidia.com
+Only assign the PIX subdev name on non-lite VFE variants to avoid
+exposing a misleading device name.
+
+Fixes: ae44829a4a97 ("media: qcom: camss: Add per sub-device type resources")
+Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/ntb_transport.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/media/platform/qcom/camss/camss-vfe.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ntb/ntb_transport.c b/drivers/ntb/ntb_transport.c
-index 771eb7d9f43560..f59f926d4bfaa9 100644
---- a/drivers/ntb/ntb_transport.c
-+++ b/drivers/ntb/ntb_transport.c
-@@ -766,8 +766,8 @@ static void ntb_free_mw(struct ntb_transport_ctx *nt, int num_mw)
- 		return;
- 
- 	ntb_mw_clear_trans(nt->ndev, PIDX, num_mw);
--	dma_free_coherent(dma_dev, mw->alloc_size,
--			  mw->alloc_addr, mw->original_dma_addr);
-+	dma_free_attrs(dma_dev, mw->alloc_size, mw->alloc_addr,
-+		       mw->original_dma_addr, DMA_ATTR_FORCE_CONTIGUOUS);
- 	mw->xlat_size = 0;
- 	mw->buff_size = 0;
- 	mw->alloc_size = 0;
-@@ -828,8 +828,8 @@ static int ntb_alloc_mw_buffer(struct ntb_transport_mw *mw,
- 	return 0;
- 
- err:
--	dma_free_coherent(ntb_dev, mw->alloc_size, alloc_addr, dma_addr);
--
-+	dma_free_attrs(ntb_dev, mw->alloc_size, alloc_addr, dma_addr,
-+		       DMA_ATTR_FORCE_CONTIGUOUS);
- 	return rc;
- }
- 
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+index 5baf0e3d4bc461..2ee4f9ae0ab50e 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -2053,7 +2053,7 @@ int msm_vfe_register_entities(struct vfe_device *vfe,
+ 		v4l2_subdev_init(sd, &vfe_v4l2_ops);
+ 		sd->internal_ops = &vfe_v4l2_internal_ops;
+ 		sd->flags |= V4L2_SUBDEV_FL_HAS_DEVNODE;
+-		if (i == VFE_LINE_PIX)
++		if (i == VFE_LINE_PIX && vfe->res->is_lite == false)
+ 			snprintf(sd->name, ARRAY_SIZE(sd->name), "%s%d_%s",
+ 				 MSM_VFE_NAME, vfe->id, "pix");
+ 		else
 -- 
 2.53.0
 
