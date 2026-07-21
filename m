@@ -1,111 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2ABD470422;
-	Tue, 21 Jul 2026 21:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFE04582CB;
+	Tue, 21 Jul 2026 21:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667772; cv=none; b=tddZleb9yF/HMLbdW1E0JdkVv6l8thCrg1870w73xVzw2eX52FbGXrJRw2R2nVo5yDBwVtt0wiJ7A9zGX6drAMCfQUxGBBHXruCxCLpJmtOvyS7aq37K10vHI3WC5UUknTgD6iRlDvRPrhNR9d2rhuD2qz+JAvxSqo+1DLm5BEo=
+	t=1784667774; cv=none; b=tzriCYGm0gcSZ+ZqUznBdL0ZAZJPdaqjY8fYqAbIuP9/8Cy3nLqCZrL5e+P5c5IV2dJj06eM/KAW45cVAZD6sXPnqP4fMe4kL991G6DGCgPuxQ8ZB02rrMHFxlmsMssENxB2PcGkCA8sOYe12By8s/K8OE9/L+kCzIHJxfIly9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667772; c=relaxed/simple;
-	bh=nttywRwr7W13s7a/Vq8CXmwdVpk/kG+Nl2kXMwmIEDA=;
+	s=arc-20240116; t=1784667774; c=relaxed/simple;
+	bh=L5Pp+N5cmfnB2ANLsOfGyALV+NhMraALbwsTBEbkbtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q1b0UVCyNErJjtjozmLcwYViRCjlu2diMjiVUquTUB5dCeF4ppXBxzGfzKOwV55JvpN9dT54o3lMjrrqgXkl7rubEKK5IBThKt98a3rx7R5PLo2H7wruXy6qqEyUZ/L/2P6+acdbporFG1T6GSKDljHlxgehLESBNSY5SJWiW2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEAJuR+f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cQhIIktTWQyrqCuy4Cvp4KwLk/AxH6G4/FDJsoR3sHLpxBG0BLiR/U3UWS1VPBPBCiJK3e/4Weav7GSNh4OhiASkwpFUB6gA88hRn9nwhvPV1VJ/UhDAzwAjo5UnyJnK0VrtrxRPYxjanUFbc74hjo0rZpRXTBBMC5twE/eM/oA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMfbRRbg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEAJuR+f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FC71F00A3A;
-	Tue, 21 Jul 2026 21:02:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMfbRRbg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB9131F00A3D;
+	Tue, 21 Jul 2026 21:02:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667763;
-	bh=kL4rz7MnYD0gJzMu3qHLpC3/b2hcZ47iK7orHjiM2iQ=;
+	s=korg; t=1784667766;
+	bh=pvDeW4RYiFv6+cREA/j6oBVJr317FkFP4E4dRm4vyPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WEAJuR+fGw9SjE1Ud0c/WIUowelnHe6O2mZU+/RmmcPL3yXnvjjKjwpBaiZZzwyEu
-	 R1W3OisO1DMPg803WpMtev5Md0hgVe8IJ1q2SEOdozKUUsS73RW88JSx3Xib/uEosp
-	 gFUGqXDZwNVbS0SII6MYKY0pYRD0jleURcWqJBTo=
+	b=bMfbRRbg43t7j/bzJ3AbAw3iXHGuaIWm4sUxjjCd50KqAF55HF6H4Tzz4N3F/FF8f
+	 ya5ubUZeaLuh7xo+XusdTosaOtNZJrMyNnPDNnSnXd5pwoxbGgdUN0HKYVsSvTsla4
+	 m5DhxxWBtP4hOanJ+dlAsJaAp1FBjFPcUnrnSzLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Christian Brauner <brauner@kernel.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Chuck Lever <cel@kernel.org>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Dave Chinner <david@fromorbit.com>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	Kirill Tkhai <tkhai@ya.ru>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Steven Price <steven.price@arm.com>,
-	Theodore Tso <tytso@mit.edu>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Alasdair Kergon <agk@redhat.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Alyssa Rosenzweig <alyssa.rosenzweig@collabora.com>,
-	Andreas Dilger <adilger.kernel@dilger.ca>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Anna Schumaker <anna@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Bob Peterson <rpeterso@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Carlos Llamas <cmllamas@google.com>,
-	Chandan Babu R <chandan.babu@oracle.com>,
-	Chao Yu <chao@kernel.org>,
-	Chris Mason <clm@fb.com>,
-	Coly Li <colyli@suse.de>,
-	Dai Ngo <Dai.Ngo@oracle.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	David Airlie <airlied@gmail.com>,
-	David Hildenbrand <david@redhat.com>,
-	David Sterba <dsterba@suse.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Huang Rui <ray.huang@amd.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Jan Kara <jack@suse.cz>,
-	Jason Wang <jasowang@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Jeffle Xu <jefflexu@linux.alibaba.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Juergen Gross <jgross@suse.com>,
-	Kent Overstreet <kent.overstreet@gmail.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Minchan Kim <minchan@kernel.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Zenghui Yu <zenghui.yu@linux.dev>,
+	Nhat Pham <nphamcs@gmail.com>,
+	SeongJae Park <sj@kernel.org>,
+	Qi Zheng <qi.zheng@linux.dev>,
 	Muchun Song <muchun.song@linux.dev>,
-	Nadav Amit <namit@vmware.com>,
-	Neil Brown <neilb@suse.de>,
-	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Richard Weinberger <richard@nod.at>,
-	Rob Clark <robdclark@gmail.com>,
-	Rob Herring <robh@kernel.org>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Sean Paul <sean@poorly.run>,
-	Song Liu <song@kernel.org>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Tomeu Vizoso <tomeu.vizoso@collabora.com>,
-	Tom Talpey <tom@talpey.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	Yue Hu <huyue2@coolpad.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Dave Chinner <david@fromorbit.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1183/1266] mm: shrinker: remove redundant shrinker_rwsem in debugfs operations
-Date: Tue, 21 Jul 2026 17:27:00 +0200
-Message-ID: <20260721152508.264935702@linuxfoundation.org>
+Subject: [PATCH 6.6 1184/1266] mm/shrinker: do not hold RCU lock in shrinker_debugfs_count_show()
+Date: Tue, 21 Jul 2026 17:27:01 +0200
+Message-ID: <20260721152508.288113118@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -118,163 +52,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qi Zheng <zhengqi.arch@bytedance.com>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-[ Upstream commit 1dd49e58f966b1eecd935dc28458a8369ae94ad1 ]
+[ Upstream commit b902890c62d200b3509cb5e09cf1e0a66553c128 ]
 
-debugfs_remove_recursive() will wait for debugfs_file_put() to return, so
-the shrinker will not be freed when doing debugfs operations (such as
-shrinker_debugfs_count_show() and shrinker_debugfs_scan_write()), so there
-is no need to hold shrinker_rwsem during debugfs operations.
+Reading the debugfs "count" file of a memcg-aware shrinker can sleep
+inside an RCU read-side critical section:
 
-Link: https://lkml.kernel.org/r/20230911092517.64141-4-zhengqi.arch@bytedance.com
-Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
-Reviewed-by: Muchun Song <songmuchun@bytedance.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Chuck Lever <cel@kernel.org>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: Darrick J. Wong <djwong@kernel.org>
+  BUG: sleeping function called from invalid context at kernel/cgroup/rstat.c:421
+  RCU nest depth: 1, expected: 0
+   css_rstat_flush
+   mem_cgroup_flush_stats
+   zswap_shrinker_count
+   shrinker_debugfs_count_show
+
+shrinker_debugfs_count_show() invokes the ->count_objects() callback under
+rcu_read_lock().  The zswap callback flushes memcg stats via
+css_rstat_flush(), which may sleep, so it must not run under RCU.
+
+The RCU lock is not needed here.  mem_cgroup_iter() takes RCU internally
+and returns a memcg holding a css reference (dropped on the next iteration
+or by mem_cgroup_iter_break()), so the memcg stays alive without it.  The
+shrinker is kept alive by the open debugfs file: shrinker_free() removes
+the debugfs entries via debugfs_remove_recursive(), which waits for
+in-flight readers to drain, before call_rcu(..., shrinker_free_rcu_cb).
+The sibling "scan" handler already invokes the sleeping ->scan_objects()
+callback with no RCU section.
+
+Drop the rcu_read_lock()/rcu_read_unlock().
+
+Link: https://lore.kernel.org/20260610232048.62930-1-shakeel.butt@linux.dev
+Fixes: 5035ebc644ae ("mm: shrinkers: introduce debugfs interface for memory shrinkers")
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Reported-by: Zenghui Yu <zenghui.yu@linux.dev>
+Closes: https://lore.kernel.org/all/c052a064-cddb-494f-a0d8-f8a10b4b1c4d@linux.dev/
+Suggested-by: Nhat Pham <nphamcs@gmail.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Reviewed-by: Qi Zheng <qi.zheng@linux.dev>
+Tested-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+Reviewed-by: Nhat Pham <nphamcs@gmail.com>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
 Cc: Dave Chinner <david@fromorbit.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Joel Fernandes <joel@joelfernandes.org>
-Cc: Kirill Tkhai <tkhai@ya.ru>
-Cc: Paul E. McKenney <paulmck@kernel.org>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Steven Price <steven.price@arm.com>
-Cc: Theodore Ts'o <tytso@mit.edu>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Alasdair Kergon <agk@redhat.com>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Alyssa Rosenzweig <alyssa.rosenzweig@collabora.com>
-Cc: Andreas Dilger <adilger.kernel@dilger.ca>
-Cc: Andreas Gruenbacher <agruenba@redhat.com>
-Cc: Anna Schumaker <anna@kernel.org>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Bob Peterson <rpeterso@redhat.com>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Carlos Llamas <cmllamas@google.com>
-Cc: Chandan Babu R <chandan.babu@oracle.com>
-Cc: Chao Yu <chao@kernel.org>
-Cc: Chris Mason <clm@fb.com>
-Cc: Coly Li <colyli@suse.de>
-Cc: Dai Ngo <Dai.Ngo@oracle.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: David Airlie <airlied@gmail.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: David Sterba <dsterba@suse.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Gao Xiang <hsiangkao@linux.alibaba.com>
-Cc: Huang Rui <ray.huang@amd.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jaegeuk Kim <jaegeuk@kernel.org>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Jason Wang <jasowang@redhat.com>
-Cc: Jeff Layton <jlayton@kernel.org>
-Cc: Jeffle Xu <jefflexu@linux.alibaba.com>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Josef Bacik <josef@toxicpanda.com>
-Cc: Juergen Gross <jgross@suse.com>
-Cc: Kent Overstreet <kent.overstreet@gmail.com>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Mike Snitzer <snitzer@kernel.org>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Nadav Amit <namit@vmware.com>
-Cc: Neil Brown <neilb@suse.de>
-Cc: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
-Cc: Olga Kornievskaia <kolga@netapp.com>
-Cc: Richard Weinberger <richard@nod.at>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Rob Herring <robh@kernel.org>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: Song Liu <song@kernel.org>
-Cc: Stefano Stabellini <sstabellini@kernel.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Tomeu Vizoso <tomeu.vizoso@collabora.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Trond Myklebust <trond.myklebust@hammerspace.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Cc: Yue Hu <huyue2@coolpad.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: b902890c62d2 ("mm/shrinker: do not hold RCU lock in shrinker_debugfs_count_show()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shrinker_debug.c |   16 +---------------
- 1 file changed, 1 insertion(+), 15 deletions(-)
+ mm/shrinker_debug.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
 --- a/mm/shrinker_debug.c
 +++ b/mm/shrinker_debug.c
-@@ -49,17 +49,12 @@ static int shrinker_debugfs_count_show(s
- 	struct mem_cgroup *memcg;
- 	unsigned long total;
- 	bool memcg_aware;
--	int ret, nid;
-+	int ret = 0, nid;
- 
- 	count_per_node = kcalloc(nr_node_ids, sizeof(unsigned long), GFP_KERNEL);
+@@ -55,8 +55,6 @@ static int shrinker_debugfs_count_show(s
  	if (!count_per_node)
  		return -ENOMEM;
  
--	ret = down_read_killable(&shrinker_rwsem);
--	if (ret) {
--		kfree(count_per_node);
--		return ret;
--	}
- 	rcu_read_lock();
- 
+-	rcu_read_lock();
+-
  	memcg_aware = shrinker->flags & SHRINKER_MEMCG_AWARE;
-@@ -92,7 +87,6 @@ static int shrinker_debugfs_count_show(s
+ 
+ 	memcg = mem_cgroup_iter(NULL, NULL, NULL);
+@@ -86,8 +84,6 @@ static int shrinker_debugfs_count_show(s
+ 		}
  	} while ((memcg = mem_cgroup_iter(NULL, memcg, NULL)) != NULL);
  
- 	rcu_read_unlock();
--	up_read(&shrinker_rwsem);
- 
+-	rcu_read_unlock();
+-
  	kfree(count_per_node);
  	return ret;
-@@ -117,7 +111,6 @@ static ssize_t shrinker_debugfs_scan_wri
- 	struct mem_cgroup *memcg = NULL;
- 	int nid;
- 	char kbuf[72];
--	ssize_t ret;
- 
- 	read_len = size < (sizeof(kbuf) - 1) ? size : (sizeof(kbuf) - 1);
- 	if (copy_from_user(kbuf, buf, read_len))
-@@ -146,12 +139,6 @@ static ssize_t shrinker_debugfs_scan_wri
- 		return -EINVAL;
- 	}
- 
--	ret = down_read_killable(&shrinker_rwsem);
--	if (ret) {
--		mem_cgroup_put(memcg);
--		return ret;
--	}
--
- 	sc.nid = nid;
- 	sc.memcg = memcg;
- 	sc.nr_to_scan = nr_to_scan;
-@@ -159,7 +146,6 @@ static ssize_t shrinker_debugfs_scan_wri
- 
- 	shrinker->scan_objects(shrinker, &sc);
- 
--	up_read(&shrinker_rwsem);
- 	mem_cgroup_put(memcg);
- 
- 	return size;
+ }
 
 
