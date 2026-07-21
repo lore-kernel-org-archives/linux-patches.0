@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0343130D3FF;
-	Tue, 21 Jul 2026 20:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FAB386C1C;
+	Tue, 21 Jul 2026 20:52:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667169; cv=none; b=VCzhKag1Ga5X7x7zwWpcw4vfe66FpG3/uu3nrZUlFEls6HGRt0IBEupYyPnQ5tmq8YVEXhini8ePF1r+CEOGWh13ySS57fklaJLX+3zdR6Q1G0VBOPfIMCx3IPe4w0ZTfILdUzoqZ4pCVHh12KRTErLm50yfJzmb18Zi1Ku9D2o=
+	t=1784667172; cv=none; b=bdaw3lX05Q6XrwmrZQj/0iD+r4mBOF8YXx1+CRNveL29dq3jhRgr6OuwIFxJs7pwfKujjAnBRlTXhm0oAt2lHN7WCtekoVpX7+am4RKUrg/lOtDukSt8vAAjI49CzeyUXlevjTkFenrnx/tDyUNEWviFgxSRZUf/23I3DXM7fv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667169; c=relaxed/simple;
-	bh=Rx4+LSzEhzYa/eC5uAmrpzSpVmD+fOFtsiBPQnhfvvg=;
+	s=arc-20240116; t=1784667172; c=relaxed/simple;
+	bh=4q4g3nhft87dDa4Wkw3VEaEDyC38DtxkimCswDMmKNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jLgvLQZgm/+VrS1YqKQL2iqsTn8WZu067i3i9kUSDmsB5R/6sgcJ12Oi7gTsT3U+sqWNNilazkBzr5aLFGbjIM2VkeihCge87QoF2QyEg+Pr+nN8mvt3acfjmIncttpSX1j76/Vy3Ezfh7qI3F6rHkLbeUu/cThA+09tlpoBgjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c0tZA4a2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VWj5sMHSuT0yLbkyg3DGFTIc3gFd6k33ZtD62ysN/wVGeKQR9bwTrQhTHTbCzMrUdIiaE8MLP5BGyumJ9U1QYQIvLRaNOODjEh9b9mzSHfuXdH2/k87WRFYYe5VqvBuw4ua/5iieVMokJe94jaGf375ZpGHszi1Ba49C9uvVWpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOTICFTp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c0tZA4a2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 693D41F000E9;
-	Tue, 21 Jul 2026 20:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOTICFTp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E3C61F000E9;
+	Tue, 21 Jul 2026 20:52:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667167;
-	bh=3MrCk1PkQ10M1f5nJY2CJuGx5utMzfPfFCPaVM12Lx8=;
+	s=korg; t=1784667170;
+	bh=XGvmQqVRGwlVLX/0onkyUC9H/lYpsxdv6EWQ/nZYcD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c0tZA4a2eHFa02fI1BplwjIzZ6ecYnbYupgLMfS2dvwYWRL3GULZxthUo6wdBaaHI
-	 JtyZwy5BkX+8fYxx2rU5nKcAq64CdoTr1R8ORGyxrth1Jo4zkJh4Iu6/9w8JL9zCk+
-	 TEuq8uiZF45SvYBflL8UgKhd24y06xbrft8ujXFY=
+	b=eOTICFTppZRWbfmvBGXriZ3ugUy9Cc2qajJ1JabErlUHG9Iw9Mpeq4bSVR281LV54
+	 ln2OghdR37jX+q8XFw74w/M8Ie2Df2QefvWK/Ifl0H/cE2cypU7Syboxx4IQJWFG1N
+	 e8ElnUQZ1kKfqGJ7AusbGosrwRxFtHsuoftnqPA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.6 0958/1266] HID: playstation: validate num_touch_reports in DualShock 4 reports
-Date: Tue, 21 Jul 2026 17:23:15 +0200
-Message-ID: <20260721152503.265554508@linuxfoundation.org>
+	Muhammad Bilal <meatuni001@gmail.com>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.6 0923/1266] netfilter: nf_conntrack_irc: fix parse_dcc() off-by-one OOB read
+Date: Tue, 21 Jul 2026 17:22:40 +0200
+Message-ID: <20260721152502.492240276@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -44,63 +44,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benoît Sevens <bsevens@google.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 82a4fc46330910b4c1d9b189561439d468e3ff11 upstream.
+commit ef6400ca25a13fd6dedbe8ef4a1d0979bbbfe88a upstream.
 
-The DualShock 4 HID driver fails to validate the num_touch_reports field
-received from the device in both USB and Bluetooth input reports.
-A malicious device could set this field to a value larger than the
-allocated size of the touch_reports array (3 for USB, 4 for Bluetooth),
-leading to an out-of-bounds read in dualshock4_parse_report().
+parse_dcc() treats data_end as an inclusive end pointer, but its only
+caller passes data_limit = ib_ptr + datalen, which points one past the
+last valid byte.
 
-This can result in kernel memory disclosure when processing malicious
-HID reports.
+The newline search loop iterates while tmp <= data_end, so when no
+newline is present, *tmp is read at tmp == data_end, one byte beyond
+the region filled by skb_header_pointer().
 
-Validate num_touch_reports against the array size for the respective
-connection types before processing the touch data.
+irc_buffer is kmalloc'd as MAX_SEARCH_SIZE + 1 bytes and datalen is
+capped at MAX_SEARCH_SIZE, so the stray read does not fault.  The byte
+is uninitialized or stale; if it contains an ASCII digit, simple_strtoul
+will consume it and produce a wrong DCC IP or port in the conntrack
+expectation.  The extra allocation byte is also a fragile guard: if the
+cap or allocation size changes, this becomes a real out-of-bounds read.
 
-Signed-off-by: Benoît Sevens <bsevens@google.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Change the loop and its post-loop check to use strict less-than,
+consistent with the caller's exclusive-end convention.  Update the
+function comment accordingly.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-playstation.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/netfilter/nf_conntrack_irc.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/hid/hid-playstation.c
-+++ b/drivers/hid/hid-playstation.c
-@@ -2199,6 +2199,12 @@ static int dualshock4_parse_report(struc
- 			size == DS4_INPUT_REPORT_USB_SIZE) {
- 		struct dualshock4_input_report_usb *usb = (struct dualshock4_input_report_usb *)data;
+--- a/net/netfilter/nf_conntrack_irc.c
++++ b/net/netfilter/nf_conntrack_irc.c
+@@ -64,7 +64,7 @@ static const char *const dccprotos[] = {
+ /* tries to get the ip_addr and port out of a dcc command
+  * return value: -1 on failure, 0 on success
+  *	data		pointer to first byte of DCC command data
+- *	data_end	pointer to last byte of dcc command data
++ *	data_end	one past end of data
+  *	ip		returns parsed ip of dcc command
+  *	port		returns parsed port of dcc command
+  *	ad_beg_p	returns pointer to first byte of addr data
+@@ -82,10 +82,10 @@ static int parse_dcc(char *data, const c
  
-+		if (usb->num_touch_reports > ARRAY_SIZE(usb->touch_reports)) {
-+			hid_err(hdev, "DualShock4 USB input report has invalid num_touch_reports=%d\n",
-+				usb->num_touch_reports);
-+			return -EINVAL;
-+		}
-+
- 		ds4_report = &usb->common;
- 		num_touch_reports = min_t(u8, usb->num_touch_reports,
- 					  ARRAY_SIZE(usb->touch_reports));
-@@ -2214,6 +2220,12 @@ static int dualshock4_parse_report(struc
- 			return -EILSEQ;
- 		}
+ 	/* Make sure we have a newline character within the packet boundaries
+ 	 * because simple_strtoul parses until the first invalid character. */
+-	for (tmp = data; tmp <= data_end; tmp++)
++	for (tmp = data; tmp < data_end; tmp++)
+ 		if (*tmp == '\n')
+ 			break;
+-	if (tmp > data_end || *tmp != '\n')
++	if (tmp >= data_end || *tmp != '\n')
+ 		return -1;
  
-+		if (bt->num_touch_reports > ARRAY_SIZE(bt->touch_reports)) {
-+			hid_err(hdev, "DualShock4 BT input report has invalid num_touch_reports=%d\n",
-+				bt->num_touch_reports);
-+			return -EINVAL;
-+		}
-+
- 		ds4_report = &bt->common;
- 		num_touch_reports = min_t(u8, bt->num_touch_reports,
- 					  ARRAY_SIZE(bt->touch_reports));
+ 	*ad_beg_p = data;
 
 
