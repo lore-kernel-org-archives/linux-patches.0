@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9C73264FF;
-	Tue, 21 Jul 2026 18:39:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD213264FF;
+	Tue, 21 Jul 2026 18:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659169; cv=none; b=K2dwjr8P0dz+4b4WozC9ffCgvyBuceJw1DSB7VY3YtNMeMT10ettEh+EIkiLrczYjP8QVZFwbj3upk26NnFS8LF2EBvbdKrMLd2gCfnvOlsel/nfsMJbZ7R7ssl5VJQ/SPgyE+x/ncB0gAaX/gaZbq9RU4UPvMp2Jlh9roXIRss=
+	t=1784659171; cv=none; b=HATGU54jUoIIzK9IGZGSuTEQA2XLlyZGEVqMsCLynsz2EGrWtdwoW65yPWaZl0SJBkVdZdI6OZ4ifwyT63xei2rQWwNe8AaTasGQ1b7A8O4M+SjAc35e/Fa3jO2MPibSBe3j8LpQUz9sc2uoy0gxN7aJbLDZiGG7NKyTrRybkHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659169; c=relaxed/simple;
-	bh=8VaOIiHsqiVR32s+MoRliv474vlBGNGiDEU+x/Q5FSI=;
+	s=arc-20240116; t=1784659171; c=relaxed/simple;
+	bh=PCMPPYS7W9meGJALDdsV3xREBD8jX/Jk5NosfoUnqUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Csiazz3/nNuffeVBQ7DFjeZNqcfXjeVYKSz1lKGUyOkYwzmyasZkT6mdDKIjJ22l+ZNzF2VlD9LfWdl1MKgnDDm1DIjcMrtE7f6ZSVVcvt0jGpBmCYAP6l3oqO83RRoel7MZFmCml8TeO8ZUUlvI5ha6v/+TANOEsqQOSnh8xoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uw38pFpn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QDJ+0f6R/OUMMvIVdQFH9yrCmlEtjq14mrAq6WtZYwfYLcQYPQucQvejsgr2Jdyl+2m9jLEi9KbhNaF6iP3FOmQBDkaBKbUym6vahOAB07FBTeJi8mvavjVe9vTK6ELY9+tqsAyYeh9b+Mkf6SAiKRnG2AfojjAJWwk7r1k5D7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mX3JMQDi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uw38pFpn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A861F000E9;
-	Tue, 21 Jul 2026 18:39:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mX3JMQDi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21C631F000E9;
+	Tue, 21 Jul 2026 18:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659168;
-	bh=i/4LZ7BH2e6/zkITT2QOn13mSwhossgRzgQgfGNVfIw=;
+	s=korg; t=1784659170;
+	bh=k4DCtzEdu7oSPW5U5M0kx8U80wxOW8uC40KGgwPPrH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uw38pFpnppHk/z6C0GYgnrZIbcYeXBECJHmp9hMk1fuPIWwZTDG4hUahyMYosD4Qv
-	 c6toapEGQHSOMX+wgQ9GDTNLQ+TU2kZq/J8X2PlTUPld4wy1rbgwo83bJiAVv1vyfE
-	 i+wA0lpg0mLr2ThvM/LtWp8F6BZMezm2AKf/dQXk=
+	b=mX3JMQDi0ppN/ZybVFXyKqXsMUG4xS666zC6othchQTVk435+oPl/xjhcEyFaxAd/
+	 VQtT7WAkGN0bHBIw2oEJGyTua4lq2kmkxZlNcM4HDEfcT3Fo+zayRLaPOjpdm4KD5B
+	 aGp2iSEzFAxQCPeX6iZrZY1lNttObZjb2RMOLqgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
-Subject: [PATCH 6.18 1419/1611] drm/xe/userptr: Stub notifier_lock helpers when DRM_GPUSVM=n
-Date: Tue, 21 Jul 2026 17:25:35 +0200
-Message-ID: <20260721152547.355237367@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.18 1393/1611] gpio: mt7621: more robust management of IRQ domain teardown
+Date: Tue, 21 Jul 2026 17:25:09 +0200
+Message-ID: <20260721152546.776582449@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -46,66 +45,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
 
-commit f5ef65adf81da3dbce4e692e48c1754c0bb95da0 upstream.
+commit 839738536adabae1a7e98ed3fc332ce9cc991d27 upstream.
 
-When CONFIG_DRM_GPUSVM=n (e.g. um-allyesconfig), the only caller of
-xe_pt_svm_userptr_notifier_lock() is compiled out, triggering:
+The driver uses devm_gpiochip_add_data() to register the GPIO chips which
+means the devres subsystem will unregister them only after the function
+'mt7621_gpio_remove()' returns. During the window between domain destruction
+and devres unregistering the GPIO chips, the chips are still fully active.
+If a consumer or userspace invokes gpiod_to_irq() during this window,
+'mt7621_gpio_to_irq()' can dereference the already-freed irq domain pointer.
+Thus, manage the IRQ domain teardown using 'devm_add_action_or_reset()' to
+guarantee it is destroyed strictly after the GPIO chips are removed.
 
-  drivers/gpu/drm/xe/xe_pt.c:1418:13: warning:
-    'xe_pt_svm_userptr_notifier_lock' defined but not used
-    [-Wunused-function]
-
-The helpers cannot simply be removed in this case: the matching
-xe_pt_svm_userptr_notifier_unlock() is also referenced from
-xe_pt_update_ops_run(), which lives outside any DRM_GPUSVM ifdef and is
-gated only at runtime by pt_update_ops->needs_svm_lock. The symbol must
-exist in all builds.
-
-Provide empty static inline stubs for !DRM_GPUSVM, matching the pattern
-used by xe_svm_notifier_lock()/_unlock() in xe_svm.h.
-
-Fixes: dca6e08c923a ("drm/xe/userptr: Hold notifier_lock for write on inject test path")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202606302210.QqcLbOEN-lkp@intel.com/
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260630192221.2998168-1-shuicheng.lin@intel.com
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-(cherry picked from commit 3359422bf0a1140e96d783a19a397686e580a3ca)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: a46f2e5720f5 ("gpio: mt7621: fix interrupt banks mapping on gpio chips")
+Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+Link: https://patch.msgid.link/20260626060112.2498324-3-sergio.paracuellos@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_pt.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpio/gpio-mt7621.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_pt.c
-+++ b/drivers/gpu/drm/xe/xe_pt.c
-@@ -1388,6 +1388,7 @@ static int xe_pt_pre_commit(struct xe_mi
- 				     pt_update_ops, rftree);
+--- a/drivers/gpio/gpio-mt7621.c
++++ b/drivers/gpio/gpio-mt7621.c
+@@ -270,9 +270,9 @@ static const struct irq_chip mt7621_irq_
+ };
+ 
+ static void
+-mt7621_gpio_remove(struct platform_device *pdev)
++mt7621_gpio_remove(void *data)
+ {
+-	struct mtk *priv = platform_get_drvdata(pdev);
++	struct mtk *priv = data;
+ 	int offset, virq;
+ 
+ 	if (priv->gpio_irq > 0)
+@@ -473,14 +473,14 @@ mediatek_gpio_probe(struct platform_devi
+ 	if (mtk->gpio_irq > 0) {
+ 		ret = mt7621_gpio_irq_setup(pdev, mtk);
+ 		if (ret)
+-			goto fail;
++			return ret;
+ 	}
+ 
+-	return 0;
++	ret = devm_add_action_or_reset(dev, mt7621_gpio_remove, mtk);
++	if (ret)
++		return ret;
+ 
+-fail:
+-	mt7621_gpio_remove(pdev);
+-	return ret;
++	return 0;
  }
  
-+#if IS_ENABLED(CONFIG_DRM_GPUSVM)
- /*
-  * Acquire/release the svm notifier_lock around xe_pt_svm_userptr_pre_commit()
-  * and the matching late release in xe_pt_update_ops_run(). Read mode by
-@@ -1414,6 +1415,10 @@ static void xe_pt_svm_userptr_notifier_u
- 	xe_svm_notifier_unlock(vm);
- #endif
- }
-+#else
-+static inline void xe_pt_svm_userptr_notifier_lock(struct xe_vm *vm) { }
-+static inline void xe_pt_svm_userptr_notifier_unlock(struct xe_vm *vm) { }
-+#endif
+ static const struct of_device_id mediatek_gpio_match[] = {
+@@ -491,7 +491,6 @@ MODULE_DEVICE_TABLE(of, mediatek_gpio_ma
  
- #if IS_ENABLED(CONFIG_DRM_GPUSVM)
- #ifdef CONFIG_DRM_XE_USERPTR_INVAL_INJECT
+ static struct platform_driver mediatek_gpio_driver = {
+ 	.probe = mediatek_gpio_probe,
+-	.remove = mt7621_gpio_remove,
+ 	.driver = {
+ 		.name = "mt7621_gpio",
+ 		.of_match_table = mediatek_gpio_match,
 
 
