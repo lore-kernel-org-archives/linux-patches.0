@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E59D44AB62;
-	Tue, 21 Jul 2026 22:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8B144AB62;
+	Tue, 21 Jul 2026 22:05:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671536; cv=none; b=ti4dfqw+JL6hYF7DdzU2ACdwurNgLJXWFUNVqLz1fMohOPdQxLVN62vsCKZFUOPtu6wC0tmOGVTpdOLD/h65ozO3rcRGK65wKD8vX05OeMCXFiet6VkDT+v5CbUGnULxhftjR1UB1r8M61L3xfav2fMJfosNQ65THm6Kd6aeKp4=
+	t=1784671538; cv=none; b=pS0buy5u5gySiJJHG4N92TaQIcJIVk1sCEg5UoJ3uR/03VM9qCPtkyCQBU7mRsQ3/F+PVIDPgdw7QxZ9q8oEhmjg7Rs7FM7X0i/1NJJDVEAaLaVz7v51ct2GipLDbFnVrAVy5HXGhOs722Oy74mzfdbVgpCnOqSFixYTM/xo+VQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671536; c=relaxed/simple;
-	bh=hoj2fb4I8a9nUlVerlo1/6fO8DGnqePczNcEdOMPKHg=;
+	s=arc-20240116; t=1784671538; c=relaxed/simple;
+	bh=3E8PW6dGQAKwSOmW9SIpKc7UtT1WBpub/fxnIgWUJvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YnWKSAGXySqFYAs0pMb2BLJgz/o42yqxNKwY7RLo+GyDaygZh9HJThTnNCUEv6nkzKwhXHQkxp15uOm1B28UNhd5oHxBKKJY3omShMsH5Y6i6Oj86tyCqdc8+4+H1IILphNX4Fn7aykUiJttA+7UsqrHCuY7l5s+aAoQ+CYBJbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ux8TKB0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cP6RDMsRkdR6gXcFUuzBL7HFoHAe/hH6dyw9noXUDsNHB/VC66QKzwFDnOhATwYt50L48DvfSlOO58lCaBEjhJN5Y9pbmK8ydpzJ9xklS3vFtk5+FCzB7MKIO4Ps29slXOOqH2qC02risJbYPYVg2XXWXKLU64myyXDc4UJu1f0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TenVSHpj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ux8TKB0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941971F000E9;
-	Tue, 21 Jul 2026 22:05:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TenVSHpj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E1CD1F000E9;
+	Tue, 21 Jul 2026 22:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671535;
-	bh=/x+HzQv3IFFpld/tHj/f+fVA5V8Hl7AcFCQUAiw9DPg=;
+	s=korg; t=1784671537;
+	bh=w+qsOYzDjek+dcRFqjIn7Ei30XEuJSh+4V0DzVBzT+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1ux8TKB0LYyvL0kTentLuqSyfrcb9UnFIrHIncOTCCNk6V5dmIjy4MUBHW8spCoV5
-	 7wFnlMXnoEcrVlcfT6p2XhoX/b6pRZSqARvq/Dkjf3D/ykT+j67ize7IT+TFDEkt/4
-	 fhQVZUhm7f8WDM3MFRoz7Bjy8hYRkpJPEhGY2/18=
+	b=TenVSHpj74yf2YFEHaejY8w9fOxTp1s/vxElqr8tjhy7b9QX2tzXXt47neczx8gz2
+	 Nxx5KOLlrn1Dh/qo7MJICXkMXeSuAv/XsP/uZjS3+x+P65Ljjw+75Gv2Y2rDxaBBCG
+	 H5o+u79pTzZ2OsI8p/XmyeETkyh8gjJ/QaIgEYg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Renjiang Han <renjiang.han@oss.qualcomm.com>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Chen Cheng <chencheng@fnnas.com>,
+	Xiao Ni <xiao@kernel.org>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 283/843] media: qcom: venus: relax encoder frame/blur step size on v6
-Date: Tue, 21 Jul 2026 17:18:38 +0200
-Message-ID: <20260721152412.392567516@linuxfoundation.org>
+Subject: [PATCH 5.15 284/843] md/raid10: reset read_slot when reusing r10bio for discard
+Date: Tue, 21 Jul 2026 17:18:39 +0200
+Message-ID: <20260721152412.417289358@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,73 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Renjiang Han <renjiang.han@oss.qualcomm.com>
+From: Chen Cheng <chencheng@fnnas.com>
 
-[ Upstream commit c53e0550288b2e08b984b24035c471941b7820c7 ]
+[ Upstream commit 6b8a26af065ddc93de2aa5c9f0df98dce9723442 ]
 
-Encoder HFI capabilities on v6 enforce a 16-pixel step for frame and blur
-dimensions, which does not reflect actual hardware requirements and can
-reject valid userspace configurations.
+put_all_bios() always drops devs[i].bio, but it only drops
+devs[i].repl_bio when r10_bio->read_slot < 0. If discard reuses an
+r10bio that was previously used for a read, read_slot can still be
+non-negative, and discard cleanup can skip bio_put() on repl_bio.
 
-Relax the step size to 1 while leaving min/max limits unchanged.
+Reset read_slot to -1 when preparing an r10bio for discard so the
+replacement bio is always released correctly.
 
-Fixes: 869d77e706290 ("media: venus: hfi_plat_v6: Populate capabilities for v6")
-Signed-off-by: Renjiang Han <renjiang.han@oss.qualcomm.com>
-Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Fixes: d30588b2731f ("md/raid10: improve raid10 discard request")
+Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+Reviewed-by: Xiao Ni <xiao@kernel.org>
+Link: https://patch.msgid.link/20260515093019.3436882-1-chencheng@fnnas.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/qcom/venus/hfi_platform_v6.c  | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/md/raid10.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v6.c b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-index d8243b22568ae3..809dac45a45697 100644
---- a/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-+++ b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-@@ -172,8 +172,8 @@ static const struct hfi_plat_caps caps[] = {
- 	.codec = HFI_VIDEO_CODEC_HEVC,
- 	.domain = VIDC_SESSION_TYPE_ENC,
- 	.cap_bufs_mode_dynamic = true,
--	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 8192, 16},
--	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 8192, 16},
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 8192, 1},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 8192, 1},
- 	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 138240, 1},
- 	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 160000000, 1},
- 	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
-@@ -194,8 +194,8 @@ static const struct hfi_plat_caps caps[] = {
- 	.caps[19] = {HFI_CAPABILITY_RATE_CONTROL_MODES, 0x1000001, 0x1000005, 1},
- 	.caps[20] = {HFI_CAPABILITY_COLOR_SPACE_CONVERSION, 0, 2, 1},
- 	.caps[21] = {HFI_CAPABILITY_ROTATION, 1, 4, 90},
--	.caps[22] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 16},
--	.caps[23] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 16},
-+	.caps[22] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 1},
-+	.caps[23] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 1},
- 	.num_caps = 24,
- 	.pl[0] = {HFI_HEVC_PROFILE_MAIN, HFI_HEVC_LEVEL_6 | HFI_HEVC_TIER_HIGH0},
- 	.pl[1] = {HFI_HEVC_PROFILE_MAIN10, HFI_HEVC_LEVEL_6 | HFI_HEVC_TIER_HIGH0},
-@@ -209,8 +209,8 @@ static const struct hfi_plat_caps caps[] = {
- 	.codec = HFI_VIDEO_CODEC_VP8,
- 	.domain = VIDC_SESSION_TYPE_ENC,
- 	.cap_bufs_mode_dynamic = true,
--	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 4096, 16},
--	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 4096, 16},
-+	.caps[0] = {HFI_CAPABILITY_FRAME_WIDTH, 128, 4096, 1},
-+	.caps[1] = {HFI_CAPABILITY_FRAME_HEIGHT, 128, 4096, 1},
- 	.caps[2] = {HFI_CAPABILITY_MBS_PER_FRAME, 64, 36864, 1},
- 	.caps[3] = {HFI_CAPABILITY_BITRATE, 1, 74000000, 1},
- 	.caps[4] = {HFI_CAPABILITY_SCALE_X, 8192, 65536, 1},
-@@ -228,8 +228,8 @@ static const struct hfi_plat_caps caps[] = {
- 	.caps[16] = {HFI_CAPABILITY_P_FRAME_QP, 0, 127, 1},
- 	.caps[17] = {HFI_CAPABILITY_MAX_WORKMODES, 1, 2, 1},
- 	.caps[18] = {HFI_CAPABILITY_RATE_CONTROL_MODES, 0x1000001, 0x1000005, 1},
--	.caps[19] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 16},
--	.caps[20] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 16},
-+	.caps[19] = {HFI_CAPABILITY_BLUR_WIDTH, 96, 4096, 1},
-+	.caps[20] = {HFI_CAPABILITY_BLUR_HEIGHT, 96, 4096, 1},
- 	.caps[21] = {HFI_CAPABILITY_COLOR_SPACE_CONVERSION, 0, 2, 1},
- 	.caps[22] = {HFI_CAPABILITY_ROTATION, 1, 4, 90},
- 	.num_caps = 23,
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index 225fa6fb183b57..f14d5427a3c46f 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -1766,6 +1766,7 @@ static int raid10_handle_discard(struct mddev *mddev, struct bio *bio)
+ 	r10_bio->mddev = mddev;
+ 	r10_bio->state = 0;
+ 	r10_bio->sectors = 0;
++	r10_bio->read_slot = -1;
+ 	memset(r10_bio->devs, 0, sizeof(r10_bio->devs[0]) * geo->raid_disks);
+ 	wait_blocked_dev(mddev, r10_bio);
+ 
 -- 
 2.53.0
 
