@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63299382385;
-	Tue, 21 Jul 2026 22:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1190D37E310;
+	Tue, 21 Jul 2026 22:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674002; cv=none; b=cA6Klkji3NL6PgC1FxK8ZEXqM2gWEbmYzTyPBZbGlJQntFi+QK45kO3FND91QtUou0uMZl2a1JyPwtIwm0x+6th9VeKaZ2uDnpcODgkGmSn84aaeAGeG1f2HUUnM6JVFPNEKpYKTq2S6MoK2ZKxWDZAyRxQV/p4YLHRsRYFnw3k=
+	t=1784674005; cv=none; b=L5iF+Mt3giVJGur7MFydcDEo/Bn3n78D3mwZxsVl3GFUo8d2gI38eNHYu9AZvDXeqe+SRiIEjfN9hZbVLdN45TXYbz03NpPnmaRVT4QjpS4WCAST1US2TZdu1okGS7Czxjqs9gYyn31OPA7GhXZSiqZMMQIhT+2rwaaRRSPkPms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674002; c=relaxed/simple;
-	bh=HczX83FBw5pZ5561NLztO9RCg2ubrXgIQtrIaanKPig=;
+	s=arc-20240116; t=1784674005; c=relaxed/simple;
+	bh=xPy0LWOoeT1CdPabA2CnoJ+Jxwb5+K8ifg7dQJCWjBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rwdnQpkoMkBmKH/RO+V5bQ0t2a+QuQ3OffNK/UiIBW5sle/YMWp5ROeP9JPpnxzISa7vGX6hxoGCghUtObceVwEALIpCmMNHUmUeHwijzaSMks9OY4XVNY2xQvIcUDu3BcS4jDllsmmcw/qdhLf3pE7Zx2VOjL2x92wFLh72XSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6mWoT9t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=twU12Jln/jsQ38LhS00fsrN4vf1K2oB2eLDmdY1nmn1SFMij8mBZGSzfM0kIXRV171V88VEF1JN/ROjLDDddSIsacDae7Ldd5K+3aU46UaUGzSbbKdTBRt1RGFIAgBDBysY/35VcCzWJZSZfhAl39WVuM/AURGmT/na11J/KtFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULyHslQ8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6mWoT9t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F041F000E9;
-	Tue, 21 Jul 2026 22:46:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULyHslQ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC9C1F000E9;
+	Tue, 21 Jul 2026 22:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674001;
-	bh=idYgvazQIf8A843ZPq5ZnqgZjSF/lbzfhF1N1mnV9IA=;
+	s=korg; t=1784674003;
+	bh=FBL7qLkfQpfGk8yIG+SjOaGf77GvnirhDpL0L8Jm/Qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d6mWoT9tXzhmemxQ2J2RfWmNpRo9reNNq435XjhYZDtTjbW0/iuchhEZ0ZX8IOJmw
-	 k/LEZij6L/JZCECRGSKm4cnNKGfQVm9VmeeY9IS0vOC2PJpYs8JevC5LGBa+avrOTz
-	 NtiYxSaSuWzI8C8AH+PynSeWjINMFoG/ErIrb2+c=
+	b=ULyHslQ8bOMtfCY7Hef81wPXWvGpF4Koez1GWn+/QFy05pJo2DvgDDIkv8DxTgCAt
+	 3iBTSAelyj0b7ICMgwCubR1kELLVo7cOTxYj/QjEH0KqZToujAFD5XCK3vGpmz/l2n
+	 9iouyK7lYbMKW7I/x/t87XmGxeWDK3xbYvVFUlX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 359/699] netfilter: nft_synproxy: stop bypassing the priv->info snapshot
-Date: Tue, 21 Jul 2026 17:21:58 +0200
-Message-ID: <20260721152403.790098131@linuxfoundation.org>
+Subject: [PATCH 5.10 377/699] hwmon: adm1275: Prevent reading uninitialized stack
+Date: Tue, 21 Jul 2026 17:22:16 +0200
+Message-ID: <20260721152404.197800164@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,71 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit 11d4bc4e26fb66040a5b5d95e9abf37deac2b1fc ]
+[ Upstream commit 553f9517813912a5ab661af5504485d96824a61c ]
 
-nft_synproxy_eval_v4() and nft_synproxy_eval_v6() already take a
-whole-object READ_ONCE() snapshot of the shared priv->info state before
-building the SYNACK reply, but nft_synproxy_tcp_options() still masks
-opts->options with priv->info.options from the live shared object.
+While adding support for the ROHM BD127X0 hot-swap controllers, sashiko
+reported an error in device-name comparison, which can lead to reading
+uninitialized stack memory.
 
-When a named synproxy object is updated concurrently with SYN traffic,
-the eval path can then mix mss and timestamp handling from the local
-snapshot with an options mask taken from a newer configuration, so one
-SYNACK no longer reflects a coherent synproxy configuration.
+Quoting Sashiko:
 
-Use info->options so nft_synproxy_tcp_options() stays on the same local
-snapshot that the eval path already copied from priv->info.
+This is a pre-existing issue, but I noticed that just before this block in
+adm1275_probe(), there might be an out-of-bounds stack read:
 
-Fixes: ee394f96ad75 ("netfilter: nft_synproxy: add synproxy stateful object support")
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+    ret = i2c_smbus_read_block_data(client, PMBUS_MFR_MODEL, block_buffer);
+    if (ret < 0) { ... }
+    for (mid = adm1275_id; mid->name[0]; mid++) {
+            if (!strncasecmp(mid->name, block_buffer, strlen(mid->name)))
+                    break;
+    }
+
+Since i2c_smbus_read_block_data() reads up to 32 bytes into the
+uninitialized stack array block_buffer without appending a null
+terminator, strncasecmp() could read past the valid bytes returned in ret.
+
+For example, if the device returns a shorter string like "adm12", checking
+it against "adm1275" up to the length of "adm1275" will continue reading
+into uninitialized stack bounds.
+
+Prevent reading uninitialized memory by zeroing the stack array.
+
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: 87102808d039 ("hwmon: (pmbus/adm1275) Validate device ID")
+Link: https://lore.kernel.org/r/c8ad38e0cdb347261c6245de2b7965e747f28d22.1782458224.git.mazziesaccount@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_synproxy.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/hwmon/pmbus/adm1275.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_synproxy.c b/net/netfilter/nft_synproxy.c
-index 46d2eefb0b2182..aaba34ed0f7179 100644
---- a/net/netfilter/nft_synproxy.c
-+++ b/net/netfilter/nft_synproxy.c
-@@ -23,14 +23,13 @@ static const struct nla_policy nft_synproxy_policy[NFTA_SYNPROXY_MAX + 1] = {
- static void nft_synproxy_tcp_options(struct synproxy_options *opts,
- 				     const struct tcphdr *tcp,
- 				     struct synproxy_net *snet,
--				     struct nf_synproxy_info *info,
--				     const struct nft_synproxy *priv)
-+				     struct nf_synproxy_info *info)
+diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
+index c0618205758e93..71233e04b3fcb0 100644
+--- a/drivers/hwmon/pmbus/adm1275.c
++++ b/drivers/hwmon/pmbus/adm1275.c
+@@ -484,7 +484,7 @@ static int adm1275_enable_vout_temp(struct i2c_client *client, int config)
+ static int adm1275_probe(struct i2c_client *client)
  {
- 	this_cpu_inc(snet->stats->syn_received);
- 	if (tcp->ece && tcp->cwr)
- 		opts->options |= NF_SYNPROXY_OPT_ECN;
- 
--	opts->options &= priv->info.options;
-+	opts->options &= info->options;
- 	opts->mss_encode = opts->mss_option;
- 	opts->mss_option = info->mss;
- 	if (opts->options & NF_SYNPROXY_OPT_TIMESTAMP)
-@@ -55,7 +54,7 @@ static void nft_synproxy_eval_v4(const struct nft_synproxy *priv,
- 
- 	if (tcp->syn) {
- 		/* Initial SYN from client */
--		nft_synproxy_tcp_options(opts, tcp, snet, &info, priv);
-+		nft_synproxy_tcp_options(opts, tcp, snet, &info);
- 		synproxy_send_client_synack(net, skb, tcp, opts);
- 		consume_skb(skb);
- 		regs->verdict.code = NF_STOLEN;
-@@ -86,7 +85,7 @@ static void nft_synproxy_eval_v6(const struct nft_synproxy *priv,
- 
- 	if (tcp->syn) {
- 		/* Initial SYN from client */
--		nft_synproxy_tcp_options(opts, tcp, snet, &info, priv);
-+		nft_synproxy_tcp_options(opts, tcp, snet, &info);
- 		synproxy_send_client_synack_ipv6(net, skb, tcp, opts);
- 		consume_skb(skb);
- 		regs->verdict.code = NF_STOLEN;
+ 	s32 (*config_read_fn)(const struct i2c_client *client, u8 reg);
+-	u8 block_buffer[I2C_SMBUS_BLOCK_MAX + 1];
++	u8 block_buffer[I2C_SMBUS_BLOCK_MAX + 1] = {0};
+ 	int config, device_config;
+ 	int ret;
+ 	struct pmbus_driver_info *info;
 -- 
 2.53.0
 
