@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1411740802F;
-	Tue, 21 Jul 2026 18:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25502DF3EA;
+	Tue, 21 Jul 2026 18:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659127; cv=none; b=iN13Uf7op9EdxlyewRayaEUV1/GF8P5ZA6xdzwZnLzkVUJGxqg+uk9IrFDLPVd/L96PvkxIZYax1M6NSBPugGFTbk9dOCzzquuLS6f/ZLrKjzhiLWu67Cw61Z4x2uKrreGlPGfzIzp8Ggrmt11be5Za6Xh055rfNmwlAhZk8fyA=
+	t=1784659130; cv=none; b=DMtR79HMydeYlbUd6o51qKuToq/KJpNWzfYacEpXSQ+AH7zu93JUrnvhFAKhV2cRI6sg3I8+TU8p50+rTSpKceU9Vo0PUN4I+kxbkarc0sCWcJRbY6B0kqYd7OTBfn6tt8MtOfi97Kta2GVcFV7GXSZ3jA7DjlLabpaK77KmT+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659127; c=relaxed/simple;
-	bh=dunkgJ0dSn54meKmJ7dQvQYfind67ZHNSFRoaysF49g=;
+	s=arc-20240116; t=1784659130; c=relaxed/simple;
+	bh=rvgw2C3PQJmZcyt3tk7uQ1tYzMmeWwLDGoh2LS1HAhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lq1YYNZWfHDe3EUFXBQ+YNoHg8ckwFlbgQu99l5BFFAL7mxD+f6+vgNwhGA7PQuLaPYi9c6rmYug1+I8Xir4gEB9ESH4F6FIIy8QmUnOns2EABm946nQD+Nh5/lVI901AJ5LyXSFsrc3cXoIGo873eAWfByYJ2smTVs+3oRspGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgbmUH79; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ym8JixdxsTdLUkf+IklB/xtBSu1BhsHZgROKrjiYsMfxKUmgRQfgEphTye8Ef1CnCt+WW4IdSMKZ47jt1dz+I7UV8M/fnDJcxr5sB9iFwxfj9QVj82kukTYwPhBAJLoNnXSL2EgvjU+suRg8oxOpsewCqNJYEypNZc1uyGiiwJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzfO4Ea8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgbmUH79"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 453511F000E9;
-	Tue, 21 Jul 2026 18:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzfO4Ea8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4F81F000E9;
+	Tue, 21 Jul 2026 18:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659125;
-	bh=3z1HjobVquw1ccRjRH1bycwKarLkkapKpNc1hix8/us=;
+	s=korg; t=1784659128;
+	bh=b6hzjycVyxF/oc1mTPyyNU6GMY3B1ionyIFRd4wGLY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bgbmUH799cR04sz7sEb/aSXLHQxQstTHzM+R2+0CCwRM4b65sFUxAIJUc+Y8bZjOF
-	 WbKfC0/xUU3op2P+yWubhXfqNfXtyorI89WtoHNgZXecT0qZBMLjWB/q0ajeLPf/rZ
-	 nZrgtFM3NQanquQNGyhu4Qsg78XjHtbDi8Ofcl+k=
+	b=qzfO4Ea877YUdLtnXKqRu4U+cFOcRQRYqp3dxFVcMf4XscbqLptzArSJa4Xr2Ytq2
+	 5bHHCQEg0ORr8QHDnVl8hh49fUtsMGlKbNymT5vAN6BgzVpdiAjJ71sVPai7suqDrP
+	 NKSS6Ou4L5hCcHQEPeoulYMPaGrO/dhniSZJ/jhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edoardo Canepa <edoardo.canepa@canonical.com>,
-	Ross Porter <ross.porter@canonical.com>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Arthur Kiyanovski <akiyano@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 1404/1611] selftests: net: fix file owner for broadcast_ether_dst test
-Date: Tue, 21 Jul 2026 17:25:20 +0200
-Message-ID: <20260721152547.022141722@linuxfoundation.org>
+Subject: [PATCH 6.18 1405/1611] net: ena: clean up XDP TX queues when regular TX setup fails
+Date: Tue, 21 Jul 2026 17:25:21 +0200
+Message-ID: <20260721152547.044567320@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,38 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ross Porter <ross.porter@canonical.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit b8613e9792002add3bf77122868cc06ce142e953 upstream.
+commit 1bd6676254b4ab6acd44b662b5e92822c036463a upstream.
 
-Ensure the output file is always owned by root (even if tcpdump was
-compiled with `--with-user`), by passing the `-Z root` argument when
-invoking it.
+create_queues_with_size_backoff() creates XDP TX queues before setting
+up the regular TX path. If the subsequent allocation or creation of
+regular TX queues fails, the error handling paths omit the teardown of the
+XDP TX queues, leading to a resource leak.
 
+Fix this by explicitly destroying the XDP TX queue subset at the two
+missing failure points.
+
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1-rc7.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have
+an ENA device to test with, no runtime testing was able to be performed.
+
+Fixes: 548c4940b9f1 ("net: ena: Implement XDP_TX action")
 Cc: stable@vger.kernel.org
-Reported-by: Edoardo Canepa <edoardo.canepa@canonical.com>
-Closes: https://bugs.launchpad.net/ubuntu-kernel-tests/+bug/2129815
-Fixes: bf59028ea8d4 ("selftests: net: add test for destination in broadcast packets")
-Suggested-by: Edoardo Canepa <edoardo.canepa@canonical.com>
-Tested-by: Ross Porter <ross.porter@canonical.com>
-Signed-off-by: Ross Porter <ross.porter@canonical.com>
-Link: https://patch.msgid.link/20260617061039.79717-2-ross.porter@canonical.com
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Arthur Kiyanovski <akiyano@amazon.com>
+Tested-by: Arthur Kiyanovski <akiyano@amazon.com>
+Link: https://patch.msgid.link/20260616142424.4005130-1-dawei.feng@seu.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/broadcast_ether_dst.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c |   23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/net/broadcast_ether_dst.sh
-+++ b/tools/testing/selftests/net/broadcast_ether_dst.sh
-@@ -44,7 +44,7 @@ test_broadcast_ether_dst() {
- 	# tcpdump will exit after receiving a single packet
- 	# timeout will kill tcpdump if it is still running after 2s
- 	timeout 2s ip netns exec "${CLIENT_NS}" \
--		tcpdump -i link0 -c 1 -w "${CAPFILE}" icmp &> "${OUTPUT}" &
-+		tcpdump -i link0 -c 1 -w "${CAPFILE}" -Z root icmp &> "${OUTPUT}" &
- 	pid=$!
- 	slowwait 1 grep -qs "listening" "${OUTPUT}"
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -752,6 +752,18 @@ static void ena_destroy_all_tx_queues(st
+ 	}
+ }
  
++static void ena_destroy_xdp_tx_queues(struct ena_adapter *adapter)
++{
++	u16 ena_qid;
++	int i;
++
++	for (i = adapter->xdp_first_ring;
++	     i < adapter->xdp_first_ring + adapter->xdp_num_queues; i++) {
++		ena_qid = ENA_IO_TXQ_IDX(i);
++		ena_com_destroy_io_queue(adapter->ena_dev, ena_qid);
++	}
++}
++
+ static void ena_destroy_all_rx_queues(struct ena_adapter *adapter)
+ {
+ 	u16 ena_qid;
+@@ -2078,14 +2090,21 @@ static int create_queues_with_size_backo
+ 		rc = ena_setup_tx_resources_in_range(adapter,
+ 						     0,
+ 						     adapter->num_io_queues);
+-		if (rc)
++		if (rc) {
++			ena_destroy_xdp_tx_queues(adapter);
++			ena_free_all_io_tx_resources_in_range(adapter,
++							      adapter->xdp_first_ring,
++							      adapter->xdp_num_queues);
+ 			goto err_setup_tx;
++		}
+ 
+ 		rc = ena_create_io_tx_queues_in_range(adapter,
+ 						      0,
+ 						      adapter->num_io_queues);
+-		if (rc)
++		if (rc) {
++			ena_destroy_xdp_tx_queues(adapter);
+ 			goto err_create_tx_queues;
++		}
+ 
+ 		rc = ena_setup_all_rx_resources(adapter);
+ 		if (rc)
 
 
