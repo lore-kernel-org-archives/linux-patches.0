@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E385646D2D2;
-	Tue, 21 Jul 2026 19:10:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9F23EEAE2;
+	Tue, 21 Jul 2026 19:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661016; cv=none; b=HxXI7Zo0Z4q/KrsK0S8SXrnKuciWihLOYz2IC0DfaOOzatwT/bJ6KXYWd9yUzrq4cBEXz416VUfNwIQi/r9nXKurV7RRkYKh7drLe/m9ATa9D28MDgIlqZQyzW0GxnwbqYfVBbs/KHSUm/eIfGxV9eR4twjBVLYevMZEWVPSLAQ=
+	t=1784661019; cv=none; b=OQp1Cr85TAiumOW7iQ4fNHjmA5g6wcPw4ai5JTAZYQnzAeSVV5JVd008wmcpZ+K5np3xRuvq0BPsiMzbpOtr1XQOSKDKWhpXRGHb8/yOk/XTBM8SfHdi7QGFD8sapav6qrB3BPwhReTJPHHp2k/9Iy0ApvI7kKuFn9tYWzsgxRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661016; c=relaxed/simple;
-	bh=UdXwa0Nq2VZ49MuWEwOZp0nybtef8B6Wn2RlVCVqWwU=;
+	s=arc-20240116; t=1784661019; c=relaxed/simple;
+	bh=mzTmT3YvOY/yz5ASffCVYPUaL61T/MWWuOwapt9qcAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NdcA7n6zb6n0Q8zC/mZzbHRUtq2bR07sesRCmiuOBwcp4BsunQNubUEORw2ygZmvkMX46/O1CugRqskEtA/QQfTENrzBjxEBysnjLGytnixv/hHiXREdF0ET3Ljn5IqJRGR5hxr4jVnF9Gm4MhUp9GQxpIlYb2MDc/Sj2IcKbmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGWvwC9b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YqLCjeaz3aR1vkSF7Mn5E0lN/8uBSVE38v5EVPd4hIK1HWBuLPQgI41Om8ltByQK537hBBbi531Cevr0n/Jg1NsIFQptKkFVAQG4uuSXMa7hKCMExBaFlHkyHtQO7MkBkLY1wTMPpIBlqgjW+Geno7fiysRnDU6huR2qj9ouw6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oFeD4ae; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGWvwC9b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 488F71F000E9;
-	Tue, 21 Jul 2026 19:10:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oFeD4ae"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B611F000E9;
+	Tue, 21 Jul 2026 19:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661015;
-	bh=8VZpHd0mR8ky0cTo5T4LeuhFosU57r2r7CA4RUJYftQ=;
+	s=korg; t=1784661018;
+	bh=ZjSt7S5hpQLoCfSLnBK2jYefTmZ47H5n9Q2TrJszLUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VGWvwC9bW3kwZMmLeSQLfTlfAcy4qvan1JoqO57sRvVHNy7XHTIImzlD4w+z1GJc/
-	 uUhkJ1pxsqAg0kY9av8gjFiO6LKnRaACRfTAYnkJFGPmzht79XfZ3y4IPgNzTvVYyq
-	 tCQ7tInksszwFEkY2gVyyuSghtGDF/KqNnSmhNtw=
+	b=0oFeD4aevyik02ii4TZdrXvJRkdSalOqGxek0/K3+EhNh8gnbv6W10pGtF6h+J+oE
+	 xB/QYTcWc6zEgRG6T9VW4xFaS8fCTAQT4YkchZFq2ciBQf58CszmmLV//HDO5KN6es
+	 s0QeNgktcGXsrKZ3v0KSC1gObEwqqJWTAl5epsPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bhargav Joshi <j.bhargav.u@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Hao Ge <hao.ge@linux.dev>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1157/2077] irqchip/crossbar: Fix parent domain resource leak
-Date: Tue, 21 Jul 2026 17:13:50 +0200
-Message-ID: <20260721152620.110247957@linuxfoundation.org>
+Subject: [PATCH 7.1 1158/2077] alloc_tag: fix use-after-free in /proc/allocinfo after module unload
+Date: Tue, 21 Jul 2026 17:13:51 +0200
+Message-ID: <20260721152620.133976019@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,37 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bhargav Joshi <j.bhargav.u@gmail.com>
+From: Hao Ge <hao.ge@linux.dev>
 
-[ Upstream commit a1074dd62faa6572921d387e8a21589ccea00efc ]
+[ Upstream commit 2956268efc457cb05d29c1bf94de1e8e684d7bbc ]
 
-irq_domain_alloc_irqs_parent() is called in allocate_gic_irq() but
-irq_domain_free_irqs_parent() is never called which causes a resource leak.
+allocinfo_start() only reinitializes the codetag iterator at position 0.
+For subsequent reads (position > 0), it reuses cached iterator state from
+the previous batch.  allocinfo_stop() drops mod_lock between read batches,
+which allows module unload to complete and free the module memory that the
+cached iterator still references:
 
-Fix this by calling irq_domain_free_irqs_parent() in
-crossbar_domain_free().
+  CPU0 (read)                        CPU1 (rmmod)
+  ----                               ----
+  allocinfo_start(pos=0)
+    down_read(mod_lock)
+    allocinfo_show()
+    ...
+  allocinfo_stop()
+    up_read(mod_lock)
+                                     codetag_unload_module()
+                                       kfree(cmod)
+                                       release_module_tags()
+                                     ...
+                                     free_mod_mem()
+  allocinfo_start(pos=N)
+    down_read(mod_lock)
+    // reuses cached iter, skips re-init
+  allocinfo_show()
+    ct->filename   <-- UAF
 
-Fixes: 783d31863fb82 ("irqchip: crossbar: Convert dra7 crossbar to stacked domains")
-Signed-off-by: Bhargav Joshi <j.bhargav.u@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260620-irq-crossbar-fix-v2-2-b8e8499f468a@gmail.com
+After free_mod_mem() frees the module's .rodata, allocinfo_show()
+dereferences ct->filename, ct->function which point there.
+
+Save the iterator state in allocinfo_next() and resume from it in
+allocinfo_start() with codetag_next_ct(), which detects module removal via
+idr_find() returning NULL and skips to the next module.
+
+Link: https://lore.kernel.org/20260604065938.105991-1-hao.ge@linux.dev
+Fixes: 9f44df50fee4 ("alloc_tag: keep codetag iterator active between read()")
+Signed-off-by: Hao Ge <hao.ge@linux.dev>
+Suggested-by: Suren Baghdasaryan <surenb@google.com>
+Acked-by: Suren Baghdasaryan <surenb@google.com>
+Cc: Kent Overstreet <kent.overstreet@linux.dev>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-crossbar.c | 1 +
- 1 file changed, 1 insertion(+)
+ lib/alloc_tag.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/irqchip/irq-crossbar.c b/drivers/irqchip/irq-crossbar.c
-index cd1134101ace03..3035f8ecfac855 100644
---- a/drivers/irqchip/irq-crossbar.c
-+++ b/drivers/irqchip/irq-crossbar.c
-@@ -163,6 +163,7 @@ static void crossbar_domain_free(struct irq_domain *domain, unsigned int virq,
- 		cb->write(d->hwirq, cb->safe_map);
+diff --git a/lib/alloc_tag.c b/lib/alloc_tag.c
+index ed1bdcf1f8abfc..a9ab88f416b9f7 100644
+--- a/lib/alloc_tag.c
++++ b/lib/alloc_tag.c
+@@ -45,6 +45,7 @@ int alloc_tag_ref_offs;
+ 
+ struct allocinfo_private {
+ 	struct codetag_iterator iter;
++	struct codetag_iterator reported_iter;
+ 	bool print_header;
+ };
+ 
+@@ -58,16 +59,20 @@ static void *allocinfo_start(struct seq_file *m, loff_t *pos)
+ 	if (node == 0) {
+ 		priv->print_header = true;
+ 		priv->iter = codetag_get_ct_iter(alloc_tag_cttype);
+-		codetag_next_ct(&priv->iter);
++	} else {
++		priv->iter = priv->reported_iter;
  	}
- 	raw_spin_unlock(&cb->lock);
-+	irq_domain_free_irqs_parent(domain, virq, nr_irqs);
++	codetag_next_ct(&priv->iter);
+ 	return priv->iter.ct ? priv : NULL;
  }
  
- static int crossbar_domain_translate(struct irq_domain *d,
+ static void *allocinfo_next(struct seq_file *m, void *arg, loff_t *pos)
+ {
+ 	struct allocinfo_private *priv = (struct allocinfo_private *)arg;
+-	struct codetag *ct = codetag_next_ct(&priv->iter);
++	struct codetag *ct;
+ 
++	priv->reported_iter = priv->iter;
++	ct = codetag_next_ct(&priv->iter);
+ 	(*pos)++;
+ 	if (!ct)
+ 		return NULL;
 -- 
 2.53.0
 
