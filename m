@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF8D471431;
-	Tue, 21 Jul 2026 17:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7248471401;
+	Tue, 21 Jul 2026 17:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656298; cv=none; b=M3+RYTaCq3S5C1mdFvMLbuxGGlrxBp+aDbvw5IYzORYZ2ysOuaoGIhjFjPIYGQtn5j9UQuCZ4OxL79wTk436/2sLVyGNWKkPyaQITR+4+C7MA2fIz7qWw+bOIW2dOIx/BqlvgxQpFFSVsCinSyzO9w4VbE7D4XYbEnggl6RhOK0=
+	t=1784656300; cv=none; b=sEI2rwsotvNVW6RlM5py1vDhHwKacC09w/hwPwRQuLeviMWjmI5XfuzQk8lUb0Uht4dlprtgU+Pzz+8FhQsbPHaSkqO7meFaVVhYPcqDtb4Q6fLUkeonJQUpMJjVGQkUgz/3p5F1cw2jg3W7Mo9uiYZ1E2M/3WSqKXXnU8EJrs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656298; c=relaxed/simple;
-	bh=jLAJ1dQ69GUQW6PPwCA9AXZpMa06LxqJZjqFgcc+3cc=;
+	s=arc-20240116; t=1784656300; c=relaxed/simple;
+	bh=1WUfomdmORYlaQTOcOUs3iPazsujTgc0oo0c3/XIwLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ij1f3NOwjfMKY+5UBS9ZSUhel/1GdlnHEsRDVzvs82pWESga3EewCYn2mScxY/NcPYi/7GVaNz0HkNRguWJsBXsjGD6FsCvQhOg8eJejDCNugvJjFVgv5xs6B7EFoi1R2km4f0hMEbRjlFb412L5mvnW5s4TJRHaCoALeqSfN8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VpfkF3DI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rCH1GoZY++Sx5cUM0im7sgXXlVy5GTSYMhOiIigomsiMMK8b25gUhNNy1GGd9Hx/fBb3Tg+8W4E3FcTWmeU39B5jEGuv2xdVagPDCSiFwJ9KzPDuDHokCwikln8yiYhj2Tm6OEnya/5vM3I1hGTxLMH5O4NlDlucVh9arjbYyZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Tf+3cIV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VpfkF3DI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C55111F000E9;
-	Tue, 21 Jul 2026 17:51:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Tf+3cIV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 422631F000E9;
+	Tue, 21 Jul 2026 17:51:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656297;
-	bh=Ejn0PLTiZnVQZn903UnyCN5JlftxseVbs/fVHNCZnp0=;
+	s=korg; t=1784656299;
+	bh=N7TiIvRxsvqL9K8aIyBdsuXet/NFnMvR3PEkFWw7rO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VpfkF3DIdJNtgqVFVpQZ9OEELBsgIm7nAAxXX05RBsV9nORRxUOyPm/SBtnS3nSGF
-	 nkTIJW3gmw/+Rpapv/Ynf8gxV0KuXwJ/ENqGOpuYGj6A93t39fBOc7JL7fg14ELlPI
-	 Md2UkAhERrtBbgg2oB+H6XnL5S0kcQoHRMYw0l9o=
+	b=1Tf+3cIVNcJii1rZyclHVqHksThjqeIWAsFOg0AHWhqbp/489Hvcsumg3W+EVqAQv
+	 6h5rKrhxyVL2vqnq68WV8J25E7dyh55EDXHAPQOcl9mhedT1Rlb0pDermSP9l0+FlG
+	 MrGoZXsoj62d0LvemisVj/zuCMJprYpWaeA+FC1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	syzbot+caacd220635a9cc3bac9@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0327/1611] perf/x86/amd/core: Always use the NMI latency mitigation
-Date: Tue, 21 Jul 2026 17:07:23 +0200
-Message-ID: <20260721152522.448382460@linuxfoundation.org>
+Subject: [PATCH 6.18 0336/1611] ocfs2: fix buffer head management in ocfs2_read_blocks()
+Date: Tue, 21 Jul 2026 17:07:32 +0200
+Message-ID: <20260721152522.658863336@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,48 +59,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 73a4c02f94a98d94480c3e5c81450215a4da05ba ]
+[ Upstream commit 6371a07148ee979af22a9d6f4c277462953a9a4a ]
 
-Commit df4d29732fda ("perf/x86/amd: Change/fix NMI latency mitigation
-to use a timestamp") fixed handling of late-arriving NMIs but limited
-the mitigation to processors having X86_FEATURE_PERFCTR_CORE. However,
-it is unclear if processors without this feature are also affected.
-When Mediated vPMU is enabled on affected hardware, it is also possible
-to bypass the fix inside KVM guests if X86_FEATURE_PERFCTR_CORE is
-removed from the guest CPUID (e.g. using "-cpu host,-perfctr-core" with
-QEMU). Hence, use the mitigation at all times.
+In ocfs2_read_blocks(), caller should't assume that buffer head returned
+by 'sb_getblk()' is exclusively owned and so 'put_bh()' always drops
+b_count from 1 to 0.  If it is not so, buffer head remains on hold and
+likely to be returned by the next call to 'sb_getblk()' unchanged - that
+is, with BH_Uptodate bit set even if it has failed validation previously,
+thus allowing to insert that buffer head into OCFS2 metadata cache and
+submit it to upper layers.  To avoid such a scenario, BH_Uptodate should
+be cleared immediately after 'validate()' callback has detected some data
+inconsistency.
 
-Fixes: df4d29732fda ("perf/x86/amd: Change/fix NMI latency mitigation to use a timestamp")
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/29a3c970da289ab8f24282933bdb36545c0403e8.1780325517.git.sandipan.das@amd.com
+Link: https://lore.kernel.org/20260529094128.494293-1-dmantipov@yandex.ru
+Fixes: cf76c78595ca ("ocfs2: don't put and assigning null to bh allocated outside")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Reported-by: syzbot+caacd220635a9cc3bac9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=caacd220635a9cc3bac9
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/core.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/ocfs2/buffer_head_io.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
-index 8868f5f5379ba8..e7d30908f25e5b 100644
---- a/arch/x86/events/amd/core.c
-+++ b/arch/x86/events/amd/core.c
-@@ -1411,12 +1411,12 @@ static int __init amd_core_pmu_init(void)
- 	u64 even_ctr_mask = 0ULL;
- 	int i;
+diff --git a/fs/ocfs2/buffer_head_io.c b/fs/ocfs2/buffer_head_io.c
+index 8f714406528d62..e52e202857d130 100644
+--- a/fs/ocfs2/buffer_head_io.c
++++ b/fs/ocfs2/buffer_head_io.c
+@@ -350,8 +350,6 @@ int ocfs2_read_blocks(struct ocfs2_caching_info *ci, u64 block, int nr,
+ 						wait_on_buffer(bh);
+ 					put_bh(bh);
+ 					bhs[i] = NULL;
+-				} else if (bh && buffer_uptodate(bh)) {
+-					clear_buffer_uptodate(bh);
+ 				}
+ 				continue;
+ 			}
+@@ -380,8 +378,11 @@ int ocfs2_read_blocks(struct ocfs2_caching_info *ci, u64 block, int nr,
+ 				BUG_ON(buffer_jbd(bh));
+ 				clear_buffer_needs_validate(bh);
+ 				status = validate(sb, bh);
+-				if (status)
++				if (status) {
++					if (buffer_uptodate(bh))
++						clear_buffer_uptodate(bh);
+ 					goto read_failure;
++				}
+ 			}
+ 		}
  
--	if (!boot_cpu_has(X86_FEATURE_PERFCTR_CORE))
--		return 0;
--
- 	/* Avoid calculating the value each time in the NMI handler */
- 	perf_nmi_window = msecs_to_jiffies(100);
- 
-+	if (!boot_cpu_has(X86_FEATURE_PERFCTR_CORE))
-+		return 0;
-+
- 	/*
- 	 * If core performance counter extensions exists, we must use
- 	 * MSR_F15H_PERF_CTL/MSR_F15H_PERF_CTR msrs. See also
 -- 
 2.53.0
 
