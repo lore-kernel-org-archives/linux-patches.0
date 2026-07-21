@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC5946D561;
-	Tue, 21 Jul 2026 15:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E1346A5FD;
+	Tue, 21 Jul 2026 15:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649303; cv=none; b=XrLRxqxoTlMXYDzwCJ9nvpaG+qZtL0xU+1FiZRP60HjYARXcXpX2V9Wz+snETB9wSRF/15+9mRluTpIywm6RXRLaPrqdSybiujT9L4uF80AcReM0YJpHNpGSG1uoBlEfEHFDXpiLTPMPxnvPZEgyHinQzZe+DA7Qp9LykAOJxlk=
+	t=1784649306; cv=none; b=YccdNsTxisf47v1ty83ieYYwYCQLvFqx4bGqD4bPV5JkS4opwze0bqNPiox9ex0PCfVpCzPSbFE16fWxJAOXRjTTouYyYX+7Gf3QZevVZvwXrWJQEwNWo3VJcwaTmVPWvcIpowolTOuC0Mchx6A82eW7UcP1d5WH7epWbHL5GEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649303; c=relaxed/simple;
-	bh=FbZe4YuD0YR8w6rPsGeWhBunLhp537qL2KCsVn0uJhE=;
+	s=arc-20240116; t=1784649306; c=relaxed/simple;
+	bh=r0Nnv9jCO6mi/P9iOVEmNybziBEfcook9qq0KYjQ/6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N43jzNvsVPpXr0XTA+X0KJHDBWWTz2UDvjbsJcxWyH+1k/FQj0UBZzXeseU9cfs9+fgTyCyAXZ8aOVEdQ064xolGYZzoaq+TXCsaSGonIgmTZ6dyMYhgpR17wJ+S3GhPpY5fx2OntkjPhJqxLVmlw22z3TKr/9tnaHuDHvYqnEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZZNPF8v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LQckkq1flKBTspAnYK5XRKc12E7kGNZ0q7aP/HPeSCkncg63AzWJ1m6O4UbcZaD/FfB+kGHlmNPGNOoTKFLmXw5RHT40qoj6+k4E2DM0SRX2yPvytUBW18ve9D52Y5QcdHI5SG+IQEpjUrSEgtaUmMgqmlamQA0P7EUzOq98MXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZR/inazd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZZNPF8v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540CE1F00A3D;
-	Tue, 21 Jul 2026 15:55:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZR/inazd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46FA1F000E9;
+	Tue, 21 Jul 2026 15:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649302;
-	bh=YtNa78wxuBHAynEMVij9n2x43Bc4m0k1FVPF2NtzGUo=;
+	s=korg; t=1784649305;
+	bh=HlI7ACFgkRkCW6qAeCxgrGYk4JnzVlnlKq/NwsyAJGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aZZNPF8vVUtPOQNXokzvve5/7aHuiApkyA6AVYPQANGXgQtsUdVltkXyPs21ustnC
-	 BaildRWvOsn0M11i9Zt3R+xCVowKt+M8gr4B6tof7CoNqYw17QR43Mds1AMNDskeVd
-	 PRom1mcHh2mjN+3E9bcVRtm+eyBQj6pIE7Gg+zU0=
+	b=ZR/inazd1I/ZZAKfZdlTDJkifcYr1N8aNnTtPsRQTH01RDMQyORY3NqbxV48SZ+ww
+	 +xhJEmQvMFGBSCyO+okdefg77jDkyIEy4cM+vOIBYYCQxa9ebQFuFz0C+U+YI5HZT9
+	 iyNd3obDbm6cBD6imPGtPIdLQY1Q2vD76VOpw1XY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0527/2077] ALSA: seq: Clear variable event pointer on read
-Date: Tue, 21 Jul 2026 17:03:20 +0200
-Message-ID: <20260721152605.237326104@linuxfoundation.org>
+Subject: [PATCH 7.1 0528/2077] riscv: alternative: Use IS_ENABLED() over ifdeffery for apply_vdso_alternatives()
+Date: Tue, 21 Jul 2026 17:03:21 +0200
+Message-ID: <20260721152605.259651131@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,52 +45,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 705dd6dcbc0ea87351c660c1a6443f85f1001c76 ]
+[ Upstream commit 4fd6505f189d447abbed1f1f6fe6b82649f27a46 ]
 
-snd_seq_read() copies a queued variable-length event header to userspace
-before expanding the payload. Queued variable-length events use
-SNDRV_SEQ_EXT_CHAINED internally, and data.ext.ptr points at the first
-extension cell.
+IS_ENABLED() allows better compilation coverage while still optimizing
+away all the dead code. Also it will make some upcoming changes easier.
 
-The read side strips SNDRV_SEQ_EXT_* bits from data.ext.len before the
-copy, but it leaves data.ext.ptr untouched. A userspace sequencer client
-can therefore write a direct variable event to itself and read back the
-extension-cell kernel address from the returned header.
-
-Clear the temporary header pointer before copy_to_user(). The original
-queued event remains unchanged and is still passed to
-snd_seq_expand_var_event(), so payload expansion keeps using the
-internal chain.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Link: https://patch.msgid.link/20260607004129.61345-1-kylebot@openai.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Link: https://patch.msgid.link/20260504-riscv-cfi-vdso-alternative-v1-2-bcdf3d37f62e@linutronix.de
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Stable-dep-of: d3e0634787a2 ("riscv: alternative: Also patch the CFI vDSO")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_clientmgr.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/riscv/kernel/alternative.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/sound/core/seq/seq_clientmgr.c b/sound/core/seq/seq_clientmgr.c
-index 5719637575a911..ce0dd53399bfac 100644
---- a/sound/core/seq/seq_clientmgr.c
-+++ b/sound/core/seq/seq_clientmgr.c
-@@ -441,6 +441,7 @@ static ssize_t snd_seq_read(struct file *file, char __user *buf, size_t count,
+diff --git a/arch/riscv/kernel/alternative.c b/arch/riscv/kernel/alternative.c
+index 7642704c7f1841..59991922a5dca5 100644
+--- a/arch/riscv/kernel/alternative.c
++++ b/arch/riscv/kernel/alternative.c
+@@ -173,7 +173,6 @@ static void __init_or_module _apply_alternatives(struct alt_entry *begin,
+ 				stage);
+ }
  
- 			memcpy(&tmpev, &cell->event, aligned_size);
- 			tmpev.data.ext.len &= ~SNDRV_SEQ_EXT_MASK;
-+			tmpev.data.ext.ptr = NULL;
- 			if (copy_to_user(buf, &tmpev, aligned_size)) {
- 				err = -EFAULT;
- 				break;
+-#ifdef CONFIG_MMU
+ static void __init apply_vdso_alternatives(void)
+ {
+ 	const Elf_Ehdr *hdr;
+@@ -194,9 +193,6 @@ static void __init apply_vdso_alternatives(void)
+ 			    (struct alt_entry *)end,
+ 			    RISCV_ALTERNATIVES_BOOT);
+ }
+-#else
+-static void __init apply_vdso_alternatives(void) { }
+-#endif
+ 
+ void __init apply_boot_alternatives(void)
+ {
+@@ -207,7 +203,8 @@ void __init apply_boot_alternatives(void)
+ 			    (struct alt_entry *)__alt_end,
+ 			    RISCV_ALTERNATIVES_BOOT);
+ 
+-	apply_vdso_alternatives();
++	if (IS_ENABLED(CONFIG_MMU))
++		apply_vdso_alternatives();
+ }
+ 
+ /*
 -- 
 2.53.0
 
