@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0677446A61F;
-	Tue, 21 Jul 2026 15:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280AE46AA89;
+	Tue, 21 Jul 2026 15:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649106; cv=none; b=aLvc+adWN1siMh+yJdTJuCLA+Ur9DketOFMZQ53yFCHlGxyEKOwjMIloz7qw95oQQeDr9dywPpkFiFgt9b6xQnaQNjS87qYlPScnOL4R7SUt3/ZU7Ne9cV63C9F72JtMR7bUpqd01VqMd6W4hRU9kr5Q+MxMg7gG32s02GcEqXI=
+	t=1784649107; cv=none; b=Ru416gKp02UMCrFQqCBLj0/LNK20YclLlbXmLvEumMnwL7PNiFox+lobW+iS9FKWBXCnQXP+Z22mOJekwruInnaPU05sn2iBAqlz6mwiySW4MrNwXExqvP4gBJiWHtprHUduJbdeGTd2EC7uVLiVFTd1NIISvU7QKdXRbSQPcSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649106; c=relaxed/simple;
-	bh=cAbtJlEV7G+0JKKgd1rjVOV3qgiAf4Cafe7/7fybVdQ=;
+	s=arc-20240116; t=1784649107; c=relaxed/simple;
+	bh=3QBq5Mu3+lMkoBCd9M8c8dDVO8lDhP4QneP7M2IVfhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DVVRclurtDUHLR+F/d8GUXzScpjmN7zAlLVEoQm7NNozUMUUCdioxJIUluYwoS2w2LSjdJz5YkX8cJ5Kdwo76tqWkoq4KZkDYX61vaHh5nlMxd7oUGYuLEM0/4EobfQv8UvhJ0uKSCAUNbeU+SyZVc6B1kgqKipfPbIiHQX6Pe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1XpEnb+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oo4BZG++apvkLcjLrCUQdw0THH8hEnoMIeDjnsCtqs7OkHJXl66p9PnBRvb59Bxr6hA/xl4QVsKQrZBr8rB+OgeXOKD/WmkIw1HIDCyWunlfl6iUouVzs4btq3M5agO60nrneNXAwrGA3pkxOcxYwnGM0k8cNJSKiO+FnT6Hf2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wdGzpjJN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1XpEnb+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E9371F000E9;
-	Tue, 21 Jul 2026 15:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wdGzpjJN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3CB61F00A3D;
+	Tue, 21 Jul 2026 15:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649102;
-	bh=mFamx6/7PR/ru5VwOzLeAKB+G2hJhbBgc/MF8UDI9Zc=;
+	s=korg; t=1784649105;
+	bh=T7f1zNhSXd/zl04oMjsaG8tbIrFzJuN1ml9RlfpMfX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U1XpEnb+QwTStlVngF20giMDS7bekCQNMukmleAMW7mnB5oGghD5qEpSKp0I8wCpn
-	 W3uSKQuhVcHFvsicTr9k7xVJGJLWuHz9WLJomHH02IeoSGHLtohvE1+NgG3fHsZJUE
-	 EC6nQJg0elvNNWYFBCObUyNNWhbxl43k2pQ2XGR0=
+	b=wdGzpjJNUJZSdSL6M29uo/46lmFzQWjVPJoCpXOk7FEQYWPsz8NoxaR7YndhrGAQM
+	 2QtuxwE7AuWLNdPZomE5C2OSjxcPYBHeAnrWIBcn2XshKQ9lwRfE2WfkPaZ5xKfK/n
+	 GMBaLFAI95qCikSLipqNnwvZ8ePnX+pXS25LvDBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI review <sashiko-bot@kernel.org>,
-	Li Chen <chenl311@chinatelecom.cn>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Peter Griffin <peter.griffin@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0449/2077] ext4: fix fast commit wait/wake bit mapping on 64-bit
-Date: Tue, 21 Jul 2026 17:02:02 +0200
-Message-ID: <20260721152603.368292601@linuxfoundation.org>
+Subject: [PATCH 7.1 0450/2077] irqchip/exynos-combiner: Remove useless spinlock
+Date: Tue, 21 Jul 2026 17:02:03 +0200
+Message-ID: <20260721152603.393973262@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -55,180 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Chen <me@linux.beauty>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 8b3bc93fee6771775243665a0cf31857d6659775 ]
+[ Upstream commit 6fe450074626eaab3def4b3e8c1819d46d2d682c ]
 
-On 64-bit, ext4 dynamic inode states live in the upper half of i_flags,
-and ext4_test_inode_state() applies the corresponding +32 offset.
+irq_controller_lock doesn't protect anything, it is a leftover from early
+development or copy/paste. Remove it completely.
 
-The fast-commit wait and wake paths open-coded the wait key with the raw
-EXT4_STATE_* value. Add small helpers for the state wait word and bit,
-and use them for the FC_COMMITTING and FC_FLUSHING_DATA waits so the wait
-key follows the same mapping as the state helpers.
-
-Fixes: 857d32f26181 ("ext4: rework fast commit commit path")
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
-Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260513085818.552432-1-me@linux.beauty
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 96031b31a4b3 ("irqchip/exynos-combiner: Switch to raw_spinlock")
+Suggested-by: Thomas Gleixner <tglx@kernel.org>
+Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
+Link: https://lore.kernel.org/all/20260521090453.bbUZ00tS@linutronix.de
+Link: https://patch.msgid.link/20260522061012.2687122-1-m.szyprowski@samsung.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ext4.h        | 20 +++++++++++++++++
- fs/ext4/fast_commit.c | 50 ++++++++++++++++---------------------------
- 2 files changed, 38 insertions(+), 32 deletions(-)
+ drivers/irqchip/exynos-combiner.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
-index 94283a991e5c4f..6569d1d575a01a 100644
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -2000,6 +2000,8 @@ EXT4_INODE_BIT_FNS(flag, flags, 0)
- static inline int ext4_test_inode_state(struct inode *inode, int bit);
- static inline void ext4_set_inode_state(struct inode *inode, int bit);
- static inline void ext4_clear_inode_state(struct inode *inode, int bit);
-+static inline unsigned long *ext4_inode_state_wait_word(struct inode *inode);
-+static inline int ext4_inode_state_wait_bit(int bit);
- #if (BITS_PER_LONG < 64)
- EXT4_INODE_BIT_FNS(state, state_flags, 0)
+diff --git a/drivers/irqchip/exynos-combiner.c b/drivers/irqchip/exynos-combiner.c
+index 03cafcc5c8355d..d9d408cb4711e8 100644
+--- a/drivers/irqchip/exynos-combiner.c
++++ b/drivers/irqchip/exynos-combiner.c
+@@ -24,8 +24,6 @@
  
-@@ -2015,6 +2017,24 @@ static inline void ext4_clear_state_flags(struct ext4_inode_info *ei)
- 	/* We depend on the fact that callers will set i_flags */
- }
- #endif
-+
-+static inline unsigned long *ext4_inode_state_wait_word(struct inode *inode)
-+{
-+#if (BITS_PER_LONG < 64)
-+	return &EXT4_I(inode)->i_state_flags;
-+#else
-+	return &EXT4_I(inode)->i_flags;
-+#endif
-+}
-+
-+static inline int ext4_inode_state_wait_bit(int bit)
-+{
-+#if (BITS_PER_LONG < 64)
-+	return bit;
-+#else
-+	return bit + 32;
-+#endif
-+}
- #else
- /* Assume that user mode programs are passing in an ext4fs superblock, not
-  * a kernel struct super_block.  This will allow us to call the feature-test
-diff --git a/fs/ext4/fast_commit.c b/fs/ext4/fast_commit.c
-index b3c22636251dde..1775bce9649a93 100644
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -239,6 +239,8 @@ void ext4_fc_del(struct inode *inode)
- 	struct ext4_inode_info *ei = EXT4_I(inode);
- 	struct ext4_fc_dentry_update *fc_dentry;
- 	wait_queue_head_t *wq;
-+	unsigned long *wait_word = ext4_inode_state_wait_word(inode);
-+	int wait_bit = ext4_inode_state_wait_bit(EXT4_STATE_FC_FLUSHING_DATA);
- 	int alloc_ctx;
+ #define IRQ_IN_COMBINER		8
  
- 	if (ext4_fc_disabled(inode->i_sb))
-@@ -268,17 +270,9 @@ void ext4_fc_del(struct inode *inode)
- 	WARN_ON(ext4_test_inode_state(inode, EXT4_STATE_FC_COMMITTING)
- 		&& !ext4_test_mount_flag(inode->i_sb, EXT4_MF_FC_INELIGIBLE));
- 	while (ext4_test_inode_state(inode, EXT4_STATE_FC_FLUSHING_DATA)) {
--#if (BITS_PER_LONG < 64)
--		DEFINE_WAIT_BIT(wait, &ei->i_state_flags,
--				EXT4_STATE_FC_FLUSHING_DATA);
--		wq = bit_waitqueue(&ei->i_state_flags,
--				   EXT4_STATE_FC_FLUSHING_DATA);
--#else
--		DEFINE_WAIT_BIT(wait, &ei->i_flags,
--				EXT4_STATE_FC_FLUSHING_DATA);
--		wq = bit_waitqueue(&ei->i_flags,
--				   EXT4_STATE_FC_FLUSHING_DATA);
--#endif
-+		DEFINE_WAIT_BIT(wait, wait_word, wait_bit);
-+
-+		wq = bit_waitqueue(wait_word, wait_bit);
- 		prepare_to_wait(wq, &wait.wq_entry, TASK_UNINTERRUPTIBLE);
- 		if (ext4_test_inode_state(inode, EXT4_STATE_FC_FLUSHING_DATA)) {
- 			ext4_fc_unlock(inode->i_sb, alloc_ctx);
-@@ -542,6 +536,8 @@ void ext4_fc_track_inode(handle_t *handle, struct inode *inode)
- {
- 	struct ext4_inode_info *ei = EXT4_I(inode);
- 	wait_queue_head_t *wq;
-+	unsigned long *wait_word = ext4_inode_state_wait_word(inode);
-+	int wait_bit = ext4_inode_state_wait_bit(EXT4_STATE_FC_COMMITTING);
- 	int ret;
+-static DEFINE_RAW_SPINLOCK(irq_controller_lock);
+-
+ struct combiner_chip_data {
+ 	unsigned int hwirq_offset;
+ 	unsigned int irq_mask;
+@@ -72,9 +70,7 @@ static void combiner_handle_cascade_irq(struct irq_desc *desc)
  
- 	if (S_ISDIR(inode->i_mode))
-@@ -564,17 +560,9 @@ void ext4_fc_track_inode(handle_t *handle, struct inode *inode)
- 	lockdep_assert_not_held(&ei->i_data_sem);
+ 	chained_irq_enter(chip, desc);
  
- 	while (ext4_test_inode_state(inode, EXT4_STATE_FC_COMMITTING)) {
--#if (BITS_PER_LONG < 64)
--		DEFINE_WAIT_BIT(wait, &ei->i_state_flags,
--				EXT4_STATE_FC_COMMITTING);
--		wq = bit_waitqueue(&ei->i_state_flags,
--				   EXT4_STATE_FC_COMMITTING);
--#else
--		DEFINE_WAIT_BIT(wait, &ei->i_flags,
--				EXT4_STATE_FC_COMMITTING);
--		wq = bit_waitqueue(&ei->i_flags,
--				   EXT4_STATE_FC_COMMITTING);
--#endif
-+		DEFINE_WAIT_BIT(wait, wait_word, wait_bit);
-+
-+		wq = bit_waitqueue(wait_word, wait_bit);
- 		prepare_to_wait(wq, &wait.wq_entry, TASK_UNINTERRUPTIBLE);
- 		if (ext4_test_inode_state(inode, EXT4_STATE_FC_COMMITTING))
- 			schedule();
-@@ -1034,6 +1022,8 @@ static int ext4_fc_perform_commit(journal_t *journal)
- 	int ret = 0;
- 	u32 crc = 0;
- 	int alloc_ctx;
-+	int flushing_wait_bit =
-+		ext4_inode_state_wait_bit(EXT4_STATE_FC_FLUSHING_DATA);
+-	raw_spin_lock(&irq_controller_lock);
+ 	status = readl_relaxed(chip_data->base + COMBINER_INT_STATUS);
+-	raw_spin_unlock(&irq_controller_lock);
+ 	status &= chip_data->irq_mask;
  
- 	/*
- 	 * Step 1: Mark all inodes on s_fc_q[MAIN] with
-@@ -1059,11 +1049,8 @@ static int ext4_fc_perform_commit(journal_t *journal)
- 	list_for_each_entry(iter, &sbi->s_fc_q[FC_Q_MAIN], i_fc_list) {
- 		ext4_clear_inode_state(&iter->vfs_inode,
- 				       EXT4_STATE_FC_FLUSHING_DATA);
--#if (BITS_PER_LONG < 64)
--		wake_up_bit(&iter->i_state_flags, EXT4_STATE_FC_FLUSHING_DATA);
--#else
--		wake_up_bit(&iter->i_flags, EXT4_STATE_FC_FLUSHING_DATA);
--#endif
-+		wake_up_bit(ext4_inode_state_wait_word(&iter->vfs_inode),
-+			    flushing_wait_bit);
- 	}
- 
- 	/*
-@@ -1279,6 +1266,8 @@ static void ext4_fc_cleanup(journal_t *journal, int full, tid_t tid)
- 	struct ext4_inode_info *ei;
- 	struct ext4_fc_dentry_update *fc_dentry;
- 	int alloc_ctx;
-+	int committing_wait_bit =
-+		ext4_inode_state_wait_bit(EXT4_STATE_FC_COMMITTING);
- 
- 	if (full && sbi->s_fc_bh)
- 		sbi->s_fc_bh = NULL;
-@@ -1315,11 +1304,8 @@ static void ext4_fc_cleanup(journal_t *journal, int full, tid_t tid)
- 		 * barrier in prepare_to_wait() in ext4_fc_track_inode().
- 		 */
- 		smp_mb();
--#if (BITS_PER_LONG < 64)
--		wake_up_bit(&ei->i_state_flags, EXT4_STATE_FC_COMMITTING);
--#else
--		wake_up_bit(&ei->i_flags, EXT4_STATE_FC_COMMITTING);
--#endif
-+		wake_up_bit(ext4_inode_state_wait_word(&ei->vfs_inode),
-+			    committing_wait_bit);
- 	}
- 
- 	while (!list_empty(&sbi->s_fc_dentry_q[FC_Q_MAIN])) {
+ 	if (status == 0)
 -- 
 2.53.0
 
