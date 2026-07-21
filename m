@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECBA46C4B0;
-	Tue, 21 Jul 2026 17:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD553FE67B;
+	Tue, 21 Jul 2026 17:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655101; cv=none; b=Jz2BVGyl8XNQoRSWb+cs1VOAtG+1tz7FK4qfiIXTZHN88NFcF3UF+dMMyggv7t7QowmUJk8Ss13JNh6IcumZs2oISHlluN6OhXzHN/cxjNNBe1bGHoh/BnuwElsoZ5Mu7zWoG7GI2j8o99v3iz55GMIl7/rEnMyWd2X5xtbiGzU=
+	t=1784655104; cv=none; b=s8xo9zCrPsC7YKsgcKcqGL7rCkTmsEz0Q20vYsnTOCBMK3EWEh8Qozoqqs8eNkxYRh3DrcRupqjwgnd4mkqrch4R4FsskFDZsYxJR0NXyiIqpITI0EX6E0f8WmE7BXSN5CXq8ibXrMvg0mUipl8wDpwQiw6ozrWx5k5xaeLJGXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655101; c=relaxed/simple;
-	bh=4O9o7HMLgRcQvCskB0wmarY+4LHFFA+DoGQ9g/49hLk=;
+	s=arc-20240116; t=1784655104; c=relaxed/simple;
+	bh=WofCAD3ejaic+uh/2976CCY+9ioddaxWTJodrPo325g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JHi5Q6vm690qi3OChhBeRRDdaShs8GU+2OALvacXSv1ZUZ24ti4bU+7HlH+cwp5R4SU4hAAtCFNobdkdHExHfMIrE3rVF+9Ury7XV3ktwmtQgnBiQ1+31A+PTODFXHS7UzZpNVJVzTZlcdS3K7x3lIHfAte2gTvJqcz5F+ZEk0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wk+L0f+l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bbPhckwW15xq9kZgqdycYtX01cs3iE569LM1GZnzIs36aavFyRsdHsOghCc6oPNWUPkKgcx4Y5d8+GZ7ha554SdU5uLEbnWvRYiV+3zK/38Vi9h01vstGB8ISFhCoBnN7cB/cdl4Iqg0RR6blVvJ4W1AESgwY/cw/f8ff/JK6HA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGh+7Ebd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wk+L0f+l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA791F000E9;
-	Tue, 21 Jul 2026 17:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGh+7Ebd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1C41F000E9;
+	Tue, 21 Jul 2026 17:31:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655100;
-	bh=qM0mNuh+O7NhE1gUXLXWt1cUAg8bwsRen6tfBcaUfzc=;
+	s=korg; t=1784655103;
+	bh=ej0zxtmUZPeYkcXLJS0vffRaxH9IAeNy4F4DdiogWhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wk+L0f+lLI+i5aJWWaZg9wvB2wgeYEdD08Jg+GF35zE5TmKtGbORpYnGcWCYOBYIU
-	 sap3d6RibeLlm5RUaOm+2UauBHw2g+i3ZNsC3L8r87rGwVxScIzawwbhD0cDJ+jozC
-	 YS3dShvVhVeGhihVxlHvQm1CvvqbpNIY3SOJkASI=
+	b=fGh+7EbduLetVEoizUX+Qpy4dGE01N5JE4kDqG21AqoruXw51t98SNPkblrEu4/iB
+	 RpWmlAr0YnyGPN/kqMqaGlxB5W/e5JrlqZuPVeenILbegvSZQ6fdvDC2W+hFRzTkCD
+	 IydxbAqm8aO9i5ToGYuCrW8hXzyMsoGDjYETbIg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lee <david.lee@trailofbits.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.1 1956/2077] fhandle: reject detached mounts in capable_wrt_mount()
-Date: Tue, 21 Jul 2026 17:27:09 +0200
-Message-ID: <20260721152638.845258204@linuxfoundation.org>
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 7.1 1957/2077] hwmon: (max1619) add missing select REGMAP to Kconfig
+Date: Tue, 21 Jul 2026 17:27:10 +0200
+Message-ID: <20260721152638.869003712@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,48 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lee <david.lee@trailofbits.com>
+From: Joshua Crofts <joshua.crofts1@gmail.com>
 
-commit 6c732471740bc2ac9b0946134f9f551dc75f4369 upstream.
+commit 943a749bdffdd2132fab9240db890e07d93e1fcf upstream.
 
-The recent fhandle RCU fix moved the mount namespace capability check
-into capable_wrt_mount(), so a non-NULL mnt_namespace survives the
-ns_capable() dereference. The helper still assumes the later
-READ_ONCE(mount->mnt_ns) must be non-NULL because may_decode_fh()
-checked is_mounted() first.
+The Kconfig entry for the MAX1619 sensor doesn't contain a
+`select REGMAP` parameter, causing build failures if regmap
+isn't selected previously during the build process.
 
-That assumption is not stable. A detached mount from
-open_tree(..., OPEN_TREE_CLONE) can be dissolved on fput while
-open_by_handle_at() is between those checks, and umount_tree() can
-clear mount->mnt_ns. If the helper observes NULL, it dereferences
-mnt_ns->user_ns and panics.
-
-Return false when the RCU read observes a detached mount. This keeps
-the relaxed permission path conservative: a mount no longer attached
-to a namespace cannot authorize open_by_handle_at() access.
-
-Fixes: 620c266f3949 ("fhandle: relax open_by_handle_at() permission checks")
+Fixes: f8016132ce49 ("hwmon: (max1619) Convert to use regmap")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Assisted-by: LLM
-Link: https://patch.msgid.link/20260701114438.24431-1-david.lee@trailofbits.com
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Link: https://lore.kernel.org/r/20260629-add-kconfig-deps-v1-1-8104df929b1a@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fhandle.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/fhandle.c
-+++ b/fs/fhandle.c
-@@ -295,7 +295,7 @@ static bool capable_wrt_mount(struct mou
- 	 */
- 	guard(rcu)();
- 	mnt_ns = READ_ONCE(mount->mnt_ns);
--	return ns_capable(mnt_ns->user_ns, CAP_SYS_ADMIN);
-+	return mnt_ns && ns_capable(mnt_ns->user_ns, CAP_SYS_ADMIN);
- }
+--- a/drivers/hwmon/Kconfig
++++ b/drivers/hwmon/Kconfig
+@@ -1215,6 +1215,7 @@ config SENSORS_MAX16065
+ config SENSORS_MAX1619
+ 	tristate "Maxim MAX1619 sensor chip"
+ 	depends on I2C
++	select REGMAP
+ 	help
+ 	  If you say yes here you get support for MAX1619 sensor chip.
  
- static inline int may_decode_fh(struct handle_to_path_ctx *ctx,
 
 
