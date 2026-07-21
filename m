@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DC22DEA74;
-	Tue, 21 Jul 2026 18:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405E12DEA74;
+	Tue, 21 Jul 2026 18:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660125; cv=none; b=kbgYZb7VRw3yKIiuQQWSrcopAwXgezdDG8MYDLRHf7iHQVeSLhhEEWPYNzfeGPgjcRYm2aYtY1vd3ZAJa23fJz3DoqlchPFT2BPqkDsML/4yS2hO0kEHG+qMlIVGSIpKd8DKNGR7dySnxzGYJbfBtd7ivB1CGsh5Edhyctb8ckc=
+	t=1784660128; cv=none; b=dq9Hh2MQl9gtSw85RYeENhBYrvwjSSnZ8JIEMLZItbp/w3uOu1MD246w5IkAStf2rukY7SW/CudXPDCR5HQ95kVX93FtXLj/nlKixJNRFcbZwhLwvrgUwzjnaMt/P8SdYKtu/NERTJZW8pST1Px+ux2ZXRP8i1skJWuGY/f80QI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660125; c=relaxed/simple;
-	bh=r1+EYu8JcFIF0MQCD5eex73nA7FslFRdY08fpBZv3Uo=;
+	s=arc-20240116; t=1784660128; c=relaxed/simple;
+	bh=K5zB3gH1G49aHPMCQ0Zclw8HZJBivJkH1WS7bJuN3Ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WKmmJNYn9Vez4ee+QiJVkhRRAjhDAXGCVv/y91o4CKlqyknZtsxSyYHjXCPUBb/OFxhFO59gtd7ikv+iTY56vDZoFUkkiW4Ok+Hh7z3HsUK6vDqEQXOP2b1SIRXw2+dL3lvIbx4d2qTi/EeW7Ue+UAdB4hWUiRBfMB6QdrcUcjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X8Mv0z0Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u4RldYWj6F9BS24NK5YHX3Ztr+WBfZzUJxV6VNf7e8hN14YKtPhmfDkyNcMku9dtY2J0kNxDlUkrrDs8SMijhNysCK2c4KcZlwa2pV0+takWD+hxV7UoAldvAxDVWznZsoCPWRFLCVheS8t0MC/z9nzSIYX2McEefTubzWZ7ZKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=njJuzmMa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X8Mv0z0Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063E61F000E9;
-	Tue, 21 Jul 2026 18:55:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="njJuzmMa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56C11F000E9;
+	Tue, 21 Jul 2026 18:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660124;
-	bh=MDuUaZdPrAVXOnEn+e/bFojwIol5eWwJoH84DWDE+eE=;
+	s=korg; t=1784660127;
+	bh=yvTn3KOonCnyjGnpXyVVaXHktKhHLBdfRafEauE1B4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X8Mv0z0Z54TaeOzktO7rKyK0UYOujqDjGYVx2QZP4QyrooXw2HifMZdlPzhs57aOp
-	 jfhziOstXFo77H26FoJs21rfXsiafCNIIvJzxjt7SenR72Irh051nlBgHfoFdx1JVM
-	 bt+/SSYWRZ1+JtdnVFy/zd1RHQYtBuWflGm6RyEc=
+	b=njJuzmMakJ8DAzI2KouYxeqycEVt7tYuZcuZAj/Y9KofEdPEsTV6hJYtwV2V6E85X
+	 Ky7n1YSRkT5LJSWXIao4MPwJhQSYUZ+gKvtsC2Iqr8WFViJOIjV9Bug2dScgKaLP3E
+	 pwWsdPJCDVptKDlriwJpwilV24w3tebNMjQcWtTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sumit Kumar <sumit.kumar@oss.qualcomm.com>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0860/2077] bus: mhi: ep: Fix potential deadlock in mhi_ep_reset_worker()
-Date: Tue, 21 Jul 2026 17:08:53 +0200
-Message-ID: <20260721152613.074087366@linuxfoundation.org>
+Subject: [PATCH 7.1 0861/2077] bus: mhi: ep: Add missing state_lock protection for mhi_state access
+Date: Tue, 21 Jul 2026 17:08:54 +0200
+Message-ID: <20260721152613.099974936@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,58 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
 
-[ Upstream commit 9dece4435d396e9877e27483552b910ba8654169 ]
+[ Upstream commit ce3e534ee9c8d13a68c8a611c3b7bd0c2152d2ab ]
 
-There is a potential deadlock scenario in mhi_ep_reset_worker() where
-the state_lock mutex is acquired twice in the same call chain:
+The mhi_cntrl->mhi_state field should be protected by state_lock to
+ensure atomic state transitions. However, mhi_ep_power_up() access
+mhi_state without holding this lock, which can race with concurrent state
+transitions and lead to state corruption.
 
-mhi_ep_reset_worker()
-  mutex_lock(&mhi_cntrl->state_lock)
-    mhi_ep_power_up()
-      mhi_ep_set_ready_state()
-        mutex_lock(&mhi_cntrl->state_lock)  <- Deadlock
+Add proper state_lock protection around mhi_state access.
 
-Fix this by releasing the state_lock before calling mhi_ep_power_up().
-The lock is only needed to protect current MHI state read operation. The
-lock can be safely released before proceeding with the power up sequence.
-
-Fixes: 7a97b6b47353 ("bus: mhi: ep: Add support for handling MHI_RESET")
+Fixes: fb3a26b7e8af ("bus: mhi: ep: Add support for powering up the MHI endpoint stack")
+Fixes: f7d0806bdb1b3 ("bus: mhi: ep: Add support for handling SYS_ERR condition")
 Signed-off-by: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260414-reset_worker_deadlock-v2-1-42fd682b45db@oss.qualcomm.com
+Link: https://patch.msgid.link/20260414-reset_worker_deadlock-v2-2-42fd682b45db@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/ep/main.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/bus/mhi/ep/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index 0277e1ab119886..425525e232f919 100644
+index 425525e232f919..5330b03dc6369c 100644
 --- a/drivers/bus/mhi/ep/main.c
 +++ b/drivers/bus/mhi/ep/main.c
-@@ -1087,11 +1087,12 @@ static void mhi_ep_reset_worker(struct work_struct *work)
+@@ -1147,7 +1147,9 @@ int mhi_ep_power_up(struct mhi_ep_cntrl *mhi_cntrl)
+ 	for (i = 0; i < mhi_cntrl->event_rings; i++)
+ 		mhi_ep_ring_init(&mhi_cntrl->mhi_event[i].ring, RING_TYPE_ER, i);
  
- 	mhi_ep_power_down(mhi_cntrl);
- 
--	mutex_lock(&mhi_cntrl->state_lock);
--
- 	/* Reset MMIO to signal host that the MHI_RESET is completed in endpoint */
- 	mhi_ep_mmio_reset(mhi_cntrl);
-+
 +	mutex_lock(&mhi_cntrl->state_lock);
- 	cur_state = mhi_cntrl->mhi_state;
+ 	mhi_cntrl->mhi_state = MHI_STATE_RESET;
 +	mutex_unlock(&mhi_cntrl->state_lock);
  
- 	/*
- 	 * Only proceed further if the reset is due to SYS_ERR. The host will
-@@ -1100,8 +1101,6 @@ static void mhi_ep_reset_worker(struct work_struct *work)
- 	 */
- 	if (cur_state == MHI_STATE_SYS_ERR)
- 		mhi_ep_power_up(mhi_cntrl);
--
--	mutex_unlock(&mhi_cntrl->state_lock);
- }
- 
- /*
+ 	/* Set AMSS EE before signaling ready state */
+ 	mhi_ep_mmio_set_env(mhi_cntrl, MHI_EE_AMSS);
 -- 
 2.53.0
 
