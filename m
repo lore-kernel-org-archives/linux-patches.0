@@ -1,48 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A56384CC4;
-	Tue, 21 Jul 2026 19:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DD2471257;
+	Tue, 21 Jul 2026 19:28:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662126; cv=none; b=kNqmhR/SysFAWz+x/SaVEvbxidURGs2W/4xNpASCZcyZk+ApV25acmXX/nzVggzbKvYgKqGWLWj23YT8xEHVWjpLyYBQMfG9ea93qKkX7W8Ooe3q0gCv6NommvkHAoo/zwa805Y6x+TW+G6Ry+1TCGTyTfVsT5ll1Z2IJkK8k2Q=
+	t=1784662128; cv=none; b=TA+/GqJrOTcq2M9MxNslu2fRU6EVZNBGdA2DE7x3I3q/HePceX/82TNhxM1Q7WOhfESy0r0X9NC7xb2dZrIGXGr5jj6jBTM7b6I/SzXw7icJtZboe818WCY5pwzQo7yVbYHtMthpb+7B9mam/0Q6+sM2XgoKF+I5mrduoYy6+E0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662126; c=relaxed/simple;
-	bh=r3lgS84/S1tIDUatbGGKDPMQcg+kQbvneiui+/mU41c=;
+	s=arc-20240116; t=1784662128; c=relaxed/simple;
+	bh=2juIxyUT0Qm5ZjugHEOYxx4ejKlrIOB4XnSN4QGl7Rs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Zs6qh2JZFjWk+F8RxMskqv3ONeoukqDs3eFHQqiW1hzJxIFc4ELf3rYvC086eQYp5s3MwG3ZLwYDYAlOPZnw1SDrFAwmXyecvAnu1fPYSNGmrVdDyF20Auixm/O3bJAs9Ra1J02ZbGxlFtu6lh6VigvPXfxSbBuqPQuHEXEx41A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZDkzXIg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TkvMuzuREPC5V+74nkqahRGIlVVf6bVAEBzqytw0lfCKotdWHVmj/I0hIH1RgAGuLeRkXA0+xS0hbJUo7DP24zo0N8eT13zGpXzOBJJoHriirAqwEakd9dBh2cseZhq9u8v79Ev6FgnaGa+BpX29Cf9NqpUEZIQYeiR8LXy7EEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lc1g1NiP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZDkzXIg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B3E1F000E9;
-	Tue, 21 Jul 2026 19:28:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lc1g1NiP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 644E71F00A3A;
+	Tue, 21 Jul 2026 19:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662121;
-	bh=xz6d6EkHYoabouw4vYtspeXgJlhzLAB/DiEcRuqgjw4=;
+	s=korg; t=1784662126;
+	bh=TeZ8+12nAV4nJYfBfgPD85/LCql65SpIQHMlVc1UFoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bZDkzXIg6zJaZN8JM1soGFg4GVD6nSz7VGOX8z6rRUukKBfO6p2/2s5LMPM7I30xx
-	 nLl+4KiYR7VEvLrdYbSBR1VVsMqReU5QD0QSHBpUyUAu0+wWwFrqPQ8wezTsf1dDh6
-	 SZRen4KgQfToE4qcct1gMTylGaiCdrr7ZLgPPUB4=
+	b=lc1g1NiPhHuzOoow8oAcJsSlLs2z2XCLZ8zW0ttLS4mLrat71nZwtXEv2nsciSSnA
+	 2Zl35Ky3zCka0PbnO7WUcMluHqPiMi6/OwfBvrEm3F/G81y7wXzHgLuNQJ0y63jx7Z
+	 sZgdE6l4e0otXEBET5/7aH2ETJFP5oXOICLYJahk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcin FM <marcin@lgic.pl>,
-	Cristian-Florin Radoi <radoi.chris@gmail.com>,
-	George Salukvadze <giosal90@gmail.com>,
-	Evgeny Kapusta <3193631@gmail.com>,
-	Samu Toljamo <samu.toljamo@gmail.com>,
-	Ariel Rosenfeld <ariel.rosenfeld.750@gmail.com>,
-	Chapuis Dario <chapuisdario4@gmail.com>,
-	=?UTF-8?q?Thibaut=20Fran=C3=A7ois?= <tibo@humeurlibre.fr>,
-	=?UTF-8?q?=E5=BC=A0=E6=97=AD=E6=B6=B5?= <Loong.0x00@gmail.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Javier Tia <floss@jetm.me>,
-	Felix Fietkau <nbd@nbd.name>,
+	David Disseldorp <ddiss@suse.de>,
+	Lee Duncan <lduncan@suse.com>,
+	John Garry <john.g.garry@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0281/1276] wifi: mt76: mt7925: fix stale pointer comparisons in change_vif_links
-Date: Tue, 21 Jul 2026 17:12:04 +0200
-Message-ID: <20260721152452.367138752@linuxfoundation.org>
+Subject: [PATCH 6.12 0273/1276] scsi: target: Fix hexadecimal CHAP_I handling
+Date: Tue, 21 Jul 2026 17:11:56 +0200
+Message-ID: <20260721152452.189201611@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -55,60 +47,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Javier Tia <floss@jetm.me>
+From: David Disseldorp <ddiss@suse.de>
 
-[ Upstream commit 9f1accf3069a0cd42c14ca6c7d44d5b17cc48a80 ]
+[ Upstream commit 7e161211f1dd5288b4ea802b30e70ef919ebc3da ]
 
-In the error path of mt7925_change_vif_links(), the free: label iterates
-over link_ids to clean up, but compares against `mconf` and `mlink`
-which hold stale values from the last loop iteration rather than the
-current link_id being freed.
+A mutual CHAP handshake requires target processing of an initiator-sent
+CHAP_I identifier. The RFC 3720 specification states:
 
-Use array-indexed access (mconfs[link_id] / mlinks[link_id]) to compare
-against the correct per-link pointers.
+  11.1.4.  Challenge Handshake Authentication Protocol (CHAP)
+  ...
+  CHAP_A=<A> CHAP_I=<I> CHAP_C=<C>
+  ...
+  Where N, (A,A1,A2), I, C, and R are (correspondingly) the Name,
+  Algorithm, Identifier, Challenge, and Response as defined in
+  [RFC1994], N is a text string, A,A1,A2, and I are numbers
 
-Fixes: 69acd6d910b0 ("wifi: mt76: mt7925: add mt7925_change_vif_links")
-Tested-by: Marcin FM <marcin@lgic.pl>
-Tested-by: Cristian-Florin Radoi <radoi.chris@gmail.com>
-Tested-by: George Salukvadze <giosal90@gmail.com>
-Tested-by: Evgeny Kapusta <3193631@gmail.com>
-Tested-by: Samu Toljamo <samu.toljamo@gmail.com>
-Tested-by: Ariel Rosenfeld <ariel.rosenfeld.750@gmail.com>
-Tested-by: Chapuis Dario <chapuisdario4@gmail.com>
-Tested-by: Thibaut François <tibo@humeurlibre.fr>
-Tested-by: 张旭涵 <Loong.0x00@gmail.com>
-Reviewed-by: Sean Wang <sean.wang@mediatek.com>
-Signed-off-by: Javier Tia <floss@jetm.me>
-Link: https://patch.msgid.link/20260425195011.790265-2-sean.wang@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+CHAP_I parsing currently calls extract_param(), which returns the
+@identifier string (stripped of any 0b/0B or 0x/0X prefix) and a @type
+which indicates DECIMAL, HEX, or BASE64 encoding (based on any stripped
+prefix).
+
+Any HEX encoded CHAP_I string is further processed via:
+
+  ret = kstrtoul(&identifier[2], 0, &id);
+
+This is incorrect for two reasons:
+
+ * The @identifier string has already been stripped of the 0x/0X prefix,
+   so skipping the first two bytes omits part of the number.
+
+ * The kstrtoul() call specifies a base of 0, which will see
+   &identifier[2] parsed as a decimal, unless a '0x' or (octal) '0' is
+   erroneously present at that offset.
+
+Fix this by passing the (zero-offset) identifier string to kstrtoul()
+along with a base=16 parameter. Also add an explicit error handler for
+BASE64 encoding.
+
+Hex-encoded CHAP_I handling can be testing using the libiscsi EncodedI
+test linked below.
+
+Reported-by: Sashiko (gemini/gemini-3.1-pro-preview)
+Link: https://sashiko.dev/#/patchset/20260521151121.808477-1-hossu.alexandru%40gmail.com
+Link: https://github.com/sahlberg/libiscsi/pull/473
+Fixes: 85db7391310b ("scsi: target: iscsi: Validate CHAP_R length before base64 decode")
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+Reviewed-by: Lee Duncan <lduncan@suse.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Link: https://patch.msgid.link/20260605122019.24146-2-ddiss@suse.de
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/target/iscsi/iscsi_target_auth.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index b1f54cb54e1759..98ec76cf2fe8b4 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -2063,9 +2063,9 @@ mt7925_change_vif_links(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 		rcu_assign_pointer(mvif->link_conf[link_id], NULL);
- 		rcu_assign_pointer(mvif->sta.link[link_id], NULL);
- 
--		if (mconf != &mvif->bss_conf)
-+		if (mconfs[link_id] != &mvif->bss_conf)
- 			devm_kfree(dev->mt76.dev, mconfs[link_id]);
--		if (mlink != &mvif->sta.deflink)
-+		if (mlinks[link_id] != &mvif->sta.deflink)
- 			devm_kfree(dev->mt76.dev, mlinks[link_id]);
+diff --git a/drivers/target/iscsi/iscsi_target_auth.c b/drivers/target/iscsi/iscsi_target_auth.c
+index 02a4c9aff98d51..41e4def46ede69 100644
+--- a/drivers/target/iscsi/iscsi_target_auth.c
++++ b/drivers/target/iscsi/iscsi_target_auth.c
+@@ -437,9 +437,11 @@ static int chap_server_compute_hash(
  	}
  
+ 	if (type == HEX)
+-		ret = kstrtoul(&identifier[2], 0, &id);
++		ret = kstrtoul(identifier, 16, &id);
++	else if (type == DECIMAL)
++		ret = kstrtoul(identifier, 10, &id);
+ 	else
+-		ret = kstrtoul(identifier, 0, &id);
++		ret = -EINVAL;
+ 
+ 	if (ret < 0) {
+ 		pr_err("kstrtoul() failed for CHAP identifier: %d\n", ret);
 -- 
 2.53.0
 
