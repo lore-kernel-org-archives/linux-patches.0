@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6D22135AD;
-	Tue, 21 Jul 2026 18:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E5B33AD8A;
+	Tue, 21 Jul 2026 18:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659198; cv=none; b=H3T7mP9P7mj8aaIHbE0hJuBctY12XEp7bXkMm8PgdJVE7+5ll5SpS10RADL2r+rLozONnPgy+NsiDkvfJ0TBXXZ8uFYk9fx/IV/LupopQLt1/0eroNvlX5S3cd7A5XxRb3hgKLU03IklxNd2tSvtNnFEHvqjHnu/DN0eQHywfoE=
+	t=1784659201; cv=none; b=HrsU4qaGOIDXVgz63Ywo4U06xzB49G0ADccEuMzuTckx3GivxF8U5dakKDDNnVEAG6QGEZl7FQssuSEmLhICW3L8nvwIIndxfgedEAuO9sREQ0BTcibeFPotDSrbsboOG4D+DEghbkqAgT16BZyZtcRuYpPDI73YvHYc/bjeDR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659198; c=relaxed/simple;
-	bh=Q2dI4+aoXMJQtvPFE+bM6Za9g2/Dq1c5LmUo6MbJmog=;
+	s=arc-20240116; t=1784659201; c=relaxed/simple;
+	bh=cBa/X6bCR5ER2Ab/68Rt9s75qczd41Qkr0RNmol4z3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dDL7NmX4agiWBqqoAYB+2pTsTLx6nloCkXgTghVt2OgO5xJ9PX2rnm9hTRze0O0H1f5ocH968IdLfQhKB/4F/RcIX8Fx85Z8yE4IUJLNoCvTvlIHkjW3opWY9txaiXJQTLsqXeX6HI3JRgMUgFIyCQUgDMLOgYT99DmXehZCNBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zWxKQ6aE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IulAblmDlZwqhRcLPDdYZbUEwSJcbgubEd64i1OTrS37tu+u1DeHuSC+WFyxb9u7Zf/Harq4sxuimz8pQ5fOPgZeQA9ZtJNp/CuaugS4t23j/0t/d7amW4NeB4nkoMkZSPQnGRye63kClNEf1Fo/+Flv7D63N1mJ0A5FpsTSHMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/PtphhR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zWxKQ6aE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B3F1F000E9;
-	Tue, 21 Jul 2026 18:39:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/PtphhR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4FB1F000E9;
+	Tue, 21 Jul 2026 18:39:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659197;
-	bh=rQNl5mGhwO604+DYN2XWFRpe6EsBFYcOtCIYyZpf/nw=;
+	s=korg; t=1784659199;
+	bh=rw+OXBA6vlZO46J1gFYOvCBdWBdz2Rri31/QqY6oHpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zWxKQ6aE/Z1OPIiYgvIshiWe1yiVoM9A+4o7lNIWREejZnrO05ifp/jIo+7ivG/aT
-	 AtlxZoGdpcs2aJxl+7HwOZ7RRhhWzps1BjuLCWlEeAjFhKkBTYWP45YBnPEwLJv06h
-	 J2Bwo84rtxMn57mwWNpWkAV5zptvKd2KaTaE6t+4=
+	b=s/PtphhRJ80oekfsMfr8TsCO/aODxdCg6ZKmV6jJ9rEpJwKFtbUHzlcmQLkM3EAT4
+	 hWo4SXuvvZle1py0yESkx/qFe1sEqy3nw2MUeWbReiOfzVAYp63yW5xJKrDXAJFlxM
+	 7SbOYdGg7kApjITYdSgc0KcCqI38EfOx7v/kJdMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.18 1429/1611] rtc: renesas-rtca3: Fix PIE clear polling condition in alarm setup error path
-Date: Tue, 21 Jul 2026 17:25:45 +0200
-Message-ID: <20260721152547.578673215@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.18 1394/1611] gpio: tegra: do not call pinctrl for GPIO direction
+Date: Tue, 21 Jul 2026 17:25:10 +0200
+Message-ID: <20260721152546.799085554@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,50 +50,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 7e342d87aa8e6b831cf6d21ca41b1f7e032d0fcf upstream.
+commit d3e91a95b2b0fc6336dbf3ec90d831a1654d2720 upstream.
 
-In rtca3_set_alarm(), the setup_failed path attempts to disable the
-Periodic Interrupt Enable (PIE) bit and wait until it is cleared.
-However, the polling condition passed to readb_poll_timeout_atomic()
-uses an incorrect expression:
+tegra_gpio_direction_input() and tegra_gpio_direction_output() already
+program the GPIO controller direction registers directly. The additional
+pinctrl_gpio_direction_input/output() calls do not add a Tegra pinctrl
+operation, because the Tegra pinmux ops provide GPIO request/free
+handling but no gpio_set_direction hook.
 
-    !(tmp & ~RTCA3_RCR1_PIE)
+The extra call still enters the pinctrl core and takes pctldev->mutex.
+Shared GPIO users can call the direction path while holding their
+per-line spinlock, so this otherwise redundant pinctrl direction call can
+sleep in an atomic context.
 
-As ~RTCA3_RCR1_PIE evaluates to a mask of all bits except PIE, the
-condition effectively waits for all non-PIE bits to become zero, which
-is unrelated to the intended operation and is unlikely to ever be true.
-This causes the poll to time out unnecessarily.
+This was found by our static analysis tool and then confirmed by manual
+review of tegra_gpio_probe(), the Tegra GPIO direction callbacks and the
+Tegra pinctrl ops. The reviewed path has a default non-sleeping
+struct gpio_chip while the direction callback still enters the pinctrl
+mutex path.
 
-Fix the condition to check for the PIE bit itself being cleared:
+A directed runtime validation kept the same non-sleeping chip registration
+and drove:
 
-    !(tmp & RTCA3_RCR1_PIE)
+  gpio_shared_proxy_direction_output()
+  gpiod_direction_output_raw_commit()
+  tegra_gpio_direction_output()
+  pinctrl_gpio_direction_output()
 
-This correctly waits until PIE is deasserted after being cleared.
+Lockdep reported a sleep-in-atomic warning with the shared GPIO spinlock
+held and pinctrl_get_device_gpio_range() plus tegra_gpio_direction_output()
+on the stack.
 
-Fixes: d4488377609e3 ("rtc: renesas-rtca3: Add driver for RTCA-3 available on Renesas RZ/G3S SoC")
+Do not mark the whole chip as can_sleep to paper over this: can_sleep
+describes whether get()/set() may sleep, and Tegra value access is MMIO.
+Remove the redundant pinctrl direction calls and keep pinctrl involvement
+in the existing request/free path.
+
+Fixes: 11da90541283 ("gpio: tegra: Fix offset of pinctrl calls")
 Cc: stable@vger.kernel.org
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Tested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com> # on RZ/G3S
-Link: https://patch.msgid.link/20260602192559.1791344-2-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260619152439.1239561-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-renesas-rtca3.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-tegra.c |   18 ++----------------
+ 1 file changed, 2 insertions(+), 16 deletions(-)
 
---- a/drivers/rtc/rtc-renesas-rtca3.c
-+++ b/drivers/rtc/rtc-renesas-rtca3.c
-@@ -455,7 +455,7 @@ setup_failed:
- 		 * specified timeout for setup.
- 		 */
- 		writeb(rcr1 & ~RTCA3_RCR1_PIE, priv->base + RTCA3_RCR1);
--		readb_poll_timeout_atomic(priv->base + RTCA3_RCR1, tmp, !(tmp & ~RTCA3_RCR1_PIE),
-+		readb_poll_timeout_atomic(priv->base + RTCA3_RCR1, tmp, !(tmp & RTCA3_RCR1_PIE),
- 					  10, RTCA3_DEFAULT_TIMEOUT_US);
- 		atomic_set(&priv->alrm_sstep, RTCA3_ALRM_SSTEP_DONE);
- 	}
+--- a/drivers/gpio/gpio-tegra.c
++++ b/drivers/gpio/gpio-tegra.c
+@@ -172,18 +172,11 @@ static int tegra_gpio_direction_input(st
+ 				      unsigned int offset)
+ {
+ 	struct tegra_gpio_info *tgi = gpiochip_get_data(chip);
+-	int ret;
+ 
+ 	tegra_gpio_mask_write(tgi, GPIO_MSK_OE(tgi, offset), offset, 0);
+ 	tegra_gpio_enable(tgi, offset);
+ 
+-	ret = pinctrl_gpio_direction_input(chip, offset);
+-	if (ret < 0)
+-		dev_err(tgi->dev,
+-			"Failed to set pinctrl input direction of GPIO %d: %d",
+-			 chip->base + offset, ret);
+-
+-	return ret;
++	return 0;
+ }
+ 
+ static int tegra_gpio_direction_output(struct gpio_chip *chip,
+@@ -191,19 +184,12 @@ static int tegra_gpio_direction_output(s
+ 				       int value)
+ {
+ 	struct tegra_gpio_info *tgi = gpiochip_get_data(chip);
+-	int ret;
+ 
+ 	tegra_gpio_set(chip, offset, value);
+ 	tegra_gpio_mask_write(tgi, GPIO_MSK_OE(tgi, offset), offset, 1);
+ 	tegra_gpio_enable(tgi, offset);
+ 
+-	ret = pinctrl_gpio_direction_output(chip, offset);
+-	if (ret < 0)
+-		dev_err(tgi->dev,
+-			"Failed to set pinctrl output direction of GPIO %d: %d",
+-			 chip->base + offset, ret);
+-
+-	return ret;
++	return 0;
+ }
+ 
+ static int tegra_gpio_get_direction(struct gpio_chip *chip,
 
 
