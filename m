@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A9E46E005;
-	Tue, 21 Jul 2026 19:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819F6433042;
+	Tue, 21 Jul 2026 19:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663649; cv=none; b=hWm0IgyYaxMZ4oukI2xQqE3PeyQkdiFmoNTQB6K/cB7npGGpwk81m87vu4YCcB7evKIiBMhLIquv0ufnvSz33wklc3DiM7XedjTMgOz14L7CBemheKrqLLKb9lSQgh3mv/1B3SUH7WycM2oyT9Xf3Hkn0z49e/Yl9VkmfIK/QUQ=
+	t=1784663651; cv=none; b=JbCoRvos9g8oMXV6oTnI6ERMMueQIzpFwFltEjbp9nXEIQcA4eg2AQFmsRqisCNwQ6aXHhYzvkPmyDaM676UqXbYT4CLSZrogbhPBZXyW92mUoII0oIhpr1Feml67vRfrFoiJOLppdkA/LtiEL1CUDBgx4Mhs3cbRV2zcUR/ZQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663649; c=relaxed/simple;
-	bh=itTxsIcWV45Gba1U0tOdKN0H6StrzDNU9HCtMilUUxg=;
+	s=arc-20240116; t=1784663651; c=relaxed/simple;
+	bh=r0lvcTAfb1VngIOvFJC8CKlyGEn9WIFTn8NSYrjdXZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RnpEcw0zrn9yaqo2eItlwKXiUe38+8cNjIuiFalaPw2eUr07Od+IhonPAeEUOuzxeLoEFHqjXp3FlvRqEuI44cCIOistm0mrsVJr/eo2KEaZXEmm3NWWaWnA9x9UzdqyPjXpHAVdslok3y+Jca7ZxgUUK0H9702/cvXEFVmUEok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+8AjyoH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cs4TZjvTy56BS0kTJxukq1vhD7zu7ZItm9Wy3XI0cEjXtRFWXnzus/lfaxaIsAt8ORezLoS0Y/kzk1iY2Es7C1dPhErrtFfv4K0egUSf2sAvSSVHwPqu8+X0V2I87Idisz+obkkdz27dwEBgybNBB2FYydlER3lNjIZ1SinpenY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1nS37f8R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+8AjyoH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F9451F000E9;
-	Tue, 21 Jul 2026 19:54:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1nS37f8R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD1A01F000E9;
+	Tue, 21 Jul 2026 19:54:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663647;
-	bh=JCq96+APzYGwGtdaMmCx1ZulaHeS8qKS4Esd4y3rt3c=;
+	s=korg; t=1784663650;
+	bh=mjRBRy0M0IHRramb1xsF6HPsgWPd+Io5+g30FbqWNlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o+8AjyoHIP/JJ6Av+YWFGM3Ve0aUiKE82J8afweFC2455LIEsOb3A3VvOaDCcs/qk
-	 sM0OAHe4mfdyX5SAfP9m7elXcr+EtWYQQJG78DJy0r6Cf4kfcrI2PEx+7gopqgmfOo
-	 hst76IN4OpyCSwEQ+xKe5JhY0+77KKq32yPTgZS4=
+	b=1nS37f8RJ2E2TWKdGnDnIkoQPY1sOcQQDa/HHLHice8NP09t8JR/szAKRfxNjlgqa
+	 IZYlt8BlhKQ8NZDzRZJYdyeyw4y1xE24fo+ga0o9v9/YTLcYjZ5Fy/9GDYaC2Z2WPc
+	 73KDPc1iBDCaSYEe/J7sr7vOP5yvPEY1Y4PtaxE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 0902/1276] sunrpc: pin svc_xprt across the asynchronous TLS handshake callback
-Date: Tue, 21 Jul 2026 17:22:25 +0200
-Message-ID: <20260721152506.224485489@linuxfoundation.org>
+Subject: [PATCH 6.12 0903/1276] sunrpc: wait for in-flight TLS handshake callback when cancel loses race
+Date: Tue, 21 Jul 2026 17:22:26 +0200
+Message-ID: <20260721152506.246103896@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,88 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <clm@meta.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 4f988f3a2808fb659f3880c282041ff067acad78 upstream.
+commit d00e32f84ca1a77cb67a3fbf59f58dada95f5a21 upstream.
 
-svc_tcp_handshake() stores the raw svc_xprt pointer in
-tls_handshake_args.ta_data and submits the request through
-tls_server_hello_x509(). The handshake core takes only
-sock_hold(req->hr_sk); nothing references the embedding struct
-svc_sock that svc_tcp_handshake_done() reaches via container_of().
+When wait_for_completion_interruptible_timeout() in
+svc_tcp_handshake() returns 0 (timeout) or -ERESTARTSYS (signal) and
+tls_handshake_cancel() then returns false, handshake_complete() has
+won the cancellation race: it has set HANDSHAKE_F_REQ_COMPLETED and
+is about to invoke svc_tcp_handshake_done(), but the callback's
+side effects on xpt_flags and on svsk->sk_handshake_done have not
+yet committed.
 
-Two close races leave the in-flight callback writing through a freed
-svc_sock. svc_sock_free() calls tls_handshake_cancel() and discards
-its return value: a false return means handshake_complete() has
-already set HANDSHAKE_F_REQ_COMPLETED but hp_done() may not have
-finished, yet svc_sock_free() proceeds to kfree(svsk). The
-cancel-loser fall-through inside svc_tcp_handshake() itself produces
-the same window: when wait_for_completion_interruptible_timeout()
-returns <= 0 (timeout or signal) and tls_handshake_cancel() returns
-false, the function does not drain, returns, and svc_handle_xprt()
-calls svc_xprt_received(), which clears XPT_BUSY and can drop the
-last reference. A concurrent close then runs svc_sock_free() while
-svc_tcp_handshake_done() is still updating xpt_flags and walking
-svsk->sk_handshake_done.
+The current code reads xpt_flags immediately to decide whether the
+session succeeded. Two races result.
 
-The corruption surfaces as set_bit/clear_bit RMW into the freed
-xpt_flags slab slot and as complete_all() walking and writing the
-freed wait_queue_head_t list embedded in sk_handshake_done -- a
-slab-corruption primitive, not a benign read. The path is reachable
-on any TLS-enabled NFS server whenever a connection close overlaps
-the tlshd downcall delivery window; the interruptible wait means
-signal delivery suffices, not just SVC_HANDSHAKE_TO expiry.
+If the callback has executed set_bit(XPT_TLS_SESSION) but not yet
+clear_bit(XPT_HANDSHAKE), svc_tcp_handshake() sees a session,
+enqueues the transport, and returns. svc_xprt_received() then
+clears XPT_BUSY, a worker thread picks the transport up, the
+dispatcher in svc_handle_xprt() observes XPT_HANDSHAKE still set,
+and xpo_handshake is invoked a second time. That svc_tcp_handshake()
+calls init_completion(&svsk->sk_handshake_done) while the original
+callback concurrently calls complete_all() on it, corrupting the
+embedded swait_queue.
 
-Take svc_xprt_get(xprt) immediately before tls_server_hello_x509()
-so the in-flight callback owns its own reference. Release it on the
-two edges where the callback is guaranteed not to fire -- submission
-failure from tls_server_hello_x509() and a successful
-tls_handshake_cancel() -- and at the tail of
-svc_tcp_handshake_done() after complete_all().
+If the callback has set HANDSHAKE_F_REQ_COMPLETED but not yet
+entered svc_tcp_handshake_done(), svc_tcp_handshake() reads
+XPT_TLS_SESSION as clear and tears the connection down even though
+the handshake is about to succeed.
+
+Wait for the callback to commit before inspecting xpt_flags. The
+completion is guaranteed to fire because handshake_complete()
+invokes svc_tcp_handshake_done() unconditionally once it has set
+HANDSHAKE_F_REQ_COMPLETED.
 
 Fixes: b3cbf98e2fdf ("SUNRPC: Support TLS handshake in the server-side TCP socket code")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <clm@meta.com>
-Assisted-by: kres (claude-opus-4-7)
-[cel: rewrote commit message to describe the actual change]
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svcsock.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/sunrpc/svcsock.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/net/sunrpc/svcsock.c
 +++ b/net/sunrpc/svcsock.c
-@@ -462,6 +462,7 @@ static void svc_tcp_handshake_done(void
- 	}
- 	clear_bit(XPT_HANDSHAKE, &xprt->xpt_flags);
- 	complete_all(&svsk->sk_handshake_done);
-+	svc_xprt_put(xprt);
- }
- 
- /**
-@@ -485,9 +486,13 @@ static void svc_tcp_handshake(struct svc
- 	clear_bit(XPT_TLS_SESSION, &xprt->xpt_flags);
- 	init_completion(&svsk->sk_handshake_done);
- 
-+	/* Pin the transport across the asynchronous handshake callback. */
-+	svc_xprt_get(xprt);
-+
- 	ret = tls_server_hello_x509(&args, GFP_KERNEL);
- 	if (ret) {
- 		trace_svc_tls_not_started(xprt);
-+		svc_xprt_put(xprt);
- 		goto out_failed;
- 	}
- 
-@@ -496,6 +501,7 @@ static void svc_tcp_handshake(struct svc
- 	if (ret <= 0) {
- 		if (tls_handshake_cancel(sk)) {
- 			trace_svc_tls_timed_out(xprt);
-+			svc_xprt_put(xprt);
+@@ -504,6 +504,10 @@ static void svc_tcp_handshake(struct svc
+ 			svc_xprt_put(xprt);
  			goto out_close;
  		}
++		/* Cancellation lost to handshake_complete(): the
++		 * callback is in flight and should finish quickly.
++		 */
++		wait_for_completion(&svsk->sk_handshake_done);
  	}
+ 
+ 	if (!test_bit(XPT_TLS_SESSION, &xprt->xpt_flags)) {
 
 
