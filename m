@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1482D7DF1;
-	Tue, 21 Jul 2026 20:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BDB6472F8F;
+	Tue, 21 Jul 2026 20:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664842; cv=none; b=pX3XzVTt8wFdEtdTdM8MaycpA2QONANzYyk//FSQxYslcniY/5S0xw1S3tP23AiMO675FDk9/NNC0DsXXmtPsmbAu4rFQ2jxT/Avt5uIBfJTRZz1E2mFtFEKx+Y8fHaZx8J4naJmdmpU1E/crLt89nbC2+dfDwepZT+prAasK2U=
+	t=1784664845; cv=none; b=G9/UvXQT/J79z9d5CBYTXvOAK+YwXPdxtJCq2+NIBN+2e1WyDKNF0qT9wQqUESpwumHJeo6N9ax4kaICO6KykCLZEHMay4p4FXAcHUhIavTfhasAV9lyLkKLSY0AwjAlFJDBeD+HAZP9J8gPeA85BHnh8MqQs27MU1Bn6cpO2ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664842; c=relaxed/simple;
-	bh=umsmb3/wMXbo4v90jDNmL/8EPc1Dbpw6uNpzlOciO+o=;
+	s=arc-20240116; t=1784664845; c=relaxed/simple;
+	bh=d/xrYpUnYHCQpiNaOBNinizTqnJap0PQp/L2YoMwtko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iBUrlKGsXQ95RP5gR++NcHOiT/wU8tvJ5ZZj2JDI+9PVuWZ55WIkSvH5m/p6CVWFBqtyFJVkgzaYdtMHji0290h30h/a+/4adHHw+LBPtMGFoXLOOYMfobXJC+GcmeQQW7JoD3/Am2HTtCEkhsMbqM6WWeJdF1mezlGxPufI+XE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8/VcEVJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W0ThsZWoHU+/l1SB9++8Zl8kZWv2cYQLMpZ2ehmo/nBUUfvAfAeSvYFt3FZEhlKhWXIkSN0BrbrU/0zVUCDYn538lM+tk37nOoSeSIHGezveP4tOI5aPUlzreU7wXmCXICz9JOMNVDOxhRcPP2eJvF2b2FsQoiZiGz91gG1tZ7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLFpoSLQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8/VcEVJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D481F000E9;
-	Tue, 21 Jul 2026 20:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLFpoSLQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 248FD1F000E9;
+	Tue, 21 Jul 2026 20:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664840;
-	bh=DOlb2eug/3w9XmXDK/whuHvX9R/OXVWSS0uIGxkGkf0=;
+	s=korg; t=1784664843;
+	bh=zkinOTI+EPQ6t2mT2bICWnTuOkFOjcNGvD/3t8crsag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y8/VcEVJmL+ARaKmIG/3XqJMpYlzugKrlZS39pSdEj5TsGlLrOwD8hzL47CniPtaD
-	 J/c1dEgUTmLy0PZFHM9OdQYg9GDYn2PONVBJ6m8ukkMHeZXjI1+QLMedysGIZkGtpT
-	 NhjPsKl4ZjXKkWLAJRQQixJwPLHPoP3Cll2AyoFo=
+	b=wLFpoSLQ3TT0Rv3HIKW7Z2jcoFLwi8iwejZuDnasjJ+0pt6q4oGyzhsmbtedzr46W
+	 nhB94ntbWEIzq96TKDsUGG8xy4eod3PaP6yZsG3WFAztBWsyyOIHyPvuXeeTy+IqsJ
+	 mlEq2odsuC6HypbkMDRXIsZ3I//LrRokF/eL4QwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Willem de Bruijn <willemb@google.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Philo Lu <lulie@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0078/1266] LoongArch: Add PIO for early access before ACPI PCI root register
-Date: Tue, 21 Jul 2026 17:08:35 +0200
-Message-ID: <20260721152443.545064386@linuxfoundation.org>
+Subject: [PATCH 6.6 0079/1266] net: Drop the lock in skb_may_tx_timestamp()
+Date: Tue, 21 Jul 2026 17:08:36 +0200
+Message-ID: <20260721152443.568113399@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,115 +55,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-commit 6061e65f95713b01f4313cda6637dfe3aa5412b4 upstream.
+commit 983512f3a87fd8dc4c94dfa6b596b6e57df5aad7 upstream.
 
-For ACPI system we suppose the ISA/LPC PIO range is registered together
-with PCI root bridge. But the fact is there may be some early access to
-the ISA/LPC PIO range before ACPI PCI root register (most of them are
-due to abnormal BIOS). Unconditionally register the ISA/LPC PIO range
-usually causes ACPI PCI root register fail because of the address range
-confliction. So we add a pair of helpers: acpi_add_early_pio() to add
-PIO for early access, and acpi_remove_early_pio() to remove PIO before
-PCI root register. Since acpi_remove_early_pio() may be called multiple
-times, we add an acpi_pio flag to ensure PIO be removed only once.
+skb_may_tx_timestamp() may acquire sock::sk_callback_lock. The lock must
+not be taken in IRQ context, only softirq is okay. A few drivers receive
+the timestamp via a dedicated interrupt and complete the TX timestamp
+from that handler. This will lead to a deadlock if the lock is already
+write-locked on the same CPU.
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Taking the lock can be avoided. The socket (pointed by the skb) will
+remain valid until the skb is released. The ->sk_socket and ->file
+member will be set to NULL once the user closes the socket which may
+happen before the timestamp arrives.
+If we happen to observe the pointer while the socket is closing but
+before the pointer is set to NULL then we may use it because both
+pointer (and the file's cred member) are RCU freed.
+
+Drop the lock. Use READ_ONCE() to obtain the individual pointer. Add a
+matching WRITE_ONCE() where the pointer are cleared.
+
+Link: https://lore.kernel.org/all/20260205145104.iWinkXHv@linutronix.de
+Fixes: b245be1f4db1a ("net-timestamp: no-payload only sysctl")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260220183858.N4ERjFW6@linutronix.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ adapted sk_set_socket() in include/net/sock.h to fix the conflict from
+ not having commit 5d6b58c932ec ("net: lockless sock_i_ino()") and the
+ additional previous changes required by it.
+ It comes down to just now having the lines of
+    if (sock) {
+            WRITE_ONCE(sk->sk_uid, SOCK_INODE(sock)->i_uid);
+            WRITE_ONCE(sk->sk_ino, SOCK_INODE(sock)->i_ino);
+    }
+ below the changed line. ]
+Signed-off-by: Philo Lu <lulie@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/acpi.h |  2 ++
- arch/loongarch/kernel/acpi.c      | 28 ++++++++++++++++++++++++++++
- arch/loongarch/kernel/setup.c     |  2 ++
- arch/loongarch/pci/acpi.c         |  2 ++
- 4 files changed, 34 insertions(+)
+ include/net/sock.h |  2 +-
+ net/core/skbuff.c  | 23 ++++++++++++++++++-----
+ net/socket.c       |  2 +-
+ 3 files changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/arch/loongarch/include/asm/acpi.h b/arch/loongarch/include/asm/acpi.h
-index 49e29b29996f0f..4f31109714c0ab 100644
---- a/arch/loongarch/include/asm/acpi.h
-+++ b/arch/loongarch/include/asm/acpi.h
-@@ -37,6 +37,8 @@ static inline bool acpi_has_cpu_in_madt(void)
- extern struct list_head acpi_wakeup_device_list;
- extern struct acpi_madt_core_pic acpi_core_pic[MAX_CORE_PIC];
+diff --git a/include/net/sock.h b/include/net/sock.h
+index a6944844553afe..c1f129a532b200 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -2155,7 +2155,7 @@ static inline int sk_rx_queue_get(const struct sock *sk)
  
-+extern void acpi_add_early_pio(void);
-+extern void acpi_remove_early_pio(void);
- extern int __init parse_acpi_topology(void);
- 
- static inline u32 get_acpi_id_for_cpu(unsigned int cpu)
-diff --git a/arch/loongarch/kernel/acpi.c b/arch/loongarch/kernel/acpi.c
-index 1f529b13490b3b..34101b753eaac3 100644
---- a/arch/loongarch/kernel/acpi.c
-+++ b/arch/loongarch/kernel/acpi.c
-@@ -14,6 +14,7 @@
- #include <linux/memblock.h>
- #include <linux/of_fdt.h>
- #include <linux/serial_core.h>
-+#include <linux/vmalloc.h>
- #include <asm/io.h>
- #include <asm/numa.h>
- #include <asm/loongson.h>
-@@ -57,6 +58,33 @@ void __iomem *acpi_os_ioremap(acpi_physical_address phys, acpi_size size)
- 		return ioremap_cache(phys, size);
+ static inline void sk_set_socket(struct sock *sk, struct socket *sock)
+ {
+-	sk->sk_socket = sock;
++	WRITE_ONCE(sk->sk_socket, sock);
  }
  
-+#define PIO_BASE (unsigned long)PCI_IOBASE
-+#define PIO_SIZE ALIGN(ISA_IOSIZE, PAGE_SIZE)
-+
-+static bool acpi_pio;
-+
-+/* Add PIO for early access */
-+void acpi_add_early_pio(void)
-+{
-+	if (!acpi_disabled) {
-+		acpi_pio = true;
-+		ioremap_page_range(PIO_BASE, PIO_BASE + PIO_SIZE,
-+				LOONGSON_LIO_BASE, pgprot_device(PAGE_KERNEL));
-+	}
-+}
-+
-+/* Remove PIO for PCI register */
-+void acpi_remove_early_pio(void)
-+{
-+	if (!acpi_pio)
-+		return;
-+
-+	if (!acpi_disabled) {
-+		acpi_pio = false;
-+		vunmap_range(PIO_BASE, PIO_BASE + PIO_SIZE);
-+	}
-+}
-+
- #ifdef CONFIG_SMP
- static int set_processor_mask(u32 id, u32 flags)
- {
-diff --git a/arch/loongarch/kernel/setup.c b/arch/loongarch/kernel/setup.c
-index 2e34ece474eece..729b0660b61c1a 100644
---- a/arch/loongarch/kernel/setup.c
-+++ b/arch/loongarch/kernel/setup.c
-@@ -530,6 +530,8 @@ static __init int arch_reserve_pio_range(void)
- {
- 	struct device_node *np;
+ static inline wait_queue_head_t *sk_sleep(struct sock *sk)
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index c5e2ae6d0406bd..732204d99822a2 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -5258,15 +5258,28 @@ static void __skb_complete_tx_timestamp(struct sk_buff *skb,
  
-+	acpi_add_early_pio();
-+
- 	for_each_node_by_name(np, "isa") {
- 		struct of_range range;
- 		struct of_range_parser parser;
-diff --git a/arch/loongarch/pci/acpi.c b/arch/loongarch/pci/acpi.c
-index 2d584a59a2a049..b53dae9d57c899 100644
---- a/arch/loongarch/pci/acpi.c
-+++ b/arch/loongarch/pci/acpi.c
-@@ -65,6 +65,8 @@ static int acpi_prepare_root_resources(struct acpi_pci_root_info *ci)
- 	struct resource_entry *entry, *tmp;
- 	struct acpi_device *device = ci->bridge;
+ static bool skb_may_tx_timestamp(struct sock *sk, bool tsonly)
+ {
+-	bool ret;
++	struct socket *sock;
++	struct file *file;
++	bool ret = false;
  
-+	acpi_remove_early_pio();
-+
- 	status = acpi_pci_probe_root_resources(ci);
- 	if (status > 0) {
- 		acpi_evaluate_integer(device->handle, "PCIH", NULL, &pci_h);
+ 	if (likely(READ_ONCE(sysctl_tstamp_allow_data) || tsonly))
+ 		return true;
+ 
+-	read_lock_bh(&sk->sk_callback_lock);
+-	ret = sk->sk_socket && sk->sk_socket->file &&
+-	      file_ns_capable(sk->sk_socket->file, &init_user_ns, CAP_NET_RAW);
+-	read_unlock_bh(&sk->sk_callback_lock);
++	/* The sk pointer remains valid as long as the skb is. The sk_socket and
++	 * file pointer may become NULL if the socket is closed. Both structures
++	 * (including file->cred) are RCU freed which means they can be accessed
++	 * within a RCU read section.
++	 */
++	rcu_read_lock();
++	sock = READ_ONCE(sk->sk_socket);
++	if (!sock)
++		goto out;
++	file = READ_ONCE(sock->file);
++	if (!file)
++		goto out;
++	ret = file_ns_capable(file, &init_user_ns, CAP_NET_RAW);
++out:
++	rcu_read_unlock();
+ 	return ret;
+ }
+ 
+diff --git a/net/socket.c b/net/socket.c
+index fa242d7e51c791..ae31c54664632c 100644
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -671,7 +671,7 @@ static void __sock_release(struct socket *sock, struct inode *inode)
+ 		iput(SOCK_INODE(sock));
+ 		return;
+ 	}
+-	sock->file = NULL;
++	WRITE_ONCE(sock->file, NULL);
+ }
+ 
+ /**
 -- 
 2.53.0
 
