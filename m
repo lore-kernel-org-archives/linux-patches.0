@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3407A430CE3;
-	Tue, 21 Jul 2026 22:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F1F430CE3;
+	Tue, 21 Jul 2026 22:55:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674550; cv=none; b=ofpfIUiScxVj0tBwGywAQvN6fEu2+fOROd9BG3AcPxuGIgbz3KgRnsilbiImac3I7IRIw8+o9qkFchhwbHV7842KBHpdfGrrln7olWeH51WU4hd+ZP5SuYUgjzBBB0knvWjiyk1x+2beCN8Xd+FjlJTnmpUQBQJDKP0t3xf2xro=
+	t=1784674552; cv=none; b=nLbbLE7sWDC2Q2MC3wM2BmS60cZsWDwDfvGAS3LtcastH4n5YkJID6ZzpbhVY+xiISCMbwTngtod7iJPbKkG+Y9aGIPDYbf+QNjtHDLRroZAT27YcZX+84nE7ccngiW+RKCj3gdZiRpkwPZuoixK6q4sGm72MEiAOURUWXz8Oak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674550; c=relaxed/simple;
-	bh=UL7f0c0fMgPI2hLP2mMxUeWg+jrC9Pxg6k8+XraFBIE=;
+	s=arc-20240116; t=1784674552; c=relaxed/simple;
+	bh=chVMU6arM+0ZjmHMM0I0Sq70E9MaejTFAc4dFc82U/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rAWamcvhGBQIJLtpGZeOHYc7yPbpuK1Bk462olc98CTfi8F31wdQiAkxqA98+S4AMMlw7GBI0RXHBJlN52G+1PuVddA0jbBpXvkbSCN/uWLSU/4JNwS0n821fcHxrWu8TmEY33Sn1sWlw4MyouJXTzABDqvrl4wope+pzDbwtMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqbxUNRY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ro0TmzVy/BbX8WE1minT/vIATDMDlOhmXHgLOELuLcUSKpdkO+t0Dzshfdff0raFcVaBZz41nalXwZ1monEwZRVGNK+YvaDgcGyFhcBs7Q7B0ctbv4Ha1zeeaabuq623DAy2CT4oXC93yOA9dSQsfFfB9Wu7hLNLAdE4egjTl0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FgfU8nWz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqbxUNRY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C3C61F000E9;
-	Tue, 21 Jul 2026 22:55:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FgfU8nWz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0BB1F000E9;
+	Tue, 21 Jul 2026 22:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674548;
-	bh=4AotJZTM9kFDPI1QaDLohhYKTSZg6oKfJQi5PwpsHew=;
+	s=korg; t=1784674551;
+	bh=xVOioYFdl+TWN0ULbtCCYMWqyQa9uRWoU/mJK3W1Ymg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qqbxUNRY8JoCdbH+IlU6PiMP3SOk1P4ft/CG27dXBUhbmEl5c7+yMc1/BYjzrQ8Z/
-	 JBcJi1owX5o7/Ene9XZbUF9MPIdZytnPKtBGz1lYlkNZxFqKmsZbW/AulzaKok2pLW
-	 NGLNck18t22ideFcPbK7TOV/2glPhGV/X/MFob0Y=
+	b=FgfU8nWzP2lEgCWIR0I6dkxGuRznkxaeh0B1n+ZsbR6fuZbvuVKyzUhSqlDFHIbNV
+	 e/mCVG28Ano2k2Oi8uIbU+/wv+XB5rFCQjJ0ELBh5kfYg9CRrLmt8zgVheUZ7Do+yC
+	 k86mL79JnLWl1jCpB6Vyzlyx60ic1Oy0+Cop2IvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 581/699] ACPI: NFIT: core: Fix acpi_nfit_init() error cleanup
-Date: Tue, 21 Jul 2026 17:25:40 +0200
-Message-ID: <20260721152408.821231994@linuxfoundation.org>
+Subject: [PATCH 5.10 582/699] iio: imu: adis: add IRQF_NO_THREAD to non-FIFO trigger IRQ
+Date: Tue, 21 Jul 2026 17:25:41 +0200
+Message-ID: <20260721152408.843666695@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,100 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 38bf27511ef41bffebd157ec3eba41fc89ba59cd ]
+[ Upstream commit 6e1b9bff1202da55c464e36bd34a2b6863d7fe30 ]
 
-If acpi_nfit_init() fails after adding the acpi_desc object to the
-acpi_descs list, that object is never removed from that list because
-the acpi_nfit_shutdown() devm action is not added for the NFIT device
-in that case.  Next, the acpi_nfit_init() failure causes
-acpi_nfit_probe() to fail, the acpi_desc object is freed, and a
-dangling pointer is left behind in the acpi_descs.  Any subsequent
-ACPI Machine Check Exception will trigger nfit_handle_mce() which
-iterates over acpi_descs and so a use-after-free will occur.
+devm_adis_probe_trigger() registers iio_trigger_generic_data_rdy_poll()
+through devm_request_irq() on the non-FIFO path, but it does not add
+IRQF_NO_THREAD to the IRQ flags.
 
-Moreover, if acpi_nfit_probe() returns 0 after installing a notify
-handler for the NFIT device and without allocating the acpi_desc
-object and setting the NFIT device's driver data pointer, the
-acpi_desc object will be allocated by acpi_nfit_update_notify()
-and acpi_nfit_init() will be called to initialize it.  Regardless
-of whether or not acpi_nfit_init() fails in that case, the
-acpi_nfit_shutdown() devm action is not added for the NFIT device
-and acpi_desc is never removed from the acpi_descs list.  If the
-acpi_desc object is freed subsequently on driver removal, any
-subsequent ACPI MCE will lead to a use-after-free like in the
-previous case.
+When the kernel is booted with forced IRQ threading, the parent IRQ can
+otherwise be threaded by the IRQ core and the subsequent IIO trigger
+child IRQ is then dispatched from irq/... thread context instead of
+hardirq context. Because iio_trigger_generic_data_rdy_poll()
+immediately drives iio_trigger_poll(), this violates the hardirq-only
+IIO trigger helper contract and can push downstream trigger consumers
+through the wrong execution context.
 
-To address the first issue mentioned above, make acpi_nfit_probe()
-call acpi_nfit_shutdown() directly on acpi_nfit_init() failures and
-to address the other one, add a remove callback to the driver and
-make it call acpi_nfit_shutdown().  Also, since it is now possible to
-pass NULL to acpi_nfit_shutdown() or the acpi_desc object passed to it
-may not have been initialized, add checks against NULL for acpi_desc and
-its nvdimm_bus field to that function and make acpi_nfit_unregister()
-clear the latter after unregistering the NVDIMM bus.
+Add IRQF_NO_THREAD on top of the existing adis->irq_flag value for the
+non-FIFO request_irq() path, while preserving the current trigger
+polarity and IRQF_NO_AUTOEN behavior.
 
-Fixes: a61fe6f7902e ("nfit, tools/testing/nvdimm: unify common init for acpi_nfit_desc")
-Fixes: fbabd829fe76 ("acpi, nfit: fix module unload vs workqueue shutdown race")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: All applicable <stable@vger.kernel.org>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/1963615.tdWV9SEqCh@rafael.j.wysocki
+Fixes: fec86c6b8369 ("iio: imu: adis: Add Managed device functions")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/nfit/core.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/iio/imu/adis_trigger.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/acpi/nfit/core.c
-+++ b/drivers/acpi/nfit/core.c
-@@ -3456,6 +3456,8 @@ static void acpi_nfit_unregister(void *d
- 	struct acpi_nfit_desc *acpi_desc = data;
+--- a/drivers/iio/imu/adis_trigger.c
++++ b/drivers/iio/imu/adis_trigger.c
+@@ -84,7 +84,7 @@ int devm_adis_probe_trigger(struct adis
  
- 	nvdimm_bus_unregister(acpi_desc->nvdimm_bus);
-+	/* The nvdimm_bus object may have been freed, so clear the pointer. */
-+	acpi_desc->nvdimm_bus = NULL;
- }
- 
- int acpi_nfit_init(struct acpi_nfit_desc *acpi_desc, void *data, acpi_size sz)
-@@ -3680,7 +3682,10 @@ static void acpi_nfit_put_table(void *ta
- void acpi_nfit_shutdown(void *data)
- {
- 	struct acpi_nfit_desc *acpi_desc = data;
--	struct device *bus_dev = to_nvdimm_bus_dev(acpi_desc->nvdimm_bus);
-+	struct device *bus_dev;
-+
-+	if (!acpi_desc || !acpi_desc->nvdimm_bus)
-+		return;
- 
- 	/*
- 	 * Destruct under acpi_desc_lock so that nfit_handle_mce does not
-@@ -3695,6 +3700,7 @@ void acpi_nfit_shutdown(void *data)
- 	mutex_unlock(&acpi_desc->init_mutex);
- 	cancel_delayed_work_sync(&acpi_desc->dwork);
- 
-+	bus_dev = to_nvdimm_bus_dev(acpi_desc->nvdimm_bus);
- 	/*
- 	 * Bounce the nvdimm bus lock to make sure any in-flight
- 	 * acpi_nfit_ars_rescan() submissions have had a chance to
-@@ -3762,13 +3768,14 @@ static int acpi_nfit_add(struct acpi_dev
- 				sz - sizeof(struct acpi_table_nfit));
- 
- 	if (rc)
--		return rc;
--	return devm_add_action_or_reset(dev, acpi_nfit_shutdown, acpi_desc);
-+		acpi_nfit_shutdown(acpi_desc);
-+
-+	return rc;
- }
- 
- static int acpi_nfit_remove(struct acpi_device *adev)
- {
--	/* see acpi_nfit_unregister */
-+	acpi_nfit_shutdown(dev_get_drvdata(&adev->dev));
- 	return 0;
- }
- 
+ 	ret = devm_request_irq(&adis->spi->dev, adis->spi->irq,
+ 			       &iio_trigger_generic_data_rdy_poll,
+-			       adis->irq_flag,
++			       adis->irq_flag | IRQF_NO_THREAD,
+ 			       indio_dev->name,
+ 			       adis->trig);
+ 	if (ret)
 
 
