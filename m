@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557C0470451;
-	Tue, 21 Jul 2026 19:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A5046EC9E;
+	Tue, 21 Jul 2026 19:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662144; cv=none; b=LTnAfgwOQvV/kgLC29AiOLfe6mdk1sPFCogblB/4hNipAgup2RacT3PRPOSFjcCdbsNiU1CCdr+Y5Uhnyiu4sSatSVJuLBpl43OkDK85vyrWgzhu1B8TD8IyoTBOp9vOPgpq/7L92g5dLpQT9TDleE50DN+mFjb8lmdkASyjjRo=
+	t=1784662147; cv=none; b=tY0jRL08t0L0eMiRN2cLHidA/r+beFwOSV8uC+w9bJ3UYIp96IL+P+95hdnCykFPozyZCPAgG4v8/ZBb1IOCxqSL8VTNH3M5nQbg9xcKx6h9A7RUaTNIXKx1H+4ln2EXerv2IDnSZYXl5OGR6yNqWhnHItnWoiwHR68OE2MZVFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662144; c=relaxed/simple;
-	bh=CU/DGc9yPDIsgBxtPHFQsc3C8TNJJpzLTSVOmM9Q0Qg=;
+	s=arc-20240116; t=1784662147; c=relaxed/simple;
+	bh=aZQEjFaKsW6wppRwnveQbrYFY/HiZ3tE3sazjavEI20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kSBSxYFlT8thV+YR0bfxi4xlBuDLxYHYG+S5DV2GoLcRva34gJPjU74TjsR1g72kd6gQzFqCS7kNHNMzevKWZteiEjEZaCKVTQdC8M8S4pP2dgjrTQ2axfvFZL1dnkYI/idVHt8EFf1KboU6cupg7209LfoJtzKjrM10N21Xhgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=URc1Pd/U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RdaDIs+fBnXG9xatp2oV23TNYIb+H8NzptxGP6EwjCcq+HPEE00+RJydCBpemfNqxH8hrSmH3qh+izxgO5Thh6ldAndFKt2rXECOtwCNEGYP9a7oPDNvmVhjRAh3SgGiw7BnUw8n92T+XO9vXiCvB3JhbSRiFB8EhbE55PyiSRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvZyUzAK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URc1Pd/U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CDA21F000E9;
-	Tue, 21 Jul 2026 19:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvZyUzAK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18BC31F000E9;
+	Tue, 21 Jul 2026 19:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662142;
-	bh=cC49tpmZD/cdvBsmr/77BqwLnniSGOvP03sQOpyYFXU=;
+	s=korg; t=1784662145;
+	bh=qnUFEOY9q3trNKPqeOET4hDr/HbK8dLtecsj2gcVlsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=URc1Pd/UNND6JxlwTuejtxhcGoZSOOoaGSsGzUfKfHwm+aObzaBDx2jw+qWiO9jhj
-	 q4/Q2LRYyjpkhZFI6OxU6+kjveGpBl8YjoRlNWWphJs2PfGpbI1fUcqfZd2bVfHSLd
-	 NX7h9bVej55F/50EfVpb5wZX9G8Ij1yHKvlCI8F4=
+	b=jvZyUzAKM4Mn64TiDO/U3VMstGjNn6obhmeXk7IyatUkXVGcBCmkDAVPuHKdUN7Ms
+	 1QnSy6lGQihUP5l0HpXVUKBO3iot05at0UZdE4C7h0VZ7XruLTW6RHwjqvH85vDpcd
+	 p49KwptXYwbw2gg55WbaYxMePUguTrq02rC43v0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0334/1276] net: fib_rules: Dont dump dying fib_rule in fib_rules_dump().
-Date: Tue, 21 Jul 2026 17:12:57 +0200
-Message-ID: <20260721152453.578435517@linuxfoundation.org>
+Subject: [PATCH 6.12 0335/1276] bridge: cfm: reject invalid CCM interval at configuration time
+Date: Tue, 21 Jul 2026 17:12:58 +0200
+Message-ID: <20260721152453.600100974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,70 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 2821e85c058f81c9948a2fb1a634f7b47457d51c ]
+[ Upstream commit f3e02edd8322b31b8e6517faa6ba053bf29d1e26 ]
 
-rocker_router_fib_event() calls fib_rule_get() during RCU dump.
+ccm_tx_work_expired() re-arms itself via queue_delayed_work() using
+the configured exp_interval converted by interval_to_us(). When
+exp_interval is BR_CFM_CCM_INTERVAL_NONE or out of range,
+interval_to_us() returns 0, causing the worker to fire immediately in
+a tight loop that allocates skbs until OOM.
 
-If the fib_rule is dying, refcount_inc() will complain about it.
+Fix this by validating exp_interval at configuration time:
 
-Let's call refcount_inc_not_zero() in fib_rules_dump().
+ - Constrain IFLA_BRIDGE_CFM_CC_CONFIG_EXP_INTERVAL to the valid range
+   [BR_CFM_CCM_INTERVAL_3_3_MS, BR_CFM_CCM_INTERVAL_10_MIN] in the
+   netlink policy so userspace cannot set an invalid value.
 
-Fixes: 5d7bfd141924 ("ipv4: fib_rules: Dump FIB rules when registering FIB notifier")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+ - Reject starting CCM TX in br_cfm_cc_ccm_tx() when exp_interval has
+   not yet been configured (defaults to 0 from kzalloc).
+
+Fixes: 2be665c3940d ("bridge: cfm: Netlink SET configuration Interface.")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260610061744.2030996-3-kuniyu@google.com
+Link: https://patch.msgid.link/20260609065116.2818837-1-xmei5@asu.edu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/fib_rules.h | 5 +++++
- net/core/fib_rules.c    | 6 +++++-
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ net/bridge/br_cfm.c         | 6 ++++++
+ net/bridge/br_cfm_netlink.c | 4 +++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/fib_rules.h b/include/net/fib_rules.h
-index d17855c52ef926..b5dd8917f56db2 100644
---- a/include/net/fib_rules.h
-+++ b/include/net/fib_rules.h
-@@ -107,6 +107,11 @@ static inline void fib_rule_get(struct fib_rule *rule)
- 	refcount_inc(&rule->refcnt);
- }
- 
-+static inline bool fib_rule_get_safe(struct fib_rule *rule)
-+{
-+	return refcount_inc_not_zero(&rule->refcnt);
-+}
-+
- static inline void fib_rule_put(struct fib_rule *rule)
- {
- 	if (refcount_dec_and_test(&rule->refcnt))
-diff --git a/net/core/fib_rules.c b/net/core/fib_rules.c
-index 388ff1d6d86b7a..35865ce1e2c583 100644
---- a/net/core/fib_rules.c
-+++ b/net/core/fib_rules.c
-@@ -330,7 +330,7 @@ int fib_rules_lookup(struct fib_rules_ops *ops, struct flowi *fl,
- 
- 		if (err != -EAGAIN) {
- 			if ((arg->flags & FIB_LOOKUP_NOREF) ||
--			    likely(refcount_inc_not_zero(&rule->refcnt))) {
-+			    likely(fib_rule_get_safe(rule))) {
- 				arg->rule = rule;
- 				goto out;
- 			}
-@@ -388,8 +388,12 @@ int fib_rules_dump(struct net *net, struct notifier_block *nb, int family,
- 	if (!ops)
- 		return -EAFNOSUPPORT;
- 	list_for_each_entry_rcu(rule, &ops->rules_list, list) {
-+		if (!fib_rule_get_safe(rule))
-+			continue;
-+
- 		err = call_fib_rule_notifier(nb, FIB_EVENT_RULE_ADD,
- 					     rule, family, extack);
-+		fib_rule_put(rule);
- 		if (err)
- 			break;
+diff --git a/net/bridge/br_cfm.c b/net/bridge/br_cfm.c
+index ffa571e38c540e..d76a0440e2b819 100644
+--- a/net/bridge/br_cfm.c
++++ b/net/bridge/br_cfm.c
+@@ -805,6 +805,12 @@ int br_cfm_cc_ccm_tx(struct net_bridge *br, const u32 instance,
+ 		goto save;
  	}
+ 
++	if (!interval_to_us(mep->cc_config.exp_interval)) {
++		NL_SET_ERR_MSG_MOD(extack,
++				   "Invalid CCM interval");
++		return -EINVAL;
++	}
++
+ 	/* Start delayed work to transmit CCM frames. It is done with zero delay
+ 	 * to send first frame immediately
+ 	 */
+diff --git a/net/bridge/br_cfm_netlink.c b/net/bridge/br_cfm_netlink.c
+index 2faab44652e7c0..91b9922dc3f25e 100644
+--- a/net/bridge/br_cfm_netlink.c
++++ b/net/bridge/br_cfm_netlink.c
+@@ -34,7 +34,9 @@ br_cfm_cc_config_policy[IFLA_BRIDGE_CFM_CC_CONFIG_MAX + 1] = {
+ 	[IFLA_BRIDGE_CFM_CC_CONFIG_UNSPEC]	 = { .type = NLA_REJECT },
+ 	[IFLA_BRIDGE_CFM_CC_CONFIG_INSTANCE]	 = { .type = NLA_U32 },
+ 	[IFLA_BRIDGE_CFM_CC_CONFIG_ENABLE]	 = { .type = NLA_U32 },
+-	[IFLA_BRIDGE_CFM_CC_CONFIG_EXP_INTERVAL] = { .type = NLA_U32 },
++	[IFLA_BRIDGE_CFM_CC_CONFIG_EXP_INTERVAL] =
++		NLA_POLICY_RANGE(NLA_U32, BR_CFM_CCM_INTERVAL_3_3_MS,
++				 BR_CFM_CCM_INTERVAL_10_MIN),
+ 	[IFLA_BRIDGE_CFM_CC_CONFIG_EXP_MAID]	 = {
+ 	.type = NLA_BINARY, .len = CFM_MAID_LENGTH },
+ };
 -- 
 2.53.0
 
