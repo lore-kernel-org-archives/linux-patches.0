@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4AF37647B;
-	Tue, 21 Jul 2026 20:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3269D1D7E5C;
+	Tue, 21 Jul 2026 20:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665775; cv=none; b=IGOO3Rbo6r0ec4S97W5qhc58mdJdWTKLBKFOBXA6y1O2/MW98x2hrruC2Pn2HRI6TDmt3mSGHQc4WruC50kbzzp/BK4PQg/xeWOEBgKbFeqFRUvfAhu05CCRIbko4uchxwGjEOmiM8M9R9A5W31AjdeYa3a/fTdrlXZGCd54QU8=
+	t=1784665778; cv=none; b=KYRMWZM/NCG/1CTkmj5Q2uAIzWOYufVBFeozn0WRSF1f0T36gbhNHfeVMZjsUuOV2/KphCwqVJZ+XCPyv1iAQEvDDvonXV6NVIZb7CdujpRjDI9wc7aMQ2J1N2YShcyfQZYH0pr2I6DlgPYRw4ix6SHBQou8pxF9Bce8HzcDwMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665775; c=relaxed/simple;
-	bh=O4SZ6uT2UI0tS7nmTHY0/7x8uezsXgY2XvOQcUjBXYU=;
+	s=arc-20240116; t=1784665778; c=relaxed/simple;
+	bh=jK0GggU48YoVGyhmtYlB9Kr7Xq9GLtBIVpRWzAJ791Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F4TtCYd7sRbmepVSxn2hVLMwIqvW+6ElNpVIFU1Z7tw6Sdkmpw3FiEfWyqVhlUi3NercVCmdOKCDIQlWmZACAhhIo/87ph5bpviIJgCvPapxuVe8C4nc33YcUwVIog5n3R3P62xjSfM2HpY2dxYV5zpaOiPsHd6hYDuDIFv58wE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w3ZG/lOH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lVRjDCDDR1j00u1wbHIXHzBMoS2ipk7cdFhJBn08gV9P7uzzT5SJPWRTKeM1H+UemJ50RGpMJm5IgJlO0XT/YmE/gTh2xeE9lmZ0HeKe7cbPb3gtESHg4wh21NSCe8izFoJ8r2GdyoDaxvoqs9+6+I7ceV1JA+C1/7h02oaxI1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oXZMNU01; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w3ZG/lOH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D0A1F000E9;
-	Tue, 21 Jul 2026 20:29:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oXZMNU01"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 981261F000E9;
+	Tue, 21 Jul 2026 20:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665774;
-	bh=33iVHf2Udq2zV57YjVOtzx1j+oHR5+G9JjDq79qx5lc=;
+	s=korg; t=1784665777;
+	bh=ChyeFTPq47prMqReHG1KT+RZybkpHtwhesxDsIptMJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w3ZG/lOHaIU5mYz2n/ll+UyBuk/bFeqDzH7VwLqLb9M1xtqy5M49u7iQBvztL02iG
-	 7T5JvpAFb3Zv72mwEqBX5Gh8JXDhX5298HCmxIOA3GjG3Iu2/1csu3a71tfK6WduC4
-	 7uwb2rmxD1nl3/8P68VPKu+28ELPbxnmOII2sdus=
+	b=oXZMNU017l9J+I50TPhS7x86NoQZYU65N1ya+uFF+AiOE04vfu/SxBWCrAEsumlZ0
+	 dfEbZuFs10HYG1US2UabZAiyuoRj+5YJMmK1LTuPcnvd/4EB/0PEa5k57q7vuhdzrz
+	 Ryv52dFxjCwxZNsBP8hNSnFdcobJBNF6mz2i11h4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lianfa Weng <wenglianfa@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Tao Cui <cuitao@kylinos.cn>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0431/1266] RDMA/hns: Fix warning in poll cq direct mode
-Date: Tue, 21 Jul 2026 17:14:28 +0200
-Message-ID: <20260721152451.485376702@linuxfoundation.org>
+Subject: [PATCH 6.6 0432/1266] RDMA/counter: Fix incorrect port index in rdma_counter_init() error cleanup
+Date: Tue, 21 Jul 2026 17:14:29 +0200
+Message-ID: <20260721152451.506512735@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,54 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lianfa Weng <wenglianfa@huawei.com>
+From: Tao Cui <cuitao@kylinos.cn>
 
-[ Upstream commit 3f19c2a3852e6ba75f3e92dd5edc4e07f3d07f4a ]
+[ Upstream commit b86fd95805a7bd4c5b9465c9e7f75e45bbe7eb6f ]
 
-CQs allocated by ib_alloc_cq() always have a comp_handler. Though
-in direct mode this handler is never expected to be called, it
-is still called when the driver is reset, triggering the following
-WARN_ONCE():
+The error cleanup loop in rdma_counter_init() iterates with variable
+'i' but accesses dev->port_data[port] instead of dev->port_data[i].
+This causes the failed port's hstats to be freed multiple times while
+leaking hstats of previously initialized ports.
 
-Call trace:
-ib_cq_completion_direct+0x38/0x60
-hns_roce_cq_completion+0x54/0x90 (hns_roce_hw_v2]
-hns_roce_handle_device_err+Ox1c8/0x340 [hns_roce_hw_v2]
-hns_roce_hw_v2_uninit_instance.constprop.0+0x34/0x70 [hns_roce_hw_v2]
-hns_roce_hw_v2_reset_notify+0xc4/0xe0 [hns_roce_hw_v2]
-hclge_notify_roce_client+0x60/0xbc [hclge]
-hclge_reset_rebuild+0x48/0x34c [hclge]
-hclge_reset_subtask+0xcc/0xec [hclge]
-hclge_reset_service_task+0x80/0x160 [hclge]
-hclge_service_task+0x50/0x80 (hclge]
-process_one_work+0x1cc/0x4d0
-worker_thread+0x154/0x414
-kthread+0x104/0x144
-ret_from_fork+0x10/0x18
-
-Fixes: f295e4cece5c ("RDMA/hns: Delete unnecessary callback functions for cq")
-Link: https://patch.msgid.link/r/20260520055759.2354037-3-huangjunxian6@hisilicon.com
-Signed-off-by: Lianfa Weng <wenglianfa@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Fixes: 56594ae1d250 ("RDMA/core: Annotate destroy of mutex to ensure that it is released as unlocked")
+Link: https://patch.msgid.link/r/20260520104546.1776253-3-cuitao@kylinos.cn
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_main.c | 2 +-
+ drivers/infiniband/core/counters.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
-index 5f39a25064d10d..a67b3291e68f4d 100644
---- a/drivers/infiniband/hw/hns/hns_roce_main.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_main.c
-@@ -969,7 +969,7 @@ static void check_and_get_armed_cq(struct list_head *cq_list, struct ib_cq *cq)
- 	unsigned long flags;
+diff --git a/drivers/infiniband/core/counters.c b/drivers/infiniband/core/counters.c
+index af59486fe41852..d41af5ab6403ab 100644
+--- a/drivers/infiniband/core/counters.c
++++ b/drivers/infiniband/core/counters.c
+@@ -649,7 +649,7 @@ void rdma_counter_init(struct ib_device *dev)
  
- 	spin_lock_irqsave(&hr_cq->lock, flags);
--	if (cq->comp_handler) {
-+	if (cq->comp_handler && hr_cq->ib_cq.poll_ctx != IB_POLL_DIRECT) {
- 		if (!hr_cq->is_armed) {
- 			hr_cq->is_armed = 1;
- 			list_add_tail(&hr_cq->node, cq_list);
+ fail:
+ 	for (i = port; i >= rdma_start_port(dev); i--) {
+-		port_counter = &dev->port_data[port].port_counter;
++		port_counter = &dev->port_data[i].port_counter;
+ 		rdma_free_hw_stats_struct(port_counter->hstats);
+ 		port_counter->hstats = NULL;
+ 		mutex_destroy(&port_counter->lock);
 -- 
 2.53.0
 
