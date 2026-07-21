@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45564432E97;
-	Tue, 21 Jul 2026 21:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1063C0617;
+	Tue, 21 Jul 2026 21:44:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670244; cv=none; b=aT9FDnoGl0xLpwpf9aEimVMYwZnTcuYw5te3Noi9p8i6gh6PTjC8CfnrBZ/ZIAlZr3nICEYVkOc9/O/IFtHpIQKwS8YHFPgOiqVY/Y+3MFCc+0mttoDmnYoNTJnVCxomf0ojlMCWaJE3T/cHrU24uriixozdqXKxe5NxJWYvEcw=
+	t=1784670246; cv=none; b=jVHmi2moz7gYmdBP9b57lq0jLTGHnQz1SLYZAlovDNeHmuNwATy7zGl7vzGDUrxCJD7r6xB+s5FPMT03pMjoEloPGiigPil8J1PGLBRE9VwZgHr5X202jmBRuKUQ1UOOleEB1Zb4Ja3xxt3t7+rbeVPM5YsYbHaM7b0k6bC7RLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670244; c=relaxed/simple;
-	bh=y4TJ/MRDWQ+qgtmENrUfm65VL77RhYs3Km1I0syNCbQ=;
+	s=arc-20240116; t=1784670246; c=relaxed/simple;
+	bh=2syOiSPGKmGIM5nwams+I1hIo8KHGmR6L5SDWf5D9RM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vGrknLs8b09JlFda3WaPCHq+C8iqxUMtevmW35YIWasf2v/8+dpWkbz9tOZEVtlJv5Rx6uuPuFEYZxbTbD0ll8hhJTCswO3SbN1fkLsbKRE0qy3o1thvMd1cFc6PiZ5KQSPu2Rsb+/xuiVDGGcHGoVpU7nOBfU278ievF7x0A9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BozZyTUQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rk+bYY7Xu2WBeB3Oxf3N09/zKW0vz0BSXzaYJHxpr1p6BenX3ta2hFnDw8QgDIMXkYR5agmEyaPQHb68hf4U1FLuKEkDZbdnt4puRrV3CxtpTk/AcQP0aWsnJNii8txJrG/0SIATvPWG/bfTPjPxoanM0KrMCx2QSTmxeysszt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uhqEgzm1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BozZyTUQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6951F000E9;
-	Tue, 21 Jul 2026 21:44:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhqEgzm1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514841F000E9;
+	Tue, 21 Jul 2026 21:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670243;
-	bh=Smk96LVyWM127ddidgmA3A0k0qoKOz/ANZxpIzvVsKg=;
+	s=korg; t=1784670245;
+	bh=T4ZLZbdkYQWVdxCFA9l1itYvar0OM9LwZX42g1ZXTVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BozZyTUQbAWMavCPZpZaMtgWlAiY6JrWE8thKq2txsBma+3L7JfOcSzYbciJ3G+sH
-	 JoZwca3HmfAoUQMVUZEio1+K8cpp+GUKkDyEzZA7WxEZV6ABpSm2LBw1W/ndmxthH6
-	 JTfrlLMoGRv9KABRxj6kO+J69qN2TOAIfbB8bELY=
+	b=uhqEgzm1mr6bSRUkKqv2bBqjW2ZvqK/A5Y3rh3/buMRMI/YCQU1QvH47Sv/AhE3Kk
+	 sAEOe319vg0acwsBFnyhTkd4/qUes5RyhPCX3xr+0KmWy5gXuLGtb38Pa1dO74MMIv
+	 C2pl6Mas2FtNakFAo3hlop3Rfp5dQi1qzhJVRIHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WenTao Liang <vulab@iscas.ac.cn>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
 	Daniel Wagner <dwagner@suse.de>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 0859/1067] scsi: elx: efct: Fix refcount leak in efct_hw_io_abort()
-Date: Tue, 21 Jul 2026 17:24:20 +0200
-Message-ID: <20260721152443.758375087@linuxfoundation.org>
+Subject: [PATCH 6.1 0860/1067] scsi: elx: efct: Fix I/O leak on unsupported additional CDB
+Date: Tue, 21 Jul 2026 17:24:21 +0200
+Message-ID: <20260721152443.780861185@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,46 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WenTao Liang <vulab@iscas.ac.cn>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 2c007acf7b31c39c08ce4959451ad00b19be4c1f upstream.
+commit 9cb2d5291dbfe7bed565ead3337047dee9ed1064 upstream.
 
-When efct_hw_reqtag_alloc() fails in efct_hw_io_abort(), the error path
-returns -ENOSPC without releasing the reference obtained via
-kref_get_unless_zero() earlier in the function. All other error paths
-correctly drop the reference. This causes a permanent reference leak on the
-io_to_abort object.
+efct_dispatch_fcp_cmd() allocates an efct_io before dispatching an
+unsolicited FCP command. If the command has an unsupported additional
+CDB, the function returns -EIO before handing the IO to the SCSI layer.
 
-Additionally, the abort_in_progress flag is left set to true on this path,
-which means future abort attempts for the same I/O will immediately return
--EINPROGRESS even though the abort was never submitted, effectively
-blocking recovery.
+Free the allocated IO before returning from this error path.
 
-Fix this by adding the missing kref_put() call and reset abort_in_progress
-to false, matching the cleanup done in the efct_hw_wq_write() failure path
-below.
-
+Fixes: f45ae6aac0a0 ("scsi: elx: efct: Unsolicited FC frame processing routines")
 Cc: stable@vger.kernel.org
-Fixes: 63de51327a64 ("scsi: elx: efct: Hardware I/O and SGL initialization")
-Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
 Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Link: https://patch.msgid.link/20260611053037.63756-1-vulab@iscas.ac.cn
+Link: https://patch.msgid.link/20260622075844.832871-1-haoxiang_li2024@163.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/elx/efct/efct_hw.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/elx/efct/efct_unsol.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/scsi/elx/efct/efct_hw.c
-+++ b/drivers/scsi/elx/efct/efct_hw.c
-@@ -1998,6 +1998,8 @@ efct_hw_io_abort(struct efct_hw *hw, str
- 	wqcb = efct_hw_reqtag_alloc(hw, efct_hw_wq_process_abort, io_to_abort);
- 	if (!wqcb) {
- 		efc_log_err(hw->os, "can't allocate request tag\n");
-+		io_to_abort->abort_in_progress = false;
-+		kref_put(&io_to_abort->ref, io_to_abort->release);
- 		return -ENOSPC;
- 	}
+--- a/drivers/scsi/elx/efct/efct_unsol.c
++++ b/drivers/scsi/elx/efct/efct_unsol.c
+@@ -385,6 +385,7 @@ efct_dispatch_fcp_cmd(struct efct_node *
  
+ 		if (cmnd->fc_flags & FCP_CFL_LEN_MASK) {
+ 			efc_log_err(efct, "Additional CDB not supported\n");
++			efct_scsi_io_free(io);
+ 			return -EIO;
+ 		}
+ 		/*
 
 
