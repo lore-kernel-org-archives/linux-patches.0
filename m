@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1C646EC77;
-	Tue, 21 Jul 2026 18:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D713446D094;
+	Tue, 21 Jul 2026 18:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659474; cv=none; b=KfihN5MZKt7C9psHABQM1duahsuWdFecV++/1WrNlqSd1XQHUd170C67sUkO7uGV6i+CMjTN1w3lUr33zC7nZO5vS1lt7ikW7Yhr+BU4MALXQhZYvCB6eEDbZxWFElnZJtKYn+kItE55hyIWwgR5SPqlLditavQXM9Kup5DJWCc=
+	t=1784659477; cv=none; b=VsxaC0aDQPMSYWDXEClBcZOR8AN0kK+qkq3WqBoXGzFZl+1Lt2L5oKuoXA6eS/4TUa4/+EdjPntqbb4cJ6zuQBkAqnx0BMLLmxQM+soDIA9fJg+6fBajtJN1aGUGz7vrYrv3VlQf6DVQnLqWrAt/tgUQiK8q88X7NcH7t+qq8Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659474; c=relaxed/simple;
-	bh=qLzXw44CGmUHgq1KrZ+M5NEvcwaVrJq+T+yuu28Hkpc=;
+	s=arc-20240116; t=1784659477; c=relaxed/simple;
+	bh=EGDok4OuN4/MmfDQYvJqFAoXKfO4ub3eb+lljeHaqKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MCNkOcvOQU3nF6FUUqxRY9nnLKuXxkFDe1RZkBdKSMBIWTo3qUhQMmj3NyV9pky9MuBKycS2UGQyFtVG0Fxxd9Us3uTgoa2IcNJwzPbAusRSP3DjmkJmAsdnuGtXnavWN4pt1Ov4LTkda22u+srS68nHzdAZ6/5KPT4TZVlFNc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSC4H/hj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aaozgTxmr/qNUXACjpAlMq8SGHO9UnOsc7UDxsRCF/4i2Vm5vsOdHSkpdaYClDMbh4EddeW6l7BsiN/HEG0QebM04ffNbuIeCInaz+IHNLxub9LOs3W+1kvQKXXPlyYZW7D6CNLgjWXmwta4RMLvxQuoXj9c+ethHpiwN0jgyfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deZZ0Yd8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSC4H/hj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4391F000E9;
-	Tue, 21 Jul 2026 18:44:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deZZ0Yd8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49BC21F000E9;
+	Tue, 21 Jul 2026 18:44:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659473;
-	bh=7A8uGKo5iKR8prZPtnFrtzRaL9IhO7nGJ1GEaZd4QTc=;
+	s=korg; t=1784659475;
+	bh=zSzMSbbu1uQ2xkiD3oO0OXBYPRt1PeD2CyTS3ivZgeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HSC4H/hjo2zyETmFtpQD6o8Bxr7xR1OCLocgL09d6mZ/lJ1SjpIbk7TNDwUY35WPC
-	 hIvGoD79ySKcu3jYfL12zSnKWGeDQk/GqxgQX7ijlMQSzVPMc3Yf4zfpwW22OPHPS7
-	 XX22895RfGWo+5V01Xr+jm0aSzJpOmiFEuj9nrls=
+	b=deZZ0Yd8dKyuFGxFLJvYZHuL0rlGcE8Kkwpscf7XXLRQN1guaLtaltn7G91K1mHNC
+	 77fmD+Pw4RkCqydGgH3Tg96QqZft0U51Ryy15ImiZph6fMty5YS9mUOICwo0FZnxKF
+	 /tvAe64LzdZZi7F7hyjX1ceXkwAyS1FacrbzdOiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.18 1491/1611] ipvs: fix more places with wrong ipv6 transport offsets
-Date: Tue, 21 Jul 2026 17:26:47 +0200
-Message-ID: <20260721152548.979876224@linuxfoundation.org>
+	Zilin Guan <zilin@seu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.18 1482/1611] wifi: mac80211: fix memory leak in ieee80211_register_hw()
+Date: Tue, 21 Jul 2026 17:26:38 +0200
+Message-ID: <20260721152548.779102418@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,82 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit b3fe4cbd583895987935a9bdad01c8f9d3a02310 upstream.
+commit 95fc02722edde02946d0d475221f2b2054d3d8ba upstream.
 
-Sashiko reports for more incorrect IPv6 transport offsets.
+If kmemdup() fails while copying supported band structures, the error
+path jumps to fail_rate. This skips rate_control_deinitialize() and
+leaks the initialized local->rate_ctrl.
 
-The app code for TCP was assuming IPv4 network header
-even after the ipvsh argument was provided. This can
-cause problems with apps over IPv6. As for the only
-official app in the kernel tree (FTP) this problem is
-harmless because we use Netfilter to mangle the FTP
-ports and we do not adjust the TCP seq numbers.
+Fix this by adding a fail_band label that shares the rate-control cleanup
+path before falling through to the remaining teardown.
 
-Also, provide correct offset of the ICMPV6 header in
-ip_vs_out_icmp_v6() for correct checksum checks when
-the IPv6 packet has extension headers.
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still present in
+v7.1-rc7.
 
-Fixes: d12e12299a69 ("ipvs: add ipv6 support to ftp")
-Fixes: 2a3b791e6e11 ("IPVS: Add/adjust Netfilter hook functions and helpers for v6")
+An x86_64 allyesconfig build showed no new warnings. As we do not have a
+suitable mac80211 device/driver combination to test with, no runtime
+testing was able to be performed.
+
+Fixes: 09b4a4faf9d0 ("mac80211: introduce capability flags for VHT EXT NSS support")
 Cc: stable@vger.kernel.org
-Link: https://sashiko.dev/#/patchset/20260706101624.69471-1-zhaoyz24%40mails.tsinghua.edu.cn
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Link: https://patch.msgid.link/20260706143507.146131-1-dawei.feng@seu.edu.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_app.c  |   10 ++++------
- net/netfilter/ipvs/ip_vs_core.c |    3 +--
- 2 files changed, 5 insertions(+), 8 deletions(-)
+ net/mac80211/main.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/netfilter/ipvs/ip_vs_app.c
-+++ b/net/netfilter/ipvs/ip_vs_app.c
-@@ -362,14 +362,13 @@ static inline int app_tcp_pkt_out(struct
- 				  struct ip_vs_iphdr *ipvsh)
- {
- 	int diff;
--	const unsigned int tcp_offset = ip_hdrlen(skb);
- 	struct tcphdr *th;
- 	__u32 seq;
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -1575,7 +1575,7 @@ int ieee80211_register_hw(struct ieee802
+ 		sband = kmemdup(sband, sizeof(*sband), GFP_KERNEL);
+ 		if (!sband) {
+ 			result = -ENOMEM;
+-			goto fail_rate;
++			goto fail_band;
+ 		}
  
--	if (skb_ensure_writable(skb, tcp_offset + sizeof(*th)))
-+	if (skb_ensure_writable(skb, ipvsh->len + sizeof(*th)))
- 		return 0;
- 
--	th = (struct tcphdr *)(skb_network_header(skb) + tcp_offset);
-+	th = (struct tcphdr *)(skb_network_header(skb) + ipvsh->len);
- 
- 	/*
- 	 *	Remember seq number in case this pkt gets resized
-@@ -439,14 +438,13 @@ static inline int app_tcp_pkt_in(struct
- 				 struct ip_vs_iphdr *ipvsh)
- {
- 	int diff;
--	const unsigned int tcp_offset = ip_hdrlen(skb);
- 	struct tcphdr *th;
- 	__u32 seq;
- 
--	if (skb_ensure_writable(skb, tcp_offset + sizeof(*th)))
-+	if (skb_ensure_writable(skb, ipvsh->len + sizeof(*th)))
- 		return 0;
- 
--	th = (struct tcphdr *)(skb_network_header(skb) + tcp_offset);
-+	th = (struct tcphdr *)(skb_network_header(skb) + ipvsh->len);
- 
- 	/*
- 	 *	Remember seq number in case this pkt gets resized
---- a/net/netfilter/ipvs/ip_vs_core.c
-+++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -1041,8 +1041,7 @@ static int ip_vs_out_icmp_v6(struct netn
- 	snet.in6 = ciph.saddr.in6;
- 	offset = ciph.len;
- 	return handle_response_icmp(AF_INET6, skb, &snet, ciph.protocol, cp,
--				    pp, offset, sizeof(struct ipv6hdr),
--				    hooknum);
-+				    pp, offset, ipvsh->len, hooknum);
- }
+ 		wiphy_dbg(hw->wiphy, "copying sband (band %d) due to VHT EXT NSS BW flag\n",
+@@ -1642,6 +1642,7 @@ int ieee80211_register_hw(struct ieee802
  #endif
- 
+ 	wiphy_unregister(local->hw.wiphy);
+  fail_wiphy_register:
++ fail_band:
+ 	rtnl_lock();
+ 	rate_control_deinitialize(local);
+ 	ieee80211_remove_interfaces(local);
 
 
