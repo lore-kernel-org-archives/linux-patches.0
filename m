@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AA7403B1E;
-	Tue, 21 Jul 2026 17:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E03E3E49F5;
+	Tue, 21 Jul 2026 17:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654908; cv=none; b=RIDpTzfv1Ip6nueKDPTrnIxOM0zT8pHk+cEshRms/j6phFEo8eI116TUNFZhoEOclU9RWyINfnZK7zUlAMuKCZ/xicBu5bPDxl1AuOrpNAjU21g3yqY6kLKb2xvcWB6++mvEgWWLY5G4FqJJ8MWd74kWQkgGaGipvcKyMXf+V7o=
+	t=1784654911; cv=none; b=FjFJbt632vLUGFkEdf8DcaUuuQ7Y9CQD7hDTWyUxbUBVBQuQSnk8eDpi6eoeNHJqbTzgwqUo5jY71r8HSc0MkDJ8rZdmq6VSgAQl1mTelr3nQj+GQlXuSIwHzURwZqlhDBt/YO3uQwcpefklb8P/hpwk79AMb7pH/V32RLnBcz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654908; c=relaxed/simple;
-	bh=/+9qxvhSNb6nFcQbKY44CZ2+vSl2XhrntD4weNRsgoQ=;
+	s=arc-20240116; t=1784654911; c=relaxed/simple;
+	bh=HUBOsuAw9qElcMU9diAaTwIq/gd0FLwMcjzM0rdyp9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DQ0s3iI/bTsCXMlGf8/vvAzxG4Tn+8oZNXIM/YeMXGj3ZDfpiWiydsEMXIrGFoX+fHUIaJmt1L1nk45FTRBXCuDAEinr6TKGczaJ3KAYriT/g9VGHNKriX6nBNiqexX4Os3WQSW1JaNBgSYjrIslDcowHJcscOzABkn/myIQVH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLhRacrZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g2ojGLn+lfzMeplDb/kzSr1BYquynPJkTd0F4Wl2wGp7Vcodj3agT8tWOW+4Tv5KyO7wdQ8U0PvThs+SNXbTBRe0vZf7l/hCzcOky7LyLkjdSP4DWV/afNUtdyeYec8ULsL8+ZjWETHdnZebp+h8tbwfeQiuX/6nhb7FAXsM4cU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVNHIiUr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLhRacrZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE90C1F000E9;
-	Tue, 21 Jul 2026 17:28:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVNHIiUr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 930801F000E9;
+	Tue, 21 Jul 2026 17:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654907;
-	bh=2BmXnUQgsFaZmcDPx5IcciLv5KT8+HO4Bt0W3Cusqpo=;
+	s=korg; t=1784654910;
+	bh=VP4ta1iU3TThkC2WlIOd8fk8lgHRC0Z2vtysZ6T97UE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oLhRacrZ2BA1HNXdu+z5JkVBQyNOkcJRnRxckjr1jYnkbsyzoQ/BwmYsnSAW96u/k
-	 3gnCqRk6BRceJYIGSNde0XRopShR4Txr3NJoE27D4OB5i25Xi5RKNUn1ze4Z/jDhK2
-	 p8JfTn3O+5gfbbL6ibZWBswPQ5vqYYAAdXG5CLxA=
+	b=AVNHIiUrc7zPHFPf8aNv63iYsHBjpgxsxsdhSJtCt2wbL4M3iafOYYDUVRva4xRWF
+	 sFhEqbMMywbYu/m7Dkty9NpSEFf/FI0WK8lhwkyUMUnKD43fvTwvtFHLpkH25CVss5
+	 be0gySfb8rsHhyBTqHDe5b1F9VJseQvlVTEn288E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko bot <sashiko-bot@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 7.1 1882/2077] Input: ims-pcu - release data interface on disconnect
-Date: Tue, 21 Jul 2026 17:25:55 +0200
-Message-ID: <20260721152637.113353662@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 7.1 1847/2077] dm-ioctl: fix a possible overflow in list_version_get_info
+Date: Tue, 21 Jul 2026 17:25:20 +0200
+Message-ID: <20260721152636.304211329@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,32 +49,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 441c510a649c8ddce38aa0311334ed8bb546b36c upstream.
+commit 76c6f845dc0c614304a6e6ee619b552f97cf24b3 upstream.
 
-During probe the driver claims the data interface, but it never releases
-it. Release it in disconnect to avoid leaving it permanently claimed.
+sizeof(tt->version) is 12 bytes, but the code writes 16 bytes into the
+output buffer - info->vers->version[0], info->vers->version[1],
+info->vers->version[2] and info->vers->next. This can cause buffer
+overflow.
 
-Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
+Fix this buffer overflow by replacing "sizeof(tt->version)" with
+"sizeof(struct dm_target_versions)".
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Assisted-by: Claude:claude-opus-4.6
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko bot <sashiko-bot@kernel.org>
-Assisted-by: Gemini:gemini-3.1-pro
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/ims-pcu.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/dm-ioctl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/misc/ims-pcu.c
-+++ b/drivers/input/misc/ims-pcu.c
-@@ -2096,6 +2096,7 @@ static void ims_pcu_disconnect(struct us
- 		ims_pcu_destroy_application_mode(pcu);
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -698,7 +698,7 @@ static void list_version_get_info(struct
+ 	struct vers_iter *info = param;
  
- 	ims_pcu_buffers_free(pcu);
-+	usb_driver_release_interface(&ims_pcu_driver, pcu->data_intf);
- 	kfree(pcu);
- }
- 
+ 	/* Check space - it might have changed since the first iteration */
+-	if ((char *)info->vers + sizeof(tt->version) + strlen(tt->name) + 1 > info->end) {
++	if ((char *)info->vers + sizeof(struct dm_target_versions) + strlen(tt->name) + 1 > info->end) {
+ 		info->flags = DM_BUFFER_FULL_FLAG;
+ 		return;
+ 	}
 
 
