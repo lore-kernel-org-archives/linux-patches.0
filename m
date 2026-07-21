@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E523546D570;
-	Tue, 21 Jul 2026 18:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F7B46EF64;
+	Tue, 21 Jul 2026 18:34:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658895; cv=none; b=UA8uIAx1bx/Jyg614J+H2Kn5Uj3VjCkObovtf9iRjSPjBFJXruIWQCqLpfgvOcT+kxEmQLDYctr47rDwcgfMTeI2rl8hihD6RY4ZigjdbswaYVJA3a814Gtm+O7jqAyR05EXK2pAirgIlo79ApqjydcYzjG7HSVORrbQCcGm5Ds=
+	t=1784658897; cv=none; b=u8nmdo/rla64VcnQ4hqMX6JpIbmJAvDlGH51tpfvVs68G4boP3I9/XikvbVemkyrSTxFZ/LEseToZlBF4FMOhxXmSxwWuPnR/I5U5ls7+1qTc5qbwVDV/6skCsUYAPWweTpXARxWkoUXspjpZdaWYVNXrgohyXho44iPHdHjwb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658895; c=relaxed/simple;
-	bh=pcJNWlhXmCpjWxil7pgjImsR27wf/5dO4bG3fRYgwrQ=;
+	s=arc-20240116; t=1784658897; c=relaxed/simple;
+	bh=mRGoy2RqiupL9x50/BmEM91Qu2BXPF+4dJxqYHsm60g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iFCo37sfEFffk6MaDzR8mCow8KLdQv4uSVEtn6adBrAYRmNiISbeH+tYtqAVI64n9E3t4nW94juU5f55SSGy4RcJ+0bB9cbLUkR1RnSYDcWBqTsOxBFz5u2hQlG/4Bb52xRjAJsU6PR8NUditPgy3wFj8Ae/x0JjvEcfuUTmoKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t69arozC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tTKRpIzmoyBLOxZBWexAK93KE4tIF2fFV9cV55d+o7hL9O3zzqr2NSRVKWzu1mGisMIC1NQ3P+0w5YUqtiuDyOzSuUN8rCYPkAUFEmoiuYRJSs919VpQRilQK2FFjAlv2jGif6X0xEbTOYu/cvCF6AxC9fkpbX11ahekN04jHE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gsr/0Pn+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t69arozC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23A261F000E9;
-	Tue, 21 Jul 2026 18:34:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gsr/0Pn+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0FBF1F000E9;
+	Tue, 21 Jul 2026 18:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658893;
-	bh=iYm74ru6A/L/yHNvDtZyWLKPxVq8ZBrkwzl9I2YhO9A=;
+	s=korg; t=1784658896;
+	bh=L5qALKmnPydlxX67yXV2vkPlFfkaaGJkvVIwhFPI7Vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t69arozCYByuvmqo+y3shO4/PN3PRHIpI6XIAdMKJvXbUccHuPT6QCWlwhuQkSMF3
-	 LTf88eVMWpKatUGPCxZy14L29RY0RGG7faNIAtHce/qCi1/zwQs6pJ+eoTbUHN0YqV
-	 Muaweu7MmNKAKYLhxcmMNYNBW5excKm6xR8+ybjU=
+	b=gsr/0Pn+wb31dd+fyRfKz5L6h+GgD5+YIm6neJ3mzCbpcHSYkkK5Y6ZKkZryBAukd
+	 fTDMAnV2EgYI6AokSMbmGTkOgJfcpCwOA5JZ+ZK86toaKJ9w9AX4IrUnv/cEG7wjDw
+	 Yx0BgB5N3tQ35tfdrRFrOKt+4JRYpj29BxFC/hg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sindre Henriksen <sindrehenriksen93@gmail.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Daniel Gibson <daniel@gibson.sh>
-Subject: [PATCH 6.18 1299/1611] platform/x86/amd/pmc: Delay suspend for some Lenovo Laptops
-Date: Tue, 21 Jul 2026 17:23:35 +0200
-Message-ID: <20260721152544.663328032@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Qianyu Luo <qianyuluo3@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Eyal Birger <eyal.birger@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.18 1317/1611] xfrm: nat_keepalive: avoid double free on send error
+Date: Tue, 21 Jul 2026 17:23:53 +0200
+Message-ID: <20260721152545.079878236@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -47,168 +48,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Gibson <daniel@gibson.sh>
+From: Qianyu Luo <qianyuluo3@gmail.com>
 
-commit 9b9e60dd31da054a37d601e9fcabdfd8a2bff354 upstream.
+commit 226f4a490d1a938fc838d8f8c46a4eca864c0d78 upstream.
 
-Some IdeaPad Slim 3 devices and similar with AMD CPUs have a
-nonfunctional keyboard and lid switch after s2idle.
+nat_keepalive_send() frees the keepalive skb whenever the IPv4 or IPv6
+send helper reports an error.
 
-It helps to delay suspend by 2.5 seconds so the EC has some time
-to do whatever it needs to get done before suspend - unfortunately
-at least on my 16ABR8 waking it with a timer (wakealarm) still
-triggers the issue, but at least normal resume via keypress or
-lid works fine. On the 14ARP10 wakealarm has been reported to also
-work fine with this patch.
+That cleanup is only correct before the skb is handed to the output
+path. Once ip_build_and_send_pkt() or ip6_xmit() takes ownership, the
+networking stack may already have consumed the skb before returning an
+error, so freeing it again is unsafe.
 
-This issue has been reported for many different devices, this patch
-has been tested with the Zen3-based IdeaPad Slim 3 16ABR8 (82XR)
-and the Zen3+-based IdeaPad Slim 3 14ARP10 (83K6) and IdeaPad Slim 3
-15ARP10 (83MM).
+Handle the pre-handoff failure cases inside nat_keepalive_send_ipv4()
+and nat_keepalive_send_ipv6(), where the caller still owns the skb, and
+keep nat_keepalive_send() responsible only for family dispatch and the
+unsupported-family cleanup path.
 
-Reported-by: Sindre Henriksen <sindrehenriksen93@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221383
-Tested-by: Sindre Henriksen <sindrehenriksen93@gmail.com>
-Suggested-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Daniel Gibson <daniel@gibson.sh>
+Fixes: f531d13bdfe3 ("xfrm: support sending NAT keepalives in ESP in UDP states")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260611150426.3683372-3-daniel@gibson.sh
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Qianyu Luo <qianyuluo3@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Eyal Birger <eyal.birger@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd/pmc/pmc-quirks.c |   39 ++++++++++++++++++++++++++++++
- drivers/platform/x86/amd/pmc/pmc.c        |   24 +++++++++++++++++-
- drivers/platform/x86/amd/pmc/pmc.h        |    1 
- 3 files changed, 63 insertions(+), 1 deletion(-)
+ net/xfrm/xfrm_nat_keepalive.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
-+++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-@@ -18,6 +18,7 @@
- struct quirk_entry {
- 	u32 s2idle_bug_mmio;
- 	bool spurious_8042;
-+	bool need_suspend_delay;
- };
+--- a/net/xfrm/xfrm_nat_keepalive.c
++++ b/net/xfrm/xfrm_nat_keepalive.c
+@@ -55,8 +55,10 @@ static int nat_keepalive_send_ipv4(struc
+ 			   ka->encap_sport, sock_net_uid(net, NULL));
  
- static struct quirk_entry quirk_s2idle_bug = {
-@@ -33,6 +34,10 @@ static struct quirk_entry quirk_s2idle_s
- 	.spurious_8042 = true,
- };
- 
-+static struct quirk_entry quirk_s2idle_need_suspend_delay = {
-+	.need_suspend_delay = true,
-+};
-+
- static const struct dmi_system_id fwbug_list[] = {
- 	{
- 		.ident = "L14 Gen2 AMD",
-@@ -203,6 +208,35 @@ static const struct dmi_system_id fwbug_
- 			DMI_MATCH(DMI_PRODUCT_NAME, "82XQ"),
- 		}
- 	},
-+	/* https://bugzilla.kernel.org/show_bug.cgi?id=221383 */
-+	{
-+		.ident = "Zen3-based IdeaPad Slim and similar",
-+		.driver_data = &quirk_s2idle_need_suspend_delay,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			/*
-+			 * Note: there are also some Zen2-based 82X* devices that
-+			 * need different quirks, they're already handled above
-+			 */
-+			DMI_MATCH(DMI_PRODUCT_NAME, "82X"),
-+		}
-+	},
-+	{
-+		.ident = "Zen3+-based IdeaPad Slim and similar",
-+		.driver_data = &quirk_s2idle_need_suspend_delay,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83K"),
-+		}
-+	},
-+	{
-+		.ident = "IdeaPad Slim 3 15ARP10 (83MM)",
-+		.driver_data = &quirk_s2idle_need_suspend_delay,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83MM"),
-+		}
-+	},
- 	/* https://bugzilla.kernel.org/show_bug.cgi?id=221273 */
- 	{
- 		.ident = "Thinkpad L14 Gen3",
-@@ -356,6 +390,11 @@ void amd_pmc_process_restore_quirks(stru
- 		amd_pmc_skip_nvme_smi_handler(dev->quirks->s2idle_bug_mmio);
- }
- 
-+bool amd_pmc_quirk_need_suspend_delay(struct amd_pmc_dev *dev)
-+{
-+	return dev->quirks && dev->quirks->need_suspend_delay;
-+}
-+
- void amd_pmc_quirks_init(struct amd_pmc_dev *dev)
- {
- 	const struct dmi_system_id *dmi_id;
---- a/drivers/platform/x86/amd/pmc/pmc.c
-+++ b/drivers/platform/x86/amd/pmc/pmc.c
-@@ -611,6 +611,27 @@ static bool amd_pmc_intermediate_wakeup_
- 	return get_metrics_table(pdev, &table) == 0 && table.s0i3_last_entry_status;
- }
- 
-+static bool amd_pmc_want_suspend_delay(struct amd_pmc_dev *pdev)
-+{
-+	/*
-+	 * Some Lenovo Laptops (like different IdeaPad 3 Slims) need some
-+	 * me-time before sleeping or they get uncooperative after waking
-+	 * up and don't send events for keyboard and lid switch anymore.
-+	 *
-+	 * Unfortunately this doesn't entirely fix the problem: It can still
-+	 * happen when resuming with a timer (wakealarm), but at least the
-+	 * more common usecases (wakeup by opening lid or pressing a key)
-+	 * work fine with this workaround.
-+	 *
-+	 * See https://bugzilla.kernel.org/show_bug.cgi?id=221383
-+	 */
-+	if (!disable_workarounds && amd_pmc_quirk_need_suspend_delay(pdev)) {
-+		dev_info(pdev->dev, "Delaying suspend by 2.5s to avoid platform bug\n");
-+		return true;
+ 	rt = ip_route_output_key(net, &fl4);
+-	if (IS_ERR(rt))
++	if (IS_ERR(rt)) {
++		kfree_skb(skb);
+ 		return PTR_ERR(rt);
 +	}
-+	return false;
-+}
-+
- static void amd_pmc_s2idle_prepare(void)
- {
- 	struct amd_pmc_dev *pdev = &pmc;
-@@ -647,7 +668,8 @@ static void amd_pmc_s2idle_check(void)
- 	struct amd_pmc_dev *pdev = &pmc;
- 	int rc;
  
--	if (amd_pmc_intermediate_wakeup_need_delay(pdev))
-+	if (amd_pmc_intermediate_wakeup_need_delay(pdev) ||
-+	    amd_pmc_want_suspend_delay(pdev))
- 		msleep(2500);
+ 	skb_dst_set(skb, &rt->dst);
  
- 	/* Dump the IdleMask before we add to the STB */
---- a/drivers/platform/x86/amd/pmc/pmc.h
-+++ b/drivers/platform/x86/amd/pmc/pmc.h
-@@ -147,6 +147,7 @@ enum amd_pmc_def {
- };
+@@ -101,6 +103,7 @@ static int nat_keepalive_send_ipv6(struc
+ 	dst = ipv6_stub->ipv6_dst_lookup_flow(net, sk, &fl6, NULL);
+ 	if (IS_ERR(dst)) {
+ 		local_unlock_nested_bh(&nat_keepalive_sk_ipv6.bh_lock);
++		kfree_skb(skb);
+ 		return PTR_ERR(dst);
+ 	}
  
- void amd_pmc_process_restore_quirks(struct amd_pmc_dev *dev);
-+bool amd_pmc_quirk_need_suspend_delay(struct amd_pmc_dev *dev);
- void amd_pmc_quirks_init(struct amd_pmc_dev *dev);
- void amd_mp2_stb_init(struct amd_pmc_dev *dev);
- void amd_mp2_stb_deinit(struct amd_pmc_dev *dev);
+@@ -118,7 +121,6 @@ static void nat_keepalive_send(struct na
+ 					sizeof(struct ipv6hdr)) +
+ 				    sizeof(struct udphdr);
+ 	const u8 nat_ka_payload = 0xFF;
+-	int err = -EAFNOSUPPORT;
+ 	struct sk_buff *skb;
+ 	struct udphdr *uh;
+ 
+@@ -140,16 +142,17 @@ static void nat_keepalive_send(struct na
+ 
+ 	switch (ka->family) {
+ 	case AF_INET:
+-		err = nat_keepalive_send_ipv4(skb, ka);
++		nat_keepalive_send_ipv4(skb, ka);
+ 		break;
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	case AF_INET6:
+-		err = nat_keepalive_send_ipv6(skb, ka, uh);
++		nat_keepalive_send_ipv6(skb, ka, uh);
+ 		break;
+ #endif
+-	}
+-	if (err)
++	default:
+ 		kfree_skb(skb);
++		break;
++	}
+ }
+ 
+ struct nat_keepalive_work_ctx {
 
 
