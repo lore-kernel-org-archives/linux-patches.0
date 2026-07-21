@@ -1,55 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F29471255;
-	Tue, 21 Jul 2026 18:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7598F404BF9;
+	Tue, 21 Jul 2026 18:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657692; cv=none; b=dltRxf6zlUVlqM+zKDvqtOvJP5CuwlcYT31MoidemCOVEYA8m+KwIzwg33otM0IhXoxTtIg8ZQyXqV7ZE2QQMJ2xaWJe1nxNrPU6SclFFyCl9OpeaJx7EfvEHWExnXgsypRvppGgf3Ew4vng/93fMpV5KY+O+MzzkKk3nmgrN44=
+	t=1784657695; cv=none; b=RqtdJg0WS32AtCvvkIluMFt+FX8c3snIdGKUJ/dsb2nk+TXMd1Cw5S10WfLakNZ1RhLlaOpdEVEDt6KohQh5JszzfHd5tUmA9mBBHJShHJLUNEbjqdWslrvzkFbbpHn05cLmCYlTDxB3DtilpnMASgBfgz1y8kEKoJlXBvbU5Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657692; c=relaxed/simple;
-	bh=z/tihSixyinNOoD0gTzeZJRqoMsLvETksTgK7i2pqP4=;
+	s=arc-20240116; t=1784657695; c=relaxed/simple;
+	bh=AE9Noqmo5uf+veS2O3CDwEL+CpTTa4rXR/egOPbJoFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uXT3DJrpud3gYebqIJyWxJ0h974gEEQKnYhYqAQFrvZGG0CPEXHI0l9cAe9CQbMjONec+G6G6IQJMAGz7DE03pyuqmugDYUDUdSKiwWWf7dDIDvS7BiV8/lkhQb445ODC0mh/X8alBj8T/q2jx5ILEBmM5DwiTsG4HhFSAP5wyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=147QTOCj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=byBYtf5yzpPKWTsmaAcoOwHlvSIu5T6yOVTQmBZrd2W1+05sxd47HCzjWrw2x/sJrQCNK/lXLy2ThGL8oVb9LI/2HAiRO5gJr4NO1Hm1IvFUslQB0qSMeRX8e2GAvi4ufnxDHQ3ZeAoUxXgfQ7lko1Zo79feN5Ti7Ml17S2Rl08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XhnG2KNL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="147QTOCj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C517B1F000E9;
-	Tue, 21 Jul 2026 18:14:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XhnG2KNL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94BCA1F000E9;
+	Tue, 21 Jul 2026 18:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657691;
-	bh=vXmxWShl9/Y+rEX6z/SO3IiZSoruXb0Ouo17raWoI1M=;
+	s=korg; t=1784657694;
+	bh=SCl3T7HWhk0o9RxEohBv/NZ8WmjhhwLJjmb9YxiPIHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=147QTOCjHqiroc/hOqD70Kjq8FEsk39RDG/wAI0fiwae9JlM/QeMqVRT9YGmuKB6n
-	 s7GdJY+NqovBSIkOuj8XAKd5hkyTfaQ0n40CfIqP9RKl0OSEyiLG90S8XpgHnRjX5j
-	 thqVBx6xDNRTeiKbL8wxRO/O6TkUaNIjhFq0HTvQ=
+	b=XhnG2KNL3ED988xDSlOVIlXUPrvuevuPKUsEhFJ8nFT3J+FITvlf+NBbBxGrzH7dI
+	 YeWMHJVKecV1X0AOcPhI50L1hICJC70FlyeIz/9C4v5kC/bjOXOOZyGy2YIW6YG3De
+	 uXjWHiBuKOuvSM3W84z/Xye5Z/lAa2PbIgjZUM/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
-	Alex Sierra <alex.sierra@amd.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Balbir Singh <balbirs@nvidia.com>,
-	David Hildenbrand <david@kernel.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Leon Romanovsky <leon@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	Sayali Patil <sayalip@linux.ibm.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Elad Nachman <enachman@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0861/1611] selftests/mm: fix exclusive_cow test fork() handling
-Date: Tue, 21 Jul 2026 17:16:17 +0200
-Message-ID: <20260721152534.756564800@linuxfoundation.org>
+Subject: [PATCH 6.18 0862/1611] net: marvell: prestera: initialize err in prestera_port_sfp_bind
+Date: Tue, 21 Jul 2026 17:16:18 +0200
+Message-ID: <20260721152534.779331359@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -68,105 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aboorva Devarajan <aboorvad@linux.ibm.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit cea5702144615878600d3a39b5d8b3cc34719012 ]
+[ Upstream commit 62b01f72d93c7bc8fde3b2e5b5f783eca5f53324 ]
 
-The test ignores the return value of fork(), so both the parent and the
-(newly created) child run the COW verification loops and then call
-hmm_buffer_free() before returning into the kselftest harness, which
-_exit()s each side.  This duplicated teardown sequence has been observed
-to manifest as a SIGSEGV in the test child, e.g.:
+prestera_port_sfp_bind() returns err after walking the ports node. If no
+child node matches the port's front-panel id, err is never assigned.
 
-  hmm-tests[360141]: segfault (11) at 0 nip 10006964 lr 1000ac3c code 1
-  in hmm-tests[6964,10000000+30000]
+Initialize err to 0 because absence of a matching optional port device
+tree node is not an error. In that case no phylink is created and port
+creation should continue with port->phy_link left NULL. Errors from
+malformed matched nodes and phylink_create() still propagate.
 
-Fix this by adopting the same fork()-then-wait pattern already used by the
-nearby anon_write_child / anon_write_child_shared tests in this file: the
-child performs the COW verification and then _exit(0)s so it does not run
-the test teardown, while the parent independently verifies COW, waits for
-the child, and only then frees the buffer.
-
-Link: https://lore.kernel.org/20260611034102.1030738-4-aboorvad@linux.ibm.com
-Fixes: b659baea75469 ("mm: selftests for exclusive device memory")
-Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Cc: Alex Sierra <alex.sierra@amd.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Balbir Singh <balbirs@nvidia.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Ralph Campbell <rcampbell@nvidia.com>
-Cc: Sayali Patil <sayalip@linux.ibm.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 52323ef75414 ("net: marvell: prestera: add phylink support")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Acked-by: Elad Nachman <enachman@marvell.com>
+Link: https://patch.msgid.link/20260617193228.1653582-1-ruoyuw560@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/hmm-tests.c | 31 +++++++++++++++++++++++---
- 1 file changed, 28 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/marvell/prestera/prestera_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/mm/hmm-tests.c b/tools/testing/selftests/mm/hmm-tests.c
-index cfc5ed3585b3f3..8f90fbb747a54c 100644
---- a/tools/testing/selftests/mm/hmm-tests.c
-+++ b/tools/testing/selftests/mm/hmm-tests.c
-@@ -1896,6 +1896,8 @@ TEST_F(hmm, exclusive_cow)
- 	unsigned long i;
- 	int *ptr;
- 	int ret;
-+	pid_t pid;
-+	int status;
+diff --git a/drivers/net/ethernet/marvell/prestera/prestera_main.c b/drivers/net/ethernet/marvell/prestera/prestera_main.c
+index 65e7ef033bde5a..84ff651dd058b5 100644
+--- a/drivers/net/ethernet/marvell/prestera/prestera_main.c
++++ b/drivers/net/ethernet/marvell/prestera/prestera_main.c
+@@ -373,7 +373,7 @@ static int prestera_port_sfp_bind(struct prestera_port *port)
+ 	struct device_node *ports, *node;
+ 	struct fwnode_handle *fwnode;
+ 	struct phylink *phy_link;
+-	int err;
++	int err = 0;
  
- 	npages = ALIGN(HMM_BUFFER_SIZE, self->page_size) >> self->page_shift;
- 	ASSERT_NE(npages, 0);
-@@ -1924,14 +1926,37 @@ TEST_F(hmm, exclusive_cow)
- 	ASSERT_EQ(ret, 0);
- 	ASSERT_EQ(buffer->cpages, npages);
- 
--	fork();
-+	pid = fork();
-+	if (pid == -1)
-+		ASSERT_EQ(pid, 0);
- 
--	/* Fault pages back to system memory and check them. */
-+	if (pid == 0) {
-+		/*
-+		 * Child verifies COW independently, then _exit(0)s so it does
-+		 * not run the test teardown.  A failed ASSERT_* here makes the
-+		 * harness abort() the child, so the parent sees
-+		 * !WIFEXITED(status) below and fails in turn.
-+		 */
-+		for (i = 0, ptr = buffer->ptr; i < size / sizeof(*ptr); ++i)
-+			ASSERT_EQ(ptr[i]++, i);
-+
-+		for (i = 0, ptr = buffer->ptr; i < size / sizeof(*ptr); ++i)
-+			ASSERT_EQ(ptr[i], i + 1);
-+
-+		_exit(0);
-+	}
-+
-+	/* Parent: also increment to verify COW works for both processes. */
- 	for (i = 0, ptr = buffer->ptr; i < size / sizeof(*ptr); ++i)
- 		ASSERT_EQ(ptr[i]++, i);
- 
- 	for (i = 0, ptr = buffer->ptr; i < size / sizeof(*ptr); ++i)
--		ASSERT_EQ(ptr[i], i+1);
-+		ASSERT_EQ(ptr[i], i + 1);
-+
-+	/* Parent: wait for child and then free the buffer. */
-+	ASSERT_EQ(waitpid(pid, &status, 0), pid);
-+	ASSERT_TRUE(WIFEXITED(status));
-+	ASSERT_EQ(WEXITSTATUS(status), 0);
- 
- 	hmm_buffer_free(buffer);
- }
+ 	if (!sw->np)
+ 		return 0;
 -- 
 2.53.0
 
