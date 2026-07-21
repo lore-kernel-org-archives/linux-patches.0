@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C0346C4BC;
-	Tue, 21 Jul 2026 18:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E0547012D;
+	Tue, 21 Jul 2026 18:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659562; cv=none; b=A6hSbEycDZ67zDHjVJrVszB6AE7eKaBWcnS6me6Hucn8Eos/xY/fdeDDfBQ1F4s/sP2LGECgs80NScY/4VBQynUV5Vxis5oX5/BnXBIivRzQ3lRHl8XaZTWr1cOBM87VwVCYyYzAufaIr2BELZISq4wQKaDb5XfLmuDLCxvI55I=
+	t=1784659564; cv=none; b=D/7VkwXU0NAAH5MRjr1CTfSIaSuPVlEFMUc0mz13PzyOqgbf0Ep9MobSmZnApkpm8svkoRC1a/Q4nIfFCzhQIOK+u/vBiyBFbDx+IegsQNZLNjNQsU8xyNWQK4M0AE2M8eInoqnGEDNneausqBADfz/ANQABe8jFhE/dIgsajr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659562; c=relaxed/simple;
-	bh=LLMtQ3xkiXL3eAeMG2f2kQ+Ra6UYzoZlhWdz/ckd96U=;
+	s=arc-20240116; t=1784659564; c=relaxed/simple;
+	bh=vzCeQ6f/qV7mwIF6ljwYRTRYEw5B0LegHd8gMMZR0Zk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ejqHU+prey4GDH9dseZw5y9wBQQWUPnw5hDb7kSd4WPKGNt+2PQ6pIVqWt7NyYemyjOC/JDIuOO0CAUsVeby/ROvEt2RGMQjXOBoq0UCioMFwycIEUCwAqB76D4Byl8GWO0c0AQd1N5zoeRzL6ubdkR4pfFgidlXHhDHc0TYqQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jn5PD92i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K0VBvvbXbI50j2of97ndps0D1fbNCihdDpjcW8u+acTmmZz4ZzT6lwOOFhXNSrFU2udJhXSQ0X12rP5UajNqfo2YGon+kiTInLxd3OUqtXWxrot1DLf3ocrFPM/d8YsPIQFHke2H8DXgPRNvumeVBAMMLAJZJtunPZ2p95ct9KE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KMmOOGcV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jn5PD92i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136C31F000E9;
-	Tue, 21 Jul 2026 18:45:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KMmOOGcV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA14B1F00A3D;
+	Tue, 21 Jul 2026 18:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659560;
-	bh=Ywiz7CvTb/uRPXwYsbmw7xVZ7qt01hXMVAuNNENgTXM=;
+	s=korg; t=1784659563;
+	bh=DB/nbYh9rVp713gHo3uG/meUDbOY7cc6NDVC0IxgFLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jn5PD92ioMbl6NGzCM9l7Wwwe5B8pQeLOAZIepjLtdzlVMwfONWAOanSE+TRV2Qxt
-	 yuA1CT8t0TNhEPNC3m31fWzJSsVt9atPi7Nl3yHjTxo9VDPskkBFJ8xeqNc9JPVuVA
-	 MQrfbVF/qEFI8wIdKVRTmrh0Ab++mgy6FW/MwQZ0=
+	b=KMmOOGcVLMMrOFtDnaRiqunNFzaxvcQsb2CMYxRLTNhhJFShQiY+UjTPcpIY84vsl
+	 2zmp6TkRs0OMabVSN9fql5Tw6t3e57tC/p7+crumc8f9g4ZL2m9TnLntmLTZK8jEB8
+	 i3NAa3oj16Ak5odOqt/cBDBOwtLjTEFsuce5eTlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>,
 	Eduard Zingerman <eddyz87@gmail.com>,
-	Mykyta Yatsenko <yatsenko@meta.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1566/1611] bpf: Introduce struct bpf_map_desc in verifier
-Date: Tue, 21 Jul 2026 17:28:02 +0200
-Message-ID: <20260721152550.686584333@linuxfoundation.org>
+Subject: [PATCH 6.18 1567/1611] bpf: Keep dynamic inner array lookups nullable
+Date: Tue, 21 Jul 2026 17:28:03 +0200
+Message-ID: <20260721152550.709678063@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,272 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mykyta Yatsenko <yatsenko@meta.com>
+From: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
 
-[ Upstream commit 98c4fd2963cb2bc5eae22b5365e6bbf3a5cd0f14 ]
+[ Upstream commit 53040a81ae57cdca8af8ac36fe4e661730cf7c6b ]
 
-Introduce struct bpf_map_desc to hold bpf_map pointer and map uid. Use
-this struct in both bpf_call_arg_meta and bpf_kfunc_call_arg_meta
-instead of having different representations:
- - bpf_call_arg_meta had separate map_ptr and map_uid fields
- - bpf_kfunc_call_arg_meta had an anonymous inline struct
+An ARRAY_OF_MAPS can use an array created with BPF_F_INNER_MAP as its
+inner map template. A concrete inner array with a different max_entries
+value can then replace the template.
 
-This unifies the map fields layout across both metadata structures,
-making the code more consistent and preparing for further refactoring of
-map field pointer validation.
+After a successful outer map lookup, the verifier represents the
+resulting map pointer using the inner map template. Const-key lookup
+nullness elision consequently uses the template max_entries even though
+the runtime helper uses the concrete inner map max_entries.
 
+Do not elide lookup result nullness for maps marked with BPF_F_INNER_MAP,
+because the template max_entries does not prove that the key is in bounds
+for the concrete runtime map.
+
+Fixes: d2102f2f5d75 ("bpf: verifier: Support eliding map lookup nullness")
+Signed-off-by: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
 Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
-Link: https://lore.kernel.org/r/20260130-verif_special_fields-v2-1-2c59e637da7d@meta.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: 53040a81ae57 ("bpf: Keep dynamic inner array lookups nullable")
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/bpf/20260607-f01-v2-v2-1-da48453146e8@mails.tsinghua.edu.cn
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c |   79 +++++++++++++++++++++++++-------------------------
- 1 file changed, 40 insertions(+), 39 deletions(-)
+ kernel/bpf/verifier.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -274,8 +274,13 @@ static bool bpf_pseudo_kfunc_call(const
- 	       insn->src_reg == BPF_PSEUDO_KFUNC_CALL;
- }
- 
-+struct bpf_map_desc {
-+	struct bpf_map *ptr;
-+	int uid;
-+};
-+
- struct bpf_call_arg_meta {
--	struct bpf_map *map_ptr;
-+	struct bpf_map_desc map;
- 	bool raw_mode;
- 	bool pkt_access;
- 	u8 release_regno;
-@@ -285,7 +290,6 @@ struct bpf_call_arg_meta {
- 	u64 msize_max_value;
- 	int ref_obj_id;
- 	int dynptr_id;
--	int map_uid;
- 	int func_id;
- 	struct btf *btf;
- 	u32 btf_id;
-@@ -345,10 +349,7 @@ struct bpf_kfunc_call_arg_meta {
- 		u8 spi;
- 		u8 frameno;
- 	} iter;
--	struct {
--		struct bpf_map *ptr;
--		int uid;
--	} map;
-+	struct bpf_map_desc map;
- 	u64 mem_size;
- };
- 
-@@ -8582,7 +8583,7 @@ static int process_timer_func(struct bpf
- 	if (err)
- 		return err;
- 
--	if (meta->map_ptr) {
-+	if (meta->map.ptr) {
- 		verifier_bug(env, "Two map pointers in a timer helper");
- 		return -EFAULT;
- 	}
-@@ -8590,8 +8591,8 @@ static int process_timer_func(struct bpf
- 		verbose(env, "bpf_timer cannot be used for PREEMPT_RT.\n");
- 		return -EOPNOTSUPP;
- 	}
--	meta->map_uid = reg->map_uid;
--	meta->map_ptr = map;
-+	meta->map.uid = reg->map_uid;
-+	meta->map.ptr = map;
+@@ -9710,7 +9710,7 @@ static int get_constant_map_key(struct b
  	return 0;
  }
  
-@@ -8655,7 +8656,7 @@ static int process_kptr_func(struct bpf_
- 			return -EINVAL;
- 		}
- 		rec = map_ptr->record;
--		meta->map_ptr = map_ptr;
-+		meta->map.ptr = map_ptr;
- 	}
+-static bool can_elide_value_nullness(enum bpf_map_type type);
++static bool can_elide_value_nullness(const struct bpf_map *map);
  
- 	if (!tnum_is_const(reg->var_off)) {
-@@ -9162,13 +9163,13 @@ static int resolve_map_arg_type(struct b
- 				 const struct bpf_call_arg_meta *meta,
- 				 enum bpf_arg_type *arg_type)
- {
--	if (!meta->map_ptr) {
-+	if (!meta->map.ptr) {
- 		/* kernel subsystem misconfigured verifier */
- 		verifier_bug(env, "invalid map_ptr to access map->type");
- 		return -EFAULT;
- 	}
- 
--	switch (meta->map_ptr->map_type) {
-+	switch (meta->map.ptr->map_type) {
- 	case BPF_MAP_TYPE_SOCKMAP:
- 	case BPF_MAP_TYPE_SOCKHASH:
- 		if (*arg_type == ARG_PTR_TO_MAP_VALUE) {
-@@ -9817,7 +9818,7 @@ skip_type_check:
- 	switch (base_type(arg_type)) {
- 	case ARG_CONST_MAP_PTR:
- 		/* bpf_map_xxx(map_ptr) call: remember that map_ptr */
--		if (meta->map_ptr) {
-+		if (meta->map.ptr) {
- 			/* Use map_uid (which is unique id of inner map) to reject:
- 			 * inner_map1 = bpf_map_lookup_elem(outer_map, key1)
- 			 * inner_map2 = bpf_map_lookup_elem(outer_map, key2)
-@@ -9830,23 +9831,23 @@ skip_type_check:
- 			 *
- 			 * Comparing map_ptr is enough to distinguish normal and outer maps.
- 			 */
--			if (meta->map_ptr != reg->map_ptr ||
--			    meta->map_uid != reg->map_uid) {
-+			if (meta->map.ptr != reg->map_ptr ||
-+			    meta->map.uid != reg->map_uid) {
- 				verbose(env,
- 					"timer pointer in R1 map_uid=%d doesn't match map pointer in R2 map_uid=%d\n",
--					meta->map_uid, reg->map_uid);
-+					meta->map.uid, reg->map_uid);
- 				return -EINVAL;
- 			}
- 		}
--		meta->map_ptr = reg->map_ptr;
--		meta->map_uid = reg->map_uid;
-+		meta->map.ptr = reg->map_ptr;
-+		meta->map.uid = reg->map_uid;
- 		break;
- 	case ARG_PTR_TO_MAP_KEY:
- 		/* bpf_map_xxx(..., map_ptr, ..., key) call:
- 		 * check that [key, key + map->key_size) are within
- 		 * stack limits and initialized
- 		 */
--		if (!meta->map_ptr) {
-+		if (!meta->map.ptr) {
- 			/* in function declaration map_ptr must come before
- 			 * map_key, so that it's verified and known before
- 			 * we have to check map_key here. Otherwise it means
-@@ -9855,11 +9856,11 @@ skip_type_check:
- 			verifier_bug(env, "invalid map_ptr to access map->key");
- 			return -EFAULT;
- 		}
--		key_size = meta->map_ptr->key_size;
-+		key_size = meta->map.ptr->key_size;
+ static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
+ 			  struct bpf_call_arg_meta *meta,
+@@ -9860,7 +9860,7 @@ skip_type_check:
  		err = check_helper_mem_access(env, regno, key_size, BPF_READ, false, NULL);
  		if (err)
  			return err;
--		if (can_elide_value_nullness(meta->map_ptr->map_type)) {
-+		if (can_elide_value_nullness(meta->map.ptr->map_type)) {
+-		if (can_elide_value_nullness(meta->map.ptr->map_type)) {
++		if (can_elide_value_nullness(meta->map.ptr)) {
  			err = get_constant_map_key(env, reg, key_size, &meta->const_map_key);
  			if (err < 0) {
  				meta->const_map_key = -1;
-@@ -9877,13 +9878,13 @@ skip_type_check:
- 		/* bpf_map_xxx(..., map_ptr, ..., value) call:
- 		 * check [value, value + map->value_size) validity
- 		 */
--		if (!meta->map_ptr) {
-+		if (!meta->map.ptr) {
- 			/* kernel subsystem misconfigured verifier */
- 			verifier_bug(env, "invalid map_ptr to access map->value");
- 			return -EFAULT;
- 		}
- 		meta->raw_mode = arg_type & MEM_UNINIT;
--		err = check_helper_mem_access(env, regno, meta->map_ptr->value_size,
-+		err = check_helper_mem_access(env, regno, meta->map.ptr->value_size,
- 					      arg_type & MEM_WRITE ? BPF_WRITE : BPF_READ,
- 					      false, meta);
- 		break;
-@@ -11201,7 +11202,7 @@ record_func_map(struct bpf_verifier_env
- 		int func_id, int insn_idx)
- {
- 	struct bpf_insn_aux_data *aux = &env->insn_aux_data[insn_idx];
--	struct bpf_map *map = meta->map_ptr;
-+	struct bpf_map *map = meta->map.ptr;
- 
- 	if (func_id != BPF_FUNC_tail_call &&
- 	    func_id != BPF_FUNC_map_lookup_elem &&
-@@ -11234,11 +11235,11 @@ record_func_map(struct bpf_verifier_env
- 	}
- 
- 	if (!aux->map_ptr_state.map_ptr)
--		bpf_map_ptr_store(aux, meta->map_ptr,
--				  !meta->map_ptr->bypass_spec_v1, false);
--	else if (aux->map_ptr_state.map_ptr != meta->map_ptr)
--		bpf_map_ptr_store(aux, meta->map_ptr,
--				  !meta->map_ptr->bypass_spec_v1, true);
-+		bpf_map_ptr_store(aux, meta->map.ptr,
-+				  !meta->map.ptr->bypass_spec_v1, false);
-+	else if (aux->map_ptr_state.map_ptr != meta->map.ptr)
-+		bpf_map_ptr_store(aux, meta->map.ptr,
-+				  !meta->map.ptr->bypass_spec_v1, true);
- 	return 0;
+@@ -11433,13 +11433,16 @@ static void update_loop_inline_state(str
+ 				 state->callback_subprogno == subprogno);
  }
  
-@@ -11248,7 +11249,7 @@ record_func_key(struct bpf_verifier_env
+-/* Returns whether or not the given map type can potentially elide
++/* Returns whether or not the given map can potentially elide
+  * lookup return value nullness check. This is possible if the key
+  * is statically known.
+  */
+-static bool can_elide_value_nullness(enum bpf_map_type type)
++static bool can_elide_value_nullness(const struct bpf_map *map)
  {
- 	struct bpf_insn_aux_data *aux = &env->insn_aux_data[insn_idx];
- 	struct bpf_reg_state *reg;
--	struct bpf_map *map = meta->map_ptr;
-+	struct bpf_map *map = meta->map.ptr;
- 	u64 val, max;
- 	int err;
- 
-@@ -11814,22 +11815,22 @@ static int check_helper_call(struct bpf_
- 		 * can check 'value_size' boundary of memory access
- 		 * to map element returned from bpf_map_lookup_elem()
- 		 */
--		if (meta.map_ptr == NULL) {
-+		if (meta.map.ptr == NULL) {
- 			verifier_bug(env, "unexpected null map_ptr");
- 			return -EFAULT;
+-	switch (type) {
++	if (map->map_flags & BPF_F_INNER_MAP)
++		return false;
++
++	switch (map->map_type) {
+ 	case BPF_MAP_TYPE_ARRAY:
+ 	case BPF_MAP_TYPE_PERCPU_ARRAY:
+ 		return true;
+@@ -11821,7 +11824,7 @@ static int check_helper_call(struct bpf_
  		}
  
  		if (func_id == BPF_FUNC_map_lookup_elem &&
--		    can_elide_value_nullness(meta.map_ptr->map_type) &&
-+		    can_elide_value_nullness(meta.map.ptr->map_type) &&
+-		    can_elide_value_nullness(meta.map.ptr->map_type) &&
++		    can_elide_value_nullness(meta.map.ptr) &&
  		    meta.const_map_key >= 0 &&
--		    meta.const_map_key < meta.map_ptr->max_entries)
-+		    meta.const_map_key < meta.map.ptr->max_entries)
+ 		    meta.const_map_key < meta.map.ptr->max_entries)
  			ret_flag &= ~PTR_MAYBE_NULL;
- 
--		regs[BPF_REG_0].map_ptr = meta.map_ptr;
--		regs[BPF_REG_0].map_uid = meta.map_uid;
-+		regs[BPF_REG_0].map_ptr = meta.map.ptr;
-+		regs[BPF_REG_0].map_uid = meta.map.uid;
- 		regs[BPF_REG_0].type = PTR_TO_MAP_VALUE | ret_flag;
- 		if (!type_may_be_null(ret_flag) &&
--		    btf_record_has_field(meta.map_ptr->record, BPF_SPIN_LOCK | BPF_RES_SPIN_LOCK)) {
-+		    btf_record_has_field(meta.map.ptr->record, BPF_SPIN_LOCK | BPF_RES_SPIN_LOCK)) {
- 			regs[BPF_REG_0].id = ++env->id_gen;
- 		}
- 		break;
-@@ -11932,7 +11933,7 @@ static int check_helper_call(struct bpf_
- 	if (type_may_be_null(regs[BPF_REG_0].type))
- 		regs[BPF_REG_0].id = ++env->id_gen;
- 
--	if (helper_multiple_ref_obj_use(func_id, meta.map_ptr)) {
-+	if (helper_multiple_ref_obj_use(func_id, meta.map.ptr)) {
- 		verifier_bug(env, "func %s#%d sets ref_obj_id more than once",
- 			     func_id_name(func_id), func_id);
- 		return -EFAULT;
-@@ -11944,7 +11945,7 @@ static int check_helper_call(struct bpf_
- 	if (is_ptr_cast_function(func_id) || is_dynptr_ref_function(func_id)) {
- 		/* For release_reference() */
- 		regs[BPF_REG_0].ref_obj_id = meta.ref_obj_id;
--	} else if (is_acquire_function(func_id, meta.map_ptr)) {
-+	} else if (is_acquire_function(func_id, meta.map.ptr)) {
- 		int id = acquire_reference(env, insn_idx);
- 
- 		if (id < 0)
-@@ -11959,7 +11960,7 @@ static int check_helper_call(struct bpf_
- 	if (err)
- 		return err;
- 
--	err = check_map_func_compatibility(env, meta.map_ptr, func_id);
-+	err = check_map_func_compatibility(env, meta.map.ptr, func_id);
- 	if (err)
- 		return err;
- 
 
 
