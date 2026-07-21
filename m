@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C1A231829;
-	Tue, 21 Jul 2026 17:45:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053CF405845;
+	Tue, 21 Jul 2026 17:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655912; cv=none; b=KpSzG/pukyKZvh7TMCCn6mi3WTuM+bQvgLBu5sydFezwcRqlBFRqeSotNZVYDXQV1B6f0+xk7X6zBh2NayMPLZ7Sqw6bNfqg9RqESTPdvnR6L7/ed6klTHrVLYFOxqpw9o1eks3aqghkNPJdDc32d2VeTNIRF5Ow3Rvi+1BpJMU=
+	t=1784655915; cv=none; b=Kk7pFE34QEWjwEQh9+gLxqj2N1KV7RqscTDqQzs9kaGV8P1FmjaIr72DLQdC20DBX4kUPisBtINJL/kKIuPpOKso81CVcqxJG4OxwqugsEnNnQsRGnVAmA+4GmJ1nKVeYL2dT9SAw3nc1Q9zdyrvjCi6hvF4S3mLkmLsWhJ0Ei8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655912; c=relaxed/simple;
-	bh=UBfuu0nO2NaimEOsXWMgsoJyyb7DoiVx52QG7TOpR/U=;
+	s=arc-20240116; t=1784655915; c=relaxed/simple;
+	bh=kX+0h6O+K5t3+rpGJtBlvWMWN2u4Drw+3O3TJ7kbAFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VrPVmyhyK49BF1E3YQpJzGCwELSYQgCKJx8ykx1TIkMSKQyOlunrNynOvgcUNC9U5fuoLj3a4SEtkJf4zy4DbsQ/EgXY6j7/lfI9cCgEW/kiOsezst+T87+iP5NjIgyhPE0yRQWy+Timm7QQwxxPyzMvPx8uWumeZok4siLI0nU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QdGEAzpi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mefDUSPnibiiXPHePLj3TiDZtZL8DKOCNWQsJKfvLjMIJ/kZ8wqHEXiUNV8Mzi1zCSEfzgGkLEslzTl6Pn4xmTQdYM5FHB/ACigx+6r+3+NbAUlHZtsc0FhF5QQJy5Jyc5IQfTJHQSqmVE4Cm2oRk2Zy0ZG84sfhmn6kFHr5jy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOdiZ2Yw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QdGEAzpi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBEF81F000E9;
-	Tue, 21 Jul 2026 17:45:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOdiZ2Yw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B8F01F000E9;
+	Tue, 21 Jul 2026 17:45:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655911;
-	bh=ay4JzFYTYAZJ0rMxAx4RcB9oMqvx5DbqQifEj4u1VSA=;
+	s=korg; t=1784655913;
+	bh=xnjZmqMYlux37MtOFVIm/a9C7WFs4F5Ce7utDbzS+hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QdGEAzpiOddfC1INA+vh5OQdVH/ViEe/dCb6rWtBMfGtSU5XtKIwYrPzjrFXDnGnR
-	 vWuyuZGI+oEogewOYCkFNsuffUsTKbGeuMNuScLg8erSTsP/Y/hmLQtUjH77KVzQSR
-	 P7Y7CKI7fHikGrUQ9iMDCehpS+ArPq8cStCzweWU=
+	b=eOdiZ2YwkaohwB5AkvpUlzFb59JLJNlN0A48WuQ1udfFdSqDe5spJQ/4uj7khxDqf
+	 PdwEEV4m9YxAfqpi3amv0SuAx6upwZoedRs1IaDbuQqD67XcTIIgpKQpmb2vz+rTU5
+	 PlVAs/lDPd8VJPMeSescH/i454ZluPUGResh3/j8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Harshal Dev <harshal.dev@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0186/1611] arm64: dts: qcom: kodiak: Add power-domain and iface clk for ice node
-Date: Tue, 21 Jul 2026 17:05:02 +0200
-Message-ID: <20260721152519.119115815@linuxfoundation.org>
+Subject: [PATCH 6.18 0187/1611] arm64: dts: qcom: sm8450: Add power-domain and iface clk for ice node
+Date: Tue, 21 Jul 2026 17:05:03 +0200
+Message-ID: <20260721152519.144108013@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -55,35 +55,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Harshal Dev <harshal.dev@oss.qualcomm.com>
 
-[ Upstream commit cca53c338ad87edc4b46d2d82730fd8ca01a164f ]
+[ Upstream commit 3a5cb1ccbfb3141862b28f24cd5050083233aae7 ]
 
 Qualcomm in-line crypto engine (ICE) platform driver specifies and votes
 for its own resources. Before accessing ICE hardware during probe, to
 avoid potential unclocked register access issues (when clk_ignore_unused
 is not passed on the kernel command line), in addition to the 'core' clock
 the 'iface' clock should also be turned on by the driver. This can only be
-done if the GCC_UFS_PHY_GDSC power domain is enabled. Specify both the
-GCC_UFS_PHY_GDSC power domain and the 'iface' clock in the ICE node for
-kodiak.
+done if the UFS_PHY_GDSC power domain is enabled. Specify both the
+UFS_PHY_GDSC power domain and the 'iface' clock in the ICE node for sm8450.
 
-Fixes: dfd5ee7b34bb7 ("arm64: dts: qcom: sc7280: Add inline crypto engine")
+Fixes: 86b0aef435851 ("arm64: dts: qcom: sm8450: Use standalone ICE node for UFS")
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-Tested-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
 Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260416-qcom_ice_power_and_clk_vote-v5-7-5ccf5d7e2846@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260416-qcom_ice_power_and_clk_vote-v5-8-5ccf5d7e2846@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 6 +++++-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 6 +++++-
  1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 07cabbb2058f81..ed87bcb0d4b69d 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2574,7 +2574,11 @@ ice: crypto@1d88000 {
- 			compatible = "qcom,sc7280-inline-crypto-engine",
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index 3a352e5f3f191b..2d49df7b69e4b6 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -5349,7 +5349,11 @@ ice: crypto@1d88000 {
+ 			compatible = "qcom,sm8450-inline-crypto-engine",
  				     "qcom,inline-crypto-engine";
  			reg = <0 0x01d88000 0 0x18000>;
 -			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
@@ -91,7 +89,7 @@ index 07cabbb2058f81..ed87bcb0d4b69d 100644
 +				 <&gcc GCC_UFS_PHY_AHB_CLK>;
 +			clock-names = "core",
 +				      "iface";
-+			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
++			power-domains = <&gcc UFS_PHY_GDSC>;
  		};
  
  		cryptobam: dma-controller@1dc4000 {
