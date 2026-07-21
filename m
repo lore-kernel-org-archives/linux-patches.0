@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB25231829;
-	Tue, 21 Jul 2026 22:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EED243E9D5;
+	Tue, 21 Jul 2026 22:29:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672985; cv=none; b=VgMWsMerq+V8Fh+tyRuwV6fS2y+eQg6MRFsDPaP9O7/EqCzw3P1RaSivRfJyoOLayisuc9bs1Lv06dQeNbmO4bzqkJtntQXURSMzcuDuPOOmy8xuMeh3Pr8ovESme9fn9M0oU1fH66eGJojooVy6Y2sw+r+nyUzhBLAGbGDlyIA=
+	t=1784672989; cv=none; b=qgcb3zIcaKPHdEu5Fux3NWZoZeCEivcMKy19qh4qvrMpRntY2hdW5OPYv6uFtZbs/p5ArGXRfWglH8WUxeKXQ9PAh+O871QNgm0iwSIHMJl5lGEcYisjWA6mct92mwQSgvMk8KTpgOcEF5rPujOGRxtXgrCSEZCBK8w6NXCvsiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672985; c=relaxed/simple;
-	bh=uTlIGcJRpxulW/nnm65l4+Aj9LA70nzNXRjRdZ613XU=;
+	s=arc-20240116; t=1784672989; c=relaxed/simple;
+	bh=X5IVP728suShoJ2IhFy5coJJfE+y7Gp+2Nj64XUBDTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EeHhNcMGwakYm94ozvvHnJdPwVt53dhQr7mlnfqctCofzfWwYvJ5shEHVm2EKzRDTURe/TOktEuHOZcvuh9atNUlXZxDFV1pKA4mco4MDcrhb3jqG9oPnoJmY50984dUJTyAK5Z++Mbsvr1l1LkoiFgS+ZUD7aLJu1tHprQAAUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZYdjBajP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XnJ3W8L9aZiIET3TLzMNTu0oY6saaDtxwqEGcLdd8hOrMsE2Yn9joiwz1G9Azh5epiCg9MmeME/qnLvf4HByrvja1wRu7vRrSrEjGYzRwxAYu45ZeWWNLbVCTpwZrsUCK9ticTX9kKupJcrPta10naBp0s6D1lBee7tZH7RcOOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGWk5+Mi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZYdjBajP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE0D91F000E9;
-	Tue, 21 Jul 2026 22:29:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGWk5+Mi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 687BD1F000E9;
+	Tue, 21 Jul 2026 22:29:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672984;
-	bh=yfJE4c5HRZxU98gxPBg3wVoSx4jd3GWOCJj17Xuci00=;
+	s=korg; t=1784672986;
+	bh=PtmlLS5gFhlRDr9sVDfiui3SqNzAD0hfSfN8BWBw2cE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZYdjBajPI1YN10+87WAjX2kgDjV0apDWmfCTLpCqVK5SYk5Ww6Ha+lF2WXmV3vUkn
-	 lQCaAfZAeXrtxGCYxxPyr9rnN9MBuc0/teOmE8MiDyDWfW7W/w+OwPqW1cg0SLrOBo
-	 iTAjRM5I7UBafo/WzJNz24wNdVkjQAnaZetoazig=
+	b=FGWk5+Miwfb7mKBF+/Rt3FQMZf1jYaXij19+8k35fc2+Py3xKC9ZT0ecG6mHaCs4d
+	 6oPfSDMesnhuNIfgJL78uP5PCZFtWDcY5ICFUOHuJFxjP/yMLIG7HfIeT9BPDP2K7Z
+	 8WeBLbRSko2O6pl1KH5pXZcQGKejKt5cACdE/qTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Guy Briggs <rgb@redhat.com>,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 832/843] audit: fix potential integer overflow in audit_log_n_hex()
-Date: Tue, 21 Jul 2026 17:27:47 +0200
-Message-ID: <20260721152424.796757284@linuxfoundation.org>
+Subject: [PATCH 5.15 833/843] regulator: scmi: fix of_node refcount leak in scmi_regulator_probe()
+Date: Tue, 21 Jul 2026 17:27:48 +0200
+Message-ID: <20260721152424.819261089@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,63 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Robaina <rrobaina@redhat.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 65dfde57d1e29ce2b76fc23dd565eccd5c0bc0f0 ]
+[ Upstream commit fa11039d6cdff84584a3ef8cc1f5e1b56e045da2 ]
 
-The function calculates new_len as len << 1 for hex encoding. This
-has two overflow risks: the shift itself can overflow when len is
-large, and the result can be truncated when assigned to new_len
-(declared as int) from the size_t calculation.
+scmi_regulator_probe() calls of_find_node_by_name() which takes a
+reference on the returned device node. On the error path where
+process_scmi_regulator_of_node() fails, the function returns without
+calling of_node_put() on the child node, leaking the reference.
 
-Fix by using check_shl_overflow() to catch shift overflow and
-changing new_len and loop counter i to size_t to prevent truncation.
+Add of_node_put(np) on the error path to properly release the
+reference.
 
 Cc: stable@vger.kernel.org
-Fixes: 168b7173959f ("AUDIT: Clean up logging of untrusted strings")
-Reviewed-by: Richard Guy Briggs <rgb@redhat.com>
-Signed-off-by: Ricardo Robaina <rrobaina@redhat.com>
-[PM: remove vertical whitspace noise]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 0fbeae70ee7c ("regulator: add SCMI driver")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260527104850.872415-1-vulab@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ kept the existing of_node_put(child) since 5.15 still uses the non-scoped for_each_child_of_node() loop, only adding the new of_node_put(np) line ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/audit.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/regulator/scmi-regulator.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/audit.c
-+++ b/kernel/audit.c
-@@ -61,6 +61,7 @@
- #include <net/netns/generic.h>
- #include <net/ip.h>
- #include <net/ipv6.h>
-+#include <linux/overflow.h>
- 
- #include "audit.h"
- 
-@@ -2037,7 +2038,8 @@ void audit_log_format(struct audit_buffe
- void audit_log_n_hex(struct audit_buffer *ab, const unsigned char *buf,
- 		size_t len)
- {
--	int i, avail, new_len;
-+	int avail;
-+	size_t i, new_len;
- 	unsigned char *ptr;
- 	struct sk_buff *skb;
- 
-@@ -2047,7 +2049,12 @@ void audit_log_n_hex(struct audit_buffer
- 	BUG_ON(!ab->skb);
- 	skb = ab->skb;
- 	avail = skb_tailroom(skb);
--	new_len = len<<1;
-+
-+	if (check_shl_overflow(len, 1, &new_len)) {
-+		audit_log_format(ab, "?");
-+		return;
-+	}
-+
- 	if (new_len >= avail) {
- 		/* Round the buffer request up to the next multiple */
- 		new_len = AUDIT_BUFSIZ*(((new_len-avail)/AUDIT_BUFSIZ) + 1);
+--- a/drivers/regulator/scmi-regulator.c
++++ b/drivers/regulator/scmi-regulator.c
+@@ -350,6 +350,7 @@ static int scmi_regulator_probe(struct s
+ 		/* abort on any mem issue */
+ 		if (ret == -ENOMEM) {
+ 			of_node_put(child);
++			of_node_put(np);
+ 			return ret;
+ 		}
+ 	}
 
 
