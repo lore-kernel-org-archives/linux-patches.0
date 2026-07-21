@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5330144AB61;
-	Tue, 21 Jul 2026 21:25:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAABD44AB61;
+	Tue, 21 Jul 2026 21:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669118; cv=none; b=QKLJ0oklEYSiPUJMwu1Mza873sU0tUQ6phAmyOZRrKLqVW81v6xX//tV1CEDDaVAH0JwYPHarpcjc3jp4pIqzeCPJxrgTQIiU1CMHiYWS5XgT9OVmQ2I21Vb5noVj49niOpIX2NjnPq7H7gPcf0dmvyv3ruh5dXuvAljqmJ4gDg=
+	t=1784669120; cv=none; b=SMzAml3f56fF06VTfFH090WfXGTFCqJ3hJ+9XYaP4bVm/c+5XsenXG+JSFS73KbtP+HcWF3VIQwGC2vX0bp6PFFtBtDWH1sY4GmGCz+BMz6icCcmvcfupCVXXaP9X6Fm653px6EZdcQGP2PT7ukFVRPt1JaMJCszQWb1s/KuLEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669118; c=relaxed/simple;
-	bh=mzsGiGtMcGs9gCi5cmg5i1OII5gaAzMCpdyYdiG7rYo=;
+	s=arc-20240116; t=1784669120; c=relaxed/simple;
+	bh=g3rJ+82NldUbM2CD1iKkwIB0KFVpRJc3unXlkgwV9pc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o9xztUa4kX44W59KIudeCBXiKeSjYFoj88RJXvWXA8H4nyEAWERHkAdpHDfDyXRmh6s++3/DAzqsB3zIsEXxN25HZd3wZeukf/Db2ax6IjzoKvjCjP0OT/90xO4s8Wg/EiYXQA3eOhYmN7evuP12pI87HvgLmmXfcbs4CfovUrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1n3VjVB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tMwOrES5lPYlRKeJI9Y8RA0kJyUk/v4THpFJtmz1i3zcUFG2u/NSgJMX4M9nVjQikpFAvuXKrn7gAyCcWtH2qqYkgbaSb55TK03yRXkanvgmYOAsSBjzO40mHGAM9Z3I4ob/IcuFj1mfcEgvt/w+J8Yb2Hy+l9Nf067lC8XaJ38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTO+3wqN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1n3VjVB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF78D1F000E9;
-	Tue, 21 Jul 2026 21:25:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTO+3wqN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1ED1F000E9;
+	Tue, 21 Jul 2026 21:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669116;
-	bh=EMB8rYaX8Gg0WyjlHWJ2cUWQRrNnBEMNKIL7BXOpXpc=;
+	s=korg; t=1784669118;
+	bh=x0YpwzPJRKNyUCC9wKKlF3vVGyMHF1gSap/2/kZFMiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u1n3VjVBFCXBdxCMlx/FY7DdGFfOMazi/7GWl1NRqkrTEqlhXPGCg/pXj1vQCT/o2
-	 1UPAfItBxBNCtIixQsNax+MYgJaqvFFunl112+uR3N66FASCuGPDyLEAo2xdNFeVXQ
-	 YU2ekJmbl6qEPfoJ4ne3uLSK/1IAAo338blNJ0pI=
+	b=rTO+3wqNHqw5zl0kuAJf724OrR37EesFZbOr0c3ipo0bmch0lnc8UWqhKghoY9EHX
+	 RtfXR35aqMusv+vOKx3fY5i87o82PS8YbKB+S91khcF+osq9GkdhgN+1RGZWVAATb4
+	 JjoI4/fBoLPS1CYQ5FqXV+gXJcxFYvXHUDA3IEnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
+	sashiko <sashiko-bot@kernel.org>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0434/1067] bridge: cfm: reject invalid CCM interval at configuration time
-Date: Tue, 21 Jul 2026 17:17:15 +0200
-Message-ID: <20260721152434.325108067@linuxfoundation.org>
+Subject: [PATCH 6.1 0435/1067] sctp: validate embedded address parameter length
+Date: Tue, 21 Jul 2026 17:17:16 +0200
+Message-ID: <20260721152434.346822808@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -54,70 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit f3e02edd8322b31b8e6517faa6ba053bf29d1e26 ]
+[ Upstream commit e9361d0ca55c4af12aac09e2572852fa91046229 ]
 
-ccm_tx_work_expired() re-arms itself via queue_delayed_work() using
-the configured exp_interval converted by interval_to_us(). When
-exp_interval is BR_CFM_CCM_INTERVAL_NONE or out of range,
-interval_to_us() returns 0, causing the worker to fire immediately in
-a tight loop that allocates skbs until OOM.
+sctp_verify_asconf() and sctp_verify_param() only validate ADD_IP, DEL_IP,
+and SET_PRIMARY parameters against a fixed minimum size of sizeof(struct
+sctp_addip_param) + sizeof(struct sctp_paramhdr). This ensures the outer
+parameter is large enough to contain an embedded address parameter header,
+but does not verify that the embedded address parameter's declared length
+fits within the bounds of the outer parameter.
 
-Fix this by validating exp_interval at configuration time:
+Later, sctp_process_param() and sctp_process_asconf_param() extract the
+embedded address parameter and pass it to af->from_addr_param(), which uses
+the address parameter length to parse the variable-length address payload.
+A malformed peer can therefore advertise an embedded address parameter
+length that exceeds the remaining bytes in the enclosing parameter.
 
- - Constrain IFLA_BRIDGE_CFM_CC_CONFIG_EXP_INTERVAL to the valid range
-   [BR_CFM_CCM_INTERVAL_3_3_MS, BR_CFM_CCM_INTERVAL_10_MIN] in the
-   netlink policy so userspace cannot set an invalid value.
+Validate that addr_param->p.length does not exceed the space available
+after the sctp_addip_param header before processing the embedded address
+parameter. Reject malformed parameters when the embedded address length
+extends beyond the enclosing parameter bounds.
 
- - Reject starting CCM TX in br_cfm_cc_ccm_tx() when exp_interval has
-   not yet been configured (defaults to 0 from kzalloc).
+This prevents out-of-bounds reads when parsing malformed parameters carried
+in INIT or ASCONF processing paths.
 
-Fixes: 2be665c3940d ("bridge: cfm: Netlink SET configuration Interface.")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260609065116.2818837-1-xmei5@asu.edu
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/7838b86b69f52add28808fb59034c8f992e97b2d.1781043268.git.lucien.xin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_cfm.c         | 6 ++++++
- net/bridge/br_cfm_netlink.c | 4 +++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ net/sctp/sm_make_chunk.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/bridge/br_cfm.c b/net/bridge/br_cfm.c
-index a3c755d0a09de9..a89aec83141648 100644
---- a/net/bridge/br_cfm.c
-+++ b/net/bridge/br_cfm.c
-@@ -805,6 +805,12 @@ int br_cfm_cc_ccm_tx(struct net_bridge *br, const u32 instance,
- 		goto save;
- 	}
+diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
+index 088764ba47a173..3089d5e577584f 100644
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -2670,6 +2670,9 @@ static int sctp_process_param(struct sctp_association *asoc,
+ 			goto fall_through;
  
-+	if (!interval_to_us(mep->cc_config.exp_interval)) {
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "Invalid CCM interval");
-+		return -EINVAL;
-+	}
+ 		addr_param = param.v + sizeof(struct sctp_addip_param);
++		if (ntohs(addr_param->p.length) >
++		    ntohs(param.p->length) - sizeof(struct sctp_addip_param))
++			break;
+ 
+ 		af = sctp_get_af_specific(param_type2af(addr_param->p.type));
+ 		if (!af)
+@@ -3068,13 +3071,16 @@ static __be16 sctp_process_asconf_param(struct sctp_association *asoc,
+ 	union sctp_addr	addr;
+ 	struct sctp_af *af;
+ 
+-	addr_param = (void *)asconf_param + sizeof(*asconf_param);
+-
+ 	if (asconf_param->param_hdr.type != SCTP_PARAM_ADD_IP &&
+ 	    asconf_param->param_hdr.type != SCTP_PARAM_DEL_IP &&
+ 	    asconf_param->param_hdr.type != SCTP_PARAM_SET_PRIMARY)
+ 		return SCTP_ERROR_UNKNOWN_PARAM;
+ 
++	addr_param = (void *)asconf_param + sizeof(*asconf_param);
++	if (ntohs(addr_param->p.length) >
++	    ntohs(asconf_param->param_hdr.length) - sizeof(*asconf_param))
++		return SCTP_ERROR_PROTO_VIOLATION;
 +
- 	/* Start delayed work to transmit CCM frames. It is done with zero delay
- 	 * to send first frame immediately
- 	 */
-diff --git a/net/bridge/br_cfm_netlink.c b/net/bridge/br_cfm_netlink.c
-index 2faab44652e7c0..91b9922dc3f25e 100644
---- a/net/bridge/br_cfm_netlink.c
-+++ b/net/bridge/br_cfm_netlink.c
-@@ -34,7 +34,9 @@ br_cfm_cc_config_policy[IFLA_BRIDGE_CFM_CC_CONFIG_MAX + 1] = {
- 	[IFLA_BRIDGE_CFM_CC_CONFIG_UNSPEC]	 = { .type = NLA_REJECT },
- 	[IFLA_BRIDGE_CFM_CC_CONFIG_INSTANCE]	 = { .type = NLA_U32 },
- 	[IFLA_BRIDGE_CFM_CC_CONFIG_ENABLE]	 = { .type = NLA_U32 },
--	[IFLA_BRIDGE_CFM_CC_CONFIG_EXP_INTERVAL] = { .type = NLA_U32 },
-+	[IFLA_BRIDGE_CFM_CC_CONFIG_EXP_INTERVAL] =
-+		NLA_POLICY_RANGE(NLA_U32, BR_CFM_CCM_INTERVAL_3_3_MS,
-+				 BR_CFM_CCM_INTERVAL_10_MIN),
- 	[IFLA_BRIDGE_CFM_CC_CONFIG_EXP_MAID]	 = {
- 	.type = NLA_BINARY, .len = CFM_MAID_LENGTH },
- };
+ 	switch (addr_param->p.type) {
+ 	case SCTP_PARAM_IPV6_ADDRESS:
+ 		if (!asoc->peer.ipv6_address)
 -- 
 2.53.0
 
