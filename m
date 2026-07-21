@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9278D46E009;
-	Tue, 21 Jul 2026 18:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441D246DFFD;
+	Tue, 21 Jul 2026 18:33:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658781; cv=none; b=NigYX3NXP7k1/DRDitrQWXususN8lTVSo2Wv9by3fjyaq33HKR3Ey9HNDSeZIOE90AAi4vQ0NGg/FJEaxFQR0D+weayLVaHHOZa++YzAGa3u0bgDlZyo9yQr45/GXXwroo1XMV9iOdtCHJ5aYk20hg5Dm+eBkg4di1Av/vnh7KM=
+	t=1784658784; cv=none; b=cOzDAc4fXh/bi7Lqwf6diWLTTbZ2JsfQY1mW9IvAq6vuh58WV+ft/sUmmMwiY/wEZv2L1K9JPsAIEcP5dPjIdTuIul1xMu6AtBhTMQhyAWZZsPKyQtA7Tv9UYMoeAEua9TBVLKJbFJ/rCI/RGLHrsNocmxuFcKeqBjQXtv0ZiZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658781; c=relaxed/simple;
-	bh=sYU2IBFyw8dx8cciec+oNAOEO81Cgm5JNRmMSfLfrdo=;
+	s=arc-20240116; t=1784658784; c=relaxed/simple;
+	bh=wEXqHS2EHSZe7iExmcDNBGPG0IIYbCrHcxkiH11sylQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IrlYFxF8f2lAiX8534Jt1ux9wTE00o901cYcnCtuww8I+AbNhQeL04HP5UMw0GtsVCjjmK5Lzqo1DUvmJgngbdUkTqy/cjtzK7a4CGUTMuqdbQOPY2N9H0Fdm1aYayAAKd164hBdGWaJxUFKuXUlgrs1j+oYQFF99rNpfgUQno4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZ2zOBHW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cKUJFFeKlJPhAs93dARi69HnchnsszrpviaIKDZmpYQIT3SwR7uw14hIEdd1grfQMKeAHEprn0JJZf5MuJ8CmjWGmxu6vaSi7OLJYLkezTDh3yUIjSnPsVCCZq4T95OlyED3+0ua4nAon9BOTqc548ZUHDTMs8wX+wnnHIl4gzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g90XA3k3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZ2zOBHW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3DA1F000E9;
-	Tue, 21 Jul 2026 18:32:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g90XA3k3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D4F1F000E9;
+	Tue, 21 Jul 2026 18:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658780;
-	bh=aas2kqT7WLmdWof/4+bj8LCvZ+0c0CR2tSmUpxHnRzw=;
+	s=korg; t=1784658783;
+	bh=v8ajT05oiuQzg+XFktWJ4s0by+c6nlWp00NeFUgfvE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lZ2zOBHW3KWGffuuSDYa8tJ1wmb+5Vfu59GYpmNxNz20C5SQIodzmhBeZwxBmIeUz
-	 BfbxOK51+Rx08xLT+bjV2FEiihRAw5gCC5JTrD+jSuK/t/BdiCSNPyZbv6Y0K3Yeeo
-	 6o9bbmzob05k7BWrtL43iwTuKWEJoNuxeN7648vI=
+	b=g90XA3k3pjNrtb79nIVS8XSqMnktIYLsQvamMKRiSnVQGSE5UDoDInMIoTE02XORE
+	 eCOPlNrCtGo3gYgMVWhaIIuiIG+WYNYeAhSKYawpIWv2MKOHs2DrJCIdR606B67qJi
+	 ZvHYmt+e4Hd89JcMQCY8BnYtgFqH5UPrvF4cC67Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -36,9 +36,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Junxiao Bi <junxiao.bi@oracle.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 1273/1611] ocfs2: reject dinodes with non-canonical i_mode type
-Date: Tue, 21 Jul 2026 17:23:09 +0200
-Message-ID: <20260721152544.079568377@linuxfoundation.org>
+Subject: [PATCH 6.18 1274/1611] ocfs2: reject dinodes whose i_rdev disagrees with the file type
+Date: Tue, 21 Jul 2026 17:23:10 +0200
+Message-ID: <20260721152544.101680114@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -59,55 +59,26 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 5366a017099c6a3c443be908a05f26fd72af12a1 upstream.
+commit 51407c2d249987a466416890a5c931a2354a46aa upstream.
 
-Patch series "ocfs2: harden inode validators against forged metadata", v2.
+id1.dev1.i_rdev is the device-number arm of the ocfs2_dinode id1 union.
+It is only meaningful for character and block device inodes.  For any
+other user-visible file type the on-disk value must be zero.
 
-This series adds three structural checks to OCFS2 dinode validation so
-malformed on-disk fields are rejected before ocfs2_populate_inode() copies
-them into the in-core inode.
+ocfs2_populate_inode() currently copies id1.dev1.i_rdev into inode->i_rdev
+before the S_IFMT switch decides whether the inode is a special file.  A
+non-device inode with a non-zero i_rdev can therefore publish stale or
+attacker-controlled device state into the in-core inode.
 
-The checks cover:
+System inodes legitimately use other arms of the same union, so keep the
+cross-check restricted to non-system inodes.  Factor that predicate into a
+helper and use it in both the normal validator and online filecheck path;
+filecheck reports the malformed dinode through
+OCFS2_FILECHECK_ERR_INVALIDINO instead of ocfs2_error().
 
-  - i_mode values whose type bits do not name a canonical POSIX file
-    type;
-  - non-device dinodes whose id1.dev1.i_rdev field is non-zero; and
-  - non-inline dinodes that claim non-zero i_size while i_clusters is
-    zero, covering directories unconditionally and regular files on
-    non-sparse volumes.
-
-The normal read path reports these through ocfs2_error(), matching the
-existing suballoc-slot, inline-data, chain-list, and refcount checks.  The
-online filecheck path uses the same structural predicates but keeps its
-own reporting contract, returning OCFS2_FILECHECK_ERR_INVALIDINO instead
-of calling ocfs2_error().
-
-
-This patch (of 3):
-
-ocfs2_validate_inode_block() currently accepts any non-zero i_mode value.
-ocfs2_populate_inode() then copies that mode verbatim into inode->i_mode
-and dispatches on i_mode & S_IFMT to the file/dir/symlink/special_file
-iops; an unrecognised type falls through to ocfs2_special_file_iops and
-init_special_inode().
-
-Reject dinodes whose type bits do not name one of the seven canonical
-POSIX file types.  Use fs_umode_to_ftype(), the same generic file-type
-conversion helper OCFS2 already uses for directory entries, so the
-accepted inode type set matches the kernel file-type vocabulary instead of
-open-coding a local switch.
-
-Apply the same structural check to the online filecheck read path.
-filecheck keeps its own error namespace, so it reports malformed i_mode
-through the filecheck logger and OCFS2_FILECHECK_ERR_INVALIDINO instead of
-calling ocfs2_error(), but it must not allow a malformed dinode to proceed
-into ocfs2_populate_inode().
-
-Link: https://lore.kernel.org/20260519110404.1803902-1-michael.bommarito@gmail.com
-Link: https://lore.kernel.org/20260519110404.1803902-2-michael.bommarito@gmail.com
+Link: https://lore.kernel.org/20260519110404.1803902-3-michael.bommarito@gmail.com
 Fixes: b657c95c1108 ("ocfs2: Wrap inode block reads in a dedicated function.")
 Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://sashiko.dev/#/patchset/20260517111015.3187935-1-michael.bommarito%40gmail.com
 Assisted-by: Claude:claude-opus-4-7
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Cc: Changwei Ge <gechangwei@live.cn>
@@ -120,70 +91,86 @@ Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/inode.c |   35 +++++++++++++++++++++++++++++++++--
- 1 file changed, 33 insertions(+), 2 deletions(-)
+ fs/ocfs2/inode.c |   55 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
 
 --- a/fs/ocfs2/inode.c
 +++ b/fs/ocfs2/inode.c
-@@ -64,7 +64,12 @@ static int ocfs2_filecheck_read_inode_bl
- static int ocfs2_filecheck_validate_inode_block(struct super_block *sb,
- 						struct buffer_head *bh);
- static int ocfs2_filecheck_repair_inode_block(struct super_block *sb,
--					      struct buffer_head *bh);
-+						      struct buffer_head *bh);
-+
-+static bool ocfs2_valid_inode_mode(umode_t mode)
-+{
-+	return fs_umode_to_ftype(mode) != FT_UNKNOWN;
-+}
+@@ -71,6 +71,16 @@ static bool ocfs2_valid_inode_mode(umode
+ 	return fs_umode_to_ftype(mode) != FT_UNKNOWN;
+ }
  
++static bool ocfs2_dinode_has_unexpected_rdev(struct ocfs2_dinode *di)
++{
++	umode_t mode = le16_to_cpu(di->i_mode);
++
++	if (le32_to_cpu(di->i_flags) & OCFS2_SYSTEM_FL)
++		return false;
++
++	return !S_ISCHR(mode) && !S_ISBLK(mode) && di->id1.dev1.i_rdev != 0;
++}
++
  void ocfs2_set_inode_flags(struct inode *inode)
  {
-@@ -1505,6 +1510,24 @@ int ocfs2_validate_inode_block(struct su
+ 	unsigned int flags = OCFS2_I(inode)->ip_attr;
+@@ -1528,6 +1538,41 @@ int ocfs2_validate_inode_block(struct su
  		goto bail;
  	}
  
 +	/*
-+	 * Reject dinodes whose i_mode does not name one of the seven
-+	 * canonical POSIX file types.  ocfs2_populate_inode() copies
-+	 * i_mode verbatim into inode->i_mode and then dispatches via
-+	 * switch (mode & S_IFMT) to file/dir/symlink/special_file iops;
-+	 * an unrecognised type falls into ocfs2_special_file_iops with
-+	 * init_special_inode(), which interprets i_rdev.  Constrain the
-+	 * type here so the dispatch only ever sees a value mkfs.ocfs2 /
-+	 * VFS can produce.
++	 * id1.dev1.i_rdev is the device-number arm of the id1 union and
++	 * is only meaningful for character and block device inodes.  For
++	 * any other regular user-visible file type the on-disk value
++	 * must be zero.  ocfs2_populate_inode() currently runs
++	 *
++	 *     inode->i_rdev = huge_decode_dev(le64_to_cpu(fe->id1.dev1.i_rdev));
++	 *
++	 * unconditionally, before the S_IFMT switch decides whether the
++	 * inode is a special file.  As a result, an i_rdev value present
++	 * on a non-device inode is silently published into the in-core
++	 * inode; a subsequent forced re-read or in-core mode mutation
++	 * (cluster peer with raw write access to the shared LUN,
++	 * on-disk corruption, or a separately forged dinode) can then
++	 * expose the attacker-controlled device number to
++	 * init_special_inode() without ever showing an unusual i_mode
++	 * at validation time.
++	 *
++	 * System inodes (OCFS2_SYSTEM_FL) legitimately use the bitmap1
++	 * and journal1 arms of the same union (allocator i_used /
++	 * i_total counters and the journal ij_flags /
++	 * ij_recovery_generation pair); those bytes are not an i_rdev
++	 * and must not be checked here.  Restrict the cross-check to
++	 * non-system inodes, which is the full attacker-controllable
++	 * surface.
 +	 */
-+	if (!ocfs2_valid_inode_mode(le16_to_cpu(di->i_mode))) {
++	if (ocfs2_dinode_has_unexpected_rdev(di)) {
 +		rc = ocfs2_error(sb,
-+				 "Invalid dinode #%llu: mode 0%o has unknown file type\n",
++				 "Invalid dinode #%llu: non-device mode 0%o with i_rdev %llu\n",
 +				 (unsigned long long)bh->b_blocknr,
-+				 le16_to_cpu(di->i_mode));
++				 le16_to_cpu(di->i_mode),
++				 (unsigned long long)le64_to_cpu(di->id1.dev1.i_rdev));
 +		goto bail;
 +	}
 +
  	if (le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_DATA_FL) {
  		struct ocfs2_inline_data *data = &di->id2.i_data;
  
-@@ -1633,6 +1656,15 @@ static int ocfs2_filecheck_validate_inod
+@@ -1665,6 +1710,16 @@ static int ocfs2_filecheck_validate_inod
  		     (unsigned long long)bh->b_blocknr,
- 		     le32_to_cpu(di->i_fs_generation));
- 		rc = -OCFS2_FILECHECK_ERR_GENERATION;
+ 		     le16_to_cpu(di->i_mode));
+ 		rc = -OCFS2_FILECHECK_ERR_INVALIDINO;
 +		goto bail;
 +	}
 +
-+	if (!ocfs2_valid_inode_mode(le16_to_cpu(di->i_mode))) {
++	if (ocfs2_dinode_has_unexpected_rdev(di)) {
 +		mlog(ML_ERROR,
-+		     "Filecheck: invalid dinode #%llu: mode 0%o has unknown file type\n",
++		     "Filecheck: invalid dinode #%llu: non-device mode 0%o with i_rdev %llu\n",
 +		     (unsigned long long)bh->b_blocknr,
-+		     le16_to_cpu(di->i_mode));
++		     le16_to_cpu(di->i_mode),
++		     (unsigned long long)le64_to_cpu(di->id1.dev1.i_rdev));
 +		rc = -OCFS2_FILECHECK_ERR_INVALIDINO;
  	}
  
  bail:
-@@ -1820,4 +1852,3 @@ const struct ocfs2_caching_operations oc
- 	.co_io_lock		= ocfs2_inode_cache_io_lock,
- 	.co_io_unlock		= ocfs2_inode_cache_io_unlock,
- };
--
 
 
