@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067403F2101;
-	Tue, 21 Jul 2026 18:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B7B39A7FD;
+	Tue, 21 Jul 2026 18:52:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659931; cv=none; b=jyU0es9NEFs/iRWgDeUTIL7JO4dswkyXH2hrFtcN+d0cwI7fw825xlNRM20BR11fojiu4rAw6fKAbWrBtlvx4atOKzTYBAJ1WehlPLxy6s9S5vbrGP2JKFZpQQA17KsCzaCXfctwEpLal/CiF3svp5ugSex0NvHi4HVo3owpQ7Q=
+	t=1784659933; cv=none; b=D5dAFgCdN9ducDxcLyiU7Ggb4tH1L36hFULWAn+F4fEpaL92ngc8Lp3FzuvQNiaq+sg4PYZNHuUoigyNfFnHdimGoCDPVGHvap9XLpgXZSyKb11ttLLNzg3NHk6Kyrs5//pFos2r06nShwK+9NRsB0RCtXXcoLlsZ39ixfPvwRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659931; c=relaxed/simple;
-	bh=fRxt4sfQxpNuJT8Blvwxx0eZL391p/gLft4c2itZz/I=;
+	s=arc-20240116; t=1784659933; c=relaxed/simple;
+	bh=jBTSFo1V/Jn57vrWFMRM23QF3xNUd5yuZgz4LLKqu9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qVL9nUkATiiYchkbgU8R4fVvmMijMJyteo83W5bbHT38KBGJZcOj+eOecPXydc+k3/gVYlK1+6fJZApAEs5w4/DbzZ+9vZq2PtuYJu6QaaK34Ly5gGayJpdB5Q5kgn0R8qLWwN45bCsT0GZnLvIHCV0BtPwMl6UrP1enOk/g1Vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVboc6Fj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K8lrd0BIoCD65fh5B+V/WsAWpvnMvCkgHiO/yqeAJfyN5BZwDVZcpXM6u0m+GT5mzCcPsDRv8Hh3NHOMbfkBGTKD0dYQoyAeFAlhBKA6uUVaU08oaXN1Eopk7HzEZCE55Uwp1H2L2OK5qvI2HFTB/3h0eziUe2hRBm8PvclDrvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+MeztHJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVboc6Fj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668931F000E9;
-	Tue, 21 Jul 2026 18:52:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+MeztHJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C181F00A3E;
+	Tue, 21 Jul 2026 18:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659929;
-	bh=Eth7TVKKPrvGki05WlEnTyusYLTxB011JG7aLLLlLbw=;
+	s=korg; t=1784659932;
+	bh=DIuzOPXnPWnQZAaoLvgkN5jG9C27YR/D/6IQYJX8Ays=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VVboc6Fji1kl5cEePKfRzHDAHyMHejtpOQhDtIBl+8Pk9qaBxzIW+ncAlJWElazJM
-	 7QWZCBSpJQqz6B6YgW5bg4hkHnJRslA9kfvvZcIymZS/fzKo6NKyNqCHmFgKfTOCYG
-	 oRNcP+hDcsi7j0hoYk5aHVblxiGZhiYZoZChihW0=
+	b=j+MeztHJXTtESbNfTUdqneJdx+dRfnk4d1fClyLra8Rj/qMl4DlY8jKClltzgeQqd
+	 ZUQsU7e3FsmFwr/oQDsyiF3YkT6gd6sBnDgkGlXUBoc3pkkj/d4wgl1cmlBYFecIfH
+	 ebXA2AXuPJMaP07SfvITCTUBHkZhvwsGERJ7MIF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0780/2077] bpf: Guard __get_user acesss with access_ok for uprobe_multi data
-Date: Tue, 21 Jul 2026 17:07:33 +0200
-Message-ID: <20260721152611.195223838@linuxfoundation.org>
+Subject: [PATCH 7.1 0789/2077] powerpc/perf: fix preempt count underflow in fsl_emb_pmu_del
+Date: Tue, 21 Jul 2026 17:07:42 +0200
+Message-ID: <20260721152611.405619386@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,53 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Aboorva Devarajan <aboorvad@linux.ibm.com>
 
-[ Upstream commit 4d87a251d45b4a95eb4c0abcfab809c9f231258a ]
+[ Upstream commit 81e3a86030462824a67d697739cf3f387f4ba350 ]
 
-As reported by sashiko [1] we need to use access_ok to check the user
-space data bounds before we use __get-user to get it.
+fsl_emb_pmu_del() unconditionally calls put_cpu_var(cpu_hw_events) at
+the 'out:' label, but only calls the matching get_cpu_var() after the
+'i < 0' early-return check. When event->hw.idx is negative the
+function jumps to 'out:' without having taken get_cpu_var(), and the
+trailing put_cpu_var() then issues an unmatched preempt_enable(),
+underflowing preempt_count.
 
-[1] https://lore.kernel.org/bpf/20260610145235.CB1441F00893@smtp.kernel.org/
-Fixes: 0b779b61f651 ("bpf: Add cookies support for uprobe_multi link")
-Fixes: 89ae89f53d20 ("bpf: Add multi uprobe link")
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20260611114230.950379-2-jolsa@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+On a CONFIG_PREEMPT=y kernel preempt_count would underflow and
+eventually present as a 'scheduling while atomic' BUG.
+
+Move put_cpu_var() to pair with get_cpu_var() so the percpu access is
+correctly bracketed and the 'out:' label only handles perf_pmu_enable.
+
+Fixes: a11106544f33 ("powerpc/perf: e500 support")
+Reviewed-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260605082912.305100-2-aboorvad@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ arch/powerpc/perf/core-fsl-emb.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index a02bd258677ee1..a4de502950c4b9 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -3180,6 +3180,7 @@ int bpf_uprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
- 	unsigned long __user *uoffsets;
- 	u64 __user *ucookies;
- 	void __user *upath;
-+	unsigned long size;
- 	u32 flags, cnt, i;
- 	struct path path;
- 	char *name;
-@@ -3217,6 +3218,16 @@ int bpf_uprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
- 	uref_ctr_offsets = u64_to_user_ptr(attr->link_create.uprobe_multi.ref_ctr_offsets);
- 	ucookies = u64_to_user_ptr(attr->link_create.uprobe_multi.cookies);
+diff --git a/arch/powerpc/perf/core-fsl-emb.c b/arch/powerpc/perf/core-fsl-emb.c
+index 7120ab20cbfecb..02b5dd74c187a0 100644
+--- a/arch/powerpc/perf/core-fsl-emb.c
++++ b/arch/powerpc/perf/core-fsl-emb.c
+@@ -366,9 +366,10 @@ static void fsl_emb_pmu_del(struct perf_event *event, int flags)
  
-+	/*
-+	 * All uoffsets/uref_ctr_offsets/ucookies arrays have the same value
-+	 * size, we need to check their address range is safe for __get_user
-+	 * calls.
-+	 */
-+	size = sizeof(*uoffsets) * cnt;
-+	if (!access_ok(uoffsets, size) || !access_ok(uref_ctr_offsets, size) ||
-+	    !access_ok(ucookies, size))
-+		return -EFAULT;
+ 	cpuhw->n_events--;
+ 
++	put_cpu_var(cpu_hw_events);
 +
- 	name = strndup_user(upath, PATH_MAX);
- 	if (IS_ERR(name)) {
- 		err = PTR_ERR(name);
+  out:
+ 	perf_pmu_enable(event->pmu);
+-	put_cpu_var(cpu_hw_events);
+ }
+ 
+ static void fsl_emb_pmu_start(struct perf_event *event, int ef_flags)
 -- 
 2.53.0
 
