@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583B643C7D7;
-	Tue, 21 Jul 2026 22:10:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15C843D4E2;
+	Tue, 21 Jul 2026 22:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671826; cv=none; b=JSTifT9+0wYba5P7oOlcDVt71vcuI7TWMKG7S1REICQ/y12w88r2k5n5hem7g59w0aQRL2v7Utie1J6ahuYHjmYyc36cBl7r9cpTMR7FNpwPJTUJS2vmJQcAC3eBGl4oAmibeMz4RJ5738ManlTPyur1z2uwhJBYAF6lGlWIZ6M=
+	t=1784671828; cv=none; b=V2Gl9d3YLYEiVssdYvuLBVBeqS1HvIURaD38T9+7DxjVimDuBdecO9ZjBUWFrfagL3wKkLFifAfJo4lwCxx2mY3LjIGqBM35sG4MAq5I4I6kh5oVQ0JaOz61GGr+HeSbWeWUwIcBEvYuJw4K70B6Tr/wOXRPdOLYSgLloe8z3Mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671826; c=relaxed/simple;
-	bh=9BnKbvv9E3swcNxtxGRLYuJ+OBEpDwpre1V4ta8bxF4=;
+	s=arc-20240116; t=1784671828; c=relaxed/simple;
+	bh=ggW1GF8FPk2Bpi++wa9BaHJg1Oik4SoXaTeqWY/np0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HvwxNkBdFliDkfAhBuLcEnSkxT+BLMrGG2oEgzZGyiXEjUd17+sNjkseNXCPDU+h+A8B/AVHt9x1zCwdbaJZ7aRnCTSRbHqDjoG6hgyUxiAZ5aYNJs/2VjapcZ8Y3MuCKoeyBTCmRWnvPqkzmW3cXIJuL5mknrMnXHeq99/M1Hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iMwneLZ7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EhC4StH9ItDii24fOtYjANNQ1fJIquMs5WsiBKDf4xpnRIG0943Uxu2LWHAi0UDV4T0O55/+WBizALWnPR8SjLqAHW82Xtw8Cx5ls9Zl5iIe8VHmm5b0kZylylHYceiOLj7cvvK3lsYrlIBgMLNmvAHsX3tFrYRp8ArPT0J/fk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lWDD0AWg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iMwneLZ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87DF01F000E9;
-	Tue, 21 Jul 2026 22:10:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lWDD0AWg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E0D71F000E9;
+	Tue, 21 Jul 2026 22:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671825;
-	bh=zfwQhcfe8GPREwUitAeF9M075TZ1/vchUG3jTEYntAw=;
+	s=korg; t=1784671827;
+	bh=sXK6wEN2oIDKDg2Q18n1+x3QJSDE4OiAuOnOKASkjBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iMwneLZ7BMchMLA8salGPW8gNndUa+P5m7pzjgr/uhLf4UBWDre/tchwGYkQDv8UU
-	 K7TDcNa8BJIcYNAdehB+jlLnq4/VX4TaOS3nutGU7bebcZcxioafPSvbAYpsRH9bSr
-	 9Xp5sVmIvKdsfFfPG9TPqHSx93D4mPmcTSVcbs14=
+	b=lWDD0AWglssVISfwr2rmRfAmR5+yPiq+oraZadAe6pBkp4KiEAA829YZ/ToGJg+HB
+	 QeiHrEfZO3/b+oxLNwpIgZJRvlU6lRYvG/uTbv8wT2G2DztG2hdclc/Xwu54rU7fSZ
+	 RL54Ne4r8vCSqOIyhEwHeTl6n6ZnjjD9J2rEC9Lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Alexey Budankov <alexey.budankov@linux.intel.com>,
-	Jiri Olsa <jolsa@kernel.org>,
+	David Ahern <dsahern@gmail.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 392/843] perf mmap: Guard cpu__get_node() return in aio_bind()
-Date: Tue, 21 Jul 2026 17:20:27 +0200
-Message-ID: <20260721152414.859377267@linuxfoundation.org>
+Subject: [PATCH 5.15 393/843] perf sched: Clean up idle_threads entry on init failure
+Date: Tue, 21 Jul 2026 17:20:28 +0200
+Message-ID: <20260721152414.881365609@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -56,53 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit f32dc302a090f48893477ef297a888db109ec0bd ]
+[ Upstream commit cda5a94ad9181cd60cbf04be11d524201bf489a2 ]
 
-perf_mmap__aio_bind() passes the cpu__get_node() return value directly
-to an unsigned long variable (node_index).  When cpu__get_node() returns
--1 for an unknown CPU, the implicit int-to-unsigned-long conversion
-sign-extends it to ULONG_MAX.
+get_idle_thread() allocates a thread via thread__new() and stores it in
+idle_threads[cpu], then calls init_idle_thread() to set up the private
+data.  If init_idle_thread() fails (e.g. OOM for the idle_thread_runtime
+struct), the function returns NULL but leaves the partially initialized
+thread in idle_threads[cpu].
 
-This causes bitmap_zalloc(ULONG_MAX + 1) which wraps to
-bitmap_zalloc(0), returning a zero-sized allocation.  The subsequent
-__set_bit(ULONG_MAX, node_mask) then writes massively out of bounds.
+On subsequent calls for the same CPU, get_idle_thread() finds a non-NULL
+idle_threads[cpu], skips allocation, and returns thread__get() on a
+thread that has no priv data.  Callers then get a thread whose
+thread__priv() returns NULL, leading to unexpected behavior.
 
-Check the return value in a signed temporary before assigning to
-node_index, and skip the NUMA binding when the node is unknown.
+Release the thread and reset the slot to NULL on init failure so the
+entry doesn't persist in a corrupted state.
 
-Fixes: c44a8b44ca9f ("perf record: Bind the AIO user space buffers to nodes")
+Fixes: 49394a2a24c7 ("perf sched timehist: Introduce timehist command")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Alexey Budankov <alexey.budankov@linux.intel.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: David Ahern <dsahern@gmail.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/mmap.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/perf/builtin-sched.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/mmap.c b/tools/perf/util/mmap.c
-index 512dc8b9c1685c..f642018a8926c0 100644
---- a/tools/perf/util/mmap.c
-+++ b/tools/perf/util/mmap.c
-@@ -103,9 +103,15 @@ static int perf_mmap__aio_bind(struct mmap *map, int idx, int cpu, int affinity)
- 	int err = 0;
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index 35cc5339ede517..6264a2cded514f 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -2289,8 +2289,11 @@ static struct thread *get_idle_thread(int cpu)
+ 		idle_threads[cpu] = thread__new(0, 0);
  
- 	if (affinity != PERF_AFFINITY_SYS && cpu__max_node() > 1) {
-+		int node;
-+
- 		data = map->aio.data[idx];
- 		mmap_len = mmap__mmap_len(map);
--		node_index = cpu__get_node(cpu);
-+		node = cpu__get_node(cpu);
-+		/* -1 sign-extends to ULONG_MAX, wrapping bitmap_zalloc(0) and OOB __set_bit */
-+		if (node < 0)
-+			return 0;
-+		node_index = node;
- 		node_mask = bitmap_zalloc(node_index + 1);
- 		if (!node_mask) {
- 			pr_err("Failed to allocate node mask for mbind: error %m\n");
+ 		if (idle_threads[cpu]) {
+-			if (init_idle_thread(idle_threads[cpu]) < 0)
++			if (init_idle_thread(idle_threads[cpu]) < 0) {
++				/* clean up so next call doesn't find a half-initialized thread */
++				thread__zput(idle_threads[cpu]);
+ 				return NULL;
++			}
+ 		}
+ 	}
+ 
 -- 
 2.53.0
 
