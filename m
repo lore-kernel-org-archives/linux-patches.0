@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E71C3B1EFC;
-	Tue, 21 Jul 2026 20:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F4452EBB8D;
+	Tue, 21 Jul 2026 20:32:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665951; cv=none; b=ovroUwsMlkO0O/LVJA9qPArp3yRL+9cuQwK7GJyUvWhaHgbzlm3EQeG/Y9xqOwGihtOjfD+CoiWPAiS2svRIKQZ0e2MoOXO5/KMa8sveknf3OPbbW7YbLCojFhfe0ia8vwG1U8eg1+ztotosVpxAVky6dYjYtd9qqv8lUkALOPc=
+	t=1784665954; cv=none; b=uenwOYJvdjk9F1/wnbWNvaAgwrzxHiB2WVQ2aP6R7yJys31v+zRwXbPs5CDyC9O+xK2L1xInC9weOKsAa3QWDJSR1SUWCXsvSrB7IPUaY5TCEgDS313H4PZMVBfRw8cPCIorkKgB+d+OWyaDhK+CIERpQVCRp66w2n/+siOSYA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665951; c=relaxed/simple;
-	bh=UzTnldKxGi8s1aQfKLSbThadftV+zcKfRxUANOX72uU=;
+	s=arc-20240116; t=1784665954; c=relaxed/simple;
+	bh=H5tg8G0yFEKARQGjBDyeb30dvsEx40ordk1mqN5TxQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NxhbiqnrYl042Qn+IT7EYPE0CospoZVNbzdv+/+RD88xj7RFMu6UhLSVjOh1N2LTOEuJnicSMo0u835Ma/05IHjS69YvHXSSi8WG/b3U5xg/SUIUscytjpLeGPxzlbaTkKo2euKFQFPni6AeFy1IPtAthGZ5zyJAdkQoXtuLC2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JP/s5zWM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GGUWiNuyRDeskvQsRQozzVBPsMGSewI1kZDG2AQ7O4/Bn+m9spGQoQjNubTB8NCbgGRjJl2sUoql+IPEhoOOXIasN/BpbapPtj8Ja/uH8MOS9T0HBc2RyN/zl0xo8KLpLPUb7zRSQCwdevKxpfizE0VuKLKqAQGZ03h+wLcLXWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKjzmynr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JP/s5zWM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE8911F000E9;
-	Tue, 21 Jul 2026 20:32:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKjzmynr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FAF51F00A3A;
+	Tue, 21 Jul 2026 20:32:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665950;
-	bh=C7Kn495sk/5yFeiczLgrDUPI3qElwEgXnb5D5igFTBw=;
+	s=korg; t=1784665953;
+	bh=9rN8wY/5pDjok7Sgq9Q0FKj9YIL2gnGj8EUzakwauUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JP/s5zWMZuUfBx53CLx1YkmdWKp6amEiI/yZ3+eMRpVjTLvSjnk9xbHEdVm2mzJEf
-	 Lfgw5dc/Ip6VobvqlmCiGjBCkJmzbku3LspyPhtYVlWlK5mD2ISXaEdfyF5qLGgR0o
-	 hB7Mtvz89nsDnYluUmr3VD/+UeCNz0Z2N456bt8o=
+	b=wKjzmynrldzMz4TDfRKdNYipwWGeD5ICW4u1zAv0+nzu2ywrcoHcdopU6+1/p1IOh
+	 69dkm600Gty6zOJyU2OVJdeVEzDepHvj1xCOfw2pCXJNoTN4SgUaWCyr7Xkn4is4bz
+	 Kq5frZr+m2y9hFhDW2VJy2YcSO0nmBYNSIlZy9tI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhoumin <teczm@foxmail.com>,
-	Tony Luck <tony.luck@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0461/1266] EDAC/{skx_common,skx}: Fix UBSAN shift-out-of-bounds in skx_get_dimm_info
-Date: Tue, 21 Jul 2026 17:14:58 +0200
-Message-ID: <20260721152452.150425478@linuxfoundation.org>
+Subject: [PATCH 6.6 0497/1266] IB/cm: Fix av cm device leak on an error path in cm_init_av_by_path()
+Date: Tue, 21 Jul 2026 17:15:34 +0200
+Message-ID: <20260721152452.964040670@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,45 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zhoumin <teczm@foxmail.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit c63ed6e1f5fe648a4a099b6717f679999be482ef ]
+[ Upstream commit 9b2207bc5cdb955bdae34b3eec80f04979e17081 ]
 
-When the skx_get_dimm_attr() helper returns -EINVAL,
-skx_get_dimm_info() does not validate these return values before using
-them in a shift operation:
+Codex pointed out that cm_init_av_by_path() can call cm_set_av_port()
+which takes a reference on the cm device, but then can immediately return
+error if ib_init_ah_attr_from_path() fails.
 
-    size = ((1ull << (rows + cols + ranks)) * banks) >> (20 - 3);
+Since callers like ib_send_cm_req() put the av on the stack this leaks
+that cm device reference.
 
-If all three values are -22, the shift exponent becomes -66, triggering
-a UBSAN shift-out-of-bounds error:
+Re-order cm_init_av_by_path() so it doesn't touch the av until it has done
+all its failable work, and then update the av in one shot so it is either
+left alone or fully init'd.
 
-    UBSAN: shift-out-of-bounds in drivers/edac/skx_common.c
-    shift exponent -66 is negative
+Sashiko also pointed out that the cm_destroy_av() prior to
+cm_init_av_by_path() is harmful as it leaves the AV broken in the error
+case and thus the REJ won't send. Since cm_init_av_by_path() is now atomic
+it is safe to delete the cm_destroy_av(). On succees the av from
+cm_init_av_for_response() is cleaned up by cm_init_av_by_path(), on
+failure the 'goto rejected' guarentees the av is destroyed during
+ib_destroy_cm_id().
 
-Fixes: 88a242c98740 ("EDAC, skx_common: Separate common code out from skx_edac")
-Signed-off-by: zhoumin <teczm@foxmail.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://patch.msgid.link/tencent_2A0CC835A18366643CBD2865B169948AB409@qq.com
+Fixes: 76039ac9095f ("IB/cm: Protect cm_dev, cm_ports and mad_agent with kref and lock")
+Link: https://patch.msgid.link/r/0-v1-38292501f539+14f-ib_cm_av_leak_jgg@nvidia.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/skx_common.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/core/cm.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
-index 9e43aed72bd9fa..6b492ac8ba48ba 100644
---- a/drivers/edac/skx_common.c
-+++ b/drivers/edac/skx_common.c
-@@ -417,6 +417,9 @@ int skx_get_dimm_info(u32 mtr, u32 mcmtr, u32 amap, struct dimm_info *dimm,
- 	rows = numrow(mtr);
- 	cols = imc->hbm_mc ? 6 : numcol(mtr);
+diff --git a/drivers/infiniband/core/cm.c b/drivers/infiniband/core/cm.c
+index 50bb3c43f40bf6..8d0d77628d9c90 100644
+--- a/drivers/infiniband/core/cm.c
++++ b/drivers/infiniband/core/cm.c
+@@ -514,6 +514,7 @@ static int cm_init_av_by_path(struct sa_path_rec *path,
+ 	struct rdma_ah_attr new_ah_attr;
+ 	struct cm_device *cm_dev;
+ 	struct cm_port *port;
++	u16 pkey_index;
+ 	int ret;
  
-+	if (ranks < 0 || rows < 0 || cols < 0)
-+		return 0;
-+
- 	if (imc->hbm_mc) {
- 		banks = 32;
- 		mtype = MEM_HBM2;
+ 	port = get_cm_port_from_path(path, sgid_attr);
+@@ -522,12 +523,10 @@ static int cm_init_av_by_path(struct sa_path_rec *path,
+ 	cm_dev = port->cm_dev;
+ 
+ 	ret = ib_find_cached_pkey(cm_dev->ib_device, port->port_num,
+-				  be16_to_cpu(path->pkey), &av->pkey_index);
++				  be16_to_cpu(path->pkey), &pkey_index);
+ 	if (ret)
+ 		return ret;
+ 
+-	cm_set_av_port(av, port);
+-
+ 	/*
+ 	 * av->ah_attr might be initialized based on wc or during
+ 	 * request processing time which might have reference to sgid_attr.
+@@ -542,6 +541,8 @@ static int cm_init_av_by_path(struct sa_path_rec *path,
+ 	if (ret)
+ 		return ret;
+ 
++	av->pkey_index = pkey_index;
++	cm_set_av_port(av, port);
+ 	av->timeout = path->packet_life_time + 1;
+ 	rdma_move_ah_attr(&av->ah_attr, &new_ah_attr);
+ 	return 0;
+@@ -2169,8 +2170,10 @@ static int cm_req_handler(struct cm_work *work)
+ 				 cm_id_priv->av.ah_attr.roce.dmac);
+ 	work->path[0].hop_limit = grh->hop_limit;
+ 
+-	/* This destroy call is needed to pair with cm_init_av_for_response */
+-	cm_destroy_av(&cm_id_priv->av);
++	/*
++	 * cm_init_av_by_path() will internally pair with the above
++	 * cm_init_av_for_response() if it succeeds.
++	 */
+ 	ret = cm_init_av_by_path(&work->path[0], gid_attr, &cm_id_priv->av);
+ 	if (ret) {
+ 		int err;
 -- 
 2.53.0
 
