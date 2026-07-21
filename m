@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132343B1EFC;
-	Tue, 21 Jul 2026 21:59:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B2F43B48C;
+	Tue, 21 Jul 2026 21:59:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671195; cv=none; b=LpsLw6MzPPLAnrML9OwC5zWYfsTYqUbszwn0AUuYsxP3EFTlFRcVeZu0PGim1uQxRgcTzyuxiJrgvmWVG/3AFrIRyUy0FEHG+IRLINK9d+iNCR6EmgEBCUKbbwwliwtGhjfBf/vKImaZEX1CHqXLCWfpj9hCqKXdQMdOwmB/nng=
+	t=1784671197; cv=none; b=Rg36lHkNGzfj8wPsr45HjaI43+mQwcS+EuJmPwqoXKJA8Sy8Pc64KSqj3xnYfuUZuxhZSt14VWtpTH9+rF2tPJOEEPoLz7CsB92ehwA99Z5JrbbXpcpVqzxM3ubzANDfPdFd0epREyRVNCCCrqlR88T9bSaI5bWEy92I+3C/Obo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671195; c=relaxed/simple;
-	bh=HTvgtPMs66ZKY6vWmt42ggbydP720+ukHJ0qlkfytQQ=;
+	s=arc-20240116; t=1784671197; c=relaxed/simple;
+	bh=JUKqkzYyqgMWomfG44RsoPeYmogBy5FAhMisOruDmdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R2EJNXIJQfBxP/PGBrpTeJIn1bCpzCOt4E1U/OhZ2NHtQ4O6ohqOK81hHxD7lzPp9Skcj40+Mgowd4Ira+rcQSaO49F17oWu6mPsPWL7lYTjE9WZPnU0iNzHs8/3YRlvn7tACFXyo0fop1JvIuCl7n5jGR3x6O7uYoVicBrE5O4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o6bRwKQ/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nrRkxpPbXekEtEG96bCaqfbM3wpyITj3BoLXwVpruCFuKyWOIqKcDFBhqQQ46JRqjhOtEIRFdGNJsobnXtQTaKGhT3Euc8rlznIyxqx//M/LyoL7zDZuavVapOZfyjMtR3D7C6l+Q8HwkeNe/08iQq6Nn3VZmY9gkhJWGdfAqkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zoeI87sL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o6bRwKQ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF6D1F000E9;
-	Tue, 21 Jul 2026 21:59:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zoeI87sL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97991F000E9;
+	Tue, 21 Jul 2026 21:59:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671193;
-	bh=tN0aUXigU6ENcaapV0jo+GKKw+s0dZyhfsIh4CQnTms=;
+	s=korg; t=1784671196;
+	bh=O7cWXsBlfPzm/nnqBkaX/q+fTsszKtkxXb/UA+Rd87E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o6bRwKQ/eENsUbG2E1beBbV/tB4tObPA0RyzGRc3MYW9YIiZOu/PAwuggbckHVpLR
-	 nGD4mqDe4WSw0X4fkeHYrgCJDk9ucq2N+ZeO4exUMt6AwnX1IIIUdXUP163Jqt0c6a
-	 tn+CkjHCMmmtXgN6Yk1ja7ayOViYuOHNjEgvh03w=
+	b=zoeI87sL5jKVYCKHEbPij+36SFOpekktFOLeOnuMP2xILsvKmvAws4y+q3JyK3vIB
+	 XlSw8MTODh52fK1/VHwiBaXPV+FZzr8ifsVpoKetufPK69tNxF7KaqwXEM8G9S75bZ
+	 mURa5imk5ljL3NEMvYByFN5GGZFs5MM31U/Xzw1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Madhu M <madhu.m@intel.com>,
-	Jameson Thies <jthies@google.com>,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.15 154/843] usb: typec: ucsi: Pass full DP config payload in SET_NEW_CAM for DP alt mode
-Date: Tue, 21 Jul 2026 17:16:29 +0200
-Message-ID: <20260721152409.477721762@linuxfoundation.org>
+	Jared Baldridge <jrb@expunge.us>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 128/843] usb: cdc_acm: Add quirk for Uniden BC125AT scanner
+Date: Tue, 21 Jul 2026 17:16:03 +0200
+Message-ID: <20260721152408.890439834@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -53,48 +50,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Madhu M <madhu.m@intel.com>
+From: Jared Baldridge <jrb@expunge.us>
 
-commit 735a461d060d4eeb2f9732aba1295bc32a3982e2 upstream.
+commit 6eba58568f6cc3ff8515a00b05e258d8cfb72b72 upstream.
 
-In the UCSI Specification Revision 3.1 RC1, bits 32-63 of the SET_NEW_CAM
-command hold the 32-bit Alternate Mode Specific (AMSpecific) field.
+Uniden BC125AT radio scanner has a USB interface which fails to work
+with the cdc_acm driver:
+ usb 1-1: new full-speed USB device number 2 using uhci_hcd
+ cdc_acm 1-1:1.0: Zero length descriptor references
+ cdc_acm 1-1:1.0: probe with driver cdc_acm failed with error -22
+ usbcore: registered new interface driver cdc_acm
 
-For DisplayPort Alternate Mode, this field must contain the full
-32-bit DisplayPort configuration VDO payload that the OPM wants the
-connector to operate in, rather than just the pin assignment value.
-This AMSpecific value follows the DisplayPort Configurations defined
-in the DisplayPort Alt Mode on USB Type-C Specification v2.1a,
-Table 5-13: SOP DisplayPort Configurations.
+Adding the NO_UNION_NORMAL quirk for the device fixes the issue:
 
-Fixes: af8622f6a585 ("usb: typec: ucsi: Support for DisplayPort alt mode")
+ usb 1-1: new full-speed USB device number 2 using uhci_hcd
+ cdc_acm 1-1:1.0: ttyACM0: USB ACM device
+ usbcore: registered new interface driver cdc_acm
+
+`lsusb -v` of the device:
+
+ Bus 001 Device 002: ID 1965:0017 Uniden Corporation BC125AT
+ Negotiated speed: Full Speed (12Mbps)
+ Device Descriptor:
+   bLength                18
+   bDescriptorType         1
+   bcdUSB               2.00
+   bDeviceClass            2 Communications
+   bDeviceSubClass         0 [unknown]
+   bDeviceProtocol         0
+   bMaxPacketSize0        64
+   idVendor           0x1965 Uniden Corporation
+   idProduct          0x0017 BC125AT
+   bcdDevice            0.01
+   iManufacturer           1 Uniden America Corp.
+   iProduct                2 BC125AT
+   iSerial                 3 0001
+   bNumConfigurations      1
+   Configuration Descriptor:
+     bLength                 9
+     bDescriptorType         2
+     wTotalLength       0x0030
+     bNumInterfaces          2
+     bConfigurationValue     1
+     iConfiguration          0
+     bmAttributes         0x80
+       (Bus Powered)
+     MaxPower              500mA
+     Interface Descriptor:
+       bLength                 9
+       bDescriptorType         4
+       bInterfaceNumber        0
+       bAlternateSetting       0
+       bNumEndpoints           1
+       bInterfaceClass         2 Communications
+       bInterfaceSubClass      2 Abstract (modem)
+       bInterfaceProtocol      0
+       iInterface              0
+       Endpoint Descriptor:
+         bLength                 7
+         bDescriptorType         5
+         bEndpointAddress     0x87  EP 7 IN
+         bmAttributes            3
+           Transfer Type            Interrupt
+           Synch Type               None
+           Usage Type               Data
+         wMaxPacketSize     0x0008  1x 8 bytes
+         bInterval              10
+     Interface Descriptor:
+       bLength                 9
+       bDescriptorType         4
+       bInterfaceNumber        1
+       bAlternateSetting       0
+       bNumEndpoints           2
+       bInterfaceClass        10 CDC Data
+       bInterfaceSubClass      0 [unknown]
+       bInterfaceProtocol      0
+       iInterface              0
+       Endpoint Descriptor:
+         bLength                 7
+         bDescriptorType         5
+         bEndpointAddress     0x81  EP 1 IN
+         bmAttributes            2
+           Transfer Type            Bulk
+           Synch Type               None
+           Usage Type               Data
+         wMaxPacketSize     0x0040  1x 64 bytes
+         bInterval               0
+       Endpoint Descriptor:
+         bLength                 7
+         bDescriptorType         5
+         bEndpointAddress     0x02  EP 2 OUT
+         bmAttributes            2
+           Transfer Type            Bulk
+           Synch Type               None
+           Usage Type               Data
+         wMaxPacketSize     0x0040  1x 64 bytes
+         bInterval               0
+ Device Status:     0x0000
+   (Bus Powered)
+
+Signed-off-by: Jared Baldridge <jrb@expunge.us>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Madhu M <madhu.m@intel.com>
-Reviewed-by: Jameson Thies <jthies@google.com>
-Reviewed-by: Andrei Kuchynski <akuchynski@chromium.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260619153311.3526083-1-madhu.m@intel.com
+Link: https://patch.msgid.link/20260530221959.612526-1-jrb@expunge.us
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/displayport.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/class/cdc-acm.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/typec/ucsi/displayport.c
-+++ b/drivers/usb/typec/ucsi/displayport.c
-@@ -185,13 +185,12 @@ static int ucsi_displayport_status_updat
- 
- static int ucsi_displayport_configure(struct ucsi_dp *dp)
- {
--	u32 pins = DP_CONF_GET_PIN_ASSIGN(dp->data.conf);
- 	u64 command;
- 
- 	if (!dp->override)
- 		return 0;
- 
--	command = UCSI_CMD_SET_NEW_CAM(dp->con->num, 1, dp->offset, pins);
-+	command = UCSI_CMD_SET_NEW_CAM(dp->con->num, 1, dp->offset, dp->data.conf);
- 
- 	return ucsi_send_command(dp->con->ucsi, command, NULL, 0);
- }
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -1772,6 +1772,9 @@ static const struct usb_device_id acm_id
+ 	{ USB_DEVICE(0x1901, 0x0006), /* GE Healthcare Patient Monitor UI Controller */
+ 	.driver_info = DISABLE_ECHO, /* DISABLE ECHO in termios flag */
+ 	},
++	{ USB_DEVICE(0x1965, 0x0017), /* Uniden BC125AT */
++	.driver_info = NO_UNION_NORMAL, /* has no union descriptor */
++	},
+ 	{ USB_DEVICE(0x1965, 0x0018), /* Uniden UBC125XLT */
+ 	.driver_info = NO_UNION_NORMAL, /* has no union descriptor */
+ 	},
 
 
