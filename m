@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8DE22E62A9;
-	Tue, 21 Jul 2026 17:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8B438399A;
+	Tue, 21 Jul 2026 17:15:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654119; cv=none; b=O4wy0T1GHXB6xHJbqX4vsof/3Z48VG0/ZyFu1J3NRPBcO7OCuXCmGqaOgwVzWr8px9QyTapce6ZrFZmt00Evz03Pq0WVAi5ejohclrg8Epx/Q53E0yO+Fjl0wtjP6B7th+aDpzMnOKz4MsP0+13M0KBiyVErf/nEREBnzOgSMjQ=
+	t=1784654122; cv=none; b=GmlkV2xxGmugcPM9J5GGBECthzlo18I9ut4T0OvLuQaR3hD51oNu7ntjur3PMfY6sX0ZCmQa/2ChnW8t+fNrDH69Cb3i97BRKGdo2ye2lhVSvem6Ywx6c+29eTpNgcRbwBSkuHZfvN4ZFViqBufMGaxUp9+tzigpEWhLAM0ss90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654119; c=relaxed/simple;
-	bh=9PMxTOAlVM+8KQhGYuzg8GMjycYUsWulPnzOJn5EBqY=;
+	s=arc-20240116; t=1784654122; c=relaxed/simple;
+	bh=3/CNlRsorFLRfU139IQU+l5Ui9799QY3geGz6JWocRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fq9+aOTLQOGbcMoDNcXlWZdqqJVKV99OnFbCSDU+29e+pHtxmFpQ/EENGwniriOGI+WV+IKfyxPUEKhxz0WcMkKGpENI7WD0BMYfrak5xeyvB/WVb3xO+hfrwkgIoTqPoCeeBymqTC3GgukvEy/7IDLWIQAzD1rHije6FTFAgvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JUMSElxt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zsspn78qa9f6REJVjtJYehA7ehfLsJvO+e/AZLL8Y4q2OqxP8RVk2k/At0b4GTn1EUsjbkvzo8wEtrTomJ4xa/Hl3rGCS0gJ9eM8ikqNf+OAeninQ8AHfTPr48JZw+GsQg3LH5/oWVl0A2Z+D4IzO0J590YF75rHC0f5g0QWet8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HBwPgCFh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUMSElxt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0789E1F000E9;
-	Tue, 21 Jul 2026 17:15:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HBwPgCFh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66C51F000E9;
+	Tue, 21 Jul 2026 17:15:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654118;
-	bh=67ICudUq7MWt/+q9fIYuVJU826w0hYu+MIAHcAqhEc8=;
+	s=korg; t=1784654121;
+	bh=ucIsXhqJyRx0O8ChOW78i/EVe3oFbouxrlmqLoMmYX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JUMSElxt2rmzAq/LcoIQLqpRjSYjsAnw3VjHE0L2sGDOCnUL8WNrb6NDLxHfBp2Mw
-	 euyfnqRrihw02eSu5qseLCsUsKpR70b7eVpDaJaP7NTUNH8idfW6r9bgH9rOr9iWIW
-	 UiuhYFHAFIlTyyV/XzjTDFTU72RahcWnu1+golSU=
+	b=HBwPgCFhKPQ56MohF/J2xdznVwcGY/zzbm2Zlc7U+C6q4+Bs6f/4FlWT17xLGn3A9
+	 V2uvuRXOJLmxW9fLdM0TGuzyxANp0cVr4iS3bol/PfBZDn61hjI89ww0Lpj8NOM2R2
+	 fa4a4y0Hp8JNDHmbc+sfJ89G9w6VMFDeBBcIOMrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 7.1 1585/2077] fbdev: i740fb: fix potential memory leak in i740fb_probe()
-Date: Tue, 21 Jul 2026 17:20:58 +0200
-Message-ID: <20260721152630.157795121@linuxfoundation.org>
+	Minh Nguyen <minhnguyen.080505@gmail.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 7.1 1568/2077] KVM: nVMX: Put vmcs12 pages if nested VM-Enter fails due to invalid guest state
+Date: Tue, 21 Jul 2026 17:20:41 +0200
+Message-ID: <20260721152629.763326298@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,32 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 5936063409af230a2c88b8700c47b89a19fd70b5 upstream.
+commit 2f2312c422fd2695da772cecb30c69994b795964 upstream.
 
-In i740fb_probe(), the memory allocated in fb_videomode_to_modelist()
-for modelist is not freed in the error paths. Fix that by calling
-fb_destroy_modelist().
+Put all vmcs12 pages if KVM synthesizes a nested VM-Exit due to invalid
+guest while emulating VMLAUNCH or VMRESUME.  The invalid guest state path
+doesn't use nested_vmx_vmexit() as that API is intended to be used if and
+only if L2 is active, and the open coded equivalent neglects to put the
+vmcs12 pages.  Failure to put the vmcs12 pages leaks any pinned pages
+(and/or mappings) if L1 retries VMLAUNCH/VMRESUME.
 
-Fixes: 5350c65f4f15 ("Resurrect Intel740 driver: i740fb")
+Note, the !from_vmenter scenario doesn't suffer the same problem, as
+vmx_get_nested_state_pages() only gets/pins/maps the vmcs12 pages if L2 is
+active, i.e. if a "full" VM-Exit is guaranteed before KVM will retry
+getting vmcs12 pages.
+
+Fixes: 96c66e87deee ("KVM/nVMX: Use kvm_vcpu_map when mapping the virtual APIC page")
+Fixes: 3278e0492554 ("KVM/nVMX: Use kvm_vcpu_map when mapping the posted interrupt descriptor table")
+Fixes: fe1911aa443e ("KVM: nVMX: Use kvm_vcpu_map() to get/pin vmcs12's APIC-access page")
+Reported-by: Minh Nguyen <minhnguyen.080505@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/i740fb.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kvm/vmx/nested.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/video/fbdev/i740fb.c
-+++ b/drivers/video/fbdev/i740fb.c
-@@ -1152,6 +1152,7 @@ err_reg_framebuffer:
- 	fb_dealloc_cmap(&info->cmap);
- err_alloc_cmap:
- err_find_mode:
-+	fb_destroy_modelist(&info->modelist);
- 	if (par->ddc_registered)
- 		i2c_del_adapter(&par->ddc_adapter);
- 	pci_iounmap(dev, par->regs);
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -3747,6 +3747,8 @@ vmentry_fail_vmexit:
+ 	if (!from_vmentry)
+ 		return NVMX_VMENTRY_VMEXIT;
+ 
++	nested_put_vmcs12_pages(vcpu);
++
+ 	load_vmcs12_host_state(vcpu, vmcs12);
+ 	vmcs12->vm_exit_reason = exit_reason.full;
+ 	if (enable_shadow_vmcs || nested_vmx_is_evmptr12_valid(vmx))
 
 
