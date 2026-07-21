@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC9444AB60;
-	Tue, 21 Jul 2026 21:23:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1AF144AB60;
+	Tue, 21 Jul 2026 21:23:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669017; cv=none; b=eQhnyg4MikVQHIpY06eyPcvzETxwLqd7T+sThKTvbEPzm25Ga6rRsqZoWgUD0YPQqf++CGQcOmBpuTnykslCx6T2/5uNbqhGB2J3+pntqZd3MMQ5ireM1hzZT83f78LxZACLCYPk9hekOpuFZj/tZU4vNfXZGtTEBZiRyhE9ECg=
+	t=1784669019; cv=none; b=sPshGq5tmo9y1/IC2ljXvmh9+Oj0xSbJ+9Q86s3DC5oYXDuFh//8ccviL2Zl26CBU//aDI0ltYD/pJTAT+Rt/seQqDdueb8I5IECo75RId0mGqDVOW641aZqfZS0/cPxBxm64YtLsEcLyUDdG7ngUAcFWClNAxQJYNchKzGPqnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669017; c=relaxed/simple;
-	bh=YzgDBxG5M0YJS6KkO/deVzwZYNmedk/cUy6/WBb2uXM=;
+	s=arc-20240116; t=1784669019; c=relaxed/simple;
+	bh=tqK1ZTAs0uetgufnyQDLLuwnETznoDzRsE2xX9FgOZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OLeKo7LGRvS9Iga0FRfnrn9++4JOsVXJOqDelFxynLE2nEUtxoaOn3wYxRcNlI3Jwmm+2dvuqJP5+4zBwVuOlV8MtlsBgqLntAVhzqip8cmoEHu07fdG7ONWsQ7FaskxROhYydL6lMZUjMpmYVO4AxaJfBVBoJo15skYroRQApo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLnDgvf9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JlP/mYgT760SWQuPrH2yxFPqm5Ca5LxTJ0KEeGkmsyzdU50iy+qU0MGrN8LfEZ4wnAFnDtWa2/RS7ueIds0g8OQdaEQCesGQQcZjW5MxgF+8sWzAIOl5s0DTAmUK+O1LxYGeFIQT8/EkE7oL3T45pK7DIO4NA0pqfWWz+2bL7aI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V3jHiQWA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLnDgvf9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532C61F000E9;
-	Tue, 21 Jul 2026 21:23:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V3jHiQWA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD481F000E9;
+	Tue, 21 Jul 2026 21:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669015;
-	bh=9g1wRQpvScS0UbbUrkewMZDPcydA40a9lJ307J0u87c=;
+	s=korg; t=1784669018;
+	bh=+L9M4fqsWt0iRIyx3rQALjQZ2g4wxkaBLQ2jeyONAZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rLnDgvf93aJNBZJtNcInhvfmWGU2URHL8b0C1bZDYhxTBex1ZWh1iKoXg0j3ZSKhv
-	 DWvLIIMQYQ3zhAKQexB/e/VRg7046q+GrbhFMzysYPQr5PeRCR+SldNECtfg5BY0pO
-	 AgMqfLTJ/O7Tix2chARIE5sSzc0qAat6Jroh63GA=
+	b=V3jHiQWAijWZYRXlDbcbglYLlyd1r2pV03LfRUr0ZdWKLaRkd+4HBhOc769GwHMfs
+	 4Yrw8u+4GH6V/Sc8ykGIUkmdeIZwXhZhL7GDIc7eDsWq1hzr2Y8XgmP6mHWM6Xfehx
+	 6LKwU+UMT7YuJmiHXEUYorBS49Cz1GFBIT12ddGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Pengjie Zhang <zhangpengjie2@huawei.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0378/1067] ocfs2: reject FITRIM ranges shorter than a cluster
-Date: Tue, 21 Jul 2026 17:16:19 +0200
-Message-ID: <20260721152433.082542881@linuxfoundation.org>
+Subject: [PATCH 6.1 0396/1067] cpufreq: Documentation: fix conservative governor freq_step description
+Date: Tue, 21 Jul 2026 17:16:37 +0200
+Message-ID: <20260721152433.490412034@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -58,53 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Pengjie Zhang <zhangpengjie2@huawei.com>
 
-[ Upstream commit ca1afd88f5eaaff9168e1466e5401385edf59543 ]
+[ Upstream commit 03120e1425262c7d11f93362a88e579a1720390b ]
 
-ocfs2_trim_mainbm() trims the global bitmap in cluster units, but its
-too-short range validation only checks sb->s_blocksize.
+The conservative governor documentation incorrectly states that setting
+freq_step to 0 will use the default 5% frequency step. In reality, since
+at least commit 8e677ce83bf4 ("[CPUFREQ] conservative: fixup governor to
+function more like ondemand logic"), freq_step=0 has always caused the
+governor to skip frequency updates entirely.
 
-On filesystems with a cluster size larger than the block size, a FITRIM
-range that is at least one block but shorter than one cluster is accepted
-and shifted down to len == 0.  The later start + len - 1 and len -= ...
-arithmetic then underflows and can drive trimming past the requested
-range.
+Correct the documentation to reflect the actual behavior: freq_step=0
+disables frequency changes by the governor entirely.
 
-Reject ranges shorter than s_clustersize instead.  That preserves the
-existing -EINVAL behavior for requests that cannot discard even one
-allocation unit and keeps zero-cluster trims out of the group walk.
-
-Link: https://lore.kernel.org/20260528151247.361854-1-rollkingzzc@gmail.com
-Fixes: aa89762c5480 ("ocfs2: return EINVAL if the given range to discard is less than block size")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 2a0e49279850 ("cpufreq: User/admin documentation update and consolidation")
+Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+[ rjw: Subject adjustment ]
+Link: https://patch.msgid.link/20260603055635.1549943-1-zhangpengjie2@huawei.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/alloc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/admin-guide/pm/cpufreq.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ocfs2/alloc.c b/fs/ocfs2/alloc.c
-index fa5223b05fad70..b8b9f8c7d28936 100644
---- a/fs/ocfs2/alloc.c
-+++ b/fs/ocfs2/alloc.c
-@@ -7546,7 +7546,7 @@ int ocfs2_trim_mainbm(struct super_block *sb, struct fstrim_range *range)
- 	len = range->len >> osb->s_clustersize_bits;
- 	minlen = range->minlen >> osb->s_clustersize_bits;
+diff --git a/Documentation/admin-guide/pm/cpufreq.rst b/Documentation/admin-guide/pm/cpufreq.rst
+index d2f37309cca3b3..5247eabb92065a 100644
+--- a/Documentation/admin-guide/pm/cpufreq.rst
++++ b/Documentation/admin-guide/pm/cpufreq.rst
+@@ -569,8 +569,8 @@ This governor exposes the following tunables:
+ 	100 (5 by default).
  
--	if (minlen >= osb->bitmap_cpg || range->len < sb->s_blocksize)
-+	if (minlen >= osb->bitmap_cpg || range->len < osb->s_clustersize)
- 		return -EINVAL;
+ 	This is how much the frequency is allowed to change in one go.  Setting
+-	it to 0 will cause the default frequency step (5 percent) to be used
+-	and setting it to 100 effectively causes the governor to periodically
++	it to 0 disables frequency changes by the governor entirely and setting
++	it to 100 effectively causes the governor to periodically
+ 	switch the frequency between the ``scaling_min_freq`` and
+ 	``scaling_max_freq`` policy limits.
  
- 	trace_ocfs2_trim_mainbm(start, len, minlen);
 -- 
 2.53.0
 
