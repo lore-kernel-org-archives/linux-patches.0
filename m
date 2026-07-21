@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92AEB3AFB0C;
-	Tue, 21 Jul 2026 20:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C49337DE8D;
+	Tue, 21 Jul 2026 20:19:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665181; cv=none; b=U+o/YyfvIr4ee4SxZQdkw6FI+qy1NcWQV+2yxMT+qjxLvqeGhJCiZ5uDRLv7xeXrG9d5wsmBiBZq3GYJHP+wvRzp+CCoKViO9Z6KOyzluDI3oSg9EToJ2KJeZmmdvjEugxKReSekrvpgN+AkAzaAaE+yTSojrilAH2uN8E5jtF0=
+	t=1784665184; cv=none; b=LsnWgvf01qTLbAkk3uEOIKUoWgQJNWLC2Kv/6T68w1JwGJuqugiQ07vjCwXVUy/8bxtBnC5I++GFL68fIwv0rZaWomjgU0XM2Z0b+RZ2/Ecu1+1wS9/A3GzoHRFQJgROINUJmInKVTvGM3UaNE+SGUaLDzPh8UIpNLcA38Sunhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665181; c=relaxed/simple;
-	bh=cnKEjBsDm550rgkZE0BPXs5o5mFgqn1IqazSX8Qlm00=;
+	s=arc-20240116; t=1784665184; c=relaxed/simple;
+	bh=SNC3GdHsVhsqc02mWRcOIn752/BX3DmQadzICnaycAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uK3ir/ztHOzy+1dsQ5nEHwjDkXjfT0XMmsEumZh/+KeM2Drt323coO2KYtfVeq274b+7ckfnwlwfWU/X5H9/Y/mEQa/7rpSxghjdGIgZFaTvjVm7tDIAL7TSMyOWnyDZZNqWaqK+y5bIy1iDxKAYLraOTszWOQsPh5fsddEHPKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9uGgZdz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XNeCOzPKkvocJu0aNIJ+POxChIAPyJWMkYgrVgA+uQI+fX/AVnEUmC5Om+KXyn26H5YrRTZpbSnAxPzXRId89y+o+Rm2eYy/FT/0DBikVt87iT2ULzI5BSc4mdoBiAbx/prJvxFF02Ii51870pX+GHWJJyyKtK6XRYwRA3DjsAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbJPGTAY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9uGgZdz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA0CA1F00A3A;
-	Tue, 21 Jul 2026 20:19:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbJPGTAY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D38D1F000E9;
+	Tue, 21 Jul 2026 20:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665180;
-	bh=eLJmcal2+Kpd39xcCBXU1sQYnIj8VDF6WXQ/3w/UyPE=;
+	s=korg; t=1784665183;
+	bh=5k+uFh7aaKSHDaYEM6ApucvpGYImGZdoj1gwj6iZrp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j9uGgZdzO8XNeEAULIEXrPmLaL7c2bNXxRfL21F0lOeUHjR5mEcmUzHXRWtPf/xmU
-	 a/+QiKaVswaoSDT14da02euwJ/yTp8IuBKd4WRR+q6nJAc2KLMtC4UdZdZLmILp7qZ
-	 v3eiLR+rH6Rp/rQL7McRj2KZfY5KkNzsirzZGCYg=
+	b=VbJPGTAYenoxedUSY8Rv1wGlFxwc/j8eTlejt1Eyv1/RtgBPj7w16UsTAXHpWePg1
+	 ReLpCgvcID+GO5X6Id4qXwnckzhuKxH5EcJ7hheuFzzp2mnKM0A+/Q7ywYhOudrYvn
+	 12fTK9sdHLhmAlRnu8T3oGUhBlkmtd++1416a8CY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 0207/1266] cpufreq: pcc: fix use-after-free and double free in _OSC evaluation
-Date: Tue, 21 Jul 2026 17:10:44 +0200
-Message-ID: <20260721152446.446251613@linuxfoundation.org>
+	WenTao Liang <vulab@iscas.ac.cn>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>
+Subject: [PATCH 6.6 0208/1266] posix-cpu-timers: Fix pid refcount leak in do_cpu_nanosleep() error path
+Date: Tue, 21 Jul 2026 17:10:45 +0200
+Message-ID: <20260721152446.468680796@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,43 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: WenTao Liang <vulab@iscas.ac.cn>
 
-commit 266d3dd8b757b48a576e90f018b51f7b7563cc32 upstream.
+commit 87bd2ad568e15b90d5f7d4bcd70342d05dad649c upstream.
 
-pcc_cpufreq_do_osc() calls acpi_evaluate_object() twice for the
-two-phase _OSC negotiation. Between the two calls it freed
-output.pointer but left output.length unchanged. Since
-acpi_evaluate_object() treats a non-zero length with a non-NULL
-pointer as an existing buffer to write into, the second call wrote
-into freed memory (use-after-free). The subsequent kfree(output.pointer)
-at out_free then freed the same pointer a second time (double free).
+In do_cpu_nanosleep(), posix_cpu_timer_create() takes a pid reference
+via get_pid() and stores it in timer.it.cpu.pid. If the subsequent
+posix_cpu_timer_set() call fails, the function returns immediately
+without calling posix_cpu_timer_del() to release the pid reference,
+causing a leak.
 
-Reset output.pointer to NULL and output.length to ACPI_ALLOCATE_BUFFER
-after freeing the first result, so ACPICA allocates a fresh buffer for
-each phase independently.
+Fix it by calling posix_cpu_timer_del() before the unlock-and-return
+on the error path, consistent with the other exit paths in the same
+function.
 
-Fixes: 0f1d683fb35d ("[CPUFREQ] Processor Clocking Control interface driver")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260416144621.93964-1-dbgh9129@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260611161738.97043-1-vulab@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/pcc-cpufreq.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/time/posix-cpu-timers.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/cpufreq/pcc-cpufreq.c
-+++ b/drivers/cpufreq/pcc-cpufreq.c
-@@ -352,6 +352,8 @@ static int __init pcc_cpufreq_do_osc(acp
- 	}
- 
- 	kfree(output.pointer);
-+	output.pointer = NULL;
-+	output.length = ACPI_ALLOCATE_BUFFER;
- 	capabilities[0] = 0x0;
- 	capabilities[1] = 0x1;
- 
+--- a/kernel/time/posix-cpu-timers.c
++++ b/kernel/time/posix-cpu-timers.c
+@@ -1535,6 +1535,7 @@ static int do_cpu_nanosleep(const clocki
+ 		spin_lock_irq(&timer.it_lock);
+ 		error = posix_cpu_timer_set(&timer, flags, &it, NULL);
+ 		if (error) {
++			posix_cpu_timer_del(&timer);
+ 			spin_unlock_irq(&timer.it_lock);
+ 			return error;
+ 		}
 
 
