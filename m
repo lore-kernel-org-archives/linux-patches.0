@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD01C37473A;
-	Tue, 21 Jul 2026 21:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744F13B9930;
+	Tue, 21 Jul 2026 21:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671014; cv=none; b=salMJPFmypIA0rEHCKBi2kMebm9DrGiaL89R/KZE4ljaRlO+9R3ytomZ/nN2KrwZD0jwPQRNHeHWpthPzMPvmBGthUL4f+e7CYawEE4E5wxoPLq9seMbas6xkzWg3XJ7sYP30Eju8UgYvrJlJ5TAXRzznBz53C39h4VLsGBydiM=
+	t=1784671017; cv=none; b=uO6VCus4yy4dqH/p/5wvBLv3PROmIVMZMJ8dtM/0u/+H7EN6yAd79hxyYF26Ryt3X/jJoJ+AGpe2j6z9QsEI1zrF+1PeeKmt8DuOGkPM3/wGMzrKNRfHizq4zturZUNwvDcOwxUoFAMQqhgfVelcLl4MUgp800DTdAMNgIzKOiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671014; c=relaxed/simple;
-	bh=3K5zNFbPOw9skm6YdgHOSYXqD73CbQ5qATopJxM8Hdc=;
+	s=arc-20240116; t=1784671017; c=relaxed/simple;
+	bh=XYTAl4eunP3VsG7ioBFMI3WUnPvOEoaOCLvnGn8zjKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PL5FDk7sAfL3ufZN1i2gaogZRsMWlc+3rHPK+22qxGdl3UJkv0JiYyAk1+FeKeRcmqG+F8j+yqvXuSZ+6NBSRPcNo7TLFxu6m/43t+mHd8ukghwSkFHqpWewvFvnNKpPlqfGHJfFF0ziK1jPTZMvBUdDKgs+glwNa0lHMjz1Bes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DVwhhxlZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fOL8dtMJ/vIeNaSYkZwWFf8qVwSdelP8Hv+tR5FEK0j0gcCb3+0tiPynY9DsVhSamsGG8BUQqqNQePHaPq+QfNF2rYWO16genNwULBCj10zBLOiSJeoqnfU9EPh/yuFItm8nlKBZsyn7JMQYN5/MVTtCQI3ImpQzW89IJMM0ZTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZkVIxC2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DVwhhxlZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E98B1F000E9;
-	Tue, 21 Jul 2026 21:56:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZkVIxC2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF651F00A3A;
+	Tue, 21 Jul 2026 21:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671013;
-	bh=OfdaH6tUACfq752w+yK8pVVW/zoDqVsPSEMAAcEPC4k=;
+	s=korg; t=1784671016;
+	bh=5ODvIvixYabYe/cJnqoh0MtnOh+IIAE6BygFUDGutV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DVwhhxlZ2zqexzvGWIoAWhTS3i3FScdezH6x6HPo77j2l0UMHn8Nxb8VHg1Q3VIYn
-	 77Pg48x/tf6NwPX5B5PgBsdGtAxLbr8HLyL9rO9dLDOPktkV9KxwZwjnR4PT7K+Uu5
-	 +VBY0pJjSdC4+qjKg43/XJYe91fsAz0Bnijl1Rw8=
+	b=pZkVIxC2zeLXezCG7+Gf8+8meGW57B+NHPYa5PNdVvxLL0ILRRu2EoaGYWdLhpXZU
+	 mxEGiMTYkNkzVA77eulBDDLh621jqebsTOPxCtlh3/CijTw5L34o9hihB1lf6IaiBw
+	 xApgAl7ZW+3XaTeGLDvPLJ59LYOHJ7FOMvk7W4NQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 5.15 079/843] binder: fix UAF in binder_thread_release()
-Date: Tue, 21 Jul 2026 17:15:14 +0200
-Message-ID: <20260721152407.775880012@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.15 088/843] usb: dwc3: run gadget disconnect from sleepable suspend context
+Date: Tue, 21 Jul 2026 17:15:23 +0200
+Message-ID: <20260721152407.980113668@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,79 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 114a116aaa5f0295376cdf12da743c5bce3b20ce upstream.
+commit 010382937fb69892b3469ac4d30af072262f59e8 upstream.
 
-When a thread exits, binder_thread_release() walks its transaction stack
-to clear the t->from and t->to_proc that correspond with the exiting
-thread. However, a process dying in parallel might attempt to kfree some
-of these transactions. And if one of them has no associated t->to_proc,
-the t->to_proc->inner_lock will not be acquired.
+dwc3_gadget_suspend() takes dwc->lock with IRQs disabled and then calls
+dwc3_disconnect_gadget().  For async callbacks that helper only uses
+plain spin_unlock()/spin_lock(), so the gadget ->disconnect() callback
+still runs with IRQs disabled and any sleepable callback trips Lockdep.
 
-This means that transaction accesses in binder_thread_release() after
-t->to_proc has been cleared might race with binder_free_transaction()
-and cause a use-after-free error as reported by KASAN:
+This issue was found by our static analysis tool and then manually
+reviewed against the current tree.
 
-  ==================================================================
-  BUG: KASAN: slab-use-after-free in binder_thread_release+0x5d0/0x798
-  Write of size 8 at addr ffff000016627500 by task X/715
+The grounded PoC kept the dwc3_gadget_suspend() ->
+dwc3_disconnect_gadget() -> gadget_driver->disconnect() chain, and
+Lockdep reported:
 
-  CPU: 17 UID: 0 PID: 715 Comm: X Not tainted 7.1.0-rc5-00149-g8fde5d1d47f6 #30 PREEMPT
-  Hardware name: linux,dummy-virt (DT)
-  Call trace:
-   binder_thread_release+0x5d0/0x798
-   binder_ioctl+0x12c0/0x299c
-   [...]
+  BUG: sleeping function called from invalid context
+  gadget_disconnect+0x21/0x39 [vuln_msv]
+  dwc3_gadget_suspend.constprop.0+0x2b/0x42 [vuln_msv]
 
-  Allocated by task 717 on cpu 18 at 67.267803s:
-   __kasan_kmalloc+0xa0/0xbc
-   __kmalloc_cache_noprof+0x174/0x444
-   binder_transaction+0x554/0x8150
-   binder_thread_write+0xa30/0x4354
-   binder_ioctl+0x20f0/0x299c
-   [...]
+Keep the disconnect callback selection in one common helper, but add a
+sleepable suspend-side wrapper which snapshots the callback under
+dwc->lock and then runs it after spin_unlock_irqrestore().  The regular
+event path still uses the existing spin_unlock()/spin_lock() window.
 
-  Freed by task 202 on cpu 18 at 90.416221s:
-   __kasan_slab_free+0x58/0x80
-   kfree+0x1a0/0x4a4
-   binder_free_transaction+0x150/0x294
-   binder_send_failed_reply+0x398/0x6d8
-   binder_release_work+0x3e4/0x4ec
-   binder_deferred_func+0xbd8/0x104c
-   [...]
-  ==================================================================
-
-In order to avoid this, make sure that binder_free_transaction() reads
-the t->to_proc under the transaction lock. This will serialize the
-transaction release with the accesses in binder_thread_release(). Plus,
-it matches the documented locking rules for @to_proc.
-
+Fixes: c8540870af4c ("usb: dwc3: gadget: Improve dwc3_gadget_suspend() and dwc3_gadget_resume()")
 Cc: stable <stable@kernel.org>
-Fixes: 7a4408c6bd3e ("binder: make sure accesses to proc/thread are safe")
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://patch.msgid.link/20260619185233.2194678-1-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20260612052005.3849659-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/gadget.c |   43 ++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 36 insertions(+), 7 deletions(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -1537,7 +1537,11 @@ static void binder_txn_latency_free(stru
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -3722,15 +3722,48 @@ static void dwc3_endpoint_interrupt(stru
+ 	}
+ }
  
- static void binder_free_transaction(struct binder_transaction *t)
- {
--	struct binder_proc *target_proc = t->to_proc;
-+	struct binder_proc *target_proc;
++static bool dwc3_prepare_disconnect_gadget(struct dwc3 *dwc,
++					   struct usb_gadget_driver **driver,
++					   struct usb_gadget **gadget)
++{
++	if (!dwc->async_callbacks || !dwc->gadget_driver ||
++	    !dwc->gadget_driver->disconnect)
++		return false;
 +
-+	spin_lock(&t->lock);
-+	target_proc = t->to_proc;
-+	spin_unlock(&t->lock);
++	*driver = dwc->gadget_driver;
++	*gadget = dwc->gadget;
++
++	return true;
++}
++
+ static void dwc3_disconnect_gadget(struct dwc3 *dwc)
+ {
+-	if (dwc->async_callbacks && dwc->gadget_driver->disconnect) {
++	struct usb_gadget_driver *driver;
++	struct usb_gadget *gadget;
++
++	if (dwc3_prepare_disconnect_gadget(dwc, &driver, &gadget)) {
+ 		spin_unlock(&dwc->lock);
+-		dwc->gadget_driver->disconnect(dwc->gadget);
++		driver->disconnect(gadget);
+ 		spin_lock(&dwc->lock);
+ 	}
+ }
  
- 	if (target_proc) {
- 		binder_inner_proc_lock(target_proc);
++static void dwc3_disconnect_gadget_sleepable(struct dwc3 *dwc)
++{
++	struct usb_gadget_driver *driver;
++	struct usb_gadget *gadget;
++	unsigned long flags;
++
++	spin_lock_irqsave(&dwc->lock, flags);
++	if (!dwc3_prepare_disconnect_gadget(dwc, &driver, &gadget)) {
++		spin_unlock_irqrestore(&dwc->lock, flags);
++		return;
++	}
++
++	spin_unlock_irqrestore(&dwc->lock, flags);
++	driver->disconnect(gadget);
++}
++
+ static void dwc3_suspend_gadget(struct dwc3 *dwc)
+ {
+ 	if (dwc->async_callbacks && dwc->gadget_driver->suspend) {
+@@ -4598,7 +4631,6 @@ void dwc3_gadget_exit(struct dwc3 *dwc)
+ 
+ int dwc3_gadget_suspend(struct dwc3 *dwc)
+ {
+-	unsigned long flags;
+ 	int ret;
+ 
+ 	ret = dwc3_gadget_soft_disconnect(dwc);
+@@ -4612,10 +4644,7 @@ int dwc3_gadget_suspend(struct dwc3 *dwc
+ 		return -EAGAIN;
+ 	}
+ 
+-	spin_lock_irqsave(&dwc->lock, flags);
+-	if (dwc->gadget_driver)
+-		dwc3_disconnect_gadget(dwc);
+-	spin_unlock_irqrestore(&dwc->lock, flags);
++	dwc3_disconnect_gadget_sleepable(dwc);
+ 
+ 	return 0;
+ }
 
 
