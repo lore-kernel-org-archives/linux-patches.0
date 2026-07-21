@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F50139733E;
-	Tue, 21 Jul 2026 22:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A9D44AB9F;
+	Tue, 21 Jul 2026 22:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674422; cv=none; b=ixSCrgaWe5xXQw58SqIbqYI/CbfGKASqxTc9h83OzCS6/f6b/Etu/XKqv8mRUn9gnJiHhHA96Ps7zrRSblxAM6h9viJDiklLGWSZ136ZFQUdRHKPp/3w4sCubrHnCibdu1Y6KNZRG7xj/Paiat9cEW8cY7QRZtiGflyfIXhdeqw=
+	t=1784674425; cv=none; b=K8Jh70CwaXY7ULJd8TRq9tYBbCvRcB2hAo61WAYVQds1TthsksCqO+dl1GsQilIZS89+TIsEZBuxNrG7PNerpAxjVyBUKG6Cyaw4p07Ct64ju0g5yppM0bCOzLlzr1TbSWP1aMIYYeSmgvLSKUa793NGOFCJTPHhkV0TsaIWkxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674422; c=relaxed/simple;
-	bh=Ofx8SkhRRSQZSiPzk3tKZxXrhJ9Ne65QAp2T1fIdOC4=;
+	s=arc-20240116; t=1784674425; c=relaxed/simple;
+	bh=XODjo6DwH8/Oq+iultMY4UpTlVNGMeUQkwrlTSGFcs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u6F/dcIulww7nfUYksfh7ebCVJSoUhWHXHJuAZevqXUBByhTgvJUfXrGrGGdEftYY6kpudHCVHUQaIhYdAy8LU0lvbNKxXVg7ZNshcU3MOW5B5AESCEOU6bHiU7FrF+xsXUFqxHmcfci3Y0pYSP+gsWYkBoxHrLRm4BOErma5YY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+7kQvpV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xj0GYPT6tBoj1XdjezCbLeJNEDomE3m6Ks2fqEgLktxruegnO55WW5AiOmQkpXENdC9kx9Ra8JiiYf/Lqw4EIgVbTbfrXJePF6EpSkJhY1aq+uGnEu3tLfLh23iWniYUQoHyjlgw2UcDBn5WzUP/RD2KuALW06B0tFQ1eCPk088=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nIeyQiPi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+7kQvpV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B90ED1F000E9;
-	Tue, 21 Jul 2026 22:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nIeyQiPi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623BA1F000E9;
+	Tue, 21 Jul 2026 22:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674421;
-	bh=+e/4nzPD7T2FukVaBVrY7oXdb/bQDGjTtBB725UBocU=;
+	s=korg; t=1784674423;
+	bh=CBYyj7eiDZUsPSvTL4Cq4wBEuv2NmOqxlkU1BL+CGww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H+7kQvpVEsa9pdk10sfPiW5GNCcYLhbd0RXwNypz9TSXgfkF4ktTBI8VMX/t0Fr2s
-	 1flXZ/D0p+q278M1KZb6Kj9t5/cCoaEqlwywHJc/aRztd0oaE8Gu4tJ9/IldDtI811
-	 4r4xD0IxM0NaPzDAiGDyzV/+mdFdFa5IkWIRSRmc=
+	b=nIeyQiPimyoTO/IUU5tnCcdZvnMHNjVuMqIhpoPGq307/X8bQE9XT5OMKJ27MW5G0
+	 XYzO7schYVPlgzza9JlMpmkI5i9mGS7XR2Zlp0RCqK3fwHswM4QdKyvJwCjsoUVS+a
+	 AYDZrPyjHWmXtX66p1DxLWtedpywNHzuAIL9jIqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>
-Subject: [PATCH 5.10 534/699] ieee802154: allow legacy LLSEC ADD/DEL ops to pass strict validation
-Date: Tue, 21 Jul 2026 17:24:53 +0200
-Message-ID: <20260721152407.745227094@linuxfoundation.org>
+	Wang Yan <wangyan01@kylinos.cn>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 5.10 499/699] time: Fix off-by-one in compat settimeofday() usec validation
+Date: Tue, 21 Jul 2026 17:24:18 +0200
+Message-ID: <20260721152406.951741285@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,94 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Wang Yan <wangyan01@kylinos.cn>
 
-commit a6bfdfcc6711d1d5a92e98644359dedc67c0c858 upstream.
+commit 269f2b43fae692d1f3988c9f888a6301aa537b82 upstream.
 
-The LLSEC ADD/DEL doit handlers under the legacy IEEE802154_NL family
-consume IEEE802154_ATTR_LLSEC_KEY_BYTES and
-IEEE802154_ATTR_LLSEC_KEY_USAGE_COMMANDS, both declared in
-net/ieee802154/nl_policy.c as bare length entries with no .type
-(defaulting to NLA_UNSPEC). Generic netlink strict validation rejects
-all NLA_UNSPEC attributes via validate_nla(), so every LLSEC_ADD_KEY,
-LLSEC_DEL_KEY, LLSEC_ADD_DEV, LLSEC_DEL_DEV, LLSEC_ADD_DEVKEY,
-LLSEC_DEL_DEVKEY, LLSEC_ADD_SECLEVEL, and LLSEC_DEL_SECLEVEL request
-fails at the dispatcher with "Unsupported attribute" before reaching
-the handler.
+The compat version of settimeofday() uses '>' instead of '>=' when
+validating tv_usec against USEC_PER_SEC, allowing the value 1000000 to pass
+the check. After the subsequent conversion to nanoseconds (tv_nsec *=
+NSEC_PER_USEC), this results in tv_nsec == NSEC_PER_SEC, which violates the
+timespec invariant that tv_nsec must be strictly less than NSEC_PER_SEC.
 
-The doit path has been silently dead since strict validation became
-the default for genl families that do not opt out. The dump path is
-unaffected because dump requests carry no LLSEC attributes to
-validate, which is why the LLSEC_LIST_KEY read remained reachable
-(patch 1/2). Introduce IEEE802154_OP_RELAXED() mirroring
-IEEE802154_OP() but with .validate = GENL_DONT_VALIDATE_STRICT, and
-use it for the eight legacy LLSEC mutate ops so admin-driven LLSEC
-configuration via the legacy interface works again.
+The native settimeofday() was already fixed in commit ce4abda5e126 ("time:
+Fix off-by-one in settimeofday() usec validation"), but the compat
+counterpart was missed.
 
-Fixes: 3e9c156e2c21 ("ieee802154: add netlink interfaces for llsec")
+Fix it by using '>=' to reject tv_usec values outside the valid range [0,
+USEC_PER_SEC - 1].
+
+Fixes: 5e0fb1b57bea ("y2038: time: avoid timespec usage in settimeofday()")
+Signed-off-by: Wang Yan <wangyan01@kylinos.cn>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://lore.kernel.org/20260520141640.1149513-3-michael.bommarito@gmail.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Link: https://patch.msgid.link/20260622103348.120255-1-wangyan01@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ieee802154/ieee802154.h |    9 +++++++++
- net/ieee802154/netlink.c    |   20 ++++++++++----------
- 2 files changed, 19 insertions(+), 10 deletions(-)
+ kernel/time/time.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ieee802154/ieee802154.h
-+++ b/net/ieee802154/ieee802154.h
-@@ -16,6 +16,15 @@ void ieee802154_nl_exit(void);
- 		.flags	= GENL_ADMIN_PERM,		\
- 	}
+--- a/kernel/time/time.c
++++ b/kernel/time/time.c
+@@ -251,7 +251,7 @@ COMPAT_SYSCALL_DEFINE2(settimeofday, str
+ 		    get_user(new_ts.tv_nsec, &tv->tv_usec))
+ 			return -EFAULT;
  
-+#define IEEE802154_OP_RELAXED(_cmd, _func)		\
-+	{						\
-+		.cmd		= _cmd,			\
-+		.doit		= _func,		\
-+		.dumpit		= NULL,			\
-+		.flags		= GENL_ADMIN_PERM,	\
-+		.validate	= GENL_DONT_VALIDATE_STRICT,\
-+	}
-+
- #define IEEE802154_DUMP(_cmd, _func, _dump)		\
- 	{						\
- 		.cmd	= _cmd,				\
---- a/net/ieee802154/netlink.c
-+++ b/net/ieee802154/netlink.c
-@@ -100,22 +100,22 @@ static const struct genl_small_ops ieee8
- 	IEEE802154_OP(IEEE802154_LLSEC_SETPARAMS, ieee802154_llsec_setparams),
- 	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_KEY, NULL,
- 			     ieee802154_llsec_dump_keys),
--	IEEE802154_OP(IEEE802154_LLSEC_ADD_KEY, ieee802154_llsec_add_key),
--	IEEE802154_OP(IEEE802154_LLSEC_DEL_KEY, ieee802154_llsec_del_key),
-+	IEEE802154_OP_RELAXED(IEEE802154_LLSEC_ADD_KEY, ieee802154_llsec_add_key),
-+	IEEE802154_OP_RELAXED(IEEE802154_LLSEC_DEL_KEY, ieee802154_llsec_del_key),
- 	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_DEV, NULL,
- 			     ieee802154_llsec_dump_devs),
--	IEEE802154_OP(IEEE802154_LLSEC_ADD_DEV, ieee802154_llsec_add_dev),
--	IEEE802154_OP(IEEE802154_LLSEC_DEL_DEV, ieee802154_llsec_del_dev),
-+	IEEE802154_OP_RELAXED(IEEE802154_LLSEC_ADD_DEV, ieee802154_llsec_add_dev),
-+	IEEE802154_OP_RELAXED(IEEE802154_LLSEC_DEL_DEV, ieee802154_llsec_del_dev),
- 	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_DEVKEY, NULL,
- 			     ieee802154_llsec_dump_devkeys),
--	IEEE802154_OP(IEEE802154_LLSEC_ADD_DEVKEY, ieee802154_llsec_add_devkey),
--	IEEE802154_OP(IEEE802154_LLSEC_DEL_DEVKEY, ieee802154_llsec_del_devkey),
-+	IEEE802154_OP_RELAXED(IEEE802154_LLSEC_ADD_DEVKEY, ieee802154_llsec_add_devkey),
-+	IEEE802154_OP_RELAXED(IEEE802154_LLSEC_DEL_DEVKEY, ieee802154_llsec_del_devkey),
- 	IEEE802154_DUMP_PRIV(IEEE802154_LLSEC_LIST_SECLEVEL, NULL,
- 			     ieee802154_llsec_dump_seclevels),
--	IEEE802154_OP(IEEE802154_LLSEC_ADD_SECLEVEL,
--		      ieee802154_llsec_add_seclevel),
--	IEEE802154_OP(IEEE802154_LLSEC_DEL_SECLEVEL,
--		      ieee802154_llsec_del_seclevel),
-+	IEEE802154_OP_RELAXED(IEEE802154_LLSEC_ADD_SECLEVEL,
-+			      ieee802154_llsec_add_seclevel),
-+	IEEE802154_OP_RELAXED(IEEE802154_LLSEC_DEL_SECLEVEL,
-+			      ieee802154_llsec_del_seclevel),
- };
+-		if (new_ts.tv_nsec > USEC_PER_SEC || new_ts.tv_nsec < 0)
++		if (new_ts.tv_nsec >= USEC_PER_SEC || new_ts.tv_nsec < 0)
+ 			return -EINVAL;
  
- static const struct genl_multicast_group ieee802154_mcgrps[] = {
+ 		new_ts.tv_nsec *= NSEC_PER_USEC;
 
 
