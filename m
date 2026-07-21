@@ -1,39 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F8E46EC9B;
-	Tue, 21 Jul 2026 18:34:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B8F46EC7E;
+	Tue, 21 Jul 2026 18:34:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658850; cv=none; b=aZdVKUieZG/BLpCsCKBSPGT2xvcA4ek0eBFRbcjEI7D09XS7h1kx1k+NEnsMUbHApisIv4uleQV0i4ihYUqh6iBJ58CFFDbiS392ZOnO3smwmPNfCtDDELflVZRlYSoh9RonWziYJZvlxxQZBW1DlqW0GrnxbIjQgRmyDXwb3fw=
+	t=1784658852; cv=none; b=Pim0UzXDKv2sPPM1WxHRCEMOIbqnR6LjN2OELLE1diycZlEVCZeCAMI7QuBaZoqPhtc7Ph4A8a9OB8SalD85iEewBnqiedR6E/b9KonXYZdM+bNdiFBYT+4ppbpOBdBIysc50J85sRcUgSQXfV9JolYMSDqmmk4+3V+G8zl6NNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658850; c=relaxed/simple;
-	bh=ufnPjS1ax5XRIVjJQvwcTVT3yNtTe4qz9HAnq2z6xWU=;
+	s=arc-20240116; t=1784658852; c=relaxed/simple;
+	bh=asDwiJBMdld8oFNchgakxXvREhJd8wZHF/V9462cZb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jvzl4SyuLEbJLew10nVozbNO1Mug7AY7S6I7ImdBLumrtNlMfCa+fEI9D9nSDZdhl15CcEdr3Z6FIkfVwHlfOe0JHGCNgpvsWL1xh60TUY2GPv9HEeiTk4llRq5lIVYQ+AiXSXUJoBhkRsCo1qYsO7/WMFH6nEppoLHsY2LePP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqscLfIV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T4yfpnShoF54sC8xIcp335mbLM8KN2SW6phf64QLmhzrRY3kSh0UhrL2igSejJfVOSMsgHgHz+HYa7s0pYphDd86BqGblJGHsCcINrUuidRQNx/ZR5szdoyL6MLa87R350kMNLWrAN+uigWYAFWxYBI4goSbxEDnzQzOo4OM6EA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rxardTk3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqscLfIV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CDB71F000E9;
-	Tue, 21 Jul 2026 18:34:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rxardTk3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE591F000E9;
+	Tue, 21 Jul 2026 18:34:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658848;
-	bh=y4BflOfPHi/coKt87IzkmysZdK4IZhyhqnPTeBNbqis=;
+	s=korg; t=1784658851;
+	bh=2yVAd+a9s0McMpaNq1efuLrwEZxh9mnHQbpLt6LelNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wqscLfIV/3gGwEq6sl14vfYL/YxQ4Oug6RTGxwAsr+ApXIKImjWTA4Pt6olflRynJ
-	 Qn92BP2tFnX4Ejq1PBqoRKq1sLiqIXDNEEwYHWPfmCEUVfI/dDcY3diNfA2HRlZ5LY
-	 gv/54lxQpQYERmI+rmzkVI3sgomChKq9V0hyja6g=
+	b=rxardTk3hl82m5VmWTp3mdTee6B1kP//iVOOOORHxUFMtg1xSZ2oHWH5uxPrtWuLz
+	 ZEm1AI0SCpKpIzt+Nq6Nm5EyEkBAZo23DFxAVoOh4dKFXuouUZAeEEKPWM139eNCcp
+	 P72jl6v2cwK0R28/ErEYW5ZxY0+wAJ0npXRxYW3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Machhiwal <amachhiw@linux.ibm.com>,
-	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.18 1256/1611] powerpc/dt_cpu_ftrs: Set CPU_FTR_P11_PVR for Power11 and later processors
-Date: Tue, 21 Jul 2026 17:22:52 +0200
-Message-ID: <20260721152543.699933044@linuxfoundation.org>
+	Muchun Song <songmuchun@bytedance.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Michal Hocko <mhocko@suse.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 1257/1611] mm/mm_init: fix uninitialized struct pages for ZONE_DEVICE
+Date: Tue, 21 Jul 2026 17:22:53 +0200
+Message-ID: <20260721152543.722746123@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,73 +63,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
+From: Muchun Song <songmuchun@bytedance.com>
 
-commit e4de1b9cb3b5c981e4fe9bca253a7fb9161f5acd upstream.
+commit cd681403a87085562499d60325b7b45d3be11217 upstream.
 
-When using device tree CPU features (dt-cpu-ftrs), the kernel bypasses
-the traditional cputable-based CPU identification and instead derives
-CPU features from the device tree's "ibm,powerpc-cpu-features" node
-provided by firmware.
+If DAX memory is hotplugged into an unoccupied subsection of an early
+section, section_activate() reuses the unoptimized boot memmap.  However,
+compound_nr_pages() still assumes that vmemmap optimization is in effect
+and initializes only the reduced number of struct pages.  As a result, the
+remaining tail struct pages are left uninitialized, which can later lead
+to unexpected behavior or crashes.
 
-However, CPU_FTR_P11_PVR is a kernel-internal feature flag used to
-identify Power11 and later processors, and is not represented in the
-device tree's ISA feature set. While ISA v3.1 support (indicated by
-CPU_FTR_ARCH_31) is present on both Power10 and Power11, the
-CPU_FTR_P11_PVR flag is specifically needed by code that must
-distinguish between Power10 and Power11 processors.
+Fix this by treating early sections as unoptimized when calculating how
+many struct pages to initialize.
 
-Without this flag set, code that checks for Power11 using
-cpu_has_feature(CPU_FTR_P11_PVR) will incorrectly return false on
-Power11+ systems using dt-cpu-ftrs, leading to incorrect behavior.
-
-This issue manifests specifically in powernv environments (bare-metal
-or QEMU TCG with powernv machine type), where skiboot/OPAL firmware
-provides the "ibm,powerpc-cpu-features" node, causing the kernel to
-use dt-cpu-ftrs. The issue does not affect pseries guests, where SLOF
-firmware does not provide this node, causing the kernel to fall back
-to the traditional cputable path (identify_cpu) which correctly sets
-CPU_FTR_P11_PVR during PVR-based CPU identification.
-
-In powernv TCG guests, the missing flag causes KVM code to trigger
-warnings when attempting to create KVM guests, as cpu_features shows
-0x000c00eb8f4fb187 (missing bit 53) instead of the correct
-0x002c00eb8f4fb187 (with bit 53 set).
-
-Fix this by setting CPU_FTR_P11_PVR for all processors with
-PVR >= PVR_POWER11 when ISA v3.1 support is detected in
-cpufeatures_setup_start(). This approach ensures forward
-compatibility with future processor generations.
-
-Fixes: 96e266e3bcd6 ("KVM: PPC: Book3S HV: Add Power11 capability support for Nested PAPR guests")
-Cc: stable@vger.kernel.org # v6.13+
-Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
-Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260614173437.26352-1-amachhiw@linux.ibm.com
+Link: https://lore.kernel.org/20260428081855.1249045-7-songmuchun@bytedance.com
+Fixes: 6fd3620b3428 ("mm/page_alloc: reuse tail struct pages for compound devmaps")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Acked-by: Liam R. Howlett <liam@infradead.org>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/dt_cpu_ftrs.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ mm/mm_init.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/arch/powerpc/kernel/dt_cpu_ftrs.c
-+++ b/arch/powerpc/kernel/dt_cpu_ftrs.c
-@@ -704,6 +704,15 @@ static void __init cpufeatures_setup_sta
- 	if (isa >= ISA_V3_1) {
- 		cur_cpu_spec->cpu_features |= CPU_FTR_ARCH_31;
- 		cur_cpu_spec->cpu_user_features2 |= PPC_FEATURE2_ARCH_3_1;
-+
-+		/*
-+		 * CPU_FTR_P11_PVR is a kernel-internal flag to identify
-+		 * Power11 and later processors. While ISA v3.1 is supported
-+		 * by Power10+, this flag specifically indicates Power11+
-+		 * for code that needs to distinguish between P10 and P11.
-+		 */
-+		if (PVR_VER(mfspr(SPRN_PVR)) >= PVR_POWER11)
-+			cur_cpu_spec->cpu_features |= CPU_FTR_P11_PVR;
- 	}
- }
+--- a/mm/mm_init.c
++++ b/mm/mm_init.c
+@@ -1072,10 +1072,17 @@ static void __ref __init_zone_device_pag
+  * of how the sparse_vmemmap internals handle compound pages in the lack
+  * of an altmap. See vmemmap_populate_compound_pages().
+  */
+-static inline unsigned long compound_nr_pages(struct vmem_altmap *altmap,
++static inline unsigned long compound_nr_pages(unsigned long pfn,
++					      struct vmem_altmap *altmap,
+ 					      struct dev_pagemap *pgmap)
+ {
+-	if (!vmemmap_can_optimize(altmap, pgmap))
++	/*
++	 * If DAX memory is hot-plugged into an unoccupied subsection
++	 * of an early section, the unoptimized boot memmap is reused.
++	 * See section_activate().
++	 */
++	if (early_section(__pfn_to_section(pfn)) ||
++	    !vmemmap_can_optimize(altmap, pgmap))
+ 		return pgmap_vmemmap_nr(pgmap);
  
+ 	return VMEMMAP_RESERVE_NR * (PAGE_SIZE / sizeof(struct page));
+@@ -1145,7 +1152,7 @@ void __ref memmap_init_zone_device(struc
+ 			continue;
+ 
+ 		memmap_init_compound(page, pfn, zone_idx, nid, pgmap,
+-				     compound_nr_pages(altmap, pgmap));
++				     compound_nr_pages(pfn, altmap, pgmap));
+ 	}
+ 
+ 	pageblock_migratetype_init_range(start_pfn, nr_pages, MIGRATE_MOVABLE);
 
 
