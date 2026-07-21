@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623343ACEFE;
-	Tue, 21 Jul 2026 21:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E721404BF6;
+	Tue, 21 Jul 2026 21:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670424; cv=none; b=M9FpaoUYwd+T5vJDMHkFUBSEPuAjnHixfLvYcbMYqCTCYtuqaBhUt6guYcUG7/gQme72kMoOaNXPONwdEvlkFc6vqPDyxP3IvWIfBrBATApOXpbRgEY+vmTQhcPXrU5YSwj/K5MiGBL6CXui8LtkkcffsK2u53y1Xij7iDdB/gQ=
+	t=1784670428; cv=none; b=mxYUbn8k6t4JeAgoeN6/MU+c3xeq0YwNZuXu7D4AY/DcU0LprnHRHXXrp/IZ0mDNGnozJlEgiyn5+3vtDr/TThO/86NKUP5XTRfi3AA/f9awVS+AGPqGYDAfzFRyInlGjGepDglX4HzrZGhdmJ1G+6W3/69i20jfGeBCJS3FwB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670424; c=relaxed/simple;
-	bh=6UgDMIoVBoueCR424AJTqOWQtDDEabEFKG9OHo/XuGc=;
+	s=arc-20240116; t=1784670428; c=relaxed/simple;
+	bh=AF+cY1rRHOoextQ5qRHC6uCgCK8HT8d6AEfNY+ki7rY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EnPj1xuSncBEJ/71xd+8FXYBcBNSKzxuEfzN00Hoq/w+yoNW2BlFRfcIKDbfuV3AZElo0ty6iURv9yo7fKgynLd43gqQs8YAJ1OAAchZY7ZsZx0dSICBdRlrSQ++afuPQwO/1WC9Rfs/E9X1q07yqyt6GjTWAGhgIES2NTKeTfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgcGWa7o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PpimkiSm2a4af55FJq6NvOQnCZuedi6brPpEauF3LMi1E0znJzI9MKB/F9MEUZFAiymTKh9LUtK9T27u2/9Lvg/EC2WISj1fcm2udWHBacZ/x3r2qO3dmDevGLrO2v9sJDqe/AOGZ3vC6LKTo3zy+byXW1VFKr8ZPAkU0p/DeDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FcbVikvP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgcGWa7o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E33AD1F000E9;
-	Tue, 21 Jul 2026 21:47:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FcbVikvP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A3431F000E9;
+	Tue, 21 Jul 2026 21:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670423;
-	bh=hRJQu2XKi9tgsfM9q4ZL7byfw0uBCjpfdkiYC3m4CN0=;
+	s=korg; t=1784670425;
+	bh=QMMq2OeSe04B2iGmqqjhuD8GKNDkVmUhb04luaTTKvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KgcGWa7oK4bkxAjhM1O+QmSLH6PJXdKcee3/QCs+j+O4IrSNjbN75MILBemq7YAn+
-	 KB/w6t4ld2ucQPQ40gIyYxjEgwkm6aHRf13RaWvrYdWNroP1jSetZ4ALtGV+KBc7BL
-	 efJHtDqOEuzeMlt5d37LfZZwNPD0C9WilPZVP3/s=
+	b=FcbVikvPm+MP5T0yNwRecc/0+cJ9gnBK/p2qy6LaPyAncamKxfpsqB9retr3B6zjg
+	 OJNLPohQyVo+ZnnpOuIL93CSm/m5/Pygp8OYNSrLtJHuUmuTybG6q2vHNdcYHJawvj
+	 mM7RT+5v+yB+JJw+jbfOZAJzME8zmvc+WFVEui3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.1 0925/1067] memstick: ms_block: reject a card that reports too many blocks
-Date: Tue, 21 Jul 2026 17:25:26 +0200
-Message-ID: <20260721152445.226575370@linuxfoundation.org>
+	Julian Anastasov <ja@ssi.bg>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.1 0926/1067] ipvs: fix more places with wrong ipv6 transport offsets
+Date: Tue, 21 Jul 2026 17:25:27 +0200
+Message-ID: <20260721152445.247761999@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,54 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Julian Anastasov <ja@ssi.bg>
 
-commit 718178f524b98bc920d74bc771aed823c8b81425 upstream.
+commit b3fe4cbd583895987935a9bdad01c8f9d3a02310 upstream.
 
-msb_ftl_initialize() computes the zone count from the card block count
-with no bound:
+Sashiko reports for more incorrect IPv6 transport offsets.
 
-	msb->zone_count = msb->block_count / MS_BLOCKS_IN_ZONE;
-	...
-	for (i = 0; i < msb->zone_count; i++)
-		msb->free_block_count[i] = MS_BLOCKS_IN_ZONE;
+The app code for TCP was assuming IPv4 network header
+even after the ipvsh argument was provided. This can
+cause problems with apps over IPv6. As for the only
+official app in the kernel tree (FTP) this problem is
+harmless because we use Netfilter to mangle the FTP
+ports and we do not adjust the TCP seq numbers.
 
-msb->block_count is a card value. msb_read_boot_blocks() reads
-number_of_blocks from the card boot page and byte swaps it.
-free_block_count is a fixed int[MS_MAX_ZONES]. MS_MAX_ZONES is 16, so the
-valid indices are 0 to 15. The init loop above indexes it by zone_count.
-msb_mark_block_used() and msb_mark_block_unused() index it by
-pba / MS_BLOCKS_IN_ZONE, for pba up to block_count - 1. A card may report
-up to 65535 blocks. A block_count above 8192 (MS_MAX_ZONES *
-MS_BLOCKS_IN_ZONE) lets the pba index reach 16. That writes past
-free_block_count[] and corrupts struct msb_data. A larger count runs the
-init loop past the end too.
+Also, provide correct offset of the ICMPV6 header in
+ip_vs_out_icmp_v6() for correct checksum checks when
+the IPv6 packet has extension headers.
 
-A real Memory Stick has at most 16 zones. So it has at most 8192 blocks.
-msb_ftl_initialize() now rejects a card that reports more than
-MS_MAX_ZONES * MS_BLOCKS_IN_ZONE blocks.
-
-Fixes: 0ab30494bc4f ("memstick: add support for legacy memorysticks")
+Fixes: d12e12299a69 ("ipvs: add ipv6 support to ftp")
+Fixes: 2a3b791e6e11 ("IPVS: Add/adjust Netfilter hook functions and helpers for v6")
 Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260706101624.69471-1-zhaoyz24%40mails.tsinghua.edu.cn
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/memstick/core/ms_block.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/netfilter/ipvs/ip_vs_app.c  |   10 ++++------
+ net/netfilter/ipvs/ip_vs_core.c |    3 +--
+ 2 files changed, 5 insertions(+), 8 deletions(-)
 
---- a/drivers/memstick/core/ms_block.c
-+++ b/drivers/memstick/core/ms_block.c
-@@ -1339,6 +1339,10 @@ static int msb_ftl_initialize(struct msb
+--- a/net/netfilter/ipvs/ip_vs_app.c
++++ b/net/netfilter/ipvs/ip_vs_app.c
+@@ -362,14 +362,13 @@ static inline int app_tcp_pkt_out(struct
+ 				  struct ip_vs_iphdr *ipvsh)
+ {
+ 	int diff;
+-	const unsigned int tcp_offset = ip_hdrlen(skb);
+ 	struct tcphdr *th;
+ 	__u32 seq;
+ 
+-	if (skb_ensure_writable(skb, tcp_offset + sizeof(*th)))
++	if (skb_ensure_writable(skb, ipvsh->len + sizeof(*th)))
  		return 0;
  
- 	msb->zone_count = msb->block_count / MS_BLOCKS_IN_ZONE;
-+	if (msb->block_count > MS_MAX_ZONES * MS_BLOCKS_IN_ZONE) {
-+		pr_err("Too many blocks: %d\n", msb->block_count);
-+		return -EINVAL;
-+	}
- 	msb->logical_block_count = msb->zone_count * 496 - 2;
+-	th = (struct tcphdr *)(skb_network_header(skb) + tcp_offset);
++	th = (struct tcphdr *)(skb_network_header(skb) + ipvsh->len);
  
- 	msb->used_blocks_bitmap = bitmap_zalloc(msb->block_count, GFP_KERNEL);
+ 	/*
+ 	 *	Remember seq number in case this pkt gets resized
+@@ -439,14 +438,13 @@ static inline int app_tcp_pkt_in(struct
+ 				 struct ip_vs_iphdr *ipvsh)
+ {
+ 	int diff;
+-	const unsigned int tcp_offset = ip_hdrlen(skb);
+ 	struct tcphdr *th;
+ 	__u32 seq;
+ 
+-	if (skb_ensure_writable(skb, tcp_offset + sizeof(*th)))
++	if (skb_ensure_writable(skb, ipvsh->len + sizeof(*th)))
+ 		return 0;
+ 
+-	th = (struct tcphdr *)(skb_network_header(skb) + tcp_offset);
++	th = (struct tcphdr *)(skb_network_header(skb) + ipvsh->len);
+ 
+ 	/*
+ 	 *	Remember seq number in case this pkt gets resized
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -1041,8 +1041,7 @@ static int ip_vs_out_icmp_v6(struct netn
+ 	snet.in6 = ciph.saddr.in6;
+ 	offset = ciph.len;
+ 	return handle_response_icmp(AF_INET6, skb, &snet, ciph.protocol, cp,
+-				    pp, offset, sizeof(struct ipv6hdr),
+-				    hooknum);
++				    pp, offset, ipvsh->len, hooknum);
+ }
+ #endif
+ 
 
 
