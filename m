@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F16838910F;
-	Tue, 21 Jul 2026 18:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2464B46D0AB;
+	Tue, 21 Jul 2026 18:37:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659055; cv=none; b=LKPQfG0K/AMy7vCPLkOuMUHaiOx2pSaisx7QYnhe0yjJUHWaHbwhhWrrl32+Kz3VfHjD1o8Xt4/X7auckF+ODiejcRMqG8zL0vs/kmn+/lMwUSIb75WdM90ZOcLRLqIIsNVvkDaN8KHZhKzTA0qZ+FjRdkBnEV/YNwPJ+IPFw8I=
+	t=1784659058; cv=none; b=DAN58SPM29P+pXuHrQVhk8JlNFA7dXoV8Av2iBf6VKX9mNmf0x/RSGMFIRkIYhdCoWEvAoqeJ4SkgXag4nShUTEdW/vRmmuRXx03VXr34AocDP1DKHAWoQ7l9HPFX4utPiHsFygjrlEohmXQ5lss27AcEykDbqgCOiZnAHYGdIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659055; c=relaxed/simple;
-	bh=8n4rRWSImA1UZ4Hym4FFIX9uA7EiUoyWhxk/8GYehTY=;
+	s=arc-20240116; t=1784659058; c=relaxed/simple;
+	bh=buKv4WnvDCfEOk5hNd5Oow1pb7Q5JL6YXYfU0UxEX6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rWfGaPHkMPsruC1C0ZOMa6QDHxoF7VrMR+kCtSP8oA7pA1bUjQYlqaRWFIqAcSt9I5rfyg6b/Xbptt3hgza7eqrActyZw8MumcxbE+TaymYG7NbabQdO6rGpcqIuKTOaRu1S2y5oFjO0zNjOFMA8K9qbITZQ5zQVjh4ze+K/QVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0k2lMuEf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PueEm8Tl/bgliGcXjQ1zbOS0U4Q76FgyF4rXhPbLmmYN+9FtzQ+2vLX830+TAw17w3F7gl9PGH/b/I/YRHoXRGgH/UAI+maYJWC0aR+EZXbKB+eg1axnyCtnpeoriy4NiG8YnSXj3+rNG3EZAWD1t3yY1YGS4fPfvNEXCiBGcKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iMIwe39b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0k2lMuEf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFEF31F000E9;
-	Tue, 21 Jul 2026 18:37:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iMIwe39b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A541F000E9;
+	Tue, 21 Jul 2026 18:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659054;
-	bh=RisLRdeGC157hTx1YYCiaVQoXo6ucKP3VUklpSqqr3k=;
+	s=korg; t=1784659057;
+	bh=OtfIOpOKCsOTa8CaepWRORhs3+167eR9YdgckxUpYXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0k2lMuEfEgbsww7WokBBMcbl17FWGEelHKmsPnRXjCBZ2BPSjstgoZgXQ0gaqg9rv
-	 bGY+H8L6/8orX5F8RIqcsSvpR/ojMlov8YsB/RAQey9RjVOK5VaUAsEG0HNsJsPrhV
-	 HoYE5pxq8WKT2ZnN4MFuz5d2x3hYskH1TM3tg8+I=
+	b=iMIwe39biqphVZ4YgVUyZer3Db5HjLP5YviNP7EjjJDTJx2Ie7d/vgIhzF6qO30TS
+	 FA3678qV2C0L5uBIAfemt7Ui1qV/Au5mXR8+dFh2gtgEYpV0+nSmms1I7OyN5yaTim
+	 uf+CR6cyvut0DmJKGJ1GMhgF83mAuwFN5Sp+UnWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sashiko bot <sashiko-bot@kernel.org>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 1375/1611] Input: ims-pcu - only expose sysfs attributes on control interface
-Date: Tue, 21 Jul 2026 17:24:51 +0200
-Message-ID: <20260721152546.373960427@linuxfoundation.org>
+Subject: [PATCH 6.18 1376/1611] Input: ims-pcu - release data interface on disconnect
+Date: Tue, 21 Jul 2026 17:24:52 +0200
+Message-ID: <20260721152546.395076600@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,64 +52,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 001428ea4d2c371107cb984108e266adf99f1f1e upstream.
+commit 441c510a649c8ddce38aa0311334ed8bb546b36c upstream.
 
-When the driver was converted to use the driver core to instantiate device
-attributes (via .dev_groups in the usb_driver structure), the attributes
-started appearing on all interfaces bound to the driver. Since the ims-pcu
-driver manually claims the secondary data interface during probe, the
-driver core automatically creates the sysfs attributes for that interface
-as well.
+During probe the driver claims the data interface, but it never releases
+it. Release it in disconnect to avoid leaving it permanently claimed.
 
-However, the driver only supports these attributes on the primary control
-interface. Data interfaces lack the necessary descriptors and internal
-state to handle these requests, and accessing them can lead to unexpected
-behavior or crashes.
-
-Fix this by updating the is_visible() callbacks for both the main and OFN
-attribute groups to verify that the interface being accessed is indeed the
-control interface.
-
-Fixes: 204d18a7a0c6 ("Input: ims-pcu - use driver core to instantiate device attributes")
+Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
+Cc: stable@vger.kernel.org
 Reported-by: Sashiko bot <sashiko-bot@kernel.org>
 Assisted-by: Gemini:gemini-3.1-pro
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/ahp23lj4_vXIeUBl@google.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/ims-pcu.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/input/misc/ims-pcu.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/input/misc/ims-pcu.c
 +++ b/drivers/input/misc/ims-pcu.c
-@@ -14,6 +14,7 @@
- #include <linux/leds.h>
- #include <linux/module.h>
- #include <linux/slab.h>
-+#include <linux/sysfs.h>
- #include <linux/types.h>
- #include <linux/usb/input.h>
- #include <linux/usb/cdc.h>
-@@ -1229,6 +1230,9 @@ static umode_t ims_pcu_is_attr_visible(s
- 	struct ims_pcu *pcu = usb_get_intfdata(intf);
- 	umode_t mode = attr->mode;
+@@ -2076,6 +2076,7 @@ static void ims_pcu_disconnect(struct us
+ 		ims_pcu_destroy_application_mode(pcu);
  
-+	if (intf != pcu->ctrl_intf)
-+		return 0;
-+
- 	if (pcu->bootloader_mode) {
- 		if (attr != &dev_attr_update_firmware_status.attr &&
- 		    attr != &dev_attr_update_firmware.attr &&
-@@ -1468,6 +1472,9 @@ static umode_t ims_pcu_ofn_is_attr_visib
- 	struct ims_pcu *pcu = usb_get_intfdata(intf);
- 	umode_t mode = attr->mode;
+ 	ims_pcu_buffers_free(pcu);
++	usb_driver_release_interface(&ims_pcu_driver, pcu->data_intf);
+ 	kfree(pcu);
+ }
  
-+	if (intf != pcu->ctrl_intf)
-+		return SYSFS_GROUP_INVISIBLE;
-+
- 	/*
- 	 * PCU-B devices, both GEN_1 and GEN_2 do not have OFN sensor.
- 	 */
 
 
