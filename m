@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1336471268;
-	Tue, 21 Jul 2026 20:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A944471268;
+	Tue, 21 Jul 2026 20:10:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664628; cv=none; b=R4El8Ijtu4Srgrm9T8Owx/jbL1p/9R6ad/yccsZm0nbC87w6lew9HlrDYDomE8nBI0uAaz25ks7GQzcWhG0HTudTPCvJFHr4Ij81uScA+xX4HFExAHOJaJQjDH0/OhxMmx9bF2MQdVRbL8g4XX0BBPrDRQHfsLpN+X+BND4iyO0=
+	t=1784664631; cv=none; b=oYRC9s/DE3CFYNN+Ak7GuVgsMRqIq0Jv53WqWzmCD7VBw7MORHxZ6j2yn4t7GhmkrHH4gXQQlKtW/nD2xQrK7jCJdRXLPpuFpR8320vd8XQ2faGAqf0iCNDA9cuS2uXxTFYapgw2Md75DEPpkTnWKjkkl32nQLA+n/zDzipOBc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664628; c=relaxed/simple;
-	bh=spTdwzW86BbNYjZBijYA1HG/zZx5fWGhfqV+SdTxgyY=;
+	s=arc-20240116; t=1784664631; c=relaxed/simple;
+	bh=nhYa9bm4i/VwgxFf8DXjbPOTgB90lBFKLuUC4H+GvOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AyOyLlRf3A+Yz5yLrMrrFfOEZ0b6qHJs/j0l5zbsIAEMxak8Sb92uhVAUQVx14/XgfbH2B2er9Nu+5p/IugaWllodbyeD9a3rUVaTgj/HSPyKC5SrKVly7vLxNYibJ5/h5B3EgutjrKVaHv7PHlmgmFdctpstvChXsJes1ZLzkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zD0bWFrc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i9JO1/8Akmxx1H0LjSxXdlIHyqf/S01n5jBwAjQBg0UZ6Re8dJG7BMqmUf9a/FmkQ3MdsdHXRGri7HZbUn3wVo2zz3rT2lX4Mg6mLftYMCHKmlvqXrXE/YHs8jasviFBLBoqIM63hOh++O63KY22vn31XNowt2TgHIBF04hA3Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c6yolg0Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zD0bWFrc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 239F51F000E9;
-	Tue, 21 Jul 2026 20:10:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6yolg0Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF63C1F000E9;
+	Tue, 21 Jul 2026 20:10:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664627;
-	bh=KUScMrXsz0Opq5oBdiGi4Xv3pQGd1x4wgJlCzvYEMp8=;
+	s=korg; t=1784664630;
+	bh=QPF9EUJ5NfmcBr3c0g9JsS15cPMvqA9CDvxdxMn6l8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zD0bWFrcZENG4qeKmKQ+S8HK9Yv/Cwg4tuSP+SoYt5E0/SEgtKqSzLn3HwRoBHk3h
-	 XhD4+U7x3loyOmoNV7usyaBCVHTkXQuWVCI6KKz3eBehC3bc3tzcZGA3gcX89STKfo
-	 /Lm0jnaV/CHlVyx9v0c7nUQMebdq1ezRT6aHZkHo=
+	b=c6yolg0QFObQlwdS4nbMyXDVuBLTtVjPYz53dD88qtbZJaRnvcVK8f23L64tnnfzt
+	 4qk5DZtBplOYnhp/6akLYMPpnzMncNjof8wBjLoH5NltEQa2fGVeJ26PmCBWjiuwhB
+	 v6tgVtSFWN3hMG4wBN79NSHvdGOinMXjI7g816tU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Christian Eggers <ceggers@arri.de>
-Subject: [PATCH 6.12 1272/1276] Bluetooth: L2CAP: Fix regressions caused by reusing ident
-Date: Tue, 21 Jul 2026 17:28:35 +0200
-Message-ID: <20260721152514.555085586@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 1273/1276] Bluetooth: 6lowpan: Fix using chan->conn as indication to no remote netdev
+Date: Tue, 21 Jul 2026 17:28:36 +0200
+Message-ID: <20260721152514.576378575@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,79 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 761fb8ec8778f0caf2bba5a41e3cff1ea86974f3 upstream.
+commit d38eaf611839b85ade3dd3db309dbc8aaaaf0095 upstream.
 
-This attempt to fix regressions caused by reusing ident which apparently
-is not handled well on certain stacks causing the stack to not respond to
-requests, so instead of simple returning the first unallocated id this
-stores the last used tx_ident and then attempt to use the next until all
-available ids are exausted and then cycle starting over to 1.
+b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding
+conn ref") don't reset the chan->conn to NULL anymore making the bt#
+netdev not be remove once the last l2cap_chan_del is removed.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221120
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221177
-Fixes: 6c3ea155e5ee ("Bluetooth: L2CAP: Fix not tracking outstanding TX ident")
+Instead of restoring the original behavior this remove the logic of
+keeping the interface after the last channel is removed because it
+never worked as intended and the l2cap_chan_del always detach its
+l2cap_conn which results in always removing the channel anyway.
+
+Fixes: b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Tested-by: Christian Eggers <ceggers@arri.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/l2cap.h |    1 +
- net/bluetooth/l2cap_core.c    |   29 ++++++++++++++++++++++++++---
- 2 files changed, 27 insertions(+), 3 deletions(-)
+ net/bluetooth/6lowpan.c |   18 +++---------------
+ 1 file changed, 3 insertions(+), 15 deletions(-)
 
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -660,6 +660,7 @@ struct l2cap_conn {
- 	struct sk_buff		*rx_skb;
- 	__u32			rx_len;
- 	struct ida		tx_ida;
-+	__u8			tx_ident;
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -781,20 +781,10 @@ static void chan_close_cb(struct l2cap_c
+ 	struct lowpan_btle_dev *dev = NULL;
+ 	struct lowpan_peer *peer;
+ 	int err = -ENOENT;
+-	bool last = false, remove = true;
++	bool last = false;
  
- 	struct sk_buff_head	pending_rx;
- 	struct work_struct	pending_rx_work;
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -958,16 +958,39 @@ int l2cap_chan_check_security(struct l2c
+ 	BT_DBG("chan %p conn %p", chan, chan->conn);
  
- static int l2cap_get_ident(struct l2cap_conn *conn)
- {
-+	u8 max;
-+	int ident;
-+
- 	/* LE link does not support tools like l2ping so use the full range */
- 	if (conn->hcon->type == LE_LINK)
--		return ida_alloc_range(&conn->tx_ida, 1, 255, GFP_ATOMIC);
+-	if (chan->conn && chan->conn->hcon) {
+-		if (!is_bt_6lowpan(chan->conn->hcon))
+-			return;
 -
-+		max = 255;
- 	/* Get next available identificator.
- 	 *    1 - 128 are used by kernel.
- 	 *  129 - 199 are reserved.
- 	 *  200 - 254 are used by utilities like l2ping, etc.
- 	 */
--	return ida_alloc_range(&conn->tx_ida, 1, 128, GFP_ATOMIC);
-+	else
-+		max = 128;
-+
-+	/* Allocate ident using min as last used + 1 (cyclic) */
-+	ident = ida_alloc_range(&conn->tx_ida, READ_ONCE(conn->tx_ident) + 1,
-+				max, GFP_ATOMIC);
-+	/* Force min 1 to start over */
-+	if (ident <= 0) {
-+		ident = ida_alloc_range(&conn->tx_ida, 1, max, GFP_ATOMIC);
-+		if (ident <= 0) {
-+			/* If all idents are in use, log an error, this is
-+			 * extremely unlikely to happen and would indicate a bug
-+			 * in the code that idents are not being freed properly.
-+			 */
-+			BT_ERR("Unable to allocate ident: %d", ident);
-+			return 0;
-+		}
-+	}
-+
-+	WRITE_ONCE(conn->tx_ident, ident);
-+
-+	return ident;
- }
+-		/* If conn is set, then the netdev is also there and we should
+-		 * not remove it.
+-		 */
+-		remove = false;
+-	}
+-
+ 	spin_lock(&devices_lock);
  
- static void l2cap_send_acl(struct l2cap_conn *conn, struct sk_buff *skb,
+ 	list_for_each_entry_rcu(entry, &bt_6lowpan_devices, list) {
+@@ -821,10 +811,8 @@ static void chan_close_cb(struct l2cap_c
+ 
+ 		ifdown(dev->netdev);
+ 
+-		if (remove) {
+-			INIT_WORK(&entry->delete_netdev, delete_netdev);
+-			schedule_work(&entry->delete_netdev);
+-		}
++		INIT_WORK(&entry->delete_netdev, delete_netdev);
++		schedule_work(&entry->delete_netdev);
+ 	} else {
+ 		spin_unlock(&devices_lock);
+ 	}
 
 
