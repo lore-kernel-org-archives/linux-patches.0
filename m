@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E3B425CF5;
-	Tue, 21 Jul 2026 21:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4962C3C10A7;
+	Tue, 21 Jul 2026 21:32:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669565; cv=none; b=Y6iwrTC6RwxzGzW23mPiGQ1ekBPApEc/enVmnNdcHb67TGxWnph7Mw1qkkPPdufSZbFjQDhj/StcCuqIEm3Q5AcGBExg1bG/O2+Fhh1Xe2d1gW4Z4XVmdGeKR7A9LXHwTflzlJjX9IrQUF/nrZAMURqXjJosA5oUFqTLofr3Uac=
+	t=1784669567; cv=none; b=R2oa82Q4S6OCht/SJrVWVprrdFqeEM0iX7Hwb5WGCfTKEJGSoy8ulHuw4SHPul+1aziB6YABiMlIcIVt2e5Chm/ydnLO/Kaf/utKXSLS0+6HGe0Jxd0w7OllNLChA76XUXGIZTL/ozqOb2gG1m7jJfCuWe0dJcVwF6EzH19Yyr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669565; c=relaxed/simple;
-	bh=lHbvrzOwD4Gqy2mHCVfLmUr+midz5o+TkZ56sN3DhvY=;
+	s=arc-20240116; t=1784669567; c=relaxed/simple;
+	bh=Uus9jX0eCRkR9zurqporIvTd+Gf+hwkDKdPsJgIRbOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MvZcNrHKMMVFgD9tZzLT3sgYOVclE/xaxc2ixQlmyESmA3JaQA89w2A+LaTicEQvTjLU69pXidCOL0mloJyj9G9EU2XdFibuYwgcEZ8Xtg+k25UGSJelQZc+ncVmgF5TV2+DS0eBRjf0mnH3UBiVWo5sxzK1h9J4YtzBXZxqTM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xcSdzSvi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ItSG1Bm/+3EbuqEJL7m/7jlHjNwXLMdVb6bxiDbNq+2aaurOrOTzX/HcoDxSpaOayQzazUGXVCwByUYs83pMx9n2qVseBktTosXcoYGcjWPxqdYqp+V5ED/++1tBN59xSMp1q1Yu5vsxhIB1IVOszBgLf3bCNDkTO6OO/3IAtBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XoFk+wVb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xcSdzSvi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C121F00A3A;
-	Tue, 21 Jul 2026 21:32:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XoFk+wVb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A21421F000E9;
+	Tue, 21 Jul 2026 21:32:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669563;
-	bh=AEf5ITf47ebar8oVsr5Q1JhT9GblcHhx+vi8tLUqDG4=;
+	s=korg; t=1784669566;
+	bh=27C49DvKAGADTFZWj5Ltf8IiU2BleTJEDg1m6DBidBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xcSdzSvifyNTIBy33rnRwMRXrXNjcjJR/wH44qiWfAgTmbOuIp4d7MTt/f6Dczq1j
-	 7EfoR5arpcWd7xLxpSiq2qUB5dkTrqJVSZOaDYftNx2AgG27yMP74VBEPl5fDkcQUv
-	 OeI7HWM6UZjSRLZbjU2nVudVkvhW4OG3V8C/OaNc=
+	b=XoFk+wVb2pklPgNEYOu+/NL2pA7o5+ZxM3jS18HIAKd2ro8CbE0SirjsBRGEkydC0
+	 uwN3vl+RkFFys7MKpvWT6Dtzn3RY1Fj8AmfJqlVnc3VuaowthQFYtMqMv0KClrQTQr
+	 st5uj91QNSKEBbLju3PR4jjznRjJa34GKUo58GBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Dave Marchevsky <davemarchevsky@fb.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Bhargav Joshi <j.bhargav.u@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0565/1067] perf bpf: Bounds-check array offsets in bpil_offs_to_addr()
-Date: Tue, 21 Jul 2026 17:19:26 +0200
-Message-ID: <20260721152437.242338378@linuxfoundation.org>
+Subject: [PATCH 6.1 0601/1067] irqchip/crossbar: Fix parent domain resource leak
+Date: Tue, 21 Jul 2026 17:20:02 +0200
+Message-ID: <20260721152438.046786019@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -46,75 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Bhargav Joshi <j.bhargav.u@gmail.com>
 
-[ Upstream commit 033e85edfbf271f92979d2a39aeaf40f8472a795 ]
+[ Upstream commit a1074dd62faa6572921d387e8a21589ccea00efc ]
 
-bpil_offs_to_addr() converts offsets stored in perf.data's
-bpf_prog_info_linear structure into heap pointers by adding the offset
-to the data allocation base.  The offsets come from untrusted file input
-and are not validated against data_len.
+irq_domain_alloc_irqs_parent() is called in allocate_gic_irq() but
+irq_domain_free_irqs_parent() is never called which causes a resource leak.
 
-If an offset exceeds data_len, the computed address points outside the
-allocated data buffer.  Callers like synthesize_bpf_prog_name() then
-dereference prog_tags[sub_id] or func_info pointers, reading arbitrary
-heap memory.
+Fix this by calling irq_domain_free_irqs_parent() in
+crossbar_domain_free().
 
-Add a bounds check: when an offset exceeds data_len, zero the field
-and skip the conversion.  This prevents out-of-bounds pointer
-construction from crafted perf.data files.
-
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Fixes: 6ac22d036f86c4e2 ("perf bpf: Pull in bpf_program__get_prog_info_linear()")
-Cc: Dave Marchevsky <davemarchevsky@fb.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 783d31863fb82 ("irqchip: crossbar: Convert dra7 crossbar to stacked domains")
+Signed-off-by: Bhargav Joshi <j.bhargav.u@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260620-irq-crossbar-fix-v2-2-b8e8499f468a@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf-utils.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/irqchip/irq-crossbar.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/util/bpf-utils.c b/tools/perf/util/bpf-utils.c
-index 80b1d2b3729ba4..a20ed281bcaf80 100644
---- a/tools/perf/util/bpf-utils.c
-+++ b/tools/perf/util/bpf-utils.c
-@@ -246,6 +246,7 @@ void bpil_offs_to_addr(struct perf_bpil *info_linear)
- 	for (i = PERF_BPIL_FIRST_ARRAY; i < PERF_BPIL_LAST_ARRAY; ++i) {
- 		struct bpil_array_desc *desc;
- 		__u64 addr, offs;
-+		__u32 count, size;
+diff --git a/drivers/irqchip/irq-crossbar.c b/drivers/irqchip/irq-crossbar.c
+index a05a7501e10790..729492772ff46e 100644
+--- a/drivers/irqchip/irq-crossbar.c
++++ b/drivers/irqchip/irq-crossbar.c
+@@ -163,6 +163,7 @@ static void crossbar_domain_free(struct irq_domain *domain, unsigned int virq,
+ 		cb->write(d->hwirq, cb->safe_map);
+ 	}
+ 	raw_spin_unlock(&cb->lock);
++	irq_domain_free_irqs_parent(domain, virq, nr_irqs);
+ }
  
- 		if ((info_linear->arrays & (1UL << i)) == 0)
- 			continue;
-@@ -253,6 +254,21 @@ void bpil_offs_to_addr(struct perf_bpil *info_linear)
- 		desc = bpil_array_desc + i;
- 		offs = bpf_prog_info_read_offset_u64(&info_linear->info,
- 						     desc->array_offset);
-+		count = bpf_prog_info_read_offset_u32(&info_linear->info,
-+						      desc->count_offset);
-+		size = bpf_prog_info_read_offset_u32(&info_linear->info,
-+						     desc->size_offset);
-+		/* offset and extent from perf.data are untrusted — keep within data[] */
-+		if (offs >= info_linear->data_len ||
-+		    (u64)count * size > info_linear->data_len - offs) {
-+			bpf_prog_info_set_offset_u64(&info_linear->info,
-+						     desc->array_offset, 0);
-+			bpf_prog_info_set_offset_u32(&info_linear->info,
-+						     desc->count_offset, 0);
-+			/* clear the bit so bpil_addr_to_offs() won't reverse a zeroed address */
-+			info_linear->arrays &= ~(1UL << i);
-+			continue;
-+		}
- 		addr = offs + ptr_to_u64(info_linear->data);
- 		bpf_prog_info_set_offset_u64(&info_linear->info,
- 					     desc->array_offset, addr);
+ static int crossbar_domain_translate(struct irq_domain *d,
 -- 
 2.53.0
 
