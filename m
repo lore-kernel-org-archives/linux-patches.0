@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F50F471262;
-	Tue, 21 Jul 2026 18:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC61471264;
+	Tue, 21 Jul 2026 18:42:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659339; cv=none; b=TP618KtU0VnNEgxpqOtFPTCWHuJdEKjJaNVBkWsa3Qv7dRyrA5dON2vZWcSVl0shiNc47WdoxBWkivXF28Sj+sX4YNI9AZb6yOQCjchj12+paHAr/kPFrQpyNxwKmm6ks8Tjr2Dif2+VxD6z1v1zM5yElju59AIkipgmyvmaOhc=
+	t=1784659341; cv=none; b=H+X6FVzDIn/RKWSEIgiNF3AOr/55W9OY4SSdl8iqgsVzGSCcYFozG5s1+V9YAuAY7sYgiGZnafN2Pat9sJFjBEEQeXwx/zK8/FPSIeAEhACwp3sHZKqDYZFbn5CTrvij2Ro5+8HxWKDg7BOeUZZicglYSJYm9J8FC3XTaBF8028=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659339; c=relaxed/simple;
-	bh=RDpMkusDUT1BTFHWDIRNQVakOwm+XbC1tXZiipQkyic=;
+	s=arc-20240116; t=1784659341; c=relaxed/simple;
+	bh=jGvGKyIBdFZtyCaNU7+6w4W6D7OBmZf8V34URcb71wQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MZuhJZjP+gq7q5Em4BBSSilSo4VtJ5Jr4hl7kWa9mI+AjWYRilLnmgexwWROQzw7ukrPCWEQkzoChclgC4N4bgy/VqDNK5HIrGCKKTabZzfX6iJpTgp1vjVlEduTkKCqegnetSfKIcdVgzRyrGiZP+DQn21og1AK9MUDHw/mHsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSeI3dvU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ih1IrVhOe/eAsACMArLnSEvRY+Njy6vmGG57yNuMg4KYzRRBJvJTfEE0N0u1NwIF+ZIWotv68QyX5vTgx2ikQaHPb7nqarMcng2c2Tyk8xA/uMLM6CFAC/vO2BYaNsKlcBNjIG4TcBKqHfuF+B6ngfDUQbMzP1JnkUP0Z1MlSZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L2QCIWzz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSeI3dvU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 698AB1F000E9;
-	Tue, 21 Jul 2026 18:42:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L2QCIWzz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 112CD1F000E9;
+	Tue, 21 Jul 2026 18:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659337;
-	bh=O3GUu6QEsQY/shGIa8u7HqeOlIxlL6x0IN/yheRzcd4=;
+	s=korg; t=1784659340;
+	bh=yCG9VKYKrEwZ/MSvMjOj0IUCnmG+CxfcG2g5etfKUpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MSeI3dvUOqQd3dfyfCpgr3EcvUpuDqVoAkEh22wc6WaXA9GuA7KGPYrE0RCyM/Z/y
-	 fmKwWdA9pV2qvu4hmBIQqNUfYL7hsrdsAfs6+luzq5/TtQoj/2yVhGHXdJ2WqTeHL4
-	 Nx8ZzJUwH+ZNjpbw7EBh5wg9rTlq1IgBoD9syaBE=
+	b=L2QCIWzz/eXZpzySX2/RKAAuhXblZPYo+pkjLhTsS475LbSuIDCZNkcweV7h3QeAu
+	 vJpW9dWrhd5HB7LBOBJ5x/if0ailMuFQUyv5qjbT3Kzz5N19DUixd0IdSIp5DZAH+k
+	 YfT+h7SGCRC1j9dOO5J05QTWZSRy7mGuVvxxFbb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Beims <rafael.beims@toradex.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 1481/1611] wifi: mwifiex: fix roaming to different channel in host_mlme mode
-Date: Tue, 21 Jul 2026 17:26:37 +0200
-Message-ID: <20260721152548.756939334@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.18 1441/1611] tracing/probes: Fix double addition of offset for @+FOFFSET
+Date: Tue, 21 Jul 2026 17:25:57 +0200
+Message-ID: <20260721152547.859263433@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,70 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael Beims <rafael.beims@toradex.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit a707e4127c0f893c7a7703500ab56297a5bd2d51 upstream.
+commit 9a667b7750dda88cbf1cca96a53a2163b2ee71f7 upstream.
 
-When host MLME is enabled, mwifiex_cfg80211_authenticate() transmits the
-authentication frame on a remain-on-channel (ROC) reservation so that the
-frame is sent on the target BSS's channel. The ROC is only configured
-when priv->auth_flag is zero.
+Since commit 533059281ee5 ("tracing: probeevent: Introduce new argument
+ fetching code") wrongly use @offset local variable during the parsing,
+the offset value is added twice when dereferencing.
+Reset the @offset after setting it in FETCH_OP_FOFFS.
 
-priv->auth_flag is set to HOST_MLME_AUTH_PENDING when the auth frame is
-queued and advances to HOST_MLME_AUTH_DONE once authentication
-completes. It is only cleared back to zero on a disconnect, deauth or
-timeout path; nothing clears it when an association succeeds. It therefore
-stays at HOST_MLME_AUTH_DONE for the whole connected session.
+Link: https://lore.kernel.org/all/178217905962.643090.1978577464942171332.stgit@devnote2/
 
-When the station later roams to a BSS on a different channel, the next
-authentication finds auth_flag != 0, skips the ROC setup, and the auth
-frame is transmitted on the currently-associated channel instead of the
-target's channel. Authentication times out on the new AP and the device
-stays connected to the original AP.
-
-Gate the ROC setup on HOST_MLME_AUTH_PENDING instead of on auth_flag
-being completely clear. This re-arms the remain-on-channel for every new
-authentication attempt, while still suppressing a redundant ROC during
-the multi-frame SAE exchange, where auth_flag stays PENDING between the
-commit and confirm frames.
-
-This change was tested in 3 different devices:
-Verdin AM62 (IW412 SD-UART) - (16.92.21.p142)
-Verdin iMX8MM (W8997 SD-SD) - (16.68.1.p197)
-Verdin iMX8MP (W8997 SD-UART) - (16.92.21.p137)
-
-There following loop tests were performed:
-1) force roaming between two AP's, one 5GHz and one 2.4GHz, same
-SSID. Use wpa_cli to trigger the roaming behavior, sleep 2s
-between iterations.
-2) force a disconnection to AP 1 and a connection to AP 2, test
-scan. Use wpa_cli to trigger the connection changes, sleep 2s
-between iterations.
-
-Each test ran in each device for at least 3 hours.
-
-Fixes: 36995892c271 ("wifi: mwifiex: add host mlme for client mode")
+Fixes: 533059281ee5 ("tracing: probeevent: Introduce new argument fetching code")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Rafael Beims <rafael.beims@toradex.com>
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://patch.msgid.link/20260610150021.1018611-1-rafael@beims.me
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/cfg80211.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_probe.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-+++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-@@ -4326,7 +4326,7 @@ mwifiex_cfg80211_authenticate(struct wip
- 		return -EOPNOTSUPP;
- 	}
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -1248,6 +1248,7 @@ parse_probe_arg(char *arg, const struct
  
--	if (!priv->auth_flag) {
-+	if (!(priv->auth_flag & HOST_MLME_AUTH_PENDING)) {
- 		ret = mwifiex_remain_on_chan_cfg(priv, HostCmd_ACT_GEN_SET,
- 						 req->bss->channel,
- 						 AUTH_TX_DEFAULT_WAIT_TIME);
+ 			code->op = FETCH_OP_FOFFS;
+ 			code->immediate = (unsigned long)offset;  // imm64?
++			offset = 0;
+ 		} else {
+ 			/* uprobes don't support symbols */
+ 			if (!(ctx->flags & TPARG_FL_KERNEL)) {
 
 
