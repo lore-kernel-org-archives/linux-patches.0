@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A56046D2A4;
-	Tue, 21 Jul 2026 18:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EF346DFF5;
+	Tue, 21 Jul 2026 18:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657898; cv=none; b=RikERfLvAwQl9Z7k3UrDrD3eAk+H1dKfJ1HncqwWIP1VKBuhA6VX9B7qjuLARBL91qU6l78rZSdHcdCXAXWc1BGWk1jzhdv4oVNzFZiWpeCK9d+Xjq38yZEdjgxf/0w3msAg7205+5gNo4U8U0v4fNoL7IeuosoW7D4vKZbV4aI=
+	t=1784657900; cv=none; b=gwqJdRhaI4P4+eRbq1ZWfLikxQZUUm0XnhmbKO/UZJM7DTjQoyrq6m8KM0mlosn2SfUoGiVGYDKN+eBtnGlcOTN5CxvSN2I4RoGm7buZLks6wdvNqBdM0bTeSQ9aPBOgRVTEKLoNWV0W57kCY4BF4rEmYF8gDud6gGmcflERlSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657898; c=relaxed/simple;
-	bh=SHn9VgcLEw9/43D8+N1oF+y/p6L39vg7EEjrhKX9xCs=;
+	s=arc-20240116; t=1784657900; c=relaxed/simple;
+	bh=tzyyY3sV3177B0Fb8SIuh4bHIY9TyqsoMOn73LMc71w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ex3kDqveTPK9bOINixi2T7HW96FJH6agocuaMJviRS2G336SrqCckiJIbRuSkVXQw7b6lZJq46zpXmHS6t+W3g7KEv4S+Wf1pRrZ1qk00hmQs0DaiTalPVejLNtX5DO24tJqNLxiS5eigowOwSXb1JeoM2MkwzmspdL8jopTKR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejn0DYBI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=T1+/mmd/D1nKUUfqeYuIFw05Fu/pMs9SUx5Gzs+GLqKMvE6V4ff8m0VKNPBJ6XfcMkJpobPgV9Jo2YDbeYn1vv+89F8Fww10fyy/BFDaizSDkZeguFFA3Ep8dmd7e1BmNwohL/pPiIsxaO0DfMPGKyw/J2r1cB732/tOQGSIGZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlBMEfW6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejn0DYBI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9C21F00A3A;
-	Tue, 21 Jul 2026 18:18:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlBMEfW6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D581F000E9;
+	Tue, 21 Jul 2026 18:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657896;
-	bh=Tf/BZd1t9NK7Cpb9OFPz1sVDmwtU0eDTgg0gBy1PPJg=;
+	s=korg; t=1784657899;
+	bh=JX67YCfgvzfsqCPPkFsrVi9Gy3LSZw4JpKUPj1b9zxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ejn0DYBIdIgO9bJqTqeuml/sLmYaAzSOXsCwT88lT2mI2tgKmoMK16SODajm3al+y
-	 ke/wzGJDQDmtntmI7FXIJD5b44h0GR37UKs0oB7jwxcolujzqgxh+RiN1ASM4/hI25
-	 /PxQ/esYZZaIMHWIghnsNqedQP0geiwa8rR6qigg=
+	b=ZlBMEfW6cj9cP6LyS+jdXdXUrOQ5qSOfBv8saw67TBV+oAGbQK4w+60RVfV+KLiaz
+	 SwDd0PfIdbRVT+zlMK8SwoKf20mUj5gunX2fFQepWT7L1MH073hIZ2Ew5E6xVdeKJf
+	 iFsvAQheZzEYhplheZN+emx+jnngjKJvNhDD6wS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Sun <samsun1006219@gmail.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0940/1611] net: udp_tunnel: prevent double queueing in udp_tunnel_nic_device_sync
-Date: Tue, 21 Jul 2026 17:17:36 +0200
-Message-ID: <20260721152536.530833487@linuxfoundation.org>
+Subject: [PATCH 6.18 0941/1611] dt-bindings: net: renesas,ether: Drop example "ethernet-phy-ieee802.3-c22" fallback
+Date: Tue, 21 Jul 2026 17:17:37 +0200
+Message-ID: <20260721152536.551952105@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -46,54 +48,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-[ Upstream commit ecf69d4b43370c587e48d4d70289dbdb7e039d4d ]
+[ Upstream commit 14eb1d2c03b38ce3427f299967f7a4d97ebff4c2 ]
 
-Yue Sun reported a use-after-free and debugobjects warning in
-udp_tunnel_nic_device_sync_work() during concurrent device operations.
+Fix the Micrel PHY in the example which shouldn't have the
+fallback "ethernet-phy-ieee802.3-c22" compatible:
 
-The workqueue core clears the internal pending bit before invoking the
-worker. At that point, a concurrent thread can queue the work again.
-When the already running worker eventually clears the work_pending flag
-to 0, it mistakenly clears the flag for the newly queued instance.
-udp_tunnel_nic_unregister() then observes work_pending as 0 and frees
-the structure while the second work item is still active in the queue,
-leading to UAF.
+Documentation/devicetree/bindings/net/renesas,ether.example.dtb: ethernet-phy@1 \
+  (ethernet-phy-id0022.1537): compatible: ['ethernet-phy-id0022.1537', 'ethernet-phy-ieee802.3-c22'] is too long
+        from schema $id: http://devicetree.org/schemas/net/micrel.yaml
 
-Fix this by returning early in udp_tunnel_nic_device_sync() if
-work_pending is already set, preventing redundant work queueing.
-
-Fixes: cc4e3835eff4 ("udp_tunnel: add central NIC RX port offload infrastructure")
-Reported-by: Yue Sun <samsun1006219@gmail.com>
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260625065938.654652-2-edumazet@google.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Acked-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Fixes: 37a2fce09001 ("dt-bindings: sh_eth convert bindings to json-schema")
+Link: https://patch.msgid.link/20260624150250.131966-2-robh@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp_tunnel_nic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/net/renesas,ether.yaml | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/ipv4/udp_tunnel_nic.c b/net/ipv4/udp_tunnel_nic.c
-index 944b3cf25468ee..b13e8f7092f463 100644
---- a/net/ipv4/udp_tunnel_nic.c
-+++ b/net/ipv4/udp_tunnel_nic.c
-@@ -301,7 +301,7 @@ __udp_tunnel_nic_device_sync(struct net_device *dev, struct udp_tunnel_nic *utn)
- static void
- udp_tunnel_nic_device_sync(struct net_device *dev, struct udp_tunnel_nic *utn)
- {
--	if (!utn->need_sync)
-+	if (!utn->need_sync || utn->work_pending)
- 		return;
+diff --git a/Documentation/devicetree/bindings/net/renesas,ether.yaml b/Documentation/devicetree/bindings/net/renesas,ether.yaml
+index f0a52f47f95a0d..dd7187f12a6757 100644
+--- a/Documentation/devicetree/bindings/net/renesas,ether.yaml
++++ b/Documentation/devicetree/bindings/net/renesas,ether.yaml
+@@ -121,8 +121,7 @@ examples:
+         #size-cells = <0>;
  
- 	queue_work(udp_tunnel_nic_workqueue, &utn->work);
+         phy1: ethernet-phy@1 {
+-            compatible = "ethernet-phy-id0022.1537",
+-                         "ethernet-phy-ieee802.3-c22";
++            compatible = "ethernet-phy-id0022.1537";
+             reg = <1>;
+             interrupt-parent = <&irqc0>;
+             interrupts = <0 IRQ_TYPE_LEVEL_LOW>;
 -- 
 2.53.0
 
