@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C5A35C6A8;
-	Tue, 21 Jul 2026 21:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC1B35C68A;
+	Tue, 21 Jul 2026 21:15:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668540; cv=none; b=VFXzOFGwWa1hl2KM/fiHmAo56SjnNMKOTyLqzp9coeFPQP66XJYcwOg19hEuoPNnxOkFrH/M/mdiQx3E//432DMIgb1vi4lCpnxfPlWDn4jHVQ02zVdroVIEF+3ouCR17GdyaFE/0NDXfthQrdvnHMyAXZ14K+r6GDW/LI8tc4g=
+	t=1784668542; cv=none; b=gyV7hD2GlCU6vap7ttRol9/Pqy4k5U9yEHiJrZGaExMD1RSrcwCzoZsidm5Jf3ZdkkG7d9E3/slkNl9uLz13UaJ17PnvBXJQPV2aOBD8KuNnKrAWaI5jxkZzTDaGcJY+X8sfpFwaCscaJ5CERQ6CXChG8cVXqg+m5oVNeGrZFuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668540; c=relaxed/simple;
-	bh=rG5sBuUjeMuN79eiKeackBMq8syr7e9Sg/0F4+HRzh8=;
+	s=arc-20240116; t=1784668542; c=relaxed/simple;
+	bh=Km+uS/4Yqz9Lw8ecO+CE4Ion7gHF7Gh1WZ9VTrtmjhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XBqWHoGkuPyVBHsHbGpaciRakjBc5L8hCF/uG6rxnC4Zsp2aFYhyg5hyPrmlvuzn2riS3x2dZ6FuikJbYyjdYHitVKPvNokD8F7pz6d4T3Yq9X35cOW85ufjlBxlctUCp1Arzk0ieSr7iGCeSJCf2lt65jKznwynf1YzNWPsqOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eSrZQ9Uk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E/i3/NWdySeYH2t5oDy7ElfYx+aMV+YQmQph04AFFRGn9qrW73/yvwS1qir/lNseb5CT9u5az740H/+1D5nEjQfYm7zpZbThNiewhoHsudXpa5bJlF0W2udiOr9ULsCYHpvbnZz0Ji6GC2pmBAr+6qletqqQJBYJpg1LjDGh3eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OK2r65BC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eSrZQ9Uk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 690431F000E9;
-	Tue, 21 Jul 2026 21:15:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OK2r65BC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1030B1F000E9;
+	Tue, 21 Jul 2026 21:15:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668538;
-	bh=cWkWeU5i9/ZqnGWKnmlHZSZ9AfSJkbhsAe2+Y4JX3rE=;
+	s=korg; t=1784668541;
+	bh=uozlFWU40Hyh2PoPsVfDFmpIfzv9OQD70EAerk8XEpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eSrZQ9UkLZMGdiNnQy+IZ7Ehp87HXuqHGjteiTs8+09z+tQPVdJwwDIDrsP0+LYF+
-	 m5E30cpb/6633IMK/Hl6mv4Gix4GDldwRMPG1AD3seTXjxvv7z2mud0fZHsQ8/bUO5
-	 zVi7n9jB3vPQb3NQSc7C/hsQ8aGE94BbYZzHpBWg=
+	b=OK2r65BCsA0RmN5yMPJxGeO57me1BIu51qyRYi878q88lgCt/7tGzBhQbDaFyMgCg
+	 NSXOYeU4DiZ+9Xe2kxabn7NdWQPK+CJ2PHGxWhpA/3iVo1vlwCCTrItidCnEH+7qwa
+	 uB9dooZsXvNNVV/l+K80X1SwdL5ZPY+nElCm9ScI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
+	Paul Louvel <paul.louvel@bootlin.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.1 0214/1067] crypto: drbg - Fix the fips_enabled priority boost
-Date: Tue, 21 Jul 2026 17:13:35 +0200
-Message-ID: <20260721152429.384564157@linuxfoundation.org>
+Subject: [PATCH 6.1 0215/1067] crypto: talitos - use dma_sync_single_for_cpu() before reading descriptor header
+Date: Tue, 21 Jul 2026 17:13:36 +0200
+Message-ID: <20260721152429.408101492@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,39 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Paul Louvel <paul.louvel@bootlin.com>
 
-commit a8a1f93080efc83a9ff8452954429ae379e9e614 upstream.
+commit e17ff3d6ff907dc8406261e8fd3e1fc8a908f0f6 upstream.
 
-When fips_enabled=1, it seems to have been intended for one of the
-algorithms defined in crypto/drbg.c to be the highest priority "stdrng"
-algorithm, so that it is what is used by "stdrng" users.
+In order to know if a descriptor has been processed by the device,
+the driver polls the FIFO to see if DESC_HDR_DONE is set on a descriptor
+header to confirm completion.
+The current code does not make sure that the CPU gets up to date data
+before reading the descriptor.
 
-However, the code only boosts the priority to 400, which is less than
-the priority 500 used in drivers/crypto/caam/caamprng.c.  Thus, the CAAM
-RNG could be used instead.
+Fix this by calling dma_sync_single_for_cpu() before reading memory
+written by the device.
 
-Fix this by boosting the priority by 2000 instead of 200.
-
-Fixes: 541af946fe13 ("crypto: drbg - SP800-90A Deterministic Random Bit Generator")
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Fixes: 58cdbc6d2263 ("crypto: talitos - fix hash on SEC1.")
+Signed-off-by: Paul Louvel <paul.louvel@bootlin.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/drbg.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/talitos.c |   28 ++++++++++++++++++++--------
+ 1 file changed, 20 insertions(+), 8 deletions(-)
 
---- a/crypto/drbg.c
-+++ b/crypto/drbg.c
-@@ -2095,7 +2095,7 @@ static inline void __init drbg_fill_arra
- 	 * it is selected.
- 	 */
- 	if (fips_enabled)
--		alg->base.cra_priority += 200;
-+		alg->base.cra_priority += 2000;
+--- a/drivers/crypto/talitos.c
++++ b/drivers/crypto/talitos.c
+@@ -321,19 +321,31 @@ static int talitos_submit(struct device
+ 	return -EINPROGRESS;
+ }
  
- 	alg->base.cra_ctxsize 	= sizeof(struct drbg_state);
- 	alg->base.cra_module	= THIS_MODULE;
+-static __be32 get_request_hdr(struct talitos_request *request, bool is_sec1)
++static __be32 get_request_hdr(struct device *dev,
++			      struct talitos_request *request, bool is_sec1)
+ {
+ 	struct talitos_edesc *edesc;
+ 
+-	if (!is_sec1)
++	if (!is_sec1) {
++		dma_sync_single_for_cpu(dev, request->dma_desc,
++					TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
++
+ 		return request->desc->hdr;
++	}
+ 
+-	if (!request->desc->next_desc)
++	if (!request->desc->next_desc) {
++		dma_sync_single_for_cpu(dev, request->dma_desc,
++					TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
+ 		return request->desc->hdr1;
+-
+-	edesc = container_of(request->desc, struct talitos_edesc, desc);
+-
+-	return ((struct talitos_desc *)(edesc->buf + edesc->dma_len))->hdr1;
++	} else {
++		dma_sync_single_for_cpu(dev,
++					be32_to_cpu(request->desc->next_desc),
++					TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
++		edesc = container_of(request->desc, struct talitos_edesc, desc);
++
++		return ((struct talitos_desc *)(edesc->buf + edesc->dma_len))
++			->hdr1;
++	}
+ }
+ 
+ /*
+@@ -357,7 +369,7 @@ static void flush_channel(struct device
+ 
+ 		/* descriptors with their done bits set don't get the error */
+ 		rmb();
+-		hdr = get_request_hdr(request, is_sec1);
++		hdr = get_request_hdr(dev, request, is_sec1);
+ 
+ 		if ((hdr & DESC_HDR_DONE) == DESC_HDR_DONE)
+ 			status = 0;
 
 
