@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3B447125D;
-	Tue, 21 Jul 2026 18:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B987471250;
+	Tue, 21 Jul 2026 18:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658964; cv=none; b=PgreUpqQjr6oXwQ6mtFFg6RdgRFdGowSgEIExfiObKOz6ZdX6C/7qTOAja1AJUTzIbw8mBWR2QkclKoTMUKIgRSVcUmJ/nuvFZ9C62xq5qGR7GTNbpQBVflzmINPdGjBPxPIvFItgfzDZk8px4PfGlkAhWDsWuryRzZxQ+KkfRg=
+	t=1784658966; cv=none; b=qdcHJtYe4SW3poBTUHhYBBWJgyW3lJDTbVFMsq9FXCryGcZfOYSm+vR3QQIQwBQzlTrN2enLVTidlY9hHX0v7QP7+Q6oABswOW3cZQDFFNMS5Fmei1QtDypMzxo34yvSDGXSAHlPG09p8lyNlPUFgXKKNMdk9cpjRlkil/v+DUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658964; c=relaxed/simple;
-	bh=43knxKmwYAe36SC6zn4R6IejKzUjJ4Jsh1G9t2XJzhM=;
+	s=arc-20240116; t=1784658966; c=relaxed/simple;
+	bh=r0M3+7GuH1g5MDvztEHgwjF7t/fQjDf04QD+milXIeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TY0lKC9+Wamz7bBCc0BmJC0tUJ/kPoOksNUUUwoL6pIrmPOuzsV2yVi3Gq6wGQUa0af8zlUQk+r6yd8TDqsY9g8UaArQrn8cc0aLFXo5wmOLBdjdZsPDrwY5b4OMcGV2dwCJO4m11TuvfgYusJgLofQc62mLt94cry4vYHiWG0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DcfOZpQg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nbu7/uUfo/j2oHa78P7rklYBbNAuuD6DmR4qGbdQOBclTExkYkwBwzm5VktckDt/i92Xgt9YMRa60TOala6HokA0xXNLZlpO15ag2owgGgtxQIuwANOkcHm1SIgbwV2RF6BeQntRVv7J96p6c+aZQ/oXv3sSmH9pdEAHHeTRrBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+Co+QUs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DcfOZpQg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299341F000E9;
-	Tue, 21 Jul 2026 18:36:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+Co+QUs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA8681F000E9;
+	Tue, 21 Jul 2026 18:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658962;
-	bh=A7Kc0MEQ7ekiJLzT1y+uRUs394exDbcMQkZKja7KcU4=;
+	s=korg; t=1784658965;
+	bh=ejmzCCYfhvb3sc1xxWD2suOwgdj0gsnUvd2xiIB6HyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DcfOZpQgnVCvy74F9L+BofDRzZ3JFs/rlgPvb8xIQPh9aFgTaFt/FR/2kQPyTYoUA
-	 TDMFOd370yJFxXBJMTmTOJhB5Y/U7Dsy3/s01ng2hElhg7XPrByYzdX/Ea4RmN2ooZ
-	 2RMBsv/PdLRuT64Q7KPaZPA1m8qEO2lQHcTMIIvg=
+	b=S+Co+QUsJtX8QaKCS0msZr+ShLfVxXYmHFO3GOl7xipORBHry/ikROVAO+VbySOlO
+	 Uf1aWrc30dkfFTTaAsHIYGdFvIOMmHnKRCcyFOGXpA4/oClaYBu+d7We+txFwH09Zu
+	 6coqVJYciYGCs63WH3BsTBgXTVnK/lN1VQJcFj1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.18 1340/1611] bpf: Add missing access_ok call to copy_user_syms
-Date: Tue, 21 Jul 2026 17:24:16 +0200
-Message-ID: <20260721152545.593864913@linuxfoundation.org>
+	Connor Williamson <connordw@amazon.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 1341/1611] block: remove redundant GD_NEED_PART_SCAN in add_disk_final()
+Date: Tue, 21 Jul 2026 17:24:17 +0200
+Message-ID: <20260721152545.616486465@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,58 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Connor Williamson <connordw@amazon.com>
 
-commit d5dc200c3a3f217de072af269dd90adddf90e48d upstream.
+commit 181bb9c9eae4f69fe510a62a42c2932d0314a800 upstream.
 
-As reported by sashiko we use __get_user without prior access_ok call on the
-user space pointer. Adding the missing call for the whole pointer array.
+add_disk_final() sets GD_NEED_PART_SCAN before calling bdev_add(),
+then calls disk_scan_partitions() which sets the flag itself. The
+early set is redundant and introduces a race.
 
-Plus removing the err check in the error path, because it's not needed and
-also we can return -ENOMEM directly from the first kvmalloc_array fail path.
+Between bdev_add() and disk_scan_partitions(), concurrent openers
+(multipathd, blkid, LVM) see the flag in blkdev_get_whole() and
+trigger bdev_disk_changed(). When disk_scan_partitions() then runs,
+it calls bdev_disk_changed() again, dropping the partitions the
+concurrent opener already created before re-adding them, which can
+result in transient partition disappearances.
 
+The race is observable by inserting an msleep() between bdev_add()
+and disk_scan_partitions() while running concurrent open() calls
+during device bind. Without artificial delay, it manifests under
+scheduling pressure during boot on systems with aggressive device
+scanners (multipathd, systemd-udevd).
+
+Therefore, do not set GD_NEED_PART_SCAN in add_disk_final(). Other
+GD_NEED_PART_SCAN consumers (blkdev_get_whole(),
+sd_need_revalidate()) should not be affected as the flag
+is set internally by disk_scan_partitions().
+
+The retry-on-next-open intention from commit e5cfefa97bcc
+("block: fix scan partition for exclusively open device again")
+should also not be affected as the early return paths in
+disk_scan_partitions() should be unreachable at device registration
+time (bd_holder is NULL and open_partitions is zero).
+
+Fixes: e5cfefa97bcc ("block: fix scan partition for exclusively open device again")
 Cc: stable@vger.kernel.org
-[1] https://lore.kernel.org/bpf/20260611115503.AC16D1F00893@smtp.kernel.org/
-Fixes: 0236fec57a15 ("bpf: Resolve symbols with ftrace_lookup_symbols for kprobe multi link")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/bpf/20260611115503.AC16D1F00893@smtp.kernel.org/
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/r/20260616083056.405652-1-jolsa@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Connor Williamson <connordw@amazon.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260615130715.53693-1-connordw@amazon.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/bpf_trace.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ block/genhd.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2318,9 +2318,12 @@ static int copy_user_syms(struct user_sy
- 	int err = -ENOMEM;
- 	unsigned int i;
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -407,10 +407,6 @@ static void add_disk_final(struct gendis
+ 	struct device *ddev = disk_to_dev(disk);
  
-+	if (!access_ok(usyms, cnt * sizeof(*usyms)))
-+		return -EFAULT;
-+
- 	syms = kvmalloc_array(cnt, sizeof(*syms), GFP_KERNEL);
- 	if (!syms)
--		goto error;
-+		return -ENOMEM;
- 
- 	buf = kvmalloc_array(cnt, KSYM_NAME_LEN, GFP_KERNEL);
- 	if (!buf)
-@@ -2345,10 +2348,8 @@ static int copy_user_syms(struct user_sy
- 	return 0;
- 
- error:
--	if (err) {
--		kvfree(syms);
--		kvfree(buf);
--	}
-+	kvfree(syms);
-+	kvfree(buf);
- 	return err;
- }
- 
+ 	if (!(disk->flags & GENHD_FL_HIDDEN)) {
+-		/* Make sure the first partition scan will be proceed */
+-		if (get_capacity(disk) && disk_has_partscan(disk))
+-			set_bit(GD_NEED_PART_SCAN, &disk->state);
+-
+ 		bdev_add(disk->part0, ddev->devt);
+ 		if (get_capacity(disk))
+ 			disk_scan_partitions(disk, BLK_OPEN_READ);
 
 
