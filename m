@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7009B3BA22C;
-	Tue, 21 Jul 2026 21:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC06473C6D;
+	Tue, 21 Jul 2026 21:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667926; cv=none; b=HApz74HCvTRTnBnlZMjI9RYG0g1Bok8uyVsn4zfYtFPLYlzzb4J2tF5jVvq/oQNxdv8S2Qej4MA1yPmbE0gzCb/0sv41sU6C3SOJhDt6DBIEeb2OtdkRI1MPUHg9AD056WxAhnBaGQdXn0sL++dwbk5d5hsil/boKogIEGt7pss=
+	t=1784667929; cv=none; b=h7Ey9t8Jw98TNqElUP9GdLkLytBR6ch1ILHTDlhEdatWMwH+NocJ454lM+5MFB4Bl3HhtzznREIQmynL0llcnzQ14TVEw5NPdktNp8jvPfiHGAofq1f1SjG3b3O092Iw2XLPLt7/f6fk0b8BULcPAqzhoBlS/3rj5IiRo80k/U4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667926; c=relaxed/simple;
-	bh=aiuZVjZ+ZPCDvDr/FZWh4DD4fohtSNO8SUqQbCkZEJ0=;
+	s=arc-20240116; t=1784667929; c=relaxed/simple;
+	bh=nL2dPQcWj9I4fHHnIWHVJYRWUCizTqUWjbv6fTxE6hA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UCKq3M5whYAncSb3ub2jkCfieVrWlsnxszzPtWtXeHiIwKaMp3I8HQE1jw5nLueLQHTTLVeHe+ZRqukW7IKfWlKw9QDygR5Mac93eZYr2pwmI4oYQZD3zjaEGSBhG+UyD3iie3TUHXQ6jEIPhzRAn3oCZAJbfa0DYe/owFIQtLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W8Aylbrd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fuva2TNYuJbnQLicFrqruMpStS9OJT//n3ldrTc8NMaw3euyEOyJnsiiAmOA+xW4Pl8RoJHdx0c4jPOv1mSDeZ7pr5jzLj8dSvvzisi8DJtJv4TL4T6irEiRYs4E69ULlgNoY15YBQYjm6Xe/NyBtB+4UpAx4seTe3XZ0gADfS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XW/s3JlR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W8Aylbrd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BF061F000E9;
-	Tue, 21 Jul 2026 21:05:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XW/s3JlR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2021F000E9;
+	Tue, 21 Jul 2026 21:05:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667925;
-	bh=HRqkyKn70h9+LXd5OezWCir1Ee4b2S1fIzypDl9W9NA=;
+	s=korg; t=1784667927;
+	bh=ufRv1EX/dOPrPxvhzNtynTOpUjqaJ9EVx+ZVF2RBjVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W8Aylbrd69iqED7NkX6uZcRLmFYUy1jQvg1m4HQsUiQrWUW0xjZGkFVTyOuyMnejO
-	 /t0YF4jUYVZ2/3aa3KND6g4FVSB5X/+ADqf2Jtau9z9apUEgGwr93EyS4ANAWA3Xs6
-	 9co0uUtKPWelvtdKdfr4RqaDnhkcfSrU2/A0DFXM=
+	b=XW/s3JlRTLpM57yKH/vEAqVWILCZ1I6HRptOwHhrC8NhBvkUt31msRgaholFY+mXu
+	 vaWETxSQFEVEjy872Cq7ENTlxflKkMQGKiUOkY3sjCC8UaB+YGZabQ1Hyp3HJwd6mI
+	 UypBV6GWxe0z14VCsAMEwL7kDjUfs9bNsgo4IAMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1201/1266] proc: protect ptrace_may_access() with exec_update_lock (FD links)
-Date: Tue, 21 Jul 2026 17:27:18 +0200
-Message-ID: <20260721152508.674093378@linuxfoundation.org>
+Subject: [PATCH 6.6 1202/1266] cpufreq: pcc: Remove empty exit() callback
+Date: Tue, 21 Jul 2026 17:27:19 +0200
+Message-ID: <20260721152508.696970664@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,271 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-[ Upstream commit 6255da28d4bb5349fe18e84cb043ccd394eba75d ]
+[ Upstream commit dfd3e8b90b3660b706c3031b0f746377c571b324 ]
 
-proc_pid_get_link() and proc_pid_readlink() currently look up the task from
-the pid once, then do the ptrace access check on that task, then look up
-the task from the pid a second time to do the actual access.
-That's racy in several ways.
+The exit() callback is optional, remove the empty one.
 
-To fix it, pass the task to the ->proc_get_link() handler, and instead of
-proc_fd_access_allowed(), introduce a new helper call_proc_get_link() that
-looks up and locks the task, does the access check, and calls
-->proc_get_link().
-
-Fixes: 778c1144771f ("[PATCH] proc: Use sane permission checks on the /proc/<pid>/fd/ symlinks")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://patch.msgid.link/20260518-procfs-lockfix-part1-v1-2-5c3d20e0ac33@google.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Stable-dep-of: bcb8889c4981 ("cpufreq: qcom-cpufreq-hw: Fix possible double free")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/base.c     |  119 ++++++++++++++++++++---------------------------------
- fs/proc/fd.c       |   25 ++++-------
- fs/proc/internal.h |    2 
- 3 files changed, 58 insertions(+), 88 deletions(-)
+ drivers/cpufreq/pcc-cpufreq.c |    6 ------
+ 1 file changed, 6 deletions(-)
 
---- a/fs/proc/base.c
-+++ b/fs/proc/base.c
-@@ -218,33 +218,24 @@ static int get_task_root(struct task_str
+--- a/drivers/cpufreq/pcc-cpufreq.c
++++ b/drivers/cpufreq/pcc-cpufreq.c
+@@ -564,18 +564,12 @@ out:
  	return result;
  }
  
--static int proc_cwd_link(struct dentry *dentry, struct path *path)
-+static int proc_cwd_link(struct dentry *dentry, struct path *path,
-+			 struct task_struct *task)
- {
--	struct task_struct *task = get_proc_task(d_inode(dentry));
- 	int result = -ENOENT;
- 
--	if (task) {
--		task_lock(task);
--		if (task->fs) {
--			get_fs_pwd(task->fs, path);
--			result = 0;
--		}
--		task_unlock(task);
--		put_task_struct(task);
-+	task_lock(task);
-+	if (task->fs) {
-+		get_fs_pwd(task->fs, path);
-+		result = 0;
- 	}
-+	task_unlock(task);
- 	return result;
- }
- 
--static int proc_root_link(struct dentry *dentry, struct path *path)
-+static int proc_root_link(struct dentry *dentry, struct path *path,
-+			  struct task_struct *task)
- {
--	struct task_struct *task = get_proc_task(d_inode(dentry));
--	int result = -ENOENT;
--
--	if (task) {
--		result = get_task_root(task, path);
--		put_task_struct(task);
--	}
--	return result;
-+	return get_task_root(task, path);
- }
- 
- /*
-@@ -704,23 +695,6 @@ static int proc_pid_syscall(struct seq_f
- /*                       Here the fs part begins                        */
- /************************************************************************/
- 
--/* permission checks */
--static bool proc_fd_access_allowed(struct inode *inode)
+-static int pcc_cpufreq_cpu_exit(struct cpufreq_policy *policy)
 -{
--	struct task_struct *task;
--	bool allowed = false;
--	/* Allow access to a task's file descriptors if it is us or we
--	 * may use ptrace attach to the process and find out that
--	 * information.
--	 */
--	task = get_proc_task(inode);
--	if (task) {
--		allowed = ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS);
--		put_task_struct(task);
--	}
--	return allowed;
+-	return 0;
 -}
 -
- int proc_nochmod_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 		 struct iattr *attr)
- {
-@@ -1778,16 +1752,12 @@ static const struct file_operations proc
- 	.release	= single_release,
+ static struct cpufreq_driver pcc_cpufreq_driver = {
+ 	.flags = CPUFREQ_CONST_LOOPS,
+ 	.get = pcc_get_freq,
+ 	.verify = pcc_cpufreq_verify,
+ 	.target = pcc_cpufreq_target,
+ 	.init = pcc_cpufreq_cpu_init,
+-	.exit = pcc_cpufreq_cpu_exit,
+ 	.name = "pcc-cpufreq",
  };
  
--static int proc_exe_link(struct dentry *dentry, struct path *exe_path)
-+static int proc_exe_link(struct dentry *dentry, struct path *exe_path,
-+			 struct task_struct *task)
- {
--	struct task_struct *task;
- 	struct file *exe_file;
- 
--	task = get_proc_task(d_inode(dentry));
--	if (!task)
--		return -ENOENT;
- 	exe_file = get_task_exe_file(task);
--	put_task_struct(task);
- 	if (exe_file) {
- 		*exe_path = exe_file->f_path;
- 		path_get(&exe_file->f_path);
-@@ -1797,26 +1767,42 @@ static int proc_exe_link(struct dentry *
- 		return -ENOENT;
- }
- 
-+static int call_proc_get_link(struct dentry *dentry, struct inode *inode, struct path *path_out)
-+{
-+	struct task_struct *task;
-+	int ret;
-+
-+	task = get_proc_task(inode);
-+	if (!task)
-+		return -ENOENT;
-+	ret = down_read_killable(&task->signal->exec_update_lock);
-+	if (ret)
-+		goto out_put_task;
-+	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS)) {
-+		ret = -EACCES;
-+		goto out;
-+	}
-+	ret = PROC_I(inode)->op.proc_get_link(dentry, path_out, task);
-+
-+out:
-+	up_read(&task->signal->exec_update_lock);
-+out_put_task:
-+	put_task_struct(task);
-+	return ret;
-+}
-+
- static const char *proc_pid_get_link(struct dentry *dentry,
- 				     struct inode *inode,
- 				     struct delayed_call *done)
- {
- 	struct path path;
--	int error = -EACCES;
-+	int error;
- 
- 	if (!dentry)
- 		return ERR_PTR(-ECHILD);
--
--	/* Are we allowed to snoop on the tasks file descriptors? */
--	if (!proc_fd_access_allowed(inode))
--		goto out;
--
--	error = PROC_I(inode)->op.proc_get_link(dentry, &path);
--	if (error)
--		goto out;
--
--	error = nd_jump_link(&path);
--out:
-+	error = call_proc_get_link(dentry, inode, &path);
-+	if (!error)
-+		error = nd_jump_link(&path);
- 	return ERR_PTR(error);
- }
- 
-@@ -1850,17 +1836,11 @@ static int proc_pid_readlink(struct dent
- 	struct inode *inode = d_inode(dentry);
- 	struct path path;
- 
--	/* Are we allowed to snoop on the tasks file descriptors? */
--	if (!proc_fd_access_allowed(inode))
--		goto out;
--
--	error = PROC_I(inode)->op.proc_get_link(dentry, &path);
--	if (error)
--		goto out;
--
--	error = do_proc_readlink(&path, buffer, buflen);
--	path_put(&path);
--out:
-+	error = call_proc_get_link(dentry, inode, &path);
-+	if (!error) {
-+		error = do_proc_readlink(&path, buffer, buflen);
-+		path_put(&path);
-+	}
- 	return error;
- }
- 
-@@ -2248,21 +2228,16 @@ static const struct dentry_operations ti
- 	.d_delete	= pid_delete_dentry,
- };
- 
--static int map_files_get_link(struct dentry *dentry, struct path *path)
-+static int map_files_get_link(struct dentry *dentry, struct path *path,
-+			      struct task_struct *task)
- {
- 	unsigned long vm_start, vm_end;
- 	struct vm_area_struct *vma;
--	struct task_struct *task;
- 	struct mm_struct *mm;
- 	int rc;
- 
- 	rc = -ENOENT;
--	task = get_proc_task(d_inode(dentry));
--	if (!task)
--		goto out;
--
- 	mm = get_task_mm(task);
--	put_task_struct(task);
- 	if (!mm)
- 		goto out;
- 
---- a/fs/proc/fd.c
-+++ b/fs/proc/fd.c
-@@ -172,24 +172,19 @@ static const struct dentry_operations ti
- 	.d_delete	= pid_delete_dentry,
- };
- 
--static int proc_fd_link(struct dentry *dentry, struct path *path)
-+static int proc_fd_link(struct dentry *dentry, struct path *path,
-+			struct task_struct *task)
- {
--	struct task_struct *task;
- 	int ret = -ENOENT;
-+	unsigned int fd = proc_fd(d_inode(dentry));
-+	struct file *fd_file;
- 
--	task = get_proc_task(d_inode(dentry));
--	if (task) {
--		unsigned int fd = proc_fd(d_inode(dentry));
--		struct file *fd_file;
--
--		fd_file = fget_task(task, fd);
--		if (fd_file) {
--			*path = fd_file->f_path;
--			path_get(&fd_file->f_path);
--			ret = 0;
--			fput(fd_file);
--		}
--		put_task_struct(task);
-+	fd_file = fget_task(task, fd);
-+	if (fd_file) {
-+		*path = fd_file->f_path;
-+		path_get(&fd_file->f_path);
-+		ret = 0;
-+		fput(fd_file);
- 	}
- 
- 	return ret;
---- a/fs/proc/internal.h
-+++ b/fs/proc/internal.h
-@@ -107,7 +107,7 @@ extern struct kmem_cache *proc_dir_entry
- void pde_free(struct proc_dir_entry *pde);
- 
- union proc_op {
--	int (*proc_get_link)(struct dentry *, struct path *);
-+	int (*proc_get_link)(struct dentry *, struct path *, struct task_struct *);
- 	int (*proc_show)(struct seq_file *m,
- 		struct pid_namespace *ns, struct pid *pid,
- 		struct task_struct *task);
 
 
