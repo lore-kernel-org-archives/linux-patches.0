@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD287471267;
-	Tue, 21 Jul 2026 18:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F13471267;
+	Tue, 21 Jul 2026 18:16:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657776; cv=none; b=gzuBEM9R/sKhx0lFqtzgUkcT8mtMmtdV5pPGO0ZAJUMLwpRj6n86Rndmh+rXLYLiDEsQhjiAi+5wRREnJ9nX3AbAZGkXyHekYNMlriA/+doYF/xVqGVVIWUhk90a2HLhohjoK6ayb4Yy4Dsi/hIACoZj8eXnzaGdBj6YB7mK38s=
+	t=1784657779; cv=none; b=YTXVeTLqqebNunYfvzjIYvNoFnAQNyAfEkqYJwMyOLJMEencLagmXPJBe0i3yrorgXSQeOcUjddSSM5ElnhA0I/GWLsDRSZ2+D3SX+mnD8zxl0CNc1JndWJrCd2pwOl975/XpXxoXGRDee3/TAZhiUGXyIyxIDqF/s31pJr+zKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657776; c=relaxed/simple;
-	bh=jnBlzQ3rih9Inw/4t+Zu5W92NtIuDDwBucxs4s083l0=;
+	s=arc-20240116; t=1784657779; c=relaxed/simple;
+	bh=Cr3T/JB6AC5guedcww9cmPgP3SxwKF0klQPOVeuuFdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Phj7SAHCkVvTNZTwWmQcehwrttgesQ9iFFsoK5DfVhjguO5VQ1drtv7bLRnmfGBTyZ9gPD1e5cizKkKreeAsGpPqqFk3NFioUejppwv8UxXWpF8mroKeJ313Xmg4KWYvHajkHgpWZYctYn3PBK3S4lJ0hCyCghqj1q3JrfBfPKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jn5i5+w+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eY3PC4W7ewQH//e1e9wEeSgevHwGD3dBC0M7Na+ZSLqsyyFF/+xO5pb9R/1wXs30KbUUKb0LbOUD/Hs5KU8aJ6PTnmYRzPZNKzHfbZ1NJiCm1eSA313T0JnrXT8sgEnRR28yukCR3aPt5vebknfElV94wl4jKavVUIWVTwdxXu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=diH3f1vo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jn5i5+w+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44FCB1F000E9;
-	Tue, 21 Jul 2026 18:16:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="diH3f1vo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4BA1F000E9;
+	Tue, 21 Jul 2026 18:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657775;
-	bh=OfubUyHqudLQtuzMc3ekGiHn+ceEnWWaajWfWIzVu+s=;
+	s=korg; t=1784657778;
+	bh=EHic1O601y24EuZ0nvlZqV4ZA4dEWb9OU3YTgdOmYpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jn5i5+w+E0r7KuGyVXWZcRQVGw1CVgaDbSHxZGXgMMY1ZHE98w0Zrh5BpnNU82vXc
-	 TS0vEtgxrCEpvgBYVOykc77pxsmOh3/V+C9tQXi5VlITbfP66+FrTuNjqEATKmxowC
-	 18/2GhBEiUjDbrmocUYFZBUXjLlsbOCKqySwkSDs=
+	b=diH3f1vobmrxgOxV0bgHJGk540vA2S7rBW3nbBR89mOExtSubPg9DFNIDPUVexL1K
+	 nbAkGw7eu99/20ZjYmfVht6CcF3St0jPMndzZtUrMiirusOa6CsC7wUk1sY0bMdG2p
+	 lAtIc+IaM+QDKLVMrN8pT+UjYBjSMTjfP5fyQNdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0894/1611] ipv6: Fix null-ptr-deref in fib6_nh_mtu_change().
-Date: Tue, 21 Jul 2026 17:16:50 +0200
-Message-ID: <20260721152535.498748536@linuxfoundation.org>
+Subject: [PATCH 6.18 0895/1611] eth: bnxt: gather and report HW-GRO stats
+Date: Tue, 21 Jul 2026 17:16:51 +0200
+Message-ID: <20260721152535.520640444@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,59 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 46c3b8191aad3d032776bf3bebf03efdf5f4b905 ]
+[ Upstream commit a7fc1a488f09f0fbf727fe3ca5b017e7657f152d ]
 
-fib6_nh_mtu_change() re-fetches idev via __in6_dev_get(arg->dev) and
-dereferences idev->cnf.mtu6 without a NULL check. addrconf_ifdown()
-clears dev->ip6_ptr with RCU_INIT_POINTER() after rt6_disable_ip() has
-released tb6_lock, so the RA-driven MTU walk can observe a NULL idev and
-oops. The caller rt6_mtu_change_route() guards its own __in6_dev_get(),
-but this re-fetch is unguarded; nexthop-backed routes survive
-addrconf_ifdown()'s flush, so the walk still reaches it after ip6_ptr is
-nulled.
+Count and report HW-GRO stats as seen by the kernel.
+The device stats for GRO seem to not reflect the reality,
+perhaps they count sessions which did not actually result
+in any aggregation. Also they count wire packets, so we
+have to count super-frames, anyway.
 
-Return 0 when idev is NULL, matching rt6_mtu_change_route() and the
-fib6_mtu() fix in commit 5ad509c1fdad ("ipv6: Fix null-ptr-deref in
-fib6_mtu().").
-
-  Oops: general protection fault, ... KASAN: null-ptr-deref in range
-        [0x00000000000002a8-0x00000000000002af]
-  RIP: 0010:fib6_nh_mtu_change+0x203/0x990
-   rt6_mtu_change_route+0x141/0x1d0
-   __fib6_clean_all+0xd0/0x160
-   rt6_mtu_change+0xb4/0x100
-   ndisc_router_discovery+0x24b5/0x2cb0
-   icmpv6_rcv+0x12e9/0x1710
-   ipv6_rcv+0x39b/0x410
-
-Fixes: c0b220cf7d80 ("ipv6: Refactor exception functions")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260619045334.2427073-1-xmei5@asu.edu
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20260207003509.3927744-2-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 40529e58629b ("eth: bnxt: improve the timing of stats")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 15 +++++++++++++--
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h |  6 ++++++
+ 2 files changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index b34f6a3e705192..ef66a3c86febbf 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -5043,6 +5043,9 @@ static int fib6_nh_mtu_change(struct fib6_nh *nh, void *_arg)
- 		struct inet6_dev *idev = __in6_dev_get(arg->dev);
- 		u32 mtu = f6i->fib6_pmtu;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 6c78fc85eafa50..2dece9aad5b95a 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -1803,7 +1803,8 @@ static inline struct sk_buff *bnxt_gro_skb(struct bnxt *bp,
+ 					   struct bnxt_tpa_info *tpa_info,
+ 					   struct rx_tpa_end_cmp *tpa_end,
+ 					   struct rx_tpa_end_cmp_ext *tpa_end1,
+-					   struct sk_buff *skb)
++					   struct sk_buff *skb,
++					   struct bnxt_rx_sw_stats *rx_stats)
+ {
+ #ifdef CONFIG_INET
+ 	int payload_off;
+@@ -1813,6 +1814,9 @@ static inline struct sk_buff *bnxt_gro_skb(struct bnxt *bp,
+ 	if (segs == 1)
+ 		return skb;
  
-+		if (!idev)
-+			return 0;
++	rx_stats->rx_hw_gro_packets++;
++	rx_stats->rx_hw_gro_wire_packets += segs;
 +
- 		if (mtu >= arg->mtu ||
- 		    (mtu < arg->mtu && mtu == idev->cnf.mtu6))
- 			fib6_metric_set(f6i, RTAX_MTU, arg->mtu);
+ 	NAPI_GRO_CB(skb)->count = segs;
+ 	skb_shinfo(skb)->gso_size =
+ 		le32_to_cpu(tpa_end1->rx_tpa_end_cmp_seg_len);
+@@ -1986,7 +1990,8 @@ static inline struct sk_buff *bnxt_tpa_end(struct bnxt *bp,
+ 	}
+ 
+ 	if (gro)
+-		skb = bnxt_gro_skb(bp, tpa_info, tpa_end, tpa_end1, skb);
++		skb = bnxt_gro_skb(bp, tpa_info, tpa_end, tpa_end1, skb,
++				   &cpr->sw_stats->rx);
+ 
+ 	return skb;
+ }
+@@ -13413,6 +13418,8 @@ static void bnxt_get_one_ring_err_stats(struct bnxt *bp,
+ 	stats->rx_total_netpoll_discards += sw_stats->rx.rx_netpoll_discards;
+ 	stats->rx_total_ring_discards +=
+ 		BNXT_GET_RING_STATS64(hw_stats, rx_discard_pkts);
++	stats->rx_total_hw_gro_packets += sw_stats->rx.rx_hw_gro_packets;
++	stats->rx_total_hw_gro_wire_packets += sw_stats->rx.rx_hw_gro_wire_packets;
+ 	stats->tx_total_resets += sw_stats->tx.tx_resets;
+ 	stats->tx_total_ring_discards +=
+ 		BNXT_GET_RING_STATS64(hw_stats, tx_discard_pkts);
+@@ -15844,6 +15851,8 @@ static void bnxt_get_queue_stats_rx(struct net_device *dev, int i,
+ 	stats->bytes += BNXT_GET_RING_STATS64(sw, rx_bcast_bytes);
+ 
+ 	stats->alloc_fail = cpr->sw_stats->rx.rx_oom_discards;
++	stats->hw_gro_packets = cpr->sw_stats->rx.rx_hw_gro_packets;
++	stats->hw_gro_wire_packets = cpr->sw_stats->rx.rx_hw_gro_wire_packets;
+ }
+ 
+ static void bnxt_get_queue_stats_tx(struct net_device *dev, int i,
+@@ -15879,6 +15888,8 @@ static void bnxt_get_base_stats(struct net_device *dev,
+ 	rx->packets = bp->net_stats_prev.rx_packets;
+ 	rx->bytes = bp->net_stats_prev.rx_bytes;
+ 	rx->alloc_fail = bp->ring_err_stats_prev.rx_total_oom_discards;
++	rx->hw_gro_packets = bp->ring_err_stats_prev.rx_total_hw_gro_packets;
++	rx->hw_gro_wire_packets = bp->ring_err_stats_prev.rx_total_hw_gro_wire_packets;
+ 
+ 	tx->packets = bp->net_stats_prev.tx_packets;
+ 	tx->bytes = bp->net_stats_prev.tx_bytes;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index c80603704838db..b326a814b1f7a7 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -1123,8 +1123,11 @@ struct bnxt_rx_sw_stats {
+ 	u64			rx_l4_csum_errors;
+ 	u64			rx_resets;
+ 	u64			rx_buf_errors;
++	/* end of ethtool -S stats */
+ 	u64			rx_oom_discards;
+ 	u64			rx_netpoll_discards;
++	u64			rx_hw_gro_packets;
++	u64			rx_hw_gro_wire_packets;
+ };
+ 
+ struct bnxt_tx_sw_stats {
+@@ -1151,6 +1154,9 @@ struct bnxt_total_ring_err_stats {
+ 	u64			tx_total_resets;
+ 	u64			tx_total_ring_discards;
+ 	u64			total_missed_irqs;
++	/* end of ethtool -S stats */
++	u64			rx_total_hw_gro_packets;
++	u64			rx_total_hw_gro_wire_packets;
+ };
+ 
+ struct bnxt_stats_mem {
 -- 
 2.53.0
 
