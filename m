@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7054D379960;
-	Tue, 21 Jul 2026 23:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16219175A81;
+	Tue, 21 Jul 2026 23:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674837; cv=none; b=eqqYkX86Rmg73pSeR/00n7SL23jc44EMU9T8seOyJOEHfkFgKeRRRQmgbpLUt+gmrW8kSITuL0mXDGYeWgF7IUudulfl51nTkACl0SRVDPfITlJ9vdtuW8ch8PelexkVs1OCSKLMrdWdwQlmePiJDlWVB2hCcnRIbzl6HtuDAu8=
+	t=1784674840; cv=none; b=eZx+Bicp6EZp9TDuxYBoUIbVycjYR84IPWJALjE/27LlCpVCuLGLZyNRi3KQtxaogGQivwcyA/uOuBuFwA4jsTTm0YJSIV95YNHIV2thtB4bcYjqCeRvel57ih1uMAb4fB9CtsFRVN15nvlNnEe1lGYf6WUFLwk35ChdfqwcR6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674837; c=relaxed/simple;
-	bh=IktBVxb6U4k1GlnzhH5iSo0dUKSYBoIlUlkBaSa1lao=;
+	s=arc-20240116; t=1784674840; c=relaxed/simple;
+	bh=YL+EM4jg5AedUJhl8277U8BJbj7DCg398+w4FMa8dfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uwjG05uTSZ0flazAOuVtArB3mCv1OgrGhFDhorfie6Q7nesDkrtiEGu9wQaRtmrVI0Zxa+FtGrxH5Hju8bnxLkp9xlp3SSlnrWmnSfsPqFCORHPwPbsCPq9QLDTTh9ZkPCQ4j9X3dLNAlVtJxB4H8pz00TD5NH/k5wVfuxFa3YQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XhVcBKl8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A1wSLiZUpK89VUqi0Pf3AZksVpEECzy3ZExAoU27iA2JwnstuBmQVUFZcbuLvi7xTKUQN4RXlhQ5XNe3yiiiwAO+6IUg8RYLh8YCGGM1zf4WEF4pNpXqCSgmtAtWnwsUvzaA6Gecd+ysKpch7IdB7nR488HBcV5/A6zIjzDHyK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZDQ1baq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XhVcBKl8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71471F000E9;
-	Tue, 21 Jul 2026 23:00:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZDQ1baq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB521F000E9;
+	Tue, 21 Jul 2026 23:00:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674836;
-	bh=dMiGgI4uuayc/BjbTUBpcupDrJnTZCTknT6evt+HcDc=;
+	s=korg; t=1784674839;
+	bh=I0rcU0bF8AS6MZ7ATACF46MNlh4MRmvfOCYrxJkOuqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XhVcBKl8WbXR/nyQ5QIHExcff87Az1akWIITQk8Gy9tpN1tlkwyGHMF6hhf+x6RQd
-	 2U/iUML+wFT9tuSRahsArOll9wrgwT9iXf2DEGdMXLcbs+tmQkk/GETUXdn4v6irB1
-	 JFWpGYJ7zktTx5Iq0Q2zq1TImanql3IFw69lWZX4=
+	b=zZDQ1baqXzYkIIXGaQufjfVK6iCfVT8xW5pevi5R7QHCDSDc5iyzEDEY1DKZvBXCL
+	 v3DjjvMjLzBAiaP4wkP5yih9vacOwHcBxWfHkTC0gGvOO0sGYYPDJnsJZog1p9+aT0
+	 bnYjn/ElEAAwmfje4HDMuI6ae8aAU2c+bWbw6blU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Haibing <yuehaibing@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 692/699] ipv6: mcast: Delay put pmc->idev in mld_del_delrec()
-Date: Tue, 21 Jul 2026 17:27:31 +0200
-Message-ID: <20260721152411.387711567@linuxfoundation.org>
+	Kristian Evensen <kristian.evensen@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.10 693/699] net: ethernet: rmnet: Always subtract MAP header
+Date: Tue, 21 Jul 2026 17:27:32 +0200
+Message-ID: <20260721152411.410676765@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,33 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yue Haibing <yuehaibing@huawei.com>
+From: Kristian Evensen <kristian.evensen@gmail.com>
 
-commit ae3264a25a4635531264728859dbe9c659fad554 upstream.
+commit 8b8701d0b4925807a6d4dc4699cb80a1e16218ad upstream.
 
-pmc->idev is still used in ip6_mc_clear_src(), so as mld_clear_delrec()
-does, the reference should be put after ip6_mc_clear_src() return.
+Commit e1d9a90a9bfd ("net: ethernet: rmnet: Support for ingress MAPv5
+checksum offload") broke ingress handling for devices where
+RMNET_FLAGS_INGRESS_MAP_CKSUMV5 or RMNET_FLAGS_INGRESS_MAP_CKSUMV4 are
+not set. Unless either of these flags are set, the MAP header is not
+removed. This commit restores the original logic by ensuring that the
+MAP header is removed for all MAP packets.
 
-Fixes: 63ed8de4be81 ("mld: add mc_lock for protecting per-interface mld data")
-Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
-Link: https://patch.msgid.link/20250714141957.3301871-1-yuehaibing@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e1d9a90a9bfd ("net: ethernet: rmnet: Support for ingress MAPv5 checksum offload")
+Signed-off-by: Kristian Evensen <kristian.evensen@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/mcast.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -806,8 +806,8 @@ static void mld_del_delrec(struct inet6_
- 		} else {
- 			im->mca_crcount = idev->mc_qrv;
- 		}
--		in6_dev_put(pmc->idev);
- 		ip6_mc_clear_src(pmc);
-+		in6_dev_put(pmc->idev);
- 		kfree_rcu(pmc, rcu);
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c
+@@ -88,11 +88,12 @@ __rmnet_map_ingress_handler(struct sk_bu
+ 			goto free_skb;
+ 		skb_pull(skb, sizeof(*map_header));
+ 		rmnet_set_skb_proto(skb);
+-	} else if (port->data_format & RMNET_FLAGS_INGRESS_MAP_CKSUMV4) {
++	} else {
+ 		/* Subtract MAP header */
+ 		skb_pull(skb, sizeof(*map_header));
+ 		rmnet_set_skb_proto(skb);
+-		if (!rmnet_map_checksum_downlink_packet(skb, len + pad))
++		if (port->data_format & RMNET_FLAGS_INGRESS_MAP_CKSUMV4 &&
++		    !rmnet_map_checksum_downlink_packet(skb, len + pad))
+ 			skb->ip_summed = CHECKSUM_UNNECESSARY;
  	}
- }
+ 
 
 
