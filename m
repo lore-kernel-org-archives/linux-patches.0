@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6D844AB7B;
-	Tue, 21 Jul 2026 22:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACD344AB7B;
+	Tue, 21 Jul 2026 22:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671776; cv=none; b=MkSbC8aG1t3a6fT9NN5Zy//24IFUJZpetbvE2lIEuIOCEcXVlm7Hj+GxInKd/7XaK87+HP2r6dBpQmszCx/gVYeLV61BHaun8xOfSovnAX44EQhltW3K2XiZ1jeHUTseVqlePHl3+zlooLuT8f2NHSRYUOnxKQlY8RlZRScZ/3Q=
+	t=1784671779; cv=none; b=COkdkGU1f5EA2ZwfczTDvbPlVnXv+klvVEmfvW3KI8wGzhVM4rz3MYKw77MCnXWxW68gc3elXOtecmIjoz94pXAvr/Hi8MDgyXYF5n0X8fuwo9Qxb2tVqo9BQTrXOXT8A2CRqSXNaddeCbSekSx8Ov756lGi0Pw27B6OD/D6KYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671776; c=relaxed/simple;
-	bh=R0JVo3ptWqWWh4btrU/WgF+vb2KnUVrsyGSfZjj9CNA=;
+	s=arc-20240116; t=1784671779; c=relaxed/simple;
+	bh=iwr2tcvkQy3Rg0qnKGjEQ/sNWczKmAEGxr332BercEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C9NYvoDe0+VHfu0xqDdo7QcyRG6hFSCYNi8ShSsAC9rCa/reBQo5YTzFbM2t6XdEKrjDnGwPUbMMKmBsJjhfl9kQmy594FoeSRtQgp/zfwvUrqLG1J6QGiDLm05YhTllST75lZMNTu4ZZNq76o2T8b03CHxQYIcerjWYvx4pnWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G29x0SEN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i8WdyQCzouuRz4nk1VRsp/gWIAZF/3iOJVebFYBEICnVKI/RMkvewgoPdKo8qrr0sCWyWnXRmNTEtKxq/fj41+BZojFfAsV/NC6IJ+QZHStI6WRunU4bgRkjniJNhGPgsDNbMhOXoJaDLevu9Mmexbrnr/YmECOpOO6MDJJajS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fcVYRsCV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G29x0SEN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A43E11F000E9;
-	Tue, 21 Jul 2026 22:09:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fcVYRsCV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575361F000E9;
+	Tue, 21 Jul 2026 22:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671775;
-	bh=L687iuPQjmWb38Em/8bZHDJpE9yfu9kRXcPE5OcViJg=;
+	s=korg; t=1784671777;
+	bh=pIe49aN5py5HlXH+qItzm3UENWUrz8gCfdufhSCyGJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G29x0SENBe1Msp2Ej/sT40eoggyr6RkDoQ3gjVS8VGvsXyCcS72c2qfeB+t1TaOI5
-	 cVar+Z4pJ5v1WOnfDTDrHGmivsX6PgaIQAP0VYNK+qy8hjN+GpGVmtrh3lIEouSNc4
-	 OEAlwba8qRGMM5wLNx/rZZSC/qOmyCqY5NrWX6IA=
+	b=fcVYRsCV1Vy99lsPAtD1wXcE+h4cjHMPFzQOJsUCNDLDfiCK4qO9o/NJyUU+LJTbs
+	 YJwOIk7bgjOvE4Hd95N2+CccqSoaV2g0dvZPKPp4mtBeqJW+IFL0V1piR8lZDgSi2A
+	 hOsTfKjll1KylexN52weqwFMGNFscTW/a+jtY8Tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Sun Jian <sun.jian.kdev@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Leo Yan <leo.yan@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 357/843] bpf: Run generic devmap egress prog on private skb
-Date: Tue, 21 Jul 2026 17:19:52 +0200
-Message-ID: <20260721152414.064065370@linuxfoundation.org>
+Subject: [PATCH 5.15 375/843] coresight: etm4x: Correct TRCVMIDCCTLR1 save and restore
+Date: Tue, 21 Jul 2026 17:20:10 +0200
+Message-ID: <20260721152414.470642035@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -48,70 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sun Jian <sun.jian.kdev@gmail.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 6001896f00984d317fb75160ba05c4a885fbe2a0 ]
+[ Upstream commit 0ec0a8785d21f63db520bd9d2a67c55e855d36a8 ]
 
-Generic XDP devmap multi redirect uses skb_clone() for intermediate
-destinations and sends the last destination with the original skb. This
-can leave multiple destinations sharing the same packet data.
+It is a typo to use trcvmidcctlr0 to save and restore TRCVMIDCCTLR1.
+Use trcvmidcctlr1 instead.
 
-This becomes visible after generic devmap egress-program support was
-added: a devmap egress program may mutate packet data, and another
-destination sharing the same data can observe that mutation.
-
-Native XDP broadcast redirect does not have this issue because
-xdpf_clone() copies the frame data for each destination. Generic XDP
-should provide the same per-destination isolation before running a
-devmap egress program.
-
-Fix this by making cloned skbs private before running the generic devmap
-egress program. Use skb_copy() instead of skb_unshare() so allocation
-failure does not consume the skb and the existing caller error paths keep
-their ownership semantics.
-
-Fixes: 2ea5eabaf04a ("bpf: devmap: Implement devmap prog execution for generic XDP")
-Suggested-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
-Link: https://lore.kernel.org/r/20260612114032.244616-2-sun.jian.kdev@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: f5bd523690d2 ("coresight: etm4x: Convert all register accesses")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260408-arm_cs_fix_trcvmidcctlr1_typo-v1-1-6a5695363b46@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/devmap.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
-index 6ad4b068abc770..0e67e6cabdb689 100644
---- a/kernel/bpf/devmap.c
-+++ b/kernel/bpf/devmap.c
-@@ -676,6 +676,18 @@ int dev_map_generic_redirect(struct bpf_dtab_netdev *dst, struct sk_buff *skb,
- 	if (unlikely(err))
- 		return err;
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index 4d9b77e454df66..1b91448f546d64 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -1753,7 +1753,7 @@ static int __etm4_cpu_save(struct etmv4_drvdata *drvdata)
  
-+	if (dst->xdp_prog && skb_cloned(skb)) {
-+		struct sk_buff *nskb;
-+
-+		nskb = skb_copy(skb, GFP_ATOMIC);
-+		if (!nskb)
-+			return -ENOMEM;
-+
-+		nskb->mac_len = skb->mac_len;
-+		consume_skb(skb);
-+		skb = nskb;
-+	}
-+
- 	/* Redirect has already succeeded semantically at this point, so we just
- 	 * return 0 even if packet is dropped. Helper below takes care of
- 	 * freeing skb.
+ 	state->trcvmidcctlr0 = etm4x_read32(csa, TRCVMIDCCTLR0);
+ 	if (drvdata->numvmidc > 4)
+-		state->trcvmidcctlr0 = etm4x_read32(csa, TRCVMIDCCTLR1);
++		state->trcvmidcctlr1 = etm4x_read32(csa, TRCVMIDCCTLR1);
+ 
+ 	state->trcclaimset = etm4x_read32(csa, TRCCLAIMCLR);
+ 
+@@ -1878,7 +1878,7 @@ static void __etm4_cpu_restore(struct etmv4_drvdata *drvdata)
+ 
+ 	etm4x_relaxed_write32(csa, state->trcvmidcctlr0, TRCVMIDCCTLR0);
+ 	if (drvdata->numvmidc > 4)
+-		etm4x_relaxed_write32(csa, state->trcvmidcctlr0, TRCVMIDCCTLR1);
++		etm4x_relaxed_write32(csa, state->trcvmidcctlr1, TRCVMIDCCTLR1);
+ 
+ 	etm4x_relaxed_write32(csa, state->trcclaimset, TRCCLAIMSET);
+ 
 -- 
 2.53.0
 
