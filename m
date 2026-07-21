@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8E444AB6E;
-	Tue, 21 Jul 2026 21:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30C644AB60;
+	Tue, 21 Jul 2026 21:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668738; cv=none; b=Kxgurk31ESW8nYnq4bNn+h10nEBB2mQ2ZtHUUKvhJTLwNRrSX3RQnbyMkwhhQZra5rIkcAiMdsGBru0wU7Rooqol6DK0g6wkB1OxSMbDQggrxADSVfiqvVRruZ2herYvPwBtXhnUJaFzElats7KVGxNP5rIvGWpHqyv/T7V3oJI=
+	t=1784668740; cv=none; b=WGBE04o0E5W0VjsR/6UAznC0pbHaF19GR5nSnLg2Ak5Jstn+cVbkap/kKkGMst2vTlC2uF4e61tafyxRfTY4v/kwRWZCmjfNfwb+6GJaxV6fnFq06ZLOGsIakU4ATYq/PT1r61X59lQYfZR3tFDibOLiNEVLLlIRfBlaIVIRp2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668738; c=relaxed/simple;
-	bh=AitnWCuh8RjRAfcdx3gQMVIW6Q2hzbgwG7U6gIPs55Q=;
+	s=arc-20240116; t=1784668740; c=relaxed/simple;
+	bh=V4ESkN7k+tB6KVzWgPzpccNnjD10IqqwimcFzc7skck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h9nNjZIKuCz1NHVAsM3drzclMgQad0irBTDQcPmnNxP57BGQeoSP2bazIxBbWt7iERzLfTkmErHAYm73X7v10HSf59WEBD3WhIaMFQ8EPsmUF3RU2QJd9xGRflsq1ujPiosjG61itXJmYKR+hEA6zxLL/SMqiE3Qww8WBVEtWTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYJQRZcj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X8pXEWhmsxd1Y3r+4xx2G2l1xOlSPyn+xAMktKLwKGxC6UNBzElDndH784C6nJ16a8i6ylHzxpSu8RMW3WUWyZGoCNgm24NXoB2ewxQXQoS1vRKZuMtQnPqPv36uDA5TbWiMsFGbsoEyQbivjbbuTY6mlUT5PajskA5NVzMzzOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ipf9UfaQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYJQRZcj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 716AC1F000E9;
-	Tue, 21 Jul 2026 21:18:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ipf9UfaQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1553A1F000E9;
+	Tue, 21 Jul 2026 21:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668736;
-	bh=IeP8Wwaf/JSRomePb1ty76WKGWAyZF1TY7Mj1TYviuU=;
+	s=korg; t=1784668739;
+	bh=SPdWGDJbElf7SM/TIUw1arBxszqKBQ+nf+ZKDVlexrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oYJQRZcjglXCLLTLK/43NS8JRhVWMGIVKblZJTzWJSRrkGpi1NDGs1aRts5XP6pJ9
-	 oRAnlAy9gCxmUoMyTqEfJHmpKSs7kmUkInDB8ItUbMa2gT4dctmyY6M9K1/zIs2WQX
-	 YI84OuZxwxtRarG4rKYRBn/OS0xdH0NMEG1K0Xek=
+	b=Ipf9UfaQH/tVLkLqFhQ0StjBuT/DVqf3H2YO6kZza+dbzkTlEh18/ZCeaZ8DMeiCr
+	 7S9F0ipV90KwoTpaz+pVrDKCWLX5rLWNT49cP3l5aSaUhIOFslYIJOGe2maD44pkSr
+	 UddB2ZD7tGAu84jXMXHmms4dtcuYzPATdGaKV5Zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Zhenhao Wan <whi4ed0g@gmail.com>,
-	Md Haris Iqbal <haris.iqbal@ionos.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.1 0246/1067] RDMA/rtrs-srv: Bound RDMA-Write length to chunk size in rdma_write_sg
-Date: Tue, 21 Jul 2026 17:14:07 +0200
-Message-ID: <20260721152430.102219402@linuxfoundation.org>
+Subject: [PATCH 6.1 0247/1067] RDMA/siw: bound Read Response placement to the RREAD length
+Date: Tue, 21 Jul 2026 17:14:08 +0200
+Message-ID: <20260721152430.124516557@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,66 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenhao Wan <whi4ed0g@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 963af8d97a8c6a117134a8d0db1415e0489200b1 upstream.
+commit 7d29f7e9dbd844cae4d3e559cf78324b9642fd6b upstream.
 
-When the server answers an RTRS READ, rdma_write_sg() builds the source
-scatter/gather entry for the IB_WR_RDMA_WRITE that returns data to the
-peer. Its length is taken directly from the wire descriptor:
+In drivers/infiniband/sw/siw/siw_qp_rx.c, siw_proc_rresp() places each
+inbound Read Response DDP segment at sge->laddr + wqe->processed and then
+accumulates wqe->processed, but it never checks the running total against
+the sink buffer length on continuation segments. siw_check_sge() resolves
+and validates the sink memory only on the first fragment (the if (!*mem)
+branch), and siw_rresp_check_ntoh() compares the cumulative length against
+wqe->bytes only on the final segment (the !frx->more_ddp_segs guard).
 
-  plist->length = le32_to_cpu(id->rd_msg->desc[0].len);
+A connected siw peer that answers an outstanding RREAD with Read Response
+segments that keep the DDP Last flag clear, carrying more total payload
+than the RREAD requested, drives wqe->processed past the validated sink
+buffer; the next siw_rx_data() call writes out of bounds at
+sge->laddr + wqe->processed. siw runs iWARP over ordinary routable TCP,
+so the peer is the remote end of an established RDMA connection and needs
+no local privilege.
 
-rd_msg points into the chunk buffer that the remote peer filled via
-RDMA-WRITE-WITH-IMM (rtrs_srv_rdma_done() -> process_io_req() ->
-process_read()), so desc[0].len is attacker-controlled and, before this
-change, was only rejected when zero. The source address is the fixed
-chunk start (dma_addr[msg_id]) and the source lkey is the PD-wide
-local_dma_lkey, which is not tied to the chunk's MR mapping, so the verbs
-layer does not constrain the transfer length to max_chunk_size. msg_id
-and off are bounded against queue_depth and max_chunk_size in
-rtrs_srv_rdma_done(), but desc[0].len is a separate field that was not
-checked against the chunk size.
+Bound every segment before placement, exactly as siw_proc_send() and
+siw_proc_write() already do for their tagged and untagged paths, and
+terminate the connection with a base-or-bounds DDP error when the
+Read Response would overrun the sink buffer.
 
-A peer that advertises desc[0].len larger than max_chunk_size can make
-the posted RDMA write read past the chunk's mapped region. The resulting
-behaviour depends on the IOMMU configuration: with no IOMMU or in
-passthrough mode the read may extend into memory adjacent to the chunk
-and be returned to the peer, which can disclose host memory; with a
-translating IOMMU the out-of-range access is expected to fault and abort
-the connection. In either case the transfer exceeds what the protocol
-permits and is driven by a remote peer.
+This is the second receive-path length fix for this file. A separate
+change rejects an MPA FPDU length that underflows the per-fragment
+remainder in the header decode; that guard does not cover this case,
+because here each individual segment length is self-consistent and only
+the accumulated placement offset overruns the buffer.
 
-Reject a descriptor length above max_chunk_size, mirroring the existing
-off >= max_chunk_size bound in rtrs_srv_rdma_done(). Legitimate clients
-do not exceed it: the client sets desc[0].len to its MR length, which is
-capped at the negotiated max_io_size (max_chunk_size - MAX_HDR_SIZE).
-
-Fixes: 9cb837480424 ("RDMA/rtrs: server: main functionality")
-Link: https://patch.msgid.link/r/20260612-master-v1-1-70cde5c6fdc9@gmail.com
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Fixes: 8b6a361b8c48 ("rdma/siw: receive path")
+Link: https://patch.msgid.link/r/20260602194700.2273758-1-michael.bommarito@gmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhenhao Wan <whi4ed0g@gmail.com>
-Reviewed-by: Md Haris Iqbal <haris.iqbal@ionos.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-srv.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/infiniband/sw/siw/siw_qp_rx.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-@@ -222,8 +222,9 @@ static int rdma_write_sg(struct rtrs_srv
- 	/* WR will fail with length error
- 	 * if this is 0
- 	 */
--	if (plist->length == 0) {
--		rtrs_err(s, "Invalid RDMA-Write sg list length 0\n");
-+	if (plist->length == 0 || plist->length > max_chunk_size) {
-+		rtrs_err(s, "Invalid RDMA-Write sg list length %u\n",
-+			 plist->length);
- 		return -EINVAL;
+--- a/drivers/infiniband/sw/siw/siw_qp_rx.c
++++ b/drivers/infiniband/sw/siw/siw_qp_rx.c
+@@ -848,6 +848,15 @@ int siw_proc_rresp(struct siw_qp *qp)
  	}
+ 	mem_p = *mem;
  
++	if (unlikely(wqe->processed + srx->fpdu_part_rem > wqe->bytes)) {
++		siw_dbg_qp(qp, "rresp len: %d + %d > %d\n",
++			   wqe->processed, srx->fpdu_part_rem, wqe->bytes);
++		wqe->wc_status = SIW_WC_LOC_LEN_ERR;
++		siw_init_terminate(qp, TERM_ERROR_LAYER_DDP,
++				   DDP_ETYPE_TAGGED_BUF,
++				   DDP_ECODE_T_BASE_BOUNDS, 0);
++		return -EINVAL;
++	}
+ 	bytes = min(srx->fpdu_part_rem, srx->skb_new);
+ 
+ 	if (mem_p->mem_obj == NULL)
 
 
