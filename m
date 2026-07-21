@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68E946EC84;
-	Tue, 21 Jul 2026 19:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48B446C4D9;
+	Tue, 21 Jul 2026 19:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661687; cv=none; b=Ooo15gLfIc9/2aw77b38zIxOtPLD3xdxr6tSe5UVYOE2P7qHY3BdLQh2PFvFdPbn+xDPXw6QMcyG5X3lbkBF3soO0C8QpzpzYjmx2m2b6in5ZyCbdBFTYs22TjUze2GS78zblogAqrb220RxV+U60GS0sAva5Kqe2yu7DIM63Nc=
+	t=1784661689; cv=none; b=TiJ215X9HRCBPkliqPMBAeagWJxXpdLvRysWWpDqbaNd4pFJcpd5pO3O8xDhHdzyCSwyoFotuso3DxpKALLmexzO1cw0UwPQTCj62N11SSLw5igoR+JTGVY5VnT0biY3GRxqkef8dhS8eAIRNywyYr7FQdt8i1TK617LOYGnt+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661687; c=relaxed/simple;
-	bh=jM8CYjUjhnV/cUYSqXSi4ErNj/ArYutqrpr+tRI53Gc=;
+	s=arc-20240116; t=1784661689; c=relaxed/simple;
+	bh=/VMPnKq3QlePvxgbUNT3ipUGCSLcavTeqezZozvJufM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u5DpS7R87g/8OM8r9G2m96o3iqwRZppNSmZOq5AmkMKioYlNOxWxaNu6ZWteVZxHtfWJDeOsMyUtJepwZw2cmVy3Io18NLGFcwDH0wNo4NCwrTukyjB1H4bi4hO2LmU2aavjnDWwFyWSOusRxwO1PWfPfMp29pYewYZjtomc37w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVSdPhfg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hLO6RXXbOROndJm+tvCXslxKhRNOlQ1or7xF58PSm0vUROAYMvk2SQWceIRoIAQ69Q9aeyMzXt1Tf9iDvQQIuER6MN6rByw60sFS/5nHLtC1BM5W2JRarhiamC0kksRJl9fo5DiVzu5ZW7eC33DtQd3l/lMC3U/Yk9RMZq08aCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N6nkFpuc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVSdPhfg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D1C1F00A3A;
-	Tue, 21 Jul 2026 19:21:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6nkFpuc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1DB11F000E9;
+	Tue, 21 Jul 2026 19:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661685;
-	bh=ayJYXXP3fdal/oI275zR0gGZyfvQxg1ZuL43dxPkCJM=;
+	s=korg; t=1784661688;
+	bh=pAp1eJIC8s44VKbKW9HA2XNh8Pikj3Ijy7mB5ZGmVIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mVSdPhfgJo25QGpsx+rYRmhg2V6BumFHkq/saeQAEzr9Z6j92y2y2vI8eOT9g9+Qh
-	 kKYgf4zaq47RJA7KphZRoAfUqn/KRrA+F+KItGOTPm/nl+QUfaUw5Vzrz9jYcU5j1y
-	 TiBCnyH3dQzZ7bnznxMfKYG94eUDq8nHnSNMXI2E=
+	b=N6nkFpucsNHIyZLQLUMkscigHBO+t5k0BexcW7iva/PvHADwoviVMbRvuY4LpPq37
+	 AzYM2hGQN9PIDeMYBRODleG7mB3hPEgYXEXZgxNC3rbbYbbe/hS4lSTeMjSwXs+vYQ
+	 j+1nDxDGkLVY5J4rnYVG9BUp9PiDAzUaSkcc3+wM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Maciej W. Rozycki" <macro@orcam.me.uk>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0160/1276] MIPS: Fix big-endian stack argument fetching in o32 wrapper
-Date: Tue, 21 Jul 2026 17:10:03 +0200
-Message-ID: <20260721152449.681360454@linuxfoundation.org>
+Subject: [PATCH 6.12 0161/1276] MIPS: DEC: Remove do_IRQ() call indirection
+Date: Tue, 21 Jul 2026 17:10:04 +0200
+Message-ID: <20260721152449.703236707@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,57 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit 8e0780d30b1b51248e42895b7acc7a20f147b40b ]
+[ Upstream commit 35554eadc1b127bb5294504a4ac8f3a5dd9e299d ]
 
-Fix an issue in call_o32() where the upper 32-bit half of incoming n64
-stack arguments is fetched and used for outgoing o32 stack arguments on
-big-endian platforms.
+As from commit 8f99a1626535 ("MIPS: Tracing: Add IRQENTRY_EXIT section
+for MIPS") do_IRQ() is not a macro anymore and can be invoked directly
+from assembly code, as a tail call.  Remove the dec_irq_dispatch() stub
+then and the indirection previously introduced with commit 187933f23679
+("[MIPS] do_IRQ cleanup"), improving performance by reducing the number
+of control flow changes and the overall instruction count, while fixing
+a compiler's complaint about a missing prototype for said stub:
 
-This code was adapted from arch/mips/dec/prom/call_o32.S which was meant
-for a little-endian platform only and therefore using 32-bit loads from
-64-bit stack slot locations holding incoming stack arguments resulted in
-correct values being retrieved for data that is expected to be 32-bit.
+arch/mips/dec/setup.c:780:25: warning: no previous prototype for 'dec_irq_dispatch' [-Wmissing-prototypes]
+  780 | asmlinkage unsigned int dec_irq_dispatch(unsigned int irq)
+      |                         ^~~~~~~~~~~~~~~~
 
-This works on little-endian platforms where the lower 32-bit half of the
-64-bit value is located at every 64-bit stack slot location.  However on
-big-endian platforms the lower 32-bit half is instead located at offset
-4 from every 64-bit stack slot location.
+(which gets promoted to a compilation error with CONFIG_WERROR).
 
-So to fix the issue the offset of 4 would have to be used on big-endian
-platforms only, or alternatively a 64-bit load from the 64-bit stack
-slot location can be used across the board, as the subsequent 32-bit
-store to the corresponding outgoing stack argument slot will correctly
-truncate the value and cause no unpredictable result.  We already take
-advantage of this architectural feature for the incoming arguments held
-in $a6 and $a7 registers, since the o32 wrapper does not know how many
-incoming arguments there are and consequently propagates incoming data
-which may not be 32-bit.
-
-Since this code is generally supposed to be used with the stack located
-in cached memory there is no extra overhead expected for 64-bit loads as
-opposed to 32-bit ones, so pick this variant for code simplicity.
-
-Fixes: 231a35d37293 ("[MIPS] RM: Collected changes")
+Fixes: 8f99a1626535 ("MIPS: Tracing: Add IRQENTRY_EXIT section for MIPS")
 Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/fw/lib/call_o32.S | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/mips/dec/int-handler.S | 2 +-
+ arch/mips/dec/setup.c       | 6 ------
+ 2 files changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/arch/mips/fw/lib/call_o32.S b/arch/mips/fw/lib/call_o32.S
-index ee856709e0b600..77533cfbdfc10b 100644
---- a/arch/mips/fw/lib/call_o32.S
-+++ b/arch/mips/fw/lib/call_o32.S
-@@ -74,7 +74,7 @@ NESTED(call_o32, O32_FRAMESZ, ra)
- 		PTR_LA		t1,6*O32_SZREG(fp)
- 		li		t2,O32_ARGC-6
- 1:
--		lw		t3,(t0)
-+		ld		t3,(t0)
- 		REG_ADDU	t0,SZREG
- 		sw		t3,(t1)
- 		REG_SUBU	t2,1
+diff --git a/arch/mips/dec/int-handler.S b/arch/mips/dec/int-handler.S
+index 011d1d678840aa..a0b439c90488fc 100644
+--- a/arch/mips/dec/int-handler.S
++++ b/arch/mips/dec/int-handler.S
+@@ -277,7 +277,7 @@
+ 		 srlv	t3,t1,t2
+ 
+ handle_it:
+-		j	dec_irq_dispatch
++		j	do_IRQ
+ 		 nop
+ 
+ #if defined(CONFIG_32BIT) && defined(CONFIG_MIPS_FP_SUPPORT)
+diff --git a/arch/mips/dec/setup.c b/arch/mips/dec/setup.c
+index 87f0a1436bf9cc..abe42616498db9 100644
+--- a/arch/mips/dec/setup.c
++++ b/arch/mips/dec/setup.c
+@@ -776,9 +776,3 @@ void __init arch_init_irq(void)
+ 			pr_err("Failed to register halt interrupt\n");
+ 	}
+ }
+-
+-asmlinkage unsigned int dec_irq_dispatch(unsigned int irq)
+-{
+-	do_IRQ(irq);
+-	return 0;
+-}
 -- 
 2.53.0
 
