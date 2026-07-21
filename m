@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030E631AF1B;
-	Tue, 21 Jul 2026 19:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790A843C7C9;
+	Tue, 21 Jul 2026 19:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660497; cv=none; b=NndVmCAAlJgQuqVb2EsNqG0kgj65RLm/5/iS05RDnWH6LPdkOe6XUkGPYEbBAkcV3Jy6wCXW4SPLxMQnGISdl5wY5GPdFjT/QEhKoqdZE9yCChCvSsJei6qKjCGHeywRbxa61R4eogwxdZI/bUowHQnEbl0lD7gPhLCXik38WYg=
+	t=1784660498; cv=none; b=RrSIm42xaF3yce98tieBSZFIxAsjwslCogkLCnqO3V3iu9kVmyfEDYN84//90IG9isfIe7wOxdkRAYqQyyw+7Hwed92mDFz4wvz1VExZtRi6ZPZgvSkbr1EW8Vp3RunyYxJG3xruRcv4VAkMqbdLWffobRb2/3XHF5Gv+HXpxcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660497; c=relaxed/simple;
-	bh=/DmumT1uIMbOyexgrLdbDGxPypkw0xa2nqjBhl0nj1E=;
+	s=arc-20240116; t=1784660498; c=relaxed/simple;
+	bh=bcKGPbCDp9+1eoNGmZpilAOXjSeZXoi8rlVmMXeKjOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gcGh0ODPxOLI/qkcktFlFoEFSP3xY810ZH6b0HdtWzmoi7wSx9WRBalFOL9ADgmNZcFe1FJufnhVn/pxSldLa6ph1Y4CDPL3En4vDqkp//hXdflq7xjve6unj0tscVDEHnAf4KNFszA7A0thAqWlZO3JByYQo+cZxaFJYvOjOqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iflFDq0l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lT/JAYKPmRWOqpfe1TfPMtg2qNlgqGdAIrV/ll/fs1l/oExU+FJTAl5FaC79ZwjxHlC3n/Rg4TgN9odWZ+XquqBdGAr4oeSVLEubvhke7HlNrLxmXSsEx6Bg1HP4OZAQlem3/wCkLMzN8XuVqxuEJQw6vuSleWTs8vA4YjgZzso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHt7LjGi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iflFDq0l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D45CD1F00A3E;
-	Tue, 21 Jul 2026 19:01:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHt7LjGi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51A01F01565;
+	Tue, 21 Jul 2026 19:01:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660462;
-	bh=L3gmPzW/E8WlbkR8qYtB/28Vpt6aalfvPqeIb8sU8m4=;
+	s=korg; t=1784660486;
+	bh=r8Gvaox7UHA/mhjN1vZO7csFDdwyFF4RdjzjNSoWKL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iflFDq0lEDJHpV6D4MKfAdoKAGpZ8Q+H7uWfiRmDkMoIBNomlhGa0btsage6nu8xm
-	 Of5QV8cI3tV/GNzwuhWDJjwVn0ysIwbzvs41zGbfQgH2X9rDhxRWJHLYPk+GOWA5H/
-	 NUa0cJJifZ4kbedHUsdZdJbZcPqQYa7rLcaasddA=
+	b=tHt7LjGiTHLT32XfC9wgcNrUlBPa/vDLbMsgFw4EODpwu9JN2HPmFpKJ47JhewD2v
+	 5/uMZAi02Gk0E0NrKnYKtzQ5T0aHka8vF8mg52jOuWj/TGI07XsUmqlRlbAcS02tNC
+	 wh/sRLUBXF26aOw+1TONMtxig9qE+8cwWXhl96zA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Song Liu <song@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Chris Mason <clm@meta.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0989/2077] perf bpf: Use scnprintf() in snprintf_hex() and synthesize_bpf_prog_name()
-Date: Tue, 21 Jul 2026 17:11:02 +0200
-Message-ID: <20260721152616.145806206@linuxfoundation.org>
+Subject: [PATCH 7.1 0997/2077] xprtrdma: Fix bcall rep leak and unbounded peek
+Date: Tue, 21 Jul 2026 17:11:10 +0200
+Message-ID: <20260721152616.334222836@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,65 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Chris Mason <clm@meta.com>
 
-[ Upstream commit cab3a9331ed0b3f884dd61c8a25b3cf123705982 ]
+[ Upstream commit c7653d5cebc8492c77ec0415b5e9c0fb3e644bc6 ]
 
-Both functions accumulate formatted output via ret += snprintf(buf + ret,
-size - ret, ...).  If the buffer is too small and snprintf() returns more
-than the remaining space, ret exceeds size and the next 'size - ret'
-underflows, causing snprintf() to write past the buffer end.
+rpcrdma_is_bcall() decodes a reply's first words to decide whether
+the frame is a backchannel call. Two issues in that decode path
+let a short or malformed reply leak the receive buffer and drain
+the Receive queue.
 
-Switch to scnprintf() which returns the actual number of bytes written,
-making the accumulation safe.
+First, the speculative peek
 
-Fixes: 7b612e291a5affb1 ("perf tools: Synthesize PERF_RECORD_* for loaded BPF programs")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Song Liu <song@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+    p = xdr_inline_decode(xdr, 0);
+    /* five p++ reads follow */
+
+asks xdr_inline_decode() for zero bytes, which returns xdr->p
+without consulting xdr->end. The five subsequent __be32 reads can
+then walk up to 20 bytes past the wire payload into stale regbuf
+contents and misclassify the reply as a backchannel call.
+
+Second, after the post-peek
+
+    p = xdr_inline_decode(xdr, 3 * sizeof(*p));
+    if (unlikely(!p))
+            return true;
+
+the short-header arm returns true without calling
+rpcrdma_bc_receive_call(). The contract with the caller is that a
+true return transfers ownership of rep to the backchannel path:
+
+    rpcrdma_reply_handler()
+      if (rpcrdma_is_bcall(r_xprt, rep))
+              return;        /* bare return, skips out_post */
+      ...
+    out_post:
+      rpcrdma_post_recvs(r_xprt, credits + ...);
+
+Because rpcrdma_bc_receive_call() never ran, no one took rep, but
+rpcrdma_reply_handler still bare-returns past rpcrdma_rep_put()
+and rpcrdma_post_recvs(). The rep, with its persistently
+DMA-mapped receive buffer, is orphaned on rb_all_reps and freed
+only at transport teardown. This completion reposts nothing, so
+its slot is reclaimed only when a later forward-channel reply
+reaches out_post and rpcrdma_post_recvs() allocates a fresh rep to
+backfill; absent that traffic the Receive queue drains and the
+peer's Sends draw RNR NAKs.
+
+Fix by consulting xdr->end after the zero-length peek so the five
+__be32 reads cannot run unless 20 bytes of wire payload remain. A
+byte-precise comparison against xdr->end is required because a
+non-4-aligned receive rounds the stream's word count up past the
+true payload. Also return false from the short-header arm so the
+reply falls through the normal out_norqst cleanup chain
+(rpcrdma_rep_put() plus rpcrdma_post_recvs()).
+
+Fixes: 41c8f70f5a3d ("xprtrdma: Harden backchannel call decoding")
+Assisted-by: kres:claude-opus-4-7
+Signed-off-by: Chris Mason <clm@meta.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf-event.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ net/sunrpc/xprtrdma/rpc_rdma.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
-index a27945c279efb7..2c09842469f1f2 100644
---- a/tools/perf/util/bpf-event.c
-+++ b/tools/perf/util/bpf-event.c
-@@ -36,7 +36,7 @@ static int snprintf_hex(char *buf, size_t size, unsigned char *data, size_t len)
- 	size_t i;
+diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
+index 8121069472af22..912d5de60abe81 100644
+--- a/net/sunrpc/xprtrdma/rpc_rdma.c
++++ b/net/sunrpc/xprtrdma/rpc_rdma.c
+@@ -1084,6 +1084,8 @@ rpcrdma_is_bcall(struct rpcrdma_xprt *r_xprt, struct rpcrdma_rep *rep)
  
- 	for (i = 0; i < len; i++)
--		ret += snprintf(buf + ret, size - ret, "%02x", data[i]);
-+		ret += scnprintf(buf + ret, size - ret, "%02x", data[i]);
- 	return ret;
- }
+ 	/* Peek at stream contents without advancing. */
+ 	p = xdr_inline_decode(xdr, 0);
++	if ((char *)xdr->end - (char *)p < 5 * XDR_UNIT)
++		return false;
  
-@@ -140,7 +140,7 @@ static int synthesize_bpf_prog_name(char *buf, int size,
- 	const struct btf_type *t;
- 	int name_len;
+ 	/* Chunk lists */
+ 	if (xdr_item_is_present(p++))
+@@ -1108,7 +1110,7 @@ rpcrdma_is_bcall(struct rpcrdma_xprt *r_xprt, struct rpcrdma_rep *rep)
+ 	 */
+ 	p = xdr_inline_decode(xdr, 3 * sizeof(*p));
+ 	if (unlikely(!p))
+-		return true;
++		return false;
  
--	name_len = snprintf(buf, size, "bpf_prog_");
-+	name_len = scnprintf(buf, size, "bpf_prog_");
- 	name_len += snprintf_hex(buf + name_len, size - name_len,
- 				 prog_tags[sub_id], BPF_TAG_SIZE);
- 	if (btf) {
-@@ -153,9 +153,10 @@ static int synthesize_bpf_prog_name(char *buf, int size,
- 			short_name = info->name;
- 	} else
- 		short_name = "F";
--	if (short_name)
--		name_len += snprintf(buf + name_len, size - name_len,
--				     "_%s", short_name);
-+	if (short_name) {
-+		name_len += scnprintf(buf + name_len, size - name_len,
-+				      "_%s", short_name);
-+	}
- 	return name_len;
- }
- 
+ 	rpcrdma_bc_receive_call(r_xprt, rep);
+ 	return true;
 -- 
 2.53.0
 
