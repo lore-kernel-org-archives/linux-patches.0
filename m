@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3DDD3B3C0A;
-	Tue, 21 Jul 2026 20:36:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B643833263F;
+	Tue, 21 Jul 2026 20:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666176; cv=none; b=kHujnGz7iMKxllqimJ/QY7WA4yALeCPm8cczAcr4kGZ9U/CzLObnWu+/3SjrcRAftHSMWHC7NOcJ+BI+DCIL4Phzt0FO7T9ikVrcj0lmIIg0pZyWTClm/e9+34/6XrsvHSnJCqnHyvYcbV25ZiDhrmR13hgcORbiMeeWJC9BoS0=
+	t=1784666178; cv=none; b=kJlfCqkd7sbtFoGqfGhdZAet/FeiN1VpRoAphXgjdfEHWtNxed/bENJ/ppgtOpFuhebKZdPC7qZwzLZojDEsURdrFBP/khCoXtGkPONMXri4pKBeuHTN8i/AjTrNHhpnDMuuJmFJYLJRiV5LDDj33GGwXTvOyo0oQr4VA1AF/CM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666176; c=relaxed/simple;
-	bh=IIOCcwOYwbK4omihFb1zrbhjBvkxEA6L4kkkfBv8xX8=;
+	s=arc-20240116; t=1784666178; c=relaxed/simple;
+	bh=EzX3QifG/aqmYiBfHp4u7ZEIpHM7O9rzGdpmPmipPUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nGe+MzzYigpIKOHmUfqJW3GXn3tIgrx7/f7EAttlF3RetrFKXaedeZqW/lwVeL0h+G1JcNUHLnz85RP52N1d74ckslgqqFfzhCYhkkeQqosJVLSWg+6zsuGGBicR4Gy/KOV2MTJ/JQVWOKv0Hl5aD6BJ+TuuCyF0bjVdhUM3zlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SIUCNeB7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S4ZsDcjyjSkr2xWED9u8MjP+yQl41Pj9zR7RWnloOde6tLYM2wQ1DnOI5tae/DGI5zoQtd3yKGsttJizjZnATssBxjkXf/gYGcepsPxTJwHrZCP2FbC+39ufXAIHY5cXY+AX5HLpdO5V1fEd7CmO6u/KxQUJ1ccmHSnY+14wz7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uXLdc0TQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SIUCNeB7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F82A1F00A3A;
-	Tue, 21 Jul 2026 20:36:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uXLdc0TQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187991F000E9;
+	Tue, 21 Jul 2026 20:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666174;
-	bh=DsxNF1LXzTHY7ZKoejkfZRatKDlf5QyczrdWO+71JzU=;
+	s=korg; t=1784666177;
+	bh=H8KZm3G4IUlEr5k9unE7+hPxCb9jVnTJuiucPgOMDGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SIUCNeB7+RvQZ+ghXObxMHZX/Kyxm1kyrhqHaGfMt1XE3CI9kOC9zCykejAVDrP1z
-	 5b1sCrtKs0tCQtIKH74DIqvcXYBASn5OPkXhC0wUUD0ymj9SjNsenQRhBxQe/Tm/bM
-	 rQaywHtHQ7fu2AZd6otCcQR40MXluyJCRNShmp98=
+	b=uXLdc0TQVenP17GIdpa9O2n6Q0mkKGmsmAtzCKTIMVMp2ubG98vL5NIvu0bvb5l3r
+	 s0MaiBDLbFgORqrP9MpVIaaAvYJVXMNbycFAtH4X+wIKWWS/vx2r7wi8P0PBuY4trc
+	 rgEsyZjHf1CaqP3vclP0P44SLNhCLWdIIxBTFJIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0582/1266] net: bcmgenet: Use weighted round-robin TX DMA arbitration
-Date: Tue, 21 Jul 2026 17:16:59 +0200
-Message-ID: <20260721152454.890333821@linuxfoundation.org>
+Subject: [PATCH 6.6 0583/1266] kcm: use WRITE_ONCE() when changing lower socket callbacks
+Date: Tue, 21 Jul 2026 17:17:00 +0200
+Message-ID: <20260721152454.911225508@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,99 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit fd615abd53110f0f815984e99e7cc51ca6b7d979 ]
+[ Upstream commit 47186409c092cd7dd70350999186c700233e854d ]
 
-Under heavy network traffic, we observed sporadic TX queue timeouts on the
-Raspberry Pi 4. The timeouts can be reproduced by stress testing the TX
-path with multiple concurrent iperf UDP streams:
+kcm_attach() replaces a live lower TCP socket's sk_data_ready and
+sk_write_space callbacks with KCM handlers, and kcm_unattach() restores
+them later. Those callback-pointer updates are still plain stores even
+though the same fields can be read and invoked concurrently on other
+CPUs.
 
-    iperf3 -c <ip> -u -b0 -P16 -t60
-    NETDEV WATCHDOG: CPU: 0: transmit queue 0 timed out 2044 ms
-    NETDEV WATCHDOG: CPU: 3: transmit queue 0 timed out 2004 ms
+If another CPU observes an older callback snapshot after the live field
+has already been restored, callback execution can run with a mismatched
+target and sk_user_data state, leading to stale or misdirected wakeups.
 
-Investigation showed that the timeouts are caused by the priority-based
-arbiter. Under heavy load the highest priority queue starves the lower
-priority ones, causing timeouts. The TX strict priority arbiter is not
-suitable for the default use case where all the traffic gets spread
-across all the TX queues.
+Use WRITE_ONCE() for the callback replacement and restore operations so
+these shared callback fields follow the same visibility contract already
+established by the earlier 4022 fixes.
 
-Therefore, to fix this, switch the TX DMA arbiter to Weighted Round-Robin,
-which services all queues, so they do not stall. The weights were chosen
-to follow the existing priority scheme: q0 gets the smallest weight, while
-q1-4 get the bulk of the TX bandwidth.
-
-Fixes: 1c1008c793fa ("net: bcmgenet: add main driver file")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
-Link: https://patch.msgid.link/20260610085238.56300-1-ovidiu.panait.rb@renesas.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ab7ac4eb9832 ("kcm: Kernel Connection Multiplexor module")
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260611053543.2429462-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/broadcom/genet/bcmgenet.c    | 23 +++++++------------
- 1 file changed, 8 insertions(+), 15 deletions(-)
+ net/kcm/kcmsock.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index d8e4456d111e04..482f56aed980de 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -41,9 +41,8 @@
+diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
+index 829eb67240a998..a47afaaea2a13c 100644
+--- a/net/kcm/kcmsock.c
++++ b/net/kcm/kcmsock.c
+@@ -1281,8 +1281,8 @@ static int kcm_attach(struct socket *sock, struct socket *csock,
+ 	psock->save_write_space = csk->sk_write_space;
+ 	psock->save_state_change = csk->sk_state_change;
+ 	csk->sk_user_data = psock;
+-	csk->sk_data_ready = psock_data_ready;
+-	csk->sk_write_space = psock_write_space;
++	WRITE_ONCE(csk->sk_data_ready, psock_data_ready);
++	WRITE_ONCE(csk->sk_write_space, psock_write_space);
+ 	csk->sk_state_change = psock_state_change;
  
- #include "bcmgenet.h"
- 
--/* Default highest priority queue for multi queue support */
--#define GENET_Q1_PRIORITY	0
--#define GENET_Q0_PRIORITY	1
-+#define GENET_Q0_WEIGHT		1
-+#define GENET_Q1_WEIGHT		4
- 
- #define GENET_Q0_RX_BD_CNT	\
- 	(TOTAL_DESC - priv->hw_params->rx_queues * priv->hw_params->rx_bds_per_q)
-@@ -2086,13 +2085,6 @@ static netdev_tx_t bcmgenet_xmit(struct sk_buff *skb, struct net_device *dev)
- 	int i;
- 
- 	index = skb_get_queue_mapping(skb);
--	/* Mapping strategy:
--	 * queue_mapping = 0, unclassified, packet xmited through ring 0
--	 * queue_mapping = 1, goes to ring 1. (highest priority queue)
--	 * queue_mapping = 2, goes to ring 2.
--	 * queue_mapping = 3, goes to ring 3.
--	 * queue_mapping = 4, goes to ring 4.
--	 */
- 	ring = &priv->tx_rings[index];
- 	txq = netdev_get_tx_queue(dev, index);
- 
-@@ -2792,8 +2784,9 @@ static void bcmgenet_fini_tx_napi(struct bcmgenet_priv *priv)
- 
- /* Initialize Tx queues
-  *
-- * Queues 1-4 are priority-based, each one has 32 descriptors,
-- * with queue 1 being the highest priority queue.
-+ * Queues 1-4 are the priority queues, each one has 32 descriptors.
-+ * The weighted round-robin arbiter gives them a larger share of TX
-+ * bandwidth than the default queue 0.
-  *
-  * Queue 0 is the default Tx queue with
-  * GENET_Q0_TX_BD_CNT = 256 - 4 * 32 = 128 descriptors.
-@@ -2821,8 +2814,8 @@ static void bcmgenet_init_tx_queues(struct net_device *dev)
- 	dma_ctrl = 0;
- 	ring_cfg = 0;
- 
--	/* Enable strict priority arbiter mode */
--	bcmgenet_tdma_writel(priv, DMA_ARBITER_SP, DMA_ARB_CTRL);
-+	/* Enable Weighted Round-Robin arbiter mode */
-+	bcmgenet_tdma_writel(priv, DMA_ARBITER_WRR, DMA_ARB_CTRL);
- 
- 	/* Initialize Tx priority queues */
- 	for (i = 0; i <= priv->hw_params->tx_queues; i++) {
-@@ -2832,7 +2825,7 @@ static void bcmgenet_init_tx_queues(struct net_device *dev)
- 		ring_cfg |= (1 << i);
- 		dma_ctrl |= (1 << (i + DMA_RING_BUF_EN_SHIFT));
- 		dma_priority[DMA_PRIO_REG_INDEX(i)] |=
--			(i ? GENET_Q1_PRIORITY : GENET_Q0_PRIORITY)
-+			(i ? GENET_Q1_WEIGHT : GENET_Q0_WEIGHT)
- 			<< DMA_PRIO_REG_SHIFT(i);
- 	}
+ 	write_unlock_bh(&csk->sk_callback_lock);
+@@ -1358,8 +1358,8 @@ static void kcm_unattach(struct kcm_psock *psock)
+ 	 */
+ 	write_lock_bh(&csk->sk_callback_lock);
+ 	csk->sk_user_data = NULL;
+-	csk->sk_data_ready = psock->save_data_ready;
+-	csk->sk_write_space = psock->save_write_space;
++	WRITE_ONCE(csk->sk_data_ready, psock->save_data_ready);
++	WRITE_ONCE(csk->sk_write_space, psock->save_write_space);
+ 	csk->sk_state_change = psock->save_state_change;
+ 	strp_stop(&psock->strp);
  
 -- 
 2.53.0
