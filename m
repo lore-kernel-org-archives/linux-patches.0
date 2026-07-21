@@ -1,44 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5908F44AB91;
-	Tue, 21 Jul 2026 21:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE3044AB9E;
+	Tue, 21 Jul 2026 21:42:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670119; cv=none; b=nHxqkaxb3pealtwLqzM35k91RLyYD5nkE6wmA472UI3eg86OqJqetAMzACKiOEhsCe5R13Me41NG++/zn/LNqzcdcSeZrIIiHIJILZwIQTjBtlKCHAnZ5y4+N59JyS+sOPB7Xtx8qD32Otroe+hBZfxEpyuXSNmaVCRX3YA5LnE=
+	t=1784670122; cv=none; b=GqOTq3xGwSvIVQ5BcWxm3oH5jrF/5CakPSFHDEjIdHD6lLnBfcsP3mEECNUTG9G/BWSLmxiCyULCyloZjWy4vFq6VY42Tf0KVrZq4qMJqLSImk0ukT8iChKuZvznOEmPk/Rl6/G2Jwdri3+MI12+ctNjXeOSV36GhmFETlzEuzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670119; c=relaxed/simple;
-	bh=teUuI97Cxe22uf8KI/hrfW2CS7q+jYWGzD1vkiy1nxU=;
+	s=arc-20240116; t=1784670122; c=relaxed/simple;
+	bh=lX/0QgrSmgthpSBMre8UZxorWKRscgRYr/hP+iGUgC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jn8f1eegy6at+/xMW9sRa0u2mnGVKoi2fmu5EKLXr1NVDH6TRJQyHO/naK/h7Wq+WEpMVOXQ9dAbHae0nI6kY5ke3Ij96C/mw0IlCo9whP7f1Ibs2LSDDOkLrOGuZg8M6XyMdxo5vLqSvcLPVnNUB379Zp8lW2WP/nwfsCx2/Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j5KcqGPr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pkdy7OnBo/7EkUKbN5Ek7r7oB6dM8Sv4OE9V9GcbANPFe6cO/4j1ju2+2urAJBBF2BdNpt32LdGpF9tF7KOxQWlFEbt+A1cCwuEbr2UzwQtnmE5ZvOGBbJ5v9MJ6DQPAUfNHe6qlENkBTYlOIXxTuVtZFdGmPmkCZHbczy9nnu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfKK9GW0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j5KcqGPr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C74F41F000E9;
-	Tue, 21 Jul 2026 21:41:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfKK9GW0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3CB1F000E9;
+	Tue, 21 Jul 2026 21:42:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670118;
-	bh=n6VREH3i5KWEJqMzv35ppzvSvyV6VhVjxioGkGUhI90=;
+	s=korg; t=1784670121;
+	bh=zvoGfHwapFkcYGiCb+Ao4R8nsWufw49dNsGSiR795EQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j5KcqGPr0tnugi+DbyFZI4qdl1vpx/SgQEsEm7AZgcZazcgSeKqsPO3N8x4/xYUSx
-	 n/eoGes7niVVAPqyiTiWmj43I0woUwRVKJx803eFhC3IYmYPwMPhocZ4oLIzyoU+P3
-	 FWvbnKqo9n7SNs2jW/BNcx4BtgDNbC/bCJgQKHdo=
+	b=NfKK9GW0sGZPk0KNvLd6l3G7oRIcniT1y1i7wFFrFHciJArTyUKLfO7EJeDcVlIBs
+	 4L6wiVkPPEplz2PhtflodhkIvmd06r7UmRzbC5f7v4scfB4tADrQfM0kTHnpdWFWdp
+	 6FnAmnonUW+O6N+cLOo9Irj8qzKGSqsozEvTVbVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 0812/1067] ocfs2: reject non-inline dinodes with i_size and zero i_clusters
-Date: Tue, 21 Jul 2026 17:23:33 +0200
-Message-ID: <20260721152442.718321272@linuxfoundation.org>
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Subject: [PATCH 6.1 0813/1067] bus: mhi: ep: Protect mhi_ep_handle_syserr() in the error path
+Date: Tue, 21 Jul 2026 17:23:34 +0200
+Message-ID: <20260721152442.740587401@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -57,135 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-commit 7ebc672fab7a76e1e47e0f2fc1ee48118d27fde4 upstream.
+commit 519ddf194b158b91439319f6b977b8a465fda0fb upstream.
 
-On a volume mounted without OCFS2_FEATURE_INCOMPAT_SPARSE_ALLOC, a
-non-inline regular file with non-zero i_size and zero i_clusters is
-structurally malformed: the extent map declares no allocated clusters yet
-the size header claims content exists.  Keep rejecting that shape, but
-express it through a shared predicate so the same invariant is available
-to normal inode reads and online filecheck.
+All the callers of mhi_ep_handle_syserr() except mhi_ep_process_cmd_ring()
+are holding the 'state_lock' to avoid the race in setting the MHI state. So
+do the same in mhi_ep_process_cmd_ring() for sanity.
 
-The same zero-cluster shape is also malformed for non-inline directories.
-ocfs2 directory growth allocates backing storage before advancing i_size,
-and ocfs2_dir_foreach_blk_el() later walks until ctx->pos reaches
-i_size_read(inode).  A forged directory dinode with a huge i_size and no
-clusters would repeatedly fail on holes while advancing through the
-claimed size.
-
-Sparse regular files remain exempt: on sparse-alloc volumes, truncate can
-legitimately grow i_size without allocating clusters.  System inodes and
-inline-data dinodes also retain their separate storage rules.
-
-Mirror the check in ocfs2_filecheck_validate_inode_block() as well.
-filecheck reports through its own error namespace, so malformed
-size/cluster state is logged as a filecheck invalid-inode result rather
-than via ocfs2_error(), but it must not proceed into
-ocfs2_populate_inode().
-
-Link: https://lore.kernel.org/20260519110404.1803902-4-michael.bommarito@gmail.com
-Fixes: b657c95c1108 ("ocfs2: Wrap inode block reads in a dedicated function.")
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://sashiko.dev/#/patchset/20260517111015.3187935-1-michael.bommarito%40gmail.com
-Assisted-by: Claude:claude-opus-4-7
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: e827569062a8 ("bus: mhi: ep: Add support for processing command rings")
+Cc: stable@vger.kernel.org # 5.18
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260302085612.18725-1-manivannan.sadhasivam@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/inode.c |   60 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 60 insertions(+)
+ drivers/bus/mhi/ep/main.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/ocfs2/inode.c
-+++ b/fs/ocfs2/inode.c
-@@ -83,6 +83,24 @@ static bool ocfs2_dinode_has_unexpected_
- 	return !S_ISCHR(mode) && !S_ISBLK(mode) && di->id1.dev1.i_rdev != 0;
- }
- 
-+static bool ocfs2_dinode_has_size_without_clusters(struct super_block *sb,
-+						   struct ocfs2_dinode *di)
-+{
-+	umode_t mode = le16_to_cpu(di->i_mode);
-+
-+	if (le32_to_cpu(di->i_flags) & OCFS2_SYSTEM_FL)
-+		return false;
-+	if (le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_DATA_FL)
-+		return false;
-+	if (!le64_to_cpu(di->i_size) || le32_to_cpu(di->i_clusters))
-+		return false;
-+
-+	if (S_ISDIR(mode))
-+		return true;
-+
-+	return !ocfs2_sparse_alloc(OCFS2_SB(sb)) && S_ISREG(mode);
-+}
-+
- void ocfs2_set_inode_flags(struct inode *inode)
- {
- 	unsigned int flags = OCFS2_I(inode)->ip_attr;
-@@ -1487,6 +1505,33 @@ int ocfs2_validate_inode_block(struct su
- 		goto bail;
- 	}
- 
-+	/*
-+	 * Non-inline directories must not have i_size without allocated
-+	 * clusters: directory growth adds storage before advancing i_size,
-+	 * and readdir walks i_size block-by-block.  A forged directory
-+	 * with zero clusters and a huge i_size would repeatedly fault on
-+	 * holes while advancing through the claimed size.
-+	 *
-+	 * Non-inline regular files have the same invariant on non-sparse
-+	 * volumes.  Sparse regular files are different: truncate can
-+	 * legitimately grow i_size without allocating clusters, so keep
-+	 * the sparse-alloc carveout for S_IFREG only.  System inodes and
-+	 * inline-data dinodes have their own storage rules.
-+	 */
-+	if (ocfs2_dinode_has_size_without_clusters(sb, di)) {
-+		if (S_ISDIR(le16_to_cpu(di->i_mode)))
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode #%llu: directory i_size %llu with i_clusters 0 and no inline-data flag\n",
-+					 (unsigned long long)bh->b_blocknr,
-+					 (unsigned long long)le64_to_cpu(di->i_size));
-+		else
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode #%llu: regular file i_size %llu with i_clusters 0 and no inline-data flag on non-sparse volume\n",
-+					 (unsigned long long)bh->b_blocknr,
-+					 (unsigned long long)le64_to_cpu(di->i_size));
-+		goto bail;
-+	}
-+
- 	if (le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_DATA_FL) {
- 		struct ocfs2_inline_data *data = &di->id2.i_data;
- 
-@@ -1602,6 +1647,21 @@ static int ocfs2_filecheck_validate_inod
- 		     le16_to_cpu(di->i_mode),
- 		     (unsigned long long)le64_to_cpu(di->id1.dev1.i_rdev));
- 		rc = -OCFS2_FILECHECK_ERR_INVALIDINO;
-+		goto bail;
-+	}
-+
-+	if (ocfs2_dinode_has_size_without_clusters(sb, di)) {
-+		if (S_ISDIR(le16_to_cpu(di->i_mode)))
-+			mlog(ML_ERROR,
-+			     "Filecheck: invalid dinode #%llu: directory i_size %llu with i_clusters 0 and no inline-data flag\n",
-+			     (unsigned long long)bh->b_blocknr,
-+			     (unsigned long long)le64_to_cpu(di->i_size));
-+		else
-+			mlog(ML_ERROR,
-+			     "Filecheck: invalid dinode #%llu: regular file i_size %llu with i_clusters 0 and no inline-data flag on non-sparse volume\n",
-+			     (unsigned long long)bh->b_blocknr,
-+			     (unsigned long long)le64_to_cpu(di->i_size));
-+		rc = -OCFS2_FILECHECK_ERR_INVALIDINO;
- 	}
- 
- bail:
+--- a/drivers/bus/mhi/ep/main.c
++++ b/drivers/bus/mhi/ep/main.c
+@@ -207,7 +207,9 @@ static int mhi_ep_process_cmd_ring(struc
+ 			ret = mhi_ep_create_device(mhi_cntrl, ch_id);
+ 			if (ret) {
+ 				dev_err(dev, "Error creating device for channel (%u)\n", ch_id);
++				mutex_lock(&mhi_cntrl->state_lock);
+ 				mhi_ep_handle_syserr(mhi_cntrl);
++				mutex_unlock(&mhi_cntrl->state_lock);
+ 				return ret;
+ 			}
+ 		}
 
 
