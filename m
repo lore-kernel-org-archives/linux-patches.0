@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27080470455;
-	Tue, 21 Jul 2026 17:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B2C4CA28D;
+	Tue, 21 Jul 2026 17:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656090; cv=none; b=Vn30KD8LyPFuyDRIrTUJT95NWBLC9WD6tI8aoSrBtedgfMGmIMQyqQxfxU8Mr8ktBFxZONUZDw/GPVSjYILtRIoF4EfzumwDy+VE3EObSsFOZdSkdNJts4pZQscNiAjFKgweD7NKWByWjYuu/Oe9UjKABI09/MxzyoKEcFZiFZc=
+	t=1784656098; cv=none; b=A9ZoGT1mp7DVumtsbXjANw3Uc8wUV442ZRjn5JptEFh8AyZyrdhfyTYJsEiSeKnz+6bdbSxDVeCznP0tpkP4XIOLSZHjsNtqLstvXGZrwssQbZhE2eEQkcoMaVJpWWVLiGjTtOxewAIGE67RqT/IHMr9HfMV0PvxlmO9RHSiqG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656090; c=relaxed/simple;
-	bh=hV+LVaxCTN4/k3nKmrNy5/20aL8CPMK1MPSk3LJtQbU=;
+	s=arc-20240116; t=1784656098; c=relaxed/simple;
+	bh=huEcZqEgS0KHxRMQXGDVgY0a8T/0xf/w9WhuE7nzhC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MLAHmyXDtV8Wy55vwjRCKUdOptbcLXO+no3paN3p9ewfcpBJ4c1DFOCrUcHlsMQptCqEqlUZfxThk/Px8im5AzMj7vochTZAeVLAXSKuf0MF4tpybxXVcDPcK2oUc0P5o1gEkyu2BYJo2EsMbTXuA4s/OgsLXRhRfW+y/G+TKj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lc6Ahdjp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k3g/8ZREDovqnoN1xT763zaXaxxxr6l1VKH0ERX7PjGhrotVnFosbF8RfWuvJLqsfjQZlwNXIFV2gLDw5Oaq+mghMb18fIeB9+a4DWKlB4mtxfKbY5uzDdg1aZtwTM13oBKSjo+CHK8wW3ycup+3blsQsjxMyRXxgNKrySv9Wnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=epeQa4AW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lc6Ahdjp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C561F000E9;
-	Tue, 21 Jul 2026 17:48:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="epeQa4AW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C4F1F00A3A;
+	Tue, 21 Jul 2026 17:48:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656086;
-	bh=kCPJNovyGGfI3BHORYinyZlyojWn8av2BT3dbUX4oS4=;
+	s=korg; t=1784656088;
+	bh=ptqxjIwaswEmuvVswK+18USJPAfhHdMQBreN+zTYWBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lc6AhdjpriJtxZ2X6huqYykhvjSkT/XpzyKbEN3apDdU/oHWjVLBadj5qxQHyq37E
-	 1Sa37CfdeEIsyL48QIaVPuUWAbffd0IPDMeITvmGEqTARjiJfBmp5dWFtmpYA4OePd
-	 zsLF0MmGcBSvQpDJMowmaWZmA8KXzu5MrXxfdB5Q=
+	b=epeQa4AWt3KTlkSiUqoeZuRrBh7PX//g3mcfBGv3RgMf/pnMsEnoi5TS8L96d1wiW
+	 N0+BdBr3DwqagjmCoAZshs/zY6+xaNagErNO9F1kfcSiWSbCJFJjeo5BfVtXXEIaeI
+	 2kZI3BAmNuAkKQAi7DlTMz//oPShKWjpkriR8nkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Nayyar <sidnayyar@google.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Quentin Monnet <qmo@kernel.org>,
+	Mykyta Yatsenko <yatsenko@meta.com>,
+	Carlos Llamas <cmllamas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0254/1611] bpftool: Fix typo in struct_ops map FD generation for light skeleton
-Date: Tue, 21 Jul 2026 17:06:10 +0200
-Message-ID: <20260721152520.754680771@linuxfoundation.org>
+Subject: [PATCH 6.18 0255/1611] libbpf: Fix UAF in strset__add_str()
+Date: Tue, 21 Jul 2026 17:06:11 +0200
+Message-ID: <20260721152520.778442343@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,41 +52,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Nayyar <sidnayyar@google.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-[ Upstream commit be4c6c7bc42952b71188894933946b410deadcfe ]
+[ Upstream commit b23705e6afb6ac4ae6d220dcb35975698667dd76 ]
 
-When generating light skeletons for BPF programs containing struct_ops
-maps, bpftool incorrectly outputs a stray literal 't' instead of a tab
-character for the map file descriptor member in the links structure.
-This causes a compilation error when the generated light skeleton is
-used.
+strset_add_str_mem() might reallocate the strset data buffer in order to
+accommodate the provided string 's'. However, if 's' points to a string
+already present in the buffer, it becomes dangling after the realloc.
+This leads to a use-after-free when attempting to memcpy() the string
+into the new buffer.
 
-Correct the format string by replacing 't' with '\t'.
+One scenario that triggers this problematic path is when resolve_btfids
+attempts to patch kfunc prototypes using existing BTF parameter names:
 
-Fixes: 08ac454e258e ("libbpf: Auto-attach struct_ops BPF maps in BPF skeleton")
-Signed-off-by: Siddharth Nayyar <sidnayyar@google.com>
+ | resolve_btfids: function bpf_list_push_back_impl already exists in BTF
+ | Segmentation fault (core dumped)
+
+Compiling resolve_btfids with fsanitize=address generates a detailed
+report of the UAF:
+
+ | =================================================================
+ | ERROR: AddressSanitizer: heap-use-after-free on address 0x7f4c4a500bd4
+ | ==1507892==ERROR: AddressSanitizer: heap-use-after-free on address 0x7f4c4a500bd4 at pc 0x55d25155a2a8 bp 0x7ffcef879060 sp 0x7ffcef878818
+ | READ of size 5 at 0x7f4c4a500bd4 thread T0
+ |     #0 0x55d25155a2a7 in memcpy (tools/bpf/resolve_btfids/resolve_btfids+0xcf2a7)
+ |     #1 0x55d2515d708e in strset__add_str tools/lib/bpf/strset.c:162:2
+ |     #2 0x55d2515c730b in btf__add_str tools/lib/bpf/btf.c:2109:8
+ |     #3 0x55d2515c9020 in btf__add_func_param tools/lib/bpf/btf.c:3108:14
+ |     #4 0x55d25159f0b5 in process_kfunc_with_implicit_args tools/bpf/resolve_btfids/main.c:1196:9
+ |     #5 0x55d25159e004 in btf2btf tools/bpf/resolve_btfids/main.c:1229:9
+ |     #6 0x55d25159cee7 in main tools/bpf/resolve_btfids/main.c:1535:6
+ |     #7 0x7f4c78e29f76 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+ |     #8 0x7f4c78e2a026 in __libc_start_main csu/../csu/libc-start.c:360:3
+ |     #9 0x55d2514bb860 in _start (tools/bpf/resolve_btfids/resolve_btfids+0x30860)
+ |
+ | 0x7f4c4a500bd4 is located 13268 bytes inside of 2829000-byte region [0x7f4c4a4fd800,0x7f4c4a7b02c8)
+ | freed by thread T0 here:
+ |     #0 0x55d25155b700 in realloc (tools/bpf/resolve_btfids/resolve_btfids+0xd0700)
+ |     #1 0x55d2515c426c in libbpf_reallocarray tools/lib/bpf/./libbpf_internal.h:220:9
+ |     #2 0x55d2515c426c in libbpf_add_mem tools/lib/bpf/btf.c:224:13
+ |
+ | previously allocated by thread T0 here:
+ |     #0 0x55d25155b2e3 in malloc (tools/bpf/resolve_btfids/resolve_btfids+0xd02e3)
+ |     #1 0x55d2515d6e7d in strset__new tools/lib/bpf/strset.c:58:20
+
+While resolve_btfids could be refactored to avoid this call path, let's
+instead fix this issue at the source in strset__add_str() and avoid
+similar scenarios.
+
+Let's check if set->strs_data was reallocated and whether 's' points to
+an internal string within the old strset buffer. In such case, 's' is
+reconstructed to point to the new buffer.
+
+While already here, also fix strset__find_str() which suffers from the
+same problem by factoring out the common operations into a new helper
+function strset_str_append().
+
+Fixes: 90d76d3ececc ("libbpf: Extract internal set-of-strings datastructure APIs")
+Suggested-by: Andrii Nakryiko <andrii@kernel.org>
+Suggested-by: Mykyta Yatsenko <yatsenko@meta.com>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/bpf/20260520-struct_ops_gen_typo_fix-v1-1-4dee3771da46@google.com
+Link: https://lore.kernel.org/bpf/20260523162722.2718940-1-cmllamas@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/gen.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/lib/bpf/strset.c | 62 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 41 insertions(+), 21 deletions(-)
 
-diff --git a/tools/bpf/bpftool/gen.c b/tools/bpf/bpftool/gen.c
-index 993c7d9484a463..bdef69c5e6cd44 100644
---- a/tools/bpf/bpftool/gen.c
-+++ b/tools/bpf/bpftool/gen.c
-@@ -1399,7 +1399,7 @@ static int do_skeleton(int argc, char **argv)
- 				continue;
+diff --git a/tools/lib/bpf/strset.c b/tools/lib/bpf/strset.c
+index 2464bcbd04e037..ace73c6b3d62b4 100644
+--- a/tools/lib/bpf/strset.c
++++ b/tools/lib/bpf/strset.c
+@@ -107,6 +107,41 @@ static void *strset_add_str_mem(struct strset *set, size_t add_sz)
+ 			      set->strs_data_len, set->strs_data_max_len, add_sz);
+ }
  
- 			if (use_loader)
--				printf("t\tint %s_fd;\n", ident);
-+				printf("\t\tint %s_fd;\n", ident);
- 			else
- 				printf("\t\tstruct bpf_link *%s;\n", ident);
- 		}
++static long strset_str_append(struct strset *set, const char *s)
++{
++	uintptr_t old_data = (uintptr_t)set->strs_data;
++	size_t old_data_len = set->strs_data_len;
++	uintptr_t old_s = (uintptr_t)s;
++	long len = strlen(s) + 1;
++	void *p;
++
++	/*
++	 * Hashmap keys are always offsets within set->strs_data, so to even
++	 * look up some string from the "outside", we need to first append it
++	 * at the end, so that it can be addressed with an offset. Luckily,
++	 * until set->strs_data_len is incremented, that string is just a piece
++	 * of garbage for the rest of the code, so no harm, no foul. On the
++	 * other hand, if the string is unique, it's already appended and
++	 * ready to be used, only a simple set->strs_data_len increment away.
++	 */
++	p = strset_add_str_mem(set, len);
++	if (!p)
++		return -ENOMEM;
++
++	/*
++	 * The set->strs_data might have reallocated and if 's' pointed
++	 * to an internal string within the old buffer, then it became
++	 * dangling and needs to be reconstructed before the copy.
++	 */
++	if (old_data && old_data != (uintptr_t)set->strs_data &&
++	    old_s >= old_data && old_s < old_data + old_data_len)
++		s = set->strs_data + (old_s - old_data);
++
++	memcpy(p, s, len);
++
++	return len;
++}
++
+ /* Find string offset that corresponds to a given string *s*.
+  * Returns:
+  *   - >0 offset into string data, if string is found;
+@@ -116,16 +151,12 @@ static void *strset_add_str_mem(struct strset *set, size_t add_sz)
+ int strset__find_str(struct strset *set, const char *s)
+ {
+ 	long old_off, new_off, len;
+-	void *p;
+ 
+-	/* see strset__add_str() for why we do this */
+-	len = strlen(s) + 1;
+-	p = strset_add_str_mem(set, len);
+-	if (!p)
+-		return -ENOMEM;
++	len = strset_str_append(set, s);
++	if (len < 0)
++		return len;
+ 
+ 	new_off = set->strs_data_len;
+-	memcpy(p, s, len);
+ 
+ 	if (hashmap__find(set->strs_hash, new_off, &old_off))
+ 		return old_off;
+@@ -142,24 +173,13 @@ int strset__find_str(struct strset *set, const char *s)
+ int strset__add_str(struct strset *set, const char *s)
+ {
+ 	long old_off, new_off, len;
+-	void *p;
+ 	int err;
+ 
+-	/* Hashmap keys are always offsets within set->strs_data, so to even
+-	 * look up some string from the "outside", we need to first append it
+-	 * at the end, so that it can be addressed with an offset. Luckily,
+-	 * until set->strs_data_len is incremented, that string is just a piece
+-	 * of garbage for the rest of the code, so no harm, no foul. On the
+-	 * other hand, if the string is unique, it's already appended and
+-	 * ready to be used, only a simple set->strs_data_len increment away.
+-	 */
+-	len = strlen(s) + 1;
+-	p = strset_add_str_mem(set, len);
+-	if (!p)
+-		return -ENOMEM;
++	len = strset_str_append(set, s);
++	if (len < 0)
++		return len;
+ 
+ 	new_off = set->strs_data_len;
+-	memcpy(p, s, len);
+ 
+ 	/* Now attempt to add the string, but only if the string with the same
+ 	 * contents doesn't exist already (HASHMAP_ADD strategy). If such
 -- 
 2.53.0
 
