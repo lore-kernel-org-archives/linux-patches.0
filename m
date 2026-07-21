@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0CC47126C;
-	Tue, 21 Jul 2026 18:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BC247124C;
+	Tue, 21 Jul 2026 18:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657211; cv=none; b=f40KjfHfpxhjgCg1FbD+VD3S0Hlt5GEApQL0qN+sGRPpZgPQM+QgpxcY4CFWrEMySwBFCBxbucX/klOPkxytgztQCpXz0TX9rDYzmIZimEP/1GrHyz1OybAbbwma/DemPaokczcEyCek0KcuxcPon0JEjcvbaFUlqUw3t5QX5Rw=
+	t=1784657214; cv=none; b=AeVkEOCek99iAj12x4AhTXPlmOAyFgxpMSVJiMkF3eTx5d0Cu5fHrm3AFo7/dYLVkrqjwkEWLqZUPXOehdUOFEpw4Cwfh6Hk2TmwW8mRt9qPo99c5qdSpeO5p6wzO6P8ljkw/TdYfj3G9wV/M6rry8dzx6apSNojr0GuXVD5DCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657211; c=relaxed/simple;
-	bh=w96iq2j2wFC+fEwtzMJgjtnAFOBkOl+hHyAoroVmlBc=;
+	s=arc-20240116; t=1784657214; c=relaxed/simple;
+	bh=sq+p2/IQmU/+X+Wbmw3HS/4tqMCDqtM3MFAkLz0UJUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=imGxnTKsG6AEFLdGWyqrbm4fHKiWFVJomC9yrb0M+mR9cnYvyol2xfirtX5ZJRpZFPPK4dPe+J9fjRdtxLKvsrncWiDnG/T1wg8hZB3WCix+zuA0BdoMq+8qQWEMIhecr3LvRXRmCeMMTFg1qcSyqir9Jw176zWvvj3n2xPBXsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ej8iVEWq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=us1KcqXFHWAXVSQ+wuSiIuDWEiJ+cZeqPglTsjs6SIf0q815oQICdguv1somOaobx5ERxhodWIy1FybiKoo5PgHNCq6GzIshu/2jdbbED7NWmOoJ5kXbgfxi6BeQvMsWQCqWpANYoEGmEERbmth0vj/S3SAvECP7Kd7cDPyDmZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgTbW22E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ej8iVEWq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3BEF1F000E9;
-	Tue, 21 Jul 2026 18:06:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgTbW22E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C1231F000E9;
+	Tue, 21 Jul 2026 18:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657210;
-	bh=Ro6himWcqKrgb6Dq0mwseceztC45BmtxzV9wUW+w0RQ=;
+	s=korg; t=1784657213;
+	bh=U5YZOXBUauZ2nK3MUEImI+W9wbgZr+5p4oZwJo/ujTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ej8iVEWq4nHLsxhtuMWKtG1qwvU3+h5nUBBNtsCpoiINXEPEBiCdAHr4rafxatzQ/
-	 h+76ZxCiG6Re+RAbG2gxqgLDEUiVCTpWQ6cxtovZ0SfEuvR36+Un5JBRjZidCBPVdr
-	 RsWzhMs7O0Qh+Hzs6rMCP3KIhbGcy3AyMm0erBVU=
+	b=hgTbW22EqGRnadN8e63qfWozaBr1x+pzX+qZt9BplwCZ7ec9119NWZupcROy57ajL
+	 qktTE15sSZs1rV1KTJfa0YQ+roiFIADxKLev7k81pP8HYqhF6I8hzf+j9VPDUw/hNu
+	 ATeUZrw5acVQd9wxgekPLJf9z8fdWVCZ5QDMln8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Carol L Soto <csoto@nvidia.com>,
+	Jamie Nguyen <jamien@nvidia.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0652/1611] perf c2c: Fix use-after-free in he__get_c2c_hists() error path
-Date: Tue, 21 Jul 2026 17:12:48 +0200
-Message-ID: <20260721152530.053969727@linuxfoundation.org>
+Subject: [PATCH 6.18 0679/1611] fs/ntfs3: resize log->one_page_buf when adopting on-disk page size
+Date: Tue, 21 Jul 2026 17:13:15 +0200
+Message-ID: <20260721152530.654875440@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,41 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Jamie Nguyen <jamien@nvidia.com>
 
-[ Upstream commit 5e5e6196d737c5be03d20647428316b36621608d ]
+[ Upstream commit 5a35454179fe1041d9cd286f5d320ce0d448c12a ]
 
-he__get_c2c_hists() assigns c2c_he->hists before calling
-c2c_hists__init().  If init fails, the error path calls free(hists)
-but leaves c2c_he->hists pointing to freed memory.  On teardown,
-c2c_he_free() finds the non-NULL pointer and calls
-hists__delete_entries() on it, causing a use-after-free.
+log_replay() allocates log->one_page_buf using the page size that was
+chosen from the host PAGE_SIZE:
 
-Set c2c_he->hists to NULL before freeing so teardown skips the
-already-freed allocation.
+	log->one_page_buf = kmalloc(log->page_size, GFP_NOFS);
 
-Fixes: b2252ae67b687d2b ("perf c2c report: Decode c2c_stats for hist entries")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Later, when a restart area is found, the log page size recorded on disk
+is adopted:
+
+	t32 = le32_to_cpu(log->rst_info.r_page->sys_page_size);
+	if (log->page_size != t32) {
+		log->l_size = log->orig_file_size;
+		log->page_size = norm_file_page(t32, &log->l_size,
+						t32 == DefaultLogPageSize);
+	}
+
+If the on-disk page size is larger than the size used for the initial
+allocation, log->page_size grows but one_page_buf is left at its
+original, smaller size. A subsequent unaligned read_log_page() then
+reads log->page_size bytes into the undersized scratch buffer:
+
+	page_buf = page_off ? log->one_page_buf : *buffer;
+	err = ntfs_read_run_nb_ra(ni->mi.sbi, &ni->file.run, page_vbo, page_buf,
+				  log->page_size, NULL, &log->read_ahead);
+
+overflowing the allocation. This is reachable when mounting a dirty
+NTFS volume whose log was formatted with a page size larger than the
+buffer initially allocated on the mounting host (for example a 64K-log
+volume mounted on a host that allocated a 4K scratch buffer).
+
+Grow one_page_buf when the adopted on-disk page size exceeds the size
+used for the initial allocation. On krealloc() failure the original
+buffer is left intact and freed by the existing error path.
+
+Fixes: b46acd6a6a627 ("fs/ntfs3: Add NTFS journal")
+Reported-by: Carol L Soto <csoto@nvidia.com>
+Signed-off-by: Jamie Nguyen <jamien@nvidia.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-c2c.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ntfs3/fslog.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/tools/perf/builtin-c2c.c b/tools/perf/builtin-c2c.c
-index 7efba102996439..0849092ef5fc1c 100644
---- a/tools/perf/builtin-c2c.c
-+++ b/tools/perf/builtin-c2c.c
-@@ -218,6 +218,7 @@ he__get_c2c_hists(struct hist_entry *he,
- 
- 	ret = c2c_hists__init(hists, sort, nr_header_lines, env);
- 	if (ret) {
-+		c2c_he->hists = NULL;
- 		free(hists);
- 		return NULL;
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 124198539b9506..8395ca003af037 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -3936,9 +3936,28 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)
+ 	 */
+ 	t32 = le32_to_cpu(log->rst_info.r_page->sys_page_size);
+ 	if (log->page_size != t32) {
++		u32 old_page_size = log->page_size;
++
+ 		log->l_size = log->orig_file_size;
+ 		log->page_size = norm_file_page(t32, &log->l_size,
+ 						t32 == DefaultLogPageSize);
++
++		/*
++		 * If the adopted on-disk page size is larger than the size used
++		 * to allocate one_page_buf above, grow the scratch buffer so a
++		 * later read_log_page() cannot overflow it.
++		 */
++		if (log->page_size > old_page_size) {
++			void *buf;
++
++			buf = krealloc(log->one_page_buf, log->page_size,
++				       GFP_NOFS);
++			if (!buf) {
++				err = -ENOMEM;
++				goto out;
++			}
++			log->one_page_buf = buf;
++		}
  	}
+ 
+ 	if (log->page_size != t32 ||
 -- 
 2.53.0
 
