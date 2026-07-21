@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287C1315D53;
-	Tue, 21 Jul 2026 18:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48BF1474CC;
+	Tue, 21 Jul 2026 18:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659262; cv=none; b=sSg6QsXKp99S4zdehqRz0otYDAERVV3n6tR5OKBx4/OMik6R6q1S9ZI/P9BmhjYOv1F804psgTLK6Ojl4acKyn0IMJTECVomFxzcZx9vb3YIzsJUcC4ZtFpHW4ooZLgVSWsflqXkagqDyc/ajVUcRk0JqMXQ958yQL0h0J6msAE=
+	t=1784659265; cv=none; b=IXXTuB27f+jpWQNPHDsvqkXDH56i5d2VEwo8Y7xd8qrvbjZBevXw2p+Q9uR0zFByNok1iYQwrvVw1q1T3cooJ1axDGQvbW0RLUa41p7Vz+sW7hmsoGxWAfk0jQA7VRf8ZKROG6uq4RrQQqA1w7me9VzLCNno60lvnkgJ3t+Xz6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659262; c=relaxed/simple;
-	bh=Y8S007HfnO/kUdGA0DuhjqAc6zoat0T3a2Rh1zyNwxk=;
+	s=arc-20240116; t=1784659265; c=relaxed/simple;
+	bh=op0GJU1xMDdLSZq7ARYHsDndXpJ0A4dECpNEbqyLeNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZWN8IV+33BPn6IdeFbfqLMdQI4vRP3Pp4oeotiha1FQ7eLpiBOYyZ/HzPVtpuuqVKwBfo93EYr4p2k+4VBVl4p1tf4BUFwHVtlWmv+oiHT7NgOnxb9SxF/3nCORsqyndwlpuExMfs5h2O2ijVGYDZvdf3qb5xQS2ExzsPFJ+VUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2wSZfce; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZT3TjTP8z/fzn6L9diLRrLg/hxHTy8PQ6ETcQWuiZGzPEc84g/Wix/JAYiLZWO4ukhwkpO4SmYsERbIRXH9JRtHNeJygyQnt5aotCXiVu1fhWvN8gAMzXQD3apMgobmVdVBfEks2vHKgaJSvI5O1XTZxUYfPa1of2HEqVHfKsQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ll01Q9kv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2wSZfce"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C761F000E9;
-	Tue, 21 Jul 2026 18:41:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ll01Q9kv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 507ED1F000E9;
+	Tue, 21 Jul 2026 18:41:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659261;
-	bh=5X0NyROFFnFbnMIO0isIcq3xyuobc6SDgYONVBqL3WQ=;
+	s=korg; t=1784659263;
+	bh=G75TE9JdG9r538jByrWJ4ZibA0//cbsWGqmpFoZpAIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U2wSZfceLvbPHBqjgrfdrzsBMWy/3DZt6lsXIBW3vsyMorPEisiH/GCJVfdjCf00t
-	 IamoGIbNRkqNb348FPdKlwS6wsdUQDH2kk3kDyniXBWky+1haf1AImawMLTTBxqgwc
-	 do6XagvDc5/XMbIQ3s9GzzF+eXgZAC+TafB+R8Cs=
+	b=ll01Q9kvY/cC7PRnqsOk/QerTu9U1n53XZtU50DeeAneKROIZVZRsf6j0X4cvITQs
+	 2hZrK5GIhgtVlHDSoH7fh7gN4CtdVa5r2Zrx1q14D4rAUtdkkEWGS0Ahv8k8zEXFDM
+	 SwJKRdKq9EP44JJoyxet/3hWuTkNxcDRIGs/lpnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Julian Anastasov <ja@ssi.bg>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.18 1455/1611] ipvs: use parsed transport offset in SCTP state lookup
-Date: Tue, 21 Jul 2026 17:26:11 +0200
-Message-ID: <20260721152548.175091417@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 1438/1611] net/sched: sch_taprio: Replace direct dequeue call with peek and qdisc_dequeue_peeked
+Date: Tue, 21 Jul 2026 17:25:54 +0200
+Message-ID: <20260721152547.792272599@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -56,83 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 2f75c0faa3361b28e36cc0512b3299e163e25789 upstream.
+commit e056e1dfcddca877dd46d704e8ec9860cfc9ec44 upstream.
 
-set_sctp_state() reads the SCTP chunk header again in order to drive the
-IPVS SCTP state table. For IPv6 it computes the offset with
-sizeof(struct ipv6hdr), while the surrounding IPVS code uses iph.len from
-ip_vs_fill_iph_skb(), where ipv6_find_hdr() has already skipped
-extension headers and found the real transport header.
+When taprio's software path peeks a non-work-conserving child qdisc, the
+child stashes the peeked skb in its gso_skb; taprio_dequeue_from_txq()
+then takes the packet with a direct child ->dequeue() call, which ignores
+that stash, orphans the peeked skb and desyncs the child's qlen/backlog.
+With a qfq child this re-enters the child on an emptied list and
+dereferences NULL, panicking the kernel from softirq on ordinary egress.
 
-This makes the state machine read from the wrong offset for IPv6 SCTP
-packets that carry extension headers. For example, an INIT packet with an
-8-byte destination options header can be scheduled correctly by
-sctp_conn_schedule(), but set_sctp_state() reads the first byte of the
-SCTP verification tag as a DATA chunk type. The connection then moves
-from NONE to ESTABLISHED instead of INIT1, gets the longer established
-timeout, and updates the active/inactive destination counters
-incorrectly. This happens even though the SCTP handshake has not
-completed.
+Take the packet through qdisc_dequeue_peeked(), as sch_red and sch_sfb
+now do. The helper returns the child's stashed skb first and is a no-op
+when there is none, so a work-conserving child is unaffected and the
+gated path now consumes the skb whose length was charged to the budget.
 
-Use the parsed transport offset passed down from ip_vs_set_state() for
-the SCTP chunk-header lookup. For IPv4 and IPv6 packets without
-extension headers this preserves the existing offset.
-
-Fixes: 2906f66a5682 ("ipvs: SCTP Trasport Loadbalancing Support")
+Fixes: 5a781ccbd19e ("tc: Add support for configuring the taprio scheduler")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/netdev/20260705123040.35755-1-zhaoyz24@mails.tsinghua.edu.cn/
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: Claude Code:GLM-5.2
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Cc: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260625-b4-disp-31bcb279-v1-1-85c40b83c529@proton.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_proto_sctp.c |   15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ net/sched/sch_taprio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
-@@ -372,20 +372,15 @@ static const char *sctp_state_name(int s
+--- a/net/sched/sch_taprio.c
++++ b/net/sched/sch_taprio.c
+@@ -748,7 +748,7 @@ static struct sk_buff *taprio_dequeue_fr
+ 		return NULL;
  
- static inline void
- set_sctp_state(struct ip_vs_proto_data *pd, struct ip_vs_conn *cp,
--		int direction, const struct sk_buff *skb)
-+		int direction, const struct sk_buff *skb,
-+		unsigned int iph_len)
- {
- 	struct sctp_chunkhdr _sctpch, *sch;
- 	unsigned char chunk_type;
- 	int event, next_state;
--	int ihl, cofs;
--
--#ifdef CONFIG_IP_VS_IPV6
--	ihl = cp->af == AF_INET ? ip_hdrlen(skb) : sizeof(struct ipv6hdr);
--#else
--	ihl = ip_hdrlen(skb);
--#endif
-+	int cofs;
- 
--	cofs = ihl + sizeof(struct sctphdr);
-+	cofs = iph_len + sizeof(struct sctphdr);
- 	sch = skb_header_pointer(skb, cofs, sizeof(_sctpch), &_sctpch);
- 	if (sch == NULL)
- 		return;
-@@ -472,7 +467,7 @@ sctp_state_transition(struct ip_vs_conn
- 		unsigned int iph_len)
- {
- 	spin_lock_bh(&cp->lock);
--	set_sctp_state(pd, cp, direction, skb);
-+	set_sctp_state(pd, cp, direction, skb, iph_len);
- 	spin_unlock_bh(&cp->lock);
- }
+ skip_peek_checks:
+-	skb = child->ops->dequeue(child);
++	skb = qdisc_dequeue_peeked(child);
+ 	if (unlikely(!skb))
+ 		return NULL;
  
 
 
