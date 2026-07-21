@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E92F3B8412;
-	Tue, 21 Jul 2026 21:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C747D3B8407;
+	Tue, 21 Jul 2026 21:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670088; cv=none; b=qr6nPHeQ+NVw4UoSQv6AeO5HQptuo4cN4YUXiri9tGn4QFkyCObdvTWp+KIYmg0gY7i+rblY00H6cem2hbMxJ6IlcF0Nmc78QEKhN5CBLI5NPE8yYvXY12bmfL3AH4uukpAsCaiChrGd7NwDzKs1pbABkOWIWBf4bis8H9hZ14o=
+	t=1784670091; cv=none; b=twoJU+e1nCSTqdwn2x3VnXZK0QJ43r7rbfCZjxvHVGerDmIDX5iKHx02KouAtuisej6S71LKrXe93XBXb+X35sddnlZQjBWbJTSJNk6O4hIM4iGlubiZycqeXMOYFILlsPQwArnCmYe4rrm3Wexjp/GkT9ZMB9Q4WcIK+QlPoeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670088; c=relaxed/simple;
-	bh=MygJG+pqIiQ3UBkZWS2oAvBILGkzwcmn1l22g1bWkIU=;
+	s=arc-20240116; t=1784670091; c=relaxed/simple;
+	bh=rbemISx/oz7S8bgmIgZ2aUg0pYnCE+7zHs/tcC3tbr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kGO291RVOyxY855H3cX4HTOtl7yFh5uT5FWIxmrTE1SA29tLu1V9NdFSjB3KjDoENv/3opLatLfi7jbCmIii8Atkqr4Kz0WP+/eq5ObR1HTDej0HnKDwoOxEDlH/5eCou8ama1NkXnQozcuP5jmpoTxD/r9HHU/NiMFZjkg3lf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UqlOFXP1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=HEoNB8n3PrbQtjJSKSNIAH03ySOu35cJ0aqKKBJ1pHufkdQqMLXMy6QcyXTAhNZJQOSwH+nXjfx5jSHDuBL9prabP9xnnpaLm3FGNVJzraC7xs7aSHX6GSV5msWQsLZdOdMCwbvXxCWu/Iz19P4iBamNv01+QmpYIVf2aN9Ey/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c6t4BH5X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UqlOFXP1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 954341F000E9;
-	Tue, 21 Jul 2026 21:41:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6t4BH5X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391441F00A3A;
+	Tue, 21 Jul 2026 21:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670087;
-	bh=xQlR+P0kww1SMdTFnNwcCFSJ8IC1uhbUVrO2G5xeI4g=;
+	s=korg; t=1784670089;
+	bh=d1RnAJd9xRavfniTlP0mv6n3LCrxBv5d5yOdeiYOQN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UqlOFXP16FDiAGf49JoG16sO4+v0As1dvvYyUAB+CE9dgjVlk+V9mcFnexORf4Bp7
-	 nEng7s+wI8W4QWWcdVqKJABodvR8I61t6poLwd0zPB1fBSbdq6OPNiF0+G+OsWXsD0
-	 x2PX1GDwcW7CS1ld9nSeCxXidiWWuKnDSDf7kD08=
+	b=c6t4BH5XeCGN6OQ3oPt1dyT49NBBPkUf0ccEhI00SNdFoudwMjoZaEK0pQItQrV8E
+	 x5bPQxV+Jg1+BS1c5gfyGpOvBDlm51rMplNqtOV7f+ZfWXGnFl9r/KKfpSF0tk4vlS
+	 7pGdkQ5YbVAG9Y4/vKuGW1LR2nmb8q1yseVppaCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.1 0793/1067] ntfs3: cap RESTART_TABLE free-chain walker at rt->used
-Date: Tue, 21 Jul 2026 17:23:14 +0200
-Message-ID: <20260721152442.300346321@linuxfoundation.org>
+	John Garry <john.g.garry@oracle.com>,
+	Ionut Nechita <ionut.nechita@windriver.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 0802/1067] scsi: sas: Skip opt_sectors when DMA reports no real optimization hint
+Date: Tue, 21 Jul 2026 17:23:23 +0200
+Message-ID: <20260721152442.505084593@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -44,94 +46,152 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Ionut Nechita <ionut.nechita@windriver.com>
 
-commit 9611f644302c07d21bc8af97e3e06a3d30064253 upstream.
+commit be8fcd4a8217a916344c88a4b1b84f5736dda17e upstream.
 
-A crafted NTFS3 disk image triggers an in-kernel infinite loop at
-mount time, hanging the mounting thread and firing the soft-lockup
-watchdog within ~22s on multi-CPU hosts (panic with
-kernel.softlockup_panic=1).  The bug is reachable from desktop USB
-auto-mount on distributions where udisks2 routes the NTFS signature
-to the in-tree ntfs3 driver (Arch family and an increasing fraction
-of Fedora / openSUSE / RHEL deployments); CAP_SYS_ADMIN-class manual
-mount elsewhere.
+sas_host_setup() unconditionally sets shost->opt_sectors from
+dma_opt_mapping_size().
 
-check_rstbl()'s second walker iterates the free-entry singly-linked
-list headed by rt->first_free with no upper bound on iteration count:
+When the IOMMU is disabled or in passthrough mode and no DMA ops provide
+an opt_mapping_size callback, dma_opt_mapping_size() returns
+min(dma_max_mapping_size(), SIZE_MAX) which equals
+dma_max_mapping_size() — a hard upper bound, not an optimization hint.
 
-  for (off = ff; off;) {
-      if (off == RESTART_ENTRY_ALLOCATED)
-          return false;
-      off = le32_to_cpu(*(__le32 *)Add2Ptr(rt, off));
-      if (off > ts - sizeof(__le32))
-          return false;
-  }
+On a Dell PowerEdge R750 with mpt3sas (Broadcom SAS3816, FW 33.15.00.00)
+and intel_iommu=off the following values are observed:
 
-The existing guards cover three exits: end-of-list (off == 0), the
-in-use marker (off == RESTART_ENTRY_ALLOCATED), and out-of-bounds
-(off > ts - sizeof(__le32)).  None of the three prevents an
-in-bounds cycle.
+  dma_opt_mapping_size()  = dma_max_mapping_size() (no real hint)
+  shost->max_sectors      = 32767
+  opt_sectors             = min(32767, huge >> 9) = 32767
+  optimal_io_size         = 32767 << 9 = 16776704
+                          → round_down(16776704, 4096) = 16773120
 
-A crafted on-disk RESTART_TABLE whose free chain contains a
-self-loop or A->B->A cycle whose offsets satisfy:
+The SAS disk (SAMSUNG MZILT800HBHQ0D3) does not report an Optimal
+Transfer Length in VPD page B0, so sdkp->opt_xfer_blocks remains 0.
 
-  - in range [sizeof(struct RESTART_TABLE), ts - sizeof(__le32)]
-  - (off - sizeof(struct RESTART_TABLE)) % rsize == 0
+sd_revalidate_disk() then uses min_not_zero(0, opt_sectors) =
+opt_sectors, propagating the bogus value into the block device's
+optimal_io_size (visible as OPT-IO = 16773120 in lsblk --topology).
 
-passes all existing guards and spins the mount-time thread forever.
-Reproduced in UML by hand-forging a 2 MB NTFS3 image whose journal
-RESTART_TABLE first_free = 0x18 and whose entry at offset 0x18
-stores 0x18 as its next pointer; mount of the forged image with
-the in-tree ntfs3 driver never returns.
+mkfs.xfs picks up optimal_io_size and minimum_io_size and computes:
 
-Bound the walker by rt->used.  Each entry on a legitimate free
-chain is unique, and the total slot count is ne = le16_to_cpu
-(rt->used).  A traversal that visits more than ne slots is by
-construction malformed; reject it as a corrupt RESTART_TABLE.
+  swidth = 16773120 / 4096 = 4095
+  sunit  = 8192 / 4096     = 2
 
-After this patch, mount of the forged image returns with -EINVAL
-and a log_replay failure message, and mkntfs-produced legitimate
-images mount cleanly (verified in the same UML harness).
+Since 4095 % 2 != 0, XFS rejects the geometry:
 
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+  SB stripe unit sanity check failed
+
+This makes it impossible to create XFS filesystems (e.g. for
+/var/lib/docker) during system bootstrap.
+
+Fix this by introducing a sas_dma_setup_opt_sectors() helper that sets
+opt_sectors only when dma_opt_mapping_size() is strictly less than
+dma_max_mapping_size(), indicating a genuine DMA optimization
+constraint.
+
+The helper computes min(opt_sectors, max_sectors) first, then rounds
+down to a power of two so that filesystem geometry calculations always
+produce clean results.
+
+When the two DMA values are equal, no backend provided a real hint, so
+opt_sectors stays at 0 ("no preference").
+
+[mkp: implemented hch's suggestion]
+
+Fixes: 4cbfca5f7750 ("scsi: scsi_transport_sas: cap shost opt_sectors according to DMA optimal limit")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Signed-off-by: Ionut Nechita <ionut.nechita@windriver.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260519135238.373784-2-ionut.nechita@windriver.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/scsi/scsi_transport_sas.c | 41 +++++++++++++++++++++++++++----
+ 1 file changed, 36 insertions(+), 5 deletions(-)
 
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -764,8 +764,19 @@ static bool check_rstbl(const struct RES
- 	/*
- 	 * Walk through the list headed by the first entry to make
- 	 * sure none of the entries are currently being used.
-+	 *
-+	 * Bound traversal by ne (rt->used) to defeat a crafted on-disk
-+	 * cycle in the free chain.  Each entry in a legitimate free
-+	 * list is unique, so a chain that visits more than ne slots
-+	 * is malformed.  Without this guard, an attacker-controlled
-+	 * RESTART_TABLE with a self-loop or A->B->A cycle whose
-+	 * offsets satisfy the existing alignment + in-bounds guards
-+	 * spins forever at mount time.
- 	 */
--	for (off = ff; off;) {
-+	for (off = ff, i = 0; off; i++) {
-+		if (i > ne)
-+			return false;
-+
- 		if (off == RESTART_ENTRY_ALLOCATED)
- 			return false;
+diff --git a/drivers/scsi/scsi_transport_sas.c b/drivers/scsi/scsi_transport_sas.c
+index d8f2377b017f..d689b9ed08a6 100644
+--- a/drivers/scsi/scsi_transport_sas.c
++++ b/drivers/scsi/scsi_transport_sas.c
+@@ -27,6 +27,7 @@
+ #include <linux/module.h>
+ #include <linux/jiffies.h>
+ #include <linux/err.h>
++#include <linux/log2.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
+ #include <linux/blkdev.h>
+@@ -220,12 +221,45 @@ static int sas_bsg_initialize(struct Scsi_Host *shost, struct sas_rphy *rphy)
+  * SAS host attributes
+  */
  
++/*
++ * Set shost->opt_sectors from the DMA optimal mapping size, but only
++ * when dma_opt_mapping_size() is strictly less than dma_max_mapping_size(),
++ * indicating a genuine optimization hint from an IOMMU or DMA backend.
++ * When the two are equal (e.g. IOMMU disabled / passthrough), no real
++ * hint exists, so leave opt_sectors at 0 to avoid bogus optimal_io_size
++ * values that break filesystem geometry (e.g. mkfs.xfs stripe alignment).
++ */
++static void sas_dma_setup_opt_sectors(struct Scsi_Host *shost)
++{
++	struct device *dma_dev = shost->dma_dev;
++	size_t opt = dma_opt_mapping_size(dma_dev);
++	size_t max = dma_max_mapping_size(dma_dev);
++	unsigned int opt_sectors;
++
++	/* opt >= max means no real hint was provided by the DMA layer */
++	if (opt >= max)
++		return;
++
++	/* Clamp to max_sectors to avoid overflow in sector arithmetic */
++	opt_sectors = min_t(unsigned int, opt >> SECTOR_SHIFT,
++			    shost->max_sectors);
++
++	/* Guard against zero before rounddown_pow_of_two() */
++	if (!opt_sectors)
++		return;
++
++	/*
++	 * Round down to power-of-two so filesystem geometry calculations
++	 * (e.g. XFS stripe width/unit) always produce clean divisors.
++	 */
++	shost->opt_sectors = rounddown_pow_of_two(opt_sectors);
++}
++
+ static int sas_host_setup(struct transport_container *tc, struct device *dev,
+ 			  struct device *cdev)
+ {
+ 	struct Scsi_Host *shost = dev_to_shost(dev);
+ 	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
+-	struct device *dma_dev = shost->dma_dev;
+ 
+ 	INIT_LIST_HEAD(&sas_host->rphy_list);
+ 	mutex_init(&sas_host->lock);
+@@ -237,10 +271,7 @@ static int sas_host_setup(struct transport_container *tc, struct device *dev,
+ 		dev_printk(KERN_ERR, dev, "fail to a bsg device %d\n",
+ 			   shost->host_no);
+ 
+-	if (dma_dev->dma_mask) {
+-		shost->opt_sectors = min_t(unsigned int, shost->max_sectors,
+-				dma_opt_mapping_size(dma_dev) >> SECTOR_SHIFT);
+-	}
++	sas_dma_setup_opt_sectors(shost);
+ 
+ 	return 0;
+ }
+-- 
+2.55.0
+
 
 
