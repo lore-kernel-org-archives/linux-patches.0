@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE8C47010D;
-	Tue, 21 Jul 2026 20:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1783472553;
+	Tue, 21 Jul 2026 20:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665508; cv=none; b=XVXORTfesuVwWW7qS6aIAyrMDz7WtV9HDRbfAcXzVPZgXJhyWgogBhVq2wOn3CAxgN3AAN931GAFefe+5s0g6WfqBBZbQfiHrPDHnmxVKpkakk3W/maJ6Vm3UDxkYFqo8FxfRjITwqhsSRArZznkaLRmwFcAm3c9KDBIj2HYMsQ=
+	t=1784665510; cv=none; b=mge5VkvRHoS40iVng1sQsFxSRMmD/Sw5g3Jn2AlbBdaSnkMwbY3nXFsYSOTKFWVAf0XQPjBtAGUf5lW4emiWC5lEWlT6F2hgS+bDGoiXqi65n3xHbJWGU4Vnt9oEDAKdl1ffVAywKBzeo2mVRQ3mdgkHKvQnk9z68Op2XE7zQhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665508; c=relaxed/simple;
-	bh=BKMIf0WMwmhUf1HuQiZ9KXCVmZtbijhE/T4cY88GuHc=;
+	s=arc-20240116; t=1784665510; c=relaxed/simple;
+	bh=tF7CVfANT7V/RqDI9ynOUOZNqBjttfBN2UA1Xu2UdcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJxYRJEKEPhjodomY4JpMC3N1ybVdHTk6o1aHglKQAbHG0FpImK/cSu/pz+BjvMtp8r4/B3NNdZCaSzcprEzsUaGY0a1ILA/bBdnGhpJet9xbhnT9GKjsl+BWLFb1I5/AfVw2nySGUZBblQPDdMmmm8RGDXAObPFLZQojWbCG10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dLHbqJF7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tog6lSs8HOBFJJ6K0fDdHkPk0ARZJPncUXRMYVaoOioZInmDM3HL0jBsZ9rdH3pymLP17l2r2UdMSMtiXDFXNrtqXSA48b966yAogAEnHq57/rcGmS7195Lt429i4YsbU+s88ON9TTJXqX1MziFypJgcpyOAlM4eSczzejSRb9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCEgPrbL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dLHbqJF7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6381F000E9;
-	Tue, 21 Jul 2026 20:25:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCEgPrbL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1954A1F000E9;
+	Tue, 21 Jul 2026 20:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665506;
-	bh=7yzWhdIx837cAcqNPxg/WmhfedotoUEeJSvve7+zlTk=;
+	s=korg; t=1784665509;
+	bh=JfleS3NkRhkRWjMU/RqUtUBH6M4JOcmajsbDh6cHJtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dLHbqJF7xlxFICuXN/9mf4kgtoIyRuKONbyppnXe4dL7N7LfjXR6g3v/s+8zmF7dh
-	 vGMkt6vTkBWrsDP/k+JpT5XuOLkxsl85LnlN8LsxLC6R2H+A1NXtSpWHo/CxjJjwAy
-	 GYYZz5KLGgBHswoZkkrYhZvwSmwVRgKRz0rFC0MQ=
+	b=TCEgPrbL1Tq1FMTUzeqS3T/BRwbVyifqvnsvO75Pq93apTCsmjPPWioQVH7Y9LG/R
+	 IpGsP2QNYSq/2HhroO1HGVfg7kPProlsCVwaR/M6lxMgg0RmeFN2fkY2DmcE1w/FZ4
+	 PGjbBFDallglTNpe+2trLOAN9EWtxGMLfvjEAu5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Fuad Tabba <tabba@google.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0331/1266] KVM: arm64: Clear __hyp_running_vcpu when flushing the pKVM hyp vCPU
-Date: Tue, 21 Jul 2026 17:12:48 +0200
-Message-ID: <20260721152449.239274716@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Shivam Kumar <kumar.shivam43666@gmail.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.6 0332/1266] nvmet-tcp: check INIT_FAILED before nvmet_req_uninit in digest error path
+Date: Tue, 21 Jul 2026 17:12:49 +0200
+Message-ID: <20260721152449.261916338@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,50 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Shivam Kumar <kumar.shivam43666@gmail.com>
 
-commit e8042f6e1d7befb2fb6b10a75918642bcd0acf9a upstream.
+commit 4606467a75cfc16721937272ed29462a750b60c8 upstream.
 
-flush_hyp_vcpu() copies the host vCPU context into the hyp's private
-vCPU on every run. ctxt_to_vcpu() expects a guest context to have a
-NULL __hyp_running_vcpu, which is only ever set on the host context, so
-that it resolves the vCPU via container_of(). While this is generally
-the case, flush_hyp_vcpu() copies the context verbatim and does not
-enforce this, so a value provided by the host is dereferenced at EL2
-(host -> EL2).
+In nvmet_tcp_try_recv_ddgst(), when a data digest mismatch is detected,
+nvmet_req_uninit() is called unconditionally. However, if the command
+arrived via the nvmet_tcp_handle_req_failure() path, nvmet_req_init()
+had returned false and percpu_ref_tryget_live() was never executed. The
+unconditional percpu_ref_put() inside nvmet_req_uninit() then causes a
+refcount underflow, leading to a WARNING in
+percpu_ref_switch_to_atomic_rcu, a use-after-free diagnostic, and
+eventually a permanent workqueue deadlock.
 
-Fix by clearing __hyp_running_vcpu after the copy.
+Check cmd->flags & NVMET_TCP_F_INIT_FAILED before calling
+nvmet_req_uninit(), matching the existing pattern in
+nvmet_tcp_execute_request().
 
-Cc: stable@vger.kernel.org
-Fixes: be66e67f1750 ("KVM: arm64: Use the pKVM hyp vCPU structure in handle___kvm_vcpu_run()")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Reviewed-by: Fuad Tabba <tabba@google.com>
-Tested-by: Fuad Tabba <tabba@google.com>
-Link: https://patch.msgid.link/20260606175614.83273-2-imv4bel@gmail.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-[ tabba: adjust flush_hyp_vcpu() context ]
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Shivam Kumar <kumar.shivam43666@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/hyp/nvhe/hyp-main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/nvme/target/tcp.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-index aa6c486667e706..ac0d5a0de01496 100644
---- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-+++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-@@ -33,6 +33,9 @@ static void flush_hyp_vcpu(struct pkvm_hyp_vcpu *hyp_vcpu)
- 
- 	hyp_vcpu->vcpu.arch.ctxt	= host_vcpu->arch.ctxt;
- 
-+	/* __hyp_running_vcpu must be NULL in a guest context. */
-+	hyp_vcpu->vcpu.arch.ctxt.__hyp_running_vcpu = NULL;
-+
- 	hyp_vcpu->vcpu.arch.sve_state	= kern_hyp_va(host_vcpu->arch.sve_state);
- 	hyp_vcpu->vcpu.arch.sve_max_vl	= host_vcpu->arch.sve_max_vl;
- 
--- 
-2.53.0
-
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -1297,7 +1297,8 @@ static int nvmet_tcp_try_recv_ddgst(stru
+ 			queue->idx, cmd->req.cmd->common.command_id,
+ 			queue->pdu.cmd.hdr.type, le32_to_cpu(cmd->recv_ddgst),
+ 			le32_to_cpu(cmd->exp_ddgst));
+-		nvmet_req_uninit(&cmd->req);
++		if (!(cmd->flags & NVMET_TCP_F_INIT_FAILED))
++			nvmet_req_uninit(&cmd->req);
+ 		nvmet_tcp_free_cmd_buffers(cmd);
+ 		nvmet_tcp_fatal_error(queue);
+ 		ret = -EPROTO;
 
 
