@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E11B4D90D6;
-	Tue, 21 Jul 2026 17:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB87446EC91;
+	Tue, 21 Jul 2026 17:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656130; cv=none; b=tjMs5lIb9qTE4lQr1jJrogFfxBwL0kZjAakujCn3Lyzmi8lpzULBwBdlWkP8MkAXvEnfaKSxNxMcElCjklYao2H3dXFGqn9bBazLNanSI/3OLU1yd0Xm8m41MHidlfbYPGwM5siRTbWsRyKEGxPRTCAJ4pqfs3O0MbOXlVPzwgU=
+	t=1784656132; cv=none; b=Z4w+ZfKZ09g4IRQCkuNpIh2K1pm4y0UmwEdoS5CxlBtBRs3VTgpoC+iKaJXnjeCw5arZqhvJrK/RKaEiGUv7X7iTfZVLPbhhgHo9+tq1khQ/xbVikhbengMxxUyQYuZzUYZA4xuUwIju7vdCtz0IQTP/y+1FtCgtfGa3QLJUcS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656130; c=relaxed/simple;
-	bh=mGrbzMTjOnug2O5l35g1JHSwSUdwCcos6FeI1tPjTa4=;
+	s=arc-20240116; t=1784656132; c=relaxed/simple;
+	bh=XVM6AfxwvaU+I4PvD757nDTv1rUfhyVQR88znFa5kIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WCQ944cIc7ScJO/HEHL1Oe1mLLM1U1V5QbcbKYMfwJHmOeN1ZhA0G8SPOspWme9CoqOn2zu+piNTpwgJf8j98d0pbuH66ArwsInqrzYNf0JXYe31UEWciwHtbAaoiJpJ8PnpfJlasnm+J7Q9nRMEgMTxG36lzTNBqS6gOtHM3a4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iqOXe8OM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GwzC6SnB1AiQuun+scTbW3IKL4VwHMOKagcbk+iUa3L6R1vcNHUOC4v7oCx3ZBA/Oj3LAv9kRDJ8D2/uQxh7MLHFZDYZvzI9tZZ4O560iNC1MkiKdChMNk+udgKoXfET6e772zsrf7YgqNBoOPcsqKS04Imi7O/UJaniAqp3coA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=No54dF3X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iqOXe8OM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 413E71F00A3A;
-	Tue, 21 Jul 2026 17:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="No54dF3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B031F00ACA;
+	Tue, 21 Jul 2026 17:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656127;
-	bh=qNHSGnTLglv5I3tufM1s4BxMkIeAgXprq6jmMbQ1w5Q=;
+	s=korg; t=1784656130;
+	bh=upTbGs9EGVD38Ujkhr6OJLpASbl0xEWy2Uz1Z7VnvY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iqOXe8OMN24xb2+YjJC61bXV/EYRgYVbvzRQTaXIiN/CJbTPKH8F5pWoFayTLhf8y
-	 YcBjIyWPxS/ljMvQ4Z4+AgQ/9pwBr6+tV8lHHEOvTgF45d/MepzLA8d+/HYTTHOC+/
-	 Yh3MaFH4bxoj3LN3TG+FXn2HBNUlq4Y+kvgO5nBY=
+	b=No54dF3X2+RTwjkMPG4ZtYlCC7H/z1RqSSffF7Wmscg0Cpeq9wzfF42U0kjYArNRf
+	 KcwTmAwPf2wZYZwy+9Slt2hCvNIWKLCDvHfKUoVT0OkDbMAQ3+ikyK7/rGiCkPd9Mz
+	 LykPx2IlsP9K/9w0eu7sZFhllG2kNSPYj4aGdY+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	zhoumin <teczm@foxmail.com>,
 	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0269/1611] EDAC/igen6: Fix call trace due to missing release()
-Date: Tue, 21 Jul 2026 17:06:25 +0200
-Message-ID: <20260721152521.101635314@linuxfoundation.org>
+Subject: [PATCH 6.18 0270/1611] EDAC/{skx_common,skx}: Fix UBSAN shift-out-of-bounds in skx_get_dimm_info
+Date: Tue, 21 Jul 2026 17:06:26 +0200
+Message-ID: <20260721152521.124477417@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,61 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: zhoumin <teczm@foxmail.com>
 
-[ Upstream commit ab1f9d466c7d83ab0d2a529e07984e53b5960dcd ]
+[ Upstream commit c63ed6e1f5fe648a4a099b6717f679999be482ef ]
 
-When unloading the igen6_edac driver, there is a call trace:
+When the skx_get_dimm_attr() helper returns -EINVAL,
+skx_get_dimm_info() does not validate these return values before using
+them in a shift operation:
 
-  Device '(null)' does not have a release() function, it is broken and must be fixed.
-  See Documentation/core-api/kobject.rst.
-  WARNING: drivers/base/core.c:2567 at device_release+0x84/0x90, CPU#5: rmmod/127209
-  ...
-  RIP: 0010:device_release+0x84/0x90
-  Call Trace:
-   <TASK>
-   kobject_put+0x8c/0x220
-   put_device+0x17/0x30
-   igen6_unregister_mcis+0xa2/0xe0 [igen6_edac]
-   igen6_remove+0x82/0xb0 [igen6_edac]
-   ...
+    size = ((1ull << (rows + cols + ranks)) * banks) >> (20 - 3);
 
-Fix the call trace by providing empty release() functions for the
-memory controller devices.
+If all three values are -22, the shift exponent becomes -66, triggering
+a UBSAN shift-out-of-bounds error:
 
-Fixes: 10590a9d4f23 ("EDAC/igen6: Add EDAC driver for Intel client SoCs using IBECC")
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+    UBSAN: shift-out-of-bounds in drivers/edac/skx_common.c
+    shift exponent -66 is negative
+
+Fixes: 88a242c98740 ("EDAC, skx_common: Separate common code out from skx_edac")
+Signed-off-by: zhoumin <teczm@foxmail.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://patch.msgid.link/20260403054029.3950383-2-qiuxu.zhuo@intel.com
+Link: https://patch.msgid.link/tencent_2A0CC835A18366643CBD2865B169948AB409@qq.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/igen6_edac.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/edac/skx_common.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
-index 463bbcd484c3c0..42eadece2d71b5 100644
---- a/drivers/edac/igen6_edac.c
-+++ b/drivers/edac/igen6_edac.c
-@@ -1255,6 +1255,11 @@ static bool igen6_imc_absent(void __iomem *window)
- 	return readl(window + MAD_INTER_CHANNEL_OFFSET) == ~0;
- }
+diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
+index 724842f512acac..ef124729bbae36 100644
+--- a/drivers/edac/skx_common.c
++++ b/drivers/edac/skx_common.c
+@@ -452,6 +452,9 @@ int skx_get_dimm_info(u32 mtr, u32 mcmtr, u32 amap, struct dimm_info *dimm,
+ 	rows = numrow(mtr);
+ 	cols = imc->hbm_mc ? 6 : numcol(mtr);
  
-+static void imc_release(struct device *dev)
-+{
-+	/* Nothing to do, the 'imc' owns the 'dev' and will also release it. */
-+}
++	if (ranks < 0 || rows < 0 || cols < 0)
++		return 0;
 +
- static int igen6_register_mci(int mc, void __iomem *window, struct pci_dev *pdev)
- {
- 	struct edac_mc_layer layers[2];
-@@ -1293,6 +1298,7 @@ static int igen6_register_mci(int mc, void __iomem *window, struct pci_dev *pdev
- 	mci->pvt_info = &igen6_pvt->imc[mc];
- 
- 	imc = mci->pvt_info;
-+	imc->dev.release = imc_release;
- 	device_initialize(&imc->dev);
- 	/*
- 	 * EDAC core uses mci->pdev(pointer of structure device) as
+ 	if (imc->hbm_mc) {
+ 		banks = 32;
+ 		mtype = MEM_HBM2;
 -- 
 2.53.0
 
