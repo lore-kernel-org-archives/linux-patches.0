@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246CA347BC6;
-	Tue, 21 Jul 2026 22:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DDD3E49F5;
+	Tue, 21 Jul 2026 22:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674201; cv=none; b=aPEhTvY9B+JpHq+qIP2Rwagol5SJHtHOKOgMCNNqWh187GTR9jtDDQGRNGbLOPkiMfBuPXaatZxHpXkQlxR9zqUqlaaJhiqIzuDz592whk2O5V8dUs0SJmbP8sOYUyTsYiKBefEhgGuliXxpVDEVsHa/AAYfgCOS51WYqzYRa7I=
+	t=1784674203; cv=none; b=hFY30nyeU9C5AUrAtJWqIHf75KEJaxJUeaJc1lUye3i0kcS+/D++6W1dl12jKX0ye3Gl4f3vXkxPMxpDc7u22H1601qaVUcPmF5Akqk9QiFl21WPgK0JOGFAGKFPKgFGlVx3yFRiRLTPnkXXZfdZgHjFK9KaeFWs9TmCZ0rIsTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674201; c=relaxed/simple;
-	bh=ZXfTpI9o+B2ev9OpcbqkloKwDyEOpnJMTboF/r13roI=;
+	s=arc-20240116; t=1784674203; c=relaxed/simple;
+	bh=TFj41qaA3Usmd+CyCZVmsO6wCgg0OS6sVGrMno1SpFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tfc+nv43RaVDFcVEtVGqMtsJZ8xHj2SXDrd0P8MCIK76yHaSoPMEnQ+q+jImiMtTFENqVr12PjnstcFa5KuFhLcG0kLFcaFwqpwG2USHU9/B/Fjt4+ctfNWydXdhxZNNbPf5SFm9Z/kX5mBQjgOxAZap2Jv33oH2jeNDNmgPSS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XK0/ExK6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=o+54SuZ5c+kQkBJ0ZCN/5LcLqwitRttPxQkv5Jl/fBtUS0pKL36rCnc1GB/ww3u/19bWIcxbv2QqYY2UsrVojrC+09MNsG3/a7jX9ByKWp1CrkjIWHka/ZQyHruAw15N3S4lEIzzoVlhzCap6rgh2W9TdKC9BwgvybMmH7q3GpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=irT1nGxD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XK0/ExK6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526D21F00A3A;
-	Tue, 21 Jul 2026 22:49:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="irT1nGxD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F01D11F000E9;
+	Tue, 21 Jul 2026 22:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674199;
-	bh=1gXrlrkiclQw8S0KB3HICwN25vvHsMDK8URUsLGlCyk=;
+	s=korg; t=1784674202;
+	bh=aiudIqJocu7CkB27BnRLTXG3iB6FMP36z8SpCMJfgiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XK0/ExK62HsMMu+amgLhV/UOOPqRYM1Uh6IoHyawTvR7nCTljsg1uMnOKlT3YET8l
-	 yXWbnQpQENdfjNJP7XUHVrKv4NDrtV1lsA7fJ28PWLoHGhlCBjvZEkacJiOXDzDMYJ
-	 Krw89wB6PZpN5bBGPA/TOad6STfNsWtMiJUL4Th4=
+	b=irT1nGxDjl/7D9PYbZhZAqZ2KtIseXDJx6QvM9hIwMtcuumfAv8Q4xtyTisONc6PK
+	 S0Nsae5FdfUA5L7sBDMEgEo5fcm/yHXjyu3Go42sCncqhHvmGueRYAvJrxFVRqKwFX
+	 yYRRpqCKrNvgEJ2d5L359z7ps6W2cA0jDtMK3h7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enrico Pozzobon <enrico.pozzobon@dissecto.com>,
-	Nicolai Buchwitz <nb@tipi-net.de>,
+	Samuel Moelius <sam.moelius@trailofbits.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 408/699] net: usb: lan78xx: disable VLAN filter in promiscuous mode
-Date: Tue, 21 Jul 2026 17:22:47 +0200
-Message-ID: <20260721152404.899319205@linuxfoundation.org>
+Subject: [PATCH 5.10 409/699] net/sched: cake: reject overhead values that underflow length
+Date: Tue, 21 Jul 2026 17:22:48 +0200
+Message-ID: <20260721152404.921519174@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -46,79 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Enrico Pozzobon <enrico.pozzobon@dissecto.com>
+From: Samuel Moelius <sam.moelius@trailofbits.com>
 
-[ Upstream commit 60444706aa17616efc03190d099ac347e28b3d0a ]
+[ Upstream commit b7f97cae7ec1b6c3c32843c42be218690d310467 ]
 
-The hardware VLAN filter (RFE_CTL_VLAN_FILTER_) drops VLAN-tagged frames
-whose VID has not been registered via lan78xx_vlan_rx_add_vid(). It is
-left enabled in promiscuous mode, so packet capture (e.g. tcpdump or
-Wireshark) does not see tagged frames for unregistered VIDs.
+CAKE accepts signed overhead values and stores them in an s16, but the
+adjusted packet length calculation uses unsigned arithmetic.  A negative
+effective length can therefore wrap to a large value.
 
-Clear the filter while the interface is promiscuous and restore it from
-NETIF_F_HW_VLAN_CTAG_FILTER otherwise. Enforce the same condition in
-lan78xx_set_features() so netdev_update_features() cannot re-enable the
-filter while promiscuous.
+Such configurations make rate accounting depend on integer wraparound
+rather than on the packet size userspace intended to model.  A static
+netlink lower bound is not enough because packets reaching CAKE can be
+smaller than any reasonable manual-overhead allowance.
 
-Fixes: 55d7de9de6c3 ("Microchip's LAN7800 family USB 2/3 to 10/100/1000 Ethernet device driver")
-Signed-off-by: Enrico Pozzobon <enrico.pozzobon@dissecto.com>
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20260701-lan78xx-vlan-promisc-v3-1-232266d32743@dissecto.com
+Fold the signed overhead adjustment into the existing datapath MPU clamp
+so negative adjusted lengths are clamped before link-layer framing
+adjustments.
+
+Fixes: a729b7f0bd5b ("sch_cake: Add overhead compensation support to the rate shaper")
+Assisted-by: Codex:gpt-5.5-cyber-preview
+Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Link: https://patch.msgid.link/20260702000758.297407.e5c888d9d99d.cake-overhead-underflow@trailofbits.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ net/sched/sch_cake.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index af0622e9425849..1a76fccee9a8d7 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -1092,6 +1092,17 @@ static void lan78xx_deferred_multicast_write(struct work_struct *param)
- 	lan78xx_write_reg(dev, RFE_CTL, pdata->rfe_ctl);
- }
+diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
+index 2be03c8d13cb01..45b175e53aac03 100644
+--- a/net/sched/sch_cake.c
++++ b/net/sched/sch_cake.c
+@@ -1381,10 +1381,7 @@ static u32 cake_calc_overhead(struct cake_sched_data *q, u32 len, u32 off)
+ 	if (q->min_netlen > len)
+ 		q->min_netlen = len;
  
-+static void lan78xx_update_vlan_filter(struct lan78xx_priv *pdata,
-+				       struct net_device *netdev,
-+				       netdev_features_t features)
-+{
-+	if ((features & NETIF_F_HW_VLAN_CTAG_FILTER) &&
-+	    !(netdev->flags & IFF_PROMISC))
-+		pdata->rfe_ctl |= RFE_CTL_VLAN_FILTER_;
-+	else
-+		pdata->rfe_ctl &= ~RFE_CTL_VLAN_FILTER_;
-+}
-+
- static void lan78xx_set_multicast(struct net_device *netdev)
- {
- 	struct lan78xx_net *dev = netdev_priv(netdev);
-@@ -1126,6 +1137,8 @@ static void lan78xx_set_multicast(struct net_device *netdev)
- 		}
- 	}
+-	len += q->rate_overhead;
+-
+-	if (len < q->rate_mpu)
+-		len = q->rate_mpu;
++	len = max((s32)len + q->rate_overhead, (s32)q->rate_mpu);
  
-+	lan78xx_update_vlan_filter(pdata, dev->net, dev->net->features);
-+
- 	if (netdev_mc_count(dev->net)) {
- 		struct netdev_hw_addr *ha;
- 		int i;
-@@ -2397,10 +2410,7 @@ static int lan78xx_set_features(struct net_device *netdev,
- 	else
- 		pdata->rfe_ctl &= ~RFE_CTL_VLAN_STRIP_;
- 
--	if (features & NETIF_F_HW_VLAN_CTAG_FILTER)
--		pdata->rfe_ctl |= RFE_CTL_VLAN_FILTER_;
--	else
--		pdata->rfe_ctl &= ~RFE_CTL_VLAN_FILTER_;
-+	lan78xx_update_vlan_filter(pdata, netdev, features);
- 
- 	spin_unlock_irqrestore(&pdata->rfe_ctl_lock, flags);
- 
+ 	if (q->atm_mode == CAKE_ATM_ATM) {
+ 		len += 47;
 -- 
 2.53.0
 
