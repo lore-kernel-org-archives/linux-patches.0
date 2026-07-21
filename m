@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9F7224B05;
-	Tue, 21 Jul 2026 22:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68BCE382385;
+	Tue, 21 Jul 2026 22:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674612; cv=none; b=OnWWHng7q01E1pEiGTRvm4pGQmeUmJUAtKCrtSMK+/WErSIxHgL4o+rX36l0g13+41+CrJ6P849iV8bXd8aLji188RP8GJUy0TBeZDqPC9HIutJIMNE1JWtqkCxzsNCAX52i3aYyvnklqrqZyMsSfNvBG8hpHPK8i9MyyBU4O/0=
+	t=1784674614; cv=none; b=Xl8+17vmO6FkfeUiFz7qBVZ8tY7ubRx6QVNZ/38oP89lA/wsHh5SQb+Q39eINOcNUItJoYTjWSv5jKbQxOzBTE5RKESH/wqC3CNLzPXuKhlstEdv7Nym4tu7QX1pOPr26RKRMCiEU3yyNjTVZdmKzSVYZdFcByw/s9MEy+MB8MQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674612; c=relaxed/simple;
-	bh=chhNQ2dF4LfQwUYRNLoStounzOc3MMrDPnqquLFLx/E=;
+	s=arc-20240116; t=1784674614; c=relaxed/simple;
+	bh=wMzKysCSJOX8E2uMKrHeHw9C3HIryaYLkqkgkXyY538=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fxXVEP07EZWxjBPCyxqW3YkwloSCNhV1O/xKuewRn/m3fjNWuIPqXG2PlUs+gFMkL0caOz9S5JlLmwwxF6PfO9TXCbpE9ryMvldvfb3xYTH/aSMVEo9LS+S062jmqw+AxdiMOeIsWqtNmuEmeSAkuTBlTXOTMH9rq0PwldeLcpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1/blKyi1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NPP1Wq2F6tb+SGF4n/HQi2vPaTkWJT7vWw4ZBuFmMgrVVceYKO9xzHl1a/0ZpMqMyg8isw5aAxSYWuU4M3WAHBL9RE62y8fzZSzoDvrMm/LK66KDObQhPV33lIbDI/5ZfNB1vgZlsfXezSwbfDNYo51/rqWL63j93xlcxYnCH9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NkglZ7ay; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/blKyi1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E7AA1F00A3A;
-	Tue, 21 Jul 2026 22:56:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NkglZ7ay"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B121F000E9;
+	Tue, 21 Jul 2026 22:56:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674610;
-	bh=AA+g8XPvMdo+0TTFMFCKB+WCJPxghPgTm7BsdLWwE5k=;
+	s=korg; t=1784674613;
+	bh=0kCnMHXTVQ+KbxTdlLS6weTTQX85TRZIdNIOmb9LXEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1/blKyi14yKjmDezaMDUolYGFbKOOkwhzmh/tpKgiOemrbZ28yoGJ2Daqa/wjFqwj
-	 hiNA115DlC5b2lZJ5fpDYrH4rG3XlWQEbRDyixHVDykGvvd2pISz7Wf4LZO8KvNP3t
-	 b14EYaS9ahXjU0PkBpHm7qIP9qziL51ZH/+4mXHE=
+	b=NkglZ7ay5IF8HRbFvDve3nONyS3Ym2Tj2pa4M+u5WpWjoagga/epcVOvk7sBf8S7+
+	 c/lIO3BvrTWp0Y/SzooQfLbtnfyJjzhn3wHUYD/hdVydNGWd4jZq+8xhCI76idJX9r
+	 Vgaxzz2P5XOkhgYnwDXW4cs5uiFh/BviOqrOkAhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 589/699] iio: invensense: fix timestamp glitches when switching frequency
-Date: Tue, 21 Jul 2026 17:25:48 +0200
-Message-ID: <20260721152409.012366921@linuxfoundation.org>
+Subject: [PATCH 5.10 607/699] staging: media: atomisp: reduce load_primary_binaries() stack usage
+Date: Tue, 21 Jul 2026 17:26:06 +0200
+Message-ID: <20260721152409.431148933@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,199 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit bf8367b00c33c64a9391c262bb2e11d274c9f2a4 ]
+[ Upstream commit f4d51e55dd47ef467fbe37d8575e20eee41b092d ]
 
-When a sensor is running and there is a FIFO frequency change due to
-another sensor turned on/off, there are glitches on timestamp. Fix that
-by using only interrupt timestamp when there is the corresponding sensor
-data in the FIFO.
+The load_primary_binaries() function is overly complex and has som large
+variables on the stack, which can cause warnings depending on CONFIG_FRAME_WARN
+setting:
 
-Delete FIFO period handling and simplify internal functions.
+drivers/staging/media/atomisp/pci/sh_css.c: In function 'load_primary_binaries':
+drivers/staging/media/atomisp/pci/sh_css.c:5260:1: error: the frame size of 1560 bytes is larger than 1536 bytes [-Werror=frame-larger-than=]
 
-Update integration inside inv_mpu6050 and inv_icm42600 drivers.
+Half of the stack usage is for the prim_descr[] array, but only one
+member of the array is used at any given time.
 
-Fixes: 0ecc363ccea7 ("iio: make invensense timestamp module generic")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Link: https://lore.kernel.org/r/20240426094835.138389-1-inv.git-commit@tdk.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: affe3f077d7a ("iio: imu: inv_icm42600: fix timestamping by limiting FIFO reading")
+Reduce the stack usage by turning the array into a single structure.
+
+Fixes: a49d25364dfb ("staging/atomisp: Add support for the Intel IPU v2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/common/inv_sensors/inv_sensors_timestamp.c |   30 +++++++----------
- drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c     |   20 ++++-------
- drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c             |    2 -
- include/linux/iio/common/inv_sensors_timestamp.h       |    3 -
- 4 files changed, 23 insertions(+), 32 deletions(-)
+ drivers/staging/media/atomisp/pci/sh_css.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
-+++ b/drivers/iio/common/inv_sensors/inv_sensors_timestamp.c
-@@ -70,13 +70,13 @@ int inv_sensors_timestamp_update_odr(str
- }
- EXPORT_SYMBOL_NS_GPL(inv_sensors_timestamp_update_odr, IIO_INV_SENSORS_TIMESTAMP);
+--- a/drivers/staging/media/atomisp/pci/sh_css.c
++++ b/drivers/staging/media/atomisp/pci/sh_css.c
+@@ -5870,7 +5870,6 @@ static int load_primary_binaries(
+ 	struct ia_css_capture_settings *mycs;
+ 	unsigned int i;
+ 	bool need_extra_yuv_scaler = false;
+-	struct ia_css_binary_descr prim_descr[MAX_NUM_PRIMARY_STAGES];
  
--static bool inv_validate_period(struct inv_sensors_timestamp *ts, uint32_t period, uint32_t mult)
-+static bool inv_validate_period(struct inv_sensors_timestamp *ts, uint32_t period)
- {
- 	uint32_t period_min, period_max;
+ 	IA_CSS_ENTER_PRIVATE("");
+ 	assert(pipe);
+@@ -6058,15 +6057,16 @@ static int load_primary_binaries(
  
- 	/* check that period is acceptable */
--	period_min = ts->min_period * mult;
--	period_max = ts->max_period * mult;
-+	period_min = ts->min_period * ts->mult;
-+	period_max = ts->max_period * ts->mult;
- 	if (period > period_min && period < period_max)
- 		return true;
- 	else
-@@ -84,32 +84,30 @@ static bool inv_validate_period(struct i
- }
+ 	/* Primary */
+ 	for (i = 0; i < mycs->num_primary_stage; i++) {
++		struct ia_css_binary_descr prim_descr;
+ 		struct ia_css_frame_info *local_vf_info = NULL;
  
- static bool inv_compute_chip_period(struct inv_sensors_timestamp *ts,
--				    uint32_t mult, uint32_t period)
-+				    uint32_t period)
- {
- 	uint32_t new_chip_period;
- 
--	if (!inv_validate_period(ts, period, mult))
-+	if (!inv_validate_period(ts, period))
- 		return false;
- 
- 	/* update chip internal period estimation */
--	new_chip_period = period / mult;
-+	new_chip_period = period / ts->mult;
- 	inv_update_acc(&ts->chip_period, new_chip_period);
- 
- 	return true;
- }
- 
- void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,
--				      uint32_t fifo_period, size_t fifo_nb,
--				      size_t sensor_nb, int64_t timestamp)
-+				     size_t sample_nb, int64_t timestamp)
- {
- 	struct inv_sensors_timestamp_interval *it;
- 	int64_t delta, interval;
--	const uint32_t fifo_mult = fifo_period / ts->chip.clock_period;
- 	uint32_t period;
- 	int32_t m;
- 	bool valid = false;
- 
--	if (fifo_nb == 0)
-+	if (sample_nb == 0)
- 		return;
- 
- 	/* update interrupt timestamp and compute chip and sensor periods */
-@@ -119,8 +117,8 @@ void inv_sensors_timestamp_interrupt(str
- 	delta = it->up - it->lo;
- 	if (it->lo != 0) {
- 		/* compute period: delta time divided by number of samples */
--		period = div_s64(delta, fifo_nb);
--		valid = inv_compute_chip_period(ts, fifo_mult, period);
-+		period = div_s64(delta, sample_nb);
-+		valid = inv_compute_chip_period(ts, period);
- 		/* update sensor period if chip internal period is updated */
- 		if (valid)
- 			ts->period = ts->mult * ts->chip_period.val;
-@@ -129,20 +127,18 @@ void inv_sensors_timestamp_interrupt(str
- 	/* no previous data, compute theoritical value from interrupt */
- 	if (ts->timestamp == 0) {
- 		/* elapsed time: sensor period * sensor samples number */
--		interval = (int64_t)ts->period * (int64_t)sensor_nb;
-+		interval = (int64_t)ts->period * (int64_t)sample_nb;
- 		ts->timestamp = it->up - interval;
- 		return;
- 	}
- 
- 	/* if interrupt interval is valid, sync with interrupt timestamp */
- 	if (valid) {
--		/* compute measured fifo_period */
--		fifo_period = fifo_mult * ts->chip_period.val;
- 		/* delta time between last sample and last interrupt */
- 		delta = it->lo - ts->timestamp;
- 		/* if there are multiple samples, go back to first one */
--		while (delta >= (fifo_period * 3 / 2))
--			delta -= fifo_period;
-+		while (delta >= (ts->period * 3 / 2))
-+			delta -= ts->period;
- 		/* compute maximal adjustment value */
- 		m = INV_SENSORS_TIMESTAMP_JITTER((int64_t)ts->period, ts->chip.jitter);
- 		if (delta > m)
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-@@ -515,20 +515,20 @@ int inv_icm42600_buffer_fifo_parse(struc
- 		return 0;
- 
- 	/* handle gyroscope timestamp and FIFO data parsing */
--	ts = iio_priv(st->indio_gyro);
--	inv_sensors_timestamp_interrupt(ts, st->fifo.period, st->fifo.nb.total,
--					st->fifo.nb.gyro, st->timestamp.gyro);
- 	if (st->fifo.nb.gyro > 0) {
-+		ts = iio_priv(st->indio_gyro);
-+		inv_sensors_timestamp_interrupt(ts, st->fifo.nb.gyro,
-+						st->timestamp.gyro);
- 		ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
- 		if (ret)
- 			return ret;
- 	}
- 
- 	/* handle accelerometer timestamp and FIFO data parsing */
--	ts = iio_priv(st->indio_accel);
--	inv_sensors_timestamp_interrupt(ts, st->fifo.period, st->fifo.nb.total,
--					st->fifo.nb.accel, st->timestamp.accel);
- 	if (st->fifo.nb.accel > 0) {
-+		ts = iio_priv(st->indio_accel);
-+		inv_sensors_timestamp_interrupt(ts, st->fifo.nb.accel,
-+						st->timestamp.accel);
- 		ret = inv_icm42600_accel_parse_fifo(st->indio_accel);
- 		if (ret)
- 			return ret;
-@@ -556,9 +556,7 @@ int inv_icm42600_buffer_hwfifo_flush(str
- 
- 	if (st->fifo.nb.gyro > 0) {
- 		ts = iio_priv(st->indio_gyro);
--		inv_sensors_timestamp_interrupt(ts, st->fifo.period,
--						st->fifo.nb.total, st->fifo.nb.gyro,
--						gyro_ts);
-+		inv_sensors_timestamp_interrupt(ts, st->fifo.nb.gyro, gyro_ts);
- 		ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
- 		if (ret)
- 			return ret;
-@@ -566,9 +564,7 @@ int inv_icm42600_buffer_hwfifo_flush(str
- 
- 	if (st->fifo.nb.accel > 0) {
- 		ts = iio_priv(st->indio_accel);
--		inv_sensors_timestamp_interrupt(ts, st->fifo.period,
--						st->fifo.nb.total, st->fifo.nb.accel,
--						accel_ts);
-+		inv_sensors_timestamp_interrupt(ts, st->fifo.nb.accel, accel_ts);
- 		ret = inv_icm42600_accel_parse_fifo(st->indio_accel);
- 		if (ret)
- 			return ret;
---- a/drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c
-+++ b/drivers/iio/imu/inv_mpu6050/inv_mpu_ring.c
-@@ -109,7 +109,7 @@ irqreturn_t inv_mpu6050_read_fifo(int ir
- 	nb = fifo_count / bytes_per_datum;
- 	/* Each FIFO data contains all sensors, so same number for FIFO and sensor data */
- 	fifo_period = NSEC_PER_SEC / INV_MPU6050_DIVIDER_TO_FIFO_RATE(st->chip_config.divider);
--	inv_sensors_timestamp_interrupt(&st->timestamp, fifo_period, nb, nb, pf->timestamp);
-+	inv_sensors_timestamp_interrupt(&st->timestamp, nb, pf->timestamp);
- 	inv_sensors_timestamp_apply_odr(&st->timestamp, fifo_period, nb, 0);
- 	for (i = 0; i < nb; ++i) {
- 		result = regmap_noinc_read(st->map, st->reg->fifo_r_w,
---- a/include/linux/iio/common/inv_sensors_timestamp.h
-+++ b/include/linux/iio/common/inv_sensors_timestamp.h
-@@ -71,8 +71,7 @@ int inv_sensors_timestamp_update_odr(str
- 				     uint32_t period, bool fifo);
- 
- void inv_sensors_timestamp_interrupt(struct inv_sensors_timestamp *ts,
--				     uint32_t fifo_period, size_t fifo_nb,
--				     size_t sensor_nb, int64_t timestamp);
-+				     size_t sample_nb, int64_t timestamp);
- 
- static inline int64_t inv_sensors_timestamp_pop(struct inv_sensors_timestamp *ts)
- {
+ 		if (pipe->enable_viewfinder[IA_CSS_PIPE_OUTPUT_STAGE_0] &&
+ 		    (i == mycs->num_primary_stage - 1))
+ 			local_vf_info = &vf_info;
+-		ia_css_pipe_get_primary_binarydesc(pipe, &prim_descr[i],
++		ia_css_pipe_get_primary_binarydesc(pipe, &prim_descr,
+ 						   &prim_in_info, &prim_out_info,
+ 						   local_vf_info, i);
+-		err = ia_css_binary_find(&prim_descr[i], &mycs->primary_binary[i]);
++		err = ia_css_binary_find(&prim_descr, &mycs->primary_binary[i]);
+ 		if (err) {
+ 			IA_CSS_LEAVE_ERR_PRIVATE(err);
+ 			return err;
 
 
