@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E9E3AA4F9;
-	Tue, 21 Jul 2026 22:35:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA7644AB9F;
+	Tue, 21 Jul 2026 22:36:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673361; cv=none; b=dC4G1AmCaG2Xt1UYdMqFFWedLGYiluw745m4ZzVt/VgMg1RUQ2E09VgLtjUgYW9JF1JktFixfoV8zxmrDYzBMUpRQYt8xSUV5P04D0HR1aRSPjUDjuhDPKJjpI9FOfynM+bCTJHpyOKS/yUxX6lZxm1zHw6O7cLmRGzENboGlEE=
+	t=1784673363; cv=none; b=KV9do9guIXKNw4j0RKXqSJ6BMh1dZ4X8xzDT2jJgz7bJlvTmpRb2RWIaIzZehF0VmWXRYXlg06MEO46kAJm891f3vwBR8IH4V7qD02G4KEK4lckUoYoD44PjXOGB8GeBd5W/GIjeQ7lMZ+cIGe5g/1e/KUaUOktYAR8fJRF7OhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673361; c=relaxed/simple;
-	bh=Wc5hKid3xcN4kH9HRvEW273HrzNp6ojwRiVvIIX0tqo=;
+	s=arc-20240116; t=1784673363; c=relaxed/simple;
+	bh=ysi7Jm95/SPQp4zYb1yhopKX6y4YulMZOXCntf58+Tk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ATIfhcKHO2JCczDhpq5o5LNi7moiGv2x7On4IDJt+Ruxr5PnofTKHa/66fehW1QREBX+7F2uF2xXQ+KO2T2TV6Ggm/1tksuWRS1xeJs5q70sgiYUJEAA3rsjMCv/YOLrFcnl9a7ptVB8YZKn1q4B6TBOLgk274MkHr5K7elCKPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MxqiT4Wv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gs6pdksaWHL0/XxyOc4RPfkH4KvVNP0DyuXmTMfYx3Y3NZnU6hFS8kwoBcD58J6DzgOf/5P1FZxGNKUn/pwTSdcN0BriBWthvKl1//gbHij60GZKZfrOi3AqCqu+H54jvI7nd7Fg54G2N8UOBmlOmCVnPCR14Sxx2p3Kl7w1Kp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y1LtBGzz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxqiT4Wv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41BC61F000E9;
-	Tue, 21 Jul 2026 22:35:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y1LtBGzz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4C41F000E9;
+	Tue, 21 Jul 2026 22:36:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673359;
-	bh=qBgEOs/Lul/scU5G4dKkmnD2TEBj/X1juh88T/fZmjc=;
+	s=korg; t=1784673362;
+	bh=1R5mpK4CRNxNSAqEAszz8aZhKQgvyu99zOX7qajy3FY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MxqiT4WvXE0+NSFKVKIWvRpwJVTINlsmJvDvloIHc1xVBXWA16/7SR88WUxiv0lCN
-	 6Gu7yLrpjki5H92x7yyAFDa+JU7lxOcvU2IqMGdeaVLTkgGO8eLgUkr3M4UsHc00rR
-	 Rsgmgc5KfTYNHLAasG3YuD5iQ7s++8XWOfxuCLQI=
+	b=y1LtBGzzTKfysbSmbywlPL5AfwaaASAuRmiAbyrt0aLD/0PJYfcuRMbnDapQ1sQgk
+	 3yXOIogvABdf8CiwmMEApDI1zDPXElb1cUkM5Dp/XjcD73uFL+pqkkzpRR8zUKcl2D
+	 cQoJEMZZBHbM8PKtJWJiZDeKWm92MgVVaBKETie4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Benson Leung <bleung@chromium.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 5.10 080/699] mfd: cros_ec: Delay dev_set_drvdata() until probe success
-Date: Tue, 21 Jul 2026 17:17:19 +0200
-Message-ID: <20260721152357.509699123@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.10 127/699] crypto: caam - use print_hex_dump_devel to guard key hex dumps
+Date: Tue, 21 Jul 2026 17:18:06 +0200
+Message-ID: <20260721152358.571398074@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,70 +50,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Kuchynski <akuchynski@chromium.org>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 8b2c1d41bc36c100b38ce5ee6def246c527eaf8a upstream.
+commit 3f57657b6ea23f933371f2c2846322f441773cee upstream.
 
-If ec_device_probe() fails, cros_ec_class_release releases memory for the
-cros_ec_dev structure. However, because the drvdata was already set,
-sub-drivers like cros_ec_typec can still retrieve the stale pointer via the
-platform device. This leads to a use-after-free when cros_ec_typec attempts
-to access &typec->ec->ec->dev on a device that has already been released.
-Move dev_set_drvdata() to ensure that the pointer is only made available
-once all initialization steps have succeeded.
+Use print_hex_dump_devel() for dumping sensitive key material in
+*_setkey() and gen_split_key() to avoid leaking secrets at runtime when
+CONFIG_DYNAMIC_DEBUG is enabled.
 
- sysfs: cannot create duplicate filename '/class/chromeos/cros_ec'
- Call trace:
-  sysfs_do_create_link_sd+0x94/0xdc
-  sysfs_create_link+0x30/0x44
-  device_add_class_symlinks+0x90/0x13c
-  device_add+0xf0/0x50c
-  ec_device_probe+0x150/0x4f0
-  platform_probe+0xa0/0xe0
- ...
- BUG: KASAN: invalid-access in __memcpy+0x44/0x230
- Write at addr f5ffff809e2d33ac by task kworker/u32:5/125
- Pointer tag: [f5], memory tag: [fe]
- Tainted : [W]=WARN, [O]=OOT_MODULE
- Hardware name: Google Navi unprovisioned 0x7FFFFFFF/sku0 board/sku3
- Workqueue: events_unbound deferred_probe_work_func
- Call trace:
-  __memcpy+0x44/0x230
-  cros_ec_check_features+0x60/0xcc [cros_ec_proto]
-  cros_typec_probe+0xe8/0x6e0 [cros_ec_typec]
-  platform_probe+0xa0/0xe0
-
+Fixes: 6e005503199b ("crypto: caam - print debug messages at debug level")
 Cc: stable@vger.kernel.org
-Fixes: 1c1d152cc5ac ("platform/chrome: cros_ec_dev - utilize new cdev_device_add helper function")
-Co-developed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Link: https://patch.msgid.link/20260427131721.1165078-1-akuchynski@chromium.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/cros_ec_dev.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/crypto/caam/caamalg.c    |   12 ++++++------
+ drivers/crypto/caam/caamalg_qi.c |   12 ++++++------
+ drivers/crypto/caam/caamhash.c   |    4 ++--
+ drivers/crypto/caam/key_gen.c    |    4 ++--
+ 4 files changed, 16 insertions(+), 16 deletions(-)
 
---- a/drivers/mfd/cros_ec_dev.c
-+++ b/drivers/mfd/cros_ec_dev.c
-@@ -137,7 +137,6 @@ static int ec_device_probe(struct platfo
- 	if (!ec)
- 		return retval;
+--- a/drivers/crypto/caam/caamalg.c
++++ b/drivers/crypto/caam/caamalg.c
+@@ -588,7 +588,7 @@ static int aead_setkey(struct crypto_aea
+ 	dev_dbg(jrdev, "keylen %d enckeylen %d authkeylen %d\n",
+ 	       keys.authkeylen + keys.enckeylen, keys.enckeylen,
+ 	       keys.authkeylen);
+-	print_hex_dump_debug("key in @"__stringify(__LINE__)": ",
++	print_hex_dump_devel("key in @"__stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, key, keylen, 1);
  
--	dev_set_drvdata(dev, ec);
- 	ec->ec_dev = dev_get_drvdata(dev->parent);
- 	ec->dev = dev;
- 	ec->cmd_offset = ec_platform->cmd_offset;
-@@ -179,6 +178,8 @@ static int ec_device_probe(struct platfo
- 	if (retval)
- 		goto failed;
+ 	/*
+@@ -624,7 +624,7 @@ static int aead_setkey(struct crypto_aea
+ 	dma_sync_single_for_device(jrdev, ctx->key_dma, ctx->adata.keylen_pad +
+ 				   keys.enckeylen, ctx->dir);
  
-+	dev_set_drvdata(dev, ec);
-+
- 	/* check whether this EC is a sensor hub. */
- 	if (cros_ec_get_sensor_count(ec) > 0) {
- 		retval = mfd_add_hotplug_devices(ec->dev,
+-	print_hex_dump_debug("ctx.key@"__stringify(__LINE__)": ",
++	print_hex_dump_devel("ctx.key@"__stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, ctx->key,
+ 			     ctx->adata.keylen_pad + keys.enckeylen, 1);
+ 
+@@ -665,7 +665,7 @@ static int gcm_setkey(struct crypto_aead
+ 	if (err)
+ 		return err;
+ 
+-	print_hex_dump_debug("key in @"__stringify(__LINE__)": ",
++	print_hex_dump_devel("key in @"__stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, key, keylen, 1);
+ 
+ 	memcpy(ctx->key, key, keylen);
+@@ -686,7 +686,7 @@ static int rfc4106_setkey(struct crypto_
+ 	if (err)
+ 		return err;
+ 
+-	print_hex_dump_debug("key in @"__stringify(__LINE__)": ",
++	print_hex_dump_devel("key in @"__stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, key, keylen, 1);
+ 
+ 	memcpy(ctx->key, key, keylen);
+@@ -712,7 +712,7 @@ static int rfc4543_setkey(struct crypto_
+ 	if (err)
+ 		return err;
+ 
+-	print_hex_dump_debug("key in @"__stringify(__LINE__)": ",
++	print_hex_dump_devel("key in @"__stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, key, keylen, 1);
+ 
+ 	memcpy(ctx->key, key, keylen);
+@@ -739,7 +739,7 @@ static int skcipher_setkey(struct crypto
+ 	u32 *desc;
+ 	const bool is_rfc3686 = alg->caam.rfc3686;
+ 
+-	print_hex_dump_debug("key in @"__stringify(__LINE__)": ",
++	print_hex_dump_devel("key in @"__stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, key, keylen, 1);
+ 
+ 	ctx->cdata.keylen = keylen;
+--- a/drivers/crypto/caam/caamalg_qi.c
++++ b/drivers/crypto/caam/caamalg_qi.c
+@@ -207,7 +207,7 @@ static int aead_setkey(struct crypto_aea
+ 	dev_dbg(jrdev, "keylen %d enckeylen %d authkeylen %d\n",
+ 		keys.authkeylen + keys.enckeylen, keys.enckeylen,
+ 		keys.authkeylen);
+-	print_hex_dump_debug("key in @" __stringify(__LINE__)": ",
++	print_hex_dump_devel("key in @" __stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, key, keylen, 1);
+ 
+ 	/*
+@@ -243,7 +243,7 @@ static int aead_setkey(struct crypto_aea
+ 				   ctx->adata.keylen_pad + keys.enckeylen,
+ 				   ctx->dir);
+ 
+-	print_hex_dump_debug("ctx.key@" __stringify(__LINE__)": ",
++	print_hex_dump_devel("ctx.key@" __stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, ctx->key,
+ 			     ctx->adata.keylen_pad + keys.enckeylen, 1);
+ 
+@@ -366,7 +366,7 @@ static int gcm_setkey(struct crypto_aead
+ 	if (ret)
+ 		return ret;
+ 
+-	print_hex_dump_debug("key in @" __stringify(__LINE__)": ",
++	print_hex_dump_devel("key in @" __stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, key, keylen, 1);
+ 
+ 	memcpy(ctx->key, key, keylen);
+@@ -470,7 +470,7 @@ static int rfc4106_setkey(struct crypto_
+ 	if (ret)
+ 		return ret;
+ 
+-	print_hex_dump_debug("key in @" __stringify(__LINE__)": ",
++	print_hex_dump_devel("key in @" __stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, key, keylen, 1);
+ 
+ 	memcpy(ctx->key, key, keylen);
+@@ -576,7 +576,7 @@ static int rfc4543_setkey(struct crypto_
+ 	if (ret)
+ 		return ret;
+ 
+-	print_hex_dump_debug("key in @" __stringify(__LINE__)": ",
++	print_hex_dump_devel("key in @" __stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, key, keylen, 1);
+ 
+ 	memcpy(ctx->key, key, keylen);
+@@ -626,7 +626,7 @@ static int skcipher_setkey(struct crypto
+ 	const bool is_rfc3686 = alg->caam.rfc3686;
+ 	int ret = 0;
+ 
+-	print_hex_dump_debug("key in @" __stringify(__LINE__)": ",
++	print_hex_dump_devel("key in @" __stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, key, keylen, 1);
+ 
+ 	ctx->cdata.keylen = keylen;
+--- a/drivers/crypto/caam/caamhash.c
++++ b/drivers/crypto/caam/caamhash.c
+@@ -495,7 +495,7 @@ static int axcbc_setkey(struct crypto_ah
+ 				   DMA_TO_DEVICE);
+ 	ctx->adata.keylen = keylen;
+ 
+-	print_hex_dump_debug("axcbc ctx.key@" __stringify(__LINE__)" : ",
++	print_hex_dump_devel("axcbc ctx.key@" __stringify(__LINE__)" : ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, ctx->key, keylen, 1);
+ 
+ 	return axcbc_set_sh_desc(ahash);
+@@ -515,7 +515,7 @@ static int acmac_setkey(struct crypto_ah
+ 	ctx->adata.key_virt = key;
+ 	ctx->adata.keylen = keylen;
+ 
+-	print_hex_dump_debug("acmac ctx.key@" __stringify(__LINE__)" : ",
++	print_hex_dump_devel("acmac ctx.key@" __stringify(__LINE__)" : ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, key, keylen, 1);
+ 
+ 	return acmac_set_sh_desc(ahash);
+--- a/drivers/crypto/caam/key_gen.c
++++ b/drivers/crypto/caam/key_gen.c
+@@ -58,7 +58,7 @@ int gen_split_key(struct device *jrdev,
+ 
+ 	dev_dbg(jrdev, "split keylen %d split keylen padded %d\n",
+ 		adata->keylen, adata->keylen_pad);
+-	print_hex_dump_debug("ctx.key@" __stringify(__LINE__)": ",
++	print_hex_dump_devel("ctx.key@" __stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, key_in, keylen, 1);
+ 
+ 	if (local_max > max_keylen)
+@@ -113,7 +113,7 @@ int gen_split_key(struct device *jrdev,
+ 		wait_for_completion(&result.completion);
+ 		ret = result.err;
+ 
+-		print_hex_dump_debug("ctx.key@"__stringify(__LINE__)": ",
++		print_hex_dump_devel("ctx.key@"__stringify(__LINE__)": ",
+ 				     DUMP_PREFIX_ADDRESS, 16, 4, key_out,
+ 				     adata->keylen_pad, 1);
+ 	}
 
 
