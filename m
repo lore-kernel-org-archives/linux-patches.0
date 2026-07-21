@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE2119049B;
-	Tue, 21 Jul 2026 17:22:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8159819049B;
+	Tue, 21 Jul 2026 17:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654574; cv=none; b=XVe1xhUPWGmvwkEiBUJ5ThAzN95OCRbyNDP1JZZV3Xu6D+xXMTImgToDsKwewUvI4U1gfTTbmTH/wFuL/JWKHMcNF5OePbrXcJJrGD5TQCouS9myMAS4Z73yqzKTlVVVRm6Coq8UUzWVkNFVboRkmtz5t3AqKyfWkynPkOEKZPs=
+	t=1784654576; cv=none; b=KrL6DMi7BZugCdHxFB5d/1+IZuCo2Lnv4rRjR2vmPwjB8UFLevHGu8lRsptp4r+sNAH4+fZ24HoJQObv+4r2DNDx4FPRq3P5b/O89G7DYHNUV1+QG+VpBQzxfkiEjUVwvkxqrU7aMxHsj2xvji4nmbUXxfRkx+rXznLsP0j1RN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654574; c=relaxed/simple;
-	bh=6VWAnAnPgKU0bG+m4cfMU8Ov63S6+bxaMlV34Jmi4tc=;
+	s=arc-20240116; t=1784654576; c=relaxed/simple;
+	bh=lcOPt/CclMXWApAnYYZrxCpDatGIJfQ9YNCF6ntYIeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aZDFfNDs0LXf59hgATAybrJ/RMkBrdXwJqsWBeba/sNX3clmBAww1OutkOGCs55EA9s7r8gme/kSDalu8C5IOAl8DhePT6wMOb5SaYRv7LN+KWbgrFwg/m2pB3MyqrH5qK22BhCFuDReyss8aHlzxjuDRKMK7t8vV6kG/BUEAh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjygZHvh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LIoVTHX5dnBbPaSHhpKv1E7Y1sJ7Es38Cyex0GsykvIM8nne/ryPHplPtOJXVuMqq4f1ZgWKoYNZlQ2qmM0u/D3F+vk2s6S9JWMFRYm5b4bKbUMV0kiP1qzQTkSy50xdwmsOvEMPsfjLWURFwgMxOYaehL+Yo3PsZnhDBfsEFr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b73DA3UN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjygZHvh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2941F000E9;
-	Tue, 21 Jul 2026 17:22:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b73DA3UN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E80541F000E9;
+	Tue, 21 Jul 2026 17:22:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654572;
-	bh=5djsT5iyPADZBGW5+S9ucNIi3wKfqRP4JiPrCR/0DYQ=;
+	s=korg; t=1784654575;
+	bh=BT9IK2Cqfa+SG8Wrv2G3F5BdoEAdYp609e2f5Xlj90k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yjygZHvhLwE4LFdgx8rJZwKWxqZXPjBgibRYhYIqvCZAudLP3dcnibYXQT1F3KUgk
-	 ytMn3dXGTNtC0A081vrmvUmfLhou7FF98UAd+Tvy6vkSvGQqg6U7VAEzX9sNbDaB8Z
-	 fOrRCZj/20K82yIs/6dUFWVQ5lxz/WA7h/KNzqm4=
+	b=b73DA3UNXmbwG9anLsYGuEw4voPCrYgjB+Iu59aXXkvCl16ySm7m6GVfMCWGYa2ZV
+	 bta9Hogi+Iw+rRwI1QQrzKVpgDJCUIbRxIzAOMK5d2xrMPnbFBwAUS0foM8pBsqakk
+	 OBcTk+3qEENcb8KtzvBIcCqIi84qLXq16qA5cPt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peiyang He <peiyang_he@smail.nju.edu.cn>,
-	Hyunchul Lee <hyc.lee@gmail.com>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.1 1713/2077] ntfs: fail attrlist updates when the superblock is inactive
-Date: Tue, 21 Jul 2026 17:23:06 +0200
-Message-ID: <20260721152633.160683147@linuxfoundation.org>
+Subject: [PATCH 7.1 1714/2077] ntfs: sanitize MFT references returned from ntfs_lookup_inode_by_name()
+Date: Tue, 21 Jul 2026 17:23:07 +0200
+Message-ID: <20260721152633.183416076@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,58 +50,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peiyang He <peiyang_he@smail.nju.edu.cn>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 0ebe8f625ab0520217a425d7cd366e4670484941 upstream.
+commit d97a36bae86a9a4021562ded2987f904e6bcb1d7 upstream.
 
-generic_shutdown_super() clears SB_ACTIVE before evicting cached inodes.
-If eviction selects the fake inode for a base inode's unnamed
-$ATTRIBUTE_LIST attribute, ntfs_evict_big_inode() drops the fake inode's
-reference on the base inode while the fake inode is still hashed and marked
-I_FREEING.
+ntfs_lookup_inode_by_name() returns MFT references read from directory
+index entries on disk. These values are untrusted, but the function can
+currently return an error-marked MFT reference to its callers without
+validating it.
 
-That iput can synchronously write back the base inode. The writeback path
-may update mapping pairs and call ntfs_attrlist_update(), which
-unconditionally calls ntfs_attr_iget() for the same $ATTRIBUTE_LIST fake
-inode. VFS then finds the I_FREEING inode and waits for eviction to finish,
-but the current task is still inside that eviction path, causing a
-self-deadlock in find_inode().
+Callers later decode lookup failures with MREF_ERR(). A crafted NTFS image
+can set the MREF error bit while leaving the low bits as an arbitrary
+value, causing callers to consume a bogus pseudo-errno instead of treating
+the lookup result as corrupted on-disk metadata.
 
-Fix this by mirroring the teardown guard used by __ntfs_write_inode():
-once SB_ACTIVE has been cleared, do not try to iget the attribute-list
-fake inode. Return -EIO so teardown aborts the update instead of waiting on
-the inode it is evicting.
+Fix this at the source by normalizing every error-marked MFT reference
+returned from ntfs_lookup_inode_by_name() to ERR_MREF(-EIO). Apply this to
+all four directory lookup return paths so every caller gets a validated
+result without needing additional checks or an API change.
 
-Reported-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
-Closes: https://lore.kernel.org/all/AB8D5E603E6EA856+ae5f622a-dd3a-4e38-bdd2-42276ae0e1a8@smail.nju.edu.cn/
-Fixes: 495e90fa3348 ("ntfs: update attrib operations")
+This keeps the sanitization in the common lookup helper, which is cleaner
+than duplicating validation in each caller.
+
+Fixes: 1e9ea7e04472 ("Revert "fs: Remove NTFS classic"")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
-Assisted-by: Codex:gpt-5.5
-Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
+Reported-by: Hongling Zeng <zenghongling@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs/attrlist.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/ntfs/dir.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/fs/ntfs/attrlist.c
-+++ b/fs/ntfs/attrlist.c
-@@ -57,6 +57,15 @@ int ntfs_attrlist_update(struct ntfs_ino
- 	struct ntfs_inode *attr_ni;
- 	int err;
+diff --git a/fs/ntfs/dir.c b/fs/ntfs/dir.c
+index 4b6bd5f30c65..6fa9ae3377cb 100644
+--- a/fs/ntfs/dir.c
++++ b/fs/ntfs/dir.c
+@@ -23,6 +23,13 @@
+ __le16 I30[5] = { cpu_to_le16('$'), cpu_to_le16('I'),
+ 		cpu_to_le16('3'),	cpu_to_le16('0'), 0 };
  
-+	/*
-+	 * generic_shutdown_super() clears SB_ACTIVE before evicting cached
-+	 * inodes. Do not look up the attribute-list inode after SB_ACTIVE has
-+	 * been cleared; it may already be I_FREEING, and waiting on it can
-+	 * self-deadlock.
-+	 */
-+	if (!(VFS_I(base_ni)->i_sb->s_flags & SB_ACTIVE))
-+		return -EIO;
++static inline u64 ntfs_check_mref(u64 mref)
++{
++	if (IS_ERR_MREF(mref))
++		return ERR_MREF(-EIO);
++	return mref;
++}
 +
- 	attr_vi = ntfs_attr_iget(VFS_I(base_ni), AT_ATTRIBUTE_LIST, AT_UNNAMED, 0);
- 	if (IS_ERR(attr_vi)) {
- 		err = PTR_ERR(attr_vi);
+ /*
+  * ntfs_lookup_inode_by_name - find an inode in a directory given its name
+  * @dir_ni:	ntfs inode of the directory in which to search for the name
+@@ -178,7 +185,7 @@ u64 ntfs_lookup_inode_by_name(struct ntfs_inode *dir_ni, const __le16 *uname,
+ 			mref = le64_to_cpu(ie->data.dir.indexed_file);
+ 			ntfs_attr_put_search_ctx(ctx);
+ 			unmap_mft_record(dir_ni);
+-			return mref;
++			return ntfs_check_mref(mref);
+ 		}
+ 		/*
+ 		 * For a case insensitive mount, we also perform a case
+@@ -273,7 +280,7 @@ u64 ntfs_lookup_inode_by_name(struct ntfs_inode *dir_ni, const __le16 *uname,
+ 		if (name) {
+ 			ntfs_attr_put_search_ctx(ctx);
+ 			unmap_mft_record(dir_ni);
+-			return name->mref;
++			return ntfs_check_mref(name->mref);
+ 		}
+ 		ntfs_debug("Entry not found.");
+ 		err = -ENOENT;
+@@ -413,7 +420,7 @@ u64 ntfs_lookup_inode_by_name(struct ntfs_inode *dir_ni, const __le16 *uname,
+ 			mref = le64_to_cpu(ie->data.dir.indexed_file);
+ 			kfree(kaddr);
+ 			iput(ia_vi);
+-			return mref;
++			return ntfs_check_mref(mref);
+ 		}
+ 		/*
+ 		 * For a case insensitive mount, we also perform a case
+@@ -538,7 +545,7 @@ u64 ntfs_lookup_inode_by_name(struct ntfs_inode *dir_ni, const __le16 *uname,
+ 	if (name) {
+ 		kfree(kaddr);
+ 		iput(ia_vi);
+-		return name->mref;
++		return ntfs_check_mref(name->mref);
+ 	}
+ 	ntfs_debug("Entry not found.");
+ 	err = -ENOENT;
+-- 
+2.55.0
+
 
 
