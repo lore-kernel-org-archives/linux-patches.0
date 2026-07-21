@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F2640315B;
-	Tue, 21 Jul 2026 17:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C6E0403AFB;
+	Tue, 21 Jul 2026 17:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654858; cv=none; b=s6GWsr6dc7Xai1bCkT4/X5hk6OI0rB1/mR0yIwxIpcqPWKHjZkaopKxsVKn1YxOf88jQBBc59XB9H0RCWsv7MGx5F2qvc8gH287SBGSPjdrE/KoCJ5Rkk5Ae8IfJOXInlSf/jZwTQqYCyM62LyUvPrZWd5xWc5gc7U+XorCkpos=
+	t=1784654861; cv=none; b=UtNfJMLfSTpWMYwuMnqR1VT/AauQRdiheRzsIC0L1dzqPglLuOqB0MFoWwddTxAR9AtXkwumvDsEo+S5JdFXO1j6w1crVUQx7jZOIM5XRqXQrsC2/QwJKrM05WgOBqJB3orpdW9nUy591CjAPL0NqCaqmIgpbnOt9XeXWW6HkDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654858; c=relaxed/simple;
-	bh=nzqZyhigwT2xDzx229cRW8X1lFzrQnYQ5lID9u16SVs=;
+	s=arc-20240116; t=1784654861; c=relaxed/simple;
+	bh=42e+Lgz/FiGasqYy9TIrxoBvMj/ZUX7aOZrx3cmUxcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m/OI7x+24A1uGg63iRwRLZQkbTpomyf7ylfzrfJUry/ikTuVzdLhIGspiURoR2slwKkebkyvVIC4dL9Vg10ewYbt/fIUop8myJpsA5V0sjJUBFd73BG87t7GSdIiQjmfFBl90Yl4bi9+SAfjE578Nkm3kf0IRnXdL+W1LKeQupI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiAKCJM4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KAo1Pd3Y3scTyCppYXWdYkl5TUat5MXsXE2KOPnkr+oVHJ7FWb38czaCE1O27o62ZiD/wMW4o7svQmIqp/VeaQIuzDJ3kmeZLvejXUmBwGSc+AROdSFkMjPJ2aW52DS4zqDwo+zC8qxn4gctlxAPzpu34jedpphWOeWku3g+rGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbC5RN7v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiAKCJM4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E57C41F000E9;
-	Tue, 21 Jul 2026 17:27:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbC5RN7v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9337A1F000E9;
+	Tue, 21 Jul 2026 17:27:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654857;
-	bh=MwB2CgI1ViSp0/I9oVqzuyMdcAJBDSdqFlvH5QWnKMk=;
+	s=korg; t=1784654860;
+	bh=tUuk7kMNKb3ON3Jh8BLwv+vYmTt7ewoHErUxphk3KqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UiAKCJM4CeU672K3tIopSZTDA8GOktH2RHJwA75wOg6emHtHmWavpHFpg/QZXcYs2
-	 d1W/5XUtGkRFlB0AdssU4bA9snAb9GCEHm6fmR/ifSZrFzpQ649pF/eheO+yfwIdoU
-	 ogZ19hkx91BAYaeOXssi/dp89Asm+e05qtfUg2mA=
+	b=GbC5RN7vwyBZ3b6Uj1aUz/JQp+1MKYUSC94tDDlXoFmdGTByFPFp3nKkhtRvq7D6t
+	 74LHzbKtH9GDCoBtl6uy2h5yQMdgaSOqPfptt7ozH4fU8/ByUjLXCDgoipzdEtAyEB
+	 E7JIh8RC/JMrvjYvyHjBwXMEB/RAYsQVwwQJ+FHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Stanner <phasta@kernel.org>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 7.1 1864/2077] dma-buf: dma-fence: Fix potential NULL pointer dereference
-Date: Tue, 21 Jul 2026 17:25:37 +0200
-Message-ID: <20260721152636.698890027@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Lizhi Hou <lizhi.hou@amd.com>
+Subject: [PATCH 7.1 1865/2077] accel/amdxdna: Fix use-after-free in amdxdna_gem_dmabuf_mmap()
+Date: Tue, 21 Jul 2026 17:25:38 +0200
+Message-ID: <20260721152636.722371589@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,68 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philipp Stanner <phasta@kernel.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 035219a760edb35ae9a9e96beba7f122e26a997b upstream.
+commit 63bbf9ac5dde2ba85e7b39d0a0b7d540e6252ba4 upstream.
 
-The commit mentioned in the fixes tag below introduced a mechanism
-through which fence producers can fully decouple from fence consumers.
-This, desirable, mechanism is based on the fence's signaled-bit as the
-"decoupling point".
+When vm_insert_pages() fails, the error path calls vma->vm_ops->close(vma)
+which internally calls drm_gem_vm_close() → drm_gem_object_put(),
+releasing the GEM object reference acquired at the start of the function.
+However, the close_vma label then falls through to put_obj, which calls
+drm_gem_object_put() a second time on the same object.
 
-A sophisticated interaction between RCU and atomic instructions attempts
-to ensure that fence consumers can still interact with fence producers
-through the dma_fence_ops (callback pointers into the producer).
+If the first put releases the last reference, the object is freed and the
+second put accesses freed memory, causing a use-after-free.
 
-This is the desired behavior: to check for decoupling, the signaled-bit
-is first checked. If it's not yet signaled, RCU ensures that the ops
-pointer cannot yet be NULL.
-
-Hereby, dma_fence_signal_timestamp_locked() first sets the signaled-bit,
-and then sets the ops pointer to NULL. Readers first load the ops
-pointer, and then check through the signaled-bit whether the pointer can
-legally be accessed.
-
-These set and load operations could occur out of order on weakly ordered
-platforms. This problem can be solved very elegantly by using the ops
-pointer itself as the synchronization point. The pointer is either NULL,
-or cannot become NULL while it is being used thanks to RCU.
-
-Replace the signaled-bit check in dma_fence_timeline_name() and
-dma_fence_driver_name().
+Fix by returning directly from close_vma instead of falling through to
+put_obj, since the close handler already performs all necessary cleanup
+including the object put.
 
 Cc: stable@vger.kernel.org
-Fixes: f4cc3ab824d6 ("dma-buf: protected fence ops by RCU v8")
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://lore.kernel.org/r/20260629075636.2513214-2-phasta@kernel.org
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260625113239.49764-1-vulab@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/dma-fence.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/accel/amdxdna/amdxdna_gem.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/dma-buf/dma-fence.c
-+++ b/drivers/dma-buf/dma-fence.c
-@@ -1168,7 +1168,7 @@ const char __rcu *dma_fence_driver_name(
+--- a/drivers/accel/amdxdna/amdxdna_gem.c
++++ b/drivers/accel/amdxdna/amdxdna_gem.c
+@@ -480,6 +480,7 @@ static int amdxdna_gem_dmabuf_mmap(struc
  
- 	/* RCU protection is required for safe access to returned string */
- 	ops = rcu_dereference(fence->ops);
--	if (!dma_fence_test_signaled_flag(fence))
-+	if (ops)
- 		return (const char __rcu *)ops->get_driver_name(fence);
- 	else
- 		return (const char __rcu *)"detached-driver";
-@@ -1201,7 +1201,7 @@ const char __rcu *dma_fence_timeline_nam
- 
- 	/* RCU protection is required for safe access to returned string */
- 	ops = rcu_dereference(fence->ops);
--	if (!dma_fence_test_signaled_flag(fence))
-+	if (ops)
- 		return (const char __rcu *)ops->get_timeline_name(fence);
- 	else
- 		return (const char __rcu *)"signaled-timeline";
+ close_vma:
+ 	vma->vm_ops->close(vma);
++	return ret;
+ put_obj:
+ 	drm_gem_object_put(gobj);
+ 	return ret;
 
 
