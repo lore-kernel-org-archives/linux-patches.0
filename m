@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0072442DFEC;
-	Tue, 21 Jul 2026 22:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1B243B6EE;
+	Tue, 21 Jul 2026 22:52:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674362; cv=none; b=jezUUUSTBIpw/y/izl9b1nqXFNhojx8BhjraRrxNPtGssDmzqjLWc6gXrThPWSPbzdnF8fgDDD7703337TMbPKWKayA8tYoxIGAG61T/z/U1NVNiZieeMaoZi5zfYT/zVa9hI+uHJEVyH5UZS/dbztOc90ryaNlvMNlRdVmUGXo=
+	t=1784674364; cv=none; b=qQrMXuw56miS6ZNQytUQsGKet0wIxoOx9JKH8t6IbEXwx4kfOrB3TFzAgLvmW7sPQbVwInxBjo3rvZtLwXW2ULPwsfx/VAnewOf38n2ScsaQxy0zDh2HvZJ6bsEVnp3H0Xn2KyALtys3glZmTNSp69LZ/9c/vxekGzkjQGTpbr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674362; c=relaxed/simple;
-	bh=HedNMNNf524bYKvLIzChFlIXYdkrBdnyCwXfGC1+TkY=;
+	s=arc-20240116; t=1784674364; c=relaxed/simple;
+	bh=lpYeLozf6OjZFmuhRGxY6uCjBVVBTz0DnOhEKZ4JtXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZM1mlh0oDFgd1XTTjvle3+tGLe2W+xLSQqVsC8j4qPlhQSy/VSdAxOETqsyiVd6dJ7zxXfehk8JCXOuEham3jKB9hwrqaf+kZ+YppyIvWf1XNHg+6FdDnC0s8YPlBr3lr0UAvj9vu3d1CetfHpIcNFojIpMYeEuQ0t8lWQ3k8+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xda4TknE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kdzHRfv2BZ8zJvJyRGQj9NsRYvMDyl8ev3oaiV2QpkGWdg0KsBgiRPqXMifobigohmBbiHK5VtMkOw9s5ScIgVFb9UiWS6I+CdA6T6ldVsCE4gCM1BPfZ+1wsB1gjWX9r+LojmnFm9Kbkof4Y7xmk7oE3xFZi8SEYk6Isd0KBRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oxgFZg81; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xda4TknE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C201F00A3A;
-	Tue, 21 Jul 2026 22:52:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxgFZg81"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C221B1F000E9;
+	Tue, 21 Jul 2026 22:52:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674360;
-	bh=8E2UDVY5tgeRDasKVe7n5xN7IJjOmSakFT1fQ914A+c=;
+	s=korg; t=1784674363;
+	bh=kCEFeoJ1yGjhybp+higTM1o5ACkDLnolYSHriPCZvd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xda4TknEcJS06UlCp+XB87DxBQ/sbiqzShY8CjIrEZ9/YaddJzBgm7bSRsbk2tx9b
-	 FLMSZ/sXWUq1q1j7wND74BitkwH+vxtXFf7iLwBmagDhqer+TQJPt6Dsu1pnlAKOCb
-	 5qqSMq9jNjShIp/MSdxk+mDlnWJ1AtfmcZnzXSq8=
+	b=oxgFZg81jwkGVp08Qv6A/cDwentf5mbJjcs8G43Ianln/9a5tmNvKKXaXoMLsCjly
+	 cFIrhLpJ3CdKcsjPMDLcFm23KScaCr+jf6LahvDX3s1A2YBXTU9vm822h+2xl3KOPD
+	 Qi0MJUd/lCtIDJ8HGxXRCDuyJ0dEAXDIdZE37/kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.10 513/699] dm_early_create: fix freeing used table on dm_resume failure
-Date: Tue, 21 Jul 2026 17:24:32 +0200
-Message-ID: <20260721152407.266654667@linuxfoundation.org>
+Subject: [PATCH 5.10 514/699] dm-verity: increase sprintf buffer size
+Date: Tue, 21 Jul 2026 17:24:33 +0200
+Message-ID: <20260721152407.289080566@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,32 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 366665416f20527ff7cad548a32d1ddf23195740 upstream.
+commit 88dd117c92a142253fb7a17e791773902b3babc6 upstream.
 
-If dm_resume fails, the kernel attempts to free table with
-dm_table_destroy, but the table was already instantiated with
-dm_swap_table. This commit skips the call to dm_table_destroy in this
-case.
+The prefix "DM_VERITY_ERR_BLOCK_NR" is 22 chars. Add '=', one digit for
+type, ',', up to 20 digits for a u64 block number, and a NUL terminator:
+that's 46 bytes. The buffer is 42 bytes. For block numbers >= 16 decimal
+digits (devices larger than ~16 EB with 4K blocks), snprintf silently
+truncates the uevent environment variable.
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Assisted-by: Claude:claude-opus-4.6
-Fixes: 6bbc923dfcf5 ("dm: add support to directly boot to a mapped device")
+Fixes: 65ff5b7ddf05 ("dm verity: add error handling modes for corrupted blocks")
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-ioctl.c |    2 +-
+ drivers/md/dm-verity-target.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -2164,7 +2164,7 @@ int __init dm_early_create(struct dm_ioc
- 	/* resume device */
- 	r = dm_resume(md);
- 	if (r)
--		goto err_destroy_table;
-+		goto err_hash_remove;
+--- a/drivers/md/dm-verity-target.c
++++ b/drivers/md/dm-verity-target.c
+@@ -21,7 +21,7 @@
  
- 	DMINFO("%s (%s) is ready", md->disk->disk_name, dmi->name);
- 	dm_put(md);
+ #define DM_MSG_PREFIX			"verity"
+ 
+-#define DM_VERITY_ENV_LENGTH		42
++#define DM_VERITY_ENV_LENGTH		46
+ #define DM_VERITY_ENV_VAR_NAME		"DM_VERITY_ERR_BLOCK_NR"
+ 
+ #define DM_VERITY_DEFAULT_PREFETCH_SIZE	262144
 
 
