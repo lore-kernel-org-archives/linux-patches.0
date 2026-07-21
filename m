@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9E246EC68;
-	Tue, 21 Jul 2026 19:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6F347010C;
+	Tue, 21 Jul 2026 19:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661125; cv=none; b=aZthIa3b3vleAQnaCJPcQvB460la7WQT8xDVd3ikITN8wjAPA9gqltaSARdxS4UpiwWfI6svB+XxcY8shqda9YuRjm2SsNL/UieTup4vlah/+5ijMxoFD0G2UQGezYT8cenhp7TezX5qUiumhAMvFQTakbf1tG/YUPAd9Xy6cCY=
+	t=1784661128; cv=none; b=mF3/1lk0gXeKzA6i6Yj8FnZWD1WU0CqZk82s0ecZ6QOQ7F0nYt7HaCdZa/C+gZgiOXeBx6OXz47l1yCYmZBly4SSIQVUmeiNmx2UaDHK0T3jcTDOedxOPmSKVJ7qfehNQqLTYmxViACmY1n+aqXKP7SO4IjK/TKI0b2oS0h1NpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661125; c=relaxed/simple;
-	bh=8eccl9BsdIw2LDg7pJIX1BLISkwcrm0/dVgsScY2qwk=;
+	s=arc-20240116; t=1784661128; c=relaxed/simple;
+	bh=3fGX/QcMTezU1vBrko+AXC5vG3rEsyQhkYSRdFJB5R4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aHWsrMxdddbRcuKzH5QPnvlKIHES0EJlA3aFo40B5xFD4Oa5F14mANlx/9aMS2Lrgi2SxnE0+EnijDpGQ01k9wNcFvTVllBeDh+0T4c41BTBpGWsAovMc7A40mxryPuZ7gP+pGWWqYFUkiQbj1ERrcZiOR2yjTQEIiBWYfcJQAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybW3vrnb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XiY2bVMTdGrNP7Z+0CtAmPPNHztpLVMGyvYC9TJob4pDXvG6GHJjgzDzjQSSioREjKNctZ6gEFaceCz3qPqOuIvhR0mTCpR+OXjU3ym04AlcGYWDjIpk+YbHpli/wpxofvJrBBPL2Cr18+mXiIFERnrg78BstGHSoZKd2Tqk+Do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMkU2Wc1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybW3vrnb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BE31F000E9;
-	Tue, 21 Jul 2026 19:12:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMkU2Wc1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0071F000E9;
+	Tue, 21 Jul 2026 19:12:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661124;
-	bh=lQXqwQCR8HPuadyoeq7zF3v4/Qhx/ZgfR4UpT0WDOko=;
+	s=korg; t=1784661127;
+	bh=SiRHeLNRdUTqv/nbVw1QRoRBT6fKnnVg0LHmdA3rxPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ybW3vrnb9EDQugv79BzxYreWSC+8L14Ht1T5cd/foes4dkPFk2NIL+iXTTsFDAFLA
-	 me6NGt6Q2fg3+SoUK2A7o/j+Y3N1bDrwmdCx11RZ3F5wq9fpdtK26BABIAB1KlaY0Q
-	 xf+hKHdYiq/YvZr0Q8NX/2IaRBHch9y5OLDICcho=
+	b=PMkU2Wc1VgMPa1JskCOAzLgxKMKBlglNj3U4o5AdU7GOKlPohGjhPrjY3u6kywbEz
+	 URTc5fTePLwqDjTqxD3yy18sNpXQSRLKBWo75mNqPEUZZwAtSjPZA0rgM6tLGRPpdG
+	 aZISdOtBaqoiW/EsZ+7beXv51EZGzg2I3STZzXJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1238/2077] netfilter: nft_ct: expectation timeouts are passed in milliseconds
-Date: Tue, 21 Jul 2026 17:15:11 +0200
-Message-ID: <20260721152622.012024443@linuxfoundation.org>
+Subject: [PATCH 7.1 1239/2077] netfilter: nf_conntrack_helper: cap maximum number of expectation at helper registration
+Date: Tue, 21 Jul 2026 17:15:12 +0200
+Message-ID: <20260721152622.036195159@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,86 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 6fb421bd07f156cdf0cdede062d31f1c21def326 ]
+[ Upstream commit 397c8300972f6e1486fd1afd99a044648a401cd5 ]
 
-Userspace passes '5000' in case user asks for 5 seconds.
+On helper registration, the maximum number of expectations cannot go over
+NF_CT_EXPECT_MAX_CNT (255), but zero can be specified then
+nf_conntrack_expect_max applies. Turn zero into NF_CT_EXPECT_MAX_CNT
+otherwise, expectation LRU eviction on insertion is disabled.
 
-Allowing for sub-second expectation lifetimes makes sense to me. so
-fix up the kernel side instead of munging nft to send a value rounded
-up to next second.
+Moreover, expand this sanity check all expectation classes.
 
-Also note that this violates nft convention of passing integers in
-network byte order, but we can't change this anymore.
+This max_expecy policy is only tunable since userspace helpers are
+available, set Fixes: tag to the commit that adds such infrastructure.
 
-Fixes: 857b46027d6f ("netfilter: nft_ct: add ct expectations support")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Remove the check for p->max_expected given this field must always
+be non-zero after this patch.
+
+Fixes: 12f7a505331e ("netfilter: add user-space connection tracking helper infrastructure")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_ct.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ net/netfilter/nf_conntrack_expect.c | 3 +--
+ net/netfilter/nf_conntrack_helper.c | 9 +++++++--
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
-index f31e18639b358f..8a79e9c1e1aed8 100644
---- a/net/netfilter/nft_ct.c
-+++ b/net/netfilter/nft_ct.c
-@@ -1216,11 +1216,23 @@ struct nft_ct_expect_obj {
- 	u32		timeout;
- };
+diff --git a/net/netfilter/nf_conntrack_expect.c b/net/netfilter/nf_conntrack_expect.c
+index 113bb1cb1683fd..38630c5e006f08 100644
+--- a/net/netfilter/nf_conntrack_expect.c
++++ b/net/netfilter/nf_conntrack_expect.c
+@@ -496,8 +496,7 @@ static inline int __nf_ct_expect_check(struct nf_conntrack_expect *expect,
+ 					   lockdep_is_held(&nf_conntrack_expect_lock));
+ 	if (helper) {
+ 		p = &helper->expect_policy[expect->class];
+-		if (p->max_expected &&
+-		    master_help->expecting[expect->class] >= p->max_expected)
++		if (master_help->expecting[expect->class] >= p->max_expected)
+ 			evict_oldest_expect(master_help, expect, p);
+ 	} else {
+ 		const struct nf_conntrack_expect_policy default_exp_policy = {
+diff --git a/net/netfilter/nf_conntrack_helper.c b/net/netfilter/nf_conntrack_helper.c
+index ec0aafcb198518..d1392b8e09af89 100644
+--- a/net/netfilter/nf_conntrack_helper.c
++++ b/net/netfilter/nf_conntrack_helper.c
+@@ -377,8 +377,13 @@ int __nf_conntrack_helper_register(struct nf_conntrack_helper *me)
+ 	if (!nf_ct_helper_hash)
+ 		return -ENOENT;
  
-+static int nft_ct_expect_timeout_get(const struct nlattr *attr, u32 *val)
-+{
-+	unsigned long jiffies_val = msecs_to_jiffies(nla_get_u32(attr));
+-	if (me->expect_policy->max_expected > NF_CT_EXPECT_MAX_CNT)
+-		return -EINVAL;
++	for (i = 0; i <= me->expect_class_max; i++) {
++		if (!me->expect_policy[i].max_expected)
++			me->expect_policy[i].max_expected = NF_CT_EXPECT_MAX_CNT;
 +
-+	if (jiffies_val > UINT_MAX)
-+		return -ERANGE;
-+
-+	*val = jiffies_val;
-+	return 0;
-+}
-+
- static int nft_ct_expect_obj_init(const struct nft_ctx *ctx,
- 				  const struct nlattr * const tb[],
- 				  struct nft_object *obj)
- {
- 	struct nft_ct_expect_obj *priv = nft_obj_data(obj);
-+	int err;
++		if (me->expect_policy[i].max_expected > NF_CT_EXPECT_MAX_CNT)
++			return -EINVAL;
++	}
  
- 	if (!tb[NFTA_CT_EXPECT_L4PROTO] ||
- 	    !tb[NFTA_CT_EXPECT_DPORT] ||
-@@ -1255,8 +1267,11 @@ static int nft_ct_expect_obj_init(const struct nft_ctx *ctx,
- 		return -EOPNOTSUPP;
- 	}
- 
-+	err = nft_ct_expect_timeout_get(tb[NFTA_CT_EXPECT_TIMEOUT], &priv->timeout);
-+	if (err)
-+		return err;
-+
- 	priv->dport = nla_get_be16(tb[NFTA_CT_EXPECT_DPORT]);
--	priv->timeout = nla_get_u32(tb[NFTA_CT_EXPECT_TIMEOUT]);
- 	priv->size = nla_get_u8(tb[NFTA_CT_EXPECT_SIZE]);
- 
- 	return nf_ct_netns_get(ctx->net, ctx->family);
-@@ -1276,7 +1291,7 @@ static int nft_ct_expect_obj_dump(struct sk_buff *skb,
- 	if (nla_put_be16(skb, NFTA_CT_EXPECT_L3PROTO, htons(priv->l3num)) ||
- 	    nla_put_u8(skb, NFTA_CT_EXPECT_L4PROTO, priv->l4proto) ||
- 	    nla_put_be16(skb, NFTA_CT_EXPECT_DPORT, priv->dport) ||
--	    nla_put_u32(skb, NFTA_CT_EXPECT_TIMEOUT, priv->timeout) ||
-+	    nla_put_u32(skb, NFTA_CT_EXPECT_TIMEOUT, jiffies_to_msecs(priv->timeout)) ||
- 	    nla_put_u8(skb, NFTA_CT_EXPECT_SIZE, priv->size))
- 		return -1;
- 
-@@ -1326,7 +1341,7 @@ static void nft_ct_expect_obj_eval(struct nft_object *obj,
- 		          &ct->tuplehash[!dir].tuple.src.u3,
- 		          &ct->tuplehash[!dir].tuple.dst.u3,
- 		          priv->l4proto, NULL, &priv->dport);
--	exp->timeout += priv->timeout * HZ;
-+	exp->timeout += priv->timeout;
- 
- 	if (nf_ct_expect_related(exp, 0) != 0)
- 		regs->verdict.code = NF_DROP;
+ 	mutex_lock(&nf_ct_helper_mutex);
+ 	for (i = 0; i < nf_ct_helper_hsize; i++) {
 -- 
 2.53.0
 
