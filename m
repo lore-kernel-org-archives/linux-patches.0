@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0AC2336888;
-	Tue, 21 Jul 2026 17:29:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8ED403AFB;
+	Tue, 21 Jul 2026 17:29:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654962; cv=none; b=iN6K8g/vAAvjJ+yxaUKlx9wVQgCiTh97dnBH2wDPKIfLF/QgsYbHG4TEMUhY54u/TcdhZ7e5WgTO/Mbh7ZKR2SwqJ7w5Rv74ONlEc0QkN2deDzS1cooFXEP5PvGkhDO1q+B9yOVP1YpLLbBOxeX03lGB/gAu4pcV0tmvuBYy0I4=
+	t=1784654964; cv=none; b=IGxP69zhXrLHXnRhhXII9jxpHxj1kqKVXBBAGagBv691hSppHYJwHfrKV05sr9ZpEOHzL5cQrz/Ae1nFCHVOqTyCFQwSO4Z9s68xrvuSCPJxvKZcm64wo3WkErDLtA7MmGshmD2TxF/AAJLohw5tztrDeBKCuXKL2FuC1/LPlY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654962; c=relaxed/simple;
-	bh=+1az1fYgCLj7uTvqQapj00V9PCioaLEvibL5pT3smEY=;
+	s=arc-20240116; t=1784654964; c=relaxed/simple;
+	bh=07eIsQMxcGrX3g/URoijN4KslilvvXUpJGp0I8DNJow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QWYRg6NTyn1O0rGVE+9WBiVRsCNRumqDdjhEsiZgt2j4U/uIat9D+gZsSmSevayZIJAIRENAKE6CxlxPoapeexhU0oLkPB7oaV/HPKAD/ZmnRmVdFvNRM6CFCmim+DYBgiwF1C8YLcCNbec3m461AsNQN9O0YdF7vn+2mJZrrZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHEigtyZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=alpmBEVlo9Qrss2kMLICD8jVwe1S1h83ffxbQjdrV/8mbrzHxbSheIL63vB0GX+/rgMy7gL58MlBq5Fd4gLO63AYa5d7DCGPtH7X+ch7b9EMSA73fiO5mBUCwOWXVAVQ/GnNWJPcuGOmBz67ObOs8De/KbOeQa1DzCVbqlQETWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqhmWblm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHEigtyZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB961F000E9;
-	Tue, 21 Jul 2026 17:29:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqhmWblm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C72321F000E9;
+	Tue, 21 Jul 2026 17:29:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654960;
-	bh=jZxo6FOfxr3BgC9XLSC3YbgWptSCHakjwllQiTj8X48=;
+	s=korg; t=1784654963;
+	bh=k4GgoeJvBpALzDvEriWeJcUfslUhQ/7iXI3kj7eRzZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MHEigtyZcW4uv8MhXCho9ePezlKVL/ZW165SStjkNvx7easJRYbdzSSxR05U13NhK
-	 TEes9xdBnfx69d4RSBQeQBJL+5Dee9Tr5jwA0d6enqY+iJozXsFwaH0gMwylhThL/O
-	 mFIhNou8vIulNGrDdcjHtVasJmIYHUxC8R6KTPjQ=
+	b=vqhmWblm9zoksXvgSeIFNO6Sml3xmiWi4cz8AqWDpwCK1erxB2l6emwGZ0PAuD5tx
+	 zeHjleJthA5tvSDgdAoTb/jdyIMn0reUkctqD2nr1T9ky+BkAvxejewyk42GSTQKMO
+	 ey8Fzg5pRoTt3YY3Mg9JZhh6F1udhPVvO1GTVVck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 7.1 1904/2077] gpio: tegra: do not call pinctrl for GPIO direction
-Date: Tue, 21 Jul 2026 17:26:17 +0200
-Message-ID: <20260721152637.629876172@linuxfoundation.org>
+Subject: [PATCH 7.1 1905/2077] gpio: mt7621: be sure IRQ domain is created before exposing GPIO chips
+Date: Tue, 21 Jul 2026 17:26:18 +0200
+Message-ID: <20260721152637.653493017@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,96 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
 
-commit d3e91a95b2b0fc6336dbf3ec90d831a1654d2720 upstream.
+commit 0e024f58291dfcb28d98c512002e1a80fad69798 upstream.
 
-tegra_gpio_direction_input() and tegra_gpio_direction_output() already
-program the GPIO controller direction registers directly. The additional
-pinctrl_gpio_direction_input/output() calls do not add a Tegra pinctrl
-operation, because the Tegra pinmux ops provide GPIO request/free
-handling but no gpio_set_direction hook.
+Function 'mediatek_gpio_bank_probe()' registers three GPIO chips using
+'devm_gpiochip_add_data()'. At this point, the chips become live and visible
+to consumers. However, the IRQ domain isn't allocated and set up until
+'mt7621_gpio_irq_setup()' is called after the GPIO chips setup finishes.
+If a consumer requests a GPIO IRQ concurrently 'mt7621_gpio_to_irq()' can
+be called and pass a NULL irq domain pointer irq_create_mapping(), that can
+corrupt the mappings or cause a crash. Fix this possible problem seting up
+irq domain before GPIO chips setup is performed.
 
-The extra call still enters the pinctrl core and takes pctldev->mutex.
-Shared GPIO users can call the direction path while holding their
-per-line spinlock, so this otherwise redundant pinctrl direction call can
-sleep in an atomic context.
-
-This was found by our static analysis tool and then confirmed by manual
-review of tegra_gpio_probe(), the Tegra GPIO direction callbacks and the
-Tegra pinctrl ops. The reviewed path has a default non-sleeping
-struct gpio_chip while the direction callback still enters the pinctrl
-mutex path.
-
-A directed runtime validation kept the same non-sleeping chip registration
-and drove:
-
-  gpio_shared_proxy_direction_output()
-  gpiod_direction_output_raw_commit()
-  tegra_gpio_direction_output()
-  pinctrl_gpio_direction_output()
-
-Lockdep reported a sleep-in-atomic warning with the shared GPIO spinlock
-held and pinctrl_get_device_gpio_range() plus tegra_gpio_direction_output()
-on the stack.
-
-Do not mark the whole chip as can_sleep to paper over this: can_sleep
-describes whether get()/set() may sleep, and Tegra value access is MMIO.
-Remove the redundant pinctrl direction calls and keep pinctrl involvement
-in the existing request/free path.
-
-Fixes: 11da90541283 ("gpio: tegra: Fix offset of pinctrl calls")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260619152439.1239561-1-runyu.xiao@seu.edu.cn
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: a46f2e5720f5 ("gpio: mt7621: fix interrupt banks mapping on gpio chips")
+Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+Link: https://patch.msgid.link/20260626060112.2498324-4-sergio.paracuellos@gmail.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-tegra.c |   18 ++----------------
- 1 file changed, 2 insertions(+), 16 deletions(-)
+ drivers/gpio/gpio-mt7621.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/gpio/gpio-tegra.c
-+++ b/drivers/gpio/gpio-tegra.c
-@@ -172,18 +172,11 @@ static int tegra_gpio_direction_input(st
- 				      unsigned int offset)
- {
- 	struct tegra_gpio_info *tgi = gpiochip_get_data(chip);
--	int ret;
+--- a/drivers/gpio/gpio-mt7621.c
++++ b/drivers/gpio/gpio-mt7621.c
+@@ -464,12 +464,6 @@ mediatek_gpio_probe(struct platform_devi
+ 	mtk->num_gpios = MTK_BANK_WIDTH * MTK_BANK_CNT;
+ 	platform_set_drvdata(pdev, mtk);
  
- 	tegra_gpio_mask_write(tgi, GPIO_MSK_OE(tgi, offset), offset, 0);
- 	tegra_gpio_enable(tgi, offset);
- 
--	ret = pinctrl_gpio_direction_input(chip, offset);
--	if (ret < 0)
--		dev_err(tgi->dev,
--			"Failed to set pinctrl input direction of GPIO %d: %d",
--			 chip->base + offset, ret);
+-	for (i = 0; i < MTK_BANK_CNT; i++) {
+-		ret = mediatek_gpio_bank_probe(dev, i);
+-		if (ret)
+-			return ret;
+-	}
 -
--	return ret;
-+	return 0;
+ 	if (mtk->gpio_irq > 0) {
+ 		ret = mt7621_gpio_irq_setup(pdev, mtk);
+ 		if (ret)
+@@ -480,6 +474,12 @@ mediatek_gpio_probe(struct platform_devi
+ 	if (ret)
+ 		return ret;
+ 
++	for (i = 0; i < MTK_BANK_CNT; i++) {
++		ret = mediatek_gpio_bank_probe(dev, i);
++		if (ret)
++			return ret;
++	}
++
+ 	return 0;
  }
  
- static int tegra_gpio_direction_output(struct gpio_chip *chip,
-@@ -191,19 +184,12 @@ static int tegra_gpio_direction_output(s
- 				       int value)
- {
- 	struct tegra_gpio_info *tgi = gpiochip_get_data(chip);
--	int ret;
- 
- 	tegra_gpio_set(chip, offset, value);
- 	tegra_gpio_mask_write(tgi, GPIO_MSK_OE(tgi, offset), offset, 1);
- 	tegra_gpio_enable(tgi, offset);
- 
--	ret = pinctrl_gpio_direction_output(chip, offset);
--	if (ret < 0)
--		dev_err(tgi->dev,
--			"Failed to set pinctrl output direction of GPIO %d: %d",
--			 chip->base + offset, ret);
--
--	return ret;
-+	return 0;
- }
- 
- static int tegra_gpio_get_direction(struct gpio_chip *chip,
 
 
