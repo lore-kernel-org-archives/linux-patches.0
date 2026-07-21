@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CF749620;
-	Tue, 21 Jul 2026 20:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4918249620;
+	Tue, 21 Jul 2026 20:47:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666838; cv=none; b=GhquW8X77+OTudtpKa7tw/oUw8uuzYznHWaKjib5e2qmdKT++/oLkMrXjH+4adcMBkuqNTeHfm5PY5VqKAJBaepvjgpwoF/mvEXymSF1Q3GEC/AtnAO9LEf/gfu9/EPQRcjhEDDRiCt3H6ecylbzbcC1S7Lx0GIuzfTYoE3XlQQ=
+	t=1784666841; cv=none; b=MfdacPqbgpgwrnT6pcRxJaZUICk64yakkfvmRkwkc6uyO9mlKa+RYfN6EIy9670PTGXHNSI/p1Dc8wfxo1vZvVQytP2+P3oL+81NbXWzWbkWMnRKhRegX0ZuLA6JhEn7w7K7KgCSMmOwDBpwNbXtHIQ+xqgxL83oQhJPay37BqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666838; c=relaxed/simple;
-	bh=1dpJF0so2VWKA8S8jMh6g8zbx60DC4AGtBGiIBnBw68=;
+	s=arc-20240116; t=1784666841; c=relaxed/simple;
+	bh=cncW2px3xUXBGWieRFmAYfr6jIwLE2xaf4iNqBtjtxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OqIUYl63EK+5jRONDK/5XwjMs6bUzVn/xIP4NjwK7oNCpVxfkS+gk20QEv1Rv4fnWeEM+CBHodu39N9FSU5tYuTwIKbxKsvd6BzCFspx2K7bXl8bROpR+k4dQXQidAUTJKF7GrNzRS7mXmLWkGhXIRtKwotFQNN9CU0Go6lacMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4NimlEo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=toWCrn7aeFjZAuWtXnKrsRpp6uKbtu/QCFIX9qs/nQRMYFsKqWEb8/ooZcZT3t3q4JKDMUUKM4CWtJEl7PnbaTrEAeReq5y6WR/tZ3T02ItUNx2R3b1vgNFgUHdnSQsMKUSlBFeqaHtAYxRWoRlAAqbfOgrNG++R1OU8UcDr8jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9OItsFR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4NimlEo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2C941F000E9;
-	Tue, 21 Jul 2026 20:47:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9OItsFR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 810EF1F000E9;
+	Tue, 21 Jul 2026 20:47:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666837;
-	bh=AUGMV5tGEs+bi2+Ts3VrwkIU9+5XUkOCp+ryfofZ5h0=;
+	s=korg; t=1784666840;
+	bh=2fAmOs84Hoi6609NDANnPivcztUGTdX12mB4xl6gtHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X4NimlEoGHpPEEwezz33mBqmYqpLkcUrQJDsl13ARj5NJF2zXmd9XS5yb6fZce1T2
-	 iXdjPJtNAxazBDDPqfzXHjtZ/ZkfaHKXfjAeXeys2x5+U1yQiLSQzy7xikIN+vE023
-	 b7K7VB5lNR446pvAsSmfJCi7YHtGK5VObF+ap3OI=
+	b=b9OItsFRkcT4s7KoicaTvq57efYFGew+w+Dyrvs2pjA4DwFyi2Fhrk4u+PY+ZY204
+	 /DyjcVC59NDPglOfvMan6qQH0OzfLq3sibj9bLSiDImfszcLIxD9Vu8Kot51tnagvP
+	 mPsiNCQvmRk+YNBFGxbTTpW1UaQycdpGutTETB70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <sam.moelius@trailofbits.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0827/1266] net/sched: hhf: clear heavy-hitter state on reset
-Date: Tue, 21 Jul 2026 17:21:04 +0200
-Message-ID: <20260721152500.361734873@linuxfoundation.org>
+Subject: [PATCH 6.6 0836/1266] ata: sata_gemini: unwind clocks on IDE pinctrl errors
+Date: Tue, 21 Jul 2026 17:21:13 +0200
+Message-ID: <20260721152500.562345814@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,71 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Moelius <sam.moelius@trailofbits.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit a225f8c20712713406ae47024b8df42deacddd4a ]
+[ Upstream commit c0ace4130e813acbabdfaa28d4e94a849c2ffdd7 ]
 
-HHF reset does not clear the classifier state used to identify heavy
-hitters.  Packets after reset can therefore be scheduled using flow
-history from before the reset.
+gemini_sata_bridge_init() prepares and enables both SATA PCLKs, then
+disables them again while keeping the clocks prepared for later bridge
+start and stop operations. If gemini_setup_ide_pins() fails after that,
+gemini_sata_probe() returns directly and skips the existing
+out_unprep_clk unwind path.
 
-The reset operation should return the qdisc to an empty state.
+Route the IDE pinctrl failure through out_unprep_clk so the clocks
+prepared by gemini_sata_bridge_init() are unprepared before probe
+fails.
 
-Clear the heavy-hitter classifier tables when HHF is reset.
-
-Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
-Assisted-by: Codex:gpt-5.5-cyber-preview
-Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: d872ced29d5f ("ata: sata_gemini: Introduce explicit IDE pin control")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hhf.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/ata/sata_gemini.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
-index 67b555c02f2c01..aca4795c4101f0 100644
---- a/net/sched/sch_hhf.c
-+++ b/net/sched/sch_hhf.c
-@@ -461,12 +461,39 @@ static struct sk_buff *hhf_dequeue(struct Qdisc *sch)
- 	return skb;
- }
+diff --git a/drivers/ata/sata_gemini.c b/drivers/ata/sata_gemini.c
+index 4c270999ba3ccd..22a30c1d88863a 100644
+--- a/drivers/ata/sata_gemini.c
++++ b/drivers/ata/sata_gemini.c
+@@ -385,7 +385,7 @@ static int gemini_sata_probe(struct platform_device *pdev)
+ 	if (sg->ide_pins) {
+ 		ret = gemini_setup_ide_pins(dev);
+ 		if (ret)
+-			return ret;
++			goto out_unprep_clk;
+ 	}
  
-+static void hhf_reset_classifier(struct hhf_sched_data *q)
-+{
-+	int i;
-+
-+	if (!q->hh_flows)
-+		return;
-+
-+	for (i = 0; i < HH_FLOWS_CNT; i++) {
-+		struct hh_flow_state *flow, *next;
-+		struct list_head *head = &q->hh_flows[i];
-+
-+		list_for_each_entry_safe(flow, next, head, flowchain) {
-+			list_del(&flow->flowchain);
-+			kfree(flow);
-+		}
-+	}
-+	WRITE_ONCE(q->hh_flows_current_cnt, 0);
-+
-+	for (i = 0; i < HHF_ARRAYS_CNT; i++) {
-+		if (q->hhf_valid_bits[i])
-+			bitmap_zero(q->hhf_valid_bits[i], HHF_ARRAYS_LEN);
-+	}
-+	q->hhf_arrays_reset_timestamp = hhf_time_stamp();
-+}
-+
- static void hhf_reset(struct Qdisc *sch)
- {
-+	struct hhf_sched_data *q = qdisc_priv(sch);
- 	struct sk_buff *skb;
- 
- 	while ((skb = hhf_dequeue(sch)) != NULL)
- 		rtnl_kfree_skbs(skb, skb);
-+	hhf_reset_classifier(q);
- }
- 
- static void hhf_destroy(struct Qdisc *sch)
+ 	dev_info(dev, "set up the Gemini IDE/SATA nexus\n");
 -- 
 2.53.0
 
