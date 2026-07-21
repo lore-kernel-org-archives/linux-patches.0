@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8913B9937;
-	Tue, 21 Jul 2026 20:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1E13B1EFC;
+	Tue, 21 Jul 2026 20:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666997; cv=none; b=tw8AkZPegjwUOY30AA9kXK4f44mWntcd5TrjvAkF7/taWeg11k8+34pJuvyes5rp+ehDTzNVBSue7S7d+/yZg0Xz4ppIDVH8TctdMEoiLqZ5uimPnGvQBakBBNxa3elm8Nm4k5JPcEdH7EJnjwz+PQETts7LTmlxJZCzQJezPic=
+	t=1784667000; cv=none; b=d+3mkxfwrdtw9QTE4v2lSKRn9Yhp3t+X0hPw4XTjkEPldLDdPMI6V0xoa30NOGIfvA2H1xSw61Azgvl6if9oSDX6+ujbGTexua2LzhXr0yDgTzI344T4bfNGstMO1KpLMnC96TbGKMhuqoynUtcfjGagndtzRQ7f9M2eQJVRXKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666997; c=relaxed/simple;
-	bh=p+qJNIOKVnw4uH8KV4nTDo5b1tpcOepGTqxrmoJ0cEE=;
+	s=arc-20240116; t=1784667000; c=relaxed/simple;
+	bh=qjPPr2OkUvWtDGSNd49KeYVYyecd8TxUMW3MC+lbOP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ul1jLidL2o93D8U+uxRUOkqrIRoW/3eKuoYQvHpkKRf9Re8jM3DzaIQQSWd6RTp8m4j40mGrhnL+MwDl9t7QNFXbyCi9+H2gzEY//Ie06YyeYrAoKLDTsLSqP8gk6HXc/6arZZ2WvwJXASDHWglflVc0CCh3DmFT49pvc1XZUIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8kX/oUX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PIV32r9Elz+gcBzfAhNrg868aRaNUb8ypbSFgxIKxh/iGwp6zjehMwNO3u4YTDZR3QaFHMFpZCKB65C8U+8+O32VWXtloX1TVhdGXW3HZv67LfeV/fAV9+PmfR82JEHeKfXTIXzpcbV1z9/CWvO7vM436i0FEwnwgk1pPDwoKcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=csXx/Sq0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8kX/oUX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE211F00A3A;
-	Tue, 21 Jul 2026 20:49:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="csXx/Sq0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670D21F000E9;
+	Tue, 21 Jul 2026 20:49:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666996;
-	bh=mH75heaS9cN6kkKQdHKY5AiYbfp7Q4P7v7WLuhEpY5g=;
+	s=korg; t=1784666998;
+	bh=qAvH3qWFCJsLLkeCEyfX/lQloID6eOO0EEx8Ts0inlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z8kX/oUXLIb28aFT+mS335fknCQonf6qhqu3FmO7AqKCeRzQPhyUAbXim65RGaib+
-	 GmgfLgmHbYIGBpCFgQfKw7AmK8YQB/CblrShiy1xNhVS/dR5lySUK9JyYjNYzkhtsr
-	 8NyvjBCCQwQV5D2OjFLmwYapuJeNMNXCk8qjHmfo=
+	b=csXx/Sq0HLizyeQhX5VtGDqfXCe2Zmj0VPW6dS9d/dq6foAFLrOSWySAfRs4l+SGI
+	 8pj7U2vmaNdG3J3FpfaCV4w6rEt8C6RmzWp7aqvStEciAfDhBoMivXCCXHaFCL6Jfz
+	 Q3NiPsAX8cFuIIn4XNy/Y2A66grcn5PyZ3kSPGPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 0894/1266] ASoC: SOF: ipc3-control: Fix TOCTOU in bytes_put and bytes_get
-Date: Tue, 21 Jul 2026 17:22:11 +0200
-Message-ID: <20260721152501.853444669@linuxfoundation.org>
+Subject: [PATCH 6.6 0895/1266] ASoC: SOF: topology: validate vendor array size before parsing
+Date: Tue, 21 Jul 2026 17:22:12 +0200
+Message-ID: <20260721152501.876858279@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -46,91 +44,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 1f97760417b5faa60e9642fd0ed61eb17d0b1b39 upstream.
+commit 8468dd79cfb2ffbdeaf7c353f63d64941cb8ba05 upstream.
 
-In sof_ipc3_bytes_put(), the size used for the memcpy is derived from
-the old data->size already in the buffer, not the incoming new data's
-size field. If the new data has a different size, the copy length is
-wrong: it may truncate valid data or copy stale bytes.
+sof_parse_token_sets() reads array->size while iterating over topology
+private data. The loop condition only checks that some data remains, so a
+malformed topology with a truncated trailing vendor array can make the
+parser read the size field before a full vendor-array header is available.
 
-Similarly, sof_ipc3_bytes_get() checks data->size against max_size
-without accounting for the sizeof(struct sof_ipc_ctrl_data) offset
-of the flex array within the allocation.
+Validate that the remaining private data contains a complete
+snd_soc_tplg_vendor_array header before reading array->size.
 
-Fix bytes_put to validate and use the incoming data's sof_abi_hdr.size
-from ucontrol before copying. Fix bytes_get to subtract sizeof(*cdata)
-from the bounds check to match the actual available space.
+The declared array size check also needs to remain signed. asize is an int,
+but sizeof(*array) has type size_t, so comparing them directly promotes
+negative asize values to unsigned and lets them pass the check,
+as reported in the stable review thread reference below.
 
-Fixes: 544ac8858f24 ("ASoC: SOF: Add bytes_get/put control IPC ops for IPC3")
+Cast sizeof(*array) to int when validating the declared array size. This
+rejects negative, zero and otherwise too-small sizes before the parser
+dispatches to the tuple-specific code.
+
+Link: https://lore.kernel.org/stable/CANiDSCsjR5NHqu_Ui5cOqWdJgFqmYsQ9WR8O7m0WOhngaYXFpw@mail.gmail.com/t/#m9b3be379221e79327cc13fd71009287368ef4f23
+Fixes: 215e5fe75881 ("ASoC: SOF: topology: reject invalid vendor array size in token parser")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20260609083458.31193-6-peter.ujfalusi@linux.intel.com
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260603-sof-topology-array-size-signed-v1-1-84f97879a4ef@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc3-control.c |   23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ sound/soc/sof/topology.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/sound/soc/sof/ipc3-control.c
-+++ b/sound/soc/sof/ipc3-control.c
-@@ -315,10 +315,13 @@ static int sof_ipc3_bytes_get(struct snd
- 	}
+--- a/sound/soc/sof/topology.c
++++ b/sound/soc/sof/topology.c
+@@ -719,10 +719,13 @@ static int sof_parse_token_sets(struct s
+ 	int ret;
  
- 	/* be->max has been verified to be >= sizeof(struct sof_abi_hdr) */
--	if (data->size > scontrol->max_size - sizeof(*data)) {
-+	if (data->size > scontrol->max_size - sizeof(*cdata) -
-+				    sizeof(*data)) {
- 		dev_err_ratelimited(scomp->dev,
- 				    "%u bytes of control data is invalid, max is %zu\n",
--				    data->size, scontrol->max_size - sizeof(*data));
-+				    data->size,
-+				    scontrol->max_size - sizeof(*cdata) -
-+				    sizeof(*data));
- 		return -EINVAL;
- 	}
+ 	while (array_size > 0 && total < count * token_instance_num) {
++		if (array_size < (int)sizeof(*array))
++			return -EINVAL;
++
+ 		asize = le32_to_cpu(array->size);
  
-@@ -336,6 +339,8 @@ static int sof_ipc3_bytes_put(struct snd
- 	struct sof_ipc_ctrl_data *cdata = scontrol->ipc_control_data;
- 	struct snd_soc_component *scomp = scontrol->scomp;
- 	struct sof_abi_hdr *data = cdata->data;
-+	const struct sof_abi_hdr *new_hdr =
-+		(const struct sof_abi_hdr *)ucontrol->value.bytes.data;
- 	size_t size;
- 
- 	if (scontrol->max_size > sizeof(ucontrol->value.bytes.data)) {
-@@ -344,14 +349,18 @@ static int sof_ipc3_bytes_put(struct snd
- 		return -EINVAL;
- 	}
- 
--	/* scontrol->max_size has been verified to be >= sizeof(struct sof_abi_hdr) */
--	if (data->size > scontrol->max_size - sizeof(*data)) {
--		dev_err_ratelimited(scomp->dev, "data size too big %u bytes max is %zu\n",
--				    data->size, scontrol->max_size - sizeof(*data));
-+	/* Validate the new data's size, not the old one */
-+	if (new_hdr->size > scontrol->max_size - sizeof(*cdata) -
-+				    sizeof(*new_hdr)) {
-+		dev_err_ratelimited(scomp->dev,
-+				    "data size too big %u bytes max is %zu\n",
-+				    new_hdr->size,
-+				    scontrol->max_size - sizeof(*cdata) -
-+				    sizeof(*new_hdr));
- 		return -EINVAL;
- 	}
- 
--	size = data->size + sizeof(*data);
-+	size = new_hdr->size + sizeof(*new_hdr);
- 
- 	/* copy from kcontrol */
- 	memcpy(data, ucontrol->value.bytes.data, size);
+ 		/* validate asize */
+-		if (asize < sizeof(*array)) {
++		if (asize < (int)sizeof(*array)) {
+ 			dev_err(scomp->dev, "error: invalid array size 0x%x\n",
+ 				asize);
+ 			return -EINVAL;
 
 
