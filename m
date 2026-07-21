@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2A53B71A2;
-	Tue, 21 Jul 2026 20:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F293B3C15;
+	Tue, 21 Jul 2026 20:30:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665841; cv=none; b=OYx364hd9uA/xYeyZGWc4xx7Pa3Wf1ykVOXOFjhKHkWwGVssU4K4Adg7kZk1kIWxvbetg75ZIDaEvQZMCUatRR7W8bZaYPv9tSJdTLM0Zx6SqeQRSfgjs8Iz/AZ9AmOALbOTRRqhuzNOdnEEVNEuSm/oK5jgOxzYpG2LEaP7WrE=
+	t=1784665845; cv=none; b=IUIBBFzvRanyZPdezEFOhrwF39vvAny3sSnoaffoq8kI9jDr6f/B1qhvzT4T3DxoQN0muLDUe1PTC8dkr8cpQ/GnYGIbTWqqxIxuL0eVzUgCqI9ynlRbvyGGUAlpfiMg48r7SYgLESUeC91OcSKfkK9YmW6vi+25jIB2BCX1y48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665841; c=relaxed/simple;
-	bh=88BGE/LDEhnZ55wsHz5bqiyo2q7AbUhi024XJF0sjDM=;
+	s=arc-20240116; t=1784665845; c=relaxed/simple;
+	bh=8YF9qCnuKWqf3bQ4GIHlOWbqzKl2zWSVhiUE23P+62Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y8/qtG9VqITyTGkTHF0jp6D3hiGeZfcf2jdzKm8WO2SlJoNfPTMjF7S8HGBJ1fAwdOgD6EoC7fV82pW+oFQHXzPF/lE1nVoodzv1AS09GgqCnF2GlulW1vp8MeeyH1QVE4/+/RpROvhMY3/LEm23nnv3IGUvG822SIE/nvXe7qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wB5luRTO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E3l8Yj7NoDrpdLTrUyc+wzGYx8HWePGBXLNXk0h1w7H/QscL6GruFL0Cdsg6QgsARUjGrzoAw7VXYEwKwr2x78OpC/DfvnllcOTbGKvFiLqxNGKfgEnv0aJuDrANdBk8Y7Z5iuzP2NEUW2Lh8UqvmvPZL8pDMHdkGFTymndp3d8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GryDkoQX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wB5luRTO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EFA81F000E9;
-	Tue, 21 Jul 2026 20:30:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GryDkoQX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94341F000E9;
+	Tue, 21 Jul 2026 20:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665840;
-	bh=SR72d8gnOYeNlwScV9XMkqW5FLovCn1JeDeOvMaToWg=;
+	s=korg; t=1784665843;
+	bh=caoyYY1ObOWDbmSgJmH4fR+7yGU1sWMcpBccJWmb/XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wB5luRTORt7Dp8Rpl8UEeHO9sV6du3udiaUjreij50jJbqrOng1HeH+9CjU3zftY7
-	 /Juqihmf9ZeEnYlg1RXoHk80wy+A7I18LLacZ9vvosbqdebMGOLT5eYTCaE1xJzFw8
-	 wTuPJPk9TRGbRrqs/zcnH6i+0DnMIRmvSYgrLs8I=
+	b=GryDkoQXTb+o9kYMmDskH5uWHctTWtMBGWmwNee4OLL+0oE2x+I+hxW1o9rNR/3a2
+	 mJR6GDPyyTftaIBbZ2VTqYBuF0qopu4Qw++xracag7sR4h2LHQm/+pnCOAp2nSs+nI
+	 edkQ5KBuiM6XFKg+tEUOB0h5z8SgfEM/c3FYH+l4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Ben Cheatham <benjamin.cheatham@amd.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vishal Verma <vishal.l.verma@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Alexandre Bounine <alex.bou9@gmail.com>,
+	Chul Kim <chul.kim@idt.com>,
+	Matt Porter <mporter@kernel.crashing.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0454/1266] dax/kmem: account for partial discontiguous resource upon removal
-Date: Tue, 21 Jul 2026 17:14:51 +0200
-Message-ID: <20260721152451.996091551@linuxfoundation.org>
+Subject: [PATCH 6.6 0455/1266] rapidio/tsi721: prevent a bad dereference in tsi721_db_dpc()
+Date: Tue, 21 Jul 2026 17:14:52 +0200
+Message-ID: <20260721152452.017329307@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -57,57 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 8aa442cfce79e2d69e72fc8e0c0864ac2971149d ]
+[ Upstream commit fc15e3a30ddd950f009c76765331783b9af94a87 ]
 
-When dev_dax_kmem_probe() partially succeeds (at least one range is
-mapped) but a subsequent range fails request_mem_region() or
-add_memory_driver_managed(), the probe silently continues, ultimately
-returning success, but with the corresponding range resource NULL'ed out.
+With a list_for_each() loop, if we don't find the item we are looking for
+in the list, then the loop exits with the iterator, which is "dbell" in
+this loop, pointing to invalid memory.
 
-dev_dax_kmem_remove() iterates over all dax_device ranges regardless of if
-the underlying resource exists.  When remove_memory() is called later, it
-returns 0 because the memory was never added which causes
-dev_dax_kmem_remove() to incorrectly assume the (nonexistent) resource can
-be removed and attempts cleanup on a NULL pointer.
+This code uses the "found" variable to determine if we have found the
+doorbell we are looking for or not.  However, the problem that the "found"
+variable needs to be set to false at the start of each iteration,
+otherwise after the first correct doorbell, then everything is marked as
+found.
 
-Fix this by skipping these ranges altogether, noting that these cases are
-considered success, such that the cleanup is still reached when all
-actually-added ranges are successfully removed.
+Reset the "found" to false at the start of the iteration and move the
+variable inside the loop.
 
-Link: https://lore.kernel.org/20260223201516.1517657-1-dave@stgolabs.net
-Fixes: 60e93dc097f7 ("device-dax: add dis-contiguous resource support")
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Ben Cheatham <benjamin.cheatham@amd.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Dave Jiang <dave.jiang@intel.com>
-Cc: Vishal Verma <vishal.l.verma@intel.com>
+Link: https://lore.kernel.org/af2WHMZiqMwdYveO@stanley.mountain
+Fixes: 48618fb4e522 ("RapidIO: add mport driver for Tsi721 bridge")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Cc: Alexandre Bounine <alex.bou9@gmail.com>
+Cc: Chul Kim <chul.kim@idt.com>
+Cc: Matt Porter <mporter@kernel.crashing.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dax/kmem.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/rapidio/devices/tsi721.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dax/kmem.c b/drivers/dax/kmem.c
-index c57acb73e3db2a..60d8bb7acf519a 100644
---- a/drivers/dax/kmem.c
-+++ b/drivers/dax/kmem.c
-@@ -193,6 +193,12 @@ static void dev_dax_kmem_remove(struct dev_dax *dev_dax)
- 		if (rc)
- 			continue;
+diff --git a/drivers/rapidio/devices/tsi721.c b/drivers/rapidio/devices/tsi721.c
+index 83323c3d10aff7..61ac7c8a1c7f65 100644
+--- a/drivers/rapidio/devices/tsi721.c
++++ b/drivers/rapidio/devices/tsi721.c
+@@ -384,7 +384,6 @@ static void tsi721_db_dpc(struct work_struct *work)
+ 						    idb_work);
+ 	struct rio_mport *mport;
+ 	struct rio_dbell *dbell;
+-	int found = 0;
+ 	u32 wr_ptr, rd_ptr;
+ 	u64 *idb_entry;
+ 	u32 regval;
+@@ -402,6 +401,8 @@ static void tsi721_db_dpc(struct work_struct *work)
+ 	rd_ptr = ioread32(priv->regs + TSI721_IDQ_RP(IDB_QUEUE)) % IDB_QSIZE;
  
-+		/* range was never added during probe */
-+		if (!data->res[i]) {
-+			success++;
-+			continue;
-+		}
+ 	while (wr_ptr != rd_ptr) {
++		int found = 0;
 +
- 		rc = remove_memory(range.start, range_len(&range));
- 		if (rc == 0) {
- 			remove_resource(data->res[i]);
+ 		idb_entry = (u64 *)(priv->idb_base +
+ 					(TSI721_IDB_ENTRY_SIZE * rd_ptr));
+ 		rd_ptr++;
 -- 
 2.53.0
 
