@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F062344AB6E;
-	Tue, 21 Jul 2026 21:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26323B8412;
+	Tue, 21 Jul 2026 21:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670745; cv=none; b=A+JIvHLPm0zjURComaa7a5fk4d3SxnKUX/rc12RemF1L4HhoHj4aj6ETXwAfIiyCTRM3G+wjwMC04JlRDl5S8xjrui6aF0gRPZRaFfXN9uxtuhl5ZZWTlj1TjrtyqoGS2xxbN7gF1QBxSi2kR/wgk/lV1K89/bHHNZg5aQdYL70=
+	t=1784670748; cv=none; b=Kg7pHUM5J5b+rAUVza3cm4EqGgZdgbvnxE7SlcvW1HaYhz05msKnv+b6uzpoqsDW/GewwfxGDZYcIOX/ADRJECw0TXjiwtMA9Nww/ZsIIOxPX8gkF2Oo13I0OLcfAP45ayYcT0bocR/U1OPTz8MyO4WehG6ToZCBZABcuf1zHk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670745; c=relaxed/simple;
-	bh=1FIKfbJ1Qp9uwZln/Z7I/SCF9eXOoIEGnlH7Zx5WXtc=;
+	s=arc-20240116; t=1784670748; c=relaxed/simple;
+	bh=Xj8B0Dthu6azaZqs6ALpwYGaJxwypzwtL3XRipjCBCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mmELIsqZdlu9pqvy8S+drFwytUpbri0jh6Gq7ZBArpwJ/Tsd51vUtkB6S1ok/LWGjQODe5rhQzNFdkl0HxzZ+6ZKFh4BQ2CN+KTJNmY+JE1S8xRpBGMhb07PDbWNjlXTaJRdOqURAuLQn4Ciiurn5pfGFBo0YOgcObhO3bGDLn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Lh2D86M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dNUAXmcFSO3R024uzG8/6s6MqJZGDqDfVlgpeBh+jwFfLNwxuCSDQmou2aJ3nUceM6ILZlFOQCYmCw8ew9hMRMC+/z/uskxbB3KCJO8fTKlZQq5wKsw0FVaJx3+YD05312yyBReWLgiVk1BrIIawYRj3vT/hFmP8qRNhglMyb3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxk1VIKx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Lh2D86M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C5D1F000E9;
-	Tue, 21 Jul 2026 21:52:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxk1VIKx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBAB1F000E9;
+	Tue, 21 Jul 2026 21:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670743;
-	bh=SgbTEPJ6KtL1ODQecPobQoMrzl2cdIF8kdT0knu/hlo=;
+	s=korg; t=1784670746;
+	bh=Dt8/421PPK9tC5pVzWtuXw/eiCbnPzGBfYYi9XikGt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Lh2D86MmeE0RsjjaPwhlw1UM3lStEqV+yivHiYo1Iizfw+klnGcshYnp8VsH6001
-	 Y3YQeDWm1p3T06iW0LluHOa/zeGcUaxqIe6giO3KZA6keWRtH6qTFxef7s88thFMVQ
-	 VNKKaGN4AbaEHc8SiPnsBT/IkRtt5L46ll1dXRSw=
+	b=sxk1VIKxpuqIF2wqaDVVnkocHx9yuuiUj09jXSGolaRLcMzlErt2UMrufvtLPF/rQ
+	 74Gmp/mPAH4edvoFmbWCa8ntA0TzOhIAu2QOXIxydq7PcqRXZA7aYZ/r15vmiitL3N
+	 XqPN8nxzqOOYgKTMhNTx13AoS8n+UxEIpYppuE9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Christian Eggers <ceggers@arri.de>
-Subject: [PATCH 6.1 1048/1067] Bluetooth: L2CAP: Fix regressions caused by reusing ident
-Date: Tue, 21 Jul 2026 17:27:29 +0200
-Message-ID: <20260721152448.033556900@linuxfoundation.org>
+	Stig Hornang <stig@hornang.me>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 1049/1067] Bluetooth: L2CAP: fix tx ident leak for commands without a response
+Date: Tue, 21 Jul 2026 17:27:30 +0200
+Message-ID: <20260721152448.054995337@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,81 +50,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Stig Hornang <stig@hornang.me>
 
-commit 761fb8ec8778f0caf2bba5a41e3cff1ea86974f3 upstream.
+commit 6e1930ece855a4c256f1c7e6632d634cfb9888b5 upstream.
 
-This attempt to fix regressions caused by reusing ident which apparently
-is not handled well on certain stacks causing the stack to not respond to
-requests, so instead of simple returning the first unallocated id this
-stores the last used tx_ident and then attempt to use the next until all
-available ids are exausted and then cycle starting over to 1.
+Commit 6c3ea155e5ee ("Bluetooth: L2CAP: Fix not tracking outstanding
+TX ident") changed ident allocation to use an IDA, releasing idents in
+l2cap_put_ident() when the matching response command is received.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221120
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221177
+But identifiers allocated for commands that have no response defined
+are never released. In particular L2CAP_LE_CREDITS is sent repeatedly for
+the lifetime of an LE CoC channel, so a peer streaming data to the
+host exhausts the 1-255 ident range after 254 credit packets. From
+then on l2cap_get_ident() fails:
+
+    kernel: Bluetooth: Unable to allocate ident: -28
+
+and every subsequent L2CAP_LE_CREDITS packet is sent with ident 0,
+which is invalid (Core Spec, Vol 3, Part A, Section 4: "Signaling
+identifier 0x00 is an invalid identifier and shall never be used in
+any command"). Remote stacks that validate the ident drop these
+commands, never receive new credits, and the channel stalls
+permanently. With default socket buffers this happens after roughly 0.5 MB
+of received data (the exact amount depends on the socket receive buffer):
+
+  < ACL Data TX: Handle 2048 flags 0x00 dlen 12
+        LE L2CAP: LE Flow Control Credit (0x16) ident 0 len 4
+          Source CID: 64
+          Credits: 1
+
+Release the ident immediately after sending L2CAP_LE_CREDITS since no
+response will ever release it. Use a local variable instead of
+chan->ident so that an ident that an EXT_FLOWCTL channel may be waiting on
+(e.g. a pending reconfigure) is not overwritten by a credit packet.
+
+Also add the missing L2CAP_LE_CONN_RSP case to l2cap_put_ident() so
+idents allocated for outgoing L2CAP_LE_CONN_REQ commands are released
+when the response arrives.
+
 Fixes: 6c3ea155e5ee ("Bluetooth: L2CAP: Fix not tracking outstanding TX ident")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221629
+Assisted-by: Claude:claude-opus-4.8
+Assisted-by: Fable:5
+Signed-off-by: Stig Hornang <stig@hornang.me>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Tested-by: Christian Eggers <ceggers@arri.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/l2cap.h |    1 +
- net/bluetooth/l2cap_core.c    |   29 ++++++++++++++++++++++++++---
- 2 files changed, 27 insertions(+), 3 deletions(-)
+ net/bluetooth/l2cap_core.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -654,6 +654,7 @@ struct l2cap_conn {
- 	struct sk_buff		*rx_skb;
- 	__u32			rx_len;
- 	struct ida		tx_ida;
-+	__u8			tx_ident;
- 
- 	struct sk_buff_head	pending_rx;
- 	struct work_struct	pending_rx_work;
 --- a/net/bluetooth/l2cap_core.c
 +++ b/net/bluetooth/l2cap_core.c
-@@ -960,16 +960,39 @@ int l2cap_chan_check_security(struct l2c
- 
- static int l2cap_get_ident(struct l2cap_conn *conn)
- {
-+	u8 max;
+@@ -4895,6 +4895,7 @@ static void l2cap_put_ident(struct l2cap
+ 	case L2CAP_ECHO_RSP:
+ 	case L2CAP_INFO_RSP:
+ 	case L2CAP_CONN_PARAM_UPDATE_RSP:
++	case L2CAP_LE_CONN_RSP:
+ 	case L2CAP_ECRED_CONN_RSP:
+ 	case L2CAP_ECRED_RECONF_RSP:
+ 		/* The remote may send bogus ids that would make ida_free
+@@ -6805,6 +6806,7 @@ static void l2cap_chan_le_send_credits(s
+ 	struct l2cap_conn *conn = chan->conn;
+ 	struct l2cap_le_credits pkt;
+ 	u16 return_credits = l2cap_le_rx_credits(chan);
 +	int ident;
+ 
+ 	if (chan->mode != L2CAP_MODE_LE_FLOWCTL &&
+ 	    chan->mode != L2CAP_MODE_EXT_FLOWCTL)
+@@ -6822,9 +6824,18 @@ static void l2cap_chan_le_send_credits(s
+ 	pkt.cid     = cpu_to_le16(chan->scid);
+ 	pkt.credits = cpu_to_le16(return_credits);
+ 
+-	chan->ident = l2cap_get_ident(conn);
++	ident = l2cap_get_ident(conn);
 +
- 	/* LE link does not support tools like l2ping so use the full range */
- 	if (conn->hcon->type == LE_LINK)
--		return ida_alloc_range(&conn->tx_ida, 1, 255, GFP_ATOMIC);
--
-+		max = 255;
- 	/* Get next available identificator.
- 	 *    1 - 128 are used by kernel.
- 	 *  129 - 199 are reserved.
- 	 *  200 - 254 are used by utilities like l2ping, etc.
- 	 */
--	return ida_alloc_range(&conn->tx_ida, 1, 128, GFP_ATOMIC);
-+	else
-+		max = 128;
-+
-+	/* Allocate ident using min as last used + 1 (cyclic) */
-+	ident = ida_alloc_range(&conn->tx_ida, READ_ONCE(conn->tx_ident) + 1,
-+				max, GFP_ATOMIC);
-+	/* Force min 1 to start over */
-+	if (ident <= 0) {
-+		ident = ida_alloc_range(&conn->tx_ida, 1, max, GFP_ATOMIC);
-+		if (ident <= 0) {
-+			/* If all idents are in use, log an error, this is
-+			 * extremely unlikely to happen and would indicate a bug
-+			 * in the code that idents are not being freed properly.
-+			 */
-+			BT_ERR("Unable to allocate ident: %d", ident);
-+			return 0;
-+		}
-+	}
-+
-+	WRITE_ONCE(conn->tx_ident, ident);
-+
-+	return ident;
++	l2cap_send_cmd(conn, ident, L2CAP_LE_CREDITS, sizeof(pkt), &pkt);
+ 
+-	l2cap_send_cmd(conn, chan->ident, L2CAP_LE_CREDITS, sizeof(pkt), &pkt);
++	/* L2CAP_LE_CREDITS has no response so the ident is never released by
++	 * l2cap_put_ident() - release it right away, otherwise the tx_ida
++	 * range is exhausted after 254 packets and from then on credits are
++	 * sent with the invalid ident 0, which some remote stacks ignore,
++	 * stalling the channel.
++	 */
++	if (ident > 0)
++		ida_free(&conn->tx_ida, ident);
  }
  
- static void l2cap_send_cmd(struct l2cap_conn *conn, u8 ident, u8 code, u16 len,
+ void l2cap_chan_rx_avail(struct l2cap_chan *chan, ssize_t rx_avail)
 
 
