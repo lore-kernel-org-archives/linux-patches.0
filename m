@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C5646E009;
-	Tue, 21 Jul 2026 18:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117AA471240;
+	Tue, 21 Jul 2026 18:32:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658766; cv=none; b=lHWx68As/yJtgBlmqM/yfQ0eKt8kYrRMfZGO6ean+j5/bvR8xm6KwDaE9ko2c9PPKuVqxPiFTM/xPWOU540wOFeU+HscQkpMkdRSihm94nKq1pumbf0n30T9Cs276yWeH7xF8JtXRmtYFMWv77EHJAdN3gJZh0uvuzwfbCV9CII=
+	t=1784658769; cv=none; b=KUIr6qZpR7XW51TliRlUx9LOwODaIUJB85HYAgjh8C2HEKm8JrWDlTTkfNpB+sk3mjDJ2qcyyfeI7Hxad8p0hXn9LoTxSRaKjBubfGKLyZxF7Cldnaleg+883LT/YWL2K31vPskDg7gE3bnYFkZobcXWH2gOFsw5nlB3TJIsOQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658766; c=relaxed/simple;
-	bh=KZWUTQxSMZ0ytYK/gqAssNLtiS6Dahbn2/4FGyqeU9Y=;
+	s=arc-20240116; t=1784658769; c=relaxed/simple;
+	bh=E5DP2VKC5qdeo5ApoVc7M5tlmwRT83rrbCdqWwMQiN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ctMfpeD08OYYfXMk4R0yYorJLZe/3caE9l7eF0reLP0YMAxWCn3HOHWxSq/DrXGgxbmF2YjwZRMTSSIsJEXMLQEUpU7wrewyaLwz9z+vignYmQ/1UvR+mszToaYFew/BdxNPTcaJ6oaHyUptaZaTRXQDMIJ/Dpoh2ICGmGQL1HY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAjZ5RWc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WkAJyy4+6PaV7JTgNqzH65FHy7oYCuH87YucjNZ4A2E9FrYJ6qoogTEooyWHThyzVVki3WcO5zJAhZhy58MZEWJx9QDG0r4HYbHBUTk7yM7BRAHv0GTgUikAQ7l89UpI/i8XOw4JTkgo7gKWWC1l5RvCtpSax3CUKQ20ystUXGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YvmNyQ5p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAjZ5RWc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2F41F000E9;
-	Tue, 21 Jul 2026 18:32:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YvmNyQ5p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801A31F000E9;
+	Tue, 21 Jul 2026 18:32:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658765;
-	bh=SQ+Loyh+jo9qwu3MPpnMPL81tv1REeca5VZ9yJo2WG8=;
+	s=korg; t=1784658768;
+	bh=9uS50XZ1xZHm4Eztb1eWwv/gl8ZLj446J/Rkf6hsOQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SAjZ5RWcdbIS5Y5DpCvRZ6eqCJo+QanPN9KIL382Kwnncikz4KjSk6oCSi7t5uKM4
-	 H5lAT7Ascbgq/pjQI6QN5JjLMHRwE0ZmEBLyYjPKjfY+JZETeOcpmD5OWyPfnft5vX
-	 C1/lMO3wvbyKKkRl/3YXBg+6eKE2I8S4Z3YUwIRk=
+	b=YvmNyQ5pbMDnGrAeXUdSG0msSvCyML+rmThmcvt78Mh/TDVK9z+D3H2slholQ+npE
+	 yLS0QAlDe9gCVhXfWn8UukWnZ1zQqv3YNFhd6nZ4uQi1DDbGHO/C6+0U7f5/ZYbLjz
+	 ZNaS/VpxDOPVclYIimTvB7RamP+Elvkk6HuxYzyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arseniy Krasnov <avkrasnov@rulkc.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.18 1268/1611] mtd: rawnand: fix condition in nand_select_target()
-Date: Tue, 21 Jul 2026 17:23:04 +0200
-Message-ID: <20260721152543.968693808@linuxfoundation.org>
+	Kyle Zeng <kylebot@openai.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 1269/1611] ocfs2: avoid moving extents to occupied clusters
+Date: Tue, 21 Jul 2026 17:23:05 +0200
+Message-ID: <20260721152543.989933697@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,31 +57,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arseniy Krasnov <avkrasnov@rulkc.org>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit 8507c2cc9e4fa402401819f44d1e8a5ef4d11d8b upstream.
+commit 22920541c35a9f23f219038ba5874c843a7c4419 upstream.
 
-'cs' here must be in range [0:nanddev_ntargets[.
+For non-auto OCFS2_IOC_MOVE_EXT operations, userspace supplies a physical
+me_goal.  ocfs2_move_extent() initializes new_phys_cpos from that goal and
+expects ocfs2_probe_alloc_group() to replace it with a free run in the
+target block group.
 
-Cc: stable@vger.kernel.org
-Fixes: 32813e288414 ("mtd: rawnand: Get rid of chip->numchips")
-Signed-off-by: Arseniy Krasnov <avkrasnov@rulkc.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+The probe currently leaves *phys_cpos unchanged if the scan reaches the
+end of the group without finding a free run.  An occupied goal at the last
+bit can therefore survive the probe and be passed to
+__ocfs2_move_extent(), which copies file data into a cluster still owned
+by another inode before the bitmap is updated.
+
+When the probe does find a free run, it also subtracts move_len from the
+ending bit.  The start of an N-bit run ending at i is i - N + 1, so the
+current calculation can report the bit immediately before the free run.
+
+Clear *phys_cpos before scanning and use the correct free-run start.
+Callers already treat a zero result as -ENOSPC, so failed probes no longer
+continue with an occupied caller-controlled goal.
+
+Link: https://lore.kernel.org/20260611213510.16956-1-kylebot@openai.com
+Fixes: e6b5859cccfa ("Ocfs2/move_extents: helper to probe a proper region to move in an alloc group.")
+Fixes: 236b9254f8d1 ("ocfs2: fix non-auto defrag path not working issue")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/nand_base.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/move_extents.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/nand_base.c
-+++ b/drivers/mtd/nand/raw/nand_base.c
-@@ -174,7 +174,7 @@ void nand_select_target(struct nand_chip
- 	 * cs should always lie between 0 and nanddev_ntargets(), when that's
- 	 * not the case it's a bug and the caller should be fixed.
- 	 */
--	if (WARN_ON(cs > nanddev_ntargets(&chip->base)))
-+	if (WARN_ON(cs >= nanddev_ntargets(&chip->base)))
- 		return;
+--- a/fs/ocfs2/move_extents.c
++++ b/fs/ocfs2/move_extents.c
+@@ -534,6 +534,8 @@ static void ocfs2_probe_alloc_group(stru
+ 	u32 base_cpos = ocfs2_blocks_to_clusters(inode->i_sb,
+ 						 le64_to_cpu(gd->bg_blkno));
  
- 	chip->cur_cs = cs;
++	*phys_cpos = 0;
++
+ 	for (i = base_bit; i < le16_to_cpu(gd->bg_bits); i++) {
+ 
+ 		used = ocfs2_test_bit(i, (unsigned long *)gd->bg_bitmap);
+@@ -555,7 +557,7 @@ static void ocfs2_probe_alloc_group(stru
+ 			last_free_bits++;
+ 
+ 		if (last_free_bits == move_len) {
+-			i -= move_len;
++			i = i - move_len + 1;
+ 			*goal_bit = i;
+ 			*phys_cpos = base_cpos + i;
+ 			break;
 
 
