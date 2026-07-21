@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4EC35C682;
-	Tue, 21 Jul 2026 22:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BEFA305E3B;
+	Tue, 21 Jul 2026 22:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671565; cv=none; b=lecYCruHoPaw3M4E7ZtAXD0GR5PWD15J+UeMPmu1LMtruyEdms710pi6rPQcKqINwa8t3VLHb7jcAJ1b3jxQWHLXfJHZ1fZLKG2DMBwfgJMgwABaTL9Xcnr6qs02D5Bb17w2ByE8xqlqmxLAHfzhlmltmG8+6QwLRKjPMjcB8uc=
+	t=1784671568; cv=none; b=tOpfkCzgKxWuWuDC3+h9oAclumNHFQuf1vCZ63vdVGl4/TFihWthc8aDCp9BGCTXYsc1QbxutRnNWHxdIzxBjTKNTvwOuIWx1R3B7u5iRm/j+7Tw0zyC5arTCQM6ExbVE3FFSNbnwdPmGYMZbDXHgbS2AP4tcRDkq3u5xvFEyiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671565; c=relaxed/simple;
-	bh=qQnDVcJCVsL47+y+f5SflO4VUMtCEhHWOxfXaLmJIWs=;
+	s=arc-20240116; t=1784671568; c=relaxed/simple;
+	bh=liqQrj229RE+V07LETDSniJLVOEonsbdmti9kKyeUYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TcB69PB/DFrZZUGL0mzcXQ8yQLsXsFhtA7+8zMwdG7d2iNXwnV+Mo/ylUig2PVfGx2smeC0VSAzl3XPm5389g06laMVSoIXs3ltqxcOSZbw9o5bE7NL/4XDVbyR+VX9PIITtdL4Le1gqbCK+5wmeVBaA8gKUfT48IjyD0GfWHhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Afm+bDAb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nhrxBexzzK20ohVutz2fUnjGKrWaG4ClJ4MeiK/q+PEdZfOZoHUCIQMQ5nf3FvZl0BixS/BPM9GXeoAu7pMO6uUzKGJezWV77y4erHKUK3UYsQJyCEv7mj/lKuRYYC0xppatdV/R0vWkre14DJWsJtH15+xcQZiTlFfK2azIDh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1yVcTME+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Afm+bDAb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEAB11F000E9;
-	Tue, 21 Jul 2026 22:06:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1yVcTME+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB8A1F000E9;
+	Tue, 21 Jul 2026 22:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671564;
-	bh=dWak0eHzX31jMRmPdFWHVlhlt1QdI3bvIL34Z+xNiqA=;
+	s=korg; t=1784671567;
+	bh=F75J2rSJQ/cGVsTwZykXy2uKV8W/3qnNeyhO9qJILZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Afm+bDAbwtgz+XTG7DqO2b00aJyR/fkuUZXXOav3NoX6OFPIsWQRJqhgtqI+hyRz6
-	 +LIR1irwk5eknEEBnE82AnylisOlCrWBUjE4bc8uNRDBeeMH/2kZMeGRHDaHaW8j74
-	 ybqSZFC0kY60VOcjsb8w+fBRLl8NCvGjA9AdZ8z0=
+	b=1yVcTME+9VWuO0TpxumjNtfV3vz60FobuAto2DWWpZ3Cw4yUmy2vifg1yGT0mm3n5
+	 Dx9k8B3SLYYg2wPLhOLUknqz/oqW3rRIEG2TS9bL9yNGtXElByuAdGYnSJKuhtP4dr
+	 bj077Kp3/JEwa+Lg01A1Yc88pJ2chZnHEPJazFHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Breno Leitao <leitao@debian.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Woojin Ji <random6.xyz@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Leon Hwang <leon.hwang@linux.dev>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Quentin Monnet <qmo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 293/843] configfs_lookup(): dont leave ->s_dentry dangling on failure
-Date: Tue, 21 Jul 2026 17:18:48 +0200
-Message-ID: <20260721152412.620788281@linuxfoundation.org>
+Subject: [PATCH 5.15 294/843] bpftool: Use libbpf error code for flow dissector query
+Date: Tue, 21 Jul 2026 17:18:49 +0200
+Message-ID: <20260721152412.642223343@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,56 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Woojin Ji <random6.xyz@gmail.com>
 
-[ Upstream commit 10da12d352b7b2bb330a8609fdda9a58bf0e9856 ]
+[ Upstream commit 8a7f2bff2165e53595d1e91c160b340f978c0ab7 ]
 
-Normally ->s_dentry is cleared when dentry it's pointing to becomes
-negative (on eviction, realistically).  However, that only happens
-if dentry gets to be positive in the first place; in case of inode
-allocation failure dentry never becomes positive, so ->d_iput()
-is not called at all.
+bpf_prog_query() returns a negative errno on failure.
+query_flow_dissector() currently closes the namespace fd and then reads
+errno to decide whether -EINVAL means that the running kernel does not
+support flow dissector queries.
 
-We do part of what normally would've been done by configfs_d_iput()
-(dropping the reference to configfs_dirent) manually, but we do
-not clear ->s_dentry there.  Sloppy as it is, it does not matter in
-case of configfs_create_{dir,link}() - there configfs_dirent does
-not survive dropping the sole reference to it.
+That errno check controls behavior, not just diagnostics: -EINVAL is
+handled as a non-fatal old-kernel case, while any other error makes bpftool
+net fail.
 
-However, for configfs_lookup() it *does* survive, with a dangling
-pointer to soon to be freed dentry sitting it its ->s_dentry.
+The namespace fd is opened read-only, so close() is not expected to
+commonly fail in normal use. Still, the BPF_PROG_QUERY error is already
+available in err, and reading errno after an intervening close() is
+fragile. If close() does change errno, the compatibility branch may be
+based on close()'s error instead of the BPF_PROG_QUERY result.
 
-Subsequent getdents(2) in that directory will end up dereferencing
-that pointer in order to pick the inode number.  Use after free...
+This was reproduced with an LD_PRELOAD fault injector that forced
+BPF_PROG_QUERY for BPF_FLOW_DISSECTOR to fail with EINVAL and then
+forced close() on the netns fd to fail with EIO. The unpatched bpftool
+reported "can't query prog: Input/output error". With this change, the
+same injected failure is handled as the intended non-fatal EINVAL
+compatibility case.
 
-This is the minimal fix; the right approach is to set the linkage
-between dentry and configfs_dirent only after we know that we have
-an inode, but that takes more surgery and the bug had been there
-since 2006, so...
+Use the libbpf-returned error code instead. Keep the existing errno reset
+in the non-fatal path to preserve batch mode behavior. The success path
+is unchanged.
 
-Fixes: 3d0f89bb1694 ("configfs: Add permission and ownership to configfs objects") # 2.6.16-rc3
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Fixes: 7f0c57fec80f ("bpftool: show flow_dissector attachment status")
+Signed-off-by: Woojin Ji <random6.xyz@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Leon Hwang <leon.hwang@linux.dev>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Acked-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/bpf/20260603003339.33791-1-random6.xyz@gmail.com
+
+Assisted-by: ChatGPT:gpt-5.5
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/configfs/dir.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/bpf/bpftool/net.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
-index e017ba188f7b5c..afe2b802eb3193 100644
---- a/fs/configfs/dir.c
-+++ b/fs/configfs/dir.c
-@@ -462,6 +462,9 @@ static struct dentry * configfs_lookup(struct inode *dir,
+diff --git a/tools/bpf/bpftool/net.c b/tools/bpf/bpftool/net.c
+index ef7fe8dd50984e..cce0adc90aafae 100644
+--- a/tools/bpf/bpftool/net.c
++++ b/tools/bpf/bpftool/net.c
+@@ -506,14 +506,14 @@ static int query_flow_dissector(struct bpf_attach_info *attach_info)
+ 			     &attach_flags, prog_ids, &prog_cnt);
+ 	close(fd);
+ 	if (err) {
+-		if (errno == EINVAL) {
++		if (err == -EINVAL) {
+ 			/* Older kernel's don't support querying
+ 			 * flow dissector programs.
+ 			 */
+ 			errno = 0;
+ 			return 0;
+ 		}
+-		p_err("can't query prog: %s", strerror(errno));
++		p_err("can't query prog: %s", strerror(-err));
+ 		return -1;
+ 	}
  
- 			inode = configfs_create(dentry, mode);
- 			if (IS_ERR(inode)) {
-+				spin_lock(&configfs_dirent_lock);
-+				sd->s_dentry = NULL;
-+				spin_unlock(&configfs_dirent_lock);
- 				configfs_put(sd);
- 				return ERR_CAST(inode);
- 			}
 -- 
 2.53.0
 
