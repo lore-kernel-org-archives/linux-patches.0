@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 984A8332913;
-	Tue, 21 Jul 2026 18:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568433B8BB9;
+	Tue, 21 Jul 2026 18:59:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660370; cv=none; b=paVqpOzlCZ0Ad+rsgxzANsFGBrnyyx4XsGLKC8lZn9YOwwymVww3vl/i+vHon5OJLCOEtOd1fv5MQ0NkpegLatrNsuTkX4Su48ROF8NRR4sqjb+T71XA9Y+3HuL9Kv36AbYOpNamWq6XDMkdHzrP2N3NJmH83GI8AkhrLMVkZWQ=
+	t=1784660373; cv=none; b=h6UEmwr/JbBrBDJer5vhfxqoZ3CdcYP5ebewcHr5k6wIhxvJEYY3B6iRxedns37kZRELwlmPirZgZvQu9Z+QPiPPQqvbeALgTqTBCMQOFpvVJTE10mQO6TYLRAQs+DOEL+T2XH517cdXpJM/Xp9IAGGPuad6cr4vkfqIAyXNHJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660370; c=relaxed/simple;
-	bh=1eclTQ/7lusGPj276yEebI6URG2vgsvYsO14oLy5+vQ=;
+	s=arc-20240116; t=1784660373; c=relaxed/simple;
+	bh=K67oi1StmYSHstDP7c3j9GA2zKx9IPjnHfG9yiVzVhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UMOv5VFzaLMCkLy2jE8pyaC/tYog8L1MJ23yxSjRUEFu8i2KqtTfes8hiQl3/2JYRqhtMzTI3kFn84MvO2s+0+ELFWEouuOTzHjLfh/Y6NpLutY75KaQfW5CL0EbTHZpM0F3k2yO9v7hYBsHFWarYIYmuE4qk/LfCcScHIpz5Bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbdTn+H7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IB7erpmZb+52Alcked2Bb/vlJ5clHcqdanEySNZmT9JFxS6RTeg4kMAdgj/3OsYUec4Wr1GLXNSrJqToNe+vGUv2on9tSy0Gyyx0BqdNncvTGH+BEHCgQZd3PuyTPAV0mVWYYhez1LXGocE/04qq5sF5ivTW6eS/kGQftZTDF3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ckLsJFYS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbdTn+H7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AFB11F000E9;
-	Tue, 21 Jul 2026 18:59:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ckLsJFYS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B761C1F00A3A;
+	Tue, 21 Jul 2026 18:59:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660369;
-	bh=ojwMDP2jduuqAzOQ3Xdw+pF0sT3+uDuATM5PjukpDCs=;
+	s=korg; t=1784660372;
+	bh=BENit96ZXILQPycXJJkAAfQDjy+375zueZ+G29dSX7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jbdTn+H7Gh6pGDN4ZkjTaW/L+pOcrJyTRZ/BtcKNV+npb9nlBeaT+cVtGiQ+q8Ez4
-	 pJviDWpuGUuYgaDFsHIH93N9yu1HR8BEYHX1u22xz2m4lzvd16K3t9KcqwTbi5AX/l
-	 jLNAX7fIuoTbWgkvOsbXlM4nzT3/YXUaJbAeM2fQ=
+	b=ckLsJFYSPR8Birng/UuqIuyxqFVUrRMbkksRcD0r2xl/RWXIqIQChD48E3Qi2UriH
+	 Rcy0/8iu1Rdq097NfNQMTNyJkPBI4FrRvCwCwb4yoeEx0360SzcfWmvxHyGugucWQP
+	 fT+4kVQUkOsyRjqQVILLBg1hZjieyXyYNjSIDyqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0953/2077] perf sched: Free callchain nodes in idle thread cleanup
-Date: Tue, 21 Jul 2026 17:10:26 +0200
-Message-ID: <20260721152615.297157104@linuxfoundation.org>
+Subject: [PATCH 7.1 0954/2077] dt-bindings: clock: qcom: Add X1P42100 camera clock controller
+Date: Tue, 21 Jul 2026 17:10:27 +0200
+Message-ID: <20260721152615.320745906@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,87 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
 
-[ Upstream commit c3e51ed45ffa7547495a851e33ce332f81ef3665 ]
+[ Upstream commit 97a5e120be5d3d7cf7d221b8703921046b73f0d2 ]
 
-free_idle_threads() relies on the thread priv destructor (free()) to
-clean up idle_thread_runtime structs.  But free() doesn't walk the
-callchain_cursor linked list or the callchain_root tree allocated
-by callchain_cursor__copy() and callchain_append() during --idle-hist
-processing.  Every idle thread with callchain data leaks these nodes.
+Add X1P42100 camera clock controller support and clock bindings
+for camera QDSS debug clocks which are applicable for both X1E80100
+and X1P42100 platforms.
 
-Introduce callchain_cursor_cleanup() to free the cursor's linked list
-of callchain_cursor_node entries, and call it together with
-free_callchain() in free_idle_threads() before thread__put().
-
-Fixes: 225b24f569980ac9 ("perf sched timehist: Save callchain when entering idle")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260507-purwa-videocc-camcc-v5-2-fc3af4130282@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 1e6ae74ac6f2 ("clk: qcom: camcc-x1e80100: Add support for camera QDSS debug clocks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c  |  5 ++++-
- tools/perf/util/callchain.c | 15 +++++++++++++++
- tools/perf/util/callchain.h |  1 +
- 3 files changed, 20 insertions(+), 1 deletion(-)
+ .../devicetree/bindings/clock/qcom,x1e80100-camcc.yaml         | 1 +
+ include/dt-bindings/clock/qcom,x1e80100-camcc.h                | 3 +++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 70157fcd20f2cc..defbf8dc26073c 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -2500,8 +2500,11 @@ static void free_idle_threads(void)
- 			struct idle_thread_runtime *itr;
+diff --git a/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml
+index 938a2f1ff3fca8..b28614186cc098 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml
+@@ -23,6 +23,7 @@ properties:
+   compatible:
+     enum:
+       - qcom,x1e80100-camcc
++      - qcom,x1p42100-camcc
  
- 			itr = thread__priv(idle);
--			if (itr)
-+			if (itr) {
- 				thread__put(itr->last_thread);
-+				free_callchain(&itr->callchain);
-+				callchain_cursor_cleanup(&itr->cursor);
-+			}
+   reg:
+     maxItems: 1
+diff --git a/include/dt-bindings/clock/qcom,x1e80100-camcc.h b/include/dt-bindings/clock/qcom,x1e80100-camcc.h
+index d72fdfb06a7c71..06c316022fb0d2 100644
+--- a/include/dt-bindings/clock/qcom,x1e80100-camcc.h
++++ b/include/dt-bindings/clock/qcom,x1e80100-camcc.h
+@@ -115,6 +115,9 @@
+ #define CAM_CC_SLEEP_CLK_SRC					105
+ #define CAM_CC_SLOW_AHB_CLK_SRC					106
+ #define CAM_CC_XO_CLK_SRC					107
++#define CAM_CC_QDSS_DEBUG_CLK					108
++#define CAM_CC_QDSS_DEBUG_CLK_SRC				109
++#define CAM_CC_QDSS_DEBUG_XO_CLK				110
  
- 			thread__put(idle);
- 		}
-diff --git a/tools/perf/util/callchain.c b/tools/perf/util/callchain.c
-index f031cbbeeba8b7..5e0498a1faf8a7 100644
---- a/tools/perf/util/callchain.c
-+++ b/tools/perf/util/callchain.c
-@@ -1578,6 +1578,21 @@ void free_callchain(struct callchain_root *root)
- 	free_callchain_node(&root->node);
- }
- 
-+void callchain_cursor_cleanup(struct callchain_cursor *cursor)
-+{
-+	struct callchain_cursor_node *node, *next;
-+
-+	callchain_cursor_reset(cursor);
-+
-+	for (node = cursor->first; node; node = next) {
-+		next = node->next;
-+		free(node);
-+	}
-+	cursor->first = NULL;
-+	cursor->last = &cursor->first;
-+	cursor->curr = NULL;
-+}
-+
- static u64 decay_callchain_node(struct callchain_node *node)
- {
- 	struct callchain_node *child;
-diff --git a/tools/perf/util/callchain.h b/tools/perf/util/callchain.h
-index 06d463ccc7a04f..60008f379b2289 100644
---- a/tools/perf/util/callchain.h
-+++ b/tools/perf/util/callchain.h
-@@ -290,6 +290,7 @@ int callchain_list_counts__printf_value(struct callchain_list *clist,
- 					FILE *fp, char *bf, int bfsize);
- 
- void free_callchain(struct callchain_root *root);
-+void callchain_cursor_cleanup(struct callchain_cursor *cursor);
- void decay_callchain(struct callchain_root *root);
- int callchain_node__make_parent_list(struct callchain_node *node);
- 
+ /* CAM_CC power domains */
+ #define CAM_CC_BPS_GDSC						0
 -- 
 2.53.0
 
