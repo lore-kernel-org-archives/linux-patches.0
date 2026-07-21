@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD46C472520;
-	Tue, 21 Jul 2026 17:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F2546EC6F;
+	Tue, 21 Jul 2026 17:56:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656610; cv=none; b=YXroHKphg/wLLyiKi+mtwZ8y6h3Mc6TBeeDPpB/KZiajIAOzKv29V0PcdlwLOcwd8rPjWgd1G1JuE08hkKWmpff8YP/egBqkjwLdQi0VLEcDGSwxH4YbJ4qD9yBwB9fWECTELwrS45Gf3Sw8S67d63+HrZGIZreS2Gqm17MZKKg=
+	t=1784656613; cv=none; b=rjKl3P0XO0eREafF5qQCGyAvtOsysXICUxWZmtwspWOHmMtJV6QIaKj/+9I4nFQXqJGPVcImQker5r/UlwsfXXOkhGbKKxU5eGCuQzyMZFZiVDuW/HrqLE/S+IBMEYvGmnNuXiFl8Yf223UsQTyn1lThrqm0FaqOhnHn/auxvlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656610; c=relaxed/simple;
-	bh=jfpTTX9juJoWpK/iDfp0M1eE/4q2RQgRr4cG2X/zTl0=;
+	s=arc-20240116; t=1784656613; c=relaxed/simple;
+	bh=36kTDa29+aH5d2rg0amjkdQYf6YS87C45C7Yg7hFvXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pAQbowDvSGd5KlXODFvwAwOjFgPcMy2ICwuOk8RXATf/AqurorauX2nBYNA0ZHCXxPrnI2ELm74N/gpNh43cDKEL33AO1uMzs7nDu/meXWFcARtudxIyC6xxjmIXuQy1cN3SIC0RXLFrpDwj6ULLLc0SpUwO2TQcs5V+geZI4eQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rBf62Eci; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h7rkUtYMY630sN2+FGVVQsphESquxIqG4B04Iah7AzDOoHd+pqgP3HmTpCuQPMeQUfuvB/m1p39eY8ar1l7w7QglOkA0NvzboZd8AUjwKvNZGrw5U65y+4z+kiSCHRkcwIw7JRQVwq7BuE4fp+wv3BOvnxWJH5H3Oz6pCqaPi/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KrPHans6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rBf62Eci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A251F000E9;
-	Tue, 21 Jul 2026 17:56:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KrPHans6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C63411F00A3A;
+	Tue, 21 Jul 2026 17:56:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656609;
-	bh=2rIX9KT/2aQYSUio0o3g3D8VnO0zxdsnSYNCCnO403k=;
+	s=korg; t=1784656612;
+	bh=SG2ZBs9WJRF0BnhWLbU8mBitJrgQOdToShgY9vLdlxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rBf62EciitDm0TIPq8WUp68s7v/mt0g3mXHYpqh7GQ0EkWYl7bjWwcdGctjWpu1Xm
-	 x6GXlxeLvI70hPSQGnuqXt/JohLa77jPoCKkqxVXGeGZzwoKmLxXCkY5C1LmQsW23g
-	 7dGOUI0s9h6goj/oLjOg68m6NSUGkkEjIpwKfZc4=
+	b=KrPHans6+R+vuiJb92htXAT3Hx6u1PaPhuDTHVJHyiPYsT/1hUkClWLZSFyiIPqjb
+	 6BUJgQ9v1zF+vacGuHYVuMWvsm+PwXSlx/IBjbxJnrdEjCQmbwVnVOrT8QC9XLc8NV
+	 4hwl0+SaJhKHvp759PtTWwdFITQU5xhQCPa41UJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0c89d865531d053abb2d@syzkaller.appspotmail.com,
-	Aditya Prakash Srivastava <aditya.ansh182@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Leon Hwang <leon.hwang@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0451/1611] ext4: fix kernel BUG in ext4_write_inline_data_end
-Date: Tue, 21 Jul 2026 17:09:27 +0200
-Message-ID: <20260721152525.448029064@linuxfoundation.org>
+Subject: [PATCH 6.18 0452/1611] selftests/bpf: Fix bpf_iter/task_vma test
+Date: Tue, 21 Jul 2026 17:09:28 +0200
+Message-ID: <20260721152525.471656374@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,52 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aditya Prakash Srivastava <aditya.ansh182@gmail.com>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit ad09aa45965d3fafaf9963bc78109b73c0f9ac8d ]
+[ Upstream commit 2e8ad1ff712d2a397e407c9fde60901f68d077dc ]
 
-When the data=journal mount option is used, the ext4_journalled_write_end()
-function incorrectly calls ext4_write_inline_data_end() without checking
-if the EXT4_STATE_MAY_INLINE_DATA flag is still set on the inode.
+For selftest bpf_iter/task_vma, I got a failure like below on my qemu run:
 
-If a previous attempt to convert the inline data to an extent failed (e.g.
-due to ENOSPC), the EXT4_STATE_MAY_INLINE_DATA flag is cleared, but
-the EXT4_INODE_INLINE_DATA flag remains set. In this scenario, the next
-call to ext4_write_begin() will not prepare the inline data xattr for
-writing, but ext4_journalled_write_end() will incorrectly attempt to write
-to it, triggering a BUG_ON(pos + len > EXT4_I(inode)->i_inline_size) in
-ext4_write_inline_data() since i_inline_size was not expanded.
+test_task_vma_common:FAIL:compare_output unexpected compare_output:
+    actual
+    '561593546000-561593585000r--p0000000000:241256579534/root/devshare/bpf-next/tools/testing/selftests/bpf/test_progs'
+    != expected
+    '561593546000-561593585000r--p0000000000:245551546830/root/devshare/bpf-next/tools/testing/selftests/bpf/test_progs'
 
-Fix this by ensuring that ext4_journalled_write_end() only calls
-ext4_write_inline_data_end() if the EXT4_STATE_MAY_INLINE_DATA flag is
-set, mirroring the behavior of ext4_write_end() and ext4_da_write_end().
+Further debugging found out file->f_inode->i_ino value may exceed 32bit,
+e.g., i_ino = 0x14c2eae35, but the format string is '%u'. This caused
+inode mismatch between bpf iter and proc result.
 
-Reported-by: syzbot+0c89d865531d053abb2d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0c89d865531d053abb2d
-Fixes: 3fdcfb668fd7 ("ext4: add journalled write support for inline data")
-Signed-off-by: Aditya Prakash Srivastava <aditya.ansh182@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260608065227.3018-1-aditya.ansh182@gmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fix the issue by using format string '%llu' to accommodate 64bit i_ino.
+
+Fixes: e8168840e16c ("selftests/bpf: Add test for bpf_iter_task_vma")
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Acked-by: Leon Hwang <leon.hwang@linux.dev>
+Link: https://lore.kernel.org/r/20260610051831.1346659-1-yonghong.song@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/bpf/progs/bpf_iter_task_vmas.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 3ed0c2656e2e1d..c38ca1441b25f3 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -1561,7 +1561,8 @@ static int ext4_journalled_write_end(const struct kiocb *iocb,
+diff --git a/tools/testing/selftests/bpf/progs/bpf_iter_task_vmas.c b/tools/testing/selftests/bpf/progs/bpf_iter_task_vmas.c
+index d64ba7ddaed54e..d7fb561ed4fb90 100644
+--- a/tools/testing/selftests/bpf/progs/bpf_iter_task_vmas.c
++++ b/tools/testing/selftests/bpf/progs/bpf_iter_task_vmas.c
+@@ -52,7 +52,7 @@ SEC("iter/task_vma") int proc_maps(struct bpf_iter__task_vma *ctx)
+ 		bpf_d_path(&file->f_path, d_path_buf, D_PATH_BUF_SIZE);
  
- 	BUG_ON(!ext4_handle_valid(handle));
- 
--	if (ext4_has_inline_data(inode))
-+	if (ext4_has_inline_data(inode) &&
-+	    ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA))
- 		return ext4_write_inline_data_end(inode, pos, len, copied,
- 						  folio);
- 
+ 		BPF_SEQ_PRINTF(seq, "%08llx ", vma->vm_pgoff << 12);
+-		BPF_SEQ_PRINTF(seq, "%02x:%02x %u", MAJOR(dev), MINOR(dev),
++		BPF_SEQ_PRINTF(seq, "%02x:%02x %llu", MAJOR(dev), MINOR(dev),
+ 			       file->f_inode->i_ino);
+ 		BPF_SEQ_PRINTF(seq, "\t%s\n", d_path_buf);
+ 	} else {
 -- 
 2.53.0
 
