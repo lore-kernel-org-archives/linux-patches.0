@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A34239B97E;
-	Tue, 21 Jul 2026 21:41:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E92F3B8412;
+	Tue, 21 Jul 2026 21:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670085; cv=none; b=qOizFr467IQDSuZsAq4v4nzsrc138Wpc/nSaLH+Zdv2zZySdVK++RTfeTpdSB8TNptcjzvsWjvw0fVSiRx6iwSHDaup/JMPFZJhao6oUCCSH+Tkt84K6zvbN2kuHM/ctrr2XFtF4+R1PoDPQD2pZJoFMpibshI8ObtokAJSJbe0=
+	t=1784670088; cv=none; b=qr6nPHeQ+NVw4UoSQv6AeO5HQptuo4cN4YUXiri9tGn4QFkyCObdvTWp+KIYmg0gY7i+rblY00H6cem2hbMxJ6IlcF0Nmc78QEKhN5CBLI5NPE8yYvXY12bmfL3AH4uukpAsCaiChrGd7NwDzKs1pbABkOWIWBf4bis8H9hZ14o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670085; c=relaxed/simple;
-	bh=Z6JEvfsVNTN94FcL9t1xwLkSatxQzpjwWTn5s0LJsys=;
+	s=arc-20240116; t=1784670088; c=relaxed/simple;
+	bh=MygJG+pqIiQ3UBkZWS2oAvBILGkzwcmn1l22g1bWkIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EJhssGg+95gERHpBUqbmVmX+ZvPBlY7D+qrLTt2ULxEZM9gmTCwD45XA8zokBZyC6gjk2o3D/KJ8i3MldWZqz+zjwY7p4yUtpiW7dsF+tJ9xC21GA7TNQ/aifN5aFTK0TtPo45/mGmBQcSpx3Uvc6URd5K3LdFlnBu+5/cApflo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Usw2YdQy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kGO291RVOyxY855H3cX4HTOtl7yFh5uT5FWIxmrTE1SA29tLu1V9NdFSjB3KjDoENv/3opLatLfi7jbCmIii8Atkqr4Kz0WP+/eq5ObR1HTDej0HnKDwoOxEDlH/5eCou8ama1NkXnQozcuP5jmpoTxD/r9HHU/NiMFZjkg3lf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UqlOFXP1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Usw2YdQy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0425C1F000E9;
-	Tue, 21 Jul 2026 21:41:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UqlOFXP1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 954341F000E9;
+	Tue, 21 Jul 2026 21:41:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670084;
-	bh=FWeXUaYkmOJ2+NngWJfvZmmkgcz90pBD6RlKdZfT1kw=;
+	s=korg; t=1784670087;
+	bh=xQlR+P0kww1SMdTFnNwcCFSJ8IC1uhbUVrO2G5xeI4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Usw2YdQyzWyWxfXWuQ7dd99wIxRvBNZREzXdM0TOStCOqiDToNNrWq55jN4/KksJQ
-	 V2YRlcCpoP9GhEOOSnm/6JorS3cIT/7AFnBHeWoPM93Bo8q/ya8hLo441SJLmaQ0k0
-	 heEwTgvfyU5YSmxqbIBccW1FZsNXaDeTc3kOpGGo=
+	b=UqlOFXP16FDiAGf49JoG16sO4+v0As1dvvYyUAB+CE9dgjVlk+V9mcFnexORf4Bp7
+	 nEng7s+wI8W4QWWcdVqKJABodvR8I61t6poLwd0zPB1fBSbdq6OPNiF0+G+OsWXsD0
+	 x2PX1GDwcW7CS1ld9nSeCxXidiWWuKnDSDf7kD08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Haoze Xie <royenheart@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.1 0745/1067] netfilter: nf_queue: pin bridge device while NFQUEUE holds fake dst
-Date: Tue, 21 Jul 2026 17:22:26 +0200
-Message-ID: <20260721152441.245016583@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.1 0793/1067] ntfs3: cap RESTART_TABLE free-chain walker at rt->used
+Date: Tue, 21 Jul 2026 17:23:14 +0200
+Message-ID: <20260721152442.300346321@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -56,116 +50,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoze Xie <royenheart@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit c9c9b37f8c5505224e8d206184df3bb668ee00cf upstream.
+commit 9611f644302c07d21bc8af97e3e06a3d30064253 upstream.
 
-The br_netfilter fake rtable is embedded in struct net_bridge and is
-attached to bridged packets with skb_dst_set_noref(). If such a packet is
-queued to NFQUEUE, __nf_queue() upgrades that fake dst with
-skb_dst_force().
+A crafted NTFS3 disk image triggers an in-kernel infinite loop at
+mount time, hanging the mounting thread and firing the soft-lockup
+watchdog within ~22s on multi-CPU hosts (panic with
+kernel.softlockup_panic=1).  The bug is reachable from desktop USB
+auto-mount on distributions where udisks2 routes the NTFS signature
+to the in-tree ntfs3 driver (Arch family and an increasing fraction
+of Fedora / openSUSE / RHEL deployments); CAP_SYS_ADMIN-class manual
+mount elsewhere.
 
-At that point the queued skb can hold a real dst reference after bridge
-teardown has started. The problem is not that every bridged packet needs
-its own dst reference. The problem is that NFQUEUE can keep the bridge
-private fake dst alive after unregister begins.
+check_rstbl()'s second walker iterates the free-entry singly-linked
+list headed by rt->first_free with no upper bound on iteration count:
 
-Fix this by keeping the bridge fake dst model unchanged and pinning the
-bridge master device only while the packet sits in NFQUEUE. Record the
-bridge device in nf_queue_entry when the queued skb carries a bridge fake
-dst, take a device reference for the queue lifetime, and drop it when the
-queue entry is freed.
+  for (off = ff; off;) {
+      if (off == RESTART_ENTRY_ALLOCATED)
+          return false;
+      off = le32_to_cpu(*(__le32 *)Add2Ptr(rt, off));
+      if (off > ts - sizeof(__le32))
+          return false;
+  }
 
-Also make sure queued entries are reaped when that bridge device goes
-down, and drop the redundant nf_bridge_info_exists() test from the fake
-dst detection.
+The existing guards cover three exits: end-of-list (off == 0), the
+in-use marker (off == RESTART_ENTRY_ALLOCATED), and out-of-bounds
+(off > ts - sizeof(__le32)).  None of the three prevents an
+in-bounds cycle.
 
-This keeps netdev_priv(br->dev) alive until verdict completion, so the
-embedded fake rtable and its metrics backing storage cannot be freed out
-from under dst_release(). It also avoids the constant refcount bump and
-avoids using ipv4-specific dst helpers for IPv6 bridge traffic.
+A crafted on-disk RESTART_TABLE whose free chain contains a
+self-loop or A->B->A cycle whose offsets satisfy:
 
-Fixes: 34666d467cbf ("netfilter: bridge: move br_netfilter out of the core")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Haoze Xie <royenheart@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+  - in range [sizeof(struct RESTART_TABLE), ts - sizeof(__le32)]
+  - (off - sizeof(struct RESTART_TABLE)) % rsize == 0
+
+passes all existing guards and spins the mount-time thread forever.
+Reproduced in UML by hand-forging a 2 MB NTFS3 image whose journal
+RESTART_TABLE first_free = 0x18 and whose entry at offset 0x18
+stores 0x18 as its next pointer; mount of the forged image with
+the in-tree ntfs3 driver never returns.
+
+Bound the walker by rt->used.  Each entry on a legitimate free
+chain is unique, and the total slot count is ne = le16_to_cpu
+(rt->used).  A traversal that visits more than ne slots is by
+construction malformed; reject it as a corrupt RESTART_TABLE.
+
+After this patch, mount of the forged image returns with -EINVAL
+and a log_replay failure message, and mkntfs-produced legitimate
+images mount cleanly (verified in the same UML harness).
+
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Cc: stable@vger.kernel.org
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_queue.h |    1 +
- net/netfilter/nf_queue.c         |   14 ++++++++++++++
- net/netfilter/nfnetlink_queue.c  |    3 +++
- 3 files changed, 18 insertions(+)
+ fs/ntfs3/fslog.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/include/net/netfilter/nf_queue.h
-+++ b/include/net/netfilter/nf_queue.h
-@@ -16,6 +16,7 @@ struct nf_queue_entry {
- 	unsigned int		id;
- 	unsigned int		hook_index;	/* index in hook_entries->hook[] */
- #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
-+	struct net_device	*bridge_dev;
- 	struct net_device	*physin;
- 	struct net_device	*physout;
- #endif
---- a/net/netfilter/nf_queue.c
-+++ b/net/netfilter/nf_queue.c
-@@ -67,6 +67,7 @@ static void nf_queue_entry_release_refs(
- 		nf_queue_sock_put(state->sk);
- 
- #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
-+	dev_put(entry->bridge_dev);
- 	dev_put(entry->physin);
- 	dev_put(entry->physout);
- #endif
-@@ -83,6 +84,8 @@ static void __nf_queue_entry_init_physde
- {
- #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
- 	const struct sk_buff *skb = entry->skb;
-+	struct dst_entry *dst = skb_dst(skb);
-+	struct net_device *dev = NULL;
- 
- 	if (nf_bridge_info_exists(skb)) {
- 		entry->physin = nf_bridge_get_physindev(skb, entry->state.net);
-@@ -91,6 +94,16 @@ static void __nf_queue_entry_init_physde
- 		entry->physin = NULL;
- 		entry->physout = NULL;
- 	}
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -764,8 +764,19 @@ static bool check_rstbl(const struct RES
+ 	/*
+ 	 * Walk through the list headed by the first entry to make
+ 	 * sure none of the entries are currently being used.
++	 *
++	 * Bound traversal by ne (rt->used) to defeat a crafted on-disk
++	 * cycle in the free chain.  Each entry in a legitimate free
++	 * list is unique, so a chain that visits more than ne slots
++	 * is malformed.  Without this guard, an attacker-controlled
++	 * RESTART_TABLE with a self-loop or A->B->A cycle whose
++	 * offsets satisfy the existing alignment + in-bounds guards
++	 * spins forever at mount time.
+ 	 */
+-	for (off = ff; off;) {
++	for (off = ff, i = 0; off; i++) {
++		if (i > ne)
++			return false;
 +
-+	if (entry->state.pf == NFPROTO_BRIDGE &&
-+	    dst && (dst->flags & DST_FAKE_RTABLE))
-+		dev = dst_dev_rcu(dst);
-+
-+	/* Must hold a reference on the bridge device: dst_hold() protects
-+	 * the dst itself, but the fake rtable is embedded in bridge-private
-+	 * storage that netdevice teardown can free independently.
-+	 */
-+	entry->bridge_dev = dev;
- #endif
- }
+ 		if (off == RESTART_ENTRY_ALLOCATED)
+ 			return false;
  
-@@ -107,6 +120,7 @@ bool nf_queue_entry_get_refs(struct nf_q
- 	dev_hold(state->out);
- 
- #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
-+	dev_hold(entry->bridge_dev);
- 	dev_hold(entry->physin);
- 	dev_hold(entry->physout);
- #endif
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -950,6 +950,9 @@ dev_cmp(struct nf_queue_entry *entry, un
- 
- 	if (physinif == ifindex || physoutif == ifindex)
- 		return 1;
-+
-+	if (entry->bridge_dev && entry->bridge_dev->ifindex == ifindex)
-+		return 1;
- #endif
- 	if (entry->skb_dev && entry->skb_dev->ifindex == ifindex)
- 		return 1;
 
 
