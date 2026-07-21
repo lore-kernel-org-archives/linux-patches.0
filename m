@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B7846A603;
-	Tue, 21 Jul 2026 15:52:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE6846D556;
+	Tue, 21 Jul 2026 15:52:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649167; cv=none; b=EqIFqx7NC5l2/31Y+IT8ZeGvKIvD+iS/p5seNxjeD3RYQraD5Jxc9H6SMVOYABQE5PPCTgPQ07qxdd/SXch5bczsyVSOewySX4QFYAu8BZXlZIzvVvflMbSI/X5avjAy9GcZw8GpexMEenqbbIx2hpsPYf3Y35VDaMJqKgH5bxk=
+	t=1784649169; cv=none; b=mGYvTd8QTs7+ZPZ647w8VqKU7Nl2O9tC4OBLrhEw5m7kNh/5UvPIHYJKtvQFBXbFKBpGJI0CPe2gbXPbXW+2BxHDBeus4uxbE5ce1CwAEXC4fjSCuX3q28jSaXEenD8Mj06ukW8+ezUuwFyYZa2AJKzaF1gA+xgsa2HbmEf8Bz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649167; c=relaxed/simple;
-	bh=F1XBoAgA1A7HhDHTJ0t62I+hO1cebBixQO9VWgmbQ5w=;
+	s=arc-20240116; t=1784649169; c=relaxed/simple;
+	bh=uKWsd/v7DwMYssjv1vQocLrW0E1w+twpZm7b4CkY1KE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JjzdnTlkCqUqGbZC6XEeq2mXaIjaAux82zgO7yfgGb7V7IjHrJrII6+ue0pBfdU9cbe9/lfUzE6fYCUSCgfHHKwAYz3gzxRd9n+gEbF0d0Hu2PqBYRJsx0rVPs6+dL5Mjerwqq75IBOLsP8DcKe0RkeEKxoZTf2aD4l1uwdTTb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTB3UB/t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sjtGnH+Ug+vdm7NuTmElCOmL61ccHXsv1UZq9RLQ/nMMYGEJNWt77BIfHxIEKmzDQeudSwyh66L9KgdyU+UggvcXy/cnrt7tFMWlNIsIu25lNUineQJW414riQH9pmTiHXoerew3CUm1rkZ5curyTOggIShtV/DT11/7xtUjIW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VvZDLcR2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTB3UB/t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973031F000E9;
-	Tue, 21 Jul 2026 15:52:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VvZDLcR2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31B7D1F000E9;
+	Tue, 21 Jul 2026 15:52:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649166;
-	bh=R4+jBiOzSkpWgYmg5bmnbOBlg0P4KCFAwz157JhWJU0=;
+	s=korg; t=1784649168;
+	bh=wJ7VJYYAoHwbwrJhAyxX84SPMOod5obSd+EM7ugHiUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sTB3UB/tQJcduo3rxIm4mQbXp5Aq7UVJWEzi3ezARVww+zuHbiZrtHxpxy/mCWhCX
-	 gf10bnVeBCgKZfh11tjppEiSYkXAO+Dpnp6Aator4QnfyAc89T33Ljm/bOlzUXE4Ps
-	 RelgsqD2nnjX0mJ47sfALJ//qmqbJkPRFQclvnp0=
+	b=VvZDLcR2sR3O4HO1hxdQy9NjuosJitH4uozcO/S0IVuWMuUy2Kp878s8FM6Wc8bNW
+	 kAY+8bKWFRG4HMC9ghPSZdyOgxZJCdhh+ccK18Za/+sJytpl5RoeQR77pHDoaqPqaA
+	 xn+gm4dR+G/Ki2Cp/GxXRtqe0+Uezzlhg2+Y7EuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	syzbot+caacd220635a9cc3bac9@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0475/2077] lib: kunit_iov_iter: repeatedly call alloc_pages_bulk()
-Date: Tue, 21 Jul 2026 17:02:28 +0200
-Message-ID: <20260721152604.003758003@linuxfoundation.org>
+Subject: [PATCH 7.1 0476/2077] ocfs2: fix buffer head management in ocfs2_read_blocks()
+Date: Tue, 21 Jul 2026 17:02:29 +0200
+Message-ID: <20260721152604.029372755@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,64 +53,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 9ac9a08e4ac4bc063e56e1aff266c5e8aa5c6c03 ]
+[ Upstream commit 6371a07148ee979af22a9d6f4c277462953a9a4a ]
 
-alloc_pages_bulk() is not guaranteed to return all requested pages in a
-single call.
+In ocfs2_read_blocks(), caller should't assume that buffer head returned
+by 'sb_getblk()' is exclusively owned and so 'put_bh()' always drops
+b_count from 1 to 0.  If it is not so, buffer head remains on hold and
+likely to be returned by the next call to 'sb_getblk()' unchanged - that
+is, with BH_Uptodate bit set even if it has failed validation previously,
+thus allowing to insert that buffer head into OCFS2 metadata cache and
+submit it to upper layers.  To avoid such a scenario, BH_Uptodate should
+be cleared immediately after 'validate()' callback has detected some data
+inconsistency.
 
-Call it repeatedly until all pages have been allocated or no more progress
-is being made.
-
-Link: https://lore.kernel.org/20260526-kunit_iov_iter-alloc_bulk-v2-1-24fbcd995c61@weissschuh.net
-Fixes: 2d71340ff1d4 ("iov_iter: Kunit tests for copying to/from an iterator")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Cc: "Christian A. Ehrhardt" <lk@c--e.de>
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/20260529094128.494293-1-dmantipov@yandex.ru
+Fixes: cf76c78595ca ("ocfs2: don't put and assigning null to bh allocated outside")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Reported-by: syzbot+caacd220635a9cc3bac9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=caacd220635a9cc3bac9
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/tests/kunit_iov_iter.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/ocfs2/buffer_head_io.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/lib/tests/kunit_iov_iter.c b/lib/tests/kunit_iov_iter.c
-index f02f7b7aa79605..1e6fce9cb255ff 100644
---- a/lib/tests/kunit_iov_iter.c
-+++ b/lib/tests/kunit_iov_iter.c
-@@ -53,7 +53,7 @@ static void *__init iov_kunit_create_buffer(struct kunit *test,
- 					    size_t npages)
- {
- 	struct page **pages;
--	unsigned long got;
-+	unsigned long got, last;
- 	void *buffer;
- 	unsigned int i;
+diff --git a/fs/ocfs2/buffer_head_io.c b/fs/ocfs2/buffer_head_io.c
+index 701d27d908d4b2..6114299b121e52 100644
+--- a/fs/ocfs2/buffer_head_io.c
++++ b/fs/ocfs2/buffer_head_io.c
+@@ -350,8 +350,6 @@ int ocfs2_read_blocks(struct ocfs2_caching_info *ci, u64 block, int nr,
+ 						wait_on_buffer(bh);
+ 					put_bh(bh);
+ 					bhs[i] = NULL;
+-				} else if (bh && buffer_uptodate(bh)) {
+-					clear_buffer_uptodate(bh);
+ 				}
+ 				continue;
+ 			}
+@@ -380,8 +378,11 @@ int ocfs2_read_blocks(struct ocfs2_caching_info *ci, u64 block, int nr,
+ 				BUG_ON(buffer_jbd(bh));
+ 				clear_buffer_needs_validate(bh);
+ 				status = validate(sb, bh);
+-				if (status)
++				if (status) {
++					if (buffer_uptodate(bh))
++						clear_buffer_uptodate(bh);
+ 					goto read_failure;
++				}
+ 			}
+ 		}
  
-@@ -61,7 +61,15 @@ static void *__init iov_kunit_create_buffer(struct kunit *test,
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, pages);
- 	*ppages = pages;
- 
--	got = alloc_pages_bulk(GFP_KERNEL, npages, pages);
-+	got = 0;
-+	while (true) {
-+		last = got;
-+		got = alloc_pages_bulk(GFP_KERNEL, npages, pages);
-+
-+		if (last == got || got == npages)
-+			break;
-+	}
-+
- 	if (got != npages) {
- 		release_pages(pages, got);
- 		kvfree(pages);
 -- 
 2.53.0
 
