@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D672A42F704;
-	Tue, 21 Jul 2026 20:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382C746EF95;
+	Tue, 21 Jul 2026 20:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665616; cv=none; b=bfS/yo+K8e0Ga1/BkBYQ4UOF8C0UBbLPvZiIlsYNo2Npg9ZrUxPxScrGQYLfCqP+QEAqRj1m/co9OeQjf+AqvQaTZG19vCUtkHiKrx1aim7zjD+EBghjVjAhLCBh3MIvPRWtGjYVWRkZrgPr0xFhW1MI+CTWiZrKZeKMu6RkKqA=
+	t=1784665619; cv=none; b=QIkZexjFBLkvEPstdPgwDSxzIPrgEPtLZ90dYkn6XxzRstim7fyAvTyE2nWQeTw8lvfNA7NpVPHhMJJElgrZhx4YreVr2bR4ACFJWZKuq8IKwErjemI29gNRKGPCH4q6SHDRGfyinMi7rOrzJq8T2GKh3vMv4w3XTKfQmj6gsb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665616; c=relaxed/simple;
-	bh=2uXPnNg28SQhe64lAV8E1aOJE0Atel1TezxK4/KbGF0=;
+	s=arc-20240116; t=1784665619; c=relaxed/simple;
+	bh=jUGL8lMHPnZ0MIYRSKluJDYg8Yoe2LzoEbNXUSTDK8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XcXUU7tw6DbgjQFNzaC80RrTKDLnYOYUMnaO1BYLn2QqiHDAgOrHzoUfz8g23apGBzw9Xjbto9jzEQkqNgfXjj1w1R4SA5N9Nn26ud6RP3vrCxoUJMmy8VvDQ98nxH/BjO6+NNa7qEcc5m9J51m5Ksw1iv1pU2rUyOdjMkZroHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kX6i7UAS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PbdpOn/DVcM62ooXuMtSBna0Pkp8xEQqAQZYLEDjjcixXXZ6cQ6g6lf37pm0dKOAXRhj7Dpnp4pGq2OXIjkEh1KPgmc6i+/cDgqsPvq2OZfJu5RdwGtlpQbnrOWVWqTRzktKBlNVpP4kwVNBdGUfSwxcLFpzsYdUwZurn3xV1Dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vz5nHgGe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kX6i7UAS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 058051F000E9;
-	Tue, 21 Jul 2026 20:26:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vz5nHgGe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5C71F000E9;
+	Tue, 21 Jul 2026 20:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665615;
-	bh=HPqG9BkbPhYn99JCFyUZd6fFzlbKjVuvXcP+Sj3m9Sw=;
+	s=korg; t=1784665618;
+	bh=a2icXd2nBuNBxQc5LCaNFDQKnNCLu81uPBw0llEMarc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kX6i7UASo8/z4zwoHV9XUnoKzSei2RSL890Dua7Nm0YmJZFw2Egr8dUJUgMCMQf9T
-	 P8oPW7f6a1oellb45LlPsC4DokDqto1/0JPb/Zo6/bW47pQeIibPCJNTEztKOEsdSK
-	 LFWKhOTXJpN/xIvBsvgLSai9lv9K4BWPWZ1UptRw=
+	b=vz5nHgGeMy2JknKh09UytPN2tWyN/+vgzF24jTf4PmgY2sZrLDyUfj0EPryMULWBV
+	 eWsaaFV7tnVZ7J1nLuov4H0irRL00uG6cngWMZousC7x9TliidZBDJmFhULO56bWZ1
+	 D2Gce8yuWFk33uL7SMQrj465IV+6IEHs9JdgN1Vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fuchs <fuchsfl@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 0318/1266] Input: maplecontrol - set driver data before registering input device
-Date: Tue, 21 Jul 2026 17:12:35 +0200
-Message-ID: <20260721152448.955255665@linuxfoundation.org>
+	Baolin Liu <liubaolin@kylinos.cn>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0365/1266] Documentation: proc: fix section numbering in table of contents
+Date: Tue, 21 Jul 2026 17:13:22 +0200
+Message-ID: <20260721152449.994552113@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,42 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Baolin Liu <liubaolin@kylinos.cn>
 
-commit fe938ee497d58c644f6910cfe6ae155f6fb3e523 upstream.
+[ Upstream commit 97a7bd8c2c58a6d820df563d1d0f68aafec45477 ]
 
-Set maple driver data before calling input_register_device() to
-ensure that it is available if the device is opened immediately and
-the callback is triggered.
+Commit e24ccaaf7ec4 ("block: remove last remaining traces of IDE
+documentation") removed the IDE section but left its table of
+contents entry behind.
+Fix the stale entry and renumber the following sections.
 
-Cc: stable@vger.kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Tested-by: Florian Fuchs <fuchsfl@gmail.com>
-Link: https://patch.msgid.link/akNYib9hQFNN1fA9@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e24ccaaf7ec4 ("block: remove last remaining traces of IDE documentation")
+Signed-off-by: Baolin Liu <liubaolin@kylinos.cn>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Message-ID: <20260424090654.19229-1-liubaolin12138@163.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/joystick/maplecontrol.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Documentation/filesystems/proc.rst | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/input/joystick/maplecontrol.c
-+++ b/drivers/input/joystick/maplecontrol.c
-@@ -112,6 +112,8 @@ static int probe_maple_controller(struct
- 	pad->dev = idev;
- 	pad->mdev = mdev;
+diff --git a/Documentation/filesystems/proc.rst b/Documentation/filesystems/proc.rst
+index 2b59cff8be1798..0a186efa0cec53 100644
+--- a/Documentation/filesystems/proc.rst
++++ b/Documentation/filesystems/proc.rst
+@@ -23,13 +23,13 @@ fixes/update part 1.1  Stefani Seibold <stefani@seibold.net>    June 9 2009
+   1	Collecting System Information
+   1.1	Process-Specific Subdirectories
+   1.2	Kernel data
+-  1.3	IDE devices in /proc/ide
+-  1.4	Networking info in /proc/net
+-  1.5	SCSI info
+-  1.6	Parallel port info in /proc/parport
+-  1.7	TTY info in /proc/tty
+-  1.8	Miscellaneous kernel statistics in /proc/stat
+-  1.9	Ext4 file system parameters
++  1.3	Networking info in /proc/net
++  1.4	SCSI info
++  1.5	Parallel port info in /proc/parport
++  1.6	TTY info in /proc/tty
++  1.7	Miscellaneous kernel statistics in /proc/stat
++  1.8	Ext4 file system parameters
++  1.9	/proc/consoles - Shows registered system consoles
  
-+	maple_set_drvdata(mdev, pad);
-+
- 	idev->open = dc_pad_open;
- 	idev->close = dc_pad_close;
+   2	Modifying System Parameters
  
-@@ -146,7 +148,6 @@ static int probe_maple_controller(struct
- 		goto fail;
- 
- 	mdev->driver = mdrv;
--	maple_set_drvdata(mdev, pad);
- 
- 	return 0;
- 
+-- 
+2.53.0
+
 
 
