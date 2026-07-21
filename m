@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E444A44AB6E;
-	Tue, 21 Jul 2026 21:53:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8445A44AB62;
+	Tue, 21 Jul 2026 21:53:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670835; cv=none; b=odI1JXVY6mXDh3s3oEZId4xQnRiguAZUVfb7UlRVayoNS43sJ2Gdm3BsScGtzEwKPTrwbV4Zcv4+pQw9AbHs1nsxgxDvtMlKtbbCWKgozoPXLV9gHd/PlhZQmAQMzMco5Ip2uvpTbpxXK0V+J1FD4IeK2o40bkBrCsSjmSqzSAc=
+	t=1784670837; cv=none; b=CEcXIt/vRerGT14yaCHRofTo/qWEO5vecwF2ZkFIdr6NqyOLb4iloGyXsv1bvjLIjnKUyJ4Boz4+HvRZc+tnYhd3sfp6shRzpT+tjUthMTkkI4N7WKXicDxga8I6DaENAhdi+gshl3vRGveuzn22jjqxoN1Vh+XP1dKG/ERXkCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670835; c=relaxed/simple;
-	bh=AjJLHmTKCmMOls8Zh3584RLqdRi7tE0yNNr3DLOUoSg=;
+	s=arc-20240116; t=1784670837; c=relaxed/simple;
+	bh=aKCP6Y3vdN9NVQeTr/MuTjMQU/rhChB/T2paTatvzSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ccc2RoaaKBgiLso3ctBCUnPxkPLHEcSp/hbM8cL2e6Hnmr2ZwyrCOgr9ziJgBGZ5RtKYL/mtzo4MHIs9mxwCROszBve72KvmJxY8E7QMopcq7A97pRvJDj09Lp03LUpad2zdihIXa+3vzeJyYmM9ycM4qOaAgRmhwV/WU7/IvCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8CLME1E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aJLMFrJxIKydVGGg0uaRWnkZbj+9ozvQ+bd2E889Dk86SKy7lp1iqiBvOs6/F8mzAdHHrExxgLElv2Wt+9qCMh7xACUR61zxnxC/J3fJ0FfQxRBnyb2xkbtF1NhyaeYqlX9KJNfYx1irmhAHSKd1mKPM2JJmbF0SboNdzt9Fvc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2bX7hHYh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8CLME1E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0BC1F000E9;
-	Tue, 21 Jul 2026 21:53:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2bX7hHYh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9AEE1F000E9;
+	Tue, 21 Jul 2026 21:53:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670833;
-	bh=yEP94CwGrATw6ZSve0FZibgBrggnLFKD8Bz4qQkNzaQ=;
+	s=korg; t=1784670836;
+	bh=yst1mx70upBYkJ/M7YOcyBD8gmGQeo0GEl5YlyQq8/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I8CLME1EMc1fDZ8dMQklTjOHFe8Gehdbygx6ctIbG9GPJFjYdl/FanqIPOLqWiEdt
-	 7qlJ2WERfflswDKn7CjAoxc3R2k9JVCVODw3LrxZf4lN40twd7Ezox7AsawcizHOvV
-	 GcyP2ZpJ6dS3TtidmLROVuQsZM81FKP2IXv1KdEw=
+	b=2bX7hHYhF+aaDQf+BFoi48qgJR4rUfpFZWPgbwCOtwLJ0ItRxxL9Updjycfy+7JH1
+	 +kPR/5xz8O/jKv8JMbxaV9eScb0ia9feonPt2SIxB4teK5gY1OKdjuhqzWoxWN5eNd
+	 gJ/m8S4ueREd8qBJo9Ue26UflNc+05o5rutnTyYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Keenan Dong <keenanat2000@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 019/843] skmsg: convert struct sk_msg_sg::copy to a bitmap
-Date: Tue, 21 Jul 2026 17:14:14 +0200
-Message-ID: <20260721152406.392241570@linuxfoundation.org>
+Subject: [PATCH 5.15 020/843] net: skmsg: preserve sg.copy across SG transforms
+Date: Tue, 21 Jul 2026 17:14:15 +0200
+Message-ID: <20260721152406.415046357@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,93 +52,289 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Yiming Qian <yimingqian591@gmail.com>
 
-[ Upstream commit 5a8fb33e530512ee67a11b30f3451a4f030f4b01 ]
+[ Upstream commit 406e8a651a7b854c41fecd5117bb282b3a6c2c6b ]
 
-We have plans for increasing MAX_SKB_FRAGS, but sk_msg_sg::copy
-is currently an unsigned long, limiting MAX_SKB_FRAGS to 30 on 32bit arches.
+The sk_msg sg.copy bitmap is part of the scatterlist entry ownership
+state. A set bit tells sk_msg_compute_data_pointers() not to expose the
+entry through writable BPF ctx->data. This protects entries backed by
+pages that are not private to the sk_msg, such as splice-backed file
+page-cache pages.
 
-Convert it to a bitmap, as Jakub suggested.
+Several sk_msg transform paths move, copy, split, or compact
+msg->sg.data[] entries without moving the matching sg.copy bit. This can
+make an externally backed entry arrive at a new slot with a clear copy
+bit. A later SK_MSG verdict can then expose sg_virt(sge) as writable
+ctx->data and BPF stores can modify the original page cache.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 406e8a651a7b ("net: skmsg: preserve sg.copy across SG transforms")
+Keep sg.copy synchronized with sg.data[] whenever entries are
+transferred, shifted, split, or copied into a new sk_msg. Clear the bit
+when an entry is replaced by a newly allocated private page or freed.
+This covers the BPF pull/push/pop helpers, sk_msg_shift_left/right(),
+sk_msg_xfer(), and tls_split_open_record(), including the partial tail
+entry created during TLS open-record splitting.
+
+Fixes: d3b18ad31f93 ("tls: add bpf support to sk_msg handling")
+Cc: stable@vger.kernel.org
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Reported-by: Keenan Dong <keenanat2000@gmail.com>
+Signed-off-by: Yiming Qian <yimingqian591@gmail.com>
+Link: https://patch.msgid.link/20260610062137.49075-1-yimingqian591@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/skmsg.h |   11 +++++------
- net/core/filter.c     |    4 ++--
- 2 files changed, 7 insertions(+), 8 deletions(-)
+ include/linux/skmsg.h |   15 +++++++++++----
+ net/core/filter.c     |   27 +++++++++++++++++++++++++++
+ net/core/skmsg.c      |    2 ++
+ net/tls/tls_sw.c      |    4 ++++
+ 4 files changed, 44 insertions(+), 4 deletions(-)
 
 --- a/include/linux/skmsg.h
 +++ b/include/linux/skmsg.h
-@@ -29,7 +29,7 @@ struct sk_msg_sg {
- 	u32				end;
- 	u32				size;
- 	u32				copybreak;
--	unsigned long			copy;
-+	DECLARE_BITMAP(copy, MAX_MSG_FRAGS + 2);
- 	/* The extra two elements:
- 	 * 1) used for chaining the front and sections when the list becomes
- 	 *    partitioned (e.g. end < start). The crypto APIs require the
-@@ -38,7 +38,6 @@ struct sk_msg_sg {
- 	 */
- 	struct scatterlist		data[MAX_MSG_FRAGS + 2];
- };
--static_assert(BITS_PER_LONG >= NR_MSG_FRAG_IDS);
+@@ -4,6 +4,7 @@
+ #ifndef _LINUX_SKMSG_H
+ #define _LINUX_SKMSG_H
  
- /* UAPI in filter.c depends on struct sk_msg_sg being first element. */
- struct sk_msg {
-@@ -236,7 +235,7 @@ static inline void sk_msg_compute_data_p
++#include <linux/bitops.h>
+ #include <linux/bpf.h>
+ #include <linux/filter.h>
+ #include <linux/scatterlist.h>
+@@ -188,11 +189,14 @@ static inline void sk_msg_xfer(struct sk
+ 			       int which, u32 size)
  {
- 	struct scatterlist *sge = sk_msg_elem(msg, msg->sg.start);
- 
--	if (test_bit(msg->sg.start, &msg->sg.copy)) {
-+	if (test_bit(msg->sg.start, msg->sg.copy)) {
- 		msg->data = NULL;
- 		msg->data_end = NULL;
- 	} else {
-@@ -255,7 +254,7 @@ static inline void sk_msg_page_add(struc
- 	sg_set_page(sge, page, len, offset);
- 	sg_unmark_end(sge);
- 
--	__set_bit(msg->sg.end, &msg->sg.copy);
-+	__set_bit(msg->sg.end, msg->sg.copy);
- 	msg->sg.size += len;
- 	sk_msg_iter_next(msg, end);
+ 	dst->sg.data[which] = src->sg.data[which];
++	__assign_bit(which, dst->sg.copy, test_bit(which, src->sg.copy));
+ 	dst->sg.data[which].length  = size;
+ 	dst->sg.size		   += size;
+ 	src->sg.size		   -= size;
+ 	src->sg.data[which].length -= size;
+ 	src->sg.data[which].offset += size;
++	if (!src->sg.data[which].length)
++		__clear_bit(which, src->sg.copy);
  }
-@@ -264,9 +263,9 @@ static inline void sk_msg_sg_copy(struct
+ 
+ static inline void sk_msg_xfer_full(struct sk_msg *dst, struct sk_msg *src)
+@@ -262,16 +266,19 @@ static inline void sk_msg_page_add(struc
+ static inline void sk_msg_sg_copy(struct sk_msg *msg, u32 i, bool copy_state)
  {
  	do {
- 		if (copy_state)
--			__set_bit(i, &msg->sg.copy);
-+			__set_bit(i, msg->sg.copy);
- 		else
--			__clear_bit(i, &msg->sg.copy);
-+			__clear_bit(i, msg->sg.copy);
+-		if (copy_state)
+-			__set_bit(i, msg->sg.copy);
+-		else
+-			__clear_bit(i, msg->sg.copy);
++		__assign_bit(i, msg->sg.copy, copy_state);
  		sk_msg_iter_var_next(i);
  		if (i == msg->sg.end)
  			break;
+ 	} while (1);
+ }
+ 
++static inline void sk_msg_sg_copy_assign(struct sk_msg *dst, u32 dst_i,
++					 const struct sk_msg *src, u32 src_i)
++{
++	__assign_bit(dst_i, dst->sg.copy, test_bit(src_i, src->sg.copy));
++}
++
+ static inline void sk_msg_sg_copy_set(struct sk_msg *msg, u32 start)
+ {
+ 	sk_msg_sg_copy(msg, start, true);
 --- a/net/core/filter.c
 +++ b/net/core/filter.c
-@@ -2660,7 +2660,7 @@ BPF_CALL_4(bpf_msg_pull_data, struct sk_
- 	 * account for the headroom.
- 	 */
- 	bytes_sg_total = start - offset + bytes;
--	if (!test_bit(i, &msg->sg.copy) && bytes_sg_total <= len)
-+	if (!test_bit(i, msg->sg.copy) && bytes_sg_total <= len)
- 		goto out;
+@@ -2701,11 +2701,13 @@ BPF_CALL_4(bpf_msg_pull_data, struct sk_
+ 		poffset += len;
+ 		sge->length = 0;
+ 		put_page(sg_page(sge));
++		__clear_bit(i, msg->sg.copy);
  
- 	/* At this point we need to linearize multiple scatterlist
-@@ -2883,7 +2883,7 @@ place_new:
- 	/* Place newly allocated data buffer */
- 	sk_mem_charge(msg->sk, len);
- 	msg->sg.size += len;
--	__clear_bit(new, &msg->sg.copy);
-+	__clear_bit(new, msg->sg.copy);
- 	sg_set_page(&msg->sg.data[new], page, len + copy, 0);
+ 		sk_msg_iter_var_next(i);
+ 	} while (i != last_sge);
+ 
+ 	sg_set_page(&msg->sg.data[first_sge], page, copy, 0);
++	__clear_bit(first_sge, msg->sg.copy);
+ 
+ 	/* To repair sg ring we need to shift entries. If we only
+ 	 * had a single entry though we can just replace it and
+@@ -2731,9 +2733,11 @@ BPF_CALL_4(bpf_msg_pull_data, struct sk_
+ 			break;
+ 
+ 		msg->sg.data[i] = msg->sg.data[move_from];
++		sk_msg_sg_copy_assign(msg, i, msg, move_from);
+ 		msg->sg.data[move_from].length = 0;
+ 		msg->sg.data[move_from].page_link = 0;
+ 		msg->sg.data[move_from].offset = 0;
++		__clear_bit(move_from, msg->sg.copy);
+ 		sk_msg_iter_var_next(i);
+ 	} while (1);
+ 
+@@ -2762,6 +2766,7 @@ BPF_CALL_4(bpf_msg_push_data, struct sk_
+ {
+ 	struct scatterlist sge, nsge, nnsge, rsge = {0}, *psge;
+ 	u32 new, i = 0, l = 0, space, copy = 0, offset = 0;
++	bool sge_copy, nsge_copy, nnsge_copy, rsge_copy = false;
+ 	u8 *raw, *to, *from;
+ 	struct page *page;
+ 
+@@ -2834,6 +2839,7 @@ BPF_CALL_4(bpf_msg_push_data, struct sk_
+ 			sk_msg_iter_var_prev(i);
+ 		psge = sk_msg_elem(msg, i);
+ 		rsge = sk_msg_elem_cpy(msg, i);
++		rsge_copy = test_bit(i, msg->sg.copy);
+ 
+ 		psge->length = start - offset;
+ 		rsge.length -= psge->length;
+@@ -2858,24 +2864,32 @@ BPF_CALL_4(bpf_msg_push_data, struct sk_
+ 
+ 	/* Shift one or two slots as needed */
+ 	sge = sk_msg_elem_cpy(msg, new);
++	sge_copy = test_bit(new, msg->sg.copy);
+ 	sg_unmark_end(&sge);
+ 
+ 	nsge = sk_msg_elem_cpy(msg, i);
++	nsge_copy = test_bit(i, msg->sg.copy);
  	if (rsge.length) {
+ 		sk_msg_iter_var_next(i);
+ 		nnsge = sk_msg_elem_cpy(msg, i);
++		nnsge_copy = test_bit(i, msg->sg.copy);
+ 		sk_msg_iter_next(msg, end);
+ 	}
+ 
+ 	while (i != msg->sg.end) {
+ 		msg->sg.data[i] = sge;
++		__assign_bit(i, msg->sg.copy, sge_copy);
+ 		sge = nsge;
++		sge_copy = nsge_copy;
+ 		sk_msg_iter_var_next(i);
+ 		if (rsge.length) {
+ 			nsge = nnsge;
++			nsge_copy = nnsge_copy;
+ 			nnsge = sk_msg_elem_cpy(msg, i);
++			nnsge_copy = test_bit(i, msg->sg.copy);
+ 		} else {
+ 			nsge = sk_msg_elem_cpy(msg, i);
++			nsge_copy = test_bit(i, msg->sg.copy);
+ 		}
+ 	}
+ 
+@@ -2889,6 +2903,7 @@ place_new:
  		get_page(sg_page(&rsge));
+ 		sk_msg_iter_var_next(new);
+ 		msg->sg.data[new] = rsge;
++		__assign_bit(new, msg->sg.copy, rsge_copy);
+ 	}
+ 
+ 	sk_msg_reset_curr(msg);
+@@ -2916,25 +2931,33 @@ static void sk_msg_shift_left(struct sk_
+ 		prev = i;
+ 		sk_msg_iter_var_next(i);
+ 		msg->sg.data[prev] = msg->sg.data[i];
++		sk_msg_sg_copy_assign(msg, prev, msg, i);
+ 	} while (i != msg->sg.end);
+ 
+ 	sk_msg_iter_prev(msg, end);
++	__clear_bit(msg->sg.end, msg->sg.copy);
+ }
+ 
+ static void sk_msg_shift_right(struct sk_msg *msg, int i)
+ {
+ 	struct scatterlist tmp, sge;
++	bool tmp_copy, sge_copy;
+ 
+ 	sk_msg_iter_next(msg, end);
+ 	sge = sk_msg_elem_cpy(msg, i);
++	sge_copy = test_bit(i, msg->sg.copy);
+ 	sk_msg_iter_var_next(i);
+ 	tmp = sk_msg_elem_cpy(msg, i);
++	tmp_copy = test_bit(i, msg->sg.copy);
+ 
+ 	while (i != msg->sg.end) {
+ 		msg->sg.data[i] = sge;
++		__assign_bit(i, msg->sg.copy, sge_copy);
+ 		sk_msg_iter_var_next(i);
+ 		sge = tmp;
++		sge_copy = tmp_copy;
+ 		tmp = sk_msg_elem_cpy(msg, i);
++		tmp_copy = test_bit(i, msg->sg.copy);
+ 	}
+ }
+ 
+@@ -2994,6 +3017,8 @@ BPF_CALL_4(bpf_msg_pop_data, struct sk_m
+ 		struct scatterlist *nsge, *sge = sk_msg_elem(msg, i);
+ 		int a = start - offset;
+ 		int b = sge->length - pop - a;
++		u32 sge_i = i;
++		bool sge_copy = test_bit(i, msg->sg.copy);
+ 
+ 		sk_msg_iter_var_next(i);
+ 
+@@ -3006,6 +3031,7 @@ BPF_CALL_4(bpf_msg_pop_data, struct sk_m
+ 				sg_set_page(nsge,
+ 					    sg_page(sge),
+ 					    b, sge->offset + pop + a);
++				__assign_bit(i, msg->sg.copy, sge_copy);
+ 			} else {
+ 				struct page *page, *orig;
+ 				u8 *to, *from;
+@@ -3022,6 +3048,7 @@ BPF_CALL_4(bpf_msg_pop_data, struct sk_m
+ 				memcpy(to, from, a);
+ 				memcpy(to + a, from + a + pop, b);
+ 				sg_set_page(sge, page, a + b, 0);
++				__clear_bit(sge_i, msg->sg.copy);
+ 				put_page(orig);
+ 			}
+ 			pop = 0;
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -65,6 +65,7 @@ int sk_msg_alloc(struct sock *sk, struct
+ 			sge = &msg->sg.data[msg->sg.end];
+ 			sg_unmark_end(sge);
+ 			sg_set_page(sge, pfrag->page, use, orig_offset);
++			__clear_bit(msg->sg.end, msg->sg.copy);
+ 			get_page(pfrag->page);
+ 			sk_msg_iter_next(msg, end);
+ 		}
+@@ -185,6 +186,7 @@ static int sk_msg_free_elem(struct sock
+ 			sk_mem_uncharge(sk, len);
+ 		put_page(sg_page(sge));
+ 	}
++	__clear_bit(i, msg->sg.copy);
+ 	memset(sge, 0, sizeof(*sge));
+ 	return len;
+ }
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -607,6 +607,7 @@ static int tls_split_open_record(struct
+ 	struct scatterlist *sge, *osge, *nsge;
+ 	u32 orig_size = msg_opl->sg.size;
+ 	struct scatterlist tmp = { };
++	u32 tmp_i = 0;
+ 	struct sk_msg *msg_npl;
+ 	struct tls_rec *new;
+ 	int ret;
+@@ -628,6 +629,7 @@ static int tls_split_open_record(struct
+ 		if (sge->length > apply) {
+ 			u32 len = sge->length - apply;
+ 
++			tmp_i = i;
+ 			get_page(sg_page(sge));
+ 			sg_set_page(&tmp, sg_page(sge), len,
+ 				    sge->offset + apply);
+@@ -659,6 +661,7 @@ static int tls_split_open_record(struct
+ 	nsge = sk_msg_elem(msg_npl, j);
+ 	if (tmp.length) {
+ 		memcpy(nsge, &tmp, sizeof(*nsge));
++		sk_msg_sg_copy_assign(msg_npl, j, msg_opl, tmp_i);
+ 		sk_msg_iter_var_next(j);
+ 		nsge = sk_msg_elem(msg_npl, j);
+ 	}
+@@ -666,6 +669,7 @@ static int tls_split_open_record(struct
+ 	osge = sk_msg_elem(msg_opl, i);
+ 	while (osge->length) {
+ 		memcpy(nsge, osge, sizeof(*nsge));
++		sk_msg_sg_copy_assign(msg_npl, j, msg_opl, i);
+ 		sg_unmark_end(nsge);
+ 		sk_msg_iter_var_next(i);
+ 		sk_msg_iter_var_next(j);
 
 
