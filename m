@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91F446AA60;
-	Tue, 21 Jul 2026 15:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9144446AA72;
+	Tue, 21 Jul 2026 15:35:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648112; cv=none; b=GrYG/h+TdKJE7+XmyAGeNwwIiP0isVBrl04KHtLpTk4uXPVnVr8Qjr+OLal4c6PninhkjUeILbG0DmnKHRZyl8bOSfyJ2GFTEqh/PD+MXJj0//HfqIw2qlV1yEseGXmU37mLxcMS7n6x9EeN6TGpXOTWr/28OtvJCV8YfL20Mxo=
+	t=1784648115; cv=none; b=f29z4DZ3jSb/sTNug8c6fURa25KnbINXeQw9lGpmbaZSTeqPLfIyud16E6ONrF2xski47UnPovoPelFL3Jd4XXEzWoXtj0eJYv4F7G/oMXEYeU2tDAZHZqrmx+mTjcIV2obFDLmgBEYG7F/C/h5/cOD53JE8ghTeVnI98Bm3pqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648112; c=relaxed/simple;
-	bh=zjPF5G0KQEG5c8iJPHd8dUkAVViaZgtAQ3dY+MfOGI8=;
+	s=arc-20240116; t=1784648115; c=relaxed/simple;
+	bh=aJ7hMmr+EkU1q6hTbIcxdOWNU6gRUlQaiuWsUPoMXBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OOdoCfQBUlBnCDXsUheA0nGPU31p+OdJyUu2MdIf4CqiQ/wg6mb6ZSz6p9xyKV1sd+cLA54fIhFJwQmB4GQsrZKiAmZPaXflNA8GShpMEwpl4/8ERkhwlv5taGd+IdC4iu1p7ZiRi8y3e/ZT6LPdMDslT7j+OuT1SM+w9fxbIB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M1kwqJ+2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TmxR1JVq+kI/u14xpkAeu69Db8EnCSoTIvXE8m0MtAOO8aEHaoOTQBeHA5VJJNV2FFRoeuNM4JAHncHOKNajtbOnWIm1ZBv0iYQC0381w4C0lmmGfHqlrv5KJP5vidiNaFCHymBdOvoC4NJXoQDHdPlW3QQV2NSD/KstPV/7Hlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ytyavg9F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M1kwqJ+2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B5041F000E9;
-	Tue, 21 Jul 2026 15:35:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ytyavg9F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14121F000E9;
+	Tue, 21 Jul 2026 15:35:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648110;
-	bh=smkOcthVLyhxrHwrIRHiSuk0qGi0HzhnaKnyiu7XuGU=;
+	s=korg; t=1784648113;
+	bh=I/wstIxOQ8cZlXsCztqH3DJJMqgiv3ux9G/4VlQCEYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M1kwqJ+2iqBsmrIVH900EEsyE/F2IbEN6FSDXhU3SIs1l2mMaVGKtgnZA2ZNaAtne
-	 hwzY79DflSZnkOQECZuzIOMRK0S/UCiKE+Vg/P/HeNKTd2LOBQWbHbXSAgNSiUDhgI
-	 00kKdxN5+M6Gchg0xBCEujbSvOxRlO9CYoVKWK8o=
+	b=Ytyavg9Fo7VmHJTaI2yyRDgXj89dQAQOS6oGuoqHtoLv4JpDOdptZLVxxwUWDFYaR
+	 jOufCJWhnp1e3JMHCfV74AqJnGGkpBbEt/cTB3cqgjpov4eJuwzaraddJdwNGrHuEa
+	 hxikuBQQacDlYJEIlbpnQvQ7dWSz5i/daEMP/OWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+42525d636f430fd5d983@syzkaller.appspotmail.com,
-	Ian Bridges <icb@fastmail.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 7.1 0039/2077] fbcon: fix NULL pointer dereference for a console without vc_data
-Date: Tue, 21 Jul 2026 16:55:12 +0200
-Message-ID: <20260721152553.610865880@linuxfoundation.org>
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 0075/2077] arm64: dts: rockchip: Fix vdec register blocks order on RK3576
+Date: Tue, 21 Jul 2026 16:55:48 +0200
+Message-ID: <20260721152554.462652288@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,61 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-commit 5fae9a928482d4845bca169a3a098789203a1ca4 upstream.
+[ Upstream commit 63fd2f6aa402a105fa22ede6f3c35dafd64827a5 ]
 
-fbcon_new_modelist() runs when a framebuffer's modelist changes. For each
-console mapped to it with fb_display[i].mode set, it reads vc_cons[i].d and
-passes the vc_num to fbcon_set_disp(). This assumes a console with a mode
-set has a vc_data, but it can be NULL. fbcon_set_disp() sets
-fb_display[i].mode before it checks vc_data, and fbcon_deinit() leaves the
-mode set after the vc_data is freed. fbcon_new_modelist() then dereferences
-the NULL vc_data.
+When building device trees for the RK3576 based boards, DTC shows the
+following complaint:
 
-Keep fb_display[i].mode set only while the console has a vc_data. Check
-vc_data before setting the mode in fbcon_set_disp(), and clear the mode in
-fbcon_deinit(). The existing mode check in fbcon_new_modelist() then skips
-such consoles.
+  rk3576.dtsi:1282.30-1304.5: Warning (simple_bus_reg): /soc/video-codec@27b00000: simple-bus unit address format error, expected "27b00100"
 
-Reported-by: syzbot+42525d636f430fd5d983@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=42525d636f430fd5d983
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Since the video decoder support for the aforementioned SoC in mainline
+driver and devicetrees hasn't been released yet (just landed in
+v7.0-rc1), fix the issue by providing the register blocks using the
+'link,function,cache' listing, which follows the address-based order as
+shown in the vendor's datasheet and, implicitly, ensures the unit
+address points to the primary register range.
+
+Fixes: da0de806d8b4 ("arm64: dts: rockchip: Add the vdpu383 Video Decoder on rk3576")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://patch.msgid.link/20260304-vdec-reg-order-rk3576-v5-3-7006fad42c3a@collabora.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbcon.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3576.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -1274,6 +1274,7 @@ static void fbcon_deinit(struct vc_data
- 	int idx;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3576.dtsi b/arch/arm64/boot/dts/rockchip/rk3576.dtsi
+index 28175d8200d57c..e12a2a0cfb8916 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3576.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3576.dtsi
+@@ -1281,10 +1281,10 @@ gpu: gpu@27800000 {
  
- 	fbcon_free_font(p);
-+	p->mode = NULL;
- 	idx = con2fb_map[vc->vc_num];
- 
- 	if (idx == -1)
-@@ -1445,14 +1446,14 @@ static void fbcon_set_disp(struct fb_inf
- 
- 	p = &fb_display[unit];
- 
--	if (var_to_display(p, var, info))
--		return;
--
- 	vc = vc_cons[unit].d;
- 
- 	if (!vc)
- 		return;
- 
-+	if (var_to_display(p, var, info))
-+		return;
-+
- 	default_mode = vc->vc_display_fg;
- 	svc = *default_mode;
- 	t = &fb_display[svc->vc_num];
+ 		vdec: video-codec@27b00000 {
+ 			compatible = "rockchip,rk3576-vdec";
+-			reg = <0x0 0x27b00100 0x0 0x500>,
+-			      <0x0 0x27b00000 0x0 0x100>,
++			reg = <0x0 0x27b00000 0x0 0x100>,
++			      <0x0 0x27b00100 0x0 0x500>,
+ 			      <0x0 0x27b00600 0x0 0x100>;
+-			reg-names = "function", "link", "cache";
++			reg-names = "link", "function", "cache";
+ 			interrupts = <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&cru ACLK_RKVDEC_ROOT>, <&cru HCLK_RKVDEC>,
+ 				 <&cru ACLK_RKVDEC_ROOT_BAK>, <&cru CLK_RKVDEC_CORE>,
+-- 
+2.53.0
+
 
 
