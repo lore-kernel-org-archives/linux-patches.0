@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C5F42FCC9;
-	Tue, 21 Jul 2026 19:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077F046EF88;
+	Tue, 21 Jul 2026 19:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662463; cv=none; b=Y6YSrdJQypEQ7soOLGgsFLgWwlc0LW4GT46kcKMIBbDzE9XxyAUrsZoZ+yqgl/T9F2Sy24W3vjojFt+QcrJNoj7yNzGvK+4vNujYLEMp2DgwGNRa89Op0q88ftQv8xDE2d2OJMGDBrSPk++KQOFFdZUe1A4WHxbNbGIOIPcxay4=
+	t=1784662466; cv=none; b=YHorpMQP0m9pXJRFO96hYzb5iA/ek98k4EUqBCMo5UUXMn6XQGxiTqK5cAeaB69WtaSPqT+tbUS9Boh91eNq9En/0i0YeZN1U3uBB8sKQW6t1ux62GsHy01k6V3jIr886JoDVGC49IL5IVa0p+jgyAq7DZK5iilZQHc5dhvnwLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662463; c=relaxed/simple;
-	bh=ZjG7YZWHbzJRZKyOB7eV25qDRPG/vavW1Td0ttWPmLQ=;
+	s=arc-20240116; t=1784662466; c=relaxed/simple;
+	bh=WzyjxIiNhbFaJw4HhBCeFWgoex2XAxY9shqRshnPeko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uceyb94YBQrIq2C1kn19Mo6W9dZyrg5TVDsJSTGBP7RGZmyFJOlW1YwoAaIIemO/FSJx95pgOA0845Ish+4YaLfp4I3W9iHe/SsDx7lnZBJ/VkhsxmwUzqrN5kW6Jk5r42R5MLFdtm3tiRfywM5Q+tIEnQGRIjynSrxunHtwFUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACWHK+mL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n1jYxgvFY1iPO/1mNy9+25ZmmFVW6xcu5THMNBnrqC92wR5LBlIXTOqedC5LDAqdaEbpoEHXT5KvHCiJTuVVoF7P85/KU6EkU0ofKyHUogNLgXHPa42USgdrcGc9D3fn5C4pSKCGx4YZRSE7gq4fE7UJxqgK0z5GeUo24K8+TUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ba+qzNNA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACWHK+mL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD3F1F00A3A;
-	Tue, 21 Jul 2026 19:34:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ba+qzNNA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA8B1F000E9;
+	Tue, 21 Jul 2026 19:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662462;
-	bh=YQ7Y/1qaU2VMhcaGytlxl99cjoc/VjapPwYw9lNsZSo=;
+	s=korg; t=1784662464;
+	bh=pSUdngQTaz/FWcval8loqOzY9AVUhsgRc1S2L5tQEq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ACWHK+mL1Y6v+WcJvfsloIHKk9656yyGMyDGG9ufblUAmTY4j0+afSTTzzmPYvzXa
-	 lv4B6OLnOTCsIGLdZCCs9eJSj6DreETpwUFgHZCX1Y97Lw32/dyr38i34+L2UjwQ5m
-	 sxhP10WxqSatkYgxL+pF2Ka+7x1dpzTtTIZEILmw=
+	b=ba+qzNNAO9hYzqMrU6nRYO6zO5saA2269ujl3Zd+qtI7bWNvDWamaCvXT0/cdLhQl
+	 jeULfa9tUxn8pJBLZ4GYBZooCrFUAtVH4csjAV8NYS0WPPH+3JF6PdhwL/DV2PhvFv
+	 XFpOhhmNhldhxVHj4Ue4q/bS3zNMa5xYP3Snc4fU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Carlos Bilbao (Lambda)" <carlos.bilbao@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	"Matthew R. Ochs" <mochs@nvidia.com>,
+	Jamie Nguyen <jamien@nvidia.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0417/1276] PCI/ASPM: Dont reconfigure ASPM entering low-power state
-Date: Tue, 21 Jul 2026 17:14:20 +0200
-Message-ID: <20260721152455.432041368@linuxfoundation.org>
+Subject: [PATCH 6.12 0453/1276] fs/ntfs3: fix mount failure on 64K page-size kernels
+Date: Tue, 21 Jul 2026 17:14:56 +0200
+Message-ID: <20260721152456.241308258@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,70 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Bilbao <carlos.bilbao@kernel.org>
+From: Jamie Nguyen <jamien@nvidia.com>
 
-[ Upstream commit c855c9921da72e535c24737c748f603a52d03f7e ]
+[ Upstream commit b7a9125cac8645245d2473c6c0a50e338280ad23 ]
 
-Reconfiguring ASPM when a device transitions to low-power state can enable
-L1.1/L1.2 substates on the PCIe link at a time when the device is sleeping
-and may be unable to exit them. ASPM should be reconfigured on D0 entry
-(resume), not on the way down.
+On 64K page-size kernels, mounting NTFS volumes smaller than ~650 MB
+fails with EINVAL. The issue is in log_replay(): the initial log page
+size probe uses PAGE_SIZE (65536) instead of DefaultLogPageSize (4096)
+when PAGE_SIZE exceeds DefaultLogPageSize * 2.
 
-pci_set_low_power_state() calls pcie_aspm_pm_state_change() after writing
-D3hot to PCI_PM_CTRL. pcie_aspm_pm_state_change() resets link->aspm_capable
-to link->aspm_support and then calls pcie_config_aspm_path(), which can
-enable ASPM L1.1/L1.2 substates on the PCIe link. If the device cannot
-recover the link from L1.2 while in D3hot, subsequent config space reads
-return 0xFFFF ("device inaccessible") and pci_power_up() fails with
-messages like:
+This makes norm_file_page() require the $LogFile to be at least
+50 * 65536 = 3.2 MB, but mkfs.ntfs creates a $LogFile of only ~1.5 MB
+for a typical 300 MB volume. norm_file_page() returns 0 and the mount
+is rejected with EINVAL.
 
-  vfio-pci 0000:5d:00.0: Unable to change power state from D3hot to D0, device inaccessible
+On 4K kernels the #if guard evaluates to true, so use_default=true is
+passed and DefaultLogPageSize (4096) is used, requiring only ~200 KB.
+This path works fine.
 
-This was observed on NVIDIA H100 SXM5 GPUs bound to vfio-pci when Linux
-runtime PM suspends them to D3hot: the GPU becomes permanently inaccessible
-and disappears from the PCIe bus.
+Fix this by always passing use_default=true, which forces the initial
+probe to use DefaultLogPageSize regardless of the kernel's PAGE_SIZE.
+This is safe because, after reading the on-disk restart area, log_replay()
+already re-adjusts log->page_size to match the volume's actual
+sys_page_size.
 
-The call to pcie_aspm_pm_state_change() in pci_set_low_power_state() was
-restored by f93e71aea6c6 ("Revert "PCI/ASPM: Remove
-pcie_aspm_pm_state_change()""), which reverted 08d0cc5f3426 ("PCI/ASPM:
-Remove pcie_aspm_pm_state_change()").  The revert was necessary because the
-removal broke suspend/resume on certain platforms that required ASPM to be
-reconfigured on D0 entry. However, the revert restored the call in both
-pci_set_full_power_state() (D0 entry) and pci_set_low_power_state()
-(low-power entry).
+Also fix read_log_page() to pass log->page_size instead of PAGE_SIZE to
+ntfs_fix_post_read(), matching the actual buffer size.
 
-Only the D0-entry call is needed to fix the suspend/resume regression. The
-low-power-entry call is harmful: reconfiguring ASPM immediately after
-putting a device into D3hot can enable link substates that the device or
-platform cannot exit while the device is sleeping.
-
-Remove the pcie_aspm_pm_state_change() call from pci_set_low_power_state().
-ASPM will still be reconfigured correctly when the device returns to D0 via
-pci_set_full_power_state().
-
-Fixes: f93e71aea6c6 ("Revert "PCI/ASPM: Remove pcie_aspm_pm_state_change()"")
-Signed-off-by: Carlos Bilbao (Lambda) <carlos.bilbao@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260428040104.78524-1-carlos.bilbao@kernel.org
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Tested-by: Matthew R. Ochs <mochs@nvidia.com>
+Signed-off-by: Jamie Nguyen <jamien@nvidia.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 3 ---
- 1 file changed, 3 deletions(-)
+ fs/ntfs3/fslog.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index d44c07bb0a2290..4fe6843a73a49c 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -1604,9 +1604,6 @@ static int pci_set_low_power_state(struct pci_dev *dev, pci_power_t state, bool
- 				     pci_power_name(dev->current_state),
- 				     pci_power_name(state));
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 5d733239aa0b74..d581f69bd52361 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -1170,7 +1170,7 @@ static int read_log_page(struct ntfs_log *log, u32 vbo,
+ 		goto out;
  
--	if (dev->bus->self)
--		pcie_aspm_pm_state_change(dev->bus->self, locked);
--
- 	return 0;
- }
+ 	if (page_buf->rhdr.sign != NTFS_FFFF_SIGNATURE)
+-		ntfs_fix_post_read(&page_buf->rhdr, PAGE_SIZE, false);
++		ntfs_fix_post_read(&page_buf->rhdr, log->page_size, false);
  
+ 	if (page_buf != *buffer)
+ 		memcpy(*buffer, Add2Ptr(page_buf, page_off), bytes);
+@@ -3800,11 +3800,7 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)
+ 	log->l_size = log->orig_file_size = ni->vfs_inode.i_size;
+ 
+ 	/* Get the size of page. NOTE: To replay we can use default page. */
+-#if PAGE_SIZE >= DefaultLogPageSize && PAGE_SIZE <= DefaultLogPageSize * 2
+ 	log->page_size = norm_file_page(PAGE_SIZE, &log->l_size, true);
+-#else
+-	log->page_size = norm_file_page(PAGE_SIZE, &log->l_size, false);
+-#endif
+ 	if (!log->page_size) {
+ 		err = -EINVAL;
+ 		goto out;
 -- 
 2.53.0
 
