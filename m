@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7754B46A60E;
-	Tue, 21 Jul 2026 19:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2292B415F14;
+	Tue, 21 Jul 2026 19:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661790; cv=none; b=NoaHr0127NxwLL85AKNTnZPfsnK3tsfuPiE2pEeRXcm+vTHqRCD/6+JCKHdPr6e1Ta8gUyoDpsdTchm9Jy54hqElcSJHVhuhgy6ZYmf3MsOPlkLxSda5qZGnodhglDXyZ/PqVABj/tS8YYv88dd5RZqMEXnO1RsseiJ/p6jcXeE=
+	t=1784661793; cv=none; b=qViMJU2GszNyIYxe9d4sC2QmpKheso468fSrtp1/D5lvZBX/bT8tAxAvia+UJMLSjadLLgpCqe0rcQSt/L9ZieYWSHyj4vMUu2bdSTe0Zqo7W3bgzeTEVwXymWBpsTxLMQ3MgP++JXzLCBqbuh/p8xCTWitx01VRSumL3Al3Du8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661790; c=relaxed/simple;
-	bh=dZXKPK5zjthZi6KCxx4ia/uEmtwOqUH+kYGgpF7cDPM=;
+	s=arc-20240116; t=1784661793; c=relaxed/simple;
+	bh=sMtIg4ay/DNuhXOV3wumAlEUfnVTQi09kyqrhvN7z58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rBkpmho/ddD+oCd4JL0ZXtbnG5nD/EgakHpTai/UMHVd1nR1872AduevqJ7w2k6Ag//RlHkuOInHHI7mxz7xP1HjYp0FtjZbvUAhpRVmX8fyZjkxLz7/sF0ggwo1NUVAhW2NylWcAjqLG5AMys45jvWkoBsMlfkb9B8/CKjfADA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TRHQFm6x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iDhW+wY+ThVAuGHFYwPaMsroTVQvNZb0ILBYhUoBX5y3R88JNK2vfHEukjLoZhIyj4jviGsc7pvtoPIsE+++l8vuC9yb7zbOWT1lSsxSBleRkdIR1UQHRcZHoLWWZ7eSKQSvMMWDl5sNJgM+R8DeePz9XRR+PLeHBHgKiqicDZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fPcPVtLK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TRHQFm6x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDCF51F000E9;
-	Tue, 21 Jul 2026 19:23:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fPcPVtLK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8092B1F000E9;
+	Tue, 21 Jul 2026 19:23:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661789;
-	bh=EaUpahD5hoL+l2wXbhAlFN9li0qHtyg02gCVgoor1vs=;
+	s=korg; t=1784661792;
+	bh=Mg1KXu2NSiZkMBvEZQMIAZ0dDlihhWtqPqo/vlDayME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TRHQFm6xGblknzemnFSqdjwZeFveQ/LYf+a85ps1aNFFQXJ8rgdtO6sGzrfZrCbLb
-	 bU9KtBvkAwHFX7SUuMM0N+AlAmAZjOx5bu/tWBe5KieInbSDuIFTLEyAZ7cai3dGOM
-	 czQzeaDRwbDYKDuGsOT3gC8i0n+jNU4jBHGZc4I4=
+	b=fPcPVtLKSSLGaapCcwZfx0i+V5FsFnBN0cbh9H80HvlbrzCAAZ+9O7e3YYUNrmVu7
+	 lTNnK175QiqhFczjqTDZEVJow7W0s9mdY4YvmgoLku/yWymi2aZZiV9l9dDMvkdZe0
+	 62lC1YaXTcz3RV5HpEyYjsGN2DIHQrJrPBATA//s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Renjiang Han <renjiang.han@oss.qualcomm.com>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0200/1276] media: qcom: venus: drop extra padding in NV12 raw size calculation
-Date: Tue, 21 Jul 2026 17:10:43 +0200
-Message-ID: <20260721152450.562573431@linuxfoundation.org>
+Subject: [PATCH 6.12 0183/1276] libbpf: Harden parse_vma_segs() path parsing
+Date: Tue, 21 Jul 2026 17:10:26 +0200
+Message-ID: <20260721152450.188447321@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,42 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Renjiang Han <renjiang.han@oss.qualcomm.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit e1c9adabb268cc5d56723b7df1da49e59070f309 ]
+[ Upstream commit fee9a38174f4c6454fb1fbaf2b9b5a1cca9070d0 ]
 
-get_framesize_raw_nv12() currently adds SZ_4K to the UV plane size and an
-additional SZ_8K to the total buffer size. This inflates the calculated
-sizeimage and leads userspace to over-allocate buffers without a clear
-requirement.
+parse_vma_segs() in tools/lib/bpf/usdt.c parses /proc/<pid>/maps
+with two widthless scansets, "%s" into mode[16] and "%[^\n]"
+into line[4096]. A VMA name in maps is not limited to that local
+buffer; a deeply nested backing path can produce a maps record long
+enough to overflow the stack buffer.
 
-Remove the extra SZ_4K/SZ_8K padding and compute the NV12 size as the sum
-of Y and UV planes, keeping the final ALIGN(size, SZ_4K) intact.
+Bound both scansets to the declared buffer sizes ("%15s" for mode[16]
+and "%4095[^\n]" for line[4096]) and drain any residue past line[4094]
+with "%*[^\n]" before the trailing "\n". Without the drain, the residue
+of an over-long record would stay in the stream and break the next
+"%zx-%zx" parse, so the loop would exit early and silently skip later
+maps records.
 
-Fixes: e1cb72de702ad ("media: venus: helpers: move frame size calculations on common place")
-Signed-off-by: Renjiang Han <renjiang.han@oss.qualcomm.com>
-Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Also stop using sscanf(..., "%s") to peel the /proc/<pid>/root prefix
+from lib_path. Parse the pid and prefix length with "%n", check for the
+following slash, and copy the remainder with libbpf_strlcpy(). That
+removes a second unbounded stack write and preserves paths containing
+spaces.
+
+Fixes: 74cc6311cec9 ("libbpf: Add USDT notes parsing and resolution logic")
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/bpf/20260522201353.1454653-1-michael.bommarito@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/helpers.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/lib/bpf/usdt.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index 8295542e1a7c8c..d6984129c2f361 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -954,8 +954,8 @@ static u32 get_framesize_raw_nv12(u32 width, u32 height)
- 	uv_sclines = ALIGN(((height + 1) >> 1), 16);
+diff --git a/tools/lib/bpf/usdt.c b/tools/lib/bpf/usdt.c
+index 76e7c5bf0cb2d7..e9ad470e7df67c 100644
+--- a/tools/lib/bpf/usdt.c
++++ b/tools/lib/bpf/usdt.c
+@@ -460,10 +460,10 @@ static int parse_elf_segs(Elf *elf, const char *path, struct elf_seg **segs, siz
  
- 	y_plane = y_stride * y_sclines;
--	uv_plane = uv_stride * uv_sclines + SZ_4K;
--	size = y_plane + uv_plane + SZ_8K;
-+	uv_plane = uv_stride * uv_sclines;
-+	size = y_plane + uv_plane;
+ static int parse_vma_segs(int pid, const char *lib_path, struct elf_seg **segs, size_t *seg_cnt)
+ {
+-	char path[PATH_MAX], line[PATH_MAX], mode[16];
++	char path[PATH_MAX], line[4096], mode[16];
+ 	size_t seg_start, seg_end, seg_off;
+ 	struct elf_seg *seg;
+-	int tmp_pid, i, err;
++	int tmp_pid, n, i, err;
+ 	FILE *f;
  
- 	return ALIGN(size, SZ_4K);
- }
+ 	*seg_cnt = 0;
+@@ -472,8 +472,13 @@ static int parse_vma_segs(int pid, const char *lib_path, struct elf_seg **segs,
+ 	 * /proc/<pid>/root/<path>. They will be reported as just /<path> in
+ 	 * /proc/<pid>/maps.
+ 	 */
+-	if (sscanf(lib_path, "/proc/%d/root%s", &tmp_pid, path) == 2 && pid == tmp_pid)
++	/* %n is not counted in sscanf() return value, so initialize it. */
++	n = 0;
++	if (sscanf(lib_path, "/proc/%d/root%n", &tmp_pid, &n) == 1 &&
++	    n > 0 && pid == tmp_pid && lib_path[n] == '/') {
++		libbpf_strlcpy(path, lib_path + n, sizeof(path));
+ 		goto proceed;
++	}
+ 
+ 	if (!realpath(lib_path, path)) {
+ 		pr_warn("usdt: failed to get absolute path of '%s' (err %d), using path as is...\n",
+@@ -496,8 +501,11 @@ static int parse_vma_segs(int pid, const char *lib_path, struct elf_seg **segs,
+ 	 * 7f5c6f5d1000-7f5c6f5d3000 rw-p 001c7000 08:04 21238613      /usr/lib64/libc-2.17.so
+ 	 * 7f5c6f5d3000-7f5c6f5d8000 rw-p 00000000 00:00 0
+ 	 * 7f5c6f5d8000-7f5c6f5d9000 r-xp 00000000 103:01 362990598    /data/users/andriin/linux/tools/bpf/usdt/libhello_usdt.so
++	 *
++	 * Some VMA names can be longer than the local buffer. Bound the
++	 * writes, but still consume the rest of the line.
+ 	 */
+-	while (fscanf(f, "%zx-%zx %s %zx %*s %*d%[^\n]\n",
++	while (fscanf(f, "%zx-%zx %15s %zx %*s %*d%4095[^\n]%*[^\n]\n",
+ 		      &seg_start, &seg_end, mode, &seg_off, line) == 5) {
+ 		void *tmp;
+ 
 -- 
 2.53.0
 
