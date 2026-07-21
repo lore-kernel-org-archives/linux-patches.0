@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C15E44AB9D;
-	Tue, 21 Jul 2026 21:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C72244AB91;
+	Tue, 21 Jul 2026 21:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670127; cv=none; b=eljy9MVhbFYAycqM3FxA7oyK+JtQ7hv3VZd5styzz8PeJzOC31XrZyaTOJeMSb1zD1qtqMsrzy9L/W3pmAzpclll9Qj0uU9zT1MZmjgYmVDso8QsiU8zzuiae+9ZSAkSWMklJDDGLehwmMywPia8BDjBpdr9M5BNHov7bTOpn9w=
+	t=1784670130; cv=none; b=dwrp9K6ULXL9HmaaJVAFBt4qhVPdnSuNXokTaZAxsfyN4nPQi/yNxgLa33dsg+kg9iv5mSuhT1jgQlWvDCVEult5nG2IJw3LOiTe2UgBdTPzX31dG9m3ymjLbZHxDM8FwNFi5B79Hj99UDb4ttcjFIzH+g8N6IeQkII/AujuaG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670127; c=relaxed/simple;
-	bh=H1hQ6q7bb0zMzxwiqq7+mzw7YLllq6FoneRUhstn3uA=;
+	s=arc-20240116; t=1784670130; c=relaxed/simple;
+	bh=uQXesRgQyU7ZF4ifBAgZ4sIfGcqN2Jw6gRHsd5hMhiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KOy48BQafb1dgLtU9jt9WDk5ZCkEW6mayNA6cpJX1DeQz9UjhH9l4r+rtdh+W/c46MXybZ9G2OI35SuP88g9trSlekBCt4DW0WjKUl2tjJatpUYFbmHZmWdcdzjAdtopeBBHaEhKkrrUhIC81J+foY5tsxsd7eh+yk38io3trqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wh2W0ai3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OWpgaWgmSn2s3iDzhw75Ih0oxed9iXhVnWgx2wbHmPq5RYlqiTtN6Mv3kXdu+NqOlciDXVqQA+JVDoiRR3u5/SsgqedcGGot3WWhKHLBnLMkBhA/RQJdY43OwU/nDTItjb+U6fKIv3yDwWJ3vmuDHjlhsMnZnNsWNeCgcWTS3VU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sW68UyFi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wh2W0ai3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C190D1F000E9;
-	Tue, 21 Jul 2026 21:42:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sW68UyFi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE8D1F00A3A;
+	Tue, 21 Jul 2026 21:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670126;
-	bh=ypiNPc+6hgNv9T21uRNBc+PD/rQ9gIGsRX3XVFnghT8=;
+	s=korg; t=1784670129;
+	bh=7wM8VHF+fFmIb/qccQjk5LJy4WrrSWX3jzSg8p7DkzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wh2W0ai3TRQ7bWc5BhNQTAaiT5/RentgkS/JG88WRteGNlalWPeU4RJOiAskqWc4b
-	 EXuWFjfPkeZ8+LG2JTqe/tcsdKAnmlFyi31AwOBTr3f9cQ4EEwqI5/T0kmmdEOJgoH
-	 aHJZvdcT8VPDL+ws8S8yVoDbyFILG2Y9CoAEQi5Q=
+	b=sW68UyFiOOcf7xNRjJtnE+lz39NICtz1WYdGw4YbUqBJbgYKFvfRcoTt9I/uc0Xsk
+	 vtfKKf+fULrzD6y1FQJg21bl3tysccujfWUSK4qVmdpdTqevkyngOK5YKtAUrUzcjW
+	 qRnSXLuBTAxziHBPhDJvWnqRmPEV+LmCZbqEImzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Pratyush Yadav <pratyush@kernel.org>
-Subject: [PATCH 6.1 0815/1067] mtd: spi-nor: swp: Improve locking user experience
-Date: Tue, 21 Jul 2026 17:23:36 +0200
-Message-ID: <20260721152442.784607610@linuxfoundation.org>
+	Florian Fuchs <fuchsfl@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.1 0816/1067] mtd: maps: vmu-flash: fix NULL pointer dereference in initialization
+Date: Tue, 21 Jul 2026 17:23:37 +0200
+Message-ID: <20260721152442.807616834@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,57 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Florian Fuchs <fuchsfl@gmail.com>
 
-commit e1d456b26bf23e30db305a6184e8abd9ab68bbf2 upstream.
+commit 357e3b8e3a8769ba36eb8ec5e053e4825f1a9329 upstream.
 
-In the case of the first block being locked (or the few first blocks),
-if the user want to fully unlock the device it has two possibilities:
-- either it asks to unlock the entire device, and this works;
-- or it asks to unlock just the block(s) that are currently locked,
-  which fails.
+The mtd_info contains a struct device, which must be linked to its
+parent. Without this, the initialization of the MTD fails with a NULL
+pointer dereference.
 
-It fails because the conditions "can_be_top" and "can_be_bottom" are
-true. Indeed, in this case, we unlock everything, so the TB bit does not
-matter. However in the current implementation, use_top would be true (as
-this is the favourite option) and lock_len, which in practice should be
-reduced down to 0, is set to "nor->params->size - (ofs + len)" which is
-a positive number. This is wrong.
-
-An easy way is to simply add an extra condition. In the unlock() path,
-if we can achieve the same result from both sides, it means we unlock
-everything and lock_len must simply be 0. A comment is added to clarify
-that logic.
-
-Fixes: 3dd8012a8eeb ("mtd: spi-nor: add TB (Top/Bottom) protect support")
-Cc: stable@kernel.org
+Fixes: 47a72688fae7 ("mtd: flash mapping support for Dreamcast VMU.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Michael Walle <mwalle@kernel.org>
-Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/swp.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/mtd/maps/vmu-flash.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mtd/spi-nor/swp.c
-+++ b/drivers/mtd/spi-nor/swp.c
-@@ -272,8 +272,15 @@ static int spi_nor_sr_unlock(struct spi_
- 	/* Prefer top, if both are valid */
- 	use_top = can_be_top;
+--- a/drivers/mtd/maps/vmu-flash.c
++++ b/drivers/mtd/maps/vmu-flash.c
+@@ -547,6 +547,7 @@ static void vmu_queryblocks(struct maple
+ 	mpart->partition = card->partition;
+ 	mtd_cur->priv = mpart;
+ 	mtd_cur->owner = THIS_MODULE;
++	mtd_cur->dev.parent = &mdev->dev;
  
--	/* lock_len: length of region that should remain locked */
--	if (use_top)
-+	/*
-+	 * lock_len: length of region that should remain locked.
-+	 *
-+	 * When can_be_top and can_be_bottom booleans are true, both adjacent
-+	 * regions are unlocked, thus the entire flash can be unlocked.
-+	 */
-+	if (can_be_top && can_be_bottom)
-+		lock_len = 0;
-+	else if (use_top)
- 		lock_len = nor->params->size - (ofs + len);
- 	else
- 		lock_len = ofs;
+ 	pcache = kzalloc(sizeof(struct vmu_cache), GFP_KERNEL);
+ 	if (!pcache)
 
 
