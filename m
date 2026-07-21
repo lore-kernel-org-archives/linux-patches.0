@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8AF2D8376;
-	Tue, 21 Jul 2026 20:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5463B1EFC;
+	Tue, 21 Jul 2026 20:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666325; cv=none; b=O24myzOwmeTmoAG0O6jKC+nptaXHOXUoh7Ri3kckQYhU8Cgu0N6uSp2hUXuH8OhKoIHZbAmFZr7K11Z2PSFbjOhqcAZEqki9oQMDkKp6mrt2rGwpGzH/cVklUwr8m7ZT8kGGQUTkkr/0O6x+pnN76Sy3tJhpn6xJUq7XZ9EsuXs=
+	t=1784666331; cv=none; b=HQktZ5cppaJ0pMc7AyZID/l2ryhTBXtxObTPASf6ea0i6wWe7PH9lt4y1ErKqbLzx7SDOyr4EVVQ5LrSWPE5ZAbfThPh/xLAFmK3a5ia2KC7GnQx1wz1DK1y0EAcBket3+xaCsft93Qg1jkvkemjvg0Pa9BzPDW6gmIuKj6EFLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666325; c=relaxed/simple;
-	bh=NaR6J2582Lmq9Ndhj3GmeJXbQWzbLeRrnnuQ7f44UEI=;
+	s=arc-20240116; t=1784666331; c=relaxed/simple;
+	bh=SMTqRGeI6Bg6sZ+ZOT3PXu1zxgvTr5hQa2JypTSH3gY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NxpRymbdQ3XaP51fr5dlRmsK9UkUX0EcHQF91KNBuwJyRYth8eKMNCnCfqW36CbhQugDH5EPMbaR2Gb5d6sQKTHujb4XezBG3Q1W92bqN/geR05QgRo0jkhkYsrmJJtaU8HagcsfVD6vZACwAnDKixStpo+tZHMaqPZraMAhHko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jtGfBcvZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QeyNUnyMmZIh7QiZAE4+YARu4M0c0uVEm3nPZhjKmW36O/akNp2b4e3saiXBOcaNFqNMaE69PfY0DWPHbmKW8ovUEOWl1jF0mdeISojix8M6KL5jN86wXCMVP5juu+jvajn0CqsmWCZbeM0NU/8+uV1SxH8JBl2cC+cEyqocJR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yq/R6zyk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jtGfBcvZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258E51F000E9;
-	Tue, 21 Jul 2026 20:38:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yq/R6zyk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6CF1F00A3A;
+	Tue, 21 Jul 2026 20:38:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666324;
-	bh=8PBNZ6VISr5ikmUCDjyefxxlZmCBGW74IL9leKRDbNA=;
+	s=korg; t=1784666329;
+	bh=OleJU1a923XxOce6YnKBUYT0bl8tHRMv2Vj7wFvqoGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jtGfBcvZC0Yn07RwMcL/YXwSMYgUeC7eichZw7+2roDVUSr8N9fVRZRlvBiAD3bL4
-	 XCxYc/IcB0Jhhwdgtp0GXNsOfbTV+kEydHhv1Pco/8oiRZQI/MdxuSVtJ3MftaNp8H
-	 yeDo0LuQrPLx48lbwDUfjVWSwCxE7eX7DDI9JDyo=
+	b=Yq/R6zykQATL4Tq3EU8erC3Ek9NIt2mZ0rS45sCC/eR2WqYAhuD9o+Jw4nov52Rra
+	 MjDq0QnZpcMtDagFHZ1ebB4DfZBU6F5fuXGVNpfR3zGeEjdIISENPlmspC0m8gx5Nw
+	 a6gKFQFlDlyQ+BPEzTf+2z61KkWvOS9GrtXfycew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
+	Alexey Budankov <alexey.budankov@linux.intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0638/1266] perf sched: Fix NULL dereference in latency_runtime_event
-Date: Tue, 21 Jul 2026 17:17:55 +0200
-Message-ID: <20260721152456.132752457@linuxfoundation.org>
+Subject: [PATCH 6.6 0640/1266] perf mmap: Guard cpu__get_node() return in aio_bind()
+Date: Tue, 21 Jul 2026 17:17:57 +0200
+Message-ID: <20260721152456.178271985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -45,7 +48,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -54,52 +56,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 8cbca8a480e15f6326ce94287570993f27a4b2d5 ]
+[ Upstream commit f32dc302a090f48893477ef297a888db109ec0bd ]
 
-latency_runtime_event() passes the return value of
-machine__findnew_thread() directly to thread_atoms_search() at line
-1216, before checking for NULL at line 1220.  thread_atoms_search()
-calls pid_cmp() which dereferences the thread pointer via
-thread__tid(), causing a NULL pointer dereference if the allocation
-fails.
+perf_mmap__aio_bind() passes the cpu__get_node() return value directly
+to an unsigned long variable (node_index).  When cpu__get_node() returns
+-1 for an unknown CPU, the implicit int-to-unsigned-long conversion
+sign-extends it to ULONG_MAX.
 
-All other callers of thread_atoms_search() in this file
-(latency_switch_event, latency_wakeup_event,
-latency_migrate_task_event) correctly check for NULL first.
+This causes bitmap_zalloc(ULONG_MAX + 1) which wraps to
+bitmap_zalloc(0), returning a zero-sized allocation.  The subsequent
+__set_bit(ULONG_MAX, node_mask) then writes massively out of bounds.
 
-Move the atoms assignment after the NULL check to match the pattern
-used by the other callers.
+Check the return value in a signed temporary before assigning to
+node_index, and skip the NUMA binding when the node is unknown.
 
-Fixes: b91fc39f4ad7 ("perf machine: Protect the machine->threads with a rwlock")
+Fixes: c44a8b44ca9f ("perf record: Bind the AIO user space buffers to nodes")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Alexey Budankov <alexey.budankov@linux.intel.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/perf/util/mmap.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 9e9bb19f0bc98b..6df0d1252f197f 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -1223,13 +1223,15 @@ static int latency_runtime_event(struct perf_sched *sched,
- 	const u32 pid	   = evsel__intval(evsel, sample, "pid");
- 	const u64 runtime  = evsel__intval(evsel, sample, "runtime");
- 	struct thread *thread = machine__findnew_thread(machine, -1, pid);
--	struct work_atoms *atoms = thread_atoms_search(&sched->atom_root, thread, &sched->cmp_pid);
-+	struct work_atoms *atoms;
- 	u64 timestamp = sample->time;
- 	int cpu = sample->cpu, err = -1;
+diff --git a/tools/perf/util/mmap.c b/tools/perf/util/mmap.c
+index 49093b21ee2da0..99f6235dd16afd 100644
+--- a/tools/perf/util/mmap.c
++++ b/tools/perf/util/mmap.c
+@@ -103,9 +103,15 @@ static int perf_mmap__aio_bind(struct mmap *map, int idx, struct perf_cpu cpu, i
+ 	int err = 0;
  
- 	if (thread == NULL)
- 		return -1;
- 
-+	atoms = thread_atoms_search(&sched->atom_root, thread, &sched->cmp_pid);
+ 	if (affinity != PERF_AFFINITY_SYS && cpu__max_node() > 1) {
++		int node;
 +
- 	/* perf.data is untrusted input — CPU may be absent or corrupted */
- 	if (cpu >= MAX_CPUS || cpu < 0) {
- 		pr_warning("WARNING: at offset %#" PRIx64 ": out-of-bound sample CPU %d, skipping sample\n",
+ 		data = map->aio.data[idx];
+ 		mmap_len = mmap__mmap_len(map);
+-		node_index = cpu__get_node(cpu);
++		node = cpu__get_node(cpu);
++		/* -1 sign-extends to ULONG_MAX, wrapping bitmap_zalloc(0) and OOB __set_bit */
++		if (node < 0)
++			return 0;
++		node_index = node;
+ 		node_mask = bitmap_zalloc(node_index + 1);
+ 		if (!node_mask) {
+ 			pr_err("Failed to allocate node mask for mbind: error %m\n");
 -- 
 2.53.0
 
