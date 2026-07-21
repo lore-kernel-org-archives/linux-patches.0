@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06ADC46EF8C;
-	Tue, 21 Jul 2026 20:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A780546D56D;
+	Tue, 21 Jul 2026 20:04:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664293; cv=none; b=uM/9LpOaALUyasd4DyCUBGeevV4+EMiuNlz9/trqsCz5Hmy/z7ZqBNBtZ03m3uM88G5EI8nEnW+Hkin9vEq1TzbA+jBWD1XakgNuJHBS/SHb+RjdQNDLYoqYlwSze8G208ZAhN2eoTdKx5dlof8Zo5g37GJCjSqhHfxHrNmUYY8=
+	t=1784664295; cv=none; b=F8gCm3MH2ZtHpTiX3n0NUNFrdcUNDuiZ9NToN37BMhF3wXpILV+zs2fh4V/F1j/IzdprnrfxG1jYmzmfDxIO3z/FSl5ROSOMtnd4mLN8VzqguJNWgtzaVaB40jRtLMBcxhI8PKlK4D276B4TPAlD1y4/g117Rasjz5lZcPMDvxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664293; c=relaxed/simple;
-	bh=EPexasjA2Eei+WqTi/0aMCY5QKCb1vYUAREOF1CAbiw=;
+	s=arc-20240116; t=1784664295; c=relaxed/simple;
+	bh=BvWTpLh4LF/N6DRVIL6WDje3W7lREo04+uzHbFKIJ94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BWRqFUDuohFG+mTp9Ygtr/HMtGNWFs4UN2ZmyZrnwPqn+YJjpzixMJiuqO2HTCRyRyAITJQQsA4NXYHq7+5N3k2BQSG8I6TgEc+q6YpHJtaUAS+AxJy+eJLQK5VCLSYtAPhXfV7Bq7BT0G+2KJIUHR8BLdGkB6y/GF0DBnWidPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWO92LqL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tiGCGbPMsn3PF+qM+S3hvHtQq5VEwvitvL2ympEFPR1f1dodY4tPxwa5lmsv3BR7Ts1BvaVdFBuEF1z5yrZf3FK0zJqVPIzSmnjZpHVVFqDf6lknHvlscQJyMhduroAfdfTWM9TIVH7voIQaoXKS1QyvAqsdPb9YgZ4VYUGkxuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=by+clm7R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWO92LqL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3BD1F000E9;
-	Tue, 21 Jul 2026 20:04:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="by+clm7R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17EA81F00A3A;
+	Tue, 21 Jul 2026 20:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664291;
-	bh=Nr7HGupeq8s4V+94ZHtTf+ldZFUfrAMs/PWnQT9jwiQ=;
+	s=korg; t=1784664294;
+	bh=u3bBS3WnH5Pd6JYtZiVqcJR3q7lH3vSGFPqGht3RaPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dWO92LqL/H6yupHLoSbobUeLT9nm21/UNeHe9N1FbjjXF5x8+nZxwGqU5LCXAKqX1
-	 YYDmgH0w/Wh29sgCs8EIOykehgvi6KbBFfYYPFVSFjbHJkboXPodifiJgOLGZ8sopj
-	 qlxyqXfESAE28MMCxRJBUVFTBHalxaehUvb42ZDw=
+	b=by+clm7RaCIh3zRl3VItSVR+X1eWaePOC6iI4sVTdH9XjGfXPV8rMDFXdvlZL8gXP
+	 YTCDPbYlRf0epWeQLEUVqwO01MHLgbJMMuWZKWScHAbsec4zDWf0zpYU36VUwTrRtg
+	 iKnV4hpLgfVxnIcZbqHRQnHB6hLboaNdHR6BK5q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
-	Takashi Iwai <tiwai@suse.de>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Alex Williamson <alex.williamson@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1144/1276] ALSA: scarlett2: Update offsets for 2i2 Gen 4 firmware 2417
-Date: Tue, 21 Jul 2026 17:26:27 +0200
-Message-ID: <20260721152511.605765802@linuxfoundation.org>
+Subject: [PATCH 6.12 1145/1276] vfio/mlx5: Fix racy bitfields and tighten struct layout
+Date: Tue, 21 Jul 2026 17:26:28 +0200
+Message-ID: <20260721152511.630712762@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,100 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Geoffrey D. Bennett" <g@b4.vu>
+From: Alex Williamson <alex.williamson@nvidia.com>
 
-[ Upstream commit 3ca15754b561483aa7a1bce51677d6389f8ff5bb ]
+[ Upstream commit f2365a63b02ddea32e7db78b742c2503ec7b81f1 ]
 
-Firmware 2417 for the Scarlett 4th Gen 2i2 moved the direct monitor gain
-parameters, so add a second config_set with the shifted offset and
-select it for firmware versions >= 2417.
+Bitfield operations are not atomic, they use a read-modify-write
+pattern, therefore we should be careful not to pack bitfields that
+can be concurrently updated into the same storage unit.
 
-Fixes: 4e809a299677 ("ALSA: scarlett2: Add support for Solo, 2i2, and 4i4 Gen 4")
-Cc: stable@vger.kernel.org # ALSA: scarlett2: Allow selecting config_set by firmware version
-Cc: stable@vger.kernel.org # ALSA: scarlett2: Fold min_firmware_version into config_sets
+This split takes a binary approach: flags that are only modified
+pre/post open/close remain bitfields, flags modified from user
+action, including actions that reach across to another device (ex.
+reset) use dedicated storage units.
+
+Note mlx5_vhca_page_tracker.status is relocated to fill the alignment
+hole this split exposes.
+
+Bitfield justifications:
+
+  migrate_cap: written only in mlx5vf_cmd_set_migratable() at probe
+  chunk_mode: written only in mlx5vf_cmd_set_migratable() at probe
+  mig_state_cap: written only in mlx5vf_cmd_set_migratable() at probe
+
+Dedicated storage units:
+
+  mdev_detach: written in the VF attach/detach event notifier
+               mlx5fv_vf_event() at runtime
+  log_active: written in mlx5vf_start_page_tracker()/
+              mlx5vf_stop_page_tracker() during runtime dirty tracking
+  deferred_reset: written in mlx5vf_state_mutex_unlock()/
+                  mlx5vf_pci_aer_reset_done() during runtime reset handling
+  is_err: set by tracker error handling and dirty-log polling at runtime
+  object_changed: set by tracker event handling and cleared by dirty-log
+                  polling at runtime
+
+Fixes: 61a2f1460fd0 ("vfio/mlx5: Manage the VF attach/detach callback from the PF")
+Fixes: 79c3cf279926 ("vfio/mlx5: Init QP based resources for dirty tracking")
+Fixes: f886473071d6 ("vfio/mlx5: Add support for tracker object change event")
+Cc: Yishai Hadas <yishaih@nvidia.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/ad0fc5a131e76eb656a24e0e198382f7134068fe.1777151532.git.g@b4.vu
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20260615191241.688297-5-alex.williamson@nvidia.com
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_scarlett2.c |   58 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ drivers/vfio/pci/mlx5/cmd.h |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/sound/usb/mixer_scarlett2.c
-+++ b/sound/usb/mixer_scarlett2.c
-@@ -910,6 +910,63 @@ static const struct scarlett2_config_set
- 	}
+--- a/drivers/vfio/pci/mlx5/cmd.h
++++ b/drivers/vfio/pci/mlx5/cmd.h
+@@ -157,25 +157,28 @@ struct mlx5_vhca_qp {
+ struct mlx5_vhca_page_tracker {
+ 	u32 id;
+ 	u32 pdn;
+-	u8 is_err:1;
+-	u8 object_changed:1;
++	/* Flags modified at runtime - dedicated storage unit */
++	u8 is_err;
++	u8 object_changed;
++	int status;
+ 	struct mlx5_uars_page *uar;
+ 	struct mlx5_vhca_cq cq;
+ 	struct mlx5_vhca_qp *host_qp;
+ 	struct mlx5_vhca_qp *fw_qp;
+ 	struct mlx5_nb nb;
+-	int status;
  };
  
-+/* 2i2 Gen 4, firmware version 2417 and above
-+ *
-+ * Firmware 2417 shifted DIRECT_MONITOR_GAIN by 4 bytes; all other
-+ * offsets are unchanged from scarlett2_config_set_gen4_2i2.
-+ */
-+static const struct scarlett2_config_set scarlett2_config_set_gen4_2i2_2417 = {
-+	.notifications = scarlett4_2i2_notifications,
-+	.param_buf_addr = 0xfc,
-+	.input_gain_tlv = db_scale_gen4_gain,
-+	.autogain_status_texts = scarlett2_autogain_status_gen4,
-+	.items = {
-+		[SCARLETT2_CONFIG_MSD_SWITCH] = {
-+			.offset = 0x49, .size = 8, .activate = 4 },
-+
-+		[SCARLETT2_CONFIG_DIRECT_MONITOR] = {
-+			.offset = 0x14a, .size = 8, .activate = 16, .pbuf = 1 },
-+
-+		[SCARLETT2_CONFIG_AUTOGAIN_SWITCH] = {
-+			.offset = 0x135, .size = 8, .activate = 10, .pbuf = 1 },
-+
-+		[SCARLETT2_CONFIG_AUTOGAIN_STATUS] = {
-+			.offset = 0x137, .size = 8 },
-+
-+		[SCARLETT2_CONFIG_AG_MEAN_TARGET] = {
-+			.offset = 0x131, .size = 8, .activate = 29, .pbuf = 1 },
-+
-+		[SCARLETT2_CONFIG_AG_PEAK_TARGET] = {
-+			.offset = 0x132, .size = 8, .activate = 30, .pbuf = 1 },
-+
-+		[SCARLETT2_CONFIG_PHANTOM_SWITCH] = {
-+			.offset = 0x48, .size = 8, .activate = 11, .pbuf = 1,
-+			.mute = 1 },
-+
-+		[SCARLETT2_CONFIG_INPUT_GAIN] = {
-+			.offset = 0x4b, .size = 8, .activate = 12, .pbuf = 1 },
-+
-+		[SCARLETT2_CONFIG_LEVEL_SWITCH] = {
-+			.offset = 0x3c, .size = 8, .activate = 13, .pbuf = 1,
-+			.mute = 1 },
-+
-+		[SCARLETT2_CONFIG_SAFE_SWITCH] = {
-+			.offset = 0x147, .size = 8, .activate = 14, .pbuf = 1 },
-+
-+		[SCARLETT2_CONFIG_AIR_SWITCH] = {
-+			.offset = 0x3e, .size = 8, .activate = 15, .pbuf = 1 },
-+
-+		[SCARLETT2_CONFIG_INPUT_SELECT_SWITCH] = {
-+			.offset = 0x14b, .size = 8, .activate = 17, .pbuf = 1 },
-+
-+		[SCARLETT2_CONFIG_INPUT_LINK_SWITCH] = {
-+			.offset = 0x14e, .size = 8, .activate = 18, .pbuf = 1 },
-+
-+		[SCARLETT2_CONFIG_DIRECT_MONITOR_GAIN] = {
-+			.offset = 0x2a4, .size = 16, .activate = 36 }
-+	}
-+};
-+
- /* 4i4 Gen 4 */
- static const struct scarlett2_config_set scarlett2_config_set_gen4_4i4 = {
- 	.notifications = scarlett4_4i4_notifications,
-@@ -1960,6 +2017,7 @@ static const struct scarlett2_device_inf
- static const struct scarlett2_device_info s2i2_gen4_info = {
- 	.config_sets = (const struct scarlett2_config_set_entry[]) {
- 		{ 2115, &scarlett2_config_set_gen4_2i2 },
-+		{ 2417, &scarlett2_config_set_gen4_2i2_2417 },
- 		{ }
- 	},
- 	.min_firmware_version = 2115,
+ struct mlx5vf_pci_core_device {
+ 	struct vfio_pci_core_device core_device;
+ 	int vf_id;
+ 	u16 vhca_id;
++	/* Flags only modified on setup/release - bitfield ok */
+ 	u8 migrate_cap:1;
+-	u8 deferred_reset:1;
+-	u8 mdev_detach:1;
+-	u8 log_active:1;
+ 	u8 chunk_mode:1;
++	/* Flags modified at runtime - dedicated storage unit */
++	u8 mdev_detach;
++	u8 log_active;
++	u8 deferred_reset;
+ 	struct completion tracker_comp;
+ 	/* protect migration state */
+ 	struct mutex state_mutex;
 
 
