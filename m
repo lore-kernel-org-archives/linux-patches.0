@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC8E24A078;
-	Tue, 21 Jul 2026 20:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6740F40803D;
+	Tue, 21 Jul 2026 20:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664721; cv=none; b=InLy3tLvjMWwA7lFBvb5FoxNkAz3cZs3i01d5Ad5PDv0Op20YZCFGtdMz5BSzpDppxoz3pEqO+BI0reudoSWPU8w8s6B0b5DNWE4Dm+rLfhSnjAuQ1XzOPAb310u5wROa0nCY+hdimx9KLbXKQHT3JQBwCNn3GqIKP+97JOqJqQ=
+	t=1784664723; cv=none; b=Q+XuyL4fkieRH3raDLIXmzqJP+dayh9S9as1fYYnEbTix30cujYcbNJFCqYwUrKweDjxryPJ1wrjvZrjLg0JfreECS++Sym0fc4Cr1YARqWfIQWh8jCBlqrP0zmOp8vOzj/LTCKSumI6AfQA7ONDvenSl1zLOqvEi8v+gOnk81Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664721; c=relaxed/simple;
-	bh=XyKIimOUNBPDXV6rw+VVT6+kBjgO0vHC4UQgSWttNJ0=;
+	s=arc-20240116; t=1784664723; c=relaxed/simple;
+	bh=WTERsSNWnJkSEaQgKwNn5Zg7MUuyI1VYXSawYaBn8hM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FQ6VnxknQAK+86bGjJUxdzdRKU36a1rbb04CyY+I9I1qzqsGipGh0HbUfZLw+12nGQBWeQIjGlSb6aoPykkGR8gKBo8aYlR04gPMbBLN0/Eh+QedGItuQh73vIBZGh4pTC2rpkEDvLnZrW0aq6Yj/X4s1cZGJKvelhcv5ny+wH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u72+cDHT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XufSJrb9aH+PN4fQGQE7eJrHCoSHmiTpD9Rdx3lZwHlI6gkwn1CFYhwRH9YKth5R7luihINnQWFID0JbBLbJZY+kmNgnAxrZYMdtsiPULvw39A0wZtkSUoch1bpdc/JGY6tmMSa4I/zzBaxXy4IdPfvDt47cFhK/MzLLboo1YTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xxk3NCga; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u72+cDHT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0B31F000E9;
-	Tue, 21 Jul 2026 20:11:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xxk3NCga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F379A1F000E9;
+	Tue, 21 Jul 2026 20:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664719;
-	bh=sSTRXbfpug6P5phQQ9jKpGP0vNngSE49i2JrWQrb8sw=;
+	s=korg; t=1784664722;
+	bh=sHHz2L7Oy+rsQAEB8i9u+NZUBsLMjHAsOv9fqPktMCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u72+cDHTCAycN8z6FcSzWCmjECTXTgVbnVAxgedkykB8Onl/4d6F2ClxVORMLhq4n
-	 lcCP2JQ89VESSAni3FAS72kqE6XtD+mKT6ZS7Z5UxS+Xwx8IXz4+zXutSUofaN0Ikd
-	 gS/dq8VfLFWyuDwgBYw6ZHcWt1FtNHl2eO0nYFDo=
+	b=Xxk3NCgaZ59ir14pyxYo7cG5u9g5gzNdAlVURoMwDdYccRHHvBKHuI4xdSyf3/2ju
+	 nuDCYLy5ffoJ3d3mPv368+wtnErityvvRbkVRPUdszmUqGtJfuAKWjQArygNqQSY6d
+	 XTNBp2PBPBfKslxbgkW4p2+85jNVH6+L4X6pOZL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Wang <sean.wang@mediatek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Phil Reid <preid@electromag.com.au>,
+	Johan Hovold <johan@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0006/1266] Bluetooth: btmtk: apply the common btmtk_fw_get_filename
-Date: Tue, 21 Jul 2026 17:07:23 +0200
-Message-ID: <20260721152441.934327732@linuxfoundation.org>
+Subject: [PATCH 6.6 0033/1266] i2c: core: fix hang on adapter registration failure
+Date: Tue, 21 Jul 2026 17:07:50 +0200
+Message-ID: <20260721152442.538773525@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,59 +52,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Wang <sean.wang@mediatek.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 7f935b21bee4d8a9f26b57ae6c3682161b247809 ]
+[ Upstream commit 3c7e164344e5bcf6f274bbf59a3274f5caad9bc1 ]
 
-Apply the common btmtk_fw_get_filename to avoid the similar coding in each
-driver.
+Clients may be registered from bus notifier callbacks when the adapter
+is registered. On a subsequent error during registration, the adapter
+references taken by such clients prevent the wait for the references to
+be released from ever completing.
 
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 5c5e8c52e3ca ("Bluetooth: btmtk: move btusb_mtk_[setup, shutdown] to btmtk.c")
+Fix this by refactoring client deregistration and deregistering also on
+late adapter registration failures.
+
+Fixes: f8756c67b3de ("i2c: core: call of_i2c_setup_smbus_alert in i2c_register_adapter")
+Cc: stable@vger.kernel.org	# 4.15
+Cc: Phil Reid <preid@electromag.com.au>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Stable-dep-of: ba14d7cf2fe7 ("i2c: core: fix adapter registration race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btmtksdio.c |  3 +++
- drivers/bluetooth/btusb.c     | 10 ++--------
- 2 files changed, 5 insertions(+), 8 deletions(-)
+ drivers/i2c/i2c-core-base.c |   49 ++++++++++++++++++++++++++------------------
+ 1 file changed, 29 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
-index e249aa7587833b..2be38c8e353efb 100644
---- a/drivers/bluetooth/btmtksdio.c
-+++ b/drivers/bluetooth/btmtksdio.c
-@@ -1111,6 +1111,9 @@ static int btmtksdio_setup(struct hci_dev *hdev)
- 			return err;
- 		}
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -63,6 +63,7 @@
+ static DEFINE_MUTEX(core_lock);
+ static DEFINE_IDR(i2c_adapter_idr);
  
-+		btmtk_fw_get_filename(fwname, sizeof(fwname), dev_id,
-+				      fw_version, 0);
++static void i2c_deregister_clients(struct i2c_adapter *adap);
+ static int i2c_detect(struct i2c_adapter *adapter, struct i2c_driver *driver);
+ 
+ static DEFINE_STATIC_KEY_FALSE(i2c_trace_msg_key);
+@@ -1595,6 +1596,7 @@ static int i2c_register_adapter(struct i
+ 	return 0;
+ 
+ out_reg:
++	i2c_deregister_clients(adap);
+ 	debugfs_remove_recursive(adap->debugfs);
+ 	init_completion(&adap->dev_released);
+ 	device_unregister(&adap->dev);
+@@ -1738,29 +1740,10 @@ static int __process_removed_adapter(str
+ 	return 0;
+ }
+ 
+-/**
+- * i2c_del_adapter - unregister I2C adapter
+- * @adap: the adapter being unregistered
+- * Context: can sleep
+- *
+- * This unregisters an I2C adapter which was previously registered
+- * by @i2c_add_adapter or @i2c_add_numbered_adapter.
+- */
+-void i2c_del_adapter(struct i2c_adapter *adap)
++static void i2c_deregister_clients(struct i2c_adapter *adap)
+ {
+-	struct i2c_adapter *found;
+ 	struct i2c_client *client, *next;
+ 
+-	/* First make sure that this adapter was ever added */
+-	mutex_lock(&core_lock);
+-	found = idr_find(&i2c_adapter_idr, adap->nr);
+-	mutex_unlock(&core_lock);
+-	if (found != adap) {
+-		pr_debug("attempting to delete unregistered adapter [%s]\n", adap->name);
+-		return;
+-	}
+-
+-	i2c_acpi_remove_space_handler(adap);
+ 	/* Tell drivers about this removal */
+ 	mutex_lock(&core_lock);
+ 	bus_for_each_drv(&i2c_bus_type, NULL, adap,
+@@ -1786,6 +1769,32 @@ void i2c_del_adapter(struct i2c_adapter
+ 	 * them up properly, so we give them a chance to do that first. */
+ 	device_for_each_child(&adap->dev, NULL, __unregister_client);
+ 	device_for_each_child(&adap->dev, NULL, __unregister_dummy);
++}
 +
- 		snprintf(fwname, sizeof(fwname),
- 			 "mediatek/BT_RAM_CODE_MT%04x_1_%x_hdr.bin",
- 			 dev_id & 0xffff, (fw_version & 0xff) + 1);
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 9b2857a8e7ac1f..048929e336cf64 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -2940,14 +2940,8 @@ static int btusb_mtk_setup(struct hci_dev *hdev)
- 	case 0x7922:
- 	case 0x7961:
- 	case 0x7925:
--		if (dev_id == 0x7925)
--			snprintf(fw_bin_name, sizeof(fw_bin_name),
--				 "mediatek/mt%04x/BT_RAM_CODE_MT%04x_1_%x_hdr.bin",
--				 dev_id & 0xffff, dev_id & 0xffff, (fw_version & 0xff) + 1);
--		else
--			snprintf(fw_bin_name, sizeof(fw_bin_name),
--				 "mediatek/BT_RAM_CODE_MT%04x_1_%x_hdr.bin",
--				 dev_id & 0xffff, (fw_version & 0xff) + 1);
-+		btmtk_fw_get_filename(fw_bin_name, sizeof(fw_bin_name), dev_id,
-+				      fw_version, 0);
++/**
++ * i2c_del_adapter - unregister I2C adapter
++ * @adap: the adapter being unregistered
++ * Context: can sleep
++ *
++ * This unregisters an I2C adapter which was previously registered
++ * by @i2c_add_adapter or @i2c_add_numbered_adapter.
++ */
++void i2c_del_adapter(struct i2c_adapter *adap)
++{
++	struct i2c_adapter *found;
++
++	/* First make sure that this adapter was ever added */
++	mutex_lock(&core_lock);
++	found = idr_find(&i2c_adapter_idr, adap->nr);
++	mutex_unlock(&core_lock);
++	if (found != adap) {
++		pr_debug("attempting to delete unregistered adapter [%s]\n", adap->name);
++		return;
++	}
++
++	i2c_acpi_remove_space_handler(adap);
++
++	i2c_deregister_clients(adap);
  
- 		err = btmtk_setup_firmware_79xx(hdev, fw_bin_name,
- 						btmtk_usb_hci_wmt_sync);
--- 
-2.53.0
-
+ #ifdef CONFIG_I2C_COMPAT
+ 	class_compat_remove_link(i2c_adapter_compat_class, &adap->dev,
 
 
