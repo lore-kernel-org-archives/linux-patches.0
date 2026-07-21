@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C869431716E;
-	Tue, 21 Jul 2026 19:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EAA7427A10;
+	Tue, 21 Jul 2026 19:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661520; cv=none; b=cI/TM2EzVY77FfZYzRuLi8WqOxybh8Z8obnyEmUGtDg0pyJpS2Y3gDKVhVU9kBCLNcnkK7MhtU/GatzEj44Wzj5yZJ8AqCjH1tYgOMtS7Zta+0c8lCsW3CaDMnZb3wploM0G2fNflxFBmzrPcThq+YH05ZhUHKF1IuHeOp/G0Cg=
+	t=1784661522; cv=none; b=jOV1ybkPtaqiPAkCMZE4jB99t4h6re+2U2MVEIygGh0mj8EO2OVobFcVIDMN3ME2rSTXCoOaxFBHiJ/m2FhCB8Pnpf8kkpnhIF9TNb75+A+TBU6ZrKM/exE//IyI6Ea2HLytjZ86AQNqlOo6moIsklZLBefsBtBujdi+DQTGFvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661520; c=relaxed/simple;
-	bh=CyD2srPFEjyW4HUhGe/yvKni6OEAlmz+ZpE8ZTZuO4w=;
+	s=arc-20240116; t=1784661522; c=relaxed/simple;
+	bh=M3GE/dWmPx87QvFaO5G80YvLcy6x5s14+yzuAfp+IZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vy15887hm6wDy/m9IEi7KTcw5kNqkazvsntm4Xk9nXzSUfXABuuoshBYNPNEr+cyelziHg0Wv8gNBKZetqJ5c7k+JyhMkVimbKAMOYTezjmWQpRu8Jt1FkXoTGO364UU5YWv6hsHSUc0S+kawRQeAE2Vat/yIg1kK7BaTH9N5XU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5hx8F41; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BpRMHbGhBmfMgmZje8ZMnIN5bWl61ajb3nG0bvKwcMO5hZYOB1ejC0n3ckmREGMTdgGu7lBNHJlUwPsvae1V21wT1AFAEivOcZ1KVbudT64awFx+togL5iocjH2jR5P8fGlzYO3dD6nNN+GS7ikq6pHNBY/r56ZVECrNZoga7g4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+TTtSHS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5hx8F41"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351DF1F000E9;
-	Tue, 21 Jul 2026 19:18:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+TTtSHS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47D41F000E9;
+	Tue, 21 Jul 2026 19:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661518;
-	bh=qizm/3WXW4BggC8bi6YB6YBr3hmCV9osIbQ84/AQS4s=;
+	s=korg; t=1784661521;
+	bh=LVR2lhBoSNkLvFXcAoxUGjsNXnIg/lucOJLqtPX/aEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P5hx8F41/foAZKGZmFVqCP4zAepO+8yq34MhgvkaRttFRMT1Mnd03mk1ZEIazLYUm
-	 VLIlBnpj2wrDWqSR+6Z1myrw6cqxpkjNlhgm8MdiWnvos72+Dro6JSGiFpyid8dsrJ
-	 IvvXZkLNtNLWbIOsfZcl6ndJQB4w9PI6kMo0T6nI=
+	b=m+TTtSHSFss1uHKSEYd2YaGbbP0Z9Ly2rtybbRCjXmZNAxhC+1wjfcjRyZwY2/09B
+	 TfNq/sfI70ytjG+OXmYzvK5MDgryYSLAxjQ2DaC1laKIcaMp4jblbdA/u9RuRdCWMe
+	 2URavaE4CCAn5Q4P9T0P6TA0QoFY4KVcu1ZPtJNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damian Muszynski <damian.muszynski@intel.com>,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0090/1276] crypto: qat - fix heartbeat error injection
-Date: Tue, 21 Jul 2026 17:08:53 +0200
-Message-ID: <20260721152448.111931630@linuxfoundation.org>
+Subject: [PATCH 6.12 0099/1276] crypto: asymmetric_keys - fix OOB read in pefile_digest_pe_contents
+Date: Tue, 21 Jul 2026 17:09:02 +0200
+Message-ID: <20260721152448.311328491@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,97 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damian Muszynski <damian.muszynski@intel.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 2e96024632b386c86860aa78639940fc96d6fcc9 ]
+[ Upstream commit f7dd32c5179d7755de18e21d5674b08f9e5cb180 ]
 
-The current implementation of the heartbeat error injection uses
-adf_disable_arb_thd() to stop a specific accelerator engine thread
-from processing requests. This does not reliably prevent the device
-from generating responses.
+pefile_digest_pe_contents() computes the trailing-data hash length as
+pelen - (hashed_bytes + certs_size). A crafted PE can make the addition
+exceed pelen, causing the unsigned subtraction to underflow to ~4 GiB.
+This is passed to crypto_shash_update() which reads out of bounds and
+panics on unmapped vmalloc guard pages.
 
-Fix the error injection by disabling the device arbiter through
-exit_arb() instead. This properly simulates a device failure by
-stopping all arbitration, which results in missing responses for
-sent requests.
+ BUG: unable to handle page fault for address: ffffc900038d8000
+ Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+ RIP: 0010:sha256_blocks_generic (lib/crypto/sha256.c:152)
+ Call Trace:
+  <TASK>
+  __sha256_update (lib/crypto/sha256.c:208)
+  crypto_sha256_update (crypto/sha256.c:142)
+  verify_pefile_signature (crypto/asymmetric_keys/verify_pefile.c:436)
+  kexec_kernel_verify_pe_sig (kernel/kexec_file.c:151)
+  __do_sys_kexec_file_load (kernel/kexec_file.c:406)
+  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+  </TASK>
+ Kernel panic - not syncing: Fatal exception
 
-Remove the now unused adf_disable_arb_thd() function and its
-declaration.
+Validate that the addition does not overflow and the result does not
+exceed pelen before the subtraction. Return -ELIBBAD on failure.
 
-Fixes: e2b67859ab6e ("crypto: qat - add heartbeat error simulator")
-Signed-off-by: Damian Muszynski <damian.muszynski@intel.com>
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Fixes: af316fc442ef ("pefile: Digest the PE binary and compare to the PKCS#7 data")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../intel/qat/qat_common/adf_common_drv.h     |  1 -
- .../qat/qat_common/adf_heartbeat_inject.c     |  6 ++---
- .../intel/qat/qat_common/adf_hw_arbiter.c     | 25 -------------------
- 3 files changed, 2 insertions(+), 30 deletions(-)
+ crypto/asymmetric_keys/verify_pefile.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_common_drv.h b/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
-index fc2fea0d3ada7d..971f94e4d87059 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
-+++ b/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
-@@ -91,7 +91,6 @@ void adf_exit_aer(void);
- int adf_init_arb(struct adf_accel_dev *accel_dev);
- void adf_exit_arb(struct adf_accel_dev *accel_dev);
- void adf_update_ring_arb(struct adf_etr_ring_data *ring);
--int adf_disable_arb_thd(struct adf_accel_dev *accel_dev, u32 ae, u32 thr);
+diff --git a/crypto/asymmetric_keys/verify_pefile.c b/crypto/asymmetric_keys/verify_pefile.c
+index 2863984b670050..95ba0a91dbbdda 100644
+--- a/crypto/asymmetric_keys/verify_pefile.c
++++ b/crypto/asymmetric_keys/verify_pefile.c
+@@ -305,6 +305,8 @@ static int pefile_digest_pe_contents(const void *pebuf, unsigned int pelen,
  
- int adf_dev_get(struct adf_accel_dev *accel_dev);
- void adf_dev_put(struct adf_accel_dev *accel_dev);
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_heartbeat_inject.c b/drivers/crypto/intel/qat/qat_common/adf_heartbeat_inject.c
-index a3b474bdef6c83..023c5f1e78b075 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_heartbeat_inject.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_heartbeat_inject.c
-@@ -64,10 +64,8 @@ int adf_heartbeat_inject_error(struct adf_accel_dev *accel_dev)
- 	if (ret)
- 		return ret;
- 
--	/* Configure worker threads to stop processing any packet */
--	ret = adf_disable_arb_thd(accel_dev, rand_ae, rand_thr);
--	if (ret)
--		return ret;
-+	/* Disable arbiter to stop processing any packet */
-+	hw_device->exit_arb(accel_dev);
- 
- 	/* Change HB counters memory to simulate a hang */
- 	adf_set_hb_counters_fail(accel_dev, rand_ae, rand_thr);
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c b/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c
-index f93d9cca70cee4..dd9a31c20bc9c9 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c
-@@ -99,28 +99,3 @@ void adf_exit_arb(struct adf_accel_dev *accel_dev)
- 		csr_ops->write_csr_ring_srv_arb_en(csr, i, 0);
- }
- EXPORT_SYMBOL_GPL(adf_exit_arb);
--
--int adf_disable_arb_thd(struct adf_accel_dev *accel_dev, u32 ae, u32 thr)
--{
--	void __iomem *csr = accel_dev->transport->banks[0].csr_addr;
--	struct adf_hw_device_data *hw_data = accel_dev->hw_device;
--	const u32 *thd_2_arb_cfg;
--	struct arb_info info;
--	u32 ae_thr_map;
--
--	if (ADF_AE_STRAND0_THREAD == thr || ADF_AE_STRAND1_THREAD == thr)
--		thr = ADF_AE_ADMIN_THREAD;
--
--	hw_data->get_arb_info(&info);
--	thd_2_arb_cfg = hw_data->get_arb_mapping(accel_dev);
--	if (!thd_2_arb_cfg)
--		return -EFAULT;
--
--	/* Disable scheduling for this particular AE and thread */
--	ae_thr_map = *(thd_2_arb_cfg + ae);
--	ae_thr_map &= ~(GENMASK(3, 0) << (thr * BIT(2)));
--
--	WRITE_CSR_ARB_WT2SAM(csr, info.arb_offset, info.wt2sam_offset, ae,
--			     ae_thr_map);
--	return 0;
--}
+ 	if (pelen > hashed_bytes) {
+ 		tmp = hashed_bytes + ctx->certs_size;
++		if (tmp <= hashed_bytes || pelen < tmp)
++			return -ELIBBAD;
+ 		ret = crypto_shash_update(desc,
+ 					  pebuf + hashed_bytes,
+ 					  pelen - tmp);
 -- 
 2.53.0
 
