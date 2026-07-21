@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7A435C694;
-	Tue, 21 Jul 2026 22:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0210043F08A;
+	Tue, 21 Jul 2026 22:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672910; cv=none; b=Ak/4f9pdOZbF+d6gNh1hG0Z7PGLAm3tKmfC3qul45v+cJKjsNYa7SCMfC9Tkk5KmGvpLmI45UvrqxQe6gIjPNF1XCj5WfXBOzUh64B+kCVlwmFA+SMKrkFu7Bg0fjnz9q9MsC/CTPtELt67Yjcuvyprz7b7Jp9hc9LieYYYhDxU=
+	t=1784672909; cv=none; b=MU9pr9Bh5yPJq3SsOnOxocLoYdK+sL0AJDdxhSNoSyIsn8guZCOEcGnGQ0Qw8gSnY0Ge9oXQkCsFEaF+wYyaUJIxctjfFUDqVBFxzVH9D6k+R2hwfzBNDOEHB1tk2Z6VdbjoJw27D4ieg/asQn9zM2u59CJylQoVR+rQEalT0kU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672910; c=relaxed/simple;
-	bh=36eiHvAhi3wM+ktdooO68KYE5PwogdYtIWRRkmggXMw=;
+	s=arc-20240116; t=1784672909; c=relaxed/simple;
+	bh=NQKCa91mLZbcfm/fStsQlO8DjKpIa57px8Gy1FVQmYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jFvJCE6/BMcNEpzSvC0ethQ7sscWJYp0T+53zUdXSX0+acMrQJXZri4Jz6gdgKRmqRu21PwWkw6a4VKBVJ3mLVwRxGdHXIpMAx5pbDqRiLjqG+nQmwXGotQN+0ei+rg2esVnTbN2K00MLdEFFxTYKNAjFJJYoR41JYkp8cHaR+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aY6kSWgc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ecD9iarGE0YX4/DAc6yA8vARYbyEK+WVvmyI+RL5W7yvVcl07eVfrbFMf1NhNXouAa5CajCFHYhS/lmltroY9QI1LDCCERFnJ9R9UK9BK0bkpyPYdM0B26yLDU6GlS66GKl9+30fmYdI9tgzp6DkcwA+QsEJdhekVN7z7s82vkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iYxed/bL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aY6kSWgc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA6E1F00A3A;
-	Tue, 21 Jul 2026 22:28:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iYxed/bL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E431F00A3E;
+	Tue, 21 Jul 2026 22:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672901;
-	bh=Rt5AHgVZlP1vkXVmJaZr2EnipR1Bc6SYEwxUvEVW1x8=;
+	s=korg; t=1784672896;
+	bh=oL5yAdPaCDSaNxgdidIxBK+tZcj1U1LQinLAwuOHArg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aY6kSWgcvcCRES3jAhwtOKWz6YWRzZqFfn156hG6XvrZ+0y36+xLtg/3ELSiGmJaw
-	 gmWNy9ETQ7NDqMYQhmWlmPNIDTyXro8o8GsBFUuq7h3009wHhqi2RKpSVAbl+Q8PHR
-	 0Cq+33lwi/cVBlnSccDx48PW30mjoVttpRdFQurI=
+	b=iYxed/bLtswyDK9xzwpAexbUw8+J97PvcJD5a30ZQR0D6STpaJtES9rwPv698lSIy
+	 H8jdWFgPZZYx8eRHVTGPa8iRr4H5VJmeRxIR0cdSY0XosUwyDfjWmPi1Jg/NHuJ5zS
+	 mGx/9hDs0LLfZE2QUhj/4iv4yXTJvweKPTHXJbEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 799/843] treewide: Switch/rename to timer_delete[_sync]()
-Date: Tue, 21 Jul 2026 17:27:14 +0200
-Message-ID: <20260721152424.040719126@linuxfoundation.org>
+Subject: [PATCH 5.15 798/843] proc: protect ptrace_may_access() with exec_update_lock (part 1)
+Date: Tue, 21 Jul 2026 17:27:13 +0200
+Message-ID: <20260721152424.018412657@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,34 +51,207 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 8fa7292fee5c5240402371ea89ab285ec856c916 ]
+[ Upstream commit 6650527444dadc63d84aa939d14ecba4fadb2f69 ]
 
-timer_delete[_sync]() replaces del_timer[_sync](). Convert the whole tree
-over and remove the historical wrapper inlines.
+Fix the easy cases where procfs currently calls ptrace_may_access() without
+exec_update_lock protection, where the fix is to simply add the extra lock
+or use mm_access():
 
-Conversion was done with coccinelle plus manual fixups where necessary.
+ - do_task_stat(): grab exec_update_lock
+ - proc_pid_wchan(): grab exec_update_lock
+ - proc_map_files_lookup(): use mm_access() instead of get_task_mm()
+ - proc_map_files_readdir(): use mm_access() instead of get_task_mm()
+ - proc_ns_get_link(): grab exec_update_lock
+ - proc_ns_readlink(): grab exec_update_lock
 
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Stable-dep-of: 75fe87e19d8a ("HID: appleir: fix UAF on pending key_up_timer in remove()")
+Fixes: f83ce3e6b02d ("proc: avoid information leaks to non-privileged processes")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://patch.msgid.link/20260518-procfs-lockfix-part1-v1-1-5c3d20e0ac33@google.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ converted NULL return from mm_access() to ERR_PTR(-ESRCH) at call sites since 5.15's mm_access() returns NULL when the task has no mm ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-appleir.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/proc/array.c      |    6 ++++++
+ fs/proc/base.c       |   41 ++++++++++++++++++++++++-----------------
+ fs/proc/namespaces.c |   12 ++++++++++++
+ 3 files changed, 42 insertions(+), 17 deletions(-)
 
---- a/drivers/hid/hid-appleir.c
-+++ b/drivers/hid/hid-appleir.c
-@@ -319,7 +319,7 @@ static void appleir_remove(struct hid_de
- {
- 	struct appleir *appleir = hid_get_drvdata(hid);
- 	hid_hw_stop(hid);
--	del_timer_sync(&appleir->key_up_timer);
-+	timer_delete_sync(&appleir->key_up_timer);
- }
+--- a/fs/proc/array.c
++++ b/fs/proc/array.c
+@@ -468,6 +468,11 @@ static int do_task_stat(struct seq_file
+ 	unsigned long flags;
+ 	struct signal_struct *sig = task->signal;
+ 	unsigned int seq = 1;
++	int ret;
++
++	ret = down_read_killable(&task->signal->exec_update_lock);
++	if (ret)
++		return ret;
  
- static const struct hid_device_id appleir_devices[] = {
+ 	state = *get_task_state(task);
+ 	vsize = eip = esp = 0;
+@@ -642,6 +647,7 @@ static int do_task_stat(struct seq_file
+ 		seq_puts(m, " 0");
+ 
+ 	seq_putc(m, '\n');
++	up_read(&task->signal->exec_update_lock);
+ 	if (mm)
+ 		mmput(mm);
+ 	return 0;
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+@@ -414,18 +414,24 @@ static int proc_pid_wchan(struct seq_fil
+ {
+ 	unsigned long wchan;
+ 	char symname[KSYM_NAME_LEN];
++	int err;
+ 
++	err = down_read_killable(&task->signal->exec_update_lock);
++	if (err)
++		return err;
+ 	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS))
+ 		goto print0;
+ 
+ 	wchan = get_wchan(task);
+ 	if (wchan && !lookup_symbol_name(wchan, symname)) {
+ 		seq_puts(m, symname);
++		up_read(&task->signal->exec_update_lock);
+ 		return 0;
+ 	}
+ 
+ print0:
+ 	seq_putc(m, '0');
++	up_read(&task->signal->exec_update_lock);
+ 	return 0;
+ }
+ #endif /* CONFIG_KALLSYMS */
+@@ -2332,17 +2338,17 @@ static struct dentry *proc_map_files_loo
+ 	if (!task)
+ 		goto out;
+ 
+-	result = ERR_PTR(-EACCES);
+-	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS))
+-		goto out_put_task;
+-
+ 	result = ERR_PTR(-ENOENT);
+ 	if (dname_to_vma_addr(dentry, &vm_start, &vm_end))
+ 		goto out_put_task;
+ 
+-	mm = get_task_mm(task);
++	mm = mm_access(task, PTRACE_MODE_READ_FSCREDS);
+ 	if (!mm)
++		mm = ERR_PTR(-ESRCH);
++	if (IS_ERR(mm)) {
++		result = ERR_CAST(mm);
+ 		goto out_put_task;
++	}
+ 
+ 	result = ERR_PTR(-EINTR);
+ 	if (mmap_read_lock_killable(mm))
+@@ -2391,23 +2397,24 @@ proc_map_files_readdir(struct file *file
+ 	if (!task)
+ 		goto out;
+ 
+-	ret = -EACCES;
+-	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS))
+-		goto out_put_task;
+-
+ 	ret = 0;
+ 	if (!dir_emit_dots(file, ctx))
+ 		goto out_put_task;
+ 
+-	mm = get_task_mm(task);
++	mm = mm_access(task, PTRACE_MODE_READ_FSCREDS);
+ 	if (!mm)
++		mm = ERR_PTR(-ESRCH);
++	if (IS_ERR(mm)) {
++		ret = PTR_ERR(mm);
++		/* if the task has no mm, the directory should just be empty */
++		if (ret == -ESRCH)
++			ret = 0;
+ 		goto out_put_task;
++	}
+ 
+ 	ret = mmap_read_lock_killable(mm);
+-	if (ret) {
+-		mmput(mm);
+-		goto out_put_task;
+-	}
++	if (ret)
++		goto out_put_mm;
+ 
+ 	nr_files = 0;
+ 
+@@ -2431,8 +2438,7 @@ proc_map_files_readdir(struct file *file
+ 		if (!p) {
+ 			ret = -ENOMEM;
+ 			mmap_read_unlock(mm);
+-			mmput(mm);
+-			goto out_put_task;
++			goto out_put_mm;
+ 		}
+ 
+ 		p->start = vma->vm_start;
+@@ -2440,7 +2446,6 @@ proc_map_files_readdir(struct file *file
+ 		p->mode = vma->vm_file->f_mode;
+ 	}
+ 	mmap_read_unlock(mm);
+-	mmput(mm);
+ 
+ 	for (i = 0; i < nr_files; i++) {
+ 		char buf[4 * sizeof(long) + 2];	/* max: %lx-%lx\0 */
+@@ -2457,6 +2462,8 @@ proc_map_files_readdir(struct file *file
+ 		ctx->pos++;
+ 	}
+ 
++out_put_mm:
++	mmput(mm);
+ out_put_task:
+ 	put_task_struct(task);
+ out:
+--- a/fs/proc/namespaces.c
++++ b/fs/proc/namespaces.c
+@@ -55,6 +55,10 @@ static const char *proc_ns_get_link(stru
+ 	if (!task)
+ 		return ERR_PTR(-EACCES);
+ 
++	error = down_read_killable(&task->signal->exec_update_lock);
++	if (error)
++		goto out_put_task;
++
+ 	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS))
+ 		goto out;
+ 
+@@ -64,6 +68,8 @@ static const char *proc_ns_get_link(stru
+ 
+ 	error = nd_jump_link(&ns_path);
+ out:
++	up_read(&task->signal->exec_update_lock);
++out_put_task:
+ 	put_task_struct(task);
+ 	return ERR_PTR(error);
+ }
+@@ -80,11 +86,17 @@ static int proc_ns_readlink(struct dentr
+ 	if (!task)
+ 		return res;
+ 
++	res = down_read_killable(&task->signal->exec_update_lock);
++	if (res)
++		goto out_put_task;
++
+ 	if (ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS)) {
+ 		res = ns_get_name(name, sizeof(name), task, ns_ops);
+ 		if (res >= 0)
+ 			res = readlink_copy(buffer, buflen, name);
+ 	}
++	up_read(&task->signal->exec_update_lock);
++out_put_task:
+ 	put_task_struct(task);
+ 	return res;
+ }
 
 
