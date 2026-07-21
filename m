@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE64472F9F;
-	Tue, 21 Jul 2026 20:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6056647044A;
+	Tue, 21 Jul 2026 20:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665540; cv=none; b=WXrsr3Ifofz9AlHC5ScHXKavQL5eWGqOynzTFNZp9z4LEOnzWJFmogQ4iTXbEk2g0All/vpChggLFRi91N4jDO4sUcHBevT2GUPaNsMxrk6zRYxLaa3f7VcVIP9TpT69G/an3s1myfzA0FYHkP7GEQOGdjZKuUt5zUQA+pVZF2c=
+	t=1784665542; cv=none; b=FykDLKRPCqo038maWrqaIR9C0j1EUiEuQ8xOflIXaFW9hyY73yVAAjYdNQI9+v3lygc/yIVSprjEk0SduEVPs9WgT3qzaNW6laiEZzqJqkoTEzkws6tB24EcQ/9XVt4tFVGyaDk6pVRU8cqJoFTuGa7J2741/h69vvDHjPQxPUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665540; c=relaxed/simple;
-	bh=c06Vo2i7hVkcjK7JLVW9ZK97Y+HbUCzC/KT8XsQAt40=;
+	s=arc-20240116; t=1784665542; c=relaxed/simple;
+	bh=XQke+IeqSon9azZu1BmFwY+r07VsvbvtDdCas0ZoOiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=haTgHdW9a7nGi8h4ESH2JUFWP2LhnSldKvJT1JNHE8wAQcWoAzxMs84Qq9jQ8BKBKwCv9TxiD6VKX5N1Ayj2ry2/EePhM9UlcoL+KeObzSuccLZMu8sM0BDngp0hXwLH9JqufnHLL3GnPykSandpJ5/uJ0fm+q5gobdOS4S8pao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iSOpIwHt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bjLa0y2GMsWCoapeuKyrGNWvuEMWiC/qgzN0hyrJl0Gsr2h6EBqwtQ7rZdU9/r3XFYNyMPecQqIpq+QC/j4anqDJMKGcQTmjvduVx7vUXmNu+0mYFLyAMG34utqXNh6+chxQ/PpFGlOlGcXirJ38jJRWLmqOz1XS7N4YCnRNIsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZkXf91I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iSOpIwHt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B071F000E9;
-	Tue, 21 Jul 2026 20:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZkXf91I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A4E1F000E9;
+	Tue, 21 Jul 2026 20:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665538;
-	bh=xT6bJ5Wy64g5D0UAQB0DB0rO+8/iM50AykOLRidpDfw=;
+	s=korg; t=1784665541;
+	bh=lusMN1QK5CGA22ScxQ4EFUcmRJl9SsVN4T0vCNu9wG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iSOpIwHt2QMV/yaTdXFBxXXUNn63lw8eAR0/DO6EqPQGtcbuaTtp88c4aLtrmpeat
-	 BS/qLszeOlm8MiTCi825TQfW40OE2U+fKMMMAummUdDjECfp1re0f7PkKE/TT5y/eh
-	 AbB5PYWRVM+P+w4dBXDLjAJY+mzju8+I6dX52PBs=
+	b=BZkXf91IoWile0+c0sQdIm54zoVk8qXrOYBxuz2kJ0Lo0qQmluqUM9XRtAfOgGz7/
+	 whmcFesnosWvZ3yQhsYemILeE5T4Tywu8oaM7CiI24w2QYC3qrP3RjQ2UPYkBpipJ3
+	 jnRDkS0OdfTmgxMXtkaJS+nlf7MWuV4ZW2unOs4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0342/1266] bpf: Skip redundant IBPB in pack allocator
-Date: Tue, 21 Jul 2026 17:12:59 +0200
-Message-ID: <20260721152449.482912346@linuxfoundation.org>
+Subject: [PATCH 6.6 0343/1266] bpf: Prefer packs that wont trigger an IBPB flush on allocation
+Date: Tue, 21 Jul 2026 17:13:00 +0200
+Message-ID: <20260721152449.506643863@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,77 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit a23c1c5396a91680703360d1ee28a44657c503c4 upstream.
+commit a9b1f19a6a673ba06820898d0f1ad02883ea1639 upstream.
 
-bpf_prog_pack_alloc() issues IBPB on all CPUs on every cBPF allocation,
-even when reusing chunks from an existing pack where no new memory was
-touched since the last IBPB.
+Currently BPF pack allocator picks the chunks from the first available
+pack. While this is okay, it naturally leads to more frequent flushes
+when there are multiple packs in the system that weren't used since the
+last flush.
 
-Since IBPB on all CPUs is heavy, Dave Hansen suggested to track allocation
-since last IBPB, and only issue IBPB at reuse for the chunks that have not
-seen an IBPB since they were last freed.
+As an optimization prefer allocating the new programs from packs that
+are unused since last flush. When all packs are dirty, allocation forces
+a flush and marks all packs clean.
 
-Track per-pack whether an IBPB is needed via arch_flush_needed. Set it when
-allocating a chunk, reset on IBPB flush. On reuse, conditionally issue the
-flush. Since IBPB invalidates all BTB entries, clear the flag on all packs
-after flushing.
+Below are some future optimizations ideas:
+
+  1. Currently, the "dirty" tracking is only done at the pack-level.
+     Flush frequency can further be reduced with chunk-level tracking.
+     This requires a new bitmap per-pack to track the dirty state.
+  2. IBPB flush is done on all CPUs, even if only a single CPU ran the
+     BPF program. On a system with hundreds of CPUs this could be a
+     major bottleneck forcing hundreds of IPIs to deliver the flush.
+     The solution is to track the CPUs where a BPF program ran, and
+     issue IBPB only on those CPUs.
+  3. Avoid IBPB when flush is already done at other sources (e.g.
+     context switch).
 
 Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Acked-by: Daniel Borkmann <daniel@iogearbox.net>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ kernel/bpf/core.c | 27 ++++++++++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
 
 diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 509f1b9c2b2e28..a2e5684d623996 100644
+index a2e5684d623996..7dc59570cd25a5 100644
 --- a/kernel/bpf/core.c
 +++ b/kernel/bpf/core.c
-@@ -851,6 +851,7 @@ int bpf_jit_add_poke_descriptor(struct bpf_prog *prog,
- struct bpf_prog_pack {
- 	struct list_head list;
- 	void *ptr;
-+	bool arch_flush_needed;
- 	unsigned long bitmap[];
- };
+@@ -917,8 +917,8 @@ static struct bpf_prog_pack *alloc_new_pack(bpf_jit_fill_hole_t bpf_fill_ill_ins
+ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns, bool was_classic)
+ {
+ 	unsigned int nbits = BPF_PROG_SIZE_TO_NBITS(size);
+-	struct bpf_prog_pack *pack;
+-	unsigned long pos;
++	struct bpf_prog_pack *pack, *fallback_pack = NULL;
++	unsigned long pos, fallback_pos = 0;
+ 	void *ptr = NULL;
  
-@@ -906,6 +907,8 @@ static struct bpf_prog_pack *alloc_new_pack(bpf_jit_fill_hole_t bpf_fill_ill_ins
- 	bitmap_zero(pack->bitmap, BPF_PROG_PACK_SIZE / BPF_PROG_CHUNK_SIZE);
- 	list_add_tail(&pack->list, &pack_list);
- 
-+	if (static_branch_unlikely(&bpf_pred_flush_enabled))
-+		pack->arch_flush_needed = true;
- 	set_vm_flush_reset_perms(pack->ptr);
- 	set_memory_rox((unsigned long)pack->ptr, BPF_PROG_PACK_SIZE / PAGE_SIZE);
- 	return pack;
-@@ -952,8 +955,15 @@ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns, bool
- 
- found_free_area:
- 	/* Flush only for cBPF as it may contain a crafted gadget */
--	if (static_branch_unlikely(&bpf_pred_flush_enabled) && was_classic)
-+	if (static_branch_unlikely(&bpf_pred_flush_enabled) &&
-+	    pack->arch_flush_needed &&
-+	    was_classic) {
-+		struct bpf_prog_pack *p;
-+
- 		static_call_cond(bpf_arch_pred_flush)();
-+		list_for_each_entry(p, &pack_list, list)
-+			p->arch_flush_needed = false;
+ 	mutex_lock(&pack_mutex);
+@@ -943,8 +943,29 @@ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns, bool
+ 	list_for_each_entry(pack, &pack_list, list) {
+ 		pos = bitmap_find_next_zero_area(pack->bitmap, BPF_PROG_CHUNK_COUNT, 0,
+ 						 nbits, 0);
+-		if (pos < BPF_PROG_CHUNK_COUNT)
++		if (pos >= BPF_PROG_CHUNK_COUNT)
++			continue;
++		/* Flush not enabled, use any pack */
++		if (!static_branch_unlikely(&bpf_pred_flush_enabled))
+ 			goto found_free_area;
++		/*
++		 * cBPF reuse of a dirty pack triggers a flush, so prefer a
++		 * clean pack for cBPF. eBPF never flushes, so pick the first
++		 * free pack, dirty or clean.
++		 */
++		if (!was_classic || !pack->arch_flush_needed)
++			goto found_free_area;
++		if (!fallback_pack) {
++			fallback_pack = pack;
++			fallback_pos = pos;
++		}
 +	}
- 	bitmap_set(pack->bitmap, pos, nbits);
- 	ptr = (void *)(pack->ptr) + (pos << BPF_PROG_CHUNK_SHIFT);
- 
-@@ -991,6 +1001,9 @@ void bpf_prog_pack_free(struct bpf_binary_header *hdr)
- 		  "bpf_prog_pack bug: missing bpf_arch_text_invalidate?\n");
- 
- 	bitmap_clear(pack->bitmap, pos, nbits);
 +
-+	if (static_branch_unlikely(&bpf_pred_flush_enabled))
-+		pack->arch_flush_needed = true;
- 	if (bitmap_find_next_zero_area(pack->bitmap, BPF_PROG_CHUNK_COUNT, 0,
- 				       BPF_PROG_CHUNK_COUNT, 0) == 0) {
- 		list_del(&pack->list);
++	/* No preferred pack found */
++	if (fallback_pack) {
++		pack = fallback_pack;
++		pos = fallback_pos;
++		goto found_free_area;
+ 	}
+ 
+ 	pack = alloc_new_pack(bpf_fill_ill_insns);
 -- 
 2.53.0
 
