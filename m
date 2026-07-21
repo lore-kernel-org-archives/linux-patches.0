@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30AB3C9ED9;
-	Tue, 21 Jul 2026 18:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7F2471264;
+	Tue, 21 Jul 2026 18:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659321; cv=none; b=nI4QHMbPuFpLxtf8eehPlRsP/c/q2hhAT3h6fvnrW+juNMf2PfwVOa0qor3BpynBKFAP3yjD/ZBOHxpwOPp2Kbb4F6dVaBM3oxGMUQIKUUoIDjBsiMJ18pAsLqTVhdyygkqwG5l/3RNc/8oqa/ROyTzSQ60kN3gfMEMXlPUPPFc=
+	t=1784659323; cv=none; b=TDudIvbIX+tLl1JjNsncf3JauJ+ZR7b7BZ/SUWeRZqIHsr72ekLDFbgD2DLfNugb2YDdt461xEM/H1RJAqwoaJ8j4J7sUERi2X1uInFeZEBUnLNd6l4GXcUf6X/aXGlYRC+cpgK6keUGD0aeu2fpSqGWlIIwYYLLn+GW8dEXwg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659321; c=relaxed/simple;
-	bh=PcgwIwUOee+jX1Dwpxg6RFYvxZAf+rxCX6NegVdDqaI=;
+	s=arc-20240116; t=1784659323; c=relaxed/simple;
+	bh=sXQQOrFOX9ck6jJIVXLTSyWXZ6/BmxM/IIW6BEaaUxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bLl6MJT5d6jKkQ/5OTNdol1xNKWYWFMwcvrKaU3Gnf9uxZFykBwOJG0OH4V9oSF/E2IKx2ONQsb3Omkvla38e2VLRIwCkWP77xON/APux9e2/WuFswd/CKOBU3tTPhPIxNlI81GPQxx8ZG4hjAuayjnt8wNQy3sP1ZHChktzHdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k3DkhIfL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rPnK1p/l6bnRca6Dz5X90zahPlCzM7OCTfT/Sxc3QCTuOYZetie46TH/tQRcvSaCpRg3F678dYpuhf4IcGOdyXHO/f3t8B0dY1ln4hyin1iUO6ltzwBFN9K59+npuJTzMmn9IfDUavv9L9FbIOyECGjjwlVp35XW+bicN5RfpQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eX6ydB07; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k3DkhIfL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB5E21F000E9;
-	Tue, 21 Jul 2026 18:41:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eX6ydB07"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E211F000E9;
+	Tue, 21 Jul 2026 18:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659319;
-	bh=wJPVzqsTU8isIXTy7sr/GojuA89v+oKvxV31iy6x0v4=;
+	s=korg; t=1784659322;
+	bh=0StqpUFRv+fVHOZJrOylgF0D098eUrfDISYg3XTGNyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k3DkhIfLmFew27/0CaufWLEbVjXlLQu7LBZK4RgbAE0VDEKktEBUPOQB5xD0lc+1h
-	 idk0dJeXPt9ua9keXHubl/vVHewBpBYEsXTdXw41KrVQ2f6SIawWHR2cX0V306Pl0U
-	 uwaRR9y2SUrB/Lsv26YVTiZrxfYFThy/EOXGktpc=
+	b=eX6ydB07d8P0BtqwJcKPXgK1TN0BoQA2Byv8zLZqxJFjm3EfNEJ8SOrI47Dx8r+Yj
+	 DQuHTJIK/h3A8Cjzi28dkLXnOpXoCcKsVNjBpO2229ByTnUWrhAAptS0KVDeBWh9C0
+	 eEfAerwWEKDw126sFooM1KNdPA4mmU/CcVIq2OwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Huth <thuth@redhat.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
-Subject: [PATCH 6.18 1475/1611] selftests/landlock: Skip scoped_signal subtest with MSG_OOB if not available
-Date: Tue, 21 Jul 2026 17:26:31 +0200
-Message-ID: <20260721152548.623933459@linuxfoundation.org>
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.18 1440/1611] hwmon: (max1619) add missing select REGMAP to Kconfig
+Date: Tue, 21 Jul 2026 17:25:56 +0200
+Message-ID: <20260721152547.837275071@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -44,69 +44,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Huth <thuth@redhat.com>
+From: Joshua Crofts <joshua.crofts1@gmail.com>
 
-commit 5ab1dc6d110db6bee167a32fd94c53ea0e7ad6d2 upstream.
+commit 943a749bdffdd2132fab9240db890e07d93e1fcf upstream.
 
-MSG_OOB might be disabled in the kernel for unix sockets (by not
-selecting CONFIG_AF_UNIX_OOB), and in this case the related tests
-of the scoped_signal_test are currently failing.  Add a runtime
-probe using socketpair() to detect MSG_OOB support and skip the
-test gracefully if it is unavailable.
+The Kconfig entry for the MAX1619 sensor doesn't contain a
+`select REGMAP` parameter, causing build failures if regmap
+isn't selected previously during the build process.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Link: https://patch.msgid.link/20260710081642.405916-1-thuth@redhat.com
+Fixes: f8016132ce49 ("hwmon: (max1619) Convert to use regmap")
 Cc: stable@vger.kernel.org
-Fixes: f34e9ce5f479 ("selftests/landlock: Test signal created by out-of-bound message")
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Link: https://lore.kernel.org/r/20260629-add-kconfig-deps-v1-1-8104df929b1a@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/landlock/scoped_signal_test.c |   21 ++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/hwmon/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/tools/testing/selftests/landlock/scoped_signal_test.c
-+++ b/tools/testing/selftests/landlock/scoped_signal_test.c
-@@ -400,6 +400,24 @@ static int setup_signal_handler(int sign
- 	return sigaction(SIGURG, &sa, NULL);
- }
- 
-+/*
-+ * MSG_OOB might be disabled in the kernel via the CONFIG_AF_UNIX_OOB
-+ * switch, so this function can be used for probing for its availability.
-+ */
-+static bool has_af_unix_oob(void)
-+{
-+	bool available = false;
-+	int sp[2];
-+
-+	if (socketpair(AF_UNIX, SOCK_STREAM, 0, sp) == 0) {
-+		available = (send(sp[0], ".", 1, MSG_OOB) == 1);
-+		close(sp[0]);
-+		close(sp[1]);
-+	}
-+
-+	return available;
-+}
-+
- /* clang-format off */
- FIXTURE(fown) {};
- /* clang-format on */
-@@ -462,6 +480,9 @@ TEST_F(fown, sigurg_socket)
- 	int pipe_parent[2], pipe_child[2];
- 	pid_t child;
- 
-+	if (!has_af_unix_oob())
-+		SKIP(return, "CONFIG_AF_UNIX_OOB / MSG_OOB not available");
-+
- 	memset(&server_address, 0, sizeof(server_address));
- 	set_unix_address(&server_address, 0);
+--- a/drivers/hwmon/Kconfig
++++ b/drivers/hwmon/Kconfig
+@@ -1213,6 +1213,7 @@ config SENSORS_MAX16065
+ config SENSORS_MAX1619
+ 	tristate "Maxim MAX1619 sensor chip"
+ 	depends on I2C
++	select REGMAP
+ 	help
+ 	  If you say yes here you get support for MAX1619 sensor chip.
  
 
 
