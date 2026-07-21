@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B627541735B;
-	Tue, 21 Jul 2026 19:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077DD471420;
+	Tue, 21 Jul 2026 19:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663888; cv=none; b=LcsYEbreS7IwtE4OX16IO+i/Moa9kxTqc2vpWGWLO6oAtyls1lMW78KgGY/rmDdbrlNFrSAOY88Eg/BsNyOmn+3nERFc66UhrCB/XVqKfocSm/bQyLLp/FsDkPdZdSw3rBOLpnl+w4CpEhRt9yFYPpuXMjKWNFU1JwROZ3sgock=
+	t=1784663891; cv=none; b=Vi4lu1JtBvBhNN+ZI/hFcc7QXpMyZ53QEDLnjTUdR4a2b5HLDGDmKwxGBPRCAeRxwbxTiMxMTK6VNLkiJfMVRAQYZ3inUBr5uGlk06q8rNpp4wNAFyCWo/vRvb09MV2BmbpCKH/0TYZLY1Xmy/UXLCPMUbfOzrLfd3OhbkG4Yos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663888; c=relaxed/simple;
-	bh=VBuRd+4ygXSTrRII0W+Hl1U8Nq5c8JXkblOMu4R5WZc=;
+	s=arc-20240116; t=1784663891; c=relaxed/simple;
+	bh=nWt1pzRw2DMYKu2aVC2v+GanummuaTWTTYLAtbknSg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kUMkyVerLeSpZg4hG/QXzrYq1bhkEUKXYVqBeMQHOywpyC6dUw4aDE22mJa8UDiy1Rz9idsMf+9UQ/OCBXXMUYqNY/FJsRAKCSVEWjpTCPNL+WfUglMt5EEPp4loep3JhOxIX2dJ06DLBU3TspesiBRfZ3iRu7FRM/8IZQczaI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTS5XEQK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i1jH94uCCpLl74W2hqgyefRg9RS1Dp3R9fWtVJykqO/URBIkYtOZv4RMaYQhRuTQjHdWLg6QamByTVktj9JSBwKKOWRj9JL0iCkg/RaD5cSrQF7IK69jWRoBrru3yP8CxEgdjyCgRMKO5KkoKjZfxxcfYIrqcaq07wEvLU+ORp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g66GyWaQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTS5XEQK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59DE1F000E9;
-	Tue, 21 Jul 2026 19:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g66GyWaQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE941F00A3A;
+	Tue, 21 Jul 2026 19:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663885;
-	bh=r/3/VMC1Hn2GfxA1phjdnNEqAozb4BrcERqsAAqb0gs=;
+	s=korg; t=1784663887;
+	bh=2pQbCTSR8i9GG5z//EDOr2rRR7J7A5aBAFLuiaMb+Bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eTS5XEQKAyE53LnpB3T8VT/TUIrXXGmAkSf3i69oL/AcL+vinLZGt1DvnjkmXi8Op
-	 7CH6ZnPU/nUOxNBlVUknmycbzgigw35QPyxVUtYt+ACoMsB9ZTwUX/MBIPQ8vnmB59
-	 RRVi92lD4ARP3FDm80CjDwP+q0mvwihAcybhc7io=
+	b=g66GyWaQi1hWY5GKwf8J88f0XA4hU3oQ2lUykJgFR9DWeX4qJeaQb/MYOCKzGo/Qs
+	 fT2GbMjRjjTadwUWRlbkDpgYcQ5g7MwtR6SaBSvpCRN/cya3EMdOz+HlXuujwulmdi
+	 1kX66oYUwCzB/Ui0wgi+sfuMfgxWtzS973a5I5es=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nico Yip <zdi-disclosures@trendmicro.com>,
+	Feng Xue <feng.xue@outlook.com>,
 	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Lee Jones <lee@kernel.org>,
 	stable@kernel.org,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.12 0992/1276] can: isotp: use unconditional synchronize_rcu() in isotp_release()
-Date: Tue, 21 Jul 2026 17:23:55 +0200
-Message-ID: <20260721152508.211371267@linuxfoundation.org>
+Subject: [PATCH 6.12 0993/1276] can: bcm: defer rx_op deallocation to workqueue to fix thrtimer UAF
+Date: Tue, 21 Jul 2026 17:23:56 +0200
+Message-ID: <20260721152508.233261472@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,59 +53,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Lee Jones <lee@kernel.org>
 
-commit 9b1a02e0d980ac6b0e36a90378f847062f81d7e4 upstream.
+commit 68973f9db76144825e4f35dfdc80fb8279eb2d57 upstream.
 
-isotp_notify() unregisters the (RCU) CAN filters via can_rx_unregister()
-and clears so->bound without waiting for a grace period. isotp_release()
-uses so->bound to decide whether it needs to call synchronize_rcu()
-before cancelling so->rxtimer, so when NETDEV_UNREGISTER runs first it
-skips that synchronize_rcu() and can cancel the timer while an
-in-flight isotp_rcv() is still executing and about to re-arm it via
-isotp_send_fc(), leading to a use-after-free timer callback on the
-freed socket.
+Commit f1b4e32aca08 ("can: bcm: use call_rcu() instead of costly
+synchronize_rcu()") replaced synchronize_rcu() in bcm_delete_rx_op()
+with call_rcu() and introduced the RX_NO_AUTOTIMER flag.
 
-sakisho-bot remarked a problem with rtnl_lock held in isotp_notify(),
-therefore make isotp_release() always call synchronize_rcu() before
-cancelling the timers, regardless of so->bound. This still closes the
-original race (isotp_notify() clearing so->bound without waiting for
-in-flight isotp_rcv() callers before isotp_release() cancels the RX
-timer) without adding any RCU wait to the netdevice notifier path.
+However, this flag check was omitted for thrtimer in the packet rx
+fast-path. During BCM RX operation teardown, a concurrent RCU reader
+(bcm_rx_handler) can race and re-arm thrtimer via
+bcm_rx_update_and_send() after call_rcu() has been scheduled.  Once
+the RCU grace period elapses, bcm_op is freed.  The subsequently
+firing thrtimer then dereferences the deallocated op, causing a UAF.
 
-Fixes: 14a4696bc311 ("can: isotp: isotp_release(): omit unintended hrtimer restart on socket release")
-Closes: https://lore.kernel.org/linux-can/20260707085210.6B6C01F000E9@smtp.kernel.org/
-Reported-by: Nico Yip <zdi-disclosures@trendmicro.com>
+Adding flag checks to the rx fast-path (bcm_rx_update_and_send) does not
+fully close the TOCTOU race and introduces latency for every CAN frame.
+Conversely, calling hrtimer_cancel() directly inside the RCU callback
+(softirq context) is fatal as hrtimer_cancel() can sleep, triggering
+a "scheduling while atomic" panic.
+
+Resolve this by deferring the timer cancellation and memory free to a
+dedicated unbound workqueue (bcm_wq).  The RCU callback now queues a
+work item to bcm_wq, which safely cancels both timers and deallocates
+memory in sleepable process context.  A dedicated workqueue is used to
+prevent system-wide WQ saturation and is cleanly flushed/destroyed
+on module unload to avoid rmmod page faults.
+
+Since the deferred work can now outlive the calling context by an
+unbounded amount, also take a reference on op->sk when it is assigned
+and drop it only once the deferred work has cancelled both timers, so a
+socket can no longer be freed out from under a still-armed timer whose
+callback (bcm_send_to_user()) dereferences op->sk.
+
+Fixes: f1b4e32aca08 ("can: bcm: use call_rcu() instead of costly synchronize_rcu()")
+Tested-by: Feng Xue <feng.xue@outlook.com>
+Tested-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260712-isotp-fixes-v10-1-793a1b1ce17f@hartkopp.net
+Link: https://patch.msgid.link/20260714-bcm_fixes-v15-1-562f7e3e42da@hartkopp.net
 Cc: stable@kernel.org
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/isotp.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/can/bcm.c |   37 ++++++++++++++++++++++++++++++++++---
+ 1 file changed, 34 insertions(+), 3 deletions(-)
 
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -1217,11 +1217,18 @@ static int isotp_release(struct socket *
- 						  SINGLE_MASK(so->txid),
- 						  isotp_rcv_echo, sk);
- 				dev_put(dev);
--				synchronize_rcu();
- 			}
- 		}
- 	}
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -58,6 +58,7 @@
+ #include <linux/can/skb.h>
+ #include <linux/can/bcm.h>
+ #include <linux/slab.h>
++#include <linux/workqueue.h>
+ #include <linux/spinlock.h>
+ #include <net/sock.h>
+ #include <net/net_namespace.h>
+@@ -91,6 +92,8 @@ MODULE_ALIAS("can-proto-2");
  
-+	/* Always wait for a grace period before touching the timers below.
-+	 * A concurrent NETDEV_UNREGISTER may have already unregistered our
-+	 * filters and cleared so->bound in isotp_notify() without waiting
-+	 * for in-flight isotp_rcv() callers to finish, so this call must not
-+	 * be skipped just because so->bound is already 0 here.
-+	 */
-+	synchronize_rcu();
+ #define BCM_MIN_NAMELEN CAN_REQUIRED_SIZE(struct sockaddr_can, can_ifindex)
+ 
++static struct workqueue_struct *bcm_wq;
 +
- 	hrtimer_cancel(&so->txfrtimer);
- 	hrtimer_cancel(&so->txtimer);
- 	hrtimer_cancel(&so->rxtimer);
+ /*
+  * easy access to the first 64 bit of can(fd)_frame payload. cp->data is
+  * 64 bit aligned so the offset has to be multiples of 8 which is ensured
+@@ -104,6 +107,7 @@ static inline u64 get_u64(const struct c
+ struct bcm_op {
+ 	struct list_head list;
+ 	struct rcu_head rcu;
++	struct work_struct work;
+ 	int ifindex;
+ 	canid_t can_id;
+ 	u32 flags;
+@@ -787,9 +791,12 @@ static struct bcm_op *bcm_find_op(struct
+ 	return NULL;
+ }
+ 
+-static void bcm_free_op_rcu(struct rcu_head *rcu_head)
++static void bcm_free_op_work(struct work_struct *work)
+ {
+-	struct bcm_op *op = container_of(rcu_head, struct bcm_op, rcu);
++	struct bcm_op *op = container_of(work, struct bcm_op, work);
++
++	hrtimer_cancel(&op->timer);
++	hrtimer_cancel(&op->thrtimer);
+ 
+ 	if ((op->frames) && (op->frames != &op->sframe))
+ 		kfree(op->frames);
+@@ -797,9 +804,23 @@ static void bcm_free_op_rcu(struct rcu_h
+ 	if ((op->last_frames) && (op->last_frames != &op->last_sframe))
+ 		kfree(op->last_frames);
+ 
++	/* the last possible access to op->timer/op->thrtimer has now
++	 * happened above via hrtimer_cancel() - op->sk is no longer
++	 * needed by any pending timer callback, so drop our reference
++	 */
++	sock_put(op->sk);
++
+ 	kfree(op);
+ }
+ 
++static void bcm_free_op_rcu(struct rcu_head *rcu_head)
++{
++	struct bcm_op *op = container_of(rcu_head, struct bcm_op, rcu);
++
++	INIT_WORK(&op->work, bcm_free_op_work);
++	queue_work(bcm_wq, &op->work);
++}
++
+ static void bcm_remove_op(struct bcm_op *op)
+ {
+ 	hrtimer_cancel(&op->timer);
+@@ -1054,6 +1075,7 @@ static int bcm_tx_setup(struct bcm_msg_h
+ 
+ 		/* bcm_can_tx / bcm_tx_timeout_handler needs this */
+ 		op->sk = sk;
++		sock_hold(sk);
+ 		op->ifindex = ifindex;
+ 
+ 		/* initialize uninitialized (kzalloc) structure */
+@@ -1216,6 +1238,7 @@ static int bcm_rx_setup(struct bcm_msg_h
+ 
+ 		/* bcm_can_tx / bcm_tx_timeout_handler needs this */
+ 		op->sk = sk;
++		sock_hold(sk);
+ 		op->ifindex = ifindex;
+ 
+ 		/* ifindex for timeout events w/o previous frame reception */
+@@ -1832,11 +1855,15 @@ static int __init bcm_module_init(void)
+ {
+ 	int err;
+ 
++	bcm_wq = alloc_workqueue("can-bcm-wq", WQ_UNBOUND, 0);
++	if (!bcm_wq)
++		return -ENOMEM;
++
+ 	pr_info("can: broadcast manager protocol\n");
+ 
+ 	err = register_pernet_subsys(&canbcm_pernet_ops);
+ 	if (err)
+-		return err;
++		goto register_pernet_failed;
+ 
+ 	err = register_netdevice_notifier(&canbcm_notifier);
+ 	if (err)
+@@ -1854,6 +1881,8 @@ register_proto_failed:
+ 	unregister_netdevice_notifier(&canbcm_notifier);
+ register_notifier_failed:
+ 	unregister_pernet_subsys(&canbcm_pernet_ops);
++register_pernet_failed:
++	destroy_workqueue(bcm_wq);
+ 	return err;
+ }
+ 
+@@ -1862,6 +1891,8 @@ static void __exit bcm_module_exit(void)
+ 	can_proto_unregister(&bcm_can_proto);
+ 	unregister_netdevice_notifier(&canbcm_notifier);
+ 	unregister_pernet_subsys(&canbcm_pernet_ops);
++	rcu_barrier();
++	destroy_workqueue(bcm_wq);
+ }
+ 
+ module_init(bcm_module_init);
 
 
