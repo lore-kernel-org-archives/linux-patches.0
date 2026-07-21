@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01FA375AC3;
-	Tue, 21 Jul 2026 17:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4C519049B;
+	Tue, 21 Jul 2026 17:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654702; cv=none; b=q91JizVWHjH4KPvSVnN61X2PC+D/uP0Mg6nSZvg/UAJJJ3baGsRDR854difBdsHCEVi3vJuXp/pBMbcidaTiXA7AlZQ89jHhlEmJAu7hyLvesZcxYqBNxUv4XpSPfeotLXDtn/ikIEaO1UMm/t0Wwd/Sp6unLKJd8qgJ5AT2oWA=
+	t=1784654706; cv=none; b=rWZpEI7mlH5zKDDLgRu9O980DCTi5nOFddODJJMOz3nkarpuNZoGydBFm6lbOI5vwvIryicZnNkPEj8HYHQT4W07YrjijZsV56DiIg4qkHCgEUAtTO2JUOZg3C0hPgwsBkCol0JqOAyIsFAH/S+8tR4nDgFVeoHJSEdFCqVmq0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654702; c=relaxed/simple;
-	bh=9olSUilN1wYqzegiUF8pFJgEoIKl9tiiFolfS2y1g64=;
+	s=arc-20240116; t=1784654706; c=relaxed/simple;
+	bh=Wbb5j6BGQM9eUs62W+0OohZCx8APLwwTUpco1KChHGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=foKpZjONS2pSLaf+CFQc1hkS+E0oRsBIAQ4UevKAOxHmxUaR3TMiiP1HM143pjre+7s5jAaSkdM2LQyXW5A2Pp/AHLTQwQxFtyjKQwmGPjOVXFrzcvwYTHZiVik/UtyYtD+dUUUw2N+XjPSVcbS+lIyz/DcS4yF70YVzjVgrDAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A89YCnep; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=avY8pEJhmBGVATdryq6OQOUL1qsJJ/Jym+93UevOwlXpFaJ7ds/sqULe/7FupK5MISo6lxXKjKsBkX6i4KkBPCpjoRBon75fTxjnaX1xfQm9ThaNkn2qkaA4Vo1E97EoNGZ0qgygzwK7c+QDlto6RlBd8qUbjud4t68itDcxOvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/PNTvmZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A89YCnep"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9501F000E9;
-	Tue, 21 Jul 2026 17:25:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/PNTvmZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BED1F000E9;
+	Tue, 21 Jul 2026 17:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654701;
-	bh=UQ67SWuFBXD/jBWNgxNSem2LwBCd+XDjWx/dzRRW9WY=;
+	s=korg; t=1784654704;
+	bh=XeCT9JqDnFkyTTBj4pD6EW9shgMF/ZtZoYVZlmZmdVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A89YCnepmJD6XstmYrE1qiEci5c/vc+o94+5/udo+2bPQ2juv79AxDsphdnxwiIMH
-	 9Ue0l0sJ8g/jChAC5A3AuVTs96ci9vfF5ipqL0MJI9S81YmtJWxiFVeMOxWxrMaBBi
-	 wOhm5X6Ii1oIvgm491GMJNzYHYf6ceUJOY/HmDUg=
+	b=w/PNTvmZRtBg+TvNcfyrx2TyfuwQtHBhCQqXEM1hXkz5W+8PK+CIp8X23K7/X3YfY
+	 xdQMiuxObBy+Wmx+9VkgzbTl8Idq8k1q7KxM9watzbcCC8ZmROtvcpXDr2R0AJvZEg
+	 kcaCPMmNWsDaLfS3F4tISOU7lerxxtHD9rT5Fgjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Greenwalt <paul.greenwalt@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Alexander Nowlin <alexander.nowlin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 7.1 1798/2077] ice: fix ice_init_link() error return preventing probe
-Date: Tue, 21 Jul 2026 17:24:31 +0200
-Message-ID: <20260721152635.156091989@linuxfoundation.org>
+	Jaewon Yang <yong010301@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 7.1 1807/2077] tpm: Make the TPM character devices non-seekable
+Date: Tue, 21 Jul 2026 17:24:40 +0200
+Message-ID: <20260721152635.368768879@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,91 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Greenwalt <paul.greenwalt@intel.com>
+From: Jaewon Yang <yong010301@gmail.com>
 
-commit eb509638686b0f8a98a0dd9c809f6a8db4d73a45 upstream.
+commit f20d61c22bcaf172d6790b6500e3838e532e71c8 upstream.
 
-ice_init_link() can return an error status from ice_update_link_info()
-or ice_init_phy_user_cfg(), causing probe to fail.
+The TPM character devices expose a sequential command/response
+interface, but their open handlers leave FMODE_PREAD and FMODE_PWRITE
+enabled.
 
-An incorrect NVM update procedure can result in link/PHY errors, and
-the recommended resolution is to update the NVM using the correct
-procedure. If the driver fails probe due to link errors, the user
-cannot update the NVM to recover. The link/PHY errors logged are
-non-fatal: they are already annotated as 'not a fatal error if this
-fails'.
+After a command leaves a response pending, pread(fd, buf, 16, 0x1400)
+passes 0x1400 as *off to tpm_common_read(). The transfer length is
+bounded by response_length, but the offset is used unchecked when
+forming data_buffer + *off. A sufficiently large offset therefore causes
+an out-of-bounds heap read through copy_to_user() and, if the copy
+succeeds, an out-of-bounds zero-write through the following memset().
 
-Since none of the errors inside ice_init_link() should prevent probe
-from completing, convert it to void and remove the error check in the
-caller. All failures are already logged; callers have no meaningful
-recovery path for link init errors.
+Positional I/O does not provide coherent semantics for this interface.
+An arbitrary pread offset cannot represent how much of a response has
+been consumed sequentially. The write callback always stores a command
+at the start of data_buffer, while pwrite() does not update file->f_pos
+and can leave the sequential read cursor stale.
 
-Fixes: 5b246e533d01 ("ice: split probe into smaller functions")
+Call nonseekable_open() from both open handlers. This removes
+FMODE_PREAD and FMODE_PWRITE, causing positional reads and writes to
+fail with -ESPIPE before reaching the TPM callbacks, and explicitly
+marks the files non-seekable. Normal read() and write() continue to use
+the existing sequential f_pos cursor, leaving the response state machine
+unchanged.
+
+Tested on Linux 6.12 with KASAN and a swtpm TPM2 device:
+
+ - sequential partial reads returned the complete response
+ - pread() and preadv() with offset 0x1400 returned -ESPIPE
+ - pwrite() and pwritev() with offset zero returned -ESPIPE
+ - the pending response remained intact after the rejected operations
+ - a subsequent normal command/response cycle completed normally
+ - no KASAN report was produced.
+
+Fixes: 9488585b21be ("tpm: add support for partial reads")
+Link: https://lore.kernel.org/all/20260710090217.191289-1-yong010301@gmail.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Paul Greenwalt <paul.greenwalt@intel.com>
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Jaewon Yang <yong010301@gmail.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c |   16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ drivers/char/tpm/tpm-dev.c   |    2 +-
+ drivers/char/tpm/tpmrm-dev.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -4789,16 +4789,14 @@ static void ice_init_wakeup(struct ice_p
- 	device_set_wakeup_enable(ice_pf_to_dev(pf), false);
+--- a/drivers/char/tpm/tpm-dev.c
++++ b/drivers/char/tpm/tpm-dev.c
+@@ -36,7 +36,7 @@ static int tpm_open(struct inode *inode,
+ 
+ 	tpm_common_open(file, chip, priv, NULL);
+ 
+-	return 0;
++	return nonseekable_open(inode, file);
+ 
+  out:
+ 	clear_bit(0, &chip->is_open);
+--- a/drivers/char/tpm/tpmrm-dev.c
++++ b/drivers/char/tpm/tpmrm-dev.c
+@@ -29,7 +29,7 @@ static int tpmrm_open(struct inode *inod
+ 
+ 	tpm_common_open(file, chip, &priv->priv, &priv->space);
+ 
+-	return 0;
++	return nonseekable_open(inode, file);
  }
  
--static int ice_init_link(struct ice_pf *pf)
-+static void ice_init_link(struct ice_pf *pf)
- {
- 	struct device *dev = ice_pf_to_dev(pf);
- 	int err;
- 
- 	err = ice_init_link_events(pf->hw.port_info);
--	if (err) {
-+	if (err)
- 		dev_err(dev, "ice_init_link_events failed: %d\n", err);
--		return err;
--	}
- 
- 	/* not a fatal error if this fails */
- 	err = ice_init_nvm_phy_type(pf->hw.port_info);
-@@ -4838,8 +4836,6 @@ static int ice_init_link(struct ice_pf *
- 	} else {
- 		set_bit(ICE_FLAG_NO_MEDIA, pf->flags);
- 	}
--
--	return err;
- }
- 
- static int ice_init_pf_sw(struct ice_pf *pf)
-@@ -4982,13 +4978,11 @@ static int ice_init(struct ice_pf *pf)
- 
- 	ice_init_wakeup(pf);
- 
--	err = ice_init_link(pf);
--	if (err)
--		goto err_init_link;
-+	ice_init_link(pf);
- 
- 	err = ice_send_version(pf);
- 	if (err)
--		goto err_init_link;
-+		goto err_deinit_pf_sw;
- 
- 	ice_verify_cacheline_size(pf);
- 
-@@ -5007,7 +5001,7 @@ static int ice_init(struct ice_pf *pf)
- 
- 	return 0;
- 
--err_init_link:
-+err_deinit_pf_sw:
- 	ice_deinit_pf_sw(pf);
- err_init_pf_sw:
- 	ice_dealloc_vsis(pf);
+ static int tpmrm_release(struct inode *inode, struct file *file)
 
 
