@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFDA346A5F7;
-	Tue, 21 Jul 2026 22:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A78146D57A;
+	Tue, 21 Jul 2026 22:15:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672154; cv=none; b=jsQnyPneNAI6LR52lxP24ahdF8xxUTPtkmyuhwJBvgpdQxd8sPUQLLzgu+zIOj7jJp5OGkllPRTDrNS9RCXWow33GM3H8XhXwWXMLTYWlDa7NVotWVZmkv4OMXTmuRZOPhgGkKNURDjT9zvsR3qx022T7MmpNdIOmOG5/8fNkGM=
+	t=1784672157; cv=none; b=OEFCs3lleMsPaBepqWKTx5gOVD6TSEtGZGXYaK0gqSM0NVdu4Jdz2D2lG3ABsyW930+qEhUS49y0Lkj/awCJ3eGyuvMlPFOOwxsKdADR9C/LqiwMvmToYm+pUr8zCUPcKDyv05dw+VDQQbeGX910PsByOpAdlh6V7d00iitU1jA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672154; c=relaxed/simple;
-	bh=6Wv4VRTQRN7u1wH1UkXF8pf3dKBnk/13iuO2w+BeM98=;
+	s=arc-20240116; t=1784672157; c=relaxed/simple;
+	bh=L5gMPrVoYaBsoMhZ3Kg6kTgtCmek8ArGjUt2l98g95M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JgQXS2/mFEmPBvnojlOUsgDoR001rPlvMCV9Q0lVUllR2GkVbGuw4QSdT7deDFwi5SLv4D5b799+i+UbAXdxCq8Q5Txu+lcNdsFjZfN5KYFLTHPrEQgH5AMkOs5DJxuLKBLzEYFSpP9Lb9O9shOEhoELWRfmWiGFeQggXquzSXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tobw2sK1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HjLv5OpJUPrLSd9Z5U2Wy1Z9C9wLktoDJ91fvW9LU2bxIuWg73rDISgryxRSR6RiE4UpIKlmY9X9wAwcGh8J3AcRAzdPW8+lg6SjNviF4UtoT4hOHWkbxMXHC0SAI68FbtoZwb2sjPEaRQDyZ9P2eNLyYWcreFhdyj2HK1ae9r0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1tridhvS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tobw2sK1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD8A1F00A3E;
-	Tue, 21 Jul 2026 22:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1tridhvS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A7511F000E9;
+	Tue, 21 Jul 2026 22:15:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672152;
-	bh=J5P440fkUmZhxJDgku8saEwNBhJFHpCaKxHgwdc/JXo=;
+	s=korg; t=1784672155;
+	bh=afuhaDq4tj+o+xeTLZ8aXfC1HqN+t9GJ2lTV4GMqxXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tobw2sK1KGhFGl70HkL9w+5aqCRZAd4uLSZm+CfDxCeYn9i3gTfhEkSnE2jPgOimE
-	 LsrP/FJExOv+gbQ65Pw/NxxDSUhsSsabiSNhFqr9w7jT6t0j05nc+0JXMVGZ5DKfqU
-	 O5uBeMt8bh8pnnU9vi5FsXbqEVlbFhxHYKr7euxs=
+	b=1tridhvSzq33TdazQ2Rs68oVedDc6TpxrK3PcqMC399GD4BC4jdpcjSUfO7rHrov5
+	 vTxmv4V+DSsWJAM6ldCT9zSt4uPwLoi0eR6kqFPn+vkI5D/mMjhhRuFQpdPHLmsbTW
+	 /9fDcvYnhx4HkUBdApkK7bc4ZsEaJfGfpDH0/1qQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Qihang <q.h.hack.winter@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 517/843] net: usb: net1080: validate packet_len before pad-byte access in rx_fixup
-Date: Tue, 21 Jul 2026 17:22:32 +0200
-Message-ID: <20260721152417.661892859@linuxfoundation.org>
+Subject: [PATCH 5.15 518/843] gue: validate REMCSUM private option length
+Date: Tue, 21 Jul 2026 17:22:33 +0200
+Message-ID: <20260721152417.683349063@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,54 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Qihang <q.h.hack.winter@gmail.com>
 
-[ Upstream commit 03f384bc0cb8d4a1301d4f5b0baef2d980258383 ]
+[ Upstream commit d335dcc6f521571d57117b8deeebc940836e5450 ]
 
-For an even packet_len, net1080_rx_fixup() reads the pad byte at
-skb->data[packet_len] before the skb->len != packet_len check further
-down, and packet_len is only bounded against NC_MAX_PACKET. A malicious
-NetChip 1080 device can send a short frame advertising a large even
-packet_len (e.g. 0x4000), so the pad-byte read lands past the end of the
-skb:
+GUE private flags can indicate that remote checksum offload metadata is
+present. The private flags field itself is accounted for by
+guehdr_flags_len(), but guehdr_priv_flags_len() currently returns 0 even
+when GUE_PFLAG_REMCSUM is set.
 
-  BUG: KASAN: slab-out-of-bounds in net1080_rx_fixup
-  Read of size 1 at addr ffff8880106c83c6 by task ksoftirqd/0/14
-   ...
-   net1080_rx_fixup (drivers/net/usb/net1080.c:384)
-   usbnet_bh (drivers/net/usb/usbnet.c:1589)
-   process_one_work (kernel/workqueue.c:3322)
-   bh_worker (kernel/workqueue.c:3708)
-   tasklet_action (kernel/softirq.c:965)
-   handle_softirqs (kernel/softirq.c:622)
-   ...
+This lets a packet with only the private flags field pass
+validate_gue_flags(), after which gue_remcsum() and gue_gro_remcsum()
+read the missing REMCSUM start/offset fields from the following bytes.
 
-Reject the frame when packet_len >= skb->len before reading.
+Account for GUE_PLEN_REMCSUM when GUE_PFLAG_REMCSUM is present so that
+malformed packets are rejected during option validation.
 
-Fixes: 904813cd8a0b ("[PATCH] USB: usbnet (4/9) module for net1080 cables")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260630045121.1565324-1-xmei5@asu.edu
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: c1aa8347e73e ("gue: Protocol constants for remote checksum offload")
+Signed-off-by: Qihang <q.h.hack.winter@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/net1080.c | 2 +-
+ include/net/gue.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/net1080.c b/drivers/net/usb/net1080.c
-index b0c0c9dd6a028d..8a66549cefa7df 100644
---- a/drivers/net/usb/net1080.c
-+++ b/drivers/net/usb/net1080.c
-@@ -381,7 +381,7 @@ static int net1080_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 	skb_trim(skb, skb->len - sizeof *trailer);
+diff --git a/include/net/gue.h b/include/net/gue.h
+index e42402f180b75a..e5246d5d3e87d1 100644
+--- a/include/net/gue.h
++++ b/include/net/gue.h
+@@ -77,7 +77,7 @@ static inline size_t guehdr_flags_len(__be16 flags)
  
- 	if ((packet_len & 0x01) == 0) {
--		if (skb->data [packet_len] != PAD_BYTE) {
-+		if (packet_len >= skb->len || skb->data[packet_len] != PAD_BYTE) {
- 			dev->net->stats.rx_frame_errors++;
- 			netdev_dbg(dev->net, "bad pad\n");
- 			return 0;
+ static inline size_t guehdr_priv_flags_len(__be32 flags)
+ {
+-	return 0;
++	return (flags & GUE_PFLAG_REMCSUM) ? GUE_PLEN_REMCSUM : 0;
+ }
+ 
+ /* Validate standard and private flags. Returns non-zero (meaning invalid)
 -- 
 2.53.0
 
