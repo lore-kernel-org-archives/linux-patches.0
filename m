@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94EC846D545;
-	Tue, 21 Jul 2026 15:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3771446D545;
+	Tue, 21 Jul 2026 15:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648662; cv=none; b=sMjZKZTDNYb5mVTXQjwaFYlA9wV6nHzLNzvypknW54d0GK+WgrwSlmppTY705HqfsI8I+CpjvU5viyRynKMmMIWJDxRm5I0Ae1qh9wdz9a22I8PWIaSftdPTExL+yUTGvzUUU0+/INfz4YgJ5yPN6U3HLPqYGsSlZSZAcHIC8vM=
+	t=1784648665; cv=none; b=PwTYYpLaQhWRgZ7rb//Ur++RPy6TQMPQI4f5bMl19pNE0TOWIY+DBrpK9xMYk+GNzbET8eVn9SWfNR72cbeEC+2vFQfsEoVxy4viO7Pu9rkgHpzmNN1GvrK3Sn7R+Ujmv/pSF1BYciXKXlFDXGRcterdZMCBpn0tOBFwhDDRXf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648662; c=relaxed/simple;
-	bh=BMjUadY6qWQSvuAmrEybTr7oAUxRlpMxDOl/aLfUGk8=;
+	s=arc-20240116; t=1784648665; c=relaxed/simple;
+	bh=plx9JP+873Wm88hAhYYz8iYLRUwRLvrINyYRSx0B4pk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uz+CjuVVaRhWpVfo7eRsc0JYdd7lGy/TOcx2dpdHykOlXqZaswqp82GNkSQJwXJJw1xXBpaEqCwoIE0TuEcCZhyd8VewdPJCbJCkCOq7LrgSQuyb7GaQzryVvVVALB4Gh6Ec9BXNYiJ5SE6p3Nm33BS8DOCtNUf0bqxeQtKl7wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JyVAQa+s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CVPfuNL+quhceMzCD3p/56Le4LStFomfMkDTaHs0zs2eS0mSu6iz2nAOw1A4Ril/xfGPNagFMlYFok/aY5NEBavbaU9pQTYdbc9KphzkJHeytPzTKvnLMlUtxz+zf4BlsgQ/fnT0XoBr8RWAzxXCOFDVLH2ML9jgpUdyFYHcvKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FymJixG8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JyVAQa+s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080F01F000E9;
-	Tue, 21 Jul 2026 15:44:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FymJixG8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E6841F000E9;
+	Tue, 21 Jul 2026 15:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648661;
-	bh=ID5HXhADOpeGwu8YzfND+P9NpXQx0IVfR9WgzWeXiLs=;
+	s=korg; t=1784648664;
+	bh=6FJU7K0Rthw3Jj5NFrmz+BG4oFkRKO3JhpwHl7ZSzxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JyVAQa+sMwz6qlGMn/4hiTIHSWcRHnLhOplgRuhYu+Y+dOIV4YYOU3ms+WSjfu5lw
-	 fjRR8G9TgkIRcAzPV2sQkdGGi31HVMkyIxzbyaFWPcm/ti8QiM7RZTbRMAGGcOwWPY
-	 orGsarPVvO0gFh5CCwwsp8qm7e9ItafDczDinif0=
+	b=FymJixG8oRpVLFji5entzyTNKmgYZKaz7ggF13XvhdG/En6eB+oGi3blLsIX4AZWj
+	 ocOOB4P3/kCp0IuN3s/WMGSK2fYtSTxANIGuMKXzrAqbk3D1phlrwW/HkTCzIcm6tv
+	 rFwIHKyX/r5uSSsr5HBnHqNHW6RIxNiBu0f4saLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Pengjie Zhang <zhangpengjie2@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0285/2077] drm/msm/mdss: correct UBWC programming sequences
-Date: Tue, 21 Jul 2026 16:59:18 +0200
-Message-ID: <20260721152559.404005702@linuxfoundation.org>
+Subject: [PATCH 7.1 0286/2077] cpufreq: Documentation: fix sampling_down_factor range
+Date: Tue, 21 Jul 2026 16:59:19 +0200
+Message-ID: <20260721152559.426481565@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,197 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Pengjie Zhang <zhangpengjie2@huawei.com>
 
-[ Upstream commit 78de481c75c34623f450abf0f4604344f9396593 ]
+[ Upstream commit 85524e651d20944399322d46fb97960337831d43 ]
 
-The UBWC registers in the MDSS region are not dependent on the UBWC
-version (it is an invalid assumption we inherited from the vendor SDE
-driver). Instead they are dependent only on the MDSS core revision.
+The ondemand governor implementation accepts sampling_down_factor values
+from 1 to 100000 via MAX_SAMPLING_DOWN_FACTOR, but the documentation in
+admin-guide/pm/cpufreq.rst still says the valid range is 1 to 100.
 
-Rework UBWC programming to follow MDSS revision and to use required (aka
-encoder) UBWC version instead of the ubwc_dec_version.
+Update the documentation to match the actual code.
 
-Fixes: d68db6069a8e ("drm/msm/mdss: convert UBWC setup to use match data")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/723384/
-Link: https://lore.kernel.org/r/20260507-ubwc-rework-v4-1-c19593d20c1d@oss.qualcomm.com
+Fixes: 2a0e49279850 ("cpufreq: User/admin documentation update and consolidation")
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
+Link: https://patch.msgid.link/20260518133457.2408463-1-zhangpengjie2@huawei.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_mdss.c | 115 ++++++++++++---------------------
- 1 file changed, 41 insertions(+), 74 deletions(-)
+ Documentation/admin-guide/pm/cpufreq.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-index 90c3fa0681a06b..4a6acd468bc84c 100644
---- a/drivers/gpu/drm/msm/msm_mdss.c
-+++ b/drivers/gpu/drm/msm/msm_mdss.c
-@@ -166,22 +166,19 @@ static int _msm_mdss_irq_domain_add(struct msm_mdss *msm_mdss)
- 	return 0;
- }
+diff --git a/Documentation/admin-guide/pm/cpufreq.rst b/Documentation/admin-guide/pm/cpufreq.rst
+index dbe6d23a5d671d..fdca59c955dcc9 100644
+--- a/Documentation/admin-guide/pm/cpufreq.rst
++++ b/Documentation/admin-guide/pm/cpufreq.rst
+@@ -516,7 +516,7 @@ This governor exposes the following tunables:
+ 	of those tasks above 0 and set this attribute to 1.
  
--static void msm_mdss_setup_ubwc_dec_20(struct msm_mdss *msm_mdss)
-+static void msm_mdss_4x_setup_ubwc(struct msm_mdss *msm_mdss)
- {
- 	const struct qcom_ubwc_cfg_data *data = msm_mdss->mdss_data;
--	u32 value = MDSS_UBWC_STATIC_UBWC_SWIZZLE(data->ubwc_swizzle) |
-+	u32 value = MDSS_UBWC_STATIC_UBWC_SWIZZLE(data->ubwc_swizzle & 0x1) |
- 		    MDSS_UBWC_STATIC_HIGHEST_BANK_BIT(data->highest_bank_bit - 13);
+ ``sampling_down_factor``
+-	Temporary multiplier, between 1 (default) and 100 inclusive, to apply to
++	Temporary multiplier, between 1 (default) and 100000 inclusive, to apply to
+ 	the ``sampling_rate`` value if the CPU load goes above ``up_threshold``.
  
--	if (data->ubwc_bank_spread)
--		value |= MDSS_UBWC_STATIC_UBWC_BANK_SPREAD;
--
- 	if (data->ubwc_enc_version == UBWC_1_0)
- 		value |= MDSS_UBWC_STATIC_UBWC_MIN_ACC_LEN(1);
- 
- 	writel_relaxed(value, msm_mdss->mmio + REG_MDSS_UBWC_STATIC);
- }
- 
--static void msm_mdss_setup_ubwc_dec_30(struct msm_mdss *msm_mdss)
-+static void msm_mdss_5x_setup_ubwc(struct msm_mdss *msm_mdss)
- {
- 	const struct qcom_ubwc_cfg_data *data = msm_mdss->mdss_data;
- 	u32 value = MDSS_UBWC_STATIC_UBWC_SWIZZLE(data->ubwc_swizzle & 0x1) |
-@@ -199,11 +196,12 @@ static void msm_mdss_setup_ubwc_dec_30(struct msm_mdss *msm_mdss)
- 	writel_relaxed(value, msm_mdss->mmio + REG_MDSS_UBWC_STATIC);
- }
- 
--static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss)
-+static void msm_mdss_6x_setup_ubwc(struct msm_mdss *msm_mdss)
- {
- 	const struct qcom_ubwc_cfg_data *data = msm_mdss->mdss_data;
- 	u32 value = MDSS_UBWC_STATIC_UBWC_SWIZZLE(data->ubwc_swizzle) |
- 		    MDSS_UBWC_STATIC_HIGHEST_BANK_BIT(data->highest_bank_bit - 13);
-+	u32 ver, prediction_mode;
- 
- 	if (data->ubwc_bank_spread)
- 		value |= MDSS_UBWC_STATIC_UBWC_BANK_SPREAD;
-@@ -211,45 +209,42 @@ static void msm_mdss_setup_ubwc_dec_40(struct msm_mdss *msm_mdss)
- 	if (data->macrotile_mode)
- 		value |= MDSS_UBWC_STATIC_MACROTILE_MODE;
- 
--	writel_relaxed(value, msm_mdss->mmio + REG_MDSS_UBWC_STATIC);
--
--	if (data->ubwc_enc_version == UBWC_3_0) {
--		writel_relaxed(1, msm_mdss->mmio + REG_MDSS_UBWC_CTRL_2);
--		writel_relaxed(0, msm_mdss->mmio + REG_MDSS_UBWC_PREDICTION_MODE);
--	} else {
--		if (data->ubwc_dec_version == UBWC_4_3)
--			writel_relaxed(3, msm_mdss->mmio + REG_MDSS_UBWC_CTRL_2);
--		else
--			writel_relaxed(2, msm_mdss->mmio + REG_MDSS_UBWC_CTRL_2);
--		writel_relaxed(1, msm_mdss->mmio + REG_MDSS_UBWC_PREDICTION_MODE);
--	}
--}
--
--static void msm_mdss_setup_ubwc_dec_50(struct msm_mdss *msm_mdss)
--{
--	const struct qcom_ubwc_cfg_data *data = msm_mdss->mdss_data;
--	u32 value = MDSS_UBWC_STATIC_UBWC_SWIZZLE(data->ubwc_swizzle) |
--		    MDSS_UBWC_STATIC_HIGHEST_BANK_BIT(data->highest_bank_bit - 13);
--
--	if (data->ubwc_bank_spread)
--		value |= MDSS_UBWC_STATIC_UBWC_BANK_SPREAD;
--
--	if (data->macrotile_mode)
--		value |= MDSS_UBWC_STATIC_MACROTILE_MODE;
-+	if (data->ubwc_enc_version == UBWC_1_0)
-+		value |= MDSS_UBWC_STATIC_UBWC_MIN_ACC_LEN(1);
- 
- 	writel_relaxed(value, msm_mdss->mmio + REG_MDSS_UBWC_STATIC);
- 
--	if (data->ubwc_dec_version == UBWC_6_0)
--		writel_relaxed(5, msm_mdss->mmio + REG_MDSS_UBWC_CTRL_2);
-+	if (data->ubwc_enc_version < UBWC_4_0)
-+		prediction_mode = 0;
- 	else
--		writel_relaxed(4, msm_mdss->mmio + REG_MDSS_UBWC_CTRL_2);
--
--	writel_relaxed(1, msm_mdss->mmio + REG_MDSS_UBWC_PREDICTION_MODE);
-+		prediction_mode = 1;
-+
-+	if (data->ubwc_enc_version >= UBWC_6_0)
-+		ver = 5;
-+	else if (data->ubwc_enc_version >= UBWC_5_0)
-+		ver = 4;
-+	else if (data->ubwc_enc_version >= UBWC_4_3)
-+		ver = 3;
-+	else if (data->ubwc_enc_version >= UBWC_4_0)
-+		ver = 2;
-+	else if (data->ubwc_enc_version >= UBWC_3_0)
-+		ver = 1;
-+	else /* UBWC 1.0 and 2.0 */
-+		ver = 0;
-+
-+	writel_relaxed(ver, msm_mdss->mmio + REG_MDSS_UBWC_CTRL_2);
-+	writel_relaxed(prediction_mode, msm_mdss->mmio + REG_MDSS_UBWC_PREDICTION_MODE);
- }
- 
-+#define MDSS_HW_VER(major, minor, step)	\
-+	((((major) & 0xf) << 28) |	\
-+	 (((minor) & 0xfff) << 16) |	\
-+	 ((step) & 0xffff))
-+
- static int msm_mdss_enable(struct msm_mdss *msm_mdss)
- {
- 	int ret, i;
-+	u32 hw_rev;
- 
- 	/*
- 	 * Several components have AXI clocks that can only be turned on if
-@@ -283,43 +278,15 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
- 	if (msm_mdss->is_mdp5 || !msm_mdss->mdss_data)
- 		return 0;
- 
--	/*
--	 * ubwc config is part of the "mdss" region which is not accessible
--	 * from the rest of the driver. hardcode known configurations here
--	 *
--	 * Decoder version can be read from the UBWC_DEC_HW_VERSION reg,
--	 * UBWC_n and the rest of params comes from hw data.
--	 */
--	switch (msm_mdss->mdss_data->ubwc_dec_version) {
--	case 0: /* no UBWC */
--	case UBWC_1_0:
--		/* do nothing */
--		break;
--	case UBWC_2_0:
--		msm_mdss_setup_ubwc_dec_20(msm_mdss);
--		break;
--	case UBWC_3_0:
--		msm_mdss_setup_ubwc_dec_30(msm_mdss);
--		break;
--	case UBWC_4_0:
--	case UBWC_4_3:
--		msm_mdss_setup_ubwc_dec_40(msm_mdss);
--		break;
--	case UBWC_5_0:
--		msm_mdss_setup_ubwc_dec_50(msm_mdss);
--		break;
--	case UBWC_6_0:
--		msm_mdss_setup_ubwc_dec_50(msm_mdss);
--		break;
--	default:
--		dev_err(msm_mdss->dev, "Unsupported UBWC decoder version %x\n",
--			msm_mdss->mdss_data->ubwc_dec_version);
--		dev_err(msm_mdss->dev, "HW_REV: 0x%x\n",
--			readl_relaxed(msm_mdss->mmio + REG_MDSS_HW_VERSION));
--		dev_err(msm_mdss->dev, "UBWC_DEC_HW_VERSION: 0x%x\n",
--			readl_relaxed(msm_mdss->mmio + REG_MDSS_UBWC_DEC_HW_VERSION));
--		break;
--	}
-+	hw_rev = readl_relaxed(msm_mdss->mmio + REG_MDSS_HW_VERSION);
-+
-+	if (hw_rev >= MDSS_HW_VER(6, 0, 0))
-+		msm_mdss_6x_setup_ubwc(msm_mdss);
-+	else if (hw_rev >= MDSS_HW_VER(5, 0, 0))
-+		msm_mdss_5x_setup_ubwc(msm_mdss);
-+	else if (hw_rev >= MDSS_HW_VER(4, 0, 0))
-+		msm_mdss_4x_setup_ubwc(msm_mdss);
-+	/* else UBWC 1.0 or none, no params to program */
- 
- 	return ret;
- }
+ 	This causes the next execution of the governor's worker routine (after
 -- 
 2.53.0
 
