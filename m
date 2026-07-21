@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0F5D4582FE;
-	Tue, 21 Jul 2026 22:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF3745A285;
+	Tue, 21 Jul 2026 22:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672574; cv=none; b=Vozp22XHT41ADzR0BEjg0ZsaPXG9NhhtDyK1b5yup+9ggyoqh7c7nhCn2XCpl5mND5y+9U5bx86SZt7jGKqvQvox7RAFdCBtFCX0oq+8YKzkFvl2emeQFPmMr+nkS6lbBKQhUGQHqhcBG+yLF86UyCEXWJlkjYoAJR/CCiINqmQ=
+	t=1784672577; cv=none; b=rltHWBZwlkPMiw16b/z6Xmk5SlF8AJfqvx2X2Zx6Qi4o15478axqvz8M64lfTdhVIRZNxdER6GNaJgqDRWrpVEQVssoFWk33/086VT9Rwrnv2MQ6x2zuaBXKlabhJv5mx1ngJUQPfGxcSzsyY5sGb1X6el+4J3MksXkw1AoDLKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672574; c=relaxed/simple;
-	bh=C39h9ObNNgVvQKgxjqMfY8wPqiHfpxXY/iJqGW9Xxxg=;
+	s=arc-20240116; t=1784672577; c=relaxed/simple;
+	bh=LHiP4QAryHlD038VqNUP6PEqYCVmYlCytRP+HERRnMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V+K92q4fKiayFmvGV7WhESKKUdpbJVyTk7mfRN/3dsoXH2r5nxFuPnyWxwtieRoaGnvLp9dpJtkRXw8M3IIL+DVahaFBXxQgpmLq/hMs8joNeYaekwbjao3N4kiWURTXj1WgvCunJj5V4z7GeItOsds2DmDBNEE/52d0oNhulcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nuM/RwdS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LgoRTr32PIBi+XGiyz82HFbnsp/M+Depf7TYjWtr8jqQDleKv2E0boDxqbYQ7bvF6y1tiexIVjOEiVVmlDRXv+ciAfqzzd4C9psiiIYj24qgFqLn3X5kiRGzc/QGwI6ilM0GcH9icEssAXY2bsGS4vbh7G9gFdT+F9VaRwuxjmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nKu8Q2C2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nuM/RwdS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DB61F000E9;
-	Tue, 21 Jul 2026 22:22:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nKu8Q2C2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED0611F000E9;
+	Tue, 21 Jul 2026 22:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672573;
-	bh=RlVlb3b/+q9jrM0Myz3U0z0oKFD0pISkJtVtigTATrY=;
+	s=korg; t=1784672576;
+	bh=1MLEa1KO7/PbYo1pEXqiZ//fFYrlIHFnEhxyS62o0go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nuM/RwdStLo2ulZl51V6deggzh/WwLJ2cBfa0lWOaiIpR4bNCvB7a3or6Vo/sfqKR
-	 ttN5ahSJBgvurCBYB+yqWZ6pmE5bAgotUQ3LVRNH8Ym9R3772Dx6mgn3Ado+WKb4Kf
-	 CZsDWSP/22fjyZ2o2ddUQ7b7NgQeqxC9iKIEMATE=
+	b=nKu8Q2C27JWAgOWkt+AGRnTKZUSE3OsxvQkIQu6kBGIk0TvkogJhJfFqu7T1Jp/QL
+	 l+qk9bWdGf4H+70SZKYTwCO1TCW5M/y8/zrdVU3qe76uVAxrAlITXw0sow3kRFiGGv
+	 AGW2kSJ+BZMQ3IZFdabEzo8x+D/Ae0TdizdYUScY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko bot <sashiko-bot@kernel.org>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 674/843] Input: ims-pcu - fix potential infinite loop in CDC union descriptor parsing
-Date: Tue, 21 Jul 2026 17:25:09 +0200
-Message-ID: <20260721152421.222923574@linuxfoundation.org>
+Subject: [PATCH 5.15 675/843] Input: ims-pcu - fix type confusion in CDC union descriptor parsing
+Date: Tue, 21 Jul 2026 17:25:10 +0200
+Message-ID: <20260721152421.244794881@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,39 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit d4579af29e67ca8722db0a1194227f8015c8981d upstream.
+commit ca459e237bc49567649c56bc72e4c602fb92fd67 upstream.
 
-The driver parses CDC union descriptors in ims_pcu_get_cdc_union_desc()
-by iterating through the extra descriptor data. However, it does not
-verify that the bLength of each descriptor is at least 2. A malicious
-device could provide a descriptor with bLength = 0, leading to an
-infinite loop in the driver.
+The driver currently trusts the bMasterInterface0 from the CDC union
+descriptor without verifying that it matches the interface being
+probed. This could lead to the driver overwriting the private data of
+another interface.
 
-Add a check to ensure bLength is at least 2 before proceeding with
-parsing.
+Validate that the control interface found in the descriptor is indeed
+the one we are probing.
 
-Fixes: 628329d52474 (Input: add IMS Passenger Control Unit driver)
+Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
 Cc: stable@vger.kernel.org
+Reported-by: Sashiko bot <sashiko-bot@kernel.org>
 Assisted-by: Gemini:gemini-3.1-pro
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/ims-pcu.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/input/misc/ims-pcu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/input/misc/ims-pcu.c
 +++ b/drivers/input/misc/ims-pcu.c
-@@ -1675,8 +1675,9 @@ ims_pcu_get_cdc_union_desc(struct usb_in
- 	while (buflen >= sizeof(*union_desc)) {
- 		union_desc = (struct usb_cdc_union_desc *)buf;
+@@ -1713,7 +1713,7 @@ static int ims_pcu_parse_cdc_data(struct
  
--		if (union_desc->bLength > buflen) {
--			dev_err(&intf->dev, "Too large descriptor\n");
-+		if (union_desc->bLength < 2 || union_desc->bLength > buflen) {
-+			dev_err(&intf->dev, "Invalid descriptor length: %d\n",
-+				union_desc->bLength);
- 			return NULL;
- 		}
+ 	pcu->ctrl_intf = usb_ifnum_to_if(pcu->udev,
+ 					 union_desc->bMasterInterface0);
+-	if (!pcu->ctrl_intf)
++	if (pcu->ctrl_intf != intf)
+ 		return -EINVAL;
  
+ 	alt = pcu->ctrl_intf->cur_altsetting;
 
 
