@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93F846AA6B;
-	Tue, 21 Jul 2026 15:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0FB46AA80;
+	Tue, 21 Jul 2026 15:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648293; cv=none; b=nO25JYGqofv08A70ec/2LpHnTJXgtaJ9HNAkbEDg5B3L4E50VZSLHuAa/22XPFEA7XLkz+V0CTs7J3teHt8RIQjE19huR26oUDpsj9wwFrfYjqHFiGOqjHPmKXQgTQfMyUfznrupDL2+H6UMAtaX2ZkbRkDHaIhZUV8T6CVeVPA=
+	t=1784648295; cv=none; b=bzZPJeX/JaCwR8/PcylaN3nFELGxsxd1er92KEW9MWnv6z22+1K8R6h/ocAUz/59MOc8Jw6uYQ0Er62Y8xcFX0B+A+q2BodcqV/CNNCFROE8oEn806nlRxHKkiabYFboScMoSl805GIZxOsRX0ALpCBS/ME7oBFw9fPiSlIDKEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648293; c=relaxed/simple;
-	bh=0H3jdKmw/bZ2OWJt37jAX+WPUyp6nbDubPFjOb7LZn0=;
+	s=arc-20240116; t=1784648295; c=relaxed/simple;
+	bh=wM+Uh3cbKmGPDgFpjYJI7Gl14mfiR1jYUTzW6eDJPyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MIZMCUciMycM2CNpPEO7zFDWcHuzbNJU7UZFqw7ryaJtHxHak8peaCYbs29PWhalolTfeVqOb47dE596Sp0gP3RFrLkwEbbCovTbvpyOXvoscMvbZ2UwrffzNtDV0Ed/z8NJB/OETIZcq3QDXUxoQ1BsyIIjFH8CUDgmhaBBnek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qoNqTW+M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XkXuyxhGg3FhXHD20pa7hcq7CyBvjmxXsmyUlfgRRWvd5El5UXUCu4aJpK8arytgVkCCv23oNeQReqmDohrcHt5mytYkR1e/nebwa8QE3bt7Z7B3pPXH9GYMwoE0iF368dEHHzZf9VHE15LVId3zvt2Aqv7eJu0BY7ZRcpCGiGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eyy0/zYL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qoNqTW+M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8621F000E9;
-	Tue, 21 Jul 2026 15:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eyy0/zYL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B971F000E9;
+	Tue, 21 Jul 2026 15:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648291;
-	bh=hRjWAivCamqUGMP+goIOFUzVw5qK1IBh3o5TLqWtlfc=;
+	s=korg; t=1784648294;
+	bh=scWdh2zn8pxCb6joLSG9OuKjA09UinMGzQwuMdDPcUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qoNqTW+M7y4PXkVGf8AoXO65Bbuat7YVsF3uot9gRPX2nyt/FEoLq8/7I7Hp5epTm
-	 8SLNqiM4FZG3YmaruciRfNx4bwhSCPApBU/LExOddwxEppEkaeH+blt7iGG8qlftAz
-	 7rwI284zYYXs1cPpiAxJziLxS0o2NShoJkG3HkFI=
+	b=Eyy0/zYL+4T6SyDvG+Xp5pkruFRu65tkymIUwibI/LC9wkkE/HkBAtpcnF6UUe4ut
+	 iEoZbnhFS63hbzCNe23Ead2o3Cyu2DMbAXwdmy2n4goSf75JHwNM4pHRQTS/Dnk+Iu
+	 LvFg2XXZ1QthQAvw20ONYcRU6MvMkhcMz68kDrLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0145/2077] riscv: dts: microchip: update pic64gx gpio interrupts to better match the SoC
-Date: Tue, 21 Jul 2026 16:56:58 +0200
-Message-ID: <20260721152556.106874309@linuxfoundation.org>
+Subject: [PATCH 7.1 0146/2077] riscv: dts: microchip: fix pic64gx gpio interrupt-cells
+Date: Tue, 21 Jul 2026 16:56:59 +0200
+Message-ID: <20260721152556.129448069@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,190 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Conor Dooley <conor.dooley@microchip.com>
 
-[ Upstream commit 4ce4a46cdb2404bcd53ca58a18aeda673f37fbe9 ]
+[ Upstream commit 48c7771b3c792b153872a2eff67e4cbcb77e4054 ]
 
-Just like PolarFire SoC, the same issues with GPIO interrupts exist in
-the pic64gx, due to their similarity. Yoinking from the commit message
-for the same change for PolarFire SoC:
+As the pic64gx devicetree files got added in parallel to the
+GPIO interrupt-cells being fixed for PolarFire SoC, they didn't get
+changed to the correct values. Fix them now.
 
-There are 3 GPIO controllers on this SoC, of which:
-- GPIO controller 0 has 14 GPIOs
-- GPIO controller 1 has 24 GPIOs
-- GPIO controller 2 has 32 GPIOs
-
-All GPIOs are capable of generating interrupts, for a total of 70.
-There are only 41 IRQs available however, so a configurable mux is used
-to ensure all GPIOs can be used for interrupt generation.
-38 of the 41 interrupts are in what the documentation calls "direct
-mode", as they provide an exclusive connection from a GPIO to the PLIC.
-The 3 remaining interrupts are used to mux the interrupts which do not
-have a exclusive connection, one for each GPIO controller.
-
-The mux was overlooked when the bindings and driver were originally
-written for the GPIO controllers on Polarfire SoC, and the interrupts
-property in the GPIO nodes used to try and convey what the mapping was.
-Instead, the mux should be a device in its own right, and the GPIO
-controllers should be connected to it, rather than to the PLIC.
-Now that a binding exists for that mux, fix the inaccurate description
-of the interrupt controller hierarchy.
-
+Fixes: 7219d20f9f421 ("riscv: dts: microchip: add pic64gx and its curiosity kit")
 Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Stable-dep-of: 48c7771b3c79 ("riscv: dts: microchip: fix pic64gx gpio interrupt-cells")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/microchip/pic64gx-curiosity-kit.dts   | 47 ++++++++++++-------
- arch/riscv/boot/dts/microchip/pic64gx.dtsi    | 32 +++++++++++--
- 2 files changed, 58 insertions(+), 21 deletions(-)
+ arch/riscv/boot/dts/microchip/pic64gx.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/boot/dts/microchip/pic64gx-curiosity-kit.dts b/arch/riscv/boot/dts/microchip/pic64gx-curiosity-kit.dts
-index 2f2ccd77af30ab..ed3ff03f3b11b7 100644
---- a/arch/riscv/boot/dts/microchip/pic64gx-curiosity-kit.dts
-+++ b/arch/riscv/boot/dts/microchip/pic64gx-curiosity-kit.dts
-@@ -63,10 +63,6 @@ hss: hss-buffer@bfc00000 {
- };
- 
- &gpio0 {
--	interrupts = <13>, <14>, <15>, <16>,
--		     <17>, <18>, <19>, <20>,
--		     <21>, <22>, <23>, <24>,
--		     <25>, <26>;
- 	status ="okay";
- 	gpio-line-names =
- 		"", "", "", "", "", "", "", "",
-@@ -74,12 +70,6 @@ &gpio0 {
- };
- 
- &gpio1 {
--	interrupts = <27>, <28>, <29>, <30>,
--		     <31>, <32>, <33>, <34>,
--		     <35>, <36>, <37>, <38>,
--		     <39>, <40>, <41>, <42>,
--		     <43>, <44>, <45>, <46>,
--		     <47>, <48>, <49>, <50>;
- 	status ="okay";
- 	gpio-line-names =
- 		"", "", "LED1", "LED2", "LED3", "LED4", "LED5", "LED6",
-@@ -88,14 +78,6 @@ &gpio1 {
- };
- 
- &gpio2 {
--	interrupts = <53>, <53>, <53>, <53>,
--		     <53>, <53>, <53>, <53>,
--		     <53>, <53>, <53>, <53>,
--		     <53>, <53>, <53>, <53>,
--		     <53>, <53>, <53>, <53>,
--		     <53>, <53>, <53>, <53>,
--		     <53>, <53>, <53>, <53>,
--		     <53>, <53>, <53>, <53>;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&mdio1_gpio>, <&spi0_gpio>, <&can0_gpio>, <&pcie_gpio>,
- 		    <&qspi_gpio>, <&uart3_gpio>, <&uart4_gpio>, <&can1_gpio>;
-@@ -107,6 +89,35 @@ &gpio2 {
- 		"DIP4", "USR_IO11", "", "", "SWITCH1", "", "", "";
- };
- 
-+&irqmux {
-+	interrupt-map = <0 &plic 13>, <1 &plic 14>, <2 &plic 15>,
-+			<3 &plic 16>, <4 &plic 17>, <5 &plic 18>,
-+			<6 &plic 19>, <7 &plic 20>, <8 &plic 21>,
-+			<9 &plic 22>, <10 &plic 23>, <11 &plic 24>,
-+			<12 &plic 25>, <13 &plic 26>,
-+
-+			<32 &plic 27>, <33 &plic 28>, <34 &plic 29>,
-+			<35 &plic 30>, <36 &plic 31>, <37 &plic 32>,
-+			<38 &plic 33>, <39 &plic 34>, <40 &plic 35>,
-+			<41 &plic 36>, <42 &plic 37>, <43 &plic 38>,
-+			<44 &plic 39>, <45 &plic 40>, <46 &plic 41>,
-+			<47 &plic 42>, <48 &plic 43>, <49 &plic 44>,
-+			<50 &plic 45>, <51 &plic 46>, <52 &plic 47>,
-+			<53 &plic 48>, <54 &plic 49>, <55 &plic 50>,
-+
-+			<64 &plic 53>, <65 &plic 53>, <66 &plic 53>,
-+			<67 &plic 53>, <68 &plic 53>, <69 &plic 53>,
-+			<70 &plic 53>, <71 &plic 53>, <72 &plic 53>,
-+			<73 &plic 53>, <74 &plic 53>, <75 &plic 53>,
-+			<76 &plic 53>, <77 &plic 53>, <78 &plic 53>,
-+			<79 &plic 53>, <80 &plic 53>, <81 &plic 53>,
-+			<82 &plic 53>, <83 &plic 53>, <84 &plic 53>,
-+			<85 &plic 53>, <86 &plic 53>, <87 &plic 53>,
-+			<88 &plic 53>, <89 &plic 53>, <90 &plic 53>,
-+			<91 &plic 53>, <92 &plic 53>, <93 &plic 53>,
-+			<94 &plic 53>, <95 &plic 53>;
-+};
-+
- &mac0 {
- 	status = "okay";
- 	phy-mode = "sgmii";
 diff --git a/arch/riscv/boot/dts/microchip/pic64gx.dtsi b/arch/riscv/boot/dts/microchip/pic64gx.dtsi
-index c164d7bc270a22..ed4623b29920e0 100644
+index ed4623b29920e0..e6a24cc5715fad 100644
 --- a/arch/riscv/boot/dts/microchip/pic64gx.dtsi
 +++ b/arch/riscv/boot/dts/microchip/pic64gx.dtsi
-@@ -295,6 +295,14 @@ mss_top_sysreg: syscon@20002000 {
- 			#size-cells = <1>;
- 			#reset-cells = <1>;
- 
-+			irqmux: interrupt-controller@54 {
-+				compatible = "microchip,pic64gx-irqmux", "microchip,mpfs-irqmux";
-+				reg = <0x54 0x4>;
-+				#address-cells = <0>;
-+				#interrupt-cells = <1>;
-+				interrupt-map-mask = <0x7f>;
-+			};
-+
- 			iomux0: pinctrl@200 {
- 				compatible = "microchip,pic64gx-pinctrl-iomux0",
- 					     "microchip,mpfs-pinctrl-iomux0";
-@@ -484,9 +492,13 @@ mac1: ethernet@20112000 {
- 		gpio0: gpio@20120000 {
- 			compatible = "microchip,pic64gx-gpio", "microchip,mpfs-gpio";
+@@ -494,7 +494,7 @@ gpio0: gpio@20120000 {
  			reg = <0x0 0x20120000 0x0 0x1000>;
--			interrupt-parent = <&plic>;
-+			interrupt-parent = <&irqmux>;
+ 			interrupt-parent = <&irqmux>;
  			interrupt-controller;
- 			#interrupt-cells = <1>;
-+			interrupts = <0>, <1>, <2>, <3>,
-+				     <4>, <5>, <6>, <7>,
-+				     <8>, <9>, <10>, <11>,
-+				     <12>, <13>;
- 			clocks = <&clkcfg CLK_GPIO0>;
- 			gpio-controller;
- 			#gpio-cells = <2>;
-@@ -497,9 +509,15 @@ gpio0: gpio@20120000 {
- 		gpio1: gpio@20121000 {
- 			compatible = "microchip,pic64gx-gpio", "microchip,mpfs-gpio";
+-			#interrupt-cells = <1>;
++			#interrupt-cells = <2>;
+ 			interrupts = <0>, <1>, <2>, <3>,
+ 				     <4>, <5>, <6>, <7>,
+ 				     <8>, <9>, <10>, <11>,
+@@ -511,7 +511,7 @@ gpio1: gpio@20121000 {
  			reg = <0x0 0x20121000 0x0 0x1000>;
--			interrupt-parent = <&plic>;
-+			interrupt-parent = <&irqmux>;
+ 			interrupt-parent = <&irqmux>;
  			interrupt-controller;
- 			#interrupt-cells = <1>;
-+			interrupts = <32>, <33>, <34>, <35>,
-+				     <36>, <37>, <38>, <39>,
-+				     <40>, <41>, <42>, <43>,
-+				     <44>, <45>, <46>, <47>,
-+				     <48>, <49>, <50>, <51>,
-+				     <52>, <53>, <54>, <55>;
- 			clocks = <&clkcfg CLK_GPIO1>;
- 			gpio-controller;
- 			#gpio-cells = <2>;
-@@ -510,9 +528,17 @@ gpio1: gpio@20121000 {
- 		gpio2: gpio@20122000 {
- 			compatible = "microchip,pic64gx-gpio", "microchip,mpfs-gpio";
+-			#interrupt-cells = <1>;
++			#interrupt-cells = <2>;
+ 			interrupts = <32>, <33>, <34>, <35>,
+ 				     <36>, <37>, <38>, <39>,
+ 				     <40>, <41>, <42>, <43>,
+@@ -530,7 +530,7 @@ gpio2: gpio@20122000 {
  			reg = <0x0 0x20122000 0x0 0x1000>;
--			interrupt-parent = <&plic>;
-+			interrupt-parent = <&irqmux>;
+ 			interrupt-parent = <&irqmux>;
  			interrupt-controller;
- 			#interrupt-cells = <1>;
-+			interrupts = <64>, <65>, <66>, <67>,
-+				     <68>, <69>, <70>, <71>,
-+				     <72>, <73>, <74>, <75>,
-+				     <76>, <77>, <78>, <79>,
-+				     <80>, <81>, <82>, <83>,
-+				     <84>, <85>, <86>, <87>,
-+				     <88>, <89>, <90>, <91>,
-+				     <92>, <93>, <94>, <95>;
- 			clocks = <&clkcfg CLK_GPIO2>;
- 			gpio-controller;
- 			#gpio-cells = <2>;
+-			#interrupt-cells = <1>;
++			#interrupt-cells = <2>;
+ 			interrupts = <64>, <65>, <66>, <67>,
+ 				     <68>, <69>, <70>, <71>,
+ 				     <72>, <73>, <74>, <75>,
 -- 
 2.53.0
 
