@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EEF643E066;
-	Tue, 21 Jul 2026 22:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA2543E066;
+	Tue, 21 Jul 2026 22:26:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672803; cv=none; b=A0n+fuaIKl9hqT/EiEUS0sW8aOUWKMIEjpFEIlHsYUn5HCQGCtCruVMQ6A91jrSQGmUso/wrTO689itiK8UAZW2+XqAPPeaQezdcz9+5j/5rqnzolksc0kMyqU+4z7sC2b/7GcsaTn0MmfU10PFXN4YtHHNFrESlr/9KDjFNGfQ=
+	t=1784672805; cv=none; b=SBPdfmIj5FY3Qm/Pvk3ZLRPHxua78dSrhhNt8KT/nE9DBro4NKzvKo92YSMse1xPIKi8tHqBA2eitE1/S/9CdvplmVjXxxuWcGUpm1QPytKkrmI65QtPlJm5ozT4RmgSUguEtwi/YmsaH+MCXQTgZVPKLORWfEBeR7COkgSY80M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672803; c=relaxed/simple;
-	bh=6Iag8maGM6TD5YfbIzP+n5IMcZ3PMQcslOI5LCHDPXk=;
+	s=arc-20240116; t=1784672805; c=relaxed/simple;
+	bh=kX9XD1M72LSRWXu0CRHGOdw4VUdRJwsoXAvZU9y0xjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KpHA82jt9W9uMwBV6WhQr6Kz0EtuhDjl6gSRGgLKK4Smn5gR8AnEZIBsUskQVRG/zUDIHp2F1s2Il8TavcKK/6QutFEt0eUVnxZXL3qDZ4sYPbWOCxJ8E7up1kOBrpifFdMdfhLJd4ZmExuBtJoPWcOba0cHOlxe0HG5+lkPuqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqsF39g5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mhSC2Otpzb4iX0qwsi2SUe+LJjm5iDL3H6LH5ne7T77OCbOYLbEv8cD2eAaIBy5ie71Hz9g81mz8K5LljBecVSZ1eynS9MkuwpNfDGOaLaamvBBCGYUKb2wofPWOq8AeDfz9096s6cPwPJJH/CM2YLc8apAgE0HcJHD2xOlXkbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kETa5Cnx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqsF39g5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CDA31F000E9;
-	Tue, 21 Jul 2026 22:26:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kETa5Cnx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C371F00A3A;
+	Tue, 21 Jul 2026 22:26:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672801;
-	bh=/BoxNi5GAdnE87ulhD8pj8W4+8jWPvgRYL39LZg6UvM=;
+	s=korg; t=1784672804;
+	bh=r2aED8VUH8uHrTFNNVVNNPm3FJOU/x4q28Hnp6qPjPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kqsF39g5vsHndnNa1RdkUj2cB8oWkw8tl55bPJYonqpp+vP7dLc5yuWxr3nvLwyhJ
-	 bqzOScfY71okk9LugUe6Tzp62GTkhQkauxggucDByrGlHZdgSutBeomvmfwkpFtMOV
-	 Ax1pBMDkCboDeoT5w/6sxX0zDwT8RBrpo3U7cL+U=
+	b=kETa5CnxzVDcUtrvWzTrKTM2C62HjXTFId0pouPmuplBOmapeEhb9a9YyBOcwutFl
+	 IYdSItSjz/zDdCx5l8o+uwD7QbkMhp3k0kUYiNafhWFAq2273U5UDiK0Xw1yJezKM0
+	 qrCCTBaCrCskF9MSx/dJKk+AVvdEDDnX8w3u6I+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Hansen-Baird <william.hansen.baird@gmail.com>,
+	Nikolay Kulikov <nikolayof23@gmail.com>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 761/843] staging: rtl8723bs: core: move constants to right side in comparison
-Date: Tue, 21 Jul 2026 17:26:36 +0200
-Message-ID: <20260721152423.170370826@linuxfoundation.org>
+Subject: [PATCH 5.15 762/843] staging: rtl8723bs: fix spaces around binary operators
+Date: Tue, 21 Jul 2026 17:26:37 +0200
+Message-ID: <20260721152423.192597535@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,53 +51,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Hansen-Baird <william.hansen.baird@gmail.com>
+From: Nikolay Kulikov <nikolayof23@gmail.com>
 
-[ Upstream commit cf0f2680c30d4b438a5e84b73dc70be405936b54 ]
+[ Upstream commit 0c9d1b56f9af0762a5be5118e1bb962f23784dc4 ]
 
-Move constants to right side in if-statement conditions.
+Add missing spaces and fix line length to comply with kernel coding
+style.
 
-Signed-off-by: William Hansen-Baird <william.hansen.baird@gmail.com>
-Link: https://patch.msgid.link/20251224100329.762141-3-william.hansen.baird@gmail.com
+Signed-off-by: Nikolay Kulikov <nikolayof23@gmail.com>
+Reviewed-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Link: https://patch.msgid.link/20260221172751.52329-1-nikolayof23@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: 1463ca3ec660 ("staging: rtl8723bs: fix OOB reads in rtw_get_sec_ie(), rtw_get_wapi_ie(), and rtw_get_wps_attr()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_ieee80211.c |    4 ++--
- drivers/staging/rtl8723bs/core/rtw_security.c  |    2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_ieee80211.c |   78 +++++++++++++------------
+ 1 file changed, 42 insertions(+), 36 deletions(-)
 
 --- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
 +++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-@@ -1028,7 +1028,7 @@ static int rtw_get_cipher_info(struct wl
- 	pbuf = rtw_get_wpa_ie(&pnetwork->network.ies[12], &wpa_ielen, pnetwork->network.ie_length-12);
+@@ -454,10 +454,10 @@ int rtw_parse_wpa_ie(u8 *wpa_ie, int wpa
+ 		return _FAIL;
+ 	}
+ 
+-	if ((*wpa_ie != WLAN_EID_VENDOR_SPECIFIC) || (*(wpa_ie+1) != (u8)(wpa_ie_len - 2)) ||
+-	   (memcmp(wpa_ie+2, RTW_WPA_OUI_TYPE, WPA_SELECTOR_LEN))) {
++	if ((*wpa_ie != WLAN_EID_VENDOR_SPECIFIC) ||
++	    (*(wpa_ie + 1) != (u8)(wpa_ie_len - 2)) ||
++	    (memcmp(wpa_ie + 2, RTW_WPA_OUI_TYPE, WPA_SELECTOR_LEN)))
+ 		return _FAIL;
+-	}
+ 
+ 	pos = wpa_ie;
+ 
+@@ -517,7 +517,7 @@ int rtw_parse_wpa2_ie(u8 *rsn_ie, int rs
+ 		return _FAIL;
+ 	}
+ 
+-	if ((*rsn_ie != WLAN_EID_RSN) || (*(rsn_ie+1) != (u8)(rsn_ie_len - 2)))
++	if ((*rsn_ie != WLAN_EID_RSN) || (*(rsn_ie + 1) != (u8)(rsn_ie_len - 2)))
+ 		return _FAIL;
+ 
+ 	pos = rsn_ie;
+@@ -585,18 +585,18 @@ int rtw_get_wapi_ie(u8 *in_ie, uint in_l
+ 	while (cnt < in_len) {
+ 		authmode = in_ie[cnt];
+ 
+-		/* if (authmode == WLAN_EID_BSS_AC_ACCESS_DELAY) */
+-		if (authmode == WLAN_EID_BSS_AC_ACCESS_DELAY && (!memcmp(&in_ie[cnt+6], wapi_oui1, 4) ||
+-					!memcmp(&in_ie[cnt+6], wapi_oui2, 4))) {
++		if (authmode == WLAN_EID_BSS_AC_ACCESS_DELAY &&
++		    (!memcmp(&in_ie[cnt + 6], wapi_oui1, 4) ||
++		     !memcmp(&in_ie[cnt + 6], wapi_oui2, 4))) {
+ 			if (wapi_ie)
+-				memcpy(wapi_ie, &in_ie[cnt], in_ie[cnt+1]+2);
++				memcpy(wapi_ie, &in_ie[cnt], in_ie[cnt + 1] + 2);
+ 
+ 			if (wapi_len)
+-				*wapi_len = in_ie[cnt+1]+2;
++				*wapi_len = in_ie[cnt + 1] + 2;
+ 
+-			cnt += in_ie[cnt+1]+2;  /* get next */
++			cnt += in_ie[cnt + 1] + 2;  /* get next */
+ 		} else {
+-			cnt += in_ie[cnt+1]+2;   /* get next */
++			cnt += in_ie[cnt + 1] + 2;   /* get next */
+ 		}
+ 	}
+ 
+@@ -620,9 +620,10 @@ void rtw_get_sec_ie(u8 *in_ie, uint in_l
+ 	while (cnt < in_len) {
+ 		authmode = in_ie[cnt];
+ 
+-		if ((authmode == WLAN_EID_VENDOR_SPECIFIC) && (!memcmp(&in_ie[cnt+2], &wpa_oui[0], 4))) {
++		if ((authmode == WLAN_EID_VENDOR_SPECIFIC) &&
++		    (!memcmp(&in_ie[cnt + 2], &wpa_oui[0], 4))) {
+ 			if (wpa_ie)
+-				memcpy(wpa_ie, &in_ie[cnt], in_ie[cnt+1]+2);
++				memcpy(wpa_ie, &in_ie[cnt], in_ie[cnt + 1] + 2);
+ 
+ 			*wpa_len = in_ie[cnt + 1] + 2;
+ 			cnt += in_ie[cnt + 1] + 2;  /* get next */
+@@ -631,10 +632,10 @@ void rtw_get_sec_ie(u8 *in_ie, uint in_l
+ 				if (rsn_ie)
+ 					memcpy(rsn_ie, &in_ie[cnt], in_ie[cnt + 1] + 2);
+ 
+-				*rsn_len = in_ie[cnt+1]+2;
+-				cnt += in_ie[cnt+1]+2;  /* get next */
++				*rsn_len = in_ie[cnt + 1] + 2;
++				cnt += in_ie[cnt + 1] + 2;  /* get next */
+ 			} else {
+-				cnt += in_ie[cnt+1]+2;   /* get next */
++				cnt += in_ie[cnt + 1] + 2;   /* get next */
+ 			}
+ 		}
+ 	}
+@@ -683,20 +684,20 @@ u8 *rtw_get_wps_ie(u8 *in_ie, uint in_le
+ 	while (cnt < in_len) {
+ 		eid = in_ie[cnt];
+ 
+-		if ((eid == WLAN_EID_VENDOR_SPECIFIC) && (!memcmp(&in_ie[cnt+2], wps_oui, 4))) {
++		if ((eid == WLAN_EID_VENDOR_SPECIFIC) && (!memcmp(&in_ie[cnt + 2], wps_oui, 4))) {
+ 			wpsie_ptr = &in_ie[cnt];
+ 
+ 			if (wps_ie)
+-				memcpy(wps_ie, &in_ie[cnt], in_ie[cnt+1]+2);
++				memcpy(wps_ie, &in_ie[cnt], in_ie[cnt + 1] + 2);
+ 
+ 			if (wps_ielen)
+-				*wps_ielen = in_ie[cnt+1]+2;
++				*wps_ielen = in_ie[cnt + 1] + 2;
+ 
+-			cnt += in_ie[cnt+1]+2;
++			cnt += in_ie[cnt + 1] + 2;
+ 
+ 			break;
+ 		}
+-		cnt += in_ie[cnt+1]+2; /* goto next */
++		cnt += in_ie[cnt + 1] + 2; /* goto next */
+ 	}
+ 
+ 	return wpsie_ptr;
+@@ -774,12 +775,12 @@ u8 *rtw_get_wps_attr_content(u8 *wps_ie,
+ 
+ 	if (attr_ptr && attr_len) {
+ 		if (buf_content)
+-			memcpy(buf_content, attr_ptr+4, attr_len-4);
++			memcpy(buf_content, attr_ptr + 4, attr_len - 4);
+ 
+ 		if (len_content)
+-			*len_content = attr_len-4;
++			*len_content = attr_len - 4;
+ 
+-		return attr_ptr+4;
++		return attr_ptr + 4;
+ 	}
+ 
+ 	return NULL;
+@@ -1025,20 +1026,25 @@ static int rtw_get_cipher_info(struct wl
+ 	int group_cipher = 0, pairwise_cipher = 0, is8021x = 0;
+ 	int ret = _FAIL;
+ 
+-	pbuf = rtw_get_wpa_ie(&pnetwork->network.ies[12], &wpa_ielen, pnetwork->network.ie_length-12);
++	pbuf = rtw_get_wpa_ie(&pnetwork->network.ies[12],
++			      &wpa_ielen,
++			      pnetwork->network.ie_length - 12);
  
  	if (pbuf && (wpa_ielen > 0)) {
--		if (_SUCCESS == rtw_parse_wpa_ie(pbuf, wpa_ielen+2, &group_cipher, &pairwise_cipher, &is8021x)) {
-+		if (rtw_parse_wpa_ie(pbuf, wpa_ielen+2, &group_cipher, &pairwise_cipher, &is8021x) == _SUCCESS) {
+-		if (rtw_parse_wpa_ie(pbuf, wpa_ielen+2, &group_cipher, &pairwise_cipher, &is8021x) == _SUCCESS) {
++		if (rtw_parse_wpa_ie(pbuf, wpa_ielen + 2, &group_cipher,
++				     &pairwise_cipher, &is8021x) == _SUCCESS) {
  			pnetwork->bcn_info.pairwise_cipher = pairwise_cipher;
  			pnetwork->bcn_info.group_cipher = group_cipher;
  			pnetwork->bcn_info.is_8021x = is8021x;
-@@ -1038,7 +1038,7 @@ static int rtw_get_cipher_info(struct wl
- 		pbuf = rtw_get_wpa2_ie(&pnetwork->network.ies[12], &wpa_ielen, pnetwork->network.ie_length-12);
+ 			ret = _SUCCESS;
+ 		}
+ 	} else {
+-		pbuf = rtw_get_wpa2_ie(&pnetwork->network.ies[12], &wpa_ielen, pnetwork->network.ie_length-12);
++		pbuf = rtw_get_wpa2_ie(&pnetwork->network.ies[12], &wpa_ielen,
++				       pnetwork->network.ie_length - 12);
  
  		if (pbuf && (wpa_ielen > 0)) {
--			if (_SUCCESS == rtw_parse_wpa2_ie(pbuf, wpa_ielen+2, &group_cipher, &pairwise_cipher, &is8021x)) {
-+			if (rtw_parse_wpa2_ie(pbuf, wpa_ielen+2, &group_cipher, &pairwise_cipher, &is8021x) == _SUCCESS) {
+-			if (rtw_parse_wpa2_ie(pbuf, wpa_ielen+2, &group_cipher, &pairwise_cipher, &is8021x) == _SUCCESS) {
++			if (rtw_parse_wpa2_ie(pbuf, wpa_ielen + 2, &group_cipher,
++					      &pairwise_cipher, &is8021x) == _SUCCESS) {
  				pnetwork->bcn_info.pairwise_cipher = pairwise_cipher;
  				pnetwork->bcn_info.group_cipher = group_cipher;
  				pnetwork->bcn_info.is_8021x = is8021x;
---- a/drivers/staging/rtl8723bs/core/rtw_security.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_security.c
-@@ -1538,7 +1538,7 @@ void rtw_sec_restore_wep_key(struct adap
- 	struct security_priv *securitypriv = &(adapter->securitypriv);
- 	signed int keyid;
+@@ -1107,21 +1113,21 @@ u16 rtw_mcs_rate(u8 bw_40MHz, u8 short_G
+ 	u16 max_rate = 0;
  
--	if ((_WEP40_ == securitypriv->dot11PrivacyAlgrthm) || (_WEP104_ == securitypriv->dot11PrivacyAlgrthm)) {
-+	if ((securitypriv->dot11PrivacyAlgrthm == _WEP40_) || (securitypriv->dot11PrivacyAlgrthm == _WEP104_)) {
- 		for (keyid = 0; keyid < 4; keyid++) {
- 			if (securitypriv->key_mask & BIT(keyid)) {
- 				if (keyid == securitypriv->dot11PrivacyKeyIndex)
+ 	if (MCS_rate[0] & BIT(7))
+-		max_rate = (bw_40MHz) ? ((short_GI)?1500:1350):((short_GI)?722:650);
++		max_rate = (bw_40MHz) ? ((short_GI) ? 1500 : 1350) : ((short_GI) ? 722 : 650);
+ 	else if (MCS_rate[0] & BIT(6))
+-		max_rate = (bw_40MHz) ? ((short_GI)?1350:1215):((short_GI)?650:585);
++		max_rate = (bw_40MHz) ? ((short_GI) ? 1350 : 1215) : ((short_GI) ? 650 : 585);
+ 	else if (MCS_rate[0] & BIT(5))
+-		max_rate = (bw_40MHz) ? ((short_GI)?1200:1080):((short_GI)?578:520);
++		max_rate = (bw_40MHz) ? ((short_GI) ? 1200 : 1080) : ((short_GI) ? 578 : 520);
+ 	else if (MCS_rate[0] & BIT(4))
+-		max_rate = (bw_40MHz) ? ((short_GI)?900:810):((short_GI)?433:390);
++		max_rate = (bw_40MHz) ? ((short_GI) ? 900 : 810) : ((short_GI) ? 433 : 390);
+ 	else if (MCS_rate[0] & BIT(3))
+-		max_rate = (bw_40MHz) ? ((short_GI)?600:540):((short_GI)?289:260);
++		max_rate = (bw_40MHz) ? ((short_GI) ? 600 : 540) : ((short_GI) ? 289 : 260);
+ 	else if (MCS_rate[0] & BIT(2))
+-		max_rate = (bw_40MHz) ? ((short_GI)?450:405):((short_GI)?217:195);
++		max_rate = (bw_40MHz) ? ((short_GI) ? 450 : 405) : ((short_GI) ? 217 : 195);
+ 	else if (MCS_rate[0] & BIT(1))
+-		max_rate = (bw_40MHz) ? ((short_GI)?300:270):((short_GI)?144:130);
++		max_rate = (bw_40MHz) ? ((short_GI) ? 300 : 270) : ((short_GI) ? 144 : 130);
+ 	else if (MCS_rate[0] & BIT(0))
+-		max_rate = (bw_40MHz) ? ((short_GI)?150:135):((short_GI)?72:65);
++		max_rate = (bw_40MHz) ? ((short_GI) ? 150 : 135) : ((short_GI) ? 72 : 65);
+ 
+ 	return max_rate;
+ }
 
 
