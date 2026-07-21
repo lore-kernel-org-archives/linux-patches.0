@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4075239B97E;
-	Tue, 21 Jul 2026 21:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D930C39B97E;
+	Tue, 21 Jul 2026 21:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669829; cv=none; b=Nt74bXiNQZaKcui7RTyS2tphhMyyPqmTtdugqQaa4uf5gDzh1YhUdcjM59OSokemXN13+PBjPU7IRjMY3SJdr2JXV7jXMuYyqiH05GbKRnrgA+wwvZdGE14XlbA5xWiULhJKmCMh+35BdbpybUc1VS1yg73O5a4PDr0HZO+qa60=
+	t=1784669831; cv=none; b=XFofSCSdbjLKhyZayh8KjlpGROhsXOMtu7FHx3eNLjTzJ+EVWXWNN6Pu1QaIoRRdX7w54xRtCJw880JPoGkWGzrFHmcTWeIUgTZw/jr7WLaaHZQPqu5dx6enaKwN+gOAA1VCeaT4ipx2HdiPlOxq2PVLzn8HllmVp8eCzdKib4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669829; c=relaxed/simple;
-	bh=M0E9VbPAmOs5748UcreEze4W88l2xUFAyDU++WJ2+4M=;
+	s=arc-20240116; t=1784669831; c=relaxed/simple;
+	bh=sS1sjq27j6F1niAr596xzoYJ72htQ1DdChZbqIPPYv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A1DqtNG1H37dg5UzBofUg+edh2QVr8k0oLVJV2HCgpcTdw3blSG0vgoiUIWx26O60cOnMSN86Swr9hS514gt5We7o9O/JGTNJlXCcY6OZTqlj8wEXEvR7c2bHr08jf8uxP8vQMqjOk32dlFmwKmxP5xdnBkTUh0unUC33dWzJuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cRfWfH/l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UvR7nLG+PCsM7jp/6ps3joUVIgAsLfvGwIYNJHlPNCvo+qDJYewbyesz/ANpqRPdsbGiQZF7d0YIZKhc61YerabcBq9aA6SL3/B+ZQrYzncByGIMitujwf46zUbGrgBsvklmeBhwcfykEKJMt6YzDQp8i98z3ft5/pXXg+FDzMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NYfg4OsJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cRfWfH/l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84021F000E9;
-	Tue, 21 Jul 2026 21:37:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NYfg4OsJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8941F000E9;
+	Tue, 21 Jul 2026 21:37:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669828;
-	bh=UgzB3gsllJMy9ElARq01EOUZDP8/zmwPWDzkgEAJv5o=;
+	s=korg; t=1784669830;
+	bh=gpGdZ2AcAjqq1oMGu9v3pX6p2EDYsmb4B1Nr3A2PhHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cRfWfH/luBdY60M74hgD1dxyLVDT3nEYtDRR56Qz7OyvhU9GIes3/bYCwrnU6EVIg
-	 SP0pCaf/BU+/4SjLotR0ESaxzJpkaR0wB+wXx645XRz6mQfrKAsI/IFLc4K13zd5Z/
-	 Q3nERrd2ZdpUrgwkSHm2BNzkw4iWcU8c+uUr0F0g=
+	b=NYfg4OsJ2WD3yIlVj6rzI9aLnGbeqfvPqUzEVzWyDu/DCADyAtIf1QhwL9mIeLIUn
+	 hfvlJv0WY5BcKTvpS3V1fAheDHNy01Af1bL1qDAPAeLbogbPro53ACXnjpIjgCnipr
+	 iWY5Rlr/fG7zlEMDt9WoFCUkDu9rFZTpObI/iyy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Noam Rathaus <noamr@ssd-disclosure.com>,
-	Neil Young <contact@ssd-disclosure.com>,
-	Nikolay Aleksandrov <nikolay@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Breno Leitao <leitao@debian.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0659/1067] bridge: stp: Fix a potential use-after-free when deleting a bridge
-Date: Tue, 21 Jul 2026 17:21:00 +0200
-Message-ID: <20260721152439.337477123@linuxfoundation.org>
+Subject: [PATCH 6.1 0660/1067] tracing/events: Fix to check the simple_tsk_fn creation
+Date: Tue, 21 Jul 2026 17:21:01 +0200
+Message-ID: <20260721152439.360268058@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -55,69 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 2a00517db8de4be7df3d483b215c5544fb30a191 ]
+[ Upstream commit cda1fbfc5313bb90daa271d45eea4a8d317a8544 ]
 
-The three STP timers are not supposed to be armed while the bridge is
-administratively down. They are synchronously deactivated when the
-bridge is put administratively down and the various call sites check for
-'IFF_UP' before arming them.
+Sashiko pointed that this sample code does not correctly handle the
+failure of thread creation because kthread_run() can return -errno.
 
-This check is missing from br_topology_change_detection() and it is
-possible to engineer a situation in which the topology change timer is
-armed while the bridge is administratively down, resulting in a
-use-after-free [1] when the bridge is deleted.
+Check the simple_tsk_fn is correctly initialized (created) or not.
 
-Fix by adding the missing check and for good measures synchronously
-shutdown the three timers when the bridge is deleted.
+Link: https://lore.kernel.org/all/178165817322.269421.3992299509400184196.stgit@devnote2/
 
-[1]
-ODEBUG: free active (active state 0) object: ffff88811662b9b0 object type: timer_list hint: br_topology_change_timer_expired (net/bridge/br_stp_timer.c:120)
-WARNING: lib/debugobjects.c:629 at debug_print_object+0x1bc/0x450, CPU#9: ip/359
+Link: https://sashiko.dev/#/patchset/178092865666.163648.10457567771536160909.stgit%40devnote2
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Noam Rathaus <noamr@ssd-disclosure.com>
-Reported-by: Neil Young <contact@ssd-disclosure.com>
-Acked-by: Nikolay Aleksandrov <nikolay@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260629072117.497959-1-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 9cfe06f8cd5c ("tracing/events: add trace-events-sample")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_if.c  | 3 +++
- net/bridge/br_stp.c | 3 ++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ samples/trace_events/trace-events-sample.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/bridge/br_if.c b/net/bridge/br_if.c
-index 42495d643a1bce..169a18f099fd2f 100644
---- a/net/bridge/br_if.c
-+++ b/net/bridge/br_if.c
-@@ -391,6 +391,9 @@ void br_dev_delete(struct net_device *dev, struct list_head *head)
- 
- 	br_fdb_delete_by_port(br, NULL, 0, 1);
- 
-+	timer_shutdown_sync(&br->hello_timer);
-+	timer_shutdown_sync(&br->topology_change_timer);
-+	timer_shutdown_sync(&br->tcn_timer);
- 	cancel_delayed_work_sync(&br->gc_work);
- 
- 	br_sysfs_delbr(br->dev);
-diff --git a/net/bridge/br_stp.c b/net/bridge/br_stp.c
-index 7d27b2e6038fb7..4cfebf5fcdf54d 100644
---- a/net/bridge/br_stp.c
-+++ b/net/bridge/br_stp.c
-@@ -371,7 +371,8 @@ void br_topology_change_detection(struct net_bridge *br)
- {
- 	int isroot = br_is_root_bridge(br);
- 
--	if (br->stp_enabled != BR_KERNEL_STP)
-+	if (br->stp_enabled != BR_KERNEL_STP ||
-+	    !(br->dev->flags & IFF_UP))
- 		return;
- 
- 	br_info(br, "topology change detected, %s\n",
+diff --git a/samples/trace_events/trace-events-sample.c b/samples/trace_events/trace-events-sample.c
+index ecc7db237f2eff..0b7a6efdb247a8 100644
+--- a/samples/trace_events/trace-events-sample.c
++++ b/samples/trace_events/trace-events-sample.c
+@@ -107,6 +107,10 @@ int foo_bar_reg(void)
+ 	 * for consistency sake, we still take the thread_mutex.
+ 	 */
+ 	simple_tsk_fn = kthread_run(simple_thread_fn, NULL, "event-sample-fn");
++	if (IS_ERR_OR_NULL(simple_tsk_fn)) {
++		pr_err("Failed to create simple_thread_fn\n");
++		simple_tsk_fn = NULL;
++	}
+  out:
+ 	mutex_unlock(&thread_mutex);
+ 	return 0;
 -- 
 2.53.0
 
