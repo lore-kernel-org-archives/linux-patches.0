@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C004D434E2C;
-	Tue, 21 Jul 2026 15:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D45434E2C;
+	Tue, 21 Jul 2026 15:46:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648761; cv=none; b=UbT6su6OWHVd7cqDCYtuyRlTvzBwBaB86YEWPTMY34lggeH+lD3HbpLpEsATHco6IjNRWj432zbmuGs+UKNOVUS2o/exAxMlKV3kEtJB3vpKxVTKdRIPpl5CNOR5lH/56/CZjvAVuj7NXwBtVPv77W0d6DLGPMRZlTKRRhqltI4=
+	t=1784648763; cv=none; b=cRcvguqPjNW+kemWpm0PAJXwlO4NjU2VqGFSYaIM+LIDY2+BmCkU3lEnLkvKqjkbOmVpH/idH2kM2T+5XrxT14KzfVb9wyjczbl/gvs9cqYGrBM51E4DRv+6vIvnXH8GUL10UV9akU+BiqqVbiIsy97CAEWTBxTKV/3u+Y2/eQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648761; c=relaxed/simple;
-	bh=rsUG+jyyBLngdPoLfggU8/D8iiYSFeC8l3osbiAs72U=;
+	s=arc-20240116; t=1784648763; c=relaxed/simple;
+	bh=Enz9ytYH7Kr3hMeaOMf3MJIKQn3KuIfkDl8aj9DJUEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fRE8t8sFaYOOkjIg7hG4+YhU3yElzOjImvI3zpHsdJlfRmT7Xp22ZUeDQKQ+H4IYGU7+1mH8G5C6tc59BFl+o5Tug08364vaQb4P14R2vSP0oZZy17CFQLWuK07tCE9DTJLtaMIACaxrZ4CSQbML/FxOSfmEkUbzIFXBzd/H1us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n3kX+Zgo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bmnYw12keWbpAUFvpCGqJj0bkQB+FjdawVowDGSJYbAlSR6f59IuUIiiFY0Y2ZTtNa5AvTfwGyFGeOAdw5f7HUkMyd1Zb/SPwZKgsiNhpn9CipsF61MiCWvGEeAdk7/nwk7UKo/PBpYxyBdLu2bljbshaY0l7O1hZd9dNhUa5v0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GUFCdb1b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n3kX+Zgo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DA61F000E9;
-	Tue, 21 Jul 2026 15:45:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GUFCdb1b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F211F00A3A;
+	Tue, 21 Jul 2026 15:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648759;
-	bh=VXqaa3Eu12ttq4gRF5CbnVYTrti7rRUiOQNfGBAbbNQ=;
+	s=korg; t=1784648762;
+	bh=5qu3Gr4mT9tYhxIk1rJOA9mvU+t5xBzXroBVLWPtCRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n3kX+Zgok3wGaubfYR/jB59kyDeecHd3RnE9qDN/2dkuwE4C9OTomQC+0ZnlT+aWV
-	 vBITuyNKUbz3nvkujNBI4qcHa3ag3EJMS2qELEm3luMTSKGTFUB2FiPzcv8N3It8yL
-	 1JuTkUIWrzedNI6AyKGMxB9sMXyxvzkj5Q/NkOxg=
+	b=GUFCdb1b7W6Y9+LSWXv0SPPN/9TB5B/IzVBMRNig/6pJFASLXXIVqk/4pTl0KL8gg
+	 7JZfXYRALUB0mzShnr+BUyA/5PF3UQSdSBFAuovXQZmd01z2Bd8m5Sy6dPAYZ+rQld
+	 2uAerib5dWlLsR/u7nDjnqj0YOU2edAdnPyowrbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
-	Harshal Dev <harshal.dev@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0268/2077] arm64: dts: qcom: kodiak: Add power-domain and iface clk for ice node
-Date: Tue, 21 Jul 2026 16:59:01 +0200
-Message-ID: <20260721152558.997210630@linuxfoundation.org>
+Subject: [PATCH 7.1 0315/2077] driver core: Guard deferred probe timeout extension with delayed_work_pending()
+Date: Tue, 21 Jul 2026 16:59:48 +0200
+Message-ID: <20260721152600.106767427@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,48 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshal Dev <harshal.dev@oss.qualcomm.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit cca53c338ad87edc4b46d2d82730fd8ca01a164f ]
+[ Upstream commit 557495bc879013c3d5e21d667e987e7ce3a514de ]
 
-Qualcomm in-line crypto engine (ICE) platform driver specifies and votes
-for its own resources. Before accessing ICE hardware during probe, to
-avoid potential unclocked register access issues (when clk_ignore_unused
-is not passed on the kernel command line), in addition to the 'core' clock
-the 'iface' clock should also be turned on by the driver. This can only be
-done if the GCC_UFS_PHY_GDSC power domain is enabled. Specify both the
-GCC_UFS_PHY_GDSC power domain and the 'iface' clock in the ICE node for
-kodiak.
+mod_delayed_work() unconditionally queues the work even when it wasn't
+previously pending, which can fire the timeout prematurely or restart it
+after it already fired. Add a delayed_work_pending() guard to restore
+the originally intended semantics.
 
-Fixes: dfd5ee7b34bb7 ("arm64: dts: qcom: sc7280: Add inline crypto engine")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-Tested-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260416-qcom_ice_power_and_clk_vote-v5-7-5ccf5d7e2846@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Premature firing calls fw_devlink_drivers_done() before all built-in
+drivers have registered, causing fw_devlink to prematurely relax device
+links for suppliers whose drivers haven't loaded yet.
+
+Fixes: 1137838865bf ("driver core: Use mod_delayed_work to prevent lost deferred probe work")
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260525012340.3860581-2-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/kodiak.dtsi | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/base/dd.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/kodiak.dtsi b/arch/arm64/boot/dts/qcom/kodiak.dtsi
-index fdde9f065199ee..522b2b61ce7d20 100644
---- a/arch/arm64/boot/dts/qcom/kodiak.dtsi
-+++ b/arch/arm64/boot/dts/qcom/kodiak.dtsi
-@@ -2579,7 +2579,11 @@ ice: crypto@1d88000 {
- 			compatible = "qcom,sc7280-inline-crypto-engine",
- 				     "qcom,inline-crypto-engine";
- 			reg = <0 0x01d88000 0 0x18000>;
--			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-+			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>,
-+				 <&gcc GCC_UFS_PHY_AHB_CLK>;
-+			clock-names = "core",
-+				      "iface";
-+			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
- 		};
- 
- 		cryptobam: dma-controller@1dc4000 {
+diff --git a/drivers/base/dd.c b/drivers/base/dd.c
+index 6ced7272b97e3c..f64175afefc915 100644
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -323,7 +323,8 @@ void deferred_probe_extend_timeout(void)
+ 	 * If the work hasn't been queued yet or if the work expired, don't
+ 	 * start a new one.
+ 	 */
+-	if (mod_delayed_work(system_wq, &deferred_probe_timeout_work,
++	if (delayed_work_pending(&deferred_probe_timeout_work) &&
++	    mod_delayed_work(system_wq, &deferred_probe_timeout_work,
+ 			     secs_to_jiffies(driver_deferred_probe_timeout)))
+ 		pr_debug("Extended deferred probe timeout by %d secs\n",
+ 					driver_deferred_probe_timeout);
 -- 
 2.53.0
 
