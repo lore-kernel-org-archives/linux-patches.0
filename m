@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE74A3E9C37;
-	Tue, 21 Jul 2026 17:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8A21F3D56;
+	Tue, 21 Jul 2026 17:11:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653863; cv=none; b=uIMLL0+vjXZ+xx55DlyybfieQ8326rqrnQg6asQu8FWJsxYCi7pRjk4HZMf6/DCo1gji5uBE52/2AMwf3D8LCZbMz8frZxIMmS4OZ5F+tbjCnMiRKvOrPIGSNTmRvXLD8aia3Eg8MKYuoLUBzelGq/oKtEt593ZUcH8q1kNS3kQ=
+	t=1784653865; cv=none; b=TiLk4R/k6Vhw2m4mVJsE4xZkEmY5y+4LJYITGXLiJYkepsmiWCTx2edQlhKm62KAjoAqw+6vd/PIPbs3Jicv80/7vMnqn5Mn9hAK2jZslei0V5OW5EcK7eG19miAfv34zc5NjasrWqY0SMgVSHqolXVJ6740VwixPOGva0r+mx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653863; c=relaxed/simple;
-	bh=8LBGK55SluSINw08yNfuoesBqHROIq9tUyWfdJLzd54=;
+	s=arc-20240116; t=1784653865; c=relaxed/simple;
+	bh=5gb1U33svZFxCxAD/9Q/5yP1vSsklXo6V+0aYrA9Pl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EDkhgSFZwl3Qp8TLUrGcwRitiJpz6ILZ3no8tQu5hRuDOwGf9kaECkEM2+5Xck8oN+GmV3TJuySvT0HtZSm6u+kr/pCXglnZRMaPpFfNFt5n4WxINbHobMWbxN5WIlC2xPWclnKibiwlH5JWWBsFeRfEryYssrQ5WlrFqhj1vDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Noa4DzWO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h+UnxUhQEhaiuLLzSSvByLnGfUGVTMWLOb3f/ZhftZT9fAatt0pBSlwR2LaXc3NxBTiHIBDLass26nzyMoq5TmYHxivXb+BdkHkTeVMtnQlpyGhe2EvXGXBEd+wTamWnnlZ0EqdUuF6xpF3y5LV5tzzeaPSCziEbTkp5jMjqg1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFr8AXSg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Noa4DzWO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EB6F1F000E9;
-	Tue, 21 Jul 2026 17:11:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFr8AXSg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDEC31F000E9;
+	Tue, 21 Jul 2026 17:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653861;
-	bh=Xm3+xyDFONmcVlIFnmP3WsyqW47DJtq1bclO4ljLPDs=;
+	s=korg; t=1784653864;
+	bh=nfnDjdlFfpB12mE+nLedr2hTaoEt8hq3Twrj/UYnQXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Noa4DzWORBwcCxoAgItJPHRgtABsBGvVy+r9ACAeltBcVm5uAG3agK4iTkzUKUSSm
-	 CCdDS9fT7IafwC6yimdgZkXLNNyUMgMbhMHoA/0vpcf+Xo1ITtYM0la9uC0K9nufo2
-	 7D1KUBrn7+qnOctQbenPOE9Qy/InQuMzRfba5hTo=
+	b=lFr8AXSgSHhyueUosDi4dDTuG2oRQGFqhjyD3QwMCSrEBnOwyrQSpMLB9OSflh/em
+	 8CJXggT6hrBJt0IsWRHrTulnLhgKWufVY5Hu9Q+gTzOePiVDKwPJ+tXLZnApLsd7Er
+	 3H2pXJBG/ZxktYx8s67GfB4k3KLMVvXZghhyrfb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuyang Huang <sigefriedhyy@gmail.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
+	Yuyang Huang <yuyanghuang@google.com>,
 	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1488/2077] ipv4: igmp: annotate data-races around im->users
-Date: Tue, 21 Jul 2026 17:19:21 +0200
-Message-ID: <20260721152627.893602200@linuxfoundation.org>
+Subject: [PATCH 7.1 1489/2077] ipv4: igmp: annotate data-races around timer-related fields
+Date: Tue, 21 Jul 2026 17:19:22 +0200
+Message-ID: <20260721152627.916917232@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,71 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuyang Huang <sigefriedhyy@gmail.com>
+From: Yuyang Huang <yuyanghuang@google.com>
 
-[ Upstream commit 061c0aa740d5d3847cd600a74c66a165bee1fbe0 ]
+[ Upstream commit 3289d17b7a1321e103b8aec4ad82675c03c4764f ]
 
-/proc/net/igmp walks IPv4 multicast memberships under RCU and
-prints im->users without holding RTNL, while multicast join and leave
-paths update the field while holding RTNL. Annotate this intentional
-lockless snapshot with READ_ONCE() and the matching writers with
-WRITE_ONCE().
+/proc/net/igmp walks the multicast list locklessly under RCU and reads
+timer-related fields (im->tm_running, im->reporter, im->timer.expires)
+to print the timer state of multicast memberships. Concurrently, these
+fields are modified under im->lock spinlock in timer management paths
+(igmp_stop_timer(), igmp_start_timer(), and igmp_timer_expire()). Fix this
+intentional lockless snapshot by annotating the lockless reads with
+READ_ONCE() and the updates with WRITE_ONCE().
 
-Signed-off-by: Yuyang Huang <sigefriedhyy@gmail.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Yuyang Huang <yuyanghuang@google.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260522093906.39764-1-sigefriedhyy@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260605014318.3890804-3-yuyanghuang@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 3546deaa0c30 ("ipv4: igmp: Fix potential memory leaks in igmp_mod_timer() and igmp_stop_timer()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/igmp.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/ipv4/igmp.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
 diff --git a/net/ipv4/igmp.c b/net/ipv4/igmp.c
-index 73e9ebb17afaa1..8ae71dd6f76bd5 100644
+index 8ae71dd6f76bd5..208328e337c27a 100644
 --- a/net/ipv4/igmp.c
 +++ b/net/ipv4/igmp.c
-@@ -1545,7 +1545,7 @@ static void ____ip_mc_inc_group(struct in_device *in_dev, __be32 addr,
- 	}
+@@ -220,8 +220,8 @@ static void igmp_stop_timer(struct ip_mc_list *im)
+ 	spin_lock_bh(&im->lock);
+ 	if (timer_delete(&im->timer))
+ 		refcount_dec(&im->refcnt);
+-	im->tm_running = 0;
+-	im->reporter = 0;
++	WRITE_ONCE(im->tm_running, 0);
++	WRITE_ONCE(im->reporter, 0);
+ 	im->unsolicit_count = 0;
+ 	spin_unlock_bh(&im->lock);
+ }
+@@ -231,7 +231,7 @@ static void igmp_start_timer(struct ip_mc_list *im, int max_delay)
+ {
+ 	int tv = get_random_u32_below(max_delay);
  
- 	if  (im) {
--		im->users++;
-+		WRITE_ONCE(im->users, im->users + 1);
- 		ip_mc_add_src(in_dev, &addr, mode, 0, NULL, 0);
- 		goto out;
- 	}
-@@ -1554,7 +1554,7 @@ static void ____ip_mc_inc_group(struct in_device *in_dev, __be32 addr,
- 	if (!im)
- 		goto out;
+-	im->tm_running = 1;
++	WRITE_ONCE(im->tm_running, 1);
+ 	if (refcount_inc_not_zero(&im->refcnt)) {
+ 		if (mod_timer(&im->timer, jiffies + tv + 2))
+ 			ip_ma_put(im);
+@@ -271,7 +271,7 @@ static void igmp_mod_timer(struct ip_mc_list *im, int max_delay)
+ 	if (timer_delete(&im->timer)) {
+ 		if ((long)(im->timer.expires-jiffies) < max_delay) {
+ 			add_timer(&im->timer);
+-			im->tm_running = 1;
++			WRITE_ONCE(im->tm_running, 1);
+ 			spin_unlock_bh(&im->lock);
+ 			return;
+ 		}
+@@ -861,12 +861,12 @@ static void igmp_timer_expire(struct timer_list *t)
+ 	struct in_device *in_dev = im->interface;
  
--	im->users = 1;
-+	WRITE_ONCE(im->users, 1);
- 	im->interface = in_dev;
- 	in_dev_hold(in_dev);
- 	im->multiaddr = addr;
-@@ -1788,7 +1788,10 @@ void __ip_mc_dec_group(struct in_device *in_dev, __be32 addr, gfp_t gfp)
- 	     (i = rtnl_dereference(*ip)) != NULL;
- 	     ip = &i->next_rcu) {
- 		if (i->multiaddr == addr) {
--			if (--i->users == 0) {
-+			int new_users = i->users - 1;
-+
-+			WRITE_ONCE(i->users, new_users);
-+			if (new_users == 0) {
- 				ip_mc_hash_remove(in_dev, i);
- 				*ip = i->next_rcu;
- 				in_dev->mc_count--;
-@@ -2982,7 +2985,7 @@ static int igmp_mc_seq_show(struct seq_file *seq, void *v)
- 		delta = im->timer.expires - jiffies;
+ 	spin_lock(&im->lock);
+-	im->tm_running = 0;
++	WRITE_ONCE(im->tm_running, 0);
+ 
+ 	if (im->unsolicit_count && --im->unsolicit_count)
+ 		igmp_start_timer(im, unsolicited_report_interval(in_dev));
+ 
+-	im->reporter = 1;
++	WRITE_ONCE(im->reporter, 1);
+ 	spin_unlock(&im->lock);
+ 
+ 	if (IGMP_V1_SEEN(in_dev))
+@@ -1329,7 +1329,7 @@ static void __igmp_group_dropped(struct ip_mc_list *im, gfp_t gfp)
+ 	    !READ_ONCE(net->ipv4.sysctl_igmp_llm_reports))
+ 		return;
+ 
+-	reporter = im->reporter;
++	reporter = READ_ONCE(im->reporter);
+ 	igmp_stop_timer(im);
+ 
+ 	if (!in_dev->dead) {
+@@ -2967,6 +2967,7 @@ static int igmp_mc_seq_show(struct seq_file *seq, void *v)
+ 		struct ip_mc_list *im = v;
+ 		struct igmp_mc_iter_state *state = igmp_mc_seq_private(seq);
+ 		char   *querier;
++		int tm_running;
+ 		long delta;
+ 
+ #ifdef CONFIG_IP_MULTICAST
+@@ -2982,13 +2983,14 @@ static int igmp_mc_seq_show(struct seq_file *seq, void *v)
+ 				   state->dev->ifindex, state->dev->name, state->in_dev->mc_count, querier);
+ 		}
+ 
+-		delta = im->timer.expires - jiffies;
++		tm_running = READ_ONCE(im->tm_running);
++		delta = READ_ONCE(im->timer.expires) - jiffies;
  		seq_printf(seq,
  			   "\t\t\t\t%08X %5d %d:%08lX\t\t%d\n",
--			   im->multiaddr, im->users,
-+			   im->multiaddr, READ_ONCE(im->users),
- 			   im->tm_running,
- 			   im->tm_running ? jiffies_delta_to_clock_t(delta) : 0,
- 			   im->reporter);
+ 			   im->multiaddr, READ_ONCE(im->users),
+-			   im->tm_running,
+-			   im->tm_running ? jiffies_delta_to_clock_t(delta) : 0,
+-			   im->reporter);
++			   tm_running,
++			   tm_running ? jiffies_delta_to_clock_t(delta) : 0,
++			   READ_ONCE(im->reporter));
+ 	}
+ 	return 0;
+ }
 -- 
 2.53.0
 
