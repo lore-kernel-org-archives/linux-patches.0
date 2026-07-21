@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB5446D2CE;
-	Tue, 21 Jul 2026 19:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FBC347143B;
+	Tue, 21 Jul 2026 19:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663407; cv=none; b=SfcgchKlEy7LWHlgxmV+Ox+MP35Eml5f4+X8DmeQDumeNsp2cvLDERcOSUB8vQ2QqELIQpH1T6A1SpaYeG2KZ9BXCmaKJ9F+DIAICjkqkXDoxDXhS3L8SjDkbkBjLs9LmBxKsi2fVItZHdCl1mup2x6+EzmetqyM+rcF8tlspec=
+	t=1784663410; cv=none; b=SAFEwyXkufSe5+2Z9Sju8Yav5a8pmXxSHEGdmiqeNWYgP9lLuoQD3VRoxWuI9eGkUZuHPxFP5Z4znlyEcFrEp7KchRhFyel+zk3s/SEP9WNUqhXL0JAcldZ3ytkDwrEN9I6O/zm8Ac3QMBj7sjnupFJ4OH73/xtBNvfUdqAABB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663407; c=relaxed/simple;
-	bh=PPnlST6B4Q2P80R+XSk7jxT9pyS1JrTz6MH+tGliMOs=;
+	s=arc-20240116; t=1784663410; c=relaxed/simple;
+	bh=yCWJKxJ65zm0edKs6ZniJPF69DYJKnMoCPLl6h4Lfuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z3NkkSK9Bq6eKGnEAx8+GG9pE/jtxXKE5rQUczH0hYqtmYfBidJIJtQ1QIjGVhJKZal6wyfvJq5bsnOJ5Bkd2UhJ63HRLozjfrX+/0Zuw4hgYnV0WnLrm07du/texjB7XGGSsLQAjvSWZyrSzDOesYQmE+7XuLi9wOpVD2IG5Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2qx1S6Na; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U1HxI2OxwdlNrOXR4wUdFeGrTgerPliB/CE01cL1lMsDkHmjC22UIg+IzsUxPoOMQTzJx/ZVXotWS/v7KuqByLG8t5dX1l/sxbWZCgzHicplbXRu2uAubvSSrwYLsDJMd4P6bzpowJuPTHZjZXW40LccusraaonLeETJSJhWRFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aT70jYd1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2qx1S6Na"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18571F000E9;
-	Tue, 21 Jul 2026 19:50:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aT70jYd1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F021F000E9;
+	Tue, 21 Jul 2026 19:50:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663406;
-	bh=i6v2T2a5yXQuM7r/JcyPnzsVJdh2ER8lu/JmD5iyjgc=;
+	s=korg; t=1784663409;
+	bh=RsEYFxYWOyOiIKuylAMBCxGs8oMa8sD9Dz9pXtq7JL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2qx1S6NaQiAYTgx3vRYe2JmPz2loZAhd8gvDqqX6QyG76paVH1GwASst9C++QzjiY
-	 qUV+obXonATKZH0OyjnNRl6KBBQh6CUjH3gqwL78umX2bSbQCDc7XyKr6C9/DXU4Fv
-	 JnUxIdUkMtBPufIKarbI4+C4uQWs3/7Hzlam5C68=
+	b=aT70jYd12jYboCQR+dP1Rlau3lPqng2fJka2B3/czTx5ColzIDyRA9BGnYPqm3/n9
+	 jbu/PskL/G5OJnqLNcJJYCuH4UGxoBfpuITQfK2N2gUekzBA49cHl61Nne5KcEfKpR
+	 ymaxET4J4nkYWM4aVS5h8xFdNVe2ELZXxTnh+oxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 0811/1276] ASoC: SOF: ipc3-control: Fix TOCTOU in bytes_put and bytes_get
-Date: Tue, 21 Jul 2026 17:20:54 +0200
-Message-ID: <20260721152504.218540633@linuxfoundation.org>
+	Sandipan Das <sandipan.das@amd.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0785/1276] perf/x86/amd/core: Avoid enabling BRS from the SVM reload path
+Date: Tue, 21 Jul 2026 17:20:28 +0200
+Message-ID: <20260721152503.647471384@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,85 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Sandipan Das <sandipan.das@amd.com>
 
-commit 1f97760417b5faa60e9642fd0ed61eb17d0b1b39 upstream.
+[ Upstream commit 07c60dda9c059c09f83d42a3ebda2e7cc1cf3bc2 ]
 
-In sof_ipc3_bytes_put(), the size used for the memcpy is derived from
-the old data->size already in the buffer, not the incoming new data's
-size field. If the new data has a different size, the copy length is
-wrong: it may truncate valid data or copy stale bytes.
+Branch Sampling (BRS) and Last Branch Record (LBR) are mutually
+exclusive hardware features, and users of both are tracked via
+cpuc->lbr_users.
 
-Similarly, sof_ipc3_bytes_get() checks data->size against max_size
-without accounting for the sizeof(struct sof_ipc_ctrl_data) offset
-of the flex array within the allocation.
+When SVM is toggled on a CPU, the host perf events are reprogrammed to
+update the HostOnly filter bit (set when virtualization is enabled,
+cleared when it is disabled). On PerfMonV2-capable processors, this
+reprogramming is performed by calling amd_pmu_enable_all() to rewrite
+the event selectors. However, amd_pmu_enable_all() also calls
+amd_brs_enable_all(), which enables BRS whenever cpuc->lbr_users > 0.
+Having active LBR events satisfies this gating on processors that have
+LBR but not BRS. The kernel then tries to set the BRS enable bit in
+DebugExtnCfg (MSR 0xc000010f). Since that bit is deprecated on such
+hardware, the write results in a #GP:
 
-Fix bytes_put to validate and use the incoming data's sof_abi_hdr.size
-from ucontrol before copying. Fix bytes_get to subtract sizeof(*cdata)
-from the bounds check to match the actual available space.
+  Call Trace:
+   <IRQ>
+   amd_pmu_enable_all+0x1d/0x90
+   amd_pmu_disable_virt+0x62/0xb0
+   kvm_arch_disable_virtualization_cpu+0xa/0x40 [kvm]
+   hardware_disable_nolock+0x1a/0x30 [kvm]
+   __flush_smp_call_function_queue+0x9b/0x410
+   __sysvec_call_function+0x18/0xc0
+   sysvec_call_function+0x69/0x90
+   </IRQ>
+   <TASK>
+   asm_sysvec_call_function+0x16/0x20
+  RIP: 0010:cpuidle_enter_state+0xc4/0x450
+   ? cpuidle_enter_state+0xb7/0x450
+   cpuidle_enter+0x29/0x40
+   cpuidle_idle_call+0xf5/0x160
+   do_idle+0x7b/0xe0
+   cpu_startup_entry+0x26/0x30
+   start_secondary+0x115/0x140
+   secondary_startup_64_no_verify+0x194/0x19b
+   </TASK>
 
-Fixes: 544ac8858f24 ("ASoC: SOF: Add bytes_get/put control IPC ops for IPC3")
-Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20260609083458.31193-6-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by ensuring that BRS is not enabled from the event selector
+reprogramming path even when cpuc->lbr_users > 0.
+
+Fixes: bae19fdd7e9e ("perf/x86/amd/core: Fix reloading events for SVM")
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://patch.msgid.link/702fa204d574b03d14e3664c7d4b201db048bbfd.1783506528.git.sandipan.das@amd.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc3-control.c |   23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ arch/x86/events/amd/core.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/sound/soc/sof/ipc3-control.c
-+++ b/sound/soc/sof/ipc3-control.c
-@@ -315,10 +315,13 @@ static int sof_ipc3_bytes_get(struct snd
+diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
+index 6ca2301e81ccd4..09b973deed3439 100644
+--- a/arch/x86/events/amd/core.c
++++ b/arch/x86/events/amd/core.c
+@@ -750,13 +750,11 @@ static void amd_pmu_enable_event(struct perf_event *event)
+ 	x86_pmu_enable_event(event);
+ }
+ 
+-static void amd_pmu_enable_all(int added)
++static void __amd_pmu_enable_all(void)
+ {
+ 	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
+ 	int idx;
+ 
+-	amd_brs_enable_all();
+-
+ 	for_each_set_bit(idx, x86_pmu.cntr_mask, X86_PMC_IDX_MAX) {
+ 		/* only activate events which are marked as active */
+ 		if (!test_bit(idx, cpuc->active_mask))
+@@ -771,6 +769,12 @@ static void amd_pmu_enable_all(int added)
  	}
+ }
  
- 	/* be->max has been verified to be >= sizeof(struct sof_abi_hdr) */
--	if (data->size > scontrol->max_size - sizeof(*data)) {
-+	if (data->size > scontrol->max_size - sizeof(*cdata) -
-+				    sizeof(*data)) {
- 		dev_err_ratelimited(scomp->dev,
- 				    "%u bytes of control data is invalid, max is %zu\n",
--				    data->size, scontrol->max_size - sizeof(*data));
-+				    data->size,
-+				    scontrol->max_size - sizeof(*cdata) -
-+				    sizeof(*data));
- 		return -EINVAL;
++static void amd_pmu_enable_all(int added)
++{
++	amd_brs_enable_all();
++	__amd_pmu_enable_all();
++}
++
+ static void amd_pmu_v2_enable_event(struct perf_event *event)
+ {
+ 	struct hw_perf_event *hwc = &event->hw;
+@@ -1557,7 +1561,7 @@ static inline void amd_pmu_reload_virt(void)
+ 		 * set global enable bits once again
+ 		 */
+ 		amd_pmu_v2_disable_all();
+-		amd_pmu_enable_all(0);
++		__amd_pmu_enable_all();
+ 		amd_pmu_v2_enable_all(0);
+ 		return;
  	}
- 
-@@ -336,6 +339,8 @@ static int sof_ipc3_bytes_put(struct snd
- 	struct sof_ipc_ctrl_data *cdata = scontrol->ipc_control_data;
- 	struct snd_soc_component *scomp = scontrol->scomp;
- 	struct sof_abi_hdr *data = cdata->data;
-+	const struct sof_abi_hdr *new_hdr =
-+		(const struct sof_abi_hdr *)ucontrol->value.bytes.data;
- 	size_t size;
- 
- 	if (scontrol->max_size > sizeof(ucontrol->value.bytes.data)) {
-@@ -344,14 +349,18 @@ static int sof_ipc3_bytes_put(struct snd
- 		return -EINVAL;
- 	}
- 
--	/* scontrol->max_size has been verified to be >= sizeof(struct sof_abi_hdr) */
--	if (data->size > scontrol->max_size - sizeof(*data)) {
--		dev_err_ratelimited(scomp->dev, "data size too big %u bytes max is %zu\n",
--				    data->size, scontrol->max_size - sizeof(*data));
-+	/* Validate the new data's size, not the old one */
-+	if (new_hdr->size > scontrol->max_size - sizeof(*cdata) -
-+				    sizeof(*new_hdr)) {
-+		dev_err_ratelimited(scomp->dev,
-+				    "data size too big %u bytes max is %zu\n",
-+				    new_hdr->size,
-+				    scontrol->max_size - sizeof(*cdata) -
-+				    sizeof(*new_hdr));
- 		return -EINVAL;
- 	}
- 
--	size = data->size + sizeof(*data);
-+	size = new_hdr->size + sizeof(*new_hdr);
- 
- 	/* copy from kcontrol */
- 	memcpy(data, ucontrol->value.bytes.data, size);
+-- 
+2.53.0
+
 
 
