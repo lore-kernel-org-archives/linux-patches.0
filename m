@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACEF415F3E;
-	Tue, 21 Jul 2026 17:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B81363081;
+	Tue, 21 Jul 2026 17:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656522; cv=none; b=IN3TZSPOhBhSZ7b1/9ZauNb3F3WuomuNInqyDGdMoRTscQLxKE+P3FLsHirXEOJMXH3qlhEw1pI0lZPr3/q2Z440ol3aqaUz0cM/po/7m3lqBA+/MIDrorrW4fInTIyLXQOMVf2bPnUCobnvuwu5yu8mRcUnNvaijS9DHcgFZrY=
+	t=1784656525; cv=none; b=siL+GN9r1xVA8VfN08giDPpc3qqJzNcdNJh7MGuAT+IKij0U2qmZph3LuS1Ft2x1wkXTNSwHPQY4aATGLDlFIiUCIEmALSMHmwtPjlyznj5FzktnXVDtoFQ8Q0pcwQ7SOOSoe8hGA6zIsBTREAqdxXtGRXdmTs/ZKAbhW1c4Ta8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656522; c=relaxed/simple;
-	bh=hrQiq1QVUla84dQV0nGHtcvOPYqEcjB+DML/PVAe0ZA=;
+	s=arc-20240116; t=1784656525; c=relaxed/simple;
+	bh=8FkBwVogN0kpJzdZTu1iWM+ZrUVE9lyarcsKrXvpg4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TAGMt9up4oO8tHxN3LasvtjneH3x+0kSxBHrISE6CSO3R6lhOB6+glS5xnU50rt8zllPg1ytdQt3qotA+KgNjtVmk6S2PVaYLDpnSGYirsPzaBy+O8o6St+BM3uLGrCgujzhvFJn8nJpwhoXPSsdQqdO36PCwvLVUZz+ADYDkPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFiu8O1E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b+mjDrkEfRmJNl+tyxK1cdZX87zoJxKi5C3dSk3d77JFsAie/i/k/GyJ62x3mLKiXe7jutYOgZV89Nud2S5D0BVNSBjpFC3G1637iABnb3mwdBvfDoNuHCuI3y+XNhOGRl+dWaIRrdowG3kAnzH4vduEt1Us/DsyjBsJnDxL7l4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ghlDTX0n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFiu8O1E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B061F000E9;
-	Tue, 21 Jul 2026 17:55:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ghlDTX0n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6051F000E9;
+	Tue, 21 Jul 2026 17:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656521;
-	bh=z2kKheDVe29J+pijHLiuZXC3PqrrkHb8R1GPD7DlyE8=;
+	s=korg; t=1784656524;
+	bh=Mr4V8raG2ZzRsDaXmT/iz6m+NWLkPLp27Hs34lGSWXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xFiu8O1EpSoJJnKTlQyXJAWQXvj/fWHo+fS1Mw+VGV4m3l5yTkkYD9oD8K6wUOSAY
-	 TxrUkwb+n3Mxir2QrwffjXXEJjT6Nq7Rt/bDUeolNiLEyXm3JgiVY9nW0c8rzhUCoO
-	 Rl6UTzW/3EONSiBD5OM+mo5SSa2mlSmOck+VpnOI=
+	b=ghlDTX0nJOblPhkxKakirHL3ge5EDJH74jw0If6hcaO7HeM3VHsVgTD9nRdg8KAiQ
+	 WLFSKpCEqk0YsX8qL5IO3ozs+cBZVe8xi0X3lB5mp2ALL1xZ4NuYoFzHTd10lkQctb
+	 7UBE4LMIhXDmAciCcp4prKsM14LWPXsRznDuSXcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Pengjie Zhang <zhangpengjie2@huawei.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0417/1611] ALSA: aloop: Drop superfluous break
-Date: Tue, 21 Jul 2026 17:08:53 +0200
-Message-ID: <20260721152524.641418989@linuxfoundation.org>
+Subject: [PATCH 6.18 0377/1611] cpufreq: Documentation: fix conservative governor freq_step description
+Date: Tue, 21 Jul 2026 17:08:13 +0200
+Message-ID: <20260721152523.670718363@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,35 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Pengjie Zhang <zhangpengjie2@huawei.com>
 
-[ Upstream commit 123fd13f35ccaf7d2b98f5a8cc6c8a3de378568d ]
+[ Upstream commit 03120e1425262c7d11f93362a88e579a1720390b ]
 
-At converting the spinlock to guard(), a break statement was put in
-the scoped_guard block in loopback_jiffies_timer_function(), but it's
-obviously superfluous (although it's harmless).  Better to drop it for
-avoiding confusion.
+The conservative governor documentation incorrectly states that setting
+freq_step to 0 will use the default 5% frequency step. In reality, since
+at least commit 8e677ce83bf4 ("[CPUFREQ] conservative: fixup governor to
+function more like ondemand logic"), freq_step=0 has always caused the
+governor to skip frequency updates entirely.
 
-Fixes: 1ef2cb6b29c2 ("ALSA: aloop: Use guard() for spin locks")
-Link: https://patch.msgid.link/20260609074907.726593-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Correct the documentation to reflect the actual behavior: freq_step=0
+disables frequency changes by the governor entirely.
+
+Fixes: 2a0e49279850 ("cpufreq: User/admin documentation update and consolidation")
+Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+[ rjw: Subject adjustment ]
+Link: https://patch.msgid.link/20260603055635.1549943-1-zhangpengjie2@huawei.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/aloop.c | 1 -
- 1 file changed, 1 deletion(-)
+ Documentation/admin-guide/pm/cpufreq.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
-index a37a1695f51c7d..3f8488716a0827 100644
---- a/sound/drivers/aloop.c
-+++ b/sound/drivers/aloop.c
-@@ -728,7 +728,6 @@ static void loopback_jiffies_timer_function(struct timer_list *t)
- 			if (dpcm->period_update_pending) {
- 				dpcm->period_update_pending = 0;
- 				period_elapsed = true;
--				break;
- 			}
- 		}
- 	}
+diff --git a/Documentation/admin-guide/pm/cpufreq.rst b/Documentation/admin-guide/pm/cpufreq.rst
+index 33122fbe9f6a0e..9909c7d5c6172d 100644
+--- a/Documentation/admin-guide/pm/cpufreq.rst
++++ b/Documentation/admin-guide/pm/cpufreq.rst
+@@ -586,8 +586,8 @@ This governor exposes the following tunables:
+ 	100 (5 by default).
+ 
+ 	This is how much the frequency is allowed to change in one go.  Setting
+-	it to 0 will cause the default frequency step (5 percent) to be used
+-	and setting it to 100 effectively causes the governor to periodically
++	it to 0 disables frequency changes by the governor entirely and setting
++	it to 100 effectively causes the governor to periodically
+ 	switch the frequency between the ``scaling_min_freq`` and
+ 	``scaling_max_freq`` policy limits.
+ 
 -- 
 2.53.0
 
