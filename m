@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ABB943CECF;
-	Tue, 21 Jul 2026 22:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E160C434E2F;
+	Tue, 21 Jul 2026 22:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672914; cv=none; b=Ma8yHg3YfoGSGAPBYjkt5A8xpJO1hdflqkEPGKex6PlFkFZ6ygAK4KzZ0oGFUn+SQgKP/0POiKAXWijEiph/NDgvUwmjFfKKmq38cgLg8s7Q+bTNSIHnZQ05R3VrGw0Ah4bSqUkOwBhkByqD6Vbfhk+0qAR2ypZLRb1jr5yN3Rw=
+	t=1784672915; cv=none; b=fhDPgwg7rMQHadJVVX9YcYdlla0ivbOfRZWCkUWdy7VCvaQZ+Dp1VcFqTJBoHW94yKQuB2wN0oc5ErmRvgg46OoUTWeko13xPPts4jAdgQ4bdyxxZ++Sw37an4gHZNeokExB6xSbrY+zoffhj+gBK8qZDfPbe3vB0WX2LyME7lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672914; c=relaxed/simple;
-	bh=q4AIgaXLOqmvVfYq+QT+iFXk0TqrB/Y5T/iXozSxje4=;
+	s=arc-20240116; t=1784672915; c=relaxed/simple;
+	bh=UaRuAbFtfqqpMKpslNY+4JpJbmUhmoU4/cf0S7MP8Ic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uHhuSY9E2VgbuJ0BCiNXOyExQw2Iaac0YeLcdtVghQFegQA8hDBzpOOeHaPqAb1Bc2r52H4CDCCg7XL8XhJgeoIGq+Oj3qnRinMXPtli0/FbbRAvclnnOg3CUq+SwbOkloh+o/kxXaNDZRP0uA6OwtdEuVeEicJzO5/H8F/tOnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBFQ5Owk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rt7v++4W5nkUk6G7LNa99RPayoxksK80/gPMSYGzg9kpSa/810gfZ4kROQ7XFhK4HTJxX2USpvxQQSk1Sec2fZEtkRXeC0RpPYCyG2X6K3oRbrHArms3d6EIkcfvx/8LmBX6pYHCE9mBvupR0M2aPHip4XpEXDlH5DSwrn012iI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ECymm8WP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBFQ5Owk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74921F00A3D;
-	Tue, 21 Jul 2026 22:28:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ECymm8WP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E0D1F00A3F;
+	Tue, 21 Jul 2026 22:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672904;
-	bh=YwxhL2HgkoqlcPRMBHzDXaoxruUccNOamL2Fqp5kslM=;
+	s=korg; t=1784672907;
+	bh=XjuhoWyyIHrXa8NS91sg9WXN19M4OD2r8buCvOby7zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zBFQ5OwkxvUHl2K7+P+VYmvPY3oi2Wu5XkkJBxVLd1X+gLMziYTPhfdRLYrgByrwi
-	 rr37Ra7IyQQvEasQn8OX8dSNhrgHXRnjxuaOTLqtcKInFOPcZFQZDClMfpYr8cd98v
-	 qT95RQdJSgEUy80yQ7dr2eADmuyZkekBN1YY2Gw4=
+	b=ECymm8WPA2g6p1eG6TfYBmgM77LOZSsDUtfciJgP5bqVOzdckhRO4n5EPjbbJALqE
+	 XMnZofvhxreUItc+7vPj+gLu/HbBcAE89RPhyGI9fuc/PSQyto5O4V9vLeLTL9Bb8n
+	 JQMhoDZLuMGGXXjb2Beed+geRVTjhAXah3G8zGJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manish Khadka <maskmemanish@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 800/843] HID: appleir: fix UAF on pending key_up_timer in remove()
-Date: Tue, 21 Jul 2026 17:27:15 +0200
-Message-ID: <20260721152424.063145585@linuxfoundation.org>
+Subject: [PATCH 5.15 801/843] serial: 8250_mid: Remove 8250_pci usage
+Date: Tue, 21 Jul 2026 17:27:16 +0200
+Message-ID: <20260721152424.084566876@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -45,153 +44,124 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Manish Khadka <maskmemanish@gmail.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 75fe87e19d8aff81eb2c64d15d244ab8da4de945 ]
+[ Upstream commit a136abd7e7abe0f1247f8ffde6cc7c8ab09f985b ]
 
-appleir_remove() runs hid_hw_stop() before timer_delete_sync().
-hid_hw_stop() synchronously unregisters the HID input device via
-hid_disconnect() -> hidinput_disconnect() -> input_unregister_device(),
-which drops the last reference and frees the underlying input_dev when
-no userspace handle holds it open.
+8250_mid uses FL_*BASE* from linux/8250_pci.h and nothing else. The
+code can be simplified by directly defining BARs within the driver
+instead.
 
-key_up_tick() reads appleir->input_dev and calls input_report_key() /
-input_sync() on it.  The timer is armed from appleir_raw_event() with
-a HZ/8 (~125 ms) timeout on every keydown and key-repeat report.  If a
-key was pressed shortly before the device is disconnected, the timer
-can fire after hid_hw_stop() has freed input_dev but before the
-teardown drains it.
-
-A simple reorder is not sufficient.  Putting the timer drain first
-still leaves a window where a USB URB completion (raw_event) running
-during hid_hw_stop() can call mod_timer() and re-arm the timer, which
-then fires after hidinput_disconnect() has freed input_dev.  The same
-URB-completion window also lets raw_event() reach key_up(), key_down()
-and battery_flat() directly, all of which dereference
-appleir->input_dev.
-
-Introduce a 'removing' flag on struct appleir, gated by the existing
-spinlock.  appleir_remove() sets the flag under the lock and then
-shuts down the timer with timer_shutdown_sync(), which both drains any
-in-flight callback and permanently disables further mod_timer() calls.
-appleir_raw_event() and key_up_tick() bail out early if the flag is
-set, so no path can arm or run the timer, or dereference
-appleir->input_dev, after remove() has started tearing down.
-
-The keyrepeat and flatbattery branches of appleir_raw_event()
-previously called into the input layer without holding the spinlock;
-take it now so the flag check is well-defined.  This incidentally
-closes a pre-existing read-side race on appleir->current_key in the
-keyrepeat branch.
-
-This bug is structurally a sibling of commit 4db2af929279 ("HID:
-appletb-kbd: fix UAF in inactivity-timer cleanup path") and has been
-present since the driver was introduced.
-
-Fixes: 9a4a5574ce42 ("HID: appleir: add support for Apple ir devices")
-Cc: stable@vger.kernel.org
-Signed-off-by: Manish Khadka <maskmemanish@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20230915094336.13278-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: b1b4efea05a5 ("serial: 8250_mid: Disable DMA for selected platforms")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-appleir.c |   45 +++++++++++++++++++++++++++++++++++----------
- 1 file changed, 35 insertions(+), 10 deletions(-)
+ drivers/tty/serial/8250/8250_mid.c |   18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
---- a/drivers/hid/hid-appleir.c
-+++ b/drivers/hid/hid-appleir.c
-@@ -109,9 +109,10 @@ struct appleir {
- 	struct hid_device *hid;
- 	unsigned short keymap[ARRAY_SIZE(appleir_key_table)];
- 	struct timer_list key_up_timer;	/* timer for key up */
--	spinlock_t lock;		/* protects .current_key */
-+	spinlock_t lock;		/* protects .current_key, .removing */
- 	int current_key;		/* the currently pressed key */
- 	int prev_key_idx;		/* key index in a 2 packets message */
-+	bool removing;			/* set during teardown; gates input_dev access */
+--- a/drivers/tty/serial/8250/8250_mid.c
++++ b/drivers/tty/serial/8250/8250_mid.c
+@@ -12,7 +12,6 @@
+ #include <linux/rational.h>
+ 
+ #include <linux/dma/hsu.h>
+-#include <linux/8250_pci.h>
+ 
+ #include "8250.h"
+ 
+@@ -32,9 +31,9 @@
+ struct mid8250;
+ 
+ struct mid8250_board {
+-	unsigned int flags;
+ 	unsigned long freq;
+ 	unsigned int base_baud;
++	unsigned int bar;
+ 	int (*setup)(struct mid8250 *, struct uart_port *p);
+ 	void (*exit)(struct mid8250 *);
  };
- 
- static int get_key(int data)
-@@ -172,7 +173,7 @@ static void key_up_tick(struct timer_lis
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&appleir->lock, flags);
--	if (appleir->current_key) {
-+	if (!appleir->removing && appleir->current_key) {
- 		key_up(hid, appleir, appleir->current_key);
- 		appleir->current_key = 0;
- 	}
-@@ -195,6 +196,10 @@ static int appleir_raw_event(struct hid_
- 		int index;
- 
- 		spin_lock_irqsave(&appleir->lock, flags);
-+		if (appleir->removing) {
-+			spin_unlock_irqrestore(&appleir->lock, flags);
-+			goto out;
-+		}
- 		/*
- 		 * If we already have a key down, take it up before marking
- 		 * this one down
-@@ -229,17 +234,25 @@ static int appleir_raw_event(struct hid_
- 	appleir->prev_key_idx = 0;
- 
- 	if (!memcmp(data, keyrepeat, sizeof(keyrepeat))) {
--		key_down(hid, appleir, appleir->current_key);
--		/*
--		 * Remote doesn't do key up, either pull them up, in the test
--		 * above, or here set a timer which pulls them up after 1/8 s
--		 */
--		mod_timer(&appleir->key_up_timer, jiffies + HZ / 8);
-+		spin_lock_irqsave(&appleir->lock, flags);
-+		if (!appleir->removing) {
-+			key_down(hid, appleir, appleir->current_key);
-+			/*
-+			 * Remote doesn't do key up, either pull them up, in
-+			 * the test above, or here set a timer which pulls them
-+			 * up after 1/8 s
-+			 */
-+			mod_timer(&appleir->key_up_timer, jiffies + HZ / 8);
-+		}
-+		spin_unlock_irqrestore(&appleir->lock, flags);
- 		goto out;
- 	}
- 
- 	if (!memcmp(data, flatbattery, sizeof(flatbattery))) {
--		battery_flat(appleir);
-+		spin_lock_irqsave(&appleir->lock, flags);
-+		if (!appleir->removing)
-+			battery_flat(appleir);
-+		spin_unlock_irqrestore(&appleir->lock, flags);
- 		/* Fall through */
- 	}
- 
-@@ -318,8 +331,20 @@ fail:
- static void appleir_remove(struct hid_device *hid)
+@@ -169,7 +168,6 @@ static int dnv_setup(struct mid8250 *mid
  {
- 	struct appleir *appleir = hid_get_drvdata(hid);
-+	unsigned long flags;
-+
-+	/*
-+	 * Mark the driver as tearing down so that any concurrent raw_event
-+	 * (e.g. from a USB URB completion that hid_hw_stop() has not yet
-+	 * killed) and the key_up_timer softirq stop touching input_dev
-+	 * before hid_hw_stop() frees it via hidinput_disconnect().
-+	 */
-+	spin_lock_irqsave(&appleir->lock, flags);
-+	appleir->removing = true;
-+	spin_unlock_irqrestore(&appleir->lock, flags);
-+
-+	timer_shutdown_sync(&appleir->key_up_timer);
- 	hid_hw_stop(hid);
--	timer_delete_sync(&appleir->key_up_timer);
+ 	struct hsu_dma_chip *chip = &mid->dma_chip;
+ 	struct pci_dev *pdev = to_pci_dev(p->dev);
+-	unsigned int bar = FL_GET_BASE(mid->board->flags);
+ 	int ret;
+ 
+ 	pci_set_master(pdev);
+@@ -183,7 +181,7 @@ static int dnv_setup(struct mid8250 *mid
+ 	chip->dev = &pdev->dev;
+ 	chip->irq = pci_irq_vector(pdev, 0);
+ 	chip->regs = p->membase;
+-	chip->length = pci_resource_len(pdev, bar);
++	chip->length = pci_resource_len(pdev, mid->board->bar);
+ 	chip->offset = DNV_DMA_CHAN_OFFSET;
+ 
+ 	/* Falling back to PIO mode if DMA probing fails */
+@@ -292,7 +290,6 @@ static int mid8250_probe(struct pci_dev
+ {
+ 	struct uart_8250_port uart;
+ 	struct mid8250 *mid;
+-	unsigned int bar;
+ 	int ret;
+ 
+ 	ret = pcim_enable_device(pdev);
+@@ -304,7 +301,6 @@ static int mid8250_probe(struct pci_dev
+ 		return -ENOMEM;
+ 
+ 	mid->board = (struct mid8250_board *)id->driver_data;
+-	bar = FL_GET_BASE(mid->board->flags);
+ 
+ 	memset(&uart, 0, sizeof(struct uart_8250_port));
+ 
+@@ -317,8 +313,8 @@ static int mid8250_probe(struct pci_dev
+ 	uart.port.flags = UPF_SHARE_IRQ | UPF_FIXED_PORT | UPF_FIXED_TYPE;
+ 	uart.port.set_termios = mid8250_set_termios;
+ 
+-	uart.port.mapbase = pci_resource_start(pdev, bar);
+-	uart.port.membase = pcim_iomap(pdev, bar, 0);
++	uart.port.mapbase = pci_resource_start(pdev, mid->board->bar);
++	uart.port.membase = pcim_iomap(pdev, mid->board->bar, 0);
+ 	if (!uart.port.membase)
+ 		return -ENOMEM;
+ 
+@@ -356,25 +352,25 @@ static void mid8250_remove(struct pci_de
  }
  
- static const struct hid_device_id appleir_devices[] = {
+ static const struct mid8250_board pnw_board = {
+-	.flags = FL_BASE0,
+ 	.freq = 50000000,
+ 	.base_baud = 115200,
++	.bar = 0,
+ 	.setup = pnw_setup,
+ 	.exit = pnw_exit,
+ };
+ 
+ static const struct mid8250_board tng_board = {
+-	.flags = FL_BASE0,
+ 	.freq = 38400000,
+ 	.base_baud = 1843200,
++	.bar = 0,
+ 	.setup = tng_setup,
+ 	.exit = tng_exit,
+ };
+ 
+ static const struct mid8250_board dnv_board = {
+-	.flags = FL_BASE1,
+ 	.freq = 133333333,
+ 	.base_baud = 115200,
++	.bar = 1,
+ 	.setup = dnv_setup,
+ 	.exit = dnv_exit,
+ };
 
 
