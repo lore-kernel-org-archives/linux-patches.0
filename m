@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E65395D8E;
-	Tue, 21 Jul 2026 19:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93C844607D;
+	Tue, 21 Jul 2026 19:05:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660736; cv=none; b=FpixG6t7XnquOCsITKzL7uQD9wi7CUotHb7QnsQ6PCvGsrjJozeNW/QCK63KjEINwwNf+UIDDi5YWCggRxj/pywO9E4qepnExi6pbHBOxPmIKyMZ2uyC3oET1H7kzAnvGT3Ckc7WQQbfke7H3rVjFZOTLEubvztuXzyJu59YSgw=
+	t=1784660739; cv=none; b=VivhvYZmPIE2v8BpYvf3H8kbYetwvMvYNlf+XfWGhe75qmvwMGiAaMXAtjN8mItgUMbXJFM9/xo72E+Eve0oNYiMTWCFbamaiyfo1cishXt+47CEMy3CwP9SEGvy3n7tb5tQRyzGDWZ+kdrYsSJvrn+x9l3ZQtJMz+HSHAYtO8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660736; c=relaxed/simple;
-	bh=/Qt27yVDdjFEkB8CfcxWSoqoH3Ip4+toohq9lHwbc4M=;
+	s=arc-20240116; t=1784660739; c=relaxed/simple;
+	bh=s9iTNAFP9LBSXVYASDkMGaeblUAVBPra0MYRDr/qwRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qqXlJ/pykG4Pg27shwQhcD5/7vNRIOa9044zrglztk7c0R5282QkYpTxzRI1HSGjEVIUUqmyxd+Ad4kPtRBl11dGUaSgXDcZs3YWWvzHldMuD9Ly49+lk0AIS1l2IQZn6T7ZHH+Spma41dncXA2y3bQyHA3ioVZuNRaEeHYhkQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khtHPWAb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SLHODdosSqmEezISCl3Y5nyO7oYKeQ3rW2xVBV7pyi+OgaF5dzsIRscylZJ3pm8C6tpgo1OyJYwM/sHFAcIE0VSLJVzXp3w0751LX4aAI67qORF8rRiZGFbXNFgLIjt7m0I/2ntm8ILQZwn7atE/Jdopw1aOgz/4pjJWdJRRghk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJCl3VrM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khtHPWAb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6851F000E9;
-	Tue, 21 Jul 2026 19:05:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJCl3VrM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4964F1F000E9;
+	Tue, 21 Jul 2026 19:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660735;
-	bh=uU+KvrVoRXcyFI08WsS8pX81Es30YKW+oLQXOu8QDHA=;
+	s=korg; t=1784660737;
+	bh=xbfl9Qc0onXEbtpFXyeWf4ajhfg4mWNtxHf6aOnr6Sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=khtHPWAbaBjBBuBB8jKujf9WDO/v8qcQr34jQ8BxCLP2e8KSU16MNRPbCaxWClFFs
-	 f/HyTj5/JdZfID7UPqax6NDtLtYsQlT9M2MsCN2PRwt2zyQO6LEInY7jLI0byO94jk
-	 UYJwhMVWstc3JNm1X6fg5iO+vX+AA4mFrSCh8y3Q=
+	b=QJCl3VrMxJO0RzuR5o+IeAsgT5fXLERA+SCWZacSQjF1igmzb+1SU8CTVgHtS+VMe
+	 KfRpMT89emKPQJC87KN/nyuctiZ9trJcZ8l3Ig6wOsbPjfnF9STKbJvySrd8NXE8WQ
+	 9/2hNXD8w8weY7LkXjdrAQTF5xzxwgNe6ZU0bbAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Simon Horman <horms@kernel.org>,
+	syzbot+d85ba1c732720b9a4097@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1091/2077] xfrm: Fix xfrm state cache insertion race
-Date: Tue, 21 Jul 2026 17:12:44 +0200
-Message-ID: <20260721152618.556099053@linuxfoundation.org>
+Subject: [PATCH 7.1 1092/2077] xfrm: annotate data-races around xfrm_policy_count[] and xfrm_policy_default[]
+Date: Tue, 21 Jul 2026 17:12:45 +0200
+Message-ID: <20260721152618.580390209@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,85 +52,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ddd3d0132920319ac426e12456013eadbae67e15 ]
+[ Upstream commit 68de007d5ac9df0e3f4f187a179c5c842bb5a2be ]
 
-The xfrm input state cache insertion code checks the validity of
-the state before acquiring the global xfrm_state_lock.  Thus it's
-possible for someone else to kill the state after it passed the
-validity check, and then the insertion will add the dead state
-to the cache.
+KCSAN reported a data race involving net->xfrm.policy_count access.
 
-Fix this by moving the validity check inside the lock.
+Add missing READ_ONCE()/WRITE_ONCE() annotations on
+xfrm_policy_count and xfrm_policy_default.
 
-This entire function is called on the input path, where BH must
-be off (e.g., the caller of this function xfrm_input acquires
-its spinlocks without disabling BH).
-
-So there is no need to disable BH here or take the RCU read lock.
-Remove both and replace them with an assertion that trips if BH
-is accidentally enabled on some future calling path.
-
-Fixes: 81a331a0e72d ("xfrm: Add an inbound percpu state cache.")
-Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 2518c7c2b3d7 ("[XFRM]: Hash policies when non-prefixed.")
+Reported-by: syzbot+d85ba1c732720b9a4097@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a2b9e96.99669fcc.12a77b.0006.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_state.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ include/net/xfrm.h     |  8 ++++----
+ net/xfrm/xfrm_policy.c | 24 ++++++++++++------------
+ net/xfrm/xfrm_user.c   | 18 +++++++++---------
+ 3 files changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 4c7eed689cd444..ae4fdc60c2a624 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -1207,9 +1207,11 @@ struct xfrm_state *xfrm_input_state_lookup(struct net *net, u32 mark,
- 	struct hlist_head *state_cache_input;
- 	struct xfrm_state *x = NULL;
+diff --git a/include/net/xfrm.h b/include/net/xfrm.h
+index 874409127e2921..35a7431293298a 100644
+--- a/include/net/xfrm.h
++++ b/include/net/xfrm.h
+@@ -1250,8 +1250,8 @@ int __xfrm_policy_check(struct sock *, int dir, struct sk_buff *skb,
+ static inline bool __xfrm_check_nopolicy(struct net *net, struct sk_buff *skb,
+ 					 int dir)
+ {
+-	if (!net->xfrm.policy_count[dir] && !secpath_exists(skb))
+-		return net->xfrm.policy_default[dir] == XFRM_USERPOLICY_ACCEPT;
++	if (!READ_ONCE(net->xfrm.policy_count[dir]) && !secpath_exists(skb))
++		return READ_ONCE(net->xfrm.policy_default[dir]) == XFRM_USERPOLICY_ACCEPT;
  
-+	/* BH is always disabled on the input path. */
-+	lockdep_assert_in_softirq();
-+
- 	state_cache_input = raw_cpu_ptr(net->xfrm.state_cache_input);
+ 	return false;
+ }
+@@ -1351,8 +1351,8 @@ static inline int xfrm_route_forward(struct sk_buff *skb, unsigned short family)
+ {
+ 	struct net *net = dev_net(skb->dev);
  
--	rcu_read_lock();
- 	hlist_for_each_entry_rcu(x, state_cache_input, state_cache_input) {
- 		if (x->props.family != family ||
- 		    x->id.spi       != spi ||
-@@ -1227,20 +1229,25 @@ struct xfrm_state *xfrm_input_state_lookup(struct net *net, u32 mark,
- 	xfrm_hash_ptrs_get(net, &state_ptrs);
+-	if (!net->xfrm.policy_count[XFRM_POLICY_OUT] &&
+-	    net->xfrm.policy_default[XFRM_POLICY_OUT] == XFRM_USERPOLICY_ACCEPT)
++	if (!READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_OUT]) &&
++	    READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_OUT]) == XFRM_USERPOLICY_ACCEPT)
+ 		return true;
  
- 	x = __xfrm_state_lookup(&state_ptrs, mark, daddr, spi, proto, family);
--
--	if (x && x->km.state == XFRM_STATE_VALID) {
--		spin_lock_bh(&net->xfrm.xfrm_state_lock);
--		if (hlist_unhashed(&x->state_cache_input)) {
-+	if (x) {
-+		spin_lock(&net->xfrm.xfrm_state_lock);
-+		if (x->km.state != XFRM_STATE_VALID) {
-+			/*
-+			 * The state is about to be destroyed.
-+			 *
-+			 * Don't add it to the cache but still
-+			 * return it to the caller.
-+			 */
-+		} else if (hlist_unhashed(&x->state_cache_input)) {
- 			hlist_add_head_rcu(&x->state_cache_input, state_cache_input);
- 		} else {
- 			hlist_del_rcu(&x->state_cache_input);
- 			hlist_add_head_rcu(&x->state_cache_input, state_cache_input);
- 		}
--		spin_unlock_bh(&net->xfrm.xfrm_state_lock);
-+		spin_unlock(&net->xfrm.xfrm_state_lock);
+ 	return (skb_dst(skb)->flags & DST_NOXFRM) ||
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index 95954442569290..1f4afd580105f9 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -685,7 +685,7 @@ static void xfrm_byidx_resize(struct net *net)
+ 
+ static inline int xfrm_bydst_should_resize(struct net *net, int dir, int *total)
+ {
+-	unsigned int cnt = net->xfrm.policy_count[dir];
++	unsigned int cnt = READ_ONCE(net->xfrm.policy_count[dir]);
+ 	unsigned int hmask = net->xfrm.policy_bydst[dir].hmask;
+ 
+ 	if (total)
+@@ -711,12 +711,12 @@ static inline int xfrm_byidx_should_resize(struct net *net, int total)
+ 
+ void xfrm_spd_getinfo(struct net *net, struct xfrmk_spdinfo *si)
+ {
+-	si->incnt = net->xfrm.policy_count[XFRM_POLICY_IN];
+-	si->outcnt = net->xfrm.policy_count[XFRM_POLICY_OUT];
+-	si->fwdcnt = net->xfrm.policy_count[XFRM_POLICY_FWD];
+-	si->inscnt = net->xfrm.policy_count[XFRM_POLICY_IN+XFRM_POLICY_MAX];
+-	si->outscnt = net->xfrm.policy_count[XFRM_POLICY_OUT+XFRM_POLICY_MAX];
+-	si->fwdscnt = net->xfrm.policy_count[XFRM_POLICY_FWD+XFRM_POLICY_MAX];
++	si->incnt = READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_IN]);
++	si->outcnt = READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_OUT]);
++	si->fwdcnt = READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_FWD]);
++	si->inscnt = READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_IN+XFRM_POLICY_MAX]);
++	si->outscnt = READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_OUT+XFRM_POLICY_MAX]);
++	si->fwdscnt = READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_FWD+XFRM_POLICY_MAX]);
+ 	si->spdhcnt = net->xfrm.policy_idx_hmask;
+ 	si->spdhmcnt = xfrm_policy_hashmax;
+ }
+@@ -2318,7 +2318,7 @@ static void __xfrm_policy_link(struct xfrm_policy *pol, int dir)
  	}
  
- out:
--	rcu_read_unlock();
- 	return x;
+ 	list_add(&pol->walk.all, &net->xfrm.policy_all);
+-	net->xfrm.policy_count[dir]++;
++	WRITE_ONCE(net->xfrm.policy_count[dir], net->xfrm.policy_count[dir] + 1);
+ 	xfrm_pol_hold(pol);
  }
- EXPORT_SYMBOL(xfrm_input_state_lookup);
+ 
+@@ -2337,7 +2337,7 @@ static struct xfrm_policy *__xfrm_policy_unlink(struct xfrm_policy *pol,
+ 	}
+ 
+ 	list_del_init(&pol->walk.all);
+-	net->xfrm.policy_count[dir]--;
++	WRITE_ONCE(net->xfrm.policy_count[dir], net->xfrm.policy_count[dir] - 1);
+ 
+ 	return pol;
+ }
+@@ -3222,7 +3222,7 @@ struct dst_entry *xfrm_lookup_with_ifid(struct net *net,
+ 
+ 		/* To accelerate a bit...  */
+ 		if (!if_id && ((dst_orig->flags & DST_NOXFRM) ||
+-			       !net->xfrm.policy_count[XFRM_POLICY_OUT]))
++			       !READ_ONCE(net->xfrm.policy_count[XFRM_POLICY_OUT])))
+ 			goto nopol;
+ 
+ 		xdst = xfrm_bundle_lookup(net, fl, family, dir, &xflo, if_id);
+@@ -3296,7 +3296,7 @@ struct dst_entry *xfrm_lookup_with_ifid(struct net *net,
+ 
+ nopol:
+ 	if ((!dst_orig->dev || !(dst_orig->dev->flags & IFF_LOOPBACK)) &&
+-	    net->xfrm.policy_default[dir] == XFRM_USERPOLICY_BLOCK) {
++	    READ_ONCE(net->xfrm.policy_default[dir]) == XFRM_USERPOLICY_BLOCK) {
+ 		err = -EPERM;
+ 		goto error;
+ 	}
+@@ -3750,7 +3750,7 @@ int __xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb,
+ 		const bool is_crypto_offload = sp &&
+ 			(xfrm_input_state(skb)->xso.type == XFRM_DEV_OFFLOAD_CRYPTO);
+ 
+-		if (net->xfrm.policy_default[dir] == XFRM_USERPOLICY_BLOCK) {
++		if (READ_ONCE(net->xfrm.policy_default[dir]) == XFRM_USERPOLICY_BLOCK) {
+ 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINNOPOLS);
+ 			return 0;
+ 		}
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index 71a4b7278eba92..8de2ebb0f9d794 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -2485,9 +2485,9 @@ static int xfrm_notify_userpolicy(struct net *net)
+ 	}
+ 
+ 	up = nlmsg_data(nlh);
+-	up->in = net->xfrm.policy_default[XFRM_POLICY_IN];
+-	up->fwd = net->xfrm.policy_default[XFRM_POLICY_FWD];
+-	up->out = net->xfrm.policy_default[XFRM_POLICY_OUT];
++	up->in = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_IN]);
++	up->fwd = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_FWD]);
++	up->out = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_OUT]);
+ 
+ 	nlmsg_end(skb, nlh);
+ 
+@@ -2511,13 +2511,13 @@ static int xfrm_set_default(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	struct xfrm_userpolicy_default *up = nlmsg_data(nlh);
+ 
+ 	if (xfrm_userpolicy_is_valid(up->in))
+-		net->xfrm.policy_default[XFRM_POLICY_IN] = up->in;
++		WRITE_ONCE(net->xfrm.policy_default[XFRM_POLICY_IN], up->in);
+ 
+ 	if (xfrm_userpolicy_is_valid(up->fwd))
+-		net->xfrm.policy_default[XFRM_POLICY_FWD] = up->fwd;
++		WRITE_ONCE(net->xfrm.policy_default[XFRM_POLICY_FWD], up->fwd);
+ 
+ 	if (xfrm_userpolicy_is_valid(up->out))
+-		net->xfrm.policy_default[XFRM_POLICY_OUT] = up->out;
++		WRITE_ONCE(net->xfrm.policy_default[XFRM_POLICY_OUT], up->out);
+ 
+ 	rt_genid_bump_all(net);
+ 
+@@ -2547,9 +2547,9 @@ static int xfrm_get_default(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	}
+ 
+ 	r_up = nlmsg_data(r_nlh);
+-	r_up->in = net->xfrm.policy_default[XFRM_POLICY_IN];
+-	r_up->fwd = net->xfrm.policy_default[XFRM_POLICY_FWD];
+-	r_up->out = net->xfrm.policy_default[XFRM_POLICY_OUT];
++	r_up->in = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_IN]);
++	r_up->fwd = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_FWD]);
++	r_up->out = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_OUT]);
+ 	nlmsg_end(r_skb, r_nlh);
+ 
+ 	return nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, portid);
 -- 
 2.53.0
 
