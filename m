@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2768D46D54B;
-	Tue, 21 Jul 2026 15:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E56846D54D;
+	Tue, 21 Jul 2026 15:44:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648684; cv=none; b=DCj1UzaNfhFXUH+FSIojVLFMm/8AiCLRgW7VZS1W6rDX4F+jczyHQ9CVDOja5oo5bcMKw8O7m+Ug7AQb2oA+OlqsopKHjgnLvGeF47tN6ggADjPh9ACEbS/Dzdx6m5CZMdAaHGBVAWwm60YP1SP8e1+b1Isazl3s12smzP6Q5Hg=
+	t=1784648686; cv=none; b=QNFzVxubyVKyAxN4TRpaYGGm10w3jIGXP/V7a9uBzRRtEjbmfTK0Ts0GXAH2InHipWsyPqeHmpsX1SZxVN8Pj7ujl1w30/JJDwt7rS3E7WUY0JmklNzrFeX7//ajQswUKafPM7FtBzKMMpw/LLyvMn8x8u7uu/TLo1/e9xsUT6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648684; c=relaxed/simple;
-	bh=fWNaeVyyCpViXnSAlmocR7oVk6mGbxqoMj76RFS1FMw=;
+	s=arc-20240116; t=1784648686; c=relaxed/simple;
+	bh=Y1uX0Kb0/JjCvcZrI6GdQePTCHGm1BLTmwFTnmOKSM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hRDY2y9Dv9q3HseqgAG4DwfhDB7l7bp2AlTBNYYmwTJmSFN9DlF7utu1irnnKBUnms8HYZYrA6pdlVtcorQ0tBfToScOJJAbP0NsO3fIee1oDqAvUl2RjCIMWSOwM+24hA1vQdup8rU13Vch6anGqoNOmzVu4TPRCdJ2xyHCzEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1oeY7tDC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DqvXHrrBCzKqtTZuTGdM1iK5SjpR4M/JvFITs1sFdkLAw3Y20gUCF5vQNGRI+YUvtJwI3dzi74dZHztaSzBajnQl/n/Ob0zunmgh8/eLJ+4N6w85X3p9UPw0PONHY73h/JWwt7xlf69etRMZQ2ZvzlaXcqTNCBvNpI7ctrkZUa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ro/63H8o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1oeY7tDC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC721F00A3A;
-	Tue, 21 Jul 2026 15:44:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ro/63H8o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47EA1F00A3A;
+	Tue, 21 Jul 2026 15:44:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648682;
-	bh=Vt15SJ4DgiTXBx4wyztaSVX5KJTX0WUWwNC/Da+9h5A=;
+	s=korg; t=1784648685;
+	bh=ztB08IlgXj0brG8M5PmSjBR5yvJjGJbRErvKIG3oIk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1oeY7tDCOV3TOCN5ePW2E5II95q94fAdhYTqdVCcoDx/Nk/YCYs1m+dwAOt2NhyOF
-	 ddlAMop/k1XiVknh+ieCoYoo0ArbZGnLuuOIPlxWiNVz3/LoCyeEU6cMnN5uXg1CA8
-	 Zk3IE962JryIsMEGrKAh6KzT84EdlbMsLTLYvBmw=
+	b=Ro/63H8ouN8/+Z0fqVYhk3cjNjrRLSWvAWc4zLkrvzpMfWCrVnjtyfp827apwDy/g
+	 66qLC6aBjS00a7h7BSop1mdu3E6j5GM2uBQu0UrZJUD5347cRqJjp2SEh07M/1Z1Jm
+	 eSa45BKefJfIZiWCJovhDvpbJ0dCdGTNwdFbNlQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Han Gao <gaohan@iscas.ac.cn>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Yixun Lan <dlan@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
+	Chancel Liu <chancel.liu@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0292/2077] pinctrl: spacemit: fix NULL check in spacemit_pin_set_config
-Date: Tue, 21 Jul 2026 16:59:25 +0200
-Message-ID: <20260721152559.563088773@linuxfoundation.org>
+Subject: [PATCH 7.1 0293/2077] ASoC: dapm: Fix widget lookup with prefixed names across DAPM contexts
+Date: Tue, 21 Jul 2026 16:59:26 +0200
+Message-ID: <20260721152559.585735532@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,53 +51,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Han Gao <gaohan@iscas.ac.cn>
+From: Chancel Liu <chancel.liu@nxp.com>
 
-[ Upstream commit 09c816e5c4d3a8d6d6e4b7537433e5e98505d934 ]
+[ Upstream commit 8468c8aafe8b5807e5acba2f8aa96d0b3ce0c248 ]
 
-spacemit_pin_set_config() looks up the per-pin descriptor with
-spacemit_get_pin() then checks the wrong variable for failure:
+Currently dapm_find_widget() manually constructs a prefixed widget name
+based on the provided DAPM context and compares it using strcmp(). This
+happens to work in most cases because callers usually know which DAPM
+context the target widget belongs to and pass in the matching DAPM
+context.
 
-	const struct spacemit_pin *spin = spacemit_get_pin(pctrl, pin);
-	...
-	if (!pin)
-		return -EINVAL;
+However, this assumption breaks when search_other_contexts is enabled.
+In such cases, callers may intentionally pass a different DAPM context,
+while searching for a widget that actually belongs to another DAPM
+context.
 
-	reg = spacemit_pin_to_reg(pctrl, spin->pin);
+For example, when searching for a "DAC" widget, the widget belongs to
+the codec DAPM and be registered with a codec prefix, while the caller
+passes card->dapm and intends to search across all DAPM contexts. The
+current implementation incorrectly applies the caller card DAPM causing
+the lookup to fail even though the widget exists on the card.
 
-pin is an unsigned int pin id, where 0 (GPIO_0 / gmac0_rxdv on K3) is a
-valid pin, so rejecting it here drops the PAD config write for the first
-pin of every group. On K3 Pico-ITX the GMAC RGMII group lists pin 0 as
-its first entry, so its drive-strength / bias configuration was silently
-ignored.
+Improve the matching strategy to support both use cases:
+1. When the caller provides a fully qualified name with prefix, perform
+   exact string matching. This preserves the ability to use prefixes for
+   disambiguation.
+2. When the caller provides a bare widget name without prefix, try exact
+   matching first, then fall back to prefix-stripped comparison using
+   snd_soc_dapm_widget_name_cmp().
 
-The intended guard is against spacemit_get_pin() returning NULL when the
-pin id isn't in the SoC's pin table. Check spin instead, which both
-restores PAD setup for pin 0 and prevents a NULL deref on spin->pin.
+To determine whether the pin name includes a prefix, a new helper
+function snd_soc_dapm_pin_has_prefix() is introduced. It checks if the
+pin name starts with any known component prefix on the card.
 
-Fixes: a83c29e1d145 ("pinctrl: spacemit: add support for SpacemiT K1 SoC")
-Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Reviewed-by: Yixun Lan <dlan@kernel.org>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+This fixes widget lookup failures when searching across different DAPM
+contexts while maintaining backward compatibility for explicitly
+prefixed lookups.
+
+Fixes: ae4fc532244b ("ASoC: dapm: use component prefix when checking widget names")
+Signed-off-by: Chancel Liu <chancel.liu@nxp.com>
+Assisted-by: Cody:Claude-4.5-Sonnet
+Link: https://patch.msgid.link/20260507013654.2945915-2-chancel.liu@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/spacemit/pinctrl-k1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/sound/soc-dapm.h |  1 +
+ sound/soc/soc-dapm.c     | 49 ++++++++++++++++++++++++++++++----------
+ 2 files changed, 38 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/pinctrl/spacemit/pinctrl-k1.c b/drivers/pinctrl/spacemit/pinctrl-k1.c
-index b0be62b1c8161d..95024e2bb5a587 100644
---- a/drivers/pinctrl/spacemit/pinctrl-k1.c
-+++ b/drivers/pinctrl/spacemit/pinctrl-k1.c
-@@ -795,7 +795,7 @@ static int spacemit_pin_set_config(struct spacemit_pinctrl *pctrl,
- 	void __iomem *reg;
- 	unsigned int mux;
+diff --git a/include/sound/soc-dapm.h b/include/sound/soc-dapm.h
+index 4f8fb7622a139d..c1e4f467efda73 100644
+--- a/include/sound/soc-dapm.h
++++ b/include/sound/soc-dapm.h
+@@ -685,6 +685,7 @@ int snd_soc_dapm_sync_unlocked(struct snd_soc_dapm_context *dapm);
+ int snd_soc_dapm_force_enable_pin(struct snd_soc_dapm_context *dapm, const char *pin);
+ int snd_soc_dapm_force_enable_pin_unlocked(struct snd_soc_dapm_context *dapm, const char *pin);
+ int snd_soc_dapm_ignore_suspend(struct snd_soc_dapm_context *dapm, const char *pin);
++bool snd_soc_dapm_pin_has_prefix(struct snd_soc_card *card, const char *pin);
+ void snd_soc_dapm_mark_endpoints_dirty(struct snd_soc_card *card);
  
--	if (!pin)
-+	if (!spin)
- 		return -EINVAL;
+ /* dapm path query */
+diff --git a/sound/soc/soc-dapm.c b/sound/soc/soc-dapm.c
+index d6192204e613da..a26771c8e6ee69 100644
+--- a/sound/soc/soc-dapm.c
++++ b/sound/soc/soc-dapm.c
+@@ -2906,20 +2906,18 @@ static struct snd_soc_dapm_widget *dapm_find_widget(
+ {
+ 	struct snd_soc_dapm_widget *w;
+ 	struct snd_soc_dapm_widget *fallback = NULL;
+-	char prefixed_pin[80];
+-	const char *pin_name;
+-	const char *prefix = dapm_prefix(dapm);
+-
+-	if (prefix) {
+-		snprintf(prefixed_pin, sizeof(prefixed_pin), "%s %s",
+-			 prefix, pin);
+-		pin_name = prefixed_pin;
+-	} else {
+-		pin_name = pin;
+-	}
++	bool pin_has_prefix = snd_soc_dapm_pin_has_prefix(dapm->card, pin);
++	bool match;
  
- 	reg = spacemit_pin_to_reg(pctrl, spin->pin);
+ 	for_each_card_widgets(dapm->card, w) {
+-		if (!strcmp(w->name, pin_name)) {
++		match = false;
++
++		if (!strcmp(pin, w->name))
++			match = true;
++		else if (!pin_has_prefix && !snd_soc_dapm_widget_name_cmp(w, pin))
++			match = true;
++
++		if (match) {
+ 			if (w->dapm == dapm)
+ 				return w;
+ 			else
+@@ -4872,6 +4870,33 @@ int snd_soc_dapm_ignore_suspend(struct snd_soc_dapm_context *dapm,
+ }
+ EXPORT_SYMBOL_GPL(snd_soc_dapm_ignore_suspend);
+ 
++/**
++ * snd_soc_dapm_pin_has_prefix - check if given pin has a known prefix
++ * @card: card to be checked
++ * @pin: pin name
++ *
++ * Returns true if given pin has a known prefix
++ */
++bool snd_soc_dapm_pin_has_prefix(struct snd_soc_card *card, const char *pin)
++{
++	struct snd_soc_component *component;
++	const char *prefix;
++	size_t prefix_len;
++
++	for_each_card_components(card, component) {
++		prefix = component->name_prefix;
++		if (!prefix)
++			continue;
++
++		prefix_len = strlen(prefix);
++		if (!strncmp(pin, prefix, prefix_len) && pin[prefix_len] == ' ')
++			return true;
++	}
++
++	return false;
++}
++EXPORT_SYMBOL_GPL(snd_soc_dapm_pin_has_prefix);
++
+ /**
+  * snd_soc_dapm_free - free dapm resources
+  * @dapm: DAPM context
 -- 
 2.53.0
 
