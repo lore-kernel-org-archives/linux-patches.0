@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABB93FAE11;
-	Tue, 21 Jul 2026 18:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99AB436344;
+	Tue, 21 Jul 2026 18:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659832; cv=none; b=pwCbcQa+LHwoCW7vdC7qXYpr4r/j/IatsSiUyoWlmxVM/0Wx0ylj9I42oNlS4lx2/9R1seO9f7UOn7XMQqsc4Eq5rGkDlDCzn7tRiz3ulVgXI+nicstDXdN4ariPuYuKZxf7fqVl3vhV31RSdqBlnYP/IDObn/hlzCMZd0TANc8=
+	t=1784659837; cv=none; b=myNfsmnThxA99RRrVNmwPKQqMEPXVreF5RRSBo6wrOkPyr2VL2dEPwvrm0IwoDX5DuMJtIpxDaLSW3Z4j6HrBfzo3ptG+ydXohyTfVMn6sdLk13punouRzdAdU2k+xuxK092DUHnB/IVEzWPEaJEABMXkNOyy4BhCIlrieNCrRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659832; c=relaxed/simple;
-	bh=7e0baEUKhyquWNJNvwC0v8pPGed943DknobteyR0Pf0=;
+	s=arc-20240116; t=1784659837; c=relaxed/simple;
+	bh=HSIirep8MazkuYsf8DSs+wRW4LCn46uF/EAwcWWlilY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SdMnzv1/XIB+KoygDUvq4xLjOphMJYHRyrjNXsRe/z5hozyCfam3ogJBYfpF6h2xuHS9qjFgOfsHS9rWCVloNaqfjas1S1G6CUGlSM5b5xIP9t8jMeKyyUFBHkltz4uF+gr4ALbZv8iHqPzXik7SB+gShQg37jBD6QZ4Rd2OnA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mlnx4umY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nCKV70CaTHiJMpH3FmlkAArQJltOGZpyMeOWSKdXOrfLMnS3KDWLGE3VELpDHk5A2tzNxEn1OLc89TdLjS8Uz4uC2wKSEpthZhX2Lz8aqAa/EoZnZ3HLhkSE4czAZ9UhXDITG1/NMHdrtIZ/FXlXoKXC0UKoAcABZCj5uvF874E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i3TTnfTg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mlnx4umY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A14901F000E9;
-	Tue, 21 Jul 2026 18:50:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i3TTnfTg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A5E11F000E9;
+	Tue, 21 Jul 2026 18:50:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659831;
-	bh=QT/FXS+lobSGA5c5DVujZs4TWF6RLDsUu86Gb02AcGY=;
+	s=korg; t=1784659833;
+	bh=ms+8P2VxJmXDLDcDvK9yfes1iw9lwr5KkKm6IYN5xp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mlnx4umYJWxVF/FAtlZiblDRyYlmYKxDuskBPgDbRnD4OCmBXAmKAd9d5tVCOKV6h
-	 LHU8zJ5T5ju9GghxSRyTEx+5oWKEX4TBSMzN6d+dsnFez0rOKzYVLOIkX5kgUMV5Sw
-	 UXCKEkq+UBLzS95IT5QC6mXc3yoFS6FiphTV1VMg=
+	b=i3TTnfTgQIBQU1SAV9TWS4OUFsV5yn7el49bKVN4lj5P9dL7JxLEvT4+Me51gZGTU
+	 2p8kYjIJmIwDWlfX5oJB2KaNJyC0BrSD5jiXHKwDzKmaDkeYSC8hPTLaP/SQ8+60so
+	 gC6Mb1SdO6aQ10HgPARL0RA5k4NtiDtEvNPZRgMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Nogueira <victor@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	David Matlack <dmatlack@google.com>,
+	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0751/2077] net/sched: sch_dualpi2: Add missing module alias
-Date: Tue, 21 Jul 2026 17:07:04 +0200
-Message-ID: <20260721152610.504931377@linuxfoundation.org>
+Subject: [PATCH 7.1 0734/2077] vfio: selftests: Ensure libvfio output dirs are always created
+Date: Tue, 21 Jul 2026 17:06:47 +0200
+Message-ID: <20260721152610.110068573@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,47 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: David Matlack <dmatlack@google.com>
 
-[ Upstream commit ee1ba0add3fbd5a28fa5423be373acd147f1e344 ]
+[ Upstream commit 785562e31dbcd85ca583cf58c446e63aa8a5af08 ]
 
-When a qdisc is added by name, the kernel tries to autoload its module
-via request_qdisc_module(), which calls:
+Add an explicit dependency between the output object files and the
+output directories that need to be created to hold those files. This
+ensures that the output directories are always created.
 
-request_module(NET_SCH_ALIAS_PREFIX "%s", name);
+Creating the output directories at parse time (current behavior) doesn't
+support the scenario where someone does "make clean all". The
+directories will be created during parsing, deleted during "clean" and
+then not available for the "all" target.
 
-i.e. it asks modprobe to resolve the "net-sch-<kind>" alias (e.g.
-"net-sch-dualpi2") rather than the module's file name. Since dualpi2
-was shipped without this alias, the autoload fails:
+Use an order-only prerequisite for the output directories, rather than a
+normal prerequisite, to avoid unnecessary recompilations.
 
-tc qdisc add dev lo root handle 1: dualpi2
-Error: Specified qdisc kind is unknown.
-
-Fix this by adding the missing alias so the qdisc is autoloaded on demand
-like the others.
-
-Fixes: 320d031ad6e4 ("sched: Struct definition and parsing of dualpi2 qdisc")
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
-Link: https://patch.msgid.link/20260611205849.3287640-1-victor@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 19faf6fd969c ("vfio: selftests: Add a helper library for VFIO selftests")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/kvm/20260610010314.DB8861F00893@smtp.kernel.org/
+Signed-off-by: David Matlack <dmatlack@google.com>
+Link: https://lore.kernel.org/r/20260611213945.3714421-1-dmatlack@google.com
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_dualpi2.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/vfio/lib/libvfio.mk | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_dualpi2.c b/net/sched/sch_dualpi2.c
-index 592c58938d3e80..5434df6ca8efe6 100644
---- a/net/sched/sch_dualpi2.c
-+++ b/net/sched/sch_dualpi2.c
-@@ -1210,6 +1210,7 @@ static struct Qdisc_ops dualpi2_qdisc_ops __read_mostly = {
- 	.dump_stats	= dualpi2_dump_stats,
- 	.owner		= THIS_MODULE,
- };
-+MODULE_ALIAS_NET_SCH("dualpi2");
+diff --git a/tools/testing/selftests/vfio/lib/libvfio.mk b/tools/testing/selftests/vfio/lib/libvfio.mk
+index 9f47bceed16f4c..f90235a1043fe8 100644
+--- a/tools/testing/selftests/vfio/lib/libvfio.mk
++++ b/tools/testing/selftests/vfio/lib/libvfio.mk
+@@ -19,11 +19,13 @@ LIBVFIO_OUTPUT := $(OUTPUT)/libvfio
+ LIBVFIO_O := $(patsubst %.c, $(LIBVFIO_OUTPUT)/%.o, $(LIBVFIO_C))
  
- static int __init dualpi2_module_init(void)
- {
+ LIBVFIO_O_DIRS := $(shell dirname $(LIBVFIO_O) | uniq)
+-$(shell mkdir -p $(LIBVFIO_O_DIRS))
++
++$(LIBVFIO_O_DIRS):
++	mkdir -p $@
+ 
+ CFLAGS += -I$(LIBVFIO_SRCDIR)/include
+ 
+-$(LIBVFIO_O): $(LIBVFIO_OUTPUT)/%.o : $(LIBVFIO_SRCDIR)/%.c
++$(LIBVFIO_O): $(LIBVFIO_OUTPUT)/%.o : $(LIBVFIO_SRCDIR)/%.c | $(LIBVFIO_O_DIRS)
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c $< -o $@
+ 
+ EXTRA_CLEAN += $(LIBVFIO_OUTPUT)
 -- 
 2.53.0
 
