@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8C03B42F9;
-	Tue, 21 Jul 2026 20:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75FF356A12;
+	Tue, 21 Jul 2026 20:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666595; cv=none; b=JABvgq+XyY/vMfKwxB3yXkDPSmG4d8qIoez5rg8pUTsgJL5dmFl/kPw/fLg+F6+jlhe2ggbbdf9la/A5Yu74sF7qE0fsS5rmj13XVr8NrahcRbeeCK78WJlyyxQ7vjp/LLuOqdRvsACuu6+uD6A2pAuAvoo5fvGdGg0gM/WDe2s=
+	t=1784666597; cv=none; b=EWhGUXLD2wHOFs/QSuxb/fb5kH5WximSEs6aOy95jGlRNVSxT88WY0QfZN2bJ6Ic6XoovMjiBr0beLdetK30xX0Qk7UcOjnhaWX1Q2D3vXmgpGi1ie/IYV30oyfxRIw1qkY1bzaFxqR9mvfYvbDh6Sgr3yRD8fJQJRV9ArNCwhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666595; c=relaxed/simple;
-	bh=HuoKtNKMG5VqMEHOfLz1nBPjEreh+Pq/2FX2QWAOXkU=;
+	s=arc-20240116; t=1784666597; c=relaxed/simple;
+	bh=hB0ofe5LGklVE0l3jnR/O1RCMtJrqDxceGKq3sJk/iM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=apot5wn+YbOcVbCPCo51F/4BSF0WuYniM8yP9u2DPBW5qbzGT9xFsumVys2QiW8Y1SngQf2wubfiTtHfktEgQPkX/15V37YLilSydsadtqcLHJ5g729W7FYndCq1rvAbZ1WktTmoLgPELH5fgeEiUY2O3Ys3rMUxY9eLSqKxcP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Izqh65Mc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hhfMWAuOUnIcHcLkIratkVXK83qeafYcbnPjpEoIBkSQ94RMea8aNXqow9eQ+ZurAmjuwgcfljouukS7hyxK7ghRrkBllcplVosWl+kwDefNnnp8dNTwZY6A4J9DHkPM9ExrLXUB41hsjpj2e1INQ0EvMCI3dNhtx1cRrBpRNcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BBUfPwKs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Izqh65Mc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FA011F000E9;
-	Tue, 21 Jul 2026 20:43:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BBUfPwKs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D041F000E9;
+	Tue, 21 Jul 2026 20:43:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666594;
-	bh=r+ZLFTsGDMagyzXBvV7Oz2Sl9CXpfyfUBetdBRISGWY=;
+	s=korg; t=1784666596;
+	bh=prqFeqhAkz1qHIImVE2poMIbDct0qIsgkHxKifLy9To=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Izqh65McBdVewXf+10Ekz4UAyUCPfaGvYDOJBZucCdWHPYSQ6mY6ejyFGeNe0l65/
-	 5xkYGz5Mcubyee4AcYQiEZeTUJXY2+VbBsRjrE3LBgwkD4eAsAkrKHXG0NZrb6UMzM
-	 50e0S2t9UmbI3nPIFJdeiK3RxI2gJYnomLO9/LQQ=
+	b=BBUfPwKsvyw9ZK8kcghiY/fSBEF5Pir9Q8ZSwZuCBavpVeFBakGTsM0YM5+defLdT
+	 NIY16fKByr7umFM4rlHI+8AEorzAfWYxdjGE5/kqJ4M5OsgXKNYaQVuhFZ3jT5tvYh
+	 YY0X4TcfF3D2BcVYkiG72UB9sU/CHBnKQczhLb3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0735/1266] thermal: intel: Fix dangling resources on thermal_throttle_online() failure
-Date: Tue, 21 Jul 2026 17:19:32 +0200
-Message-ID: <20260721152458.321171450@linuxfoundation.org>
+Subject: [PATCH 6.6 0744/1266] netfilter: ipset: fix order of kfree_rcu() and rcu_assign_pointer()
+Date: Tue, 21 Jul 2026 17:19:41 +0200
+Message-ID: <20260721152458.520750343@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,55 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+From: Jozsef Kadlecsik <kadlec@netfilter.org>
 
-[ Upstream commit b91d287fa7a1ba0727eed5823c6ee4924ee5fa31 ]
+[ Upstream commit 3ca9982a8882470aa0ac4e8bb9a552b181d1efcd ]
 
-The function thermal_throttle_add_dev() may fail and abort a CPU hotplug
-online operation. Since the failure occurs within the online callback,
-thermal_throttle_online(), the CPU hotplug framework does not invoke the
-corresponding offline callback. As a result, the hardware and software
-resources set up during the failed operation are not torn down.
+Sashiko pointed out that kfree_rcu() was called before
+rcu_assign_pointer() in handling the comment extension.
+Fix the order so that rcu_assign_pointer() called first.
 
-Since only thermal_throttle_add_dev() can fail, call it before setting up
-the rest of the resources.
-
-Fixes: f6656208f04e ("x86/mce/therm_throt: Optimize notifications of thermal throttle")
-Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-Link: https://patch.msgid.link/20260613-rneri-directed-therm-intr-v3-1-3a26d1e47fc8@linux.intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: b57b2d1fa53f ("netfilter: ipset: Prepare the ipset core to use RCU at set level")
+Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/intel/therm_throt.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/netfilter/ipset/ip_set_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/intel/therm_throt.c b/drivers/thermal/intel/therm_throt.c
-index e69868e868eb9e..dfdc8c1b0eb5d3 100644
---- a/drivers/thermal/intel/therm_throt.c
-+++ b/drivers/thermal/intel/therm_throt.c
-@@ -528,8 +528,13 @@ static int thermal_throttle_online(unsigned int cpu)
- {
- 	struct thermal_state *state = &per_cpu(thermal_state, cpu);
- 	struct device *dev = get_cpu_device(cpu);
-+	int err;
- 	u32 l;
+diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
+index 94157104d85a95..f51a1af31513cd 100644
+--- a/net/netfilter/ipset/ip_set_core.c
++++ b/net/netfilter/ipset/ip_set_core.c
+@@ -351,8 +351,8 @@ ip_set_init_comment(struct ip_set *set, struct ip_set_comment *comment,
  
-+	err = thermal_throttle_add_dev(dev, cpu);
-+	if (err)
-+		return err;
-+
- 	state->package_throttle.level = PACKAGE_LEVEL;
- 	state->core_throttle.level = CORE_LEVEL;
- 
-@@ -547,7 +552,7 @@ static int thermal_throttle_online(unsigned int cpu)
- 	l = apic_read(APIC_LVTTHMR);
- 	apic_write(APIC_LVTTHMR, l & ~APIC_LVT_MASKED);
- 
--	return thermal_throttle_add_dev(dev, cpu);
-+	return err;
+ 	if (unlikely(c)) {
+ 		set->ext_size -= sizeof(*c) + strlen(c->str) + 1;
+-		kfree_rcu(c, rcu);
+ 		rcu_assign_pointer(comment->c, NULL);
++		kfree_rcu(c, rcu);
+ 	}
+ 	if (!len)
+ 		return;
+@@ -393,8 +393,8 @@ ip_set_comment_free(struct ip_set *set, void *ptr)
+ 	if (unlikely(!c))
+ 		return;
+ 	set->ext_size -= sizeof(*c) + strlen(c->str) + 1;
+-	kfree_rcu(c, rcu);
+ 	rcu_assign_pointer(comment->c, NULL);
++	kfree_rcu(c, rcu);
  }
  
- static int thermal_throttle_offline(unsigned int cpu)
+ typedef void (*destroyer)(struct ip_set *, void *);
 -- 
 2.53.0
 
