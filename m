@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91706439336;
-	Tue, 21 Jul 2026 21:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39723E9C37;
+	Tue, 21 Jul 2026 21:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668109; cv=none; b=e19yVslieA5o0cRfEJSG1XbLVVyS/m8A/H4/hdsxxZjwsiyzUzpilEkd1bzZW0dE+W1PR6D8nr3s4j/ryUovadn5D890QDu+ecq1gNzOUroGmo4eskzZXTX2NqYvTwJFDqXKPiDn5Qc2I/xx4WUDJxbdWqSYdp3Jrv7eBqXFVEA=
+	t=1784668112; cv=none; b=OAJ862CvHgb64P5EzB9FIpI/1ePCNua25pdgexq9yMFl0239Hb0JX8wcdh0Hqdi2iYOQ3L+8TbJHjK7kcIcy7AGGNHKeBbvzu4hQ9D1arbF66EBaJpFYbgBvFmBnj/n8WTPBUxj+zWuoazN/9briNtzrm+jVskEtuqbKzeAf/mg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668109; c=relaxed/simple;
-	bh=0wjGgFlS1qQWq3ZJkj/cl7TGrAueKVnT+8mtowyss/o=;
+	s=arc-20240116; t=1784668112; c=relaxed/simple;
+	bh=zwG2pVG8WDzHIT4bbVcWAf/4w/mXYTgwE2yIL1dRCS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qb8OcMp7pxG+SQ+i+XAF2ecEBjOo4vbUlwhLcNu+FMNNRmXTpsDvSTF4gf4wP29SmwhSl+H+beK+2rXRZoyUqytbTNIGm9Hf/rCFG7PfKpiVZtTZvCuxEnfwcT2t3511vZq1vodNn6uXN/bpi6KBhXs07K6a04lQ3TQe7igVE6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iajxXFs4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y/NSA+Q10Vy+1bJRUWaATvbKo/aqhOtfcdLcLG9PgVet31vkLaYxzw6/YJqCquP8MgAURznu7L9CXREfl+eH5OUPQBHITVH4SbSyuu0B/Ph0wUVTa4waW8fefvviKUH7vRnNGUvaV8xBoTG2jECqhfuzbe5EcCn25na6U1srfL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lX60pJp3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iajxXFs4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66C71F000E9;
-	Tue, 21 Jul 2026 21:08:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lX60pJp3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC211F000E9;
+	Tue, 21 Jul 2026 21:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668108;
-	bh=d/uJJnTq8GFA0bx5fXbCNn+SIpMMh2fiX80JgIQyxXo=;
+	s=korg; t=1784668110;
+	bh=rVbG96Io6uV9RU65Yy7INF5s4lP0Wkx0kPuVPFX6nVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iajxXFs4ZQNPKxvszQzujPWeCUOIHmS+fRO1u0XPPJBGhLNVXGuMW6gKoZO9sssJo
-	 Nvo6nltvPhgTVM7NEUpelnHzeHgJ6XAL2a7VLHqkcocSJvhTfSolaprpB0T/9Z9m9r
-	 PqcVH+aCcIOqrBRcL5T+Hkk/mVQR2wY7537DErN4=
+	b=lX60pJp36AsnuiXSUmkb1BBtnAIMnDAxtX/YzdVbSFzpLfFvHt6NrRVFMxSBD7BT8
+	 nBXaAETHw+9kb64Juv7ZA2aQa4xfJeqMnmq6QZz8FglIxN+Mh0YN4vPvef/XysCs5K
+	 HDP5PDpzHAEVW9QW43Y6dc2aIZrpr2bYKZY5fbxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taeyang Lee <0wn@theori.io>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Philo Lu <lulie@linux.alibaba.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Joe Damato <jdamato@fastly.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Hyokyung Kim <pulpannie@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0049/1067] perf/core: Detach event groups during remove_on_exec
-Date: Tue, 21 Jul 2026 17:10:50 +0200
-Message-ID: <20260721152425.661072905@linuxfoundation.org>
+Subject: [PATCH 6.1 0050/1067] virtio_net: Support dynamic rss indirection table size
+Date: Tue, 21 Jul 2026 17:10:51 +0200
+Message-ID: <20260721152425.683262289@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,97 +55,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taeyang Lee <0wn@theori.io>
+From: Philo Lu <lulie@linux.alibaba.com>
 
-[ Upstream commit 037a3c43edfb597665dd34457cd22b14692f2ba3 ]
+commit 86a48a00efdf61197b6658e52c6140463eb313dc upstream.
 
-perf_event_remove_on_exec() removes events by calling
-perf_event_exit_event(). For top-level events, this removes the event from
-the context with DETACH_EXIT only.
+When reading/writing virtio_net_ctrl_rss, the indirection table size is
+obtained from vi->rss_indir_table_size, initialized during virtnet_probe().
+However, the indirection_table was statically sized as
+VIRTIO_NET_RSS_MAX_TABLE_LEN=128, potentially causing issues when
+vi->rss_indir_table_size exceeds this limit.
 
-This can leave inconsistent group state when a removed event is a group
-leader and the group contains siblings without remove_on_exec. If the group
-was active, the surviving siblings can remain active and attached to the
-removed leader's sibling list, but are no longer represented by a valid
-group leader on the PMU context active lists.
+This patch implements dynamic allocation for the indirection table,
+allocated alongside vi->rss after vi->rss_indir_table_size is initialized,
+and freed in virtnet_remove().
 
-A later close of the removed leader uses DETACH_GROUP and can promote the
-still-active siblings from this stale group state. The next schedule-in can
-then add an already-linked active_list entry again, corrupting the PMU
-context active list.
+In virtnet_commit_rss_command(), scatter-gather lists for RSS are
+initialized differently based on hash_report presence, so indirection_table
+is unused when !vi->has_rss. Therefore, allocation is unnecessary for
+hash_report-only scenarios.
 
-With DEBUG_LIST enabled, this is caught as a list_add double-add in
-merge_sched_in().
-
-Fix this by detaching group relationships when remove_on_exec removes an
-event. This preserves the existing task-exit and revoke behavior, while
-ensuring surviving siblings are ungrouped before the removed event leaves
-the context.
-
-Fixes: 2e498d0a74e5 ("perf: Add support for event removal on exec")
-Signed-off-by: Taeyang Lee <0wn@theori.io>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/ai65GgZcC0LAlWLG@Taeyangs-MacBook-Pro.local
+Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
+Signed-off-by: Philo Lu <lulie@linux.alibaba.com>
+Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Acked-by: Joe Damato <jdamato@fastly.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ Hyokyung Kim: 6.1.y predates the refactor that moved the RSS config into
+  struct virtnet_info, so struct virtio_net_ctrl_rss is still embedded in
+  struct control_buf and reached through the heap-allocated vi->ctrl. Every
+  adaptation below follows from that single difference:
+  - the new allocation and all indirection_table accesses use vi->ctrl->rss
+    in place of upstream's vi->rss;
+  - because vi->ctrl is allocated in virtnet_alloc_queues() (via init_vqs())
+    and freed in virtnet_free_queues(), the table is allocated and freed there
+    too, not in virtnet_probe()/virtnet_remove(), so its lifetime tracks
+    vi->ctrl across the probe error-unwind and freeze/restore paths;
+  - since freeing the table now dereferences vi->ctrl, vi->ctrl is set to NULL
+    after each kfree so a re-entered virtnet_free_queues() cannot dereference
+    or free a stale pointer;
+  - the table is allocated with kcalloc() so it is zero-filled when
+    reallocated on the restore path (upstream never reallocates it). ]
+Signed-off-by: Hyokyung Kim <pulpannie@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/virtio_net.c | 43 +++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 38 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 146b37e97832a9..1478bad56e40a1 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -4334,7 +4334,8 @@ static void perf_event_enable_on_exec(int ctxn)
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index b62b7696313757..2fb00df795d4ab 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -179,15 +179,16 @@ struct receive_queue {
+  * because table sizes may be differ according to the device configuration.
+  */
+ #define VIRTIO_NET_RSS_MAX_KEY_SIZE     40
+-#define VIRTIO_NET_RSS_MAX_TABLE_LEN    128
+ struct virtio_net_ctrl_rss {
+ 	u32 hash_types;
+ 	u16 indirection_table_mask;
+ 	u16 unclassified_queue;
+-	u16 indirection_table[VIRTIO_NET_RSS_MAX_TABLE_LEN];
++	u16 hash_cfg_reserved; /* for HASH_CONFIG (see virtio_net_hash_config for details) */
+ 	u16 max_tx_vq;
+ 	u8 hash_key_length;
+ 	u8 key[VIRTIO_NET_RSS_MAX_KEY_SIZE];
++
++	u16 *indirection_table;
+ };
  
- static void perf_remove_from_owner(struct perf_event *event);
- static void perf_event_exit_event(struct perf_event *event,
--				  struct perf_event_context *ctx);
-+				  struct perf_event_context *ctx,
-+				  unsigned long detach_flags);
- 
- /*
-  * Removes all events from the current task that have been marked
-@@ -4365,7 +4366,7 @@ static void perf_event_remove_on_exec(int ctxn)
- 
- 		modified = true;
- 
--		perf_event_exit_event(event, ctx);
-+		perf_event_exit_event(event, ctx, DETACH_GROUP);
- 	}
- 
- 	raw_spin_lock_irqsave(&ctx->lock, flags);
-@@ -13055,10 +13056,11 @@ static void sync_child_event(struct perf_event *child_event)
+ /* Control VQ buffers: protected by the rtnl lock */
+@@ -2488,6 +2489,25 @@ static int virtnet_set_ringparam(struct net_device *dev,
+ 	return 0;
  }
  
- static void
--perf_event_exit_event(struct perf_event *event, struct perf_event_context *ctx)
-+perf_event_exit_event(struct perf_event *event,
-+		      struct perf_event_context *ctx,
-+		      unsigned long detach_flags)
++static int rss_indirection_table_alloc(struct virtio_net_ctrl_rss *rss, u16 indir_table_size)
++{
++	if (!indir_table_size) {
++		rss->indirection_table = NULL;
++		return 0;
++	}
++
++	rss->indirection_table = kcalloc(indir_table_size, sizeof(u16), GFP_KERNEL);
++	if (!rss->indirection_table)
++		return -ENOMEM;
++
++	return 0;
++}
++
++static void rss_indirection_table_free(struct virtio_net_ctrl_rss *rss)
++{
++	kfree(rss->indirection_table);
++}
++
+ static bool virtnet_commit_rss_command(struct virtnet_info *vi)
  {
- 	struct perf_event *parent_event = event->parent;
--	unsigned long detach_flags = 0;
+ 	struct net_device *dev = vi->dev;
+@@ -2497,11 +2517,15 @@ static bool virtnet_commit_rss_command(struct virtnet_info *vi)
+ 	/* prepare sgs */
+ 	sg_init_table(sgs, 4);
  
- 	if (parent_event) {
- 		/*
-@@ -13073,7 +13075,7 @@ perf_event_exit_event(struct perf_event *event, struct perf_event_context *ctx)
- 		 * Do destroy all inherited groups, we don't care about those
- 		 * and being thorough is better.
- 		 */
--		detach_flags = DETACH_GROUP | DETACH_CHILD;
-+		detach_flags |= DETACH_GROUP | DETACH_CHILD;
- 		mutex_lock(&parent_event->child_mutex);
+-	sg_buf_size = offsetof(struct virtio_net_ctrl_rss, indirection_table);
++	sg_buf_size = offsetof(struct virtio_net_ctrl_rss, hash_cfg_reserved);
+ 	sg_set_buf(&sgs[0], &vi->ctrl->rss, sg_buf_size);
+ 
+-	sg_buf_size = sizeof(uint16_t) * (vi->ctrl->rss.indirection_table_mask + 1);
+-	sg_set_buf(&sgs[1], vi->ctrl->rss.indirection_table, sg_buf_size);
++	if (vi->has_rss) {
++		sg_buf_size = sizeof(uint16_t) * vi->rss_indir_table_size;
++		sg_set_buf(&sgs[1], vi->ctrl->rss.indirection_table, sg_buf_size);
++	} else {
++		sg_set_buf(&sgs[1], &vi->ctrl->rss.hash_cfg_reserved, sizeof(uint16_t));
++	}
+ 
+ 	sg_buf_size = offsetof(struct virtio_net_ctrl_rss, key)
+ 			- offsetof(struct virtio_net_ctrl_rss, max_tx_vq);
+@@ -3415,7 +3439,10 @@ static void virtnet_free_queues(struct virtnet_info *vi)
+ 
+ 	kfree(vi->rq);
+ 	kfree(vi->sq);
++	if (vi->ctrl)
++		rss_indirection_table_free(&vi->ctrl->rss);
+ 	kfree(vi->ctrl);
++	vi->ctrl = NULL;
+ }
+ 
+ static void _free_receive_bufs(struct virtnet_info *vi)
+@@ -3610,6 +3637,9 @@ static int virtnet_alloc_queues(struct virtnet_info *vi)
+ 		vi->ctrl = kzalloc(sizeof(*vi->ctrl), GFP_KERNEL);
+ 		if (!vi->ctrl)
+ 			goto err_ctrl;
++		if ((vi->has_rss || vi->has_rss_hash_report) &&
++		    rss_indirection_table_alloc(&vi->ctrl->rss, vi->rss_indir_table_size))
++			goto err_sq;
+ 	} else {
+ 		vi->ctrl = NULL;
  	}
- 
-@@ -13158,7 +13160,7 @@ static void perf_event_exit_task_context(struct task_struct *child, int ctxn)
- 	perf_event_task(child, child_ctx, 0);
- 
- 	list_for_each_entry_safe(child_event, next, &child_ctx->event_list, event_entry)
--		perf_event_exit_event(child_event, child_ctx);
-+		perf_event_exit_event(child_event, child_ctx, 0);
- 
- 	mutex_unlock(&child_ctx->mutex);
- 
+@@ -3642,7 +3672,10 @@ static int virtnet_alloc_queues(struct virtnet_info *vi)
+ err_rq:
+ 	kfree(vi->sq);
+ err_sq:
++	if (vi->ctrl)
++		rss_indirection_table_free(&vi->ctrl->rss);
+ 	kfree(vi->ctrl);
++	vi->ctrl = NULL;
+ err_ctrl:
+ 	return -ENOMEM;
+ }
 -- 
 2.53.0
 
