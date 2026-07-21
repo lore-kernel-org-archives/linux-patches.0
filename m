@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3689835C6BC;
-	Tue, 21 Jul 2026 21:38:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F5135C6A0;
+	Tue, 21 Jul 2026 21:39:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669940; cv=none; b=nizqDHyITxhRZx+gaNJgbDagP4i9gTLgJxlZjWVzAu4udXu4b7r3VEmKDNAnsSxViO6gsKmCYwkBZQtq6iNnDbHkuOBhESRINQ4+DXQ2x1Q8N3iBV4Yyk8V0tAnqhWHQ2gNjApYKxr0IHNbCRisPiczy+CecL79PYZa/Ft44IGA=
+	t=1784669942; cv=none; b=osDgSJfjYuG3yfJfi9aRvOGVvlSe+0BIAj0ZRDY6LPka0xZTWTVPeyN8wM2VSXUmbWo8CQZhBrgAvo1hmmKQfKjFEQkDCLctzBwjyBz0DQ/yk35giiXhDPmjtBwGmg15lowkIvwOySO6FXeiOr5GD5BTqvfDog3n26nv+Nbf6Lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669940; c=relaxed/simple;
-	bh=2m97nFsRGIAYGul92Hbjpz6v4odKjLQS6AtzNwbd+h4=;
+	s=arc-20240116; t=1784669942; c=relaxed/simple;
+	bh=ByooqWjqrv3Vv4tPRmHlUfAsVp63iknZy35FRjFoYqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GcQyJjYATQIoIaHfe3NiRAkC+wwH3WfgwE5tpjVjXf/gCmrA43qbY/PTmQ0JK5Vkq2TTj5hThfqYQ8e4Q9Gvwzo1s2oCOmW4LimYt2trT4CNpWSNVjVk/XTeQ26V+LFTxHuyY7AGUMR6QjjV0aEW004BaCEkerWifeHveIUezEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgIGlG+4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HqfEjHU1ZlJTk8yvxdU+3PlNsCkhvFIMOf+JQ+2c+eBfAdGU0jNKXTKccRipMzMjQajP95GAItEB56j5b8M82S9E+Az0aWlQGj3wS/INQ1hJxD4Wo8cNJewRvj+i78EIwjrDVVRy1BF9NCVrGNnG9ZkLGRw/Sped1Frk0wtxYZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y49YcPSn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgIGlG+4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC461F000E9;
-	Tue, 21 Jul 2026 21:38:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y49YcPSn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 453861F00A3A;
+	Tue, 21 Jul 2026 21:39:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669939;
-	bh=KQX4JUkAwpSAOSg3/qezrfowKwd/l/BJOpmaQBYOH6k=;
+	s=korg; t=1784669941;
+	bh=jLF3HVbDYOD5AoZ4cM9XotL8j4aeejqNZHlozti0MbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SgIGlG+4YSswrsvDCh76gOQ/UEibZm3EYUBMHtKm7gkwsg/SRujpaYeDf/Xfjy0Dy
-	 3NlrdvskGjbV4AoYCHS6BP5GCJCr3zQQJNy5Qws3CdYfXBS9mo8Z50xCL0mJ96xpoC
-	 Rj/qpT5P/8Uz7LTywY/PGmGzPQqTg6SiayKvTvBc=
+	b=Y49YcPSnP12mbcu12rufjsEFfiAVdjYCgdKDfKz7XcutDTwHw7Trsoc5XSqcadt8B
+	 NOh9CLYMD0IDoyCLlFF20H8T9kIukCi2XnKDX2TuzfAHJJWRwwTSCl5pczIwGGa1ox
+	 xWUZXsODw9pkhxaCtn5AW3iapNHAaWtsaSMs5hZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
+	David Carlier <devnexen@gmail.com>,
 	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.1 0742/1067] netfilter: nf_conntrack_irc: fix parse_dcc() off-by-one OOB read
-Date: Tue, 21 Jul 2026 17:22:23 +0200
-Message-ID: <20260721152441.178620751@linuxfoundation.org>
+Subject: [PATCH 6.1 0743/1067] netfilter: nfnl_cthelper: apply per-class values when updating policies
+Date: Tue, 21 Jul 2026 17:22:24 +0200
+Message-ID: <20260721152441.201523064@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,61 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: David Carlier <devnexen@gmail.com>
 
-commit ef6400ca25a13fd6dedbe8ef4a1d0979bbbfe88a upstream.
+commit d738feccb98cb224ebabecb703e98f5008276bff upstream.
 
-parse_dcc() treats data_end as an inclusive end pointer, but its only
-caller passes data_limit = ib_ptr + datalen, which points one past the
-last valid byte.
+When a userspace conntrack helper with multiple expectation classes is
+updated via nfnetlink, every class ends up with the first class's
+max_expected and timeout values.
 
-The newline search loop iterates while tmp <= data_end, so when no
-newline is present, *tmp is read at tmp == data_end, one byte beyond
-the region filled by skb_header_pointer().
+nfnl_cthelper_update_policy_all() validates each new policy into the
+corresponding slot of the temporary new_policy array, but the second
+loop that commits the values into the live helper dereferences
+new_policy as a pointer instead of indexing it, so every iteration
+reads new_policy[0] regardless of i.  An update that changes per-class
+values is silently collapsed onto class 0's values with no error
+returned to userspace.
 
-irc_buffer is kmalloc'd as MAX_SEARCH_SIZE + 1 bytes and datalen is
-capped at MAX_SEARCH_SIZE, so the stray read does not fault.  The byte
-is uninitialized or stale; if it contains an ASCII digit, simple_strtoul
-will consume it and produce a wrong DCC IP or port in the conntrack
-expectation.  The extra allocation byte is also a fragile guard: if the
-cap or allocation size changes, this becomes a real out-of-bounds read.
+Index the temporary array by i in the commit loop so each class gets
+its own validated values.
 
-Change the loop and its post-loop check to use strict less-than,
-consistent with the caller's exclusive-end convention.  Update the
-function comment accordingly.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 2c422257550f ("netfilter: nfnl_cthelper: fix runtime expectation policy updates")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Signed-off-by: David Carlier <devnexen@gmail.com>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_irc.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/netfilter/nfnetlink_cthelper.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/netfilter/nf_conntrack_irc.c
-+++ b/net/netfilter/nf_conntrack_irc.c
-@@ -64,7 +64,7 @@ static const char *const dccprotos[] = {
- /* tries to get the ip_addr and port out of a dcc command
-  * return value: -1 on failure, 0 on success
-  *	data		pointer to first byte of DCC command data
-- *	data_end	pointer to last byte of dcc command data
-+ *	data_end	one past end of data
-  *	ip		returns parsed ip of dcc command
-  *	port		returns parsed port of dcc command
-  *	ad_beg_p	returns pointer to first byte of addr data
-@@ -82,10 +82,10 @@ static int parse_dcc(char *data, const c
+--- a/net/netfilter/nfnetlink_cthelper.c
++++ b/net/netfilter/nfnetlink_cthelper.c
+@@ -348,8 +348,8 @@ static int nfnl_cthelper_update_policy_a
+ 	for (i = 0; i < helper->expect_class_max + 1; i++) {
+ 		policy = (struct nf_conntrack_expect_policy *)
+ 				&helper->expect_policy[i];
+-		policy->max_expected = new_policy->max_expected;
+-		policy->timeout	= new_policy->timeout;
++		policy->max_expected = new_policy[i].max_expected;
++		policy->timeout	= new_policy[i].timeout;
+ 	}
  
- 	/* Make sure we have a newline character within the packet boundaries
- 	 * because simple_strtoul parses until the first invalid character. */
--	for (tmp = data; tmp <= data_end; tmp++)
-+	for (tmp = data; tmp < data_end; tmp++)
- 		if (*tmp == '\n')
- 			break;
--	if (tmp > data_end || *tmp != '\n')
-+	if (tmp >= data_end || *tmp != '\n')
- 		return -1;
- 
- 	*ad_beg_p = data;
+ err:
 
 
