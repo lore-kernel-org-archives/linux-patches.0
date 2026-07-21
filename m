@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF6AE3770B;
-	Tue, 21 Jul 2026 20:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0157C346A0C;
+	Tue, 21 Jul 2026 20:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666307; cv=none; b=AgOAeE8QFLPOm8VevPAnay/yHNOvF5UrE6XR15MF4q7UuRgbH7wcppmwq4uQxPifFiTtK83LniOOeDgntiRiI5BdYXx0iwP39FHxjEkcl4AWcYQgaiNOXPyYUcVvwbsLlDwKOHsPb6xXwyZNoTZdWuet4RI61VQJResAY0W1yrM=
+	t=1784666310; cv=none; b=K6TtP7a9IaD+9qv+mpluvcxxlTQCsas+v0QBX02BV4GmFAH0ymOm6qNEGUTMcfTwVbzR5A2HyalwglLUJCPM1drHPFT/lMEQuPHddFjSk9Qsl9Vlv+K7JY1kml7NW5Es0CvA+TDl0G7sXjixmpwY8Q5VWENHGWQWovTeTqwVWDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666307; c=relaxed/simple;
-	bh=bMDHfRDmDjpiQrPN0ZdJ8zjo4flGK3PFh4VVDyx14Jg=;
+	s=arc-20240116; t=1784666310; c=relaxed/simple;
+	bh=v+qe8FPJ3oqoAu0u3gJ5nZiS7sgvYxoOP4vvW6JU0+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T08NCi7bQVhNGDnsiuZnb6TicEz6ZFXhNkebLlQti99hf7KtqFxznuYclp1ti5zA7p2dubLLY1FLuOW/1EKNnpgz9F6pLOQRSzgfRo2e2+d8nyn+ljAoPvtqbqJSF6beSguK/TR5Iz0hG9wQOAmjqodyDKhpMqTJETBa62S1aKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZo502wM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FAp+jP1pOiziG5QPeCOrUJxzlHkTJCofcklWNDLpptkRxl1cEAU6sQQk1PXbhNW4iYvG6YWybPg67BGc17rbt4ZXtnHazomDxmjhLcBIYfGVkA0p/hOw1fDK6HdvRzSMypmGJXxSUI7eUkEBBnj4PBr9zvrX5azygEHkJohl9tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CnI26/0m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZo502wM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6151F000E9;
-	Tue, 21 Jul 2026 20:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CnI26/0m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DFD91F000E9;
+	Tue, 21 Jul 2026 20:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666306;
-	bh=PzD8Fa1kjU4pLAI89UdyyXm+JQLR8tNOtK89tu/z+gk=;
+	s=korg; t=1784666308;
+	bh=SPA4wAEFgUyBbmaDPphEhwIQ2FVXoxrzmQP5PMmWjYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SZo502wMtN6tOHNpSHRKPs2WnVfO+Wwn7sV558UO6zXgWUgfTF2rRB2o9yGlFccAG
-	 LcB4z0GY/ZpIzx1WkOQyXnjKI1Vztz1a1ZhslmcKSscZBn4fonVBAewPhYvw3m+7vv
-	 pfK1pktns5zefl9G5kI7Mx70SyEXgGttIjuFAmp0=
+	b=CnI26/0mtDhmnMKriav+uCo9yDqF7+XFXuhtzBx+e02p0WvPNb89Z3/emmAmZWsd2
+	 IeMngiTLT4+YiY+1s2yBujBjlzIhsBp92VN6MgNuoG5mGMhWfHCyRznbmIygPOQA9m
+	 38iBEFuxWsp+LGxpm+L08OsuCYH2nCZD0KQBIFFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew R. Ochs" <mochs@nvidia.com>,
-	Jamie Nguyen <jamien@nvidia.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>,
+	Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0632/1266] fs/ntfs3: fix mount failure on 64K page-size kernels
-Date: Tue, 21 Jul 2026 17:17:49 +0200
-Message-ID: <20260721152455.999747443@linuxfoundation.org>
+Subject: [PATCH 6.6 0633/1266] drm/amd/display: Add missing kdoc for ALLM parameters
+Date: Tue, 21 Jul 2026 17:17:50 +0200
+Message-ID: <20260721152456.021564548@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,67 +58,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamie Nguyen <jamien@nvidia.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit b7a9125cac8645245d2473c6c0a50e338280ad23 ]
+[ Upstream commit d4c6ec729fb7a8bf8a27b19bd70a1b945ad93dac ]
 
-On 64K page-size kernels, mounting NTFS volumes smaller than ~650 MB
-fails with EINVAL. The issue is in log_replay(): the initial log page
-size probe uses PAGE_SIZE (65536) instead of DefaultLogPageSize (4096)
-when PAGE_SIZE exceeds DefaultLogPageSize * 2.
+Add descriptions for the missing parameters for ALLMEnabled and
+ALLMValue  to keep the function documentation synchronized with the
+function prototype mod_build_hf_vsif_infopacket().
 
-This makes norm_file_page() require the $LogFile to be at least
-50 * 65536 = 3.2 MB, but mkfs.ntfs creates a $LogFile of only ~1.5 MB
-for a typical 300 MB volume. norm_file_page() returns 0 and the mount
-is rejected with EINVAL.
+Fixes the below with gcc W=1:
+../display/modules/info_packet/info_packet.c:507 function parameter 'ALLMEnabled' not described in 'mod_build_hf_vsif_infopacket'
+../display/modules/info_packet/info_packet.c:507 function parameter 'ALLMValue' not described in 'mod_build_hf_vsif_infopacket'
 
-On 4K kernels the #if guard evaluates to true, so use_default=true is
-passed and DefaultLogPageSize (4096) is used, requiring only ~200 KB.
-This path works fine.
-
-Fix this by always passing use_default=true, which forces the initial
-probe to use DefaultLogPageSize regardless of the kernel's PAGE_SIZE.
-This is safe because, after reading the on-disk restart area, log_replay()
-already re-adjusts log->page_size to match the volume's actual
-sys_page_size.
-
-Also fix read_log_page() to pass log->page_size instead of PAGE_SIZE to
-ntfs_fix_post_read(), matching the actual buffer size.
-
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
-Tested-by: Matthew R. Ochs <mochs@nvidia.com>
-Signed-off-by: Jamie Nguyen <jamien@nvidia.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 3c2381b92cba ("drm/amd/display: add support for VSIP info packet")
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Wayne Lin <Wayne.Lin@amd.com>
+Cc: Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>
+Cc: Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index 5d652d5775ba37..9175f53cb938cc 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -1170,7 +1170,7 @@ static int read_log_page(struct ntfs_log *log, u32 vbo,
- 		goto out;
- 
- 	if (page_buf->rhdr.sign != NTFS_FFFF_SIGNATURE)
--		ntfs_fix_post_read(&page_buf->rhdr, PAGE_SIZE, false);
-+		ntfs_fix_post_read(&page_buf->rhdr, log->page_size, false);
- 
- 	if (page_buf != *buffer)
- 		memcpy(*buffer, Add2Ptr(page_buf, page_off), bytes);
-@@ -3800,11 +3800,7 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)
- 	log->l_size = log->orig_file_size = ni->vfs_inode.i_size;
- 
- 	/* Get the size of page. NOTE: To replay we can use default page. */
--#if PAGE_SIZE >= DefaultLogPageSize && PAGE_SIZE <= DefaultLogPageSize * 2
- 	log->page_size = norm_file_page(PAGE_SIZE, &log->l_size, true);
--#else
--	log->page_size = norm_file_page(PAGE_SIZE, &log->l_size, false);
--#endif
- 	if (!log->page_size) {
- 		err = -EINVAL;
- 		goto out;
+diff --git a/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c b/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
+index 84f9b412a4f117..dbb62b911c75c1 100644
+--- a/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
++++ b/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
+@@ -447,6 +447,8 @@ void mod_build_vsc_infopacket(const struct dc_stream_state *stream,
+  *
+  *  @stream:      contains data we may need to construct VSIF (i.e. timing_3d_format, etc.)
+  *  @info_packet: output structure where to store VSIF
++ *  @ALLMEnabled: indicates whether ALLM HF-VSIF should be generated
++ *  @ALLMValue:   ALLM bit value to advertise in HF-VSIF
+  */
+ void mod_build_hf_vsif_infopacket(const struct dc_stream_state *stream,
+ 		struct dc_info_packet *info_packet)
 -- 
 2.53.0
 
