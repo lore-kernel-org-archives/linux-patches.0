@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180A33909A9;
-	Tue, 21 Jul 2026 18:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3E0404BDA;
+	Tue, 21 Jul 2026 18:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658411; cv=none; b=EPQyR9P5kD+Jz9zHLa76w79eg15BjDEqgPk+K09xwe946iF+O32D9lWvCw6oGTcozoMBOQXUTgdK7XXzNw2Y9F/8Xizb1ZlRHCFiUz8deQVNWGfVJn3EbkBSyOvrGNxwt8i50pfwCfjp/XTqdSTMkzhDJi1wSabfBiotw5zHZzg=
+	t=1784658413; cv=none; b=Ev8tFbK+rkx8NMcOCvZasKiWh2uGCHeVgfoYB/b5MkRbGeCTobq/uwcdXe9fHZSUIZiPqJpbs9Wc1kLQnCgU848xI1eeafhxCGPUp2/q1g1QxYZfgwPHREHfsVb9e+4q/S2He1/JONP/GFDs3jL9Stp2svwCit51mvhOlFUfS98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658411; c=relaxed/simple;
-	bh=1qG2vKLApQuswuEo+o+YwunP3ZDFhHboI94Q9gJYoyY=;
+	s=arc-20240116; t=1784658413; c=relaxed/simple;
+	bh=215XU1pje1Fy3DZXo4HRgbdlfAYM5iqdvwkhJ2avvac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NvoDO0ibRgbkxqrMps9bh+Fyt+1c0ttOvp25pFzVwGyDX5iQF7MNAzLzm1/b1RQLtoCLDUOzL5Qs8ArbMZ3dasI4a0uaS2D7Y6iuVjMtBvE7ItbPO/yPUR1lsCX2M7jd6NSrkQSWwRoxsfKisJ9YQJyf4fCIvzFPTcAKoH64RCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2VOv348; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tNGWFDlBbhFrEmHph+ObMq3wWQcQidDlubTNR9H7bSeeypXJGkQEb093VCYbDhB+XnE0gTlAQ6FzeZ99YZmKY0PFcZuyNihZyM4VL5BA2I0gQy+yajEKw0c3fqfFXkxamNjIjf6Pw+DzdfAHb6fKYYF6+lGDjziPQf9YSzQeOBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNq8m7Eo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2VOv348"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 793B91F000E9;
-	Tue, 21 Jul 2026 18:26:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNq8m7Eo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF111F00A3D;
+	Tue, 21 Jul 2026 18:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658410;
-	bh=9SY0rJGah4PZS61H0ETNf1XB//h5j9LJ1NJl4YtyHYc=;
+	s=korg; t=1784658412;
+	bh=hIbmdOqjkxUk013EVG3iLLRmJoqsUNLCoSTswoDtINY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T2VOv348thgQJRHLt359rMpP9socgIa8bLoyGooWNbIRAYCBEWuI/kM9nlxS0bjtd
-	 01zJuepG5fpeBYX+9mP8sSjRuWtLL/1T4bS6v9oCdn+2pca9jOyJgZPbqHFq0azoLq
-	 WjwMpvsl0pTZbk6BiZxgZ/i5tZOoFLmyuF23R974=
+	b=qNq8m7Eo+Eoj8sXrhyNc4idEr52LQMar3PCo3WAJp6bsyuKvhJtiJtBaTgQZ18R+j
+	 POLDzYFfGxMVZ3hddgV9qN0Bf3NCqW3ouu87VLXxCS/UedmxPynSm0Imchs3U3kRvp
+	 3spO2H7mSnDv+oY0qnjMTOI8QIlosFvCbg8XWc1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Atish Patra <atishp@meta.com>,
+	Kai Huang <kai.huang@intel.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 1133/1611] KVM: SEV: Do not allow intra-host migration/mirroring of SNP VMs
-Date: Tue, 21 Jul 2026 17:20:49 +0200
-Message-ID: <20260721152540.908869109@linuxfoundation.org>
+Subject: [PATCH 6.18 1134/1611] KVM: x86: Ignore pending PV EOI if the vCPU has since disabled PV EOIs
+Date: Tue, 21 Jul 2026 17:20:50 +0200
+Message-ID: <20260721152540.931482549@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,60 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Atish Patra <atishp@meta.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 6ee4140788234a6fabf59e6a50e38cdb936008cd upstream.
+commit 9285e4070df2c40585c3d7ec9571faa7a2b97e17 upstream.
 
-The intra-host migration/mirroring feature is not fully implemented for
-SEV-SNP VMs. The proper migration requires additional SNP-specific
-state such as guest_req_mutex, guest_req_buf, and guest_resp_buf to be
-transferred or initialized on the destination.
+Ignore KVM's internal "service pending PV EOI" request if the vCPU has
+disabled PV EOIs since the request was made.  Asserting that PV EOIs are
+enabled can fail if reading guest memory in pv_eoi_get_user() fails, i.e.
+if pv_eoi_test_and_clr_pending() bails early, *and* the vCPU also disables
+PV EOIs.
 
-The SNP VM mirroring requires vmsa features to be copied as well otherwise
-ASID would be bound to SNP range while VM is detected as a SEV VM.
+  kernel BUG at arch/x86/kvm/lapic.c:3338!
+  Oops: invalid opcode: 0000 [#1] SMP
+  CPU: 4 UID: 1000 PID: 890 Comm: pv_eoi_test Not tainted 7.0.0-d585aa5894d8-vm #337 PREEMPT
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  RIP: 0010:kvm_lapic_sync_from_vapic+0x12b/0x140 [kvm]
+  Call Trace:
+   <TASK>
+   kvm_arch_vcpu_ioctl_run+0x1075/0x1c30 [kvm]
+   kvm_vcpu_ioctl+0x2d5/0x980 [kvm]
+   __x64_sys_ioctl+0x8a/0xd0
+   do_syscall_64+0xb5/0xb40
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   </TASK>
+  Modules linked in: kvm_intel kvm irqbypass
+  ---[ end trace 0000000000000000 ]---
 
-Reject SNP source VMs in migration/mirroring until proper SNP state
-transfer is implemented.
-
-Fixes: 1dfe571c12cf ("KVM: SEV: Add initial SEV-SNP support")
-
-Reported-by: Chris Mason <clm@meta.com>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Assisted-by: Claude:claude-opus-4-6
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Atish Patra <atishp@meta.com>
-Link: https://patch.msgid.link/20260602-sev_snp_fixes-v3-1-24bfd3ae047c@meta.com
+Fixes: ae7a2a3fb6f8 ("KVM: host side for eoi optimization")
 Cc: stable@vger.kernel.org
-[sean: let lines poke past 80 chars, tag for stable]
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Link: https://patch.msgid.link/20260624220516.3033391-1-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/x86/kvm/lapic.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -2086,8 +2086,9 @@ int sev_vm_move_enc_context_from(struct
- 	if (ret)
- 		return ret;
- 
-+	/* Do not allow SNP VM migration until additional state transfer is implemented  */
- 	if (kvm->arch.vm_type != source_kvm->arch.vm_type ||
--	    sev_guest(kvm) || !sev_guest(source_kvm)) {
-+	    sev_guest(kvm) || !sev_guest(source_kvm) || sev_snp_guest(source_kvm)) {
- 		ret = -EINVAL;
- 		goto out_unlock;
- 	}
-@@ -2831,8 +2832,9 @@ int sev_vm_copy_enc_context_from(struct
- 	 * disallow out-of-band SEV/SEV-ES init if the target is already an
- 	 * SEV guest, or if vCPUs have been created.  KVM relies on vCPUs being
- 	 * created after SEV/SEV-ES initialization, e.g. to init intercepts.
-+	 * Also do not allow SNP VM mirroring until additional state transfer is implemented.
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -3379,6 +3379,12 @@ static void apic_sync_pv_eoi_from_guest(
+ 					struct kvm_lapic *apic)
+ {
+ 	int vector;
++
++	if (unlikely(!pv_eoi_enabled(vcpu))) {
++		__clear_bit(KVM_APIC_PV_EOI_PENDING, &vcpu->arch.apic_attention);
++		return;
++	}
++
+ 	/*
+ 	 * PV EOI state is derived from KVM_APIC_PV_EOI_PENDING in host
+ 	 * and KVM_PV_EOI_ENABLED in guest memory as follows:
+@@ -3390,8 +3396,6 @@ static void apic_sync_pv_eoi_from_guest(
+ 	 * KVM_APIC_PV_EOI_PENDING is set, KVM_PV_EOI_ENABLED is unset:
+ 	 * 	-> host enabled PV EOI, guest executed EOI.
  	 */
--	if (sev_guest(kvm) || !sev_guest(source_kvm) ||
-+	if (sev_guest(kvm) || !sev_guest(source_kvm) || sev_snp_guest(source_kvm) ||
- 	    is_mirroring_enc_context(source_kvm) || kvm->created_vcpus) {
- 		ret = -EINVAL;
- 		goto e_unlock;
+-	BUG_ON(!pv_eoi_enabled(vcpu));
+-
+ 	if (pv_eoi_test_and_clr_pending(vcpu))
+ 		return;
+ 	vector = apic_set_eoi(apic);
 
 
