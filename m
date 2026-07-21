@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48510471252;
-	Tue, 21 Jul 2026 19:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF622471252;
+	Tue, 21 Jul 2026 19:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660940; cv=none; b=SBVBXNE49HzTHOuX0utFzqY12XkpCjJyjKxfosJVHRSWBSH+kaVUvSWbYeh3HELV1ZEyMy3UeGQcYaLuvfDt8e1v6N2h3x57DNuWORR45vpFsqzZso/qvGew8Xgw60KC2i/9sVwKUFmL/Ls4VfrSa796BkVJJzNeL7jubc0zQLM=
+	t=1784660942; cv=none; b=X/HYyc+ERj7KYbtnOEGimKyWwO5C892tMKNV4gbu1VpSxH1kXVp/Y4E0aVmjOD+Z4XWlmT4tImh5UA/VZMNoqlSrlUrByYsQdMudPYj6P47Y0KR0r6dP+jJ3yG5NfHbj2PHFdAqup/pWmFe5utvrT+V4dSp1eRHRw0aCnIrNPLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660940; c=relaxed/simple;
-	bh=/5idMHRxI+tD9kkz4mdBJ/qwVHtvwLl6gcG/BWsth78=;
+	s=arc-20240116; t=1784660942; c=relaxed/simple;
+	bh=Qal5kgyXnDS9UauJNKIIqu+pTUvj2YOHHrynoKdZ+Xo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C66mT/HOt7BCANGPkQnCSZPPjW7YHsegDGDjbUSDZF+eu8UlxWC5LO71e3DZHi12v82S3hV/MXg2k/2GPgEWeSdB7aGdWQn7QDEuJaJEu14Q7Zj/Mbeq+p3mXHksaTnN8BizeIvywSWcAYCNKXHcSE1hc/YZly1vspHvR0dLNfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OvfyH1TZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jEDreys3CvVp7KX1qZFAHuAX2lsbVRw2+lnWmu0MLuh5AdQ4e9vmj7HhqZO6edRQ3nX59K7NTjnRfvF62kle2obfxgfkOwJ9nCM0pp1rFk+Wua7hVOGmWGjuh47/Uoexw5dbmxkm7SHnMIjGshsN5qjYrBim6HdDPdqew8GwPQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FrkHMFMr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OvfyH1TZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEF041F000E9;
-	Tue, 21 Jul 2026 19:08:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FrkHMFMr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32CF81F000E9;
+	Tue, 21 Jul 2026 19:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660939;
-	bh=WinC41yB0NPwArnh8rloOwJ932YiA4Qb4crdGU2jA7I=;
+	s=korg; t=1784660941;
+	bh=bSqwOBeSUHN+A6BGPL4Zh7cqXncaF9hkici5ckv4eds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OvfyH1TZtnpPbUoksbKRmqZwbbwaxNg4/7x0ZVEYq3FT/QaUd9xtI7Egd1Ic5iRzi
-	 y7iAjgpoIorPKF9pWKk2MNo4QbZk6+7r4I4FOc1yNfQ1/IuApBK9QphGhQtxIDq454
-	 FfeocGMf3dMCRUwUDYnH3E88VyDUug1nYWXOAFRY=
+	b=FrkHMFMrELrMdbiif1mkF0z4Cd42k4HDHyj75/a5GmLyXVuLQFvomhdH9iZ4owqUW
+	 0dcqdj2N0OI0gQHvQVsUIv6HIz0SgZFw+Ep6Z92SVdU1Tr80R1j+mszu6cjzZJMLJh
+	 gVoI5Z6qO40K+HU7gNjcUY37Y4OvNu4Z31VR5c6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sayali Patil <sayalip@linux.ibm.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
 	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Dev Jain <dev.jain@arm.com>,
 	Liam Howlett <liam.howlett@oracle.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
 	Michal Hocko <mhocko@kernel.org>,
 	Oscar Salvador <osalvador@suse.de>,
 	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
@@ -40,9 +40,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1170/2077] selftests/mm: move hwpoison setup into run_test() and silence modprobe output for memory-failure category
-Date: Tue, 21 Jul 2026 17:14:03 +0200
-Message-ID: <20260721152620.417803653@linuxfoundation.org>
+Subject: [PATCH 7.1 1171/2077] selftests/mm: clarify alternate unmapping in compaction_test
+Date: Tue, 21 Jul 2026 17:14:04 +0200
+Message-ID: <20260721152620.441149080@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -63,57 +63,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Sayali Patil <sayalip@linux.ibm.com>
 
-[ Upstream commit 90c132f8379b788a0482dbeabc884d3ae5d82205 ]
+[ Upstream commit 69ba1d76d93ab818245333cf400928477ba72053 ]
 
-run_vmtests.sh contains special handling to ensure the hwpoison_inject
-module is available for the memory-failure tests.  This logic was
-implemented outside of run_test(), making the setup category-specific but
-managed globally.
+Add a comment explaining that every other entry in the list is unmapped to
+intentionally create fragmentation with locked pages before invoking
+check_compaction().
 
-Move the hwpoison_inject handling into run_test() and restrict it
-to the memory-failure category so that:
-1. the module is checked and loaded only when memory-failure tests run,
-2. the test is skipped if the module or the debugfs interface
-(/sys/kernel/debug/hwpoison/) is not available.
-3. the module is unloaded after the test if it was loaded by the script.
-
-This localizes category-specific setup and makes the test flow
-consistent with other per-category preparations.
-
-While updating this logic, fix the module availability check.
-The script previously used:
-
-        modprobe -R hwpoison_inject
-
-The -R option prints the resolved module name to stdout, causing every
-run to print:
-
-        hwpoison_inject
-
-in the test output, even when no action is required, introducing
-unnecessary noise.
-
-Replace this with:
-
-        modprobe -n hwpoison_inject
-
-which verifies that the module is loadable without producing output,
-keeping the selftest logs clean and consistent.
-
-Also, ensure that skipped tests do not override a previously recorded
-failure.  A skipped test currently sets exitcode to ksft_skip even if a
-prior test has failed, which can mask failures in the final exit status.
-Update the logic to only set exitcode to ksft_skip when no failure has
-been recorded.
-
-Link: https://lore.kernel.org/93441f34f7ef5add47d1a130d03daa79e21b5050.1779296493.git.sayalip@linux.ibm.com
-Fixes: ff4ef2fbd101 ("selftests/mm: add memory failure anonymous page test")
+Link: https://lore.kernel.org/da5e0a8d5152e54152c0d2f456aac2fac35af291.1779296493.git.sayalip@linux.ibm.com
+Fixes: bd67d5c15cc1 ("Test compaction of mlocked memory")
 Signed-off-by: Sayali Patil <sayalip@linux.ibm.com>
-Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
 Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
 Cc: David Hildenbrand (Arm) <david@kernel.org>
 Cc: Dev Jain <dev.jain@arm.com>
 Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
 Cc: Michal Hocko <mhocko@kernel.org>
 Cc: Oscar Salvador <osalvador@suse.de>
 Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
@@ -122,108 +85,23 @@ Cc: Zi Yan <ziy@nvidia.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/run_vmtests.sh | 62 +++++++++++++++--------
- 1 file changed, 41 insertions(+), 21 deletions(-)
+ tools/testing/selftests/mm/compaction_test.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/testing/selftests/mm/run_vmtests.sh b/tools/testing/selftests/mm/run_vmtests.sh
-index 913a32a47baf85..59e6eada431f39 100755
---- a/tools/testing/selftests/mm/run_vmtests.sh
-+++ b/tools/testing/selftests/mm/run_vmtests.sh
-@@ -234,6 +234,9 @@ pretty_name() {
- # Usage: run_test [test binary] [arbitrary test arguments...]
- run_test() {
- 	if test_selected ${CATEGORY}; then
-+		local skip=0
-+		local LOADED_HWPOISON_INJECT_MOD=0
-+
- 		# On memory constrainted systems some tests can fail to allocate hugepages.
- 		# perform some cleanup before the test for a higher success rate.
- 		if [ ${CATEGORY} == "thp" -o ${CATEGORY} == "hugetlb" ]; then
-@@ -248,13 +251,45 @@ run_test() {
- 			fi
- 		fi
+diff --git a/tools/testing/selftests/mm/compaction_test.c b/tools/testing/selftests/mm/compaction_test.c
+index 30209c40b69778..e1610e2fbdf64f 100644
+--- a/tools/testing/selftests/mm/compaction_test.c
++++ b/tools/testing/selftests/mm/compaction_test.c
+@@ -261,6 +261,9 @@ int main(int argc, char **argv)
+ 		mem_fragmentable_MB -= MAP_SIZE_MB;
+ 	}
  
-+		# Ensure hwpoison_inject is available for memory-failure tests
-+		if [ "${CATEGORY}" = "memory-failure" ]; then
-+			# Try to load hwpoison_inject if not present.
-+			HWPOISON_DIR=/sys/kernel/debug/hwpoison/
-+			if [ ! -d "$HWPOISON_DIR" ]; then
-+				if ! modprobe -n hwpoison_inject > /dev/null 2>&1; then
-+					echo "Module hwpoison_inject not found, skipping..." \
-+						| tap_prefix
-+					skip=1
-+				else
-+					modprobe hwpoison_inject > /dev/null 2>&1
-+					LOADED_HWPOISON_INJECT_MOD=1
-+					if [ ! -d "$HWPOISON_DIR" ]; then
-+						echo "hwpoison debugfs interface not present" \
-+							| tap_prefix
-+						skip=1
-+					fi
-+				fi
-+			fi
-+
-+		fi
-+
- 		local test=$(pretty_name "$*")
- 		local title="running $*"
- 		local sep=$(echo -n "$title" | tr "[:graph:][:space:]" -)
- 		printf "%s\n%s\n%s\n" "$sep" "$title" "$sep" | tap_prefix
- 
--                ("$@" 2>&1) | tap_prefix
--                local ret=${PIPESTATUS[0]}
-+		if [ $skip -eq 1 ]; then
-+			local ret=$ksft_skip
-+		else
-+			("$@" 2>&1) | tap_prefix
-+			local ret=${PIPESTATUS[0]}
-+		fi
-+
-+		# Unload hwpoison_inject if we loaded it
-+		if [ "${LOADED_HWPOISON_INJECT_MOD}" = "1" ]; then
-+			modprobe -r hwpoison_inject > /dev/null 2>&1
-+		fi
-+
- 		count_total=$(( count_total + 1 ))
- 		if [ $ret -eq 0 ]; then
- 			count_pass=$(( count_pass + 1 ))
-@@ -264,7 +299,9 @@ run_test() {
- 			count_skip=$(( count_skip + 1 ))
- 			echo "[SKIP]" | tap_prefix
- 			echo "ok ${count_total} ${test} # SKIP" | tap_output
--			exitcode=$ksft_skip
-+			if [ $exitcode -eq 0 ]; then
-+				exitcode=$ksft_skip
-+			fi
- 		else
- 			count_fail=$(( count_fail + 1 ))
- 			echo "[FAIL]" | tap_prefix
-@@ -525,24 +562,7 @@ CATEGORY="page_frag" run_test ./test_page_frag.sh nonaligned
- 
- CATEGORY="rmap" run_test ./rmap
- 
--# Try to load hwpoison_inject if not present.
--HWPOISON_DIR=/sys/kernel/debug/hwpoison/
--if [ ! -d "$HWPOISON_DIR" ]; then
--	if ! modprobe -q -R hwpoison_inject; then
--		echo "Module hwpoison_inject not found, skipping..."
--	else
--		modprobe hwpoison_inject > /dev/null 2>&1
--		LOADED_MOD=1
--	fi
--fi
--
--if [ -d "$HWPOISON_DIR" ]; then
--	CATEGORY="memory-failure" run_test ./memory-failure
--fi
--
--if [ -n "${LOADED_MOD}" ]; then
--	modprobe -r hwpoison_inject > /dev/null 2>&1
--fi
-+CATEGORY="memory-failure" run_test ./memory-failure
- 
- if [ "${HAVE_HUGEPAGES}" = 1 ]; then
- 	echo "$orig_nr_hugepgs" > /proc/sys/vm/nr_hugepages
++	/* Unmap every other entry in the list to create fragmentation with
++	 * locked pages before invoking check_compaction().
++	 */
+ 	for (entry = list; entry != NULL; entry = entry->next) {
+ 		munmap(entry->map, MAP_SIZE);
+ 		if (!entry->next)
 -- 
 2.53.0
 
