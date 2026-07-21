@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30491438FEE;
-	Tue, 21 Jul 2026 21:11:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D6243E9C5;
+	Tue, 21 Jul 2026 21:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668315; cv=none; b=h0Ic0p6uLANVxKD02MoUsXIRC9C/9XY8i7HMjle2UJnXbv2CFhJcC2ZIdHqFIBcygt1WDMLvjNJ8/dqIKf6fOYaBrWiiV9GYl6mGilWB1pU2yt8+KG4Wh1m6Ja41dONF0xVkJSOCbxCtsUk3KvIvOQhUQ9LWaQJj+My4JtVMjyU=
+	t=1784668318; cv=none; b=niQui8TVxINvOO/rZK1gZqMDF4czRHtZp2aE6rB6aUTSlqgONQalBm+LICCmOHGfQdCMTc0GeZLaJE9bIucybDJhiy5lCR4oe3KjKyDuOg1EZZeVnNG8GsqHdlOwV4SKIz81q2izZ26AYVNsvhBL9ruhvuRoywil9K9hAU6ersk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668315; c=relaxed/simple;
-	bh=KKzaqFvVtlRPgrVioM2h8XWXPvJHzr5AvuHuynZ/thg=;
+	s=arc-20240116; t=1784668318; c=relaxed/simple;
+	bh=9tthuYRP9Jx6P7IFKQQx/RyEXQBBZn6UssXMnP6ufiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y8Vu2QX2ZnNsUczrnkmJ41oxhDJsnVPYQUeokiisQ5dEF/hGDoGKcm/Wna04BtMKEizFd2KSsvcAdeQE4ntGFtH4SPbD2ee+DSokHm5DFQ3Hxz8q5K2e1QQs5GW3xLv4W31Luu4kuyjOp68tBoMIYXs/AOjnhHkIXzIfotf7mEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mjTeS2oi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ti2p6BsmPjbnt9VPwVvxxbjcbG1bw97IpjhJLGJMUfO7f80TG3YMr9b22U/qZ3lU/k3HUaOmTXMhtZMNCGs2iAUmP/fLlNfqKGKBmYQk/ySB43HZPA4++qdNFARFCZbZK20vKJGOITdGLIpWo+kRgc5Zb4aRQ0GMN9hgqPPnhDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bnV9gBp5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mjTeS2oi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 911451F000E9;
-	Tue, 21 Jul 2026 21:11:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnV9gBp5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 405941F000E9;
+	Tue, 21 Jul 2026 21:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668314;
-	bh=kknZrDGk/2xvwrQpm6I7Y4TkToUq2y1mm+/Ny+kcbGU=;
+	s=korg; t=1784668316;
+	bh=eTCfdycob6kK/aoLPL/AhmGxASt4A0Xn6ay9dI98dR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mjTeS2oiPvZEQwVYP9u4zX/HLCMzF6SGLN5cVs4ygtV/998rcTKhd5F2eQLY3e793
-	 CZ7ncztZZe9/OiO6GpZvW14h0RzRHAIcQSZ5NBxPqieRrGOHeyWPPij5B+G8mPj/f0
-	 PnUegDgdoZG7uOMQg11pJObBsJcqsQZwOgyk25pk=
+	b=bnV9gBp5/fjZaEoFM4gJO2Ebrg+VlFwtqpDotpW13i/l61nKwXfgGKsRAENiL/K42
+	 PtvLRJCflvRITiAUoiR4dTyQKQHofdHDGJwchXA7BilumBu3hFqzoMwjTmmCOykiof
+	 cvk/Zs/en5n1KJXv6fEAhV6bWXeCt7GvCFb4oX4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
 	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.1 0128/1067] netfilter: ebtables: module names must be null-terminated
-Date: Tue, 21 Jul 2026 17:12:09 +0200
-Message-ID: <20260721152427.456232739@linuxfoundation.org>
+Subject: [PATCH 6.1 0129/1067] netfilter: ebtables: terminate table name before find_table_lock()
+Date: Tue, 21 Jul 2026 17:12:10 +0200
+Message-ID: <20260721152427.478666850@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -49,32 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit 084d23f818321390509e9738a0b08bbf46df6425 upstream.
+commit a622d2e9608c9dff47fc2e5759ac7aa3a836b45d upstream.
 
-We need to explicitly check the length, else we may pass non-null
-terminated string to request_module().
+update_counters() and compat_update_counters() forward a user-supplied
+32-byte table name to find_table_lock() without NUL-terminating it. On a
+lookup miss, find_inlist_lock() calls try_then_request_module(..., "%s%s",
+"ebtable_", name), and vsnprintf() reads past the name field and the
+stack object until it hits a zero byte.
 
+  BUG: KASAN: stack-out-of-bounds in string (lib/vsprintf.c:648 lib/vsprintf.c:730)
+  Read of size 1 at addr ffff8880119dfb20 by task exploit/147
+  Call Trace:
+  ...
+   string (lib/vsprintf.c:648 lib/vsprintf.c:730)
+   vsnprintf (lib/vsprintf.c:2945)
+   __request_module (kernel/module/kmod.c:150)
+   do_update_counters.isra.0 (net/bridge/netfilter/ebtables.c:371 net/bridge/netfilter/ebtables.c:380)
+   update_counters (net/bridge/netfilter/ebtables.c:1440)
+   do_ebt_set_ctl (net/bridge/netfilter/ebtables.c:2573)
+   nf_setsockopt (net/netfilter/nf_sockopt.c:101)
+   ip_setsockopt (net/ipv4/ip_sockglue.c:1424)
+   raw_setsockopt (net/ipv4/raw.c:847)
+   __sys_setsockopt (net/socket.c:2393)
+  ...
+
+compat_do_replace() shares the same unterminated name via
+compat_copy_ebt_replace_from_user(); terminate it there too so all
+find_table_lock() callers behave alike. The other callers already
+terminate the name after the copy.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 81e675c227ec ("netfilter: ebtables: add CONFIG_COMPAT support")
 Cc: stable@vger.kernel.org
-Fixes: bcf493428840 ("netfilter: ebtables: Fix extension lookup with identical name")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/netfilter/ebtables.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/bridge/netfilter/ebtables.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/net/bridge/netfilter/ebtables.c
 +++ b/net/bridge/netfilter/ebtables.c
-@@ -402,6 +402,9 @@ ebt_check_match(struct ebt_entry_match *
- 	    left - sizeof(struct ebt_entry_match) < m->match_size)
+@@ -1433,6 +1433,8 @@ static int update_counters(struct net *n
+ 	if (copy_from_sockptr(&hlp, arg, sizeof(hlp)))
+ 		return -EFAULT;
+ 
++	hlp.name[sizeof(hlp.name) - 1] = '\0';
++
+ 	if (len != sizeof(hlp) + hlp.num_counters * sizeof(struct ebt_counter))
  		return -EINVAL;
  
-+	if (strnlen(m->u.name, XT_EXTENSION_MAXNAMELEN) == XT_EXTENSION_MAXNAMELEN)
-+		return -EINVAL;
+@@ -2272,6 +2274,8 @@ static int compat_copy_ebt_replace_from_
+ 
+ 	memcpy(repl, &tmp, offsetof(struct ebt_replace, hook_entry));
+ 
++	repl->name[sizeof(repl->name) - 1] = '\0';
 +
- 	match = xt_find_match(NFPROTO_BRIDGE, m->u.name, m->u.revision);
- 	if (IS_ERR(match) || match->family != NFPROTO_BRIDGE) {
- 		if (!IS_ERR(match))
+ 	/* starting with hook_entry, 32 vs. 64 bit structures are different */
+ 	for (i = 0; i < NF_BR_NUMHOOKS; i++)
+ 		repl->hook_entry[i] = compat_ptr(tmp.hook_entry[i]);
+@@ -2394,6 +2398,8 @@ static int compat_update_counters(struct
+ 	if (copy_from_sockptr(&hlp, arg, sizeof(hlp)))
+ 		return -EFAULT;
+ 
++	hlp.name[sizeof(hlp.name) - 1] = '\0';
++
+ 	/* try real handler in case userland supplied needed padding */
+ 	if (len != sizeof(hlp) + hlp.num_counters * sizeof(struct ebt_counter))
+ 		return update_counters(net, arg, len);
 
 
