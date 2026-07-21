@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FAF53AF676;
-	Tue, 21 Jul 2026 20:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229223B42CB;
+	Tue, 21 Jul 2026 20:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666762; cv=none; b=AUmoRmnhSzx0/nou1gKBDCnDLAg2SrGdfUb7S94FBH6DLF8kTVHheX0vPMCZXKED9pODFBMJgVNsvPnO8SmWAY9rvE4lKeDpLTOrFHIGvIDTH2E977+IRX8v93V6DzKUbq4B5TqkQEdj4gTa7m9KRYat+SOr4dJlGb/SldvtDh8=
+	t=1784666764; cv=none; b=XoFhciVTsT3F/1AjBddFuIxPSlHvAp9mnKnBJEJ7f3Mqq0AB3KZ8GbaTa1jzfrXiyHM1Ry/SB9d7Bug4Qv3z1x4nkItWKxEJXFXqof/GDu95a/SOpriQLZmPBwR9Ly+db4yUnrjkYBhvhNadcttBxFmUMBc+95QHZz/keOyF80o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666762; c=relaxed/simple;
-	bh=/cej6u9xvwJk1x7V0rtyfiKAgkgLBo+5FqaHH/IEE2U=;
+	s=arc-20240116; t=1784666764; c=relaxed/simple;
+	bh=zkEuwOAXu6QaJxrFthjuRrxvXdwiRRKfO3DSrSbe3C4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kzdB2OiRiUemnF8q8el9V6ekFlDgHHO1nvbC4VahKicTvdox1QIHiWg1qHHCQdFTPdXN5JJFUgXwVSvp5e002zTvzCtYVOV6y6Tciq1dx52iaXgnAafBwcnxEyjOIYqaHUaxlzb4d3lc+Ht43uD7Y/cT75irOJ006ErGVfojBaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwTb/43V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dKfCV33faRnYDCd6rKDr1xoMmkOdvBtOI6wnzrdr0rcI1SSRd6LNWgH1pesn0MilvK1J52hO7YFWP+aF0IhtyrvzPzgjPgA46kFI+vW5ue1kv7ykreUmxyJbgH1f4l1YkO8y0xjNkaq2Dbabko/1rVnyLCAwYwlMf12bWoieeTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5vIf7Kf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwTb/43V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D2C1F000E9;
-	Tue, 21 Jul 2026 20:45:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5vIf7Kf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B4D1F00A3A;
+	Tue, 21 Jul 2026 20:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666760;
-	bh=udHjcOpnwdpVpKZ8Dp20WccbypIiLulmZoTByJ6vpJU=;
+	s=korg; t=1784666763;
+	bh=81dO1PJXhudRjswO3mGBWtvFD9zKypu5Qp6GvGGr9PQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LwTb/43V8xMlek1iBFJzYkK4fzYed9XbL56PrBqm7jGYmX+8CxkoFf6bCnej5/X1F
-	 mcyBKJ8Ie9Q/DjuxHglhd04XcFjnbpdgAmyyR9yGeLGdJ2lYvMgk07i+PTFpgUBvg2
-	 FYa3ik1EEhlvu0YAEGXZmBH06zro8DvoiKnCYkls=
+	b=I5vIf7KffZZ3ag86aLGKb18AUyEI/zdcopC51eWHaMX23c4vE3z9+cgyJs3iCX6al
+	 81Imj+31sbtLO8ebfnOK3ca6NzGwCTsjtt6UKnxml8MPNmuk+idSToeH+bUly2R4q/
+	 8EXzfOfKr+yjvAsZR//1oQI4hK19XwFTwHxPME1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0805/1266] net: enetc: check the number of BDs needed for xdp_frame
-Date: Tue, 21 Jul 2026 17:20:42 +0200
-Message-ID: <20260721152459.871893343@linuxfoundation.org>
+Subject: [PATCH 6.6 0806/1266] sctp: fix SCTP_RESET_STREAMS stream list length limit
+Date: Tue, 21 Jul 2026 17:20:43 +0200
+Message-ID: <20260721152459.895325310@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,49 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit 555c5475e787802eeae0d2b91c2f66c330db2767 ]
+[ Upstream commit 2b9f5ef534184bd81b8a4772780626c40eed1fd5 ]
 
-The size of xdp_redirect_arr array is ENETC_MAX_SKB_FRAGS. However, the
-number of fragments contained in xdp_frame may be greater than or equal
-to ENETC_MAX_SKB_FRAGS, which will cause the access to xdp_redirect_arr
-to be out of bounds.
+SCTP_RESET_STREAMS carries a flexible array of u16 stream IDs, but the
+optlen clamps treat USHRT_MAX as a byte count and then multiply
+sizeof(__u16) by the fixed header size.
 
-Fixes: 9d2b68cc108d ("net: enetc: add support for XDP_REDIRECT")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Link: https://patch.msgid.link/20260626073244.2168214-1-wei.fang@oss.nxp.com
+That caps the copied and validated option buffer at about 64 KiB, which
+rejects valid requests containing more than about half of the u16 stream
+ID range.
+
+Use struct_size_t() for the maximum struct sctp_reset_streams layout
+instead, so the bound matches the flexible array described by
+srs_number_streams.
+
+Fixes: 5960cefab9df ("sctp: add a ceiling to optlen in some sockopts")
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Link: https://patch.msgid.link/20260625142354.2600-1-alhouseenyousef@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/sctp/socket.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
-index e3ab6f4f8dbba7..3ee6995bc7d256 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.c
-@@ -1425,6 +1425,7 @@ int enetc_xdp_xmit(struct net_device *ndev, int num_frames,
- {
- 	struct enetc_tx_swbd xdp_redirect_arr[ENETC_MAX_SKB_FRAGS] = {0};
- 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
-+	struct skb_shared_info *shinfo;
- 	struct enetc_bdr *tx_ring;
- 	int xdp_tx_bd_cnt, i, k;
- 	int xdp_tx_frm_cnt = 0;
-@@ -1440,6 +1441,12 @@ int enetc_xdp_xmit(struct net_device *ndev, int num_frames,
- 	prefetchw(ENETC_TXBD(*tx_ring, tx_ring->next_to_use));
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 890c587ebe2745..4cc73e7b3c2aae 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -4110,8 +4110,9 @@ static int sctp_setsockopt_reset_streams(struct sock *sk,
+ 	if (optlen < sizeof(*params))
+ 		return -EINVAL;
+ 	/* srs_number_streams is u16, so optlen can't be bigger than this. */
+-	optlen = min_t(unsigned int, optlen, USHRT_MAX +
+-					     sizeof(__u16) * sizeof(*params));
++	optlen = min_t(unsigned int, optlen,
++		       struct_size_t(struct sctp_reset_streams, srs_stream_list,
++				     USHRT_MAX));
  
- 	for (k = 0; k < num_frames; k++) {
-+		if (xdp_frame_has_frags(frames[k])) {
-+			shinfo = xdp_get_shared_info_from_frame(frames[k]);
-+			if (unlikely((shinfo->nr_frags + 1) > ENETC_MAX_SKB_FRAGS))
-+				break;
-+		}
-+
- 		xdp_tx_bd_cnt = enetc_xdp_frame_to_xdp_tx_swbd(tx_ring,
- 							       xdp_redirect_arr,
- 							       frames[k]);
+ 	if (params->srs_number_streams * sizeof(__u16) >
+ 	    optlen - sizeof(*params))
+@@ -4597,8 +4598,8 @@ static int sctp_setsockopt(struct sock *sk, int level, int optname,
+ 	if (optlen > 0) {
+ 		/* Trim it to the biggest size sctp sockopt may need if necessary */
+ 		optlen = min_t(unsigned int, optlen,
+-			       PAGE_ALIGN(USHRT_MAX +
+-					  sizeof(__u16) * sizeof(struct sctp_reset_streams)));
++			       PAGE_ALIGN(struct_size_t(struct sctp_reset_streams,
++							srs_stream_list, USHRT_MAX)));
+ 		kopt = memdup_sockptr(optval, optlen);
+ 		if (IS_ERR(kopt))
+ 			return PTR_ERR(kopt);
 -- 
 2.53.0
 
