@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5A52E1F06;
-	Tue, 21 Jul 2026 16:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B21B3C2790;
+	Tue, 21 Jul 2026 16:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649642; cv=none; b=nlh1kmkUsQCthshDpbrzZwQZLEeT+Ov93TDdLIsaw+GUTWldDHJktw2bXcPgNwokPEGi/uTV3ueRBG32wD26V+ISwblzNkGtW7ejEXbGuX+7EFhCpP4xeSoDKLiHTT8yL2Tj1CxLO05fGzeTk7cUtJtYCgHQF72t+ajE+NdfWtI=
+	t=1784649645; cv=none; b=n21ycNx5nLH5Cca0tr+CaF7B0ma9lDNnCx90nC1wg/uhCn/PaL1ZfsccSB/Ba3YGfgTRdq5ynsrId4bCutsN25ID/0yUSdaj5+GerFEqwk3IkwaRriyyeEi9yxZYT60T36V+sH+aGVi18QrZ5o5JLP3CMK3eQeRhLfi0LbQHjjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649642; c=relaxed/simple;
-	bh=4QASfoXbdIhS+l5hZ3KsJbBufH8AWpqBUe5lnnZi3DU=;
+	s=arc-20240116; t=1784649645; c=relaxed/simple;
+	bh=T78mj+0z3N/GrwkjAljGCvNfXRq6wU1NrBnDUi7j3r8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VZJahTouaOtXGAglSeBUs97JrUSFznwBACt4PfVPhcFxAWUAWFJBU3rl8izssPsHi42ikhUJtsNeTd/vJCI3AsiPcuZ1tBPy+c7RgFBB8hZvyDFwWZw8MHAzPAa8sHEYzlvXZjlNvrlVu6m+3k503ufZdBnfi0/OqzyJyMfU2o4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TWKccllw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hf5BtRscIdTzsDGXoF2iUflbFviKqOEPmvTzxon3GRWjXy78g1BIZ2GCZ9MH6P04N+NPfS/cSAZ78W/zK7ZHzIpUoO1mjvvIyY04No2dGprcV0yp5VQgdOckYGFoWQt4ocr4kdniIjoSgoRcbdGhy87fFki/++j8yLClfKvkjnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAKisv/O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TWKccllw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B811F00A3A;
-	Tue, 21 Jul 2026 16:00:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAKisv/O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEDA1F000E9;
+	Tue, 21 Jul 2026 16:00:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649641;
-	bh=eNg/DfRWrVDpka9ITUcT9cTchhgVlroDrgao4sWFCAo=;
+	s=korg; t=1784649644;
+	bh=n83dMt7n8AKFBavhUsmDeNvjcCZAJdJ1176/LP46p8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TWKccllwmhdfll+ZEWpTXoiWXZW7BpgrHNwoO4ddeQcy5waMC20Th31jIdJInAFOI
-	 wId12enCkEtxLiqcGbKLFE9l6idcWh/UrLKui+jwj6xddQpCaTOUbbJccOHgfPJacj
-	 J03AAaieubmO7uW6JPsiFDK6k234loea8I3MQb/k=
+	b=TAKisv/OcVurEbyWjNz/K66qn6Fetw3nxYV+pd/oF1QHPahSS/mKETUc6GfnQPdBg
+	 WQKtD7Ey34dI3KioTUoVUKhvtD3u5Ve9j6NA1gtkzTSIma/BAqvk3e3ychVGYOqXUz
+	 rbosg+cGIaXCbkXNl01Yzl/nmtoorhqH1xXGNP3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alison Schofield <alison.schofield@intel.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0655/2077] cxl/test: Verify cmd->size_in before accessing payload
-Date: Tue, 21 Jul 2026 17:05:28 +0200
-Message-ID: <20260721152608.254445296@linuxfoundation.org>
+Subject: [PATCH 7.1 0656/2077] cxl/test: Fix integer overflow in mock LSA bounds checks
+Date: Tue, 21 Jul 2026 17:05:29 +0200
+Message-ID: <20260721152608.277456792@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,117 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 71a1def165267bc0947d4236f7336f490739c379 ]
+[ Upstream commit 81eafcada109b653977c4dfbd2b6a72470025a01 ]
 
-Several mock mailbox handlers access input payload fields before
-verifying that cmd->size_in is large enough for the corresponding
-structure.
+Pre-existing issue discovered by sashiko-bot.
 
-To ensure invalid commands are rejected before any payload data is
-consumed, add missing size checks and move existing checks ahead of
-the first payload field access.
+mock_get_lsa() and mock_set_lsa() validate the requested LSA range with
+"offset + length > LSA_SIZE". Both offset and length are u32 and, in
+mock_get_lsa(), both are taken directly from the user-supplied payload.
+The addition is evaluated modulo 2^32, so a large offset combined with a
+small length wraps around and passes the check.
 
-[dj: Updated commit log per Alison's comments. ]
+Rewrite the checks to first bound offset, then compare length against the
+remaining LSA size.
 
-Fixes: 7d3eb23c4ccf ("tools/testing/cxl: Introduce a mock memory device + driver")
-Fixes: d1dca858f058 ("cxl/test: Add generic mock events")
-Fixes: f6448cb5f2f3 ("tools/testing/cxl: add firmware update emulation to CXL memdevs")
-Fixes: e77e9c107978 ("cxl/test: Add Get Feature support to cxl_test")
-Link: https://lore.kernel.org/linux-cxl/20260605143748.235271F00893@smtp.kernel.org/
 Suggested-by: sashiko-bot
-Tested-by: Alison Schofield <alison.schofield@intel.com>
+Fixes: 7d3eb23c4ccf ("tools/testing/cxl: Introduce a mock memory device + driver")
+Link: https://lore.kernel.org/linux-cxl/20260605143748.235271F00893@smtp.kernel.org/
+Assisted-by: Claude:claude-opus-4-8
 Reviewed-by: Alison Schofield <alison.schofield@intel.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/cxl/test/mem.c | 39 +++++++++++++++++++++++++++---------
- 1 file changed, 30 insertions(+), 9 deletions(-)
+ tools/testing/cxl/test/mem.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/tools/testing/cxl/test/mem.c b/tools/testing/cxl/test/mem.c
-index 271c7ad8cc32c9..2e9a5f151e983d 100644
+index 2e9a5f151e983d..9a7cd3f46a1ee5 100644
 --- a/tools/testing/cxl/test/mem.c
 +++ b/tools/testing/cxl/test/mem.c
-@@ -312,12 +312,17 @@ static int mock_get_event(struct device *dev, struct cxl_mbox_cmd *cmd)
- 
- static int mock_clear_event(struct device *dev, struct cxl_mbox_cmd *cmd)
- {
--	struct cxl_mbox_clear_event_payload *pl = cmd->payload_in;
-+	struct cxl_mbox_clear_event_payload *pl;
- 	struct mock_event_log *log;
--	u8 log_type = pl->event_log;
-+	u8 log_type;
- 	u16 handle;
- 	int nr;
- 
-+	if (cmd->size_in < sizeof(*pl))
-+		return -EINVAL;
-+
-+	pl = cmd->payload_in;
-+	log_type = pl->event_log;
- 	if (log_type >= CXL_EVENT_TYPE_MAX)
+@@ -1063,7 +1063,7 @@ static int mock_get_lsa(struct cxl_mockmem_data *mdata,
+ 		return -EINVAL;
+ 	offset = le32_to_cpu(get_lsa->offset);
+ 	length = le32_to_cpu(get_lsa->length);
+-	if (offset + length > LSA_SIZE)
++	if (offset > LSA_SIZE || length > LSA_SIZE - offset)
+ 		return -EINVAL;
+ 	if (length > cmd->size_out)
+ 		return -EINVAL;
+@@ -1083,7 +1083,7 @@ static int mock_set_lsa(struct cxl_mockmem_data *mdata,
+ 		return -EINVAL;
+ 	offset = le32_to_cpu(set_lsa->offset);
+ 	length = cmd->size_in - sizeof(*set_lsa);
+-	if (offset + length > LSA_SIZE)
++	if (offset > LSA_SIZE || length > LSA_SIZE - offset)
  		return -EINVAL;
  
-@@ -574,14 +579,19 @@ static int mock_gsl(struct cxl_mbox_cmd *cmd)
- static int mock_get_log(struct cxl_memdev_state *mds, struct cxl_mbox_cmd *cmd)
- {
- 	struct cxl_mailbox *cxl_mbox = &mds->cxlds.cxl_mbox;
--	struct cxl_mbox_get_log *gl = cmd->payload_in;
--	u32 offset = le32_to_cpu(gl->offset);
--	u32 length = le32_to_cpu(gl->length);
- 	uuid_t uuid = DEFINE_CXL_CEL_UUID;
-+	struct cxl_mbox_get_log *gl;
- 	void *data = &mock_cel;
-+	u32 offset;
-+	u32 length;
- 
- 	if (cmd->size_in < sizeof(*gl))
- 		return -EINVAL;
-+
-+	gl = cmd->payload_in;
-+	offset = le32_to_cpu(gl->offset);
-+	length = le32_to_cpu(gl->length);
-+
- 	if (length > cxl_mbox->payload_size)
- 		return -EINVAL;
- 	if (offset + length > sizeof(mock_cel))
-@@ -1336,10 +1346,14 @@ static int mock_fw_info(struct cxl_mockmem_data *mdata,
- static int mock_transfer_fw(struct cxl_mockmem_data *mdata,
- 			    struct cxl_mbox_cmd *cmd)
- {
--	struct cxl_mbox_transfer_fw *transfer = cmd->payload_in;
-+	struct cxl_mbox_transfer_fw *transfer;
- 	void *fw = mdata->fw;
- 	size_t offset, length;
- 
-+	if (cmd->size_in < sizeof(*transfer))
-+		return -EINVAL;
-+
-+	transfer = cmd->payload_in;
- 	offset = le32_to_cpu(transfer->offset) * CXL_FW_TRANSFER_ALIGNMENT;
- 	length = cmd->size_in - sizeof(*transfer);
- 	if (offset + length > FW_SIZE)
-@@ -1415,11 +1429,18 @@ static int mock_get_test_feature(struct cxl_mockmem_data *mdata,
- 				 struct cxl_mbox_cmd *cmd)
- {
- 	struct vendor_test_feat *output = cmd->payload_out;
--	struct cxl_mbox_get_feat_in *input = cmd->payload_in;
--	u16 offset = le16_to_cpu(input->offset);
--	u16 count = le16_to_cpu(input->count);
-+	struct cxl_mbox_get_feat_in *input;
-+	u16 offset;
-+	u16 count;
- 	u8 *ptr;
- 
-+	if (cmd->size_in < sizeof(*input))
-+		return -EINVAL;
-+
-+	input = cmd->payload_in;
-+	offset = le16_to_cpu(input->offset);
-+	count = le16_to_cpu(input->count);
-+
- 	if (offset > sizeof(*output)) {
- 		cmd->return_code = CXL_MBOX_CMD_RC_INPUT;
- 		return -EINVAL;
+ 	memcpy(lsa + offset, &set_lsa->data[0], length);
 -- 
 2.53.0
 
