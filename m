@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17735231829;
-	Tue, 21 Jul 2026 22:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B120833A9FC;
+	Tue, 21 Jul 2026 22:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673605; cv=none; b=YgBGldsVfcQgJiDSwkPpfM0yXbBtBxlwRWXDMd9IcTbR5og3M219XqdKeKYkdp9GKaM60wfaxAnufYdWkzH42B13I2q+uxuRy5AyVZNof815YVg2S08wTs/oTk1Zcu48gGiN/ksmopl+TH0OCE8XxzED6JziBaMHP0uM2Z+4xvE=
+	t=1784673607; cv=none; b=i4mz8VMUo4Kh0/43pZbONS4HyC3fzOcneA4bziGt0xnX1gryvXTLVVBUi5Ymn4J9AwzCTBlx7FVFq5zF3LcSiHuA6L+6TkXaSuobGT9LjVoUts3RbXAeF+D2pLl1mldVrYf+E6A8CIGAk433X73hCFxNBYJJL4bLIuxmHK6ymcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673605; c=relaxed/simple;
-	bh=kq66z4eEFDifXmeJHYE9rfHh/NHbSTUDJ6b132LQQcg=;
+	s=arc-20240116; t=1784673607; c=relaxed/simple;
+	bh=rNnmnXkoTYC7TaNlQ6jxOhYIkJDUVR/Rst4J9VliDA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RehN5AzTworxNcnwuD3uy2Ns3P0rzuKz3U/e4bcSzGYlXYMuxf07tm9aFI0+t9gluVDZd7/rdKIkpHUda2/OXNuUT6DqOstKCRKjm4N/RcVi5NQ19imzOYciQzOLSw7gCTr7F1Vqoorg4CqnBfKtJIMdfs/JPW+W4uVkQP5UcLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ve5xNkgW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ipJd5mqmD0yvIfb93xgqyNSDXRvBI0Ye/1CnZlwe9z69KqLecwgswqFon7dvESSz7zUKLnu2DnBMpzxb1+3S4cfyhPp+PQ+P5v8k5Oaab5UJd3fMy+GGxLRTa8q2vCSQK7Mr/cTaabffbn1hLPPBjjUe3/8SayRXdblaIiucZSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7/965Gc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ve5xNkgW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785A51F000E9;
-	Tue, 21 Jul 2026 22:40:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7/965Gc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23AE01F000E9;
+	Tue, 21 Jul 2026 22:40:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673604;
-	bh=hnDWGme9JrNO1+AEIr4iz5LkB6qvfgfAhAH+2CxtKRk=;
+	s=korg; t=1784673606;
+	bh=fTN05kI8xmyPakPE3fAcKsGGEjgEFBP+79vkcLrUBEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ve5xNkgW9PR/T8IP9Rcsf+1iYJoeu1ce6vdNUj1BzswzMAO6adPnNXKjz20GWzEnj
-	 pqHYOm2d7R2Nv+W1vZDKoAaCM/8A5CewJWZkfQJH8PzqFu6g2C2RWtKGW7wU10eSXe
-	 YnrsK530SEgIt1d/0Oud9dv2uL6JctcRMbRPAhvI=
+	b=J7/965Gc+RI3e1sK9JokQl4x5zXvt4R4TrJoS6rl3NQU43cw4w+an2PkSl3T4Sdhl
+	 C67eSEr8PWxfpD3UYoMKUee8dCY9xr/I3Ci+EqIqw7GcoWX4fuBs8/YaRobwS03VfQ
+	 hrginuxlBFN+CAjz9kvAOo0b1pDmW5rLmmBWHFtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 181/699] crypto: asymmetric_keys - fix OOB read in pefile_digest_pe_contents
-Date: Tue, 21 Jul 2026 17:19:00 +0200
-Message-ID: <20260721152359.781244253@linuxfoundation.org>
+Subject: [PATCH 5.10 172/699] wifi: rtw88: fix OOB read from firmware RX descriptor exceeding DMA buffer
+Date: Tue, 21 Jul 2026 17:18:51 +0200
+Message-ID: <20260721152359.581967773@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,56 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit f7dd32c5179d7755de18e21d5674b08f9e5cb180 ]
+[ Upstream commit 6e76e9ed273dfb4b3333a5ebbb94958cc5752ab6 ]
 
-pefile_digest_pe_contents() computes the trailing-data hash length as
-pelen - (hashed_bytes + certs_size). A crafted PE can make the addition
-exceed pelen, causing the unsigned subtraction to underflow to ~4 GiB.
-This is passed to crypto_shash_update() which reads out of bounds and
-panics on unmapped vmalloc guard pages.
+In rtw_pci_rx_napi(), new_len is computed as the sum of pkt_len (14-bit
+descriptor field, max 16383) and pkt_offset (drv_info_sz + shift, both
+firmware-controlled). The result can exceed RTK_PCI_RX_BUF_SIZE (11478),
+causing an out-of-bounds read from the pre-allocated DMA buffer when
+skb_put_data copies new_len bytes. The USB transport already validates
+this (rtw_usb_rx_data_put checks against RTW_USB_MAX_RECVBUF_SZ); the
+PCIe path does not.
 
- BUG: unable to handle page fault for address: ffffc900038d8000
- Oops: Oops: 0000 [#1] SMP KASAN NOPTI
- RIP: 0010:sha256_blocks_generic (lib/crypto/sha256.c:152)
- Call Trace:
-  <TASK>
-  __sha256_update (lib/crypto/sha256.c:208)
-  crypto_sha256_update (crypto/sha256.c:142)
-  verify_pefile_signature (crypto/asymmetric_keys/verify_pefile.c:436)
-  kexec_kernel_verify_pe_sig (kernel/kexec_file.c:151)
-  __do_sys_kexec_file_load (kernel/kexec_file.c:406)
-  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-  </TASK>
- Kernel panic - not syncing: Fatal exception
+Add a check that new_len does not exceed the DMA buffer size.
 
-Validate that the addition does not overflow and the result does not
-exceed pelen before the subtraction. Return -ELIBBAD on failure.
-
-Fixes: af316fc442ef ("pefile: Digest the PE binary and compare to the PKCS#7 data")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260421111434.3389674-1-tristmd@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/asymmetric_keys/verify_pefile.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/realtek/rtw88/pci.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/crypto/asymmetric_keys/verify_pefile.c b/crypto/asymmetric_keys/verify_pefile.c
-index 22beaf2213a224..7e5b392dcac79a 100644
---- a/crypto/asymmetric_keys/verify_pefile.c
-+++ b/crypto/asymmetric_keys/verify_pefile.c
-@@ -305,6 +305,8 @@ static int pefile_digest_pe_contents(const void *pebuf, unsigned int pelen,
- 
- 	if (pelen > hashed_bytes) {
- 		tmp = hashed_bytes + ctx->certs_size;
-+		if (tmp <= hashed_bytes || pelen < tmp)
-+			return -ELIBBAD;
- 		ret = crypto_shash_update(desc,
- 					  pebuf + hashed_bytes,
- 					  pelen - tmp);
+diff --git a/drivers/net/wireless/realtek/rtw88/pci.c b/drivers/net/wireless/realtek/rtw88/pci.c
+index 676d861aaf9971..bc09e0225e44e0 100644
+--- a/drivers/net/wireless/realtek/rtw88/pci.c
++++ b/drivers/net/wireless/realtek/rtw88/pci.c
+@@ -980,6 +980,11 @@ static void rtw_pci_rx_isr(struct rtw_dev *rtwdev, struct rtw_pci *rtwpci,
+ 		 * discard the frame if none available
+ 		 */
+ 		new_len = pkt_stat.pkt_len + pkt_offset;
++		if (unlikely(new_len > RTK_PCI_RX_BUF_SIZE)) {
++			rtw_dbg(rtwdev, RTW_DBG_RX,
++				"oversized RX packet: %u\n", new_len);
++			goto next_rp;
++		}
+ 		new = dev_alloc_skb(new_len);
+ 		if (WARN_ONCE(!new, "rx routine starvation\n"))
+ 			goto next_rp;
 -- 
 2.53.0
 
