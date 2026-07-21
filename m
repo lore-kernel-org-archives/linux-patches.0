@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA861382385;
-	Tue, 21 Jul 2026 22:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFD137E310;
+	Tue, 21 Jul 2026 22:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673970; cv=none; b=P46cjcSnPRMMlxLdlR5qDlR2Ka/UWDH+qjXE/4ta/zinzbwtwnzcAhncwhf7aE62cYRCc8VKbz597JsnnW0Q3wY5rv915fIJ+mcU4RGo/oJlgeT2D/q7JlDnugWjhyWTbXrEol2Dzk5Ov7snfEVRyjZZbTKSn6+o8ilqbr54TmM=
+	t=1784673973; cv=none; b=r/LLyldeY0WK6SC4z7x7fIhhaJ4RJvUlcHfgbjYrqUgAG6jDkFuy1+BBcvJvVfKmaApG/ni4cX20G7wT8p1PymmLYvuQs3Cdg5/zvxNd3YnaGvQh1qcbkcKUrZR6POKBWdewg8ze0loNPMbovU+BRwzqGHHeRu2JLjWgs+qWyAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673970; c=relaxed/simple;
-	bh=r/xfZXQvr/FPxRzzo37prQ6IYWhSc2rBaepWZ5bfD3I=;
+	s=arc-20240116; t=1784673973; c=relaxed/simple;
+	bh=ZmuWo6faVe/oeZm4Xx0ajVXTJGsAWCRSEwO99TbTPT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hsu4N+FhtuMewr7142po9pWmEESBEaDPEwUVDu4R3iPJk4K3QTvEfw6BS0ag8Bxi+DqzJ2T7fjiIbulVDWM7esREwL9yLXQA7dhNUd+Keos8z28BicP0mfYfUW4hUwZLNG0U4BdiyfW0jvIUr75KrkTadnCUCcZZJMGa0qtHZGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pc5sbXkT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PK6ry6U66yN0ABsiEHl6mxxa9+vBTSiPcjGkoVhXTtqENdY3fp9aZHiCUhQCXEe1LUupCaReJVuw6LNUdeqT4GOpoOTcvqVlPBEyna3ldLxuNCaD1hoJyE9REiO6PfLHNkuEh8QDJ4hiVRLurYllqVHMVcri9TGL9Pqv168gDhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QoV2urhH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pc5sbXkT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE1C1F000E9;
-	Tue, 21 Jul 2026 22:46:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QoV2urhH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF7E1F000E9;
+	Tue, 21 Jul 2026 22:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673969;
-	bh=gEPR9aM2KBsDPEzIqcU0vY4PQM94PrL8x6WYn3XSlzI=;
+	s=korg; t=1784673972;
+	bh=QpTx8lk8ypgv9auJ1LKNX8PiqfARbzWu/snndM8D5yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pc5sbXkTSRMNaqYeMCZVzhqt4f8K0DhbCNlPNNMF9RoAr1d/WE96PHi5kUc9I1Ja5
-	 dznu4AIDAB1Efth+NEYi3StjnKeDXQ77aWZz5fwlrrluAdgsdXoMJMHrVh4l5l928g
-	 lgQEQHzgZfAt4EXd0G5cohWI8xIpKK/XqxkWLY/s=
+	b=QoV2urhHErquIu7CT6b66dtLdR+0Ow1T93+j8FLyHt02NiqZBuNml2VamDdEYQBvT
+	 xHtrzJFS3+yw4Dyj7vt3qcdylz2TNicc38FsqUyheKnkO2896kymZB24wChPtAZqQJ
+	 Sb3EPI0vs8yFHrI28UhwQAoyL0wZSh+5vwQDNgpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Alejandro Olivan Alvarez <alejandro.olivan.alvarez@gmail.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 311/699] perf hists: Fix snprintf() in hists__scnprintf_title() UID filter path
-Date: Tue, 21 Jul 2026 17:21:10 +0200
-Message-ID: <20260721152402.712058579@linuxfoundation.org>
+Subject: [PATCH 5.10 358/699] netfilter: nf_conncount: prevent connlimit drops for early confirmed ct
+Date: Tue, 21 Jul 2026 17:21:57 +0200
+Message-ID: <20260721152403.766524241@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,49 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 227a8748742f0263f1fe3131449b44563b77a209 ]
+[ Upstream commit c8b6f36f766991e3ebebec6596daee4b04dcbc49 ]
 
-hists__scnprintf_title() accumulates formatted output into a buffer
-using scnprintf() for all filter clauses except the UID filter, which
-uses snprintf().  If the buffer fills up and snprintf() returns more
-than the remaining space, printed exceeds size and the next 'size -
-printed' underflows, causing later scnprintf() calls to write past
-the buffer.
+Commit 69894e5b4c5e ("netfilter: nft_connlimit: update the count if add
+was skipped") introduced a regression where packets for valid
+connections are dropped when using connlimit for soft-limiting
+scenarios.
 
-Switch the UID filter clause to scnprintf() to match the rest of the
-function.
+The issue occurs when a new connection reuses a socket currently in
+the TIME_WAIT state. In this scenario, the connection tracking entry
+is evaluated as already confirmed. Previously, __nf_conncount_add()
+assumed that if a connection was confirmed and did not originate from
+the loopback interface, it should skip the addition and return -EEXIST.
 
-Fixes: 25c312dbf88ca402 ("perf hists: Move hists__scnprintf_title() away from the TUI code")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Skipping the addition triggers a garbage collection run that cleans up
+the TIME_WAIT connection. Consequently, the active connection count
+drops to 0, which xt_connlimit mishandles, leading to the false rejection
+of the perfectly valid new connection.
+
+Fix this by replacing the interface check with protocol-agnostic state
+checks. We now skip the tree insertion and preserve the lockless garbage
+collection optimization only if the connection is IPS_ASSURED. This
+allows early-confirmed setup packets (such as reused TIME_WAIT sockets
+or locally generated SYN-ACKs) to be properly evaluated and counted
+without falsely dropping. The goto check_connections path is maintained
+to ensure these setup packets are deduplicated correctly.
+
+This has been tested with slowhttptest and HTTP server configured
+locally to ensure we are not breaking soft-limiting scenarios for local
+or external connections. In addition, it was tested with a OVS zone
+limit too.
+
+Fixes: 69894e5b4c5e ("netfilter: nft_connlimit: update the count if add was skipped")
+Reported-by: Alejandro Olivan Alvarez <alejandro.olivan.alvarez@gmail.com>
+Closes: https://lore.kernel.org/netfilter-devel/177349610461.3071718.4083978280323144323@eldamar.lan/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/hist.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/netfilter/nf_conncount.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/util/hist.c b/tools/perf/util/hist.c
-index 8a793e4c9400a7..97a9531e26ed5c 100644
---- a/tools/perf/util/hist.c
-+++ b/tools/perf/util/hist.c
-@@ -2728,9 +2728,10 @@ int __hists__scnprintf_title(struct hists *hists, char *bf, size_t size, bool sh
- 			   ev_name, sample_freq_str, enable_ref ? ref : " ", nr_events);
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index b9265a8cdb2bc4..79b0d9c8de56d9 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -179,17 +179,16 @@ static int __nf_conncount_add(struct net *net,
+ 		return -ENOENT;
  
+ 	if (ct && nf_ct_is_confirmed(ct)) {
+-		/* local connections are confirmed in postrouting so confirmation
+-		 * might have happened before hitting connlimit
++		/* Connection is confirmed but might still be in the setup phase.
++		 * Only skip the tracking if it is fully assured. This guarantees
++		 * that setup packets or retransmissions are properly counted and
++		 * deduplicated.
+ 		 */
+-		if (skb->skb_iif != LOOPBACK_IFINDEX) {
++		if (test_bit(IPS_ASSURED_BIT, &ct->status)) {
+ 			err = -EEXIST;
+ 			goto out_put;
+ 		}
  
--	if (hists->uid_filter_str)
--		printed += snprintf(bf + printed, size - printed,
--				    ", UID: %s", hists->uid_filter_str);
-+	if (hists->uid_filter_str) {
-+		printed += scnprintf(bf + printed, size - printed,
-+				     ", UID: %s", hists->uid_filter_str);
-+	}
- 	if (thread) {
- 		if (hists__has(hists, thread)) {
- 			printed += scnprintf(bf + printed, size - printed,
+-		/* this is likely a local connection, skip optimization to avoid
+-		 * adding duplicates from a 'packet train'
+-		 */
+ 		goto check_connections;
+ 	}
+ 
 -- 
 2.53.0
 
