@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0748415F33;
-	Tue, 21 Jul 2026 21:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC14343849F;
+	Tue, 21 Jul 2026 21:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669673; cv=none; b=WjORaYoQH1YFlmtepGlF7DgW8w10P04Y/Reb8PI2BDR1HChReh20CZkWJ+xmbpJ5PhN+B/zEn2aQBAZp0fvjb/CeP4wC4zYAToN+YX6Cmkn1O5xdwORjrSiArmBVJFRkvzVJvkh/Ag8yOnoXAxM6QAfAbamSbxVeiPkC5dKr2Lw=
+	t=1784669676; cv=none; b=rFZuBsySgZELIIYZzkFlrHwuQjfvbBUF8eul6MDKSbxNdV/vc73JKeTMEEx4oydYS7b0hTKpeFeQEKxW1/3vKvBusTsmh6MBEK9kXqo44W0Vy3OprAqOe0baoBe9QvwelQLwH3IeNEOpM3zAM51uVXbbIDCp2YryMi53ymrHFNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669673; c=relaxed/simple;
-	bh=gaoGdYhOAJNHQ0lcJtA1ItYELpaMz7Ez7DrEGwkolkg=;
+	s=arc-20240116; t=1784669676; c=relaxed/simple;
+	bh=umBILamPwmGRThHlFdkKn/BRGCq9r3jgISd1BG7lmF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mzbS7untdB4Vj7weUem1+yIEOu2lQVE9Ah4F3dBBUFwR5p9AsFdukeCbA+n3kCxhhMlpR3OwUb5k4n0JJ22eicqVLnenLciTI9paLyTwy1rLsYsZ0tKPrLt/LxNn9w4MI1Qlc/kxtVEo+YR4xQ/U5ksMAbYSLE1iDlC9UNsvkw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pRV1Snb7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H+dI24A7ngIbMfj3l4Pkrr/NKPSu37f6aIalV2swPCgz8UmAJ2fP9aqybWAdl61XhJ/RIdhbY60PDtxuo/x7o5k9+6pmn8XyA02pEc4UpmK/dzyJ9FwplbqD8bKP7UTPW6yY9HWHbi6gskZ5TTazzcB9hsGSrY8jBAXcrHhcCqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gD/4Yeh4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pRV1Snb7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F370F1F00A3D;
-	Tue, 21 Jul 2026 21:34:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gD/4Yeh4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98DDE1F000E9;
+	Tue, 21 Jul 2026 21:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669671;
-	bh=xyo/2wkoXP+uCL+25sa2WpsFrJx16dKo8mbNvQszLgQ=;
+	s=korg; t=1784669674;
+	bh=ibyJk1JHhWJZ4/D2SJpAO8jiBLzPLAiyvsVcX6f/XXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pRV1Snb7e8Acy08XHRRp1gc0iHak95vyBud5cp1mrK+FXSo8aXt2t2CIm5GFtW+/F
-	 +2OYhiZh7HU7YIhkgDukmGIhYCI6nO9f9F0t1DTeV8OiMHqSo+h6AhaPosFGYXyEsG
-	 p+RQWRDHBDNE5d0oNdNYc7kxYoPUX4L3rKNFNQJA=
+	b=gD/4Yeh49CQG9uTXcQhuZtpOYTZfNuYQGURShe7tv854P7d7+nYKZvTxjOQkZEZGY
+	 r3EM3Mi5isJ812UiR+FTbPJZpqYuRS+orbZdHzkJhE3nl4AhWPolIL1HVPAbSbVCGQ
+	 abHND5HRVIalNNubFvX8h08ZEOHuXSQcIAj1Q8u4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Yun Zhou <yun.zhou@windriver.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0642/1067] rtc: cmos: unregister HPET IRQ handler on probe failure
-Date: Tue, 21 Jul 2026 17:20:43 +0200
-Message-ID: <20260721152438.953629110@linuxfoundation.org>
+Subject: [PATCH 6.1 0643/1067] net: mvneta: re-enable percpu interrupt on resume
+Date: Tue, 21 Jul 2026 17:20:44 +0200
+Message-ID: <20260721152438.978363662@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,61 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-[ Upstream commit a5bb580df018b5d1c5668f05f7979044fb19e23a ]
+[ Upstream commit fd398d6480987e4c84fff0aaab6b9d6642a93343 ]
 
-cmos_do_probe() registers cmos_interrupt() as the HPET RTC IRQ
-handler before requesting the RTC IRQ and registering the RTC
-device. If either request_irq() or devm_rtc_register_device()
-fails afterwards, the error path leaves the HPET RTC IRQ handler
-installed. This leaves a stale handler behind and make a later
-hpet_register_irq_handler() fail with -EBUSY.
+On Marvell MPIC platforms (Armada 370/XP/38x), mvneta uses a percpu
+IRQ disable/enable scheme for NAPI: the ISR (mvneta_percpu_isr) calls
+disable_percpu_irq() to mask the MPIC per-CPU interrupt and schedules
+NAPI poll, which calls enable_percpu_irq() on completion to unmask.
 
-Track whether the HPET handler was registered successfully and
-undo the registration on the probe error path. Also mask the HPET
-RTC IRQ bits to match the normal shutdown cleanup.
+If suspend occurs while NAPI poll is pending (between
+disable_percpu_irq in the ISR and enable_percpu_irq in poll
+completion), the interrupt is never re-enabled:
 
-Fixes: 9d8af78b0797 ("rtc: add HPET RTC emulation to RTC_DRV_CMOS")
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Link: https://patch.msgid.link/20260623100848.2127281-1-haoxiang_li2024@163.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+  1. mvneta_percpu_isr: disable_percpu_irq() + napi_schedule()
+     => MPIC masked, percpu_enabled cpumask bit cleared
+  2. NAPI poll does not complete before suspend proceeds
+     (on PREEMPT_RT this is highly likely since softirqs run in
+     ksoftirqd which gets frozen; on non-RT it can happen when
+     softirq processing is deferred to ksoftirqd)
+  3. mvneta_stop_dev => napi_disable(): cancels the pending poll
+     without executing the completion path
+  4. suspend_device_irqs => IRQCHIP_MASK_ON_SUSPEND: masks MPIC
+     (already masked, but records IRQS_SUSPENDED)
+  5. Resume: mpic_resume checks irq_percpu_is_enabled() => false
+     (bit was cleared in step 1) => skips unmask
+  6. mvneta_start_dev only restores device-level INTR_NEW_MASK,
+     does not touch the MPIC per-CPU mask
+
+Result: MPIC per-CPU interrupt stays masked permanently. The NIC
+generates interrupts (INTR_NEW_CAUSE != 0) but the CPU never
+receives them, causing complete loss of network connectivity.
+
+Fix by calling on_each_cpu(mvneta_percpu_enable) in the resume path
+to unconditionally unmask the MPIC per-CPU interrupt regardless of
+pre-suspend state.
+
+Fixes: 12bb03b436da ("net: mvneta: Handle per-cpu interrupts")
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/20260622074350.1666290-1-yun.zhou@windriver.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/marvell/mvneta.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 1442c629d0d550..47799baa32d760 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -928,6 +928,7 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
- 	unsigned char			rtc_control;
- 	unsigned			address_space;
- 	u32				flags = 0;
-+	bool				hpet_registered = false;
- 	struct nvmem_config nvmem_cfg = {
- 		.name = "cmos_nvram",
- 		.word_size = 1,
-@@ -1078,6 +1079,7 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
- 						" failed in rtc_init().");
- 				goto cleanup1;
- 			}
-+			hpet_registered = true;
- 		} else
- 			rtc_cmos_int_handler = cmos_interrupt;
+diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
+index eb4ebaa1c92ff7..1faf3dbd9233e2 100644
+--- a/drivers/net/ethernet/marvell/mvneta.c
++++ b/drivers/net/ethernet/marvell/mvneta.c
+@@ -5799,6 +5799,9 @@ static int mvneta_resume(struct device *device)
+ 	rtnl_unlock();
+ 	mvneta_set_rx_mode(dev);
  
-@@ -1127,6 +1129,10 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
- 	if (is_valid_irq(rtc_irq))
- 		free_irq(rtc_irq, cmos_rtc.rtc);
- cleanup1:
-+	if (hpet_registered) {
-+		hpet_mask_rtc_irq_bit(RTC_IRQMASK);
-+		hpet_unregister_irq_handler(cmos_interrupt);
-+	}
- 	cmos_rtc.dev = NULL;
- cleanup0:
- 	if (RTC_IOMAPPED)
++	if (!pp->neta_armada3700)
++		on_each_cpu(mvneta_percpu_enable, pp, true);
++
+ 	return 0;
+ }
+ #endif
 -- 
 2.53.0
 
