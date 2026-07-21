@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C131B3FFAB0;
-	Tue, 21 Jul 2026 21:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666054266B2;
+	Tue, 21 Jul 2026 21:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668366; cv=none; b=VyD3EeD22XRAMEt0Nm0bEl8bf6xOr6SQciMHGhysd9EVCkR0XBT0Ki3HQWS2c5o4jhYs+alkC6O2A02R0YFiWeq6skDzFsWihb531opCZ3pcXlKVs2JWj2DSyO7gkL52LQGxkPiEU5As6DTLvFphb3USbH79dNJkN+w/wIKreFU=
+	t=1784668368; cv=none; b=cQ0r53OCNYyGkP0cnD2yUFo+u/r/o1mvmJPvKVmTpRWo9qBDVuRLmZFelCokH7kza4nGcoPXcGHE2maAA8TcnNxfAMb78soQFfGjBY5v+B4JrgX3DdXYqHJ3zcb2p7IbsskP81KFQsGTY/DFUlUwT3OlyXzldXNjYc+jeu1Lo00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668366; c=relaxed/simple;
-	bh=WwYqks83GpBwFq75ffYqFgyriEunizgd/pXcDxrmuLE=;
+	s=arc-20240116; t=1784668368; c=relaxed/simple;
+	bh=pICdW4y3/4YWsDVGrCp77X2RFsToCpAYLvOFwvxsZVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H9zBb3JSYACBh1aTywLaDidFgc9Rtp3lXqJiFw7Ktagd3FaM2KVgnj776N6K7cJ3ACtbmdPeEA4Tw+pJlu/0++VqlJz+f1A5dJ55MqcLwSKYQUG5DL4qSAIv6sReAwJaMfBurAuNDsR7hYEOykg4n+pMEyT7kRc9zfgqcO2C1z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OI1A4Ddw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nBq24sDA8z9eSCc7fhCtqzfbeQfh0DSa9AzVrHCoGUojZln1oiKL19wkvw5eAdrqcq97a/0b3CvfftUDW2HnUxJOnA0hzYje3esjTr7UW2iuIVc4z8DL7m9hMK4AXzdtznXE07NZnAcp9BopQylyeBNPjhOghjP3oYZDb9SduFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kB5j50fM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OI1A4Ddw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30EDE1F000E9;
-	Tue, 21 Jul 2026 21:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kB5j50fM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC0491F000E9;
+	Tue, 21 Jul 2026 21:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668364;
-	bh=GfnV57r5/bGJwiMjvp0Li/WLthPoCSDcZD+45MkR2h0=;
+	s=korg; t=1784668367;
+	bh=J4cvEfQjBOEOC8i+nkZW8/m0NMA04OQLNhyMJkxwzdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OI1A4Ddw27UXVg5OEy7IJnOlSNOMxD3kSB3rKNRwZKeqcEoyMZHbFEL+XgwrQixwW
-	 fDy6CpKhWW+xjTWS2KDIIZGc0+lcE7jIrXeEWMo4Z3fdBjYR7prRIgtj6jjRC2SSeo
-	 v7N8VIXgIDjZH5l6wvZ9sJ5u75rX3vuN5lTucTYs=
+	b=kB5j50fMI6x4ArAIWG20fcxVReCLHWj56mXEJ6deRvUYNyd7IaeHcCmkhd3pnnuAY
+	 ku61cPxpZeRW9T9Vwxk1m4VexrTvRsEqCQmPjRZJO1KS7RaiOD1ieJAjdMrnI222bJ
+	 X7RM2zm2iQrCYRDY3ETuZoKdoeCNQ7Guu8rtsPdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shoichiro Miyamoto <shoichiro.miyamoto@gmail.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 0104/1067] smb: client: restrict implied bcc[0] exemption to responses without data area
-Date: Tue, 21 Jul 2026 17:11:45 +0200
-Message-ID: <20260721152426.917381426@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Martyn Welch <martyn@welchs.me.uk>,
+	Hao-Qun Huang <alvinhuang0603@gmail.com>
+Subject: [PATCH 6.1 0105/1067] staging: vme_user: fix location monitor leak in fake bridge
+Date: Tue, 21 Jul 2026 17:11:46 +0200
+Message-ID: <20260721152426.938370319@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,202 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shoichiro Miyamoto <shoichiro.miyamoto@gmail.com>
+From: Hao-Qun Huang <alvinhuang0603@gmail.com>
 
-commit 53b7c271f06be4dd5cfc8c6ef552a8355c891a7f upstream.
+commit e8422d89e8af41d87f0e9db564be8e2634f4c602 upstream.
 
-smb2_check_message() has a long-standing quirk that accepts a response
-whose calculated length is one byte larger than the bytes actually
-received ("server can return one byte more due to implied bcc[0]").
-This was introduced to accommodate servers that omit the trailing bcc[0]
-overlap byte when no data area is present.
+fake_init() allocates a location monitor resource and links it into
+fake_bridge->lm_resources. The init error path frees this list, but
+fake_exit() only frees the slave and master resource lists. Loading
+and unloading the module therefore triggers a kmemleak warning:
 
-However, the exemption is applied unconditionally, regardless of whether
-the command actually carries a data area (has_smb2_data_area[]).  When a
-response with a data area is subject to the +1 exemption, the reported
-data can extend one byte beyond the bytes actually received, yet
-smb2_check_message() still accepts it.  The subsequent decoder then reads
-past the end of the receive buffer.  This is reachable during NEGOTIATE
-and SESSION_SETUP, before the session is established.
+  unreferenced object 0xffff8b8b82aebe40 (size 64):
+    comm "init", pid 1, jiffies 4294894572
+    backtrace (crc c1e013ef):
+      kmemleak_alloc+0x4e/0x90
+      __kmalloc_cache_noprof+0x338/0x430
+      0xffffffffc0602246
+      do_one_initcall+0x4f/0x320
+      do_init_module+0x68/0x270
+      load_module+0x2a3b/0x2d90
 
-The resulting out-of-bounds reads are visible under KASAN when mounting
-against a non-conforming server; both the SPNEGO/negTokenInit and the
-NTLMSSP challenge decoders are affected:
+Free the lm_resources list in fake_exit() as well, before fake_bridge
+is freed.
 
-  BUG: KASAN: slab-out-of-bounds in asn1_ber_decoder+0x16a7/0x1b00
-  Read of size 1 at addr ffff8880084d67c0 by task mount.cifs/81
-  CPU: 1 UID: 0 PID: 81 Comm: mount.cifs Not tainted 7.1.0-rc6 #1
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x4e/0x70
-   print_report+0x157/0x4c9
-   kasan_report+0xce/0x100
-   asn1_ber_decoder+0x16a7/0x1b00
-   decode_negTokenInit+0x19/0x30
-   SMB2_negotiate+0x31d9/0x4c90
-   cifs_negotiate_protocol+0x1f2/0x3f0
-   cifs_get_smb_ses+0x93f/0x17e0
-   cifs_mount_get_session+0x7f/0x3a0
-   cifs_mount+0xb4/0xcf0
-   cifs_smb3_do_mount+0x23a/0x1500
-   smb3_get_tree+0x3b0/0x630
-   vfs_get_tree+0x82/0x2d0
-   fc_mount+0x10/0x1b0
-   path_mount+0x50d/0x1de0
-   __x64_sys_mount+0x20b/0x270
-   do_syscall_64+0xee/0x590
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-  Allocated by task 85:
-   kmem_cache_alloc_noprof+0x106/0x380
-   mempool_alloc_noprof+0x116/0x1e0
-   cifs_small_buf_get+0x31/0x80
-   allocate_buffers+0x10d/0x2b0
-   cifs_demultiplex_thread+0x1d5/0x1d50
-   kthread+0x2c6/0x390
-   ret_from_fork+0x36e/0x5a0
-   ret_from_fork_asm+0x1a/0x30
-  The buggy address is located 0 bytes to the right of
-   allocated 448-byte region [ffff8880084d6600, ffff8880084d67c0)
-   which belongs to the cache cifs_small_rq of size 448
-
-  BUG: KASAN: slab-out-of-bounds in kmemdup_noprof+0x36/0x50
-  Read of size 329 at addr ffff88800726c678 by task mount.cifs/89
-  CPU: 0 UID: 0 PID: 89 Comm: mount.cifs Tainted: G    B      7.1.0-rc6 #1
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x4e/0x70
-   print_report+0x157/0x4c9
-   kasan_report+0xce/0x100
-   kasan_check_range+0x10f/0x1e0
-   __asan_memcpy+0x23/0x60
-   kmemdup_noprof+0x36/0x50
-   decode_ntlmssp_challenge+0x457/0x680
-   SMB2_sess_auth_rawntlmssp_negotiate+0x6f0/0xcb0
-   SMB2_sess_setup+0x219/0x4f0
-   cifs_setup_session+0x248/0xaf0
-   cifs_get_smb_ses+0xf79/0x17e0
-   cifs_mount_get_session+0x7f/0x3a0
-   cifs_mount+0xb4/0xcf0
-   cifs_smb3_do_mount+0x23a/0x1500
-   smb3_get_tree+0x3b0/0x630
-   vfs_get_tree+0x82/0x2d0
-   fc_mount+0x10/0x1b0
-   path_mount+0x50d/0x1de0
-   __x64_sys_mount+0x20b/0x270
-   do_syscall_64+0xee/0x590
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-  Allocated by task 93:
-   kmem_cache_alloc_noprof+0x106/0x380
-   mempool_alloc_noprof+0x116/0x1e0
-   cifs_small_buf_get+0x31/0x80
-   allocate_buffers+0x10d/0x2b0
-   cifs_demultiplex_thread+0x1d5/0x1d50
-   kthread+0x2c6/0x390
-   ret_from_fork+0x36e/0x5a0
-   ret_from_fork_asm+0x1a/0x30
-  The buggy address is located 120 bytes inside of
-   allocated 448-byte region [ffff88800726c600, ffff88800726c7c0)
-   which belongs to the cache cifs_small_rq of size 448
-
-Restrict the +1 exemption to responses that have no data area, so that
-it still covers the bcc[0] omission it was meant for.  When a data area
-is present, the +1 discrepancy instead means the reported data length
-overruns the received buffer, so the response must be rejected.
-
-Fixes: 093b2bdad322 ("CIFS: Make demultiplex_thread work with SMB2 code")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shoichiro Miyamoto <shoichiro.miyamoto@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 658bcdae9c67 ("vme: Adding Fake VME driver")
+Cc: stable <stable@kernel.org>
+Cc: Martyn Welch <martyn@welchs.me.uk>
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Hao-Qun Huang <alvinhuang0603@gmail.com>
+Link: https://patch.msgid.link/20260704065817.403111-1-alvinhuang0603@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2misc.c |   32 ++++++++++++++++++++++++++------
- 1 file changed, 26 insertions(+), 6 deletions(-)
+ drivers/staging/vme_user/vme_fake.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/smb/client/smb2misc.c
-+++ b/fs/smb/client/smb2misc.c
-@@ -18,6 +18,8 @@
- #include "nterr.h"
- #include "cached_dir.h"
- 
-+static unsigned int __smb2_calc_size(void *buf, bool *have_data);
-+
- static int
- check_smb2_hdr(struct smb2_hdr *shdr, __u64 mid)
+--- a/drivers/staging/vme_user/vme_fake.c
++++ b/drivers/staging/vme_user/vme_fake.c
+@@ -1253,6 +1253,7 @@ static void __exit fake_exit(void)
  {
-@@ -143,6 +145,7 @@ smb2_check_message(char *buf, unsigned i
- 	int command;
- 	__u32 calc_len; /* calculated length */
- 	__u64 mid;
-+	bool have_data;
+ 	struct list_head *pos = NULL;
+ 	struct list_head *tmplist;
++	struct vme_lm_resource *lm;
+ 	struct vme_master_resource *master_image;
+ 	struct vme_slave_resource *slave_image;
+ 	int i;
+@@ -1283,6 +1284,13 @@ static void __exit fake_exit(void)
  
- 	/* If server is a channel, select the primary channel */
- 	pserver = CIFS_SERVER_IS_CHAN(server) ? server->primary_server : server;
-@@ -226,7 +229,8 @@ smb2_check_message(char *buf, unsigned i
- 		}
- 	}
- 
--	calc_len = smb2_calc_size(buf);
-+	have_data = false;
-+	calc_len = __smb2_calc_size(buf, &have_data);
- 
- 	/* For SMB2_IOCTL, OutputOffset and OutputLength are optional, so might
- 	 * be 0, and not a real miscalculation */
-@@ -245,8 +249,13 @@ smb2_check_message(char *buf, unsigned i
- 		/* Windows 7 server returns 24 bytes more */
- 		if (calc_len + 24 == len && command == SMB2_OPLOCK_BREAK_HE)
- 			return 0;
--		/* server can return one byte more due to implied bcc[0] */
--		if (calc_len == len + 1)
-+		/*
-+		 * Server can return one byte more due to implied bcc[0].
-+		 * Allow it only when there is no data area; if data_length > 0
-+		 * the +1 gap indicates an overreported data length rather than
-+		 * the bcc[0] omission.
-+		 */
-+		if (calc_len == len + 1 && !have_data)
- 			return 0;
- 
- 		/*
-@@ -407,14 +416,17 @@ smb2_get_data_area_len(int *off, int *le
- /*
-  * Calculate the size of the SMB message based on the fixed header
-  * portion, the number of word parameters and the data portion of the message.
-+ * If have_data is non-NULL, it is set to true when a non-empty data area was
-+ * found (data_length > 0), allowing callers to distinguish the implied bcc[0]
-+ * case (no data area) from an overreported data length.
-  */
--unsigned int
--smb2_calc_size(void *buf)
-+static unsigned int
-+__smb2_calc_size(void *buf, bool *have_data)
- {
- 	struct smb2_pdu *pdu = buf;
- 	struct smb2_hdr *shdr = &pdu->hdr;
- 	int offset; /* the offset from the beginning of SMB to data area */
--	int data_length; /* the length of the variable length data area */
-+	int data_length = 0; /* the length of the variable length data area */
- 	/* Structure Size has already been checked to make sure it is 64 */
- 	int len = le16_to_cpu(shdr->StructureSize);
- 
-@@ -447,9 +459,17 @@ smb2_calc_size(void *buf)
- 	}
- calc_size_exit:
- 	cifs_dbg(FYI, "SMB2 len %d\n", len);
-+	if (have_data)
-+		*have_data = (data_length > 0);
- 	return len;
- }
- 
-+unsigned int
-+smb2_calc_size(void *buf)
-+{
-+	return __smb2_calc_size(buf, NULL);
-+}
+ 	fake_crcsr_exit(fake_bridge);
+ 	/* resources are stored in link list */
++	list_for_each_safe(pos, tmplist, &fake_bridge->lm_resources) {
++		lm = list_entry(pos, struct vme_lm_resource, list);
++		list_del(pos);
++		kfree(lm);
++	}
 +
- /* Note: caller must free return buffer */
- __le16 *
- cifs_convert_path_to_utf16(const char *from, struct cifs_sb_info *cifs_sb)
++	/* resources are stored in link list */
+ 	list_for_each_safe(pos, tmplist, &fake_bridge->slave_resources) {
+ 		slave_image = list_entry(pos, struct vme_slave_resource, list);
+ 		list_del(pos);
 
 
