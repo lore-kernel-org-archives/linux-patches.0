@@ -1,47 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1B93C1081;
-	Tue, 21 Jul 2026 21:53:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1F444AB6E;
+	Tue, 21 Jul 2026 21:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670829; cv=none; b=ktATepTHG4Q7t1Frlwm4bLuIBo2raNNOQgf7IcyRgY3UnHReJZC+edeeGIdMPZpI3yW+hrm5sXuhDZncWK0yhIx8UYvci2T1/BQzaTwweKYm0qTbcP/5lgD69PG0PKPCcwNWe4BscjV/DkB1nRb7drB6vCctydp3v6bb/mqfE4w=
+	t=1784670832; cv=none; b=d80KT6HMDx8GDY25U5A/Ec3iskTk81UEAxx1LeVs/fvXwM3f8PE/AYq6CewbT8nbtwiSjqDFEpRco7LRoQNLWdJPH949Lt85z6kN2F5tUA8L3//4fKwYLMCkVrbHmu0ofCOOkK5cyx6kOSNj6Drz8KXe4zhQ662kV0hDTpandjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670829; c=relaxed/simple;
-	bh=W9l70jVlnYdydtJW/sUxOr1IQaP9acFDGoxPsixm3kI=;
+	s=arc-20240116; t=1784670832; c=relaxed/simple;
+	bh=8MiFhvoN/MB+609xdPi+BzSK41t6iLmi+MVGTmGMk28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K90yLjb+k+Ldht9rLFF8idx91jT22iBWnjBElASL187jMpi8u1QZTzG9FJBpI2BE0FeAL4x+TzbJnYGJNGuwgVSWVos1acnkqzyrNGMn5GJy9vuTwtVBPhjRYz4I+OitDa0LGiLEYrdzip1ctcIGKzw5O8f2V6XyZa1AvaL8bls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJoPHoGC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uCNqyr6YVk2K1BEeBU64s2HInXZJleiIetyQk5AWFwTsRbXjd8BbnPzpIqTjocZl5aCPXxmFVnccVKR412oMdICD7XmsTOJ0NkKfiC1QidFJnb3wi0bj/jw6uHCGpk36+Ygwo1NnMXI5DbqxEsTSvQ9wIw2LpoZtMmTwxcRS/cs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uX8QRq4a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJoPHoGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B87B1F000E9;
-	Tue, 21 Jul 2026 21:53:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uX8QRq4a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A01981F000E9;
+	Tue, 21 Jul 2026 21:53:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670828;
-	bh=P2ex7yl98P3tNCWkgj+o/5ZOUgUy24Tx1ytZ10Y6NgY=;
+	s=korg; t=1784670831;
+	bh=MNqj8gyD+hHoGeJm1wWvI84hhOFIz9BDUiHw7CEN0Dg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GJoPHoGCm1SXt5SchmlLc31Q3ucVpmQ68Q7y1/jKM6D5I7yP13ZdYgrtvZDF7cQZN
-	 KHf4P8jgu0WdJq/AuX9yJGSb9W4TTkBmHUpBsqJ96fb8/4gvLoSuG608xEq2IGEYDd
-	 TRteStpG1z59uatPVTAF29jaHwuFp3JtsCspxDsU=
+	b=uX8QRq4aKYNaPvMRDZZdLJynaFiROdDjSgw0iIa9LfMbNtfXNCjTUqO7puLJ0J67u
+	 6tpA/Ha6tjCkhzGD4uwJJkpyWnFAwomv37DCb3A/4VJA4C9p2XgFqbeF30q8Zb/655
+	 9jB/PzMvQh0gSOm2ybbjsNXwle1rLg4JX3tXNzns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Markus Mayer <mmayer@broadcom.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 5.15 017/843] perf trace beauty fcntl: Fix build with older kernel headers
-Date: Tue, 21 Jul 2026 17:14:12 +0200
-Message-ID: <20260721152406.344649393@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Jakub Acs <acsjakub@amazon.de>,
+	Sid Kumar <sidkumar1@gmail.com>
+Subject: [PATCH 5.15 018/843] netfilter: nf_tables: restore set elements when delete set fails
+Date: Tue, 21 Jul 2026 17:14:13 +0200
+Message-ID: <20260721152406.369266358@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -60,60 +52,313 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 7ee7f48413c42b90230de4a8e40898b757bc8e82 upstream.
+commit e79b47a8615d42c68aaeb68971593333667382ed upstream.
 
-Toolchains with older kernel headers that do not include upstream commit
-c75b1d9421f80f41 ("fs: add fcntl() interface for setting/getting write
-life time hints") will now fail to build perf due to missing definitions
-for F_GET_RW_HINT/F_SET_RW_HINT/F_GET_FILE_RW_HINT/F_SET_FILE_RW_HINT.
+>From abort path, nft_mapelem_activate() needs to restore refcounters to
+the original state. Currently, it uses the set->ops->walk() to iterate
+over these set elements. The existing set iterator skips inactive
+elements in the next generation, this does not work from the abort path
+to restore the original state since it has to skip active elements
+instead (not inactive ones).
 
-Provide a fallback definition for these when they are not already
-defined.
+This patch moves the check for inactive elements to the set iterator
+callback, then it reverses the logic for the .activate case which
+needs to skip active elements.
 
-Fixes: 9c47f66748381ecb ("perf trace beauty fcntl: Basic 'arg' beautifier")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Markus Mayer <mmayer@broadcom.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Toggle next generation bit for elements when delete set command is
+invoked and call nft_clear() from .activate (abort) path to restore the
+next generation bit.
+
+The splat below shows an object in mappings memleak:
+
+[43929.457523] ------------[ cut here ]------------
+[43929.457532] WARNING: CPU: 0 PID: 1139 at include/net/netfilter/nf_tables.h:1237 nft_setelem_data_deactivate+0xe4/0xf0 [nf_tables]
+[...]
+[43929.458014] RIP: 0010:nft_setelem_data_deactivate+0xe4/0xf0 [nf_tables]
+[43929.458076] Code: 83 f8 01 77 ab 49 8d 7c 24 08 e8 37 5e d0 de 49 8b 6c 24 08 48 8d 7d 50 e8 e9 5c d0 de 8b 45 50 8d 50 ff 89 55 50 85 c0 75 86 <0f> 0b eb 82 0f 0b eb b3 0f 1f 40 00 90 90 90 90 90 90 90 90 90 90
+[43929.458081] RSP: 0018:ffff888140f9f4b0 EFLAGS: 00010246
+[43929.458086] RAX: 0000000000000000 RBX: ffff8881434f5288 RCX: dffffc0000000000
+[43929.458090] RDX: 00000000ffffffff RSI: ffffffffa26d28a7 RDI: ffff88810ecc9550
+[43929.458093] RBP: ffff88810ecc9500 R08: 0000000000000001 R09: ffffed10281f3e8f
+[43929.458096] R10: 0000000000000003 R11: ffff0000ffff0000 R12: ffff8881434f52a0
+[43929.458100] R13: ffff888140f9f5f4 R14: ffff888151c7a800 R15: 0000000000000002
+[43929.458103] FS:  00007f0c687c4740(0000) GS:ffff888390800000(0000) knlGS:0000000000000000
+[43929.458107] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[43929.458111] CR2: 00007f58dbe5b008 CR3: 0000000123602005 CR4: 00000000001706f0
+[43929.458114] Call Trace:
+[43929.458118]  <TASK>
+[43929.458121]  ? __warn+0x9f/0x1a0
+[43929.458127]  ? nft_setelem_data_deactivate+0xe4/0xf0 [nf_tables]
+[43929.458188]  ? report_bug+0x1b1/0x1e0
+[43929.458196]  ? handle_bug+0x3c/0x70
+[43929.458200]  ? exc_invalid_op+0x17/0x40
+[43929.458211]  ? nft_setelem_data_deactivate+0xd7/0xf0 [nf_tables]
+[43929.458271]  ? nft_setelem_data_deactivate+0xe4/0xf0 [nf_tables]
+[43929.458332]  nft_mapelem_deactivate+0x24/0x30 [nf_tables]
+[43929.458392]  nft_rhash_walk+0xdd/0x180 [nf_tables]
+[43929.458453]  ? __pfx_nft_rhash_walk+0x10/0x10 [nf_tables]
+[43929.458512]  ? rb_insert_color+0x2e/0x280
+[43929.458520]  nft_map_deactivate+0xdc/0x1e0 [nf_tables]
+[43929.458582]  ? __pfx_nft_map_deactivate+0x10/0x10 [nf_tables]
+[43929.458642]  ? __pfx_nft_mapelem_deactivate+0x10/0x10 [nf_tables]
+[43929.458701]  ? __rcu_read_unlock+0x46/0x70
+[43929.458709]  nft_delset+0xff/0x110 [nf_tables]
+[43929.458769]  nft_flush_table+0x16f/0x460 [nf_tables]
+[43929.458830]  nf_tables_deltable+0x501/0x580 [nf_tables]
+
+Fixes: 628bd3e49cba ("netfilter: nf_tables: drop map element references from preparation phase")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+[Vegard: CVE-2024-27012; fixed conflicts due to missing commits
+ 0e1ea651c9717ddcd8e0648d8468477a31867b0a ("netfilter: nf_tables: shrink
+ memory consumption of set elements") and
+ 9dad402b89e81a0516bad5e0ac009b7a0a80898f ("netfilter: nf_tables: expose
+ opaque set element as struct nft_elem_priv") so we pass the correct types
+ and values to nft_setelem_data_deactivate(), nft_setelem_validate(),
+ nft_set_elem_ext(), etc.]
+Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
+[acsjakub: clean cherry-pick of the commit 164936b2fc88
+ ("netfilter: nf_tables: restore set elements when delete set fails")
+ from 6.6.y. Plus, add "[ Upstream commit .." header to the message]
+Signed-off-by: Jakub Acs <acsjakub@amazon.de>
+[sidk: clean cherry-pick of the commit faa0deee2721
+ ("netfilter: nf_tables: restore set elements when delete set fails")
+ from 6.1.y.]
+Signed-off-by: Sid Kumar <sidkumar1@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/trace/beauty/fcntl.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ net/netfilter/nf_tables_api.c  |   41 +++++++++++++++++++++++++++++++++++++----
+ net/netfilter/nft_set_bitmap.c |    4 +---
+ net/netfilter/nft_set_hash.c   |    8 ++------
+ net/netfilter/nft_set_pipapo.c |    5 +----
+ net/netfilter/nft_set_rbtree.c |    4 +---
+ 5 files changed, 42 insertions(+), 20 deletions(-)
 
---- a/tools/perf/trace/beauty/fcntl.c
-+++ b/tools/perf/trace/beauty/fcntl.c
-@@ -9,6 +9,22 @@
- #include <linux/kernel.h>
- #include <uapi/linux/fcntl.h>
- 
-+#ifndef F_GET_RW_HINT
-+#define F_GET_RW_HINT		(F_LINUX_SPECIFIC_BASE + 11)
-+#endif
-+
-+#ifndef F_SET_RW_HINT
-+#define F_SET_RW_HINT		(F_LINUX_SPECIFIC_BASE + 12)
-+#endif
-+
-+#ifndef F_GET_FILE_RW_HINT
-+#define F_GET_FILE_RW_HINT	(F_LINUX_SPECIFIC_BASE + 13)
-+#endif
-+
-+#ifndef F_SET_FILE_RW_HINT
-+#define F_SET_FILE_RW_HINT	(F_LINUX_SPECIFIC_BASE + 14)
-+#endif
-+
- static size_t fcntl__scnprintf_getfd(unsigned long val, char *bf, size_t size, bool show_prefix)
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -594,6 +594,12 @@ static int nft_mapelem_deactivate(const
+ 				  const struct nft_set_iter *iter,
+ 				  struct nft_set_elem *elem)
  {
- 	return val ? scnprintf(bf, size, "%s", "0") :
++	struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
++
++	if (!nft_set_elem_active(ext, iter->genmask))
++		return 0;
++
++	nft_set_elem_change_active(ctx->net, set, ext);
+ 	nft_setelem_data_deactivate(ctx->net, set, elem);
+ 
+ 	return 0;
+@@ -619,6 +625,7 @@ static void nft_map_catchall_deactivate(
+ 			continue;
+ 
+ 		elem.priv = catchall->elem;
++		nft_set_elem_change_active(ctx->net, set, ext);
+ 		nft_setelem_data_deactivate(ctx->net, set, &elem);
+ 		break;
+ 	}
+@@ -3522,6 +3529,9 @@ int nft_setelem_validate(const struct nf
+ 	const struct nft_data *data;
+ 	int err;
+ 
++	if (!nft_set_elem_active(ext, iter->genmask))
++		return 0;
++
+ 	if (nft_set_ext_exists(ext, NFT_SET_EXT_FLAGS) &&
+ 	    *nft_set_ext_flags(ext) & NFT_SET_ELEM_INTERVAL_END)
+ 		return 0;
+@@ -3545,19 +3555,22 @@ int nft_setelem_validate(const struct nf
+ 
+ int nft_set_catchall_validate(const struct nft_ctx *ctx, struct nft_set *set)
+ {
+-	u8 genmask = nft_genmask_next(ctx->net);
++	struct nft_set_iter dummy_iter = {
++		.genmask	= nft_genmask_next(ctx->net),
++	};
+ 	struct nft_set_elem_catchall *catchall;
+ 	struct nft_set_elem elem;
++
+ 	struct nft_set_ext *ext;
+ 	int ret = 0;
+ 
+ 	list_for_each_entry_rcu(catchall, &set->catchall_list, list) {
+ 		ext = nft_set_elem_ext(set, catchall->elem);
+-		if (!nft_set_elem_active(ext, genmask))
++		if (!nft_set_elem_active(ext, dummy_iter.genmask))
+ 			continue;
+ 
+ 		elem.priv = catchall->elem;
+-		ret = nft_setelem_validate(ctx, set, NULL, &elem);
++		ret = nft_setelem_validate(ctx, set, &dummy_iter, &elem);
+ 		if (ret < 0)
+ 			return ret;
+ 	}
+@@ -5032,6 +5045,11 @@ static int nf_tables_bind_check_setelem(
+ 					const struct nft_set_iter *iter,
+ 					struct nft_set_elem *elem)
+ {
++	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
++
++	if (!nft_set_elem_active(ext, iter->genmask))
++		return 0;
++
+ 	return nft_setelem_data_validate(ctx, set, elem);
+ }
+ 
+@@ -5126,6 +5144,13 @@ static int nft_mapelem_activate(const st
+ 				const struct nft_set_iter *iter,
+ 				struct nft_set_elem *elem)
+ {
++	struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
++
++	/* called from abort path, reverse check to undo changes. */
++	if (nft_set_elem_active(ext, iter->genmask))
++		return 0;
++
++	nft_clear(ctx->net, ext);
+ 	nft_setelem_data_activate(ctx->net, set, elem);
+ 
+ 	return 0;
+@@ -5144,6 +5169,7 @@ static void nft_map_catchall_activate(co
+ 		if (nft_set_elem_active(ext, genmask))
+ 			continue;
+ 
++		nft_clear(ctx->net, ext);
+ 		elem.priv = catchall->elem;
+ 		nft_setelem_data_activate(ctx->net, set, &elem);
+ 		break;
+@@ -5417,6 +5443,9 @@ static int nf_tables_dump_setelem(const
+ 	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
+ 	struct nft_set_dump_args *args;
+ 
++	if (!nft_set_elem_active(ext, iter->genmask))
++		return 0;
++
+ 	if (nft_set_elem_expired(ext) || nft_set_elem_is_dead(ext))
+ 		return 0;
+ 
+@@ -6103,7 +6132,7 @@ static void nft_setelem_activate(struct
+ 	struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
+ 
+ 	if (nft_setelem_is_catchall(set, elem)) {
+-		nft_set_elem_change_active(net, set, ext);
++		nft_clear(net, ext);
+ 	} else {
+ 		set->ops->activate(net, set, elem);
+ 	}
+@@ -6777,9 +6806,13 @@ static int nft_setelem_flush(const struc
+ 			     const struct nft_set_iter *iter,
+ 			     struct nft_set_elem *elem)
+ {
++	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
+ 	struct nft_trans *trans;
+ 	int err;
+ 
++	if (!nft_set_elem_active(ext, iter->genmask))
++		return 0;
++
+ 	trans = nft_trans_alloc_gfp(ctx, NFT_MSG_DELSETELEM,
+ 				    sizeof(struct nft_trans_elem), GFP_ATOMIC);
+ 	if (!trans)
+--- a/net/netfilter/nft_set_bitmap.c
++++ b/net/netfilter/nft_set_bitmap.c
+@@ -171,7 +171,7 @@ static void nft_bitmap_activate(const st
+ 	nft_bitmap_location(set, nft_set_ext_key(&be->ext), &idx, &off);
+ 	/* Enter 11 state. */
+ 	priv->bitmap[idx] |= (genmask << off);
+-	nft_set_elem_change_active(net, set, &be->ext);
++	nft_clear(net, &be->ext);
+ }
+ 
+ static bool nft_bitmap_flush(const struct net *net,
+@@ -223,8 +223,6 @@ static void nft_bitmap_walk(const struct
+ 	list_for_each_entry_rcu(be, &priv->list, head) {
+ 		if (iter->count < iter->skip)
+ 			goto cont;
+-		if (!nft_set_elem_active(&be->ext, iter->genmask))
+-			goto cont;
+ 
+ 		elem.priv = be;
+ 
+--- a/net/netfilter/nft_set_hash.c
++++ b/net/netfilter/nft_set_hash.c
+@@ -196,7 +196,7 @@ static void nft_rhash_activate(const str
+ {
+ 	struct nft_rhash_elem *he = elem->priv;
+ 
+-	nft_set_elem_change_active(net, set, &he->ext);
++	nft_clear(net, &he->ext);
+ }
+ 
+ static bool nft_rhash_flush(const struct net *net,
+@@ -285,8 +285,6 @@ static void nft_rhash_walk(const struct
+ 
+ 		if (iter->count < iter->skip)
+ 			goto cont;
+-		if (!nft_set_elem_active(&he->ext, iter->genmask))
+-			goto cont;
+ 
+ 		elem.priv = he;
+ 
+@@ -615,7 +613,7 @@ static void nft_hash_activate(const stru
+ {
+ 	struct nft_hash_elem *he = elem->priv;
+ 
+-	nft_set_elem_change_active(net, set, &he->ext);
++	nft_clear(net, &he->ext);
+ }
+ 
+ static bool nft_hash_flush(const struct net *net,
+@@ -669,8 +667,6 @@ static void nft_hash_walk(const struct n
+ 		hlist_for_each_entry_rcu(he, &priv->table[i], node) {
+ 			if (iter->count < iter->skip)
+ 				goto cont;
+-			if (!nft_set_elem_active(&he->ext, iter->genmask))
+-				goto cont;
+ 
+ 			elem.priv = he;
+ 
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -1819,7 +1819,7 @@ static void nft_pipapo_activate(const st
+ {
+ 	struct nft_pipapo_elem *e = elem->priv;
+ 
+-	nft_set_elem_change_active(net, set, &e->ext);
++	nft_clear(net, &e->ext);
+ }
+ 
+ /**
+@@ -2121,9 +2121,6 @@ static void nft_pipapo_walk(const struct
+ 
+ 		e = f->mt[r].e;
+ 
+-		if (!nft_set_elem_active(&e->ext, iter->genmask))
+-			goto cont;
+-
+ 		elem.priv = e;
+ 
+ 		iter->err = iter->fn(ctx, set, iter, &elem);
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -548,7 +548,7 @@ static void nft_rbtree_activate(const st
+ {
+ 	struct nft_rbtree_elem *rbe = elem->priv;
+ 
+-	nft_set_elem_change_active(net, set, &rbe->ext);
++	nft_clear(net, &rbe->ext);
+ }
+ 
+ static bool nft_rbtree_flush(const struct net *net,
+@@ -618,8 +618,6 @@ static void nft_rbtree_walk(const struct
+ 
+ 		if (iter->count < iter->skip)
+ 			goto cont;
+-		if (!nft_set_elem_active(&rbe->ext, iter->genmask))
+-			goto cont;
+ 
+ 		elem.priv = rbe;
+ 
 
 
