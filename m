@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634DA46EF88;
-	Tue, 21 Jul 2026 19:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28D8411661;
+	Tue, 21 Jul 2026 19:08:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660910; cv=none; b=hgaX1sW5rthq+2jt8gQJ9OdXRYpOzRsdxtJcGalFnLFa34AhC8mEaSsgLf+OvI9/6Rj2i1ary2s/54klNNA7Ri3M/y4PrI/5gIKQM5HKAyIBacqOlh9DYo6DVkyreRsYVU2Vf77s2DWpZCqvpn2JWgcPJWqT1HhyLw3jXjVdPdo=
+	t=1784660913; cv=none; b=bHteNE5xGEnSMlthpSoj+wCvkeObs/+2xKCv6mRpkcP7j7dDRtIQpq3hdRLFbTkZllSSKtzySBrPIOh0BYUi0DCoZ4uAo6HLsA+t0syHcTTOaKSaxSXHZlKLWMgsVCQVHVJ7SBA4GKLgB4PpR1x0mbNAQWowme6IprLADLdhCZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660910; c=relaxed/simple;
-	bh=yGDmWeDqmolPsN05bl068rgVOaX+SbuLBe5gc6+vfic=;
+	s=arc-20240116; t=1784660913; c=relaxed/simple;
+	bh=5iYJK+ZHw1H2m8rPlDwXXmEV5wA2xMjBUGpjP1ztivs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HhTxhAR0q1ar8T9dTQjswqfAQv9hiNVncIcYsH4wfwOAWDDE9vbiEAZE8JVlE1hCwTy3+5q3HRPpR87AoQxlIq6qf1sVDaYgCGgCsbxjiroo2QL7zMmGDj4KyMg3BCrlNH8MWbWciNKha0raUgvVk47IyM+zhqG+t2ayY+3x+Lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JAH46zQc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QLy1/1Gjc6SoAQ2lw+1n+DPyrdi3ZjzBtbD4Cz3hpMX7EiFK2ixbq56A6czB16INQCSNgVHR+R/rS9oK66NxAdBYTulAyqVoDyWKuYDtO0KxZeL/FTt0n+Fpv1n2y5z7fXnvH7CTF1tSKDJlY17R1p3DN/PQhwo6TYeqcoqZMaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=miQOttwc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JAH46zQc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F521F000E9;
-	Tue, 21 Jul 2026 19:08:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="miQOttwc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4926D1F000E9;
+	Tue, 21 Jul 2026 19:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660909;
-	bh=4a0J3PjW5ab8Af2BoFyLTec+1Filb5MIlWL7C8MU14c=;
+	s=korg; t=1784660911;
+	bh=wTlJnVJGsU7W4397WxbFvp9ji3oAKVnP5qG5vfwSNWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JAH46zQc0UtXfHiVGfKbn6TJpt4cVgdqqHxNogNYe3+foHUKsMevNLkUqxrIOx6AI
-	 X2GZhjp6rMBwQQl5fm/qD8QNA6MBWDiJkIBpL9sFxT24DhcMNDmLsR7F9niYC2JLnR
-	 9jenp9xnhtHv4NGSkypDjHb1hmo2MRjt/veZfNis=
+	b=miQOttwcP3rlXV/7xXdkv3hFQCvFqIGe4lqkqxNY4umex4SXMK1H+bYUw/sBljRmE
+	 tBlBJMl+2oOd8AwLJilAr3cj4I5CvH1YzIAI4TBAQq/xMFKfKZQJLAOY4o8ZWuCEZD
+	 SDN1Qdo0i7ThcRYfqz+a0zrU6w9LNMWYkFsGk+1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sayali Patil <sayalip@linux.ibm.com>,
+	Zi Yan <ziy@nvidia.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Michal Hocko <mhocko@kernel.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1151/2077] netfilter: nft_meta_bridge: add validate callback for get operations
-Date: Tue, 21 Jul 2026 17:13:44 +0200
-Message-ID: <20260721152619.972711876@linuxfoundation.org>
+Subject: [PATCH 7.1 1160/2077] selftests/mm: fix hugetlb pathname construction in charge_reserved_hugetlb.sh
+Date: Tue, 21 Jul 2026 17:13:53 +0200
+Message-ID: <20260721152620.181350719@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,110 +61,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Sayali Patil <sayalip@linux.ibm.com>
 
-[ Upstream commit bff1c8b49a9cb5c04af20f4e7d43bf4af5863bc6 ]
+[ Upstream commit 404c04e010da2edc93cada07d4d50deda12a68e4 ]
 
-Blamed commit added NFT_META_BRI_IIFHWADDR to the set validate callback,
-yet this is a get operation.
+The charge_reserved_hugetlb.sh script assumes hugetlb cgroup memory
+interface file names use the "<size>MB" format
+(e.g. hugetlb.1024MB.current).
+This assumption breaks on systems with larger huge pages such as 1GB,
+where the kernel exposes normalized units:
+    hugetlb.1GB.current
+    hugetlb.1GB.max
+    hugetlb.1GB.rsvd.max
+    ...
 
-Add a get validate callback and move the NFT_META_BRI_IIFHWADDR key
-there.
+As a result, the script attempts to access files like
+hugetlb.1024MB.current, which do not exist when the kernel reports the
+size in GB.
 
-AFAICS this is harmless, NFT_META_BRI_IIFHWADDR can deal with a NULL
-input device and the set handler ignores a NFT_META_BRI_IIFHWADDR
-operation, but it allows to read 4 bytes off bridge skb->cb[].
+Normalize the huge page size and construct the pathname using the
+appropriate unit (MB or GB), matching the hugetlb controller naming.
 
-Fixes: cbd2257dc96e ("netfilter: nft_meta_bridge: introduce NFT_META_BRI_IIFHWADDR support")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://lore.kernel.org/04b6b49e4a2acf46319f627caf82b09e6dc1ad7f.1779296493.git.sayalip@linux.ibm.com
+Fixes: 209376ed2a84 ("selftests/vm: make charge_reserved_hugetlb.sh work with existing cgroup setting")
+Fixes: 29750f71a9b4 ("hugetlb_cgroup: add hugetlb_cgroup reservation tests")
+Signed-off-by: Sayali Patil <sayalip@linux.ibm.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nft_meta.h       |  2 ++
- net/bridge/netfilter/nft_meta_bridge.c | 19 ++++++++++++++++++-
- net/netfilter/nft_meta.c               |  5 +++--
- 3 files changed, 23 insertions(+), 3 deletions(-)
+ .../selftests/mm/charge_reserved_hugetlb.sh   | 42 +++++++++++++------
+ 1 file changed, 29 insertions(+), 13 deletions(-)
 
-diff --git a/include/net/netfilter/nft_meta.h b/include/net/netfilter/nft_meta.h
-index f74e63290603d9..6cf1d910bbf8da 100644
---- a/include/net/netfilter/nft_meta.h
-+++ b/include/net/netfilter/nft_meta.h
-@@ -40,6 +40,8 @@ void nft_meta_set_eval(const struct nft_expr *expr,
- void nft_meta_set_destroy(const struct nft_ctx *ctx,
- 			  const struct nft_expr *expr);
- 
-+int nft_meta_get_validate(const struct nft_ctx *ctx,
-+			  const struct nft_expr *expr);
- int nft_meta_set_validate(const struct nft_ctx *ctx,
- 			  const struct nft_expr *expr);
- 
-diff --git a/net/bridge/netfilter/nft_meta_bridge.c b/net/bridge/netfilter/nft_meta_bridge.c
-index 219c4068026026..3d95f68e0906ab 100644
---- a/net/bridge/netfilter/nft_meta_bridge.c
-+++ b/net/bridge/netfilter/nft_meta_bridge.c
-@@ -107,12 +107,30 @@ static int nft_meta_bridge_get_init(const struct nft_ctx *ctx,
- 					NULL, NFT_DATA_VALUE, len);
+diff --git a/tools/testing/selftests/mm/charge_reserved_hugetlb.sh b/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
+index e1945901fd207c..a1cfd3a349db62 100755
+--- a/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
++++ b/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
+@@ -94,6 +94,15 @@ function get_machine_hugepage_size() {
  }
  
-+static int nft_meta_bridge_get_validate(const struct nft_ctx *ctx,
-+					const struct nft_expr *expr)
-+{
-+	struct nft_meta *priv = nft_expr_priv(expr);
-+	unsigned int hooks;
-+
-+	switch (priv->key) {
-+	case NFT_META_BRI_IIFHWADDR:
-+		hooks = 1 << NF_BR_PRE_ROUTING;
-+		break;
-+	default:
-+		return nft_meta_get_validate(ctx, expr);
-+	}
-+
-+	return nft_chain_validate_hooks(ctx->chain, hooks);
-+}
-+
- static struct nft_expr_type nft_meta_bridge_type;
- static const struct nft_expr_ops nft_meta_bridge_get_ops = {
- 	.type		= &nft_meta_bridge_type,
- 	.size		= NFT_EXPR_SIZE(sizeof(struct nft_meta)),
- 	.eval		= nft_meta_bridge_get_eval,
- 	.init		= nft_meta_bridge_get_init,
-+	.validate	= nft_meta_bridge_get_validate,
- 	.dump		= nft_meta_get_dump,
- };
+ MB=$(get_machine_hugepage_size)
++if (( MB >= 1024 )); then
++        # For 1GB hugepages
++        UNIT="GB"
++        MB_DISPLAY=$((MB / 1024))
++else
++        # For 2MB hugepages
++        UNIT="MB"
++        MB_DISPLAY=$MB
++fi
  
-@@ -168,7 +186,6 @@ static int nft_meta_bridge_set_validate(const struct nft_ctx *ctx,
+ function setup_cgroup() {
+   local name="$1"
+@@ -103,11 +112,12 @@ function setup_cgroup() {
+   mkdir $cgroup_path/$name
  
- 	switch (priv->key) {
- 	case NFT_META_BRI_BROUTE:
--	case NFT_META_BRI_IIFHWADDR:
- 		hooks = 1 << NF_BR_PRE_ROUTING;
- 		break;
- 	default:
-diff --git a/net/netfilter/nft_meta.c b/net/netfilter/nft_meta.c
-index 5b25851381e524..db937d66210d91 100644
---- a/net/netfilter/nft_meta.c
-+++ b/net/netfilter/nft_meta.c
-@@ -635,8 +635,8 @@ static int nft_meta_get_validate_xfrm(const struct nft_ctx *ctx)
- #endif
+   echo writing cgroup limit: "$cgroup_limit"
+-  echo "$cgroup_limit" >$cgroup_path/$name/hugetlb.${MB}MB.$fault_limit_file
++  echo "$cgroup_limit" > \
++	  $cgroup_path/$name/hugetlb.${MB_DISPLAY}${UNIT}.$fault_limit_file
+ 
+   echo writing reservation limit: "$reservation_limit"
+   echo "$reservation_limit" > \
+-    $cgroup_path/$name/hugetlb.${MB}MB.$reservation_limit_file
++    $cgroup_path/$name/hugetlb.${MB_DISPLAY}${UNIT}.$reservation_limit_file
+ 
+   if [ -e "$cgroup_path/$name/cpuset.cpus" ]; then
+     echo 0 >$cgroup_path/$name/cpuset.cpus
+@@ -142,7 +152,7 @@ function wait_for_file_value() {
+ 
+ function wait_for_hugetlb_memory_to_get_depleted() {
+   local cgroup="$1"
+-  local path="$cgroup_path/$cgroup/hugetlb.${MB}MB.$reservation_usage_file"
++  local path="$cgroup_path/$cgroup/hugetlb.${MB_DISPLAY}${UNIT}.$reservation_usage_file"
+ 
+   wait_for_file_value "$path" "0"
  }
+@@ -150,7 +160,7 @@ function wait_for_hugetlb_memory_to_get_depleted() {
+ function wait_for_hugetlb_memory_to_get_reserved() {
+   local cgroup="$1"
+   local size="$2"
+-  local path="$cgroup_path/$cgroup/hugetlb.${MB}MB.$reservation_usage_file"
++  local path="$cgroup_path/$cgroup/hugetlb.${MB_DISPLAY}${UNIT}.$reservation_usage_file"
  
--static int nft_meta_get_validate(const struct nft_ctx *ctx,
--				 const struct nft_expr *expr)
-+int nft_meta_get_validate(const struct nft_ctx *ctx,
-+			  const struct nft_expr *expr)
- {
- 	const struct nft_meta *priv = nft_expr_priv(expr);
- 
-@@ -652,6 +652,7 @@ static int nft_meta_get_validate(const struct nft_ctx *ctx,
- 
- 	return 0;
+   wait_for_file_value "$path" "$size"
  }
-+EXPORT_SYMBOL_GPL(nft_meta_get_validate);
+@@ -158,7 +168,7 @@ function wait_for_hugetlb_memory_to_get_reserved() {
+ function wait_for_hugetlb_memory_to_get_written() {
+   local cgroup="$1"
+   local size="$2"
+-  local path="$cgroup_path/$cgroup/hugetlb.${MB}MB.$fault_usage_file"
++  local path="$cgroup_path/$cgroup/hugetlb.${MB_DISPLAY}${UNIT}.$fault_usage_file"
  
- int nft_meta_set_validate(const struct nft_ctx *ctx,
- 			  const struct nft_expr *expr)
+   wait_for_file_value "$path" "$size"
+ }
+@@ -180,8 +190,8 @@ function write_hugetlbfs_and_get_usage() {
+   hugetlb_difference=0
+   reserved_difference=0
+ 
+-  local hugetlb_usage=$cgroup_path/$cgroup/hugetlb.${MB}MB.$fault_usage_file
+-  local reserved_usage=$cgroup_path/$cgroup/hugetlb.${MB}MB.$reservation_usage_file
++  local hugetlb_usage=$cgroup_path/$cgroup/hugetlb.${MB_DISPLAY}${UNIT}.$fault_usage_file
++  local reserved_usage=$cgroup_path/$cgroup/hugetlb.${MB_DISPLAY}${UNIT}.$reservation_usage_file
+ 
+   local hugetlb_before=$(cat $hugetlb_usage)
+   local reserved_before=$(cat $reserved_usage)
+@@ -312,8 +322,10 @@ function run_test() {
+ 
+   cleanup_hugetlb_memory "hugetlb_cgroup_test"
+ 
+-  local final_hugetlb=$(cat $cgroup_path/hugetlb_cgroup_test/hugetlb.${MB}MB.$fault_usage_file)
+-  local final_reservation=$(cat $cgroup_path/hugetlb_cgroup_test/hugetlb.${MB}MB.$reservation_usage_file)
++  local final_hugetlb=$(cat \
++	 $cgroup_path/hugetlb_cgroup_test/hugetlb.${MB_DISPLAY}${UNIT}.$fault_usage_file)
++  local final_reservation=$(cat \
++	  $cgroup_path/hugetlb_cgroup_test/hugetlb.${MB_DISPLAY}${UNIT}.$reservation_usage_file)
+ 
+   echo $hugetlb_difference
+   echo $reserved_difference
+@@ -369,10 +381,14 @@ function run_multiple_cgroup_test() {
+   reservation_failed1=$reservation_failed
+   oom_killed1=$oom_killed
+ 
+-  local cgroup1_hugetlb_usage=$cgroup_path/hugetlb_cgroup_test1/hugetlb.${MB}MB.$fault_usage_file
+-  local cgroup1_reservation_usage=$cgroup_path/hugetlb_cgroup_test1/hugetlb.${MB}MB.$reservation_usage_file
+-  local cgroup2_hugetlb_usage=$cgroup_path/hugetlb_cgroup_test2/hugetlb.${MB}MB.$fault_usage_file
+-  local cgroup2_reservation_usage=$cgroup_path/hugetlb_cgroup_test2/hugetlb.${MB}MB.$reservation_usage_file
++  local cgroup1_hugetlb_usage=\
++	  $cgroup_path/hugetlb_cgroup_test1/hugetlb.${MB_DISPLAY}${UNIT}.$fault_usage_file
++  local cgroup1_reservation_usage=\
++	  $cgroup_path/hugetlb_cgroup_test1/hugetlb.${MB_DISPLAY}${UNIT}.$reservation_usage_file
++  local cgroup2_hugetlb_usage=\
++	  $cgroup_path/hugetlb_cgroup_test2/hugetlb.${MB_DISPLAY}${UNIT}.$fault_usage_file
++  local cgroup2_reservation_usage=\
++	  $cgroup_path/hugetlb_cgroup_test2/hugetlb.${MB_DISPLAY}${UNIT}.$reservation_usage_file
+ 
+   local usage_before_second_write=$(cat $cgroup1_hugetlb_usage)
+   local reservation_usage_before_second_write=$(cat $cgroup1_reservation_usage)
 -- 
 2.53.0
 
