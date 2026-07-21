@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832583264FF;
-	Tue, 21 Jul 2026 18:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3DDE407CCF;
+	Tue, 21 Jul 2026 18:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658876; cv=none; b=Yn1UkdMZz4VFTaL8jdZQgiESMKozmkqZrzzwZqFCKtNrsJ+Xzc5UHcZCZsQAcbxiLN3UhBdkdkKCq7GT/+Ail/k9u9S66wL+zLkvBgzJazHCmj2HwKl19Jp2VgQHFYJW2dI0oUrT3iVh+jqWiugw1TlFN6KR04/oV3X2O9YKl/8=
+	t=1784658879; cv=none; b=dp7OknwpFbWI99XmaHEjvTSW5NS2qAWZFo7gpY9PAPx9KNo4cUxp3mWXSfoMZ6bRKIi60x5jgQZd8YlpdT6Fnn6F81YNY3vUgOAe2YmN6JWmWgrG4YuXp7lMm6C4gwcyouW2CaDN6Zqxx03muT2KPukPiVoLU1+n8rC5iEcaEyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658876; c=relaxed/simple;
-	bh=rAgTMm6sQ9OOUeiKEWgk9N3wU7CwosJeFOJC5W00v+w=;
+	s=arc-20240116; t=1784658879; c=relaxed/simple;
+	bh=c2jZJ9ZFsHQdw18c+2mV81Csfwg/6XEPv2P9rVqObSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ne+WJzFdbJ0GuLJf+A+142YCQak9UHZMv9ej4E7mvOdwRjVUMKxJopnwPdlxWrNFmDGsJyjMX6jFlHcc+Rs4S5VRWOTxYR0HoOskOACJBMxfRLq/7Ln4bVaIy/qYDwPtgdvJ14JH+FmccJeKgY943OjMDFPixmQ46YTRWTBdGEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1QgUkduU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qHvlhT2eSzJ7SCjg1t/zk4FFWf8kUgTNLQfu9mxci0WvV/H4o4405nu4blZCHBXgBc2AA/sZo4YwFGECfBaemJL/eMtpNGq34gxxtDzMyPOABIuSC42ujcHuJU2/ya0PF10tnezL5duMyDBP1kvLXm25hUP8ivHeoq0YtNqNSms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jedYuKYC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1QgUkduU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09181F000E9;
-	Tue, 21 Jul 2026 18:34:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jedYuKYC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66BC61F000E9;
+	Tue, 21 Jul 2026 18:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658875;
-	bh=NeBsheEkPv1RST+DdxKppdYoXRx3EI/ZyKc+qdjS+nk=;
+	s=korg; t=1784658877;
+	bh=Lr/RMIL0EM5ulnSEUkU7YrrSofV48VRG58O52wXIm1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1QgUkduUoKbLJ3UOOdvJImOHKLuNURaRAwUZNUwTrE0G+6H599uoWOMBXqBsvBHFl
-	 NIfq40np1JXr6Q4svCRrjjh6+24S4vXpbk1hqJtHXqSCipkCSFqTh1gV5XDgJIF4dl
-	 l+2CB+ocIW71S02TVej/YsbgVUJJwREW9sOaFyY4=
+	b=jedYuKYCnohg9WjRCfQxdscUvmu7KEdXgWKjLBq9fJoVD6h4tWOnHUpZEAahj4yV7
+	 EWs+84D0pxQJlBt8rB3RCIsOtSLqRdXfsrtfTrPmTLvsXeBamsc81pDtk4HO+dJdB7
+	 qSUEh/ieik5PZAQZIe+ZMC4sr2ooZoe4Y73Ok1lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.18 1310/1611] i2c: mlxbf: Fix use-after-free in mlxbf_i2c_init_resource()
-Date: Tue, 21 Jul 2026 17:23:46 +0200
-Message-ID: <20260721152544.919670649@linuxfoundation.org>
+Subject: [PATCH 6.18 1311/1611] i2c: spacemit: fix spurious IRQ handling returning IRQ_HANDLED
+Date: Tue, 21 Jul 2026 17:23:47 +0200
+Message-ID: <20260721152544.942648415@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,39 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-commit 71356737a7a55c76fee847563e3d33f8e6dc6b6d upstream.
+commit 9db20d23aac7916ff49be409a4bfd48fe7cbbfb4 upstream.
 
-If devm_platform_get_and_ioremap_resource() returns an error,
-mlxbf_i2c_init_resource() frees tmp_res before reading tmp_res->io to
-get the error code. This results in a use-after-free.
+When the interrupt status register reads zero, the handler should
+return IRQ_NONE instead of IRQ_HANDLED. What the return value
+actually feeds into is the spurious interrupt accounting in
+note_interrupt(): falsely claiming IRQ_HANDLED defeats the "irq XX:
+nobody cared" detection, so a stuck interrupt source would never be
+caught.
 
-Save the error code before freeing tmp_res.
-
-Fixes: b5b5b32081cd ("i2c: mlxbf: I2C SMBus driver for Mellanox BlueField SoC")
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Cc: <stable@vger.kernel.org> # v5.10+
+Fixes: 5ea558473fa3 ("i2c: spacemit: add support for SpacemiT K1 SoC")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Cc: <stable@vger.kernel.org> # v6.15+
+Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Reviewed-by: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260714150808.85045-1-xuanqiang.luo@linux.dev
+Link: https://lore.kernel.org/r/ef8b623f45d4e430721e46572c2598d882044aed.1783667875.git.xiaopei01@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-mlxbf.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-k1.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-mlxbf.c
-+++ b/drivers/i2c/busses/i2c-mlxbf.c
-@@ -1058,8 +1058,10 @@ static int mlxbf_i2c_init_resource(struc
+--- a/drivers/i2c/busses/i2c-k1.c
++++ b/drivers/i2c/busses/i2c-k1.c
+@@ -425,7 +425,7 @@ static irqreturn_t spacemit_i2c_irq_hand
  
- 	tmp_res->io = devm_platform_get_and_ioremap_resource(pdev, type, &tmp_res->params);
- 	if (IS_ERR(tmp_res->io)) {
-+		int ret = PTR_ERR(tmp_res->io);
-+
- 		devm_kfree(dev, tmp_res);
--		return PTR_ERR(tmp_res->io);
-+		return ret;
- 	}
+ 	status = readl(i2c->base + SPACEMIT_ISR);
+ 	if (!status)
+-		return IRQ_HANDLED;
++		return IRQ_NONE;
  
- 	tmp_res->type = type;
+ 	i2c->status = status;
+ 
 
 
