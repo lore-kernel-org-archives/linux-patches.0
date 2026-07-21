@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8E0265606;
-	Tue, 21 Jul 2026 19:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742F0472553;
+	Tue, 21 Jul 2026 19:52:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663543; cv=none; b=Fhq0zJucsyteKea0kkInAV20c4nvmXVDoPP5hYd9s/OBpkm3NjvQSZh21i5DTPq0usgbw8FxhLeJMD9vaSWS/9n1Db+eVNloJOrs8MdRcSa5coaankYBiabHDIV+jp7pohjDEf/mNhwXQm6+NO9R1HawuWevn0FF01uPp1YwwFE=
+	t=1784663545; cv=none; b=CV8vXyUgC9eDfNI+XvAW/caG5w7036txeWSGsjk0mzZyowy+kWsRrH4SfoJ5ixvBu7ljbIkNHLy9oHuJv7ZJi1z357OPP5C+dYcZPYOgCVV+viDVVkUBJMOCgjzyEHw6p78OjZW1lxetLOMNBeJBgnHU9S+HNI9heeR1TaltIuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663543; c=relaxed/simple;
-	bh=5ZR7KHBSt321nXVBnbKBXqpJKKjLG5HV4I+QEIHMxgk=;
+	s=arc-20240116; t=1784663545; c=relaxed/simple;
+	bh=dQiFVHi1c+Tu6+ZfLXZyavra2I7n6yBRpHK4R4hOkTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eM+WDRWngs8tV26FjS9EpJvykI24tuJZTgrkvgymKBP5OLHiTtuBsKhgLedt4FgoFglJvlgk3kVeccn/cQSKntgZ6AiQEtte3OqDOcG8p7/5RilZlvmUoH9FSNZhss7pCdhOA/p4vKrq43LMAU7RnjmlRwrRo3ceHuZTb/EVDWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tk0/A2I7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fk5jDuF201FtYO9Eyc/Dp9gx4EI7SPx82QjuMHfjQ7YQ+22XvVyM0azb9U8rFe4aYqhwOGoilNRY2M0v6jOlZvSgKds+dJhynM1auLvvLtPSoKCv/LNzRF9w7CbMWtRnc9bKHVD4m9htYJJbu2niLbRDDtSD2CLorINoh9fe5KA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MpcwP7hR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tk0/A2I7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F2D1F000E9;
-	Tue, 21 Jul 2026 19:52:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MpcwP7hR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB5801F000E9;
+	Tue, 21 Jul 2026 19:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663541;
-	bh=g8TBf/dIROIndgQqO9dsKZPhJj6vgdCIq0plntn0eQQ=;
+	s=korg; t=1784663544;
+	bh=AxIZkEO4ej9dR/0QfIix5Pu77WXOFjkZyXFuKLiC72o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tk0/A2I7+fdndVyGBXATeInppjWTRC3qG6lDsoa/YYfIugGkfRQFVobi6onksGulC
-	 KZnJJDQVcGGLW0y0rIozZTJMaPWGays5I6FJ+FRkq4/5CGNVjYtJWTp//Lps820nZ4
-	 P15F5DnH+6WD09w+lpbWlQMGeEjtygn9lyxYexmE=
+	b=MpcwP7hRxnjPfSH839tm9Rd0Tw0W0D1eszGax1E2CyRnzb4yPuRgYQqtE0KSymzdk
+	 IUbJBYzppkDW0sdgIUH/G9+8axzRaSESJv7jHC2CMlC58gofSavJm+xqsGtnrNqxLu
+	 cGNX11EuEEfnACIquWzW6wcUmiSOLHVKGihfCmAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Florian Westphal <fw@strlen.de>,
-	Seesee <cjc000013@gmail.com>
-Subject: [PATCH 6.12 0861/1276] netfilter: nft_set_pipapo: dont leak bad clone into future transaction
-Date: Tue, 21 Jul 2026 17:21:44 +0200
-Message-ID: <20260721152505.319086213@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.12 0862/1276] netfilter: nf_nat_sip: reload possible stale data pointer
+Date: Tue, 21 Jul 2026 17:21:45 +0200
+Message-ID: <20260721152505.342338491@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,158 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-commit 47e65eff50691f0a5b79d325e28d83ec1da43bcf upstream.
+commit 77e43bcb7ec177e293a5c3f1b91a2c5aebfb6c68 upstream.
 
-On memory allocation failure the cloned nft_pipapo_match can enter a bad
-state:
- - some fields can have their lookup tables resized while others did
-   not
- - bits might have been toggled
- - scratch map can be undersized which also means m->bsize_max can be
-   lower than what is required
+quoting sashiko:
+ ------------------------------------------------------------------------
+ [..] noticed a potential memory bug and header corruption involving the
+ SIP NAT helper.
 
-This means that the next insertion in the same batch can trigger
-out-of-bounds writes.
+ In net/netfilter/nf_nat_sip.c:nf_nat_sip():
+	if (skb_ensure_writable(skb, skb->len)) {
+		nf_ct_helper_log(skb, ct, "cannot mangle packet");
+		return NF_DROP;
+	}
+	uh = (void *)skb->data + protoff;
+	uh->dest = ct_sip_info->forced_dport;
+	if (!nf_nat_mangle_udp_packet(skb, ct, ctinfo, protoff,
+				      0, 0, NULL, 0)) {
 
-Furthermore, a failure in the first can result in the bad clone to
-leak into the next transaction because the abort callback is never
-executed in this case (the upper layer saw an error and no attempt to
-allocate a transactional request was made).
+ If a cloned or fragmented SKB is reallocated by skb_ensure_writable(), the
+ old data buffer is freed. However, nf_nat_sip() fails to update *dptr to
+ point to the new buffer.
 
-Record a state for the nft_pipapo_match structure:
-- NEW (pristine clone)
-- MOD (modified clone with good state)
-- ERR (potentially bogus content)
+ It also appears to use nf_nat_mangle_udp_packet() on what could be a TCP
+ packet, which would overwrite the sequence number with a checksum update.
+ ------------------------------------------------------------------------
 
-Then make it so that deletes and insertions fail when the clone
-entered ERR state.
+nf_conntrack_sip linerizes skbs, hence no fragmented skb can be seen.
+But clones are possible, so rebuild dptr.
 
-In case the very first insert attempt results in an error, free the
-clone right away.
+Disable nf_nat_mangle_udp_packet() branch for TCP streams.
+It doesn't look like this can ever happen, else we should have received
+bug reports about this, so just check the conntrack is UDP and drop
+otherwise.
 
-Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
+The calling conntrack_sip set ->forced_dport for SIP_HDR_VIA_UDP messages,
+so I don't think this is ever expected to be true for a TCP stream.
+
+Fixes: 7266507d8999 ("netfilter: nf_ct_sip: support Cisco 7941/7945 IP phones")
 Cc: stable@vger.kernel.org
-Reported-and-tested-by: Seesee <cjc000013@gmail.com>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Assisted-by: Claude:claude-sonnet-4-6
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_set_pipapo.c |   34 +++++++++++++++++++++++++++++-----
- net/netfilter/nft_set_pipapo.h |    8 ++++++++
- 2 files changed, 37 insertions(+), 5 deletions(-)
+ net/netfilter/nf_nat_sip.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -342,6 +342,8 @@
- #include "nft_set_pipapo_avx2.h"
- #include "nft_set_pipapo.h"
+--- a/net/netfilter/nf_nat_sip.c
++++ b/net/netfilter/nf_nat_sip.c
+@@ -283,13 +283,24 @@ next:
  
-+static void nft_pipapo_abort(const struct nft_set *set);
-+
- /**
-  * pipapo_refill() - For each set bit, set bits from selected mapping table item
-  * @map:	Bitmap to be scanned for set bits
-@@ -1284,7 +1286,7 @@ static int nft_pipapo_insert(const struc
- 	const u8 *start_p, *end_p;
- 	int i, bsize_max, err = 0;
+ 	/* Mangle destination port for Cisco phones, then fix up checksums */
+ 	if (dir == IP_CT_DIR_REPLY && ct_sip_info->forced_dport) {
++		int doff = *dptr - (const char *)skb->data;
+ 		struct udphdr *uh;
  
--	if (!m)
-+	if (!m || m->state == NFT_PIPAPO_CLONE_ERR)
- 		return -ENOMEM;
- 
- 	if (nft_set_ext_exists(ext, NFT_SET_EXT_KEY_END))
-@@ -1355,8 +1357,10 @@ static int nft_pipapo_insert(const struc
- 		else
- 			ret = pipapo_expand(f, start, end, f->groups * f->bb);
- 
--		if (ret < 0)
--			return ret;
-+		if (ret < 0) {
-+			err = ret;
-+			goto abort;
++		if (doff <= 0) {
++			DEBUG_NET_WARN_ON_ONCE(1);
++			return NF_DROP;
 +		}
- 
- 		if (f->bsize > bsize_max)
- 			bsize_max = f->bsize;
-@@ -1372,7 +1376,7 @@ static int nft_pipapo_insert(const struc
- 
- 		err = pipapo_realloc_scratch(m, bsize_max);
- 		if (err)
--			return err;
-+			goto abort;
- 
- 		m->bsize_max = bsize_max;
- 	} else {
-@@ -1384,7 +1388,26 @@ static int nft_pipapo_insert(const struc
- 
- 	pipapo_map(m, rulemap, e);
- 
-+	m->state = NFT_PIPAPO_CLONE_MOD;
- 	return 0;
-+abort:
-+	DEBUG_NET_WARN_ON_ONCE(m->state == NFT_PIPAPO_CLONE_ERR);
 +
-+	/* Two rollback cases:
-+	 * 1) no previous changes.  nft_pipapo_abort is not
-+	 * guaranteed to be invoked (there might be no further
-+	 * add/delete requests coming after this).
-+	 *
-+	 * 2) we had previous changes: there are transaction
-+	 * records pointing to this set.  Leave the rollback to
-+	 * the transaction handling.
-+	 */
-+	if (m->state == NFT_PIPAPO_CLONE_NEW)
-+		nft_pipapo_abort(set); /* releases m */
-+	else
-+		m->state = NFT_PIPAPO_CLONE_ERR;
++		/* ct_sip_info->forced_dport only expected with UDP */
++		if (nf_ct_protonum(ct) != IPPROTO_UDP)
++			return NF_DROP;
 +
-+	return err;
- }
+ 		if (skb_ensure_writable(skb, skb->len)) {
+ 			nf_ct_helper_log(skb, ct, "cannot mangle packet");
+ 			return NF_DROP;
+ 		}
  
- /**
-@@ -1462,6 +1485,7 @@ static struct nft_pipapo_match *pipapo_c
- 		dst++;
- 	}
++		*dptr = skb->data + doff;
+ 		uh = (void *)skb->data + protoff;
+ 		uh->dest = ct_sip_info->forced_dport;
  
-+	new->state = NFT_PIPAPO_CLONE_NEW;
- 	return new;
- 
- out_mt:
-@@ -1885,7 +1909,7 @@ nft_pipapo_deactivate(const struct net *
- 	/* removal must occur on priv->clone, if we are low on memory
- 	 * we have no choice and must fail the removal request.
- 	 */
--	if (!m)
-+	if (!m || m->state == NFT_PIPAPO_CLONE_ERR)
- 		return NULL;
- 
- 	e = pipapo_get(m, (const u8 *)elem->key.val.data,
---- a/net/netfilter/nft_set_pipapo.h
-+++ b/net/netfilter/nft_set_pipapo.h
-@@ -134,9 +134,16 @@ struct nft_pipapo_scratch {
- 	unsigned long map[];
- };
- 
-+enum nft_pipapo_clone_state {
-+	NFT_PIPAPO_CLONE_NEW,
-+	NFT_PIPAPO_CLONE_MOD,
-+	NFT_PIPAPO_CLONE_ERR,
-+};
-+
- /**
-  * struct nft_pipapo_match - Data used for lookup and matching
-  * @field_count:	Amount of fields in set
-+ * @state:		add/delete state; used from control plane
-  * @bsize_max:		Maximum lookup table bucket size of all fields, in longs
-  * @scratch:		Preallocated per-CPU maps for partial matching results
-  * @rcu:		Matching data is swapped on commits
-@@ -144,6 +151,7 @@ struct nft_pipapo_scratch {
-  */
- struct nft_pipapo_match {
- 	u8 field_count;
-+	enum nft_pipapo_clone_state state:8;
- 	unsigned int bsize_max;
- 	struct nft_pipapo_scratch * __percpu *scratch;
- 	struct rcu_head rcu;
 
 
