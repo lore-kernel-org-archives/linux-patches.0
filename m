@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161C846D567;
-	Tue, 21 Jul 2026 15:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D6F46A603;
+	Tue, 21 Jul 2026 15:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649219; cv=none; b=geiUhZcd/BYp4nd11s+c6vnK2QOqsw29LDl5eAo7AyAmh2iSLPukJB9KgDIMGoQ74cpmTtAaY8APdLQWImBCnZ0XEybWzm9NoxEAvo/l7kzIjFpfNWb30dGRdr0GstRtV/eJdGs0ZmawLWuJ6blzL/gKCMCi5ZMwepU20WBxO2I=
+	t=1784649222; cv=none; b=AkjTTY9tNqWn6kn7OD3SYUzMzgT7Mz5IsMWSnhluz3l4VdZpxBbeh+BbbMTfUEJP1ON7WTzJ3BkCtJkybaMOk9mf2PgyfW0kJPyH3rHMhPqGHIClEB74ERlVBTBY8z8kgAcnpX3da6RT0KVr8ItvTwiDwFYl3SchU8yKXRuP1yE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649219; c=relaxed/simple;
-	bh=vq6TKwezdyh+pQ/sPh4dsEPR/CoO2UnBYCv8pSe4ViI=;
+	s=arc-20240116; t=1784649222; c=relaxed/simple;
+	bh=YCskw1X5lSF2s05n9Rg9a5LgwRh5KT0EHHYD6/ze1Go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fKg5Be2FRCxXgVTnopRkKLjJ7f+rxPtuetQUB1n3PqyCVMkR4ZCycsI6AVPEf/2cjPZXyZKyzME4P1OTvOPHBbKk5wY3vJwjcmZNQphUoWc8QS3RDnDjc1siL3rStHlITGC5EtCkPazIwnxDpJtIxShfmktKc5PHhuoc8IzvNes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kXGWl31S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sslU3A0ltvxu/mQ664il2T0yEVyDwXmaSjeQOW4o4Ftr8g/2HygTBf8EZ33tI3Y0H1y5TRyyWdlW2GivNaKPnhJ/aVSwjvqgM6lp9x4zA68+fkbj/5f2LHpb+mshmZx+mp2t1bIuO9nOwfG8ao4Jt6k2d0oVRdCwG9za//3zfnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o64rs66+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kXGWl31S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A9A61F000E9;
-	Tue, 21 Jul 2026 15:53:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o64rs66+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253351F000E9;
+	Tue, 21 Jul 2026 15:53:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649218;
-	bh=oSqgfTq0Yf1jYRSHSylbBX+Ze5fX9+pEJAw5Ml0i7IE=;
+	s=korg; t=1784649220;
+	bh=lFKaLAvnmqP54pCjTNpJ89uMaPQCrNQaF2FBBRa7DAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kXGWl31SOy1hXG/Nm5CcEo3/6mmhUul9PMNInDBqeeFsJEKGqZJkwuqn6I8EnOb9z
-	 6YPeohYqvWk/or76NmY+ZP5VpE6ALxDPVxB5/n3LZqtRct+/TFyYBuoVucFe6NLfdC
-	 oldNemzzJOfeGKGVNcC13nxeJRPqUXsUdIJJ/oJw=
+	b=o64rs66+dZZ2xgMdtPN9eJkXmqhOuFwj/Jlr/O8yHBY1fLSlc7GfTQbc8uPf0Njby
+	 Wb3fVNICIdlnjHf7CkX1iZy3dxv5lSwMoIsoqjEvJjwE/PW9KkTcJoeVPcZy4Tt/SQ
+	 kPUCdWxygaCphhVJK21FaJfKh/i/4keVMMFBLOl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0458/2077] mm: preserve PG_dropbehind flag during folio split
-Date: Tue, 21 Jul 2026 17:02:11 +0200
-Message-ID: <20260721152603.590415119@linuxfoundation.org>
+Subject: [PATCH 7.1 0494/2077] netfilter: conntrack: revert ct extension genid infrastructure
+Date: Tue, 21 Jul 2026 17:02:47 +0200
+Message-ID: <20260721152604.462492053@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,43 +50,235 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 0ad186cf167fdbeb6b29a8005c71973781036bd3 ]
+[ Upstream commit 35e21a4dccc5c255ba59ccfbfeb4629ed21da972 ]
 
-__split_folio_to_order() copies page flags from the original folio to
-newly created sub-folios using an explicit allowlist, but PG_dropbehind
-is not included. When a large folio with PG_dropbehind set is split,
-only the head sub-folio retains the flag; all tail sub-folios silently
-lose it and will not be reclaimed eagerly after writeback completes.
+This infrastructure is not used anymore after moving ct timeout and
+helper to use datapath refcount to track object use.
 
-Add PG_dropbehind to the flag copy mask so that the drop-behind hint
-is preserved across folio splits.
+Revert commit c56716c69ce1 ("netfilter: extensions: introduce extension
+genid count") this patch disables all ct extensions (leading to NULL)
+for unconfirmed conntracks, when this is only targeted at ct helper and
+ct timeout. There is also codebase that dereferences the ct extension
+without checking for NULL which could lead to crash.
 
-Fixes: a323281cdfec ("mm: add PG_dropbehind folio flag")
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260511-dontcache-v7-1-2848ddce8090@kernel.org
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: c56716c69ce1 ("netfilter: extensions: introduce extension genid count")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/huge_memory.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/netfilter/nf_conntrack_extend.h | 12 ----
+ net/netfilter/nf_conntrack_core.c           | 61 +--------------------
+ net/netfilter/nf_conntrack_extend.c         | 32 +----------
+ 3 files changed, 2 insertions(+), 103 deletions(-)
 
-diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index b118bcd392cb35..d29e85495091d4 100644
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -3644,6 +3644,7 @@ static void __split_folio_to_order(struct folio *folio, int old_order,
- 				 (1L << PG_arch_3) |
- #endif
- 				 (1L << PG_dirty) |
-+				 (1L << PG_dropbehind) |
- 				 LRU_GEN_MASK | LRU_REFS_MASK));
+diff --git a/include/net/netfilter/nf_conntrack_extend.h b/include/net/netfilter/nf_conntrack_extend.h
+index 0b247248b03239..fd5c4dbf72caf7 100644
+--- a/include/net/netfilter/nf_conntrack_extend.h
++++ b/include/net/netfilter/nf_conntrack_extend.h
+@@ -38,7 +38,6 @@ enum nf_ct_ext_id {
+ struct nf_ct_ext {
+ 	u8 offset[NF_CT_EXT_NUM];
+ 	u8 len;
+-	unsigned int gen_id;
+ 	char data[] __aligned(8);
+ };
  
- 		if (handle_hwpoison &&
+@@ -52,8 +51,6 @@ static inline bool nf_ct_ext_exist(const struct nf_conn *ct, u8 id)
+ 	return (ct->ext && __nf_ct_ext_exist(ct->ext, id));
+ }
+ 
+-void *__nf_ct_ext_find(const struct nf_ct_ext *ext, u8 id);
+-
+ static inline void *nf_ct_ext_find(const struct nf_conn *ct, u8 id)
+ {
+ 	struct nf_ct_ext *ext = ct->ext;
+@@ -61,19 +58,10 @@ static inline void *nf_ct_ext_find(const struct nf_conn *ct, u8 id)
+ 	if (!ext || !__nf_ct_ext_exist(ext, id))
+ 		return NULL;
+ 
+-	if (unlikely(ext->gen_id))
+-		return __nf_ct_ext_find(ext, id);
+-
+ 	return (void *)ct->ext + ct->ext->offset[id];
+ }
+ 
+ /* Add this type, returns pointer to data or NULL. */
+ void *nf_ct_ext_add(struct nf_conn *ct, enum nf_ct_ext_id id, gfp_t gfp);
+ 
+-/* ext genid.  if ext->id != ext_genid, extensions cannot be used
+- * anymore unless conntrack has CONFIRMED bit set.
+- */
+-extern atomic_t nf_conntrack_ext_genid;
+-void nf_ct_ext_bump_genid(void);
+-
+ #endif /* _NF_CONNTRACK_EXTEND_H */
+diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
+index a45b732393693a..d46faf2d7b9ae6 100644
+--- a/net/netfilter/nf_conntrack_core.c
++++ b/net/netfilter/nf_conntrack_core.c
+@@ -840,33 +840,6 @@ static void __nf_conntrack_hash_insert(struct nf_conn *ct,
+ 			   &nf_conntrack_hash[reply_hash]);
+ }
+ 
+-static bool nf_ct_ext_valid_pre(const struct nf_ct_ext *ext)
+-{
+-	/* if ext->gen_id is not equal to nf_conntrack_ext_genid, some extensions
+-	 * may contain stale pointers to e.g. helper that has been removed.
+-	 *
+-	 * The helper can't clear this because the nf_conn object isn't in
+-	 * any hash and synchronize_rcu() isn't enough because associated skb
+-	 * might sit in a queue.
+-	 */
+-	return !ext || ext->gen_id == atomic_read(&nf_conntrack_ext_genid);
+-}
+-
+-static bool nf_ct_ext_valid_post(struct nf_ct_ext *ext)
+-{
+-	if (!ext)
+-		return true;
+-
+-	if (ext->gen_id != atomic_read(&nf_conntrack_ext_genid))
+-		return false;
+-
+-	/* inserted into conntrack table, nf_ct_iterate_cleanup()
+-	 * will find it.  Disable nf_ct_ext_find() id check.
+-	 */
+-	WRITE_ONCE(ext->gen_id, 0);
+-	return true;
+-}
+-
+ int
+ nf_conntrack_hash_check_insert(struct nf_conn *ct)
+ {
+@@ -882,9 +855,6 @@ nf_conntrack_hash_check_insert(struct nf_conn *ct)
+ 
+ 	zone = nf_ct_zone(ct);
+ 
+-	if (!nf_ct_ext_valid_pre(ct->ext))
+-		return -EAGAIN;
+-
+ 	local_bh_disable();
+ 	do {
+ 		sequence = read_seqcount_begin(&nf_conntrack_generation);
+@@ -918,18 +888,6 @@ nf_conntrack_hash_check_insert(struct nf_conn *ct)
+ 			goto chaintoolong;
+ 	}
+ 
+-	/* If genid has changed, we can't insert anymore because ct
+-	 * extensions could have stale pointers and nf_ct_iterate_destroy
+-	 * might have completed its table scan already.
+-	 *
+-	 * Increment of the ext genid right after this check is fine:
+-	 * nf_ct_iterate_destroy blocks until locks are released.
+-	 */
+-	if (!nf_ct_ext_valid_post(ct->ext)) {
+-		err = -EAGAIN;
+-		goto out;
+-	}
+-
+ 	smp_wmb();
+ 	/* The caller holds a reference to this object */
+ 	refcount_set(&ct->ct_general.use, 2);
+@@ -1257,11 +1215,6 @@ __nf_conntrack_confirm(struct sk_buff *skb)
+ 		return NF_DROP;
+ 	}
+ 
+-	if (!nf_ct_ext_valid_pre(ct->ext)) {
+-		NF_CT_STAT_INC(net, insert_failed);
+-		goto dying;
+-	}
+-
+ 	/* We have to check the DYING flag after unlink to prevent
+ 	 * a race against nf_ct_get_next_corpse() possibly called from
+ 	 * user context, else we insert an already 'dead' hash, blocking
+@@ -1324,16 +1277,6 @@ __nf_conntrack_confirm(struct sk_buff *skb)
+ 	nf_conntrack_double_unlock(hash, reply_hash);
+ 	local_bh_enable();
+ 
+-	/* ext area is still valid (rcu read lock is held,
+-	 * but will go out of scope soon, we need to remove
+-	 * this conntrack again.
+-	 */
+-	if (!nf_ct_ext_valid_post(ct->ext)) {
+-		nf_ct_kill(ct);
+-		NF_CT_STAT_INC_ATOMIC(net, drop);
+-		return NF_DROP;
+-	}
+-
+ 	help = nfct_help(ct);
+ 	if (help && help->helper)
+ 		nf_conntrack_event_cache(IPCT_HELPER, ct);
+@@ -2440,13 +2383,11 @@ nf_ct_iterate_destroy(int (*iter)(struct nf_conn *i, void *data), void *data)
+ 	 */
+ 	synchronize_net();
+ 
+-	nf_ct_ext_bump_genid();
+ 	iter_data.data = data;
+ 	nf_ct_iterate_cleanup(iter, &iter_data);
+ 
+ 	/* Another cpu might be in a rcu read section with
+-	 * rcu protected pointer cleared in iter callback
+-	 * or hidden via nf_ct_ext_bump_genid() above.
++	 * rcu protected pointer cleared in iter callback.
+ 	 *
+ 	 * Wait until those are done.
+ 	 */
+diff --git a/net/netfilter/nf_conntrack_extend.c b/net/netfilter/nf_conntrack_extend.c
+index dd62cc12e77507..0da105e1ded939 100644
+--- a/net/netfilter/nf_conntrack_extend.c
++++ b/net/netfilter/nf_conntrack_extend.c
+@@ -27,8 +27,6 @@
+ 
+ #define NF_CT_EXT_PREALLOC	128u /* conntrack events are on by default */
+ 
+-atomic_t nf_conntrack_ext_genid __read_mostly = ATOMIC_INIT(1);
+-
+ static const u8 nf_ct_ext_type_len[NF_CT_EXT_NUM] = {
+ 	[NF_CT_EXT_HELPER] = sizeof(struct nf_conn_help),
+ #if IS_ENABLED(CONFIG_NF_NAT)
+@@ -118,10 +116,8 @@ void *nf_ct_ext_add(struct nf_conn *ct, enum nf_ct_ext_id id, gfp_t gfp)
+ 	if (!new)
+ 		return NULL;
+ 
+-	if (!ct->ext) {
++	if (!ct->ext)
+ 		memset(new->offset, 0, sizeof(new->offset));
+-		new->gen_id = atomic_read(&nf_conntrack_ext_genid);
+-	}
+ 
+ 	new->offset[id] = newoff;
+ 	new->len = newlen;
+@@ -131,29 +127,3 @@ void *nf_ct_ext_add(struct nf_conn *ct, enum nf_ct_ext_id id, gfp_t gfp)
+ 	return (void *)new + newoff;
+ }
+ EXPORT_SYMBOL(nf_ct_ext_add);
+-
+-/* Use nf_ct_ext_find wrapper. This is only useful for unconfirmed entries. */
+-void *__nf_ct_ext_find(const struct nf_ct_ext *ext, u8 id)
+-{
+-	unsigned int gen_id = atomic_read(&nf_conntrack_ext_genid);
+-	unsigned int this_id = READ_ONCE(ext->gen_id);
+-
+-	if (!__nf_ct_ext_exist(ext, id))
+-		return NULL;
+-
+-	if (this_id == 0 || ext->gen_id == gen_id)
+-		return (void *)ext + ext->offset[id];
+-
+-	return NULL;
+-}
+-EXPORT_SYMBOL(__nf_ct_ext_find);
+-
+-void nf_ct_ext_bump_genid(void)
+-{
+-	unsigned int value = atomic_inc_return(&nf_conntrack_ext_genid);
+-
+-	if (value == UINT_MAX)
+-		atomic_set(&nf_conntrack_ext_genid, 1);
+-
+-	msleep(HZ);
+-}
 -- 
 2.53.0
 
