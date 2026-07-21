@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9679C46EF9C;
-	Tue, 21 Jul 2026 20:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48518471268;
+	Tue, 21 Jul 2026 20:10:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664636; cv=none; b=ALBeYjxqmP6A3rTk5kwk5e2/Hi6wPNzxTYwqWcwRJHjo81XkycnGIj0WeVlBLJ+MMbf3WK5SVBAjRvEsQf/WnW/6yEDpoX/L1EnZphBljQ6Yci8IYtzbB0Zow1HhrhWHAtBN8H3UFGPXMBh48wWqEc77KDXZBPlKVdajvs92vus=
+	t=1784664640; cv=none; b=muaTzpS3nLFEMf12/wckxu4o/4bNVDu2N3gkX8qjmLYz3gsm2Td4xtglo72iv4QEHHR4uFK7tXNttfbI2rTAyS1o8fJvnGCCHLJsE6K1kNdEPeWERrKkU7juuKS8uAh3d2ghxqxd1q0UXK9JzEUMd/BrwUnyEhzxSY5f2KxZdgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664636; c=relaxed/simple;
-	bh=WotfOlDj7Rx4k7/AbcqHBtdTZsXpqwGaNxd2A+cb6E0=;
+	s=arc-20240116; t=1784664640; c=relaxed/simple;
+	bh=EkpsK32LIHS9uyuVv7XkFO9zOlD565U7h1avbe6Uj74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KfST6xvzxHYv6XYGTiM3PZ38wec+1egNZuudVp3/f0skoXg6Zpf4B8YsBlszlI2YbBz8xVNMxdf21ajqOb8I1cTonR8vsqvIMt61WWnD5lOdrzsHY0hQMbJdEvFKTEDDzvAsgCpQGnruBNgThm6GBa/EvhCXwegiKwQV6+COW+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CzxKY0La; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=exwoSjchJPB/m5JViwy/PPmr+PGU4AqCMHTnrRA+eK1nwNslkigHAnGVHhoFA6Nm56eorhJplDvhwyHuw4YXIzeC/ip+JSdbq+n08kjctl7L8yC13aI50wcBvUKdWVWY3R5ImGmIaKehU5AAn7q0bTsgx4k+acw56UMfrTmBzpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPJi0xP2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CzxKY0La"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087891F000E9;
-	Tue, 21 Jul 2026 20:10:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPJi0xP2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3ECD1F000E9;
+	Tue, 21 Jul 2026 20:10:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664635;
-	bh=HviYghN1ilxm80h98ScHjXWvu8BJWzfixhewCCui26E=;
+	s=korg; t=1784664638;
+	bh=3NTjJO8GPUWeTuSxYL6T0hXvfNTR7uLhRiVL6iqfSJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CzxKY0LamWRrSk/O2mwF/lfnw97Ds385t7kLY1LtJXq5eJKxE/S5yP6amH3sJhSE+
-	 XSR5uj1bpLUpFAzF7HZe6oY83bzokEae57XNdkb9ikovEirXiA6k0rt/2LAl8wFdTY
-	 jMLzIuod/9Hfbwmo6G3CX9seb5vB1NYZGh6FcsxU=
+	b=IPJi0xP2CohEJDdR6kyEv6i2sMRWBSVpTxuVhMLACrqEKK6Y4Lu7XdLxMMeDLb6ES
+	 AFwbR46ZClvbofaqDdxZKdyvFPmGb6mHQE0B5FupIxeI8W8BQPjvwE9914vlP+urvq
+	 Fa9Wqy1uuSHk9x/54CpKW2Z0Kb21ZEBtELKaBgy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stig Hornang <stig@hornang.me>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 1274/1276] Bluetooth: L2CAP: fix tx ident leak for commands without a response
-Date: Tue, 21 Jul 2026 17:28:37 +0200
-Message-ID: <20260721152514.598205045@linuxfoundation.org>
+	Ivan Vecera <ivecera@redhat.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 1275/1276] dpll: fix NULL pointer dereference in dpll_msg_add_pin_ref_sync()
+Date: Tue, 21 Jul 2026 17:28:38 +0200
+Message-ID: <20260721152514.621051804@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,93 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stig Hornang <stig@hornang.me>
+From: Ivan Vecera <ivecera@redhat.com>
 
-commit 6e1930ece855a4c256f1c7e6632d634cfb9888b5 upstream.
+commit d2e914a4a0d0f753dbae830264850d044026167c upstream.
 
-Commit 6c3ea155e5ee ("Bluetooth: L2CAP: Fix not tracking outstanding
-TX ident") changed ident allocation to use an IDA, releasing idents in
-l2cap_put_ident() when the matching response command is received.
+When a dpll_pin is shared across multiple dpll_device instances and
+those devices are being unregistered (e.g. during driver module removal),
+a NULL pointer dereference can occur in dpll_msg_add_pin_ref_sync().
 
-But identifiers allocated for commands that have no response defined
-are never released. In particular L2CAP_LE_CREDITS is sent repeatedly for
-the lifetime of an LE CoC channel, so a peer streaming data to the
-host exhausts the 1-255 ident range after 254 credit packets. From
-then on l2cap_get_ident() fails:
+This happens under the following conditions:
+ - A pin is registered with two or more dpll devices (dpll_A, dpll_B)
+ - The pin has ref_sync pairs with other pins
+ - During unregistration of dpll_A's pins, a ref_sync partner pin is
+   unregistered first, removing it from dpll_A->pin_refs
+ - But since the partner pin is still registered with dpll_B, its
+   dpll_refs is not empty, so dpll_pin_ref_sync_pair_del() does NOT
+   run and the partner stays in the pin's ref_sync_pins xarray
+ - When the pin itself is then unregistered from dpll_A, the delete
+   notification calls dpll_msg_add_pin_ref_sync() which finds the
+   partner in ref_sync_pins, passes dpll_pin_available() (partner is
+   still registered with dpll_B), but dpll_pin_on_dpll_priv(dpll_A,
+   partner) returns NULL because partner was already removed from
+   dpll_A->pin_refs
+ - The NULL priv pointer is passed to the driver's ref_sync_get
+   callback, which dereferences it
 
-    kernel: Bluetooth: Unable to allocate ident: -28
+ BUG: kernel NULL pointer dereference, address: 0000000000000034
+ Oops: Oops: 0000 [#1] SMP NOPTI
+ RIP: 0010:zl3073x_dpll_input_pin_ref_sync_get+0x73/0x80 [zl3073x]
+ Call Trace:
+  dpll_msg_add_pin_ref_sync+0xb8/0x200
+  dpll_cmd_pin_get_one+0x3b6/0x4b0
+  dpll_pin_event_send+0x72/0x140
+  __dpll_pin_unregister+0x5a/0x2b0
+  dpll_pin_unregister+0x49/0x70
 
-and every subsequent L2CAP_LE_CREDITS packet is sent with ident 0,
-which is invalid (Core Spec, Vol 3, Part A, Section 4: "Signaling
-identifier 0x00 is an invalid identifier and shall never be used in
-any command"). Remote stacks that validate the ident drop these
-commands, never receive new credits, and the channel stalls
-permanently. With default socket buffers this happens after roughly 0.5 MB
-of received data (the exact amount depends on the socket receive buffer):
+Fix this by skipping ref_sync pins whose priv pointer cannot be resolved
+for the current dpll device.
 
-  < ACL Data TX: Handle 2048 flags 0x00 dlen 12
-        LE L2CAP: LE Flow Control Credit (0x16) ident 0 len 4
-          Source CID: 64
-          Credits: 1
-
-Release the ident immediately after sending L2CAP_LE_CREDITS since no
-response will ever release it. Use a local variable instead of
-chan->ident so that an ident that an EXT_FLOWCTL channel may be waiting on
-(e.g. a pending reconfigure) is not overwritten by a credit packet.
-
-Also add the missing L2CAP_LE_CONN_RSP case to l2cap_put_ident() so
-idents allocated for outgoing L2CAP_LE_CONN_REQ commands are released
-when the response arrives.
-
-Fixes: 6c3ea155e5ee ("Bluetooth: L2CAP: Fix not tracking outstanding TX ident")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221629
-Assisted-by: Claude:claude-opus-4.8
-Assisted-by: Fable:5
-Signed-off-by: Stig Hornang <stig@hornang.me>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 58256a26bfb3 ("dpll: add reference sync get/set")
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://patch.msgid.link/20260710193625.1378822-1-ivecera@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/dpll/dpll_netlink.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4857,6 +4857,7 @@ static void l2cap_put_ident(struct l2cap
- 	case L2CAP_ECHO_RSP:
- 	case L2CAP_INFO_RSP:
- 	case L2CAP_CONN_PARAM_UPDATE_RSP:
-+	case L2CAP_LE_CONN_RSP:
- 	case L2CAP_ECRED_CONN_RSP:
- 	case L2CAP_ECRED_RECONF_RSP:
- 		/* The remote may send bogus ids that would make ida_free
-@@ -6755,6 +6756,7 @@ static void l2cap_chan_le_send_credits(s
- 	struct l2cap_conn *conn = chan->conn;
- 	struct l2cap_le_credits pkt;
- 	u16 return_credits = l2cap_le_rx_credits(chan);
-+	int ident;
- 
- 	if (chan->mode != L2CAP_MODE_LE_FLOWCTL &&
- 	    chan->mode != L2CAP_MODE_EXT_FLOWCTL)
-@@ -6772,9 +6774,18 @@ static void l2cap_chan_le_send_credits(s
- 	pkt.cid     = cpu_to_le16(chan->scid);
- 	pkt.credits = cpu_to_le16(return_credits);
- 
--	chan->ident = l2cap_get_ident(conn);
-+	ident = l2cap_get_ident(conn);
-+
-+	l2cap_send_cmd(conn, ident, L2CAP_LE_CREDITS, sizeof(pkt), &pkt);
- 
--	l2cap_send_cmd(conn, chan->ident, L2CAP_LE_CREDITS, sizeof(pkt), &pkt);
-+	/* L2CAP_LE_CREDITS has no response so the ident is never released by
-+	 * l2cap_put_ident() - release it right away, otherwise the tx_ida
-+	 * range is exhausted after 254 packets and from then on credits are
-+	 * sent with the invalid ident 0, which some remote stacks ignore,
-+	 * stalling the channel.
-+	 */
-+	if (ident > 0)
-+		ida_free(&conn->tx_ida, ident);
- }
- 
- void l2cap_chan_rx_avail(struct l2cap_chan *chan, ssize_t rx_avail)
+--- a/drivers/dpll/dpll_netlink.c
++++ b/drivers/dpll/dpll_netlink.c
+@@ -424,6 +424,9 @@ dpll_msg_add_pin_ref_sync(struct sk_buff
+ 		if (!dpll_pin_available(ref_sync_pin))
+ 			continue;
+ 		ref_sync_pin_priv = dpll_pin_on_dpll_priv(dpll, ref_sync_pin);
++		/* Pin may have been unregistered from this dpll already */
++		if (!ref_sync_pin_priv)
++			continue;
+ 		if (WARN_ON(!ops->ref_sync_get))
+ 			return -EOPNOTSUPP;
+ 		ret = ops->ref_sync_get(pin, pin_priv, ref_sync_pin,
 
 
