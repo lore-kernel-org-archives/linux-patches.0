@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1AD5407CCF;
-	Tue, 21 Jul 2026 18:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832583264FF;
+	Tue, 21 Jul 2026 18:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658873; cv=none; b=U+bueZK1DJnZRVxPve6iluaFf6hs75+WmIsvrXWQtuXrZWv9PpR1mC9JmdgxIlGvZozPryhkRQb5qCkkTg/yMDRAdPthY1QT4GbAigca7Q4yygFqTqJ4vALlMrQxONBZpmaZsiPwXX4Bn+uim+URazel0lJjBbFv5Sy+OakQ65g=
+	t=1784658876; cv=none; b=Yn1UkdMZz4VFTaL8jdZQgiESMKozmkqZrzzwZqFCKtNrsJ+Xzc5UHcZCZsQAcbxiLN3UhBdkdkKCq7GT/+Ail/k9u9S66wL+zLkvBgzJazHCmj2HwKl19Jp2VgQHFYJW2dI0oUrT3iVh+jqWiugw1TlFN6KR04/oV3X2O9YKl/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658873; c=relaxed/simple;
-	bh=d4JQhXKP203viyB1YieU9lXhkGU1dAvC5O/E3Vykzck=;
+	s=arc-20240116; t=1784658876; c=relaxed/simple;
+	bh=rAgTMm6sQ9OOUeiKEWgk9N3wU7CwosJeFOJC5W00v+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mGKv8NBxQbDx1gE3n49TgGxcz+9lQD62gWks8K9Eav95ts6feGhvbsJLbE0L5lLoVks4JpLZ/uiuzyLdUnDIn0ZGnSCf69MMs0p326Z60vr5FVQaheMPv4CRcAJVoycfWFxA6qFyWuGSYaM00b/ER4rfyj6g/j/XJoLhYlvP8ZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzLPpT90; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ne+WJzFdbJ0GuLJf+A+142YCQak9UHZMv9ej4E7mvOdwRjVUMKxJopnwPdlxWrNFmDGsJyjMX6jFlHcc+Rs4S5VRWOTxYR0HoOskOACJBMxfRLq/7Ln4bVaIy/qYDwPtgdvJ14JH+FmccJeKgY943OjMDFPixmQ46YTRWTBdGEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1QgUkduU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzLPpT90"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 230C71F000E9;
-	Tue, 21 Jul 2026 18:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1QgUkduU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09181F000E9;
+	Tue, 21 Jul 2026 18:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658872;
-	bh=gXf56qHeETg5WNA8W5/UGtxjukFKf21Br40M4LZujlA=;
+	s=korg; t=1784658875;
+	bh=NeBsheEkPv1RST+DdxKppdYoXRx3EI/ZyKc+qdjS+nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vzLPpT90pMsPEa20q+rVEstwc4PE5QJ5rSmCdQLPWgB8lMhhnXXhTltRWjHMGoCsm
-	 IVSfml9kCA8FiMlZ6qBiw5KcMbAiPiCp01hCr1hC7xE42OmbQr/JCJI2s2fG/wMpNA
-	 ZecUoD778ApZZhGUMT8Na0UKKhyC1cySvmv8iyeM=
+	b=1QgUkduUoKbLJ3UOOdvJImOHKLuNURaRAwUZNUwTrE0G+6H599uoWOMBXqBsvBHFl
+	 NIfq40np1JXr6Q4svCRrjjh6+24S4vXpbk1hqJtHXqSCipkCSFqTh1gV5XDgJIF4dl
+	 l+2CB+ocIW71S02TVej/YsbgVUJJwREW9sOaFyY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Vivchar <rva333@protonmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.18 1309/1611] i2c: mediatek: fix WRRD for SoCs without auto_restart option
-Date: Tue, 21 Jul 2026 17:23:45 +0200
-Message-ID: <20260721152544.895727515@linuxfoundation.org>
+Subject: [PATCH 6.18 1310/1611] i2c: mlxbf: Fix use-after-free in mlxbf_i2c_init_resource()
+Date: Tue, 21 Jul 2026 17:23:46 +0200
+Message-ID: <20260721152544.919670649@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,37 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Vivchar <rva333@protonmail.com>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-commit deb35336b5bfed5db9231b5348bc1514db930797 upstream.
+commit 71356737a7a55c76fee847563e3d33f8e6dc6b6d upstream.
 
-MediaTek mt65xx family SoCs have no auto restart, however, they still
-support the WRRD mode in the hardware. Because auto_restart is set to 0,
-the WRRD mode will be never enabled, leading to read errors.
+If devm_platform_get_and_ioremap_resource() returns an error,
+mlxbf_i2c_init_resource() frees tmp_res before reading tmp_res->io to
+get the error code. This results in a use-after-free.
 
-Fix this by removing auto_restart check from the WRRD enable path.
+Save the error code before freeing tmp_res.
 
-Fixes: b49218365280 ("i2c: mediatek: fix potential incorrect use of I2C_MASTER_WRRD")
-Signed-off-by: Roman Vivchar <rva333@protonmail.com>
-Cc: <stable@vger.kernel.org> # v6.18+
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: b5b5b32081cd ("i2c: mlxbf: I2C SMBus driver for Mellanox BlueField SoC")
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Cc: <stable@vger.kernel.org> # v5.10+
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260709-6572-6595-i2c-v2-1-b2fb8510d1d3@protonmail.com
+Link: https://lore.kernel.org/r/20260714150808.85045-1-xuanqiang.luo@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-mt65xx.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-mlxbf.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-mt65xx.c
-+++ b/drivers/i2c/busses/i2c-mt65xx.c
-@@ -1250,7 +1250,7 @@ static int mtk_i2c_transfer(struct i2c_a
- 	i2c->auto_restart = i2c->dev_comp->auto_restart;
+--- a/drivers/i2c/busses/i2c-mlxbf.c
++++ b/drivers/i2c/busses/i2c-mlxbf.c
+@@ -1058,8 +1058,10 @@ static int mlxbf_i2c_init_resource(struc
  
- 	/* checking if we can skip restart and optimize using WRRD mode */
--	if (i2c->auto_restart && num == 2) {
-+	if (num == 2) {
- 		if (!(msgs[0].flags & I2C_M_RD) && (msgs[1].flags & I2C_M_RD) &&
- 		    msgs[0].addr == msgs[1].addr) {
- 			i2c->auto_restart = 0;
+ 	tmp_res->io = devm_platform_get_and_ioremap_resource(pdev, type, &tmp_res->params);
+ 	if (IS_ERR(tmp_res->io)) {
++		int ret = PTR_ERR(tmp_res->io);
++
+ 		devm_kfree(dev, tmp_res);
+-		return PTR_ERR(tmp_res->io);
++		return ret;
+ 	}
+ 
+ 	tmp_res->type = type;
 
 
