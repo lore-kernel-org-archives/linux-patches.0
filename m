@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC483F2101;
-	Tue, 21 Jul 2026 18:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645CA471264;
+	Tue, 21 Jul 2026 18:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659236; cv=none; b=D7nA2ugC9gxMg4tfV+SgxrjgodEgVwtYTrgateq8vP51iYIuM6jdEal9b0rvPEIuonxImG6vB0MsOB1yOOixvE4Mql1+gfOcCGiTfgimC/6PGwypMoTqU5DmD5YWSigPnX1n376MDeOX6pWA2DiZR0/XE8GHwljqTBr3S7InSMU=
+	t=1784659238; cv=none; b=ZlIzQK3WNKQXA3eidcNDc091XYmMwAp27y0QdqjSIbFVkZeeM3F/2nexhZs7DlQ8bTVOrgiwDyZNU+em+qcnM8YTuWpt9v/HaOHzZLH60v9LDTgZmaupi1lXRwEQQOwEY0dIp67iukoBK4dfS0uJu1dVc2pboGi0EQ3YGmZkiSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659236; c=relaxed/simple;
-	bh=wiZAjLP9maW/o/o0t/Uv4LuTA/SN1HsCYLr7pxtWkdQ=;
+	s=arc-20240116; t=1784659238; c=relaxed/simple;
+	bh=HztoFw50FK1okKDpjkqzp3dn/1j4FjAvR0WPoasUtwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gq0jMM0V0YYkcSREq5SvKPXNZEGOjSktyrPiA06E935yLwPeBaItmlp20LqU8jhh4ys/yTi9nVuJU13EecGaSV6H7p8DTriD5L4zb7y9AXDl6TvrcmANEojgk62REdNs66yFPlrjliBIc0P92Vd3TCk2dKPYBhjhsdFsIeT6zzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZ6QzlTC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VNI1/X2FAiRN8UW+wahWq9arIFVVry2KpxGrtaR1z7TTvXQzof1iAMhdocjiS/eboNGy0qL6QvrPozwXM7onQPnnbGguTa9V9J2lKZcTdpfU2xOaSKaIbyf1TihwQzRFAJPm5HnMTi+OvoW3M5y2T3jh7N0j4z2nbLcvUzy6JYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJPArbfS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZ6QzlTC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33CF61F000E9;
-	Tue, 21 Jul 2026 18:40:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJPArbfS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7D31F000E9;
+	Tue, 21 Jul 2026 18:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659234;
-	bh=KTlPKHzDWPWo8O4mPYfvwNWa09bXRKcOXrZo477JNyc=;
+	s=korg; t=1784659237;
+	bh=Pn3SZeTwR9B5eTU1TYd3CHdWZUq40yJNEULGFBgSDxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bZ6QzlTCWn7KRSr7ERk1vMLGc0e5SAr5Wibg4pkZfvEd+HSBxETBAWmbJFD/VmcEY
-	 iqmeX0Wss7qGNn8DSrn4oMsW88hPOL69QxLJLG29hIusiA9WLTv2puEJ0YSvuC4gA0
-	 YWo6x2Naa0QWMiDJoyU6Hq6oDKpn7eSRul4K760w=
+	b=mJPArbfSsSsNcvdZbOsrdT7E6q+ljPRSkXSl8+4auLHFGK+a0Lh3WSNwxdsBIuUdT
+	 k8bCaxhvMiGkLwdnjv5clsQaZFJ1Rl0mGKmXRE45ulWD5f9FiaBiVycN1N19df/F6g
+	 h8dgQ1zUbqlnXX6fcYsh6yUUB4GCADzAUTYWksIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 1437/1611] net/sched: sch_multiq: Replace direct dequeue call with peek and qdisc_dequeue_peeked
-Date: Tue, 21 Jul 2026 17:25:53 +0200
-Message-ID: <20260721152547.769600812@linuxfoundation.org>
+	HyeongJun An <sammiee5311@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.18 1446/1611] hwmon: (asus_atk0110) Check package count before accessing element
+Date: Tue, 21 Jul 2026 17:26:02 +0200
+Message-ID: <20260721152547.975189860@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,44 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit 54f6b0c843e228d499eb4b6bbb89df68cad9ad5d upstream.
+commit e2735b39f044bad7bf2017aef248935525bc0b97 upstream.
 
-multiq_dequeue() takes a packet from a band's child with a direct
-->dequeue() call after multiq_peek() peeked it. When the child is
-non-work-conserving the peek stashes the skb in the child's gso_skb, so
-the direct dequeue returns a different skb and orphans the stash,
-desyncing the child's qlen/backlog. With a qfq child reached through a
-peeking parent (e.g. tbf) this re-enters the child on an emptied list and
-dereferences NULL, panicking the kernel from softirq on ordinary egress.
+atk_ec_present() walks the management group package returned by the GGRP
+ACPI method and, for each sub-package, reads its first element:
 
-Take the packet through qdisc_dequeue_peeked(), as sch_prio already does
-and as sch_red and sch_sfb were just fixed to do. The helper is a no-op
-when the child has no stash, so a work-conserving child is unaffected.
+	id = &obj->package.elements[0];
+	if (id->type != ACPI_TYPE_INTEGER)
 
-Fixes: 77be155cba4e ("pkt_sched: Add peek emulation for non-work-conserving qdiscs.")
+without checking that the sub-package is non-empty.  ACPICA allocates the
+element array with exactly package.count entries, so for a sub-package
+with a zero count this reads past the allocation.
+
+The sibling function atk_debugfs_ggrp_open() performs the same access but
+skips empty packages with a package.count check first.  Add the same
+check to atk_ec_present() so a malformed firmware package cannot trigger
+an out-of-bounds read.
+
+Fixes: 9e6eba610c2e ("hwmon: (asus_atk0110) Enable the EC")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260625-b4-disp-31bcb279-v1-2-85c40b83c529@proton.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://lore.kernel.org/r/20260619122746.721981-1-sammiee5311@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_multiq.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/asus_atk0110.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/sched/sch_multiq.c
-+++ b/net/sched/sch_multiq.c
-@@ -103,7 +103,7 @@ static struct sk_buff *multiq_dequeue(st
- 		if (!netif_xmit_stopped(
- 		    netdev_get_tx_queue(qdisc_dev(sch), q->curband))) {
- 			qdisc = q->queues[q->curband];
--			skb = qdisc->dequeue(qdisc);
-+			skb = qdisc_dequeue_peeked(qdisc);
- 			if (skb) {
- 				qdisc_bstats_update(sch, skb);
- 				sch->q.qlen--;
+--- a/drivers/hwmon/asus_atk0110.c
++++ b/drivers/hwmon/asus_atk0110.c
+@@ -1037,6 +1037,9 @@ static int atk_ec_present(struct atk_dat
+ 		if (obj->type != ACPI_TYPE_PACKAGE)
+ 			continue;
+ 
++		if (!obj->package.count)
++			continue;
++
+ 		id = &obj->package.elements[0];
+ 		if (id->type != ACPI_TYPE_INTEGER)
+ 			continue;
 
 
