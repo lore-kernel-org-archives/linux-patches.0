@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D3B46C4AC;
-	Tue, 21 Jul 2026 17:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567DD40B112;
+	Tue, 21 Jul 2026 17:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655494; cv=none; b=epGmfvf+51wRNkMOjU4I68DpZ5TU5DkcQTlT7ML1bYVPMrvh6jbR/K+gSoZSbSv9gHR974seKkwEcWtU3/VXUUIF72/RwqCaWyTy7tknapqPNBTySAVnvlLaMX/YKJKJZuSrSO9uhmw+uOW7vOsU97vWt5sgtaENFY0YjiLwJMQ=
+	t=1784655495; cv=none; b=BhFPz/IHi5Uzp967sjszkxpfacYVNW0Gr8WR5pR5IbCRPkVTcC9Fr6OVshK+bsr7zfZ5ReAJf7LW6bGP5k1rQmY3n/zLkgds+Sh04RxxOO3yCjqugNokjKlXv35u2yVgTSlZ7aD05eDWm5NUVHbQLzPB/R/fQ2rYWam5Jaup6bQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655494; c=relaxed/simple;
-	bh=sVaiM4Fvd4dCZJ3R9W/fVYaiDJBXwXDxsfTr4k4MMDI=;
+	s=arc-20240116; t=1784655495; c=relaxed/simple;
+	bh=UfQXYNbIyGYkKL0WGs28iTuyMXzwjNEvPUGaHsK17+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B1F5p4TW1xT5JJw+RchH8AQDeBnbmgl4y1Un5M20I0G9BJlGbOglz79EOSScJ1ZBsgqkmb2NsTjGWQpz4BRzOEMPHf6HVAF4Njz24NG6P1qZjZ6eLBppA0n/K4dqRHa6Q1n3X+0l5ZJCEIPVccy/VCh4kqpaIhLMvDAd4WSGU7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=miNGUziP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k9Ybgw9Qht42RWQ24zrc2oNc0gU1JnwlweIE+1MJGWvrAkNNleRnF2uCbUyFINcd5Slf8UfIo2IKkUr1PI4fSg9Vjk/g5eRSHtLWd+3qLzfTUVd3qYwU4k35UbSDAajOFXr8PHQ2pnPAVzAE0YPjd0jT4uAVnOrwh1sVbfPTZZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5AvVWef; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="miNGUziP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2701F00A3D;
-	Tue, 21 Jul 2026 17:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5AvVWef"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA05D1F000E9;
+	Tue, 21 Jul 2026 17:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655491;
-	bh=iOASOheUXm4OgcYG7ozmyi6iJeYX5e60834IMapywm4=;
+	s=korg; t=1784655494;
+	bh=6bGLr6uvWTSYGg0jgu1x3S0ALhw/U1Gpge+Sxs7+E7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=miNGUziPV+hD6XS4BkIW5aEfmZvFRrbNkxtYKsWOe1v8yGlel9gzGWpoczix0yBJG
-	 Rx6FWSsgHMLvpiWn8m5/fvvijWeapszBZepajZGyAw5fz9CCpWxt697bwXcZKqnO2a
-	 wr1gYqHR2JiP9PH30Hznqy68f+lL6Htp7BLqTP3A=
+	b=w5AvVWefQdHhhArtSGwaT7h4bt4lJAnL+dM6I1OWEjxNafSCf4S3IJqeF5Ms6FHCM
+	 28v7GoSSr7hVWGclHOc8DiSfXWYT0Fl4T/iwmeOuEqEvZ8CsHSyM/373sJ+WvDC1xm
+	 aVuu8s3dDXQh14vcclgxShp9VyBw5UWisQhSPnU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunke Cao <yunkec@google.com>,
 	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Yunke Cao <yunkec@google.com>,
 	Ricardo Ribalda <ribalda@chromium.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 0029/1611] media: uvcvideo: Do not add clock samples with small sof delta
-Date: Tue, 21 Jul 2026 17:02:25 +0200
-Message-ID: <20260721152515.464958683@linuxfoundation.org>
+Subject: [PATCH 6.18 0030/1611] media: uvcvideo: Relax the constrains for interpolating the hw clock
+Date: Tue, 21 Jul 2026 17:02:26 +0200
+Message-ID: <20260721152515.488740585@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,64 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit ba649fff36c1fe68489a86d00285224907edd436 upstream.
+commit 1719d78f832dda8dd3f09a867ba74e05d6f11308 upstream.
 
-Some UVC 1.1 cameras running in fast isochronous mode tend to spam the
-USB host with a lot of empty packets. These packets contain clock
-information and are added to the clock buffer but do not add any
-accuracy to the calculation. In fact, it is quite the opposite, in our
-calculations, only the first and the last timestamp is used, and we only
-have 32 slots.
+In the initial version we set the min value to 250msec. Looks like
+100msec can also provide a good value.
 
-Ignore the samples that will produce less than MIN_HW_TIMESTAMP_DIFF
-data.
+Now that we are at it, add a macro to make it cleaner.
 
-Fixes: 141270bd95d4 ("media: uvcvideo: Refactor clock circular buffer")
+Fixes: 6243c83be6ee8 ("media: uvcvideo: Allow hw clock updates with buffers not full")
 Cc: stable@vger.kernel.org
-Tested-by: Yunke Cao <yunkec@google.com>
 Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Tested-by: Yunke Cao <yunkec@google.com>
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://patch.msgid.link/20260513-uvc-hwtimestamp-v3-4-7a64838b0b02@chromium.org
+Link: https://patch.msgid.link/20260513-uvc-hwtimestamp-v3-3-7a64838b0b02@chromium.org
 Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_video.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/media/usb/uvc/uvc_video.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
 --- a/drivers/media/usb/uvc/uvc_video.c
 +++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -537,6 +537,15 @@ static void uvc_video_clock_add_sample(s
- 	spin_unlock_irqrestore(&clock->lock, flags);
- }
+@@ -494,6 +494,13 @@ static int uvc_commit_video(struct uvc_s
+  * Clocks and timestamps
+  */
  
-+static inline u16 sof_diff(u16 a, u16 b)
-+{
-+	/*
-+	 * Because the result is modulo 2048 (via & 2047), we do not need a
-+	 * special case for a < b.
-+	 */
-+	return (a - b) & 2047;
-+}
++/*
++ * The accuracy of the hardware timestamping depends on having enough data to
++ * interpolate between the different clock domains. This value is sof cycles,
++ * this is, milliseconds.
++ */
++#define UVC_MIN_HW_TIMESTAMP_DIFF 100
 +
- static void
- uvc_video_clock_decode(struct uvc_streaming *stream, struct uvc_buffer *buf,
- 		       const u8 *data, int len)
-@@ -657,12 +666,13 @@ uvc_video_clock_decode(struct uvc_stream
- 	sample.dev_sof = (sample.dev_sof + stream->clock.sof_offset) & 2047;
- 
- 	/*
--	 * To limit the amount of data, drop SCRs with an SOF identical to the
-+	 * To limit the amount of data, drop SCRs with an SOF similar to the
- 	 * previous one. This filtering is also needed to support UVC 1.5, where
- 	 * all the data packets of the same frame contains the same SOF. In that
- 	 * case only the first one will match the host_sof.
+ static inline ktime_t uvc_video_get_time(void)
+ {
+ 	if (uvc_clock_param == CLOCK_MONOTONIC)
+@@ -854,13 +861,13 @@ void uvc_video_clock_update(struct uvc_s
+ 	 * buffer, but RAM is expensive these days, specially the infinitely
+ 	 * big.
+ 	 *
+-	 * The value of 1/4th of a second was determined by running Android's
+-	 * CTS on different devices.
++	 * The value of UVC_MIN_HW_TIMESTAMP_DIFF was determined by running
++	 * Android's CTS on different devices.
+ 	 *
+-	 * dev_sof runs at 1KHz, and we have a fixed point precision of
+-	 * 16 bits.
++	 * y1 and y2 are dev_sof with a fixed point precision of 16 bits.
  	 */
--	if (sample.dev_sof == stream->clock.last_sof)
-+	if (sof_diff(sample.dev_sof, stream->clock.last_sof) <=
-+	    (UVC_MIN_HW_TIMESTAMP_DIFF / stream->clock.size))
- 		return;
+-	if (clock->size != clock->count && (y2 - y1) < ((1000 / 4) << 16))
++	if (clock->size != clock->count &&
++	    (y2 - y1) < (UVC_MIN_HW_TIMESTAMP_DIFF << 16))
+ 		goto done;
  
- 	uvc_video_clock_add_sample(&stream->clock, &sample);
+ 	y = (u64)(y2 - y1) * (1ULL << 31) + (u64)y1 * (u64)x2
 
 
