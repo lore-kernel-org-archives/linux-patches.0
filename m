@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5DA44AB8A;
-	Tue, 21 Jul 2026 21:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3697A44AB9D;
+	Tue, 21 Jul 2026 21:16:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668608; cv=none; b=B9BSx9ubl5Wi63RtrDlavqQOlBq9QiCyYh/7drhiQZadiNYjwOVVPqebmrSTR7ynrWXUgcn21mZxmAezteqjWcUJReqMNdI6OE4mac5vZMRz7/OZublIg6w0qJHV0irSsYJKDneu4IxmNgMUc7V2WBH4pO20dubi0HRTtzh3QyY=
+	t=1784668611; cv=none; b=ozEy/nGhNKny68tab9AbU72axRRhuSG22JluQiLeZfqMzll7YwSg923FXeyWht052YNs4j6EFUm1GFx8xxBz4+h386b2q/n8hzRXT3RZRQscQt4kjO3XHba5X4dNdEaPZhgyIJLEFeFzrYB39OXpxhYuX8RNbFlKgjSv9N8reQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668608; c=relaxed/simple;
-	bh=mQbcv857B4FY5zcuGKnl22KZ1queaYbRebXTb7dd3lQ=;
+	s=arc-20240116; t=1784668611; c=relaxed/simple;
+	bh=AdobWIyyyCKkc5Ck1sYudx9m7kCQBcs/gbHnQc4c6rI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X7NY4HJcuKzhi/gyaK1Cl9F3RIJ3FNLe5Y7SaIunsWllRCwNxxknlMBaL3Uq+HKggVFLbWA+TMzkVYIJvgXSMKk6kU1FWW6SxPDv1MWau1Hy/aypeaVEvLDIBDI4YeMr3o5/B9ZJWvbcBCSulWWLfC40qZhVi0dwe1Kri6nHyiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPwCsGpu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JL3UJU/keyOTTwXYjc+07hgY/dATuNcan5wGCe+Ud0+4NDSinoH2HMYKH495CceWg4uCdDMhAnc6bcalfQzHXYhSP1td7uX9AySjcak7YXdiOmLBH55EcGD3hQqVdSO0/QQ9ypwZKbcfgY6vNGfXWNLKHBlAXDdyJwYCGGignek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFBeKJad; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPwCsGpu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05BF1F000E9;
-	Tue, 21 Jul 2026 21:16:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFBeKJad"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9962D1F000E9;
+	Tue, 21 Jul 2026 21:16:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668607;
-	bh=4+R9or5joqv7jxip3hT/lyKuKfTEhKVj3KBixQPbTck=;
+	s=korg; t=1784668610;
+	bh=BRtkSND/PwpcOn8T0As0Ra3EVv5aSPtvUEbJatEwLDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hPwCsGpuxalE8jY/2LRuiS8mnbNvIDx8u4v38ooRYIRT76i9YlkQBUrU9XHoK/9xf
-	 ir0YaI+6fauMKAqxktFGrei5Lvrnake28+ttMeVhvf8YZPtNxW1Kl/aatFlL7BW6ke
-	 yIzu90LgHoMYRj0/V+AEe+92V3Cuebx6Q4j3WChQ=
+	b=HFBeKJadh1V4/SZo9RSHaWGEvluhZy491Pojcb+gRyd6vH7GvAKUDA2PXSneqMa8k
+	 Rm3+rmoVZ3E6abB9W7hNFRZQmSv7QA+mnudCzQNOPces4P+HgYb9aiJvRoT79I2vMG
+	 mFshqO0lKX3gVcQvDdBcwW1yw0uweW67rktls87E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.1 0196/1067] usb: typec: ucsi: cancel pending work on system suspend
-Date: Tue, 21 Jul 2026 17:13:17 +0200
-Message-ID: <20260721152428.979593281@linuxfoundation.org>
+	Liviu Stan <liviu.stan@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0197/1067] iio: temperature: ltc2983: Fix n_wires default bypassing rotation check
+Date: Tue, 21 Jul 2026 17:13:18 +0200
+Message-ID: <20260721152429.000358729@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,116 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Menzel <pmenzel@molgen.mpg.de>
+From: Liviu Stan <liviu.stan@analog.com>
 
-commit 7c4a234bd31a64a8dbd0140dc812da592c5e0787 upstream.
+[ Upstream commit 434c150752675f44dc52c384a7fa22e5176bc35a ]
 
-On a Dell XPS 13 9360 (BIOS 2.21.0), entering system suspend (deep/S3)
-races a pending UCSI connector-change worker against the ACPI EC teardown.
-The worker evaluates the UCSI _DSM (GET_CONNECTOR_STATUS), whose AML
-accesses the Embedded Controller. By that point the ACPI EC has already
-been stopped for suspend, so the EC address space handler rejects the
-access with AE_BAD_PARAMETER, aborting the AML and failing the connector
-query:
+When adi,number-of-wires is absent, n_wires is left at 0. The binding
+documents a default of 2 wires, matching the hardware default. However
+the current-rotate validation checks n_wires == 2 || n_wires == 3, so
+with n_wires = 0 the guard is bypassed and adi,current-rotate is accepted
+for a 2-wire RTD.
 
-    [22314.689495] ACPI: EC: interrupt blocked
-    [22314.711981] ACPI: PM: Preparing to enter system sleep state S3
-    [22314.743260] ACPI: EC: event blocked
-    [22314.743265] ACPI: EC: EC stopped
-    [22314.743267] ACPI: PM: Saving platform NVS memory
-    [22314.744241] ACPI Error: AE_BAD_PARAMETER, Returned by Handler for [EmbeddedControl] (20260408/evregion-303)
-    [22314.744432] ACPI Error: Aborting method \_SB.PCI0.LPCB.ECDV.ECW1 due to previous error (AE_BAD_PARAMETER) (20260408/psparse-543)
-    [22314.744673] ACPI Error: Aborting method \ECWB due to previous error (AE_BAD_PARAMETER) (20260408/psparse-543)
-    [22314.745201] ACPI Error: Aborting method \_SB.UBTC._DSM due to previous error (AE_BAD_PARAMETER) (20260408/psparse-543)
-    [22314.745394] ACPI: \_SB_.UBTC: failed to evaluate _DSM c298836f-a47c-e411-ad36-631042b5008f rev:1 func:1 (0x1001)
-    [22314.745414] ucsi_acpi USBC000:00: ucsi_acpi_dsm: failed to evaluate _DSM 1
-    [22314.745424] ucsi_acpi USBC000:00: ucsi_handle_connector_change: GET_CONNECTOR_STATUS failed (-5)
+Initialize n_wires = 2 to match the binding default and ensure the
+rotation check fires correctly when the property is absent.
 
-ucsi_acpi implements a resume callback but no suspend callback, so nothing
-cancels the connector-change work before the firmware/EC is torn down.
+Fixes: f110f3188e56 ("iio: temperature: Add support for LTC2983")
+Signed-off-by: Liviu Stan <liviu.stan@analog.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Liviu Stan <liviu.stan@analog.com>
 
-Add a `ucsi_suspend()` core helper that cancels the pending init and
-connector-change work, and wire it into ucsi_acpi's PM ops. The connector
-state is re-read on resume by `ucsi_resume()`, so cancelling the work loses
-nothing.
+[ Liviu Stan: resolve conflict - keep fwnode_handle *ref declaration
+  which was removed upstream by a later refactor not in 6.1.y ]
 
-Fixes: 4e3a50293c2b ("usb: typec: ucsi: acpi: Implement resume callback")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Assisted-by: Claude Opus 4.8
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260703110738.8457-2-pmenzel@molgen.mpg.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c      |   20 ++++++++++++++++++++
- drivers/usb/typec/ucsi/ucsi.h      |    1 +
- drivers/usb/typec/ucsi/ucsi_acpi.c |   10 +++++++++-
- 3 files changed, 30 insertions(+), 1 deletion(-)
+ drivers/iio/temperature/ltc2983.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1374,6 +1374,26 @@ static void ucsi_resume_work(struct work
- 	}
- }
+diff --git a/drivers/iio/temperature/ltc2983.c b/drivers/iio/temperature/ltc2983.c
+index 8d18823be40f41..9d3fb988cd061a 100644
+--- a/drivers/iio/temperature/ltc2983.c
++++ b/drivers/iio/temperature/ltc2983.c
+@@ -706,7 +706,7 @@ ltc2983_rtd_new(const struct fwnode_handle *child, struct ltc2983_data *st,
+ 	int ret = 0;
+ 	struct device *dev = &st->spi->dev;
+ 	struct fwnode_handle *ref;
+-	u32 excitation_current = 0, n_wires = 0;
++	u32 excitation_current = 0, n_wires = 2;
  
-+int ucsi_suspend(struct ucsi *ucsi)
-+{
-+	int i;
-+
-+	/*
-+	 * Cancel pending work so it cannot access the firmware after the ACPI
-+	 * EC is stopped for suspend; state is re-read on resume.
-+	 */
-+	cancel_delayed_work_sync(&ucsi->work);
-+
-+	if (!ucsi->connector)
-+		return 0;
-+
-+	for (i = 0; i < ucsi->cap.num_connectors; i++)
-+		cancel_work_sync(&ucsi->connector[i].work);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(ucsi_suspend);
-+
- int ucsi_resume(struct ucsi *ucsi)
- {
- 	if (ucsi->connector)
---- a/drivers/usb/typec/ucsi/ucsi.h
-+++ b/drivers/usb/typec/ucsi/ucsi.h
-@@ -351,6 +351,7 @@ int ucsi_send_command(struct ucsi *ucsi,
- 		      void *retval, size_t size);
- 
- void ucsi_altmode_update_active(struct ucsi_connector *con);
-+int ucsi_suspend(struct ucsi *ucsi);
- int ucsi_resume(struct ucsi *ucsi);
- 
- #if IS_ENABLED(CONFIG_POWER_SUPPLY)
---- a/drivers/usb/typec/ucsi/ucsi_acpi.c
-+++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
-@@ -290,6 +290,13 @@ static int ucsi_acpi_remove(struct platf
- 	return 0;
- }
- 
-+static int ucsi_acpi_suspend(struct device *dev)
-+{
-+	struct ucsi_acpi *ua = dev_get_drvdata(dev);
-+
-+	return ucsi_suspend(ua->ucsi);
-+}
-+
- static int ucsi_acpi_resume(struct device *dev)
- {
- 	struct ucsi_acpi *ua = dev_get_drvdata(dev);
-@@ -297,7 +304,8 @@ static int ucsi_acpi_resume(struct devic
- 	return ucsi_resume(ua->ucsi);
- }
- 
--static DEFINE_SIMPLE_DEV_PM_OPS(ucsi_acpi_pm_ops, NULL, ucsi_acpi_resume);
-+static DEFINE_SIMPLE_DEV_PM_OPS(ucsi_acpi_pm_ops, ucsi_acpi_suspend,
-+				ucsi_acpi_resume);
- 
- static const struct acpi_device_id ucsi_acpi_match[] = {
- 	{ "PNP0CA0", 0 },
+ 	rtd = devm_kzalloc(dev, sizeof(*rtd), GFP_KERNEL);
+ 	if (!rtd)
+-- 
+2.53.0
+
 
 
