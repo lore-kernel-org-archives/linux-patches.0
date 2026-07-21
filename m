@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1A946D541;
-	Tue, 21 Jul 2026 15:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C401C46D54F;
+	Tue, 21 Jul 2026 15:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648599; cv=none; b=JLbo+3WxgQ7EAUAcqVZvGz44ndi6d78AOpOihXQbWuPR5TeSV0Ftqg/QOYBAp/tWoI3aJgniykmc70uG8draeF7MMy1NDuheKTquRiw/vjsCjD53uiTuaME8Z7mkRKikp+cBYmaadWMXF8zxtQZsY7AgYGbY4i9EmxdnrIkD8s4=
+	t=1784648601; cv=none; b=K0cx82mdklI2XIOFtocfYG8NNGpiPOwbU/omN+wRH2sE+tvi5MwgY0n7sfQQFE2pFwhabqrS25wKZNNUYkIFiUstOWv35xneFSqU8VdDP/ZoAZHhMiximSMB6u6IJTBzop28DYbK1QaNvQzS/jB6z+5MF+MxMz2xDYGjBbNaZIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648599; c=relaxed/simple;
-	bh=lBCMpwjHJtj3ooPO3cD7XvheuHnkSqr/1Z4EK0BopFU=;
+	s=arc-20240116; t=1784648601; c=relaxed/simple;
+	bh=dED6kHIaP9Dw5gZbEuF4TG4www/WDQ8bIyKV2hsmWgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RnHp/niU1EPO3/Z+Vgr7aGxHBKtFKBW+IzjNZaOJ/00oLJIt9XO81n0yDdffuz2sqQ6/ueqwOnur8hbdJYVPAIFV4sLEM4VbzVa1h5lUTVy+2Wdsu6zWdkXLx4EjU2lx8e9sSXsixJpHq0XfLYbVwWsoVrs6GDOKmM7RAgrfv6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiEFJXFZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gL9W9DPhNyk3ea/QLkR4n7MG9AVXLWqWRoTUgACxFWyX6FN/3NBGN/9R2CwlU7ukXmJ4wqAf8lAkONIIJLRU7oM0ovSCkITnu683BoumdSBEu9FqZXuXhAM8uZd7i52TDCZckbylCPSWgBhg0RnhnxPGZUkwLWa6GCJPTMBli0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q9JYdsQY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiEFJXFZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5921F000E9;
-	Tue, 21 Jul 2026 15:43:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q9JYdsQY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 369E61F000E9;
+	Tue, 21 Jul 2026 15:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648598;
-	bh=/D0gTo13Qo0YRJ8WP0X8eQJ3Hu6CpnAyepxNv1NkwLA=;
+	s=korg; t=1784648600;
+	bh=ICpL6Y8SzHvviCyGfM1FQlQL6/AYQecVyplYwPU38r8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UiEFJXFZy7xA5QVDKpkAUZ4xYTSU4PxGPSQxWmFoTwvtXfIByZSyQSSA8Nur5gZbS
-	 qBRRHCqxjQ55BfCUZLTjKU5t/kygUuCroPWJapdVA9kc3HwrgrhK0iQzy9ZAA8tXCf
-	 nFNcV5ySEEULeqVQrNYbywyhEUtHCAhm+UJZejGY=
+	b=Q9JYdsQYAUez97rOnyR5IpHElyWykdGg+Au34WAr7eYVnjpbtpqj+v9tIocVmx7bC
+	 c47cttq23jfoVyFH6m3gAExgKS++dHa+rl9U5Edldxfh5VoNnnEZSVZ361wj64YKht
+	 W/WipMTWYEILhZkhC0N778oA2B+qydvEJMOPRVd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Nishanth Sampath Kumar <nissampa@cisco.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0259/2077] net/sched: sch_drr: annotate data-races around cl->deficit
-Date: Tue, 21 Jul 2026 16:58:52 +0200
-Message-ID: <20260721152558.788846469@linuxfoundation.org>
+Subject: [PATCH 7.1 0260/2077] regmap-i2c: fix sparse warning in regmap_smbus_word_write_reg16
+Date: Tue, 21 Jul 2026 16:58:53 +0200
+Message-ID: <20260721152558.810556293@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,63 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Nishanth Sampath Kumar <nissampa@cisco.com>
 
-[ Upstream commit c67b104fd7982162885c5e43057ca761006748e2 ]
+[ Upstream commit 34808ac8ddafc3e2c2a59e84eaab0a410e7a0fdc ]
 
-drr_dump_class_stats() runs without qdisc spinlock held.
+i2c_smbus_write_word_data() expects a plain u16, but cpu_to_le16()
+returns __le16 (a sparse-restricted endian type), causing:
 
-Add missing READ_ONCE()/WRITE_ONCE() annotations around cl->deficit.
+  drivers/base/regmap/regmap-i2c.c:340: sparse: incorrect type in
+  argument 3 (different base types)
+    expected unsigned short [usertype] value
+    got restricted __le16 [usertype]
 
-Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260519094618.2632073-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+SMBus already defines byte ordering internally, so cpu_to_le16() is
+wrong here. Replace it with a plain (u16) cast.
+
+Fixes: bad4bd28abf4 ("regmap-i2c: add SMBus byte/word reg16 bus for adapters lacking I2C_FUNC_I2C")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202605161621.mY5zFh4D-lkp@intel.com/
+Signed-off-by: Nishanth Sampath Kumar <nissampa@cisco.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_drr.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/base/regmap/regmap-i2c.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_drr.c b/net/sched/sch_drr.c
-index 925fa0cfd730ce..2eedd3a4322ad5 100644
---- a/net/sched/sch_drr.c
-+++ b/net/sched/sch_drr.c
-@@ -270,7 +270,7 @@ static int drr_dump_class_stats(struct Qdisc *sch, unsigned long arg,
+diff --git a/drivers/base/regmap/regmap-i2c.c b/drivers/base/regmap/regmap-i2c.c
+index 31e30dfced192f..51a04961faf7be 100644
+--- a/drivers/base/regmap/regmap-i2c.c
++++ b/drivers/base/regmap/regmap-i2c.c
+@@ -337,7 +337,7 @@ static int regmap_smbus_word_write_reg16(void *context, const void *data,
+ 	val = ((u8 *)data)[2];
  
- 	memset(&xstats, 0, sizeof(xstats));
- 	if (qlen)
--		xstats.deficit = cl->deficit;
-+		xstats.deficit = READ_ONCE(cl->deficit);
+ 	return i2c_smbus_write_word_data(i2c, addr_hi,
+-					 cpu_to_le16(((u16)val << 8) | addr_lo));
++					 ((u16)val << 8) | addr_lo);
+ }
  
- 	if (gnet_stats_copy_basic(d, NULL, &cl->bstats, true) < 0 ||
- 	    gnet_stats_copy_rate_est(d, &cl->rate_est) < 0 ||
-@@ -362,7 +362,7 @@ static int drr_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 
- 	if (!cl_is_active(cl)) {
- 		list_add_tail(&cl->alist, &q->active);
--		cl->deficit = cl->quantum;
-+		WRITE_ONCE(cl->deficit, cl->quantum);
- 	}
- 
- 	sch->qstats.backlog += len;
-@@ -389,7 +389,7 @@ static struct sk_buff *drr_dequeue(struct Qdisc *sch)
- 
- 		len = qdisc_pkt_len(skb);
- 		if (len <= cl->deficit) {
--			cl->deficit -= len;
-+			WRITE_ONCE(cl->deficit, cl->deficit - len);
- 			skb = qdisc_dequeue_peeked(cl->qdisc);
- 			if (unlikely(skb == NULL))
- 				goto out;
-@@ -403,7 +403,7 @@ static struct sk_buff *drr_dequeue(struct Qdisc *sch)
- 			return skb;
- 		}
- 
--		cl->deficit += cl->quantum;
-+		WRITE_ONCE(cl->deficit, cl->deficit + cl->quantum);
- 		list_move_tail(&cl->alist, &q->active);
- 	}
- out:
+ static const struct regmap_bus regmap_smbus_byte_word_reg16 = {
 -- 
 2.53.0
 
