@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DF9471252;
-	Tue, 21 Jul 2026 19:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AAC385D67;
+	Tue, 21 Jul 2026 19:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660815; cv=none; b=U+V/ad/IQ7kuRYa3aMboHR7VkQVLYemvV1qrVjzlhr5KboKDBQj6yut7aQFbbyfCckHdAf/oZi2tDUsnqUTTLpHZMVzD60VPk5RkNknqqgkGRcpDKxLg3euAyq9pdnXcn7GVpnj3tTfAB4G5+KeImaevpA9+cptUbFLMv3wDEBM=
+	t=1784660818; cv=none; b=nZfIYQwh+bRR4bdqZQDCPbvvChL5gzJocOl9Ak7aurrauM0+3qj1ONQZacd2YN+Wbtcj77XuFeSEZyZz0ts3DtfDNLB8XRVwVe8hQXnazPUG0OAbGgjfIyp3fklz2KKoI2fzkoxBxY+DRP+TW7AAoMtm8bHv701246fG2RHHqSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660815; c=relaxed/simple;
-	bh=fraWOnReV6vcq/g82L9VqcClYQUQoudC1XK2YGpA6ik=;
+	s=arc-20240116; t=1784660818; c=relaxed/simple;
+	bh=scXiamANRYPdc82mUanxT2yt73dzr5D5EIqhUP5jsGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AT1wuidBkgQ44oZZGhjell3SDtgsah4wSNHEduj+AsAjtXz1x0ijsDYao0QUmHtbpiZZOXOkkgKNMlqD7M4d4h20pJkXWrlEMy3AN4IpdSoeDUl5VOvr/2owiwcvNinjGnrTFN40ZFMKg4+/Um0jvXsKGpD/PBd5/4NzNEYtPZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hS6ru3tx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f7EgNhN9FjMIVh+EWLTlZfyqgoPzzrWzRmYBYqc3VfpTOsPWyaZFgUXXz3gFRH8jxMccSB5RmeQDuD7wND9qKSfC4zKyynYKuGahnN7bxek3t2QnpRy/36cWkJ0j32qv0IBpFvi28P+UQ4NeuWRgDYSn58v3LeXfT2VUhrprPn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MifXfKJe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hS6ru3tx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67881F000E9;
-	Tue, 21 Jul 2026 19:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MifXfKJe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 583851F000E9;
+	Tue, 21 Jul 2026 19:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660814;
-	bh=SxNCHUWQjsLxfykaVxaNSPn9nQtZS//bYKBLB0EBViM=;
+	s=korg; t=1784660816;
+	bh=JVRCLybeAMkbmk3P49pgrKbtt+kgenis09WhC5nuh+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hS6ru3txxPh2cYsUg0TZRPLAynsP71zAlZCFEHGNIVS+QWDNOLBwWAhVPtjw1KEzv
-	 atecKYMnIgWq/L6WTadjqrFOPPw3XKZjxsYEkLEnhCujn0QeDSq8rNjBKEKZKZTG4i
-	 8bFhBCMBeSyM2Chs6cZRMehyUMpK+Xqh8gDH2OBU=
+	b=MifXfKJelksXKZGXuiXsVnJUQpvvTNacZ6eaFnQfAt7IFBowUXGr4VlnS5+EcaT+3
+	 I9vOR8W9EYxiVvY7CxqkEx/MtAjqUPEu/sueK9KfO8MVBtAWrWs+x08/AztnyFzhgP
+	 7a6Ria39/81p7V0+G757lgpxBFiuptUMFGos5JVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Roman Li <Roman.Li@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Wayen Yan <win847@gmail.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1105/2077] drm/amd/display: Skip PHY SSC reduction on some 8K panels
-Date: Tue, 21 Jul 2026 17:12:58 +0200
-Message-ID: <20260721152618.883339005@linuxfoundation.org>
+Subject: [PATCH 7.1 1123/2077] net: airoha: fix foe_check_time allocation size
+Date: Tue, 21 Jul 2026 17:13:16 +0200
+Message-ID: <20260721152619.307990561@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,79 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Li <Roman.Li@amd.com>
+From: Wayen Yan <win847@gmail.com>
 
-[ Upstream commit fe7945d092a1d3c340febc2ab176cee50d0f6c80 ]
+[ Upstream commit 5c121ee635680c93d7074becf14cfbaac140f80d ]
 
-[Why]
-Some 8K displays cannot tolerate the reduced phy ssc value
-at high link utilization and show corruption or black screen.
+foe_check_time is declared as u16 pointer but was allocated with
+only ppe_num_entries bytes instead of ppe_num_entries * sizeof(u16).
 
-[How]
-Add an EDID panel-id quirk to utilize existing skip_phy_ssc_reduction flag.
+When airoha_ppe_foe_verify_entry() is called with hash >= ppe_num_entries/2,
+it writes beyond the allocated buffer, causing heap buffer overflow and
+potential kernel crash.
 
-To pass the link into the quirk handler, change the signature of
-apply_edid_quirks() to take link as an argument. The dev local in
-dm_helpers_parse_edid_caps() becomes unused and is removed.
-
-Fixes: 5fa62c87cffd ("drm/amd/display: Add option to disable PHY SSC reduction on transmitter enable")
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Roman Li <Roman.Li@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 144169e7be0831e09958a906d08d1856751aa6c6)
+Fixes: 6d5b601d52a2 ("net: airoha: ppe: Dynamically allocate foe_check_time array in airoha_ppe struct")
+Signed-off-by: Wayen Yan <win847@gmail.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/178161119471.2163752.14373384830691569758@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c   | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/airoha/airoha_ppe.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-index a3cb05490dc916..ee214f7592e50b 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-@@ -95,8 +95,11 @@ static u32 edid_extract_panel_id(struct edid *edid)
- 	       (u32)EDID_PRODUCT_ID(edid);
- }
- 
--static void apply_edid_quirks(struct drm_device *dev, struct edid *edid, struct dc_edid_caps *edid_caps)
-+static void apply_edid_quirks(struct dc_link *link, struct edid *edid,
-+			      struct dc_edid_caps *edid_caps)
- {
-+	struct amdgpu_dm_connector *aconnector = link->priv;
-+	struct drm_device *dev = aconnector->base.dev;
- 	uint32_t panel_id = edid_extract_panel_id(edid);
- 
- 	switch (panel_id) {
-@@ -126,6 +129,11 @@ static void apply_edid_quirks(struct drm_device *dev, struct edid *edid, struct
- 		drm_dbg_driver(dev, "Disabling VSC on monitor with panel id %X\n", panel_id);
- 		edid_caps->panel_patch.disable_colorimetry = true;
- 		break;
-+	/* Workaround for monitors that get corrupted by the PHY SSC reduction */
-+	case drm_edid_encode_panel_id('D', 'E', 'L', 0x4147):
-+		drm_dbg_driver(dev, "Skip PHY SSC reduction on panel id %X\n", panel_id);
-+		link->wa_flags.skip_phy_ssc_reduction = true;
-+		break;
- 	default:
- 		return;
+diff --git a/drivers/net/ethernet/airoha/airoha_ppe.c b/drivers/net/ethernet/airoha/airoha_ppe.c
+index a124f15345a916..a1f9939c21f20a 100644
+--- a/drivers/net/ethernet/airoha/airoha_ppe.c
++++ b/drivers/net/ethernet/airoha/airoha_ppe.c
+@@ -1578,7 +1578,8 @@ int airoha_ppe_init(struct airoha_eth *eth)
+ 			return -ENOMEM;
  	}
-@@ -147,7 +155,6 @@ enum dc_edid_status dm_helpers_parse_edid_caps(
- {
- 	struct amdgpu_dm_connector *aconnector = link->priv;
- 	struct drm_connector *connector = &aconnector->base;
--	struct drm_device *dev = connector->dev;
- 	struct edid *edid_buf = edid ? (struct edid *) edid->raw_edid : NULL;
- 	struct cea_sad *sads;
- 	int sad_count = -1;
-@@ -181,7 +188,7 @@ enum dc_edid_status dm_helpers_parse_edid_caps(
- 	if (edid_caps->edid_hdmi)
- 		populate_hdmi_info_from_connector(&connector->display_info.hdmi, edid_caps);
  
--	apply_edid_quirks(dev, edid_buf, edid_caps);
-+	apply_edid_quirks(link, edid_buf, edid_caps);
- 
- 	sad_count = drm_edid_to_sad((struct edid *) edid->raw_edid, &sads);
- 	if (sad_count <= 0)
+-	ppe->foe_check_time = devm_kzalloc(eth->dev, ppe_num_entries,
++	ppe->foe_check_time = devm_kzalloc(eth->dev,
++					   ppe_num_entries * sizeof(*ppe->foe_check_time),
+ 					   GFP_KERNEL);
+ 	if (!ppe->foe_check_time)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
