@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76943471401;
-	Tue, 21 Jul 2026 17:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BAA2471425;
+	Tue, 21 Jul 2026 17:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656290; cv=none; b=aMZVtj2E4mqGaT3N5F3GjDLNFSy+SIdD0ip1Rhz3NCryM7N8IM+9kWczwY1VcMhWM9xNIxXGIsMzQQKuh/nmUATPivJvVPoo2Cws9d/BNuLy6ypIDePWNH20S+3dNpcH4xh9Ag/R4ovSg8HQHwo1NBxcmaGNZBnIPhmRj+pLoiQ=
+	t=1784656293; cv=none; b=kSG+uC4uvmMq0TJ7OUvxPbWueonZJsY95am8bfT83gPFRUlOrLF/WdPCU5/8mW9yJ8TAVfoaEAU7KH9Ryg9e6HcrgLJDlivvJwpjPqM0uuhjdbgdCMxBkweefWPg+etKoe0I+HS/tSxjxjVjGGbKcKq/7U1MFa5ZktqFGV2z9M8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656290; c=relaxed/simple;
-	bh=3Gtco67zeA43O38ETlAD4XXk2A5H25ZFcgLOlAoN/C8=;
+	s=arc-20240116; t=1784656293; c=relaxed/simple;
+	bh=6heqSt60QlIxjHKWJsV3w+0RYgnztZyP2HFLJGLcbGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RR0IzwPE1bz+aAOA+oG7lWoZQZWCXBa9COLZS+gKQCISSJWvpRsG44492Bv6SpzzjSAvg3d0uSJAv2isNpx453V6nC5krHAchjMIF+k/iyPuJZGaCaFMMhQ+utqhCVe0vR34FPDoENQQrBLIIa5IcL1wqp71zKzS3pmgiugTqmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjNr0E9z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bNe9DFDhT5UlwPZfivLr0QKSFPGnXws+7aPgdxcsmtgHbnyIEywGiewx5Y2KJGaJNWOn/iJerwgKy6iVy0Yx3RGIC7pkhjWm7RnT/mB8ZSNN9Zvhl2RYMCdFxPUhwQ4ND6uNTd9iPbCVtgWj6esX/hqJZH91kV7KkMi9R83HBtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vpM7WI/W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjNr0E9z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D80251F000E9;
-	Tue, 21 Jul 2026 17:51:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vpM7WI/W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830B71F000E9;
+	Tue, 21 Jul 2026 17:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656289;
-	bh=OYKhfDD3b1AY+hW+RiuF5bsYfkZN11xKorL5o+Uwh+U=;
+	s=korg; t=1784656292;
+	bh=lI4Fb72NIpDzaCOQxdU1ENJgSIME3lJ7+AOsNxrbu54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hjNr0E9zzbPwGdvRNRTxEARWAkEi3ZgcWRlok1rjYBxkRbwwgZ5mehXrs7r5Mi1eN
-	 RKOnpm6Bx5Id2HxdFAcqnrUiffOM8LAUipmGyoF/oEgjYJy/xVXuvgeQjQudqGy0xQ
-	 NXdr4nplLzVAqYjDLwnXv3JFlRyQ+fsxVptfaF9A=
+	b=vpM7WI/Wl7jJAUUhSA0fki93Yc7ZOqP2tT6LoREXBuE/sg4bUdEYCUZElJFrPZU6a
+	 CYFS6yXnJoqFuhiTdvARnX70Z9TooKCYigZs8BVzxsPwFTcZKnDgcLX34Aj3dGQYIR
+	 fESjTnTeuC/DYrRr+M/LJujCLIHzMVT6Bsu3iVsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko <sashiko@sashiko.dev>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0288/1611] libbpf: Skip endianness swap when loader generation failed
-Date: Tue, 21 Jul 2026 17:06:44 +0200
-Message-ID: <20260721152521.539050616@linuxfoundation.org>
+Subject: [PATCH 6.18 0289/1611] ext4: fix LOGFLUSH shutdown ordering to allow ordered-mode data writeback
+Date: Tue, 21 Jul 2026 17:06:45 +0200
+Message-ID: <20260721152521.563335302@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,52 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 41300d032a1b1d91a3ed996ad21905463e344beb ]
+[ Upstream commit d99748ef1695ce17eaf51c64b7a06952fa7cddab ]
 
-bpf_gen__prog_load() byte-swaps the program insns and the {func,line}_info
-and CO-RE relo blobs in place for cross-endian targets. The blob offsets
-come from add_data(), which returns 0 on failure: realloc_data_buf() either
-frees and NULLs gen->data_start (realloc OOM) or returns early on an
-already-latched gen->error, leaving a stale, possibly too-small buffer.
+In EXT4_GOING_FLAGS_LOGFLUSH mode, the EXT4_FLAGS_SHUTDOWN flag was set
+before calling ext4_force_commit().  This caused ordered-mode data
+writeback (triggered by journal commit) to fail with -EIO, since
+ext4_do_writepages() checks for the shutdown flag.  The journal would
+then be aborted prematurely before the commit could succeed.
 
-Neither bswap site checked for this. With gen->swapped_endian set and a
-failed generation, "gen->data_start + off" becomes NULL + 0. Guard the
-same way via !gen->error so they are skipped once generation has failed.
+Fix this by calling ext4_force_commit() first, then setting the
+shutdown flag, so that pending data can be written back correctly.
 
-Fixes: 8ca3323dce43 ("libbpf: Support creating light skeleton of either endianness")
-Reported-by: sashiko <sashiko@sashiko.dev>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260529162829.315921-1-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Note that moving ext4_force_commit() before setting the shutdown flag
+creates a small window in which new writes may occur and generate new
+journal transactions.  When the journal is subsequently aborted, the
+new transactions will not be able to write to disk.  This is intentional
+because LOGFLUSH's semantics are to flush pre-existing journal entries
+before shutdown, not to guarantee atomicity for writes that race with
+the ioctl.
+
+Fixes: 783d94854499 ("ext4: add EXT4_IOC_GOINGDOWN ioctl")
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260424104201.1930823-1-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/gen_loader.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ext4/ioctl.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
-index b2e8b4224640f8..637b26d1100bbd 100644
---- a/tools/lib/bpf/gen_loader.c
-+++ b/tools/lib/bpf/gen_loader.c
-@@ -1054,7 +1054,7 @@ void bpf_gen__prog_load(struct bpf_gen *gen,
- 		 prog_idx, prog_type, insns_off, insn_cnt, license_off);
- 
- 	/* convert blob insns to target endianness */
--	if (gen->swapped_endian) {
-+	if (gen->swapped_endian && !gen->error) {
- 		struct bpf_insn *insn = gen->data_start + insns_off;
- 		int i;
- 
-@@ -1092,7 +1092,7 @@ void bpf_gen__prog_load(struct bpf_gen *gen,
- 		 sizeof(struct bpf_core_relo));
- 
- 	/* convert all info blobs to target endianness */
--	if (gen->swapped_endian)
-+	if (gen->swapped_endian && !gen->error)
- 		info_blob_bswap(gen, func_info, line_info, core_relos, load_attr);
- 
- 	libbpf_strlcpy(attr.prog_name, prog_name, sizeof(attr.prog_name));
+diff --git a/fs/ext4/ioctl.c b/fs/ext4/ioctl.c
+index acc28aa5744b1d..fbf5771eca9937 100644
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -829,11 +829,17 @@ int ext4_force_shutdown(struct super_block *sb, u32 flags)
+ 		bdev_thaw(sb->s_bdev);
+ 		break;
+ 	case EXT4_GOING_FLAGS_LOGFLUSH:
++		/*
++		 * Call ext4_force_commit() before setting EXT4_FLAGS_SHUTDOWN.
++		 * This is because in data=ordered mode, journal commit
++		 * triggers data writeback which fails if shutdown is already
++		 * set, causing the journal to be aborted prematurely before
++		 * the commit succeeds.
++		 */
++		(void) ext4_force_commit(sb);
+ 		set_bit(EXT4_FLAGS_SHUTDOWN, &sbi->s_ext4_flags);
+-		if (sbi->s_journal && !is_journal_aborted(sbi->s_journal)) {
+-			(void) ext4_force_commit(sb);
++		if (sbi->s_journal && !is_journal_aborted(sbi->s_journal))
+ 			jbd2_journal_abort(sbi->s_journal, -ESHUTDOWN);
+-		}
+ 		break;
+ 	case EXT4_GOING_FLAGS_NOLOGFLUSH:
+ 		set_bit(EXT4_FLAGS_SHUTDOWN, &sbi->s_ext4_flags);
 -- 
 2.53.0
 
