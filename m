@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B22A430CE3;
-	Tue, 21 Jul 2026 22:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26816431A4E;
+	Tue, 21 Jul 2026 22:49:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674153; cv=none; b=dcyg0a963PyV+C5i5Vav6GEyNz5sRdECv+BhOhjvlVrFl56DD0HO3nlkesuWl1/8oCvAFEhGeu7Q00QDdRNj2uhxYNZxqZpp5oHbimmEMzJ3Bi/cIYf0nJtwqH5VBOBoYGvEvRdithAb6BD+vVLYn7Vy7VpYIz1zyPWq/b41taY=
+	t=1784674156; cv=none; b=Yn96c+pHqKZa7zvhL+CaPb0vdxDRc2cFwybnGS99nNA4LZ5VwBafXshFyMsqVMp2YvJCqtuwh5QZ94x/RjCHladuD3arlyvuOyV7ZmmxVftm0SeyMh2YonHveRA/EnG1Ie/L6FJAqtKs2uekhDOIGEtSDf3mFWadQTGBcFm83/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674153; c=relaxed/simple;
-	bh=pY0vzfSpj1o+n58yTNjv/f9T33Ks2wtiNutQ2X7WZ8s=;
+	s=arc-20240116; t=1784674156; c=relaxed/simple;
+	bh=lDQhazO78t3vemLsiSMoj8LoSJT0HaIV7hXGkpB4FuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d6b3gQlGt0KOarWa4rhls26UenKNBsRjYnMNBYrRPDCqskPWU82Pv0SoW9sIAugbtxxVc1Y/XvGuaQbjshlEUTA3csu1RJMkUX69+WXQakEkeFVF0m5rGi+8ikoVPem9EBXLLG/iJiRDFKDsyNvZQGL2DEBxis+iGkX2wLSvtGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MODDitYN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p6MPAkhOvw0HbUbdJpnSKAlfaUm0nGoCcDlftsahoOc4JmC0au0edyCE67YQskDxhtpZ3POtcfQLxqS4zJTkM/1dUhtW9zEd6FMkLLtSPDquU5RLMqSEVfHwH3XdKBnO/eidk4ZgXZ8bPCwWiLD5i5IyU/vl81AMayAbmEwkE5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cIcFNl10; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MODDitYN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0EC91F000E9;
-	Tue, 21 Jul 2026 22:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cIcFNl10"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569B81F00A3A;
+	Tue, 21 Jul 2026 22:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674152;
-	bh=3aZnYmArHs77CJlxFtYBmQVcxHZZF8uJvAyCDb2X01s=;
+	s=korg; t=1784674154;
+	bh=B34cEeseA5yNj8721KOMDSb5cFwP8y4wtLHgs0WtDrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MODDitYNiwwzfdsZap331HptureEuugGnUV9asjxvuy3iwoR02igy1XMhczwFButJ
-	 67ISb0tJRTdoLeAFgRkKAg3bub71yJtNJ21ZG4M8F2SsJiSpkz+B+JvEvkvRPQuY9o
-	 /VuL+S67yYHY+i8bHQmXpq0N/g55YWGnxo4mKeL8=
+	b=cIcFNl10oweGOpYSiNs3cXZG/ws6TTUPS+w29k68GXcekOIbA5OfxJ0Ov91e4h682
+	 9VuE1PCV2me3+iQln/5JVekiojYG0KUGOfV+GVQ6lX/VnVytPRzJUuV41WRY9Ef3C5
+	 0jK4iZKSAhR7ikFmL8VK+xy4tHwL9JMKxxy1qIIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 406/699] Bluetooth: bpa10x: avoid OOB read of revision string in bpa10x_setup()
-Date: Tue, 21 Jul 2026 17:22:45 +0200
-Message-ID: <20260721152404.852807518@linuxfoundation.org>
+	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Nickolay Goppen <setotau@mainlining.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 5.10 433/699] arm64: dts: qcom: sdm630: describe adsp_mem region properly
+Date: Tue, 21 Jul 2026 17:23:12 +0200
+Message-ID: <20260721152405.461383937@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,61 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Nickolay Goppen <setotau@mainlining.org>
 
-[ Upstream commit dd068ef044128db655f48323a4acfd5907e04903 ]
+commit ce414263e9ebe5080381a50cbdf9065c29816202 upstream.
 
-bpa10x_setup() sends the vendor command 0xfc0e and passes the response
-to bt_dev_info() and hci_set_fw_info() as a "%s" string starting at
-skb->data + 1, without checking the length:
+Downstream [1] this region is marked as shared, reusable and dynamic so
+describe it that way.
 
-	bt_dev_info(hdev, "%s", (char *)(skb->data + 1));
-	hci_set_fw_info(hdev, "%s", skb->data + 1);
+[1]: https://github.com/xiaomi-sdm660/android_kernel_xiaomi_sdm660/blob/11-EAS/arch/arm/boot/dts/qcom/sdm660.dtsi#L448
 
-A device that returns a one-byte response (status only) leaves
-skb->data + 1 past the end of the data, and the %s walk reads adjacent
-slab memory until it meets a NUL. The same happens when the payload is
-not NUL-terminated within skb->len. The out-of-bounds bytes end up in
-the kernel log and the firmware-info debugfs file.
-
-Print the revision string with a bounded "%.*s" limited to skb->len - 1
-instead. This keeps the string readable for well-behaved devices while
-never reading past the received data, and does not fail setup, so a
-device returning a short or unterminated response keeps working.
-
-Fixes: ddd68ec8f484 ("Bluetooth: bpa10x: Read revision information in setup stage")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b190fb010664 ("arm64: dts: qcom: sdm630: Add sdm630 dts file")
+Cc: stable@vger.kernel.org
+Reviewed-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
+Link: https://lore.kernel.org/r/20260429-qcom-sdm660-cdsp-adsp-fastrpc-dts-fix-v5-4-16bc82e622ad@mainlining.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/bpa10x.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm630.dtsi |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/bpa10x.c b/drivers/bluetooth/bpa10x.c
-index 1fa58c059cbf5c..8942ebd0d0b9f6 100644
---- a/drivers/bluetooth/bpa10x.c
-+++ b/drivers/bluetooth/bpa10x.c
-@@ -254,9 +254,13 @@ static int bpa10x_setup(struct hci_dev *hdev)
- 	if (IS_ERR(skb))
- 		return PTR_ERR(skb);
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -391,9 +391,12 @@
+ 			no-map;
+ 		};
  
--	bt_dev_info(hdev, "%s", (char *)(skb->data + 1));
-+	/* Bounded print: the device controls skb->len. */
-+	if (skb->len > 1) {
-+		int len = skb->len - 1;
+-		adsp_mem: adsp-region@f6000000 {
+-			reg = <0x0 0xf6000000 0x0 0x800000>;
+-			no-map;
++		adsp_mem: adsp-region {
++			compatible = "shared-dma-pool";
++			alloc-ranges = <0x0 0x80000000 0x0 0x80000000>;
++			alignment = <0x0 0x400000>;
++			size = <0x0 0x800000>;
++			reusable;
+ 		};
  
--	hci_set_fw_info(hdev, "%s", skb->data + 1);
-+		bt_dev_info(hdev, "%.*s", len, (char *)(skb->data + 1));
-+		hci_set_fw_info(hdev, "%.*s", len, skb->data + 1);
-+	}
- 
- 	kfree_skb(skb);
- 	return 0;
--- 
-2.53.0
-
+ 		qseecom_mem: qseecom-region@f6800000 {
 
 
