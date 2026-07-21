@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431133E7141;
-	Tue, 21 Jul 2026 17:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5BA3E7141;
+	Tue, 21 Jul 2026 17:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655115; cv=none; b=IjIcchCSrgbeJvLAN54ZNvGVBdYavJYxuu/auiV369N/iffvh1NdOYQ6y2t1jMpH2lrOW/k1jwuq5+TyAAnrcEoGQVe5GJ/OvVqCyy2Q+GBGnzmv491I0d1OAehZPAC51WM8gi8zTGQBu4vRg/oHygWbvYfQu3bUH3oM2Eep+cA=
+	t=1784655118; cv=none; b=EjkKhtVJBHPzXYVxVjX+42YL5d6pzXW7CHOs7A66l77eHC0OYwJ6gW3v2wSbzWG7gpVlJ2kw7jziQM6a3gZ7/tJofhLHT9tzIc/yieAflciS+2KXDgj3lrXy+uBpnLO/dFoJPSLiibYkFCeoK5auKGEKfDrr1r5BBjXYg/trLWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655115; c=relaxed/simple;
-	bh=gd4bPCnZq+NNKgpz72oi2Ccy3pAckwJIcpM9JABcHzY=;
+	s=arc-20240116; t=1784655118; c=relaxed/simple;
+	bh=zALWvvKpXv/t//BhoBQmmfvK/RzEsVjwnPa0Mj9HE0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lsceYQFdPmVLU73/FiEYvdtV3Gr70XzXWqyF+sG+1BJZdRJTpklrLpBWQ5BWyGlswwI9R+N+U1q7FURXJCy2WeGOsr9TEWJaUX6WUHyWtoAOzTApqEhfSQ1blBy5yUqqYTKb+y2knzstaSPRg4wXpmZDr878Hwqfs+0EjFL574Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvXmMiHj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PR4M7rQdJWmrK6EUJoq0Vy8MTHKh+bhhQYIF8LBcNAK07nPThLNIrEToEjA6qAkUiMVFjz9CFkl4RbDpWCbhQpENE4dFcLhcgT7iqHpAaOdlraW9WdowQL49wJuimzLu4oMyRG2aEiacpGeAsI+6s0y+g686su7baL9u7Fp+Nz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SqIqKRwo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvXmMiHj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7671F000E9;
-	Tue, 21 Jul 2026 17:31:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SqIqKRwo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF0B1F000E9;
+	Tue, 21 Jul 2026 17:31:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655113;
-	bh=N0XLEilhKrgEXgLZWfAw9bFYTJjMyKpAXjiAVO3v2QQ=;
+	s=korg; t=1784655116;
+	bh=WruLPIxLgyUuL5R9HK23CnCI2jrFcuWJ4X9vcgv51rQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AvXmMiHjXlOmuiIe9gT/oHhcPwA/94ktjmLQ/nNr55lQ+2Pg0pTZJEEDiGLZAXHte
-	 ZjpRPCHgvSmElHCkNlZQLx0hWotNYZ/FMKZHinXqcDlPMAcVZOY6zphZtONjmrPhTh
-	 22/LMNucoqtRy6wAxcpoS3cPKT3Zq0Z4Wt/8Yowg=
+	b=SqIqKRwoKxL3ZRJvr+yd8VhXdkkejT9O4cZ/6+NdkWt8r6UHr0N8EgIS8dZu3pw2i
+	 H5f3LC4Ol+NJam/v27jvVlUK8yfK02IWHfLue/0i62BVkIVgi4BLv7nuNsu0j5y8a/
+	 FutEfacf0lDxMFBfTCOPDafI6iOLT4kE3BNHMOXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Niklas Cassel <cassel@kernel.org>,
 	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 7.1 1961/2077] ata: libata-core: Add NOLPM quirk for PNY CS900 1TB SSD
-Date: Tue, 21 Jul 2026 17:27:14 +0200
-Message-ID: <20260721152638.961736909@linuxfoundation.org>
+Subject: [PATCH 7.1 1962/2077] ata: pata_pxa: Fix DMA channel leak on probe error
+Date: Tue, 21 Jul 2026 17:27:15 +0200
+Message-ID: <20260721152638.984309608@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,39 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 462775c620197adaabc983ce847e5b9878ff4cb0 upstream.
+commit fcaf242e7fc406e78f444a35441e3b58f5e28781 upstream.
 
-The PNY CS900 1TB SSD (Phison PS3111-S11, DRAM-less) drops off the bus
-after entering Device-Initiated Slumber during idle. With the default
-med_power_with_dipm policy the link goes down (SStatus 1 SControl 300)
-and does not recover, forcing the filesystem read-only. Forcing
-max_performance keeps the link stable across prolonged idle.
+When dmaengine_slave_config() fails, the DMA channel acquired by
+dma_request_chan() is not released before returning the error,
+leaking the channel reference.
 
-Add a NOLPM quirk so link power management is disabled for this drive
-specifically, leaving it intact for other devices on the host.
+Fix by adding dma_release_channel() in the error path.
+
+The ata_host_activate() error path already correctly releases the
+DMA channel.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Fixes: 88622d80af82 ("ata: pata_pxa: dmaengine conversion")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Reviewed-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/ata/pata_pxa.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -4295,6 +4295,9 @@ static const struct ata_dev_quirks_entry
- 	/* Apacer models with LPM issues */
- 	{ "Apacer AS340*",		NULL,	ATA_QUIRK_NOLPM },
+--- a/drivers/ata/pata_pxa.c
++++ b/drivers/ata/pata_pxa.c
+@@ -286,6 +286,7 @@ static int pxa_ata_probe(struct platform
+ 	ret = dmaengine_slave_config(data->dma_chan, &config);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev, "dma configuration failed: %d\n", ret);
++		dma_release_channel(data->dma_chan);
+ 		return ret;
+ 	}
  
-+	/* PNY CS900 (Phison PS3111-S11, DRAM-less) drops the link on DIPM */
-+	{ "PNY CS900 1TB SSD",		NULL,	ATA_QUIRK_NOLPM },
-+
- 	/* Silicon Motion models with LPM issues */
- 	{ "MD619HXCLDE3TC",		"TCVAID", ATA_QUIRK_NOLPM },
- 	{ "MD619GXCLDE3TC",		"TCV35D", ATA_QUIRK_NOLPM },
 
 
