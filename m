@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65563E1723;
-	Tue, 21 Jul 2026 17:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62149322DB7;
+	Tue, 21 Jul 2026 17:05:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653551; cv=none; b=qg6SIv8P6HiC/EVwDbU2jrpBf8qy+JVTga9VCgwwQoPekRy2jTbvzvHZW3zW5DBZvURKGvu6FDy5aAh0IQOgNV5K/1ZVA588eNC+Ib8vmLR142O6EB3e5udouUiPD47FeQpLb8VcBOUqRjw1RdvACLnG8XD9UMf08QML1nWe2Yw=
+	t=1784653553; cv=none; b=iIg2vnAPxonN5L2gdtcLopeW0AKbdfQUj5UwfyW9XFTOIKxqITlmZuG/RHMrq4RkaMb8f53qbpL09149dsBCBg4SMWaFdXEEiU59/4q7rj6rbRlweb0VsQvxscJHPZhCNIYSYdoW2gnrp3DPRPBH9y3PhEYc48pliy024xUe1r4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653551; c=relaxed/simple;
-	bh=Hkzu0sTSjyjaxK+4B5yLpNlYaJoEyIzh+FZ3+4SwG/g=;
+	s=arc-20240116; t=1784653553; c=relaxed/simple;
+	bh=IB+wUxGR9ZBWNiz2tZ70bUtbJVilO3WuB4ONOyFVm1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MDST4PVnE900DRlwxec4mdcbqojUNdoXUBkUkwkbOf3CNGOLWOCAtGTWiVJJMUflpeuGhmt/F+DOYokGRveqB3+CVt0e2fK6HdpYgdluOp7h/hZt0cvCPRlstAcuuWDjqhaQDdu7C6m1MuaLdfIQUEdVxmFMu8V26nu3j8oNdC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCVbBPWD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q/XyBTK0c9jS8ZzXUZ3fIfWqkzIspqOzBfyQB7BccVzvc0fdo2JbTDuyOgUkdUZ39IUp5GAwy+CTJODmAlfVhA0jO/SqWC0WK1WtYe8SZgEg0u5mRkyMDYdzyStw05SZmN5DD8laqatRBXyAbnhBlQ9ErxYLzNfuaWxhGqOzb/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zi/ffNhU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCVbBPWD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 291CA1F000E9;
-	Tue, 21 Jul 2026 17:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zi/ffNhU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C68BD1F000E9;
+	Tue, 21 Jul 2026 17:05:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653549;
-	bh=9lY7vaywUG4qabquyVBH7+PoxzcF9z8StcNJDbtv3qA=;
+	s=korg; t=1784653552;
+	bh=0nGGywweofiQyfC6WAglOhAMnl0g5E+eQOhuFZIrDJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iCVbBPWD8JCMCVyQUFFxaF+RegsCzZN5ReXiTN7Ll5JNtgh392Nb8UAbrkXYIT0OF
-	 4Aw8Yp04d4NQx23u+j/QDgqpUCYpCm+1DjoY12YEhZLq/dmMose+ddNjlnXd+OoYQw
-	 EvMXAS0nkhbTZpA9PUarBLfRy/zxMXJsqcfCa3xc=
+	b=zi/ffNhUQMa9hN8ldi7tIPJ0ORFZu2uw9x6nuYRBBxsQ+Nxy/e8/7jyKzfsdKIB4t
+	 quaai8femwFBsjpVMBD2pBxiw19/xHsDpuWD7yCcSMkiRYFSbGZ1cqXzfN97Gz2jWa
+	 kHanT1EVzx4fM+9t9qZScRLVr20lGk/r/CCkKEtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <sam.moelius@trailofbits.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1368/2077] net/sched: hhf: clear heavy-hitter state on reset
-Date: Tue, 21 Jul 2026 17:17:21 +0200
-Message-ID: <20260721152625.083621100@linuxfoundation.org>
+Subject: [PATCH 7.1 1369/2077] fs: refuse O_TMPFILE creation with an unmapped fsuid or fsgid
+Date: Tue, 21 Jul 2026 17:17:22 +0200
+Message-ID: <20260721152625.107124394@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,71 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Moelius <sam.moelius@trailofbits.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit a225f8c20712713406ae47024b8df42deacddd4a ]
+[ Upstream commit 539dce1144651f7976fa418e618b0b574bf15eeb ]
 
-HHF reset does not clear the classifier state used to identify heavy
-hitters.  Packets after reset can therefore be scheduled using flow
-history from before the reset.
+vfs_tmpfile() never checked that the caller's fsuid and fsgid map into
+the filesystem.  On an idmapped mount whose idmapping does not cover the
+caller's fs{u,g}id, the ->tmpfile() instance initializes the new inode
+through inode_init_owner(), where mapped_fsuid()/mapped_fsgid() return
+INVALID_UID/INVALID_GID, and the tmpfile ends up owned by (uid_t)-1.
 
-The reset operation should return the qdisc to an empty state.
+Every other creation path already refuses this: may_o_create() (O_CREAT)
+and may_create_dentry() (mkdir, mknod, symlink, link) bail out with
+-EOVERFLOW via fsuidgid_has_mapping() precisely so that an object cannot
+be created with an owner the filesystem cannot represent.  An O_TMPFILE
+is no exception: it is created I_LINKABLE and linkat(2) can splice it
+into the namespace afterwards, so the same guarantee must hold.
 
-Clear the heavy-hitter classifier tables when HHF is reset.
+Add the missing fsuidgid_has_mapping() check to vfs_tmpfile().  On a
+non-idmapped mount the caller's fs{u,g}id always map in the superblock's
+user namespace, so this is a no-op there and only takes effect on an
+idmapped mount that does not map the caller.  It applies to every
+filesystem that sets FS_ALLOW_IDMAP and implements ->tmpfile() (tmpfs,
+ext4, btrfs, xfs, f2fs, ...), and to overlayfs, whose upper-layer
+tmpfile creation funnels through vfs_tmpfile() via backing_tmpfile_open().
 
-Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
-Assisted-by: Codex:gpt-5.5-cyber-preview
-Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 8e5389132ab4 ("fs: introduce fsuidgid_has_mapping() helper")
+Link: https://patch.msgid.link/20260615-work-idmapped-tmpfile-v1-1-754a94d81f83@kernel.org
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hhf.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ fs/namei.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
-index 1e25b75daae2e5..d85cb0263b675a 100644
---- a/net/sched/sch_hhf.c
-+++ b/net/sched/sch_hhf.c
-@@ -462,12 +462,39 @@ static struct sk_buff *hhf_dequeue(struct Qdisc *sch)
- 	return skb;
- }
+diff --git a/fs/namei.c b/fs/namei.c
+index 4787244ca4a75b..0da20b387e96ed 100644
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -4735,6 +4735,10 @@ int vfs_tmpfile(struct mnt_idmap *idmap,
+ 	int error;
+ 	int open_flag = file->f_flags;
  
-+static void hhf_reset_classifier(struct hhf_sched_data *q)
-+{
-+	int i;
++	/* A tmpfile is I_LINKABLE, so guard its owner like may_o_create(). */
++	if (!fsuidgid_has_mapping(dir->i_sb, idmap))
++		return -EOVERFLOW;
 +
-+	if (!q->hh_flows)
-+		return;
-+
-+	for (i = 0; i < HH_FLOWS_CNT; i++) {
-+		struct hh_flow_state *flow, *next;
-+		struct list_head *head = &q->hh_flows[i];
-+
-+		list_for_each_entry_safe(flow, next, head, flowchain) {
-+			list_del(&flow->flowchain);
-+			kfree(flow);
-+		}
-+	}
-+	WRITE_ONCE(q->hh_flows_current_cnt, 0);
-+
-+	for (i = 0; i < HHF_ARRAYS_CNT; i++) {
-+		if (q->hhf_valid_bits[i])
-+			bitmap_zero(q->hhf_valid_bits[i], HHF_ARRAYS_LEN);
-+	}
-+	q->hhf_arrays_reset_timestamp = hhf_time_stamp();
-+}
-+
- static void hhf_reset(struct Qdisc *sch)
- {
-+	struct hhf_sched_data *q = qdisc_priv(sch);
- 	struct sk_buff *skb;
- 
- 	while ((skb = hhf_dequeue(sch)) != NULL)
- 		rtnl_kfree_skbs(skb, skb);
-+	hhf_reset_classifier(q);
- }
- 
- static void hhf_destroy(struct Qdisc *sch)
+ 	/* we want directory to be writable */
+ 	error = inode_permission(idmap, dir, MAY_WRITE | MAY_EXEC);
+ 	if (error)
 -- 
 2.53.0
 
