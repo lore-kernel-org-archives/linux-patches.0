@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA7C37DE97;
-	Tue, 21 Jul 2026 18:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819BB407576;
+	Tue, 21 Jul 2026 18:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657819; cv=none; b=bMefWhmH/KfIgajKaIDoSpy/uyeH8TIjeENLe/Jdnkwe2+BvmAhqtLlxrW808Bcq5WwhEhkhp3jNT+pzNiZjpMOEeGQdvfsoEG26ugvwGTgfYycsS6DoRTCyihQCk7K/10MXCtsCMpTZc4NUuQDJAJsQ+zUhMIPXRr0zQ1Z1fIM=
+	t=1784657821; cv=none; b=nNM0YFSeMLQFpwGSW2E3Y1o/s0XqZ1C7dm0gXLD8fUDbaeq39A02bohqxE00jnL5M9ZiZKsGLAVH29kQbbNqvYBM/l51iLC/d4IAAfhaw0urzuNipvL9ex1aStmBPJaeMSpy2rVoXkfV9YuIhlgDNay7jkdu3c/TrEeH9N9ueOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657819; c=relaxed/simple;
-	bh=0O2QuSWIW6bHvn3lO76kEWhNiUMs7EVicsW6mLE76dA=;
+	s=arc-20240116; t=1784657821; c=relaxed/simple;
+	bh=VyQPsTJ79pCyKg/6+huoLCLQhpk0ZjXsDwfNxzBxTME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a0jpiS61IObqkzx33wzX1UJOlKlp4DYZ5jSGMuzzyRVNrz5X+6j7Q+3aQCDTeOUW2y/TxTweM2V2PlS3CeD0c066+zGh32bwLVboucWSeM2OvxlEX5RDRuWAbXDd2lH+2sUw5GI86Y2GQ8vJBfwMekAaYD1kkKO6AbM9fXFbTlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uyRGU1So; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PYeqeh++5kYuluY9WisO6gcDRY6CPk3EwPSRw2I99JlwHOjNZW114bolbbcGIKs+YLASWJDS69JAqSIIiiXLfUcqX4Y6PYb4me7a5CaPRhMynzjZStoIe5D5MzMTA7WNsTINipTvWiMxzVr/fT7pTXLQ1qykSLrLFsextNao/qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qDtfhvcD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uyRGU1So"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4743A1F000E9;
-	Tue, 21 Jul 2026 18:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDtfhvcD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE07F1F000E9;
+	Tue, 21 Jul 2026 18:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657817;
-	bh=TtE4XD23vn6OHR4/f3tFQc0E4GcFUOj00fnaRmGUI88=;
+	s=korg; t=1784657820;
+	bh=z8JUl/iE1PHm5djkO+nJwjWzlgToebv+4PUL8Ix7LXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uyRGU1So39Uo2R3TM/0o3VrLs/nMITDRPclLIVFV6xlUZ1Hbwg2QIoUbOHq9Ab9Nk
-	 zS74x8wLJx6FBX1QA/Qe0BCQ0EY022suaYxRp9DvkB5ylshm06dTgnkmCjfW8et+8q
-	 8rxSlaQT7RlKqecx2+FXaE62UZdAH/QNZls0MjgE=
+	b=qDtfhvcD8saiNUXodVIhl8pM/8yQFJKV6YrCi3d5TPuTJGD7khATaFpNClydTq0bl
+	 TnhvWiF2Deev9vv90uQu1ohoZgWyUXYfKbjgtotbe1+u3mZtmjsi2dzCeK/8lDi/sp
+	 OVuhIgZ9Ywz1noCLPzCq5Wfs9hW9GxzNwRwgJMQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
+	Koichiro Den <den@valinux.co.jp>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0909/1611] NTB: epf: Fix doorbell bitmask and IRQ vector handling
-Date: Tue, 21 Jul 2026 17:17:05 +0200
-Message-ID: <20260721152535.834854116@linuxfoundation.org>
+Subject: [PATCH 6.18 0883/1611] PCI: endpoint: pci-epf-vntb: Add check to detect db_count value of 0
+Date: Tue, 21 Jul 2026 17:16:39 +0200
+Message-ID: <20260721152535.251868793@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,209 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 4fdea8dbb62d746429498e07385a3ba0b0f6d1ab ]
+[ Upstream commit 33bd1ea748bc897c4d13437284e08c658e8d1340 ]
 
-The EPF driver currently stores the incoming doorbell as a vector number
-(irq_no + 1) in db_val and db_clear() clears all bits unconditionally.
-This breaks db_read()/db_clear() semantics when multiple doorbells are
-used.
+epf_ntb->db_count value should be within 1 to MAX_DB_COUNT. Current code
+only checks for the upper bound, while the lower bound is unchecked. This
+can cause a lot of issues in the driver if the user passes 'db_count' as 0.
 
-Store doorbells as a bitmask (BIT_ULL(vector)) and make
-db_clear(db_bits) clear only the specified bits. Use atomic64 operations
-as db_val is updated from interrupt context.
+Add a check for 0 also. While at it, remove the redundant 'db_count'
+assignment.
 
-Once db_val is stored as a bitmask, the ISR's doorbell vector is used
-not only for ntb_db_event(), but also as the bit index for BIT_ULL().
-The existing ISR derives that vector by subtracting pci_irq_vector(pdev,
-0) from the Linux IRQ number passed to the handler, but Linux IRQ
-numbers are not guaranteed to be contiguous.
-
-Pass per-vector context as request_irq() dev_id instead, so the ISR gets
-the device vector directly.
-
-Validate the doorbell vector before updating db_val or calling
-ntb_db_event(), so an unexpected vector cannot create an invalid shift
-or be reported to NTB clients.
-
-While at it, read and validate mw_count before requesting interrupt
-vectors. An unsupported memory-window count does not need IRQs, and
-failing before ntb_epf_init_isr() keeps the probe error path simple.
-
-Fixes: 812ce2f8d14e ("NTB: Add support for EPF PCI Non-Transparent Bridge")
-Suggested-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Koichiro Den <den@valinux.co.jp>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260513024923.451765-12-den@valinux.co.jp
+Link: https://patch.msgid.link/20260407124421.282766-2-mani@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/hw/epf/ntb_hw_epf.c | 61 +++++++++++++++++++++------------
- 1 file changed, 39 insertions(+), 22 deletions(-)
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/ntb/hw/epf/ntb_hw_epf.c b/drivers/ntb/hw/epf/ntb_hw_epf.c
-index 292e2ca059ac39..200409b4e4ddff 100644
---- a/drivers/ntb/hw/epf/ntb_hw_epf.c
-+++ b/drivers/ntb/hw/epf/ntb_hw_epf.c
-@@ -6,6 +6,7 @@
-  * Author: Kishon Vijay Abraham I <kishon@ti.com>
-  */
- 
-+#include <linux/atomic.h>
- #include <linux/delay.h>
- #include <linux/module.h>
- #include <linux/pci.h>
-@@ -77,6 +78,13 @@ enum epf_irq_slot {
- 
- #define NTB_EPF_MAX_MW_COUNT	(NTB_BAR_NUM - BAR_MW1)
- 
-+struct ntb_epf_dev;
-+
-+struct ntb_epf_irq_ctx {
-+	struct ntb_epf_dev *ndev;
-+	unsigned int irq_no;
-+};
-+
- struct ntb_epf_dev {
- 	struct ntb_dev ntb;
+diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+index 750a246f79c923..d3d0780fb48167 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+@@ -466,7 +466,6 @@ static int epf_ntb_configure_interrupt(struct epf_ntb *ntb)
+ {
+ 	const struct pci_epc_features *epc_features;
  	struct device *dev;
-@@ -96,9 +104,9 @@ struct ntb_epf_dev {
- 	unsigned int self_spad;
- 	unsigned int peer_spad;
- 
--	int db_val;
-+	atomic64_t db_val;
- 	u64 db_valid_mask;
--	int irq_base;
-+	struct ntb_epf_irq_ctx irq_ctx[NTB_EPF_MAX_DB_COUNT + 1];
- };
- 
- #define ntb_ndev(__ntb) container_of(__ntb, struct ntb_epf_dev, ntb)
-@@ -322,11 +330,10 @@ static int ntb_epf_link_disable(struct ntb_dev *ntb)
- 
- static irqreturn_t ntb_epf_vec_isr(int irq, void *dev)
- {
--	struct ntb_epf_dev *ndev = dev;
--	int irq_no;
--
--	irq_no = irq - ndev->irq_base;
--	ndev->db_val = irq_no + 1;
-+	struct ntb_epf_irq_ctx *ctx = dev;
-+	struct ntb_epf_dev *ndev = ctx->ndev;
-+	unsigned int db_vector;
-+	unsigned int irq_no = ctx->irq_no;
- 
- 	if (irq_no == EPF_IRQ_LINK) {
- 		ntb_link_event(&ndev->ntb);
-@@ -334,7 +341,17 @@ static irqreturn_t ntb_epf_vec_isr(int irq, void *dev)
- 		dev_warn_ratelimited(ndev->dev,
- 				     "Unexpected reserved doorbell slot IRQ received\n");
- 	} else {
--		ntb_db_event(&ndev->ntb, irq_no - EPF_IRQ_DB_START);
-+		db_vector = irq_no - EPF_IRQ_DB_START;
-+		if (ndev->db_count < NTB_EPF_MIN_DB_COUNT ||
-+		    db_vector >= ndev->db_count - 1) {
-+			dev_warn_ratelimited(ndev->dev,
-+					     "Unexpected doorbell vector %u (db_count %u)\n",
-+					     db_vector, ndev->db_count);
-+			return IRQ_HANDLED;
-+		}
-+
-+		atomic64_or(BIT_ULL(db_vector), &ndev->db_val);
-+		ntb_db_event(&ndev->ntb, db_vector);
- 	}
- 
- 	return IRQ_HANDLED;
-@@ -361,18 +378,18 @@ static int ntb_epf_init_isr(struct ntb_epf_dev *ndev, int msi_min, int msi_max)
- 		argument &= ~MSIX_ENABLE;
- 	}
- 
--	ndev->irq_base = pci_irq_vector(pdev, 0);
-+	ndev->db_count = irq - 1;
- 	for (i = 0; i < irq; i++) {
-+		ndev->irq_ctx[i].ndev = ndev;
-+		ndev->irq_ctx[i].irq_no = i;
- 		ret = request_irq(pci_irq_vector(pdev, i), ntb_epf_vec_isr,
--				  0, "ntb_epf", ndev);
-+				  0, "ntb_epf", &ndev->irq_ctx[i]);
- 		if (ret) {
- 			dev_err(dev, "Failed to request irq\n");
- 			goto err_free_irq;
- 		}
- 	}
- 
--	ndev->db_count = irq - 1;
--
- 	ret = ntb_epf_send_command(ndev, CMD_CONFIGURE_DOORBELL,
- 				   argument | irq);
- 	if (ret) {
-@@ -384,7 +401,7 @@ static int ntb_epf_init_isr(struct ntb_epf_dev *ndev, int msi_min, int msi_max)
- 
- err_free_irq:
- 	while (i--)
--		free_irq(pci_irq_vector(pdev, i), ndev);
-+		free_irq(pci_irq_vector(pdev, i), &ndev->irq_ctx[i]);
- 	pci_free_irq_vectors(pdev);
- 
- 	return ret;
-@@ -509,7 +526,7 @@ static u64 ntb_epf_db_read(struct ntb_dev *ntb)
- {
- 	struct ntb_epf_dev *ndev = ntb_ndev(ntb);
- 
--	return ndev->db_val;
-+	return atomic64_read(&ndev->db_val);
- }
- 
- static int ntb_epf_db_clear_mask(struct ntb_dev *ntb, u64 db_bits)
-@@ -521,7 +538,7 @@ static int ntb_epf_db_clear(struct ntb_dev *ntb, u64 db_bits)
- {
- 	struct ntb_epf_dev *ndev = ntb_ndev(ntb);
- 
--	ndev->db_val = 0;
-+	atomic64_and(~db_bits, &ndev->db_val);
- 
- 	return 0;
- }
-@@ -562,6 +579,12 @@ static int ntb_epf_init_dev(struct ntb_epf_dev *ndev)
- 	struct device *dev = ndev->dev;
+-	u32 db_count;
  	int ret;
  
-+	ndev->mw_count = readl(ndev->ctrl_reg + NTB_EPF_MW_COUNT);
-+	if (ndev->mw_count > NTB_EPF_MAX_MW_COUNT) {
-+		dev_err(dev, "Unsupported MW count: %u\n", ndev->mw_count);
-+		return -EINVAL;
-+	}
-+
- 	/* One Link interrupt and rest doorbell interrupt */
- 	ret = ntb_epf_init_isr(ndev, NTB_EPF_MIN_DB_COUNT + 1,
- 			       NTB_EPF_MAX_DB_COUNT + 1);
-@@ -575,14 +598,8 @@ static int ntb_epf_init_dev(struct ntb_epf_dev *ndev)
- 	 * doorbell layout, hence -1.
- 	 */
- 	ndev->db_valid_mask = BIT_ULL(ndev->db_count - 1) - 1;
--	ndev->mw_count = readl(ndev->ctrl_reg + NTB_EPF_MW_COUNT);
- 	ndev->spad_count = readl(ndev->ctrl_reg + NTB_EPF_SPAD_COUNT);
+ 	dev = &ntb->epf->dev;
+@@ -478,14 +477,12 @@ static int epf_ntb_configure_interrupt(struct epf_ntb *ntb)
+ 		return -EINVAL;
+ 	}
  
--	if (ndev->mw_count > NTB_EPF_MAX_MW_COUNT) {
--		dev_err(dev, "Unsupported MW count: %u\n", ndev->mw_count);
--		return -EINVAL;
--	}
+-	db_count = ntb->db_count;
+-	if (db_count > MAX_DB_COUNT) {
+-		dev_err(dev, "DB count cannot be more than %d\n", MAX_DB_COUNT);
++	if (!ntb->db_count || ntb->db_count > MAX_DB_COUNT) {
++		dev_err(dev, "DB count %d out of range (1 - %d)\n",
++			ntb->db_count, MAX_DB_COUNT);
+ 		return -EINVAL;
+ 	}
+ 
+-	ntb->db_count = db_count;
 -
- 	return 0;
- }
- 
-@@ -677,7 +694,7 @@ static void ntb_epf_cleanup_isr(struct ntb_epf_dev *ndev)
- 	ntb_epf_send_command(ndev, CMD_TEARDOWN_DOORBELL, ndev->db_count + 1);
- 
- 	for (i = 0; i < ndev->db_count + 1; i++)
--		free_irq(pci_irq_vector(pdev, i), ndev);
-+		free_irq(pci_irq_vector(pdev, i), &ndev->irq_ctx[i]);
- 	pci_free_irq_vectors(pdev);
- }
- 
+ 	if (epc_features->msi_capable) {
+ 		ret = pci_epc_set_msi(ntb->epf->epc,
+ 				      ntb->epf->func_no,
 -- 
 2.53.0
 
