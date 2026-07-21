@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BB7403EA1;
-	Tue, 21 Jul 2026 23:00:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA651403EA1;
+	Tue, 21 Jul 2026 23:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674848; cv=none; b=K8H4gvHJgf9/yIZUnkISWba2uT13BF53imn6oC0KCG2I+f6lWHrDeEculZu25tfb1qHogBbsS+8B+SlsQ6CMcQHNm6lDxyG4hzj05GvDGd9Bhq2hnPwEmzEpaSqqT47ytZKPZvhogdGFiChZBIw5zlnuDm2R8dkP0grE63neP/E=
+	t=1784674850; cv=none; b=VSYxrla30YiWNLHIpWZzI8tl9KMFlM4G8RV9mXW5ex52t7SaC7Gt+1flUG4IwThA/wQLkvWS149hY1lvwLvZ3BSbcGnH2gLsSglZHb968GsPwcrlcg4GohMTkBeTtBmiYVh9PU8yYXihgRozh8sUHw4Yp6Wd6kqc1EG9y7pphco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674848; c=relaxed/simple;
-	bh=/MVDy99dBF8IGEhErmT30q6ILn+EwhtLD5/lZ9Hy90o=;
+	s=arc-20240116; t=1784674850; c=relaxed/simple;
+	bh=RAKtnLvW6vZ2Mw4ZrQWqInEdwW4+9HIWVbLHMRMd2EI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kKRCXDPsC1fkMe4c7f+V/FFdTakVLHpYje6YSQDuBL1SsrpTkQe7uyShCs2oBQTt1iX+89WBlwGotpKI3bx2YX+KhZ2r0HeNBh++e/hdQtOCtw/MsNcV06Yd9v/Qh+cEdI7mNagbu3F/lJvY4Rw2O1XTmHHkI8Fh4UO+sKaNc4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wIowCgk8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JZh4zcYV9izVk5ZlW7+PBPqfSKeVERZzQQc8+zrxHzq+DKuO4tdhzFe4K2neEXnHmO+IGBa7q3BMh5+VJc4FIM6ftu855ny9VfYjEZonbSzEZtOxfEeWjTvVmYfXI9ss8PB95LLxWglinXfmOr54bzNw/yS6znpOPTkMFoSxVjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVW8GR1J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wIowCgk8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701EA1F000E9;
-	Tue, 21 Jul 2026 23:00:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVW8GR1J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 217DC1F000E9;
+	Tue, 21 Jul 2026 23:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674847;
-	bh=vyLOAs6EKnAs5FZ6d0R9YepIuQnXJ5Pyfz5qaRJiIRg=;
+	s=korg; t=1784674849;
+	bh=3+ir1ffahwvp76+Qo+u1ZoO8ejnNPxvIEcjopnetyaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wIowCgk8rd/L6OnHqUeDDU8s9VEL6PjL9idaN6SyKcUC2Loc58A0UOPut6QcOKchm
-	 V+XrnUYINACIWK52scoxEhQ3CQGKkqFMjJsnZx0ZBPHfqDbjMQL8oGkXzsQtlCAmMP
-	 g75x89eXVoQWg+5ZBR82ZBSywdfdtmN5LRDRnQIE=
+	b=dVW8GR1J+AFI2cdQBOj4rExXpFtFsELZ6KYUnVp1BsxlBGXUALYrbyWhqUMtxwc5A
+	 tLgEmgRMDJM2ylHafaGAP6E9rEe0jm1ntjN0LEZlEkrDWi+wKIGDP74KP6ikaX37rX
+	 tNTljx3QlD4VVEX0F8BBPHqWFgx8wnr7VjnMdN1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
+	syzbot+a9400cabb1d784e49abf@syzkaller.appspotmail.com,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
 	Taehee Yoo <ap420073@gmail.com>,
 	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 696/699] net: mld: fix reference count leak in mld_{query | report}_work()
-Date: Tue, 21 Jul 2026 17:27:35 +0200
-Message-ID: <20260721152411.479462702@linuxfoundation.org>
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 697/699] ipv6: mcast: fix data-race in ipv6_mc_down / mld_ifc_work
+Date: Tue, 21 Jul 2026 17:27:36 +0200
+Message-ID: <20260721152411.501575851@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,117 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taehee Yoo <ap420073@gmail.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit 3e7d18b9dca388940a19cae30bfc1f76dccd8c28 upstream.
+commit 2e7ef287f07c74985f1bf2858bedc62bd9ebf155 upstream.
 
-mld_{query | report}_work() processes queued events.
-If there are too many events in the queue, it re-queue a work.
-And then, it returns without in6_dev_put().
-But if queuing is failed, it should call in6_dev_put(), but it doesn't.
-So, a reference count leak would occur.
+idev->mc_ifc_count can be written over without proper locking.
 
-THREAD0				THREAD1
-mld_report_work()
-				spin_lock_bh()
-				if (!mod_delayed_work())
-					in6_dev_hold();
-				spin_unlock_bh()
-	spin_lock_bh()
-	schedule_delayed_work()
-	spin_unlock_bh()
+Originally found by syzbot [1], fix this issue by encapsulating calls
+to mld_ifc_stop_work() (and mld_gq_stop_work() for good measure) with
+mutex_lock() and mutex_unlock() accordingly as these functions
+should only be called with mc_lock per their declarations.
 
-Script to reproduce(by Hangbin Liu):
-   ip netns add ns1
-   ip netns add ns2
-   ip netns exec ns1 sysctl -w net.ipv6.conf.all.force_mld_version=1
-   ip netns exec ns2 sysctl -w net.ipv6.conf.all.force_mld_version=1
+[1]
+BUG: KCSAN: data-race in ipv6_mc_down / mld_ifc_work
 
-   ip -n ns1 link add veth0 type veth peer name veth0 netns ns2
-   ip -n ns1 link set veth0 up
-   ip -n ns2 link set veth0 up
+write to 0xffff88813a80c832 of 1 bytes by task 3771 on cpu 0:
+ mld_ifc_stop_work net/ipv6/mcast.c:1080 [inline]
+ ipv6_mc_down+0x10a/0x280 net/ipv6/mcast.c:2725
+ addrconf_ifdown+0xe32/0xf10 net/ipv6/addrconf.c:3949
+ addrconf_notify+0x310/0x980
+ notifier_call_chain kernel/notifier.c:93 [inline]
+ raw_notifier_call_chain+0x6b/0x1c0 kernel/notifier.c:461
+ __dev_notify_flags+0x205/0x3d0
+ dev_change_flags+0xab/0xd0 net/core/dev.c:8685
+ do_setlink+0x9f6/0x2430 net/core/rtnetlink.c:2916
+ rtnl_group_changelink net/core/rtnetlink.c:3458 [inline]
+ __rtnl_newlink net/core/rtnetlink.c:3717 [inline]
+ rtnl_newlink+0xbb3/0x1670 net/core/rtnetlink.c:3754
+ rtnetlink_rcv_msg+0x807/0x8c0 net/core/rtnetlink.c:6558
+ netlink_rcv_skb+0x126/0x220 net/netlink/af_netlink.c:2545
+ rtnetlink_rcv+0x1c/0x20 net/core/rtnetlink.c:6576
+ netlink_unicast_kernel net/netlink/af_netlink.c:1342 [inline]
+ netlink_unicast+0x589/0x650 net/netlink/af_netlink.c:1368
+ netlink_sendmsg+0x66e/0x770 net/netlink/af_netlink.c:1910
+ ...
 
-   for i in `seq 50`; do
-           for j in `seq 100`; do
-                   ip -n ns1 addr add 2021:${i}::${j}/64 dev veth0
-                   ip -n ns2 addr add 2022:${i}::${j}/64 dev veth0
-           done
-   done
-   modprobe -r veth
-   ip -a netns del
+write to 0xffff88813a80c832 of 1 bytes by task 22 on cpu 1:
+ mld_ifc_work+0x54c/0x7b0 net/ipv6/mcast.c:2653
+ process_one_work kernel/workqueue.c:2627 [inline]
+ process_scheduled_works+0x5b8/0xa30 kernel/workqueue.c:2700
+ worker_thread+0x525/0x730 kernel/workqueue.c:2781
+ ...
 
-splat looks like:
- unregister_netdevice: waiting for veth0 to become free. Usage count = 2
- leaked reference.
-  ipv6_add_dev+0x324/0xec0
-  addrconf_notify+0x481/0xd10
-  raw_notifier_call_chain+0xe3/0x120
-  call_netdevice_notifiers+0x106/0x160
-  register_netdevice+0x114c/0x16b0
-  veth_newlink+0x48b/0xa50 [veth]
-  rtnl_newlink+0x11a2/0x1a40
-  rtnetlink_rcv_msg+0x63f/0xc00
-  netlink_rcv_skb+0x1df/0x3e0
-  netlink_unicast+0x5de/0x850
-  netlink_sendmsg+0x6c9/0xa90
-  ____sys_sendmsg+0x76a/0x780
-  __sys_sendmsg+0x27c/0x340
-  do_syscall_64+0x43/0x90
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Tested-by: Hangbin Liu <liuhangbin@gmail.com>
-Fixes: f185de28d9ae ("mld: add new workqueues for process mld events")
-Signed-off-by: Taehee Yoo <ap420073@gmail.com>
+Fixes: 2d9a93b4902b ("mld: convert from timer to delayed work")
+Reported-by: syzbot+a9400cabb1d784e49abf@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/000000000000994e09060ebcdffb@google.com/
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Acked-by: Taehee Yoo <ap420073@gmail.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://lore.kernel.org/r/20240117172102.12001-1-n.zhandarovich@fintech.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/mcast.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ net/ipv6/mcast.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/net/ipv6/mcast.c
 +++ b/net/ipv6/mcast.c
-@@ -1545,7 +1545,6 @@ static void mld_query_work(struct work_s
- 
- 		if (++cnt >= MLD_MAX_QUEUE) {
- 			rework = true;
--			schedule_delayed_work(&idev->mc_query_work, 0);
- 			break;
- 		}
- 	}
-@@ -1556,8 +1555,10 @@ static void mld_query_work(struct work_s
- 		__mld_query_work(skb);
- 	mutex_unlock(&idev->mc_lock);
- 
--	if (!rework)
--		in6_dev_put(idev);
-+	if (rework && queue_delayed_work(mld_wq, &idev->mc_query_work, 0))
-+		return;
+@@ -2754,8 +2754,12 @@ void ipv6_mc_down(struct inet6_dev *idev
+ 	synchronize_net();
+ 	mld_query_stop_work(idev);
+ 	mld_report_stop_work(idev);
 +
-+	in6_dev_put(idev);
++	mutex_lock(&idev->mc_lock);
+ 	mld_ifc_stop_work(idev);
+ 	mld_gq_stop_work(idev);
++	mutex_unlock(&idev->mc_lock);
++
+ 	mld_dad_stop_work(idev);
  }
  
- /* called with rcu_read_lock() */
-@@ -1652,7 +1653,6 @@ static void mld_report_work(struct work_
- 
- 		if (++cnt >= MLD_MAX_QUEUE) {
- 			rework = true;
--			schedule_delayed_work(&idev->mc_report_work, 0);
- 			break;
- 		}
- 	}
-@@ -1663,8 +1663,10 @@ static void mld_report_work(struct work_
- 		__mld_report_work(skb);
- 	mutex_unlock(&idev->mc_lock);
- 
--	if (!rework)
--		in6_dev_put(idev);
-+	if (rework && queue_delayed_work(mld_wq, &idev->mc_report_work, 0))
-+		return;
-+
-+	in6_dev_put(idev);
- }
- 
- static bool is_in(struct ifmcaddr6 *pmc, struct ip6_sf_list *psf, int type,
 
 
