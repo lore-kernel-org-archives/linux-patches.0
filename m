@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A9D44AB9F;
-	Tue, 21 Jul 2026 22:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F15347BC6;
+	Tue, 21 Jul 2026 22:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674425; cv=none; b=K8Jh70CwaXY7ULJd8TRq9tYBbCvRcB2hAo61WAYVQds1TthsksCqO+dl1GsQilIZS89+TIsEZBuxNrG7PNerpAxjVyBUKG6Cyaw4p07Ct64ju0g5yppM0bCOzLlzr1TbSWP1aMIYYeSmgvLSKUa793NGOFCJTPHhkV0TsaIWkxg=
+	t=1784674427; cv=none; b=dExMy/UfpiA24JvuaQR/I9zpYviv1vNeAK8M9haiB0WZhF5htUdcZnBYzST6L5XZ5Q/sdGbmy+MatXtpZx9kmvzwyye4XvdJIPmBsVMxTn2aTMej6TIM/HKlr6HFiMhus2lvTFEwcfEAF7aqFq29C7L3Gu07i0coPdAIuj2FLvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674425; c=relaxed/simple;
-	bh=XODjo6DwH8/Oq+iultMY4UpTlVNGMeUQkwrlTSGFcs0=;
+	s=arc-20240116; t=1784674427; c=relaxed/simple;
+	bh=QhA9zvz9UbWG8bk/DMemanb8YYPcX6VG+JqGUQcJvfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xj0GYPT6tBoj1XdjezCbLeJNEDomE3m6Ks2fqEgLktxruegnO55WW5AiOmQkpXENdC9kx9Ra8JiiYf/Lqw4EIgVbTbfrXJePF6EpSkJhY1aq+uGnEu3tLfLh23iWniYUQoHyjlgw2UcDBn5WzUP/RD2KuALW06B0tFQ1eCPk088=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nIeyQiPi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q4jRtPQmjFqgFaAHc772sP98zYMvMjy3zjwgZTmadWPZVpaJQBNHnZb6fFzld410R+IAmTZ7iCrWwjnUfQOeEqg06OWbOybbsES2HnQ1MFbUbPqitlhT6TPH876unCa4+voyCnUX/Ibmmpv1yIIt2Y8LZczbgjPdUGecn0zOn+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0iZmffHE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nIeyQiPi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623BA1F000E9;
-	Tue, 21 Jul 2026 22:53:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0iZmffHE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3241F00A3A;
+	Tue, 21 Jul 2026 22:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674423;
-	bh=CBYyj7eiDZUsPSvTL4Cq4wBEuv2NmOqxlkU1BL+CGww=;
+	s=korg; t=1784674426;
+	bh=vwriPjd6Ro6vsd5vPrWI+HMYaIyX1rwg55gumd8reQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nIeyQiPimyoTO/IUU5tnCcdZvnMHNjVuMqIhpoPGq307/X8bQE9XT5OMKJ27MW5G0
-	 XYzO7schYVPlgzza9JlMpmkI5i9mGS7XR2Zlp0RCqK3fwHswM4QdKyvJwCjsoUVS+a
-	 AYDZrPyjHWmXtX66p1DxLWtedpywNHzuAIL9jIqw=
+	b=0iZmffHE5wkq8RazkdyiAOEf5O2Phkgu+YosVfkpIIt6Cd2HxOBn3Rf5Qlzn4SdH3
+	 56GBJ7CMY3HARvufNn4XyA8/pMMqZOwdo5jQNmOiJB+xt2E3nt2+yf4YhHl/zcYZMB
+	 VTSpJSSuriS5FilDNHSMBDEB6g3D+ajkK0y0Knn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yan <wangyan01@kylinos.cn>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 5.10 499/699] time: Fix off-by-one in compat settimeofday() usec validation
-Date: Tue, 21 Jul 2026 17:24:18 +0200
-Message-ID: <20260721152406.951741285@linuxfoundation.org>
+	Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>
+Subject: [PATCH 5.10 535/699] ieee802154: ca8210: fix cas_ctl leak on spi_async failure
+Date: Tue, 21 Jul 2026 17:24:54 +0200
+Message-ID: <20260721152407.768111810@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,44 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Yan <wangyan01@kylinos.cn>
+From: Shitalkumar Gandhi <shital.gandhi45@gmail.com>
 
-commit 269f2b43fae692d1f3988c9f888a6301aa537b82 upstream.
+commit e09390e439bd7cca30dd10893b1f64802961667a upstream.
 
-The compat version of settimeofday() uses '>' instead of '>=' when
-validating tv_usec against USEC_PER_SEC, allowing the value 1000000 to pass
-the check. After the subsequent conversion to nanoseconds (tv_nsec *=
-NSEC_PER_USEC), this results in tv_nsec == NSEC_PER_SEC, which violates the
-timespec invariant that tv_nsec must be strictly less than NSEC_PER_SEC.
+ca8210_spi_transfer() allocates cas_ctl with kzalloc_obj(GFP_ATOMIC)
+and relies entirely on the SPI completion callback
+ca8210_spi_transfer_complete() to free it.
 
-The native settimeofday() was already fixed in commit ce4abda5e126 ("time:
-Fix off-by-one in settimeofday() usec validation"), but the compat
-counterpart was missed.
+The spi_async() API only invokes the completion callback on successful
+submission.  On failure it returns a negative error code without ever
+queuing the callback, which leaves cas_ctl and its embedded spi_message
+and spi_transfer orphaned.  Every kfree(cas_ctl) in the driver is
+inside the completion callback, so there is no other reclamation path.
 
-Fix it by using '>=' to reject tv_usec values outside the valid range [0,
-USEC_PER_SEC - 1].
+ca8210_spi_transfer() is called from ca8210_spi_exchange(), the
+interrupt handler ca8210_interrupt_handler(), and from the retry path
+inside the completion callback itself.  The exchange and interrupt
+handler paths loop on -EBUSY, so under sustained SPI bus contention
+every retry iteration leaks a fresh cas_ctl (~600 bytes per
+occurrence).
 
-Fixes: 5e0fb1b57bea ("y2038: time: avoid timespec usage in settimeofday()")
-Signed-off-by: Wang Yan <wangyan01@kylinos.cn>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
+Fix it by freeing cas_ctl on the spi_async() error path.  While here,
+correct the misleading error string: the function calls spi_async(),
+not spi_sync().
+
+Fixes: ded845a781a5 ("ieee802154: Add CA8210 IEEE 802.15.4 device driver")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260622103348.120255-1-wangyan01@kylinos.cn
+Signed-off-by: Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/20260421073259.2259783-1-shitalkumar.gandhi@cambiumnetworks.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/time.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ieee802154/ca8210.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/time/time.c
-+++ b/kernel/time/time.c
-@@ -251,7 +251,7 @@ COMPAT_SYSCALL_DEFINE2(settimeofday, str
- 		    get_user(new_ts.tv_nsec, &tv->tv_usec))
- 			return -EFAULT;
+--- a/drivers/net/ieee802154/ca8210.c
++++ b/drivers/net/ieee802154/ca8210.c
+@@ -962,9 +962,10 @@ static int ca8210_spi_transfer(
+ 	if (status < 0) {
+ 		dev_crit(
+ 			&spi->dev,
+-			"status %d from spi_sync in write\n",
++			"status %d from spi_async in write\n",
+ 			status
+ 		);
++		kfree(cas_ctl);
+ 	}
  
--		if (new_ts.tv_nsec > USEC_PER_SEC || new_ts.tv_nsec < 0)
-+		if (new_ts.tv_nsec >= USEC_PER_SEC || new_ts.tv_nsec < 0)
- 			return -EINVAL;
- 
- 		new_ts.tv_nsec *= NSEC_PER_USEC;
+ 	return status;
 
 
