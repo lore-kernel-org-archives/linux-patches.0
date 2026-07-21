@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DDF46EC93;
-	Tue, 21 Jul 2026 17:52:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56DDE4071E3;
+	Tue, 21 Jul 2026 17:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656345; cv=none; b=H46CA24I9kHFA0CZ6GsgyJDKtJD0HtemphJd/c3MBGbTCFLH1voyWHijf2A11egfva0wAbrSBb+LAnajDg3t28Su8dmPQtQAR01g7fWMxWqud+5W4e2VpoBymMtxnTNBjasR6jym7nIrMHQEi1YXjy5oegY4MvGSYgovKcvx3Y0=
+	t=1784656348; cv=none; b=rQopnxotxd2iF9azwM6hQOnSPacyTORL7FbAP6+ThnQtNYYZdprE0T2+ldWlHLtkM3E6OHbldt+xZhEgYmZlq3Y7nhNq+HU69JzTGeqf1hECTBzj2ctnIPTviYdaGp9e8eoYEKQq1aMh5SfM8yN27hvUzEgQawXiUfphyv0vOAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656345; c=relaxed/simple;
-	bh=Ig9x58715W3eAq1mVwonaeSIxhCwovJg+deuwBCDR/o=;
+	s=arc-20240116; t=1784656348; c=relaxed/simple;
+	bh=S6g4NoPne2IGrtBWBrVg0F52fZ0P6bccb0skWIUqcvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O6LI+Ysgr+OtTJrIC7F4Am3/BsnaoZAh6ulrIBcJTTw4EoFfYyqEm0lvj2kXRoSGY2ewinOBpScUU8u+eWRbbNdGY32Z8pByNIDwVwejGuo+T9uSrcjlsMiVadckua9EODmow0qx5VNVP2FA25CFQdanW0m7LI2wUkhXQQPAzlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EixHCdtx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QGwksUpJGpxn3PLaSjdB4hjR19O0fZPxMYZ0S438d3V8Jvn685cKXuIK6/48l+AIDQmBXLqJPW4Yx4XYN4HZMmJiyAK5l7oD+78zNw5mViysDs+/sidIq06qNVNyPKgMbOnyukG0YLrkZmqYw29+qCeCR9pE+IDVk7VZtFGKc50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Gyiz1tl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EixHCdtx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2557C1F000E9;
-	Tue, 21 Jul 2026 17:52:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Gyiz1tl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDA041F000E9;
+	Tue, 21 Jul 2026 17:52:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656344;
-	bh=WFXPX9opu3o3CyvLYhRqnLezBeyXLxFxsx5MtB/2pdQ=;
+	s=korg; t=1784656347;
+	bh=CzVx9zvHwRwNF7hDKAf7HyoUV2w6psobeX6yD7uk22g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EixHCdtxM+Ya6O3aFIsPFAvevrZwZ/hRnPOUuDB/cNSrPVLp8ZnNsuSMVHjn1092V
-	 NqL73mnsuZZ5c6xmnlwIuOsQinjt7pdJq7LKFXba+uexibNxtJ09YPorJGJOCUgTq0
-	 w5FpOt2U/QxFTXM0vZ+VtN3VPsCMkkGnX+T6Oc5w=
+	b=0Gyiz1tlBDHPNSXEBmq9TGQK7D6rpUcYy/oyr/T5AIFGphCcxbKnvlxkj3Qz621Ct
+	 3VHUwsXQPkzBlTLiEzi1ZsSjGPVwf/Zklr8yElMC6GtoqrmtvKGENk7ajkCZa//w+F
+	 fNOEX7ku3NzqPegwAAxvh1xYSFXUnbOcPS2zCMtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jacob Moroni <jmoroni@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0352/1611] ALSA: hda: fix Kconfig dependency of HD Audio PCI
-Date: Tue, 21 Jul 2026 17:07:48 +0200
-Message-ID: <20260721152523.052280742@linuxfoundation.org>
+Subject: [PATCH 6.18 0353/1611] RDMA/irdma: Fix OOB read during CQ MR registration
+Date: Tue, 21 Jul 2026 17:07:49 +0200
+Message-ID: <20260721152523.077686861@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,44 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit 1516134cb65526aba5319bb446c296fc8a192f84 ]
+[ Upstream commit 4385ddd654d90245eeb83b3cb539670ab5c85ba4 ]
 
-With commit 2d9223d2d64c ("ALSA: hda: Move controller drivers into
-sound/hda/controllers directory") the HD Audio drivers have been moved
-from linux/sound/pci/hda to linux/sound/hda.
+Sashiko pointed out an unrelated bug during a previous patch:
+https://sashiko.dev/#/patchset/20260512183852.614045-1-jmoroni%40google.com
 
-But the Kconfig dependency for SND_HDA_INTEL stayed on SND_PCI instead of
-depending on PCI directly. To make the "HD Audio PCI" configuration entry
-visible it is currently needed to enable "PCI sound devices" although
-no PCI device in the submenu needs to be selected.
+This change fixes the bug by eliminating the cqmr->split field which
+was not being set properly and instead just checks the CQ resize
+feature flag directly.
 
-Make SND_HDA_INTEL directly depending on hardware/architecture like the
-other entries in this Kconfig.
+The cqmr->split field essentially tracks whether IRDMA_FEATURE_CQ_RESIZE
+is set, but it was not being set until CQ creation time, which is _after_
+CQ memory registration (the only other place where it is referenced).
 
-Fixes: 2d9223d2d64c ("ALSA: hda: Move controller drivers into sound/hda/controllers directory")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260529-hda-kconfig-v1-1-4a2c6a0efd56@hartkopp.net
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+As a result, it would always be false during MR registration and would
+therefore cause irdma_handle_q_mem to populate cqmr->shadow even for GEN_2
+HW and beyond:
+
+    cqmr->shadow = (dma_addr_t)arr[req->cq_pages];
+
+The issue is that for GEN_2 and beyond, req->cq_pages may be exactly equal
+to iwmr->page_cnt and therefore equal to the size of arr, which would cause
+an OOB read by one.
+
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Link: https://patch.msgid.link/r/20260602214423.1315105-2-jmoroni@google.com
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/controllers/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/irdma/verbs.c | 4 ++--
+ drivers/infiniband/hw/irdma/verbs.h | 1 -
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/sound/hda/controllers/Kconfig b/sound/hda/controllers/Kconfig
-index 34721f50b055af..39b934365aee3b 100644
---- a/sound/hda/controllers/Kconfig
-+++ b/sound/hda/controllers/Kconfig
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
- config SND_HDA_INTEL
- 	tristate "HD Audio PCI"
--	depends on SND_PCI
-+	depends on PCI
- 	select SND_HDA
- 	select SND_INTEL_DSP_CONFIG
- 	help
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 6c9925f175711f..80e9cdef5baff3 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -2563,7 +2563,6 @@ static int irdma_create_cq(struct ib_cq *ibcq,
+ 			}
+ 			cqmr_shadow = &iwpbl_shadow->cq_mr;
+ 			info.shadow_area_pa = cqmr_shadow->cq_pbl.addr;
+-			cqmr->split = true;
+ 		} else {
+ 			info.shadow_area_pa = cqmr->shadow;
+ 		}
+@@ -2965,7 +2964,8 @@ static int irdma_handle_q_mem(struct irdma_device *iwdev,
+ 	case IRDMA_MEMREG_TYPE_CQ:
+ 		hmc_p = &cqmr->cq_pbl;
+ 
+-		if (!cqmr->split)
++		if (!(iwdev->rf->sc_dev.hw_attrs.uk_attrs.feature_flags &
++		      IRDMA_FEATURE_CQ_RESIZE))
+ 			cqmr->shadow = (dma_addr_t)arr[req->cq_pages];
+ 
+ 		if (lvl)
+diff --git a/drivers/infiniband/hw/irdma/verbs.h b/drivers/infiniband/hw/irdma/verbs.h
+index aabbb3442098bc..289ebc9b23ca78 100644
+--- a/drivers/infiniband/hw/irdma/verbs.h
++++ b/drivers/infiniband/hw/irdma/verbs.h
+@@ -65,7 +65,6 @@ struct irdma_hmc_pble {
+ struct irdma_cq_mr {
+ 	struct irdma_hmc_pble cq_pbl;
+ 	dma_addr_t shadow;
+-	bool split;
+ };
+ 
+ struct irdma_srq_mr {
 -- 
 2.53.0
 
