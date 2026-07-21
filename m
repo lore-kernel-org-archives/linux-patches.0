@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48A245DF4D;
-	Tue, 21 Jul 2026 21:03:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68F4473C72;
+	Tue, 21 Jul 2026 21:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667814; cv=none; b=QDvLQSkrxp97nflo8Vl/UvQ0OW28EG8RZlFfr7im9Sc9EbeEXDUsGBh4meS6b6hEwzD2swcUPmVM3ljH61o92Bo4qc20Lmu9+6s9sLEvnJp9qSY3RDrybtdzwurXw3h3MQe2tOaYK1HFqPPcSv5fm760FbP5Jq+nhgAs+2sOLzw=
+	t=1784667813; cv=none; b=lKdM+vtX6YohB2m6cx/nBoDumWMwpWXUDJ9hrem6frJqVjOin5CIJbYGSoktCXJmZG+eExpWHlzUk7G/n45zLQii0ZLr1w/APV6DSwb+ClwlqWOi671WZSEWxxWUl/TpH0QqfaRdAz+o/IsV8Vq/K+4aoE9iveXpdvCFp7RrE+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667814; c=relaxed/simple;
-	bh=YoReRKPJ9HH6wOyA3B9jImpA4yq0FaB0rUcIv3SdX5A=;
+	s=arc-20240116; t=1784667813; c=relaxed/simple;
+	bh=+N60dD3S0mUPZ7GwahGUxgIEL1f44ikK8lSdW/ghRn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=My47K17b0FdS5c3hQ/U8ypM31ZZuHbQXwVYKf1t1F9JAO3HAchpdbJiChSmsPE/WlHs66i4zjQTyZUVhrpMd2jf1kMcM3D3Y3hMISU5KD/JaTQS4quz6G8K6ZysS7ORDpTEuhtxnYacTx+GY/zuJMFW2jqA/pw6hEX0MFIh8lXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7CCc2S5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IxVEg4VJCrZkeUZ5DOdeDeAbiu9OScKX5L/5FYzGjCs+loMqCXDrUiBobhc0seh3OYv4KdOqy8mBvgIKI3ZfbpbuZv2Y27yIYy512Fo2thVRxkM05/QzZWMH9wbj/oD23Cdq3lq/PZNX8IgUKopOwLtRWIi3edmy41bHPewVkmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTpcjb8d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7CCc2S5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6C51F00A3D;
-	Tue, 21 Jul 2026 21:03:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTpcjb8d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2344A1F00A3A;
+	Tue, 21 Jul 2026 21:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667811;
-	bh=+w4nSIcszi4ERprPmmrWf6a8jMa9lAcL7HvfE54w84I=;
+	s=korg; t=1784667808;
+	bh=kspW37uxW3JOqqoo/2Rz0GKHx9HXRdvYVPZ4hQu8uGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n7CCc2S5HuqwL1nmQBPyTltL0SAzwEDbtlkONteBwzattsCEFZscQvg10+U4y3A2a
-	 U1X5KWdym2zCkZIFrCDKH6W8j9GKYpXdPKBtw4u5/eUJuk6gh7lAdK5h44o8+aeudq
-	 EFet1j2DXDkT1fXMJLIemD5bSra3fWEpvoSbTuAk=
+	b=bTpcjb8dyNv2vzPYRoZwM+l4pXcfPZ1oltF2yCE4tBfCtNZZiZcSVVv2beUkr6ysZ
+	 qaBomQ7Rot3eWkLEG/EYCO2Rto+IV4yT+RmqMXPJAS32USmCTSfkfVN+q9bccRP8ts
+	 Gs7oA7tmfa+W/USuwXWxIEZfw3Djjuv/1vjBw1+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Elfring <elfring@users.sourceforge.net>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1195/1266] smb: client: Improve unlocking of a mutex in cifs_get_swn_reg()
-Date: Tue, 21 Jul 2026 17:27:12 +0200
-Message-ID: <20260721152508.536662415@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Sandipan Das <sandipan.das@amd.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Stephane Eranian <eranian@google.com>
+Subject: [PATCH 6.6 1149/1266] perf/x86/amd/brs: Fix kernel address leakage
+Date: Tue, 21 Jul 2026 17:26:26 +0200
+Message-ID: <20260721152507.494086498@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,62 +53,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Elfring <elfring@users.sourceforge.net>
+From: Sandipan Das <sandipan.das@amd.com>
 
-[ Upstream commit e2080b70c5851a132547bec3bd7dde847e649678 ]
+commit 47915e855fb38b42133e31ba917d99565f862154 upstream.
 
-Use two additional labels so that another bit of common code can be better
-reused at the end of this function implementation.
+A user-only branch stack can contain branches that originate from
+the kernel. As a result, kernel addresses are exposed to user space
+even when PERF_SAMPLE_BRANCH_USER is requested. On AMD processors
+supporting X86_FEATURE_BRS (Zen 3 only), perf can still report entries
+such as SYSRET/interrupt returns for which the branch-from addresses
+are in the kernel.
 
-Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: ec457f9afe5a ("smb: client: resolve SWN tcon from live registrations")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+E.g.
+
+  $ perf record -j any,u -c 4000 -e branch-brs -o - -- \
+        perf bench syscall basic --loop 1000 | \
+        perf script -i - -F brstack|tr ' ' '\n'| \
+        grep -E '0x[89a-f][0-9a-f]{15}'
+
+  ...
+  0xffffffff810001c4/0x72e2e32955eb/-/-/-/0//-
+  0xffffffff810001c4/0x72e2d94a9821/-/-/-/0//-
+  0xffffffff810001c4/0x72e2d94ffa1b/-/-/-/0//-
+  ...
+
+BRS provides no hardware branch filtering, so privilege level
+filtering is performed entirely in software. However, amd_brs_match_plm()
+only validates the branch-to address against the requested privilege
+levels. For branches from the kernel to user space, the branch-from
+address is left unchecked and is leaked. Extend the software filter to
+also validate the branch-from address, so that any branch record whose
+branch-from address is in the kernel is dropped when
+PERF_SAMPLE_BRANCH_USER is requested.
+
+Fixes: 8910075d61a3 ("perf/x86/amd: Enable branch sampling priv level filtering")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Stephane Eranian <eranian@google.com>
+Link: https://patch.msgid.link/f05931c4f89a146c364bd5dc6b8170b1ac611c65.1783701239.git.sandipan.das@amd.com
+Closes: https://lore.kernel.org/all/20260710110235.F3FD81F000E9@smtp.kernel.org/
+[sandipan: backport to linux-6.6.y]
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifs_swn.c |   13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ arch/x86/events/amd/brs.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/fs/smb/client/cifs_swn.c
-+++ b/fs/smb/client/cifs_swn.c
-@@ -313,17 +313,15 @@ static struct cifs_swn_reg *cifs_get_swn
- 	reg = cifs_find_swn_reg(tcon);
- 	if (!IS_ERR(reg)) {
- 		kref_get(&reg->ref_count);
--		mutex_unlock(&cifs_swnreg_idr_mutex);
--		return reg;
-+		goto unlock;
- 	} else if (PTR_ERR(reg) != -EEXIST) {
--		mutex_unlock(&cifs_swnreg_idr_mutex);
--		return reg;
-+		goto unlock;
- 	}
- 
- 	reg = kmalloc(sizeof(struct cifs_swn_reg), GFP_ATOMIC);
- 	if (reg == NULL) {
--		mutex_unlock(&cifs_swnreg_idr_mutex);
--		return ERR_PTR(-ENOMEM);
-+		ret = -ENOMEM;
-+		goto fail_unlock;
- 	}
- 
- 	kref_init(&reg->ref_count);
-@@ -354,7 +352,7 @@ static struct cifs_swn_reg *cifs_get_swn
- 	reg->ip_notify = (tcon->capabilities & SMB2_SHARE_CAP_SCALEOUT);
- 
- 	reg->tcon = tcon;
--
-+unlock:
- 	mutex_unlock(&cifs_swnreg_idr_mutex);
- 
- 	return reg;
-@@ -365,6 +363,7 @@ fail_idr:
- 	idr_remove(&cifs_swnreg_idr, reg->id);
- fail:
- 	kfree(reg);
-+fail_unlock:
- 	mutex_unlock(&cifs_swnreg_idr_mutex);
- 	return ERR_PTR(ret);
+--- a/arch/x86/events/amd/brs.c
++++ b/arch/x86/events/amd/brs.c
+@@ -259,13 +259,13 @@ void amd_brs_disable_all(void)
+ 		amd_brs_disable();
  }
+ 
+-static bool amd_brs_match_plm(struct perf_event *event, u64 to)
++static bool amd_brs_match_plm(struct perf_event *event, u64 from, u64 to)
+ {
+ 	int type = event->attr.branch_sample_type;
+ 	int plm_k = PERF_SAMPLE_BRANCH_KERNEL | PERF_SAMPLE_BRANCH_HV;
+ 	int plm_u = PERF_SAMPLE_BRANCH_USER;
+ 
+-	if (!(type & plm_k) && kernel_ip(to))
++	if (!(type & plm_k) && (kernel_ip(to) || kernel_ip(from)))
+ 		return 0;
+ 
+ 	if (!(type & plm_u) && !kernel_ip(to))
+@@ -338,11 +338,11 @@ void amd_brs_drain(void)
+ 		 */
+ 		to = (u64)(((s64)to << shift) >> shift);
+ 
+-		if (!amd_brs_match_plm(event, to))
+-			continue;
+-
+ 		rdmsrl(brs_from(brs_idx), from);
+ 
++		if (!amd_brs_match_plm(event, from, to))
++			continue;
++
+ 		perf_clear_branch_entry_bitfields(br+nr);
+ 
+ 		br[nr].from = from;
 
 
