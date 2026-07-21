@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2163FFF85;
-	Tue, 21 Jul 2026 22:13:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD7143E08B;
+	Tue, 21 Jul 2026 22:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672035; cv=none; b=Owx5zCL44JPDM9jpBJXSRBhWANl8zwXpUb8BBfvHEu2eGKoY9JJDpuKgSQ1WK6HeXBWkF+fW6CyLvPO3YdxsyR5y2WaMogOzv1/a6L1mMmTZnWtdHbH3FpYBya4EWl6uj3VuLk/vP8VZZNSvmajIKriJ7Fm0LeuqSKjUOtv1ffU=
+	t=1784672038; cv=none; b=poINEVnHSHQ8ntb7Fie0dnoUHsMDCMD1k5EpXSZTraNnf0zQn6xpcaf3oKfrwImaFJKUMUQX/Rg+VsUPoZNa2I9tRj7ZzcBMugNhpIGO0wAX8PMWcJdOYmeZ+rZ+YZfoNksQVfsMrksO8pPFMQSnGDcB+678d66umhkwJE0euek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672035; c=relaxed/simple;
-	bh=PJHR9YRD8t2qzsIpK4weONAZXQfuAul87aaINtY2z4c=;
+	s=arc-20240116; t=1784672038; c=relaxed/simple;
+	bh=GDzajw8UJKD6uMHkF+yJpR4oRztVn1sN+2BTTM/fSFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2wzvRxs5FYB4dZ9BTBUSrEW4O6oKtHbjzeOwGhhq8eG26kxVXMXoNA7MB624kom/UeZA5k6IcYp7wnC51ytaGLiai3nS9Sv4Wb6Ch20GyRe20Aih4RKseuR/b7C+mhXSwrAgeKykordYvRilldzFJgGvQW2SoSr9DpdVS8BItA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wR63NLbA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eQt7ZxXpbC6dpUM0s/Yru3B9ac9jPFpWlJ9abtuwUfabSF/Ul4YRMobKjGq+Nzkq04G0Cb/CtlzuWfC3PHu15nckbut3UasnBtG84NAdYh2K+2oZnv3ubsdRt5hpDyDbN794Ex+un3P6BpAuma905nNnGyXMUL9eKUIavkAEkeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sEDQnzNm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wR63NLbA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DEB1F00A3A;
-	Tue, 21 Jul 2026 22:13:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sEDQnzNm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5667F1F00A3A;
+	Tue, 21 Jul 2026 22:13:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672034;
-	bh=Aabd3SngzdO5n1WoNkfk3YYKdgcuyMPcU+Vk3268N00=;
+	s=korg; t=1784672036;
+	bh=ckb/r9Ct9ZF4YN0vtzTXBwne30JYOTEOV11pkYKNE04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wR63NLbAtP8aI/awT5JKtICHK+xcCYBrz3NjPuMGLfZr4vTK/QRvOVHWCpsWIsynS
-	 +EVU9N64YLoIsILd/vW2a5C1Xr8wfSrs18uBTpw5moy/fBqmIGPdyAjIjYuMgpE8gN
-	 hwH8m8BZrfJYeyMeWAKmQ+1aEj9sQe6mWqiMtfnw=
+	b=sEDQnzNmNm4YfO348n/3+k+VPC+trxCPSGIcVckBHO/x67gkg68iXy9P7HjA3rhhP
+	 GSFcUilqh4ZbOg+wSJC8mbHkoCkUybG/tlxabhTU1w1DwNqT7Um4+o1Dy9kgtr5uJy
+	 iVFOY1zXlTV8aEPxCQC7wVDTrY3L2IMaWODHqwps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Aleksandrova Alyona <aga@itb.spb.ru>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 472/843] net, bpf: check master for NULL in xdp_master_redirect()
-Date: Tue, 21 Jul 2026 17:21:47 +0200
-Message-ID: <20260721152416.654929931@linuxfoundation.org>
+Subject: [PATCH 5.15 473/843] net: dsa: sja1105: round up PTP perout pin duration
+Date: Tue, 21 Jul 2026 17:21:48 +0200
+Message-ID: <20260721152416.677621127@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -53,66 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Aleksandrova Alyona <aga@itb.spb.ru>
 
-[ Upstream commit e82d8cc4321c373dc46e741cd2dfdaa7921fddb7 ]
+[ Upstream commit aee5836273b07b439fb245fb43930664d8b78518 ]
 
-xdp_master_redirect() dereferences the result of
-netdev_master_upper_dev_get_rcu() without a NULL check, but that helper
-returns NULL when the receiving device has no upper-master adjacency.
+pin_duration is converted from the user-provided period to SJA1105
+clock ticks and is later passed as the cycle_time argument to
+future_base_time().
 
-The reach guard only checks netif_is_bond_slave(). On bond slave release
-bond_upper_dev_unlink() drops the upper-master adjacency before clearing
-IFF_SLAVE, so an XDP_TX reaching xdp_master_redirect() in that window
-still passes netif_is_bond_slave() while master is already NULL, and
-faults on master->flags at offset 0xb0:
+Very small period values may become zero after the conversion,
+which can lead to a division by zero in future_base_time().
 
-  BUG: kernel NULL pointer dereference, address: 00000000000000b0
-  RIP: 0010:xdp_master_redirect (net/core/filter.c:4432)
-  Call Trace:
-   xdp_master_redirect (net/core/filter.c:4432)
-   bpf_prog_run_generic_xdp (include/net/xdp.h:700)
-   do_xdp_generic (net/core/dev.c:5608)
-   __netif_receive_skb_one_core (net/core/dev.c:6204)
-   process_backlog (net/core/dev.c:6319)
-   __napi_poll (net/core/dev.c:7729)
-   net_rx_action (net/core/dev.c:7792)
-   handle_softirqs (kernel/softirq.c:622)
-   __dev_queue_xmit (include/linux/bottom_half.h:33)
-   packet_sendmsg (net/packet/af_packet.c:3082)
-   __sys_sendto (net/socket.c:2252)
-  Kernel panic - not syncing: Fatal exception in interrupt
+Round zero pin_duration up to 1 tick so that the smallest unsupported
+periods use the minimum non-zero hardware duration instead of passing
+zero to future_base_time().
 
-The missing check dates back to the original code; commit 1921f91298d1
-("net, bpf: fix null-ptr-deref in xdp_master_redirect() for down master")
-later added the master->flags read where the fault now lands but kept the
-unconditional deref. Check master for NULL before use; a NULL master is
-treated the same as one that is not up.
-
-Fixes: 879af96ffd72 ("net, core: Add support for XDP redirection to slave device")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260620201531.180123-1-xmei5@asu.edu
+Fixes: 747e5eb31d59 ("net: dsa: sja1105: configure the PTP_CLK pin as EXT_TS or PER_OUT")
+Signed-off-by: Aleksandrova Alyona <aga@itb.spb.ru>
+Link: https://patch.msgid.link/20260618110508.53094-1-aga@itb.spb.ru
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 2 +-
+ drivers/net/dsa/sja1105/sja1105_ptp.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 72807bea81ec53..af34e922836ce1 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -4070,7 +4070,7 @@ u32 xdp_master_redirect(struct xdp_buff *xdp)
- 	struct bpf_redirect_info *ri = this_cpu_ptr(&bpf_redirect_info);
- 
- 	master = netdev_master_upper_dev_get_rcu(xdp->rxq->dev);
--	if (unlikely(!(master->flags & IFF_UP)))
-+	if (unlikely(!master || !(master->flags & IFF_UP)))
- 		return XDP_ABORTED;
- 	slave = master->netdev_ops->ndo_xdp_get_xmit_slave(master, xdp);
- 	if (slave && slave != xdp->rxq->dev) {
+diff --git a/drivers/net/dsa/sja1105/sja1105_ptp.c b/drivers/net/dsa/sja1105/sja1105_ptp.c
+index 54396992a9199c..c14d599d8682b5 100644
+--- a/drivers/net/dsa/sja1105/sja1105_ptp.c
++++ b/drivers/net/dsa/sja1105/sja1105_ptp.c
+@@ -766,7 +766,7 @@ static int sja1105_per_out_enable(struct sja1105_private *priv,
+ 		 * 2 edges on PTP_CLK. So check for truncation which happens
+ 		 * at periods larger than around 68.7 seconds.
+ 		 */
+-		pin_duration = ns_to_sja1105_ticks(pin_duration / 2);
++		pin_duration = max_t(u64, ns_to_sja1105_ticks(pin_duration / 2), 1);
+ 		if (pin_duration > U32_MAX) {
+ 			rc = -ERANGE;
+ 			goto out;
 -- 
 2.53.0
 
