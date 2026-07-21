@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515E247125D;
-	Tue, 21 Jul 2026 18:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3C546EF77;
+	Tue, 21 Jul 2026 18:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658921; cv=none; b=EeiPA1s1hLqCYK1+4qbCXMO3+Kny7rkbzTilCRjnNFyhB1xsisN8Ngn3zJv5ugrnvIKwlW+MYWHx+Hyb2b/NIxCA57atLm5eIgaCS09viZ2ffOGqA2tfGQUTtoDxQysZu81ba59etJsW0TeoOyACsGcdQO89UMj36j+7beAZjCo=
+	t=1784658924; cv=none; b=ILeiwW2aIotuFxdPTP98K6WB3QtcjYcvLKZ5YIVEobeSiI+uJCHKwODgiVY3JJFeEt01Bbq2CgWKsfF3nddkt5pn/p0HMtfsswSALww0Ct5VhiBg56R68nD/PkApGR4ABV6g04o4ZEyiYe3y4+QQSkRAxOzjFjcl2YaaJO0YxzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658921; c=relaxed/simple;
-	bh=8mj0UiOo50Ca3sTkPiQcRYiXxGjkgpSEaTZ3Wt07Gg8=;
+	s=arc-20240116; t=1784658924; c=relaxed/simple;
+	bh=+dEROCQ6+SiFReD3uKVfBN++sQIFdk03aCHRojZ+fSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BU9+FJRtMkIOIxgKhG/mlm1U+/oESTSHOvUTGXUWT1OFtawSW2zkeIMDzvBa3ZTPGl2VCuDw5eEzzkQtu4f3/wz/nq+BUbaRAJBqN9T8aqFYhjPDhh9aOinhEQgewrHNBs0Lw+dAARtn8SxtPuQehQtbJNE5zDd6onv6njcwmSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjjCyGwl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=X20U2ZNiVZQgQeKDY5nUPzRGWBe930JapVXf69y6C9KnMUm6S5ZqmhD4GnFQq4KwGhRPi7QuZ1CyhoX9IuMDuKjW+hV4Ft4dmzt/i3aNTmCiUSTwZll5r8ALyBEfakOJIbgyVO9moj92QVCWav+NulNnCwNSRcbZix5FwJKglYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYlEihA/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjjCyGwl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BE21F000E9;
-	Tue, 21 Jul 2026 18:35:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYlEihA/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4CD1F00A3A;
+	Tue, 21 Jul 2026 18:35:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658920;
-	bh=bplZi3mAxSb39Ohkn6hh1cxXQ1FQtK+Jo3k+aJ7h3u4=;
+	s=korg; t=1784658922;
+	bh=OG9vnngwyVYHJ47kqlz+o/DlRvMZ7vQ395zi58nHR8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DjjCyGwlgo7SQhs1NpGHaJTL0DWCJUW8r663aPhe46WfhFoWj64epaCwXB8trGodg
-	 NG7+O+Xb7moPb4w5klswtxjTUJZGe7AEfAPDnZF2eo4O18JB3Htq/wiTcAlps89b0G
-	 2t04u09Itdv4NeZTBp17glKMxhhmU+/kDrbfD/NA=
+	b=UYlEihA/yZPiHooowAgb6chdA+BfUUX4aVb5nS4pZeAzd+tvhTrfry9G6Wexl+l0p
+	 J6A4zEFtadU2jvn+vdd5IRo1b47ijS3yPyVlpkfYLBmn9GwEXt8NVOtWs9CtuK+/bq
+	 WOKwIPFOmMC7XqrVbB7lkaPmZC3EhR7t4GsjUkf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Peter <sven@kernel.org>,
-	Nick Chan <towinchenmi@gmail.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.18 1326/1611] nvme-apple: Prevent shared tags across queues on Apple A11
-Date: Tue, 21 Jul 2026 17:24:02 +0200
-Message-ID: <20260721152545.279531712@linuxfoundation.org>
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Daniel Gibson <daniel@gibson.sh>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.18 1300/1611] platform/x86/amd/pmc: Add delay_suspend module parameter
+Date: Tue, 21 Jul 2026 17:23:36 +0200
+Message-ID: <20260721152544.685314811@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -45,74 +45,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nick Chan <towinchenmi@gmail.com>
+From: Daniel Gibson <daniel@gibson.sh>
 
-commit 6fe0687245e8406bf26143bd45eb16441bbe5280 upstream.
+commit 428b9fd2dce50b4dc5cd9ade10b92efcf57ce7aa upstream.
 
-On Apple A11, tags of pending commands must be unique across the admin
-and IO queues, else the firmware crashes with
-"duplicate tag error for tag N", with N being the tag.
+Enabling the new delay_suspend module parameter delays suspend for
+2.5 seconds which is known to help for some AMD-based Lenovo Laptops
+that otherwise failed to send/receive events for key presses or the
+lid switch after s2idle. Apparently the EC needs to do some things
+in the background before suspend or it gets into a bad state.
 
-Apply the existing workaround for M1 of reserving two tags for the admin
-queue to A11.
+There are many reports of AMD-based laptops (mostly but not exclusively
+IdeaPads) about similar issues on the web; this parameter gives
+affected users an easy way to try out if their issues have the same
+root cause and to work around them until their specific device is added
+to the quirks list.
 
+The parameter description has a note encouraging users to report
+their device so it can be added to the quirks list, inspired by a
+similar request in parameter descriptions of the ideapad-laptop module.
+
+The module parameter can be set to "1" to explicitly enable it,
+"0" to disable it even on devices that are assumed to be affected,
+or -1 (the default) to enable it if the device is assumed to be affected
+(according to fwbug_list[])
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221383
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Daniel Gibson <daniel@gibson.sh>
 Cc: stable@vger.kernel.org
-Fixes: 04d8ecf37b5e ("nvme: apple: Add Apple A11 support")
-Reviewed-by: Sven Peter <sven@kernel.org>
-Signed-off-by: Nick Chan <towinchenmi@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Link: https://patch.msgid.link/20260611150426.3683372-4-daniel@gibson.sh
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/apple.c |   12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/platform/x86/amd/pmc/pmc.c |   25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
---- a/drivers/nvme/host/apple.c
-+++ b/drivers/nvme/host/apple.c
-@@ -225,7 +225,7 @@ static unsigned int apple_nvme_queue_dep
- {
- 	struct apple_nvme *anv = queue_to_apple_nvme(q);
+--- a/drivers/platform/x86/amd/pmc/pmc.c
++++ b/drivers/platform/x86/amd/pmc/pmc.c
+@@ -16,6 +16,7 @@
+ #include <linux/bits.h>
+ #include <linux/debugfs.h>
+ #include <linux/delay.h>
++#include <linux/dmi.h>
+ #include <linux/io.h>
+ #include <linux/iopoll.h>
+ #include <linux/limits.h>
+@@ -89,6 +90,11 @@ static bool disable_workarounds;
+ module_param(disable_workarounds, bool, 0644);
+ MODULE_PARM_DESC(disable_workarounds, "Disable workarounds for platform bugs");
  
--	if (q->is_adminq && anv->hw->has_lsq_nvmmu)
-+	if (q->is_adminq)
- 		return APPLE_NVME_AQ_DEPTH;
++static int delay_suspend = -1;
++module_param(delay_suspend, int, 0644);
++MODULE_PARM_DESC(delay_suspend,
++		 "Delays s2idle by 2.5 seconds to work around buggy ECs, often causing keyboard issues after suspend. 0: don't delay, 1: do delay, -1 (default): let amd_pmc decide. If you need this please report this to: platform-driver-x86@vger.kernel.org");
++
+ static struct amd_pmc_dev pmc;
  
- 	return anv->hw->max_queue_depth;
-@@ -303,7 +303,7 @@ static void apple_nvme_submit_cmd_t8015(
- 		memcpy((void *)q->sqes + (q->sq_tail << APPLE_NVME_IOSQES),
- 			cmd, sizeof(*cmd));
- 
--	if (++q->sq_tail == anv->hw->max_queue_depth)
-+	if (++q->sq_tail == apple_nvme_queue_depth(q))
- 		q->sq_tail = 0;
- 
- 	writel(q->sq_tail, q->sq_db);
-@@ -1139,10 +1139,7 @@ static void apple_nvme_reset_work(struct
- 	}
- 
- 	/* Setup the admin queue */
--	if (anv->hw->has_lsq_nvmmu)
--		aqa = APPLE_NVME_AQ_DEPTH - 1;
--	else
--		aqa = anv->hw->max_queue_depth - 1;
-+	aqa = APPLE_NVME_AQ_DEPTH - 1;
- 	aqa |= aqa << 16;
- 	writel(aqa, anv->mmio_nvme + NVME_REG_AQA);
- 	writeq(anv->adminq.sq_dma_addr, anv->mmio_nvme + NVME_REG_ASQ);
-@@ -1324,8 +1321,7 @@ static int apple_nvme_alloc_tagsets(stru
- 	 * both queues. The admin queue gets the first APPLE_NVME_AQ_DEPTH which
- 	 * must be marked as reserved in the IO queue.
+ static inline u32 amd_pmc_reg_read(struct amd_pmc_dev *dev, int reg_offset)
+@@ -625,8 +631,23 @@ static bool amd_pmc_want_suspend_delay(s
+ 	 *
+ 	 * See https://bugzilla.kernel.org/show_bug.cgi?id=221383
  	 */
--	if (anv->hw->has_lsq_nvmmu)
--		anv->tagset.reserved_tags = APPLE_NVME_AQ_DEPTH;
-+	anv->tagset.reserved_tags = APPLE_NVME_AQ_DEPTH;
- 	anv->tagset.queue_depth = anv->hw->max_queue_depth - 1;
- 	anv->tagset.timeout = NVME_IO_TIMEOUT;
- 	anv->tagset.numa_node = NUMA_NO_NODE;
+-	if (!disable_workarounds && amd_pmc_quirk_need_suspend_delay(pdev)) {
+-		dev_info(pdev->dev, "Delaying suspend by 2.5s to avoid platform bug\n");
++	if (amd_pmc_quirk_need_suspend_delay(pdev)) {
++		/*
++		 * delay_suspend=1 force-enables this, otherwise it can be
++		 * disabled with disable_workarounds or delay_suspend=0
++		 */
++		if (delay_suspend == 1 || (delay_suspend == -1 && !disable_workarounds)) {
++			dev_info(pdev->dev, "Delaying suspend by 2.5s to avoid platform bug\n");
++			return true;
++		}
++		dev_info(pdev->dev, "Not delaying suspend because of module parameter, even though your device is assumed to need it!\n");
++	} else if (delay_suspend == 1) {
++		dev_info(pdev->dev, "Delaying suspend by 2.5s because delay_suspend=1. If this solves problems on your machine, please report this whole line to: platform-driver-x86@vger.kernel.org so it can be automatically detected as affected in the future. System Vendor: \"%s\" Product Name: \"%s\" Product Family: \"%s\" Board Vendor: \"%s\" Board Name: \"%s\"\n",
++			 dmi_get_system_info(DMI_SYS_VENDOR),
++			 dmi_get_system_info(DMI_PRODUCT_NAME),
++			 dmi_get_system_info(DMI_PRODUCT_FAMILY),
++			 dmi_get_system_info(DMI_BOARD_VENDOR),
++			 dmi_get_system_info(DMI_BOARD_NAME));
+ 		return true;
+ 	}
+ 	return false;
 
 
