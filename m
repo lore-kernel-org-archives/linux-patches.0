@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA6E3B8412;
-	Tue, 21 Jul 2026 21:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390E0409E0A;
+	Tue, 21 Jul 2026 21:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670710; cv=none; b=KiMKg0x+iKYVYSAAN3ERB2KcIN2fTnwX35PW1yMkSd5c5QgQd09d2sdbnwRXrXoppenCCPEZGv85xkYrTohC9BE6CftzvCzxk4mVAzup8KSbFkR97Bubyf1TK085xd9u3cQcxrJgckbF0Y2lk7T9a0QDrlv+8/XdTCPyon59bak=
+	t=1784670713; cv=none; b=M5ztPLPxHEq/OPsX08eF8AdSrs12Q/Vg6YGfcEQe8xJahQVfl7Vr4ev+jIadXKYglLKgCCyXs1HOScP2WW4BbCremP/ljpWLPlSs2t/MYUPUGAd+EW1UKZPbeS0RWpn66GBbUYe42bu9PRM+w+rbrnhIMF6yrcZWqlBprCe04EI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670710; c=relaxed/simple;
-	bh=oKAH9DC+4jXY1CLcJ/CXUQCQr4CW6JTAP5QGBJ+1YlI=;
+	s=arc-20240116; t=1784670713; c=relaxed/simple;
+	bh=rI8d37wPn2czsvYNTw4+40RzcxPf1IWxPvuQ9sfgG3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WTSPSvphqPI+3SClkM9+xn1krxoRplPzBnUlbO6J/nzY+4MQqUi+mqXRAB2KriN9wXR/T7Z6Hvr4YVCuHvYeJfj63nVR1bl7JsY+IATcBrowJleWuiohcpdMrGWKFZD37u+Y4k43zwa7ZnXDJrAPwdxiGvfvl17V/JSDMEiZzJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZqoTPYu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gES5aup7xcBOqfrTOepMelG0iwOuywjWRYB46mxwG5Z5J/DY1N3tkLJ0QnHXKBx+v/guFlbI/E+HxuBfmqWTRoCqJwoe6Z9ZdEyOb2W8ZttKcHZIBKtE359FisztaO1Fy+IG9O12atVbghD1LtOLhbLg/4FU+K1oj5eoLaLRkIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GqIQ8Zr/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZqoTPYu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1B1B1F000E9;
-	Tue, 21 Jul 2026 21:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GqIQ8Zr/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96CEE1F000E9;
+	Tue, 21 Jul 2026 21:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670709;
-	bh=8zAkGSB1IoJFB7xWQb+8UrVWAlsvK4nf62jbCSgLTr4=;
+	s=korg; t=1784670712;
+	bh=acMKaC9FMUIIfF6vfV7Yan6WZOcNugMqjRd4+KDLVFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CZqoTPYu9zTk4I9o3ooRjP4BkMqbR1+PGPIk7mQi4CMtwOTEG/r8HUsDpMbGEs8Qn
-	 lrCdwgykhI/LBvDckZTFoOG47kbtQPqF7LfEEuNNJaDVPx+yyWVR5fcXdKDdFT4rG3
-	 B747ATYFyRn7ueOisACy5LW/J9MT0GscJSA//Rv0=
+	b=GqIQ8Zr/egzxLssU0ixKqxkmQhBqzRmq3OThj2kizNHEY1PRFsOJcxIeJ4/x+htPw
+	 7ZdY5HO0axU+q0nfcWrYBpGtDD6awk+AhDRxeTD4abvjrS1wO3TkIJ4pU3x2pWr3B3
+	 OmdkNxFuyGO23HpaTf8/mfrJByDhMWsWlfnHE1dU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Laurent M Coquerel <laurent.m.coquerel@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1036/1067] btrfs: check and set EXTENT_DELALLOC_NEW before clearing EXTENT_DELALLOC
-Date: Tue, 21 Jul 2026 17:27:17 +0200
-Message-ID: <20260721152447.762655255@linuxfoundation.org>
+Subject: [PATCH 6.1 1037/1067] crypto: qat - validate RSA CRT component lengths
+Date: Tue, 21 Jul 2026 17:27:18 +0200
+Message-ID: <20260721152447.785178058@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,266 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit 95ee2231896d5f2a31760411429075a99d6045a7 ]
+[ Upstream commit b3ac78756588059729b9195fcc9f4b37d54057a5 ]
 
-[WARNING]
-When running test cases with injected errors or shutdown, e.g.
-generic/388 or generic/475, there is a chance that the following kernel
-warning is triggered:
+The generic RSA key parser (rsa_helper.c) bounds each CRT component (p,
+q, dp, dq, qinv) by the modulus size n_sz, but qat_rsa_setkey_crt()
+allocates half-size DMA buffers (key_sz / 2) and right-aligns each
+component with:
 
-  BTRFS info (device dm-2): first mount of filesystem d8a19a28-3232-4809-b0df-38df83e71bff
-  BTRFS info (device dm-2): using crc32c checksum algorithm
-  BTRFS info (device dm-2): checking UUID tree
-  BTRFS info (device dm-2): turning on async discard
-  BTRFS info (device dm-2): enabling free space tree
-  BTRFS critical (device dm-2 state E): emergency shutdown
-  ------------[ cut here ]------------
-  WARNING: extent_io.c:1742 at extent_writepage_io+0x437/0x520 [btrfs], CPU#2: kworker/u43:2/651591
-  CPU: 2 UID: 0 PID: 651591 Comm: kworker/u43:2 Tainted: G        W  OE       7.0.0-rc6-custom+ #365 PREEMPT(full)  5804053f02137e627472d94b5128cc9fcb110e88
-  RIP: 0010:extent_writepage_io+0x437/0x520 [btrfs]
-  Call Trace:
-   <TASK>
-   extent_write_cache_pages+0x2a5/0x820 [btrfs 70299925d0856939e93b17d480651713b3cbba58]
-   btrfs_writepages+0x74/0x130 [btrfs 70299925d0856939e93b17d480651713b3cbba58]
-   do_writepages+0xd0/0x160
-   __writeback_single_inode+0x42/0x340
-   writeback_sb_inodes+0x22d/0x580
-   wb_writeback+0xc6/0x360
-   wb_workfn+0xbd/0x470
-   process_one_work+0x198/0x3b0
-   worker_thread+0x1c8/0x330
-   kthread+0xee/0x120
-   ret_from_fork+0x2a6/0x330
-   ret_from_fork_asm+0x11/0x20
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
-  BTRFS error (device dm-2 state E): root 5 ino 259 folio 1323008 is marked dirty without notifying the fs
-  BTRFS error (device dm-2 state E): failed to submit blocks, root=5 inode=259 folio=1323008 submit_bitmap=0: -117
-  BTRFS info (device dm-2 state E): last unmount of filesystem d8a19a28-3232-4809-b0df-38df83e71bff
+    memcpy(dst + half_key_sz - len, src, len)
 
-[CAUSE]
-Inside btrfs we have the following pattern in several locations, for
-example inside btrfs_dirty_folio():
+When a CRT component is larger than half_key_sz the subtraction
+underflows and memcpy writes past the DMA buffer, causing memory
+corruption.
 
-	btrfs_clear_extent_bit(&inode->io_tree, start_pos, end_of_last_block,
-			       EXTENT_DELALLOC | EXTENT_DO_ACCOUNTING | EXTENT_DEFRAG,
-			       cached);
+Add a len > half_key_sz check next to the existing !len check for each
+of the five CRT components so the driver falls back to the non-CRT path
+instead of writing out of bounds.
 
-	ret = btrfs_set_extent_delalloc(inode, start_pos, end_of_last_block,
-					extra_bits, cached);
-	if (ret)
-		return ret;
-
-However btrfs_set_extent_delalloc() can return IO errors other than -ENOMEM
-through the following callchain:
-
- btrfs_set_extent_delalloc()
- \- btrfs_find_new_delalloc_bytes()
-    \- btrfs_get_extent()
-       \- btrfs_lookup_file_extent()
-          \- btrfs_search_slot()
-
-When such IO error happened, the previous btrfs_clear_extent_bit() has
-cleared the EXTENT_DELALLOC for the range, and we're expecting
-btrfs_set_extent_delalloc() to re-set EXTENT_DELALLOC.
-
-But since btrfs_set_extent_delalloc() failed before
-btrfs_set_extent_bit(), EXTENT_DELALLOC flag is no longer present.
-
-And if the folio range is dirty before entering
-btrfs_set_extent_delalloc(), we got a dirty folio but no EXTENT_DELALLOC
-flag now.
-
-Then we hit the folio writeback:
-
-  extent_writepage()
-  |- writepage_delalloc()
-  |  No ordered extent is created, as there is no EXTENT_DELALLOC set
-  |  for the folio range.
-  |  This also means the folio has no ordered flag set.
-  |
-  |- extent_writepage_io()
-     \- if (unlikely(!folio_test_ordered(folio))
-        Now we hit the warning.
-
-[FIX]
-Introduce a new helper, btrfs_reset_extent_delalloc() to replace the
-currently open-coded btrfs_clear_extent_bit() +
-btrfs_set_extent_delalloc() combination.
-
-Instead of calling btrfs_clear_extent_bit() first, update
-EXTENT_DELALLOC_NEW first, as that part can fail due to metadata IO,
-meanwhile btrfs_clear_extent_bit() and btrfs_set_extent_bit() won't
-return any error but retry memory allocation until succeeded.
-
-This allows us to fail early without clearing EXTENT_DELALLOC bit, so
-even if that new btrfs_reset_extent_delalloc() failed before touching
-EXTENT_DELALLOC, the existing dirty range will still have their old
-EXTENT_DELALLOC flag present, thus avoid the warning.
-
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 879f77e9071f ("crypto: qat - Add RSA CRT mode")
+Cc: stable@vger.kernel.org
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Laurent M Coquerel <laurent.m.coquerel@intel.com>
+Tested-by: Laurent M Coquerel <laurent.m.coquerel@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ctree.h   |    2 +
- fs/btrfs/file.c    |   12 +-------
- fs/btrfs/inode.c   |   73 ++++++++++++++++++++++++++++++++++++++---------------
- fs/btrfs/reflink.c |    5 ---
- 4 files changed, 58 insertions(+), 34 deletions(-)
+ drivers/crypto/qat/qat_common/qat_asym_algs.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -3327,6 +3327,8 @@ int btrfs_start_delalloc_roots(struct bt
- int btrfs_set_extent_delalloc(struct btrfs_inode *inode, u64 start, u64 end,
- 			      unsigned int extra_bits,
- 			      struct extent_state **cached_state);
-+int btrfs_reset_extent_delalloc(struct btrfs_inode *inode, u64 start, u64 end,
-+				unsigned int extra_bits, struct extent_state **cached_state);
- struct btrfs_new_inode_args {
- 	/* Input */
- 	struct inode *dir;
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -144,16 +144,8 @@ int btrfs_dirty_pages(struct btrfs_inode
- 
- 	end_of_last_block = start_pos + num_bytes - 1;
- 
--	/*
--	 * The pages may have already been dirty, clear out old accounting so
--	 * we can set things up properly
--	 */
--	clear_extent_bit(&inode->io_tree, start_pos, end_of_last_block,
--			 EXTENT_DELALLOC | EXTENT_DO_ACCOUNTING | EXTENT_DEFRAG,
--			 cached);
--
--	err = btrfs_set_extent_delalloc(inode, start_pos, end_of_last_block,
--					extra_bits, cached);
-+	err = btrfs_reset_extent_delalloc(inode, start_pos, end_of_last_block,
-+					  extra_bits, cached);
- 	if (err)
- 		return err;
- 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -2845,7 +2845,11 @@ int btrfs_set_extent_delalloc(struct btr
- 			      unsigned int extra_bits,
- 			      struct extent_state **cached_state)
- {
--	WARN_ON(PAGE_ALIGNED(end));
-+	const u32 blocksize = inode->root->fs_info->sectorsize;
-+
-+	/* Basic alignment check. */
-+	ASSERT(IS_ALIGNED(start, blocksize));
-+	ASSERT(IS_ALIGNED(end + 1, blocksize));
- 
- 	if (start >= i_size_read(&inode->vfs_inode) &&
- 	    !(inode->flags & BTRFS_INODE_PREALLOC)) {
-@@ -3055,6 +3059,51 @@ int btrfs_writepage_cow_fixup(struct pag
- 	return -EAGAIN;
- }
- 
-+/*
-+ * Clear the old accounting flags and set EXTENT_DELALLOC for the range.
-+ *
-+ * Return <0 for error, in that case no range has EXTENT_DELALLOC bit cleared or set.
-+ */
-+int btrfs_reset_extent_delalloc(struct btrfs_inode *inode, u64 start, u64 end,
-+				unsigned int extra_bits, struct extent_state **cached_state)
-+{
-+	const u32 blocksize = inode->root->fs_info->sectorsize;
-+
-+	/* The @extra_bits can only be EXTENT_NORESERVE for now. */
-+	ASSERT(!(extra_bits & ~EXTENT_NORESERVE));
-+
-+	/* Basic alignment check. */
-+	ASSERT(IS_ALIGNED(start, blocksize));
-+	ASSERT(IS_ALIGNED(end + 1, blocksize));
-+
-+	/*
-+	 * Check and set DELALLOC_NEW flag, this needs to search tree thus can
-+	 * fail early.  Thus we want to do this before clearing EXTENT_DELALLOC.
-+	 */
-+	if (start >= i_size_read(&inode->vfs_inode) &&
-+	    !(inode->flags & BTRFS_INODE_PREALLOC)) {
-+		/*
-+		 * There can't be any extents following EOF in this case so just
-+		 * set the delalloc new bit for the range directly.
-+		 */
-+		extra_bits |= EXTENT_DELALLOC_NEW;
-+	} else {
-+		int ret;
-+
-+		ret = btrfs_find_new_delalloc_bytes(inode, start, end + 1 - start,
-+						    NULL);
-+		if (unlikely(ret))
-+			return ret;
-+	}
-+	/* Clear the old accounting as the range may already be dirty. */
-+	clear_extent_bit(&inode->io_tree, start, end,
-+			 EXTENT_DELALLOC | EXTENT_DO_ACCOUNTING |
-+			 EXTENT_DEFRAG, cached_state);
-+	return set_extent_bit(&inode->io_tree, start, end,
-+			      EXTENT_DELALLOC | extra_bits, cached_state,
-+			      GFP_NOFS);
-+}
-+
- static int insert_reserved_file_extent(struct btrfs_trans_handle *trans,
- 				       struct btrfs_inode *inode, u64 file_pos,
- 				       struct btrfs_file_extent_item *stack_fi,
-@@ -5037,12 +5086,7 @@ again:
- 		goto again;
- 	}
- 
--	clear_extent_bit(&inode->io_tree, block_start, block_end,
--			 EXTENT_DELALLOC | EXTENT_DO_ACCOUNTING | EXTENT_DEFRAG,
--			 &cached_state);
--
--	ret = btrfs_set_extent_delalloc(inode, block_start, block_end, 0,
--					&cached_state);
-+	ret = btrfs_reset_extent_delalloc(inode, block_start, block_end, 0, &cached_state);
- 	if (ret) {
- 		unlock_extent(io_tree, block_start, block_end, &cached_state);
- 		goto out_unlock;
-@@ -8685,19 +8729,8 @@ again:
- 		}
- 	}
- 
--	/*
--	 * page_mkwrite gets called when the page is firstly dirtied after it's
--	 * faulted in, but write(2) could also dirty a page and set delalloc
--	 * bits, thus in this case for space account reason, we still need to
--	 * clear any delalloc bits within this page range since we have to
--	 * reserve data&meta space before lock_page() (see above comments).
--	 */
--	clear_extent_bit(&BTRFS_I(inode)->io_tree, page_start, end,
--			  EXTENT_DELALLOC | EXTENT_DO_ACCOUNTING |
--			  EXTENT_DEFRAG, &cached_state);
--
--	ret2 = btrfs_set_extent_delalloc(BTRFS_I(inode), page_start, end, 0,
--					&cached_state);
-+	ret2 = btrfs_reset_extent_delalloc(BTRFS_I(inode), page_start, end, 0,
-+					   &cached_state);
- 	if (ret2) {
- 		unlock_extent(io_tree, page_start, page_end, &cached_state);
- 		ret = VM_FAULT_SIGBUS;
---- a/fs/btrfs/reflink.c
-+++ b/fs/btrfs/reflink.c
-@@ -90,10 +90,7 @@ static int copy_inline_to_page(struct bt
- 	if (ret < 0)
- 		goto out_unlock;
- 
--	clear_extent_bit(&inode->io_tree, file_offset, range_end,
--			 EXTENT_DELALLOC | EXTENT_DO_ACCOUNTING | EXTENT_DEFRAG,
--			 NULL);
--	ret = btrfs_set_extent_delalloc(inode, file_offset, range_end, 0, NULL);
-+	ret = btrfs_reset_extent_delalloc(inode, file_offset, range_end, 0, NULL);
- 	if (ret)
- 		goto out_unlock;
- 
+--- a/drivers/crypto/qat/qat_common/qat_asym_algs.c
++++ b/drivers/crypto/qat/qat_common/qat_asym_algs.c
+@@ -1032,7 +1032,7 @@ static void qat_rsa_setkey_crt(struct qa
+ 	ptr = rsa_key->p;
+ 	len = rsa_key->p_sz;
+ 	qat_rsa_drop_leading_zeros(&ptr, &len);
+-	if (!len)
++	if (!len || len > half_key_sz)
+ 		goto err;
+ 	ctx->p = dma_alloc_coherent(dev, half_key_sz, &ctx->dma_p, GFP_KERNEL);
+ 	if (!ctx->p)
+@@ -1043,7 +1043,7 @@ static void qat_rsa_setkey_crt(struct qa
+ 	ptr = rsa_key->q;
+ 	len = rsa_key->q_sz;
+ 	qat_rsa_drop_leading_zeros(&ptr, &len);
+-	if (!len)
++	if (!len || len > half_key_sz)
+ 		goto free_p;
+ 	ctx->q = dma_alloc_coherent(dev, half_key_sz, &ctx->dma_q, GFP_KERNEL);
+ 	if (!ctx->q)
+@@ -1054,7 +1054,7 @@ static void qat_rsa_setkey_crt(struct qa
+ 	ptr = rsa_key->dp;
+ 	len = rsa_key->dp_sz;
+ 	qat_rsa_drop_leading_zeros(&ptr, &len);
+-	if (!len)
++	if (!len || len > half_key_sz)
+ 		goto free_q;
+ 	ctx->dp = dma_alloc_coherent(dev, half_key_sz, &ctx->dma_dp,
+ 				     GFP_KERNEL);
+@@ -1066,7 +1066,7 @@ static void qat_rsa_setkey_crt(struct qa
+ 	ptr = rsa_key->dq;
+ 	len = rsa_key->dq_sz;
+ 	qat_rsa_drop_leading_zeros(&ptr, &len);
+-	if (!len)
++	if (!len || len > half_key_sz)
+ 		goto free_dp;
+ 	ctx->dq = dma_alloc_coherent(dev, half_key_sz, &ctx->dma_dq,
+ 				     GFP_KERNEL);
+@@ -1078,7 +1078,7 @@ static void qat_rsa_setkey_crt(struct qa
+ 	ptr = rsa_key->qinv;
+ 	len = rsa_key->qinv_sz;
+ 	qat_rsa_drop_leading_zeros(&ptr, &len);
+-	if (!len)
++	if (!len || len > half_key_sz)
+ 		goto free_dq;
+ 	ctx->qinv = dma_alloc_coherent(dev, half_key_sz, &ctx->dma_qinv,
+ 				       GFP_KERNEL);
 
 
