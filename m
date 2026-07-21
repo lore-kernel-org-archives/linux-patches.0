@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E73346EC8B;
-	Tue, 21 Jul 2026 19:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30268470441;
+	Tue, 21 Jul 2026 19:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661893; cv=none; b=EcmNiTuw1Dk0h5jv8WihrB7VQFzS9FIFGk+LhTRGPQinNjDfzizDNSFIhxEz/XwDff8pG8WEqaEctTsEb6mpOlv8IB0mYA2MuMTuKDdbov4rWXT1f3IsYEvf5jV0j2ixNY/QZkWGXrjRhTvLcECS7QgGlW+FePPgVqsldjT6F9k=
+	t=1784661896; cv=none; b=hF9kXheE5mgbk7L81+3oKyXpQdN17guJo0tMwL10gP9pFyrE8zt24O7BuPgziRcAqLWNoul6RPyjgWW7GHTS9nXle0KnFxY+AifnYy9OpixwPLV9OKpGFPaRdshf3r5YGsFjVjQFjB3+w6RSj9L+BkE+IaNldRb3aJ91dE904G0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661893; c=relaxed/simple;
-	bh=MuvGuY4wXmZ/BdfozzSGwBV78fH94nJllZIeJw18/ZU=;
+	s=arc-20240116; t=1784661896; c=relaxed/simple;
+	bh=Qvk1nMzbV8xDF0D/Fo8RN7uxnj2LB18zH4yFPGzrxvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fpIt51ibf0kAHUYXTKnIdqj1MmNTy0Jpiokbd7W36yYR0yoJd9ahtcVFcH/VjIgp+sgq7X8xJnKaRC/GDTHlnWdY4ZXa9KHhzLY/jxX77c87SZ2IZRHGULvYE3/ma/H3KwoZX8lVupqFYZPuoPy3HGl8YGt0CuK7ltsLPXTTyXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jYeldZcz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t04OgnzieDlI8bzOodqCNcDnf2TyPWhqnnz07tiUfR53JlN/enyqrBfHxtT6v/WjgaViaYgzxrkaBKQN7rgNpbfVUeMjonlBWpJmdD4FsZ/wNz4ZmnGJeUxH8UN8VBpwoMMcDy4xmVzsBFx5xLmIhc/H43HFOT0gkYmuun/3IqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nMnu1SgZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jYeldZcz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 877791F000E9;
-	Tue, 21 Jul 2026 19:24:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nMnu1SgZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E7091F000E9;
+	Tue, 21 Jul 2026 19:24:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661892;
-	bh=Nyp4zDg2y3UppO/ppT/AaBGx7YCG/Sohe/IBdiDAJjM=;
+	s=korg; t=1784661894;
+	bh=0WhgJ9C6Mk7QpqrDdcHRDsQcqQmXI+cXj9p/otEbAuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jYeldZczSoJtpoLT63E1X9ARlX5qSqwdfQ3tUgVZeB05vgMahlj7MRz65uRApRG1E
-	 nzx8T/KygNM8F/M2PV+MtsWeuGkniVrxhIkwWa8okZS14/9q7rwi6UOapwaib15Fsu
-	 BVPLRQlRkRIo41f7zZFkrqqhPb0piVaKdAX8u0Io=
+	b=nMnu1SgZhMK+7EJpfD6iGP/ZfIBm7vE2n9OHFOZH9iW/dNa2yz4XYuBINZJn4C8B7
+	 TbvlXVhBUK1ysRURqBpS9yU+GTqjOf9ZQOEi9jfKmx00Rxuz41xm7NU9n7jOmreD+5
+	 8cptMotCU7Y+OjuIRAGwI7QB3/+T6X4spJj7+k4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Ginger <ginger.jzllee@gmail.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0239/1276] ocfs2: fix race between ocfs2_control_install_private() and ocfs2_control_release()
-Date: Tue, 21 Jul 2026 17:11:22 +0200
-Message-ID: <20260721152451.439542021@linuxfoundation.org>
+Subject: [PATCH 6.12 0240/1276] netfilter: nfnetlink_osf: fix mss parsing on big-endian architectures
+Date: Tue, 21 Jul 2026 17:11:23 +0200
+Message-ID: <20260721152451.461110834@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -58,59 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 57dcfd9049d497c31151787a0696d59f0a98f8e6 ]
+[ Upstream commit a625c94144c9b66d32e1f374f909f38db46161c1 ]
 
-Move atomic_inc(&ocfs2_control_opened) and the handshake state update
-inside ocfs2_control_lock to close a race window where
-ocfs2_control_release() can observe ocfs2_control_opened dropping to zero
-(resetting ocfs2_control_this_node and running_proto) while
-ocfs2_control_install_private() is about to bump the counter and mark the
-connection valid.
+The MSS calculation in nf_osf_match_one() manually shifts bytes to
+construct a 16-bit value before passing it to ntohs().
 
-Link: https://lore.kernel.org/20260601121618.1263346-1-joseph.qi@linux.alibaba.com
-Fixes: 3cfd4ab6b6b4 ("ocfs2: Add the local node id to the handshake.")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reported-by: Ginger <ginger.jzllee@gmail.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+This works on little-endian hosts but it does not work on big-endian as
+the bytes are being always shifted and set in the same way for all
+architectures.
+
+Use get_unaligned_be16() to fix this on big-endian systems. It also
+simplifies the code.
+
+Fixes: 11eeef41d5f6 ("netfilter: passive OS fingerprint xtables match")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/stack_user.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ net/netfilter/nfnetlink_osf.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/fs/ocfs2/stack_user.c b/fs/ocfs2/stack_user.c
-index c5236b3ed168f6..0ec0a934a09803 100644
---- a/fs/ocfs2/stack_user.c
-+++ b/fs/ocfs2/stack_user.c
-@@ -327,18 +327,14 @@ static int ocfs2_control_install_private(struct file *file)
- 		ocfs2_control_this_node = p->op_this_node;
- 		running_proto.pv_major = p->op_proto.pv_major;
- 		running_proto.pv_minor = p->op_proto.pv_minor;
--	}
--
--out_unlock:
--	mutex_unlock(&ocfs2_control_lock);
--
--	if (!rc && set_p) {
--		/* We set the global values successfully */
- 		atomic_inc(&ocfs2_control_opened);
- 		ocfs2_control_set_handshake_state(file,
- 					OCFS2_CONTROL_HANDSHAKE_VALID);
- 	}
+diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
+index c89efb951994a9..b9a0257fa2bef7 100644
+--- a/net/netfilter/nfnetlink_osf.c
++++ b/net/netfilter/nfnetlink_osf.c
+@@ -95,11 +95,7 @@ static bool nf_osf_match_one(const struct sk_buff *skb,
  
-+out_unlock:
-+	mutex_unlock(&ocfs2_control_lock);
-+
- 	return rc;
- }
- 
+ 			switch (*optp) {
+ 			case OSFOPT_MSS:
+-				mss = optp[3];
+-				mss <<= 8;
+-				mss |= optp[2];
+-
+-				mss = ntohs((__force __be16)mss);
++				mss = get_unaligned_be16(&optp[2]);
+ 				break;
+ 			case OSFOPT_TS:
+ 				break;
 -- 
 2.53.0
 
