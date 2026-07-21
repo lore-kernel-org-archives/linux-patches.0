@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DEB1434E5D;
-	Tue, 21 Jul 2026 20:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC767471421;
+	Tue, 21 Jul 2026 20:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665347; cv=none; b=dzz1PdolXvi92Q7RxUpoKUA+Nsny4BF/OmEPa8JIgyWRS0GYbE9R+wIDADzt5ivcT1oRX0cW5XsJunxHoGGH6u4Un89SYKe10u0l03L+HbIqgAFkYLZ5GNozJ5iJ5KNEscodDcqBeGp0lczVfxp89ymAwc6uflu9GNia+CGoX+Y=
+	t=1784665349; cv=none; b=fKuQvZxQ8fHTOF+GJ9bYxQ4y/60EY/hcGnUn42QdH/JBKsY561tVpEA8eMoTpEreh1sfA2OlhLt+2O4GYs8yWhlF0WwPV3lmCzu351Ncy8HKxUysW8tLx94nS94r9Wp/TdvsRh5WklHF/QfHKrPKwRAthsKBeEjTFI4BI4I4xLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665347; c=relaxed/simple;
-	bh=qKyaA9VsZqErBCSUwvsHQid7INPDTVuJ0q7CLAegQHg=;
+	s=arc-20240116; t=1784665349; c=relaxed/simple;
+	bh=B7ogZ7K3XYJMjvylrcM7bBMqSlz48okF+97HZhydSKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hsqZhg6QQBThyZrLnzAi6RKG638jBzEAJbsX7duoGLGJx9pCS1DeYfHjAKcU4J0JR8h+T6uTk9I9vHHFa/a5tyXzBdUlGEDKtpRAmjofAIBfF9zynKo9XaehYXiAPZN96ZuqBcSHgG9Q5jO8SsfN/Ygn44CUlwZLfDHXF3+Z4lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGTh3btF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KGYBLPUBXZdyRwrWc2h5xJ+MaqSpZD7Of4ns1bHba5b6S5Zgw+I1LlB/TF/mC0ELi48TjCmiKM61uwpi0uy2qkWRbyXrmS02nlQmkUSjWM2CJbL949ukXgUSy+E5dhuqeJWexvo36whiDqOCo9rz/f8Kyxos6cuFMrpGSIEVxqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ldVnYdkq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGTh3btF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7CB1F00A3D;
-	Tue, 21 Jul 2026 20:22:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldVnYdkq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D72B1F000E9;
+	Tue, 21 Jul 2026 20:22:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665345;
-	bh=jDYVj/RsNgGUaONKkL4jtAXTsvzZBN0l3oVWZkDMI+8=;
+	s=korg; t=1784665347;
+	bh=/O6I2FnrB6XQXI3Jw+OiT0UIom1hV+rZbgMGzuuUTyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pGTh3btFt+2lIyYxacJuRvKf7+QF0F6VIptPPizlfWqhUT3ayfXxbNELnVbR/nT6g
-	 MbDwbrERdpFMrl+mqgm3DymL5FJIbe48cS5iy+Nco/0kfHhZkXT2R7reUuYbnzfErV
-	 gMccK5pkuoLoa35dqjWkhc0wytyDd4ZmDjk5N594=
+	b=ldVnYdkqoCvVfh8DtjVnOk1w7Maj7jsFJkwcrP4xx1OVK7dNr6NwMni4TzVDo816Y
+	 P9D5CSsFVNeeU8ZjbvECfsZIzZacwLO5zhWpz3n8ZG7utLv/lRVzZQzcNqwzrUNcKB
+	 +ddGWNUkheQqZcev68Yt2OmiNvrRRwhHp7NQ++B0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Bryam Vargas <hexlabsecurity@proton.me>,
-	Philippe De Muyter <phdm@macqel.be>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 0267/1266] partitions: aix: bound the pp_count scan to the ppe array
-Date: Tue, 21 Jul 2026 17:11:44 +0200
-Message-ID: <20260721152447.797201593@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.6 0268/1266] isofs: bound Rock Ridge symlink components to the SL record
+Date: Tue, 21 Jul 2026 17:11:45 +0200
+Message-ID: <20260721152447.819218568@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -53,60 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 2dc0bfd2fe355fb930de63c2f2eb8ced8570c579 upstream.
+commit 5fa1d6a5ec2356d2107dead614437c66fa7138b1 upstream.
 
-aix_partition() reads the physical volume descriptor into a fixed-size
-struct pvd and then scans its physical-partition-extent array:
+get_symlink_chunk() and the SL handling in
+parse_rock_ridge_inode_internal() walk the variable-length components of
+a Rock Ridge "SL" (symbolic link) record.  Each component is a two-byte
+header (flags, len) followed by len bytes of text, so it occupies
+slp->len + 2 bytes.  Both loops read slp->len and advance to the next
+component, and get_symlink_chunk() additionally does
+memcpy(rpnt, slp->text, slp->len), but neither checks that the component
+lies within the SL record before dereferencing it.
 
-	int numpps = be16_to_cpu(pvd->pp_count);
-	...
-	for (i = 0; i < numpps; i += 1) {
-		struct ppe *p = pvd->ppe + i;
-		...
-		lp_ix = be16_to_cpu(p->lp_ix);
+A crafted SL record whose component declares a len that runs past the
+record (rr->len) therefore triggers an out-of-bounds read of up to 255
+bytes.  When the record sits at the tail of its backing buffer - for
+example a small kmalloc()ed continuation block reached through a CE
+record - the read crosses the allocation; get_symlink_chunk() then
+copies the out-of-bounds bytes into the symlink body returned to user
+space by readlink(), disclosing adjacent kernel memory.
 
-pvd points at a single kmalloc()'d struct pvd whose ppe[] member holds a
-fixed ARRAY_SIZE(pvd->ppe) (1016) entries, but the loop runs up to the
-on-disk pp_count.  pp_count is an unvalidated __be16 read straight from
-the descriptor, so a crafted AIX image with pp_count larger than 1016
-drives the loop to read pvd->ppe[i] past the end of the allocation (up
-to 65535 entries, ~2 MB out of bounds).
+ISO 9660 images are routinely mounted from untrusted removable media -
+desktop environments auto-mount them (e.g. via udisks2) without
+CAP_SYS_ADMIN - so the record contents are attacker-controlled.
 
-The partition scan runs without mounting anything, when a block device
-with a crafted AIX/IBM partition table appears (an attacker-supplied
-image attached with losetup -P, or a device auto-scanned by udev), via
-msdos_partition() -> aix_partition().
+Reject any component that does not fit in the remaining record bytes
+before using it.  In get_symlink_chunk() return NULL, like the existing
+output-buffer (plimit) checks, so a malformed record makes readlink()
+fail with -EIO rather than silently returning a truncated target; in
+parse_rock_ridge_inode_internal() stop the inode-size walk.
 
-Clamp the scan to the number of entries the ppe[] array can hold.
-
-Fixes: 6ceea22bbbc8 ("partitions: add aix lvm partition support files")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
+Suggested-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Acked-by: Philippe De Muyter <phdm@macqel.be>
-Link: https://patch.msgid.link/20260607064137.302574-1-hexlabsecurity@proton.me
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://patch.msgid.link/20260607011823.217748-1-hexlabsecurity@proton.me
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/partitions/aix.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/isofs/rock.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/block/partitions/aix.c
-+++ b/block/partitions/aix.c
-@@ -228,6 +228,15 @@ int aix_partition(struct parsed_partitio
- 		int next_lp_ix = 1;
- 		int lp_ix;
- 
+--- a/fs/isofs/rock.c
++++ b/fs/isofs/rock.c
+@@ -462,6 +462,9 @@ repeat:
+ 				inode->i_size = symlink_len;
+ 				while (slen > 1) {
+ 					rootflag = 0;
++					/* keep the component within the SL record */
++					if (slp->len + 2 > slen)
++						goto eio;
+ 					switch (slp->flags & ~1) {
+ 					case 0:
+ 						inode->i_size +=
+@@ -617,6 +620,14 @@ static char *get_symlink_chunk(char *rpn
+ 	slp = &rr->u.SL.link;
+ 	while (slen > 1) {
+ 		rootflag = 0;
 +		/*
-+		 * pvd was read into a fixed-size struct pvd whose ppe[] array
-+		 * holds ARRAY_SIZE(pvd->ppe) entries.  pp_count is an
-+		 * unvalidated on-disk __be16, so clamp the scan to the array
-+		 * size to avoid walking past the allocation.
++		 * A component is slp->len + 2 bytes (a two-byte header plus
++		 * len bytes of text).  If it does not fit in the bytes left in
++		 * the SL record the record is malformed: fail like the plimit
++		 * checks below so readlink() returns -EIO, not a truncated path.
 +		 */
-+		if (numpps > ARRAY_SIZE(pvd->ppe))
-+			numpps = ARRAY_SIZE(pvd->ppe);
-+
- 		for (i = 0; i < numpps; i += 1) {
- 			struct ppe *p = pvd->ppe + i;
- 			unsigned int lv_ix;
++		if (slp->len + 2 > slen)
++			return NULL;
+ 		switch (slp->flags & ~1) {
+ 		case 0:
+ 			if (slp->len > plimit - rpnt)
 
 
