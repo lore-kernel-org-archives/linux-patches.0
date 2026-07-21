@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD03432BE4;
-	Tue, 21 Jul 2026 19:36:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A965415F1A;
+	Tue, 21 Jul 2026 19:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662616; cv=none; b=dex8u+hhkcSAbdlfd9xDXwDNkCw+NVu6nKbGocExCH//vul/dVGGTbTwDicMpBBULm00+ync55Wh2zI61nnWlzxZXrVfkBrE/d/hjDs81Xq0ykHw6im4owJ5EDR8EC8UWa4Yxz+mDWxwBkVhkobM1mIU8er0JjCplYIE5dqTdaI=
+	t=1784662619; cv=none; b=rM47x1sYL8WBN/yyhCNMAsr0b/1Si/UkPg4L28PChYN5EZsTyizOkmfXFC0QMeQSZTW9o9sooMzHrzonrKy0k5QSsc1xbczuA9C/5nRFx3OA3OR/xlyLfJUuZAKL3iD9VhWmkDmh3q+mcZ2ho+Oihf5HbQYEiWb4PTxyzC/zeE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662616; c=relaxed/simple;
-	bh=xVjLoEIOveJjHG/U5+lPkOlAMoOKF0iwksLWGwFw2VU=;
+	s=arc-20240116; t=1784662619; c=relaxed/simple;
+	bh=hztvCeTCGu/LHmZmCicHlTluZAXrXke2zFLTnJzplqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NOb41V1H+/q4hh5jHaSupwM2Zdb+MYafURrMocmSvc7ZOMukfuZ7XfZGxhoNYycts5SJYsE1rXvnzbq+mbGfkANml/3CQmFy7OUN+63+D5ptvEJekdVW72j7AXYw+JF+aCBtA4/ETddg3enwumxtr6Z5JG8mzf/1m/OgxcAh7Kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nc2aZyd6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B62l3/zKO2r9ieVy92w4MDZ1WBhztIlLhgMu1LOg8gJmM0aEWADW6EPxDfVh0v/ekadthXqej4edLFCtNbzH63VEIN2G1usOjwMO22rWo6RZiuWoJ94KMumMFzucE0G6TEScvOlWdrb/6WJ6h5sQbgeDvb5HqP6sIen1EznQKXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZ+st+Q0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nc2aZyd6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E301F000E9;
-	Tue, 21 Jul 2026 19:36:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZ+st+Q0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F2551F000E9;
+	Tue, 21 Jul 2026 19:36:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662615;
-	bh=0gd3w6FbGLPZDx279oZlp4hJQHxImDpFwguTnbwbDh4=;
+	s=korg; t=1784662618;
+	bh=Na8bFb11pbrLko1cBnECepZhXwmMJB2WM1jvbxTYiFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nc2aZyd6aaJcmGPH45HPDQZVPFJtNHQqiLPEBY8kACQKJyBIrf/ZN3wTYoT8UVLFW
-	 tFNgLHZOLQXjdX+ioIYeqXTDJllD51IYlze7b70wPf1dS1WuvzxHUWILDI4ipFl5Oo
-	 nX/hPCVs3OObKrIBDDP6V84Chs91L3rzeZMY7G28=
+	b=UZ+st+Q0Adv54jXd6tqUtDOiJ4g4B2OzBFd3HcX7XVHWKjzn393DkfwUUjKb4LtMM
+	 UPmk9afH+4ymfrQpjKil73EPS5gi8YhkybWMeMueCQ9f2B9Vt7axNbMjxaizq0qWV1
+	 YKYzbuamkSZ2KrMSVNKaRKR2fLIBXOQ3jiN20Pyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Chris Mason <clm@meta.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0459/1276] perf sched: Fix thread reference leak in latency_switch_event
-Date: Tue, 21 Jul 2026 17:15:02 +0200
-Message-ID: <20260721152456.376500503@linuxfoundation.org>
+Subject: [PATCH 6.12 0506/1276] xprtrdma: Initialize re_id before removal registration
+Date: Tue, 21 Jul 2026 17:15:49 +0200
+Message-ID: <20260721152457.430657031@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,40 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Chris Mason <clm@meta.com>
 
-[ Upstream commit 66ea9de60396a4dea5276bc87025884691876c36 ]
+[ Upstream commit bb7caa63e1db22fd03e8dc591b12169e99169dff ]
 
-In latency_switch_event(), after acquiring thread references for
-sched_out and sched_in via machine__findnew_thread(), the first
-add_sched_out_event() failure path does 'return -1', bypassing the
-out_put label that calls thread__put() on both references.
+rpcrdma_create_id() registers ep->re_rn with the rpcrdma ib_client
+before returning the new rdma_cm_id to rpcrdma_ep_create(). However
+rpcrdma_ep_create() currently stores that pointer in ep->re_id only
+after rpcrdma_create_id() returns.
 
-The second and third add_sched_out_event() failures correctly use
-'goto out_put'.  Fix the first one to match.
+A local administrator can race an NFS/RDMA mount against RDMA device
+removal. If rpcrdma_remove_one() observes the just-registered
+notification before rpcrdma_ep_create() assigns ep->re_id,
+rpcrdma_ep_removal_done() calls trace_xprtrdma_device_removal(NULL).
+The tracepoint dereferences id->device->name and copies
+id->route.addr.dst_addr, so the callback can crash the kernel with a
+NULL pointer dereference.
 
-Fixes: b91fc39f4ad7 ("perf machine: Protect the machine->threads with a rwlock")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Store the rdma_cm_id in ep->re_id immediately before publishing
+ep->re_rn. The existing error path still destroys the id directly if
+registration fails; ep is then freed by the caller without using
+ep->re_id. Remove the later duplicate assignment in rpcrdma_ep_create().
+
+Fixes: 3f4eb9ff9234 ("xprtrdma: Handle device removal outside of the CM event handler")
+Assisted-by: kres:openai-gpt-5
+Signed-off-by: Chris Mason <clm@meta.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 2 +-
+ net/sunrpc/xprtrdma/verbs.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 6d7106fb1c0cbc..c0fd6a8595d0f2 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -1175,7 +1175,7 @@ static int latency_switch_event(struct perf_sched *sched,
- 		}
- 	}
- 	if (add_sched_out_event(out_events, prev_state, timestamp))
--		return -1;
-+		goto out_put;
+diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
+index ab7c6178a2b9ba..dc8629bf294dc4 100644
+--- a/net/sunrpc/xprtrdma/verbs.c
++++ b/net/sunrpc/xprtrdma/verbs.c
+@@ -334,6 +334,7 @@ static struct rdma_cm_id *rpcrdma_create_id(struct rpcrdma_xprt *r_xprt,
+ 	if (rc)
+ 		goto out;
  
- 	in_events = thread_atoms_search(&sched->atom_root, sched_in, &sched->cmp_pid);
- 	if (!in_events) {
++	ep->re_id = id;
+ 	rc = rpcrdma_rn_register(id->device, &ep->re_rn, rpcrdma_ep_removal_done);
+ 	if (rc)
+ 		goto out;
+@@ -406,7 +407,6 @@ static int rpcrdma_ep_create(struct rpcrdma_xprt *r_xprt)
+ 	}
+ 	__module_get(THIS_MODULE);
+ 	device = id->device;
+-	ep->re_id = id;
+ 	reinit_completion(&ep->re_done);
+ 
+ 	ep->re_max_requests = r_xprt->rx_xprt.max_reqs;
 -- 
 2.53.0
 
