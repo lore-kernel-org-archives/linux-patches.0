@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5CF30EF7E;
-	Tue, 21 Jul 2026 19:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3E7470123;
+	Tue, 21 Jul 2026 19:54:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663667; cv=none; b=WdAKymvuYzTqvYxK/TF9KrJIYDLR1bKLgu/WVwy72ik/NmyOyM8O2zYeTeml8p3K2Ly8DyJrTSXrh7OUFwnALO5rhNb7Bl5/m0P/Yd72frQb5Dbofx84znrgAF1Y06p2TMqIFVt0DaSEEMIWM/5Lcp9L6Hnp1IXHt5KRzp4MS7s=
+	t=1784663670; cv=none; b=iH3GW1x8CkKaV3JfkXsTvUBGoz6/FUsO03JBmcVU9sp2Ub9dm/k+huOuY21Sv4vGeYuqJ4uigPmPmM+aLYSNNIiSNkdcEu69F9XlYrmqbcLvmy5VJK0LrF4c0L1NF3A7EY+UoPhfrTw44nqhElht1mW7YBKyXBMURVeczSI1+Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663667; c=relaxed/simple;
-	bh=9btxYlRlLtKpDQD/QcnXlby/YM/SjlZjQVw4gwCc7QM=;
+	s=arc-20240116; t=1784663670; c=relaxed/simple;
+	bh=7n//phQzOKk+BwrYR9uMBHmY3B4c2Pz1ayB4cIL2V64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UehdjzHGRq8Wonwm30rB0Vc5RrEp1Et4KqbybRDYXtSKG5jNPUC/gv2abQtaTd3scGQhRVSgCEBLDkiPJLnnx7hChPQn1+pbTz8V7bcSbC7rnPS1ksrnYmxZUbzsxgjxpRFIonutlDoB1N3+GALxx3i4lgVzj7ecJquI78ixfeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8Ij+MjQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u+PK+EfKL6lOUAy9tiCcEPe+CBmTKtSbaPFq1N4ynBrwrOOSe4Z1rE3BXlUZwM31NulNgA8W/fcQUbJrU390EZ/1tGNnIuDFD8u+47e4fgOTTN3qUs95rTFBLz8Y3iWrLXQBoWPtpqLhG6VGhoTwRGT/O3OBkVEtrW3oScWkRJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qM6PfOWQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8Ij+MjQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D131F00A3D;
-	Tue, 21 Jul 2026 19:54:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qM6PfOWQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C37A1F00A3D;
+	Tue, 21 Jul 2026 19:54:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663666;
-	bh=9q9LEkpKmHayA2PJL+/ZL13Cr8ezdj4WfHB2vpxPIME=;
+	s=korg; t=1784663668;
+	bh=qH1zYFYZGJdJFdTmUAifARmPnYjkj8hboxH0C2UbtK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s8Ij+MjQ01r3Wz9349xUOxYs/GPlx/eEoqgWDNWR6Unqd2TVZVy91LmROFck/JcVT
-	 8Ya0KG0uBncm+erEF5QxnHTSc0LjWA9qpF/mfnZk1llUBt0UBAIO2+BpWEH7/TTwGc
-	 1P7t9vYsfAyo3V3TgOzVfbHzzw62kbzOxG7HlFkQ=
+	b=qM6PfOWQ/yO9IgpiM/DL78qW6oCgmou5qgwo5OxiH7iRVCfMERoU2d8V13PveGmFw
+	 EqVHc8Lp9iGSXdFw7MhvXuJUEKors+DUffjw+i8nI8XGox+0aty9T4x7thmKveHk3h
+	 yzutNkSPEmYU7JUlXXvkAaqk8kpY1xUmLy/3qdYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 0908/1276] MIPS: ip22-gio: fix gio device memory leak
-Date: Tue, 21 Jul 2026 17:22:31 +0200
-Message-ID: <20260721152506.354143262@linuxfoundation.org>
+	Levente Kurusa <levex@linux.com>,
+	Johan Hovold <johan@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.12 0909/1276] MIPS: ip22-gio: fix kfree() of static object
+Date: Tue, 21 Jul 2026 17:22:32 +0200
+Message-ID: <20260721152506.377062641@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,31 +53,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 7de9a1b45f5a95b58145653c525c8fb80292d9ab upstream.
+commit c62cdd3e919bdf84c37ec46810f87cdb1736e822 upstream.
 
-The gio device release callback was never wired up so gio devices are
-not freed when the last reference is dropped.
+The gio bus root device is a statically allocated object which must not
+be freed by kfree() on failure to register the device or bus.
 
-Fixes: e84de0c61905 ("MIPS: GIO bus support for SGI IP22/28")
-Cc: stable@vger.kernel.org	# 3.3
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 82242d28ff8b ("MIPS: IP22: Add missing put_device call")
+Cc: stable@vger.kernel.org	# 3.17
+Cc: Levente Kurusa <levex@linux.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/sgi-ip22/ip22-gio.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/mips/sgi-ip22/ip22-gio.c |    1 -
+ 1 file changed, 1 deletion(-)
 
 --- a/arch/mips/sgi-ip22/ip22-gio.c
 +++ b/arch/mips/sgi-ip22/ip22-gio.c
-@@ -101,6 +101,8 @@ int gio_device_register(struct gio_devic
+@@ -30,7 +30,6 @@ static struct {
+ 
+ static void gio_bus_release(struct device *dev)
  {
- 	giodev->dev.bus = &gio_bus_type;
- 	giodev->dev.parent = &gio_bus;
-+	giodev->dev.release = gio_release_dev;
-+
- 	return device_register(&giodev->dev);
+-	kfree(dev);
  }
- EXPORT_SYMBOL_GPL(gio_device_register);
+ 
+ static struct device gio_bus = {
 
 
