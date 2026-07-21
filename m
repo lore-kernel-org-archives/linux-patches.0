@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9982D4746AC;
-	Tue, 21 Jul 2026 21:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5303434E4E;
+	Tue, 21 Jul 2026 21:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667835; cv=none; b=lUuEBJTF3Ay0pCB5X/eh8uF1h+jBmJuKEnCjN+nYeQPjFxnurOWWFFvnDcqAZKt14FkrMOuogPMRl40YHZhTxE2CyXEQrb35mIya9Po7U8h8s6VWL4BcQM6z3baBqgMtqbNBIw7ouqAuVoiMSJ4x9vRvTBQVOSGvTjrL/U4Ml5Y=
+	t=1784667837; cv=none; b=sK6TQhGZc9389isIZNxFKM3uDwruWI0V8ovsCVXgvLbQs1WceJwCsV/rjWSHrT82pOu+Uc7JRTYlx9kyugLZlb5eYk+Iwbvs6BSGacon6zKFrCtaN6RHF2Z48QamDoUYQVTqvt4MA6uSUU1cLJFUe5Ir+rrFUd+xXcIEAFBsGec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667835; c=relaxed/simple;
-	bh=LuMYLDe7uhv1aNN2iyZr0M+2dVn6nSogoyPOP9CKfz8=;
+	s=arc-20240116; t=1784667837; c=relaxed/simple;
+	bh=Kolwk0vVvTacP7PZjipYaMxhsNxFRORIyfKqlxBNwDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bomhB4+yUGVwfNQgXl6s1C+pZBhFd0FuSgDNzkiCyT60LQr0xH9ze1FWMNJHhXFDFFlc5VZ56mtlhpuA2DnjujbBgQloJljEIp3+7e+c/xCIZtIPAnODpLdwpT3mv5V/7/yxDH3npUV1753rEVr8ZYk+IujtMdxvDlja/b9M5NU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFnVkle2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nuaTMnZOQwAF6zCucg1St7wLN+VHMZCmKJSC9s42e0rknahMQ5oBcpp87sqqmQZwYUjZeRZUy7q7ULNBSBxcKkdkiF7rx8cWRs9vzM0DK5QjzH1u7zM7kObIKJE1HNfJQQaGvDDgxI1l7CWtxbPv6zT6tcGLW+6kc3UwNazYfAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dZVUE9E/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFnVkle2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BCB71F00A3A;
-	Tue, 21 Jul 2026 21:03:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dZVUE9E/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C94C1F00A3F;
+	Tue, 21 Jul 2026 21:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667829;
-	bh=GnCTCVpuHbvH0XCXyP3fccIVCWHzj4dcRz3S/KVJuBQ=;
+	s=korg; t=1784667832;
+	bh=/DO2gpxLOX5up7kG55VZKR1Y4jt8kr0J/Rq1lcfG0Fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GFnVkle2g7+Qm4Va6/EgkvC0GU5tRGP9Rk4iiDVxqbR1umwKNS3kgIMr1J8KZNaEf
-	 6L+r1F05cCK3CtsumsuWTSBlzEPjXv+8RtdEb9edOpY4Y4nUOzwPqwRaQWF6FdEgNF
-	 tE3NARM/p+QXYS0tfWcZcXtBdJyc6an+X7HOj4CE=
+	b=dZVUE9E/wbu/MIsi9I22+wuVU5EbDWijIREaZvwoS7mfgRH/SxDzxU63tHL8Bb1Va
+	 ttxsE4MgRtXfeOuY/F23gGAN0A7a1w14zxbjMlodra2Z+LdEqLFRYKYF493CQjanzi
+	 n0hGAPNa8FW7APfryQZEqDEm+k+zh8SEjH8SFOqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Harry Yoo (Oracle)" <harry@kernel.org>,
-	Hao Li <hao.li@linux.dev>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1210/1266] mm/slab: do not limit zeroing to orig_size when only red zoning is enabled
-Date: Tue, 21 Jul 2026 17:27:27 +0200
-Message-ID: <20260721152508.878012251@linuxfoundation.org>
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>
+Subject: [PATCH 6.6 1211/1266] seqlock: Introduce scoped_seqlock_read()
+Date: Tue, 21 Jul 2026 17:27:28 +0200
+Message-ID: <20260721152508.899379111@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,67 +51,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 648927ceb84021a25a0fbd5673740956f318d534 ]
+[ Upstream commit cc39f3872c0865bef992b713338df369554fa9e0 ]
 
-When init (zeroing) on allocation is requested, for kmalloc() we
-generally have to zero the full object size even if a smaller size is
-requested, in order to provide krealloc()'s __GFP_ZERO guarantees.
+The read_seqbegin/need_seqretry/done_seqretry API is cumbersome and
+error prone. With the new helper the "typical" code like
 
-But if we track the requested size, krealloc() uses that information to
-do the right thing, so we can zero only the requested size. With red
-zoning also enabled, any extra size became part of the red zone, so it
-must not be zeroed and thus we must zero only the requested size.
+	int seq, nextseq;
+	unsigned long flags;
 
-However the current check is imprecise, and will trigger also when only
-SLAB_RED_ZONE is enabled without SLAB_STORE_USER (which enables tracking
-the requested size). This means enabling red zoning alone can compromise
-krealloc()'s __GFP_ZERO contract.
+	nextseq = 0;
+	do {
+		seq = nextseq;
+		flags = read_seqbegin_or_lock_irqsave(&seqlock, &seq);
 
-Fix this by using slub_debug_orig_size() instead, which is the exact
-check for whether the requested size is tracked. We don't need to care
-if red zoning is also enabled or not. Also update and expand the
-comment accordingly.
+		// read-side critical section
 
-Fixes: 9ce67395f5a0 ("mm/slub: only zero requested size of buffer for kzalloc when debug enabled")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260610-slab_alloc_flags-v2-1-7190909db118@kernel.org
-Reviewed-by: Harry Yoo (Oracle) <harry@kernel.org>
-Reviewed-by: Hao Li <hao.li@linux.dev>
-Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+		nextseq = 1;
+	} while (need_seqretry(&seqlock, seq));
+	done_seqretry_irqrestore(&seqlock, seq, flags);
+
+can be rewritten as
+
+	scoped_seqlock_read (&seqlock, ss_lock_irqsave) {
+		// read-side critical section
+	}
+
+Original idea by Oleg Nesterov; with contributions from Linus.
+
+Originally-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Stable-dep-of: 6650527444da ("proc: protect ptrace_may_access() with exec_update_lock (part 1)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slab.h |   17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ include/linux/seqlock.h |  111 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 111 insertions(+)
 
---- a/mm/slab.h
-+++ b/mm/slab.h
-@@ -734,14 +734,17 @@ static inline void slab_post_alloc_hook(
- 	flags &= gfp_allowed_mask;
- 
- 	/*
--	 * For kmalloc object, the allocated memory size(object_size) is likely
--	 * larger than the requested size(orig_size). If redzone check is
--	 * enabled for the extra space, don't zero it, as it will be redzoned
--	 * soon. The redzone operation for this extra space could be seen as a
--	 * replacement of current poisoning under certain debug option, and
--	 * won't break other sanity checks.
-+	 * For kmalloc object, the allocated size (object_size) can be larger
-+	 * than the requested size (orig_size). We however need to zero the
-+	 * whole object_size to handle possible later krealloc() with
-+	 *__GFP_ZERO properly.
-+	 *
-+	 * But if we keep track of the requested size, krealloc() uses that
-+	 * information. Additionally if red zoning is enabled, the extra space
-+	 * is also red zone, so we should not overwrite it. So limit zeroing to
-+	 * orig_size if we track it.
- 	 */
--	if (kmem_cache_debug_flags(s, SLAB_STORE_USER | SLAB_RED_ZONE) &&
-+	if (kmem_cache_debug_flags(s, SLAB_STORE_USER) &&
- 	    (s->flags & SLAB_KMALLOC))
- 		zero_size = orig_size;
- 
+--- a/include/linux/seqlock.h
++++ b/include/linux/seqlock.h
+@@ -1266,4 +1266,115 @@ done_seqretry_irqrestore(seqlock_t *lock
+ 	if (seq & 1)
+ 		read_sequnlock_excl_irqrestore(lock, flags);
+ }
++
++enum ss_state {
++	ss_done = 0,
++	ss_lock,
++	ss_lock_irqsave,
++	ss_lockless,
++};
++
++struct ss_tmp {
++	enum ss_state	state;
++	unsigned long	data;
++	spinlock_t	*lock;
++	spinlock_t	*lock_irqsave;
++};
++
++static inline void __scoped_seqlock_cleanup(struct ss_tmp *sst)
++{
++	if (sst->lock)
++		spin_unlock(sst->lock);
++	if (sst->lock_irqsave)
++		spin_unlock_irqrestore(sst->lock_irqsave, sst->data);
++}
++
++extern void __scoped_seqlock_invalid_target(void);
++
++#if defined(CONFIG_CC_IS_GCC) && CONFIG_GCC_VERSION < 90000
++/*
++ * For some reason some GCC-8 architectures (nios2, alpha) have trouble
++ * determining that the ss_done state is impossible in __scoped_seqlock_next()
++ * below.
++ */
++static inline void __scoped_seqlock_bug(void) { }
++#else
++/*
++ * Canary for compiler optimization -- if the compiler doesn't realize this is
++ * an impossible state, it very likely generates sub-optimal code here.
++ */
++extern void __scoped_seqlock_bug(void);
++#endif
++
++static inline void
++__scoped_seqlock_next(struct ss_tmp *sst, seqlock_t *lock, enum ss_state target)
++{
++	switch (sst->state) {
++	case ss_done:
++		__scoped_seqlock_bug();
++		return;
++
++	case ss_lock:
++	case ss_lock_irqsave:
++		sst->state = ss_done;
++		return;
++
++	case ss_lockless:
++		if (!read_seqretry(lock, sst->data)) {
++			sst->state = ss_done;
++			return;
++		}
++		break;
++	}
++
++	switch (target) {
++	case ss_done:
++		__scoped_seqlock_invalid_target();
++		return;
++
++	case ss_lock:
++		sst->lock = &lock->lock;
++		spin_lock(sst->lock);
++		sst->state = ss_lock;
++		return;
++
++	case ss_lock_irqsave:
++		sst->lock_irqsave = &lock->lock;
++		spin_lock_irqsave(sst->lock_irqsave, sst->data);
++		sst->state = ss_lock_irqsave;
++		return;
++
++	case ss_lockless:
++		sst->data = read_seqbegin(lock);
++		return;
++	}
++}
++
++#define __scoped_seqlock_read(_seqlock, _target, _s)			\
++	for (struct ss_tmp _s __cleanup(__scoped_seqlock_cleanup) =	\
++	     { .state = ss_lockless, .data = read_seqbegin(_seqlock) };	\
++	     _s.state != ss_done;					\
++	     __scoped_seqlock_next(&_s, _seqlock, _target))
++
++/**
++ * scoped_seqlock_read (lock, ss_state) - execute the read side critical
++ *                                        section without manual sequence
++ *                                        counter handling or calls to other
++ *                                        helpers
++ * @lock: pointer to seqlock_t protecting the data
++ * @ss_state: one of {ss_lock, ss_lock_irqsave, ss_lockless} indicating
++ *            the type of critical read section
++ *
++ * Example:
++ *
++ *     scoped_seqlock_read (&lock, ss_lock) {
++ *         // read-side critical section
++ *     }
++ *
++ * Starts with a lockess pass first. If it fails, restarts the critical
++ * section with the lock held.
++ */
++#define scoped_seqlock_read(_seqlock, _target)				\
++	__scoped_seqlock_read(_seqlock, _target, __UNIQUE_ID(seqlock))
++
+ #endif /* __LINUX_SEQLOCK_H */
 
 
