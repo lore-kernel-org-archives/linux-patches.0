@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E99946D555;
-	Tue, 21 Jul 2026 17:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDEE946D090;
+	Tue, 21 Jul 2026 17:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655466; cv=none; b=RX5faMUSRjAWcUXFDTh1dvCwXbm3dxcx/cuqbV2RI70IyX5MSIGVnNs/CBXBRMM+kANfOfPxVi8m23ctqLxnX4Yn4cVZ5UD15ZCkhYS4wAf+ox/X0tlG3FGOoBEX/w1Bt8JwFu5cDwzswHrMiwDcYoThf3URKFy1q8/nfdChyDI=
+	t=1784655469; cv=none; b=r/rZhfxmRu+wMEKaJ7eY7iVZTDLWX7km7vJ60ieJ8Vta3sbB/kOUiGmNRcS0yB91Bjy5/XC8SwcJrvEG15ySzgy4iQcv08rK82szcx7+Y8ui+AZj+XDwb020zK9fmQ3WGeGwhDGNpfpOztulHZgQXGcNzbqFiHK9/m27hcR/a/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655466; c=relaxed/simple;
-	bh=lgjIDTGBd0ipruMwjzOHvVaxvifgcDGet/CzzhvuBSY=;
+	s=arc-20240116; t=1784655469; c=relaxed/simple;
+	bh=tf480oDgYf2Od2Dz2LM7SjwNQwUxN2jEFiHE1D6sz2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nsB/jTohKtpU76QNF8tidVQXZmeYe0ErmfFaRpZ6s9ejsu+EY6D2p3VC8G6EJjiyie1g9MWy6IEYJ8n6WDqO2kyssQOJungcU5eNBjnieAOwqBf3xuS5pZwdaPptWSgGhjTQws+JGehgJ65ZfdcQfj1U/y4ua79IYY/nzlf4mu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQddRH7e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MW0ZRK7OpzfOimfmI+xtDC6vpTcI217nbZwg+0qRw0swJovzcBmRjn/VnWsAoRipV8nZHXmpBzLvkm6Kt30cHlT+n4ki+5YPI6zKbrPIkiWiwAs4Fy3kTT13ctGbUxb9Hf4Bgx+Lv7IfrUJEaC3nWa/h+4188l6eMwwacLy1id0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fcv0pU47; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQddRH7e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E071F00A3A;
-	Tue, 21 Jul 2026 17:37:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fcv0pU47"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC351F000E9;
+	Tue, 21 Jul 2026 17:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655465;
-	bh=k9GJVDxnwYozllgYH4S3lXHLiT6ZCd9OPNfzSsHcxUA=;
+	s=korg; t=1784655467;
+	bh=veThFdtGFAh5EEtt/7OXJ3BcLfOLd2hjIU5NpEaa+Ek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LQddRH7eXIXSD2Zn3vVGSTDIKLj9vqNPE8W/s8BzrfO/cJpM94iJCwUaCRch8QqhE
-	 AbXlQmZQFcHBC6U4dH4sbWh825wfyIZ8CWFnh2D3TXwUuqd1M0hz63sn405IwW/xp9
-	 s/gRvpB7cVgpL6/pc8/7XtfhvCi/C0+ybaWb5HAo=
+	b=fcv0pU47P9C1VE67akgo1Ne4v54AzxnKLH5xkjsv4bT+L8VPz14JnvtmSLgSlo+x/
+	 OA/0D2ojyIjuXnp9nd26XNQTQ+06aut6lVzcqdbRKHe5YTjxgNu8/JagR3rA42OjZe
+	 t7G8QMYDy4PVbNtZ7a5x6q1l6PzQdg/jtwaGkSqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingyu Jin <xingyuj@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0020/1611] af_unix: Drop all SCM attributes for SOCKMAP.
-Date: Tue, 21 Jul 2026 17:02:16 +0200
-Message-ID: <20260721152515.254940872@linuxfoundation.org>
+	Eckhart Mohr <e.mohr@tuxedocomputers.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.18 0021/1611] ALSA: hda/realtek: Add quirk for TongFang X6xx45xU
+Date: Tue, 21 Jul 2026 17:02:17 +0200
+Message-ID: <20260721152515.277300981@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,179 +51,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Eckhart Mohr <e.mohr@tuxedocomputers.com>
 
-[ Upstream commit 965dc93481d1b80d341bdd16c27b16fe197175ee ]
+commit d595255241e5fec0c94adeebf2565524398e37c5 upstream.
 
-SOCKMAP can hide inflight fd from AF_UNIX GC.
+Fix microphone detection on built in headphone jack for some devices.
 
-When a socket in SOCKMAP receives skb with inflight fd,
-sk_psock_verdict_data_ready() looks up the mapped socket and
-enqueue skb to its psock->ingress_skb.
-
-Since neither the old nor the new GC can inspect the psock
-queue, the hidden skb leaks the inflight sockets.  Note that
-this cannot be detected via kmemleak because inflight sockets
-are linked to a global list.
-
-In addition, SOCKMAP redirect breaks the Tarjan-based GC's
-assumption that unix_edge.successor is always alive, which
-is no longer true once skb is redirected, resulting in
-use-after-free below. [0]
-
-Moreover, SOCKMAP does not call scm_stat_del() properly,
-so unix_show_fdinfo() could report an incorrect fd count.
-
-sk_msg_recvmsg() does not support any SCM attributes in the
-first place.
-
-Let's drop all SCM attributes before passing skb to the
-SOCKMAP layer.
-
-[0]:
-BUG: KASAN: slab-use-after-free in unix_del_edges (net/unix/garbage.c:118 net/unix/garbage.c:181 net/unix/garbage.c:251)
-Read of size 8 at addr ffff888125362670 by task kworker/56:1/496
-
-CPU: 56 UID: 0 PID: 496 Comm: kworker/56:1 Not tainted 7.0.0-rc7-00263-gb9d8b856689d #3 PREEMPT(lazy)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-Workqueue: events sk_psock_backlog
-Call Trace:
- <TASK>
- dump_stack_lvl (lib/dump_stack.c:122)
- print_report (mm/kasan/report.c:379)
- kasan_report (mm/kasan/report.c:597)
- unix_del_edges (net/unix/garbage.c:118 net/unix/garbage.c:181 net/unix/garbage.c:251)
- unix_destroy_fpl (net/unix/garbage.c:317)
- unix_destruct_scm (./include/net/scm.h:80 ./include/net/scm.h:86 net/unix/af_unix.c:1976)
- sk_psock_backlog (./include/linux/skbuff.h:?)
- process_scheduled_works (kernel/workqueue.c:?)
- worker_thread (kernel/workqueue.c:?)
- kthread (kernel/kthread.c:438)
- ret_from_fork (arch/x86/kernel/process.c:164)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:258)
- </TASK>
-
-Allocated by task 955:
- kasan_save_track (mm/kasan/common.c:58 mm/kasan/common.c:78)
- __kasan_slab_alloc (mm/kasan/common.c:369)
- kmem_cache_alloc_noprof (mm/slub.c:4539)
- sk_prot_alloc (net/core/sock.c:2240)
- sk_alloc (net/core/sock.c:2301)
- unix_create1 (net/unix/af_unix.c:1099)
- unix_create (net/unix/af_unix.c:1169)
- __sock_create (net/socket.c:1606)
- __sys_socketpair (net/socket.c:1811)
- __x64_sys_socketpair (net/socket.c:1863 net/socket.c:1860 net/socket.c:1860)
- do_syscall_64 (arch/x86/entry/syscall_64.c:?)
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-Freed by task 496:
- kasan_save_track (mm/kasan/common.c:58 mm/kasan/common.c:78)
- kasan_save_free_info (mm/kasan/generic.c:587)
- __kasan_slab_free (mm/kasan/common.c:287)
- kmem_cache_free (mm/slub.c:6165)
- __sk_destruct (net/core/sock.c:2282 net/core/sock.c:2384)
- sk_psock_destroy (./include/net/sock.h:?)
- process_scheduled_works (kernel/workqueue.c:?)
- worker_thread (kernel/workqueue.c:?)
- kthread (kernel/kthread.c:438)
- ret_from_fork (arch/x86/kernel/process.c:164)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:258)
-
-Fixes: c63829182c37 ("af_unix: Implement ->psock_update_sk_prot()")
-Fixes: 77462de14a43 ("af_unix: Add read_sock for stream socket types")
-Reported-by: Xingyu Jin <xingyuj@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260415184830.3988432-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Eckhart Mohr <e.mohr@tuxedocomputers.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Link: https://patch.msgid.link/20260708132135.102680-1-wse@tuxedocomputers.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/unix/af_unix.c | 35 +++++++++++++++++++++++++++--------
- 1 file changed, 27 insertions(+), 8 deletions(-)
+ sound/hda/codecs/realtek/alc269.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index b339f83caf036e..12c075a07e76b7 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -1985,16 +1985,19 @@ static void unix_peek_fds(struct scm_cookie *scm, struct sk_buff *skb)
- 
- static void unix_destruct_scm(struct sk_buff *skb)
- {
--	struct scm_cookie scm;
-+	struct scm_cookie scm = {};
-+
-+	swap(scm.pid, UNIXCB(skb).pid);
- 
--	memset(&scm, 0, sizeof(scm));
--	scm.pid = UNIXCB(skb).pid;
- 	if (UNIXCB(skb).fp)
- 		unix_detach_fds(&scm, skb);
- 
--	/* Alas, it calls VFS */
--	/* So fscking what? fput() had been SMP-safe since the last Summer */
- 	scm_destroy(&scm);
-+}
-+
-+static void unix_wfree(struct sk_buff *skb)
-+{
-+	unix_destruct_scm(skb);
- 	sock_wfree(skb);
- }
- 
-@@ -2010,7 +2013,7 @@ static int unix_scm_to_skb(struct scm_cookie *scm, struct sk_buff *skb, bool sen
- 	if (scm->fp && send_fds)
- 		err = unix_attach_fds(scm, skb);
- 
--	skb->destructor = unix_destruct_scm;
-+	skb->destructor = unix_wfree;
- 	return err;
- }
- 
-@@ -2087,6 +2090,13 @@ static void scm_stat_del(struct sock *sk, struct sk_buff *skb)
- 	}
- }
- 
-+static void unix_orphan_scm(struct sock *sk, struct sk_buff *skb)
-+{
-+	scm_stat_del(sk, skb);
-+	unix_destruct_scm(skb);
-+	skb->destructor = sock_wfree;
-+}
-+
- /*
-  *	Send AF_UNIX data.
-  */
-@@ -2704,10 +2714,16 @@ static int unix_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
- 	int err;
- 
- 	mutex_lock(&u->iolock);
-+
- 	skb = skb_recv_datagram(sk, MSG_DONTWAIT, &err);
--	mutex_unlock(&u->iolock);
--	if (!skb)
-+	if (!skb) {
-+		mutex_unlock(&u->iolock);
- 		return err;
-+	}
-+
-+	unix_orphan_scm(sk, skb);
-+
-+	mutex_unlock(&u->iolock);
- 
- 	return recv_actor(sk, skb);
- }
-@@ -2905,6 +2921,9 @@ static int unix_stream_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
- #endif
- 
- 	spin_unlock(&queue->lock);
-+
-+	unix_orphan_scm(sk, skb);
-+
- 	mutex_unlock(&u->iolock);
- 
- 	return recv_actor(sk, skb);
--- 
-2.53.0
-
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7550,6 +7550,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x1d05, 0x300f, "TongFang X6AR5xxY", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d05, 0x3019, "TongFang X6FR5xxY", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d05, 0x3031, "TongFang X6AR55xU", ALC2XX_FIXUP_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1d05, 0x3034, "TongFang X6xx45xU", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d17, 0x3288, "Haier Boyue G42", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
+ 	SND_PCI_QUIRK(0x1d72, 0x1602, "RedmiBook", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1701, "XiaomiNotebook Pro", ALC298_FIXUP_DELL1_MIC_NO_PRESENCE),
 
 
