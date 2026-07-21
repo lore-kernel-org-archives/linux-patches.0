@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FC03BD63B;
-	Tue, 21 Jul 2026 22:06:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DCA4189DA;
+	Tue, 21 Jul 2026 22:06:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671608; cv=none; b=uIjrwFUbc5gw2kVKDtiZZCSnbhQpvPi7DVRQepd4jlXagtT0keR8Ke7FdIZARojwYU6yHC+5H8UTFSzATmjkx05giltrQKdQHORrNxeJJ93GMGQOVb4KzfyKVGgpXkZrLwZgh+l8ty7AXPPb6O9F3d5Pl2jECxMgEFyn2nXvrp8=
+	t=1784671610; cv=none; b=exuiy8VJ32Va+esiOHz44AjPxOfokvCt4x27rmOrfZFGUZFjwxaJKvefYYtS9/Fdyw6dlHLXyj8dnz17cdE5hmoc6GsgDvUHwBDskezVD00K9b5FD+LJ5iiyo90R8VciGbsQsr8uO1rs9JWlETrmN4vQ8cD8rrRgMmpn00w5emU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671608; c=relaxed/simple;
-	bh=aW1lGMg5KZ8a+5p5955ELNGNBalINMUzkCspoOg1KDc=;
+	s=arc-20240116; t=1784671610; c=relaxed/simple;
+	bh=eyGpuV6laf8cwAFbjVf6QlFWcapVhwvUMUVBxaBT7us=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZLNzQz7Ne5vfCIeCUG4CAI6jKSxvEG9g0e98O17HST9eikS6zTPLg9lFTYbvTQzAGdbJYc4w0tq8GhUWWIzcHjvySvxDpU+oXLpoQRM4eKTJyxnWV8r8ecbUX+oPLKPxaEZOvqXGZ2QQS0xEpCRbCC+SubiUagj+dthxcRGR49E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NrxXBvjP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AWOKRkI2Ud+Ibj/aAL6bNR2JHkTsJpIXNtcs2MDG2529pRRFn+UqBV8TR4lFq+pWfYNWmPVLDqLy2wXnMuTjee8d/FkxToBtd4RLdfWz3osKkMMmstm9XONWBYD4kehqKY3IXBikZTd/amkf50hO3VPmSa3nm4jqZ5OD3WwMnIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UeWflChE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NrxXBvjP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C59861F000E9;
-	Tue, 21 Jul 2026 22:06:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UeWflChE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 963CB1F00A3A;
+	Tue, 21 Jul 2026 22:06:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671606;
-	bh=Uj4N9Bf6MnfC1XLZnjqB7emXyoeeKMCs/OnIIUerQVE=;
+	s=korg; t=1784671609;
+	bh=bWn8oRWoI5WP6QL7pCks1mIT7zs3vMy4/JgSaaeEE2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NrxXBvjPNyfzntjhfjmK/wbzkyjR6mQTYGC/TYGgLpUpR1gvE6iIweMiM8xuq9gRl
-	 F6vqzRSm+RfEXGaqTXuS5ju75LrnD9O2vnKsGemh9yisnJPjXHaH479WxU/rcr+EWk
-	 8/LZC+NrqwpgatN6YqHexI7gOraszIhqYToUEreY=
+	b=UeWflChEFHiU1gGh63nYAPbH6qxt/XI2XMxhYqI40eisMkI3mQQk5Ve+hk+fX3mkN
+	 UceOZs31t794m4yf8fs3sIekLvt2Go1fCC0McYXbzLZeZUETt7cjBwkb4mZOrbPiZM
+	 mQ7l9FLnIBkqkYb54B+NqkQzib5+agPo94kKF4Eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rui Qi <qirui.001@bytedance.com>,
-	Paul Walmsley <pjw@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 308/843] riscv: stacktrace: Remove bogus -0x4 offset in non-FP walk_stackframe
-Date: Tue, 21 Jul 2026 17:19:03 +0200
-Message-ID: <20260721152412.955513961@linuxfoundation.org>
+Subject: [PATCH 5.15 268/843] net/sched: cls_bpf: prevent unbounded recursion in offload rollback
+Date: Tue, 21 Jul 2026 17:18:23 +0200
+Message-ID: <20260721152412.052339202@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,60 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rui Qi <qirui.001@bytedance.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 8ac35bac70e7e581d673b76878f7691cdadc33b8 ]
+[ Upstream commit 27db54b90bcc7c37867fe664107fa25ea6a116e4 ]
 
-In the non-frame-pointer version of walk_stackframe, each value read
-from the stack is treated as a potential return address and has 0x4
-subtracted before being used as the program counter. This was intended
-to convert the return address (the instruction after a call) back to
-the call site, but it is incorrect:
+Quan Sun reported [1] a stack overflow in cls_bpf_offload_cmd().
 
-1. RISC-V has variable-length instructions due to the RVC (compressed
-   instruction) extension. A call instruction can be either 4 bytes
-   (regular) or 2 bytes (compressed, e.g. c.jal). Subtracting a fixed
-   0x4 assumes all call instructions are 4 bytes, which is wrong for
-   compressed instructions.
+Reproducer on netdevsim: add a skip_sw cls_bpf filter, set the
+bpf_tc_accept debugfs knob to 0, then `tc filter replace`. The replace
+calls tc_setup_cb_replace() which fails. cls_bpf_offload_cmd() then
+swaps prog/oldprog and recursively calls itself to roll back. But
+bpf_tc_accept=0 makes the rollback fail too, which triggers yet another
+rollback frame with the same arguments, and so on until the stack is
+exhausted.
 
-2. Stack traces conventionally report return addresses, not call sites.
-   Other architectures (ARM64, x86, ARM) do not subtract instruction
-   size from return addresses in their stack unwinding code.
+bpf_tc_accept is just a convenient knob for the reproducer. Any driver
+whose tc_setup_cb_replace() fails twice in a row can hit the same loop,
+so this is not a netdevsim-only issue.
 
-3. The frame-pointer version of walk_stackframe already dropped the
-   -0x4 offset. Commit b785ec129bd9 ("riscv/ftrace: Add
-   HAVE_FUNCTION_GRAPH_RET_ADDR_PTR support") replaced "pc =
-   frame->ra - 0x4" with ftrace_graph_ret_addr(), and the commit
-   message explicitly noted that "the original calculation, pc =
-   frame->ra - 4, is buggy when the instruction at the return address
-   happened to be a compressed inst." The non-FP version was simply
-   overlooked.
+Two ways to fix it:
 
-Remove the bogus -0x4 offset to match the FP version and the
-conventions used by other architectures.
+  1) Have the rollback call tc_setup_cb_add() on oldprog instead of
+     re-entering cls_bpf_offload_cmd().
+  2) Mark the rollback frame with a flag and skip a second-level
+     rollback from inside it.
 
-Fixes: 5d8544e2d007 ("RISC-V: Generic library routines and assembly")
-Signed-off-by: Rui Qi <qirui.001@bytedance.com>
-Link: https://patch.msgid.link/20260603115329.791603-2-qirui.001@bytedance.com
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Go with (2). It is the smaller change and keeps the original behaviour:
+the rollback still goes through tc_setup_cb_replace(), so the driver
+gets one real chance to restore its state. If that attempt also fails,
+we just return the original error instead of recursing.
+
+[1]: https://lore.kernel.org/bpf/ce5a6005-3c5e-4696-9e05-eba9461dc860@std.uestc.edu.cn/T/#u
+
+Fixes: 102740bd9436 ("cls_bpf: fix offload assumptions after callback conversion")
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260526025529.24382-1-jiayuan.chen@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/stacktrace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/cls_bpf.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
-index 7c35af666d425b..d435dba3576929 100644
---- a/arch/riscv/kernel/stacktrace.c
-+++ b/arch/riscv/kernel/stacktrace.c
-@@ -112,7 +112,7 @@ void notrace walk_stackframe(struct task_struct *task,
- 	while (!kstack_end(ksp)) {
- 		if (__kernel_text_address(pc) && unlikely(!fn(arg, pc)))
- 			break;
--		pc = READ_ONCE_NOCHECK(*ksp++) - 0x4;
-+		pc = READ_ONCE_NOCHECK(*ksp++);
+diff --git a/net/sched/cls_bpf.c b/net/sched/cls_bpf.c
+index 63fb61a290cd6c..70ed894b812092 100644
+--- a/net/sched/cls_bpf.c
++++ b/net/sched/cls_bpf.c
+@@ -138,7 +138,8 @@ static bool cls_bpf_is_ebpf(const struct cls_bpf_prog *prog)
+ 
+ static int cls_bpf_offload_cmd(struct tcf_proto *tp, struct cls_bpf_prog *prog,
+ 			       struct cls_bpf_prog *oldprog,
+-			       struct netlink_ext_ack *extack)
++			       struct netlink_ext_ack *extack,
++			       bool is_rollback)
+ {
+ 	struct tcf_block *block = tp->chain->block;
+ 	struct tc_cls_bpf_offload cls_bpf = {};
+@@ -173,7 +174,8 @@ static int cls_bpf_offload_cmd(struct tcf_proto *tp, struct cls_bpf_prog *prog,
+ 					  &oldprog->in_hw_count, true);
+ 
+ 	if (prog && err) {
+-		cls_bpf_offload_cmd(tp, oldprog, prog, extack);
++		if (!is_rollback)
++			cls_bpf_offload_cmd(tp, oldprog, prog, extack, true);
+ 		return err;
  	}
+ 
+@@ -204,7 +206,7 @@ static int cls_bpf_offload(struct tcf_proto *tp, struct cls_bpf_prog *prog,
+ 	if (!prog && !oldprog)
+ 		return 0;
+ 
+-	return cls_bpf_offload_cmd(tp, prog, oldprog, extack);
++	return cls_bpf_offload_cmd(tp, prog, oldprog, extack, false);
  }
  
+ static void cls_bpf_stop_offload(struct tcf_proto *tp,
+@@ -213,7 +215,7 @@ static void cls_bpf_stop_offload(struct tcf_proto *tp,
+ {
+ 	int err;
+ 
+-	err = cls_bpf_offload_cmd(tp, NULL, prog, extack);
++	err = cls_bpf_offload_cmd(tp, NULL, prog, extack, false);
+ 	if (err)
+ 		pr_err("Stopping hardware offload failed: %d\n", err);
+ }
 -- 
 2.53.0
 
