@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D968401A18;
-	Tue, 21 Jul 2026 17:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C86405845;
+	Tue, 21 Jul 2026 17:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654969; cv=none; b=IyLKagdGSVuY+y+nKOQiwdmwwbFc5cZan8C+5JAP1ycGmyNAwHGLSYdUSBPfsNwuI5ibMlbaUa3Q6cUdTgOOb+Z9dWq08A/wFiqntLppb7yzBDj5gOErDG5LZDxIJoQHxvzoLFvAGSA3pbwFguCZMr+qpJ5C427UlaYC5LRHkS0=
+	t=1784654972; cv=none; b=DB7FVNSZblzXCfVm3VSLl/wUsvDgFLfS0h/d5isI3UfDbhcjMTPYekDCLyNlh6R9Zcdmrisi//DHDrqLn2BQWuwz1Y2sqcdX3n7+XabN0Z7pW7XMs5Bh4Uo5Of5zrv1zK6OGxGOfqQRztd3U/KftUQdeTtqgZV1aCs2A1XHYv90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654969; c=relaxed/simple;
-	bh=QRq00/6TUdP+uTz8zdFXvu7/Gc2oP/Dftl/8V8zb1YI=;
+	s=arc-20240116; t=1784654972; c=relaxed/simple;
+	bh=S1koEnteLDLSVeQxdA3O6es5AGmJdgpkJcKc278mgc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZSH97coZBF4hzY8e0gKEIxOjvLc4DnqKiYPXC2iXqm5Bmdods2aMhfhJdyTEU2C2ha+uCXpnIy0WCLRFRpOk8xNMrmOhpewn0nfIxB+QVfo5VPM9QOQcrxcbJVPYfnzOKvMzu0o5L7hZ8kTE7Mh/84DOf7nIdWdFad/8pxWyTYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QgscB6dZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UGNDEeFiGUlmwMYhwKMag5jehXAXCnhUyoBzH9iVHO497qQaLrHO1jL21+GQQnSGxB4M9NsuNzDfHHWuNK5y5R3g+spa2pt8O1zjFn/U91x31CN+J2kOLJCXZzOsz4HjpQVNBEONtC/i8r5Pp6QF8MZfrBeTD1MYhQ+0oV2alyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JpRTB3lO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QgscB6dZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102A21F000E9;
-	Tue, 21 Jul 2026 17:29:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpRTB3lO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7BB81F000E9;
+	Tue, 21 Jul 2026 17:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654968;
-	bh=Vz5JRyoHjcQWKOwS3G20h5UXc4VV3N4FjtwdPY37FIc=;
+	s=korg; t=1784654971;
+	bh=9gsfJo6mxVSYDcEFjgPEKm4kUcGaG/fShhLT5N/GV9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QgscB6dZp/qtHCGM/Uwlet5pFqQDcIV82cHWgDs9/9Y/BDCpUMJkOR5Ov4rtmF17F
-	 KTIyCaIXJGSVJvsWQNtRfpYimf3gklqi00sDO4HMmfXwjJLXdC9BA1JSt99ZywjEGt
-	 SJoTkgsGFNS7+ftjuUR8uBi5KSWdJ5hqWMA+XByU=
+	b=JpRTB3lObRE82f/8aMghTvhAsOKD6Xlt3tQG3sJ1C1s3xZkVS+V1p66j1QGml+A5a
+	 AvGVdiebefbApmDaM77RGWWNC3aDABkPAA+NuLcrdZM9j4QSWSy8mOLlTDG6fK9CT6
+	 4LVXRNFmivitGH6SVUfJa5YqZQXhfD3PCk9/DadE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Andreas Kemnade <andreas@kemnade.info>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 7.1 1907/2077] gpio: mt7621: avoid corruption of shared interrupt trigger state
-Date: Tue, 21 Jul 2026 17:26:20 +0200
-Message-ID: <20260721152637.700550973@linuxfoundation.org>
+Subject: [PATCH 7.1 1908/2077] gpios: palmas: add .get_direction() op
+Date: Tue, 21 Jul 2026 17:26:21 +0200
+Message-ID: <20260721152637.724285444@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,39 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+From: Andreas Kemnade <andreas@kemnade.info>
 
-commit 1781172526d1092323af443fa03f00e6de560401 upstream.
+commit db4a79713ed8e252d5e4edf6eaaa80948b6855a2 upstream.
 
-The bank-shared fields like 'rising' and 'falling' are modified using
-non-atomic read-modify-write operations. Since every gpio chip instance
-represents an entire bank of 32 pins, if 'mediatek_gpio_irq_type()' is
-called concurrently for different IRQs on the same bank a possible overwrite
-of each other's configuration is possible. Thus, protect this state with
-'gpio_generic_lock_irqsave' lock in the same way it is handled in irp_chip
-'mediatek_gpio_irq_mask()' and 'mediatek_gpio_irq_unmask()' callbacks.
+Accessing debug/gpio is quite noisy without a get_direction()
+implementation. To calm that down add an implementation.
 
+Fixes: 3d50a2785271 ("gpio: palmas: Add support for Palmas GPIO")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 4ba9c3afda41 ("gpio: mt7621: Add a driver for MT7621")
-Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Link: https://patch.msgid.link/20260626060112.2498324-2-sergio.paracuellos@gmail.com
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+Link: https://patch.msgid.link/20260704-palmas-getdirection-v2-1-2fd85fee3832@kemnade.info
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-mt7621.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpio/gpio-palmas.c |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/drivers/gpio/gpio-mt7621.c
-+++ b/drivers/gpio/gpio-mt7621.c
-@@ -187,6 +187,8 @@ mediatek_gpio_irq_type(struct irq_data *
- 	struct mtk_gc *rg = gpiochip_get_data(gc);
- 	u32 mask = BIT(mt7621_gpio_hwirq_to_offset(d->hwirq, rg));
+--- a/drivers/gpio/gpio-palmas.c
++++ b/drivers/gpio/gpio-palmas.c
+@@ -116,6 +116,24 @@ static int palmas_gpio_input(struct gpio
+ 	return ret;
+ }
  
-+	guard(gpio_generic_lock_irqsave)(&rg->chip);
++static int palmas_gpio_get_direction(struct gpio_chip *gc, unsigned int offset)
++{
++	struct palmas_gpio *pg = gpiochip_get_data(gc);
++	struct palmas *palmas = pg->palmas;
++	unsigned int val;
++	unsigned int reg;
++	int ret;
++	int gpio16 = (offset/8);
 +
- 	if (type == IRQ_TYPE_PROBE) {
- 		if ((rg->rising | rg->falling |
- 		     rg->hlevel | rg->llevel) & mask)
++	offset %= 8;
++	reg = (gpio16) ? PALMAS_GPIO_DATA_DIR2 : PALMAS_GPIO_DATA_DIR;
++	ret = palmas_read(palmas, PALMAS_GPIO_BASE, reg, &val);
++	if (ret)
++		return ret;
++
++	return (val & BIT(offset)) ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
++}
++
+ static int palmas_gpio_to_irq(struct gpio_chip *gc, unsigned offset)
+ {
+ 	struct palmas_gpio *pg = gpiochip_get_data(gc);
+@@ -165,6 +183,7 @@ static int palmas_gpio_probe(struct plat
+ 	palmas_gpio->gpio_chip.can_sleep = true;
+ 	palmas_gpio->gpio_chip.direction_input = palmas_gpio_input;
+ 	palmas_gpio->gpio_chip.direction_output = palmas_gpio_output;
++	palmas_gpio->gpio_chip.get_direction = palmas_gpio_get_direction;
+ 	palmas_gpio->gpio_chip.to_irq = palmas_gpio_to_irq;
+ 	palmas_gpio->gpio_chip.set	= palmas_gpio_set;
+ 	palmas_gpio->gpio_chip.get	= palmas_gpio_get;
 
 
