@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC9F46A5FD;
-	Tue, 21 Jul 2026 17:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECCA3E49E7;
+	Tue, 21 Jul 2026 17:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655896; cv=none; b=Yu4Qty8dZPC/PwRR+x2bqNV14k0mVSa8/ytRsaWu1p8qanGGot7Gb4zws5O9FNeBygs2vG94mJwt08B2GvBIS9J5JgrlTKAvTweKwD5zAPQxMpF6PCdStYCVqp2gomL6rVWIVvqlDVU6HbFQs6DWnyMM9aqmKkYH3ATJCbSy8Pc=
+	t=1784655899; cv=none; b=ugKQTfKn5GJ+WyQ5GEd5BucD90bUGLJjMxj8pqFypxZ9E0HradXjA5tr+vXirKsotZmw9hCHWFShh/xuh8PYUxYiQ0n+HubrJstvfxP+5wRA4LPnvw2KKrWd/CYMqeHW6+BfzNpoMCDJoscIN3nEc7g0zga7qGTsG/C8Uh7Dnyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655896; c=relaxed/simple;
-	bh=OtlvJnDrftchIs4h/LKhida6wmdXPd1bsGhpp/PPkyY=;
+	s=arc-20240116; t=1784655899; c=relaxed/simple;
+	bh=xR/fY8rB/17FiNQW6R6LXP4e2LuRsStw1yShAQZH3so=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tVVXJkZj5GOljpu7S9vL/7Bm/SeXs/h1LcF4TL+GAs8sgwMAHgkuokAzOHgT57CWWy45QgEs5vVoISy2/fk+7PGPwYnIH4B7aYcVQh5kAAvv8o2lEb/B24vFB5A2gu4Qzf1/X3ukPK1uoBR4ZDUJ6o3rbGexsZmZxo7NpkmBBg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2nygpYV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LvYjlnyol71tg+d/W81YkTVGkvOfvLAEsYDYkxPGhGZ5uQzbt6JLDjvhSZQV+wrrQYFtzEyZArYEHFSLNeCMYzj6cyt2B3Rcu6+Iyr03/6cT2c17ezaAaPDEtMiA3uMaB3dxB6auiOODcXAKjI6E5zYw8Is49kiwivQSqgoRJdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ytF47pRF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2nygpYV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6CED1F000E9;
-	Tue, 21 Jul 2026 17:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ytF47pRF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5050C1F000E9;
+	Tue, 21 Jul 2026 17:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655895;
-	bh=9HZVaD+VQrRudV6cjqJpUyH5NqscOxul8eSlI+k6ZQc=;
+	s=korg; t=1784655897;
+	bh=KOXO2N5hwlMuYVglN1oID+bN6M4US7odQdpWhXVZyFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x2nygpYVuTD3M/IfP/nkBobhkbSTwYf9+D7hD3dZ9fASRgehCHpXIuwHD8rwMs2r5
-	 KizTOkUubh8y//+Mjkt0upeScZdUu5EcsQ61p02R0N37Zm+DB8QQ7KvZMEvY0+q/5J
-	 3RHekMZ1miOf45bonhOm0tuM6MWs7EVBAqHplpW0=
+	b=ytF47pRF2Ej1Lh/sC7F9cqMEUslJqTIhrZ2Y0Yv4+KC/fZzL799+DN2U6tMhyDVt8
+	 Id7M8O0zQcCvz/Xj2im6Pb5IlmhOLhlVbSDH6NVx6dK/6kmnrkOw6B/1zUyxMLsP7G
+	 bqSA79YYfv4NIq5Z0i2YDDrG6W3Rn0Bt3kz8pdMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	=?UTF-8?q?Sven=20P=C3=BCschel?= <s.pueschel@pengutronix.de>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0145/1611] thermal: hwmon: Fix critical temperature attribute removal
-Date: Tue, 21 Jul 2026 17:04:21 +0200
-Message-ID: <20260721152518.139254879@linuxfoundation.org>
+Subject: [PATCH 6.18 0181/1611] media: rockchip: rga: fix too small buffer size
+Date: Tue, 21 Jul 2026 17:04:57 +0200
+Message-ID: <20260721152518.993294386@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -44,66 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Sven Püschel <s.pueschel@pengutronix.de>
 
-[ Upstream commit c2114dbda05354dbcf4dfbb30a2c623e8611c43a ]
+[ Upstream commit 65017e26c065d1240b0512c15867ef1128034fd8 ]
 
-Since the return value of thermal_zone_crit_temp_valid() depends on
-the behavior of the thermal zone .get_crit_temp() callback which
-may change over time in theory, thermal_remove_hwmon_sysfs() may
-attempt to remove a critical temperature attribute that has not
-been created, passing a pointer to an uninitialized attribute
-structure to device_remove_file().
+Fix the command buffer size being only a quarter of the actual size.
+The RGA_CMDBUF_SIZE macro was potentially intended to specify the length
+of the cmdbuf u32 array pointer. But as it's used to specify the size of
+the allocation, which is counted in bytes. Therefore adjust the macro
+size to bytes as it better matches the variable name and adjust it's
+users accordingly.
 
-To avoid that, set a flag in struct thermal_hwmon_temp after creating
-a critical temperature attribute and use the value of that flag to
-decide whether or not the attribute needs to be removed.
+As the command buffer is relatively small, it probably didn't caused
+an issue due to being smaller than a single page.
 
-Fixes: e8db5d6736a7 ("thermal: hwmon: Make the check for critical temp valid consistent")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2437056.ElGaqSPkdT@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: f7e7b48e6d79 ("[media] rockchip/rga: v4l2 m2m support")
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Sven Püschel <s.pueschel@pengutronix.de>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_hwmon.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/media/platform/rockchip/rga/rga-hw.c | 2 +-
+ drivers/media/platform/rockchip/rga/rga-hw.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/thermal_hwmon.c b/drivers/thermal/thermal_hwmon.c
-index 64cc3ab949fed4..c68b27b2fb0274 100644
---- a/drivers/thermal/thermal_hwmon.c
-+++ b/drivers/thermal/thermal_hwmon.c
-@@ -40,6 +40,7 @@ struct thermal_hwmon_temp {
- 	struct thermal_zone_device *tz;
- 	struct thermal_hwmon_attr temp_input;	/* hwmon sys attr */
- 	struct thermal_hwmon_attr temp_crit;	/* hwmon sys attr */
-+	bool temp_crit_present;
- };
+diff --git a/drivers/media/platform/rockchip/rga/rga-hw.c b/drivers/media/platform/rockchip/rga/rga-hw.c
+index 43ed742a164929..d1618bb2475013 100644
+--- a/drivers/media/platform/rockchip/rga/rga-hw.c
++++ b/drivers/media/platform/rockchip/rga/rga-hw.c
+@@ -414,7 +414,7 @@ static void rga_cmd_set(struct rga_ctx *ctx,
+ {
+ 	struct rockchip_rga *rga = ctx->rga;
  
- static LIST_HEAD(thermal_hwmon_list);
-@@ -191,6 +192,8 @@ int thermal_add_hwmon_sysfs(struct thermal_zone_device *tz)
- 					    &temp->temp_crit.attr);
- 		if (result)
- 			goto unregister_input;
-+
-+		temp->temp_crit_present = true;
- 	}
+-	memset(rga->cmdbuf_virt, 0, RGA_CMDBUF_SIZE * 4);
++	memset(rga->cmdbuf_virt, 0, RGA_CMDBUF_SIZE);
  
- 	mutex_lock(&thermal_hwmon_list_lock);
-@@ -235,7 +238,7 @@ void thermal_remove_hwmon_sysfs(struct thermal_zone_device *tz)
- 	}
+ 	rga_cmd_set_src_addr(ctx, src->dma_desc_pa);
+ 	/*
+diff --git a/drivers/media/platform/rockchip/rga/rga-hw.h b/drivers/media/platform/rockchip/rga/rga-hw.h
+index cc6bd7f5b03003..2b8537a5fd0d7a 100644
+--- a/drivers/media/platform/rockchip/rga/rga-hw.h
++++ b/drivers/media/platform/rockchip/rga/rga-hw.h
+@@ -6,7 +6,7 @@
+ #ifndef __RGA_HW_H__
+ #define __RGA_HW_H__
  
- 	device_remove_file(hwmon->device, &temp->temp_input.attr);
--	if (thermal_zone_crit_temp_valid(tz))
-+	if (temp->temp_crit_present)
- 		device_remove_file(hwmon->device, &temp->temp_crit.attr);
+-#define RGA_CMDBUF_SIZE 0x20
++#define RGA_CMDBUF_SIZE 0x80
  
- 	mutex_lock(&thermal_hwmon_list_lock);
+ /* Hardware limits */
+ #define MAX_WIDTH 8192
 -- 
 2.53.0
 
