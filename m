@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFED63ED3B2;
-	Tue, 21 Jul 2026 15:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B35C3955F4;
+	Tue, 21 Jul 2026 15:56:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649369; cv=none; b=uLsLLBdRAhctZGSfY/YkgS60ao0CBUcYpdifkucZ3AltWOaRGev/7KMXtQUndZ+KmyJdYkOQI4i0Me2woawe3WkHxXV6005ceDUXJtKSRgFMYkI1vvIBuaSHqdY1lIxWGE4lxXOHXMsq6vQNKCxIylMvxt07OGQLFDR/8RQ3pjA=
+	t=1784649372; cv=none; b=LoLCyQZ6632sP76OGzdTTthq/52sdTbZMjjNXf/YMnKi9I3B1Kd6Z7GMwguNctyK75MaKya7q0ZgWrFKlh7/W0nRsUbR1u8Lydcr5XvcA7mevRCyHuB93DyGICY0egrJnPxCWPVgZLT9rgB2hjI9lb+kAclB+SazIWRVp8qHHwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649369; c=relaxed/simple;
-	bh=DVaqf4YdhmgBp0WtiQa/pnzjzSPB2W1YZFGZGnbQS68=;
+	s=arc-20240116; t=1784649372; c=relaxed/simple;
+	bh=/2XehD5RqKt8o0fvi0KPcLS9Fm29Yc7Kqzvtxmk5FWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cgO+3Qc5haJ6vVAMQM79Fo2TamIzcrZIoyw6nKv+13VQwWr5BGLOx2xfO4o6mYiJd0Ng5wA64mw0n5JwphcBmxuqmnQkOC55Oy84ad+vhAESQgDNJJVG5hOJq74veO35OWqWW8GTD8GzxxZvI9AGVUR45dIKoNJUvW8itxsKYd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtyGOzt8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S6Ev8B/40RZojm0Ywm/iVHibjlS93eOjR6c7Sfj072mbYgv3tQhpG6JAdbp/RxtDs8V4cz7CetypFFOuyS2ct+HfMpQSBFAfyE5X1ORp/ZOrjgAEmptHPBnJ7/SeQRaASQYHT1ONf0J/4Omb+m4kLT1L5XFUFHdY8gjDFtQlmEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Wq/Qh+Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtyGOzt8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C211F000E9;
-	Tue, 21 Jul 2026 15:56:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Wq/Qh+Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFECE1F000E9;
+	Tue, 21 Jul 2026 15:56:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649368;
-	bh=SwZUEi3SPx51B31rIe7A43rEi6RC/Smby/BxuGkkYOQ=;
+	s=korg; t=1784649371;
+	bh=87+LIgJbzWySwNwAq95haFflny+Ha/w4AYauSU1GOW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LtyGOzt8fv0x9OdWqzQy2hh+IsGdIkgZvg9mP6Q4W3MWCeNvV8udrZr5hGI1msb9/
-	 EfJKJWDFWo+pd5Vynr4cWJcY5Oh0IfSIN+ca0eA8npdHBinNc45ALHb9oX/0l/vO+y
-	 g+6I0BHT9C6/4W39AtaDwwZEiImGh2o/u0EOmLGw=
+	b=0Wq/Qh+Z5o3THVpYjnUP2cX4W4VKDtrUMJjkn6+AuMdG5DY1LCC03LxfW0TYCe4b1
+	 /WSxYLhKnuckDURGBfUphQIXw0KOOS33wavJmT+h4ix8SmXxtKz5sLqi6HbfJzRP45
+	 i6or7GhORc1skVR+Z237hG0RDpK6ryX8f0XeBv5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
+	Jacob Moroni <jmoroni@google.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0509/2077] RDMA/siw: Fix endpoint/socket association handling
-Date: Tue, 21 Jul 2026 17:03:02 +0200
-Message-ID: <20260721152604.820776220@linuxfoundation.org>
+Subject: [PATCH 7.1 0500/2077] RDMA/irdma: Fix OOB read during CQ MR registration
+Date: Tue, 21 Jul 2026 17:02:53 +0200
+Message-ID: <20260721152604.606286220@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,129 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Metzler <bernard.metzler@linux.dev>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit ea4f6f6c53577fb3f05dbd78b15e586772d49831 ]
+[ Upstream commit 4385ddd654d90245eeb83b3cb539670ab5c85ba4 ]
 
-Disassociating a socket from an endpoint via siw_socket_disassoc() may
-release the last reference on that endpoint and free it. Therefore, don't
-clear the endpoints socket pointer after calling that function, but
-within.
+Sashiko pointed out an unrelated bug during a previous patch:
+https://sashiko.dev/#/patchset/20260512183852.614045-1-jmoroni%40google.com
 
-This fixes a:
+This change fixes the bug by eliminating the cqmr->split field which
+was not being set properly and instead just checks the CQ resize
+feature flag directly.
 
-  BUG: KASAN: slab-use-after-free in siw_cm_work_handler (drivers/infiniband/sw/siw/siw_cm.c:1053 drivers/infiniband/sw/siw/siw_cm.c:1075)
+The cqmr->split field essentially tracks whether IRDMA_FEATURE_CQ_RESIZE
+is set, but it was not being set until CQ creation time, which is _after_
+CQ memory registration (the only other place where it is referenced).
 
-which occurred after processing a malformed MPA request during connection
-establishment, causing the new endpoint to be closed.
+As a result, it would always be false during MR registration and would
+therefore cause irdma_handle_q_mem to populate cqmr->shadow even for GEN_2
+HW and beyond:
 
-Fixes: 6c52fdc244b5c ("rdma/siw: connection management")
-Link: https://patch.msgid.link/r/20260604160808.30948-1-bernard.metzler@linux.dev
-Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Signed-off-by: Bernard Metzler <bernard.metzler@linux.dev>
+    cqmr->shadow = (dma_addr_t)arr[req->cq_pages];
+
+The issue is that for GEN_2 and beyond, req->cq_pages may be exactly equal
+to iwmr->page_cnt and therefore equal to the size of arr, which would cause
+an OOB read by one.
+
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Link: https://patch.msgid.link/r/20260602214423.1315105-2-jmoroni@google.com
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_cm.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ drivers/infiniband/hw/irdma/verbs.c | 4 ++--
+ drivers/infiniband/hw/irdma/verbs.h | 1 -
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
-index f7ac81c0f267a6..87c79527ac0903 100644
---- a/drivers/infiniband/sw/siw/siw_cm.c
-+++ b/drivers/infiniband/sw/siw/siw_cm.c
-@@ -138,6 +138,7 @@ static void siw_socket_disassoc(struct socket *s)
- 		cep = sk_to_cep(sk);
- 		if (cep) {
- 			siw_sk_restore_upcalls(sk, cep);
-+			cep->sock = NULL;
- 			siw_cep_put(cep);
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 661f2e0299ef7d..d79e130d98ee2a 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -2572,7 +2572,6 @@ static int irdma_create_cq(struct ib_cq *ibcq,
+ 			}
+ 			cqmr_shadow = &iwpbl_shadow->cq_mr;
+ 			info.shadow_area_pa = cqmr_shadow->cq_pbl.addr;
+-			cqmr->split = true;
  		} else {
- 			pr_warn("siw: cannot restore sk callbacks: no ep\n");
-@@ -418,10 +419,11 @@ static void siw_free_cm_id(struct siw_cep *cep)
- 
- static void siw_destroy_cep_sock(struct siw_cep *cep)
- {
--	if (cep->sock) {
--		siw_socket_disassoc(cep->sock);
--		sock_release(cep->sock);
--		cep->sock = NULL;
-+	struct socket *s = cep->sock;
-+
-+	if (s) {
-+		siw_socket_disassoc(s);
-+		sock_release(s);
- 	}
- }
- 
-@@ -1050,7 +1052,6 @@ static void siw_accept_newconn(struct siw_cep *cep)
- 	if (new_s) {
- 		siw_socket_disassoc(new_s);
- 		sock_release(new_s);
--		new_cep->sock = NULL;
- 	}
- 	siw_dbg_cep(cep, "error %d\n", rv);
- }
-@@ -1202,6 +1203,8 @@ static void siw_cm_work_handler(struct work_struct *w)
- 		WARN(1, "Undefined CM work type: %d\n", work->type);
- 	}
- 	if (release_cep) {
-+		struct socket *s = cep->sock;
-+
- 		siw_dbg_cep(cep,
- 			    "release: timer=%s, QP[%u]\n",
- 			    cep->mpa_timer ? "y" : "n",
-@@ -1227,10 +1230,9 @@ static void siw_cm_work_handler(struct work_struct *w)
- 			cep->qp = NULL;
- 			siw_qp_put(qp);
+ 			info.shadow_area_pa = cqmr->shadow;
  		}
--		if (cep->sock) {
--			siw_socket_disassoc(cep->sock);
--			sock_release(cep->sock);
--			cep->sock = NULL;
-+		if (s) {
-+			siw_socket_disassoc(s);
-+			sock_release(s);
- 		}
- 		if (cep->cm_id) {
- 			siw_free_cm_id(cep);
-@@ -1561,7 +1563,6 @@ int siw_connect(struct iw_cm_id *id, struct iw_cm_conn_param *params)
- 	if (cep) {
- 		siw_socket_disassoc(s);
- 		sock_release(s);
--		cep->sock = NULL;
+@@ -2980,7 +2979,8 @@ static int irdma_handle_q_mem(struct irdma_device *iwdev,
+ 	case IRDMA_MEMREG_TYPE_CQ:
+ 		hmc_p = &cqmr->cq_pbl;
  
- 		cep->qp = NULL;
+-		if (!cqmr->split)
++		if (!(iwdev->rf->sc_dev.hw_attrs.uk_attrs.feature_flags &
++		      IRDMA_FEATURE_CQ_RESIZE))
+ 			cqmr->shadow = (dma_addr_t)arr[req->cq_pages];
  
-@@ -1937,7 +1938,6 @@ int siw_create_listen(struct iw_cm_id *id, int backlog)
- 		siw_cep_set_inuse(cep);
+ 		if (lvl)
+diff --git a/drivers/infiniband/hw/irdma/verbs.h b/drivers/infiniband/hw/irdma/verbs.h
+index aabbb3442098bc..289ebc9b23ca78 100644
+--- a/drivers/infiniband/hw/irdma/verbs.h
++++ b/drivers/infiniband/hw/irdma/verbs.h
+@@ -65,7 +65,6 @@ struct irdma_hmc_pble {
+ struct irdma_cq_mr {
+ 	struct irdma_hmc_pble cq_pbl;
+ 	dma_addr_t shadow;
+-	bool split;
+ };
  
- 		siw_free_cm_id(cep);
--		cep->sock = NULL;
- 		siw_socket_disassoc(s);
- 		cep->state = SIW_EPSTATE_CLOSED;
- 
-@@ -1959,6 +1959,7 @@ static void siw_drop_listeners(struct iw_cm_id *id)
- 	 */
- 	list_for_each_safe(p, tmp, (struct list_head *)id->provider_data) {
- 		struct siw_cep *cep = list_entry(p, struct siw_cep, listenq);
-+		struct socket *s = cep->sock;
- 
- 		list_del(p);
- 
-@@ -1967,10 +1968,9 @@ static void siw_drop_listeners(struct iw_cm_id *id)
- 		siw_cep_set_inuse(cep);
- 
- 		siw_free_cm_id(cep);
--		if (cep->sock) {
--			siw_socket_disassoc(cep->sock);
--			sock_release(cep->sock);
--			cep->sock = NULL;
-+		if (s) {
-+			siw_socket_disassoc(s);
-+			sock_release(s);
- 		}
- 		cep->state = SIW_EPSTATE_CLOSED;
- 		siw_cep_set_free_and_put(cep);
+ struct irdma_srq_mr {
 -- 
 2.53.0
 
