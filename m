@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB9843B3FA;
-	Tue, 21 Jul 2026 21:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7811C43B4A2;
+	Tue, 21 Jul 2026 21:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670928; cv=none; b=K9Biu2EzHplWbMZp6E6fWUngZwtKGDAeRuCeXcj/O3sWJGwMiuaDLJsgnBpYiWm0HIhUVmJEEKe5du7UjMGmu/tWWFEf8tAzusL0w7tjVbyrCxXVmNcbXdC2cK5KL9f3Y+UP3ujeDV2dODRiMtQUGQPPC7TWEoATiwcf6qz8cVo=
+	t=1784670930; cv=none; b=jSjGoe/+ffDvG8JQctIND4gSp9lsSJZs/JixZWvkbmJCXX4vn/lu/7Y/1P06+m6i60aixEilzxfr8i2P6E5zezkEhR83QkCPtbENfVcUolTNedyHEcFERxfkUnbbWbWGI2Iv+eL7zT7tb++ByIoStqM7/qlwtspbe4178+MQhSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670928; c=relaxed/simple;
-	bh=KgBlsAH8xNSPZfG8B02SFuGtzrw3/XEfek9XDk1l4Sw=;
+	s=arc-20240116; t=1784670930; c=relaxed/simple;
+	bh=OMWpbq8YQ12iwtXfIUWwDI24LDHhQUurCzVw99lLoIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I2ILr/BBfxrtrsbOrj42nC8NMBmnig8b9Z1jRuxAAFjLmlnabKnZgFYfpCQX+FEwOjuu+6DD/0g2gxQsYZzZpsNAmbP3WIlFkbQEHG02eFCU+O9W5n8+1p79+E1OC9AIQKCsLHa7ykngOmaECpF5hxHnp4a28aRnjmpRM0MtoIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSo7Sxgj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lbSWtb2l97wLluEEsTfTlp3FuMRJzvxR3bCRCm19cGgIgcZ6015CSsTk6b5JQYZ3+W2igv//15jpYelK4pPN0NwvVjfzPtScXysDB4SELs2LHbSrcQP93XoB0vwbvQ2+33rBAWFIjMcTHg6njM3sCiuruon60SknFC172hAbN9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RviS9J1S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSo7Sxgj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408041F00A3A;
-	Tue, 21 Jul 2026 21:55:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RviS9J1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5AD1F000E9;
+	Tue, 21 Jul 2026 21:55:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670926;
-	bh=uKtxhRWXOm1ef+mdEN4BwI85Em5AkWj2vrp++m2sP5Q=;
+	s=korg; t=1784670929;
+	bh=UGYntsEcrKt1nwPW2j3hpCd7LKeLXRl7l5bmcQxFaiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FSo7SxgjStM7PKJVx5w6V8MYd4jSp6bHy4uV7CHO7fAQyOUmU55krXEsOkgMamGer
-	 mbWkwIk/CvcX1RM68wBrDN6WaPhLF/87vo7MFbcc+mWibMIiT2SJpbHahXpU6uVNLG
-	 04xCghFDuzutB3nGDepSPwhB8B4uwJi2EsvGl0pU=
+	b=RviS9J1S4dOaLLz8KEvxjZ9FoeMT/yIHIEtyv05Y/4AUQj7RUw8LkuQ+9O17kNDfZ
+	 XIUO31DnZoDS1JwohqcbR81s5cCx4pEZoz9CUNOzCBmprOqAdcWGodaQeF19Hyddf0
+	 46EQgHxSkCtAe+0kE3fTDBbGqW0+LmJ2/CD0VhzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko <sashiko-bot@kernel.org>,
-	Maxwell Doose <m32285159@gmail.com>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 5.15 053/843] iio: chemical: scd30: Cleanup initializations and fix sign-extension bug
-Date: Tue, 21 Jul 2026 17:14:48 +0200
-Message-ID: <20260721152407.178132526@linuxfoundation.org>
+Subject: [PATCH 5.15 054/843] iio: event: Fix event FIFO reset race
+Date: Tue, 21 Jul 2026 17:14:49 +0200
+Message-ID: <20260721152407.200515530@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -46,82 +46,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxwell Doose <m32285159@gmail.com>
+From: Lars-Peter Clausen <lars@metafoo.de>
 
-commit 60d877910a43c305b5165131b258a17b1d772d57 upstream.
+commit af791d295737ea6b6ff2c8d8488462a49c14af01 upstream.
 
-Include linux/bitfield.h for FIELD_GET().
+`iio_event_getfd()` creates the event file descriptor with
+`anon_inode_getfd()`, which allocates a new fd, creates the anonymous
+file and installs it in the process fd table before returning to the
+caller.
 
-Create new macros for bit manipulation in combination with manual bit
-manipulation being replaced with FIELD_GET().
+The IIO code resets the event FIFO after `anon_inode_getfd()` has returned,
+but before `IIO_GET_EVENT_FD_IOCTL` has copied the fd number to userspace.
+But since fd tables are shared between threads, another thread can guess
+the newly allocated fd number and issue a `read()` on it as soon as the fd
+has been installed.
 
-The current variable declaration and initializations are barely readable
-and use comma separations across multiple lines. Refactor the
-initializations so that mantissa and exp have separate declarations and
-sign gets initialized later.
+This means the `kfifo_to_user()` in `iio_event_chrdev_read()` can run in
+parallel with the `kfifo_reset_out()` in `iio_event_getfd()`.
 
-In addition (and due to the nature of the cleanup), fix a sign-extension
-bug where, float32 would get bitwise anded with ~BIT(31)
-(which is 0xFFFFFFFF7FFFFFFF) which corrupted the exponent.
+The kfifo documentation says that `kfifo_reset_out()` is only safe when it
+is called from the reader thread and there is only one concurrent reader.
+Otherwise it is dangerous and must be handled in the same way as
+`kfifo_reset()`.
 
-Fixes: 64b3d8b1b0f5c ("iio: chemical: scd30: add core driver")
-Reported-by: sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260524020309.18618-1-m32285159%40gmail.com
-Signed-off-by: Maxwell Doose <m32285159@gmail.com>
+If that happens, `kfifo_to_user()` can advance the FIFO `out` index based
+on state from before the reset, after the reset has already moved the `out`
+index to the current `in` index. That can leave the FIFO with an `out`
+index past the `in` index. A later `read()` can then see an underflowed
+FIFO length and copy more data than the event FIFO buffer contains. This
+can result in an out-of-bounds read and leak adjacent kernel memory to
+userspace.
+
+Move the FIFO reset before `anon_inode_getfd()`. At that point the event fd is
+marked busy, but the new fd has not been installed yet, so userspace cannot
+access it while the FIFO is reset.
+
+Fixes: b91accafbb10 ("iio:event: Fix and cleanup locking")
+Reported-by: Codex:gpt-5.5
+Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/chemical/scd30_core.c |   19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/iio/industrialio-event.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/iio/chemical/scd30_core.c
-+++ b/drivers/iio/chemical/scd30_core.c
-@@ -4,6 +4,8 @@
-  *
-  * Copyright (c) 2020 Tomasz Duszynski <tomasz.duszynski@octakon.com>
-  */
-+
-+#include <linux/bitfield.h>
- #include <linux/bits.h>
- #include <linux/cleanup.h>
- #include <linux/completion.h>
-@@ -43,6 +45,11 @@
- #define SCD30_TEMP_OFFSET_MAX 655360
- #define SCD30_EXTRA_TIMEOUT_PER_S 250
+--- a/drivers/iio/industrialio-event.c
++++ b/drivers/iio/industrialio-event.c
+@@ -207,6 +207,8 @@ static int iio_event_getfd(struct iio_de
+ 		goto unlock;
+ 	}
  
-+/* Floating point arithmetic macros */
-+#define SCD30_FLOAT_MANTISSA_MSK GENMASK(22, 0)
-+#define SCD30_FLOAT_EXP_MSK GENMASK(30, 23)
-+#define SCD30_FLOAT_SIGN_MSK BIT(31)
++	kfifo_reset_out(&ev_int->det_events);
 +
- enum {
- 	SCD30_CONC,
- 	SCD30_TEMP,
-@@ -89,10 +96,14 @@ static int scd30_reset(struct scd30_stat
- /* simplified float to fixed point conversion with a scaling factor of 0.01 */
- static int scd30_float_to_fp(int float32)
- {
--	int fraction, shift,
--	    mantissa = float32 & GENMASK(22, 0),
--	    sign = (float32 & BIT(31)) ? -1 : 1,
--	    exp = (float32 & ~BIT(31)) >> 23;
-+	int fraction, shift, sign;
-+	int mantissa = FIELD_GET(SCD30_FLOAT_MANTISSA_MSK, float32);
-+	int exp = FIELD_GET(SCD30_FLOAT_EXP_MSK, float32);
-+
-+	if (float32 & SCD30_FLOAT_SIGN_MSK)
-+		sign = -1;
-+	else
-+		sign = 1;
+ 	iio_device_get(indio_dev);
  
- 	/* special case 0 */
- 	if (!exp && !mantissa)
+ 	fd = anon_inode_getfd("iio:event", &iio_event_chrdev_fileops,
+@@ -214,10 +216,7 @@ static int iio_event_getfd(struct iio_de
+ 	if (fd < 0) {
+ 		clear_bit(IIO_BUSY_BIT_POS, &ev_int->flags);
+ 		iio_device_put(indio_dev);
+-	} else {
+-		kfifo_reset_out(&ev_int->det_events);
+ 	}
+-
+ unlock:
+ 	mutex_unlock(&indio_dev->mlock);
+ 	return fd;
 
 
