@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384F43E49CA;
-	Tue, 21 Jul 2026 18:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED92E3E49CA;
+	Tue, 21 Jul 2026 18:00:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656834; cv=none; b=m8JgbEhRu/JfrTdg0GKing0Egk6cK5H1iTMqtfZR6HCnO7yY5WFWmSmqACAhi2lVN+ez6TrJq5Wu91q9BRNKKz4z8JR7eB4zrpcOxO8linfgr2/6XL5PwxsxoZoOYR9shM/VfXqlrKGX/k+tkkof8O2ND+n2eCbZFMMUKMSbjlg=
+	t=1784656837; cv=none; b=hbAPWx0UmgFlP2uG8/FiqjPY7lUJLQbCxThgyQRGMubKyPDfH96b/X2DoJ32WgoVMcymLj7P3L4GJ7/BvO1SBPP2HxLmKntB8vbKZnCPTFHVFzSMoeOaTAlv73ixhAmc0HJKqGjf+y2JQaOPaztvjz6wc+BhyGKk9HAOLD/Kqak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656834; c=relaxed/simple;
-	bh=ocYH3tvwD2EGUqUQiBQ633vanj71hl2fNLjbPs1Ta6s=;
+	s=arc-20240116; t=1784656837; c=relaxed/simple;
+	bh=hC2oXH0sROBcsD+5H0z87hWegbXyNDTy9lv/BDM+4LY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pRDYKIZFWhNlvBx4Z/LTHwkgMqnU+fUEBk67fZdmEtrxQWn+w/oUeGlr7u4nNb3rYH1rAYZWWn9gJKXQx2N+17QcYhRsLiRZgBn3TzmQIXQhNhyh9T/6wJuG9hvymcHuuHQEPp03Ll605CULiLxzRMNLnPOFZcjokQrR00YSaM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EA3fo4p/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d/FTrGTC3G6eU68MhX48D6E17ouH00dwt9YcYUTsTl8/5ttFRbgi1uEMVvhDfuUswvYY0vYKym4qUJNwF0K6bny8mZKd5J8KZMFTNXZjLMm7MxX/I+YwafujzcqAw7F/H64DZgRadYhD3zwYnhQtwBAor/M/NHG6/jUMRKvKZsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTWZ8iYA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EA3fo4p/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB101F00A3A;
-	Tue, 21 Jul 2026 18:00:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTWZ8iYA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A53D1F00A3A;
+	Tue, 21 Jul 2026 18:00:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656833;
-	bh=q7OXww8HvaxCpxbn7YyPs3CIcgf+rRHA5L75tCCaJFk=;
+	s=korg; t=1784656835;
+	bh=+ribn7oL7QH4TizcBjDDSOLIh9ojSzHpVDmDp2aSuTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EA3fo4p/fC9nF2D723Q9ZHkD9pKJXP3aKRku8ac+rH1mL2N261UXEjr8RhBlU2WPx
-	 qw7kQkqBBO/0oLr9N7nOd+Wg7QH6zx259Ts3A5f1eO9aaa+gBxUBIVsgyqZX0CE/3j
-	 egDj2HuyYxVPUbFLP13uFwfHNbLUC+leqWoGPQ20=
+	b=fTWZ8iYAEElF8KmTPKSZeKjBaBwRxkCmL37ZbAOD2Mt1T+YO1BP39YWt40uAHAWlL
+	 cCckLv/wyTwWf1aB/huUNiwLqNmuLJyjKzyFO1hY6SOeLV5mh/eroD8G6WcbyJCaPf
+	 gjC08dVesVrX72jUffGjhFs0+791q7LyeOZd+o0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huiwen He <hehuiwen@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0536/1611] smb/client: always return a value for FS_IOC_GETFLAGS
-Date: Tue, 21 Jul 2026 17:10:52 +0200
-Message-ID: <20260721152527.417100531@linuxfoundation.org>
+Subject: [PATCH 6.18 0537/1611] selftests/bpf: Fix typo in verify_umulti_link_info
+Date: Tue, 21 Jul 2026 17:10:53 +0200
+Message-ID: <20260721152527.440852087@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,71 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huiwen He <hehuiwen@kylinos.cn>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 7acbaa16b99edaf8ef432229d4b7a6f3b666767d ]
+[ Upstream commit df29003c55115737a8fb4f8a60c6c2bba4c4a484 ]
 
-Currently, repeated lsattr calls on a regular CIFS file without the
-compressed attribute may show random flags:
+We verify info.uprobe_multi.flags against wrong kprobe-multi flag
+(BPF_F_KPROBE_MULTI_RETURN). It's the same value as the correct
+flag (BPF_F_UPROBE_MULTI_RETURN), so there's not functional change.
 
-	$ touch test.bin
-	$ lsattr test.bin
-	s-S-ia-A-EjI---------m test.bin
-	$ lsattr test.bin
-	------d-cEjI---------m test.bin
-
-The lsattr reproducer depends on the previous contents of its userspace
-buffer, so it may not reproduce on every setup. A deterministic
-reproducer is to initialize the ioctl argument before FS_IOC_GETFLAGS
-on a file without the compressed attribute:
-
-        int flags = 0x7fffffff;
-        ioctl(fd, FS_IOC_GETFLAGS, &flags);
-
-On an affected kernel, flags remains 0x7fffffff. With the fix, it is
-set to 0.
-
-This happens because when the cached inode does not have the compressed
-bit set, the CIFS fallback path in FS_IOC_GETFLAGS returns success
-without calling put_user() to write the zero flags value into the user
-buffer. As a result, the caller observes stale contents from its own
-buffer.
-
-Fix this by always writing the visible flags value back to the user
-buffer before returning success, even when the value is zero.
-
-Fixes: 64a5cfa6db94 ("Allow setting per-file compression via SMB2/3")
-Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 147c69307bcf ("selftests/bpf: Add link_info test for uprobe_multi link")
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20260611114230.950379-8-jolsa@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/ioctl.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/fill_link_info.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/ioctl.c b/fs/smb/client/ioctl.c
-index 1a6ce837e26af1..4607d007d9504b 100644
---- a/fs/smb/client/ioctl.c
-+++ b/fs/smb/client/ioctl.c
-@@ -393,13 +393,11 @@ long cifs_ioctl(struct file *filep, unsigned int command, unsigned long arg)
- 			}
- #endif /* CONFIG_CIFS_ALLOW_INSECURE_LEGACY */
- #endif /* CONFIG_CIFS_POSIX */
--			rc = 0;
--			if (CIFS_I(inode)->cifsAttrs & ATTR_COMPRESSED) {
--				/* add in the compressed bit */
--				ExtAttrBits = FS_COMPR_FL;
--				rc = put_user(ExtAttrBits & FS_FL_USER_VISIBLE,
--					      (int __user *)arg);
--			}
-+			if (CIFS_I(inode)->cifsAttrs & FILE_ATTRIBUTE_COMPRESSED)
-+				ExtAttrBits |= FS_COMPR_FL;
-+
-+			rc = put_user(ExtAttrBits & FS_FL_USER_VISIBLE,
-+				      (int __user *)arg);
- 			break;
- 		case FS_IOC_SETFLAGS:
- 			if (pSMBFile == NULL)
+diff --git a/tools/testing/selftests/bpf/prog_tests/fill_link_info.c b/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
+index e401146207510a..f589eefbf9fbd5 100644
+--- a/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
++++ b/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
+@@ -469,7 +469,7 @@ verify_umulti_link_info(int fd, bool retprobe, __u64 *offsets,
+ 
+ 		ASSERT_EQ(info.uprobe_multi.pid, getpid(), "info.uprobe_multi.pid");
+ 		ASSERT_EQ(info.uprobe_multi.count, 3, "info.uprobe_multi.count");
+-		ASSERT_EQ(info.uprobe_multi.flags & BPF_F_KPROBE_MULTI_RETURN,
++		ASSERT_EQ(info.uprobe_multi.flags & BPF_F_UPROBE_MULTI_RETURN,
+ 			  retprobe, "info.uprobe_multi.flags.retprobe");
+ 		ASSERT_EQ(info.uprobe_multi.path_size, strlen(path) + 1, "info.uprobe_multi.path_size");
+ 		ASSERT_STREQ(path_buf, path, "info.uprobe_multi.path");
 -- 
 2.53.0
 
