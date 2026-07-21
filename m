@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9279F25228D;
-	Tue, 21 Jul 2026 15:45:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC0446D560;
+	Tue, 21 Jul 2026 15:45:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648731; cv=none; b=eGuxDgI3SXTDZh/a9iNXdKludEyiUk2VS2XTaI5G0xa+xrQWLZ2NoV0MvnRVLpgf4XzmF/7r6v3xFf0+tOFzNCHWD8EEebgmVmHn5NF9IGTPQzu9wSeoypRIcEWrYWST0pLi0sM+/iEJwdZfQi28jsxTTPEaX26zAu88r4PBaCA=
+	t=1784648734; cv=none; b=WOrj7UcZUFU+Nx+FtpxuuslWonziiiDl7jPaP7QHUUALxruR9LV5wvq+EnPIDsfCjClOVBwJgKowTARgQAcqBxO52HEZJ5cj3DD/1w5AGFVvbr0rKZxDSFYOm8jxhDO2Lia5i5mHZeCj8Ru5fs8ujtchhiDbOqD4h3rfCk2b/s0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648731; c=relaxed/simple;
-	bh=wJs33Kq0YTbrJ/u2bHJbPw7jTsdG4zEEl5GKsn+1tQY=;
+	s=arc-20240116; t=1784648734; c=relaxed/simple;
+	bh=qTGr/eONlk5/CGvSSHvEFteMSApv2G1ES1zdP2E3lZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lk+Xo26eu4tGOYqa5egAV5aNQhKf6mQhtviACMDRfmvC/+ER4C0OAXq3jQ4ODz1dj1EXJqqLK4cmVNUr676lq3OsSF7h5mFfoxivK9lfDfnpdGC1Aqkd9D7HlKURr5oLsH/U1Dap3pFdAGAsnK1ntj3btHw8HRzIQ7IZR59e2P4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFOIo/XW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oqEnfcagcFI63WeFiz96lCifF5o/1kh4DMjEYuN7BQLhw9ctSBQMIajrda4moes14D/yfNwr6VK063rfE65ARBBtuPA2V+NgmZlUVPIYPqF01Ym9ei2P3SKGoIamuH8LsRL4GZ2xdCyXcKHm0KpQ3+CUGkPa1BMPVtCfh8E80BY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ol9bK7m7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFOIo/XW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 049141F000E9;
-	Tue, 21 Jul 2026 15:45:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ol9bK7m7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C8A11F000E9;
+	Tue, 21 Jul 2026 15:45:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648730;
-	bh=mRai6Rs82yTjHwz9riaALdyBjGkUbiBO52vJgNXMhVo=;
+	s=korg; t=1784648733;
+	bh=fXI7UE0qrjNVhqZyH1hbWPxiCk4rGBYIg6aWCpIf7nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QFOIo/XWzh8NyGnjvMo9fz29HLx5XmzUfuDiAIpafP/A/IcjlfcKmL1mZEhlD0tuM
-	 ymCHkAuslaa5ejh+2IFIO+mZQLtNLzNMOxo0MXuHFdz+RMYlL3p3EBKfc40i6X6FP7
-	 xAymgdsb8spRFH7D9JIUuyAgG6ojjdJCiNGu08/I=
+	b=Ol9bK7m7z98RP43i16sZ60vzrI0TLw6a0MhLtk9tFgY/6Uir2wmJx4b9w/xRYxw/F
+	 4F6/ZQno+JH8Ddg19b9DKuYZkNMuzwqkps6IapsxuI0MgpHfP0YlE+k/BCUUrg6Bkc
+	 eYXcepI3ZCEC69m1ShqtdJwz4vTwcfn9LXi5xQw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xianwei Zhao <xianwei.zhao@amlogic.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Linus Walleij <linusw@kernel.org>,
+	Jiakai Xu <xujiakai24@mails.ucas.ac.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0308/2077] pinctrl: meson: amlogic-a4: fix gpio output glitch
-Date: Tue, 21 Jul 2026 16:59:41 +0200
-Message-ID: <20260721152559.945022604@linuxfoundation.org>
+Subject: [PATCH 7.1 0309/2077] PM: sleep: Use complete() in device_pm_sleep_init()
+Date: Tue, 21 Jul 2026 16:59:42 +0200
+Message-ID: <20260721152559.968536083@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,70 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xianwei Zhao <xianwei.zhao@amlogic.com>
+From: Jiakai Xu <xujiakai24@mails.ucas.ac.cn>
 
-[ Upstream commit 45ad4de324cb1bba88e568b5bef633a79d926aed ]
+[ Upstream commit 3855941f1e4069182c895d5093c5fa589f5b38bd ]
 
-When the system transitions from bootloader to kernel, the GPIO is
-expected to keep driving high.
+Replace complete_all() with complete() in device_pm_sleep_init() to allow
+it to be called in atomic contexts without triggering a false-positive
+WARNING from lockdep_assert_RT_in_threaded_ctx() when
+CONFIG_PROVE_RAW_LOCK_NESTING is enabled.
 
-However, the Linux kernel first configures the pin direction and then
-sets the output value. This may cause a brief low-level glitch on the
-GPIO line, which can be problematic for regulator control.
+device_pm_sleep_init() may be called during device initialization while
+holding a raw_spinlock (e.g., from within device_initialize()), and
+complete_all() is unsafe in atomic contexts on PREEMPT_RT kernels.
+complete(), which is safe to call from any context, is sufficient here.
 
-By configuring the output value before switching the pin direction to
-output, the glitch can be avoided.
+complete_all() sets the completion count to UINT_MAX/2 (permanently
+signaled), while complete() increments it by 1. Since no threads can be
+waiting during device initialization, both are functionally equivalent.
+The completion is always reinitialized via reinit_completion() in
+dpm_clear_async_state() before each suspend/resume cycle.
 
-This commit fixes the issue by swapping the configuration order.
+However, changing to complete() introduces a potential deadlock for
+devices with no PM support (dev->power.no_pm = true). Such devices are
+never added to the dpm_list and never go through dpm_clear_async_state(),
+so their completion is never reinitialized. A parent device waiting on a
+no_pm child across multiple suspend phases would consume the single-use
+token in the first phase and block forever in the second.
 
-Fixes: 6e9be3abb78c ("pinctrl: Add driver support for Amlogic SoCs")
-Signed-off-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fix this by adding an early return in dpm_wait() when dev->power.no_pm is
+set, since no_pm devices do not participate in system suspend/resume.
+
+Fixes: 152e1d592071 ("PM: Prevent waiting forever on asynchronous resume after failing suspend")
+Signed-off-by: Jiakai Xu <xujiakai24@mails.ucas.ac.cn>
+[ rjw: Subject adjustment ]
+Link: https://patch.msgid.link/20260523022314.2657232-1-xujiakai24@mails.ucas.ac.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/meson/pinctrl-amlogic-a4.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/base/power/main.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/meson/pinctrl-amlogic-a4.c b/drivers/pinctrl/meson/pinctrl-amlogic-a4.c
-index 35d27626a336b7..1bd58fbbd26ac6 100644
---- a/drivers/pinctrl/meson/pinctrl-amlogic-a4.c
-+++ b/drivers/pinctrl/meson/pinctrl-amlogic-a4.c
-@@ -548,11 +548,11 @@ static int aml_pinconf_set_output_drive(struct aml_pinctrl *info,
- {
- 	int ret;
- 
--	ret = aml_pinconf_set_output(info, pin, true);
-+	ret = aml_pinconf_set_drive(info, pin, high);
- 	if (ret)
- 		return ret;
- 
--	return aml_pinconf_set_drive(info, pin, high);
-+	return aml_pinconf_set_output(info, pin, true);
+diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
+index e1b550664babbf..ed48c292f57576 100644
+--- a/drivers/base/power/main.c
++++ b/drivers/base/power/main.c
+@@ -115,7 +115,7 @@ void device_pm_sleep_init(struct device *dev)
+ 	dev->power.is_noirq_suspended = false;
+ 	dev->power.is_late_suspended = false;
+ 	init_completion(&dev->power.completion);
+-	complete_all(&dev->power.completion);
++	complete(&dev->power.completion);
+ 	dev->power.wakeup = NULL;
+ 	INIT_LIST_HEAD(&dev->power.entry);
  }
+@@ -252,6 +252,10 @@ static void dpm_wait(struct device *dev, bool async)
+ 	if (!dev)
+ 		return;
  
- static int aml_pinconf_set(struct pinctrl_dev *pcdev, unsigned int pin,
-@@ -921,15 +921,14 @@ static int aml_gpio_direction_output(struct gpio_chip *chip, unsigned int gpio,
- 	unsigned int bit, reg;
- 	int ret;
- 
--	aml_gpio_calc_reg_and_bit(bank, AML_REG_DIR, gpio, &reg, &bit);
--	ret = regmap_update_bits(bank->reg_gpio, reg, BIT(bit), 0);
-+	aml_gpio_calc_reg_and_bit(bank, AML_REG_OUT, gpio, &reg, &bit);
-+	ret = regmap_update_bits(bank->reg_gpio, reg, BIT(bit),
-+				 value ? BIT(bit) : 0);
- 	if (ret < 0)
- 		return ret;
- 
--	aml_gpio_calc_reg_and_bit(bank, AML_REG_OUT, gpio, &reg, &bit);
--
--	return regmap_update_bits(bank->reg_gpio, reg, BIT(bit),
--				  value ? BIT(bit) : 0);
-+	aml_gpio_calc_reg_and_bit(bank, AML_REG_DIR, gpio, &reg, &bit);
-+	return regmap_update_bits(bank->reg_gpio, reg, BIT(bit), 0);
++	/* Devices with no PM support don't use the completion. */
++	if (dev->power.no_pm)
++		return;
++
+ 	if (async || (pm_async_enabled && dev->power.async_suspend))
+ 		wait_for_completion(&dev->power.completion);
  }
- 
- static int aml_gpio_set(struct gpio_chip *chip, unsigned int gpio, int value)
 -- 
 2.53.0
 
