@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E8437B40C;
-	Tue, 21 Jul 2026 17:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D816A375AC3;
+	Tue, 21 Jul 2026 17:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653844; cv=none; b=tHhnBMzHx94V99FnQ5grwbkON8/VCP1yDh/aPyKg0xXtItcVpN/0HNRMIkXA6NrM5pdTl2Hj6vH+0eKRB0rDxREfrFaqTgrab2Z/5OQPiBVQxiZk/Vlt5QBd6zUR8yRP8fE5AX0obvr3rC0aygOAuegiPt4684342Pk15BnptGo=
+	t=1784653847; cv=none; b=YkyHOmxQ1DPm+OThqTwWAVsnpje8FmLPON2WqvzxjsUCUWxqegysOvP5k8MiRdJSd7Zrkvzsa3v9fOyInfOUpi9DSAxnNiDJ1dEuqME0TAAhZ5LwGv0I65bvD4XX/PimVPeTKPQUM9Or/2T+J5Wn4a+sbYzm87Dtyz3ksrgGhzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653844; c=relaxed/simple;
-	bh=qLLeTGQoe71CVBDfErEJxrl6em6SJ906SVCfmJmiEZg=;
+	s=arc-20240116; t=1784653847; c=relaxed/simple;
+	bh=DWFPwps949KoHomyo4WXIeQFarsR7OiIQj3DgzWyMFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S4e/8KZunVwaNkqxTMai2HDg6J8QsL9cuo4nV9NOYpYeOUg9ODIqNfuziskQT04Fi9p+cyFY462eX4ucqefUJCDa+DBhOulYZNblnXNp83VnrUdVQufWrKIgLgM/rS++Q+vNPZNf9FkTTIdVxu4sTnxCTnUmAT54GIVsDvrhCDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wK7U3sC6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a03kGE+odgidyk+HkLd3e/Dx5ASZqzkPBRe97bqnsvKNrILSCHYFog8AKQbfD9aJXDp39ZJM67sTlCa3qSAZ1+4LM2wxQIaF3WN4L9wF2KhL2dfe1AoSaIUaoaVXITr8bfMpYiqLkka76M0UIRq0A2dwME1uVw7csisERDxVLjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9RFf+lA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wK7U3sC6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88CE91F000E9;
-	Tue, 21 Jul 2026 17:10:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9RFf+lA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44B581F000E9;
+	Tue, 21 Jul 2026 17:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653843;
-	bh=VU0L+hpA3SS3ynsxlSVNOo69LDOdFAL+9wSaDRGst1M=;
+	s=korg; t=1784653845;
+	bh=7Bof4I2jvVau4Yis00m1aUI41RRGGlSOojb7+BzFZI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wK7U3sC6cqpAb3wJT3UTHkGOYvU9HjiZxM2DweulSqgyw5LKXjoSm1U2NfNGsFHiI
-	 NJEaJsIfCkUow4h4PeOqBzmFbBYApGQwo4dutVTZlVae3o7Lmkr5NtmUq4QkgiCoQz
-	 xBimaduphHLVNUrryIaqDWA71EhgFPrbhG5NVTno=
+	b=R9RFf+lAEhL07EqQR6GI4gL4jIiXhkVrOw+Z7IIjZxUhw6j8GcCrRYbs43U/4z5mK
+	 qw9cz3s/tJt36WHQ0Edg/eJaiweGWIxVYgNghbMbp9bEl8d8fdDhXWmKo2bSpbk3k8
+	 RVd7zmYQEH/qadkK9nOdcrWWaMHzUy0rs4DfDue8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhixing Chen <running910@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	Enrico Pozzobon <enrico.pozzobon@dissecto.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1427/2077] netfilter: ip6tables: mark malformed IPv6 extension headers for hotdrop
-Date: Tue, 21 Jul 2026 17:18:20 +0200
-Message-ID: <20260721152626.465298451@linuxfoundation.org>
+Subject: [PATCH 7.1 1474/2077] net: usb: lan78xx: disable VLAN filter in promiscuous mode
+Date: Tue, 21 Jul 2026 17:19:07 +0200
+Message-ID: <20260721152627.559639755@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,74 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhixing Chen <running910@gmail.com>
+From: Enrico Pozzobon <enrico.pozzobon@dissecto.com>
 
-[ Upstream commit 43ccc20b5a733226417832cf16ef45322e594990 ]
+[ Upstream commit 60444706aa17616efc03190d099ac347e28b3d0a ]
 
-The ah, hbh and rt matches check that the fixed extension header is
-present, then use the header length field to derive the advertised
-extension header length for matching.
+The hardware VLAN filter (RFE_CTL_VLAN_FILTER_) drops VLAN-tagged frames
+whose VID has not been registered via lan78xx_vlan_rx_add_vid(). It is
+left enabled in promiscuous mode, so packet capture (e.g. tcpdump or
+Wireshark) does not see tagged frames for unregistered VIDs.
 
-For the ah match, add the missing advertised-length check. For hbh
-and rt, update the existing advertised-length checks. In all three
-cases, set hotdrop to true before returning false when the advertised
-extension header length exceeds the available skb data.
+Clear the filter while the interface is promiscuous and restore it from
+NETIF_F_HW_VLAN_CTAG_FILTER otherwise. Enforce the same condition in
+lan78xx_set_features() so netdev_update_features() cannot re-enable the
+filter while promiscuous.
 
-Returning false treats the packet as a rule mismatch. Set hotdrop to
-true and drop malformed packets so they cannot bypass rules intended
-to drop packets with these IPv6 extension headers.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Zhixing Chen <running910@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 55d7de9de6c3 ("Microchip's LAN7800 family USB 2/3 to 10/100/1000 Ethernet device driver")
+Signed-off-by: Enrico Pozzobon <enrico.pozzobon@dissecto.com>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20260701-lan78xx-vlan-promisc-v3-1-232266d32743@dissecto.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/netfilter/ip6t_ah.c  | 5 +++++
- net/ipv6/netfilter/ip6t_hbh.c | 1 +
- net/ipv6/netfilter/ip6t_rt.c  | 3 ++-
- 3 files changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/usb/lan78xx.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/netfilter/ip6t_ah.c b/net/ipv6/netfilter/ip6t_ah.c
-index 70da2f2ce064ca..1258783ed87629 100644
---- a/net/ipv6/netfilter/ip6t_ah.c
-+++ b/net/ipv6/netfilter/ip6t_ah.c
-@@ -56,6 +56,11 @@ static bool ah_mt6(const struct sk_buff *skb, struct xt_action_param *par)
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index c4cebacabcb534..cb782d81d84f2a 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -1499,6 +1499,17 @@ static void lan78xx_deferred_multicast_write(struct work_struct *param)
+ 	return;
+ }
+ 
++static void lan78xx_update_vlan_filter(struct lan78xx_priv *pdata,
++				       struct net_device *netdev,
++				       netdev_features_t features)
++{
++	if ((features & NETIF_F_HW_VLAN_CTAG_FILTER) &&
++	    !(netdev->flags & IFF_PROMISC))
++		pdata->rfe_ctl |= RFE_CTL_VLAN_FILTER_;
++	else
++		pdata->rfe_ctl &= ~RFE_CTL_VLAN_FILTER_;
++}
++
+ static void lan78xx_set_multicast(struct net_device *netdev)
+ {
+ 	struct lan78xx_net *dev = netdev_priv(netdev);
+@@ -1533,6 +1544,8 @@ static void lan78xx_set_multicast(struct net_device *netdev)
+ 		}
  	}
  
- 	hdrlen = ipv6_authlen(ah);
-+	if (skb->len - ptr < hdrlen) {
-+		/* Packet smaller than its length field */
-+		par->hotdrop = true;
-+		return false;
-+	}
++	lan78xx_update_vlan_filter(pdata, dev->net, dev->net->features);
++
+ 	if (netdev_mc_count(dev->net)) {
+ 		struct netdev_hw_addr *ha;
+ 		int i;
+@@ -3074,10 +3087,7 @@ static int lan78xx_set_features(struct net_device *netdev,
+ 	else
+ 		pdata->rfe_ctl &= ~RFE_CTL_VLAN_STRIP_;
  
- 	pr_debug("IPv6 AH LEN %u %u ", hdrlen, ah->hdrlen);
- 	pr_debug("RES %04X ", ah->reserved);
-diff --git a/net/ipv6/netfilter/ip6t_hbh.c b/net/ipv6/netfilter/ip6t_hbh.c
-index 450dd53846a2f7..6d1a5d2026a678 100644
---- a/net/ipv6/netfilter/ip6t_hbh.c
-+++ b/net/ipv6/netfilter/ip6t_hbh.c
-@@ -75,6 +75,7 @@ hbh_mt6(const struct sk_buff *skb, struct xt_action_param *par)
- 	hdrlen = ipv6_optlen(oh);
- 	if (skb->len - ptr < hdrlen) {
- 		/* Packet smaller than it's length field */
-+		par->hotdrop = true;
- 		return false;
- 	}
+-	if (features & NETIF_F_HW_VLAN_CTAG_FILTER)
+-		pdata->rfe_ctl |= RFE_CTL_VLAN_FILTER_;
+-	else
+-		pdata->rfe_ctl &= ~RFE_CTL_VLAN_FILTER_;
++	lan78xx_update_vlan_filter(pdata, netdev, features);
  
-diff --git a/net/ipv6/netfilter/ip6t_rt.c b/net/ipv6/netfilter/ip6t_rt.c
-index 5561bd9cea8185..278b52752f3645 100644
---- a/net/ipv6/netfilter/ip6t_rt.c
-+++ b/net/ipv6/netfilter/ip6t_rt.c
-@@ -56,7 +56,8 @@ static bool rt_mt6(const struct sk_buff *skb, struct xt_action_param *par)
- 
- 	hdrlen = ipv6_optlen(rh);
- 	if (skb->len - ptr < hdrlen) {
--		/* Pcket smaller than its length field */
-+		/* Packet smaller than its length field */
-+		par->hotdrop = true;
- 		return false;
- 	}
+ 	spin_unlock_irqrestore(&pdata->rfe_ctl_lock, flags);
  
 -- 
 2.53.0
