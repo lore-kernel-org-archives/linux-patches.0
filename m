@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A3846AA86;
-	Tue, 21 Jul 2026 15:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C2F46AA80;
+	Tue, 21 Jul 2026 15:39:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648358; cv=none; b=As8bFNeZ3BaCe6N29JlMTgtNFCPDC+m+zU7FYl2xfP8v2a5fTBsVD6BJR7bYpZzAycaMzMBt1ByUAHkAE6IPWQhUMkZWaFge7WGOjPZnXOxTRdF+qdp2UUuNUOR53CRc90zmlQg5Fr+EW5I3efGXjy2+5xC4R9yBmvP/NsBRqcA=
+	t=1784648361; cv=none; b=cIiU01L0AphgN1wzs9mIDwkPsIcuXNHWIgXJv1FuV0Ur63rAi5huom0BqYSy7WM5aqAnS1xVC/2vNyL8YNCYyacRbDjQ3rQwYGH/SfM8rd/yWaG0Sb2p1GzbJrgk5F0Vn274HvlATaPbcSqcmtJMCl+nD7A7KbvuNDz1JeBjIBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648358; c=relaxed/simple;
-	bh=5ffhWQp1cKWGlnDxLFjNiLjrbctg/jY8sIXP2Oq0+V8=;
+	s=arc-20240116; t=1784648361; c=relaxed/simple;
+	bh=1r5AvaHis7twZZwRxDAORWDHX33UqBzYZtu9p+KRn+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hr70SLFc4NaZCKPzi4xf5l4EJkmyZig8MXvZS5gh22pTwXbJC6hE/VO7Lvtokbp+Yk09xmc4DCzO/teFnbZavp5/vZsOMrEIPT6rY0D39V8LCC6bGzavkuiqlaPvssjjQCzhW1HXsBuksIx/F8NiB6Tv+C2U6OwNylTOdcvHS1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zv2NrD+3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L6PJNt59o01iWRrPsvA3KMU1gc3a+nCzyYdW4bcYeUEJ/5XvyIMtO2EVZJjIxw6mefLjY+jUpPbG2t22yda7YyOHCkmTBnTcAsgT2Cth57ZkgLuIPw9ey3lxNBvPIsvxmAPxkMQkrFnjFnfsmFnQ5CWhZ+phaXCehvQtpMExUy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFC1gJ+E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zv2NrD+3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C831F000E9;
-	Tue, 21 Jul 2026 15:39:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFC1gJ+E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00C01F000E9;
+	Tue, 21 Jul 2026 15:39:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648357;
-	bh=M11MjTgk+Tp77ITCMrEZX6EvXVPDfIpac1H0pyNxWaM=;
+	s=korg; t=1784648360;
+	bh=PzcaLbaW7Tz8jrilCCwzr01iwnxbJZZrMbWwi9lclwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zv2NrD+341xssa1wE6a6zdMl9NczuLOusL3fgGJSG3hwVx7n5D4CAwgOy/I/omvQo
-	 PFWcD8iorWBo71YQhhDNF2OftQJB2k45eqvNVfJwMU+yc1mXktW7XImA/SUv4H7bfJ
-	 2l8piYLi/SEtWJPzZXvuEG4M137prX+FNcsrG1TI=
+	b=UFC1gJ+Ede2UwMaHfa9B6eY9bNdiyFsTwGeGhbwpP5vU64MsT6QJKJdrPw8yehzlk
+	 rb5qs5aVdIKuT1sEDLOzWZvkkurXeHZBPeqdO9d2FY1kbMjTm1MicnM3FWdfjDM4em
+	 yXhtd0gvCTvZHNUU1SVOAYSDoNI2VxVWev9Dy2ME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0132/2077] klp-build: Fix patch cleanup on interrupt
-Date: Tue, 21 Jul 2026 16:56:45 +0200
-Message-ID: <20260721152555.806685233@linuxfoundation.org>
+Subject: [PATCH 7.1 0168/2077] ARM: multi_v7_defconfig: Correct QCOM_RPMH and QCOM_RPMHPD
+Date: Tue, 21 Jul 2026 16:57:21 +0200
+Message-ID: <20260721152556.653679263@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,57 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit f3048888ea62ac1c573db91e74e0dcabe058e89f ]
+[ Upstream commit 02802b40c31d2f2cfc94716189cfaf610930c589 ]
 
-If a build error occurs and the user hits Ctrl-C while a large patch is
-being reverted during cleanup, the cleanup EXIT trap gets re-triggered
-and tries to re-revert the already partially-reverted patch.  That
-causes 'patch -R' to repeatedly prompt
+QCOM_RPMH and QCOM_RPMHPD can be build only as modules when
+QCOM_COMMAND_DB is module itself.
 
-  "Unreversed patch detected!  Ignore -R? [n]"
-
-for each already-reverted hunk, with no way to break out.
-
-Fix it by adding '--force' to the patch revert command in
-revert_patch(), which causes it to silently ignore already-reverted
-hunks.  And ignore errors, as the cleanup is always best-effort.
-
-For similar reasons, add to APPLIED_PATCHES before (rather than after)
-applying the patch in apply_patch() so an interrupted apply will also
-get cleaned up.
-
-Fixes: d36a7343f4ba ("livepatch/klp-build: switch to GNU patch and recountdiff")
-Acked-by: Song Liu <song@kernel.org>
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Fixes: 1c25ca9bb5c5 ("ARM: multi_v7_defconfig: enable more Qualcomm drivers")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/livepatch/klp-build | 4 ++--
+ arch/arm/configs/multi_v7_defconfig | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/livepatch/klp-build b/scripts/livepatch/klp-build
-index 8f0ea56f264005..ab5ea13c87004e 100755
---- a/scripts/livepatch/klp-build
-+++ b/scripts/livepatch/klp-build
-@@ -381,15 +381,15 @@ apply_patch() {
- 		warn "${patch} applied with fuzz"
- 	fi
- 
--	patch -d "$SRC" -p1 --no-backup-if-mismatch -r /dev/null "${extra_args[@]}" --silent < "$patch"
- 	APPLIED_PATCHES+=("$patch")
-+	patch -d "$SRC" -p1 --no-backup-if-mismatch -r /dev/null "${extra_args[@]}" --silent < "$patch"
- }
- 
- revert_patch() {
- 	local patch="$1"
- 	local tmp=()
- 
--	patch -d "$SRC" -p1 -R --silent --no-backup-if-mismatch -r /dev/null < "$patch"
-+	patch -d "$SRC" -p1 -R --force --no-backup-if-mismatch -r /dev/null &> /dev/null < "$patch" || true
- 
- 	for p in "${APPLIED_PATCHES[@]}"; do
- 		[[ "$p" == "$patch" ]] && continue
+diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
+index bcc9aabc120283..aad12026b20d28 100644
+--- a/arch/arm/configs/multi_v7_defconfig
++++ b/arch/arm/configs/multi_v7_defconfig
+@@ -1155,7 +1155,7 @@ CONFIG_QCOM_COMMAND_DB=m
+ CONFIG_QCOM_GSBI=y
+ CONFIG_QCOM_OCMEM=m
+ CONFIG_QCOM_RMTFS_MEM=m
+-CONFIG_QCOM_RPMH=y
++CONFIG_QCOM_RPMH=m
+ CONFIG_QCOM_SMEM=y
+ CONFIG_QCOM_SMD_RPM=y
+ CONFIG_QCOM_SMP2P=y
+@@ -1170,7 +1170,7 @@ CONFIG_KEYSTONE_NAVIGATOR_DMA=y
+ CONFIG_TI_PRUSS=m
+ CONFIG_RASPBERRYPI_POWER=y
+ CONFIG_QCOM_CPR=y
+-CONFIG_QCOM_RPMHPD=y
++CONFIG_QCOM_RPMHPD=m
+ CONFIG_QCOM_RPMPD=y
+ CONFIG_ROCKCHIP_PM_DOMAINS=y
+ CONFIG_TI_SCI_PM_DOMAINS=y
 -- 
 2.53.0
 
