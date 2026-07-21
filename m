@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8821474CC;
-	Tue, 21 Jul 2026 18:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304CA47127B;
+	Tue, 21 Jul 2026 18:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657527; cv=none; b=OMnr5jEkIDEs9C0AgiRIORNLxgLCP3ogo71A3b2lTUUw+G5WaM7FKntGanbT5l70b9FDlaLgDep7iK49iMyM/a8ps241ou8dpjoaqQ5s1c6I5cBOl9PQcPuAUAh4sTqEtUAV/du3Pi+poobLoDSC2w6PiENd9Inis3K0CUFjdYc=
+	t=1784657530; cv=none; b=hI4WjO6TvVIOQ/C3Gv035oB5YCOOJsCMgQuexzZXNNmSj6BdjQyf/OiRJyuB/igoX4szsOReYKCWKGdTT7VrXWnCJzK8VyA4yEriyoa7zZ5fB4aO8by7p1ocGz6ZiMt0mN6SFeiKR9pvnG2JmRbLPGSRiyAzcBNKgzQuFt3bwZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657527; c=relaxed/simple;
-	bh=Y+E0ttFZGo4UUuxhVUA6x7YwKt/dhHsYmAKZ9pHZa7s=;
+	s=arc-20240116; t=1784657530; c=relaxed/simple;
+	bh=rl2n+GiMXdZHq9EAfJUm8zNizGGOeN4trj0SlmAZ1t8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=poqzS69PU6soFGkEwaBOTgwDqYFrh+oLsKgCbULaJgZWtZzdZAjnv1zU6RCvc+vUtINk6xvyqfDw2H4TQ+w+RpRjyo2jcDXOp8L+d38QbYV9PB5ARzbveq/vgWjFUI24MPVaCimP5evo6NAoynzGzUZ+9PqC12xxLeHIyE2XoiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RH8Dm2Q7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OhG/xu2kWz5o6clH1W1LEtcYuL/5IDVQ+Qc2/R2jRNx24zPKtj5xp+jAMlMnmtaoLlwKN+z972PUbXVeSDj5QWU1HIHXrfpCBL3ooKaVD03U5WclQC1AluWav4ZFqC1i8IBhdCAxEVPKo9DdSzMmSoc1JMKo8PTmJJ3GOXxFsRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yA20n1As; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RH8Dm2Q7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03871F000E9;
-	Tue, 21 Jul 2026 18:12:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yA20n1As"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C5921F000E9;
+	Tue, 21 Jul 2026 18:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657526;
-	bh=9lBmtWtf7JQiCfhFnNRGHCQejOIAw7VDzLIhpyETTQU=;
+	s=korg; t=1784657529;
+	bh=KSUs+E36dDBlt4T4zsanirPMZrlLD4glZvK86FxVvOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RH8Dm2Q7GTPA34MopqcidJJI0TA5mriRdpDCHmlrcjun+/8IYDNPSK/qECiyNGA+e
-	 OR0FI/LDSWJy0102crszl6Y+3dBBo3nOEs0h3bkyvUsGd+xtehBs2NkW7kgUna24LN
-	 0o7Hu9XnLkjryPzDfeTk+navO9CD+7oDRdoaZXMs=
+	b=yA20n1AsqPof5jqP0RFeqLzs6ypUNZU3JC20Ui3xYNiMa2iTefPo6BwnQKaH2BFuq
+	 qyq2EP8bHbucbttGGhSqjMEiMr53SgXKqnJSs71ZpbGznhnDfQr/r/5Wug9jSlP6XI
+	 bhtdA1NkpaI4ZNKiEcdMineYKqEKc9hGPX4TGs2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Song Liu <songliubraving@fb.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0799/1611] perf bpf: Validate array presence before casting BPF prog info pointers
-Date: Tue, 21 Jul 2026 17:15:15 +0200
-Message-ID: <20260721152533.358398676@linuxfoundation.org>
+Subject: [PATCH 6.18 0800/1611] perf dso: Set standard errno on decompression failure
+Date: Tue, 21 Jul 2026 17:15:16 +0200
+Message-ID: <20260721152533.381204404@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -54,153 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 5ebf4137d23a4fd6c0cc6a6fb766ee60d2b09193 ]
+[ Upstream commit 1a5f9334a45a6b0c1cd7341cc72a3b87adad1d27 ]
 
-Several functions cast bpf_prog_info fields (jited_ksyms,
-jited_func_lens, jited_prog_insns) from u64 to pointers and
-dereference them.  These fields are only valid pointers if
-bpil_offs_to_addr() converted their file offsets to addresses, which
-only happens when the corresponding PERF_BPIL_* bits are set in
-info_linear->arrays.
+dso__get_filename() sets errno to a negative custom DSO_LOAD_ERRNO
+value when kernel module decompression fails:
 
-A crafted perf.data can leave these bits unset while setting non-zero
-counts and offset values, causing the functions to dereference raw file
-offsets as pointers.
+  errno = *dso__load_errno(dso);  /* e.g. -9996 */
 
-Add array bitmask validation to all perf.data processing paths:
+The caller __open_dso() then computes fd = -errno, producing a large
+positive value (9996) that looks like a valid file descriptor.  This
+can cause close_data_fd() to close an unrelated fd used by another
+subsystem.
 
-  - __bpf_event__print_bpf_prog_info(): check JITED_KSYMS and
-    JITED_FUNC_LENS (changed to take struct perf_bpil *)
-  - machine__process_bpf_event_load(): check JITED_KSYMS
-  - bpf_read(): check JITED_INSNS before memcpy from jited_prog_insns
-  - dso__disassemble_filename(): check JITED_INSNS before returning
-    jited_prog_insns pointer
+Set errno to EIO instead.  The detailed error code is already stored
+in dso__load_errno(dso) for diagnostic messages.
 
-Fixes: f8dfeae009effc0b ("perf bpf: Show more BPF program info in print_bpf_prog_info()")
+Fixes: 1d6b3c9ba756a513 ("perf tools: Decompress kernel module when reading DSO data")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Song Liu <songliubraving@fb.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf-event.c | 20 +++++++++++++++++---
- tools/perf/util/bpf-event.h |  4 ++--
- tools/perf/util/dso.c       | 10 ++++++++++
- tools/perf/util/header.c    |  3 +--
- 4 files changed, 30 insertions(+), 7 deletions(-)
+ tools/perf/util/dso.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
-index 579742afe2221f..9fa64c4bde6972 100644
---- a/tools/perf/util/bpf-event.c
-+++ b/tools/perf/util/bpf-event.c
-@@ -59,6 +59,10 @@ static int machine__process_bpf_event_load(struct machine *machine,
- 		return 0;
- 	info_linear = info_node->info_linear;
- 
-+	/* jited_ksyms is only valid if bpil_offs_to_addr() converted it */
-+	if (!(info_linear->arrays & (1UL << PERF_BPIL_JITED_KSYMS)))
-+		return 0;
-+
- 	for (i = 0; i < info_linear->info.nr_jited_ksyms; i++) {
- 		u64 *addrs = (u64 *)(uintptr_t)(info_linear->info.jited_ksyms);
- 		u64 addr = addrs[i];
-@@ -961,12 +965,15 @@ int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env)
- 	return evlist__add_sb_event(evlist, &attr, bpf_event__sb_cb, env);
- }
- 
--void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
-+void __bpf_event__print_bpf_prog_info(struct perf_bpil *info_linear,
- 				      struct perf_env *env,
- 				      FILE *fp)
- {
--	__u32 *prog_lens = (__u32 *)(uintptr_t)(info->jited_func_lens);
--	__u64 *prog_addrs = (__u64 *)(uintptr_t)(info->jited_ksyms);
-+	struct bpf_prog_info *info = &info_linear->info;
-+	__u64 required_arrays = (1UL << PERF_BPIL_JITED_KSYMS) |
-+				(1UL << PERF_BPIL_JITED_FUNC_LENS);
-+	__u32 *prog_lens;
-+	__u64 *prog_addrs;
- 	char name[KSYM_NAME_LEN];
- 	struct btf *btf = NULL;
- 	u32 sub_prog_cnt, i;
-@@ -976,6 +983,13 @@ void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
- 	    sub_prog_cnt != info->nr_jited_func_lens)
- 		return;
- 
-+	/* Ensure the arrays were present and converted by bpil_offs_to_addr() */
-+	if ((info_linear->arrays & required_arrays) != required_arrays)
-+		return;
-+
-+	prog_lens = (__u32 *)(uintptr_t)(info->jited_func_lens);
-+	prog_addrs = (__u64 *)(uintptr_t)(info->jited_ksyms);
-+
- 	if (info->btf_id) {
- 		struct btf_node *node;
- 
-diff --git a/tools/perf/util/bpf-event.h b/tools/perf/util/bpf-event.h
-index 60d2c6637af5d6..da4eeb4a1a7320 100644
---- a/tools/perf/util/bpf-event.h
-+++ b/tools/perf/util/bpf-event.h
-@@ -40,7 +40,7 @@ struct btf_node {
- int machine__process_bpf(struct machine *machine, union perf_event *event,
- 			 struct perf_sample *sample);
- int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env);
--void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
-+void __bpf_event__print_bpf_prog_info(struct perf_bpil *info_linear,
- 				      struct perf_env *env,
- 				      FILE *fp);
- void bpf_metadata_free(struct bpf_metadata *metadata);
-@@ -58,7 +58,7 @@ static inline int evlist__add_bpf_sb_event(struct evlist *evlist __maybe_unused,
- 	return 0;
- }
- 
--static inline void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info __maybe_unused,
-+static inline void __bpf_event__print_bpf_prog_info(struct perf_bpil *info_linear __maybe_unused,
- 						    struct perf_env *env __maybe_unused,
- 						    FILE *fp __maybe_unused)
- {
 diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
-index 5b88b19f9d8e3c..48f0617df2dbbd 100644
+index 48f0617df2dbbd..d63e97480fece4 100644
 --- a/tools/perf/util/dso.c
 +++ b/tools/perf/util/dso.c
-@@ -882,6 +882,12 @@ static ssize_t bpf_read(struct dso *dso, u64 offset, char *data)
- 		return -1;
- 	}
+@@ -602,7 +602,13 @@ static char *dso__get_filename(struct dso *dso, const char *root_dir,
+ 		size_t len = sizeof(newpath);
  
-+	/* jited_prog_insns is only valid if bpil_offs_to_addr() converted it */
-+	if (!(node->info_linear->arrays & (1UL << PERF_BPIL_JITED_INSNS))) {
-+		dso__data(dso)->status = DSO_DATA_STATUS_ERROR;
-+		return -1;
-+	}
-+
- 	len = node->info_linear->info.jited_prog_len;
- 	buf = (u8 *)(uintptr_t)node->info_linear->info.jited_prog_insns;
- 
-@@ -1927,6 +1933,10 @@ const u8 *dso__read_symbol(struct dso *dso, const char *symfs_filename,
- 			return NULL;
+ 		if (dso__decompress_kmodule_path(dso, name, newpath, len) < 0) {
+-			errno = *dso__load_errno(dso);
++			/*
++			 * Use a standard errno value, not the negative custom
++			 * DSO_LOAD_ERRNO stored in dso__load_errno(dso):
++			 * __open_dso() computes fd = -errno, so a negative
++			 * errno produces a positive fd that looks valid.
++			 */
++			errno = EIO;
+ 			goto out;
  		}
- 		info_linear = info_node->info_linear;
-+		if (!(info_linear->arrays & (1UL << PERF_BPIL_JITED_INSNS))) {
-+			errno = SYMBOL_ANNOTATE_ERRNO__BPF_MISSING_BTF;
-+			return NULL;
-+		}
- 		assert(len <= info_linear->info.jited_prog_len);
- 		*out_buf_len = len;
- 		return (const u8 *)(uintptr_t)(info_linear->info.jited_prog_insns);
-diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
-index 131fdbe9cefda5..9cb1d54b2452d9 100644
---- a/tools/perf/util/header.c
-+++ b/tools/perf/util/header.c
-@@ -1825,8 +1825,7 @@ static void print_bpf_prog_info(struct feat_fd *ff, FILE *fp)
- 		node = rb_entry(next, struct bpf_prog_info_node, rb_node);
- 		next = rb_next(&node->rb_node);
  
--		__bpf_event__print_bpf_prog_info(&node->info_linear->info,
--						 env, fp);
-+		__bpf_event__print_bpf_prog_info(node->info_linear, env, fp);
- 	}
- 
- 	up_read(&env->bpf_progs.lock);
 -- 
 2.53.0
 
