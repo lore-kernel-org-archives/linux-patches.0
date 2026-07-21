@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9DB44AB97;
-	Tue, 21 Jul 2026 21:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E5644AB6A;
+	Tue, 21 Jul 2026 21:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668766; cv=none; b=f+F73hCtxzFReZQdGQ3Nhy//VBGO4IRRgG7A4flJny99acZGqw2N5B0ERo3W2i0OsyMm8iC3qXLOLVgBrl7PM7VdbXXQ+4Jrjweqsc6Do+77WZou0XS81wnQZ0oq3lusspW4W5AMS9ItXCODiILVPuLEjBPXv02QKRo0aLIh8r0=
+	t=1784668769; cv=none; b=ZBipfW5Fi00cX8c9Q0UK01tqeo8mtZ6CRvpnWOvLffz7+HZ6xx8gZMX7w8tJ0+yKVsG9JL1zmAzvLDRr8ekAvwywHHBpOOwjMfyKoc37SxZjemn1rBYPNyKtBsoQxzvxsq8iQVWwhnE1JDZvSmSzwzPQmsQU3ebvGJGmZGyG/CA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668766; c=relaxed/simple;
-	bh=IndEYByR8kcVulr6w1nezU7QP+2FjgA+Cxwrk46VnFA=;
+	s=arc-20240116; t=1784668769; c=relaxed/simple;
+	bh=vfasnWLEc4hBhpiFIZZERUksM1TZ3lCClbpA1+5A6k4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hUzgVf/tsxaslaj98lpLiCgt/rcfrELbNmVBapZrJtOnGPadB3LAIcRhfCF9M/wr5M73l7UCBd8wkluLG4/9JuOH+b19d3YkFoqUB6NlisYursMkjby7bhtxQSHNhMeFap9RfIvPikmwbyS2HhhGTzUn9kv8yvZh6HliWBXkNZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZWZ+rzk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IT7ZvaiFAH02yfCoCjyy8vl/M5jXVh0kY9+/GyB8m21da74USgp0HJCMVUEnvCOgY7/2afPJ53c9lfPPw0I4Ke0qN/oTyp/A8EDiJA5zX4/KBzVj29gYJyFiezO+cj+X0IZS4Wkw6BTVyRvkeFrw8AmdY6ctHEXy/BgO0gGSRFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vgjPLbw+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZWZ+rzk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA301F000E9;
-	Tue, 21 Jul 2026 21:19:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgjPLbw+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CBA1F000E9;
+	Tue, 21 Jul 2026 21:19:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668765;
-	bh=niJx5u3BIAh2SHRs1NtCt6jcl8ZdNrMiczHjzYyP3TA=;
+	s=korg; t=1784668768;
+	bh=0hffDQeFpQm7UWpmsu05qStknGureOxHc2+ks/+yNgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OZWZ+rzkZagMRcrwusl2kOa7Eb+lLpekZSvoSWWl+BlrtsrNq9YnKW18NnB7n5v7Z
-	 sLTQFDSgn2ueaq5wbQqdRkyP3lAG8NUgZMsxn12qpJibHMfIwy3IHzQjj1HvEon1+o
-	 mxwqdTdil7lrgvl6SFPYLS+o3Q/LAObmvsAAR4BQ=
+	b=vgjPLbw+Tx5OvzK4WPCHOzMUiXZwTac6MsI+RFwpWHbAUuYbhWYrrJs1qQWFmbU5H
+	 FfUujPFpGiTnHBt2JD420PZ6l363urYA8ti7zSX7Fn+wX1tHMRiiox/o2ShI//7nJ+
+	 oNB+CWgeuWlYQKE656sIhJQ7U80zv+aJrOAzanTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	linux-clk@vger.kernel.org,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Brian Masney <bmasney@redhat.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0301/1067] arm64: dts: mediatek: mt8192-asurada: Move PCIe DMA bounce buffer to host
-Date: Tue, 21 Jul 2026 17:15:02 +0200
-Message-ID: <20260721152431.331303647@linuxfoundation.org>
+Subject: [PATCH 6.1 0302/1067] clk: scmi: Fix clock rate rounding
+Date: Tue, 21 Jul 2026 17:15:03 +0200
+Message-ID: <20260721152431.354001593@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,44 +57,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-[ Upstream commit 533275a4b5240a2bf2c592bd4536560388306d26 ]
+[ Upstream commit d0c81a38d06d446d341532700b3a4a43d3b00eb1 ]
 
-The DMA bounce buffer is attached to the PCIe host controller, i.e. all
-PCIe DMA transfers should use it.
+While the do_div() helper used for rounding expects its divisor argument
+to be a 32bits quantity, the currently provided divisor parameter is a
+64bit value that, as a consequence, is silently truncated and a possible
+source of bugs.
 
-Move it from the PCIe (WiFi) device node down to the PCIe host
-controller node.
+Fix by using the proper div64_ul helper.
 
-Fixes: 0dca9f0b3e63 ("arm64: dts: mediatek: asurada: Enable PCIe and add WiFi")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: Michael Turquette <mturquette@baylibre.com>
+Cc: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-clk@vger.kernel.org
+Fixes: 7a8655e19bdb ("clk: scmi: Fix the rounding of clock rate")
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260508153300.2224715-2-cristian.marussi@arm.com
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/clk-scmi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
-index 7e5230581a1c76..738ea2100a25ab 100644
---- a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
-@@ -261,6 +261,7 @@ flash@0 {
- &pcie {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pcie_pins>;
-+	memory-region = <&wifi_restricted_dma_region>;
+diff --git a/drivers/clk/clk-scmi.c b/drivers/clk/clk-scmi.c
+index fdec715c9ba9b3..096b0691661961 100644
+--- a/drivers/clk/clk-scmi.c
++++ b/drivers/clk/clk-scmi.c
+@@ -9,9 +9,9 @@
+ #include <linux/device.h>
+ #include <linux/err.h>
+ #include <linux/of.h>
++#include <linux/math64.h>
+ #include <linux/module.h>
+ #include <linux/scmi_protocol.h>
+-#include <asm/div64.h>
  
- 	pcie0: pcie@0,0 {
- 		device_type = "pci";
-@@ -275,7 +276,6 @@ pcie0: pcie@0,0 {
- 		wifi: wifi@0,0 {
- 			reg = <0x10000 0 0 0 0x100000>,
- 			      <0x10000 0 0x100000 0 0x100000>;
--			memory-region = <&wifi_restricted_dma_region>;
- 		};
- 	};
- };
+ static const struct scmi_clk_proto_ops *scmi_proto_clk_ops;
+ 
+@@ -61,7 +61,7 @@ static long scmi_clk_round_rate(struct clk_hw *hw, unsigned long rate,
+ 
+ 	ftmp = rate - fmin;
+ 	ftmp += clk->info->range.step_size - 1; /* to round up */
+-	do_div(ftmp, clk->info->range.step_size);
++	ftmp = div64_ul(ftmp, clk->info->range.step_size);
+ 
+ 	return ftmp * clk->info->range.step_size + fmin;
+ }
 -- 
 2.53.0
 
