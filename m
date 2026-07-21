@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02843C9ED9;
-	Tue, 21 Jul 2026 18:24:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E3546C4DA;
+	Tue, 21 Jul 2026 18:24:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658255; cv=none; b=uXZGSM5oghqg/MNXnsJUGEEyy1AYXNcPcU5gHIxHk6LZQpFaphlizUKsfccB5d6FReWpFk98HWpFNXQkf6OG/3ZSHGEdpM7ea/jCUena7XMJyijjcf3wSmQsyUIEiOU5PyOfM192HqSpPpAhwbFjlccLx7GbkFznobCLAc9O3i4=
+	t=1784658258; cv=none; b=KgVZw1kes2+wYPdsYBscDck2b4Y0BUFhQm9bZvG3k5IjAkTTmB5HRCQtEDPTN0v4XeKFby6JQGd/X+xoIgUkimyqMuKm8cLewei8fH1iV+U/QG6OzRwGdox0MdKqxquFbWMmuNCI7MnG38NjfQcodBRjoejXNRDbQul+xx2kcec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658255; c=relaxed/simple;
-	bh=KBiwW8YuLyVPONzTHKuvEMac77giA9HTOlCOPw/yl9M=;
+	s=arc-20240116; t=1784658258; c=relaxed/simple;
+	bh=jz/ICGppW078Vdx1mQ8VsbqFVmKR3O//yE7F9+j79Zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rvHJZ363xw+5VwIlyGkc+Z/OYX5B8gL4sm8InitHx/XOejphVJ0SBkCd/Ehe45nA1OMQyVE+hXWJN9riUwSVKpd5ThQAqtjJQsYxcHpqKAyoYFTiGeDVslTJToXazadnyP40tLhzpN4MQHZGOaz9kl4iR/nNtdM6hndPZtL5udE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5VVEQ9r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VlqfUPsHbm+x/akYDRZUzEIZU0S1mrMYnKRfHykqtMcocug7htAG8/HRaDAmKLDOfFfqmy2Go2GdXwZYal8UylH6HgxSe63giMtg4EQNoep9iEnnD7CaZdUwei/Twqrie1Ix7zBGsJA0SeB0jyTr9+aGG0qtuDamihM/icS4AiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JokF8hjK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5VVEQ9r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512011F000E9;
-	Tue, 21 Jul 2026 18:24:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JokF8hjK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED8C11F000E9;
+	Tue, 21 Jul 2026 18:24:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658253;
-	bh=Fm95oXEmJWmoPe2Xx2YMvgT1hE6nQNczPgFFveQQ6x8=;
+	s=korg; t=1784658256;
+	bh=whmIKnyfQx1loWkddlHh6sVw/UJ+1Ehncm6iLCRnc4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X5VVEQ9rZdf/+poVim0cwB7Fl41jgXMFoVV1sh5rPljYXRSbYvfJcuTtc/jqTQNjV
-	 CFhVR8V/aNkFuY14JuJAHBX7FUQUB98u/bwdn8sIVWd+U3p7/hiUPNy4dvRXLfeSaj
-	 aNeGRRf4oj51jpngpQGakHQEddkPxJZ6db0U6uwo=
+	b=JokF8hjKF+qEYicTgKvhyx7wZKW9k+e2xj/yrf3ZbZ7eIYX2z7cfCkFNK25KjIfU3
+	 n5klmRU1zs6QOg2KaSP8TTab6ncvmHf5VlcqmIQFkVoBg4eBWOQmEGWNaYF7HlVyH3
+	 v4eWJJaqXZKZar79veoUFw65LxPYqneMV+or6oUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yuyang Huang <sigefriedhyy@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Eric Dumazet <edumazet@google.com>,
 	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1075/1611] ipv6: mcast: Fix potential UAF in MLD delayed work
-Date: Tue, 21 Jul 2026 17:19:51 +0200
-Message-ID: <20260721152539.590295993@linuxfoundation.org>
+Subject: [PATCH 6.18 1076/1611] ipv4: igmp: annotate data-races around im->users
+Date: Tue, 21 Jul 2026 17:19:52 +0200
+Message-ID: <20260721152539.612618216@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,156 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Yuyang Huang <sigefriedhyy@gmail.com>
 
-[ Upstream commit 9b26518b6896a16b809b1e42986f4ebac7bccc1e ]
+[ Upstream commit 061c0aa740d5d3847cd600a74c66a165bee1fbe0 ]
 
-A race condition exists between device teardown and incoming MLD query
-processing, leading to a Use-After-Free in the MLD delayed work.
+/proc/net/igmp walks IPv4 multicast memberships under RCU and
+prints im->users without holding RTNL, while multicast join and leave
+paths update the field while holding RTNL. Annotate this intentional
+lockless snapshot with READ_ONCE() and the matching writers with
+WRITE_ONCE().
 
-During device destruction, the primary reference to inet6_dev is dropped,
-which can drop its refcount to 0. The actual freeing of inet6_dev memory
-is deferred via RCU.
-
-Concurrently, the packet receive path runs under RCU read lock and obtains
-the inet6_dev pointer. Because the memory is RCU-protected, CPU-0 can
-safely dereference inet6_dev even if its refcount has hit 0.
-
-However, if CPU-0 calls igmp6_event_query() and schedules delayed work, it
-attempts to acquire a reference using in6_dev_hold(). This increments the
-refcount from 0 to 1, triggering a "refcount_t: addition on 0" warning.
-Since the inet6_dev memory is still scheduled to be freed after the RCU
-grace period, the device is freed while the work is still scheduled.
-When the work runs, it accesses the freed memory, causing a kernel panic.
-
-Fix this by using refcount_inc_not_zero() (via a new helper
-in6_dev_hold_safe()) to prevent acquiring a reference if the device is
-already being destroyed. If the refcount is 0, we do not schedule the work.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Yuyang Huang <sigefriedhyy@gmail.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260705181756.963063-3-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20260522093906.39764-1-sigefriedhyy@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 3546deaa0c30 ("ipv4: igmp: Fix potential memory leaks in igmp_mod_timer() and igmp_stop_timer()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/addrconf.h |  5 +++++
- net/ipv6/mcast.c       | 40 ++++++++++++++++++++++++++++------------
- 2 files changed, 33 insertions(+), 12 deletions(-)
+ net/ipv4/igmp.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/addrconf.h b/include/net/addrconf.h
-index c5a215ec14215d..a106e8d6bd6efd 100644
---- a/include/net/addrconf.h
-+++ b/include/net/addrconf.h
-@@ -440,6 +440,11 @@ static inline void in6_dev_hold(struct inet6_dev *idev)
- 	refcount_inc(&idev->refcnt);
- }
+diff --git a/net/ipv4/igmp.c b/net/ipv4/igmp.c
+index 894b11b79019a4..980f6fa77a6bbc 100644
+--- a/net/ipv4/igmp.c
++++ b/net/ipv4/igmp.c
+@@ -1531,7 +1531,7 @@ static void ____ip_mc_inc_group(struct in_device *in_dev, __be32 addr,
+ 	}
  
-+static inline bool in6_dev_hold_safe(struct inet6_dev *idev)
-+{
-+	return refcount_inc_not_zero(&idev->refcnt);
-+}
-+
- /* called with rcu_read_lock held */
- static inline bool ip6_ignore_linkdown(const struct net_device *dev)
- {
-diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
-index f4b3cb48387096..c63f97c79c49b4 100644
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -1080,8 +1080,10 @@ static void mld_gq_start_work(struct inet6_dev *idev)
- 	mc_assert_locked(idev);
- 
- 	idev->mc_gq_running = 1;
--	if (!mod_delayed_work(mld_wq, &idev->mc_gq_work, tv + 2))
--		in6_dev_hold(idev);
-+	if (in6_dev_hold_safe(idev)) {
-+		if (mod_delayed_work(mld_wq, &idev->mc_gq_work, tv + 2))
-+			in6_dev_put(idev);
-+	}
- }
- 
- static void mld_gq_stop_work(struct inet6_dev *idev)
-@@ -1099,8 +1101,10 @@ static void mld_ifc_start_work(struct inet6_dev *idev, unsigned long delay)
- 
- 	mc_assert_locked(idev);
- 
--	if (!mod_delayed_work(mld_wq, &idev->mc_ifc_work, tv + 2))
--		in6_dev_hold(idev);
-+	if (in6_dev_hold_safe(idev)) {
-+		if (mod_delayed_work(mld_wq, &idev->mc_ifc_work, tv + 2))
-+			in6_dev_put(idev);
-+	}
- }
- 
- static void mld_ifc_stop_work(struct inet6_dev *idev)
-@@ -1118,8 +1122,10 @@ static void mld_dad_start_work(struct inet6_dev *idev, unsigned long delay)
- 
- 	mc_assert_locked(idev);
- 
--	if (!mod_delayed_work(mld_wq, &idev->mc_dad_work, tv + 2))
--		in6_dev_hold(idev);
-+	if (in6_dev_hold_safe(idev)) {
-+		if (mod_delayed_work(mld_wq, &idev->mc_dad_work, tv + 2))
-+			in6_dev_put(idev);
-+	}
- }
- 
- static void mld_dad_stop_work(struct inet6_dev *idev)
-@@ -1405,18 +1411,23 @@ static void mld_process_v2(struct inet6_dev *idev, struct mld2_query *mld,
- void igmp6_event_query(struct sk_buff *skb)
- {
- 	struct inet6_dev *idev = __in6_dev_get(skb->dev);
-+	bool put = false;
- 
- 	if (!idev || idev->dead)
+ 	if  (im) {
+-		im->users++;
++		WRITE_ONCE(im->users, im->users + 1);
+ 		ip_mc_add_src(in_dev, &addr, mode, 0, NULL, 0);
+ 		goto out;
+ 	}
+@@ -1540,7 +1540,7 @@ static void ____ip_mc_inc_group(struct in_device *in_dev, __be32 addr,
+ 	if (!im)
  		goto out;
  
- 	spin_lock_bh(&idev->mc_query_lock);
--	if (skb_queue_len(&idev->mc_query_queue) < MLD_MAX_SKBS) {
-+	if (skb_queue_len(&idev->mc_query_queue) < MLD_MAX_SKBS &&
-+	    in6_dev_hold_safe(idev)) {
- 		__skb_queue_tail(&idev->mc_query_queue, skb);
--		if (!mod_delayed_work(mld_wq, &idev->mc_query_work, 0))
--			in6_dev_hold(idev);
-+		if (mod_delayed_work(mld_wq, &idev->mc_query_work, 0))
-+			put = true;
- 		skb = NULL;
- 	}
- 	spin_unlock_bh(&idev->mc_query_lock);
+-	im->users = 1;
++	WRITE_ONCE(im->users, 1);
+ 	im->interface = in_dev;
+ 	in_dev_hold(in_dev);
+ 	im->multiaddr = addr;
+@@ -1774,7 +1774,10 @@ void __ip_mc_dec_group(struct in_device *in_dev, __be32 addr, gfp_t gfp)
+ 	     (i = rtnl_dereference(*ip)) != NULL;
+ 	     ip = &i->next_rcu) {
+ 		if (i->multiaddr == addr) {
+-			if (--i->users == 0) {
++			int new_users = i->users - 1;
 +
-+	if (put)
-+		in6_dev_put(idev);
- out:
- 	kfree_skb(skb);
- }
-@@ -1573,18 +1584,23 @@ static void mld_query_work(struct work_struct *work)
- void igmp6_event_report(struct sk_buff *skb)
- {
- 	struct inet6_dev *idev = __in6_dev_get(skb->dev);
-+	bool put = false;
- 
- 	if (!idev || idev->dead)
- 		goto out;
- 
- 	spin_lock_bh(&idev->mc_report_lock);
--	if (skb_queue_len(&idev->mc_report_queue) < MLD_MAX_SKBS) {
-+	if (skb_queue_len(&idev->mc_report_queue) < MLD_MAX_SKBS &&
-+	    in6_dev_hold_safe(idev)) {
- 		__skb_queue_tail(&idev->mc_report_queue, skb);
--		if (!mod_delayed_work(mld_wq, &idev->mc_report_work, 0))
--			in6_dev_hold(idev);
-+		if (mod_delayed_work(mld_wq, &idev->mc_report_work, 0))
-+			put = true;
- 		skb = NULL;
- 	}
- 	spin_unlock_bh(&idev->mc_report_lock);
-+
-+	if (put)
-+		in6_dev_put(idev);
- out:
- 	kfree_skb(skb);
- }
++			WRITE_ONCE(i->users, new_users);
++			if (new_users == 0) {
+ 				ip_mc_hash_remove(in_dev, i);
+ 				*ip = i->next_rcu;
+ 				in_dev->mc_count--;
+@@ -2968,7 +2971,7 @@ static int igmp_mc_seq_show(struct seq_file *seq, void *v)
+ 		delta = im->timer.expires - jiffies;
+ 		seq_printf(seq,
+ 			   "\t\t\t\t%08X %5d %d:%08lX\t\t%d\n",
+-			   im->multiaddr, im->users,
++			   im->multiaddr, READ_ONCE(im->users),
+ 			   im->tm_running,
+ 			   im->tm_running ? jiffies_delta_to_clock_t(delta) : 0,
+ 			   im->reporter);
 -- 
 2.53.0
 
