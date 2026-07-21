@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC3A31716E;
-	Tue, 21 Jul 2026 19:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C869431716E;
+	Tue, 21 Jul 2026 19:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661517; cv=none; b=k62aMlmvyguvB7n3BGSDWCWqhBHzI8s9ez56yrIwxyCQB8wVRgLHMpEg2RIxk3vZIkGaEngRObURhtmWu3DomZwRSe+9ZbK3uiHlYTuVt920CgQdv6nHSiXm28SJzXH35zvOHw96/RMJExqEH7zSfFYY91za0RSIwDA8F1DDCho=
+	t=1784661520; cv=none; b=cI/TM2EzVY77FfZYzRuLi8WqOxybh8Z8obnyEmUGtDg0pyJpS2Y3gDKVhVU9kBCLNcnkK7MhtU/GatzEj44Wzj5yZJ8AqCjH1tYgOMtS7Zta+0c8lCsW3CaDMnZb3wploM0G2fNflxFBmzrPcThq+YH05ZhUHKF1IuHeOp/G0Cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661517; c=relaxed/simple;
-	bh=v0iOWCUYjKxrBmJVekhsNQL/1cHVG3lFXI+JoSg6URQ=;
+	s=arc-20240116; t=1784661520; c=relaxed/simple;
+	bh=CyD2srPFEjyW4HUhGe/yvKni6OEAlmz+ZpE8ZTZuO4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SuHtmS/yHtr1fyvKUykdqIRZ7E0NLoFZ1dFNC8lDvFA3DScIc2HI49VR9+dc9lwzz3vtK0FvhhrwZUvz/ncjjiOGH15ATCmfs8GVPVoOBrt/fWqfqyzwRb8aVeCUuU37YcWnV2ZD4U3Zjph9rHJ0GIqYq49T400xowLsBW6/ayY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xJqeMk9S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vy15887hm6wDy/m9IEi7KTcw5kNqkazvsntm4Xk9nXzSUfXABuuoshBYNPNEr+cyelziHg0Wv8gNBKZetqJ5c7k+JyhMkVimbKAMOYTezjmWQpRu8Jt1FkXoTGO364UU5YWv6hsHSUc0S+kawRQeAE2Vat/yIg1kK7BaTH9N5XU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5hx8F41; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xJqeMk9S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767751F000E9;
-	Tue, 21 Jul 2026 19:18:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5hx8F41"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351DF1F000E9;
+	Tue, 21 Jul 2026 19:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661516;
-	bh=Fj8p7X3Xys8DFEV1YGkVNxa56LqUbkzsOr2rk9ldr8k=;
+	s=korg; t=1784661518;
+	bh=qizm/3WXW4BggC8bi6YB6YBr3hmCV9osIbQ84/AQS4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xJqeMk9SQHsTLqrPOswErfjgSR6hVwhh5RFSEXJvrCjZf3vyqINlMqTqDIbFWLFe4
-	 9lpthDFKfaXi0Z0khs7q9CtuCdpo11oUdBa9eBO3sF2bKAmkGWydmUMqAbrR6LLPIp
-	 IWOLTczZVl9zxDUATwkEzH7+hcGCYkcI3ab4UhNY=
+	b=P5hx8F41/foAZKGZmFVqCP4zAepO+8yq34MhgvkaRttFRMT1Mnd03mk1ZEIazLYUm
+	 VLIlBnpj2wrDWqSR+6Z1myrw6cqxpkjNlhgm8MdiWnvos72+Dro6JSGiFpyid8dsrJ
+	 IvvXZkLNtNLWbIOsfZcl6ndJQB4w9PI6kMo0T6nI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 0042/1276] media: uvcvideo: Fix buffer sequence in frame gaps
-Date: Tue, 21 Jul 2026 17:08:05 +0200
-Message-ID: <20260721152447.028544057@linuxfoundation.org>
+	Damian Muszynski <damian.muszynski@intel.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0090/1276] crypto: qat - fix heartbeat error injection
+Date: Tue, 21 Jul 2026 17:08:53 +0200
+Message-ID: <20260721152448.111931630@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,67 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Damian Muszynski <damian.muszynski@intel.com>
 
-commit 2f24ac8dd87983a55f0498898f34a5f2b735b802 upstream.
+[ Upstream commit 2e96024632b386c86860aa78639940fc96d6fcc9 ]
 
-In UVC, the FID flips with every frame. For every FID flip, we increase
-the stream sequence number.
+The current implementation of the heartbeat error injection uses
+adf_disable_arb_thd() to stop a specific accelerator engine thread
+from processing requests. This does not reliably prevent the device
+from generating responses.
 
-Now, if a FID flips multiple times and there is no data transferred between
-the flips, the buffer sequence number will be set to the value of the
-stream sequence number after the first flip.
+Fix the error injection by disabling the device arbiter through
+exit_arb() instead. This properly simulates a device failure by
+stopping all arbitration, which results in missing responses for
+sent requests.
 
-Userspace uses the buffer sequence number to determine if there have been
-missing frames. With the current behaviour, userspace will think that the
-gap is in the wrong location.
+Remove the now unused adf_disable_arb_thd() function and its
+declaration.
 
-This patch modifies uvc_video_decode_start() to provide the correct buffer
-sequence number and timestamp.
-
-Cc: stable@kernel.org
-Fixes: 650b95feee35 ("[media] uvcvideo: Generate discontinuous sequence numbers when frames are lost")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e2b67859ab6e ("crypto: qat - add heartbeat error simulator")
+Signed-off-by: Damian Muszynski <damian.muszynski@intel.com>
+Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_video.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ .../intel/qat/qat_common/adf_common_drv.h     |  1 -
+ .../qat/qat_common/adf_heartbeat_inject.c     |  6 ++---
+ .../intel/qat/qat_common/adf_hw_arbiter.c     | 25 -------------------
+ 3 files changed, 2 insertions(+), 30 deletions(-)
 
---- a/drivers/media/usb/uvc/uvc_video.c
-+++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -1181,6 +1181,19 @@ static int uvc_video_decode_start(struct
- 		stream->sequence++;
- 		if (stream->sequence)
- 			uvc_video_stats_update(stream);
-+
-+		/*
-+		 * On a FID flip initialize sequence number and timestamp.
-+		 *
-+		 * The driver already takes care of injecting FID flips for
-+		 * UVC_QUIRK_STREAM_NO_FID and UVC_QUIRK_MJPEG_NO_EOF.
-+		 */
-+		if (buf) {
-+			buf->buf.field = V4L2_FIELD_NONE;
-+			buf->buf.sequence = stream->sequence;
-+			buf->buf.vb2_buf.timestamp =
-+					ktime_to_ns(uvc_video_get_time());
-+		}
- 	}
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_common_drv.h b/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
+index fc2fea0d3ada7d..971f94e4d87059 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
++++ b/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
+@@ -91,7 +91,6 @@ void adf_exit_aer(void);
+ int adf_init_arb(struct adf_accel_dev *accel_dev);
+ void adf_exit_arb(struct adf_accel_dev *accel_dev);
+ void adf_update_ring_arb(struct adf_etr_ring_data *ring);
+-int adf_disable_arb_thd(struct adf_accel_dev *accel_dev, u32 ae, u32 thr);
  
- 	uvc_video_clock_decode(stream, buf, data, len);
-@@ -1221,10 +1234,6 @@ static int uvc_video_decode_start(struct
- 			return -ENODATA;
- 		}
+ int adf_dev_get(struct adf_accel_dev *accel_dev);
+ void adf_dev_put(struct adf_accel_dev *accel_dev);
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_heartbeat_inject.c b/drivers/crypto/intel/qat/qat_common/adf_heartbeat_inject.c
+index a3b474bdef6c83..023c5f1e78b075 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_heartbeat_inject.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_heartbeat_inject.c
+@@ -64,10 +64,8 @@ int adf_heartbeat_inject_error(struct adf_accel_dev *accel_dev)
+ 	if (ret)
+ 		return ret;
  
--		buf->buf.field = V4L2_FIELD_NONE;
--		buf->buf.sequence = stream->sequence;
--		buf->buf.vb2_buf.timestamp = ktime_to_ns(uvc_video_get_time());
+-	/* Configure worker threads to stop processing any packet */
+-	ret = adf_disable_arb_thd(accel_dev, rand_ae, rand_thr);
+-	if (ret)
+-		return ret;
++	/* Disable arbiter to stop processing any packet */
++	hw_device->exit_arb(accel_dev);
+ 
+ 	/* Change HB counters memory to simulate a hang */
+ 	adf_set_hb_counters_fail(accel_dev, rand_ae, rand_thr);
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c b/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c
+index f93d9cca70cee4..dd9a31c20bc9c9 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c
+@@ -99,28 +99,3 @@ void adf_exit_arb(struct adf_accel_dev *accel_dev)
+ 		csr_ops->write_csr_ring_srv_arb_en(csr, i, 0);
+ }
+ EXPORT_SYMBOL_GPL(adf_exit_arb);
 -
- 		/* TODO: Handle PTS and SCR. */
- 		buf->state = UVC_BUF_STATE_ACTIVE;
- 		if (meta_buf)
+-int adf_disable_arb_thd(struct adf_accel_dev *accel_dev, u32 ae, u32 thr)
+-{
+-	void __iomem *csr = accel_dev->transport->banks[0].csr_addr;
+-	struct adf_hw_device_data *hw_data = accel_dev->hw_device;
+-	const u32 *thd_2_arb_cfg;
+-	struct arb_info info;
+-	u32 ae_thr_map;
+-
+-	if (ADF_AE_STRAND0_THREAD == thr || ADF_AE_STRAND1_THREAD == thr)
+-		thr = ADF_AE_ADMIN_THREAD;
+-
+-	hw_data->get_arb_info(&info);
+-	thd_2_arb_cfg = hw_data->get_arb_mapping(accel_dev);
+-	if (!thd_2_arb_cfg)
+-		return -EFAULT;
+-
+-	/* Disable scheduling for this particular AE and thread */
+-	ae_thr_map = *(thd_2_arb_cfg + ae);
+-	ae_thr_map &= ~(GENMASK(3, 0) << (thr * BIT(2)));
+-
+-	WRITE_CSR_ARB_WT2SAM(csr, info.arb_offset, info.wt2sam_offset, ae,
+-			     ae_thr_map);
+-	return 0;
+-}
+-- 
+2.53.0
+
 
 
