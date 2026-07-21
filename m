@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0312146AA68;
-	Tue, 21 Jul 2026 15:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70BF46AA82;
+	Tue, 21 Jul 2026 15:38:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648282; cv=none; b=WNm+H+NjnIBoFvmvG/QaIaFfsozfiL0yF9NIUxv3UqDH/Mljbl9CY5K6m8ejvPxkXjXEj6AMIS4zZrPIhEhWioJehLlPpXuLpdL5y+K2StJyrw9eLCqhyaYpdDu5OohqTK2an59JaDGQNP5MJGl60/zTFgaERtM2woQthbzvGq0=
+	t=1784648285; cv=none; b=Tb7R0ScujBLioig6g7F1XDu0K8snXxhlka6I5AGNrzut48OEwT4OO5w0iibcXwLbfS5WqIc2kv0rvAws8+j1XThj9cP8PCzQI1kmSiBYaYC18MvWIU003uJOc4HLWlAF6hTLjJvRBvLrZBn7CkHQKisS53mbSjU8GOFoOXfFZPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648282; c=relaxed/simple;
-	bh=tXHu54W0bncaWC/A2HMAzWwOthgm1CCEMq0yJW+R5Nc=;
+	s=arc-20240116; t=1784648285; c=relaxed/simple;
+	bh=VRzmJMzlXDyPMuO3FiWy0MBG885PyOxwKazAn1noleY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rc1eQNHC02mVhoBy75+ZgNNe5XOvUigR+zlJB/OIxsq1o2io2UUuggxD3GomOmZXnAPal5nRrvE8rVuhDYIXDNxKuvozzc9BHyYluZRK9cgYhPNwGUmHhZnQJ+55Rf9MdZdRQsCpPQ/XtCgBpMv5D/BLicrBvyur4b5KRFiMyzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vsuv/TAb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YXfh2As+h4wT2ML16YysLU4ZU0LRh2+5zL/g1qnxm1wtezv/zgkOPrXluquZ2kuW0X0k1fDXJzgjWLfwDTE+4NiNWhkUJ7mJMpAtpqNqSbnMedGz+KwMIo0R83VSnA14c5aUT8kBPYfmEc9pfxrN+WOOM0Us4dkxDDKMSd5Y3t0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HE0Z3ZEO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vsuv/TAb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 906A51F000E9;
-	Tue, 21 Jul 2026 15:38:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HE0Z3ZEO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC031F000E9;
+	Tue, 21 Jul 2026 15:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648280;
-	bh=R/l8SRMlOAjspXFOOm4YZBoJL673kJf2IIlXSbXoaAY=;
+	s=korg; t=1784648283;
+	bh=4k8fRzBFqnVp/6beCLt5Jy1pP5Vdut8x+tOKPwYBwC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vsuv/TAbsOBVSqx7Uf6+tZ0ApaW47r+n7azgEz9Kun+e0JuRq3uivu5wDan327Is0
-	 u/SoCWk99UGzFtFtKLEnwdBBnxd72ldCbrjydNXZVmt977RtnoRep41peVpJW5Gcgl
-	 6lB8CVKogwhLNt447y80uHI3qd3wNiiZrx7FWrog=
+	b=HE0Z3ZEOB2sAlMQfMINdJ/AxoPYEqgtU+svvcXMEPqqKKX9sjO8b3PlJQAPP9+kC/
+	 /MZlKa+rpShoMBtrh17EhdSa4jyeIGU5tbH4nT8QGY/XEu9Og3nejAZMazGoogoqMv
+	 D4tqji3ZsKgl68sK8tLV9D7a14nqzwjDTNGTBqw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kavita Kavita <kavita.kavita@oss.qualcomm.com>,
-	Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Casey Connolly <casey.connolly@linaro.org>,
+	David Heidelberg <david@ixit.cz>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0141/2077] wifi: cfg80211: restrict LMR feedback check to TB and non-TB ranging
-Date: Tue, 21 Jul 2026 16:56:54 +0200
-Message-ID: <20260721152556.013439940@linuxfoundation.org>
+Subject: [PATCH 7.1 0142/2077] drm/panel: Clean up SOFEF00 config dependencies
+Date: Tue, 21 Jul 2026 16:56:55 +0200
+Message-ID: <20260721152556.035522824@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,43 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit bef9d5e378f07ccdf967b929897de84a9931d1e3 ]
+[ Upstream commit e87e2357292f80d10e1a43cb910454313a5cb448 ]
 
-The lmr_feedback field is only applicable to TB and non-TB ranging.
-Currently, pmsr_parse_ftm() enforces lmr_feedback for all RSTA
-requests, incorrectly rejecting valid EDCA-based RSTA requests.
+As per the config name this Display IC features a DSI command-mode
+interface (or the command to switch to video mode is not
+known/documented) and does not use any of the video-mode helper
+utilities, hence should not select VIDEOMODE_HELPERS.  In addition it
+uses devm_gpiod_get() and related functions from GPIOLIB.
 
-Fix this by limiting the lmr_feedback requirement to TB and non-TB
-ranging only.
-
-Fixes: 853800c746d3 ("wifi: nl80211/cfg80211: support operating as RSTA in PMSR FTM request")
-Co-developed-by: Kavita Kavita <kavita.kavita@oss.qualcomm.com>
-Signed-off-by: Kavita Kavita <kavita.kavita@oss.qualcomm.com>
-Signed-off-by: Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260420090856.2152905-2-peddolla.reddy@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 5933baa36e26 ("drm/panel/samsung-sofef00: Add panel for OnePlus 6/T devices")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Casey Connolly <casey.connolly@linaro.org>
+Reviewed-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260505-panel-clean-up-kconfig-dep-v2-1-9cc31d6e6919@ixit.cz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/pmsr.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panel/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/pmsr.c b/net/wireless/pmsr.c
-index d6cd0de64d1f84..0ca93fd7d46f8d 100644
---- a/net/wireless/pmsr.c
-+++ b/net/wireless/pmsr.c
-@@ -195,7 +195,9 @@ static int pmsr_parse_ftm(struct cfg80211_registered_device *rdev,
- 		return -EOPNOTSUPP;
- 	}
+diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
+index d592f4f4b939a9..28802f86a538fe 100644
+--- a/drivers/gpu/drm/panel/Kconfig
++++ b/drivers/gpu/drm/panel/Kconfig
+@@ -982,10 +982,10 @@ config DRM_PANEL_SAMSUNG_S6E8FC0
  
--	if (out->ftm.rsta && !out->ftm.lmr_feedback) {
-+	if (out->ftm.rsta &&
-+	    (out->ftm.non_trigger_based || out->ftm.trigger_based) &&
-+	    !out->ftm.lmr_feedback) {
- 		NL_SET_ERR_MSG_ATTR(info->extack,
- 				    tb[NL80211_PMSR_FTM_REQ_ATTR_RSTA],
- 				    "FTM: RSTA set without LMR feedback");
+ config DRM_PANEL_SAMSUNG_SOFEF00
+ 	tristate "Samsung SOFEF00 DSI panel controller"
++	depends on GPIOLIB
+ 	depends on OF
+ 	depends on DRM_MIPI_DSI
+ 	depends on BACKLIGHT_CLASS_DEVICE
+-	select VIDEOMODE_HELPERS
+ 	help
+ 	  Say Y or M here if you want to enable support for the Samsung AMOLED
+ 	  panel SOFEF00 DDIC and connected panel.
 -- 
 2.53.0
 
