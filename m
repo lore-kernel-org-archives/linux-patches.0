@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3966437B40C;
-	Tue, 21 Jul 2026 17:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC559322DB7;
+	Tue, 21 Jul 2026 17:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653532; cv=none; b=nK7Vgzyr9Kaodue/Y2yQbTwgLK9c/UZXS7eg1GIHvmfOCva4E9GBmJCeuqEk5LeE8a8QYEbqlBph6+ImQVqCJ9KneJNt8mgFmv+mrhwW2En53WV7hfRMPLS/S5XtZm/gDRfcvLgTy1Rbxg275JAr6F14KxmU9l+2ku+n5Ub/kwc=
+	t=1784653535; cv=none; b=uDzQs+SKc81XH978MwjI5+chi85r49A7b6NdpOeKsqvxQ9QAxzGack35tU03PAbDkPh5obk6T6JGNMVVGWocR7LLZtvM/O7rLMt9V5VG0BTTWcN5XIafedmAZUihCTVGzoJj5WlNsT9aw5d4KEL1SH7D82F9xVCgGFpwIj8rPAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653532; c=relaxed/simple;
-	bh=i6kc9L0KA3z3B1D2lWCqUuURmkQeXV1jmuQSTe+lEbI=;
+	s=arc-20240116; t=1784653535; c=relaxed/simple;
+	bh=UxTHJEXBIQpCcnF1TzlhPWdJmiLB1FQrxX7XaJ5lcAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hJ9Eg8hx06+h4FR1FKbWgqJz5uyaZKuJSbT14w5mgUSlcPphsvFzOalSku6FCXeCI/T8TNFjZyRQgIOIbmGn55hUj/Tai+frJytgt7x+dSI87txOEXxG6tvfj1pSnNn7r4g41WmIvDD4BEbVgEQKoZUJ/tBQmvFdtLWOunXznbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UpEom2mR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DJKWMyKG9aFFx6jtqlaD2X+YsM4Wl/8ZzM/7vB1YCOYTkisgIk8mDyOQV1VenbzWgoInMojwDIic1F6MfP5kDJjvd7qV1BEiXpiR9LWiMR3UKICotnmylqHf4+v1/Rca7zoDcWa2aeXeWxnNpRCOR7Jy3beo3VLfuvhM8nQsZbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2HMbUsS8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UpEom2mR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC9B1F000E9;
-	Tue, 21 Jul 2026 17:05:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2HMbUsS8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D181F000E9;
+	Tue, 21 Jul 2026 17:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653531;
-	bh=AXl5qwaln2Dy0zqjXYE6yKQMxgEKCpkwDqaffI6N7Z8=;
+	s=korg; t=1784653533;
+	bh=FBwuMzLmgFHDpTF+GE9mhYWQiaM49GwcUvLg5YU2V3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UpEom2mRV4cutYeAKa7923ND0SkATXI+35XeMhjjdQFugFAFffSAiaRiA5O07YXD1
-	 P/DOW8ZH5JqkgvPz3GSigNPYvtHCQKzc9b2FSStaE5ph+Q1prIEOvFKKbz3O91DRGD
-	 4qBYY0VMIjjV0tlj03VH1A/3c1dISF67pU2APFzk=
+	b=2HMbUsS8rM89pM9i2JjYN5LIaPGy4C6j3IK8SnixnaC1RM48wl3Sa6R+1zvZ8EtC1
+	 hZ7RTXk6oHLPPwXGvUVF6SGyVmU+kfJ6GqUlbwXrspFBMOHC41ry7McIPkH62VskQ/
+	 DR3QixaqJD5LY/vlsHwbNHRc5UZiB+xG4jP8Cess=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haofeng Li <lihaofeng@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Gil Portnoy <dddhkts1@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1362/2077] ksmbd: reject undersized DACLs before parsing ACEs
-Date: Tue, 21 Jul 2026 17:17:15 +0200
-Message-ID: <20260721152624.944698840@linuxfoundation.org>
+Subject: [PATCH 7.1 1363/2077] ksmbd: fix use-after-free of fp->owner.name in durable handle owner check
+Date: Tue, 21 Jul 2026 17:17:16 +0200
+Message-ID: <20260721152624.968036846@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,68 +52,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haofeng Li <lihaofeng@kylinos.cn>
+From: Gil Portnoy <dddhkts1@gmail.com>
 
-[ Upstream commit 60908f7ebcd9b6cde74ad5711fab0f49c7970949 ]
+[ Upstream commit 38637163501fd9e2f684b8cd275d0db5d79f37c6 ]
 
-parse_dacl() limits the attacker-controlled ACE count by comparing it
-with the number of minimal ACEs that fit in the DACL size. The DACL size
-field is 16 bits, but the expression subtracts sizeof(struct smb_acl).
-Because sizeof() is unsigned, a DACL size smaller than the ACL header
-underflows to a large size_t.
+Two concurrent SMB2 durable reconnects (DH2C/DHnC) on the same
+persistent_id race the fp->owner.name compare-read in
+ksmbd_vfs_compare_durable_owner() against the kfree() in
+ksmbd_reopen_durable_fd()'s reopen-success path. fp->owner.name is a
+standalone kstrdup() buffer whose lifetime is independent of the fp
+refcount, and the two sites share no lock: the compare reads the buffer
+while the reopen frees it, so the strcmp() can dereference freed memory.
 
-A malicious client can reach this with:
+Commit 7ce4fc40018d ("ksmbd: fix durable reconnect double-bind race in
+ksmbd_reopen_durable_fd") made the fp->conn claim atomic under
+global_ft.lock (closing the owner.name double-free and the ksmbd_file
+write-UAF), but the compare-read versus reopen-free pair was left
+unserialized.
 
-SMB2_SET_INFO (InfoType=SMB2_O_INFO_SECURITY)
-  -> smb2_set_info_sec()
-  -> set_info_sec()
-  -> parse_sec_desc()
-  -> parse_dacl()
-     -> init_acl_state(..., 0xffff)
-     -> init_acl_state(..., 0xffff)
-     -> kmalloc_objs(..., 0xffff)
+  BUG: KASAN: slab-use-after-free in strcmp+0x2c/0x80
+  Read of size 1 by task kworker
+    strcmp
+    ksmbd_vfs_compare_durable_owner
+    smb2_check_durable_oplock
+    smb2_open
+  Freed by task kworker:
+    kfree
+    ksmbd_reopen_durable_fd
+    smb2_open
+  Allocated by task kworker:
+    kstrdup
+    session_fd_check
+    smb2_session_logoff
+  The buggy address belongs to the cache kmalloc-8
 
-Thus a malformed security descriptor can make num_aces pass the guard
-and drive large temporary ACL state and pointer-array allocations.
+Serialize both sides of the race with fp->f_lock.  The global durable
+file-table lock still protects the durable reconnect claim, but
+fp->owner.name is per-open state and does not need to block unrelated
+durable table lookups or reconnects.  The teardown is left at its
+existing location after the reopen-success point so that an __open_id()
+rollback still retains owner.name for a later legitimate reconnect to
+verify.
 
-Reject DACLs smaller than struct smb_acl before doing the subtraction,
-so the ACE count check cannot be bypassed by the underflow.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Signed-off-by: Haofeng Li <lihaofeng@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 49110a8ce654 ("ksmbd: validate owner of durable handle on reconnect")
+Assisted-by: Henry (Claude):claude-opus-4
+Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
+Co-developed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smbacl.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/smb/server/vfs_cache.c | 29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
-diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
-index 340ea98fa494cb..fc9937cedb012b 100644
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -374,6 +374,7 @@ static void parse_dacl(struct mnt_idmap *idmap,
+diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
+index 39c56942ae440b..aa0924c9fdf96e 100644
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -1229,16 +1229,21 @@ void ksmbd_stop_durable_scavenger(void)
+ static int ksmbd_vfs_copy_durable_owner(struct ksmbd_file *fp,
+ 		struct ksmbd_user *user)
  {
- 	int i, ret;
- 	u16 num_aces = 0;
-+	u16 dacl_size;
- 	unsigned int acl_size;
- 	char *acl_base;
- 	struct smb_ace **ppace;
-@@ -403,7 +404,11 @@ static void parse_dacl(struct mnt_idmap *idmap,
- 	if (num_aces <= 0)
- 		return;
- 
--	if (num_aces > (le16_to_cpu(pdacl->size) - sizeof(struct smb_acl)) /
-+	dacl_size = le16_to_cpu(pdacl->size);
-+	if (dacl_size < sizeof(struct smb_acl))
-+		return;
++	char *name;
 +
-+	if (num_aces > (dacl_size - sizeof(struct smb_acl)) /
- 			(offsetof(struct smb_ace, sid) +
- 			 offsetof(struct smb_sid, sub_auth) + sizeof(__le16)))
- 		return;
+ 	if (!user)
+ 		return -EINVAL;
+ 
+ 	/* Duplicate the user name to ensure identity persistence */
+-	fp->owner.name = kstrdup(user->name, GFP_KERNEL);
+-	if (!fp->owner.name)
++	name = kstrdup(user->name, GFP_KERNEL);
++	if (!name)
+ 		return -ENOMEM;
+ 
++	spin_lock(&fp->f_lock);
+ 	fp->owner.uid = user->uid;
+ 	fp->owner.gid = user->gid;
++	fp->owner.name = name;
++	spin_unlock(&fp->f_lock);
+ 
+ 	return 0;
+ }
+@@ -1256,18 +1261,24 @@ static int ksmbd_vfs_copy_durable_owner(struct ksmbd_file *fp,
+ bool ksmbd_vfs_compare_durable_owner(struct ksmbd_file *fp,
+ 		struct ksmbd_user *user)
+ {
+-	if (!user || !fp->owner.name)
++	bool ret = false;
++
++	if (!user)
+ 		return false;
+ 
++	spin_lock(&fp->f_lock);
++	if (!fp->owner.name)
++		goto out;
++
+ 	/* Check if the UID and GID match first (fast path) */
+ 	if (fp->owner.uid != user->uid || fp->owner.gid != user->gid)
+-		return false;
++		goto out;
+ 
+ 	/* Validate the account name to ensure the same SecurityContext */
+-	if (strcmp(fp->owner.name, user->name))
+-		return false;
+-
+-	return true;
++	ret = (strcmp(fp->owner.name, user->name) == 0);
++out:
++	spin_unlock(&fp->f_lock);
++	return ret;
+ }
+ 
+ static bool session_fd_check(struct ksmbd_tree_connect *tcon,
+@@ -1460,9 +1471,11 @@ int ksmbd_reopen_durable_fd(struct ksmbd_work *work, struct ksmbd_file *fp)
+ 	}
+ 	up_write(&ci->m_lock);
+ 
++	spin_lock(&fp->f_lock);
+ 	fp->owner.uid = fp->owner.gid = 0;
+ 	kfree(fp->owner.name);
+ 	fp->owner.name = NULL;
++	spin_unlock(&fp->f_lock);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
