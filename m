@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF9246A5E3;
-	Tue, 21 Jul 2026 15:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C4A46AA71;
+	Tue, 21 Jul 2026 15:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648787; cv=none; b=gn3KqWetxkn79cyHWrTdJLSX60cgb0WG7JkWyBcgN+ydIeW4dl4bQSwJfjFNbQcfUBofKqSKEqSBSvzbiEZLfkY/7FDnOu/QPH1JwKCHZYeacZspz+w/zdqm0xv+2ck53QJlUXH+4eoWUrBkQLsexBMZVJpRcdwGMdjxRV8uX+A=
+	t=1784648790; cv=none; b=r/vhIUjmmsmxKm+vs4UK5nQpWHfmhPoMr+6tutMSz2kh6j4znxbFUWb+lKENUa7qPiaS2ccsDyzhsdOlm449aZfyQcMeZlV+nFCgebZwgkxn0IJGr5JvzPARi+zuhqe8YsSickJUsyIhl8R5pSj8Ydqqnur6DU/FAWWJ2tw7+jA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648787; c=relaxed/simple;
-	bh=oG89YR8IlbUmogzyGXA5HCyi7e16nvEiAODpeJNzO9Y=;
+	s=arc-20240116; t=1784648790; c=relaxed/simple;
+	bh=pLZsYugdT3ETnEF+PALZQKu/Xwg/XnPftNULSP/koq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pBO215qFUDNkr6m4WyJp1lF9RWzrRQyfh/K+g302Hx7sB5SAZIunu3fEzGrtcIGnqN/bfqOKOi9oQWyKrBl07HyUKnH9DkD7uF6od3qeyfY6W5BqrhGubAwskM+wbah2DfQogFG0xSlcMnSJm7B7kZRzCTQJYiwFf7K2CUOqQvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ancDf1+W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jA06N/h4SUOvNUpQRBZJQriqNfbWrZtRie/UuxKcOqA4YpiukC5Zkbd87G7Z0WZzZhN94SmGPjikB7jE+gvcsAgpjQhDKDsqhnGEfiHc4xQtQ0MJKi5v2I+QNTUmokzlm9spLIw+tyXuCqNSQKICElcLU4G14m36Uakp0yjaSi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nYI6SPJB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ancDf1+W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A19511F000E9;
-	Tue, 21 Jul 2026 15:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nYI6SPJB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457B71F000E9;
+	Tue, 21 Jul 2026 15:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648786;
-	bh=aTrkG/g+YWx4xgseaZrQpkAanlzYv74BoB3+dsWpjOg=;
+	s=korg; t=1784648788;
+	bh=zILJBkIhPO+NIbdj6c+fyqNojQ1N4yAQiEAjG23DYA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ancDf1+WeHaZczUpl0oz5/0qdQ3AjUyudo2ibIAybrdK5xZe+V3WXfHO9KLnOE4VJ
-	 7rejftdEhZCG/hoAKsZqiVBznXkhznhPkEPfp0BdP9w+N7vjqmX6epTG82wSZfps9A
-	 YCcj36bucC+d6qsPKjYpxYwjuFIag/NVx9WmJhC0=
+	b=nYI6SPJB7bm7J/AKh1EwcVP9WFOxU+nLGG8OPYbpf+Hr+RsFZKlcEhIkfJ1UQH+Ri
+	 wGmdW3xx0yaJ6mhA/H02Ejq2yhTltS/kZESrouj7hDXpB6Y8c3VamI+VgcZLQph4uE
+	 pX95HP5EmvsW4+XtLcdYZ7zdxO+2YIWItUdRxSsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
 	Hannes Reinecke <hare@kernel.org>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Geliang Tang <tanggeliang@kylinos.cn>,
+	John Garry <john.g.garry@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0332/2077] nvmet-tcp: check return value of nvmet_tcp_set_queue_sock
-Date: Tue, 21 Jul 2026 17:00:05 +0200
-Message-ID: <20260721152600.515275028@linuxfoundation.org>
+Subject: [PATCH 7.1 0333/2077] nvme-multipath: fix flex array size in struct nvme_ns_head
+Date: Tue, 21 Jul 2026 17:00:06 +0200
+Message-ID: <20260721152600.538056409@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,46 +55,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Nilay Shroff <nilay@linux.ibm.com>
 
-[ Upstream commit 7ef789703e2b91775dcb36b2efa46325be31a2a0 ]
+[ Upstream commit 001e57554de81aa79c25c18fd53911d8a415c304 ]
 
-The return value of nvmet_tcp_set_queue_sock() is currently ignored in
-nvmet_tcp_tls_handshake_done(). If it fails (e.g., due to the socket
-not being in TCP_ESTABLISHED state), the socket callbacks will not be
-properly set, leading to queue and socket leakage.
+struct nvme_ns_head contains a flexible array member, current_path[],
+which is indexed using the NUMA node ID:
+head->current_path[numa_node_id()]
 
-Fix this by capturing the return value and calling
-nvmet_tcp_schedule_release_queue() on failure to ensure proper cleanup.
+The structure is currently allocated as:
+size = sizeof(struct nvme_ns_head) +
+       (num_possible_nodes() * sizeof(struct nvme_ns *));
+head = kzalloc(size, GFP_KERNEL);
 
-Fixes: 675b453e0241 ("nvmet-tcp: enable TLS handshake upcall")
+This allocation assumes that NUMA node IDs are sequential and densely
+packed from 0 .. num_possible_nodes() - 1. While this assumption holds
+on many systems, it is not always true on some architectures such as
+powerpc.
+
+On some powerpc systems, NUMA node IDs can be sparse. For example:
+NUMA:
+  NUMA node(s):              6
+  NUMA node0 CPU(s):         80-159
+  NUMA node8 CPU(s):         0-79
+  NUMA node252 CPU(s):
+  NUMA node253 CPU(s):
+  NUMA node254 CPU(s):
+  NUMA node255 CPU(s):
+
+That is, the possible/online NUMA node IDs are: 0, 8, 252, 253, 254, 255
+In this case: num_possible_nodes() = 6
+
+So memory is allocated for only 6 entries in current_path[]. However,
+the array is later indexed using the actual NUMA node ID. As a result,
+accesses such as:
+head->current_path[8] or
+head->current_path[252]
+goes out of bounds, leading to the following KASAN splat:
+
+==================================================================
+BUG: KASAN: slab-out-of-bounds in nvme_mpath_revalidate_paths+0x22c/0x290 [nvme_core]
+Write of size 8 at addr c00020003bda35b8 by task kworker/u641:2/1997
+
+CPU: 1 UID: 0 PID: 1997 Comm: kworker/u641:2 Not tainted 7.1.0-rc5-dirty #14 PREEMPT(lazy)
+Hardware name: 8335-GTH POWER9 0x4e1202 opal:skiboot-v6.5.3-35-g1851b2a06 PowerNV
+Workqueue: async async_run_entry_fn
+Call Trace:
+[c000200037fa7510] [c0000000021c23d4] dump_stack_lvl+0x88/0xdc (unreliable)
+[c000200037fa7540] [c0000000009fda90] print_report+0x22c/0x67c
+[c000200037fa7630] [c0000000009fd508] kasan_report+0x108/0x220
+[c000200037fa7740] [c0000000009fff48] __asan_store8+0xe8/0x120
+[c000200037fa7760] [c008000018e76474] nvme_mpath_revalidate_paths+0x22c/0x290 [nvme_core]
+[c000200037fa7800] [c008000018e6556c] nvme_update_ns_info+0x4a4/0x5e0 [nvme_core]
+[c000200037fa7a50] [c008000018e66270] nvme_alloc_ns+0x6d8/0x1a70 [nvme_core]
+[c000200037fa7c20] [c008000018e679fc] nvme_scan_ns+0x3f4/0x630 [nvme_core]
+[c000200037fa7d10] [c00000000031f22c] async_run_entry_fn+0x9c/0x3a0
+[c000200037fa7db0] [c0000000002fa544] process_one_work+0x414/0xa10
+[c000200037fa7ec0] [c0000000002fbf00] worker_thread+0x320/0x640
+[c000200037fa7f80] [c00000000030d0f8] kthread+0x278/0x290
+[c000200037fa7fe0] [c00000000000ded8] start_kernel_thread+0x14/0x18
+
+Allocated by task 1997 on cpu 1 at 35.928317s:
+
+The buggy address belongs to the object at c00020003bda3000
+ which belongs to the cache kmalloc-rnd-15-2k of size 2048
+The buggy address is located 16 bytes to the right of
+ allocated 1448-byte region [c00020003bda3000, c00020003bda35a8)
+
+The buggy address belongs to the physical page:
+
+Memory state around the buggy address:
+ c00020003bda3480: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ c00020003bda3500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>c00020003bda3580: 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc fc
+                                        ^
+ c00020003bda3600: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ c00020003bda3680: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+==================================================================
+
+Fix this by allocating the flexible array using nr_node_ids instead
+of num_possible_nodes(). Since nr_node_ids represents the maximum
+possible NUMA node IDs, indexing current_path[] using numa_node_id()
+becomes safe even on systems with sparse node IDs.
+
+Fixes: f333444708f8 ("nvme: take node locality into account when selecting a path")
+Tested-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
 Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/nvme/host/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index 57a6da696fa0b0..15c52f1f95f1b0 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -1844,10 +1844,11 @@ static void nvmet_tcp_tls_handshake_done(void *data, int status,
- 	if (!status)
- 		status = nvmet_tcp_tls_key_lookup(queue, peerid);
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index c3032d6ad6b1e2..96809227a0e229 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3926,7 +3926,7 @@ static struct nvme_ns_head *nvme_alloc_ns_head(struct nvme_ctrl *ctrl,
+ 	int ret = -ENOMEM;
  
-+	if (!status)
-+		status = nvmet_tcp_set_queue_sock(queue);
-+
- 	if (status)
- 		nvmet_tcp_schedule_release_queue(queue);
--	else
--		nvmet_tcp_set_queue_sock(queue);
- 	kref_put(&queue->kref, nvmet_tcp_release_queue);
- }
+ #ifdef CONFIG_NVME_MULTIPATH
+-	size += num_possible_nodes() * sizeof(struct nvme_ns *);
++	size += nr_node_ids * sizeof(struct nvme_ns *);
+ #endif
  
+ 	head = kzalloc(size, GFP_KERNEL);
 -- 
 2.53.0
 
