@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705B53B8BA4;
-	Tue, 21 Jul 2026 20:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE293B8120;
+	Tue, 21 Jul 2026 20:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667534; cv=none; b=CJcYsNQ9qQWlV2181c0U2EZTXdLp2MBfer4tLHMayjlgA1ubDbREOwXB9uuyi2Hr7xOsI8AnOnqVcW/t2MqEI6oqReHdUKiL5G+IUm9btYL3QuKV4kg9DIUokHyFiglc/VOxoeYawYw7BUcxV7DGefCDE0LjvbvvrvvWzKcvc4Q=
+	t=1784667537; cv=none; b=PWaJJHiiUXGtD+Ok5zclz7ZKcxZOscX3HvBfEYuRvxF79P2KZld4In7codb4WzbL+F8eSiIIClX3P40JD1T2VgzfU39Oqd6i6gvutLzgmI6Spp3lt8iszXFMsebOr7+Zh5Wn2Bb5hQmk1BWJ/18O1scCTuz7e+G1CM5enmhw5T4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667534; c=relaxed/simple;
-	bh=lAjNDkrDxXHZBcFcjwG9jjRJ4rRtcnK42Z604Xjxx5c=;
+	s=arc-20240116; t=1784667537; c=relaxed/simple;
+	bh=Tv6UB/Jc6WqpnuU1NaMzu7vwbH4F9VdqCN/z/MpYY9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K8xpFF10tWqdWZCXZpUo+w3BSeozVFCO9o/vlO/qkuNPHoYmFSAm62zPnAXGIsbkuT2/id+OR5usVB3BXRQTna7h1EkIcsp2Xa2ipusMjy8k1jF8GLX+nCzdms5uy+0DuMMYZ8gsiA4XRZI5hECXXDO7TLgc9gFmG833aMv+gpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZEhmzjch; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O9OU7R8xTWV7QnOgcnua6LADd3b0rA4ek2cI17cVZZONgWhYUVef5WuX20KDVWmwoY9GaCMp10QgR8Rwk2HqNJFHQ0tRaSRIhGfrQaPA1Y/wEIT8Y72ZYK1UOTOKH9cD8nkDLcngNmZ9puXlQ6cZgW5ZAzqnSXJ6pecMz7pv4oE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QnAPN2ox; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZEhmzjch"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C00F1F000E9;
-	Tue, 21 Jul 2026 20:58:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QnAPN2ox"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D1D71F000E9;
+	Tue, 21 Jul 2026 20:58:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667533;
-	bh=TlqhLPNrCuvBLHwk6ipWrFWJxb+FORdC35uS5QSvRP4=;
+	s=korg; t=1784667535;
+	bh=rH/keb3COuMJCi6js54vFlJMCWdDLg14ij08+ExTXuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZEhmzjch9aGG4rhttVMBtlcW5pLOouoxKLpy8dKM6kXXdmkj+pvpZyH7rEPLuKWGd
-	 YmM3Y4QCebYot5Oauwpf9rnvX1L7HnCvavhueTcIqgIOdCrO6FJ6lfAsX7iTsrt1Qi
-	 n/5vqPDJRgcKMKPsDmgtYo1oUS7CRqn9h8yzhAEk=
+	b=QnAPN2oxYO3E7jODRkdGOqEVTPtMOPUi73HxCHZ65ZOfR6AdlwpRPiBAq8grba8XY
+	 nZ5sWyfmanldx52HZ9MDQyUEVswD495MRPSbvG9+6/XFKKVjsTcvks5bxfbugDBfHA
+	 ifVdiqMap7EOEonLm0l5NaKliFou0borDzuYKXAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Eckelmann <sven@narfation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1096/1266] batman-adv: clean untagged VLAN on netdev registration failure
-Date: Tue, 21 Jul 2026 17:25:33 +0200
-Message-ID: <20260721152506.328910213@linuxfoundation.org>
+	Tianyang Zhang <zhangtianyang@loongson.cn>,
+	Hongchen Zhang <zhanghongchen@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 1097/1266] LoongArch: Fix missing dirty page tracking in {pte,pmd}_wrprotect()
+Date: Tue, 21 Jul 2026 17:25:34 +0200
+Message-ID: <20260721152506.350824284@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -50,112 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Hongchen Zhang <zhanghongchen@loongson.cn>
 
-commit 8669a550c752d86baebc5fdc83b8ff35c4372c0e upstream.
+commit 018e9828eb523c638fa3d9bdf0fd4956b74555b2 upstream.
 
-When an mesh interface is registered, it creates an untagged struct
-batadv_meshif_vlan on top of it via the NETDEV_REGISTER notifier. But in
-this process, another receiver of this notification can veto the
-registration. The netdev registration will be aborted because of this veto.
+When hardware page table walker (PTW) is enabled on LoongArch, the CPU
+may set _PAGE_DIRTY directly in the page table entry during a write TLB
+miss, without going through the software TLB store handler. The software
+TLB store handler (tlbex.S:254) sets both _PAGE_DIRTY and_PAGE_MODIFIED
+together:
 
-The register_netdevice() call will try to clean up the net_device using
-unregister_netdevice_queue() - which only uses the .priv_destructor to
-free private resources. In this situation, .dellink will not be called.
+    ori t0, t0, (_PAGE_VALID | _PAGE_DIRTY | _PAGE_MODIFIED)
 
-The cleanup of the untagged batadv_meshif_vlan must thefore be done in the
-destructor to avoid a leak of this object.
+Since hardware PTW only sets _PAGE_DIRTY, the software-only bit, i.e.
+_PAGE_MODIFIED is left unchanged. This creates a window where a PTE has
+_PAGE_DIRTY set (hardware knows the page is dirty) but _PAGE_MODIFIED
+clear (software is unaware).
+
+When fork()/clone() triggers copy-on-write, __copy_present_ptes() calls
+pte_wrprotect(), which unconditionally clears both the _PAGE_WRITE and
+_PAGE_DIRTY bits:
+
+    pte_val(pte) &= ~(_PAGE_WRITE | _PAGE_DIRTY);
+
+Since _PAGE_MODIFIED was never set, the dirtiness information is lost
+completely. Subsequently, when memory pressure triggers page reclaim,
+page_mkclean() / try_to_unmap() sees the page as clean (i.e. pte_dirty()
+returns false) and the page may be freed without writeback, causing data
+corruption.
+
+Fix this by propagating the _PAGE_DIRTY bit to the _PAGE_MODIFIED bit in
+both pte_wrprotect() and pmd_wrprotect() before clearing writeable bits:
+
+    if (pte_val(pte) & _PAGE_DIRTY)
+        pte_val(pte) |= _PAGE_MODIFIED;
+
+The pmd_wrprotect() fix handles the CONFIG_TRANSPARENT_HUGEPAGE case,
+where pmd entries need the same treatment.
+
+This ensures the software dirty tracking bit (checked by pte_dirty() and
+pmd_dirty(), which read both the _PAGE_DIRTY and _PAGE_MODIFIED bits) is
+preserved across fork COW write-protection.
+
+The issue was found by the LTP madvise09 test case, which exercises page
+reclaim after "madvise(MADV_FREE), write and fork" operation sequence on
+private anonymous mappings.
 
 Cc: stable@vger.kernel.org
-Fixes: 5d2c05b21337 ("batman-adv: add per VLAN interface attribute framework")
-[ switch to old "mesh_iface" name "soft_iface" ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 09cfefb7fa70 ("LoongArch: Add memory management")
+Co-developed-by: Tianyang Zhang <zhangtianyang@loongson.cn>
+Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
+Signed-off-by: Hongchen Zhang <zhanghongchen@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/main.c           |  8 ++++++++
- net/batman-adv/soft-interface.c | 13 ++-----------
- net/batman-adv/soft-interface.h |  2 ++
- 3 files changed, 12 insertions(+), 11 deletions(-)
+ arch/loongarch/include/asm/pgtable.h |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/batman-adv/main.c b/net/batman-adv/main.c
-index 28f616b8891a12..417de98c39a7be 100644
---- a/net/batman-adv/main.c
-+++ b/net/batman-adv/main.c
-@@ -258,6 +258,7 @@ int batadv_mesh_init(struct net_device *soft_iface)
- void batadv_mesh_free(struct net_device *soft_iface)
+--- a/arch/loongarch/include/asm/pgtable.h
++++ b/arch/loongarch/include/asm/pgtable.h
+@@ -410,6 +410,8 @@ static inline pte_t pte_mkwrite_novma(pt
+ 
+ static inline pte_t pte_wrprotect(pte_t pte)
  {
- 	struct batadv_priv *bat_priv = netdev_priv(soft_iface);
-+	struct batadv_softif_vlan *vlan;
- 
- 	atomic_set(&bat_priv->mesh_state, BATADV_MESH_DEACTIVATING);
- 
-@@ -273,6 +274,13 @@ void batadv_mesh_free(struct net_device *soft_iface)
- 
- 	batadv_mcast_free(bat_priv);
- 
-+	/* destroy the "untagged" VLAN */
-+	vlan = batadv_softif_vlan_get(bat_priv, BATADV_NO_FLAGS);
-+	if (vlan) {
-+		batadv_softif_destroy_vlan(bat_priv, vlan);
-+		batadv_softif_vlan_put(vlan);
-+	}
-+
- 	/* Free the TT and the originator tables only after having terminated
- 	 * all the other depending components which may use these structures for
- 	 * their purposes.
-diff --git a/net/batman-adv/soft-interface.c b/net/batman-adv/soft-interface.c
-index 9760ae08451ac9..97578973943be8 100644
---- a/net/batman-adv/soft-interface.c
-+++ b/net/batman-adv/soft-interface.c
-@@ -603,8 +603,8 @@ int batadv_softif_create_vlan(struct batadv_priv *bat_priv, unsigned short vid)
-  * @bat_priv: the bat priv with all the soft interface information
-  * @vlan: the object to remove
-  */
--static void batadv_softif_destroy_vlan(struct batadv_priv *bat_priv,
--				       struct batadv_softif_vlan *vlan)
-+void batadv_softif_destroy_vlan(struct batadv_priv *bat_priv,
-+				struct batadv_softif_vlan *vlan)
- {
- 	/* explicitly remove the associated TT local entry because it is marked
- 	 * with the NOPURGE flag
-@@ -1086,22 +1086,13 @@ static int batadv_softif_newlink(struct net *src_net, struct net_device *dev,
- static void batadv_softif_destroy_netlink(struct net_device *soft_iface,
- 					  struct list_head *head)
- {
--	struct batadv_priv *bat_priv = netdev_priv(soft_iface);
- 	struct batadv_hard_iface *hard_iface;
--	struct batadv_softif_vlan *vlan;
- 
- 	list_for_each_entry(hard_iface, &batadv_hardif_list, list) {
- 		if (hard_iface->soft_iface == soft_iface)
- 			batadv_hardif_disable_interface(hard_iface);
- 	}
- 
--	/* destroy the "untagged" VLAN */
--	vlan = batadv_softif_vlan_get(bat_priv, BATADV_NO_FLAGS);
--	if (vlan) {
--		batadv_softif_destroy_vlan(bat_priv, vlan);
--		batadv_softif_vlan_put(vlan);
--	}
--
- 	unregister_netdevice_queue(soft_iface, head);
++	if (pte_val(pte) & _PAGE_DIRTY)
++		pte_val(pte) |= _PAGE_MODIFIED;
+ 	pte_val(pte) &= ~(_PAGE_WRITE | _PAGE_DIRTY);
+ 	return pte;
  }
+@@ -522,6 +524,8 @@ static inline pmd_t pmd_mkwrite_novma(pm
  
-diff --git a/net/batman-adv/soft-interface.h b/net/batman-adv/soft-interface.h
-index 9f2003f1a4972e..13709a5d23e3bf 100644
---- a/net/batman-adv/soft-interface.h
-+++ b/net/batman-adv/soft-interface.h
-@@ -22,6 +22,8 @@ void batadv_interface_rx(struct net_device *soft_iface,
- bool batadv_softif_is_valid(const struct net_device *net_dev);
- extern struct rtnl_link_ops batadv_link_ops;
- int batadv_softif_create_vlan(struct batadv_priv *bat_priv, unsigned short vid);
-+void batadv_softif_destroy_vlan(struct batadv_priv *bat_priv,
-+				struct batadv_softif_vlan *vlan);
- void batadv_softif_vlan_release(struct kref *ref);
- struct batadv_softif_vlan *batadv_softif_vlan_get(struct batadv_priv *bat_priv,
- 						  unsigned short vid);
--- 
-2.53.0
-
+ static inline pmd_t pmd_wrprotect(pmd_t pmd)
+ {
++	if (pmd_val(pmd) & _PAGE_DIRTY)
++		pmd_val(pmd) |= _PAGE_MODIFIED;
+ 	pmd_val(pmd) &= ~(_PAGE_WRITE | _PAGE_DIRTY);
+ 	return pmd;
+ }
 
 
