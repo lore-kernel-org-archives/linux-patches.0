@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A2934B1A6;
-	Tue, 21 Jul 2026 21:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4232F34B1A6;
+	Tue, 21 Jul 2026 21:46:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670384; cv=none; b=A7pSxgmqkUEo7ZDx424dWpQyCYIw3ly6nwEa0hUdTjaDjnFqXxq0K/wh8LO+FmCDFw2o9cDgEyQL9tfvcJmuaJn37tU7Fdra9xENbEtDKtxCB/+lxFZ3CnuNKLsvN4xPyxBnTuJzkTt+hNB004NE527StIxNTgpSojQeMCVFGZE=
+	t=1784670387; cv=none; b=hhJv+aHeETvaMQzVjUtimK20SuP3jHFyyoY63BCP7/2RJS5/svZSQV5RJPzZQgqqK7SP4TFxC+kgip8Km7GtTpRhxH5yy3EHEPCwVihodd63j5Pv5bRrUbPX70nj975RZ5mowhyhLTyg4++d48yAfkXYw9mW1DYU1bcKyVkFdP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670384; c=relaxed/simple;
-	bh=t6aqyVIHQzQAGkSwH2HTubBI59AM0i/lB25MyTvP67w=;
+	s=arc-20240116; t=1784670387; c=relaxed/simple;
+	bh=NUOLCz2UF2jP5fvuRF6DWe/xRCVFVeYIUuBzgR5J8To=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dxCjJLpYt+rLDXsQStsGJxNh6UtNudG6zxtSq9uXVSaAG1AYE8BIpnkTQtDpDiWGflcXAS19eT9dyWu3ODj3sIIH3Ff+AS0vduy+2p3yFHiGHiL1oGBo9/7gkHLy3G1xYQpPQmtbSu+FcZaBdQcrIjhFK4kAx7az+jqgXBiicsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyQMw/HQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BQa7O8ZbDw+qI2hEVCJtfp7UPLsm6yEQMtOJNm/7c2vL8eGVsMurEYShkCPGg9ugNay1Iqt357YvUaw6EkkyAeSRZTK/LqJPI1iCv7JrvdTq+gF7DwfA/kDischBZxB4vsnVorTBULMEX8rbkMo8A+1NYxVEE63hOUlXJWcafjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jz4aFftm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyQMw/HQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118701F000E9;
-	Tue, 21 Jul 2026 21:46:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jz4aFftm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75CC1F000E9;
+	Tue, 21 Jul 2026 21:46:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670383;
-	bh=vNvD1z6slMvgGU4N8pJ82cXhfhCj/onX9iAk0wlHOz0=;
+	s=korg; t=1784670386;
+	bh=ercSN6hfkViG0PcqMRhQqBA2UHNbdycatiCwvCEcLqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zyQMw/HQEd8kbM/9ZZFtiz0F0MWP5Bavs8Czk497A22396y8eT1mPvHz/oAHolfaB
-	 aGnye4iX3ZpM7D6G3ui6MY4MQ8osD5NGqpeUsQnC2Tz7aSii9qyfPyzkNbLArVIqV2
-	 srLuktaHG47OxE2lu5oc7xtd20pYTlNhK7FSe3Mk=
+	b=jz4aFftmMi63OZQmDBPNii/OosYWHi7akyCA2Ii32pCpvwE/mfw26h/YDQZx1HTPl
+	 oWop3K8mj+XsYYEAeqq4B4I9j8Jb6GEPt41Pz5qTc6tEpZzEsRlXxZ7gaTDm0Jh1Uj
+	 xaVmYQywEV0tjUwJs0TBfoEdW69hGlwHt2wq3NIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.1 0912/1067] ipvs: reset full ip_vs_seq structs in ip_vs_conn_new
-Date: Tue, 21 Jul 2026 17:25:13 +0200
-Message-ID: <20260721152444.936744621@linuxfoundation.org>
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 0913/1067] macsec: dont read an unset MAC header in macsec_encrypt()
+Date: Tue, 21 Jul 2026 17:25:14 +0200
+Message-ID: <20260721152444.959745542@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -55,65 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-commit 2975324d164c552b028632f107b567302863b7f6 upstream.
+commit f5089008f90c0a7c5520dff3934e0af00adf322d upstream.
 
-Commit 9a05475cebdd ("ipvs: avoid kmem_cache_zalloc in
-ip_vs_conn_new") changed ip_vs_conn_new() to allocate an ip_vs_conn
-object with kmem_cache_alloc().  The function then initializes many
-fields explicitly, but only resets in_seq.delta and out_seq.delta in the
-two struct ip_vs_seq members.
+macsec_encrypt() reads the Ethernet header via eth_hdr(skb)
+(skb->head + skb->mac_header) to memmove() the 12 source/destination MAC
+bytes forward and make room for the SecTAG.
 
-That leaves init_seq and previous_delta uninitialized.  This is normally
-harmless while the corresponding IP_VS_CONN_F_IN_SEQ or
-IP_VS_CONN_F_OUT_SEQ flag is clear.  For connections learned from a sync
-message, however, ip_vs_proc_conn() preserves those flags from
-IP_VS_CONN_F_BACKUP_MASK and passes opt=NULL when the message omits
-IPVS_OPT_SEQ_DATA.  In that case the new connection can be hashed with
-SEQ flags set but with the rest of in_seq/out_seq still containing stale
-slab data.
+On the AF_PACKET SOCK_RAW + PACKET_QDISC_BYPASS transmit path the skb
+reaches the macsec ndo_start_xmit() with the MAC header unset, so
+eth_hdr(skb) resolves to skb->head + (u16)~0 and the read is out of
+bounds: a 12-byte heap over-read that is also emitted on the wire as the
+frame's outer source/destination MAC. KASAN reports a slab-out-of-bounds
+read in macsec_start_xmit() on 6.0; on current mainline a CONFIG_DEBUG_NET
+build flags it as an unset mac header in skb_mac_header().
 
-When a packet for such a connection is later handled by an IPVS
-application helper, vs_fix_seq() and vs_fix_ack_seq() use
-previous_delta and init_seq to rewrite TCP sequence numbers.  A malformed
-sync message can therefore make forwarded packets carry stale slab bytes
-in their TCP seq/ack numbers, and can also corrupt the forwarded TCP
-flow.
+On the TX path the L2 header is at skb->data, so use skb_eth_hdr(), added
+by commit 96cc4b69581d ("macvlan: do not assume mac_header is set in
+macvlan_broadcast()") for exactly this purpose.
 
-Reset both struct ip_vs_seq members completely before publishing the
-connection.  This matches the existing "reset struct ip_vs_seq" comment
-and keeps the sequence-adjustment gates inactive unless valid sequence
-data is installed later.
-
-Fixes: 9a05475cebdd ("ipvs: avoid kmem_cache_zalloc in ip_vs_conn_new")
+Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
 Cc: stable@vger.kernel.org
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: Claude-Code:GLM-5.2
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20260703083634.2035145-1-4ncienth@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_conn.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/macsec.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/netfilter/ipvs/ip_vs_conn.c
-+++ b/net/netfilter/ipvs/ip_vs_conn.c
-@@ -996,8 +996,8 @@ ip_vs_conn_new(const struct ip_vs_conn_p
- 	cp->app = NULL;
- 	cp->app_data = NULL;
- 	/* reset struct ip_vs_seq */
--	cp->in_seq.delta = 0;
--	cp->out_seq.delta = 0;
-+	memset(&cp->in_seq, 0, sizeof(cp->in_seq));
-+	memset(&cp->out_seq, 0, sizeof(cp->out_seq));
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -644,7 +644,7 @@ static struct sk_buff *macsec_encrypt(st
+ 	}
  
- 	atomic_inc(&ipvs->conn_count);
- 	if (flags & IP_VS_CONN_F_NO_CPORT)
+ 	unprotected_len = skb->len;
+-	eth = eth_hdr(skb);
++	eth = skb_eth_hdr(skb);
+ 	sci_present = macsec_send_sci(secy);
+ 	hh = skb_push(skb, macsec_extra_len(sci_present));
+ 	memmove(hh, eth, 2 * ETH_ALEN);
 
 
