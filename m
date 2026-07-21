@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5242EBB8D;
-	Tue, 21 Jul 2026 20:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59B13B1EFC;
+	Tue, 21 Jul 2026 20:41:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666518; cv=none; b=AiZ3lmavvnjHNsbeCwVu+6OWGLv1wC8DKpiVqHNVa9f8WaCoAk9HEy4VUfteSjDnaEm6EltrezefQFvBSMszboWHs6A7Ss8SIhDx/zjktL2wAhYrERLIm7Rtpv/qPEG8eNvpF58EQsDLqQJuP8gUEHwEVIp3LGUZkXsMWG0GOk8=
+	t=1784666521; cv=none; b=rXGb6RG9VK08fmzusdgV1vFlM5Bv/MM2GrOc7VkUAj6RWpDII0LyG0AyqIVEaHTvO1y0BjFZTP5bTgnUerMwQQCu+3pnSf2acidzzSdal7y6lmcWQevz4eKp4MuAjUMhwp5ZNmNiYI2HxYTL8IItUpdf68NlclT/1gDPFlrPRAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666518; c=relaxed/simple;
-	bh=C0Z0uox2CgDqjEyCEJVJxR5DoTLju4mjcKiRbX+vLtQ=;
+	s=arc-20240116; t=1784666521; c=relaxed/simple;
+	bh=2H13zIZXRk+iAix6mWXISzrPihNZzyX9P5C7YwRRZao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OMRQ0oOO+w73MHoMuKm5w23B59oa6HEFv63kjhC7UnRGq9cnYWsGGFWVtpVmhsN8xzU4TYTbKIfEPfrC5NHasIkoZKbPE/pXgYf98u2cflFjaHVJutC8lkxZoeH78C0a9FI1/92otzKkrEShvJEcjpNqFeAJ//Lf8WnUUTsbwKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Soi/C7rS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aPjJtMbcql0nSGro4lhCPYagcgHLyu//8rGG4fQAjTfZqdzzesHBeE3haoGpbHBrcNq2JIcN6r0n+zPyQrDbFEUt9EIAyVTctejr7mKWrbTdCwBkU5fKYTyGTLr7odiO8njwwqqA5s+SGyw6qd3GrQ1zNJ1zBIRIgbN61Hr4Zog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ef9Em1EH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Soi/C7rS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B389E1F000E9;
-	Tue, 21 Jul 2026 20:41:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ef9Em1EH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577F71F000E9;
+	Tue, 21 Jul 2026 20:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666517;
-	bh=FX5TMsz9NCJ7YKMu5EE4jdkWOdda4fCO886FxbMas34=;
+	s=korg; t=1784666519;
+	bh=wgRodg2BzJqwQxv3Nma1uFfYRC717QVBN7J2OOl0ItU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Soi/C7rSRaXH2HVZR7H2IE0ZWtvG2kzfuNi8sop78Q25HcLR+i8f/OWtMuwbbrkX5
-	 rDGfF6sIcjxs6UcBdIwWLu1p3KHWVFynUnlCW3kehfuZjzORo/KNXif77CMhCZ2dY0
-	 9Z3fpov9ZjjQ3mwp1NSOmOueeNgBCXsJArdFhgf8=
+	b=Ef9Em1EHYAuyI17QKiQpNvf5AB48ijcZLBcog/HwzNGXfPp1e3hE0hAvQMqTPWpmR
+	 xAoxqYYRxVDCsiQqh2E5+ZFLQVKZBatEtB+MtoTWPae4mLFZM5fQtEtpTr5qJDsN22
+	 vjKguiPmh4t5kvMCITN0l0hvtr7wMOinPE9OogrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mike Yu <yumike@google.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
-	Antony Antony <antony.antony@secunet.com>,
-	Eyal Birger <eyal.birger@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0713/1266] xfrm: Use the XFRM_GRO to indicate a GRO call on input
-Date: Tue, 21 Jul 2026 17:19:10 +0200
-Message-ID: <20260721152457.819259775@linuxfoundation.org>
+Subject: [PATCH 6.6 0714/1266] xfrm: Support crypto offload for inbound IPv6 ESP packets not in GRO path
+Date: Tue, 21 Jul 2026 17:19:11 +0200
+Message-ID: <20260721152457.842937781@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,74 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steffen Klassert <steffen.klassert@secunet.com>
+From: Mike Yu <yumike@google.com>
 
-[ Upstream commit b439475a0dba2b50fb39a6356069969780e45fd4 ]
+[ Upstream commit f7e8542d71e908706855a9f3e9e7844fea1feea0 ]
 
-This is needed to support GRO for ESP in UDP encapsulation.
+IPsec crypt offload supports outbound IPv6 ESP packets, but it doesn't
+support inbound IPv6 ESP packets.
 
+This change enables the crypto offload for inbound IPv6 ESP packets
+that are not handled through GRO code path. If HW drivers add the
+offload information to the skb, the packet will be handled in the
+crypto offload rx code path.
+
+Apart from the change in crypto offload rx code path, the change
+in xfrm_policy_check is also needed.
+
+Exampe of RX data path:
+
+  +-----------+   +-------+
+  | HW Driver |-->| wlan0 |--------+
+  +-----------+   +-------+        |
+                                   v
+                             +---------------+   +------+
+                     +------>| Network Stack |-->| Apps |
+                     |       +---------------+   +------+
+                     |             |
+                     |             v
+                 +--------+   +------------+
+                 | ipsec1 |<--| XFRM Stack |
+                 +--------+   +------------+
+
+Test: Enabled both in/out IPsec crypto offload, and verified IPv6
+      ESP packets on Android device on both wifi/cellular network
+Signed-off-by: Mike Yu <yumike@google.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Co-developed-by: Antony Antony <antony.antony@secunet.com>
-Signed-off-by: Antony Antony <antony.antony@secunet.com>
-Reviewed-by: Eyal Birger <eyal.birger@gmail.com>
 Stable-dep-of: 68de007d5ac9 ("xfrm: annotate data-races around xfrm_policy_count[] and xfrm_policy_default[]")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/esp4_offload.c | 2 +-
- net/ipv6/esp6_offload.c | 2 +-
- net/xfrm/xfrm_input.c   | 6 ++----
- 3 files changed, 4 insertions(+), 6 deletions(-)
+ net/xfrm/xfrm_input.c  | 2 +-
+ net/xfrm/xfrm_policy.c | 5 ++++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/esp4_offload.c b/net/ipv4/esp4_offload.c
-index 028d2d3477d132..0984f330362749 100644
---- a/net/ipv4/esp4_offload.c
-+++ b/net/ipv4/esp4_offload.c
-@@ -77,7 +77,7 @@ static struct sk_buff *esp4_gro_receive(struct list_head *head,
- 
- 	/* We don't need to handle errors from xfrm_input, it does all
- 	 * the error handling and frees the resources on error. */
--	xfrm_input(skb, IPPROTO_ESP, spi, -2);
-+	xfrm_input(skb, IPPROTO_ESP, spi, 0);
- 
- 	return ERR_PTR(-EINPROGRESS);
- out_reset:
-diff --git a/net/ipv6/esp6_offload.c b/net/ipv6/esp6_offload.c
-index 333d87557bf32b..84affcc7f4d760 100644
---- a/net/ipv6/esp6_offload.c
-+++ b/net/ipv6/esp6_offload.c
-@@ -104,7 +104,7 @@ static struct sk_buff *esp6_gro_receive(struct list_head *head,
- 
- 	/* We don't need to handle errors from xfrm_input, it does all
- 	 * the error handling and frees the resources on error. */
--	xfrm_input(skb, IPPROTO_ESP, spi, -2);
-+	xfrm_input(skb, IPPROTO_ESP, spi, 0);
- 
- 	return ERR_PTR(-EINPROGRESS);
- out_reset:
 diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
-index 77bc0ad368d7eb..1d20f2a0a7386b 100644
+index 1d20f2a0a7386b..1483770f845642 100644
 --- a/net/xfrm/xfrm_input.c
 +++ b/net/xfrm/xfrm_input.c
 @@ -470,7 +470,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
  	struct xfrm_offload *xo = xfrm_offload(skb);
  	struct sec_path *sp;
  
--	if (encap_type < 0) {
-+	if (encap_type < 0 || (xo && xo->flags & XFRM_GRO)) {
+-	if (encap_type < 0 || (xo && xo->flags & XFRM_GRO)) {
++	if (encap_type < 0 || (xo && (xo->flags & XFRM_GRO || encap_type == 0))) {
  		x = xfrm_input_state(skb);
  
  		if (unlikely(x->km.state != XFRM_STATE_VALID)) {
-@@ -493,9 +493,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- 			seq = XFRM_SKB_CB(skb)->seq.input.low;
- 			goto resume;
- 		}
--
--		/* encap_type < -1 indicates a GRO call. */
--		encap_type = 0;
-+		/* GRO call */
- 		seq = XFRM_SPI_SKB_CB(skb)->seq;
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index 2110941c8e9a75..ef07c9872b8d14 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -3683,12 +3683,15 @@ int __xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb,
+ 	}
  
- 		if (xo && (xo->flags & CRYPTO_DONE)) {
+ 	if (!pol) {
++		const bool is_crypto_offload = sp &&
++			(xfrm_input_state(skb)->xso.type == XFRM_DEV_OFFLOAD_CRYPTO);
++
+ 		if (net->xfrm.policy_default[dir] == XFRM_USERPOLICY_BLOCK) {
+ 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINNOPOLS);
+ 			return 0;
+ 		}
+ 
+-		if (sp && secpath_has_nontransport(sp, 0, &xerr_idx)) {
++		if (sp && secpath_has_nontransport(sp, 0, &xerr_idx) && !is_crypto_offload) {
+ 			xfrm_secpath_reject(xerr_idx, skb, &fl);
+ 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINNOPOLS);
+ 			return 0;
 -- 
 2.53.0
 
