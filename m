@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DF94189DA;
-	Tue, 21 Jul 2026 21:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F5437473A;
+	Tue, 21 Jul 2026 21:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671010; cv=none; b=P1V+I+aq0qX5sKlsoaBGk86tKBDNUGXuuo6SwlqiieyAcHoEotQtRrOc6ToromY4PC7DNykTnudr/4qD9a3c0GKEuR50joN3vPPwGKxSUV4sTWPB5dv8FeF9Tkp0Z0LkNPicOVhLIiuQUH1ytVWy8sfO9Dx0bKq7sK8ykTV0VY4=
+	t=1784671012; cv=none; b=W41qn3NEPG3AqPaGWbg5OHDEL1ITlKfVUQr8hO3Jcqdna8BYQ7YpbzzqvAGXxsH/hAOXRK4HlyNeNS8GG+WU4tS+PntwJq4VTPqckSqYavbTAED2ZJnErS/n9FVr+Ply5p+4isVCUX3teK+T26XH6HlolMESO4pyJHNUW/y/blg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671010; c=relaxed/simple;
-	bh=n0L1Khz+XKJTeTEqEKUKzAq/wklLqUIOos9LrAsha8Q=;
+	s=arc-20240116; t=1784671012; c=relaxed/simple;
+	bh=uw4JIp4BDWC022HtHIq7gA/6hE8q2EAkq2gofFS7KCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PantTlRRncIBcR3Lonh3Oj1xtXvxlE2W+vdWDufB0aVWinRuUSwLsb7gPVJMiCpQxiRplYXRSRhuii5n3+OJcbF9oaAW8uuXiWBm2MV9yjOCJyfOrrFwiYJ+JYyVWG2NhqNB/9lJcQdZKhHB6WXfjQTtBRO4S0DqOPyIIT7uxxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PvlbQ3Y4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=doAkfdfiIiJuTS4vBM95aleUeAP5Z8BaCy8SQ5XEjilC7UvW9sNs2SAlAog4U1c90aw6Y4BDJh6i0EN7JiC6c2LuMeo8CjV0GiaztlT2NmFui6vhKxU2M50RitGvtu1gIM7pMeLOOIhC9eM2sAi/HlmOPGIiprwGEF9JAT4oJT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lWHDAcpg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PvlbQ3Y4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90401F000E9;
-	Tue, 21 Jul 2026 21:56:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lWHDAcpg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CBF11F000E9;
+	Tue, 21 Jul 2026 21:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671008;
-	bh=2hJ9eEb/Avw0QdwBSOSjNxRo2geS9wAgzGomelBALoQ=;
+	s=korg; t=1784671011;
+	bh=pbY5beGlaBltA+tg09XuTT0//iEoFXe2AS51gf5zD6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PvlbQ3Y4nco78b7KdTgQaHFWNor2hQGhP/I0Xp15dLmGUvULZoMv5EUwd87k+Zh9D
-	 TKOLdFastgwIX8l7ulB3NxesDNQE9wu2SN5hp5ms6Fn7fQySjS0NB+RkM9xb+yIWv2
-	 VsyPfq08SOSe8uNx0oPw7+wGZlLO982MZUfNBsEg=
+	b=lWHDAcpgCccEo63Ok4RG7mY3XS5ueh9JVfXBRO/hr6cYV0En47uF+ewn+LRu+LZLE
+	 YAGMV6uDjWw+xDAGc6LUaUePi7P1vuOeBHHBNKP78rIyHUECQzVdQ7i15RZX2kqFec
+	 jLcYH1YwRyJGvwCJI8QDgXrxDka7jcXcNFHkZb2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	stable@kernel.org,
+	Ruipeng Qi <ruipengqi3@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Chao Yu <chaseyu@google.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 041/843] NFSv4/flexfiles: reject zero filehandle version count
-Date: Tue, 21 Jul 2026 17:14:36 +0200
-Message-ID: <20260721152406.900989799@linuxfoundation.org>
+Subject: [PATCH 5.15 032/843] f2fs: fix potential deadlock in gc_merge path of f2fs_balance_fs()
+Date: Tue, 21 Jul 2026 17:14:27 +0200
+Message-ID: <20260721152406.693019389@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,55 +54,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 2c6bb3c40bc24f6aa8dfbe6fe98c3ad6389203f2 ]
+[ Upstream commit 8b4468ec023d0d1b4669dfb867588997cc03a06b ]
 
-ff_layout_alloc_lseg() decodes the filehandle-version array count
-from the flexfiles layout body. The value is used as the count for
-kzalloc_objs(), and the current code only rejects NULL.
+When we mount device w/ gc_merge mount option, we may suffer below
+potential deadlock:
 
-A zero count yields ZERO_SIZE_PTR, which can be stored in
-dss_info->fh_versions even though later flexfiles paths assume that at
-least one filehandle version exists.
+Kworker					GC trehad			Truncator
+- f2fs_write_cache_pages
+ - f2fs_write_single_data_page
+  - f2fs_do_write_data_page
+   - folio_start_writeback  --- set writeback flag on folio
+   - f2fs_outplace_write_data
+   : cached folio in internal bio cache
+  - f2fs_balance_fs
+   - wake_up(gc_thread)
+   : wake up gc thread to run foreground GC
+   - finish_wait(fggc_wq)
+   : wait on the waitqueue --- wait on GC thread to finish the work
+									- truncate_inode_pages_range
+									 - __filemap_get_folio(, FGP_LOCK)  --- lock folio
+									 - truncate_inode_partial_folio
+									  - folio_wait_writeback            --- wait on writeback being cleared
+					- do_garbage_collect
+					 - move_data_page
+					  - f2fs_get_lock_data_folio
+					   - lock on folio  --- blocked on folio's lock
 
-Reject fh_count == 0 before the allocation, matching the existing zero
-version_count validation in the flexfiles GETDEVICEINFO parser.
+In order to avoid such deadlock, let's call below functions to commit
+cached bios in GC_MERGE path of f2fs_balance_fs() as the same as we did
+in NOGC_MERGE path.
+- f2fs_submit_merged_write(sbi, DATA);
+- f2fs_submit_all_merged_ipu_writes(sbi);
 
-A QEMU/KASAN run with a malformed flexfiles layout hit:
-
-  KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
-  RIP: 0010:ff_layout_encode_ff_layoutupdate.isra.0+0x15f/0x750
-  ff_layout_encode_layoutreturn+0x683/0x970
-  nfs4_xdr_enc_layoutreturn+0x278/0x3a0
-  Kernel panic - not syncing: Fatal exception
-
-The patched kernel rejects the malformed layout without KASAN/oops/panic,
-and a valid fh_count=1 regression still opens, reads, and unmounts cleanly.
-
-Cc: stable@vger.kernel.org
-Fixes: d67ae825a59d ("pnfs/flexfiles: Add the FlexFile Layout Driver")
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Cc: stable@kernel.org
+Fixes: 351df4b20115 ("f2fs: add segment operations")
+Cc: Ruipeng Qi <ruipengqi3@gmail.com>
+Reported: Sandeep Dhavale <dhavale@google.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Chao Yu <chaseyu@google.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayout.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/f2fs/segment.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/fs/nfs/flexfilelayout/flexfilelayout.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-@@ -454,6 +454,10 @@ ff_layout_alloc_lseg(struct pnfs_layout_
- 		if (!p)
- 			goto out_err_free;
- 		fh_count = be32_to_cpup(p);
-+		if (fh_count == 0) {
-+			rc = -EINVAL;
-+			goto out_err_free;
-+		}
- 
- 		fls->mirror_array[i]->fh_versions =
- 			kcalloc(fh_count, sizeof(struct nfs_fh),
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -515,6 +515,13 @@ void f2fs_balance_fs(struct f2fs_sb_info
+ 	 * dir/node pages without enough free segments.
+ 	 */
+ 	if (has_not_enough_free_secs(sbi, 0, 0)) {
++		/*
++		 * Submit all cached OPU/IPU DATA bios before triggering
++		 * foreground GC to avoid potential deadlocks.
++		 */
++		f2fs_submit_merged_write(sbi, DATA);
++		f2fs_submit_all_merged_ipu_writes(sbi);
++
+ 		if (test_opt(sbi, GC_MERGE) && sbi->gc_thread &&
+ 					sbi->gc_thread->f2fs_gc_task) {
+ 			DEFINE_WAIT(wait);
+@@ -525,13 +532,6 @@ void f2fs_balance_fs(struct f2fs_sb_info
+ 			io_schedule();
+ 			finish_wait(&sbi->gc_thread->fggc_wq, &wait);
+ 		} else {
+-			/*
+-			 * Submit all cached OPU/IPU DATA bios before triggering
+-			 * foreground GC to avoid potential deadlocks.
+-			 */
+-			f2fs_submit_merged_write(sbi, DATA);
+-			f2fs_submit_all_merged_ipu_writes(sbi);
+-
+ 			down_write(&sbi->gc_lock);
+ 			f2fs_gc(sbi, false, false, false, NULL_SEGNO);
+ 		}
 
 
