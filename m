@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E4147044B;
-	Tue, 21 Jul 2026 19:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBD546F48A;
+	Tue, 21 Jul 2026 19:40:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662849; cv=none; b=jrJDCi8S53B2+WKFNKmSyJBg/EFqzggUUh0j2IRNpQpgU+5R0rFsT5adW74ISvm/htmWeujQZcj33LfNxWgltYO8oGT8vpTbReEmpxvc7f7Gk+T485QkKNcEhpJMRoalUClgFEg0Y5V30Mnh2/xZFmDV4e0ZUt6qDHPRcQJEBgI=
+	t=1784662852; cv=none; b=Ad1YY/iY80aw4hkPeZCSl/ju9C+P/yJDINJ6zt8IvJUnXwaQvTBlbVgaf9RAt/HffWuF2OvTiPf793OIwjHz4vbwnngHv/nTfW1Zy/YulWUCSoPoW0uKYJrySLhJcmvb/k+RSy5FLsAPbwe372S040cCYcN0YyO+MJBQu5P8GkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662849; c=relaxed/simple;
-	bh=txIyyi+WnG83wh7s6vgO18boxhkNs+hazgZL0dXaPbA=;
+	s=arc-20240116; t=1784662852; c=relaxed/simple;
+	bh=qwyt4UWuTZqCoeCY4DnDjli+pX6IH1+gEWe8NH/8+rE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dsG2TiRvG4fpBOY41BQ0Av97IwcN167T1pkMmWiOIi3qWxvMgDKh/sAJyvfpDpIJIisO8KD/42nBM5dgtjN45TFWhrraOuV/TFN00pOZr6EU77kCgl5oN/O3jh0IiEgBmrSTRsdtoNgi2ec37OzyyvWg0n9DluXO4j/4lsLDgvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MrXDP7hR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IIT43EdnFfny0pShRnf4cKv9+ji7xAOJtKam1naBqowx6xiKyAmSIO8VE3IO67UcB0GYS+ChTqq0+fchA8NSvZPj8rm7KcIyPkc5n+zj4DU6+3Tg1FH2d0Sm5G17dpQUChEJSgSww+L8EC4ET0IHki0CEbqrOfVjrwEkkzgV6jY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WhGhKF0I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MrXDP7hR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D941F1F00A3A;
-	Tue, 21 Jul 2026 19:40:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WhGhKF0I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 954A51F000E9;
+	Tue, 21 Jul 2026 19:40:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662848;
-	bh=ZDaS2dUS5slCDfiDjCHv7slr3yYXt4vZsvfQrUu/lyc=;
+	s=korg; t=1784662851;
+	bh=4reyHoUWyYHXvZsTJtor+OLlolNgMs2Ezxb1y2TgYdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MrXDP7hRCYtEAVZZSiMza4M3j0WXvCImti4fUDTrv3gdVHMYsK96nknbGE+S8MNuS
-	 eYn+ToY8KM+xIE7bhGeoVOm70Ookvmu+0XLTDCcs3cSI3FjHSuzsSH5g53umogXqLO
-	 9KUs0op/ZS+ZbntRm5t7B4+UkjMczeIAWwLuGUGw=
+	b=WhGhKF0IU8lN84FuRXYuA8mqRTdGuwb42m8sOBsdb80YGk9Xqu8oL3KsGd4uJIp5T
+	 ZIdvus3atV7llfswdCSfRxkGykBFhWYcNT4uviQ//pScFjAT+OOTdD+xQW9cVDicIo
+	 Ppi9ysJRYFwUoCHes2oBKYbrTw3Asp4bGkZda2B0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Dave Marchevsky <davemarchevsky@fb.com>,
+	Leo Yan <leo.yan@arm.com>,
+	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@linaro.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0557/1276] perf bpf: Bounds-check array offsets in bpil_offs_to_addr()
-Date: Tue, 21 Jul 2026 17:16:40 +0200
-Message-ID: <20260721152458.582389720@linuxfoundation.org>
+Subject: [PATCH 6.12 0558/1276] perf: Remove redundant kernel.h include
+Date: Tue, 21 Jul 2026 17:16:41 +0200
+Message-ID: <20260721152458.604357561@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -46,74 +48,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 033e85edfbf271f92979d2a39aeaf40f8472a795 ]
+[ Upstream commit 7a0ba3891104da77cfd1a16d41699e0fdf45603a ]
 
-bpil_offs_to_addr() converts offsets stored in perf.data's
-bpf_prog_info_linear structure into heap pointers by adding the offset
-to the data allocation base.  The offsets come from untrusted file input
-and are not validated against data_len.
+Now that the bitfield dependency is resolved, the explicit inclusion of
+kernel.h is no longer needed.
 
-If an offset exceeds data_len, the computed address points outside the
-allocated data buffer.  Callers like synthesize_bpf_prog_name() then
-dereference prog_tags[sub_id] or func_info pointers, reading arbitrary
-heap memory.
+Remove the redundant include.
 
-Add a bounds check: when an offset exceeds data_len, zero the field
-and skip the conversion.  This prevents out-of-bounds pointer
-construction from crafted perf.data files.
-
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Fixes: 6ac22d036f86c4e2 ("perf bpf: Pull in bpf_program__get_prog_info_linear()")
-Cc: Dave Marchevsky <davemarchevsky@fb.com>
-Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 542e88a4c6f7 ("perf cs-etm: Reject CPU IDs that would overflow signed comparison")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf-utils.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ tools/perf/arch/arm64/util/header.c | 1 -
+ tools/perf/util/cs-etm.c            | 1 -
+ 2 files changed, 2 deletions(-)
 
-diff --git a/tools/perf/util/bpf-utils.c b/tools/perf/util/bpf-utils.c
-index 5a66dc8594aa88..03a621a0c5dcd5 100644
---- a/tools/perf/util/bpf-utils.c
-+++ b/tools/perf/util/bpf-utils.c
-@@ -264,12 +264,28 @@ void bpil_offs_to_addr(struct perf_bpil *info_linear)
- 	for (i = PERF_BPIL_FIRST_ARRAY; i < PERF_BPIL_LAST_ARRAY; ++i) {
- 		const struct bpil_array_desc *desc = &bpil_array_desc[i];
- 		__u64 addr, offs;
-+		__u32 count, size;
+diff --git a/tools/perf/arch/arm64/util/header.c b/tools/perf/arch/arm64/util/header.c
+index 741df3614a09ac..d0ccc727593ca2 100644
+--- a/tools/perf/arch/arm64/util/header.c
++++ b/tools/perf/arch/arm64/util/header.c
+@@ -1,4 +1,3 @@
+-#include <linux/kernel.h>
+ #include <linux/bits.h>
+ #include <linux/bitfield.h>
+ #include <stdio.h>
+diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
+index 3fd669817eb9bf..776bef4e00156e 100644
+--- a/tools/perf/util/cs-etm.c
++++ b/tools/perf/util/cs-etm.c
+@@ -6,7 +6,6 @@
+  * Author: Mathieu Poirier <mathieu.poirier@linaro.org>
+  */
  
- 		if ((info_linear->arrays & (1UL << i)) == 0)
- 			continue;
- 
- 		offs = bpf_prog_info_read_offset_u64(&info_linear->info,
- 						     desc->array_offset);
-+		count = bpf_prog_info_read_offset_u32(&info_linear->info,
-+						      desc->count_offset);
-+		size = bpf_prog_info_read_offset_u32(&info_linear->info,
-+						     desc->size_offset);
-+		/* offset and extent from perf.data are untrusted — keep within data[] */
-+		if (offs >= info_linear->data_len ||
-+		    (u64)count * size > info_linear->data_len - offs) {
-+			bpf_prog_info_set_offset_u64(&info_linear->info,
-+						     desc->array_offset, 0);
-+			bpf_prog_info_set_offset_u32(&info_linear->info,
-+						     desc->count_offset, 0);
-+			/* clear the bit so bpil_addr_to_offs() won't reverse a zeroed address */
-+			info_linear->arrays &= ~(1UL << i);
-+			continue;
-+		}
- 		addr = offs + ptr_to_u64(info_linear->data);
- 		bpf_prog_info_set_offset_u64(&info_linear->info,
- 					     desc->array_offset, addr);
+-#include <linux/kernel.h>
+ #include <linux/bitfield.h>
+ #include <linux/bitops.h>
+ #include <linux/coresight-pmu.h>
 -- 
 2.53.0
 
