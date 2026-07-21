@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2A744AB68;
-	Tue, 21 Jul 2026 21:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE1244AB6A;
+	Tue, 21 Jul 2026 21:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668830; cv=none; b=bbUCl8Lm6g3ckPFZWjLVYPLgqPw+WA7LytzX+Qu9P/ftr2k1P5pDp2m1JJWMvkMZe3d3Bcge2hO5k8tJXr8s9pzTbD1ZWXZACB4mJmcAFDD//6m9ymZbil6JvR2DGxoghqkb8Xi1AU4j2leJ948a/tacUe1NVckbrIUVfKBVV48=
+	t=1784668833; cv=none; b=qrrEGJmGvJIwK+J8xNkyBbxQWb5a5S35aSbTFD3JZpq1oLPECXQueotGzCLc+MuFnCYYX0SIl3zN0Bw+dJXdE443VWch0uOSj9YjyV6wjR/RLrxWMeCzKLvuo4alf9PpiyU/BDBgb8Q09sgfrWEeYN8Ap+CfCt1SGTAtztbQA0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668830; c=relaxed/simple;
-	bh=Nd3vW4wc60ghdiZnMo0l1BEnfQoNJzhT6QYJh1oc9no=;
+	s=arc-20240116; t=1784668833; c=relaxed/simple;
+	bh=PjOlQ3LHVKaK8qJqMzrJr3fIDwyXc3WH0mkqlo9OQYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MgKnXRkjPmlbEup1tt65A5eGibbs72ep1n5ftPWtlWdQ/d7WnvBDrMoCclQ4PVhHPlHPkwhRZj21I3uKd8QodluD6lFvdFg6ybrT+j5yym7vvIXjHZ3W1CW2aJBxRXD0+F6b7tscwrrVseUjNjVRgOj5Ym14IuCeOk6j1UQDGlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EWwjOEDz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iSBQxOOBXh9I4GfbMFLe6LQlDq0e42ZsjvJrAAmik5JoZhEYS0AqEsDry6BOfTOP/V+ftIXlYpsRx/1SMyoDnaBIymoTMyoVDgZdidvcSurwQ0FTSzxJ9BEEO1mOpQxcGBljhd5rlSoB4FJAQy9gVrf8+OoC7ei6XlBgPpSyOxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=czz4uit7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EWwjOEDz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05A11F000E9;
-	Tue, 21 Jul 2026 21:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="czz4uit7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 739551F000E9;
+	Tue, 21 Jul 2026 21:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668829;
-	bh=TbYcesOwMd/XlmnehHmTTPKRPY9TI0JMxC62GZoDByQ=;
+	s=korg; t=1784668831;
+	bh=gClZn3KaOprH/lBWZ2espN9P6jCnobP4NPt9DjoQZsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EWwjOEDzJJW+a99zhDymk/0zZGUvm98NeAK+ayGgrcFZoKpfkG2MY9kH0yQceST1R
-	 TDuige2J+/dTFkCvAKdtMbaGmgPEml8+p1Z1n8ZBuBptU7O3nxNG2t5fTmGZRBd5Ja
-	 FG+k0ILfEA9rAyDSgsjqgqc26XJurl9iZ6MAJWZY=
+	b=czz4uit7ERWEmXg7hUlKJzxkiSZa/VNSyQmsHqhPctH0F92gZ0hgVx6jXrkD82VtB
+	 Opzo47NVbWY4clor/qMZ7LPQ7+nSZAlUGP1RqOc/8bmcO0iT85zxBBJ5NzHYne5YxY
+	 aSCbelVvKBW4Bhk1gAbiQF8PxGjYzITi+jXSbtNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Pengjie Zhang <zhangpengjie2@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Xingjing Deng <micro6947@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0323/1067] cpufreq: Documentation: fix sampling_down_factor range
-Date: Tue, 21 Jul 2026 17:15:24 +0200
-Message-ID: <20260721152431.818320630@linuxfoundation.org>
+Subject: [PATCH 6.1 0288/1067] kconfig: fix potential NULL pointer dereference in conf_askvalue
+Date: Tue, 21 Jul 2026 17:14:49 +0200
+Message-ID: <20260721152431.045254991@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,39 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengjie Zhang <zhangpengjie2@huawei.com>
+From: Xingjing Deng <micro6947@gmail.com>
 
-[ Upstream commit 85524e651d20944399322d46fb97960337831d43 ]
+[ Upstream commit b9d21c32dca2167a614e66c9e27999b9e1c33d55 ]
 
-The ondemand governor implementation accepts sampling_down_factor values
-from 1 to 100000 via MAX_SAMPLING_DOWN_FACTOR, but the documentation in
-admin-guide/pm/cpufreq.rst still says the valid range is 1 to 100.
+In conf_askvalue(), the 'def' argument (retrieved via sym_get_string_value)
+can be NULL. While current call sites ensure that 'def' is valid,
+calling printf("%s\n", def) is technically undefined behavior and could
+lead to a segmentation fault on certain libc implementations if the
+function were called with a NULL pointer in the future.
 
-Update the documentation to match the actual code.
+Improve the robustness of conf_askvalue() by providing an empty string
+as a fallback.
 
-Fixes: 2a0e49279850 ("cpufreq: User/admin documentation update and consolidation")
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
-Link: https://patch.msgid.link/20260518133457.2408463-1-zhangpengjie2@huawei.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Additionally, remove the redundant re-initialization of the 'line'
+buffer inside the !sym_is_changeable(sym) block, as it is already
+properly initialized at the function entry.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Xingjing Deng <micro6947@gmail.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20260306021709.27068-1-micro6947@gmail.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/pm/cpufreq.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/kconfig/conf.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/admin-guide/pm/cpufreq.rst b/Documentation/admin-guide/pm/cpufreq.rst
-index 6adb7988e0eb6d..d2f37309cca3b3 100644
---- a/Documentation/admin-guide/pm/cpufreq.rst
-+++ b/Documentation/admin-guide/pm/cpufreq.rst
-@@ -499,7 +499,7 @@ This governor exposes the following tunables:
- 	of those tasks above 0 and set this attribute to 1.
+diff --git a/scripts/kconfig/conf.c b/scripts/kconfig/conf.c
+index 662a5e7c37c285..6c4ff012a05ebd 100644
+--- a/scripts/kconfig/conf.c
++++ b/scripts/kconfig/conf.c
+@@ -323,9 +323,7 @@ static int conf_askvalue(struct symbol *sym, const char *def)
+ 	line[1] = 0;
  
- ``sampling_down_factor``
--	Temporary multiplier, between 1 (default) and 100 inclusive, to apply to
-+	Temporary multiplier, between 1 (default) and 100000 inclusive, to apply to
- 	the ``sampling_rate`` value if the CPU load goes above ``up_threshold``.
+ 	if (!sym_is_changeable(sym)) {
+-		printf("%s\n", def);
+-		line[0] = '\n';
+-		line[1] = 0;
++		printf("%s\n", def ?: "");
+ 		return 0;
+ 	}
  
- 	This causes the next execution of the governor's worker routine (after
+@@ -333,7 +331,7 @@ static int conf_askvalue(struct symbol *sym, const char *def)
+ 	case oldconfig:
+ 	case syncconfig:
+ 		if (sym_has_value(sym)) {
+-			printf("%s\n", def);
++			printf("%s\n", def ?: "");
+ 			return 0;
+ 		}
+ 		/* fall through */
 -- 
 2.53.0
 
