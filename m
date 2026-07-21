@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276C244AB6E;
-	Tue, 21 Jul 2026 21:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F8A44AB6E;
+	Tue, 21 Jul 2026 21:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670857; cv=none; b=ZbbNsrVh2LfX+Ylj4IYC0UQY6je1vzAHo6whrmqFevaQfVehksoAlhIZ0KKqACkOWN6k6nE+548B13jHNStwTKmH5/XBjj5yx0Okp3cD/ALp+MWuCzI9GG7VBPqI3bavXoi+DXo9XQZ/+jk0EfvF/jwzCHCQ5sPqh+eH+NjeZSs=
+	t=1784670859; cv=none; b=XWpL4O3QB41m3WNeTCJhC1MAjibRqd6jjD3CyXcgl+GXp7RbGs6mX0nRSFKWsyZ2TjlsBKexLNf9wN2KquiZjaFDPm9e0Ar/gVDMOHFKnyoGtpb0Rqu/4qjLpinZwcfIwMSQQzjB76yXipvYxhkwm8ly75RuHJZ2Shf8MEy1zdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670857; c=relaxed/simple;
-	bh=NUkXjmEHAZLaxYPa37JYyC4Jmy4ioeajUjqWRaeydm0=;
+	s=arc-20240116; t=1784670859; c=relaxed/simple;
+	bh=ts9i0Y8m5Qt0+aU+/e1Zws14XGCUXWmoCkFv4lVVPCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ny0/7WNCI3DS8McPuXIaF+7mplbnA3RZOdX8yw8XLmU3sfrIRRCd2ON7Elg0xQJkYlywoHdrgne/8C7jR6SsJBUP9wm2CmgMoZ6EgjlaRqLo2IW9niaiRDS81y1JLFeidcdUCfUCBM+8H5/YywzGEDKcFwy2LAT0tew39VvnCJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYKiwA8F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JNZWLfow69XFQX0lw6NbOp88WERaxE++DAsbDVmdLTm5M3RefkdyMQ7DyOJaONneer/LSierIfP5PbLFi1VAYTiCQRwARPzm6/6Qw5IDB/p5EgxbXJbPOSApsuSerer3g/Nl64ZtzvuLH9N1/bE+c/WzyL81AtARxfYF0r8gHAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TlMgHZch; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYKiwA8F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC0C1F000E9;
-	Tue, 21 Jul 2026 21:54:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlMgHZch"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4924A1F000E9;
+	Tue, 21 Jul 2026 21:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670855;
-	bh=zO3eP1Sff7gNOpLOsUt8WLHXQOfz7xHBPU9pAzYSExU=;
+	s=korg; t=1784670857;
+	bh=vtBbDteAwISxmE9mgwe8R10ok66yt2mDUQU6xIOxS9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FYKiwA8FwpLxI7c9JImFgWAzOoqZhLe0imiBWqICNprtQVjt4xVkos4wTOq8ORvLx
-	 g0g8/tkoYjJ17gt66RMrOh0rjfQ9bUAexskvwXINCLz6DdmDpqQB6oTyl0yJCoOmMn
-	 icSX4LqjQ2LBwmF07VHseg8zUd3fsKNjMPFPy6x8=
+	b=TlMgHZchej2OAWWMH+8QCUNqrD9eH+ehbFlmH/jQQTFxZIK2bBcW34eZ9OsbEPxw/
+	 XtS1o7nbxBY6bFkaQhxhAuG1CZ3vugSLuK/lpn/q0l4B81NDP3zQu1k5/Fuo1YRYT3
+	 k6zfGtWNozUJUeBCdPqFTo4QK5EfcOxV5kGHbluQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yunji Kang <yunji0.kang@samsung.com>,
+	Yeongjin Gil <youngjin.gil@samsung.com>,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Sunmin Jeong <s_min.jeong@samsung.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 026/843] f2fs: adjust zone capacity when considering valid block count
-Date: Tue, 21 Jul 2026 17:14:21 +0200
-Message-ID: <20260721152406.554400474@linuxfoundation.org>
+Subject: [PATCH 5.15 027/843] f2fs: fix to round down start offset of fallocate for pin file
+Date: Tue, 21 Jul 2026 17:14:22 +0200
+Message-ID: <20260721152406.577052121@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,139 +55,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Sunmin Jeong <s_min.jeong@samsung.com>
 
-[ Upstream commit 074b5ea2900ea8e40f8e7a3fd37e0a55ad3d5874 ]
+[ Upstream commit 4275b59673eb60b02eec3997816c83f1f4b909c4 ]
 
-This patch fixes counting unusable blocks set by zone capacity when
-checking the valid block count in a section.
+Currently, the length of fallocate for pin file is section-aligned to
+keep allocated sections from being selected as victims of GC. However,
+for the case that the start offset of fallocate is not aligned in
+section, the allocated sections can't be fully utilized. It's because a
+new section is allocated by f2fs_allocate_pinning_section() after using
+blks_per_sec blocks regardless of the start offset. As a result, several
+unexpected dirty segments may be created, including blocks assigned to
+the pinned file.
 
+To address this issue, let's round down the start offset of fallocate
+to the length of section.
+
+The reproducing scenario is as below
+
+chunk=$(((2<<20)+4096)) # 2MB + 4KB
+touch test
+f2fs_io pinfile set test
+f2fs_io fallocate 0 0 $chunk test
+f2fs_io fallocate 0 $chunk $chunk test
+f2fs_io fallocate 0 $((chunk*2)) $chunk test
+f2fs_io fiemap 0 $((chunk*3)) test
+
+Fiemap: offset = 0 len = 12288
+    logical addr.    physical addr.   length           flags
+0   0000000000000000 000000068c600000 0000000000400000 00001088
+1   0000000000400000 000000003d400000 0000000000001000 00001088
+2   0000000000401000 00000003eb200000 0000000000200000 00001088
+3   0000000000601000 00000005e4200000 0000000000001000 00001088
+4   0000000000602000 0000000605400000 0000000000200000 00001089
+
+Cc: stable@vger.kernel.org
+Fixes: f5a53edcf01e ("f2fs: support aligned pinned file")
+Reviewed-by: Yunji Kang <yunji0.kang@samsung.com>
+Reviewed-by: Yeongjin Gil <youngjin.gil@samsung.com>
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 4275b59673eb ("f2fs: fix to round down start offset of fallocate for pin file")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/debug.c   |    2 +-
- fs/f2fs/file.c    |    6 +++---
- fs/f2fs/gc.c      |    4 ++--
- fs/f2fs/segment.c |    7 +++----
- fs/f2fs/segment.h |    8 ++++----
- 5 files changed, 13 insertions(+), 14 deletions(-)
+ fs/f2fs/file.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/fs/f2fs/debug.c
-+++ b/fs/f2fs/debug.c
-@@ -39,7 +39,7 @@ void f2fs_update_sit_info(struct f2fs_sb
- 
- 	bimodal = 0;
- 	total_vblocks = 0;
--	blks_per_sec = BLKS_PER_SEC(sbi);
-+	blks_per_sec = CAP_BLKS_PER_SEC(sbi);
- 	hblks_per_sec = blks_per_sec / 2;
- 	for (segno = 0; segno < MAIN_SEGS(sbi); segno += sbi->segs_per_sec) {
- 		vblocks = get_valid_blocks(sbi, segno, true);
 --- a/fs/f2fs/file.c
 +++ b/fs/f2fs/file.c
-@@ -1694,7 +1694,7 @@ static int expand_inode_data(struct inod
- 		return 0;
+@@ -1695,8 +1695,15 @@ static int expand_inode_data(struct inod
  
  	if (f2fs_is_pinned_file(inode)) {
--		block_t sec_blks = BLKS_PER_SEC(sbi);
-+		block_t sec_blks = CAP_BLKS_PER_SEC(sbi);
- 		block_t sec_len = roundup(map.m_len, sec_blks);
+ 		block_t sec_blks = CAP_BLKS_PER_SEC(sbi);
+-		block_t sec_len = roundup(map.m_len, sec_blks);
++		block_t sec_len;
  
++		if (map.m_lblk % sec_blks) {
++			map.m_lblk = rounddown(map.m_lblk, sec_blks);
++			map.m_len = pg_end - map.m_lblk;
++			if (off_end)
++				map.m_len++;
++		}
++		sec_len = roundup(map.m_len, sec_blks);
  		map.m_len = sec_blks;
-@@ -2547,7 +2547,7 @@ do_more:
- 			ret = -EAGAIN;
- 		goto out;
- 	}
--	range->start += BLKS_PER_SEC(sbi);
-+	range->start += CAP_BLKS_PER_SEC(sbi);
- 	if (range->start <= end)
- 		goto do_more;
- out:
-@@ -2672,7 +2672,7 @@ static int f2fs_defragment_range(struct
- 		goto out;
- 	}
- 
--	sec_num = DIV_ROUND_UP(total, BLKS_PER_SEC(sbi));
-+	sec_num = DIV_ROUND_UP(total, CAP_BLKS_PER_SEC(sbi));
- 
- 	/*
- 	 * make sure there are enough free section for LFS allocation, this can
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -461,7 +461,7 @@ static void atgc_lookup_victim(struct f2
- 	unsigned long long age, u, accu;
- 	unsigned long long max_mtime = sit_i->dirty_max_mtime;
- 	unsigned long long min_mtime = sit_i->dirty_min_mtime;
--	unsigned int sec_blocks = BLKS_PER_SEC(sbi);
-+	unsigned int sec_blocks = CAP_BLKS_PER_SEC(sbi);
- 	unsigned int vblocks;
- 	unsigned int dirty_threshold = max(am->max_candidate_count,
- 					am->candidate_ratio *
-@@ -1445,7 +1445,7 @@ next_step:
- 		 */
- 		if ((gc_type == BG_GC && has_not_enough_free_secs(sbi, 0, 0)) ||
- 			(!force_migrate && get_valid_blocks(sbi, segno, true) ==
--							BLKS_PER_SEC(sbi)))
-+							CAP_BLKS_PER_SEC(sbi)))
- 			return submitted;
- 
- 		if (check_valid_map(sbi, segno, off) == 0)
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -833,7 +833,7 @@ static void __locate_dirty_segment(struc
- 				get_valid_blocks(sbi, segno, true);
- 
- 			f2fs_bug_on(sbi, unlikely(!valid_blocks ||
--					valid_blocks == BLKS_PER_SEC(sbi)));
-+					valid_blocks == CAP_BLKS_PER_SEC(sbi)));
- 
- 			if (!IS_CURSEC(sbi, secno))
- 				set_bit(secno, dirty_i->dirty_secmap);
-@@ -869,7 +869,7 @@ static void __remove_dirty_segment(struc
- 			unsigned int secno = GET_SEC_FROM_SEG(sbi, segno);
- 
- 			if (!valid_blocks ||
--					valid_blocks == BLKS_PER_SEC(sbi)) {
-+					valid_blocks == CAP_BLKS_PER_SEC(sbi)) {
- 				clear_bit(secno, dirty_i->dirty_secmap);
- 				return;
- 			}
-@@ -4679,7 +4679,6 @@ static void init_dirty_segmap(struct f2f
- 	struct free_segmap_info *free_i = FREE_I(sbi);
- 	unsigned int segno = 0, offset = 0, secno;
- 	block_t valid_blocks, usable_blks_in_seg;
--	block_t blks_per_sec = BLKS_PER_SEC(sbi);
- 
- 	while (1) {
- 		/* find dirty segment based on free segmap */
-@@ -4708,7 +4707,7 @@ static void init_dirty_segmap(struct f2f
- 		valid_blocks = get_valid_blocks(sbi, segno, true);
- 		secno = GET_SEC_FROM_SEG(sbi, segno);
- 
--		if (!valid_blocks || valid_blocks == blks_per_sec)
-+		if (!valid_blocks || valid_blocks == CAP_BLKS_PER_SEC(sbi))
- 			continue;
- 		if (IS_CURSEC(sbi, secno))
- 			continue;
---- a/fs/f2fs/segment.h
-+++ b/fs/f2fs/segment.h
-@@ -605,10 +605,10 @@ static inline bool has_not_enough_free_s
- 					get_pages(sbi, F2FS_DIRTY_DENTS) +
- 					get_pages(sbi, F2FS_DIRTY_IMETA);
- 	unsigned int total_dent_blocks = get_pages(sbi, F2FS_DIRTY_DENTS);
--	unsigned int node_secs = total_node_blocks / BLKS_PER_SEC(sbi);
--	unsigned int dent_secs = total_dent_blocks / BLKS_PER_SEC(sbi);
--	unsigned int node_blocks = total_node_blocks % BLKS_PER_SEC(sbi);
--	unsigned int dent_blocks = total_dent_blocks % BLKS_PER_SEC(sbi);
-+	unsigned int node_secs = total_node_blocks / CAP_BLKS_PER_SEC(sbi);
-+	unsigned int dent_secs = total_dent_blocks / CAP_BLKS_PER_SEC(sbi);
-+	unsigned int node_blocks = total_node_blocks % CAP_BLKS_PER_SEC(sbi);
-+	unsigned int dent_blocks = total_dent_blocks % CAP_BLKS_PER_SEC(sbi);
- 	unsigned int free, need_lower, need_upper;
- 
- 	if (unlikely(is_sbi_flag_set(sbi, SBI_POR_DOING)))
+ next_alloc:
+ 		if (has_not_enough_free_secs(sbi, 0,
 
 
