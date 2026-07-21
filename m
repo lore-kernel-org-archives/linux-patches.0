@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EE04446EF;
-	Tue, 21 Jul 2026 21:07:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF544446F9;
+	Tue, 21 Jul 2026 21:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668076; cv=none; b=bl0gjHVbACcUooi+7CIQyqDMk4Ara2IIWyuKOz7Z8qnB0fQ0IcOJ/okA56D510NIOH3mW5tcL1fQiCj4hB6QQKVKieE9wWVzRmCDIw+cGjLIKESgpfMlK8jKc1nLIFzlQuDutczJdmgsuw4DfMUfrbUMBxxMVvniiS1vYStm1vA=
+	t=1784668078; cv=none; b=t6GTBavXhvyu+hIOhFPJ/6pHeCxRQ45p/UYMb7Oyxq3rLajs51rCiBESoOxkkMbMkBAvLAIRmn4N6SHsuDIIdZpv/lPByl6hpXP/DD8vvKPsUx3LFYC+0gIGxetKmQwOZj+Ean4F4m6TPLzq+SWRgvmRHa/bR5wdx55qhts5av4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668076; c=relaxed/simple;
-	bh=jKca+/SCc7/TMqjDwQKKw9AhP5h01IMGmRjzTtemIyI=;
+	s=arc-20240116; t=1784668078; c=relaxed/simple;
+	bh=F1SIqBeVmcOigWHHZzXAtyesPC79N0FHSwFQSqbUY8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BISBbSrlfDvUjeRzuV8jpgkf5Bw1gEARi6z3NgmfY0Bd4zLi32xmcP2uRGcarSdG3BKpK/dLyiWJzIEGBYmIXvvgAqXLZUgzi5rGLWE+dm/nPg8won/lsekPWbMSdaO3TZJ1jXQ/oWqWVG/3ggCmLGrDu9yvYNH1CoU2VGdwws8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mL9JA1Vw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aHsMpGCiM86HhkOUHd1QWrN3kyMVOZnyd35UcZ7iFSmIkTNGqc5Ju53v6/tYh2fVv7rBtpycInaWl8TRFqdmCLzJIGCqcyssiH0Mdm/Px1EZQFsO+I0Qw+zk7uPa23WWatb8jrwTjfS3DmPrmn2kumZFXseuvdezxn5DucbpS00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7KEOZrg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mL9JA1Vw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370361F000E9;
-	Tue, 21 Jul 2026 21:07:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7KEOZrg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC791F00A3A;
+	Tue, 21 Jul 2026 21:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668073;
-	bh=P6bhyBmzqHy382A4Bj0sdsBUxlGc6J4L4dBfE2brsQg=;
+	s=korg; t=1784668076;
+	bh=U8eeYwU5nyhoicZaQMFT+DgF7h2Nj+QWi9n9XzLOqnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mL9JA1Vw5I8XSGYO1JmYEW3lQwV8ggCTPrpXnFr7iGi4CeswVIPvGkj1WXQPbAcdR
-	 inIYbbA4sRUP/KALRp+Id8TGlcMKBDBxmZFjHdeujANB1XF1S4znr6eAzRAl1shKMf
-	 Os4KJ4qFkA8g+NVWkZfjyzxQJjDz/Cq972AX47/8=
+	b=t7KEOZrgu8Hxo1GfxbC/5/6ts+Sak4yMRSvRARnbVgF9x6JCTZ2pWe0+M6FD0w8gh
+	 Rcpit5/UsxkfTZ6AM0OyA0VWMfhdGECpX4k5VOthNkh0A9xbxfj1f0kpWiqgCoAscJ
+	 t3XzUXxpCzRWJnckpC4RjmcRgJb2GBhXqB1cuNwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	carnil@debian.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Markus Mayer <mmayer@broadcom.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 6.1 0037/1067] perf trace beauty fcntl: Fix build with older kernel headers
-Date: Tue, 21 Jul 2026 17:10:38 +0200
-Message-ID: <20260721152425.384246352@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Wentao Guan <guanwentao@uniontech.com>
+Subject: [PATCH 6.1 0038/1067] eventpoll: dont decrement ep refcount while still holding the ep mutex
+Date: Tue, 21 Jul 2026 17:10:39 +0200
+Message-ID: <20260721152425.407259602@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -60,60 +55,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 7ee7f48413c42b90230de4a8e40898b757bc8e82 upstream.
+commit 8c2e52ebbe885c7eeaabd3b7ddcdc1246fc400d2 upstream.
 
-Toolchains with older kernel headers that do not include upstream commit
-c75b1d9421f80f41 ("fs: add fcntl() interface for setting/getting write
-life time hints") will now fail to build perf due to missing definitions
-for F_GET_RW_HINT/F_SET_RW_HINT/F_GET_FILE_RW_HINT/F_SET_FILE_RW_HINT.
+Jann Horn points out that epoll is decrementing the ep refcount and then
+doing a
 
-Provide a fallback definition for these when they are not already
-defined.
+    mutex_unlock(&ep->mtx);
 
-Fixes: 9c47f66748381ecb ("perf trace beauty fcntl: Basic 'arg' beautifier")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Markus Mayer <mmayer@broadcom.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+afterwards. That's very wrong, because it can lead to a use-after-free.
+
+That pattern is actually fine for the very last reference, because the
+code in question will delay the actual call to "ep_free(ep)" until after
+it has unlocked the mutex.
+
+But it's wrong for the much subtler "next to last" case when somebody
+*else* may also be dropping their reference and free the ep while we're
+still using the mutex.
+
+Note that this is true even if that other user is also using the same ep
+mutex: mutexes, unlike spinlocks, can not be used for object ownership,
+even if they guarantee mutual exclusion.
+
+A mutex "unlock" operation is not atomic, and as one user is still
+accessing the mutex as part of unlocking it, another user can come in
+and get the now released mutex and free the data structure while the
+first user is still cleaning up.
+
+See our mutex documentation in Documentation/locking/mutex-design.rst,
+in particular the section [1] about semantics:
+
+	"mutex_unlock() may access the mutex structure even after it has
+	 internally released the lock already - so it's not safe for
+	 another context to acquire the mutex and assume that the
+	 mutex_unlock() context is not using the structure anymore"
+
+So if we drop our ep ref before the mutex unlock, but we weren't the
+last one, we may then unlock the mutex, another user comes in, drops
+_their_ reference and releases the 'ep' as it now has no users - all
+while the mutex_unlock() is still accessing it.
+
+Fix this by simply moving the ep refcount dropping to outside the mutex:
+the refcount itself is atomic, and doesn't need mutex protection (that's
+the whole _point_ of refcounts: unlike mutexes, they are inherently
+about object lifetimes).
+
+Reported-by: Jann Horn <jannh@google.com>
+Link: https://docs.kernel.org/locking/mutex-design.html#semantics [1]
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/trace/beauty/fcntl.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ fs/eventpoll.c |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
---- a/tools/perf/trace/beauty/fcntl.c
-+++ b/tools/perf/trace/beauty/fcntl.c
-@@ -9,6 +9,22 @@
- #include <linux/kernel.h>
- #include <uapi/linux/fcntl.h>
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -777,7 +777,7 @@ static bool __ep_remove(struct eventpoll
+ 	call_rcu(&epi->rcu, epi_rcu_free);
  
-+#ifndef F_GET_RW_HINT
-+#define F_GET_RW_HINT		(F_LINUX_SPECIFIC_BASE + 11)
-+#endif
-+
-+#ifndef F_SET_RW_HINT
-+#define F_SET_RW_HINT		(F_LINUX_SPECIFIC_BASE + 12)
-+#endif
-+
-+#ifndef F_GET_FILE_RW_HINT
-+#define F_GET_FILE_RW_HINT	(F_LINUX_SPECIFIC_BASE + 13)
-+#endif
-+
-+#ifndef F_SET_FILE_RW_HINT
-+#define F_SET_FILE_RW_HINT	(F_LINUX_SPECIFIC_BASE + 14)
-+#endif
-+
- static size_t fcntl__scnprintf_getfd(unsigned long val, char *bf, size_t size, bool show_prefix)
+ 	percpu_counter_dec(&ep->user->epoll_watches);
+-	return ep_refcount_dec_and_test(ep);
++	return true;
+ }
+ 
+ /*
+@@ -785,14 +785,14 @@ static bool __ep_remove(struct eventpoll
+  */
+ static void ep_remove_safe(struct eventpoll *ep, struct epitem *epi)
  {
- 	return val ? scnprintf(bf, size, "%s", "0") :
+-	WARN_ON_ONCE(__ep_remove(ep, epi, false));
++	if (__ep_remove(ep, epi, false))
++		WARN_ON_ONCE(ep_refcount_dec_and_test(ep));
+ }
+ 
+ static void ep_clear_and_put(struct eventpoll *ep)
+ {
+ 	struct rb_node *rbp, *next;
+ 	struct epitem *epi;
+-	bool dispose;
+ 
+ 	/* We need to release all tasks waiting for these file */
+ 	if (waitqueue_active(&ep->poll_wait))
+@@ -825,10 +825,8 @@ static void ep_clear_and_put(struct even
+ 		cond_resched();
+ 	}
+ 
+-	dispose = ep_refcount_dec_and_test(ep);
+ 	mutex_unlock(&ep->mtx);
+-
+-	if (dispose)
++	if (ep_refcount_dec_and_test(ep))
+ 		ep_free(ep);
+ }
+ 
+@@ -1008,7 +1006,7 @@ again:
+ 		dispose = __ep_remove(ep, epi, true);
+ 		mutex_unlock(&ep->mtx);
+ 
+-		if (dispose)
++		if (dispose && ep_refcount_dec_and_test(ep))
+ 			ep_free(ep);
+ 		goto again;
+ 	}
 
 
