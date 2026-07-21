@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C743BADB2;
-	Tue, 21 Jul 2026 21:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E1442EEB8;
+	Tue, 21 Jul 2026 21:12:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668350; cv=none; b=uMIGCPH9DUV9hDgpuRKeCWg4GjT5uzVmgHui1JUudzi7vdxRjkehD7HS+BVmO/9grWQ1duBnbF2fvOn9zSjrN6EbOm7sYDtNeK4dP6tEO/l+788pD9WzDgrP7u/KAAXDsm0PaZsvrDt1PLM6dBQz3rRNOQ/trFHlgF+xBuvDyS8=
+	t=1784668354; cv=none; b=ONV81DVsjquBix74dSOY2i0isMQbs8mmjFtxKpxAU8fklX9ihF3sGwqdRkZienjprr5u8C2t+qAVgr8PlRRyuyGZFvfDNEwMyRf8Vll24ab42OLN4spzDgbXKZeFRXjEqMe0yYvjnJNtcKec9IRXWSCibI/wkhqPkJCYsbiQo0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668350; c=relaxed/simple;
-	bh=3aDe8f55zz3+J2r6WRGasYC66yw6NdMy47Ek5WmAW1E=;
+	s=arc-20240116; t=1784668354; c=relaxed/simple;
+	bh=xu8mXxcCBfZ4tvSG1t13v4r8zqUVL4qFrpZJ27lg/II=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=V07onVt7Wt2L1Ox/nq9KJJj+blhL3I6BbpceG+ekzO9TRP/OvgcctCwzKgNYZAfpI3QUfUhtdNFWH28ouS5l45Ko7NrNQtD8pGLzbfHTjGVmZ3dURC92Adw9s/no8M8cOpSkGAcQ5oKptE+sMZxL8RrY5lehFM1sKRgbdSkGXuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oe6YxJsf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ptjNvMxrO3D+6AVDm6pcMzEmSsqyI7eNRfiZQtMYO/GtRC+jDcKcuTQDci8XSaFILFNpeUe7IlofzYA/fUtK+GI4neJQxNkTr4OLryPTn6Jw7xB2o0R29S0PTSVNBY0JeIIp0j3giiniIDrKP8WBUaU8PXoiKA+eWD5Ag4FfMq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/adyhMU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oe6YxJsf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E9E1F00A3A;
-	Tue, 21 Jul 2026 21:12:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/adyhMU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050E91F000E9;
+	Tue, 21 Jul 2026 21:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668348;
-	bh=wbdnbhp2SbQ+3w7fBeWAeq2v+AyXwmHWR/fZdiPCo/Q=;
+	s=korg; t=1784668351;
+	bh=QK4YpQaHwXZOe+NH/wPD/4WCR0X5WbEKfNGrgGy2BeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oe6YxJsfFkvIeTEtRroecfhhQGQmhf7d12fk4udiVJmtcb4fVSVP6jlmn2w/rRTCB
-	 MpZQMtrD2a8W7XyAHrDAN8HoEHik/3m4bZO7J9WbYFgo1wMfjw1aTR2OJwyJDjxaDD
-	 imVsoq74R3HQ0fvDMcwe7D6HYXfrn9YSDsPL9SKY=
+	b=j/adyhMUAJf4+JZma7emHWXi2zVW405f78wGTzJW+om623jkdmKGtQ6Tt+FPltvoZ
+	 MBiwy7E5UDMwfG3BXq0WRicw2hmMN4UTQk5L/JQGNUPtlb4rnTgeypZJljrmkZY6nN
+	 eZ4tVpy4ugKICN0g8ducz1E8ByQVuW7+YMz1dmmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Portnoy <dddhkts1@gmail.com>,
+	Musaab Khan <musaab.khan@protonmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 0140/1067] ksmbd: add a WRITE_DAC/WRITE_OWNER check to SMB2 SET_INFO SECURITY
-Date: Tue, 21 Jul 2026 17:12:21 +0200
-Message-ID: <20260721152427.726827014@linuxfoundation.org>
+Subject: [PATCH 6.1 0141/1067] ksmbd: run set info with opener credentials
+Date: Tue, 21 Jul 2026 17:12:22 +0200
+Message-ID: <20260721152427.749958610@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -45,64 +45,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gil Portnoy <dddhkts1@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 44df157a1183a7f746caa970c169255da5ac61f8 upstream.
+commit b383bcad3d2fe634b26efbce53e22bbb5753a520 upstream.
 
-commit cc57232cae23 ("ksmbd: fix FSCTL permission bypass by adding a
-permission check for FSCTL_SET_SPARSE") added a fp->daccess gate to
-fsctl_set_sparse and noted that "similar handle-level checks exist in other
-functions but are missing here." The SMB2 SET_INFO SECURITY arm is one of
-the missing ones, and the most security-relevant: smb2_set_info_sec() calls
-set_info_sec() with no per-handle access check.
+SMB2 SET_INFO handlers call path-based VFS helpers after checking the
+access mask granted to the SMB handle. Those helpers perform their owner,
+inode permission and LSM checks using the current ksmbd worker credentials.
 
-set_info_sec() (fs/smb/server/smbacl.c) re-permissions the file: it
-rewrites owner/group/mode via notify_change(), rewrites the POSIX ACL via
-set_posix_acl(), and on KSMBD_SHARE_FLAG_ACL_XATTR shares removes and
-rewrites the Windows security descriptor via ksmbd_vfs_set_sd_xattr().
-Every other persistent-mutation arm of the sibling handler
-smb2_set_info_file() checks fp->daccess first (FILE_WRITE_DATA /
-FILE_DELETE / FILE_WRITE_EA / FILE_WRITE_ATTRIBUTES); the SECURITY arm —
-which mutates the access control itself — is the only one with no gate.
+Run the complete SET_INFO dispatch with the credentials captured when the
+handle was opened. This also removes the separate security information
+credential setup and keeps all SET_INFO classes under one credential scope.
 
-A client can therefore open a handle with FILE_WRITE_ATTRIBUTES only (no
-FILE_WRITE_DAC / FILE_WRITE_OWNER) and use SMB2_SET_INFO with InfoType
-SMB2_O_INFO_SECURITY to rewrite the file's DACL and owner, granting itself
-access the handle's daccess never carried. Unlike the FSCTL data arms this
-is a metadata/xattr operation, so there is no FMODE_WRITE VFS backstop —
-the missing fp->daccess check is the entire gate.
-
-Setting a security descriptor is the WRITE_DAC / WRITE_OWNER operation, so
-require at least one of those on the handle before re-permissioning the
-file. -EACCES is mapped to STATUS_ACCESS_DENIED by smb2_set_info().
+Direct override_creds() is used because it can nest with the request
+credential overrides already used by rename and link helpers.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Reported-by: Musaab Khan <musaab.khan@protonmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/smb/server/smb2pdu.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -6117,6 +6117,9 @@ static int smb2_set_info_sec(struct ksmb
+@@ -6132,6 +6132,7 @@ static int smb2_set_info_sec(struct ksmb
+  */
+ int smb2_set_info(struct ksmbd_work *work)
+ {
++	const struct cred *saved_cred;
+ 	struct smb2_set_info_req *req;
+ 	struct smb2_set_info_rsp *rsp;
+ 	struct ksmbd_file *fp = NULL;
+@@ -6173,6 +6174,7 @@ int smb2_set_info(struct ksmbd_work *wor
+ 		goto err_out;
+ 	}
  
- 	fp->saccess |= FILE_SHARE_DELETE_LE;
++	saved_cred = override_creds(fp->filp->f_cred);
+ 	switch (req->InfoType) {
+ 	case SMB2_O_INFO_FILE:
+ 		ksmbd_debug(SMB, "GOT SMB2_O_INFO_FILE\n");
+@@ -6180,19 +6182,15 @@ int smb2_set_info(struct ksmbd_work *wor
+ 		break;
+ 	case SMB2_O_INFO_SECURITY:
+ 		ksmbd_debug(SMB, "GOT SMB2_O_INFO_SECURITY\n");
+-		if (ksmbd_override_fsids(work)) {
+-			rc = -ENOMEM;
+-			goto err_out;
+-		}
+ 		rc = smb2_set_info_sec(fp,
+ 				       le32_to_cpu(req->AdditionalInformation),
+ 				       (char *)req + le16_to_cpu(req->BufferOffset),
+ 				       le32_to_cpu(req->BufferLength));
+-		ksmbd_revert_fsids(work);
+ 		break;
+ 	default:
+ 		rc = -EOPNOTSUPP;
+ 	}
++	revert_creds(saved_cred);
  
-+	if (!(fp->daccess & (FILE_WRITE_DAC_LE | FILE_WRITE_OWNER_LE)))
-+		return -EACCES;
-+
- 	return set_info_sec(fp->conn, fp->tcon, &fp->filp->f_path, pntsd,
- 			buf_len, false, true);
- }
+ 	if (rc < 0)
+ 		goto err_out;
 
 
