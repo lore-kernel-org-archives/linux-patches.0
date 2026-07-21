@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21DB8388890;
-	Tue, 21 Jul 2026 19:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EFA415F1A;
+	Tue, 21 Jul 2026 19:39:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662765; cv=none; b=Wn/yGLV2bMdQDuaJjZLgkRZu3ImosyEIDlOV4cGvt9fNXiPcAy6vzv4zmsjRs6de2biGE7TFVt10H5UI0aYi8clbdlLMOEqm7KqWxU754lJjcVHTE9UcvuD8gfW03MEig3RwxCeFlkzoM/fjM2tMolNgCSj1eqtaur/W6fAn8+A=
+	t=1784662768; cv=none; b=J0smOdjjUN5WzbdKUI80VkkR5Y6zNqTmkOkfqdi2s0aTb1X35YyLqWk1w7rmWQErYJXQpZZXYJ4gazVQ7+4TLH24dkT9XNrD8LipjcdQi0t9WA79m7+yiRMqQ/A/nQr7l9K/pIyFqDaYjWM9kPb+kcWWDUlaf4D9aQUnfsDoKUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662765; c=relaxed/simple;
-	bh=ulsA9YSQcnjxpV0cGvlsFTMEYH44Qv+8MDCs16ZBI4w=;
+	s=arc-20240116; t=1784662768; c=relaxed/simple;
+	bh=VkTPAQ1I/cyzDt4eDOEEuhZraFJQG9mwJRTpFvNLGEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VK6O4AhLa1ZkaNj81uWFtMhRvB613LKql2wbl1qejsm8r4nttkNsBCvJ1PvWqlilXJmiUcKU69Sru1/SEwicUyvE1ETuDlNr0ruigwxfjr/QKtL2bNGhvyTdKRFe5yhputnMv/lYxQb5UUwISxPNCKpa/zOnUksfoL+pJsIfu74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0NH40BF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=InQyeJhQf2nYYVs7DBN6Qur3d2Z3UgFLaJ06rZ9x+1NigshrZVQZ4Z7vVEulXauUBcG+itmjj2fMtnevFQ7RM4BrmyfN9OPO8doHmnDbuhx7eJNXY3E61PKtW3nO9/PZ2kzlt9oqL14prKeAX/nlsfhmCtr3U9UfZcFHQ8t6n1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nDmU3XIs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0NH40BF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD261F000E9;
-	Tue, 21 Jul 2026 19:39:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nDmU3XIs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7A41F00A3A;
+	Tue, 21 Jul 2026 19:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662764;
-	bh=t++s21FS1+1hrHXM4Abzxta9Ss/B1mEAAnB/DiGmp0M=;
+	s=korg; t=1784662766;
+	bh=hsCotEmI0DG8dKn8oWlRe1jZvmC7UNlVYDmZE1wEFpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I0NH40BFgXW94u0fq7eAlLy22ebhQed76MFfNSBPs3/qp9qtXm+ecty6ib5xWXAsn
-	 vHlJdoeXCT5XI9CQiRps2wHQqsalq+lSEvrK4uZlPCnimCCRqedPzGxIgbP4T+Lmgq
-	 HrWb0CMRH3E8i0SKui/cj1EEjnqPMulYSggTAslw=
+	b=nDmU3XIs7qfVHVblpOPMT0mIb9tbZHowUnechA2XI/qvIkX6EVeI228eLLLYPaso8
+	 TFsN9lfi0uKxA5YAYE/0RPcSV48cqFVH+Dc2uSiBXcwvjoqBZAAtvrQMLioumB7GBr
+	 Jw1ru/3tDKmmWl7pOyCjPwRYW3ak1EpQy2XQUzyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	James Clark <james.clark@arm.com>,
-	Leo Yan <leo.yan@linaro.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Mir Jeffres <m-jeffres@ti.com>,
+	Sen Wang <sen@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0569/1276] perf cs-etm: Bounds-check CPU in cs_etm__get_queue()
-Date: Tue, 21 Jul 2026 17:16:52 +0200
-Message-ID: <20260721152458.850050585@linuxfoundation.org>
+Subject: [PATCH 6.12 0570/1276] ASoC: tlv320aic3x: restrict CLKDIV bypass Q values in dual-rate mode
+Date: Tue, 21 Jul 2026 17:16:53 +0200
+Message-ID: <20260721152458.872530945@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -48,124 +46,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Sen Wang <sen@ti.com>
 
-[ Upstream commit 9a989e60cc6e29d98aed2087425cba53bf4b392d ]
+[ Upstream commit fdf043f5f3bae150b678feae3d7bb1beed87ec14 ]
 
-cs_etm__get_queue() indexes etm->queues.queue_array[cpu] without
-validating that cpu is within nr_queues.  When processing
-AUX_OUTPUT_HW_ID events, the cpu value comes from untrusted perf.data
-trace payload and flows through cs_etm__process_trace_id_v0_1() and
-cs_etm__queue_aux_fragment() without bounds checking, allowing an
-out-of-bounds read with a crafted file.
+The datasheet documents that when the PLL is disabled and dual-rate mode
+is enabled, only Q values {4, 8, 9, 12, 16} are valid for the CLKDIV
+bypass path; all other Q values produce invalid bitclock output.
 
-Add a bounds check in cs_etm__get_queue() and NULL checks in all
-callers.
+The existing loop iterates Q from 2 to 17 without this restriction,
+causing silent audio failure when an out-of-spec Q is picked.
 
-Also add NULL checks for queue_array[i].priv in the queue iteration
-loops in cs_etm__map_trace_id_v0() and cs_etm__process_trace_id_v0_1()
-— after auxtrace_queues__grow() new entries are zero-initialized so
-.priv can be NULL.  Add a get_cpu_data() NULL check in
-cs_etm__process_trace_id_v0_1(), matching the existing check in
-cs_etm__process_trace_id_v0().
+Restrict the Q search to the allowed set in dual-rate mode.
 
-Fixes: 77c123f53e97ad4b ("perf: cs-etm: Move traceid_list to each queue")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Leo Yan <leo.yan@linaro.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 4f9c16ccfa26 ("[ALSA] soc - tlv320aic3x - revisit clock setup")
+Suggested-by: Mir Jeffres <m-jeffres@ti.com>
+Signed-off-by: Sen Wang <sen@ti.com>
+Link: https://patch.msgid.link/20260616233322.873081-1-sen@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm.c | 25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+ sound/soc/codecs/tlv320aic3x.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
-index 9e12084f66099f..36e9e6dc9b526a 100644
---- a/tools/perf/util/cs-etm.c
-+++ b/tools/perf/util/cs-etm.c
-@@ -292,8 +292,11 @@ static struct cs_etm_queue *cs_etm__get_queue(struct cs_etm_auxtrace *etm, int c
+diff --git a/sound/soc/codecs/tlv320aic3x.c b/sound/soc/codecs/tlv320aic3x.c
+index 591f6c9f9d3a60..05eff1ed4e96ca 100644
+--- a/sound/soc/codecs/tlv320aic3x.c
++++ b/sound/soc/codecs/tlv320aic3x.c
+@@ -1049,11 +1049,13 @@ static int aic3x_hw_params(struct snd_pcm_substream *substream,
+ 			   struct snd_pcm_hw_params *params,
+ 			   struct snd_soc_dai *dai)
  {
- 	if (etm->per_thread_decoding)
- 		return etm->queues.queue_array[0].priv;
--	else
--		return etm->queues.queue_array[cpu].priv;
-+
-+	if (cpu < 0 || cpu >= (int)etm->queues.nr_queues)
-+		return NULL;
-+
-+	return etm->queues.queue_array[cpu].priv;
- }
++	static const u8 dual_rate_q[] = {4, 8, 9, 12, 16};
+ 	struct snd_soc_component *component = dai->component;
+ 	struct aic3x_priv *aic3x = snd_soc_component_get_drvdata(component);
+ 	int codec_clk = 0, bypass_pll = 0, fsref, last_clk = 0;
+ 	u8 data, j, r, p, pll_q, pll_p = 1, pll_r = 1, pll_j = 1;
+ 	u16 d, pll_d = 1;
++	bool dual_rate;
+ 	int clk;
+ 	int width = aic3x->slot_width;
  
- static int cs_etm__map_trace_id_v0(struct cs_etm_auxtrace *etm, u8 trace_chan_id,
-@@ -306,6 +309,9 @@ static int cs_etm__map_trace_id_v0(struct cs_etm_auxtrace *etm, u8 trace_chan_id
- 	 * queue associated with that CPU so only one decoder is made.
- 	 */
- 	etmq = cs_etm__get_queue(etm, cpu_metadata[CS_ETM_CPU]);
-+	if (!etmq)
-+		return -EINVAL;
-+
- 	if (etmq->format == UNFORMATTED)
- 		return cs_etm__insert_trace_id_node(etmq, trace_chan_id,
- 						    cpu_metadata);
-@@ -318,6 +324,9 @@ static int cs_etm__map_trace_id_v0(struct cs_etm_auxtrace *etm, u8 trace_chan_id
- 		int ret;
+@@ -1079,14 +1081,25 @@ static int aic3x_hw_params(struct snd_pcm_substream *substream,
  
- 		etmq = etm->queues.queue_array[i].priv;
-+		if (!etmq)
-+			continue;
-+
- 		ret = cs_etm__insert_trace_id_node(etmq, trace_chan_id,
- 						   cpu_metadata);
- 		if (ret)
-@@ -358,6 +367,9 @@ static int cs_etm__process_trace_id_v0_1(struct cs_etm_auxtrace *etm, int cpu,
- 	u32 sink_id = FIELD_GET(CS_AUX_HW_ID_SINK_ID_MASK, hw_id);
- 	u8 trace_id = FIELD_GET(CS_AUX_HW_ID_TRACE_ID_MASK, hw_id);
+ 	/* Fsref can be 44100 or 48000 */
+ 	fsref = (params_rate(params) % 11025 == 0) ? 44100 : 48000;
++	dual_rate = params_rate(params) >= 64000;
  
-+	if (!etmq)
-+		return -EINVAL;
-+
- 	/*
- 	 * Check sink id hasn't changed in per-cpu mode. In per-thread mode,
- 	 * let it pass for now until an actual overlapping trace ID is hit. In
-@@ -375,6 +387,9 @@ static int cs_etm__process_trace_id_v0_1(struct cs_etm_auxtrace *etm, int cpu,
- 	for (unsigned int i = 0; i < etm->queues.nr_queues; ++i) {
- 		struct cs_etm_queue *other_etmq = etm->queues.queue_array[i].priv;
+ 	/* Try to find a value for Q which allows us to bypass the PLL and
+ 	 * generate CODEC_CLK directly. */
+-	for (pll_q = 2; pll_q < 18; pll_q++)
+-		if (aic3x->sysclk / (128 * pll_q) == fsref) {
+-			bypass_pll = 1;
+-			break;
++	if (dual_rate) {
++		for (int i = 0; i < ARRAY_SIZE(dual_rate_q); i++) {
++			pll_q = dual_rate_q[i];
++			if (aic3x->sysclk / (128 * pll_q) == fsref) {
++				bypass_pll = 1;
++				break;
++			}
+ 		}
++	} else {
++		for (pll_q = 2; pll_q < 18; pll_q++)
++			if (aic3x->sysclk / (128 * pll_q) == fsref) {
++				bypass_pll = 1;
++				break;
++			}
++	}
  
-+		if (!other_etmq)
-+			continue;
-+
- 		/* Different sinks, skip */
- 		if (other_etmq->sink_id != etmq->sink_id)
- 			continue;
-@@ -396,6 +411,9 @@ static int cs_etm__process_trace_id_v0_1(struct cs_etm_auxtrace *etm, int cpu,
- 	}
+ 	if (bypass_pll) {
+ 		pll_q &= 0xf;
+@@ -1106,13 +1119,13 @@ static int aic3x_hw_params(struct snd_pcm_substream *substream,
+ 	 * right DAC to right channel input */
+ 	data = (LDAC2LCH | RDAC2RCH);
+ 	data |= (fsref == 44100) ? FSREF_44100 : FSREF_48000;
+-	if (params_rate(params) >= 64000)
++	if (dual_rate)
+ 		data |= DUAL_RATE_MODE;
+ 	snd_soc_component_write(component, AIC3X_CODEC_DATAPATH_REG, data);
  
- 	cpu_data = get_cpu_data(etm, cpu);
-+	if (!cpu_data)
-+		return -EINVAL;
-+
- 	ret = cs_etm__insert_trace_id_node(etmq, trace_id, cpu_data);
- 	if (ret)
- 		return ret;
-@@ -3146,6 +3164,9 @@ static int cs_etm__queue_aux_fragment(struct perf_session *session, off_t file_o
- 	    aux_offset + aux_size <= auxtrace_event->offset + auxtrace_event->size) {
- 		struct cs_etm_queue *etmq = etm->queues.queue_array[auxtrace_event->idx].priv;
- 
-+		if (!etmq)
-+			return -EINVAL;
-+
- 		/*
- 		 * If this AUX event was inside this buffer somewhere, create a new auxtrace event
- 		 * based on the sizes of the aux event, and queue that fragment.
+ 	/* codec sample rate select */
+ 	data = (fsref * 20) / params_rate(params);
+-	if (params_rate(params) < 64000)
++	if (!dual_rate)
+ 		data /= 2;
+ 	data /= 5;
+ 	data -= 2;
 -- 
 2.53.0
 
