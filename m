@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5D947010D;
-	Tue, 21 Jul 2026 20:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAF647010D;
+	Tue, 21 Jul 2026 20:24:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665439; cv=none; b=lRr97uXFEwbfIprkeYCnsiDucT7w9NWbaVcqiM4esdvxRuLwxNu9XpzPLVUmEsimjW0W0bp+15kVTqHT3ddppl3gxA6nfA2NENh99Uggr6hNTDlOBGSqUw4Oc5RLLDAXRPIBuvHk9yvRVHBAJlMgHH0lKIf5U6yeOaVHTxbgy+U=
+	t=1784665442; cv=none; b=jVEDTPj3ZsaqDNQjDIymeoFua73i0qZSyTBkbVV47xomyDK8WAbXvC+Ju8i0ns4EUt8UJeddbpFBVRzn2/yKDF8WJQWuhCJjoG1VDfa3Bx4njW51U90f41jh/OktBGMCwlUwHifZuiJXQW3+gYjqDlSubrrMBs6iEovP/tGKJ1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665439; c=relaxed/simple;
-	bh=tW7eY1rCDFecTrbQw/ThYJZDl+9cAI8YLtbArcogVs8=;
+	s=arc-20240116; t=1784665442; c=relaxed/simple;
+	bh=xgXSuCwxpflAmWUrJwwCrHLl+61Ramj7SjbfvBMtZAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SlAw3a81hagrMMJO6mxaQarRoz9F/ttdDuALYUvOxvZv33Zo62ulCj4odxFK1yVszQcg63FISEcG/AM337nRxpXManAeviwgSVTd0yDLZaQCZ31Y1/3qc8XdKARCy0LfPCuabdn7ZyEfbDB+F3qTHhASy1MUYts5lVDPavCsAEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qqszfvtl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XUKV6s8EglDXyCG/AFmA3r4WsYDcfIYqte8N95Ci4/eNcwfTxkV3rrk9r4diHU9s2DZ2HBqNB6tl2yFcIgYthAyzVowSX1IuNLKPsON7clNzqVmkUTIh3C6mHYZ30rp0JZuh1XfrvZVhkXqW/3+LjlyToEHNPQM6fKlYtMqPE4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zipnJBuO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qqszfvtl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541CC1F000E9;
-	Tue, 21 Jul 2026 20:23:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zipnJBuO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBEE71F000E9;
+	Tue, 21 Jul 2026 20:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665437;
-	bh=QlhRrxePLHdSGVTF+vdtDDY8xA5mOv1I6GG9zLYddIM=;
+	s=korg; t=1784665440;
+	bh=ZeKT7pyoV5QOoXb4Rh2tfqQ8ISp+DCG/feWbBXZ4Rd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QqszfvtlNm59zelgONZ2QdKRDpUL6CSVgh/W/fSJXXDrOiCtu7RWdy6quL9NYftiT
-	 Fee4Plhgdglbp0OlVK7+edgw142XGKZmnDHzqHbHuU0vvkDXPmiRoaxmYP4XwA2kn9
-	 x5pLxy2tS6saQu6VB0wDPMXjuLpUg/3mbZKAR9g4=
+	b=zipnJBuOSbHECFtGNQlZybTUzIbSjDLNcmftA2MvybcN1Ev1n/1h9OpEUjfNfOO3N
+	 dJuZrOu0CfXqmIqKtLg3C4TSm7W2K0aFnRvdBnWoAHzTePrRFOJLCvbdHJiaBvI/Kh
+	 PItETYjxkpPbewT9VI8pADQtOI89Pfgsqa3zrK2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Chris Packham <chris.packham@alliedtelesis.co.nz>,
+	=?UTF-8?q?Guillermo=20Rodr=C3=ADguez?= <guille.rodriguez@gmail.com>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.6 0303/1266] i2c: mpc: Fix timeout calculations
-Date: Tue, 21 Jul 2026 17:12:20 +0200
-Message-ID: <20260721152448.608950947@linuxfoundation.org>
+Subject: [PATCH 6.6 0304/1266] i2c: stm32f7: truncate clock period instead of rounding it
+Date: Tue, 21 Jul 2026 17:12:21 +0200
+Message-ID: <20260721152448.632456314@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -45,54 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Guillermo Rodríguez <guille.rodriguez@gmail.com>
 
-commit 2e9a7f68329be41792c0b123c28e6c53c2fa2249 upstream.
+commit 111bb7f9f4a90b32e495d70a607c67b137f3074a upstream.
 
-At first glance the harmless cleanup of the driver does nothing bad.
-However, as the operator precedence list states the '*' (multiplication)
-and '/' division operators have order 5 with left-to-right associativity
-the *= has order 17 and associativity right-to-left. It wouldn't be
-a problem to replace
+stm32f7_i2c_compute_timing() derives the I2C clock source period
+(i2cclk) with DIV_ROUND_CLOSEST, which may round it up. When the
+period is overestimated, all timings computed from it (SCLDEL,
+SDADEL, SCLL, SCLH) come out shorter on the wire than calculated,
+and the resulting bus rate can exceed the requested speed, violating
+the I2C specification minimums for tLOW and tHIGH.
 
-	foo = foo * HZ / 1000000;
+For example, with a 104.45 MHz clock source (e.g. PCLK1, the
+reset-default I2C clock source on STM32MP1), i2cclk is rounded from
+9.574 ns up to 10 ns. Requesting a 400 kHz fast mode bus with
+72/27 ns rise/fall times and no analog/digital filters then produces
+an actual bus rate of 415.6 kHz with tLOW = 1254 ns, violating both
+the 400 kHz maximum rate and the 1300 ns tLOW minimum of the
+specification.
 
-with
+Truncate the period instead, so that it can only be underestimated.
+The error then falls on the safe side: the programmed timings come
+out slightly longer than computed and the bus runs marginally below
+the target rate (375.3 kHz in the example above) while meeting the
+specification.
 
-	foo *= HZ / 1000000;
+i2cbus is left rounded-to-closest: it is only used as the target of
+the clk_error comparison and is never multiplied into the programmed
+timings, so nearest rounding remains accurate there.
 
-if HZ constant is in Hertz. The problem is that in the Linux kernel HZ is
-defined in jiffy units, which is order of magnitude smaller than a million.
-That's why operator precedence has a crucial role here. Fix the regression
-by reverting pre-optimized calculations.
-
-Fixes: be40a3ae719f ("i2c: mpc: Use of_property_read_u32 instead of of_get_property")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: <stable@vger.kernel.org> # v6.4+
-Reviewed-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
+Fixes: aeb068c57214 ("i2c: i2c-stm32f7: add driver")
+Signed-off-by: Guillermo Rodríguez <guille.rodriguez@gmail.com>
+Cc: <stable@vger.kernel.org> # v4.14+
+Acked-by: Alain Volmat <alain.volmat@foss.st.com>
+Reviewed-by: Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260618144934.3249950-1-andriy.shevchenko@linux.intel.com
+Link: https://lore.kernel.org/r/20260611104857.242153-1-guille.rodriguez@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-mpc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-stm32f7.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/i2c/busses/i2c-mpc.c
-+++ b/drivers/i2c/busses/i2c-mpc.c
-@@ -857,7 +857,7 @@ static int fsl_i2c_probe(struct platform
- 					      "fsl,timeout", &mpc_ops.timeout);
- 
- 	if (!result) {
--		mpc_ops.timeout *= HZ / 1000000;
-+		mpc_ops.timeout = mpc_ops.timeout * HZ / 1000000;
- 		if (mpc_ops.timeout < 5)
- 			mpc_ops.timeout = 5;
- 	} else {
+--- a/drivers/i2c/busses/i2c-stm32f7.c
++++ b/drivers/i2c/busses/i2c-stm32f7.c
+@@ -450,8 +450,13 @@ static int stm32f7_i2c_compute_timing(st
+ {
+ 	struct stm32f7_i2c_spec *specs;
+ 	u32 p_prev = STM32F7_PRESC_MAX;
+-	u32 i2cclk = DIV_ROUND_CLOSEST(NSEC_PER_SEC,
+-				       setup->clock_src);
++	/*
++	 * Truncate instead of rounding to closest: if the clock period is
++	 * overestimated, the computed SCL timings will come out shorter on
++	 * the wire, which can push the bus above the target rate and below
++	 * the spec's tLOW/tHIGH minimums.
++	 */
++	u32 i2cclk = NSEC_PER_SEC / setup->clock_src;
+ 	u32 i2cbus = DIV_ROUND_CLOSEST(NSEC_PER_SEC,
+ 				       setup->speed_freq);
+ 	u32 clk_error_prev = i2cbus;
 
 
