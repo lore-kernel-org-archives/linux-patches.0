@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2692147125D;
-	Tue, 21 Jul 2026 18:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5230471250;
+	Tue, 21 Jul 2026 18:35:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658945; cv=none; b=C3zmkdpAtM8HRT7jn6tOKY6swGC9mwwK63CtDlb+PUu1kW0edd09OiwFOvNNZ26P7OHW5khikZtjb8siOTfOB/HMMi+ku7Q1ORe5xhlY3rRACCU+2WvficX+7Y/jzHKWTiuS3vynGXMzIc/coJB2W4S1IWEkj24vjpVZzgWaK6g=
+	t=1784658948; cv=none; b=gBwsqLUI3YaOgmWRJzZh3+7DnzuiJndIBbVM7tlG6fYxOKIQBaZcFpbZcb3jeJcufjYms6zR5xg+vm0kU5bq4Nt4z7kY9PnoeVCdHD9xTy3DGtzIjyiUf8/59TlX47mP7eZjcChBBpudDxAek5nLbIDgMVHZJOhvdlX0fukQlvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658945; c=relaxed/simple;
-	bh=EjKqBXi4v72LpROn9v+vYnG5CxFvAQ33/wc02vzgtCo=;
+	s=arc-20240116; t=1784658948; c=relaxed/simple;
+	bh=yVs/ix0lpZTIubI76czDf1PWQx0kt9y2+pVBsGJmz9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L2Pu9/iVJeanBbIaqPK+Oh/UIbmRQwW9wLL74zeZN6HwnlcASKsDquSBcHjgcFK3K+NjTCKbbf3wJyJ7uJikA3T60YxAVfPMrBNM8VOa6zJ3TLVOlHdNcSgR78Z4eyXKLzBDtcKXjPxBXS+NOhPHr20307Fwc0oqwd4y0/PZc/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tz1PAr9j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sFeiHwX95OlP0f/QLoH7DH7uZKxcLxfbX++LXg3ruYDfgV27bzjiEF8Bc0YdexlsSnM0lOKytok63iyzJZ4GOeRyukMm7E6+YJN94Q4bYmjSCx5GUJKEogC4pbm7VlYqUSiy9vDnu3SnQLupce95rW+RGe8p+D7naKBAmQgeIGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNas8P/q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tz1PAr9j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86FBE1F000E9;
-	Tue, 21 Jul 2026 18:35:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNas8P/q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3683F1F000E9;
+	Tue, 21 Jul 2026 18:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658944;
-	bh=KpxmyV8Cqe26Ez6Npkkg+znw5Agws/uZL4cBXFPCtEA=;
+	s=korg; t=1784658946;
+	bh=51oNVFlgBNxIz4vWVcnroTbfTGmOUyFcg7A7yoHiOLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tz1PAr9jq5VU+zsd2OmlErX7H9zYIITsHEL0PFRoVicTAldvX0FtEu17KgPehcSpK
-	 HzHOw+JEJNUmykV7CA26KEm5ddayBVfnvRGFXfb6+NQbufWL8ryniutoPB8VY5irz9
-	 pYpMMbkMgls/Ih++OdkWj4oWefTnhPfw/uMJA0VE=
+	b=gNas8P/q9Hv4eKDy4Ld0TRR8w5ky/imkEch1qni7I5F2Kbb2j6d2xs/Lu9aprIcRM
+	 9kb46TYKyjdiHim7JtRtwp+Mof1LC5ykiEiH9gDkrmnCK51QIFnuyLX16Nd3vB5g8m
+	 8l+D1NkNv+1x/d3LpPGKDXO4ykaae3yuHysPKTpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
+	Feng Xue <feng.xue@outlook.com>,
 	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Lee Jones <lee@kernel.org>,
 	stable@kernel.org,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.18 1334/1611] can: isotp: serialize TX state transitions under so->rx_lock
-Date: Tue, 21 Jul 2026 17:24:10 +0200
-Message-ID: <20260721152545.457448402@linuxfoundation.org>
+Subject: [PATCH 6.18 1335/1611] can: bcm: defer rx_op deallocation to workqueue to fix thrtimer UAF
+Date: Tue, 21 Jul 2026 17:24:11 +0200
+Message-ID: <20260721152545.481089082@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -52,430 +53,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Lee Jones <lee@kernel.org>
 
-commit cf070fe33bfbd1a4c21236078fadb35dd223a157 upstream.
+commit 68973f9db76144825e4f35dfdc80fb8279eb2d57 upstream.
 
-The TX state machine (so->tx.state) is driven from three contexts:
-sendmsg() claiming and progressing a transfer, the RX path consuming
-Flow Control/echo frames, and two hrtimers timing out a stalled
-transfer. Mixing a lock-free cmpxchg() claim in sendmsg() with
-hrtimer_cancel() calls made under so->rx_lock elsewhere left windows
-where a frame or timer callback could act on a state that had already
-moved on, corrupting an unrelated transfer.
+Commit f1b4e32aca08 ("can: bcm: use call_rcu() instead of costly
+synchronize_rcu()") replaced synchronize_rcu() in bcm_delete_rx_op()
+with call_rcu() and introduced the RX_NO_AUTOTIMER flag.
 
-so->rx_lock now covers the full lifecycle of a TX claim: sendmsg()
-takes it to check so->tx.state is ISOTP_IDLE, switch it to
-ISOTP_SENDING, bump so->tx_gen and drain the previous transfer's
-timers - all as one critical section. isotp_rcv_fc()/isotp_rcv_cf()
-already run under this lock via isotp_rcv(), and isotp_rcv_echo() now
-takes it itself, so none of them can ever observe a transfer mid-claim.
-This also means a transfer can no longer be handed to sendmsg()'s
-cleanup paths (signal or send error) while another thread is
-concurrently claiming or finishing it, so those paths can cancel
-timers and reset the state unconditionally.
+However, this flag check was omitted for thrtimer in the packet rx
+fast-path. During BCM RX operation teardown, a concurrent RCU reader
+(bcm_rx_handler) can race and re-arm thrtimer via
+bcm_rx_update_and_send() after call_rcu() has been scheduled.  Once
+the RCU grace period elapses, bcm_op is freed.  The subsequently
+firing thrtimer then dereferences the deallocated op, causing a UAF.
 
-isotp_release() claims the socket the same way, so a racing sendmsg()
-sees a consistent ISOTP_SHUTDOWN and skips arming its timer or sending.
+Adding flag checks to the rx fast-path (bcm_rx_update_and_send) does not
+fully close the TOCTOU race and introduces latency for every CAN frame.
+Conversely, calling hrtimer_cancel() directly inside the RCU callback
+(softirq context) is fatal as hrtimer_cancel() can sleep, triggering
+a "scheduling while atomic" panic.
 
-Only the hrtimer callbacks stay outside so->rx_lock, since they run
-under so->rx_lock's cancellation elsewhere and taking it themselves
-would deadlock. so->tx_gen lets them recognize whether the transfer
-they timed out is still the one currently active, so they don't
-report an error against a transfer that has since completed or been
-superseded.
+Resolve this by deferring the timer cancellation and memory free to a
+dedicated unbound workqueue (bcm_wq).  The RCU callback now queues a
+work item to bcm_wq, which safely cancels both timers and deallocates
+memory in sleepable process context.  A dedicated workqueue is used to
+prevent system-wide WQ saturation and is cleanly flushed/destroyed
+on module unload to avoid rmmod page faults.
 
-Fixes: e057dd3fc20f ("can: add ISO 15765-2:2016 transport protocol")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/linux-can/20260710142146.BDAE61F000E9@smtp.kernel.org/
+Since the deferred work can now outlive the calling context by an
+unbounded amount, also take a reference on op->sk when it is assigned
+and drop it only once the deferred work has cancelled both timers, so a
+socket can no longer be freed out from under a still-armed timer whose
+callback (bcm_send_to_user()) dereferences op->sk.
+
+Fixes: f1b4e32aca08 ("can: bcm: use call_rcu() instead of costly synchronize_rcu()")
+Tested-by: Feng Xue <feng.xue@outlook.com>
+Tested-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260712-isotp-fixes-v10-3-793a1b1ce17f@hartkopp.net
+Link: https://patch.msgid.link/20260714-bcm_fixes-v15-1-562f7e3e42da@hartkopp.net
 Cc: stable@kernel.org
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/isotp.c |  202 ++++++++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 160 insertions(+), 42 deletions(-)
+ net/can/bcm.c |   37 ++++++++++++++++++++++++++++++++++---
+ 1 file changed, 34 insertions(+), 3 deletions(-)
 
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -157,7 +157,7 @@ struct isotp_sock {
- 	canid_t rxid;
- 	ktime_t tx_gap;
- 	ktime_t lastrxcf_tstamp;
--	struct hrtimer rxtimer, txtimer, txfrtimer;
-+	struct hrtimer rxtimer, txtimer, txfrtimer, echotimer;
- 	struct can_isotp_options opt;
- 	struct can_isotp_fc_options rxfc, txfc;
- 	struct can_isotp_ll_options ll;
-@@ -165,6 +165,7 @@ struct isotp_sock {
- 	u32 force_tx_stmin;
- 	u32 force_rx_stmin;
- 	u32 cfecho; /* consecutive frame echo tag */
-+	u32 tx_gen; /* generation, bumped per new tx transfer */
- 	struct tpcon rx, tx;
- 	struct list_head notifier;
- 	wait_queue_head_t wait;
-@@ -372,6 +373,15 @@ static int isotp_rcv_fc(struct isotp_soc
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -58,6 +58,7 @@
+ #include <linux/can/skb.h>
+ #include <linux/can/bcm.h>
+ #include <linux/slab.h>
++#include <linux/workqueue.h>
+ #include <linux/spinlock.h>
+ #include <net/sock.h>
+ #include <net/net_namespace.h>
+@@ -91,6 +92,8 @@ MODULE_ALIAS("can-proto-2");
  
- 	hrtimer_cancel(&so->txtimer);
+ #define BCM_MIN_NAMELEN CAN_REQUIRED_SIZE(struct sockaddr_can, can_ifindex)
  
-+	/* isotp_tx_timeout() may have given up on this job while
-+	 * hrtimer_cancel() above waited for it to finish; so->rx_lock
-+	 * (held by our caller isotp_rcv()) rules out a concurrent claim,
-+	 * so a plain recheck is enough here.
-+	 */
-+	if (so->tx.state != ISOTP_WAIT_FC &&
-+	    so->tx.state != ISOTP_WAIT_FIRST_FC)
-+		return 1;
++static struct workqueue_struct *bcm_wq;
 +
- 	if ((cf->len < ae + FC_CONTENT_SZ) ||
- 	    ((so->opt.flags & ISOTP_CHECK_PADDING) &&
- 	     check_pad(so, cf, ae + FC_CONTENT_SZ, so->opt.rxpad_content))) {
-@@ -418,7 +428,7 @@ static int isotp_rcv_fc(struct isotp_soc
- 		so->tx.bs = 0;
- 		so->tx.state = ISOTP_SENDING;
- 		/* send CF frame and enable echo timeout handling */
--		hrtimer_start(&so->txtimer, ktime_set(ISOTP_ECHO_TIMEOUT, 0),
-+		hrtimer_start(&so->echotimer, ktime_set(ISOTP_ECHO_TIMEOUT, 0),
- 			      HRTIMER_MODE_REL_SOFT);
- 		isotp_send_cframe(so);
- 		break;
-@@ -571,6 +581,14 @@ static int isotp_rcv_cf(struct sock *sk,
- 
- 	hrtimer_cancel(&so->rxtimer);
- 
-+	/* isotp_rx_timer_handler() may have raced us for so->rx.state
-+	 * while hrtimer_cancel() above waited for it to finish, already
-+	 * reporting ETIMEDOUT and resetting the reception; don't process
-+	 * this CF into a reassembly that has already been given up on.
-+	 */
-+	if (so->rx.state != ISOTP_WAIT_DATA)
-+		return 1;
-+
- 	/* CFs are never longer than the FF */
- 	if (cf->len > so->rx.ll_dl)
- 		return 1;
-@@ -860,20 +878,36 @@ static void isotp_rcv_echo(struct sk_buf
- 	struct canfd_frame *cf = (struct canfd_frame *)skb->data;
- 
- 	/* only handle my own local echo CF/SF skb's (no FF!) */
--	if (skb->sk != sk || so->cfecho != *(u32 *)cf->data)
-+	if (skb->sk != sk)
- 		return;
- 
-+	/* unlike isotp_rcv_fc()/isotp_rcv_cf(), not already under so->rx_lock
-+	 * (no isotp_rcv() caller here), so take it ourselves
-+	 */
-+	spin_lock(&so->rx_lock);
-+
-+	/* so->cfecho may since belong to a new transfer; recheck under lock */
-+	if (so->cfecho != *(u32 *)cf->data)
-+		goto out_unlock;
-+
- 	/* cancel local echo timeout */
--	hrtimer_cancel(&so->txtimer);
-+	hrtimer_cancel(&so->echotimer);
- 
- 	/* local echo skb with consecutive frame has been consumed */
- 	so->cfecho = 0;
- 
-+	/* claiming a transfer also takes so->rx_lock, so a plain recheck
-+	 * is enough: so->tx.state can't have flipped to ISOTP_SENDING for
-+	 * a new claim while we're still in here
-+	 */
-+	if (so->tx.state != ISOTP_SENDING)
-+		goto out_unlock;
-+
- 	if (so->tx.idx >= so->tx.len) {
- 		/* we are done */
- 		so->tx.state = ISOTP_IDLE;
- 		wake_up_interruptible(&so->wait);
--		return;
-+		goto out_unlock;
- 	}
- 
- 	if (so->txfc.bs && so->tx.bs >= so->txfc.bs) {
-@@ -881,53 +915,83 @@ static void isotp_rcv_echo(struct sk_buf
- 		so->tx.state = ISOTP_WAIT_FC;
- 		hrtimer_start(&so->txtimer, ktime_set(ISOTP_FC_TIMEOUT, 0),
- 			      HRTIMER_MODE_REL_SOFT);
--		return;
-+		goto out_unlock;
- 	}
- 
- 	/* no gap between data frames needed => use burst mode */
- 	if (!so->tx_gap) {
- 		/* enable echo timeout handling */
--		hrtimer_start(&so->txtimer, ktime_set(ISOTP_ECHO_TIMEOUT, 0),
-+		hrtimer_start(&so->echotimer, ktime_set(ISOTP_ECHO_TIMEOUT, 0),
- 			      HRTIMER_MODE_REL_SOFT);
- 		isotp_send_cframe(so);
--		return;
-+		goto out_unlock;
- 	}
- 
- 	/* start timer to send next consecutive frame with correct delay */
- 	hrtimer_start(&so->txfrtimer, so->tx_gap, HRTIMER_MODE_REL_SOFT);
-+
-+out_unlock:
-+	spin_unlock(&so->rx_lock);
+ /*
+  * easy access to the first 64 bit of can(fd)_frame payload. cp->data is
+  * 64 bit aligned so the offset has to be multiples of 8 which is ensured
+@@ -104,6 +107,7 @@ static inline u64 get_u64(const struct c
+ struct bcm_op {
+ 	struct list_head list;
+ 	struct rcu_head rcu;
++	struct work_struct work;
+ 	int ifindex;
+ 	canid_t can_id;
+ 	u32 flags;
+@@ -788,9 +792,12 @@ static struct bcm_op *bcm_find_op(struct
+ 	return NULL;
  }
  
--static enum hrtimer_restart isotp_tx_timer_handler(struct hrtimer *hrtimer)
-+/* shared by so->txtimer's and so->echotimer's callbacks. Both timers get
-+ * cancelled under so->rx_lock elsewhere, so this must stay lock-free to
-+ * avoid deadlocking with that; uses so->tx_gen instead to avoid tainting
-+ * a new transfer with an error from the one that just timed out.
-+ */
-+static enum hrtimer_restart isotp_tx_timeout(struct isotp_sock *so)
+-static void bcm_free_op_rcu(struct rcu_head *rcu_head)
++static void bcm_free_op_work(struct work_struct *work)
  {
--	struct isotp_sock *so = container_of(hrtimer, struct isotp_sock,
--					     txtimer);
- 	struct sock *sk = &so->sk;
-+	u32 gen = READ_ONCE(so->tx_gen);
-+	u32 old_state = READ_ONCE(so->tx.state);
- 
- 	/* don't handle timeouts in IDLE or SHUTDOWN state */
--	if (so->tx.state == ISOTP_IDLE || so->tx.state == ISOTP_SHUTDOWN)
-+	if (old_state == ISOTP_IDLE || old_state == ISOTP_SHUTDOWN)
-+		return HRTIMER_NORESTART;
+-	struct bcm_op *op = container_of(rcu_head, struct bcm_op, rcu);
++	struct bcm_op *op = container_of(work, struct bcm_op, work);
 +
-+	/* only claim the timeout if the state is still unchanged */
-+	if (cmpxchg(&so->tx.state, old_state, ISOTP_IDLE) != old_state)
- 		return HRTIMER_NORESTART;
++	hrtimer_cancel(&op->timer);
++	hrtimer_cancel(&op->thrtimer);
  
- 	/* we did not get any flow control or echo frame in time */
+ 	if ((op->frames) && (op->frames != &op->sframe))
+ 		kfree(op->frames);
+@@ -798,9 +805,23 @@ static void bcm_free_op_rcu(struct rcu_h
+ 	if ((op->last_frames) && (op->last_frames != &op->last_sframe))
+ 		kfree(op->last_frames);
  
--	/* report 'communication error on send' */
--	sk->sk_err = ECOMM;
--	if (!sock_flag(sk, SOCK_DEAD))
--		sk_error_report(sk);
-+	if (READ_ONCE(so->tx_gen) == gen) {
-+		/* report 'communication error on send' */
-+		sk->sk_err = ECOMM;
-+		if (!sock_flag(sk, SOCK_DEAD))
-+			sk_error_report(sk);
-+	}
- 
--	/* reset tx state */
--	so->tx.state = ISOTP_IDLE;
- 	wake_up_interruptible(&so->wait);
- 
- 	return HRTIMER_NORESTART;
++	/* the last possible access to op->timer/op->thrtimer has now
++	 * happened above via hrtimer_cancel() - op->sk is no longer
++	 * needed by any pending timer callback, so drop our reference
++	 */
++	sock_put(op->sk);
++
+ 	kfree(op);
  }
  
-+/* so->txtimer: fires when a Flow Control frame does not arrive in time */
-+static enum hrtimer_restart isotp_tx_timer_handler(struct hrtimer *hrtimer)
++static void bcm_free_op_rcu(struct rcu_head *rcu_head)
 +{
-+	struct isotp_sock *so = container_of(hrtimer, struct isotp_sock,
-+					     txtimer);
++	struct bcm_op *op = container_of(rcu_head, struct bcm_op, rcu);
 +
-+	return isotp_tx_timeout(so);
++	INIT_WORK(&op->work, bcm_free_op_work);
++	queue_work(bcm_wq, &op->work);
 +}
 +
-+/* so->echotimer: fires when a sent CF/SF's local echo does not arrive */
-+static enum hrtimer_restart isotp_echo_timer_handler(struct hrtimer *hrtimer)
-+{
-+	struct isotp_sock *so = container_of(hrtimer, struct isotp_sock,
-+					     echotimer);
-+
-+	return isotp_tx_timeout(so);
-+}
-+
- static enum hrtimer_restart isotp_txfr_timer_handler(struct hrtimer *hrtimer)
+ static void bcm_remove_op(struct bcm_op *op)
  {
- 	struct isotp_sock *so = container_of(hrtimer, struct isotp_sock,
- 					     txfrtimer);
+ 	hrtimer_cancel(&op->timer);
+@@ -1055,6 +1076,7 @@ static int bcm_tx_setup(struct bcm_msg_h
  
- 	/* start echo timeout handling and cover below protocol error */
--	hrtimer_start(&so->txtimer, ktime_set(ISOTP_ECHO_TIMEOUT, 0),
-+	hrtimer_start(&so->echotimer, ktime_set(ISOTP_ECHO_TIMEOUT, 0),
- 		      HRTIMER_MODE_REL_SOFT);
+ 		/* bcm_can_tx / bcm_tx_timeout_handler needs this */
+ 		op->sk = sk;
++		sock_hold(sk);
+ 		op->ifindex = ifindex;
  
- 	/* cfecho should be consumed by isotp_rcv_echo() here */
-@@ -947,13 +1011,24 @@ static int isotp_sendmsg(struct socket *
- 	int ae = (so->opt.flags & CAN_ISOTP_EXTEND_ADDR) ? 1 : 0;
- 	int wait_tx_done = (so->opt.flags & CAN_ISOTP_WAIT_TX_DONE) ? 1 : 0;
- 	s64 hrtimer_sec = ISOTP_ECHO_TIMEOUT;
-+	struct hrtimer *tx_hrt = &so->echotimer;
-+	u32 new_state = ISOTP_SENDING;
- 	int off;
+ 		/* initialize uninitialized (kzalloc) structure */
+@@ -1216,6 +1238,7 @@ static int bcm_rx_setup(struct bcm_msg_h
+ 
+ 		/* bcm_can_tx / bcm_tx_timeout_handler needs this */
+ 		op->sk = sk;
++		sock_hold(sk);
+ 		op->ifindex = ifindex;
+ 
+ 		/* ifindex for timeout events w/o previous frame reception */
+@@ -1830,11 +1853,15 @@ static int __init bcm_module_init(void)
+ {
  	int err;
  
- 	if (!so->bound || so->tx.state == ISOTP_SHUTDOWN)
- 		return -EADDRNOTAVAIL;
- 
--	while (cmpxchg(&so->tx.state, ISOTP_IDLE, ISOTP_SENDING) != ISOTP_IDLE) {
-+	/* claim the socket under so->rx_lock: this serializes the claim
-+	 * with the RX path and with sendmsg()'s own error paths below, so
-+	 * none of them can ever see a transfer mid-claim
-+	 */
-+	for (;;) {
-+		spin_lock_bh(&so->rx_lock);
-+		if (READ_ONCE(so->tx.state) == ISOTP_IDLE)
-+			break;
-+		spin_unlock_bh(&so->rx_lock);
++	bcm_wq = alloc_workqueue("can-bcm-wq", WQ_UNBOUND, 0);
++	if (!bcm_wq)
++		return -ENOMEM;
 +
- 		/* we do not support multiple buffers - for now */
- 		if (msg->msg_flags & MSG_DONTWAIT)
- 			return -EAGAIN;
-@@ -962,11 +1037,23 @@ static int isotp_sendmsg(struct socket *
- 			return -EADDRNOTAVAIL;
+ 	pr_info("can: broadcast manager protocol\n");
  
- 		/* wait for complete transmission of current pdu */
--		err = wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
-+		err = wait_event_interruptible(so->wait,
-+					       so->tx.state == ISOTP_IDLE);
- 		if (err)
--			goto err_event_drop;
-+			return err;
- 	}
+ 	err = register_pernet_subsys(&canbcm_pernet_ops);
+ 	if (err)
+-		return err;
++		goto register_pernet_failed;
  
-+	/* new transfer: bump so->tx_gen and drain the old one's timers,
-+	 * still under the so->rx_lock we just claimed the socket with
-+	 */
-+	WRITE_ONCE(so->tx.state, ISOTP_SENDING);
-+	WRITE_ONCE(so->tx_gen, READ_ONCE(so->tx_gen) + 1);
-+	hrtimer_cancel(&so->txtimer);
-+	hrtimer_cancel(&so->echotimer);
-+	hrtimer_cancel(&so->txfrtimer);
-+	so->cfecho = 0;
-+	spin_unlock_bh(&so->rx_lock);
-+
- 	/* so->bound is only checked once above - a wakeup may have
- 	 * unbound/rebound the socket meanwhile, so re-validate it
- 	 */
-@@ -1077,18 +1164,33 @@ static int isotp_sendmsg(struct socket *
- 			so->cfecho = *(u32 *)cf->data;
- 		} else {
- 			/* standard flow control check */
--			so->tx.state = ISOTP_WAIT_FIRST_FC;
-+			new_state = ISOTP_WAIT_FIRST_FC;
- 
- 			/* start timeout for FC */
- 			hrtimer_sec = ISOTP_FC_TIMEOUT;
-+			tx_hrt = &so->txtimer;
- 
- 			/* no CF echo tag for isotp_rcv_echo() (FF-mode) */
- 			so->cfecho = 0;
- 		}
- 	}
- 
--	hrtimer_start(&so->txtimer, ktime_set(hrtimer_sec, 0),
-+	spin_lock_bh(&so->rx_lock);
-+	if (so->tx.state == ISOTP_SHUTDOWN) {
-+		/* isotp_release() has since taken over and already drained
-+		 * our timers - don't send into a socket that's going away
-+		 */
-+		spin_unlock_bh(&so->rx_lock);
-+		kfree_skb(skb);
-+		dev_put(dev);
-+		wake_up_interruptible(&so->wait);
-+		return -EADDRNOTAVAIL;
-+	}
-+	/* WAIT_FIRST_FC for standard FF, else stays ISOTP_SENDING */
-+	so->tx.state = new_state;
-+	hrtimer_start(tx_hrt, ktime_set(hrtimer_sec, 0),
- 		      HRTIMER_MODE_REL_SOFT);
-+	spin_unlock_bh(&so->rx_lock);
- 
- 	/* send the first or only CAN frame */
- 	cf->flags = so->ll.tx_flags;
-@@ -1101,13 +1203,10 @@ static int isotp_sendmsg(struct socket *
- 		pr_notice_once("can-isotp: %s: can_send_ret %pe\n",
- 			       __func__, ERR_PTR(err));
- 
-+		spin_lock_bh(&so->rx_lock);
- 		/* no transmission -> no timeout monitoring */
--		hrtimer_cancel(&so->txtimer);
--
--		/* reset consecutive frame echo tag */
--		so->cfecho = 0;
--
--		goto err_out_drop;
-+		hrtimer_cancel(tx_hrt);
-+		goto err_out_drop_locked;
- 	}
- 
- 	if (wait_tx_done) {
-@@ -1123,14 +1222,21 @@ static int isotp_sendmsg(struct socket *
- 
- 	return size;
- 
-+err_out_drop:
-+	/* claimed but nothing sent yet - no timer to cancel */
-+	spin_lock_bh(&so->rx_lock);
-+	goto err_out_drop_locked;
- err_event_drop:
--	/* got signal: force tx state machine to be idle */
--	so->tx.state = ISOTP_IDLE;
-+	/* interrupted waiting on our own transfer - drain its timers */
-+	spin_lock_bh(&so->rx_lock);
- 	hrtimer_cancel(&so->txfrtimer);
- 	hrtimer_cancel(&so->txtimer);
--err_out_drop:
--	/* drop this PDU and unlock a potential wait queue */
-+	hrtimer_cancel(&so->echotimer);
-+err_out_drop_locked:
-+	/* release the claim; so->rx_lock still held from above */
-+	so->cfecho = 0;
- 	so->tx.state = ISOTP_IDLE;
-+	spin_unlock_bh(&so->rx_lock);
- 	wake_up_interruptible(&so->wait);
- 
+ 	err = register_netdevice_notifier(&canbcm_notifier);
+ 	if (err)
+@@ -1852,6 +1879,8 @@ register_proto_failed:
+ 	unregister_netdevice_notifier(&canbcm_notifier);
+ register_notifier_failed:
+ 	unregister_pernet_subsys(&canbcm_pernet_ops);
++register_pernet_failed:
++	destroy_workqueue(bcm_wq);
  	return err;
-@@ -1192,13 +1298,20 @@ static int isotp_release(struct socket *
- 	so = isotp_sk(sk);
- 	net = sock_net(sk);
+ }
  
--	/* wait for complete transmission of current pdu */
--	while (wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE) == 0 &&
--	       cmpxchg(&so->tx.state, ISOTP_IDLE, ISOTP_SHUTDOWN) != ISOTP_IDLE)
-+	/* best-effort: wait for a running pdu to finish, but don't block on
-+	 * it forever - give up after the first signal
-+	 */
-+	while (so->tx.state != ISOTP_IDLE &&
-+	       wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE) == 0)
- 		;
+@@ -1860,6 +1889,8 @@ static void __exit bcm_module_exit(void)
+ 	can_proto_unregister(&bcm_can_proto);
+ 	unregister_netdevice_notifier(&canbcm_notifier);
+ 	unregister_pernet_subsys(&canbcm_pernet_ops);
++	rcu_barrier();
++	destroy_workqueue(bcm_wq);
+ }
  
--	/* force state machines to be idle also when a signal occurred */
-+	/* claim the socket under so->rx_lock like sendmsg() does, so its
-+	 * claim can't race the forced ISOTP_SHUTDOWN below; force it
-+	 * unconditionally, even when a signal cut the wait above short
-+	 */
-+	spin_lock_bh(&so->rx_lock);
- 	so->tx.state = ISOTP_SHUTDOWN;
-+	spin_unlock_bh(&so->rx_lock);
- 	so->rx.state = ISOTP_IDLE;
- 
- 	spin_lock(&isotp_notifier_lock);
-@@ -1244,6 +1357,7 @@ static int isotp_release(struct socket *
- 
- 	hrtimer_cancel(&so->txfrtimer);
- 	hrtimer_cancel(&so->txtimer);
-+	hrtimer_cancel(&so->echotimer);
- 	hrtimer_cancel(&so->rxtimer);
- 
- 	sock_orphan(sk);
-@@ -1683,10 +1797,14 @@ static int isotp_init(struct sock *sk)
- 	so->rx.buflen = ARRAY_SIZE(so->rx.sbuf);
- 	so->tx.buflen = ARRAY_SIZE(so->tx.sbuf);
- 
--	hrtimer_setup(&so->rxtimer, isotp_rx_timer_handler, CLOCK_MONOTONIC, HRTIMER_MODE_REL_SOFT);
--	hrtimer_setup(&so->txtimer, isotp_tx_timer_handler, CLOCK_MONOTONIC, HRTIMER_MODE_REL_SOFT);
--	hrtimer_setup(&so->txfrtimer, isotp_txfr_timer_handler, CLOCK_MONOTONIC,
--		      HRTIMER_MODE_REL_SOFT);
-+	hrtimer_setup(&so->rxtimer, isotp_rx_timer_handler,
-+		      CLOCK_MONOTONIC, HRTIMER_MODE_REL_SOFT);
-+	hrtimer_setup(&so->txtimer, isotp_tx_timer_handler,
-+		      CLOCK_MONOTONIC, HRTIMER_MODE_REL_SOFT);
-+	hrtimer_setup(&so->echotimer, isotp_echo_timer_handler,
-+		      CLOCK_MONOTONIC, HRTIMER_MODE_REL_SOFT);
-+	hrtimer_setup(&so->txfrtimer, isotp_txfr_timer_handler,
-+		      CLOCK_MONOTONIC, HRTIMER_MODE_REL_SOFT);
- 
- 	init_waitqueue_head(&so->wait);
- 	spin_lock_init(&so->rx_lock);
+ module_init(bcm_module_init);
 
 
