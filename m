@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A18407CCF;
-	Tue, 21 Jul 2026 18:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09308269D18;
+	Tue, 21 Jul 2026 18:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659080; cv=none; b=XMoRqx4RRG40YeWQzrm6/NUSfdLrqd12jSWIBkZDqNJNMDKrF8uLepTKK4Juzaw4WtuiNqe1kX1K3WT+p+NPlXg+cGo/wTLrkHcGqpddxR4/QNh3HEeqLcByUVxRK8s+uGdbmrKBQHyTnpg0dpYxSk5fUz/rOdmSA1onddbTRis=
+	t=1784659082; cv=none; b=bZni9Gh14B7iKgqHrdMO75qChOjVAkmKFAjcYIp/zyuDnujBEZySgraHIXX+u/+I7eWeUHCgq5Y5uDXYkyYnorB2wWmHiDe7q+7OE5NOzEp08BrARbFTCcuXd/5424RklKJukI9sdjsYtluFBdoJFk9oxF0cPi+cHGdv3qQEplE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659080; c=relaxed/simple;
-	bh=oNyft1HXgLJ4Ag2eAz9XIJHYGihtMhopxpFi/x/5h5c=;
+	s=arc-20240116; t=1784659082; c=relaxed/simple;
+	bh=LwUcjnl0UlcO4BUdtGehjX9vkeYKmGNHW8I+GZXQpio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UqOShnhsi0Ck267eDALAe07RJskK2jKoLdILlEOtROxhRyIsM9Bf+gkmoon3JjPe0xg6NJtC4lgD4JuImwfIXCNJ9JfIGsUiQup8NmDq/oYOr2MyV5lNhRAlfPPp5Izci21MAXFQxZ1TJx3LcllW9iWw5BVC1+GMOKgPJGDTF3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBGOZsex; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s/isVOq7lJQMGPISfPpqWS2imJjkluAAFNVJJltT6TJeQmzv1VGNnp2Zt4EU9KJSqY7hY9tJIvQFXt/Wa2t/BX1b03i0wk4MU8LcN58yn21ZD/O1JxpzjZ7BroyhBlANs0tPJoMuAeex7eAhqQkp7D4ixKbTlF0M7mAQhtMiq54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGkSbx8z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBGOZsex"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86DA1F00A3A;
-	Tue, 21 Jul 2026 18:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGkSbx8z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E9C1F00A3D;
+	Tue, 21 Jul 2026 18:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659075;
-	bh=7eQcyUk5rcxftCzqdyhpZg9iT91uQVNgBbkbyAvSWN8=;
+	s=korg; t=1784659078;
+	bh=QlKs/7/ZIL40o0/f3W6Z7m5m8fvmk1W6650iSZcgUik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xBGOZsexVVg+bmuq9V7i6kNcOgfmaTUYoFATJk5A5QYPqoCptCquIINUzlwYLon0X
-	 aMff3OGsNZ0Bi6SutLNyHYXulUl+V7M8VdUBlUq1xergyaYGMPgyxug05KI2iZgB58
-	 l6SAjgXJC7IGK4tzlvBeZfne3X6tGR46N6OBV2kw=
+	b=KGkSbx8zztF+6GnQ2Bm70kexhBSYe7mbtEybJGdXCT2bEYVa34VnqJSbdG4/zwAVn
+	 WQXmyUJPEtlg/DE+YakVO4A40p21WD4JIzVMlm/4ZH/hfPXJ7mK7pm4RFxP7/FeH0x
+	 eoyeWWHybWWYp4wVsQ3dCFnPmDv+BmUD0rmpyhXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <sam.moelius@trailofbits.com>,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.18 1347/1611] dm era: fix out-of-bounds memory access for non-zero start sector
-Date: Tue, 21 Jul 2026 17:24:23 +0200
-Message-ID: <20260721152545.754407093@linuxfoundation.org>
+	Sashiko bot <sashiko-bot@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.18 1383/1611] Input: ims-pcu - fix race condition in reset_device sysfs callback
+Date: Tue, 21 Jul 2026 17:24:59 +0200
+Message-ID: <20260721152546.550311078@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,59 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Moelius <sam.moelius@trailofbits.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit a868196f03c2b19418ae3d2b69e195d668a271e5 upstream.
+commit 411b8c4b274737c3bf08e1e025801161603cfffc upstream.
 
-dm-era tracks writes in target-relative blocks, but era_map() calculates
-the writeset block before applying the target offset.  Tables with a
-non-zero start sector can therefore pass an absolute mapped-device block
-to metadata_current_marked().
+The ims_pcu_reset_device() sysfs callback calls ims_pcu_execute_command()
+without acquiring pcu->cmd_mutex. This can lead to data races and
+corruption of the shared command buffer if triggered concurrently with
+other commands.
 
-If the absolute block is beyond the current writeset size,
-writeset_marked() tests past the end of the in-core bitset.  KASAN reports
-this as a vmalloc-out-of-bounds access.
+Acquire pcu->cmd_mutex before calling ims_pcu_execute_command().
 
-Apply the target offset before calculating the era block so writeset
-lookups use the target-relative block number.
-
-Assisted-by: Codex:gpt-5.5-cyber-preview
-Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
-Reviewed-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
 Cc: stable@vger.kernel.org
-Fixes: eec40579d848 ("dm: add era target")
+Reported-by: Sashiko bot <sashiko-bot@kernel.org>
+Assisted-by: Gemini:gemini-3.1-pro
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-era-target.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/input/misc/ims-pcu.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/md/dm-era-target.c
-+++ b/drivers/md/dm-era-target.c
-@@ -1231,6 +1231,7 @@ static dm_block_t get_block(struct era *
- static void remap_to_origin(struct era *era, struct bio *bio)
- {
- 	bio_set_dev(bio, era->origin_dev->bdev);
-+	bio->bi_iter.bi_sector = dm_target_offset(era->ti, bio->bi_iter.bi_sector);
- }
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -1166,6 +1166,8 @@ static ssize_t ims_pcu_reset_device(stru
  
- /*
-@@ -1562,7 +1563,7 @@ static void era_dtr(struct dm_target *ti
- static int era_map(struct dm_target *ti, struct bio *bio)
- {
- 	struct era *era = ti->private;
--	dm_block_t block = get_block(era, bio);
-+	dm_block_t block;
+ 	dev_info(pcu->dev, "Attempting to reset device\n");
  
- 	/*
- 	 * All bios get remapped to the origin device.  We do this now, but
-@@ -1570,6 +1571,7 @@ static int era_map(struct dm_target *ti,
- 	 * block is marked in this era.
- 	 */
- 	remap_to_origin(era, bio);
-+	block = get_block(era, bio);
- 
- 	/*
- 	 * REQ_PREFLUSH bios carry no data, so we're not interested in them.
++	guard(mutex)(&pcu->cmd_mutex);
++
+ 	error = ims_pcu_execute_command(pcu, PCU_RESET, &reset_byte, 1);
+ 	if (error) {
+ 		dev_info(pcu->dev,
 
 
