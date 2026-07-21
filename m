@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE71386C39;
-	Tue, 21 Jul 2026 19:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA16433BC0;
+	Tue, 21 Jul 2026 19:36:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662590; cv=none; b=KVIeu4i9us6m5Dc0Pk6bpKNfYoc71gkBYTBbE4iaoP76Ls1U/1FqbWtsdHlB4D75USTSGe4WkM23/ZW2+mJ75YJPN92JADYOAuPmvAshqabbfybA5goUMFsmZJaqGPmhQ1gA8+FzWtPeGXsb2EMww1+2wMGwfTJNfpcDEMnx4Xc=
+	t=1784662593; cv=none; b=Z6RLNwsSy+jQSscpI1RgflaCKGwdIzvOLuzNl6iB5RRCcxnQDTalIZ9NzEeOsMuPPcMZqktATaYnI7J4C6w6D8t/tk/6UHdcYaBkpJqLFlhJ+MQx7Lm0xbAT0H0sD2i+jnw67CXGOg4Ybiv6hoZ/jVgdlPDaPBHbAz8+mKkNi90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662590; c=relaxed/simple;
-	bh=b4AY4vohA+e+kaHHg7LO92PqpsFHxOdxjiiMzqmIbYI=;
+	s=arc-20240116; t=1784662593; c=relaxed/simple;
+	bh=sc6mYILdUB59gVQl+x2tyP/5OMbLdlt+0bXUXmZPwGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c7WUWAUDX1i49JZSX+5O5ABeFDF/l8opBEMyecr1RUdKfboZWzsmofnrnYNvR3wr1wJtzsj1ypD7lYP3oojvLTEOnqfa7Bt/VF8X91m5zODLOzISkg8rG7+jiLOhF73KBUDsGd+2PRAdiD/N/Hv1wBKFA/Yvo0CO1T5EUYpakLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e92W5RJw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=I3sLAwEEwfpB7TT0c0SrsTq9cj6jQ6KWxfpSR5owfB3o3cTYH3fjuWH/lRx+uR/3mw7zpiQCl16swXFXG/rFi7J6lD+yTlFM9v7br7OuU/6D3X4YI1ZlXk2vXjVftN1fcXYGkho0xh+5ETItRhCQ2wdJgSt7eUnzO0a8POcwuP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyMOUhgu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e92W5RJw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC96E1F000E9;
-	Tue, 21 Jul 2026 19:36:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyMOUhgu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A291F000E9;
+	Tue, 21 Jul 2026 19:36:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662589;
-	bh=R9M7hE2B9hMGydlANnW9MIHjZcPW6077To1Sd+Ivp0k=;
+	s=korg; t=1784662591;
+	bh=NT3GizsijI0rKihSuNqJ2UBsm1FMektDTuHPvpoaXw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e92W5RJwk/7/HFHGAffTplctlOZG7luUSAy3hbkY00Z3IM29Rlv1DfO9FSnWrtb/2
-	 nWW6T3A58LcOGZAUJp2Ag+WGyzRCZOJBTpXE2c1mEJgLCmhjYQemAaMh5GRwsrRM+6
-	 HDIRTLPPOyaXNLd9RIOmfqYak1qh8UptHiZ2lG6E=
+	b=zyMOUhgu9tO2T+3ZZmwhJnCUxZHs9mG4MQkUq/Gue6cOT9ECO32dnbkfxklOOXJgk
+	 BK9kxKT+sWsrJ7f/85/U6tCzgEGdzryMr+b4JsxBSlHuhexrD4ouh4PO9QIB4WHwQV
+	 v/sPfO3FQh61ImEqu6TkUjlYMh7nmmvI2vRJ7Lj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Yang Jihong <yangjihong@bytedance.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0500/1276] PCI: rcar-host: Remove unused LIST_HEAD(res)
-Date: Tue, 21 Jul 2026 17:15:43 +0200
-Message-ID: <20260721152457.293636984@linuxfoundation.org>
+Subject: [PATCH 6.12 0501/1276] perf sched: Bounds-check prio before test_bit() in timehist
+Date: Tue, 21 Jul 2026 17:15:44 +0200
+Message-ID: <20260721152457.316941741@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -47,49 +47,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 6ba90ce2069ae923b0ec787aebdf2d786e5d2a58 ]
+[ Upstream commit 4477dc01fcfc7f404772a67e0c1e056541ceb61d ]
 
-Remove the unused LIST_HEAD(res) declaration from rcar_pcie_hw_enable().
+timehist_skip_sample() reads prio from untrusted tracepoint data via
+perf_sample__intval(sample, "prev_prio") without bounds validation.
+A crafted perf.data with prev_prio >= MAX_PRIO (140) causes test_bit()
+to read past the end of the prio_bitmap, which is only MAX_PRIO bits.
 
-The macro instantiation defines an unused 'struct list_head res' variable,
-which conflicts with a valid resource loop-local 'struct resource *res'
-declaration further down in the function, triggering a compiler variable
-shadowing warning:
+Add a prio >= 0 guard before the test_bit() call and skip out-of-range
+values (>= MAX_PRIO) that can never match the user's filter set.
 
- drivers/pci/controller/pcie-rcar-host.c:357:34: warning: declaration of 'res' shadows a previous local [-Wshadow]
- 357 |                  struct resource *res = win->res;
+The original prio != -1 already let all negatives other than -1 through
+(after an undefined-behavior bitmap read); the new prio >= 0 guard
+preserves that pass-through behavior — negative means "no priority
+info", so the event is shown unfiltered — while fixing the OOB.
+Values >= MAX_PRIO are skipped because they cannot be represented in
+the filter bitmap.
 
-Fixes: ce351636c67f75a9 ("PCI: rcar: Add suspend/resume")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Link: https://patch.msgid.link/20260521091256.15737-1-prabhakar.mahadev-lad.rj@bp.renesas.com
+Fixes: 9b3a48bbe20d9692 ("perf sched timehist: Add --prio option")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Yang Jihong <yangjihong@bytedance.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rcar-host.c | 1 -
- 1 file changed, 1 deletion(-)
+ tools/perf/builtin-sched.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/pcie-rcar-host.c b/drivers/pci/controller/pcie-rcar-host.c
-index a90beedd8e24ee..4ecb41a0e3b389 100644
---- a/drivers/pci/controller/pcie-rcar-host.c
-+++ b/drivers/pci/controller/pcie-rcar-host.c
-@@ -345,7 +345,6 @@ static void rcar_pcie_hw_enable(struct rcar_pcie_host *host)
- 	struct rcar_pcie *pcie = &host->pcie;
- 	struct pci_host_bridge *bridge = pci_host_bridge_from_priv(host);
- 	struct resource_entry *win;
--	LIST_HEAD(res);
- 	int i = 0;
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index d599ad421df108..7cf56e271a993a 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -2646,7 +2646,9 @@ static bool timehist_skip_sample(struct perf_sched *sched,
+ 		else if (evsel__name_is(evsel, "sched:sched_switch"))
+ 			prio = evsel__intval(evsel, sample, "prev_prio");
  
- 	/* Try setting 5 GT/s link speed */
+-		if (prio != -1 && !test_bit(prio, sched->prio_bitmap)) {
++		/* negative prio means no info; out-of-range prio can't match the filter */
++		if (prio >= 0 &&
++		    (prio >= MAX_PRIO || !test_bit(prio, sched->prio_bitmap))) {
+ 			rc = true;
+ 			sched->skipped_samples++;
+ 		}
 -- 
 2.53.0
 
