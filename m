@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41AC347142D;
-	Tue, 21 Jul 2026 20:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94E4472F74;
+	Tue, 21 Jul 2026 20:13:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664834; cv=none; b=CgeV74OEuD3acEtskCoivicw0mD4ktNMVUmnoLcq3wz/BSoKKCJt3iQxcpGbCLUZH6lMqjgMw0I92Kqlx34DlaNDUBdEOe/XpNDJrLCXgkwv/jDLR9ot7HAS/0we5brVGTBCtA1wbtu2jFYg2MiJihjrELkf8Kb3Xq73X8d9Bgg=
+	t=1784664836; cv=none; b=fi1+8H9UjbRV5M5bkfn7ZUC0tWy2dWUPGEkhlFM+vjzywQCXEv0mnN54mQVwfbwsm3dllglRV6b4CDgn/NYw+sYceTPEDhbEMGqiyksh76oT1zSK104xw99st4WGKUhiHYTXw31pShL1DDWwOCBjP20gig9Zo39TPX3Hqvca55w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664834; c=relaxed/simple;
-	bh=+uN3dVzNkEvH5E4hAS2hGMoZQ/xOSH67xRdWqyFhVIw=;
+	s=arc-20240116; t=1784664836; c=relaxed/simple;
+	bh=eab6cSgH+To6XaviCCEGr7SpGKFdUJCkq4HRd19Gxyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EGmp4VuS9nXbpAnm0cOzCC3mM2DezWb/c+r5YOIO7445IODClEUCKwhLco1NobLHfgpb92kvMyl3rMb/AGRDqwOkscbvdoiUpMVx0j4fV4O0yXC0uPixoxvyl2YBweGZUq5TXtL6wzPsH7nI+1tZrR5ZaioQ+MyGHdjjrIDOJbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ntputtxl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S+BP41Jv+ZO94Rwa18u/9GLBC5g2orziSSkF71dZzQf9J7NiFFWxpcEUysuNea7qyuocvkmTbc4nbY2zSmF37X+JEDOuLzQu2oBECdj4hOl2IITd6aEAFfbUWbWamjjVBQH+XUmcUKHhJniO4qxLuMv0LGhp0uUl5P71TGSaLMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FsSt6Q0T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ntputtxl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF4F1F000E9;
-	Tue, 21 Jul 2026 20:13:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FsSt6Q0T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6041F000E9;
+	Tue, 21 Jul 2026 20:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664833;
-	bh=UwFtZXKtY72TLhBp7tauHwf7Qg0lO3rK1Zc6ys8PnzQ=;
+	s=korg; t=1784664835;
+	bh=69sZYGtCr2m+K4trw/0NUHaoJS2DFlzfituP47THtCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NtputtxlLQWzHl07Eau6YRukCdl4x69oI/UzxWUJNk4KTgfjOo578L03o0NgJQjZv
-	 QOVU9WT8HPTNI4Ti92aR9nDUXAQjmUlFhdgM3sWuExIXklUkjFxWyYFIZ7wie0N1wU
-	 Hz8HZ5r2IANgIF3KpjZF/K17zQsBjOPNGdgNgDko=
+	b=FsSt6Q0T3Zi4mS1JOvHoxHesWDgLDfz24QalioSCBn9SJ2HTv14gcPA98Lfrk43aO
+	 sa1xhzHZyk/n1U9ShQ1mnc950yUz3qHj9ISiJqewO7RCiCdFaWsHysEypM9EFmOOY+
+	 9Epq8l+YONoycXNjsPN4MFultTiDGuFAfu8oLYxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Fuad Tabba <tabba@google.com>,
 	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Jan Kotas <jank@cadence.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Colton Lewis <coltonlewis@google.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0075/1266] arm64: Revamp HCR_EL2.E2H RES1 detection
-Date: Tue, 21 Jul 2026 17:08:32 +0200
-Message-ID: <20260721152443.479241724@linuxfoundation.org>
+Subject: [PATCH 6.6 0076/1266] arm64: sysreg: Correct sign definitions for EIESB and DoubleLock
+Date: Tue, 21 Jul 2026 17:08:33 +0200
+Message-ID: <20260721152443.501530927@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -55,111 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Fuad Tabba <tabba@google.com>
 
-[ Upstream commit ca88ecdce5f51874a7c151809bd2c936ee0d3805 ]
+[ Upstream commit f4d4ebc84995178273740f3e601e97fdefc561d2 ]
 
-We currently have two ways to identify CPUs that only implement FEAT_VHE
-and not FEAT_E2H0:
+The `ID_AA64MMFR4_EL1.EIESB` field, is an unsigned enumeration, but was
+incorrectly defined as a `SignedEnum` when introduced in commit
+cfc680bb04c5 ("arm64: sysreg: Add layout for ID_AA64MMFR4_EL1"). This is
+corrected to `UnsignedEnum`.
 
-- either they advertise it via ID_AA64MMFR4_EL1.E2H0,
-- or the HCR_EL2.E2H bit is RAO/WI
+Conversely, the `ID_AA64DFR0_EL1.DoubleLock` field, is a signed
+enumeration, but was incorrectly defined as an `UnsignedEnum`. This is
+corrected to `SignedEnum`, which wasn't correctly set when annotated as
+such in commit ad16d4cf0b4f ("arm64/sysreg: Initial unsigned annotations
+for ID registers").
 
-However, there is a third category of "cpus" that fall between these
-two cases: on CPUs that do not implement FEAT_FGT, it is IMPDEF whether
-an access to ID_AA64MMFR4_EL1 can trap to EL2 when the register value
-is zero.
-
-A consequence of this is that on systems such as Neoverse V2, a NV
-guest cannot reliably detect that it is in a VHE-only configuration
-(E2H is writable, and ID_AA64MMFR0_EL1 is 0), despite the hypervisor's
-best effort to repaint the id register.
-
-Replace the RAO/WI test by a sequence that makes use of the VHE
-register remnapping between EL1 and EL2 to detect this situation,
-and work out whether we get the VHE behaviour even after having
-set HCR_EL2.E2H to 0.
-
-This solves the NV problem, and provides a more reliable acid test
-for CPUs that do not completely follow the letter of the architecture
-while providing a RES1 behaviour for HCR_EL2.E2H.
-
-Suggested-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Fuad Tabba <tabba@google.com>
 Acked-by: Mark Rutland <mark.rutland@arm.com>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
-Tested-by: Jan Kotas <jank@cadence.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/15A85F2B-1A0C-4FA7-9FE4-EEC2203CC09E@global.cadence.com
-
-[ Backport: Resolved conflict in arch/arm64/include/asm/el2_setup.h
-  by replacing msr_hcr_el2 macro usages with raw msr hcr_el2 (since
-  the macro is missing in 6.6.y). ]
-Signed-off-by: Colton Lewis <coltonlewis@google.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/el2_setup.h | 38 +++++++++++++++++++++++++-----
- 1 file changed, 32 insertions(+), 6 deletions(-)
+ arch/arm64/tools/sysreg | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/include/asm/el2_setup.h b/arch/arm64/include/asm/el2_setup.h
-index 76b0d50d286d59..4c7467b382b608 100644
---- a/arch/arm64/include/asm/el2_setup.h
-+++ b/arch/arm64/include/asm/el2_setup.h
-@@ -24,22 +24,48 @@
- 	 * ID_AA64MMFR4_EL1.E2H0 < 0. On such CPUs HCR_EL2.E2H is RES1, but it
- 	 * can reset into an UNKNOWN state and might not read as 1 until it has
- 	 * been initialized explicitly.
--	 *
--	 * Fruity CPUs seem to have HCR_EL2.E2H set to RAO/WI, but
--	 * don't advertise it (they predate this relaxation).
--	 *
- 	 * Initalize HCR_EL2.E2H so that later code can rely upon HCR_EL2.E2H
- 	 * indicating whether the CPU is running in E2H mode.
- 	 */
- 	mrs_s	x1, SYS_ID_AA64MMFR4_EL1
- 	sbfx	x1, x1, #ID_AA64MMFR4_EL1_E2H0_SHIFT, #ID_AA64MMFR4_EL1_E2H0_WIDTH
- 	cmp	x1, #0
--	b.ge	.LnVHE_\@
-+	b.lt	.LnE2H0_\@
- 
-+	/*
-+	 * Unfortunately, HCR_EL2.E2H can be RES1 even if not advertised
-+	 * as such via ID_AA64MMFR4_EL1.E2H0:
-+	 *
-+	 * - Fruity CPUs predate the !FEAT_E2H0 relaxation, and seem to
-+	 *   have HCR_EL2.E2H implemented as RAO/WI.
-+	 *
-+	 * - On CPUs that lack FEAT_FGT, a hypervisor can't trap guest
-+	 *   reads of ID_AA64MMFR4_EL1 to advertise !FEAT_E2H0. NV
-+	 *   guests on these hosts can write to HCR_EL2.E2H without
-+	 *   trapping to the hypervisor, but these writes have no
-+	 *   functional effect.
-+	 *
-+	 * Handle both cases by checking for an essential VHE property
-+	 * (system register remapping) to decide whether we're
-+	 * effectively VHE-only or not.
-+	 */
-+	msr	hcr_el2, x0		// Setup HCR_EL2 as nVHE
-+	isb
-+	mov	x1, #1		// Write something to FAR_EL1
-+	msr	far_el1, x1
-+	isb
-+	mov	x1, #2		// Try to overwrite it via FAR_EL2
-+	msr	far_el2, x1
-+	isb
-+	mrs	x1, far_el1	// If we see the latest write in FAR_EL1,
-+	cmp	x1, #2		// we can safely assume we are VHE only.
-+	b.ne	.LnVHE_\@	// Otherwise, we know that nVHE works.
-+
-+.LnE2H0_\@:
- 	orr	x0, x0, #HCR_E2H
--.LnVHE_\@:
- 	msr	hcr_el2, x0
- 	isb
-+.LnVHE_\@:
- .endm
- 
- .macro __init_el2_sctlr
+diff --git a/arch/arm64/tools/sysreg b/arch/arm64/tools/sysreg
+index f7180d391f829f..43089787196bad 100644
+--- a/arch/arm64/tools/sysreg
++++ b/arch/arm64/tools/sysreg
+@@ -1130,7 +1130,7 @@ UnsignedEnum	43:40	TraceFilt
+ 	0b0000	NI
+ 	0b0001	IMP
+ EndEnum
+-UnsignedEnum	39:36	DoubleLock
++SignedEnum	39:36	DoubleLock
+ 	0b0000	IMP
+ 	0b1111	NI
+ EndEnum
+@@ -1697,7 +1697,7 @@ UnsignedEnum	11:8	ASID2
+ 	0b0000	NI
+ 	0b0001	IMP
+ EndEnum
+-SignedEnum	7:4	EIESB
++UnsignedEnum	7:4	EIESB
+ 	0b0000	NI
+ 	0b0001	ToEL3
+ 	0b0010	ToELx
 -- 
 2.53.0
 
