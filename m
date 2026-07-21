@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120883B1EFC;
-	Tue, 21 Jul 2026 20:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB087346A0C;
+	Tue, 21 Jul 2026 20:41:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666468; cv=none; b=pCevG1Bw6nCk9BiZ5zkw2CKjQc+TbQPyRtqm8XuOAqccew0czdeg/cCvwjHXgCaN26GqHtxSrKhJj3ZnT++eq/ezDqODdsYboWrs0nkxGv6Lo6Wl9zaMJeIpJWSGajcH1Pz5pP0p9mFPNrz8S3iJ7TGjXVJOo8/6/gtihZWAg5o=
+	t=1784666470; cv=none; b=HVu17icQeemI6YvDlpRHsrLcteG5BscLVKLg5bDq2litpf0pdEm4jC01FdQlD8HaTnW5fFXvG9H2OXWsANyS3viyV8hIQGYrwu+rk/NJZVbgy2/o8WfY/yHElpbudOnuopMestol2n7+3ndE6VNYc0u0NXkx60WCXW/utpTXung=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666468; c=relaxed/simple;
-	bh=LJcyx3KfNnDKoAVBmlhkKyD9gB2AiAnkFFMcDq0NNmo=;
+	s=arc-20240116; t=1784666470; c=relaxed/simple;
+	bh=UHwevlQ5nh3qqen7TqIXDNBUtdoQtqseCsT0xY+5fRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ONBOvFe8Dle+8lMTT5qf5Khn6JIMVC3LUwxfKehZXBktR+nv2krjmsd1pfo0qJ8UdvXi3+X5qsDfCm1nmkGe631lexjhxh0NVUGV3cpo7YSCkoqxJ2VYDQHUPc0fue+n5A4LoFrit7T9XZygndOtdhJlnnRwg3BBcV7tDghnsQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zunu+UK9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oyOwb8A/3XuS2sK5Tc2DGDYk4ovU2Dm+BLvSleHbaoI4Am4q6Rq9TacqrylDnbElXkekFKgmR28pI7lam2MOLGqRFffxGp0Pv2CskuxGaNPuBCzoMVvbVKcIf5yhf8nCmk+mpRRW7wuU1P8w79sT592icae3j90Ijdj73ld+++Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l7fg7Hbh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zunu+UK9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D151F000E9;
-	Tue, 21 Jul 2026 20:41:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7fg7Hbh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA611F000E9;
+	Tue, 21 Jul 2026 20:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666467;
-	bh=fSU4nb0ykQBv1UeFH3du6URqSLzNAK/9Ahqs5dbezCs=;
+	s=korg; t=1784666469;
+	bh=0zef729zvDD0jDLC4bX/oQBC2bxQzLQbX0ANXkVmfyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zunu+UK9y9j2wv7++kPU8zJUxFAkOWTZGvBfACNrywu7coo8s/t7Y8Q/VYzdK8ZUm
-	 u2qmbYXMndaHP12jF4saTLv+s0567UzPJieYpp/U/Dw6zjgZZuBAN/RN/Qvf6DPvJJ
-	 Fp+ZiBiOwcDH9Sg/MNuhQuh2fMOLDOvxD0urOrlI=
+	b=l7fg7HbhwIWAavcq/uPmHcTylHmAEQSh9GPo2hFoT+qZE6H+tNRVonBRl0grIsaS4
+	 WXRfeJfdzWLpVM46m3jXmDw4Vuc4GVFQtVgJZaYoH7LPptAlnpxh5W7d1f0lKIu1nV
+	 q/u7jpA6DpXDkXmB8JIhSsHd9QFnonj9h9Eitj/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	David Ahern <dsahern@gmail.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0651/1266] xprtrdma: Avoid 250 ms delay on backlog wakeup
-Date: Tue, 21 Jul 2026 17:18:08 +0200
-Message-ID: <20260721152456.423623807@linuxfoundation.org>
+Subject: [PATCH 6.6 0642/1266] perf sched: Clean up idle_threads entry on init failure
+Date: Tue, 21 Jul 2026 17:17:59 +0200
+Message-ID: <20260721152456.225333877@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,43 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 100142093e22b3f7741ac88e94878bb3694e306f ]
+[ Upstream commit cda5a94ad9181cd60cbf04be11d524201bf489a2 ]
 
-Commit a721035477fb ("SUNRPC/xprt: async tasks mustn't block waiting
-for memory") changed xprt_rdma_alloc_slot() to set tk_status to
--ENOMEM so that call_reserveresult() would sleep HZ/4 before
-retrying.  That rationale applies to xprt_dynamic_alloc_slot(),
-where an immediate retry under memory pressure wastes CPU, but not
-to the RDMA backlog path: a task woken from the backlog has a slot
-waiting for it, so the 250 ms rpc_delay adds latency without
-benefit.
+get_idle_thread() allocates a thread via thread__new() and stores it in
+idle_threads[cpu], then calls init_idle_thread() to set up the private
+data.  If init_idle_thread() fails (e.g. OOM for the idle_thread_runtime
+struct), the function returns NULL but leaves the partially initialized
+thread in idle_threads[cpu].
 
-This also aligns the code with the existing kernel-doc for
-xprt_rdma_alloc_slot(), which already documented %-EAGAIN.
+On subsequent calls for the same CPU, get_idle_thread() finds a non-NULL
+idle_threads[cpu], skips allocation, and returns thread__get() on a
+thread that has no priv data.  Callers then get a thread whose
+thread__priv() returns NULL, leading to unexpected behavior.
 
-Fixes: a721035477fb ("SUNRPC/xprt: async tasks mustn't block waiting for memory")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Stable-dep-of: e786233d2e0b ("xprtrdma: Decouple req recycling from RPC completion")
+Release the thread and reset the slot to NULL on init failure so the
+entry doesn't persist in a corrupted state.
+
+Fixes: 49394a2a24c7 ("perf sched timehist: Introduce timehist command")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: David Ahern <dsahern@gmail.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/transport.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/builtin-sched.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtrdma/transport.c b/net/sunrpc/xprtrdma/transport.c
-index 29b0562d62e759..b971776b55936c 100644
---- a/net/sunrpc/xprtrdma/transport.c
-+++ b/net/sunrpc/xprtrdma/transport.c
-@@ -511,7 +511,7 @@ xprt_rdma_alloc_slot(struct rpc_xprt *xprt, struct rpc_task *task)
- 	return;
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index 6df0d1252f197f..0a1a58f33ae651 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -2372,8 +2372,11 @@ static struct thread *get_idle_thread(int cpu)
+ 		idle_threads[cpu] = thread__new(0, 0);
  
- out_sleep:
--	task->tk_status = -ENOMEM;
-+	task->tk_status = -EAGAIN;
- 	xprt_add_backlog(xprt, task);
- }
+ 		if (idle_threads[cpu]) {
+-			if (init_idle_thread(idle_threads[cpu]) < 0)
++			if (init_idle_thread(idle_threads[cpu]) < 0) {
++				/* clean up so next call doesn't find a half-initialized thread */
++				thread__zput(idle_threads[cpu]);
+ 				return NULL;
++			}
+ 		}
+ 	}
  
 -- 
 2.53.0
