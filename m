@@ -1,38 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAC444AB71;
-	Tue, 21 Jul 2026 21:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3989415F10;
+	Tue, 21 Jul 2026 21:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669765; cv=none; b=i4K4MTeicc7RfzQlixcfj9yB5zWiZHq3KH9acLycku9Yks1loJBnQsUJUh8EFi2nO+j4jfuiGqDGBTZLQtYIrvRtGxPWB3b9UegncvO3iwEWJDZsEC/6+hriFpjbrC84F90Z+/9SmlLep36ovO6EMxAKB/8hz4ZgKiMJaZgJqPk=
+	t=1784669768; cv=none; b=R2ZyTHxRvYNUAe0OzMbqs2fxY2ibxdgx5YyJRVpVEOnF4+EqhMEixUH3C8mAiMsAaUZKsn1XE3KoV7Ql7jmTeH7/CJTFPudmQV3PskuM07FWEkQCHHhSbdIEQoUJvYGG33LDf4fsG7eJ0zbpdoKXZwIsU/DlOZjKXdEl4pSOUa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669765; c=relaxed/simple;
-	bh=rg9Z094kNSBszcTz0wl5EJaSNQfvThec9Tp1BO6bJ2c=;
+	s=arc-20240116; t=1784669768; c=relaxed/simple;
+	bh=o2sOBOYiUR3awCLKJ/DlpzofR482VrxfqVsCEI1/F0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d+r6x6HQC1nPGxwrGZCBg6je+DQJCZTHMPN9ZDRMjZRgzEkz8mI0xMup71fJIjenQ7fSyiinpPkBv9SSc99xWIWu0gGd9fcFwl/VJ8sE6JSOJRTCB6Nru7ltZEgv2QRE9/AlL1F/i5cEMl6L8YNaIiCKWKnSqDBmVxJLYQdC8hY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LquV1qWW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PwiPtZJ2eq233eJld8/zi7hKo6SMrtuAEjjKEbTZr30E8jNOAv7+umpR7wU26wohIOlhxO96aDQkGF77FT/Ee5JxyKU9d7oQJ/f7PT7ZKHYnMuvvMXiwj2bcolcHm8eecb0d1PnHeQVvs3OudzEu90Jki3wBLR3y/PV/Yxo7K+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BcRBrwe7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LquV1qWW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22661F000E9;
-	Tue, 21 Jul 2026 21:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BcRBrwe7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 431551F000E9;
+	Tue, 21 Jul 2026 21:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669764;
-	bh=BJZCuyNXrM0SoDjox9k0xXXRPJMi1v0wCspwJ5FiSuM=;
+	s=korg; t=1784669766;
+	bh=UWY/znhiF1/W/1MufralEuvK4YxSLytYqz2x3xerCcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LquV1qWW3hL0xN65nxlYxMaojq4F0MRxnV/79nlccQk9sLd9JicjpEOV8sRQeIbGP
-	 5E5QtNxRri22W2jPZR5ObxMgig3jyFo74pwGWBqvy5RWQD3AA3owag01RUr9153HDS
-	 gDGLg+R5glZ2ghLl6mQ7fyQc5pUYioga55prehc8=
+	b=BcRBrwe7NNNoy6s9Y+5JGMYALtzjnocZU8xvw5DxP3MQJgSOlS7b/tseQ3yjMdgI2
+	 eZqNuOZxSIsoJAFwOE0WsHJoIZwIxfxEdlLskU7aSg8zhssTpRfjroc+0gT+zBSm/7
+	 Wl8ryQLwM+sjbRRmRxyxPxnEf461l7LsfOVUZPZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Jiri Kosina <jkosina@suse.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Barry Song <21cnbao@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	David Hildenbrand <david@redhat.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Morse <james.morse@arm.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Marc Zyngier <maz@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Will Deacon <will@kernel.org>,
+	Yang Shi <shy828301@gmail.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0678/1067] HID: core: Fix OOB read in hid_get_report for numbered reports
-Date: Tue, 21 Jul 2026 17:21:19 +0200
-Message-ID: <20260721152439.764067097@linuxfoundation.org>
+Subject: [PATCH 6.1 0679/1067] arm64/mm: convert ptep_clear() to ptep_get_and_clear()
+Date: Tue, 21 Jul 2026 17:21:20 +0200
+Message-ID: <20260721152439.787297992@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,48 +71,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-[ Upstream commit af1a9b65ebe8a948eda805c14b78d4d0767cb1b5 ]
+[ Upstream commit cbb0294fdd72a5f63ec59fad5c0a98d63bd572fc ]
 
-When a caller passes a size of 0 to hid_report_raw_event() for a
-numbered report, the function originally called hid_get_report() before
-performing any size validation.
+ptep_clear() is a generic wrapper around the arch-implemented
+ptep_get_and_clear().  We are about to convert ptep_get_and_clear() into a
+public version and private version (__ptep_get_and_clear()) to support the
+transparent contpte work.  We won't have a private version of ptep_clear()
+so let's convert it to directly call ptep_get_and_clear().
 
-Inside hid_get_report(), if the report is numbered (report_enum->numbered
-is true), it unconditionally dereferences data[0] to extract the report ID.
-With a size of 0, this results in an out-of-bounds read or kernel panic.
-
-Fix this by moving the numbered report size validation check before the
-call to hid_get_report(), ensuring that size is at least 1 before
-dereferencing the data pointer.
-
-Fixes: 2c85c61d1332 ("HID: pass the buffer size to hid_report_raw_event")
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Link: https://lkml.kernel.org/r/20240215103205.2607016-10-ryan.roberts@arm.com
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Tested-by: John Hubbard <jhubbard@nvidia.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Barry Song <21cnbao@gmail.com>
+Cc: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Will Deacon <will@kernel.org>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: ff4c5a0de1f2 ("arm64/mm: Optimize TLB flush in unmap_hotplug_[pmd|pud]_range()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm64/mm/hugetlbpage.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 2191205ce5b0bf..7270561cce1cc1 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -2001,6 +2001,13 @@ int hid_report_raw_event(struct hid_device *hid, enum hid_report_type type, u8 *
- 	u8 *cdata = data;
- 	int ret = 0;
+diff --git a/arch/arm64/mm/hugetlbpage.c b/arch/arm64/mm/hugetlbpage.c
+index 99810310efdda1..79f0d2a7768855 100644
+--- a/arch/arm64/mm/hugetlbpage.c
++++ b/arch/arm64/mm/hugetlbpage.c
+@@ -236,7 +236,7 @@ static void clear_flush(struct mm_struct *mm,
+ 	unsigned long i, saddr = addr;
  
-+	if (report_enum->numbered && (size < 1 || bufsize < 1)) {
-+		hid_warn_ratelimited(hid,
-+				     "Event data for numbered report is too short (%d vs %zu)\n",
-+				     size, bufsize);
-+		return -EINVAL;
-+	}
-+
- 	report = hid_get_report(report_enum, data);
- 	if (!report)
- 		return 0;
+ 	for (i = 0; i < ncontig; i++, addr += pgsize, ptep++)
+-		ptep_clear(mm, addr, ptep);
++		ptep_get_and_clear(mm, addr, ptep);
+ 
+ 	flush_tlb_range(&vma, saddr, addr);
+ }
 -- 
 2.53.0
 
