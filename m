@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0F7386571;
-	Tue, 21 Jul 2026 18:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916EC1474CC;
+	Tue, 21 Jul 2026 18:03:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657038; cv=none; b=fKMqF4qbZTqAir7obgwShBK+lGRarWbIhsK0CYMlxMmLclIokRkfmFAniQN+EwwCAVK1U925D3k7tR6YGqXFySbnY1YjVXRKRwV4wFcR1L1SGB/9gTlV9dbouS6XqOA6MzSPp7HjS+xST9gDgO/opf6BCC2URcMtq4Ui+WDGgMU=
+	t=1784657040; cv=none; b=RmRZFupIdYH9Ost3SKyQpp/HEG1N18U0UAaNd+JBePSrhNlN2fRIGalTwCq8Th4ORmjGwJCHZfT2XFto7yT6+VxMOtj0fi3MY98/kf1o46osj2YR0GQyle7IHz7Pd+qnZozytEnXXPJStILiwTf30z1AMp3aKgQSXK65AiwsmWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657038; c=relaxed/simple;
-	bh=z710D3JGrgualJB/txNv3O5Bl2ty1RUnZ1egmjnhYyg=;
+	s=arc-20240116; t=1784657040; c=relaxed/simple;
+	bh=gdXGC/hTChvqkNaWJxoOgkKUmyh3j3pDOkv3Q0IT3fw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VBfxxDT37X+g2UPvLkeeGc/xYP1eYhu1SzE5t3oxq4jFp+Ikb+v4b5H57TSLvIAt5eyPgkYWPthb1n6dv6rnHHo/PWhdoBPkonWNBhrFFp3OKeN1RkrKVRui0F4iBhjPPl+daWzI//964MUOoh2wdoF/NZHf7CyjOHbKij9BInA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YOIBS3Bi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FaSzy2EYucXm5TVbCB1M9KneX7e5xp5XIXxFmaNbiyZJn9vS5yPk5Z9utNT/tEkBO24XLdH9xMicDt6IG+kMxI4TBaQhVTTosi4jnlFbOmlW4/rbyCIkvpI7368PwUWcbN4UVIwGnMRi9NwUTTdHFNee7RrFpiakO3zHg9wH8Lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hzn1F/lA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YOIBS3Bi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FDB01F000E9;
-	Tue, 21 Jul 2026 18:03:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hzn1F/lA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03ABF1F000E9;
+	Tue, 21 Jul 2026 18:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657036;
-	bh=DNItS4Sdd3/pBMwfqyh3hymSr4d+4hKIy36MK0UFxmI=;
+	s=korg; t=1784657039;
+	bh=y8eRRz+pZadQ5JUMuajo+eH8YAX1J2VHKpCY7RmQnmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YOIBS3BiGOJnrQwGfVkETB2VKh9x0DnLI/Phlt54uaSY9iqjM9tsXc3f4B/kcTRS7
-	 dmRURv/WHQj7T69gKwUicMjUcYSaY0rhesSJRcCGggYnCjkorCWODtJtac2Z0EmXIv
-	 eDyi1zxPMEEjTPe7lJ5piUVzgV2a3UT8L3HNz0O8=
+	b=Hzn1F/lAl0Ge6IUDgch+Z2rg6UkN/ZLF9sXw2Xg0yTlP7Vf5VUBaKvHgypoN0xW8u
+	 /VIvL5g9QkdCjS2Jb+2WjQMD6VzeYDhelgg6Vea8HL8h2v8N93arK4P+VcHrSN/a+Y
+	 F5AkxfYUEGhbGj1u/6a2ASrBaEGT/9kFb6Jgc56c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruikai Peng <ruikai@pwno.io>,
-	Adam Crosser <adam.crosser@praetorian.com>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	stable <stable@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0614/1611] gpib: fix double decrement of descriptor_busy in command_ioctl()
-Date: Tue, 21 Jul 2026 17:12:10 +0200
-Message-ID: <20260721152529.194873895@linuxfoundation.org>
+Subject: [PATCH 6.18 0615/1611] gpib: cb7210: Fix region leak when request_irq fails
+Date: Tue, 21 Jul 2026 17:12:11 +0200
+Message-ID: <20260721152529.217290950@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,47 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Crosser <adam.crosser@praetorian.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-[ Upstream commit c4faab452b3c1ada003d49c477609dd80523b9bf ]
+[ Upstream commit 2eae90a457baa0048a96ed38ad93090ee38c8b2f ]
 
-commit d1857f8296dc ("gpib: fix use-after-free in IO ioctl handlers")
-introduced a descriptor_busy reference counter to pin struct
-gpib_descriptor across IO ioctl operations.  In command_ioctl(), the
-error path inside the loop decrements descriptor_busy and breaks, but
-execution then falls through to the unconditional decrement after the
-loop, underflowing the counter to -1.
+When request_irq() fails, the region allocated by request_region()
+is not released. Fix this by adding an error handling path with
+proper goto labels to release the region.
 
-This re-enables the use-after-free that the original fix was meant to
-prevent: a concurrent close_dev_ioctl() sees descriptor_busy == 0 on
-an actively-used descriptor and frees it.
-
-Remove the early decrement from the error path.  The post-loop
-decrement already handles all exit paths, matching the correct pattern
-used in read_ioctl() and write_ioctl().
-
-Fixes: d1857f8296dc ("gpib: fix use-after-free in IO ioctl handlers")
-Reported-by: Ruikai Peng <ruikai@pwno.io>
-Signed-off-by: Adam Crosser <adam.crosser@praetorian.com>
-Link: https://patch.msgid.link/20260424123750.855863-1-adam.r.crosser@gmail.com
+Fixes: e9dc69956d4d ("staging: gpib: Add Computer Boards GPIB driver")
+Closes: https://lore.kernel.org/oe-kbuild-all/202605160620.ReBOadPX-lkp@intel.com/
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20260518022939.16881-1-zenghongling@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 5ad284960558 ("gpib: cb7210: Fix region leak when request_irq fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/gpib/common/gpib_os.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/staging/gpib/cb7210/cb7210.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/staging/gpib/common/gpib_os.c b/drivers/staging/gpib/common/gpib_os.c
-index 6bae025434e5cf..a2bed6bd757a06 100644
---- a/drivers/staging/gpib/common/gpib_os.c
-+++ b/drivers/staging/gpib/common/gpib_os.c
-@@ -1017,7 +1017,6 @@ static int command_ioctl(struct gpib_file_private *file_priv,
- 		userbuf += bytes_written;
- 		if (retval < 0) {
- 			atomic_set(&desc->io_in_progress, 0);
--			atomic_dec(&desc->descriptor_busy);
- 
- 			wake_up_interruptible(&board->wait);
- 			break;
+diff --git a/drivers/staging/gpib/cb7210/cb7210.c b/drivers/staging/gpib/cb7210/cb7210.c
+index 3e2397898a9ba2..f6d9db02f03068 100644
+--- a/drivers/staging/gpib/cb7210/cb7210.c
++++ b/drivers/staging/gpib/cb7210/cb7210.c
+@@ -1061,6 +1061,7 @@ static int cb_isa_attach(struct gpib_board *board, const struct gpib_board_confi
+ 	// install interrupt handler
+ 	if (request_irq(config->ibirq, cb7210_interrupt, isr_flags, DRV_NAME, board)) {
+ 		dev_err(board->gpib_dev, "failed to obtain IRQ %d\n", config->ibirq);
++		release_region(nec7210_iobase(cb_priv), cb7210_iosize);
+ 		return -EBUSY;
+ 	}
+ 	cb_priv->irq = config->ibirq;
 -- 
 2.53.0
 
