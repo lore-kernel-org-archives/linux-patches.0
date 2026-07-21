@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F7744AB62;
-	Tue, 21 Jul 2026 21:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDC035C6B3;
+	Tue, 21 Jul 2026 21:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670596; cv=none; b=EdLMDRi05w0agnzSayfO0vBVpZyaJpcCZbAzti1Saj2U8XruMCe6HLchCb3HtEsx3fymT1veqZrC7A8qpJ9FpMJBHnSCwCJFOQzm5Agl6NxmMhhQx+A0Ndw7scCgwdP5y/SCQR5jd7noSlnmp/kmJ0bRSQ81D8H47at0zZ0FcH8=
+	t=1784670599; cv=none; b=QAtnxDNdc/EdCkmVtoEFzpFp07r4wlIUSzm+2hvElFDFHQdYt+XVIQoeyb0Sg942GQjKZIcn2EWEOadGqjTmHA/PfJYAngc19OyaInMiWvUa+Pc1Ih/7srB/Sp5JxeDoc7N1PSDehJ3yrALR92ILVdsqvHC0yfG+wls8UpUx284=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670596; c=relaxed/simple;
-	bh=wAav8Sjv4arMWgwDPhtTUZNtSgll2iAZpmB/RrGom/k=;
+	s=arc-20240116; t=1784670599; c=relaxed/simple;
+	bh=ZaqRvXMcchgZkY32AjcrbHOE2Ne6rl0vbR9oC+TxC5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=beo56mMRbpe4W+s62/mf6yZviOxmsMkBqK/P0cZR3OILJkTYNetwcuoj42wXXoFBy/Zc1iE21mvyp6CdS/uSHbDzCXMc2QA+IJRl1Gq2QS+Gsrj+LJA/yZzM6BATfvapVgVaVlbqbMNFXdL/jvzes/5oCLj2SA/nzmFqzY2Wn7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgUjLeU5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=foISLz8/zFz4NY2MfiPnHrrDxpayBWarnPNzt6n4ZdheLi9G/LNG5q94ZACjsxlC000yxpqMvAFaazxk3XY4WnlBCUlJwg6zpBVD275t9NInOIob5kQZD4GwgnZeGHKlz/Ck5JnHExEXGvpMVd8jgO1z9Jf4WAq6+wtIB1f56PU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3U/OEzK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgUjLeU5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A6F1F000E9;
-	Tue, 21 Jul 2026 21:49:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3U/OEzK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 422361F000E9;
+	Tue, 21 Jul 2026 21:49:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670595;
-	bh=cHOEaIycOW4663c8cxFSwYlYg6GtWg7lVKddxNCFex4=;
+	s=korg; t=1784670597;
+	bh=D6xEKu0HaKnMDHlkTNRB506JqURCd6n9FYPS/LxzsYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GgUjLeU5L6e7G9nwbEGyHXPbiIsLgysOU53xIgDZRovX4G4WG8yO5NrvvuRbHV1cM
-	 CegWpzrXGHkrxxplsijyUt7wCtcKYyjvZZ9WXn4r4yIN01Kr0e7CsN0sGkalCYCMeG
-	 6HU0agrRrpihaprJHNOE1peTdLBIP3Jru+AdpkwU=
+	b=U3U/OEzK+rLeLyMy9C9koNwnn8GLw2Aqh1OwrEfYQj2uIG1cbrv9+L+Q0yzj+D8nr
+	 ga3CgBktrnkUZBblifUrqp6UAD0eBXVwpC0mAV/NarAmDVb2FTA4TeKSLd+MzfFk6c
+	 Pth1yzJOVOAARd0TsMs0vrRaZIXCCAl07CxA+phM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shyam Prasad N <sprasad@microsoft.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0993/1067] cifs: handle when server stops supporting multichannel
-Date: Tue, 21 Jul 2026 17:26:34 +0200
-Message-ID: <20260721152446.774201489@linuxfoundation.org>
+Subject: [PATCH 6.1 0994/1067] cifs: after disabling multichannel, mark tcon for reconnect
+Date: Tue, 21 Jul 2026 17:26:35 +0200
+Message-ID: <20260721152446.796241128@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,291 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit ee1d21794e55ab76505745d24101331552182002 ]
+[ Upstream commit 27e1fd343f80168ff456785c2443136b6b7ca3cc ]
 
-When a server stops supporting multichannel, we will
-keep attempting reconnects to the secondary channels today.
-Avoid this by freeing extra channels when negotiate
-returns no multichannel support.
+Once the server disables multichannel for an active multichannel
+session, on the following reconnect, the client would reduce
+the number of channels to 1. However, it could be the case that
+the tree connect was active on one of these disabled channels.
+This results in an unrecoverable state.
 
+This change fixes that by making sure that whenever a channel
+is being terminated, the session and tcon are marked for
+reconnect too. This could mean a few redundant tree connect
+calls to the server, but considering that this is not a frequent
+event, we should be okay.
+
+Fixes: ee1d21794e55 ("cifs: handle when server stops supporting multichannel")
 Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Stable-dep-of: ec457f9afe5a ("smb: client: resolve SWN tcon from live registrations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsglob.h  |    1 
- fs/smb/client/cifsproto.h |    2 +
- fs/smb/client/connect.c   |   10 ++++++
- fs/smb/client/sess.c      |   65 +++++++++++++++++++++++++++++++++------
- fs/smb/client/smb2pdu.c   |   76 +++++++++++++++++++++++++++++++++++++++++++++-
- fs/smb/client/transport.c |    2 -
- 6 files changed, 145 insertions(+), 11 deletions(-)
+ fs/smb/client/connect.c |   20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -639,6 +639,7 @@ struct TCP_Server_Info {
- 	bool noautotune;		/* do not autotune send buf sizes */
- 	bool nosharesock;
- 	bool tcp_nodelay;
-+	bool terminate;
- 	unsigned int credits;  /* send no more requests at once */
- 	unsigned int max_credits; /* can override large 32000 default at mnt */
- 	unsigned int in_flight;  /* number of requests on the wire to server */
---- a/fs/smb/client/cifsproto.h
-+++ b/fs/smb/client/cifsproto.h
-@@ -662,6 +662,8 @@ cifs_chan_needs_reconnect(struct cifs_se
- bool
- cifs_chan_is_iface_active(struct cifs_ses *ses,
- 			  struct TCP_Server_Info *server);
-+void
-+cifs_disable_secondary_channels(struct cifs_ses *ses);
- int
- cifs_chan_update_iface(struct cifs_ses *ses, struct TCP_Server_Info *server);
- int
 --- a/fs/smb/client/connect.c
 +++ b/fs/smb/client/connect.c
-@@ -259,6 +259,14 @@ cifs_mark_tcp_ses_conns_for_reconnect(st
+@@ -256,17 +256,21 @@ cifs_mark_tcp_ses_conns_for_reconnect(st
+ 	/* If server is a channel, select the primary channel */
+ 	pserver = CIFS_SERVER_IS_CHAN(server) ? server->primary_server : server;
+ 
++	/*
++	 * if the server has been marked for termination, there is a
++	 * chance that the remaining channels all need reconnect. To be
++	 * on the safer side, mark the session and trees for reconnect
++	 * for this scenario. This might cause a few redundant session
++	 * setup and tree connect requests, but it is better than not doing
++	 * a tree connect when needed, and all following requests failing
++	 */
++	if (server->terminate) {
++		mark_smb_session = true;
++		server = pserver;
++	}
  
  	spin_lock(&cifs_tcp_ses_lock);
  	list_for_each_entry_safe(ses, nses, &pserver->smb_ses_list, smb_ses_list) {
-+		/*
-+		 * if channel has been marked for termination, nothing to do
-+		 * for the channel. in fact, we cannot find the channel for the
-+		 * server. So safe to exit here
-+		 */
-+		if (server->terminate)
-+			break;
-+
+-		/*
+-		 * if channel has been marked for termination, nothing to do
+-		 * for the channel. in fact, we cannot find the channel for the
+-		 * server. So safe to exit here
+-		 */
+-		if (server->terminate)
+-			break;
+-
  		spin_lock(&ses->ses_lock);
  		if (ses->ses_status == SES_EXITING) {
  			spin_unlock(&ses->ses_lock);
-@@ -302,6 +310,8 @@ cifs_mark_tcp_ses_conns_for_reconnect(st
- 			spin_lock(&tcon->tc_lock);
- 			tcon->status = TID_NEED_RECON;
- 			spin_unlock(&tcon->tc_lock);
-+
-+			cancel_delayed_work(&tcon->query_interfaces);
- 		}
- 		if (ses->tcon_ipc) {
- 			ses->tcon_ipc->need_reconnect = true;
---- a/fs/smb/client/sess.c
-+++ b/fs/smb/client/sess.c
-@@ -278,6 +278,60 @@ int cifs_try_adding_channels(struct cifs
- }
- 
- /*
-+ * called when multichannel is disabled by the server.
-+ * this always gets called from smb2_reconnect
-+ * and cannot get called in parallel threads.
-+ */
-+void
-+cifs_disable_secondary_channels(struct cifs_ses *ses)
-+{
-+	int i, chan_count;
-+	struct TCP_Server_Info *server;
-+	struct cifs_server_iface *iface;
-+
-+	spin_lock(&ses->chan_lock);
-+	chan_count = ses->chan_count;
-+	if (chan_count == 1)
-+		goto done;
-+
-+	ses->chan_count = 1;
-+
-+	/* for all secondary channels reset the need reconnect bit */
-+	ses->chans_need_reconnect &= 1;
-+
-+	for (i = 1; i < chan_count; i++) {
-+		iface = ses->chans[i].iface;
-+		server = ses->chans[i].server;
-+
-+		if (iface) {
-+			spin_lock(&ses->iface_lock);
-+			kref_put(&iface->refcount, release_iface);
-+			ses->chans[i].iface = NULL;
-+			iface->num_channels--;
-+			if (iface->weight_fulfilled)
-+				iface->weight_fulfilled--;
-+			spin_unlock(&ses->iface_lock);
-+		}
-+
-+		spin_unlock(&ses->chan_lock);
-+		if (server && !server->terminate) {
-+			server->terminate = true;
-+			cifs_signal_cifsd_for_reconnect(server, false);
-+		}
-+		spin_lock(&ses->chan_lock);
-+
-+		if (server) {
-+			ses->chans[i].server = NULL;
-+			cifs_put_tcp_session(server, false);
-+		}
-+
-+	}
-+
-+done:
-+	spin_unlock(&ses->chan_lock);
-+}
-+
-+/*
-  * update the iface for the channel if necessary.
-  * will return 0 when iface is updated, 1 if removed, 2 otherwise
-  * Must be called with chan_lock held.
-@@ -570,15 +624,10 @@ cifs_ses_add_channel(struct cifs_sb_info
- 
- out:
- 	if (rc && chan->server) {
--		/*
--		 * we should avoid race with these delayed works before we
--		 * remove this channel
--		 */
--		cancel_delayed_work_sync(&chan->server->echo);
--		cancel_delayed_work_sync(&chan->server->resolve);
--		cancel_delayed_work_sync(&chan->server->reconnect);
-+		cifs_put_tcp_session(chan->server, 0);
- 
- 		spin_lock(&ses->chan_lock);
-+
- 		/* we rely on all bits beyond chan_count to be clear */
- 		cifs_chan_clear_need_reconnect(ses, chan->server);
- 		ses->chan_count--;
-@@ -588,8 +637,6 @@ out:
- 		 */
- 		WARN_ON(ses->chan_count < 1);
- 		spin_unlock(&ses->chan_lock);
--
--		cifs_put_tcp_session(chan->server, 0);
- 	}
- 
- 	free_xid(xid);
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -160,6 +160,8 @@ smb2_reconnect(__le16 smb2_command, stru
- 	int rc = 0;
- 	struct nls_table *nls_codepage = NULL;
- 	struct cifs_ses *ses;
-+	struct TCP_Server_Info *pserver;
-+	unsigned int chan_index;
- 
- 	/*
- 	 * SMB2s NegProt, SessSetup, Logoff do not have tcon yet so
-@@ -220,6 +222,12 @@ smb2_reconnect(__le16 smb2_command, stru
- 			return -EAGAIN;
- 		}
- 	}
-+
-+	/* if server is marked for termination, cifsd will cleanup */
-+	if (server->terminate) {
-+		spin_unlock(&server->srv_lock);
-+		return -EHOSTDOWN;
-+	}
- 	spin_unlock(&server->srv_lock);
- 
- again:
-@@ -239,11 +247,23 @@ again:
- 
- 	mutex_lock(&ses->session_mutex);
- 	/*
-+	 * if this is called by delayed work, and the channel has been disabled
-+	 * in parallel, the delayed work can continue to execute in parallel
-+	 * there's a chance that this channel may not exist anymore
-+	 */
-+	spin_lock(&server->srv_lock);
-+	if (server->tcpStatus == CifsExiting) {
-+		spin_unlock(&server->srv_lock);
-+		mutex_unlock(&ses->session_mutex);
-+		rc = -EHOSTDOWN;
-+		goto out;
-+	}
-+
-+	/*
- 	 * Recheck after acquire mutex. If another thread is negotiating
- 	 * and the server never sends an answer the socket will be closed
- 	 * and tcpStatus set to reconnect.
- 	 */
--	spin_lock(&server->srv_lock);
- 	if (server->tcpStatus == CifsNeedReconnect) {
- 		spin_unlock(&server->srv_lock);
- 		mutex_unlock(&ses->session_mutex);
-@@ -280,6 +300,53 @@ again:
- 
- 	rc = cifs_negotiate_protocol(0, ses, server);
- 	if (!rc) {
-+		/*
-+		 * if server stopped supporting multichannel
-+		 * and the first channel reconnected, disable all the others.
-+		 */
-+		if (ses->chan_count > 1 &&
-+		    !(server->capabilities & SMB2_GLOBAL_CAP_MULTI_CHANNEL)) {
-+			if (CIFS_SERVER_IS_CHAN(server)) {
-+				cifs_dbg(VFS, "server %s does not support " \
-+					 "multichannel anymore. skipping secondary channel\n",
-+					 ses->server->hostname);
-+
-+				spin_lock(&ses->chan_lock);
-+				chan_index = cifs_ses_get_chan_index(ses, server);
-+				if (!chan_index) {
-+					spin_unlock(&ses->chan_lock);
-+					goto skip_terminate;
-+				}
-+
-+				ses->chans[chan_index].server = NULL;
-+				spin_unlock(&ses->chan_lock);
-+
-+				/*
-+				 * the above reference of server by channel
-+				 * needs to be dropped without holding chan_lock
-+				 * as cifs_put_tcp_session takes a higher lock
-+				 * i.e. cifs_tcp_ses_lock
-+				 */
-+				cifs_put_tcp_session(server, 1);
-+
-+				server->terminate = true;
-+				cifs_signal_cifsd_for_reconnect(server, false);
-+
-+				/* mark primary server as needing reconnect */
-+				pserver = server->primary_server;
-+				cifs_signal_cifsd_for_reconnect(pserver, false);
-+
-+skip_terminate:
-+				mutex_unlock(&ses->session_mutex);
-+				rc = -EHOSTDOWN;
-+				goto out;
-+			} else {
-+				cifs_server_dbg(VFS, "does not support " \
-+					 "multichannel anymore. disabling all other channels\n");
-+				cifs_disable_secondary_channels(ses);
-+			}
-+		}
-+
- 		rc = cifs_setup_session(0, ses, server, nls_codepage);
- 		if ((rc == -EACCES) && !tcon->retry) {
- 			mutex_unlock(&ses->session_mutex);
-@@ -3903,6 +3970,13 @@ void smb2_reconnect_server(struct work_s
- 	/* Prevent simultaneous reconnects that can corrupt tcon->rlist list */
- 	mutex_lock(&pserver->reconnect_mutex);
- 
-+	/* if the server is marked for termination, drop the ref count here */
-+	if (server->terminate) {
-+		cifs_put_tcp_session(server, true);
-+		mutex_unlock(&pserver->reconnect_mutex);
-+		return;
-+	}
-+
- 	INIT_LIST_HEAD(&tmp_list);
- 	INIT_LIST_HEAD(&tmp_ses_list);
- 	cifs_dbg(FYI, "Reconnecting tcons and channels\n");
---- a/fs/smb/client/transport.c
-+++ b/fs/smb/client/transport.c
-@@ -1063,7 +1063,7 @@ struct TCP_Server_Info *cifs_pick_channe
- 	spin_lock(&ses->chan_lock);
- 	for (i = 0; i < ses->chan_count; i++) {
- 		server = ses->chans[i].server;
--		if (!server)
-+		if (!server || server->terminate)
- 			continue;
- 
- 		/*
 
 
