@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2295343B490;
-	Tue, 21 Jul 2026 22:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B983B52FF;
+	Tue, 21 Jul 2026 22:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671900; cv=none; b=em+J/vfTA4a+KYhOGGVWTmmFcHBRtVE0XY/RuSRSab9IM9Z8PTscY0nFD6WVyLa3H8NF0OjMPT1aUS+S+bEkKpFVarYWgf6zXDsEdGLbUgk5GO/pn2e/3/TmoEEz2iVmlxZcGqeKFwUFuP2fb+Vs7vwdFG3LaT8eOgkuGJv/df4=
+	t=1784671903; cv=none; b=iLwuMB4pXzrsD3sMHLUxTb31VGQx6oLAd1raBFEdcmXCziSymeMfJBLG25qQDaCxMSURk4EDUTRRHZCYOWAUDab1AFOKjVk2OJ43NFGEuec7qRsctPMntfpp6zB24RegPPqlApnxr2VbyFRxiAbtLQkDwUZQfk4yVxU51+X/QE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671900; c=relaxed/simple;
-	bh=LABx0rhLFXvmxqsRYgockTfkfHU1w035yFl13BQn+4s=;
+	s=arc-20240116; t=1784671903; c=relaxed/simple;
+	bh=9G/lPyioy0w2pMKkVxS+QukCHAYsnx82/mzQMqHmUy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZlpiaypHWB7iG7jTYy6zXv0UCzVVc8Q3QZJy2vwSdRqRvks5/JgG2akzpnkiE9paLS0G3wF8lYC4DkqfOeHPTrjZ6BJpCedjR/a6KeTHQkIRN/ULTjXdbheNcDdID+Ph5pWpsib3QiUeEI372MJlox/AEquWxtPusX6veM/Dt3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=blbEC9C7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b6Mp5PBDTMk38NHFXUqU3iBscUIL2aE2ZrugmP0HmIoSh9hyoQ3D3d7YAPgDKaaupOrGTDQqrQ35O36P8EpKZXcdfHuzmN4J1j9IP8ZB9yKxY8sKJKNRFl/F60Awz3ru1sqxytolSyDtkBtiq6+aVYXYAKnFlNKQv33Mr3gOhB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iz4OYg0z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="blbEC9C7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855821F00A3A;
-	Tue, 21 Jul 2026 22:11:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iz4OYg0z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ACF51F00A3D;
+	Tue, 21 Jul 2026 22:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671899;
-	bh=oQVmmFvAa4KRdO72+PoZnE9TgkhViNxdZ24T1HDdzvo=;
+	s=korg; t=1784671901;
+	bh=H+5uwG6tDWIcjrLPuKNO/7YY4v8ysITU77/PpjILPSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=blbEC9C7l/1i8YunpTkLD0y0BNEoPr7zH8kD5tXFsXP4Vlxx/PD/DxI5I9CjhvjS6
-	 xRVI/MjPwjfA3AafZ8/LkDpMgJyy/CV7DKU5p/7OA4I4ACQgSKrxOZxf1YI9G/8Pzr
-	 +48erq/0g4lrU8stIX9rrUSvm+jDxWwEQ7D8E73Q=
+	b=iz4OYg0zkmLKtZvPpfBMFVnW3+QcdsOHiZFF02qUHWRuNJMXnW1mJS1IteuO/PA5P
+	 +9fcfZ0ZwLBKMSbubmVaX6QcaENcCjvrZW9AmByfW2i1iG0P33dStdwjrdS0jGAaBy
+	 OaByO+zx1x1GYfGdu/Hs8YOfR8CvGg9l3PPXkhws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
+	Song Liu <songliubraving@fb.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 421/843] tools lib api: Fix mount_overload() snprintf truncation and toupper range
-Date: Tue, 21 Jul 2026 17:20:56 +0200
-Message-ID: <20260721152415.506931993@linuxfoundation.org>
+Subject: [PATCH 5.15 422/843] perf bpf: Add NULL check for btf__type_by_id() in synthesize_bpf_prog_name()
+Date: Tue, 21 Jul 2026 17:20:57 +0200
+Message-ID: <20260721152415.529374076@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -54,47 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit fd1f70776add263f8ef38a87ae593c75303f1dcd ]
+[ Upstream commit 903b0526dcf86d030c5970b4b0a67f9c227368e2 ]
 
-mount_overload() builds an environment variable name like
-"PERF_SYSFS_ENVIRONMENT" from fs->name.  Two bugs:
+synthesize_bpf_prog_name() calls btf__type_by_id() and immediately
+dereferences the result via t->name_off without checking for NULL.
+btf__type_by_id() returns NULL when the type_id is invalid or out
+of range.  When processing perf.data files, finfo->type_id comes from
+untrusted input, so an invalid ID causes a NULL pointer dereference.
 
-1) snprintf() uses name_len as the buffer size instead of sizeof(upper_name).
-   For fs->name = "sysfs" (len=5), the output is truncated to "PERF" (4
-   chars + null), so getenv() never finds the intended variable.
-
-2) mem_toupper() only uppercases name_len bytes, converting just the "PERF"
-   prefix rather than the full string including the filesystem name portion.
-
-Fix by using sizeof(upper_name) for snprintf and strlen(upper_name) for
-mem_toupper, so the full "PERF_SYSFS_ENVIRONMENT" string is correctly
-formatted and uppercased.
+Fix by checking t for NULL before dereferencing.
 
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Fixes: 73ca85ad364769ff ("tools lib api fs: Add FSTYPE__mount() method")
-Cc: Jiri Olsa <jolsa@kernel.org>
+Fixes: fc462ac75b36daaa ("perf bpf: Extract logic to create program names from perf_event__synthesize_one_bpf_prog()")
+Cc: Song Liu <songliubraving@fb.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/api/fs/fs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/bpf-event.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/api/fs/fs.c b/tools/lib/api/fs/fs.c
-index e13034cb0b6315..d8a55846883059 100644
---- a/tools/lib/api/fs/fs.c
-+++ b/tools/lib/api/fs/fs.c
-@@ -272,8 +272,8 @@ static const char *mount_overload(struct fs *fs)
- 	/* "PERF_" + name + "_ENVIRONMENT" + '\0' */
- 	char upper_name[5 + name_len + 12 + 1];
- 
--	snprintf(upper_name, name_len, "PERF_%s_ENVIRONMENT", fs->name);
--	mem_toupper(upper_name, name_len);
-+	snprintf(upper_name, sizeof(upper_name), "PERF_%s_ENVIRONMENT", fs->name);
-+	mem_toupper(upper_name, strlen(upper_name));
- 
- 	return getenv(upper_name) ?: *fs->mounts;
- }
+diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
+index 56ab0d85931e36..1c597ac08ae926 100644
+--- a/tools/perf/util/bpf-event.c
++++ b/tools/perf/util/bpf-event.c
+@@ -149,7 +149,8 @@ static int synthesize_bpf_prog_name(char *buf, int size,
+ 	if (btf) {
+ 		finfo = func_infos + sub_id * info->func_info_rec_size;
+ 		t = btf__type_by_id(btf, finfo->type_id);
+-		short_name = btf__name_by_offset(btf, t->name_off);
++		if (t)
++			short_name = btf__name_by_offset(btf, t->name_off);
+ 	} else if (sub_id == 0 && sub_prog_cnt == 1) {
+ 		/* no subprog */
+ 		if (info->name[0])
 -- 
 2.53.0
 
