@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F305843B48C;
-	Tue, 21 Jul 2026 22:48:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3266643D4E2;
+	Tue, 21 Jul 2026 22:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674084; cv=none; b=ZuJ1+AReW4h80sXG4spo6SQyCZ2UzwWZ4mzF0Qa+l9nJ9Gzex5O3SyupHYpQMsqdcSa/v8//0IHaMlNomlB2/QaaX7t7V5oOk/hMXIw7Mgwkweu8QdCQGWo5ZCTmsl4jimtkSMFTJTsoHIH/QOGPDjsr8tDSkie2yONlFC5u6JY=
+	t=1784674085; cv=none; b=OR/APVdvF3dKA4/Oj8J16q/MuSqR6zu+nQhS6IMhuqlfNApQp65892DYYe3JCS6NSHEemBGW9YR/TNT9oViY2JW5BqE3uJ68SO/QVut1AY3X0uniYgiZeyS80/PzHlzS5zW4LagKOqB8VwOm+vhr34GiQukKUmiOqDBaDQaQwzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674084; c=relaxed/simple;
-	bh=sGlLy4IAV7/TQNOXRjaB7F7L+hoiXKHkf69MbnrKP+Q=;
+	s=arc-20240116; t=1784674085; c=relaxed/simple;
+	bh=uqwAatU016fpWUE0xjuBBTzF0hc9RLVe3sLznixWbtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IKOY6PrWC6VsIKuZNBT9TF9vb8QTEm4KPq4J0lClXP3X8kF5cT9Np26mO2tPeYSJIOSDsxAy/GGu5yqmSaO1AsjBeNjrKoKW2Pbdm1REMc353TtBBDKK4+WZKJRGB1MhFvx56h+JCFHOVCKqWGfodNSMkmhzkXeZUXMufz4lmFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TlGUclFO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sDYQrusxEsFqF6PSalduP3cTLk5+deOzrg4IcTCGT82eoozNXwpqqKdGlJdhwpwK2aEZaevkC5p5oKmSDECMZx5dUFf7S/eq3uEASYA7zK0qyXdsQXtiRIZHJetbE9RBhaNEeUWwc4/Wutu+ymCfxx87S8g8swuAw0Nas4/llnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGWhohc5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlGUclFO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1061F000E9;
-	Tue, 21 Jul 2026 22:47:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGWhohc5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD571F00A3A;
+	Tue, 21 Jul 2026 22:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674080;
-	bh=dHGFjEooUYaHAJRXlPTXBVVCNpPz3pUtpDk7zcrcW7I=;
+	s=korg; t=1784674075;
+	bh=n9e239A+p+AnxfbxI4/lMf8mrMMQCpAOKbdXexmwt8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TlGUclFOYMwxfnKt1Ip5KxmZWoIrT7biDbNDHOs1Utl1T0zsqJSwgKzvBWjky0aak
-	 jLZr20nx4exGAX5Da+AuOcmyh59oR+1cCnBlb0FDmrtAi/eEmC8OQ/cslKJXuZ3GO7
-	 mdy4BalKqePVQoTZOn2p2er1hcUTM9oUenZ0CqH0=
+	b=nGWhohc5RwtY8evDNR7gfZiSFiFRk7IAbeF2t5PDV6hhuz5g/W4CFgsRVlRS3FNUZ
+	 0Lc24DRI/K2HvJBEZEbMaDTslv3P+tRTLQ+Adcrq9wRGijSOYG33YW0ZaRoB4vtrtv
+	 pnvdFct3KyW6z6KRJmlB7yqsGOKteL3rOJjY80MI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daniele Palmas <dnlplm@gmail.com>,
+	Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 363/699] ipv6: fix error handling in disable_ipv6 sysctl
-Date: Tue, 21 Jul 2026 17:22:02 +0200
-Message-ID: <20260721152403.882441364@linuxfoundation.org>
+Subject: [PATCH 5.10 402/699] net: qualcomm: rmnet: add tx packets aggregation
+Date: Tue, 21 Jul 2026 17:22:41 +0200
+Message-ID: <20260721152404.764379699@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -53,46 +52,431 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Daniele Palmas <dnlplm@gmail.com>
 
-[ Upstream commit c779441e5070e2268bdfe77f6e2e0de926c431e3 ]
+[ Upstream commit 64b5d1f8f2d1b3f039cfb0dd8035892015543e58 ]
 
-When writing to the disable_ipv6 sysctl, if proc_dointvec() fails to
-parse the input, it returns a negative error code. The current
-implementation is overwriting that error for write operations.
+Add tx packets aggregation.
 
-This results in a silent failure, it returns a successful write although
-the configuration was not modified at all. When modifying the "all"
-variant it can also modify the configuration of existing interfaces to
-the wrong value.
+Bidirectional TCP throughput tests through iperf with low-cat
+Thread-x based modems revelead performance issues both in tx
+and rx.
 
-Fix this by checking the return value of proc_dointvec() and returning
-early on failure.
+The Windows driver does not show this issue: inspecting USB
+packets revealed that the only notable change is the driver
+enabling tx packets aggregation.
 
-Fixes: 56d417b12e57 ("IPv6: Add 'autoconf' and 'disable_ipv6' module parameters")
-Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260622130857.5115-2-fmancera@suse.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tx packets aggregation is by default disabled and can be enabled
+by increasing the value of ETHTOOL_A_COALESCE_TX_MAX_AGGR_FRAMES.
+
+The maximum aggregated size is by default set to a reasonably low
+value in order to support the majority of modems.
+
+This implementation is based on patches available in Code Aurora
+repositories (msm kernel) whose main authors are
+
+Subash Abhinov Kasiviswanathan <subashab@codeaurora.org>
+Sean Tranchetti <stranche@codeaurora.org>
+
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+Reviewed-by: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: f0f1887a9e30 ("net: qualcomm: rmnet: validate MAP frame length before ingress parsing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../ethernet/qualcomm/rmnet/rmnet_config.c    |   5 +
+ .../ethernet/qualcomm/rmnet/rmnet_config.h    |  20 ++
+ .../ethernet/qualcomm/rmnet/rmnet_handlers.c  |  18 +-
+ .../net/ethernet/qualcomm/rmnet/rmnet_map.h   |   6 +
+ .../ethernet/qualcomm/rmnet/rmnet_map_data.c  | 191 ++++++++++++++++++
+ .../net/ethernet/qualcomm/rmnet/rmnet_vnd.c   |   9 +-
+ .../net/ethernet/qualcomm/rmnet/rmnet_vnd.h   |   1 +
+ 7 files changed, 246 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index c0f84b2315528f..c888471bf5d355 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -6291,6 +6291,8 @@ static int addrconf_sysctl_disable(struct ctl_table *ctl, int write,
- 	lctl.data = &val;
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c
+index c1b96bb3456333..0dc9c9ac9b0a9c 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.c
+@@ -12,6 +12,7 @@
+ #include "rmnet_handlers.h"
+ #include "rmnet_vnd.h"
+ #include "rmnet_private.h"
++#include "rmnet_map.h"
  
- 	ret = proc_dointvec(&lctl, write, buffer, lenp, ppos);
-+	if (ret)
-+		return ret;
+ /* Local Definitions and Declarations */
  
- 	if (write)
- 		ret = addrconf_disable_ipv6(ctl, valp, val);
+@@ -39,6 +40,8 @@ static int rmnet_unregister_real_device(struct net_device *real_dev)
+ 	if (port->nr_rmnet_devs)
+ 		return -EINVAL;
+ 
++	rmnet_map_tx_aggregate_exit(port);
++
+ 	netdev_rx_handler_unregister(real_dev);
+ 
+ 	kfree(port);
+@@ -79,6 +82,8 @@ static int rmnet_register_real_device(struct net_device *real_dev,
+ 	for (entry = 0; entry < RMNET_MAX_LOGICAL_EP; entry++)
+ 		INIT_HLIST_HEAD(&port->muxed_ep[entry]);
+ 
++	rmnet_map_tx_aggregate_init(port);
++
+ 	netdev_dbg(real_dev, "registered with rmnet\n");
+ 	return 0;
+ }
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.h b/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.h
+index 0fd2c23e7ee09e..1bde80ea226393 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.h
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_config.h
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include <linux/skbuff.h>
++#include <linux/time.h>
+ #include <net/gro_cells.h>
+ 
+ #ifndef _RMNET_CONFIG_H_
+@@ -19,6 +20,12 @@ struct rmnet_endpoint {
+ 	struct rcu_head rcu;
+ };
+ 
++struct rmnet_egress_agg_params {
++	u32 bytes;
++	u32 count;
++	u64 time_nsec;
++};
++
+ /* One instance of this structure is instantiated for each real_dev associated
+  * with rmnet.
+  */
+@@ -30,6 +37,19 @@ struct rmnet_port {
+ 	struct hlist_head muxed_ep[RMNET_MAX_LOGICAL_EP];
+ 	struct net_device *bridge_ep;
+ 	struct net_device *rmnet_dev;
++
++	/* Egress aggregation information */
++	struct rmnet_egress_agg_params egress_agg_params;
++	/* Protect aggregation related elements */
++	spinlock_t agg_lock;
++	struct sk_buff *skbagg_head;
++	struct sk_buff *skbagg_tail;
++	int agg_state;
++	u8 agg_count;
++	struct timespec64 agg_time;
++	struct timespec64 agg_last;
++	struct hrtimer hrtimer;
++	struct work_struct agg_wq;
+ };
+ 
+ extern struct rtnl_link_ops rmnet_link_ops;
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c
+index f50112f75d5077..9fec50a1969f14 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c
+@@ -158,8 +158,18 @@ static int rmnet_map_egress_handler(struct sk_buff *skb,
+ 
+ 	map_header->mux_id = mux_id;
+ 
+-	skb->protocol = htons(ETH_P_MAP);
++	if (READ_ONCE(port->egress_agg_params.count) > 1) {
++		unsigned int len;
++
++		len = rmnet_map_tx_aggregate(skb, port, orig_dev);
++		if (likely(len)) {
++			rmnet_vnd_tx_fixup_len(len, orig_dev);
++			return -EINPROGRESS;
++		}
++		return -ENOMEM;
++	}
+ 
++	skb->protocol = htons(ETH_P_MAP);
+ 	return 0;
+ }
+ 
+@@ -224,6 +234,7 @@ void rmnet_egress_handler(struct sk_buff *skb)
+ 	struct rmnet_port *port;
+ 	struct rmnet_priv *priv;
+ 	u8 mux_id;
++	int err;
+ 
+ 	sk_pacing_shift_update(skb->sk, 8);
+ 
+@@ -236,8 +247,11 @@ void rmnet_egress_handler(struct sk_buff *skb)
+ 	if (!port)
+ 		goto drop;
+ 
+-	if (rmnet_map_egress_handler(skb, port, mux_id, orig_dev))
++	err = rmnet_map_egress_handler(skb, port, mux_id, orig_dev);
++	if (err == -ENOMEM)
+ 		goto drop;
++	else if (err == -EINPROGRESS)
++		return;
+ 
+ 	rmnet_vnd_tx_fixup(skb, orig_dev);
+ 
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map.h b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map.h
+index 1a399bfa07d254..7a2718b7e359db 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map.h
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map.h
+@@ -49,5 +49,11 @@ int rmnet_map_checksum_downlink_packet(struct sk_buff *skb, u16 len);
+ void rmnet_map_checksum_uplink_packet(struct sk_buff *skb,
+ 				      struct net_device *orig_dev);
+ int rmnet_map_process_next_hdr_packet(struct sk_buff *skb, u16 len);
++unsigned int rmnet_map_tx_aggregate(struct sk_buff *skb, struct rmnet_port *port,
++				    struct net_device *orig_dev);
++void rmnet_map_tx_aggregate_init(struct rmnet_port *port);
++void rmnet_map_tx_aggregate_exit(struct rmnet_port *port);
++void rmnet_map_update_ul_agg_config(struct rmnet_port *port, u32 size,
++				    u32 count, u32 time);
+ 
+ #endif /* _RMNET_MAP_H_ */
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
+index a8326f23736c2b..d82af25f51cc2e 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
+@@ -12,6 +12,7 @@
+ #include "rmnet_config.h"
+ #include "rmnet_map.h"
+ #include "rmnet_private.h"
++#include "rmnet_vnd.h"
+ 
+ #define RMNET_MAP_DEAGGR_SPACING  64
+ #define RMNET_MAP_DEAGGR_HEADROOM (RMNET_MAP_DEAGGR_SPACING / 2)
+@@ -467,3 +468,193 @@ int rmnet_map_process_next_hdr_packet(struct sk_buff *skb,
+ 
+ 	return 0;
+ }
++
++#define RMNET_AGG_BYPASS_TIME_NSEC 10000000L
++
++static void reset_aggr_params(struct rmnet_port *port)
++{
++	port->skbagg_head = NULL;
++	port->agg_count = 0;
++	port->agg_state = 0;
++	memset(&port->agg_time, 0, sizeof(struct timespec64));
++}
++
++static void rmnet_send_skb(struct rmnet_port *port, struct sk_buff *skb)
++{
++	if (skb_needs_linearize(skb, port->dev->features)) {
++		if (unlikely(__skb_linearize(skb))) {
++			struct rmnet_priv *priv;
++
++			priv = netdev_priv(port->rmnet_dev);
++			this_cpu_inc(priv->pcpu_stats->stats.tx_drops);
++			dev_kfree_skb_any(skb);
++			return;
++		}
++	}
++
++	dev_queue_xmit(skb);
++}
++
++static void rmnet_map_flush_tx_packet_work(struct work_struct *work)
++{
++	struct sk_buff *skb = NULL;
++	struct rmnet_port *port;
++
++	port = container_of(work, struct rmnet_port, agg_wq);
++
++	spin_lock_bh(&port->agg_lock);
++	if (likely(port->agg_state == -EINPROGRESS)) {
++		/* Buffer may have already been shipped out */
++		if (likely(port->skbagg_head)) {
++			skb = port->skbagg_head;
++			reset_aggr_params(port);
++		}
++		port->agg_state = 0;
++	}
++
++	spin_unlock_bh(&port->agg_lock);
++	if (skb)
++		rmnet_send_skb(port, skb);
++}
++
++static enum hrtimer_restart rmnet_map_flush_tx_packet_queue(struct hrtimer *t)
++{
++	struct rmnet_port *port;
++
++	port = container_of(t, struct rmnet_port, hrtimer);
++
++	schedule_work(&port->agg_wq);
++
++	return HRTIMER_NORESTART;
++}
++
++unsigned int rmnet_map_tx_aggregate(struct sk_buff *skb, struct rmnet_port *port,
++				    struct net_device *orig_dev)
++{
++	struct timespec64 diff, last;
++	unsigned int len = skb->len;
++	struct sk_buff *agg_skb;
++	int size;
++
++	spin_lock_bh(&port->agg_lock);
++	memcpy(&last, &port->agg_last, sizeof(struct timespec64));
++	ktime_get_real_ts64(&port->agg_last);
++
++	if (!port->skbagg_head) {
++		/* Check to see if we should agg first. If the traffic is very
++		 * sparse, don't aggregate.
++		 */
++new_packet:
++		diff = timespec64_sub(port->agg_last, last);
++		size = port->egress_agg_params.bytes - skb->len;
++
++		if (size < 0) {
++			/* dropped */
++			spin_unlock_bh(&port->agg_lock);
++			return 0;
++		}
++
++		if (diff.tv_sec > 0 || diff.tv_nsec > RMNET_AGG_BYPASS_TIME_NSEC ||
++		    size == 0)
++			goto no_aggr;
++
++		port->skbagg_head = skb_copy_expand(skb, 0, size, GFP_ATOMIC);
++		if (!port->skbagg_head)
++			goto no_aggr;
++
++		dev_kfree_skb_any(skb);
++		port->skbagg_head->protocol = htons(ETH_P_MAP);
++		port->agg_count = 1;
++		ktime_get_real_ts64(&port->agg_time);
++		skb_frag_list_init(port->skbagg_head);
++		goto schedule;
++	}
++	diff = timespec64_sub(port->agg_last, port->agg_time);
++	size = port->egress_agg_params.bytes - port->skbagg_head->len;
++
++	if (skb->len > size) {
++		agg_skb = port->skbagg_head;
++		reset_aggr_params(port);
++		spin_unlock_bh(&port->agg_lock);
++		hrtimer_cancel(&port->hrtimer);
++		rmnet_send_skb(port, agg_skb);
++		spin_lock_bh(&port->agg_lock);
++		goto new_packet;
++	}
++
++	if (skb_has_frag_list(port->skbagg_head))
++		port->skbagg_tail->next = skb;
++	else
++		skb_shinfo(port->skbagg_head)->frag_list = skb;
++
++	port->skbagg_head->len += skb->len;
++	port->skbagg_head->data_len += skb->len;
++	port->skbagg_head->truesize += skb->truesize;
++	port->skbagg_tail = skb;
++	port->agg_count++;
++
++	if (diff.tv_sec > 0 || diff.tv_nsec > port->egress_agg_params.time_nsec ||
++	    port->agg_count >= port->egress_agg_params.count ||
++	    port->skbagg_head->len == port->egress_agg_params.bytes) {
++		agg_skb = port->skbagg_head;
++		reset_aggr_params(port);
++		spin_unlock_bh(&port->agg_lock);
++		hrtimer_cancel(&port->hrtimer);
++		rmnet_send_skb(port, agg_skb);
++		return len;
++	}
++
++schedule:
++	if (!hrtimer_active(&port->hrtimer) && port->agg_state != -EINPROGRESS) {
++		port->agg_state = -EINPROGRESS;
++		hrtimer_start(&port->hrtimer,
++			      ns_to_ktime(port->egress_agg_params.time_nsec),
++			      HRTIMER_MODE_REL);
++	}
++	spin_unlock_bh(&port->agg_lock);
++
++	return len;
++
++no_aggr:
++	spin_unlock_bh(&port->agg_lock);
++	skb->protocol = htons(ETH_P_MAP);
++	dev_queue_xmit(skb);
++
++	return len;
++}
++
++void rmnet_map_update_ul_agg_config(struct rmnet_port *port, u32 size,
++				    u32 count, u32 time)
++{
++	spin_lock_bh(&port->agg_lock);
++	port->egress_agg_params.bytes = size;
++	WRITE_ONCE(port->egress_agg_params.count, count);
++	port->egress_agg_params.time_nsec = time * NSEC_PER_USEC;
++	spin_unlock_bh(&port->agg_lock);
++}
++
++void rmnet_map_tx_aggregate_init(struct rmnet_port *port)
++{
++	hrtimer_init(&port->hrtimer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
++	port->hrtimer.function = rmnet_map_flush_tx_packet_queue;
++	spin_lock_init(&port->agg_lock);
++	rmnet_map_update_ul_agg_config(port, 4096, 1, 800);
++	INIT_WORK(&port->agg_wq, rmnet_map_flush_tx_packet_work);
++}
++
++void rmnet_map_tx_aggregate_exit(struct rmnet_port *port)
++{
++	hrtimer_cancel(&port->hrtimer);
++	cancel_work_sync(&port->agg_wq);
++
++	spin_lock_bh(&port->agg_lock);
++	if (port->agg_state == -EINPROGRESS) {
++		if (port->skbagg_head) {
++			dev_kfree_skb_any(port->skbagg_head);
++			reset_aggr_params(port);
++		}
++
++		port->agg_state = 0;
++	}
++	spin_unlock_bh(&port->agg_lock);
++}
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_vnd.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_vnd.c
+index 2adcf24848a452..0b35dfe1e58e33 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_vnd.c
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_vnd.c
+@@ -28,7 +28,7 @@ void rmnet_vnd_rx_fixup(struct sk_buff *skb, struct net_device *dev)
+ 	u64_stats_update_end(&pcpu_ptr->syncp);
+ }
+ 
+-void rmnet_vnd_tx_fixup(struct sk_buff *skb, struct net_device *dev)
++void rmnet_vnd_tx_fixup_len(unsigned int len, struct net_device *dev)
+ {
+ 	struct rmnet_priv *priv = netdev_priv(dev);
+ 	struct rmnet_pcpu_stats *pcpu_ptr;
+@@ -37,10 +37,15 @@ void rmnet_vnd_tx_fixup(struct sk_buff *skb, struct net_device *dev)
+ 
+ 	u64_stats_update_begin(&pcpu_ptr->syncp);
+ 	pcpu_ptr->stats.tx_pkts++;
+-	pcpu_ptr->stats.tx_bytes += skb->len;
++	pcpu_ptr->stats.tx_bytes += len;
+ 	u64_stats_update_end(&pcpu_ptr->syncp);
+ }
+ 
++void rmnet_vnd_tx_fixup(struct sk_buff *skb, struct net_device *dev)
++{
++	rmnet_vnd_tx_fixup_len(skb->len, dev);
++}
++
+ /* Network Device Operations */
+ 
+ static netdev_tx_t rmnet_vnd_start_xmit(struct sk_buff *skb,
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_vnd.h b/drivers/net/ethernet/qualcomm/rmnet/rmnet_vnd.h
+index dc3a4443ef0af1..c2b2baf86894e7 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_vnd.h
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_vnd.h
+@@ -16,6 +16,7 @@ int rmnet_vnd_newlink(u8 id, struct net_device *rmnet_dev,
+ int rmnet_vnd_dellink(u8 id, struct rmnet_port *port,
+ 		      struct rmnet_endpoint *ep);
+ void rmnet_vnd_rx_fixup(struct sk_buff *skb, struct net_device *dev);
++void rmnet_vnd_tx_fixup_len(unsigned int len, struct net_device *dev);
+ void rmnet_vnd_tx_fixup(struct sk_buff *skb, struct net_device *dev);
+ void rmnet_vnd_setup(struct net_device *dev);
+ int rmnet_vnd_validate_real_dev_mtu(struct net_device *real_dev);
 -- 
 2.53.0
 
