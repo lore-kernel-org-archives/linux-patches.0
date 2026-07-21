@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA8E415F05;
-	Tue, 21 Jul 2026 18:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E313859EE;
+	Tue, 21 Jul 2026 18:01:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656887; cv=none; b=BXkTe+qvdn1Qs953yK4SFOCV9vbNsIRWA+I0iTq7K/uyZDbMlTF+UOSIFoQZwSPVk6bCGNo+hO588hpllzjhZv/c5TqHVgYf+yUVgHaXzs3cBvfrI7HTXCKbSbrLInbNH9gcWIStwXeDDfc1unBpCQo2oQ567E4R8bDXXMXeR3c=
+	t=1784656890; cv=none; b=YgpZWuncXXLWi/ZgZMIewqi0Wp6L2SZrD3T6+1f9s3t5PsrbfVtQIwa2ZrIM7S2c2AMR4mxqdfUKNcPgZeiVy7yunWPTbCqD6EW8jFPxCb9PteSrKiFDOLBtK2ZTU3HUZPurAUonz7HL/+8MJvHq0LwENUHG8n391JPR4PnmbnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656887; c=relaxed/simple;
-	bh=8Pcl3m+v6R7u1ZgbRGeTdn/ylC28dCgWNl6g+P0TeTw=;
+	s=arc-20240116; t=1784656890; c=relaxed/simple;
+	bh=2qLIs7nCT1/iyArNoXrF0lZYwqVy2qGADh8MaOKCXWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=huBxrIQdV/JOWuY/jICDQgjhHUjzrKwloy9rLk7Yurc3f81g7dvkCNjs9DtnzvI71SbhrzkXi0Qv2113Iz2LFMNc5Ka2czMoeQAJNfF0N1Ap/RC1paR00tMxhJaSyYcTAvdysv6JFnthnFHgeSD2EHywfjfOumM9IBlQdmK5xFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cMrD4cH+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pN3PxfKmr2UI5N6HNApg7r6ApvQmNsoynu8Q8JfjlUdw6Yuq3gvUfVVswVM2nWd3U5XAL6zLg9lIfSHoVLMI52C83cMAKRQR4YQ/rkFZFDePa7cZD5z0LHpCUO4o/Vt4IiCDP+U3SlOleok0nG6UzbGQm0zMHnp06q3ADIZenvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JldwlNrD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cMrD4cH+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DEA61F000E9;
-	Tue, 21 Jul 2026 18:01:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JldwlNrD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C8C61F000E9;
+	Tue, 21 Jul 2026 18:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656886;
-	bh=MYttyAUBzHbS/ILUibw1FYz+43WcRN90s03kAv+ehLs=;
+	s=korg; t=1784656888;
+	bh=Hmyl4Zr9szqvgjD6u0cIVrh9SmHLupcgam58b/tZUv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cMrD4cH+66Ii6TvjKNkyavv/hfh5v+Azj1heIhogRo7fh2hs6sWnBVYfrugWj2XTI
-	 QU0NGUNZ3S0gW6v33kunzbZ1th40jilMwc24ICNRMqK8wcSCSsyWB+uPfgoHYpdfWu
-	 re8YJ3x+YWjI5TTeHO3bVJUm/epqJqlizY+9y1Og=
+	b=JldwlNrDnlJyEy6/pb2dbhTCNlfxuxHTrVj4G6Yn+Tqntyz9jjl2IkM8CWJt5yT/n
+	 AjWrIqvd518n9NUpAaF/UdGv2+1vKqiUJUnPnj5snJVfKDurkgWqHjVS9p79TyLZoE
+	 w4XHTt56nhNr8Ce2TEMOluXIJyDM/TUzrOYRNiIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0554/1611] net: ethernet: oa_tc6: Remove FCS size in RX frame
-Date: Tue, 21 Jul 2026 17:11:10 +0200
-Message-ID: <20260721152527.839932418@linuxfoundation.org>
+Subject: [PATCH 6.18 0555/1611] dt-bindings: net: updated interrupt type to be active low, level triggered
+Date: Tue, 21 Jul 2026 17:11:11 +0200
+Message-ID: <20260721152527.862437555@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,47 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>
 
-[ Upstream commit a5a1d11dd3729146abe7420b874bab15870a42b4 ]
+[ Upstream commit 31e56112e6544afba0a50d60251175585ee62943 ]
 
-OA TC6 MAC-PHY appends FCS to the incoming frame. It must be
-removed from the frame before being passed to the stack.
+According to OPEN Alliance 10BASE-T1x MACPHY Serial Interface (TC6)
+specification, interrupt type is active low, level triggered interrupt.
 
-With FCS in the frame, many applications, like ping or any
-application that uses IP layer may work as they may
-carry the packet size information in the protocol.
+Specification calls for when interrupt level will be asserted and what
+condition it is de-asserted. By using edge triggered interrupt, there is a
+potential chance to miss it, particularly if it is asserted when interrupt
+is disabled.
 
-Application like ptp4l, particularly if it uses layer 2
-for its communication, it will fail with "bad message" due to
-the extra 4 bytes added by the presence of FCS.
+Level triggered interrupt can't be missed as it gets de-asserted only on
+interrupt handler taking actions on interrupting conditions.
 
-Fixes: d70a0d8f2f2d ("net: ethernet: oa_tc6: implement receive path to receive rx ethernet frames")
+Fixes: ac49b950bea9 ("dt-bindings: net: add Microchip's LAN865X 10BASE-T1S MACPHY")
 Signed-off-by: Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>
-Link: https://patch.msgid.link/20260611-level-trigger-v5-3-4533a9e85ce2@onsemi.com
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260611-level-trigger-v5-4-4533a9e85ce2@onsemi.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/oa_tc6.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ Documentation/devicetree/bindings/net/microchip,lan8650.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/oa_tc6.c
-+++ b/drivers/net/ethernet/oa_tc6.c
-@@ -751,6 +751,17 @@ static int oa_tc6_process_rx_chunk_foote
- 
- static void oa_tc6_submit_rx_skb(struct oa_tc6 *tc6)
- {
-+	/* MAC-PHY delivers each frame with its Ethernet FCS attached.
-+	 * Strip it before handing over to the stack, unless the user
-+	 * has asked to keep it via NETIF_F_RXFCS. Keeping the FCS
-+	 * in the frame is harmless for IP traffic, but is parsed as
-+	 * a (malformed) suffix TLV by PTP, which makes ptp4l reject
-+	 * every message with "bad message" error.
-+	 */
-+	if (!(tc6->netdev->features & NETIF_F_RXFCS) &&
-+	    tc6->rx_skb->len > ETH_FCS_LEN)
-+		skb_trim(tc6->rx_skb, tc6->rx_skb->len - ETH_FCS_LEN);
-+
- 	tc6->rx_skb->protocol = eth_type_trans(tc6->rx_skb, tc6->netdev);
- 	tc6->netdev->stats.rx_packets++;
- 	tc6->netdev->stats.rx_bytes += tc6->rx_skb->len;
+diff --git a/Documentation/devicetree/bindings/net/microchip,lan8650.yaml b/Documentation/devicetree/bindings/net/microchip,lan8650.yaml
+index 61e11d4a07c407..766ff58147ae36 100644
+--- a/Documentation/devicetree/bindings/net/microchip,lan8650.yaml
++++ b/Documentation/devicetree/bindings/net/microchip,lan8650.yaml
+@@ -67,7 +67,7 @@ examples:
+         pinctrl-names = "default";
+         pinctrl-0 = <&eth0_pins>;
+         interrupt-parent = <&gpio>;
+-        interrupts = <6 IRQ_TYPE_EDGE_FALLING>;
++        interrupts = <6 IRQ_TYPE_LEVEL_LOW>;
+         local-mac-address = [04 05 06 01 02 03];
+         spi-max-frequency = <15000000>;
+       };
+-- 
+2.53.0
+
 
 
