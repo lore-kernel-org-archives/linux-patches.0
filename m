@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AF043E06C;
-	Tue, 21 Jul 2026 22:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA0843B3DA;
+	Tue, 21 Jul 2026 22:11:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671886; cv=none; b=Pv1paRzxOVEujRcxgiFrMUPFbxIOxK4IOO0w5XDpaHOyZbw8V1IQ6MV3blC5TbTi6yKnT8TW41f9SSkfSsTqUconwVruwDJFsyOTIooLIFf8f2VtLvTmAvgDWeaCnu7fKhRycatVKwZ0iCWZlqVYxDX2GX3IY8UBSlpZy+LYgzM=
+	t=1784671890; cv=none; b=PMdbtyMP8Bn4JOovh99eL8qLQVDgggUL/LMiyR7elhos6KW32hUA938BfapgY+Wc7o/ccVJTYCRJbveB5oKEKMZ5+kkrRAtbdRMTFhcyMUPItN8nISLoVu/0gxEhaFpX1dVt1IR0W+s7fCSdUgD2eRDVltOGy7A5x4XTRqb7jF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671886; c=relaxed/simple;
-	bh=auHiNH+P/8AhH6A+PGk+U1GQR60LEP6nkutLz1epaUI=;
+	s=arc-20240116; t=1784671890; c=relaxed/simple;
+	bh=K2vwPU8HAPKV2gPcXDn/ofo5P7mKSLmeR50B7lw99FI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uDHVzradoEXT9IdH1eGBiAu29VphDtP9KYzOtAeTCMt+jg7/xYinmHklYT5LLQfyHDKpJGRGEs0al8wuZOxSJRikRfJTXk1Anv8AT1xxJRaBxM3lJam4GrFOzJLKY11S/gC2m+KbPZyYcisjGgWcBTbxPiXe0KcK+bD48t1OjM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pbxid7GA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YJpoRtjOTdi0nbPFXfq17y6H6UwR5/Omr6s4Xczit79XhuyJaXeUcjyn3z8B9Ww0WnleEhPZP5nxMoqAD8xidpg1Qtr9/G7huGYk9/ooV6GXBEPbXUqPAJHX1oKBbgiDTM5+tHUSifrUZfRKkFovSBHZtW/nQPyOlPSLntisHX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hb7sraPo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pbxid7GA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47BF91F000E9;
-	Tue, 21 Jul 2026 22:11:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hb7sraPo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3FBD1F000E9;
+	Tue, 21 Jul 2026 22:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671885;
-	bh=PcemfR9UgCOvk+Ba8kLLtSHed1/lXz6FSnbXBwiE/ZQ=;
+	s=korg; t=1784671888;
+	bh=0INiX8Tm3h7TKAnl42sTo7HCxWpLwO/w7/Yw0WoHKEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pbxid7GAqm1F2Aag6Iypv8eLmMuUKHeyoBNJNYdCxWuUNU3I0HfB+DpFFlN1NRhxm
-	 sCZm58k+hD3wc+ecD/ftfxPvYsziSE8sPdJMkFTYJTAN8CtTBtbnyoNvxQu5zeoqIc
-	 XVJYJBGhOAy16VlY7aybeAtbkxfPsBzxKOW2zSk0=
+	b=Hb7sraPoqwpQjHpl3mqagCZGvatq+vte2yVE7aN/KBDTFbeMdho7Qw/QaW5US7JGE
+	 8cdNzPQfLmeSkHuluMhqJG/mUqs0j622/K4JwpUdDMI/XjM0tmj7jZA7ho3XbdCZoe
+	 kpogn1k1F5gTca93TuhNpN1Yj+uOqv9F5X0x+xVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 417/843] perf intel-pt: Fix snprintf size tracking bug in insn decoder
-Date: Tue, 21 Jul 2026 17:20:52 +0200
-Message-ID: <20260721152415.416628650@linuxfoundation.org>
+Subject: [PATCH 5.15 418/843] perf tools: Fix thread__set_comm_from_proc() on empty comm file
+Date: Tue, 21 Jul 2026 17:20:53 +0200
+Message-ID: <20260721152415.439460407@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -47,6 +45,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
@@ -55,63 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit b6bb3b005dcdd960b8e0b7f9d6869132b3de08d5 ]
+[ Upstream commit 31d596054550f793508abe7dd593853ece47d428 ]
 
-dump_insn() tracks remaining buffer space with a 'left' variable,
-but the loop subtracts the cumulative offset 'n' each iteration
-instead of just the per-iteration delta:
+thread__set_comm_from_proc() calls procfs__read_str() then strips
+the trailing newline via comm[sz - 1] = '\0'.  procfs__read_str()
+allocates the buffer before reading, so on an empty /proc/pid/comm
+(reachable during late exit teardown) it returns success with sz = 0
+and an unterminated heap buffer.
 
-    n += snprintf(x->out + n, left, "%02x ", inbuf[i]);
-    left -= n;  /* BUG: n is cumulative, not the delta */
+The sz - 1 underflow was the original sashiko finding: it writes a
+null byte before the allocation.  But even with a sz > 0 guard on
+the newline strip, the unterminated buffer would still be passed to
+thread__set_comm() which calls strlen() — an unbounded heap read.
 
-After two iterations left goes massively negative, wrapping to a
-huge value when passed as size_t to snprintf(), disabling all bounds
-checking for the rest of the loop.
+Fix by treating sz == 0 as failure: free the buffer and return -1.
+This is consistent with pmu.c's perf_pmu__parse_scale/unit which
+already treat len == 0 from filename__read_str as an error.
 
-Switch to scnprintf() accumulation using sizeof(x->out) - n as the
-remaining space, which is always correct and eliminates the separate
-'left' variable entirely.
-
-Fixes: 48d02a1d5c137d36 ("perf script: Add 'brstackinsn' for branch stacks")
+Fixes: 2f3027ac28bf6bc3 ("perf thread: Introduce method to set comm from /proc/pid/self")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../util/intel-pt-decoder/intel-pt-insn-decoder.c     | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ tools/perf/util/thread.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tools/perf/util/intel-pt-decoder/intel-pt-insn-decoder.c b/tools/perf/util/intel-pt-decoder/intel-pt-insn-decoder.c
-index 9f29cf7210773b..1c377f2454b06e 100644
---- a/tools/perf/util/intel-pt-decoder/intel-pt-insn-decoder.c
-+++ b/tools/perf/util/intel-pt-decoder/intel-pt-insn-decoder.c
-@@ -198,7 +198,6 @@ const char *dump_insn(struct perf_insn *x, uint64_t ip __maybe_unused,
- {
- 	struct insn insn;
- 	int n, i, ret;
--	int left;
- 
- 	ret = insn_decode(&insn, inbuf, inlen,
- 			  x->is64bit ? INSN_MODE_64 : INSN_MODE_32);
-@@ -207,13 +206,9 @@ const char *dump_insn(struct perf_insn *x, uint64_t ip __maybe_unused,
- 		return "<bad>";
- 	if (lenp)
- 		*lenp = insn.length;
--	left = sizeof(x->out);
--	n = snprintf(x->out, left, "insn: ");
--	left -= n;
--	for (i = 0; i < insn.length; i++) {
--		n += snprintf(x->out + n, left, "%02x ", inbuf[i]);
--		left -= n;
--	}
-+	n = scnprintf(x->out, sizeof(x->out), "insn: ");
-+	for (i = 0; i < insn.length; i++)
-+		n += scnprintf(x->out + n, sizeof(x->out) - n, "%02x ", inbuf[i]);
- 	return x->out;
- }
- 
+diff --git a/tools/perf/util/thread.c b/tools/perf/util/thread.c
+index 665e5c0618ed3d..6840a2d357b6a6 100644
+--- a/tools/perf/util/thread.c
++++ b/tools/perf/util/thread.c
+@@ -282,6 +282,11 @@ int thread__set_comm_from_proc(struct thread *thread)
+ 	if (!(snprintf(path, sizeof(path), "%d/task/%d/comm",
+ 		       thread->pid_, thread->tid) >= (int)sizeof(path)) &&
+ 	    procfs__read_str(path, &comm, &sz) == 0) {
++		/* sz==0: read got nothing, e.g. race during exit teardown */
++		if (sz == 0) {
++			free(comm);
++			return -1;
++		}
+ 		comm[sz - 1] = '\0';
+ 		err = thread__set_comm(thread, comm, 0);
+ 	}
 -- 
 2.53.0
 
