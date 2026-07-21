@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6803A429822;
-	Tue, 21 Jul 2026 18:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D570F471271;
+	Tue, 21 Jul 2026 18:38:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659103; cv=none; b=JgR/J3SGLjiqnuF8EQ8lu4weMn5KwzNGZVId4k7dDy16Qg/UADjEXIT4xANXORRyJxCoAuiKAAWEF6MaPdJYADmXucj+plzVEFA96FNj82zNNJu9+P9TQsP6saQWGnZaEPkJYlv4TcPXOZZrxcAPBlvYVQBT3VGojwGwvhJs4Es=
+	t=1784659105; cv=none; b=uoABeeHk6g0PPQrn5wp3TAhu2S6sscb3NVC3jM7cyD7uiMR0hSOG9jwzJeZwVIyWbfyuhJvGfGLXpZGWBBQZ8o1lHGVMyXI6M4fyJGDIFMJIlMdVh2a/tmEzeXEDTBkqCDE64B6ARUctCp+IQ9n4O4MU75bT4AChuu0YF93ppJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659103; c=relaxed/simple;
-	bh=DMpDHqgVQd643xJuN9xgDq4vDHWStNy/OK95HKcHOLk=;
+	s=arc-20240116; t=1784659105; c=relaxed/simple;
+	bh=6RaButsybyFy1VMYs+5GtsnH+lBkkxrGHyBGojboiVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SkqGSJDRwtG3qsFD75dMfEboJ1DUkRlh2Aj2pZsb/0ZQBP0zCUPcQxeKpwR1+b0OLHiLU4ig9S+NpxZQ0YXytDzdXbOTDmA/k5o5jTXFANxDtNOWNa9jYdmt95ZCFpVhWwYZIOzxtnxK9lxYqemq23ug4fYr3EXjCjrp3LxvdYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebowIm1n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gOPf0WR3K+ddFP49TK5BhSpLss+3joQzxDfkjfY3xGycPk+ikEASsFRy8lWop064s/serAHLbOpR9mBi2iDgNREjF1mTiHBMXT/y5+mRbu96VhR5vQyCDilhLvBPu+xMAdyX2qI8jEuwHscZAZclknRr10Q2xlyv7HFy6mP/gy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vES4pcgT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebowIm1n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B7901F000E9;
-	Tue, 21 Jul 2026 18:38:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vES4pcgT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FCB31F00A3F;
+	Tue, 21 Jul 2026 18:38:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659102;
-	bh=hOY5dPR/Iae28j1nV0CgbWu/6QotB4z1iYCs5Zlvu6w=;
+	s=korg; t=1784659104;
+	bh=rjl0ilT9NmT6v+Lrdy3ib2/HC5ig4tN2vv04cXfvznA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ebowIm1ndG3qvoaZsVAFUXJthK0lsSOnD/v3Jt5K2pc2SdDfEDyR3z6P+UPqgxrpc
-	 Lg5oQEOvcwQuYRPI0VE+YW6H/4jatdMXbSidr7NnCh8Jk6BetTbLqRu1AE+zxaU0Ws
-	 iZOuB4fTxM2iYdWQiectEELcGUHCImsqB3aJtB1o=
+	b=vES4pcgTwha2cQX0Gpe1EcWmweD5LZzBw2kTfM6TPS5bjhxRDio2srr/AsMDH9poT
+	 GELjSQEYroPoEGgKFD8xw+jZ2ajJJYiPtD9R1kYEvROQb3+CrBrcoDWQUwmwDQuQ4y
+	 1ZCf3H2RalPYr6CXbiJI4sV18ABuvBF2zVm0X7Zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Marzinski <bmarzins@redhat.com>,
+	Samuel Moelius <sam.moelius@trailofbits.com>,
+	Zheng Gu <cengku@gmail.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.18 1350/1611] dm-log: fix a bitset_size overflow on 32bit machines
-Date: Tue, 21 Jul 2026 17:24:26 +0200
-Message-ID: <20260721152545.822596385@linuxfoundation.org>
+Subject: [PATCH 6.18 1351/1611] dm-pcache: reject option groups without values
+Date: Tue, 21 Jul 2026 17:24:27 +0200
+Message-ID: <20260721152545.845134611@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -50,45 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Marzinski <bmarzins@redhat.com>
+From: Samuel Moelius <sam.moelius@trailofbits.com>
 
-commit 9743132a41f4d9d0e54c5f2adcb821b04796bab1 upstream.
+commit d9c631e3fbd44246a2be781d26cfacbb9b8ec127 upstream.
 
-Commit c20e36b7631d ("dm log: fix out-of-bounds write due to
-region_count overflow") made sure that region_count could fit in an
-unsigned int. But the bitmap memory isn't allocated based on
-region_count. It uses bitset_size (a size_t variable). The first step of
-calculating bitset_size is to set it to region_count, rounded up to a
-multiple of BITS_PER_LONG. If region_size is less than BITS_PER_LONG
-smaller than UINT_MAX, it will get rounded up to 2^32. On a 32bit
-architecture, this will make bitset_size wrap around to 0 and fail,
-despite region_count being valid.
+The pcache target parses optional arguments as name/value pairs.  A
+table that advertises one optional argument and supplies only a
+recognized option name, for example "cache_mode", reaches
+parse_cache_opts() with argc == 1.  The parser consumes the name,
+decrements argc to zero, then calls dm_shift_arg() again for the value.
+dm_shift_arg() returns NULL when no arguments remain, and the following
+strcmp() dereferences that NULL pointer.
 
-Since bitset_size gets divided by 8, it can hold any valid region_count.
-It just needs a special case to handle the rollover. If it is 0, the
-value rolled over, and bitset size should be set to the number of bytes
-needed to hold 2^32 bits.
+Check that each recognized option has a value before consuming it.  This
+keeps valid "cache_mode writeback" and "data_crc true/false" tables
+unchanged while making malformed tables fail during target construction
+with a precise missing-value error.
 
-Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Assisted-by: Codex:gpt-5.5-cyber-preview
+Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
+Reviewed-by:  Zheng Gu <cengku@gmail.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Fixes: c20e36b7631d ("dm log: fix out-of-bounds write due to region_count overflow")
+Fixes: 1d57628ff95b ("dm-pcache: add persistent cache target in device-mapper")
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-log.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/md/dm-pcache/dm_pcache.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/md/dm-log.c
-+++ b/drivers/md/dm-log.c
-@@ -425,6 +425,9 @@ static int create_log_context(struct dm_
- 	 */
- 	bitset_size = dm_round_up(region_count, BITS_PER_LONG);
- 	bitset_size >>= BYTE_SHIFT;
-+	/* Handle dm_round_up rollover on 32-bit systems */
-+	if (!bitset_size)
-+		bitset_size = 1UL << (BITS_PER_LONG - BYTE_SHIFT);
+diff --git a/drivers/md/dm-pcache/dm_pcache.c b/drivers/md/dm-pcache/dm_pcache.c
+index 81c795c0400e..d5cfd162c063 100644
+--- a/drivers/md/dm-pcache/dm_pcache.c
++++ b/drivers/md/dm-pcache/dm_pcache.c
+@@ -168,6 +168,10 @@ static int parse_cache_opts(struct dm_pcache *pcache, struct dm_arg_set *as,
+ 		argc--;
  
- 	lc->bitset_uint32_count = bitset_size / sizeof(*lc->clean_bits);
- 
+ 		if (!strcmp(arg, "cache_mode")) {
++			if (!argc) {
++				*error = "Missing value for cache_mode";
++				return -EINVAL;
++			}
+ 			arg = dm_shift_arg(as);
+ 			if (!strcmp(arg, "writeback")) {
+ 				opts->cache_mode = PCACHE_CACHE_MODE_WRITEBACK;
+@@ -177,6 +181,10 @@ static int parse_cache_opts(struct dm_pcache *pcache, struct dm_arg_set *as,
+ 			}
+ 			argc--;
+ 		} else if (!strcmp(arg, "data_crc")) {
++			if (!argc) {
++				*error = "Missing value for data_crc";
++				return -EINVAL;
++			}
+ 			arg = dm_shift_arg(as);
+ 			if (!strcmp(arg, "true")) {
+ 				opts->data_crc = true;
+-- 
+2.55.0
+
 
 
