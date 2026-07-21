@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10943B995D;
-	Tue, 21 Jul 2026 21:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9060735C6A3;
+	Tue, 21 Jul 2026 21:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670141; cv=none; b=anwFkP3EEd5X8dnH6gMjHaIVue2Q6oE5azry84G7Zj9UN3mbgxMG/mSk/pkbvd07m4pe3dWhCUBRVkGEGdPcZGhpv3zIznlLATfNfJ4etVD4pXbvFnyBu/K2wNgH33THKj/NvoStGdMNrYq7PDnljW3Rzt6DLy5D64K6SSQQMDI=
+	t=1784670143; cv=none; b=mEbrVJivG692mp9Y8vQTRDD6MPJaDxWjBhhPpt8CzEfss5KMtpPlzRq74ICvmWPoGkPOKruM61aKmKY8K6ZXuuND0eB8T+wSJjnR9SU+qdI5tAMNP0IzU+pLX4ch8a9vq9J5M/nLEW2pVD3nWzKK097K58tB6DSxt4zYI0QK0VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670141; c=relaxed/simple;
-	bh=kuWizVtcnPyWzCmYEPPbOn7v38+pIJmDL/NJ0Vz9fpo=;
+	s=arc-20240116; t=1784670143; c=relaxed/simple;
+	bh=knIFuaJPA6R0gK50kLALAYiznTsdSmS0PMYNtXTLSeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oNF/vuIvv4ZBW+bRgspfHE5DGAJM04AE0cbTyDQUJ1c5h+GVvidUMGYqgWvZfaFCw9YwoFdBIUE1sQE7YnPRwXRIzZitBSiutWMI+3McPOrOWQUI4sVFFuOBnJaViYrxwMDqFNUdYqEEhlKtzJbrn4ZiHrvQzjPJcKbm7uySlD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yBuJIrjf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dla/uYl00LAveM9/P/S2NwrOQJmh0oEI2CqQpvJ/yJ32p6U/+fmdbRhyFxlVbqjRyzVP6cgYtRJbgEUphrRHb/kg5LyAKg7/bAGlD++litNICZvI722JWrhawzJTglHCwzd5n7cmu6CH4dTWk6QAAhL6cwv8MTG7lTYXuQO4epk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kf/seHWq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yBuJIrjf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD4C1F000E9;
-	Tue, 21 Jul 2026 21:42:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kf/seHWq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E201F000E9;
+	Tue, 21 Jul 2026 21:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670139;
-	bh=syOORFP3gfElnC4jc0p5eMZe5zxM9YKt/o5idgQLfJk=;
+	s=korg; t=1784670142;
+	bh=aNvb+eten3ie09VHuQEFFsw++2RyXhr6hhdNB8L5u34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yBuJIrjfdxltreJ18fGZWRyhWdzl+tzQfh0YQ2tkzWLbjfelr1xGVhGqmmLvCcCCT
-	 f/QPTYhzz90nz8loztvpWWF6ChHtDj/erGCsNF5Ff3tkInSyqTbo32H2yQTe8rvqte
-	 DTOrY6032LzDOVDOvNT6/nosyX1+YMwb5FQ+xJkk=
+	b=Kf/seHWqcnfziYrwg1qM7l0dY+EsRnbJnhYg+znodlwr/SxmxPmPXv/eKeJGGH77+
+	 089DFOwvHIeF9hVxJNAJMMgM1RvICxIUMLVFNQJdwliyM0rhA0D7EOX1fJTh/5PBVY
+	 TxRlU6L02fNrV9s/vt5ipkUemqbCKVgqWt8xn3sI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Koichiro Den <den@valinux.co.jp>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 0820/1067] dmaengine: dw-edma: Add spinlock to protect DONE_INT_MASK and ABORT_INT_MASK
-Date: Tue, 21 Jul 2026 17:23:41 +0200
-Message-ID: <20260721152442.898366716@linuxfoundation.org>
+	Fredric Cover <fredric.cover.lkernel@gmail.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 0821/1067] smb: client: use kvzalloc() for megabyte buffer in simple fallocate
+Date: Tue, 21 Jul 2026 17:23:42 +0200
+Message-ID: <20260721152442.919005173@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,72 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Fredric Cover <fredric.cover.lkernel@gmail.com>
 
-commit 8ffba0171c6bbce5f093c6dba5a02c0805b31203 upstream.
+commit 806c00c23e3ce8eae397a40ced536ef88ae4e012 upstream.
 
-The DONE_INT_MASK and ABORT_INT_MASK registers are shared by all DMA
-channels, and modifying them requires a read-modify-write sequence.
-Because this operation is not atomic, concurrent calls to
-dw_edma_v0_core_start() can introduce race conditions if two channels
-update these registers simultaneously.
+Currently in smb3_simple_fallocate_range(), a 1 MB buffer is allocated
+using kzalloc(). Under heavy memory fragmentation, a contiguous 1 MB block
+of physical memory (an order-8 allocation) may not be available,
+causing the allocation to fail.
 
-Add a spinlock to serialize access to these registers and prevent race
-conditions.
+This failure was observed during xfstests generic/013 on a 4GB RAM
+test machine running fsstress:
 
-Fixes: 7e4b8a4fbe2c ("dmaengine: Add Synopsys eDMA IP version 0 support")
+fsstress: page allocation failure: order:8,
+mode:0x40dc0(GFP_KERNEL|__GFP_ZERO|__GFP_COMP),
+nodemask=(null),cpuset=/,mems_allowed=0
+
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x5d/0x80
+ warn_alloc+0x163/0x190
+ __alloc_pages_slowpath.constprop.0+0x71b/0x12f0
+ __alloc_frozen_pages_noprof+0x2f6/0x340
+ alloc_pages_mpol+0xb6/0x170
+ ___kmalloc_large_node+0xb3/0xd0
+ __kmalloc_large_noprof+0x1e/0xc0
+ smb3_simple_falloc.isra.0+0x62b/0x960
+ cifs_fallocate+0xed/0x180
+ vfs_fallocate+0x165/0x3c0
+ __x64_sys_fallocate+0x48/0xa0
+ do_syscall_64+0xe1/0x640
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ </TASK>
+
+Node 0 Normal: 3375*4kB ... 7*128kB 0*256kB 0*512kB 0*1024kB 0*2048kB 0*4096kB
+
+Since this scratch buffer does not require physically contiguous memory,
+switch the allocation to kvzalloc(). This retains the performance
+benefits of kmalloc() under normal conditions, while gracefully falling
+back to virtually contiguous memory when physical allocation fails.
+
+Fixes: 966a3cb7c7db ("cifs: improve fallocate emulation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-[den: update dw_edma.lock comment]
-Link: https://lore.kernel.org/dmaengine/20260109-edma_ll-v2-1-5c0b27b2c664@nxp.com/
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Link: https://patch.msgid.link/20260521142153.2957432-5-den@valinux.co.jp
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
+Tested-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.h    |    2 +-
- drivers/dma/dw-edma/dw-edma-v0-core.c |    6 ++++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ fs/smb/client/smb2ops.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/dma/dw-edma/dw-edma-core.h
-+++ b/drivers/dma/dw-edma/dw-edma-core.h
-@@ -109,7 +109,7 @@ struct dw_edma {
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3664,7 +3664,7 @@ static int smb3_simple_fallocate_range(u
+ 	if (rc)
+ 		goto out;
  
- 	struct dw_edma_chan		*chan;
+-	buf = kzalloc(1024 * 1024, GFP_KERNEL);
++	buf = kvzalloc(1024 * 1024, GFP_KERNEL);
+ 	if (buf == NULL) {
+ 		rc = -ENOMEM;
+ 		goto out;
+@@ -3721,7 +3721,7 @@ static int smb3_simple_fallocate_range(u
  
--	raw_spinlock_t			lock;		/* Only for legacy */
-+	raw_spinlock_t			lock;		/* Protect v0 shared registers */
+  out:
+ 	kfree(out_data);
+-	kfree(buf);
++	kvfree(buf);
+ 	return rc;
+ }
  
- 	struct dw_edma_chip             *chip;
- #ifdef CONFIG_DEBUG_FS
---- a/drivers/dma/dw-edma/dw-edma-v0-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
-@@ -361,6 +361,7 @@ void dw_edma_v0_core_start(struct dw_edm
- {
- 	struct dw_edma_chan *chan = chunk->chan;
- 	struct dw_edma *dw = chan->dw;
-+	unsigned long flags;
- 	u32 tmp;
- 
- 	dw_edma_v0_core_write_chunk(chunk);
-@@ -405,6 +406,8 @@ void dw_edma_v0_core_start(struct dw_edm
- 			}
- 		}
- 		/* Interrupt unmask - done, abort */
-+		raw_spin_lock_irqsave(&dw->lock, flags);
-+
- 		tmp = GET_RW_32(dw, chan->dir, int_mask);
- 		tmp &= ~FIELD_PREP(EDMA_V0_DONE_INT_MASK, BIT(chan->id));
- 		tmp &= ~FIELD_PREP(EDMA_V0_ABORT_INT_MASK, BIT(chan->id));
-@@ -413,6 +416,9 @@ void dw_edma_v0_core_start(struct dw_edm
- 		tmp = GET_RW_32(dw, chan->dir, linked_list_err_en);
- 		tmp |= FIELD_PREP(EDMA_V0_LINKED_LIST_ERR_MASK, BIT(chan->id));
- 		SET_RW_32(dw, chan->dir, linked_list_err_en, tmp);
-+
-+		raw_spin_unlock_irqrestore(&dw->lock, flags);
-+
- 		/* Channel control */
- 		SET_CH_32(dw, chan->dir, chan->id, ch_control1,
- 			  (DW_EDMA_V0_CCS | DW_EDMA_V0_LLE));
 
 
