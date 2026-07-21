@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7E635DA40;
-	Tue, 21 Jul 2026 19:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C51432BEE;
+	Tue, 21 Jul 2026 19:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662640; cv=none; b=bQ308Y3aNLT/dTr3AXTdDyMCAtkz710u8ClaEN7htQJyg48V03XSLCucy4L6KwsLS9oYedpPUPuQwoSjDy7pLqHEewLmP4IG54oaiq3NdVq/Tjo8VCN4sTyWb/kItJiAQ5ENH919KmwDFm7q2/x2jzakrCubhZsbAeR1BW4Mudk=
+	t=1784662643; cv=none; b=LQUTMnWvolzRsV1d2xNrcNqF7S0TQtgCJxqviSt52iyf91vV5rXETreomKrb0vYkxcqwPzFS0QbpfgFPBPtnlLp0PdDwA0qWJZgQukTs7d5cUpu89APxh7dpFyQ5bcsOxKdWkgMBIu9sNbNyt0TepW1tzcwzDkFDv1Phs3Rotlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662640; c=relaxed/simple;
-	bh=Qe5v9JBSgaAeEtwftXYZjzt9JDOBFtfDox3wq7v/rUs=;
+	s=arc-20240116; t=1784662643; c=relaxed/simple;
+	bh=0w8yJiQyBFA9rNtqy2lyyMPhAR3skRGlayALMBfAwH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZRgj+894z0ylAKy14xUPvpNes7U8pyzWjcVa8bdqZzhtutbEg8CBb3Lg7tYoOOFnS+yO9z3jTwkN6n/jsSiCFZLNKDyuoBvji2zOjlSzB19S/F74qu0Qx+pwuJFthfNVBcOzhehfS4iLOHdBbOWi/lfE9BPrUpTLs9BuxgZIEVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vtGkjY7O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dbjFUTk62fqATCteMBIdZ8djybNPuVkmJBIaBEEkFR4aiJLOsKeZFsvqnszzWyCCHSZIYsOETI4xOe3kuPlOiLyEGoLCoNS2gCLaUPZVJzGJi8JhI3EsJRmHRSc3GCSLgMTwkZ+2fzXmJsYUK1RyE4yLtSLP4+IZWlvJ8IhZ3xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fs34Siq7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vtGkjY7O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA111F00A3A;
-	Tue, 21 Jul 2026 19:37:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fs34Siq7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774B01F000E9;
+	Tue, 21 Jul 2026 19:37:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662639;
-	bh=Skr1qOslZUexRx3ifAZJfzJuDHc5lFyIuEUqYjkpvSg=;
+	s=korg; t=1784662642;
+	bh=PQBfy8iOjwzXHsicVTIIfwmvyLkO2lnVvxXFGmqvImQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vtGkjY7OZKvPQ2Vnn+CeEnu2d1pMkyJRYDksOud+8uTl4Yik5KeGWtfGSdMjb2Jb3
-	 0SrcaOmCrZI7bQZ68PoxzL2ppRszfTax/ntT7P6AA7CqU61UWPG7g91kEbgMuIM8rh
-	 T9HcGCS3GGwiJeWGHd2s4ikArtoDdpKlOsBl8eQM=
+	b=Fs34Siq71hhE/Hjm/PHYY/c7CUJIijT4okzsFzRnp2niDv9AuZABq9CJ5gcSIZujf
+	 8J4CnHSXxGDQX3EqGyVvEO+kQUx0vGOrwc3ccfP0quTW6yxiTmurWFx2ehuUGZbFsu
+	 nKsMIEGlWL7t7ojVLUNDCIHEoRw+zLu6KfiXAv/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0522/1276] perf symbols: Bounds-check descsz in sysfs__read_build_id() GNU fallback
-Date: Tue, 21 Jul 2026 17:16:05 +0200
-Message-ID: <20260721152457.797147838@linuxfoundation.org>
+Subject: [PATCH 6.12 0523/1276] perf dso: Use lock annotations to fix asan deadlock
+Date: Tue, 21 Jul 2026 17:16:06 +0200
+Message-ID: <20260721152457.819151252@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -46,60 +45,363 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 1b4e9fbdeabc549965e70ac0cd8095d57ff6df06 ]
+[ Upstream commit 5ac22c35aa8519f1fb5522fb3aff915f28a9365e ]
 
-When sysfs__read_build_id() matches NT_GNU_BUILD_ID with the right
-namesz but the name content is not "GNU", it falls back to reading
-descsz bytes into the stack buffer bf[BUFSIZ]:
+dso__list_del with address sanitizer and/or reference count checking
+will call dso__put that can call dso__data_close reentrantly trying to
+lock the dso__data_open_lock and deadlocking. Switch from pthread
+mutexes to perf's mutex so that lock checking is performed in debug
+builds. Add lock annotations that diagnosed the problem. Release the
+dso__data_open_lock around the dso__put to avoid the deadlock.
 
-    } else if (read(fd, bf, descsz) != (ssize_t)descsz)
+Change the declaration of dso__data_get_fd to return a boolean,
+indicating the fd is valid and the lock is held, to make it compatible
+with the thread safety annotations as a try lock.
 
-Unlike the else branch which validates namesz + descsz against
-sizeof(bf), this path passes descsz directly to read() without any
-bounds check.  A crafted sysfs file with a large n_descsz overflows
-the 8192-byte stack buffer.
-
-Add a descsz > sizeof(bf) check before the read, breaking out of
-the loop on oversized values.
-
-Fixes: e5a1845fc0aeca85 ("perf symbols: Split out util/symbol-elf.c")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20250318043151.137973-3-irogers@google.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Stable-dep-of: 2ea64782a428 ("perf tools: Use snprintf() in dso__read_running_kernel_build_id()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-elf.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ tools/perf/tests/dso-data.c              |  4 +-
+ tools/perf/util/dso.c                    | 74 +++++++++++++++---------
+ tools/perf/util/dso.h                    | 15 +++--
+ tools/perf/util/unwind-libunwind-local.c | 16 ++---
+ 4 files changed, 66 insertions(+), 43 deletions(-)
 
-diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-index 923e7d1d8aad8a..c7fcbb8fb644c3 100644
---- a/tools/perf/util/symbol-elf.c
-+++ b/tools/perf/util/symbol-elf.c
-@@ -1060,8 +1060,13 @@ int sysfs__read_build_id(const char *filename, struct build_id *bid)
- 					err = 0;
- 					break;
- 				}
--			} else if (read(fd, bf, descsz) != (ssize_t)descsz)
--				break;
-+			} else {
-+				/* descsz from untrusted file — clamp to buffer */
-+				if (descsz > sizeof(bf))
-+					break;
-+				if (read(fd, bf, descsz) != (ssize_t)descsz)
-+					break;
-+			}
- 		} else {
- 			size_t n;
+diff --git a/tools/perf/tests/dso-data.c b/tools/perf/tests/dso-data.c
+index 5286ae8bd2d70d..06be7c5d849554 100644
+--- a/tools/perf/tests/dso-data.c
++++ b/tools/perf/tests/dso-data.c
+@@ -106,9 +106,9 @@ struct test_data_offset offsets[] = {
+ /* move it from util/dso.c for compatibility */
+ static int dso__data_fd(struct dso *dso, struct machine *machine)
+ {
+-	int fd = dso__data_get_fd(dso, machine);
++	int fd = -1;
+ 
+-	if (fd >= 0)
++	if (dso__data_get_fd(dso, machine, &fd))
+ 		dso__data_put_fd(dso);
+ 
+ 	return fd;
+diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
+index 5c6e85fdae0de1..05a9dc6f41f820 100644
+--- a/tools/perf/util/dso.c
++++ b/tools/perf/util/dso.c
+@@ -490,11 +490,25 @@ void dso__set_module_info(struct dso *dso, struct kmod_path *m,
+ /*
+  * Global list of open DSOs and the counter.
+  */
++struct mutex _dso__data_open_lock;
+ static LIST_HEAD(dso__data_open);
+-static long dso__data_open_cnt;
+-static pthread_mutex_t dso__data_open_lock = PTHREAD_MUTEX_INITIALIZER;
++static long dso__data_open_cnt GUARDED_BY(_dso__data_open_lock);
+ 
+-static void dso__list_add(struct dso *dso)
++static void dso__data_open_lock_init(void)
++{
++	mutex_init(&_dso__data_open_lock);
++}
++
++static struct mutex *dso__data_open_lock(void) LOCK_RETURNED(_dso__data_open_lock)
++{
++	static pthread_once_t data_open_lock_once = PTHREAD_ONCE_INIT;
++
++	pthread_once(&data_open_lock_once, dso__data_open_lock_init);
++
++	return &_dso__data_open_lock;
++}
++
++static void dso__list_add(struct dso *dso) EXCLUSIVE_LOCKS_REQUIRED(_dso__data_open_lock)
+ {
+ 	list_add_tail(&dso__data(dso)->open_entry, &dso__data_open);
+ #ifdef REFCNT_CHECKING
+@@ -505,11 +519,13 @@ static void dso__list_add(struct dso *dso)
+ 	dso__data_open_cnt++;
+ }
+ 
+-static void dso__list_del(struct dso *dso)
++static void dso__list_del(struct dso *dso) EXCLUSIVE_LOCKS_REQUIRED(_dso__data_open_lock)
+ {
+ 	list_del_init(&dso__data(dso)->open_entry);
+ #ifdef REFCNT_CHECKING
++	mutex_unlock(dso__data_open_lock());
+ 	dso__put(dso__data(dso)->dso);
++	mutex_lock(dso__data_open_lock());
+ #endif
+ 	WARN_ONCE(dso__data_open_cnt <= 0,
+ 		  "DSO data fd counter out of bounds.");
+@@ -518,7 +534,7 @@ static void dso__list_del(struct dso *dso)
+ 
+ static void close_first_dso(void);
+ 
+-static int do_open(char *name)
++static int do_open(char *name) EXCLUSIVE_LOCKS_REQUIRED(_dso__data_open_lock)
+ {
+ 	int fd;
+ 	char sbuf[STRERR_BUFSIZE];
+@@ -545,6 +561,7 @@ char *dso__filename_with_chroot(const struct dso *dso, const char *filename)
+ }
+ 
+ static int __open_dso(struct dso *dso, struct machine *machine)
++	EXCLUSIVE_LOCKS_REQUIRED(_dso__data_open_lock)
+ {
+ 	int fd = -EINVAL;
+ 	char *root_dir = (char *)"";
+@@ -610,6 +627,7 @@ static void check_data_close(void);
+  * list/count of open DSO objects.
+  */
+ static int open_dso(struct dso *dso, struct machine *machine)
++	EXCLUSIVE_LOCKS_REQUIRED(_dso__data_open_lock)
+ {
+ 	int fd;
+ 	struct nscookie nsc;
+@@ -635,7 +653,7 @@ static int open_dso(struct dso *dso, struct machine *machine)
+ 	return fd;
+ }
+ 
+-static void close_data_fd(struct dso *dso)
++static void close_data_fd(struct dso *dso) EXCLUSIVE_LOCKS_REQUIRED(_dso__data_open_lock)
+ {
+ 	if (dso__data(dso)->fd >= 0) {
+ 		close(dso__data(dso)->fd);
+@@ -652,12 +670,12 @@ static void close_data_fd(struct dso *dso)
+  * Close @dso's data file descriptor and updates
+  * list/count of open DSO objects.
+  */
+-static void close_dso(struct dso *dso)
++static void close_dso(struct dso *dso) EXCLUSIVE_LOCKS_REQUIRED(_dso__data_open_lock)
+ {
+ 	close_data_fd(dso);
+ }
+ 
+-static void close_first_dso(void)
++static void close_first_dso(void) EXCLUSIVE_LOCKS_REQUIRED(_dso__data_open_lock)
+ {
+ 	struct dso_data *dso_data;
+ 	struct dso *dso;
+@@ -702,7 +720,7 @@ void reset_fd_limit(void)
+ 	fd_limit = 0;
+ }
+ 
+-static bool may_cache_fd(void)
++static bool may_cache_fd(void) EXCLUSIVE_LOCKS_REQUIRED(_dso__data_open_lock)
+ {
+ 	if (!fd_limit)
+ 		fd_limit = get_fd_limit();
+@@ -718,7 +736,7 @@ static bool may_cache_fd(void)
+  * for opened dso file descriptors. The limit is half
+  * of the RLIMIT_NOFILE files opened.
+ */
+-static void check_data_close(void)
++static void check_data_close(void) EXCLUSIVE_LOCKS_REQUIRED(_dso__data_open_lock)
+ {
+ 	bool cache_fd = may_cache_fd();
+ 
+@@ -734,12 +752,13 @@ static void check_data_close(void)
+  */
+ void dso__data_close(struct dso *dso)
+ {
+-	pthread_mutex_lock(&dso__data_open_lock);
++	mutex_lock(dso__data_open_lock());
+ 	close_dso(dso);
+-	pthread_mutex_unlock(&dso__data_open_lock);
++	mutex_unlock(dso__data_open_lock());
+ }
+ 
+ static void try_to_open_dso(struct dso *dso, struct machine *machine)
++	EXCLUSIVE_LOCKS_REQUIRED(_dso__data_open_lock)
+ {
+ 	enum dso_binary_type binary_type_data[] = {
+ 		DSO_BINARY_TYPE__BUILD_ID_CACHE,
+@@ -781,25 +800,27 @@ static void try_to_open_dso(struct dso *dso, struct machine *machine)
+  * returns file descriptor.  It should be paired with
+  * dso__data_put_fd() if it returns non-negative value.
+  */
+-int dso__data_get_fd(struct dso *dso, struct machine *machine)
++bool dso__data_get_fd(struct dso *dso, struct machine *machine, int *fd)
+ {
++	*fd = -1;
+ 	if (dso__data(dso)->status == DSO_DATA_STATUS_ERROR)
+-		return -1;
++		return false;
+ 
+-	if (pthread_mutex_lock(&dso__data_open_lock) < 0)
+-		return -1;
++	mutex_lock(dso__data_open_lock());
+ 
+ 	try_to_open_dso(dso, machine);
+ 
+-	if (dso__data(dso)->fd < 0)
+-		pthread_mutex_unlock(&dso__data_open_lock);
++	*fd = dso__data(dso)->fd;
++	if (*fd >= 0)
++		return true;
+ 
+-	return dso__data(dso)->fd;
++	mutex_unlock(dso__data_open_lock());
++	return false;
+ }
+ 
+ void dso__data_put_fd(struct dso *dso __maybe_unused)
+ {
+-	pthread_mutex_unlock(&dso__data_open_lock);
++	mutex_unlock(dso__data_open_lock());
+ }
+ 
+ bool dso__data_status_seen(struct dso *dso, enum dso_data_status_seen by)
+@@ -951,7 +972,7 @@ static ssize_t file_read(struct dso *dso, struct machine *machine,
+ {
+ 	ssize_t ret;
+ 
+-	pthread_mutex_lock(&dso__data_open_lock);
++	mutex_lock(dso__data_open_lock());
+ 
+ 	/*
+ 	 * dso__data(dso)->fd might be closed if other thread opened another
+@@ -967,7 +988,7 @@ static ssize_t file_read(struct dso *dso, struct machine *machine,
+ 
+ 	ret = pread(dso__data(dso)->fd, data, DSO__DATA_CACHE_SIZE, offset);
+ out:
+-	pthread_mutex_unlock(&dso__data_open_lock);
++	mutex_unlock(dso__data_open_lock());
+ 	return ret;
+ }
+ 
+@@ -1075,7 +1096,7 @@ static int file_size(struct dso *dso, struct machine *machine)
+ 	struct stat st;
+ 	char sbuf[STRERR_BUFSIZE];
+ 
+-	pthread_mutex_lock(&dso__data_open_lock);
++	mutex_lock(dso__data_open_lock());
+ 
+ 	/*
+ 	 * dso__data(dso)->fd might be closed if other thread opened another
+@@ -1099,7 +1120,7 @@ static int file_size(struct dso *dso, struct machine *machine)
+ 	dso__data(dso)->file_size = st.st_size;
+ 
+ out:
+-	pthread_mutex_unlock(&dso__data_open_lock);
++	mutex_unlock(dso__data_open_lock());
+ 	return ret;
+ }
+ 
+@@ -1608,11 +1629,10 @@ size_t dso__fprintf(struct dso *dso, FILE *fp)
+ 
+ enum dso_type dso__type(struct dso *dso, struct machine *machine)
+ {
+-	int fd;
++	int fd = -1;
+ 	enum dso_type type = DSO__TYPE_UNKNOWN;
+ 
+-	fd = dso__data_get_fd(dso, machine);
+-	if (fd >= 0) {
++	if (dso__data_get_fd(dso, machine, &fd)) {
+ 		type = dso__type_fd(fd);
+ 		dso__data_put_fd(dso);
+ 	}
+diff --git a/tools/perf/util/dso.h b/tools/perf/util/dso.h
+index c0472a41147c3c..53eac48fd0cd81 100644
+--- a/tools/perf/util/dso.h
++++ b/tools/perf/util/dso.h
+@@ -231,6 +231,8 @@ DECLARE_RC_STRUCT(dso) {
+ 	char		 name[];
+ };
+ 
++extern struct mutex _dso__data_open_lock;
++
+ /* dso__for_each_symbol - iterate over the symbols of given type
+  *
+  * @dso: the 'struct dso *' in which symbols are iterated
+@@ -652,7 +654,7 @@ void __dso__inject_id(struct dso *dso, const struct dso_id *id);
+ int dso__name_len(const struct dso *dso);
+ 
+ struct dso *dso__get(struct dso *dso);
+-void dso__put(struct dso *dso);
++void dso__put(struct dso *dso) LOCKS_EXCLUDED(_dso__data_open_lock);
+ 
+ static inline void __dso__zput(struct dso **dso)
+ {
+@@ -732,8 +734,8 @@ void dso__set_module_info(struct dso *dso, struct kmod_path *m,
+  * The current usage of the dso__data_* interface is as follows:
+  *
+  * Get DSO's fd:
+- *   int fd = dso__data_get_fd(dso, machine);
+- *   if (fd >= 0) {
++ *   int fd;
++ *   if (dso__data_get_fd(dso, machine, &fd)) {
+  *       USE 'fd' SOMEHOW
+  *       dso__data_put_fd(dso);
+  *   }
+@@ -755,9 +757,10 @@ void dso__set_module_info(struct dso *dso, struct kmod_path *m,
+  *
+  * TODO
+ */
+-int dso__data_get_fd(struct dso *dso, struct machine *machine);
+-void dso__data_put_fd(struct dso *dso);
+-void dso__data_close(struct dso *dso);
++bool dso__data_get_fd(struct dso *dso, struct machine *machine, int *fd)
++	EXCLUSIVE_TRYLOCK_FUNCTION(true, _dso__data_open_lock);
++void dso__data_put_fd(struct dso *dso) UNLOCK_FUNCTION(_dso__data_open_lock);
++void dso__data_close(struct dso *dso) LOCKS_EXCLUDED(_dso__data_open_lock);
+ 
+ int dso__data_file_size(struct dso *dso, struct machine *machine);
+ off_t dso__data_size(struct dso *dso, struct machine *machine);
+diff --git a/tools/perf/util/unwind-libunwind-local.c b/tools/perf/util/unwind-libunwind-local.c
+index 16c2b03831f39a..4c076eba86226c 100644
+--- a/tools/perf/util/unwind-libunwind-local.c
++++ b/tools/perf/util/unwind-libunwind-local.c
+@@ -330,8 +330,7 @@ static int read_unwind_spec_eh_frame(struct dso *dso, struct unwind_info *ui,
+ 	int ret, fd;
+ 
+ 	if (dso__data(dso)->eh_frame_hdr_offset == 0) {
+-		fd = dso__data_get_fd(dso, ui->machine);
+-		if (fd < 0)
++		if (!dso__data_get_fd(dso, ui->machine, &fd))
+ 			return -EINVAL;
+ 
+ 		/* Check the .eh_frame section for unwinding info */
+@@ -372,8 +371,7 @@ static int read_unwind_spec_debug_frame(struct dso *dso,
+ 	 *    has to be pointed by symsrc_filename
+ 	 */
+ 	if (ofs == 0) {
+-		fd = dso__data_get_fd(dso, machine);
+-		if (fd >= 0) {
++		if (dso__data_get_fd(dso, machine, &fd) {
+ 			ofs = elf_section_offset(fd, ".debug_frame");
+ 			dso__data_put_fd(dso);
+ 		}
+@@ -485,14 +483,16 @@ find_proc_info(unw_addr_space_t as, unw_word_t ip, unw_proc_info_t *pi,
+ 	/* Check the .debug_frame section for unwinding info */
+ 	if (ret < 0 &&
+ 	    !read_unwind_spec_debug_frame(dso, ui->machine, &segbase)) {
+-		int fd = dso__data_get_fd(dso, ui->machine);
+-		int is_exec = elf_is_exec(fd, dso__name(dso));
++		int fd;
+ 		u64 start = map__start(map);
+-		unw_word_t base = is_exec ? 0 : start;
++		unw_word_t base = start;
+ 		const char *symfile;
+ 
+-		if (fd >= 0)
++		if (dso__data_get_fd(dso, ui->machine, &fd)) {
++			if (elf_is_exec(fd, dso__name(dso)))
++				base = 0;
+ 			dso__data_put_fd(dso);
++		}
+ 
+ 		symfile = dso__symsrc_filename(dso) ?: dso__name(dso);
  
 -- 
 2.53.0
