@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD1843D502;
-	Tue, 21 Jul 2026 22:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B958A3C1400;
+	Tue, 21 Jul 2026 22:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673518; cv=none; b=MQgSM/4U5j9Adc9D90o0h9CIR4eKoELzfWFggZP1L03O2YUYG2sTizVGpJlslwmjfHjcUd6LRBnlQGULIlry8d0MbbnCJo+cLK6CghS4TYI6AqH7AkBQBAx8IQwXhKGOVSPUwnU0oyD6M9Fe4S3MGrJAGQjpMZUcpVyBFK9VWBI=
+	t=1784673520; cv=none; b=gziPTOocZvAvyfLrkZgAtJsl9Xv3WwsdZOAUZuUn9sPV4Az2K+ZpR0wv+gg+bK7mjU54nZG3LwfdAx/b2Z6xRfLionYt6sdRzdhbG+QvgUnwXJnVWFkeHqiu/EoTbeyLnQZNnMO53jHGZa3eJ9U6AtC7pGvEDPKYgHOCyIrQebY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673518; c=relaxed/simple;
-	bh=pqglV1aBRn/B6i+YVlYETD8W+JN7z/Qc3VmKcAoTsDQ=;
+	s=arc-20240116; t=1784673520; c=relaxed/simple;
+	bh=kMp7vHTE3BJ02Va0Hrs0onDCpFlgeSNHdZGHC37mBN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nG8jB77Wsf5wfnnypAdU4UMkNqvXIvOptDqJy/XAbrCq4sBx/BYjvKSVhA6zHfQ9RAToBj5BPFA5WlYdUS0iFJyY9km1wSNTHLH2bKRklv6Ey/Kba+SCezBmORcUBGv4uiFSZOGVjOuAeRg8cfFA/3xBmxZEADoE+aHolN3iF8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U7pYqyth; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OcoRETsfmnK+ZI7CJN7m9gKnKnMrOJ3wVZXWTDQGhVaReA0bgNgyG1MKJ3hfPy1bJUdjpVOxG1UH/Gee9l0IsOcdyguJqUgjeuFQT6DD2jlia7KAETXh0THgarRqXrhb+ngKU+WGArOZ8njPi5T0b56I7xC8l9wc++TxDYBDeEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QR19jxLC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U7pYqyth"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FAE11F000E9;
-	Tue, 21 Jul 2026 22:38:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QR19jxLC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2192E1F000E9;
+	Tue, 21 Jul 2026 22:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673517;
-	bh=EErc66Tidg2F6SDSJCf+fH5prFO+1gBoULd+/gFx1rI=;
+	s=korg; t=1784673519;
+	bh=24GFmxEZ66lVtO5Y91Y7Pvm8sWrbAkOiZjSAbHxYaG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U7pYqythebH3sXYev+M0kcwD9MafdW/l+Kz21u5t9FWYrJlB9Ic0i1PoxszE+C2wp
-	 rUzEdC1BjAR6kDipIlA/RxNJPQ4KqGi6/aJEdRJ0vL9Pasr78GS8GftQmn84FGd5PH
-	 8YPBf/X6VKwVaWGqmlrrWiPZm0cpmG+XpYSoT/IU=
+	b=QR19jxLCnB7NGBorm61013OZ1PeFJ3Mxbd3XEPxls07F2OIwSGvDmwp1wnnkyGPNG
+	 ZwpwJRC0EVqaurQdI2W1vOkFRc2PxBaNteBbJcwv+F08by6fxNywRagZPNQC9rh6be
+	 qo1BfweWsHm+0hA+UaoB7YTMWzDJm8B/Q8wtgQZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	NeilBrown <neil@brown.name>,
+	Tejun Heo <tj@kernel.org>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 192/699] media: atomisp: Fix memory leak in atomisp_fixed_pattern_table()
-Date: Tue, 21 Jul 2026 17:19:11 +0200
-Message-ID: <20260721152400.030361292@linuxfoundation.org>
+Subject: [PATCH 5.10 193/699] sysfs: clamp show() return value in sysfs_kf_read()
+Date: Tue, 21 Jul 2026 17:19:12 +0200
+Message-ID: <20260721152400.052508482@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,58 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 4e8156bd9517fa18c3613ea39c222c7035f0221e ]
+[ Upstream commit 454257f6d124a92342dcbb7710c03dd6ef96c731 ]
 
-atomisp_v4l2_framebuffer_to_css_frame() allocates memory for
-temporary variable raw_black_frame, which must be released via
-ia_css_frame_free() before the function returns. However, if
-sh_css_set_black_frame() fails, the function returns immediately without
-performing this cleanup, leading to a memory leak.
+sysfs_kf_seq_show() defends against buggy show() callbacks that return
+larger than PAGE_SIZE by clamping the value and printing a warning.
+sysfs_kf_read(), the prealloc variant, has no such defense.
 
-Fix this by assigning the return value of sh_css_set_black_frame() to
-ret. This ensures that the error code is propagated while allowing the
-execution to fall through to the ia_css_frame_free() cleanup call.
+The only current in-tree user of __ATTR_PREALLOC is drivers/md/md.c,
+whose show() callbacks are well-behaved, so this is hardening against
+future drivers doing foolish things and out-of-tree code doing even more
+foolish things.
 
-The bug was originally detected on v6.13-rc1 using an experimental
-static analysis tool we are developing, and we have verified that the
-issue persists in the latest mainline kernel. The tool is based on the
-LLVM framework and is specifically designed to detect memory management
-issues. It is currently under active development and not yet publicly
-available.
-
-We performed build testing on x86_64 with allyesconfig. Since triggering
-this error path in atomisp requires specific Intel Atom ISP hardware and
-firmware, we were unable to perform runtime testing and instead verified
-the fix according to the code logic.
-
-Fixes: 85b606e02ad7 ("media: atomisp: get rid of a bunch of other wrappers")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Cc: NeilBrown <neil@brown.name>
+Cc: Tejun Heo <tj@kernel.org>
+Fixes: 2b75869bba67 ("sysfs/kernfs: allow attributes to request write buffer be pre-allocated.")
+Assisted-by: gregkh_clanker_t1000
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patch.msgid.link/2026052000-drove-unicycle-d61b@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/atomisp/pci/atomisp_cmd.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/sysfs/file.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/staging/media/atomisp/pci/atomisp_cmd.c b/drivers/staging/media/atomisp/pci/atomisp_cmd.c
-index 613bd962022424..0e92a6156ed5b6 100644
---- a/drivers/staging/media/atomisp/pci/atomisp_cmd.c
-+++ b/drivers/staging/media/atomisp/pci/atomisp_cmd.c
-@@ -4689,10 +4689,8 @@ int atomisp_fixed_pattern_table(struct atomisp_sub_device *asd,
- 	if (ret)
- 		return ret;
- 
--	if (sh_css_set_black_frame(asd->stream_env[ATOMISP_INPUT_STREAM_GENERAL].stream,
--				   raw_black_frame) != 0)
--		return -ENOMEM;
--
-+	ret = sh_css_set_black_frame(asd->stream_env[ATOMISP_INPUT_STREAM_GENERAL].stream,
-+				     raw_black_frame);
- 	ia_css_frame_free(raw_black_frame);
- 	return ret;
- }
+diff --git a/fs/sysfs/file.c b/fs/sysfs/file.c
+index f51b2396830f4a..d3dd04d3997d2d 100644
+--- a/fs/sysfs/file.c
++++ b/fs/sysfs/file.c
+@@ -117,6 +117,10 @@ static ssize_t sysfs_kf_read(struct kernfs_open_file *of, char *buf,
+ 	len = ops->show(kobj, of->kn->priv, buf);
+ 	if (len < 0)
+ 		return len;
++	if (len >= (ssize_t)PAGE_SIZE) {
++		printk("fill_read_buffer: %pS returned bad count\n", ops->show);
++		len = PAGE_SIZE - 1;
++	}
+ 	if (pos) {
+ 		if (len <= pos)
+ 			return 0;
 -- 
 2.53.0
 
