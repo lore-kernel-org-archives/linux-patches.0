@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C98D403AFB;
-	Tue, 21 Jul 2026 17:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D8837B40C;
+	Tue, 21 Jul 2026 17:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654948; cv=none; b=fMGAqbUSxHUAZ2QWVd8NFNG+tEa3o4Q2yVtKwYGhOihhS3I2gW4PJiiDxB65mT5p3tENCJ9wDgPE1A2olgBCctLrSR584X/qbdrd9DnEtf3+0J792CDWzPUICirfoZcTwPhTUM6u1BlGbzWGJ5dHPEvUN2e/2fPsVW2wc4dNaAU=
+	t=1784654951; cv=none; b=Ed0rkORc//eX1XC468rgJPr+/f6Xxi8GUq98P3alDBOBEO+ZfYWkqUlnCX1UBJxsgB9VPoq2j9Nm/bWB4QqElghDWTOpz3NK+PX1NDjZxeDCbGT0/iIpK3JAW9xYx3Y0aLmYeasemJxl62U1XaUVqFEL4ZEEE3hmAq8inAiA0wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654948; c=relaxed/simple;
-	bh=Y+i5G41tbzqiPZSurugHLf80OlzPJx0/lBXRxrXI44s=;
+	s=arc-20240116; t=1784654951; c=relaxed/simple;
+	bh=Ymw1xghJN9lt2rTXW0nUutTwP4okIkUAgf0XZNPETvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JsSMRm0tBzDlJXc7t1VOT0Ki086SqHaAr5bKqqaWq0ctOVwk6oD2f79b75SBCjSew5nHxTLWjRTSYdy5AAglrZqqHRHxVSZNYCFuMQmLIvxt+vibQcE2vJ4VkS2ajoHjRhShv9Oul6JKkst9RwczYZ304NtfWhZjYzB/Mlewtrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BvftANpu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qA0/pzg9/U54LUpZdofqT+VFC28+q7xWfYLtNP5ihgxMOzh/NI5k2T3kcjnKLqTLQomFebY0m9lMA65lWf7JO+EYlcbdk5ktSwCvCSswGANV6gDZsxruxzghuQpM67lhB6lMRSFGlqL2BRyYCCmHexKQ/LPE67XKDe1GwL14Hic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vc5Pie7I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BvftANpu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67871F000E9;
-	Tue, 21 Jul 2026 17:29:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vc5Pie7I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD911F00A3A;
+	Tue, 21 Jul 2026 17:29:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654947;
-	bh=SD/rDG6rMlrY3cD31H+k9JunlydcttHf3HcGKCvw11g=;
+	s=korg; t=1784654949;
+	bh=5Y6FEc96yJCjLgmmv2NKduIsS+eu++zWMmmXa3UUitE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BvftANpuj9uQKBGP4TyH0y5NXg/mdxjcW0ZrKnPfXfRl2CwP3huEpgh+p60lxv/e9
-	 gSYAto6wbDGLzxiFxuTuNgknRk3ca+b1PXYya101Zs1907DM0nkkqnxS7SDRx+Xs9m
-	 TcTrxkf6qwTF4kbSc6kBpuI4DgSfxgGnvbovn0uE=
+	b=Vc5Pie7I15vCREjGIkwCxc6lFpvToLXa/KT1MEn7DilA15SdtV4tA/ryAsXVclgbA
+	 9cbiety4O6GbAhqapHNSlyDB7S9CXE16w8pqBqGuRKymiB3x0Rjw707+XwNBq9T3NA
+	 3wa/JLrQpoyndyzGuYZvKiFvTExBY5acXieHpG8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko bot <sashiko-bot@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 7.1 1891/2077] Input: ims-pcu - fix type confusion in CDC union descriptor parsing
-Date: Tue, 21 Jul 2026 17:26:04 +0200
-Message-ID: <20260721152637.325603441@linuxfoundation.org>
+	Bradley Morgan <include@grrlz.net>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 7.1 1900/2077] cpu: hotplug: Bound hotplug states sysfs output
+Date: Tue, 21 Jul 2026 17:26:13 +0200
+Message-ID: <20260721152637.534406200@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,38 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Bradley Morgan <include@grrlz.net>
 
-commit ca459e237bc49567649c56bc72e4c602fb92fd67 upstream.
+commit 86f436567f2516a0083b210bedc933544826a2c3 upstream.
 
-The driver currently trusts the bMasterInterface0 from the CDC union
-descriptor without verifying that it matches the interface being
-probed. This could lead to the driver overwriting the private data of
-another interface.
+states_show() adds CPU hotplug state names into a single sysfs buffer
+using sprintf(). With enough registered states, this can write past the
+end of the PAGE_SIZE buffer.
 
-Validate that the control interface found in the descriptor is indeed
-the one we are probing.
+Use sysfs_emit_at() so output is bounded.
 
-Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
+Fixes: 98f8cdce1db5 ("cpu/hotplug: Add sysfs state interface")
+Signed-off-by: Bradley Morgan <include@grrlz.net>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko bot <sashiko-bot@kernel.org>
-Assisted-by: Gemini:gemini-3.1-pro
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://patch.msgid.link/20260619163719.12103-2-include@grrlz.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/ims-pcu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/cpu.c |   12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
---- a/drivers/input/misc/ims-pcu.c
-+++ b/drivers/input/misc/ims-pcu.c
-@@ -1747,7 +1747,7 @@ static int ims_pcu_parse_cdc_data(struct
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -2854,21 +2854,17 @@ static const struct attribute_group cpuh
+ 	.name = "hotplug",
+ };
  
- 	pcu->ctrl_intf = usb_ifnum_to_if(pcu->udev,
- 					 union_desc->bMasterInterface0);
--	if (!pcu->ctrl_intf)
-+	if (pcu->ctrl_intf != intf)
- 		return -EINVAL;
+-static ssize_t states_show(struct device *dev,
+-				 struct device_attribute *attr, char *buf)
++static ssize_t states_show(struct device *dev, struct device_attribute *attr, char *buf)
+ {
+-	ssize_t cur, res = 0;
++	ssize_t res = 0;
+ 	int i;
  
- 	alt = pcu->ctrl_intf->cur_altsetting;
+ 	mutex_lock(&cpuhp_state_mutex);
+ 	for (i = CPUHP_OFFLINE; i <= CPUHP_ONLINE; i++) {
+ 		struct cpuhp_step *sp = cpuhp_get_step(i);
+ 
+-		if (sp->name) {
+-			cur = sprintf(buf, "%3d: %s\n", i, sp->name);
+-			buf += cur;
+-			res += cur;
+-		}
++		if (sp->name)
++			res += sysfs_emit_at(buf, res, "%3d: %s\n", i, sp->name);
+ 	}
+ 	mutex_unlock(&cpuhp_state_mutex);
+ 	return res;
 
 
