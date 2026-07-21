@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409C8305E3B;
-	Tue, 21 Jul 2026 22:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB23305E3B;
+	Tue, 21 Jul 2026 22:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671599; cv=none; b=POUChvuMeFR93p0fyICT4Y/Z4lpl3Ptbam1xTa5Aka74mETQfkg+GOA3KNJGhLjlyddd8ECoAQR2LI85r/UMtsKhpItAD/m3c0/P+GFD9m/KvFyFnhDemic+dltVf+ERniW1ZhEp31ltJmOkss7AkqTW8J1c9hRPPtkH/9d/mR4=
+	t=1784671602; cv=none; b=BuP1PMeFY/g+0AXdtvAomhO/9HkFKtHNK1qlukj/+y0svkc9iAfw6MzrvDu8Ck1xYk46yJnn+iBQhfLYLzDfN0xmPkpW2aLutVuxtCVz+xqxMORqnodi0gy5DKTc4lDu+jaXThbq8gEwBxCvIMRc+Le2SuMIJb2JVpyPR3+SpxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671599; c=relaxed/simple;
-	bh=DIrEF4exXhWr1H6CJUFc3we1tEBDqZOcuIoPD7bPQZM=;
+	s=arc-20240116; t=1784671602; c=relaxed/simple;
+	bh=gHHIPdzbWx9T1YimfijdkoJTTCCk3vgocDOuJola1lQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9kcDft/Fo6W+Pc7Ot5CYDvrgWUQFnawGbXnqoJ/Dy+ex5oBmFuiFGgrQYRPcCO4JQrsQ042Y0yCzzSpk2NOaB7w63b5shAw+PgK+6fho3K3zzWDTU+A5YkuBecv/TKOuDYqRAgrN1rsiRJhIfaJZQ2C4WZXkptcelOFZsVizB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDYnD+s9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LN4d0u75nKDZR0CF12Jvii3XPK8/zVrycajMOFOrvJ0yCsI7LVXh9JaSt6BkjGNqLFU3CEPmT/gAx6VBlZxEkQdVm8i4d9p1mYmhIRLIqICbAAR+lzh/eMZVEA92Gk6LB6p5u2nsdBM0mXxOSS9KeAUZvIwz6tJ2s+U8RySd7J0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WssRfx+g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDYnD+s9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5E7D1F000E9;
-	Tue, 21 Jul 2026 22:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WssRfx+g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DFAE1F000E9;
+	Tue, 21 Jul 2026 22:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671598;
-	bh=P3G6UCWtqLSd1KkSfrNkR+PUr++75yseOKNaaGM6hBA=;
+	s=korg; t=1784671600;
+	bh=IyTJDRsfLn5pN4Q4vJoobeNyLBAUBtnVz/WKBDvD/Pw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lDYnD+s9+vWphTukZt3Rn2BMXpn1NoQjfCyAwhOQh87OW92uB6rud05uzRTlRLEqr
-	 sKMM3iXBcY7maTLWJ2g3mplsDBai1Khq4ZqMmUSSap2yRtYkZbSQQTQ/FYjIyPqMMH
-	 O6fSivZpO9gXjfwlPt/8ONcocwhvxgvTbCwIa7XU=
+	b=WssRfx+gyzwEsBV4zTFdSAjVEP2LTqW6iXSWxvi39vciizjjo22cQ/myrtuu4B/Tr
+	 Jl3dDJ35IA096Vgej7LEcO0hH3CEipxSTsl9QEOne84LPbisthfSwXc75j7Y3NulfD
+	 NPdYUAmQbdm9A6wSeUsPi7DQjaR73PSu44xwFFio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Leon Hwang <leon.huangfu@shopee.com>,
+	Leon Hwang <leon.hwang@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 305/843] RDMA/irdma: Fix OOB read during CQ MR registration
-Date: Tue, 21 Jul 2026 17:19:00 +0200
-Message-ID: <20260721152412.888976356@linuxfoundation.org>
+Subject: [PATCH 5.15 306/843] bpf: Update transport_header when encapsulating UDP tunnel in lwt
+Date: Tue, 21 Jul 2026 17:19:01 +0200
+Message-ID: <20260721152412.910615645@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,75 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Leon Hwang <leon.hwang@linux.dev>
 
-[ Upstream commit 4385ddd654d90245eeb83b3cb539670ab5c85ba4 ]
+[ Upstream commit 82d7d0adbc678064543e9d254864f6b4ea4a388c ]
 
-Sashiko pointed out an unrelated bug during a previous patch:
-https://sashiko.dev/#/patchset/20260512183852.614045-1-jmoroni%40google.com
+Currently, bpf_lwt_push_ip_encap() does not update skb->transport_header.
+When a driver, e.g. ice, reuses the stale skb->transport_header to
+offload checksum computation to NIC hardware, VxLAN packets encapsulated
+by bpf_lwt_push_encap() helper may be dropped due to incorrect checksum.
 
-This change fixes the bug by eliminating the cqmr->split field which
-was not being set properly and instead just checks the CQ resize
-feature flag directly.
+Update skb->transport_header in bpf_lwt_push_ip_encap() whenever the
+encapsulated packet uses UDP, so checksum offload works correctly.
 
-The cqmr->split field essentially tracks whether IRDMA_FEATURE_CQ_RESIZE
-is set, but it was not being set until CQ creation time, which is _after_
-CQ memory registration (the only other place where it is referenced).
-
-As a result, it would always be false during MR registration and would
-therefore cause irdma_handle_q_mem to populate cqmr->shadow even for GEN_2
-HW and beyond:
-
-    cqmr->shadow = (dma_addr_t)arr[req->cq_pages];
-
-The issue is that for GEN_2 and beyond, req->cq_pages may be exactly equal
-to iwmr->page_cnt and therefore equal to the size of arr, which would cause
-an OOB read by one.
-
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Link: https://patch.msgid.link/r/20260602214423.1315105-2-jmoroni@google.com
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 52f278774e79 ("bpf: implement BPF_LWT_ENCAP_IP mode in bpf_lwt_push_encap")
+Cc: Leon Hwang <leon.huangfu@shopee.com>
+Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
+Link: https://lore.kernel.org/r/20260602150931.49629-2-leon.hwang@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 4 ++--
- drivers/infiniband/hw/irdma/verbs.h | 1 -
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ net/core/lwt_bpf.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index f6409fa1d33b82..e6cf2734c684a8 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -2024,7 +2024,6 @@ static int irdma_create_cq(struct ib_cq *ibcq,
- 			}
- 			cqmr_shadow = &iwpbl_shadow->cq_mr;
- 			info.shadow_area_pa = cqmr_shadow->cq_pbl.addr;
--			cqmr->split = true;
- 		} else {
- 			info.shadow_area_pa = cqmr->shadow;
- 		}
-@@ -2400,7 +2399,8 @@ static int irdma_handle_q_mem(struct irdma_device *iwdev,
- 	case IRDMA_MEMREG_TYPE_CQ:
- 		hmc_p = &cqmr->cq_pbl;
+diff --git a/net/core/lwt_bpf.c b/net/core/lwt_bpf.c
+index f6c327c7badb4c..8c41532b4fe8fb 100644
+--- a/net/core/lwt_bpf.c
++++ b/net/core/lwt_bpf.c
+@@ -589,6 +589,7 @@ static int handle_gso_encap(struct sk_buff *skb, bool ipv4, int encap_len)
  
--		if (!cqmr->split)
-+		if (!(iwdev->rf->sc_dev.hw_attrs.uk_attrs.feature_flags &
-+		      IRDMA_FEATURE_CQ_RESIZE))
- 			cqmr->shadow = (dma_addr_t)arr[req->cq_pages];
- 
- 		if (use_pbles)
-diff --git a/drivers/infiniband/hw/irdma/verbs.h b/drivers/infiniband/hw/irdma/verbs.h
-index 13c66908411f75..9604d9dc2784c0 100644
---- a/drivers/infiniband/hw/irdma/verbs.h
-+++ b/drivers/infiniband/hw/irdma/verbs.h
-@@ -56,7 +56,6 @@ struct irdma_hmc_pble {
- struct irdma_cq_mr {
- 	struct irdma_hmc_pble cq_pbl;
- 	dma_addr_t shadow;
--	bool split;
- };
- 
- struct irdma_qp_mr {
+ int bpf_lwt_push_ip_encap(struct sk_buff *skb, void *hdr, u32 len, bool ingress)
+ {
++	bool is_udp_tunnel;
+ 	struct iphdr *iph;
+ 	bool ipv4;
+ 	int err;
+@@ -602,10 +603,16 @@ int bpf_lwt_push_ip_encap(struct sk_buff *skb, void *hdr, u32 len, bool ingress)
+ 		ipv4 = true;
+ 		if (unlikely(len < iph->ihl * 4))
+ 			return -EINVAL;
++		is_udp_tunnel = iph->protocol == IPPROTO_UDP;
++		if (unlikely(is_udp_tunnel && len < iph->ihl * 4 + sizeof(struct udphdr)))
++			return -EINVAL;
+ 	} else if (iph->version == 6) {
+ 		ipv4 = false;
+ 		if (unlikely(len < sizeof(struct ipv6hdr)))
+ 			return -EINVAL;
++		is_udp_tunnel = ((struct ipv6hdr *)iph)->nexthdr == NEXTHDR_UDP;
++		if (unlikely(is_udp_tunnel && len < sizeof(struct ipv6hdr) + sizeof(struct udphdr)))
++			return -EINVAL;
+ 	} else {
+ 		return -EINVAL;
+ 	}
+@@ -627,6 +634,11 @@ int bpf_lwt_push_ip_encap(struct sk_buff *skb, void *hdr, u32 len, bool ingress)
+ 	if (ingress)
+ 		skb_postpush_rcsum(skb, iph, len);
+ 	skb_reset_network_header(skb);
++	if (is_udp_tunnel) {
++		size_t iph_sz = ipv4 ? iph->ihl * 4 : sizeof(struct ipv6hdr);
++
++		skb_set_transport_header(skb, skb_network_offset(skb) + iph_sz);
++	}
+ 	memcpy(skb_network_header(skb), hdr, len);
+ 	bpf_compute_data_pointers(skb);
+ 	skb_clear_hash(skb);
 -- 
 2.53.0
 
