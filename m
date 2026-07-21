@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACAA3783D4;
-	Tue, 21 Jul 2026 20:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4976438026;
+	Tue, 21 Jul 2026 20:30:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665802; cv=none; b=MQbWIPMbP59YnMPmi+XvuTIXbVdMxF101xVewoWw8mNFNrcNDpY54+jx8nACUNw1DxiiA6Vah5JOqqAbPTPKY6K3TVEi0+Y7fhpECkfiSh73KR87cOOyvkQ/Oi2HGzE4Xq43YrtikM0c0w4B+TQM6Gtk4oRwZJvxuDXMtCt4KC0=
+	t=1784665805; cv=none; b=lSrENkBrzIObg03XVdAtdO+xeBXvHO+ac4vXtNcDG1EWDH1U8n3XyqXQj87L2FlIPbklV4uyw5K7WNN4fvrdblOFWp6Yb7ZbkZ5nIKtUvpAYXZeA8EnkBIvWldCCcYa4n9/l76B5wL5GG2qVP7EjtiwN+FjCi8CxWL017e+d+lY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665802; c=relaxed/simple;
-	bh=vYzJigOAwTrOs5+VJQU8de6I5XgvUxEc08Syo6A78Hc=;
+	s=arc-20240116; t=1784665805; c=relaxed/simple;
+	bh=xrE+vBdG6uvH2D5jWZVh/Ih3VczTJ2vogOCx01tUsJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UJHaXt7Nsk1B3zB/h9Vqo83jBJeoOxGM2B+ZkhQGfVVf7wz3E5DPLecCUzLSR9FNDtjqy6amE3YkccxdKK6oOceGk58JP9r1Z8MAViNE6j/yRWVqr167QGIyZ4kuoG8tJVRVUtwwHcJ+Blv05yrqvqpN6XP0c+AVUdOqeJDMz5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hYP6kEx4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M2ccoQAX0zz3QUQbf8qipF6tA8DV8a3Xlwi3uFbyAVXsbJmtNYMss4rLpTbWBwF0qwQLCQvE5Vm5Jx+tAXEJABqUcvF10RaUsmwmz2LJ8AdraB6GOCTdfvHlbQgbcUXkfEB6JReHJ35wHU3Q3lX0bTEdVLbC/FT3GiJ4jBLt6x0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q3o9cP9N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hYP6kEx4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2451F000E9;
-	Tue, 21 Jul 2026 20:30:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q3o9cP9N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1751F000E9;
+	Tue, 21 Jul 2026 20:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665800;
-	bh=HqJmgbrIDRQSRPwjYrug+aNjuUebPGpKuOHb+6BumXE=;
+	s=korg; t=1784665803;
+	bh=EWfecE4b3UZ5RTNf4RLmyIlmanxalyibxrTbLXpIZec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hYP6kEx40d1xDyLZ0mJnrLJ3TL7SV2dorusgSIfkkwCfKK/lPlarPfCOECYD3PeOP
-	 ho/QzqiHZHuy/DW6MvwkJim63Z/n3eYeRY5nfS/kFfHj6ZOcOXyzCZBzkvxjbiMxId
-	 piUk8WknqG82//fckaxZa7R+GTFzTl7l+u/0xXBc=
+	b=q3o9cP9N7gNcg5t5iii+DR58Kj0m5FBGHxTK2zY7Ozi4/+9WVBxUYwVZJYmLzafNN
+	 2jCD2uoJ6X/nyaIQcrABSKk3lO2j95V6yA1RnFr1AIlPJgWFDfGcRl3HDOOdKvtmad
+	 m+vYzWnigRnhgOunw1S1765h+oINZW2+g78QXbaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Yury Norov <yury.norov@gmail.com>,
+	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	John Garry <john.g.garry@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0414/1266] bitops: use common function parameter names
-Date: Tue, 21 Jul 2026 17:14:11 +0200
-Message-ID: <20260721152451.103588589@linuxfoundation.org>
+Subject: [PATCH 6.6 0441/1266] nvme-multipath: fix flex array size in struct nvme_ns_head
+Date: Tue, 21 Jul 2026 17:14:38 +0200
+Message-ID: <20260721152451.706890477@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,88 +55,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Nilay Shroff <nilay@linux.ibm.com>
 
-[ Upstream commit 8a51b2e874f47a6094353b59ecae421f0968fe3a ]
+[ Upstream commit 001e57554de81aa79c25c18fd53911d8a415c304 ]
 
-Fix the function prototypes to use the common parameter name 'addr'
-instead of 'p' (common to arch-specific implementations of these
-functions).
-This avoids the kernel-doc warnings:
+struct nvme_ns_head contains a flexible array member, current_path[],
+which is indexed using the NUMA node ID:
+head->current_path[numa_node_id()]
 
-Warning: include/asm-generic/bitops/lock.h:19 function parameter 'p'
- not described in 'arch_test_and_set_bit_lock'
-Warning: include/asm-generic/bitops/lock.h:41 function parameter 'p'
- not described in 'arch_clear_bit_unlock'
-Warning: include/asm-generic/bitops/lock.h:59 function parameter 'p'
- not described in 'arch___clear_bit_unlock'
+The structure is currently allocated as:
+size = sizeof(struct nvme_ns_head) +
+       (num_possible_nodes() * sizeof(struct nvme_ns *));
+head = kzalloc(size, GFP_KERNEL);
 
-Fixes: 84c6591103db ("locking/atomics, asm-generic/bitops/lock.h: Rewrite using atomic_fetch_*()")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Yury Norov <yury.norov@gmail.com>
+This allocation assumes that NUMA node IDs are sequential and densely
+packed from 0 .. num_possible_nodes() - 1. While this assumption holds
+on many systems, it is not always true on some architectures such as
+powerpc.
+
+On some powerpc systems, NUMA node IDs can be sparse. For example:
+NUMA:
+  NUMA node(s):              6
+  NUMA node0 CPU(s):         80-159
+  NUMA node8 CPU(s):         0-79
+  NUMA node252 CPU(s):
+  NUMA node253 CPU(s):
+  NUMA node254 CPU(s):
+  NUMA node255 CPU(s):
+
+That is, the possible/online NUMA node IDs are: 0, 8, 252, 253, 254, 255
+In this case: num_possible_nodes() = 6
+
+So memory is allocated for only 6 entries in current_path[]. However,
+the array is later indexed using the actual NUMA node ID. As a result,
+accesses such as:
+head->current_path[8] or
+head->current_path[252]
+goes out of bounds, leading to the following KASAN splat:
+
+==================================================================
+BUG: KASAN: slab-out-of-bounds in nvme_mpath_revalidate_paths+0x22c/0x290 [nvme_core]
+Write of size 8 at addr c00020003bda35b8 by task kworker/u641:2/1997
+
+CPU: 1 UID: 0 PID: 1997 Comm: kworker/u641:2 Not tainted 7.1.0-rc5-dirty #14 PREEMPT(lazy)
+Hardware name: 8335-GTH POWER9 0x4e1202 opal:skiboot-v6.5.3-35-g1851b2a06 PowerNV
+Workqueue: async async_run_entry_fn
+Call Trace:
+[c000200037fa7510] [c0000000021c23d4] dump_stack_lvl+0x88/0xdc (unreliable)
+[c000200037fa7540] [c0000000009fda90] print_report+0x22c/0x67c
+[c000200037fa7630] [c0000000009fd508] kasan_report+0x108/0x220
+[c000200037fa7740] [c0000000009fff48] __asan_store8+0xe8/0x120
+[c000200037fa7760] [c008000018e76474] nvme_mpath_revalidate_paths+0x22c/0x290 [nvme_core]
+[c000200037fa7800] [c008000018e6556c] nvme_update_ns_info+0x4a4/0x5e0 [nvme_core]
+[c000200037fa7a50] [c008000018e66270] nvme_alloc_ns+0x6d8/0x1a70 [nvme_core]
+[c000200037fa7c20] [c008000018e679fc] nvme_scan_ns+0x3f4/0x630 [nvme_core]
+[c000200037fa7d10] [c00000000031f22c] async_run_entry_fn+0x9c/0x3a0
+[c000200037fa7db0] [c0000000002fa544] process_one_work+0x414/0xa10
+[c000200037fa7ec0] [c0000000002fbf00] worker_thread+0x320/0x640
+[c000200037fa7f80] [c00000000030d0f8] kthread+0x278/0x290
+[c000200037fa7fe0] [c00000000000ded8] start_kernel_thread+0x14/0x18
+
+Allocated by task 1997 on cpu 1 at 35.928317s:
+
+The buggy address belongs to the object at c00020003bda3000
+ which belongs to the cache kmalloc-rnd-15-2k of size 2048
+The buggy address is located 16 bytes to the right of
+ allocated 1448-byte region [c00020003bda3000, c00020003bda35a8)
+
+The buggy address belongs to the physical page:
+
+Memory state around the buggy address:
+ c00020003bda3480: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ c00020003bda3500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>c00020003bda3580: 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc fc
+                                        ^
+ c00020003bda3600: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ c00020003bda3680: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+==================================================================
+
+Fix this by allocating the flexible array using nr_node_ids instead
+of num_possible_nodes(). Since nr_node_ids represents the maximum
+possible NUMA node IDs, indexing current_path[] using numa_node_id()
+becomes safe even on systems with sparse node IDs.
+
+Fixes: f333444708f8 ("nvme: take node locality into account when selecting a path")
+Tested-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/bitops/lock.h | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/nvme/host/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/asm-generic/bitops/lock.h b/include/asm-generic/bitops/lock.h
-index 40913516e654c9..b78be6c6c73e74 100644
---- a/include/asm-generic/bitops/lock.h
-+++ b/include/asm-generic/bitops/lock.h
-@@ -16,16 +16,16 @@
-  * It can be used to implement bit locks.
-  */
- static __always_inline int
--arch_test_and_set_bit_lock(unsigned int nr, volatile unsigned long *p)
-+arch_test_and_set_bit_lock(unsigned int nr, volatile unsigned long *addr)
- {
- 	long old;
- 	unsigned long mask = BIT_MASK(nr);
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 48c46c942253c7..13ff4ac8f3e372 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3396,7 +3396,7 @@ static struct nvme_ns_head *nvme_alloc_ns_head(struct nvme_ctrl *ctrl,
+ 	int ret = -ENOMEM;
  
--	p += BIT_WORD(nr);
--	if (READ_ONCE(*p) & mask)
-+	addr += BIT_WORD(nr);
-+	if (READ_ONCE(*addr) & mask)
- 		return 1;
+ #ifdef CONFIG_NVME_MULTIPATH
+-	size += num_possible_nodes() * sizeof(struct nvme_ns *);
++	size += nr_node_ids * sizeof(struct nvme_ns *);
+ #endif
  
--	old = raw_atomic_long_fetch_or_acquire(mask, (atomic_long_t *)p);
-+	old = raw_atomic_long_fetch_or_acquire(mask, (atomic_long_t *)addr);
- 	return !!(old & mask);
- }
- 
-@@ -38,10 +38,10 @@ arch_test_and_set_bit_lock(unsigned int nr, volatile unsigned long *p)
-  * This operation is atomic and provides release barrier semantics.
-  */
- static __always_inline void
--arch_clear_bit_unlock(unsigned int nr, volatile unsigned long *p)
-+arch_clear_bit_unlock(unsigned int nr, volatile unsigned long *addr)
- {
--	p += BIT_WORD(nr);
--	raw_atomic_long_fetch_andnot_release(BIT_MASK(nr), (atomic_long_t *)p);
-+	addr += BIT_WORD(nr);
-+	raw_atomic_long_fetch_andnot_release(BIT_MASK(nr), (atomic_long_t *)addr);
- }
- 
- /**
-@@ -56,14 +56,14 @@ arch_clear_bit_unlock(unsigned int nr, volatile unsigned long *p)
-  * See for example x86's implementation.
-  */
- static inline void
--arch___clear_bit_unlock(unsigned int nr, volatile unsigned long *p)
-+arch___clear_bit_unlock(unsigned int nr, volatile unsigned long *addr)
- {
- 	unsigned long old;
- 
--	p += BIT_WORD(nr);
--	old = READ_ONCE(*p);
-+	addr += BIT_WORD(nr);
-+	old = READ_ONCE(*addr);
- 	old &= ~BIT_MASK(nr);
--	raw_atomic_long_set_release((atomic_long_t *)p, old);
-+	raw_atomic_long_set_release((atomic_long_t *)addr, old);
- }
- 
- /**
+ 	head = kzalloc(size, GFP_KERNEL);
 -- 
 2.53.0
 
