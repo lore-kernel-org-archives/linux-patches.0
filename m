@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9E344331B;
-	Tue, 21 Jul 2026 21:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00F543CEE4;
+	Tue, 21 Jul 2026 21:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669956; cv=none; b=uu/+1p5/mMP2oKWWEJIJ6JqLQmQzcEhCQsALDHxRXDTFhschPO0mv82ZSef2qh+A7QmQDNMLoM0BJHp3G0uca0fJo4xatAuIw8oXUCjPMuwxjdG50+05ayax5TwKNMsyGo29kqIQk2OO1lfheXdOTxXvo7Ig67sC5AGmoHgsLTQ=
+	t=1784669958; cv=none; b=fbJoz7107hjvMQzhw48oKlxXUKCHKiQywNmQfKBBrDgvt5lr9vlh5zPDTK9Ff0EJXFgpTub49MyV1KQLhmakraO5CeA2G1VGPMMymgaqIS4M6oivs/XlB/Xm7tsYbQlzxsQAOW3QwjrfnVpav73Tub+Up+S1kn23+1biVKYUwpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669956; c=relaxed/simple;
-	bh=a0rR7dBR+kUfC+HUWrNXW70WSrvc92opnkzM957GDYg=;
+	s=arc-20240116; t=1784669958; c=relaxed/simple;
+	bh=Z7fCe3lvfSiaFnaj1FXTMnestHXhAjuXx7k1/9P2HFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c7WHgihr3/2gXE3C7jhibeVjZ2g8owI/QDiB5RsezCz45TlZb6JtTPvqI8xSkFOK8dUfps4c/xBZGBZfBFDgJFZQRqrGUF+NMzVduTwKpNqcfNhtu7J6+lZGcGNElj4g51gWslglCAL0aBP5pauijXspazmaKkEdrLJfM4V/gPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q8f3mP/E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZRS/ovroAlY2HcbBgObwZkxJFkNVht+UM9duVnoZCyQL8Nb5gls4CJoEwRaWMNNanY2PqTZwQHz0txM/fxlAQG97UWrX/NY84XZzoOJ46kA4iS+Mqhh+7j5SZ4P9Wj6JG2TBJhYhp8IW1Dlu3waGUiww77u3ixSwB1itzjyJeZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVmvDdBn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8f3mP/E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7176A1F000E9;
-	Tue, 21 Jul 2026 21:39:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVmvDdBn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7831F00A3E;
+	Tue, 21 Jul 2026 21:39:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669954;
-	bh=hEXqrXuXaplNCJxCdUJvSpBywRn08zZjiJoo+vpcbQA=;
+	s=korg; t=1784669957;
+	bh=l++fg4s+UZie72PBTMPFJGKzx5+P9MN8A2CgJ0RrtUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q8f3mP/EhKdqy3TaaFlplkqxtd2y2E45KnKq/jp+I4eRyFSkiQRzYbtiAXfxBaYgm
-	 ll6IqzTANWJpSMHbnrfaIeFkqyUbfVabJY8qf1BENPD0P5lE6/IuQNaSY8tWZMF4Cn
-	 X2wp1bTT05qosms++aJ4aJeANju9rJbIQ4Vxgvr4=
+	b=VVmvDdBnxTO6sR1U47QckQplVOvz2AQzhAS1mgpxTzrHcgIzE5yyYqOK/hV7vzjcx
+	 O/kq8xmy+501oT5vlTc0IDOvNAKRcwdzWnRHbtKUstEr+47MO3PVFPZ1DMth5XdwiA
+	 MPnt9JbQktlqc5aMy+WvK2rbpBBpAKEH11J46+Vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Florian Westphal <fw@strlen.de>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0707/1067] ipvs: ensure inner headers in ICMP errors are in headroom
-Date: Tue, 21 Jul 2026 17:21:48 +0200
-Message-ID: <20260721152440.407511517@linuxfoundation.org>
+Subject: [PATCH 6.1 0708/1067] cifs: validate DFS referral string offsets
+Date: Tue, 21 Jul 2026 17:21:49 +0200
+Message-ID: <20260721152440.428729003@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,111 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 3f7a535ff0fa627a0132803e4c2f903ceffcbc1c ]
+[ Upstream commit 027a84ac6b50c12ef767c15abfc58aa865820e9e ]
 
-Sashiko points out that after stripping the outer headers
-with pskb_pull() we should ensure the inner IP headers
-in ICMP errors from tunnels are present in the skb headroom
-for functions like ipv4_update_pmtu(), icmp_send() and
-IP_VS_DBG().
+parse_dfs_referrals() validates that the response header and referral
+array fit in the received buffer, but each referral also contains string
+offsets supplied by the server.
 
-Also, add more checks for the length of the inner headers.
+Those offsets are used to compute the DfsPath and NetworkAddress string
+pointers without checking whether they still point inside the response
+buffer. A malformed referral can therefore make the computed pointer
+exceed the end of the buffer. The resulting negative max_len is then
+passed to cifs_strndup_from_utf16(), and the non-Unicode path forwards it
+to kstrndup() as a size_t, allowing strnlen() to read out of bounds.
 
-Fixes: f2edb9f7706d ("ipvs: implement passive PMTUD for IPIP packets")
-Link: https://sashiko.dev/#/patchset/20260702073430.67680-1-zhaoyz24%40mails.tsinghua.edu.cn
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Validate each string offset before deriving the string pointer.
+
+Fixes: 4ecce920e13a ("CIFS: move DFS response parsing out of SMB1 code")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_core.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ fs/smb/client/misc.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
-index 07ae3cf3007e47..4f8f75cafb2c99 100644
---- a/net/netfilter/ipvs/ip_vs_core.c
-+++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -1594,6 +1594,7 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 	bool tunnel, new_cp = false;
- 	union nf_inet_addr *raddr;
- 	char *outer_proto = "IPIP";
-+	unsigned int hlen_ipip;
- 	int ulen = 0;
+diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
+index 049a14677c9106..8ca5143c34a195 100644
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -981,6 +981,10 @@ parse_dfs_referrals(struct get_dfs_referral_rsp *rsp, u32 rsp_size,
+ 		node->ref_flag = le16_to_cpu(ref->ReferralEntryFlags);
  
- 	*related = 1;
-@@ -1631,9 +1632,10 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 	/* Now find the contained IP header */
- 	offset += sizeof(_icmph);
- 	cih = skb_header_pointer(skb, offset, sizeof(_ciph), &_ciph);
--	if (cih == NULL)
-+	if (!(cih && cih->version == 4 && cih->ihl >= 5))
- 		return NF_ACCEPT; /* The packet looks wrong, ignore */
- 	raddr = (union nf_inet_addr *)&cih->daddr;
-+	hlen_ipip = cih->ihl * 4;
- 
- 	/* Special case for errors for IPIP/UDP/GRE tunnel packets */
- 	tunnel = false;
-@@ -1649,9 +1651,9 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 		/* Only for known tunnel */
- 		if (!dest || dest->tun_type != IP_VS_CONN_F_TUNNEL_TYPE_IPIP)
- 			return NF_ACCEPT;
--		offset += cih->ihl * 4;
-+		offset += hlen_ipip;
- 		cih = skb_header_pointer(skb, offset, sizeof(_ciph), &_ciph);
--		if (cih == NULL)
-+		if (!(cih && cih->version == 4 && cih->ihl >= 5))
- 			return NF_ACCEPT; /* The packet looks wrong, ignore */
- 		tunnel = true;
- 	} else if ((cih->protocol == IPPROTO_UDP ||	/* Can be UDP encap */
-@@ -1663,7 +1665,7 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 		/* Non-first fragment has no UDP/GRE header */
- 		if (unlikely(cih->frag_off & htons(IP_OFFSET)))
- 			return NF_ACCEPT;
--		offset2 = offset + cih->ihl * 4;
-+		offset2 = offset + hlen_ipip;
- 		if (cih->protocol == IPPROTO_UDP) {
- 			ulen = ipvs_udp_decap(ipvs, skb, offset2, AF_INET,
- 					      raddr, &iproto);
-@@ -1732,6 +1734,7 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 	}
- 
- 	if (tunnel) {
-+		unsigned int hlen_orig = cih->ihl * 4;
- 		__be32 info = ic->un.gateway;
- 		__u8 type = ic->type;
- 		__u8 code = ic->code;
-@@ -1748,6 +1751,9 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 				goto ignore_tunnel;
- 			offset2 -= ihl + sizeof(_icmph);
- 			skb_reset_network_header(skb);
-+			/* Ensure the IP header is present in headroom */
-+			if (!pskb_may_pull(skb, hlen_ipip))
-+				goto ignore_tunnel;
- 			IP_VS_DBG(12, "ICMP for %s %pI4->%pI4: mtu=%u\n",
- 				  outer_proto, &ip_hdr(skb)->saddr,
- 				  &ip_hdr(skb)->daddr, mtu);
-@@ -1763,8 +1769,8 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 				if (dest_dst)
- 					mtu = dst_mtu(dest_dst->dst_cache);
- 			}
--			if (mtu > 68 + sizeof(struct iphdr) + ulen)
--				mtu -= sizeof(struct iphdr) + ulen;
-+			if (mtu > 68 + hlen_ipip + ulen)
-+				mtu -= hlen_ipip + ulen;
- 			info = htonl(mtu);
+ 		/* copy DfsPath */
++		if (le16_to_cpu(ref->DfsPathOffset) > data_end - (char *)ref) {
++			rc = -EINVAL;
++			goto parse_DFS_referrals_exit;
++		}
+ 		temp = (char *)ref + le16_to_cpu(ref->DfsPathOffset);
+ 		max_len = data_end - temp;
+ 		node->path_name = cifs_strndup_from_utf16(temp, max_len,
+@@ -991,6 +995,10 @@ parse_dfs_referrals(struct get_dfs_referral_rsp *rsp, u32 rsp_size,
  		}
- 		/* Strip outer IP, ICMP and IPIP/UDP/GRE, go to IP header of
-@@ -1773,6 +1779,9 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 		if (pskb_pull(skb, offset2) == NULL)
- 			goto ignore_tunnel;
- 		skb_reset_network_header(skb);
-+		/* Ensure the IP header is present in headroom */
-+		if (!pskb_may_pull(skb, hlen_orig))
-+			goto ignore_tunnel;
- 		IP_VS_DBG(12, "Sending ICMP for %pI4->%pI4: t=%u, c=%u, i=%u\n",
- 			&ip_hdr(skb)->saddr, &ip_hdr(skb)->daddr,
- 			type, code, ntohl(info));
+ 
+ 		/* copy link target UNC */
++		if (le16_to_cpu(ref->NetworkAddressOffset) > data_end - (char *)ref) {
++			rc = -EINVAL;
++			goto parse_DFS_referrals_exit;
++		}
+ 		temp = (char *)ref + le16_to_cpu(ref->NetworkAddressOffset);
+ 		max_len = data_end - temp;
+ 		node->node_name = cifs_strndup_from_utf16(temp, max_len,
 -- 
 2.53.0
 
