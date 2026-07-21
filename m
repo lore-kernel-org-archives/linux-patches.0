@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBFA43D4E2;
-	Tue, 21 Jul 2026 22:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC09743F4CE;
+	Tue, 21 Jul 2026 22:15:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672109; cv=none; b=UHKe/LobR8VNid8vVDC4Pd7Ai1lzF8iJWQuZOnEKdAqQrSOCQLT3HrgdYoxTUTo+cYmPd9PBBEiFlM8Lo248mhp0pfyEg78ktb6EnU7ZPcOM54ZVTndy1l186wdG4PRH9fN+8s2C1kT/e2z2VLbUAhvvpWoUuCslmOSmQ54BoCs=
+	t=1784672111; cv=none; b=Tdmyz+oY9pnjyOLFHaTKx/SjwIGQHI5uHudwzxByRbXtynbmfFKuYp7W9fhgmJxsjTJzScXPNtnIXIDp33Ml5LigahAyedbYWQqhIVHIkZZDwUGiVIylS2UgVUXIkUaqp1PsVzUUUwncPzza7zNqWxDjkS8SnT2p8cMpLfmR6gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672109; c=relaxed/simple;
-	bh=GB/IFBc2kBe2kp5Gr+AnmiTwj2Z4hyz9q46YWFLMtnE=;
+	s=arc-20240116; t=1784672111; c=relaxed/simple;
+	bh=tHfTnugrk7WL/7oQM34FSKIPmvjnyio9ny4su4Rpym0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AiTE6CmjW+jgayNXK0Lz5VVxkkjTVDNzqie2t6YQQjqVI6B33NzBY8Nu6rhRAyBsUI2Gtd+Ttj+uwapoIy+F1DeLePapRjnQGA9ixtchcoTOoM+WkZot9fHJAD/z19+pzt/9pzoBsDscjxbOZyozB/Jw2KjPYhVsACvBfFo35Xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVESWYf7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DKrMGwqbGnUd7JKy78LNui3EkkcGsd4WHRs60KAdGyj1Bu0jY+tQnGp5Of61jzp72EC/SJeR/YYwCdUUax1bikMoKaLB4MomCM3t5tXknk1DG4HxwZJ2CvSKlgauTwKtzPH3KWV9vYpW3Ozu65k2h/Pkx1qKq+/+QzPEk91WYzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YXfNODC0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVESWYf7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931911F00A3A;
-	Tue, 21 Jul 2026 22:15:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YXfNODC0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA011F000E9;
+	Tue, 21 Jul 2026 22:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672108;
-	bh=h/bW4MunhgMkFsx29rwg183QwSGB5or28jXkNK1N9kI=;
+	s=korg; t=1784672110;
+	bh=pajl7N3b+Sz2+qIRxd6Cz3yAoZ4hSFltvMHn7KjtwII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kVESWYf7LoNfusU48OUd1jDPRw81CUw1Bv/qAlni5mWkWeoTNLD8aX5eq1o5CiIgM
-	 wysUAR4eUShCfVi3Z857B+dTkv2xgBVMO7nYeFOv6p8qeurR6sVWtnj3IIZuihF/P+
-	 PB7PbuLAkRe+cvFc72hqBJ/T7dSJGacwcVXCaSJE=
+	b=YXfNODC0vsm/o86Nh1CsNlEsKjtcB2JNaFw4Z1dZHUj2rVgXNYqcfWVPawnhPcxzF
+	 epvGKrOIAVlhDyij0OYf+irfTT7KfFs0++CKPVrKU4Y51JxsSHHb9R2QtTs7StudUm
+	 TpvtBSn1uR3YCdbeahp4OSvZ52rhBUHjvPH09JUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Donald Hunter <donald.hunter@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 493/843] rtnetlink: add RTNL_FLAG_DUMP_UNLOCKED flag
-Date: Tue, 21 Jul 2026 17:22:08 +0200
-Message-ID: <20260721152417.122774025@linuxfoundation.org>
+Subject: [PATCH 5.15 502/843] irqchip/gic-v3-its: Fix OF node reference leak
+Date: Tue, 21 Jul 2026 17:22:17 +0200
+Message-ID: <20260721152417.325102172@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,99 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 386520e0ecc01004d3a29c70c5a77d4bbf8a8420 ]
+[ Upstream commit 2e1368a9d61bdf5502ddade004f223a5831c5b8c ]
 
-Similarly to RTNL_FLAG_DOIT_UNLOCKED, this new flag
-allows dump operations registered via rtnl_register()
-or rtnl_register_module() to opt-out from RTNL protection.
+of_get_cpu_node() returns a referenced device node. In
+its_cpu_init_collection(), the Cavium 23144 workaround only uses the
+node to compare the CPU NUMA node, but the reference is never dropped.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 9facb861dc6b ("ipv6: fib6: fix NULL deref in fib6_walk_continue() on multi-batch dump")
+Use the device_node cleanup helper for the CPU node reference so it is
+released when leaving the workaround block, including the NUMA mismatch
+return path.
+
+Fixes: fbf8f40e1658 ("irqchip/gicv3-its: numa: Enable workaround for Cavium thunderx erratum 23144")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+Acked-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netlink.h  | 2 ++
- include/net/rtnetlink.h  | 1 +
- net/core/rtnetlink.c     | 2 ++
- net/netlink/af_netlink.c | 3 +++
- 4 files changed, 8 insertions(+)
+ drivers/irqchip/irq-gic-v3-its.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/netlink.h b/include/linux/netlink.h
-index 61b1c7fcc401ee..a27e5e17836bdd 100644
---- a/include/linux/netlink.h
-+++ b/include/linux/netlink.h
-@@ -216,6 +216,7 @@ struct netlink_callback {
- 	u16			answer_flags;
- 	u32			min_dump_alloc;
- 	unsigned int		prev_seq, seq;
-+	int			flags;
- 	bool			strict_check;
- 	union {
- 		u8		ctx[48];
-@@ -243,6 +244,7 @@ struct netlink_dump_control {
- 	void *data;
- 	struct module *module;
- 	u32 min_dump_alloc;
-+	int flags;
- };
+diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+index 0fe5ee752c90ea..db5a0eb820c39b 100644
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -3213,11 +3213,9 @@ static void its_cpu_init_collection(struct its_node *its)
  
- int __netlink_dump_start(struct sock *ssk, struct sk_buff *skb,
-diff --git a/include/net/rtnetlink.h b/include/net/rtnetlink.h
-index 649d4f88a3da5d..8aac46eb818811 100644
---- a/include/net/rtnetlink.h
-+++ b/include/net/rtnetlink.h
-@@ -12,6 +12,7 @@ typedef int (*rtnl_dumpit_func)(struct sk_buff *, struct netlink_callback *);
- enum rtnl_link_flags {
- 	RTNL_FLAG_DOIT_UNLOCKED		= BIT(0),
- 	RTNL_FLAG_BULK_DEL_SUPPORTED	= BIT(1),
-+	RTNL_FLAG_DUMP_UNLOCKED		= BIT(2),
- };
+ 	/* avoid cross node collections and its mapping */
+ 	if (its->flags & ITS_FLAGS_WORKAROUND_CAVIUM_23144) {
+-		struct device_node *cpu_node;
++		struct device_node *cpu_node __free(device_node) = of_get_cpu_node(cpu, NULL);
  
- enum rtnl_kinds {
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index ac9dd385d80f9e..dd121a3eddff69 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -5631,6 +5631,7 @@ static int rtnetlink_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh,
- 		}
- 		owner = link->owner;
- 		dumpit = link->dumpit;
-+		flags = link->flags;
+-		cpu_node = of_get_cpu_node(cpu, NULL);
+-		if (its->numa_node != NUMA_NO_NODE &&
+-			its->numa_node != of_node_to_nid(cpu_node))
++		if (its->numa_node != NUMA_NO_NODE && its->numa_node != of_node_to_nid(cpu_node))
+ 			return;
+ 	}
  
- 		if (type == RTM_GETLINK - RTM_BASE)
- 			min_dump_alloc = rtnl_calcit(skb, nlh);
-@@ -5648,6 +5649,7 @@ static int rtnetlink_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh,
- 				.dump		= dumpit,
- 				.min_dump_alloc	= min_dump_alloc,
- 				.module		= owner,
-+				.flags		= flags,
- 			};
- 			err = netlink_dump_start(rtnl, skb, nlh, &c);
- 			/* netlink_dump_start() will keep a reference on
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 2b9dbf003abd11..1029c87ea913c7 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -2284,6 +2284,8 @@ static int netlink_dump(struct sock *sk, bool lock_taken)
- 
- 		cb->extack = &extack;
- 
-+		if (cb->flags & RTNL_FLAG_DUMP_UNLOCKED)
-+			extra_mutex = NULL;
- 		if (extra_mutex)
- 			mutex_lock(extra_mutex);
- 		nlk->dump_done_errno = cb->dump(skb, cb);
-@@ -2378,6 +2380,7 @@ int __netlink_dump_start(struct sock *ssk, struct sk_buff *skb,
- 	cb->data = control->data;
- 	cb->module = control->module;
- 	cb->min_dump_alloc = control->min_dump_alloc;
-+	cb->flags = control->flags;
- 	cb->skb = skb;
- 
- 	nlk2 = nlk_sk(NETLINK_CB(skb).sk);
 -- 
 2.53.0
 
