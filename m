@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1833B9930;
-	Tue, 21 Jul 2026 21:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E2D34B1A6;
+	Tue, 21 Jul 2026 21:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670477; cv=none; b=tXOCmSyTmQo2mQYIFTZvNUc2Z1c2zvT+wMBU1Q8PhMnN4on8ZDlQUI2qvFitLSBqC8M8iaGk+2EnDUCSGHGmBYWny1Gh2O2IXAl6dBzGvW7lJDW8pL2vck5/f3vfewKyawSjJv84CGyjVWUmgxDAXJMNL2vhd6SjpGYKeswqfq8=
+	t=1784670480; cv=none; b=Cw3nZkEkB4g326k3br6XeOeT44rNeOzLqVeh+TN0U/GojO6B7H5HxpQ19nrNhNPn9RYheBWQDEjq97KCl/kNPN9TrtPziyXDgtXYmgEgjPw7MWHWoF+FEwqyg/X8/LJcFrktqf8CSI9BTqAt3iWpFBpx9Yl+EcbFCiB/A/M9hJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670477; c=relaxed/simple;
-	bh=nF/j/h1pT0fxC465zMKd5MpFEocLGJ8jYwtILbaCzC4=;
+	s=arc-20240116; t=1784670480; c=relaxed/simple;
+	bh=SEO8kgN+TTISQR1Dg86PGE4meOHJUo78+dswI/OBu3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p1fIbkahlB9MOAsAp0Tr8E7UZyRDOpb/OV4x04CEI22faL/onhdPIOU8RmZLcfTsQc95+3UsGc6a+vj/yVxEEHEJmSOmG9kyJYKtkE8dx1uvEzmZa911a7Z74glNheoeoBU00wQnVjkEjqgkyx3olA+O9ifuPJksdLQTOVlTdTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a4cIuEiG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ubhrszS7FNxOgjoMUTXzVOcfPyrgDCs+C93wyIheC7SfGSPok5L6tZ0mJfKoyAQEgKwINcAh7ZpRZuYlm47Jh2X/dgpNs5BA9KlAosXmFC3RRJcbh2E5icCZHCoizi0tU+o0H+pnhVIDAlwsvgeo5iu3XL9QlHKlvJI0tlf7tR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inujrJV3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a4cIuEiG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3DF1F000E9;
-	Tue, 21 Jul 2026 21:47:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inujrJV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFCA1F000E9;
+	Tue, 21 Jul 2026 21:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670476;
-	bh=Yb9MFo29hMbD8Xi9UJJrKWnjlyZ3uDfH0mFDOowUBHc=;
+	s=korg; t=1784670479;
+	bh=eDe+eznI6NFsIQlJibXgqeyS9PbtMXMVQokV/zLs6w4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a4cIuEiGG9iUTqr7j0+5Pc0cBPLJsQRFMIraQkYrZO4LsSr2CmdDnAl8xcyyWtciX
-	 9k4ghVTF9EZJZaDQN5BcNrQnA36b65A8Ez1ZG77It7mh4/SNmqTwnynbbaYfivHYw7
-	 GojEJ2k2qI5otnu8TifpylSFBYUVFEVY0pIzoREA=
+	b=inujrJV3lDH5Yi3mCM8xhnDe1EYDw9OTh45J08CqVQlGg69TnLRltLnGHYaC5L9Xp
+	 Bk9TNyRzS0RtPn/t7TLqckfzp+NAKINAvA6TX4iEZn0dC8/kBPLy2HalcIiXEkRWwb
+	 TFZnihl4gp6WiXfRkwz9kmyVRGFO1sRN4bwPDLHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0948/1067] iio: imu: inv_icm42600: stabilized timestamp in interrupt
-Date: Tue, 21 Jul 2026 17:25:49 +0200
-Message-ID: <20260721152445.745310549@linuxfoundation.org>
+Subject: [PATCH 6.1 0949/1067] iio: imu: inv_icm42600: fix timestamping by limiting FIFO reading
+Date: Tue, 21 Jul 2026 17:25:50 +0200
+Message-ID: <20260721152445.768740624@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,111 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-[ Upstream commit d7bd473632d07f8a54655c270c0940cc3671c548 ]
+[ Upstream commit affe3f077d7a4eeb25937f5323ff059a54b4712c ]
 
-Use IRQF_ONESHOT flag to ensure the timestamp is not updated in the
-hard handler during the thread handler. And compute and use the
-effective watermark value that correspond to this first timestamp.
+Timestamps are made by measuring the chip clock using the watermark
+interrupts. If we read more than watermark samples as done today, we
+are reducing the period between interrupts and distort the time
+measurement. Fix that by reading only watermark samples in the
+interrupt case.
 
-This way we can ensure the timestamp is always corresponding to the
-value used by the timestamping mechanism. Otherwise, it is possible
-that between FIFO count read and FIFO processing the timestamp is
-overwritten in the hard handler.
-
-Fixes: ec74ae9fd37c ("iio: imu: inv_icm42600: add accurate timestamping")
+Fixes: 7f85e42a6c54 ("iio: imu: inv_icm42600: add buffer support in iio devices")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Link: https://lore.kernel.org/r/20240529154717.651863-1-inv.git-commit@tdk.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: affe3f077d7a ("iio: imu: inv_icm42600: fix timestamping by limiting FIFO reading")
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c |   19 +++++++++++++++++--
- drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.h |    2 ++
- drivers/iio/imu/inv_icm42600/inv_icm42600_core.c   |    1 +
- 3 files changed, 20 insertions(+), 2 deletions(-)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c |    9 +++++----
+ drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.h |    1 +
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
 --- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
 +++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-@@ -222,10 +222,15 @@ int inv_icm42600_buffer_update_watermark
- 	latency_accel = period_accel * wm_accel;
- 
- 	/* 0 value for watermark means that the sensor is turned off */
-+	if (wm_gyro == 0 && wm_accel == 0)
-+		return 0;
-+
- 	if (latency_gyro == 0) {
- 		watermark = wm_accel;
-+		st->fifo.watermark.eff_accel = wm_accel;
- 	} else if (latency_accel == 0) {
- 		watermark = wm_gyro;
-+		st->fifo.watermark.eff_gyro = wm_gyro;
- 	} else {
- 		/* compute the smallest latency that is a multiple of both */
- 		if (latency_gyro <= latency_accel)
-@@ -241,6 +246,13 @@ int inv_icm42600_buffer_update_watermark
- 		watermark = latency / period;
- 		if (watermark < 1)
- 			watermark = 1;
-+		/* update effective watermark */
-+		st->fifo.watermark.eff_gyro = latency / period_gyro;
-+		if (st->fifo.watermark.eff_gyro < 1)
-+			st->fifo.watermark.eff_gyro = 1;
-+		st->fifo.watermark.eff_accel = latency / period_accel;
-+		if (st->fifo.watermark.eff_accel < 1)
-+			st->fifo.watermark.eff_accel = 1;
- 	}
+@@ -257,6 +257,7 @@ int inv_icm42600_buffer_update_watermark
  
  	/* compute watermark value in bytes */
-@@ -517,7 +529,7 @@ int inv_icm42600_buffer_fifo_parse(struc
- 	/* handle gyroscope timestamp and FIFO data parsing */
- 	if (st->fifo.nb.gyro > 0) {
- 		ts = iio_priv(st->indio_gyro);
--		inv_sensors_timestamp_interrupt(ts, st->fifo.nb.gyro,
-+		inv_sensors_timestamp_interrupt(ts, st->fifo.watermark.eff_gyro,
- 						st->timestamp.gyro);
- 		ret = inv_icm42600_gyro_parse_fifo(st->indio_gyro);
- 		if (ret)
-@@ -527,7 +539,7 @@ int inv_icm42600_buffer_fifo_parse(struc
- 	/* handle accelerometer timestamp and FIFO data parsing */
- 	if (st->fifo.nb.accel > 0) {
- 		ts = iio_priv(st->indio_accel);
--		inv_sensors_timestamp_interrupt(ts, st->fifo.nb.accel,
-+		inv_sensors_timestamp_interrupt(ts, st->fifo.watermark.eff_accel,
- 						st->timestamp.accel);
- 		ret = inv_icm42600_accel_parse_fifo(st->indio_accel);
- 		if (ret)
-@@ -578,6 +590,9 @@ int inv_icm42600_buffer_init(struct inv_
- 	unsigned int val;
- 	int ret;
+ 	wm_size = watermark * packet_size;
++	st->fifo.watermark.value = watermark;
  
-+	st->fifo.watermark.eff_gyro = 1;
-+	st->fifo.watermark.eff_accel = 1;
-+
+ 	/* changing FIFO watermark requires to turn off watermark interrupt */
+ 	ret = regmap_update_bits_check(st->map, INV_ICM42600_REG_INT_SOURCE0,
+@@ -476,11 +477,10 @@ int inv_icm42600_buffer_fifo_read(struct
+ 	st->fifo.nb.accel = 0;
+ 	st->fifo.nb.total = 0;
+ 
+-	/* compute maximum FIFO read size */
++	/* compute maximum FIFO read size (watermark for max = 0 interrupt case) */
+ 	if (max == 0)
+-		max_count = sizeof(st->fifo.data);
+-	else
+-		max_count = max * inv_icm42600_get_packet_size(st->fifo.en);
++		max = st->fifo.watermark.value;
++	max_count = max * inv_icm42600_get_packet_size(st->fifo.en);
+ 
+ 	/* read FIFO count value */
+ 	raw_fifo_count = (__be16 *)st->buffer;
+@@ -592,6 +592,7 @@ int inv_icm42600_buffer_init(struct inv_
+ 
+ 	st->fifo.watermark.eff_gyro = 1;
+ 	st->fifo.watermark.eff_accel = 1;
++	st->fifo.watermark.value = 1;
+ 
  	/*
  	 * Default FIFO configuration (bits 7 to 5)
- 	 * - use invalid value
 --- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.h
 +++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.h
-@@ -32,6 +32,8 @@ struct inv_icm42600_fifo {
- 	struct {
- 		unsigned int gyro;
+@@ -34,6 +34,7 @@ struct inv_icm42600_fifo {
  		unsigned int accel;
-+		unsigned int eff_gyro;
-+		unsigned int eff_accel;
+ 		unsigned int eff_gyro;
+ 		unsigned int eff_accel;
++		unsigned int value;
  	} watermark;
  	size_t count;
  	struct {
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
-@@ -518,6 +518,7 @@ static int inv_icm42600_irq_init(struct
- 	if (ret)
- 		return ret;
- 
-+	irq_type |= IRQF_ONESHOT;
- 	return devm_request_threaded_irq(dev, irq, inv_icm42600_irq_timestamp,
- 					 inv_icm42600_irq_handler, irq_type,
- 					 "inv_icm42600", st);
 
 
