@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9CD44AB9D;
-	Tue, 21 Jul 2026 21:41:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42FA144AB9D;
+	Tue, 21 Jul 2026 21:41:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670099; cv=none; b=owVnFHAOEY/ZOl5HYeM/f31N79hk0rrz31zBpctjNsvglzyX8nXSohu7ic2tMJ1GQbECTGeHXyL62kVgbTlTwA2kiqinok9QKT/jFPMlrJ4QtFnjNCUKreFUJaHwVJBLxSuGplDqGr/S9BepJdIfkbnAl8l2VT8anXCljHyZKJs=
+	t=1784670101; cv=none; b=O+tK3ki99pgMfeK9Vom+k9NvYk2JTpjOcedQ7qVgiggwXTuBUrGVwVwrqTo0oIiTOrS0dsi5WhMv1+0ebhw+R4T6ZIpfYSbBB7L1halw4PC16GwQd4oVK0ryhdPd2f57xuSLo7ctLDjbTiBRNS89jyK16wHVZyWGkwN0o5v70M0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670099; c=relaxed/simple;
-	bh=7YzyW4Xc34Xjmdc2aHRnkDsJLIQTnsrjbvjHVgTkdbc=;
+	s=arc-20240116; t=1784670101; c=relaxed/simple;
+	bh=i4dnYukC0I0xC9TADT8BwlBp/ZKk0iR0CdrzDlbAwJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gWiDhtwCDfRIJy4di0sbEuz0XV2XKkcLu1kg23xTUbc+/jfwJI4JzuIvkAMFr5FTc+clsUQWcDa+obb34rSAeZosyYBbNMAx27uVq4u6sWD51M9nuPoFpkK63NpEqtOwl5e49Lsn1yPxWAdn9S9+bxlyW6VyZ+JkNlldccNfegM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbZy8YtU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GEEytZJCVPapFg/oCKv1264Rw3C87n2emLldnVcp5dBpDPuMfeAqBqT4RURAKp3k2yuPNtJH25bFISuYU0pRaKrM4pS33WDf61nbAXG9pXnaS0iOzUnD7rw8x0pePPR7wGimc5Wxr/x3ovSx8AQIGmZsvnNExX5H5nbj6+swISo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gpRrrGdo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbZy8YtU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7B11F000E9;
-	Tue, 21 Jul 2026 21:41:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gpRrrGdo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85BE1F000E9;
+	Tue, 21 Jul 2026 21:41:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670097;
-	bh=ffS1uJrk1/Z7gkr5H+gEUs+GA3c2Gc3pqftkB5Wd9yE=;
+	s=korg; t=1784670100;
+	bh=HdtUDEx20P1Eok/6qHSCw+2+wMInadcQ2CEv+1U63Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gbZy8YtUGaUKZdOZwnGEVZStPnXd0lWPc78zGmB9NJfGVcwsoV1Cbsz29cQArkItP
-	 YXElyvpG4dSQwC3H7MT+l5K83raMt8OsgrnDQr58SaDf+NG35nntTc5idzZGKGuEoa
-	 jNOA5dqJ53L+RycFa0cekKBwcwhwrg/z2MGHt0rU=
+	b=gpRrrGdoRPU6SUeXMoi2Ok3tvUHe2DzQkfGYYMeu3FUFFGFqvXJn9PPBmdDGshOS3
+	 aP6NTr3LaJGOsDIDlTtPEFTWL+3T0N2q6YZ0qBfuSR6eLzQpHeoaDmNhWliss0BPW0
+	 Gg9iw2mxeHcotnFD+WkQAw+ixtpEbFYNZmPOkRAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Dominique Martinet <asmadeus@codewreck.org>
-Subject: [PATCH 6.1 0805/1067] net/9p: fix infinite loop in p9_client_rpc on fatal signal
-Date: Tue, 21 Jul 2026 17:23:26 +0200
-Message-ID: <20260721152442.567445393@linuxfoundation.org>
+	Arseniy Krasnov <avkrasnov@rulkc.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.1 0806/1067] mtd: rawnand: fix condition in nand_select_target()
+Date: Tue, 21 Jul 2026 17:23:27 +0200
+Message-ID: <20260721152442.588348937@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,101 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Arseniy Krasnov <avkrasnov@rulkc.org>
 
-commit 6b4f48728faa8bb514368f7eacda05565dea8696 upstream.
+commit 8507c2cc9e4fa402401819f44d1e8a5ef4d11d8b upstream.
 
-When p9_client_rpc() is called with type P9_TFLUSH and the transport
-has no peer (e.g. fd transport backed by pipes with no 9p server),
-a fatal signal causes an infinite loop:
+'cs' here must be in range [0:nanddev_ntargets[.
 
-  again:
-	err = io_wait_event_killable(req->wq, ...)
-	/* SIGKILL wakes the task, returns -ERESTARTSYS */
-
-	if (err == -ERESTARTSYS && c->status == Connected &&
-		type == P9_TFLUSH) {
-		sigpending = 1;
-		clear_thread_flag(TIF_SIGPENDING);
-		goto again;
-	}
-
-clear_thread_flag() clears TIF_SIGPENDING before jumping back to
-io_wait_event_killable(). signal_pending_state() checks TIF_SIGPENDING,
-finds it zero, and the task goes to sleep again. The task can only wake
-on the next signal delivery that calls signal_wake_up() and sets
-TIF_SIGPENDING again. When that happens the loop repeats, clears
-TIF_SIGPENDING, and sleeps again indefinitely.
-
-This is triggered in practice by coredump_wait(): when a thread in a
-multi-threaded process causes a coredump (e.g. via SIGSYS from Syscall
-User Dispatch), coredump_wait() sends SIGKILL to all other threads and
-waits for them to call mm_release(). If one of those threads is blocked
-in p9_client_rpc() over an fd transport with no peer, it enters the
-P9_TFLUSH loop and never calls mm_release(), so coredump_wait() stalls
-forever:
-
-INFO: task syz.0.18:676 blocked for more than 143 seconds.
-      Not tainted 6.12.77+ #1
-task:syz.0.18 state:D stack:27600 pid:676 tgid:673 ppid:630 flags:0x00000004
-Call Trace:
- <TASK>
- context_switch kernel/sched/core.c:5344 [inline]
- __schedule+0xcb4/0x5d50 kernel/sched/core.c:6724
- __schedule_loop kernel/sched/core.c:6801 [inline]
- schedule+0xe5/0x350 kernel/sched/core.c:6816
- schedule_timeout+0x253/0x290 kernel/time/timer.c:2593
- do_wait_for_common kernel/sched/completion.c:95 [inline]
- __wait_for_common+0x409/0x600 kernel/sched/completion.c:116
- wait_for_common kernel/sched/completion.c:127 [inline]
- wait_for_completion_state+0x1d/0x40 kernel/sched/completion.c:264
- coredump_wait fs/coredump.c:448 [inline]
- do_coredump+0x854/0x4350 fs/coredump.c:629
- get_signal+0x1425/0x2730 kernel/signal.c:2903
- arch_do_signal_or_restart+0x81/0x880 arch/x86/kernel/signal.c:337
- exit_to_user_mode_loop kernel/entry/common.c:111 [inline]
- exit_to_user_mode_prepare include/linux/entry-common.h:328 [inline]
- __syscall_exit_to_user_mode_work kernel/entry/common.c:207 [inline]
- syscall_exit_to_user_mode+0xf9/0x160 kernel/entry/common.c:218
- do_syscall_64+0x102/0x220 arch/x86/entry/common.c:84
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
-
-Fix: check fatal_signal_pending() before clearing TIF_SIGPENDING in the
-P9_TFLUSH retry loop. At that point TIF_SIGPENDING is still set, so
-fatal_signal_pending() works correctly. If a fatal signal is pending,
-jump to recalc_sigpending to restore TIF_SIGPENDING and return
--ERESTARTSYS to the caller.
-
-The same defect is present in stable kernels back to 5.4. On those
-kernels the infinite loop is broken earlier by a second SIGKILL from
-the parent process (e.g. kill_and_wait() retrying after a timeout),
-resulting in a zombie process and a shutdown delay rather than a
-permanent D-state hang, but the underlying flaw is the same.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 91b8534fa8f5 ("9p: make rpc code common and rework flush code")
-Closes: https://syzkaller.appspot.com/bug?extid=3ce7863f8fc836a427e7
 Cc: stable@vger.kernel.org
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Message-ID: <20260415155237.182891-1-kovalev@altlinux.org>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: 32813e288414 ("mtd: rawnand: Get rid of chip->numchips")
+Signed-off-by: Arseniy Krasnov <avkrasnov@rulkc.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/9p/client.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mtd/nand/raw/nand_base.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/9p/client.c
-+++ b/net/9p/client.c
-@@ -716,6 +716,8 @@ again:
+--- a/drivers/mtd/nand/raw/nand_base.c
++++ b/drivers/mtd/nand/raw/nand_base.c
+@@ -175,7 +175,7 @@ void nand_select_target(struct nand_chip
+ 	 * cs should always lie between 0 and nanddev_ntargets(), when that's
+ 	 * not the case it's a bug and the caller should be fixed.
+ 	 */
+-	if (WARN_ON(cs > nanddev_ntargets(&chip->base)))
++	if (WARN_ON(cs >= nanddev_ntargets(&chip->base)))
+ 		return;
  
- 	if (err == -ERESTARTSYS && c->status == Connected &&
- 	    type == P9_TFLUSH) {
-+		if (fatal_signal_pending(current))
-+			goto recalc_sigpending;
- 		sigpending = 1;
- 		clear_thread_flag(TIF_SIGPENDING);
- 		goto again;
+ 	chip->cur_cs = cs;
 
 
