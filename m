@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A111471264;
-	Tue, 21 Jul 2026 18:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5758471264;
+	Tue, 21 Jul 2026 18:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660209; cv=none; b=dm3wTp2VDoYMmK3uzAZrNc93VwDVsAygrMTcajMpKXiED9tECxSYtGieVIDkrHDVaC2Ij/1WhIog30QUurgx4qy7IraMbINw/zzSkCb3pg8kvUoT2LVcjTk+cUvV6YtlscjPAWeLN16N+QjkRNy9ZzggVCRN7rwvZwbA3nBAFz8=
+	t=1784660212; cv=none; b=pmEPV+tMSewVoc0nQYIm1G5269vEVbtsf3ymJzxh7fuqX/NJMNJpJqQnn86ZLymR4TYwmHefxirxFM2LwdBMdn8lXxwh25oxzYbCseN0yN1stPTfZ5bzwiVM8im9dhOhA9x/vwljsCUE2uNA6nJpDahXYnPCJpRg9nscXA5DzrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660209; c=relaxed/simple;
-	bh=esNDYQ0tAm3UhUaUOx1QjOQeiq2bgv59yUEN8wPMqpA=;
+	s=arc-20240116; t=1784660212; c=relaxed/simple;
+	bh=b5bMvusSPE9pHna3htNJOm6xvSTJvhP3MMAVcdd5YZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V+xvsRea1ECT06u5tqioeJ/O1KHNaXfSLz3dDhzY5V0CTqAi2tLmqD1qcTuyPQWd94cdZx3jmO6VxEwml/qFgWegcvGv7WzyC1BA9lsZtz+TiGiaIOlFIraUqmgcpmq4aiMhw2EI7qdP31dmfvgm4WlUnIPy+PbZk+zuiEgjwIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gm9N7Sv2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aTabkXb4byxP/HnT+HTBKIDSMW43LhSlVcazGA+k+iruW7EZoaBMJ8mdM0DFdid7JY3wjpNHJHlZTlqHgWP7jS2verNREuQqGGvX9F1cVM2zX5ZUISQo7TyFd+zfA0tQY/h/cixFOrWPhlAELnhvhCSHviR9t4AL+K3BQmiXH/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+p4T5ow; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gm9N7Sv2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A19CC1F000E9;
-	Tue, 21 Jul 2026 18:56:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+p4T5ow"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F541F000E9;
+	Tue, 21 Jul 2026 18:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660208;
-	bh=8Dh46DyuLrD135+W3xQEGJRm+ePaIRbguLl7VznULEw=;
+	s=korg; t=1784660210;
+	bh=3ua5Eelmg2CFtLEUMDsbicjAe+jfmnpF6sWpDO3TrhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gm9N7Sv2T0qqxTXm3cze0mWctMsSv6SvdFkpdH+ZI5px6uz9b+3dfujvg+WwWhoz+
-	 /s65/5JI1zNGzOdo3nSHiNEcJ5s0LhxFHnXBl22BZH1Ra9bgqeLwnTjQ8kqohF2s1+
-	 gronALNGK/LH2b8xkrcO9oVwg0L0/lelTSQiBnxM=
+	b=b+p4T5owAuwGqRVkYgpEfsaAw7Zpa2oLaIjtSVxWfEjUxMqxW9jaJa5PlKuCUOKUy
+	 A8oAQGnqQJ3+gw9qbJ+td/OmleS+ewFwyoBIzAFxdFE0vzdTdGB7p4szMV0vUuzN74
+	 1/OFn5pYTW3Ef64P64HZQ3dUWnZqqEW+hDTB/mPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Penkler <dpenkler@gmail.com>,
+	James Kim <james010kim@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0893/2077] gpib: Fix inappropriate ioctl error return
-Date: Tue, 21 Jul 2026 17:09:26 +0200
-Message-ID: <20260721152613.879842338@linuxfoundation.org>
+Subject: [PATCH 7.1 0894/2077] char: tlclk: fix use-after-free in tlclk_cleanup()
+Date: Tue, 21 Jul 2026 17:09:27 +0200
+Message-ID: <20260721152613.903167525@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,43 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Penkler <dpenkler@gmail.com>
+From: James Kim <james010kim@gmail.com>
 
-[ Upstream commit 70ea440324e8c1a10837f721352f5bd469c85007 ]
+[ Upstream commit bbf003b7794d6ad6f939fdd29f1f1bde8ac554c1 ]
 
-The driver was returning -ENOTTY in the case the ioctl command
-was not recognised. Change it to -EBADRQC.
+This patch improves the module cleanup process in the tlclk driver to
+prevent potential use-after-free and race conditions.
 
-Fixes: 9dde4559e939 ("staging: gpib: Add GPIB common core driver")
-Signed-off-by: Dave Penkler <dpenkler@gmail.com>
-Link: https://patch.msgid.link/20260411102025.2000-3-dpenkler@gmail.com
+Currently, the file_operations structure does not specify the .owner
+field, which could allow the module to be unloaded while user-space
+processes are still interacting with the device. Additionally, the
+tlclk_cleanup() function frees the alarm_events memory before ensuring
+that blocked processes in the waitqueue are fully awakened and that the
+switchover_timer has completed.
+
+To address these cases, this patch:
+- Sets '.owner = THIS_MODULE' in tlclk_fops to safely defer module
+  unloading while the device is in use.
+- Updates tlclk_cleanup() to explicitly wake up all blocked readers
+  (wake_up_all), properly release hardware I/O regions, and safely
+  delete the timer (timer_delete_sync) prior to freeing memory.
+
+Fixes: 1a80ba882730 ("[PATCH] Telecom Clock Driver for MPCBL0010 ATCA computer blade")
+Signed-off-by: James Kim <james010kim@gmail.com>
+Link: https://patch.msgid.link/20260503101131.64219-1-james010kim@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpib/common/gpib_os.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/char/tlclk.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpib/common/gpib_os.c b/drivers/gpib/common/gpib_os.c
-index 5909274ddc1226..7dca60488872f3 100644
---- a/drivers/gpib/common/gpib_os.c
-+++ b/drivers/gpib/common/gpib_os.c
-@@ -613,7 +613,7 @@ long ibioctl(struct file *filep, unsigned int cmd, unsigned long arg)
- 	unsigned int minor = iminor(file_inode(filep));
- 	struct gpib_board *board;
- 	struct gpib_file_private *file_priv = filep->private_data;
--	long retval = -ENOTTY;
-+	long retval = -EBADRQC;
+diff --git a/drivers/char/tlclk.c b/drivers/char/tlclk.c
+index 677d230a226cf5..dd45fe5eb6f270 100644
+--- a/drivers/char/tlclk.c
++++ b/drivers/char/tlclk.c
+@@ -264,6 +264,7 @@ static ssize_t tlclk_read(struct file *filp, char __user *buf, size_t count,
+ }
  
- 	if (minor >= GPIB_MAX_NUM_BOARDS) {
- 		pr_err("gpib: invalid minor number of device file\n");
-@@ -806,7 +806,6 @@ long ibioctl(struct file *filep, unsigned int cmd, unsigned long arg)
- 		mutex_unlock(&board->big_gpib_mutex);
- 		return write_ioctl(file_priv, board, arg);
- 	default:
--		retval = -ENOTTY;
- 		goto done;
- 	}
+ static const struct file_operations tlclk_fops = {
++	.owner = THIS_MODULE,
+ 	.read = tlclk_read,
+ 	.open = tlclk_open,
+ 	.release = tlclk_release,
+@@ -837,6 +838,9 @@ static void __exit tlclk_cleanup(void)
+ 	misc_deregister(&tlclk_miscdev);
+ 	unregister_chrdev(tlclk_major, "telco_clock");
  
++	got_event = 1;
++	wake_up_all(&wq);
++
+ 	release_region(TLCLK_BASE, 8);
+ 	timer_delete_sync(&switchover_timer);
+ 	kfree(alarm_events);
 -- 
 2.53.0
 
