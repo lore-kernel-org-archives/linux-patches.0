@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FAE471251;
-	Tue, 21 Jul 2026 20:50:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A51638839E;
+	Tue, 21 Jul 2026 20:50:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667020; cv=none; b=IUg/047JXYVp8Sl/LcrvTeVwR+CzP2n3BbpqLCp8nXDI5vxFFUZW2oc6OYZWvvb1WcAx/bSAe+jkNZslmmJTjkaDzfB30+E26y3XBDTb7pwc42YK2YLRxXQVg67tUY26TIjTnl6eKP/8js5wOKgJBOcA7tDKwLtE8x1tIK4tZBE=
+	t=1784667021; cv=none; b=PLgzUlIA9mZiwSvhPOTZJ7IfIlUURd5+pqV7/8EJoBdXvLE+uFoOmTC+HDtW6/tBLxFAuyWlKo4uhGwpAcLC0ruJiuezSG8Csm07LL7YOGn9k9ucaLP0lmkc6XnkX/b4jrHywuG4PU8LYk1QbpY9fHZt3LharBmbLPe1ZtZUia4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667020; c=relaxed/simple;
-	bh=X09LfxAfZMfnPAibi6x650uQ3bW9I1o2D5YLVUrNQz0=;
+	s=arc-20240116; t=1784667021; c=relaxed/simple;
+	bh=B+iIOgge19MynL4Xang937NMAySz/9gEqYAhBXfkQmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RiojR2iib/HXQag9lA2kvbgYtd6TboqjOgwx4eqfsPvA9hXpHLRXE2/Z30IQNTOI55h2CJtYiWSydc7n4PDwx17CclJE2wQ27NgBX0d9XAdV+NofQs9pHmRUMY/oxCksAYMGhBcR0MiS0p6I6YvtvS8F8aJO2DiTmk1F3HVjo/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tl+vm9Br; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fUO8VHkJ8h8L4GO18tOyW1mCqtZpzFVmvHZxfc3kprF+E0z8UTN+oCihhBMSY3f0b8CX8j8rxlGnOMpusfte21JzOKs3m+DB7EQaHTel435ZOgK3+GEavcAHrvrVHWzUoyTJlf4YuLp3Q+8CRfM1R/m+Qfz5E4Sy8acJmYPKw3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=afuiXdiC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tl+vm9Br"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A0E1F000E9;
-	Tue, 21 Jul 2026 20:50:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afuiXdiC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F47F1F00A3A;
+	Tue, 21 Jul 2026 20:50:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667017;
-	bh=5ao45hWZQKfZuTKbafeKatWShAxcl0IuqOIBXXU2gUc=;
+	s=korg; t=1784667020;
+	bh=hoJg+DchG7Uze9N/S+l2rXdw9YdUb8HftILlMYh18cU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tl+vm9Brt5+LlbKy2+971g6fSqsjT+JwxdZSuDsD+MY9iYvqk46VmPd9Z2X5+9+RW
-	 ZcdONdYnnP8HgbwUBwfTlnIuvmR5bUFap1vHWUbylGKI2EdZ16MVawNujWgpirYy0r
-	 pe837uksSnaJGMMpUtnXsdHAEOdDWl9ZdJMyRUxE=
+	b=afuiXdiCeBA1/e/NhQTZGyeTmJ5/aDoJYDy2Y2RO0cw4zqJo/9i/LBPFHXh9+amEr
+	 fI6RXeALWYFPMnMuIgIQ51HngDNoCaDJwaaMFkfa7mdXcGPSwT11hM5QJfh0jC6Twz
+	 ZzrOnJYhsgarniFRosWaxCgUdOPQ7cK0lds1xhlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Julian Anastasov <ja@ssi.bg>,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0875/1266] ipvs: pass parsed transport offset to state handlers
-Date: Tue, 21 Jul 2026 17:21:52 +0200
-Message-ID: <20260721152501.429715516@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.6 0902/1266] KVM: arm64: vgic: Check the interrupt is still ours before migrating it
+Date: Tue, 21 Jul 2026 17:22:19 +0200
+Message-ID: <20260721152502.029861951@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,135 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit bae7ce7bafb59e42dc0e0e2999fdd9d1cffe3866 ]
+commit 0074b82cdfcb5fd13710a0ac308ade68ac6f6fbe upstream.
 
-IPVS callers already parse the packet into struct ip_vs_iphdr before
-updating connection state. For IPv6 this records the real
-transport-header offset after extension headers in iph.len.
+vgic_prune_ap_list() drops both ap_list_lock and irq_lock while migrating
+an interrupt to another vCPU. After reacquiring the locks it only checks
+that the affinity is unchanged (target_vcpu == vgic_target_oracle(irq))
+before moving the interrupt, which assumes that an interrupt whose affinity
+is preserved is still queued on this vCPU's ap_list.
 
-Pass this parsed transport offset through ip_vs_set_state() and the
-protocol state_transition() callback so protocol handlers can use the
-same packet context as scheduling and NAT handling. This patch only
-changes the common callback plumbing and adapts the protocol callback
-signatures; TCP and SCTP start using the value in follow-up patches.
+That assumption no longer holds if the interrupt is taken off the ap_list
+while the locks are dropped. vgic_flush_pending_lpis() removes the
+interrupt from the list and sets irq->vcpu to NULL, but leaves
+enabled/pending/target_vcpu untouched. As the interrupt is still enabled
+and pending, vgic_target_oracle() returns the same target_vcpu, so the
+affinity check passes and list_del() is run a second time on an entry that
+has already been removed.
 
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: 2500fa3958b1 ("ipvs: use parsed transport offset in TCP state lookup")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Also check that the interrupt is still assigned to this vCPU
+(irq->vcpu == vcpu) before moving it.
+
+Fixes: 0919e84c0fc1 ("KVM: arm/arm64: vgic-new: Add IRQ sync/flush framework")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Link: https://patch.msgid.link/aiHnI1mu6SGQrgnz@v4bel
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/ip_vs.h                   |  3 ++-
- net/netfilter/ipvs/ip_vs_core.c       | 10 +++++-----
- net/netfilter/ipvs/ip_vs_proto_sctp.c |  3 ++-
- net/netfilter/ipvs/ip_vs_proto_tcp.c  |  3 ++-
- net/netfilter/ipvs/ip_vs_proto_udp.c  |  3 ++-
- 5 files changed, 13 insertions(+), 9 deletions(-)
+ arch/arm64/kvm/vgic/vgic.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
-index d70268cf1af82e..08b90d33acdc65 100644
---- a/include/net/ip_vs.h
-+++ b/include/net/ip_vs.h
-@@ -516,7 +516,8 @@ struct ip_vs_protocol {
+--- a/arch/arm64/kvm/vgic/vgic.c
++++ b/arch/arm64/kvm/vgic/vgic.c
+@@ -701,15 +701,16 @@ retry:
+ 		raw_spin_lock(&irq->irq_lock);
  
- 	void (*state_transition)(struct ip_vs_conn *cp, int direction,
- 				 const struct sk_buff *skb,
--				 struct ip_vs_proto_data *pd);
-+				 struct ip_vs_proto_data *pd,
-+				 unsigned int iph_len);
+ 		/*
+-		 * If the affinity has been preserved, move the
+-		 * interrupt around. Otherwise, it means things have
+-		 * changed while the interrupt was unlocked, and we
+-		 * need to replay this.
++		 * If the interrupt is still ours and its affinity has
++		 * been preserved, move it around. Otherwise, it means
++		 * things have changed while the interrupt was unlocked
++		 * (it may even have been taken off the list with its
++		 * affinity left untouched), and we need to replay this.
+ 		 *
+ 		 * In all cases, we cannot trust the list not to have
+ 		 * changed, so we restart from the beginning.
+ 		 */
+-		if (target_vcpu == vgic_target_oracle(irq)) {
++		if (irq->vcpu == vcpu && target_vcpu == vgic_target_oracle(irq)) {
+ 			struct vgic_cpu *new_cpu = &target_vcpu->arch.vgic_cpu;
  
- 	int (*register_app)(struct netns_ipvs *ipvs, struct ip_vs_app *inc);
- 
-diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
-index 34c4648ba36ece..b0fa8f04f7a1c3 100644
---- a/net/netfilter/ipvs/ip_vs_core.c
-+++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -220,10 +220,10 @@ ip_vs_conn_stats(struct ip_vs_conn *cp, struct ip_vs_service *svc)
- static inline void
- ip_vs_set_state(struct ip_vs_conn *cp, int direction,
- 		const struct sk_buff *skb,
--		struct ip_vs_proto_data *pd)
-+		struct ip_vs_proto_data *pd, unsigned int iph_len)
- {
- 	if (likely(pd->pp->state_transition))
--		pd->pp->state_transition(cp, direction, skb, pd);
-+		pd->pp->state_transition(cp, direction, skb, pd, iph_len);
- }
- 
- static inline int
-@@ -625,7 +625,7 @@ int ip_vs_leave(struct ip_vs_service *svc, struct sk_buff *skb,
- 		ip_vs_in_stats(cp, skb);
- 
- 		/* set state */
--		ip_vs_set_state(cp, IP_VS_DIR_INPUT, skb, pd);
-+		ip_vs_set_state(cp, IP_VS_DIR_INPUT, skb, pd, iph->len);
- 
- 		/* transmit the first SYN packet */
- 		ret = cp->packet_xmit(skb, cp, pd->pp, iph);
-@@ -1306,7 +1306,7 @@ handle_response(int af, struct sk_buff *skb, struct ip_vs_proto_data *pd,
- 
- after_nat:
- 	ip_vs_out_stats(cp, skb);
--	ip_vs_set_state(cp, IP_VS_DIR_OUTPUT, skb, pd);
-+	ip_vs_set_state(cp, IP_VS_DIR_OUTPUT, skb, pd, iph->len);
- 	skb->ipvs_property = 1;
- 	if (!(cp->flags & IP_VS_CONN_F_NFCT))
- 		ip_vs_notrack(skb);
-@@ -2051,7 +2051,7 @@ ip_vs_in_hook(void *priv, struct sk_buff *skb, const struct nf_hook_state *state
- 	IP_VS_DBG_PKT(11, af, pp, skb, iph.off, "Incoming packet");
- 
- 	ip_vs_in_stats(cp, skb);
--	ip_vs_set_state(cp, IP_VS_DIR_INPUT, skb, pd);
-+	ip_vs_set_state(cp, IP_VS_DIR_INPUT, skb, pd, iph.len);
- 	if (cp->packet_xmit)
- 		ret = cp->packet_xmit(skb, cp, pp, &iph);
- 		/* do not touch skb anymore */
-diff --git a/net/netfilter/ipvs/ip_vs_proto_sctp.c b/net/netfilter/ipvs/ip_vs_proto_sctp.c
-index 63c78a1f3918a7..394367b7b38879 100644
---- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
-@@ -468,7 +468,8 @@ set_sctp_state(struct ip_vs_proto_data *pd, struct ip_vs_conn *cp,
- 
- static void
- sctp_state_transition(struct ip_vs_conn *cp, int direction,
--		const struct sk_buff *skb, struct ip_vs_proto_data *pd)
-+		const struct sk_buff *skb, struct ip_vs_proto_data *pd,
-+		unsigned int iph_len)
- {
- 	spin_lock_bh(&cp->lock);
- 	set_sctp_state(pd, cp, direction, skb);
-diff --git a/net/netfilter/ipvs/ip_vs_proto_tcp.c b/net/netfilter/ipvs/ip_vs_proto_tcp.c
-index ede4fa3b63f52d..dc8394383c148e 100644
---- a/net/netfilter/ipvs/ip_vs_proto_tcp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_tcp.c
-@@ -580,7 +580,8 @@ set_tcp_state(struct ip_vs_proto_data *pd, struct ip_vs_conn *cp,
- static void
- tcp_state_transition(struct ip_vs_conn *cp, int direction,
- 		     const struct sk_buff *skb,
--		     struct ip_vs_proto_data *pd)
-+		     struct ip_vs_proto_data *pd,
-+		     unsigned int iph_len)
- {
- 	struct tcphdr _tcph, *th;
- 
-diff --git a/net/netfilter/ipvs/ip_vs_proto_udp.c b/net/netfilter/ipvs/ip_vs_proto_udp.c
-index ffbebda547fc10..dbd4155bb07526 100644
---- a/net/netfilter/ipvs/ip_vs_proto_udp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_udp.c
-@@ -445,7 +445,8 @@ static const char * udp_state_name(int state)
- static void
- udp_state_transition(struct ip_vs_conn *cp, int direction,
- 		     const struct sk_buff *skb,
--		     struct ip_vs_proto_data *pd)
-+		     struct ip_vs_proto_data *pd,
-+		     unsigned int iph_len)
- {
- 	if (unlikely(!pd)) {
- 		pr_err("UDP no ns data\n");
--- 
-2.53.0
-
+ 			list_del(&irq->ap_list);
 
 
