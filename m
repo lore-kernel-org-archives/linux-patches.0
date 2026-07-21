@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CEF347143C;
-	Tue, 21 Jul 2026 20:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44D7432E9C;
+	Tue, 21 Jul 2026 20:08:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664501; cv=none; b=Hn3KUYIMN2iazylD+kCJKhSZXyT3I9lduH5NM237xUKERME2m/uE66w0+EhEeA0H2kmBgMds3/0eTF8LudIiyU1dDge300bI9+zHKzKIzxG+lPcxyRLBvZ28H7/uI06OZ7rqQEL8+YK3tXMVWYyLrfB0bvlQe3MSP0Wg5rl/dIs=
+	t=1784664502; cv=none; b=ITsS0mUUHehoGKGltwsq6lJ4dQUvL1dKURFlMbW1kaK/WsZPB7SkMcQk4GGeD3NAJVoIqgEVrihR1Wm+Hcc8HUenhyfgl1o915Md+v516pqDAy0sLn565SwNp077rNQiQkoG0J+ExV8G2wJc9vQ8FfMG46NcebKXnZ44WQtWjIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664501; c=relaxed/simple;
-	bh=32PYT+VDlQ9CLEiHgmpTHAKC+vTvbGXRQZfDfR2P3bY=;
+	s=arc-20240116; t=1784664502; c=relaxed/simple;
+	bh=tkXyJGFRa7Ux56y8rX8Y37uRvjHIVIpgFiXqcxxNEmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mbpXeXR1xPnbbfMgiiF+tkk/I24YF1grePxxdEc6Y1IM2ZpXsmYsaklADum/au6itjNMKmXTkh6BqzUn74n9uCesVEKeRIxAY0gsGsNEGIGS8lPqr2YxJfbptFMONcSL2LlDbOg4eAU+JPi+Lbyp+V/KFiS/x9G+TYZ6P/wMyyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9GBE/55; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bYdAWR3qCFJ8vhRcmnWbmkmKnEciv2rZFbvbLovO0oUH+HtOSj6GFlrDRob+WAZg8vLahPl50gB7E7zWr08rWLw+VSpGnjz256DxOn3uT+339Rc31/QR60JDNr6OMpF7G1qDlkETcwgJUiZLxov2h2ewLqRdMtKZlqouYYI0JHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YKGIFrbj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9GBE/55"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8D41F00A3A;
-	Tue, 21 Jul 2026 20:08:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YKGIFrbj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 442D01F00ADE;
+	Tue, 21 Jul 2026 20:08:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664488;
-	bh=QP5DaSqKJYTlIGdWB/JcQQKRTR+1VMKbpbqrN+XIaLE=;
+	s=korg; t=1784664498;
+	bh=K486Wdrup9iSbjzZTcxkUZPAKWAXuHXXbiX57ZEuqDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k9GBE/55KH7WRpQkmnCDyw592MFCq6Q73m837t6r0ovV2iZmOp0s1F8Q/WklP7fFB
-	 zTSODxA2BaDxHhwTxotPlNaJ653WbjgAf+UZRPSr/527hluTEpqpmBhpsIaFmWvh7b
-	 eoyYi9XUkviz8/G0ddZcZLYvugkQOjmx6quzdtIA=
+	b=YKGIFrbjLs5g6hTAOplytNqHz8YpnTVFKMmnMFxpWvVUFACdsQzKWWPyZwauRrA19
+	 f0l6c++VNOTcfyUSyHCyZFDC8WEoahzzHkP11ZU+nl34W3zt7OCq+nUcKqSrF1HtzB
+	 fYPth5hWF2Pg/WSxpcL5ydWqeyYcD//AexYgJGY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tom Lendacky <thomas.lendacky@amd.com>,
-	Ashish Kalra <ashish.kalra@amd.com>,
+	"Tycho Andersen (AMD)" <tycho@kernel.org>,
+	Alexey Kardashevskiy <aik@amd.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1219/1276] crypto: ccp - Move dev_info/err messages for SEV/SNP init and shutdown
-Date: Tue, 21 Jul 2026 17:27:42 +0200
-Message-ID: <20260721152513.350671075@linuxfoundation.org>
+Subject: [PATCH 6.12 1223/1276] crypto: ccp - Fix a case where SNP_SHUTDOWN is missed
+Date: Tue, 21 Jul 2026 17:27:46 +0200
+Message-ID: <20260721152513.446874168@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,140 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashish Kalra <ashish.kalra@amd.com>
+From: Tom Lendacky <thomas.lendacky@amd.com>
 
-[ Upstream commit 9770b428b1a28360663f1f5e524ee458b4cf454b ]
+[ Upstream commit 551120148b67e04527b405c5ec33a31593846ba4 ]
 
-Move dev_info and dev_err messages related to SEV/SNP initialization
-and shutdown into __sev_platform_init_locked(), __sev_snp_init_locked()
-and __sev_platform_shutdown_locked(), __sev_snp_shutdown_locked() so
-that they don't need to be issued from callers.
+If page reclaim fails in sev_ioctl_do_snp_platform_status() and SNP was
+moved from UNINIT to INIT for the function, SNP is not moved back to
+UNINIT state. Additionally, SNP is not required to be initialized in order
+to execute the SNP_PLATFORM_STATUS command, so don't attempt to move to
+INIT state and let SNP_PLATFORM_STATUS report the status as is.
 
-This allows both _sev_platform_init_locked() and various SEV/SNP ioctls
-to call __sev_platform_init_locked(), __sev_snp_init_locked() and
-__sev_platform_shutdown_locked(), __sev_snp_shutdown_locked() for
-implicit SEV/SNP initialization and shutdown without additionally
-printing any errors/success messages.
-
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
+Fixes: ceac7fb89e8d ("crypto: ccp - Ensure implicit SEV/SNP init and shutdown in ioctls")
+Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Tycho Andersen (AMD) <tycho@kernel.org>
+Reviewed-by: Alexey Kardashevskiy <aik@amd.com>
+Signed-off-by: Tycho Andersen (AMD) <tycho@kernel.org>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Stable-dep-of: 08f0e65e784c ("crypto: ccp - Do not initialize SNP for ioctl(SNP_CONFIG)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/ccp/sev-dev.c |   44 +++++++++++++++++++++++++++++++------------
- 1 file changed, 32 insertions(+), 12 deletions(-)
+ drivers/crypto/ccp/sev-dev.c |   46 +++++++++++++++++++++----------------------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
 
 --- a/drivers/crypto/ccp/sev-dev.c
 +++ b/drivers/crypto/ccp/sev-dev.c
-@@ -1174,21 +1174,31 @@ static int __sev_snp_init_locked(int *er
- 	wbinvd_on_all_cpus();
+@@ -2071,11 +2071,10 @@ e_free_pdh:
+ static int sev_ioctl_do_snp_platform_status(struct sev_issue_cmd *argp)
+ {
+ 	struct sev_device *sev = psp_master->sev_data;
+-	bool shutdown_required = false;
+ 	struct sev_data_snp_addr buf;
+ 	struct page *status_page;
+-	int ret, error;
+ 	void *data;
++	int ret;
  
- 	rc = __sev_do_cmd_locked(cmd, arg, error);
--	if (rc)
-+	if (rc) {
-+		dev_err(sev->dev, "SEV-SNP: %s failed rc %d, error %#x\n",
-+			cmd == SEV_CMD_SNP_INIT_EX ? "SNP_INIT_EX" : "SNP_INIT",
-+			rc, *error);
- 		return rc;
-+	}
+ 	if (!argp->data)
+ 		return -EINVAL;
+@@ -2086,31 +2085,35 @@ static int sev_ioctl_do_snp_platform_sta
  
- 	/* Prepare for first SNP guest launch after INIT. */
- 	wbinvd_on_all_cpus();
- 	rc = __sev_do_cmd_locked(SEV_CMD_SNP_DF_FLUSH, NULL, error);
--	if (rc)
-+	if (rc) {
-+		dev_err(sev->dev, "SEV-SNP: SNP_DF_FLUSH failed rc %d, error %#x\n",
-+			rc, *error);
- 		return rc;
-+	}
+ 	data = page_address(status_page);
  
- 	sev->snp_initialized = true;
- 	dev_dbg(sev->dev, "SEV-SNP firmware initialized\n");
- 
-+	dev_info(sev->dev, "SEV-SNP API:%d.%d build:%d\n", sev->api_major,
-+		 sev->api_minor, sev->build);
-+
- 	sev_es_tmr_size = SNP_TMR_SIZE;
- 
--	return rc;
-+	return 0;
- }
- 
- static void __sev_platform_init_handle_tmr(struct sev_device *sev)
-@@ -1285,16 +1295,22 @@ static int __sev_platform_init_locked(in
- 	if (error)
- 		*error = psp_ret;
- 
--	if (rc)
-+	if (rc) {
-+		dev_err(sev->dev, "SEV: %s failed %#x, rc %d\n",
-+			sev_init_ex_buffer ? "INIT_EX" : "INIT", psp_ret, rc);
- 		return rc;
-+	}
- 
- 	sev->state = SEV_STATE_INIT;
- 
- 	/* Prepare for first SEV guest launch after INIT */
- 	wbinvd_on_all_cpus();
- 	rc = __sev_do_cmd_locked(SEV_CMD_DF_FLUSH, NULL, error);
--	if (rc)
-+	if (rc) {
-+		dev_err(sev->dev, "SEV: DF_FLUSH failed %#x, rc %d\n",
-+			*error, rc);
- 		return rc;
-+	}
- 
- 	dev_dbg(sev->dev, "SEV firmware initialized\n");
- 
-@@ -1374,8 +1390,11 @@ static int __sev_platform_shutdown_locke
- 		return 0;
- 
- 	ret = __sev_do_cmd_locked(SEV_CMD_SHUTDOWN, NULL, error);
--	if (ret)
-+	if (ret) {
-+		dev_err(sev->dev, "SEV: failed to SHUTDOWN error %#x, rc %d\n",
-+			*error, ret);
- 		return ret;
-+	}
- 
- 	sev->state = SEV_STATE_UNINIT;
- 	dev_dbg(sev->dev, "SEV firmware shutdown\n");
-@@ -1733,9 +1752,12 @@ static int __sev_snp_shutdown_locked(int
- 	ret = __sev_do_cmd_locked(SEV_CMD_SNP_SHUTDOWN_EX, &data, error);
- 	/* SHUTDOWN may require DF_FLUSH */
- 	if (*error == SEV_RET_DFFLUSH_REQUIRED) {
--		ret = __sev_do_cmd_locked(SEV_CMD_SNP_DF_FLUSH, NULL, NULL);
-+		int dfflush_error;
-+
-+		ret = __sev_do_cmd_locked(SEV_CMD_SNP_DF_FLUSH, NULL, &dfflush_error);
- 		if (ret) {
--			dev_err(sev->dev, "SEV-SNP DF_FLUSH failed\n");
-+			dev_err(sev->dev, "SEV-SNP DF_FLUSH failed, ret = %d, error = %#x\n",
-+				ret, dfflush_error);
- 			return ret;
- 		}
- 		/* reissue the shutdown command */
-@@ -1743,7 +1765,8 @@ static int __sev_snp_shutdown_locked(int
- 					  error);
- 	}
- 	if (ret) {
--		dev_err(sev->dev, "SEV-SNP firmware shutdown failed\n");
-+		dev_err(sev->dev, "SEV-SNP firmware shutdown failed, rc %d, error %#x\n",
-+			ret, *error);
- 		return ret;
- 	}
- 
-@@ -2511,9 +2534,6 @@ void sev_pci_init(void)
- 		dev_err(sev->dev, "SEV: failed to INIT error %#x, rc %d\n",
- 			args.error, rc);
- 
--	dev_info(sev->dev, "SEV%s API:%d.%d build:%d\n", sev->snp_initialized ?
--		"-SNP" : "", sev->api_major, sev->api_minor, sev->build);
+-	if (!sev->snp_initialized) {
+-		ret = snp_move_to_init_state(argp, &shutdown_required);
+-		if (ret)
+-			goto cleanup;
+-	}
 -
- 	atomic_notifier_chain_register(&panic_notifier_list,
- 				       &snp_panic_notifier);
- 	return;
+ 	/*
+-	 * Firmware expects status page to be in firmware-owned state, otherwise
+-	 * it will report firmware error code INVALID_PAGE_STATE (0x1A).
++	 * SNP_PLATFORM_STATUS can be executed in any SNP state. But if executed
++	 * when SNP has been initialized, the status page must be firmware-owned.
+ 	 */
+-	if (rmp_mark_pages_firmware(__pa(data), 1, true)) {
+-		ret = -EFAULT;
+-		goto cleanup;
++	if (sev->snp_initialized) {
++		/*
++		 * Firmware expects the status page to be in Firmware state,
++		 * otherwise it will report an error INVALID_PAGE_STATE.
++		 */
++		if (rmp_mark_pages_firmware(__pa(data), 1, true)) {
++			ret = -EFAULT;
++			goto cleanup;
++		}
+ 	}
+ 
+ 	buf.address = __psp_pa(data);
+ 	ret = __sev_do_cmd_locked(SEV_CMD_SNP_PLATFORM_STATUS, &buf, &argp->error);
+ 
+-	/*
+-	 * Status page will be transitioned to Reclaim state upon success, or
+-	 * left in Firmware state in failure. Use snp_reclaim_pages() to
+-	 * transition either case back to Hypervisor-owned state.
+-	 */
+-	if (snp_reclaim_pages(__pa(data), 1, true))
+-		return -EFAULT;
++	if (sev->snp_initialized) {
++		/*
++		 * The status page will be in Reclaim state on success, or left
++		 * in Firmware state on failure. Use snp_reclaim_pages() to
++		 * transition either case back to Hypervisor-owned state.
++		 */
++		if (snp_reclaim_pages(__pa(data), 1, true)) {
++			snp_leak_pages(__page_to_pfn(status_page), 1);
++			return -EFAULT;
++		}
++	}
+ 
+ 	if (ret)
+ 		goto cleanup;
+@@ -2120,9 +2123,6 @@ static int sev_ioctl_do_snp_platform_sta
+ 		ret = -EFAULT;
+ 
+ cleanup:
+-	if (shutdown_required)
+-		__sev_snp_shutdown_locked(&error, false);
+-
+ 	__free_pages(status_page, 0);
+ 	return ret;
+ }
 
 
