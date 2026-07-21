@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35AD4431A5C;
-	Tue, 21 Jul 2026 19:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9AC408634;
+	Tue, 21 Jul 2026 19:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661875; cv=none; b=LR+UrTY+d3p3cno1ElaOV0/rn2vXTba+YuWQmrPDfzPp5zFYGOUlGsk7m3RASyBBgvKRixJqSgcp43H8st0sT6hNxeMmRldgcV+NxWHJFCHQopLVuUBUQFAnN25MaqvAEqd9L5WRS8mNel8tlS8gMoJRp9bhevSly1GNB1xfvzE=
+	t=1784661878; cv=none; b=ZvhtsRarTcLxECwLNA8AYy6KH9YQlhfuTJ1j6O2Te1uLCAzqRs/zCTsG6M7NbmKHODabNeBCpTjyzBPiXh+gh7YF5roxnFYNwwNkx37eytGETYEaB1fNajxtV/rTO3yIqCC3+r27PLMl54lEyQfSpZNzYOq5aWVEB5gNo91F7yY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661875; c=relaxed/simple;
-	bh=pTTP674jmJxNidDENv/0Olc9qs0QjZq+ikHarNAeKc0=;
+	s=arc-20240116; t=1784661878; c=relaxed/simple;
+	bh=7oNJ8mivuRIRdX5mbsy8JOLIYhP4IZ6szr8OZOBJ4do=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1nmf0WYQFh68ZR48PHjbgJ4Lsoay5bhu5yj+ckoa8ArG1YvWomnhCB93vFVZ7kg8LwHHRI1HDjEu2VmVxiWnXWUb473+S3IyBY5d3euAK1yTY3aXnQTuuoBDAn+a5ByA3BUAdNJCWsfoY0Ktmt0lBTraf1+1DrqIEliNAsP3zE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N84kHX1l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M3i/26H/OeIw1fUHJ3O6WlD4ztTmv3NEwg4LOKbNg98lJjSQeVxEqkUae9qjs8HzC6WOq2+lnifN5bBo4NA+KwuZodKhxdI12j6aZQB69k1nyRGI7yXbhbSpLdAxgszECtf3TCAFFRdiHA76icYva7P1fdPWWxJ+5tvXVoQnUk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlC5jz7P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N84kHX1l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A26521F000E9;
-	Tue, 21 Jul 2026 19:24:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlC5jz7P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DAEF1F00A3A;
+	Tue, 21 Jul 2026 19:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661874;
-	bh=TKChTlBCeRobHconmNG1wnn9XNSJAQo0MRDF3y+DwZc=;
+	s=korg; t=1784661876;
+	bh=Cqrybo9ptnlr5PG8ErXTxNynjfYxSaaG9ZRwIKqMPH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N84kHX1lOQukYsgG8It91T2aTp9q79J8LxRFT599J92SCHWJwNz0FL4VOLuskLyco
-	 roEgEvUnTJG6/auqwiVGHsHZiOBX7AgzUYshqAyfHoVYQ4Yfad02Ny6wKMO4naYY+B
-	 8OY2IYqmhMJ+RdmD0od5sMesddYoZ+8msz/O9ESc=
+	b=LlC5jz7P0ERUJN0/HukPv8y24JFAmXFPLsdUSyGb0OZqPqqilAUM/qoxchLJjmvCi
+	 wF96xAfLJS2Sc23Tlb0LSA53XEvIANg9RezVs52IKUrq8YmBTpyWo21ACorb1vuEch
+	 pBlh1pYqi32310LBgLFVts+93jpL1XGlY/XRJPyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Chul Kim <chul.kim@idt.com>,
-	Matt Porter <mporter@kernel.crashing.org>,
+	ZhengYuan Huang <gality369@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0187/1276] rapidio/tsi721: prevent a bad dereference in tsi721_db_dpc()
-Date: Tue, 21 Jul 2026 17:10:30 +0200
-Message-ID: <20260721152450.276144284@linuxfoundation.org>
+Subject: [PATCH 6.12 0188/1276] ocfs2: dont BUG_ON an invalid journal dinode
+Date: Tue, 21 Jul 2026 17:10:31 +0200
+Message-ID: <20260721152450.298367979@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -54,56 +58,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: ZhengYuan Huang <gality369@gmail.com>
 
-[ Upstream commit fc15e3a30ddd950f009c76765331783b9af94a87 ]
+[ Upstream commit c0438198c28b1d22c272751af5e717c11d9fa8dd ]
 
-With a list_for_each() loop, if we don't find the item we are looking for
-in the list, then the loop exits with the iterator, which is "dbell" in
-this loop, pointing to invalid memory.
+[BUG]
+A fuzzed OCFS2 image can corrupt the current slot journal dinode while
+mount is still in progress. The mount path first reports the invalid
+journal block and then crashes in shutdown:
 
-This code uses the "found" variable to determine if we have found the
-doorbell we are looking for or not.  However, the problem that the "found"
-variable needs to be set to false at the start of each iteration,
-otherwise after the first correct doorbell, then everything is marked as
-found.
+kernel BUG at fs/ocfs2/journal.c:1034!
+Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+RIP: 0010:ocfs2_journal_toggle_dirty+0x2d6/0x340 fs/ocfs2/journal.c:1034
+Call Trace:
+ ocfs2_journal_shutdown+0x414/0xc30 fs/ocfs2/journal.c:1116
+ ocfs2_mount_volume fs/ocfs2/super.c:1785 [inline]
+ ocfs2_fill_super+0x30a9/0x3cd0 fs/ocfs2/super.c:1083
+ get_tree_bdev_flags+0x38b/0x640 fs/super.c:1698
+ get_tree_bdev+0x24/0x40 fs/super.c:1721
+ ocfs2_get_tree+0x21/0x30 fs/ocfs2/super.c:1184
+ vfs_get_tree+0x9a/0x370 fs/super.c:1758
+ fc_mount fs/namespace.c:1199 [inline]
+ do_new_mount_fc fs/namespace.c:3642 [inline]
+ do_new_mount fs/namespace.c:3718 [inline]
+ path_mount+0x5b8/0x1ea0 fs/namespace.c:4028
+ do_mount fs/namespace.c:4041 [inline]
+ __do_sys_mount fs/namespace.c:4229 [inline]
+ __se_sys_mount fs/namespace.c:4206 [inline]
+ __x64_sys_mount+0x282/0x320 fs/namespace.c:4206
+ ...
 
-Reset the "found" to false at the start of the iteration and move the
-variable inside the loop.
+[CAUSE]
+ocfs2_journal_toggle_dirty() used to return -EIO when journal->j_bh no
+longer contained a valid dinode, because the startup and shutdown paths
+already handled that failure. Commit 10995aa2451a
+("ocfs2: Morph the haphazard OCFS2_IS_VALID_DINODE() checks.") changed
+the check to a BUG_ON() under the assumption that the journal dinode had
+already been validated. That turns an unexpected invalid journal dinode
+during mount teardown into a kernel crash instead of a normal mount
+failure.
 
-Link: https://lore.kernel.org/af2WHMZiqMwdYveO@stanley.mountain
-Fixes: 48618fb4e522 ("RapidIO: add mport driver for Tsi721 bridge")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Chul Kim <chul.kim@idt.com>
-Cc: Matt Porter <mporter@kernel.crashing.org>
+[FIX]
+Replace the BUG_ON() with WARN_ON() and return -EIO. This keeps the
+invariant warning for debugging, but restores the original behavior of
+failing startup or shutdown cleanly instead of panicking the kernel.
+
+Link: https://lore.kernel.org/20260512024115.4036371-1-gality369@gmail.com
+Fixes: 10995aa2451a ("ocfs2: Morph the haphazard OCFS2_IS_VALID_DINODE() checks.")
+Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rapidio/devices/tsi721.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ocfs2/journal.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/rapidio/devices/tsi721.c b/drivers/rapidio/devices/tsi721.c
-index 4b84270a890617..ab64c991468de2 100644
---- a/drivers/rapidio/devices/tsi721.c
-+++ b/drivers/rapidio/devices/tsi721.c
-@@ -394,7 +394,6 @@ static void tsi721_db_dpc(struct work_struct *work)
- 						    idb_work);
- 	struct rio_mport *mport;
- 	struct rio_dbell *dbell;
--	int found = 0;
- 	u32 wr_ptr, rd_ptr;
- 	u64 *idb_entry;
- 	u32 regval;
-@@ -412,6 +411,8 @@ static void tsi721_db_dpc(struct work_struct *work)
- 	rd_ptr = ioread32(priv->regs + TSI721_IDQ_RP(IDB_QUEUE)) % IDB_QSIZE;
+diff --git a/fs/ocfs2/journal.c b/fs/ocfs2/journal.c
+index c2a73bfb16aa46..9a924fdf927ad0 100644
+--- a/fs/ocfs2/journal.c
++++ b/fs/ocfs2/journal.c
+@@ -1027,11 +1027,8 @@ static int ocfs2_journal_toggle_dirty(struct ocfs2_super *osb,
+ 	struct ocfs2_dinode *fe;
  
- 	while (wr_ptr != rd_ptr) {
-+		int found = 0;
-+
- 		idb_entry = (u64 *)(priv->idb_base +
- 					(TSI721_IDB_ENTRY_SIZE * rd_ptr));
- 		rd_ptr++;
+ 	fe = (struct ocfs2_dinode *)bh->b_data;
+-
+-	/* The journal bh on the osb always comes from ocfs2_journal_init()
+-	 * and was validated there inside ocfs2_inode_lock_full().  It's a
+-	 * code bug if we mess it up. */
+-	BUG_ON(!OCFS2_IS_VALID_DINODE(fe));
++	if (WARN_ON(!OCFS2_IS_VALID_DINODE(fe)))
++		return -EIO;
+ 
+ 	flags = le32_to_cpu(fe->id1.journal1.ij_flags);
+ 	if (dirty)
 -- 
 2.53.0
 
