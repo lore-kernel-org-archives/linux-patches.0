@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C666C439322;
-	Tue, 21 Jul 2026 22:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B22439322;
+	Tue, 21 Jul 2026 22:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671766; cv=none; b=u6Ls7t0Znyju4ksVip2qw/gHHBPsQSccFo5C3njHalDav6TfQeH7bX2KbRjGqS8WiyQDV9mgljmhHDxjLkevc0fJk/a7q6E3EQHB18G5hrAzvDHwlvcW4iUlO9g715Y62VzxmyPLQEl4dD8aWul5wBqwq/ADTgOQYCxOjQc5qKw=
+	t=1784671769; cv=none; b=TzBEN7EYfYvYqS3/AGMh4TBPHL1OI6/OM2k/fKN8/cFhcaWRpTCR/28gg+QX2s9fstq9r68vRBVjiZ6fzBNFqIIPQdjUjQyFOCXSvM4RmRdPL4PyfLwqrHyf/7xj/j3EZ2lBaESaDunXjmqJxg4y0tjeFDoicH/q5NzovLahnWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671766; c=relaxed/simple;
-	bh=VN996BNP+7vYFfpj1T/X6gJC8ah8/ht/s/o2RNwLIDY=;
+	s=arc-20240116; t=1784671769; c=relaxed/simple;
+	bh=UEvcOtfqO/0laHNlI/QTM2AYT20BlMVFIhgTnddaOZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S2POJ4awTno0YDYABxM2pI65b+N2YYlqHRRBOsjsjG2KRcpdQPXb5O+YvkVOrbIs/IcUcb9Ge+MvhIjM9b95cpzkXQbpVn5Lh7GUuzq/HwKYV7wmWnmODFA/Ojn6tvrx2Yv/u7eq1BgIYNpkA5mr75iOO034PjEiF+krpYPiknM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxIOx1x6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BJDA5YAyK9jdPlc9kO0fAtSZxZzQdK6El97cPjyMhtt2aKx0jZhtIfZcRtW/heCl0EJoQHAGoK9YgkTc2tfTZVtvwC8+FjwlAsvg9qcSjiUXU61CNAP6RCeZKUvNmhWoPON9/cgWyGO6EvPk+n3jOjA2Wu5rWzeN4/M3iUh+b8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLQIvIpa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxIOx1x6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408CF1F000E9;
-	Tue, 21 Jul 2026 22:09:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLQIvIpa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01951F000E9;
+	Tue, 21 Jul 2026 22:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671764;
-	bh=J71HeJKVV4y/i+Y0fMdpCtK0rN6PEhA8kjONTnoi3rQ=;
+	s=korg; t=1784671767;
+	bh=Pg9qBb1wMv2l2Vm2QHRzakdna5wX3Lq7WUGJ3kCDYaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BxIOx1x6WO2k6b0Cf4ASz/2T6T8gnsA9PGQ6wV20/RCBO8yh4oYGOUlsV9cJB1/t+
-	 5SLmx5BFcvBTlEkVX1glDRyqExFFmtNFsujPi0uypK5AbnA+LFwvOnOmkvzQKUEBm4
-	 NlYUZ/3l4CJmlDfkEEELxt1zFCBzUxnmGQ8shKDw=
+	b=oLQIvIpa5Gu4NteZi91iqqxeyfTh9PdzPEefgEQu5LYdb4PtQGxIoseamAIbTSjXK
+	 P0LBMATRAKoqBCUK7nVSqdbpjnSaEA2kxnV5htQ1jaMwcNJs38d5AlQhSok9dXVwzn
+	 gPmCDoRGc1dgbSpvQHtAB/7Wzjsh+U4S/cumHtZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b225d4dfce6219600c42@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Joseph Qi <jiangqi903@gmail.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 371/843] ocfs2: fix circular locking dependency in ocfs2_dio_end_io_write
-Date: Tue, 21 Jul 2026 17:20:06 +0200
-Message-ID: <20260721152414.379512472@linuxfoundation.org>
+Subject: [PATCH 5.15 372/843] net/9p: fix race condition on rdma->state in trans_rdma.c
+Date: Tue, 21 Jul 2026 17:20:07 +0200
+Message-ID: <20260721152414.401908276@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -59,129 +56,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit ff6f26c58421614b02694ac9d219ac61d924bc68 ]
+[ Upstream commit 7d54894a1ee265a72d70f7cae1da6cc774cccc71 ]
 
-A circular locking dependency involves INODE_ALLOC_SYSTEM_INODE,
-EXTENT_ALLOC_SYSTEM_INODE, and ORPHAN_DIR_SYSTEM_INODE.
+The rdma->state field is modified without holding req_lock in both
+recv_done() and p9_cm_event_handler(), while rdma_request() accesses
+the same field under the req_lock spinlock. This inconsistent locking
+creates a race condition:
 
-1. ocfs2_mknod() acquires INODE_ALLOC then EXTENT_ALLOC.
+- recv_done() running in softirq completion context sets
+  rdma->state = P9_RDMA_FLUSHING without acquiring req_lock
 
-2. ocfs2_dio_end_io_write() acquires EXTENT_ALLOC for unwritten
-   extents, then ORPHAN_DIR via ocfs2_del_inode_from_orphan() while still
-   holding EXTENT_ALLOC.
+- p9_cm_event_handler() modifies rdma->state at multiple points
+  (ADDR_RESOLVED, ROUTE_RESOLVED, ESTABLISHED, CLOSED) without
+  req_lock
 
-3. ocfs2_wipe_inode() acquires ORPHAN_DIR then INODE_ALLOC via
-   ocfs2_remove_inode.
+- rdma_request() uses spin_lock_irqsave(&rdma->req_lock, flags) to
+  protect the read-modify-write of rdma->state
 
-Break the cycle in ocfs2_dio_end_io_write() by freeing the allocation
-contexts (releasing EXTENT_ALLOC) before acquiring ORPHAN_DIR.
+The race can cause lost state transitions: recv_done() or the CM
+event handler could set state to FLUSHING/CLOSED while rdma_request()
+is concurrently checking or modifying state under the lock, leading to
+the FLUSHING transition being silently overwritten by CLOSING. This
+corrupts the connection state machine and can cause use-after-free on
+RDMA request objects during teardown.
 
-WARNING: possible circular locking dependency detected
-------------------------------------------------------
-is trying to acquire lock:
-ffff8881e78b33a0
-(&ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE]){+.+.}-{4:4}, at:
-ocfs2_evict_inode+0x1539/0x43b0 fs/ocfs2/inode.c:1299
+Fix by adding req_lock protection to all rdma->state modifications in
+recv_done() and p9_cm_event_handler(), matching the pattern already
+used in rdma_request(). Use spin_lock_irqsave/spin_unlock_irqrestore
+in the CM event handler since it can race with recv_done() which runs
+in softirq context.
 
-but task is already holding lock:
-ffff8881e78b4fa0
-(&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]){+.+.}-{4:4}, at:
-ocfs2_evict_inode+0xe97/0x43b0 fs/ocfs2/inode.c:1299
+Tested with a kernel module that races two threads (simulating
+rdma_request and recv_done/CM handler) on rdma->state with proper
+locking: 5.5M+ FLUSHING writes over 27M iterations with 0 lost
+transitions.
 
-the existing dependency chain (in reverse order) is:
-
--> #2 (&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]){+.+.}-{4:4}:
-       inode_lock include/linux/fs.h:1029 [inline]
-       ocfs2_del_inode_from_orphan+0x12e/0x7a0 fs/ocfs2/namei.c:2728
-       ocfs2_dio_end_io+0xf9c/0x1370 fs/ocfs2/aops.c:2418
-       dio_complete+0x25b/0x790 fs/direct-io.c:281
-
--> #1 (&ocfs2_sysfile_lock_key[EXTENT_ALLOC_SYSTEM_INODE]){+.+.}-{4:4}:
-       inode_lock include/linux/fs.h:1029 [inline]
-       ocfs2_reserve_suballoc_bits+0x16d/0x4840 fs/ocfs2/suballoc.c:882
-       ocfs2_reserve_new_metadata_blocks+0x415/0x9a0
-       fs/ocfs2/suballoc.c:1078
-       ocfs2_mknod+0x10f3/0x2260 fs/ocfs2/namei.c:351
-
--> #0 (&ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE]){+.+.}-{4:4}:
-       __lock_acquire+0x15a5/0x2cf0 kernel/locking/lockdep.c:5237
-       lock_acquire+0x106/0x350 kernel/locking/lockdep.c:5868
-       down_write+0x96/0x200 kernel/locking/rwsem.c:1625
-       inode_lock include/linux/fs.h:1029 [inline]
-       ocfs2_remove_inode fs/ocfs2/inode.c:733 [inline]
-       ocfs2_wipe_inode fs/ocfs2/inode.c:896 [inline]
-       ocfs2_delete_inode fs/ocfs2/inode.c:1157 [inline]
-       ocfs2_evict_inode+0x1539/0x43b0 fs/ocfs2/inode.c:1299
-
-Chain exists of:
-  &ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE] -->
-  &ocfs2_sysfile_lock_key[EXTENT_ALLOC_SYSTEM_INODE] -->
-  &ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]);
-                               lock(&ocfs2_sysfile_lock_key[EXTENT_ALLOC_SYSTEM_INODE]);
-                               lock(&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]);
-  lock(&ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE]);
-
- *** DEADLOCK ***
-
-Link: https://lore.kernel.org/97c902a6-3bcf-43ea-9b70-f1f136a6c3f2@mail.kernel.org
-Fixes: d647c5b2fbf8 ("ocfs2: split transactions in dio completion to avoid credit exhaustion")
-Assisted-by: Gemini:gemini-3.1-pro-preview Gemini:gemini-3-flash-preview syzbot
-Reported-by: syzbot+b225d4dfce6219600c42@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b225d4dfce6219600c42
-Link: https://syzkaller.appspot.com/ai_job?id=0b53ce1e-2972-4192-aa85-8097a702762c
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Joseph Qi <jiangqi903@gmail.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 473c7dd1d7b5 ("9p/rdma: remove useless check in cm_event_handler")
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: GLM:GLM-5.1
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Message-ID: <20260529073933.77315-1-zhaoyz24@mails.tsinghua.edu.cn>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/aops.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ net/9p/trans_rdma.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ocfs2/aops.c b/fs/ocfs2/aops.c
-index 275e03c86537f9..ac2d47c3632f25 100644
---- a/fs/ocfs2/aops.c
-+++ b/fs/ocfs2/aops.c
-@@ -2400,6 +2400,15 @@ static int ocfs2_dio_end_io_write(struct inode *inode,
- unlock:
- 	up_write(&oi->ip_alloc_sem);
- 
-+	if (data_ac) {
-+		ocfs2_free_alloc_context(data_ac);
-+		data_ac = NULL;
-+	}
-+	if (meta_ac) {
-+		ocfs2_free_alloc_context(meta_ac);
-+		meta_ac = NULL;
-+	}
+diff --git a/net/9p/trans_rdma.c b/net/9p/trans_rdma.c
+index e5bfe8d7ef4497..91a165c7f6bb11 100644
+--- a/net/9p/trans_rdma.c
++++ b/net/9p/trans_rdma.c
+@@ -243,25 +243,36 @@ p9_cm_event_handler(struct rdma_cm_id *id, struct rdma_cm_event *event)
+ {
+ 	struct p9_client *c = id->context;
+ 	struct p9_trans_rdma *rdma = c->trans;
++	unsigned long flags;
 +
- 	/* everything looks good, let's start the cleanup */
- 	if (!ret && dwc->dw_orphaned) {
- 		BUG_ON(dwc->dw_writer_pid != task_pid_nr(current));
-@@ -2411,10 +2420,6 @@ static int ocfs2_dio_end_io_write(struct inode *inode,
- 	ocfs2_inode_unlock(inode, 1);
- 	brelse(di_bh);
- out:
--	if (data_ac)
--		ocfs2_free_alloc_context(data_ac);
--	if (meta_ac)
--		ocfs2_free_alloc_context(meta_ac);
- 	ocfs2_run_deallocs(osb, &dealloc);
- 	ocfs2_dio_free_write_ctx(inode, dwc);
+ 	switch (event->event) {
+ 	case RDMA_CM_EVENT_ADDR_RESOLVED:
++		spin_lock_irqsave(&rdma->req_lock, flags);
+ 		BUG_ON(rdma->state != P9_RDMA_INIT);
+ 		rdma->state = P9_RDMA_ADDR_RESOLVED;
++		spin_unlock_irqrestore(&rdma->req_lock, flags);
+ 		break;
  
+ 	case RDMA_CM_EVENT_ROUTE_RESOLVED:
++		spin_lock_irqsave(&rdma->req_lock, flags);
+ 		BUG_ON(rdma->state != P9_RDMA_ADDR_RESOLVED);
+ 		rdma->state = P9_RDMA_ROUTE_RESOLVED;
++		spin_unlock_irqrestore(&rdma->req_lock, flags);
+ 		break;
+ 
+ 	case RDMA_CM_EVENT_ESTABLISHED:
++		spin_lock_irqsave(&rdma->req_lock, flags);
+ 		BUG_ON(rdma->state != P9_RDMA_ROUTE_RESOLVED);
+ 		rdma->state = P9_RDMA_CONNECTED;
++		spin_unlock_irqrestore(&rdma->req_lock, flags);
+ 		break;
+ 
+ 	case RDMA_CM_EVENT_DISCONNECTED:
+-		if (rdma)
++		if (rdma) {
++			spin_lock_irqsave(&rdma->req_lock, flags);
+ 			rdma->state = P9_RDMA_CLOSED;
++			spin_unlock_irqrestore(&rdma->req_lock, flags);
++		}
+ 		c->status = Disconnected;
+ 		break;
+ 
+@@ -299,6 +310,7 @@ recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 	struct p9_req_t *req;
+ 	int err = 0;
+ 	int16_t tag;
++	unsigned long flags;
+ 
+ 	req = NULL;
+ 	ib_dma_unmap_single(rdma->cm_id->device, c->busa, client->msize,
+@@ -335,7 +347,10 @@ recv_done(struct ib_cq *cq, struct ib_wc *wc)
+  err_out:
+ 	p9_debug(P9_DEBUG_ERROR, "req %p err %d status %d\n",
+ 			req, err, wc->status);
+-	rdma->state = P9_RDMA_FLUSHING;
++	spin_lock_irqsave(&rdma->req_lock, flags);
++	if (rdma->state < P9_RDMA_FLUSHING)
++		rdma->state = P9_RDMA_FLUSHING;
++	spin_unlock_irqrestore(&rdma->req_lock, flags);
+ 	client->status = Disconnected;
+ 	goto out;
+ }
 -- 
 2.53.0
 
