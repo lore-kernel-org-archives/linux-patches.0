@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339C343F4AD;
-	Tue, 21 Jul 2026 21:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F244582D0;
+	Tue, 21 Jul 2026 21:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671080; cv=none; b=rLroqMHpgErDp44ryutvfjK0LjuG2V1KLE4FCFdOSBKmRpakWSr4CFmvQG4AB4ldEpjKW2EyMHIJehNdUNe4ksvjl/kZbrj/oIq2mSieeRCTia3JbU/NmT30ug2wxnRyu50hrh2ulumOWBepvzPYBw3gR2uwun2CwOsbP1SBPxM=
+	t=1784671081; cv=none; b=S3tqhx4frK+MD5iN7d1C5R3guySHusB0XleeKCc5Ygw5Xy+nDjtsSgm5wRkf3hUQe5i0gY+vwU4RLTyhdx+t2Gs4zx6Qa2OndRjleeFGocbH7jn0Pnmxy88gaflS9+134FDYA1D7gFmsbnZWjLHnMVAhdvf6ptOtq8vkouLtg5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671080; c=relaxed/simple;
-	bh=9vvcVSeI0dBetQnDnVI5F/08mRzoVxKQX97izcGzj6g=;
+	s=arc-20240116; t=1784671081; c=relaxed/simple;
+	bh=K2jJu1SZ07l9Opp2FwwFmF8/+t+mbuDEOk9KjlMknkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VvxO+vp89dmGtm4GoCQcdAyG0gOrNmtTfympJk/krv0weKzmMYFft2o8I1dCQCpZAPLlyUbpvcu7Yr7Nxg0PZKdSj22kE+lFkH7PM53UbdWcoVOACuOIuvjQnsg5F22IEnBqfQTmLxEvKynT4DM8nNxdL7GeO+e4LLeahT8INXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z9hE7SFY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L9kwbqWtxrXZKV8+gDABTLH368iXIAGfOjtM4WSnnYe0cCFcJdyZPHM+qxEmEqSkLeACUdf+OVmMob6vvbyQ02CgztxxRSic+nCu72zj0NkXNzTlsYgWh5XFPZKn5k+ratkT088MwgG13GCwjY6msOFm0wUdTHC3E+Ibi6Hdo4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EERi+lh6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z9hE7SFY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6FC1F00A3D;
-	Tue, 21 Jul 2026 21:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EERi+lh6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1486B1F000E9;
+	Tue, 21 Jul 2026 21:57:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671076;
-	bh=0DPtW/2D6ZW0YDTgosbFU0e8Km2FKRCuC2BYsrOQrv0=;
+	s=korg; t=1784671079;
+	bh=7aQVKAZ4LoE5MgtRMm503QF9B+Y5GXSmhxQNfLNmEUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z9hE7SFYBb7mQFeJpCVcOFRUo9fydAa3n3s+eR6H3j4ovD1D64G2oFwXgf7r2vHQ2
-	 8sQQpilJSoLofUKaUtECxosbt/VCN1vn4nASmvkTclMrvcRLGjmyxtjVoI5JTGW5xn
-	 iafBlgypWUElvLSXBONuLj2bSZ4xQuo6XT0YeMLk=
+	b=EERi+lh68UZOBGLD3GF2ZZXXIKE4e4v7s09EI+b2CQpIuhyidPNL5ErGUUG9BLBHD
+	 /gfq98wYFaFMMA+zSW9DJQ6xiJ9KYmU401IYBBPbUjj2kmv+2Wv90x2OelMqk1BJL9
+	 8yCSLxOaeEarUb5K83noNOvl3h9Jx6U4Rpnzpnsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Benson Leung <bleung@chromium.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 5.15 109/843] mfd: cros_ec: Delay dev_set_drvdata() until probe success
-Date: Tue, 21 Jul 2026 17:15:44 +0200
-Message-ID: <20260721152408.453990781@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 5.15 110/843] netfilter: ebtables: module names must be null-terminated
+Date: Tue, 21 Jul 2026 17:15:45 +0200
+Message-ID: <20260721152408.475869419@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,70 +49,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Kuchynski <akuchynski@chromium.org>
+From: Florian Westphal <fw@strlen.de>
 
-commit 8b2c1d41bc36c100b38ce5ee6def246c527eaf8a upstream.
+commit 084d23f818321390509e9738a0b08bbf46df6425 upstream.
 
-If ec_device_probe() fails, cros_ec_class_release releases memory for the
-cros_ec_dev structure. However, because the drvdata was already set,
-sub-drivers like cros_ec_typec can still retrieve the stale pointer via the
-platform device. This leads to a use-after-free when cros_ec_typec attempts
-to access &typec->ec->ec->dev on a device that has already been released.
-Move dev_set_drvdata() to ensure that the pointer is only made available
-once all initialization steps have succeeded.
-
- sysfs: cannot create duplicate filename '/class/chromeos/cros_ec'
- Call trace:
-  sysfs_do_create_link_sd+0x94/0xdc
-  sysfs_create_link+0x30/0x44
-  device_add_class_symlinks+0x90/0x13c
-  device_add+0xf0/0x50c
-  ec_device_probe+0x150/0x4f0
-  platform_probe+0xa0/0xe0
- ...
- BUG: KASAN: invalid-access in __memcpy+0x44/0x230
- Write at addr f5ffff809e2d33ac by task kworker/u32:5/125
- Pointer tag: [f5], memory tag: [fe]
- Tainted : [W]=WARN, [O]=OOT_MODULE
- Hardware name: Google Navi unprovisioned 0x7FFFFFFF/sku0 board/sku3
- Workqueue: events_unbound deferred_probe_work_func
- Call trace:
-  __memcpy+0x44/0x230
-  cros_ec_check_features+0x60/0xcc [cros_ec_proto]
-  cros_typec_probe+0xe8/0x6e0 [cros_ec_typec]
-  platform_probe+0xa0/0xe0
+We need to explicitly check the length, else we may pass non-null
+terminated string to request_module().
 
 Cc: stable@vger.kernel.org
-Fixes: 1c1d152cc5ac ("platform/chrome: cros_ec_dev - utilize new cdev_device_add helper function")
-Co-developed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Link: https://patch.msgid.link/20260427131721.1165078-1-akuchynski@chromium.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: bcf493428840 ("netfilter: ebtables: Fix extension lookup with identical name")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/cros_ec_dev.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/bridge/netfilter/ebtables.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/mfd/cros_ec_dev.c
-+++ b/drivers/mfd/cros_ec_dev.c
-@@ -142,7 +142,6 @@ static int ec_device_probe(struct platfo
- 	if (!ec)
- 		return retval;
+--- a/net/bridge/netfilter/ebtables.c
++++ b/net/bridge/netfilter/ebtables.c
+@@ -402,6 +402,9 @@ ebt_check_match(struct ebt_entry_match *
+ 	    left - sizeof(struct ebt_entry_match) < m->match_size)
+ 		return -EINVAL;
  
--	dev_set_drvdata(dev, ec);
- 	ec->ec_dev = dev_get_drvdata(dev->parent);
- 	ec->dev = dev;
- 	ec->cmd_offset = ec_platform->cmd_offset;
-@@ -184,6 +183,8 @@ static int ec_device_probe(struct platfo
- 	if (retval)
- 		goto failed;
- 
-+	dev_set_drvdata(dev, ec);
++	if (strnlen(m->u.name, XT_EXTENSION_MAXNAMELEN) == XT_EXTENSION_MAXNAMELEN)
++		return -EINVAL;
 +
- 	/* check whether this EC is a sensor hub. */
- 	if (cros_ec_get_sensor_count(ec) > 0) {
- 		retval = mfd_add_hotplug_devices(ec->dev,
+ 	match = xt_find_match(NFPROTO_BRIDGE, m->u.name, m->u.revision);
+ 	if (IS_ERR(match) || match->family != NFPROTO_BRIDGE) {
+ 		if (!IS_ERR(match))
 
 
