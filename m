@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C5437B40C;
-	Tue, 21 Jul 2026 17:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3CE336888;
+	Tue, 21 Jul 2026 17:29:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654985; cv=none; b=YjNuGAjgJFZebnsZfvTJC5A/fJNmxxes/CZ4hgzJOlFbVsIbgKN2WrxsSRgeusXEnc+u/XOs+mZMDVsVNUwzB16h+hfI6mi+3Y6Jn/mjkYONSbykRp0zMLeGL2eAPRRXEUJHeTktA4Z//9ba2mwUW5oezLGFtTgtBe0+krQoAn8=
+	t=1784654988; cv=none; b=dsG2BrsNXIaZ8dNitTjE5DzVmA+kwY/MFRRSvIsrQFl+VPR6ii2hMVGRAbjFACvGhBeWBuqtH39wVEE4SSV1ugwjKagW76t89FKIqzY55FgHyT3ZtekunAR626JfNJNzMh6bPnzA/JksizEPHxDfVFXrMWwhtBtl6ySdzAFsm5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654985; c=relaxed/simple;
-	bh=NvYwInlngOYBqLqXMKAGvGCLvjPi5HqdHAWPFd4PZGA=;
+	s=arc-20240116; t=1784654988; c=relaxed/simple;
+	bh=gg3e/WoU0SN1zBIsI2Q1xTWKTeL5fq0MD0Uj5OuesLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sod8ioaw2qjwsS+trnZJz7SP12a8OP14wdDifoA+vLtrB8Vc6VBp5tO5yxmB+loF0sWZKCkzW9IyXHegD0rC+bfR559+yz+VmUhhrLAoz0OiESe7L4+Mn4ZMBCAn1cMyp6fQvvxk7cOBB/T3dArFXjj7Eg1SWHenpJlhoFaAmSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hOEfE5u5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IBDjfMgd4c6v7c6xvUlXla2vrVmOElLmAnqjqMT5MXXmXnrU4A5Mvfl0spXbmo+v8JXv6lkdV1mhPWeyQ+FGOX2957y9ADUfMqdG1Ck9ync/GAypB9y2EqhNFrwA6qEm6AJCzID1NaJBxURzNCyNp+EHTXDQtC54/bGUntV34oI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3HWnVWN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hOEfE5u5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D04C81F000E9;
-	Tue, 21 Jul 2026 17:29:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3HWnVWN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A23A1F000E9;
+	Tue, 21 Jul 2026 17:29:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654984;
-	bh=wUzikWIxclOnXxxaJ+eVVZkYgzkP397iIw72/z7BYJ8=;
+	s=korg; t=1784654986;
+	bh=ZtKjM/xKxb5BUyMpS0MIjU8tHurzKHiT1FyB5Z9T9/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hOEfE5u5dUHd4cGO+dWwDsrrw/B9bOPOmBuYDTjvNoo+fvjVr0GjsPACsvgN/Tz3k
-	 e1pXQHrWMBUSNSUFMvnj04C9MCRXLfXMF6muG4aq3A9HB7/unoBRcMkB9lv27PCsNJ
-	 liZ490wC51jMpJw0dHbdjwT8L0V4Ckuj0Ei3U6UQ=
+	b=M3HWnVWNsebi+MgiNYvxEWFYdlPnc6MxUSfhr5ndodmId8CmMlyOFz9bt9jhDoH5E
+	 5zb2+H7vJzsiGAPJjU8AeehP3aI+EPCONqED1q4A70DSiM6YkePXyN4fgR++BoxZOq
+	 4JIVsA77mgYlmvVTBfQ/o1hxo5CvIf5KNw/nbhtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Zihan Xi <xizh2024@lzu.edu.cn>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 1912/2077] net: ixp4xx_hss: fix duplicate HDLC netdev allocation
-Date: Tue, 21 Jul 2026 17:26:25 +0200
-Message-ID: <20260721152637.814974535@linuxfoundation.org>
+Subject: [PATCH 7.1 1913/2077] net/sched: act_ct: preserve tc_skb_cb across defragmentation
+Date: Tue, 21 Jul 2026 17:26:26 +0200
+Message-ID: <20260721152637.838141845@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,54 +55,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Zihan Xi <xizh2024@lzu.edu.cn>
 
-commit db818b0e8af7bac16860116a19c341a63d6677b4 upstream.
+commit 9092e15defbe6c7bc241c306093ca9d358a578e7 upstream.
 
-ixp4xx_hss_probe() allocates two HDLC netdevs. The first one is stored
-in ndev, initialized, and registered with register_hdlc_device(). The
-second one is stored in port->netdev and later used by the remove path
-for unregister_hdlc_device() and free_netdev().
+tcf_ct_handle_fragments() calls nf_ct_handle_fragments() without saving
+and restoring skb->cb. The defrag helper clears IPCB/IP6CB, which aliases
+the tc_skb_cb/qdisc_skb_cb control buffer. Fragmented traffic through
+act_ct therefore loses qdisc metadata such as pkt_segs and can trigger
+WARN_ON_ONCE() in qdisc_pkt_segs() when panic_on_warn is enabled.
 
-This means that the registered netdev is not the same object that is
-unregistered and freed on remove. It also leaks the first allocation if
-the second alloc_hdlcdev() call fails, and the first allocation is not
-checked before ndev is used.
+Save and restore the full tc_skb_cb around nf_ct_handle_fragments(),
+matching the pattern used by ovs_ct_handle_fragments().
 
-Older code allocated the HDLC netdev only once and stored the same object
-in both the local variable and port->netdev. The buggy conversion split
-this into two alloc_hdlcdev() calls. A later rename changed the local
-variable name to ndev, but the underlying mismatch remained.
-
-Fix this by allocating the HDLC netdev only once and assigning the same
-object to port->netdev.
-
-Fixes: 99ebe65eb9c0 ("net: ixp4xx_hss: move out assignment in if condition")
+Fixes: ec624fe740b4 ("net/sched: Extend qdisc control block with tc control block")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260622043015.643637-1-haoxiang_li2024@163.com
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Zihan Xi <xizh2024@lzu.edu.cn>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Link: https://patch.msgid.link/510c51217fd7aaf29c6dc298bab8d643fe229b1c.1781358692.git.xizh2024@lzu.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wan/ixp4xx_hss.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sched/act_ct.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wan/ixp4xx_hss.c
-+++ b/drivers/net/wan/ixp4xx_hss.c
-@@ -1487,11 +1487,11 @@ static int ixp4xx_hss_probe(struct platf
- 				     "unable to get CLK internal GPIO\n");
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -844,11 +844,11 @@ static int tcf_ct_handle_fragments(struc
+ 				   u8 family, u16 zone, bool *defrag)
+ {
+ 	enum ip_conntrack_info ctinfo;
++	struct tc_skb_cb cb;
+ 	struct nf_conn *ct;
+ 	int err = 0;
+ 	bool frag;
+ 	u8 proto;
+-	u16 mru;
  
- 	ndev = alloc_hdlcdev(port);
--	port->netdev = alloc_hdlcdev(port);
--	if (!port->netdev) {
-+	if (!ndev) {
- 		err = -ENOMEM;
- 		goto err_plat;
- 	}
-+	port->netdev = ndev;
+ 	/* Previously seen (loopback)? Ignore. */
+ 	ct = nf_ct_get(skb, &ctinfo);
+@@ -862,12 +862,13 @@ static int tcf_ct_handle_fragments(struc
+ 	if (err || !frag)
+ 		return err;
  
- 	SET_NETDEV_DEV(ndev, &pdev->dev);
- 	hdlc = dev_to_hdlc(ndev);
+-	err = nf_ct_handle_fragments(net, skb, zone, family, &proto, &mru);
++	cb = *tc_skb_cb(skb);
++	err = nf_ct_handle_fragments(net, skb, zone, family, &proto, &cb.mru);
+ 	if (err)
+ 		return err;
+ 
+ 	*defrag = true;
+-	tc_skb_cb(skb)->mru = mru;
++	*tc_skb_cb(skb) = cb;
+ 
+ 	return 0;
+ }
 
 
