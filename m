@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6BD43E06E;
-	Tue, 21 Jul 2026 22:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B6321FF2E;
+	Tue, 21 Jul 2026 22:26:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672771; cv=none; b=i/EbwOOevpdT4FCW0/dthGLKh/9NGHrhADtoXb2yU5Pjc0UTnYoS1sZPB6b1pkxTfVTz5o9SkqFoSW7iq9GGWwssKo2o5Zrt4Rp1GUr8Ej9Khyv5R1xve/SWHac/TUEeDda3WqwI/YpvCLIq4ZoATJPw1ufg5Z4I+LWEJfTEjBM=
+	t=1784672774; cv=none; b=jUVHycvMLLSYqzGK7F2c7xoz5BfJBYaHfFitDaY/kykxh8gZEe//HhgUlvmTXP9aqXUw8jd220wzwYd+dOn2yw2vFTPgeNKgUmY8vr/uPsJAXhkJWo7BTSdt+T3/yztBSmYmKIcCuX9gwQ5PUfk6nTGBUOZuNjAFWQOVWaHjlUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672771; c=relaxed/simple;
-	bh=YdT3qN23OrEim1Qc7VV084XM02FhCpUSs6TWhA4e2cI=;
+	s=arc-20240116; t=1784672774; c=relaxed/simple;
+	bh=FtQ1KSKfq6BPcT3eon3LTHIj66r30E0X5fLTvaEQNGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ut4f5LE7cSlKHMAFWm+gm4hcQvfqZZEao8pMeysPs+w41rYO9jRaCfUK/z3AbifT7sT3nW04bXLwNSBa6ocUPK8eIcA87r18wmTzc3cQLi+GRGMJ54VdhjAzbS/bcvYX1Gy0vekqJ/oNhkU/Ul22WKaYHyq+ExpJrphi9fkzeWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g44BpTAs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NOa4MjdyYcrZJ9RmHtPk1xHZVAyleDvm2rsTGc6tFcXxRKPGpoM+6di+dwJ87rnv8GjNvxYzbqn/OwCCqITIrD6JoLt7N9CBoPMDlUimQ/dL2ZeErfwSmdHy1oVCHdvTz0J+ETa4mMStgcLaVg7kTBpoxIvgD9+TO12B6Fx39uw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pG0om50i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g44BpTAs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D5C61F000E9;
-	Tue, 21 Jul 2026 22:26:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pG0om50i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275571F000E9;
+	Tue, 21 Jul 2026 22:26:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672770;
-	bh=QxmRSNlKCa/p2KSGaiktBwywHXxx2+QF7PJzFw+RuD4=;
+	s=korg; t=1784672772;
+	bh=oMYcFsAsAYpV/0iPy5vrnNkBT3uy9CNisxCpueyiApY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g44BpTAs3P4B5XJwrTKhnXuJSeG3QkS0D1Dene2MXiwACjFGWmaPBwzV3tgo+YYcn
-	 uO03K/QavV6+QXKkaOANBjJj807yLVJ/8OA+VRMGHG9FyZISlA2+LCE5VjVC1YihJN
-	 mjglt2M7OMn5OICH53fmC5RxEeoY/+uRMSmIOlNY=
+	b=pG0om50iJHyHCmL2a+evsq6cb9IJjG02Gkwaq1WcIajBPbOvQsVp6eKI2Wee49dwk
+	 t6oz8JfXhguhVHwcABBDcRYFGGGmPGL1JbLAlC4+otphHf8WuZdbZXCooAkOqdqC/n
+	 BG8vI0LU8WcFByqbPaMvPTXGmGCuXihSQSwyXEZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Enzo Matsumiya <ematsumiya@suse.de>,
+	Shoichiro Miyamoto <shoichiro.miyamoto@gmail.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 750/843] cifs: remove unused server parameter from calc_smb_size()
-Date: Tue, 21 Jul 2026 17:26:25 +0200
-Message-ID: <20260721152422.922424372@linuxfoundation.org>
+Subject: [PATCH 5.15 751/843] smb: client: restrict implied bcc[0] exemption to responses without data area
+Date: Tue, 21 Jul 2026 17:26:26 +0200
+Message-ID: <20260721152422.945840145@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,148 +51,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Enzo Matsumiya <ematsumiya@suse.de>
+From: Shoichiro Miyamoto <shoichiro.miyamoto@gmail.com>
 
-[ Upstream commit 68ed14496b032b0c9ef21b38ee45c6c8f3a18ff1 ]
+[ Upstream commit 53b7c271f06be4dd5cfc8c6ef552a8355c891a7f ]
 
-This parameter is unused by the called function
+smb2_check_message() has a long-standing quirk that accepts a response
+whose calculated length is one byte larger than the bytes actually
+received ("server can return one byte more due to implied bcc[0]").
+This was introduced to accommodate servers that omit the trailing bcc[0]
+overlap byte when no data area is present.
 
-Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
+However, the exemption is applied unconditionally, regardless of whether
+the command actually carries a data area (has_smb2_data_area[]).  When a
+response with a data area is subject to the +1 exemption, the reported
+data can extend one byte beyond the bytes actually received, yet
+smb2_check_message() still accepts it.  The subsequent decoder then reads
+past the end of the receive buffer.  This is reachable during NEGOTIATE
+and SESSION_SETUP, before the session is established.
+
+The resulting out-of-bounds reads are visible under KASAN when mounting
+against a non-conforming server; both the SPNEGO/negTokenInit and the
+NTLMSSP challenge decoders are affected:
+
+  BUG: KASAN: slab-out-of-bounds in asn1_ber_decoder+0x16a7/0x1b00
+  Read of size 1 at addr ffff8880084d67c0 by task mount.cifs/81
+  CPU: 1 UID: 0 PID: 81 Comm: mount.cifs Not tainted 7.1.0-rc6 #1
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x4e/0x70
+   print_report+0x157/0x4c9
+   kasan_report+0xce/0x100
+   asn1_ber_decoder+0x16a7/0x1b00
+   decode_negTokenInit+0x19/0x30
+   SMB2_negotiate+0x31d9/0x4c90
+   cifs_negotiate_protocol+0x1f2/0x3f0
+   cifs_get_smb_ses+0x93f/0x17e0
+   cifs_mount_get_session+0x7f/0x3a0
+   cifs_mount+0xb4/0xcf0
+   cifs_smb3_do_mount+0x23a/0x1500
+   smb3_get_tree+0x3b0/0x630
+   vfs_get_tree+0x82/0x2d0
+   fc_mount+0x10/0x1b0
+   path_mount+0x50d/0x1de0
+   __x64_sys_mount+0x20b/0x270
+   do_syscall_64+0xee/0x590
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
+  Allocated by task 85:
+   kmem_cache_alloc_noprof+0x106/0x380
+   mempool_alloc_noprof+0x116/0x1e0
+   cifs_small_buf_get+0x31/0x80
+   allocate_buffers+0x10d/0x2b0
+   cifs_demultiplex_thread+0x1d5/0x1d50
+   kthread+0x2c6/0x390
+   ret_from_fork+0x36e/0x5a0
+   ret_from_fork_asm+0x1a/0x30
+  The buggy address is located 0 bytes to the right of
+   allocated 448-byte region [ffff8880084d6600, ffff8880084d67c0)
+   which belongs to the cache cifs_small_rq of size 448
+
+  BUG: KASAN: slab-out-of-bounds in kmemdup_noprof+0x36/0x50
+  Read of size 329 at addr ffff88800726c678 by task mount.cifs/89
+  CPU: 0 UID: 0 PID: 89 Comm: mount.cifs Tainted: G    B      7.1.0-rc6 #1
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x4e/0x70
+   print_report+0x157/0x4c9
+   kasan_report+0xce/0x100
+   kasan_check_range+0x10f/0x1e0
+   __asan_memcpy+0x23/0x60
+   kmemdup_noprof+0x36/0x50
+   decode_ntlmssp_challenge+0x457/0x680
+   SMB2_sess_auth_rawntlmssp_negotiate+0x6f0/0xcb0
+   SMB2_sess_setup+0x219/0x4f0
+   cifs_setup_session+0x248/0xaf0
+   cifs_get_smb_ses+0xf79/0x17e0
+   cifs_mount_get_session+0x7f/0x3a0
+   cifs_mount+0xb4/0xcf0
+   cifs_smb3_do_mount+0x23a/0x1500
+   smb3_get_tree+0x3b0/0x630
+   vfs_get_tree+0x82/0x2d0
+   fc_mount+0x10/0x1b0
+   path_mount+0x50d/0x1de0
+   __x64_sys_mount+0x20b/0x270
+   do_syscall_64+0xee/0x590
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
+  Allocated by task 93:
+   kmem_cache_alloc_noprof+0x106/0x380
+   mempool_alloc_noprof+0x116/0x1e0
+   cifs_small_buf_get+0x31/0x80
+   allocate_buffers+0x10d/0x2b0
+   cifs_demultiplex_thread+0x1d5/0x1d50
+   kthread+0x2c6/0x390
+   ret_from_fork+0x36e/0x5a0
+   ret_from_fork_asm+0x1a/0x30
+  The buggy address is located 120 bytes inside of
+   allocated 448-byte region [ffff88800726c600, ffff88800726c7c0)
+   which belongs to the cache cifs_small_rq of size 448
+
+Restrict the +1 exemption to responses that have no data area, so that
+it still covers the bcc[0] omission it was meant for.  When a data area
+is present, the +1 discrepancy instead means the reported data length
+overruns the received buffer, so the response must be rejected.
+
+Fixes: 093b2bdad322 ("CIFS: Make demultiplex_thread work with SMB2 code")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shoichiro Miyamoto <shoichiro.miyamoto@gmail.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: 53b7c271f06b ("smb: client: restrict implied bcc[0] exemption to responses without data area")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifs_debug.c |    2 +-
- fs/cifs/cifsglob.h   |    2 +-
- fs/cifs/cifsproto.h  |    2 +-
- fs/cifs/misc.c       |    2 +-
- fs/cifs/netmisc.c    |    2 +-
- fs/cifs/readdir.c    |    6 ++----
- fs/cifs/smb2misc.c   |    4 ++--
- fs/cifs/smb2ops.c    |    2 +-
- fs/cifs/smb2proto.h  |    2 +-
- 9 files changed, 11 insertions(+), 13 deletions(-)
+ fs/cifs/smb2misc.c |   32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
---- a/fs/cifs/cifs_debug.c
-+++ b/fs/cifs/cifs_debug.c
-@@ -42,7 +42,7 @@ void cifs_dump_detail(void *buf, struct
- 		 smb->Command, smb->Status.CifsError,
- 		 smb->Flags, smb->Flags2, smb->Mid, smb->Pid);
- 	cifs_dbg(VFS, "smb buf %p len %u\n", smb,
--		 server->ops->calc_smb_size(smb, server));
-+		 server->ops->calc_smb_size(smb));
- #endif /* CONFIG_CIFS_DEBUG2 */
- }
- 
---- a/fs/cifs/cifsglob.h
-+++ b/fs/cifs/cifsglob.h
-@@ -389,7 +389,7 @@ struct smb_version_operations {
- 	int (*close_dir)(const unsigned int, struct cifs_tcon *,
- 			 struct cifs_fid *);
- 	/* calculate a size of SMB message */
--	unsigned int (*calc_smb_size)(void *buf, struct TCP_Server_Info *ptcpi);
-+	unsigned int (*calc_smb_size)(void *buf);
- 	/* check for STATUS_PENDING and process the response if yes */
- 	bool (*is_status_pending)(char *buf, struct TCP_Server_Info *server);
- 	/* check for STATUS_NETWORK_SESSION_EXPIRED */
---- a/fs/cifs/cifsproto.h
-+++ b/fs/cifs/cifsproto.h
-@@ -148,7 +148,7 @@ extern int cifs_get_writable_path(struct
- extern struct cifsFileInfo *find_readable_file(struct cifsInodeInfo *, bool);
- extern int cifs_get_readable_path(struct cifs_tcon *tcon, const char *name,
- 				  struct cifsFileInfo **ret_file);
--extern unsigned int smbCalcSize(void *buf, struct TCP_Server_Info *server);
-+extern unsigned int smbCalcSize(void *buf);
- extern int decode_negTokenInit(unsigned char *security_blob, int length,
- 			struct TCP_Server_Info *server);
- extern int cifs_convert_address(struct sockaddr *dst, const char *src, int len);
---- a/fs/cifs/misc.c
-+++ b/fs/cifs/misc.c
-@@ -357,7 +357,7 @@ checkSMB(char *buf, unsigned int total_r
- 	/* otherwise, there is enough to get to the BCC */
- 	if (check_smb_hdr(smb))
- 		return -EIO;
--	clc_len = smbCalcSize(smb, server);
-+	clc_len = smbCalcSize(smb);
- 
- 	if (4 + rfclen != total_read) {
- 		cifs_dbg(VFS, "Length read does not match RFC1001 length %d\n",
---- a/fs/cifs/netmisc.c
-+++ b/fs/cifs/netmisc.c
-@@ -912,7 +912,7 @@ map_and_check_smb_error(struct mid_q_ent
-  * portion, the number of word parameters and the data portion of the message
-  */
- unsigned int
--smbCalcSize(void *buf, struct TCP_Server_Info *server)
-+smbCalcSize(void *buf)
- {
- 	struct smb_hdr *ptr = (struct smb_hdr *)buf;
- 	return (sizeof(struct smb_hdr) + (2 * ptr->WordCount) +
---- a/fs/cifs/readdir.c
-+++ b/fs/cifs/readdir.c
-@@ -808,8 +808,7 @@ find_cifs_entry(const unsigned int xid,
- 
- 		end_of_smb = cfile->srch_inf.ntwrk_buf_start +
- 			server->ops->calc_smb_size(
--					cfile->srch_inf.ntwrk_buf_start,
--					server);
-+					cfile->srch_inf.ntwrk_buf_start);
- 
- 		cur_ent = cfile->srch_inf.srch_entries_start;
- 		first_entry_in_buffer = cfile->srch_inf.index_of_last_entry
-@@ -1008,8 +1007,7 @@ int cifs_readdir(struct file *file, stru
- 	cifs_dbg(FYI, "loop through %d times filling dir for net buf %p\n",
- 		 num_to_fill, cifsFile->srch_inf.ntwrk_buf_start);
- 	max_len = tcon->ses->server->ops->calc_smb_size(
--			cifsFile->srch_inf.ntwrk_buf_start,
--			tcon->ses->server);
-+			cifsFile->srch_inf.ntwrk_buf_start);
- 	end_of_smb = cifsFile->srch_inf.ntwrk_buf_start + max_len;
- 
- 	tmp_buf = kmalloc(UNICODE_NAME_MAX, GFP_KERNEL);
 --- a/fs/cifs/smb2misc.c
 +++ b/fs/cifs/smb2misc.c
-@@ -221,7 +221,7 @@ smb2_check_message(char *buf, unsigned i
+@@ -17,6 +17,8 @@
+ #include "smb2glob.h"
+ #include "nterr.h"
+ 
++static unsigned int __smb2_calc_size(void *buf, bool *have_data);
++
+ static int
+ check_smb2_hdr(struct smb2_hdr *shdr, __u64 mid)
+ {
+@@ -141,6 +143,7 @@ smb2_check_message(char *buf, unsigned i
+ 	int command;
+ 	__u32 calc_len; /* calculated length */
+ 	__u64 mid;
++	bool have_data;
+ 
+ 	/*
+ 	 * Add function to do table lookup of StructureSize by command
+@@ -221,7 +224,8 @@ smb2_check_message(char *buf, unsigned i
  		}
  	}
  
--	calc_len = smb2_calc_size(buf, server);
-+	calc_len = smb2_calc_size(buf);
+-	calc_len = smb2_calc_size(buf);
++	have_data = false;
++	calc_len = __smb2_calc_size(buf, &have_data);
  
  	/* For SMB2_IOCTL, OutputOffset and OutputLength are optional, so might
  	 * be 0, and not a real miscalculation */
-@@ -403,7 +403,7 @@ smb2_get_data_area_len(int *off, int *le
+@@ -239,8 +243,13 @@ smb2_check_message(char *buf, unsigned i
+ 		/* Windows 7 server returns 24 bytes more */
+ 		if (calc_len + 24 == len && command == SMB2_OPLOCK_BREAK_HE)
+ 			return 0;
+-		/* server can return one byte more due to implied bcc[0] */
+-		if (calc_len == len + 1)
++		/*
++		 * Server can return one byte more due to implied bcc[0].
++		 * Allow it only when there is no data area; if data_length > 0
++		 * the +1 gap indicates an overreported data length rather than
++		 * the bcc[0] omission.
++		 */
++		if (calc_len == len + 1 && !have_data)
+ 			return 0;
+ 
+ 		/*
+@@ -401,14 +410,17 @@ smb2_get_data_area_len(int *off, int *le
+ /*
+  * Calculate the size of the SMB message based on the fixed header
   * portion, the number of word parameters and the data portion of the message.
++ * If have_data is non-NULL, it is set to true when a non-empty data area was
++ * found (data_length > 0), allowing callers to distinguish the implied bcc[0]
++ * case (no data area) from an overreported data length.
   */
- unsigned int
--smb2_calc_size(void *buf, struct TCP_Server_Info *srvr)
-+smb2_calc_size(void *buf)
+-unsigned int
+-smb2_calc_size(void *buf)
++static unsigned int
++__smb2_calc_size(void *buf, bool *have_data)
  {
  	struct smb2_pdu *pdu = (struct smb2_pdu *)buf;
  	struct smb2_hdr *shdr = &pdu->hdr;
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -374,7 +374,7 @@ smb2_dump_detail(void *buf, struct TCP_S
- 		 shdr->Command, shdr->Status, shdr->Flags, shdr->MessageId,
- 		 shdr->Id.SyncId.ProcessId);
- 	cifs_server_dbg(VFS, "smb buf %p len %u\n", buf,
--		 server->ops->calc_smb_size(buf, server));
-+		 server->ops->calc_smb_size(buf));
- #endif
+ 	int offset; /* the offset from the beginning of SMB to data area */
+-	int data_length; /* the length of the variable length data area */
++	int data_length = 0; /* the length of the variable length data area */
+ 	/* Structure Size has already been checked to make sure it is 64 */
+ 	int len = le16_to_cpu(shdr->StructureSize);
+ 
+@@ -441,9 +453,17 @@ smb2_calc_size(void *buf)
+ 	}
+ calc_size_exit:
+ 	cifs_dbg(FYI, "SMB2 len %d\n", len);
++	if (have_data)
++		*have_data = (data_length > 0);
+ 	return len;
  }
  
---- a/fs/cifs/smb2proto.h
-+++ b/fs/cifs/smb2proto.h
-@@ -23,7 +23,7 @@ struct smb_rqst;
- extern int map_smb2_to_linux_error(char *buf, bool log_err);
- extern int smb2_check_message(char *buf, unsigned int length,
- 			      struct TCP_Server_Info *server);
--extern unsigned int smb2_calc_size(void *buf, struct TCP_Server_Info *server);
-+extern unsigned int smb2_calc_size(void *buf);
- extern char *smb2_get_data_area_len(int *off, int *len,
- 				    struct smb2_hdr *shdr);
- extern __le16 *cifs_convert_path_to_utf16(const char *from,
++unsigned int
++smb2_calc_size(void *buf)
++{
++	return __smb2_calc_size(buf, NULL);
++}
++
+ /* Note: caller must free return buffer */
+ __le16 *
+ cifs_convert_path_to_utf16(const char *from, struct cifs_sb_info *cifs_sb)
 
 
