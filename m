@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 977FC403EA5;
-	Tue, 21 Jul 2026 21:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47813C10A7;
+	Tue, 21 Jul 2026 21:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669654; cv=none; b=eJxAplXH5lR0iGniOE65TrRxjjVV41qZt4Z5nr0Dy5DkNpcy+kkrQDXKmkKMFP0smkuR6e8vyP10qMcLbJsCcgwFXkOGBcr6XEmc4xaaCkTdTuuUL8Wf6snH2exEE8l1GClno69y0EUvXmD35T3KtyBz4B9S0+oQiaaABmr6QyY=
+	t=1784669657; cv=none; b=dIKksvEwRnOp+KMVaubDQWnVTYRmZizie10vqcd9btMKVOHLmmHC7AKbs5UDKE4z+yMuNIVVbnSSdmPNYjbIbBI5FgFP3U+A47daZxpzc1k19wNHObc4UTS8Aja0923Iw5rmmbPdcs0aT2iBBZJ97opLreXkhYKBzCx8EuvhZig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669654; c=relaxed/simple;
-	bh=L3qN7sVwWhc8Wt6beYoL1cwIISFBBYTjUJqzofEV66I=;
+	s=arc-20240116; t=1784669657; c=relaxed/simple;
+	bh=n19h9IfIkQW9nLFNfF9Z6B9UBa6aaT0eVIYOdWcejy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BtQe29Y7vIuDYSXE1ywK7IRe1MjzjeQb9C+/LR9HPYa+Gfo4gBKcJWUKyOxHD0zyXQHJaqbm1VVOIUc+GGszx0WdDqni72qeiFwbMe79dNSpVC4xhiUF1lhUEpkn/wR5cAEi/+iWSB+l2cTYcryrUdF2HyQD/7I/LS4Jp2VBu8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgtwzEIK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IT9sY0BHGoldigQkFj1g0UpSS/XXfebpFxWQNQ0vPD7e3ogtH7JikY1/EKgscDHXMDUkHnAi+efJfldUPu1nipmRlYL0kyoZ5i/C19GgMG2VyXChNNhIF4w8LdrrzyTY6C01Mp9HuRFTaSaTZmbkx0LWcukRwgf/ub7yqaSLHM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3fKogO5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgtwzEIK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E451F000E9;
-	Tue, 21 Jul 2026 21:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3fKogO5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4D11F00A3A;
+	Tue, 21 Jul 2026 21:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669650;
-	bh=uTLqb9kqjwbbgk37oYj2dc6NUvFnE9MEQ7jgcrS9DAk=;
+	s=korg; t=1784669653;
+	bh=4QAVhoNDfkuz9JOC6M8hwQOb3Z8CmfXkTWwVvKhnr2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OgtwzEIKXpQAdYciA6moPjqsMd5nmWIIzREsTc8dlNJoPz6fQGCDvl2hj2AX78brn
-	 DGxv8uE229XqnhQBnWSSQ7W+parr4JI0yd8AA3jGccTLj7528tKG4EG0o6Ju+GKqhv
-	 q1s6ZMJ92fxAOZFIhPGyy/2iIIB9bUmJICEwzhuM=
+	b=Y3fKogO5tknUwhhaWZgdkYZ/Jgp/QqNzjDi1MAUrRysoPBz7RshIK/chDeClPQCpq
+	 47mfeHTSoU+r4TIfILaPKfrVL0REnh+KV9vy8TLZwGAugWoAwYd+XSrvz+PXFP5cjR
+	 VIVV9Lmaa6bzec8+zQgzjoK1n1slfBN207cbkV5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0635/1067] net/sched: cls_api: Handle TC_ACT_CONSUMED in tcf_qevent_handle
-Date: Tue, 21 Jul 2026 17:20:36 +0200
-Message-ID: <20260721152438.800743225@linuxfoundation.org>
+Subject: [PATCH 6.1 0636/1067] ipv6: fix error handling in disable_ipv6 sysctl
+Date: Tue, 21 Jul 2026 17:20:37 +0200
+Message-ID: <20260721152438.822620821@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,58 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit a8a02897f2b479127db261de05cbf0c28b98d159 ]
+[ Upstream commit c779441e5070e2268bdfe77f6e2e0de926c431e3 ]
 
-tcf_classify() can return TC_ACT_CONSUMED while the skb is held by the
-defragmentation engine (e.g. act_ct on out-of-order fragments). When
-that happens the skb is no longer owned by the caller and must not be
-touched again.
+When writing to the disable_ipv6 sysctl, if proc_dointvec() fails to
+parse the input, it returns a negative error code. The current
+implementation is overwriting that error for write operations.
 
-tcf_qevent_handle() did not handle TC_ACT_CONSUMED: it fell through the
-switch and returned the skb to the caller as if classification had
-passed. The only qdisc that wires up qevents today is RED, via three call sites
-(qe_mark on RED_PROB_MARK/HARD_MARK, qe_early_drop on congestion_drop)
-red_enqueue() was continuing to operate on an skb it no longer owns  in this
-case -- enqueueing it, dropping it, or updating statistics. Resulting in a UAF.
+This results in a silent failure, it returns a successful write although
+the configuration was not modified at all. When modifying the "all"
+variant it can also modify the configuration of existing interfaces to
+the wrong value.
 
-  tc qdisc add dev eth0 root handle 1: red ... qevent early_drop block 10
-  tc filter add block 10 ... action ct
+Fix this by checking the return value of proc_dointvec() and returning
+early on failure.
 
-  (with ct defrag enabled and traffic that produces out-of-order
-  fragments, e.g. a fragmented UDP stream)
-
-Handle TC_ACT_CONSUMED in tcf_qevent_handle() the same way the ingress
-and egress fast paths do: treat it as stolen and return NULL without
-touching the skb. Unlike the TC_ACT_STOLEN case, the skb must not be
-dropped/freed here, as it is no longer owned by us.
-
-Fixes: 3f14b377d01d ("net/sched: act_ct: fix skb leak and crash on ooo frags")
-Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260620130749.226642-1-jhs@mojatatu.com
+Fixes: 56d417b12e57 ("IPv6: Add 'autoconf' and 'disable_ipv6' module parameters")
+Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260622130857.5115-2-fmancera@suse.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_api.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv6/addrconf.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index 0ccd8bf57a93b0..64a9092021359d 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -3758,6 +3758,9 @@ struct sk_buff *tcf_qevent_handle(struct tcf_qevent *qe, struct Qdisc *sch, stru
- 		skb_do_redirect(skb);
- 		*ret = __NET_XMIT_STOLEN;
- 		return NULL;
-+	case TC_ACT_CONSUMED:
-+		*ret = __NET_XMIT_STOLEN;
-+		return NULL;
- 	}
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 56f3af49f123b2..2ae1548f58737d 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -6376,6 +6376,8 @@ static int addrconf_sysctl_disable(struct ctl_table *ctl, int write,
+ 	lctl.data = &val;
  
- 	return skb;
+ 	ret = proc_dointvec(&lctl, write, buffer, lenp, ppos);
++	if (ret)
++		return ret;
+ 
+ 	if (write)
+ 		ret = addrconf_disable_ipv6(ctl, valp, val);
 -- 
 2.53.0
 
