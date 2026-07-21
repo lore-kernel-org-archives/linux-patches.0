@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDF33D3337;
-	Tue, 21 Jul 2026 17:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37DE3D9027;
+	Tue, 21 Jul 2026 17:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784653376; cv=none; b=RSWTxYpdfu+1p3y85Vgm6T1AYVLmxWV5ZN0JidAx8TUyVi//cNaKr7zk8JZCFotmUZdj0Nts23NeA781UQZjh7A/pYryxRNo3UsJi53DL9tkdbinsv0djsJcTZsLoOdtIUnWJWfTcaSKPhdDupOUD89IFDZsNrcQ83CVB+6pI6c=
+	t=1784653379; cv=none; b=SeuBgsM7BQL3bGmnVaFbSSWbwZlMrHyuB4VvziiZ6Yj8fv+xNHPzDLM54kEmaBD6dLADky0M/ZSjn9syPpSzetHCL9fjmiPrVpTG0hy//cRcO8zNiUGM7wLoYDnw9ttJWaP3XZxRaybVwIvAF96FYIZv+gwSqgIFU+APbuiYaF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784653376; c=relaxed/simple;
-	bh=8Kk2U/o2MTRb+FSd0vbe/5SwLlJOEKDDWjYnSpS2ZVc=;
+	s=arc-20240116; t=1784653379; c=relaxed/simple;
+	bh=tdblJTldlGiYlJSSBIfha1EJc06efayv8gAby0+T9TU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V8ZyPcBqlE7XXh6X0Bt7mXIqfRZVKk7EN8gGCdhRcR7PEVJ/vEvjgW7cNUWR3dgal3+4bLwT8mzU260X5sCMxDYcfs3JgprEVtGQ0LE/EospHvv2NDwycO+g/2FWDzVsSG/dFpCSl/AK/BhyI7pqpMAWRzUCL16gsmfBRppoVsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TL1TJCYS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Om3IetwfGnRQho61yvvSyBS7hTqrDJTyU9rtBZEmyURloEsvbOMO+aIyaAt2EtpmguPXvAnbjcPtQCIKQUwU//orNOqW0Nx9fH3/6qaVoHn6tzHbGHB4cpGRymrqD3CadwE/K5JeRu8GMXkbwXCTF7sK5506+NWBAKatrxCCx8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sy9P9n+W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TL1TJCYS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5A71F000E9;
-	Tue, 21 Jul 2026 17:02:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sy9P9n+W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2085B1F000E9;
+	Tue, 21 Jul 2026 17:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784653375;
-	bh=EzKH4Yz6y+6n0Np6hXGrLGC+nt+sRUZ4OhYxufidovM=;
+	s=korg; t=1784653377;
+	bh=HQX7gfEeCL79VouM7PSlaMjORZv07OEMmqLM8qQ+DQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TL1TJCYSwpUnXcXXRr+TrLN24H83nFeUk/QdVv6i1fleg2/oyAHxxbgovvLm9Qr1v
-	 l0anDSH4voj2hTBvqxGq5ePqSi5W/pqcj+DD/b7XpdrBjz32y3IUcEZmpR0fuUeBDf
-	 3/t9yeQnxk6ogG/5DCoDcXnP3om1Bv8nPdOWSfks=
+	b=sy9P9n+WA1q94SxCBPkvb72+pp4TzQhDtd83pPARM5DZInndWk5n0137OSajJu1Hg
+	 B3oSinxApbab/ePPbSlFldbIJTvpSDDixhJ2F3tddwiTqQEV+MItUs7XUlYxA0L5e7
+	 yaWSwsher//kyTYsTepoiW9jZbI5ISDdmkL9gh7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuaisong Yang <yangshuaisong@h-partners.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jiaming Zhang <r772577952@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1304/2077] net: hns3: differentiate autoneg default values between copper and fiber
-Date: Tue, 21 Jul 2026 17:16:17 +0200
-Message-ID: <20260721152623.575145565@linuxfoundation.org>
+Subject: [PATCH 7.1 1305/2077] ALSA: FCP: Fix NULL pointer dereference in interface lookup
+Date: Tue, 21 Jul 2026 17:16:18 +0200
+Message-ID: <20260721152623.598339085@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,56 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuaisong Yang <yangshuaisong@h-partners.com>
+From: Jiaming Zhang <r772577952@gmail.com>
 
-[ Upstream commit d9d349c4e8a0acd73bac8baa3605443c0df5eb26 ]
+[ Upstream commit e1e31e0ec8a609e17fd2e86b77bc00d9cbb24d7c ]
 
-Fix a link loss issue during driver initialization on optical ports
-connected to forced-mode (non-autoneg) remote switches.
+A malformed USB device can provide a vendor-specific interface without
+any endpoint descriptors. fcp_find_fc_interface() currently selects the
+first vendor-specific interface and reads endpoint 0 from it, without
+checking whether the interface actually has any endpoints.
 
-Previously, during driver probe or initialization, hclge_configure()
-blindly hardcoded hdev->hw.mac.req_autoneg to AUTONEG_ENABLE for all
-media types. While this is necessary for copper (BASE-T) ports to
-establish a link, many high-speed optical (fiber) ports in data
-centers are connected to switches running in forced mode (fixed speed,
-autoneg disabled). Forcing autoneg on these optical ports during
-initialization causes a permanent link failure since the remote end
-refuses to respond to autoneg pulses.
+When bNumEndpoints is zero, no endpoint array is allocated for the parsed
+alternate setting, so get_endpoint(..., 0) yields an invalid endpoint
+descriptor pointer. Dereferencing it through usb_endpoint_num() then
+triggers a NULL pointer dereference.
 
-Fix this by implementing media-type differentiated initialization in
-hclge_init_ae_dev(). Copper ports continue to default to
-AUTONEG_ENABLE, while optical ports strictly inherit the preset
-autoneg status pre-configured by the firmware (hdev->hw.mac.autoneg),
-preserving native compatibility with forced-mode network environments.
+Skip vendor-specific interfaces that do not have any endpoints.
 
-Fixes: 05eb60e9648c ("net: hns3: using user configure after hardware reset")
-Signed-off-by: Shuaisong Yang <yangshuaisong@h-partners.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://patch.msgid.link/20260624141319.271439-5-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 46757a3e7d50 ("ALSA: FCP: Add Focusrite Control Protocol driver")
+Reported-by: Jiaming Zhang <r772577952@gmail.com>
+Closes: https://lore.kernel.org/lkml/CANypQFb1EHj0xX8bA1WxSOSK-5xca6ZNKzOQcp12=s=puY7VFw@mail.gmail.com/
+Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
+Link: https://patch.msgid.link/20260625134933.425785-1-r772577952@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/usb/fcp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index b8563ac34ad198..2a6e4d17452c4f 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -11926,6 +11926,13 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
- 	if (ret)
- 		goto err_ptp_uninit;
+diff --git a/sound/usb/fcp.c b/sound/usb/fcp.c
+index 0fc4d063c48a58..c45dbe4d453280 100644
+--- a/sound/usb/fcp.c
++++ b/sound/usb/fcp.c
+@@ -1083,6 +1083,8 @@ static int fcp_find_fc_interface(struct usb_mixer_interface *mixer)
  
-+	if (hdev->hw.mac.media_type != HNAE3_MEDIA_TYPE_COPPER) {
-+		hdev->hw.mac.req_autoneg = hdev->hw.mac.autoneg;
-+		if (hdev->hw.mac.autoneg == AUTONEG_DISABLE &&
-+		    hdev->hw.mac.speed != SPEED_UNKNOWN)
-+			hdev->hw.mac.req_speed = hdev->hw.mac.speed;
-+	}
-+
- 	ret = hclge_set_autoneg_speed_dup(hdev);
- 	if (ret) {
- 		dev_err(&pdev->dev,
+ 		if (desc->bInterfaceClass != 255)
+ 			continue;
++		if (desc->bNumEndpoints < 1)
++			continue;
+ 
+ 		epd = get_endpoint(intf->altsetting, 0);
+ 		private->bInterfaceNumber = desc->bInterfaceNumber;
 -- 
 2.53.0
 
