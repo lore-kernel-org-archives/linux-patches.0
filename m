@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9FB366DA5;
-	Tue, 21 Jul 2026 15:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80AEE46A610;
+	Tue, 21 Jul 2026 15:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649118; cv=none; b=EZTaUURZv59qcF+vnR4OCJcmr59BGzQjbYUE8BvdU/GEIup6Rhc37jtMEdEYTJQs4zrx2Yaze2EnXi1xmYeqiHRhokyt0XK9saaPS9jKeM0PFkB+mC7X6VA9FGghFn4xiKXH9aHlrOSwyfci82PBeUBzRCotNOTnYYUwyP0KMzY=
+	t=1784649120; cv=none; b=QCk8Lh/D1Y2EUZ0NSEsvb2W/UMCvJMukwET2D+i0VczrKwyjR/eqz5H+gQhCiLibrpla6Wt1LMItbyFh8LPp1mZ9qiShJSkZ9If8/H4XPMl3bdqQud1w/tWts4IiRtA4rtV7+NPG+ZuBeJeyMrPzOnVmD3ENp7iHju3VQbTYsV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649118; c=relaxed/simple;
-	bh=EwQoE9kn3+sZmH9oAQ33gsIo6xrk5PUOpv6fyGSEJOk=;
+	s=arc-20240116; t=1784649120; c=relaxed/simple;
+	bh=FpI4Pioko5SMjA9vgg36HTHiKRMS3hVJwu370tRK1jw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZJ67oqPbutxBq+Oj0fz6soAIuGyKzParQsUBgbzd2EBDt7/ruwB+YKtiplG1wo48SoWAuolWExJMQW6Z0Ydo0OlZjFvf20c/O2vMLjyM1hM3h3gcNVO23A0uoqFDw3bczUP7NPfXHc+XRMGSz5pdrCudxEV0DaCQJ7szWV3Kyrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjATB22E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a9F3QniRvwTA1lH62CnZLpKd5XpjARQwHNGHX0tJvX98wW2mCLuUeTc6P4zmNzH2JkDyvc7tEZJ26H416Do7kz716ZYVhYaGgspiaAQKCMCyJmJKkfUonhQ+46ytQptYHF6whqWerVVw5sTXh0IYpx1ArXOIvmmmygFyg9LD7zM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2KwvxZUu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjATB22E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554D41F00A3A;
-	Tue, 21 Jul 2026 15:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2KwvxZUu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C70771F000E9;
+	Tue, 21 Jul 2026 15:51:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649115;
-	bh=mZAqdnmM72Ullz7iIGJRT64Z6bPjYwqAyg7fYChDl2g=;
+	s=korg; t=1784649118;
+	bh=/1GOXeTFoyqvWVstXvjjSacmfSpUQ/fyln7uQDH7vk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JjATB22E0qbdYTChH5N+sffrNngtdPNljnlIqYOsJcnR12E5tib9DxKxeBay6RBkG
-	 TlcpAaipqH08bxLE6BE3WB8NHkkrva0p3Gs00UVq/JQYCrrBuBErJbWzvdkgWVErq4
-	 C5EGFomZFhuvh3g3+4WLIaueSuo5pb3QvwaG8zUY=
+	b=2KwvxZUuNFVz8ntBWJA9/rjsDqUcqfmoJJBZ42fTlNAv3oEWYJzxu0Rdc07vmVGWc
+	 killUoJkB/sZqFjAQ94oUj69J2gIqAFQXPc2eL3uZ3a+CKz441bdEIG/iaP6uKsDxh
+	 hYgHXNIb2RGSDB6ZVw2oDDbOdF4+gKjXw3yPFlaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
+	Carlos Song <carlos.song@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0412/2077] spi: atmel: fix DMA channel and bounce buffer leaks
-Date: Tue, 21 Jul 2026 17:01:25 +0200
-Message-ID: <20260721152602.451751934@linuxfoundation.org>
+Subject: [PATCH 7.1 0413/2077] spi: imx: replace dmaengine_terminate_all() with dmaengine_terminate_sync()
+Date: Tue, 21 Jul 2026 17:01:26 +0200
+Message-ID: <20260721152602.475010421@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,230 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Carlos Song <carlos.song@nxp.com>
 
-[ Upstream commit bd7e9843ec95bffe2643c901dd625f0bab32e639 ]
+[ Upstream commit 4503b2fe761c2bfd33ed043d9b9deec0d1eb40e0 ]
 
-The original code set use_dma to false when dma_alloc_coherent() for
-bounce buffers failed, but DMA channels acquired earlier via
-atmel_spi_configure_dma() were never freed.
+dmaengine_terminate_all() has been deprecated, so replace it with
+dmaengine_terminate_sync().
 
-When devm_request_irq() or clk_prepare_enable() failed later in probe,
-the driver also did not release DMA channels or bounce buffers already
-allocated.
-
-The out_free_dma error path released DMA channels but did not free the
-bounce buffers.
-
-Fix by moving bounce buffer allocation into atmel_spi_configure_dma()
-and registering the devres cleanup for DMA channels and bounce buffers.
-
-Fixes: a9889ed62d06 ("spi: atmel: Implements transfers with bounce buffer")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260522-atmel-v3-1-23f8c6e6aa43@gmail.com
+Fixes: ba9b28652c75 ("spi: imx: enable DMA mode for target operation")
+Fixes: a450c8b77f92 ("spi: imx: handle DMA submission errors with dma_submit_error()")
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Link: https://patch.msgid.link/20260525062928.3191821-1-carlos.song@oss.nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-atmel.c | 133 ++++++++++++++++++++--------------------
- 1 file changed, 68 insertions(+), 65 deletions(-)
+ drivers/spi/spi-imx.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/spi/spi-atmel.c b/drivers/spi/spi-atmel.c
-index 42db85d7ff8e13..397bc819e7161e 100644
---- a/drivers/spi/spi-atmel.c
-+++ b/drivers/spi/spi-atmel.c
-@@ -559,6 +559,38 @@ static int atmel_spi_dma_slave_config(struct atmel_spi *as, u8 bits_per_word)
- 	return err;
- }
+diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
+index 480d1e8b281f19..ae9912905c67ad 100644
+--- a/drivers/spi/spi-imx.c
++++ b/drivers/spi/spi-imx.c
+@@ -1774,8 +1774,8 @@ static int spi_imx_dma_submit(struct spi_imx_data *spi_imx,
+ 							transfer_timeout);
+ 		if (!time_left) {
+ 			dev_err(spi_imx->dev, "I/O Error in DMA TX\n");
+-			dmaengine_terminate_all(controller->dma_tx);
+-			dmaengine_terminate_all(controller->dma_rx);
++			dmaengine_terminate_sync(controller->dma_tx);
++			dmaengine_terminate_sync(controller->dma_rx);
+ 			return -ETIMEDOUT;
+ 		}
  
-+static void atmel_spi_release_dma(void *data)
-+{
-+	struct spi_controller *host = data;
-+	struct atmel_spi *as = spi_controller_get_devdata(host);
-+	struct device *dev = &as->pdev->dev;
-+
-+	if (host->dma_tx) {
-+		dma_release_channel(host->dma_tx);
-+		host->dma_tx = NULL;
-+	}
-+
-+	if (host->dma_rx) {
-+		dma_release_channel(host->dma_rx);
-+		host->dma_rx = NULL;
-+	}
-+
-+	if (IS_ENABLED(CONFIG_SOC_SAM_V4_V5)) {
-+		if (as->addr_tx_bbuf) {
-+			dma_free_coherent(dev, SPI_MAX_DMA_XFER,
-+					  as->addr_tx_bbuf,
-+					  as->dma_addr_tx_bbuf);
-+			as->addr_tx_bbuf = NULL;
-+		}
-+		if (as->addr_rx_bbuf) {
-+			dma_free_coherent(dev, SPI_MAX_DMA_XFER,
-+					  as->addr_rx_bbuf,
-+					  as->dma_addr_rx_bbuf);
-+			as->addr_rx_bbuf = NULL;
-+		}
-+	}
-+}
-+
- static int atmel_spi_configure_dma(struct spi_controller *host,
- 				   struct atmel_spi *as)
- {
-@@ -569,7 +601,8 @@ static int atmel_spi_configure_dma(struct spi_controller *host,
- 	if (IS_ERR(host->dma_tx)) {
- 		err = PTR_ERR(host->dma_tx);
- 		dev_dbg(dev, "No TX DMA channel, DMA is disabled\n");
--		goto error_clear;
-+		host->dma_tx = NULL;
-+		return err;
- 	}
+@@ -1784,7 +1784,7 @@ static int spi_imx_dma_submit(struct spi_imx_data *spi_imx,
+ 		if (!time_left) {
+ 			dev_err(&controller->dev, "I/O Error in DMA RX\n");
+ 			spi_imx->devtype_data->reset(spi_imx);
+-			dmaengine_terminate_all(controller->dma_rx);
++			dmaengine_terminate_sync(controller->dma_rx);
+ 			return -ETIMEDOUT;
+ 		}
+ 	} else {
+@@ -1793,15 +1793,15 @@ static int spi_imx_dma_submit(struct spi_imx_data *spi_imx,
+ 		if (wait_for_completion_interruptible(&spi_imx->dma_tx_completion) ||
+ 		    READ_ONCE(spi_imx->target_aborted)) {
+ 			dev_dbg(spi_imx->dev, "I/O Error in DMA TX interrupted\n");
+-			dmaengine_terminate_all(controller->dma_tx);
+-			dmaengine_terminate_all(controller->dma_rx);
++			dmaengine_terminate_sync(controller->dma_tx);
++			dmaengine_terminate_sync(controller->dma_rx);
+ 			return -EINTR;
+ 		}
  
- 	host->dma_rx = dma_request_chan(dev, "rx");
-@@ -580,26 +613,45 @@ static int atmel_spi_configure_dma(struct spi_controller *host,
- 		 * requested tx channel.
- 		 */
- 		dev_dbg(dev, "No RX DMA channel, DMA is disabled\n");
--		goto error;
-+		host->dma_rx = NULL;
-+		goto err_release_dma;
- 	}
+ 		if (wait_for_completion_interruptible(&spi_imx->dma_rx_completion) ||
+ 		    READ_ONCE(spi_imx->target_aborted)) {
+ 			dev_dbg(spi_imx->dev, "I/O Error in DMA RX interrupted\n");
+-			dmaengine_terminate_all(controller->dma_rx);
++			dmaengine_terminate_sync(controller->dma_rx);
+ 			return -EINTR;
+ 		}
  
- 	err = atmel_spi_dma_slave_config(as, 8);
- 	if (err)
--		goto error;
-+		goto err_release_dma;
-+
-+	if (IS_ENABLED(CONFIG_SOC_SAM_V4_V5)) {
-+		as->addr_tx_bbuf = dma_alloc_coherent(dev, SPI_MAX_DMA_XFER,
-+						      &as->dma_addr_tx_bbuf,
-+						      GFP_KERNEL | GFP_DMA);
-+		if (!as->addr_tx_bbuf) {
-+			err = -ENOMEM;
-+			goto err_release_dma;
-+		}
-+
-+		as->addr_rx_bbuf = dma_alloc_coherent(dev, SPI_MAX_DMA_XFER,
-+						      &as->dma_addr_rx_bbuf,
-+						      GFP_KERNEL | GFP_DMA);
-+		if (!as->addr_rx_bbuf) {
-+			err = -ENOMEM;
-+			goto err_release_dma;
-+		}
-+	}
-+
-+	err = devm_add_action_or_reset(dev, atmel_spi_release_dma, host);
-+	if (err)
-+		return err;
- 
- 	dev_info(&as->pdev->dev,
--			"Using %s (tx) and %s (rx) for DMA transfers\n",
--			dma_chan_name(host->dma_tx),
--			dma_chan_name(host->dma_rx));
-+		 "Using %s (tx) and %s (rx) for DMA transfers\n",
-+		 dma_chan_name(host->dma_tx), dma_chan_name(host->dma_rx));
- 
+@@ -1818,9 +1818,9 @@ static int spi_imx_dma_submit(struct spi_imx_data *spi_imx,
  	return 0;
--error:
--	if (!IS_ERR(host->dma_rx))
--		dma_release_channel(host->dma_rx);
--	if (!IS_ERR(host->dma_tx))
--		dma_release_channel(host->dma_tx);
--error_clear:
--	host->dma_tx = host->dma_rx = NULL;
-+
-+err_release_dma:
-+	atmel_spi_release_dma(host);
-+
- 	return err;
+ 
+ dmaengine_terminate_tx:
+-	dmaengine_terminate_all(controller->dma_tx);
++	dmaengine_terminate_sync(controller->dma_tx);
+ dmaengine_terminate_rx:
+-	dmaengine_terminate_all(controller->dma_rx);
++	dmaengine_terminate_sync(controller->dma_rx);
+ 
+ 	return -EINVAL;
  }
- 
-@@ -611,18 +663,6 @@ static void atmel_spi_stop_dma(struct spi_controller *host)
- 		dmaengine_terminate_all(host->dma_tx);
- }
- 
--static void atmel_spi_release_dma(struct spi_controller *host)
--{
--	if (host->dma_rx) {
--		dma_release_channel(host->dma_rx);
--		host->dma_rx = NULL;
--	}
--	if (host->dma_tx) {
--		dma_release_channel(host->dma_tx);
--		host->dma_tx = NULL;
--	}
--}
--
- /* This function is called by the DMA driver from tasklet context */
- static void dma_callback(void *data)
- {
-@@ -1585,30 +1625,6 @@ static int atmel_spi_probe(struct platform_device *pdev)
- 		as->use_pdc = true;
- 	}
- 
--	if (IS_ENABLED(CONFIG_SOC_SAM_V4_V5)) {
--		as->addr_rx_bbuf = dma_alloc_coherent(&pdev->dev,
--						      SPI_MAX_DMA_XFER,
--						      &as->dma_addr_rx_bbuf,
--						      GFP_KERNEL | GFP_DMA);
--		if (!as->addr_rx_bbuf) {
--			as->use_dma = false;
--		} else {
--			as->addr_tx_bbuf = dma_alloc_coherent(&pdev->dev,
--					SPI_MAX_DMA_XFER,
--					&as->dma_addr_tx_bbuf,
--					GFP_KERNEL | GFP_DMA);
--			if (!as->addr_tx_bbuf) {
--				as->use_dma = false;
--				dma_free_coherent(&pdev->dev, SPI_MAX_DMA_XFER,
--						  as->addr_rx_bbuf,
--						  as->dma_addr_rx_bbuf);
--			}
--		}
--		if (!as->use_dma)
--			dev_info(host->dev.parent,
--				 "  can not allocate dma coherent memory\n");
--	}
--
- 	if (as->caps.has_dma_support && !as->use_dma)
- 		dev_info(&pdev->dev, "Atmel SPI Controller using PIO only\n");
- 
-@@ -1668,13 +1684,10 @@ static int atmel_spi_probe(struct platform_device *pdev)
- out_free_dma:
- 	pm_runtime_disable(&pdev->dev);
- 	pm_runtime_set_suspended(&pdev->dev);
--
--	if (as->use_dma)
--		atmel_spi_release_dma(host);
--
- 	spi_writel(as, CR, SPI_BIT(SWRST));
- 	spi_writel(as, CR, SPI_BIT(SWRST)); /* AT91SAM9263 Rev B workaround */
--	clk_disable_unprepare(as->gclk);
-+	if (as->gclk)
-+		clk_disable_unprepare(as->gclk);
- out_disable_clk:
- 	clk_disable_unprepare(clk);
- out_free_irq:
-@@ -1695,18 +1708,8 @@ static void atmel_spi_remove(struct platform_device *pdev)
- 	spi_unregister_controller(host);
- 
- 	/* reset the hardware and block queue progress */
--	if (as->use_dma) {
-+	if (as->use_dma)
- 		atmel_spi_stop_dma(host);
--		atmel_spi_release_dma(host);
--		if (IS_ENABLED(CONFIG_SOC_SAM_V4_V5)) {
--			dma_free_coherent(&pdev->dev, SPI_MAX_DMA_XFER,
--					  as->addr_tx_bbuf,
--					  as->dma_addr_tx_bbuf);
--			dma_free_coherent(&pdev->dev, SPI_MAX_DMA_XFER,
--					  as->addr_rx_bbuf,
--					  as->dma_addr_rx_bbuf);
--		}
--	}
- 
- 	spin_lock_irq(&as->lock);
- 	spi_writel(as, CR, SPI_BIT(SWRST));
 -- 
 2.53.0
 
