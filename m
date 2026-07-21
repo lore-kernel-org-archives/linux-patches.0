@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D91346F488;
-	Tue, 21 Jul 2026 18:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9BD46F484;
+	Tue, 21 Jul 2026 18:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658648; cv=none; b=q31YVwSjRiyG5imiUKvyivcRdshUVsq5siIORD1w50hThN6Zrx8+MqIARCjJ0SRyZvU3O4TYONUsSm98ocoGF9WF85lp3ruItgb1sOwQampy9QJRW6+e0by3B2mZw44OlEusnGI59M4aMRhlt126+YdUXooVRwzwwcAyxSndyic=
+	t=1784658651; cv=none; b=IBv55BDrwT2cf0Z3BQY1eq3XHA8TQq/9GDXVJ2d5AWHAjuRaS8i5GV11H3Ws3KR6hlT79Ydl5hu5ALBWvkeP3nITj09tgHd82NzzDKDazHm7Hlbx7p3lq5WdfRk8N2+Wb/PLnzlzU2mkeuTMqQLEsbU98in/hcLGCUznueXuR5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658648; c=relaxed/simple;
-	bh=4PdR0+T0DEdIyXsvjSMi3HDbWn+qVP39tBNisyWlxQI=;
+	s=arc-20240116; t=1784658651; c=relaxed/simple;
+	bh=RKnL7ovPb5SHYKnOlwqqPj3IqFjor6q8FDbAiEvWw4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ltjZLSZ3nW6P2ryOtPZsy0J3XFAbjkD09X5O0tVR5J2y2S5Tp/W21STu+OKZiDSjbmKhClz+o4HJE4+1oUK5vUiNkEUvE1I8leLr/vJKtdobWHFA4DL7IdAfCrID2Ld3V7OvhhkMTd0vf1rxRRkDHxfjva4a5/WDeylObvFmTfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z0+sC7Bz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EW4bAIUqKrv6ap82naUuNvZsnNMVTqxWY39JO8MnvpKoL+7XQFDcl/RJ2r+6qotEfouQXWux88a5oYHz9RN+XXV+hDblGkC32EOLMYCS8KnuPr3JyQwJY3RgwHFHqt6So4t8qOucVAkyGgb2yxkWVmH/D+bLkZKjkSbZkzZEBPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvPNMa2P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z0+sC7Bz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2543E1F000E9;
-	Tue, 21 Jul 2026 18:30:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvPNMa2P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0441F00AC4;
+	Tue, 21 Jul 2026 18:30:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658646;
-	bh=q6REQ/7llwbg0rn/KCH/olTd2jmQCl+VGjEoBQ8pWOI=;
+	s=korg; t=1784658649;
+	bh=zeXmXpYq69CeD8cYsFxGxVgsBDdBqMAeKgjiPovp9/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z0+sC7Bz8nqBeoC2JLYkYRkwPa6l0F8cYfmCG2iMXVujb5YU5PtfXHcfbNfflSB8j
-	 ahZb7X1dF8RdfE0b6jMUxfBI969a+6qnTnq4QKsiZkIVZhRV61dzvaiTd5aifUYERO
-	 RYq9E0+GIG26/v5n2QzblIHGmR2K9v1mDvwiJwYU=
+	b=FvPNMa2PNxYd19X9YDhmoxSAKPTsn2HFe2Ue1+B8xaKM2N/gXiLPu5Q1SGxbkzUzL
+	 aQ3k853Gr6HoFBM69L8eFztaiDGdA+Mm5tSAyTEZIyBCc0wkC/MszfYJViPY7R++pN
+	 OMxjqm73+pZ/3uLilDT+oNA5W14IARdDynTt+6/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Wasim Nazir <wasim.nazir@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.18 1223/1611] remoteproc: qcom: Fix leak when custom dump_segments addition fails
-Date: Tue, 21 Jul 2026 17:22:19 +0200
-Message-ID: <20260721152542.944300444@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 6.18 1206/1611] batman-adv: frag: fix primary_if leak on failed linearization
+Date: Tue, 21 Jul 2026 17:22:02 +0200
+Message-ID: <20260721152542.561166343@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,63 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit ecf9fc18e62c58eae1ceb65dab2bccb8a724de2d upstream.
+commit 353d2c1d5492e53ae34f490a84494124dc3d3531 upstream.
 
-Free allocated minidump_region 'name' in qcom_add_minidump_segments()
-when failing before adding the region to 'dump_segments'. Otherwise,
-the 'name' is not tracked and is never freed by qcom_minidump_cleanup().
+If the skb has a frag_list, it must be linearized before it can be split
+using skb_split(). But when this step failed, it must not only free the skb
+but also take care of the reference to the already found primary_if.
 
-Return error when adding to 'dump_segments' fails.
-
-Cc: stable@vger.kernel.org # v5.11
-Fixes: 8ed8485c4f05 ("remoteproc: qcom: Add capability to collect minidumps")
-Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260318-rproc-memleak-v2-1-ade70ab858f2@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: a063f2fba3fa ("batman-adv: Don't skb_split skbuffs with frag_list")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/qcom_common.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ net/batman-adv/fragmentation.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/remoteproc/qcom_common.c
-+++ b/drivers/remoteproc/qcom_common.c
-@@ -110,6 +110,7 @@ static int qcom_add_minidump_segments(st
- 	struct minidump_region __iomem *ptr;
- 	struct minidump_region region;
- 	int seg_cnt, i;
-+	int ret = 0;
- 	dma_addr_t da;
- 	size_t size;
- 	char *name;
-@@ -130,17 +131,22 @@ static int qcom_add_minidump_segments(st
- 		if (le32_to_cpu(region.valid) == MINIDUMP_REGION_VALID) {
- 			name = kstrndup(region.name, MAX_REGION_NAME_LENGTH - 1, GFP_KERNEL);
- 			if (!name) {
--				iounmap(ptr);
--				return -ENOMEM;
-+				ret = -ENOMEM;
-+				break;
- 			}
- 			da = le64_to_cpu(region.address);
- 			size = le64_to_cpu(region.size);
--			rproc_coredump_add_custom_segment(rproc, da, size, rproc_dumpfn_t, name);
-+			ret = rproc_coredump_add_custom_segment(rproc, da, size, rproc_dumpfn_t,
-+								name);
-+			if (ret) {
-+				kfree(name);
-+				break;
-+			}
- 		}
+--- a/net/batman-adv/fragmentation.c
++++ b/net/batman-adv/fragmentation.c
+@@ -545,7 +545,7 @@ int batadv_frag_send_packet(struct sk_bu
+ 	 */
+ 	if (skb_has_frag_list(skb) && __skb_linearize(skb)) {
+ 		ret = -ENOMEM;
+-		goto free_skb;
++		goto put_primary_if;
  	}
  
- 	iounmap(ptr);
--	return 0;
-+	return ret;
- }
- 
- void qcom_minidump(struct rproc *rproc, unsigned int minidump_id,
+ 	/* Create one header to be copied to all fragments */
 
 
