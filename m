@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FA147143E;
-	Tue, 21 Jul 2026 17:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8850D47143E;
+	Tue, 21 Jul 2026 17:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656311; cv=none; b=B/0WIRpYZ1zC9amwFHfFhuek18fa/UBqWCBX9gHkCfEKcDP+et5RuYv6CqZ55wk6EQDrJ3547lf0ymnb1Lz3gmLuhbCbG+AvuLeBnG2vMTc1axttheCyr5xk0fkwBTdLQRF1cCYCwgUC85znTW21OjvQumrNDRemSlBbiD+0TJc=
+	t=1784656313; cv=none; b=g++aeVXU39FeSc2TTQLUtCI+m4QoL6s2VhP18FkWELlhuCYWDIOGdNo5RiBhZ+MGpMGSUCr+mG5sVuEtGEht5XMhwKTeb7HiXNupsjJjh4PpwZO0i9ZVgfvAeIXeEgdn9M0kfXLBdPCfqUIeZTtYYAlavLLLmlLpLP32z0jldwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656311; c=relaxed/simple;
-	bh=vvdr1+d9/A6vGn4mhC5Nz/tnlQ9tOM8D7JG6SVwnEfo=;
+	s=arc-20240116; t=1784656313; c=relaxed/simple;
+	bh=kFp2GDjBk/8XeCJ2dSrufDjSfI+mxvEAgA1WIC4v6AU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JKhxNUQK57d2a+FntKGDVQMSeq+fnZcvO7tUDzYuovZ/FpJHGT3c7ohq31d99GLofWkbW/cSnkMmsVgJ5adGuN1kwPs6WHO+dekOAYtnoIAWInHBylmRayVXvuniMR/aY2ThAcZgwCXSEARedEZSspFV2QOXv8NeTNr/8Q+DyA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6fQyS6i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gP1MJWo8pK4R9Splj+DVB+bu4ZFgPsxIPe7bz/X15VpYM68FNrQ44F42VAml+zO3IfyJngi8R86gUPuDW133xIqCQ1Qv6qWJ9x62ft/5IUE5c6RZHCyua0Cmd4AGW8rrWlBKP6lfTlAOAaIrCxq6t+Av33cS0EcRmjbwO9wpuOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8q4iYyk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6fQyS6i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 525D51F000E9;
-	Tue, 21 Jul 2026 17:51:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8q4iYyk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEAA91F000E9;
+	Tue, 21 Jul 2026 17:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656309;
-	bh=3M9an6HFmKDXisHZkP8P933UQA6QCUeY8NF4Mcu3mAI=;
+	s=korg; t=1784656312;
+	bh=TgYc4k/6wzjaMu456D9e6zKigDCZOw+UQagPBJVnbR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C6fQyS6iUk4dqNw9T3X0hoXnXpvaqSRXATRkpNpEcoPyH7oWy0A+VJL8FhYdnspZQ
-	 zGl/dmRgBX1UiwNDrBHvFm2w/aGTG/VEnNsL0lSGxkDCD0MFNEiVaiT2bvykrQqCbb
-	 SLIaXaLV/uVwh0aoQJZJVXnNVx7Wsuvms4w2pRA8=
+	b=I8q4iYyklyi4gCnni8UNVhG7zFjwD0iTr+wdVA3w7d70XXf7ADVTaYQ/vYihLrPJA
+	 08U+c6EQvihswQtIGCrQgjzuGOw/4yqwgiZFogciryWeNBObAV/d1vO2ro0+3MsdQ+
+	 vlf7RUKDrIlA6KJBCJYbPO1ciWq1gMQFCs1IlUDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0340/1611] netfilter: nfnetlink_osf: fix mss parsing on big-endian architectures
-Date: Tue, 21 Jul 2026 17:07:36 +0200
-Message-ID: <20260721152522.762911266@linuxfoundation.org>
+Subject: [PATCH 6.18 0341/1611] netfilter: nfnetlink_cthelper: use {READ,WRITE}_ONCE for accessing helper flags
+Date: Tue, 21 Jul 2026 17:07:37 +0200
+Message-ID: <20260721152522.787658155@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,45 +50,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit a625c94144c9b66d32e1f374f909f38db46161c1 ]
+[ Upstream commit f8bf5edf7157984bb8e288c8b04fdb041223b80c ]
 
-The MSS calculation in nf_osf_match_one() manually shifts bytes to
-construct a 16-bit value before passing it to ntohs().
+Conntrack helper flags are accessed from packet and netlink dump path.
+Concurrent update of userspace helper flags is not possible, because the
+nfnl_mutex in held on updates. These flags are only used by userspace
+helpers. Use {READ,WRITE}_ONCE() to access this flags from lockless
+paths.
 
-This works on little-endian hosts but it does not work on big-endian as
-the bytes are being always shifted and set in the same way for all
-architectures.
-
-Use get_unaligned_be16() to fix this on big-endian systems. It also
-simplifies the code.
-
-Fixes: 11eeef41d5f6 ("netfilter: passive OS fingerprint xtables match")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Fixes: 12f7a505331e ("netfilter: add user-space connection tracking helper infrastructure")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_osf.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ net/netfilter/nf_conntrack_core.c  |  4 +++-
+ net/netfilter/nfnetlink_cthelper.c | 20 +++++++++++++-------
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
-index c89efb951994a9..b9a0257fa2bef7 100644
---- a/net/netfilter/nfnetlink_osf.c
-+++ b/net/netfilter/nfnetlink_osf.c
-@@ -95,11 +95,7 @@ static bool nf_osf_match_one(const struct sk_buff *skb,
+diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
+index 344f88295976d7..18e52dcd22990e 100644
+--- a/net/netfilter/nf_conntrack_core.c
++++ b/net/netfilter/nf_conntrack_core.c
+@@ -2211,6 +2211,7 @@ static int nf_confirm_cthelper(struct sk_buff *skb, struct nf_conn *ct,
+ {
+ 	const struct nf_conntrack_helper *helper;
+ 	const struct nf_conn_help *help;
++	unsigned int helper_flags;
+ 	int protoff;
  
- 			switch (*optp) {
- 			case OSFOPT_MSS:
--				mss = optp[3];
--				mss <<= 8;
--				mss |= optp[2];
--
--				mss = ntohs((__force __be16)mss);
-+				mss = get_unaligned_be16(&optp[2]);
- 				break;
- 			case OSFOPT_TS:
- 				break;
+ 	help = nfct_help(ct);
+@@ -2221,7 +2222,8 @@ static int nf_confirm_cthelper(struct sk_buff *skb, struct nf_conn *ct,
+ 	if (!helper)
+ 		return NF_ACCEPT;
+ 
+-	if (!(helper->flags & NF_CT_HELPER_F_USERSPACE))
++	helper_flags = READ_ONCE(helper->flags);
++	if (!(helper_flags & NF_CT_HELPER_F_USERSPACE))
+ 		return NF_ACCEPT;
+ 
+ 	switch (nf_ct_l3num(ct)) {
+diff --git a/net/netfilter/nfnetlink_cthelper.c b/net/netfilter/nfnetlink_cthelper.c
+index 71a248cca746ae..18a57af99d27ee 100644
+--- a/net/netfilter/nfnetlink_cthelper.c
++++ b/net/netfilter/nfnetlink_cthelper.c
+@@ -41,8 +41,9 @@ static int
+ nfnl_userspace_cthelper(struct sk_buff *skb, unsigned int protoff,
+ 			struct nf_conn *ct, enum ip_conntrack_info ctinfo)
+ {
+-	const struct nf_conn_help *help;
+ 	struct nf_conntrack_helper *helper;
++	const struct nf_conn_help *help;
++	unsigned int helper_flags;
+ 
+ 	help = nfct_help(ct);
+ 	if (help == NULL)
+@@ -53,8 +54,10 @@ nfnl_userspace_cthelper(struct sk_buff *skb, unsigned int protoff,
+ 	if (helper == NULL)
+ 		return NF_DROP;
+ 
++	helper_flags = READ_ONCE(helper->flags);
++
+ 	/* This is a user-space helper not yet configured, skip. */
+-	if ((helper->flags &
++	if ((helper_flags &
+ 	    (NF_CT_HELPER_F_USERSPACE | NF_CT_HELPER_F_CONFIGURED)) ==
+ 	     NF_CT_HELPER_F_USERSPACE)
+ 		return NF_ACCEPT;
+@@ -406,10 +409,10 @@ nfnl_cthelper_update(const struct nlattr * const tb[],
+ 
+ 		switch(status) {
+ 		case NFCT_HELPER_STATUS_ENABLED:
+-			helper->flags |= NF_CT_HELPER_F_CONFIGURED;
++			WRITE_ONCE(helper->flags, helper->flags | NF_CT_HELPER_F_CONFIGURED);
+ 			break;
+ 		case NFCT_HELPER_STATUS_DISABLED:
+-			helper->flags &= ~NF_CT_HELPER_F_CONFIGURED;
++			WRITE_ONCE(helper->flags, helper->flags & ~NF_CT_HELPER_F_CONFIGURED);
+ 			break;
+ 		}
+ 	}
+@@ -531,8 +534,8 @@ static int
+ nfnl_cthelper_fill_info(struct sk_buff *skb, u32 portid, u32 seq, u32 type,
+ 			int event, struct nf_conntrack_helper *helper)
+ {
+-	struct nlmsghdr *nlh;
+ 	unsigned int flags = portid ? NLM_F_MULTI : 0;
++	struct nlmsghdr *nlh;
+ 	int status;
+ 
+ 	event = nfnl_msg_type(NFNL_SUBSYS_CTHELPER, event);
+@@ -556,7 +559,7 @@ nfnl_cthelper_fill_info(struct sk_buff *skb, u32 portid, u32 seq, u32 type,
+ 	if (nla_put_be32(skb, NFCTH_PRIV_DATA_LEN, htonl(helper->data_len)))
+ 		goto nla_put_failure;
+ 
+-	if (helper->flags & NF_CT_HELPER_F_CONFIGURED)
++	if (READ_ONCE(helper->flags) & NF_CT_HELPER_F_CONFIGURED)
+ 		status = NFCT_HELPER_STATUS_ENABLED;
+ 	else
+ 		status = NFCT_HELPER_STATUS_DISABLED;
+@@ -577,6 +580,7 @@ static int
+ nfnl_cthelper_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
+ {
+ 	struct nf_conntrack_helper *cur, *last;
++	unsigned int helper_flags;
+ 
+ 	rcu_read_lock();
+ 	last = (struct nf_conntrack_helper *)cb->args[1];
+@@ -585,8 +589,10 @@ nfnl_cthelper_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
+ 		hlist_for_each_entry_rcu(cur,
+ 				&nf_ct_helper_hash[cb->args[0]], hnode) {
+ 
++			helper_flags = READ_ONCE(cur->flags);
++
+ 			/* skip non-userspace conntrack helpers. */
+-			if (!(cur->flags & NF_CT_HELPER_F_USERSPACE))
++			if (!(helper_flags & NF_CT_HELPER_F_USERSPACE))
+ 				continue;
+ 
+ 			if (cb->args[1]) {
 -- 
 2.53.0
 
