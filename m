@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE2C24A078;
-	Tue, 21 Jul 2026 20:13:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B31947141F;
+	Tue, 21 Jul 2026 20:13:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664794; cv=none; b=I7jl+2x5IhTAnrplQhfy9nS7X6yxp18cB/ucaTcldrREocBnB7FWkYEUBjENaAOmc1p9PMFu+NAdMhbpmVquZ1qWSycj29WrCZGAm0BpZ7popTNf4qdTAoM1OGKwgX+kpjb6ZtpyoohQ/hLwxV5gFDrLDc5zey+0zXnJunlaNL0=
+	t=1784664797; cv=none; b=N7lK1xd1nTWQvEZmkVJNIG6wzyh4hyw2THY/8STbOZ6oWn7ehAqCICUsUnDIP4zd4AQrhI4ckqrk6TjnS46cZkU4fEweUTjhNdrlVclGgLX+iJ9MuHz/8TttAAYzXBymoZX+O6LXdXMp0Wz6P4JegqiM66jypRpfKlk8qWCaPI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664794; c=relaxed/simple;
-	bh=ataCPlhN9p3bxqw3UNT8XbmJGHtO7xAPZPwF/g7L7U8=;
+	s=arc-20240116; t=1784664797; c=relaxed/simple;
+	bh=47ssRt/tHxGPxzAErY2/p5y8tJOM8Su6P3dRnpuLja8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=elQh7JLNLQiMQyzmkdddBkwcIQN/EKa+gW4S5n67UQH2M5lSdjylJ3N8+6fPofSkAdYvq+xBDm7YMxKU/zlo5IYNFu65kY1qSfglTTFzzYA/rWyGZTG4RQn0DREOGml6XDxM/q+jt09BcR5/4cG8w3fTIZNNAtNhIb4mo9MJN44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgHqetCa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F4K71ufLcdHQc65qq4B4epjaCVetXLpYJN5qLM5L1iENa5/sZ7M/YtdAbRLUHU2Zl0byHJFMSO+Oax+gEf5q2aZiBnzWD2ZmJnKtVUf50Ucb0QDuciDP1cojgBCuEaNCVthpnP9Kvug1ywhDRTgwHxhNW62voIZSZNCg9t2VB4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sigPimQr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgHqetCa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F41E1F000E9;
-	Tue, 21 Jul 2026 20:13:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sigPimQr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8671F000E9;
+	Tue, 21 Jul 2026 20:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664793;
-	bh=Kr/RFGGR8TmLW4snvfCPDt5az8QvZyp/0CkapQVje08=;
+	s=korg; t=1784664796;
+	bh=Xi6L6yp1LkSwqJLcYmnHqc2ODWFbIkHgmi242ko8Wac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OgHqetCaA/clVAdYlvRb4OqHzgJOTdVA6LjjugvfsPycyHAriR3Tjg3BcTjJuu+HF
-	 gFluysJ0jkm3ptc7QyL5K3bD+G8Xlk/w6XLIuloPe/Uor2PWUr3v4NBc0FHnVR4tJx
-	 toSxCIDf+lx76VJAtPJAkvagTVUS/i4zhYUnutF0=
+	b=sigPimQrOTlVqtl0L+b/3mc2QnYqAG/WyKDlUaIoZrqhIwnVPz5dkQkT1+FkImU8g
+	 WRkvuiAbH6rYd6DLvxupA3nLxHGDT//esAR3bh/Ew8ZWcn/DxOpryxmkwfBunX2h7N
+	 FlBHcLCpcZANkeX4R5tgcss7kzbOjMYETAAEr5PM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Linton <jeremy.linton@arm.com>,
-	Jarred White <jarredwhite@linux.microsoft.com>,
-	Easwar Hariharan <easwar.hariharan@linux.microsoft.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 0061/1266] ACPI: CPPC: Suppress UBSAN warning caused by field misuse
-Date: Tue, 21 Jul 2026 17:08:18 +0200
-Message-ID: <20260721152443.167832578@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>
+Subject: [PATCH 6.6 0062/1266] ACPI: NFIT: core: Fix possible NULL pointer dereference
+Date: Tue, 21 Jul 2026 17:08:19 +0200
+Message-ID: <20260721152443.190328131@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,81 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Linton <jeremy.linton@arm.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 1b1acf2dada0cc3931bb2cb9ff8832edfbee46a1 upstream.
+commit 027e128abb82788189d6d45b68e3e8e7329b67be upstream.
 
-The definition of reg->access_width changes depending on the
-reg->space_id type.  Type ACPI_ADR_SPACE_PLATFORM_COMM uses
-access_width to indicate the PCC region, which can result in a UBSAN
-if the value is greater than 4.
+After commit 9b311b7313d6 ("ACPI: NFIT: Install Notify() handler before
+getting NFIT table"), acpi_nfit_probe() installs an ACPI notify handler
+for the NFIT device before checking the presence of the NFIT table.  If
+that table is not there, 0 is returned without allocating the acpi_desc
+object and setting the driver data pointer of the NFIT device.  If the
+platform firmware triggers an NFIT_NOTIFY_UC_MEMORY_ERROR notification
+on the NFIT device at that point, acpi_nfit_uc_error_notify() will
+dereference a NULL pointer.
 
-For example:
+Prevent that from occurring by adding an acpi_desc check against NULL
+to acpi_nfit_uc_error_notify().
 
- UBSAN: shift-out-of-bounds in drivers/acpi/cppc_acpi.c:1090:9
- shift exponent 32 is too large for 32-bit type 'int'
- CPU: 61 UID: 0 PID: 1220 Comm: (udev-worker) Not tainted 7.0.10-201.fc44.aarch64 #1 PREEMPT(lazy)
- Hardware name: To be filled by O.E.M.
- Call trace:
-  ...(trimming)
-  ubsan_epilogue+0x10/0x48
-  __ubsan_handle_shift_out_of_bounds+0xdc/0x1e0
-  cpc_write+0x4d0/0x670
-  cppc_set_perf+0x18c/0x490
-  cppc_cpufreq_cpu_init+0x1c8/0x380 [cppc_cpufreq]
-  ... (trimming)
-
-Lets fix this by validating the region type, as well as whether
-access_width has a value. Then since we are returning bit_width
-directly for ACPI_ADR_SPACE_PLATFORM_COMM, drop the code correcting
-the size.
-
-Fixes: 2f4a4d63a193 ("ACPI: CPPC: Use access_width over bit_width for system memory accesses")
-Signed-off-by: Jeremy Linton <jeremy.linton@arm.com>
-Tested-by: Jarred White <jarredwhite@linux.microsoft.com>
-Reviewed-by: Jarred White <jarredwhite@linux.microsoft.com>
-Reviewed-by: Easwar Hariharan <easwar.hariharan@linux.microsoft.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260601235808.1113137-1-jeremy.linton@arm.com
+Fixes: 9b311b7313d6 ("ACPI: NFIT: Install Notify() handler before getting NFIT table")
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: All applicable <stable@vger.kernel.org>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/2418508.ElGaqSPkdT@rafael.j.wysocki
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/cppc_acpi.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/acpi/nfit/core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -171,8 +171,13 @@ show_cppc_data(cppc_get_perf_caps, cppc_
- show_cppc_data(cppc_get_perf_ctrs, cppc_perf_fb_ctrs, reference_perf);
- show_cppc_data(cppc_get_perf_ctrs, cppc_perf_fb_ctrs, wraparound_time);
+--- a/drivers/acpi/nfit/core.c
++++ b/drivers/acpi/nfit/core.c
+@@ -3453,6 +3453,9 @@ static void acpi_nfit_uc_error_notify(st
+ {
+ 	struct acpi_nfit_desc *acpi_desc = dev_get_drvdata(dev);
  
--/* Check for valid access_width, otherwise, fallback to using bit_width */
--#define GET_BIT_WIDTH(reg) ((reg)->access_width ? (8 << ((reg)->access_width - 1)) : (reg)->bit_width)
-+/*
-+ * PCC reuses the access_width field as the subspace id, so only decode access
-+ * size for non-PCC registers. Otherwise, use the bit_width.
-+ */
-+#define GET_BIT_WIDTH(reg) (((reg)->access_width &&				\
-+			     (reg)->space_id != ACPI_ADR_SPACE_PLATFORM_COMM) ? \
-+			    (8 << ((reg)->access_width - 1)) : (reg)->bit_width)
- 
- /* Shift and apply the mask for CPC reads/writes */
- #define MASK_VAL_READ(reg, val) (((val) >> (reg)->bit_offset) &				\
-@@ -1033,7 +1038,6 @@ static int cpc_read(int cpu, struct cpc_
- 		 * by the bit width field; the access size is used to indicate
- 		 * the PCC subspace id.
- 		 */
--		size = reg->bit_width;
- 		vaddr = GET_PCC_VADDR(reg->address, pcc_ss_id);
- 	}
- 	else if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
-@@ -1105,7 +1109,6 @@ static int cpc_write(int cpu, struct cpc
- 		 * by the bit width field; the access size is used to indicate
- 		 * the PCC subspace id.
- 		 */
--		size = reg->bit_width;
- 		vaddr = GET_PCC_VADDR(reg->address, pcc_ss_id);
- 	}
- 	else if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
++	if (!acpi_desc)
++		return;
++
+ 	if (acpi_desc->scrub_mode == HW_ERROR_SCRUB_ON)
+ 		acpi_nfit_ars_rescan(acpi_desc, ARS_REQ_LONG);
+ 	else
 
 
