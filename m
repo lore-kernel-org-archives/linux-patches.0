@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCA046A61E;
-	Tue, 21 Jul 2026 17:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9415646A5F6;
+	Tue, 21 Jul 2026 17:32:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655165; cv=none; b=rH9Y+j1oejc1NFK5/nLVB6J2HSYfI4tn3TpPTnybxL0W16WR3P8D1fugLHG4ARTU8a4VObk9685v9Ed1H41imsDSH/SL0fZxsFS+6MGodgZCpBHUxu3RH9NFHxxHybjVHJLqqow06f0+HJ9PLpOH9UmXykJ5J6qM0RCe1DYL0kk=
+	t=1784655167; cv=none; b=LrG0MnDOFqNNYb6+XUGO2BZvVhLbnYGD1UYfXhbjf+EorhznI0LWM1qFfpeklQyRsizKBHtZryrv8MXHPPlfkSTjqbTE4mVqX0dparfzJPX27GL77h4yiQjAIS0Tc9kUNbVWePepL5rgKdC3qWxRn8SKHbTBOH1JBN99N359wvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655165; c=relaxed/simple;
-	bh=69tkjuNKh8OkgP9Hv+5YUs9FE7JEnpiIC+OKsBONN/s=;
+	s=arc-20240116; t=1784655167; c=relaxed/simple;
+	bh=owAl4iMkCDMENmLZNQSwQaWZezjtZdVpoVTbS/U5eFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E0xSgIRJmAx1x70lxIf0KCn1cJXxjxy6LJNI0cRBQOk+6Ljtd76Ebjfxfzv+zCKwZSeVOo8ZcXXS1cKODGYdscaLfIVmucoG8nHQLxW7cZmR8qsCvdyKO7MuJWvXaTRzGStJJXcmXHZnhor8HvJJW71zwLCn1eZ6Xzlm1cQNCyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E5rdqAIh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pnI5Ro1i8UezACPBdn+eq1x/eqYywqc31+2Exxn+3MxWPNhxz7CPiU781vKah36jmkZw7k88FS0ZmWjjYcl5z8ndJwLfgcBxlPcglliWhI65H4c2PDJ9kd2CLtWkEc8HGsFNp7H6rtpbh+bYWy1FwSqt1N18zsxLgqJWnAZhVTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTiBAKpZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E5rdqAIh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8671F000E9;
-	Tue, 21 Jul 2026 17:32:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTiBAKpZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070B11F000E9;
+	Tue, 21 Jul 2026 17:32:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655163;
-	bh=qfarVPbzMDR0tfy7MW6BKqnyoxlPyu6OkL5YgHBhE+0=;
+	s=korg; t=1784655166;
+	bh=zsVLC+CfBwApsbedRCfWRu8sQyv3HHQpffGgKwTqiig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E5rdqAIh5TcVnhNDHZRIuQvlyGu9l7D39xu2ioInvIlQE9FnJ0qroB/QR1kKyFuMk
-	 PoAmvtvEFbMfxQaSymIIHnoJ6+8a8ii4aoIf6IRrqOpJ1FR2kXYphuKSD+mXeZI1u7
-	 1w0qE1g2jB5slL50D+NEnaCGbN4zFUaw9Tc+CzsA=
+	b=aTiBAKpZ7F4a+2Zsfyd0DmSlCnQhq9mw7f/07tTQWVUQTMCxlHMltff2IbmL8PvNm
+	 oaluxNnXCRRhx5UHZI7rvTlPVyOwHYn4CYPd0x5W5wgBDl9y20K1xFzNheDmckHV32
+	 giBq7b50IHef7b2liZnfA7GTaSwLuQB0O+5xFX3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Baul Lee <baul.lee@xbow.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.1 1978/2077] dibs: loopback: validate offset and size in move_data()
-Date: Tue, 21 Jul 2026 17:27:31 +0200
-Message-ID: <20260721152639.362860915@linuxfoundation.org>
+Subject: [PATCH 7.1 1979/2077] net: macb: drop in-flight Tx SKBs on close
+Date: Tue, 21 Jul 2026 17:27:32 +0200
+Message-ID: <20260721152639.385719753@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,50 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dust Li <dust.li@linux.alibaba.com>
+From: Théo Lebrun <theo.lebrun@bootlin.com>
 
-commit 78237e3c0720fcc6eb9b87e90fd70f63eeca886f upstream.
+commit 27f575836cfebbf872dec020428742b10650a955 upstream.
 
-The loopback move_data() performs a memcpy into the registered DMB
-without checking whether offset + size exceeds the DMB length.  Unlike
-real ISM hardware, which enforces memory region bounds natively, the
-software loopback has no such protection.
+The MACB driver has since forever leaked the outgoing SKBs that
+have not yet been marked as completed. They live in queue->tx_skb
+which gets freed without remorse nor checking.
 
-A peer-supplied out-of-bounds offset or oversized write would result in
-an OOB write past the allocated kernel buffer.  Add an explicit bounds
-check before the memcpy to reject such requests with -EINVAL.
+macb_free_consistent() gets called in a few codepaths, but only close will
+trigger the added expressions. In macb_open() and macb_alloc_consistent()
+failure cases, queues' tx_skb just got allocated and are empty.
 
-Fixes: f7a22071dbf3 ("net/smc: implement DMB-related operations of loopback-ism")
+Fixes: 89e5785fc8a6 ("[PATCH] Atmel MACB ethernet driver")
 Cc: stable@vger.kernel.org
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Signed-off-by: Dust Li <dust.li@linux.alibaba.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260707074318.1448662-1-dust.li@linux.alibaba.com
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Signed-off-by: Théo Lebrun <theo.lebrun@bootlin.com>
+Link: https://patch.msgid.link/20260702-macb-drop-tx-v4-1-1c833eebdbc8@bootlin.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dibs/dibs_loopback.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/cadence/macb_main.c |   21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
---- a/drivers/dibs/dibs_loopback.c
-+++ b/drivers/dibs/dibs_loopback.c
-@@ -254,6 +254,11 @@ static int dibs_lo_move_data(struct dibs
- 		read_unlock_bh(&ldev->dmb_ht_lock);
- 		return -EINVAL;
- 	}
-+	if ((u64)offset + size > rmb_node->len) {
-+		read_unlock_bh(&ldev->dmb_ht_lock);
-+		return -EINVAL;
-+	}
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -2668,8 +2668,25 @@ static void macb_free_consistent(struct
+ 	dma_free_coherent(dev, size, bp->queues[0].rx_ring, bp->queues[0].rx_ring_dma);
+ 
+ 	for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue) {
+-		kfree(queue->tx_skb);
+-		queue->tx_skb = NULL;
++		if (queue->tx_skb) {
++			unsigned int dropped = 0, tail;
 +
- 	memcpy((char *)rmb_node->cpu_addr + offset, data, size);
- 	sba_idx = rmb_node->sba_idx;
- 	read_unlock_bh(&ldev->dmb_ht_lock);
++			for (tail = queue->tx_tail; tail != queue->tx_head;
++			     tail++) {
++				if (macb_tx_skb(queue, tail)->skb)
++					dropped++;
++				macb_tx_unmap(bp, macb_tx_skb(queue, tail), 0);
++			}
++
++			queue->stats.tx_dropped += dropped;
++			bp->dev->stats.tx_dropped += dropped;
++
++			kfree(queue->tx_skb);
++			queue->tx_skb = NULL;
++		}
++
++		queue->tx_head = 0;
++		queue->tx_tail = 0;
+ 		queue->tx_ring = NULL;
+ 		queue->rx_ring = NULL;
+ 	}
 
 
