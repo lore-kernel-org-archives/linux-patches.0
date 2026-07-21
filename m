@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709FA366816;
-	Tue, 21 Jul 2026 20:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124B2471251;
+	Tue, 21 Jul 2026 20:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667092; cv=none; b=lCI+z+TeDPmx1UJMqqKtSVT1F0VpvuxX4/PK3IFZmdh+Tf2tf4Dga4I441pBTiHwIaw5WJbq0cQRvZWIWISsGz6G4GMA8wzFjgy6twkllMgXHzvHsy/BjAlbqYleQm4WnUvH+HsYxMu9JjwQMpRo0ejRHqSwoJGOweSUm2fzsZk=
+	t=1784667095; cv=none; b=fLz14iKDjtNfNvVKD0zx5D4warf0j6dDJoJIQ4bTFwtSAUci5x4B3mZ1C2Z9xMeX4KhJH4m1//1fJzWve0DnDqukt/lfrF2s3rOwNiF0I35Zcl6vMEUW85nAV0kjqKuDbfkyHqKdT50PLrrFHAsQxyhwTb81yn02AwTvqpsQas0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667092; c=relaxed/simple;
-	bh=sPrFhYolCZGnR2x9zmlgg9UHKOP1BEKZnRFUwU+Rv+I=;
+	s=arc-20240116; t=1784667095; c=relaxed/simple;
+	bh=Oc0qPOcURqh2wpgqpspC+7PHZPql+0HigOlbD8PyBxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dAVNpqq0YtiW0C59pgRPYwRZ0jcQSAM/fdUA/Yvqr+gqZDFq16pkD0QzL2KBi7LCJmidJxBnITSp5+6vw/svsPjDAwQUu/1/T/Ez6ucniMLmylWUVheFRA7Q2PQLcsqBk/XBc3P96uEcm3dcCkCJMjrfCAR4VUUsYIdUZ0V5E9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrSb/9W2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L/7ommlCXmlxTZawyt77yVJRyt78OiczPlpUrMyWVUg+zwfMwnjYvs7OrdPGpGl35/J7Pu0Lf3BSdX5diusr+0xmdtzRRuBXf6Ljovpgs8ZyyMTn0XW8TrG0CgEvJGjw5aPKm5swVIL4ZqEchTJSsCTcAy5WvUlWKlBnNw2ldwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFa7UCBd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrSb/9W2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74151F000E9;
-	Tue, 21 Jul 2026 20:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFa7UCBd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728D11F000E9;
+	Tue, 21 Jul 2026 20:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667091;
-	bh=eDPNcKPuGoXEZ7dgsBlJXW8DjtnK3mMm9mJCBzN8d+M=;
+	s=korg; t=1784667093;
+	bh=WcY4PBaZf28Rzb7TnuHpGskwZPOWi+jU7aFZSw9xAhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BrSb/9W2PVjVDk2gu/fxuCskOEQA8I6iJAmAMyaVijxQpAZQk2pZwqxizXEJ9Nk7c
-	 5vAu+RzL2PTbucdiU4sazCtqYHmNVZGWn03AyoLk36a6yHxpugKd6PKORks2Pd2tPn
-	 fdOmw5OrvYpB9kLiJbEdh0mH2vmCYJQFD+1G3omY=
+	b=xFa7UCBdtaKh2rqxNe+umkHCk5R7s4MU/LxVTF+DkJV2M473G6wP/65HkPUIvFgMv
+	 RTEbxv/FZPzdtE+Zg9EaWPEmPTEshwLp1PmxyI1gjtANQ7gj9/ojqRXnZKw7jXBBZU
+	 v81YpVNfjKOZNjPxrKqkMDPc+isEn29kEHU7Kq/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Wyatt Feng <bronzed_45_vested@icloud.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
 	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.6 0931/1266] netfilter: xt_nat: reject unsupported target families
-Date: Tue, 21 Jul 2026 17:22:48 +0200
-Message-ID: <20260721152502.668238549@linuxfoundation.org>
+Subject: [PATCH 6.6 0932/1266] netfilter: bridge: fix stale prevhdr pointer in br_ip6_fragment()
+Date: Tue, 21 Jul 2026 17:22:49 +0200
+Message-ID: <20260721152502.690052910@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -56,58 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wyatt Feng <bronzed_45_vested@icloud.com>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-commit 5d1a2240935ea47e2673d0ea17fdb058e4dc91dd upstream.
+commit 86f3ce81dd2b4b0aa2c3016c989a943e4b1b643d upstream.
 
-xt_nat SNAT and DNAT target handlers assume IP-family conntrack state
-is present and can dereference a NULL pointer when instantiated from an
-unsupported family through nft_compat. A bridge-family compat rule can
-therefore trigger a NULL-dereference in nf_nat_setup_info().
+br_ip6_fragment() gets prevhdr, a pointer into the skb head, from
+ip6_find_1stfragopt(), then calls skb_checksum_help().  For a cloned skb
+skb_checksum_help() reallocates the head via pskb_expand_head(), leaving
+prevhdr dangling.  It is later dereferenced in ip6_frag_next(), causing a
+use-after-free write.
 
-Reject non-IP families in xt_nat_checkentry() so unsupported targets
-cannot be installed. Keep NFPROTO_INET allowed for valid inet NAT
-compat users and leave the runtime fast path unchanged.
+Save prevhdr's offset before skb_checksum_help() and recompute it after,
+like commit ef0efcd3bd3f ("ipv6: Fix dangling pointer when ipv6
+fragment").
 
-[ The crash was fixed via
-  9dbba7e694ec ("netfilter: nft_compat: ebtables emulation must reject non-bridge targets"),
-  so this patch is no longer critical.
-  Nevertheless, NAT is only relevant for ipv4/ipv6, so this extra
-  family check is a good idea in any case. ]
+  BUG: KASAN: slab-use-after-free in ip6_frag_next (net/ipv6/ip6_output.c:857)
+  Write of size 1 at addr ffff888013ff5016 by task exploit/141
+  Call Trace:
+   ...
+   kasan_report (mm/kasan/report.c:595)
+   ip6_frag_next (net/ipv6/ip6_output.c:857)
+   br_ip6_fragment (net/ipv6/netfilter.c:212)
+   nf_ct_bridge_post (net/bridge/netfilter/nf_conntrack_bridge.c:407)
+   nf_hook_slow (net/netfilter/core.c:619)
+   br_forward_finish (net/bridge/br_forward.c:66)
+   __br_forward (net/bridge/br_forward.c:115)
+   maybe_deliver (net/bridge/br_forward.c:191)
+   br_flood (net/bridge/br_forward.c:245)
+   br_handle_frame_finish (net/bridge/br_input.c:229)
+   br_handle_frame (net/bridge/br_input.c:442)
+   ...
+   packet_sendmsg (net/packet/af_packet.c:3114)
+   ...
+   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+  Kernel panic - not syncing: Fatal exception in interrupt
 
-Fixes: c7232c9979cb ("netfilter: add protocol independent NAT core")
+Fixes: 764dd163ac92 ("netfilter: nf_conntrack_bridge: add support for IPv6")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/xt_nat.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/ipv6/netfilter.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/netfilter/xt_nat.c
-+++ b/net/netfilter/xt_nat.c
-@@ -26,6 +26,15 @@ static int xt_nat_checkentry_v0(const st
+--- a/net/ipv6/netfilter.c
++++ b/net/ipv6/netfilter.c
+@@ -130,7 +130,7 @@ int br_ip6_fragment(struct net *net, str
+ 	ktime_t tstamp = skb->tstamp;
+ 	struct ip6_frag_state state;
+ 	u8 *prevhdr, nexthdr = 0;
+-	unsigned int mtu, hlen;
++	unsigned int mtu, hlen, nexthdr_offset;
+ 	int hroom, err = 0;
+ 	__be32 frag_id;
  
- static int xt_nat_checkentry(const struct xt_tgchk_param *par)
- {
-+	switch (par->family) {
-+	case NFPROTO_IPV4:
-+	case NFPROTO_IPV6:
-+	case NFPROTO_INET:
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
- 	return nf_ct_netns_get(par->net, par->family);
- }
+@@ -139,6 +139,7 @@ int br_ip6_fragment(struct net *net, str
+ 		goto blackhole;
+ 	hlen = err;
+ 	nexthdr = *prevhdr;
++	nexthdr_offset = prevhdr - skb_network_header(skb);
  
+ 	mtu = skb->dev->mtu;
+ 	if (frag_max_size > mtu ||
+@@ -157,6 +158,7 @@ int br_ip6_fragment(struct net *net, str
+ 	    (err = skb_checksum_help(skb)))
+ 		goto blackhole;
+ 
++	prevhdr = skb_network_header(skb) + nexthdr_offset;
+ 	hroom = LL_RESERVED_SPACE(skb->dev);
+ 	if (skb_has_frag_list(skb)) {
+ 		unsigned int first_len = skb_pagelen(skb);
 
 
