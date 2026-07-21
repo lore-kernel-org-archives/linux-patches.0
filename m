@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB1C436BC6;
-	Tue, 21 Jul 2026 19:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24963470111;
+	Tue, 21 Jul 2026 19:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663926; cv=none; b=PvTBwJhp45qs/mrA4163kEdPuUfuO4+rW/vC3PUFXIGMgDPvZJzOU0TlAZEZ4hAKcX0Wyq6lhXP56GorBTl6nfVfktJhfyoE6gByXj5iy6wWH8Rt67/E+j+Z3A/n0DHgBiDhp6yaD0TMJQfjeA29SD/6gQtDp0HNVymiDLNEkiE=
+	t=1784663929; cv=none; b=UCzFpnLvq5076Ky7XDtA1uNaDHUu2+Asm5/3zyohsUH8HZjP4CPsO4qonNrQcCbEq6F1Y4IZnjINFN6eNTM4/M4s3fv8pQia/xuUgikb+Puu99G11QECOROBXixiq/sowESgQ3KtAD0ZEuXcKWXHypussRxVBcHQepwqJQtlDFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663926; c=relaxed/simple;
-	bh=OzXvYgY+vHjodmjW/Kupjx9XQH5NoLauybvo0tYVizk=;
+	s=arc-20240116; t=1784663929; c=relaxed/simple;
+	bh=xPoKbeOXenAZbqXhUGQBAtLKzECijnfzDSISM1Onm8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lA48wLwQWP6V6LjTL0ln9YAnXsnbWPqRtC/M2g0w22DoJiIXn+eguCJ4OBANp7B/MVpAgE2btAQTo1Ul0LxdZahWF8+EzzqX0sn+b6DYRZqaYSA2BrNnai69t9rTI9O5I7cfW9Q+4eu5Qp0cCzCzO+NR+mh3rxRTvpLEV3NzDX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ev0LsX+e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IqQNrHUFL2CYpvOQGvos/FMSmeh98V6nFWQfI8DAZ08l7e+xcH09GNgF59y42cXoLLv4gMdm3j+Pe1AkCCDXm0ES0tcG83VWpwYSJtiITT0Y/1cHZieYQO2sMIRYVm6m7YJca3m8sAHe3rQdo6sbnHIYlpjWz9nlnjYVhMSKfUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVeHKcUZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ev0LsX+e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30FA91F000E9;
-	Tue, 21 Jul 2026 19:58:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVeHKcUZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0FBB1F000E9;
+	Tue, 21 Jul 2026 19:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663924;
-	bh=jjImNVE8eIenrdquO8fJSTdX8eLxJUR120D+q4cITxA=;
+	s=korg; t=1784663927;
+	bh=Fwo9QluMD+XCvOTKfkOMOJp3DKoXKROAI9av8lp/bfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ev0LsX+e0NNbYu3KTHuhGimSM09Rk7DIiGdVAE5DxwI/RiNW1Ado94049+2EjEUAS
-	 801LC1fmP5UmasCpnVTZC3dryuBNA8eRBw85VkrmTbvlBw8hRCY9o7fCFjtXxK2ipx
-	 Rdt2AKpeGLSHvRQngbu8H89MCrdq6EWXTCjZirlE=
+	b=aVeHKcUZ64i+hxvFVB5ODlPipjPQHW4enhJDwyS5QT/vCkNoUCiZ2gxsgBnxhUvY4
+	 R3m0KrSB+KeCPkE4X2MS64JhYTXBKiAIyCZZRJFvcOp9dbmN7Qxi/PnozJeZgyNWIj
+	 BZc8jzUZbzpGZACkw8s0lbnc22Jy5NUY61g5yYpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 1006/1276] dm-stats: fix dm_jiffies_to_msec64
-Date: Tue, 21 Jul 2026 17:24:09 +0200
-Message-ID: <20260721152508.521893122@linuxfoundation.org>
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Daniel Gibson <daniel@gibson.sh>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.12 0971/1276] platform/x86/amd/pmc: Dont log during intermediate wakeups
+Date: Tue, 21 Jul 2026 17:23:34 +0200
+Message-ID: <20260721152507.749357558@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -43,42 +45,122 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Daniel Gibson <daniel@gibson.sh>
 
-commit 386df1a57b631c456d14f857cb0c0c2e11c16bef upstream.
+commit 037f0b03c663a247366673a807834389107995b7 upstream.
 
-There were wrong calculations in dm_jiffies_to_msec64 that produced
-incorrect output when HZ was different from 1000. This commit fixes them.
+The ECs in the IdeaPads that need the delay_suspend quirk send lots
+of messages when charging, which not only causes intermediate wakeups
+when suspended, but also prevents the device from reaching the deepest
+suspend state.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-4-6
-Fixes: fd2ed4d25270 ("dm: add statistics support")
+Because of this amd_pmc_intermediate_wakeup_need_delay() returns false
+during intermediate wakeups and amd_pmc_want_suspend_delay() is called.
+So far it always logged its "Delaying suspend by 2.5s ..." messages
+then, which spams dmesg. This commit makes sure that those messages are
+only logged once per suspend.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221383
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Daniel Gibson <daniel@gibson.sh>
 Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260611150426.3683372-5-daniel@gibson.sh
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-stats.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/platform/x86/amd/pmc/pmc.c |   39 +++++++++++++++++++++++++++++--------
+ drivers/platform/x86/amd/pmc/pmc.h |    1 
+ 2 files changed, 32 insertions(+), 8 deletions(-)
 
---- a/drivers/md/dm-stats.c
-+++ b/drivers/md/dm-stats.c
-@@ -842,10 +842,10 @@ static unsigned long long dm_jiffies_to_
- 		result = jiffies_to_msecs(j & 0x3fffff);
- 	if (j >= 1 << 22) {
- 		mult = jiffies_to_msecs(1 << 22);
--		result += (unsigned long long)mult * (unsigned long long)jiffies_to_msecs((j >> 22) & 0x3fffff);
-+		result += (unsigned long long)mult * ((j >> 22) & 0x3fffff);
+--- a/drivers/platform/x86/amd/pmc/pmc.c
++++ b/drivers/platform/x86/amd/pmc/pmc.c
+@@ -881,6 +881,20 @@ static bool amd_pmc_intermediate_wakeup_
+ static bool amd_pmc_want_suspend_delay(struct amd_pmc_dev *pdev)
+ {
+ 	/*
++	 * intermediate_wakeup implies that the machine didn't get to deepest sleep
++	 * state before - otherwise this function isn't called in amd_pmc_s2idle_check()
++	 * because amd_pmc_intermediate_wakeup_need_delay() returns true first.
++	 * On some IdeaPads that happens when charging, because the EC seems
++	 * to send lots of messages then that wake the machine.
++	 *
++	 * But even in that case, the sleep here is necessary (on those IdeaPads),
++	 * otherwise they wake up completely (resume) after a few seconds.
++	 * So this variable is only used to avoid spamming dmesg on each
++	 * intermediate wakeup.
++	 */
++	bool intermediate_wakeup = !pdev->is_first_check_after_suspend;
++
++	/*
+ 	 * Some Lenovo Laptops (like different IdeaPad 3 Slims) need some
+ 	 * me-time before sleeping or they get uncooperative after waking
+ 	 * up and don't send events for keyboard and lid switch anymore.
+@@ -898,17 +912,20 @@ static bool amd_pmc_want_suspend_delay(s
+ 		 * disabled with disable_workarounds or delay_suspend=0
+ 		 */
+ 		if (delay_suspend == 1 || (delay_suspend == -1 && !disable_workarounds)) {
+-			dev_info(pdev->dev, "Delaying suspend by 2.5s to avoid platform bug\n");
++			if (!intermediate_wakeup)
++				dev_info(pdev->dev, "Delaying suspend by 2.5s to avoid platform bug\n");
+ 			return true;
+ 		}
+-		dev_info(pdev->dev, "Not delaying suspend because of module parameter, even though your device is assumed to need it!\n");
++		if (!intermediate_wakeup)
++			dev_info(pdev->dev, "Not delaying suspend because of module parameter, even though your device is assumed to need it!\n");
+ 	} else if (delay_suspend == 1) {
+-		dev_info(pdev->dev, "Delaying suspend by 2.5s because delay_suspend=1. If this solves problems on your machine, please report this whole line to: platform-driver-x86@vger.kernel.org so it can be automatically detected as affected in the future. System Vendor: \"%s\" Product Name: \"%s\" Product Family: \"%s\" Board Vendor: \"%s\" Board Name: \"%s\"\n",
+-			 dmi_get_system_info(DMI_SYS_VENDOR),
+-			 dmi_get_system_info(DMI_PRODUCT_NAME),
+-			 dmi_get_system_info(DMI_PRODUCT_FAMILY),
+-			 dmi_get_system_info(DMI_BOARD_VENDOR),
+-			 dmi_get_system_info(DMI_BOARD_NAME));
++		if (!intermediate_wakeup)
++			dev_info(pdev->dev, "Delaying suspend by 2.5s because delay_suspend=1. If this solves problems on your machine, please report this whole line to: platform-driver-x86@vger.kernel.org so it can be automatically detected as affected in the future. System Vendor: \"%s\" Product Name: \"%s\" Product Family: \"%s\" Board Vendor: \"%s\" Board Name: \"%s\"\n",
++				 dmi_get_system_info(DMI_SYS_VENDOR),
++				 dmi_get_system_info(DMI_PRODUCT_NAME),
++				 dmi_get_system_info(DMI_PRODUCT_FAMILY),
++				 dmi_get_system_info(DMI_BOARD_VENDOR),
++				 dmi_get_system_info(DMI_BOARD_NAME));
+ 		return true;
  	}
- 	if (j >= 1ULL << 44)
--		result += (unsigned long long)mult * (unsigned long long)mult * (unsigned long long)jiffies_to_msecs(j >> 44);
-+		result += (unsigned long long)mult * (unsigned long long)(1 << 22) * (j >> 44);
+ 	return false;
+@@ -921,6 +938,9 @@ static void amd_pmc_s2idle_prepare(void)
+ 	u8 msg;
+ 	u32 arg = 1;
  
- 	return result;
++	/* Reset this variable because this is a fresh suspend */
++	pdev->is_first_check_after_suspend = true;
++
+ 	/* Reset and Start SMU logging - to monitor the s0i3 stats */
+ 	amd_pmc_setup_smu_logging(pdev);
+ 
+@@ -960,6 +980,9 @@ static void amd_pmc_s2idle_check(void)
+ 	rc = amd_pmc_write_stb(pdev, AMD_PMC_STB_S2IDLE_CHECK);
+ 	if (rc)
+ 		dev_err(pdev->dev, "error writing to STB: %d\n", rc);
++
++	/* remember that first check after suspend is done (until next prepare) */
++	pdev->is_first_check_after_suspend = false;
  }
+ 
+ static int amd_pmc_dump_data(struct amd_pmc_dev *pdev)
+--- a/drivers/platform/x86/amd/pmc/pmc.h
++++ b/drivers/platform/x86/amd/pmc/pmc.h
+@@ -49,6 +49,7 @@ struct amd_pmc_dev {
+ 	struct dentry *dbgfs_dir;
+ 	struct quirk_entry *quirks;
+ 	bool disable_8042_wakeup;
++	bool is_first_check_after_suspend;
+ 	struct amd_mp2_dev *mp2;
+ };
+ 
 
 
