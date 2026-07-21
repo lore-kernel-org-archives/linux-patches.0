@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9415646A5F6;
-	Tue, 21 Jul 2026 17:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDE2404BE9;
+	Tue, 21 Jul 2026 17:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784655167; cv=none; b=LrG0MnDOFqNNYb6+XUGO2BZvVhLbnYGD1UYfXhbjf+EorhznI0LWM1qFfpeklQyRsizKBHtZryrv8MXHPPlfkSTjqbTE4mVqX0dparfzJPX27GL77h4yiQjAIS0Tc9kUNbVWePepL5rgKdC3qWxRn8SKHbTBOH1JBN99N359wvw=
+	t=1784655170; cv=none; b=GsZTJrgA0h0e0TaXGj/ynWbOYSatzDE9NNgV5ENZ1U+NtL7k7aoMtOSqbqppK+Et+0lmz+6ig9RCcujyhUjgoKeTutMjgzguL9C2e4kPgDI3pfO8sM3EjB7oZQIGdmtpjCzCELz752TH13m/0pUCZfNydFZX5ZCIjDXi6+pAI04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784655167; c=relaxed/simple;
-	bh=owAl4iMkCDMENmLZNQSwQaWZezjtZdVpoVTbS/U5eFM=;
+	s=arc-20240116; t=1784655170; c=relaxed/simple;
+	bh=NbCMMLwnGr56J6oLKpLLUYx6H1AtEYj6V6Wu8LUYlmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pnI5Ro1i8UezACPBdn+eq1x/eqYywqc31+2Exxn+3MxWPNhxz7CPiU781vKah36jmkZw7k88FS0ZmWjjYcl5z8ndJwLfgcBxlPcglliWhI65H4c2PDJ9kd2CLtWkEc8HGsFNp7H6rtpbh+bYWy1FwSqt1N18zsxLgqJWnAZhVTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTiBAKpZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yxko0o2LRMHVgTtGeK1dayu7z4N7c4ITkHkfGltH2BsXI/kJFl4MLn5a3mcDKX+TH25YTPxxFF6CJqYJPEX3Dg+9V5fQoH8Y4GRN34Ms6EZCBgTprI6LosuPz2eEtB5KNscldFv1+MU5LCrTmZLfPM2m0pilLb5Y+8qj8teQxcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13qedR0F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTiBAKpZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070B11F000E9;
-	Tue, 21 Jul 2026 17:32:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13qedR0F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44AA1F000E9;
+	Tue, 21 Jul 2026 17:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784655166;
-	bh=zsVLC+CfBwApsbedRCfWRu8sQyv3HHQpffGgKwTqiig=;
+	s=korg; t=1784655169;
+	bh=EUWEX+QG9ZOfjwecR2j6XxDZY34Vk9SHGsjJ57wpaBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aTiBAKpZ7F4a+2Zsfyd0DmSlCnQhq9mw7f/07tTQWVUQTMCxlHMltff2IbmL8PvNm
-	 oaluxNnXCRRhx5UHZI7rvTlPVyOwHYn4CYPd0x5W5wgBDl9y20K1xFzNheDmckHV32
-	 giBq7b50IHef7b2liZnfA7GTaSwLuQB0O+5xFX3c=
+	b=13qedR0FdP/o8NwPPlq04/g2fSErlE2o5U0p9SPVvPA+U+vcHKF5rUfS4f+qCp76Z
+	 w9ZqaKYvyEENPNfakg/0Hd+X2I+AI0mM9KIJfX5Ey49jxI/3KEZj6BLHVkkV3qBh00
+	 UZkqyuaTrtSkfa1LfGVnRH79JLN50DljRepLZkis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.1 1979/2077] net: macb: drop in-flight Tx SKBs on close
-Date: Tue, 21 Jul 2026 17:27:32 +0200
-Message-ID: <20260721152639.385719753@linuxfoundation.org>
+	Zhu Lingshan <lingshan.zhu@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.1 1980/2077] amdkfd: properly free secondary context id
+Date: Tue, 21 Jul 2026 17:27:33 +0200
+Message-ID: <20260721152639.411112782@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -45,65 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Théo Lebrun <theo.lebrun@bootlin.com>
+From: Zhu Lingshan <lingshan.zhu@amd.com>
 
-commit 27f575836cfebbf872dec020428742b10650a955 upstream.
+commit a88419af8dbd5abf8b1dfdfd9346376bce5413b4 upstream.
 
-The MACB driver has since forever leaked the outgoing SKBs that
-have not yet been marked as completed. They live in queue->tx_skb
-which gets freed without remorse nor checking.
+Function kfd_process_free_id() should skip over
+the primary kfd process because its context id
+is fixed assigned, not allocated through the ida table.
+This function should only work on secondary contexts.
 
-macb_free_consistent() gets called in a few codepaths, but only close will
-trigger the added expressions. In macb_open() and macb_alloc_consistent()
-failure cases, queues' tx_skb just got allocated and are empty.
-
-Fixes: 89e5785fc8a6 ("[PATCH] Atmel MACB ethernet driver")
+Fixes: fac682a1d1af ("amdkfd: identify a secondary kfd process by its id")
+Signed-off-by: Zhu Lingshan <lingshan.zhu@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 8799ba6fb6a48438aea20c82e74c2f2a3d2b2e7a)
 Cc: stable@vger.kernel.org
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Signed-off-by: Théo Lebrun <theo.lebrun@bootlin.com>
-Link: https://patch.msgid.link/20260702-macb-drop-tx-v4-1-1c833eebdbc8@bootlin.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c |   21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_process.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -2668,8 +2668,25 @@ static void macb_free_consistent(struct
- 	dma_free_coherent(dev, size, bp->queues[0].rx_ring, bp->queues[0].rx_ring_dma);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+@@ -910,7 +910,7 @@ static void kfd_process_free_id(struct k
+ {
+ 	struct kfd_process *primary_process;
  
- 	for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue) {
--		kfree(queue->tx_skb);
--		queue->tx_skb = NULL;
-+		if (queue->tx_skb) {
-+			unsigned int dropped = 0, tail;
-+
-+			for (tail = queue->tx_tail; tail != queue->tx_head;
-+			     tail++) {
-+				if (macb_tx_skb(queue, tail)->skb)
-+					dropped++;
-+				macb_tx_unmap(bp, macb_tx_skb(queue, tail), 0);
-+			}
-+
-+			queue->stats.tx_dropped += dropped;
-+			bp->dev->stats.tx_dropped += dropped;
-+
-+			kfree(queue->tx_skb);
-+			queue->tx_skb = NULL;
-+		}
-+
-+		queue->tx_head = 0;
-+		queue->tx_tail = 0;
- 		queue->tx_ring = NULL;
- 		queue->rx_ring = NULL;
- 	}
+-	if (process->context_id != KFD_CONTEXT_ID_PRIMARY)
++	if (process->context_id == KFD_CONTEXT_ID_PRIMARY)
+ 		return;
+ 
+ 	primary_process = kfd_lookup_process_by_mm(process->lead_thread->mm);
 
 
