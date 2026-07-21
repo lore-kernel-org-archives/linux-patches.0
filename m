@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE12A3EEAC7;
-	Tue, 21 Jul 2026 19:14:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6E3417D67;
+	Tue, 21 Jul 2026 19:14:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661291; cv=none; b=O4mQk9QI1rM+g+sUNC3I2h2X95ZQA8EtT7cVo7b69Fw+9xnuI4hUEog/uywu5Aykl8DbuECVMPtIMae1Xd8Ef/roN8b51OA5CYT2ouyNNrA+s0zDO5i5rAAPkfCJrBrEywvvaGEhLHSIqhQzAJVZ/z5zKs4kJZ0Nh2OtIc8Jy/4=
+	t=1784661294; cv=none; b=CtnRbBDCdwWoPTd5x/w7NAFWVYcqweI17P4gKkxGWefvnggfZt06qaYkXZ/jukkkzsXER0Bl7lJqSSSkqlvc9abxyYxySPELwOkDvNzeDY2cKsH1dhKwcfxxfcknD39sW6JBhtksyHd+sUA6iwUmj2edLgGZehgQLcf3WhnHKWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661291; c=relaxed/simple;
-	bh=mggEMOqN/MD6eeTIRcniHgVs9nZI8/WOlDCFM+R5xA4=;
+	s=arc-20240116; t=1784661294; c=relaxed/simple;
+	bh=is3J2aoTaZcb7xE6wZYrcSJujeRbVIa8QrsuK1497F4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G++lyG62cmN61cgKejRXSIqdOiQNMO/bWCB0S2pqf6zVs23+a7vtgiJMViDyvcCtfSVzmNnJwjbB4iJcF4ee+jn3AItg75Kvu2Bk8QtjsTR4tRvczf59gTHgawvjEicZwx0iN137KAUlgZmPSPHLBDBTYuGBMWRUUwRUPnRuZ7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJb3KCPK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JgYadhhEVoVlfjhcPWLz5Ez9ZvCIpdXsFjmzJKQvs+M/DYJrlKMq1Mvlz9dxE2ICZWmrZ7B+TzNJGrF/MlN852N3NX04XQtMbdECCLiUk4CEjyGaXMSGnsc9IdjrwmUpK0+/h20V4B0ZfxfKopu/Era9Os7XgpQggHE1W4bwlXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JhoEQGsx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJb3KCPK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 315491F000E9;
-	Tue, 21 Jul 2026 19:14:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JhoEQGsx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF61D1F000E9;
+	Tue, 21 Jul 2026 19:14:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661290;
-	bh=XB/dVe5pG+wJvdbiKBvVl55J69RSJYzN+4lTe+fdHao=;
+	s=korg; t=1784661293;
+	bh=/QlgxQtD6XP3nujTHX/aTy7mpdk4vKoJW8GpRhiZjBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jJb3KCPKNt5KJylQFtmPu8dBg7Pokh1AiiNYSmmWt3/yvSDsUoaZEiXpE2YjaShjm
-	 Erand9GEpZbqwuUna1jyiUJ/1TNYS1G5Y+pPBx6R314d9ngs/R6wKGxb6CwPkkJeAX
-	 RvkMIoOkrDALeGt4ArCh0NE9ntVC5L2B88deoDFU=
+	b=JhoEQGsxa71bPrU+UbZMkXFCHVKyl26BraZZXoZHqV85pLl8DN4oV9PdlOS07Dr9C
+	 8knCNsqPPcr6xcasdTuSAvHxRu49GKhAdNBr+cjNPuzFXXHAgYNwJ/zWkL0pMkmlDw
+	 8Y5UzNvL65IGvSUzATM3JYXsCAAblKwdBVe0Whzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Fuad Tabba <tabba@google.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0004/1276] bpf: Support for hardening against JIT spraying
-Date: Tue, 21 Jul 2026 17:07:27 +0200
-Message-ID: <20260721152446.170953783@linuxfoundation.org>
+Subject: [PATCH 6.12 0013/1276] KVM: arm64: Clear __hyp_running_vcpu when flushing the pKVM hyp vCPU
+Date: Tue, 21 Jul 2026 17:07:36 +0200
+Message-ID: <20260721152446.376438315@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,118 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 96cce16e26dd02a8678f1e87f88a4b5cdb63b995 upstream.
+commit e8042f6e1d7befb2fb6b10a75918642bcd0acf9a upstream.
 
-The BPF JIT allocator packs many small programs into larger executable
-allocations and reuses space within those allocations as programs are
-loaded and freed. When fresh code is written into space that a previous
-program occupied, an indirect jump into the new program can reuse a branch
-prediction left behind by the old one.
+flush_hyp_vcpu() copies the host vCPU context into the hyp's private
+vCPU on every run. ctxt_to_vcpu() expects a guest context to have a
+NULL __hyp_running_vcpu, which is only ever set on the host context, so
+that it resolves the vCPU via container_of(). While this is generally
+the case, flush_hyp_vcpu() copies the context verbatim and does not
+enforce this, so a value provided by the host is dereferenced at EL2
+(host -> EL2).
 
-Flush the indirect branch predictors before reusing JIT memory so that
-indirect jumps into a newly written program don't reuse predictions from an
-old program that occupied the same space.
+Fix by clearing __hyp_running_vcpu after the copy.
 
-Introduce bpf_arch_pred_flush_enabled static key and bpf_arch_pred_flush
-static call for flushing the branch predictors on JIT memory reuse.
-Architectures that need a flush, can update it to a predictor flush
-function. By default, its a NOP and does not emit any CALL.
-
-Allocations larger than a pack are not covered by this flush. That is safe
-because cBPF programs (the unprivileged attack surface) are bounded well
-below a pack size. Issue a warning if this assumption is ever violated
-while the flush is active.
-
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: stable@vger.kernel.org
+Fixes: be66e67f1750 ("KVM: arm64: Use the pKVM hyp vCPU structure in handle___kvm_vcpu_run()")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reviewed-by: Fuad Tabba <tabba@google.com>
+Tested-by: Fuad Tabba <tabba@google.com>
+Link: https://patch.msgid.link/20260606175614.83273-2-imv4bel@gmail.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+[ tabba: adjust flush_hyp_vcpu() context ]
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/filter.h | 10 ++++++++++
- kernel/bpf/core.c      | 19 +++++++++++++++++++
- 2 files changed, 29 insertions(+)
+ arch/arm64/kvm/hyp/nvhe/hyp-main.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/linux/filter.h b/include/linux/filter.h
-index a91f2babf4253d..8046cd2a39c6a9 100644
---- a/include/linux/filter.h
-+++ b/include/linux/filter.h
-@@ -22,6 +22,7 @@
- #include <linux/vmalloc.h>
- #include <linux/sockptr.h>
- #include <crypto/sha1.h>
-+#include <linux/static_call.h>
- #include <linux/u64_stats_sync.h>
+diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+index 5dbc1878428cc2..72384712377d16 100644
+--- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
++++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+@@ -103,6 +103,9 @@ static void flush_hyp_vcpu(struct pkvm_hyp_vcpu *hyp_vcpu)
  
- #include <net/sch_generic.h>
-@@ -1238,6 +1239,15 @@ extern long bpf_jit_limit_max;
+ 	hyp_vcpu->vcpu.arch.ctxt	= host_vcpu->arch.ctxt;
  
- typedef void (*bpf_jit_fill_hole_t)(void *area, unsigned int size);
- 
-+/*
-+ * Flush the indirect branch predictors before reusing JIT memory, so that
-+ * indirect jumps into a newly written program don't reuse predictions left
-+ * behind by an old program that occupied the same space.
-+ */
-+void bpf_arch_pred_flush(void);
-+DECLARE_STATIC_CALL(bpf_arch_pred_flush, bpf_arch_pred_flush);
-+DECLARE_STATIC_KEY_FALSE(bpf_pred_flush_enabled);
++	/* __hyp_running_vcpu must be NULL in a guest context. */
++	hyp_vcpu->vcpu.arch.ctxt.__hyp_running_vcpu = NULL;
 +
- void bpf_jit_fill_hole_with_zero(void *area, unsigned int size);
- 
- struct bpf_binary_header *
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 517710c89fa505..5f676320c53beb 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -38,6 +38,7 @@
- #include <linux/bpf_mem_alloc.h>
- #include <linux/memcontrol.h>
- #include <linux/execmem.h>
-+#include <linux/static_call.h>
- 
- #include <asm/barrier.h>
- #include <linux/unaligned.h>
-@@ -892,6 +893,15 @@ void bpf_jit_fill_hole_with_zero(void *area, unsigned int size)
- 	memset(area, 0, size);
- }
- 
-+DEFINE_STATIC_CALL_NULL(bpf_arch_pred_flush, bpf_arch_pred_flush);
-+
-+/*
-+ * Enabled once bpf_arch_pred_flush points at a real flush routine. Lets the
-+ * pack allocator test "is a predictor flush wired up at all" with a cheap
-+ * static branch instead of repeatedly querying the static call target.
-+ */
-+DEFINE_STATIC_KEY_FALSE(bpf_pred_flush_enabled);
-+
- #define BPF_PROG_SIZE_TO_NBITS(size)	(round_up(size, BPF_PROG_CHUNK_SIZE) / BPF_PROG_CHUNK_SIZE)
- 
- static DEFINE_MUTEX(pack_mutex);
-@@ -951,6 +961,14 @@ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns)
- 
- 	mutex_lock(&pack_mutex);
- 	if (size > BPF_PROG_PACK_SIZE) {
-+		/*
-+		 * Allocations larger than a pack get their own pages, and
-+		 * predictors are not flushed for such allocation. This is only
-+		 * safe because cBPF programs (the unprivileged attack surface)
-+		 * are bounded well below a pack size.
-+		 */
-+		if (static_branch_unlikely(&bpf_pred_flush_enabled))
-+			pr_warn_once("BPF: Predictors not flushed for allocations greater than BPF_PROG_PACK_SIZE\n");
- 		size = round_up(size, PAGE_SIZE);
- 		ptr = bpf_jit_alloc_exec(size);
- 		if (ptr) {
-@@ -981,6 +999,7 @@ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns)
- 	pos = 0;
- 
- found_free_area:
-+	static_call_cond(bpf_arch_pred_flush)();
- 	bitmap_set(pack->bitmap, pos, nbits);
- 	ptr = (void *)(pack->ptr) + (pos << BPF_PROG_CHUNK_SHIFT);
- 
+ 	hyp_vcpu->vcpu.arch.sve_state	= kern_hyp_va(host_vcpu->arch.sve_state);
+ 	/* Limit guest vector length to the maximum supported by the host.  */
+ 	hyp_vcpu->vcpu.arch.sve_max_vl	= min(host_vcpu->arch.sve_max_vl, kvm_host_sve_max_vl);
 -- 
 2.53.0
 
