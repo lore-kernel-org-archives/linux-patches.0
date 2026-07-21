@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06EC044AB9F;
-	Tue, 21 Jul 2026 22:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F8E431A4E;
+	Tue, 21 Jul 2026 22:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674370; cv=none; b=GKjH0Z+UPhlpbEJi1hwi26kaDSzxhdi6DLH0zVWcQDisKUdKonbJjih2r6Q7tXdYiwFL/lBT+R5BwnjAo3ApEoI4035THE1fuld67lthEFIIw0TnwpngHUvMRv6q+UKFwN/2bga6VqVLcSanUoy1SSRJKAnbDbQo5XNXTXkpb8k=
+	t=1784674372; cv=none; b=flVvCMmCt1AFVJN49sT7qNBteop3CgOaVg+8OY6QFOQ8MsJshK8u85/SvOZe5Rxiw9FLZ4anQKO4cNoERKZEqO5yf5E4iHqcKU625F7MD6/RIBJmbDA+rkQT8oSA2XCLrdnLR7Ybr8V5j4PxlCFWWDxSujSUlN6/5HWJMCFALLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674370; c=relaxed/simple;
-	bh=XHpR1D6wA5YhDm0B4a6PM/6iWju2vEaaezPhrEcx8A8=;
+	s=arc-20240116; t=1784674372; c=relaxed/simple;
+	bh=Htyi8ZqJuR5O512/P7QQ+QFfZ55zTTZRv5AImthoOyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GJntRQ+g7ZWDqxNMRdB2upQJiaiOkf0jI/z1SvQUjNJ3uRmIrVptZr1XnPvtMpDckd79i8kRFJwyuzmcU6GmeQO/9RFHvHbFJdWdovPRfaZtdaqtUgoD+eR4aEgJaEVYWu5y3iRsys1VEpHXz5ooC8lv6bMr4cFVt86OJDyX90w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TwSTT5p7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VOPhU5Qv0ziNbO5NkU0+bWyiCGDEOEDvzEhxaIr6O4ffr2eoN7oRY5FkO7vcZlrn3FSLKCx0EQOrlfay8beg1xMvkZZF/cYhPkEc+knBUF6UU0OKorPl68COgLzgznBPgLse0rITACqtBElP6Cz9pqnE6Wfii/SpnYQg39zJ4oE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eZ7fYkbY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TwSTT5p7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D4E1F000E9;
-	Tue, 21 Jul 2026 22:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eZ7fYkbY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA8741F000E9;
+	Tue, 21 Jul 2026 22:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674368;
-	bh=CYILRQ0+uwJ2tAVKUWiF0WvaIDse856aAId/kxB+NaE=;
+	s=korg; t=1784674371;
+	bh=uTZlf4zAhJV/qXeMNpTvge0ZARY765moMrJzNIqHW5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TwSTT5p7WQZea9GLj/D1b5NYM2ROrZETNoWx9qSQdlWRfbcKsLzz81APUy0xxov2E
-	 6weHxvRQD2/yvKfMXasPIFyy7FHmcGiBjAMbGUU1HwEqR9QgWCwrZYXBxwrsFmHtr2
-	 yEamUjPuxP3Y0v+MJuGWqUZJ26Ozk13pEDEPBg7k=
+	b=eZ7fYkbYhf4xSG2vg34x4AYW8jKbA9fkSPRMLvUfSzOAagIXSfVWWcVVk0k/kJYAB
+	 DCCOWf4Kmd/nnLBbD5n+k3VIXOoNs/0nxIKYe1JMKwBlV+Y6iVrt2/q3+TrhX2REbj
+	 kRbUA/2Ay1ydxTZ2w3xqRnVD2CQWH+1M7iXFkRS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Don Brace <don.brace@microchip.com>,
+	Xu Rao <raoxu@uniontech.com>,
+	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 515/699] scsi: hpsa: Fix DMA mapping leak on IOACCEL2 reset path
-Date: Tue, 21 Jul 2026 17:24:34 +0200
-Message-ID: <20260721152407.312895928@linuxfoundation.org>
+Subject: [PATCH 5.10 516/699] scsi: sg: Report request-table problems when any status is set
+Date: Tue, 21 Jul 2026 17:24:35 +0200
+Message-ID: <20260721152407.338578531@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,39 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit e166bafc483e927150cb9b5f286c9191ea0df84e upstream.
+commit 1d3a742afeb761eaead774691bde1ced699e9a5d upstream.
 
-If phys_disk->in_reset is set, the function returns directly without
-undoing the resources acquired for the command. Add the missing error
-cleanup by unmapping the IOACCEL2 SG chain block when needed, unmapping
-the SCSI command, and dropping the outstanding IOACCEL command count
-before returning.
+SG_GET_REQUEST_TABLE reports per-request diagnostic state through
+sg_req_info::problem. The field is meant to indicate whether there is an
+error to report for a completed request.
 
-Fixes: c5dfd106414f ("scsi: hpsa: correct device resets")
+sg_fill_request_table() currently combines masked_status, host_status
+and driver_status with bitwise AND. This only reports a problem when all
+three status fields are non-zero at the same time. A normal target check
+condition, for example, has masked_status set while host_status and
+driver_status may both be zero, so the request is incorrectly reported
+as clean.
+
+Use the same condition as sg_new_read(), which sets SG_INFO_CHECK when
+any of the three status fields is non-zero.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Acked-by: Don Brace <don.brace@microchip.com>
-Link: https://patch.msgid.link/20260622160028.1240496-1-haoxiang_li2024@163.com
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/54B60C19F7DB8889+20260707030845.970018-1-raoxu@uniontech.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/hpsa.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/scsi/sg.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/drivers/scsi/hpsa.c
-+++ b/drivers/scsi/hpsa.c
-@@ -5035,6 +5035,10 @@ static int hpsa_scsi_ioaccel2_queue_comm
- 
- 	if (phys_disk->in_reset) {
- 		cmd->result = DID_RESET << 16;
-+		atomic_dec(&phys_disk->ioaccel_cmds_out);
-+		scsi_dma_unmap(cmd);
-+		if (use_sg > h->ioaccel_maxsg)
-+			hpsa_unmap_ioaccel2_sg_chain_block(h, cp);
- 		return -1;
- 	}
- 
+--- a/drivers/scsi/sg.c
++++ b/drivers/scsi/sg.c
+@@ -864,10 +864,9 @@ sg_fill_request_table(Sg_fd *sfp, sg_req
+ 		if (val >= SG_MAX_QUEUE)
+ 			break;
+ 		rinfo[val].req_state = srp->done + 1;
+-		rinfo[val].problem =
+-			srp->header.masked_status &
+-			srp->header.host_status &
+-			srp->header.driver_status;
++		rinfo[val].problem = srp->header.masked_status ||
++					     srp->header.host_status ||
++					     srp->header.driver_status;
+ 		if (srp->done)
+ 			rinfo[val].duration =
+ 				srp->header.duration;
 
 
