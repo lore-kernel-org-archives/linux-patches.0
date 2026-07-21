@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B8644AB60;
-	Tue, 21 Jul 2026 22:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B02224B05;
+	Tue, 21 Jul 2026 22:45:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673920; cv=none; b=s3fKBSD58DQvy5NK3tJ7+udjxq29qzatyESZA/bZCS0LSK2kLdxJ+jdKCXL2aKqGfn2DrFKnGNmTDi5IhgJzprG24pMQ8ovxGL0xoWLXNnU0cj/iEpQVIh7NBn4CuPgPRQoN+1JPgMuu98Y5Tm/vEQmtksAWsEd4acw1AUlUVfE=
+	t=1784673923; cv=none; b=RkI2FF1DW6vq9l+7dmKtLtnXEY4wInlZnxZx/kTcGzWIIBYvtX3tfJGE1GoaXrACpqBhb8RLYRABpLm9XtTwkJsZTGL3bx+NLjvXkgeJq+ad2gMRUcoLSa/GZJ9t/G6Q4Tm/lq8rEHrqJM+aXmJjl6W/xPdlOqi+LiKN0HyFDqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673920; c=relaxed/simple;
-	bh=yZ2A4SkAF+CTzJU1Q3AnhSFD/3XtgdfhKePt/mWuLXA=;
+	s=arc-20240116; t=1784673923; c=relaxed/simple;
+	bh=yUqZ7jmOK+tc26dadomWOIntwqfDNz+qvMfohy4YaLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n9drmd07er/H4OBdYokCoyyP9vjzMNom/Epms0QbWM1hjRwuDlbaQQt6iCpPZX/jJASidEVOxS0TlohBgqNQkeVyBMUnPdl9LSplyZwtD0Rg9y1flnx2oBjZ0a6J1FBfgYXYPp9EoN01eap7OUfr1Pgy1jFhsiYcFyXGpUrglRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xD2pgLRu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OAFqdupWyRVtJykC21mWs2XnDH7C3jVAwvKNUH/ITLiycgxoAyBt0mke0yxtibCPGpm7jiHcQ2Rx1jTkHTlhB6LQa+xuZDDUIigBMRs/PlunW3MQqN2yrqRk4YVT7MUcLkAPujeFDP3SMSEAGoq8+4u5LjLQOMRkL9G1JQKJZSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWfOmRvf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xD2pgLRu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433D21F000E9;
-	Tue, 21 Jul 2026 22:45:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWfOmRvf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03A771F000E9;
+	Tue, 21 Jul 2026 22:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673919;
-	bh=+CRKQeQNBJAmEJDh4uF5rnCFd90M+9u20wxI9wR6ubU=;
+	s=korg; t=1784673922;
+	bh=GNIFdWj2EU8mh5J3/x28OnP2XetfKQSUwvXsLT+i9po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xD2pgLRu8BqRGYd/faviM/LB+clP/DDtE1avVA7GhnGhLbGPzdQhwr+i3Mtxa8CsA
-	 ZC1TQza+92en0ZnDcI9eFBq6r8TYtK4real3O7bkltXdQErmoRI3v9MNJ3Llcpl7Xh
-	 8LlxN10zFYBCRyn6mua1DHrcB0uKvuUgnNo3yViM=
+	b=IWfOmRvf0sz80A4E9DfnvtoYPUVUY81g3OG0ZfOpsglaHaL3KNIrZnvRusZ3aidB/
+	 kPCvSXDu+kzXumCX4ZYQZ9QsX4jN+vsP0/uq3aH6Ufzk7rKhqcIbHqnwTDxqb7PL/5
+	 vfTfckDYGowyMuYHbvI746oGlNorx1OVNpu8tir8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Ivan Abramov <i.abramov@mt-integration.ru>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 344/699] ACPI: resource: Amend kernel-doc style
-Date: Tue, 21 Jul 2026 17:21:43 +0200
-Message-ID: <20260721152403.452135025@linuxfoundation.org>
+Subject: [PATCH 5.10 345/699] ieee802154: Remove WARN_ON() in cfg802154_pernet_exit()
+Date: Tue, 21 Jul 2026 17:21:44 +0200
+Message-ID: <20260721152403.475105510@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -51,54 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Ivan Abramov <i.abramov@mt-integration.ru>
 
-[ Upstream commit 78ad5c7722b7bed9d35ffc5b45eb0f12e2c22fee ]
+[ Upstream commit e69ed6fc9fb3b386b5fcdb9f51623f122cee2ebd ]
 
-The functions are referred as func() in the kernel-doc. The % (percent)
-character makes the rendering for constants as described in the respective
-documentation. Amend all these.
+There's no need to call WARN_ON() in cfg802154_pernet_exit(), since
+every point of failure in cfg802154_switch_netns() is covered with
+WARN_ON(), so remove it.
 
-Fixes: 8e345c991c8c ("ACPI: Centralized processing of ACPI device resources")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260617090555.2648709-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 66e5c2672cd1 ("ieee802154: add netns support")
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
+Link: https://lore.kernel.org/20250403101935.991385-4-i.abramov@mt-integration.ru
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/resource.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/ieee802154/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index 14898b4fadf099..11ec469653a81b 100644
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -688,7 +688,7 @@ bool acpi_dev_resource_interrupt(struct acpi_resource *ares, int index,
- EXPORT_SYMBOL_GPL(acpi_dev_resource_interrupt);
- 
- /**
-- * acpi_dev_free_resource_list - Free resource from %acpi_dev_get_resources().
-+ * acpi_dev_free_resource_list - Free resource from acpi_dev_get_resources().
-  * @list: The head of the resource list to free.
-  */
- void acpi_dev_free_resource_list(struct list_head *list)
-@@ -808,7 +808,7 @@ static int __acpi_dev_get_resources(struct acpi_device *adev,
-  *
-  * The resultant struct resource objects are put on the list pointed to by
-  * @list, that must be empty initially, as members of struct resource_entry
-- * objects.  Callers of this routine should use %acpi_dev_free_resource_list() to
-+ * objects.  Callers of this routine should use acpi_dev_free_resource_list() to
-  * free that list.
-  *
-  * The number of resources in the output list is returned on success, an error
-@@ -846,7 +846,7 @@ static int is_memory(struct acpi_resource *ares, void *not_used)
-  * The resultant struct resource objects are put on the list pointed to
-  * by @list, that must be empty initially, as members of struct
-  * resource_entry objects.  Callers of this routine should use
-- * %acpi_dev_free_resource_list() to free that list.
-+ * acpi_dev_free_resource_list() to free that list.
-  *
-  * The number of resources in the output list is returned on success,
-  * an error code reflecting the error condition is returned otherwise.
+diff --git a/net/ieee802154/core.c b/net/ieee802154/core.c
+index de259b5170ab17..b3b89a1cd2a4c1 100644
+--- a/net/ieee802154/core.c
++++ b/net/ieee802154/core.c
+@@ -324,7 +324,7 @@ static void __net_exit cfg802154_pernet_exit(struct net *net)
+ 	rtnl_lock();
+ 	list_for_each_entry(rdev, &cfg802154_rdev_list, list) {
+ 		if (net_eq(wpan_phy_net(&rdev->wpan_phy), net))
+-			WARN_ON(cfg802154_switch_netns(rdev, &init_net));
++			cfg802154_switch_netns(rdev, &init_net);
+ 	}
+ 	rtnl_unlock();
+ }
 -- 
 2.53.0
 
