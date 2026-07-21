@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41283B8407;
-	Tue, 21 Jul 2026 20:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9738E3B47DF;
+	Tue, 21 Jul 2026 20:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666892; cv=none; b=TG/dhaKJYGLhkCd0IVY3YM0hedVL6iqjxIjB1G+B5ai+vpqbp+wrzENsHXz3yCuW3FEDyih8G0me5w/rVsh5B9tLhZI3/SVibG91rpRh0l/7YXwlhxPo1poHTBGWOXImzEukCUPFInPFt73IaIMxXpbPxPx9tWtEPwM6fF1D3qc=
+	t=1784666895; cv=none; b=oXHQkvO7I66LhR4CfBbQx8tzHRS4O+WdhCAVaKv5YryAkQBFv2/JJqaXEvhM363jKyhBbF/0xV1EEtIRk1+Us3+vYzqq3D3sCYU0vMmTYx0siUCa2iOreCvElT16MgR+4EAYylf0eV9AR6+qjYzlMJbKHNmjUlpYh0um+JWJ5b0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666892; c=relaxed/simple;
-	bh=Sc46aIsv5dGeCFipN5p0bxhvnPka/7IQ2SgrdifvOPo=;
+	s=arc-20240116; t=1784666895; c=relaxed/simple;
+	bh=u0jwL0RL8vthsGzirwujT/ARQf293i7Zhfdw9+y+2es=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lRqJjsJpHJhBmAaOHSl8ziCddiB7Wuw9WqM1h+oy+7L1QpHjM4TBr43hdMtttCp8xVvM5uNqy70qEKNqYL5XEcJ4rKBE6iRTh3VfONaPX7Ks46TL9K5taF8f7TOO0OtWSumSWoQlIziYb4f5FWHZ6EvrKhR2s/ZPq2IjaKQ52nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2icrzOTc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZUyy9degy9woIDhXd1uZBug4XTCN6FED/ZwC+qYfHjNRZMvuX/s0TWN5kHaS63OUkzl7DAwmugpcHZk4mrUqkVPiGngpaT/rN/KW9iK00pfry2bqxCD4nX1NLOBp6JSeguOL9LMpdPOnoJFPHin26Jp9baLNaC0k3O90tJWC6SE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lftFVpul; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2icrzOTc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B381F00A3A;
-	Tue, 21 Jul 2026 20:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lftFVpul"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C104A1F00A3D;
+	Tue, 21 Jul 2026 20:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666887;
-	bh=+6N5EStLrlKGM979jESRifm+ia+22OUw5ZludxHrgKc=;
+	s=korg; t=1784666890;
+	bh=jzD+s7vAu5RZmOvTrxZbBulzQjhO+fB8qCnx1khd7Hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2icrzOTc7MLKpt4PnyXx7UST2HUJgujImAIzNrQ+nKGLNTkxrJasXbXSGOLAw0q0r
-	 MPtkTi9LhP3jUxLIF8SbtWTpfbvrlsgTQFjqbFZtdDMAOVHy9JFNqnQjkpS4G9bkCq
-	 TdszfIIxFP2NWFVnhvf5Qe6q+hrzu+Qy4UUrMHPQ=
+	b=lftFVpulfkTcIg23cJNpMSyr37DnOBPx7CqgS+M/3iGMILRKsMiWvecr+F9ynU+h+
+	 1tsq7P9rss2Mj2K5r5t2hoA2aSYpHqwFzUxLkeG0zHLSMTvnIRUeiykAMmUObl3ALD
+	 LAT8dqbHvAhPcjsXeAp2K+LO8XIF0jixHZXfPkiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <dstsmallbird@foxmail.com>,
-	Wyatt Feng <bronzed_45_vested@icloud.com>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Phil Sutter <phil@nwl.cc>,
-	Florian Westphal <fw@strlen.de>,
+	Feng Liu <feliu@nvidia.com>,
+	Eran Ben Elisha <eranbe@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0853/1266] netfilter: xt_connmark: reject invalid shift parameters
-Date: Tue, 21 Jul 2026 17:21:30 +0200
-Message-ID: <20260721152500.940919335@linuxfoundation.org>
+Subject: [PATCH 6.6 0854/1266] net/mlx5e: Fix HV VHCA stats zero-sized buffer allocation
+Date: Tue, 21 Jul 2026 17:21:31 +0200
+Message-ID: <20260721152500.962775088@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -56,75 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wyatt Feng <bronzed_45_vested@icloud.com>
+From: Feng Liu <feliu@nvidia.com>
 
-[ Upstream commit 1b47026fb4b35bac850ad6e8a4ad7fc018e09ebc ]
+[ Upstream commit 25f6b929c7e379cbea7cb8caa67b49b2d1efae17 ]
 
-Revision 2 of the CONNMARK target accepts user-controlled shift
-parameters and applies them to 32-bit mark values in
-connmark_tg_shift().
+mlx5e_hv_vhca_stats_create() is called from mlx5e_nic_enable(),
+before mlx5e_open(). At that point priv->stats_nch is still zero,
+because it is only ever incremented in mlx5e_channel_stats_alloc(),
+which is reached only from mlx5e_open_channel().
 
-A shift_bits value of 32 or more triggers an undefined-shift bug when
-the rule is evaluated. Invalid shift_dir values are also accepted and
-silently fall back to the left-shift path.
+mlx5e_hv_vhca_stats_buf_size() therefore returns 0, and
+kvzalloc(0, GFP_KERNEL) returns ZERO_SIZE_PTR ((void *)16) rather
+than NULL. The "if (!buf)" guard does not catch this, and
+mlx5e_hv_vhca_stats_create() completes "successfully" with
+priv->stats_agent.buf set to ZERO_SIZE_PTR.
 
-Reject invalid revision-2 shift parameters in connmark_tg_check() so
-malformed rules fail at installation time, before they can reach the
-packet path.
+Once channels are opened (priv->stats_nch > 0) and the hypervisor
+enables stats reporting, mlx5e_hv_vhca_stats_work() recomputes
+buf_len using the new non-zero stats_nch and calls
+memset(buf, 0, buf_len) on ZERO_SIZE_PTR, faulting at address 0x10.
 
-Fixes: 472a73e00757 ("netfilter: xt_conntrack: Support bit-shifting for CONNMARK & MARK targets.")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <dstsmallbird@foxmail.com>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
-Reviewed-by: Ren Wei <enjou1224z@gmail.com>
-Reviewed-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Allocate the buffer based on priv->max_nch, which is set in
+mlx5e_priv_init() and is the upper bound on stats_nch:
+
+  - Add a separate helper mlx5e_hv_vhca_stats_buf_max_size() that
+    returns sizeof(per_ring_stats) * max(max_nch, stats_nch), and
+    use it for the kvzalloc() in mlx5e_hv_vhca_stats_create().
+  - Keep mlx5e_hv_vhca_stats_buf_size() (which returns based on
+    stats_nch) for the worker's active payload size, so the wire
+    format (block->rings = stats_nch) and the amount of data filled
+    by mlx5e_hv_vhca_fill_stats() are unchanged.
+
+The max(max_nch, stats_nch) guard handles the rare case where
+mlx5e_attach_netdev() recomputes max_nch downward across a
+detach/resume cycle while priv->stats_nch persists (mlx5e_detach_netdev
+does not call mlx5e_priv_cleanup, so stats_nch is only reset when
+the netdev is destroyed). Without the guard, the worker could compute
+buf_len from stats_nch and overrun the smaller buffer allocated based
+on the reduced max_nch.
+
+Allocating a non-zero buffer also makes the kvzalloc() failure path in
+mlx5e_hv_vhca_stats_create() reachable for the first time: it returns
+early without (re)creating the agent. Clear
+priv->stats_agent.{agent,buf} in mlx5e_hv_vhca_stats_destroy() after
+freeing them, so that if a later create() bails out on this path, a
+subsequent teardown does not double-free the stale agent/buffer left
+from a previous enable/disable cycle.
+
+This mirrors the existing mlx5e pattern of preallocating arrays of
+size max_nch (e.g. priv->channel_stats) and lazily populating
+entries up to stats_nch on demand.
+
+Fixes: fa691d0c9c08 ("net/mlx5e: Allocate per-channel stats dynamically at first usage")
+Signed-off-by: Feng Liu <feliu@nvidia.com>
+Reviewed-by: Eran Ben Elisha <eranbe@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260630115151.729219-2-tariqt@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_connmark.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/xt_connmark.c b/net/netfilter/xt_connmark.c
-index 4277084de2e70c..2cf27f7d59b95f 100644
---- a/net/netfilter/xt_connmark.c
-+++ b/net/netfilter/xt_connmark.c
-@@ -112,6 +112,16 @@ static int connmark_tg_check(const struct xt_tgchk_param *par)
- 	return ret;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c b/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c
+index b4f3bd7d346e43..41a662d47be6f4 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/hv_vhca_stats.c
+@@ -54,6 +54,12 @@ static int mlx5e_hv_vhca_stats_buf_size(struct mlx5e_priv *priv)
+ 		priv->stats_nch);
  }
  
-+static int connmark_tg_check_v2(const struct xt_tgchk_param *par)
++static int mlx5e_hv_vhca_stats_buf_max_size(struct mlx5e_priv *priv)
 +{
-+	const struct xt_connmark_tginfo2 *info = par->targinfo;
-+
-+	if (info->shift_dir > D_SHIFT_RIGHT || info->shift_bits >= 32)
-+		return -EINVAL;
-+
-+	return connmark_tg_check(par);
++	return (sizeof(struct mlx5e_hv_vhca_per_ring_stats) *
++		max(priv->max_nch, priv->stats_nch));
 +}
 +
- static void connmark_tg_destroy(const struct xt_tgdtor_param *par)
+ static void mlx5e_hv_vhca_stats_work(struct work_struct *work)
  {
- 	nf_ct_netns_put(par->net, par->family);
-@@ -162,7 +172,7 @@ static struct xt_target connmark_tg_reg[] __read_mostly = {
- 		.name           = "CONNMARK",
- 		.revision       = 2,
- 		.family         = NFPROTO_IPV4,
--		.checkentry     = connmark_tg_check,
-+		.checkentry     = connmark_tg_check_v2,
- 		.target         = connmark_tg_v2,
- 		.targetsize     = sizeof(struct xt_connmark_tginfo2),
- 		.destroy        = connmark_tg_destroy,
-@@ -183,7 +193,7 @@ static struct xt_target connmark_tg_reg[] __read_mostly = {
- 		.name           = "CONNMARK",
- 		.revision       = 2,
- 		.family         = NFPROTO_IPV6,
--		.checkentry     = connmark_tg_check,
-+		.checkentry     = connmark_tg_check_v2,
- 		.target         = connmark_tg_v2,
- 		.targetsize     = sizeof(struct xt_connmark_tginfo2),
- 		.destroy        = connmark_tg_destroy,
+ 	struct mlx5e_hv_vhca_stats_agent *sagent;
+@@ -122,7 +128,7 @@ static void mlx5e_hv_vhca_stats_cleanup(struct mlx5_hv_vhca_agent *agent)
+ 
+ void mlx5e_hv_vhca_stats_create(struct mlx5e_priv *priv)
+ {
+-	int buf_len = mlx5e_hv_vhca_stats_buf_size(priv);
++	int buf_len = mlx5e_hv_vhca_stats_buf_max_size(priv);
+ 	struct mlx5_hv_vhca_agent *agent;
+ 
+ 	priv->stats_agent.buf = kvzalloc(buf_len, GFP_KERNEL);
+@@ -155,5 +161,7 @@ void mlx5e_hv_vhca_stats_destroy(struct mlx5e_priv *priv)
+ 		return;
+ 
+ 	mlx5_hv_vhca_agent_destroy(priv->stats_agent.agent);
++	priv->stats_agent.agent = NULL;
+ 	kvfree(priv->stats_agent.buf);
++	priv->stats_agent.buf = NULL;
+ }
 -- 
 2.53.0
 
