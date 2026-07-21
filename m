@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0028A35C682;
-	Tue, 21 Jul 2026 22:10:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A45F44AB7B;
+	Tue, 21 Jul 2026 22:10:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671816; cv=none; b=SnG2XJn4nQ7imO+ijBcr9kInMVtZACLS5Q3QE10arvymGHXC4+9HqYq7rkAQQL0Z5aTPBaT7UwY4KrwIU/r+5vGypMugItZOPZLsJTDb6nJkJNegEvA7Ely60YtZuzrxUV3EeTQoBQ7EupCfFP+PD61lBS1omBZyH78LQT4Hr3E=
+	t=1784671818; cv=none; b=udobs4jY+zkY4ttfKFNLUj0/IB0LGp0FHbvFkvKmOat5NB0G4lH8I/XFPn+d1X+/EWrJ2Pu9L/ccJP2uFDHkWUF9CBPyFoy/p32cjH5d0TOdXRjqJOo2EY6s/X/Cjy7o64P/Rnwu+Uz3iwhhAmKlBs9qlmXhkGJl72JNudCMdgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671816; c=relaxed/simple;
-	bh=MElAU2iG7pqRDEvXl+NNSJb6TO2v3MJ4ajm9MLCvhIU=;
+	s=arc-20240116; t=1784671818; c=relaxed/simple;
+	bh=z0b1G8KZrtTgtqcYQtrZK3WYdCFMdUqy9KLmj9l6+zo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ift3a6+/Ns0bmVfpE+xXoflqFRQplOYSU3UeJ3uBNbdtCoHJgM9HH1C3Q1HGmUSpyMGlTLRy4CQwsgLBfIVaH4JIRMKt1c74Xrk1QnsZQ+kiLJmLaPYj0FYOkmzwObTbIs9msDk6z3mYMS8oN2mN/ELcAeZ3RK8SBNt2MwAyFBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6k6RKV0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=otTzcnLqfzSZ8/M4r46jKgL78p1yiwhHZyfnrYhHXUsBZE/q3ttwMH3ob5SaDt6YP9JZe3z6hxH0al6ca8vf3RIyCfZqDiTjMedGlUX4eiaQSG6j+GH9leerfM9QnAcxulLkXtD8Z793f77FPkDVw9KTev+P+mU265+O+78F5sI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUzlINRV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6k6RKV0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657DA1F000E9;
-	Tue, 21 Jul 2026 22:10:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUzlINRV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B54B1F000E9;
+	Tue, 21 Jul 2026 22:10:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671814;
-	bh=uQ0+m0qmQbNBBe5zCGcA2HIn3HrTvNe/AOiyJzA1rBI=;
+	s=korg; t=1784671817;
+	bh=Y0gm39UAm8VrxJ1VWSdb6C51+I9dlx5obTq5DdnhBMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G6k6RKV0VzST0CC/39r0rfN4xazBhujoKOvO2wOaIui4R3rZEJRWJRsFSqs0uJVZL
-	 RVswfVEp1jjFB49QOCGaJorzhq3ftK5x/NF5Wx0e1wH4q+yKKNKi7dGVrzuLjjMty/
-	 Jlzif5vqgcexr7Nv08T8182WkmsRL5QQcK9XxdXo=
+	b=SUzlINRVC7ROiw3F2LMViEZxu4JMIH/nhh+gfqiTk6sg4tmLSFD9BCgVJWIypqYlE
+	 8VA+HR4v64bvVQkmMLcjDQeA/TatMcjLbMe6md5V3rP46BrTQ/zdoh36NhE94UO3Sj
+	 dFOLbzBfOaKr6d02nyT8/NCSPzC/L4e8TOEJ1J/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanjay Chitroda <sanjayembeddedse@gmail.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 388/843] iio: accel: mma8452: handle I2C read error(s) in mma8452_read()
-Date: Tue, 21 Jul 2026 17:20:23 +0200
-Message-ID: <20260721152414.767362297@linuxfoundation.org>
+Subject: [PATCH 5.15 389/843] HID: logitech-hidpp: remove excess kernel-doc member in hidpp_scroll_counter
+Date: Tue, 21 Jul 2026 17:20:24 +0200
+Message-ID: <20260721152414.788492582@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,41 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanjay Chitroda <sanjayembeddedse@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 5bdff291d20c31b365d9ddfe9c426fbfb41da5bb ]
+[ Upstream commit f22a5db8a7d38152556f230d6d68e59dbc27971b ]
 
-Currently, If i2c_smbus_read_i2c_block_data() fails but
-mma8452_set_runtime_pm_state() succeeds, mma8452_read() returns 0.
+The @dev member described in the kernel-doc does not exist in the
+struct. Remove the stale entry.
 
-As a result, the caller mma8452_read_raw() assumes the read was
-successful and proceeds to use a buffer containing uninitialized
-stack memory.
+Fixes: 0610430e3dea ("HID: logitech-hidpp: add input_device ptr to struct hidpp_device")
+Assisted-by: opencode:big-pickle
 
-Add proper checking of the I2C read return value and propagate errors
-to the caller.
-
-Fixes: 96c0cb2bbfe0 ("iio: mma8452: add support for runtime power management")
-Signed-off-by: Sanjay Chitroda <sanjayembeddedse@gmail.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/mma8452.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/hid-logitech-hidpp.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
-index a7168803408f68..aa369bdd9c555b 100644
---- a/drivers/iio/accel/mma8452.c
-+++ b/drivers/iio/accel/mma8452.c
-@@ -252,6 +252,8 @@ static int mma8452_read(struct mma8452_data *data, __be16 buf[3])
- 
- 	ret = i2c_smbus_read_i2c_block_data(data->client, MMA8452_OUT_X,
- 					    3 * sizeof(__be16), (u8 *)buf);
-+	if (ret < 0)
-+		return ret;
- 
- 	ret = mma8452_set_runtime_pm_state(data->client, false);
- 
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index 812ed660c55575..495d486f540347 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -155,7 +155,6 @@ struct hidpp_battery {
+ /**
+  * struct hidpp_scroll_counter - Utility class for processing high-resolution
+  *                             scroll events.
+- * @dev: the input device for which events should be reported.
+  * @wheel_multiplier: the scalar multiplier to be applied to each wheel event
+  * @remainder: counts the number of high-resolution units moved since the last
+  *             low-resolution event (REL_WHEEL or REL_HWHEEL) was sent. Should
 -- 
 2.53.0
 
