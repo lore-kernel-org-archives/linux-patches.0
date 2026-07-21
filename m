@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD35B401A18;
-	Tue, 21 Jul 2026 17:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871AD40244D;
+	Tue, 21 Jul 2026 17:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654542; cv=none; b=d5CwMyfIGQD3MKyMqlKNStxICCS7vNrGwfbtsviynDc8nW4mPsRYKb25VgJmdv39Kg3lPlnl9H8GVRTVOkbwC5gUQA25KegFGfRc1ERYyjUMPyQv5xwwDNSuvt+2Idayg6QErNd7xTX4/yaLkUbNKc9iBJ+5KZOUD6tUBJxj0FQ=
+	t=1784654545; cv=none; b=R6LEuzJ/NC9FJRHCUDB16NcONiW1jIcQfLUVidsfINxyLVqgd/PsKLK58aZR0J4PqerItpvM5ub3TWOGtYSSyQ+d5LJ1X39kjhURwufLEigYqcJK42LwdQpD62WpP1d5Y1WoXMxzKPJY5fYSmUZclN9hJdX5Iz13XckA7P+onmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654542; c=relaxed/simple;
-	bh=cNLPLCx3z9sWSU1ABEKIVJxfcOOQXzRqqgFX7jr1Mmk=;
+	s=arc-20240116; t=1784654545; c=relaxed/simple;
+	bh=9Tb2+WLrmCN7b5S28rGsIwQA7MzhBn6mm9AeO2un3ro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GrfDlMFoQEtfVyPTIPY+iAHUig+AOsTucDIw8aTTzxHbQF6P7dJqbTZpQcgTde5fR3GfXMBsLhxUg3Y5AnY+F8RUCPVOmuIKaVQ6o6aumSwoOxGzNcajYoAjoAkVmbM+wuxL3+4sdGV9amB50+UdRhrNiahlxLrDHRRCmz+SYYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=040Ub9iq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pC3R9pz5cc9MDd4Rk1ndJtXAju6fX1wiXgsdk07kwp6aXziBpBMaqC5MFA2ud98XD22kb/4lmcAGy/Rke3+FEqYHnkkK5DRo2GL5Sih17h+Ki8MZDCe1FVCsm26VhVfHDyioKd+cKN7jN7bLXj/C69Xp2pTrGATlgSD7vTKHsYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/AX7vso; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="040Ub9iq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6201F000E9;
-	Tue, 21 Jul 2026 17:22:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/AX7vso"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EE01F000E9;
+	Tue, 21 Jul 2026 17:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654541;
-	bh=nvs6f2npQ7xShhYBICXKIY0UlQbY/9e6ntKwQpQ0W5w=;
+	s=korg; t=1784654544;
+	bh=i6Vz2RIyFP9PhcC5uzlKg8OBTZVcC2Zt12NYfDnTBLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=040Ub9iqeOzHmgsIXfDbGWZ3GSxwC2Yu32uAjjfPKmZvzpIVtUaZ26dc0JL0+m3wu
-	 5MrEncO1sS0nI7tpNLBFey4GqaxSb8O27nWrowaHla5xyKgiulO8nleQoxyLpK2ibI
-	 qYYB0K3hrDzIX/rmc3q5/hw/mqJJM5H62M5GGcfo=
+	b=T/AX7vsopVYm1/OUL6CB6xVM2H14Nvx0uBiJmiir1EbDwQdhJgVeAIKhaG+VTZwj4
+	 +D8qmHOhXFmonW81zpf99yL7IQ3yy5EaenqGkOzYX4bXBc80m8Wzg98/SMNz5Var2x
+	 BgGLunSZcUcDGJMkAN5MhSeMAHcRsSAEc4symqrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stafford Horne <shorne@gmail.com>
-Subject: [PATCH 7.1 1743/2077] openrisc: Add full instruction cache invalidate functions
-Date: Tue, 21 Jul 2026 17:23:36 +0200
-Message-ID: <20260721152633.858380235@linuxfoundation.org>
+	Florian Fuchs <fuchsfl@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 7.1 1744/2077] mtd: maps: vmu-flash: fix fault in unaligned fixup
+Date: Tue, 21 Jul 2026 17:23:37 +0200
+Message-ID: <20260721152633.881031371@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -49,105 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stafford Horne <shorne@gmail.com>
+From: Florian Fuchs <fuchsfl@gmail.com>
 
-commit 1be031de802ba486a7605b52eda825f128b026e2 upstream.
+commit 79d1661502c6e4b6f626185cef72cf2fa78116e1 upstream.
 
-Add functions to invalidate all cache lines which we will use for
-static_key patching.
+Use kzalloc_obj() / kzalloc_objs() to allocate the memcard structs,
+instead of kmalloc_obj() / kmalloc_objs() to prevent access to
+uninitialized data.
 
-On OpenRISC there is no instruction to invalidate an entire cache so we
-loop and invalidate cache lines one by one.  This is not extremely
-expensive on OpenRISC as we usually have only a few hundred cache lines.
+Fixes runtime error: Fault in unaligned fixup: 0000 [#1] at
+mtd_get_fact_prot_info.
 
-I considered using the invalidate cache page or range functions.
-However, tracking which ranges need invalidation would have been more
-expensive than flushing all pages.
-
+Fixes: 47a72688fae7 ("mtd: flash mapping support for Dreamcast VMU.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Stafford Horne <shorne@gmail.com>
+Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/openrisc/include/asm/cacheflush.h |    4 ++++
- arch/openrisc/kernel/smp.c             |   21 +++++++++++++++++++++
- arch/openrisc/mm/cache.c               |   16 ++++++++++++++++
- 3 files changed, 41 insertions(+)
+ drivers/mtd/maps/vmu-flash.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/openrisc/include/asm/cacheflush.h
-+++ b/arch/openrisc/include/asm/cacheflush.h
-@@ -26,6 +26,7 @@ extern void local_icache_page_inv(struct
- extern void local_dcache_range_flush(unsigned long start, unsigned long end);
- extern void local_dcache_range_inv(unsigned long start, unsigned long end);
- extern void local_icache_range_inv(unsigned long start, unsigned long end);
-+extern void local_icache_all_inv(void);
+--- a/drivers/mtd/maps/vmu-flash.c
++++ b/drivers/mtd/maps/vmu-flash.c
+@@ -609,7 +609,7 @@ static int vmu_connect(struct maple_devi
  
- /*
-  * Data cache flushing always happen on the local cpu. Instruction cache
-@@ -35,10 +36,13 @@ extern void local_icache_range_inv(unsig
- #ifndef CONFIG_SMP
- #define dcache_page_flush(page)      local_dcache_page_flush(page)
- #define icache_page_inv(page)        local_icache_page_inv(page)
-+#define icache_all_inv()             local_icache_all_inv()
- #else  /* CONFIG_SMP */
- #define dcache_page_flush(page)      local_dcache_page_flush(page)
- #define icache_page_inv(page)        smp_icache_page_inv(page)
-+#define icache_all_inv()             smp_icache_all_inv()
- extern void smp_icache_page_inv(struct page *page);
-+extern void smp_icache_all_inv(void);
- #endif /* CONFIG_SMP */
+ 	basic_flash_data = be32_to_cpu(mdev->devinfo.function_data[c - 1]);
  
- /*
---- a/arch/openrisc/kernel/smp.c
-+++ b/arch/openrisc/kernel/smp.c
-@@ -346,3 +346,24 @@ void smp_icache_page_inv(struct page *pa
- 	on_each_cpu(ipi_icache_page_inv, page, 1);
- }
- EXPORT_SYMBOL(smp_icache_page_inv);
-+
-+static void ipi_icache_all_inv(void *arg)
-+{
-+	local_icache_all_inv();
-+}
-+
-+void smp_icache_all_inv(void)
-+{
-+	if (num_online_cpus() < 2) {
-+		local_icache_all_inv();
-+		return;
-+	}
-+
-+	/*
-+	 * Ensure stores complete before we request remote icaches
-+	 * to invalidate.
-+	 */
-+	mb();
-+
-+	on_each_cpu(ipi_icache_all_inv, NULL, 1);
-+}
---- a/arch/openrisc/mm/cache.c
-+++ b/arch/openrisc/mm/cache.c
-@@ -63,6 +63,22 @@ void local_icache_page_inv(struct page *
- }
- EXPORT_SYMBOL(local_icache_page_inv);
+-	card = kmalloc_obj(struct memcard);
++	card = kzalloc_obj(struct memcard);
+ 	if (!card) {
+ 		error = -ENOMEM;
+ 		goto fail_nomem;
+@@ -627,13 +627,13 @@ static int vmu_connect(struct maple_devi
+ 	* Not sure there are actually any multi-partition devices in the
+ 	* real world, but the hardware supports them, so, so will we
+ 	*/
+-	card->parts = kmalloc_objs(struct vmupart, card->partitions);
++	card->parts = kzalloc_objs(struct vmupart, card->partitions);
+ 	if (!card->parts) {
+ 		error = -ENOMEM;
+ 		goto fail_partitions;
+ 	}
  
-+void local_icache_all_inv(void)
-+{
-+	if (cpu_cache_is_present(SPR_UPR_ICP)) {
-+		unsigned long iccfgr = mfspr(SPR_ICCFGR);
-+		unsigned long sets = 1 << ((iccfgr & SPR_ICCFGR_NCS) >> 3);
-+		unsigned long block_size = 16 << ((iccfgr & SPR_ICCFGR_CBS) >> 7);
-+		unsigned long paddr = 0;
-+		unsigned long end = sets * block_size;
-+
-+		while (paddr < end) {
-+			mtspr(SPR_ICBIR, paddr);
-+			paddr += block_size;
-+		}
-+	}
-+}
-+
- void local_dcache_range_flush(unsigned long start, unsigned long end)
- {
- 	cache_loop(start, end, SPR_DCBFR, SPR_UPR_DCP);
+-	card->mtd = kmalloc_objs(struct mtd_info, card->partitions);
++	card->mtd = kzalloc_objs(struct mtd_info, card->partitions);
+ 	if (!card->mtd) {
+ 		error = -ENOMEM;
+ 		goto fail_mtd_info;
 
 
