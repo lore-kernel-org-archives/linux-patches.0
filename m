@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C0B415F12;
-	Tue, 21 Jul 2026 18:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5155A44CADF;
+	Tue, 21 Jul 2026 18:48:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659705; cv=none; b=qmoyQQZVImoaGFL+odidV6ZhqN6To8xetBxRW6nqrGm8tUqvBDcFMet7/8RatvxWTXeIFRz4o36jDksaH/2K0EsU+hXqa8fkyYc1xhUg/lT6JhUsxEVkhYJG+i0MvBT2T+nniZgb9tZIdl/qrL8amg9rUXkEHQeoxlnEF2DzTkU=
+	t=1784659706; cv=none; b=HrUHO41mtkHdtUitHzWRoznfzVzRVpf2MkcS5Ox9/iNR/pVDyB3hQQk1zhUN0vYS54FLNFtvAwCbv4afcmreCo0Gdkbo6O5LLY7z/NGL6e3QpFDIQ6tkLODnX8M3ddJ8QfmrLqeYz9r0SN8ITmS3vGM+ZF/M/F8rhdpKImjPYMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659705; c=relaxed/simple;
-	bh=e7sCeLeV6grRC1zbXm5EcUZEdMWivzlk1iR77PZyumY=;
+	s=arc-20240116; t=1784659706; c=relaxed/simple;
+	bh=3KfzYI5Hsx4VDh0Av1u4dovaPxABCj4i+vESaLsa8Uo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XfN0eKJy+j4i2z/yUyIGD+LxaV90837stcFVfwcPLp5Fcs8t2j7vldis39fiJh9kz1xOycZdwRyBxwpOjkbXdrAyIRqNIjBSHltwvFUpcbweyZgkcOin9y05Ou/YAD0BVluWQLUHqwSXGLbnUQOvbe8l5YIbd10VBG6IfwJlhdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDxF/hwe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mMnQVZ+gVv+Skp3byQG0o9D+qBoRumh7GM0wu8OzU2SvD5giHajkGKmcXOQKwnv2sHaPXubDL5krVVeG3ZHlVsprcd98n1N4Dg0xOTGTTODR0/eLl6PlgmgjzPIVgvxqpRyctlQVRsJb3uT8m6S5fS3du3mFIh+79jEQy5941Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qv8u/aTY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDxF/hwe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C2471F00A3A;
-	Tue, 21 Jul 2026 18:48:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qv8u/aTY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B468F1F000E9;
+	Tue, 21 Jul 2026 18:48:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659701;
-	bh=/qNmh/ODO5Xh8CHkZB/ZKeU93qfI9/Qsz30qqm7b8Hs=;
+	s=korg; t=1784659704;
+	bh=x9UEvVKzbnERS6JX8sLYiANGOaZ1/sEMIR+9pPm5Bis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CDxF/hwePf/ezu25NGHBBt6ONyFZb2fFNSv7EVbhOkoQYeXK9JVKoUZVZsnfm3Umg
-	 UtSsPZgoKzrawDjxLiEr8U4AcSrRhDLRtyB5RPjcKy0QDijVw+6MMd6ip1Up7py3xx
-	 Ah39u5oCKcb/qaccDl430XRNv6wXIGvs6ckRsAEk=
+	b=Qv8u/aTY1DrnvpVVmgZKdeXvPwKaOTpSxY6R28PoOtvFRb5ah4WgF5HczO0p5hZGN
+	 r4FTKZcUI6RBShsB4t7e2M4lCkjMw1tsgMei9Lr37GrDInLtTghFWLka6m5kN32wSn
+	 1/7RQVPekBzRvSpf173P+nHvxGqTSgso2cUqZ3TA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	HyeongJun An <sammiee5311@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0702/2077] ASoC: SOF: Intel: hda-sdw-bpt: select SND_SOF_SOF_HDA_SDW_BPT properly
-Date: Tue, 21 Jul 2026 17:06:15 +0200
-Message-ID: <20260721152609.352895192@linuxfoundation.org>
+Subject: [PATCH 7.1 0703/2077] ASoC: codecs: hdac_hdmi: Validate written enum value
+Date: Tue, 21 Jul 2026 17:06:16 +0200
+Message-ID: <20260721152609.375836844@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,58 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 999ec4c29d73ac85b639a31bbc85ad2ec00eb9d7 ]
+[ Upstream commit 0b08baeccdcf52fad328ad645f5b4fbee04eea34 ]
 
-When SND_SOC_SOF_INTEL_LNL is set, SND_SOF_SOF_HDA_SDW_BPT must also
-be enabled, in order to let the soundwire support call into it.
+hdac_hdmi_set_pin_port_mux() uses the written enum value to index the
+texts array before calling snd_soc_dapm_put_enum_double(), which validates
+that the value is within the enum item range.
 
-However, there are configurations with SND_SOF_SOF_HDA_SDW_BPT=m
-and SND_SOF_SOF_HDA_SDW_BPT=m but SOUNDWIRE_INTEL=y, which still
-lead to a link failure:
+An out-of-range value can therefore make the driver read past the texts
+array before the helper rejects the write. Move the lookup after the helper
+has accepted the value.
 
-aarch64-linux-ld: drivers/soundwire/intel_ace2x.o: in function `intel_ace2x_bpt_wait':
-intel_ace2x.c:(.text+0xfc8): undefined reference to `hda_sdw_bpt_wait'
-aarch64-linux-ld: drivers/soundwire/intel_ace2x.o: in function `intel_ace2x_bpt_send_async':
-intel_ace2x.c:(.text+0x1ff8): undefined reference to `hda_sdw_bpt_get_buf_size_alignment'
-
-Address this by moving the 'select SND_SOF_SOF_HDA_SDW_BPT' into
-SND_SOC_SOF_HDA_GENERIC.
-
-Fixes: 614d416dd8ae ("ASoC: SOF: Intel: hda-sdw-bpt: fix SND_SOF_SOF_HDA_SDW_BPT dependencies")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20260611132310.137688-2-arnd@kernel.org
+Fixes: 4a3478debf36 ("ASoC: hdac_hdmi: Add jack reporting")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260609124317.38046-2-sammiee5311@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/hdac_hdmi.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/sof/intel/Kconfig b/sound/soc/sof/intel/Kconfig
-index 9ddf14e7946aab..915abbef398d54 100644
---- a/sound/soc/sof/intel/Kconfig
-+++ b/sound/soc/sof/intel/Kconfig
-@@ -266,10 +266,8 @@ config SND_SOC_SOF_METEORLAKE
+diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
+index 2652fcf2a3a345..3220f9226e0b26 100644
+--- a/sound/soc/codecs/hdac_hdmi.c
++++ b/sound/soc/codecs/hdac_hdmi.c
+@@ -911,12 +911,14 @@ static int hdac_hdmi_set_pin_port_mux(struct snd_kcontrol *kcontrol,
+ 	struct hdac_device *hdev = dev_to_hdac_dev(dev);
+ 	struct hdac_hdmi_priv *hdmi = hdev_to_hdmi_priv(hdev);
+ 	struct hdac_hdmi_pcm *pcm;
+-	const char *cvt_name =  e->texts[ucontrol->value.enumerated.item[0]];
++	const char *cvt_name;
  
- config SND_SOC_SOF_INTEL_LNL
- 	tristate
--	select SOUNDWIRE_INTEL if SND_SOC_SOF_INTEL_SOUNDWIRE != n
- 	select SND_SOC_SOF_HDA_GENERIC
- 	select SND_SOC_SOF_INTEL_SOUNDWIRE_LINK_BASELINE
--	select SND_SOF_SOF_HDA_SDW_BPT if SND_SOC_SOF_INTEL_SOUNDWIRE != n
- 	select SND_SOC_SOF_IPC4
- 	select SND_SOC_SOF_INTEL_MTL
+ 	ret = snd_soc_dapm_put_enum_double(kcontrol, ucontrol);
+ 	if (ret < 0)
+ 		return ret;
  
-@@ -331,6 +329,8 @@ config SND_SOC_SOF_HDA_GENERIC
- 	select SND_SOC_SOF_HDA_PROBES
- 	select SND_SOC_SDW_UTILS if SND_SOC_SOF_INTEL_SOUNDWIRE !=n
- 	select SND_SOC_SOF_HDA_MLINK if SND_SOC_SOF_HDA_LINK
-+	select SND_SOF_SOF_HDA_SDW_BPT if SND_SOC_SOF_INTEL_LNL != n && \
-+					  SND_SOC_SOF_INTEL_SOUNDWIRE !=n
- 	help
- 	  This option is not user-selectable but automagically handled by
- 	  'select' statements at a higher level.
++	cvt_name = e->texts[ucontrol->value.enumerated.item[0]];
++
+ 	if (port == NULL)
+ 		return -EINVAL;
+ 
 -- 
 2.53.0
 
