@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D259415F14;
-	Tue, 21 Jul 2026 19:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31AD46C4D9;
+	Tue, 21 Jul 2026 19:21:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661668; cv=none; b=oHYPQKKKzNlze8SZcUWnylkn/tRErEy6P9tcfhfhC1DyPpqLAZf6bw4f+OllslO9G2pLhKK5ggnX7s+n2MK5I5QQfShXu1sjVojh4OM8noYnICct3X71QTm16JQhfNZJHETlgBA1dwu+Tmgm/fKOKNvx/Nmpmscow1S1whD+rJM=
+	t=1784661671; cv=none; b=WsTzAfU+ga0tyTBV+OgKp+TG+x4qPe+wtqEh/bnmzrnT/+gG31W8Gf28Km/goQAoeOAOATUVa9N2oNRcOtbIchxqW7DUorpnwl4AbrhYCU8jxUUN02Rwy0rnjhvhGsEnM3edeylIy5AGjP83XlwR8jI2bTmCZ3onworI4YnH694=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661668; c=relaxed/simple;
-	bh=/k8T33pi22vJeSle6yskVfUc7G+sA7WpfjOmmYydr+Q=;
+	s=arc-20240116; t=1784661671; c=relaxed/simple;
+	bh=BJ5W3ZkVLHHeXO7bQvViQWvUNDewAYE7qn+jJMQ2fL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NG4ksYtIzZmNi7/qLRsjmg336U39js3qJQ7p5tsh0RGCZ8/AuTAkHOA9pZxSepZMsSbTEW6RuMpnQL28YbPg3KpgxmmG16X/WLvoPHfrTUxdx0qhO+6bv2x3yKeBShF11vTwCKErzpWg5dbuzKCJZD+dPaT8OiIw+Si3vhIjB0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSX7qDTU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LC7CLTLTbm/zMkkgPTgwS3gQrof5dWVZEsYKfvgF2S2OwTgO0ANVuu/V6U9E69VB7Xxyb0NG/dCm9s9PIDzOID4I1Ul+6R3Y1J/gRfZUXssFwfF5zVx5WTAQgtO9oK5dcZieIrAXR3dppgYjqmBsToeyNb6yhfnIx1T7cPfBq44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JCbmXHLF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSX7qDTU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3CE11F000E9;
-	Tue, 21 Jul 2026 19:21:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JCbmXHLF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8091F000E9;
+	Tue, 21 Jul 2026 19:21:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661667;
-	bh=IKxyByz5kQ9a5Nv7i9QgorkWiHRe9ZdsD+MtblW8hgs=;
+	s=korg; t=1784661669;
+	bh=ZxIdPwT69JagsfdRYzmYAKDQcU7/Ti9tE7iX5xN09Sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MSX7qDTUCSyTosaPljBlOq8hiFjTkjkiQULIafF4AYs0iYTqo9+OWDxxGppVXr3dx
-	 8Wk4pJYNLL3FLhg3b3KFANj21v64pD+GOLQEsCr1izB+mXbfjEVbO0uZy/BpxxbfI0
-	 ZOZ9xieZUQkuke4CUHbYDSvWgMjjtyOVNqZb8dTo=
+	b=JCbmXHLFUMXqZ4ZOY8a5nJ51OK8SqOb2hU4Dpqch/u2J28riGPmLx1yiU6F3tUz0X
+	 5d/e8eeEEtH3s1HD6G/zRJ21iBIIquKfwvq+wbov2OepxU7iLgo+vjNg8GE9UyJKrz
+	 WC0NtLn1sxSR5QTcMu0NjnTmD+5iwIIFXvXu0k7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	nasm <n4sm@protonmail.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	=?UTF-8?q?Sven=20P=C3=BCschel?= <s.pueschel@pengutronix.de>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0154/1276] RDMA/rxe: Fix a use-after-free problem in rxe_mmap
-Date: Tue, 21 Jul 2026 17:09:57 +0200
-Message-ID: <20260721152449.548243952@linuxfoundation.org>
+Subject: [PATCH 6.12 0137/1276] media: rockchip: rga: fix too small buffer size
+Date: Tue, 21 Jul 2026 17:09:40 +0200
+Message-ID: <20260721152449.166844663@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,158 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Sven Püschel <s.pueschel@pengutronix.de>
 
-[ Upstream commit 35744ab3d03c5fca8c1752f53fc8fc674e14c561 ]
+[ Upstream commit 65017e26c065d1240b0512c15867ef1128034fd8 ]
 
-rxe_mmap() removes a rxe_mmap_info struct from the pending_mmaps list
-and releases pending_lock while the struct's kref is still at 1:
+Fix the command buffer size being only a quarter of the actual size.
+The RGA_CMDBUF_SIZE macro was potentially intended to specify the length
+of the cmdbuf u32 array pointer. But as it's used to specify the size of
+the allocation, which is counted in bytes. Therefore adjust the macro
+size to bytes as it better matches the variable name and adjust it's
+users accordingly.
 
-   list_del_init(&ip->pending_mmaps);
-   spin_unlock_bh(&rxe->pending_lock);   /* ref == 1, no lock held */
-   ret = remap_vmalloc_range(vma, ip->obj, 0);  /* walks PTEs */
-   [...]
-   rxe_vma_open(vma);                    /* kref_get, ref → 2 */
-   remap_vmalloc_range_partial() walks PTEs without any lock.
+As the command buffer is relatively small, it probably didn't caused
+an issue due to being smaller than a single page.
 
-A concurrent DESTROY_CQ ioctl on another CPU calls:
-
-    kref_put(&q->ip->ref, rxe_mmap_release)   /* ref 1→0 */
-    vfree(ip->obj)   /* clears vmalloc PTEs mid-walk */
-    kfree(ip)        /* frees rxe_mmap_info */
-
-This yields:
-
-   1. Kernel crash, vmalloc_to_page() returns NULL when vfree wins the
-   per-PTE race -> vm_insert_page(NULL) → GPF in validate_page_before_insert
-
-   2. Page UAF, vmalloc_to_page() reads a stale PTE before vfree clears
-   it. User VMA holds a PTE to a free'd page which might eventually get
-   reallocated later by vmalloc which allows the attacker to get a clean
-   page-level UAF.
-
-   It is worth noting that even though a page-level UAF is possible given
-   the strong primitive, it is statistically very difficult to achieve
-   given the very short time window (after the last insert_page and before
-   the kref_get).
-
-The call trace are as below:
-
-  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  CPU: 0 UID: 1000 PID: 413 Comm: poc Not tainted 7.0.0-rc5-dirty #28 PREEMPT(lazy)
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-  RIP: 0010:validate_page_before_insert+0x32/0x300
-  Code: e5 41 57 41 56 49 89 fe 41 55 41 54 53 48 89 f3 e8 93 b5 a3 ff 48 8d 7b 08 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 7b 02 00 00 4c 8b 63 08 31 ff 4d 89 e5 41 83 e5
-  RSP: 0018:ffff88811b15f2f0 EFLAGS: 00000202
-  RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
-  RDX: 0000000000000001 RSI: 0000000000000000 RDI: 0000000000000008
-  RBP: ffff88811b15f318 R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000000 R12: ffff8881181eee00
-  R13: 0000000000000000 R14: ffff8881181eee00 R15: ffff8881181eee20
-  FS:  00007b1e000f76c0(0000) GS:ffff8884268e0000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00007b1e00a24ac0 CR3: 0000000116eb3000 CR4: 00000000000006f0
-  Call Trace:
-   <TASK>
-   insert_page+0x8f/0x190
-   ? __pfx_insert_page+0x10/0x10
-   ? kasan_save_alloc_info+0x38/0x60
-   vm_insert_page+0x2e7/0x400
-   remap_vmalloc_range_partial+0x212/0x3e0
-   remap_vmalloc_range+0x6e/0xb0
-   ? __kasan_check_write+0x14/0x30
-   rxe_mmap+0x2e9/0x5d0
-   ib_uverbs_mmap+0x1ad/0x2c0
-   __mmap_region+0x12c2/0x2ad0
-   ? __pfx___mmap_region+0x10/0x10
-   ? __sanitizer_cov_trace_switch+0x58/0xb0
-   ? mas_prev_slot+0x360/0x39c0
-   ? __sanitizer_cov_trace_switch+0x58/0xb0
-   ? mas_next_slot+0x1e5b/0x2f40
-   ? __sanitizer_cov_trace_cmp8+0x18/0x30
-   ? unmapped_area_topdown+0x4dd/0x610
-   ? kfree+0x1b1/0x440
-   ? free_cpumask_var+0x16/0x30
-   ? __kasan_slab_free+0x7d/0xa0
-   ? __sanitizer_cov_trace_cmp8+0x18/0x30
-   mmap_region+0x2e6/0x3c0
-   do_mmap+0xa3e/0x12a0
-   ? __pfx_do_mmap+0x10/0x10
-   ? __kasan_check_write+0x14/0x30
-   ? down_write_killable+0xba/0x160
-   ? __pfx_down_write_killable+0x10/0x10
-   ? __sanitizer_cov_trace_cmp4+0x16/0x30
-   vm_mmap_pgoff+0x2d4/0x4a0
-   ? __pfx_vm_mmap_pgoff+0x10/0x10
-   ? fget+0x1bf/0x270
-   ksys_mmap_pgoff+0x40c/0x690
-   ? __sanitizer_cov_trace_const_cmp4+0x16/0x30
-   ? __pfx_ksys_mmap_pgoff+0x10/0x10
-   ? __kasan_check_write+0x14/0x30
-   ? _raw_spin_trylock+0xbb/0x130
-   ? __pfx__raw_spin_trylock+0x10/0x10
-   __x64_sys_mmap+0x135/0x1e0
-   x64_sys_call+0x1c14/0x2790
-   do_syscall_64+0xd2/0x1050
-   ? rcu_core+0x352/0x7d0
-   ? rcu_core_si+0xe/0x20
-   ? handle_softirqs+0x1aa/0x650
-   ? __sanitizer_cov_trace_cmp4+0x16/0x30
-   ? fpregs_assert_state_consistent+0xe1/0x160
-   ? irqentry_exit+0xb1/0x670
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Link: https://patch.msgid.link/r/20260515002537.6209-1-yanjun.zhu@linux.dev
-Reported-and-tested-by: nasm <n4sm@protonmail.com>
-Suggested-by: nasm <n4sm@protonmail.com>
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: f7e7b48e6d79 ("[media] rockchip/rga: v4l2 m2m support")
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Sven Püschel <s.pueschel@pengutronix.de>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_mmap.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/media/platform/rockchip/rga/rga-hw.c | 2 +-
+ drivers/media/platform/rockchip/rga/rga-hw.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mmap.c b/drivers/infiniband/sw/rxe/rxe_mmap.c
-index 6b7f2bd6987991..466ab6dbe9af6f 100644
---- a/drivers/infiniband/sw/rxe/rxe_mmap.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mmap.c
-@@ -93,18 +93,31 @@ int rxe_mmap(struct ib_ucontext *context, struct vm_area_struct *vma)
- 	goto done;
+diff --git a/drivers/media/platform/rockchip/rga/rga-hw.c b/drivers/media/platform/rockchip/rga/rga-hw.c
+index b2ef3beec5258a..7de6f80fdce7e5 100644
+--- a/drivers/media/platform/rockchip/rga/rga-hw.c
++++ b/drivers/media/platform/rockchip/rga/rga-hw.c
+@@ -414,7 +414,7 @@ static void rga_cmd_set(struct rga_ctx *ctx,
+ {
+ 	struct rockchip_rga *rga = ctx->rga;
  
- found_it:
-+	/*
-+	 * Increment refcount and check whether it is being freed atm while
-+	 * holding lock to prevent UAF
-+	 */
-+	if (!kref_get_unless_zero(&ip->ref)) {
-+		spin_unlock_bh(&rxe->pending_lock);
-+		ret = -ENXIO;
-+		goto done;
-+	}
-+
- 	list_del_init(&ip->pending_mmaps);
- 	spin_unlock_bh(&rxe->pending_lock);
+-	memset(rga->cmdbuf_virt, 0, RGA_CMDBUF_SIZE * 4);
++	memset(rga->cmdbuf_virt, 0, RGA_CMDBUF_SIZE);
  
-+	vma->vm_ops = &rxe_vm_ops;
-+	vma->vm_private_data = ip;
-+
- 	ret = remap_vmalloc_range(vma, ip->obj, 0);
- 	if (ret) {
-+		vma->vm_private_data = NULL;
-+		vma->vm_ops = NULL;
-+		kref_put(&ip->ref, rxe_mmap_release);
- 		rxe_dbg_dev(rxe, "err %d from remap_vmalloc_range\n", ret);
- 		goto done;
- 	}
+ 	rga_cmd_set_src_addr(ctx, src->dma_desc_pa);
+ 	/*
+diff --git a/drivers/media/platform/rockchip/rga/rga-hw.h b/drivers/media/platform/rockchip/rga/rga-hw.h
+index e8917e5630a48d..03990fd30f158c 100644
+--- a/drivers/media/platform/rockchip/rga/rga-hw.h
++++ b/drivers/media/platform/rockchip/rga/rga-hw.h
+@@ -6,7 +6,7 @@
+ #ifndef __RGA_HW_H__
+ #define __RGA_HW_H__
  
--	vma->vm_ops = &rxe_vm_ops;
--	vma->vm_private_data = ip;
--	rxe_vma_open(vma);
- done:
- 	return ret;
- }
+-#define RGA_CMDBUF_SIZE 0x20
++#define RGA_CMDBUF_SIZE 0x80
+ 
+ /* Hardware limits */
+ #define MAX_WIDTH 8192
 -- 
 2.53.0
 
