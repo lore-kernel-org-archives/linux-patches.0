@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77BF2DEA74;
-	Tue, 21 Jul 2026 18:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67EFB231829;
+	Tue, 21 Jul 2026 18:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660060; cv=none; b=Wk82myC364W6Oa4JhXo//zMoJTmJXU4RY3OQ/X5sjs/XFFVpOYhlquqLN/PCjhhdhr+ALDMxSNBwgYX+aPGqojS7GQj2bCu+EI0WlEe7OqMW5D01r6fKsWeRYKwx12oeD9sWCQVbZ0Xsimyhw9dTOmVvtmIXMe8pSxjoFMqPiA0=
+	t=1784660062; cv=none; b=KGr/w3nCDOGAP4FcGDxtuw5KSWtmTrIhrZUSeMtZxlt/xD+VYwvFZPvXh4pzgoqz89FGxCaIe8kiWOAkjPqoqbTjbXICKL9ss/I6r7EflGoxH0a6s8XjFRMf5jEVAR8VV0jGp6pvyR78F+CImeLNu+Zu+34NG/BY2Xbv6Hur3iY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660060; c=relaxed/simple;
-	bh=Ke9HMo6z3+44idy+Q2RTdS+mUy6cKMar5EQA7VFhpus=;
+	s=arc-20240116; t=1784660062; c=relaxed/simple;
+	bh=ZeMp2lm7ZS7B/kqp38MWGfTfUvP+/HBk9bpc3jpYZOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=siidHYpcyianSN+3T83kIXRjUFzlEoAa77kivMMQOjF7xgHNBpuAveHi7hUXYXRoDPVNJC0cscqiRDbvO7Rrx6iGfv62+BBA3OHyO/HmJslFj1v4rOnhc/d7labd0v9N8H+ovBQR9+4SRD+7kuqPJ4CjDnbtvghHjxOh8i4G5m8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aOomRw4k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P3E6sHfQFHVuPSuEP5w1x/XsFmkAXtVikL+AJLY48UXkPFDrAUIV1kOnxmDR4p6BbVTNt8KVGW9iUB3iQTPEefjf0UUuyt1QmUO1eSc1juMChuE4gh6BNHONqUidswt3J9fwReG514QJ4gs/xn5Ue2RRe1im6fkR9UaysiKjxPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TlJdBm0u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aOomRw4k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0871F000E9;
-	Tue, 21 Jul 2026 18:54:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlJdBm0u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28651F000E9;
+	Tue, 21 Jul 2026 18:54:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660058;
-	bh=xV7miY7xCKPASISC8p97Y2p/uokdxTaFDVUXp2iuQQg=;
+	s=korg; t=1784660061;
+	bh=R3ZQWOA21kiN9GaSWPLjHeDzJntJ75rajydzZ2S8dVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aOomRw4ksFDqLWLuWs+u3EgU80vAJrsYkwaesXN+xbuAZOgNRSMiB7q5AwxBTpwMR
-	 XNQYX0O8eaE1uzw48jhfbInS1ZsJo5n3xOQwRZSOCA0t4h7WXhTlopqdknR5Eu2Ag5
-	 zc5cVYbYx3SrtlBIoLLDyrhqy2nXv0BSXCwp29X8=
+	b=TlJdBm0ubwoo2sxUusEmFDc5Qs7ROdqDpmo8TQCjt/yotj+sRzrmXplX+P4cFXBGc
+	 Gjab7uQ7gi5JUGrU3GUxOOwoMeNW4GM3Cw9xSYHhd69CwU9R1r14XWcOTkKnVoN2z3
+	 Ni3l/p+9OYyPrc3z80uOuVmuN5gGpualqB6Zowew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -38,9 +38,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zecheng Li <zli94@ncsu.edu>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0837/2077] perf libdw: Fix libdw API contract violations and memory leaks
-Date: Tue, 21 Jul 2026 17:08:30 +0200
-Message-ID: <20260721152612.529845867@linuxfoundation.org>
+Subject: [PATCH 7.1 0838/2077] perf probe-finder: Fix libdw API contract violations
+Date: Tue, 21 Jul 2026 17:08:31 +0200
+Message-ID: <20260721152612.553534960@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -61,27 +61,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 9c6d535ddb794fb540c3b142ab1d7416d469c1de ]
+[ Upstream commit 9a2ef19b5f5218d35c161f272a901f6c070faf79 ]
 
-Check return values of `dwfl_report_end` and `dwfl_module_addrdie`
-to prevent using uninitialized stack variables or reporting success on
-failure.
+Check return values of `dwarf_formsdata`, `dwarf_entrypc`,
+`dwarf_highpc`, `dwarf_bytesize`, `dwarf_attr`, `dwarf_decl_line`,
+`dwarf_getfuncs`, and `dwarf_formref_die`. Validate `dwarf_diename` and
+`dwarf_diecu` results to prevent potential crashes. Fix C90 mixed
+declarations.
 
 Additionally:
- - Ensure `*file` is freed and inline frames are cleared on error in
-   `libdw__addr2line()` to prevent memory leaks and duplicated
-   callchains when falling back to other unwinders.
- - Use `die_name()` safe wrapper inside the inline function unwinding
-   callback (`libdw_a2l_cb`).
- - Refactor `libdw_a2l_cb`'s repeated memory error handling/cleanup
-   paths using a cleaner goto control flow.
+ - Avoid vfprintf undefined behavior with NULL strings by using the
+   `die_name()` helper for `dwarf_diename()` in `pr_*` calls,
+   including when warning about tail calls.
+ - Prevent NULL pointer dereference in `convert_variable_fields()`
+   when processing array elements for variables in registers.
+ - Fallback to offset 0 in `line_range_search_cb()` instead of
+   skipping functions without `DW_AT_decl_line`.
+ - Relax `dwarf_getfuncs` error checking in
+   `find_probe_point_by_func()` and `find_line_range_by_func()` to
+   prevent premature CU search aborts, ensuring robustness against
+   corrupted CUs.
 
-Fixes: b7a2b011e9627ff3 ("perf powerpc: Unify the skip-callchain-idx libdw with that for addr2line")
-Fixes: 88c51002d06f9a68 ("perf addr2line: Add a libdw implementation")
+Fixes: 66f69b2197167cb9 ("perf probe: Support DW_AT_const_value constant value")
+Fixes: 3d918a12a1b3088a ("perf probe: Find fentry mcount fuzzed parameter location")
+Fixes: bcfc082150c6b1e9 ("perf probe: Remove redundant dwarf functions")
+Fixes: 221d061182b8ff55 ("perf probe: Fix to search local variables in appropriate scope")
+Fixes: b55a87ade3839c33 ("perf probe: Remove die() from probe-finder code")
+Fixes: 4c859351226c920b ("perf probe: Support glob wildcards for function name")
 Assisted-by: Gemini-CLI:Google Gemini 3
 Signed-off-by: Ian Rogers <irogers@google.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
 Cc: Ingo Molnar <mingo@redhat.com>
 Cc: James Clark <james.clark@linaro.org>
 Cc: Jiri Olsa <jolsa@kernel.org>
@@ -92,108 +101,324 @@ Cc: Zecheng Li <zli94@ncsu.edu>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/libdw.c | 49 ++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 43 insertions(+), 6 deletions(-)
+ tools/perf/util/probe-finder.c | 102 +++++++++++++++++++++------------
+ 1 file changed, 65 insertions(+), 37 deletions(-)
 
-diff --git a/tools/perf/util/libdw.c b/tools/perf/util/libdw.c
-index 21697788410308..15bf646d104f5a 100644
---- a/tools/perf/util/libdw.c
-+++ b/tools/perf/util/libdw.c
-@@ -60,7 +60,10 @@ struct Dwfl *dso__libdw_dwfl(struct dso *dso)
- 		return NULL;
+diff --git a/tools/perf/util/probe-finder.c b/tools/perf/util/probe-finder.c
+index 64328abeef8b24..f3f9a1573502c9 100644
+--- a/tools/perf/util/probe-finder.c
++++ b/tools/perf/util/probe-finder.c
+@@ -79,7 +79,7 @@ static int convert_variable_location(Dwarf_Die *vr_die, Dwarf_Addr addr,
+ 	unsigned int regn;
+ 	Dwarf_Word offs = 0;
+ 	bool ref = false;
+-	const char *regs;
++	const char *regs, *name;
+ 	int ret, ret2 = 0;
+ 
+ 	if (dwarf_attr(vr_die, DW_AT_external, &attr) != NULL)
+@@ -93,7 +93,8 @@ static int convert_variable_location(Dwarf_Die *vr_die, Dwarf_Addr addr,
+ 		if (!tvar)
+ 			return 0;
+ 
+-		dwarf_formsdata(&attr, &snum);
++		if (dwarf_formsdata(&attr, &snum) != 0)
++			return -ENOENT;
+ 		ret = asprintf(&tvar->value, "\\%ld", (long)snum);
+ 
+ 		return ret < 0 ? -ENOMEM : 0;
+@@ -103,8 +104,7 @@ static int convert_variable_location(Dwarf_Die *vr_die, Dwarf_Addr addr,
+ 	if (dwarf_attr(vr_die, DW_AT_location, &attr) == NULL)
+ 		return -EINVAL;	/* Broken DIE ? */
+ 	if (dwarf_getlocation_addr(&attr, addr, &op, &nops, 1) <= 0) {
+-		ret = dwarf_entrypc(sp_die, &tmp);
+-		if (ret)
++		if (dwarf_entrypc(sp_die, &tmp) != 0)
+ 			return -ENOENT;
+ 
+ 		if (probe_conf.show_location_range &&
+@@ -115,8 +115,7 @@ static int convert_variable_location(Dwarf_Die *vr_die, Dwarf_Addr addr,
+ 			return -ENOENT;
+ 		}
+ 
+-		ret = dwarf_highpc(sp_die, &tmp);
+-		if (ret)
++		if (dwarf_highpc(sp_die, &tmp) != 0)
+ 			return -ENOENT;
+ 		/*
+ 		 * This is fuzzed by fentry mcount. We try to find the
+@@ -138,12 +137,16 @@ static int convert_variable_location(Dwarf_Die *vr_die, Dwarf_Addr addr,
+ static_var:
+ 		if (!tvar)
+ 			return ret2;
++
+ 		/* Static variables on memory (not stack), make @varname */
+-		ret = strlen(dwarf_diename(vr_die));
++		name = dwarf_diename(vr_die);
++		if (!name)
++			return -ENOENT;
++		ret = strlen(name);
+ 		tvar->value = zalloc(ret + 2);
+ 		if (tvar->value == NULL)
+ 			return -ENOMEM;
+-		snprintf(tvar->value, ret + 2, "@%s", dwarf_diename(vr_die));
++		snprintf(tvar->value, ret + 2, "@%s", name);
+ 		tvar->ref = alloc_trace_arg_ref((long)offs);
+ 		if (tvar->ref == NULL)
+ 			return -ENOMEM;
+@@ -234,13 +237,14 @@ static int convert_variable_type(Dwarf_Die *vr_die,
  	}
  
--	dwfl_report_end(dwfl, /*removed=*/NULL, /*arg=*/NULL);
-+	if (dwfl_report_end(dwfl, /*removed=*/NULL, /*arg=*/NULL) != 0) {
-+		dwfl_end(dwfl);
-+		return NULL;
+ 	if (die_get_real_type(vr_die, &type) == NULL) {
+-		pr_warning("Failed to get a type information of %s.\n",
+-			   dwarf_diename(vr_die));
++		const char *name = dwarf_diename(vr_die);
++
++		pr_warning("Failed to get a type information of %s.\n", name ?: "<unknown>");
+ 		return -ENOENT;
+ 	}
+ 
+ 	pr_debug("%s type is %s.\n",
+-		 dwarf_diename(vr_die), dwarf_diename(&type));
++		 die_name(vr_die), die_name(&type));
+ 
+ 	if (cast && (!strcmp(cast, "string") || !strcmp(cast, "ustring"))) {
+ 		/* String type */
+@@ -249,7 +253,7 @@ static int convert_variable_type(Dwarf_Die *vr_die,
+ 		    ret != DW_TAG_array_type) {
+ 			pr_warning("Failed to cast into string: "
+ 				   "%s(%s) is not a pointer nor array.\n",
+-				   dwarf_diename(vr_die), dwarf_diename(&type));
++				   die_name(vr_die), die_name(&type));
+ 			return -EINVAL;
+ 		}
+ 		if (die_get_real_type(&type, &type) == NULL) {
+@@ -272,7 +276,7 @@ static int convert_variable_type(Dwarf_Die *vr_die,
+ 		    !die_compare_name(&type, "unsigned char")) {
+ 			pr_warning("Failed to cast into string: "
+ 				   "%s is not (unsigned) char *.\n",
+-				   dwarf_diename(vr_die));
++				   die_name(vr_die));
+ 			return -EINVAL;
+ 		}
+ 		tvar->type = strdup(cast);
+@@ -299,7 +303,7 @@ static int convert_variable_type(Dwarf_Die *vr_die,
+ 	/* Check the bitwidth */
+ 	if (ret > MAX_BASIC_TYPE_BITS) {
+ 		pr_info("%s exceeds max-bitwidth. Cut down to %d bits.\n",
+-			dwarf_diename(&type), MAX_BASIC_TYPE_BITS);
++			die_name(&type), MAX_BASIC_TYPE_BITS);
+ 		ret = MAX_BASIC_TYPE_BITS;
+ 	}
+ 	ret = snprintf(buf, 16, "%c%d", prefix, ret);
+@@ -333,12 +337,14 @@ static int convert_variable_fields(Dwarf_Die *vr_die, const char *varname,
+ 		pr_warning("Failed to get the type of %s.\n", varname);
+ 		return -ENOENT;
+ 	}
+-	pr_debug2("Var real type: %s (%x)\n", dwarf_diename(&type),
++	pr_debug2("Var real type: %s (%x)\n", die_name(&type),
+ 		  (unsigned)dwarf_dieoffset(&type));
+ 	tag = dwarf_tag(&type);
+ 
+ 	if (field->name[0] == '[' &&
+ 	    (tag == DW_TAG_array_type || tag == DW_TAG_pointer_type)) {
++		int bsize;
++
+ 		/* Save original type for next field or type */
+ 		memcpy(die_mem, &type, sizeof(*die_mem));
+ 		/* Get the type of this array */
+@@ -346,7 +352,7 @@ static int convert_variable_fields(Dwarf_Die *vr_die, const char *varname,
+ 			pr_warning("Failed to get the type of %s.\n", varname);
+ 			return -ENOENT;
+ 		}
+-		pr_debug2("Array real type: %s (%x)\n", dwarf_diename(&type),
++		pr_debug2("Array real type: %s (%x)\n", die_name(&type),
+ 			 (unsigned)dwarf_dieoffset(&type));
+ 		if (tag == DW_TAG_pointer_type) {
+ 			ref = zalloc(sizeof(struct probe_trace_arg_ref));
+@@ -357,7 +363,15 @@ static int convert_variable_fields(Dwarf_Die *vr_die, const char *varname,
+ 			else
+ 				*ref_ptr = ref;
+ 		}
+-		ref->offset += dwarf_bytesize(&type) * field->index;
++		bsize = dwarf_bytesize(&type);
++
++		if (bsize < 0)
++			return -EINVAL;
++		if (!ref) {
++			pr_warning("Array indexing not supported for variables in registers.\n");
++			return -ENOTSUP;
++		}
++		ref->offset += bsize * field->index;
+ 		ref->user_access = user_access;
+ 		goto next;
+ 	} else if (tag == DW_TAG_pointer_type) {
+@@ -414,7 +428,7 @@ static int convert_variable_fields(Dwarf_Die *vr_die, const char *varname,
+ 
+ 	if (die_find_member(&type, field->name, die_mem) == NULL) {
+ 		pr_warning("%s(type:%s) has no member %s.\n", varname,
+-			   dwarf_diename(&type), field->name);
++			   die_name(&type), field->name);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -461,7 +475,7 @@ static int convert_variable(Dwarf_Die *vr_die, struct probe_finder *pf)
+ 	int ret;
+ 
+ 	pr_debug("Converting variable %s into trace event.\n",
+-		 dwarf_diename(vr_die));
++		 die_name(vr_die));
+ 
+ 	ret = convert_variable_location(vr_die, pf->addr, pf->fb_ops,
+ 					&pf->sp_die, pf, pf->tvar);
+@@ -542,7 +556,7 @@ static int convert_to_trace_point(Dwarf_Die *sp_die, Dwfl_Module *mod,
+ 	/* Verify the address is correct */
+ 	if (!dwarf_haspc(sp_die, paddr)) {
+ 		pr_warning("Specified offset is out of %s\n",
+-			   dwarf_diename(sp_die));
++			   die_name(sp_die));
+ 		return -EINVAL;
+ 	}
+ 
+@@ -599,7 +613,7 @@ static int call_probe_finder(Dwarf_Die *sc_die, struct probe_finder *pf)
+ 		if (!die_find_realfunc(&pf->cu_die, pf->addr, &pf->sp_die)) {
+ 			if (die_find_tailfunc(&pf->cu_die, pf->addr, &pf->sp_die)) {
+ 				pr_warning("Ignoring tail call from %s\n",
+-						dwarf_diename(&pf->sp_die));
++						die_name(&pf->sp_die));
+ 				return 0;
+ 			} else {
+ 				pr_warning("Failed to find probe point in any "
+@@ -611,10 +625,16 @@ static int call_probe_finder(Dwarf_Die *sc_die, struct probe_finder *pf)
+ 		memcpy(&pf->sp_die, sc_die, sizeof(Dwarf_Die));
+ 
+ 	/* Get the frame base attribute/ops from subprogram */
+-	dwarf_attr(&pf->sp_die, DW_AT_frame_base, &fb_attr);
+-	ret = dwarf_getlocation_addr(&fb_attr, pf->addr, &pf->fb_ops, &nops, 1);
+-	if (ret <= 0 || nops == 0) {
++	if (dwarf_attr(&pf->sp_die, DW_AT_frame_base, &fb_attr) == NULL) {
+ 		pf->fb_ops = NULL;
++	} else {
++		ret = dwarf_getlocation_addr(&fb_attr, pf->addr, &pf->fb_ops, &nops, 1);
++		if (ret <= 0 || nops == 0)
++			pf->fb_ops = NULL;
 +	}
- 	dso__set_libdw(dso, dwfl);
- 
- 	return dwfl;
-@@ -72,18 +75,19 @@ struct libdw_a2l_cb_args {
- 	struct inline_node *node;
- 	char *leaf_srcline;
- 	bool leaf_srcline_used;
-+	int err;
- };
- 
- static int libdw_a2l_cb(Dwarf_Die *die, void *_args)
- {
- 	struct libdw_a2l_cb_args *args  = _args;
--	struct symbol *inline_sym = new_inline_sym(args->dso, args->sym, dwarf_diename(die));
-+	struct symbol *inline_sym = new_inline_sym(args->dso, args->sym, die_name(die));
- 	const char *call_fname = die_get_call_file(die);
- 	char *call_srcline = srcline__unknown;
- 	struct inline_list *ilist;
- 
- 	if (!inline_sym)
--		return -ENOMEM;
-+		goto abort_enomem;
- 
- 	/* Assign caller information to the parent. */
- 	if (call_fname)
-@@ -103,12 +107,27 @@ static int libdw_a2l_cb(Dwarf_Die *die, void *_args)
- 
- 	/* Add this symbol to the chain as the leaf. */
- 	if (!args->leaf_srcline_used) {
--		inline_list__append_tail(inline_sym, args->leaf_srcline, args->node);
-+		if (inline_list__append_tail(inline_sym, args->leaf_srcline, args->node) != 0)
-+			goto abort_delete_sym;
- 		args->leaf_srcline_used = true;
++
++	if (pf->fb_ops == NULL) {
++		/* Not supported */
+ 	} else if (nops == 1 && pf->fb_ops[0].atom == DW_OP_call_frame_cfa &&
+ 		   (pf->cfi_eh != NULL || pf->cfi_dbg != NULL)) {
+ 		if ((dwarf_cfi_addrframe(pf->cfi_eh, pf->addr, &frame) != 0 &&
+@@ -667,8 +687,8 @@ static int find_best_scope_cb(Dwarf_Die *fn_die, void *data)
+ 		}
  	} else {
--		inline_list__append_tail(inline_sym, strdup(args->leaf_srcline), args->node);
-+		char *srcline = strdup(args->leaf_srcline);
-+
-+		if (!srcline)
-+			goto abort_delete_sym;
-+		if (inline_list__append_tail(inline_sym, srcline, args->node) != 0) {
-+			free(srcline);
-+			goto abort_delete_sym;
-+		}
- 	}
- 	return 0;
-+
-+abort_delete_sym:
-+	if (inline_sym->inlined)
-+		symbol__delete(inline_sym);
-+abort_enomem:
-+	args->err = -ENOMEM;
-+	return DWARF_CB_ABORT;
+ 		/* With the line number, find the nearest declared DIE */
+-		dwarf_decl_line(fn_die, &lno);
+-		if (lno < fsp->line && fsp->diff > fsp->line - lno) {
++		if (dwarf_decl_line(fn_die, &lno) == 0 && lno < fsp->line &&
++		    fsp->diff > fsp->line - lno) {
+ 			/* Keep a candidate and continue */
+ 			fsp->diff = fsp->line - lno;
+ 			memcpy(fsp->die_mem, fn_die, sizeof(Dwarf_Die));
+@@ -924,12 +944,12 @@ static int probe_point_inline_cb(Dwarf_Die *in_die, void *data)
+ 		/* Get probe address */
+ 		if (die_entrypc(in_die, &addr) != 0) {
+ 			pr_warning("Failed to get entry address of %s.\n",
+-				   dwarf_diename(in_die));
++				   die_name(in_die));
+ 			return -ENOENT;
+ 		}
+ 		if (addr == 0) {
+ 			pr_debug("%s has no valid entry address. skipped.\n",
+-				 dwarf_diename(in_die));
++				 die_name(in_die));
+ 			return -ENOENT;
+ 		}
+ 		pf->addr = addr;
+@@ -971,12 +991,13 @@ static int probe_point_search_cb(Dwarf_Die *sp_die, void *data)
+ 	if (pp->file && fname && strtailcmp(pp->file, fname))
+ 		return DWARF_CB_OK;
+ 
+-	pr_debug("Matched function: %s [%lx]\n", dwarf_diename(sp_die),
++	pr_debug("Matched function: %s [%lx]\n", die_name(sp_die),
+ 		 (unsigned long)dwarf_dieoffset(sp_die));
+ 	pf->fname = fname;
+ 	pf->abstrace_dieoffset = dwarf_dieoffset(sp_die);
+ 	if (pp->line) { /* Function relative line */
+-		dwarf_decl_line(sp_die, &pf->lno);
++		if (dwarf_decl_line(sp_die, &pf->lno) != 0)
++			return DWARF_CB_OK;
+ 		pf->lno += pp->line;
+ 		param->retval = find_probe_point_by_line(pf);
+ 	} else if (die_is_func_instance(sp_die)) {
+@@ -985,7 +1006,7 @@ static int probe_point_search_cb(Dwarf_Die *sp_die, void *data)
+ 		/* But in some case the entry address is 0 */
+ 		if (pf->addr == 0) {
+ 			pr_debug("%s has no entry PC. Skipped\n",
+-				 dwarf_diename(sp_die));
++				 die_name(sp_die));
+ 			param->retval = 0;
+ 		/* Real function */
+ 		} else if (pp->lazy_line)
+@@ -1018,7 +1039,8 @@ static int find_probe_point_by_func(struct probe_finder *pf)
+ {
+ 	struct dwarf_callback_param _param = {.data = (void *)pf,
+ 					      .retval = 0};
+-	dwarf_getfuncs(&pf->cu_die, probe_point_search_cb, &_param, 0);
++	if (dwarf_getfuncs(&pf->cu_die, probe_point_search_cb, &_param, 0) < 0)
++		pr_debug("Failed to get functions from CU\n");
+ 	return _param.retval;
  }
  
- int libdw__addr2line(u64 addr, char **file, unsigned int *line_nr,
-@@ -162,11 +181,29 @@ int libdw__addr2line(u64 addr, char **file, unsigned int *line_nr,
- 			.leaf_srcline = srcline_from_fileline(src ?: "<unknown>", lineno),
- 		};
+@@ -1207,7 +1229,8 @@ static int copy_variables_cb(Dwarf_Die *die_mem, void *data)
+ 		 * points to correct die.
+ 		 */
+ 		if (dwarf_attr(die_mem, DW_AT_abstract_origin, &attr)) {
+-			dwarf_formref_die(&attr, &var_die);
++			if (dwarf_formref_die(&attr, &var_die) == NULL)
++				goto out;
+ 			if (pf->abstrace_dieoffset != dwarf_dieoffset(&var_die))
+ 				goto out;
+ 		}
+@@ -1293,13 +1316,16 @@ static int add_probe_trace_event(Dwarf_Die *sc_die, struct probe_finder *pf)
+ 	if (ret < 0)
+ 		goto end;
  
-+		if (!args.leaf_srcline) {
-+			if (file && *file) {
-+				free(*file);
-+				*file = NULL;
-+			}
-+			return 0;
-+		}
-+
- 		/* Walk from the parent down to the leaf. */
--		cu_walk_functions_at(cudie, addr, libdw_a2l_cb, &args);
-+		if (cudie)
-+			cu_walk_functions_at(cudie, addr, libdw_a2l_cb, &args);
- 
- 		if (!args.leaf_srcline_used)
- 			free(args.leaf_srcline);
-+
-+		if (args.err) {
-+			if (file && *file) {
-+				free(*file);
-+				*file = NULL;
-+			}
-+			inline_node__clear_frames(node);
-+			return 0;
-+		}
+-	tev->point.realname = strdup(dwarf_diename(sc_die));
++	tev->point.realname = strdup(die_name(sc_die));
+ 	if (!tev->point.realname) {
+ 		ret = -ENOMEM;
+ 		goto end;
  	}
- 	return 1;
+ 
+-	tev->lang = dwarf_srclang(dwarf_diecu(sc_die, &pf->cu_die, NULL, NULL));
++	if (dwarf_diecu(sc_die, &pf->cu_die, NULL, NULL) != NULL)
++		tev->lang = dwarf_srclang(&pf->cu_die);
++	else
++		tev->lang = DW_LANG_C; /* Fallback */
+ 
+ 	pr_debug("Probe point found: %s+%lu\n", tev->point.symbol,
+ 		 tev->point.offset);
+@@ -1794,7 +1820,8 @@ static int line_range_search_cb(Dwarf_Die *sp_die, void *data)
+ 
+ 	if (die_match_name(sp_die, lr->function) && die_is_func_def(sp_die)) {
+ 		lf->fname = die_get_decl_file(sp_die);
+-		dwarf_decl_line(sp_die, &lr->offset);
++		if (dwarf_decl_line(sp_die, &lr->offset) != 0)
++			lr->offset = 0; /* Fallback if no line info */
+ 		pr_debug("fname: %s, lineno:%d\n", lf->fname, lr->offset);
+ 		lf->lno_s = lr->offset + lr->start;
+ 		if (lf->lno_s < 0)	/* Overflow */
+@@ -1818,7 +1845,8 @@ static int line_range_search_cb(Dwarf_Die *sp_die, void *data)
+ static int find_line_range_by_func(struct line_finder *lf)
+ {
+ 	struct dwarf_callback_param param = {.data = (void *)lf, .retval = 0};
+-	dwarf_getfuncs(&lf->cu_die, line_range_search_cb, &param, 0);
++	if (dwarf_getfuncs(&lf->cu_die, line_range_search_cb, &param, 0) < 0)
++		pr_debug("Failed to get functions from CU\n");
+ 	return param.retval;
  }
+ 
 -- 
 2.53.0
 
