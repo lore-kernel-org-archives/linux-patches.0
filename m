@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5FC366816;
-	Tue, 21 Jul 2026 20:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479E83B9950;
+	Tue, 21 Jul 2026 20:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667308; cv=none; b=trUUSasYasVCtsLyN/ZAlZX9U27BMJcx0o2suZyq13TkqcjAVQ73rViBp2oKzozRx2p0xV/bZfbYwQI6HdoCdSpgvEPiaEKWgmiKUEGNvDWgfznk901Oy9zDEbmqLnGWUBT67sjHOtOmuopKqWTM38nf9BTN0kpTEYmcmesbvHg=
+	t=1784667311; cv=none; b=Y2MyfO7zW0oO571iMOs0le0mxD2LoXbnIUksRXNFXKkr1Dj92uziblzypscICKL5DPnlBp/mLOe0lCldGt97IpKBkREuFNg472FzCKZfrXySS1Tl/uAe9ojxmPR5LoLsWfJNb7cZ00FMtVrVFVvLF5/WfBivHcE7NC8jPoyyWcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667308; c=relaxed/simple;
-	bh=LAJyZ898dT5Yj9AaSbXSeUcdBOg+Zy5TokjDKsbF8Lw=;
+	s=arc-20240116; t=1784667311; c=relaxed/simple;
+	bh=DfG8xNY4TPFCHsfh8PvaK2Eumxebj5MgGpYs6vpykTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VHYZAKbxvKRsYjWa8L+9Eq5k/yCI3AwmFayvA4Sw6nVqbx6XsRmZyBl58WvqWL9tu/RrDWzyWX0aAXnFuucEdq4yGLWiN6/4lFWYORedfnX+H4/NPIpfuKOH+Oydqxd4TI3mjWHeK1Bv8bSREhpmtYAGeq+nMW7/FkGwzMxNzfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NFIzIVam; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M0Ryw22zg6gqvMxSqhvhiBTIfXSh+gnJvpDa74jxMGIn1lGvCcdTZLs6MPsgzQ/LwWMN1GYqsmkTo0y3aeO2CCwdY7OZVpAXvKZawTL4crErpCGQMC507687Ev88N7D9iXnJHld1QWzXm6SYkp287zKd7q2RqkT8F3iHN7+Y7P4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DL74aWbk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NFIzIVam"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B5C1F000E9;
-	Tue, 21 Jul 2026 20:55:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DL74aWbk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D0F1F000E9;
+	Tue, 21 Jul 2026 20:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667307;
-	bh=xFoB6wGjzmUn71RF1P8wrv1aucJQV0bnc2PMgiV9VKo=;
+	s=korg; t=1784667310;
+	bh=wVtM4/IJqyM4Ix6lYwULLfQcobiIHrF2rIsLzfUO4ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NFIzIVamV+exbNW4sBBTE3F3bK1qQ9ZFVBAtiGTRn2GLRB0uBOWDkTLTanvItEjgG
-	 nN7f9KvjCnnIBTo1TTNUwob1h21ljc1I05EropwvmM3yxnFrJFI4RkwFCMMYAhzqVg
-	 JHW0AT5HdCQ9w2vArkTHaZe6In9KQzLhv2X/oVt4=
+	b=DL74aWbkSAEUSNAiqWQmOnt87+FBj9Z5lmWysqmMWL4Y4TZl4iTXq0SiJoje/EpSh
+	 0+H6QRtshFW49cKq64Ep79zDVLgvCtBWSJl5nz5VzaL9Sp1kNQTq2ErW2vZ7oWtRfu
+	 OZa7n+SYpybqg5V16tSpYkSLbM38Ijpnlr+dP+Tw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 1010/1266] net: thunderbolt: Fix frags[] overflow by bounding frame_count
-Date: Tue, 21 Jul 2026 17:24:07 +0200
-Message-ID: <20260721152504.427617172@linuxfoundation.org>
+	Sebastian Alba Vives <sebasjosue84@gmail.com>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>
+Subject: [PATCH 6.6 1011/1266] fpga: microchip-spi: fix zero header_size OOB read in mpf_ops_parse_header()
+Date: Tue, 21 Jul 2026 17:24:08 +0200
+Message-ID: <20260721152504.449593346@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,58 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Sebastian Alba Vives <sebasjosue84@gmail.com>
 
-commit 55d9895f89970501fe126d1026b586b04a224c27 upstream.
+commit 43a1974da6bc7ce8f4d1dc1d03d56997428c29c3 upstream.
 
-tbnet_poll() assembles a multi-frame ThunderboltIP packet into one skb. The
-first frame goes into the skb linear area and every further frame is added as
-a page fragment.
+mpf_ops_parse_header() reads header_size from the bitstream at
+MPF_HEADER_SIZE_OFFSET (24). When header_size is zero, the expression
+*(buf + header_size - 1) reads one byte before the buffer start.
 
-	skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags,
-			page, hdr_size, frame_size,
-			TBNET_RX_PAGE_SIZE - hdr_size);
+Since initial_header_size is set to 71 in mpf_ops, the fpga-mgr core
+guarantees the buffer is large enough to reach MPF_HEADER_SIZE_OFFSET.
+The only real gap is the zero header_size case, which cannot be
+resolved by providing a larger buffer, so return -EINVAL.
 
-A packet of frame_count frames therefore ends up with frame_count - 1
-fragments. tbnet_check_frame() only bounds the peer supplied frame_count to
-TBNET_RING_SIZE / 4 (64), which is far above MAX_SKB_FRAGS (17 by default). A
-peer that sends a packet of 19 or more small frames pushes nr_frags past
-MAX_SKB_FRAGS, so skb_add_rx_frag() writes past skb_shinfo()->frags[] and
-corrupts memory after the shared info.
-
-Tighten the start of packet bound to MAX_SKB_FRAGS + 1 so a packet can never
-produce more fragments than frags[] can hold. This matches the recent skb
-frags overflow fixes in other receive paths, for example f0813bcd2d9d ("net:
-wwan: t7xx: fix potential skb->frags overflow in RX path") and 600dc40554dc
-("net: usb: cdc-phonet: fix skb frags[] overflow in rx_complete()").
-
-Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
+Fixes: 5f8d4a900830 ("fpga: microchip-spi: add Microchip MPF FPGA manager")
 Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://patch.msgid.link/178163152194.2486768.14724194232649760778@maoyixie.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20260518190742.61426-4-sebasjosue84@gmail.com
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/thunderbolt/main.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/fpga/microchip-spi.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/thunderbolt/main.c
-+++ b/drivers/net/thunderbolt/main.c
-@@ -786,8 +786,12 @@ static bool tbnet_check_frame(struct tbn
- 		return true;
+--- a/drivers/fpga/microchip-spi.c
++++ b/drivers/fpga/microchip-spi.c
+@@ -116,6 +116,9 @@ static int mpf_ops_parse_header(struct f
  	}
  
--	/* Start of packet, validate the frame header */
--	if (frame_count == 0 || frame_count > TBNET_RING_SIZE / 4) {
-+	/* Start of packet, validate the frame header. tbnet_poll() puts the
-+	 * first frame in the skb linear area and every further frame in a page
-+	 * fragment, so a packet may not span more than MAX_SKB_FRAGS + 1 frames
-+	 * without overflowing skb_shinfo()->frags[].
-+	 */
-+	if (frame_count == 0 || frame_count > MAX_SKB_FRAGS + 1) {
- 		net->stats.rx_length_errors++;
- 		return false;
- 	}
+ 	header_size = *(buf + MPF_HEADER_SIZE_OFFSET);
++	if (!header_size)
++		return -EINVAL;
++
+ 	if (header_size > count) {
+ 		info->header_size = header_size;
+ 		return -EAGAIN;
 
 
