@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A1B399015;
-	Tue, 21 Jul 2026 22:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC1C415F10;
+	Tue, 21 Jul 2026 22:54:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674494; cv=none; b=f0bb5LCrVyME9CFYDyiedviM6ILDQDkKRC9ghLS0nb7pDaPSxasjCWgVRwMztkBBPjtd+j1e8ZXNZRFfr7Px14aCkoldnWi3iBk0YsEuPWGI0gJ6y+9fRY9rHafh8m0CrccKWuZtoZp8eytxmvr0zQH5oZtTOLENXghIlxEXU9w=
+	t=1784674496; cv=none; b=Q88eNPPTsUdt2RlD+hZY4NKC06Te5GKhVtv9YpqUoRbiMf+L6mGIJlWfAJVevF1ZAMeo4Ms0KhXC+F/MKiAOLXG8mm5a990ZSvAgGBIf4ELUC5wbpr10HMLhqjV8giGjrUezE4L3P0p/WhAe6djoOo1VJXeCmeSTzVdOSqsOYjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674494; c=relaxed/simple;
-	bh=sHM2KVebD4tSL8F1j3pvbH6Ufsw/KavypMH8UyY+ktg=;
+	s=arc-20240116; t=1784674496; c=relaxed/simple;
+	bh=zItlsBIX4irLbKNqCw6HajxYbGwl+NaLucTRHUP9itY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LGz0HFGI7isXDTwCN3x+EbA00O/KiQMhUiMvGo5Hdw1+nKjbc+SOraUCfKk6gA9mKAOnYsINQXUj4ZEiJrpxG/8dh/AEvtYsrESdAAN7c4xy9YLeCrjT4tWBYQWLM6E1zLukchOFLbqdJG3l8KRMjG/Hi2JYMk6u5Ykrmtz89Mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hu58egXA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jvy71q55j1IUJsDJn1LkoIYeN+9GJ1yPDQJ+DPmhZGhvZqqYMRuAKYg8OUyuKqHogwORGC1Ke+l2BNquDL18ED977LUcPcPvisVXSqquhiX3uBZch3wasEO4Ia15Amv562xYtLQv1osoefvmHbBIZh5l0em/ek0bUk8EVNb+zJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EiZlbXVl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hu58egXA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657FD1F000E9;
-	Tue, 21 Jul 2026 22:54:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EiZlbXVl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D1EB1F000E9;
+	Tue, 21 Jul 2026 22:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674492;
-	bh=b0feNeuVj3pSKiM0QomRFxZ58sR7Q1spSFrn3jBIB78=;
+	s=korg; t=1784674495;
+	bh=yDFieAKAa8/OM67QwEe8u+zzSwkWxsBXgbOYos1jDXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hu58egXA5fyvyeULeB8e5zdQ4KfZbogmxM6iOy8sxYVJvKAxpemXN+Rs4F6SSvGP0
-	 3zRkq0E/RzXp+ol9M1m3ohjwhozcZzreVW2d3CNAbl6a2xo3/DcoTg+llsHCWoQ5by
-	 kA4IxkavjIvQC14zk0ToMynKx8b20Cruq/WRqOr4=
+	b=EiZlbXVli8ECnRzq6D48aou0N3cK7l975w7FQF8EUzm3N5Yso3gMWau7ZEl9Ui89Z
+	 r3QLoqxC8KSx3MbltEJxw29ODCHVQ1bsn/5twmcSqjb9DRPUHYHMem1lMvVLiHPp3q
+	 yRghWavbhrRhqlkwv9MWgcs2WoKxoUgCxT+6H+0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.10 562/699] Bluetooth: btrtl: validate firmware patch bounds
-Date: Tue, 21 Jul 2026 17:25:21 +0200
-Message-ID: <20260721152408.387117313@linuxfoundation.org>
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.10 563/699] llc: fix SAP refcount leak when creating incoming sockets
+Date: Tue, 21 Jul 2026 17:25:22 +0200
+Message-ID: <20260721152408.409708459@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,41 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-commit 609c5b04a28dc1b0f3af6a7bc93055135b2d2059 upstream.
+commit 2c72eb6286347d05a885412fb076993bd5286b53 upstream.
 
-rtlbt_parse_firmware() copies patch_length - 4 bytes before appending the
-firmware version. A malformed firmware patch shorter than the version field
-can make this subtraction underflow and turn the copy into an oversized
-read and write during Bluetooth setup.
+llc_sap_add_socket() takes a SAP reference for each socket added to a SAP,
+and llc_sap_remove_socket() releases it. llc_create_incoming_sock() takes
+an additional SAP reference after adding the child socket.
 
-The existing patch_offset + patch_length check can also wrap on 32-bit
-architectures. Validate the patch length and range without arithmetic
-overflow before allocating or copying the patch.
+This extra reference was balanced by an explicit llc_sap_put() in
+llc_ui_release() until commit 3100aa9d74db ("llc: fix SAP reference
+counting w.r.t. socket handling") removed that put. The corresponding hold
+in the accept path was left behind.
 
-Fixes: db33c77dddc2 ("Bluetooth: btrtl: Create separate module for Realtek BT driver")
+When such a child socket is removed, only the reference taken by
+llc_sap_add_socket() is released. The extra reference keeps the SAP alive
+after its last socket is removed. Remove the obsolete hold.
+
+Fixes: 3100aa9d74db ("llc: fix SAP reference counting w.r.t. socket handling")
 Cc: stable@vger.kernel.org
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Link: https://patch.msgid.link/20260712130343.518797-1-xuanqiang.luo@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btrtl.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/llc/llc_conn.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/bluetooth/btrtl.c
-+++ b/drivers/bluetooth/btrtl.c
-@@ -382,8 +382,9 @@ static int rtlbt_parse_firmware(struct h
- 	}
- 
- 	BT_DBG("length=%x offset=%x index %d", patch_length, patch_offset, i);
--	min_size = patch_offset + patch_length;
--	if (btrtl_dev->fw_len < min_size)
-+	if (patch_length < sizeof(epatch_info->fw_version) ||
-+	    patch_offset > btrtl_dev->fw_len ||
-+	    patch_length > btrtl_dev->fw_len - patch_offset)
- 		return -EINVAL;
- 
- 	/* Copy the firmware into a new buffer and write the version at
+--- a/net/llc/llc_conn.c
++++ b/net/llc/llc_conn.c
+@@ -761,7 +761,6 @@ static struct sock *llc_create_incoming_
+ 	newllc->dev = dev;
+ 	dev_hold(dev);
+ 	llc_sap_add_socket(llc->sap, newsk);
+-	llc_sap_hold(llc->sap);
+ out:
+ 	return newsk;
+ }
 
 
