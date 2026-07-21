@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F45435C694;
-	Tue, 21 Jul 2026 22:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A853E49CF;
+	Tue, 21 Jul 2026 22:24:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672680; cv=none; b=MytZzm4CpDcTDhbtHHRXyU9vhaLWAKOr41mNrltk+/IYM4R7H56fEogJqTDHtQToifZZfzJEUQbondwtoJ/E/tONmHE91cXgwWnNn2Rt45SbMUmg96savu3MLpX/ULXMRVsfIP0BVGNgVNwxPw6Vt+Eieyi2uMMXqFVNu8qBZ1c=
+	t=1784672683; cv=none; b=QCadBlCUnMws8I38sdFBiAofHyJK/3G6tE0SyPPp/QKLL6cqzpRPQPFLWFv6dZI32R0yC1VogeaM5ubFSKy6EStVmXVNoP0//k9kvLqmdSJ2/2DfXZGJ+LGJfg8ShhdLaVWJT8RdrpXGSJYdT2RC+ZRMGlpq7+TVTqLizwUPW4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672680; c=relaxed/simple;
-	bh=Ob5rX0VkKwZuQ2/bAUrLCAQHOdh1bjY9pbF9iefmwqA=;
+	s=arc-20240116; t=1784672683; c=relaxed/simple;
+	bh=zJRE50JRpfCNoX/p578JToX9LkxrYl0EBKYoQjLqwrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X7aS8SpoJbDHnD8HvzVh6jrUiTmPTVi5GGDVf3pkWbzl9GWer+KaksqsuhxH+F8iIVFG/iVV2vQHzy/bhVrjPqkZtEwA8RQaqryuaF23+alp/HKfTf7kx/MmtazrYHHgtfbCqECe+KDYP0gjHuISsA+ERVsu2Sl489kR6BY6Yn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgG/RBY7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RHRBZ7FmDuQ0JH3NQNOtX/Lpxv20m1U0LRecwFeU9oG66WtZa4awRCIxtE9pRIr3Ktz5YAg+x+TpeKbLjYLUvuRJfD76DZ/MoM03gR6Jgzx3pvv4nw0g7WPW1tCOhUfzNwln7chNjSljtqA9DO8mEg45E/q77w0Fn6AdlPLKxMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kF66jhV+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgG/RBY7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CE11F000E9;
-	Tue, 21 Jul 2026 22:24:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kF66jhV+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A72B1F000E9;
+	Tue, 21 Jul 2026 22:24:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672679;
-	bh=XUwbx7+EAmGOPrlmCYbUZRZb0kJiEIuSsD6yWoxND/g=;
+	s=korg; t=1784672682;
+	bh=QzKKr+uBpH6GwUX7Mb1CxZW51ovB4usavmv+ekk4eGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jgG/RBY7PEs7c2lXTsBsZtR9NDhErfZ39YgUOndzXdjcCG7l36zG3C/zcdis2Zx4k
-	 aFBXNIAgHexFJzm/nxYbrAdHQeFba14fEmWjjxTh+y2DGnIaqDJpQUQCy/tJNmcfya
-	 1IDeEP+i7MPGpGloDBEYZzToKvpAgB1YqwPjhOdw=
+	b=kF66jhV+9i4ENUdL993W6tZZfaN/UBaYALTOJ7LBuDV0LvzTtp0JVPprDPe6B7HS/
+	 MP+g7jY8LBghBewYgAFgCbBoqGgwEyazBjSatAWUGs06Px9jH+EcnGEq0Ek61xj74S
+	 RZWFC2au8cZiK++p2M5zLZH8U6c99c+7s9iqMrww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	James Raphael Tiovalen <jamestiotio@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 715/843] llc: fix SAP refcount leak when creating incoming sockets
-Date: Tue, 21 Jul 2026 17:25:50 +0200
-Message-ID: <20260721152422.131920727@linuxfoundation.org>
+Subject: [PATCH 5.15 716/843] macsec: fix promiscuity refcount leak in macsec_dev_open()
+Date: Tue, 21 Jul 2026 17:25:51 +0200
+Message-ID: <20260721152422.154761367@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,42 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: James Raphael Tiovalen <jamestiotio@gmail.com>
 
-commit 2c72eb6286347d05a885412fb076993bd5286b53 upstream.
+commit 7410d11460eb90d6c9281162ccc6a128534d897d upstream.
 
-llc_sap_add_socket() takes a SAP reference for each socket added to a SAP,
-and llc_sap_remove_socket() releases it. llc_create_incoming_sock() takes
-an additional SAP reference after adding the child socket.
+When a MACsec interface with IFF_PROMISC set is brought up on top of a
+device that has hardware offload enabled, macsec_dev_open() first calls
+dev_set_promiscuity(real_dev, 1) and then propagates the open to the
+offload device. If that propagation fails, the error path jumps to the
+clear_allmulti label, which only reverts allmulti and the unicast
+address. The promiscuity taken on the lower device is never dropped, so
+real_dev is left permanently stuck in promiscuous mode. Its promiscuity
+count can no longer be balanced from software.
 
-This extra reference was balanced by an explicit llc_sap_put() in
-llc_ui_release() until commit 3100aa9d74db ("llc: fix SAP reference
-counting w.r.t. socket handling") removed that put. The corresponding hold
-in the accept path was left behind.
+Add a clear_promisc label that drops the promiscuity reference and
+route the two offload failure paths to it. The dev_set_promiscuity()
+failure itself still jumps to clear_allmulti, since on that failure the
+count was not incremented.
 
-When such a child socket is removed, only the reference taken by
-llc_sap_add_socket() is released. The extra reference keeps the SAP alive
-after its last socket is removed. Remove the obsolete hold.
-
-Fixes: 3100aa9d74db ("llc: fix SAP reference counting w.r.t. socket handling")
+Fixes: 3cf3227a21d1 ("net: macsec: hardware offloading infrastructure")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Link: https://patch.msgid.link/20260712130343.518797-1-xuanqiang.luo@linux.dev
+Signed-off-by: James Raphael Tiovalen <jamestiotio@gmail.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20260705113629.187490-1-jamestiotio@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/llc/llc_conn.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/macsec.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/net/llc/llc_conn.c
-+++ b/net/llc/llc_conn.c
-@@ -761,7 +761,6 @@ static struct sock *llc_create_incoming_
- 	newllc->dev = dev;
- 	dev_hold(dev);
- 	llc_sap_add_socket(llc->sap, newsk);
--	llc_sap_hold(llc->sap);
- out:
- 	return newsk;
- }
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -3556,19 +3556,22 @@ static int macsec_dev_open(struct net_de
+ 		ops = macsec_get_ops(netdev_priv(dev), &ctx);
+ 		if (!ops) {
+ 			err = -EOPNOTSUPP;
+-			goto clear_allmulti;
++			goto clear_promisc;
+ 		}
+ 
+ 		ctx.secy = &macsec->secy;
+ 		err = macsec_offload(ops->mdo_dev_open, &ctx);
+ 		if (err)
+-			goto clear_allmulti;
++			goto clear_promisc;
+ 	}
+ 
+ 	if (netif_carrier_ok(real_dev))
+ 		netif_carrier_on(dev);
+ 
+ 	return 0;
++clear_promisc:
++	if (dev->flags & IFF_PROMISC)
++		dev_set_promiscuity(real_dev, -1);
+ clear_allmulti:
+ 	if (dev->flags & IFF_ALLMULTI)
+ 		dev_set_allmulti(real_dev, -1);
 
 
