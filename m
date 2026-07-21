@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD55356A12;
-	Tue, 21 Jul 2026 20:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C90356A12;
+	Tue, 21 Jul 2026 20:44:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666679; cv=none; b=KQ5nkgw7Ls3p8mPFDg/nRTxwK5I1YrvS2yOv8YgTdVUj6USqBZS6vIoRH0hJ8qGo5mjIc3aLJvCUMrjwlT11/wLLcZux7vjE/SBX9s0Pn7IsKr049GBHZ6qBpa/m02FnlhaxLYVEBzG6pxsVp6gW++hdolcLxSwZizTmhpxZPe0=
+	t=1784666682; cv=none; b=BMP6Z32X31CgTsVaBsh333Ki0UH/ApZGvgaqbwvfRUEodFW9BtQjKMIVL3RyTk+iUTB68sXF8MikqcFxSGzYjXnsbO1odBajsPT/srBbaze4/KO7CJ1xF0/0pZsHF8k4SqQZDNIS4tVxS1FXZz/bSp1ZGlJikXNb+aZ9HmrtK2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666679; c=relaxed/simple;
-	bh=07qGwIXRQy9/U8aPIuRchdcL+ajhC9CIpfySj7qtfzI=;
+	s=arc-20240116; t=1784666682; c=relaxed/simple;
+	bh=p43H5gFWTQOx+9LVcYCursoppEyTlmsjb60Ork5UVo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gdpWPWc0mMsgsDIaKQFA5UcAtnNhWizdh2rJ1Hq0su8ONY8NvhS90t//lxukNKKRxJlOBwTNk9kjjAlhCqF4ht3C3I3j/nTic4FPbRVNioU+wXcJ/Iyp2W8u0ViSK5SV+Cfw3nUfK42GfxRCyhqFBy/60WO5HmdkEs1Fkcz2vzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kvz9BZeF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j/5MzH5NgJrlpZOFW8maK9XX59O6g0PKgXm0HTgBeGLesLAh1wT+KO88/AXpZe3VuaTrjJvngSMNHOLLBBX3dIJiKlLFISeEneEUMY7Yq2RG9x4tGIhEUwKAetK6xzeoQ6tfCRLiAp40strcqUP/0MSng4BpYhN5wRQmVHjUhO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNI5T3YZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kvz9BZeF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2DCC1F000E9;
-	Tue, 21 Jul 2026 20:44:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNI5T3YZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB501F000E9;
+	Tue, 21 Jul 2026 20:44:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666678;
-	bh=Ab3lD90xpB6ZhlKOZpv5sC7aEunBaQr2lRMzcEiiJ14=;
+	s=korg; t=1784666681;
+	bh=iV9IcFq+hasCSXHNMGcAoybZ33J51qvmGsYLoooJw/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kvz9BZeFJVlHSJbOTyU99Jm9TljdUzMH1HP+ywO+n4SIHx6u2epnQ96LvS/+hWBoB
-	 17jhN7egGANT+fIs5fSW2xVpcrsb3ydCtDlWnN/Q2ciCMaH+q/wCNGx6oT7T+L+zCZ
-	 6zskZLUzC1JeMnB/BQGiTovEjqYpIznxxCgHGiF4=
+	b=fNI5T3YZC04furCceosEfgpKQRGXIW71ZTr3djQFfzZK5QGTcILj3j8mL2a6z1IWB
+	 Zbj9NaFax0Sm5B5wfiH8J1Pf/GxOnCciCtT99l5b3QY0pzQwAvZ9Tpm2SCCmzKsUUe
+	 oIeEtwlMpAE1Uusy/CYdKVPn3dohJ+n0JGWaDG6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <include@grrlz.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Ivan Abramov <i.abramov@mt-integration.ru>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0773/1266] bpf: Disable xfrm_decode_session hook attachment
-Date: Tue, 21 Jul 2026 17:20:10 +0200
-Message-ID: <20260721152459.162263206@linuxfoundation.org>
+Subject: [PATCH 6.6 0738/1266] ieee802154: Remove WARN_ON() in cfg802154_pernet_exit()
+Date: Tue, 21 Jul 2026 17:19:35 +0200
+Message-ID: <20260721152458.387108403@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,40 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bradley Morgan <include@grrlz.net>
+From: Ivan Abramov <i.abramov@mt-integration.ru>
 
-[ Upstream commit 12091470c6b4c1c14b2de12dcbae2ada6cb6d20b ]
+[ Upstream commit e69ed6fc9fb3b386b5fcdb9f51623f122cee2ebd ]
 
-BPF LSM programs can currently attach to xfrm_decode_session(). That
-hook may return an error, but security_skb_classify_flow() calls it
-from a void path and triggers BUG_ON() if an error is returned.
+There's no need to call WARN_ON() in cfg802154_pernet_exit(), since
+every point of failure in cfg802154_switch_netns() is covered with
+WARN_ON(), so remove it.
 
-Disable BPF attachment to the hook to prevent a BPF LSM program from
-turning packet classification into a full panic.
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-Fixes: 9e4e01dfd325 ("bpf: lsm: Implement attach, detach and execution")
-Signed-off-by: Bradley Morgan <include@grrlz.net>
-Link: https://lore.kernel.org/r/20260619130305.27779-1-include@grrlz.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 66e5c2672cd1 ("ieee802154: add netns support")
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
+Link: https://lore.kernel.org/20250403101935.991385-4-i.abramov@mt-integration.ru
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_lsm.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/ieee802154/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
-index c7c4201644322b..147c3a8ad4e8e0 100644
---- a/kernel/bpf/bpf_lsm.c
-+++ b/kernel/bpf/bpf_lsm.c
-@@ -51,6 +51,9 @@ BTF_ID(func, bpf_lsm_key_getsecurity)
- #ifdef CONFIG_AUDIT
- BTF_ID(func, bpf_lsm_audit_rule_match)
- #endif
-+#ifdef CONFIG_SECURITY_NETWORK_XFRM
-+BTF_ID(func, bpf_lsm_xfrm_decode_session)
-+#endif
- BTF_ID(func, bpf_lsm_ismaclabel)
- BTF_SET_END(bpf_lsm_disabled_hooks)
- 
+diff --git a/net/ieee802154/core.c b/net/ieee802154/core.c
+index 57546e07e06ade..cdf4b41c54b2b1 100644
+--- a/net/ieee802154/core.c
++++ b/net/ieee802154/core.c
+@@ -327,7 +327,7 @@ static void __net_exit cfg802154_pernet_exit(struct net *net)
+ 	rtnl_lock();
+ 	list_for_each_entry(rdev, &cfg802154_rdev_list, list) {
+ 		if (net_eq(wpan_phy_net(&rdev->wpan_phy), net))
+-			WARN_ON(cfg802154_switch_netns(rdev, &init_net));
++			cfg802154_switch_netns(rdev, &init_net);
+ 	}
+ 	rtnl_unlock();
+ }
 -- 
 2.53.0
 
