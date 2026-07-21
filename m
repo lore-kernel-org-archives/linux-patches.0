@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE3D44AB99;
-	Tue, 21 Jul 2026 21:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18D53C1098;
+	Tue, 21 Jul 2026 21:31:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669503; cv=none; b=ZQprJuu/uqU2ZoqXmVy0E86sWfvR5GOnkxHKrfIYwi66CH8Bjnen+LfN832i3YWF3T/PDAXkR53eGGSSNZGAQ/a1a9owAxiHbRbwgMZsq2ul5gU9zyPLmt60d6s2Lyhmp+HOsSQdXg4w9tPDqJuLfvn1TSfXKXfDEVg4l7aKqwY=
+	t=1784669505; cv=none; b=A0BuNTDnzMQxEc3HUQJWDItWAtbqvhSKxnTrbRthEalVEn5cf/XgfwH0ZJzRnJglsZLgVGMI/aMFD0wN6NRTv1D1F0Hwu1siUoiUKgb01EN76qjoa+DCGXjdliWVgwebJav/00deSz0OClf0HBtlsqQOqUpcIcvXby3c4BOgkcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669503; c=relaxed/simple;
-	bh=BrHV/v8lJX+aLJjGuqRxDLbw/i/TbXEncoNMLRV0VyE=;
+	s=arc-20240116; t=1784669505; c=relaxed/simple;
+	bh=x6nsc+yXtUJad3HH9b+9zTaosfLf0c9sWSGUlU1IssY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NYWArpsTFPUTbyCOkZh30oG2IPDE8I6Uu23nuKVWsvNDUUmOJ2BmA5rNwXbXX+XLByuy5cK1ffvYR+PO4WODdYHX5F/l9oEIb3/esgg8wjO7B4XU4BrNQPD0llkT9OEhllSBrrp1PlnzdzvNUbmTQKLqunR79qUt0dKocGGSJZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPZQmqqO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u7mEKhCNJvmGVTNH8Y2/3vjEd1RlRQS3HVgfmVE/Qec5R8+omnpmDx0xsZ/CdD5NcEqiDPmn5JAsVdiMZFLZAF4n2BSdZGbz8U11p/Th6h5l9Tb0QSr6UZpww+lUqv2+cSh358+GE1206DWanEHJTyBkDhijMIxHuUOouIq2U7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPkOUWci; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPZQmqqO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D3B1F000E9;
-	Tue, 21 Jul 2026 21:31:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPkOUWci"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DFA21F00A3F;
+	Tue, 21 Jul 2026 21:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669502;
-	bh=LrblPxklg7FskawnNI6NWuRvqwXLXb6BvlYXpkGSgVs=;
+	s=korg; t=1784669504;
+	bh=EdCF8jVhhdhrMmJn8LlCbDoHPQHjIgvtPu4QtGAmQJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xPZQmqqOiD0piZa7gAdK0OdyUmesyqasnAp7djXYCNR3In5fKDGSbwQjFV+t90brR
-	 +Va9Lt6OKoImF79+XRwVI8k8Q5FnYv0hqqo97U/uK0+FaXABCr+Ncq1vvYscADmPha
-	 X1r4Jgh949pfEMhpvVyoMGOPdBRP3IzqnMc0/3PA=
+	b=XPkOUWci2/245lwClrJ19jrg5WWTLxIptF8eKMudugbwM3GDTfLZJ7N5/pb77Ndn2
+	 2y+l17RsPInRLwclOAb620riGcnzJUoMqBcmmBPTRG4JMBPOlJcCA+PqHqZqYih/7g
+	 rnMTRVUyP9JPUp/dbsvAD73djmQFcsSnx6r3uh1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Ray Jui <ray.jui@broadcom.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Zhang Yanmin <yanmin_zhang@linux.intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0580/1067] PCI: iproc: Restore .map_irq() for the platform bus driver
-Date: Tue, 21 Jul 2026 17:19:41 +0200
-Message-ID: <20260721152437.580859871@linuxfoundation.org>
+Subject: [PATCH 6.1 0563/1067] perf tools: Use snprintf() for root_dir path construction
+Date: Tue, 21 Jul 2026 17:19:24 +0200
+Message-ID: <20260721152437.198405269@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,101 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 3c2e6cc6affa8acdb99a580be1f8f297edf54204 ]
+[ Upstream commit 7b0df6f4d498b1608afccfd6dffb264e6da91693 ]
 
-Commit b64aa11eb2dd ("PCI: Set bridge map_irq and swizzle_irq to default
-functions") moved the assignment of default .map_irq() callback to
-devm_of_pci_bridge_init() and removed the initialization of
-'iproc_pcie::map_irq' in platform bus driver.  This led to the callback
-getting assigned the NULL pointer for platform bus driver, thereby breaking
-the INTx functionality, since 'iproc_pcie::map_irq' overrides the
-'pci_host_bridge::map_irq' callback in iproc_pcie_setup().
+get_kernel_version() in machine.c and dso__load_guest_kernel_sym() in
+symbol.c use sprintf() to construct paths by prepending root_dir to
+"/proc/version" and "/proc/kallsyms" respectively.  Both write into
+PATH_MAX stack buffers, but root_dir comes from --guestmount or KVM
+configuration and is not length-checked.  A root_dir at or near
+PATH_MAX causes a stack buffer overflow.
 
-This issue only affected the iproc platform bus driver as this driver
-relies on the default callback for non-PAXC controllers. iproc-brcm driver
-was already providing the custom mapping function, so it was unaffected.
+Switch to snprintf() with sizeof(path) to prevent overflow.
 
-Restore the original (and intended) behaviour to use the default map_irq
-function by removing the local 'iproc_pcie::map_irq' pointer and directly
-assigning the 'pci_host_bridge::map_irq' callback in iproc-bcma driver.
-This ensures that the default 'map_irq' callback is used for platform bus
-driver and only iproc-brcm driver overrides it with a custom one.
-
-Fixes: b64aa11eb2dd ("PCI: Set bridge map_irq and swizzle_irq to default functions")
-Signed-off-by: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
-[mani: commit log]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Ray Jui <ray.jui@broadcom.com>
-Link: https://patch.msgid.link/20260430021628.1343154-1-mark.tomlinson@alliedtelesis.co.nz
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Fixes: a1645ce12adb6c9c ("perf: 'perf kvm' tool for monitoring guest performance from host")
+Cc: Zhang Yanmin <yanmin_zhang@linux.intel.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-iproc-bcma.c     | 2 +-
- drivers/pci/controller/pcie-iproc-platform.c | 2 +-
- drivers/pci/controller/pcie-iproc.c          | 1 -
- drivers/pci/controller/pcie-iproc.h          | 2 --
- 4 files changed, 2 insertions(+), 5 deletions(-)
+ tools/perf/util/machine.c | 2 +-
+ tools/perf/util/symbol.c  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-iproc-bcma.c b/drivers/pci/controller/pcie-iproc-bcma.c
-index 99a99900444de1..593418c2bc3aa6 100644
---- a/drivers/pci/controller/pcie-iproc-bcma.c
-+++ b/drivers/pci/controller/pcie-iproc-bcma.c
-@@ -64,7 +64,7 @@ static int iproc_bcma_pcie_probe(struct bcma_device *bdev)
- 	if (ret)
- 		return ret;
+diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
+index 9cd52f50ea7acf..419147da8d672b 100644
+--- a/tools/perf/util/machine.c
++++ b/tools/perf/util/machine.c
+@@ -1443,7 +1443,7 @@ static char *get_kernel_version(const char *root_dir)
+ 	char *name, *tmp;
+ 	const char *prefix = "Linux version ";
  
--	pcie->map_irq = iproc_bcma_pcie_map_irq;
-+	bridge->map_irq = iproc_bcma_pcie_map_irq;
+-	sprintf(version, "%s/proc/version", root_dir);
++	snprintf(version, sizeof(version), "%s/proc/version", root_dir);
+ 	file = fopen(version, "r");
+ 	if (!file)
+ 		return NULL;
+diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
+index b434f2398df5ac..bc79eace253591 100644
+--- a/tools/perf/util/symbol.c
++++ b/tools/perf/util/symbol.c
+@@ -2336,7 +2336,7 @@ static int dso__load_guest_kernel_sym(struct dso *dso, struct map *map)
+ 		if (!kallsyms_filename)
+ 			return -1;
+ 	} else {
+-		sprintf(path, "%s/proc/kallsyms", machine->root_dir);
++		snprintf(path, sizeof(path), "%s/proc/kallsyms", machine->root_dir);
+ 		kallsyms_filename = path;
+ 	}
  
- 	bcma_set_drvdata(bdev, pcie);
- 
-diff --git a/drivers/pci/controller/pcie-iproc-platform.c b/drivers/pci/controller/pcie-iproc-platform.c
-index 538115246c799c..310c17245df351 100644
---- a/drivers/pci/controller/pcie-iproc-platform.c
-+++ b/drivers/pci/controller/pcie-iproc-platform.c
-@@ -99,7 +99,7 @@ static int iproc_pltfm_pcie_probe(struct platform_device *pdev)
- 	switch (pcie->type) {
- 	case IPROC_PCIE_PAXC:
- 	case IPROC_PCIE_PAXC_V2:
--		pcie->map_irq = NULL;
-+		bridge->map_irq = NULL;
- 		break;
- 	default:
- 		break;
-diff --git a/drivers/pci/controller/pcie-iproc.c b/drivers/pci/controller/pcie-iproc.c
-index 2519201b0e51c4..6525c7ded5c400 100644
---- a/drivers/pci/controller/pcie-iproc.c
-+++ b/drivers/pci/controller/pcie-iproc.c
-@@ -1515,7 +1515,6 @@ int iproc_pcie_setup(struct iproc_pcie *pcie, struct list_head *res)
- 
- 	host->ops = &iproc_pcie_ops;
- 	host->sysdata = pcie;
--	host->map_irq = pcie->map_irq;
- 
- 	ret = pci_host_probe(host);
- 	if (ret < 0) {
-diff --git a/drivers/pci/controller/pcie-iproc.h b/drivers/pci/controller/pcie-iproc.h
-index dcca315897c8ef..af2145710876f3 100644
---- a/drivers/pci/controller/pcie-iproc.h
-+++ b/drivers/pci/controller/pcie-iproc.h
-@@ -61,7 +61,6 @@ struct iproc_msi;
-  * @base_addr: PCIe host controller register base physical address
-  * @mem: host bridge memory window resource
-  * @phy: optional PHY device that controls the Serdes
-- * @map_irq: function callback to map interrupts
-  * @ep_is_internal: indicates an internal emulated endpoint device is connected
-  * @iproc_cfg_read: indicates the iProc config read function should be used
-  * @rej_unconfig_pf: indicates the root complex needs to detect and reject
-@@ -91,7 +90,6 @@ struct iproc_pcie {
- 	phys_addr_t base_addr;
- 	struct resource mem;
- 	struct phy *phy;
--	int (*map_irq)(const struct pci_dev *, u8, u8);
- 	bool ep_is_internal;
- 	bool iproc_cfg_read;
- 	bool rej_unconfig_pf;
 -- 
 2.53.0
 
