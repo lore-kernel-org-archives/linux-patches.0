@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A95471257;
-	Tue, 21 Jul 2026 18:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E39471248;
+	Tue, 21 Jul 2026 18:12:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657556; cv=none; b=L19ZzbAchlQCsttIT/hp3/DMC87zasz/YlKmlZLyIsqR9lvZ2+Hr/apgr9W57eIZAsX2ggutqFWPgu8j0FZ9BGERBHhIAayy9ndqYB6O5sKUwadkjfFWvAmft6PukO6Z/O73lam7EK69RAjSvTbSiBGR/HEzYawxKoTQGYdkIr0=
+	t=1784657559; cv=none; b=BFspxu2M4Sumk8jrFdLBp00kVRX4fs0caV17O9G4stAhUoQqUXkpjApwKMlqiEbRbVTB/wESSAQbG/3M6AMTAnMdBBCSFttCjiwb2C9vEy91SwleN9XO5e0AcT0lihQ9aVe1sX2D3WeMmHF44fX4XNpqR7UT9+hYIK+yemEBQTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657556; c=relaxed/simple;
-	bh=MjHXxSm5eFcz6RVlZrxthmg5QR4Mm2ZsnMc3rPx0tfQ=;
+	s=arc-20240116; t=1784657559; c=relaxed/simple;
+	bh=W0jkSP8jdy1uuI6++pW4eJfSFRIB5X0Ju6d95GDcx2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W8Sxb9nqXx7E0QjpxmVETMKVrOxtcdwLBQGyDZhfcfxQptkkGxIw5ab+R4dHQzReRKNCtDmKpROPE0DReqcBlKMUQDdgt213oytutId7OQITFMiVVHz7/q/e5NOqyjv4VLwurgu02ZoQGvUFAcytq4Q/o2ERjKSwJ0uY+zarVpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VfKbrNNB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jm6xQvkkTOx7+mI9N9jstIKSsyIrEUhmA8StsoCptXQXjJqkCwBAYbg64Dp1sR8mnThsRlpZvrnRDYPymeg/RxV5Gr7A0d0bKQWgaw3vMt1BeVaV6PSXogRpcfpYUykjCkQ63xcC8gg3eZcAz4FB5CBCn0wVOmo+HkoULomp4IA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1GLRWJxB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VfKbrNNB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5D21F000E9;
-	Tue, 21 Jul 2026 18:12:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GLRWJxB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8901E1F000E9;
+	Tue, 21 Jul 2026 18:12:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657555;
-	bh=vbgOMX45F5GcRmZeKmozcakXcoEnUZ+HbfcYNlyRq4E=;
+	s=korg; t=1784657558;
+	bh=uelndBhjKzPuB7AYakgeapVPljOff9x0vFn5DSvdp+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VfKbrNNBjAlz3I+Vyv+7pfCO5Ho7/z+3o/acds6egNlaVgeYBkDVd5CRtr/FRXmhZ
-	 nGXZQ/SKHNnGu4RKQC/qwl01IKIW3qTOBA9I8ThgdkBTjM2hGyCFiBhTlAjlUAN+Q3
-	 pjaIZOGG3brNaTq2wL9uYZzq1pDiCTBCyAymue5Q=
+	b=1GLRWJxBgz9glo1u2hlf9b8enAILueCszLMXH9vPhu76W+XfAQkQP4FcpEe6GLuq/
+	 tq2THv8YIwgr7Xf+tiS1jI0Hf67WGnaWaf1qR/tSWDj9m3Rkavt+i6gwTeBwMnZzkE
+	 8Ei9KDDz1HOrT4t0hW8eolBEk/zSz8MJzeqttrgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0809/1611] ALSA: usb-audio: qcom: reject stream disable with no active interface
-Date: Tue, 21 Jul 2026 17:15:25 +0200
-Message-ID: <20260721152533.584769126@linuxfoundation.org>
+Subject: [PATCH 6.18 0810/1611] ALSA: usb-audio: qcom: clear opened when stream enable fails
+Date: Tue, 21 Jul 2026 17:15:26 +0200
+Message-ID: <20260721152533.607325280@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,57 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit bdb640be82e645e2828731648f485224d0c2587b ]
+[ Upstream commit 3c7af07943b2718087ae791cad450af5cf646d90 ]
 
-handle_uaudio_stream_req() resolves an interface index with
-info_idx_from_ifnum(), which returns -EINVAL when no interface matches.
-The enable branch and the response: cleanup label both guard against a
-negative index, but the disable branch does not: it forms
-info = &uadev[pcm_card_num].info[info_idx] and dereferences it.
+On enable, subs->opened is set before the service_interval is validated;
+an invalid interval jumps to the response label without clearing it, so
+the substream is wedged at -EBUSY until a disable or disconnect.
 
-uadev[].info is a pointer allocated only when a stream is first enabled,
-so a negative info_idx on the disable path is unsafe in two ways:
-
- - If the card was never enabled, .info is NULL and &info[-EINVAL] is a
-   wild pointer; reading info->data_ep_pipe faults (kernel oops).
-
- - If the card was enabled at least once (.info allocated) and the
-   disable names an interface that does not match, &info[-EINVAL] points
-   before the allocation; info->data_ep_pipe / info->sync_ep_pipe are an
-   out-of-bounds slab read and, when non-zero, an out-of-bounds 4-byte
-   write (both pipe fields are cleared to 0). That is memory corruption,
-   not just a NULL dereference.
-
-The request is reachable from unprivileged local userspace over
-AF_QIPCRTR. Reject a disable request with no resolved interface, matching
-the guard the enable path already has.
+Clear subs->opened on the enable error path.
 
 Fixes: 326bbc348298a ("ALSA: usb-audio: qcom: Introduce QC USB SND offloading support")
 Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260618025126.1862954-2-michael.bommarito@gmail.com
+Link: https://patch.msgid.link/20260618025126.1862954-3-michael.bommarito@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/qcom/qc_audio_offload.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/usb/qcom/qc_audio_offload.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
-index 26b632baefadc9..09a699649f8d7a 100644
+index 09a699649f8d7a..da2759f2ee8665 100644
 --- a/sound/usb/qcom/qc_audio_offload.c
 +++ b/sound/usb/qcom/qc_audio_offload.c
-@@ -1648,6 +1648,11 @@ static void handle_uaudio_stream_req(struct qmi_handle *handle,
- 			subs->opened = 0;
- 		}
- 	} else {
-+		if (info_idx < 0) {
-+			ret = -EINVAL;
-+			goto response;
+@@ -1626,8 +1626,13 @@ static void handle_uaudio_stream_req(struct qmi_handle *handle,
+ 	if (req_msg->service_interval_valid) {
+ 		ret = get_data_interval_from_si(subs,
+ 						req_msg->service_interval);
+-		if (ret == -EINVAL)
++		if (ret == -EINVAL) {
++			if (req_msg->enable) {
++				guard(mutex)(&chip->mutex);
++				subs->opened = 0;
++			}
+ 			goto response;
 +		}
-+
- 		info = &uadev[pcm_card_num].info[info_idx];
- 		if (info->data_ep_pipe) {
- 			ep = usb_pipe_endpoint(uadev[pcm_card_num].udev,
+ 
+ 		datainterval = ret;
+ 	}
 -- 
 2.53.0
 
