@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A288A471432;
-	Tue, 21 Jul 2026 20:14:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BDF2471268;
+	Tue, 21 Jul 2026 20:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664852; cv=none; b=q/fEUbD2SzGFX+pr0hIW3/T5e6YZ6IkudqPxOJfYjXLChUcemJCnkt+DssaE4GPATTX98g9C75O+8wmt2A7KBBNXe92WnXYINBV3fpJgvL5XyTAAfRo+D6l8LxxJkT94ocM1wvgm2mLJi3Jl25aULeNIUerH7vUCjKKk8/cUsTU=
+	t=1784664855; cv=none; b=ck2eD0BZno3TalaT6IYmiAUJ36tYyhMSk3QeCxsjYNCqQothByIqA6eKo8c/phFDNz8XqihlkwUN5dI1C3d8kmr7wH+LiSAxRzefVMBbA7WU3nn0nKxmPqTcW0tLO5mwm2cvI66oQ81zBsfE6DjY3/dEzVAGd1OESSGyM27w/2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664852; c=relaxed/simple;
-	bh=i+1HFOMxaT6HFM5AZ2IAcqPtwBLi3ioI13zuiM8ZJiI=;
+	s=arc-20240116; t=1784664855; c=relaxed/simple;
+	bh=WfIVDCt3XOQ4NRo1rrFa1r8w3clU1Qk1beJJJGHgQn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SnNODy7nVMWSaq+I96hipEPV8zueu9Q1MR4xX53XKoxtrZvgU9QsycE7FkXDnTITgBqPiTRZfHYn1vY+RcERzmjf8wLOap8CJUA6MMXOlG8x3JOboz11t0bINu8Z9XjyMotHC6GDgWCJOdUCeubz+GikdiSvG+HrSRlWEJfP88o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuDT3lOu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s3yRF6XYdmjsH8LqQ2Ue9wxcpLUH6sNzREcdQOZIEQnD4vex9sKIHxwG50AAuV2s4MahP9s+ZcMgYePrilqq4L1a6EWjrrAKGLavHzt79gNqeF52MJmBGc929GwDVo13rTHVRUKMu0985zrhGhkDc9OVcKHBPfMwI/TTsRpDr2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pOCk63vt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuDT3lOu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31961F000E9;
-	Tue, 21 Jul 2026 20:14:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pOCk63vt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A82B1F000E9;
+	Tue, 21 Jul 2026 20:14:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664851;
-	bh=uriUpiymL+KtxwBOgjqn4GIJkXWxNspIIpRd6ONWbFE=;
+	s=korg; t=1784664854;
+	bh=wNkHwbQ7V9+bW/avZRqBYdEH8/xFWhBwIb6KiA2T4Pw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xuDT3lOuOcJSWG7V0moEq7Q0ufFCCcGk4tTNOOBp8jFexHmN4NAFyLEDhr1Gjld0i
-	 U6O/Ur4SVE9YyycQNdL7RSR/uxbqgEr60fWXk75oL2rqmJMFk2EBmCL9mELj/mhb+4
-	 EPFRGlXwhAEIkzRP/jrxRxPGpNEtyKyPwS8dJTYQ=
+	b=pOCk63vt5xMEMb1cUAknQ4hpZ7JRbwnTaGJfKZrMCAliYF6p7xwWyKnMBCqoA4vie
+	 geMnivm5HAuWLRdfxd/uWaAkvSUCLcV6RS27pNsEXNXxagv2ec9is6H67joHv/Rs7r
+	 YBWh7rFnRRBKNPujhCg6uyZeVB3bcXu9V20aYdQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
 	Griffin Kroah-Hartman <griffin@kroah.com>
-Subject: [PATCH 6.6 0081/1266] usb: gadget: function: rndis: add length check to response query
-Date: Tue, 21 Jul 2026 17:08:38 +0200
-Message-ID: <20260721152443.612183573@linuxfoundation.org>
+Subject: [PATCH 6.6 0082/1266] usb: gadget: function: rndis: add length check for header
+Date: Tue, 21 Jul 2026 17:08:39 +0200
+Message-ID: <20260721152443.634285245@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,58 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-commit 95f90eea070837f7c72207d5520f805bdefc3bc5 upstream.
+commit 21b5bf155435008e0fb0736795289788e63d426f upstream.
 
-Add variable representations for BufLength and BufOffset in
-rndis_query_response(), and perform a length check on them.
-
-This is identical to how rndis_set_response() handles these parameters.
+Add a length check for the rndis header in rndis_rm_hdr, to ensure that
+MessageType, MessageLength, DataOffset, and DataLength fields are
+present before they are accessed.
 
 Assisted-by: gkh_clanker_2000
 Cc: stable <stable@kernel.org>
 Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Link: https://patch.msgid.link/20260708-usb-gadget-rndis-v1-1-e77e026dcc6a@kroah.com
+Link: https://patch.msgid.link/20260708-usb-gadget-rndis-v1-2-e77e026dcc6a@kroah.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/rndis.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/function/rndis.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/drivers/usb/gadget/function/rndis.c
 +++ b/drivers/usb/gadget/function/rndis.c
-@@ -591,6 +591,7 @@ static int rndis_init_response(struct rn
- static int rndis_query_response(struct rndis_params *params,
- 				rndis_query_msg_type *buf)
- {
-+	u32 BufLength, BufOffset;
- 	rndis_query_cmplt_type *resp;
- 	rndis_resp_t *r;
+@@ -1080,6 +1080,12 @@ int rndis_rm_hdr(struct gether *port,
+ 	/* tmp points to a struct rndis_packet_msg_type */
+ 	__le32 *tmp = (void *)skb->data;
  
-@@ -598,6 +599,13 @@ static int rndis_query_response(struct r
- 	if (!params->dev)
- 		return -ENOTSUPP;
- 
-+	BufLength = le32_to_cpu(buf->InformationBufferLength);
-+	BufOffset = le32_to_cpu(buf->InformationBufferOffset);
-+	if ((BufLength > RNDIS_MAX_TOTAL_SIZE) ||
-+	    (BufOffset > RNDIS_MAX_TOTAL_SIZE) ||
-+	    (BufOffset + 8 >= RNDIS_MAX_TOTAL_SIZE))
++	/* Need at least MessageType, MessageLength, DataOffset, DataLength */
++	if (skb->len < 16) {
++		dev_kfree_skb_any(skb);
 +		return -EINVAL;
++	}
 +
- 	/*
- 	 * we need more memory:
- 	 * gen_ndis_query_resp expects enough space for
-@@ -614,10 +622,8 @@ static int rndis_query_response(struct r
- 	resp->RequestID = buf->RequestID; /* Still LE in msg buffer */
- 
- 	if (gen_ndis_query_resp(params, le32_to_cpu(buf->OID),
--			le32_to_cpu(buf->InformationBufferOffset)
--					+ 8 + (u8 *)buf,
--			le32_to_cpu(buf->InformationBufferLength),
--			r)) {
-+				BufOffset + 8 + (u8 *)buf,
-+				BufLength, r)) {
- 		/* OID not supported */
- 		resp->Status = cpu_to_le32(RNDIS_STATUS_NOT_SUPPORTED);
- 		resp->MessageLength = cpu_to_le32(sizeof *resp);
+ 	/* MessageType, MessageLength */
+ 	if (cpu_to_le32(RNDIS_MSG_PACKET)
+ 			!= get_unaligned(tmp++)) {
 
 
