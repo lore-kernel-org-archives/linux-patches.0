@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52479415F24;
-	Tue, 21 Jul 2026 17:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2623415F07;
+	Tue, 21 Jul 2026 17:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656517; cv=none; b=QpTOfvutRD2sUpWt86+IpwL4hBW0fQ5yvFxfkcGXN9DcMgW0NJ+qswPAdC8qI7zr6/RaXsTvxzDpMqSZvCdDBVYxSnB8UjExYr9sLtmhZSIjqbk/X3aOQ9OesPT+QeZiBfaAX6aLuf6vJszzYnSem5KrkW2dS3npJ8Jdn/HfA70=
+	t=1784656520; cv=none; b=cJv6pTtAZjji3VWvrJd/GFl0qMp9VvPQnkXigRlroVuH++37F2t1E6FYIqFRiPbdcLvig6YFrCqC2jnOBInqBfVW9gD8nb5xHqfaDWI8uVIDyVOsJ32vxzkUOkpTNgkbJ2BZZjYrm8IlQ3VCLKsWFhr134pjHArhRmBwa8V2/oQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656517; c=relaxed/simple;
-	bh=//y5Ku6MJu8fpj/KO2zn05FLeXWjRWAPsTdHHxcU6F0=;
+	s=arc-20240116; t=1784656520; c=relaxed/simple;
+	bh=wnvGQR1ByRIRUsqD8Wg5nAaG9XTV/Rj0adlkbUoF4Mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tnygrbDSeBrHtZYa6yGEwDUwTUlS6OVnZ03pWjn8uYhb7rFIE34jxILu8brTXizFagedETEjUGabC66D2GacDp6aaXjSjdEpNJIftRhuzrvtcQaunanWu6T4QY98l4tsCX9+x9BLsXYQZQJtFJ30AaLMS/o8a5dE+1SUWqJG3jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mupp7oE4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ODHaEkGEba0MqrOFVnA81aFqROtuIHCwM6D+aXKygAokrhd/cU8npam46VZaRXLzOeHPzdDA15klgNTKgxfParKDMEOI/oAL8k8XB31hGQDpdSyRblWgo2bccyNGP0zzYo9XbuclzVUCY7QZcvBXOCIlWlOsbD173FuMTtuOHHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2efIK9Wf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mupp7oE4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B98131F000E9;
-	Tue, 21 Jul 2026 17:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2efIK9Wf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C91D1F000E9;
+	Tue, 21 Jul 2026 17:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656516;
-	bh=qGq1lyQqIPikK7wxkvbi5vH7JUveZi/qxd46MG6zY5I=;
+	s=korg; t=1784656518;
+	bh=sCOXkPI7cOkkK04dIvfhzOTCXdU1m1mqXwdRMoHTg6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mupp7oE4fQnukIppiv9w+b/6A82pjChDf1ww0auQtbFeX1ksxf7ZqTKiTyA/4r0Zy
-	 U3K9cB4TweadKg8CLDdKJkACJJPDcaDqWUVaTrgf+MDR9k46/x7BWZQ2q6DWQ3oQPG
-	 5JYjdUeeQbCFCg01DBG/kzCanJyggkkiLSEKJYzI=
+	b=2efIK9WfmbB1wcfaHNDa5W2ySFwBRqEEnjtPWjN1J057KdJYRPYNeO55A99s53taQ
+	 lYTuyMiEPmmJUa03yosI0k5j1IroZIm6NN85xscr4RsUS9cyNRkITfvvk4Ge/QsD1U
+	 dkJS01oOx3MxZHLQvKaEnyuMHGmHN1m6KF868xKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryder Lee <ryder.lee@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Dan Carpenter <error27@gmail.com>,
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0415/1611] wifi: mt76: mt7996: fix potential tx_retries underflow
-Date: Tue, 21 Jul 2026 17:08:51 +0200
-Message-ID: <20260721152524.590567173@linuxfoundation.org>
+Subject: [PATCH 6.18 0416/1611] btrfs: fix invalid pointer dereference in __btrfs_run_delayed_refs()
+Date: Tue, 21 Jul 2026 17:08:52 +0200
+Message-ID: <20260721152524.614957327@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,46 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryder Lee <ryder.lee@mediatek.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 4d8bba99d645bcb46a442b18eb42402610cba03a ]
+[ Upstream commit 486f8298b6188ff11ef1f4be7f1d5d2e4d1b1fae ]
 
-When FIELD_GET returns 0 for the retry count, subtracting 1 causes
-an unsigned integer underflow, resulting in tx_retries becoming a
-very large value (0xFFFFFFFF for u32).
+In the beginning of the loop, we try to obtain a locked delayed ref head,
+if 'locked_ref' is currently NULL, by calling btrfs_select_ref_head(),
+which can return an error pointer. If the error pointer is -EAGAIN we do
+a continue and go back to the beginning of the loop, which will not try
+again to call btrfs_select_ref_head() since 'locked_ref' is no longer
+NULL but it's ERR_PTR(-EAGAIN), and then we do:
 
-Fix by checking if count is non-zero before subtracting 1.
+   spin_lock(&locked_ref->lock);
 
-Fixes: 2461599f835e ("wifi: mt76: mt7996: get tx_retries and tx_failed from txfree")
-Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
-Link: https://patch.msgid.link/20260605113306.3485554-4-ryder.lee@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+against a ERR_PTR(-EAGAIN) value, generating an invalid pointer
+dereference.
+
+Fix this by ensuring that 'locked_ref' is set to NULL when
+btrfs_select_ref_head() returns ERR_PTR(-EAGAIN) and incrementing 'count'
+as well, to prevent infinite looping. We do this by doing a goto to the
+bottom of the loop that already sets 'locked_ref' to NULL and does a
+cond_resched(), with an increment to 'count' right before the goto.
+These measures were in place before the refactoring in commit 0110a4c43451
+("btrfs: refactor __btrfs_run_delayed_refs loop") but were unintentionally
+lost afterwards.
+
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/ag8ARRwykv8bpJ87@stanley.mountain/
+Fixes: 0110a4c43451 ("btrfs: refactor __btrfs_run_delayed_refs loop")
+Reviewed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/btrfs/extent-tree.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index 57f3f358393aa2..29f599a7ad0171 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -1398,13 +1398,13 @@ mt7996_mac_tx_free(struct mt7996_dev *dev, void *data, int len)
- 				cur_info++;
- 			continue;
- 		} else if (info & MT_TXFREE_INFO_HEADER) {
--			u32 tx_retries = 0, tx_failed = 0;
-+			u32 tx_retries = 0, tx_failed = 0, count;
- 
- 			if (!wcid)
- 				continue;
- 
--			tx_retries =
--				FIELD_GET(MT_TXFREE_INFO_COUNT, info) - 1;
-+			count = FIELD_GET(MT_TXFREE_INFO_COUNT, info);
-+			tx_retries = count ? count - 1 : 0;
- 			tx_failed = tx_retries +
- 				!!FIELD_GET(MT_TXFREE_INFO_STAT, info);
- 
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index ffe6c80495666b..6ef7cc116bfcca 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -2022,7 +2022,8 @@ static noinline int __btrfs_run_delayed_refs(struct btrfs_trans_handle *trans,
+ 			locked_ref = btrfs_select_ref_head(fs_info, delayed_refs);
+ 			if (IS_ERR_OR_NULL(locked_ref)) {
+ 				if (PTR_ERR(locked_ref) == -EAGAIN) {
+-					continue;
++					count++;
++					goto again;
+ 				} else {
+ 					break;
+ 				}
+@@ -2070,7 +2071,7 @@ static noinline int __btrfs_run_delayed_refs(struct btrfs_trans_handle *trans,
+ 		 * Either success case or btrfs_run_delayed_refs_for_head
+ 		 * returned -EAGAIN, meaning we need to select another head
+ 		 */
+-
++again:
+ 		locked_ref = NULL;
+ 		cond_resched();
+ 	} while ((min_bytes != U64_MAX && bytes_processed < min_bytes) ||
 -- 
 2.53.0
 
