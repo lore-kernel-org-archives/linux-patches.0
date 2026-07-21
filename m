@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62ED746DFFD;
-	Tue, 21 Jul 2026 19:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9144946EC9B;
+	Tue, 21 Jul 2026 19:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660520; cv=none; b=LHh/abhK84kBFzp9uszA+fZKTvGAavIZdMSbrTvqu1hBMQBmqvM/RuVkarHaklJUtIA8dHfN456NEW+DAJ9FYIUDr7bgEia4Etl5Y6D7SVep6ntjohr0IWxSmJz4BmLIJgyMY2L20NRg3BA7wGWZr+8xjhd7iDXFyoZ/ehCrhlE=
+	t=1784660523; cv=none; b=WnUl3kvGUVl3FJh3antBWVsKBWNuNciEQTFhu6imhy+lFFvTcfpTe/AAmO4lCJpkKXwMOmQSSL2Q3PImNvpRVrA9UkMzBDRH+FCRYwQOqJxgezCSTBhtCSe8Jt+icLGz4JUCaQrUtg81jsVAIG91vaHylk/L/sTLurXZEXtsrO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660520; c=relaxed/simple;
-	bh=wZao2o0xSpEWYGcLF4bAv6jZDeIXcVTNSc9NONgQzXI=;
+	s=arc-20240116; t=1784660523; c=relaxed/simple;
+	bh=ERlScBrfrEg5//qeKVfmoUCQP11+M0lhYn0ZwSzE70g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EyGSmFGI4+snPrXRqqdt7cVogRAvV06TEs2kwK+REwBxl80ymIAcEhjlHt21oqJhf+SKshac8t9Bqw/FiHLX2WPyZfu/Lq4USBpUQVBCc797R6EplCJAk3+6NnrQHInHGf06MiV67YW0TXu4AsCl6sdzHhgTmcMZ0ZRA6kZosdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aL6/dBgv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QWBDwmoQEdBinDvhFtljLQLmgFHYZvBCpAq27USm3iP6FoxifHCqurmQx0DqO6DXelEYHOkT6IqOm353l7lu/h539XxDhD04KGBkcxOCPZR3Ybf0tqGzOcuH8BTMozXjbTCQz5rpKvfilhuOUd+nmtf+NqOBEyOGkGkBeIWFNY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tO17nJrF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aL6/dBgv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C94B1F00A3A;
-	Tue, 21 Jul 2026 19:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tO17nJrF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD611F000E9;
+	Tue, 21 Jul 2026 19:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660518;
-	bh=RUkZN8IkxPBeOJQDMAzxBX9WQbLCjX9bU3bzGkty6YY=;
+	s=korg; t=1784660520;
+	bh=gsCvMAtHYLUeWI2ymABZ+wEmsUReXAB4pGgiWqDpQ7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aL6/dBgv3JP0+0PEnSE+dVejUuzh/GK8F1nTQ9a1giMjbvY8M3EauL9BkG8Xx526I
-	 Ksd+/o6wfk/cTGKyz8KbwyRaHtbqjeBm63DpN5q1W2/BFLIBpDtOW0resSu0pQp+ze
-	 WXIcNpHDkbOCsoYuV+wu94v8LM1H107ArEGCf964=
+	b=tO17nJrF+0e55gyE9lxpjfJFlesYNAczjpcVP8XhPLTgwMky05nxh0K9But2TEN1x
+	 XUuqqusdL/QFq4P/4jqrfvuh1m+eM+B99L3yKf4NJo4W/a5rCP3NBTAndIR/SFvudo
+	 yyvdQ+SbC/3g5BOfeKU1qvJ3MbOCBcn4JCGfzBjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot <sashiko-bot@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Namhyung Kim <namhyung@kernel.org>,
+	Stephen Brennan <stephen.s.brennan@oracle.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1008/2077] perf symbols: Bounds-check .gnu_debuglink section data
-Date: Tue, 21 Jul 2026 17:11:21 +0200
-Message-ID: <20260721152616.590725173@linuxfoundation.org>
+Subject: [PATCH 7.1 1009/2077] perf tools: Use mkostemp() for O_CLOEXEC on temporary files
+Date: Tue, 21 Jul 2026 17:11:22 +0200
+Message-ID: <20260721152616.614653274@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,55 +56,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 9c74f0aab398cb32ab250401f323c0fdc9a3a496 ]
+[ Upstream commit b8acc68f1382a3f380a0e7320a95d328ac5e9027 ]
 
-filename__read_debuglink() copies .gnu_debuglink section data into a
-caller-provided buffer via:
+mkstemp() creates file descriptors without the close-on-exec flag.
+These fds leak to child processes spawned during symbol resolution
+(addr2line, objdump), wasting descriptors and potentially exposing
+temporary file contents.
 
-    strncpy(debuglink, data->d_buf, size);
+Replace mkstemp() with mkostemp(tmpbuf, O_CLOEXEC) at all three
+call sites:
 
-where size is PATH_MAX.  If the ELF section is smaller than size and
-lacks a null terminator, strncpy reads past data->d_buf into adjacent
-memory.  A malformed ELF file can trigger this, potentially causing a
-segfault or leaking heap data.
+  - filename__decompress() in dso.c
+  - read_gnu_debugdata() in symbol-elf.c
+  - kcore__init() in symbol-elf.c
 
-Additionally, strncpy does not guarantee null termination when the
-source fills the buffer.
-
-Replace with an explicit memcpy bounded by both the output buffer
-size and the actual section data size (data->d_size), followed by
-explicit null termination.
-
-Fixes: e5a1845fc0aeca85 ("perf symbols: Split out util/symbol-elf.c")
+Fixes: 42b3fa670825983f ("perf tools: Introduce dso__decompress_kmodule_{fd,path}")
+Fixes: b10f74308e130527 ("perf symbol: Support .gnu_debugdata for symbols")
+Fixes: afba19d9dc8eba66 ("perf symbols: Workaround objdump difficulties with kcore")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Stephen Brennan <stephen.s.brennan@oracle.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-elf.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ tools/perf/util/dso.c        | 2 +-
+ tools/perf/util/symbol-elf.c | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
+diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
+index 511e91843fbd8e..d878c46de52a79 100644
+--- a/tools/perf/util/dso.c
++++ b/tools/perf/util/dso.c
+@@ -346,7 +346,7 @@ int filename__decompress(const char *name, char *pathname,
+ 	if (!compressions[comp].is_compressed(name))
+ 		return open(name, O_RDONLY | O_CLOEXEC);
+ 
+-	fd = mkstemp(tmpbuf);
++	fd = mkostemp(tmpbuf, O_CLOEXEC);
+ 	if (fd < 0) {
+ 		*err = errno;
+ 		return -1;
 diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-index 792d270c3a70da..3b2e31367196c2 100644
+index 3b2e31367196c2..c415670453bed9 100644
 --- a/tools/perf/util/symbol-elf.c
 +++ b/tools/perf/util/symbol-elf.c
-@@ -1026,7 +1026,14 @@ int filename__read_debuglink(const char *filename, char *debuglink,
- 		goto out_elf_end;
+@@ -1118,9 +1118,9 @@ static Elf *read_gnu_debugdata(struct dso *dso, Elf *elf, const char *name, int
+ 		return NULL;
+ 	}
  
- 	/* the start of this section is a zero-terminated string */
--	strncpy(debuglink, data->d_buf, size);
-+	if (data->d_size > 0) {
-+		size_t len = min(size - 1, data->d_size);
-+
-+		memcpy(debuglink, data->d_buf, len);
-+		debuglink[len] = '\0';
-+	} else {
-+		debuglink[0] = '\0';
-+	}
+-	temp_fd = mkstemp(temp_filename);
++	temp_fd = mkostemp(temp_filename, O_CLOEXEC);
+ 	if (temp_fd < 0) {
+-		pr_debug("%s: mkstemp: %m\n", __func__);
++		pr_debug("%s: mkostemp: %m\n", __func__);
+ 		*dso__load_errno(dso) = -errno;
+ 		fclose(wrapped);
+ 		return NULL;
+@@ -1986,7 +1986,7 @@ static int kcore__init(struct kcore *kcore, char *filename, int elfclass,
+ 	kcore->elfclass = elfclass;
  
- 	err = 0;
- 
+ 	if (temp)
+-		kcore->fd = mkstemp(filename);
++		kcore->fd = mkostemp(filename, O_CLOEXEC);
+ 	else
+ 		kcore->fd = open(filename, O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC, 0400);
+ 	if (kcore->fd == -1)
 -- 
 2.53.0
 
