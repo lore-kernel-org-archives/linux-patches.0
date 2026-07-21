@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC841403B1E;
-	Tue, 21 Jul 2026 20:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD9037647B;
+	Tue, 21 Jul 2026 20:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665768; cv=none; b=sEVF/xAS1/bT9UgecvcXzBLJ+t6dUvDQ+6sGxabxa6b6zAphWeTIm7YwzIpBFUQs4O7Ruz1GTnpXrVTmU+UQMWp9e30tTNqZNpJOehLAD71zCTDDhI8lWQRlRIDwn/c3bTMh6kWbMufbyRZYgOrzyiAmwebMgi/oK/S/1filkBQ=
+	t=1784665770; cv=none; b=dbQ+HOjZeYRwmPeA9ipxM08rXsLa78Igb1T7milpIuJnE8h5j7vJhu0ei0TzjqLdChpFt9BIXS8AJysei3X6yEMDtkB/KotUdXLLXQ3TiskIpP8lHwp4ZmNts9k8I9oaskUCt26zCG9ZqYORGHOLURTQjIoGreGJhcQotebcb2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665768; c=relaxed/simple;
-	bh=b+AHClCI4SVwhbRBsJ5U3qAF7GNQVYqVGb/hiTYJy1o=;
+	s=arc-20240116; t=1784665770; c=relaxed/simple;
+	bh=TeZxd8PtcLDtm9NdEsPYxe2ukQrsXnLJ+9jUubQKVKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K+Qn8/BJLQOgaa4YPel8+YzNh2raz9DnJ1drmBAQ0y4lnzTzW7dALd7sVJZkr7XQWjowQ+3FD0vxBXCu7Q77EEZzvHyqK/uRaedzW6SINh5kG7kHy8VJM6t0+hZfg6++hz8JLYZsMuQwpQ6DVkNDFl4GYPxtSnvUt588FbtjFQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TonVRPAk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FA7YexyxLvnheegspu3fSZMdeMRcFMzZkf2xFMErx60n2mrltOKsS1jR8MTrKI260R1xdQAi9qhZFlxuh6BSOs6P5T9mcSdg79oqnvrXuB04cNKe0jHMu9pzq6dB5sxtitp76HPDL8Y4/fbPmSo1RybsG00KJEaqg1bkoozrEoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TMOx7qtY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TonVRPAk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1609B1F000E9;
-	Tue, 21 Jul 2026 20:29:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TMOx7qtY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D3B1F000E9;
+	Tue, 21 Jul 2026 20:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665766;
-	bh=whGJ4cNngIgOkF81lMBttO7kMx35hSXE8vfoqkXSGKE=;
+	s=korg; t=1784665769;
+	bh=BL9AUsru0nF/SnrZgIWkVb664Ils3CUbKuSY0jO8250=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TonVRPAkxpnH4ykhR4sbb37/kn3vT3lhqy4jNiQOC/h9mhQ140UZuzepcutzZqncJ
-	 4mAtHJ3jdMEGUlzO0Q/9NerA0gKdzXFc7Xv/ykJUmE3q8oPvd/TsRVW6K1wqcGcsm0
-	 GEfBogGT8AiHRGHD6v4Demtwju5rQm7Ijl7MQ9u0=
+	b=TMOx7qtYn7X7JJOTofR6Wtr6p8lV9zc/LfztHFb5jBmB18mzXdLztXpfQbE5yp+Kw
+	 m1tkyqtxdtTXJtoFbItlKFTGJ4OJwKiPrTOsXRUkntLovmDtbFBQ26wCV/Up+X2V6N
+	 sYiITJZtUzaF9l/yoEPzsLuCs54DYe9Z0e6i5pZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	nasm <n4sm@protonmail.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0429/1266] RDMA/rxe: Fix a use-after-free problem in rxe_mmap
-Date: Tue, 21 Jul 2026 17:14:26 +0200
-Message-ID: <20260721152451.441608511@linuxfoundation.org>
+Subject: [PATCH 6.6 0430/1266] IB/mlx4: Fix refcount leak in add_port() error path
+Date: Tue, 21 Jul 2026 17:14:27 +0200
+Message-ID: <20260721152451.463763413@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -46,163 +45,126 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 35744ab3d03c5fca8c1752f53fc8fc674e14c561 ]
+[ Upstream commit 9a8826fdfbcd7ed2ccf745f5d54208358d939def ]
 
-rxe_mmap() removes a rxe_mmap_info struct from the pending_mmaps list
-and releases pending_lock while the struct's kref is still at 1:
+After kobject_init_and_add(), the lifetime of the embedded struct
+kobject is expected to be managed through the kobject core reference
+counting.
 
-   list_del_init(&ip->pending_mmaps);
-   spin_unlock_bh(&rxe->pending_lock);   /* ref == 1, no lock held */
-   ret = remap_vmalloc_range(vma, ip->obj, 0);  /* walks PTEs */
-   [...]
-   rxe_vma_open(vma);                    /* kref_get, ref → 2 */
-   remap_vmalloc_range_partial() walks PTEs without any lock.
+In add_port(), failure paths after kobject_init_and_add() must not free
+struct mlx4_port directly, because the embedded kobject is then managed
+by the kobject core. Freeing it directly leaves the kobject reference
+counting unbalanced and can lead to incorrect lifetime handling.
 
-A concurrent DESTROY_CQ ioctl on another CPU calls:
+Allocate the pkey and gid attribute arrays before kobject_init_and_add(),
+so failures before kobject initialization can be handled by directly
+freeing the allocated memory. Once kobject_init_and_add() has been
+called, unwind later failures by removing any successfully created sysfs
+groups, calling kobject_del(), and then releasing the embedded kobject
+with kobject_put().
 
-    kref_put(&q->ip->ref, rxe_mmap_release)   /* ref 1→0 */
-    vfree(ip->obj)   /* clears vmalloc PTEs mid-walk */
-    kfree(ip)        /* frees rxe_mmap_info */
-
-This yields:
-
-   1. Kernel crash, vmalloc_to_page() returns NULL when vfree wins the
-   per-PTE race -> vm_insert_page(NULL) → GPF in validate_page_before_insert
-
-   2. Page UAF, vmalloc_to_page() reads a stale PTE before vfree clears
-   it. User VMA holds a PTE to a free'd page which might eventually get
-   reallocated later by vmalloc which allows the attacker to get a clean
-   page-level UAF.
-
-   It is worth noting that even though a page-level UAF is possible given
-   the strong primitive, it is statistically very difficult to achieve
-   given the very short time window (after the last insert_page and before
-   the kref_get).
-
-The call trace are as below:
-
-  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  CPU: 0 UID: 1000 PID: 413 Comm: poc Not tainted 7.0.0-rc5-dirty #28 PREEMPT(lazy)
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-  RIP: 0010:validate_page_before_insert+0x32/0x300
-  Code: e5 41 57 41 56 49 89 fe 41 55 41 54 53 48 89 f3 e8 93 b5 a3 ff 48 8d 7b 08 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 7b 02 00 00 4c 8b 63 08 31 ff 4d 89 e5 41 83 e5
-  RSP: 0018:ffff88811b15f2f0 EFLAGS: 00000202
-  RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
-  RDX: 0000000000000001 RSI: 0000000000000000 RDI: 0000000000000008
-  RBP: ffff88811b15f318 R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000000 R12: ffff8881181eee00
-  R13: 0000000000000000 R14: ffff8881181eee00 R15: ffff8881181eee20
-  FS:  00007b1e000f76c0(0000) GS:ffff8884268e0000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00007b1e00a24ac0 CR3: 0000000116eb3000 CR4: 00000000000006f0
-  Call Trace:
-   <TASK>
-   insert_page+0x8f/0x190
-   ? __pfx_insert_page+0x10/0x10
-   ? kasan_save_alloc_info+0x38/0x60
-   vm_insert_page+0x2e7/0x400
-   remap_vmalloc_range_partial+0x212/0x3e0
-   remap_vmalloc_range+0x6e/0xb0
-   ? __kasan_check_write+0x14/0x30
-   rxe_mmap+0x2e9/0x5d0
-   ib_uverbs_mmap+0x1ad/0x2c0
-   __mmap_region+0x12c2/0x2ad0
-   ? __pfx___mmap_region+0x10/0x10
-   ? __sanitizer_cov_trace_switch+0x58/0xb0
-   ? mas_prev_slot+0x360/0x39c0
-   ? __sanitizer_cov_trace_switch+0x58/0xb0
-   ? mas_next_slot+0x1e5b/0x2f40
-   ? __sanitizer_cov_trace_cmp8+0x18/0x30
-   ? unmapped_area_topdown+0x4dd/0x610
-   ? kfree+0x1b1/0x440
-   ? free_cpumask_var+0x16/0x30
-   ? __kasan_slab_free+0x7d/0xa0
-   ? __sanitizer_cov_trace_cmp8+0x18/0x30
-   mmap_region+0x2e6/0x3c0
-   do_mmap+0xa3e/0x12a0
-   ? __pfx_do_mmap+0x10/0x10
-   ? __kasan_check_write+0x14/0x30
-   ? down_write_killable+0xba/0x160
-   ? __pfx_down_write_killable+0x10/0x10
-   ? __sanitizer_cov_trace_cmp4+0x16/0x30
-   vm_mmap_pgoff+0x2d4/0x4a0
-   ? __pfx_vm_mmap_pgoff+0x10/0x10
-   ? fget+0x1bf/0x270
-   ksys_mmap_pgoff+0x40c/0x690
-   ? __sanitizer_cov_trace_const_cmp4+0x16/0x30
-   ? __pfx_ksys_mmap_pgoff+0x10/0x10
-   ? __kasan_check_write+0x14/0x30
-   ? _raw_spin_trylock+0xbb/0x130
-   ? __pfx__raw_spin_trylock+0x10/0x10
-   __x64_sys_mmap+0x135/0x1e0
-   x64_sys_call+0x1c14/0x2790
-   do_syscall_64+0xd2/0x1050
-   ? rcu_core+0x352/0x7d0
-   ? rcu_core_si+0xe/0x20
-   ? handle_softirqs+0x1aa/0x650
-   ? __sanitizer_cov_trace_cmp4+0x16/0x30
-   ? fpregs_assert_state_consistent+0xe1/0x160
-   ? irqentry_exit+0xb1/0x670
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Link: https://patch.msgid.link/r/20260515002537.6209-1-yanjun.zhu@linux.dev
-Reported-and-tested-by: nasm <n4sm@protonmail.com>
-Suggested-by: nasm <n4sm@protonmail.com>
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Fixes: c1e7e466120b ("IB/mlx4: Add iov directory in sysfs under the ib device")
+Link: https://patch.msgid.link/r/20260518021910.972900-1-lgs201920130244@gmail.com
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_mmap.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/mlx4/sysfs.c | 45 ++++++++++++++++++------------
+ 1 file changed, 27 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mmap.c b/drivers/infiniband/sw/rxe/rxe_mmap.c
-index 6b7f2bd6987991..466ab6dbe9af6f 100644
---- a/drivers/infiniband/sw/rxe/rxe_mmap.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mmap.c
-@@ -93,18 +93,31 @@ int rxe_mmap(struct ib_ucontext *context, struct vm_area_struct *vma)
- 	goto done;
+diff --git a/drivers/infiniband/hw/mlx4/sysfs.c b/drivers/infiniband/hw/mlx4/sysfs.c
+index 88f534cf690e92..1676f819c2f760 100644
+--- a/drivers/infiniband/hw/mlx4/sysfs.c
++++ b/drivers/infiniband/hw/mlx4/sysfs.c
+@@ -638,12 +638,6 @@ static int add_port(struct mlx4_ib_dev *dev, int port_num, int slave)
+ 	p->port_num = port_num;
+ 	p->slave = slave;
  
- found_it:
-+	/*
-+	 * Increment refcount and check whether it is being freed atm while
-+	 * holding lock to prevent UAF
-+	 */
-+	if (!kref_get_unless_zero(&ip->ref)) {
-+		spin_unlock_bh(&rxe->pending_lock);
-+		ret = -ENXIO;
-+		goto done;
-+	}
-+
- 	list_del_init(&ip->pending_mmaps);
- 	spin_unlock_bh(&rxe->pending_lock);
- 
-+	vma->vm_ops = &rxe_vm_ops;
-+	vma->vm_private_data = ip;
-+
- 	ret = remap_vmalloc_range(vma, ip->obj, 0);
- 	if (ret) {
-+		vma->vm_private_data = NULL;
-+		vma->vm_ops = NULL;
-+		kref_put(&ip->ref, rxe_mmap_release);
- 		rxe_dbg_dev(rxe, "err %d from remap_vmalloc_range\n", ret);
- 		goto done;
+-	ret = kobject_init_and_add(&p->kobj, &port_type,
+-				   kobject_get(dev->dev_ports_parent[slave]),
+-				   "%d", port_num);
+-	if (ret)
+-		goto err_alloc;
+-
+ 	p->pkey_group.name  = "pkey_idx";
+ 	p->pkey_group.attrs =
+ 		alloc_group_attrs(show_port_pkey,
+@@ -651,13 +645,9 @@ static int add_port(struct mlx4_ib_dev *dev, int port_num, int slave)
+ 				  dev->dev->caps.pkey_table_len[port_num]);
+ 	if (!p->pkey_group.attrs) {
+ 		ret = -ENOMEM;
+-		goto err_alloc;
++		goto err_free_port;
  	}
  
--	vma->vm_ops = &rxe_vm_ops;
--	vma->vm_private_data = ip;
--	rxe_vma_open(vma);
- done:
+-	ret = sysfs_create_group(&p->kobj, &p->pkey_group);
+-	if (ret)
+-		goto err_free_pkey;
+-
+ 	p->gid_group.name  = "gid_idx";
+ 	p->gid_group.attrs = alloc_group_attrs(show_port_gid_idx, NULL, 1);
+ 	if (!p->gid_group.attrs) {
+@@ -665,28 +655,47 @@ static int add_port(struct mlx4_ib_dev *dev, int port_num, int slave)
+ 		goto err_free_pkey;
+ 	}
+ 
++	ret = kobject_init_and_add(&p->kobj, &port_type,
++				   kobject_get(dev->dev_ports_parent[slave]),
++				   "%d", port_num);
++	if (ret)
++		goto err_put;
++
++	ret = sysfs_create_group(&p->kobj, &p->pkey_group);
++	if (ret)
++		goto err_del;
++
+ 	ret = sysfs_create_group(&p->kobj, &p->gid_group);
+ 	if (ret)
+-		goto err_free_gid;
++		goto err_remove_pkey;
+ 
+ 	ret = add_vf_smi_entries(p);
+ 	if (ret)
+-		goto err_free_gid;
++		goto err_remove_gid;
+ 
+ 	list_add_tail(&p->kobj.entry, &dev->pkeys.pkey_port_list[slave]);
+ 	return 0;
+ 
+-err_free_gid:
+-	kfree(p->gid_group.attrs[0]);
+-	kfree(p->gid_group.attrs);
++err_remove_gid:
++	sysfs_remove_group(&p->kobj, &p->gid_group);
++
++err_remove_pkey:
++	sysfs_remove_group(&p->kobj, &p->pkey_group);
++
++err_del:
++	kobject_del(&p->kobj);
++
++err_put:
++	kobject_put(dev->dev_ports_parent[slave]);
++	kobject_put(&p->kobj);
++	return ret;
+ 
+ err_free_pkey:
+ 	for (i = 0; i < dev->dev->caps.pkey_table_len[port_num]; ++i)
+ 		kfree(p->pkey_group.attrs[i]);
+ 	kfree(p->pkey_group.attrs);
+ 
+-err_alloc:
+-	kobject_put(dev->dev_ports_parent[slave]);
++err_free_port:
+ 	kfree(p);
  	return ret;
  }
 -- 
