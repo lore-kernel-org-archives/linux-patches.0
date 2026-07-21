@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A222472537;
-	Tue, 21 Jul 2026 20:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907FE47143B;
+	Tue, 21 Jul 2026 20:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664210; cv=none; b=scwc+QqhgowdL0fKdwoLledNoRxolp5rwD8/c2KrQnbIiSzfR1TTk7CCOrrzE9MsceXnibf3yCwEADKgiPS7j7vSQkPy3XPv4dmsbNNVe7brZjBzy5h5NCYXqnNIlfZB57DAmldd2LQc6J0NhAlmU8ffbVyMAk2mowz6ZROcsZ0=
+	t=1784664212; cv=none; b=ubTUNE/Icna1NjMzQhQ8wdV4KAFGBIkazD0uiM3cyHC7Jh62iE/E+HteA3UusqBhYMy8Ny9shAehhHePY5wrAAUyVJ9mAjEVEPXAqZvOVJme4/RBjNfCglqWZG6y9IgGz9P9hKuFJ3QVWpc3JPB+UnBrWGoU/ZsN9vplqfB0yiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664210; c=relaxed/simple;
-	bh=/9mJnEuOdyNmd7tSnbpYeFmNLdallXRHFvXpkPOJndY=;
+	s=arc-20240116; t=1784664212; c=relaxed/simple;
+	bh=0kvzXtKte4ZPYJmug6kb7nVunNvjzF/ePPO7X48kPPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OinnaPfrh9PvG7mPdoTyJyjFbqcr9PHFuUyag/dNwQgEdfdkmUNi3XDbZ7CmfxjL3ZVc4GgrkeFg6hBjMUldyUWlSiNuSTzpWgsgkXB5m0+/+SHCk5k7M1bVQbisztgAuaDrEoiqNif0ZQ/tujiASLWxN8acrm+zK0/4xuNKcTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Thi/nSIl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cSdm62ZYzkusXdcCxe1d6/fC4drVBrTCM3BfmPH3wdoX3qT2+tIg2aiXsVkut7c4zZVrXQlteNwACv+DmOhEI844n/VHPBGbm7OdDMCVa1JEo+maH2EhVFmX0uIiDtQwkdYGPgEr2Ng1kaQeiRGekbLVeoKAjLs6RuqaBV8E2Tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ydalLsrl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Thi/nSIl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012AF1F00A3A;
-	Tue, 21 Jul 2026 20:03:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ydalLsrl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6ED1F000E9;
+	Tue, 21 Jul 2026 20:03:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664207;
-	bh=YOPWha2RfU2ot7HMJefOFDRVPstybgdeIEwtfHyyi8k=;
+	s=korg; t=1784664210;
+	bh=N+GI4skcBYDTtkdU+fuJX2RbC2o6p2aaYqzFafYESK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Thi/nSIlwxioU2e6CLYKdIovh3LomYG91inSA3xq9FbAQCKlAfEUgG8HNjN9piXsG
-	 FJ+O0rWGtuqWZ2dggX+f9OX7vEGm58BFge58wUtUlPZqt91ICrLs1vrDNW4R7ObuLX
-	 /N3ohToMtyq5a/sp2p4gC/ElIOLBwf+7mdS0rjnA=
+	b=ydalLsrlT1EyUgGTRDJysCP1z9aROfg8xsiHF4mGP7UKs9igInDBviBgh5f03SmOq
+	 tKq8xEZ6xfRFf5ITFV+49kdYz5yN0z/yfiuPvf4zTm7knZ4LMTwhia2T6iYi3AESsS
+	 /ZrRuztpCMRjYnub8b9DI9AlSKl8I/T1t7mEjHVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 1060/1276] net/sched: sch_teql: move rcu_read_lock()/spin_lock() from _bh variants
-Date: Tue, 21 Jul 2026 17:25:03 +0200
-Message-ID: <20260721152509.708504258@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 1107/1276] wifi: rt2x00: avoid full teardown before work setup in probe
+Date: Tue, 21 Jul 2026 17:25:50 +0200
+Message-ID: <20260721152510.762208387@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -50,118 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 6301f6a34ed86fe6f3b7b3211ea069f3677fc559 upstream.
+commit 536fb3d739d75a03cb318c0c6fe799425cfea501 upstream.
 
-This is a followup based on sashiko comments [1] on commit e5b811fe7931
-("net/sched: sch_teql: Introduce slaves_lock to avoid race condition and UAF")
+rt2x00lib_probe_dev() uses the full rt2x00lib_remove_dev() teardown for
+all probe failures. However, drv_data allocation and workqueue allocation
+can fail before intf_work, autowakeup_work and sleep_work have been
+initialized.
 
-Use plain rcu_read_lock()/spin_lock() in teql_master_xmit() instead of the
-_bh variants, since ndo_start_xmit is already invoked with BH disabled
-by the core stack and the _bh primitives can warn in_hardirq() when xmit
-is reached through netpoll or a softirq xmit path with hard IRQs disabled.
+Do not enter the full remove path until the probe has reached the point
+where those work items are set up. Return directly for drv_data allocation
+failure, and use a small early cleanup path for workqueue allocation
+failure.
 
-Moves rcu_read_lock() after restart: label + adds rcu_read_unlock() before
-goto restart (fixes the unbounded RCU hold across retries)
+This issue was found by our static analysis tool and then confirmed by
+manual review of rt2x00lib_probe_dev() and rt2x00lib_remove_dev(). The
+early probe exits should not call a common teardown path that assumes the
+later work setup has already completed.
 
-[1] https://sashiko.dev/#/patchset/20260628111229.669751-1-jhs%40mojatatu.com
+A QEMU PoC forced alloc_ordered_workqueue() to fail before the work
+initializers are reached. The resulting fail path entered
+rt2x00lib_remove_dev(), and DEBUG_OBJECTS reported invalid work drains with
+rt2x00lib_probe_dev() and rt2x00lib_remove_dev() in the stack.
 
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Fixes: e5b811fe7931 ("net/sched: sch_teql: Introduce slaves_lock to avoid race condition and UAF")
-Link: https://patch.msgid.link/20260630150922.238714-1-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 1ebbc48520a0 ("rt2x00: Introduce concept of driver data in struct rt2x00_dev.")
+Fixes: 0439f5367c8d ("rt2x00: Move TX/RX work into dedicated workqueue")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260619073104.1809161-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_teql.c |   27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ drivers/net/wireless/ralink/rt2x00/rt2x00dev.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/net/sched/sch_teql.c
-+++ b/net/sched/sch_teql.c
-@@ -311,14 +311,14 @@ static netdev_tx_t teql_master_xmit(stru
- 	int subq = skb_get_queue_mapping(skb);
- 	struct sk_buff *skb_res = NULL;
- 
--	rcu_read_lock_bh();
--
--	start = rcu_dereference_bh(master->slaves);
--
- restart:
- 	nores = 0;
- 	busy = 0;
- 
-+	rcu_read_lock();
-+
-+	start = rcu_dereference(master->slaves);
-+
- 	q = start;
- 	if (!q)
- 		goto drop;
-@@ -345,17 +345,17 @@ restart:
- 				    netdev_start_xmit(skb, slave, slave_txq, false) ==
- 				    NETDEV_TX_OK) {
- 					__netif_tx_unlock(slave_txq);
--					spin_lock_bh(&master->slaves_lock);
-+					spin_lock(&master->slaves_lock);
- 					if (rcu_dereference_protected(master->slaves,
- 								      lockdep_is_held(&master->slaves_lock)) == q)
- 						rcu_assign_pointer(master->slaves,
- 								   rcu_dereference_protected(NEXT_SLAVE(q),
- 											     lockdep_is_held(&master->slaves_lock)));
--					spin_unlock_bh(&master->slaves_lock);
-+					spin_unlock(&master->slaves_lock);
- 					netif_wake_queue(dev);
- 					master->tx_packets++;
- 					master->tx_bytes += length;
--					rcu_read_unlock_bh();
-+					rcu_read_unlock();
- 					return NETDEV_TX_OK;
- 				}
- 				__netif_tx_unlock(slave_txq);
-@@ -364,37 +364,38 @@ restart:
- 				busy = 1;
- 			break;
- 		case 1:
--			spin_lock_bh(&master->slaves_lock);
-+			spin_lock(&master->slaves_lock);
- 			if (rcu_dereference_protected(master->slaves,
- 						      lockdep_is_held(&master->slaves_lock)) == q)
- 				rcu_assign_pointer(master->slaves,
- 						   rcu_dereference_protected(NEXT_SLAVE(q),
- 									     lockdep_is_held(&master->slaves_lock)));
--			spin_unlock_bh(&master->slaves_lock);
--			rcu_read_unlock_bh();
-+			spin_unlock(&master->slaves_lock);
-+			rcu_read_unlock();
- 			return NETDEV_TX_OK;
- 		default:
- 			nores = 1;
- 			break;
+--- a/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
+@@ -1382,7 +1382,7 @@ int rt2x00lib_probe_dev(struct rt2x00_de
+ 			                      GFP_KERNEL);
+ 		if (!rt2x00dev->drv_data) {
+ 			retval = -ENOMEM;
+-			goto exit;
++			return retval;
  		}
- 		__skb_pull(skb, skb_network_offset(skb));
--	} while ((q = rcu_dereference_bh(NEXT_SLAVE(q))) != start);
-+	} while ((q = rcu_dereference(NEXT_SLAVE(q))) != start);
- 
- 	if (nores && skb_res == NULL) {
- 		skb_res = skb;
-+		rcu_read_unlock();
- 		goto restart;
  	}
  
- 	if (busy) {
- 		netif_stop_queue(dev);
--		rcu_read_unlock_bh();
-+		rcu_read_unlock();
- 		return NETDEV_TX_BUSY;
+@@ -1416,7 +1416,7 @@ int rt2x00lib_probe_dev(struct rt2x00_de
+ 	    alloc_ordered_workqueue("%s", 0, wiphy_name(rt2x00dev->hw->wiphy));
+ 	if (!rt2x00dev->workqueue) {
+ 		retval = -ENOMEM;
+-		goto exit;
++		goto exit_free_drv_data;
  	}
- 	master->tx_errors++;
  
- drop:
- 	master->tx_dropped++;
--	rcu_read_unlock_bh();
-+	rcu_read_unlock();
- 	dev_kfree_skb(skb);
- 	return NETDEV_TX_OK;
+ 	INIT_WORK(&rt2x00dev->intf_work, rt2x00lib_intf_scheduled);
+@@ -1489,6 +1489,14 @@ exit:
+ 	rt2x00lib_remove_dev(rt2x00dev);
+ 
+ 	return retval;
++
++exit_free_drv_data:
++	clear_bit(DEVICE_STATE_PRESENT, &rt2x00dev->flags);
++
++	kfree(rt2x00dev->drv_data);
++	rt2x00dev->drv_data = NULL;
++
++	return retval;
  }
+ EXPORT_SYMBOL_GPL(rt2x00lib_probe_dev);
+ 
 
 
