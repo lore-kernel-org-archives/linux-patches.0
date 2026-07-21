@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885092DF3EA;
-	Tue, 21 Jul 2026 18:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F97231829;
+	Tue, 21 Jul 2026 18:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659970; cv=none; b=L87AHT/Xh6aPQcw4/VOLLErE69PV1zL9JVJt0RlWltqNP3a/f1BBZ9frtw75jO1bdIZVracN58nuzHoyWKyczCzSo5UT/s07iwT9gkoeM0ZYHQ6wF+HJvMd/rDOeenz8A9yvUWQw8n4Kk37CURlusvRC05CpqTCfWp7Q4ju2TSk=
+	t=1784659973; cv=none; b=C5P03yY+U/BoUSIcN7y5xhmGp14udgfGSDh4xyPIP3uKEBIWFby176wGHO77gpTD8pb+0wZPCOmEMmYElmlI8B+u+EKggcfRlzQUROzV/KI6u30PVn8g7oJX+GkrKHcYxRZHhTG9ASzuiWthX7baKS023aNK1eM+/DoFiaQowwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659970; c=relaxed/simple;
-	bh=nN7g0Q+8/EYV+Shkbz0uQqGGSOBQIPBf1v2oJSHghyA=;
+	s=arc-20240116; t=1784659973; c=relaxed/simple;
+	bh=DO4R7rclvz/VTXsvopO+lIRGO6UZBM1mAclpZ+aUcw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n7N+e7K7vDbjJqqYDZUc5ojuslRJuQEYwajCTHTBbhV6JjXhX04ssT13mQT7BfyZG/0zWr4HZvxR8/oVp8OsRFS+Zcz4yjOc6AuJzCjSAkoiPMfuAMLk8bHegYYZ01BVXqjezT4gC7usUVJr0AjCwJtnOwkpLBHBUPCaVnaUwQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZQBoEGn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DogpAXza9FB4xwUdFG5SMJtZexySStgW3CHwC2gbhP/vrbJvYvvoImzxu5zSJ7E3OdjdSe86FFUyGd3waXjq0TboM0zeaLMob4oxZiBjBsbFxAHT7PO3ZZpsAXf5o0j7AiSCT5nphDdQwQOa9Tj8ZJ6HFv3Or8YAH/r475S9Axg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qEq5nKRF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZQBoEGn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7B1A1F000E9;
-	Tue, 21 Jul 2026 18:52:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qEq5nKRF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC5C1F000E9;
+	Tue, 21 Jul 2026 18:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659969;
-	bh=xOOgMrpIEotfqmJn/nP8LACIpOVqK2rKIlAaYfA9fNM=;
+	s=korg; t=1784659972;
+	bh=k7UL1RgrDfsoNTPEapWEUX3r4WzAEz1mhDS/G8EArG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PZQBoEGnqlvEjgXwkCFK2dWh0k5u4XETwajlnnMe/rfP48lGt2Jmcic/u/gHuZqcO
-	 qTBUwVbU7hbxeC7+PeGcvA9aZyJMNy6PjtfaKjmQzcYPxxzph2SwouX9SzXGX3pU9B
-	 1kkiOArjDRzWbAvB7wr7a3ThLsvnRZltEwuPZ92E=
+	b=qEq5nKRFBrcovw+a7G/6by0N59RlX+6hT27aMviLwQs5hzucVraROMxh9a27zlEFC
+	 BA3sxxA5RvK1ZLHr/4+Q8HX/aqwtGs9vu5jQ1HjrQb4f97upzZ68X0YvK7Q1MTjFfR
+	 NF4HE+6mVn07CRS8eBNjp0LyeY4+5PLaCwCUMIAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brett Creeley <brett.creeley@amd.com>,
-	Eric Joyner <eric.joyner@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Anantha Prabhu <anantha.prabhu@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0802/2077] ionic: Fix check in ionic_get_link_ext_stats
-Date: Tue, 21 Jul 2026 17:07:55 +0200
-Message-ID: <20260721152611.708851777@linuxfoundation.org>
+Subject: [PATCH 7.1 0803/2077] RDMA/bnxt_re: Initialize dpi variable to zero
+Date: Tue, 21 Jul 2026 17:07:56 +0200
+Message-ID: <20260721152611.732518397@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,48 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brett Creeley <brett.creeley@amd.com>
+From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit 7678e69079c10b2fb10977f28f44ddb22971ea5b ]
+[ Upstream commit 978b27d6ce538bb832ccd69e45802824e4301c4b ]
 
-The current check will fail if SR-IOV is not initialized for the
-physical function; this is because is_physfn is 0 if sriov_init() isn't
-run or fails. Change the check that prevents getting the link down count
-to use is_virtfn instead so that VFs don't get this functionality, which
-was the original intent.
+dpi is initialized only for BNXT_RE_ALLOC_WC_PAGE, but copied
+for all the cases. So initialize the dpi to 0.
 
-Fixes: 132b4ebfa090 ("ionic: add support for ethtool extended stat link_down_count")
-Signed-off-by: Brett Creeley <brett.creeley@amd.com>
-Signed-off-by: Eric Joyner <eric.joyner@amd.com>
-Link: https://patch.msgid.link/20260614205303.48088-2-eric.joyner@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: eee6268421a2 ("RDMA/bnxt_re: Move the UAPI methods to a dedicated file")
+Fixes: 360da60d6c6e ("RDMA/bnxt_re: Enable low latency push")
+Link: https://patch.msgid.link/r/20260615224751.232802-2-selvin.xavier@broadcom.com
+Reviewed-by: Anantha Prabhu <anantha.prabhu@broadcom.com>
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_ethtool.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/bnxt_re/uapi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-index 78a802eb159f0a..6069fa46091318 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-@@ -116,8 +116,15 @@ static void ionic_get_link_ext_stats(struct net_device *netdev,
- {
- 	struct ionic_lif *lif = netdev_priv(netdev);
+diff --git a/drivers/infiniband/hw/bnxt_re/uapi.c b/drivers/infiniband/hw/bnxt_re/uapi.c
+index 3eaee7101615bf..61ddfa94c1aa1a 100644
+--- a/drivers/infiniband/hw/bnxt_re/uapi.c
++++ b/drivers/infiniband/hw/bnxt_re/uapi.c
+@@ -76,8 +76,8 @@ static int UVERBS_HANDLER(BNXT_RE_METHOD_ALLOC_PAGE)(struct uverbs_attr_bundle *
+ 	struct ib_ucontext *ib_uctx;
+ 	struct bnxt_re_dev *rdev;
+ 	u64 mmap_offset;
++	u32 dpi = 0;
+ 	u32 length;
+-	u32 dpi;
+ 	u64 addr;
+ 	int err;
  
--	if (lif->ionic->pdev->is_physfn)
--		stats->link_down_events = lif->link_down_count;
-+	if (lif->ionic->pdev->is_virtfn)
-+		return;
-+
-+	if (!lif->ionic->idev.port_info) {
-+		netdev_err_once(netdev, "port_info not initialized\n");
-+		return;
-+	}
-+
-+	stats->link_down_events = lif->link_down_count;
- }
- 
- static int ionic_get_link_ksettings(struct net_device *netdev,
 -- 
 2.53.0
 
