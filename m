@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C11415F0E;
-	Tue, 21 Jul 2026 19:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858B041A547;
+	Tue, 21 Jul 2026 19:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661975; cv=none; b=dltb9MzO6S925f0FKXilV/v1P5ALB466CdH5cRbJfrCYhUN/wSBb5p3L3gNZtmlxpHFE5s1ny8oN8rrGiQLK61KvAi6jCLhh+DBn9qRNqb6/Rk1jV/GEZO4pa62oUfkUj3L6b/LgAi6zmafYZNj0FX/tzNSwY7YtH6p9SnJzlWg=
+	t=1784661978; cv=none; b=OkQB5hwD33r34U1KfRYt2c32svZWqRShqN1jH9dwfQq82aeo4ePq7Zsb1nVwvxTIhoU/j/A1Dq/+SHDUH9vNo6aZ49BxAQYp5kAgVfh3mj5rccyLWEHPBF0WK/AHlOmvNwl5BT/gjSoJMsji6OFTZc21sKwfuDSFZQ7tium32UM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661975; c=relaxed/simple;
-	bh=H1gRY7Fr3V+xRc62xIHzwERh9pAtC73TW4XSChbMaAE=;
+	s=arc-20240116; t=1784661978; c=relaxed/simple;
+	bh=qEiWErqqooRrwOkj2ocTj8aMlUYHQvE5FU0b9z9eiMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p9Q7q1LsW0VObtV9zvLKFCdxRTKgGtt2uxQ4wwV7L2qMWPteXHyd2AExAe2vTY2FS2wWsOhbMlSoIZ+9SCCKt02tgTXL832qor9wGxVrAm3w964h5Qy34aA105oAFx8vpfkL2BiFiHQs8X4LzSumLXWi75/CBTY1kjAhaUAecwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvvKvnq2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TIU9Ectccbonm3OhAYiDboD6itOXwo8dYJ1zScTObuuOy//3SfEwTZvhqITsmkn2wY3eycNp6Sw7TFpmuhUyYNWVJQhEI5K7nzMyWJgTb7geiUm41NkR8Xu0Q6aoe4UgeIHA+lbuSEoh+wHu+3xIEf6iIZAv+27LzzaLigMqV6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zF00FPwu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvvKvnq2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457161F000E9;
-	Tue, 21 Jul 2026 19:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zF00FPwu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22E01F000E9;
+	Tue, 21 Jul 2026 19:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661974;
-	bh=ifMj90iF8a/RZr87w3gHXhDWx//cLVVbbThN5vFlXtQ=;
+	s=korg; t=1784661977;
+	bh=d34Ks8BxZVaaUKtJoVo65xfRZi5/CTv3JItpuWTJH9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KvvKvnq2uUvXDDg/jmbK7heLbPnlE+ytadZGj36B9ObKdUJR36DMWbBZCO6GZ9rho
-	 cJpuQL+wPrLci6MYz6bet3NrkhUogLbXynekk2eAkaHHZPPopyEUqkP2jFKZgZbZDo
-	 rHqk662U2Iz4QYh+2tHaUq6vcXshNBwYldNOwqIw=
+	b=zF00FPwukrLtI6BDeAKhCrVnZvj9CMfimSfugpN4WVBpDcxf5fibM73swuvydCEDY
+	 63rwaDUmH62ApXNxr5TAXsqTS/ALh5/CaTaBfSIWxel0BI/Kq/eB88dyF9ZQkxHeVM
+	 gnWdYZsi1KX0+s2nrjtzxTTspAcyzegg8PXBusvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0232/1276] perf/x86/amd/uncore: Use Node ID to identify DF and UMC domains
-Date: Tue, 21 Jul 2026 17:11:15 +0200
-Message-ID: <20260721152451.282819331@linuxfoundation.org>
+Subject: [PATCH 6.12 0268/1276] spi: ep93xx: fix double-free of zeropage on DMA setup failure
+Date: Tue, 21 Jul 2026 17:11:51 +0200
+Message-ID: <20260721152452.077831549@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,57 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 67d27727854def4a7e2b386429941f5c4741ccc4 ]
+[ Upstream commit 7886054b06f762f62054957a8f6de0f14e6b7541 ]
 
-For DF and UMC PMUs, a single context is shared across all CPUs that
-are connected to the same Data Fabric (DF) instance. Currently, the
-Package ID, which also happens to be the Socket ID, is used to identify
-DF instances. This approach works for configurations having a single IO
-Die (IOD) but fails in the following cases.
-  * Older Zen 1 processors, where each chiplet has its own DF instance.
-  * Any configurations with multiple DF instances or multiple IODs in
-    the same package.
+If DMA setup fails after allocating the zeropage, the error path frees
+the page but leaves espi->zeropage dangling. A subsequent call to
+ep93xx_spi_release_dma() sees the non-NULL pointer and frees the page
+again.
 
-The correct way to identify DF instances is through the Node ID (not to
-be confused with NUMA Node ID). This is available in ECX[7:0] of CPUID
-leaf 0x8000001e and returned via topology_amd_node_id(). Hence, replace
-usage of topology_logical_package_id() with topology_amd_node_id().
+Clear the pointer after freeing in the error path of
+ep93xx_spi_setup_dma().
 
-Fixes: 07888daa056e ("perf/x86/amd/uncore: Move discovery and registration")
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/e7a71a727c6a7b118c23d3e469929c538c4665aa.1780315832.git.sandipan.das@amd.com
+Fixes: 626a96db1169 ("spi/ep93xx: add DMA support")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Link: https://patch.msgid.link/20260529-ep93xx-v1-1-9185070ca1fc@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/uncore.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/spi/spi-ep93xx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/events/amd/uncore.c b/arch/x86/events/amd/uncore.c
-index 0bb60fde1f4fce..cad240e88b4ff2 100644
---- a/arch/x86/events/amd/uncore.c
-+++ b/arch/x86/events/amd/uncore.c
-@@ -639,7 +639,7 @@ void amd_uncore_df_ctx_scan(struct amd_uncore *uncore, unsigned int cpu)
- 	info.split.aux_data = 0;
- 	info.split.num_pmcs = NUM_COUNTERS_NB;
- 	info.split.gid = 0;
--	info.split.cid = topology_logical_package_id(cpu);
-+	info.split.cid = topology_amd_node_id(cpu);
+diff --git a/drivers/spi/spi-ep93xx.c b/drivers/spi/spi-ep93xx.c
+index 0b42eeccd42ea6..fdf72636b66ad9 100644
+--- a/drivers/spi/spi-ep93xx.c
++++ b/drivers/spi/spi-ep93xx.c
+@@ -600,6 +600,7 @@ static int ep93xx_spi_setup_dma(struct device *dev, struct ep93xx_spi *espi)
+ 	espi->dma_rx = NULL;
+ fail_free_page:
+ 	free_page((unsigned long)espi->zeropage);
++	espi->zeropage = NULL;
  
- 	if (pmu_version >= 2) {
- 		ebx.full = cpuid_ebx(EXT_PERFMON_DEBUG_FEATURES);
-@@ -932,8 +932,8 @@ void amd_uncore_umc_ctx_scan(struct amd_uncore *uncore, unsigned int cpu)
- 	cpuid(EXT_PERFMON_DEBUG_FEATURES, &eax, &ebx.full, &ecx, &edx);
- 	info.split.aux_data = ecx;	/* stash active mask */
- 	info.split.num_pmcs = ebx.split.num_umc_pmc;
--	info.split.gid = topology_logical_package_id(cpu);
--	info.split.cid = topology_logical_package_id(cpu);
-+	info.split.gid = topology_amd_node_id(cpu);
-+	info.split.cid = topology_amd_node_id(cpu);
- 	*per_cpu_ptr(uncore->info, cpu) = info;
+ 	return ret;
  }
- 
 -- 
 2.53.0
 
