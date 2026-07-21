@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4E833A9FC;
-	Tue, 21 Jul 2026 20:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5932D8376;
+	Tue, 21 Jul 2026 20:40:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666439; cv=none; b=qA02VZI8iUAkrcnLk2wjZKpj98k8zmciub8PIvTz1b/zcK2g5FJBj1GYU74WOTnPFCQqxEIjq0/rtjyQT1nuxH+jE8zY+C6l4w3pk4dUxKuK4k2kdsf9BIVscHkaf8k1k0ttIwvdDLqRiVSDmd0+ATydRgmCOoPYJ94FG5gszRI=
+	t=1784666441; cv=none; b=u+4OgP87YnI5fVXx13Sz7lJ0AkwBkazldSiCe7UNYHa3UeCJdDAYWPSVp6/6KhJOCkOAO0tkoz1OvXPfaK/hcjWIqVw01dt/G8jm5rCkPHYvClPBD4VqJvUSRp1gyzvsfeQ5qqbZ47pHiG1cXpMhjRnVGR4lIRqy2DLVMeb0sGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666439; c=relaxed/simple;
-	bh=XGVV4i4QvYmBFws+9BqjXelPhamS8f7MMt8uGuYwtVc=;
+	s=arc-20240116; t=1784666441; c=relaxed/simple;
+	bh=5musZPfpIJvNRv0E5AVxTHbeV6jy7LmB6PTt7fPAmIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uIdRyI9B5e0MaClOq8jy4G8J9FsLkfTQbrBCpFaIYWsOU1SB+vbdWwBjZimalYD34lgG2jW1IJuxdV3QOwSgO687+0rZkBEInyws2fJSJZqZZH/t+IVQsc6jdNsG/07bWn8+amrOm8Ldj22Nlx2JE7rhukGIo8nN4yhWgKqWGn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iMro8rXG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KLI7VKABrIk14vAVXmsUUX5XcqJaytw+3gRrL9L+KNJ41X5leb5hDQzZQAFtEtEghC0QE9JbcuKt3gNoaAY8dJA9qLWerVvfKSw9csfgMfvKJjV+W9SA/06Z8fdWSBPYn3XmiwEsRx6dfYFCciz3UqyXxLgOH9/JCUqXzP6/9BY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eD1sEQwO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iMro8rXG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 783341F000E9;
-	Tue, 21 Jul 2026 20:40:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eD1sEQwO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5C31F000E9;
+	Tue, 21 Jul 2026 20:40:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666438;
-	bh=7tLqi6Z0ONMvQoXKfNoihFrD33D5J8IAFMF30KLeneA=;
+	s=korg; t=1784666440;
+	bh=hNwm91ICfU/TvETxf+kpsqotS6iouDdR1lj302IUMA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iMro8rXGl+oULnditutciReqKnlsalh4CcvBg26+BOwfPb1GKBqWO2jjEU+DYgUj2
-	 6CPdKWkK81Evi2Q8rwatssQohIXMUJbVgI8HsxRtDwW4wVGDBcIDnkdoafAOjc149V
-	 /wiiZD7mB12UW10OiBpPPlKLdNagm290W6TIM+lc=
+	b=eD1sEQwOFmqkIsoz+kt4DbKxkZZZVLeFwWvPEWk3IWw601zlAC2u12jYMgtNH2vtL
+	 iAdhHZQWNJ5E1h0jT1U+zp9WHCl0z6CeXdaHQPtgzttwl76MMAOsCtTkkU+Uhwxj0Q
+	 NnUTyreTNHAhmf3deULYSoDCEb03pJ1tfihH/hMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0646/1266] dmaengine: qcom: gpi: set DMA_PRIVATE capability
-Date: Tue, 21 Jul 2026 17:18:03 +0200
-Message-ID: <20260721152456.315987745@linuxfoundation.org>
+Subject: [PATCH 6.6 0682/1266] tools lib api: Fix missing null termination in filename__read_int/ull()
+Date: Tue, 21 Jul 2026 17:18:39 +0200
+Message-ID: <20260721152457.116778651@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,40 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 4e351f408743354d54ee1af5193fc78234f2044e ]
+[ Upstream commit 52b1f9678499b13b7aeb0186d9c6f486c043283f ]
 
-The GPI DMA controller is only responsible for QUP peripherals, and
-cannot work as a general-purpose DMA accelerator.
+filename__read_int() passes a stack buffer to read() using the full
+sizeof(line) and then hands it to atoi() without null-terminating.
+If a sysfs file fills the 64-byte buffer exactly, atoi() reads past
+the array into uninitialized stack memory.
 
-Set DMA_PRIVATE capability for it.
+filename__read_ull_base() has the same issue with strtoull().
 
-This fixes error messages about GPI being shown when an async-tx
-consumer is loaded.
+Fix both by reading sizeof(line) - 1 bytes and explicitly
+null-terminating after a successful read.
 
-Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
-Signed-off-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260602070344.3707256-1-zhengxingda@iscas.ac.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 3a351127cbc682c3 ("tools lib fs: Adopt filename__read_int from tools/perf/")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/qcom/gpi.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/lib/api/fs/fs.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index 36830efd13f741..a6fc151f8cc120 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -2252,6 +2252,7 @@ static int gpi_probe(struct platform_device *pdev)
- 	/* clear and Set capabilities */
- 	dma_cap_zero(gpi_dev->dma_device.cap_mask);
- 	dma_cap_set(DMA_SLAVE, gpi_dev->dma_device.cap_mask);
-+	dma_cap_set(DMA_PRIVATE, gpi_dev->dma_device.cap_mask);
+diff --git a/tools/lib/api/fs/fs.c b/tools/lib/api/fs/fs.c
+index 5cb0eeec2c8a6c..1ea76e5ba9d482 100644
+--- a/tools/lib/api/fs/fs.c
++++ b/tools/lib/api/fs/fs.c
+@@ -293,11 +293,14 @@ int filename__read_int(const char *filename, int *value)
+ {
+ 	char line[64];
+ 	int fd = open(filename, O_RDONLY), err = -1;
++	ssize_t n;
  
- 	/* configure dmaengine apis */
- 	gpi_dev->dma_device.directions = BIT(DMA_DEV_TO_MEM) | BIT(DMA_MEM_TO_DEV);
+ 	if (fd < 0)
+ 		return -1;
+ 
+-	if (read(fd, line, sizeof(line)) > 0) {
++	n = read(fd, line, sizeof(line) - 1);
++	if (n > 0) {
++		line[n] = '\0';
+ 		*value = atoi(line);
+ 		err = 0;
+ 	}
+@@ -311,11 +314,14 @@ static int filename__read_ull_base(const char *filename,
+ {
+ 	char line[64];
+ 	int fd = open(filename, O_RDONLY), err = -1;
++	ssize_t n;
+ 
+ 	if (fd < 0)
+ 		return -1;
+ 
+-	if (read(fd, line, sizeof(line)) > 0) {
++	n = read(fd, line, sizeof(line) - 1);
++	if (n > 0) {
++		line[n] = '\0';
+ 		*value = strtoull(line, NULL, base);
+ 		if (*value != ULLONG_MAX)
+ 			err = 0;
 -- 
 2.53.0
 
