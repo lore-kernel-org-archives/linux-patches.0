@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62ACE44AB60;
-	Tue, 21 Jul 2026 21:25:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25F544AB60;
+	Tue, 21 Jul 2026 21:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669133; cv=none; b=hDzltjuIgkBNMZsN/ZA54in7yPX+7+MLo0mWzHzmz5i9g8h7f2LsmlWsw5Ue9emPM6rgO66q/k32t6gIts6uCJBDaV6Ff5yZSXzm5QZtsb/atuOKP8UXqRwY37Hao0fIfUS4XhFKiNzbm3tMHJrbVVIhm4KrqW+O++NRG5ZIDNM=
+	t=1784669135; cv=none; b=M3MrPLXPQk2zLC6fkzGytxbHEu9iJaPVZOPPm3EHW44m464Nk0vgsSp37lF1kWDnr5mSXa6hdWS3Farj0WXMOtOh6fzUug1o5DaiWwOf9PwI3C5o2y3pbj2kF4HrIYXnQY1padTfi/9tYi3P2oBlwuc+vQ1JN0Kz2+xLxmNLgQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669133; c=relaxed/simple;
-	bh=JXBsvM8if4u0mJx4Ek1BqP62ZNfTFojPvSFxU+QipIo=;
+	s=arc-20240116; t=1784669135; c=relaxed/simple;
+	bh=hZrCPoj0avTh0JCGwqV6ZG8wGZtZbnrYksGvasBQALI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RYuMjn/t7/nnDpqUUH2XCvW90RmNDWwsZyNJiHMblvhsKxFp95dTJ56/7bVSvk6nVuZLCFo6xgaICDwDQWUdSsbf8jb07szXjwNHKcgTTxAyj6qeQgxk+MbckvHbAlo8fYyFm1k0kptlGIxY44sQ9dHpz8M+0n6dFv/77JPGBCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HRWmUtdB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SB+pI//FIBekQ3X+x0vvx56faRWItF7O5/aUpyaOHkeXKHVs93m1nSnq70W0737kw1YEa2p5WYItU/qPrkrJgmxo18FgPiTx6hzRg4MthK6+lV+BH/Hv4TJ0yGp4RKdtOZzzBH+7qWnjTO0ez6UynEFDobUWcRYdCrRSQkno0oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tU8qGyoE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HRWmUtdB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804911F000E9;
-	Tue, 21 Jul 2026 21:25:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tU8qGyoE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B3D1F000E9;
+	Tue, 21 Jul 2026 21:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669132;
-	bh=s0iDlFBhNl+41Zf6hQ/lzI6Yt0XWvGZTN2NJMemEPSU=;
+	s=korg; t=1784669134;
+	bh=GExJClK/XdcvGYOyXfOoXH8A3wmxFHP2o5O1/LElQPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HRWmUtdBRKjlJUKz8RQh6qjZsXldlq3nXLykFXroigBIZ6es1AbHh+JJzy3SuJAs1
-	 CPbQ4fnKHUAFGl8Z2uk+IDiJCqwFZEEHhY1lHzg57T7kC/bwZGBeEG3n3vqrzM5XiR
-	 Ndu5M6EOtEh2ZJUW98Q+wtSpl5QU3jUxU1b0BgPQ=
+	b=tU8qGyoEYfef3nSLsw4VPu8YRwVlN/E9oYrhfrEPkJsVO32QcWKZ2dUumhkPL5khn
+	 sXjkEOqZyWWyH+zpKOrhw9FSpyM8OF/qawduyg+RAoPzjrxwXyZW72uzOuwGjw9k7t
+	 LZB3JabNgMB11TzEchsWWrxY/nZB+6IfJZQ+yIDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0440/1067] cxl/test: Add check after kzalloc() memory in alloc_mock_res()
-Date: Tue, 21 Jul 2026 17:17:21 +0200
-Message-ID: <20260721152434.459262986@linuxfoundation.org>
+Subject: [PATCH 6.1 0441/1067] crypto: marvell/octeontx - fix DMA cleanup using wrong loop index
+Date: Tue, 21 Jul 2026 17:17:22 +0200
+Message-ID: <20260721152434.480589525@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,55 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit dfe28c8592538152e9611341dae6f7be1735b3f1 ]
+[ Upstream commit 7891c64c0520519782470ba29bac8a5761e295d8 ]
 
-alloc_mock_res() calls kzalloc() without checking the return value.
-Add scope based resource management to deal with the allocated memory
-cleanly.
+The sg_cleanup path used list[i] instead of list[j] when unmapping DMA
+buffers, leaking successfully mapped entries and repeatedly unmapping
+the failed one.
 
-Reported-by: sashiko-bot
-Fixes: 67dcdd4d3b83 ("tools/testing/cxl: Introduce a mocked-up CXL port hierarchy")
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260611230305.197390-1-dave.jiang@intel.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: 10b4f09491bf ("crypto: marvell - add the Virtual Function driver for CPT")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/cxl/test/cxl.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/crypto/marvell/octeontx/otx_cptvf_reqmgr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/cxl/test/cxl.c b/tools/testing/cxl/test/cxl.c
-index 339b31a3319bfe..7be8bc4e4500ec 100644
---- a/tools/testing/cxl/test/cxl.c
-+++ b/tools/testing/cxl/test/cxl.c
-@@ -264,12 +264,16 @@ static void depopulate_all_mock_resources(void)
+diff --git a/drivers/crypto/marvell/octeontx/otx_cptvf_reqmgr.c b/drivers/crypto/marvell/octeontx/otx_cptvf_reqmgr.c
+index c80baf1ad90b2f..89030e2711ce41 100644
+--- a/drivers/crypto/marvell/octeontx/otx_cptvf_reqmgr.c
++++ b/drivers/crypto/marvell/octeontx/otx_cptvf_reqmgr.c
+@@ -157,8 +157,8 @@ static inline int setup_sgio_components(struct pci_dev *pdev,
+ sg_cleanup:
+ 	for (j = 0; j < i; j++) {
+ 		if (list[j].dma_addr) {
+-			dma_unmap_single(&pdev->dev, list[i].dma_addr,
+-					 list[i].size, DMA_BIDIRECTIONAL);
++			dma_unmap_single(&pdev->dev, list[j].dma_addr,
++					 list[j].size, DMA_BIDIRECTIONAL);
+ 		}
  
- static struct cxl_mock_res *alloc_mock_res(resource_size_t size)
- {
--	struct cxl_mock_res *res = kzalloc(sizeof(*res), GFP_KERNEL);
- 	struct genpool_data_align data = {
- 		.align = SZ_256M,
- 	};
- 	unsigned long phys;
- 
-+	struct cxl_mock_res *res __free(kfree) = kzalloc(sizeof(*res),
-+							 GFP_KERNEL);
-+	if (!res)
-+		return NULL;
-+
- 	INIT_LIST_HEAD(&res->list);
- 	phys = gen_pool_alloc_algo(cxl_mock_pool, size,
- 				   gen_pool_first_fit_align, &data);
-@@ -284,7 +288,7 @@ static struct cxl_mock_res *alloc_mock_res(resource_size_t size)
- 	list_add(&res->list, &mock_res);
- 	mutex_unlock(&mock_res_lock);
- 
--	return res;
-+	return no_free_ptr(res);
- }
- 
- static int populate_cedt(void)
+ 		list[j].dma_addr = 0;
 -- 
 2.53.0
 
