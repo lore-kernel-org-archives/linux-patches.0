@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D8D46AA71;
-	Tue, 21 Jul 2026 15:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4750E46AA82;
+	Tue, 21 Jul 2026 15:38:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648314; cv=none; b=GlDW7QaKbaIbiNYUxLgQKN5+T7YzrKx6PjRaVOqUj5e2GXGIU78j3YtUw8r0QLZVEyW1GiA4fN11PnZ143Qd2ww8bTFuChfaqSdPBAF2aiUPliue9+3DKTri5zFVaAsS24WE5N4nnGYGkazWZAjyoSzXHwI+f1pRkZcccBksdM0=
+	t=1784648316; cv=none; b=ei2L9lKcuFruDWaWs/D9agL68OZhOBMH9yZ7t/7kaeRlw6hy1Wj4LCef4H7MQ+Uo9Un4k7m3A6B1YbCQrrVAN3fychDc60L2ZcGy0LbHnieWyjzMmeEbWkJnplwXWaBH+TdyZ5nO3+SGqQII+HuZGka5nKIzWH/ctWcWYf4vh7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648314; c=relaxed/simple;
-	bh=7pVcMuUCp6Vp9E3LHfp7PfhWyla7QfHX44dPpSPlBDo=;
+	s=arc-20240116; t=1784648316; c=relaxed/simple;
+	bh=zj8NQ/YNaW31t/PIStHuftOSy8SAHfxGDmHfqKXQQEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SmBeLWm8baEx5+4Xkf4h1hOYKJJckx59txaScVEgEc0xKsboKafQvzQc2Dhx+Vt3kiqPjExVfWIdzlb0YIyswxZjcVnphZ7YjlhU2c90sJyarir1FmyhUaKMGT5kAuHjmCT2EQ4d/9NVentuJ7Vn9vxhESXqTalrrffRuDKtocA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vw1JlKz2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P1kcbSQ665kVrQ9kP6gV3WbAhwCW6s209tDGy0S08A3K/vwec1uJ0KaLNNsDbkNVq+TNfcjOYasqg9hw7wnidk4SS+ZGPK/aPo+0wPSZ4RlLPKhP/RjVUg1ERiXc/cTXAtBDXA/7B1dcuDxcD3YPKv3hG+KLjQ5CVqjp1zuOy7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NDOjEBOW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vw1JlKz2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F15B1F000E9;
-	Tue, 21 Jul 2026 15:38:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDOjEBOW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE26C1F000E9;
+	Tue, 21 Jul 2026 15:38:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648312;
-	bh=FljWTCEpanh7FRphxa7BsVDrJnMDz0M81RsH+ViuxG4=;
+	s=korg; t=1784648315;
+	bh=/UEGyRvIqjasOJ3h4T2cxUlCNZgyWKI1V2M9fasafkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vw1JlKz2sEWNAksRAkfT33MhE0SU23GO/oekyQwvb4RIUZ0bXlEkBeaA/zBQQpo89
-	 ikXu0MbemPUp6wGESzCwrAelA9qP7e94yn8Erxj+qtauHQt35BlSvMYvAx3jvLbP1J
-	 QQETw5yLpnv0IZCAPvwp/tj+ekr5BdvU8zn2eOB4=
+	b=NDOjEBOWxQJ1lubwVrFLS9fnh/zE+o81uov8m5uy5ZoY7TOWGnzkscPMAVSpkD+bI
+	 uXL6u85pdp9dBba793ys9YtQPrr7meLmjM2CnBUSNK0BoRb88QViXowWXKK+pcUbRA
+	 FameSBPVtY2puAYLMfomwN+lMdntxQNykDAMGU/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Marek Vasut <marex@nabladev.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0152/2077] arm64: dts: imx8mn-vhip4-evalboard-v1: Correct interrupt flags
-Date: Tue, 21 Jul 2026 16:57:05 +0200
-Message-ID: <20260721152556.269500064@linuxfoundation.org>
+Subject: [PATCH 7.1 0153/2077] arm64: dts: imx8mn-vhip4-evalboard-v2: Correct interrupt flags
+Date: Tue, 21 Jul 2026 16:57:06 +0200
+Message-ID: <20260721152556.292482777@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -54,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 895e7756cdc1ba6467eb37eba31c1358243f6ad9 ]
+[ Upstream commit 7263f1acdd33169e1558064ee9a98758921f3bec ]
 
 GPIO_ACTIVE_x flags are not correct in the context of interrupt flags.
 These are simple defines so they could be used in DTS but they will not
@@ -72,19 +72,19 @@ Reviewed-by: Marek Vasut <marex@nabladev.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mn-vhip4-evalboard-v1.dts | 2 +-
+ arch/arm64/boot/dts/freescale/imx8mn-vhip4-evalboard-v2.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mn-vhip4-evalboard-v1.dts b/arch/arm64/boot/dts/freescale/imx8mn-vhip4-evalboard-v1.dts
-index 5f37065bf43f38..a8f7c226a61f86 100644
---- a/arch/arm64/boot/dts/freescale/imx8mn-vhip4-evalboard-v1.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mn-vhip4-evalboard-v1.dts
-@@ -112,7 +112,7 @@ &i2c3 {
+diff --git a/arch/arm64/boot/dts/freescale/imx8mn-vhip4-evalboard-v2.dts b/arch/arm64/boot/dts/freescale/imx8mn-vhip4-evalboard-v2.dts
+index 4dadfb7f78de27..43fd4d0041ef30 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mn-vhip4-evalboard-v2.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mn-vhip4-evalboard-v2.dts
+@@ -99,7 +99,7 @@ &i2c3 {
  
  &ifm_pmic {
- 	interrupt-parent = <&gpio2>;
--	interrupts = <0 GPIO_ACTIVE_LOW>;
-+	interrupts = <0 IRQ_TYPE_LEVEL_LOW>;
+ 	interrupt-parent = <&gpio5>;
+-	interrupts = <17 GPIO_ACTIVE_LOW>;
++	interrupts = <17 IRQ_TYPE_LEVEL_LOW>;
  };
  
  &iomuxc {
