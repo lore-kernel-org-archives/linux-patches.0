@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283382FE56A;
-	Tue, 21 Jul 2026 18:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4725471250;
+	Tue, 21 Jul 2026 18:16:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657782; cv=none; b=N8qzss9Wi1RfSKWHkwDP2KpFIBzvtjSZQQCd7BGcMWRu3y2PzzKgnn/fNj209PnVADz9fY1r7gPy5nTDaTEe0KWpoYAybkU/QXJmVDCV1QOn/F1fwh+4Z+AEIq/u+0RCsBg8z1xF8v83/hQw5Ab9oBjfKSIhwmTY5ry1cep9vrs=
+	t=1784657785; cv=none; b=VJ740jNFPtFMi1LISmcT8k/AQpJxkrMA46eCEbUNS15pRl9hsQ2HrU14Ih91c/J+p+bdP8+aq3cO+8iXatrDS3i5oOClVJ7lXWj4r/HB1cOwFFmz4GmPeOcYouahtbBmwM0QBqrA/T6N6jDYj9p3wfPawLyUgPKsGHWBVxF6GJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657782; c=relaxed/simple;
-	bh=g9dpRrw0MPuD63GDsSoZwxLZ8QPSFpFl+HemNx/igUY=;
+	s=arc-20240116; t=1784657785; c=relaxed/simple;
+	bh=0Y2b13c9WwNOBpv1foaw3AoPhip1ZnXjQEZyR62CJP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FKaHxvJ08sST1G6Ob5nlSnrCOtHbEpg+ZCKhPrpv/8eR/njtuqMp+1XjsjdXLO6uxBs6wqsi/i2X04fLy0bAmOouOwk/DJ0FuaiBHPl81Ww4z4xHiufbl35MR6+j/hyt6A6lwWwHMzUeCJqxLZ7vVvvrrWlgwieeEKwf4hxGW2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vKfQ6Oyd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q3w6tDqFZxBhI1GA4F8eOGugy3Y+p+o7+0IADGGwrnVFXIXEtVmm05cP+UOg3MBtvODYZ3k2K3j8dEC0v1ZxC9WUFbIvjnAKSR2eU4inFsntoEmlIFs2YOBD4FT9lKHZBxLu2vQ4xn6kxdRC9DzEwN69M8XMg/bVDZAKKZZr4t0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSlMSz2b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKfQ6Oyd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81EB51F000E9;
-	Tue, 21 Jul 2026 18:16:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSlMSz2b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26E501F000E9;
+	Tue, 21 Jul 2026 18:16:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657781;
-	bh=yiJraoXRXe1Hasgx7nDVumNYLRB9SyMEOT3C7M5QIwQ=;
+	s=korg; t=1784657783;
+	bh=4AwZn3l2r+DFmmZ8X0FRlWKvIpbUK4RGi4PdaQ5GkDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vKfQ6Oyd50bCV3/IK7AYX525anNAkiDer4v89nfPrCjRebrjhR3TumdfVJtkL0zgK
-	 WMkw8/+K2DehGePQOei3SqVMKnhoERX9cNQo7d2dNKsAkpfA9yy6ZlPdmzdaZLObVK
-	 7hJ3f69mGZ661dYdgiTd0ODEoY0JAER06RQ9C1Rw=
+	b=VSlMSz2bs8VnAFACYPGnTm5940BMpsG15g0BOWHPR2YQ93UH0nZlU7dOOpJCGSM7B
+	 OKyPHLiBWTXuEeI3lYTqtx2/ibp/RIqiTWQ0PmZazdwsRsQJoo+EZu5NDpxkvBdK4n
+	 NOxU9QZAFQ1Y97pl4oUqEdNbzVTnizWwDHWiLVyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0896/1611] eth: bnxt: rename ring_err_stats -> ring_drv_stats
-Date: Tue, 21 Jul 2026 17:16:52 +0200
-Message-ID: <20260721152535.543893513@linuxfoundation.org>
+Subject: [PATCH 6.18 0897/1611] eth: bnxt: improve the timing of stats
+Date: Tue, 21 Jul 2026 17:16:53 +0200
+Message-ID: <20260721152535.566571770@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,187 +53,181 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 6c32b07650676ab4c112ff8e9d345b6770ae2be5 ]
+[ Upstream commit 40529e58629baa9ce72143cb46cf1b3d2ca0d465 ]
 
-We recently added GRO stats to bnxt, which are maintained
-by the driver. Having "err" in the name of the struct for
-ring stats no longer makes sense (as pointed out by Michael,
-see Link).
+Kernel selftests wait 1.25x of the promised stats refresh time
+(as read from ethtool -c). bnxt reports 1sec by default, but
+the stats update process has two steps. First device DMAs the
+new values, then the service task performs update in full-width
+SW counters. So the worst case delay is actually 2x.
 
-Rename them to "drv" stats, as these are all maintained
-by the driver (even if partially based on info from descriptors).
-Michael suggested calling these misc, happy to go back to
-that. IMHO "drv" is a bit more meaningful that "misc".
+Note that the behavior is different for ring stats and port stats.
+Port stats are fetched synchronously by the service worker, so
+there's no risk of doubling up the delay there.
 
-Pure rename using sed, no functional changes.
+The problem of stale stats impacts not only tests but real workloads
+which monitor egress bandwidth of a NIC. The inaccuracy causes double
+counting in the next cycle and spurious overload alarms.
 
-Link: https://lore.kernel.org/CACKFLimgibJ0qkM1AacZVh8MKKy-pE_AAc4KPKZ7GUqebmXW9A@mail.gmail.com
+Try to read from the DMA buffer more aggressively, to mitigate
+timing issues between DMA and service task. The SW update should
+be cheap.
+
+Fixes: 51f307856b60 ("bnxt_en: Allow statistics DMA to be configurable using ethtool -C.")
 Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20260223203702.4137801-1-kuba@kernel.org
+Link: https://patch.msgid.link/20260619191538.104165-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 40529e58629b ("eth: bnxt: improve the timing of stats")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 18 ++++++++---------
- drivers/net/ethernet/broadcom/bnxt/bnxt.h     |  8 ++++----
- .../net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 20 +++++++++----------
- 3 files changed, 23 insertions(+), 23 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 48 ++++++++++++++++++-
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h     |  5 ++
+ .../net/ethernet/broadcom/bnxt/bnxt_ethtool.c |  1 +
+ 3 files changed, 53 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 2dece9aad5b95a..d0e37a09466499 100644
+index d0e37a09466499..98a911eae8eac8 100644
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -13159,7 +13159,7 @@ static void __bnxt_close_nic(struct bnxt *bp, bool irq_re_init,
- 	/* Save ring stats before shutdown */
- 	if (bp->bnapi && irq_re_init) {
- 		bnxt_get_ring_stats(bp, &bp->net_stats_prev);
--		bnxt_get_ring_err_stats(bp, &bp->ring_err_stats_prev);
-+		bnxt_get_ring_drv_stats(bp, &bp->ring_drv_stats_prev);
+@@ -10367,7 +10367,7 @@ static void bnxt_accumulate_stats(struct bnxt_stats_mem *stats)
+ 				stats->hw_masks, stats->len / 8, false);
+ }
+ 
+-static void bnxt_accumulate_all_stats(struct bnxt *bp)
++static void bnxt_accumulate_ring_stats(struct bnxt *bp)
+ {
+ 	struct bnxt_stats_mem *ring0_stats;
+ 	bool ignore_zero = false;
+@@ -10390,6 +10390,10 @@ static void bnxt_accumulate_all_stats(struct bnxt *bp)
+ 					ring0_stats->hw_masks,
+ 					ring0_stats->len / 8, ignore_zero);
  	}
- 	if (irq_re_init) {
- 		bnxt_free_irq(bp);
-@@ -13404,8 +13404,8 @@ bnxt_get_stats64(struct net_device *dev, struct rtnl_link_stats64 *stats)
- 	clear_bit(BNXT_STATE_READ_STATS, &bp->state);
++}
++
++static void bnxt_accumulate_port_stats(struct bnxt *bp)
++{
+ 	if (bp->flags & BNXT_FLAG_PORT_STATS) {
+ 		struct bnxt_stats_mem *stats = &bp->port_stats;
+ 		__le64 *hw_stats = stats->hw_stats;
+@@ -10412,6 +10416,41 @@ static void bnxt_accumulate_all_stats(struct bnxt *bp)
+ 	}
  }
  
--static void bnxt_get_one_ring_err_stats(struct bnxt *bp,
--					struct bnxt_total_ring_err_stats *stats,
-+static void bnxt_get_one_ring_drv_stats(struct bnxt *bp,
-+					struct bnxt_total_ring_drv_stats *stats,
- 					struct bnxt_cp_ring_info *cpr)
++static void bnxt_accumulate_all_stats(struct bnxt *bp)
++{
++	bnxt_accumulate_ring_stats(bp);
++	bnxt_accumulate_port_stats(bp);
++}
++
++/* Re-accumulate ring stats from DMA buffers if stale.
++ * uAPIs for reading sw_stats should call this first.
++ *
++ * We promise user space update frequency of bp->stats_coal_ticks but
++ * the update is a two step process - first device updates the DMA buffer,
++ * then we have to update from that buffer to driver stats in the service work.
++ * Worst case we would be 2x off from the desired frequency.
++ * Sync the stats sooner, if stale. The 20% threshold was chosen arbitrarily.
++ *
++ * Ideally we would split the user-configured time into two portions,
++ * i.e. also lower the DMA period by the 20%. But the DMA timer seems to have
++ * too coarse granularity to play such tricks.
++ */
++void bnxt_sync_ring_stats(struct bnxt *bp)
++{
++	unsigned long stale;
++
++	if (!netif_running(bp->dev) || !bp->stats_coal_ticks)
++		return;
++
++	spin_lock(&bp->stats_lock);
++	stale = usecs_to_jiffies(bp->stats_coal_ticks / 5);
++	if (time_after_eq(jiffies, bp->stats_updated_jiffies + stale)) {
++		bnxt_accumulate_ring_stats(bp);
++		bp->stats_updated_jiffies = jiffies;
++	}
++	spin_unlock(&bp->stats_lock);
++}
++
+ static int bnxt_hwrm_port_qstats(struct bnxt *bp, u8 flags)
  {
- 	struct bnxt_sw_stats *sw_stats = cpr->sw_stats;
-@@ -13426,13 +13426,13 @@ static void bnxt_get_one_ring_err_stats(struct bnxt *bp,
- 	stats->total_missed_irqs += sw_stats->cmn.missed_irqs;
- }
+ 	struct hwrm_port_qstats_input *req;
+@@ -13376,6 +13415,7 @@ bnxt_get_stats64(struct net_device *dev, struct rtnl_link_stats64 *stats)
+ 		return;
+ 	}
  
--void bnxt_get_ring_err_stats(struct bnxt *bp,
--			     struct bnxt_total_ring_err_stats *stats)
-+void bnxt_get_ring_drv_stats(struct bnxt *bp,
-+			     struct bnxt_total_ring_drv_stats *stats)
- {
- 	int i;
++	bnxt_sync_ring_stats(bp);
+ 	bnxt_get_ring_stats(bp, stats);
+ 	bnxt_add_prev_stats(bp, stats);
  
- 	for (i = 0; i < bp->cp_nr_rings; i++)
--		bnxt_get_one_ring_err_stats(bp, stats, &bp->bnapi[i]->cp_ring);
-+		bnxt_get_one_ring_drv_stats(bp, stats, &bp->bnapi[i]->cp_ring);
- }
+@@ -14548,7 +14588,10 @@ static void bnxt_sp_task(struct work_struct *work)
+ 	if (test_and_clear_bit(BNXT_PERIODIC_STATS_SP_EVENT, &bp->sp_event)) {
+ 		bnxt_hwrm_port_qstats(bp, 0);
+ 		bnxt_hwrm_port_qstats_ext(bp, 0);
++		spin_lock(&bp->stats_lock);
+ 		bnxt_accumulate_all_stats(bp);
++		bp->stats_updated_jiffies = jiffies;
++		spin_unlock(&bp->stats_lock);
+ 	}
  
- static bool bnxt_mc_list_updated(struct bnxt *bp, u32 *rx_mask)
-@@ -15887,9 +15887,9 @@ static void bnxt_get_base_stats(struct net_device *dev,
+ 	if (test_and_clear_bit(BNXT_LINK_CHNG_SP_EVENT, &bp->sp_event)) {
+@@ -15279,6 +15322,7 @@ static int bnxt_init_board(struct pci_dev *pdev, struct net_device *dev)
+ 	INIT_DELAYED_WORK(&bp->fw_reset_task, bnxt_fw_reset_task);
  
- 	rx->packets = bp->net_stats_prev.rx_packets;
- 	rx->bytes = bp->net_stats_prev.rx_bytes;
--	rx->alloc_fail = bp->ring_err_stats_prev.rx_total_oom_discards;
--	rx->hw_gro_packets = bp->ring_err_stats_prev.rx_total_hw_gro_packets;
--	rx->hw_gro_wire_packets = bp->ring_err_stats_prev.rx_total_hw_gro_wire_packets;
-+	rx->alloc_fail = bp->ring_drv_stats_prev.rx_total_oom_discards;
-+	rx->hw_gro_packets = bp->ring_drv_stats_prev.rx_total_hw_gro_packets;
-+	rx->hw_gro_wire_packets = bp->ring_drv_stats_prev.rx_total_hw_gro_wire_packets;
+ 	spin_lock_init(&bp->ntp_fltr_lock);
++	spin_lock_init(&bp->stats_lock);
+ #if BITS_PER_LONG == 32
+ 	spin_lock_init(&bp->db_lock);
+ #endif
+@@ -15837,6 +15881,7 @@ static void bnxt_get_queue_stats_rx(struct net_device *dev, int i,
+ 	if (!bp->bnapi)
+ 		return;
  
- 	tx->packets = bp->net_stats_prev.tx_packets;
- 	tx->bytes = bp->net_stats_prev.tx_bytes;
++	bnxt_sync_ring_stats(bp);
+ 	cpr = &bp->bnapi[i]->cp_ring;
+ 	sw = cpr->stats.sw_stats;
+ 
+@@ -15865,6 +15910,7 @@ static void bnxt_get_queue_stats_tx(struct net_device *dev, int i,
+ 	if (!bp->tx_ring)
+ 		return;
+ 
++	bnxt_sync_ring_stats(bp);
+ 	bnapi = bp->tx_ring[bp->tx_ring_map[i]].bnapi;
+ 	sw = bnapi->cp_ring.stats.sw_stats;
+ 
 diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index b326a814b1f7a7..9c9212ecd8c744 100644
+index 9c9212ecd8c744..d55987e24ad6e4 100644
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -1144,7 +1144,7 @@ struct bnxt_sw_stats {
- 	struct bnxt_cmn_sw_stats cmn;
- };
+@@ -2601,6 +2601,10 @@ struct bnxt {
+ #define BNXT_MIN_STATS_COAL_TICKS	  250000
+ #define BNXT_MAX_STATS_COAL_TICKS	 1000000
  
--struct bnxt_total_ring_err_stats {
-+struct bnxt_total_ring_drv_stats {
- 	u64			rx_total_l4_csum_errors;
- 	u64			rx_total_resets;
- 	u64			rx_total_buf_errors;
-@@ -2562,7 +2562,7 @@ struct bnxt {
- 	u8			pri2cos_idx[8];
- 	u8			pri2cos_valid;
- 
--	struct bnxt_total_ring_err_stats ring_err_stats_prev;
-+	struct bnxt_total_ring_drv_stats ring_drv_stats_prev;
- 
- 	u16			hwrm_max_req_len;
- 	u16			hwrm_max_ext_req_len;
-@@ -2963,8 +2963,8 @@ int bnxt_half_open_nic(struct bnxt *bp);
- void bnxt_half_close_nic(struct bnxt *bp);
- void bnxt_reenable_sriov(struct bnxt *bp);
++	/* Protects stats_updated_jiffies and writes to sw_stats */
++	spinlock_t		stats_lock;
++	unsigned long		stats_updated_jiffies;
++
+ 	struct work_struct	sp_task;
+ 	unsigned long		sp_event;
+ #define BNXT_RX_MASK_SP_EVENT		0
+@@ -2965,6 +2969,7 @@ void bnxt_reenable_sriov(struct bnxt *bp);
  void bnxt_close_nic(struct bnxt *, bool, bool);
--void bnxt_get_ring_err_stats(struct bnxt *bp,
--			     struct bnxt_total_ring_err_stats *stats);
-+void bnxt_get_ring_drv_stats(struct bnxt *bp,
-+			     struct bnxt_total_ring_drv_stats *stats);
+ void bnxt_get_ring_drv_stats(struct bnxt *bp,
+ 			     struct bnxt_total_ring_drv_stats *stats);
++void bnxt_sync_ring_stats(struct bnxt *bp);
  bool bnxt_rfs_capable(struct bnxt *bp, bool new_rss_ctx);
  int bnxt_dbg_hwrm_rd_reg(struct bnxt *bp, u32 reg_off, u16 num_words,
  			 u32 *reg_buf);
 diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-index 3237515f0e7ec8..8d10bf22480f69 100644
+index 8d10bf22480f69..a71025f51370d7 100644
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-@@ -340,7 +340,7 @@ enum {
- 	RX_NETPOLL_DISCARDS,
- };
- 
--static const char *const bnxt_ring_err_stats_arr[] = {
-+static const char *const bnxt_ring_drv_stats_arr[] = {
- 	"rx_total_l4_csum_errors",
- 	"rx_total_resets",
- 	"rx_total_buf_errors",
-@@ -500,7 +500,7 @@ static const struct {
- 	BNXT_TX_STATS_PRI_ENTRIES(tx_packets),
- };
- 
--#define BNXT_NUM_RING_ERR_STATS	ARRAY_SIZE(bnxt_ring_err_stats_arr)
-+#define BNXT_NUM_RING_DRV_STATS	ARRAY_SIZE(bnxt_ring_drv_stats_arr)
- #define BNXT_NUM_PORT_STATS ARRAY_SIZE(bnxt_port_stats_arr)
- #define BNXT_NUM_STATS_PRI			\
- 	(ARRAY_SIZE(bnxt_rx_bytes_pri_arr) +	\
-@@ -539,7 +539,7 @@ static int bnxt_get_num_stats(struct bnxt *bp)
- 	int num_stats = bnxt_get_num_ring_stats(bp);
- 	int len;
- 
--	num_stats += BNXT_NUM_RING_ERR_STATS;
-+	num_stats += BNXT_NUM_RING_DRV_STATS;
- 
- 	if (bp->flags & BNXT_FLAG_PORT_STATS)
- 		num_stats += BNXT_NUM_PORT_STATS;
-@@ -594,7 +594,7 @@ static bool is_tx_ring(struct bnxt *bp, int ring_num)
- static void bnxt_get_ethtool_stats(struct net_device *dev,
- 				   struct ethtool_stats *stats, u64 *buf)
- {
--	struct bnxt_total_ring_err_stats ring_err_stats = {0};
-+	struct bnxt_total_ring_drv_stats ring_drv_stats = {0};
- 	struct bnxt *bp = netdev_priv(dev);
- 	u64 *curr, *prev;
- 	u32 tpa_stats;
-@@ -643,12 +643,12 @@ static void bnxt_get_ethtool_stats(struct net_device *dev,
- 			buf[j] = sw[k];
+@@ -605,6 +605,7 @@ static void bnxt_get_ethtool_stats(struct net_device *dev,
+ 		goto skip_ring_stats;
  	}
  
--	bnxt_get_ring_err_stats(bp, &ring_err_stats);
-+	bnxt_get_ring_drv_stats(bp, &ring_drv_stats);
- 
- skip_ring_stats:
--	curr = &ring_err_stats.rx_total_l4_csum_errors;
--	prev = &bp->ring_err_stats_prev.rx_total_l4_csum_errors;
--	for (i = 0; i < BNXT_NUM_RING_ERR_STATS; i++, j++, curr++, prev++)
-+	curr = &ring_drv_stats.rx_total_l4_csum_errors;
-+	prev = &bp->ring_drv_stats_prev.rx_total_l4_csum_errors;
-+	for (i = 0; i < BNXT_NUM_RING_DRV_STATS; i++, j++, curr++, prev++)
- 		buf[j] = *curr + *prev;
- 
- 	if (bp->flags & BNXT_FLAG_PORT_STATS) {
-@@ -752,8 +752,8 @@ static void bnxt_get_strings(struct net_device *dev, u32 stringset, u8 *buf)
- 				ethtool_sprintf(&buf, "[%d]: %s", i, str);
- 			}
- 		}
--		for (i = 0; i < BNXT_NUM_RING_ERR_STATS; i++)
--			ethtool_puts(&buf, bnxt_ring_err_stats_arr[i]);
-+		for (i = 0; i < BNXT_NUM_RING_DRV_STATS; i++)
-+			ethtool_puts(&buf, bnxt_ring_drv_stats_arr[i]);
- 
- 		if (bp->flags & BNXT_FLAG_PORT_STATS)
- 			for (i = 0; i < BNXT_NUM_PORT_STATS; i++) {
++	bnxt_sync_ring_stats(bp);
+ 	tpa_stats = bnxt_get_num_tpa_ring_stats(bp);
+ 	for (i = 0; i < bp->cp_nr_rings; i++) {
+ 		struct bnxt_napi *bnapi = bp->bnapi[i];
 -- 
 2.53.0
 
