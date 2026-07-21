@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257FB44AB7F;
-	Tue, 21 Jul 2026 21:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38BE44AB9E;
+	Tue, 21 Jul 2026 21:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668810; cv=none; b=pFpnVJyQGXKZ1OmoHX5al5SZkG6YuCt1K5ww/hVaU4b3PZGU2sTgUAA9S0vh9UqEsPe3AdayxOMzALkKIYna5bcJrRBH6xwLWH24KcTYjApGeei8UsLOU/0yqB37MDBK5pNg2sDMgNHGG3GGA9VL++2JI9qAd2zZYEFhkhJ+QQE=
+	t=1784668811; cv=none; b=X3MW+I8KaKl4odeKocNmvVChWqjIFy+tVspmDfy2ZsoLHhGVxOn572/++NbuTDXeHXBUqvgdlRwqX/zGrBMGpkJlaQYix7z05r5zKivEHNJwfgVFAPf4nc057rUfNrUPQv1PKHLtoxgXMuXWghgGBdQzuCl0OAkAPsH6+0aIXb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668810; c=relaxed/simple;
-	bh=T7fDJagqoVXHhfNjk1nETPcgxuWSvUiXTtOajhPqgo4=;
+	s=arc-20240116; t=1784668811; c=relaxed/simple;
+	bh=lU5GPyzzkBicpVwqT2uBXP4cQrRFKYmiXt51eg/RREY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SvX1u30hyDEgXzcorfOp3IeeV17zvakvjJ82jhL8o4gzeyydzXU1b9p2f520053PaxsE/HK/qT9VeCs2oiNOVCWVGiERn5GiNl8YjkgAM/I2d+azGrJ+fSWfIMkPVNnY3Ig7QK/heFFe7b1QJGBmah6sW6MtKtPhsqfPPxL1n/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=moNowqH0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q1nfztYHt5fbaUPVNYIj/Qrl1Nskljmr61b9l3D620BJ1Z/1+87CNC4RLF79dAy6WWI/cKSnfJv6NhWYi22DK0oDAZzfzZLKRtQHZQOKlTGselpdtvcRibq7rZnSULfo+RjuSOSstsMRuyjirGW3diiEBnJmOgDvoQcm1TyRkK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axqJ03de; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="moNowqH0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 860311F000E9;
-	Tue, 21 Jul 2026 21:20:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axqJ03de"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C781F00A3A;
+	Tue, 21 Jul 2026 21:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668808;
-	bh=ziCNCsPWZyTUyfS+KLBsOZPqrNtc/hj9wUzSqCcoIJk=;
+	s=korg; t=1784668810;
+	bh=bkqCxwr4cte6fCgPOlHE/QnlBj4e1v6GHVNhX5SvNR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=moNowqH06d9L5ocGYT25jDAJ4ddtA2WDAyqMttRDF/ZaaDD+wvlTUlXtATACdopyc
-	 0u5/YNsM/8maI+3xYXcbbUOSoI/LhhNoUztNgaRM2qBKonBoXQP880lEVf8OIv8KF7
-	 YHKI6HXpmqdK2zxZJbWdyTNxdsRq3D4kqi2XeeMM=
+	b=axqJ03deqmttuvVswDhiHOBZAxWb6K6QcPn4JQJIo4g6MrULgshNjsZ46L6xbh2Gq
+	 /VyD/DeHTRxwKO794Mu8aV3Az2kORRopvdYPChPFoyYB9BJeTuZyLIrb8nihz3gJHC
+	 +M35STI7qV6IvinfhoTxyXseQcGvRHkky0hojibw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0315/1067] media: atomisp: Fix memory leak in atomisp_fixed_pattern_table()
-Date: Tue, 21 Jul 2026 17:15:16 +0200
-Message-ID: <20260721152431.638893153@linuxfoundation.org>
+Subject: [PATCH 6.1 0316/1067] firmware: arm_scmi: Read sensor config as 32-bit value
+Date: Tue, 21 Jul 2026 17:15:17 +0200
+Message-ID: <20260721152431.660788235@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -52,58 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 4e8156bd9517fa18c3613ea39c222c7035f0221e ]
+[ Upstream commit f6fe7c3c007df18afd289ff2d98c692fae9ab085 ]
 
-atomisp_v4l2_framebuffer_to_css_frame() allocates memory for
-temporary variable raw_black_frame, which must be released via
-ia_css_frame_free() before the function returns. However, if
-sh_css_set_black_frame() fails, the function returns immediately without
-performing this cleanup, leading to a memory leak.
+The SENSOR_CONFIG_GET response contains a 32-bit sensor_config field,
+and the xfer is initialized with a 4-byte RX buffer. Reading it with
+get_unaligned_le64() can consume bytes past the returned payload.
 
-Fix this by assigning the return value of sh_css_set_black_frame() to
-ret. This ensures that the error code is propagated while allowing the
-execution to fall through to the ia_css_frame_free() cleanup call.
+Use get_unaligned_le32() to match the protocol layout and the allocated
+response size.
 
-The bug was originally detected on v6.13-rc1 using an experimental
-static analysis tool we are developing, and we have verified that the
-issue persists in the latest mainline kernel. The tool is based on the
-LLVM framework and is specifically designed to detect memory management
-issues. It is currently under active development and not yet publicly
-available.
-
-We performed build testing on x86_64 with allyesconfig. Since triggering
-this error path in atomisp requires specific Intel Atom ISP hardware and
-firmware, we were unable to perform runtime testing and instead verified
-the fix according to the code logic.
-
-Fixes: 85b606e02ad7 ("media: atomisp: get rid of a bunch of other wrappers")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: 7b83c5f41088 ("firmware: arm_scmi: Add SCMI v3.0 sensor configuration support")
+Link: https://patch.msgid.link/20260517-scmi_fixes-v1-1-d86daec4defd@kernel.org
+Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/atomisp/pci/atomisp_cmd.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/firmware/arm_scmi/sensors.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/media/atomisp/pci/atomisp_cmd.c b/drivers/staging/media/atomisp/pci/atomisp_cmd.c
-index c72d0e34467104..57d66f2c620769 100644
---- a/drivers/staging/media/atomisp/pci/atomisp_cmd.c
-+++ b/drivers/staging/media/atomisp/pci/atomisp_cmd.c
-@@ -4234,10 +4234,8 @@ int atomisp_fixed_pattern_table(struct atomisp_sub_device *asd,
- 	if (ret)
- 		return ret;
+diff --git a/drivers/firmware/arm_scmi/sensors.c b/drivers/firmware/arm_scmi/sensors.c
+index 0b5853fa9d874f..4e3e937cb92c18 100644
+--- a/drivers/firmware/arm_scmi/sensors.c
++++ b/drivers/firmware/arm_scmi/sensors.c
+@@ -777,7 +777,7 @@ static int scmi_sensor_config_get(const struct scmi_protocol_handle *ph,
+ 	if (!ret) {
+ 		struct scmi_sensor_info *s = si->sensors + sensor_id;
  
--	if (sh_css_set_black_frame(asd->stream_env[ATOMISP_INPUT_STREAM_GENERAL].stream,
--				   raw_black_frame) != 0)
--		return -ENOMEM;
--
-+	ret = sh_css_set_black_frame(asd->stream_env[ATOMISP_INPUT_STREAM_GENERAL].stream,
-+				     raw_black_frame);
- 	ia_css_frame_free(raw_black_frame);
- 	return ret;
- }
+-		*sensor_config = get_unaligned_le64(t->rx.buf);
++		*sensor_config = get_unaligned_le32(t->rx.buf);
+ 		s->sensor_config = *sensor_config;
+ 	}
+ 
 -- 
 2.53.0
 
