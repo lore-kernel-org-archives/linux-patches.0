@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8A246AA71;
-	Tue, 21 Jul 2026 15:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A4146AA86;
+	Tue, 21 Jul 2026 15:40:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648423; cv=none; b=W5EU4kGAJNJGDyOeqpCbXzYB0nHZigC9YQ3GiYaSOVOZLvPLjRtOSzQ/7EXHo3ijFLuuO8uV/FUdQ/CX7fF6m8NXnScKy+nLA/+hMVc385bkVvjGogiEEJPLC8A3qmjQpke1ijGdaFydgxPIC0YepxNsrt+a36yo5Bf8L5QfrfQ=
+	t=1784648424; cv=none; b=KEHt8xm11EiN91vQcJ66poWtYkzy25RIBeNFViTCSAQmPa10n7QbFyXoxhl6vMtN+04OMqd1Jtvik4SQcT8mHO2zbKA8Y4y9otliAn2PB62uD22IYTMVU5+MYsqeNoSrlVadcYhgIP81dXrdo3TMF/R59l4dNZv8Gfg7z3GCaes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648423; c=relaxed/simple;
-	bh=cgnIqRuImGTNVkEZq5QHmX7T69rmKNDsfUCSIBovla4=;
+	s=arc-20240116; t=1784648424; c=relaxed/simple;
+	bh=GJBV1W/YVjhARcwXnLVjUX5vBVe3rxNyXH8VysUeK+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PJfr73EcqYT2G800MDblDm9lhttZG43B4A+z0I2RsVX87x7SxZEbPy5p37QQn/37ZtVb+pDep6MQFtGMpPKF+TTI9y7XUr31tONbyMH+z0TbsGlZjbPIfN7xpte7e4wVopUAH9Qh9Sy4EyVON67B7rX87X1xnQuT8Kiv+iNxzX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqxP2YBw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=elK+gfCh+BrRLA6D6be2/KhBVYenlWuwj8kcm9chKSCfYwFBrTNrOUmOd20+hY7UVF96Z2ZuqfC6ms0C7v9w3oAdFke9juPLeVQ6b83L/TdsZpOxNEDUOchmwbu/9GlyL6jyVaHskq2n0P2ru9D1vohX4h0PllxpT7mmJGbw5Gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u4ZKKRHG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqxP2YBw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCED1F000E9;
-	Tue, 21 Jul 2026 15:40:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4ZKKRHG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0AEA1F00A3A;
+	Tue, 21 Jul 2026 15:40:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648420;
-	bh=8fQEFHDQU9zfXH2gUKH16GtW0/y9Vg3C1ptRWJqTVKk=;
+	s=korg; t=1784648423;
+	bh=hWfVh8CpTMxF1r2YRmyEAMvEY4VL56yuoAe0uGkKubE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QqxP2YBwS99yVIcO6AJ6pL/TzaNd2LQROiJFDNeL9EwBCcKUMwDJCIWz3o1AH//o8
-	 zbWO/o93MfkutZVKgQrhM2Jr8Ds708wrGKn4GI3lYFf6bFQdzz1VVnfcSpmjRpa1/M
-	 IttLK5ZJw1VosGevK+O/vdioaaj5waxhwZdC90KM=
+	b=u4ZKKRHGmiqfZwBFM5FsvdJiVLimO/Cl4emuhXRZU5+XOW9zszOd2o+rx3BeAFDbL
+	 o763kU56L8ZIaZc+xcJ6OluaW2jJjyGJ4UOzZTLTme9rr6/2DiCnQpUfKwOCHU1eOp
+	 JW59EuzugvHvpx9JRZtSIcOivtMtUzLRWsEzPZc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	linux-clk@vger.kernel.org,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Brian Masney <bmasney@redhat.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
+	Nickolay Goppen <setotau@mainlining.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0194/2077] clk: scmi: Fix clock rate rounding
-Date: Tue, 21 Jul 2026 16:57:47 +0200
-Message-ID: <20260721152557.258574991@linuxfoundation.org>
+Subject: [PATCH 7.1 0177/2077] arm64: dts: qcom: sdm630: set adsp compute-cbs regs properly
+Date: Tue, 21 Jul 2026 16:57:30 +0200
+Message-ID: <20260721152556.858498877@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -57,56 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Nickolay Goppen <setotau@mainlining.org>
 
-[ Upstream commit d0c81a38d06d446d341532700b3a4a43d3b00eb1 ]
+[ Upstream commit e8e1fb5c703fc6962103ffdc60830df99351c139 ]
 
-While the do_div() helper used for rounding expects its divisor argument
-to be a 32bits quantity, the currently provided divisor parameter is a
-64bit value that, as a consequence, is silently truncated and a possible
-source of bugs.
+Changing FastRPC compute-cbs' reg values to matching iommu streams
+solves SMMU translation errors when trying to use FastRPC on ADSP
+so change FastRPC compute-cbs' reg values that way
 
-Fix by using the proper div64_ul helper.
-
-Cc: Michael Turquette <mturquette@baylibre.com>
-Cc: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-clk@vger.kernel.org
-Fixes: 7a8655e19bdb ("clk: scmi: Fix the rounding of clock rate")
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260508153300.2224715-2-cristian.marussi@arm.com
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: af2ce7296643 ("arm64: dts: qcom: sdm630: Add FastRPC nodes to ADSP")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
+Link: https://lore.kernel.org/r/20260429-qcom-sdm660-cdsp-adsp-fastrpc-dts-fix-v5-3-16bc82e622ad@mainlining.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-scmi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm630.dtsi | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/clk/clk-scmi.c b/drivers/clk/clk-scmi.c
-index 6b286ea6f1218c..b6a12f3bc123c9 100644
---- a/drivers/clk/clk-scmi.c
-+++ b/drivers/clk/clk-scmi.c
-@@ -10,9 +10,9 @@
- #include <linux/device.h>
- #include <linux/err.h>
- #include <linux/of.h>
-+#include <linux/math64.h>
- #include <linux/module.h>
- #include <linux/scmi_protocol.h>
--#include <asm/div64.h>
+diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+index bef3213165d668..4b47efdb57b213 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -2459,27 +2459,27 @@ fastrpc {
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
  
- #define NOT_ATOMIC	false
- #define ATOMIC		true
-@@ -83,7 +83,7 @@ static int scmi_clk_determine_rate(struct clk_hw *hw,
+-					compute-cb@1 {
++					compute-cb@3 {
+ 						compatible = "qcom,fastrpc-compute-cb";
+-						reg = <1>;
++						reg = <3>;
+ 						iommus = <&lpass_smmu 3>;
+ 					};
  
- 	ftmp = req->rate - fmin;
- 	ftmp += clk->info->range.step_size - 1; /* to round up */
--	do_div(ftmp, clk->info->range.step_size);
-+	ftmp = div64_ul(ftmp, clk->info->range.step_size);
+-					compute-cb@2 {
++					compute-cb@7 {
+ 						compatible = "qcom,fastrpc-compute-cb";
+-						reg = <2>;
++						reg = <7>;
+ 						iommus = <&lpass_smmu 7>;
+ 					};
  
- 	req->rate = ftmp * clk->info->range.step_size + fmin;
+-					compute-cb@3 {
++					compute-cb@8 {
+ 						compatible = "qcom,fastrpc-compute-cb";
+-						reg = <3>;
++						reg = <8>;
+ 						iommus = <&lpass_smmu 8>;
+ 					};
  
+-					compute-cb@4 {
++					compute-cb@9 {
+ 						compatible = "qcom,fastrpc-compute-cb";
+-						reg = <4>;
++						reg = <9>;
+ 						iommus = <&lpass_smmu 9>;
+ 					};
+ 				};
 -- 
 2.53.0
 
