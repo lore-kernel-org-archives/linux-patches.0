@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF39C46D56A;
-	Tue, 21 Jul 2026 17:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84120472523;
+	Tue, 21 Jul 2026 17:56:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656600; cv=none; b=FcPyW1pczcxn34azE1xTkiXGtbFCP5Yt06g9exI2/XK62BFd1eRoixAdpHS10QVXda8UYTjllwsPLn9Ot6bPpt5bwfNYMQUql4xqMymqiZ4QDK2BW1WCdoXshZMBWuRFuMJvG0yJYMvrkhKyb9c1VGRaD6nztF0w7Sq0//No6Gk=
+	t=1784656602; cv=none; b=YQw6xyx6XWGRPYoMA1DRJuh/L2E2F2uQEqLaq5aUMeruTl3IKinyCVmBMmlOW0fgOFrtv8LOCXTSOTOm/j9LB2nDcWxRGpZ98LtebrPrW1JQHTm/3D6NfNb+Zx1JFzvgMnlQYtXeYdOfDfB8871xwW5Kv+B0QOKVxewQiTuQv/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656600; c=relaxed/simple;
-	bh=iUcPrPz1jV1SdVFSguWRQJJHyghXO8NY5SkPRqHBfZ4=;
+	s=arc-20240116; t=1784656602; c=relaxed/simple;
+	bh=V1ep2oja0ZnCfFPvq5g/7nC+y36YPClUNFLLCSUig5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KRJYovwGe68FQ7oN50SKJJHFba033laQqDTkao+G5zOqSXbYBN5VLQ9PJdJSPRwaIzM4yPRuonYTlKZw8VT4uLLuYXxFog3l5pyEoTqQB4+5dHoWvpwRs9gw3CZOhuNpV+uSPWteIIZHXeCEaZMFI3FNcwi1RuRzQO4zgu3NXQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tkMjsZoL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B/DmySTvOMvbzk8cewjERv+5bFto0eBXvxWtw6Db4GsS5unIlwaT6DhLhyJK7FjxghA/xXk54HeXBJGhp/mR+Bq5YRfs9zyqr3QN1PHARB93zRrIg8fx9uVWKTx4uOtT5HfO8B56wEvdouZzOYrYysJHmasosFCe8RWj03EhMeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=irsbbOmr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkMjsZoL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDE81F000E9;
-	Tue, 21 Jul 2026 17:56:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="irsbbOmr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A171F00A3A;
+	Tue, 21 Jul 2026 17:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656598;
-	bh=U9w+l6E+KqUE3cbp1Je+4fUK8uODsDZIkWFaZtzK4+0=;
+	s=korg; t=1784656601;
+	bh=mcx6BzXhNrYxhm/wHXRqlNdWo5/8lLb1EGYKBReXiug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tkMjsZoLOoHj/TSHb4hgz42UqVcNUh5CqVInzouPSmo4OobwhIfnT/j2KAsCiQrqv
-	 FMqNxn/MMnk58/hNndzdx9fXcPjRAXaJoosvV1v2ivenn8eIvu+z5KP8pBtMeaKG7R
-	 mJrXtCeaZVXLY2mi5lCxsUICXrg5PqcAi9YUDjIE=
+	b=irsbbOmrhBDVUGDzpgWMaohs0Ap2yKqSRBriOF3g6dcfsylBi2zmj+tgH8fZhbfrq
+	 biaVdAUR2J4TWiyyMAC6rlKYlfk2f3tm8AEqnZ9ooea6CU7SHQeLXAQ8hKWPEAxK8Z
+	 DAQecwq6yW5tMD/yJoijUsy5Vz9nV/pHh3HrdpsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
-	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Louis Scalbert <louis.scalbert@6wind.com>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0421/1611] vfs: add FS_USERNS_DELEGATABLE flag and set it for NFS
-Date: Tue, 21 Jul 2026 17:08:57 +0200
-Message-ID: <20260721152524.735437915@linuxfoundation.org>
+Subject: [PATCH 6.18 0448/1611] bonding: 3ad: add lacp_strict configuration knob
+Date: Tue, 21 Jul 2026 17:09:24 +0200
+Message-ID: <20260721152525.378421875@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,102 +52,260 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Louis Scalbert <louis.scalbert@6wind.com>
 
-[ Upstream commit c5d6cac28646b0d5d81ef632be748ae93c1f36c7 ]
+[ Upstream commit 32b0b8953343eaceaa816a9ead3b6bb66355c64e ]
 
-Commit e1c5ae59c0f2 ("fs: don't allow non-init s_user_ns for filesystems
-without FS_USERNS_MOUNT") prevents the mount of any filesystem inside a
-container that doesn't have FS_USERNS_MOUNT set.
+When an 802.3ad (LACP) bonding interface has no slaves in the
+collecting/distributing state, the bonding master still reports
+carrier as up as long as at least 'min_links' slaves have carrier.
 
-This broke NFS mounts in our containerized environment. We have a daemon
-somewhat like systemd-mountfsd running in the init_ns. A process does a
-fsopen() inside the container and passes it to the daemon via unix
-socket.
+In this situation, only one slave is effectively used for TX/RX,
+while traffic received on other slaves is dropped. Upper-layer
+daemons therefore consider the interface operational, even though
+traffic may be blackholed if the lack of LACP negotiation means
+the partner is not ready to deal with traffic.
 
-The daemon then vets that the request is for an allowed NFS server and
-performs the mount. This now fails because the fc->user_ns is set to the
-value in the container and NFS doesn't set FS_USERNS_MOUNT.  We don't
-want to add FS_USERNS_MOUNT to NFS since that would allow the container
-to mount any NFS server (even malicious ones).
+Introduce a configuration knob to control this behavior. It allows
+the bonding master to assert carrier only when at least 'min_links'
+slaves are in Collecting_Distributing state.
 
-Add a new FS_USERNS_DELEGATABLE flag, and enable it on NFS.
+The default mode preserves the existing behavior. This patch only
+introduces the knob; its behavior is implemented in the subsequent
+commit.
 
-Fixes: e1c5ae59c0f2 ("fs: don't allow non-init s_user_ns for filesystems without FS_USERNS_MOUNT")
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260129-twmount-v1-1-4874ed2a15c4@kernel.org
-Acked-by: Anna Schumaker <anna.schumaker@oracle.com>
-Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 655f8919d549 ("bonding: add min links parameter to 802.3ad")
+Signed-off-by: Louis Scalbert <louis.scalbert@6wind.com>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Link: https://patch.msgid.link/20260603150331.1919611-4-louis.scalbert@6wind.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/fs_context.c |  8 ++++++--
- fs/super.c          | 11 ++++++-----
- include/linux/fs.h  |  1 +
- 3 files changed, 13 insertions(+), 7 deletions(-)
+ Documentation/netlink/specs/rt-link.yaml |  3 +++
+ Documentation/networking/bonding.rst     | 23 +++++++++++++++++++++
+ drivers/net/bonding/bond_main.c          |  1 +
+ drivers/net/bonding/bond_netlink.c       | 16 +++++++++++++++
+ drivers/net/bonding/bond_options.c       | 26 ++++++++++++++++++++++++
+ include/net/bond_options.h               |  1 +
+ include/net/bonding.h                    |  1 +
+ include/uapi/linux/if_link.h             |  1 +
+ tools/include/uapi/linux/if_link.h       |  1 +
+ 9 files changed, 73 insertions(+)
 
-diff --git a/fs/nfs/fs_context.c b/fs/nfs/fs_context.c
-index b4679b7161b096..128ebd48b4f4ba 100644
---- a/fs/nfs/fs_context.c
-+++ b/fs/nfs/fs_context.c
-@@ -1768,7 +1768,9 @@ struct file_system_type nfs_fs_type = {
- 	.init_fs_context	= nfs_init_fs_context,
- 	.parameters		= nfs_fs_parameters,
- 	.kill_sb		= nfs_kill_super,
--	.fs_flags		= FS_RENAME_DOES_D_MOVE|FS_BINARY_MOUNTDATA,
-+	.fs_flags		= FS_RENAME_DOES_D_MOVE	|
-+				  FS_BINARY_MOUNTDATA	|
-+				  FS_USERNS_DELEGATABLE,
- };
- MODULE_ALIAS_FS("nfs");
- EXPORT_SYMBOL_GPL(nfs_fs_type);
-@@ -1780,7 +1782,9 @@ struct file_system_type nfs4_fs_type = {
- 	.init_fs_context	= nfs_init_fs_context,
- 	.parameters		= nfs_fs_parameters,
- 	.kill_sb		= nfs_kill_super,
--	.fs_flags		= FS_RENAME_DOES_D_MOVE|FS_BINARY_MOUNTDATA,
-+	.fs_flags		= FS_RENAME_DOES_D_MOVE	|
-+				  FS_BINARY_MOUNTDATA	|
-+				  FS_USERNS_DELEGATABLE,
- };
- MODULE_ALIAS_FS("nfs4");
- MODULE_ALIAS("nfs4");
-diff --git a/fs/super.c b/fs/super.c
-index 4c79f170ac0d27..ce6e5b4ff3c5f6 100644
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -737,12 +737,13 @@ struct super_block *sget_fc(struct fs_context *fc,
- 	int err;
+diff --git a/Documentation/netlink/specs/rt-link.yaml b/Documentation/netlink/specs/rt-link.yaml
+index 0a1f957961f80a..ae4db7e032770f 100644
+--- a/Documentation/netlink/specs/rt-link.yaml
++++ b/Documentation/netlink/specs/rt-link.yaml
+@@ -1339,6 +1339,9 @@ attribute-sets:
+       -
+         name: broadcast-neigh
+         type: u8
++      -
++        name: lacp-strict
++        type: u8
+   -
+     name: bond-ad-info-attrs
+     name-prefix: ifla-bond-ad-info-
+diff --git a/Documentation/networking/bonding.rst b/Documentation/networking/bonding.rst
+index e700bf1d095c35..33ca5afafdf6dd 100644
+--- a/Documentation/networking/bonding.rst
++++ b/Documentation/networking/bonding.rst
+@@ -619,6 +619,29 @@ min_links
+ 	aggregator cannot be active without at least one available link,
+ 	setting this option to 0 or to 1 has the exact same effect.
  
- 	/*
--	 * Never allow s_user_ns != &init_user_ns when FS_USERNS_MOUNT is
--	 * not set, as the filesystem is likely unprepared to handle it.
--	 * This can happen when fsconfig() is called from init_user_ns with
--	 * an fs_fd opened in another user namespace.
-+	 * Never allow s_user_ns != &init_user_ns when FS_USERNS_MOUNT or
-+	 * FS_USERNS_DELEGATABLE is not set, as the filesystem is likely
-+	 * unprepared to handle it. This can happen when fsconfig() is called
-+	 * from init_user_ns with an fs_fd opened in another user namespace.
- 	 */
--	if (user_ns != &init_user_ns && !(fc->fs_type->fs_flags & FS_USERNS_MOUNT)) {
-+	if (user_ns != &init_user_ns &&
-+	    !(fc->fs_type->fs_flags & (FS_USERNS_MOUNT | FS_USERNS_DELEGATABLE))) {
- 		errorfc(fc, "VFS: Mounting from non-initial user namespace is not allowed");
- 		return ERR_PTR(-EPERM);
++lacp_strict
++
++	Specifies the fallback behavior of a bonding when LACP negotiation
++	fails on all slave links, i.e. when no slave is in the
++	Collecting_Distributing state, while at least `min_links` link still
++	reports carrier up.
++
++	This option is only applicable to 802.3ad mode (mode 4).
++
++	Valid values are:
++
++	off or 0
++		One interface of the bond is selected to be active, in order to
++		facilitate communication with peer devices that do not implement
++		LACP.
++
++	on or 1
++		Interfaces are only permitted to be made active if they have an
++		active LACP partner and have successfully reached
++		Collecting_Distributing state.
++
++	The default value is 0 (off).
++
+ mode
+ 
+ 	Specifies one of the bonding policies. The default is
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 00df78d497fad9..e38cae22fe025e 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -6422,6 +6422,7 @@ static int __init bond_check_params(struct bond_params *params)
+ 	params->ad_user_port_key = ad_user_port_key;
+ 	params->coupled_control = 1;
+ 	params->broadcast_neighbor = 0;
++	params->lacp_strict = 0;
+ 	if (packets_per_slave > 0) {
+ 		params->reciprocal_packets_per_slave =
+ 			reciprocal_value(packets_per_slave);
+diff --git a/drivers/net/bonding/bond_netlink.c b/drivers/net/bonding/bond_netlink.c
+index c7d3e0602c831d..08d4d0814f67a5 100644
+--- a/drivers/net/bonding/bond_netlink.c
++++ b/drivers/net/bonding/bond_netlink.c
+@@ -143,6 +143,7 @@ static const struct nla_policy bond_policy[IFLA_BOND_MAX + 1] = {
+ 	[IFLA_BOND_NS_IP6_TARGET]	= { .type = NLA_NESTED },
+ 	[IFLA_BOND_COUPLED_CONTROL]	= { .type = NLA_U8 },
+ 	[IFLA_BOND_BROADCAST_NEIGH]	= { .type = NLA_U8 },
++	[IFLA_BOND_LACP_STRICT]		= { .type = NLA_U8 },
+ };
+ 
+ static const struct nla_policy bond_slave_policy[IFLA_BOND_SLAVE_MAX + 1] = {
+@@ -599,6 +600,16 @@ static int bond_changelink(struct net_device *bond_dev, struct nlattr *tb[],
+ 			return err;
  	}
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 39269c7d167e6d..6374649060ba34 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -2693,6 +2693,7 @@ struct file_system_type {
- #define FS_MGTIME		64	/* FS uses multigrain timestamps */
- #define FS_LBS			128	/* FS supports LBS */
- #define FS_POWER_FREEZE		256	/* Always freeze on suspend/hibernate */
-+#define FS_USERNS_DELEGATABLE	1024	/* Can be mounted inside userns from outside */
- #define FS_RENAME_DOES_D_MOVE	32768	/* FS will handle d_move() during rename() internally. */
- 	int (*init_fs_context)(struct fs_context *);
- 	const struct fs_parameter_spec *parameters;
+ 
++	if (data[IFLA_BOND_LACP_STRICT]) {
++		int fallback_mode = nla_get_u8(data[IFLA_BOND_LACP_STRICT]);
++
++		bond_opt_initval(&newval, fallback_mode);
++		err = __bond_opt_set(bond, BOND_OPT_LACP_STRICT, &newval,
++				     data[IFLA_BOND_LACP_STRICT], extack);
++		if (err)
++			return err;
++	}
++
+ 	return 0;
+ }
+ 
+@@ -671,6 +682,7 @@ static size_t bond_get_size(const struct net_device *bond_dev)
+ 		nla_total_size(sizeof(struct in6_addr)) * BOND_MAX_NS_TARGETS +
+ 		nla_total_size(sizeof(u8)) +	/* IFLA_BOND_COUPLED_CONTROL */
+ 		nla_total_size(sizeof(u8)) +	/* IFLA_BOND_BROADCAST_NEIGH */
++		nla_total_size(sizeof(u8)) +	/* IFLA_BOND_LACP_STRICT */
+ 		0;
+ }
+ 
+@@ -838,6 +850,10 @@ static int bond_fill_info(struct sk_buff *skb,
+ 		       bond->params.broadcast_neighbor))
+ 		goto nla_put_failure;
+ 
++	if (nla_put_u8(skb, IFLA_BOND_LACP_STRICT,
++		       bond->params.lacp_strict))
++		goto nla_put_failure;
++
+ 	if (BOND_MODE(bond) == BOND_MODE_8023AD) {
+ 		struct ad_info info;
+ 
+diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
+index adc216df43459e..08dc024c6f2f3f 100644
+--- a/drivers/net/bonding/bond_options.c
++++ b/drivers/net/bonding/bond_options.c
+@@ -67,6 +67,8 @@ static int bond_option_lacp_active_set(struct bonding *bond,
+ 				       const struct bond_opt_value *newval);
+ static int bond_option_lacp_rate_set(struct bonding *bond,
+ 				     const struct bond_opt_value *newval);
++static int bond_option_lacp_strict_set(struct bonding *bond,
++				       const struct bond_opt_value *newval);
+ static int bond_option_ad_select_set(struct bonding *bond,
+ 				     const struct bond_opt_value *newval);
+ static int bond_option_queue_id_set(struct bonding *bond,
+@@ -161,6 +163,12 @@ static const struct bond_opt_value bond_lacp_rate_tbl[] = {
+ 	{ NULL,   -1,           0},
+ };
+ 
++static const struct bond_opt_value bond_lacp_strict_tbl[] = {
++	{ "off", 0, BOND_VALFLAG_DEFAULT},
++	{ "on",  1, 0},
++	{ NULL, -1, 0 }
++};
++
+ static const struct bond_opt_value bond_ad_select_tbl[] = {
+ 	{ "stable",          BOND_AD_STABLE,    BOND_VALFLAG_DEFAULT},
+ 	{ "bandwidth",       BOND_AD_BANDWIDTH, 0},
+@@ -362,6 +370,14 @@ static const struct bond_option bond_opts[BOND_OPT_LAST] = {
+ 		.values = bond_lacp_rate_tbl,
+ 		.set = bond_option_lacp_rate_set
+ 	},
++	[BOND_OPT_LACP_STRICT] = {
++		.id = BOND_OPT_LACP_STRICT,
++		.name = "lacp_strict",
++		.desc = "Define the LACP fallback mode when no slaves have negotiated",
++		.unsuppmodes = BOND_MODE_ALL_EX(BIT(BOND_MODE_8023AD)),
++		.values = bond_lacp_strict_tbl,
++		.set = bond_option_lacp_strict_set
++	},
+ 	[BOND_OPT_MINLINKS] = {
+ 		.id = BOND_OPT_MINLINKS,
+ 		.name = "min_links",
+@@ -1683,6 +1699,16 @@ static int bond_option_lacp_rate_set(struct bonding *bond,
+ 	return 0;
+ }
+ 
++static int bond_option_lacp_strict_set(struct bonding *bond,
++				       const struct bond_opt_value *newval)
++{
++	netdev_dbg(bond->dev, "Setting LACP fallback to %s (%llu)\n",
++		   newval->string, newval->value);
++	bond->params.lacp_strict = newval->value;
++
++	return 0;
++}
++
+ static int bond_option_ad_select_set(struct bonding *bond,
+ 				     const struct bond_opt_value *newval)
+ {
+diff --git a/include/net/bond_options.h b/include/net/bond_options.h
+index e6eedf23aea1a3..52b966e927938a 100644
+--- a/include/net/bond_options.h
++++ b/include/net/bond_options.h
+@@ -79,6 +79,7 @@ enum {
+ 	BOND_OPT_COUPLED_CONTROL,
+ 	BOND_OPT_BROADCAST_NEIGH,
+ 	BOND_OPT_ACTOR_PORT_PRIO,
++	BOND_OPT_LACP_STRICT,
+ 	BOND_OPT_LAST
+ };
+ 
+diff --git a/include/net/bonding.h b/include/net/bonding.h
+index 99c1bdadcd11a9..45069ed6e527f9 100644
+--- a/include/net/bonding.h
++++ b/include/net/bonding.h
+@@ -132,6 +132,7 @@ struct bond_params {
+ 	int peer_notif_delay;
+ 	int lacp_active;
+ 	int lacp_fast;
++	int lacp_strict;
+ 	unsigned int min_links;
+ 	int ad_select;
+ 	char primary[IFNAMSIZ];
+diff --git a/include/uapi/linux/if_link.h b/include/uapi/linux/if_link.h
+index 69f19759b79d53..857b83a04b28e1 100644
+--- a/include/uapi/linux/if_link.h
++++ b/include/uapi/linux/if_link.h
+@@ -1538,6 +1538,7 @@ enum {
+ 	IFLA_BOND_NS_IP6_TARGET,
+ 	IFLA_BOND_COUPLED_CONTROL,
+ 	IFLA_BOND_BROADCAST_NEIGH,
++	IFLA_BOND_LACP_STRICT,
+ 	__IFLA_BOND_MAX,
+ };
+ 
+diff --git a/tools/include/uapi/linux/if_link.h b/tools/include/uapi/linux/if_link.h
+index 97a2d4411534ae..757ce5e9426e92 100644
+--- a/tools/include/uapi/linux/if_link.h
++++ b/tools/include/uapi/linux/if_link.h
+@@ -1527,6 +1527,7 @@ enum {
+ 	IFLA_BOND_NS_IP6_TARGET,
+ 	IFLA_BOND_COUPLED_CONTROL,
+ 	IFLA_BOND_BROADCAST_NEIGH,
++	IFLA_BOND_LACP_STRICT,
+ 	__IFLA_BOND_MAX,
+ };
+ 
 -- 
 2.53.0
 
