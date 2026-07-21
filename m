@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900B140928C;
-	Tue, 21 Jul 2026 19:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E269746DFFD;
+	Tue, 21 Jul 2026 19:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784660689; cv=none; b=iC1ijtBSttXdIhaDLYFqJpq42st6H5CqbD+T2NBTxuoBvrB9/E9+twXmf1rcNKl7EL21nxwzwGWNG8lpmg528qQTQsNxXWGvht+j9zDM7u9faP9P0RPwv6Nuke/XChl2+mlbeSxkKl/ANQojeJ9IgZQO7s9FtMAlHd+Y9YS+xFQ=
+	t=1784660691; cv=none; b=CPsR90G/UYvIhvt+vYsNheAQpefNhPseFdZch1F6DvW1K1c6EtZzuClOiJ4WKTHCqJ1yF0reOJOVHgF0V9vTPGhZFPQADE97ayxg2Jum+S4hT3YLYX/oE7Nj8Or/kkZJZqi+hTr42OB9QcNtyil6q0VReDiB/PpO16ulpFAwB1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784660689; c=relaxed/simple;
-	bh=8JeJ49FmSfX+BO5SrmTsho9+wiCMEhvsFyIbLpI7z8w=;
+	s=arc-20240116; t=1784660691; c=relaxed/simple;
+	bh=sDj7F0NwPP940bQ35oB580mGkCDMRWVeVTuhwKEtREQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NRVFzfbBQT/YPHa30R/mDFKZ+N+c2ADQASlQPssQpRpDCSPbesLRwTDMcnrQTp0gUwbtQeUHo0yB67Zf1LAeGgaZXVxJ06StKECFruTHrUYf0/IiuQB++GLFUJVY6CSbGJoVL7eEBdMaxuHneXqdm/5drM35p5jOJ0gdSSZmCH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTbv14Xr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uSFjx+oUFk9gJgcjCxd2o/IRdxbmFLFkQPMXEwViVsbXfpLeqrRhxsh/hmaDhSCVWIlxbwjhS//LuOrZnlUFB3QWWmWra7bLyYukMRwLEbw32VTSAlmk9ps8mqZXbzrNZI+lI5IBP8nqDNhJqG4CkZCv7iMthk0wB+XtareOLkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Y5hh2To; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTbv14Xr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78991F000E9;
-	Tue, 21 Jul 2026 19:04:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Y5hh2To"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534CB1F00A3A;
+	Tue, 21 Jul 2026 19:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784660687;
-	bh=oEedOmGQiSdyLeuK6PfQd1tPbmTrBbW6sbeHwvxo9/8=;
+	s=korg; t=1784660689;
+	bh=/KNK++H6v+sFsXpiKAnqTyX2AlrHcCY1TaEYvSoeG5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iTbv14Xr4HWyeO5ZxKmAzJwgs2Flm1LraCYQD7VVgHnSpSSRRoLzDpKDty1OO3KcM
-	 ljX2NDLunNWXsy1piwm01nGPI5jrO3CEBBBYZytZFn0UdWApZwwgRGxrDutPGZ9ncO
-	 5QRcDJmWpmW7V9bKCwC4O2lYU817+go5pdF3eyB8=
+	b=0Y5hh2Tof8mujGPFwSbpAxdeEOXSPXM+iSDt+gB2GsObauYas4tAH1nBQPszD8SUj
+	 Kc4idhVpe1tO0jkkYQGnTwg8qex+akmvRsmMpJSTFDpVhOvO4XDDTzGWgsgl+eHYDf
+	 gDr6gRkMCpRi9CPMjW1vNNCkYhjcKyGukFLh0mEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1075/2077] perf hwmon: Fix fd check to accept fd 0 in hwmon_pmu__describe_items()
-Date: Tue, 21 Jul 2026 17:12:28 +0200
-Message-ID: <20260721152618.178557801@linuxfoundation.org>
+Subject: [PATCH 7.1 1076/2077] perf sched: Replace (void*)1 sentinel with proper runtime allocation
+Date: Tue, 21 Jul 2026 17:12:29 +0200
+Message-ID: <20260721152618.201490630@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,6 +46,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
@@ -54,40 +55,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit cfafef390ca9c753b34c7e97b5abee4cab0ce270 ]
+[ Upstream commit 500f5dd0a8b6f7bd174102587c7dff5a7d2fecbf ]
 
-hwmon_pmu__describe_items() checks 'if (fd > 0)' after openat(), which
-incorrectly rejects fd 0.  While fd 0 is normally stdin, if stdin has
-been closed (common in daemon/service contexts), the kernel reuses fd 0
-for the next open.  With fd > 0, the sysfs file is not read and the fd
-is leaked.
+map__findnew_thread() marks color-pid threads by storing (void*)1 as
+the thread private data via thread__set_priv().  This sentinel value
+causes two problems:
 
-Change to 'if (fd >= 0)' to match the standard openat() error check.
+1. thread__get_runtime() returns (void*)1 as a struct thread_runtime
+   pointer.  Any field access (e.g. tr->shortname) dereferences address
+   1, which is an unmapped page — immediate segfault.
+
+2. cmd_sched() registers free() as the thread priv destructor, so thread
+   cleanup calls free((void*)1) — undefined behavior that corrupts the
+   heap on many allocators.
+
+Fix by adding a 'color' flag to struct thread_runtime and allocating a
+real runtime struct for color-pid threads.  thread__has_color() now
+checks the flag instead of relying on priv being non-NULL.
 
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Fixes: 53cc0b351ec99278 ("perf hwmon_pmu: Add a tool PMU exposing events from hwmon in sysfs")
+Fixes: 58a606149c60d5da ("perf sched: Avoid union type punning undefined behavior")
 Reviewed-by: Ian Rogers <irogers@google.com>
 Cc: Ian Rogers <irogers@google.com>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/hwmon_pmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/builtin-sched.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/util/hwmon_pmu.c b/tools/perf/util/hwmon_pmu.c
-index efd3067a2e5910..ed544dca70c380 100644
---- a/tools/perf/util/hwmon_pmu.c
-+++ b/tools/perf/util/hwmon_pmu.c
-@@ -435,7 +435,7 @@ static size_t hwmon_pmu__describe_items(struct hwmon_pmu *hwm, char *out_buf, si
- 			hwmon_item_strs[bit],
- 			is_alarm ? "_alarm" : "");
- 		fd = openat(dir, buf, O_RDONLY);
--		if (fd > 0) {
-+		if (fd >= 0) {
- 			ssize_t read_len = read(fd, buf, sizeof(buf) - 1);
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index 2ccda1e382930a..f6c772cde0bc94 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -274,6 +274,7 @@ struct thread_runtime {
+ 	u64 migrations;
  
- 			while (read_len > 0 && buf[read_len - 1] == '\n')
+ 	int prio;
++	bool color;
+ };
+ 
+ /* per event run time data */
+@@ -1596,22 +1597,32 @@ static int process_sched_wakeup_ignore(const struct perf_tool *tool __maybe_unus
+ 
+ static bool thread__has_color(struct thread *thread)
+ {
+-	return thread__priv(thread) != NULL;
++	struct thread_runtime *tr = thread__priv(thread);
++
++	return tr != NULL && tr->color;
+ }
+ 
+ static struct thread*
+ map__findnew_thread(struct perf_sched *sched, struct machine *machine, pid_t pid, pid_t tid)
+ {
+ 	struct thread *thread = machine__findnew_thread(machine, pid, tid);
+-	bool color = false;
+ 
+-	if (!sched->map.color_pids || !thread || thread__priv(thread))
++	if (!sched->map.color_pids || !thread)
+ 		return thread;
+ 
+-	if (thread_map__has(sched->map.color_pids, tid))
+-		color = true;
++	/*
++	 * Always check the color-pids map, even if thread__priv() is
++	 * already set.  COMM events processed before the first sched_switch
++	 * allocate a thread_runtime via thread__get_runtime(), so priv is
++	 * non-NULL before we ever get here.  Skipping the check on non-NULL
++	 * priv would prevent those threads from being colored.
++	 */
++	if (thread_map__has(sched->map.color_pids, tid)) {
++		struct thread_runtime *tr = thread__get_runtime(thread);
+ 
+-	thread__set_priv(thread, color ? ((void*)1) : NULL);
++		if (tr)
++			tr->color = true;
++	}
+ 	return thread;
+ }
+ 
 -- 
 2.53.0
 
