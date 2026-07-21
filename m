@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB4C470434;
-	Tue, 21 Jul 2026 17:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F2246D0AA;
+	Tue, 21 Jul 2026 17:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784656250; cv=none; b=GAY8wxOqDuquotBXtIdZN3NiX9RVXjndlFPngUeSzzB8cF9ZZEm8TXGRTBxuV/26kCbJ4Jq8O36ZzBAAG/2UzUmOnVi780PFSzt3PktyeQ7CSgrhSZWG4s4BSBsB+oYvlK+fmNpKNShLmIjKT76M0C+j0hrqbAUZwND3OS5aNG4=
+	t=1784656253; cv=none; b=TiTexkN1cbeQTROmvFkMCcG/GqTRwwk6zQRPHgdqJTzS/9cTwtQqF+LzMXllaKuQATHR+7ziVr+22oT48OAMtmwrJDUsP9C4EtvJHghONP7dAzfAf3kcOPlKngGlu2yatwhpDVnIBCmjc8KjUwdHF48NCzPcIxZkNI9oEGQvKzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784656250; c=relaxed/simple;
-	bh=yKmWoNaUTYbSazw3+LrGByrQ1K5lpBA3m8y+mLpyCA4=;
+	s=arc-20240116; t=1784656253; c=relaxed/simple;
+	bh=xjHw7KGOodyPA2DXjzmj99FbuBhvFcBkElkKccaxJIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lBmU6sppRwkisuMworDZUssYvRdVEERThJIJTA5w7A5PWIbQrcv/NXzdmAYWfNhGTKcaOIJsYBmUlaetFkTAcz24IiWhdlR+t+uUgrkmG/XdvNLSdycgP8B4Njc4TV19oN2R1+wgEdHfdoKHTMAXTidHPfaqEXfxNvQb2CWE8AM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p09F7l3v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pkpGmRqz3MBG5yRpslFQjsjJXWY1+wkT3FgxHqiFVAgUOwePZJ0o/7wK51LLQLW9CuS1pD/th9XKP8JZnknPSi+tJUTyqo1rKWT4G7PrepMjspJfAhEF9TOgomvQja7h6FXOj6DWrr79RVn0VHeMtLp0/m19aASo3kYBZ4KZArA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EgdiSJTa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p09F7l3v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EEDA1F00A3A;
-	Tue, 21 Jul 2026 17:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EgdiSJTa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43771F000E9;
+	Tue, 21 Jul 2026 17:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784656249;
-	bh=JqAywUZxaXQECN6kHNvznzQO65r8IIfDlKOx1N4Ca9A=;
+	s=korg; t=1784656252;
+	bh=KZukRlt2S/f/uIV0j7YmzTHIMXsmCO9MOWUN3L/4fYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p09F7l3vtFMLXorj5ENyLA8q1xiUJm7U4oLySNC52vk1MOb2QMKVuwBHcDXNtjykE
-	 MDu3S9Fo51NyIoDkHqGJbCcKbAFl8i4ql4I6V5HtsC/+YxOxa52L3T6/u7qXXVKVLe
-	 5kR6R71X+uTvohlJQvWo81hsscXG+E/tQUbjb9cU=
+	b=EgdiSJTahcvKaphqpdWYbdmiDfiMnqf62gEP9+KkE5ma6NQ1DgXo4gapQbx82KF6n
+	 bHBZarumFq4tGQa1a2BamL3B1hn/RzBK/7HehoBliXhEsBjnKw7np1A3LiW2pofscz
+	 gnuSMyJdTMAo+KrC5QSujlw4XsTm69EQj9aCK1RE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Alexander Potapenko <glider@google.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0315/1611] tick/sched: Fix TOCTOU in nohz idle time fetch
-Date: Tue, 21 Jul 2026 17:07:11 +0200
-Message-ID: <20260721152522.163326534@linuxfoundation.org>
+Subject: [PATCH 6.18 0316/1611] lib/test_meminit: use && for bools
+Date: Tue, 21 Jul 2026 17:07:12 +0200
+Message-ID: <20260721152522.185285582@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,71 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Alexander Potapenko <glider@google.com>
 
-[ Upstream commit 86db4084b4b5d1a074bcc66c108a4c9d266812d4 ]
+[ Upstream commit 8e0c2085c978ed6d9764d79fc785920360096f21 ]
 
-When the nohz idle time is fetched, the current clock timestamp is taken
-outside the seqcount, which can result in a race as reported by Sashiko:
+As pointed out by Dan Carpenter, test_kmemcache() was using a bitwise AND
+on two bools instead of a boolean AND.  Fix this for the sake of code
+cleanliness.
 
-    get_cpu_sleep_time_us()                 tick_nohz_start_idle()
-    -----------------------                 ---------------------
-    now = ktime_get()
-                                            write_seqcount_begin(idle_sleeptime_seq);
-                                            idle_entrytime = ktime_get()
-                                            tick_sched_flag_set(ts, TS_FLAG_IDLE_ACTIVE);
-                                            write_seqcount_end(&ts->idle_sleeptime_seq);
-    read_seqcount_begin(idle_sleeptime_seq)
-    delta = now - idle_entrytime);
-    //!! But now < idle_entrytime
-    idle = *sleeptime +  delta;
-    read_seqcount_retry(&ts->idle_sleeptime_seq, seq)
-
-Here the read side fetches the timestamp before the write side and its
-update. As a result the time delta computed on the read side is negative
-(ktime_t is signed) and breaks the cputime monotonicity guarantee.
-
-This could possibly be fixed with reading the current clock timestamp
-inside the seqcount but the reader overhead might then increase. Also
-simply checking that the current timestamp is above the idle entry time
-is enough to prevent any issue of the like.
-
-Fixes: 620a30fa0bd1 ("timers/nohz: Protect idle/iowait sleep time under seqcount")
-Reported-by: Sashiko
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260508131647.43868-2-frederic@kernel.org
+Link: https://lore.kernel.org/20260504100637.1535762-1-glider@google.com
+Fixes: 5015a300a522 ("lib: introduce test_meminit module")
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/kernel-janitors/afOcIan1ap9kD26M@stanley.mountain/
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/tick-sched.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ lib/test_meminit.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/time/tick-sched.c b/kernel/time/tick-sched.c
-index 466e083c827218..4f04c621c9224f 100644
---- a/kernel/time/tick-sched.c
-+++ b/kernel/time/tick-sched.c
-@@ -766,15 +766,16 @@ static u64 get_cpu_sleep_time_us(struct tick_sched *ts, ktime_t *sleeptime,
- 		*last_update_time = ktime_to_us(now);
- 
- 	do {
-+		ktime_t delta = 0;
-+
- 		seq = read_seqcount_begin(&ts->idle_sleeptime_seq);
- 
- 		if (tick_sched_flag_test(ts, TS_FLAG_IDLE_ACTIVE) && compute_delta) {
--			ktime_t delta = ktime_sub(now, ts->idle_entrytime);
--
--			idle = ktime_add(*sleeptime, delta);
--		} else {
--			idle = *sleeptime;
-+			if (now > ts->idle_entrytime)
-+				delta = ktime_sub(now, ts->idle_entrytime);
- 		}
-+
-+		idle = ktime_add(*sleeptime, delta);
- 	} while (read_seqcount_retry(&ts->idle_sleeptime_seq, seq));
- 
- 	return ktime_to_us(idle);
+diff --git a/lib/test_meminit.c b/lib/test_meminit.c
+index 6298f66c964bb1..d028a6552cd61c 100644
+--- a/lib/test_meminit.c
++++ b/lib/test_meminit.c
+@@ -387,7 +387,7 @@ static int __init test_kmemcache(int *total_failures)
+ 			ctor = flags & 1;
+ 			rcu = flags & 2;
+ 			zero = flags & 4;
+-			if (ctor & zero)
++			if (ctor && zero)
+ 				continue;
+ 			num_tests += do_kmem_cache_size(size, ctor, rcu, zero,
+ 							&failures);
 -- 
 2.53.0
 
