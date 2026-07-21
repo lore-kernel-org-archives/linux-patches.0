@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E645434E2F;
-	Tue, 21 Jul 2026 22:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D493335C694;
+	Tue, 21 Jul 2026 22:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672792; cv=none; b=k9m54Ohb1ecTRH7ngQe9CG4jBb9BxBi33g5rtj7+upIcyoiIsGQPe9XPQDCFJ9V+pSZTZ7cahOUmxXoehJeVx9rN77d89JTN0LBFcEG44FJVpBFRSLU+OR5Fh449hm0F2w3XdgtGVoGEnuBKllaxIatg0XOBE/4BbOA4KlE9V3Y=
+	t=1784672795; cv=none; b=JbOZVIhKdBc5PcYSRFPsHB+L/6NbYtstlsdYbSqi26CUFjGLXLkTKWFkWTF42FjXfrYEXq2CtwS2sysJGVBsbdPFeNZYj9uCOHQ1M6hcM4bPwPXIbxYhnpGgN2+seToaE/in2oOmmzz5nwjtCy0y389QyaNZf4fndkYOSx1Pdco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672792; c=relaxed/simple;
-	bh=3KBW5pR9ylUDImQJMP86mv7pvmE0xX6KWwXPxOirL9A=;
+	s=arc-20240116; t=1784672795; c=relaxed/simple;
+	bh=lEFlLU8QqtbxmFWyIk1S+dWMhq4c/xo2Dsx52LtiV3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IprUUjKaj4phQskToAwAhDHKNoNN/qImBZajv62/KisDrkw8O0bXbK3YDsKtxYDAQ/cOWifNnJEclU9i0E5097sW9MTAYgSFXhC1yaJMnf/87TaIn3HrLAkFKuV8ThRdcVvsbP99IhCoJNuG02uKQyWo1V9ZlhmuVocNuuYMm4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kNCefTX4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VKMxzlF1xPgpHImpIObinJnnT0NsZuL+qDYjuNskUCV98Kr+Q/p40ml+9A/Atdm3H0/oh98S82u9wJEqqWqVJHcRG3jJijTkDrZGq5NyiD51irtyocADT/WnDMgNN7UFjerXYroZ8e0CuArZYAWelyZSpJnqC9lGkF4L1ANuGSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DNEbjFkT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kNCefTX4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9342B1F00A3A;
-	Tue, 21 Jul 2026 22:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DNEbjFkT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC261F000E9;
+	Tue, 21 Jul 2026 22:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672791;
-	bh=fTP+TQxAqitnKA1iK9Ug/ObiFKLplH12Ib9FXB5vclY=;
+	s=korg; t=1784672793;
+	bh=N1jsMJSUNzobfyEGPDJjSySIIpdciwRDwh1F+Tnp8Ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kNCefTX4zkG9aWZslgP3Y2tck1MXBJTH8h8T/chSyX2NhM8jgxJkP3DsGRJ7efOY6
-	 KS9vT61BRdKb2o+AdpxtqTC3Ik6tIryhOY9m0bRiUW2oBPT9gr1d7VxarAG38q7gff
-	 thzzofxs5oZYA660Bu8K4eV+JZVXIp8tWVSsIl/w=
+	b=DNEbjFkT0ioPc5/WKEsBi/905S4TwsG25OhUMnG3X3iKqhXkSWcc27/ZpdVV1L7pp
+	 OqAM4zcZsxwzpD6gZfokrMC89EzaCfYL97s6y/QURtAmtytYUxyA6lP+RkQFGtMHe0
+	 gixd1rKpLy5cdjocuGnVSW6q5/ytZDPI/lqMizBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Caleb James DeLisle <cjd@cjdns.fr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 757/843] PCI: mediatek: Convert bool to single quirks entry and bitmap
-Date: Tue, 21 Jul 2026 17:26:32 +0200
-Message-ID: <20260721152423.079594764@linuxfoundation.org>
+Subject: [PATCH 5.15 758/843] PCI: mediatek: Fix IRQ domain leak when port fails to enable
+Date: Tue, 21 Jul 2026 17:26:33 +0200
+Message-ID: <20260721152423.102266200@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,124 +52,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 04305367fab7ec9c98eeba315ad09c8b20abce93 ]
+[ Upstream commit f865a57896bd92d7662eb2818d8f48872e2cbbc7 ]
 
-To clean Mediatek SoC PCIe struct, convert all the bool to a bitmap and
-use a single quirks to reference all the values. This permits cleaner
-addition of new quirk without having to define a new bool in the struct.
+When mtk_pcie_enable_port() fails, mtk_pcie_port_free() removes the port
+from pcie->ports and frees the port structure. However, the IRQ domains set
+up earlier by mtk_pcie_init_irq_domain() are never freed.
 
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Fix this by refactoring mtk_pcie_irq_teardown() into a per-port helper,
+mtk_pcie_irq_teardown_port(), and calling it from mtk_pcie_setup() when
+mtk_pcie_enable_port() fails. Since the IRQ teardown must only happen in
+the probe error path (during resume, child devices may have active MSI
+mappings and the NOIRQ context prohibits sleeping locks),
+mtk_pcie_enable_port() is changed to return an error code so callers can
+distinguish the two paths and act accordingly.
+
+This issue was reported by Sashiko while reviewing the EcoNet EN7528 SoC
+support series.
+
+Fixes: b099631df160 ("PCI: mediatek: Add controller support for MT2712 and MT7622")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20251020111121.31779-4-ansuelsmth@gmail.com
-Stable-dep-of: f865a57896bd ("PCI: mediatek: Fix IRQ domain leak when port fails to enable")
+Cc: stable@vger.kernel.org # 5.10
+Cc: Caleb James DeLisle <cjd@cjdns.fr>
+Link: https://patch.msgid.link/20260521174617.17692-1-mani@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-mediatek.c |   33 ++++++++++++++++++++-------------
- 1 file changed, 20 insertions(+), 13 deletions(-)
+ drivers/pci/controller/pcie-mediatek.c |   67 ++++++++++++++++++++-------------
+ 1 file changed, 42 insertions(+), 25 deletions(-)
 
 --- a/drivers/pci/controller/pcie-mediatek.c
 +++ b/drivers/pci/controller/pcie-mediatek.c
-@@ -143,23 +143,31 @@
- struct mtk_pcie_port;
+@@ -547,25 +547,29 @@ static void mtk_pcie_enable_msi(struct m
+ 	writel(val, port->base + PCIE_INT_MASK);
+ }
  
- /**
-+ * enum mtk_pcie_quirks - MTK PCIe quirks
-+ * @MTK_PCIE_FIX_CLASS_ID: host's class ID needed to be fixed
-+ * @MTK_PCIE_FIX_DEVICE_ID: host's device ID needed to be fixed
-+ * @MTK_PCIE_NO_MSI: Bridge has no MSI support, and relies on an external block
-+ */
-+enum mtk_pcie_quirks {
-+	MTK_PCIE_FIX_CLASS_ID = BIT(0),
-+	MTK_PCIE_FIX_DEVICE_ID = BIT(1),
-+	MTK_PCIE_NO_MSI = BIT(2),
-+};
+-static void mtk_pcie_irq_teardown(struct mtk_pcie *pcie)
++static void mtk_pcie_irq_teardown_port(struct mtk_pcie_port *port)
+ {
+-	struct mtk_pcie_port *port, *tmp;
++	irq_set_chained_handler_and_data(port->irq, NULL, NULL);
+ 
+-	list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
+-		irq_set_chained_handler_and_data(port->irq, NULL, NULL);
++	if (port->irq_domain)
++		irq_domain_remove(port->irq_domain);
+ 
+-		if (port->irq_domain)
+-			irq_domain_remove(port->irq_domain);
++	if (IS_ENABLED(CONFIG_PCI_MSI)) {
++		if (port->msi_domain)
++			irq_domain_remove(port->msi_domain);
++		if (port->inner_domain)
++			irq_domain_remove(port->inner_domain);
++	}
+ 
+-		if (IS_ENABLED(CONFIG_PCI_MSI)) {
+-			if (port->msi_domain)
+-				irq_domain_remove(port->msi_domain);
+-			if (port->inner_domain)
+-				irq_domain_remove(port->inner_domain);
+-		}
++	irq_dispose_mapping(port->irq);
++}
+ 
+-		irq_dispose_mapping(port->irq);
+-	}
++static void mtk_pcie_irq_teardown(struct mtk_pcie *pcie)
++{
++	struct mtk_pcie_port *port, *tmp;
 +
-+/**
-  * struct mtk_pcie_soc - differentiate between host generations
-- * @need_fix_class_id: whether this host's class ID needed to be fixed or not
-- * @need_fix_device_id: whether this host's device ID needed to be fixed or not
-- * @no_msi: Bridge has no MSI support, and relies on an external block
-  * @device_id: device ID which this host need to be fixed
-  * @ops: pointer to configuration access functions
-  * @startup: pointer to controller setting functions
-  * @setup_irq: pointer to initialize IRQ functions
-+ * @quirks: PCIe device quirks.
-  */
- struct mtk_pcie_soc {
--	bool need_fix_class_id;
--	bool need_fix_device_id;
--	bool no_msi;
- 	unsigned int device_id;
- 	struct pci_ops *ops;
- 	int (*startup)(struct mtk_pcie_port *port);
- 	int (*setup_irq)(struct mtk_pcie_port *port, struct device_node *node);
-+	enum mtk_pcie_quirks quirks;
- };
++	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
++		mtk_pcie_irq_teardown_port(port);
+ }
  
- /**
-@@ -720,7 +728,7 @@ static int mtk_pcie_startup_port_v2(stru
- 	writel(val, port->base + PCIE_RST_CTRL);
+ static int mtk_pcie_intx_map(struct irq_domain *domain, unsigned int irq,
+@@ -846,7 +850,7 @@ static int mtk_pcie_startup_port(struct
+ 	return 0;
+ }
  
- 	/* Set up vendor ID and class code */
--	if (soc->need_fix_class_id) {
-+	if (soc->quirks & MTK_PCIE_FIX_CLASS_ID) {
- 		val = PCI_VENDOR_ID_MEDIATEK;
- 		writew(val, port->base + PCIE_CONF_VEND_ID);
- 
-@@ -728,7 +736,7 @@ static int mtk_pcie_startup_port_v2(stru
- 		writew(val, port->base + PCIE_CONF_CLASS_ID);
+-static void mtk_pcie_enable_port(struct mtk_pcie_port *port)
++static int mtk_pcie_enable_port(struct mtk_pcie_port *port)
+ {
+ 	struct mtk_pcie *pcie = port->pcie;
+ 	struct device *dev = pcie->dev;
+@@ -855,7 +859,7 @@ static void mtk_pcie_enable_port(struct
+ 	err = clk_prepare_enable(port->sys_ck);
+ 	if (err) {
+ 		dev_err(dev, "failed to enable sys_ck%d clock\n", port->slot);
+-		goto err_sys_clk;
++		return err;
  	}
  
--	if (soc->need_fix_device_id)
-+	if (soc->quirks & MTK_PCIE_FIX_DEVICE_ID)
- 		writew(soc->device_id, port->base + PCIE_CONF_DEVICE_ID);
+ 	err = clk_prepare_enable(port->ahb_ck);
+@@ -903,11 +907,15 @@ static void mtk_pcie_enable_port(struct
+ 		goto err_phy_on;
+ 	}
  
- 	/* 100ms timeout value should be enough for Gen1/2 training */
-@@ -1129,7 +1137,7 @@ static int mtk_pcie_probe(struct platfor
+-	if (!pcie->soc->startup(port))
+-		return;
++	err = pcie->soc->startup(port);
++	if (err) {
++		dev_info(dev, "Port%d link down\n", port->slot);
++		goto err_soc_startup;
++	}
  
- 	host->ops = pcie->soc->ops;
- 	host->sysdata = pcie;
--	host->msi_domain = pcie->soc->no_msi;
-+	host->msi_domain = !!(pcie->soc->quirks & MTK_PCIE_NO_MSI);
+-	dev_info(dev, "Port%d link down\n", port->slot);
++	return 0;
  
- 	err = pci_host_probe(host);
- 	if (err)
-@@ -1219,9 +1227,9 @@ static const struct dev_pm_ops mtk_pcie_
- };
++err_soc_startup:
+ 	phy_power_off(port->phy);
+ err_phy_on:
+ 	phy_exit(port->phy);
+@@ -923,8 +931,8 @@ err_aux_clk:
+ 	clk_disable_unprepare(port->ahb_ck);
+ err_ahb_clk:
+ 	clk_disable_unprepare(port->sys_ck);
+-err_sys_clk:
+-	mtk_pcie_port_free(port);
++
++	return err;
+ }
  
- static const struct mtk_pcie_soc mtk_pcie_soc_v1 = {
--	.no_msi = true,
- 	.ops = &mtk_pcie_ops,
- 	.startup = mtk_pcie_startup_port,
-+	.quirks = MTK_PCIE_NO_MSI,
- };
+ static int mtk_pcie_parse_port(struct mtk_pcie *pcie,
+@@ -1100,8 +1108,13 @@ static int mtk_pcie_setup(struct mtk_pci
+ 		return err;
  
- static const struct mtk_pcie_soc mtk_pcie_soc_mt2712 = {
-@@ -1231,19 +1239,18 @@ static const struct mtk_pcie_soc mtk_pci
- };
+ 	/* enable each port, and then check link status */
+-	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
+-		mtk_pcie_enable_port(port);
++	list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
++		err = mtk_pcie_enable_port(port);
++		if (err) {
++			mtk_pcie_irq_teardown_port(port);
++			mtk_pcie_port_free(port);
++		}
++	}
  
- static const struct mtk_pcie_soc mtk_pcie_soc_mt7622 = {
--	.need_fix_class_id = true,
- 	.ops = &mtk_pcie_ops_v2,
- 	.startup = mtk_pcie_startup_port_v2,
- 	.setup_irq = mtk_pcie_setup_irq,
-+	.quirks = MTK_PCIE_FIX_CLASS_ID,
- };
+ 	/* power down PCIe subsys if slots are all empty (link down) */
+ 	if (list_empty(&pcie->ports))
+@@ -1205,14 +1218,18 @@ static int __maybe_unused mtk_pcie_resum
+ {
+ 	struct mtk_pcie *pcie = dev_get_drvdata(dev);
+ 	struct mtk_pcie_port *port, *tmp;
++	int err;
  
- static const struct mtk_pcie_soc mtk_pcie_soc_mt7629 = {
--	.need_fix_class_id = true,
--	.need_fix_device_id = true,
- 	.device_id = PCI_DEVICE_ID_MEDIATEK_7629,
- 	.ops = &mtk_pcie_ops_v2,
- 	.startup = mtk_pcie_startup_port_v2,
- 	.setup_irq = mtk_pcie_setup_irq,
-+	.quirks = MTK_PCIE_FIX_CLASS_ID | MTK_PCIE_FIX_DEVICE_ID,
- };
+ 	if (list_empty(&pcie->ports))
+ 		return 0;
  
- static const struct of_device_id mtk_pcie_ids[] = {
+ 	clk_prepare_enable(pcie->free_ck);
+ 
+-	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
+-		mtk_pcie_enable_port(port);
++	list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
++		err = mtk_pcie_enable_port(port);
++		if (err)
++			mtk_pcie_port_free(port);
++	}
+ 
+ 	/* In case of EP was removed while system suspend. */
+ 	if (list_empty(&pcie->ports))
 
 
