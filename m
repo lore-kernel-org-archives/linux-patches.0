@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB4244AB9F;
-	Tue, 21 Jul 2026 22:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896A639733E;
+	Tue, 21 Jul 2026 22:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674517; cv=none; b=c3pmXqV4nmSGsIEGZUugKN6Aj6Uu252GXT77OtIkvBbXXRp8F2hS6iKA9Pv+EMBQutsxhtfxEi1oVjaY7Dlg/I+sdS6rvXa4DublSlXI+IKAiZcP5qZ/7OgQLRR/YKSDFO9SWGQG/rJRDr+9em5Khhtk6XVr8rp2GAEWvJL5gcY=
+	t=1784674520; cv=none; b=J0RnarHaZu+9AgXnjs1x8LUWyUNKAUOM7LlLnfNlPBaRd45r/ty3nwewncZZfkCM28WQYu1yzBuS6SijwYjAEpW8/2c9SIs3/gCjgbdWYsA+csE3KmGjYdSACcRcmA5FXo2kncmKNtNd0tXP1LrVNn6wPvuS7cTAi88xjwSiTgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674517; c=relaxed/simple;
-	bh=1xsIbNv0VMeziPVQfvc5xxsTLOqDhRRnUgPc1ZTKBPM=;
+	s=arc-20240116; t=1784674520; c=relaxed/simple;
+	bh=nQ4Kmjoh094E68O+g6k/6tmxmWpM6KTIL0pjuD47ibI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t8KZW6HTbIu2dOgG1bpv+bBT8HUQEmLNhF85SNgms/QPCv66ljv1GuCseOl/NU0W0TTK0m6cp9XEorNPW85y54R13k1o9xW3M6v/3TljIjlyL4UiEbpB3QReydEwdvR1zmq8NZb5Ay4PEEv9axNEnLscbi6ezdRSVxVgButAzGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8lKpWZS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XHJsV7sBvFXKKE/7aPnBGtUrVYttRfd+wSEtoplOxDPjdk9kbyH4ZoymLFYKpWReCVrVmojptb0B4KogGSU7VXXnaTZSDT9cSR1FMa8UWrLhAGYfpSIB5ijZhRFOFR04nNDOzHYnJ1gi7SsgiRXBt9GvHS1KQe6aKn5h7FlqUTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaboVuKO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8lKpWZS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30FE31F000E9;
-	Tue, 21 Jul 2026 22:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaboVuKO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8BF71F000E9;
+	Tue, 21 Jul 2026 22:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674516;
-	bh=jxb6z7JthywEvGfvMs/vbz2yhs+8r3q79r0fbN4sSCQ=;
+	s=korg; t=1784674519;
+	bh=5hddoxesf8xXAh6kz2WGZ6D+/Z4OfsoT4k9a3ymH6Rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d8lKpWZSAahqGV8QhmnR5wt7wvG9cYwJVjmqpQW54PemHiHxYjiYepeejFi2sRnmt
-	 8gcdte+Aqh+6xE0NCjsBqPci77ufm2zFVfjvT8P4AAnsEffHziaQvhw6aPuhw321Dn
-	 mxvlI6ca2RksfQYc/INeKtWC4JzzJIw3BSVEUZm8=
+	b=WaboVuKOTxZt67YTbnXPfcLVJk67I5gXpnmVvukL5arh7i/LWmuSAJciqV3ijJ1FG
+	 hR0l4lgBvz3JkLz9iX5OGZJHeFjK1SofLu6fbkupYnpV4VrnIlPm23/tMqLK+CcuIA
+	 xAeDr159a1sgZTMWf/7WNJvKvhQB8neb/MX+2Fos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 5.10 544/699] hwmon: (w83793) remove vrm sysfs file on probe failure
-Date: Tue, 21 Jul 2026 17:25:03 +0200
-Message-ID: <20260721152407.975251685@linuxfoundation.org>
+	Rafael Beims <rafael.beims@toradex.com>,
+	Jeff Chen <jeff.chen_1@nxp.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.10 571/699] wifi: mwifiex: fix permanently busy scans after multiple roam iterations
+Date: Tue, 21 Jul 2026 17:25:30 +0200
+Message-ID: <20260721152408.589936596@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,39 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Rafael Beims <rafael.beims@toradex.com>
 
-commit 77b983757280c69b0290811669ff1d31022e5f1d upstream.
+commit d78a407bad6f500884a8606aea1a5a9207be4030 upstream.
 
-w83793_probe() creates the vrm sysfs file after creating the VID files
-when VID support is present.
+In order for the firmware to sleep, the driver has to confirm a
+previously received sleep request. The normal sequence of evets goes
+like this:
+EVENT_SLEEP -> adapter->ps_state = PS_STATE_PRE_SLEEP -> sleep-confirm
+-> SLEEP -> EVENT_AWAKE -> AWAKE.
+Before sending the sleep-confirm command, the driver must make sure
+there are no commands either running or waiting to be completed.
 
-The normal remove path deletes vrm, but the probe error path only
-removes the sensor, SDA, VID, fan, PWM and temperature files.  A later
-probe failure can therefore leave vrm behind after the driver data has
-been freed.
+mwifiex_ret_802_11_associate() unconditionally sets
+ps_state = PS_STATE_AWAKE when it processes the association command
+response, outside of the normal powersave management flow. If
+EVENT_SLEEP arrives while the association command is in flight,
+ps_state is PRE_SLEEP when the association command response is parsed,
+and the forced AWAKE overwrites it. The deferred sleep-confirm is
+never sent.
 
-Remove vrm in the probe error path next to the VID files, matching the
-normal remove path.
+A subsequent scan_start command is correctly acknowledged, but the
+firmware doesn't generate scan_result events. The scan request never
+finishes, and additional requests from userspace fail with -EBUSY.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20260615064806.51139-1-pengpeng@iscas.ac.cn
+After testing on both IW412 and W8997, I could only trigger the bug on
+the IW412 and observed the firmwares behave differently. On the IW412
+the firmware still sends EVENT_SLEEP while the authentication /
+association process is ongoing. A W8997 under the same
+conditions seems to suppress power-save for the duration of the
+association, so PRE_SLEEP never coincided with the association response
+even after extended periods of testing using the loops
+described below (>12hours).
+
+On the IW412, the delay between commands that triggers an EVENT_SLEEP
+was empirically determined to be ~20ms. This delay can naturally occur
+when the driver is outputting debugging information
+(debug_mask = 0x00000037), in which situation the busy scans issue is
+repeatable while running "test 1)" as described below. If the delay
+between commands is less than ~20ms, the firmware stays awake and
+the issue was not reproducible running the same test.
+
+The host_mlme=false path also behaves differently. In this case, the
+entire authentication / association transaction is executed by one
+command (HostCmd_CMD_802_11_ASSOCIATE), and the firmware doesn't emit
+EVENT_SLEEP while the command is running.
+
+Remove the assignment so the ps_state is only manipulated in the paths
+that are related to powersave event handling and on the main workqueue
+for correct sleep confirmation.
+
+The following loop tests were performed (with debugging output enabled):
+1) force roaming between two AP's, one 5GHz and one 2.4GHz, same
+SSID. Use wpa_cli to trigger the roaming behavior, sleep 2s
+between iterations.
+2) force a disconnection to AP 1 and a connection to AP 2, test
+scan. Use wpa_cli to trigger the connection changes, sleep 2s
+between iterations.
+
+Each test ran in each device for at least 3 hours.
+
+Fixes: 5e6e3a92b9a4 ("wireless: mwifiex: initial commit for Marvell mwifiex driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Rafael Beims <rafael.beims@toradex.com>
+Reviewed-by: Jeff Chen <jeff.chen_1@nxp.com>
+Link: https://patch.msgid.link/20260612122547.1586872-2-rafael@beims.me
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/w83793.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/marvell/mwifiex/join.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/hwmon/w83793.c
-+++ b/drivers/hwmon/w83793.c
-@@ -1920,6 +1920,7 @@ exit_remove:
+--- a/drivers/net/wireless/marvell/mwifiex/join.c
++++ b/drivers/net/wireless/marvell/mwifiex/join.c
+@@ -702,7 +702,6 @@ int mwifiex_ret_802_11_associate(struct
+ 	/* Send a Media Connected event, according to the Spec */
+ 	priv->media_connected = true;
  
- 	for (i = 0; i < ARRAY_SIZE(w83793_vid); i++)
- 		device_remove_file(dev, &w83793_vid[i].dev_attr);
-+	device_remove_file(dev, &dev_attr_vrm);
+-	priv->adapter->ps_state = PS_STATE_AWAKE;
+ 	priv->adapter->pps_uapsd_mode = false;
+ 	priv->adapter->tx_lock_flag = false;
  
- 	for (i = 0; i < ARRAY_SIZE(w83793_left_fan); i++)
- 		device_remove_file(dev, &w83793_left_fan[i].dev_attr);
 
 
