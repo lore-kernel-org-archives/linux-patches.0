@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0193ACA5D;
-	Tue, 21 Jul 2026 23:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BEB403EA1;
+	Tue, 21 Jul 2026 23:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674832; cv=none; b=BT7v00NUV40jGQqWol67GpvvaYuBLQGudlqUk+kG2xV+zn+HHwTU0FN84GntppsFXekZMLdeW94By4AUSykZjNEt/MkcUX56VKru9DLCyLknBWar/g/3mL7OlH0ZH87MLSKI9voXbQg9G+kxfKW/vJJAgEjRYHJcYauXitRLutM=
+	t=1784674835; cv=none; b=LsU6msoAlY2n3dcdiUQb86fyHviRtIdLegbZ3p9I64yNoWKPtwsVa4y2q7LgcGX96b36nBLKIy8lkSpsPaTVJJ6LMTgqPaHgcNHKxXOkNW0y2L8gA1dpAOku+aLx8uWV7Zcdc4dMPRvWWq7eMsNuZJonwDVCBS3Il06WcIdKyDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674832; c=relaxed/simple;
-	bh=DBz4sO4sY19vSQ6YplNKueE/jH9xOHlT7jS/ErpCW8M=;
+	s=arc-20240116; t=1784674835; c=relaxed/simple;
+	bh=ZzDNc3HgwgcFU3AQ+OIOYB59Hif2T3NOk9I5SrdoQfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qy5mTrvI1d3d2xSmgPOKFnLvdCQmComtxpKJun6wI6ErvIkyrv+kjTFRxnZI0OwcNfDjs9Bco52DyHnOxFPPCZytkcOw73cTYJsyZcaWCtKAgJAQs5t2sVWSVhbvzX5N1fbKw3hS8xr2YbGfy2W0KjgBfAfj58KrgZv94YFs5SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZtEgDjr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DQh771aIRTzCDn0I+itAK0aT+O5TUWrq2LZGBaadoxrQF4ZQzi763R7Xgz7ziOwG/9TvzLuAd3XElTWfDoNzvWEzQX3H8YNrYazCZk7LF3OyU2OokoIquT1eGy6eRbDxuW1q7eaNpSSaT9KQHhLumR1e0tnckGNnlP+fGVWyuPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FUwIkMz/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZtEgDjr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9D91F000E9;
-	Tue, 21 Jul 2026 23:00:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUwIkMz/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8E31F000E9;
+	Tue, 21 Jul 2026 23:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674831;
-	bh=8TjRC/uXXKrJDQLHnPZXSkQyJAjwjWAtnpYyIKpBM3k=;
+	s=korg; t=1784674833;
+	bh=WRGZkbqW/flW7INwawPf8jTEv4S5NpC/5lFkM6pGvxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EZtEgDjrzvbCyCfpgaivi/0mmqDwI0I9TohFJOJo7cb7xAeN2BMsmrJ/wCXpDqxHs
-	 4lc99N8KALci4bWkQBQ8a/1Wp15NtTX86MqIdVzGAGTPfygFFOLk8/ewj6ZKgcp38G
-	 FNcvm+o0n01dadTvQP1JfLijBGcjsY6QNerKMpnM=
+	b=FUwIkMz/snLa7QaNiTnmWMxAT2ZN52ZDz1UPN6JiNCewzL2LqpyXuoM/YSbcE37B8
+	 DAH08wQ8w9jUjH8haSoPwey/VvyUb/OKkPslgorvpCdbH/mJjHqIJ0/7rtFfco5H+C
+	 1j9GdklX6DRqwmz0VP/f1+gfH0pnSb7PELXpA0sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 5.10 690/699] iio: imu: inv_icm42600: fix timestamp clock period by using lower value
-Date: Tue, 21 Jul 2026 17:27:29 +0200
-Message-ID: <20260721152411.338912450@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Taehee Yoo <ap420073@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.10 691/699] mld: change lockdep annotation for ip6_sf_socklist and ipv6_mc_socklist
+Date: Tue, 21 Jul 2026 17:27:30 +0200
+Message-ID: <20260721152411.361122515@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -50,55 +51,249 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Taehee Yoo <ap420073@gmail.com>
 
-commit 8b0b864c11a2e2ada470f9d5010e1c2bf1eceef2 upstream.
+commit 4b4b84468aa27d0a18be8cb727f246aa35a3406d upstream.
 
-Clock period value is used for computing periods of sampling. There is
-no need for it to be higher than the maximum odr, otherwise we are
-losing precision in the computation for nothing.
+struct ip6_sf_socklist and ipv6_mc_socklist are per-socket MLD data.
+These data are protected by rtnl lock, socket lock, and RCU.
+So, when these are used, it verifies whether rtnl lock is acquired or not.
 
-Switch clock period value to maximum odr period (8kHz).
+ip6_mc_msfget() is called by do_ipv6_getsockopt().
+But caller doesn't acquire rtnl lock.
+So, when these data are used in the ip6_mc_msfget() lockdep warns about it.
+But accessing these is actually safe because socket lock was acquired by
+do_ipv6_getsockopt().
 
-Fixes: 0ecc363ccea7 ("iio: make invensense timestamp module generic")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+So, it changes lockdep annotation from rtnl lock to socket lock.
+(rtnl_dereference -> sock_dereference)
+
+Locking graph for mld data is like below:
+
+When writing mld data:
+do_ipv6_setsockopt()
+    rtnl_lock
+    lock_sock
+    (mld functions)
+        idev->mc_lock(if per-interface mld data is modified)
+
+When reading mld data:
+do_ipv6_getsockopt()
+    lock_sock
+    ip6_mc_msfget()
+
+Splat looks like:
+=============================
+WARNING: suspicious RCU usage
+5.12.0-rc4+ #503 Not tainted
+-----------------------------
+net/ipv6/mcast.c:610 suspicious rcu_dereference_protected() usage!
+
+other info that might help us debug this:
+
+rcu_scheduler_active = 2, debug_locks = 1
+1 lock held by mcast-listener-/923:
+ #0: ffff888007958a70 (sk_lock-AF_INET6){+.+.}-{0:0}, at:
+ipv6_get_msfilter+0xaf/0x190
+
+stack backtrace:
+CPU: 1 PID: 923 Comm: mcast-listener- Not tainted 5.12.0-rc4+ #503
+Call Trace:
+ dump_stack+0xa4/0xe5
+ ip6_mc_msfget+0x553/0x6c0
+ ? ipv6_sock_mc_join_ssm+0x10/0x10
+ ? lockdep_hardirqs_on_prepare+0x3e0/0x3e0
+ ? mark_held_locks+0xb7/0x120
+ ? lockdep_hardirqs_on_prepare+0x27c/0x3e0
+ ? __local_bh_enable_ip+0xa5/0xf0
+ ? lock_sock_nested+0x82/0xf0
+ ipv6_get_msfilter+0xc3/0x190
+ ? compat_ipv6_get_msfilter+0x300/0x300
+ ? lock_downgrade+0x690/0x690
+ do_ipv6_getsockopt.isra.6.constprop.13+0x1809/0x29e0
+ ? do_ipv6_mcast_group_source+0x150/0x150
+ ? register_lock_class+0x1750/0x1750
+ ? kvm_sched_clock_read+0x14/0x30
+ ? sched_clock+0x5/0x10
+ ? sched_clock_cpu+0x18/0x170
+ ? find_held_lock+0x3a/0x1c0
+ ? lock_downgrade+0x690/0x690
+ ? ipv6_getsockopt+0xdb/0x1b0
+ ipv6_getsockopt+0xdb/0x1b0
+[ ... ]
+
+Fixes: 88e2ca308094 ("mld: convert ifmcaddr6 to RCU")
+Reported-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Taehee Yoo <ap420073@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c |    4 ++--
- drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c  |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ net/ipv6/mcast.c     |   48 +++++++++++++++++++++++-------------------------
+ net/tipc/udp_media.c |    2 ++
+ 2 files changed, 25 insertions(+), 25 deletions(-)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-@@ -725,10 +725,10 @@ struct iio_dev *inv_icm42600_accel_init(
- 		return ERR_PTR(-ENOMEM);
+--- a/net/ipv6/mcast.c
++++ b/net/ipv6/mcast.c
+@@ -114,10 +114,13 @@ int sysctl_mld_qrv __read_mostly = MLD_Q
+ #define mc_dereference(e, idev) \
+ 	rcu_dereference_protected(e, lockdep_is_held(&(idev)->mc_lock))
  
- 	/*
--	 * clock period is 32kHz (31250ns)
-+	 * clock period is 8kHz (125000ns)
- 	 * jitter is +/- 2% (20 per mille)
- 	 */
--	ts_chip.clock_period = 31250;
-+	ts_chip.clock_period = 125000;
- 	ts_chip.jitter = 20;
- 	ts_chip.init_period = inv_icm42600_odr_to_period(st->conf.accel.odr);
- 	ts = iio_priv(indio_dev);
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
-@@ -736,10 +736,10 @@ struct iio_dev *inv_icm42600_gyro_init(s
- 		return ERR_PTR(-ENOMEM);
+-#define for_each_pmc_rtnl(np, pmc)				\
+-	for (pmc = rtnl_dereference((np)->ipv6_mc_list);	\
++#define sock_dereference(e, sk) \
++	rcu_dereference_protected(e, lockdep_sock_is_held(sk))
++
++#define for_each_pmc_socklock(np, sk, pmc)			\
++	for (pmc = sock_dereference((np)->ipv6_mc_list, sk);	\
+ 	     pmc;						\
+-	     pmc = rtnl_dereference(pmc->next))
++	     pmc = sock_dereference(pmc->next, sk))
  
- 	/*
--	 * clock period is 32kHz (31250ns)
-+	 * clock period is 8kHz (125000ns)
- 	 * jitter is +/- 2% (20 per mille)
+ #define for_each_pmc_rcu(np, pmc)				\
+ 	for (pmc = rcu_dereference((np)->ipv6_mc_list);		\
+@@ -183,7 +186,7 @@ static int __ipv6_sock_mc_join(struct so
+ 	if (!ipv6_addr_is_multicast(addr))
+ 		return -EINVAL;
+ 
+-	for_each_pmc_rtnl(np, mc_lst) {
++	for_each_pmc_socklock(np, sk, mc_lst) {
+ 		if ((ifindex == 0 || mc_lst->ifindex == ifindex) &&
+ 		    ipv6_addr_equal(&mc_lst->addr, addr))
+ 			return -EADDRINUSE;
+@@ -261,7 +264,7 @@ int ipv6_sock_mc_drop(struct sock *sk, i
+ 		return -EINVAL;
+ 
+ 	for (lnk = &np->ipv6_mc_list;
+-	     (mc_lst = rtnl_dereference(*lnk)) != NULL;
++	     (mc_lst = sock_dereference(*lnk, sk)) != NULL;
+ 	      lnk = &mc_lst->next) {
+ 		if ((ifindex == 0 || mc_lst->ifindex == ifindex) &&
+ 		    ipv6_addr_equal(&mc_lst->addr, addr)) {
+@@ -326,7 +329,7 @@ void __ipv6_sock_mc_close(struct sock *s
+ 
+ 	ASSERT_RTNL();
+ 
+-	while ((mc_lst = rtnl_dereference(np->ipv6_mc_list)) != NULL) {
++	while ((mc_lst = sock_dereference(np->ipv6_mc_list, sk)) != NULL) {
+ 		struct net_device *dev;
+ 
+ 		np->ipv6_mc_list = mc_lst->next;
+@@ -353,8 +356,11 @@ void ipv6_sock_mc_close(struct sock *sk)
+ 
+ 	if (!rcu_access_pointer(np->ipv6_mc_list))
+ 		return;
++
+ 	rtnl_lock();
++	lock_sock(sk);
+ 	__ipv6_sock_mc_close(sk);
++	release_sock(sk);
+ 	rtnl_unlock();
+ }
+ 
+@@ -384,7 +390,7 @@ int ip6_mc_source(int add, int omode, st
+ 	err = -EADDRNOTAVAIL;
+ 
+ 	mutex_lock(&idev->mc_lock);
+-	for_each_pmc_rtnl(inet6, pmc) {
++	for_each_pmc_socklock(inet6, sk, pmc) {
+ 		if (pgsr->gsr_interface && pmc->ifindex != pgsr->gsr_interface)
+ 			continue;
+ 		if (ipv6_addr_equal(&pmc->addr, group))
+@@ -407,7 +413,7 @@ int ip6_mc_source(int add, int omode, st
+ 		pmc->sfmode = omode;
+ 	}
+ 
+-	psl = rtnl_dereference(pmc->sflist);
++	psl = sock_dereference(pmc->sflist, sk);
+ 	if (!add) {
+ 		if (!psl)
+ 			goto done;	/* err = -EADDRNOTAVAIL */
+@@ -514,7 +520,7 @@ int ip6_mc_msfilter(struct sock *sk, str
+ 		goto done;
+ 	}
+ 
+-	for_each_pmc_rtnl(inet6, pmc) {
++	for_each_pmc_socklock(inet6, sk, pmc) {
+ 		if (pmc->ifindex != gsf->gf_interface)
+ 			continue;
+ 		if (ipv6_addr_equal(&pmc->addr, group))
+@@ -555,7 +561,7 @@ int ip6_mc_msfilter(struct sock *sk, str
+ 	}
+ 
+ 	mutex_lock(&idev->mc_lock);
+-	psl = rtnl_dereference(pmc->sflist);
++	psl = sock_dereference(pmc->sflist, sk);
+ 	if (psl) {
+ 		ip6_mc_del_src(idev, group, pmc->sfmode,
+ 			       psl->sl_count, psl->sl_addr, 0);
+@@ -577,40 +583,32 @@ done:
+ int ip6_mc_msfget(struct sock *sk, struct group_filter *gsf,
+ 	struct sockaddr_storage *p)
+ {
+-	int err, i, count, copycount;
++	struct ipv6_pinfo *inet6 = inet6_sk(sk);
+ 	const struct in6_addr *group;
+ 	struct ipv6_mc_socklist *pmc;
+-	struct inet6_dev *idev;
+-	struct ipv6_pinfo *inet6 = inet6_sk(sk);
+ 	struct ip6_sf_socklist *psl;
+-	struct net *net = sock_net(sk);
++	int i, count, copycount;
+ 
+ 	group = &((struct sockaddr_in6 *)&gsf->gf_group)->sin6_addr;
+ 
+ 	if (!ipv6_addr_is_multicast(group))
+ 		return -EINVAL;
+ 
+-	idev = ip6_mc_find_dev_rtnl(net, group, gsf->gf_interface);
+-	if (!idev)
+-		return -ENODEV;
+-
+-	err = -EADDRNOTAVAIL;
+ 	/* changes to the ipv6_mc_list require the socket lock and
+-	 * rtnl lock. We have the socket lock and rcu read lock,
+-	 * so reading the list is safe.
++	 * rtnl lock. We have the socket lock, so reading the list is safe.
  	 */
--	ts_chip.clock_period = 31250;
-+	ts_chip.clock_period = 125000;
- 	ts_chip.jitter = 20;
- 	ts_chip.init_period = inv_icm42600_odr_to_period(st->conf.accel.odr);
- 	ts = iio_priv(indio_dev);
+ 
+-	for_each_pmc_rtnl(inet6, pmc) {
++	for_each_pmc_socklock(inet6, sk, pmc) {
+ 		if (pmc->ifindex != gsf->gf_interface)
+ 			continue;
+ 		if (ipv6_addr_equal(group, &pmc->addr))
+ 			break;
+ 	}
+ 	if (!pmc)		/* must have a prior join */
+-		return err;
++		return -EADDRNOTAVAIL;
+ 
+ 	gsf->gf_fmode = pmc->sfmode;
+-	psl = rtnl_dereference(pmc->sflist);
++	psl = sock_dereference(pmc->sflist, sk);
+ 	count = psl ? psl->sl_count : 0;
+ 
+ 	copycount = count < gsf->gf_numsrc ? count : gsf->gf_numsrc;
+@@ -2620,7 +2618,7 @@ static int ip6_mc_leave_src(struct sock
+ 	struct ip6_sf_socklist *psl;
+ 	int err;
+ 
+-	psl = rtnl_dereference(iml->sflist);
++	psl = sock_dereference(iml->sflist, sk);
+ 
+ 	if (idev)
+ 		mutex_lock(&idev->mc_lock);
+--- a/net/tipc/udp_media.c
++++ b/net/tipc/udp_media.c
+@@ -411,8 +411,10 @@ static int enable_mcast(struct udp_beare
+ 		err = ip_mc_join_group(sk, &mreqn);
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	} else {
++		lock_sock(sk);
+ 		err = ipv6_stub->ipv6_sock_mc_join(sk, ub->ifindex,
+ 						   &remote->ipv6);
++		release_sock(sk);
+ #endif
+ 	}
+ 	return err;
 
 
