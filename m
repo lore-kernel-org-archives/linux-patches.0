@@ -1,38 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 493BF2EBB8D;
-	Tue, 21 Jul 2026 20:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E230C3B42EF;
+	Tue, 21 Jul 2026 20:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666424; cv=none; b=TJsmjzUAyC68mTOp73tIgkCzthVdbZkwKTzhW/LZY5S7n0L4Gwrq4tX8h0Qpa8zhaXwnE0t2WSXOCA15hoLgtKkGeJvxZ2VkhEUPHast/243qtMPguK1cBMg7ePd8J6DdGdgSDczXRyeqdjeAm0N50a6WSJSHZr31Ewf6Auso/g=
+	t=1784666426; cv=none; b=LiqmuGL5G4WCzZWds4kX/LzDyuvQHbWSWL1UMTGYGBkBe0DzFj+ARxiybkPvoFyYbUWHSVfPOxMB7YGip3C1vg2Ft38gHkBALdDZ716LPLdLbEgMHBnuHdblhT+YFDMqm7Ht2qHFqhSHKCVfNbwymrLwQvxFF6EnZYPy/A9ncRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666424; c=relaxed/simple;
-	bh=FakfEjoCTTP5ZOuaJ3ImjWzk1+2F9KoV1CRXq3pFM1A=;
+	s=arc-20240116; t=1784666426; c=relaxed/simple;
+	bh=xJBTUhcZrCm0Ydpimqdmd6bxltf/4H/Ve3ULkAcfC24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fV5b2eNQu3Mehv8nIphiuNzatvPBvJjxq41QulLVK4zPKICTrQAdATyJCZ8CvPnlwpqN+QiYnTbCgk32S4BgjV5KmvQdR0GqC64Nz3pqze6C0ahPxGM174i8fAFVFeBW/JMv3fK0llsEqgOHMWPsjbcNHnlqCyFQJHoaCfYRiqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJjHb75I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WM/V4I4SEPNxIjPi35vDiHWyyIugFA22q+x8E0RxRCeyxp5wbANbC198AnbX0EysI8phXkHlvaI7mBbdLcCOFxsj/B+eQ8VzWPjRBpWQf5jMMli2SE4TVImDlGdr4yz0Lqoes3BXIULRDxwBW24Mu+7EQZ3yiyQOZ5XbziKRxOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zErBHtFf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJjHb75I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8DE21F000E9;
-	Tue, 21 Jul 2026 20:40:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zErBHtFf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF8F1F00A3A;
+	Tue, 21 Jul 2026 20:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666422;
-	bh=RlCF6Q3k/v27sY0EIdUUkO0WuNFv0OB7CYajhyRKpuY=;
+	s=korg; t=1784666424;
+	bh=AcdEzncU3ftQKZf36FlokIZRDhmTqCouwvyYSKyfiQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GJjHb75IHHQfgTKQ5aAeY149QEC+0MJgVfua63YmHODCvMd7cOtpFaKLiZw3toRmb
-	 6gQj770+R/RU7sqIoYqMLuWRvova69WMzRQByPl8E5qYblvL972l/lwmlKrOclWaqE
-	 Qvki2NYJaw3CV3c16BJ7bl960A3+94c3ngEUj+cg=
+	b=zErBHtFfxz4VQbeq1GeY70lKAGGffRbNOGJPiulgWnVvaDknvDjBdhELUpgf4ODwt
+	 7NuPTvpeKB1ouMMyRUT6IbrIXSltlKVFeQOk2Y2wQd3izCMQroie+AwHRDftOWc9bx
+	 muLuz2ZsQcqwNSCWtt3mghEpD81+r8TMdqXaQNeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Besar Wicaksono <bwicaksono@nvidia.com>,
+	James Clark <james.clark@arm.com>,
+	suzuki.poulose@arm.com,
+	mike.leach@linaro.org,
+	jonathanh@nvidia.com,
+	rwiley@nvidia.com,
+	treding@nvidia.com,
+	vsethi@nvidia.com,
+	ywan@nvidia.com,
+	linux-arm-kernel@lists.infradead.org,
+	coresight@lists.linaro.org,
+	linux-tegra@vger.kernel.org,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0676/1266] xprtrdma: Return sendctx slot after Send preparation failure
-Date: Tue, 21 Jul 2026 17:18:33 +0200
-Message-ID: <20260721152456.982239916@linuxfoundation.org>
+Subject: [PATCH 6.6 0677/1266] perf cs-etm: Fix incorrect or missing decoder for raw trace
+Date: Tue, 21 Jul 2026 17:18:34 +0200
+Message-ID: <20260721152457.005189941@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -51,157 +62,245 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Besar Wicaksono <bwicaksono@nvidia.com>
 
-[ Upstream commit 60e7870052f417d83965db144f70ae21fcfcf37f ]
+[ Upstream commit a16afcc58a8c5ebc65c852faf001f8f61f05e4ef ]
 
-rpcrdma_prepare_send_sges() gets a sendctx before it maps the SGEs
-for the Send WR. If one of the mapping helpers fails, no Send WR
-is posted, so no Send completion is guaranteed to advance rb_sc_tail.
+The decoder creation for raw trace uses metadata from the first CPU.
+On per-cpu mode, this metadata is incorrectly used for every decoder.
+On per-process/per-thread traces, the first CPU is CPU0. If CPU0 trace
+is not enabled, its metadata will be marked unused and the decoder is
+not created. Perf report dump skips the decoding part because the
+decoder is missing.
 
-Current cleanup clears sc_req so a later completion can sweep over
-that slot, but a consecutive run of preparation failures can still
-advance rb_sc_head until the ring appears full. At that point
-rpcrdma_sendctx_get_locked() returns NULL and no Send can be posted to
-produce the completion needed to recover the ring.
+To fix this, use metadata of the CPU associated with sample object.
 
-The trigger requires CONFIG_SUNRPC_XPRT_RDMA and an NFS/RDMA mount.
-Mount setup and reliable DMA-map fault injection require local admin
-authority. Unprivileged I/O on an existing mount can exercise the send
-path, but a remote peer alone cannot force this local DMA-map failure.
-
-Add rpcrdma_sendctx_unget_locked() for the single-consumer send path
-to rewind rb_sc_head when the just-acquired sendctx is canceled before
-ib_post_send(). Wake waiters after making the slot available again.
-After the rewind, every slot the completion sweep visits belongs to a
-posted Send, so rpcrdma_sendctx_put_locked() no longer needs to test
-sc_req before unmapping.
-
-Fixes: ae72950abf99 ("xprtrdma: Add data structure to manage RDMA Send arguments")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Signed-off-by: Besar Wicaksono <bwicaksono@nvidia.com>
+Reviewed-by: James Clark <james.clark@arm.com>
+Cc: suzuki.poulose@arm.com
+Cc: mike.leach@linaro.org
+Cc: jonathanh@nvidia.com
+Cc: rwiley@nvidia.com
+Cc: treding@nvidia.com
+Cc: vsethi@nvidia.com
+Cc: ywan@nvidia.com
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: coresight@lists.linaro.org
+Cc: linux-tegra@vger.kernel.org
+Link: https://lore.kernel.org/r/20231010234803.5419-1-bwicaksono@nvidia.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Stable-dep-of: 68ca50bc0fa6 ("perf cs-etm: Queue context packets for frontend")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/rpc_rdma.c  |  5 ++++-
- net/sunrpc/xprtrdma/verbs.c     | 40 +++++++++++++++++++++++++++++----
- net/sunrpc/xprtrdma/xprt_rdma.h |  2 ++
- 3 files changed, 42 insertions(+), 5 deletions(-)
+ tools/perf/util/cs-etm.c | 106 ++++++++++++++++++++++++---------------
+ 1 file changed, 65 insertions(+), 41 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
-index f65ecbb83befc7..e201b37578a70e 100644
---- a/net/sunrpc/xprtrdma/rpc_rdma.c
-+++ b/net/sunrpc/xprtrdma/rpc_rdma.c
-@@ -792,6 +792,7 @@ inline int rpcrdma_prepare_send_sges(struct rpcrdma_xprt *r_xprt,
- 				     struct xdr_buf *xdr,
- 				     enum rpcrdma_chunktype rtype)
+diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
+index 799c104901b4ff..1fb104357eebb8 100644
+--- a/tools/perf/util/cs-etm.c
++++ b/tools/perf/util/cs-etm.c
+@@ -283,22 +283,31 @@ static int cs_etm__metadata_set_trace_id(u8 trace_chan_id, u64 *cpu_metadata)
+ }
+ 
+ /*
+- * Get a metadata for a specific cpu from an array.
++ * Get a metadata index for a specific cpu from an array.
+  *
+  */
+-static u64 *get_cpu_data(struct cs_etm_auxtrace *etm, int cpu)
++static int get_cpu_data_idx(struct cs_etm_auxtrace *etm, int cpu)
  {
-+	struct rpcrdma_sendctx *sc;
- 	int ret;
+ 	int i;
+-	u64 *metadata = NULL;
  
- 	ret = -EAGAIN;
-@@ -834,7 +835,9 @@ inline int rpcrdma_prepare_send_sges(struct rpcrdma_xprt *r_xprt,
- 	return 0;
+ 	for (i = 0; i < etm->num_cpu; i++) {
+ 		if (etm->metadata[i][CS_ETM_CPU] == (u64)cpu) {
+-			metadata = etm->metadata[i];
+-			break;
++			return i;
+ 		}
+ 	}
  
- out_unmap:
--	rpcrdma_sendctx_cancel(req->rl_sendctx);
-+	sc = req->rl_sendctx;
-+	rpcrdma_sendctx_cancel(sc);
-+	rpcrdma_sendctx_unget_locked(r_xprt, sc);
- out_nosc:
- 	trace_xprtrdma_prepsend_failed(&req->rl_slot, ret);
- 	return ret;
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index c2718732801b3c..27bb176f082f63 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -618,6 +618,11 @@ static void rpcrdma_sendctxs_destroy(struct rpcrdma_xprt *r_xprt)
- 	/* The QP is drained, but the final unsignaled Sends might not
- 	 * have been walked by a signaled Send completion. Release those
- 	 * Send owners before request buffers are reset.
-+	 *
-+	 * Unlike the completion sweep, this walk can visit slots with
-+	 * no Send posted: after a partial rpcrdma_sendctxs_create()
-+	 * failure on reconnect, rb_sc_head and rb_sc_tail are stale,
-+	 * and slots between them can be NULL or have sc_req clear.
- 	 */
- 	for (i = rpcrdma_sendctx_next(buf, buf->rb_sc_tail);
- 	     i != rpcrdma_sendctx_next(buf, buf->rb_sc_head);
-@@ -690,6 +695,12 @@ static unsigned long rpcrdma_sendctx_next(struct rpcrdma_buffer *buf,
- 	return likely(item < buf->rb_sc_last) ? item + 1 : 0;
- }
- 
-+static unsigned long rpcrdma_sendctx_prev(struct rpcrdma_buffer *buf,
-+					  unsigned long item)
-+{
-+	return item > 0 ? item - 1 : buf->rb_sc_last;
+-	return metadata;
++	return -1;
 +}
 +
- /**
-  * rpcrdma_sendctx_get_locked - Acquire a send context
-  * @r_xprt: controlling transport instance
-@@ -734,6 +745,29 @@ struct rpcrdma_sendctx *rpcrdma_sendctx_get_locked(struct rpcrdma_xprt *r_xprt)
- 	return NULL;
- }
- 
-+/**
-+ * rpcrdma_sendctx_unget_locked - Release an unposted send context
-+ * @r_xprt: controlling transport instance
-+ * @sc: send context to release
++/*
++ * Get a metadata for a specific cpu from an array.
 + *
-+ * Usage: Called when no Send is posted for the sendctx most
-+ * recently returned by rpcrdma_sendctx_get_locked().
-+ *
-+ * The caller serializes calls to this function and to
-+ * rpcrdma_sendctx_get_locked() (per transport).
 + */
-+void rpcrdma_sendctx_unget_locked(struct rpcrdma_xprt *r_xprt,
-+				  struct rpcrdma_sendctx *sc)
++static u64 *get_cpu_data(struct cs_etm_auxtrace *etm, int cpu)
 +{
-+	struct rpcrdma_buffer *buf = &r_xprt->rx_buf;
++	int idx = get_cpu_data_idx(etm, cpu);
 +
-+	if (WARN_ON_ONCE(buf->rb_sc_ctxs[buf->rb_sc_head] != sc))
-+		return;
++	return (idx != -1) ? etm->metadata[idx] : NULL;
+ }
+ 
+ /*
+@@ -641,66 +650,80 @@ static void cs_etm__packet_dump(const char *pkt_string)
+ }
+ 
+ static void cs_etm__set_trace_param_etmv3(struct cs_etm_trace_params *t_params,
+-					  struct cs_etm_auxtrace *etm, int idx,
+-					  u32 etmidr)
++					  struct cs_etm_auxtrace *etm, int t_idx,
++					  int m_idx, u32 etmidr)
+ {
+ 	u64 **metadata = etm->metadata;
+ 
+-	t_params[idx].protocol = cs_etm__get_v7_protocol_version(etmidr);
+-	t_params[idx].etmv3.reg_ctrl = metadata[idx][CS_ETM_ETMCR];
+-	t_params[idx].etmv3.reg_trc_id = metadata[idx][CS_ETM_ETMTRACEIDR];
++	t_params[t_idx].protocol = cs_etm__get_v7_protocol_version(etmidr);
++	t_params[t_idx].etmv3.reg_ctrl = metadata[m_idx][CS_ETM_ETMCR];
++	t_params[t_idx].etmv3.reg_trc_id = metadata[m_idx][CS_ETM_ETMTRACEIDR];
+ }
+ 
+ static void cs_etm__set_trace_param_etmv4(struct cs_etm_trace_params *t_params,
+-					  struct cs_etm_auxtrace *etm, int idx)
++					  struct cs_etm_auxtrace *etm, int t_idx,
++					  int m_idx)
+ {
+ 	u64 **metadata = etm->metadata;
+ 
+-	t_params[idx].protocol = CS_ETM_PROTO_ETMV4i;
+-	t_params[idx].etmv4.reg_idr0 = metadata[idx][CS_ETMV4_TRCIDR0];
+-	t_params[idx].etmv4.reg_idr1 = metadata[idx][CS_ETMV4_TRCIDR1];
+-	t_params[idx].etmv4.reg_idr2 = metadata[idx][CS_ETMV4_TRCIDR2];
+-	t_params[idx].etmv4.reg_idr8 = metadata[idx][CS_ETMV4_TRCIDR8];
+-	t_params[idx].etmv4.reg_configr = metadata[idx][CS_ETMV4_TRCCONFIGR];
+-	t_params[idx].etmv4.reg_traceidr = metadata[idx][CS_ETMV4_TRCTRACEIDR];
++	t_params[t_idx].protocol = CS_ETM_PROTO_ETMV4i;
++	t_params[t_idx].etmv4.reg_idr0 = metadata[m_idx][CS_ETMV4_TRCIDR0];
++	t_params[t_idx].etmv4.reg_idr1 = metadata[m_idx][CS_ETMV4_TRCIDR1];
++	t_params[t_idx].etmv4.reg_idr2 = metadata[m_idx][CS_ETMV4_TRCIDR2];
++	t_params[t_idx].etmv4.reg_idr8 = metadata[m_idx][CS_ETMV4_TRCIDR8];
++	t_params[t_idx].etmv4.reg_configr = metadata[m_idx][CS_ETMV4_TRCCONFIGR];
++	t_params[t_idx].etmv4.reg_traceidr = metadata[m_idx][CS_ETMV4_TRCTRACEIDR];
+ }
+ 
+ static void cs_etm__set_trace_param_ete(struct cs_etm_trace_params *t_params,
+-					  struct cs_etm_auxtrace *etm, int idx)
++					  struct cs_etm_auxtrace *etm, int t_idx,
++					  int m_idx)
+ {
+ 	u64 **metadata = etm->metadata;
+ 
+-	t_params[idx].protocol = CS_ETM_PROTO_ETE;
+-	t_params[idx].ete.reg_idr0 = metadata[idx][CS_ETE_TRCIDR0];
+-	t_params[idx].ete.reg_idr1 = metadata[idx][CS_ETE_TRCIDR1];
+-	t_params[idx].ete.reg_idr2 = metadata[idx][CS_ETE_TRCIDR2];
+-	t_params[idx].ete.reg_idr8 = metadata[idx][CS_ETE_TRCIDR8];
+-	t_params[idx].ete.reg_configr = metadata[idx][CS_ETE_TRCCONFIGR];
+-	t_params[idx].ete.reg_traceidr = metadata[idx][CS_ETE_TRCTRACEIDR];
+-	t_params[idx].ete.reg_devarch = metadata[idx][CS_ETE_TRCDEVARCH];
++	t_params[t_idx].protocol = CS_ETM_PROTO_ETE;
++	t_params[t_idx].ete.reg_idr0 = metadata[m_idx][CS_ETE_TRCIDR0];
++	t_params[t_idx].ete.reg_idr1 = metadata[m_idx][CS_ETE_TRCIDR1];
++	t_params[t_idx].ete.reg_idr2 = metadata[m_idx][CS_ETE_TRCIDR2];
++	t_params[t_idx].ete.reg_idr8 = metadata[m_idx][CS_ETE_TRCIDR8];
++	t_params[t_idx].ete.reg_configr = metadata[m_idx][CS_ETE_TRCCONFIGR];
++	t_params[t_idx].ete.reg_traceidr = metadata[m_idx][CS_ETE_TRCTRACEIDR];
++	t_params[t_idx].ete.reg_devarch = metadata[m_idx][CS_ETE_TRCDEVARCH];
+ }
+ 
+ static int cs_etm__init_trace_params(struct cs_etm_trace_params *t_params,
+ 				     struct cs_etm_auxtrace *etm,
++				     bool formatted,
++				     int sample_cpu,
+ 				     int decoders)
+ {
+-	int i;
++	int t_idx, m_idx;
+ 	u32 etmidr;
+ 	u64 architecture;
+ 
+-	for (i = 0; i < decoders; i++) {
+-		architecture = etm->metadata[i][CS_ETM_MAGIC];
++	for (t_idx = 0; t_idx < decoders; t_idx++) {
++		if (formatted)
++			m_idx = t_idx;
++		else {
++			m_idx = get_cpu_data_idx(etm, sample_cpu);
++			if (m_idx == -1) {
++				pr_warning("CS_ETM: unknown CPU, falling back to first metadata\n");
++				m_idx = 0;
++			}
++		}
 +
-+	buf->rb_sc_head = rpcrdma_sendctx_prev(buf, buf->rb_sc_head);
-+	xprt_write_space(&r_xprt->rx_xprt);
-+}
-+
- /**
-  * rpcrdma_sendctx_put_locked - Release a send context
-  * @r_xprt: controlling transport instance
-@@ -751,8 +785,7 @@ static void rpcrdma_sendctx_put_locked(struct rpcrdma_xprt *r_xprt,
- 	unsigned long next_tail;
++		architecture = etm->metadata[m_idx][CS_ETM_MAGIC];
  
- 	/* Release previously completed but unsignaled Sends by walking
--	 * up the queue until @sc is found. Entries left behind by a
--	 * failed rpcrdma_prepare_send_sges() have sc_req cleared.
-+	 * up the queue until @sc is found.
- 	 */
- 	next_tail = buf->rb_sc_tail;
- 	do {
-@@ -762,8 +795,7 @@ static void rpcrdma_sendctx_put_locked(struct rpcrdma_xprt *r_xprt,
+ 		switch (architecture) {
+ 		case __perf_cs_etmv3_magic:
+-			etmidr = etm->metadata[i][CS_ETM_ETMIDR];
+-			cs_etm__set_trace_param_etmv3(t_params, etm, i, etmidr);
++			etmidr = etm->metadata[m_idx][CS_ETM_ETMIDR];
++			cs_etm__set_trace_param_etmv3(t_params, etm, t_idx, m_idx, etmidr);
+ 			break;
+ 		case __perf_cs_etmv4_magic:
+-			cs_etm__set_trace_param_etmv4(t_params, etm, i);
++			cs_etm__set_trace_param_etmv4(t_params, etm, t_idx, m_idx);
+ 			break;
+ 		case __perf_cs_ete_magic:
+-			cs_etm__set_trace_param_ete(t_params, etm, i);
++			cs_etm__set_trace_param_ete(t_params, etm, t_idx, m_idx);
+ 			break;
+ 		default:
+ 			return -EINVAL;
+@@ -1016,7 +1039,7 @@ static u32 cs_etm__mem_access(struct cs_etm_queue *etmq, u8 trace_chan_id,
+ }
  
- 		/* ORDER: item must be accessed _before_ tail is updated */
- 		cur = buf->rb_sc_ctxs[next_tail];
--		if (cur->sc_req)
--			rpcrdma_sendctx_unmap(cur);
-+		rpcrdma_sendctx_unmap(cur);
+ static struct cs_etm_queue *cs_etm__alloc_queue(struct cs_etm_auxtrace *etm,
+-						bool formatted)
++						bool formatted, int sample_cpu)
+ {
+ 	struct cs_etm_decoder_params d_params;
+ 	struct cs_etm_trace_params  *t_params = NULL;
+@@ -1041,7 +1064,7 @@ static struct cs_etm_queue *cs_etm__alloc_queue(struct cs_etm_auxtrace *etm,
+ 	if (!t_params)
+ 		goto out_free;
  
- 	} while (buf->rb_sc_ctxs[next_tail] != sc);
+-	if (cs_etm__init_trace_params(t_params, etm, decoders))
++	if (cs_etm__init_trace_params(t_params, etm, formatted, sample_cpu, decoders))
+ 		goto out_free;
  
-diff --git a/net/sunrpc/xprtrdma/xprt_rdma.h b/net/sunrpc/xprtrdma/xprt_rdma.h
-index 93ffb190ad50e2..c78734e93c717b 100644
---- a/net/sunrpc/xprtrdma/xprt_rdma.h
-+++ b/net/sunrpc/xprtrdma/xprt_rdma.h
-@@ -476,6 +476,8 @@ void rpcrdma_req_destroy(struct rpcrdma_req *req);
- int rpcrdma_buffer_create(struct rpcrdma_xprt *);
- void rpcrdma_buffer_destroy(struct rpcrdma_buffer *);
- struct rpcrdma_sendctx *rpcrdma_sendctx_get_locked(struct rpcrdma_xprt *r_xprt);
-+void rpcrdma_sendctx_unget_locked(struct rpcrdma_xprt *r_xprt,
-+				  struct rpcrdma_sendctx *sc);
+ 	/* Set decoder parameters to decode trace packets */
+@@ -1081,14 +1104,15 @@ static struct cs_etm_queue *cs_etm__alloc_queue(struct cs_etm_auxtrace *etm,
+ static int cs_etm__setup_queue(struct cs_etm_auxtrace *etm,
+ 			       struct auxtrace_queue *queue,
+ 			       unsigned int queue_nr,
+-			       bool formatted)
++			       bool formatted,
++			       int sample_cpu)
+ {
+ 	struct cs_etm_queue *etmq = queue->priv;
  
- struct rpcrdma_mr *rpcrdma_mr_get(struct rpcrdma_xprt *r_xprt);
- void rpcrdma_mrs_refresh(struct rpcrdma_xprt *r_xprt);
+ 	if (list_empty(&queue->head) || etmq)
+ 		return 0;
+ 
+-	etmq = cs_etm__alloc_queue(etm, formatted);
++	etmq = cs_etm__alloc_queue(etm, formatted, sample_cpu);
+ 
+ 	if (!etmq)
+ 		return -ENOMEM;
+@@ -2827,7 +2851,7 @@ static int cs_etm__process_auxtrace_event(struct perf_session *session,
+ 		 * formatted in piped mode (true).
+ 		 */
+ 		err = cs_etm__setup_queue(etm, &etm->queues.queue_array[idx],
+-					  idx, true);
++					  idx, true, -1);
+ 		if (err)
+ 			return err;
+ 
+@@ -3033,7 +3057,7 @@ static int cs_etm__queue_aux_fragment(struct perf_session *session, off_t file_o
+ 		idx = auxtrace_event->idx;
+ 		formatted = !(aux_event->flags & PERF_AUX_FLAG_CORESIGHT_FORMAT_RAW);
+ 		return cs_etm__setup_queue(etm, &etm->queues.queue_array[idx],
+-					   idx, formatted);
++					   idx, formatted, sample->cpu);
+ 	}
+ 
+ 	/* Wasn't inside this buffer, but there were no parse errors. 1 == 'not found' */
 -- 
 2.53.0
 
