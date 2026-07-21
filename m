@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906623BE641;
-	Tue, 21 Jul 2026 21:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3935F3BE641;
+	Tue, 21 Jul 2026 21:46:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670363; cv=none; b=GdccSUdUNfvrVkaQftG4X2SeowT5kLJgPqpetFQ96fIaWnwN+yFyJm40xFl4j13tnzYUpfJ+Carq001n0gS7H1WiiEFf+RqqKefgEQg2Jn2cTHdNTBKKQeenZASOqgFjQufKj1wntCthNQycR/6jP2k/j3VtIJ4M2MFpFHeGW1Y=
+	t=1784670366; cv=none; b=Z8cLTkRVe0TCCP8sxwA6CIs/KK28D6BaWDC8p7t2xakwWdPYejfcw00DPbjbMLORrMIoZxZI8+eFm+6nmGhG5QYdPSHZqq7+6HaN99baHpJeniApj/ulspsYSH+WrY3VuigOn5JhAsiozZEtl1ieS+xV2GVZt959Kycw3zVA6KE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670363; c=relaxed/simple;
-	bh=O1mjyqkfYQHgFY6JImnKi1wLgQVpZwmTPAXPGJZ9yCc=;
+	s=arc-20240116; t=1784670366; c=relaxed/simple;
+	bh=rmoUlgMGWhTexM+qAbIt3kii+O8V+E81FbnTvPoEJNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uf+WGpLVz0FcjmP+jHBQm3W9pV0Mz/blFpwOTJA14yLp3irDurT2C/K1qmPzKf16qtYKmLoscf3H4kt7gts9ANHX1un6RrzcTCFSHTKfDxUCpB8TJmFrHJSNM1lKw0hQf5oSHOGNZlA0JUXYjzylC6OVmr/gel3TWH8qE8CXK+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ly6LxWjw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gtY6MtrvjujztWPoG867XDhkvN58MzIOCzsrJDlgMIom/7cHpltFj3IUhDVPMkAhnOzR2FvpccLha8UjpJHW61ffhfGzHfT3FJkHFeFFBvASG3oxAO+B8bfPUR7lPDjPKsfXJSXcUwi6eJDYrbpNYos9wXJoCBJxlSeqOmx4QQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EE58Etp5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ly6LxWjw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2682E1F000E9;
-	Tue, 21 Jul 2026 21:46:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EE58Etp5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE431F000E9;
+	Tue, 21 Jul 2026 21:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670362;
-	bh=/q8v72cs/MP/FlOKdJZLAAp+2QG1Drng4P2/giWugjc=;
+	s=korg; t=1784670365;
+	bh=JkQ94bobiwfl7+raYvJy8Van+NWdOvLFbyXlEegNzTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ly6LxWjwB3Y2XV2E3rhdf67blItc7w75t3/hkeEeGYgmOf6bBNHABfGi57UhlEFjO
-	 ieTT11QRcBAleuhbe8b/U5ImAkRrmLWCjKqP80ZA/lOCT0okyz9LNI0A4HQXhdssKR
-	 6vsq9Ski5mjLD46DycE9PooLV1O32z0BHGERLsO4=
+	b=EE58Etp5XsgMHEUSNpDpEEQ24vpB5bglW7O7QV+eambecva9WFkY/vbsGXuccDzNs
+	 wLYYr7bFtczhMUlxAuwKHpHvBTIUDg/C/0stZvXM+BAgDevx5wcehjZP7ZWqlcvvfm
+	 cxrrTR77w4j8IjB6NyaRa+Xr/XcGCrDbIcRU80IM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.1 0904/1067] orangefs: keep the readdir entry size 64-bit in fill_from_part()
-Date: Tue, 21 Jul 2026 17:25:05 +0200
-Message-ID: <20260721152444.759981340@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 6.1 0905/1067] ata: pata_pxa: Fix DMA channel leak on probe error
+Date: Tue, 21 Jul 2026 17:25:06 +0200
+Message-ID: <20260721152444.784055862@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,51 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 18227a6bc98bd0ba96ed3ce9d5b28776a5a28dfc upstream.
+commit fcaf242e7fc406e78f444a35441e3b58f5e28781 upstream.
 
-fill_from_part() computes the size of a directory entry in size_t but
-stores it in a __u32. An entry length near U32_MAX wraps it to a small
-value, bypasses the bounds check, and is then used to index the entry,
-reading far past the directory part -- an out-of-bounds read that oopses
-the kernel.
+When dmaengine_slave_config() fails, the DMA channel acquired by
+dma_request_chan() is not released before returning the error,
+leaking the channel reference.
 
-Compute the size as a u64 so it cannot truncate; the bounds check then
-rejects the entry. The trailer is supplied by the userspace client.
+Fix by adding dma_release_channel() in the error path.
 
-Fixes: 480e3e532e31 ("orangefs: support very large directories")
+The ata_host_activate() error path already correctly releases the
+DMA channel.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260619-b4-disp-50d2bd59-v1-1-ce332969b4a2@proton.me
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 88622d80af82 ("ata: pata_pxa: dmaengine conversion")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/orangefs/dir.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/ata/pata_pxa.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/orangefs/dir.c
-+++ b/fs/orangefs/dir.c
-@@ -191,7 +191,8 @@ static int fill_from_part(struct orangef
- {
- 	const int offset = sizeof(struct orangefs_readdir_response_s);
- 	struct orangefs_khandle *khandle;
--	__u32 *len, padlen;
-+	__u32 *len;
-+	u64 padlen;
- 	loff_t i;
- 	char *s;
- 	i = ctx->pos & ~PART_MASK;
-@@ -215,8 +216,8 @@ static int fill_from_part(struct orangef
- 		 * len is the size of the string itself.  padlen is the
- 		 * total size of the encoded string.
- 		 */
--		padlen = (sizeof *len + *len + 1) +
--		    (8 - (sizeof *len + *len + 1)%8)%8;
-+		padlen = (u64)sizeof *len + *len + 1;
-+		padlen += (8 - padlen % 8) % 8;
- 		if (part->len < i + padlen + sizeof *khandle)
- 			goto next;
- 		s = (void *)part + offset + i + sizeof *len;
+--- a/drivers/ata/pata_pxa.c
++++ b/drivers/ata/pata_pxa.c
+@@ -287,6 +287,7 @@ static int pxa_ata_probe(struct platform
+ 	ret = dmaengine_slave_config(data->dma_chan, &config);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev, "dma configuration failed: %d\n", ret);
++		dma_release_channel(data->dma_chan);
+ 		return ret;
+ 	}
+ 
 
 
