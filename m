@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA6E46A604;
-	Tue, 21 Jul 2026 15:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F242F46A5F3;
+	Tue, 21 Jul 2026 15:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784649035; cv=none; b=AGnw6mMVO8oW5kCPX/HC6C9iYP0WPGcQCfZWVXT31FngZH0ez28ttZGyM19OwW66rZe1OHMxG9TG2QL+VxJxUH3BfpDGsULSXcyENDsmpwEDhLj+VHWZ/NH5VlsUb2OkW1IPdUpzKKostNxoK71JIG6+yxnWfnuyLsLoctazNdE=
+	t=1784649038; cv=none; b=ILWXDtzn01J6wA0xtwZVKImJHuzq6gGhRdJWtDCgTGYYEiEsXPE6j9wxPjyYIFLIsUj0PVGOtYSnHBRdxw39AHXv8E+ukqhgFLAVsD0zK1IF7NJ/f6uz8mHCy52+1L/mD5vCL/NI7bXtjIp97rlCvFIchz6+LVnG0guHnuWHwFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784649035; c=relaxed/simple;
-	bh=TG6FW4PTMao4TeYeqf+xBj2DpKoxLt7/kyyl30G+wNA=;
+	s=arc-20240116; t=1784649038; c=relaxed/simple;
+	bh=Y5XtoKWBOEH3hSQvzz64+zN/U6lWrgNWzHEWKctJ7xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XfNCN+Ddij2Cnn2yZpEpuiBUQxkP4wWbdOPX14FQ1WestoE9lPiFyS9OoeaZxpRlVPyciJnJSkm2Tc+iaqmKZbxSo3ardozyyKYH5Qj39watiqgU+rIpEUE3Y1yQX57kg+bmSGfLsimlPNuKvHJObSDtd115HpIdHWiugB4+lUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ubl+yH6s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TOcS0NgPdiVqnaIhtbjawZ52QeZuTDF/q7Ogbh77qSFS6vlar8O3OQcZhmtnU1t3FLpkII7vfaE+rHaqU1mH1nePAt35iyyrxO9oquprxHuHfPfHkccZOJ8Zr4pJuJD8H4Ndq/G7dSBHUemEW17TVsY3AT+FhCatOnBsf9iF/o0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=boLirXae; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ubl+yH6s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705A11F000E9;
-	Tue, 21 Jul 2026 15:50:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boLirXae"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 195121F000E9;
+	Tue, 21 Jul 2026 15:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784649033;
-	bh=svWx2XfZuXq0lZMnoWxGG3KkCVwc1691Ynr0HL8mH7A=;
+	s=korg; t=1784649036;
+	bh=4WZ6MpriXiY4QcknE7Ioi2fNqtX/g1Soj5SMa4U+5bA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ubl+yH6sZ8AL8yGPmwohCqfzZ5NIw1xsAiEdRHT3uvi/Tb7tdOnLCOwhkx8IIec5o
-	 tf+aosx89NBqXhOur34ZTXj5P6ZWxTHpFdJXmM8ve6W80yuPUqnF8YOEnbK7fwk5YL
-	 Arf2Vux2Qj0GSEEbvAMTqF1enxFDTx9LZpgmdQ7Q=
+	b=boLirXae8Y/kLHCuKdMa+VJGrWUcrotI9SSwexLleb2VfsaplzmX4/tcT8E8MDt9J
+	 uHloQ3NlsANbrM5u5FNJ978fmjZUc86+LNsY51CURFiiP75FMpjofg5Qlp/TRkeCbw
+	 NSaeL0rblnWhH0SqgA0kEDlpg/5E6icHFQzIW2C0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
-	Vishal Verma <vishal.l.verma@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
+	Oskar Gerlicz Kowalczuk <oskar@gerlicz.space>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0426/2077] nvdimm/btt: Handle preemption in BTT lane acquisition
-Date: Tue, 21 Jul 2026 17:01:39 +0200
-Message-ID: <20260721152602.789190914@linuxfoundation.org>
+Subject: [PATCH 7.1 0409/2077] liveupdate: block session mutations during reboot
+Date: Tue, 21 Jul 2026 17:01:22 +0200
+Message-ID: <20260721152602.379416613@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -53,214 +53,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alison Schofield <alison.schofield@intel.com>
+From: Pasha Tatashin <pasha.tatashin@soleen.com>
 
-[ Upstream commit 8d4b989d9c9afe5f185aa5853b666fc4617afe9e ]
+[ Upstream commit bb1328be35bf43c88288c5c31ceb45181b574c0c ]
 
-BTT lanes serialize access to per-lane metadata and workspace state
-during BTT I/O. The btt-check unit test reports data mismatches during
-BTT writes due to a race in lane acquisition that can lead to silent
-data corruption.
+During the reboot() syscall, user processes may still be running
+concurrently and attempting to mutate sessions (e.g., creating,
+retrieving, or releasing sessions). To prevent this, introduce
+luo_session_serialize_rwsem to synchronize mutations with the
+serialization process.
 
-The existing lane model uses a spinlock together with a per-CPU
-recursion count. That recursion model stopped being valid after BTT
-lanes became preemptible: another task can run on the same CPU,
-observe a non-zero recursion count, bypass locking, and use the same
-lane concurrently.
+All session mutation operations (create, retrieve, release, ioctl) take
+the read lock. The serialization process (luo_session_serialize) takes
+the write lock and holds it indefinitely on success. This effectively
+freezes the LUO session subsystem during the transition to the new
+kernel. If serialization fails, the lock is released to allow recovery.
 
-BTT lanes are also held across arena_write_bytes() calls. That path
-reaches nsio_rw_bytes(), which flushes writes with nvdimm_flush().
-Some provider flush callbacks can sleep, making a spinlock the wrong
-primitive for the lane lifetime.
-
-Replace the spinlock-based recursion model with a dynamically
-allocated per-lane mutex array and take the lane lock
-unconditionally.
-
-Add might_sleep() to catch any future atomic-context caller.
-
-Found with the ndctl unit test btt-check.sh.
-
-Fixes: 36c75ce3bd29 ("nd_btt: Make BTT lanes preemptible")
-Assisted-by: Claude-Sonnet:4.5
-Tested-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Reviewed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Reviewed-by: Vishal Verma <vishal.l.verma@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260528021625.618462-1-alison.schofield@intel.com
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Fixes: 0153094d03df ("liveupdate: luo_session: add sessions support")
+Reported-by: Oskar Gerlicz Kowalczuk <oskar@gerlicz.space>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Signed-off-by: Pasha Tatashin <pasha.tatashin@soleen.com>
+Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
+Link: https://patch.msgid.link/20260527202737.1345192-4-pasha.tatashin@soleen.com
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/driver-api/nvdimm/btt.rst |  5 +-
- drivers/nvdimm/nd.h                     | 11 ++---
- drivers/nvdimm/region_devs.c            | 66 +++++++++----------------
- 3 files changed, 29 insertions(+), 53 deletions(-)
+ kernel/liveupdate/luo_session.c | 51 +++++++++++++++++++++++++++++++--
+ 1 file changed, 48 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/driver-api/nvdimm/btt.rst b/Documentation/driver-api/nvdimm/btt.rst
-index 2d8269f834bd60..d29fab95f14942 100644
---- a/Documentation/driver-api/nvdimm/btt.rst
-+++ b/Documentation/driver-api/nvdimm/btt.rst
-@@ -161,9 +161,8 @@ process::
- 	nlanes = min(nfree, num_cpus)
- 
- A lane number is obtained at the start of any IO, and is used for indexing into
--all the on-disk and in-memory data structures for the duration of the IO. If
--there are more CPUs than the max number of available lanes, than lanes are
--protected by spinlocks.
-+all the on-disk and in-memory data structures for the duration of the IO. Lanes
-+are protected by mutexes.
- 
- 
- d. In-memory data structure: Read Tracking Table (RTT)
-diff --git a/drivers/nvdimm/nd.h b/drivers/nvdimm/nd.h
-index b199eea3260ef6..197e5368c0a46b 100644
---- a/drivers/nvdimm/nd.h
-+++ b/drivers/nvdimm/nd.h
-@@ -365,11 +365,6 @@ unsigned sizeof_namespace_label(struct nvdimm_drvdata *ndd);
- 	for (res = (ndd)->dpa.child, next = res ? res->sibling : NULL; \
- 			res; res = next, next = next ? next->sibling : NULL)
- 
--struct nd_percpu_lane {
--	int count;
--	spinlock_t lock;
--};
--
- enum nd_label_flags {
- 	ND_LABEL_REAP,
- };
-@@ -400,6 +395,10 @@ struct nd_mapping {
- 	struct nvdimm_drvdata *ndd;
- };
- 
-+struct nd_lane {
-+	struct mutex lock; /* serialize lane access */
-+} ____cacheline_aligned_in_smp;
-+
- struct nd_region {
- 	struct device dev;
- 	struct ida ns_ida;
-@@ -420,7 +419,7 @@ struct nd_region {
- 	struct kernfs_node *bb_state;
- 	struct badblocks bb;
- 	struct nd_interleave_set *nd_set;
--	struct nd_percpu_lane __percpu *lane;
-+	struct nd_lane *lane;
- 	int (*flush)(struct nd_region *nd_region, struct bio *bio);
- 	struct nd_mapping mapping[] __counted_by(ndr_mappings);
- };
-diff --git a/drivers/nvdimm/region_devs.c b/drivers/nvdimm/region_devs.c
-index e35c2e18518f0c..5e079d61cbaa32 100644
---- a/drivers/nvdimm/region_devs.c
-+++ b/drivers/nvdimm/region_devs.c
-@@ -192,7 +192,9 @@ static void nd_region_release(struct device *dev)
- 
- 		put_device(&nvdimm->dev);
- 	}
--	free_percpu(nd_region->lane);
-+	for (i = 0; i < nd_region->num_lanes; i++)
-+		mutex_destroy(&nd_region->lane[i].lock);
-+	kfree(nd_region->lane);
- 	if (!test_bit(ND_REGION_CXL, &nd_region->flags))
- 		memregion_free(nd_region->id);
- 	kfree(nd_region);
-@@ -904,52 +906,30 @@ void nd_region_advance_seeds(struct nd_region *nd_region, struct device *dev)
-  * nd_region_acquire_lane - allocate and lock a lane
-  * @nd_region: region id and number of lanes possible
-  *
-- * A lane correlates to a BLK-data-window and/or a log slot in the BTT.
-- * We optimize for the common case where there are 256 lanes, one
-- * per-cpu.  For larger systems we need to lock to share lanes.  For now
-- * this implementation assumes the cost of maintaining an allocator for
-- * free lanes is on the order of the lock hold time, so it implements a
-- * static lane = cpu % num_lanes mapping.
-+ * A lane correlates to a log slot in the BTT. Lanes are shared across
-+ * CPUs using a static lane = cpu % num_lanes mapping, with a per-lane
-+ * mutex to serialize access.
-  *
-- * In the case of a BTT instance on top of a BLK namespace a lane may be
-- * acquired recursively.  We lock on the first instance.
-- *
-- * In the case of a BTT instance on top of PMEM, we only acquire a lane
-- * for the BTT metadata updates.
-+ * Callers must be in sleepable context. The only in-tree caller is
-+ * BTT's ->submit_bio handler (btt_read_pg / btt_write_pg).
+diff --git a/kernel/liveupdate/luo_session.c b/kernel/liveupdate/luo_session.c
+index 85af0963d66ae0..5486e834c4514c 100644
+--- a/kernel/liveupdate/luo_session.c
++++ b/kernel/liveupdate/luo_session.c
+@@ -46,6 +46,38 @@
+  * 4.  Retrieval: A userspace agent in the new kernel can then call
+  *     `luo_session_retrieve()` with a session name to get a new file
+  *     descriptor and access the preserved state.
++ *
++ * Locking:
++ *
++ * The LUO session subsystem uses a three-tier locking hierarchy to ensure thread
++ * safety and prevent deadlocks during concurrent session mutations and kexec
++ * serialization:
++ *
++ * 1. `luo_session_serialize_rwsem` (global rwsem):
++ *    Protects session mutations (creation, retrieval, release, and ioctls)
++ *    against the serialization process during reboot.
++ *
++ *    - Readers: Taken by any path modifying or accessing session state (e.g.,
++ *      `luo_session_create()`, `luo_session_retrieve()`, `luo_session_release()`,
++ *      and `luo_session_ioctl()`).
++ *    - Writer: Taken by the serialization process (`luo_session_serialize()`)
++ *      during reboot. On success, the write lock is held indefinitely to freeze
++ *      the subsystem. On failure, it is released to allow recovery.
++ *
++ * 2. `luo_session_header->rwsem` (per-list rwsem):
++ *    Synchronizes list-level operations for the incoming and outgoing session headers.
++ *
++ *    - Writer: Taken during list mutation operations (inserting or removing a
++ *      session from the list).
++ *    - Reader: Taken when traversing the list (e.g., retrieving a session by name).
++ *
++ * 3. `luo_session->mutex` (per-session mutex):
++ *    Protects the internal state and file sets of an individual session. It is
++ *    acquired during per-session operations such as preserving, retrieving,
++ *    or freezing files.
++ *
++ * Lock Hierarchy:
++ *   `luo_session_serialize_rwsem` -> `luo_session_header->rwsem` -> `luo_session->mutex`
   */
- unsigned int nd_region_acquire_lane(struct nd_region *nd_region)
-+	__acquires(&nd_region->lane[lane].lock)
- {
--	unsigned int cpu, lane;
--
--	migrate_disable();
--	cpu = smp_processor_id();
--	if (nd_region->num_lanes < nr_cpu_ids) {
--		struct nd_percpu_lane *ndl_lock, *ndl_count;
-+	unsigned int lane;
  
--		lane = cpu % nd_region->num_lanes;
--		ndl_count = per_cpu_ptr(nd_region->lane, cpu);
--		ndl_lock = per_cpu_ptr(nd_region->lane, lane);
--		if (ndl_count->count++ == 0)
--			spin_lock(&ndl_lock->lock);
--	} else
--		lane = cpu;
-+	might_sleep();
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+@@ -75,6 +107,8 @@
+ 		sizeof(struct luo_session_header_ser)) /		\
+ 		sizeof(struct luo_session_ser))
  
-+	lane = raw_smp_processor_id() % nd_region->num_lanes;
-+	mutex_lock(&nd_region->lane[lane].lock);
- 	return lane;
++static DECLARE_RWSEM(luo_session_serialize_rwsem);
++
+ /**
+  * struct luo_session_header - Header struct for managing LUO sessions.
+  * @count:      The number of sessions currently tracked in the @list.
+@@ -205,6 +239,7 @@ static int luo_session_release(struct inode *inodep, struct file *filep)
+ 	struct luo_session *session = filep->private_data;
+ 	struct luo_session_header *sh;
+ 
++	guard(rwsem_read)(&luo_session_serialize_rwsem);
+ 	/* If retrieved is set, it means this session is from incoming list */
+ 	if (session->retrieved) {
+ 		int err = luo_session_finish_one(session);
+@@ -354,6 +389,7 @@ static long luo_session_ioctl(struct file *filep, unsigned int cmd,
+ 	if (ret)
+ 		return ret;
+ 
++	guard(rwsem_read)(&luo_session_serialize_rwsem);
+ 	return op->execute(session, &ucmd);
  }
- EXPORT_SYMBOL(nd_region_acquire_lane);
  
- void nd_region_release_lane(struct nd_region *nd_region, unsigned int lane)
-+	__releases(&nd_region->lane[lane].lock)
- {
--	if (nd_region->num_lanes < nr_cpu_ids) {
--		unsigned int cpu = smp_processor_id();
--		struct nd_percpu_lane *ndl_lock, *ndl_count;
--
--		ndl_count = per_cpu_ptr(nd_region->lane, cpu);
--		ndl_lock = per_cpu_ptr(nd_region->lane, lane);
--		if (--ndl_count->count == 0)
--			spin_unlock(&ndl_lock->lock);
--	}
--	migrate_enable();
-+	mutex_unlock(&nd_region->lane[lane].lock);
+@@ -393,14 +429,17 @@ int luo_session_create(const char *name, struct file **filep)
+ 	if (IS_ERR(session))
+ 		return PTR_ERR(session);
+ 
++	down_read(&luo_session_serialize_rwsem);
+ 	err = luo_session_insert(&luo_session_global.outgoing, session);
+ 	if (err)
+ 		goto err_free;
+ 
+-	scoped_guard(mutex, &session->mutex)
+-		err = luo_session_getfile(session, filep);
++	mutex_lock(&session->mutex);
++	err = luo_session_getfile(session, filep);
++	mutex_unlock(&session->mutex);
+ 	if (err)
+ 		goto err_remove;
++	up_read(&luo_session_serialize_rwsem);
+ 
+ 	return 0;
+ 
+@@ -408,6 +447,7 @@ int luo_session_create(const char *name, struct file **filep)
+ 	luo_session_remove(&luo_session_global.outgoing, session);
+ err_free:
+ 	luo_session_free(session);
++	up_read(&luo_session_serialize_rwsem);
+ 
+ 	return err;
  }
- EXPORT_SYMBOL(nd_region_release_lane);
+@@ -419,6 +459,7 @@ int luo_session_retrieve(const char *name, struct file **filep)
+ 	struct luo_session *it;
+ 	int err;
  
-@@ -1019,17 +999,16 @@ static struct nd_region *nd_region_create(struct nvdimm_bus *nvdimm_bus,
- 			goto err_id;
++	guard(rwsem_read)(&luo_session_serialize_rwsem);
+ 	guard(rwsem_read)(&sh->rwsem);
+ 	list_for_each_entry(it, &sh->list, list) {
+ 		if (!strncmp(it->name, name, sizeof(it->name))) {
+@@ -591,7 +632,8 @@ int luo_session_serialize(void)
+ 	int i = 0;
+ 	int err;
+ 
+-	guard(rwsem_write)(&sh->rwsem);
++	down_write(&luo_session_serialize_rwsem);
++	down_write(&sh->rwsem);
+ 	list_for_each_entry(session, &sh->list, list) {
+ 		err = luo_session_freeze_one(session, &sh->ser[i]);
+ 		if (err)
+@@ -602,6 +644,7 @@ int luo_session_serialize(void)
+ 		i++;
  	}
+ 	sh->header_ser->count = sh->count;
++	up_write(&sh->rwsem);
  
--	nd_region->lane = alloc_percpu(struct nd_percpu_lane);
-+	nd_region->num_lanes = ndr_desc->num_lanes;
-+	if (!nd_region->num_lanes)
-+		goto err_percpu;
-+	nd_region->lane = kcalloc(nd_region->num_lanes,
-+				  sizeof(*nd_region->lane), GFP_KERNEL);
- 	if (!nd_region->lane)
- 		goto err_percpu;
+ 	return 0;
  
--        for (i = 0; i < nr_cpu_ids; i++) {
--		struct nd_percpu_lane *ndl;
--
--		ndl = per_cpu_ptr(nd_region->lane, i);
--		spin_lock_init(&ndl->lock);
--		ndl->count = 0;
--	}
-+	for (i = 0; i < nd_region->num_lanes; i++)
-+		mutex_init(&nd_region->lane[i].lock);
- 
- 	for (i = 0; i < ndr_desc->num_mappings; i++) {
- 		struct nd_mapping_desc *mapping = &ndr_desc->mapping[i];
-@@ -1046,7 +1025,6 @@ static struct nd_region *nd_region_create(struct nvdimm_bus *nvdimm_bus,
+@@ -611,6 +654,8 @@ int luo_session_serialize(void)
+ 		luo_session_unfreeze_one(session, &sh->ser[i]);
+ 		memset(sh->ser[i].name, 0, sizeof(sh->ser[i].name));
  	}
- 	nd_region->provider_data = ndr_desc->provider_data;
- 	nd_region->nd_set = ndr_desc->nd_set;
--	nd_region->num_lanes = ndr_desc->num_lanes;
- 	nd_region->flags = ndr_desc->flags;
- 	nd_region->ro = ro;
- 	nd_region->numa_node = ndr_desc->numa_node;
++	up_write(&sh->rwsem);
++	up_write(&luo_session_serialize_rwsem);
+ 
+ 	return err;
+ }
 -- 
 2.53.0
 
