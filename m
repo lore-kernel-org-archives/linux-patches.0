@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3642F44AB6E;
-	Tue, 21 Jul 2026 21:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB0C44AB9E;
+	Tue, 21 Jul 2026 21:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668553; cv=none; b=OfLNEvGQTye2KmIJ/0T0CYNrovYSX4ZccmbA6n/ondjW8+u51Mx7GMopKJRbey4ud0bZIAP/FS0G47JbsZ5lT4ro7f7V9YRD8Iau4yhToxG1chsMbtclP6NoI1YivauFWIMxOTulZwXfSHF6vLQtcXXi6aO+puPyfrwJ/VeUmF0=
+	t=1784668555; cv=none; b=mSt1Jrvz0sjCWXj17mg5KMnuiH7jMdqOivHKXlfmjA2hihhnL65XhWeUdK46gevyb/HTmMk54f4sBYL97DnOmIvqlsK/R0FvXuSYTfnf/06Hb8sz3CqZ/zk4EiTwruSSjK8n6FaTb8di/EHXPdTcBkJvFmCPv10jUWkvdmkuEGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668553; c=relaxed/simple;
-	bh=7xH157TTdgSzwke5lFAKNUO6wGN7U2JMfOwYCtmplok=;
+	s=arc-20240116; t=1784668555; c=relaxed/simple;
+	bh=bfnra6/6pCscfO06UYP7uDqVr18khB5zvbjJrBosZ2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uavqpXYFQXb0/t09SudDbxHmSqyD/EZsB7mMlpicAVN1Y/U1nVRw0vFjdweGQilLerLfB/VncOj82d4CAnGvBAi+0xRIL6GRrLI1m3iExuxDWArYI27Nb2feo06IEVkv4yTAz9sguBlHXwKeOVZLnDNmKkso0n5Tu6w1pU6dfSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCrtCm9L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k7TW9RpbbLMvRj0JsGesGZHl7AB/6Aw1ZLGsMeS/U18gMSy9fdbaw+QijZol5cfYei9Z/IMA1JZnEIkvIKhSt07/N7vAinPYc2pPBrHNWvKfSqiqSAFNjaSA0EByyOB9E1LMbeup+ViwMGnaiw6vhva7ZcamcLvFvOuyDxQGipY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjuSNMwp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCrtCm9L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF711F000E9;
-	Tue, 21 Jul 2026 21:15:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjuSNMwp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F8471F00A3A;
+	Tue, 21 Jul 2026 21:15:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668552;
-	bh=UfjHo/xDhiT64H/oZECF5YEdoCTto4/jalfTLCsPn0U=;
+	s=korg; t=1784668554;
+	bh=/BfMu+9Lm0vxjY8IN0PJqxHEN2Qi0zxi2QEaSqTwjZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lCrtCm9L6be/ZJ5rEX3ms/yr14A9AzDa2KUUs1VLRsrXLru8UIEPPbwJ1aO4e0O/D
-	 g0MGaRZYaPH2z4bIEF31NISbgO2B6i5D4tZD0sDSwwC5oE4kA+aXJbOCCxaJ0Sr7nA
-	 Urm/vu/tfIN6uGOroILGLBLcfJQ3RkzUQXz2admA=
+	b=gjuSNMwpQ2DCGmT15RNbH3aZzR3MO1YKzbkZHTrWaXcWxQhmrZ+4tGSMYW3OGRP9Y
+	 r+sH8ltBx3RV2maf9eQK2EoKvIAdLMk6wvHNqaFG3TvwgA0F2BZ/2cUiS+6FwSMw26
+	 pkcx4Bnh+F4OLLq1VMYXT7FIk4ure+py4oei0AAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Louvel <paul.louvel@bootlin.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.1 0219/1067] crypto: talitos - move code in current_desc_hdr() into a standalone function
-Date: Tue, 21 Jul 2026 17:13:40 +0200
-Message-ID: <20260721152429.496789873@linuxfoundation.org>
+	Carlos Song <carlos.song@nxp.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 0220/1067] spi: fsl-lpspi: replace dmaengine_terminate_all() with dmaengine_terminate_sync()
+Date: Tue, 21 Jul 2026 17:13:41 +0200
+Message-ID: <20260721152429.518296642@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,80 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Louvel <paul.louvel@bootlin.com>
+From: Carlos Song <carlos.song@nxp.com>
 
-commit f8713d9e6091755dd30f7f1cfa25f8440cddf81b upstream.
+commit e703ce47691b967fe9b4057fb1d062273211afa9 upstream.
 
-Previously added code in current_desc_hdr() in order to add support for
-searching an offending descriptor inside a descriptor chain.
+dmaengine_terminate_all() has been deprecated, so replace it with
+dmaengine_terminate_sync().
 
-Move that code into a standalone function to improve readability.
-
+Fixes: 09c04466ce7e ("spi: lpspi: add dma mode support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paul Louvel <paul.louvel@bootlin.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Link: https://patch.msgid.link/20260525062357.3191349-2-carlos.song@oss.nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/talitos.c |   35 +++++++++++++++++++----------------
- 1 file changed, 19 insertions(+), 16 deletions(-)
+ drivers/spi/spi-fsl-lpspi.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/drivers/crypto/talitos.c
-+++ b/drivers/crypto/talitos.c
-@@ -519,6 +519,24 @@ DEF_TALITOS2_DONE(ch0, TALITOS2_ISR_CH_0
- DEF_TALITOS2_DONE(ch0_2, TALITOS2_ISR_CH_0_2_DONE)
- DEF_TALITOS2_DONE(ch1_3, TALITOS2_ISR_CH_1_3_DONE)
+--- a/drivers/spi/spi-fsl-lpspi.c
++++ b/drivers/spi/spi-fsl-lpspi.c
+@@ -577,7 +577,7 @@ static int fsl_lpspi_dma_transfer(struct
+ 				tx->sgl, tx->nents, DMA_MEM_TO_DEV,
+ 				DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
+ 	if (!desc_tx) {
+-		dmaengine_terminate_all(controller->dma_tx);
++		dmaengine_terminate_sync(controller->dma_tx);
+ 		return -EINVAL;
+ 	}
  
-+static __be32 search_desc_hdr_in_request(struct talitos_request *request,
-+					 dma_addr_t cur_desc, bool is_sec1)
-+{
-+	struct talitos_edesc *edesc;
-+
-+	if (request->dma_desc == cur_desc) {
-+		return request->desc->hdr;
-+	} else if (is_sec1) {
-+		edesc = container_of(request->desc, struct talitos_edesc, desc);
-+		while (edesc->next_desc) {
-+			if (edesc->desc.next_desc == cpu_to_be32(cur_desc))
-+				return edesc->next_desc->desc.hdr1;
-+			edesc = edesc->next_desc;
-+		}
-+	}
-+	return 0;
-+}
-+
- /*
-  * locate current (offending) descriptor
-  */
-@@ -527,7 +545,6 @@ static __be32 current_desc_hdr(struct de
- 	struct talitos_private *priv = dev_get_drvdata(dev);
- 	bool is_sec1 = has_ftr_sec1(priv);
- 	struct talitos_request *request;
--	struct talitos_edesc *edesc;
- 	int tail, iter;
- 	dma_addr_t cur_desc;
- 	__be32 hdr = 0;
-@@ -545,21 +562,7 @@ static __be32 current_desc_hdr(struct de
- 	do {
- 		request = &priv->chan[ch].fifo[iter];
- 
--		if (request->dma_desc == cur_desc) {
--			hdr = request->desc->hdr;
--		} else if (is_sec1) {
--			edesc = container_of(request->desc,
--					     struct talitos_edesc, desc);
--			while (edesc->next_desc) {
--				if (edesc->desc.next_desc ==
--				    cpu_to_be32(cur_desc)) {
--					hdr = edesc->next_desc->desc.hdr1;
--					break;
--				}
--				edesc = edesc->next_desc;
--			}
--		}
--
-+		hdr = search_desc_hdr_in_request(request, cur_desc, is_sec1);
- 		if (hdr)
- 			break;
- 
+@@ -598,8 +598,8 @@ static int fsl_lpspi_dma_transfer(struct
+ 						      transfer_timeout);
+ 		if (!timeout) {
+ 			dev_err(fsl_lpspi->dev, "I/O Error in DMA TX\n");
+-			dmaengine_terminate_all(controller->dma_tx);
+-			dmaengine_terminate_all(controller->dma_rx);
++			dmaengine_terminate_sync(controller->dma_tx);
++			dmaengine_terminate_sync(controller->dma_rx);
+ 			fsl_lpspi_reset(fsl_lpspi);
+ 			return -ETIMEDOUT;
+ 		}
+@@ -608,8 +608,8 @@ static int fsl_lpspi_dma_transfer(struct
+ 						      transfer_timeout);
+ 		if (!timeout) {
+ 			dev_err(fsl_lpspi->dev, "I/O Error in DMA RX\n");
+-			dmaengine_terminate_all(controller->dma_tx);
+-			dmaengine_terminate_all(controller->dma_rx);
++			dmaengine_terminate_sync(controller->dma_tx);
++			dmaengine_terminate_sync(controller->dma_rx);
+ 			fsl_lpspi_reset(fsl_lpspi);
+ 			return -ETIMEDOUT;
+ 		}
+@@ -618,8 +618,8 @@ static int fsl_lpspi_dma_transfer(struct
+ 			fsl_lpspi->slave_aborted) {
+ 			dev_dbg(fsl_lpspi->dev,
+ 				"I/O Error in DMA TX interrupted\n");
+-			dmaengine_terminate_all(controller->dma_tx);
+-			dmaengine_terminate_all(controller->dma_rx);
++			dmaengine_terminate_sync(controller->dma_tx);
++			dmaengine_terminate_sync(controller->dma_rx);
+ 			fsl_lpspi_reset(fsl_lpspi);
+ 			return -EINTR;
+ 		}
+@@ -628,8 +628,8 @@ static int fsl_lpspi_dma_transfer(struct
+ 			fsl_lpspi->slave_aborted) {
+ 			dev_dbg(fsl_lpspi->dev,
+ 				"I/O Error in DMA RX interrupted\n");
+-			dmaengine_terminate_all(controller->dma_tx);
+-			dmaengine_terminate_all(controller->dma_rx);
++			dmaengine_terminate_sync(controller->dma_tx);
++			dmaengine_terminate_sync(controller->dma_rx);
+ 			fsl_lpspi_reset(fsl_lpspi);
+ 			return -EINTR;
+ 		}
 
 
