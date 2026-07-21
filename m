@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93007430CDC;
-	Tue, 21 Jul 2026 19:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35028284662;
+	Tue, 21 Jul 2026 19:46:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663190; cv=none; b=KxBkp3FPp7b7zcc6HjDzZXeNvpblDUpDGZHvRYI5aWLmi9j50PaDu4Dxlk5ujfhL6QBpglO1gpjT9Zb/7J6qSmvBXTqz55WVJBdFE2YSEjahmHutDH1vvJ96jqRS+eUSic0nMCE9tWIUd3qrvrOS5/fgXsvT5cO8RtTZxoFXPh8=
+	t=1784663193; cv=none; b=EOOVA7rbIM1oh6rOHzEUL+8XZEAynKEiCdjvP29Ltb9gs90ldcpGPZTzQJsttfQ62hXBxtRkW7u9dLLulbiiSmbvNvElbwrDLju1KssrzI1Yq3xoG3AAIqcwHI10/NsqhM4WFdC9aW1c/e7X65oMb7Zl1dBMu4DqGuZkJOy6YLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663190; c=relaxed/simple;
-	bh=+b9tPBTcyjDl+K8TDbJ8h3G9G/KxgB77IZUhfXgSBSk=;
+	s=arc-20240116; t=1784663193; c=relaxed/simple;
+	bh=UvU4xWSXNBotXFSfuO7YyWvSdmqcrw5m5reLbMq2uSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZcfB0HfiCAXuEGF1O/Iw/8Aevdnx7CzyHQejETCN0EAyXtWdgkg7gKF7Apa483KAIUugMBiV5xYxbp3Grn5sdJEuTCD4drzW6IRT9gLQfU4m08czxg2y5xmRXXPvf3fMxndNs4wbF17UwL7+bxEkat+vmJAJXh5YQx+ewLsMsC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nROdkAuR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AFVDqHrcc8FYQz97WBNdzL1HHhQ0O2XvhsBydYKxAkwZk4QfkFgrwz5EULM9yJ8WHqkLt2hg7vIc4hoWhhC9xAzp/glaj6sRqTHYAN0sKB7R5NBC10jze0/cVB6E2jYravDxAQQVGFRI2jwzNKWUMzT24hL+37xtI5x+6CFref0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zpLy0DsD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nROdkAuR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF24F1F000E9;
-	Tue, 21 Jul 2026 19:46:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zpLy0DsD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A3B71F000E9;
+	Tue, 21 Jul 2026 19:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663189;
-	bh=2tjIz61bL7t1ROpmeNWxvQAePT1/IsGxDRyf+Affy2w=;
+	s=korg; t=1784663192;
+	bh=Zf99ivg/WiSMES6HqFyBN6X3kkxj/w1d1GV6NtQqgzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nROdkAuRSylTqowbN3VQIS8KBmMd4qGI4+/WPLS/1+iJ6fhF5/2hCyGhOqQb9e/dc
-	 bRxYCkz1PZjfDPjVSq7I2rmN6yilGNq6/crkFwDEOfSXR6SkSJQARJElsnzn9oUiVO
-	 7LjUbVJLfe5W1OdjPr1qLmOzd97yAZdBaKMWtS2I=
+	b=zpLy0DsD4vRacA4kHqr7rtk17pk4xPDQOdtPhHQmMc/tLFB30HRBA7Tk1YSKYk4UK
+	 hVL18zTMKTQ0rdw72i/OjnPvGzB29vf2U65O3pijgdUpx0XbSc8JARd+QCM4yru3mS
+	 nshpuEyKf2YAenkWDdjyqPRPRj0gOEy1efRfulJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0728/1276] afs: Fix double netfs initialisation in afs_root_iget()
-Date: Tue, 21 Jul 2026 17:19:31 +0200
-Message-ID: <20260721152502.375295712@linuxfoundation.org>
+Subject: [PATCH 6.12 0693/1276] gpio: htc-egpio: use managed gpiochip registration
+Date: Tue, 21 Jul 2026 17:18:56 +0200
+Message-ID: <20260721152501.604511676@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,37 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 733a984a4ee7345325e47efb505eebfe67b299bc ]
+[ Upstream commit 17326db5f0ab4ec1901e75d052b5ebef486b467f ]
 
-Fix afs_root_iget() to leave initialisation of the netfs_inode part of the
-afs_vnode to afs_inode_init_from_status().
+egpio_probe() registers each nested gpio_chip with gpiochip_add_data()
+but ignores the return value. If one registration fails, probe still
+returns success even though one of the chips was not published to
+gpiolib.
 
-Fixes: bc899ee1c898 ("netfs: Add a netfs inode context")
-Closes: https://sashiko.dev/#/patchset/20260609081738.770127-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260622090856.2746629-5-dhowells@redhat.com
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Use devm_gpiochip_add_data() and fail probe if any chip registration
+fails. This lets devres unwind already registered chips and prevents
+the driver from publishing a partially initialized device.
+
+Fixes: a1635b8fe59d ("[ARM] 4947/1: htc-egpio, a driver for GPIO/IRQ expanders with fixed input/output pins")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260624131828.94139-1-pengpeng@iscas.ac.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/inode.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpio/gpio-htc-egpio.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/afs/inode.c b/fs/afs/inode.c
-index a95e77670b4945..c4f92aaa252759 100644
---- a/fs/afs/inode.c
-+++ b/fs/afs/inode.c
-@@ -546,7 +546,6 @@ struct inode *afs_root_iget(struct super_block *sb, struct key *key)
+diff --git a/drivers/gpio/gpio-htc-egpio.c b/drivers/gpio/gpio-htc-egpio.c
+index a40bd56673fe36..5f12ce9ac28caf 100644
+--- a/drivers/gpio/gpio-htc-egpio.c
++++ b/drivers/gpio/gpio-htc-egpio.c
+@@ -268,6 +268,7 @@ static int __init egpio_probe(struct platform_device *pdev)
+ 	struct gpio_chip  *chip;
+ 	unsigned int      irq, irq_end;
+ 	int               i;
++	int               ret;
  
- 	vnode = AFS_FS_I(inode);
- 	vnode->cb_v_check = atomic_read(&as->volume->cb_v_break);
--	afs_set_netfs_context(vnode);
+ 	/* Initialize ei data structure. */
+ 	ei = devm_kzalloc(&pdev->dev, sizeof(*ei), GFP_KERNEL);
+@@ -331,7 +332,10 @@ static int __init egpio_probe(struct platform_device *pdev)
+ 		chip->base            = pdata->chip[i].gpio_base;
+ 		chip->ngpio           = pdata->chip[i].num_gpios;
  
- 	op = afs_alloc_operation(key, as->volume);
- 	if (IS_ERR(op)) {
+-		gpiochip_add_data(chip, &ei->chip[i]);
++		ret = devm_gpiochip_add_data(&pdev->dev, chip, &ei->chip[i]);
++		if (ret)
++			return dev_err_probe(&pdev->dev, ret,
++					     "failed to register gpiochip %d\n", i);
+ 	}
+ 
+ 	/* Set initial pin values */
 -- 
 2.53.0
 
