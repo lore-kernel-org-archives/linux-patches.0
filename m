@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB9531F99C;
-	Tue, 21 Jul 2026 15:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5338B46A5E3;
+	Tue, 21 Jul 2026 15:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648861; cv=none; b=VJEjYOZBrlLw54AmrcTjt8oU7knzEe/lKuGbQTrKkrhHx2tEBhJ495QX4QnJhRWu3XFwcUmbzRpdRaI8sg8bn8/u/ghYITtx5PsUL36P08ZQOESeIAUCOEeG7fz+HzmdvIGahn4cRQhEbBPW43hITcnJoay/2gW5/KXSeYGddCY=
+	t=1784648864; cv=none; b=tRzju0n9oqmPsXkhtHvvWN3IsPfbzBwbXoyKFw1bpxDpeAugTSdDCganwII+ocNWlSH+hG3T0FVI50f6vNONStDBOZIoSQiDoF7K6H/ddRh+ttCxtZ2zR6mpJePOpt0myiUsy1N28Co5lwsEK53zgnsHjwmVpvzhaTSPJEUfU68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648861; c=relaxed/simple;
-	bh=x0YSP530D8erCjH0lO6qZTQdSTEvu4FadbuHMk5LUhs=;
+	s=arc-20240116; t=1784648864; c=relaxed/simple;
+	bh=jcBlLR46SVZDR6AXPaWoL9ga/QK8njxp7ATHhiXrf0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gw5D7/w/ER/Axv6DI7M0I7WYKhpqQ50/ieyjJo3uY+zbX2UQNP56gkb8SC7B9R/mnisEqoT3CV4IuBNG3JbEj/HBDve5M+Muui4Wr0UFo/8kmEYmf5vmCL4uMUttsx933Xpb/FKcH4Mfiw6eZzOPEn7orwDssMJOQkD6f/l9I0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXWqVHjU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JKJc/TKyv8WmdUryZl9IZ3FgYn5AjrOS2MZns6GAdpU/cWqxWhrRXqGZrGPMCR/99lwVFmx+1u0hp+12hgtlI3HXRwbk+SqxkAsfH82P0TtBz+RAhx3UVOU6CxgN5Xpg6M48jgctNrCmQsCYx6h3MWRRuzeHJAqGWurAU+08h2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7FS1wqV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXWqVHjU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DC71F000E9;
-	Tue, 21 Jul 2026 15:47:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7FS1wqV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9FA1F000E9;
+	Tue, 21 Jul 2026 15:47:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648860;
-	bh=ZoVDDuD0KN+Ve5PtjjBokWz+4y6wXNq8n3T6FivnUOE=;
+	s=korg; t=1784648863;
+	bh=LheUsqD5113vB69QVF8oQYbgwUocHuG096ua5XBVb18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RXWqVHjUPctf0AsSSw8qKB+dL9oBK21V9XmPoR7otSdZ025ek5Lr2582a9QJtqSX/
-	 M0Y5jtakLuClIVZ1xaJ4T5tX1EO9eoyLly3dAc7N0Gf1N+s5IarwO+LRg0RBoDcgSJ
-	 PH2/Os45J6jElvrJgUn3tTMGSVzRU1kNtrZDjn6Q=
+	b=C7FS1wqVPpG3E/iOPZG/s95ilN+o/ZRPYtcR4LK/N82NM//s9gcrvySRYNyKwaUSC
+	 o8Syzrr2nJ+ZML+ujX6zP77DS2W+3hojDr8aouO2BkUs16jPXeR3kny6pZ9LW3uhpQ
+	 yCzzijHN8b7myJx+iU36rHBskh3ZoGa/tF2fAoRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Ben Cheatham <benjamin.cheatham@amd.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vishal Verma <vishal.l.verma@intel.com>,
+	Josh Law <objecting@objecting.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0357/2077] dax/kmem: account for partial discontiguous resource upon removal
-Date: Tue, 21 Jul 2026 17:00:30 +0200
-Message-ID: <20260721152601.109528523@linuxfoundation.org>
+Subject: [PATCH 7.1 0358/2077] lib/base64: validate before writing in decode tail path
+Date: Tue, 21 Jul 2026 17:00:31 +0200
+Message-ID: <20260721152601.133476204@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -57,57 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Josh Law <objecting@objecting.org>
 
-[ Upstream commit 8aa442cfce79e2d69e72fc8e0c0864ac2971149d ]
+[ Upstream commit cae29a5787e38ce7ec7727a87ac7e393a85cb1ef ]
 
-When dev_dax_kmem_probe() partially succeeds (at least one range is
-mapped) but a subsequent range fails request_mem_region() or
-add_memory_driver_managed(), the probe silently continues, ultimately
-returning success, but with the corresponding range resource NULL'ed out.
+Patch series "lib/base64: decode fixes", v2.
 
-dev_dax_kmem_remove() iterates over all dax_device ranges regardless of if
-the underlying resource exists.  When remove_memory() is called later, it
-returns 0 because the memory was never added which causes
-dev_dax_kmem_remove() to incorrectly assume the (nonexistent) resource can
-be removed and attempts cleanup on a NULL pointer.
+Two small fixes for lib/base64.c:
 
-Fix this by skipping these ranges altogether, noting that these cases are
-considered success, such that the cleanup is still reached when all
-actually-added ranges are successfully removed.
+1. base64_decode() writes a decoded byte to the output buffer before
+   validating the input in the trailing-bytes path. Move the validity
+   checks before any writes so dst is untouched on invalid input.
 
-Link: https://lore.kernel.org/20260223201516.1517657-1-dave@stgolabs.net
-Fixes: 60e93dc097f7 ("device-dax: add dis-contiguous resource support")
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Ben Cheatham <benjamin.cheatham@amd.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Dave Jiang <dave.jiang@intel.com>
-Cc: Vishal Verma <vishal.l.verma@intel.com>
+2. The @padding kernel-doc for base64_decode() was copy-pasted from
+   base64_encode() and describes the wrong direction.
+
+This patch (of 2):
+
+The trailing-bytes path in base64_decode() writes a decoded byte to the
+output buffer before checking whether the input characters are valid.  If
+the input is malformed, garbage is written to dst before the function
+returns -1.
+
+Move the validity checks before any writes so the output buffer is left
+untouched on invalid input.
+
+Link: https://lore.kernel.org/20260324223210.47676-1-objecting@objecting.org
+Link: https://lore.kernel.org/20260324223210.47676-2-objecting@objecting.org
+Fixes: 9c7d3cf94d33 ("lib/base64: rework encode/decode for speed and stricter validation")
+Signed-off-by: Josh Law <objecting@objecting.org>
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dax/kmem.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ lib/base64.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dax/kmem.c b/drivers/dax/kmem.c
-index 2cc8749bc8711b..a18e2b968e4dae 100644
---- a/drivers/dax/kmem.c
-+++ b/drivers/dax/kmem.c
-@@ -227,6 +227,12 @@ static void dev_dax_kmem_remove(struct dev_dax *dev_dax)
- 		if (rc)
- 			continue;
+diff --git a/lib/base64.c b/lib/base64.c
+index 41961a444028b6..20dacee25f6508 100644
+--- a/lib/base64.c
++++ b/lib/base64.c
+@@ -168,15 +168,16 @@ int base64_decode(const char *src, int srclen, u8 *dst, bool padding, enum base6
+ 		return -1;
  
-+		/* range was never added during probe */
-+		if (!data->res[i]) {
-+			success++;
-+			continue;
-+		}
-+
- 		rc = remove_memory(range.start, range_len(&range));
- 		if (rc == 0) {
- 			remove_resource(data->res[i]);
+ 	val = (base64_rev_tables[s[0]] << 12) | (base64_rev_tables[s[1]] << 6);
+-	*bp++ = val >> 10;
+ 
+ 	if (srclen == 2) {
+ 		if (val & 0x800003ff)
+ 			return -1;
++		*bp++ = val >> 10;
+ 	} else {
+ 		val |= base64_rev_tables[s[2]];
+ 		if (val & 0x80000003)
+ 			return -1;
++		*bp++ = val >> 10;
+ 		*bp++ = val >> 2;
+ 	}
+ 	return bp - dst;
 -- 
 2.53.0
 
