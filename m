@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2478446AA92;
-	Tue, 21 Jul 2026 15:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE81046AA82;
+	Tue, 21 Jul 2026 15:39:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648377; cv=none; b=ZOcl/MVb8HjESkekjWp69QKlkqrzme+6FV4Foghf3GcvNAOjBnWfJz3+jg248g/wDl9dpyHxN9AvbrTUiNfUs9exeKCsRef1YM/wbal63SaHoUiyGNYueMV94FDDyi9Pv0q4mFkUk7EBWoFaV2dU6WaSPKW5+nQ+oVrBuR7f+w0=
+	t=1784648379; cv=none; b=r99HnaELHLw79m6nER/0wW1kURVMwROtRyUzylhmmr/JAZBYLJbEGWPuZkZJvPjufKhoOTNvLr47kSLn1Vi/UxMiSKdZlqzdYd2DzQGo+81ESdNDE5Ozcut3v4aWJmOTHCmxSn+nDOSR9MepV3RCyj8WLMEhJH+rC8nz7jGkyrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648377; c=relaxed/simple;
-	bh=Yq7PIXKFH1w8hW9NkeEiUiCvHLCO2OhBSuTX8IIRi0A=;
+	s=arc-20240116; t=1784648379; c=relaxed/simple;
+	bh=zJp75cExAj1shsL3fCTCDc3A4EZG4O8zuoy//52YLIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=npbFDihMsUJ6l1cd6dgvqlWEcNEmQPT/WmnVXNoBtu4pfnijl/wm71zBfr3Uq1cJJ4wSqcn2al4aMmjlh2EzWOnz8LOYuDBY1TziNO42cnIHlVgdTWUyb066i9rYElw8O70zmz8K11H2B7y3lp5KueAFujFf1hGxk01D9l5JHdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGyEBFgC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FzKeTp7o6XloIqOXlJyQ+zBgCpYZ8cqDN+Q27InZHVxV8QKJBq9Wecga7+20mq2GMpuSMR07iUoKnEEZidJM7INtVJw5WXcLSHbDlNLIrz6yiNixK8WWTIql+Seh3EvVhyEvXAfMgFMSdDBcs2CGb0dN3fcDRPpiacn2hA3C6N4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFZzBEYl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGyEBFgC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2EB1F000E9;
-	Tue, 21 Jul 2026 15:39:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFZzBEYl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05B51F000E9;
+	Tue, 21 Jul 2026 15:39:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648375;
-	bh=QPk8SUNt00gkvPDtKpC8rvcQdFKrVoY6ZtwN6h0BNVc=;
+	s=korg; t=1784648378;
+	bh=qSyBUqzAcVv+2y5rGqo9lcUrfJzB4dD5JVuDr/VrNXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GGyEBFgCvovo2BqfbHEq/emkSS4Pg/Y6Xybqe3TjrRmP2YAoWio9kp/xSO7c7/W8k
-	 1S+dOiIXvXYQibAg82Y81tNVY+65DNDrdfbDouGVFBrh11Me5klxXVPPm5DNWdIaV1
-	 EcIq93xmaqo5b4wybEkQzCsmM/1Ywh4OdBYLUijg=
+	b=dFZzBEYlunzgjebi21V7IkEJk6Wbmwc+7XF3bpPQDsuuD15FBK2M9knQWkoNuuF4y
+	 wmreKkj93c2dTHSor9GzeYhkjegSh7aw+FdQPPWqLQIpT3HQjZs2Xoa1+NA6irNZK4
+	 SfckYHUoYK9JG6bR/IMBHZaRCh23AIuuzEGc1R7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Damian Muszynski <damian.muszynski@intel.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0174/2077] media: qcom: camss: vfe: fix PIX subdev naming on VFE lite
-Date: Tue, 21 Jul 2026 16:57:27 +0200
-Message-ID: <20260721152556.789845338@linuxfoundation.org>
+Subject: [PATCH 7.1 0133/2077] crypto: qat - fix heartbeat error injection
+Date: Tue, 21 Jul 2026 16:56:46 +0200
+Message-ID: <20260721152555.830127105@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,39 +53,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+From: Damian Muszynski <damian.muszynski@intel.com>
 
-[ Upstream commit c97e797a64cdfe4acecff831b4285418d2815893 ]
+[ Upstream commit 2e96024632b386c86860aa78639940fc96d6fcc9 ]
 
-VFE lite hardware does not provide a functional PIX path, but after
-the per sub-device type resource changes the PIX subdev name is still
-assigned unconditionally.
+The current implementation of the heartbeat error injection uses
+adf_disable_arb_thd() to stop a specific accelerator engine thread
+from processing requests. This does not reliably prevent the device
+from generating responses.
 
-Only assign the PIX subdev name on non-lite VFE variants to avoid
-exposing a misleading device name.
+Fix the error injection by disabling the device arbiter through
+exit_arb() instead. This properly simulates a device failure by
+stopping all arbitration, which results in missing responses for
+sent requests.
 
-Fixes: ae44829a4a97 ("media: qcom: camss: Add per sub-device type resources")
-Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Remove the now unused adf_disable_arb_thd() function and its
+declaration.
+
+Fixes: e2b67859ab6e ("crypto: qat - add heartbeat error simulator")
+Signed-off-by: Damian Muszynski <damian.muszynski@intel.com>
+Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss-vfe.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../intel/qat/qat_common/adf_common_drv.h     |  1 -
+ .../qat/qat_common/adf_heartbeat_inject.c     |  6 ++---
+ .../intel/qat/qat_common/adf_hw_arbiter.c     | 25 -------------------
+ 3 files changed, 2 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index 5baf0e3d4bc461..2ee4f9ae0ab50e 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -2053,7 +2053,7 @@ int msm_vfe_register_entities(struct vfe_device *vfe,
- 		v4l2_subdev_init(sd, &vfe_v4l2_ops);
- 		sd->internal_ops = &vfe_v4l2_internal_ops;
- 		sd->flags |= V4L2_SUBDEV_FL_HAS_DEVNODE;
--		if (i == VFE_LINE_PIX)
-+		if (i == VFE_LINE_PIX && vfe->res->is_lite == false)
- 			snprintf(sd->name, ARRAY_SIZE(sd->name), "%s%d_%s",
- 				 MSM_VFE_NAME, vfe->id, "pix");
- 		else
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_common_drv.h b/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
+index db26e0b31170e8..7d7d64fce61404 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
++++ b/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
+@@ -90,7 +90,6 @@ void adf_exit_aer(void);
+ int adf_init_arb(struct adf_accel_dev *accel_dev);
+ void adf_exit_arb(struct adf_accel_dev *accel_dev);
+ void adf_update_ring_arb(struct adf_etr_ring_data *ring);
+-int adf_disable_arb_thd(struct adf_accel_dev *accel_dev, u32 ae, u32 thr);
+ 
+ int adf_dev_get(struct adf_accel_dev *accel_dev);
+ void adf_dev_put(struct adf_accel_dev *accel_dev);
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_heartbeat_inject.c b/drivers/crypto/intel/qat/qat_common/adf_heartbeat_inject.c
+index a3b474bdef6c83..023c5f1e78b075 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_heartbeat_inject.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_heartbeat_inject.c
+@@ -64,10 +64,8 @@ int adf_heartbeat_inject_error(struct adf_accel_dev *accel_dev)
+ 	if (ret)
+ 		return ret;
+ 
+-	/* Configure worker threads to stop processing any packet */
+-	ret = adf_disable_arb_thd(accel_dev, rand_ae, rand_thr);
+-	if (ret)
+-		return ret;
++	/* Disable arbiter to stop processing any packet */
++	hw_device->exit_arb(accel_dev);
+ 
+ 	/* Change HB counters memory to simulate a hang */
+ 	adf_set_hb_counters_fail(accel_dev, rand_ae, rand_thr);
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c b/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c
+index f93d9cca70cee4..dd9a31c20bc9c9 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_hw_arbiter.c
+@@ -99,28 +99,3 @@ void adf_exit_arb(struct adf_accel_dev *accel_dev)
+ 		csr_ops->write_csr_ring_srv_arb_en(csr, i, 0);
+ }
+ EXPORT_SYMBOL_GPL(adf_exit_arb);
+-
+-int adf_disable_arb_thd(struct adf_accel_dev *accel_dev, u32 ae, u32 thr)
+-{
+-	void __iomem *csr = accel_dev->transport->banks[0].csr_addr;
+-	struct adf_hw_device_data *hw_data = accel_dev->hw_device;
+-	const u32 *thd_2_arb_cfg;
+-	struct arb_info info;
+-	u32 ae_thr_map;
+-
+-	if (ADF_AE_STRAND0_THREAD == thr || ADF_AE_STRAND1_THREAD == thr)
+-		thr = ADF_AE_ADMIN_THREAD;
+-
+-	hw_data->get_arb_info(&info);
+-	thd_2_arb_cfg = hw_data->get_arb_mapping(accel_dev);
+-	if (!thd_2_arb_cfg)
+-		return -EFAULT;
+-
+-	/* Disable scheduling for this particular AE and thread */
+-	ae_thr_map = *(thd_2_arb_cfg + ae);
+-	ae_thr_map &= ~(GENMASK(3, 0) << (thr * BIT(2)));
+-
+-	WRITE_CSR_ARB_WT2SAM(csr, info.arb_offset, info.wt2sam_offset, ae,
+-			     ae_thr_map);
+-	return 0;
+-}
 -- 
 2.53.0
 
