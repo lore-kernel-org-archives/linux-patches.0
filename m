@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5A043031D;
-	Tue, 21 Jul 2026 19:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EED946EF7A;
+	Tue, 21 Jul 2026 19:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661992; cv=none; b=FATCdXn8tad4XzHrCi1RDtLPS7JRy05fxNun9Wuuuj10aHSuSLqT7w/z/RGRHvmyhhQDyGNH0LKpZCx8EavurhhRjYMJ62dluuvMxOFwSKRyzQxmtYVo2Nf2AAwiDfiqAPQstSodLfH/33DgwFss2LV/qNRjPIEk3r71QyiLaWo=
+	t=1784661995; cv=none; b=hTHoUHQ/z/SDCy05n3gN2cJYMOCF8U5daKJ8AYciCfWr0+uHBkrhH7V5H2sxWH64EqjyqPegjqDt3uNBHXbwOaH9hX1VWyq7w0XpNt+pIVUafC1w4Qa0FZq05W9pMQSxfDETOorKRFo5TM9/Cus5/6smEpxxHnGSZ50rvMJkNlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661992; c=relaxed/simple;
-	bh=8k+OdGtwRjOO3X54lBbbNJ0DqJxdB9x4e62sIS4cFME=;
+	s=arc-20240116; t=1784661995; c=relaxed/simple;
+	bh=ecZkZEpZMZ+cx1M9wyeIv9tUj5kieqklucLamjfR7YI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EJA5p7imY6vfs4rOIxY6pEHRt90k5bDfQb970uDh3Qe7XvGdJqllR2MSV73UgCQ4txd1Eg9l+3+bOoJriqywZVtjo6LHZqOqhUiQux4nxoDQgaIVRfU1deDVovhSAsIRZrHwKZzhpPCPDTHWpVM4CIjhVgpbNLYtCikZmaKyAs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kHQB4GcN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UZU4LRlbg1Xa6z5MWu1zBmFu3HPIrm5AoMxusxqSloZ/MbH1vpofP0BJzcfMTli7zDgJaiyRwbsR9BgFJdp1wExli3RnPxyJWhDhYtRav02g8N3BjvirsxD75Wvy1zL+Y9fQM0OtYmMkh4gxViWuLdFMZqgcWUT4DULHWfPT0ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGwKbUQa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kHQB4GcN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191331F000E9;
-	Tue, 21 Jul 2026 19:26:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGwKbUQa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE881F000E9;
+	Tue, 21 Jul 2026 19:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661990;
-	bh=8wo6AKkW2VtfdBVcflZErR+jYYvcQkyeCcxICNiBbW8=;
+	s=korg; t=1784661993;
+	bh=wGtH8PtC939p/i88QhaNixDkj34qGiHLz2OdAy48hHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kHQB4GcNKFJd3WEezFZ7aQvebHpTRF5VA/8jS0d4hoSO+KveJqQKmOrsi1Ltf77Lo
-	 BXvPHI3oFeSZiNQwxoHi3BY0geEh9XUcAe1yAkPBLEaOn7jpMl6vtZNXHG5BocY57B
-	 L8XnMXiJRZOxfuowESpTlyyAr4HLMo/fbhhSmoQ4=
+	b=hGwKbUQaOjg3/zq9tgS50fDS95I0Zw8jcaMEkjadJkNHEUbFzrYKbXwxtyvZfGuMN
+	 WiEfBU72+lXNNLUIAdqSnAtIwveeuqpidpHUHPZxbAP1bbCfdVJAYa8QTI+p802hKU
+	 IL5DkTaGHL8H/fqSGWdSzCIizcb7ypO7BgfZzlio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Antony Antony <antony.antony@secunet.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Amber Lin <Amber.Lin@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0233/1276] xfrm: fix NAT-related field inheritance in SA migration
-Date: Tue, 21 Jul 2026 17:11:16 +0200
-Message-ID: <20260721152451.305158960@linuxfoundation.org>
+Subject: [PATCH 6.12 0234/1276] drm/amdkfd: always resume_all after suspend_all
+Date: Tue, 21 Jul 2026 17:11:17 +0200
+Message-ID: <20260721152451.327597687@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,50 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antony Antony <antony.antony@secunet.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 364e165e0b63e8142e76de83e96ae8e36c3b955a ]
+[ Upstream commit 56ae73c92e200e630c2bdf1e98c88b86c8483b37 ]
 
-During SA migration via xfrm_state_clone_and_setup(),
-nat_keepalive_interval was silently dropped and never copied to the new
-SA. mapping_maxage was unconditionally copied even when migrating to a
-non-encapsulated SA.
+Need to restore any good queues even if the suspend_all
+failed for some.  Always run remove_queue as that will
+schedule a GPU reset is removing the queue fails.
 
-Both fields are only meaningful when UDP encapsulation (NAT-T) is in
-use. Move mapping_maxage and add nat_keepalive_interval inside the
-existing if (encap) block, so both are inherited when migrating with
-encapsulation and correctly absent when migrating without it.
+v2: move resume_all after remove
 
-Fixes: f531d13bdfe3 ("xfrm: support sending NAT keepalives in ESP in UDP states")
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Antony Antony <antony.antony@secunet.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: eb067d65c33e ("drm/amdkfd: Update BadOpcode Interrupt handling with MES")
+Reviewed-by: Amber Lin <Amber.Lin@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_state.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../drm/amd/amdkfd/kfd_device_queue_manager.c | 20 ++++++-------------
+ 1 file changed, 6 insertions(+), 14 deletions(-)
 
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 04cb201638027d..c39f91b858c815 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -1954,6 +1954,8 @@ static struct xfrm_state *xfrm_state_clone(struct xfrm_state *orig,
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+index e19f088c7dcf06..9035eebe9cd63b 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -2925,32 +2925,24 @@ int kfd_dqm_suspend_bad_queue_mes(struct kfd_node *knode, u32 pasid, u32 doorbel
  
- 		if (!x->encap)
- 			goto error;
-+		x->mapping_maxage = orig->mapping_maxage;
-+		x->nat_keepalive_interval = orig->nat_keepalive_interval;
+ 		list_for_each_entry(q, &qpd->queues_list, list) {
+ 			if (q->doorbell_id == doorbell_id && q->properties.is_active) {
+-				ret = suspend_all_queues_mes(dqm);
+-				if (ret) {
+-					dev_err(dev, "Suspending all queues failed");
+-					goto out;
+-				}
++				/* suspend all queues will save any good queues and mark the rest as bad */
++				suspend_all_queues_mes(dqm);
+ 
+ 				q->properties.is_evicted = true;
+ 				q->properties.is_active = false;
+ 				decrement_queue_count(dqm, qpd, q);
+ 
++				/* this will remove the bad queue and sched a GPU reset if needed */
+ 				ret = remove_queue_mes(dqm, q, qpd);
+-				if (ret) {
+-					dev_err(dev, "Removing bad queue failed");
+-					goto out;
+-				}
+-
+-				ret = resume_all_queues_mes(dqm);
+ 				if (ret)
+-					dev_err(dev, "Resuming all queues failed");
+-
++					dev_err(dev, "Removing bad queue failed");
++				/* resume the good queues */
++				resume_all_queues_mes(dqm);
+ 				break;
+ 			}
+ 		}
  	}
  
- 	if (orig->security)
-@@ -1988,7 +1990,6 @@ static struct xfrm_state *xfrm_state_clone(struct xfrm_state *orig,
- 	x->km.seq = orig->km.seq;
- 	x->replay = orig->replay;
- 	x->preplay = orig->preplay;
--	x->mapping_maxage = orig->mapping_maxage;
- 	x->lastused = orig->lastused;
- 	x->new_mapping = 0;
- 	x->new_mapping_sport = 0;
+-out:
+ 	dqm_unlock(dqm);
+ 	return ret;
+ }
 -- 
 2.53.0
 
