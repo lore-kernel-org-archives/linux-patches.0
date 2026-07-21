@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFA846F488;
-	Tue, 21 Jul 2026 18:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F5046D57D;
+	Tue, 21 Jul 2026 18:03:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657006; cv=none; b=QgrxgKgIC7bW7Gs4HHfNJLSf4/2oAQYiYfaWG96mT2AqxalDMrRjtctkD59VRs7C5TsgHjUn8LCJPDjplyLtN31Y4FAvh8cqZhQBxQovFYEnzrUkzJOxyvwwiTnlVC2uM5rOOCf5jj6gXFNpN2S91RIs6lDtz/OOTcxY8tv8WyA=
+	t=1784657008; cv=none; b=bKf1LUM06iacBKPgsjJlJv4PV+ltHKT4EeHfDaMmXeLWhbH6WxeT3/OxUBlo2xXub48slpyk2WUQbtmKDG09gxzmBgb/Zu+rkWURenbavrUKGbm4x6DKDg1tdjTa1AOxgdiwT8QvV5JjtzBo8VF673qzgZwa8JzF3WwGnHXsroY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657006; c=relaxed/simple;
-	bh=Lyeu2TLg5hpvN+AoUgNxLmuisnK0e/Byq9xj7fkUWgc=;
+	s=arc-20240116; t=1784657008; c=relaxed/simple;
+	bh=Et3JwT0WM7A06QHh/39WHuPQKipbcb6N5InAHzJ/YXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oE3tz9YtgXpAadxVGhjDceCBJ/kxEIb6n40mecgZqW0xaF0+yjrKYvZeUEqUAqemScSL9tmc0e1ib77IUpEcMAVI/hR0uRRW6OAQQOecRo7BjJNN7wbebAZnWgYyDkTRqk92194wZbBw5nyQvObEomkJFiBe6QbZzooGIIKmWpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5XbRPOq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TA1fmbNq0NFut7RUx11sN1dsFFaFjnWwMsXgPQTSIc7lFHcXNsbiUCZweOyHMjlDTWpc7o+vI9ih9dJGN+IGGBSbgcPFcWAlJUKtWwD6Obvq0qouA4bIp3yxr3ui0GE6B8ldNhNvgpoddn2Dx0R0nOPipK+eiVu6gaw6G3dSUR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrlBwAhu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5XbRPOq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3FD1F000E9;
-	Tue, 21 Jul 2026 18:03:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrlBwAhu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232631F000E9;
+	Tue, 21 Jul 2026 18:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657005;
-	bh=PJBE1jwQSWb5wAIYxyvICYwYcNO3+GbjYCKXBetRyTs=;
+	s=korg; t=1784657007;
+	bh=X0YMolfMPOTY0S+sdnUD6tX0dtnX317ypy3fNilaMRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y5XbRPOq6Yq7SJbVIwJzURhprim6tFxrSZXOuZPCGbs+0XCRSUJ6plwk7PiZfjaxa
-	 dOLYZTYYqWEatgDlb1MijCD9SRzVArC9QzTpvnrCLZ2q/QeATevsXCEYAU2kIl1vzr
-	 fUYWmFlr43Sx4uOaFKPs9EeKVNkqA5C9qOoX5tUw=
+	b=jrlBwAhuZG8aN09KmoDcJs0bwgRQVpmGuL3jzh+PqyOjpMSYSuuVGkoRhCV3+QnHe
+	 +SQQe5P488uG6JP132CPexHi/cDPQy9ajk8C6j7KbZwBPtpBJdzMjOsOeZYgTrHx0a
+	 x1Q5g4GURpl1O5FzfU/EZB+JYk0nswNgdyymcA+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Simon Trimmer <simont@opensource.cirrus.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Vinod Koul <vkoul@kernel.org>,
+	Jie Gan <jie.gan@oss.qualcomm.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0599/1611] soundwire: intel_ace2x: release bpt_stream when close it
-Date: Tue, 21 Jul 2026 17:11:55 +0200
-Message-ID: <20260721152528.859278290@linuxfoundation.org>
+Subject: [PATCH 6.18 0600/1611] coresight: Fix source not disabled on idr_alloc_u32 failure
+Date: Tue, 21 Jul 2026 17:11:56 +0200
+Message-ID: <20260721152528.881850538@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,36 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Jie Gan <jie.gan@oss.qualcomm.com>
 
-[ Upstream commit 8a7fe10eec64bfb7cf4091bca540de4c55d56bfa ]
+[ Upstream commit ea2c2b9e2a66e2b4aa0455b2d70058e2f0ea4d23 ]
 
-The BPT stream was allocated in intel_ace2x_bpt_open_stream(), we need
-to free it in intel_ace2x_bpt_close_stream().
+In coresight_enable_sysfs(), for non-CPU sources (SOFTWARE, TPDM,
+OTHERS), the source device is enabled via coresight_enable_source_sysfs()
+before idr_alloc_u32() maps the path. If idr_alloc_u32() fails, the
+original code jumped directly to err_source, which only calls
+coresight_disable_path() and coresight_release_path(). The source device
+was left enabled with an incremented refcnt but no path tracked for it,
+leaving the device in an inconsistent state.
 
-Fixes: 4c1ce9f37d8a8 ("soundwire: intel_ace2x: add BPT send_async/wait callbacks")
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Simon Trimmer <simont@opensource.cirrus.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20260514141625.1834216-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Disable the source before jumping to err_source so the enable and path
+operations are fully unwound.
+
+Fixes: 5c0016d7b343 ("coresight: core: Use IDR for non-cpu bound sources' paths.")
+Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260515-arm_coresight_path_power_management_improvement-v14-1-f88c4a3ecfe9@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/intel_ace2x.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwtracing/coresight/coresight-sysfs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soundwire/intel_ace2x.c b/drivers/soundwire/intel_ace2x.c
-index 5b73bbb73be6e0..63aef983614675 100644
---- a/drivers/soundwire/intel_ace2x.c
-+++ b/drivers/soundwire/intel_ace2x.c
-@@ -248,6 +248,7 @@ static void intel_ace2x_bpt_close_stream(struct sdw_intel *sdw, struct sdw_slave
- 		dev_err(cdns->dev, "%s: remove slave failed: %d\n",
- 			__func__, ret);
- 
-+	sdw_release_stream(cdns->bus.bpt_stream);
- 	cdns->bus.bpt_stream = NULL;
- }
- 
+diff --git a/drivers/hwtracing/coresight/coresight-sysfs.c b/drivers/hwtracing/coresight/coresight-sysfs.c
+index c5f3fc2b5135fb..958c0fe8837d51 100644
+--- a/drivers/hwtracing/coresight/coresight-sysfs.c
++++ b/drivers/hwtracing/coresight/coresight-sysfs.c
+@@ -244,8 +244,10 @@ int coresight_enable_sysfs(struct coresight_device *csdev)
+ 		 */
+ 		hash = hashlen_hash(hashlen_string(NULL, dev_name(&csdev->dev)));
+ 		ret = idr_alloc_u32(&path_idr, path, &hash, hash, GFP_KERNEL);
+-		if (ret)
++		if (ret) {
++			coresight_disable_source_sysfs(csdev, NULL);
+ 			goto err_source;
++		}
+ 		break;
+ 	default:
+ 		/* We can't be here */
 -- 
 2.53.0
 
