@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C305635201C;
-	Tue, 21 Jul 2026 20:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DE73B0AC6;
+	Tue, 21 Jul 2026 20:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666774; cv=none; b=Bgu8sAh++j99NfqUyiQ4zFpQFE59s2U3IxaHlz3kArO17b7lTq7urBRDKh9UYJ/SqMNgRDWBCz/4X6B8OFvGItYHg9Da7Rok9ArPwz7xeabNd2SFbW3vjWgCKOsXVwzwqb3AiNYizdJ8Ifm0FiWYEW44gMNGK3d8gkgrN0ks7PU=
+	t=1784666777; cv=none; b=uIVEqUrUAVDz24uWWRxUJ4BkVYGVGO9kLP4wk2PQd1mBq2J9mxYoTh7Qgd2Tg4VTVVq7/O1/usfBulXp6rbCU4nZoV5azND1LmwLQXqkrafXqFmhk+BwWWpNU6OOUXuRTQggOeyXiI29sKkV0kdHIfZraOaiVhjyaSYtplnVWUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666774; c=relaxed/simple;
-	bh=XEtvBmsOF6gy5jynPLHk3e/T0p5JhjrijO8vtGUBbWQ=;
+	s=arc-20240116; t=1784666777; c=relaxed/simple;
+	bh=LHiEMCPbpHHX1zLDGxeCxYx6vznrbbfeTRYMpOxOUNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SQ6SdE+W27N+lUb3Pea1WNLBShSoHZwXrFH5DIHTk/HWxvMl0e324VLVQSZNUYSJFguJaM/dpN2ft3QSxDcDGZzjfnUMrN2CawQwvIquTvEnE/tujHIV9Z8S8CMQqWunlWC3wBNDAvs184hfWlkIQj4wa19bqSR23vOoWCB961M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gc9QLb94; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KRAaIgklmDhLQPEj+3fA3nmnck7SV6IE+3Bvj01jF+dYQf6Tab7HxsyAaAhFWRHkhRGFg282OE4cVqjnTqQdYUqzcblKS87peFyrtDdELC6/pvR2DBuCN7KCmpkGhnz6h3lFPStBguTDhpIsSLY3Zcif7H/3Ps5fA84Fkzo6TIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/YHiNjI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gc9QLb94"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A1F1F000E9;
-	Tue, 21 Jul 2026 20:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/YHiNjI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA06C1F00A3A;
+	Tue, 21 Jul 2026 20:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666773;
-	bh=nAQA8ptp2iDHr3nNjnC/S1iKWdwepMMEtPLCN5w8Gc4=;
+	s=korg; t=1784666776;
+	bh=G4dmWig2MY6/UzrxcFqoeHXFvlwR3YCzoDlG4Nl39+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gc9QLb94i1nFsIzXj1GQkqzrZCWCYC8ErNQ9qTrskePTn3Z+jrqMv+V8thZTy5Ew3
-	 nt+QjpfRp1alrc4onfCkvmBN8ar1apEoHHvnh7ZHsTpnPcyANIm5G2nAp0JB9p77Xp
-	 BwFVyn/PvD6+lZLg119go1gbp1BrZB2bAvr4837Y=
+	b=H/YHiNjIgLzmUeg5b5YWo19ky/H4vGqnJXLNQqFvPJgdBo8OG/Y9Va1sHVL6s+fd8
+	 hrGxV9nnSxC4jhIkJSC43H5+Xcj4pDHwuXS9krjPfw/f+IYRK+jv7p8MMfDWFl8HhS
+	 62CwQUUizs4xu50uu0ga0U2h24+EmiFdC2OFs9ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Weiming Shi <bestswngs@gmail.com>,
 	Xiang Mei <xmei5@asu.edu>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0783/1266] net, bpf: check master for NULL in xdp_master_redirect()
-Date: Tue, 21 Jul 2026 17:20:20 +0200
-Message-ID: <20260721152459.383373345@linuxfoundation.org>
+Subject: [PATCH 6.6 0810/1266] usbnet: gl620a: fix out-of-bounds read in genelink_rx_fixup()
+Date: Tue, 21 Jul 2026 17:20:47 +0200
+Message-ID: <20260721152459.984949835@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -55,64 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit e82d8cc4321c373dc46e741cd2dfdaa7921fddb7 ]
+[ Upstream commit 8ff7f2a6da4fccaa5cc9be7251a24e71e29fbd1a ]
 
-xdp_master_redirect() dereferences the result of
-netdev_master_upper_dev_get_rcu() without a NULL check, but that helper
-returns NULL when the receiving device has no upper-master adjacency.
+genelink_rx_fixup() splits an aggregated RX frame into its individual
+packets, using a per-packet length taken from device-supplied data. That
+length is only bounded by GL_MAX_PACKET_LEN (1514); it is never compared
+against how many bytes were actually received.
 
-The reach guard only checks netif_is_bond_slave(). On bond slave release
-bond_upper_dev_unlink() drops the upper-master adjacency before clearing
-IFF_SLAVE, so an XDP_TX reaching xdp_master_redirect() in that window
-still passes netif_is_bond_slave() while master is already NULL, and
-faults on master->flags at offset 0xb0:
+A malicious GeneLink (GL620A) device can therefore send a short URB whose
+header claims packet_count > 1 and a first packet of up to 1514 bytes.
 
-  BUG: kernel NULL pointer dereference, address: 00000000000000b0
-  RIP: 0010:xdp_master_redirect (net/core/filter.c:4432)
+	skb_put_data(gl_skb, packet->packet_data, size);
+
+then copies past the end of the receive buffer and hands the adjacent slab
+contents up the network stack, an out-of-bounds read that leaks kernel heap.
+No privilege is required: the path runs in the usbnet RX softirq as soon as
+the interface is up.
+
+  BUG: KASAN: slab-out-of-bounds in genelink_rx_fixup (drivers/net/usb/gl620a.c:112)
+  Read of size 1514 at addr ffff888011309708 by task ksoftirqd/0/14
   Call Trace:
-   xdp_master_redirect (net/core/filter.c:4432)
-   bpf_prog_run_generic_xdp (include/net/xdp.h:700)
-   do_xdp_generic (net/core/dev.c:5608)
-   __netif_receive_skb_one_core (net/core/dev.c:6204)
-   process_backlog (net/core/dev.c:6319)
-   __napi_poll (net/core/dev.c:7729)
-   net_rx_action (net/core/dev.c:7792)
-   handle_softirqs (kernel/softirq.c:622)
-   __dev_queue_xmit (include/linux/bottom_half.h:33)
-   packet_sendmsg (net/packet/af_packet.c:3082)
-   __sys_sendto (net/socket.c:2252)
-  Kernel panic - not syncing: Fatal exception in interrupt
+    ...
+    __asan_memcpy (mm/kasan/shadow.c:105)
+    genelink_rx_fixup (include/linux/skbuff.h:2814 drivers/net/usb/gl620a.c:112)
+    usbnet_bh (drivers/net/usb/usbnet.c:572 drivers/net/usb/usbnet.c:1589)
+    process_one_work (kernel/workqueue.c:3322)
+    bh_worker (kernel/workqueue.c:3405)
+    tasklet_action (kernel/softirq.c:965)
+    handle_softirqs (kernel/softirq.c:622)
+    run_ksoftirqd (kernel/softirq.c:1076)
+    ...
 
-The missing check dates back to the original code; commit 1921f91298d1
-("net, bpf: fix null-ptr-deref in xdp_master_redirect() for down master")
-later added the master->flags read where the fault now lands but kept the
-unconditional deref. Check master for NULL before use; a NULL master is
-treated the same as one that is not up.
+skb_pull() already verifies that the requested length fits the buffer and
+returns NULL otherwise. Move it ahead of the copy and check its result, so
+a packet that overruns the received data is rejected before it is read.
+Well-formed frames, whose packets are fully present, are unaffected.
 
-Fixes: 879af96ffd72 ("net, core: Add support for XDP redirection to slave device")
+Fixes: 47ee3051c856 ("[PATCH] USB: usbnet (5/9) module for genesys gl620a cables")
 Reported-by: Weiming Shi <bestswngs@gmail.com>
 Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260620201531.180123-1-xmei5@asu.edu
+Link: https://patch.msgid.link/20260627205353.4000788-1-xmei5@asu.edu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/gl620a.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 5bbad21c7757c3..62d21a961e5ec2 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -4393,7 +4393,7 @@ u32 xdp_master_redirect(struct xdp_buff *xdp)
- 	struct bpf_redirect_info *ri = this_cpu_ptr(&bpf_redirect_info);
+diff --git a/drivers/net/usb/gl620a.c b/drivers/net/usb/gl620a.c
+index 0bfa37c1405918..09afd137b64e15 100644
+--- a/drivers/net/usb/gl620a.c
++++ b/drivers/net/usb/gl620a.c
+@@ -104,6 +104,9 @@ static int genelink_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 			return 0;
+ 		}
  
- 	master = netdev_master_upper_dev_get_rcu(xdp->rxq->dev);
--	if (unlikely(!(master->flags & IFF_UP)))
-+	if (unlikely(!master || !(master->flags & IFF_UP)))
- 		return XDP_ABORTED;
- 	slave = master->netdev_ops->ndo_xdp_get_xmit_slave(master, xdp);
- 	if (slave && slave != xdp->rxq->dev) {
++		if (!skb_pull(skb, size + 4))
++			return 0;
++
+ 		// allocate the skb for the individual packet
+ 		gl_skb = alloc_skb(size, GFP_ATOMIC);
+ 		if (gl_skb) {
+@@ -116,9 +119,6 @@ static int genelink_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 		// advance to the next packet
+ 		packet = (struct gl_packet *)&packet->packet_data[size];
+ 		count--;
+-
+-		// shift the data pointer to the next gl_packet
+-		skb_pull(skb, size + 4);
+ 	}
+ 
+ 	// skip the packet length field 4 bytes
 -- 
 2.53.0
 
