@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC1444AB6D;
-	Tue, 21 Jul 2026 21:32:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4559F3C73F6;
+	Tue, 21 Jul 2026 21:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669522; cv=none; b=HQAZmu0HO91zqJlEke/n9exLdAf15qOlJji77iKAZ6GIQ7c+7jMVQ3sEi3L5lWLzFwmkh3gjquDY4Mc4vuNAtgIvJcZewERdbfXBD6kC5dI0tKOscxJZUxUax9oNZjmIrAmZ3ZFhXIILmcyjxA8hRhpPn76aIgHY7Z53CAe14c4=
+	t=1784669526; cv=none; b=r0wgfCF6+BE6s7bms1F6bRqoiMDQjH4YQXXLdBp1cnpV52iF57FjKw2+Cj6xXmiD7aJwVpb2TlmK+1VhCEV6Ak65Q3RvDaDeHDp1JJGodBs6OKVDmUA7nuHFOGRUuLsDdaqHutT6+VRy8xTgZ5OEc/Tp8HgFURCGhfAl1/kC4Gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669522; c=relaxed/simple;
-	bh=nHMRYLuWkS20ySTvlQSd0KxCm7Cec3lJlCAy9LeyccI=;
+	s=arc-20240116; t=1784669526; c=relaxed/simple;
+	bh=fAoSa0nW+q5nMpJuUQ/NIzEvq3iIZ6xaAA2fhrs3Zec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mvDPoKcXN4x4obuNaSKAByGFry5gnhPHtKAjtoFfunU/fK3sY5visB7QZyjurNFeQA6ZlULM2LImXzhKZNLTOxXL1EplJArxqP526U8IDvYXjpJ8zBslx9X+fLx6Qqy357JoMJgYD4JLcQk43PATTD88pvDMjs7uV0hjPD6PwC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lWI9iAAu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mrNOM8/pbyv4pvVPcAC+UdVe9tBUWQWeFH3ODlXQvbWnzLE4D/pQUtpULOJWQ2h9wgtIbJ1URDi5krWD1/W5Z8dCXpKrLZnAh2AF3jQJ3dWc3xqG85CcYbqWjbYKKrlMgjydQtwdqjHOfG64RM5JLDQ0xpmc1u3mvX1dXcm6PC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j4AkKXpL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lWI9iAAu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E9B1F000E9;
-	Tue, 21 Jul 2026 21:31:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j4AkKXpL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10BBA1F000E9;
+	Tue, 21 Jul 2026 21:32:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784669520;
-	bh=IWkrP4clSREmiDMwH9j40CWBivF1A+1clbvb4v/F/7g=;
+	s=korg; t=1784669523;
+	bh=ClW37ncdPMKbrGu6GhfM1f0PJ4hHJEfjyzraQn5pNUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lWI9iAAu49bkl+n67nWqA/3rkYhpacoochtPOb40bM5QOo2/Il1OM8GwIyyqvwZ/X
-	 ITVOXXjFD7iNbhiyg7Nu6xJ86rizvkjmihZQv74F1KjgsF2QS8TyWazoYpDRJ7gFj2
-	 pP37WwnrlNwOyL0YvH6cTkjvXV+MMV1SZPzGe0pI=
+	b=j4AkKXpLMEyZhIVrs7pZCoKixvdN+QB1V/GUlv0ssfRi8SGXxQKQYk0cBUfHnXyZz
+	 /JrtKPreGUsz5JBi2UNB4baDafjykzpGCi42c7x3XK4gGAPP0PEvInK6tBHAYnXRVV
+	 +Zrvj/9heKFLL0gz7GPFnIAlp58qNI5mnzZqJ0wY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	syzbot+fa2f5b1fb06147be5e16@syzkaller.appspotmail.com,
+	Yun Zhou <yun.zhou@windriver.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0586/1067] dpaa2-switch: fix VLAN upper check not rejecting bridge join
-Date: Tue, 21 Jul 2026 17:19:47 +0200
-Message-ID: <20260721152437.714566398@linuxfoundation.org>
+Subject: [PATCH 6.1 0587/1067] flow_dissector: check device type before reading ETH_ADDRS
+Date: Tue, 21 Jul 2026 17:19:48 +0200
+Message-ID: <20260721152437.737862511@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -51,38 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-[ Upstream commit ed2294f94e34e97342850c40b320833d881c3819 ]
+[ Upstream commit bf6e8af2c8be77489bedeae9f8a9654cb710e500 ]
 
-The blamed commit refactored the prechangeupper event handling but
-failed to actually return an error in case
-dpaa2_switch_prevent_bridging_with_8021q_upper() detected a 802.1q upper
-on a port which tries to join a bridge. Fix this by returning err
-instead of 0.
+__skb_flow_dissect() unconditionally reads 12 bytes from eth_hdr(skb)
+when FLOW_DISSECTOR_KEY_ETH_ADDRS is requested. This assumes the skb
+has a valid Ethernet header at mac_header, which is not always the case.
 
-Fixes: 45035febc495 ("net: dpaa2-switch: refactor prechangeupper sanity checks")
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://patch.msgid.link/20260616105430.3725910-1-ioana.ciornei@nxp.com
+The problem can be triggered by:
+ 1. Creating a TUN device in L3 mode (IFF_TUN, hard_header_len=0)
+ 2. Attaching a multiq qdisc with a flower filter matching on eth_src
+ 3. Sending a packet through AF_PACKET
+
+Since TUN in L3 mode has no link-layer header, mac_header points to
+the L3 data area. The flow dissector reads 12 bytes of uninitialized
+skb memory, which then propagates through fl_set_masked_key() and is
+used as a rhashtable lookup key in __fl_lookup(), as reported by KMSAN.
+
+Rejecting the filter in the control path (at tc filter add time) is
+not feasible because TC filter blocks can be shared between arbitrary
+devices -- a filter installed on an Ethernet device may later classify
+packets on a headerless device through a shared block. The device
+association is not fixed at filter creation time.
+
+Fix this by gating the memcpy on dev->type == ARPHRD_ETHER, which
+ensures only true Ethernet-framed packets have their addresses read.
+This is more precise than the previous hard_header_len >= 12 check,
+which would incorrectly pass for non-Ethernet link types like IPoIB
+(ARPHRD_INFINIBAND, hard_header_len=24) and FDDI (hard_header_len=21)
+whose L2 headers are not in Ethernet format. Additionally check
+skb_mac_header_was_set() to guard against the pathological case where
+mac_header is the unset sentinel (~0U), which would cause eth_hdr() to
+return a wild pointer.
+
+For the act_mirred redirect case (Ethernet packet redirected to a
+non-Ethernet device sharing a TC block), zeroing the key is the correct
+behavior: the packet is now being classified on the target device, where
+Ethernet address matching is not semantically meaningful.
+
+Note: on non-Ethernet devices, the zeroed key will match a filter
+configured with all-zero MAC addresses. This is an improvement over the
+previous behavior where uninitialized memory could randomly match any
+filter.
+
+Reported-by: syzbot+fa2f5b1fb06147be5e16@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=fa2f5b1fb06147be5e16
+Fixes: 67a900cc0436 ("flow_dissector: introduce support for Ethernet addresses")
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+Link: https://patch.msgid.link/20260616123057.482154-1-yun.zhou@windriver.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/flow_dissector.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-index 510a018978d9ac..c8478fdcb3aa5f 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-@@ -2186,7 +2186,7 @@ dpaa2_switch_prechangeupper_sanity_checks(struct net_device *netdev,
- 	if (err) {
- 		NL_SET_ERR_MSG_MOD(extack,
- 				   "Cannot join a bridge while VLAN uppers are present");
--		return 0;
-+		return err;
+diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
+index 77c65b2968a377..e604c6a08cbd07 100644
+--- a/net/core/flow_dissector.c
++++ b/net/core/flow_dissector.c
+@@ -1069,13 +1069,21 @@ bool __skb_flow_dissect(const struct net *net,
+ 
+ 	if (dissector_uses_key(flow_dissector,
+ 			       FLOW_DISSECTOR_KEY_ETH_ADDRS)) {
+-		struct ethhdr *eth = eth_hdr(skb);
+ 		struct flow_dissector_key_eth_addrs *key_eth_addrs;
+ 
+ 		key_eth_addrs = skb_flow_dissector_target(flow_dissector,
+ 							  FLOW_DISSECTOR_KEY_ETH_ADDRS,
+ 							  target_container);
+-		memcpy(key_eth_addrs, eth, sizeof(*key_eth_addrs));
++		/* TC filter blocks can be shared across devices with
++		 * different link types, so we cannot validate this
++		 * when the filter is installed -- check at dissect time.
++		 */
++		if (skb && skb->dev &&
++		    skb->dev->type == ARPHRD_ETHER &&
++		    skb_mac_header_was_set(skb))
++			memcpy(key_eth_addrs, eth_hdr(skb), sizeof(*key_eth_addrs));
++		else
++			memset(key_eth_addrs, 0, sizeof(*key_eth_addrs));
  	}
  
- 	return 0;
+ 	if (dissector_uses_key(flow_dissector,
 -- 
 2.53.0
 
