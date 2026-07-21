@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0173B47127A;
-	Tue, 21 Jul 2026 18:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B5846EC78;
+	Tue, 21 Jul 2026 18:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659782; cv=none; b=Ma98vcDPyj53OnQeC8YtnOu0zQMUWuDIdi5h0e9mch4zss5LNx0k+/c2r3kl2qccxzSc05leNz/aPiHlqASfr9YgkhQsTsfS6TYJZH9q/0JE8v300A+snaStDZ4oP5+iwM+oMRY2WmjBSvOvDw74wkl1RyXkP1I3AePIm5cugV4=
+	t=1784659784; cv=none; b=f/2HkCZeV3IqJl9f61nRhtM5nzwp8rQ+C8uqOZih8BJCDkQmOJ3WNUiNbRvX8LqsyQIhvttc+p3wKzv6sO2O4pj5cUx1A+jIIYSe157BPm74oUwXckGs1DGHwQ3vb+Sg/IJPXb91dHbdxG/5v051PgT2hDDHoezsAUUFh2PnoYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659782; c=relaxed/simple;
-	bh=RIRpx1e5pIp/TQfGH2GJnqtuMLXcDywfmbtWlsszouY=;
+	s=arc-20240116; t=1784659784; c=relaxed/simple;
+	bh=RKz0f8iXTuwCtz4hExSHccaBAtTkCVVOgNXgt/84FuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oxT7lqQou6btMNUG5PXCs5J7NZNsvBVymIb6DiNEv3yntbWaLQvo7+lfi1l2eoYSPQzLueOKZnc5IvtJ32YpGl8JgaYndNh6z/qW8nq5JV6pZ0Yeh0s8r4XI1ZnZudZ35gJrTfE/cCRJrPj3NDIrjejfDh26c7Ewnbpd/1Bp270=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z9tisMms; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ldr9X3Uupcp9FPdcMkLqnpMxE1/QjUbglUiyZ+RPK6DoNbXqOqgdbjXNHeypN6rIOPLx6/duPnKXeUlmfcS/LboGIRPeN5WMLJ9pOYpaNsLukuiePtOX47Yq5Fn41CR2bB+xzWROdDcbPTBw8EowHt8mN3F1EIpWpfv7nSreIuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9aA8OE1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z9tisMms"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ECAC1F000E9;
-	Tue, 21 Jul 2026 18:49:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9aA8OE1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBCFC1F000E9;
+	Tue, 21 Jul 2026 18:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659780;
-	bh=NSI7wC5f8BHUEUpI8YCV4qPDLMql1gIYLUTGaSDTG6Y=;
+	s=korg; t=1784659783;
+	bh=4cuWdsNSyUUG+z1EtdJP0aOBxGRJKHIfyhwUUoiLvkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z9tisMmsZ4TVlkCYSmyIkh2MlahAN1pnn+gHb3DR75XqKGJyA5Af6zdpaHjCoxKIY
-	 92fa2F/FVolthtbXlFiRTs+dTvMuDw6bb5akMD1m4cLhLgqQLS7Ki1rZs0zcybxqX2
-	 xJXorwCuqj5MDeNDpA0uv9X0Ro8UneLvzWHax6yw=
+	b=f9aA8OE1WiYlRz59HszUO6aTKOfiTpyyJhFS9w25LikSaVBvofvxTPZkk3y464Gry
+	 6l1rMwKMNoJqaJ8GBW8IULTztmbKK9SGN+muJSPhedXRjwE/8JOcFHyKoNF/dgKhzg
+	 MvCF9IVAQPMNNitMljB/5VMYRcBfa9GOS5lEm2E8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Lars=20P=C3=B6schel?= <lars.poeschel@edag.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0729/2077] spi: xilinx: use FIFO occupancy register to determine buffer size
-Date: Tue, 21 Jul 2026 17:06:42 +0200
-Message-ID: <20260721152609.993493524@linuxfoundation.org>
+Subject: [PATCH 7.1 0730/2077] iommu: Avoid copying the user array twice in the full-array copy helper
+Date: Tue, 21 Jul 2026 17:06:43 +0200
+Message-ID: <20260721152610.016365231@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -46,84 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lars Pöschel <lars.poeschel@edag.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit 47f3b5365536e8c38f264824ab15fdb74454e066 ]
+[ Upstream commit e28bee5b445178390d63f7a93a5a219063c6434e ]
 
-The method the driver uses to determine the size of the FIFO has a
-problem. What it currently does is this:
-It stops the SPI hardware and writes to the TX FIFO register until TX
-FIFO FULL asserts in the status register. But the hardware does not only
-have the FIFO, it also has a shift register which can hold a byte. This
-can be seen, when writing a byte to the FIFO (while the SPI hardware is
-stopped,) the TX FIFO EMPTY is still empty. So, if we have a FIFO size
-of 16 for example, the current method returns a 17.
-This is a problem, at least when using the driver in irq mode. The same
-size determined for the TX FIFO is also assumed for the RX FIFO. When a
-SPI transaction wants to write the amount of the FIFO size or more
-bytes, the following happens, for example with 16 bytes FIFO size:
-The driver stops the SPI hardware and writes 17 bytes to the TX FIFO and
-starts the SPI hardware and goes sleep.
-The hardware then shifts out 17 bytes (FIFO + shift register) and
-simultaneously reads bytes into the RX FIFO, but it only has 16 places,
-so it looses one byte. Then TX FIFO empty asserts, wakes the driver
-again, which has a fast path and reads 16 bytes from the RX FIFO, but
-before reading the last 17th byte (which is lost) it does this:
+iommu_copy_struct_from_full_user_array() copies a whole user array into a
+kernel buffer. In the common case, where user entry_len equals destination
+entry size, it takes a fast path and copies the whole array with a single
+copy_from_user().
 
-	sr = xspi->read_fn(xspi->regs + XSPI_SR_OFFSET);
-	if (!(sr & XSPI_SR_RX_EMPTY_MASK)) {
-		xilinx_spi_rx(xspi);
-		rx_words--;
-	}
+That fast path does not return, so it falls through into the item-by-item
+copy_struct_from_user() loop and copies every entry a second time. For an
+equal entry_len that loop is just a copy_from_user() of the same bytes, so
+the whole array is copied twice for no benefit.
 
-It reads the status register and checks if the RX FIFO is not empty.
-But it is empty in our case. So this check spins in a while loop
-forever locking the driver.
+Return right after the bulk copy. The per-item loop then runs only on the
+slow path, where entry_len differs and each entry needs size adaption.
 
-This patch fixes the logic to determine the FIFO size.
-
-Fixes: 4c9a761402d7 ("spi/xilinx: Simplify spi_fill_tx_fifo")
-Signed-off-by: Lars Pöschel <lars.poeschel@edag.com>
-Reviewed-by: Michal Simek <michal.simek@amd.com>
-Link: https://patch.msgid.link/20260612105244.9076-1-lars.poeschel.linux@edag.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 4f2e59ccb698 ("iommu: Add iommu_copy_struct_from_full_user_array helper")
+Link: https://patch.msgid.link/r/6c9eca4ff584cb977661e97799ac6fe934e7f51c.1780521606.git.nicolinc@nvidia.com
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-xilinx.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ include/linux/iommu.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/spi/spi-xilinx.c b/drivers/spi/spi-xilinx.c
-index 9f065d4e27d19a..b95485710e2f71 100644
---- a/drivers/spi/spi-xilinx.c
-+++ b/drivers/spi/spi-xilinx.c
-@@ -371,11 +371,18 @@ static int xilinx_spi_find_buffer_size(struct xilinx_spi *xspi)
- 		xspi->regs + XIPIF_V123B_RESETR_OFFSET);
+diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+index e587d4ac4d3310..6957144263793b 100644
+--- a/include/linux/iommu.h
++++ b/include/linux/iommu.h
+@@ -547,6 +547,7 @@ iommu_copy_struct_from_full_user_array(void *kdst, size_t kdst_entry_size,
+ 				   user_array->entry_num *
+ 					   user_array->entry_len))
+ 			return -EFAULT;
++		return 0;
+ 	}
  
- 	/* Fill the Tx FIFO with as many words as possible */
--	do {
-+	while (1) {
- 		xspi->write_fn(0, xspi->regs + XSPI_TXD_OFFSET);
- 		sr = xspi->read_fn(xspi->regs + XSPI_SR_OFFSET);
-+		if (sr & XSPI_SR_TX_FULL_MASK)
-+			break;
-+
- 		n_words++;
--	} while (!(sr & XSPI_SR_TX_FULL_MASK));
-+	}
-+
-+	/* Handle the NO FIFO case separately */
-+	if (!n_words)
-+		return 1;
- 
- 	return n_words;
- }
+ 	/* Copy item by item */
 -- 
 2.53.0
 
