@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D786471258;
-	Tue, 21 Jul 2026 18:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B740E471255;
+	Tue, 21 Jul 2026 18:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657387; cv=none; b=B/3zgtIPh9xFMSD6riJWvwkYRZv1d5FVIuoEsr5BsbqdZstRvd7ERfrTW+3vqpdMmVCx4HcSJLBLaO5e+uqpnZILY0i3rit9eJ8LmfM5Zi3kQ+I1AEAFfjZyMLFNnSFjLoc7FzUN1EDpt2hWujlvv8SavZsY3Q5YF9LefnQrLs4=
+	t=1784657390; cv=none; b=skG7HCWzB+9aJlfk35qqy6EUBLi5hDQIm4utKh0fPQ94I0yGiCqKXOTYexAOPmfzpEQufghl/1Nitw9QLUglT8ea/Mo46UhwSYgSy9zivgM2+Dac99Y40KJi4+71gP2GVv84kEALPIRQve5TqZJrgv8TcE4Yt4yLmrlwvCSc+R8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657387; c=relaxed/simple;
-	bh=c3sMWR36YGr2C42QXrNk4KN+pepLOwRgLWBA8hvNrIw=;
+	s=arc-20240116; t=1784657390; c=relaxed/simple;
+	bh=VH3lyq4Wp2jBPAAhpuwU9s+54j4QmCg26HlgwKYHyhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qjb43APR78WWmnxpF3lRGauRuwg1PJyTma05ccFpAr2MpyzUb/Tu0qOz59qcbmcsN65t+LaC74eLlFV46w96S9nYpX2kues5thQONbLKZoPwPUl1PEnZom3KgoEfUQLs5aViwNz25o/tZTxf2RSUBzZHZkXhgswqedx064PzeI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zecGVetN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r/h4Q7vrMWB33TZRC5xqFDfD9BH/y2gmYxtZxCY6yTg6bBo/lvjxrI8IokTTrcDOq72J4NR3nwgI64ogphrZNVV8Pf7UdRyoLfTFjCGDdlIf49szCg1kHy/n/qpqCL7ipWtyW3U2kWQtnPNrjjDu3Tisv2gwPwrPCS3w7flZ5n0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Et0nRvhe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zecGVetN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335F31F000E9;
-	Tue, 21 Jul 2026 18:09:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Et0nRvhe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DED1F000E9;
+	Tue, 21 Jul 2026 18:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657385;
-	bh=stvKlUC+pY6eDA3/GXtXdRNz5xCfKS/19SUfF7kf+oc=;
+	s=korg; t=1784657388;
+	bh=24gVv5//Nb9D0+yhDePXZMVqH+jFak9aNoO0NVc3WJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zecGVetNDVXUA4z8p4tXE5CEz/sPeFIA82GGvHyqRaJ2A/NNteKAiycJYogeuo118
-	 6/MT3kJOVpWsA+b4J3fwv6lfN6+bPVDxM4NZd4UCEeXsmYmKU+gkKNgBOScFFEq08Y
-	 ABX/d6KKM6JdvMk//80oSzRanqtom5HUxeECzzhA=
+	b=Et0nRvhe2tax7mvHHhqkbsdc5A8hxsG6LOU3QI/AOFbSEWQWvUxRAyqbrrrIYvs4W
+	 dm3zE2j/q6dDl4U5TRSdkLXzZMrq3cb7tHrpHnuQiG/9NpjZRhnkaANPHu2s88SozN
+	 yCCx/pzqizkaV/IusT1l8v6v6Pk6bMjEuixG/fDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0702/1611] xprtrdma: Sanitize the reply credit grant after parsing
-Date: Tue, 21 Jul 2026 17:13:38 +0200
-Message-ID: <20260721152531.170083760@linuxfoundation.org>
+Subject: [PATCH 6.18 0703/1611] xprtrdma: Repost Receive buffers for malformed replies
+Date: Tue, 21 Jul 2026 17:13:39 +0200
+Message-ID: <20260721152531.192089498@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,61 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit c3a628aab2dc8f5fd7bff86ceaeae64de590e60a ]
+[ Upstream commit abc011ddaf1617e3e82d8a1e87daa7ddbfb9bac5 ]
 
-The out_norqst exit in rpcrdma_reply_handler() branches away before
-the credit clamp, so a reply that matches no pending request reaches
-out_post carrying the raw credit value parsed from the wire.
-rpcrdma_post_recvs() does not bound its @needed argument: the refill
-loop allocates and chains Receive WRs until the count is satisfied or
-allocation fails. A peer that sends a well-formed reply carrying an
-unknown XID and an inflated credit grant therefore drives rep
-allocation and Receive posting past re_max_requests on every such
-reply.
+rpcrdma_wc_receive() decrements the transport's Receive count for
+every completion before it dispatches a successful Receive to
+rpcrdma_reply_handler(). The handler must post a replacement
+Receive WR before returning unless ownership of the rep has moved
+elsewhere, as on the backchannel path.
 
-Move the clamp to immediately after the credit field is parsed,
-ahead of the first branch that can reach out_post, so every later
-consumer sees a sanitized value. The cwnd update stays on the
-matched-request path.
+Commit 2ae50ad68cd7 ("xprtrdma: Close window between waking RPC
+senders and posting Receives") moved the Receive refill out of
+rpcrdma_wc_receive(), where it had run ahead of every reply, into
+rpcrdma_reply_handler() so that the responder's credit grant could
+be parsed before reposting. The bad-version and short-reply exits
+never reach that refill: they recycle the rep and return without
+calling rpcrdma_post_recvs().
 
-Fixes: 704f3f640f72 ("xprtrdma: Post receive buffers after RPC completion")
+A remote peer can therefore drain the client's posted Receive
+queue by sending a sustained stream of replies that are shorter
+than the fixed transport header or that carry an unrecognized
+RPC/RDMA version. Each such reply consumes one posted Receive
+without replacing it. Once the queue empties, the peer's next
+Send finds no posted Receive and the transport stalls until
+reconnect.
+
+Route both malformed-reply exits through the shared repost tail
+after recycling the rep, refilling against buf->rb_credits, the
+most recent accepted credit grant. Neither exit updates the
+congestion window, so RPCs admitted under the previous grant
+remain in flight awaiting replies. A smaller refill target would
+let a stream of malformed replies ratchet the posted Receive count
+down to the batch floor while the congestion window still admits
+rb_credits RPCs; a burst of valid replies to those RPCs could then
+overrun the posted Receives, and because the client connects with
+rnr_retry_count of zero, a single RNR NAK terminates the
+connection. Refilling against rb_credits also restores the target
+that applied to malformed replies before commit 2ae50ad68cd7
+("xprtrdma: Close window between waking RPC senders and posting
+Receives") when rpcrdma_post_recvs() computed it from rb_credits
+internally. rb_credits is at least one from connection
+establishment onward, so the repost path always keeps Receives
+posted.
+
+Fixes: 2ae50ad68cd7 ("xprtrdma: Close window between waking RPC senders and posting Receives")
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/rpc_rdma.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/sunrpc/xprtrdma/rpc_rdma.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
-index d19e371d63cf1a..3002e625f2b3f0 100644
+index 3002e625f2b3f0..425dbaec66fdfb 100644
 --- a/net/sunrpc/xprtrdma/rpc_rdma.c
 +++ b/net/sunrpc/xprtrdma/rpc_rdma.c
-@@ -1517,6 +1517,14 @@ void rpcrdma_reply_handler(struct rpcrdma_rep *rep)
- 	credits = be32_to_cpu(*p++);
- 	rep->rr_proc = *p++;
+@@ -1573,11 +1573,13 @@ void rpcrdma_reply_handler(struct rpcrdma_rep *rep)
  
-+	/* The credit grant from the wire is not trustworthy;
-+	 * sanitize it before any code path consumes it.
-+	 */
-+	if (credits == 0)
-+		credits = 1;	/* don't deadlock */
-+	else if (credits > r_xprt->rx_ep->re_max_requests)
-+		credits = r_xprt->rx_ep->re_max_requests;
-+
- 	if (rep->rr_vers != rpcrdma_version)
- 		goto out_badversion;
+ out_badversion:
+ 	trace_xprtrdma_reply_vers_err(rep);
+-	goto out;
++	rpcrdma_rep_put(buf, rep);
++	credits = buf->rb_credits;
++	goto out_post;
  
-@@ -1533,10 +1541,6 @@ void rpcrdma_reply_handler(struct rpcrdma_rep *rep)
- 	xprt_pin_rqst(rqst);
- 	spin_unlock(&xprt->queue_lock);
- 
--	if (credits == 0)
--		credits = 1;	/* don't deadlock */
--	else if (credits > r_xprt->rx_ep->re_max_requests)
--		credits = r_xprt->rx_ep->re_max_requests;
- 	if (buf->rb_credits != credits)
- 		rpcrdma_update_cwnd(r_xprt, credits);
- 
+ out_shortreply:
+ 	trace_xprtrdma_reply_short_err(rep);
+-
+-out:
+ 	rpcrdma_rep_put(buf, rep);
++	credits = buf->rb_credits;
++	goto out_post;
+ }
 -- 
 2.53.0
 
