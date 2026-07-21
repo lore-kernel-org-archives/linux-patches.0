@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44118408039;
-	Tue, 21 Jul 2026 18:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067403F2101;
+	Tue, 21 Jul 2026 18:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659928; cv=none; b=t/6Jrw8L6S3qmTY3tlZzZt0cfnZudES7hHLtJ3KXllY2ngGMHuMYYiQo6qrTkBXYUfErodupEJhW3oLc+TkaCqNW0L598+6GS1YvLv2Ae6z7CbCDRRMkXeXV2E5A5F9NsA6zufpAJNbkOlqPlrRtVjoDtcyGKBRfEX0dWQs64zA=
+	t=1784659931; cv=none; b=jyU0es9NEFs/iRWgDeUTIL7JO4dswkyXH2hrFtcN+d0cwI7fw825xlNRM20BR11fojiu4rAw6fKAbWrBtlvx4atOKzTYBAJ1WehlPLxy6s9S5vbrGP2JKFZpQQA17KsCzaCXfctwEpLal/CiF3svp5ugSex0NvHi4HVo3owpQ7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659928; c=relaxed/simple;
-	bh=WV4iOqTTwi/aq/G3PUHA6sPnS9rzkK/MiHwFaur8wsw=;
+	s=arc-20240116; t=1784659931; c=relaxed/simple;
+	bh=fRxt4sfQxpNuJT8Blvwxx0eZL391p/gLft4c2itZz/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kgpsLKy4L/xP575IUfH6wAhyX4hQJhfKUCvEfEy5BfyBAjvJGVYO1ZNvu/r93HfTWCu8GPMAnD1/FJjRv0uX65a9zxz3/Euu4Etnc5Kn7LIp+8+R9QezHDXW9PqnFAi7UO0NdPRIC7PtO64BR7TsSe6LvVpamRMVIEY2ah27pgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7HoZaNQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qVL9nUkATiiYchkbgU8R4fVvmMijMJyteo83W5bbHT38KBGJZcOj+eOecPXydc+k3/gVYlK1+6fJZApAEs5w4/DbzZ+9vZq2PtuYJu6QaaK34Ly5gGayJpdB5Q5kgn0R8qLWwN45bCsT0GZnLvIHCV0BtPwMl6UrP1enOk/g1Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVboc6Fj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7HoZaNQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AADF61F000E9;
-	Tue, 21 Jul 2026 18:52:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVboc6Fj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668931F000E9;
+	Tue, 21 Jul 2026 18:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659927;
-	bh=y78a1ptC7+I/EbwiA4Nz0XuyfTTa16PU9KPbZady3IQ=;
+	s=korg; t=1784659929;
+	bh=Eth7TVKKPrvGki05WlEnTyusYLTxB011JG7aLLLlLbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m7HoZaNQnqpcs21/RhexJp1D7iiv0UnHEniYjhpRROVR+yTarZBNW94MFKgLcNhFL
-	 hJNuvYFkliOu68P3QbciwvOZOUQ/t5i1RtK7Bn0d9MC7r2lbw+YlYoaNjMMwhPcLdr
-	 k03Hxd6lrd9UGtSUmCbWzDQ4zl8xNSYVK/IdkIRI=
+	b=VVboc6Fji1kl5cEePKfRzHDAHyMHejtpOQhDtIBl+8Pk9qaBxzIW+ncAlJWElazJM
+	 7QWZCBSpJQqz6B6YgW5bg4hkHnJRslA9kfvvZcIymZS/fzKo6NKyNqCHmFgKfTOCYG
+	 oRNcP+hDcsi7j0hoYk5aHVblxiGZhiYZoZChihW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Ming <ming.li@zohomail.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0732/2077] cxl/region: Fix out-of-bounds access in cxl_cancel_auto_attach()
-Date: Tue, 21 Jul 2026 17:06:45 +0200
-Message-ID: <20260721152610.062191258@linuxfoundation.org>
+Subject: [PATCH 7.1 0780/2077] bpf: Guard __get_user acesss with access_ok for uprobe_multi data
+Date: Tue, 21 Jul 2026 17:07:33 +0200
+Message-ID: <20260721152611.195223838@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,105 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Ming <ming.li@zohomail.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit cbda6a2c2bec2a5fb30a2ce85baeab15b5fc7db3 ]
+[ Upstream commit 4d87a251d45b4a95eb4c0abcfab809c9f231258a ]
 
-In cxl_cancel_auto_attach(), it assumes cxled->pos is a valid index for
-accessing p->targets[]. However, cxled->pos can be set to negative errno
-in cxl_region_sort_targets() if cxl_calc_interleave_pos() fails. This
-causes the driver to use a negative index to access p->targets[],
-resulting in out-of-bounds access.
+As reported by sashiko [1] we need to use access_ok to check the user
+space data bounds before we use __get-user to get it.
 
-Fix it by walking p->targets[] instead of using cxled->pos directly.
-
-Fixes: 87805c32e6ad ("cxl/region: Fix use-after-free from auto assembly failure")
-Signed-off-by: Li Ming <ming.li@zohomail.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260606-fix_two_issues_introduced_by_cxl_cancel_auto_attach-v1-1-5d94ca06c4e4@zohomail.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+[1] https://lore.kernel.org/bpf/20260610145235.CB1441F00893@smtp.kernel.org/
+Fixes: 0b779b61f651 ("bpf: Add cookies support for uprobe_multi link")
+Fixes: 89ae89f53d20 ("bpf: Add multi uprobe link")
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20260611114230.950379-2-jolsa@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/region.c | 40 +++++++++++++++++++--------------------
- 1 file changed, 19 insertions(+), 21 deletions(-)
+ kernel/trace/bpf_trace.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index e50dc716d4e820..8956b049c4620c 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -2011,8 +2011,9 @@ static int cxl_region_sort_targets(struct cxl_region *cxlr)
- 		cxled->pos = cxl_calc_interleave_pos(cxled, &cxlr->hpa_range);
- 		/*
- 		 * Record that sorting failed, but still continue to calc
--		 * cxled->pos so that follow-on code paths can reliably
--		 * do p->targets[cxled->pos] to self-reference their entry.
-+		 * cxled->pos so that cxl_calc_interleave_pos() emits its
-+		 * dev_dbg() for every member. which is useful for auto
-+		 * discovery debug.
- 		 */
- 		if (cxled->pos < 0)
- 			rc = -ENXIO;
-@@ -2202,18 +2203,30 @@ static int cxl_region_attach(struct cxl_region *cxlr,
- 	return 0;
- }
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index a02bd258677ee1..a4de502950c4b9 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -3180,6 +3180,7 @@ int bpf_uprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
+ 	unsigned long __user *uoffsets;
+ 	u64 __user *ucookies;
+ 	void __user *upath;
++	unsigned long size;
+ 	u32 flags, cnt, i;
+ 	struct path path;
+ 	char *name;
+@@ -3217,6 +3218,16 @@ int bpf_uprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
+ 	uref_ctr_offsets = u64_to_user_ptr(attr->link_create.uprobe_multi.ref_ctr_offsets);
+ 	ucookies = u64_to_user_ptr(attr->link_create.uprobe_multi.cookies);
  
--static int cxl_region_by_target(struct device *dev, const void *data)
-+static int cxl_region_remove_target(struct device *dev, void *data)
- {
--	const struct cxl_endpoint_decoder *cxled = data;
-+	struct cxl_endpoint_decoder *cxled = data;
- 	struct cxl_region_params *p;
- 	struct cxl_region *cxlr;
-+	int i;
- 
- 	if (!is_cxl_region(dev))
- 		return 0;
- 
- 	cxlr = to_cxl_region(dev);
- 	p = &cxlr->params;
--	return p->targets[cxled->pos] == cxled;
-+	for (i = 0; i < p->interleave_ways; i++) {
-+		if (p->targets[i] == cxled) {
-+			p->nr_targets--;
-+			cxled->state = CXL_DECODER_STATE_AUTO;
-+			cxled->pos = -1;
-+			p->targets[i] = NULL;
++	/*
++	 * All uoffsets/uref_ctr_offsets/ucookies arrays have the same value
++	 * size, we need to check their address range is safe for __get_user
++	 * calls.
++	 */
++	size = sizeof(*uoffsets) * cnt;
++	if (!access_ok(uoffsets, size) || !access_ok(uref_ctr_offsets, size) ||
++	    !access_ok(ucookies, size))
++		return -EFAULT;
 +
-+			return 1;
-+		}
-+	}
-+
-+	return 0;
- }
- 
- /*
-@@ -2222,25 +2235,10 @@ static int cxl_region_by_target(struct device *dev, const void *data)
-  */
- static void cxl_cancel_auto_attach(struct cxl_endpoint_decoder *cxled)
- {
--	struct cxl_region_params *p;
--	struct cxl_region *cxlr;
--	int pos = cxled->pos;
--
- 	if (cxled->state != CXL_DECODER_STATE_AUTO_STAGED)
- 		return;
- 
--	struct device *dev __free(put_device) =
--		bus_find_device(&cxl_bus_type, NULL, cxled, cxl_region_by_target);
--	if (!dev)
--		return;
--
--	cxlr = to_cxl_region(dev);
--	p = &cxlr->params;
--
--	p->nr_targets--;
--	cxled->state = CXL_DECODER_STATE_AUTO;
--	cxled->pos = -1;
--	p->targets[pos] = NULL;
-+	bus_for_each_dev(&cxl_bus_type, NULL, cxled, cxl_region_remove_target);
- }
- 
- static struct cxl_region *
+ 	name = strndup_user(upath, PATH_MAX);
+ 	if (IS_ERR(name)) {
+ 		err = PTR_ERR(name);
 -- 
 2.53.0
 
