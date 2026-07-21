@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB2B305E3B;
-	Tue, 21 Jul 2026 22:06:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4EC35C682;
+	Tue, 21 Jul 2026 22:06:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671562; cv=none; b=kN1P3/J676xtQ7QS1xSUJ/dlymMjPAPZyZuBY8KIIwLLgN4RBTnyMDlf9LPCHFNq27Ku0qWh6MFUgLvOOx+NfiWT1TPRW9Yk5c84QyvbfVdIbllZRP/h9zp8G53cRa8x7mbSqUddMqL5Zoa9bD7bl9BCOkt6n2qYk1hDYxPV2WQ=
+	t=1784671565; cv=none; b=lecYCruHoPaw3M4E7ZtAXD0GR5PWD15J+UeMPmu1LMtruyEdms710pi6rPQcKqINwa8t3VLHb7jcAJ1b3jxQWHLXfJHZ1fZLKG2DMBwfgJMgwABaTL9Xcnr6qs02D5Bb17w2ByE8xqlqmxLAHfzhlmltmG8+6QwLRKjPMjcB8uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671562; c=relaxed/simple;
-	bh=ZA5pVSJ0saIxtWV0syxECUdmUoa9IIGrU6I13t91MAU=;
+	s=arc-20240116; t=1784671565; c=relaxed/simple;
+	bh=qQnDVcJCVsL47+y+f5SflO4VUMtCEhHWOxfXaLmJIWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pt1bVLwtSkvhWPDO+gNByjHp8XBHhySj6Eo36V32PlnYpPxzXU5TxbbsmkLei2myDFut0X6sEPsdzXH9wpqrxWPIMb0MHujwxZsUZnJlqj2hmeKbyDoBgvL/1BDCYLgphIUqoTZD3An7Ip6RT/4fEXzH0340iLnnDKNA5U3FGuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jb3LAz0R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TcB69PB/DFrZZUGL0mzcXQ8yQLsXsFhtA7+8zMwdG7d2iNXwnV+Mo/ylUig2PVfGx2smeC0VSAzl3XPm5389g06laMVSoIXs3ltqxcOSZbw9o5bE7NL/4XDVbyR+VX9PIITtdL4Le1gqbCK+5wmeVBaA8gKUfT48IjyD0GfWHhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Afm+bDAb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jb3LAz0R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2711F000E9;
-	Tue, 21 Jul 2026 22:06:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Afm+bDAb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEAB11F000E9;
+	Tue, 21 Jul 2026 22:06:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671561;
-	bh=r1L7BBAb8bEqJ6FZ1RhTmmM6hBJlLXxk5hvBbGaxKP0=;
+	s=korg; t=1784671564;
+	bh=dWak0eHzX31jMRmPdFWHVlhlt1QdI3bvIL34Z+xNiqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jb3LAz0RTYxz+asAyIFTnhJJAhQW1PWakhQwqj0vrVtbOpZDelqlF4M5jVx6hC296
-	 jjde+0uOzJydC4/5ALSAxyZXGE0glgZ4ysJ0Cudn9NzyXVv8Ni8yo58wkbSQPvt+1L
-	 fSf2ylZsIGCudn+cA4O28YhPNSL55Fx3hz0NhN/M=
+	b=Afm+bDAbwtgz+XTG7DqO2b00aJyR/fkuUZXXOav3NoX6OFPIsWQRJqhgtqI+hyRz6
+	 +LIR1irwk5eknEEBnE82AnylisOlCrWBUjE4bc8uNRDBeeMH/2kZMeGRHDaHaW8j74
+	 ybqSZFC0kY60VOcjsb8w+fBRLl8NCvGjA9AdZ8z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jan Kara <jack@suse.cz>,
 	Breno Leitao <leitao@debian.org>,
-	Tejun Heo <tj@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 266/843] workqueue: drop spurious * from print_worker_info() fn declaration
-Date: Tue, 21 Jul 2026 17:18:21 +0200
-Message-ID: <20260721152412.007593525@linuxfoundation.org>
+Subject: [PATCH 5.15 293/843] configfs_lookup(): dont leave ->s_dentry dangling on failure
+Date: Tue, 21 Jul 2026 17:18:48 +0200
+Message-ID: <20260721152412.620788281@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -51,47 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 611583a76ea97991b0f65ec1ff099eac7fe0bae4 ]
+[ Upstream commit 10da12d352b7b2bb330a8609fdda9a58bf0e9856 ]
 
-print_worker_info() declares its local 'fn' as work_func_t * but
-worker->current_func has type work_func_t (a function pointer). The
-extra level of indirection is wrong and only happens to be harmless
-today because every supported Linux architecture has
-sizeof(work_func_t) == sizeof(work_func_t *):
-copy_from_kernel_nofault() reads the correct number of bytes by
-accident, and %ps still resolves the printed address because the
-stored value is the function address regardless of declared type.
+Normally ->s_dentry is cleared when dentry it's pointing to becomes
+negative (on eviction, realistically).  However, that only happens
+if dentry gets to be positive in the first place; in case of inode
+allocation failure dentry never becomes positive, so ->d_iput()
+is not called at all.
 
-On any future ABI where sizeof(void (*)()) differs from
-sizeof(void *), the nofault copy would transfer the wrong number of
-bytes and the subsequent %ps would print an incorrect address.
+We do part of what normally would've been done by configfs_d_iput()
+(dropping the reference to configfs_dirent) manually, but we do
+not clear ->s_dentry there.  Sloppy as it is, it does not matter in
+case of configfs_create_{dir,link}() - there configfs_dirent does
+not survive dropping the sole reference to it.
 
-Match the field type so the intent is explicit and the code does not
-silently rely on equal pointer sizes.
+However, for configfs_lookup() it *does* survive, with a dangling
+pointer to soon to be freed dentry sitting it its ->s_dentry.
 
-Fixes: 3d1cb2059d93 ("workqueue: include workqueue info when printing debug dump of a worker task")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Subsequent getdents(2) in that directory will end up dereferencing
+that pointer in order to pick the inode number.  Use after free...
+
+This is the minimal fix; the right approach is to set the linkage
+between dentry and configfs_dirent only after we know that we have
+an inode, but that takes more surgery and the bug had been there
+since 2006, so...
+
+Fixes: 3d0f89bb1694 ("configfs: Add permission and ownership to configfs objects") # 2.6.16-rc3
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/workqueue.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/configfs/dir.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index 73002260674fe5..61db234c28433e 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -4688,7 +4688,7 @@ EXPORT_SYMBOL_GPL(set_worker_desc);
-  */
- void print_worker_info(const char *log_lvl, struct task_struct *task)
- {
--	work_func_t *fn = NULL;
-+	work_func_t fn = NULL;
- 	char name[WQ_NAME_LEN] = { };
- 	char desc[WORKER_DESC_LEN] = { };
- 	struct pool_workqueue *pwq = NULL;
+diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
+index e017ba188f7b5c..afe2b802eb3193 100644
+--- a/fs/configfs/dir.c
++++ b/fs/configfs/dir.c
+@@ -462,6 +462,9 @@ static struct dentry * configfs_lookup(struct inode *dir,
+ 
+ 			inode = configfs_create(dentry, mode);
+ 			if (IS_ERR(inode)) {
++				spin_lock(&configfs_dirent_lock);
++				sd->s_dentry = NULL;
++				spin_unlock(&configfs_dirent_lock);
+ 				configfs_put(sd);
+ 				return ERR_CAST(inode);
+ 			}
 -- 
 2.53.0
 
