@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D3E3368A5;
-	Tue, 21 Jul 2026 19:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33D53644B3;
+	Tue, 21 Jul 2026 19:52:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663553; cv=none; b=iU5gsfPuyQ8l8NFMq6kMGAIm9vvZmNW92OEpMbh2WEOiiTYxMn/BBXxdydxDlBR3/tbgCAprnQza+zVDwDFHLlfTHX7g8aY0wv6Qw2GmIh0YgoGI5fKtuJp4YEYU1OHo4i4yGFA2VZ7I2c3mX5fFFP2PYcgIuI1bo+3V4VGXSZM=
+	t=1784663556; cv=none; b=OpJH0VTCfRPG6/t6iEslHi775ufoO6tU6//CrASbm+TROHsWZbhFL/SAVHFo+j6Rl7ujyndtL2AaxVlIS+zE1la1NJwTyhIVCsgrba3wxHBCKe4/4V+sMct6Zwgc9Y3WwxNkoXGICnjzojWCYU0JdWdi3eOBZunMjfgw5dlTRF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663553; c=relaxed/simple;
-	bh=JmW4PUVGnCZubkbHtCRWOtQA82nv1CqYQ/rvM1SaWIk=;
+	s=arc-20240116; t=1784663556; c=relaxed/simple;
+	bh=QGRYksqueHtEzl8U1OxQt97zLhxCWRsaA8jJy8CmyK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cMkK3fSXEyQOgOfIePfqUR9Jm5Bdt8NDhE2XvzW6HMIjLEJEVu3ww9yx/ArRq2ZIY+Bm3J2NJGzxSa+kGzuQ0DDgp0eUU8YDBH+2zWwhjhP9YZ/Y1B7vYGGzycYntUbBYNJ3OxeCtyaF8WNSNP2khtgI6ZUBd86WTOrFAPuMovM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kiwBZrJF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Do3qAZ69nA9H/4K9VMjhzFWEssLh46zYRPTORTxZzTzeuckswHyAzB+Xef2CMO8FC0Nr1sFRnAfsnIa+AJ59ov4oFJww6JlEtZLMwiAlvkEKpmszlZnvqjZsnQ3spq2fvDxOa/jE8qOtTtT+rgfOE1Yscn/iExPOFXey/2uGwKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKMmN+sI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kiwBZrJF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17FA1F000E9;
-	Tue, 21 Jul 2026 19:52:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKMmN+sI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD801F000E9;
+	Tue, 21 Jul 2026 19:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663552;
-	bh=JvyvgarDXArXHrHaE4kNR4HbNi4q/GHG8qAh4h2B/AA=;
+	s=korg; t=1784663554;
+	bh=Fq4mT0uZnpwJkASU/wu3CFzeaODpvJYI8sJGnFJm/lU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kiwBZrJFOijDCmhDZmac9e1yVYLakIvhFj0knGUE3FjZtjW67KTrF4PHpDqSg/gXf
-	 oDuwG7syNTpDvg0aiupA+xUyYtRxEOYx5J+uUXaHxgGfoiCV88YX+0avXlIsAhwImm
-	 OCpBcLNQOzqSO1ra94ol/M/lKu8bhxhLeMoMfTg0=
+	b=xKMmN+sIwbRXErBxBxyzcbEe6XSl8SKvHWIx/talAcKm+eCCIj9O+vMJYey+WNV1W
+	 et+k2xF6SV3nRICNiIHboHyj+9codkAXuQg69EBtih4d7LxLo7bFtZSBgiuGtwIh0g
+	 MoLfz+40iXx7ewsHCYISSK8s+9Ia24H8DaeJx5G4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Wyatt Feng <bronzed_45_vested@icloud.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.12 0865/1276] netfilter: ecache: fix inverted time_after() check
-Date: Tue, 21 Jul 2026 17:21:48 +0200
-Message-ID: <20260721152505.408096927@linuxfoundation.org>
+Subject: [PATCH 6.12 0866/1276] netfilter: xt_nat: reject unsupported target families
+Date: Tue, 21 Jul 2026 17:21:49 +0200
+Message-ID: <20260721152505.430258669@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -55,69 +56,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Wyatt Feng <bronzed_45_vested@icloud.com>
 
-commit b06163ce52ec0561f202fbfb9b08090cb61f512e upstream.
+commit 5d1a2240935ea47e2673d0ea17fdb058e4dc91dd upstream.
 
-ecache_work_evict_list() redelivers DESTROY events for conntracks that
-were moved to the per-netns dying_list after event delivery failed.  It
-sets a 10ms deadline:
+xt_nat SNAT and DNAT target handlers assume IP-family conntrack state
+is present and can dereference a NULL pointer when instantiated from an
+unsupported family through nft_compat. A bridge-family compat rule can
+therefore trigger a NULL-dereference in nf_nat_setup_info().
 
-    stop = jiffies + ECACHE_MAX_JIFFIES
+Reject non-IP families in xt_nat_checkentry() so unsupported targets
+cannot be installed. Keep NFPROTO_INET allowed for valid inet NAT
+compat users and leave the runtime fast path unchanged.
 
-but then tests:
+[ The crash was fixed via
+  9dbba7e694ec ("netfilter: nft_compat: ebtables emulation must reject non-bridge targets"),
+  so this patch is no longer critical.
+  Nevertheless, NAT is only relevant for ipv4/ipv6, so this extra
+  family check is a good idea in any case. ]
 
-    time_after(stop, jiffies)
-
-This condition is true while the deadline is still in the future, so the
-worker returns STATE_RESTART after the first successful redelivery in the
-usual case.  ecache_work() maps STATE_RESTART to delay 0, which turns the
-redelivery path into one dying conntrack per workqueue dispatch and makes
-the sent > 16 batching/cond_resched() path effectively unreachable.
-
-A conntrack netlink listener whose receive queue is congested can make
-DESTROY event delivery fail with -ENOBUFS.  With sustained conntrack
-churn, entries then accumulate on the dying_list and are only drained at
-the degraded one-entry-per-dispatch rate once delivery succeeds again,
-wasting CPU on back-to-back workqueue reschedules and prolonging
-conntrack memory/resource pressure.
-
-In a KASAN QEMU test with CONFIG_NF_CONNTRACK_EVENTS=y and
-nf_conntrack.enable_hooks=1, a congested DESTROY listener caused 8192
-nf_ct_delete() calls to return false and move entries to the dying_list.
-After closing the listener, the unfixed kernel needed 7670 ecache_work()
-entries to destroy 7669 conntracks.  With this change, the same 8192
-entries were destroyed by 2 ecache_work() entries.
-
-Swap the comparison so the worker restarts only after the deadline has
-expired.
-
-Fixes: 2ed3bf188b33 ("netfilter: ecache: use dedicated list for event redelivery")
+Fixes: c7232c9979cb ("netfilter: add protocol independent NAT core")
 Cc: stable@vger.kernel.org
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: Claude-Code:GLM-5.2
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_ecache.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/xt_nat.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/net/netfilter/nf_conntrack_ecache.c
-+++ b/net/netfilter/nf_conntrack_ecache.c
-@@ -77,7 +77,7 @@ next:
- 		hlist_nulls_del_rcu(&ct->tuplehash[IP_CT_DIR_ORIGINAL].hnnode);
- 		hlist_nulls_add_head(&ct->tuplehash[IP_CT_DIR_REPLY].hnnode, &evicted_list);
+--- a/net/netfilter/xt_nat.c
++++ b/net/netfilter/xt_nat.c
+@@ -26,6 +26,15 @@ static int xt_nat_checkentry_v0(const st
  
--		if (time_after(stop, jiffies)) {
-+		if (time_after(jiffies, stop)) {
- 			ret = STATE_RESTART;
- 			break;
- 		}
+ static int xt_nat_checkentry(const struct xt_tgchk_param *par)
+ {
++	switch (par->family) {
++	case NFPROTO_IPV4:
++	case NFPROTO_IPV6:
++	case NFPROTO_INET:
++		break;
++	default:
++		return -EINVAL;
++	}
++
+ 	return nf_ct_netns_get(par->net, par->family);
+ }
+ 
 
 
