@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 968E823C368;
-	Tue, 21 Jul 2026 20:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BFF1435A96;
+	Tue, 21 Jul 2026 20:20:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665253; cv=none; b=LD/ecAz+6FlLYXdRfw+Z1TwaAM7jANXT4GHBQV6WHY7GUBX/SnB9KARq8N5ohxlOtXmQuOIlcSWQEq3R4wtrUrQchC7RL/OjJKLo5x+oR6KcUabkp9cUVpaiaocc9j+m1liZBCvkLegdkrTmEnl/ODm5Q1j6g3ldhH7vBqUcuvo=
+	t=1784665256; cv=none; b=nFBwaIc76vjpdWGe9jyRiQGiELORCseY47a7O/qO8AYBlXsp85j0pBb2e0Z9Q6FjwEQvHSX9AgXbNUwQUeIxZPD9L9wrfQjxps5xcZYnRi6YzrIbGp1rMXu/DWYdtCer2r4D7+on8g4gZnFtFjju9GL2+a3GjQxP9h/wjrxvmIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665253; c=relaxed/simple;
-	bh=4L0Z3CJPnzKYuKi/wkusvNMOWHyPx4nqT1b2ywCKrjU=;
+	s=arc-20240116; t=1784665256; c=relaxed/simple;
+	bh=3DxlP4VJ7P8078UwcQ4cKA19fAfoPfAnUNTe5y4I0dg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LU3cPXvIqMhO7wR5BZxQaxxIEzGEVrLbeiyrYg9hFe78iY7DGaMLETapftD5oB83UQMnOj/GlJdOFHDYhinUm0WsSoLCNkITayTunQNNIZmPdM5VnziBrrLq9OleROilCDcfEO2Ph89PIUUopMFtVEJfpaHcT+KerbYW9VvaUV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ah2bkDAZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=phya+FT6ecSCc1CW8TSynOH+Vt26GCB1eMqGt14P/MYsFxBPAUK5v3NTfuSWuc+0u10UY6AdG8LolNQdTfMatkQN2WkDygfx6lpqPHjwNmakMUpE6ngOF8CbjorE/+ib/gyKMk7f4QS2WII/X++lN5XSF2Wc3KgRgiCCuLni08w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyXcZHjH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ah2bkDAZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D6C1F000E9;
-	Tue, 21 Jul 2026 20:20:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyXcZHjH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0131F000E9;
+	Tue, 21 Jul 2026 20:20:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665252;
-	bh=rJz5qgIehkFUxjCjj/gMTMGcEqOtzcZ9AyrxfA2Z1n0=;
+	s=korg; t=1784665254;
+	bh=abQxHuvwrXcf0jX+63Q+i+OKxZ1khqLrdAvTBfCpYuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ah2bkDAZAr0EF9fjzmMoMnZwzwBPKy5E5Riy8eCYdix1fdIW78wslAQkCzcSrYKRl
-	 R9MpFZ2Yyd4TBVgFBUp78Oa5jogPLZUnaJPZtCBgqtrTotg4ltE0R0KxlfHnmgmBan
-	 c2/xC/Fm9oUMx6T2HVOsTicxbQmveYyiKuaohV/c=
+	b=DyXcZHjHq8eOmt89zTClMTEIkrV5kGuwa9Km7+jO/mvVBCwXF5bh4nrBLAD89Xj2K
+	 21fzgvp5gRa04df6Eirvq4aTV1rJLaq9gAKoaA8tTJj6U2Ge37DhD5WHfM+BWmiabt
+	 iJ9u8YdmbwEla1Kv8Mq9NvDcjyXveVqGByboJL4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rodrigo=20Lugathe=20da=20Concei=C3=A7=C3=A3o=20Alves?= <lugathe2@gmail.com>,
+	"Erich E. Hoover" <erich.e.hoover@gmail.com>,
 	stable <stable@kernel.org>
-Subject: [PATCH 6.6 0227/1266] USB: core: add USB_QUIRK_NO_LPM for VIA Labs USB 2.0 hub
-Date: Tue, 21 Jul 2026 17:11:04 +0200
-Message-ID: <20260721152446.896614946@linuxfoundation.org>
+Subject: [PATCH 6.6 0236/1266] USB: quirks: add NO_LPM for the Samsung T5 EVO Portable SSD
+Date: Tue, 21 Jul 2026 17:11:13 +0200
+Message-ID: <20260721152447.101445317@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -44,36 +44,33 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rodrigo Lugathe da Conceição Alves <lugathe2@gmail.com>
+From: Erich E. Hoover <erich.e.hoover@gmail.com>
 
-commit bd728c3d9b1cc0bb0fda6a7055c5c8b55d7477b2 upstream.
+commit fc591787785b9709a0bb65a7df3ba2537d611c47 upstream.
 
-The VIA Labs, Inc. USB 2.0 hub controller (2109:2817),
-found in a KVM switch, fails to enumerate high-power devices during
-cold boot and system restart.
+The Samsung T5 EVO Portable SSD (04e8:6200) exhibit two forms of
+link instability when USB Link Power Management is enabled:
 
-Applying the kernel parameter
-  usbcore.quirks=2109:2817:k
-resolves the issue.
+  1. The units fail to initialize properly on first detection,
+  resulting in a lockup in the drive where it must be power cycled
+  or the kernel will not recognize the presence of the device.
 
-Enumeration failure log:
-  usb 1-1.2.3: device descriptor read/64, error -32
-  usb 1-1.2.3: Device not responding to setup address.
-  usb 1-1.2.3: device not accepting address 11, error -71
-  usb 1-1.2-port3: unable to enumerate USB device
+  2. If used for sustained operations (small amounts of continuous
+  data are transferred to the unit) then the unit will "hiccup"
+  after roughly 8 hours of use and will disconnect and reconnect.
+  This has a certain probability of triggering the first issue,
+  but also causes mount points to become invalid since the device
+  gets issued a new letter.
 
-Add USB_QUIRK_NO_LPM for this device.
-
-Signed-off-by: Rodrigo Lugathe da Conceição Alves <lugathe2@gmail.com>
+Signed-off-by: Erich E. Hoover <erich.e.hoover@gmail.com>
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260603113626.395612-1-lugathe2@gmail.com
+Link: https://patch.msgid.link/20260602204508.48856-1-erich.e.hoover@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  drivers/usb/core/quirks.c |    3 +++
@@ -81,15 +78,15 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/usb/core/quirks.c
 +++ b/drivers/usb/core/quirks.c
-@@ -574,6 +574,9 @@ static const struct usb_device_id usb_qu
- 	/* VLI disk */
- 	{ USB_DEVICE(0x2109, 0x0711), .driver_info = USB_QUIRK_NO_LPM },
+@@ -297,6 +297,9 @@ static const struct usb_device_id usb_qu
+ 	/* CarrolTouch 4500U */
+ 	{ USB_DEVICE(0x04e7, 0x0030), .driver_info = USB_QUIRK_RESET_RESUME },
  
-+	/* VIA Labs, Inc. USB2.0 Hub */
-+	{ USB_DEVICE(0x2109, 0x2817), .driver_info = USB_QUIRK_NO_LPM },
++	/* Samsung T5 EVO Portable SSD */
++	{ USB_DEVICE(0x04e8, 0x6200), .driver_info = USB_QUIRK_NO_LPM },
 +
- 	/* Raydium Touchscreen */
- 	{ USB_DEVICE(0x2386, 0x3114), .driver_info = USB_QUIRK_NO_LPM },
- 
+ 	/* Samsung Android phone modem - ID conflict with SPH-I500 */
+ 	{ USB_DEVICE(0x04e8, 0x6601), .driver_info =
+ 			USB_QUIRK_CONFIG_INTF_STRINGS },
 
 
