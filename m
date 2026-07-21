@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C406E471260;
-	Tue, 21 Jul 2026 21:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2292D4582C8;
+	Tue, 21 Jul 2026 21:08:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668127; cv=none; b=pDkBEuy+neJ69ujBKU96elVdoq0+G7WC38Aat1NVw/dmDyLfm5nI8l5BHJu66GeXc5GYM89RLuZbJQrirK7flLYnx8C+2SFf957V6etLXdrEN+whaMFWfZrkORxXXP6400uNtsXNaeMosno59GQN9bsDd+IoZGbJw6xJGtlXCbI=
+	t=1784668133; cv=none; b=NtGb2kwb264MeHJfilfj7wpkjc/32lUjRoXpp39A4P+h36kNeKtNXv1LwN6iZqoARGfZ9w6PTdKQqp6tTrmAUTrV7c9vWS/QJKi6SLavRX5iddcQ2n1QP/GbF/g2D66jeuc83lYQWxIc7buGdpK1Wy3b9X3HLDxE1NvrUcesHGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668127; c=relaxed/simple;
-	bh=zdEk9GdO0PG27bHN2ZqsXVIW/BE5AxeE4h41HzKzknU=;
+	s=arc-20240116; t=1784668133; c=relaxed/simple;
+	bh=K35vV3afKL1OF81rHhMg0wmOKFX2H9BOXcv/L4PZ3vM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJqN1L6bVhWNbrnnQsRNhb+DZGAbfeAIeHUdHDmPhqNjWKhfqD2YqcoI+B0dA13eQgM6df4ShrX0EK3Y7mgj7Mj3Z70TsBUc/QxNKpahkbDqO39MY5pDqqCtgvwjwiVXbiC6vIKFE+0GJ/FqwAtZtCszXPILc+MJVD8CW4i2fbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WahoVUBA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TkXNFOeuWyLXyZoYBhcQqKxRCzrtd4+Xn+7RNnzPBByFw5NpxJXHGe3hWWY5+wpHkJ1uMoZKLgFwkNbg7Gggq2kl+D/XogDznKZHos2x+Ym//gPO9ZUmqtc7DeckRcicdXaOGpWxc4krSMRdTbpKXFooEfIdEd73PriCBJUewcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tp069IUC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WahoVUBA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9F41F000E9;
-	Tue, 21 Jul 2026 21:08:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tp069IUC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F5B81F00A3A;
+	Tue, 21 Jul 2026 21:08:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668126;
-	bh=blctjwWlsQSJnhcPeTyMnW6+c2105Q+CpXpejBlW93U=;
+	s=korg; t=1784668131;
+	bh=1PMdIzFy6FzvB4Y5XDCSiM/d8FRCbVSnjeVATkIHK/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WahoVUBAvKOzxsU9exPWZ/tl02Rm7ZUN/RE4VQ+QLnlZ5eap87GvibFhFKE54+rYG
-	 Ef917nDs7+ZT+G1iIDnjCE+ImW7C/VrU9o0S/ii1CZZeH1K4H2ATx/pTYIYjDjgRqh
-	 Qu/VNYKZW75SSVsCwn15/VMOViu6iLDxDR6GpvLY=
+	b=Tp069IUCMxxMPoW5pPUcNGQDBt81rB2Rg7Or1OLrNgNufbSqv7VKeJNBT4olsminj
+	 Cg8nBMHuuUCEXjdnSxopY+1oCZ4iRRk0HZ3c4pyp3dEYGg1zSnSgRcvdH5supic3FT
+	 SaKWRnjxv9eEyuRLoUAYywGw00DkINJic/rx6+/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0005/1067] LoongArch: Report dying CPU to RCU in stop_this_cpu()
-Date: Tue, 21 Jul 2026 17:10:06 +0200
-Message-ID: <20260721152424.653009215@linuxfoundation.org>
+	Stepan Ionichev <sozdayvek@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 6.1 0061/1067] iio: gyro: bmg160: bail out when bandwidth/filter is not in table
+Date: Tue, 21 Jul 2026 17:11:02 +0200
+Message-ID: <20260721152425.932618316@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -50,64 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-commit f2539c56c74691e7a88af6372ba2b48c06ed2fe4 upstream.
+commit 8320c77e67382d5d55d77043a5f60a867d408a2b upstream.
 
-This is a port of MIPS commit 9f3f3bdc6d9dac1 ("MIPS: smp: report dying
-CPU to RCU in stop_this_cpu()"). smp_send_stop() parks all secondary
-CPUs in stop_this_cpu(). And the function marks the CPU offline for the
-scheduler via set_cpu_online(false) but never informs RCU, so RCU keeps
-expecting a quiescent state from CPUs that are now spinning forever with
-interrupts disabled.
+bmg160_get_filter() walks bmg160_samp_freq_table[] looking for the entry
+matching the bw_bits value read from the chip:
 
-As long as nothing waits for an RCU grace period after smp_send_stop()
-this is harmless, which is why it went unnoticed. However, since commit
-91840be8f710370 ("irq_work: Fix use-after-free in irq_work_single() on
-PREEMPT_RT"), irq_work_sync() calls synchronize_rcu() on architectures
-without an irq_work self-IPI, i.e. where arch_irq_work_has_interrupt()
-returns false. Any irq_work_sync() issued in the reboot/shutdown/halt
-path after smp_send_stop() then blocks on a grace period that can never
-complete, hanging the reboot:
+	for (i = 0; i < ARRAY_SIZE(bmg160_samp_freq_table); ++i) {
+		if (bmg160_samp_freq_table[i].bw_bits == bw_bits)
+			break;
+	}
+	*val = bmg160_samp_freq_table[i].filter;
 
-  WARNING: CPU: 0 PID: 15 at kernel/irq_work.c:144 irq_work_queue_on
-  ...
-  rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
-  rcu: Offline CPU 1 blocking current GP.
-  rcu: Offline CPU 2 blocking current GP.
-  rcu: Offline CPU 3 blocking current GP.
+If no entry matches, i ends up equal to the array size and the next line
+reads one slot past the end. bmg160_set_filter() has the same shape, driven
+by 'val' instead of bw_bits.
 
-This issue needs some hacks to reproduce, and it was not noticed on
-LoongArch because arch_irq_work_has_interrupt() usually returns true.
+smatch flags both:
 
-Call rcutree_report_cpu_dead() once interrupts are disabled, mirroring
-the generic CPU-hotplug offline path, so RCU stops waiting on the parked
-CPUs and grace periods can still complete. LoongArch shuts down all CPUs
-here without going through the CPU-hotplug mechanism, so this report is
-not otherwise issued.
+  drivers/iio/gyro/bmg160_core.c:204 bmg160_get_filter() error:
+  buffer overflow 'bmg160_samp_freq_table' 7 <= 7
+  drivers/iio/gyro/bmg160_core.c:222 bmg160_set_filter() error:
+  buffer overflow 'bmg160_samp_freq_table' 7 <= 7
 
-Cc: <stable@vger.kernel.org>
-Fixes: 91840be8f710 ("irq_work: Fix use-after-free in irq_work_single() on PREEMPT_RT")
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Return -EINVAL when no entry matches.
+
+The set_filter() path is reachable from userspace via the sysfs
+in_anglvel_filter_low_pass_3db_frequency interface, so userspace can
+trivially trigger the out-of-bounds read with a value that is not in
+bmg160_samp_freq_table[].filter.
+
+Fixes: 22b46c45fb9b ("iio:gyro:bmg160 Gyro Sensor driver")
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/smp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/gyro/bmg160_core.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/loongarch/kernel/smp.c b/arch/loongarch/kernel/smp.c
-index 18a2b37f4aea37..356918d5aa28f1 100644
---- a/arch/loongarch/kernel/smp.c
-+++ b/arch/loongarch/kernel/smp.c
-@@ -517,6 +517,7 @@ static void stop_this_cpu(void *dummy)
- 	set_cpu_online(smp_processor_id(), false);
- 	calculate_cpu_foreign_map();
- 	local_irq_disable();
-+	rcu_report_dead(smp_processor_id());
- 	while (true);
- }
+--- a/drivers/iio/gyro/bmg160_core.c
++++ b/drivers/iio/gyro/bmg160_core.c
+@@ -205,6 +205,9 @@ static int bmg160_get_filter(struct bmg1
+ 			break;
+ 	}
  
--- 
-2.53.0
-
++	if (i == ARRAY_SIZE(bmg160_samp_freq_table))
++		return -EINVAL;
++
+ 	*val = bmg160_samp_freq_table[i].filter;
+ 
+ 	return ret ? ret : IIO_VAL_INT;
+@@ -222,6 +225,9 @@ static int bmg160_set_filter(struct bmg1
+ 			break;
+ 	}
+ 
++	if (i == ARRAY_SIZE(bmg160_samp_freq_table))
++		return -EINVAL;
++
+ 	ret = regmap_write(data->regmap, BMG160_REG_PMU_BW,
+ 			   bmg160_samp_freq_table[i].bw_bits);
+ 	if (ret < 0) {
 
 
