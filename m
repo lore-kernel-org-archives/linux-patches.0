@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF0846EF7F;
-	Tue, 21 Jul 2026 18:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FCC46D56F;
+	Tue, 21 Jul 2026 18:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658735; cv=none; b=OkSyRwLniaRceKmmdsDiGpDYsFOOcD7uNhyV9B0YjT3dUf5fgwv8NfGnWtwWw4j1SR5D6fHQ54oaVJqFY0MjMmiHpAwAcFH+eymHuhbVvTKwrF6OAU0cUgniVxVy4l2sDhuU8kV6kMeFxhDf2XDnGBfwXhCTftZgH4bCipxoCO4=
+	t=1784658737; cv=none; b=QxEgsnY6UYaEcoaWBfH7tr9T4OLWGxJ9YiAg4QHqhL9n058YRggU4QJ2lqrIJHHl+o3LdM5oz2zqKLS5MwtA5XpAe3ep6gw0ATS+rNpAV1YIDbSzSeZpYpHMyIBJZltYSf+PPHLqEus/cVgmuCs7W2205YDSAdpZQiZNoSVNr4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658735; c=relaxed/simple;
-	bh=v1+xpQ000OWA3xwqfS74CDlKdY10qfcs9ki4naz5XcQ=;
+	s=arc-20240116; t=1784658737; c=relaxed/simple;
+	bh=65NbyQPOWGfISvYw3Or55MdtKttTZJ/CDAehsyktW9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Nowxo8pv5Dhwak0g5PPHUEinrq/QtLrBjhlvUiUBX4d98mUJlYxk/eqcIyDssqQJ6FF+cfX0iO770k3GlK6+T6ebZ1nz0QZJIqLZxPGPMub1aQCmtvOEDd5ZGcU9+YN8GEe22dmNvttYE3/e96bNLxrywcYSA75HzY7vi+zcQF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKN3kPOU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lBpNY9WNzlAvrDNMZZdUyI7y8hCzizcV38QochJakpXFMhHtQeoiL4ACL9kpbE3kJyRo6EPipI7dh2UwKtxjHjH+2boq5LkxcOPl2ni+FKgUpbxbjTKxsbK1WoS3Fr2GrcOs9fVgw8OLoq7d/6hbNJamxKUu/0fAkcjfFUc16r4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GuWmlAyB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKN3kPOU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A54AE1F000E9;
-	Tue, 21 Jul 2026 18:32:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GuWmlAyB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE0F1F00A3A;
+	Tue, 21 Jul 2026 18:32:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658734;
-	bh=XkNdFXsRUHoyfQLMRHM7SI9fLidLwZ5AT713Sh1cdng=;
+	s=korg; t=1784658736;
+	bh=GVfIdeM5Gte0KwnUctZJ8tKDqjSaGeekDAwelbMrYiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hKN3kPOUliNETfs0Ct1zMRQk1WyVdsezH2WtltdT2+SeAxbtkfX8QTrN71jYkv4+U
-	 ZRZqP1Dvp+6FgJzWed80W5hMIv/+FPxuAWI20IpMDHRGv0DQBoMENrLsykPcX1R9/Z
-	 g1p4Aekt0CCoypHv3krwHnUgvANXXsm1Ol/L3D+c=
+	b=GuWmlAyB1ORrQCDBuUhLaEOGcyd1qudVc5e51aaW7ywS6Gib5s8XzUVeJuyyJcJN1
+	 k/CsazPB8Xc4C/fREBSes+OS+uFurKwqDRAs2MEI+pI44D3Ht1qs6jj6W88N5oxDma
+	 ECVd+5YLXUHhxv1lX0woqsdEMfH/oT5x7cnh+rds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.18 1211/1611] HID: playstation: validate num_touch_reports in DualShock 4 reports
-Date: Tue, 21 Jul 2026 17:22:07 +0200
-Message-ID: <20260721152542.674673811@linuxfoundation.org>
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 1212/1611] Bluetooth: SCO: fix sleeping under spinlock in sco_conn_ready
+Date: Tue, 21 Jul 2026 17:22:08 +0200
+Message-ID: <20260721152542.697096695@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -44,63 +44,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benoît Sevens <bsevens@google.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-commit 82a4fc46330910b4c1d9b189561439d468e3ff11 upstream.
+commit b819db93d73f4593636299e229914052b89e3ef2 upstream.
 
-The DualShock 4 HID driver fails to validate the num_touch_reports field
-received from the device in both USB and Bluetooth input reports.
-A malicious device could set this field to a value larger than the
-allocated size of the touch_reports array (3 for USB, 4 for Bluetooth),
-leading to an out-of-bounds read in dualshock4_parse_report().
+sco_conn_ready calls sleeping functions under conn->lock spinlock.
 
-This can result in kernel memory disclosure when processing malicious
-HID reports.
+The critical section can be reduced: conn->hcon is modified only with
+hdev->lock held. It is guaranteed to be held in sco_conn_ready, so
+conn->lock is not needed to guard it.
 
-Validate num_touch_reports against the array size for the respective
-connection types before processing the touch data.
+Move taking conn->lock after lock_sock(parent). This also follows the
+lock ordering lock_sock() > conn->lock elsewhere in the file.
 
-Signed-off-by: Benoît Sevens <bsevens@google.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 27c24fda62b60 ("Bluetooth: switch to lock_sock in SCO")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-playstation.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/bluetooth/sco.c |   20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
---- a/drivers/hid/hid-playstation.c
-+++ b/drivers/hid/hid-playstation.c
-@@ -2377,6 +2377,12 @@ static int dualshock4_parse_report(struc
- 		struct dualshock4_input_report_usb *usb =
- 			(struct dualshock4_input_report_usb *)data;
- 
-+		if (usb->num_touch_reports > ARRAY_SIZE(usb->touch_reports)) {
-+			hid_err(hdev, "DualShock4 USB input report has invalid num_touch_reports=%d\n",
-+				usb->num_touch_reports);
-+			return -EINVAL;
-+		}
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -1407,26 +1407,24 @@ static void sco_conn_ready(struct sco_co
+ 		sk->sk_state_change(sk);
+ 		release_sock(sk);
+ 	} else {
+-		sco_conn_lock(conn);
+-
+-		if (!conn->hcon) {
+-			sco_conn_unlock(conn);
++		if (!conn->hcon)
+ 			return;
+-		}
 +
- 		ds4_report = &usb->common;
- 		num_touch_reports = min_t(u8, usb->num_touch_reports,
- 					  ARRAY_SIZE(usb->touch_reports));
-@@ -2392,6 +2398,12 @@ static int dualshock4_parse_report(struc
- 			return -EILSEQ;
++		lockdep_assert_held(&conn->hcon->hdev->lock);
+ 
+ 		parent = sco_get_sock_listen(&conn->hcon->src);
+-		if (!parent) {
+-			sco_conn_unlock(conn);
++		if (!parent)
+ 			return;
+-		}
+ 
+ 		lock_sock(parent);
+ 
++		sco_conn_lock(conn);
++
+ 		sk = sco_sock_alloc(sock_net(parent), NULL,
+ 				    BTPROTO_SCO, GFP_ATOMIC, 0);
+ 		if (!sk) {
+-			release_sock(parent);
+ 			sco_conn_unlock(conn);
++			release_sock(parent);
+ 			return;
  		}
  
-+		if (bt->num_touch_reports > ARRAY_SIZE(bt->touch_reports)) {
-+			hid_err(hdev, "DualShock4 BT input report has invalid num_touch_reports=%d\n",
-+				bt->num_touch_reports);
-+			return -EINVAL;
-+		}
+@@ -1447,9 +1445,9 @@ static void sco_conn_ready(struct sco_co
+ 		/* Wake up parent */
+ 		parent->sk_data_ready(parent);
+ 
+-		release_sock(parent);
+-
+ 		sco_conn_unlock(conn);
 +
- 		ds4_report = &bt->common;
- 		num_touch_reports = min_t(u8, bt->num_touch_reports,
- 					  ARRAY_SIZE(bt->touch_reports));
++		release_sock(parent);
+ 	}
+ }
+ 
 
 
