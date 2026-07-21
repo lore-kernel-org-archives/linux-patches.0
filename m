@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F01145B27;
-	Tue, 21 Jul 2026 18:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D642315D53;
+	Tue, 21 Jul 2026 18:40:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784659219; cv=none; b=hxqowA0GkOxvSHLxChokG0MhUF9h+tDB21qvEvUONezTBuGlh3SaQc8PToN6mUlPc3TL7b1yKghM2A2934/ICk+6ZlDvD9/RRlho2XwhhWOXqjQBHE3ERs/4pZSv/ftnrTF2H2ohbx7zMbT/VtHgMkqNNa2xDFRfyYnmij7iabc=
+	t=1784659222; cv=none; b=sOWSTW/7ABZhsRQ+dAU+du1jrUxIXGfxewRQD7pX75FkVQTznMTqOciCVAdRSI4sAYZUm1HvO2ZfcxNU4NyXSoFSZ1QGQbU6yHGCVvQSSWh2uhhK5LYD0U2S26Pzten04Z7bysX+HzxA+9RgY91dhOYvEW38KL6IwP7+3nKvppI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784659219; c=relaxed/simple;
-	bh=NRf1BeRv1J6bEwRIDI49bVDRMoyrCbJAcSBiawzA4HY=;
+	s=arc-20240116; t=1784659222; c=relaxed/simple;
+	bh=eycF48HdWzCAapykaVItEu4t1H7lKbHg23auBjZ8iFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aa58aKNYRJzsJnMY+GMFjlKafFMEckGpPhfT4o2fryANABMoW3Nqc3YZ6AnnGiHWymhfcSyEa02AmD8qrfbgHFE0GQnIHGAowd44jnf8a/TOHMRksrKNDLfnD7HwmKQ5wl1OLKqWOQfcRX5q8GCKqKW+Ae4A7oRoqcj9pgicnF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ql+AyenR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ABqo6/83sUnxugb8qQbluP8ktuezqu5yG1OCqkE8TroDtjfDcB0xTG9zKgxmD8psvfxiwYFGWk2bERSUc9RCVDkeRlHHX/nRSKep4awN1l+ocB8zv4dSw2d1fs0LY2p8bfVaArEZSeod8rvtH7GRuFEZvYh95g0DeoboO3i3ob8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8zMAE+H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ql+AyenR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7EC1F000E9;
-	Tue, 21 Jul 2026 18:40:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8zMAE+H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42C81F000E9;
+	Tue, 21 Jul 2026 18:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784659218;
-	bh=RwP87/0JO8Wf8FqWH62nDQKwG56oJlCqG13vYHFoVds=;
+	s=korg; t=1784659221;
+	bh=90v+S5fgTbDy5nQGmtwqhdZBeTq43c/TcXhNH7Q63I8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ql+AyenRVGYTC4jkmt5j7F10q6fensaBufgtDe58fu0rsgHKzhmtArRhTOo13dc/x
-	 MZvKGe00dj7ehmjahWMpSJ0H+Zx/oQ03rVl8jgxJ+Buyz5OS4tIyfc1prmIxcsG4dH
-	 6cgaibCkNzgnecKvPItR/lfsFwtrIm9IAepqizeU=
+	b=T8zMAE+H8FAoUM3hAqxye6vTHvhtRV3fey7/izBiwLD51SvqDbBY1NBlduJhRKfY1
+	 kdXOaxkv8aQJDyvWC3NOFr7iWnW4I5yuLGJQpIpuylSYaj8ZBQE3nLwAX6kIsrr9c8
+	 WfKSCTOgdjSnOAJ3QQ84zUjiJny0JrWd9hd8h4Ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+	Paul Louvel <paul.louvel@bootlin.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.18 1395/1611] gpio: mt7621: be sure IRQ domain is created before exposing GPIO chips
-Date: Tue, 21 Jul 2026 17:25:11 +0200
-Message-ID: <20260721152546.820596900@linuxfoundation.org>
+Subject: [PATCH 6.18 1396/1611] gpio-f7188x: Add support for NCT6126D version B
+Date: Tue, 21 Jul 2026 17:25:12 +0200
+Message-ID: <20260721152546.842500615@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,57 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+From: Paul Louvel <paul.louvel@bootlin.com>
 
-commit 0e024f58291dfcb28d98c512002e1a80fad69798 upstream.
+commit 9a6c0b6ea12746d50cf53d59a7e05fd83f974bda upstream.
 
-Function 'mediatek_gpio_bank_probe()' registers three GPIO chips using
-'devm_gpiochip_add_data()'. At this point, the chips become live and visible
-to consumers. However, the IRQ domain isn't allocated and set up until
-'mt7621_gpio_irq_setup()' is called after the GPIO chips setup finishes.
-If a consumer requests a GPIO IRQ concurrently 'mt7621_gpio_to_irq()' can
-be called and pass a NULL irq domain pointer irq_create_mapping(), that can
-corrupt the mappings or cause a crash. Fix this possible problem seting up
-irq domain before GPIO chips setup is performed.
+The Nuvoton NCT6126D Super-I/O is available in two hardware revisions.
+According to the manufacturer datasheet revision 2.4, version A reports
+chip ID 0xD283, while version B reports chip ID 0xD284.
 
+The driver currently only recognizes only the version A ID. Version B
+only contains hardware fixes unrelated to the GPIO functionality, so it
+can be supported by simply adding its chip ID without any other driver
+changes.
+
+Fixes: 3002b8642f01 ("gpio-f7188x: fix chip name and pin count on Nuvoton chip")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: a46f2e5720f5 ("gpio: mt7621: fix interrupt banks mapping on gpio chips")
-Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Link: https://patch.msgid.link/20260626060112.2498324-4-sergio.paracuellos@gmail.com
+
+Signed-off-by: Paul Louvel <paul.louvel@bootlin.com>
+Link: https://patch.msgid.link/20260629-gpio-f7188x-nct6126d-version-b-v1-1-a06226c02a2d@bootlin.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-mt7621.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpio/gpio-f7188x.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpio/gpio-mt7621.c
-+++ b/drivers/gpio/gpio-mt7621.c
-@@ -464,12 +464,6 @@ mediatek_gpio_probe(struct platform_devi
- 	mtk->num_gpios = MTK_BANK_WIDTH * MTK_BANK_CNT;
- 	platform_set_drvdata(pdev, mtk);
+--- a/drivers/gpio/gpio-f7188x.c
++++ b/drivers/gpio/gpio-f7188x.c
+@@ -48,7 +48,8 @@
+ /*
+  * Nuvoton devices.
+  */
+-#define SIO_NCT6126D_ID		0xD283  /* NCT6126D chipset ID */
++#define SIO_NCT6126D_VER_A_ID		0xD283  /* NCT6126D version A chipset ID */
++#define SIO_NCT6126D_VER_B_ID		0xD284  /* NCT6126D version B chipset ID */
  
--	for (i = 0; i < MTK_BANK_CNT; i++) {
--		ret = mediatek_gpio_bank_probe(dev, i);
--		if (ret)
--			return ret;
--	}
--
- 	if (mtk->gpio_irq > 0) {
- 		ret = mt7621_gpio_irq_setup(pdev, mtk);
- 		if (ret)
-@@ -480,6 +474,12 @@ mediatek_gpio_probe(struct platform_devi
- 	if (ret)
- 		return ret;
+ #define SIO_LD_GPIO_NUVOTON	0x07	/* GPIO logical device */
  
-+	for (i = 0; i < MTK_BANK_CNT; i++) {
-+		ret = mediatek_gpio_bank_probe(dev, i);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	return 0;
- }
- 
+@@ -564,7 +565,8 @@ static int __init f7188x_find(int addr,
+ 	case SIO_F81865_ID:
+ 		sio->type = f81865;
+ 		break;
+-	case SIO_NCT6126D_ID:
++	case SIO_NCT6126D_VER_A_ID:
++	case SIO_NCT6126D_VER_B_ID:
+ 		sio->device = SIO_LD_GPIO_NUVOTON;
+ 		sio->type = nct6126d;
+ 		break;
 
 
