@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22082EBB8D;
-	Tue, 21 Jul 2026 20:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EED3B47DF;
+	Tue, 21 Jul 2026 20:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784667391; cv=none; b=UMJi0o41GQcPdb3Ax9AZcSAxG8G7KpZzFAzPe+S5LVESx6sRISINFw0ckJH2/BWejQY7i7PV5F1XBJffYfIYGrYX/nubntAo8WYwKWGNOd2J43An3HXdxx5Nd54rT2VTTwElscM6sTE2lP3MfhPEp3EcjXi6sIRsqfQO0g+X+VY=
+	t=1784667394; cv=none; b=U3muEHmIS/7BbUGZE9AE/KKcIyHJ2tVkvvjnjoNanba5DcQ4KaGNbY45YjY1I316AURDdsY0Pw9RxOFHcZTvjQT2MerJ5YO2NmNd18Wk4dXtrg7qswxkhJfrOVxwJxv741eSYEnBTUHAkIbn1FnQ5lWNzAzHavq6oeXLsMdlv4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784667391; c=relaxed/simple;
-	bh=w038d6VlzT0lqxQpsTfVmbrjPAK2HcfsOhs1o6+r4XA=;
+	s=arc-20240116; t=1784667394; c=relaxed/simple;
+	bh=uN+9svQFdeKviFq/PE6MtzJD6O7z3Jir50klDcoZURQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k4GmwXVkh3SrYhOIesRvujxa1bLRWCp0mhp01bI81AgdwW1QVGVmBBz3RJeLPeHs3EefKAx3X5tY5bmDzOpnnFk+Za8rZE705WepX0mNDTr0umYmfxNTmRJ9GPBPq1qWPHSzoc/Us4bDlemJhDqlc7ZTLWY2RzbPuPO632IsYg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SnUjH5mA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eTDYD1zM3PvT+Y8ISQ3+MCNN01KdzeBdRzZA81aG3m2TWCQu0w+bsBX/kTQe1XJ4DTu+BsxEk4yibnybmZ8o9fB6jBeDrMF38DufiMqCSoRKTXoCl14RRUnwEPCGGAGZ4n2yV/hy8teuzhf2UhMRB4zbMvcvcyL0gNsy4UcUgaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUgV+LLw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnUjH5mA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDA31F000E9;
-	Tue, 21 Jul 2026 20:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUgV+LLw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA621F000E9;
+	Tue, 21 Jul 2026 20:56:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784667389;
-	bh=OKkaFuJmNV8yWDLNYzh0WkSc9+rl/Or0D7akQEDjwzg=;
+	s=korg; t=1784667392;
+	bh=FTfe3dHMAAEMH4IMpPpW8ECmi9/68auC9hU5vrRDf8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SnUjH5mAPux9ZnQ9uR3zI4NoHr6ocSyRzZL0Nr7hM+3qPwoFERPKzPaFXiF7Er4P0
-	 mHBex0XcubJOP3Unrf7Qe661o/w32UE56ztSYbwDTvIwl5hVNwEGFE92uRQJ9w1Rnh
-	 URRBFSw5ddgF4MxP8SWZgtguJ6E9/kXZGt4zJGsM=
+	b=QUgV+LLwA0mko10b3bvceoPt6GmtUTSd0B47mTTOiI6oYEXD4Bdw2dUWxi+YIfpqb
+	 MTlNT6JEM/T5sOGuKRVONK7Cc7Z/uBiNrmqoADMRVzXdAncxrUWqdyp7pW3T/7k+9/
+	 mtK9ezxUKBnBB5ff4+8TmkgE0e/ZKgbPGl77X0TY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.6 1042/1266] bpf: Add missing access_ok call to copy_user_syms
-Date: Tue, 21 Jul 2026 17:24:39 +0200
-Message-ID: <20260721152505.136689162@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 1043/1266] net: sparx5: unregister blocking notifier on init failure
+Date: Tue, 21 Jul 2026 17:24:40 +0200
+Message-ID: <20260721152505.158500739@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,58 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit d5dc200c3a3f217de072af269dd90adddf90e48d upstream.
+commit 483be61b4a9a6df3b7cb277e8f189e082dee4cb8 upstream.
 
-As reported by sashiko we use __get_user without prior access_ok call on the
-user space pointer. Adding the missing call for the whole pointer array.
+sparx5_register_notifier_blocks() registers the switchdev blocking
+notifier before allocating the ordered workqueue. If the workqueue
+allocation fails, the error path unregisters the switchdev and netdevice
+notifiers, but leaves the blocking notifier registered.
 
-Plus removing the err check in the error path, because it's not needed and
-also we can return -ENOMEM directly from the first kvmalloc_array fail path.
+Add a separate error label for the workqueue allocation failure path and
+unregister the switchdev blocking notifier there.
 
+Fixes: d6fce5141929 ("net: sparx5: add switching support")
 Cc: stable@vger.kernel.org
-[1] https://lore.kernel.org/bpf/20260611115503.AC16D1F00893@smtp.kernel.org/
-Fixes: 0236fec57a15 ("bpf: Resolve symbols with ftrace_lookup_symbols for kprobe multi link")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/bpf/20260611115503.AC16D1F00893@smtp.kernel.org/
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/r/20260616083056.405652-1-jolsa@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260623115714.2192074-1-haoxiang_li2024@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/bpf_trace.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2549,9 +2549,12 @@ static int copy_user_syms(struct user_sy
- 	int err = -ENOMEM;
- 	unsigned int i;
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_switchdev.c
+@@ -740,11 +740,13 @@ int sparx5_register_notifier_blocks(stru
+ 	sparx5_owq = alloc_ordered_workqueue("sparx5_order", 0);
+ 	if (!sparx5_owq) {
+ 		err = -ENOMEM;
+-		goto err_switchdev_blocking_nb;
++		goto err_alloc_workqueue;
+ 	}
  
-+	if (!access_ok(usyms, cnt * sizeof(*usyms)))
-+		return -EFAULT;
-+
- 	syms = kvmalloc_array(cnt, sizeof(*syms), GFP_KERNEL);
- 	if (!syms)
--		goto error;
-+		return -ENOMEM;
- 
- 	buf = kvmalloc_array(cnt, KSYM_NAME_LEN, GFP_KERNEL);
- 	if (!buf)
-@@ -2576,10 +2579,8 @@ static int copy_user_syms(struct user_sy
  	return 0;
  
- error:
--	if (err) {
--		kvfree(syms);
--		kvfree(buf);
--	}
-+	kvfree(syms);
-+	kvfree(buf);
- 	return err;
- }
- 
++err_alloc_workqueue:
++	unregister_switchdev_blocking_notifier(&s5->switchdev_blocking_nb);
+ err_switchdev_blocking_nb:
+ 	unregister_switchdev_notifier(&s5->switchdev_nb);
+ err_switchdev_nb:
 
 
