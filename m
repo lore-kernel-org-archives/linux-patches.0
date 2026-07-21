@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE838401A21;
-	Tue, 21 Jul 2026 18:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A13946D096;
+	Tue, 21 Jul 2026 18:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658332; cv=none; b=oOsKOUzPNFU9ZlkL69HiDUMSa3lcsV7sFU/SruUJ6oJgi7uM/PCx8ECEtkLPpMHFOjV37uvcEjyI/XGPrmVuo65H1LAUXYUoCYndJ0LPr3zKbVbkbqQSoMd5pDLAgpDnMtGk/NJ6IEcan1ojyHxpHil/6CEdi3TobnrSYHZrfxY=
+	t=1784658334; cv=none; b=EkBl1eshoui0pHBW+2NnnZosgfuvZrg+1vwcuHovq1pFrqwADYFRKuKvbJm1r/7D4T+W1V5vM91H06d0ss2uUkZ2Qm44fVgZfuA+0oOqThaGjDyvz6PQwIB9D2sknlIoxe2UlV0a4FgOPN4YEvy/nCmggAP0KIf0KCZdm9Xvw8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658332; c=relaxed/simple;
-	bh=YiuFF0W862yvI5E7sC4D+kbm0b+I53FVASYCQg7Ae3Y=;
+	s=arc-20240116; t=1784658334; c=relaxed/simple;
+	bh=m/5oYy3lporNIa+ZrZWIgXNLzrieIJ3MwHXAEZNUx9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AIp/50iflw8mQaDdVd3C9HAKriMJbQjNIyDXFEFQWbBLzPVagab3g1WPbfF5a9XLHNqAXx+pwxUtPmwXKhp/3qNoZ9qAIyIM/2bPcUxxubFJM7/P30LEOkXXIgpUFYVPdQ6lOGvbohNYzwZojnj6uZT9KDZ6zuuguPLp5yJlAnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oD2lbKAr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KwpHMqHpMrkBWlAh1ztM1txdgJBfC3dfTkZlvTv+IHwbONAv0hZDSA37u3VQUpURep0Qr+yzRa0sKHbHg+rOs6REqGOijBKzK1BzwLaG1ea/PAmo94y9Ul2cPJXdNp4jeUR1Tjqf1xvxkZb+lbjksNyu+vKwOBI83j3ZkHd4XBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tXeEw///; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oD2lbKAr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5471F000E9;
-	Tue, 21 Jul 2026 18:25:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tXeEw///"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA67D1F000E9;
+	Tue, 21 Jul 2026 18:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658330;
-	bh=OEAqQ0XsLfkS5Ug8X1itCgIFxN+d3L8uzIHhhpM0jMM=;
+	s=korg; t=1784658333;
+	bh=K7XG8FyUbsnyX47SNyt6HMIFmp3H8QPsWMErYXdFk70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oD2lbKAr/jZLi12tUVpLfhyzFHpFD/kRnXm3aOezPKtdEGF203uhqtzqCn+CGyXy5
-	 tGZ7nNBOvSpN1D0EJ0C0JtwnI52T9JBdzOFVzG9YIbqzYar0Nm4Mrn4Bbsh60eBZ+L
-	 0PvdqcdULYgjBFJoFy9r2XoZSMg7AzuOvLZtEeaI=
+	b=tXeEw///wTk4qfHod8eJrlYStbTowgbFIfbEmm3UwuEJ0Rl5Ur8U2ENANPcnZZJaH
+	 YUtptfhlbQZKp97c2o509cLyKOD1Wp3CaNWt3KzjQ/it7crj6lqU5EUYe81GMbY5Iy
+	 m4uoyL0mBygT/uXPid4qwN1spMuIGDD3DQ3WT8x0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 1102/1611] ASoC: SOF: topology: validate vendor array size before parsing
-Date: Tue, 21 Jul 2026 17:20:18 +0200
-Message-ID: <20260721152540.203650409@linuxfoundation.org>
+	Li Xiasong <lixiasong1@huawei.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 1103/1611] tipc: restrict socket queue dumps in enqueue tracepoints
+Date: Tue, 21 Jul 2026 17:20:19 +0200
+Message-ID: <20260721152540.225172862@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -44,61 +45,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Li Xiasong <lixiasong1@huawei.com>
 
-commit 8468dd79cfb2ffbdeaf7c353f63d64941cb8ba05 upstream.
+commit acd7df8d955480a6f6e5bb809da67b1500cc3cf4 upstream.
 
-sof_parse_token_sets() reads array->size while iterating over topology
-private data. The loop condition only checks that some data remains, so a
-malformed topology with a truncated trailing vendor array can make the
-parser read the size field before a full vendor-array header is available.
+tipc_sk_enqueue() runs with sk->sk_lock.slock held while the socket is
+owned by user context. The spinlock protects the backlog queue in this
+path, but it does not serialize against the socket owner consuming or
+purging sk_receive_queue.
 
-Validate that the remaining private data contains a complete
-snd_soc_tplg_vendor_array header before reading array->size.
+KASAN reported:
 
-The declared array size check also needs to remain signed. asize is an int,
-but sizeof(*array) has type size_t, so comparing them directly promotes
-negative asize values to unsigned and lets them pass the check,
-as reported in the stable review thread reference below.
+  CPU: 14 UID: 0 PID: 1050 Comm: tipc3 Not tainted 7.1.0-rc6+ #126 PREEMPT(lazy)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  Call Trace:
+    <TASK>
+    dump_stack_lvl+0x76/0xa0 lib/dump_stack.c:123
+    print_report+0xce/0x5b0 mm/kasan/report.c:482
+    kasan_report+0xc6/0x100 mm/kasan/report.c:597
+    __asan_report_load4_noabort+0x14/0x30 mm/kasan/report_generic.c:380
+    tipc_skb_dump+0x1327/0x16f0 net/tipc/trace.c:73
+    tipc_list_dump+0x208/0x2e0 net/tipc/trace.c:187
+    tipc_sk_dump+0xaf6/0xd60 net/tipc/socket.c:3996
+    trace_event_raw_event_tipc_sk_class+0x312/0x5a0 net/tipc/trace.h:188
+    tipc_sk_rcv+0xb1d/0x1d50 net/tipc/socket.c:2497
+    tipc_node_xmit+0x1c3/0x1440 net/tipc/node.c:1689
+    __tipc_sendmsg+0x97a/0x1440 net/tipc/socket.c:1512
+    tipc_sendmsg+0x52/0x80 net/tipc/socket.c:1400
+    sock_sendmsg+0x2f6/0x3e0 net/socket.c:825
+    splice_to_socket+0x7f9/0x1010 fs/splice.c:884
+    do_splice+0xe21/0x2330 fs/splice.c:936
+    __do_splice+0x153/0x260 fs/splice.c:1431
+    __x64_sys_splice+0x150/0x230 fs/splice.c:1616
+    x64_sys_call+0xeb5/0x2790 arch/x86/entry/syscall_64.c:41
+    do_syscall_64+0xf3/0x620 arch/x86/entry/syscall_64.c:63
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e arch/x86/entry/entry_64.S:130
+  RIP: 0033:0x71624e8aafe2
+  Code: 08 0f 85 71 3a ff ff 49 89 fb 48 89 f0 48 89 d7 48 89 ce 4c 89 c2 4d 89 ca 4c 8b 44 24 08 4c 8b 4c 24 10 4c 89 5c 24 08 0f 05 <c3> 66 2e 0f 1f 84 00 00 00 00 00 66 2e 0f 1f 84 00 00 00 00 00 66
+  RSP: 002b:0000716157ffed68 EFLAGS: 00000246 ORIG_RAX: 0000000000000113
+  RAX: ffffffffffffffda RBX: 0000716157fff6c0 RCX: 000071624e8aafe2
+  RDX: 000000000000005f RSI: 0000000000000000 RDI: 0000000000000066
+  RBP: 0000716157ffed90 R08: 0000000000008000 R09: 0000000000000001
+  R10: 0000000000000000 R11: 0000000000000246 R12: ffffffffffffff00
+  R13: 0000000000000021 R14: 0000000000000000 R15: 00007fff89799c40
+    </TASK>
 
-Cast sizeof(*array) to int when validating the declared array size. This
-rejects negative, zero and otherwise too-small sizes before the parser
-dispatches to the tuple-specific code.
+The TIPC_DUMP_ALL tracepoints in tipc_sk_enqueue() also dump
+sk_receive_queue and can therefore dereference skbs that the socket
+owner has already dequeued or freed. Restrict these dumps to
+TIPC_DUMP_SK_BKLGQ, which matches the queue protected by the held
+spinlock.
 
-Link: https://lore.kernel.org/stable/CANiDSCsjR5NHqu_Ui5cOqWdJgFqmYsQ9WR8O7m0WOhngaYXFpw@mail.gmail.com/t/#m9b3be379221e79327cc13fd71009287368ef4f23
-Fixes: 215e5fe75881 ("ASoC: SOF: topology: reject invalid vendor array size in token parser")
+Keep the change limited to the enqueue path, where the unsafe queue dump
+is reachable while the socket is owned by user context.
+
+Fixes: 01e661ebfbad ("tipc: add trace_events for tipc socket")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260603-sof-topology-array-size-signed-v1-1-84f97879a4ef@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260611135647.3666727-1-lixiasong1@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/topology.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/tipc/socket.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/sound/soc/sof/topology.c
-+++ b/sound/soc/sof/topology.c
-@@ -733,10 +733,13 @@ static int sof_parse_token_sets(struct s
- 	int ret;
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -2455,17 +2455,17 @@ static void tipc_sk_enqueue(struct sk_bu
+ 			atomic_set(dcnt, 0);
+ 		lim = rcvbuf_limit(sk, skb) + atomic_read(dcnt);
+ 		if (likely(!sk_add_backlog(sk, skb, lim))) {
+-			trace_tipc_sk_overlimit1(sk, skb, TIPC_DUMP_ALL,
++			trace_tipc_sk_overlimit1(sk, skb, TIPC_DUMP_SK_BKLGQ,
+ 						 "bklg & rcvq >90% allocated!");
+ 			continue;
+ 		}
  
- 	while (array_size > 0 && total < count * token_instance_num) {
-+		if (array_size < (int)sizeof(*array))
-+			return -EINVAL;
-+
- 		asize = le32_to_cpu(array->size);
- 
- 		/* validate asize */
--		if (asize < sizeof(*array)) {
-+		if (asize < (int)sizeof(*array)) {
- 			dev_err(scomp->dev, "error: invalid array size 0x%x\n",
- 				asize);
- 			return -EINVAL;
+-		trace_tipc_sk_dump(sk, skb, TIPC_DUMP_ALL, "err_overload!");
++		trace_tipc_sk_dump(sk, skb, TIPC_DUMP_SK_BKLGQ, "err_overload!");
+ 		/* Overload => reject message back to sender */
+ 		onode = tipc_own_addr(sock_net(sk));
+ 		sk_drops_inc(sk);
+ 		if (tipc_msg_reverse(onode, &skb, TIPC_ERR_OVERLOAD)) {
+-			trace_tipc_sk_rej_msg(sk, skb, TIPC_DUMP_ALL,
++			trace_tipc_sk_rej_msg(sk, skb, TIPC_DUMP_SK_BKLGQ,
+ 					      "@sk_enqueue!");
+ 			__skb_queue_tail(xmitq, skb);
+ 		}
 
 
