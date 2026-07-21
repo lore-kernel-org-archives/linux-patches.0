@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D19143901B;
-	Tue, 21 Jul 2026 22:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060CD4446E9;
+	Tue, 21 Jul 2026 22:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672482; cv=none; b=fBOhQFRiV01BS2RlFkMgi9zuB55Fas1besNngHioCDlg/PVz6A4ce+i55I9Xxw6C/taPfxiACpZc3146VB2FmcnuYcU0pNcKTkgmIXPEmU9sE27kLCpzlmG/xJE8aKw9TE3+KgVmG84l6j2Z1qqhgpeOKUdx8qFPMHOFEJrMr5A=
+	t=1784672485; cv=none; b=Qip7Eq8mKvwDj7szYW8jkmaXBRGHcmUR4MNQjwt7WkvAWqQE8VNyykjvUq/rIq7w1ObRpxK18x4VsE80NaVoIVheYQ8qhAPskISUp2K8+oynZbU/R1l8BNjkY8KSXEW8SQuMEJieLQlud8DuwPcdc4IbxviMxEBN7lLxGspfDbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672482; c=relaxed/simple;
-	bh=wmOFr6o3uNHssbkrYe2O8cxFJFnYoPasQVpFPuHePG0=;
+	s=arc-20240116; t=1784672485; c=relaxed/simple;
+	bh=kjKYu8CtmM1QRvUclMohfa23gy7dHUrwXK1U/0kc6kk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c76zU/oM1sjHQh6WyMTPUQJvETlZ9sdHk8YMhvKy7f33EUm0tD1Un3FqD0j5DHwEPzmOa/Jcg9ITWYzyd/tSodCQvGXaeCqu9V7GzAHcwyNWAj54Ct97A2gfTOq62JT5oa2w+BlCxQ5YAikf/CN40DHQKRmn3HV+6P3EnRNi/fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=esrdIXbO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jInEQCyGvhP+GKXGNjulzTM8mlVLmO93xdR24gi+IkbuAU7SCgqRVNHQx3kHL5XHFGW7xcsSlcbqhr+Jju5Xk4OifXixZpU40m2bG3CARBm7O48ILpbbOH8Do9GtG2mZdd+2EayZhxvZJrYbTIXiKLK4kRMvyO2lqkBzwaZzojs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wyrbzR+a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="esrdIXbO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E761F00A3A;
-	Tue, 21 Jul 2026 22:21:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wyrbzR+a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B5DF1F000E9;
+	Tue, 21 Jul 2026 22:21:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672481;
-	bh=bGRaW5krzIHu5OqvAwDoRUr6ZUs8xC+Ywa4kytBbHJk=;
+	s=korg; t=1784672483;
+	bh=ok85WcmGWGw3Q7e2CSjw43pUMoXEooblx3cnWuaF5H4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=esrdIXbOf72mL1mOFCic9yQNO7aSKAi7vAhiFQnBJ54jPQ4vwHAssM2OMvii1bA+a
-	 Q7J0xY75yk95uTwVQmph9kMUHxhMS1GVC9TVzS7jX9z6mTfZ2FD8t6yuJ7EmBnPnCr
-	 Qrckx7vuH6TsW34ngUbFbE0S4745AA3rB5xhzOsw=
+	b=wyrbzR+avWlZ3XxMsx2O72379GkgtdpaIxZ505jGPWK50aqwMYaxXKnh+EX2zLI6V
+	 Hg8pYHs5NXIMQqdNZ7OVDO6MlrPZ3QDWjtMesJWi8izHrBP/3hfEL0x4Wc40fUjMmD
+	 0dJph3DO04NQT9CkJsmf7/oUh/lYMfOSFSUvO4J0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaewon Yang <yong010301@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.15 642/843] tpm: Make the TPM character devices non-seekable
-Date: Tue, 21 Jul 2026 17:24:37 +0200
-Message-ID: <20260721152420.508041500@linuxfoundation.org>
+	Wang Yan <wangyan01@kylinos.cn>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 5.15 643/843] time: Fix off-by-one in compat settimeofday() usec validation
+Date: Tue, 21 Jul 2026 17:24:38 +0200
+Message-ID: <20260721152420.529928039@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -50,75 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaewon Yang <yong010301@gmail.com>
+From: Wang Yan <wangyan01@kylinos.cn>
 
-commit f20d61c22bcaf172d6790b6500e3838e532e71c8 upstream.
+commit 269f2b43fae692d1f3988c9f888a6301aa537b82 upstream.
 
-The TPM character devices expose a sequential command/response
-interface, but their open handlers leave FMODE_PREAD and FMODE_PWRITE
-enabled.
+The compat version of settimeofday() uses '>' instead of '>=' when
+validating tv_usec against USEC_PER_SEC, allowing the value 1000000 to pass
+the check. After the subsequent conversion to nanoseconds (tv_nsec *=
+NSEC_PER_USEC), this results in tv_nsec == NSEC_PER_SEC, which violates the
+timespec invariant that tv_nsec must be strictly less than NSEC_PER_SEC.
 
-After a command leaves a response pending, pread(fd, buf, 16, 0x1400)
-passes 0x1400 as *off to tpm_common_read(). The transfer length is
-bounded by response_length, but the offset is used unchecked when
-forming data_buffer + *off. A sufficiently large offset therefore causes
-an out-of-bounds heap read through copy_to_user() and, if the copy
-succeeds, an out-of-bounds zero-write through the following memset().
+The native settimeofday() was already fixed in commit ce4abda5e126 ("time:
+Fix off-by-one in settimeofday() usec validation"), but the compat
+counterpart was missed.
 
-Positional I/O does not provide coherent semantics for this interface.
-An arbitrary pread offset cannot represent how much of a response has
-been consumed sequentially. The write callback always stores a command
-at the start of data_buffer, while pwrite() does not update file->f_pos
-and can leave the sequential read cursor stale.
+Fix it by using '>=' to reject tv_usec values outside the valid range [0,
+USEC_PER_SEC - 1].
 
-Call nonseekable_open() from both open handlers. This removes
-FMODE_PREAD and FMODE_PWRITE, causing positional reads and writes to
-fail with -ESPIPE before reaching the TPM callbacks, and explicitly
-marks the files non-seekable. Normal read() and write() continue to use
-the existing sequential f_pos cursor, leaving the response state machine
-unchanged.
-
-Tested on Linux 6.12 with KASAN and a swtpm TPM2 device:
-
- - sequential partial reads returned the complete response
- - pread() and preadv() with offset 0x1400 returned -ESPIPE
- - pwrite() and pwritev() with offset zero returned -ESPIPE
- - the pending response remained intact after the rejected operations
- - a subsequent normal command/response cycle completed normally
- - no KASAN report was produced.
-
-Fixes: 9488585b21be ("tpm: add support for partial reads")
-Link: https://lore.kernel.org/all/20260710090217.191289-1-yong010301@gmail.com/
+Fixes: 5e0fb1b57bea ("y2038: time: avoid timespec usage in settimeofday()")
+Signed-off-by: Wang Yan <wangyan01@kylinos.cn>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jaewon Yang <yong010301@gmail.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://patch.msgid.link/20260622103348.120255-1-wangyan01@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm-dev.c   |    2 +-
- drivers/char/tpm/tpmrm-dev.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ kernel/time/time.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/char/tpm/tpm-dev.c
-+++ b/drivers/char/tpm/tpm-dev.c
-@@ -36,7 +36,7 @@ static int tpm_open(struct inode *inode,
+--- a/kernel/time/time.c
++++ b/kernel/time/time.c
+@@ -251,7 +251,7 @@ COMPAT_SYSCALL_DEFINE2(settimeofday, str
+ 		    get_user(new_ts.tv_nsec, &tv->tv_usec))
+ 			return -EFAULT;
  
- 	tpm_common_open(file, chip, priv, NULL);
+-		if (new_ts.tv_nsec > USEC_PER_SEC || new_ts.tv_nsec < 0)
++		if (new_ts.tv_nsec >= USEC_PER_SEC || new_ts.tv_nsec < 0)
+ 			return -EINVAL;
  
--	return 0;
-+	return nonseekable_open(inode, file);
- 
-  out:
- 	clear_bit(0, &chip->is_open);
---- a/drivers/char/tpm/tpmrm-dev.c
-+++ b/drivers/char/tpm/tpmrm-dev.c
-@@ -29,7 +29,7 @@ static int tpmrm_open(struct inode *inod
- 
- 	tpm_common_open(file, chip, &priv->priv, &priv->space);
- 
--	return 0;
-+	return nonseekable_open(inode, file);
- }
- 
- static int tpmrm_release(struct inode *inode, struct file *file)
+ 		new_ts.tv_nsec *= NSEC_PER_USEC;
 
 
