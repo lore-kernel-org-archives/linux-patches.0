@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E045246D2C1;
-	Tue, 21 Jul 2026 19:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887C4417D67;
+	Tue, 21 Jul 2026 19:12:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661160; cv=none; b=mw55jppOCsUpO1BES7zMidWFDfqVPw2M8KSpviRqbVfy1Q7OYdgnvX41aKil85Ft6F5FsPDv+8H7KyBk/pvHF1W8WDFnheZ/RYvoLH4OZXT5KiboQfVmvHdimX5oMOiGHOKBetnce9GRUqVLirOMpBE6zkJXneyFY0PrntAcdK0=
+	t=1784661162; cv=none; b=UlxquZHNrJ9ApH97Yi8I4hWES0QUFiYqBkVsCtTsXmewlkwTQvXc0+18O58C2yLu61DLzNM1KyfFHgI7JZ9T3i9zq8aRxIeXUZcQMhyEJqEOe0pcaEHpTlP/GRzjEHaBueHaTigSFYPTYUW4wnlUw2OLtivB3a9hPLFMjbj6DkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661160; c=relaxed/simple;
-	bh=QrD39MexRUVzOvu5cnHMeq/eQVK3Wr4PPhizhAOIWYk=;
+	s=arc-20240116; t=1784661162; c=relaxed/simple;
+	bh=iU/35VAOg5Eq8cLj0419dJ++L+V30/XSS3m8NKP+zvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bkMuXEZATLQZd0dsc+o09Ul/mvB4tJmEKcsgu6Z/jU9SbKvg9YQ17LQi55DlcH96dWE3ebWpfAUgmpFKjBTxbDD9T4AWeoMIb2Na4pyPHqfG9g16SnI75zRWDEWABO+zzfQsvmouFwFqSSj0tkxVAgsAdoqwd+yvr80RWWk/8SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gBU0JxI3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=smG5yo1ou0OEsfscnKW3EM3bJ9KeK5pdRlnhQals8Don7GAT8zS9eUtluBHLATOLuZZQ49/E9CdGu1XssXotKtGEmX3V7VSieNYMKFzNGcZvUzFjmFYIjRHqn9gYiYJshDhTsJHa26l9Mbrh/tJwj3yUVBQpDW69B0/rnS1MnWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xZNHZDB0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gBU0JxI3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591001F000E9;
-	Tue, 21 Jul 2026 19:12:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xZNHZDB0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2331F000E9;
+	Tue, 21 Jul 2026 19:12:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661158;
-	bh=N66A9aS0Ac4om8fb/GHvIzoQZkgGf9N7CMppUPhwVcM=;
+	s=korg; t=1784661161;
+	bh=TF6tgweOIxgcjam60yX6h5W+NjEXzhow25wuQl6ThEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gBU0JxI31uiPbta743BzhlouzViG2cfSQqfeqP6MsI4jlfJwDZoMjyoHkcElITo01
-	 nrCNuqC0qpwE7JwRdzOjNmLH8zXVToU82Rs1T3UbD7Cqzvp9v6zFDDEVsO4diyYHtH
-	 SyiMSK2gc1XnDvKoJHs3Tdhmzxh7UXjf6Sgo9f1I=
+	b=xZNHZDB09/tnzqtHhz1GfT3Y+fbyCBoR6CrkKIX1XrhIF1g/FdsfpoTgwbUfMDBvC
+	 R8MIydlWo6+Ep7bl87dmZxgyLGbOkFyPU675+pXWEAuXap36aeXbXVaGk9Uo30430S
+	 Y0NhOOAeM48YTa9un/lYZySGOE07owZcjoZYncq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <groeck@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn.topel@intel.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Sven Schuchmann <schuchmann@schleissheimer.de>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 1254/2077] veth: fix NAPI leak in XDP enable error path
-Date: Tue, 21 Jul 2026 17:15:27 +0200
-Message-ID: <20260721152622.392173958@linuxfoundation.org>
+Subject: [PATCH 7.1 1255/2077] net: usb: lan78xx: restore VLAN and hash filters after link up
+Date: Tue, 21 Jul 2026 17:15:28 +0200
+Message-ID: <20260721152622.416111734@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,68 +46,133 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Nicolai Buchwitz <nb@tipi-net.de>
 
-[ Upstream commit 6739027cb72da26890edd424c77080d187b2a92e ]
+[ Upstream commit 5c12248673c76f10ab900f70724c5da288c7efa5 ]
 
-During XDP enablement in veth, if xdp_rxq_info_reg() or
-xdp_rxq_info_reg_mem_model() fails, the driver rolls back the changes.
+Configured VLANs intermittently stop receiving traffic after a link
+down/up cycle, e.g. when the network cable is unplugged and plugged back
+in. VLAN filtering stays enabled but all VLAN-tagged frames are dropped
+until a VLAN is added or removed again.
 
-However, the rollback loop:
-	for (i--; i >= start; i--) {
+The LAN7801 datasheet (DS00002123E) states:
 
-decrements the loop index 'i' before the first iteration. This
-correctly skips unregistering the rxq for the failed index 'i' (as
-registration failed or was already cleaned up), but it also
-erroneously skips calling netif_napi_deli() for rq[i].xdp_napi.
+  "A portion of the MAC operates on clocks generated by the Ethernet
+   PHY. During a PHY reset event, this portion of the MAC is designed to
+   not be taken out of reset until the PHY clocks are operational"
+  (section 8.10, MAC Reset Watchdog Timer)
 
-Since netif_napi_add() was already called for index 'i', this leaves
-a dangling napi_struct in the device's napi_list. When the veth
-device is later destroyed, the freed queue memory (which contains the
-leaked NAPI structure) can be reused.
+  "After a reset event, the RFE will automatically initialize the
+   contents of the VHF to 0h."
+  (section 7.1.4, VHF Organization)
 
-The subsequent device teardown iterates the NAPI list and
-corrupts the reallocated memory, leading to UAF.
+Thus a link down/up cycle stops and restarts the PHY clock, resets the
+PHY-clocked portion of the MAC, and the RFE clears its VLAN/DA hash
+filter (VHF) memory. The VHF holds both the VLAN filter table and the
+multicast hash table, but the driver never reprograms either from its
+shadow copy once the link is back, so both stay empty.
 
-Fix this by explicitly deleting the NAPI association for the failed
-index 'i' before rolling back the successfully configured queues.
+Reprogram the VLAN filter and multicast hash tables on link up.
 
-Fixes: b02e5a0ebb17 ("xsk: Propagate napi_id to XDP socket Rx path")
-Reported-by: Guenter Roeck <groeck@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Björn Töpel <bjorn.topel@intel.com>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Cc: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://patch.msgid.link/20260622111825.88337-1-edumazet@google.com
+Reported-by: Sven Schuchmann <schuchmann@schleissheimer.de>
+Closes: https://lore.kernel.org/netdev/BEZP281MB224501E38B30BFDC4BD3D364D9E32@BEZP281MB2245.DEUP281.PROD.OUTLOOK.COM/T/#u
+Tested-by: Sven Schuchmann <schuchmann@schleissheimer.de>
+Fixes: 55d7de9de6c3 ("Microchip's LAN7800 family USB 2/3 to 10/100/1000 Ethernet device driver")
+Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20260622102911.484045-1-nb@tipi-net.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/usb/lan78xx.c | 37 +++++++++++++++++++++++++++++++------
+ 1 file changed, 31 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index 0cfb19b760dd54..1c514214917536 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -1137,6 +1137,8 @@ static int veth_enable_xdp_range(struct net_device *dev, int start, int end,
- err_reg_mem:
- 	xdp_rxq_info_unreg(&priv->rq[i].xdp_rxq);
- err_rxq_reg:
-+	if (!napi_already_on)
-+		netif_napi_del(&priv->rq[i].xdp_napi);
- 	for (i--; i >= start; i--) {
- 		struct veth_rq *rq = &priv->rq[i];
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index bcf293ea1bd388..c4cebacabcb534 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -1452,6 +1452,15 @@ static inline u32 lan78xx_hash(char addr[ETH_ALEN])
+ 	return (ether_crc(ETH_ALEN, addr) >> 23) & 0x1ff;
+ }
  
++static int lan78xx_write_mchash_table(struct lan78xx_net *dev)
++{
++	struct lan78xx_priv *pdata = (struct lan78xx_priv *)(dev->data[0]);
++
++	return lan78xx_dataport_write(dev, DP_SEL_RSEL_VLAN_DA_,
++				      DP_SEL_VHF_VLAN_LEN,
++				      DP_SEL_VHF_HASH_LEN, pdata->mchash_table);
++}
++
+ static void lan78xx_deferred_multicast_write(struct work_struct *param)
+ {
+ 	struct lan78xx_priv *pdata =
+@@ -1462,9 +1471,7 @@ static void lan78xx_deferred_multicast_write(struct work_struct *param)
+ 	netif_dbg(dev, drv, dev->net, "deferred multicast write 0x%08x\n",
+ 		  pdata->rfe_ctl);
+ 
+-	ret = lan78xx_dataport_write(dev, DP_SEL_RSEL_VLAN_DA_,
+-				     DP_SEL_VHF_VLAN_LEN,
+-				     DP_SEL_VHF_HASH_LEN, pdata->mchash_table);
++	ret = lan78xx_write_mchash_table(dev);
+ 	if (ret < 0)
+ 		goto multicast_write_done;
+ 
+@@ -1557,6 +1564,7 @@ static void lan78xx_set_multicast(struct net_device *netdev)
+ }
+ 
+ static void lan78xx_rx_urb_submit_all(struct lan78xx_net *dev);
++static int lan78xx_write_vlan_table(struct lan78xx_net *dev);
+ 
+ static int lan78xx_mac_reset(struct lan78xx_net *dev)
+ {
+@@ -2514,6 +2522,17 @@ static void lan78xx_mac_link_up(struct phylink_config *config,
+ 	if (ret < 0)
+ 		goto link_up_fail;
+ 
++	/* The RFE clears the VLAN/DA hash filter (VHF) on a link down/up
++	 * cycle, so reprogram both tables from their shadow copies.
++	 */
++	ret = lan78xx_write_vlan_table(dev);
++	if (ret < 0)
++		goto link_up_fail;
++
++	ret = lan78xx_write_mchash_table(dev);
++	if (ret < 0)
++		goto link_up_fail;
++
+ 	netif_start_queue(net);
+ 
+ 	return;
+@@ -3065,14 +3084,20 @@ static int lan78xx_set_features(struct net_device *netdev,
+ 	return lan78xx_write_reg(dev, RFE_CTL, pdata->rfe_ctl);
+ }
+ 
++static int lan78xx_write_vlan_table(struct lan78xx_net *dev)
++{
++	struct lan78xx_priv *pdata = (struct lan78xx_priv *)(dev->data[0]);
++
++	return lan78xx_dataport_write(dev, DP_SEL_RSEL_VLAN_DA_, 0,
++				      DP_SEL_VHF_VLAN_LEN, pdata->vlan_table);
++}
++
+ static void lan78xx_deferred_vlan_write(struct work_struct *param)
+ {
+ 	struct lan78xx_priv *pdata =
+ 			container_of(param, struct lan78xx_priv, set_vlan);
+-	struct lan78xx_net *dev = pdata->dev;
+ 
+-	lan78xx_dataport_write(dev, DP_SEL_RSEL_VLAN_DA_, 0,
+-			       DP_SEL_VHF_VLAN_LEN, pdata->vlan_table);
++	lan78xx_write_vlan_table(pdata->dev);
+ }
+ 
+ static int lan78xx_vlan_rx_add_vid(struct net_device *netdev,
 -- 
 2.53.0
 
