@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B40284662;
-	Tue, 21 Jul 2026 19:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C88342FCBC;
+	Tue, 21 Jul 2026 19:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784663227; cv=none; b=DDe6II4NPuVeqt4EmS2CI5HkUveD+1OQNZgS1GlyApK0VaI037cOZ/02wO5AYgIbt/hludfTZAhHnNHGdQNsdI/KwtkyX57IX7njrJ8u4PSCPmZRmhIxMmJzWHryfxYwJgsEDjvzIcIgD5bzUcIo20uxbDHdfg/Y4umpwQfSX68=
+	t=1784663230; cv=none; b=dE0PDEVfTK78pEECJY49jTPlFzFpeEcI3EvwkxHyMnJJ32N50aECcmAQvwtJTLOK9tJvcvRFKPkXzFvB4pr2W9ovQHGeSN3WfIoAJTkOGRM0/pgoWUiVrAxgXAeuE533s+UEHzHOIwik0jPcsqQAsVvu21fJBUz0gwnRpJ8KeLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784663227; c=relaxed/simple;
-	bh=C3nGV1nlijSxwM0GDDNPoK5nC3WNImI5lNa7nKucbjg=;
+	s=arc-20240116; t=1784663230; c=relaxed/simple;
+	bh=0FVTuKYXmUi7nto2afBV1iHefJfMqGo4+g5RcDdCjfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gt9APdVAbB3bY9vTMVRjPQL/Ka9ONYynMYrMOQXx5WKj93SL3XOM4CJh0cXAIBllogvkk8bxcQaRtGoaxWihKx/xYxNBdjhU4V8s5oxa7X5Qv3ZoNcR6QwvlCxxLBtVEkmhk1P6xjW4D5EjSvbZYaIB/zJ0XrWcLAq1+lmFEm5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tvGLtLdr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YFdNIrVVFHvcH+lv1u+r9js/DaUC/PpFgSarhQj6RjGdnRmiuroUJauTxNJ8oq5+F8qGq9WYYF7nfkOaVZlCH4kasSC3JQ+Yy+T4hDSlbYxOK3pU+8CIi511B7OhOElKxsxSIwQIuIW6CgqNm+3WM3Dx+xTwa/Tzf/+ujApNqNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zeUtxzkk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tvGLtLdr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAE131F000E9;
-	Tue, 21 Jul 2026 19:47:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zeUtxzkk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A7D1F000E9;
+	Tue, 21 Jul 2026 19:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784663226;
-	bh=YbAV27+BgzIHWC5c5bkaz0ih7RxBb598NbOhkKKeoZ0=;
+	s=korg; t=1784663228;
+	bh=0WoF4MuxRLs3//e1V31iSXpvmX/KWHc21O9ijZHNuGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tvGLtLdrNbW15NrtLcxWLYjWuHdpgCzR5jkybtZDKtCltVE7614RxswtQ7fwLIe1Q
-	 uo4/ThM9MjQkr6+qNR6itY1YIjMSWNLvPQka6Kl2j+Glztr/eIbXWkOcFOs17Xl/+8
-	 r137497rWMLuwtOtWimGSMV0TFDQtDzb8FE9zcVA=
+	b=zeUtxzkkW6udxtJIh4PoqXi8TXtnudf+Gvfk6dREgyCtvWW9V+Nor4IZfetHtwQyl
+	 O0Fx23ijjAruzmUFev9dpdJWV3WUiaj7mt+pgjcCaN+E6guShzhc6B1lwmd7xVm/GY
+	 sN/WxaXEpEHcEu8ep0NgvY1QQItTl38xERwTXJlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuaisong Yang <yangshuaisong@h-partners.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hillf Danton <hdanton@sina.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0689/1276] net: hns3: differentiate autoneg default values between copper and fiber
-Date: Tue, 21 Jul 2026 17:18:52 +0200
-Message-ID: <20260721152501.514396436@linuxfoundation.org>
+Subject: [PATCH 6.12 0737/1276] afs: Fix misplaced inc of net->cells_outstanding
+Date: Tue, 21 Jul 2026 17:19:40 +0200
+Message-ID: <20260721152502.573879673@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,56 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuaisong Yang <yangshuaisong@h-partners.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit d9d349c4e8a0acd73bac8baa3605443c0df5eb26 ]
+[ Upstream commit c9c3b615a462a4023bd148f02c564e175ed10502 ]
 
-Fix a link loss issue during driver initialization on optical ports
-connected to forced-mode (non-autoneg) remote switches.
+Fix net->cells_outstanding being incremented before the check for failure
+of idr_alloc_cyclic(), leaving the count incremented on error.
 
-Previously, during driver probe or initialization, hclge_configure()
-blindly hardcoded hdev->hw.mac.req_autoneg to AUTONEG_ENABLE for all
-media types. While this is necessary for copper (BASE-T) ports to
-establish a link, many high-speed optical (fiber) ports in data
-centers are connected to switches running in forced mode (fixed speed,
-autoneg disabled). Forcing autoneg on these optical ports during
-initialization causes a permanent link failure since the remote end
-refuses to respond to autoneg pulses.
-
-Fix this by implementing media-type differentiated initialization in
-hclge_init_ae_dev(). Copper ports continue to default to
-AUTONEG_ENABLE, while optical ports strictly inherit the preset
-autoneg status pre-configured by the firmware (hdev->hw.mac.autoneg),
-preserving native compatibility with forced-mode network environments.
-
-Fixes: 05eb60e9648c ("net: hns3: using user configure after hardware reset")
-Signed-off-by: Shuaisong Yang <yangshuaisong@h-partners.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://patch.msgid.link/20260624141319.271439-5-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 88c853c3f5c0 ("afs: Fix cell refcounting by splitting the usage counter")
+Reported-by: Hillf Danton <hdanton@sina.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260622090856.2746629-12-dhowells@redhat.com
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/afs/cell.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 54072be71a9ed9..79858b06c97b0d 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -11930,6 +11930,13 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
- 	if (ret)
- 		goto err_ptp_uninit;
+diff --git a/fs/afs/cell.c b/fs/afs/cell.c
+index c2e44cd2eb96cb..1fb1f97d720e0d 100644
+--- a/fs/afs/cell.c
++++ b/fs/afs/cell.c
+@@ -203,11 +203,11 @@ static struct afs_cell *afs_alloc_cell(struct afs_net *net,
+ 	cell->dns_source = vllist->source;
+ 	cell->dns_status = vllist->status;
+ 	smp_store_release(&cell->dns_lookup_count, 1); /* vs source/status */
+-	atomic_inc(&net->cells_outstanding);
+ 	ret = idr_alloc_cyclic(&net->cells_dyn_ino, cell,
+ 			       2, INT_MAX / 2, GFP_KERNEL);
+ 	if (ret < 0)
+ 		goto error;
++	atomic_inc(&net->cells_outstanding);
+ 	cell->dynroot_ino = ret;
+ 	cell->debug_id = atomic_inc_return(&cell_debug_id);
  
-+	if (hdev->hw.mac.media_type != HNAE3_MEDIA_TYPE_COPPER) {
-+		hdev->hw.mac.req_autoneg = hdev->hw.mac.autoneg;
-+		if (hdev->hw.mac.autoneg == AUTONEG_DISABLE &&
-+		    hdev->hw.mac.speed != SPEED_UNKNOWN)
-+			hdev->hw.mac.req_speed = hdev->hw.mac.speed;
-+	}
-+
- 	ret = hclge_set_autoneg_speed_dup(hdev);
- 	if (ret) {
- 		dev_err(&pdev->dev,
 -- 
 2.53.0
 
