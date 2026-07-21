@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656D13E49C7;
-	Tue, 21 Jul 2026 18:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1050246DFFD;
+	Tue, 21 Jul 2026 18:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784658789; cv=none; b=Ux/J2S+LtQ6pwJuL/oIfBXD+xElAW6MUpE5CgcRe/hgJomvL1RyijR0pNNc8muIJhJS0THrxng3MENuxvpTI406YGCOQof/Kit2iIlD0Prz63ps8Q+wgC6Eij7RUXFQV6qgmLUqgw7ucm+PmpN/Kt81qaIuA1diFh6lsgCh07nU=
+	t=1784658792; cv=none; b=dQnA5T3eeP863BIVZJd//Tgz3rjMoZzyfc+F9gP/Kf+sCZvwZMY9uAVTKR41pvzAGoppro/2bcV81ulhnh3KXzLE2F+ZCwYnAt7z1ULn8rfpZP1qt2I2I0DVlGaFi8S58HDK8N5xCosQQUJpnsEoO5qKI1pv8V7mB9Di1zKpNgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784658789; c=relaxed/simple;
-	bh=QhFjyHQB8nOdhGbPlIpXv+Pyn+9sIblUcIHKmvuJPm0=;
+	s=arc-20240116; t=1784658792; c=relaxed/simple;
+	bh=MdSVEUAnZqWD9awaNRpzMoSgc83u3/2mibiHa7LVJ+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sCyPQicSAohs2uBcNFFc7cc/TKhsT0fDrPVaLxidyT1eRrjoP/LJuH7XoZcSzd6zcZT+/ajAvB0qEPZL/KS9vF3WjMRdOMw9bosYyjc31vbSsXtPvSrQBr1XETL0p3QoRR+Efv+P5cSdOaL6nJEeIEEIwiv4q58v2lftsvL/nPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xmAObpox; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SZOxtMlaA0Rq6BMC8Yh5VpXIMQeuMa1OnzjQmDWD3jjSvUYBg2PwoD4HXXLI55t6IREXvs3lsfzP3n29HnUZiyuGDJfJWF1vEIYzE5TjqMjjx6aUVTR5FMnGJIp65qkfK3RFKdbxivpcNXxvmvuMfGPNcFKKXnD2z0iL38jQI8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9G4l5w7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xmAObpox"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD481F000E9;
-	Tue, 21 Jul 2026 18:33:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9G4l5w7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7309C1F000E9;
+	Tue, 21 Jul 2026 18:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784658788;
-	bh=r8arQvSvGa7lkF+QYUTIknduRwXiCC3yOP0BS/YQFL8=;
+	s=korg; t=1784658791;
+	bh=DB2CPxlEyukQE7J4aNGcXmZhfeNMJ408kkmZi18zsJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xmAObpoxqtp9C7H3wPSWf84SYr55ISUrZp7QEZL4gTx9Acz7j3rG7z3v6fxOw4718
-	 A5Vlt02b2qCQmkLTlMwL/KLX+HrHz7MJ++/An6Yy+TgYbk2BgJIV4ONGLMhDQz5Sle
-	 AdGN8/XB5vhLBUOosUHcQheN1y+JyunBsxdoewWU=
+	b=n9G4l5w7AmvLFPBCARpm+dHMWzdlLSvwXFdDCaAY0e5pD32Pz+tJP6fuz9MyzJQgP
+	 dmxUxG4eR0eYwik6x0grokdUjkgZNPJb3mVNizSEf0XSsFcSmZembzM9gMS0sUC4Vg
+	 dXnkb7h7lO+oDMLB3dt8zOStcAlz/Duc8pxKHzZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Alba Vives <sebasjosue84@gmail.com>,
-	Xu Yilun <yilun.xu@intel.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>
-Subject: [PATCH 6.18 1276/1611] fpga: dfl: add bounds check in dfh_get_param_size()
-Date: Tue, 21 Jul 2026 17:23:12 +0200
-Message-ID: <20260721152544.145679642@linuxfoundation.org>
+	Slark Xiao <slark_xiao@163.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Subject: [PATCH 6.18 1277/1611] bus: mhi: host: pci_generic: Fix the physical function check
+Date: Tue, 21 Jul 2026 17:23:13 +0200
+Message-ID: <20260721152544.168210057@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -51,43 +50,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Alba Vives <sebasjosue84@gmail.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-commit 9e8bc49f91f3f81d957c4f1c1f09fe94e2f88f6a upstream.
+commit 32845111e8ea6ef5e837b6d25080e69e99bd4561 upstream.
 
-dfh_get_param_size() can return a parameter size larger than the feature
-region because the loop bounds check is evaluated before incrementing
-size. If the EOP (End of Parameters) bit is set in the same iteration,
-the inflated size is returned without re-validation against max.
+Commit b4d01c5b9a9d ("bus: mhi: host: pci_generic: Read SUBSYSTEM_VENDOR_ID
+for VF's to check status") added the check for physical function by
+checking for 'pdev->is_physfn. But 'pdev->is_physfn' is only set for the
+physical function of a SR-IOV capable device. But for the non-SR-IOV device
+this variable will be 0. So this check ended up breaking the health check
+functionality for all non-SR-IOV devices.
 
-This can cause create_feature_instance() to call memcpy_fromio() with a
-size exceeding the ioremap'd region when a malicious FPGA device provides
-crafted DFHv1 parameter headers.
+Fix it by checking for '!pdev->is_virtfn' to make sure that the check is
+only skipped for virtual functions.
 
-Add a bounds check after the size increment to ensure the accumulated
-size never exceeds the feature boundary.
-
-Fixes: 4747ab89b4a6 ("fpga: dfl: add basic support for DFHv1")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
-Reviewed-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20260518190742.61426-2-sebasjosue84@gmail.com
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
+Cc: stable@vger.kernel.org # 6.18
+Reported-by: Slark Xiao <slark_xiao@163.com>
+Tested-by: Slark Xiao <slark_xiao@163.com>
+Fixes: b4d01c5b9a9d ("bus: mhi: host: pci_generic: Read SUBSYSTEM_VENDOR_ID for VF's to check status")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/fpga/dfl.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/bus/mhi/host/pci_generic.c |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
---- a/drivers/fpga/dfl.c
-+++ b/drivers/fpga/dfl.c
-@@ -1133,6 +1133,8 @@ static int dfh_get_param_size(void __iom
- 			return -EINVAL;
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -1197,7 +1197,7 @@ static void mhi_pci_recovery_work(struct
  
- 		size += next * sizeof(u64);
-+		if (size > max)
-+			return -EINVAL;
+ 	dev_warn(&pdev->dev, "device recovery started\n");
  
- 		if (FIELD_GET(DFHv1_PARAM_HDR_NEXT_EOP, v))
- 			return size;
+-	if (pdev->is_physfn)
++	if (!pdev->is_virtfn)
+ 		timer_delete(&mhi_pdev->health_check_timer);
+ 
+ 	pm_runtime_forbid(&pdev->dev);
+@@ -1227,7 +1227,7 @@ static void mhi_pci_recovery_work(struct
+ 
+ 	set_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status);
+ 
+-	if (pdev->is_physfn)
++	if (!pdev->is_virtfn)
+ 		mod_timer(&mhi_pdev->health_check_timer, jiffies + HEALTH_CHECK_PERIOD);
+ 
+ 	return;
+@@ -1318,7 +1318,7 @@ static int mhi_pci_probe(struct pci_dev
+ 		mhi_cntrl_config = info->config;
+ 
+ 	/* Initialize health check monitor only for Physical functions */
+-	if (pdev->is_physfn)
++	if (!pdev->is_virtfn)
+ 		timer_setup(&mhi_pdev->health_check_timer, health_check, 0);
+ 
+ 	mhi_cntrl = &mhi_pdev->mhi_cntrl;
+@@ -1340,7 +1340,7 @@ static int mhi_pci_probe(struct pci_dev
+ 	mhi_cntrl->mru = info->mru_default;
+ 	mhi_cntrl->name = info->name;
+ 
+-	if (pdev->is_physfn)
++	if (!pdev->is_virtfn)
+ 		mhi_pdev->reset_on_remove = info->reset_on_remove;
+ 
+ 	if (info->edl_trigger)
+@@ -1389,7 +1389,7 @@ static int mhi_pci_probe(struct pci_dev
+ 	set_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status);
+ 
+ 	/* start health check */
+-	if (pdev->is_physfn)
++	if (!pdev->is_virtfn)
+ 		mod_timer(&mhi_pdev->health_check_timer, jiffies + HEALTH_CHECK_PERIOD);
+ 
+ 	/* Allow runtime suspend only if both PME from D3Hot and M3 are supported */
+@@ -1417,7 +1417,7 @@ static void mhi_pci_remove(struct pci_de
+ 
+ 	pci_disable_sriov(pdev);
+ 
+-	if (pdev->is_physfn)
++	if (!pdev->is_virtfn)
+ 		timer_delete_sync(&mhi_pdev->health_check_timer);
+ 	cancel_work_sync(&mhi_pdev->recovery_work);
+ 
+@@ -1449,7 +1449,7 @@ static void mhi_pci_reset_prepare(struct
+ 
+ 	dev_info(&pdev->dev, "reset\n");
+ 
+-	if (pdev->is_physfn)
++	if (!pdev->is_virtfn)
+ 		timer_delete(&mhi_pdev->health_check_timer);
+ 
+ 	/* Clean up MHI state */
+@@ -1495,7 +1495,7 @@ static void mhi_pci_reset_done(struct pc
+ 	}
+ 
+ 	set_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status);
+-	if (pdev->is_physfn)
++	if (!pdev->is_virtfn)
+ 		mod_timer(&mhi_pdev->health_check_timer, jiffies + HEALTH_CHECK_PERIOD);
+ }
+ 
+@@ -1561,7 +1561,7 @@ static int  __maybe_unused mhi_pci_runti
+ 	if (test_and_set_bit(MHI_PCI_DEV_SUSPENDED, &mhi_pdev->status))
+ 		return 0;
+ 
+-	if (pdev->is_physfn)
++	if (!pdev->is_virtfn)
+ 		timer_delete(&mhi_pdev->health_check_timer);
+ 
+ 	cancel_work_sync(&mhi_pdev->recovery_work);
+@@ -1614,7 +1614,7 @@ static int __maybe_unused mhi_pci_runtim
+ 	}
+ 
+ 	/* Resume health check */
+-	if (pdev->is_physfn)
++	if (!pdev->is_virtfn)
+ 		mod_timer(&mhi_pdev->health_check_timer, jiffies + HEALTH_CHECK_PERIOD);
+ 
+ 	/* It can be a remote wakeup (no mhi runtime_get), update access time */
 
 
