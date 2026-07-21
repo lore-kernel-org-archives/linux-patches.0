@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312E53DDB03;
-	Tue, 21 Jul 2026 22:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6300544AB91;
+	Tue, 21 Jul 2026 22:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674193; cv=none; b=DW9rNTwMM9hUnkEzubCvC8L0d5P8blDJMlgSwNTLK60r0GFMmvTkW14sd7G77cMjt/Il7OwZ7QPsj8xas7Vyql4DOI2m5ZcpbJYKEULnhX+pBdh2ElS3cJArGgOq6eVG2Mfy0tJfhkQTefqat2Gmy+HLmpu4Oh/JGAPEnSO/OLI=
+	t=1784674198; cv=none; b=eTzQ/haa+fsyAIA4S4GUkt5XLcKxvvoD5HtCE8D4nMq5R82/OQayWk6Ur+RfZ55TSW4PkqpHpZ0UZzGNtbD51GJKg8IsoTKEjPjFEH7878ijUoNxSVt9NDtKZolUe+pDpvInz1lLarv80v5GfyG5hhROgXiPIjLNBaRNG3CakUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674193; c=relaxed/simple;
-	bh=IfP7vmlYqi1juFtWCc/uHD59MRvcjHMb7jYFm2sd7lU=;
+	s=arc-20240116; t=1784674198; c=relaxed/simple;
+	bh=kwUwU3O+H2RjUnmVzBOtz2p/ZMYQ+z+T8O2IqJRTC/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MsR/EK8VZHz6rD3Sae9SM8bDk1yPUCXwepTf8pnKKSTvBEpvciPpJg5yt0+XZ7kfX15ufsi8PGhI664kndbnksbAnST0ABCQJH2RlsVaFdmL62TMmuBsBWdNMO2/h5+NTZoyar0B7DsJwC4tfVzQIvGlmMgKDe9ZASxXeNzyuzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sB9FGsR7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZcGmK2Rus3PJ3Y6jI9IlLHfBZ9FLl1gLbAzloawip0Ec+/YeSo7jORajjaDCqSfOFitYfUXt5llqFbOJDUmCeFFf7x4W1gtwc3G4odgahGrhEXhVNEmytJblsACmvMBEnYFNiGOgpPEeQ22tJ/HN0qzWLcbYAVBNbQXQ52Z9g+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACBYCJkt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sB9FGsR7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 689B51F000E9;
-	Tue, 21 Jul 2026 22:49:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACBYCJkt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85DE1F00A3A;
+	Tue, 21 Jul 2026 22:49:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674191;
-	bh=Hr+ZdGplIuu6Hg6DTkVzUbL+vrSRrRgAp3DzAS3d7DQ=;
+	s=korg; t=1784674197;
+	bh=BxPxfnDelFNLzwipJlUU+fQOZWJeRn3/oZWV5io2tZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sB9FGsR7mPvaLeqUOHlFoY46s/8pVg1Zxn0V8B46VRUcsqVdKb1c+u1nWJcKV20r+
-	 9lx+tLKEvx2/R3XMlkzbajLvx/GsJU6bCehq65VWDbWlgh0K1ndN5QSh+NFKChjGlw
-	 8kiPMWwDE83O0cEmc+jYJZUFYxR5UGNsPUi6o5ME=
+	b=ACBYCJktW1lmz6jiQg22XrxhCL0A4QWhkUxK5Bo4M00IfuIYOUoKlcNt5w0fInN2Z
+	 6pHJ0g/XKexqTUlHCC+raSMUwaht0shGgH8cITFRX6ENKEY8rzQ9HThD3gd534tYQu
+	 vRc3KpC+4R2AUPZgyax508RW23A//lprlXFTO/u8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Wyatt Feng <bronzed_45_vested@icloud.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.10 446/699] netfilter: xt_cluster: reject template conntracks in hash match
-Date: Tue, 21 Jul 2026 17:23:25 +0200
-Message-ID: <20260721152405.761859042@linuxfoundation.org>
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 5.10 448/699] netfilter: nf_conntrack_reasm: guard mac_header adjustment after IPv6 defrag
+Date: Tue, 21 Jul 2026 17:23:27 +0200
+Message-ID: <20260721152405.805754925@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -56,49 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wyatt Feng <bronzed_45_vested@icloud.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit 5feba91006ec92da57acc1cc2e34df623b98541e upstream.
+commit 3b08fed5b7e0d5e3a25d73ef3ba09cd33ade16c9 upstream.
 
-xt_cluster_mt() treats any non-NULL nf_ct_get() result as a fully
-initialized conntrack and passes it to xt_cluster_hash().
+nf_ct_frag6_reasm() slides the packet head forward to drop the IPv6
+fragment header and then unconditionally advances skb->mac_header:
 
-This causes a state confusion bug when the raw table CT target attaches
-a template conntrack to skb->_nfct before normal conntrack processing.
-Templates carry IPS_TEMPLATE status but do not have a valid tuple for
-hashing yet, so xt_cluster_hash() can hit its WARN_ON() path on the
-zeroed l3num field.
+	skb->mac_header += sizeof(struct frag_hdr);
 
-Reject template conntracks before hashing them. This matches existing
-netfilter handling for template objects and avoids hashing incomplete
-conntrack state.
+On the NF_INET_LOCAL_OUT defrag path the skb has no link-layer header
+yet, so skb->mac_header is still the "not set" sentinel (u16)~0U. Adding
+sizeof(struct frag_hdr) wraps it to a small value (0xffff + 8 == 7),
+after which skb_mac_header_was_set() wrongly reports a MAC header is
+present and skb_mac_header() points into the headroom.
 
-Fixes: 0269ea493734 ("netfilter: xtables: add cluster match")
+The reassembler has done this unconditional add since it was introduced;
+it was harmless while mac_header was a bare pointer, but wrong once
+mac_header became a u16 offset whose unset state is the ~0U sentinel
+tested by skb_mac_header_was_set(). The sibling net/ipv6/reassembly.c
+does the same relocation and does guard the adjustment; mirror the
+guard here.
+
+Fixes: 9fb9cbb1082d ("[NETFILTER]: Add nf_conntrack subsystem.")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/xt_cluster.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/netfilter/nf_conntrack_reasm.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/netfilter/xt_cluster.c
-+++ b/net/netfilter/xt_cluster.c
-@@ -107,7 +107,7 @@ xt_cluster_mt(const struct sk_buff *skb,
- 	}
+--- a/net/ipv6/netfilter/nf_conntrack_reasm.c
++++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
+@@ -344,7 +344,8 @@ static int nf_ct_frag6_reasm(struct frag
+ 	skb_network_header(skb)[fq->nhoffset] = skb_transport_header(skb)[0];
+ 	memmove(skb->head + sizeof(struct frag_hdr), skb->head,
+ 		(skb->data - skb->head) - sizeof(struct frag_hdr));
+-	skb->mac_header += sizeof(struct frag_hdr);
++	if (skb_mac_header_was_set(skb))
++		skb->mac_header += sizeof(struct frag_hdr);
+ 	skb->network_header += sizeof(struct frag_hdr);
  
- 	ct = nf_ct_get(skb, &ctinfo);
--	if (ct == NULL)
-+	if (!ct || nf_ct_is_template(ct))
- 		return false;
- 
- 	if (ct->master)
+ 	skb_reset_transport_header(skb);
 
 
