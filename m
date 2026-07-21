@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E9547044D;
-	Tue, 21 Jul 2026 20:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6691947044D;
+	Tue, 21 Jul 2026 20:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664176; cv=none; b=lKICLpd6SKVJSTuTsTGspdfYUISHUTEYdXRPkvYseMm03edJNd0/pwVqFCCYgpDZSxYU2NB2oPVTF1fBmQt8nDowKBK6vHudLdTGOZf3VBcTWFmD0FSkJSZZFixTgASMEp/LfAFD0L3tbWgKvuWMnUye9TzhgAt+081DTqTcB/4=
+	t=1784664180; cv=none; b=lb4Bezx60sfwVlw2N4ZM9SDnoykG2OYm+r7SbEW/LsfCE2zHwxdbn5OxIke9fBB9tBLeGYDoEItti1/SNPpuup1OfXvHpud50tI1j5mcXqmvuwSZNX6ZIsGHyHI7NcasruWS1CIydjm9wowZYSss7rx3by9dQSO4pBbFxrg39Hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664176; c=relaxed/simple;
-	bh=81uVUIk+NtjVETagzHrpAtE0jYVnFV9QRAkWrbdK7y0=;
+	s=arc-20240116; t=1784664180; c=relaxed/simple;
+	bh=vYUXMjKP/dsB9azFh7vIXLq4hDfX9hYtm0EhdbwM4+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nWp1a2c3FyCKvF5P/vCWpjL2o8/dveb1+Mg94rWWmXbCPVFy4n9u3QwaYxndiW/T2XvmaCaWWrpAY8SrgbtwLlHWjrwqi8Gy1epi9n0m8fcQVxvHXr0atqxIF6RwpHvS2+h68Rsx/PhLbpZUxhYKv1mO4a72lhB44ZFPqBgby6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zd7vBnjZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gUAySEedcLoeQMZMrZZqaxGsaODzH8ZjHMAfA4+KBOTZKcKLT8YpjI3Fwcv2bNxwf4csIXepL6InujfccOS9D7h+u/B4iJwHkwAHFjhzhYM3vx25AsKMXLKW3soBTi1309X7SmWZSnDsodNsjL0hfIgwFvY6g2OTH5Bee88E+xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f1K9Yhny; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zd7vBnjZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 354E81F000E9;
-	Tue, 21 Jul 2026 20:02:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f1K9Yhny"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD5CB1F000E9;
+	Tue, 21 Jul 2026 20:02:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664175;
-	bh=C0zGTwdUvOwoKm0qiJxGj0bu0iCweu2/Yk4dmrrU4Go=;
+	s=korg; t=1784664178;
+	bh=qWE/hmQlzteqwfZaEPNufR0Uh+jpCX5HFEviifx5ouQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zd7vBnjZtxU/W61L59TGMF9Wcu+PqL/X4/xf32MkWaFpayoBdadXyPLK4mtCe0D6b
-	 daljh6i6lmSCiR6CQQ5XLKH3qoZbLDKRnqB0F3/SOx3CRxXF7z3Zd7xchYsfDjhxV4
-	 5bU+6odUmZaWptMeem0p8UrYXrQVlADJa3hzghrM=
+	b=f1K9YhnycWDZdg2E7KtRHm5tuUD6nVnc19JMGOoWiAxiZjALomPLi+CidY108MZpB
+	 HAabtJ6ARxaTB9uUeoUNoLK+WsO/scRUalP5ifM8kvTP1QgKHBrsSUXV0A/M3kmiMC
+	 uZUXRi3YO+X1mUzkgluwOtqBzLiKyB/2epuSmRPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Boqun Feng <boqun@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1064/1276] rust: block: `allow(deprecated)` for `fetch_update` for Rust >= 1.99.0
-Date: Tue, 21 Jul 2026 17:25:07 +0200
-Message-ID: <20260721152509.796996174@linuxfoundation.org>
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.12 1100/1276] s390/mm: Fix type mismatch in get_align_mask().
+Date: Tue, 21 Jul 2026 17:25:43 +0200
+Message-ID: <20260721152510.604343865@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -53,67 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
 
-Starting with Rust 1.99.0 (expected 2026-10-01), the
-`Atomic*::fetch_update` method is deprecated, with the compiler suggesting
-the `try_update` alias instead:
+commit ec84aad4c3594307d103af563991b4415ac5c8ab upstream.
 
-    error: use of deprecated method `core::sync::atomic::Atomic::<u64>::fetch_update`: renamed to `try_update` for consistency
-       --> rust/kernel/block/mq/request.rs:206:22
-        |
-    206 |     let old = target.fetch_update(Ordering::Relaxed, Ordering::Relaxed, |x| Some(op(x)));
-        |                      ^^^^^^^^^^^^
-        |
-        = note: `-D deprecated` implied by `-D warnings`
-        = help: to override `-D warnings` add `#[allow(deprecated)]`
-    help: replace the use of the deprecated method
-        |
-    206 -     let old = target.fetch_update(Ordering::Relaxed, Ordering::Relaxed, |x| Some(op(x)));
-    206 +     let old = target.try_update(Ordering::Relaxed, Ordering::Relaxed, |x| Some(op(x)));
-        |
+Commit 86f48f922ba79 ("s390/mmap: disable mmap alignment when
+randomize_va_space = 0") introduced get_align_mask() with return type of
+'int', while the target field 'info.align_mask' in struct
+vm_unmapped_area_info is 'unsigned long'.
 
-The deprecation was added in Rust 1.95.0 [1], but only triggers starting
-with Rust 1.99.0.
+With currently used masks, this should not cause truncation issues, but
+fix it and return 'unsigned long' to avoid future problems.
 
-However, we cannot use the alias since our minimum in 6.12.y is Rust
-1.78.0 -- `try_update` was added in Rust 1.86.0 [2].
-
-Thus just allow the lint.
-
-Cc: Andreas Hindborg <a.hindborg@kernel.org>
-Cc: Boqun Feng <boqun@kernel.org>
-Cc: Jens Axboe <axboe@kernel.dk>
-Link: https://github.com/rust-lang/rust/pull/148590 [1]
-Link: https://github.com/rust-lang/rust/pull/133829 [2]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 86f48f922ba79 ("s390/mmap: disable mmap alignment when randomize_va_space = 0")
+Cc: stable@vger.kernel.org # v6.9+
+Signed-off-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/block/mq/request.rs | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/s390/mm/mmap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/rust/kernel/block/mq/request.rs b/rust/kernel/block/mq/request.rs
-index 7943f43b957532..1c793765354260 100644
---- a/rust/kernel/block/mq/request.rs
-+++ b/rust/kernel/block/mq/request.rs
-@@ -203,6 +203,7 @@ unsafe impl<T: Operations> Sync for Request<T> {}
- /// Store the result of `op(target.load())` in target, returning new value of
- /// target.
- fn atomic_relaxed_op_return(target: &AtomicU64, op: impl Fn(u64) -> u64) -> u64 {
-+    #[allow(deprecated)]
-     let old = target.fetch_update(Ordering::Relaxed, Ordering::Relaxed, |x| Some(op(x)));
+--- a/arch/s390/mm/mmap.c
++++ b/arch/s390/mm/mmap.c
+@@ -71,7 +71,7 @@ static inline unsigned long mmap_base(un
+ 	return PAGE_ALIGN(STACK_TOP - gap - rnd);
+ }
  
-     // SAFETY: Because the operation passed to `fetch_update` above always
-@@ -215,6 +216,7 @@ fn atomic_relaxed_op_return(target: &AtomicU64, op: impl Fn(u64) -> u64) -> u64
- /// Store the result of `op(target.load)` in `target` if `target.load() !=
- /// pred`, returning [`true`] if the target was updated.
- fn atomic_relaxed_op_unless(target: &AtomicU64, op: impl Fn(u64) -> u64, pred: u64) -> bool {
-+    #[allow(deprecated)]
-     target
-         .fetch_update(Ordering::Relaxed, Ordering::Relaxed, |x| {
-             if x == pred {
--- 
-2.53.0
-
+-static int get_align_mask(struct file *filp, unsigned long flags)
++static unsigned long get_align_mask(struct file *filp, unsigned long flags)
+ {
+ 	if (!(current->flags & PF_RANDOMIZE))
+ 		return 0;
 
 
