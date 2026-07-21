@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA993B2D1D;
-	Tue, 21 Jul 2026 20:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6261C3B71CC;
+	Tue, 21 Jul 2026 20:36:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666167; cv=none; b=Eun0ete08A3bucuflPSqrj0/wXYJ0xh7E5FGHL5OjRbPaL9x2r4qJQ9qWdmnHSRg4S0nPieeedVtDHgHTen1BSHB/TGvjvM+Ka85Gv79b2YSTHEBfj6z/cwI+BF8F1yAiVCN64c6zqgbKoRNYNxS9dndNrBf1gKlSSndliCavLU=
+	t=1784666171; cv=none; b=DpnRohzystf4ppRpC/cO3FwZExgfLK+1iDG5IGYRtGha/9kTholy7wI6vqKoOoUfhHOgzxUhv7zxljWRsbLv67MhVraOcRs9J2if1ZpcOwqddUF4VASB+G47NZIl6wfsXGB53ATJf+IRlqGeO9pbRSKNJk4R00en+Bs60K5r6ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666167; c=relaxed/simple;
-	bh=qF6ZobCe8e8YK4r8YQIN9Zhh2UzlM3AQFEBTm4soK3g=;
+	s=arc-20240116; t=1784666171; c=relaxed/simple;
+	bh=+gdOTa8fXMVDiO0igKt23NOSTu6129ZyGTEwhmJ0Vl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kUxDb2/LoXA2ZRAUnofv85BuViD/HplAtAlDKW/Vi/2YRVVtC9t7q16Hz4w4TamISqrm7KMka90RfhvYa8+GI4k+ikDc9GQ7NEtEFMvBprRVDzIVSpjZBm97MvDhZyKl+Nee/ojyG5yP6vng7sPq0RAHykxQFv1dyX6YDlRQ29c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGhF3ASq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OmXPBfjlIX2iMUbdqONQ9aloO9i6f9IMiCWKKn6CC1M1XbFZfPiorbdz/8+r9eIzXKcD9ws6UP5IyuXSkgMG4wzX5eAcSZ9nX6LmTCf7wc8K7f2UeA4tbuDSU36G4zR1iSyXvT1FTVZZuq+9kbhMPm6LxjS/al4Yh7e9itqwXyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fka5cXut; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGhF3ASq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B6D1F00A3A;
-	Tue, 21 Jul 2026 20:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fka5cXut"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 783F11F000E9;
+	Tue, 21 Jul 2026 20:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666164;
-	bh=odX3u8uJlfhuM6x2JMPbXz3VWNdytXDbjxiaAuKs8eU=;
+	s=korg; t=1784666167;
+	bh=VJK1iyGNVFBpTR80tGZbRv6iL0mUayGhIm4vxH7uAtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MGhF3ASq0ct0jsuV97QH53SfPE3EBCZXbiBOI767gZokGc1p0bm/W84teN29VjN1S
-	 T+1AsXjBlMo8FUxp84XnCHDErd58c7AIDnQS13sWSEid+LRdoi9KcKY2KTGhzFwkLO
-	 EIh2zexn4BRHJ647vfJGzQvl4HACY+/WZ9IyM1SE=
+	b=fka5cXutRfhWrZWgDsCFBUBdzClQtigi8zIDi899XjGAwa7FBC/O9ciRUKuMmYC43
+	 bEMrt9lRmFvknkqLWarjdFdn5/vzptx41bnEcCQiHfzKrhdcgX7MWbSjr4zLldwuMX
+	 +2FhBje+a3NkOEA45pZ/hMsp9/3MevL+ssSUPtRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Sun Jian <sun.jian.kdev@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0579/1266] bpf: Run generic devmap egress prog on private skb
-Date: Tue, 21 Jul 2026 17:16:56 +0200
-Message-ID: <20260721152454.823701043@linuxfoundation.org>
+Subject: [PATCH 6.6 0553/1266] RDMA/mlx5: Remove raw RSS QP restrack tracking
+Date: Tue, 21 Jul 2026 17:16:30 +0200
+Message-ID: <20260721152454.240948770@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -48,70 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sun Jian <sun.jian.kdev@gmail.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 6001896f00984d317fb75160ba05c4a885fbe2a0 ]
+[ Upstream commit 666031fed8f0fdfc29b20d125a628c1b0a04cdaf ]
 
-Generic XDP devmap multi redirect uses skb_clone() for intermediate
-destinations and sends the last destination with the original skb. This
-can leave multiple destinations sharing the same packet data.
+Raw RSS QP restrack tracking wasn't working to begin with as it was
+only tracking the first raw RSS QP which was added, since at creation
+the raw RSS QP number is reserved so the QP number for this qp type
+was always zero.
+The following raw RSS QP additions were always failing silently.
 
-This becomes visible after generic devmap egress-program support was
-added: a devmap egress program may mutate packet data, and another
-destination sharing the same data can observe that mutation.
+Since the fix isn't trivial and there were no users that required or
+complained about this issue we are dropping this for now instead of fixing.
 
-Native XDP broadcast redirect does not have this issue because
-xdpf_clone() copies the frame data for each destination. Generic XDP
-should provide the same per-destination isolation before running a
-devmap egress program.
-
-Fix this by making cloned skbs private before running the generic devmap
-egress program. Use skb_copy() instead of skb_unshare() so allocation
-failure does not consume the skb and the existing caller error paths keep
-their ownership semantics.
-
-Fixes: 2ea5eabaf04a ("bpf: devmap: Implement devmap prog execution for generic XDP")
-Suggested-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
-Link: https://lore.kernel.org/r/20260612114032.244616-2-sun.jian.kdev@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 968f0b6f9c01 ("RDMA/mlx5: Consolidate into special function all create QP calls")
+Link: https://patch.msgid.link/r/20260607-restrack-uaf-fix-v1-2-d72e45eb76c2@nvidia.com
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/devmap.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/infiniband/hw/mlx5/qp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
-index 3f710d5af55d4b..8ce3b152dcd5b9 100644
---- a/kernel/bpf/devmap.c
-+++ b/kernel/bpf/devmap.c
-@@ -687,6 +687,18 @@ int dev_map_generic_redirect(struct bpf_dtab_netdev *dst, struct sk_buff *skb,
- 	if (unlikely(err))
- 		return err;
+diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+index 0a9ae84600b204..df4acd9de4918c 100644
+--- a/drivers/infiniband/hw/mlx5/qp.c
++++ b/drivers/infiniband/hw/mlx5/qp.c
+@@ -3090,6 +3090,7 @@ static int create_qp(struct mlx5_ib_dev *dev, struct ib_pd *pd,
+ 	int err;
  
-+	if (dst->xdp_prog && skb_cloned(skb)) {
-+		struct sk_buff *nskb;
-+
-+		nskb = skb_copy(skb, GFP_ATOMIC);
-+		if (!nskb)
-+			return -ENOMEM;
-+
-+		nskb->mac_len = skb->mac_len;
-+		consume_skb(skb);
-+		skb = nskb;
-+	}
-+
- 	/* Redirect has already succeeded semantically at this point, so we just
- 	 * return 0 even if packet is dropped. Helper below takes care of
- 	 * freeing skb.
+ 	if (params->is_rss_raw) {
++		rdma_restrack_no_track(&qp->ibqp.res);
+ 		err = create_rss_raw_qp_tir(dev, pd, qp, params);
+ 		goto out;
+ 	}
 -- 
 2.53.0
 
