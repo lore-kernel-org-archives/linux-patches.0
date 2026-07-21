@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865C2414A1C;
-	Tue, 21 Jul 2026 21:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4128A434409;
+	Tue, 21 Jul 2026 21:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784670564; cv=none; b=giYm+HPTfyv2szwV62PZPHg5nVgo5UDn0pMs2ue5cIunH19ZGoR38du4FST6LK4L5UMbhQ9SYWEdTbM4Lewi4+rHhoLG9SMEYLfKlknMwSyPjB03MWg8361Drd/esjiD/vRbz5fwDdgXFBH828r/x3chFvep/QCbS2p6Cq8NP0Y=
+	t=1784670568; cv=none; b=ENZzhtaJZLIOvGIp7A6Et94AYQS3p91RpKoVsS6Wodh7BgpCSpeqGisQztdNQReKL87dFX+Rd0gKZOspLw85xUQx/+Ijr7fgosOnPcvXT7HtCdkAEDMG9MZ60hvzyh7nJzj0Le+XGjW6OVUBMn9+4wxCcIgmzqQhm0lM66e3onM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784670564; c=relaxed/simple;
-	bh=p5Rz6Zi7ruAgAvs1xsezZzz9P2Kw3SypnM4HJZKQxdw=;
+	s=arc-20240116; t=1784670568; c=relaxed/simple;
+	bh=DjdtSbYYCq/CMD4wy7nhnVgjUsk6JIVUXscgSDp0TN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F5IhgYr1gJmspQytOfF7DrqRR1JeFTpyLNIWstO/RC2vPDfkT7qhReHt7AZ9pf8Rkg1EAd+AgWaKo8sdarF/xuVBwCfz+mV2tnwdabf2A0OzvYCdaBtzyr1jOHiHBoyDvzb3h42x1PVsqMqUNBYE2ddlEXQQl0WHgH/JughhH40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=00+2TAk2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vz27LGPixBR+jeulzp1jEQjCqASuxWwvbAsxM7ni/TVefr3KboCSoNJMSFsNbFEEy2q6hCvI84p+HydagxquLuHZ2WHhQqqX3G0g/yYwQJFo5ZeO/2Fm0N1quaH0EUzz1JPFtFXCTkzwbSgNtisA1WkpAQBKGzs14uRVLNlz36M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkXS0BCc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00+2TAk2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9361F000E9;
-	Tue, 21 Jul 2026 21:49:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkXS0BCc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D7B1F000E9;
+	Tue, 21 Jul 2026 21:49:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784670563;
-	bh=4/HylmvvTKZ1BxJwAtJLcaBQrOg61ooZ3j+0Lt2PDMw=;
+	s=korg; t=1784670566;
+	bh=T9iI/JUDDweAevDcCldzN21+Ro2Uj6e9F2gfASx6RfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=00+2TAk22UtYAQQurG3eD1yfaOVcOonj6JN+RNwj15UhHdSLA908VY85w2j9GhpTe
-	 hX6RtbNZ2818XhAfbpVTriQ4V7yaStM988PUBMTnEl7YoP5aKeocdAiy0iYMgIbsY8
-	 oFXjh0b4ZnxwbS1sM5egURbN4nYZ/pHb9J0YLzPg=
+	b=qkXS0BCcQFNSXnSy9pV/iE/cZElEpLls3YEVS9QKTP0rqm/qPlmlWPfqiWdPGHwo7
+	 jJniWM2wyxOT9Cd0GEJ5O/1SPg4Tj8PtOY9qXu+IlKF2IezgiwdES8EPrALl6llamZ
+	 3v5BPXyKItUUmrX9BJB+l7vf7nhQTTx+Zpew25DI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sandipan Das <sandipan.das@amd.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Stephane Eranian <eranian@google.com>
-Subject: [PATCH 6.1 0938/1067] perf/x86/amd/brs: Fix kernel address leakage
-Date: Tue, 21 Jul 2026 17:25:39 +0200
-Message-ID: <20260721152445.515585978@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0939/1067] ACPI: NFIT: core: Fix acpi_nfit_init() error cleanup
+Date: Tue, 21 Jul 2026 17:25:40 +0200
+Message-ID: <20260721152445.537437695@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,87 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-commit 47915e855fb38b42133e31ba917d99565f862154 upstream.
+[ Upstream commit 38bf27511ef41bffebd157ec3eba41fc89ba59cd ]
 
-A user-only branch stack can contain branches that originate from
-the kernel. As a result, kernel addresses are exposed to user space
-even when PERF_SAMPLE_BRANCH_USER is requested. On AMD processors
-supporting X86_FEATURE_BRS (Zen 3 only), perf can still report entries
-such as SYSRET/interrupt returns for which the branch-from addresses
-are in the kernel.
+If acpi_nfit_init() fails after adding the acpi_desc object to the
+acpi_descs list, that object is never removed from that list because
+the acpi_nfit_shutdown() devm action is not added for the NFIT device
+in that case.  Next, the acpi_nfit_init() failure causes
+acpi_nfit_probe() to fail, the acpi_desc object is freed, and a
+dangling pointer is left behind in the acpi_descs.  Any subsequent
+ACPI Machine Check Exception will trigger nfit_handle_mce() which
+iterates over acpi_descs and so a use-after-free will occur.
 
-E.g.
+Moreover, if acpi_nfit_probe() returns 0 after installing a notify
+handler for the NFIT device and without allocating the acpi_desc
+object and setting the NFIT device's driver data pointer, the
+acpi_desc object will be allocated by acpi_nfit_update_notify()
+and acpi_nfit_init() will be called to initialize it.  Regardless
+of whether or not acpi_nfit_init() fails in that case, the
+acpi_nfit_shutdown() devm action is not added for the NFIT device
+and acpi_desc is never removed from the acpi_descs list.  If the
+acpi_desc object is freed subsequently on driver removal, any
+subsequent ACPI MCE will lead to a use-after-free like in the
+previous case.
 
-  $ perf record -j any,u -c 4000 -e branch-brs -o - -- \
-        perf bench syscall basic --loop 1000 | \
-        perf script -i - -F brstack|tr ' ' '\n'| \
-        grep -E '0x[89a-f][0-9a-f]{15}'
+To address the first issue mentioned above, make acpi_nfit_probe()
+call acpi_nfit_shutdown() directly on acpi_nfit_init() failures and
+to address the other one, add a remove callback to the driver and
+make it call acpi_nfit_shutdown().  Also, since it is now possible to
+pass NULL to acpi_nfit_shutdown() or the acpi_desc object passed to it
+may not have been initialized, add checks against NULL for acpi_desc and
+its nvdimm_bus field to that function and make acpi_nfit_unregister()
+clear the latter after unregistering the NVDIMM bus.
 
-  ...
-  0xffffffff810001c4/0x72e2e32955eb/-/-/-/0//-
-  0xffffffff810001c4/0x72e2d94a9821/-/-/-/0//-
-  0xffffffff810001c4/0x72e2d94ffa1b/-/-/-/0//-
-  ...
-
-BRS provides no hardware branch filtering, so privilege level
-filtering is performed entirely in software. However, amd_brs_match_plm()
-only validates the branch-to address against the requested privilege
-levels. For branches from the kernel to user space, the branch-from
-address is left unchecked and is leaked. Extend the software filter to
-also validate the branch-from address, so that any branch record whose
-branch-from address is in the kernel is dropped when
-PERF_SAMPLE_BRANCH_USER is requested.
-
-Fixes: 8910075d61a3 ("perf/x86/amd: Enable branch sampling priv level filtering")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: stable@vger.kernel.org
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Stephane Eranian <eranian@google.com>
-Link: https://patch.msgid.link/f05931c4f89a146c364bd5dc6b8170b1ac611c65.1783701239.git.sandipan.das@amd.com
-Closes: https://lore.kernel.org/all/20260710110235.F3FD81F000E9@smtp.kernel.org/
-[sandipan: backport to linux-6.1.y]
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
+Fixes: a61fe6f7902e ("nfit, tools/testing/nvdimm: unify common init for acpi_nfit_desc")
+Fixes: fbabd829fe76 ("acpi, nfit: fix module unload vs workqueue shutdown race")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: All applicable <stable@vger.kernel.org>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/1963615.tdWV9SEqCh@rafael.j.wysocki
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/amd/brs.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/acpi/nfit/core.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/arch/x86/events/amd/brs.c
-+++ b/arch/x86/events/amd/brs.c
-@@ -262,13 +262,13 @@ void amd_brs_disable_all(void)
- 		amd_brs_disable();
+--- a/drivers/acpi/nfit/core.c
++++ b/drivers/acpi/nfit/core.c
+@@ -3067,6 +3067,8 @@ static void acpi_nfit_unregister(void *d
+ 	struct acpi_nfit_desc *acpi_desc = data;
+ 
+ 	nvdimm_bus_unregister(acpi_desc->nvdimm_bus);
++	/* The nvdimm_bus object may have been freed, so clear the pointer. */
++	acpi_desc->nvdimm_bus = NULL;
  }
  
--static bool amd_brs_match_plm(struct perf_event *event, u64 to)
-+static bool amd_brs_match_plm(struct perf_event *event, u64 from, u64 to)
+ int acpi_nfit_init(struct acpi_nfit_desc *acpi_desc, void *data, acpi_size sz)
+@@ -3290,7 +3292,10 @@ static void acpi_nfit_put_table(void *ta
+ void acpi_nfit_shutdown(void *data)
  {
- 	int type = event->attr.branch_sample_type;
- 	int plm_k = PERF_SAMPLE_BRANCH_KERNEL | PERF_SAMPLE_BRANCH_HV;
- 	int plm_u = PERF_SAMPLE_BRANCH_USER;
- 
--	if (!(type & plm_k) && kernel_ip(to))
-+	if (!(type & plm_k) && (kernel_ip(to) || kernel_ip(from)))
- 		return 0;
- 
- 	if (!(type & plm_u) && !kernel_ip(to))
-@@ -341,11 +341,11 @@ void amd_brs_drain(void)
- 		 */
- 		to = (u64)(((s64)to << shift) >> shift);
- 
--		if (!amd_brs_match_plm(event, to))
--			continue;
--
- 		rdmsrl(brs_from(brs_idx), from);
- 
-+		if (!amd_brs_match_plm(event, from, to))
-+			continue;
+ 	struct acpi_nfit_desc *acpi_desc = data;
+-	struct device *bus_dev = to_nvdimm_bus_dev(acpi_desc->nvdimm_bus);
++	struct device *bus_dev;
 +
- 		perf_clear_branch_entry_bitfields(br+nr);
++	if (!acpi_desc || !acpi_desc->nvdimm_bus)
++		return;
  
- 		br[nr].from = from;
+ 	/*
+ 	 * Destruct under acpi_desc_lock so that nfit_handle_mce does not
+@@ -3305,6 +3310,7 @@ void acpi_nfit_shutdown(void *data)
+ 	mutex_unlock(&acpi_desc->init_mutex);
+ 	cancel_delayed_work_sync(&acpi_desc->dwork);
+ 
++	bus_dev = to_nvdimm_bus_dev(acpi_desc->nvdimm_bus);
+ 	/*
+ 	 * Bounce the nvdimm bus lock to make sure any in-flight
+ 	 * acpi_nfit_ars_rescan() submissions have had a chance to
+@@ -3372,13 +3378,14 @@ static int acpi_nfit_add(struct acpi_dev
+ 				sz - sizeof(struct acpi_table_nfit));
+ 
+ 	if (rc)
+-		return rc;
+-	return devm_add_action_or_reset(dev, acpi_nfit_shutdown, acpi_desc);
++		acpi_nfit_shutdown(acpi_desc);
++
++	return rc;
+ }
+ 
+ static int acpi_nfit_remove(struct acpi_device *adev)
+ {
+-	/* see acpi_nfit_unregister */
++	acpi_nfit_shutdown(dev_get_drvdata(&adev->dev));
+ 	return 0;
+ }
+ 
 
 
