@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549B944AB7F;
-	Tue, 21 Jul 2026 21:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA34844AB62;
+	Tue, 21 Jul 2026 21:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668938; cv=none; b=MRtzj2NTcEc1XVJZPPoZukfnjMR1kBIojrlolQME0odbI5LdTPPojeh2qzrS4tyRlxWviiysRf5zvQFXu4MIOVXTMMvXBM3xEOAwLHgykQm2AIQu89SR9QYIRqpkOYUaflbIz4zId48RJTF0p++wc7cSGV8lgs1UdR4o/0AZkmI=
+	t=1784668940; cv=none; b=AOKxT80jH3ISQDDPCEbnhkvOLhEwf7Lb7nU+0wVJ83L3Z9+1g2/PTec5xxLjn96CA9gzfhF3im0X1n2+enVI3U9AlgackyXERkDe/scUoLbJdE27imIgzMfQtwbmHPLp6r7W/9NRIu4mQPhqPcv1n7OGwLkxbdsNf4KLkHkCDPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668938; c=relaxed/simple;
-	bh=BmnB0lpxv6CFsLLDilDUKPBQfBKzgHsfhsYbe20IZEY=;
+	s=arc-20240116; t=1784668940; c=relaxed/simple;
+	bh=EBuJHMbYCth+U2G1XLv/an+ZCrVNATFIi9uAeo9B+QY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=scVNUQdDImp36MypPuvPIkhQUBpjk4Xeb8F2qZNDKmjz4PKCuI+wau8ZQboZEbYderfjbHDi4ejLxb6rRJOX0eMRuI5mB6+9Kxt1QArxvHqERoOwY3fjmx2E3WX6xSQ+4hNm5l0h+IlR4QppLEFBG6bgb13f8/ORYKUVF7zX4xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PFhw5kfb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZsS9gC1ZSsG4aqbWoUteyEBV+d0KEtcSqr5YkhZqCnh5wbLh+kQT3bICn14CU/NGS3jQPliE1wr1VAvFvL5zxGqIidXnNug2taGzvPAv+DepKcEKnBLnNONiILhwLOxZe6Fe7lIc6ldmC6ux82k9ydfvd5Ca2+j8bdjcCotNnU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0vS0VeL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PFhw5kfb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8662F1F000E9;
-	Tue, 21 Jul 2026 21:22:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0vS0VeL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD8D1F000E9;
+	Tue, 21 Jul 2026 21:22:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668937;
-	bh=qElD4DxMncGf+zzWihZSe8sXjlW6qgFxUsBJm6DIzfs=;
+	s=korg; t=1784668939;
+	bh=6h3AyhZwU6SNYh7xAVCQ2CPGgsFTYqbpnFEpUItrSmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PFhw5kfbC0u8ZjDa8UrN6Dc45FebBOlF2e/HgguJrVjbSRDKrjdSBsZ7IFHW0GLw4
-	 1VjgTzk/yFJvpY6qJC6TnZI6fRuS6AKuLQPGtssubhfg5RgE7hQ/ags5wFqvF0m6u0
-	 bkop/TN5/eS64XHYrVngiL//KOie8R5Sugp1Lm28=
+	b=O0vS0VeL3DQpdyzmMTgv8gOCgD43UnhdR+xGLBkT0oKL5wiCSTSy74oFq9F8NuGRU
+	 a/MKEZSxMuy2TDFid0CLAW8vVIZhjWC7PISlzU1Z0OYGIsS2OxeOH9xpJATs769du8
+	 QmLnMTaYD1SzT/ttJkxWrZEJ2D2oLx42K5DOgDOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yuho Choi <dbgh9129@gmail.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0364/1067] ARM: imx3: Fix CCM node reference leak
-Date: Tue, 21 Jul 2026 17:16:05 +0200
-Message-ID: <20260721152432.761243590@linuxfoundation.org>
+Subject: [PATCH 6.1 0365/1067] ARM: imx31: Fix IIM mapping leak in revision check
+Date: Tue, 21 Jul 2026 17:16:06 +0200
+Message-ID: <20260721152432.784681576@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,42 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 36d46348eb5fc4bc505cd2290ddd70c25fbe6bb3 ]
+[ Upstream commit ccb4b54b8ecf1ebafef96d538cd6c5c8455bb390 ]
 
-of_find_compatible_node() returns a referenced device node. The i.MX31
-and i.MX35 early init paths use the node to map the CCM registers with
-of_iomap(), but never drop the node reference.
+mx31_read_cpu_rev() maps the IIM registers with of_iomap() to read the
+silicon revision, but returns without unmapping the MMIO mapping.
 
-Release the node after the mapping is created.
+Keep the normalized revision value in a local variable and route the
+return path through iounmap() after the revision register has been read.
 
-Fixes: 2cf98d12958c ("ARM: imx3: Retrieve the CCM base address from devicetree")
+Fixes: 3172225d45bd ("ARM: imx31: Retrieve the IIM base address from devicetree")
 Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-imx/mm-imx3.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/mach-imx/cpu-imx31.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-imx/mm-imx3.c b/arch/arm/mach-imx/mm-imx3.c
-index 28db97289ee8ff..d333a8fdb7319a 100644
---- a/arch/arm/mach-imx/mm-imx3.c
-+++ b/arch/arm/mach-imx/mm-imx3.c
-@@ -107,6 +107,7 @@ void __init imx31_init_early(void)
- 	arm_pm_idle = imx31_idle;
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx31-ccm");
- 	mx3_ccm_base = of_iomap(np, 0);
-+	of_node_put(np);
- 	BUG_ON(!mx3_ccm_base);
+diff --git a/arch/arm/mach-imx/cpu-imx31.c b/arch/arm/mach-imx/cpu-imx31.c
+index 35c544924e5095..e81ef9e36a1fab 100644
+--- a/arch/arm/mach-imx/cpu-imx31.c
++++ b/arch/arm/mach-imx/cpu-imx31.c
+@@ -36,6 +36,7 @@ static int mx31_read_cpu_rev(void)
+ 	void __iomem *iim_base;
+ 	struct device_node *np;
+ 	u32 i, srev;
++	int rev = IMX_CHIP_REVISION_UNKNOWN;
+ 
+ 	np = of_find_compatible_node(NULL, NULL, "fsl,imx31-iim");
+ 	iim_base = of_iomap(np, 0);
+@@ -48,13 +49,17 @@ static int mx31_read_cpu_rev(void)
+ 
+ 	for (i = 0; i < ARRAY_SIZE(mx31_cpu_type); i++)
+ 		if (srev == mx31_cpu_type[i].srev) {
++			rev = mx31_cpu_type[i].rev;
+ 			imx_print_silicon_rev(mx31_cpu_type[i].name,
+ 						mx31_cpu_type[i].rev);
+-			return mx31_cpu_type[i].rev;
++			goto out;
+ 		}
+ 
+ 	imx_print_silicon_rev("i.MX31", IMX_CHIP_REVISION_UNKNOWN);
+-	return IMX_CHIP_REVISION_UNKNOWN;
++
++out:
++	iounmap(iim_base);
++	return rev;
  }
- #endif /* ifdef CONFIG_SOC_IMX31 */
-@@ -144,6 +145,7 @@ void __init imx35_init_early(void)
- 	arch_ioremap_caller = imx3_ioremap_caller;
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx35-ccm");
- 	mx3_ccm_base = of_iomap(np, 0);
-+	of_node_put(np);
- 	BUG_ON(!mx3_ccm_base);
- }
- #endif /* ifdef CONFIG_SOC_IMX35 */
+ 
+ int mx31_revision(void)
 -- 
 2.53.0
 
