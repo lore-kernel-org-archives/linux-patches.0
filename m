@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F08F4302F8;
-	Tue, 21 Jul 2026 19:34:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FA3432BEE;
+	Tue, 21 Jul 2026 19:34:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784662484; cv=none; b=qx2AA1/mADTUDOdEmOwVtHKv2dX2bpmqnbcf8hqJzm99LswNZrU59hwGAKr673gaQiOTIrx82ZzTxbkpCHhKzTZ5/wXro5x2W+6IvgSdtOSLVWaYIphUKW+xxQ8jSLqp3MIQ4IJgnqUKZy3Z4S8sPc0FbP7SXXcdAQdfmi+RvDE=
+	t=1784662486; cv=none; b=lpdnWMK72Cx1ZAdzgmhKmash+Q0bbiXQaZ10g6aTzgok2d/JXZ7rdXJ53HJsrQcZ3ngLJK8MRd0CiK7TryV9xTG3ibuVyD146LwrpgWqzZkzgHrZhcn2OqtPKbc/mBWbC9LYJ47c32a7viQOVT5OfFCtIXL7+OMe0Irm/p0OqkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784662484; c=relaxed/simple;
-	bh=Y7jM41FO099wDug2hWVDLpLwkgkY45+MwDj62N0GqKo=;
+	s=arc-20240116; t=1784662486; c=relaxed/simple;
+	bh=LEJbQowXv7STIGXA7UkLapAEUPhY1t8JnBlWgw0lVXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ocPqlUy/d+Zfi4OYBDqVraSFkF6HcF6IqH8AOUh0/HnDN3FHRdlYWta6EC06a6dQgVghbW+wdOynN6Rocwp+2mIRt4P/fSy/MbveUmFSCY3gGj4qoyX+VGQ1oBVEbqefxB6rHy52DFYinEFwBeY5QfnyHksiLhoD49sYvISdjsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lrgc7nP4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oC3m8ahQs2c2EltLkxpAgfeDF7E+Q7QS7P6lsMlrfoq8bLt5muqUyzw4Sw8vkiOm3NJIyV8In9gFRdHbS0c0St0q1kDmMJcstNds3MCulaGLtSwyp2ArP6WYi8OUKVzE5yw/n8jBalZDe54gXQ4xyNayJWfz4lXYWHas1+LecSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+0zpfnM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lrgc7nP4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A791F000E9;
-	Tue, 21 Jul 2026 19:34:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+0zpfnM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487721F000E9;
+	Tue, 21 Jul 2026 19:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784662483;
-	bh=gu52032OfOotcKBRwsll3GCKHZYXmadv6ivs8sWsPwY=;
+	s=korg; t=1784662485;
+	bh=sOCuvGvRLPgqSP72uTAB7r6ycmL5RiZifWHThHk7A/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lrgc7nP4U8PxKxISslgb4ur+Qp1MqCfvz/JTocEODLJbtXq/yNWYP50sOtLS8i59T
-	 /qFyFUZ2euRG/rVSU0CeRHj3XvmOq/H0hUKPk/gSJr1rCdm8QbPxD2uYVutcNrC8p+
-	 HxXDMrovm+CTAOgx/8ku4naSbSNHGkmuxD/AiLhA=
+	b=L+0zpfnM6xepOcXawI6gZQNWuSM6wOVJPuusvvrZSADBJHNHHpj0Rg655B77LM5ny
+	 FAZt7lzzhbojnI65hKU3PoWDMmLiEBt0zAkaapLL3JDWh4TgFqL7zmoOjH3Xew4uxJ
+	 GixoDdGNFel8vdzVmU6u2hbOIrGrwVh/ZH9tsMZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0419/1276] PCI: Check ROM header and data structure addr before accessing
-Date: Tue, 21 Jul 2026 17:14:22 +0200
-Message-ID: <20260721152455.477941257@linuxfoundation.org>
+Subject: [PATCH 6.12 0420/1276] x86/platform/olpc: xo15: Drop wakeup source on driver removal
+Date: Tue, 21 Jul 2026 17:14:23 +0200
+Message-ID: <20260721152455.501629308@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -47,232 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 538796b807fcfb81b2ce40cc97a614fd8588feb5 ]
+[ Upstream commit cc966553e6ff0849978b5754531b768b0ff54985 ]
 
-We meet a crash when running stress-ng on x86_64 machine:
+Prevent leaking a wakeup source object after removing the driver by
+adding appropriate cleanup code to its remove callback function.
 
-  BUG: unable to handle page fault for address: ffa0000007f40000
-  RIP: 0010:pci_get_rom_size+0x52/0x220
-  Call Trace:
-  <TASK>
-    pci_map_rom+0x80/0x130
-    pci_read_rom+0x4b/0xe0
-    kernfs_file_read_iter+0x96/0x180
-    vfs_read+0x1b1/0x300
-
-Our analysis reveals that the ROM space's start address is
-0xffa0000007f30000, and size is 0x10000. Because of broken ROM space,
-before calling readl(pds), the pds's value is 0xffa0000007f3ffff, which is
-already pointed to the ROM space end, invoking readl() would read 4 bytes
-therefore cause an out-of-bounds access and trigger a crash.  Fix this by
-adding image header and data structure checking.
-
-We also found another crash on arm64 machine:
-
-  Unable to handle kernel paging request at virtual address ffff8000dd1393ff
-  Mem abort info:
-  ESR = 0x0000000096000021
-  EC = 0x25: DABT (current EL), IL = 32 bits
-  SET = 0, FnV = 0
-  EA = 0, S1PTW = 0
-  FSC = 0x21: alignment fault
-
-The call trace is the same with x86_64, but the crash reason is that the
-data structure addr is not aligned with 4, and arm64 machine report
-"alignment fault". Fix this by adding alignment checking.
-
-Fixes: 47b975d234ea ("PCI: Avoid iterating through memory outside the resource window")
-Suggested-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-[bhelgaas: shorten function names, wrap comments]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Link: https://patch.msgid.link/20260508082128.3344255-3-kanie@linux.alibaba.com
+Fixes: a0f30f592d2d ("x86, olpc: Add XO-1.5 SCI driver")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/2069931.usQuhbGJ8B@rafael.j.wysocki
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/rom.c | 123 +++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 105 insertions(+), 18 deletions(-)
+ arch/x86/platform/olpc/olpc-xo15-sci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/rom.c b/drivers/pci/rom.c
-index d4a141bd148b4b..f2105c6ceef524 100644
---- a/drivers/pci/rom.c
-+++ b/drivers/pci/rom.c
-@@ -6,9 +6,12 @@
-  * (C) Copyright 2004 Silicon Graphics, Inc. Jesse Barnes <jbarnes@sgi.com>
-  */
+diff --git a/arch/x86/platform/olpc/olpc-xo15-sci.c b/arch/x86/platform/olpc/olpc-xo15-sci.c
+index 68244a3422d1d6..683935da493d27 100644
+--- a/arch/x86/platform/olpc/olpc-xo15-sci.c
++++ b/arch/x86/platform/olpc/olpc-xo15-sci.c
+@@ -185,6 +185,7 @@ static int xo15_sci_add(struct acpi_device *device)
  
-+#include <linux/align.h>
- #include <linux/bits.h>
- #include <linux/kernel.h>
- #include <linux/export.h>
-+#include <linux/io.h>
-+#include <linux/overflow.h>
- #include <linux/pci.h>
- #include <linux/sizes.h>
- #include <linux/slab.h>
-@@ -27,6 +30,15 @@
- #define PCI_ROM_DATA_STRUCT_SIGNATURE		0x52494350
- #define PCI_ROM_DATA_STRUCT_LEN			0x0A
- 
-+/*
-+ * Per PCI Firmware r3.3, sec 5.1.3, a conformant PCI Data Structure is at
-+ * least 24 bytes (0x18), large enough to cover every fixed field this
-+ * driver reads (up to the Indicator byte at offset 0x15).  Reject smaller
-+ * device-claimed lengths so the follow-up readers in pci_get_rom_size()
-+ * cannot escape the mapped ROM window.
-+ */
-+#define PCI_ROM_DATA_STRUCT_MIN_LEN		0x18
-+
- /**
-  * pci_enable_rom - enable ROM decoding for a PCI device
-  * @pdev: PCI device to enable
-@@ -84,6 +96,91 @@ void pci_disable_rom(struct pci_dev *pdev)
- }
- EXPORT_SYMBOL_GPL(pci_disable_rom);
- 
-+static bool pci_rom_header_valid(struct pci_dev *pdev, void __iomem *image,
-+				 void __iomem *rom, size_t size,
-+				 bool expect_valid)
-+{
-+	unsigned long rom_end = (unsigned long)rom + size - 1;
-+	unsigned long header_end;
-+	u16 signature;
-+
-+	/*
-+	 * Per PCI Firmware r3.3, sec 5.1, each image must start on a
-+	 * 512-byte boundary and must contain the PCI Expansion ROM header.
-+	 * Because @rom is page-aligned (returned by ioremap()), checking
-+	 * 512-byte alignment of @image is equivalent to enforcing the
-+	 * spec's sector-aligned layout within the ROM.  This also
-+	 * satisfies the natural-alignment requirement of readw() on archs
-+	 * such as arm64 that disallow unaligned IOMEM access.
-+	 */
-+	if (!IS_ALIGNED((unsigned long)image, PCI_ROM_IMAGE_SECTOR_SIZE))
-+		return false;
-+
-+	if (check_add_overflow((unsigned long)image, PCI_ROM_HEADER_SIZE - 1,
-+				&header_end))
-+		return false;
-+
-+	if (image < rom || header_end > rom_end)
-+		return false;
-+
-+	/* Standard PCI ROMs start out with these bytes 55 AA */
-+	signature = readw(image);
-+	if (signature != PCI_ROM_IMAGE_SIGNATURE) {
-+		if (expect_valid) {
-+			pci_info(pdev, "Invalid PCI ROM header signature: expecting %#06x, got %#06x\n",
-+				 PCI_ROM_IMAGE_SIGNATURE, signature);
-+		} else {
-+			pci_info(pdev, "No more images in PCI ROM\n");
-+		}
-+		return false;
-+	}
-+
-+	return true;
-+}
-+
-+static bool pci_rom_data_struct_valid(struct pci_dev *pdev, void __iomem *pds,
-+				      void __iomem *rom, size_t size)
-+{
-+	unsigned long rom_end = (unsigned long)rom + size - 1;
-+	unsigned long end;
-+	u32 signature;
-+	u16 data_len;
-+
-+	/*
-+	 * Some CPU architectures require IOMEM access addresses to be
-+	 * aligned, for example arm64, so since we're about to call
-+	 * readl(), check here for 4-byte alignment.
-+	 */
-+	if (!IS_ALIGNED((unsigned long)pds, 4))
-+		return false;
-+
-+	if (check_add_overflow((unsigned long)pds, PCI_ROM_DATA_STRUCT_LEN + 1,
-+				&end))
-+		return false;
-+
-+	if (pds < rom || end > rom_end)
-+		return false;
-+
-+	signature = readl(pds);
-+	if (signature != PCI_ROM_DATA_STRUCT_SIGNATURE) {
-+		pci_info(pdev, "Invalid PCI ROM data signature: expecting %#010x, got %#010x\n",
-+			 PCI_ROM_DATA_STRUCT_SIGNATURE, signature);
-+		return false;
-+	}
-+
-+	data_len = readw(pds + PCI_ROM_DATA_STRUCT_LEN);
-+	if (data_len < PCI_ROM_DATA_STRUCT_MIN_LEN || data_len == U16_MAX)
-+		return false;
-+
-+	if (check_add_overflow((unsigned long)pds, data_len - 1, &end))
-+		return false;
-+
-+	if (end > rom_end)
-+		return false;
-+
-+	return true;
-+}
-+
- /**
-  * pci_get_rom_size - obtain the actual size of the ROM image
-  * @pdev: target PCI device
-@@ -99,38 +196,28 @@ static size_t pci_get_rom_size(struct pci_dev *pdev, void __iomem *rom,
- 			       size_t size)
+ static void xo15_sci_remove(struct acpi_device *device)
  {
- 	void __iomem *image;
--	int last_image;
- 	unsigned int length;
-+	bool last_image;
- 
- 	image = rom;
- 	do {
- 		void __iomem *pds;
--		/* Standard PCI ROMs start out with these bytes 55 AA */
--		if (readw(image) != PCI_ROM_IMAGE_SIGNATURE) {
--			pci_info(pdev, "Invalid PCI ROM header signature: expecting %#06x, got %#06x\n",
--				 PCI_ROM_IMAGE_SIGNATURE, readw(image));
-+		if (!pci_rom_header_valid(pdev, image, rom, size, true))
- 			break;
--		}
-+
- 		/* Get the PCI data structure and check its "PCIR" signature */
- 		pds = image + readw(image + PCI_ROM_POINTER_TO_DATA_STRUCT);
--		if (readl(pds) != PCI_ROM_DATA_STRUCT_SIGNATURE) {
--			pci_info(pdev, "Invalid PCI ROM data signature: expecting %#010x, got %#010x\n",
--				 PCI_ROM_DATA_STRUCT_SIGNATURE, readl(pds));
-+		if (!pci_rom_data_struct_valid(pdev, pds, rom, size))
- 			break;
--		}
-+
- 		last_image = readb(pds + PCI_ROM_LAST_IMAGE_INDICATOR) &
- 				   PCI_ROM_LAST_IMAGE_INDICATOR_BIT;
- 		length = readw(pds + PCI_ROM_IMAGE_LEN);
- 		image += length * PCI_ROM_IMAGE_SECTOR_SIZE;
--		/* Avoid iterating through memory outside the resource window */
--		if (image >= rom + size)
-+
-+		if (!last_image &&
-+		    !pci_rom_header_valid(pdev, image, rom, size, false))
- 			break;
--		if (!last_image) {
--			if (readw(image) != PCI_ROM_IMAGE_SIGNATURE) {
--				pci_info(pdev, "No more image in the PCI ROM\n");
--				break;
--			}
--		}
- 	} while (length && !last_image);
- 
- 	/* never return a size larger than the PCI resource window */
++	device_init_wakeup(&device->dev, false);
+ 	acpi_disable_gpe(NULL, xo15_sci_gpe);
+ 	acpi_remove_gpe_handler(NULL, xo15_sci_gpe, xo15_sci_gpe_handler);
+ 	cancel_work_sync(&sci_work);
 -- 
 2.53.0
 
