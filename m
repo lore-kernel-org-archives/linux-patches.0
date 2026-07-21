@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFCFD3BE155;
-	Tue, 21 Jul 2026 15:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4213B46AA89;
+	Tue, 21 Jul 2026 15:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784648269; cv=none; b=u0O2N5+Avxx+irP8c9Kc9ajQ+Yw9RN7yPwfBC52LJhEJ4UvTXJqAf/YxVi/Jp0mnOYPB2O1NDdN16WayyPaewS0tWzsmlpGH8EaLGom3D4dE9nxAFECT3tOKaxKrKH/FfamRnIXww/gYJ6Qo1Qy7hEMrWCxamR2cVqcf6Ik5f+U=
+	t=1784648271; cv=none; b=SYJmAP+PHRDQNst4meFxyilpgAEU643Lp7qVjS8Fu+MnMgNJNZYI5aSzO0VxVgZeKabd+ar4oeh6oSITte0Lt1YXrXk0/WQ6J1lr2bwHkBKusCuqLoJQGQr9tjB+HheYO3zfbtle8kGEWKvhQq7SZh3QPuMVdkDbPGclUbOZBuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784648269; c=relaxed/simple;
-	bh=eykXP2aP1Qnp5K8ft73aFFbt5Cmgz7dO6Tu2eBGWSao=;
+	s=arc-20240116; t=1784648271; c=relaxed/simple;
+	bh=BRu19k5JbciJAldA/W7LVxtWXxsw60NDqn+7RWqmLj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sIu5MyGjEg4BbAerBGOYDxucWY6WHc90bD3Je7hTcJ+lYCzgaFvWyLRAhRynUQCKS4cpuV/qDTL/QC64h/L3eYmK8wfscJQWEvDRmzc1yIHAdDo3pqkkrXvXG6dsErEZk7JkEqjWRZ7B8adtpkqLbuOlNNRYRsO2j3miCco/7Hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b1XYZEOO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s9HEQXTGIcLiEDe57stWBKlwYg/E9ak8OljiJqSN/iqMPvMahk7EgNwMKj1t1QStPixs/nwLgHrZzmeRrVIG5d3gLDPgeAi99T5beabEc2ofHzI8FchRYk4z0vnw3cWzPiHnd2/xvKgeUl3qLO1w8XBtKAyTlggdzOzjAo+GSmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aCcV8zbS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b1XYZEOO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508261F000E9;
-	Tue, 21 Jul 2026 15:37:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aCcV8zbS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8CE11F00A3A;
+	Tue, 21 Jul 2026 15:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784648264;
-	bh=yLF1xIIWpE+OsV5HjpQEfgQMq8P7vsQddKn25U2C1Bo=;
+	s=korg; t=1784648270;
+	bh=QWdGAv7vA+0Cv3BTzPShfRnLdVoMzYd2N+CvCYZJyHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b1XYZEOO8rjtgHLfUGaXpQVthkXIUiedeGkEt1CxLOQ33+DQfCyiHr8p1iMIRCgUZ
-	 siLfHy3jhUz9/ZS1Fr/jn7eZxutQtbxcgnMjNw2ZSPgJJy++dbmCmJNditw2ad0ina
-	 YoYVv3trL0qtwmM6NWqtHKB+cr5NvV9Fqy2CQ0v8=
+	b=aCcV8zbSC+aTCR8MZIxBVSlRBy6dHnLCEj56qFgs/s44prPYxdWSsYsgmPxKWoVjg
+	 /P0AHipikorJZfmo/MeCjWJx1xzc++b/qPs3H2P5BK9MKFaMsyE7BII6cOtNzBVWjr
+	 VtWOq6/0dVMT4fBNnumpG1Ey2VLsD5XELYuoBV2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bc70a12e438dadba4fb4@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Song Liu <song@kernel.org>,
+	Miroslav Benes <mbenes@suse.cz>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 0091/2077] hfsplus: Remove the duplicate attr inode dirty marking action
-Date: Tue, 21 Jul 2026 16:56:04 +0200
-Message-ID: <20260721152554.839424937@linuxfoundation.org>
+Subject: [PATCH 7.1 0129/2077] objtool: Fix reloc hash collision in find_reloc_by_dest_range()
+Date: Tue, 21 Jul 2026 16:56:42 +0200
+Message-ID: <20260721152555.737700207@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -52,51 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 7a41fd2b32e5908f19a68732008d581c167279dd ]
+[ Upstream commit a375e327b63e0da29b82a92b569bfdf4628fa38a ]
 
-Syzbot reported a null-ptr-deref in [1].
-If the attributes file is not loaded during system mount, a trigger
-occurs [1] when setxattr is executed in userspace.
+In find_reloc_by_dest_range(), hash collisions can cause a high-offset
+relocation to appear when probing a low-offset hash bucket.
 
-Remove the first mark attr inode dirty operation.
+Only return early when the best match found so far genuinely belongs to
+the current bucket (its offset is within the bucket's stride range).
+Otherwise, continue scanning later buckets which may contain
+lower-offset matches.
 
-[1]
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-Call Trace:
- hfsplus_setxattr+0x124/0x340 fs/hfsplus/xattr.c:555
- hfsplus_trusted_setxattr+0x40/0x60 fs/hfsplus/xattr_trusted.c:30
- __vfs_setxattr+0x43c/0x480 fs/xattr.c:218
- __vfs_setxattr_noperm+0x12d/0x660 fs/xattr.c:252
- vfs_setxattr+0x163/0x360 fs/xattr.c:339
- do_setxattr fs/xattr.c:654 [inline]
+This ensures the first reloc in the range gets returned.
 
-Reported-by: syzbot+bc70a12e438dadba4fb4@syzkaller.appspotmail.com
-Fixes: ee8422d00b7c ("hfsplus: fix potential Allocation File corruption after fsync")
-Closes: https://syzkaller.appspot.com/bug?extid=bc70a12e438dadba4fb4
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/tencent_A8D47429765566CC3C8B378496D036664A09@qq.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: 74b873e49d92 ("objtool: Optimize find_rela_by_dest_range()")
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Song Liu <song@kernel.org>
+Reviewed-by: Miroslav Benes <mbenes@suse.cz>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/xattr.c | 1 -
- 1 file changed, 1 deletion(-)
+ tools/objtool/elf.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/hfsplus/xattr.c b/fs/hfsplus/xattr.c
-index 452a1f9becb2d1..21a1c196c71f2e 100644
---- a/fs/hfsplus/xattr.c
-+++ b/fs/hfsplus/xattr.c
-@@ -317,7 +317,6 @@ static int hfsplus_create_attributes_file(struct super_block *sb)
- 		next_node++;
+diff --git a/tools/objtool/elf.c b/tools/objtool/elf.c
+index dc39132f71c148..58631d62011d67 100644
+--- a/tools/objtool/elf.c
++++ b/tools/objtool/elf.c
+@@ -301,8 +301,9 @@ struct symbol *find_global_symbol_by_name(const struct elf *elf, const char *nam
+ 	return NULL;
+ }
+ 
++/* If there are multiple matches, return the first one in the range */
+ struct reloc *find_reloc_by_dest_range(const struct elf *elf, struct section *sec,
+-				     unsigned long offset, unsigned int len)
++				       unsigned long offset, unsigned int len)
+ {
+ 	struct reloc *reloc, *r = NULL;
+ 	struct section *rsec;
+@@ -324,11 +325,11 @@ struct reloc *find_reloc_by_dest_range(const struct elf *elf, struct section *se
+ 					r = reloc;
+ 			}
+ 		}
+-		if (r)
++		if (r && (reloc_offset(r) & OFFSET_STRIDE_MASK) == o)
+ 			return r;
  	}
  
--	hfsplus_mark_inode_dirty(HFSPLUS_ATTR_TREE_I(sb), HFSPLUS_I_ATTR_DIRTY);
- 	hfsplus_mark_inode_dirty(attr_file, HFSPLUS_I_ATTR_DIRTY);
+-	return NULL;
++	return r;
+ }
  
- 	sbi->attr_tree = hfs_btree_open(sb, HFSPLUS_ATTR_CNID);
+ struct reloc *find_reloc_by_dest(const struct elf *elf, struct section *sec, unsigned long offset)
 -- 
 2.53.0
 
