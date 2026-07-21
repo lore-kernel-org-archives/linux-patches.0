@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50F146D2C7;
-	Tue, 21 Jul 2026 17:17:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F1D401A21;
+	Tue, 21 Jul 2026 17:17:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654263; cv=none; b=HIREkQ40u3c+UYfCc7rjKurDC8mXvE3fZ6Hsx9X3S3P/EWVBkNy/1vMgJbUh5li84ZmVltqCsUFjxTTlVQFiKal02i6ibSWVfF/XpGTIF3WGFY3bKQEj7ZPWXpWSKI6k6h9CTa4AJDdTlEqBle1YuWwz+2wBvfmDiRHBdpa6yvY=
+	t=1784654265; cv=none; b=QLRoBtCRKQPrrBlETBF8iL/xF4vaauURioQtkMtM/ws4pNMBQ8oy3ExmPHdcbhp3+xFyjLP5HxLMpUW2nyf16ojKk05VyQOSCIwJbBUbXSbRqGg1MuYGxq+CPY+hwST67bYpPNOWa7/DtFoO14L82aWzPkEwyImJbLZ2kepSoSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654263; c=relaxed/simple;
-	bh=boXrxVud/gBJS8ewBxAq4th6PZph4s0B1Y2zEnMofJk=;
+	s=arc-20240116; t=1784654265; c=relaxed/simple;
+	bh=JZTUqcNSZ9S5jacLzmiQaDkIlS76b4Y4cLQlnKp5zXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CDgqHmpPC4HsABOdYqpGJrnvpGUzf+N/AVqkcH84qYEfTHfdqrHthRvu2Z3Lpg/Ge1cQpSk220KlZhj6GGM1tFd3myAyYIAtpp3JTF500oA9IGJ6VyoIXPAu1DP/uO+hnMMbKlaNMEiNZaASHQ+AnsTvCmWsBOEn/GqMq4dmp+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QzVNIKQ7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u5Z23M6hIW7c5L5xBEpb2me2Iwepk2g0NEdiYZwLXxePZuGIRX9YfYNIzzP4lEovEfo0OUAoFfA/ldVitW+VTNXmp27MbkjBMtaMFyzt1mV9WEU1Z15vYn2d0mwOYd9garuADaZVXWw0Mkfun5jdIigSQ/mTZX0wGPkZtmhK9x8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bjTRWhkZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QzVNIKQ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481F91F000E9;
-	Tue, 21 Jul 2026 17:17:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bjTRWhkZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E808C1F000E9;
+	Tue, 21 Jul 2026 17:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654261;
-	bh=pENF77ThLInPWXbvv2DX9z6J8FewbRRg7DK48GEU7UU=;
+	s=korg; t=1784654264;
+	bh=7cUi0X8nJp24nkJ9VGfvURYSwgDxmB4lYbxY6woNp4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QzVNIKQ7ootThtizoHqbK/SKp6i4t7+mzj6uDSZl/TSOWUGhr96n1wUYesOazS/Q8
-	 1zr10H15sLN3fBUZILVmgokWsDCSrUnrxC80zfck0nIwkrzkuzGqZrcqewCQySITw6
-	 55nyYj2gqiG/wq6vvri3x34KqBbgEdcV7JCyefEY=
+	b=bjTRWhkZoChLHtQGlyafPgtND94d74lBlFwyQOYOPjOobVNjLAbcG+WxxxBQW5EhU
+	 SxDxLemT6+gkGfQCiO+66wJ2kPE5DFjp98V80lxtWFAMCcO8WjtPVGQNZFw6WBjKSv
+	 Km6Cl6p4O0cfOlLcXGx2wTfC1J2QfLRnZVa4v8GE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 7.1 1638/2077] batman-adv: gw: acquire ethernet header only after skb realloc
-Date: Tue, 21 Jul 2026 17:21:51 +0200
-Message-ID: <20260721152631.385907969@linuxfoundation.org>
+Subject: [PATCH 7.1 1639/2077] batman-adv: retrieve ethhdr after potential skb realloc on RX
+Date: Tue, 21 Jul 2026 17:21:52 +0200
+Message-ID: <20260721152631.408818705@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -51,36 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 77880a3be88d378d60cc1e8f8ec70430e2ed0518 upstream.
+commit 035e1fed892d3d06002a73ff73668f618a514644 upstream.
 
-The pskb_may_pull() called by batadv_get_vid() could reallocate the buffer
-behind the skb. Variables which were pointing to the old buffer need to be
+pskb_may_pull() in batadv_interface_rx() could reallocate the buffer behind
+the skb. Variables which were pointing to the old buffer need to be
 reassigned to avoid an use-after-free.
 
+This was done correctly for the VLAN header but missed for the ethernet
+header which is later used for the TT and AP isolation handling.
+
 Cc: stable@vger.kernel.org
-Fixes: 6c413b1c22a2 ("batman-adv: send every DHCP packet as bat-unicast")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
+Fixes: c78296665c3d ("batman-adv: Check skb size before using encapsulated ETH+VLAN header")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/gateway_client.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/batman-adv/mesh-interface.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/batman-adv/gateway_client.c
-+++ b/net/batman-adv/gateway_client.c
-@@ -683,12 +683,13 @@ bool batadv_gw_out_of_range(struct batad
- 	struct batadv_gw_node *gw_node = NULL;
- 	struct batadv_gw_node *curr_gw = NULL;
- 	struct batadv_neigh_ifinfo *curr_ifinfo, *old_ifinfo;
--	struct ethhdr *ethhdr = (struct ethhdr *)skb->data;
-+	struct ethhdr *ethhdr;
- 	bool out_of_range = false;
- 	u8 curr_tq_avg;
- 	unsigned short vid;
+--- a/net/batman-adv/mesh-interface.c
++++ b/net/batman-adv/mesh-interface.c
+@@ -432,6 +432,7 @@ void batadv_interface_rx(struct net_devi
+ 		if (!pskb_may_pull(skb, VLAN_ETH_HLEN))
+ 			goto dropped;
  
- 	vid = batadv_get_vid(skb, 0);
-+	ethhdr = (struct ethhdr *)skb->data;
++		ethhdr = eth_hdr(skb);
+ 		vhdr = skb_vlan_eth_hdr(skb);
  
- 	if (is_multicast_ether_addr(ethhdr->h_dest))
- 		goto out;
+ 		/* drop batman-in-batman packets to prevent loops */
 
 
