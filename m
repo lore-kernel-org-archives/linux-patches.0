@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4F13AFAEC;
-	Tue, 21 Jul 2026 20:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7DF33A9FC;
+	Tue, 21 Jul 2026 20:45:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784666735; cv=none; b=lzP+aeC9zEmuyJQhuPvfAbPRBEKSnTpoSyi4sHbM3IYUbKWyq4vJg84NGamyXCDrclpFRztu7JrDXhqWBcIAvVLWydO4FVRE6WWdTM/jR1nG4UQir+dUybBVPy24+8RwrfnCY7ZPrB/MRxjr6UfH5WXCnz521EmuDPC6ikm5kas=
+	t=1784666737; cv=none; b=HGEBtFBcXDvZkG8P/SG6plagmpM1+h2fiSm9zOJgdkBKaIAy8ygcdSd+sOzRra4q1NiR37ZsZU0KVtnB9bpiMV4pFk0rM3KF8zJOByn6XjzNcI6qFDAeTVBiE62LwrNEkXF6SgAfo1MM7F7A+6IX9XE2ltWo9MXfzRFPSqhdemQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784666735; c=relaxed/simple;
-	bh=5Hm9hsWJKvZ7L/OFBgdT5hMnj73F+qrdDNnOxwR2nU8=;
+	s=arc-20240116; t=1784666737; c=relaxed/simple;
+	bh=nul8HoydsG4Wjc5Acgt+c7k1x7JQBLml2FP8CFRbW40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UkVMY+JhIDI+myab5i+URyGwDo5qi6dXV6ymNhivkjJ2Qg+8MN+m7tzsWI3NK6MigQIvAyk8pu94wZFUyty5vq4FAeyXoiPgT5cIw+tYJVjcyywJ7E3mubgCOW1DrxA+dVDDSiU2XwoWenyRn6YfrL6bwX6YT2bDvQDiaOh0lt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kntrlj13; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dMJJ7u822GDlQaKaaIQq1SdOo0Ji4NUY4hapszZhQiJv7ESTbLX9tvnfu3YRKLFG5h+r+oaxhULGduEvTQ3PsUkMnA9GN5YPNvziV/znmv9zbHwAVHYnjQcqpAkYCWHyvwn1TaJXj2nFiKEJkqI7oiNyzYj4DFKqJoFxCtlzX6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rdb2TOu6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kntrlj13"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2951F000E9;
-	Tue, 21 Jul 2026 20:45:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rdb2TOu6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 286601F000E9;
+	Tue, 21 Jul 2026 20:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784666733;
-	bh=i3nSkVt1ZARjOMvZAq6xjKFH3w8jjx01W15DRfcFG1c=;
+	s=korg; t=1784666736;
+	bh=zuBMy5DdGwSIveaIIGlqOqd6vN8hjO+siwLv+y1NeWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kntrlj13fyiu2WLmsH6Q5hUHwiWSt9rOXxAn8rS0kug165MMV2zdRRrm3qLc5NhlJ
-	 +KoPKa4GnChzSM/hb2mTLYB8eWLUVMUkUmj15uEnRaLLNiv8XsHl/awxuxdPRkJFOQ
-	 fD/skpB8pTwhULgkFOpcgEocu0V/jCDgee1eqASM=
+	b=rdb2TOu6b6OdpCHwq9dhZC/clbFKFggteeiamWxFReq0dkhVgeU4xidj43EhXWoTR
+	 qenG13nxq1XVzE9FcRNjoy0mkdAlYePzCuGe05sWp5ma/wUV3ufAeQy5HuKpu2pti/
+	 DyONBji7GnwTMD0dA2SVT7YfW4FCze20CUBq8QIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0796/1266] net: ethernet: sunplus: spl2sw: fix phy_node refcount leak in remove
-Date: Tue, 21 Jul 2026 17:20:33 +0200
-Message-ID: <20260721152459.671499838@linuxfoundation.org>
+Subject: [PATCH 6.6 0797/1266] ASoC: fsl_asrc_dma: fix eDMA maxburst misalignment with channel count
+Date: Tue, 21 Jul 2026 17:20:34 +0200
+Message-ID: <20260721152459.692558004@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,53 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shitalkumar Gandhi <shital.gandhi45@gmail.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit a9e29dcd8a84081177f693439d663ca9e216c9fa ]
+[ Upstream commit cf6f56990ea21172e085f0588e5bbf2089ce8f58 ]
 
-mac->phy_node is acquired via of_parse_phandle() in spl2sw_probe() and
-stored in the mac private data, transferring ownership of the
-device_node reference to mac. On driver removal, spl2sw_phy_remove()
-disconnects the PHY but never drops that reference, so each
-probe-then-remove cycle leaks one of_node refcount per port permanently.
+The back-end consumes data in units of the number of channels. When the
+maxburst value is not evenly divisible by the channel count, the DMA
+transfer length does not align with the FIFO frame boundary, causing
+wrong data to be copied and audible noise at the end of the stream.
 
-Drop the reference after phy_disconnect(). While at it, remove the
-redundant inner "if (ndev)" check; comm->ndev[i] was just verified
-non-NULL on the line above.
+This is specific to eDMA: eDMA only responds to DMA requests from the
+back-end, whereas SDMA handles requests from both the front-end and the
+back-end and is not affected.
 
-Compile-tested only; no SP7021 hardware available.
+For eDMA, when the back-end maxburst is not evenly divisible by the
+channel count, align it to the nearest valid boundary:
+- If maxburst >= channel count, override to the channel count so each
+  transfer corresponds to exactly one audio frame.
+- If maxburst < channel count, override to 1 to avoid partial-frame
+  transfers.
 
-Fixes: fd3040b9394c ("net: ethernet: Add driver for Sunplus SP7021")
-Signed-off-by: Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/f3bdd4c91f3e2269b4e256075f9dc70808b1b8e9.1782195965.git.shitalkumar.gandhi@cambiumnetworks.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Retain the original maxburst for SDMA or when it already aligns with
+the channel count.
+
+Fixes: c05f10f28ef6 ("ASoC: fsl_asrc: Add support for imx8qm & imx8qxp")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20260625102416.424911-1-shengjiu.wang@oss.nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sunplus/spl2sw_phy.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/fsl/fsl_asrc_dma.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/net/ethernet/sunplus/spl2sw_phy.c b/drivers/net/ethernet/sunplus/spl2sw_phy.c
-index 6f899e48f51dfb..a4889c52e00e4c 100644
---- a/drivers/net/ethernet/sunplus/spl2sw_phy.c
-+++ b/drivers/net/ethernet/sunplus/spl2sw_phy.c
-@@ -79,12 +79,14 @@ int spl2sw_phy_connect(struct spl2sw_common *comm)
- void spl2sw_phy_remove(struct spl2sw_common *comm)
- {
- 	struct net_device *ndev;
-+	struct spl2sw_mac *mac;
- 	int i;
+diff --git a/sound/soc/fsl/fsl_asrc_dma.c b/sound/soc/fsl/fsl_asrc_dma.c
+index 05a7d1588d204b..91dd85153e83e1 100644
+--- a/sound/soc/fsl/fsl_asrc_dma.c
++++ b/sound/soc/fsl/fsl_asrc_dma.c
+@@ -275,6 +275,26 @@ static int fsl_asrc_dma_hw_params(struct snd_soc_component *component,
+ 	config_be.dst_addr_width = buswidth;
+ 	config_be.dst_maxburst = dma_params_be->maxburst;
  
- 	for (i = 0; i < MAX_NETDEV_NUM; i++)
- 		if (comm->ndev[i]) {
- 			ndev = comm->ndev[i];
--			if (ndev)
--				phy_disconnect(ndev->phydev);
-+			mac = netdev_priv(ndev);
-+			phy_disconnect(ndev->phydev);
-+			of_node_put(mac->phy_node);
- 		}
- }
++	/*
++	 * For eDMA, the back-end may report a maxburst size that is not evenly
++	 * divisible by the channel count. This causes the DMA transfer length
++	 * to misalign with the FIFO boundary, resulting in wrong data and
++	 * audible noise. Align maxburst to the nearest valid boundary:
++	 * - If maxburst >= channel count, override to the channel count so
++	 *   each transfer equals exactly one audio frame.
++	 * - If maxburst < channel count, override to 1 to avoid partial-frame
++	 *   transfers.
++	 */
++	if (asrc->use_edma && (dma_params_be->maxburst % params_channels(params))) {
++		if (dma_params_be->maxburst >= params_channels(params)) {
++			config_be.src_maxburst = params_channels(params);
++			config_be.dst_maxburst = params_channels(params);
++		} else {
++			config_be.src_maxburst = 1;
++			config_be.dst_maxburst = 1;
++		}
++	}
++
+ 	memset(&audio_config, 0, sizeof(audio_config));
+ 	config_be.peripheral_config = &audio_config;
+ 	config_be.peripheral_size  = sizeof(audio_config);
 -- 
 2.53.0
 
