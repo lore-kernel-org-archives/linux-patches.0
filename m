@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B49544AB76;
-	Tue, 21 Jul 2026 21:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E537C44AB96;
+	Tue, 21 Jul 2026 21:18:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784668693; cv=none; b=nQhVt/XDpEY5unOfOWzxyhSJgmLtnnHiKAGe03qQvjQ4AjZl6UdBi32Kx1Z6vghXsWX9ezOF1TRKN8AE7oBUsXth9eyLSi1UC5HI+9Y2wavsLutXwR83kHHxW1QFZAy6kJMepUiRM+6hqu6PpC1mA+/r8l1e48CJenweacyYugM=
+	t=1784668696; cv=none; b=FFxSJax+ALaJbL+qdrEAVTN0mIYW2A4jK+6DpkZacsFfLtbD77S2Hkatfs+fL80CwuM+pqUEiVkFiYW3bOzZrV/xCMX9q+Ks7w07sapqMrDv9SPAub48P2R8YbRMdc3+KdJ2HOQDcVby/HQdvrOsyu+yfUK8UdaIG9DDh6td3/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784668693; c=relaxed/simple;
-	bh=NyA7MfDVz0D238l/kO1NZn9lPvXQRFmD6CI/E/yg5XQ=;
+	s=arc-20240116; t=1784668696; c=relaxed/simple;
+	bh=YcRjY569pO8fE3z0l2Gk2g06B/PgyeMTFk+ABKVVhQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XkaMQemRoUTMoCLT2qcUb5EB/iVS1h2hmxpeqUKV6GEjZmSygjP3D9LdV7EeeT0/M9M+I/h/JHYI40e9g15wMQjlDRg9QJCXUDTMvK5lJQNboAejZEJu5J/e/2H1madgCgKshY9+9Q8PN0Gy5TzvbJW5xomvpc+LIzaKLqrw5OI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xpd6w2vu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ER98x41SXxCdSBPspaTqdeFYa5vlUVxULS4KKbhrivYj3SFmHSaD9ieR8GfVSc9vkv64AUcGhPKrwj3kdEiCv1XYdKoGi/mN5YfReC3ckYNIGAkofKgjnnDJBnarDOJlIIxXL8rCgAliYPjdRKqLsUrOv75QFSJi1hVOMSEmdoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+TIHTSV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xpd6w2vu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0FFC1F000E9;
-	Tue, 21 Jul 2026 21:18:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+TIHTSV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5720A1F00A3A;
+	Tue, 21 Jul 2026 21:18:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784668692;
-	bh=cLStSyoJt6ErXuLRMK086eOWjQcsXjFGjvCO+lq2CJQ=;
+	s=korg; t=1784668694;
+	bh=mL8CZwe92dnUbNzhk2iTaDnPN7mvCRCRiIZHwKqynV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xpd6w2vuwQElr/u9LCyoXh0mEijVQ6b4WSDM9Ue1FvYlkxoy5QIZrAzehygin00w7
-	 kx9FUKPQjSlAo6oDbOU1USlyaUQqjvkVX4voYgLf/HYEK1rUjMSSkgXiRHFdUWecdD
-	 BKfn07aPaSa8iAlt58MmWbQpygan2YUc8vaanQAk=
+	b=W+TIHTSVE7+fyqRHo/i6iqLqx9MpRS/BUM0zQHofThME+THi1TpyVUftwnxypYHyz
+	 2teaRBSBtHpxC5kp2u1JIe1aAHnq61uhPEtuOfgaSC/3vXWix8ENR236XitHLY44mq
+	 qXDnhDoBlDvkNF+w0/aPMHjL3HkKogdNTFRLejkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guoniu Zhou <guoniu.zhou@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.1 0271/1067] dt-bindings: power: imx93: Add MIPI PHY power domain
-Date: Tue, 21 Jul 2026 17:14:32 +0200
-Message-ID: <20260721152430.657659047@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: [PATCH 6.1 0272/1067] serial: msm: Disable DMA for kernel console UART
+Date: Tue, 21 Jul 2026 17:14:33 +0200
+Message-ID: <20260721152430.679168531@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152424.521567757@linuxfoundation.org>
 References: <20260721152424.521567757@linuxfoundation.org>
@@ -53,38 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guoniu Zhou <guoniu.zhou@oss.nxp.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit 6aa38ef0eab32df5409b72d62509de6ba09cea50 upstream.
+commit 22dd2777e6c180e1c945b00f6d18550979436324 upstream.
 
-Add MIPI PHY power domain for shared PHY resources used by both
-MIPI DSI and CSI blocks.
+At the moment, concurrent writes from userspace and the kernel to the
+console can trigger a race condition that results in an infinite loop of
+the same messages printed over and over again. This is most likely to
+happen during system startup or shutdown when the init system starts/stops
+a large number of system services that interact with various kernel code.
 
-Signed-off-by: Guoniu Zhou <guoniu.zhou@oss.nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Fixes: e9aa77d413c9 ("soc: imx: add i.MX93 media blk ctrl driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+When userspace writes to the TTY device, the driver initiates an
+asynchronous DMA transfer and releases the port lock. At the same moment,
+the kernel printk path might grab the port lock and re-configure the UART
+controller for PIO, without waiting for the DMA operation to complete. It
+seems like this collision results in zero progress being reported for the
+DMA engine, so the same text is printed to the console over and over again.
+
+For the kernel console, we want a reliable output path that will be
+functional even during crashes etc. So rather than implementing complex
+code to synchronize the kernel console write routines with the userspace
+DMA write routines, simply disable DMA for the console UART instance.
+
+Similar checks exist in many other serial drivers, e.g. 8250_port.c,
+imx.c, sh-sci.c etc.
+
+Cc: stable <stable@kernel.org>
+Fixes: 3a878c430fd6 ("tty: serial: msm: Add TX DMA support")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260706-serial-msm-console-dma-collision-v1-1-3179b8cb1d89@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/dt-bindings/power/fsl,imx93-power.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/serial/msm_serial.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/dt-bindings/power/fsl,imx93-power.h b/include/dt-bindings/power/fsl,imx93-power.h
-index 17f9f015bf7d..071221fe5c57 100644
---- a/include/dt-bindings/power/fsl,imx93-power.h
-+++ b/include/dt-bindings/power/fsl,imx93-power.h
-@@ -11,5 +11,6 @@
- #define IMX93_MEDIABLK_PD_PXP			2
- #define IMX93_MEDIABLK_PD_LCDIF			3
- #define IMX93_MEDIABLK_PD_ISI			4
-+#define IMX93_MEDIABLK_PD_MIPI_PHY		5
+--- a/drivers/tty/serial/msm_serial.c
++++ b/drivers/tty/serial/msm_serial.c
+@@ -1225,7 +1225,8 @@ static int msm_startup(struct uart_port
+ 	data |= MSM_UART_MR1_AUTO_RFR_LEVEL0 & rfr_level;
+ 	msm_write(port, data, MSM_UART_MR1);
  
- #endif
--- 
-2.55.0
-
+-	if (msm_port->is_uartdm) {
++	/* Disable DMA for console to prevent PIO/DMA collisions */
++	if (msm_port->is_uartdm && !uart_console(port)) {
+ 		msm_request_tx_dma(msm_port, msm_port->uart.mapbase);
+ 		msm_request_rx_dma(msm_port, msm_port->uart.mapbase);
+ 	}
 
 
