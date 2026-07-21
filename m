@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDAC2471435;
-	Tue, 21 Jul 2026 20:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D9D435A96;
+	Tue, 21 Jul 2026 20:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784665487; cv=none; b=QAo+kGQhooynGqiRWoBOAvuQJ0O2gl4BMY8hi8XOiRXMHeYma9w9JEL08JuWvv1suVVy7BUtXL9H0fvPTyPSMHfxOPsd8KhnKZidYLiQCNgccRrD6WXrgxQZcY+RAQT9uaHuJ1enVkG5xGnvKZHSxAvGDHNY+zHoSEHaENaModg=
+	t=1784665489; cv=none; b=VPwECeRE+iEuiXKmHjNme8spA4fLcFTwN7yqyGDa1CAddewiROIthDTPhdAI3LmkXRfBTpZV3NX/4vXrvIWiU0sSLeBY5kbFH3TFb3Bfta1/dO7wlbiJATxcfKKcvuNeD8fI+B7hRHYeuBehcse5U+3UlaZUQf9B79JpfHbVeE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784665487; c=relaxed/simple;
-	bh=VNQS12jk/gZsX6snh4wG+4vNwRSdvgn8hYLVCTyPDtw=;
+	s=arc-20240116; t=1784665489; c=relaxed/simple;
+	bh=jXZjLf9gYMXoBUXtohFvw9lH4SITtm0v4urr2BaYmJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SfISHr/ANo0xruf0P9UjHzuQIdN7azx1vUuW+jtIYHf7G9IWXA3cbru0Av34norpJ+ajgAtRuM2QQH1O3fVBT6PgBYRfXk447Tf/WFf5PZbQNpdTGBr4flya3WeV1KNZ55PZrvWKFp1sTx9gsd8grOY5W9wwQYSheQfIhJwMVSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYrbPSbS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jl5EnYukNvcTCZSFLL2avuuBnLhwdmrDQT27MF6CsZYkTWN+sZld6lCbYrip4YzClK1tqVjdwLIt7f1JdUSOKDAzpRgTrcZx0xSHCy6Dr7QlDs9LIXMMZ+sxP150GkBYjsgG6mUYBInsQtKOk/iMNT/1p0T68GG7qYTkbrKJJRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NlEO7SxY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYrbPSbS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC311F000E9;
-	Tue, 21 Jul 2026 20:24:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NlEO7SxY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081301F000E9;
+	Tue, 21 Jul 2026 20:24:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784665485;
-	bh=mdvQY0ENF0XSPeIr3JaiYZW6plwMMpAp+eVCP7m/QLo=;
+	s=korg; t=1784665488;
+	bh=XoaHPmVkY5R6HmqpH19zt9JCs3FBiH56J4kXHYs7YO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xYrbPSbSxTlLb4bgdcNgGh94yRo65Cx+5fmvY7m2DbXFX2vRVCJkHWth/l4oLjoFM
-	 nojN/BGaG73jr9HNxx42bNsEyzsebLUro19XcZta6TCwwAN3WzQLq6L7zTgoAx7Mlc
-	 XkrcNuk9AWJheb/wqhG3y1GF2SfX9mK9k1JyUMSk=
+	b=NlEO7SxYueYWnJfcFKMvMUi4pCrebWIJbr/y1X+7ioklR4LqyKPfQ9lRmak0W4i5d
+	 Vypg0GXqoHG0UnDdWOio2WpuYuryjjyK5cedGc67DM2LBrNSZz2JuybQ+O/cJzXmVI
+	 WYgI698gGiwFbkoTmvZaU/khRUJ7OGNEprx7nImI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Paul Louvel <paul.louvel@bootlin.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.6 0279/1266] crypto: talitos - add chaining of arbitrary number of descriptor for the SEC1
-Date: Tue, 21 Jul 2026 17:11:56 +0200
-Message-ID: <20260721152448.065353915@linuxfoundation.org>
+Subject: [PATCH 6.6 0280/1266] crypto: talitos - move dma unmapping code in flush_channel() into a standalone dma_unmap_request() function
+Date: Tue, 21 Jul 2026 17:11:57 +0200
+Message-ID: <20260721152448.088325662@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -52,350 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Paul Louvel <paul.louvel@bootlin.com>
 
-commit f126384ed55279c3b676f89d5ab547b8de8df782 upstream.
+commit 4d9b0b7415b9e79a3d54d18b5ff230974ea78740 upstream.
 
-The SEC1 hardware can process a chain of descriptors without host
-intervention. Only the hash implementation currently use this feature,
-but with a chain of at most 2 descriptors added in commit 37b5e8897eb5
-("crypto: talitos - chain in buffered data for ahash on SEC1").
+Previously added code to flush_channel() in order to unmap an entire
+descriptor.
 
-Add supports for chaining an arbitrary number of descriptors in a chain.
-
-Adapt the ahash implementation to make it compatible.
+Move that code into a standalone function to improve readability.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Paul Louvel <paul.louvel@bootlin.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/talitos.c |  180 +++++++++++++++++++++++++++++++----------------
- drivers/crypto/talitos.h |    2 
- 2 files changed, 124 insertions(+), 58 deletions(-)
+ drivers/crypto/talitos.c |   39 ++++++++++++++++++++++-----------------
+ 1 file changed, 22 insertions(+), 17 deletions(-)
 
 --- a/drivers/crypto/talitos.c
 +++ b/drivers/crypto/talitos.c
-@@ -273,7 +273,10 @@ static int talitos_submit(struct device
- 					   void *context, int error),
- 			  void *context)
- {
-+	struct talitos_edesc *edesc = container_of(desc, struct talitos_edesc, desc);
- 	struct talitos_private *priv = dev_get_drvdata(dev);
-+	dma_addr_t dma_desc, prev_dma_desc;
-+	struct talitos_edesc *prev_edesc = NULL;
- 	struct talitos_request *request;
- 	unsigned long flags;
- 	int head;
-@@ -292,10 +295,31 @@ static int talitos_submit(struct device
- 
- 	/* map descriptor and save caller data */
- 	if (is_sec1) {
--		desc->hdr1 = desc->hdr;
--		request->dma_desc = dma_map_single(dev, &desc->hdr1,
-+		while (edesc) {
-+			edesc->desc.hdr1 = edesc->desc.hdr;
-+
-+			dma_desc = dma_map_single(dev, &edesc->desc.hdr1,
-+						  TALITOS_DESC_SIZE,
-+						  DMA_BIDIRECTIONAL);
-+
-+			if (!prev_edesc) {
-+				request->dma_desc = dma_desc;
-+				goto next;
-+			}
-+
-+			/* Chain in any previous descriptors. */
-+
-+			prev_edesc->desc.next_desc = cpu_to_be32(dma_desc);
-+
-+			dma_sync_single_for_device(dev, prev_dma_desc,
- 						   TALITOS_DESC_SIZE,
--						   DMA_BIDIRECTIONAL);
-+						   DMA_TO_DEVICE);
-+
-+next:
-+			prev_edesc = edesc;
-+			prev_dma_desc = dma_desc;
-+			edesc = edesc->next_desc;
-+		}
- 	} else {
- 		request->dma_desc = dma_map_single(dev, desc,
- 						   TALITOS_DESC_SIZE,
-@@ -326,6 +350,7 @@ static __be32 get_request_hdr(struct dev
- 			      struct talitos_request *request, bool is_sec1)
- {
- 	struct talitos_edesc *edesc;
-+	dma_addr_t dma_desc;
- 
- 	if (!is_sec1) {
- 		dma_sync_single_for_cpu(dev, request->dma_desc,
-@@ -334,19 +359,17 @@ static __be32 get_request_hdr(struct dev
- 		return request->desc->hdr;
- 	}
- 
--	if (!request->desc->next_desc) {
--		dma_sync_single_for_cpu(dev, request->dma_desc,
--					TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
--		return request->desc->hdr1;
--	} else {
--		dma_sync_single_for_cpu(dev,
--					be32_to_cpu(request->desc->next_desc),
--					TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
--		edesc = container_of(request->desc, struct talitos_edesc, desc);
--
--		return ((struct talitos_desc *)(edesc->buf + edesc->dma_len))
--			->hdr1;
-+	edesc = container_of(request->desc, struct talitos_edesc, desc);
-+	dma_desc = request->dma_desc;
-+	while (edesc->next_desc) {
-+		dma_desc = be32_to_cpu(edesc->desc.next_desc);
-+		edesc = edesc->next_desc;
- 	}
-+
-+	dma_sync_single_for_cpu(dev, dma_desc, TALITOS_DESC_SIZE,
-+				DMA_BIDIRECTIONAL);
-+
-+	return edesc->desc.hdr1;
+@@ -372,6 +372,27 @@ static __be32 get_request_hdr(struct dev
+ 	return edesc->desc.hdr1;
  }
  
++static void dma_unmap_request(struct device *dev,
++			      struct talitos_request *request, bool is_sec1)
++{
++	struct talitos_edesc *edesc;
++
++	if (is_sec1) {
++		dma_unmap_single(dev, request->dma_desc, TALITOS_DESC_SIZE,
++				 DMA_BIDIRECTIONAL);
++		edesc = container_of(request->desc, struct talitos_edesc, desc);
++		while (edesc->next_desc) {
++			dma_unmap_single(dev,
++					 be32_to_cpu(edesc->desc.next_desc),
++					 TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
++			edesc = edesc->next_desc;
++		}
++	} else {
++		dma_unmap_single(dev, request->dma_desc, TALITOS_DESC_SIZE,
++				 DMA_BIDIRECTIONAL);
++	}
++}
++
  /*
-@@ -356,6 +379,7 @@ static void flush_channel(struct device
+  * process what was done, notify callback of error if not
+  */
+@@ -379,7 +400,6 @@ static void flush_channel(struct device
  {
  	struct talitos_private *priv = dev_get_drvdata(dev);
  	struct talitos_request *request, saved_req;
-+	struct talitos_edesc *edesc;
+-	struct talitos_edesc *edesc;
  	unsigned long flags;
  	int tail, status;
  	bool is_sec1 = has_ftr_sec1(priv);
-@@ -380,9 +404,22 @@ static void flush_channel(struct device
+@@ -404,22 +424,7 @@ static void flush_channel(struct device
  			else
  				status = error;
  
--		dma_unmap_single(dev, request->dma_desc,
--				 TALITOS_DESC_SIZE,
--				 DMA_BIDIRECTIONAL);
-+		if (is_sec1) {
-+			dma_unmap_single(dev, request->dma_desc,
-+					 TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
-+			edesc = container_of(request->desc,
-+					     struct talitos_edesc, desc);
-+			while (edesc->next_desc) {
-+				dma_unmap_single(
-+					dev, be32_to_cpu(edesc->desc.next_desc),
-+					TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
-+				edesc = edesc->next_desc;
-+			}
-+		} else {
-+			dma_unmap_single(dev, request->dma_desc,
-+					TALITOS_DESC_SIZE,
-+					DMA_BIDIRECTIONAL);
-+		}
+-		if (is_sec1) {
+-			dma_unmap_single(dev, request->dma_desc,
+-					 TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
+-			edesc = container_of(request->desc,
+-					     struct talitos_edesc, desc);
+-			while (edesc->next_desc) {
+-				dma_unmap_single(
+-					dev, be32_to_cpu(edesc->desc.next_desc),
+-					TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
+-				edesc = edesc->next_desc;
+-			}
+-		} else {
+-			dma_unmap_single(dev, request->dma_desc,
+-					TALITOS_DESC_SIZE,
+-					DMA_BIDIRECTIONAL);
+-		}
++		dma_unmap_request(dev, request, is_sec1);
  
  		/* copy entries so we can call callback outside lock */
  		saved_req.desc = request->desc;
-@@ -477,8 +514,12 @@ DEF_TALITOS2_DONE(ch1_3, TALITOS2_ISR_CH
- static __be32 current_desc_hdr(struct device *dev, int ch)
- {
- 	struct talitos_private *priv = dev_get_drvdata(dev);
-+	bool is_sec1 = has_ftr_sec1(priv);
-+	struct talitos_request *request;
-+	struct talitos_edesc *edesc;
- 	int tail, iter;
- 	dma_addr_t cur_desc;
-+	__be32 hdr = 0;
- 
- 	cur_desc = ((u64)in_be32(priv->chan[ch].reg + TALITOS_CDPR)) << 32;
- 	cur_desc |= in_be32(priv->chan[ch].reg + TALITOS_CDPR_LO);
-@@ -489,27 +530,35 @@ static __be32 current_desc_hdr(struct de
- 	}
- 
- 	tail = priv->chan[ch].tail;
--
- 	iter = tail;
--	while (priv->chan[ch].fifo[iter].dma_desc != cur_desc &&
--	       priv->chan[ch].fifo[iter].desc->next_desc != cpu_to_be32(cur_desc)) {
--		iter = (iter + 1) & (priv->fifo_len - 1);
--		if (iter == tail) {
--			dev_err(dev, "couldn't locate current descriptor\n");
--			return 0;
-+	do {
-+		request = &priv->chan[ch].fifo[iter];
-+
-+		if (request->dma_desc == cur_desc) {
-+			hdr = request->desc->hdr;
-+		} else if (is_sec1) {
-+			edesc = container_of(request->desc,
-+					     struct talitos_edesc, desc);
-+			while (edesc->next_desc) {
-+				if (edesc->desc.next_desc ==
-+				    cpu_to_be32(cur_desc)) {
-+					hdr = edesc->next_desc->desc.hdr1;
-+					break;
-+				}
-+				edesc = edesc->next_desc;
-+			}
- 		}
--	}
- 
--	if (priv->chan[ch].fifo[iter].desc->next_desc == cpu_to_be32(cur_desc)) {
--		struct talitos_edesc *edesc;
-+		if (hdr)
-+			break;
- 
--		edesc = container_of(priv->chan[ch].fifo[iter].desc,
--				     struct talitos_edesc, desc);
--		return ((struct talitos_desc *)
--			(edesc->buf + edesc->dma_len))->hdr;
--	}
-+		iter = (iter + 1) & (priv->fifo_len - 1);
-+	} while (iter != tail);
-+
-+	if (!hdr)
-+		dev_err(dev, "couldn't locate current descriptor\n");
- 
--	return priv->chan[ch].fifo[iter].desc->hdr;
-+	return hdr;
- }
- 
- /*
-@@ -1408,10 +1457,6 @@ static struct talitos_edesc *talitos_ede
- 		dma_len = 0;
- 	}
- 	alloc_len += icv_stashing ? authsize : 0;
--
--	/* if its a ahash, add space for a second desc next to the first one */
--	if (is_sec1 && !dst)
--		alloc_len += sizeof(struct talitos_desc);
- 	alloc_len += ivsize;
- 
- 	edesc = kmalloc(ALIGN(alloc_len, dma_get_cache_alignment()), flags);
-@@ -1427,6 +1472,7 @@ static struct talitos_edesc *talitos_ede
- 	edesc->dst_nents = dst_nents;
- 	edesc->iv_dma = iv_dma;
- 	edesc->dma_len = dma_len;
-+	edesc->next_desc = NULL;
- 	if (dma_len)
- 		edesc->dma_link_tbl = dma_map_single(dev, &edesc->link_tbl[0],
- 						     edesc->dma_len,
-@@ -1727,8 +1773,10 @@ static void common_nonsnoop_hash_unmap(s
- 	struct talitos_private *priv = dev_get_drvdata(dev);
- 	bool is_sec1 = has_ftr_sec1(priv);
- 	struct talitos_desc *desc = &edesc->desc;
--	struct talitos_desc *desc2 = (struct talitos_desc *)
--				     (edesc->buf + edesc->dma_len);
-+	struct talitos_desc *desc2;
-+
-+	if (desc->next_desc)
-+		desc2 = &edesc->next_desc->desc;
- 
- 	unmap_single_talitos_ptr(dev, &desc->ptr[5], DMA_FROM_DEVICE);
- 	if (desc->next_desc &&
-@@ -1756,10 +1804,17 @@ static void common_nonsnoop_hash_unmap(s
- 	if (edesc->dma_len)
- 		dma_unmap_single(dev, edesc->dma_link_tbl, edesc->dma_len,
- 				 DMA_BIDIRECTIONAL);
-+}
- 
--	if (desc->next_desc)
--		dma_unmap_single(dev, be32_to_cpu(desc->next_desc),
--				 TALITOS_DESC_SIZE, DMA_BIDIRECTIONAL);
-+static void free_edesc_list_from(struct talitos_edesc *edesc)
-+{
-+	struct talitos_edesc *next;
-+
-+	while (edesc) {
-+		next = edesc->next_desc;
-+		kfree(edesc);
-+		edesc = next;
-+	}
- }
- 
- static void ahash_done(struct device *dev,
-@@ -1778,7 +1833,7 @@ static void ahash_done(struct device *de
- 	}
- 	common_nonsnoop_hash_unmap(dev, edesc, areq);
- 
--	kfree(edesc);
-+	free_edesc_list_from(edesc);
- 
- 	if (err) {
- 		ahash_request_complete(areq, err);
-@@ -1894,14 +1949,23 @@ static int common_nonsnoop_hash(struct t
- 		talitos_handle_buggy_hash(ctx, edesc, &desc->ptr[3]);
- 
- 	if (is_sec1 && req_ctx->nbuf && length) {
--		struct talitos_desc *desc2 = (struct talitos_desc *)
--					     (edesc->buf + edesc->dma_len);
--		dma_addr_t next_desc;
-+		struct talitos_edesc *edesc2;
-+		struct talitos_desc *desc2;
-+
-+		edesc2 = kzalloc(sizeof(*edesc2),
-+				 areq->base.flags & CRYPTO_TFM_REQ_MAY_SLEEP ?
-+					 GFP_KERNEL :
-+					 GFP_ATOMIC);
-+		if (!edesc2) {
-+			ret = -ENOMEM;
-+			goto err;
-+		}
-+		edesc->next_desc = edesc2;
-+
-+		desc2 = &edesc2->desc;
- 
--		memset(desc2, 0, sizeof(*desc2));
- 		desc2->hdr = desc->hdr;
- 		desc2->hdr &= ~DESC_HDR_MODE0_MDEU_INIT;
--		desc2->hdr1 = desc2->hdr;
- 		desc->hdr &= ~DESC_HDR_MODE0_MDEU_PAD;
- 		desc->hdr |= DESC_HDR_MODE0_MDEU_CONT;
- 		desc->hdr &= ~DESC_HDR_DONE_NOTIFY;
-@@ -1925,21 +1989,21 @@ static int common_nonsnoop_hash(struct t
- 						      req_ctx->hw_context_size,
- 						      req_ctx->hw_context,
- 						      DMA_FROM_DEVICE);
--
--		next_desc = dma_map_single(dev, &desc2->hdr1, TALITOS_DESC_SIZE,
--					   DMA_BIDIRECTIONAL);
--		desc->next_desc = cpu_to_be32(next_desc);
- 	}
- 
- 	if (sync_needed)
- 		dma_sync_single_for_device(dev, edesc->dma_link_tbl,
- 					   edesc->dma_len, DMA_BIDIRECTIONAL);
- 
--	ret = talitos_submit(dev, ctx->ch, desc, callback, areq);
--	if (ret != -EINPROGRESS) {
--		common_nonsnoop_hash_unmap(dev, edesc, areq);
--		kfree(edesc);
--	}
-+	ret = talitos_submit(dev, ctx->ch, desc, callback,
-+			     areq);
-+	if (ret != -EINPROGRESS)
-+		goto err;
-+
-+	return -EINPROGRESS;
-+err:
-+	common_nonsnoop_hash_unmap(dev, edesc, areq);
-+	kfree(edesc);
- 	return ret;
- }
- 
---- a/drivers/crypto/talitos.h
-+++ b/drivers/crypto/talitos.h
-@@ -49,6 +49,7 @@ struct talitos_desc {
-  * @iv_dma: dma address of iv for checking continuity and link table
-  * @dma_len: length of dma mapped link_tbl space
-  * @dma_link_tbl: bus physical address of link_tbl/buf
-+ * @next_desc: next descriptor
-  * @desc: h/w descriptor
-  * @link_tbl: input and output h/w link tables (if {src,dst}_nents > 1) (SEC2)
-  * @buf: input and output buffeur (if {src,dst}_nents > 1) (SEC1)
-@@ -63,6 +64,7 @@ struct talitos_edesc {
- 	dma_addr_t iv_dma;
- 	int dma_len;
- 	dma_addr_t dma_link_tbl;
-+	struct talitos_edesc *next_desc;
- 	struct talitos_desc desc;
- 	union {
- 		DECLARE_FLEX_ARRAY(struct talitos_ptr, link_tbl);
 
 
