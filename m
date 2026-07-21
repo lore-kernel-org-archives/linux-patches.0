@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C23341A547;
-	Tue, 21 Jul 2026 19:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F96A408634;
+	Tue, 21 Jul 2026 19:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661944; cv=none; b=k9l15EBy1RvH0zKiP0vg9qXGE/GZ02Rlg5BxmbDDmTJEcuiiQ+ZPkWL9r1KHbt1GHO9Lyf/3F/ifNspgojRuMTlIhQ3wGrgaWB6y9EgIDQo98dyTa0vC3Ju4QqyeWFM6lA52xaYqyxqrTkVI5fovvr6jCdcUoQfc6SsAtDD5aPo=
+	t=1784661946; cv=none; b=cga2YPg0STV7ZhmyIXZNWpeOLOQGqrhZZYcOp9HuYpVMPV+7uARHvo151cgrwZkHh5Rk7AfZC7UbsiNX77eej84nWVeyD27jTnuvYTlxoxks/JoUzNnBi9YLAWPC6b4MpeGmvRxrH4XUVYs5lPMnohQhHCTo182bj1fkAQBHHBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661944; c=relaxed/simple;
-	bh=KRuuqPBWGdmZG2lHokatuz+QmmOCKUL0uveA0iHQok0=;
+	s=arc-20240116; t=1784661946; c=relaxed/simple;
+	bh=OJzZbeio2poIz5zqnJ6UOT1xnLnc0Ht0jR+enl1/ctc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L8uCftd9Z2oIt/zT5OZEcTuQMbSDpwQ9GsvAaZO4duqFQ0tVAJf3Y7vkP6yriWd6HYzYJzGbvNZk1DXyX0O/UN+YCwbPXdQSGHNOACLKbRnVJgfISxGX1h2T6D59vpUPZOj14vdKFfVsU5HNcnzfTNfdgSfkpqK6iRdTsD5hzVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ghKMaL5I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NOg5QJRK321Gs4X/oLj52fkh/fI2FTyMwrAwFLRxCVX21rSEX4TsU4KYrJGI0zFo13nBvZ+ZKIeX9O7dGhCV+b5drAyYQvidFoZRwBF/52lC649gXgT1qLjbHm3Oc1NTOMU1ww2okaGRPHybjhZb27filXUfziNPEhIpRrz9yts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WjQ6+0Lc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ghKMaL5I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E9E81F000E9;
-	Tue, 21 Jul 2026 19:25:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WjQ6+0Lc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E62A51F000E9;
+	Tue, 21 Jul 2026 19:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661942;
-	bh=dxdap+au8n3ttrXmSbmTFnO4AZz5Rk09WTQUNPkMr7w=;
+	s=korg; t=1784661945;
+	bh=52kgZP7cLQgyxxpKzyZvB+XtG5TaM6ZV6QzSQndJ7rU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ghKMaL5IidFJQZkOAmlg7mka21m+/HpkP8uJmYb61iWlZNr7DqMDTL6NNcg0MAG/C
-	 FHLPZBc15QNJidMFpCQs8GkRIiHVdriANdav6TqXAbPUNULPCKwYtkHB9S4imLuE3A
-	 bhPn9+ucsRana3EKs1oUGk38GoaOOSfY1qWT78jw=
+	b=WjQ6+0Lc7XR3sv6IWRuIlNUevpR14wC9rTT7O/O28vyO0gb7vFIYJnoTpCNuJK3ag
+	 6alqAo1s2zBzKI1Qb8H2w2Zy1hw3fPMWG1/lD2z/JLF6AOGEk3+NJX/fVac315qTZW
+	 2N6BvTQmo3mi6R1dyZK7qMpnj7GsOZ5fsAm0BCDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Zide Chen <zide.chen@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0257/1276] wifi: wcn36xx: fix OOB read from firmware count in PRINT_REG_INFO indication
-Date: Tue, 21 Jul 2026 17:11:40 +0200
-Message-ID: <20260721152451.837460108@linuxfoundation.org>
+Subject: [PATCH 6.12 0231/1276] perf/x86/intel/uncore: Fix discovery unit lookup for multi-die systems
+Date: Tue, 21 Jul 2026 17:11:14 +0200
+Message-ID: <20260721152451.260757519@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -52,44 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Zide Chen <zide.chen@intel.com>
 
-[ Upstream commit df2187acfca6c6cca372c5d35f42394d9c270b09 ]
+[ Upstream commit 63f48abd55d0417996bca86022925c853a2b436b ]
 
-The firmware-controlled rsp->count field is used as the loop bound for
-indexing into the flexible rsp->regs[] array without validation against
-the message length. A count exceeding the actual data causes out-of-
-bounds reads from the heap-allocated message buffer.
+In uncore_find_add_unit(), PMON units with the same unit ID may be
+added to the uncore discovery RB-tree for different dies. These units
+are distinguished by node->die.
 
-Add a check that count fits within the received message.
+However, intel_generic_uncore_box_ctl() uses a fixed die ID of -1 when
+looking up the discovery unit, which may retrieve the wrong node on
+multi-die systems.
 
-Fixes: 43efa3c0f241 ("wcn36xx: Implement print_reg indication")
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260421135018.352774-3-tristmd@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Use box->dieid instead so the correct discovery unit is selected.
+
+No functional issue has been observed so far because currently supported
+platforms happen to use the same unit control register for such units.
+
+Remove WARN_ON_ONCE() because with the above change a NULL unit can be
+expected, e.g. when a CPU die is offline during uncore enumeration and
+the unit is not added to the RB-tree. In this case,
+intel_uncore_find_discovery_unit() returns NULL once the die becomes
+online, and it is expected that the PMU box is not functional for that
+die.
+
+Fixes: b1d9ea2e1ca4 ("perf/x86/uncore: Apply the unit control RB tree to MSR uncore units")
+Signed-off-by: Zide Chen <zide.chen@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Link: https://patch.msgid.link/20260602144908.263680-2-zide.chen@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/wcn36xx/smd.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/x86/events/intel/uncore_discovery.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/wcn36xx/smd.c b/drivers/net/wireless/ath/wcn36xx/smd.c
-index f550eb86301322..0cea465edf327d 100644
---- a/drivers/net/wireless/ath/wcn36xx/smd.c
-+++ b/drivers/net/wireless/ath/wcn36xx/smd.c
-@@ -2865,6 +2865,12 @@ static int wcn36xx_smd_print_reg_info_ind(struct wcn36xx *wcn,
- 		return -EIO;
- 	}
+diff --git a/arch/x86/events/intel/uncore_discovery.c b/arch/x86/events/intel/uncore_discovery.c
+index aad35190ccf649..618481ad9f5791 100644
+--- a/arch/x86/events/intel/uncore_discovery.c
++++ b/arch/x86/events/intel/uncore_discovery.c
+@@ -432,8 +432,8 @@ static u64 intel_generic_uncore_box_ctl(struct intel_uncore_box *box)
+ 	struct intel_uncore_discovery_unit *unit;
  
-+	if (rsp->count > (len - sizeof(*rsp)) / sizeof(rsp->regs[0])) {
-+		wcn36xx_warn("Truncated print reg info indication: count %u, len %zu\n",
-+			     rsp->count, len);
-+		return -EIO;
-+	}
-+
- 	wcn36xx_dbg(WCN36XX_DBG_HAL,
- 		    "reginfo indication, scenario: 0x%x reason: 0x%x\n",
- 		    rsp->scenario, rsp->reason);
+ 	unit = intel_uncore_find_discovery_unit(box->pmu->type->boxes,
+-						-1, box->pmu->pmu_idx);
+-	if (WARN_ON_ONCE(!unit))
++						box->dieid, box->pmu->pmu_idx);
++	if (!unit)
+ 		return 0;
+ 
+ 	return unit->addr;
 -- 
 2.53.0
 
