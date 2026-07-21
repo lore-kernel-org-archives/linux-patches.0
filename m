@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D44F37DE97;
-	Tue, 21 Jul 2026 18:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34DF37DE97;
+	Tue, 21 Jul 2026 18:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784657861; cv=none; b=gC6pb4/mmawcQPYt/jZRW403764/ezU9HolGyDOFI3zG3uKCOKcj8UwiCwAJY0DOr9x5txxI9uOkZMn+dKA7ugP4AreemEiBIYEhtDGSbzrw9y4N43PCiQxkIcEy6jCUInWrHkgfOt8gxTaLVMav/Zo7JswgTZjt4iQjIcPR+YM=
+	t=1784657863; cv=none; b=WRhTO8uWjP8Y7aMGcnkr18yJVRNzpgZtCkE05k0ABt5XlU073kC+oaP18Zjv8pF9tGCkOq4ZRaXeZREEOCWDKJDK4CgGUOTsTFDX17dwWELdbZnovzNWlUovcFEJtgGvSXQv0e/zPwfcrw/MhSpmqYMax3q6sb2xV2teNyYTmgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784657861; c=relaxed/simple;
-	bh=2fCpdTS/b4/RiJRWyze/i9+sTsclj0e19s+R/mkvP8o=;
+	s=arc-20240116; t=1784657863; c=relaxed/simple;
+	bh=zF6DTxdngKXw6I5gEjz768H7jQCRvVrvppxtEgL4bpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EtmYn8WiU0YyZYm17H3TJcPU1nl8zgSsv3JYTs1QLv1sqB8eHODz7NSqvWYzCZvJpF70wC5KZPOhwyAUryqw2wZ/XeY+8LPXr+4RZvTWR2tZr12ShbcUCp62SRXzdzZD4J0d1nmQqDCtvOTi12QzQgQZmkIoxKKWYGV+EEpxapw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDaG1OVQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rrmf9C2ePyazonUe8Rw/dA2qxp79H4oEpaByh/2mGi/bNeAQ63cAwsYhhuRNqfAKgr4w54jmSuC2gnPfFuwFw4Fk2N61Q37CVnUoBgNUOefgGSyq0NKkTNRPVtHmARQm/sQKvMaMkN+DI7y90xR6MMWaKvTMgvDqQGx7Wjenk84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKb7f1Em; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDaG1OVQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F301F000E9;
-	Tue, 21 Jul 2026 18:17:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKb7f1Em"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D781F000E9;
+	Tue, 21 Jul 2026 18:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784657860;
-	bh=vYDjFAB6gkmCD0jMbCXpa6qhCvfmXAVo308xWG33db4=;
+	s=korg; t=1784657862;
+	bh=cxHXujeO1bYe69OwR/rqW0EpLJ9xqHKkf5oijUXNZBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GDaG1OVQM7FuISArkKGmbnwnoExZrLKxZKb1k5dUqym21lKfVM8ZjML/Wje9wJZAd
-	 oz+vTZRVtyouR7Kbl/GJ8sf3GQy8ul4CPXcTWUPCySAAXCpWoE57rE3L7WlxoYKYy7
-	 WbIXBeUXSnBEiIsG4RQ4Rfhwmv0FGeW74uv/pd/M=
+	b=oKb7f1EmRwRL0DXE7YUUiGjoYN7Xzako6xHHrsuro3Hk+4YhIiw8DiulgPDbAWTCv
+	 l2oVZgO5oyfxQZkRhqvSUluUrUho+3BX00VPbOk13Tz782O9S0YmsZgVBp18/rITfI
+	 ClIrOwy7YJWo2vVoA0BZ2b967RDG/MhNToeILHPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0923/1611] ipv6: fix missing notification for ignore_routes_with_linkdown
-Date: Tue, 21 Jul 2026 17:17:19 +0200
-Message-ID: <20260721152536.148270923@linuxfoundation.org>
+Subject: [PATCH 6.18 0924/1611] eth: fbnic: fix ordering of heartbeat vs ownership
+Date: Tue, 21 Jul 2026 17:17:20 +0200
+Message-ID: <20260721152536.170578144@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152514.750365251@linuxfoundation.org>
 References: <20260721152514.750365251@linuxfoundation.org>
@@ -53,69 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 17dc3b245de45b1f2012e3a48ec51889f544e67b ]
+[ Upstream commit d87363b0edfc7504ff2b144fe4cdd8154f90f42e ]
 
-When changing the ignore_routes_with_linkdown sysctl for a specific
-interface, the RTM_NEWNETCONF netlink notification was not being emitted
-to userspace. Fix this by emitting the notification when needed.
+When requesting ownership of the NIC (MAC/PHY control), we set up
+the heartbeat to look stale:
 
-In addition, fix bogus return value for successful "all" and specific
-interface write operation leading to a wrong reset of the position
-pointer.
+  /* Initialize heartbeat, set last response to 1 second in the past
+   * so that we will trigger a timeout if the firmware doesn't respond
+   */
+  fbd->last_heartbeat_response = req_time - HZ;
+  fbd->last_heartbeat_request = req_time;
 
-Fixes: 35103d11173b ("net: ipv6 sysctl option to ignore routes when nexthop link is down")
-Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260622130857.5115-7-fmancera@suse.de
+The response handler then sets:
+
+  fbd->last_heartbeat_response = jiffies;
+
+for which we wait via:
+
+  fbnic_fw_init_heartbeat() -> fbnic_fw_heartbeat_current()
+
+The scheme is a bit odd, but it should work in principle.
+
+Fix the ordering of operations. We have to set up the stale heartbeat
+before we send the message. Otherwise if the response is very fast
+we will override it. This triggers on QEMU if we run on the core
+that handles the IRQ, and results in ndo_open failing with ETIMEDOUT.
+
+The change in ordering doesn't impact releasing the ownership.
+Both ndo_stop and heartbeat check are under rtnl_lock.
+
+Fixes: 20d2e88cc746 ("eth: fbnic: Add initial messaging to notify FW of our presence")
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Link: https://patch.msgid.link/20260622154753.827506-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/meta/fbnic/fbnic_fw.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 530c302beb4898..c98b1b919f18c4 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -955,11 +955,7 @@ static int addrconf_fixup_linkdown(const struct ctl_table *table, int *p, int ne
- 						     NETCONFA_IGNORE_ROUTES_WITH_LINKDOWN,
- 						     NETCONFA_IFINDEX_DEFAULT,
- 						     net->ipv6.devconf_dflt);
--		rtnl_net_unlock(net);
--		return 0;
--	}
--
--	if (p == &net->ipv6.devconf_all->ignore_routes_with_linkdown) {
-+	} else if (p == &net->ipv6.devconf_all->ignore_routes_with_linkdown) {
- 		WRITE_ONCE(net->ipv6.devconf_dflt->ignore_routes_with_linkdown, newf);
- 		addrconf_linkdown_change(net, newf);
- 		if ((!newf) ^ (!old))
-@@ -968,11 +964,21 @@ static int addrconf_fixup_linkdown(const struct ctl_table *table, int *p, int ne
- 						     NETCONFA_IGNORE_ROUTES_WITH_LINKDOWN,
- 						     NETCONFA_IFINDEX_ALL,
- 						     net->ipv6.devconf_all);
-+	} else {
-+		if (!newf ^ !old) {
-+			struct inet6_dev *idev = table->extra1;
-+
-+			inet6_netconf_notify_devconf(net,
-+						     RTM_NEWNETCONF,
-+						     NETCONFA_IGNORE_ROUTES_WITH_LINKDOWN,
-+						     idev->dev->ifindex,
-+						     &idev->cnf);
-+		}
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
+index fcd9912e7ad3bd..1204c12ea0fa24 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
+@@ -484,15 +484,10 @@ int fbnic_fw_xmit_ownership_msg(struct fbnic_dev *fbd, bool take_ownership)
+ 			goto free_message;
  	}
  
- 	rtnl_net_unlock(net);
+-	err = fbnic_mbx_map_tlv_msg(fbd, msg);
+-	if (err)
+-		goto free_message;
+-
+ 	/* Initialize heartbeat, set last response to 1 second in the past
+ 	 * so that we will trigger a timeout if the firmware doesn't respond
+ 	 */
+ 	fbd->last_heartbeat_response = req_time - HZ;
+-
+ 	fbd->last_heartbeat_request = req_time;
  
--	return 1;
-+	return 0;
- }
+ 	/* Set prev_firmware_time to 0 to avoid triggering firmware crash
+@@ -500,6 +495,10 @@ int fbnic_fw_xmit_ownership_msg(struct fbnic_dev *fbd, bool take_ownership)
+ 	 */
+ 	fbd->prev_firmware_time = 0;
  
- #endif
++	err = fbnic_mbx_map_tlv_msg(fbd, msg);
++	if (err)
++		goto free_message;
++
+ 	/* Set heartbeat detection based on if we are taking ownership */
+ 	fbd->fw_heartbeat_enabled = take_ownership;
+ 
 -- 
 2.53.0
 
