@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDB1434E2F;
-	Tue, 21 Jul 2026 22:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C403FFF85;
+	Tue, 21 Jul 2026 22:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784673847; cv=none; b=I4e4edaKAEU2IYulBAMTv3wKa3yNOcdG/eqai4gps4vDZmVRLadITxfYEdB7mwqYeyH0rY1V2fIPz4qX0EWt8kNYImgIUN6oeJjCxM4K4Vx3wXCmPoo6hNDL2JZdFCh2zLOQXIykJjkw5OwhE4XlYw7vQCJmJ9DvaiPK8uHUg/4=
+	t=1784673849; cv=none; b=n864Q9f7B/L3jeP/ztz4ojLixKBWJjMcBO4Bd0Uw6bmEr55NdzB98k3upebsLeM19Ecfcz+eRdk67yReFtj0rGAMPb7NaVb0qytU/hD+2rQMNSzDFfW77SeUpg8lIcnQrwNyZm/CkovMY9kM2erotSlKSCxbaQi6QuR3yjTM+yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784673847; c=relaxed/simple;
-	bh=1jyMiWP4dSYQ095E5R1oZQipTZ86truUoJT+JFLWA1Y=;
+	s=arc-20240116; t=1784673849; c=relaxed/simple;
+	bh=BRnYMyW04tQjVZkPt+OPGy3DbGELxMsoTsYW7zFI344=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J0QQE2Hbl/k6SuWisO/Ges0klT7qhoMVf/Co4vE5kS5W9MgWyMfLGIGLXfogGsfPhEkjkenO+sbq24rRDCSjMF8jKJ2bGj4pVQKgc/bLM6f1mSVejWfJOs8U/xE8la9ED6iQ6W717he9v/YIL4FBl4k9GL23HG1YoZBg8kVmkO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=feU+7Nmt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hprZIVz9P3x0IQqcLE1+9nkKJbr+lPk5V4kTcPJMvnGUmF+DdOQ3jVuDUecdw9RBMlqHIifFiebwDYyAnH5G93Ai1cw+cgApIvltJvP8di8Qt3DO4RbZY6rOJOjlTMfLotsUCBEjMyUmmSokTMT+/vgOgzHWOgQFIO7tbXzvd2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZf2j0gw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="feU+7Nmt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 720201F000E9;
-	Tue, 21 Jul 2026 22:44:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZf2j0gw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1722C1F000E9;
+	Tue, 21 Jul 2026 22:44:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784673845;
-	bh=1ytCulUB42d6WDUwae25EkyFwcNg7akorvcf0Ac9JLo=;
+	s=korg; t=1784673848;
+	bh=XoJO6HiKXyHEXZ6VDzvyE9zTYx1Rev4Q0UyizunX1lQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=feU+7Nmt1oAPTY7bULXZKsjh4VitpeYvX49CRFm9A3LKweA23ZHB5jco3kuuWcpEW
-	 Vc5VEE8sT+3wE/LSTt1zjy8nm4b/aVqXRhif70vRDJ3/b0GuTDhETujPPH5VzgTUnL
-	 r9NTY/ZW+FbF5ES0IejNgkEH2ZWpsnAoSWZi/jNo=
+	b=EZf2j0gw5xPbeImE6GWvhVvoY0lywgxEL7uTsENsCRgT3Son5zG667EJ50qRdG0hg
+	 hz8B8Top0PaPVxRSGWMJGbLJn0hnuOa2Iwtq851mEHMtJLrK1ghfNjB3UjMdMd9JKA
+	 stPUZNWX+UedmoueHQ/B3Hf4gh90caMMO3An04xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Anirudh Gupta <anirudhrudr@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 274/699] powerpc/kexec: fix double get_cpu() imbalance in kexec_prepare_cpus
-Date: Tue, 21 Jul 2026 17:20:33 +0200
-Message-ID: <20260721152401.879755236@linuxfoundation.org>
+Subject: [PATCH 5.10 265/699] net/sched: sch_fq_codel: Do not call qdisc_tree_reduce_backlog during peek before restoring qlen
+Date: Tue, 21 Jul 2026 17:20:24 +0200
+Message-ID: <20260721152401.679426978@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -52,61 +53,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aboorva Devarajan <aboorvad@linux.ibm.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 5c86f1c1f972761a04bf22f4c0618d1aa714185b ]
+[ Upstream commit 097f6fc7b1ae362dd7a9444b2572162fda73b284 ]
 
-kexec_prepare_cpus_wait() calls get_cpu() internally to obtain the
-current CPU id. kexec_prepare_cpus() calls kexec_prepare_cpus_wait()
-twice -- once for KEXEC_STATE_IRQS_OFF and once for
-KEXEC_STATE_REAL_MODE -- but only issues a single put_cpu() at the end,
-leaving preempt_count elevated by one extra nesting level.
+Whenever fq_codel drops packets during peek, it calls
+qdisc_tree_reduce_backlog. An issue arises because it calls
+qdisc_tree_reduce_backlog before it reincrements the qlen. If qlen drops
+to zero, but peek returns an skb, the parent's qlen_notify callback will be
+executed even though fq_codel still has 1 packet on the queue and, thus,
+will mistakenly deactivate the parent's class causing issues like a recent
+report [1] and a wild memory access in qfq:
 
-In practice the imbalance does not trigger a 'scheduling while atomic'
-splat because the kexec path is a one-way trip: IRQs are already
-disabled, no schedule() occurs after the leak, and
-default_machine_kexec() overwrites preempt_count with HARDIRQ_OFFSET
-before jumping into kexec_sequence() which never returns. However the
-bookkeeping is still wrong.
+[   29.371146][  T360] Oops: general protection fault, probably for non-canonical address 0xfbd59c0000000024: 0000 [#1] SMP KASAN NOPTI
+[   29.371666][  T360] KASAN: maybe wild-memory-access in range [0xdead000000000120-0xdead000000000127]
+[   29.371987][  T360] CPU: 6 UID: 0 PID: 360 Comm: tc Not tainted 7.1.0-rc5-00285-gc530e5b2dbc6-dirty #82 PREEMPT(full)
+[   29.372384][  T360] Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
+[   29.372620][  T360] RIP: 0010:qfq_deactivate_agg (include/linux/list.h:1029 (discriminator 2) include/linux/list.h:1043 (discriminator 2) net/sched/sch_qfq.c:1369 (discriminator 2) net/sched/sch_qfq.c:1395 (discriminator 2)) sch_qfq
+[   29.373544][  T360] RSP: 0018:ffff888102417370 EFLAGS: 00010216
+[   29.373800][  T360] RAX: 0000000000000000 RBX: ffff88811224d568 RCX: dffffc0000000000
+[   29.374079][  T360] RDX: 1ffff11021fe1543 RSI: ffff88810ff0aa00 RDI: dffffc0000000000
+[   29.374368][  T360] RBP: ffff88811224c280 R08: dead000000000122 R09: 1bd5a00000000024
+[   29.374649][  T360] R10: fffffbfff7940329 R11: fffffbfff7940329 R12: 0000000000000000
+[   29.374926][  T360] R13: dead000000000100 R14: ffff88811224d580 R15: ffff88811224d578
+[   29.375207][  T360] FS:  00007f5b794e5780(0000) GS:ffff88815d1e9000(0000) knlGS:0000000000000000
+[   29.375545][  T360] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   29.375823][  T360] CR2: 000055ffb091f000 CR3: 000000010a305000 CR4: 0000000000750ef0
+[   29.376103][  T360] PKRU: 55555554
+[   29.376258][  T360] Call Trace:
+[   29.376401][  T360]  <TASK>
+...
+[   29.376885][  T360] qfq_reset_qdisc (net/sched/sch_qfq.c:357 net/sched/sch_qfq.c:1487) sch_qfq
+[   29.377074][  T360]  qdisc_reset (net/sched/sch_generic.c:1057)
+[   29.377414][  T360]  __qdisc_destroy (net/sched/sch_generic.c:1096)
+[   29.377600][  T360]  qdisc_graft (net/sched/sch_api.c:1062 net/sched/sch_api.c:1053 net/sched/sch_api.c:1159)
+[   29.378593][  T360]  tc_get_qdisc (net/sched/sch_api.c:1528 net/sched/sch_api.c:1556)
 
-kexec_prepare_cpus() calls local_irq_disable()/hard_irq_disable()
-before invoking kexec_prepare_cpus_wait(), so the CPU is already pinned
-and the get_cpu()/put_cpu() preempt_disable() bracketing is unnecessary.
-Only the current CPU id is needed, so replace get_cpu() with
-raw_smp_processor_id() and drop the now-unneeded put_cpu().
+Fix this by only calling qdisc_tree_reduce_backlog in peek after the
+qlen is restored.
 
-Fixes: 1fc711f7ffb0 ("powerpc/kexec: Fix race in kexec shutdown")
-Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Reviewed-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260605082912.305100-4-aboorvad@linux.ibm.com
+[1] http://lore.kernel.org/netdev/CAN2cbVe79oj0O9==m4+4x3v+O+qzRagA=2=wkrp9i9=CqYvyZA@mail.gmail.com/
+
+Fixes: 342debc12183 ("codel: remove sch->q.qlen check before qdisc_tree_reduce_backlog()")
+Reported-by: Anirudh Gupta <anirudhrudr@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAN2cbVe79oj0O9==m4+4x3v+O+qzRagA=2=wkrp9i9=CqYvyZA@mail.gmail.com/
+Tested-by: Anirudh Gupta <anirudhrudr@gmail.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20260610192855.3121513-2-victor@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kexec/core_64.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/sched/sch_fq_codel.c | 41 ++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 39 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/kexec/core_64.c b/arch/powerpc/kexec/core_64.c
-index 8a449b2d8715d8..348120e3c0ea53 100644
---- a/arch/powerpc/kexec/core_64.c
-+++ b/arch/powerpc/kexec/core_64.c
-@@ -163,7 +163,7 @@ static void kexec_prepare_cpus_wait(int wait_state)
- 	int my_cpu, i, notified=-1;
- 
- 	hw_breakpoint_disable();
--	my_cpu = get_cpu();
-+	my_cpu = raw_smp_processor_id();
- 	/* Make sure each CPU has at least made it to the state we need.
- 	 *
- 	 * FIXME: There is a (slim) chance of a problem if not all of the CPUs
-@@ -242,8 +242,6 @@ static void kexec_prepare_cpus(void)
- 	/* after we tell the others to go down */
- 	if (ppc_md.kexec_cpu_down)
- 		ppc_md.kexec_cpu_down(0, 0);
--
--	put_cpu();
+diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
+index 10bdc0de394cc5..ae1d19bb6c5561 100644
+--- a/net/sched/sch_fq_codel.c
++++ b/net/sched/sch_fq_codel.c
+@@ -278,7 +278,7 @@ static void drop_func(struct sk_buff *skb, void *ctx)
+ 	qdisc_qstats_drop(sch);
  }
  
- #else /* ! SMP */
+-static struct sk_buff *fq_codel_dequeue(struct Qdisc *sch)
++static struct sk_buff *__fq_codel_dequeue(struct Qdisc *sch)
+ {
+ 	struct fq_codel_sched_data *q = qdisc_priv(sch);
+ 	struct sk_buff *skb;
+@@ -315,12 +315,49 @@ static struct sk_buff *fq_codel_dequeue(struct Qdisc *sch)
+ 	qdisc_bstats_update(sch, skb);
+ 	flow->deficit -= qdisc_pkt_len(skb);
+ 
++	return skb;
++}
++
++static void fq_codel_dequeue_drop(struct Qdisc *sch)
++{
++	struct fq_codel_sched_data *q = qdisc_priv(sch);
++
+ 	if (q->cstats.drop_count) {
+ 		qdisc_tree_reduce_backlog(sch, q->cstats.drop_count,
+ 					  q->cstats.drop_len);
+ 		q->cstats.drop_count = 0;
+ 		q->cstats.drop_len = 0;
+ 	}
++}
++
++static struct sk_buff *fq_codel_dequeue(struct Qdisc *sch)
++{
++	struct sk_buff *skb;
++
++	skb =  __fq_codel_dequeue(sch);
++
++	fq_codel_dequeue_drop(sch);
++
++	return skb;
++}
++
++static struct sk_buff *fq_codel_peek(struct Qdisc *sch)
++{
++	struct sk_buff *skb = skb_peek(&sch->gso_skb);
++
++	if (!skb) {
++		skb = __fq_codel_dequeue(sch);
++
++		if (skb) {
++			__skb_queue_head(&sch->gso_skb, skb);
++			/* it's still part of the queue */
++			qdisc_qstats_backlog_inc(sch, skb);
++			sch->q.qlen++;
++		}
++
++		fq_codel_dequeue_drop(sch);
++	}
++
+ 	return skb;
+ }
+ 
+@@ -702,7 +739,7 @@ static struct Qdisc_ops fq_codel_qdisc_ops __read_mostly = {
+ 	.priv_size	=	sizeof(struct fq_codel_sched_data),
+ 	.enqueue	=	fq_codel_enqueue,
+ 	.dequeue	=	fq_codel_dequeue,
+-	.peek		=	qdisc_peek_dequeued,
++	.peek		=	fq_codel_peek,
+ 	.init		=	fq_codel_init,
+ 	.reset		=	fq_codel_reset,
+ 	.destroy	=	fq_codel_destroy,
 -- 
 2.53.0
 
