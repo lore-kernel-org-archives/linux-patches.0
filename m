@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28ED403AEA;
-	Tue, 21 Jul 2026 17:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C8D3F825C;
+	Tue, 21 Jul 2026 17:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654385; cv=none; b=B9REFN7MC+Wkcir8NFIOMaYIExxCbFBqhyfMCSF+3s1K7XdJ+EkSxUeFxoSNjSu+neYReNxSgidkvGwJQTxxex9PxcRkbx4PI8CBbZv+TrfZHPCV1Dumf+H5yxP4EtTJIbPqQLSyLFd8LvQ0K3hudpSWdTrLT44H3JrCOC4aGsE=
+	t=1784654387; cv=none; b=l1GVfPWch38JX6oMrA09S5RzXCbY90JfY59FZ+WkkZwZgeESd5l8+w15Yy8pYnLVKiQrOGTL0sk77deL/giCd0MAtNWCkfFnkO01P//vb7BF0JphPnPDkN67KDaqbL5Rj7zKhz0aHrwSGR8jSl9KsyDzQTNq4y4GHr0YOm1z5WI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654385; c=relaxed/simple;
-	bh=Ww9XocpQIrPKFx7glG+wslMkXsf0Z7W1uz0mpFp/ktw=;
+	s=arc-20240116; t=1784654387; c=relaxed/simple;
+	bh=nQ2Pcl8qnP+Kzj64TSrutakog2/h7F7i1pEO7L6O00U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bSRCEO8FYPbAYhzn7tBn0jew89U+AOBnwkBQ8xdGw8eSZrJIsPXKHwWMjpFayMIXLdstX9wN8Lb31DYEb8ka8QCuKHcTl3+CALmnsdF7Je1LfDhsOYbcm11Az2q2UVHpzgKCOucFqdwwb0rZAtqMa4COlyPIJM0PvMN0+fOA+VU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/O3eU0O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kP4HgV2T28U9SQQO6Z7vjrZGxoFbUtguPwPtjuubfD895d8MRwjs6M0Z+FbWojUGKP3I17k3QubnV+mDKpzGH0Q0ktLj4sDvbeoKzNt43HiHSgxw6wOOOVMnDGHD0JyGIRsQ0RZCH8JYxxWIJwC8TKIboAtaPiD9rhTycu9wk94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SFzEYqE7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/O3eU0O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441811F000E9;
-	Tue, 21 Jul 2026 17:19:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFzEYqE7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE45F1F000E9;
+	Tue, 21 Jul 2026 17:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654383;
-	bh=BBh965I9vVGas6/eP5CZH6wI40KzM9j1G63MNRxrxlQ=;
+	s=korg; t=1784654386;
+	bh=mrOPPZoR4zvLy8K130TBXzKgvU4xo0BrO47huF+6oUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D/O3eU0OHML16eD6HgTzPbRDSQIPtSXEypG3N1ZuNcZsyMZiMZhY6XCG5mWzBJM07
-	 MUujajWiiv+biFe4WkBHjJXFmQuSZbZ307p4CydBRwjNm+8cZrdNlPJqXkd79o2Hy+
-	 yk4iogLIfyOmQwwsAfjJXHjMgNQEZ+wEO3Y/yKXU=
+	b=SFzEYqE7BLvaOQMTSzrfa2GLydtnWIO7++Ro2fZ2THmzRuLUanyMgEUlS0uJlXA34
+	 j1GR4uNx4KCNfZzkzVkD6Stiw3BOaN2hYDzQXOEJmmz4zvsll/7DkYuuCMYL3u7zet
+	 3TO+UW5wpTC+sXmsS+S557UMsWqCMX1Tq32JdtaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 7.1 1684/2077] ntfs: validate attribute values on lookup
-Date: Tue, 21 Jul 2026 17:22:37 +0200
-Message-ID: <20260721152632.470790125@linuxfoundation.org>
+Subject: [PATCH 7.1 1685/2077] ntfs: add bounds check before accessing EA entries
+Date: Tue, 21 Jul 2026 17:22:38 +0200
+Message-ID: <20260721152632.494512898@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -50,285 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: Hyunchul Lee <hyc.lee@gmail.com>
 
-commit d5803e3345dae9c6470bb61869885236276b9a35 upstream.
+commit 937282f7d15b593d0be765fa2ced164130ec87f7 upstream.
 
-ntfs_attr_find() and ntfs_external_attr_find() check that generic
-resident attribute values fit in their attribute records and that
-fixed-size resident values are large enough. For variable-length resident
-formats, however, the fixed part is not enough: embedded length fields
-can still point callers past the resident value.
-
-A crafted image can set a small resident $FILE_NAME value_length while
-leaving file_name_length large. Callers then trust file_name_length and
-read past the resident value when converting or comparing the name. This
-was reproduced with a crafted image under KASAN as a slab-out-of-bounds
-read from the kmalloc-1k MFT record copy. The stack included
-ntfs_lookup(), ntfs_iget(), ntfs_read_locked_inode(), ntfs_attr_name_get(),
-ntfs_ucstonls(), and utf16s_to_utf8s().
-
-Add a shared attribute value validator and use it before a lookup path
-can return an attribute, including the AT_UNUSED enumeration case where
-callers inspect returned attributes directly. The helper validates
-resident value bounds, minimum resident value sizes, variable-length
-$FILE_NAME fields, and non-resident mapping-pairs metadata that was
-previously checked separately in both lookup paths.
-
-This also preserves the intended resident @val matching semantics in the
-external attribute lookup path. The old duplicated validation block
-overwrote the actual resident value length with the type-specific minimum
-length before comparing @val, so variable-length resident values could
-fail to match even when the bytes were identical. Keep the comparison on
-the actual value length, and make ntfs_attrlist_entry_add() compare
-resident attributes with lowest_vcn zero instead of reading the
-non-resident union member after a successful resident match.
-
-Reject non-resident $FILE_NAME records too: the format requires
-$FILE_NAME to be resident and callers treat returned records as resident.
+in ntfs_ea_lookup and ntfs_listxattr, this verifies that there is enough
+space in the EA entry before accessing the next_entry_offset field of
+the EA entry.
 
 Cc: stable@vger.kernel.org # v7.1
-Fixes: 6ceb4cc81ef3 ("ntfs: add bound checking to ntfs_attr_find")
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
+Signed-off-by: Hyunchul Lee <hyc.lee@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs/attrib.c   |  160 ++++++++++++++++++++++++++++++++---------------------
- fs/ntfs/attrlist.c |   11 ++-
- 2 files changed, 107 insertions(+), 64 deletions(-)
+ fs/ntfs/ea.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/fs/ntfs/attrib.c
-+++ b/fs/ntfs/attrib.c
-@@ -595,6 +595,97 @@ static u32 ntfs_resident_attr_min_value_
- 	}
- }
+--- a/fs/ntfs/ea.c
++++ b/fs/ntfs/ea.c
+@@ -53,11 +53,11 @@ static int ntfs_ea_lookup(char *ea_buf,
+ 	loff_t offset, p_ea_size;
+ 	unsigned int next;
  
-+static bool ntfs_file_name_attr_value_is_valid(const u8 *value, const u32 value_length)
-+{
-+	const struct file_name_attr *fn;
-+	u32 file_name_size;
+-	if (ea_buf_size < sizeof(struct ea_attr))
+-		goto out;
+-
+ 	offset = 0;
+ 	do {
++		if (ea_buf_size - offset < sizeof(struct ea_attr))
++			break;
 +
-+	fn = (const struct file_name_attr *)value;
-+	file_name_size = fn->file_name_length * sizeof(__le16);
-+
-+	return file_name_size <=
-+			value_length - offsetof(struct file_name_attr, file_name);
-+}
-+
-+struct ntfs_resident_attr_value {
-+	const u8 *data;
-+	u32 len;
-+};
-+
-+static bool ntfs_resident_attr_value_get(const struct attr_record *a,
-+					 struct ntfs_resident_attr_value *value)
-+{
-+	u32 attr_len;
-+	u16 value_offset;
-+
-+	attr_len = le32_to_cpu(a->length);
-+	if (attr_len < offsetof(struct attr_record, data.resident.reserved) +
-+			sizeof(a->data.resident.reserved))
-+		return false;
-+
-+	value->len = le32_to_cpu(a->data.resident.value_length);
-+	value_offset = le16_to_cpu(a->data.resident.value_offset);
-+
-+	if (value->len > attr_len || value_offset > attr_len - value->len)
-+		return false;
-+
-+	value->data = (const u8 *)a + value_offset;
-+	return true;
-+}
-+
-+static bool ntfs_non_resident_attr_value_is_valid(const struct attr_record *a)
-+{
-+	u32 attr_len;
-+	u32 min_len;
-+	u16 mp_offset;
-+
-+	attr_len = le32_to_cpu(a->length);
-+	min_len = offsetof(struct attr_record, data.non_resident.initialized_size) +
-+		  sizeof(a->data.non_resident.initialized_size);
-+	if (attr_len < min_len)
-+		return false;
-+
-+	mp_offset = le16_to_cpu(a->data.non_resident.mapping_pairs_offset);
-+	return mp_offset >= min_len && mp_offset <= attr_len;
-+}
-+
-+static bool ntfs_attr_value_is_valid(struct ntfs_volume *vol,
-+				     const struct attr_record *a,
-+				     const u64 mft_no)
-+{
-+	struct ntfs_resident_attr_value value;
-+	u32 min_len;
-+
-+	if (a->non_resident) {
-+		if (a->type == AT_FILE_NAME)
-+			goto corrupt;
-+		if (!ntfs_non_resident_attr_value_is_valid(a))
-+			goto corrupt;
-+		return true;
-+	}
-+
-+	if (!ntfs_resident_attr_value_get(a, &value))
-+		goto corrupt;
-+
-+	min_len = ntfs_resident_attr_min_value_length(a->type);
-+	if (min_len && value.len < min_len)
-+		goto corrupt;
-+
-+	switch (a->type) {
-+	case AT_FILE_NAME:
-+		if (!ntfs_file_name_attr_value_is_valid(value.data, value.len))
-+			goto corrupt;
-+		break;
-+	}
-+	return true;
-+
-+corrupt:
-+	ntfs_error(vol->sb,
-+		   "Corrupt %#x attribute in MFT record %llu\n",
-+		   le32_to_cpu(a->type), mft_no);
-+	return false;
-+}
-+
- /*
-  * ntfs_attr_find - find (next) attribute in mft record
-  * @type:	attribute type to find
-@@ -705,8 +796,11 @@ static int ntfs_attr_find(const __le32 t
- 			}
- 		}
+ 		p_ea = (const struct ea_attr *)&ea_buf[offset];
+ 		next = le32_to_cpu(p_ea->next_entry_offset);
+ 		p_ea_size = next ? next : (ea_buf_size - offset);
+@@ -479,13 +479,13 @@ ssize_t ntfs_listxattr(struct dentry *de
+ 	if (ea_info_qsize > ea_buf_size || ea_info_qsize == 0)
+ 		goto out;
  
--		if (type == AT_UNUSED)
-+		if (type == AT_UNUSED) {
-+			if (!ntfs_attr_value_is_valid(vol, a, ctx->ntfs_ino->mft_no))
-+				break;
- 			return 0;
+-	if (ea_info_qsize < sizeof(struct ea_attr)) {
+-		err = -EIO;
+-		goto out;
+-	}
+-
+ 	offset = 0;
+ 	do {
++		if (ea_info_qsize - offset < sizeof(struct ea_attr)) {
++			err = -EIO;
++			goto out;
 +		}
- 		if (a->type != type)
- 			continue;
- 		/*
-@@ -747,37 +841,8 @@ static int ntfs_attr_find(const __le32 t
- 			}
- 		}
- 
--		 /* Validate attribute's value offset/length */
--		if (!a->non_resident) {
--			u32 min_len;
--			u32 value_length = le32_to_cpu(a->data.resident.value_length);
--			u16 value_offset = le16_to_cpu(a->data.resident.value_offset);
--
--			if (value_length > le32_to_cpu(a->length) ||
--			    value_offset > le32_to_cpu(a->length) - value_length)
--				break;
--
--			min_len = ntfs_resident_attr_min_value_length(a->type);
--			if (min_len && value_length < min_len) {
--				ntfs_error(vol->sb,
--					   "Too small %#x resident attribute value in MFT record %lld\n",
--					   le32_to_cpu(a->type), (long long)ctx->ntfs_ino->mft_no);
--				break;
--			}
--		} else {
--			u32 min_len;
--			u16 mp_offset;
--
--			min_len = offsetof(struct attr_record, data.non_resident.initialized_size) +
--				  sizeof(a->data.non_resident.initialized_size);
--			if (le32_to_cpu(a->length) < min_len)
--				break;
--
--			mp_offset = le16_to_cpu(a->data.non_resident.mapping_pairs_offset);
--			if (mp_offset < min_len ||
--			    mp_offset > le32_to_cpu(a->length))
--				break;
--		}
-+		if (!ntfs_attr_value_is_valid(vol, a, ctx->ntfs_ino->mft_no))
-+			break;
- 
- 		/*
- 		 * The names match or @name not present and attribute is
-@@ -1299,22 +1364,8 @@ do_next_attr_loop:
- 
- 		ctx->attr = a;
- 
--		if (a->non_resident) {
--			u32 min_len;
--			u16 mp_offset;
--
--			min_len = offsetof(struct attr_record,
--					   data.non_resident.initialized_size) +
--				  sizeof(a->data.non_resident.initialized_size);
--
--			if (le32_to_cpu(a->length) < min_len)
--				break;
--
--			mp_offset =
--				le16_to_cpu(a->data.non_resident.mapping_pairs_offset);
--			if (mp_offset < min_len || mp_offset > attr_len)
--				break;
--		}
-+		if (!ntfs_attr_value_is_valid(vol, a, ctx->ntfs_ino->mft_no))
-+			break;
- 
- 		/*
- 		 * If no @val specified or @val specified and it matches, we
-@@ -1326,19 +1377,6 @@ do_next_attr_loop:
- 			u32 value_length = le32_to_cpu(a->data.resident.value_length);
- 			u16 value_offset = le16_to_cpu(a->data.resident.value_offset);
- 
--			if (attr_len < offsetof(struct attr_record, data.resident.reserved) +
--					sizeof(a->data.resident.reserved))
--				break;
--			if (value_length > attr_len || value_offset > attr_len - value_length)
--				break;
--
--			value_length = ntfs_resident_attr_min_value_length(a->type);
--			if (value_length && le32_to_cpu(a->data.resident.value_length) <
--			    value_length) {
--				pr_err("Too small resident attribute value in MFT record %lld, type %#x\n",
--				       (long long)ctx->ntfs_ino->mft_no, a->type);
--				break;
--			}
- 			if (value_length == val_len &&
- 			    !memcmp((u8 *)a + value_offset, val, val_len)) {
- attr_found:
---- a/fs/ntfs/attrlist.c
-+++ b/fs/ntfs/attrlist.c
-@@ -118,6 +118,7 @@ int ntfs_attrlist_entry_add(struct ntfs_
- 	int entry_len, entry_offset, err;
- 	struct mft_record *ni_mrec;
- 	u8 *old_al;
-+	__le64 lowest_vcn;
- 
- 	if (!ni || !attr) {
- 		ntfs_debug("Invalid arguments.\n");
-@@ -158,17 +159,21 @@ int ntfs_attrlist_entry_add(struct ntfs_
- 		ntfs_error(ni->vol->sb, "Failed to get search context");
- 		goto err_out;
- 	}
-+	if (attr->non_resident)
-+		lowest_vcn = attr->data.non_resident.lowest_vcn;
-+	else
-+		lowest_vcn = 0;
- 
- 	err = ntfs_attr_lookup(attr->type, (attr->name_length) ? (__le16 *)
- 			((u8 *)attr + le16_to_cpu(attr->name_offset)) :
- 			AT_UNNAMED, attr->name_length, CASE_SENSITIVE,
--			(attr->non_resident) ? le64_to_cpu(attr->data.non_resident.lowest_vcn) :
--			0, (attr->non_resident) ? NULL : ((u8 *)attr +
-+			le64_to_cpu(lowest_vcn),
-+			(attr->non_resident) ? NULL : ((u8 *)attr +
- 			le16_to_cpu(attr->data.resident.value_offset)), (attr->non_resident) ?
- 			0 : le32_to_cpu(attr->data.resident.value_length), ctx);
- 	if (!err) {
- 		/* Found some extent, check it to be before new extent. */
--		if (ctx->al_entry->lowest_vcn == attr->data.non_resident.lowest_vcn) {
-+		if (ctx->al_entry->lowest_vcn == lowest_vcn) {
- 			err = -EEXIST;
- 			ntfs_debug("Such attribute already present in the attribute list.\n");
- 			ntfs_attr_put_search_ctx(ctx);
++
+ 		p_ea = (const struct ea_attr *)&ea_buf[offset];
+ 		next = le32_to_cpu(p_ea->next_entry_offset);
+ 		ea_size = next ? next : (ea_info_qsize - offset);
 
 
