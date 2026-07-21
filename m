@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D365D471421;
-	Tue, 21 Jul 2026 20:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FAFC472553;
+	Tue, 21 Jul 2026 20:12:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784664742; cv=none; b=ELLJGswpEOyqFVA4m0kVer6nTxISnsiIXOsHI8NSEkocriIQ4wvsEFlNDBhvPXceyCXk28FO4LKwfOHT/77AwmTJru6c3MYLXuOw2rixQUDC36Rh1i3tD9Dh1pTaz4nxXY+DqgkrQgy7dwWpRuF8mYSO0XQzNP3QkKZDdWnBHag=
+	t=1784664744; cv=none; b=rBKx7gbtVptF8tCPYtScNfrC6PnaKHs3UDNbQUiGv2u4bAO0nnKi2bxnH1i/gNoHRbLd2VMf6T7BHBCzDvpcQYd0v8f0+JjqEegtiuJX4SQo8b47bl8K9VNjkx+AivMPNaHF8O3/RderlXuNXWDV1vHi/ZbkTUsd0koCRzNb7mg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784664742; c=relaxed/simple;
-	bh=V64t55gOvqL5tB9VJ8C4qtYn7etjazHSfnxBECaag0g=;
+	s=arc-20240116; t=1784664744; c=relaxed/simple;
+	bh=8INbr9QcIYBKatsTyOkc1braqMy2ikJf/7DPK0veylU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K772X/lRAR2Tw7hNd0eUhxMbm04455s4KDvT6Lz3QK8S2ADqDbPbzURT6TxCZvshdasdA41XFjkJQB65qZ0LOdyjS7gKEAGbtTuv5Z4hDuTbLTyOJbrkL4YFcztR6ONQI7HyGZ7FJMb3JXuJQDethahdPRLZXDajEJsbLV628NU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T3NSV0Z/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q4mrTSIJwZt/tHYvt8uG9Zb4fWb/R4GQIwdZefl3uBIWCaP2swF3dte1SstQF1WIAtYJuBwCfY6F9BncB5NZI2BVFIcXImyXFS+HnnxQZiA6Yx+hkIPZCMIZUC5b+wkh/SIRTj4pbGvebI+rJ2FqHWoXDge+MKCFBHVZogoPcPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYBxbMS1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T3NSV0Z/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4459D1F000E9;
-	Tue, 21 Jul 2026 20:12:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYBxbMS1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E38261F00A3D;
+	Tue, 21 Jul 2026 20:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784664740;
-	bh=ZgeBk8QZypqski2LjAmWbnD8iKUODY5EhqDS2CrHVwU=;
+	s=korg; t=1784664743;
+	bh=4sMm1AQ97qT3QNaSvzNtl+OYXAWSqpULJN6RlW8j9Oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T3NSV0Z/JjS+EP78JLvIfP3+e7pwAq6LgwEZTdEZtHwdZVVbperG7qO6PFPVL2Csk
-	 UMZo79vDn+z6DdC71c2yrctKrdBtXuSoRuOh3pOO6eqBNnpSm//BUdHS5AWZ5xPMdk
-	 BaCnMpRMw8O94dy8jRYvEPoL9w6pIYmfNYkeqejA=
+	b=mYBxbMS1CRLnt89KP1NE08xiUg+f3VfkaBbuPfvWV1O3q1s511Y4864xezdxGWR04
+	 q/ocARuduWaUdPqN9oUATTio7WjL/nTsI8pnu3qozt3FsQLzwqB+CnAdZ2VoNKBjTT
+	 DrnZdDoarIA/7b+ou4j3F1TK8bVcuvzMNNhaflMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sean Wang <sean.wang@mediatek.com>,
-	Chris Lu <chris.lu@mediatek.com>,
 	Hao Qin <hao.qin@mediatek.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0007/1266] Bluetooth: btusb: mediatek: reset the controller before downloading the fw
-Date: Tue, 21 Jul 2026 17:07:24 +0200
-Message-ID: <20260721152441.956863996@linuxfoundation.org>
+Subject: [PATCH 6.6 0008/1266] Bluetooth: btusb: mediatek: add MT7922 subsystem reset
+Date: Tue, 21 Jul 2026 17:07:25 +0200
+Message-ID: <20260721152441.978857926@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152441.786066624@linuxfoundation.org>
 References: <20260721152441.786066624@linuxfoundation.org>
@@ -55,56 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Hao Qin <hao.qin@mediatek.com>
 
-[ Upstream commit ccfc8948d7e4d93cab341a99774b24586717d89a ]
+[ Upstream commit 064aee501012eaeeeb40a2acb991598e0a89fac9 ]
 
-Reset the controller before downloading the firmware to improve its
-reliability. This includes situations like cold or warm reboots, ensuring
-the controller is in its initial state before starting the firmware
-download.
+Add the support of MT7922 bluetooth subsystem reset that was called the
+auto revert to self-recover from the fatal error in the controller like
+the host encounters HCI cmd timeout or the controller crashes.
 
 Co-developed-by: Sean Wang <sean.wang@mediatek.com>
 Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Co-developed-by: Chris Lu <chris.lu@mediatek.com>
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
 Signed-off-by: Hao Qin <hao.qin@mediatek.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Stable-dep-of: 5c5e8c52e3ca ("Bluetooth: btmtk: move btusb_mtk_[setup, shutdown] to btmtk.c")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/bluetooth/btusb.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 048929e336cf64..c6b62437be2d5a 100644
+index c6b62437be2d5a..536b013ff7aedc 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -2940,6 +2940,13 @@ static int btusb_mtk_setup(struct hci_dev *hdev)
- 	case 0x7922:
- 	case 0x7961:
- 	case 0x7925:
-+		/* Reset the device to ensure it's in the initial state before
-+		 * downloading the firmware to ensure.
-+		 */
-+
-+		if (!test_bit(BTUSB_FIRMWARE_LOADED, &data->flags))
-+			btusb_mtk_subsys_reset(hdev, dev_id);
-+
- 		btmtk_fw_get_filename(fw_bin_name, sizeof(fw_bin_name), dev_id,
- 				      fw_version, 0);
+@@ -2811,7 +2811,16 @@ static int btusb_mtk_subsys_reset(struct hci_dev *hdev, u32 dev_id)
+ 	u32 val;
+ 	int err;
  
-@@ -2947,9 +2954,12 @@ static int btusb_mtk_setup(struct hci_dev *hdev)
- 						btmtk_usb_hci_wmt_sync);
- 		if (err < 0) {
- 			bt_dev_err(hdev, "Failed to set up firmware (%d)", err);
-+			clear_bit(BTUSB_FIRMWARE_LOADED, &data->flags);
- 			return err;
- 		}
+-	if (dev_id == 0x7925) {
++	if (dev_id == 0x7922) {
++		btusb_mtk_uhw_reg_read(data, MTK_BT_SUBSYS_RST, &val);
++		val |= 0x00002020;
++		btusb_mtk_uhw_reg_write(data, MTK_BT_SUBSYS_RST, val);
++		btusb_mtk_uhw_reg_write(data, MTK_EP_RST_OPT, 0x00010001);
++		btusb_mtk_uhw_reg_read(data, MTK_BT_SUBSYS_RST, &val);
++		val |= BIT(0);
++		btusb_mtk_uhw_reg_write(data, MTK_BT_SUBSYS_RST, val);
++		msleep(100);
++	} else if (dev_id == 0x7925) {
+ 		btusb_mtk_uhw_reg_read(data, MTK_BT_RESET_REG_CONNV3, &val);
+ 		val |= (1 << 5);
+ 		btusb_mtk_uhw_reg_write(data, MTK_BT_RESET_REG_CONNV3, val);
+@@ -2851,6 +2860,9 @@ static int btusb_mtk_subsys_reset(struct hci_dev *hdev, u32 dev_id)
+ 	if (err < 0)
+ 		bt_dev_err(hdev, "Reset timeout");
  
-+		set_bit(BTUSB_FIRMWARE_LOADED, &data->flags);
++	if (dev_id == 0x7922)
++		btusb_mtk_uhw_reg_write(data, MTK_UDMA_INT_STA_BT, 0x000000FF);
 +
- 		/* It's Device EndPoint Reset Option Register */
- 		btusb_mtk_uhw_reg_write(data, MTK_EP_RST_OPT, MTK_EP_RST_IN_OUT_OPT);
- 
+ 	btusb_mtk_id_get(data, 0x70010200, &val);
+ 	if (!val)
+ 		bt_dev_err(hdev, "Can't get device id, subsys reset fail.");
 -- 
 2.53.0
 
