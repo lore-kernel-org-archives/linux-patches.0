@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB1246D2C7;
-	Tue, 21 Jul 2026 17:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02C73E49C8;
+	Tue, 21 Jul 2026 17:17:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784654245; cv=none; b=qGbBEGQYHfBsRFqOQ4aa1qzusAJI/7uRI3lxO97c2wDDSNrpAz2jISxTpNmfKpzaIkQnoY3flIFhmGIzShSwami74jsiCrdBpUgtIe7Wg5ccvPqp9ljYF5VSKV0nvCWQEyGAqyad94WWv5MmxMTj1snokCmNnXiBeMAd72fbtBk=
+	t=1784654247; cv=none; b=JsNKjc1GJSdUQ5OUwaRF3ZX2sOonIayOZiNEr1vMxcNYvnjPmBxDnye9jRbvIizJaIyR7cgAKNZl9r5cNvTZsJtYwg92rZJlQ5sg2AEhnAPrUC56KwcToaKGKFR6Lys24w9PITnS2edwzCXBfMx2A9QvLYzbFMblHDDxW5VbcVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784654245; c=relaxed/simple;
-	bh=B+/aYw3vFgh0T6h2ZfQcHK4c/NkBM1JiRkcpvUNiGUA=;
+	s=arc-20240116; t=1784654247; c=relaxed/simple;
+	bh=xzAny3mgAs99bidPzsBoJMhW0u2nks9mKytE+zHzPI0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ne5fzFWX6BLb96RvBgp9jVEgrRMBV09K7NORjccGJyEK8S2A0n5aycb8hbygAbpoEYpYhXb/GYJs88cYkAXF3rqoVZNPlchxUq17lj+Z8j/ubNBgBfu6PEhzZyWh7/DvSt2EbBBkvtNzn2/nW/4JfYoH7P3FoZ2sykXfTvf+Pec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3uNcokE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SMwKplHRZBLYEa7eAc+1od53wRnDmLlIzljKo5MizRjtYJM7pFSCrA67lvvCGTNgtbgkvK+LbyGDTUQ1OaTdHvYC5+6CXpp8VxaUyFQTf0CrVNGarnR8JljAL2/viIFJnzLyESChK/mYx0eMzT9+Nv/M+Z7D8lRnhWuoJGB5RS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lp8QAI9S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3uNcokE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3EFA1F000E9;
-	Tue, 21 Jul 2026 17:17:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lp8QAI9S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62AE21F00A3A;
+	Tue, 21 Jul 2026 17:17:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784654243;
-	bh=iPVpd1aYjEZhjQ3WenZiMPe39WYg5SXrQYpPS2LiUdA=;
+	s=korg; t=1784654245;
+	bh=cQ8MIypttYb7yN3aEaOYLkS5IsBCmGB6rjQhOtmXFls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O3uNcokEipPWwDtN5ipFphkrRV0yil2n1CD0DJgywt198C1xGOGqx5lZ0ZdtczOHX
-	 Qmgm/gjP1QsfleNTAlOJVr4nqFD3zGdo9/0SJDvGURfkTZVQIszOKapoGWPAoX+tGN
-	 kDaZ9h3QG/uoDuG8FUAebX/lSYTgd7MqPf2mbydY=
+	b=Lp8QAI9SqDJymOJPcaETIDmtg5JRCdU+qE3HZDc4w/bisB8dCKMM/g+PBEFIcblkU
+	 KQ/wBs2grvRXGaEU93H59dhiNo8haE9lfJdU2yiHfgqE0KigWNNlatTPws8wtneEBP
+	 P+PWR6zX2qG8+yn4mKz0XNowP7NgzFJHE7FlYjVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 7.1 1614/2077] netfilter: ecache: fix inverted time_after() check
-Date: Tue, 21 Jul 2026 17:21:27 +0200
-Message-ID: <20260721152630.830833962@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 7.1 1632/2077] x86/boot: Reject too long acpi_rsdp= values
+Date: Tue, 21 Jul 2026 17:21:45 +0200
+Message-ID: <20260721152631.247453551@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
 References: <20260721152552.646164743@linuxfoundation.org>
@@ -55,69 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit b06163ce52ec0561f202fbfb9b08090cb61f512e upstream.
+commit d130041a7b96f79cd4c7079a6c2431a6db4c9619 upstream.
 
-ecache_work_evict_list() redelivers DESTROY events for conntracks that
-were moved to the per-netns dying_list after event delivery failed.  It
-sets a 10ms deadline:
+cmdline_find_option() returns the full length of the parsed acpi_rsdp=
+value. get_cmdline_acpi_rsdp() then silently truncates values which do
+not fit in the val[] buffer.
 
-    stop = jiffies + ECACHE_MAX_JIFFIES
+Prevent boot_kstrtoul() from parsing a truncated value and then the
+kernel from silently using the wrong RSDP address, see discussion in
+Link:.
 
-but then tests:
+Issue a warning so that the user is aware that s/he supplied a malformed
+value and can get feedback instead of silent crashes.
 
-    time_after(stop, jiffies)
+  [ bp: Make commit message more precise. ]
 
-This condition is true while the deadline is still in the future, so the
-worker returns STATE_RESTART after the first successful redelivery in the
-usual case.  ecache_work() maps STATE_RESTART to delay 0, which turns the
-redelivery path into one dying conntrack per workqueue dispatch and makes
-the sent > 16 batching/cond_resched() path effectively unreachable.
-
-A conntrack netlink listener whose receive queue is congested can make
-DESTROY event delivery fail with -ENOBUFS.  With sustained conntrack
-churn, entries then accumulate on the dying_list and are only drained at
-the degraded one-entry-per-dispatch rate once delivery succeeds again,
-wasting CPU on back-to-back workqueue reschedules and prolonging
-conntrack memory/resource pressure.
-
-In a KASAN QEMU test with CONFIG_NF_CONNTRACK_EVENTS=y and
-nf_conntrack.enable_hooks=1, a congested DESTROY listener caused 8192
-nf_ct_delete() calls to return false and move entries to the dying_list.
-After closing the listener, the unfixed kernel needed 7670 ecache_work()
-entries to destroy 7669 conntracks.  With this change, the same 8192
-entries were destroyed by 2 ecache_work() entries.
-
-Swap the comparison so the worker restarts only after the deadline has
-expired.
-
-Fixes: 2ed3bf188b33 ("netfilter: ecache: use dedicated list for event redelivery")
+Fixes: 3c98e71b42a7 ("x86/boot: Add "acpi_rsdp=" early parsing")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Cc: stable@vger.kernel.org
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: Claude-Code:GLM-5.2
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Link: https://lore.kernel.org/all/20260617130417.36651-4-thorsten.blum@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_ecache.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/boot/compressed/acpi.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/net/netfilter/nf_conntrack_ecache.c
-+++ b/net/netfilter/nf_conntrack_ecache.c
-@@ -77,7 +77,7 @@ next:
- 		hlist_nulls_del_rcu(&ct->tuplehash[IP_CT_DIR_ORIGINAL].hnnode);
- 		hlist_nulls_add_head(&ct->tuplehash[IP_CT_DIR_REPLY].hnnode, &evicted_list);
+--- a/arch/x86/boot/compressed/acpi.c
++++ b/arch/x86/boot/compressed/acpi.c
+@@ -184,10 +184,15 @@ static unsigned long get_cmdline_acpi_rs
+ 	char val[MAX_ADDR_LEN] = { };
+ 	int ret;
  
--		if (time_after(stop, jiffies)) {
-+		if (time_after(jiffies, stop)) {
- 			ret = STATE_RESTART;
- 			break;
- 		}
+-	ret = cmdline_find_option("acpi_rsdp", val, MAX_ADDR_LEN);
++	ret = cmdline_find_option("acpi_rsdp", val, sizeof(val));
+ 	if (ret < 0)
+ 		return 0;
+ 
++	if (ret >= sizeof(val)) {
++		warn("acpi_rsdp= value too long; ignoring");
++		return 0;
++	}
++
+ 	if (boot_kstrtoul(val, 16, &addr))
+ 		return 0;
+ #endif
 
 
