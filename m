@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5788543B4AB;
-	Tue, 21 Jul 2026 22:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560C73B6BE5;
+	Tue, 21 Jul 2026 22:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784672871; cv=none; b=td3ZRL6v6BzrExZNNQiY9h/NYEk1LapdNUo5n1iSamSfnYdm7XJBOpUov3IKlEmaayJE/6hf9tKrEpTe0/z4V5FxZS06SOSWOUx5hEbHgz4DI2HOyzvQYfDL2Ox2vkE5bxS8w2sALlDk2s3l9Trkc6rSyqWBlkJfmqb5oJ9n2dw=
+	t=1784672874; cv=none; b=rGt9AXjmmiFa+RRMfvKGL2AZwwW9wXYFVn3lSn5tMkppY/rLua0f/h2h8Ie+aco7eJJaSdEsm2VZ8VTSMgBQLJERdDx/U+iJV3y4W1G2USGcPt7zZ3U+Ta0Jf/9rkNbcwS2QD41qhkDOT6FC73QoBIrWeWSAPRRHBuDWwWBMmNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784672871; c=relaxed/simple;
-	bh=ZAQMAbEud0VxIp0PeaWa4EM8hE8cwCNI1iaBtwHjc20=;
+	s=arc-20240116; t=1784672874; c=relaxed/simple;
+	bh=vweWJ3JqFYCi5kzgw3gLRsNo6H6EpmKY4oVRy3Icy4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OPOtT+qmoUiv5ktPWMtgysgCiD8Sa7JNtqzE563P9tvgmFJEzkvoj/z0vHa+QEHLwlEHLlupFkiRGH7cNDOuZ0n/TeboWwVGUWURY8+ELfeskKx+54LmK5ffVoLteCz7CJr8YzgBF8gjfyq8fGvyZ0H1eum2ZV4AtA2nNl7WdwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLh579nY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C+YbpMrFzml6vJUsd2a3LA/KFQ1ZkGHn/P9VhBdpTVGFVQq9/EexQwtBzN2JAsjE17HOGalyRqzChF+YxGS/ROzJUXIb/jMMmsCdrRndJg1bu5+pF2QDGKbIsFwMo2MJgk8YlS6Y3J0NBAX5lWXPfp14dKiSbBpGqJhb73WWSh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mu8o08Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLh579nY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B8C1F000E9;
-	Tue, 21 Jul 2026 22:27:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mu8o08Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A1B1F000E9;
+	Tue, 21 Jul 2026 22:27:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784672870;
-	bh=e3PxfHqq80ige7xdGZ9Cp52mcWtE4x1ajYHCZJCtzyc=;
+	s=korg; t=1784672872;
+	bh=gpIqbq37SfdQP2M/WKxKfW7uaz6T7LNoGkmwVvZHehk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GLh579nYzhwXAPkiYw5GBAhVjm4RTN80C0nivX+5qhZHJd2s0mGWLzTwYlGtz0S3H
-	 7UW16GPXSS3wrZhVUUJbR693fYH7af+5L6eQGYC1lIkx4wiijFPf1g1JBHdVM4sArg
-	 +1MnUoCPn2aVsBFOMXIdkFkzKGUIvFWrqL5KwebU=
+	b=1mu8o08ZQGIkSEIFy3O/entUFsNexIkSpH1X9dd3Kh1hQGx+Vvu3jmUAfJO/i2XKo
+	 //2zIZcM8ByN3FTMDKO2sc3NpM7cYEg8G8egiwzx+IunfNXiJqngEsghV9+A9y426N
+	 YzLSJGKOLMsjsEE0al4dhc+5IinATRzQahoR/fk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	James Clark <james.clark@linaro.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Musaab Khan <musaab.khan@protonmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 771/843] coresight: etb10: restore atomic_t for shared reading state
-Date: Tue, 21 Jul 2026 17:26:46 +0200
-Message-ID: <20260721152423.396708416@linuxfoundation.org>
+Subject: [PATCH 5.15 789/843] ksmbd: track the connection owning a byte-range lock
+Date: Tue, 21 Jul 2026 17:27:04 +0200
+Message-ID: <20260721152423.810650329@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,120 +52,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit fa09f08ede3db3050ae16ae1ed92c902d0cada23 ]
+[ Upstream commit c1016dd1d8b2bcd1158bbaabe94a31bb7e7431fb ]
 
-The etb10 miscdevice uses drvdata->reading as a shared exclusivity gate
-for userspace buffer access. etb_open() claims that gate with
-local_cmpxchg(), and etb_release() clears it with local_set().
+SMB2_LOCK adds each granted byte-range lock to both the file lock list
+and the lock list of the connection which handled the request.  The
+final close and durable handle paths, however, remove the connection
+list entry while holding fp->conn->llist_lock.
 
-That gate is shared per-device state rather than CPU-local state. A
-running system can reach it whenever /dev/<etb> is opened, closed, and
-reopened by different tasks while the device remains registered, so the
-same drvdata->reading variable may be claimed on one CPU and later
-cleared on another.
+With SMB3 multichannel, the connection handling the LOCK request can be
+different from the connection which opened the file.  The entry can
+therefore be removed under a different spinlock from the one protecting
+the list it belongs to.  A concurrent traversal can then access freed
+struct ksmbd_lock and struct file_lock objects.
 
-This code used to use atomic_t for the same gate, but commit
-27b10da8fff2 ("coresight: etb10: moving to local atomic operations")
-changed it to local_t even though the access pattern remained cross-task
-and cross-CPU. Restore atomic_t together with atomic_cmpxchg() and
-atomic_set() so the exclusivity gate again uses a primitive intended
-for shared state.
+Record the connection owning each lock's clist entry and hold a
+reference to it while the entry is linked.  Use that connection and its
+llist_lock for unlock, rollback, close, and durable preserve.  Durable
+reconnect assigns the new connection as the owner when publishing the
+locks again.
 
-The issue was found on Linux v6.18.21 by our static analysis tool while
-scanning surviving local_t-on-shared-state sites, and then manually
-reviewed against the live etb10 file-op path.
-
-It was runtime-validated with a reproducible QEMU no-device KCSAN PoC
-that kept the same report-local contract:
-
-  1. use one shared struct etb_drvdata carrier and its
-     drvdata->reading gate;
-  2. call etb_open() and etb_release() sequentially on that gate to
-     confirm the original claim/clear path;
-  3. bind the open side to CPU0 and the release side to CPU1 for the
-     same gate to show cross-CPU ownership;
-  4. run bound workers that repeatedly race etb_open() and
-     etb_release() on the same gate until KCSAN reports a target hit.
-
-The harness recorded:
-
-  L1 passed open=1 release=1
-  reading_after_open=1 reading_after_release=0
-  L2 passed open_cpu=0 release_cpu=1
-  cross_cpu_release=1 reading_after=0 open_ret=0
-
-Representative KCSAN excerpt from the no-device validation run:
-
-  BUG: KCSAN: data-race in etb_open.constprop.0.isra.0 [vuln_msv]
-
-  write to 0xffffffffc0003810 of 4 bytes by task 216 on cpu 1:
-   etb_open.constprop.0.isra.0+0x38/0x80 [vuln_msv]
-   l3_worker_thread_fn+0x4f/0xf0 [vuln_msv]
-   kthread+0x17e/0x1c0
-   ret_from_fork+0x22/0x30
-
-  read to 0xffffffffc0003810 of 4 bytes by task 215 on cpu 0:
-   etb_open.constprop.0.isra.0+0x18/0x80 [vuln_msv]
-   l3_worker_thread_fn+0x4f/0xf0 [vuln_msv]
-   kthread+0x17e/0x1c0
-   ret_from_fork+0x22/0x30
-
-  value changed: 0x00000000 -> 0x00000001
-
-  Reported by Kernel Concurrency Sanitizer on:
-  CPU: 0 PID: 215 Comm: etb10_l3_a Tainted: G           O       6.1.66 #2
-
-This no-device harness is not a real ETB10 hardware end-to-end run, but
-it preserves the same shared drvdata->reading gate and the same
-etb_open()/etb_release() claim/clear contract. No real ETB10 hardware
-was available for runtime testing.
-
-Build-tested with:
-  make olddefconfig
-  make -j"$(nproc)" drivers/hwtracing/coresight/coresight-etb10.o
-
-Fixes: 27b10da8fff2 ("coresight: etb10: moving to local atomic operations")
+Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260528165201.319452-1-runyu.xiao@seu.edu.cn
+Reported-by: Musaab Khan <musaab.khan@protonmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/coresight/coresight-etb10.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/ksmbd/smb2pdu.c   |   10 ++++++++--
+ fs/ksmbd/vfs_cache.c |   12 ++++++++----
+ fs/ksmbd/vfs_cache.h |    1 +
+ 3 files changed, 17 insertions(+), 6 deletions(-)
 
---- a/drivers/hwtracing/coresight/coresight-etb10.c
-+++ b/drivers/hwtracing/coresight/coresight-etb10.c
-@@ -86,7 +86,7 @@ struct etb_drvdata {
- 	struct coresight_device	*csdev;
- 	struct miscdevice	miscdev;
- 	spinlock_t		spinlock;
--	local_t			reading;
-+	atomic_t		reading;
- 	pid_t			pid;
- 	u8			*buf;
- 	u32			mode;
-@@ -604,7 +604,7 @@ static int etb_open(struct inode *inode,
- 	struct etb_drvdata *drvdata = container_of(file->private_data,
- 						   struct etb_drvdata, miscdev);
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -7074,9 +7074,11 @@ int smb2_lock(struct ksmbd_work *work)
+ 						nolock = 0;
+ 						list_del(&cmp_lock->flist);
+ 						list_del(&cmp_lock->clist);
++						cmp_lock->conn = NULL;
+ 						spin_unlock(&conn->llist_lock);
+ 						up_read(&conn_list_lock);
  
--	if (local_cmpxchg(&drvdata->reading, 0, 1))
-+	if (atomic_cmpxchg(&drvdata->reading, 0, 1))
- 		return -EBUSY;
++						ksmbd_conn_put(conn);
+ 						locks_free_lock(cmp_lock->fl);
+ 						kfree(cmp_lock);
+ 						goto out_check_cl;
+@@ -7212,6 +7214,7 @@ skip:
+ 				goto retry;
+ 			} else if (!rc) {
+ 				list_add(&smb_lock->llist, &rollback_list);
++				smb_lock->conn = ksmbd_conn_get(work->conn);
+ 				spin_lock(&work->conn->llist_lock);
+ 				list_add_tail(&smb_lock->clist,
+ 					      &work->conn->lock_list);
+@@ -7259,11 +7262,14 @@ out:
+ 			pr_err("rollback unlock fail : %d\n", rc);
  
- 	dev_dbg(&drvdata->csdev->dev, "%s: successfully opened\n", __func__);
-@@ -642,7 +642,7 @@ static int etb_release(struct inode *ino
- {
- 	struct etb_drvdata *drvdata = container_of(file->private_data,
- 						   struct etb_drvdata, miscdev);
--	local_set(&drvdata->reading, 0);
-+	atomic_set(&drvdata->reading, 0);
+ 		list_del(&smb_lock->llist);
+-		spin_lock(&work->conn->llist_lock);
++		conn = smb_lock->conn;
++		spin_lock(&conn->llist_lock);
+ 		if (!list_empty(&smb_lock->flist))
+ 			list_del(&smb_lock->flist);
+ 		list_del(&smb_lock->clist);
+-		spin_unlock(&work->conn->llist_lock);
++		smb_lock->conn = NULL;
++		spin_unlock(&conn->llist_lock);
++		ksmbd_conn_put(conn);
  
- 	dev_dbg(&drvdata->csdev->dev, "%s: released\n", __func__);
- 	return 0;
+ 		locks_free_lock(smb_lock->fl);
+ 		locks_free_lock(rlock);
+--- a/fs/ksmbd/vfs_cache.c
++++ b/fs/ksmbd/vfs_cache.c
+@@ -317,10 +317,14 @@ static void __ksmbd_close_fd(struct ksmb
+ 	 * there are not accesses to fp->lock_list.
+ 	 */
+ 	list_for_each_entry_safe(smb_lock, tmp_lock, &fp->lock_list, flist) {
+-		if (!list_empty(&smb_lock->clist) && fp->conn) {
+-			spin_lock(&fp->conn->llist_lock);
+-			list_del(&smb_lock->clist);
+-			spin_unlock(&fp->conn->llist_lock);
++		struct ksmbd_conn *conn = smb_lock->conn;
++
++		if (conn) {
++			spin_lock(&conn->llist_lock);
++			list_del_init(&smb_lock->clist);
++			smb_lock->conn = NULL;
++			spin_unlock(&conn->llist_lock);
++			ksmbd_conn_put(conn);
+ 		}
+ 
+ 		list_del(&smb_lock->flist);
+--- a/fs/ksmbd/vfs_cache.h
++++ b/fs/ksmbd/vfs_cache.h
+@@ -30,6 +30,7 @@ struct ksmbd_session;
+ 
+ struct ksmbd_lock {
+ 	struct file_lock *fl;
++	struct ksmbd_conn *conn;
+ 	struct list_head clist;
+ 	struct list_head flist;
+ 	struct list_head llist;
 
 
