@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98BB2408039;
-	Tue, 21 Jul 2026 19:25:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4016E32B132;
+	Tue, 21 Jul 2026 19:25:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784661930; cv=none; b=fY+x3zBjFxekdsYKAOnm63fQWeSQcnlvUqpPNDQ5C3OFrtPSfLWYijYqT7cQYm3pwgGuFZCuq06DCemHOYIObdDVcTsv2o3pfZ7qB+4cAWQtRNVZDcVFfok4Qba4NTzxbjBDRdO9oleKNgenOXqkStV6/acB3JK7+WwXrWoWI2g=
+	t=1784661933; cv=none; b=KADxkWGayNIq5s8VtTifnBydw1yiG/3OcdLQnOwtBI3vMByvJr+Gbo4IXFlD2g+rE3wDp+Asa0jabRG5FV3TqJFYZ4zvQaOLloOJORwqwJ5OBEe8gndm3cZIMojBrg/DMZs+ht5g7o8liptbRiDUgsyAhOlmnG2gwguva4SU8hM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784661930; c=relaxed/simple;
-	bh=KDpVe2EkVdmQXFNHUI9AtgLejBfVhaGaCFMwEQKjMV0=;
+	s=arc-20240116; t=1784661933; c=relaxed/simple;
+	bh=umi9hLiuuhIfkmwxZmU6We88qDsxO5t4QtrCoLlH/Tw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tveBYgiGKSPW+IYvcZqfdGYt4Jc/Et3IsxwzfWzchQzN0v04mViwVLTEkJV+z7eOwMJb40tT/RQyLLBsxwT0/Wxv7BjCkqcO770dWzF24mKElBGRqOu7l/43m/FmB2RuMZ9KX31koS60qRWZxhBfuwRB6kE0xu+2Tt63/eyqxdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFcLfVWM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pEqmvMl8XpiywIYVCZD8S13ZPP6teyapIew5NNvO7719jq291GwpPgPcYVT3epIcHvn1g7z/J/vHZ/GChq1MNHupcH26HGUIDCpOcapLFr1wtHe5flx4oKqjKFZrSUDshIVcqCY5jCTaaTfPVGh9YWvtAGKe3YdPdV6IQ7hrX1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmmJ8xbA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFcLfVWM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054691F000E9;
-	Tue, 21 Jul 2026 19:25:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmmJ8xbA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68291F000E9;
+	Tue, 21 Jul 2026 19:25:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784661929;
-	bh=C/CKAlAB24/2m+Sr4gcWMwucRbFckQ4jebSAumWkR+U=;
+	s=korg; t=1784661932;
+	bh=Toty82aJ0PpCvREQFeXcDbcjWC3SWjJ5cFLSueNR2w4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZFcLfVWMOkzBXugDfZfIxo/079rvHRNiuyZe9zNzGReGqcqFlUwr5dQcl7hAGSsAk
-	 3Y+XcuG/V3hktPxy3O6agMGmd2IX1pA7CTITC6odCZsSCqY8wwFpUWoZRfaq3A3VFo
-	 8Cu7rDDrBiUg7lPnKfqam4KYSPdhdqVruHZ3aL6Q=
+	b=jmmJ8xbA9BqSH6McQ21+7/pcVh25tj6UmGEtCZ9UHGODayCBgjyyjmN9stPwNFNYo
+	 UCj2PbdCa+vlDYgmRpo/Yb97/kCSYOVaFeJwPpDPo+LkUs6YSmDpZE2fuO6wHwUNpP
+	 nZss+feCh9+OWcQRblAb+WYc4OJa2fJvT9rtk6a0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0252/1276] arm64: dts: tqma8mpql-mba8mpxl: configure sai clock in audio codec as well
-Date: Tue, 21 Jul 2026 17:11:35 +0200
-Message-ID: <20260721152451.727063556@linuxfoundation.org>
+Subject: [PATCH 6.12 0253/1276] RDMA/siw: Fix endpoint/socket association handling
+Date: Tue, 21 Jul 2026 17:11:36 +0200
+Message-ID: <20260721152451.748610846@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152446.065700225@linuxfoundation.org>
 References: <20260721152446.065700225@linuxfoundation.org>
@@ -51,36 +52,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Bernard Metzler <bernard.metzler@linux.dev>
 
-[ Upstream commit 748835fcb2eb2120234aef9556d282272501b96b ]
+[ Upstream commit ea4f6f6c53577fb3f05dbd78b15e586772d49831 ]
 
-With deferrable card binding the sound card driver tries to
-get the mclk configuration before it is setup in sai3 node.
-Fix this by setting the sai clock config for the audio codec as well.
+Disassociating a socket from an endpoint via siw_socket_disassoc() may
+release the last reference on that endpoint and free it. Therefore, don't
+clear the endpoints socket pointer after calling that function, but
+within.
 
-Fixes: d8f9d8126582 ("arm64: dts: imx8mp: Add analog audio output on i.MX8MP TQMa8MPxL/MBa8MPxL")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+This fixes a:
+
+  BUG: KASAN: slab-use-after-free in siw_cm_work_handler (drivers/infiniband/sw/siw/siw_cm.c:1053 drivers/infiniband/sw/siw/siw_cm.c:1075)
+
+which occurred after processing a malformed MPA request during connection
+establishment, causing the new endpoint to be closed.
+
+Fixes: 6c52fdc244b5c ("rdma/siw: connection management")
+Link: https://patch.msgid.link/r/20260604160808.30948-1-bernard.metzler@linux.dev
+Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Signed-off-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/sw/siw/siw_cm.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts b/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts
-index 773282002e6c67..2f52e32608861f 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mpxl.dts
-@@ -518,6 +518,9 @@ tlv320aic3x04: audio-codec@18 {
- 		reset-gpios = <&gpio4 29 GPIO_ACTIVE_LOW>;
- 		iov-supply = <&reg_vcc_1v8>;
- 		ldoin-supply = <&reg_vcc_3v3>;
-+		assigned-clocks = <&clk IMX8MP_CLK_SAI3>;
-+		assigned-clock-parents = <&clk IMX8MP_AUDIO_PLL1_OUT>;
-+		assigned-clock-rates = <12288000>;
- 	};
+diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
+index 708b13993fdfd3..49ff121f77fe44 100644
+--- a/drivers/infiniband/sw/siw/siw_cm.c
++++ b/drivers/infiniband/sw/siw/siw_cm.c
+@@ -89,6 +89,7 @@ static void siw_socket_disassoc(struct socket *s)
+ 		cep = sk_to_cep(sk);
+ 		if (cep) {
+ 			siw_sk_restore_upcalls(sk, cep);
++			cep->sock = NULL;
+ 			siw_cep_put(cep);
+ 		} else {
+ 			pr_warn("siw: cannot restore sk callbacks: no ep\n");
+@@ -369,10 +370,11 @@ static void siw_free_cm_id(struct siw_cep *cep)
  
- 	se97_1c: temperature-sensor@1c {
+ static void siw_destroy_cep_sock(struct siw_cep *cep)
+ {
+-	if (cep->sock) {
+-		siw_socket_disassoc(cep->sock);
+-		sock_release(cep->sock);
+-		cep->sock = NULL;
++	struct socket *s = cep->sock;
++
++	if (s) {
++		siw_socket_disassoc(s);
++		sock_release(s);
+ 	}
+ }
+ 
+@@ -1001,7 +1003,6 @@ static void siw_accept_newconn(struct siw_cep *cep)
+ 	if (new_s) {
+ 		siw_socket_disassoc(new_s);
+ 		sock_release(new_s);
+-		new_cep->sock = NULL;
+ 	}
+ 	siw_dbg_cep(cep, "error %d\n", rv);
+ }
+@@ -1153,6 +1154,8 @@ static void siw_cm_work_handler(struct work_struct *w)
+ 		WARN(1, "Undefined CM work type: %d\n", work->type);
+ 	}
+ 	if (release_cep) {
++		struct socket *s = cep->sock;
++
+ 		siw_dbg_cep(cep,
+ 			    "release: timer=%s, QP[%u]\n",
+ 			    cep->mpa_timer ? "y" : "n",
+@@ -1178,10 +1181,9 @@ static void siw_cm_work_handler(struct work_struct *w)
+ 			cep->qp = NULL;
+ 			siw_qp_put(qp);
+ 		}
+-		if (cep->sock) {
+-			siw_socket_disassoc(cep->sock);
+-			sock_release(cep->sock);
+-			cep->sock = NULL;
++		if (s) {
++			siw_socket_disassoc(s);
++			sock_release(s);
+ 		}
+ 		if (cep->cm_id) {
+ 			siw_free_cm_id(cep);
+@@ -1511,7 +1513,6 @@ int siw_connect(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 	if (cep) {
+ 		siw_socket_disassoc(s);
+ 		sock_release(s);
+-		cep->sock = NULL;
+ 
+ 		cep->qp = NULL;
+ 
+@@ -1886,7 +1887,6 @@ int siw_create_listen(struct iw_cm_id *id, int backlog)
+ 		siw_cep_set_inuse(cep);
+ 
+ 		siw_free_cm_id(cep);
+-		cep->sock = NULL;
+ 		siw_socket_disassoc(s);
+ 		cep->state = SIW_EPSTATE_CLOSED;
+ 
+@@ -1908,6 +1908,7 @@ static void siw_drop_listeners(struct iw_cm_id *id)
+ 	 */
+ 	list_for_each_safe(p, tmp, (struct list_head *)id->provider_data) {
+ 		struct siw_cep *cep = list_entry(p, struct siw_cep, listenq);
++		struct socket *s = cep->sock;
+ 
+ 		list_del(p);
+ 
+@@ -1916,10 +1917,9 @@ static void siw_drop_listeners(struct iw_cm_id *id)
+ 		siw_cep_set_inuse(cep);
+ 
+ 		siw_free_cm_id(cep);
+-		if (cep->sock) {
+-			siw_socket_disassoc(cep->sock);
+-			sock_release(cep->sock);
+-			cep->sock = NULL;
++		if (s) {
++			siw_socket_disassoc(s);
++			sock_release(s);
+ 		}
+ 		cep->state = SIW_EPSTATE_CLOSED;
+ 		siw_cep_set_free_and_put(cep);
 -- 
 2.53.0
 
