@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D63143D4EE;
-	Tue, 21 Jul 2026 21:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83C3418A58;
+	Tue, 21 Jul 2026 21:59:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784671139; cv=none; b=JNHVBe8g+fsW6hCXYwRJmE9S3wgsWXxq/4YgvtjwTuYf0erM6qghPz+WgiS0vUQEN/I2OZSvkr96xRarhcedqgNmA2LcqXPw8Noq2yjdioX31tbKGIVVexbtFusanrdHG1/+0IrO+RCD4zXxk7o7UCAawDNdzXYyCCyMuZGY3aE=
+	t=1784671142; cv=none; b=SUH8NLj9CgBAr20P2UwP0bElqL6qgiRpVz68kaAVWL/GztGv2v0pOOcmdcYZr5ODQOYiAgm++5sTAv/P/77RqftD098DxZUExYxCL0RJTObbwIUwC3vFf8yPJhCf10MPFptSGvvTNeYqPaWIagfKIa9GmW9dt2iujkvBZN45GPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784671139; c=relaxed/simple;
-	bh=4HGvdIvhydCI+OFz5NJZcn0UQcdwTvGqkC86TVEpYO8=;
+	s=arc-20240116; t=1784671142; c=relaxed/simple;
+	bh=yrUyuozGNpT8mDyfZhHXdhWtz12i+FLCgvAjWzVxYtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VsV4y5+D9cJDAONBH6R+xRcrwYIH8c80UBWbGP48+IWmUbKATlhNSU5r1P9ZXDeG5CoRLoZPUtxF9LO1XQThIB9kgrIep4YD1UjLKQiFIvoKL/84hWa3Hny1xabuF9tM4V2pv+k2frdpKjfB99VPWQ6+Mjovrrx6o3yEx9jwbfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dPnEaVQL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uKHKLyDFfRb9UG51I9hEOcuI625z6saRinB8ehX+bKHentPV8yhWf0WguJ04FPMxiu6Wz1U1xEGxBYDEt0fW5Opl/H4lycikcskBYaHEKZpO7k0zZ08CLSpMR3n5Ww50ZkxkfHneYmbNZ4Hxz+n35lk0P0p0CDbY76wopDtFKOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBTzl8hv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPnEaVQL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E8581F000E9;
-	Tue, 21 Jul 2026 21:58:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBTzl8hv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 210821F000E9;
+	Tue, 21 Jul 2026 21:58:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784671138;
-	bh=Ll4BUBI5k1nvZpAzRWLHy70vGT7nCEvnB4QFkSERAJc=;
+	s=korg; t=1784671140;
+	bh=1jShiC+hC9NoKT8no5WOh96JUyUM5OLA6A3s39lLpME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dPnEaVQLoMfUEdalLMk/4rfIicTnjcbuZDqY1PpRjh8vDDcwgkuo6pK0fzyRAjFpe
-	 coQkKnaZXUpmMPSP1N714R9CIht4AlMIHthuREU8YxwU9nsFzJeNPtD6PsuGPmpRgm
-	 CZk/KAfUBH+3tBJ1R1PCWjkXw36xLnjycgrwkraM=
+	b=RBTzl8hveH/vEKgQlFT9K1v5wJxEnSauYzD4/dTXHFrAmWcKO11BxE+vsEDpwDiT4
+	 ndoDZlI5RlBjuPwBDz55s0v5Ej3XwCQn6ZeIgALMayx8gBM4JIKbM3FhpvIe+Loiwl
+	 yyrdAD8cLz7eLo4H+YZSAUGz9WEEVJ6Cgu3aukxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Nepomnyashih <sdl@nppct.ru>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Allison Henderson <achender@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 5.15 126/843] xfs: fix unreachable BIGTIME check in dquot flush validation
-Date: Tue, 21 Jul 2026 17:16:01 +0200
-Message-ID: <20260721152408.844227206@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Daniel Walker <dwalker@mvista.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 135/843] USB: ldusb: fix use-after-free on disconnect race
+Date: Tue, 21 Jul 2026 17:16:10 +0200
+Message-ID: <20260721152409.053191086@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152405.946368001@linuxfoundation.org>
 References: <20260721152405.946368001@linuxfoundation.org>
@@ -52,59 +51,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Nepomnyashih <sdl@nppct.ru>
+From: Johan Hovold <johan@kernel.org>
 
-commit 03866d130ed33ab68cc7faaf4bf2c4abef96d42e upstream.
+commit 19bdfc7b3c179331eafa423d87e1336f43bbfeb8 upstream.
 
-The dqp->q_id == 0 check inside the XFS_DQTYPE_BIGTIME block is
-unreachable because root dquots return successfully earlier. Reject root
-dquots with XFS_DQTYPE_BIGTIME before that early return, preserving the
-intended validation and removing the unreachable condition.
+mutex_unlock() may access the mutex structure after releasing the lock
+and therefore cannot be used to manage lifetime of objects directly
+(unlike spinlocks and refcounts). [1][2]
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Use a kref to release the driver data to avoid use-after-free in
+mutex_unlock() when release() races with disconnect().
 
-Fixes: 4ea1ff3b4968 ("xfs: widen ondisk quota expiration timestamps to handle y2038+")
-Cc: stable@vger.kernel.org # v5.10+
-Signed-off-by: Alexey Nepomnyashih <sdl@nppct.ru>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[1] a51749ab34d9 ("locking/mutex: Document that mutex_unlock() is
+                   non-atomic")
+[2] 2b9d9e0a9ba0 ("locking/mutex: Clarify that mutex_unlock(), and most
+                   other sleeping locks, can still use the lock object
+                   after it's unlocked")
+
+Fixes: ce0d7d3f575f ("usb: ldusb: ld_usb semaphore to mutex")
+Cc: stable <stable@kernel.org>
+Cc: Daniel Walker <dwalker@mvista.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260622152612.116422-4-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_dquot.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/usb/misc/ldusb.c |   38 ++++++++++++++++++--------------------
+ 1 file changed, 18 insertions(+), 20 deletions(-)
 
---- a/fs/xfs/xfs_dquot.c
-+++ b/fs/xfs/xfs_dquot.c
-@@ -1202,6 +1202,14 @@ xfs_qm_dqflush_check(
- 	    type != XFS_DQTYPE_PROJ)
- 		return __this_address;
+--- a/drivers/usb/misc/ldusb.c
++++ b/drivers/usb/misc/ldusb.c
+@@ -150,6 +150,7 @@ MODULE_PARM_DESC(min_interrupt_out_inter
  
-+	/* bigtime flag should never be set on root dquots */
-+	if (dqp->q_type & XFS_DQTYPE_BIGTIME) {
-+		if (!xfs_has_bigtime(dqp->q_mount))
-+			return __this_address;
-+		if (dqp->q_id == 0)
-+			return __this_address;
-+	}
+ /* Structure to hold all of our device specific stuff */
+ struct ld_usb {
++	struct kref		kref;
+ 	struct mutex		mutex;		/* locks this structure */
+ 	struct usb_interface	*intf;		/* save off the usb interface pointer */
+ 	unsigned long		disconnected:1;
+@@ -201,8 +202,10 @@ static void ld_usb_abort_transfers(struc
+ /*
+  *	ld_usb_delete
+  */
+-static void ld_usb_delete(struct ld_usb *dev)
++static void ld_usb_delete(struct kref *kref)
+ {
++	struct ld_usb *dev = container_of(kref, struct ld_usb, kref);
 +
- 	if (dqp->q_id == 0)
- 		return NULL;
+ 	/* free data structures */
+ 	usb_free_urb(dev->interrupt_in_urb);
+ 	usb_free_urb(dev->interrupt_out_urb);
+@@ -355,6 +358,8 @@ static int ld_usb_open(struct inode *ino
+ 		goto unlock_exit;
+ 	}
  
-@@ -1217,14 +1225,6 @@ xfs_qm_dqflush_check(
- 	    !dqp->q_rtb.timer)
- 		return __this_address;
++	kref_get(&dev->kref);
++
+ 	/* save device in the file's private structure */
+ 	file->private_data = dev;
  
--	/* bigtime flag should never be set on root dquots */
--	if (dqp->q_type & XFS_DQTYPE_BIGTIME) {
--		if (!xfs_has_bigtime(dqp->q_mount))
--			return __this_address;
--		if (dqp->q_id == 0)
--			return __this_address;
+@@ -381,17 +386,8 @@ static int ld_usb_release(struct inode *
+ 
+ 	mutex_lock(&dev->mutex);
+ 
+-	if (dev->open_count != 1) {
+-		retval = -ENODEV;
++	if (dev->disconnected)
+ 		goto unlock_exit;
 -	}
--
- 	return NULL;
- }
+-	if (dev->disconnected) {
+-		/* the device was unplugged before the file was released */
+-		mutex_unlock(&dev->mutex);
+-		/* unlock here as ld_usb_delete frees dev */
+-		ld_usb_delete(dev);
+-		goto exit;
+-	}
  
+ 	/* wait until write transfer is finished */
+ 	if (dev->interrupt_out_busy)
+@@ -401,7 +397,7 @@ static int ld_usb_release(struct inode *
+ 
+ unlock_exit:
+ 	mutex_unlock(&dev->mutex);
+-
++	kref_put(&dev->kref, ld_usb_delete);
+ exit:
+ 	return retval;
+ }
+@@ -660,6 +656,8 @@ static int ld_usb_probe(struct usb_inter
+ 	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
+ 	if (!dev)
+ 		goto exit;
++
++	kref_init(&dev->kref);
+ 	mutex_init(&dev->mutex);
+ 	spin_lock_init(&dev->rbsl);
+ 	dev->intf = intf;
+@@ -739,7 +737,7 @@ exit:
+ 	return retval;
+ 
+ error:
+-	ld_usb_delete(dev);
++	kref_put(&dev->kref, ld_usb_delete);
+ 
+ 	return retval;
+ }
+@@ -767,18 +765,18 @@ static void ld_usb_disconnect(struct usb
+ 
+ 	mutex_lock(&dev->mutex);
+ 
+-	/* if the device is not opened, then we clean up right now */
+-	if (!dev->open_count) {
+-		mutex_unlock(&dev->mutex);
+-		ld_usb_delete(dev);
+-	} else {
+-		dev->disconnected = 1;
++	dev->disconnected = 1;
++
++	if (dev->open_count) {
+ 		/* wake up pollers */
+ 		wake_up_interruptible_all(&dev->read_wait);
+ 		wake_up_interruptible_all(&dev->write_wait);
+-		mutex_unlock(&dev->mutex);
+ 	}
+ 
++	mutex_unlock(&dev->mutex);
++
++	kref_put(&dev->kref, ld_usb_delete);
++
+ 	dev_info(&intf->dev, "LD USB Device #%d now disconnected\n",
+ 		 (minor - USB_LD_MINOR_BASE));
+ }
 
 
