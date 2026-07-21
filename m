@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7EB415F0C;
-	Tue, 21 Jul 2026 22:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB4244AB9F;
+	Tue, 21 Jul 2026 22:55:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784674515; cv=none; b=B8j2s+Yilnve10kkDhtIxr9QkI/gewY+M9lRV4QINjMVqjHbkY9rvQPXemibJkSmZwHdSDvFdDr+aoQFWnEqyXRNWVa3zhKXaznrHR4Cj+5xX+mBz+Uwwh1vJtnV62r6CFwFSqN1nqR8ABuGRhwH6uLG2nWMZ+Ypt6z1dMPZerw=
+	t=1784674517; cv=none; b=c3pmXqV4nmSGsIEGZUugKN6Aj6Uu252GXT77OtIkvBbXXRp8F2hS6iKA9Pv+EMBQutsxhtfxEi1oVjaY7Dlg/I+sdS6rvXa4DublSlXI+IKAiZcP5qZ/7OgQLRR/YKSDFO9SWGQG/rJRDr+9em5Khhtk6XVr8rp2GAEWvJL5gcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784674515; c=relaxed/simple;
-	bh=JSGyaygI4w+7ez/I7QQSe1AemPZG2iJY5JJb3vryh9g=;
+	s=arc-20240116; t=1784674517; c=relaxed/simple;
+	bh=1xsIbNv0VMeziPVQfvc5xxsTLOqDhRRnUgPc1ZTKBPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LtAU2wxLwWP/PIyFRsmBNZvVeiKeT/l+d7JlD68YWo1WTc69mYERw8j2ZYYma4DwlhaKT8DjY38JfaT0InG66x0hAdtd2a5DeKBpnACFK5hao444zYuDD8ypto0899xw796B+YTM9e4wJHcLP/3lvLZSDow3bUJAJeWBYwC2mrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZKfdUT/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t8KZW6HTbIu2dOgG1bpv+bBT8HUQEmLNhF85SNgms/QPCv66ljv1GuCseOl/NU0W0TTK0m6cp9XEorNPW85y54R13k1o9xW3M6v/3TljIjlyL4UiEbpB3QReydEwdvR1zmq8NZb5Ay4PEEv9axNEnLscbi6ezdRSVxVgButAzGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8lKpWZS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZKfdUT/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 889CD1F00A3A;
-	Tue, 21 Jul 2026 22:55:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8lKpWZS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30FE31F000E9;
+	Tue, 21 Jul 2026 22:55:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784674514;
-	bh=Sl6zwBBZZpV8vUREHwlGQPwz5kd8/BJrMLFJPSFjLmE=;
+	s=korg; t=1784674516;
+	bh=jxb6z7JthywEvGfvMs/vbz2yhs+8r3q79r0fbN4sSCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TZKfdUT/zelcvIK68VJcOMfmw24PO7dunAhnS8qBMBpYJVbFsMXqQ0L5ny4OrW9ei
-	 CriUJkfovBmR4mAxODhsO+cNx/sSISaJ5CC212p1+3qQaHdI/BjN+39KXqtj6of758
-	 nrhUSCJ68B9fS3tOez/xMvYKNDmlAqEG5FlPTSoI=
+	b=d8lKpWZSAahqGV8QhmnR5wt7wvG9cYwJVjmqpQW54PemHiHxYjiYepeejFi2sRnmt
+	 8gcdte+Aqh+6xE0NCjsBqPci77ufm2zFVfjvT8P4AAnsEffHziaQvhw6aPuhw321Dn
+	 mxvlI6ca2RksfQYc/INeKtWC4JzzJIw3BSVEUZm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Zhiling Zou <roxy520tt@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.10 570/699] wifi: mac80211: free ack status frame on TX header build failure
-Date: Tue, 21 Jul 2026 17:25:29 +0200
-Message-ID: <20260721152408.567119551@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.10 544/699] hwmon: (w83793) remove vrm sysfs file on probe failure
+Date: Tue, 21 Jul 2026 17:25:03 +0200
+Message-ID: <20260721152407.975251685@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260721152355.667394603@linuxfoundation.org>
 References: <20260721152355.667394603@linuxfoundation.org>
@@ -55,78 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <roxy520tt@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 2c51457d930f723e5f2903af90f5847f7df53f42 upstream.
+commit 77b983757280c69b0290811669ff1d31022e5f1d upstream.
 
-ieee80211_build_hdr() stores an ACK status frame before it has
-finished all validation and header construction. If a later error path
-is taken, the transmit skb is freed but the stored ACK status frame
-remains in local->ack_status_frames.
+w83793_probe() creates the vrm sysfs file after creating the VID files
+when VID support is present.
 
-This can happen for control port frames when the requested MLO link ID
-does not match the link selected for a non-MLO station. Repeated
-failures can fill the ACK status IDR and leave pending ACK frames until
-hardware teardown.
+The normal remove path deletes vrm, but the probe error path only
+removes the sensor, SDA, VID, fan, PWM and temperature files.  A later
+probe failure can therefore leave vrm behind after the driver data has
+been freed.
 
-Remove any stored ACK status frame before returning an error after it
-has been inserted into the IDR.
+Remove vrm in the probe error path next to the VID files, matching the
+normal remove path.
 
-Fixes: a729cff8ad51 ("mac80211: implement wifi TX status")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20260615064806.51139-1-pengpeng@iscas.ac.cn
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/9de0423da840e92084915b8f92e66a421245c4b8.1782462409.git.roxy520tt@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/tx.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/hwmon/w83793.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -2516,6 +2516,18 @@ static u16 ieee80211_store_ack_skb(struc
- 	return info_id;
- }
+--- a/drivers/hwmon/w83793.c
++++ b/drivers/hwmon/w83793.c
+@@ -1920,6 +1920,7 @@ exit_remove:
  
-+static void ieee80211_remove_ack_skb(struct ieee80211_local *local, u16 info_id)
-+{
-+	struct sk_buff *ack_skb;
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&local->ack_status_lock, flags);
-+	ack_skb = idr_remove(&local->ack_status_frames, info_id);
-+	spin_unlock_irqrestore(&local->ack_status_lock, flags);
-+
-+	kfree_skb(ack_skb);
-+}
-+
- /**
-  * ieee80211_build_hdr - build 802.11 header in the given frame
-  * @sdata: virtual interface to build the header for
-@@ -2875,7 +2887,8 @@ static struct sk_buff *ieee80211_build_h
- 		if (ieee80211_skb_resize(sdata, skb, head_need, ENCRYPT_DATA)) {
- 			ieee80211_free_txskb(&local->hw, skb);
- 			skb = NULL;
--			return ERR_PTR(-ENOMEM);
-+			ret = -ENOMEM;
-+			goto free;
- 		}
- 	}
+ 	for (i = 0; i < ARRAY_SIZE(w83793_vid); i++)
+ 		device_remove_file(dev, &w83793_vid[i].dev_attr);
++	device_remove_file(dev, &dev_attr_vrm);
  
-@@ -2912,6 +2925,8 @@ static struct sk_buff *ieee80211_build_h
- 
- 	return skb;
-  free:
-+	if (info_id)
-+		ieee80211_remove_ack_skb(local, info_id);
- 	kfree_skb(skb);
- 	return ERR_PTR(ret);
- }
+ 	for (i = 0; i < ARRAY_SIZE(w83793_left_fan); i++)
+ 		device_remove_file(dev, &w83793_left_fan[i].dev_attr);
 
 
