@@ -1,35 +1,22 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from bregans-1.gladserv.net (bregans-1.gladserv.net [185.128.211.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22D4471CEF;
-	Wed, 22 Jul 2026 16:43:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD6D3D47DA;
+	Wed, 22 Jul 2026 16:54:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.211.58
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784738619; cv=none; b=E1QoStNWHyTxWB7Aj9bVFVq2r/sSk+nsBl/BAUfONNpLJ6/3TqGDU7vP0pjsd1/D368aT9zjBUnKJpuQdk/zNOjN2AEWvwwBMsNUrgTFDaVXgXDlT8VcDHVXHDWQceoPeh2gDjc0IDcBmySi0DmYm6k/9bLGEYhGaJ94TFCnKZc=
+	t=1784739289; cv=none; b=RePJ4yDPgRZ+QshVXdF0UeZHf2WNmgvqu5VvVyyTSUOAK3+FDHSm37WlpFmYOb5eaq2mDvupcnh4goJ0VX8+KxEPMi9drrGNH1jxBYbRds3mrdubj+8xqVirUzDKdWyEBNnkAqdCS04e2W6+FCue5sekM37IFnqIKflorvZK358=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784738619; c=relaxed/simple;
-	bh=XjYmCDMzYWYlPMl7zStNn6MTQiqYP3kthFphvhqNbBc=;
+	s=arc-20240116; t=1784739289; c=relaxed/simple;
+	bh=zbX1n3PR+UrRmkSTg3W5V+GVTKQNSvpiYOzlq64jGOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KH0mPCio7mrXd5DE6umIV+FQhlCYkXq69pKxenJO9kFDFbNr1RU+45w7bCEPdQ6fn2rKkulXVlsNIToAjAnLFIGbvIRdtgfIsrBJmu+1UFfvFaVtn6yXYw0PRdUv0sseoDU3kQaYRxfutlRguUzhkJS1+BWeSs2BL5cMhkzWseU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=frFMMjw/; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="frFMMjw/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A061F00ACF;
-	Wed, 22 Jul 2026 16:43:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784738607;
-	bh=8zDLUS0bxfHwOpEZiuLxrdyTwvpr5eTnLI5y0qRTQxU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=frFMMjw/9WZCRrWn9HMsy59FxL0zNi+hvPx15mf+7ITLRmsKINtsz1mHqtW10HjjM
-	 P/G85OGf2n6XQOKQVuPJt63b4KqNusq08aGWk+q7lPMcIJya6+nv7XACJ1xVdcR1OI
-	 pjUGNIoss0NHU6O0X9b/h1egcKLcy840V0hdYPO6ZueakuuVRnXq7Ec1XLtyk2uZO1
-	 P5PeACYwHxSOIFWSx4y4AXS/UTPGwalVEtUe/m4+krX4KfcSVllwnqtXQvlzgtrH7t
-	 eXE2lrOzTMMlf0uvRX5+4Zkym2npBO8q7M9oVrRhpEUtIl2FhRWJ5RSoPahWLAWr/E
-	 sWSX7Oo5/ANow==
-From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org
-Cc: Sasha Levin <sashal@kernel.org>,
+	 MIME-Version; b=OAroJ4kd91wnDuUGhj2knOihhpdMT/APg9BLBX9DJAnTznUx+DrDebAzCj6aZ5js3qiXhrBUK5YUXYjQBa2w8HBcuHYTcYv+w4dC4p9kF3KQMhDpxzJNr1gQVwFlVVtD58gs7iUGenjQlp+SjKFAs7PGdsFBI4NHI+MvLWguGxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.211.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+From: Brett A C Sheffield <bacs@librecast.net>
+To: gregkh@linuxfoundation.org
+Cc: stable@vger.kernel.org,
 	patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	torvalds@linux-foundation.org,
@@ -40,6 +27,7 @@ Cc: Sasha Levin <sashal@kernel.org>,
 	lkft-triage@lists.linaro.org,
 	pavel@nabladev.com,
 	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com,
 	rwarsow@gmx.de,
 	conor@kernel.org,
@@ -47,13 +35,13 @@ Cc: Sasha Levin <sashal@kernel.org>,
 	broonie@kernel.org,
 	achill@achill.org,
 	sr@sladewatkins.com,
-	Florian Fainelli <f.fainelli@gmail.com>
-Subject: Re: [PATCH 7.1 0000/2077] 7.1.5-rc1 review
-Date: Wed, 22 Jul 2026 12:43:16 -0400
-Message-ID: <20260722113506.rc-reply-0006@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <b7e241f0-2604-4609-ac21-483b95757e10@gmail.com>
-References: <20260721152552.646164743@linuxfoundation.org> <b7e241f0-2604-4609-ac21-483b95757e10@gmail.com>
+	Brett A C Sheffield <bacs@librecast.net>
+Subject: Re: [PATCH 5.10 000/674] 5.10.261-rc2 review
+Date: Wed, 22 Jul 2026 16:54:31 +0000
+Message-ID: <20260722165437.41889-1-bacs@librecast.net>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260722142749.280611149@linuxfoundation.org>
+References: <20260722142749.280611149@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -62,33 +50,12 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, Jul 21, 2026 at 10:54:18AM -0700, Florian Fainelli wrote:
-> builtin-sched.c:1196:34: error: 'struct perf_sample' has no member named
-> 'file_offset'
->
-> which is due to 6018a2a9ff1baa45426f7a52f8ec4f7d32fedfce ("perf sched:
-> Replace BUG_ON on invalid CPU with graceful skip"), we need to backport
-> a490187f22b4bfae7ef752edbe3fb13017ca11c ("perf sample: Add file_offset
-> field to struct perf_sample")
+# Librecast Test Results
 
-Greg has queued 7a490187f22b for 7.1 (ordered right before the
-perf-sched patch), so this is resolved for -rc2.
+020/020 [ OK ] liblcrq
+010/010 [ OK ] libmld
+120/120 [ OK ] liblibrecast
 
-The other two perf build errors reported in this thread are covered as
-well: the libdw.c inline_node__clear_frames() failure is fixed by
-674dea094ef6 ("perf srcline: Introduce inline_node__clear_frames()"),
-which is now also queued.
+CPU/kernel: Linux auntie 5.10.261-rc2-00675-gd0067f0d9e68 #1 SMP Wed Jul 22 15:03:16 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
 
-Thorsten's third error ('evsel' undeclared in
-perf_session__deliver_event at util/session.c) doesn't apply to the
-queue itself: that code block comes from upstream a2e59fb79f449f
-("perf session: Bound nr_cpus_avail and validate sample CPU"), which
-isn't queued for 7.1. His local cherry-pick of 7a490187f22b pulled in
-that surrounding context without the evsel declaration; the backport
-in the queue doesn't carry it. I verified the current queue's
-perf_session__deliver_event has no evsel reference and that perf from
-the current 7.1 queue builds cleanly, so -rc2 should be good.
-
--- 
-Thanks,
-Sasha
+Tested-by: Brett A C Sheffield <bacs@librecast.net>
