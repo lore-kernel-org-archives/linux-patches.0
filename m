@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE16466AE5;
-	Wed, 22 Jul 2026 16:43:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E133F471CE4;
+	Wed, 22 Jul 2026 16:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784738614; cv=none; b=qOshuBNNdqCAZZKkZUKsv9A6Mrk6QMKQVCi/4wSRMhKgfsf7R7vOJD23zZpsqkonslglhRqVSudLkB6lzoJvp6Uz8uGXd0Qt0uhsXfv0WzDk7NEcZlsGH9L5l2PHd2ULIiwNaqa5Rt3ahdNjUZcaF2fNAgqwdyL1I05eI9SH3OI=
+	t=1784738617; cv=none; b=Iq9YxP8sd22pPnrQ/ridhl80z5OaGjNQchR4IygyU6UjMl4TRQvoHRNKjjm3qb+nRs96W8Ikw4J4qtXgnKJ+BYrKS0NRkDEQR9LeC4XQmEsD1kAgY2mT3TysFX230YMy/J8H4GB0CuFE8cqOPTB7hCHrCpCf4QoMoIz0/8z4vtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784738614; c=relaxed/simple;
-	bh=4mvVr6++11QMRYDqG1NbeQF3kpqsc+ecII9T/vYzrZo=;
+	s=arc-20240116; t=1784738617; c=relaxed/simple;
+	bh=MPgZudTPXXOc0AvRX0wtlpJwYUjtL2EHOpWMXjtgDKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QEtinIqWI/tI+f6YUz78dvEfsTvETM0PqoZV3SogSqHkC9MsyUgU4wTUduJEYrABASC/YWxSJU92tdeKA+HpCmfDdiNyxwKXYM09s0EZ/hei0Lm9G/VBjFgyrPLnzLrggcuw/LAF8YOjyZnHZAUAQYGl120sD3T8b250MjiuToM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Scurq7T9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fw/DPZdrLBdbN889Hm2fTplxMYa/PQyTFv1vY+rEoF7uaGG/V6K5ZRsJTv7zDRG+26bq2CA743+zHWf9dtcueJBbYJ0MRn0rBQ4Kp8yw7aQUE1ig7BueDVKC7KiL5U+mpnluenjTZCyfyYoFVYIqmnUq6RXOcHOgtBFT5VehOp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A6aTwAEC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Scurq7T9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2091F00ACA;
-	Wed, 22 Jul 2026 16:43:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A6aTwAEC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349571F00ADE;
+	Wed, 22 Jul 2026 16:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784738605;
-	bh=X0tLg/oL51AFuN+0Akdy5oAyb6i747wfWw4argKikIU=;
+	s=k20260515; t=1784738608;
+	bh=+58Zy8mT5F6DnLXXDeqPQlBPm/r4jZVpbWk0iXqLxHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Scurq7T9IkjPv00fc9sFZ/Uzr3VEee5Ff4fF3eIUw4dJ9a4aVgCL+2tCwPq3olfPg
-	 QK5yiFJ+XDmiV0iCvj+Qr1XFWIvmp6Ye8d7jba7VWu1TqOqnB+KFZvkkFqlfk3XrzL
-	 TR7N1qtC6jgU86i2RBuWE2DCk8yRhnZAgsOHjVYEj8du30b9rLsYl0C6fqEIfYvB9W
-	 l1r3k18P5ZtPOm7AtgOwTU3Cbwq9YRkSMU5ejrq/0UV9Sq6rDudsQL17u2Z6uXoqm0
-	 eY9d3n00Ttfzb5BraT8CSgQKbpFwviIz60AmNDMTCyOXRprgTd+Hu5SSfapVJ9JmzK
-	 XLBmfMkyLgibA==
+	b=A6aTwAECvURJkGJgx9XVljCCFLlsojvdVA14orbmkwGFMzX/SsIpwfpyyyMLRIS0m
+	 0h0djMo5jAEyPvfCdr1rsyP0BcguxdQ9azt0PLxjMkbJ/uhZVhE4AWOak4IddVShYi
+	 QtS6XZCVfqHJuh+QrIyYG/ATfaLo4gxE4krNRZb/xjTwv4ySwU6o2ROE+/TlDohMjp
+	 dlUMqptXnxcmDkAD1a9WfahtIsHXmItF0FFJsR7Nc2LmnYoyMaF+TZyKADYgb8ajKv
+	 AN06hrltLZ9qu+8Bx+Gr1/R8jmvQn1EX2JkH8+ajd61W4FajOrD9suJzmIAbSStaNp
+	 4khpgpw0X9Eww==
 From: Sasha Levin <sashal@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"stable@vger.kernel.org" <stable@vger.kernel.org>
+	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Selvamani Rajagopal <Selvamani.Rajagopal@onsemi.com>
-Subject: Re: [PATCH 7.1 0801/2077] dt-bindings: net: updated interrupt type to be active low, level triggered
-Date: Wed, 22 Jul 2026 12:43:14 -0400
-Message-ID: <20260722113504.rc-reply-0004@kernel.org>
+	patches@lists.linux.dev,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: Re: [PATCH 6.12 159/349] fs/ntfs3: zero-fill folios beyond i_valid in ntfs_read_folio()
+Date: Wed, 22 Jul 2026 12:43:17 -0400
+Message-ID: <20260722113507.rc-reply-0007@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <DM5PR02MB3369B73209A7D10B584B4C5483C22@DM5PR02MB3369.namprd02.prod.outlook.com>
-References: <20260721152552.646164743@linuxfoundation.org> <20260721152611.685698227@linuxfoundation.org> <DM5PR02MB3369B73209A7D10B584B4C5483C22@DM5PR02MB3369.namprd02.prod.outlook.com>
+In-Reply-To: <7a338426-7b4c-485b-a177-9b3651e3c716@oracle.com>
+References: <20260716133033.287196923@linuxfoundation.org> <20260716133036.938913374@linuxfoundation.org> <7a338426-7b4c-485b-a177-9b3651e3c716@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,30 +47,36 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, Jul 21, 2026 at 08:36:24PM +0000, Selvamani Rajagopal wrote:
-> Wouldn't this need to go in along with source code changes to drivers/net/ethernet/oa_tc6.c?
-> Otherwise, binding would say IRQ_TYPE_LEVEL_LOW, but the code in oa_tc6.c would be using
-> IRQ_TYPE_EDGE_FALLING. If that is acceptable, then it is fine.
+On Mon, Jul 20, 2026 at 12:22:10AM +0530, Harshit Mogalapalli wrote:
+> It preserves the new zero-fill fast path but drops the bad-inode rejection
+> that precedes the same path upstream.
 
-You're right - the companion driver change (b542d13fab0f) was already
-dropped at your request, so this binding change makes no sense on its
-own. Dropped it from the 7.1, 6.18, and 6.12 queues.
+Correct, and the omission is intentional (see the [ sashal: ... ] note
+in the backport): is_bad_ni()/ni_bad were introduced by 519b078998ce,
+which is in neither 6.12.y nor 6.6.y. The guard is new hardening that
+upstream added together with that infrastructure - the pre-patch
+ntfs_read_folio() in these trees had no bad-inode check at all, so the
+backport doesn't remove any existing protection. A bad inode reaching
+read_folio behaves no worse than before the patch (make_bad_inode()
+already swaps i_op/i_fop, so the normal open/read paths return -EIO
+earlier).
 
-> FYI: drivers/net/ethernet/oa_tc6.c isn't ready for pulling into 7.1 or 6.18 as we have a follow-up
-> patches to the "net" repo that is still under review.
+> The narrow 6.12.y adaptation would be:
+>
+>          if (unlikely(is_bad_inode(inode))) {
+>                  folio_unlock(folio);
+>                  return -EIO;
+>          }
 
-I've also dropped the mdiobus->parent fix (a221d3f7e3f3) from the 7.1,
-6.18, and 6.12 queues. We'll requeue the whole set together once your
-follow-up series lands upstream.
+That would work, but it would be a hunk with no upstream counterpart,
+which we try hard to avoid in stable backports. If the guard is wanted
+in stable, the clean path would be backporting 519b078998ce itself (or
+a dedicated upstream follow-up). Note the same adaptation already
+shipped in 6.12.96 with no reported issues.
 
-The one patch I kept is the FCS trim fix (a5a1d11dd372 "net: ethernet:
-oa_tc6: remove FCS size in rx frame"): I verified it against your
-pending "fix race condition and crash" v3 series and it's independent
-of both pending fixes - the race fix targets the threaded-IRQ state
-that's no longer in the stable queues, and the skb_over_panic fix
-doesn't touch oa_tc6_submit_rx_skb(). It fixes real user-visible ptp4l
-breakage, so I'd like it to ship. If you'd rather see that one held
-back too, please let me know.
+Keeping the 6.6 patch as queued - it's also a prerequisite of
+d7ea8495fd30 ("fs/ntfs3: fix missing run load for vcn0 in
+attr_data_get_block_locked()").
 
 -- 
 Thanks,
