@@ -1,44 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E133F471CE4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22D4471CEF;
 	Wed, 22 Jul 2026 16:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784738617; cv=none; b=Iq9YxP8sd22pPnrQ/ridhl80z5OaGjNQchR4IygyU6UjMl4TRQvoHRNKjjm3qb+nRs96W8Ikw4J4qtXgnKJ+BYrKS0NRkDEQR9LeC4XQmEsD1kAgY2mT3TysFX230YMy/J8H4GB0CuFE8cqOPTB7hCHrCpCf4QoMoIz0/8z4vtU=
+	t=1784738619; cv=none; b=E1QoStNWHyTxWB7Aj9bVFVq2r/sSk+nsBl/BAUfONNpLJ6/3TqGDU7vP0pjsd1/D368aT9zjBUnKJpuQdk/zNOjN2AEWvwwBMsNUrgTFDaVXgXDlT8VcDHVXHDWQceoPeh2gDjc0IDcBmySi0DmYm6k/9bLGEYhGaJ94TFCnKZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784738617; c=relaxed/simple;
-	bh=MPgZudTPXXOc0AvRX0wtlpJwYUjtL2EHOpWMXjtgDKA=;
+	s=arc-20240116; t=1784738619; c=relaxed/simple;
+	bh=XjYmCDMzYWYlPMl7zStNn6MTQiqYP3kthFphvhqNbBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fw/DPZdrLBdbN889Hm2fTplxMYa/PQyTFv1vY+rEoF7uaGG/V6K5ZRsJTv7zDRG+26bq2CA743+zHWf9dtcueJBbYJ0MRn0rBQ4Kp8yw7aQUE1ig7BueDVKC7KiL5U+mpnluenjTZCyfyYoFVYIqmnUq6RXOcHOgtBFT5VehOp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A6aTwAEC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KH0mPCio7mrXd5DE6umIV+FQhlCYkXq69pKxenJO9kFDFbNr1RU+45w7bCEPdQ6fn2rKkulXVlsNIToAjAnLFIGbvIRdtgfIsrBJmu+1UFfvFaVtn6yXYw0PRdUv0sseoDU3kQaYRxfutlRguUzhkJS1+BWeSs2BL5cMhkzWseU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=frFMMjw/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A6aTwAEC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349571F00ADE;
-	Wed, 22 Jul 2026 16:43:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="frFMMjw/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A061F00ACF;
+	Wed, 22 Jul 2026 16:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784738608;
-	bh=+58Zy8mT5F6DnLXXDeqPQlBPm/r4jZVpbWk0iXqLxHo=;
+	s=k20260515; t=1784738607;
+	bh=8zDLUS0bxfHwOpEZiuLxrdyTwvpr5eTnLI5y0qRTQxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A6aTwAECvURJkGJgx9XVljCCFLlsojvdVA14orbmkwGFMzX/SsIpwfpyyyMLRIS0m
-	 0h0djMo5jAEyPvfCdr1rsyP0BcguxdQ9azt0PLxjMkbJ/uhZVhE4AWOak4IddVShYi
-	 QtS6XZCVfqHJuh+QrIyYG/ATfaLo4gxE4krNRZb/xjTwv4ySwU6o2ROE+/TlDohMjp
-	 dlUMqptXnxcmDkAD1a9WfahtIsHXmItF0FFJsR7Nc2LmnYoyMaF+TZyKADYgb8ajKv
-	 AN06hrltLZ9qu+8Bx+Gr1/R8jmvQn1EX2JkH8+ajd61W4FajOrD9suJzmIAbSStaNp
-	 4khpgpw0X9Eww==
+	b=frFMMjw/9WZCRrWn9HMsy59FxL0zNi+hvPx15mf+7ITLRmsKINtsz1mHqtW10HjjM
+	 P/G85OGf2n6XQOKQVuPJt63b4KqNusq08aGWk+q7lPMcIJya6+nv7XACJ1xVdcR1OI
+	 pjUGNIoss0NHU6O0X9b/h1egcKLcy840V0hdYPO6ZueakuuVRnXq7Ec1XLtyk2uZO1
+	 P5PeACYwHxSOIFWSx4y4AXS/UTPGwalVEtUe/m4+krX4KfcSVllwnqtXQvlzgtrH7t
+	 eXE2lrOzTMMlf0uvRX5+4Zkym2npBO8q7M9oVrRhpEUtIl2FhRWJ5RSoPahWLAWr/E
+	 sWSX7Oo5/ANow==
 From: Sasha Levin <sashal@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: Re: [PATCH 6.12 159/349] fs/ntfs3: zero-fill folios beyond i_valid in ntfs_read_folio()
-Date: Wed, 22 Jul 2026 12:43:17 -0400
-Message-ID: <20260722113507.rc-reply-0007@kernel.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com,
+	Florian Fainelli <f.fainelli@gmail.com>
+Subject: Re: [PATCH 7.1 0000/2077] 7.1.5-rc1 review
+Date: Wed, 22 Jul 2026 12:43:16 -0400
+Message-ID: <20260722113506.rc-reply-0006@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <7a338426-7b4c-485b-a177-9b3651e3c716@oracle.com>
-References: <20260716133033.287196923@linuxfoundation.org> <20260716133036.938913374@linuxfoundation.org> <7a338426-7b4c-485b-a177-9b3651e3c716@oracle.com>
+In-Reply-To: <b7e241f0-2604-4609-ac21-483b95757e10@gmail.com>
+References: <20260721152552.646164743@linuxfoundation.org> <b7e241f0-2604-4609-ac21-483b95757e10@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,36 +62,32 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, Jul 20, 2026 at 12:22:10AM +0530, Harshit Mogalapalli wrote:
-> It preserves the new zero-fill fast path but drops the bad-inode rejection
-> that precedes the same path upstream.
-
-Correct, and the omission is intentional (see the [ sashal: ... ] note
-in the backport): is_bad_ni()/ni_bad were introduced by 519b078998ce,
-which is in neither 6.12.y nor 6.6.y. The guard is new hardening that
-upstream added together with that infrastructure - the pre-patch
-ntfs_read_folio() in these trees had no bad-inode check at all, so the
-backport doesn't remove any existing protection. A bad inode reaching
-read_folio behaves no worse than before the patch (make_bad_inode()
-already swaps i_op/i_fop, so the normal open/read paths return -EIO
-earlier).
-
-> The narrow 6.12.y adaptation would be:
+On Tue, Jul 21, 2026 at 10:54:18AM -0700, Florian Fainelli wrote:
+> builtin-sched.c:1196:34: error: 'struct perf_sample' has no member named
+> 'file_offset'
 >
->          if (unlikely(is_bad_inode(inode))) {
->                  folio_unlock(folio);
->                  return -EIO;
->          }
+> which is due to 6018a2a9ff1baa45426f7a52f8ec4f7d32fedfce ("perf sched:
+> Replace BUG_ON on invalid CPU with graceful skip"), we need to backport
+> a490187f22b4bfae7ef752edbe3fb13017ca11c ("perf sample: Add file_offset
+> field to struct perf_sample")
 
-That would work, but it would be a hunk with no upstream counterpart,
-which we try hard to avoid in stable backports. If the guard is wanted
-in stable, the clean path would be backporting 519b078998ce itself (or
-a dedicated upstream follow-up). Note the same adaptation already
-shipped in 6.12.96 with no reported issues.
+Greg has queued 7a490187f22b for 7.1 (ordered right before the
+perf-sched patch), so this is resolved for -rc2.
 
-Keeping the 6.6 patch as queued - it's also a prerequisite of
-d7ea8495fd30 ("fs/ntfs3: fix missing run load for vcn0 in
-attr_data_get_block_locked()").
+The other two perf build errors reported in this thread are covered as
+well: the libdw.c inline_node__clear_frames() failure is fixed by
+674dea094ef6 ("perf srcline: Introduce inline_node__clear_frames()"),
+which is now also queued.
+
+Thorsten's third error ('evsel' undeclared in
+perf_session__deliver_event at util/session.c) doesn't apply to the
+queue itself: that code block comes from upstream a2e59fb79f449f
+("perf session: Bound nr_cpus_avail and validate sample CPU"), which
+isn't queued for 7.1. His local cherry-pick of 7a490187f22b pulled in
+that surrounding context without the evsel declaration; the backport
+in the queue doesn't carry it. I verified the current queue's
+perf_session__deliver_event has no evsel reference and that perf from
+the current 7.1 queue builds cleanly, so -rc2 should be good.
 
 -- 
 Thanks,
