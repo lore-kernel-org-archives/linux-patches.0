@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FF540F727;
-	Wed, 22 Jul 2026 13:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127F533F8A3;
+	Wed, 22 Jul 2026 13:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784726569; cv=none; b=k9J/7NAZ2AVQEdEbpZT89rX2hMNdi0TEHqKnK6P3irz4lx7DBxSMrzNfjiGJZN5sszUHJfk4EW/u+apM7ATNRYxtBymn4KMSePAnXaCHh5FYRvBgABcQmHCV7I9FMyENy96wrkAkzXfWl6dtCiofHf8pwKO4mLAuLWCHPmtcufE=
+	t=1784726747; cv=none; b=ELOhGLteHiCeiPYpsZB83yt4MEx+0zSXyVU4b3fIQ+LVjvCbiWhlTs4CQy/pUZ55wKEW5LRJIVxoaORpVr+3HoKhhs50Cahrh4/2XXxvIJfv1PMAlNws2QG/KYhmRgozz0xrTcBLob47ffwLlBQoEhXHuAPog7pXvt/jjCdSaiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784726569; c=relaxed/simple;
-	bh=cQ7o5OksMOIDcTYGMfTyLTes55s65dEwDvnzUwRSThg=;
+	s=arc-20240116; t=1784726747; c=relaxed/simple;
+	bh=ORF0NR03uUvejeVPGOQ1gjz/F9vxipBG+0yAybP4WQI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OamQ/JH9t8Jfs9mvJc5djYOk9fdzZKF+s2Vf5JinK18TLnbVk32jwpIkgWh/N3YkXVtln85j26YpcPcPpH9YzcgBeYaEbrCqxEnLY63qf/Mvs8sgABaKizr9AdI7QgHPPZuhvRhwJ4a57ux9ZSmN24IS+s7/2EArxbgd/m20zhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgVYJRfY; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=ipmKW8NgbWoBIkYopLLE42Y7hbPlv14gjd9p8SOO2+SMT+hz3VaHsZZCwm1c1naVI7q59F/hhXRQ/+b9sEvljdw4EIXzaCoHoeoFFtKK7h17nrx/3qWEeLRfbcE67RPL0Yyt540FjCdLNSNpW9FU9YQoPEBt42OHHvjqaAeoKZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dnf59Is8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgVYJRfY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB691F00A3D;
-	Wed, 22 Jul 2026 13:22:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dnf59Is8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260541F000E9;
+	Wed, 22 Jul 2026 13:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784726568;
-	bh=VpNt+tuiOcbKXTovMfMRN1a9ejRXx2fUAqx5jWb3uDk=;
+	s=korg; t=1784726745;
+	bh=JlVwsgUU44JlChANx8iFerR99T32QYVdq68KqtRkrEI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=GgVYJRfYdYfDg02GlGSxPu3ESka9T80a682dk1WKObZ/VT1+0DOajzOz56PZBGTV+
-	 xKm+hi9Yew3AvTqq2pnWhf/bwrqsDBIi6D4Mtf4kCwjegXsuUiN331AfrEJuPV4w2+
-	 D6i5hSVdx8e/cHAmxgwOh1hrB1hjns/3T0izky60=
-Date: Wed, 22 Jul 2026 15:22:38 +0200
+	b=Dnf59Is8KO2c3A4u7dTip8mtTVVi1Y7pQ8nfN5pBKnak/2WVVocUxcbwEpXGBcTRE
+	 h4Z68cpx+TaCkaB+8bCh9R2JACVwJvEifiA1jyk3hvr7StWMFvMIq5plxI1y7LBDkF
+	 JveNKdaZSn/oy8iRXoADIqm1nhEwRYJlr+7DPdgM=
+Date: Wed, 22 Jul 2026 15:25:35 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Jiri Slaby <jirislaby@kernel.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>, sashiko-bot@kernel.org
-Subject: Re: [PATCH 7.1 0931/2077] perf sched: Replace BUG_ON on invalid CPU
- with graceful skip
-Message-ID: <2026072231-luckiness-salaried-9fbc@gregkh>
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 7.1 0944/2077] perf sched: Use is_idle_sample() for idle
+ thread runtime cast guard
+Message-ID: <2026072225-polyester-lid-1a1d@gregkh>
 References: <20260721152552.646164743@linuxfoundation.org>
- <20260721152614.777381844@linuxfoundation.org>
- <37827f3f-a0e6-4841-b54e-5784d5a8a705@kernel.org>
+ <20260721152615.083823288@linuxfoundation.org>
+ <5d1db582-46e2-49e4-9884-eb96b573079e@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,9 +46,9 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <37827f3f-a0e6-4841-b54e-5784d5a8a705@kernel.org>
+In-Reply-To: <5d1db582-46e2-49e4-9884-eb96b573079e@kernel.org>
 
-On Wed, Jul 22, 2026 at 07:25:43AM +0200, Jiri Slaby wrote:
+On Wed, Jul 22, 2026 at 07:29:43AM +0200, Jiri Slaby wrote:
 > On 21. 07. 26, 17:10, Greg Kroah-Hartman wrote:
 > > 7.1-stable review patch.  If anyone has any objections, please let me know.
 > > 
@@ -55,49 +56,29 @@ On Wed, Jul 22, 2026 at 07:25:43AM +0200, Jiri Slaby wrote:
 > > 
 > > From: Arnaldo Carvalho de Melo <acme@redhat.com>
 > > 
-> > [ Upstream commit 1e2c83f732deb329ebce23e26cbc482f4c4bf194 ]
-> > 
-> > latency_switch_event(), latency_runtime_event(), and map_switch_event()
-> > use BUG_ON(cpu >= MAX_CPUS || cpu < 0) to validate the sample CPU.
-> > When PERF_SAMPLE_CPU is absent from the sample type,
-> > evsel__parse_sample() initializes sample->cpu to (u32)-1.  Casting
-> > this to int yields -1, which triggers the BUG_ON and aborts perf sched.
-> > 
-> > The central CPU validation in perf_session__deliver_event() intentionally
-> > preserves the (u32)-1 sentinel for downstream tools like perf script
-> > and perf inject, so leaf callbacks must handle it themselves.
-> > 
-> > Replace the three BUG_ON calls with graceful skips using pr_warning(),
-> > matching the existing pattern in process_sched_switch_event() and
-> > process_sched_runtime_event() earlier in the same file.  Include the
-> > file offset for cross-referencing with perf report -D.
-> > 
-> > Reported-by: sashiko-bot@kernel.org # Running on a local machine
-> > Reviewed-by: Ian Rogers <irogers@google.com>
-> > Assisted-by: Claude:claude-opus-4.6
-> > Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-> > Stable-dep-of: 8cbca8a480e1 ("perf sched: Fix NULL dereference in latency_runtime_event")
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > ---
-> >   tools/perf/builtin-sched.c | 22 +++++++++++++++++++---
-> >   1 file changed, 19 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-> > index c6a96d0dd77d94..adff5d40a15c95 100644
+> > [ Upstream commit c9b3054c99cafd5f5f92158101760992a83e5a5e ]
+> ...
 > > --- a/tools/perf/builtin-sched.c
 > > +++ b/tools/perf/builtin-sched.c
-> > @@ -1147,7 +1147,12 @@ static int latency_switch_event(struct perf_sched *sched,
-> >   	int cpu = sample->cpu, err = -1;
-> >   	s64 delta;
-> > -	BUG_ON(cpu >= MAX_CPUS || cpu < 0);
-> > +	/* perf.data is untrusted input — CPU may be absent or corrupted */
-> > +	if (cpu >= MAX_CPUS || cpu < 0) {
-> > +		pr_warning("WARNING: at offset %#" PRIx64 ": out-of-bound sample CPU %d, skipping sample\n",
-> > +			   sample->file_offset, cpu);
+> > @@ -2904,7 +2904,13 @@ static int timehist_sched_change_event(const struct perf_tool *tool,
+> >   			t = ptime->end;
+> >   	}
+> > -	if (!sched->idle_hist || thread__tid(thread) == 0) {
+> > +	/*
+> > +	 * Use is_idle_sample() not thread__tid() == 0: a crafted perf.data
+> > +	 * can set common_pid=0 with prev_pid!=0, giving us a machine thread
+> > +	 * whose priv is thread_runtime, not idle_thread_runtime — the cast
+> > +	 * below would read past the allocation.
+> > +	 */
+> > +	if (!sched->idle_hist || is_idle_sample(sample)) {
 > 
-> This needs:
-> 7a490187f22b perf sample: Add file_offset field to struct perf_sample
+> This would need:
+> 1ac10645bb29 perf sched: Don't pass evsel with sample
+> 
+> Instead, calling
+>   is_idle_sample(sample, evsel)
+> here would be simpler backport.
 
-Thanks, now added.
+Yes, thanks, I've made that change now.
 
 greg k-h
