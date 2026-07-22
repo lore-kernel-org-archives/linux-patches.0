@@ -1,111 +1,137 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C43940BCA4
-	for <patches@lists.linux.dev>; Wed, 22 Jul 2026 04:42:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0980C2D738F;
+	Wed, 22 Jul 2026 05:09:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784695349; cv=none; b=XjflW+VbRrDIVVMhVX1avx0ppG70PoUsfTSamaThb8M1szCIYf5mtczA1bMZn3FGRYIlTm8EYVFlpwy2L8q/+G9MpFTvW4u7hx1bAMF0HIlVPmImUG8d1Bp2mCnSwUPzcCn34S4eAea1QUH8OSmKj2puNiQZUzJ2gU38BXkfXuI=
+	t=1784696965; cv=none; b=Ow+Zqi3KRucUoJn2rEsgSRoF7nVGiHEbxXgt6/Q0fRLVH0x3Bu/mJg7UlVJFrMWCiXbO1+uhR6f14ktkOMgiPelUhQZp3gNYq9l1EWkR4oiyus3CLjPNv8TxPDfySvYbfly36xEVQrbIENyOOjKB5GxH5SkNBEsV8KUqLsnslME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784695349; c=relaxed/simple;
-	bh=UDwEITqIh//cs/uc6EAZsKevx3PgNN5PHdWvOK5FIXc=;
+	s=arc-20240116; t=1784696965; c=relaxed/simple;
+	bh=nNdg8Ej544spvDaEEf2ZW9klWc2zw0nMsT3QIpou15Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=s9xtLrWVrsE7J1hAxx09A7w4u71YfxxjNITCUSrgtZiPqbXAQDhtjZ5qyvQ4yBPUR/pXvSy8pA4dF8WtO4HHhAW0WJVUWHDD7eyHEC+mEii+MJuzgsDHIpb6to+4SyQnlkEgo/JudhJKxvTprFd5EqTnlLK8du8ijGOyMrEgaNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=Jm2elim5; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	 In-Reply-To:Content-Type; b=f7uzcsN5XcZwxqFI4qO9/CQkJFMhOaSt4XZJdWS+vsGsvBJrF5gO6sdh4wPjB8SwnMlRIT8c52mrnjXtLveAQRIHpNUi8I+xi9XkvGglIgA6iOS1ESiwe+55pD1yAtRKwbBdjqxOkV0fht9WiyYdhpaXYgnbiWQQa0Y4pAv96UU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dQKdy3ZC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="Jm2elim5"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4954df200ddso28644245e9.0
-        for <patches@lists.linux.dev>; Tue, 21 Jul 2026 21:42:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20251104; t=1784695346; x=1785300146; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=HtEJofhzLlm02HKE+RTIuX6GzjO7GsDV1sElIk6QVJo=;
-        b=Jm2elim5hENcKgzeazG6v01QAvvQu2Mtjecj6maaIlejJszRyFSbA7BCNbSA4Kjyij
-         4MI1cVpVUcapbVplfdkGI6d+vu+aGFJbC3lk78/C/3GB9GcafGaTQRZOkt5grjyRhGl6
-         XdxLkF1hmGIRO/rX1HKTobRo+k43/pgdBMKMpm2a3S3ywNShLdcohw5/Bd4vNUC9tEvw
-         aIlGIFyreIfvBtAQzrqxEeYAxeWlx0LJt4vMStmPp3K2CH+K0H+OVPGcSNNQ/ENgHCK2
-         gKYUCUEeMIRaYEOB837HteCZE1Gw+tfXygDSSGrklpwQN8M4gb5/0oVcYzRqvFMTcifv
-         rDOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784695346; x=1785300146;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=HtEJofhzLlm02HKE+RTIuX6GzjO7GsDV1sElIk6QVJo=;
-        b=BIugE9B822s6EQnluOsQOnxZAkpbgBwMowddHlM7V0iTG8bNUeF+95ZAAT0nBWRWLQ
-         BM3lKNmPsNqCf7+IfS5lxxftaMa6HJ5HJZB/ZCqrjofwt8b+hZB09d2dtl8DKynJnIC9
-         YnqVUsmqAEQRx7Qa5Hwbq6eRhEiVBJeabcfBIkD0MSGN26BZWZYA1zbF+vK8lyAK1m5i
-         T6mAIydMLCyfgCu+/mN7lSfKJFw2scoeL1C1Z7hC2HhPevNLTW5eKmHA02mU2DNrhmoz
-         l5+v4CSBWaHf0TM4hDSYk/LvVOxRn4lb7dkkyuk880roiMoVwfhG7mFboynP9HAqzDc9
-         zp7w==
-X-Gm-Message-State: AOJu0YzVLPNn0eFQMRo73pyeDYnCx6fD0rfe8fA30/0b0xgNKkLL2SuC
-	VnMQowqyWzmgDVDXiD8DBK7L+JBwSBmUIxXyng2klSLyMK3A6WDjO3c=
-X-Gm-Gg: AR+sD10LU9CcNz0v6BFK2DIymt4wN9hjPMkAdGyNogHDZr/SPfq41JyjecySHulS+PG
-	gPnvNwy6VOSCGEpEUPOtWOVdwXhPNjTXOX9hyoUIhIOihA/MgFCiice/O7+eYKGxaRkLEadjsOq
-	yizgg94FERPkpkR603qOpK8qoEA3j39wcCAqne8ROtEgvbDkXa9r76SrZm5hBhFJ1eawZrkfTqV
-	RbFD5Hcx3yATKasFs1ustgRrHFhlo7WFGbsbFAia/GKFD2bd7KsuwodEVs2+z1siLn5vP1ksfCR
-	hwuMPl0SEBGPx6YJSt1n1P1L20Hn7iVbydOUSpka2o5OzAsuBpJDJfTvYvvOtMsG0Z/Ui6j0AHc
-	ZlCVMAgQ34LNjqxpHSYeC19H1RWgtvqHEeAfG1v4QshIz9cMykZr6JcAVffnD3pNwc2wsZwE2Gw
-	3Z09bF4SEnsfiAyCq9bzjvkLc72Be9i8kxWv6JxLBJ2/P0MqpEsE+GbRqf0CKyEcXi
-X-Received: by 2002:a05:6000:402c:b0:47f:7759:89df with SMTP id ffacd0b85a97d-47f77598aeamr14551185f8f.3.1784695346324;
-        Tue, 21 Jul 2026 21:42:26 -0700 (PDT)
-Received: from [192.168.1.3] (p5b0575c3.dip0.t-ipconnect.de. [91.5.117.195])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f85bb5127sm2524047f8f.10.2026.07.21.21.42.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Jul 2026 21:42:26 -0700 (PDT)
-Message-ID: <74b89e01-4a1f-4c0d-9d52-ebda6e980548@googlemail.com>
-Date: Wed, 22 Jul 2026 06:42:25 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dQKdy3ZC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2A61F000E9;
+	Wed, 22 Jul 2026 05:09:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784696963;
+	bh=Sp0oBn2A3UJy7GjDdLimRq5Z/3hvzhUwc/AK/Txvgi0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=dQKdy3ZCErs8SQhSMBNPNzcGwDugWiuGZAf9pYMFov6Chev8PZ0Kqb6oNwe/tlBiD
+	 9YH1DSem8Sb2T0FutRnukw43tSJDRMc4fbemFCJkyew8EdYiPUkGihNm0KCCX3s+89
+	 LgkmYm43tpx7Nu/meKsu9hcLE8hVYTqMQFbRtaEtPT9S5T/CEjeuvQnOqKbYcK/o/T
+	 Os4JUi2CDaPg+eVOPWh2zzL5du2BtsGSVV6psxL7xXlvwMAWtk2i1eeo9p/U5uwWAr
+	 w6USA+Lq4WL0UJnf+txKD8Bfe/+UM/8cqWt6XSe/7CNH88kPbOXMlCw8cGB6lWu/QY
+	 7hy4dxHg3dRKg==
+Message-ID: <26425ef4-454f-4087-98ec-d045247242d8@kernel.org>
+Date: Wed, 22 Jul 2026 07:09:20 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 7.1 0000/2077] 7.1.5-rc1 review
-Content-Language: de-DE
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.1 0898/2077] gpib: cb7210: Fix region leak when
+ request_irq fails
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
+Cc: patches@lists.linux.dev, Hongling Zeng <zenghongling@kylinos.cn>,
+ Sasha Levin <sashal@kernel.org>
 References: <20260721152552.646164743@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20260721152552.646164743@linuxfoundation.org>
+ <20260721152614.000907002@linuxfoundation.org>
+Content-Language: en-US
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <20260721152614.000907002@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Am 21.07.2026 um 16:54 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 7.1.5 release.
-> There are 2077 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 21. 07. 26, 17:09, Greg Kroah-Hartman wrote:
+> 7.1-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Hongling Zeng <zenghongling@kylinos.cn>
+> 
+> [ Upstream commit 5ad28496055858166eb2268344c8fda2c26d3561 ]
 
-Wow, 2077 patches? That must have been the biggest stable RC patchset I have ever seen... Yet I found no problems 
-testing it on my machine:
+This was reverted upstream by:
+285ecb7d9e1b Revert "gpib: cb7210: Fix region leak when request_irq fails"
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
-
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
-
-
-Beste Grüße,
-Peter Schneider
+> When request_irq() fails, the region allocated by request_region()
+> is not released. Fix this by calling release_region() before returning.
+> 
+>    Smatch warning:
+>      drivers/gpib/cb7210/cb7210.c:1068 cb_isa_attach() warn: 'config->ibbase'
+>    from __request_region() not released on lines: 1064.
+> 
+> Fixes: 82e3508046f9 ("staging: gpib: cb7210 console messaging cleanup")
+> Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+> Link: https://patch.msgid.link/20260503093036.283546-1-zenghongling@kylinos.cn
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>   drivers/gpib/cb7210/cb7210.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/gpib/cb7210/cb7210.c b/drivers/gpib/cb7210/cb7210.c
+> index 6dd8637c5964b3..05058bf2cd50bc 100644
+> --- a/drivers/gpib/cb7210/cb7210.c
+> +++ b/drivers/gpib/cb7210/cb7210.c
+> @@ -1062,6 +1062,7 @@ static int cb_isa_attach(struct gpib_board *board, const struct gpib_board_confi
+>   	// install interrupt handler
+>   	if (request_irq(config->ibirq, cb7210_interrupt, isr_flags, DRV_NAME, board)) {
+>   		dev_err(board->gpib_dev, "failed to obtain IRQ %d\n", config->ibirq);
+> +		release_region(nec7210_iobase(cb_priv), cb7210_iosize);
+>   		return -EBUSY;
+>   	}
+>   	cb_priv->irq = config->ibirq;
 
 -- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+js
+suse labs
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
