@@ -1,117 +1,93 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-42a9.mail.infomaniak.ch (smtp-42a9.mail.infomaniak.ch [84.16.66.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B08386C31
-	for <patches@lists.linux.dev>; Wed, 22 Jul 2026 07:19:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784704788; cv=pass; b=GjmI1WNWUrctfcB+/qG2wSauAwFOvQ8LSInN0DKlPokT6qm+uXHNJ7jUKj9WTDR19GxTz/72xS7S+egr7QCGRo1h7NwJQ1Tx0QMcS97Z7Y+YRVR7PMz+3ASFvQyYlzGVW3KNSOAozK4ULUUGtTlsH08XPLk8k+2Qlgp8KKrC/+g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784704788; c=relaxed/simple;
-	bh=4zThSNHzxYD+okwWzZg9aALuGq5zqrVRtzbLGFKtg2E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R5BeKMT4jyIuvpHdaXoOqET2nsmHk20VJbehNz6bJpPbYfWvZ1+9TpXphXf/NwTWoOmEMJZaFE/x2zXFnQWjenD9LSKEzUxQuPX1ZohI7Mp0EvDJtDj/G/EOw0FAR25asCbnC2E/SjaQg3GX/mg9enUjwZ7cQ5Xr1COWQoM7It8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ovmYhdH8; arc=pass smtp.client-ip=209.85.216.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF8A298CA5
+	for <patches@lists.linux.dev>; Wed, 22 Jul 2026 08:16:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.16.66.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784708188; cv=none; b=imycGjN5lYuPVn13CV9ieRIMme1DZdKCdIWpQmiR7nTX5sSLpQMoc5t3pWfTh2QKdKTfnU+akHI4MPLMBIdgg2ZSBeAjTRXOa/n3Q+rW18rfJ1KGIcx0Cn2oz2CAAcDj2REBZKzQMzSbtBY+Cwt3sj6PvRnkzyGR8Vp4HNokKN4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784708188; c=relaxed/simple;
+	bh=hE0zDnQ+UqJJ4BLvzjnb6H+I4z2TAHTg1lvPy/LzS1I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CxdYKQxdHPt4PaxaYtX00kcnsFU8LFHYhZXWzV6FE/oA3sn5T+K/HqzMnjbIVuy4UqU/1yZnAbX1TgWLeYl5+jRchjPLqARYh6GH/11meTUN3MD1StcY2/H09pe6qcz7aRy14OhrQX6vFBgqThNjmLbpaqMdUvEU28rtZZOkcuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gibson.sh; spf=pass smtp.mailfrom=gibson.sh; dkim=pass (2048-bit key) header.d=gibson.sh header.i=@gibson.sh header.b=T1i/zQXh; arc=none smtp.client-ip=84.16.66.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gibson.sh
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gibson.sh
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ovmYhdH8"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-3860f32307bso1930967a91.0
-        for <patches@lists.linux.dev>; Wed, 22 Jul 2026 00:19:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784704787; cv=none;
-        d=google.com; s=arc-20260327;
-        b=EkXJHZLY0vLS2msJeOP1Rhta0Pd2f5CX7hvCCdlnh5NCCt37prV3lYegQnNdpcUkv/
-         w6qn+0mtdDd/zbMRa6VEeDdlwthXGRdobEQ1Y59Ikvdeau9WmZ9uKH+o566IzYJHYQvD
-         rp53O8a7920bfeHE0qAuAQCGvTWAj3erOgpBko5QUOQpTMx5xQK62nZC3glz2PF/v9bx
-         k2oXZyH9smrs8uLZIR8cxK5g2was5ILeliErauznxs8AcI/G/+WrA1rPBk2fUXy9Nwkn
-         rLwWCYYk7oSPjFJsEBaV07+9hSbCZlaVOSkO0UK/fyeS19HZ34SyttLrK0s/0BO5HteG
-         TZgw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=o3kLMI1ggHSuNQyv11Yct6G+erBFb60cEs2tdiP33S8=;
-        fh=7VHtyjoaeEyVm1UsOQzFLzIDtdBgap5RQ2s7+EQYOu0=;
-        b=BuXuEgWLBhkpWny8HWMrFCKhLmXywjb6TdMvA4ffbW8FvP65sf3NdzTV635kC9S0vD
-         X2YPfuV9VfTNxutwvliofCr/IxAqkvf5Wfw1vFzDidFQQTI1mDh50c6NUE0bbI4jHqHq
-         4zcaHykjdKo1f/z+SihIcCqwQ8CqvYJTDG3DLhQ9mxQiymm5Kgip5i9yGM+/gXkRR1RD
-         PLuu7cFAG/kENL3uq8QdtSBlq14k6zyxptOnFdijY7sZegXLSW7E/tCskEElSaORP5mD
-         3QhJ4/zdVboB67V61rFaI/pVr3RXDbuUrvRMt80fm4CIHG8beDEHXJSj/ZVACoYsA6nM
-         vapQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784704787; x=1785309587; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=o3kLMI1ggHSuNQyv11Yct6G+erBFb60cEs2tdiP33S8=;
-        b=ovmYhdH8/j5GAqgN4sYjWF8lPQQlRjm8Lg16KpdFcVsGjrU1Awgcxkgp3j/vKrMINq
-         XO0JaQNgJdG5aGq8fUr2kNiWdTWYVsB87z5dmvXGI/52IeaQcErTir1OkzoDro8r47d6
-         eu2MUnl3oXEr1icy2pkzCTmNW+SMb226RKacPTvBjbwnsaHz3lyaQQIJtsIalNrVgdRo
-         rGSb7/QJyfVcDi0Uc2s6NiMVSKuo81Ee1KtOe8gykhS1K7f5V62IA5gGXkFZW3Q7I2ui
-         3mXacQDV1CHc3sIvpkA1Jk2p+914PKegvukVdBEBmKCY0O6JM/cQo1DpA+7L+Yn+rHuz
-         Eyew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784704787; x=1785309587;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=o3kLMI1ggHSuNQyv11Yct6G+erBFb60cEs2tdiP33S8=;
-        b=rPFqbVrfjaq1529KFxz6TuXoo3FvKcF2ROipF/9mvAOqcHboMOkDYzhJhCbPs7zE/D
-         wwUVdptYIB/uFR+a2Q/ZB8eVzdWmascOn4Qod6TrUntgl3+ByaV9EV44OOpKj3iCJx2k
-         Bmt+mtpZ2GG0I1UX0X5HV5wqf28ApEYlMjwa4HuvJhzgF/oIk+95GEiM6lM5quarQ59y
-         gmTr94GMjYbT2PIIfqMRW6gASmJm2Veo8Z4iiN1STU7xBv9gmkmsjlNnlIQD16kPVLvN
-         mfqmSb4hhnfMcX1kDK4vYfZ1eeAXH++I1PEY8Pm9GdGpOmU380Q5pfx7fztP/pxuExBV
-         /JCg==
-X-Forwarded-Encrypted: i=1; AHgh+Rrfz0a6HFy/WBd8AZIDJ7akFsiZ0aBHZCKmu8BH15lTrBz9RbDzNxnJcgvqS7edqmnfmuOWVXfU@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzx+LrtQLzKX4UcXvzjsThKKIpXg12U3LoVXl3JdfiiU0lgNr+j
-	0ehlMmcL2OX7ewU9Wh0FjHN2rxktRFXYUIgQc2ufFMrp4r/8rOqGrV4DcBW3rtnQdXUuLddOPbv
-	qnDkSUaidCAGKAUnogBPonWSBB8g6Ly6LCecObaE=
-X-Gm-Gg: AR+sD10BSMMB+WXKCgg+wFDuw3C41QPWtoy8LxJ2ouSD6+utvyAesDofT2k8WIuvPFS
-	X9q1qf4h37+CThZcN54RObH32ltpw0wzzgTarQZWSHpaPNX5XUY8wnXXgrYyyTZ+XeePJcOssya
-	u9JVBgziWxSC3c3izi9R9iQFDudptQ3AFgjhR0c13adG4X9nASY9DCLGVrAsbUb6xPqXYnxNWlC
-	eoPBzT/UkF1y6iQntkUJ5ACD6TIlwpZiuXi9h2LevwaAuiHw4lScQB+0Qd8pYAmXdeEeHEin+Q6
-	VJYcQ+lvj0oj9yFkaNvmPuA/ELLToqp+SkBtO7tNTzDc3NPlrse/gTYSrrtJGAcMkwLa8/WrJTg
-	87ER+OphaubsF
-X-Received: by 2002:a17:90a:e7c1:b0:37f:e7e7:ad1 with SMTP id
- 98e67ed59e1d1-38e92a46742mr4531515a91.5.1784704786586; Wed, 22 Jul 2026
- 00:19:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gibson.sh header.i=@gibson.sh header.b="T1i/zQXh"
+Received: from smtp-4-0000.mail.infomaniak.ch (smtp-4-0000.mail.infomaniak.ch [10.7.10.107])
+	by smtp-4-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4h4nC45PGkzMFh;
+	Wed, 22 Jul 2026 10:16:16 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gibson.sh;
+	s=20260228; t=1784708176;
+	bh=Lsbf5HqpXLXokRBbXcIGB2u5wKP2su+pKWLVZgHuvNA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=T1i/zQXhM3H8U3TNDF2oTwZ+URRnEdKny3kbNiq9y5iWSH+7uwdR3zv9i3QhGfkpf
+	 vbGBzQC18UFWeRprGMIf+Jw3bk+UT+PJPPhqM/3/lKhnYteJMxcQrD6ljd+zZVZ8ML
+	 4UTGA1n6C9vb0l7S0vyOxRzY4+bP40x2xPDAGz3wLzNDp2Sjjx6OXyKhGY5r4z3xok
+	 bz4d8HtPYEd0dDS64llSd43bDpfwTPhmW/Otuhv0eWdsIAsU5yqcCR4iTW0UvXek9O
+	 JvTJfrcbctYvo5r9B3vAsQTS7wZMwPa0jnHOMA1e5TwwQlOxaqqTt+sxPI6dJUQzFQ
+	 fvuOE66HiS+kA==
+Received: from unknown by smtp-4-0000.mail.infomaniak.ch (Postfix) with ESMTPA id 4h4nC400fJzHmC;
+	Wed, 22 Jul 2026 10:16:15 +0200 (CEST)
+Message-ID: <dc1702d3-ed9e-418c-a4c4-35575b55670a@gibson.sh>
+Date: Wed, 22 Jul 2026 10:16:15 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260721152441.786066624@linuxfoundation.org> <20260721152443.212105076@linuxfoundation.org>
- <CAH5fLgh=6eOcsUpBODZmyhQnZ0eqDfY12MkmA20w2JmgxJ3wiQ@mail.gmail.com>
-In-Reply-To: <CAH5fLgh=6eOcsUpBODZmyhQnZ0eqDfY12MkmA20w2JmgxJ3wiQ@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 22 Jul 2026 09:19:33 +0200
-X-Gm-Features: AUfX_mzu6_9BMnuLdA9zaU6lvCr1vaDjIaZa_hixp4hYnmzw8j4YHJhB5m5ABiI
-Message-ID: <CANiq72=G_TpX6Qjeo9ZAkQX7oVjtMSkw5arjepFOW3_7GSv+5g@mail.gmail.com>
-Subject: Re: [PATCH 6.6 0063/1266] rust: Kbuild: set frame-pointer llvm module
- flag for CONFIG_FRAME_POINTER
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.6 1020/1266] platform/x86/amd/pmc: Add delay_suspend
+ module parameter
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ Hans de Goede <johannes.goede@oss.qualcomm.com>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+References: <20260721152441.786066624@linuxfoundation.org>
+ <20260721152504.653512550@linuxfoundation.org>
+ <980c483b-d3ed-41be-94e0-9b28fc42b482@gibson.sh>
+ <2026072230-volatile-citric-73fa@gregkh>
+Content-Language: de-DE, en-GB
+From: Daniel Gibson <daniel@gibson.sh>
+In-Reply-To: <2026072230-volatile-citric-73fa@gregkh>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Infomaniak-Routing: alpha
 
-On Wed, Jul 22, 2026 at 8:22=E2=80=AFAM Alice Ryhl <aliceryhl@google.com> w=
-rote:
->
-> We shouldn't backport this to 6.6 because -Zllvm_module_flag does not
-> exist on the rustc version used by the 6.6. kernel.
+On 22.07.26 07:28, Greg Kroah-Hartman wrote:
+> On Tue, Jul 21, 2026 at 11:07:35PM +0200, Daniel Gibson wrote:
+>> Hi,
+>>
+>> On 21.07.26 17:24, Greg Kroah-Hartman wrote:
+>>> 6.6-stable review patch.  If anyone has any objections, please let me know.
+>>>
+>>
+>> No objections, I just wonder why the commits
+>> 037f0b03c663a2 "platform/x86/amd/pmc: Dont log during intermediate wakeups"
+>> and
+>> a0738abd042f74 "platform/x86/amd/pmc: Avoid logging "(null)" for DMI values"
+>>
+>> are not added for 6.6 as well (they're added for 6.12, 6.18 and 7.1).
+> 
+> Because they do not apply to that tree, and there was no explicit
+> "Fixes:" tag on the commit so we just backported them as far as they
+> easily went.
+> 
+> If you want these patches in a stable 6.6.y release, please provide
+> working backports.
+> 
+> thanks,
 
-Yeah -- please see the instruction above:
-
-  # 6.12.y and later (flag not available in pinned Rust in older LTSs).
-
-More details I wrote back then at:
-
-  https://lore.kernel.org/all/CANiq72kek9NoFe2PCFnND1p6BRbuzgv6kT2o5jw09sWg=
-+wau_Q@mail.gmail.com/
+Thanks for the reply!
+I'll backport the commits.
+Where should I send the backported patches?
 
 Cheers,
-Miguel
+Daniel
+
+> 
+> greg k-h
+
