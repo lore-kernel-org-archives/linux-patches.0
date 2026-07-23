@@ -1,125 +1,83 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0AF484229;
-	Thu, 23 Jul 2026 15:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880FB4570F6;
+	Thu, 23 Jul 2026 15:54:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784821400; cv=none; b=Ob3UOoU76nE/G8W2V1o9l7fO/qTEWaBuqhTCsz88M/xtI2mCL8NxvqZ4Y1+wohfD4ExY4o7wRUYRhIqUr48No+B5qEqwr6UXFXvUF3zg/Z5bqEqI1EbgT8HXIWuY+UUU7N9a+nci2tVYHDd/qop5fd6XsOP+tRBsRg+G6QTuaus=
+	t=1784822066; cv=none; b=LD9T487j8Tri2zVzOpvCCKDUMgXEgooQQxhqDp+iExc1w4du1zeikCCmgdWb14Px7bTZBo8vHkm5jl6QedS9QVJuAXR4Cmg5hp0P2lAdSk6O4wH7I81yiHi8zLj6txgiWpbQluEj0lgm2vROvIaOuFvb74Rv+cgo7ZEkPZBajzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784821400; c=relaxed/simple;
-	bh=7CtQsGOkF4aE9AptO2qQPJHnLasb1hwzeZ6GKl3hLQc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k5XLypHaCQt4GL7Dy7SRl2FKMH9KAgDFlJJNiYPnAN68U+UzhAWnclcvaFbYkrtBekpIZIkLjNwjRIW9LjjSZG3bd+1Zn8UsQugTjPyqTUEhAjxpvkO0DCuNOQfErrEH5TI3sGAUlkb1CaYS9eOatOv0o3PAHVLjtLKSaGx39XM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K5le84i7; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784822066; c=relaxed/simple;
+	bh=oAAdQn2lm9BgCv8DHVbBNlDjpSwehQzZAYUZnabeFMY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sPYTFDh45YWhmq6RAbtuf4kPyuLzrNv1q2nXWAtKHPVQCqO3blDyxSwb9/cQJ9PEcoCvUJdHfV3DUX1v2PzIxcQjxj2w9la3jKkJyBAjPxMAMBbCsA5qXoQl1yqFytjVlYtDQrSK7u3wvv9octSqkKdJL7K16W4++uGmG+Qd3bU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QHLE/c+7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K5le84i7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C6511F000E9;
-	Thu, 23 Jul 2026 15:43:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QHLE/c+7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3FBE1F00A3A;
+	Thu, 23 Jul 2026 15:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784821398;
-	bh=n+cHDD9zAl4Um9SwhjM7LLm9yRbwoVznrjntYEx5NNI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K5le84i7bPrvUhmaEcZNEO/laXZ16q1Gz7wJT3o5UUCf/oA1kaakRD3EwZHxfdvY6
-	 9+oNhR+Q2tUVl6ClLaojRsqJk93orjrBKaf6afkwsxJumqOosa4opVS5qtY3mh+Sw3
-	 nCQ/3U70aEfd/84tUn0rbwqaOdPV4NudO/Cg/q4KoCYYFNKbxCRKFaymPTI093G9Q1
-	 gGhTOzn1SvVhISuE8EjphwBJ8diSr2vV2vJ8Gv/jCCdFK/ltWhzo1M2f2PaQyxGfXq
-	 Lbv0WrUhwO0doc85Cvo64z6TciQ3zXKrCz4tYPN8dovTuq68fkLzSx3EZEDi8jt8lz
-	 n/F0zp8v3XkzQ==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Eliot Courtney <ecourtney@nvidia.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Alexandre Courbot <acourbot@nvidia.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	nova-gpu@lists.linux.dev
-Subject: Re: [PATCH 6.18 0000/1624] 6.18.40-rc2 review
-Date: Thu, 23 Jul 2026 17:43:03 +0200
-Message-ID: <20260723154303.11008-1-ojeda@kernel.org>
-In-Reply-To: <20260722142910.893804136@linuxfoundation.org>
-References: <20260722142910.893804136@linuxfoundation.org>
+	s=k20260515; t=1784822065;
+	bh=XRhnmdoHtmo9NnNAk4JTciukS5h0FMY0NdWsHY1ryZU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=QHLE/c+7Lo30apvLlFLHKWtjauPYbbxx4HFUQXtDnGi3mai5ye5UxPWHKZHfMBJw3
+	 VsfUmWJwhYOam4rTVBcJIHBEYdss5JXre3xS1/W5L1G4AFTarvLDXbA0H4WZQBZOAX
+	 C/DhXLHir56VRfN8MuCEVp6JjhaIRnd+N3fSXmy/2L8PyqeW2+jSWKHuatvgDRq5/R
+	 3hie+xWDRLxKs5Pa9xaZW7t9gDbTCGGA7MBkzBCWUKzARXhMhsEDW3cvAPjN73sCLz
+	 FMu/mpldCiwXnuipbWukknDcK+ZwiMcjlpRh/EX4j9nwC2YB9l9/DfSXH8iEO7mFcV
+	 tk7tlYokSpycA==
+Date: Thu, 23 Jul 2026 16:54:19 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
+Subject: Re: [PATCH 6.6 0000/1226] 6.6.145-rc2 review
+Message-ID: <32a043a0-6bdf-48ba-8649-1c5539690905@sirena.org.uk>
+References: <20260722143258.264584003@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ePzcJUAb9mXf34+w"
+Content-Disposition: inline
+In-Reply-To: <20260722143258.264584003@linuxfoundation.org>
+X-Cookie: (null cookie
 
-On Wed, 22 Jul 2026 16:31:54 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.18.40 release.
-> There are 1624 patches in this series, all will be posted as a response
+
+--ePzcJUAb9mXf34+w
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Wed, Jul 22, 2026 at 04:33:42PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.145 release.
+> There are 1226 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
-> Responses should be made by Fri, 24 Jul 2026 14:26:57 +0000.
-> Anything received after that time might be too late.
 
-Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-for loongarch64 and arm32:
+Looks like I'm seeing the same proc read kselftest issue as I am on
+v6.12, the bisect is still running though.
 
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
+--ePzcJUAb9mXf34+w
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I found a build error for all builds with Nova:
+-----BEGIN PGP SIGNATURE-----
 
-    error[E0405]: cannot find trait `FromBytes` in this scope
-       --> drivers/gpu/nova-core/vbios.rs:398:13
-        |
-    398 | unsafe impl FromBytes for BitToken {}
-        |             ^^^^^^^^^ not found in this scope
-        |
-    help: consider importing this trait
-        |
-    5   + use kernel::transmute::FromBytes;
-        |
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmpiOSoACgkQJNaLcl1U
+h9BrEQf/fLpmjUxny8Bz65Re5SXBCZ77uqbLRfHJc9Mvj6rUojYYuqqVjBFRwVuX
+ZxshBDKXIJrTeNVdKzMyTz42vR1HsYKOj6iNj5kq/BwinLRmykQqAxFlMiTVRHTy
+2iGmMdmlZ2S3EL63RLByHpnDGsLMFHmgaHG4sP4nPAjX2vyKz+VVc1S02VRZNqiU
+EXDRT8pbfSyJK8th0ZSi8sUpBb3RsdwQTlC3imRFJuufoqtlp0h/Icgxtz26rXo5
+JL2cqJpsdigM3FppJ2khh6JPQ8qieVFQY7iSrSI4Qk8cfJvyrx1AsDZe/hdD8KG0
+ar+NoV8mblddtKpx4iSv5cPAW805Qg==
+=M/cn
+-----END PGP SIGNATURE-----
 
-The reason is that the trait is not imported (and then the function does
-not exist in 6.18.y, i.e. `from_bytes_copy_prefix()`).
-
-I suggest dropping commit
-
-  d8fa174e21c8 ("gpu: nova-core: vbios: read BitToken using FromBytes")
-
-for now -- it was not marked for stable, and as far as I know, there are
-no production users of Nova, especially in stable kernels.
-
-With that reverted, 6.18.y is fine for me for all builds.
-
-If we want to fix the bug, then we may want a custom minimal patch.
-
-Same applies for -rc1.
-
-Cc: Eliot Courtney <ecourtney@nvidia.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Eliot Courtney <ecourtney@nvidia.com>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: Alexandre Courbot <acourbot@nvidia.com>
-Cc: Alice Ryhl <aliceryhl@google.com>
-Cc: nova-gpu@lists.linux.dev
-
-I hope that helps!
-
-Cheers,
-Miguel
+--ePzcJUAb9mXf34+w--
