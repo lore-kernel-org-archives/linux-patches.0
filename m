@@ -1,143 +1,110 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD58442AFB2
-	for <patches@lists.linux.dev>; Thu, 23 Jul 2026 16:58:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6415F45D18E
+	for <patches@lists.linux.dev>; Thu, 23 Jul 2026 18:34:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784825882; cv=none; b=i8oM4xwWFXDR3477dfBwd1lIf500DXQbSzexvaWI3QivJf9dFxoEpIwCjJZTovYAMIaHTNhYz2lD0ivDHyJwDs3YldUO7R20SgsqB7PjjjOUeTG5YefzRbpFuscOJ7Xltssc6T/NRd4I+qxxmihp+kg80JMH+jWJrZexMabLawg=
+	t=1784831657; cv=none; b=aFE0HwnR9bL7H6Rb6A68Oa4UYRn4uQ8w+Ctpvf8xRQMvUPiSskEpjooWaxVX0rX63IL/BhgKvpNuZMFNwDuud6B9hnQlBfZ6c39ookljIWho71d4IEGUDAl+R2gPwtJ0MuvO3ToWaSqVHjADq08koXzNmYE1smkFobT/bctOLQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784825882; c=relaxed/simple;
-	bh=agnn/vVVbpuTs4r+4QvYib5M9eijg86H2mN+aWjNIgI=;
+	s=arc-20240116; t=1784831657; c=relaxed/simple;
+	bh=6BYvR1xlmastehOVUnSWesvLDMiljL+lh/30A+8Qi0o=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IwOqatihli4CsbiV6J+ZNY1KF1kIxAUW26SdjtOCyqS/NfVbbk1X3p0FUqYZ7VDvxepjjUDgUN7xiIeHq7P+xTJpl8W+iUUM81pWZKfLqTNlLKCAsY/6PxcLHGMhRzSzGemlDZyFQ2JeQR8RrIUaIpGIN4s2JWgTJ8snEVTchjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=l5iEhWuq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VjgPSq6M; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 In-Reply-To:Content-Type; b=SYDXExSiUP/r2FBBGhnqxKA4PHRbSxxu7qQHfLjHhN31PtlEjACh8T5Br2lrmq7Gt0peLd0yGts0SwT3C2x1HLShpnvzOZNWPxdOO1FWO2jCPo9yjdZSZXLH42fdKGYZm8T1alPWH0MqSKzN5sxIJSPsgMYvJxkN9VpOQOYXDB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=dXJLi95E; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="l5iEhWuq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VjgPSq6M"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id C078EEC0315;
-	Thu, 23 Jul 2026 12:57:59 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 23 Jul 2026 12:57:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1784825879;
-	 x=1784912279; bh=kg12pdmvq4RbPVfHzm9t6uJlsAgGwMISSFf/J3UeB8w=; b=
-	l5iEhWuqRjSvI1F3j84riiIcHWCC7OKQh+lTDI8se/S5vmww8Ou02oTjiDwIJLhv
-	ksl+ADg2XMvP2AWjIV3Zy6IkDlCn9WVjzzc4bYr0UjuPt4QGfQGPlSAvovHc98JM
-	eK5o+BZy+cM72JEJK4wnZ0L97V0Eg5lS9BopBNANgkTW1Z7OegkvgSiGk86bBCvE
-	9j9S1w8YqUHdTC7Yabm2fTkEQ5QPwTxXjSzxnOvfNZ4nz/6kOdf56woH5wOTPkZD
-	9IXJ9U+vmxRBqJH3MjVSI0w+kEGsgylrXAtdeXfnK93GcQyxDrZcqGXUA0DaRk3Q
-	CE4RorCRPdGJ5ham5TQB9g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784825879; x=
-	1784912279; bh=kg12pdmvq4RbPVfHzm9t6uJlsAgGwMISSFf/J3UeB8w=; b=V
-	jgPSq6Mey2Phw3cAleABx67c3EMiZtdKOnLVsnM4TyyG2oyYUQNKzTbTEOkIXGhK
-	ZPMkn1mz1iSmunFXB3HqT/Zvu/iI1m2Qf7CfEIRCWNhKAWT2IP6rjECIFmYI+Xi6
-	1nIA2Sc5ZYX/dOkRL5mPlHElWRcEuR2oNxBp1ZwSvIiD5S7Pgh9Wu+Q3hs89KX3e
-	okodWzjhQyT+crcVlU6vlUR6tJTDYMi8vY1ATHUCrduTZgy3lwNAuNtd1fzf36E8
-	d7RYGZr4KSy8XxNeykoTUIjYy3MhbNwg+U3HmrOtgRTUw7sqgeaDayrSMruNO2Kn
-	aR2ziPb0FxtoxzHN70Eiw==
-X-ME-Sender: <xms:Fkhiat7iz-bWLu5BJCEp2XTUjX02H-yBGpHzW8416AQhejFcu5Vo9g>
-    <xme:FkhiahasbBqwBS-r5wAR44jQNHqUA-gykxjTCjueXlRfQvJv_3aSDnCZbVKFKkHOD
-    20OdQYEmbuVE9pZEibSO443EgJiDo0YMn_sabGBjJOf4dfqStDX3gw>
-X-ME-Received: <xmr:FkhiaicUEzTWvsQWuReimamB4eiHM8xKlKyIwp2iVVWCn_jtNaPj-plBoP_0wbrKQYGJjawH1jX8FxPMC7Q0R8lBqrZim0KY>
-X-ME-Proxy-Cause: dmFkZTGrHdAdEnK9D8QcBeUJE6Iu8s8ENkYluDvRv9lwJnC9ZCbR4uc9b7r6l2HcPCLbrk
-    bmBZZbxL1s++nDgWs1tWU+dNvaJTUkpy/2SKW1wNuRgN1PGQ3zO66sJ8HkqFz/Uho0aXJw
-    6gT+xrnaEWSZH3VrglNdYQwMQTsY5/92HAFrbGeb8ndg4Szh+71OKWn1+w+BltnT6DS9gi
-    cl2iwUgvH+mGDH5PVUgTbV+Y67Av06FZxi63RYedTOBj8LzKgqZwoRtuCbx3AhoG3de8YH
-    HJlhoYhTgu1xJnP2BkdAoxuyaPFFyB5v2mLpFqGksp/z01b1d5kT57oZzJHwGqPKFS9kBn
-    bBrMHaPEo+7FB/TEMDoyqESgI5ccPtDYIhAUgRiJNrtkg6alnrT/6fGdvEvK6cKHPBjNyY
-    /Xkfsjoif+EUSrmG2zVKe3eGV8I0ySnB3o8v2nHSdOyGvIRQ0bINgb6+k7WE9haYq9le6m
-    qVwlBEa9S0HPe7txKM4rnU8olULDKagnSMtBjjg5W7yb9l5h3mbF0idCaRAp1TUbnOrNFE
-    M7m5NkOlQDUrHzUUDqhTACIGbT/AW479JEc3oe2FO0fKKjYqC9fBxT9SXZVjnrUYO6Xke9
-    /p1Dbh7t2yKCVYrV4ERwlnikyMnF3Q7fKM47OSYGpm22tb7HViafCgu6edEw
-X-ME-Proxy: <xmx:Fkhiao7q2MM8YE2zyqPHf2DBtzmA1VwEFHO3nphALH3duK8dm3RHYg>
-    <xmx:FkhianZV7R6vA3PpD3BFvECCTSIqxrQ3DaXMBfDmC7bfhIfpM3ldRQ>
-    <xmx:FkhiaqFaYyCDqKYrVhm79M19l9AKcnWcHNgnETnt-SHuPpidvBoI7A>
-    <xmx:FkhiaimKnf8v_iNnsO8RsQch87mDnUHZo47hGUgqCUcHd9PwgBaE7Q>
-    <xmx:F0hiaq3PsfaggAw4xeEnMDWTcsG5XChALGGy_U4XsYeLWbPuaGnijpHM>
-Feedback-ID: i6289494f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 23 Jul 2026 12:57:57 -0400 (EDT)
-Message-ID: <3308ea85-4ae5-4c5d-bfba-67bf7164a5d9@pobox.com>
-Date: Thu, 23 Jul 2026 09:57:56 -0700
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="dXJLi95E"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-4798bea72f9so654995f8f.1
+        for <patches@lists.linux.dev>; Thu, 23 Jul 2026 11:34:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20251104; t=1784831651; x=1785436451; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=EofdiDH+aqgzOU51jG+bu/UGsM0Cml3C5C1OY1sI1T8=;
+        b=dXJLi95EZtRs6nrtNAGU8wrUDNA7tcFnusXfcP6fEJ9ccnC8qIHHkcUNgwwFD+dprK
+         LCbYvJCcSVag9X5hOb0c37ynEww+/yV7WAgk8kyHbgHy1A1MfD63qF7kMsE686Y2oz4z
+         ATPwLfEry966pkYKokEy0oaipIbzXjO1o/pJkGamBZ6hewv2jFZfxwqvyV5r1d045HKv
+         W7kC6/sJ3KAIH9juumZ74SCYeCXrxdaQvdZ6y8P9s8U8BmVkn00wwlg9QZ0ZdpNeDJ4i
+         zKRwKq4rDhunqRcTZn14RcQPhsDg+l4oB5g4jkcX+XZFcoaMTFKiL9SrgoNmTkDZZCox
+         UtoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784831651; x=1785436451;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=EofdiDH+aqgzOU51jG+bu/UGsM0Cml3C5C1OY1sI1T8=;
+        b=iMydVOXBAF9qToF9ss5dVkkQU5TDip0PIZ/aPvz7dN+1x3ROdhesnuQItio4pnooWB
+         T6z/70SLJ3Hx2WcpGbHjw3JHDMsDFqjbXlLFafZa7zkp7Bm2+Ex4W89kXDCz2kQPIFEr
+         JBZbDkkOwpRdjiDDIqoHnc1ebBEqMfi8JDJI3Tko53paLuDVCoEbk1B/NzciPfvcAN7u
+         fZNp9g39QqiGAI5N7I4OLFbDDDEOx3F1IZaKI9GfOA/GDuK9AZe++mMKVFbGjHELg0cS
+         jKM+DFIJiXJyeS391r9L3pm2UUwuYjdwmoL8FPlq6ScaqyW3+oIGGesQmoLVE/yjuuMu
+         6agw==
+X-Gm-Message-State: AOJu0YwGvCtSstaRSJRENkcbOGeVN64T5AkDcdor81rdj3GrKen53Mh5
+	yC/46YpWT5anZ1nUP9CbfGnZT4GgatpUuAW7AKLm+X7EEZouRMIIGaY=
+X-Gm-Gg: AR+sD12xebPh0ecgTWwC3nOJl8092+FsICZC+4zO3mB/s9pwwLX8GUwG7Gjs3OG7oS9
+	1daiwifTAfZOIDdCB/PaWwbZSgD31keNB4kNTHNHzbCVNE22YnFc6XVTB6MVjw6HbznYmIMQFJY
+	sdJZLb34ye0ENt1oHkTc3aEaowheusbGzdmfQdXSVs/LKc4o/SMzNxRkDyRBErAlC9j3iPbtX2d
+	GDIva/3qKHVoHt8FQkgkDxF6P0AwtGLJthgvM52gbu6QnpY+9X7kRox5kJNEy3lw8YBppWViRP6
+	ixVa8sqatPjVEbVBWcd1f/hips3QggR+divM4BPxP9CoFyU2XlBi2qfbFTyj20zXd8pWKXwlUGf
+	Fj2eIsCHMIcg1v9fu8toPupdghpVXI0lF3D2zhKJFoOKvycKQYzay1ZIHmCSN0QY74ZH4cXybrC
+	A7m5ndHs4yaoToN+7BvJpI78/hTp3om/+MY20+HFBdUcAxAPe4i3VF0qA=
+X-Received: by 2002:a05:6000:603:b0:47f:81c6:5a38 with SMTP id ffacd0b85a97d-47f8da66b09mr5694327f8f.18.1784831650544;
+        Thu, 23 Jul 2026 11:34:10 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2acb97.dip0.t-ipconnect.de. [91.42.203.151])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f85b9a6d7sm19103319f8f.2.2026.07.23.11.34.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Jul 2026 11:34:10 -0700 (PDT)
+Message-ID: <daab158d-ba4b-4e66-ac65-00ebcc3969ed@googlemail.com>
+Date: Thu, 23 Jul 2026 20:34:09 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.10 137/699] tracing: Prevent out-of-bounds read in glob
- matching
-To: Steven Rostedt <rostedt@goodmis.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, Yuan Tan <yuantan098@gmail.com>,
- Yifan Wu <yifanwucs@gmail.com>, Juefei Pu <tomapufckgml@gmail.com>,
- Zhengchuan Liang <zcliangcn@gmail.com>, Xin Liu <bird@lzu.edu.cn>,
- Huihui Huang <hhhuang@smu.edu.sg>, Ren Wei <n05ec@lzu.edu.cn>,
- "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-References: <20260721152355.667394603@linuxfoundation.org>
- <20260721152358.800887633@linuxfoundation.org>
- <1d60d21d-ea26-4502-afee-c49c750df1e9@pobox.com>
- <2026072339-reshuffle-blizzard-42e9@gregkh>
- <759ee068-9519-4cfa-9be5-1deb0d9fc877@pobox.com>
- <20260723114247.00a3f66d@gandalf.local.home>
-Content-Language: en-US
-From: "Barry K. Nathan" <barryn@pobox.com>
-In-Reply-To: <20260723114247.00a3f66d@gandalf.local.home>
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 7.1 0000/2079] 7.1.5-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260722142947.085426486@linuxfoundation.org>
+Content-Language: de-DE
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20260722142947.085426486@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 7/23/26 8:42 AM, Steven Rostedt wrote:
-> On Thu, 23 Jul 2026 08:32:23 -0700
-> "Barry K. Nathan" <barryn@pobox.com> wrote:
-> 
->> In the process of testing, troubleshooting, and eventually bisecting this,
->> I've tried rebuilding the kernel from scratch maybe 6 or 7 times now. I've
->> tried on two different build systems so far, and it seems deterministic
->> that the build succeeds without this patch and fails with it.
-> 
-> When you say "from scatch", do you create a new directory and build there?
-> 
-> Is it reproducible with a "make mrproper"? (Need to copy the .config
-> elsewhere to not lose it)
-> 
-> As I don't see anything in this patch that would cause filp_close to be
-> unresolved. Sounds like a bad object was added somewhere.
+Am 22.07.2026 um 16:32 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 7.1.5 release.
+> There are 2079 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-When I say "from scratch" I mean something like:
+Just like rc1, rc2 builds, boots and works fine on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or 
+regressions found.
 
-rm -rf build/linux-5.10.261-rc2
-cp -al linux-5.10.261-rc2 build/
-cd build/linux-5.10.261-rc2
-cp ../../configs/config-5.10.257 .config
-make oldconfig
-make -j#
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-(where # is dependent on the hardware of the build system in question)
 
-I just tried again, doing a "make mrproper" after
-"cd build/linux-5.10.261-rc2", but it didn't make a difference,
-the build still fails.
+Beste Grüße,
+Peter Schneider
 
-(By the way, I tried downloading a fresh 5.10.260 tarball off kernel.org,
-extracting it, and running "diff -ruN" between the new extraction and my
-existing copy of 5.10.260. The diff output was empty.)
-
-Oh, also, this might be useless information, but if I disable
-CONFIG_64BIT then the build succeeds.
-
-Anyway, there are several different things I'm going to try. Perhaps in a
-few hours I'll have a somewhat better idea of what's happening, hopefully.
 -- 
--Barry K. Nathan  <barryn@pobox.com>
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
