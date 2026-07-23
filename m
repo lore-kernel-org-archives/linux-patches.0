@@ -1,177 +1,190 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A3142AFB7;
-	Thu, 23 Jul 2026 15:18:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B95B448B99
+	for <patches@lists.linux.dev>; Thu, 23 Jul 2026 15:32:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784819885; cv=none; b=QuNvfjWoaiQKmUYRh7WTcccf8zO9Pfd4fp66FaWwWST2QtznKQn3LqRfFpomb2iCjLbGdB08QdWJ9VfAfSHiRZcWlILxFsM27V/V9X+2VzXNZw8Wv+F7LANpz0eDk0TCSPe7H08Cr6II8Qhg7vZ09IgnUU93XXX/RhzVKQm0Pm4=
+	t=1784820751; cv=none; b=fnofIuur6ul3fMR8/DF5jdy5xYuLR/8jkhW3CWPTfRO+LEOgDZE9quKRtKPZzVESLFZ2/HOsWwR4WwhBD7ZMiMeUZ0iHTnw9st3BuD1WXQt5xYRiczlxGYD1mz0XV2ZTrztCHpJN6CeS0Bc/MyZTVcpkSB/lU0n6udKwYXoifek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784819885; c=relaxed/simple;
-	bh=2T7nmM3mhRxlBSfjbJ+XmcTjTnVn51Hn5ZeDzChYsJ0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RZtZniIJQzDAvNSN1Xmf7CPOYe2Jt+kSwssrq85hMQd820h4xKs3KDSrwp3qMyOrw/BVaJtEhTP9mdbikIAzT98aQlz/elnStTXJkfxPiFKzrAvQ52iizTUU8R0q49jf8xPtF3FiTHtkmjD21TmHuodkUk5tUx80TzsUKImruho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OreCp9uy; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784820751; c=relaxed/simple;
+	bh=seaYDwI+nOspPsam8nAG0QjOMH1JMpbMu7zdWL49U/w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HHn5zZoxiO/5dStb5pWrRBqc4hENSB9dX+rZRYGRBmZ/dnf3bjYM3V/KcODER4UUQEt3bRzgnDnnDq6kJzpDOAlzy3915zzMpgEj1XbTWmwJ0yfDrBI11CODWaywVUV2eaT7k3DGlugXdNbyMZwZ2Nn5L8h2DPvmMCTfSVdVybw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=agJVx3Y8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V2U2pGJI; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OreCp9uy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E9911F000E9;
-	Thu, 23 Jul 2026 15:18:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784819883;
-	bh=qjRCPXomKSjphdAldTpSRSYsWggsHazfxgaRK7XWVLw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=OreCp9uyv5cCbuH2IsD8GYJev6QpIM1TlPo7fXjFz3xdSqI+H1wKZynSzx4R5psVE
-	 6AHRU2lGaKOnKr5NjuIXQeUqRlTdb70LoK+yeVVdnehHF2JhAZlqJCgPLBdK63tNUc
-	 XvgTmaishQDvqiX2sgBDDxv4z0H5sYkgRc3mZIVx8ydlVWdisWDvRtGJJSE2S21v6C
-	 wMqnnL2UexQ3hElUrv0LWjJfDj2hxzvtwVi3SV7IgbC7F0Qk5sNZsccfT3shjWERGK
-	 2CWJOGwLbJJd9TJBwdhCSoiNEl3+l4aORVWW+W4sZyjJC7ApDlkEeGOuC/TqkA1NEG
-	 2MGte3U0BEjFA==
-Date: Thu, 23 Jul 2026 16:17:55 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
-Subject: Re: [PATCH 6.12 0000/1202] 6.12.97-rc2 review
-Message-ID: <16237d02-bc2c-4401-a1e5-1d81961a65c9@sirena.org.uk>
-References: <20260722142834.868902312@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="agJVx3Y8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V2U2pGJI"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 187A5EC02B7;
+	Thu, 23 Jul 2026 11:32:28 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Thu, 23 Jul 2026 11:32:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1784820748;
+	 x=1784907148; bh=uC8O9Vyu/QrSbOX3b8tQmIgdm0AzPdgb0nkxuwubWPM=; b=
+	agJVx3Y8kslvZuAu+VhczzMJ49A2rRBl2mTYw79bwBfPPw/vqlvReS2rCidZ5sim
+	DLmlxGHbmpFHc80pdURtcVwVI0vJI8Ed8l62+eIyB8jBvjrcb/rWeJ+jQ+Oyktjj
+	6TOCtPblnwC2j8Rsp/Qd2ZBXPql2Dz9rDmyjdztRi1YFvNS/fuWusWQcS6qN45Je
+	yXVMhALyQTuDDKMMVoDEJQFPhkVZOxODL0j/k6GwNKFQWCR6y+jhzzQ5YdSnwQHR
+	WNS78jUEwvyPYiMmx2l1heAv+Oq1sXQ9WdrU79L2yHXrcKcjcSIAzNfV+O2m1T/S
+	ci8bJnd9HT3XEXkKMaJ0rA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784820748; x=
+	1784907148; bh=uC8O9Vyu/QrSbOX3b8tQmIgdm0AzPdgb0nkxuwubWPM=; b=V
+	2U2pGJI11I1+XtinyGw449vKlgchUYRkj4apXGRuRkZA7bHjwdwlIDPeivmMBL4D
+	UUCPB5NpizCgh/f8DsTS0j1sWo56xGsVfukWC8NglpNO69mp+992Kh96MgQ39iY9
+	2C6G5N2xzz4y+a9rSOc/fONjhdjhTXKot40YCqm0IzC+VQYSUHkPIXe2zIOXA7F5
+	BOP8GXkbmKjalSd7sjN1SHm3IreR0uMO1ZJuD+cZnrhI1EFxveuz8A/oAZYcHWmf
+	51UDZy7VFCdhPM3PlFzl58INNGz8DnW42mXr0ARvsvxaA3hrn9neTNc1+zn05qTw
+	KF1syhyuGBOJsji+5UiWA==
+X-ME-Sender: <xms:CjRiatQ0UIg0iHMzR1Wuzq0HHEPEYJYG3mS3weQF5hfFAgoUfapHEQ>
+    <xme:CjRiatSVegr9ihLvDHZVmkn6mFAi_6cH1Xhl8aGdwXk_CYzpzSZwEGOoOO8oBD5tB
+    VlYoUIujMVH7QQ0WWNk-XNCkdrKv_PrhG9_srHQSLP8YDodwQKxAKc>
+X-ME-Received: <xmr:CjRiag1OKCkO8RGsWFeELfGdCtVs4uxPneHX3h-3kBZcNKSaCPfaXzbyTnwu6W6gSM5XpRXDmfnR4cYw5u2pmXY-21-yZ4Kk>
+X-ME-Proxy-Cause: dmFkZTGLzDJ6eA1f46/pGTTCNa9RQ903DHco+Bmz4K6MxvF5YldMvu//KTv+xII7QcGw3J
+    xdytwGZQ0qdzuGyHtSRKYhEXUoH2Ui3UhQednuWCJB+IOnALpIro+FDEeHG3r8Mt8Piyyk
+    NB+GQYZ7yeSlleCUVnshrqwPmueoc1EZ4AIlKekndhEM4zJDnhf6pcIVx+SsQr+Vwtg+9F
+    HTAY1QlbjlKmHpfiNwFu5ZPzyW6BHXh+/1MUAh2OkjV1v2z5SuPnIY/3Spa3LqlOX39VZZ
+    In0s4lvobVuZsnczUQ60JT7Bnd0Ez82Dy3oQrYzLriug3T0Q9Atf4piy+HUB/bBjqNJNMw
+    ecqdCg2LegFWdBHbXpgnLgXn/cC0qCaGZZ1QIpnMV7qg/aCRuNAgwaH7hjcxts1gCgkb+k
+    SzsUACEuDz6YeurmoPneImdEOr9aOl2noMvmAsSfBWZmX8F4ikOR9cD7CU++TGVUETGmdF
+    qyrB+Q9H/pcVxoeT63KVxpoaBma3zOmPy3hIBVcuvyEsVln1PR0xgzyr/kOl9YY52ozn5A
+    KADk9Cb+cn9H9xa3YyWs9/CPLio1w1RT+mx6Ruo7LgqU67P8SDu4BxXYObJPypFQGXfpJz
+    rnjhD5OLtVRxYmoFCf4hpHBAu8ukX93BxMrAiuc89WtVYJKgUaDWzUBit3sg
+X-ME-Proxy: <xmx:CjRianw17wNDqa2wMeEPcMoaYYC6mBvwx3tcpl-z7vRA5Y37FTnKlw>
+    <xmx:CjRiaswQJefk5GoFQJedxD9ftOUUrho8-4INeQRY8Mdak8S-OFEc1w>
+    <xmx:CjRiaj9itblK3k51fqbyt3RmmY8-pxnHCLJnTPxVcbpjAWhHu0CTrA>
+    <xmx:CjRiam-8CgSZEWe_WQZlLQYR1dY3dlToVcqco5gU57eyj9bpVXDaXw>
+    <xmx:DDRialhXTy7YJVOl7hOlnyGbc9dbJJyxqrHgP-QNMEVXay6i2_34HF8E>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 23 Jul 2026 11:32:25 -0400 (EDT)
+Message-ID: <759ee068-9519-4cfa-9be5-1deb0d9fc877@pobox.com>
+Date: Thu, 23 Jul 2026 08:32:23 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2Nmix2e3CdKJ9H49"
-Content-Disposition: inline
-In-Reply-To: <20260722142834.868902312@linuxfoundation.org>
-X-Cookie: (null cookie
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.10 137/699] tracing: Prevent out-of-bounds read in glob
+ matching
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ Yuan Tan <yuantan098@gmail.com>, Yifan Wu <yifanwucs@gmail.com>,
+ Juefei Pu <tomapufckgml@gmail.com>, Zhengchuan Liang <zcliangcn@gmail.com>,
+ Xin Liu <bird@lzu.edu.cn>, Huihui Huang <hhhuang@smu.edu.sg>,
+ Ren Wei <n05ec@lzu.edu.cn>, "Masami Hiramatsu (Google)"
+ <mhiramat@kernel.org>, Steven Rostedt <rostedt@goodmis.org>
+References: <20260721152355.667394603@linuxfoundation.org>
+ <20260721152358.800887633@linuxfoundation.org>
+ <1d60d21d-ea26-4502-afee-c49c750df1e9@pobox.com>
+ <2026072339-reshuffle-blizzard-42e9@gregkh>
+Content-Language: en-US
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <2026072339-reshuffle-blizzard-42e9@gregkh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 7/23/26 12:44 AM, Greg Kroah-Hartman wrote:
+> On Wed, Jul 22, 2026 at 07:42:14PM -0700, Barry K. Nathan wrote:
+>> On 7/21/26 8:18 AM, Greg Kroah-Hartman wrote:
+>>> 5.10-stable review patch.  If anyone has any objections, please let me know.
+>>>
+>>> ------------------
+>>>
+>>> From: Huihui Huang<hhhuang@smu.edu.sg>
+>>>
+>>> commit 0a6070839b1ef276d5b05bedfb787743e140fb17 upstream.
+>>>
+>>> String event fields are not necessarily NUL-terminated, so the filter
+>>> predicate functions (filter_pred_string(), filter_pred_strloc() and
+>>> filter_pred_strrelloc()) pass the field length to the regex match
+>>> callbacks, and the length-aware matchers honour it.
+>>>
+>>> regex_match_glob() was the exception: it ignored the length and called
+>>> glob_match(), which scans the string until it hits a NUL byte. Some
+>>> string fields are not NUL-terminated. One example is the dynamic char
+>>> array of the xfs_* namespace tracepoints, which is copied without a
+>>> trailing NUL. For such a field, glob matching reads past the end of
+>>> the event field, causing a KASAN slab-out-of-bounds read in
+>>> glob_match(), reached via regex_match_glob() and filter_match_preds()
+>>> from the xfs_lookup tracepoint.
+>>>
+>>> Add a length-bounded glob_match_len() and use it from regex_match_glob()
+>>> so glob matching always stops at the field boundary. The matching loop
+>>> is factored into a shared helper so glob_match() keeps its behaviour.
+>>>
+>>> Fixes: 60f1d5e3bac4 ("ftrace: Support full glob matching")
+>>> Cc:stable@vger.kernel.org
+>>> Link:https://patch.msgid.link/da1aaf125fc3b63320b0c540fd6afa7c3d5b4f1a.1782836943.git.hhhuang@smu.edu.sg
+>>> Reported-by: Yuan Tan<yuantan098@gmail.com>
+>>> Reported-by: Yifan Wu<yifanwucs@gmail.com>
+>>> Reported-by: Juefei Pu<tomapufckgml@gmail.com>
+>>> Reported-by: Zhengchuan Liang<zcliangcn@gmail.com>
+>>> Reported-by: Xin Liu<bird@lzu.edu.cn>
+>>> Assisted-by: Codex:GPT-5.4
+>>> Signed-off-by: Huihui Huang<hhhuang@smu.edu.sg>
+>>> Signed-off-by: Ren Wei<n05ec@lzu.edu.cn>
+>>> Acked-by: Masami Hiramatsu (Google)<mhiramat@kernel.org>
+>>> Signed-off-by: Steven Rostedt<rostedt@goodmis.org>
+>>> Signed-off-by: Greg Kroah-Hartman<gregkh@linuxfoundation.org>
+>>
+>> 5.10.261-rc2 does not build for me (nor does -rc1):
+>>
+>> ...
+>>    LD      vmlinux.o
+>>    MODPOST vmlinux.symvers
+>>    MODINFO modules.builtin.modinfo
+>>    GEN     modules.builtin
+>>    LD      .tmp_vmlinux.btf
+>>    BTF     .btf.vmlinux.bin.o
+>>    LD      .tmp_vmlinux.kallsyms1
+>>    KSYMS   .tmp_vmlinux.kallsyms1.S
+>>    AS      .tmp_vmlinux.kallsyms1.o
+>>    LD      .tmp_vmlinux.kallsyms2
+>>    KSYMS   .tmp_vmlinux.kallsyms2.S
+>>    AS      .tmp_vmlinux.kallsyms2.o
+>>    LD      vmlinux
+>>    BTFIDS  vmlinux
+>> FAILED unresolved symbol filp_close
+>> make: *** [Makefile:1228: vmlinux] Error 255
+>>
+>> I bisected it, and this patch is the culprit. Reverting it fixes the
+>> build for me.
+>>
+>> This is happening on fully updated Debian 13 trixie, compiling with
+>> gcc 14.2.0-19. The kernel is being built for an amd64 target. This
+>> failure happens whether building natively on amd64 or doing a
+>> cross-compile on an arm64 build system.
+>>
+>> For what it's worth, 5.15.212-rc2, 7.1.4, 7.1.5-rc2, 7.2-rc3, and
+>> 7.2-rc4 are all unaffected.
+> 
+> This is a much-reported issue that seems very flaky and can not be
+> reliably triggered.  Try rebuilding from scratch and see if it goes
+> away.  The archives of the list has more details, it's been showing up
+> for a while now.
+> 
+> thanks,
+> greg k-h
 
---2Nmix2e3CdKJ9H49
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In the process of testing, troubleshooting, and eventually bisecting this,
+I've tried rebuilding the kernel from scratch maybe 6 or 7 times now. I've
+tried on two different build systems so far, and it seems deterministic
+that the build succeeds without this patch and fails with it.
 
-On Wed, Jul 22, 2026 at 04:31:38PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.97 release.
-> There are 1202 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-I'm seeing a regression in the proc read kselftest which bisects to
-"proc: protect ptrace_may_access() with exec_update_lock (part 1)":
-
-# selftests: proc: read
-[  167.845745] ICMPv6: process `read' is using deprecated sysctl (syscall) =
-net.ipv6.neigh.default.base_reachable_time - use net.ipv6.neigh.default.bas=
-e_reachable_time_ms instead
-[  167.914113] sysrq: HELP : loglevel(0-9) reboot(b) crash(c) terminate-all=
--tasks(e) memory-full-oom-kill(f) kill-all-tasks(i) thaw-filesystems(j) sak=
-(k) show-backtrace-all-active-cpus(l) show-memory-usage(m) nice-all-RT-task=
-s(n) poweroff(o) show-registers(p) show-all-timers(q) unraw(r) sync(s) show=
--task-states(t) unmount(u) show-blocked-tasks(w) replay-kernel-logs(R)=20
-[  168.019358] Unable to handle kernel NULL pointer dereference at virtual =
-address 0000000000000098
-
-=2E..
-
-[  168.270588] Call trace:
-[  168.273035]  rwsem_read_trylock+0x30/0xe0
-[  168.277047]  proc_map_files_readdir+0x94/0x3dc
-[  168.281498]  iterate_dir+0x118/0x224
-[  168.285077]  __arm64_sys_getdents64+0x70/0x160
-[  168.289524]  invoke_syscall+0x44/0xe4
-
-Full log:
-
-   https://lava.sirena.org.uk/scheduler/job/3014030#L10663
-
-bisect log:
-
-# bad: [f5410b1bf27f296237f0ad05c8473d8e9a7ac467] Linux 6.12.97-rc2
-# good: [6d15a1029d425b15c59463910ebdccc4afe760d6] Linux 6.12.96
-git bisect start 'f5410b1bf27f296237f0ad05c8473d8e9a7ac467' '6d15a1029d425b=
-15c59463910ebdccc4afe760d6'
-# test job: [f5410b1bf27f296237f0ad05c8473d8e9a7ac467] https://lava.sirena.=
-org.uk/scheduler/job/3014030
-# bad: [f5410b1bf27f296237f0ad05c8473d8e9a7ac467] Linux 6.12.97-rc2
-git bisect bad f5410b1bf27f296237f0ad05c8473d8e9a7ac467
-# test job: [9c20411fdaad93e7408587bd3091f7503ef93ab5] https://lava.sirena.=
-org.uk/scheduler/job/3014886
-# good: [9c20411fdaad93e7408587bd3091f7503ef93ab5] thermal: testing: zone: =
-Flush work items during cleanup
-git bisect good 9c20411fdaad93e7408587bd3091f7503ef93ab5
-# test job: [9aa948a6f8287277c395a9296d2ef196a4a52b33] https://lava.sirena.=
-org.uk/scheduler/job/3015136
-# good: [9aa948a6f8287277c395a9296d2ef196a4a52b33] platform/x86/amd/pmc: Ch=
-eck for intermediate wakeup in function
-git bisect good 9aa948a6f8287277c395a9296d2ef196a4a52b33
-# test job: [e5744e5ac81be38feb1b9519fe911b21ab5051d6] https://lava.sirena.=
-org.uk/scheduler/job/3015323
-# good: [e5744e5ac81be38feb1b9519fe911b21ab5051d6] reset: sunxi: fix memory=
- region leak on ioremap failure
-git bisect good e5744e5ac81be38feb1b9519fe911b21ab5051d6
-# test job: [1a47ba727805fe69a6af0cf5c58f6f953f6b3620] https://lava.sirena.=
-org.uk/scheduler/job/3015469
-# bad: [1a47ba727805fe69a6af0cf5c58f6f953f6b3620] treewide: Switch/rename t=
-o timer_delete[_sync]()
-git bisect bad 1a47ba727805fe69a6af0cf5c58f6f953f6b3620
-# test job: [a593a39fda99d6d9161502d92d348b2102db059b] https://lava.sirena.=
-org.uk/scheduler/job/3015711
-# good: [a593a39fda99d6d9161502d92d348b2102db059b] PCI: Move Resizable BAR =
-code to rebar.c
-git bisect good a593a39fda99d6d9161502d92d348b2102db059b
-# test job: [37a0b322a8872dd78832c2631e615b24053e4f8e] https://lava.sirena.=
-org.uk/scheduler/job/3015958
-# good: [37a0b322a8872dd78832c2631e615b24053e4f8e] Bluetooth: 6lowpan: fix =
-cyclic locking warning on netdev unregister
-git bisect good 37a0b322a8872dd78832c2631e615b24053e4f8e
-# test job: [3402cd2dfaaa8f3e03d354e994d97361d8aeeafa] https://lava.sirena.=
-org.uk/scheduler/job/3016246
-# good: [3402cd2dfaaa8f3e03d354e994d97361d8aeeafa] ksmbd: centralize ksmbd_=
-conn final release to plug transport leak
-git bisect good 3402cd2dfaaa8f3e03d354e994d97361d8aeeafa
-# test job: [ecefa46f7bae6b671bd90f8a5456bacda4dbc3c6] https://lava.sirena.=
-org.uk/scheduler/job/3016441
-# good: [ecefa46f7bae6b671bd90f8a5456bacda4dbc3c6] HID: add haptics page de=
-fines
-git bisect good ecefa46f7bae6b671bd90f8a5456bacda4dbc3c6
-# test job: [56f46798a52ac271c5dae5c25eeb36eb3ce48f3b] https://lava.sirena.=
-org.uk/scheduler/job/3016753
-# good: [56f46798a52ac271c5dae5c25eeb36eb3ce48f3b] seqlock: Introduce scope=
-d_seqlock_read()
-git bisect good 56f46798a52ac271c5dae5c25eeb36eb3ce48f3b
-# test job: [6258bb18b077de959eeda9968d49ef94b383a451] https://lava.sirena.=
-org.uk/scheduler/job/3016884
-# bad: [6258bb18b077de959eeda9968d49ef94b383a451] proc: protect ptrace_may_=
-access() with exec_update_lock (part 1)
-git bisect bad 6258bb18b077de959eeda9968d49ef94b383a451
-# test job: [a95c6a2607658a19a6daf8a2d06851316c4fa8dd] https://lava.sirena.=
-org.uk/scheduler/job/3017038
-# good: [a95c6a2607658a19a6daf8a2d06851316c4fa8dd] seqlock: Change do_task_=
-stat() to use scoped_seqlock_read()
-git bisect good a95c6a2607658a19a6daf8a2d06851316c4fa8dd
-# first bad commit: [6258bb18b077de959eeda9968d49ef94b383a451] proc: protec=
-t ptrace_may_access() with exec_update_lock (part 1)
-
---2Nmix2e3CdKJ9H49
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmpiMKIACgkQJNaLcl1U
-h9Db0wf/eZJFGfNgYtrBPpJTUyPM+vB15WSUpQY1KrDqMTcdycsVnXqCvNGdfVOI
-OMQAwnONL1f2HqQ/JS8fm0gIpiUu5W8fqS45C6ucKPpFNYKO1b5LjlQlC02Ja3iu
-11H208Xp/KtaRHasMWCysaqRgBD1iSS6dYpixNrEDUTYG+Tbu5Mbomftu3yxGFu4
-42QnQV8LH383G0xVb9TJ8p70jCCA09PRAY0iqxAeb8kl6Az9haZ9/IurIET5OQq9
-MLW9GNfuMPGrwpiJt1qjd0EdBRGPZmZFDCQNmW3HuHutXwWTHC9j3jhonXAhW1v4
-QMp+AvExiDqPa0y6ZDI/KvaQRwN7aw==
-=pD9E
------END PGP SIGNATURE-----
-
---2Nmix2e3CdKJ9H49--
+However, I'll keep digging and see if I can figure out more about what's
+going on.
+-- 
+-Barry K. Nathan  <barryn@pobox.com>
