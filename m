@@ -1,112 +1,64 @@
-Received: from us-smtp-delivery-44.mimecast.com (us-smtp-delivery-44.mimecast.com [205.139.111.44])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681EF40DB20
-	for <patches@lists.linux.dev>; Thu, 23 Jul 2026 10:01:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.139.111.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250B640B10C;
+	Thu, 23 Jul 2026 10:17:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784800864; cv=none; b=aGLE8b8iIodK0THM/A/XwEtAkWnOgw5mpMLdUbwvNTjS13Mc4djFQ3b5LPLJWP2VTTIGcr9rFeKODZDYBheSAFp3bYzWqtkewKrH3snaZefFcmlH1cCTI5JoaXTtSAKjrqNmInHjbbwnu0dq3kCUJfXRuS7pvy2dViqFgCycy2w=
+	t=1784801858; cv=none; b=pbOteQ/pW+CMP23Hxd91LJ8f3FY6XcZe70kHgLuA96n6AT3F/lipgRQAETL3BlZyMxuHBaprbV/mAxw14ZB06e4zP2nHa6uyaGRFpYIbDR8HejBkT44wk16yrRbp5VjWCxodlhSrBzxvIdRSBANiac+EjM5SCiKDiEewV9m7DaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784800864; c=relaxed/simple;
-	bh=VUf/envLUyxi/cJ+3LgtTFSbV6Dh/IUXj9kqPwfWa+E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZH8TJtIk4AC88B8w36UgFWV+VpLsucjyQhZs9LTnw+earu0lM4aQx3+CMXN0Bxtm1Cb9i+IJ2R8zIStC1azHfWESrZMA/CFZxNnJNYLXO7Ha6+E3lZmII/Wp6V7nnN1VQiFvY1FmVvmZ/NGy1K0HJez4Yze5W56Xs19gESSm1w4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org; spf=fail smtp.mailfrom=kernel.org; arc=none smtp.client-ip=205.139.111.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=kernel.org
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-459-eSBkw949OGKAl13PuBvbXA-1; Thu,
- 23 Jul 2026 05:54:13 -0400
-X-MC-Unique: eSBkw949OGKAl13PuBvbXA-1
-X-Mimecast-MFC-AGG-ID: eSBkw949OGKAl13PuBvbXA_1784800451
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id D8FC2195604F;
-	Thu, 23 Jul 2026 09:54:09 +0000 (UTC)
-Received: from fedora.brq.redhat.com (unknown [10.43.17.39])
-	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id DCB493000225;
-	Thu, 23 Jul 2026 09:54:03 +0000 (UTC)
-From: Tomas Glozar <tglozar@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com,
-	cc@epic-linux.org
+	s=arc-20240116; t=1784801858; c=relaxed/simple;
+	bh=Q9qivlKsPl+yBwb65TotXNA9y/9myZamnh+XiSud4BE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uUFqvwAgp44xfW9uRfD7zNvVsY8y9t5G/XPt45L9eHJi2vs5WNBSObrVcWnrARca5A0HlAmlR0h2R++or1rebJ1tHTzb8i+JkkQoHxChyM4dqhezY5311YqDbnhrAdyx+3fnt5wyhn7nM73CTuEb6BzcjS+x6Vfzy+FEYqM2g+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C9081F00A3A;
+	Thu, 23 Jul 2026 10:17:36 +0000 (UTC)
+Date: Thu, 23 Jul 2026 12:17:23 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
 Subject: Re: [PATCH 6.6 0000/1226] 6.6.145-rc2 review
-Date: Thu, 23 Jul 2026 11:53:24 +0200
-Message-ID: <20260723095326.1481919-1-tglozar@kernel.org>
-In-Reply-To: 2026072333-creed-overbite-b2a9@gregkh
-References: 
+Message-ID: <2026072304-dentist-repayment-4761@gregkh>
+References: <20260722143258.264584003@linuxfoundation.org>
+ <amHSEwZcutUhO5tL@u94a>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-X-Mimecast-MFC-PROC-ID: DwwO-rFLhf9ChRhuA1POYd2ebCljjKO2HOEt1dBDuFg_1784800451
-X-Mimecast-Originator: kernel.org
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <amHSEwZcutUhO5tL@u94a>
 
-=C4=8Dt 23. 7. 2026 v 11:33 odes=C3=ADlatel Tom=C3=A1=C5=A1 Glozar <tglozar=
-@gmail.com> napsal:
->
-> I have been doing various experiments with the architecture in the
-> past 5 years, and co-maintaining an out-of-tree patchset for the past
-> 3 years. This patch also originally comes from there [1] - that's why
-> it has my signoff, too.
->
-> [1] https://github.com/linux-ia64/linux-ia64/commit/a4085ca68e49f49f962dd=
-ff46a901ff3468574b8
->
-> Tomas
+On Thu, Jul 23, 2026 at 04:37:07PM +0800, Shung-Hsi Yu wrote:
+> On Wed, Jul 22, 2026 at 04:33:42PM +0200, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.6.145 release.
+> > There are 1226 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Fri, 24 Jul 2026 14:31:21 +0000.
+> > Anything received after that time might be too late.
+> 
+> BPF selftests compilation is currently broken. But with [1] applied it
+> will build, with test_progs, test_progs-no_alu32, test_progs-cpuv4,
+> test_maps, test_verifier in BPF selftests all passes[2] on x86_64 and
+> aarch64.
+> 
+> Tested-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+> 
+> 1: https://lore.kernel.org/stable/20260723071334.39630-1-shung-hsi.yu@suse.com/
+> 2: https://github.com/kernel-patches/linux-stable/actions/runs/29987147891
 
-[somehow the mailing list seems not to have accepted that, trying git
-send-email through kernel.org server next...]
+Ok, I'll go queue those up for 6.12.y and 6.6.y now, thanks!
 
-...I did not notice the fork was already mentioned in the thread, sorry! To
-elaborate: we have a small community and had quite a few updates recently.
-I ported Rust/LLVM to ia64 in the past two months [1], someone else has an
-experimental branch for re-added Altix support in the SGI hobbyist communit=
-y
-even with graphics (and KDE Plasma) [2], and we have at least a few other
-users on the T2 Linux Discord server and elsewhere.
-
-It's nothing like mainstream interest, maybe roughly comparable to PA-RISC,
-but it's not dead either, and interest might grow as more machines will go =
-out
-of production and enter the second-hand marked following the recent
-discontinuation of (at least base level) HP-UX and HP Integrity support.
-
-[1] https://github.com/linux-ia64/rust, https://github.com/linux-ia64/llvm-=
-project;
-recently it got good enough to run Firefox:
-https://forums.irixnet.org/thread-4971-post-36303.html#pid36303
-
-[2] https://nsafran.com/blog/010-sn2-t2-install.html,
-https://forums.sgi.sh/index.php?threads/modern-linux-and-gpu-3d-acceleratio=
-n-for-sgi-altix.1547/
-
-Tomas
-
+greg k-h
