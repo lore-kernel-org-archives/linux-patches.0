@@ -1,88 +1,91 @@
 Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF9E3EB10C;
-	Fri, 24 Jul 2026 15:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EEC343899;
+	Fri, 24 Jul 2026 15:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.177.32
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784905266; cv=fail; b=B1fi3fLZEWEWhPw2QefOeRUq5rprhgwY4iSEixTFZVwq2tSVl2MyTd/g2OTZDBgQNNGeRn1j8Q6bHqhjaAtpRzTFq5/QeaoQXk6LiqIaf6mPSuW2bHoC8q4qt/W5bt9sMC/iVd48lAdywKVe/T0R4JRdjOvs1s0QBcLH4RPWZFk=
+	t=1784906035; cv=fail; b=edFIbJPSPfXsOxZaqU2H3ERKS4ZHsImRnkkVvT4Omm113Pzwjk1SBS4B8hsvnYk2pALDg/85p7lgtpvmFeRzVpo0Zx4nVgDM44zzjWXieUfjvjXB/zpjqoT0Z+MwZ1tvpxV/nDAMLz7QxZSr/PR9mPcJFnDrzAeyuWt05GZh3ZQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784905266; c=relaxed/simple;
-	bh=32PpMRKEVK3ES87kNDQhGBYZRrpK6CFirO0FRQPx4dg=;
+	s=arc-20240116; t=1784906035; c=relaxed/simple;
+	bh=KlVaDE3i0w60oysbTEwnWIHwfe5TEotCnm2WLAsDO6Y=;
 	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=k4h+j8mfw8yMFiCFeyR9LnmbZAPZo6x5QBsaPEI8Mr0Ws7c1w5lEnekeX455t8DruJ3L/OR2TUHATHBaYTlPpDjPB0/C5pIQIXR4nORxvtTQ/U/1W47FidrV0IOtOgGzM646pcU95AESmjNorlQVLegqlR3bt75hF5lJTbr4bzI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=YqYAib1l; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=iaMkx1HK; arc=fail smtp.client-ip=205.220.177.32
+	 Content-Type:MIME-Version; b=VLEfZxgbguRZmSFjfTpmTHGsO1sRpYD3wRHQyvOMFQziMHkdIqlt5zsULHGygPHGykdiJM/ZHyXwl51Z2FR9I760nhtRJrmld1VZYEBn3G1grnfU7bJIgU68XHa3xIw5KEW5pjRHTKgoXrC/KBl2GaNSanN+9QMTqTkT/htTubc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=Mf5nwcjx; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=Z8DnWH8Z; arc=fail smtp.client-ip=205.220.177.32
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="YqYAib1l";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="iaMkx1HK"
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66OCtdGe093218;
-	Fri, 24 Jul 2026 15:00:50 GMT
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="Mf5nwcjx";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="Z8DnWH8Z"
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66OFBfaX3585667;
+	Fri, 24 Jul 2026 15:13:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=klE2ufQpR6neaRFPRh1SHma3hoVni06MwA4OD571l7o=; b=
-	YqYAib1lPIanM9/Vm5XhEHfTJo+InrQrhUYXYaea2RzLE+0VbLdzVlYe6MbYGhKW
-	vFda3QNRDT3Jkz+uVWmK1Go5nejGY/R3o53RnHNr4+qzT+Kt0mI+H8noSp/ZAhbj
-	Q1CcdL0+u1rr5uBN+WPIiX6ijAhqARVLKkmfW/VC3uIneq0YQbcG7rKlUtScx/ux
-	wxtzuYWONFch5e8RYsJnG0BM2JvV+5A9MjtS+m9P1ij94SwYD1mH4ElpEwpg4CkS
-	sdU19RxaLfb+Zx8xQo/CCdBMuvkhTKGjMIJhZjhKbuKoA9A8la7+nVE8ESCaWaUt
-	+7u6DtlF9fauxjfKGcjF5Q==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4fg1n38uw1-1
+	corp-2025-04-25; bh=bKZSM+eMdK9nx5HQrBQIhW7w2w0JEYQ9a671lCqZtHw=; b=
+	Mf5nwcjxkpWbDskOzmMTUfOm9kwCnF1CPNYH3LpaEyA8BB9pAUr46h0C60ScmV1F
+	eFiGbTaLoNWh4r4zEITbGjaj3jYhTj44AMTkr85cmXRkOBcJ/5res8qh2ptQBH31
+	c1TeI9pNrXr5ZGMCqAvBmSK6pYEPg6yDd7g0jsNjyomZ5xMp0qLlKW6nTleKJUgz
+	Bem4CDSAAuCHB4pRYHvbRHAWbp36THd8wLrgD7qTBbkbh4O6zIY4ikVN02TvV8a/
+	JZDj9Z5+GMzDhrPhIz4G7D60n2lVYWda7gFOBA/dn9wCMei8s9h6mbJnvCSUrR1R
+	P1Nlzhw0v8kUR75EeGIggQ==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4fg1mv8n82-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 24 Jul 2026 15:00:49 +0000 (GMT)
-Received: from pps.filterd (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 66OEmCdR012951;
-	Fri, 24 Jul 2026 15:00:48 GMT
-Received: from bl0pr03cu003.outbound.protection.outlook.com (mail-eastusazon11012069.outbound.protection.outlook.com [52.101.53.69])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4fgts2ch1n-1
+	Fri, 24 Jul 2026 15:13:35 +0000 (GMT)
+Received: from pps.filterd (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 66OFDBX0000948;
+	Fri, 24 Jul 2026 15:13:34 GMT
+Received: from mw6pr02cu001.outbound.protection.outlook.com (mail-westus2azon11012070.outbound.protection.outlook.com [52.101.48.70])
+	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4ffyxg4u1a-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Fri, 24 Jul 2026 15:00:48 +0000 (GMT)
+	Fri, 24 Jul 2026 15:13:34 +0000 (GMT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=m9+bNCtbZ6POcjFKnQ+Icg4ULHcfoyG3gKrwxL0l55MGN1M2Grzyu+1wviG2rvoq+LNRQUH3gTqbsuzvZHb6Q0b8/96qd3JG35PCoDJYxtxk3c0Q9bHHAVVKM4W9/tPCCDImcIemEKJCT2coJKNuBS2WIbIzOWjCLSf89Bgw43wxdGnZCallsAr8gktHM+RbnzX8J1z3LWITsDLpvD+6+JSEO/irAwKu0mWCc61LdMlokp9JAF8E+Bemsp4D3Sfyss8OiuUukI53GaTV6rv1Y1kiZggQyATs4Hg6pyfVWmDrtz3QEGMj0ssat71zQrCqorzQNrQmSi2b5+yZtKg13w==
+ b=MEduTsEwZpxCe0gn9H6+c4Qf5+n8ns/dtVAqjC9SvbhlX+Z1tx+nSvQSY5DeCZKkeKqDFUc4jFAVSMozhN/qVMEQ5g2iGHrXs0ET8OI/0eBE4X9l1g/98dD+g+3UfpURPisOgoFfd8lO2z7uGXmy8Kc9xK6qsbFdOGhvanq1eCbrhbkCGu+13GX02Xdkm+NdLIkKjaSZ8sWtkgGgoPYxVFZJoTxgoWfUW+vqNjO60oKYtfthoPwVK8RGl5W/zgYnYojfFNrnV9GeNb8Z2Kg8ZqpYNNyzXtSRuP+1oIch1nVwv9Xrgqb0jIN3s5mtprcNnusQe49SauxEO8kzca1vVQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=klE2ufQpR6neaRFPRh1SHma3hoVni06MwA4OD571l7o=;
- b=XHJhnIkjWCLAMUOuWCBzvx9B+vZ2fOIU/5ExGGwj/TlolnvF3n4saGFNMWQXaxKc7z65MlXEDsZ9a7ma4wCnoL5s61SO6UieYUEds888GtgCL6EwM7MEP0+PfisJHBBLYhbntpPysxIO6NaePQwJ69HKTjTox5aNA+qF9WsDR9bIcS9GzCtVQD3HpIqFKr9DKEXacXiuDP8IJWRgPGw5fEssJzQM1dBFJ4Tk7Y6nREGPKqOeJEaGRcpOjM7RRC2HGV4VWV9BFBu6B2QshOgOOTwROrEwnZgnkdH8vbNl9nNAd3JgbM35pUttBfU9ghT4GIcRyh3FO32SZVB7rDr/3A==
+ bh=bKZSM+eMdK9nx5HQrBQIhW7w2w0JEYQ9a671lCqZtHw=;
+ b=aEXB1YroRqfsgyIvo5c8NIfN/g5zG5o/7oOqsYlnNpQDWlHTIRPyVZB0sq4e6XbvXnuicEwGAkCHWTYWfFu3C41eQgX/hNAt76dIf3vwapOvnxf+N//cPBcowwrGMmWE8XPs57WOD4I9fGNXJucbNs4HQKfDXIw+QJD4HC69G/WmMBfdLkZ3uPc0O0o2iUKGH3OS57sGTxcdPtX5YUeTEjdVNcHELwroaM6/6gzotrcIuHNLuOi0wP46AicI+iOT0/Jlbl5jJWgWE8v1KMD8ZE9zOKtFPEPl4HJU9IbUfu1SHWeMywY0Bqe4wz0U8pt2vJntD3EozfnGRszEEMgkUQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=klE2ufQpR6neaRFPRh1SHma3hoVni06MwA4OD571l7o=;
- b=iaMkx1HKVpR8vb9TjArprdFpgFvQTGgZ4pf6N2HIthgIZdeTwXtgSqZ5PLW49/qb4ngOm8ZaifNEoogWpgZPjTffWtMNKy5KXk3O+AvZx8c4xeTmD0DiMj/NoQxiiT7WZii6ab2MMWYT8hGq2tq/4npuQGB4Imna7/t+i5PPfQE=
+ bh=bKZSM+eMdK9nx5HQrBQIhW7w2w0JEYQ9a671lCqZtHw=;
+ b=Z8DnWH8ZzW0vO6mGpZzaXbnOHfbizcdRzBhip2f5nFJOyRReEaTKB2ToiBRYc/hCg4wx2HeQy5FTNgDQZ0gA8ZOoN7eQK4H9awjMPwDsCul66vlbi1qyGpFA3AjDMmwz2zj6S5b5Yq8oTWzezUq83plgtCcb1laFrA6gAtt5BNc=
 Received: from DS3PR10MB997700.namprd10.prod.outlook.com (2603:10b6:8:347::19)
- by IA3PR10MB8562.namprd10.prod.outlook.com (2603:10b6:208:57a::6) with
+ by DS4PR10MB997620.namprd10.prod.outlook.com (2603:10b6:8:31a::14) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.11; Fri, 24 Jul
- 2026 15:00:39 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.12; Fri, 24 Jul
+ 2026 15:13:30 +0000
 Received: from DS3PR10MB997700.namprd10.prod.outlook.com
  ([fe80::4c1c:3bb:c4c9:8e7a]) by DS3PR10MB997700.namprd10.prod.outlook.com
  ([fe80::4c1c:3bb:c4c9:8e7a%7]) with mapi id 15.21.0245.009; Fri, 24 Jul 2026
- 15:00:38 +0000
-Message-ID: <ae4d5ec1-9e10-4230-85f7-88b99028ff17@oracle.com>
-Date: Fri, 24 Jul 2026 20:30:31 +0530
+ 15:13:30 +0000
+Message-ID: <51bde2e9-0989-4145-9fb8-cdfb08c50e29@oracle.com>
+Date: Fri, 24 Jul 2026 20:43:23 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 1139/1276] iio: pressure: Remove redundant
- pm_runtime_mark_last_busy() calls
+Subject: Re: [PATCH 6.12 1155/1276] PCI: Fix restoring BARs on BAR resize
+ rollback path
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Sakari Ailus <sakari.ailus@linux.intel.com>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+Cc: patches@lists.linux.dev, Simon Richter <Simon.Richter@hogyros.de>,
+        =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+        =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
         Sasha Levin <sashal@kernel.org>, vegard.nossum@oracle.com
 References: <20260721152446.065700225@linuxfoundation.org>
- <20260721152511.493081649@linuxfoundation.org>
+ <20260721152511.861098835@linuxfoundation.org>
 Content-Language: en-US
 From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-In-Reply-To: <20260721152511.493081649@linuxfoundation.org>
+In-Reply-To: <20260721152511.861098835@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PN5PR01CA0040.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:264::6) To DS3PR10MB997700.namprd10.prod.outlook.com
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PN2PR01CA0239.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:eb::18) To DS3PR10MB997700.namprd10.prod.outlook.com
  (2603:10b6:8:347::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -91,103 +94,104 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS3PR10MB997700:EE_|IA3PR10MB8562:EE_
-X-MS-Office365-Filtering-Correlation-Id: 81f52a22-356c-4b75-a8a0-08dee9945291
+X-MS-TrafficTypeDiagnostic: DS3PR10MB997700:EE_|DS4PR10MB997620:EE_
+X-MS-Office365-Filtering-Correlation-Id: 77e02022-f623-4e9d-d662-08dee9961ea6
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|5023799004|56012099006|10067099003|4143699003|22082099003|18002099003;
+	BCL:0;ARA:13230040|366016|23010399003|1800799024|376014|6133799003|56012099006|4143699003|5023799004|10067099003|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	vYARdidOM5VkKCXuRq2Bfo73QrivSACQWXScbknlf6Boqga9UayOSU6DlU9k1dnKKtEf8EqwU64+CpNztEzqC61A6vL/oD3C72TLgXxUPMBHmPOJ5R/52kdo7JthFhRk8IBL0i7PpwtcB/beOAfHaTTHlhXnS1gfKKtkxjJxKFFWxFxYCE0hfP3jyJXkz4QSqPVtoD3T5tuIqJaxktqbrQ0/05FECDBNTqwoGzoa61l5tiLHNTnTV0kMjVNepStHDTAABfIwiW12hLl0BkxspVrdwEDb9ewTXfi4C7KbF0n1Xnn+465ln43f2WuHIC4ImHWLTSaC7QRDVKmH6D6RD83JrASWqgcPBtS+BtDiAOVjPbJLGAP7/NrS2Ai8D+Bo3O+V2zKSkKPP/sh2pnup00bxWZHfp7Ua/6/s0zRWZeYmXYrmKKaKCtc0Wq+mjOe6jQ34aUR03LbOFPxV9I/y3vr5hwKocMeR39CcUwZcTgT6VUvQ9WGhudDjzsn0e+y3rkpS4sHfD67CTs0zo6wnrmVU2UwTsUf/661yFd1mNiCo2MlETiTQ9fLaXrEwP5IsCbPIcZ1n5qYcwt1ipJjq+MFqhfbebnMK24hEAcsTxAA63f8obWV8diCdbC2GzT+Q
+	gD7j+yPT0YWS5r+9WUVjie76ho/UmV0UEpStke9jOsrKGgNGlkpKpNP7MsBKmmGVgC9Ivx0sMipcW7+j+oohNTcVSCPlcURo0I7VkStjxrFZ9fY28fDPP03HKWThXKuVXv7gS00pYjqUxJo8kvQzTpJSdRx0PdiAwwF7YPPZL4xjOsyhNYnDHdbdOMrHjv8/Z8EWHpGGTFcsYsJqBht+jd4c1MdLGrHfN14jsm0OV8ieIypjB5lZvexRPVB9Lj6LNZ3ze4VoGNyrHxoN6LSVGSRYoBKaFdyHGwKc+kqaMnuFyZJAQO1oAMxNtOvPbKLifQ5+lLZfzjoeIbfjp9vz/ELq5ybFdvE8yRSzbUHa+lT6OEcLSfRoeZeNnilWDM4xzbaA91FQ+cGdbWIQLiGzBp3hICjMEzZQHEXlZtRa0nQkRsc4eSXBBUDxF9N4fRBxS4GlQGFo5PnlLmY8Ms4wNTYSl0RUwP0CZO75oCGYv5C3UPPYsv4V17t1gQr67OgWeWu5BheLX6K1Gh2zScy0xaY5X+MQP1tZRifFAv665SOHOmaOLgFv9LlBUnIhGtPNzBNC86R88fnjWX3yn0bS4j+nt+erQHi/1YTzgcHGsNvunli+lX+ysGyOZw+yWbuB
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS3PR10MB997700.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(5023799004)(56012099006)(10067099003)(4143699003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS3PR10MB997700.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(6133799003)(56012099006)(4143699003)(5023799004)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?aUJucEozSWFURWFhalIwQ3VDOXY1K09wWWd0NGFRU1pHaDZlczAzd2NYS3Ft?=
- =?utf-8?B?RW5Kam1CZHB4TG5jZDdFNHhCNnpxZ0E1UnF1U1FwRTNxU1V4ZjQ1UktVblZB?=
- =?utf-8?B?OENGTGMrOENzNnVyclJUbU45SHZOL1RRZ243OWxObWwxYmE4cHRpbUEydlhw?=
- =?utf-8?B?Y0h4ZnFkdlp3K1FUNVdSZjFXTHZkeEM0ZS8yZTJZdlkxbzRhNlphSlNVM2xD?=
- =?utf-8?B?SVlsc1dNanlONWVNTVUybFBoYjcycjZtOXhZcHR3WGpSL3piVXlSQ0JEVHg0?=
- =?utf-8?B?N2hpeXVFa0xnVTJsLzdYNmY1ZmpkNXp5K2cvczlBem5Hb1VhWENFcEVJVFk0?=
- =?utf-8?B?WllWZnhPNlhOdmxQVStiM2V5WFZuNGNPWGxveXJQVjlkbldEdzFUQk0wNmp6?=
- =?utf-8?B?TVFURU1YS0FrR04yYzJFY25MNXp4WUU5bk1BN04yTU1uMVNhckVtcGRibW1G?=
- =?utf-8?B?NFlpOEVQU1RZNnpzWktTWW5DclBrTzc1L1dDNHlReWpwajZaaUlyanVSVXZ4?=
- =?utf-8?B?MXlXZExuKysrSnBMUFJ2a2VERk1heVpKZ0lyK0ZuTmJKWlYwZXFEckhTSVNl?=
- =?utf-8?B?dGJJd3N3elBwbE02TnhvdDd2WHRWRTdDbjE0NmxDdW1JcWo1QkJvWW40bGU1?=
- =?utf-8?B?SnZvbXloTDlNRXp2Sk01enVQT3N2VGJiTTYrWHhSNzFodmIrWDFBWW1naVlv?=
- =?utf-8?B?TDZoc2dFbGFtMWhkUWpxSGpNVDZXZ2w5TXJ1R3lIQUdJMGhkS0ZrYm5zUTYv?=
- =?utf-8?B?YVpBbklTbnoyV1BUc3NmazJlWHBOdFlCTjBaZUFwSytrNHJwTHZkUFVrNWZF?=
- =?utf-8?B?VGFkWDlCMG5rbWcwSG5KazVOWVFxR0IvcU9LdktjN0lxYkZORW1WSEo0bjhS?=
- =?utf-8?B?Qlgvb211SkQ0UkZhNGRMWEk1dWRzblBBRDlFcXF6RXVWb0cycmgrdW1HcURq?=
- =?utf-8?B?aXNqaEEvcjRCYVpOUHFXd3Q5ajFndGU2Mk9UZEFwQTZTanYrVlB1dkJGb3py?=
- =?utf-8?B?VUZkR3o3SWtSR3Jqbm1zeFNGaU1NMnVkWGUzc2hJcHlzT3dKUWFLcnFmaStl?=
- =?utf-8?B?RWVqRmFqUFBxcUZodUxVWEJodFlXMjBYa2JiNDlRd2dMd0ZuYzZMWWNHbWU3?=
- =?utf-8?B?cUFjS21vdHJrSDB2UnBic1hMZGxWK010QTZjMVFHOE9zZ0g1c3c2TVRaNE1Z?=
- =?utf-8?B?UzFXS3JxQStaTVdsTVpaRUNEWUlRL3NCVm9jQi93TG1WTlhmWHFvdFdxZ2dB?=
- =?utf-8?B?a0JsbGpldVhsRW0yb282SHdnZGx4a2VJSTFwdFVsOGZsZTI3UTF6ejdzazFF?=
- =?utf-8?B?THVGVEpsT21KNVp0YzhOVjVJOU1ndXUwTHMrOGV1bEZEbHN3ZkIzN0VaYi9G?=
- =?utf-8?B?VU1EVDg5U3UvTmVFOFd6eDhhaDBuZzMySjVqS1l5a0NNWlVFSWYzN0JJUlRw?=
- =?utf-8?B?ejd0NFZlS1J2V2dQOFZsN25qNmdYZjRhbjI0RGtROURMMXQ0aWcreW95RFkx?=
- =?utf-8?B?TE9sL3JUa0VwbU4relczSDBrUlFVWVBUbndTdys5a2d5RUdBeVMzZER4R0w4?=
- =?utf-8?B?Qml3UW1FUGF4OFQwcDBJZzRtaEw5STBPeCtUeUNNQXRJYW5WVkJJZ3VPSDEx?=
- =?utf-8?B?TjJTTWdiM3NTck51SkZYMDBDSS9WSjFtVU9EWEk4bTZUaWozd0pUcFlJei9J?=
- =?utf-8?B?TGptWWVBRDJUamVucnRjQURiYjgwT3ZYbXFNYU5kbXlJZWs4UW9hdkpuRXMw?=
- =?utf-8?B?bDdUMWZKeXdxVUl1aEU4K3ZzUW1Rc0duSVAvZG1CdU5JZ2tkcjRsaWl2bDRY?=
- =?utf-8?B?RDZTVTRweVoxSlI5cy9YZUR5MVJyMFlqZ290c21OTUsvMll3dGg5cWpkN08y?=
- =?utf-8?B?L0J6VEJiUGM4R0hoOXhqcHM3WU5lU3hjUWJzaU9ocm9sZFdrZmljTWZ5M1Vt?=
- =?utf-8?B?MDBUVGJqNnk4RWZPcHQwNzJOc1NOZnMrMlBkbHJrUE9kYWp0czQwRGhORnhi?=
- =?utf-8?B?dnpEYTJUMFEyR0ZmNVNZQUVUTG1SdVBrRDc4ZTdPQW5GTnJLbWdQRTl4Yk00?=
- =?utf-8?B?VE9Md0dQZUZZRUlSQTdEREUrcWNnKyt2YlZoWkpBTkdJaFRiVSt2eHZXQ2pZ?=
- =?utf-8?B?czBSRWEvTmE4K2JTcDJGSnF6UURwbU5BcEhGZzdiQ3MzN042cVZibFpFNU9X?=
- =?utf-8?B?bXpSUG00YTFNbW50V0ZOUlhWcWRud0RESzZuaEdWUGhlZWJzMXhOU2lrbE9H?=
- =?utf-8?B?aHNERXFmTzZlZGs2TjJDV2xtc0tyV2xhbVJhNlJjbGJkamJ2TXpPckhlOWk4?=
- =?utf-8?B?NjNtU2Rrc2hhVWhVcE9QdG83MkJ4SWdYdE5vaVAreE5neGZQVjV0ZFZraW1F?=
- =?utf-8?Q?Iy03MUWjNM0BMzZJoCie8QS/gQt7lvh35cWND?=
+	=?utf-8?B?R2tBNGpvMitSZzZ3UndKMkJWSEZRQ3pNTzRveS9YcExLSjJJY2tmazdpVE9V?=
+ =?utf-8?B?SWs0eldYd1ErRWpTL09CeGE3TGFXNW9oQjU3NFB5dlppZEtUQ1FNTlg5bENJ?=
+ =?utf-8?B?UTYvYVNwbGZGMkt2dlF4VFJlZkFRMGtNem93cmhEQm9WZDQ1R1VsMkFOZzF6?=
+ =?utf-8?B?Qk9GVWE3ZFcxajhETnJKOThtc1Z0QlhIOVByeXpVeGdPdWU3VklTc3BwdVBC?=
+ =?utf-8?B?aHd4NHdKY0prSnhkMFNXVDR4dkZaa1lzRnpsWFZyWVRuWEFDNk5QWVhuQnlT?=
+ =?utf-8?B?TnVSVXV4a2M2KzZPSmpQWlQ5ZEg4TG5FSVp2d3R4VzRLUmZKSmpZclBwVjRq?=
+ =?utf-8?B?ZEpEdDdPUzBYV3NFc2oyRDYxNHlJampTeVRRZFB0UWFqSHhuYklxYWFxZita?=
+ =?utf-8?B?TVhYLzJ5U1FQS0ZpUG1DMFhEQmxWN0VZRnVzMFJjeTUzSUxmOXRMTVJaMDFt?=
+ =?utf-8?B?QmlNdVVYczh3SGhoSFlhZkdzcmxpUlUyVkc4MlZxYVhEdnZmemdnRE5vb3Np?=
+ =?utf-8?B?cFFQc0ViaE1jYTVmQm1LRFdHc2xZVnN5anBqRWE4aVR0cHAxZEYrR0NpV3RR?=
+ =?utf-8?B?TVg2RlJBd3J6K0kxR05zWXFjWHA1dHJmVTRhcVArdUpuV0YzYmZxZUd3dDU0?=
+ =?utf-8?B?dDlzV0RKMHRDLzFjOFEwYW5JRzJPTmdOSTdEWmszaHFrNTJBc3BiZmNTM0pt?=
+ =?utf-8?B?bVdieW5OdGowMDVsYzZNSk8rem1TRVdpZTNTWXpHWmtQQVp3NiszVVkyYkkz?=
+ =?utf-8?B?N2xXK2pQLzI4Y0tzanFvOENFZDQrUEVMQ2tlVUw0Q1pOZ1ZpRXY0cW51ZE5p?=
+ =?utf-8?B?bm9jSWNKdTZZK01yWTNReWlJRy93dzM5VzZ2YVBMblZoUTMvVmJ6ckF4TS9z?=
+ =?utf-8?B?cURaWklyY0Q4WVdXY1U3NDF5NmFWbXlqd3pJWElLelNER1hzZ3BVRXg4MGFu?=
+ =?utf-8?B?SGs1MVpEd2VmMHloczRrNFlkK0JwSXlKZlFWU08zU2Z0SVNwRG11aWlNVWN3?=
+ =?utf-8?B?WFIxWitoZkw5K1BpTXRWRDNHUDY2V2Rzb3lhQmZ3VE4zQlVKVmpvUVQ3aVFJ?=
+ =?utf-8?B?RUpJZm1tbVdkZzYxQXlMQ3RSUkNTR0ZFSmlnQWt6SmphZ00vMFZXSmtzSk5o?=
+ =?utf-8?B?YUVBM1JBWVcxY29vQnFTYzJnOUsyY2NUUVducXZDOFFQd0FHZUdEeEdibFdR?=
+ =?utf-8?B?TnAyazBJOVlYcjh0bkVqNjJXekdyUUhCdHRrMUNHMmZIM3NpUUJGOHJaaGI1?=
+ =?utf-8?B?TlVyOHpkbEJndi84NDk1d2paTkVTT0YzckVkSGE2MUlheUM3bTNXem04ZDFC?=
+ =?utf-8?B?SUxmUzR2WDVuR2hEb3h3b2pDTWVUR0hsNGQvMitmNUhwUFdpc0xsMkNnM2Vm?=
+ =?utf-8?B?dGZabW5zVU5xcVJFVjBIZHFmOGRMU1RpMStmNGVUYU5tR3IyRHlXOTd5cmho?=
+ =?utf-8?B?R1d4RVNmWkV6RU1MYmpMS1VuamhXb1hLd0FpbnFlbndZOWJUZGtBNmUzT3Jt?=
+ =?utf-8?B?OHI3U09lWWRJZ0dGNjhvdjRPcXhMbDVNbnZWbFRLbEwxWCtMbDRPcWZOa2dD?=
+ =?utf-8?B?SXROSmZSa1o0V3NpbFpWTWVnSUVxVkRTaVg1Qzk2aGE4WTE5ZnFnM1ozM25s?=
+ =?utf-8?B?RWJ6SllUS3BtWlA2NjZsU1piUDdTZ2diL0R0cmpyRE5oNnhQaFN4MTdKNVdD?=
+ =?utf-8?B?bFhEVVJsN2t4dEtJV3RsVjU0dkdKYWFnTGRuSUswRFZCMDI0SXZMTFBjclMx?=
+ =?utf-8?B?Z0VCaHNiQUVrT21aYlJJSmRXTUNTNS82VWlOQXJsdEFNOGlFajNqVm9xRkhu?=
+ =?utf-8?B?aGJzTWJ4SHdMMHNiQkFnTFEwaUZmdkRTRXRkVGd5NXhOUkgxakJCcGFEOURM?=
+ =?utf-8?B?c1R2MCtCMGNmT0Jqd2NHTnBNbnBjNHVjUXYyNE5adDEvTEFmcFZDRVllaFRs?=
+ =?utf-8?B?ZzJPK3pkQTRaOGxMNEU0TjcvUWdmY2IrZll6Vk01bCtsUUljVCtMTmtUT3dW?=
+ =?utf-8?B?Zm9laGFzdXZ4cjlCMFJxRVE1Ny9SMGlDSFFyeVJSNStvZDg2djFxREV6MWhv?=
+ =?utf-8?B?NVY3eXZhV1d4NkdFUTh2RmtENGxJblZ6RGd0emdEemVRYk1wRU55UFFHSmhO?=
+ =?utf-8?B?QWZsRnVENnRDaTZMSkx3SG1KMEIxNGJoc3UwclRiQ1pUcGVwd0h4RjNMcURQ?=
+ =?utf-8?B?SFoxYkl3OXNJNnVHSkw5SzlRQlNqM3NLODZxTHl2QVo5NmdKUWcycERDRlJk?=
+ =?utf-8?B?NDdpZUJsUENSTjBqTVczaC9JME1HdjdkclBLTWVCQTlqU2FLeHUxVjR5cUtJ?=
+ =?utf-8?B?Y012VklQV2p2UzVqYUhGemxvM2gvMWJwL1QzTEhkUjhiODJNQWxxT1ljRmF1?=
+ =?utf-8?Q?FZJl+F2YgvFIXpff8vLX3C3B4HzXmNJ5cBM26?=
 X-Exchange-RoutingPolicyChecked:
-	nYVDKL91EP7tYEd5oPaLTYOKu/3Bdwxd5c05p9K+9tsM1vQN/qcpzYje+9Sf3ZBO3F40aLEeL6k7NVpvK5+xhhtFqz5CNlB18q1JsqncxJxKkanhZfz9E2ggsZIMhlS/W7sqwCp7mIEE0kjRdS1usM7GR3Ai/S5OofKVCgqeWD4D4PHhOqvLtY+7eur4/UapH7oJ5E4DoYwWgWydDE410ciTuQDC3sVzjlo1wp3yOTHvl0E7ykPl0Tv3Kg3cl9QhezxBkhnf6eTDyGJhPynK+XtHyjgIjMY9EEzKQdg/jOwsDj9CeLJZs5YKxm4Ttmc16aCpdJRbwyEtAaBY6B6grA==
+	ZSLJVtHFhprNfi7H9LGysy8LFcsC4LlFhvS1bEazGiYuw3mJcIriDHxpJNfPhj41LlIwbY3zWuWQ7CkfGtSj8ciCNw0NU5HmTvnG4/pJDiR3KMmyvmHcU0M+uNgFl09qJo4E0fhy6exSXe6ICD/KY1Yika9jJzYqGAdrtFibfRE7SW3MWgDo5NGiukvqGATHBwRr6r7pUDJuqALaeydHolGnkwJEr6jVuZVRvTqv8aY7noI/TZQqHgKY9wt9XA9NPjRi9X4Bo+GBDf7LhDDWpzqY0WIgqXuTGwEx3R4DvCbmrJ9uf31Prvor9Qm0D4oSmDWM9SXfQLyomjyr3KsnEA==
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	E36Irvv9MtGXUmIiBaVmcL6UZWm+khj7ldCvNKlCnWSQICdkG0XaSfrldHTB7JBnj17GB0R0FbuuyZUludynMh+DBBJnWzfHLtTFvFP2fgiZlHRzvKYUJuyPHZ/EDwcFqu18CPV7ogrh4yWZ/FUQP5PDFxzuoQHuqIWAJm/vhpA6nNLWkLWWz/1BhboAx+2DzbvSKFHXTtgZ0aQ9uDgbVHjXfzPLi0jDKe88eBrm/DHXStBb9bsSOaJTSflekmWxFZtPRrkuESlnxQn8M/sPjtShgnAPGFpRtuKpdxFQpF8ZKJ/aP0cOKsPqQqMA3I+BOkOPdkl9GiNGMRHOPRQPnNAsbxbwS5rYGYbDW7YZCvuXbv8i3dGkSGy8kw7DzStIuLf2r229aQ290rjH28aVhGWsVNUv5CyAQsQUbgAHGWcTs7ws/rcqXWtuGz6m8x1vXppK97I+MMicjJyGC8zLo2GanycZsHNcCoMXYghvQO54XgwfsBfhcNQR4WmoNo35wBLsXgvwyyoSWQosAzGR7Lsw+veUnEr5dDs0rWT+BsoduB42Dk8WwAR5Aw5VQNVaHB723q5eDE6p1u2GrIegMejVPcekWo5Uxuu+Rl6VOnw=
+	dMK7Zh90jpQ9OWHJMsU63WFTY0Hf+rm1t6nQEpUVwp9xI2dufLmCPTRJkRnb5FIa0aYMWheXbH8FzHKi6lk1hdorAMTX3EzI2CsZa5zzwGd0AySeewX4fSF78hcmyCblDeifXOsPBNiQy3IqpnXAcBFuk04V0tX92wwqSA1ORc3b4iKK5+6vt0LyByiFaTV4XkFzXG8TgQhuPYiWB6jMduBFbjYKuazpmru4v83TBUxXDi0OCII3m5LKFHjWewrs69CoIblC50YpRmsyyNemncvmE5CzxprQlpl7vxpi9BpYoKue3dfOoQKC0zNKnX4Yhc0sBNxQjTjm7eaF7pfQw2647trYIb3hzwJwS8kL/FFggSAo/CM55j8Vwf3O1sBL6bR0kKdWnyFyLA5wcXrlruE635nrZrTPf7Q2JE4Km+Ga7XrGB0iOaDYNKd+b5axeTxWnuDxjzycK2ldvXayneLwzep4uO9mPIw3KyZK0Q+AOTfxa2WbGcpVDBpPr1kGeF1mtsEud5m8PP1G32kkN/cHPC/2ddoz7MTNSIVJDFkwR8hfLS6WYcY1qwtarpxZW2ULT6/ewfyNpgeu5qJ2dPpTpOWIqN5KvdTE17maFPGY=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 81f52a22-356c-4b75-a8a0-08dee9945291
+X-MS-Exchange-CrossTenant-Network-Message-Id: 77e02022-f623-4e9d-d662-08dee9961ea6
 X-MS-Exchange-CrossTenant-AuthSource: DS3PR10MB997700.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jul 2026 15:00:38.5212
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jul 2026 15:13:30.5011
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: +PdMElBMcq9USyEFK1LgHK3bRicwrOg3rne1bT3HuZ77TwpNh2UsynKmTQjqz/p+3AjV2dDkq738ExmYAwWQsbDZlShBmoMdrDj+Vc0tO0/2Vz4c1L5aHRRcRRY4GDsy
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR10MB8562
+X-MS-Exchange-CrossTenant-UserPrincipalName: mk9liFzKoYHpmTaaS/0eBj/Xi2GVKA6Qz+miv0e/RkT1w//B9J8VnxhVrqjzCEW5dKPphxOLZiR8w1q4kZULQKTjH8azUx+KvMpQ7AIw1WaPvtz8AtEZ3ediwTmJ109+
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PR10MB997620
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-24_03,2026-07-24_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- mlxlogscore=999 spamscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
- suspectscore=0 phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2606160000 definitions=main-2607240134
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDEzNSBTYWx0ZWRfX/CuoGtj6u0xf
- MQufZBbYrFRFgGNq1b3tLhvdVb1bYpxpTtksuEA6xz3zvqDUGSn57C2scLxNRvmCnVDewe8Kx6n
- aOYxak/bUpdYbR2EI5b4rCzWqWzfmpVPvopjYUsZdSZHIqqX9wgMNab1wBurBIhT/xm9tZElYqL
- AeaBgkrS0YW7PwQR85kWxe6K91e/XE1g08G7zlsK2t8Mbo35beKQGZH2qyaePybzQ4t8hdx4lKG
- 65ATtzZsYxSVYGaxpvyNgVLYeQVaVB5L5MeiSU+qBX+KX115oQcaAwNQsey9KjnXmX/TOgYgvUB
- DUPoeVELJlP0QhUU4w9VHt3YW9QFzo4ksc3cXdCQuEWUMtFRc0fH1MWd/EAo+8PdYWpME6MSHs8
- amdLsSOEHKrbA28P0fn5s+p5cRjUxfbFtN7C+NkY708EFIb0GJUmT7gt4LxZphDh2AtRLXqsA6q
- k9D4KAxf/oHXaNhHH3A==
-X-Proofpoint-GUID: BuQ6AO6cbTaJOO4ItQvdYN2LnznKtAWg
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDEzNSBTYWx0ZWRfXyPogu4GFNLiW
- XjpU5/Sn6pf18xghWQy1rF7jH5OSnabVkwqc/aWev3GRiQ2J76tyw26skyJCKQHpTw/VytfQGGD
- NePGP6EoZaD9E4GPPjfcLvl6jRTCPGMXkevUZqid7OHJZ/mGZnnH
-X-Authority-Analysis: v=2.4 cv=JrfBas4C c=1 sm=1 tr=0 ts=6a637e22 cx=c_pps
- a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ adultscore=0 mlxscore=0 phishscore=0 suspectscore=0 spamscore=0
+ malwarescore=0 bulkscore=0 lowpriorityscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2606160000 definitions=main-2607240137
+X-Proofpoint-GUID: D6xZrhjwb7gEGr0NuqdDoo0RC2Mp8NPH
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDEzNiBTYWx0ZWRfX6C0gGLibPOht
+ 5G/DyevTPMHhDgLSlLMjOYdYqj1cY9xyVomTnxdvAMHtZwgXAvB2+rF6OYoksGNiMPwapWfjqBE
+ o0uyUdWhyWKjmtX8D/X6KlXwNZViluxkw00VC55k3QmaFSSrlmMp
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDEzNiBTYWx0ZWRfXwcYJGDJV8YAV
+ 68qRjdBsiYUF4pdiMK30CwXiSt2RSYBxnxLZCPc/OemCEYvhGLrB2tp/glF5BoffRM/rpUSexUJ
+ kNqVlnMu/HdFG/MV5hC6nXaZT4e/v80XX2FDA77iGAxM+qRndbgNeEFry5DkOXH53jf7+hve0Zb
+ wB/IWGxVJ4krSa6Uhvwd7u5QSxyK8DdhafNGr/ewG8w0Rqfe0Y9v4S1T81vkwOo4VJBKMtyqGyC
+ NOrM4XwHPG5f+xZzn81ZKGjWzWJav/dBZpj+29Wa8wwC+N4PWFlVA5POOOnmtKV3hoEksjnH75t
+ oQNxEpqMkcGbR/7k8+mTB+34fIzO0gPc02JZvEsfetIIwsZZOhmPBmgJ5Zi7p2b2bZfF0T4elc9
+ dt8CAaQiwde72i9N7lRp+mr+GmEad5NJJqx3x+AjgPKR1XdbUWcvHx6vim3hx2HKa8efQ5K652z
+ jkLb+7keorjsedTvIzw==
+X-Authority-Analysis: v=2.4 cv=ZpPd7d7G c=1 sm=1 tr=0 ts=6a63811f cx=c_pps
+ a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
  a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
  a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=RAioF0-LDSMA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jiCTI4zE5U7BLdzWsZGv:22 a=BqU2WV_vvsyTyxaotp0D:22 a=bC-a23v3AAAA:8
- a=QyXUC8HyAAAA:8 a=i0EeH86SAAAA:8 a=VwQbUJbxAAAA:8 a=ag1SF4gXAAAA:8
- a=qs14TrG_rUihYl5Ky7YA:9 a=QEXdDO2ut3YA:10 a=FO4_E8m0qiDe52t0p3_H:22
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=x4eqshVgHu-cdnggieHk:22 a=VwQbUJbxAAAA:8
+ a=KKAkSRfTAAAA:8 a=bC-a23v3AAAA:8 a=QyXUC8HyAAAA:8 a=1XWaLZrsAAAA:8
+ a=zd2uoN0lAAAA:8 a=ag1SF4gXAAAA:8 a=Y2qx3jW9RG5hHRTA0q8A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=FO4_E8m0qiDe52t0p3_H:22
  a=Yupwre4RP9_Eg_Bd0iYG:22
-X-Proofpoint-ORIG-GUID: BuQ6AO6cbTaJOO4ItQvdYN2LnznKtAWg
+X-Proofpoint-ORIG-GUID: D6xZrhjwb7gEGr0NuqdDoo0RC2Mp8NPH
 
 Hi Greg/Sasha,
 
@@ -196,141 +200,433 @@ On 21/07/26 8:56 pm, Greg Kroah-Hartman wrote:
 > 
 > ------------------
 > 
-> From: Sakari Ailus <sakari.ailus@linux.intel.com>
+> From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 > 
-> [ Upstream commit dfb68a8ebb2e8d9af6e356ae0806bfd8e854ab44 ]
+> [ Upstream commit 337b1b566db087347194e4543ddfdfa5645275cc ]
 > 
-> pm_runtime_put_autosuspend(), pm_runtime_put_sync_autosuspend(),
-> pm_runtime_autosuspend() and pm_request_autosuspend() now include a call
-> to pm_runtime_mark_last_busy(). Remove the now-reduntant explicit call to
-> pm_runtime_mark_last_busy().
-
-
-I ran an AI-assisted backport review and verified one issue.
-
-The 6.12.y backport e23d3671bc0a ("iio: pressure: Remove redundant
-pm_runtime_mark_last_busy() calls") removes ten explicit last-busy 
-updates before pm_runtime_put_autosuspend().  However, in this branch 
-that helper only calls __pm_runtime_suspend() and does not update 
-power.last_busy.
-
-Upstream dfb68a8ebb2e removes those calls only after b3db492e8335
-("PM: runtime: Mark last busy stamp in pm_runtime_put_autosuspend()") 
-moved the update into pm_runtime_put_autosuspend().
-
-I think 6.12.y misses commit b3db492e8335 ("PM: runtime: Mark last busy
-stamp in pm_runtime_put_autosuspend()"), so this backport probably is 
-not be complete.
-
-Lets drop this from the queues, I see this is a stable dep of other 
-patch, and the missing commit is not a clean cherry-pick, so we could 
-deal with backporting that later and along with that we could probably 
-include this. Thoughts ?
-
-thanks,
-Harshit
+> BAR resize operation is implemented in the pci_resize_resource() and
+> pbus_reassign_bridge_resources() functions. pci_resize_resource() can be
+> called either from __resource_resize_store() from sysfs or directly by the
+> driver for the Endpoint Device.
 > 
-> Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-> Link: https://patch.msgid.link/20250825135401.1765847-11-sakari.ailus@linux.intel.com
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Stable-dep-of: fbe67ff37a6f ("iio: pressure: mpl115: fix runtime PM leak on read error")
+> The pci_resize_resource() requires that caller has released the device
+> resources that share the bridge window with the BAR to be resized as
+> otherwise the bridge window is pinned in place and cannot be changed.
+> 
+> pbus_reassign_bridge_resources() rolls back resources if the resize
+> operation fails, but rollback is performed only for the bridge windows.
+> Because releasing the device resources are done by the caller of the BAR
+> resize interface, these functions performing the BAR resize do not have
+> access to the device resources as they were before the resize.
+> 
+> pbus_reassign_bridge_resources() could try __pci_bridge_assign_resources()
+> after rolling back the bridge windows as they were, however, it will not
+> guarantee the resource are assigned due to differences in how FW and the
+> kernel assign the resources (alignment of the start address and tail).
+> 
+> To perform rollback robustly, the BAR resize interface has to be altered to
+> also release the device resources that share the bridge window with the BAR
+> to be resized.
+> 
+> Also, remove restoring from the entries failed list as saved list should
+> now contain both the bridge windows and device resources so the extra
+> restore is duplicated work.
+> 
+> Some drivers (currently only amdgpu) want to prevent releasing some
+> resources. Add exclude_bars param to pci_resize_resource() and make amdgpu
+> pass its register BAR (BAR 2 or 5), which should never be released during
+> resize operation. Normally 64-bit prefetchable resources do not share a
+> bridge window with the 32-bit only register BAR, but there are various
+> fallbacks in the resource assignment logic which may make the resources
+> share the bridge window in rare cases.
+> 
+> This change (together with the driver side changes) is to counter the
+> resource releases that had to be done to prevent resource tree corruption
+> in the ("PCI: Release assigned resource before restoring them") change. As
+> such, it likely restores functionality in cases where device resources were
+> released to avoid resource tree conflicts which appeared to be "working"
+> when such conflicts were not correctly detected by the kernel.
+> 
+> Reported-by: Simon Richter <Simon.Richter@hogyros.de>
+> Link: https://lore.kernel.org/linux-pci/f9a8c975-f5d3-4dd2-988e-4371a1433a60@hogyros.de/
+> Reported-by: Alex Bennée <alex.bennee@linaro.org>
+> Link: https://lore.kernel.org/linux-pci/874irqop6b.fsf@draig.linaro.org/
+> Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+> [bhelgaas: squash amdgpu BAR selection from
+> https: //lore.kernel.org/r/20251114103053.13778-1-ilpo.jarvinen@linux.intel.com]
+> Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+> Tested-by: Alex Bennée <alex.bennee@linaro.org> # AVA, AMD GPU
+> Reviewed-by: Christian König <christian.koenig@amd.com>
+> Link: https://patch.msgid.link/20251113162628.5946-7-ilpo.jarvinen@linux.intel.com
+> Stable-dep-of: ee7471fe968d ("PCI: Skip Resizable BAR restore on read error")
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
 > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 > ---
->   drivers/iio/pressure/bmp280-core.c |    5 -----
->   drivers/iio/pressure/icp10100.c    |    1 -
->   drivers/iio/pressure/mpl115.c      |    2 --
->   drivers/iio/pressure/zpa2326.c     |    2 --
->   4 files changed, 10 deletions(-)
+>   drivers/gpu/drm/amd/amdgpu/amdgpu_device.c  |    4 -
+>   drivers/gpu/drm/i915/gt/intel_region_lmem.c |    2
+>   drivers/gpu/drm/xe/xe_vram.c                |    2
+>   drivers/pci/pci-sysfs.c                     |   17 ----
+>   drivers/pci/pci.h                           |    3
+>   drivers/pci/setup-bus.c                     |  101 +++++++++++++++++++---------
+>   drivers/pci/setup-res.c                     |   19 +----
+>   include/linux/pci.h                         |    4 -
+>   8 files changed, 87 insertions(+), 65 deletions(-)
 > 
-> --- a/drivers/iio/pressure/bmp280-core.c
-> +++ b/drivers/iio/pressure/bmp280-core.c
-> @@ -747,7 +747,6 @@ static int bmp280_read_raw(struct iio_de
+> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+> @@ -1611,7 +1611,9 @@ int amdgpu_device_resize_fb_bar(struct a
 >   
->   	pm_runtime_get_sync(data->dev);
->   	ret = bmp280_read_raw_impl(indio_dev, chan, val, val2, mask);
-> -	pm_runtime_mark_last_busy(data->dev);
->   	pm_runtime_put_autosuspend(data->dev);
+>   	pci_release_resource(adev->pdev, 0);
 >   
->   	return ret;
-> @@ -922,7 +921,6 @@ static int bmp280_write_raw(struct iio_d
+> -	r = pci_resize_resource(adev->pdev, 0, rbar_size);
+> +	r = pci_resize_resource(adev->pdev, 0, rbar_size,
+> +				(adev->asic_type >= CHIP_BONAIRE) ? 1 << 5
+> +								  : 1 << 2);
+>   	if (r == -ENOSPC)
+>   		DRM_INFO("Not enough PCI address space for a large BAR.");
+>   	else if (r && r != -ENOTSUPP)
+> --- a/drivers/gpu/drm/i915/gt/intel_region_lmem.c
+> +++ b/drivers/gpu/drm/i915/gt/intel_region_lmem.c
+> @@ -37,7 +37,7 @@ _resize_bar(struct drm_i915_private *i91
 >   
->   	pm_runtime_get_sync(data->dev);
->   	ret = bmp280_write_raw_impl(indio_dev, chan, val, val2, mask);
-> -	pm_runtime_mark_last_busy(data->dev);
->   	pm_runtime_put_autosuspend(data->dev);
+>   	_release_bars(pdev);
 >   
->   	return ret;
-> @@ -1951,7 +1949,6 @@ static int bmp580_nvmem_read(void *priv,
+> -	ret = pci_resize_resource(pdev, resno, bar_size);
+> +	ret = pci_resize_resource(pdev, resno, bar_size, 0);
+>   	if (ret) {
+>   		drm_info(&i915->drm, "Failed to resize BAR%d to %dM (%pe)\n",
+>   			 resno, 1 << bar_size, ERR_PTR(ret));
+> --- a/drivers/gpu/drm/xe/xe_vram.c
+> +++ b/drivers/gpu/drm/xe/xe_vram.c
+> @@ -33,7 +33,7 @@ _resize_bar(struct xe_device *xe, int re
+>   	if (pci_resource_len(pdev, resno))
+>   		pci_release_resource(pdev, resno);
 >   
->   	pm_runtime_get_sync(data->dev);
->   	ret = bmp580_nvmem_read_impl(priv, offset, val, bytes);
-> -	pm_runtime_mark_last_busy(data->dev);
->   	pm_runtime_put_autosuspend(data->dev);
->   
->   	return ret;
-> @@ -2026,7 +2023,6 @@ static int bmp580_nvmem_write(void *priv
->   
->   	pm_runtime_get_sync(data->dev);
->   	ret = bmp580_nvmem_write_impl(priv, offset, val, bytes);
-> -	pm_runtime_mark_last_busy(data->dev);
->   	pm_runtime_put_autosuspend(data->dev);
->   
->   	return ret;
-> @@ -2634,7 +2630,6 @@ static int bmp280_buffer_postdisable(str
+> -	ret = pci_resize_resource(pdev, resno, bar_size);
+> +	ret = pci_resize_resource(pdev, resno, bar_size, 0);
+>   	if (ret) {
+>   		drm_info(&xe->drm, "Failed to resize BAR%d to %dM (%pe). Consider enabling 'Resizable BAR' support in your BIOS\n",
+>   			 resno, 1 << bar_size, ERR_PTR(ret));
+> --- a/drivers/pci/pci-sysfs.c
+> +++ b/drivers/pci/pci-sysfs.c
+> @@ -1427,18 +1427,13 @@ static ssize_t __resource_resize_store(s
 >   {
->   	struct bmp280_data *data = iio_priv(indio_dev);
+>   	struct pci_dev *pdev = to_pci_dev(dev);
+>   	struct pci_bus *bus = pdev->bus;
+> -	struct resource *b_win, *res;
+>   	unsigned long size;
+> -	int ret, i;
+> +	int ret;
+>   	u16 cmd;
 >   
-> -	pm_runtime_mark_last_busy(data->dev);
->   	pm_runtime_put_autosuspend(data->dev);
+>   	if (kstrtoul(buf, 0, &size) < 0)
+>   		return -EINVAL;
 >   
+> -	b_win = pbus_select_window(bus, pci_resource_n(pdev, n));
+> -	if (!b_win)
+> -		return -EINVAL;
+> -
+>   	device_lock(dev);
+>   	if (dev->driver || pci_num_vf(pdev)) {
+>   		ret = -EBUSY;
+> @@ -1460,15 +1455,7 @@ static ssize_t __resource_resize_store(s
+>   
+>   	pci_remove_resource_files(pdev);
+>   
+> -	pci_dev_for_each_resource(pdev, res, i) {
+> -		if (i >= PCI_BRIDGE_RESOURCES)
+> -			break;
+> -
+> -		if (b_win == pbus_select_window(bus, res))
+> -			pci_release_resource(pdev, i);
+> -	}
+> -
+> -	ret = pci_resize_resource(pdev, n, size);
+> +	ret = pci_resize_resource(pdev, n, size, 0);
+>   
+>   	pci_assign_unassigned_bus_resources(bus);
+>   
+> --- a/drivers/pci/pci.h
+> +++ b/drivers/pci/pci.h
+> @@ -330,6 +330,9 @@ enum pci_bar_type {
+>   struct device *pci_get_host_bridge_device(struct pci_dev *dev);
+>   void pci_put_host_bridge_device(struct device *dev);
+>   
+> +int pci_do_resource_release_and_resize(struct pci_dev *dev, int resno, int size,
+> +				       int exclude_bars);
+> +
+>   int pci_configure_extended_tags(struct pci_dev *dev, void *ign);
+>   bool pci_bus_read_dev_vendor_id(struct pci_bus *bus, int devfn, u32 *pl,
+>   				int rrs_timeout);
+> --- a/drivers/pci/setup-bus.c
+> +++ b/drivers/pci/setup-bus.c
+> @@ -2297,18 +2297,16 @@ enable_all:
+>   }
+>   EXPORT_SYMBOL_GPL(pci_assign_unassigned_bridge_resources);
+>   
+> -int pci_reassign_bridge_resources(struct pci_dev *bridge, unsigned long type)
+> +static int pci_reassign_bridge_resources(struct pci_dev *bridge, unsigned long type,
+> +					 struct list_head *saved)
+>   {
+>   	struct pci_dev_resource *dev_res;
+>   	struct pci_dev *next;
+> -	LIST_HEAD(saved);
+>   	LIST_HEAD(added);
+>   	LIST_HEAD(failed);
+>   	unsigned int i;
+>   	int ret;
+>   
+> -	down_read(&pci_bus_sem);
+> -
+>   	/* Walk to the root hub, releasing bridge BARs when possible */
+>   	next = bridge;
+>   	do {
+> @@ -2325,9 +2323,9 @@ int pci_reassign_bridge_resources(struct
+>   			if (res->child)
+>   				continue;
+>   
+> -			ret = add_to_list(&saved, bridge, res, 0, 0);
+> +			ret = add_to_list(saved, bridge, res, 0, 0);
+>   			if (ret)
+> -				goto cleanup;
+> +				return ret;
+>   
+>   			pci_info(bridge, "%s %pR: releasing\n", res_name, res);
+>   
+> @@ -2343,67 +2341,108 @@ int pci_reassign_bridge_resources(struct
+>   		next = bridge->bus ? bridge->bus->self : NULL;
+>   	} while (next);
+>   
+> -	if (list_empty(&saved)) {
+> -		up_read(&pci_bus_sem);
+> +	if (list_empty(saved))
+>   		return -ENOENT;
+> -	}
+>   
+>   	__pci_bus_size_bridges(bridge->subordinate, &added);
+>   	__pci_bridge_assign_resources(bridge, &added, &failed);
+>   	BUG_ON(!list_empty(&added));
+>   
+>   	if (!list_empty(&failed)) {
+> -		ret = -ENOSPC;
+> -		goto cleanup;
+> +		free_list(&failed);
+> +		return -ENOSPC;
+>   	}
+>   
+> -	list_for_each_entry(dev_res, &saved, list) {
+> +	list_for_each_entry(dev_res, saved, list) {
+>   		/* Skip the bridge we just assigned resources for */
+>   		if (bridge == dev_res->dev)
+>   			continue;
+>   
+> +		if (!dev_res->dev->subordinate)
+> +			continue;
+> +
+>   		bridge = dev_res->dev;
+>   		pci_setup_bridge(bridge->subordinate);
+>   	}
+>   
+> -	free_list(&saved);
+> -	up_read(&pci_bus_sem);
 >   	return 0;
-> --- a/drivers/iio/pressure/icp10100.c
-> +++ b/drivers/iio/pressure/icp10100.c
-> @@ -265,7 +265,6 @@ static int icp10100_get_measures(struct
->   			(be16_to_cpu(measures[1]) >> 8);
->   	*temperature = be16_to_cpu(measures[2]);
+> +}
 >   
-> -	pm_runtime_mark_last_busy(&st->client->dev);
->   error_measure:
->   	pm_runtime_put_autosuspend(&st->client->dev);
+> -cleanup:
+> -	/* Restore size and flags */
+> -	list_for_each_entry(dev_res, &failed, list) {
+> -		struct resource *res = dev_res->res;
+> +int pci_do_resource_release_and_resize(struct pci_dev *pdev, int resno, int size,
+> +				       int exclude_bars)
+> +{
+> +	struct resource *res = pdev->resource + resno;
+> +	unsigned long flags = res->flags;
+> +	struct pci_dev_resource *dev_res;
+> +	struct pci_bus *bus = pdev->bus;
+> +	struct resource *r;
+> +	LIST_HEAD(saved);
+> +	unsigned int i;
+> +	int ret = 0;
+>   
+> -		res->start = dev_res->start;
+> -		res->end = dev_res->end;
+> -		res->flags = dev_res->flags;
+> +	down_read(&pci_bus_sem);
+> +
+> +	pci_dev_for_each_resource(pdev, r, i) {
+> +		if (i >= PCI_BRIDGE_RESOURCES)
+> +			break;
+> +
+> +		if (exclude_bars & BIT(i))
+> +			continue;
+> +
+> +		if (!pci_resource_len(pdev, i) || r->flags != flags)
+> +			continue;
+> +
+
+^^ observe this:
+
+I ran an AI-assisted backport review and verified one issue with
+afc90d2fc3b8 ("PCI: Fix restoring BARs on BAR resize rollback path").
+
+In 6.12.y, pci_do_resource_release_and_resize() releases sibling BARs 
+only when their resource flags exactly match the resized BAR:
+
+	if (!pci_resource_len(pdev, i) || r->flags != flags)
+		continue;
+
+Upstream 337b1b566db0 instead selects resources by the actual bridge window:
+
+	b_win = pbus_select_window(bus, res);
+	...
+	if (b_win != pbus_select_window(bus, r))
+		continue;
+
+Those are not equivalent. I think this backport is incomplete without 
+pbus_select_window() semantics, or an equivalent branch-specific 
+adaptation. Upstream gets that via 74afce3dfcba ("PCI: Add bridge window 
+selection functions").
+
+Without an equivalent fix, I think this backport should be dropped.
+
+Thoughts ?
+
+Thanks,
+Harshit
+
+
+> +		ret = add_to_list(&saved, pdev, r, 0, 0);
+> +		if (ret)
+> +			goto restore;
+> +		pci_release_resource(pdev, i);
+>   	}
+> -	free_list(&failed);
+>   
+> +	res->end = res->start + pci_rebar_size_to_bytes(size) - 1;
+> +
+> +	if (!bus->self)
+> +		goto out;
+> +
+> +	ret = pci_reassign_bridge_resources(bus->self, res->flags, &saved);
+> +	if (ret)
+> +		goto restore;
+> +
+> +out:
+> +	up_read(&pci_bus_sem);
+> +	free_list(&saved);
+> +	return ret;
+> +
+> +restore:
+>   	/* Revert to the old configuration */
+>   	list_for_each_entry(dev_res, &saved, list) {
+>   		struct resource *res = dev_res->res;
+> +		struct pci_dev *dev = dev_res->dev;
+>   
+> -		bridge = dev_res->dev;
+> -		i = res - bridge->resource;
+> +		i = res - dev->resource;
+>   
+>   		if (res->parent) {
+>   			release_child_resources(res);
+> -			pci_release_resource(bridge, i);
+> +			pci_release_resource(dev, i);
+>   		}
+>   
+>   		res->start = dev_res->start;
+>   		res->end = dev_res->end;
+>   		res->flags = dev_res->flags;
+>   
+> -		pci_claim_resource(bridge, i);
+> -		pci_setup_bridge(bridge->subordinate);
+> -	}
+> -	up_read(&pci_bus_sem);
+> -	free_list(&saved);
+> +		if (pci_claim_resource(dev, i))
+> +			continue;
+>   
+> -	return ret;
+> +		if (i < PCI_BRIDGE_RESOURCES) {
+> +			const char *res_name = pci_resource_name(dev, i);
+> +
+> +			pci_update_resource(dev, i);
+> +			pci_info(dev, "%s %pR: old value restored\n",
+> +				 res_name, res);
+> +		}
+> +		if (dev->subordinate)
+> +			pci_setup_bridge(dev->subordinate);
+> +	}
+> +	goto out;
+>   }
+>   
+>   void pci_assign_unassigned_bus_resources(struct pci_bus *bus)
+> --- a/drivers/pci/setup-res.c
+> +++ b/drivers/pci/setup-res.c
+> @@ -429,9 +429,9 @@ void pci_release_resource(struct pci_dev
+>   }
+>   EXPORT_SYMBOL(pci_release_resource);
+>   
+> -int pci_resize_resource(struct pci_dev *dev, int resno, int size)
+> +int pci_resize_resource(struct pci_dev *dev, int resno, int size,
+> +			int exclude_bars)
+>   {
+> -	struct resource *res = dev->resource + resno;
+>   	struct pci_host_bridge *host;
+>   	int old, ret;
+>   	u32 sizes;
+> @@ -442,10 +442,6 @@ int pci_resize_resource(struct pci_dev *
+>   	if (host->preserve_config)
+>   		return -ENOTSUPP;
+>   
+> -	/* Make sure the resource isn't assigned before resizing it. */
+> -	if (!(res->flags & IORESOURCE_UNSET))
+> -		return -EBUSY;
+> -
+>   	pci_read_config_word(dev, PCI_COMMAND, &cmd);
+>   	if (cmd & PCI_COMMAND_MEMORY)
+>   		return -EBUSY;
+> @@ -465,19 +461,14 @@ int pci_resize_resource(struct pci_dev *
+>   	if (ret)
+>   		return ret;
+>   
+> -	res->end = res->start + pci_rebar_size_to_bytes(size) - 1;
+> +	ret = pci_do_resource_release_and_resize(dev, resno, size, exclude_bars);
+> +	if (ret)
+> +		goto error_resize;
+>   
+> -	/* Check if the new config works by trying to assign everything. */
+> -	if (dev->bus->self) {
+> -		ret = pci_reassign_bridge_resources(dev->bus->self, res->flags);
+> -		if (ret)
+> -			goto error_resize;
+> -	}
+>   	return 0;
+>   
+>   error_resize:
+>   	pci_rebar_set_size(dev, resno, old);
+> -	res->end = res->start + pci_rebar_size_to_bytes(old) - 1;
 >   	return ret;
-> --- a/drivers/iio/pressure/mpl115.c
-> +++ b/drivers/iio/pressure/mpl115.c
-> @@ -108,7 +108,6 @@ static int mpl115_read_raw(struct iio_de
->   		ret = mpl115_comp_pressure(data, val, val2);
->   		if (ret < 0)
->   			return ret;
-> -		pm_runtime_mark_last_busy(data->dev);
->   		pm_runtime_put_autosuspend(data->dev);
->   
->   		return IIO_VAL_INT_PLUS_MICRO;
-> @@ -118,7 +117,6 @@ static int mpl115_read_raw(struct iio_de
->   		ret = mpl115_read_temp(data);
->   		if (ret < 0)
->   			return ret;
-> -		pm_runtime_mark_last_busy(data->dev);
->   		pm_runtime_put_autosuspend(data->dev);
->   		*val = ret >> 6;
->   
-> --- a/drivers/iio/pressure/zpa2326.c
-> +++ b/drivers/iio/pressure/zpa2326.c
-> @@ -699,7 +699,6 @@ static void zpa2326_suspend(struct iio_d
->   
->   	zpa2326_sleep(indio_dev);
->   
-> -	pm_runtime_mark_last_busy(parent);
->   	pm_runtime_put_autosuspend(parent);
+>   }
+>   EXPORT_SYMBOL(pci_resize_resource);
+> --- a/include/linux/pci.h
+> +++ b/include/linux/pci.h
+> @@ -1418,7 +1418,8 @@ static inline int pci_rebar_bytes_to_siz
 >   }
 >   
-> @@ -710,7 +709,6 @@ static void zpa2326_init_runtime(struct
->   	pm_runtime_enable(parent);
->   	pm_runtime_set_autosuspend_delay(parent, 1000);
->   	pm_runtime_use_autosuspend(parent);
-> -	pm_runtime_mark_last_busy(parent);
->   	pm_runtime_put_autosuspend(parent);
->   }
->   
+>   u32 pci_rebar_get_possible_sizes(struct pci_dev *pdev, int bar);
+> -int __must_check pci_resize_resource(struct pci_dev *dev, int i, int size);
+> +int __must_check pci_resize_resource(struct pci_dev *dev, int i, int size,
+> +				     int exclude_bars);
+>   int pci_select_bars(struct pci_dev *dev, unsigned long flags);
+>   bool pci_device_is_present(struct pci_dev *pdev);
+>   void pci_ignore_hotplug(struct pci_dev *dev);
+> @@ -1488,7 +1489,6 @@ void pci_assign_unassigned_resources(voi
+>   void pci_assign_unassigned_bridge_resources(struct pci_dev *bridge);
+>   void pci_assign_unassigned_bus_resources(struct pci_bus *bus);
+>   void pci_assign_unassigned_root_bus_resources(struct pci_bus *bus);
+> -int pci_reassign_bridge_resources(struct pci_dev *bridge, unsigned long type);
+>   int pci_enable_resources(struct pci_dev *, int mask);
+>   void pci_assign_irq(struct pci_dev *dev);
+>   struct resource *pci_find_resource(struct pci_dev *dev, struct resource *res);
 > 
 > 
 > 
