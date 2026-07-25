@@ -1,147 +1,122 @@
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0064b401.pphosted.com (mx0b-0064b401.pphosted.com [205.220.178.238])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5345D2D59E8
-	for <patches@lists.linux.dev>; Sat, 25 Jul 2026 01:24:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784942662; cv=pass; b=uC091bVg5JzLgW9bhIeZWOWgN+zSX2r7Aoqn+amJNYxl9QZQb0A8DAjCee95/MGuIH6jNDWELLruXlQb13a/EIKbN12AZQPODH1uCzRBZJgexX1+eqeKnffkK9IPtvwcH70oFL+0YmaaslAL+mOlbvw11wAlGml+TIv65Y2vc9I=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784942662; c=relaxed/simple;
-	bh=RR/N+7U6HxpMfVUnwIY2W1vRNETeHCqGINXb3mjcJBs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=s3xgG+fAqrml3raUKbdpd960vOL3QFAqR07x5VEQjCUSsAolMKNdmWsSTuDX2HLRhcmLxNwwU6kYz0oXdNekMozm/ea/JqNPDNQjJuVWiTzaFwfdrY5GbvJEECuVXIi3AuVs1Xtusb59XdcDmbP6+nimE2BjJtuYVLGnjV+Malg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YWhluK5r; arc=pass smtp.client-ip=209.85.208.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16ABA2C11D5
+	for <patches@lists.linux.dev>; Sat, 25 Jul 2026 02:40:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.178.238
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784947248; cv=none; b=GAjx19ybPObnW84wPXiEK1HVfaxwQZn28wcqSllqn2Sn9Z5wfUORxUasQiP/sOBDZN7qYdPrqNH9RZRn+FUYdQt/lMcTYM3GEGHuVhP4nX+ceRGsfYxp/JQ+hIu81q2CX2oAxNXNfbpylLN/R6pf6mME8oM0PO29/+BiBqZ5zrY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784947248; c=relaxed/simple;
+	bh=s7DABp79lmouaegyvbRepnivXsOGFVUNS8Nw/huquY4=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=YQnzoiRhMZhTJV+xdI+HDvuqs9hFDyJxmHSiyJy6NIJfkaV4M7z4hk8oqPBQI4t34T3WTAwS3iFEkRy4hWTSJplyR8VvkVzbOgaOJJcwyu2Rd1e6MhypBsOZpIRndxMmWnfVVt/kImMt77uP/Jb/BDJDYXYdDksFDnOO1+lRRME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; dkim=pass (2048-bit key) header.d=windriver.com header.i=@windriver.com header.b=CLSUtuhJ; arc=none smtp.client-ip=205.220.178.238
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YWhluK5r"
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-39c9452243cso8754171fa.3
-        for <patches@lists.linux.dev>; Fri, 24 Jul 2026 18:24:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784942659; cv=none;
-        d=google.com; s=arc-20260327;
-        b=b9iSnTvicCTi55cOj+/FpVS2tefJpHVTaqHYace2MtJDGd3VvDf+3N2sD0H2iZz2Rd
-         NtxfIgFBKeAmDqzgZ1z6itbwneSAzbLmhKMB3RrzuR/iZxkgxh6EG4yvuxrST4cOO6hY
-         YZd1PFB7HoPzwRgRO6NEP1+GgRQ7CIRIVSFkjM42g2ryPykfdySOxOOJacPa+jbSWgmT
-         huIhb7NfeiBtkoj0vRdKC9n05iWMP7G284sibXhMivDHmT6OXWx2YaqRAadnmKXcj4Jl
-         VIKdEJeT/qsHYdzlBWmrMLX4ZAvySbc78vhJwIHhLIskyUqx+kpzQ0Eucg71gGxPNPRB
-         580Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=N/CJCfH0/SDNKO9hky1DdcwmPfaS2frL/4dsCfTjLhg=;
-        fh=l9t1Y5gyGe80cy0apAQWfvEJz7SSYLd5B82HwOyn7Mo=;
-        b=qmJVewyT8xCuGo8rdbqmQGbUQ074e5b4YBoYXExM9/LxRxu/CvaeqyoKV3kotCjHK3
-         6OTDIORNnFVy2tkzaaklHwDv+72IT9Bwbv6z6+nrQbddtlCa+7JAogsXeM0XmmScSaXq
-         nUzFAtnOrjc5PZNR/iIVoRbniqJDZpUwn+0NWHiNrg9DcmzFhpUoKRuaxllcDnDZQSKF
-         O8qF2CaI47ph+YwBdYvLMyy+SXlW/0i2zCEC6uPQsPyC0L0isq8Q1uE2jqSLFtFUNwoM
-         SBRPAhwYnAhqklZR0R8Xxkg35AxVynfLJ6HFgISO2qdA6xBfNZgl1ht9OjHisfcqDIUX
-         DxUg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784942659; x=1785547459; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=N/CJCfH0/SDNKO9hky1DdcwmPfaS2frL/4dsCfTjLhg=;
-        b=YWhluK5r/m9FYLcM1UALllBd8wbPrqZi8OltyNy8toSsonyae9ZCLKx9aNKltVW060
-         0fMxrxJ3DakFwQe5880ig10U3XjF8HgtF9KvEXneoWt5X12OqPxymGLxrzJ2nDkmQGPd
-         nmv+sKDTDEBwZexQKz2/4HaQe7cgTWvReaJc45kGExafb4Q5ys438p7/X8/m1PpG4htj
-         etufeLUMd89qtqEGdtEcMmdZ+G/eE2WPQ6ZBdZVFp0dCNCZ61082cAUauGQfB+pwws24
-         oYdOd4OHlk2wmfP2noQO3drAktan5EiQs1T4ZUs9AIkwO+e9lRC5MgTskgb2pKe0pOCR
-         ANYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784942659; x=1785547459;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=N/CJCfH0/SDNKO9hky1DdcwmPfaS2frL/4dsCfTjLhg=;
-        b=DBEHSfhB0qfAkwhCCp4Itp/YTKfCA8nbWaJIixbeNUj15x5MTbl/GZos/apbWL2eAo
-         s+0GncyJer8apxfm1+EtclPAJQuAVbR+c1P8DSsU44cFwWyRL7+D0yZ4LyAsa/3/nzi6
-         kwtc7FtPdn+2Jna6PWbwxu+abj8FE3egh5nGpxI+H6EASmnDh6VGDQTsqsmzhHu8K8CB
-         wSiXg9vHcAMzf8rc5EKD86dT5x3QqTvKhFycIriES0bA4NX1e60vJu0UPacyxdUN56fW
-         Ug8CFAGwAzjBWkgQowlw69LL/kadM5ErnoJ5tqJDPZpNWy/9avqL+W9AqZxVwiX0xmrz
-         RD7w==
-X-Forwarded-Encrypted: i=1; AHgh+RqlmgFzKcAiHtfAHLG9DTISy+f++J02Xlv4UorlJ3oFrpIhuLVI8EgoXKInjULt9/0gKF0H4j9k@lists.linux.dev
-X-Gm-Message-State: AOJu0YyXYuMtWXC0D3PF+vDaq0OXQcCm4KX7600Y6qEupvLF3JeQrtZ3
-	UbMGX+Vg7E9kmVt2eCNHlm82GFPKn8MhaBl20BiRq9HoCQVT/Ebn+Xy1eSYZwNrvpxk0gn9i6ZG
-	jyMzBHWVJuidzivEmThJ8N7EfxAKO59s=
-X-Gm-Gg: AR+sD12tzONfOHfKm9eyzOj4ycqupAc4JEHePk3IVVRlwwJAW/6saZcsqivpeV24yvH
-	b5TTKX4O2GXB1AvjxuzykWV0u1Ok1ZSj0CaCCgyAMu9+XRgzWz6yUuVr6PE7n+8eV6+FUBNI83e
-	mT1tFxpopTj50scWg24DdDev7UHaSvc/AfBPMkiMSEM4uo7Wo+mWTUiCXJYig+5fSCdYYuKi68S
-	MoUq8wUIZ6ha5qmpTGfscfNK2KZ1XvagHR1B6SVJJRGgxucQoVKl/NgYvrfwRUvSTsvGXvdm1AO
-	WO/zs0+5H430CblQ6wQ=
-X-Received: by 2002:a05:6512:3d21:b0:5ae:b75d:8c0d with SMTP id
- 2adb3069b0e04-5b2c1afecd8mr59784e87.12.1784942659075; Fri, 24 Jul 2026
- 18:24:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=windriver.com header.i=@windriver.com header.b="CLSUtuhJ"
+Received: from pps.filterd (m0250811.ppops.net [127.0.0.1])
+	by mx0a-0064b401.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66P1ZihS3271387;
+	Sat, 25 Jul 2026 02:40:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=windriver.com;
+	 h=cc:content-transfer-encoding:content-type:date:from
+	:message-id:mime-version:subject:to; s=PPS06212021; bh=zz3k5ldBc
+	pYxIRhJPIqsKQfWpJ/un6hhprO2MvNgYeM=; b=CLSUtuhJpPHgJRj2EeMWjQ3Gs
+	o+Z7LVwSZ3ENJrSUfYPuEvkWH76DMzn1Vlb9ly+kJbm1Kw3Lz/5yqj78vsydsH+a
+	fXz7/LVWJ3J1LygD2SETa0zD/LilDYUiCB3owVDIy1hncv0p3RI676c9fg7u2Ywl
+	l5nEfVNfFZG53rx61lntoAJeFxaDYUqYwiBv7U2JH20sjWVyaqsIJVxIMUmjbbHe
+	JUI5+BIS0r/Vt++9mbq1AoA+j3SnpBkqE15D4ggBXdj1VKrrsBBpe4RxyW853nLL
+	DKSdqTNpDNAkC/8vcChzJs2BiVe9iRT1aSm6JlcWxRCYmbTgjY4s/xFuRXtUg==
+Received: from ala-exchng02.corp.ad.wrs.com (ala-exchng02.wrs.com [128.224.246.37])
+	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 4fmjnfr2dx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+	Sat, 25 Jul 2026 02:40:32 +0000 (GMT)
+Received: from ala-exchng01.corp.ad.wrs.com (10.11.224.121) by
+ ALA-EXCHNG02.corp.ad.wrs.com (10.11.224.122) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.61; Fri, 24 Jul 2026 19:40:31 -0700
+Received: from pek-yzhou-d3.wrs.com (10.11.232.110) by
+ ala-exchng01.corp.ad.wrs.com (10.11.224.121) with Microsoft SMTP Server id
+ 15.1.2507.61 via Frontend Transport; Fri, 24 Jul 2026 19:40:30 -0700
+From: Yun Zhou <yun.zhou@windriver.com>
+To: <gregkh@linuxfoundation.org>
+CC: <harshit.m.mogalapalli@oracle.com>, <stable@vger.kernel.org>,
+        <patches@lists.linux.dev>
+Subject: [PATCH 6.12.y] ext4: fix fd leak in EXT4_IOC_MOVE_EXT cross-sb validation
+Date: Sat, 25 Jul 2026 10:40:29 +0800
+Message-ID: <20260725024029.1217577-1-yun.zhou@windriver.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260722142947.085426486@linuxfoundation.org>
-In-Reply-To: <20260722142947.085426486@linuxfoundation.org>
-From: Dileep malepu <dileep.debian@gmail.com>
-Date: Sat, 25 Jul 2026 06:54:06 +0530
-X-Gm-Features: AUfX_mzIyZ3MrkOex7XlD4dMeTTVkltiwhpKNUAGs3b5-mmzTOIMJycxWGA2hag
-Message-ID: <CAC-m1rryTBYDDfroX1kuLa262NaMh4ppoFr=m7RaNpoUYVxMoA@mail.gmail.com>
-Subject: Re: [PATCH 7.1 0000/2079] 7.1.5-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI1MDAyMiBTYWx0ZWRfXztvKE/f9+bHc
+ 4JlG45Ev3ijoHphAbR8hyadJtwlB79hTVHU5mzggmXoCOEQL2MXGMUOyLpHRGM4l34WMBPcqVBg
+ qVVphmbKJecIGAFyyUHW6LmXn8jAUyMG+tYXQoaTrEEI4R68WHPe
+X-Proofpoint-ORIG-GUID: -8idVCaP8B7AXZCBnubRoz7D_pjucxBA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI1MDAyMiBTYWx0ZWRfX+Cm7sUP0Fj5+
+ 9Uh1eNQsqLQq3k+LxOj+OT5jF8JQbEP03rEvCz4Hp4nxlz83UeB99TT2vK2KRW1gDWChFkBgiiy
+ aeFr9aai8aJgTfrc1lyl8O0Y8tpQUul3N1PUqXeQJFeN5DyHAEd49RxYc7j/1aBBhnbc7UzOIxG
+ z+D4duAJg0s0KiWhEb04D7i449xbrUIROZZhCeu6eY+AO1nmOXakH1uuIShQ5dvSwyMer5rpG6K
+ 9rr5ToNUkcwTEaiOF2JrRGyEpkj4bry3fQSAhUSdAHRN4WE0ZdQCAVz9eHLFNjj1D4owruKXcpg
+ Ce3bNRyQOqYXW384Z8Fk/xbRuXczHAV9ThJwQFPm65z+nzBcxS872vNwOl3EqDcbEQpb5rVUKgk
+ ConFhluZ39wx0F5Vf+ykdwEyqzxlxQ/Ips/ZXNE/0dmaijbCLEfp1pAgoGryRkj3xnm9nCQ6o/l
+ djaBlwinuxUz3jqdqUA==
+X-Authority-Analysis: v=2.4 cv=MuRiLWae c=1 sm=1 tr=0 ts=6a642220 cx=c_pps
+ a=Lg6ja3A245NiLSnFpY5YKQ==:117 a=Lg6ja3A245NiLSnFpY5YKQ==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=bi6dqmuHe4P4UrxVR6um:22
+ a=klDOsUkWDRETUCZYPvoE:22 a=yPCof4ZbAAAA:8 a=t7CeM3EgAAAA:8
+ a=wjBiMjVWcXLmg7aGH80A:9 a=FdTzh2GWekK77mhwV6Dw:22
+X-Proofpoint-GUID: -8idVCaP8B7AXZCBnubRoz7D_pjucxBA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-25_01,2026-07-24_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 malwarescore=0 phishscore=0 suspectscore=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607250022
 
-On Wed, Jul 22, 2026 at 8:09=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 7.1.5 release.
-> There are 2079 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 24 Jul 2026 14:26:57 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-=
-7.1.5-rc2.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-7.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-> -------------
-Build and Boot Report  7.1.5-rc2
+The backport of upstream commit c143957520c6 ("ext4: validate donor
+file superblock early in EXT4_IOC_MOVE_EXT") uses a bare 'return -EXDEV'
+which is safe upstream because the fd is managed via CLASS(fd) with
+automatic cleanup (commit 8152f8201088 ("fdget(), more trivial
+conversions")).
 
-I built and tested Linux kernel version 7.1.5-rc2 using the default
-configurations
-on both x86_64 and arm64 architectures in a virtualized environment.
+However, on 6.12.y the ioctl still uses the traditional fdget/fdput
+pattern, so the bare return bypasses fdput(donor) at the mext_out label,
+leaking the file reference.
 
-The kernel compiled successfully on both architectures and booted
-without issues.
-I did not observe any regressions or new warnings in dmesg during boot.
+Fix by setting err and using goto mext_out.
 
-Kernel version: 7.1.5-rc2
-Configurations tested: x86_64_defconfig, defconfig
-Architectures tested: x86_64, arm64
-Kernel source: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux=
--stable-rc.git
-Commit: ad98fbfe8a23687c534125422868b050b67eb6ad
+Fixes: 74796e886ca3 ("ext4: validate donor file superblock early in EXT4_IOC_MOVE_EXT")
+Reported-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+---
+ fs/ext4/ioctl.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-Tested-by: Dileep Malepu <dileep.debian@gmail.com>
+diff --git a/fs/ext4/ioctl.c b/fs/ext4/ioctl.c
+index a8a024bb62b4..e726f9dbc146 100644
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -1372,8 +1372,10 @@ static long __ext4_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
+ 			goto mext_out;
+ 		}
+ 
+-		if (file_inode(filp)->i_sb != file_inode(fd_file(donor))->i_sb)
+-			return -EXDEV;
++		if (file_inode(filp)->i_sb != file_inode(fd_file(donor))->i_sb) {
++			err = -EXDEV;
++			goto mext_out;
++		}
+ 
+ 		err = mnt_want_write_file(filp);
+ 		if (err)
+-- 
+2.43.0
 
-Best regards,
-Dileep Malepu.
