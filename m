@@ -1,48 +1,48 @@
-Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010059.outbound.protection.outlook.com [52.101.193.59])
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012053.outbound.protection.outlook.com [40.93.195.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67282771E;
-	Sat, 25 Jul 2026 00:42:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.59
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FEB1331A65;
+	Sat, 25 Jul 2026 01:12:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.195.53
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784940160; cv=fail; b=fBfR8Gvo3S3KpBKc9n8zRpfHdRPB6fc1PDoGGt+gL3ICLg7JxtwGRcUvZloi9Jow8XyziOyYk19N21ynCKEj+jxJw1MK/GNCIgwiGXAtdF8Xl6Hoio2uZJWbTQm4UBAOvqRdbOify6wE/MPckhEFvuI8+VNQg3IXTKXkp9+pJw4=
+	t=1784941947; cv=fail; b=JvzslnfnXX8ahYicc37VXnsPBEOPr6pBEnsXFI0SyeIqxJNDWri2K+8rTUtp6Kr9z43TtM81pOKLF9MebWw1J51G8IGbDW2tZX/NHqd40W+63aS0FZEoZmdcmiNdI2luf0mk67Bamnm6c1ixDPXbZChGqedzlYuLZjGY5iXFZsc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784940160; c=relaxed/simple;
-	bh=yqsm62rpXOUHbrlX5p+2yT1Tmtm3b7UFBa4kJckyhEQ=;
+	s=arc-20240116; t=1784941947; c=relaxed/simple;
+	bh=8BwDaviklwGx81v4mYCnHTKvkFrpdcNHDUjsHqeEWcs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=uMK1uR6JShiDrezIfH1rY2DpJJUmdExQVfxFYAQFcW9qsRaD7e5EO+yriAQdsKBF1LN69JOtNQjHxArERdXZ8VnOT9HjMkq2RCCXH4i8NeDyvoSZR81cdJS9OX/rTEws07GgoTKD5+6r8QuV+4vfLC2qY1UpAdF2EZzATW94RR8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=V2LphTUA; arc=fail smtp.client-ip=52.101.193.59
+	 Content-Disposition:In-Reply-To:MIME-Version; b=UnnsNg1U8lALMJEIq5+vA/2FAZLIzLvGs4f8kDaPGXXTvFyFukImJ2XYHZyXtl8DtLcOyIqnBYEfnjZoni6Dg87fhG/fjWm87syBnrc1cCwWERaLUPn/Wj6cDUgBbUH+QuqhroqcklKTM2BDoI0tispa5aTXAL81owsxu3JI5xc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Iei7pGtA; arc=fail smtp.client-ip=40.93.195.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="V2LphTUA"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Iei7pGtA"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qreJF7l2/6c6vhd+baFD8AD36E3b/mPJlzR5PazUnzUwwixRliza6JEsrcNZxAsx0YxhXDUJo5WcabdPTyx6ZhIr05Cd5iURoAWh+kmd9WTHCHWNuGyO3XrZPm9Ojp7m2esM+CSejGTNUo31SB7Nw6hMtdoFXp9+t12QEUhto4r6M+HHmOLk/O5+oUPyQwaYvYYpolJH/cTUQCrt6Fe8nj0+3ix/jKquR7Ol8oa17XvALcJRu/AQeoZllOdfPCv3NgSpebbCZ0tAF7q7PUSEug2T2OLP+Fkb57rj7TC5QQpQYXCx9sWEdlhspG0w5M3RWbK2+9g0/LKX6NCI8SqdrQ==
+ b=gDjQ0WOlGWUodOgPKibV1vT0bKnBcvCC1JrInNrUXAkT9UrNmFk5OMmZ5tTpHyr/fjSKyYt7NRc+kk4CfGp57vDCoXyAjin5Gg1Lni/49fo50uBDS/T8JQUHBxDhZbbPn+EyxJ3HAOCxCLoub38pSiHxFY4E2npFWIHBVNRF0jKJIXz3ahvk9muAW9Cx4lpHbrPrzknlUKlfEbGt1fxB+GaUXRntuEScqCcKWtiGyKp9CMb8BUA1LimoLQw9y+V3RCUujNtDInv1gNvrCXxvkmNQaaMXrWCscdFPySGqtHiTQBSaCWhC8dJBDha/061BhG1CJt9XgBjY48LsRab2Bw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4WpI0fyC0SK+83Q5UovnfEWWtCRjHvLmfmVowoRyu9E=;
- b=L6l2I574B92uvCc3Nb8f6yiGQpeYNxr2FznXFyyPLKYFNQUQWsU0CWDz7CxOi2vsnxX0LONsus3A72PYxYvUj+FMttw8Jud/hWgLVwNYkLWuHusQ/Muf2wzbx/aeny5tHuTVnV0bFmpdbo+hsy7+127fow/MH4KERpxQIZfkp1ppzBmrC5awv7PYajfEFijWbQHXA6fBYOUSRwj/PW5uPBOLH1VlRO38MwBb86B4aC6R84nWCnXm4J0DEfs5RhflKluFl96/jYi9vkP/EV/jDZTRa9LLEICv0q37KOQYyEZhw8GsfIJlfHE8PX/g95Wap/rTcGRS7x/XhaWdYMSn5Q==
+ bh=SONvdh7bwZoKhMpQvFTjZkFERf/2ha33oBwBKd2or5Q=;
+ b=UQP9wSn3B4fSGIcWJxk7QT4TQT8IMl3wS7SD3zm9+fi56jgHHBAGWPGGlpyGEJipANfzAXYIeaDSkSzJCwBE265WSZzPP5+mjlnsxnpyqDV3Z9PZmoOyi4Q2S36FLcWANM7goqztcb73u53loJrHSwn9BQcXoj9bEzDQUKT0l60SFPtbuFG6IhBt8tFku62wg6g/mbdXhR1Qga09tQpCFjlFHepuJoSHkFbDrFiR9tDLE9NsF7ipPKFLS/UYybw8fZ84f39I61c6l//lwFZaR3z8vHsZSL5zvWuoCRgydXCRzH5b9jAB8GBWiCyZ/HUP9u7eok3Mn3+39qPSDOFh/w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4WpI0fyC0SK+83Q5UovnfEWWtCRjHvLmfmVowoRyu9E=;
- b=V2LphTUAFO9kC++JVKPYj/+WFekCz3WlrzR9zcCBre/OubmvaOo6HYvK+BkEnarML8L5GMiCktvUBSjbXtefULevs/oP1Z9gi/pDug9w6Cg2gC+2Imyk2/DhEyueNZT0zIN7WBreVV/HHBs5dJOa/MVyK6MHit+y95MV5jwJcJYkMJgUsDNA1E2GIvaDpQz0bkXtXyOUn0qERr4oINBaOmwfDVkR8jlpGTnmnzvhghHm8EBldmIpQMNamGJBMcsAej1sX0nl6GU9sk4qRT/uSbCX8uq8aYUQUwB5qth0Qv92F1RRSBgKnGS3jNHYRw78v0jzAWAmGXjm+1oPAAWnqQ==
+ bh=SONvdh7bwZoKhMpQvFTjZkFERf/2ha33oBwBKd2or5Q=;
+ b=Iei7pGtAEEE0UR2cd6mi0Y2+b9+V1+SBEM5zbjiCr/9094AiAw3BlGjH9eVIysoPHzR9b9pyt8lfPgZvo1ADqxlJwvpGRXi3Sa4AbaJYNiykod6s6jtXa4JHNK0JvpEgvAcUcM34aNc9OcL4o8WrlB+EYvMGqpX12SLhVIOwHH7kfNqcptYb3TFLmrv25m/S6rjkfnl8U9bkZ7dPfNc6mmcXUmWQaQEpKwVcfS21noGEIzAVRKT9rrej5qvSpcJKf3jBP5oDdfhT2ouDOQptb2dUT4PjsJdgeTYpX76vttfHy9Hs1cZfABf/Gq0hgfhORFuexmPYLmsHg+//Ru+tqA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by BL3PR12MB6402.namprd12.prod.outlook.com (2603:10b6:208:3b2::17) with
+ by BN7PPF7F4CD71A4.namprd12.prod.outlook.com (2603:10b6:40f:fc02::6d6) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.12; Sat, 25 Jul
- 2026 00:42:34 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.18; Sat, 25 Jul
+ 2026 01:12:20 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0245.010; Sat, 25 Jul 2026
- 00:42:34 +0000
-Date: Fri, 24 Jul 2026 21:42:32 -0300
+ 01:12:20 +0000
+Date: Fri, 24 Jul 2026 22:12:18 -0300
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: Mostafa Saleh <smostafa@google.com>
 Cc: iommu@lists.linux.dev, "Joerg Roedel (AMD)" <joro@8bytes.org>,
@@ -53,15 +53,16 @@ Cc: iommu@lists.linux.dev, "Joerg Roedel (AMD)" <joro@8bytes.org>,
 	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
 	Pranjal Shrivastava <praan@google.com>,
 	Samiullah Khawaja <skhawaja@google.com>
-Subject: Re: [PATCH 0/7] Use the generic iommu page table for SMMUv3
-Message-ID: <amQGeHirwgEEJVkf@nvidia.com>
+Subject: Re: [PATCH 3/7] iommupt: Add the 64 bit ARMv8 page table format
+Message-ID: <amQNcq5RfAY9b+Hy@nvidia.com>
 References: <0-v1-807e2d1a5efb+e1-iommupt_armv8_jgg@nvidia.com>
- <amO-sGlWsmtcPsDZ@google.com>
+ <3-v1-807e2d1a5efb+e1-iommupt_armv8_jgg@nvidia.com>
+ <amO70_Bx0hM10xUn@google.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <amO-sGlWsmtcPsDZ@google.com>
-X-ClientProxiedBy: SJ0PR05CA0207.namprd05.prod.outlook.com
- (2603:10b6:a03:330::32) To LV8PR12MB9620.namprd12.prod.outlook.com
+In-Reply-To: <amO70_Bx0hM10xUn@google.com>
+X-ClientProxiedBy: SJ0PR13CA0236.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c1::31) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -70,125 +71,283 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|BL3PR12MB6402:EE_
-X-MS-Office365-Filtering-Correlation-Id: afe68d33-5dbb-4a51-8d15-08dee9e59dfa
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|BN7PPF7F4CD71A4:EE_
+X-MS-Office365-Filtering-Correlation-Id: 01699f06-2697-4232-3ba4-08dee9e9c691
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|7416014|376014|1800799024|366016|56012099006|4143699003|10067099003|11063799006|6133799003|18002099003|22082099003;
+	BCL:0;ARA:13230040|376014|1800799024|7416014|366016|23010399003|22082099003|18002099003|4143699003|11063799006|10067099003|56012099006|6133799003;
 X-Microsoft-Antispam-Message-Info:
-	hKod9O3Nifz3BOnCEICCb06PY/3UokQIxmIDRtvoOPWBFfaHVonfi19XVPZdKak+zg9R+OYmloSvccBgKXJb9f+jsdbYuAMi4B81I92Bzrd7Gyokwm2tK4iXjLf1FXnotl3CV4551T3zLASycH+ybN7RV5OYvql+Rq5mvBUOxM12Hv3dEkHpySor1vWFlNFspctkb8HR53DYx3cyUFiHAqx3errt7Eb62Mo5p1L9o4VL9ofghcr/rkfbe2BQfjfIqo00R7LcW8SSnJ0wXWtSEJUFshTopIiZJgPyZwFpL3iXezjW3lGRbhT7k06l335Sg9EGfR90uizx4LwxV4XNGx6B4wQL/4WfwPhh2bWDxOt2F4fKezMTztxKd5LWZi6Z7hP9PPe8T5/pY3cbFVNIajtGrrQgvb+krxFhvp9hs+2YWlx3zv1KaDn0/tzLJWiiJewqztAYg1hmsU8+zqbNYRSkhKR8KgnfoNw3EOYUxqDQw2egvEyyYPKQL0H7AAI96A+wq4bMATdo6MfZin4/BHvQOKcwCaTldwYCB8IBeaz4W8RAuN80OAjzVrtdiG6JmT1XgAhHsv2ElmdYcNDXmqWnD83xQMvzTPKjSV2XNJUEACljfSfF8qiDJGgfVhNebNKGNPIHBZPcCBDwwB4BsGU3+tuWvVJSWTrNrmLrJ/I=
+	Cr0wJEEhfvoMXRLtSC1hYPR/nERQ4CxdimywyoLBKpOes6EWUGvZ2adMRAHLRO/HyzyvbDpK6M6Q3vKBzvi6rVA8uf6OfFT/dP44A+ovxpWw2i5JDKVB6gRhv+HcbsnpwTUROoHoGuC1bFMhBkV/snG8tXAJquZ44gtylQq4T/0Ohxya0wgxPybfceA0hMUs4BOpjrVzAI7JoE+496ocGkabeP9bgSDwQFliIDcyQJAzyM7S0Tknj8X+IMIXWAiHZEvKGpZmxWj+0YhPTfJ9aeLqD0rCZptJt/7X7REeNcp+u805UiG4kAwJuPmh+dRbhzdoe0fDThsmxvVhyLipZNXo/EJnzfis7k4NIsXTsWbilA+MtV/hD6Fr1bz8Q/SHVHCXd4tc+0QOXotJ01zdl4qqNKbTH8BN5UwKPFBRBKpA0Da3kJWTFIGbapfbZo9czN1NJywPUJBctzxLj1JSdOZxCwZBQpes6e5Xa1CRFtkp7jvxtLTW+ERtL0GAJ2JxyRO9EfjK/KpttO63dnc3QrgOB3wfmkQzlUmBEO78e6XUcll36GHz1ukHTEFqEUlORhUt42NwPBQZr7sWa+FX+CxAXNbgR7oBCWlMiZOLYM7/lvK8RjkMzSasS+KrAOUJnZtLtgMTLRp2/t4Qr79rke5+SZGNWSXm0InLJX0QzDg=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(7416014)(376014)(1800799024)(366016)(56012099006)(4143699003)(10067099003)(11063799006)(6133799003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(7416014)(366016)(23010399003)(22082099003)(18002099003)(4143699003)(11063799006)(10067099003)(56012099006)(6133799003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?pv/QqZM6xjD23Pt7uG99v6NH+bON3Ge47fYBnDsGY1Pd+ZGQ+WQhL7WUaByW?=
- =?us-ascii?Q?7Y7r0jLcZTpdqbTfg3503DNnvrD8oHwCXIGCxFqRO9W+ITT+eVE4f/AifgcT?=
- =?us-ascii?Q?pjDbEpBQ4W2GAXi3ixB5VWtm+hGwrJthGelmVahuPEQq4s284k4ukP4kfESM?=
- =?us-ascii?Q?A8zzu3lgLuECMpZo52zqZDq7I12Z4i2CE51ct6J7JvOH+N0jCEeGr4zhYtjz?=
- =?us-ascii?Q?oxdM7Z0iSwXYEaMd88V8OLj8WgfHC2al+TmCxY2+eiShKcy+mKcxQqdGIKZe?=
- =?us-ascii?Q?EQ8jjH68y8CU3a4mMAO+LGcJuMhuLXWh/BHy6+mTgbQO86a/qXXs4lvoWSt5?=
- =?us-ascii?Q?3fCv2hSHfT6JPBPpiu0bltaJugwEEsoAq0XzH+0P9YpoaW2m179Lw3OJbYht?=
- =?us-ascii?Q?q1VLePVfH5XMs01iPHmmdVI852+wMeTJ/jFeHM+nxgVemQqSAZbSKZ8/LA5n?=
- =?us-ascii?Q?pKLcv/Yh4iFeyaOCZt4KhO7UMRXei7bpvGj6s/ne4sEZC5NVhWh0pdFIOsR6?=
- =?us-ascii?Q?5uikiG71d8mfrYP7STQLZ1Gs8RGD8uzJwCZEbCkiccE7g8TmLZJOqgo3BZ3m?=
- =?us-ascii?Q?ACFuN9WrUjPG1muCtwRiS410YAoksPN456Cs3E006lXqxsI/a/L3Cd0ey8wv?=
- =?us-ascii?Q?feL6+Nj8TB2X3cW/AUMZ42rfjAfyY/TP+qLdlO7oixaYCa2Muuj9yNpcj3IE?=
- =?us-ascii?Q?9pAeiU/K6fnNh5r07ELob3q6DVTLNv1Ig10gzHpPkb9ghw7JSfRtR2QMgC2r?=
- =?us-ascii?Q?4EQ/2zqrdPlSlGL3/BoFSg6tMCmajrNP1DE+Y1Oj/TuB4AsYtKJEDduFe8Z9?=
- =?us-ascii?Q?R4zlt5a5nU6nSBh3T7L7+vJ+zy6cMBQ7BuuoMozysavpYaVjN1YmjmPJ4Enk?=
- =?us-ascii?Q?Dv3DwjqLCZfVAwY2rozUyGmMmlluIXsGY7F2/DaFQoUWzi7TFxVe3kYaadle?=
- =?us-ascii?Q?nDge/cV1bMw6jKYSIXIKSClW/d3v4BrZv5vFKRL5IhHxmQ17Sbf+IuluSehr?=
- =?us-ascii?Q?349yn424y/lRq1iliMRCK/syKaEaT3NzPInI0dgLx+L11g1Si5ImkAMfGX/4?=
- =?us-ascii?Q?rXRfcs1azvxjviK0lqgC4VkQsg/XTnFjpdi5N7Dn9579Y+Cx4XZqQUpetvHI?=
- =?us-ascii?Q?w1vrewvrLCeYrSvmMvAcrzLFghE7uyalQRoA/DW7PL/2fkTjIEJNB81ZVYCD?=
- =?us-ascii?Q?453YfXtbkU36vTPV5RU30MTsQTh5Ap6qoG2TjZA5z3gR8vLfpNFaWnPifOWT?=
- =?us-ascii?Q?0wVNbZTWzA405X8EUD3Iqj2D94p7g3hVlb3yjPpJ8ZntACKuAKETNBIioG93?=
- =?us-ascii?Q?CXGyXAVt8MHHpxb1PeaLqlBsOksfqawTwgU9rFPKJuOKasKJ/2ELbfY2oFb3?=
- =?us-ascii?Q?LvQ6VmOmAj5WhR43qb9sI/JAkZGqZhVPzhDwyEUOB1AilPgSmLOltaezJDu+?=
- =?us-ascii?Q?voeCxx5i+8yQfD0rjYFVuX95lPsDa72zvyxsnz99Urd+o+3N2dU0UgbQXAgk?=
- =?us-ascii?Q?bY6pXlR8yxqnz6LvHQOUnr1mCiUbSo4dW+neF1IG/DlX9piLtbuOyqMQ2eHA?=
- =?us-ascii?Q?LwlFpvddT6HFK2PVmfqKG7CSQEaFiwTiELek1PdBMIUHu6Ji6va5LE9HD3Md?=
- =?us-ascii?Q?C6emvmyc8UmiXeM3F0nDy1NYM61i9XmrTM4rMuTGaInthoTmNxBtLrPMYZo0?=
- =?us-ascii?Q?x/VxJFWN5IuOEUU/h5YOiUeNVtv/rR4EdvkuJ6F1wYAMJnPqwCKbnWuXJuPP?=
- =?us-ascii?Q?GlNrpsJUyw=3D=3D?=
+	=?us-ascii?Q?gliv8Aeu12nSDNe4Axf4lmJxrUxFHaV2IOUymhEeFul86ceaNNIcvmwF+13j?=
+ =?us-ascii?Q?lHOf5Z9GlxyMxmv5Oh851RG50RMyF7NjPyAvNOUs2+dV1CwzAOrrUV4lQtlT?=
+ =?us-ascii?Q?RsnlXAUGmMDh1hWI+94V5+T7l7c3O1nTRqyLQqn+xTgBpCCi3OFjBNsTQDO3?=
+ =?us-ascii?Q?JoBXXbNrS0gSOLxwOOPOKViAwGYRUnMjI+pU9uAQR8rNlOFkhJBSZ0xv7SXi?=
+ =?us-ascii?Q?8CjxGwp6paFOfHmyGrRO5xuuzfZA/+j0IEoxMiWGNHnisVfqG5kp4XVfdH2J?=
+ =?us-ascii?Q?U8BvoYfs2ZYPqoGY0gM6AQAPbgNYvcGx99C6Dc4bglzf7DYNwAaBg7p5KPxK?=
+ =?us-ascii?Q?5rFGyt8iOR74eDZaNnPoQ8jSEB6CR+6IHF84+PN5q72Qp1pJiMEJtDwiVjqy?=
+ =?us-ascii?Q?BVXUfuMSZYZBnT/dT3b+lkwjyKxsd0zCat/z+YRRYd4FxLu9BJGJctetxXWP?=
+ =?us-ascii?Q?ZGkPXAZEHOLxXrXSP1aZ3tD+rf4spQpbh+/fDsr1+Au1VYxLYavnVMsSuU3g?=
+ =?us-ascii?Q?f2fyiS7KzxQwNCHbO+OZ6TzbqqmtJC9OHcFSLGUrCLsf1cl5BePFsOtlxiPR?=
+ =?us-ascii?Q?VcFmoaWMCyM+MBufeDO4spV2hit3dbYDt+LB1EEg7UVz9PKXN3uelTOtDrs8?=
+ =?us-ascii?Q?Uy/LTSgXBZwGnzMoQtR420PQome7pVMqhvnAR2vG6zrcvRGkO7ki5oByDeNx?=
+ =?us-ascii?Q?qqwRVchWaKVNCSDdk3HRu4DwihH4yPExJpPK/fEJqdO8phQa53CSgNXCINz3?=
+ =?us-ascii?Q?DmXf1FPzuWVGl8IBjxm4NwZPeDjpwTgLXsd2TTKVH7snbRMSwhGupPr4G0oe?=
+ =?us-ascii?Q?YOq8HMXH+wFdHwlWATdRg7+40PGl/kiSa7TiP+BhjL7EJdALfYQQtnQhvaPv?=
+ =?us-ascii?Q?OoHaqxFsbZKFqdZqYWmXEXm5KMDo76wIcKM5edIceIqbm3rFo1zbgnzXvjqh?=
+ =?us-ascii?Q?yhd/Hxr64gTJVjZv6yeF8KwQo2/3tqpddw5WvBRHhItLViGcQ5RHkqEHeVJs?=
+ =?us-ascii?Q?g1Gl5Sa2RWDa3ipy+RTN+6kW+cugTzl4GPWgI+5r/QRpIx0HRb68JYnQdgbU?=
+ =?us-ascii?Q?HrPAvtVLAMnSsAoyyOwbIUGpFmIbm10yN4z7vwp+0bUjBbThwRseUTYk08nE?=
+ =?us-ascii?Q?AwWyDX7CfmnA+bNWY0UxmlNHldNviFzO2/w+SHcyOibEcn0KdTu8YIqKtHRK?=
+ =?us-ascii?Q?NPtQwYWtBItqR4CYj2vJqQJJda8AsfCjzVwWOqzfilZAKMvKU1uXxrqrTiC/?=
+ =?us-ascii?Q?efajVIQ8JVuO4tLCPn117Ea3pC45RwEBF83JVTAJwtbqcWtv0opdbM8FwD7+?=
+ =?us-ascii?Q?ICVqxEOJb5tx7oS22el9iJpgcHWKYXcmT4HyFdrup6h/xALIg8gcSguLpDwq?=
+ =?us-ascii?Q?MHiPfsXWCA02LjnxIM3itEloHUw5iaEGtUS+oZWlHWudv6NZsqUMSD/POILJ?=
+ =?us-ascii?Q?EX3oZjNO6wH1Fx204HY5asvDOCHrb41nDr+EmcftQguIMYgggvAj0R1/bNHY?=
+ =?us-ascii?Q?FxntNJ3YjkiAxHRUqDoX3YktLSwBswg26CGES+8WJ66jclXMjUMtrS2r2CbF?=
+ =?us-ascii?Q?MvUeuX2zClQVFk5u34Opd4grvEp/ZXkJwGmTeYRI+YJEFbWvViQiZPLwtWf0?=
+ =?us-ascii?Q?0SO2sIfb8i6B9spgYlr3tQ083+bVrCcbrB47w1XKIGZXzJOR5geZ4QExoWsn?=
+ =?us-ascii?Q?/9KCNaA2yqiro0YvZlLsSIIZTWwtnyIUDteZq153oEJ9HWedeaN4Oo3bD6ps?=
+ =?us-ascii?Q?waQ/4OZwaA=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: afe68d33-5dbb-4a51-8d15-08dee9e59dfa
+X-MS-Exchange-CrossTenant-Network-Message-Id: 01699f06-2697-4232-3ba4-08dee9e9c691
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jul 2026 00:42:34.1961
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jul 2026 01:12:20.3905
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: nI1ybDEvBt4eu0cTFkI/XucOCrTe786ffpUZjVuedmUWgfzqSevftWl0ddvqeu6t
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR12MB6402
+X-MS-Exchange-CrossTenant-UserPrincipalName: D/PH+7E/7Ge8ZqT2mEh5BssaK2lVRGFGunc6qWU4dDFoCkzuPX6EX/7v0Sz8sWA5
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PPF7F4CD71A4
 
-On Fri, Jul 24, 2026 at 07:36:16PM +0000, Mostafa Saleh wrote:
-> On Mon, Jul 06, 2026 at 01:29:06PM -0300, Jason Gunthorpe wrote:
-> > [ This is the last patch to move SMMUv3 over to the generic page
-> >   table:
-> > 1) Organize the SMMUv3 invalidation flow so iommupt can use it
-> >   ..
-> > 2) Use the generic iommu page table for SMMUv3
+On Fri, Jul 24, 2026 at 07:24:03PM +0000, Mostafa Saleh wrote:
+> On Mon, Jul 06, 2026 at 01:29:09PM -0300, Jason Gunthorpe wrote:
+> > The features, format and naming is taking from the ARMv8 VMSAv8-64
+> > chapter. By far ARMv8 is the most complex format supported by generic page
+> > table, with the largest number of options and configurations.
 > > 
-> > It depends on #1
+> > ARMv8 uses almost all the features of the common implementation:
 > > 
-> > The whole branch is here:
-> >    https://github.com/jgunthorpe/linux/commits/iommu_pt_arm64/
-> > ]
+> >  - Contiguous pages
+> >  - Leaf pages at many levels
+> >  - Variable starting top level
+> >  - Variable size top level supporting concatenated tables with a high
+> >  - order top table allocation
+> >  - Dirty tracking
+> >  - Low (TTB0) or high (TTB1) starting VA
+> >  - Software bits
 > > 
-> > Introduce the generic page table for what the ARM spec calls VMSAv8-64
-> > (ie the long 64 bit PTE page table, io-pgtable-arm.c) and use it for
-> > SMMUv3. ARM is by far the most complex page table of all the ones
-> > implemented, it has the most runtime behavior variations and a lot of
-> > features.
-> > 
-> > Like the othe architectures, the page table itself is supported by a kunit
-> > compare test that runs operations through both io-pgtable-arm.c and the
-> > new code then checks for identical PTEs. This is on the github link above
-> > but I don't intend to merge it.
-> > 
-> > The existing kunit tests for iommupt will automatically cover the new
-> > format as well.
-> > 
-> > This is the final series migrating the SMMUv3 driver over to use the new
-> > functions and remove io-pgtable-arm.c usage. In principle the other iommu
-> > drivers that use io-pgtable-arm could be converted someday as well.
-> > 
-> > Robin once mentioned there were errata about contiguous bits, I only found
-> > 3673557 and it is mitigated in this design by always using RIL. I'm
-> > assuming that RIL is always available in SMMUs that are effected by
-> > 3673557? I have a patch add a FEAT if for contiguous bits if that is
-> > required.
-> > 
-> > Jason Gunthorpe (7):
-> >   iommupt: Remove the sanity check for pt_num_items_lg2() at the top
-> >     level
-> >   iommupt/kunit: Skip test configs without supported features
-> >   iommupt: Add the 64 bit ARMv8 page table format
-> >   iommu/arm-smmu-v3: Remove io-pgtable-arm from sva.c
-> >   iommu/arm-smmu-v3: Move the DMA API comment to flush_iotlb_all
-> >   iommu/arm-smmu-v3: Use the generic iommu page table
-> >   iommu: Remove pgsize from iommu_iotlb_gather
+> > Compared to the io-pgtable version this also implements the contiguous
+> > page hint, and supports dirty readback from the S2. It implements the
+> > original io-pgtable intention of always using S2 concatenated tables
+> > instead of only when mandatory.
 > 
-> I went through the series, it seems the arm work plug in nicely with
-> the iommupt stuff, I left some comments around, but I feel that
-> patches 1,2 and 5 can be sent separately.
+> I believe the intention of the original code was to use concatenation
+> at level 0 to reduce the table walk. Always using concatenation will
+> have a trade-off between high order allocations at runtime which can
+> happen late with VFIO vs walk length .
 
-Yeah, I can probably do that
+Maybe, but I kind of prefer this version :) I'm pretty sure 2x 4x are
+fairly reasonable things for VFIO to be asking to allocate these days
+in a hypervisor context..
 
-> And patch 8 it too large to review, it would be better to split into
-> 3-6 patches, I was thinking: base support, dirty tracking, contig bit
-> aarch32 and kunit.
+> > +static inline unsigned int armv8pt_num_items_lg2(const struct pt_state *pts)
+> > +{
+> > +	/* It is not allowed to call pt_num_items_lg2() at the top level */
+> > +	PT_WARN_ON(pts->level == pts->range->top_level);
+> 
+> This is a bit confusing, there is not a similar check at
+> armv8pt_table_item_lg2sz(), that's because the core code assumes this
+> does not deal with concatenation and uses max_vasz_lg2 to figure it
+> out. I think we should have consistent semantics for this.
 
-I'd rather not have patches creating unique things that don't need to
-exist eg a version without contig or something like that. It is too
-much busy work to go and test all of that. Clean splits like around
-the kunit and dirty tracking are OK, but I didn't feel it reduces the
-reviewer burden.
+There is some micro optimization going on here, if this function has
+to deal with the concatination it becomes alot slower and it is kind
+of a critical function. Hence the special restriction
 
-But yeah, arm is uniquely large because of it's complexity.
+> > +static inline enum pt_entry_type armv8pt_load_entry_raw(struct pt_state *pts)
+> > +{
+> > +	const u64 *tablep = pt_cur_table(pts, u64) + pts->index;
+> > +	u64 entry;
+> > +
+> > +	pts->entry = entry = READ_ONCE(*tablep);
+> > +	if (!(entry & ARMV8PT_FMT_VALID))
+> > +		return PT_ENTRY_EMPTY;
+> > +	/* R_RWMFF/Table D8-48: ARM level 3 has only Page descriptors */
+> > +	if (pts->level != ARML3 && (entry & ARMV8PT_FMT_TABLE))
+> > +		return PT_ENTRY_TABLE;
+> > +
+> > +	/*
+> > +	 * Suppress returning OA for levels that cannot have a page to remove
+> > +	 * code.
+> > +	 */
+> > +	if (!armv8pt_can_have_leaf(pts))
+> > +		return PT_ENTRY_EMPTY;
+> 
+> If this is not a valid PTE and not a table as checked above, what
+> does this check catch?
+
+This is another micro optimzation as the commment is alluding too, if
+can_have_leaf is statically false then the compiler can see the
+function NEVER returns PT_ENTRY_OA and it will remove branches from
+the caller too.
+
+> > +static inline void armv8pt_clear_entries(struct pt_state *pts,
+> > +					 unsigned int num_contig_lg2)
+> > +{
+> > +	u64 *tablep = pt_cur_table(pts, u64) + pts->index;
+> > +
+> > +	if (num_contig_lg2 == 0)
+> > +		WRITE_ONCE(*tablep, 0);
+> > +	else
+> > +		memset64(tablep, 0, log2_to_int(num_contig_lg2));
+> 
+> I am not sure about that, memset64 just uses raw pointers,
+> I believe we need WRITE_ONCE for PTEs.
+
+It is an intersting point, I think that might be pedantically correct,
+but practically unnecessary, at least for ARM it doesn't look like it
+has an optimized assembly version so this can probably be safely
+fixed. On AMD this is actually a pretty big performance win as it
+emits a rep stor thing that is much much faster.
+
+> > +static inline bool armv8pt_entry_make_write_dirty(struct pt_state *pts)
+> > +{
+> > +	u64 *tablep = pt_cur_table(pts, u64) + pts->index;
+> > +	u64 new = pts->entry;
+> > +
+> > +	if (!(pts->entry & ARMV8PT_FMT_DBM))
+> > +		return false;
+> > +
+> > +	if (!pts_feature(pts, PT_FEAT_ARMV8_S2)) {
+> > +		new &= ~(u64)ARMV8PT_FMT_AP;
+> 
+> Wouldn't that clear the ARMV8PT_AP_UNPRIV?
+> 
+> > +		new |= FIELD_PREP(ARMV8PT_FMT_AP, 0);
+> > +	} else {
+> > +		new &= ~(u64)ARMV8PT_FMT_S2AP;
+> > +		new |= FIELD_PREP(ARMV8PT_FMT_S2AP, ARMV8PT_S2AP_WRITE);
+> 
+> Same, wouldn't that make the page write-only?
+
+Maybe, I'm travelling I will double check this logic when I get
+back. We didn't test the dirty tracking yet, but I think we can do
+that now, so I would not be surprised to see a typo here.
+
+> > +static inline void armv8pt_s2_validate_level(unsigned int top_level,
+> > +					     unsigned int granule_lg2sz,
+> > +					     unsigned int vasz_lg2, bool lpa2)
+> 
+> I do not understand this, the iommupt is the one choosing the level,
+> and it calculates the table topology, so it should not have bugs in
+> the configuration and should clearly reject certain bad inputs.
+> Running this at then is more of a debug check that I do not think it
+> should exist in the default config (maybe with kunit)
+
+Yes, it is a debug check, all the function does it call WARN_ON and
+I'd rather have it unconditional for now. There are so many
+combinations the kunit does not cover every one, so it is not
+sufficient alone.
+
+> > +static inline int armv8pt_iommu_fmt_init(struct pt_iommu_armv8 *iommu_table,
+> > +					 const struct pt_iommu_armv8_cfg *cfg)
+> > +{
+> > +	struct pt_armv8 *armv8pt = &iommu_table->armpt;
+> > +	unsigned int vasz_lg2 = cfg->common.hw_max_vasz_lg2;
+> > +	unsigned int oasz_lg2 = cfg->common.hw_max_oasz_lg2;
+> > +	unsigned int granule_lg2sz = cfg->granule_lg2sz;
+> > +	unsigned int max_top_level;
+> > +	unsigned int levels;
+> > +
+> > +	if (granule_lg2sz != SZLG2_4K && granule_lg2sz != SZLG2_16K &&
+> > +	    granule_lg2sz != SZLG2_64K)
+> > +		return -EOPNOTSUPP;
+> > +
+> > +	if (pt_feature(&armv8pt->common, PT_FEAT_ARMV8_AARCH32)) {
+> 
+> Was that added for smmu-v2? as the smmu-v3 driver does not use it.
+
+Yeah, it is here and tested against the existing iopgtable, I think
+you are right we should drop it off since it isn't used. It was such a
+small amount of code I didn't mind leaving it.
+
+> > +	/* The NS quirk doesn't apply at stage 2 */
+> > +	if (pt_feature(&armv8pt->common, PT_FEAT_ARMV8_NS) &&
+> > +	    pt_feature(&armv8pt->common, PT_FEAT_ARMV8_S2))
+> > +		return -EOPNOTSUPP;
+> > +
+> 
+> This seems a bit random, there are others incompatible features as
+> PT_FEAT_ARMV8_TTBR1 && PT_FEAT_ARMV8_S2 and PT_FEAT_ARMV8_S2FWB &&
+> !PT_FEAT_ARMV8_S2. Maybe there should be a validate() function to
+> make sure all features work together.
+
+Hmm, that's a good point. We should also drop the _NS thing too if the
+dropping AARCH32
+ 
+> > +	/* LPA2 (DS=1) is only valid for 4K and 16K granules */
+> > +	if (pt_feature(&armv8pt->common, PT_FEAT_ARMV8_LPA2) &&
+> > +	    granule_lg2sz == SZLG2_64K)
+> > +		return -EOPNOTSUPP;
+> > +
+> > +	/* LPA is only valid for the 64K granule */
+> > +	if (pt_feature(&armv8pt->common, PT_FEAT_ARMV8_LPA) &&
+> > +	    granule_lg2sz != SZLG2_64K)
+> > +		return -EOPNOTSUPP;
+> > +
+> > +	/* LVA is only valid for 64K granule Stage 1 */
+> > +	if (pt_feature(&armv8pt->common, PT_FEAT_ARMV8_LVA) &&
+> > +	    (granule_lg2sz != SZLG2_64K ||
+> > +	     pt_feature(&armv8pt->common, PT_FEAT_ARMV8_S2)))
+> > +		return -EOPNOTSUPP;
+> > +
+> > +	if (vasz_lg2 <= granule_lg2sz)
+> > +		return -EINVAL;
+> 
+> When can this happen?
+
+Another sanity check, lets do WARN_ON
+
+> > +	/*
+> > +	 * D8.2.2: Always use the S2 concatenated tables feature (I_TDMHR)
+> > +	 * to fold a top level of up to 16 tables into the next lower
+> > +	 * level. Since FEAT_TTST is not supported single level cannot be
+> > +	 * selected here either. Notice that there are a number of cases
+> > +	 * in the spec that require concatenated tables (eg R_DXBSH),
+> > +	 * since this always uses them it is OK. See commit 4dcac8407fe1
+> > +	 * ("iommu/io-pgtable-arm: Fix stage-2 concatenation with 16K")
+> > +	 */
+> > +	if (!pt_feature(&armv8pt->common, PT_FEAT_DYNAMIC_TOP) &&
+> 
+> Should not PT_FEAT_DYNAMIC_TOP be always false for armv8?
+
+The format supports it, and the kunit checks it, but smmuv3 does not
+use it because of how the STE was layed out and the atomic update
+granule. I prefer to leave it because of the kunit, it is a bit of
+hassle to make the kunit not test it sometimes.
+
+> > +	    pt_feature(&armv8pt->common, PT_FEAT_ARMV8_S2) && levels > 1) {
+> > +		unsigned int topsz_lg2 =
+> > +			vasz_lg2 -
+> > +			(granule_lg2sz +
+> > +			 (granule_lg2sz - ilog2(sizeof(u64))) * (levels - 1));
+> > +		if (topsz_lg2 <= ilog2(16))
+> > +			levels--;
+> > +	}
+> 
+> I am not sure that applies for AARCH32, spec says:
+> 	This use of concatenated translation tables is:
+> 	[...]
+> 	Supported for a stage 2 translation with an input address range of
+> 	31-34 bits
+
+Okay, I will capture that and stick it in some discarded patch :)
 
 Thanks,
 Jason
