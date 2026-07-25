@@ -1,58 +1,109 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51169353A67;
-	Sat, 25 Jul 2026 05:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0E327703;
+	Sat, 25 Jul 2026 06:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784956758; cv=none; b=eZuLWKL6LfUhlPX0Qkit8LWr72I/ZH65x7iwV/z8Mzjjs0A6kXU6/C/2TfaMnU5MadQ5/Aw1/U+UclWGXKsWGVS0H5KJfzgRwx8f9KiFOcUcuvVFn0ZC4gARwxJ4mz529USuKK6nzyXD8SfdvRH/JVDpwcG6kmGrZ4SWE+mlm18=
+	t=1784959336; cv=none; b=H8hgK3ZxvBrxYN1T8xh7YDE5p5Kc+CczJKnHEHoJRSA2W3oQn99eJgYUCDmIDj7uyWTwTk2M8v569/Q9AJ5kbnusx0X0KMc/hyn1MliCp1vbmofg6jj/f0sC90mphnauQgf4rOmUxohJwnbQ8lh5sipT1M91IO9imnd3ncXRUfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784956758; c=relaxed/simple;
-	bh=x1KL3Cz0kG86RSr+lMvZgsStKND3GPa4u+QS1Z/J64M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BGRae04f2IpNQ410GeZB/I5e20G3gkrFUdfkse8irVTsLb4hDGZdR0j9WXm06fcqMBh+M5dnIPbtm0Sa5ATFs4r8oE+EQepe44U0ATfLgag1B5RdO4ZOv27VOBbfX7MV/wJGpa8zlLwt1vBNvv/6g/3JruRcWRc+XKSBIJAeg0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMDeqD9w; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784959336; c=relaxed/simple;
+	bh=ytYAAkbuCAyqTYpJA3+OGV56etOtOzBEUF2sSpL8meI=;
+	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
+	 Content-Type; b=bAA53Bkoj2XWrrq/FhoTYdesb1ZFLQ8gmaXQ8OHVHRu7gbBgq2Rs9ZEyXZ4OCL/QivqImHqB8UUr/FU9uAlDp9JpZ/mecYgCZ4AMsTN9NJtb2S/s8KAnOpwPne0jcHnhDm7nbnMFNErv2f0XJGqcdgSTISnQwndK1PhfGzujPos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwOe1ND5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMDeqD9w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B61AF1F000E9;
-	Sat, 25 Jul 2026 05:19:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwOe1ND5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E13691F000E9;
+	Sat, 25 Jul 2026 06:02:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1784956757;
-	bh=x0uXdWTbkAjcFG3ULzfaFFsBVMG9D6OLfaLsSzM8sV8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=CMDeqD9w9ydo5zjObva4g61ufvD8ZYONEG7DPNeH8v9uEslFLcwtXJ5vzwv/KmznW
-	 AE8y52CLOBs9vAPdVk1VHLmGfsRgysFI4xwLVhp6EBtXsPWV0os5ABwEiPJ4KGJ5rY
-	 pssLuU4RuO6zPbFb20E/220g9lOxSc7z0TM/2VgA=
-Date: Sat, 25 Jul 2026 07:18:58 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: "Zhou, Yun" <yun.zhou@windriver.com>
-Cc: harshit.m.mogalapalli@oracle.com, stable@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 6.12.y] ext4: validate donor file superblock early in
- EXT4_IOC_MOVE_EXT
-Message-ID: <2026072543-overdrive-celery-11ec@gregkh>
-References: <20260724143828.1668805-1-yun.zhou@windriver.com>
- <2026072404-cultivate-cohesive-9fc6@gregkh>
- <26bb37e4-e696-471b-b313-8c4e24c4884d@windriver.com>
+	s=korg; t=1784959334;
+	bh=jTQ7MRvDDFxw3pfPXSbUszuLSKmS7xPRcilamo8tLCA=;
+	h=Subject:To:Cc:From:Date:In-Reply-To;
+	b=nwOe1ND5UtPQpRln2W3LkHpJntl7txpErUZNMUfLGbEqGG29OmLJUgiO6bphHS+lc
+	 JRcVnfl/MvWnCCoxQRNMl+OOwuJUfL0/8uTFu4LoAWfh2x7I0FdRjziVSYby006qPY
+	 bENPDuk2XtNsbQATGgULcvg3j4ceZ5Nv2qsrwVzY=
+Subject: Patch "ext4: fix fd leak in EXT4_IOC_MOVE_EXT cross-sb validation" has been added to the 6.12-stable tree
+To: gregkh@linuxfoundation.org,harshit.m.mogalapalli@oracle.com,patches@lists.linux.dev,yun.zhou@windriver.com
+Cc: <stable-commits@vger.kernel.org>
+From: <gregkh@linuxfoundation.org>
+Date: Sat, 25 Jul 2026 08:02:03 +0200
+In-Reply-To: <20260725024029.1217577-1-yun.zhou@windriver.com>
+Message-ID: <2026072503-jab-tabby-8f6d@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <26bb37e4-e696-471b-b313-8c4e24c4884d@windriver.com>
+Content-Type: text/plain; charset=ANSI_X3.4-1968
+Content-Transfer-Encoding: 8bit
+X-stable: commit
+X-Patchwork-Hint: ignore 
 
-On Sat, Jul 25, 2026 at 10:43:18AM +0800, Zhou, Yun wrote:
-> On 7/24/2026 11:26 PM, Greg KH wrote:
-> > 
-> > I already merged the original, can you send a fix-up patch that I can
-> > just apply instead?
-> > 
-> 
-> Sure, I've already sent it out. My previous understanding was incorrect.
 
-Not your fault, thanks for the fix, I'll go queue it up later today!
+This is a note to let you know that I've just added the patch titled
 
-greg k-h
+    ext4: fix fd leak in EXT4_IOC_MOVE_EXT cross-sb validation
+
+to the 6.12-stable tree which can be found at:
+    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
+
+The filename of the patch is:
+     ext4-fix-fd-leak-in-ext4_ioc_move_ext-cross-sb-validation.patch
+and it can be found in the queue-6.12 subdirectory.
+
+If you, or anyone else, feels it should not be added to the stable tree,
+please let <stable@vger.kernel.org> know about it.
+
+
+From stable+bounces-289044-greg=kroah.com@vger.kernel.org Sat Jul 25 04:41:06 2026
+From: Yun Zhou <yun.zhou@windriver.com>
+Date: Sat, 25 Jul 2026 10:40:29 +0800
+Subject: ext4: fix fd leak in EXT4_IOC_MOVE_EXT cross-sb validation
+To: <gregkh@linuxfoundation.org>
+Cc: <harshit.m.mogalapalli@oracle.com>, <stable@vger.kernel.org>, <patches@lists.linux.dev>
+Message-ID: <20260725024029.1217577-1-yun.zhou@windriver.com>
+
+From: Yun Zhou <yun.zhou@windriver.com>
+
+The backport of upstream commit c143957520c6 ("ext4: validate donor
+file superblock early in EXT4_IOC_MOVE_EXT") uses a bare 'return -EXDEV'
+which is safe upstream because the fd is managed via CLASS(fd) with
+automatic cleanup (commit 8152f8201088 ("fdget(), more trivial
+conversions")).
+
+However, on 6.12.y the ioctl still uses the traditional fdget/fdput
+pattern, so the bare return bypasses fdput(donor) at the mext_out label,
+leaking the file reference.
+
+Fix by setting err and using goto mext_out.
+
+Fixes: 74796e886ca3 ("ext4: validate donor file superblock early in EXT4_IOC_MOVE_EXT")
+Reported-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ fs/ext4/ioctl.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -1372,8 +1372,10 @@ group_extend_out:
+ 			goto mext_out;
+ 		}
+ 
+-		if (file_inode(filp)->i_sb != file_inode(fd_file(donor))->i_sb)
+-			return -EXDEV;
++		if (file_inode(filp)->i_sb != file_inode(fd_file(donor))->i_sb) {
++			err = -EXDEV;
++			goto mext_out;
++		}
+ 
+ 		err = mnt_want_write_file(filp);
+ 		if (err)
+
+
+Patches currently in stable-queue which might be from yun.zhou@windriver.com are
+
+queue-6.12/ext4-fix-fd-leak-in-ext4_ioc_move_ext-cross-sb-validation.patch
