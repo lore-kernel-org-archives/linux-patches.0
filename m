@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4B2469843
-	for <patches@lists.linux.dev>; Wed, 29 Jul 2026 17:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1B1469843
+	for <patches@lists.linux.dev>; Wed, 29 Jul 2026 17:28:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785346083; cv=none; b=sgDoHEzjR20wPdXqC1+lDo7bGrONZMyjy8VyUqrqQrlr2YkARukNLjVK1AQQFassPpct+QtWJlF+FFVfkONnvkAKapGBfDvCgPYFRpBimYg9pHbnCKCbDza7YYura/7jemS7BrftCaRdbmfELitWAvIkrAgD9ICEm/z5eYdC6so=
+	t=1785346084; cv=none; b=XYLj/A+DD1fBS3M/DdyO2v9eH2YYPNzEdSwmQ/I7pe6CRtgS+rzWlJV6Hswxl0hD/KeQRL+jY45fHOQ7eUzGnfQbaEKdM9zPWS/8WRiirbcB0/IhNGndZ6knf3rgHHsbRuz0Comtv0CBgF9qUsmYuUhoFs4DsF8faK0eCpCAGs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785346083; c=relaxed/simple;
-	bh=WcPgE1DJLY7e8F5Lz0+pqsvQduengKJ6Gliu/YMdQ4k=;
+	s=arc-20240116; t=1785346084; c=relaxed/simple;
+	bh=b/Y9b11eCewCizECX0FkrMSQKmvy4W1xK4zbXsP02cg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tde63whReDEn4TdwYBEdcipxOF7SPFTt4LOLUkEdU2Jzykhi/BvqKAgNAvdvydoLmlrYJqx0rVRH+24K/ZhqgnuW9b8zxAY9FHqxt9NnRFN7lh10ogmYCX8R1GMNckdZdQ264oX6npa0TFhpCv0EnMMQo1jphEFxpEmQ4JuwD0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AJnjVs5P; arc=none smtp.client-ip=198.175.65.12
+	 MIME-Version; b=Pt8i56lMsddyo5ITg/pLe2M/7N1BJa0izXD4yWadxugAnKFIprCcuddbsoefuP9Ss64qNgdUm52v9BOShwOebBpB/QGX39ByHSQTKdjYBHCCq2mSM/jfkzDOVkl71LZk9JmgrEngg6DzwCYxqr0LJjFupPnlM3GQH9LPhxKb/sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=go5RdwIk; arc=none smtp.client-ip=198.175.65.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AJnjVs5P"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="go5RdwIk"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1785346081; x=1816882081;
+  t=1785346083; x=1816882083;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=WcPgE1DJLY7e8F5Lz0+pqsvQduengKJ6Gliu/YMdQ4k=;
-  b=AJnjVs5PRys+7u5wGTPKcBU9YZxsZ/FzaJBlCL+CXifxFMh3wrOSW5zt
-   Mh+y99FcooofdxYHbl8m6i59H2SGo1tGM5XbaJmJhJc0zZFx/HO1PQuLA
-   sQM4Wwn6L9TqI9v+dN/RFFbMjdASBIBsB6SpGy+c7CQ9aihHOVzV7iZm9
-   efW7qYikT8OkXuneMryfcdiVaxoTOmjCL52Y952s0gr/iQLBu0uZZyRQz
-   LeT2vOkCFiBBSdsrV7dlQUg7O8biQU+k/jBpluCg3uRyAo3Yn0bBZ6dRk
-   JVMpSf5d6MXeWt6oxMvc51q9q+LIgpTORAgfqao+cdba8gfi/95izNQth
-   g==;
-X-CSE-ConnectionGUID: TSoKQLdSSjmh66doYmbfww==
-X-CSE-MsgGUID: R77gVX6jSEieD14n75mASQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11859"; a="97473556"
+  bh=b/Y9b11eCewCizECX0FkrMSQKmvy4W1xK4zbXsP02cg=;
+  b=go5RdwIkOXxQ0Or6h++SalEkQy31RXUMB+wJ2q04nMbBktJRjcHaSevs
+   pCwZ/S6sCDeS3K+kNLi3tMVEOvFQgOwymkS1OnpMjc8XgWsCihjb/1Drk
+   k43+d9Jmo1P00JHLf27x72Wef3sfvROXLeK/JLazDUF/vNIUVG/lLmb5y
+   iLLKg883t5HfQj0TKUBcMe9mnG4GlPY+dkDJN/WD5rOCYHWgcJt8QtoZ4
+   kyogfWr7swJ5Cok0Acg8U8HqYVdVadYIRpcTa+rj77zObwcOghFG7FOfH
+   O748QBnb+PxWQiJlwhYplXlCdCTpfGI6xqTsSzVfN0H2JZufLVTmQfGqp
+   A==;
+X-CSE-ConnectionGUID: KiT0yKrjTYiVyOkAUzuYSg==
+X-CSE-MsgGUID: 9ezttxnGSmSU+xQfBsYz5w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11859"; a="97473565"
 X-IronPort-AV: E=Sophos;i="6.25,192,1779174000"; 
-   d="scan'208";a="97473556"
+   d="scan'208";a="97473565"
 Received: from fmviesa004.fm.intel.com ([10.60.135.144])
   by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jul 2026 10:28:00 -0700
-X-CSE-ConnectionGUID: URrAjOEFQK6z0d6vKDSVjg==
-X-CSE-MsgGUID: jaxe6E/LTdK4AP4vUWJs8A==
+X-CSE-ConnectionGUID: ubeLygm+TK2K2Csr1HlgUw==
+X-CSE-MsgGUID: zFbr0poVTzWe4hkYFY7tUA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,192,1779174000"; 
-   d="scan'208";a="262024545"
+   d="scan'208";a="262024549"
 Received: from iherna2-mobl4.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.223.238])
   by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jul 2026 10:28:00 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -58,10 +58,11 @@ To: Fenghua Yu <fenghuay@nvidia.com>,
 Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
+	Hongyu Ning <hongyu.ning@linux.intel.com>,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v10 01/17] x86/resctrl: Fix enumeration of number of supported RMIDs
-Date: Wed, 29 Jul 2026 10:27:36 -0700
-Message-ID: <20260729172752.11561-2-tony.luck@intel.com>
+Subject: [PATCH v10 02/17] x86/resctrl: Require 64-bit x86 for resctrl support
+Date: Wed, 29 Jul 2026 10:27:37 -0700
+Message-ID: <20260729172752.11561-3-tony.luck@intel.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260729172752.11561-1-tony.luck@intel.com>
 References: <20260729172752.11561-1-tony.luck@intel.com>
@@ -73,71 +74,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-There is a multi-step decision tree for enumeration on X86 of Intel Resource
-Director Technology (RDT) also known as AMD Platform Quality of Service (PQOS)
+From: Chen Yu <yu.c.chen@intel.com>
 
-First check CPUID(0x7,0x0).EBX{12} (Linux feature flag X86_FEATURE_CQM).
-If this is "0" no monitoring features are supported. If it is "1" then
-monitoring is supported, the IA32_PQR_ASSOC MSR exists, and the RMID field can
-be written with values from zero to the value enumerated in CPUID(0xF,0x0).EBX.
+All known hardware that supports Intel RDT or AMD QoS is 64-bit. Future
+enhancements like MMIO-based Enhanced RDT (ERDT) monitoring require
+readq()/writeq() which are only available on 64-bit. There is also no
+realistic use case for users to build a 32-bit kernel on a server and
+enable resctrl.
 
-Second check CPUID(0xF,0x0).EDX{1} (Linux feature flag X86_FEATURE_CQM_LLC).
-If this is "1" then one or more L3 cache monitoring features exist and
-further enumeration from CPUID(0xF,0x1) provides information about L3
-monitoring features.
+Drop 32-bit support by changing the X86_CPU_RESCTRL dependency from X86
+to X86_64.
 
-Linux skips the check for X86_FEATURE_CQM and begins with step two checking
-X86_FEATURE_CQM_LLC.
+Since X86_CPU_RESCTRL now implies X86_64, remove the redundant X86_64
+dependency from X86_CPU_RESCTRL_INTEL_AET.
 
-This is a problem for systems that do not support any L3 monitoring features
-(or have disabled them with the kernel boot parameter "clearcpuid=cqm_llc")
-but do support other features such as Application Energy Telemetry. On
-such a system cpuinfo_x86::x86_cache_max_rmid is incorrectly set to "-1".
-
-Correct the checks to follow guidance from the Intel Software
-Developer's manual and AMD Architecture Programmer's Manual.
-
-Fixes: cbc82b172638 ("x86: Add support for Intel Cache QoS Monitoring (CQM) detection")
+Tested-by: Hongyu Ning <hongyu.ning@linux.intel.com>
+Signed-off-by: Chen Yu <yu.c.chen@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
 v10:
-	New patch so that boot_cpu_data.x86_cache_max_rmid is useful
-	even on systems that don't have cache monitoring.
+	New patch. Split out from the "Simplyfy Kconfig" patch in
+	v9.  Chen Yu also needs this for his MMIO enabling patches,
+	so I've just copied his patch.
 
-	Perhaps only worthy of backport to older kernels if taking the
-	rest of this series.
+ arch/x86/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- arch/x86/kernel/cpu/resctrl/core.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
-
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 9b9495174041..e3544c99cff1 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -1075,20 +1075,17 @@ static enum cpuhp_state rdt_online;
- /* Runs once on the BSP during boot. */
- void resctrl_cpu_detect(struct cpuinfo_x86 *c)
- {
--	if (!cpu_has(c, X86_FEATURE_CQM_LLC) && !cpu_has(c, X86_FEATURE_ABMC)) {
-+	if (!cpu_has(c, X86_FEATURE_CQM)) {
- 		c->x86_cache_max_rmid  = -1;
- 		c->x86_cache_occ_scale = -1;
- 		c->x86_cache_mbm_width_offset = -1;
- 		return;
- 	}
+diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
+index bdad90f210e4..6685e120cff3 100644
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -514,7 +514,7 @@ config X86_MPPARSE
  
--	/* will be overridden if occupancy monitoring exists */
-+	/* May be overridden if L3 monitoring exists and supports fewer RMIDs. */
- 	c->x86_cache_max_rmid = cpuid_ebx(0xf);
+ config X86_CPU_RESCTRL
+ 	bool "x86 CPU resource control support"
+-	depends on X86 && (CPU_SUP_INTEL || CPU_SUP_AMD)
++	depends on X86_64 && (CPU_SUP_INTEL || CPU_SUP_AMD)
+ 	depends on MISC_FILESYSTEMS
+ 	select ARCH_HAS_CPU_RESCTRL
+ 	select RESCTRL_FS
+@@ -537,7 +537,7 @@ config X86_CPU_RESCTRL
  
--	if (cpu_has(c, X86_FEATURE_CQM_OCCUP_LLC) ||
--	    cpu_has(c, X86_FEATURE_CQM_MBM_TOTAL) ||
--	    cpu_has(c, X86_FEATURE_CQM_MBM_LOCAL) ||
--	    cpu_has(c, X86_FEATURE_ABMC)) {
-+	if (cpu_has(c, X86_FEATURE_CQM_LLC) || cpu_has(c, X86_FEATURE_ABMC)) {
- 		u32 eax, ebx, ecx, edx;
+ config X86_CPU_RESCTRL_INTEL_AET
+ 	bool "Intel Application Energy Telemetry"
+-	depends on X86_64 && X86_CPU_RESCTRL && CPU_SUP_INTEL && INTEL_PMT_TELEMETRY=y && INTEL_TPMI=y
++	depends on X86_CPU_RESCTRL && CPU_SUP_INTEL && INTEL_PMT_TELEMETRY=y && INTEL_TPMI=y
+ 	help
+ 	  Enable per-RMID telemetry events in resctrl.
  
- 		/* QoS sub-leaf, EAX=0Fh, ECX=1 */
 -- 
 2.55.0
 
