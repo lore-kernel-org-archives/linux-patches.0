@@ -1,36 +1,36 @@
-Received: from bg5.exmail.qq.com (bg5.exmail.qq.com [43.155.80.173])
+Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3684ADDAE
-	for <patches@lists.linux.dev>; Wed, 29 Jul 2026 14:52:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=43.155.80.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2153B0591
+	for <patches@lists.linux.dev>; Wed, 29 Jul 2026 15:12:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.59.177.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785336782; cv=none; b=dBF/K36yu9QhinJzJwJqf/wNZ0kjOnCgL/JIGuDH1d8la3mgLJO/Cf+jfJ4oavLfM2wEsWqqALe/XORIG6EiAyo1YEVkBzKn/MfY1DZjOE0/e8XRIX365JwJuTGir+MuZWxcNSIxt6OUzZv6KgqH6rHM//wPH+0tSQK7tzV2f7k=
+	t=1785337957; cv=none; b=W1eJDxmPxNI4ro99o4lr2jF1tOmes+WLEimvAyf9cP5xYW2qIS/D+ReSNW/omrnnf5hphbgtN7dKIrjrznTR+F0NDThEVGDj5iD34nHGhigQwqGqUQ3dd2KFuWScoSPmHZCCXrvMSA7xuq1bVK3AvD4Ikv6yMgWN0Yz8Uz9JB4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785336782; c=relaxed/simple;
-	bh=fmId3A+vbNouxAm1WBOyAM8a3dwwOc3CAoO8LskLOUo=;
+	s=arc-20240116; t=1785337957; c=relaxed/simple;
+	bh=GcEDxDp6slVuFh2pmvm2AEsvTEGURrkovVjDgj0eAIM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=gLNGwsgbXbkUhwn+4sN0N9WGG3GvGMcdFU9ZIknTGH9Hdm3KR/ZuVCqdLNtGtyUqb9CCzv4lsuzIBHgMraHqzE3JCowNGshEQnCvWhcpUYfwMRxItB5t7Fifp+g7jfuUE/K6+q0AdJGNqzLEBB9+33WlEnRR4iyfCrAC52upuAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=jt6HIV8y; arc=none smtp.client-ip=43.155.80.173
+	 MIME-Version; b=QzdAF5XIgHlJ74A5d2P6putxkmMYd34P+JRtIfd2A2Wl/RXAFIR8ENDH2PS3eciBo7X6TMVOhOn2Jx9JjNpwwbVyupxcjNVUsj8H4zGQJarIFlmXtj9PvIbF5fhK2dJ5Ja4049e3ztu6micSoviFgdiTDdQ/UMTgp3qZIASfWBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=Hoj0pKg9; arc=none smtp.client-ip=52.59.177.22
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="jt6HIV8y"
+	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="Hoj0pKg9"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1785336728;
-	bh=DXAJPscoB2zLOiCsnCwrT5qLcfUxpcEX2BBTbrDPvR4=;
+	s=onoh2408; t=1785337922;
+	bh=P/fIXLskanWs6kH9duIS/7KIdhQyN0wEgI7p81+xflE=;
 	h=From:To:Subject:Date:Message-Id:MIME-Version;
-	b=jt6HIV8yQgBVXFdi4UiN4ixfkhkflln92CF53LY7AzCcv3Oi2mUOwgq6PrQU9/O+o
-	 rZNOkyIrAPOjmoEPzMmntOdJxqhVCON1KG1ch0jCLJOjYwmEFlJ0Aj7NSGgVTZv/MG
-	 5EnuZBsq2238OD0eEAjW7tAjncF6wkFnP+qHj82Y=
-X-QQ-mid: esmtpgz12t1785336722t213ac178
-X-QQ-Originating-IP: x71DZbKtd5Es3UfvGpXOz592NwnqJiClUK1mJaGg9qw=
+	b=Hoj0pKg96hMkYO/sE5mSZTxHMDg4+lhOEPBAOAsUxvQWW0B/uIZvWJDslgnvIO81Q
+	 XzzbFknJ6uoUs+x7DKJyqTAnq3frFhiHHjWLbrAA4Ew5OUTg2Mm4REkzZm03gkdF21
+	 vi1msI5A4WttB1w2pLCbnoWyYVEEpJk9FvdQHxd4=
+X-QQ-mid: zesmtpgz5t1785337915tf7fbfa8c
+X-QQ-Originating-IP: rUWNejuX26U7v14AHwkaCDb5SEexKPdzkXwiatyzzMY=
 Received: from localhost.localdomain ( [113.57.152.160])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 29 Jul 2026 22:52:01 +0800 (CST)
+	id ; Wed, 29 Jul 2026 23:11:53 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 5242705765587433280
+X-BIZMAIL-ID: 14402103827723616478
 EX-QQ-RecipientCnt: 9
 From: Wentao Guan <guanwentao@uniontech.com>
 To: sashal@kernel.org
@@ -42,9 +42,9 @@ Cc: andrii@kernel.org,
 	patches@lists.linux.dev,
 	stable@vger.kernel.org,
 	xukuohai@huawei.com
-Subject: [PATCH 6.6.y] bpf: drop bpf_lsm_getselfattr from hook list
-Date: Wed, 29 Jul 2026 22:51:57 +0800
-Message-Id: <20260729145157.2065278-1-guanwentao@uniontech.com>
+Subject: [PATCH 6.1.y] bpf: drop bpf_lsm_getselfattr from hook list
+Date: Wed, 29 Jul 2026 23:11:51 +0800
+Message-Id: <20260729151151.2069645-1-guanwentao@uniontech.com>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20260728225520.stable-0003@kernel.org>
 References: <20260728225520.stable-0003@kernel.org>
@@ -56,37 +56,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NrLS4o1naR9Iq6P8tBv47F4Q2HNUNEYdu0ZNQuTjm2w56kv3wYxYUoUk
-	OiiDHy9WmLPv2q0c/TuRYZZeE4HeXvnP9iHnfMgdY+8UCnHacP95VRVLkxfpu75UozU4ZiV
-	asuf5ydflqQavwoNFJTyIo4Qcf6Ro96oJ3Nepvw2wGASFTAhumN3THlll0p3A7ClBrubnBL
-	+Se6siEVd7o6Ek50oVyNe1/PmQgZZj7ulqzGsdsF4ANNlbT4fXg/19Hxrnnk3/UPNn4u3zF
-	qpClSIvWCjNZLc8YcG6dXjvGuiXl34Wtt6mUv6Gw7qYPp7ITMlx+SVXxQ58Y/0hnDv5D3ZD
-	nV2QAd6O17h+HC8+ICZRVHaKluCX9qBTdPbYavZenQQSvpFBoibbjHDQpfBsx5gP1k6djnO
-	QT6ALMOHQKfXChvr4N3hnsjdAJtYH7eHuOK7vRNG9obxMsnhC5RQlhTlVfrWbkaTdkAP54g
-	DQYGRf+UfbY3alIJCU4VMRB22Hxg4motMuSLXmnmLJGpRb56NJa4CTpMnJ5PSH09+qoRRVJ
-	Gx6YjWPceAZBPG1SF0TQgvfmLXqkTxRvnBLT8jpp9JoW+IcCZP4aToheajHD/02mnPsRR1f
-	QqWRdz/8C54PV8MzV02lQCMnlpRzCc+MYtJ77Mt6d6j0uaUllZZehGM7Leja2lvHhKT9rWA
-	0ov54uoDC5yeHmLbxPB0VYbtYdBe2PKziaKID/G3WWvqw/yzkJemJ0v/cni1Wf9xeSZ+NRr
-	ZuakZnw+OKr3+zdBqI+9KLm5zGjxklruGlKyzOaGknd1aZas223sEcqLuaw7dYvo80FDyNN
-	yzs/QIM0co7iGMtJVvTXVwqHmCopqQxhmDFnV7VlGjBoE2wR07TsATmjfdD6qisv1EnIW6r
-	4Zwqhc5G3CIfQYbS9zTuYNNQKrjyOL4+RYMwA5l4R4xRzUINWyVJnKkaMKbvMD2Whahf1pY
-	ZAyKZwDhZv3lNo/Zc00bg4/l1/39/3usB/EXCxcjkhy53yAPU0frJU2Zx/uTAuSd02XxHHJ
-	eySnRjCZUrPRH86OpLZ2v/T5GSkcjyRQ2jkZcZhuoFQc3o7Ctxqy7fY67k94Xfplnsh7L94
-	l/NvWpj9vvbhesmc2PFZGxmYqN0a336Zg==
-X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
+Feedback-ID: zesmtpgz:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NvIr6BtGSx+/S0s4k6wnsgQILDoUswjc74C2BhfPS2H+23LO9m/wTLii
+	fc03X3imW22E85MvAIr+5xL1zTX/IkaoIlTt4YNOVWFBPKa1uZ5kIob2LzB/YJDj3cil0nj
+	CaSDNt7GxG91Tw0Wq6IGRmCSt3tRueDuptQ865/eL+MAtbvQYqm8+gbudOBeR8NoLu1E9Z/
+	5iVzvov9UkzMKZwzm/e0OAQchvbzqdyfnqJM/z9fNit3Vqubqx4hrfQURJ90ZlQ2u+V3wAy
+	U6gK641pk/C1VeT6Lpcbusc1bz9oK4jmMrkFfdLBjZw6CHJ9xmTrfgkvKo4Km03fQTH7NYY
+	OoDSOdLZXnPDcCp0UNPXNYfACsrxbmfwDFaTk6qXR3Y7WT6NCV0Eai1BcrJUjheIA4mpwzI
+	ezvBr/28sdFMjpWtXuTBBopxyYhzkom/yKG/9sEOUSsosgp0C2Jy8xp7NhL+CevyxPexFSC
+	X5srTfoZ66wdRc7CyPI1bIfUb8rRtdKJEmu5EVBqT2nYkAYIw9NvkYMDY6cmFe1qrnaCkBV
+	6EzhOOvVBmeWYzTiPSgmgQzG+buQxjpge5W3HTKFGSxNL2N9davnCbRVd/O8qbA8RSlAXL0
+	E5IVhvurXEj75OWBC2C9fkx0/NKL90Uxhey4jxZ5hSjRWAYEgpNcBnBqs+raADOB2/dJqs8
+	pEstEY8lKU2q9udymyveb9kAr3R8/44svcxUUPky1olg5MrpAHh0y8JOtWafbdUuqqo/jca
+	EDLCrMkoFD9ecPjzvFKCKZ2sOMcaJQ5Q1lWTblQnQ6zL/KvlE7OL4hLFrQQqSjUc0o7F1Gx
+	qzAkQVfc6TntvglqtLOrKTEXmo1n6/DqGH4HYydImLKx/TszmRV0cjEukqpguUR28VRpva2
+	LodLGN5J6aEB4UtmOTONjapNvFB8ug3ynPvAZMZleicprk6N6ElyamWp8SYvW82lwO44XKt
+	1Y094gvqK8gVnKAjj3PgXYUDDUi49hxPVSmEuSlgKG8w+KKUJbLdo+0sY2c4tNyaHLzBNOb
+	fa5lDFd5/gNNlnCR6pvBs5dTNdzSiCGVEa27Y2InEHxIT1TIYSaLDe/bB/cV5SB5XjeigSp
+	ftldIRteZE0mVrI/Ty5Ef4UwailkrVsu5b/yqSYTqEvjSguFQnqwTIlRIdqG1R6qeQgQOh2
+	ipclE64VuNat2pZux4A0bUC363oTYlSao+dbMO2peMC56xSsk8LD0yE+HA==
+X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
 X-QQ-RECHKSPAM: 0
 
-Backport ("bpf, lsm: Add disabled BPF LSM hook list") for v6.6.y bring the
+Backport ("bpf, lsm: Add disabled BPF LSM hook list") for v6.1.y bring the
 warning "WARN: resolve_btfids: unresolved symbol bpf_lsm_getselfattr".
 
 The lsm_getselfattr from commit a04a1198088a
 ("LSM: syscalls for current process attributes"), no need to backport
 the huge patch, simply drop the entry to fix the noise.
 
-This is a fix for stable v6.6.145 backport commit, so no upstream commit.
+This is a fix for stable v6.1.178 backport commit, so no upstream commit.
 
-Fixes: b3b4719429d5 ("bpf, lsm: Add disabled BPF LSM hook list")
+Fixes: 0562ae02a6c4 ("bpf, lsm: Add disabled BPF LSM hook list")
 Link: https://lore.kernel.org/stable/20260728225520.stable-0003@kernel.org/
 Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 ---
@@ -94,7 +95,7 @@ Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
  1 file changed, 1 deletion(-)
 
 diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
-index 147c3a8ad4e8e..984e944a0221d 100644
+index 4bb8c363c0bfd..61e93253b6b5e 100644
 --- a/kernel/bpf/bpf_lsm.c
 +++ b/kernel/bpf/bpf_lsm.c
 @@ -42,7 +42,6 @@ BTF_ID(func, bpf_lsm_inode_need_killpriv)
