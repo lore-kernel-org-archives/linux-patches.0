@@ -1,53 +1,70 @@
-Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2153B0591
-	for <patches@lists.linux.dev>; Wed, 29 Jul 2026 15:12:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.59.177.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4B2469843
+	for <patches@lists.linux.dev>; Wed, 29 Jul 2026 17:28:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785337957; cv=none; b=W1eJDxmPxNI4ro99o4lr2jF1tOmes+WLEimvAyf9cP5xYW2qIS/D+ReSNW/omrnnf5hphbgtN7dKIrjrznTR+F0NDThEVGDj5iD34nHGhigQwqGqUQ3dd2KFuWScoSPmHZCCXrvMSA7xuq1bVK3AvD4Ikv6yMgWN0Yz8Uz9JB4c=
+	t=1785346083; cv=none; b=sgDoHEzjR20wPdXqC1+lDo7bGrONZMyjy8VyUqrqQrlr2YkARukNLjVK1AQQFassPpct+QtWJlF+FFVfkONnvkAKapGBfDvCgPYFRpBimYg9pHbnCKCbDza7YYura/7jemS7BrftCaRdbmfELitWAvIkrAgD9ICEm/z5eYdC6so=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785337957; c=relaxed/simple;
-	bh=GcEDxDp6slVuFh2pmvm2AEsvTEGURrkovVjDgj0eAIM=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=QzdAF5XIgHlJ74A5d2P6putxkmMYd34P+JRtIfd2A2Wl/RXAFIR8ENDH2PS3eciBo7X6TMVOhOn2Jx9JjNpwwbVyupxcjNVUsj8H4zGQJarIFlmXtj9PvIbF5fhK2dJ5Ja4049e3ztu6micSoviFgdiTDdQ/UMTgp3qZIASfWBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=Hoj0pKg9; arc=none smtp.client-ip=52.59.177.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
+	s=arc-20240116; t=1785346083; c=relaxed/simple;
+	bh=WcPgE1DJLY7e8F5Lz0+pqsvQduengKJ6Gliu/YMdQ4k=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Tde63whReDEn4TdwYBEdcipxOF7SPFTt4LOLUkEdU2Jzykhi/BvqKAgNAvdvydoLmlrYJqx0rVRH+24K/ZhqgnuW9b8zxAY9FHqxt9NnRFN7lh10ogmYCX8R1GMNckdZdQ264oX6npa0TFhpCv0EnMMQo1jphEFxpEmQ4JuwD0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AJnjVs5P; arc=none smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="Hoj0pKg9"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1785337922;
-	bh=P/fIXLskanWs6kH9duIS/7KIdhQyN0wEgI7p81+xflE=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version;
-	b=Hoj0pKg96hMkYO/sE5mSZTxHMDg4+lhOEPBAOAsUxvQWW0B/uIZvWJDslgnvIO81Q
-	 XzzbFknJ6uoUs+x7DKJyqTAnq3frFhiHHjWLbrAA4Ew5OUTg2Mm4REkzZm03gkdF21
-	 vi1msI5A4WttB1w2pLCbnoWyYVEEpJk9FvdQHxd4=
-X-QQ-mid: zesmtpgz5t1785337915tf7fbfa8c
-X-QQ-Originating-IP: rUWNejuX26U7v14AHwkaCDb5SEexKPdzkXwiatyzzMY=
-Received: from localhost.localdomain ( [113.57.152.160])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 29 Jul 2026 23:11:53 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 14402103827723616478
-EX-QQ-RecipientCnt: 9
-From: Wentao Guan <guanwentao@uniontech.com>
-To: sashal@kernel.org
-Cc: andrii@kernel.org,
-	ast@kernel.org,
-	gregkh@linuxfoundation.org,
-	guanwentao@uniontech.com,
-	kpsingh@kernel.org,
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AJnjVs5P"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1785346081; x=1816882081;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=WcPgE1DJLY7e8F5Lz0+pqsvQduengKJ6Gliu/YMdQ4k=;
+  b=AJnjVs5PRys+7u5wGTPKcBU9YZxsZ/FzaJBlCL+CXifxFMh3wrOSW5zt
+   Mh+y99FcooofdxYHbl8m6i59H2SGo1tGM5XbaJmJhJc0zZFx/HO1PQuLA
+   sQM4Wwn6L9TqI9v+dN/RFFbMjdASBIBsB6SpGy+c7CQ9aihHOVzV7iZm9
+   efW7qYikT8OkXuneMryfcdiVaxoTOmjCL52Y952s0gr/iQLBu0uZZyRQz
+   LeT2vOkCFiBBSdsrV7dlQUg7O8biQU+k/jBpluCg3uRyAo3Yn0bBZ6dRk
+   JVMpSf5d6MXeWt6oxMvc51q9q+LIgpTORAgfqao+cdba8gfi/95izNQth
+   g==;
+X-CSE-ConnectionGUID: TSoKQLdSSjmh66doYmbfww==
+X-CSE-MsgGUID: R77gVX6jSEieD14n75mASQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11859"; a="97473556"
+X-IronPort-AV: E=Sophos;i="6.25,192,1779174000"; 
+   d="scan'208";a="97473556"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jul 2026 10:28:00 -0700
+X-CSE-ConnectionGUID: URrAjOEFQK6z0d6vKDSVjg==
+X-CSE-MsgGUID: jaxe6E/LTdK4AP4vUWJs8A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,192,1779174000"; 
+   d="scan'208";a="262024545"
+Received: from iherna2-mobl4.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.223.238])
+  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jul 2026 10:28:00 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	David E Box <david.e.box@intel.com>,
+	x86@kernel.org
+Cc: Christoph Hellwig <hch@infradead.org>,
+	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	stable@vger.kernel.org,
-	xukuohai@huawei.com
-Subject: [PATCH 6.1.y] bpf: drop bpf_lsm_getselfattr from hook list
-Date: Wed, 29 Jul 2026 23:11:51 +0800
-Message-Id: <20260729151151.2069645-1-guanwentao@uniontech.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20260728225520.stable-0003@kernel.org>
-References: <20260728225520.stable-0003@kernel.org>
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v10 01/17] x86/resctrl: Fix enumeration of number of supported RMIDs
+Date: Wed, 29 Jul 2026 10:27:36 -0700
+Message-ID: <20260729172752.11561-2-tony.luck@intel.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260729172752.11561-1-tony.luck@intel.com>
+References: <20260729172752.11561-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,57 +72,72 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NvIr6BtGSx+/S0s4k6wnsgQILDoUswjc74C2BhfPS2H+23LO9m/wTLii
-	fc03X3imW22E85MvAIr+5xL1zTX/IkaoIlTt4YNOVWFBPKa1uZ5kIob2LzB/YJDj3cil0nj
-	CaSDNt7GxG91Tw0Wq6IGRmCSt3tRueDuptQ865/eL+MAtbvQYqm8+gbudOBeR8NoLu1E9Z/
-	5iVzvov9UkzMKZwzm/e0OAQchvbzqdyfnqJM/z9fNit3Vqubqx4hrfQURJ90ZlQ2u+V3wAy
-	U6gK641pk/C1VeT6Lpcbusc1bz9oK4jmMrkFfdLBjZw6CHJ9xmTrfgkvKo4Km03fQTH7NYY
-	OoDSOdLZXnPDcCp0UNPXNYfACsrxbmfwDFaTk6qXR3Y7WT6NCV0Eai1BcrJUjheIA4mpwzI
-	ezvBr/28sdFMjpWtXuTBBopxyYhzkom/yKG/9sEOUSsosgp0C2Jy8xp7NhL+CevyxPexFSC
-	X5srTfoZ66wdRc7CyPI1bIfUb8rRtdKJEmu5EVBqT2nYkAYIw9NvkYMDY6cmFe1qrnaCkBV
-	6EzhOOvVBmeWYzTiPSgmgQzG+buQxjpge5W3HTKFGSxNL2N9davnCbRVd/O8qbA8RSlAXL0
-	E5IVhvurXEj75OWBC2C9fkx0/NKL90Uxhey4jxZ5hSjRWAYEgpNcBnBqs+raADOB2/dJqs8
-	pEstEY8lKU2q9udymyveb9kAr3R8/44svcxUUPky1olg5MrpAHh0y8JOtWafbdUuqqo/jca
-	EDLCrMkoFD9ecPjzvFKCKZ2sOMcaJQ5Q1lWTblQnQ6zL/KvlE7OL4hLFrQQqSjUc0o7F1Gx
-	qzAkQVfc6TntvglqtLOrKTEXmo1n6/DqGH4HYydImLKx/TszmRV0cjEukqpguUR28VRpva2
-	LodLGN5J6aEB4UtmOTONjapNvFB8ug3ynPvAZMZleicprk6N6ElyamWp8SYvW82lwO44XKt
-	1Y094gvqK8gVnKAjj3PgXYUDDUi49hxPVSmEuSlgKG8w+KKUJbLdo+0sY2c4tNyaHLzBNOb
-	fa5lDFd5/gNNlnCR6pvBs5dTNdzSiCGVEa27Y2InEHxIT1TIYSaLDe/bB/cV5SB5XjeigSp
-	ftldIRteZE0mVrI/Ty5Ef4UwailkrVsu5b/yqSYTqEvjSguFQnqwTIlRIdqG1R6qeQgQOh2
-	ipclE64VuNat2pZux4A0bUC363oTYlSao+dbMO2peMC56xSsk8LD0yE+HA==
-X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
-X-QQ-RECHKSPAM: 0
 
-Backport ("bpf, lsm: Add disabled BPF LSM hook list") for v6.1.y bring the
-warning "WARN: resolve_btfids: unresolved symbol bpf_lsm_getselfattr".
+There is a multi-step decision tree for enumeration on X86 of Intel Resource
+Director Technology (RDT) also known as AMD Platform Quality of Service (PQOS)
 
-The lsm_getselfattr from commit a04a1198088a
-("LSM: syscalls for current process attributes"), no need to backport
-the huge patch, simply drop the entry to fix the noise.
+First check CPUID(0x7,0x0).EBX{12} (Linux feature flag X86_FEATURE_CQM).
+If this is "0" no monitoring features are supported. If it is "1" then
+monitoring is supported, the IA32_PQR_ASSOC MSR exists, and the RMID field can
+be written with values from zero to the value enumerated in CPUID(0xF,0x0).EBX.
 
-This is a fix for stable v6.1.178 backport commit, so no upstream commit.
+Second check CPUID(0xF,0x0).EDX{1} (Linux feature flag X86_FEATURE_CQM_LLC).
+If this is "1" then one or more L3 cache monitoring features exist and
+further enumeration from CPUID(0xF,0x1) provides information about L3
+monitoring features.
 
-Fixes: 0562ae02a6c4 ("bpf, lsm: Add disabled BPF LSM hook list")
-Link: https://lore.kernel.org/stable/20260728225520.stable-0003@kernel.org/
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Linux skips the check for X86_FEATURE_CQM and begins with step two checking
+X86_FEATURE_CQM_LLC.
+
+This is a problem for systems that do not support any L3 monitoring features
+(or have disabled them with the kernel boot parameter "clearcpuid=cqm_llc")
+but do support other features such as Application Energy Telemetry. On
+such a system cpuinfo_x86::x86_cache_max_rmid is incorrectly set to "-1".
+
+Correct the checks to follow guidance from the Intel Software
+Developer's manual and AMD Architecture Programmer's Manual.
+
+Fixes: cbc82b172638 ("x86: Add support for Intel Cache QoS Monitoring (CQM) detection")
+Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- kernel/bpf/bpf_lsm.c | 1 -
- 1 file changed, 1 deletion(-)
+v10:
+	New patch so that boot_cpu_data.x86_cache_max_rmid is useful
+	even on systems that don't have cache monitoring.
 
-diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
-index 4bb8c363c0bfd..61e93253b6b5e 100644
---- a/kernel/bpf/bpf_lsm.c
-+++ b/kernel/bpf/bpf_lsm.c
-@@ -42,7 +42,6 @@ BTF_ID(func, bpf_lsm_inode_need_killpriv)
- BTF_ID(func, bpf_lsm_inode_getsecurity)
- BTF_ID(func, bpf_lsm_inode_listsecurity)
- BTF_ID(func, bpf_lsm_inode_copy_up_xattr)
--BTF_ID(func, bpf_lsm_getselfattr)
- BTF_ID(func, bpf_lsm_getprocattr)
- BTF_ID(func, bpf_lsm_setprocattr)
- #ifdef CONFIG_KEYS
+	Perhaps only worthy of backport to older kernels if taking the
+	rest of this series.
+
+ arch/x86/kernel/cpu/resctrl/core.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
+
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 9b9495174041..e3544c99cff1 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -1075,20 +1075,17 @@ static enum cpuhp_state rdt_online;
+ /* Runs once on the BSP during boot. */
+ void resctrl_cpu_detect(struct cpuinfo_x86 *c)
+ {
+-	if (!cpu_has(c, X86_FEATURE_CQM_LLC) && !cpu_has(c, X86_FEATURE_ABMC)) {
++	if (!cpu_has(c, X86_FEATURE_CQM)) {
+ 		c->x86_cache_max_rmid  = -1;
+ 		c->x86_cache_occ_scale = -1;
+ 		c->x86_cache_mbm_width_offset = -1;
+ 		return;
+ 	}
+ 
+-	/* will be overridden if occupancy monitoring exists */
++	/* May be overridden if L3 monitoring exists and supports fewer RMIDs. */
+ 	c->x86_cache_max_rmid = cpuid_ebx(0xf);
+ 
+-	if (cpu_has(c, X86_FEATURE_CQM_OCCUP_LLC) ||
+-	    cpu_has(c, X86_FEATURE_CQM_MBM_TOTAL) ||
+-	    cpu_has(c, X86_FEATURE_CQM_MBM_LOCAL) ||
+-	    cpu_has(c, X86_FEATURE_ABMC)) {
++	if (cpu_has(c, X86_FEATURE_CQM_LLC) || cpu_has(c, X86_FEATURE_ABMC)) {
+ 		u32 eax, ebx, ecx, edx;
+ 
+ 		/* QoS sub-leaf, EAX=0Fh, ECX=1 */
 -- 
-2.30.2
+2.55.0
 
