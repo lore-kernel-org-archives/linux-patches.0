@@ -1,46 +1,45 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1B1469843
-	for <patches@lists.linux.dev>; Wed, 29 Jul 2026 17:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4427C348C77
+	for <patches@lists.linux.dev>; Wed, 29 Jul 2026 17:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785346084; cv=none; b=XYLj/A+DD1fBS3M/DdyO2v9eH2YYPNzEdSwmQ/I7pe6CRtgS+rzWlJV6Hswxl0hD/KeQRL+jY45fHOQ7eUzGnfQbaEKdM9zPWS/8WRiirbcB0/IhNGndZ6knf3rgHHsbRuz0Comtv0CBgF9qUsmYuUhoFs4DsF8faK0eCpCAGs8=
+	t=1785346085; cv=none; b=KQUx90eXHQewZi0hl3SnoBdM1oMLwykgmQMK1AIMCCOmXnsniw6WcWDvE/WrkV+pzxDBATqBNsc+NQdiDBQy7LZCGKhX5XgxCoLAuBnwJphwPUjIEZFHDcJ/8CL6TB/z2YtH8Ycb0ptk0XeUJJP7ZKdCFvk7pMPis2SinBHl/7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785346084; c=relaxed/simple;
-	bh=b/Y9b11eCewCizECX0FkrMSQKmvy4W1xK4zbXsP02cg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pt8i56lMsddyo5ITg/pLe2M/7N1BJa0izXD4yWadxugAnKFIprCcuddbsoefuP9Ss64qNgdUm52v9BOShwOebBpB/QGX39ByHSQTKdjYBHCCq2mSM/jfkzDOVkl71LZk9JmgrEngg6DzwCYxqr0LJjFupPnlM3GQH9LPhxKb/sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=go5RdwIk; arc=none smtp.client-ip=198.175.65.12
+	s=arc-20240116; t=1785346085; c=relaxed/simple;
+	bh=JLz9I2lxKSUs1M8gizAwWUQHNzNsxy2vmPxoYlslL6g=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=E27DMmU52RhzfbHSeQzDKzruz7FMIGjOF+42Ug0vajGiCpgEP7WGnmZ8oCVB67BOqsGxGjmFPj4NaGRoz+8hIvJ7pnXxTLFvhzht+h89zVpsgeaOQkiQDfE2CYpI26Fs/MbRzBZ8dba2M9C/mfwGAYk13L8Bz3dgRvmObEDC5cU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=go9qbPrb; arc=none smtp.client-ip=198.175.65.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="go5RdwIk"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="go9qbPrb"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1785346083; x=1816882083;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=b/Y9b11eCewCizECX0FkrMSQKmvy4W1xK4zbXsP02cg=;
-  b=go5RdwIkOXxQ0Or6h++SalEkQy31RXUMB+wJ2q04nMbBktJRjcHaSevs
-   pCwZ/S6sCDeS3K+kNLi3tMVEOvFQgOwymkS1OnpMjc8XgWsCihjb/1Drk
-   k43+d9Jmo1P00JHLf27x72Wef3sfvROXLeK/JLazDUF/vNIUVG/lLmb5y
-   iLLKg883t5HfQj0TKUBcMe9mnG4GlPY+dkDJN/WD5rOCYHWgcJt8QtoZ4
-   kyogfWr7swJ5Cok0Acg8U8HqYVdVadYIRpcTa+rj77zObwcOghFG7FOfH
-   O748QBnb+PxWQiJlwhYplXlCdCTpfGI6xqTsSzVfN0H2JZufLVTmQfGqp
-   A==;
-X-CSE-ConnectionGUID: KiT0yKrjTYiVyOkAUzuYSg==
-X-CSE-MsgGUID: 9ezttxnGSmSU+xQfBsYz5w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11859"; a="97473565"
+  t=1785346082; x=1816882082;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=JLz9I2lxKSUs1M8gizAwWUQHNzNsxy2vmPxoYlslL6g=;
+  b=go9qbPrb4mHY9syq1CoPF9L6e/yedE1+QAwfvwJ80jVP2j2uxjJm6tws
+   k0KwVyr8NSVADMlHcYfU9m53FEDOBnBAzr6S7+yFvXlzsS1nTHtEnWbet
+   N0w86Rzx+rFNt4LkZc3UJVR8HKWyWUF++0rBd4MOgEmT+UdJGGnmMKle6
+   Y77lnkd9vgmsu0E8koJPnVpFOnqmH1bUaC6nZ91vigtxidr93IpWt+LZl
+   UPD1eG33WwArDVZ1Pi7zn+b2df9HV2mTrBS6NFgIBNuDyeJ4DUYf+fPYe
+   wt8BR2VjOBqnK+bh9VUf8izautQnrR6evpws9UiU/pHZLRCMIRYAX0NvJ
+   w==;
+X-CSE-ConnectionGUID: k+SmAzLPRHeX/SdTIAfa0A==
+X-CSE-MsgGUID: 488F7gxkQJyWtyjmU+lamA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11859"; a="97473548"
 X-IronPort-AV: E=Sophos;i="6.25,192,1779174000"; 
-   d="scan'208";a="97473565"
+   d="scan'208";a="97473548"
 Received: from fmviesa004.fm.intel.com ([10.60.135.144])
   by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jul 2026 10:28:00 -0700
-X-CSE-ConnectionGUID: ubeLygm+TK2K2Csr1HlgUw==
-X-CSE-MsgGUID: zFbr0poVTzWe4hkYFY7tUA==
+X-CSE-ConnectionGUID: X+jg5i5RSz6gX5YvnXzryA==
+X-CSE-MsgGUID: dAzvuQAFRJOO3G7AV7VsNA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,192,1779174000"; 
-   d="scan'208";a="262024549"
+   d="scan'208";a="262024542"
 Received: from iherna2-mobl4.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.223.238])
   by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jul 2026 10:28:00 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -58,14 +57,11 @@ To: Fenghua Yu <fenghuay@nvidia.com>,
 Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Hongyu Ning <hongyu.ning@linux.intel.com>,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v10 02/17] x86/resctrl: Require 64-bit x86 for resctrl support
-Date: Wed, 29 Jul 2026 10:27:37 -0700
-Message-ID: <20260729172752.11561-3-tony.luck@intel.com>
+Subject: [PATCH v10 00/17] Allow AET to use PMT as loadable module
+Date: Wed, 29 Jul 2026 10:27:35 -0700
+Message-ID: <20260729172752.11561-1-tony.luck@intel.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260729172752.11561-1-tony.luck@intel.com>
-References: <20260729172752.11561-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -74,54 +70,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Chen Yu <yu.c.chen@intel.com>
+Requiring INTEL_PMT_TELEMETRY=y to enable AET is a functional workaround
+to enable enumeration of Application Energy Telemetry (AET) events, but
+unacceptable to many users. It results in increased configuration complexity,
+increased kernel memory footprint and inability to patch problems by unloading
+a module and loading an updated version.
 
-All known hardware that supports Intel RDT or AMD QoS is 64-bit. Future
-enhancements like MMIO-based Enhanced RDT (ERDT) monitoring require
-readq()/writeq() which are only available on 64-bit. There is also no
-realistic use case for users to build a 32-bit kernel on a server and
-enable resctrl.
+Add a registration function to the AET code that can be used by
+INTEL_PMT_TELEMETRY to provide the enumeration functions.
 
-Drop 32-bit support by changing the X86_CPU_RESCTRL dependency from X86
-to X86_64.
+INTEL_PMT_TELEMETRY can be loaded/unloaded independently of
+resctrl file system mount/unmount. Perform enumeration on
+every mount and cleanup on every unmount.
 
-Since X86_CPU_RESCTRL now implies X86_64, remove the redundant X86_64
-dependency from X86_CPU_RESCTRL_INTEL_AET.
+Patch series based on tip[1] git repo x86/cache branch. Top commit at time
+of snapshot:
+854db793d407 ("fs/resctrl: Inform user space when status buffer overflowed")
 
-Tested-by: Hongyu Ning <hongyu.ning@linux.intel.com>
-Signed-off-by: Chen Yu <yu.c.chen@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
-v10:
-	New patch. Split out from the "Simplyfy Kconfig" patch in
-	v9.  Chen Yu also needs this for his MMIO enabling patches,
-	so I've just copied his patch.
 
- arch/x86/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Changes since v9[2]:
 
-diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index bdad90f210e4..6685e120cff3 100644
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -514,7 +514,7 @@ config X86_MPPARSE
- 
- config X86_CPU_RESCTRL
- 	bool "x86 CPU resource control support"
--	depends on X86 && (CPU_SUP_INTEL || CPU_SUP_AMD)
-+	depends on X86_64 && (CPU_SUP_INTEL || CPU_SUP_AMD)
- 	depends on MISC_FILESYSTEMS
- 	select ARCH_HAS_CPU_RESCTRL
- 	select RESCTRL_FS
-@@ -537,7 +537,7 @@ config X86_CPU_RESCTRL
- 
- config X86_CPU_RESCTRL_INTEL_AET
- 	bool "Intel Application Energy Telemetry"
--	depends on X86_64 && X86_CPU_RESCTRL && CPU_SUP_INTEL && INTEL_PMT_TELEMETRY=y && INTEL_TPMI=y
-+	depends on X86_CPU_RESCTRL && CPU_SUP_INTEL && INTEL_PMT_TELEMETRY=y && INTEL_TPMI=y
- 	help
- 	  Enable per-RMID telemetry events in resctrl.
- 
+A few new patches:
+
+0001 Fix CPUID enumeration to conform to Intel/AMD manuals.
+0002 Split X86_64 Kconfig dependency into its own patch.
+0008 Adjust all event_group::num_rmid values to not exceed system maximum.
+0012 Add locking to resctrl_arch_pre_mount() and resctrl_arch_unmount().
+0015 Add notification to AET when devices are unbound or removed.
+
+Other patches updated based on comments and dicussion of the v9 series.
+See indivdual patches for details.
+
+Link: git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git [1]
+Link: https://lore.kernel.org/all/20260701213553.15222-1-tony.luck@intel.com/ [2]
+
+Chen Yu (1):
+  x86/resctrl: Require 64-bit x86 for resctrl support
+
+Tony Luck (16):
+  x86/resctrl: Fix enumeration of number of supported RMIDs
+  fs/resctrl: Remove redundant calls to resctrl_arch_mon_capable()
+  x86/resctrl: Honor rdt=perf option to force enable AET perf events
+  fs/resctrl: Add interface to disable a monitor event
+  x86/resctrl: Drop global 'rdt_mon_capable' flag
+  arm,x86,fs/resctrl: Handle change in number of RMIDs on each mount
+  x86/resctrl: Enforce system RMID limit on AET event groups
+  x86/resctrl: Add PMT registration API for AET enumeration callbacks
+  platform/x86/intel/pmt: Register enumeration functions with resctrl
+  arm,x86/resctrl: Resolve INTEL_PMT_TELEMETRY symbols at runtime
+  x86/resctrl: Prepare to handle nested mount requests
+  fs/resctrl: Call architecture hooks for every mount/unmount
+  x86/resctrl: Export interface to report telemetry unbind/remove
+  platform/x86/intel/pmt: Inform resctrl when MMIO maps are being
+    removed
+  x86/resctrl: Simplify Kconfig options for resctrl
+  Documentation/filesystems/resctrl: Document telemetry mount timing
+    caveat
+
+ Documentation/filesystems/resctrl.rst      |  60 ++++++++-
+ include/linux/arm_mpam.h                   |   1 -
+ include/linux/intel_vsec.h                 |  14 +++
+ include/linux/resctrl.h                    |  66 +++++++++-
+ arch/x86/include/asm/resctrl.h             |   6 -
+ arch/x86/kernel/cpu/resctrl/internal.h     |  14 ++-
+ arch/x86/kernel/cpu/resctrl/core.c         | 118 +++++++++++++++---
+ arch/x86/kernel/cpu/resctrl/intel_aet.c    | 138 +++++++++++++++++++--
+ arch/x86/kernel/cpu/resctrl/monitor.c      |  10 +-
+ drivers/platform/x86/intel/pmt/telemetry.c |  44 ++++++-
+ drivers/resctrl/mpam_resctrl.c             |  12 +-
+ fs/resctrl/monitor.c                       |  99 ++++++++++-----
+ fs/resctrl/rdtgroup.c                      |  20 ++-
+ arch/x86/Kconfig                           |  15 +--
+ arch/x86/kernel/cpu/resctrl/Makefile       |   2 +-
+ 15 files changed, 511 insertions(+), 108 deletions(-)
+
+
+base-commit: 854db793d4073087fa799d886ed84a342e3f484a
 -- 
 2.55.0
 
