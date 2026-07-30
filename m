@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6983B383983;
-	Thu, 30 Jul 2026 16:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392EE3815D5;
+	Thu, 30 Jul 2026 16:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427327; cv=none; b=Ine5EFwtSVkfYV83DY6RjxTG76ge9mz7dBBF9Bmh+4rqGkuO3wtzPfYBkYNpid5mHNG3PdGNrh0540eOY/A839bnECsViBSXRWeAAUWIZANpyFoXeXgUOjhXO7VEw2ddFCCinHsgqVi3wYh23H63JKkLzjFSpRlEW7NRMoSBTT4=
+	t=1785427330; cv=none; b=TYjY5fEOZLpiM06osLA2eBgQHVfWwF4zLYLCLrOWa1xJ4jsieb8RTFmUSa+2jLVSQjyrPq5vjOHGprXnwjHQQj2GP0peCVJ/4+s/TIE00cRCUuvDvWDEP42UJsrf1IPVPHyEMrVVM/LGoEoDNcE04/qWZTOWov6SvsckyWjC0FU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427327; c=relaxed/simple;
-	bh=h6DEWstQFvKl5HtZ6nk257h6TReHOqfcOPZQfb7AUbc=;
+	s=arc-20240116; t=1785427330; c=relaxed/simple;
+	bh=gf3ZxfznkqKiB4rKaZiMm3Q5DAeyr3eu/N4yDcxg0Is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LmDDvPsuRAHHEbRGwcdcFLV/GZQPf7uSsvzDH6Bd8tZSuAav/Hvo38VBK/nmLVfLLislTHQ8YJXljeaQ5pP1lr5h8zf3bHoFreU0efaQ5Bm0c7/fJewjXyWS/SDpec/RCtnxV9Tl9ByVNzwtblvO7t21eXRn3yZ0XBdj52WM5fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vxaa46OZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XYlUxuGrg+aYYn6wFLigdyoQeG0T9EFWAV7MwwIFLQ7mxGJhu7XlXDW4L3DUWVeFyKP490ZxfhTzrLlyrhM7J60zViNz15xyYNkmNehocVJYqmQxn8ataHfmzHQR5yVDe5pRUn/mtA7D5Kl0o83VyZjW9V2TiRWzc/lY8MBi3yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMn1EYpd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vxaa46OZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C1D1F000E9;
-	Thu, 30 Jul 2026 16:02:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMn1EYpd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BDE31F000E9;
+	Thu, 30 Jul 2026 16:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427326;
-	bh=fzGuE+FCDawa3ra1NZsDkuqz+Dy9liSM2dwWfIK4q5U=;
+	s=korg; t=1785427329;
+	bh=sHa0o8Ge89Dp4QkAeEVuEZDyh3/tr7Y5pM//WsAxTsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vxaa46OZAqXvEbBYy7xjH61vVwE8DDEB4hwLAmNYk+rCHHbHh7BQAZ5wRkFxXPueT
-	 Lg4LRzpDN1eKfHpV74+fGh4iOqz5iXfBSsx7J1PRxqfqswtztq2x+Z/Fi4AJgXEr/v
-	 Fay3/w2aQj82pS7HyFZV+lKHDwPBBK8dQqzBSnxI=
+	b=QMn1EYpd1nIvP4Q8tyzDwZxiA9i9lBX49yo9cnTijc8s8j+hXRC8ugBVwcIMxkD1p
+	 h0ATzU/JGep95YU8cVX/f5ZpstfcktWsVqfyQVkqjd297R9s21KIGBjayzzDoQk5oK
+	 /a+cPgeC+eyRQrCkcfiO/AA7OoFm2XM5tdB1Cebw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Christian Lamparter <chunkeey@gmail.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 129/484] wifi: carl9170: fix buffer overflow in rx_stream failover path
-Date: Thu, 30 Jul 2026 16:10:26 +0200
-Message-ID: <20260730141426.260492517@linuxfoundation.org>
+Subject: [PATCH 6.6 088/484] bpf, sockmap: Reject unhashed UDP sockets on sockmap update
+Date: Thu, 30 Jul 2026 16:09:45 +0200
+Message-ID: <20260730141425.360431579@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,44 +54,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit a1a21995c2e1cc2ca6b2226cfe4f5f018370182a ]
+[ Upstream commit 66efd3368ae10d05e08fbe6425b50fdec7186ac7 ]
 
-The failover continuation in carl9170_rx_stream() copies the full tlen
-from the second USB transfer instead of capping at rx_failover_missing
-bytes. When both transfers are near maximum size, the total exceeds the
-65535-byte failover SKB, triggering skb_over_panic.
+UDP sockets get SOCK_RCU_FREE set when (auto-)bound. This means
+sk_is_refcounted(unbound) = true, while sk_is_refcounted(bound) = false.
 
-Limit the copy size to the missing byte count.
+Because sockmap accepts unbound UDP sockets, a BPF program can increment a
+socket's refcount via lookup. If the socket is subsequently bound, the
+transition from unbound to bound causes bpf_sk_release() to skip the
+decrement of the refcount, causing a memory leak.
 
-Fixes: a84fab3cbfdc ("carl9170: 802.11 rx/tx processing and usb backend")
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Acked-by: Christian Lamparter <chunkeey@gmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=5c1ca6ccaa1215781cac
-Link: https://patch.msgid.link/20260421134929.325662-4-tristmd@gmail.com
-[Fix checkpatch CHECK:PARENTHESIS_ALIGNMENT]
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+unreferenced object 0xffff88810bc2eb40 (size 1984):
+  comm "test_progs", pid 2451, jiffies 4295320596
+  hex dump (first 32 bytes):
+    7f 00 00 01 7f 00 00 01 d2 04 1b b7 04 d2 00 00  ................
+    02 00 01 40 00 00 00 00 00 00 00 00 00 00 00 00  ...@............
+  backtrace (crc bdee079d):
+    kmem_cache_alloc_noprof+0x557/0x660
+    sk_prot_alloc+0x69/0x240
+    sk_alloc+0x30/0x460
+    inet_create+0x2ce/0xf80
+    __sock_create+0x25b/0x5c0
+    __sys_socket+0x119/0x1d0
+    __x64_sys_socket+0x72/0xd0
+    do_syscall_64+0xa1/0x5f0
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Instead of special-casing for refcounted sockets, reject unhashed UDP
+sockets during sockmap updates, as there is no benefit to supporting those.
+This effectively reverts the commit under Fixes, with two exceptions:
+
+1. sock_map_sk_state_allowed() maintains a fall-through `return true`.
+2. In the spirit of commit b8b8315e39ff ("bpf, sockmap: Remove unhash
+   handler for BPF sockmap usage"), the proto::unhash BPF handler is not
+   reintroduced.
+
+Historical note: this issue is related to commit 67312adc96b5 ("bpf: reject
+unhashed sockets in bpf_sk_assign").
+
+Fixes: 0c48eefae712 ("sock_map: Lift socket state restriction for datagram sockets")
+Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/20260707-sockmap-lookup-udp-leak-v4-2-f878346f27ab@rbox.co
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/carl9170/rx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/core/sock_map.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/carl9170/rx.c b/drivers/net/wireless/ath/carl9170/rx.c
-index 9a25c2a540b95f..bda30b1f940459 100644
---- a/drivers/net/wireless/ath/carl9170/rx.c
-+++ b/drivers/net/wireless/ath/carl9170/rx.c
-@@ -918,7 +918,9 @@ static void carl9170_rx_stream(struct ar9170 *ar, void *buf, unsigned int len)
- 				}
- 			}
- 
--			skb_put_data(ar->rx_failover, tbuf, tlen);
-+			skb_put_data(ar->rx_failover, tbuf,
-+				     min_t(unsigned int, tlen,
-+					   ar->rx_failover_missing));
- 			ar->rx_failover_missing -= tlen;
- 
- 			if (ar->rx_failover_missing <= 0) {
+diff --git a/net/core/sock_map.c b/net/core/sock_map.c
+index 3a53b6a0e76e2b..052057303cff11 100644
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -539,6 +539,8 @@ static bool sock_map_sk_state_allowed(const struct sock *sk)
+ {
+ 	if (sk_is_tcp(sk))
+ 		return (1 << sk->sk_state) & (TCPF_ESTABLISHED | TCPF_LISTEN);
++	if (sk_is_udp(sk))
++		return sk_hashed(sk);
+ 	if (sk_is_stream_unix(sk))
+ 		return (1 << sk->sk_state) & TCPF_ESTABLISHED;
+ 	if (sk_is_vsock(sk) &&
 -- 
 2.53.0
 
