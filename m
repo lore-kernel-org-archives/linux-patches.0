@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC744483BC;
-	Thu, 30 Jul 2026 16:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0FC449B28;
+	Thu, 30 Jul 2026 16:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427409; cv=none; b=MCqk4TfGUrM0ntEH2BJRINgM4qlKx+tbfWqxAxuqXXq32aYvBHtN66wdzY27XMiIVpM9Bqvo4txNxAQ9OUlQ20Nx2324h9aC1HGcXGqAqnjnjffsCl3xJeAbImsMz16fr67TktRGdoBmAbE7RWz4lEwTgimUjxFzuvI2geSiJBg=
+	t=1785427412; cv=none; b=XxCQZBMVY6BEE78m88ty200eiai4jjSgpstptQZ2KMPBpSuuLpfjRiZCVhI5I3R+7Z9CGHZ/SV4giggF9pD0z6J/wFuthvevOMhLRAWuBiaamipprxYg27gHceKk5jYu+mPEqk0Ja0paJyK+2nuo/tslOPQCgRCNnX8sDseLg7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427409; c=relaxed/simple;
-	bh=EReuoFgwQ1JtFFT46+Dqhf9GER8uuTIBPRS5aVjz4n8=;
+	s=arc-20240116; t=1785427412; c=relaxed/simple;
+	bh=yd0jxsOnc6NwrV/vtjhVzoi7jOAmFHbFPy9DTnYhl4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=efUv7qvw6txhX2hCX7IqQhHqJ5YJXpm3CqBFsqj8kUvAL6KCWQDdRnWeYYRbYjaUjSbkgxlBYrq8zNPxdoITMGTjFqrSWWf1w11zOKBQKvcPz5Hmjy0SyM7HPQRKb8ZDEy50ur9DNe8YotfYK4YcKiEbhFTOOSmJ6dQmMfiC8Go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvUCIjlR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UzEH6Tiwth95G8m0/mSGcUQ819qXZbHLZB4+SqQF24yj9WGKmqgSfP6wePckmllTTx0QUfmF8qtvzXZZm5uFxOGrtOnmM+Lf4CaugXajcaewJt7Y6e/D5V6r/PHz/H0qyvhdbA/sqoBKkchuT/jK3mFW+BoYcktB/tl1os4FoqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOXREvUQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvUCIjlR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75801F000E9;
-	Thu, 30 Jul 2026 16:03:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOXREvUQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DB061F00A3A;
+	Thu, 30 Jul 2026 16:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427408;
-	bh=TJZD8ygC8OvYldulIZVMLS5DqZPjW02i6oIWbItRGlU=;
+	s=korg; t=1785427411;
+	bh=0duoo2YKHPH2JC+oLIB3dbl/LfpKUUAvVACLJEG4uq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hvUCIjlR2FZPVfyDMjOUUimVsjZMvvVbkIijfjLOtby2cVKfMKcdrS7hFQmUYjaWm
-	 8iNMHSvh74fwKeyA/vnBX7d7tPyEBGrdVWnx1YeMwSJcu+2UltEJVGBOyfzMc2SUa9
-	 48o0jhDog+o6ZWmpVqz/l/8pO705laHts/IoGFds=
+	b=IOXREvUQCcUYVfs/HYSrLlqynvbqU3vl8A9oKVNaGFypHb1HPCS3OnYztZztmMtpK
+	 /bpZ1qOYDNMVOZFOMCe+owodyuoK2zkG4m2duMNDuij0qpkBvEd1ch2uVcjhqwvORI
+	 8lD5AmVfuZWFw4VVhtW6fvnv1E9+ojc60pu074Go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Patrick Oppenlander <patrick.oppenlander@gmail.com>,
+	Prashanth Kumar KR <PrashanthKumar.K.R@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 133/484] ASoC: bt-sco: fix duplicate DAPM widget names for wideband DAI
-Date: Thu, 30 Jul 2026 16:10:30 +0200
-Message-ID: <20260730141426.347293837@linuxfoundation.org>
+Subject: [PATCH 6.6 160/484] amd-xgbe: fix MAC_AUTO_SW handling in CL37 AN
+Date: Thu, 30 Jul 2026 16:10:57 +0200
+Message-ID: <20260730141426.942913812@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,70 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Prashanth Kumar KR <PrashanthKumar.K.R@amd.com>
 
-[ Upstream commit 0b604e886ece11b71c4daaeccc512c784b89b014 ]
+[ Upstream commit 4bf22afe53a1de4b44b04cf677fd5199089cbdff ]
 
-The bt-sco-pcm-wb DAI uses the same stream_name strings as bt-sco-pcm
-("Playback" and "Capture"). This causes duplicate DAPM AIF widget
-names within the same component, leading to debugfs warnings:
+MAC_AUTO_SW (VR_MII_DIG_CTRL1 bit 9) enables automatic XPCS speed
+mode switching after CL37 auto-negotiation and is only meaningful in
+SGMII MAC mode. The original code unconditionally set this bit on
+every call to xgbe_an37_set(), including when called from
+xgbe_an37_disable() with enable=false. This left MAC_AUTO_SW=1 after
+AN was disabled, causing the XPCS to autonomously switch speed from
+stale AN state during subsequent mode changes, breaking SGMII speed
+negotiation on 1G copper SFP modules.
 
-  debugfs: 'Playback' already exists in 'dapm'
-  debugfs: 'Capture' already exists in 'dapm'
+Patrick: This was breaking negotiation for all 1G SFP modules,
+not just copper modules.
 
-Give the wideband DAI distinct stream names ("WB Playback" and
-"WB Capture") and add corresponding DAPM AIF widgets and routes for
-them.
-
-Fixes: 5947e1b4992e ("ASoC: bt-sco: extend rate and add a general compatible string")
-Assisted-by: VeroCoder:claude-sonnet-4-5
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20260715100620.1387159-1-shengjiu.wang@oss.nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 42fd432fe6d3 ("amd-xgbe: align CL37 AN sequence as per databook")
+Reported-by: Patrick Oppenlander <patrick.oppenlander@gmail.com>
+Link: https://lore.kernel.org/netdev/CAEg67GmFS0Q4oSZkz8zWdOzckSth9_vBPiOy6a7-d697C2w2Xg@mail.gmail.com
+Signed-off-by: Prashanth Kumar KR <PrashanthKumar.K.R@amd.com>
+Tested-by: Patrick Oppenlander <patrick.oppenlander@gmail.com>
+Link: https://patch.msgid.link/20260709095006.3683940-1-prashanthkumar.k.r@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/bt-sco.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/bt-sco.c b/sound/soc/codecs/bt-sco.c
-index 3afcef2dfa3529..c0bf45b76cb8c5 100644
---- a/sound/soc/codecs/bt-sco.c
-+++ b/sound/soc/codecs/bt-sco.c
-@@ -17,11 +17,17 @@ static const struct snd_soc_dapm_widget bt_sco_widgets[] = {
- 			    SND_SOC_NOPM, 0, 0),
- 	SND_SOC_DAPM_AIF_OUT("BT_SCO_TX", "Capture", 0,
- 			     SND_SOC_NOPM, 0, 0),
-+	SND_SOC_DAPM_AIF_IN("BT_SCO_RX_WB", "WB Playback", 0,
-+			    SND_SOC_NOPM, 0, 0),
-+	SND_SOC_DAPM_AIF_OUT("BT_SCO_TX_WB", "WB Capture", 0,
-+			     SND_SOC_NOPM, 0, 0),
- };
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+index 63012119f2c8eb..4e4e0735cb2ada 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+@@ -376,9 +376,14 @@ static void xgbe_an37_set(struct xgbe_prv_data *pdata, bool enable,
  
- static const struct snd_soc_dapm_route bt_sco_routes[] = {
- 	{ "BT_SCO_TX", NULL, "RX" },
- 	{ "TX", NULL, "BT_SCO_RX" },
-+	{ "BT_SCO_TX_WB", NULL, "RX" },
-+	{ "TX", NULL, "BT_SCO_RX_WB" },
- };
+ 	XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_CTRL1, reg);
  
- static struct snd_soc_dai_driver bt_sco_dai[] = {
-@@ -45,14 +51,14 @@ static struct snd_soc_dai_driver bt_sco_dai[] = {
- 	{
- 		.name = "bt-sco-pcm-wb",
- 		.playback = {
--			.stream_name = "Playback",
-+			.stream_name = "WB Playback",
- 			.channels_min = 1,
- 			.channels_max = 1,
- 			.rates = SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_16000,
- 			.formats = SNDRV_PCM_FMTBIT_S16_LE,
- 		},
- 		.capture = {
--			 .stream_name = "Capture",
-+			 .stream_name = "WB Capture",
- 			.channels_min = 1,
- 			.channels_max = 1,
- 			.rates = SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_16000,
+-	reg = XMDIO_READ(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL);
+-	reg |= XGBE_VEND2_MAC_AUTO_SW;
+-	XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL, reg);
++	if (pdata->an_mode == XGBE_AN_MODE_CL37_SGMII) {
++		reg = XMDIO_READ(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL);
++		if (enable)
++			reg |= XGBE_VEND2_MAC_AUTO_SW;
++		else
++			reg &= ~XGBE_VEND2_MAC_AUTO_SW;
++		XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL, reg);
++	}
+ }
+ 
+ static void xgbe_an37_restart(struct xgbe_prv_data *pdata)
 -- 
 2.53.0
 
