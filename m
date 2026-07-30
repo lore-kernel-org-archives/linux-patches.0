@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A5B446C06;
-	Thu, 30 Jul 2026 15:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FFA448D11;
+	Thu, 30 Jul 2026 15:21:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424873; cv=none; b=WlCHag5CxAzyAMSZQCLMwZ38iZH3LH3ToRnp3uXTV8KN+kXEVwOaKTjO73zY7Zj5YaI+V9cn2X192QDTzDYZs0vb9vNS3aXx0itmkYbIIufOyI/Gx8en8Wmen/T+vCxmD6Ym35E6TM+Uiew4AqfZwHQaaO6sBNotkYpHBTjBMfM=
+	t=1785424875; cv=none; b=YmcWKZ/VWNFo7OuQZKLp60yp2U8o/dACjnWSIMBCaWTJHq26JkT5Q3iO5srJ6Qf/T85b+1Tzr750ZGwN9Mk/diKjlmSDU0xcQOb9ZbsgK9uiH4NY4NS+0UzrP2n7xVW/L4SSpC/qCTrqlEzQvAXa+/3VVTHJMGKP95lcs4bVVXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424873; c=relaxed/simple;
-	bh=7zmJPYSNfR2wDUNmEQpTWqGjFhu6JvbAQAPtQrlUtlk=;
+	s=arc-20240116; t=1785424875; c=relaxed/simple;
+	bh=AbzqBCWdUCSDmhpyIDLUDQ3pZTpsoBMWq0N6ySTDM28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eFwtfQGjKUSyFBpMi/TdbFJYJs5ZfWbytNoiAL2kjNVYt6cpebJN3rMy6mWzn+LVK5mvVYBKdeuxgSRgzDV7HfmDWFQfHzddo19IsqoqmHzhImSWGsdnSrxNcB+vsptWsPha6iDDOgsn5rCVHhFo++nMAQjrWXduPgYziflsUgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3AcObsl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hq1JYk3zxUqbYTngTlnBxCNK+vlbtuMPYMXafDQrlOrqE+tDHXg5lvDmfOj10L6j/+wVaWKvR+jK5FT3+Z+FTHfCz2lNTAGRmv995FyW/g/uhUTEiHTuvaXvnW7/auxfZg/Gmi3CSVK5Gd36vGS0PgHzEJHwOpNRwuStPpQllHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQtsvqjl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3AcObsl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A13F1F0155E;
-	Thu, 30 Jul 2026 15:21:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQtsvqjl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0535F1F00ACA;
+	Thu, 30 Jul 2026 15:21:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424871;
-	bh=p/KrA3XxuVUFALPWFGyTd/ggU5dWZpqciYG0ZVusEtI=;
+	s=korg; t=1785424874;
+	bh=OK6YCbBbgeezeqBs9IqW9Ts5sI5cRiCEqE3QSleVF/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b3AcObsl10oG90sgprhwNYxzdIu9rGlM7lWgdQ4jc6Yl2dugNzhmKbui/KuFWG7SR
-	 J23AgRUzMS4fw41xFi+km5y8LjQIvMCnYn4BFrUJcp8jhkyGAYoJTAR1QrxUKn+iUZ
-	 xHFNnNuOLwP5/z5mbS4SPXD6Bry4Gg5/WRrmhAC8=
+	b=IQtsvqjlBRxfnjSeKWXWgJpyoVn+04NaeAPNTie6M57uiibJz/r1v55dAaHDUNg+F
+	 gusZ7i0yM1vxbf4pCulvRPZgCkr3tW0tB3Wu9WQf22pSMX3H0Cm4zPdwdGY9lphACZ
+	 5m1g3u9LXtybecQgQFhnm2/B1XKYgFxvIE3Wh4LI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Magnus Lindholm <linmag7@gmail.com>,
-	Jann Horn <jannh@google.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 544/675] proc: Fix broken error paths for namespace links
-Date: Thu, 30 Jul 2026 16:14:34 +0200
-Message-ID: <20260730141456.705835044@linuxfoundation.org>
+	Sven Schnelle <svens@linux.ibm.com>,
+	stable@kernel.org,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 545/675] ptp: ptp_s390: Add missing facility check
+Date: Thu, 30 Jul 2026 16:14:35 +0200
+Message-ID: <20260730141456.726667923@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,52 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-commit 425224c2d700391729be7fe6929a88ef4e2d7a4e upstream.
+commit e78f1ac37afcb16cb6fef8a2c92591eab6558956 upstream.
 
-Don't return the return value of down_read_killable() (0) when a ptrace
-access check fails, return -EACCES as intended.
+Only register the physical clock when facility 28 is installed
+and PTFF QAF returns that PTFF QPT is available.
 
-Reported-by: Magnus Lindholm <linmag7@gmail.com>
-Closes: https://lore.kernel.org/r/20260706170735.2941493-1-linmag7@gmail.com
-Fixes: 6650527444da ("proc: protect ptrace_may_access() with exec_update_lock (part 1)")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://patch.msgid.link/20260706-procfs-ns-eacces-fix-v1-1-a69ab14c02e6@google.com
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 2d7de7a3010d ("s390/time: Add PtP driver")
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Cc: stable@kernel.org
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Link: https://patch.msgid.link/20260714130342.1971700-3-svens@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/namespaces.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/ptp/ptp_s390.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/proc/namespaces.c
-+++ b/fs/proc/namespaces.c
-@@ -46,7 +46,7 @@ static const char *proc_ns_get_link(stru
- 	const struct proc_ns_operations *ns_ops = PROC_I(inode)->ns_ops;
- 	struct task_struct *task;
- 	struct path ns_path;
--	int error = -EACCES;
-+	int error;
+--- a/drivers/ptp/ptp_s390.c
++++ b/drivers/ptp/ptp_s390.c
+@@ -107,6 +107,9 @@ static __init int ptp_s390_init(void)
+ 	if (IS_ERR(ptp_stcke_clock))
+ 		return PTR_ERR(ptp_stcke_clock);
  
- 	if (!dentry)
- 		return ERR_PTR(-ECHILD);
-@@ -59,6 +59,7 @@ static const char *proc_ns_get_link(stru
- 	if (error)
- 		goto out_put_task;
++	if (!test_facility(28) || !ptff_query(PTFF_QPT))
++		return 0;
++
+ 	ptp_qpt_clock = ptp_clock_register(&ptp_s390_qpt_info, NULL);
+ 	if (IS_ERR(ptp_qpt_clock)) {
+ 		ptp_clock_unregister(ptp_stcke_clock);
+@@ -117,7 +120,8 @@ static __init int ptp_s390_init(void)
  
-+	error = -EACCES;
- 	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS))
- 		goto out;
+ static __exit void ptp_s390_exit(void)
+ {
+-	ptp_clock_unregister(ptp_qpt_clock);
++	if (ptp_qpt_clock)
++		ptp_clock_unregister(ptp_qpt_clock);
+ 	ptp_clock_unregister(ptp_stcke_clock);
+ }
  
-@@ -90,6 +91,7 @@ static int proc_ns_readlink(struct dentr
- 	if (res)
- 		goto out_put_task;
- 
-+	res = -EACCES;
- 	if (ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS)) {
- 		res = ns_get_name(name, sizeof(name), task, ns_ops);
- 		if (res >= 0)
 
 
