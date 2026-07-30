@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEEA432E94;
-	Thu, 30 Jul 2026 14:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48ED30C143;
+	Thu, 30 Jul 2026 14:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423576; cv=none; b=YkreIRrsbZXofEFUqhOJPno08KefGAoNCNBqcSbzbFWlvjEbe86cllECG/hOz8SfyjVsUV5yMT8MJ+6orIYyVPUc/CtJ7TQcKIw/HRYk3Qm5pq8JsTYsIFX+Q+qk1xmOUVQlhBgLk7a8uLhiY5REimJwP340aVUb2Nm+ovyTNHg=
+	t=1785423578; cv=none; b=gKl9nMHP9mVAyiJXlrjzf6kvcboeA0/3I4WUovYZ0WfFpyd0ojWpApbWuCvbB1Ey2H9wQhkywFRl/h7J+tKCJaPf092dUREnGoBaa3Htqb3SUSPrgB7W3dmIypnK0927Mvtjy0JYn1M3sTguH2urM62Sv6IHBRxRwWKTNEzXiOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423576; c=relaxed/simple;
-	bh=/XUyiUxqsbK3T0DVwm9R9KHHRQ62Yt5zN2UMCrlmLDo=;
+	s=arc-20240116; t=1785423578; c=relaxed/simple;
+	bh=G4TpZ0hHH/mYAwGLO7I9oEemkv+1oCC3Quq6sLI+48k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jLeqE2yYGXh2IK9IdY5H6h58cYKgQLoJd9338gyp03XVINWIWdZUvA2y2FrA+Rft+KZgL36E8Gk+fQhJma6CmoRnixXrpsTuW8Sau+iO5/DDenJXJAkGG6bM/Yo++vYLwZOUyBhlOMV4PCLBfeS/5UYd66FTgHkQumcKDfbhNZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V8gR95Zm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=twB20E25AmWfXum0E8fv9JmbIP4I8JREUmCA88bm+2ralnW+n+CfYZbup0dhf2HdjyyrGqdSY29n8oG+f5zAjSXKWArazi99tpZgcz/xwuKVCM30zQiU2mWtug0ByOK+pSWoyzn182HzV4jhOr4lx0VVgbw05zSwBnZQH5xKri8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yjz1LuOc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8gR95Zm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FFE41F000E9;
-	Thu, 30 Jul 2026 14:59:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yjz1LuOc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CD01F000E9;
+	Thu, 30 Jul 2026 14:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423574;
-	bh=IRmHB4ywvQ/qUTeJ/v5PfrhiaieBooHRdNRe2fZNODE=;
+	s=korg; t=1785423577;
+	bh=xj/u/9A9D7+b5J5Wl7jl8ZxG16kacMR2Zs5KXU57XSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V8gR95ZmkYRIvgk2pslIa+JVPAVKwzMuM/eQXkMJyrNLOIUWoP7Fjv169TYJ37ZQd
-	 7/mPh3XZThtng+l9NclukaX0JCSathL2XyIOWG+GgwSfEkLJvJhEVAD9c63+qE6XxR
-	 JRJpMk1VNR5FBduv5qtB3PHJYkt2ccKfU6qURVR8=
+	b=Yjz1LuOcZEnLlYmA9Fp0kEcjRBd6fD1gUNa4aSrCUEhaokf9g6o5Ql+bAdJ6tttyy
+	 ediLC8WrkG44hSesbRCcMGoe0UIexKheEB7VJWc6T2FWotuH8TD/pSZQskWe7XrbTX
+	 erhVj5VRMbY6N7DYJTRac1TAPrqUW1+5lPOlerus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uday Khare <udaykhare77@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 093/675] ASoC: tas2562: fix deprecated shut-down GPIO always cleared after lookup
-Date: Thu, 30 Jul 2026 16:07:03 +0200
-Message-ID: <20260730141447.105745214@linuxfoundation.org>
+Subject: [PATCH 6.18 076/675] wifi: cfg80211: derive S1G beacon TSF from S1G fields
+Date: Thu, 30 Jul 2026 16:06:46 +0200
+Message-ID: <20260730141446.744120807@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,59 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uday Khare <udaykhare77@gmail.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 3238c634725afbb2a137fdda762208510828f71d ]
+[ Upstream commit 4e5a4641e7b4763656336b7891d01359aaf363cd ]
 
-In tas2562_parse_dt(), the fallback lookup for the deprecated
-"shut-down" GPIO property is broken due to a missing pair of braces.
+cfg80211_inform_bss_frame_data() parses S1G beacons with the extension
+frame layout, but still reads the TSF from the regular probe response
+layout after the S1G branch. For S1G beacons that reads bytes at the
+regular management-frame timestamp offset instead of the S1G timestamp.
 
-The code intends to reset sdz_gpio to NULL only when the lookup
-returns an error that is not -EPROBE_DEFER (so the driver gracefully
-continues without a GPIO). However, without braces the statement:
+Use the 32-bit S1G beacon timestamp and the S1G Beacon Compatibility
+element's TSF completion field when informing an S1G BSS. Keep the
+regular management-frame timestamp read in the non-S1G branch.
 
-    tas2562->sdz_gpio = NULL;
-
-falls outside the IS_ERR() check and is executed unconditionally
-for every path through the if block, including a successful GPIO
-lookup.
-
-This means any device using the deprecated 'shut-down' DT property
-will always have sdz_gpio == NULL after probe, making the GPIO
-completely non-functional.
-
-Fix this by adding the missing braces to scope the NULL assignment
-inside the IS_ERR() branch, matching the pattern already used for
-the primary 'shutdown' GPIO lookup above.
-
-Fixes: f78a97003b8b ("ASoC: tas2562: Update shutdown GPIO property")
-Signed-off-by: Uday Khare <udaykhare77@gmail.com>
-Link: https://patch.msgid.link/20260706153109.10953-1-udaykhare77@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 9eaffe5078ca ("cfg80211: convert S1G beacon to scan results")
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Tested-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+Reviewed-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+Link: https://patch.msgid.link/20260611161943.91069-6-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2562.c | 5 +++--
+ net/wireless/scan.c | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/tas2562.c b/sound/soc/codecs/tas2562.c
-index 8e00dcc09d0c28..795c66cb47134e 100644
---- a/sound/soc/codecs/tas2562.c
-+++ b/sound/soc/codecs/tas2562.c
-@@ -675,11 +675,12 @@ static int tas2562_parse_dt(struct tas2562_data *tas2562)
- 	if (tas2562->sdz_gpio == NULL) {
- 		tas2562->sdz_gpio = devm_gpiod_get_optional(dev, "shut-down",
- 							      GPIOD_OUT_HIGH);
--		if (IS_ERR(tas2562->sdz_gpio))
-+		if (IS_ERR(tas2562->sdz_gpio)) {
- 			if (PTR_ERR(tas2562->sdz_gpio) == -EPROBE_DEFER)
- 				return -EPROBE_DEFER;
- 
--		tas2562->sdz_gpio = NULL;
-+			tas2562->sdz_gpio = NULL;
-+		}
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index 27d5f99dbb2289..af1e2ce1628dae 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -3326,14 +3326,15 @@ cfg80211_inform_bss_frame_data(struct wiphy *wiphy,
+ 		bssid = ext->u.s1g_beacon.sa;
+ 		capability = le16_to_cpu(compat->compat_info);
+ 		beacon_interval = le16_to_cpu(compat->beacon_int);
++		tsf = le32_to_cpu(ext->u.s1g_beacon.timestamp);
++		tsf |= (u64)le32_to_cpu(compat->tsf_completion) << 32;
+ 	} else {
+ 		bssid = mgmt->bssid;
+ 		beacon_interval = le16_to_cpu(mgmt->u.probe_resp.beacon_int);
+ 		capability = le16_to_cpu(mgmt->u.probe_resp.capab_info);
++		tsf = le64_to_cpu(mgmt->u.probe_resp.timestamp);
  	}
  
- 	if (tas2562->model_id == TAS2110)
+-	tsf = le64_to_cpu(mgmt->u.probe_resp.timestamp);
+-
+ 	if (ieee80211_is_probe_resp(mgmt->frame_control))
+ 		ftype = CFG80211_BSS_FTYPE_PRESP;
+ 	else if (ext)
 -- 
 2.53.0
 
