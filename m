@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C505C4503EB;
-	Thu, 30 Jul 2026 16:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83DF943E4BA;
+	Thu, 30 Jul 2026 16:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428055; cv=none; b=qG75njz4i2bcfpXACNQBeYUBv6iJWWFnrmcPbEty0LRjl4p8kIxghc+asbv2r9GPlM9f0iLHJy2U4KeKI7aBi59wKwiTMukcREBhdGQVup5BTWEJaGAH7inKdJQl6yJclZh0lCff9nqRB+ST+Hvt0jeGa03UyqEAS9H31hIM0ow=
+	t=1785428057; cv=none; b=lK25i/sO1SiZVGVkqeICgyds0Dm9nBdnOEs2PNyfqDKrQij/g12NVZ2ItVzyWza+GJOWR21Q5wOxkwLfrDNG9XyW9Ay8rGb8JQ52lpPxEXHEYGbvO76qWE6nqtvE4WlvcMnqEfH00ccbQON3WqR/cx5BWV66T7suvvh/mWDCD+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428055; c=relaxed/simple;
-	bh=tQWBSf5fVnPiIlRnmU9D2BaQ1Vtzrs+xkGcNKUsnH0A=;
+	s=arc-20240116; t=1785428057; c=relaxed/simple;
+	bh=30/n7fdTM/T5G3EwW+c94lov7Xn85TAndih5BQaaYFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=flC6cChKiOeERHO2IusbLcWDeWJkQycMXUDdfIadNNS+c0YPTeiPG5yvw8gb66C7f+GZ9v8Rx2OG1+Vs9//ZNjR8WpBe981SKA05q1yvWsIRt0vgAu2X43u5FloIjdZOPD9h7rx9A2saeN6kvQTMmadlIzcuUbmjI52EUQ8pMww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLqwyZn7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TxzGHgeEN3ofJBfBOW7cG1tUuwOBCT8TO1LpcMTaSCUGcgmtuIoffWMlOXGbUFBWpTcIfXxUyxdbSSxihwI9LrWA8521fXpEzr+53a4X1TkEF7HFIBENRZOnRDricHCF0S8R1VqFYI4UuJwX59kbd2hvbj/c39OTiABDTQ+oAX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X57f1KwB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLqwyZn7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF121F00A3A;
-	Thu, 30 Jul 2026 16:14:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X57f1KwB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE8C41F00A3A;
+	Thu, 30 Jul 2026 16:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428053;
-	bh=kts3eytkz8Ev3EZfLZq7rp0XBIo/rSrZIdSdJUiI15Q=;
+	s=korg; t=1785428056;
+	bh=np1G88R9N7WmdXANHNvAoSyX3/bAYJbzD8hUprfHHNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PLqwyZn75KR73ZFpPNlBT8PD+NTKaeidMMN/9DLZUeGYBBcUdB874Gyl/FutXmmXm
-	 nxNS0sylJ0AtGCc3c/UCcgLuAd90pZW/p6ybU6pKs5haN9KENvu4H+zcJLvn/xtfPC
-	 9TSZ+QyOMdo8aXuGTPK8C89YTS1n9ygEzy8w9vSU=
+	b=X57f1KwBzG58vGUtdntH3EqgslEayCotEW7fHUBsSm5REyAtWDHNFveqRHeA/Fv6y
+	 WgQMnE1ewVwiX8TDpQGSwV3Af7BZRwCTuYUTrMDL28j4Q9AH9YYoLXzTnWVs6mz/Vw
+	 22unn6VcvTQCXScnp7lbrr9MFtdoWNgEEZbxexg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Paul Moore <paul@paul-moore.com>,
-	Christian Brauner <brauner@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 370/484] audit: widen ino fields to u64
-Date: Thu, 30 Jul 2026 16:14:27 +0200
-Message-ID: <20260730141431.512601176@linuxfoundation.org>
+Subject: [PATCH 6.6 388/484] rxrpc: Fix socket notification race
+Date: Thu, 30 Jul 2026 16:14:45 +0200
+Message-ID: <20260730141431.904486204@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,156 +56,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 125dfa218134df7cc112667e92984de9d8cd0bf6 ]
+[ Upstream commit e66f8f32f50116670dbbee5bc9e692cd2cd0c8f8 ]
 
-inode->i_ino is being widened from unsigned long to u64. The audit
-subsystem uses unsigned long ino in struct fields, function parameters,
-and local variables that store inode numbers from arbitrary filesystems.
-On 32-bit platforms this truncates inode numbers that exceed 32 bits,
-which will cause incorrect audit log entries and broken watch/mark
-comparisons.
+There's a race between rxrpc_recvmsg() and rxrpc_notify_socket(), whereby
+the latter's attempt to avoid disabling interrupts and taking the socket's
+recvmsg_lock if the call is already queued may happen simultaneously with
+the former's discarding of a call that has nothing queued.
 
-Widen all audit ino fields, parameters, and locals to u64, and update
-the inode format string from %lu to %llu to match.
+Fix this by removing the shortcut.  Note that this only affects userspace's
+use of AF_RXRPC; the AFS filesystem driver doesn't use the socket queue.
 
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260304-iino-u64-v3-2-2257ad83d372@kernel.org
-Acked-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 81905b5acbe7 ("audit: fix recursive locking deadlock in audit_dupe_exe()")
+Fixes: 248f219cb8bc ("rxrpc: Rewrite the data and ack handling code")
+Link: https://sashiko.dev/#/patchset/20260616155749.2125907-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260624163819.3017002-10-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/audit.h   |    2 +-
- kernel/audit.h          |    9 ++++-----
- kernel/audit_fsnotify.c |    2 +-
- kernel/audit_watch.c    |   10 +++++-----
- kernel/auditsc.c        |    4 ++--
- 5 files changed, 13 insertions(+), 14 deletions(-)
+ net/rxrpc/recvmsg.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/include/linux/audit.h
-+++ b/include/linux/audit.h
-@@ -16,7 +16,7 @@
- #include <uapi/linux/netfilter/nf_tables.h>
- #include <uapi/linux/fanotify.h>
+--- a/net/rxrpc/recvmsg.c
++++ b/net/rxrpc/recvmsg.c
+@@ -27,8 +27,6 @@ void rxrpc_notify_socket(struct rxrpc_ca
  
--#define AUDIT_INO_UNSET ((unsigned long)-1)
-+#define AUDIT_INO_UNSET ((u64)-1)
- #define AUDIT_DEV_UNSET ((dev_t)-1)
+ 	_enter("%d", call->debug_id);
  
- struct audit_sig_info {
---- a/kernel/audit.h
-+++ b/kernel/audit.h
-@@ -75,7 +75,7 @@ struct audit_names {
- 	int			name_len;	/* number of chars to log */
- 	bool			hidden;		/* don't log this record */
- 
--	unsigned long		ino;
-+	u64			ino;
- 	dev_t			dev;
- 	umode_t			mode;
- 	kuid_t			uid;
-@@ -219,9 +219,9 @@ extern int auditd_test_task(struct task_
- #define AUDIT_INODE_BUCKETS	32
- extern struct list_head audit_inode_hash[AUDIT_INODE_BUCKETS];
- 
--static inline int audit_hash_ino(u32 ino)
-+static inline int audit_hash_ino(u64 ino)
- {
--	return (ino & (AUDIT_INODE_BUCKETS-1));
-+	return ((u32)ino & (AUDIT_INODE_BUCKETS-1));
- }
- 
- /* Indicates that audit should log the full pathname. */
-@@ -271,8 +271,7 @@ extern int audit_to_watch(struct audit_k
- extern int audit_add_watch(struct audit_krule *krule, struct list_head **list);
- extern void audit_remove_watch_rule(struct audit_krule *krule);
- extern char *audit_watch_path(struct audit_watch *watch);
--extern int audit_watch_compare(struct audit_watch *watch, unsigned long ino,
--			       dev_t dev);
-+extern int audit_watch_compare(struct audit_watch *watch, u64 ino, dev_t dev);
- 
- extern struct audit_fsnotify_mark *audit_alloc_mark(struct audit_krule *krule,
- 						    char *pathname, int len);
---- a/kernel/audit_fsnotify.c
-+++ b/kernel/audit_fsnotify.c
-@@ -25,7 +25,7 @@
-  */
- struct audit_fsnotify_mark {
- 	dev_t dev;		/* associated superblock device */
--	unsigned long ino;	/* associated inode number */
-+	u64 ino;		/* associated inode number */
- 	char *path;		/* insertion path */
- 	struct fsnotify_mark mark; /* fsnotify mark on the inode */
- 	struct audit_krule *rule;
---- a/kernel/audit_watch.c
-+++ b/kernel/audit_watch.c
-@@ -37,7 +37,7 @@ struct audit_watch {
- 	refcount_t		count;	/* reference count */
- 	dev_t			dev;	/* associated superblock device */
- 	char			*path;	/* insertion path */
--	unsigned long		ino;	/* associated inode number */
-+	u64			ino;	/* associated inode number */
- 	struct audit_parent	*parent; /* associated parent */
- 	struct list_head	wlist;	/* entry in parent->watches list */
- 	struct list_head	rules;	/* anchor for krule->rlist */
-@@ -125,7 +125,7 @@ char *audit_watch_path(struct audit_watc
- 	return watch->path;
- }
- 
--int audit_watch_compare(struct audit_watch *watch, unsigned long ino, dev_t dev)
-+int audit_watch_compare(struct audit_watch *watch, u64 ino, dev_t dev)
- {
- 	return (watch->ino != AUDIT_INO_UNSET) &&
- 		(watch->ino == ino) &&
-@@ -285,7 +285,7 @@ static void audit_update_watch(struct au
- 				list_del(&oentry->rule.list);
- 				audit_panic("error updating watch, removing");
- 			} else {
--				int h = audit_hash_ino((u32)ino);
-+				int h = audit_hash_ino(ino);
- 
- 				/*
- 				 * nentry->rule.watch == oentry->rule.watch so
-@@ -439,7 +439,7 @@ int audit_add_watch(struct audit_krule *
- 
- 	audit_add_to_parent(krule, parent);
- 
--	h = audit_hash_ino((u32)watch->ino);
-+	h = audit_hash_ino(watch->ino);
- 	*list = &audit_inode_hash[h];
- error:
- 	path_put(&parent_path);
-@@ -527,7 +527,7 @@ int audit_dupe_exe(struct audit_krule *n
- int audit_exe_compare(struct task_struct *tsk, struct audit_fsnotify_mark *mark)
- {
- 	struct file *exe_file;
--	unsigned long ino;
-+	u64 ino;
- 	dev_t dev;
- 
- 	/* only do exe filtering if we are recording @current events/records */
---- a/kernel/auditsc.c
-+++ b/kernel/auditsc.c
-@@ -884,7 +884,7 @@ static int audit_filter_inode_name(struc
- 				   struct audit_names *n,
- 				   struct audit_context *ctx)
- {
--	int h = audit_hash_ino((u32)n->ino);
-+	int h = audit_hash_ino(n->ino);
- 	struct list_head *list = &audit_inode_hash[h];
- 
- 	return __audit_filter_op(tsk, ctx, list, n, ctx->major);
-@@ -1549,7 +1549,7 @@ static void audit_log_name(struct audit_
- 		audit_log_format(ab, " name=(null)");
- 
- 	if (n->ino != AUDIT_INO_UNSET)
--		audit_log_format(ab, " inode=%lu dev=%02x:%02x mode=%#ho ouid=%u ogid=%u rdev=%02x:%02x",
-+		audit_log_format(ab, " inode=%llu dev=%02x:%02x mode=%#ho ouid=%u ogid=%u rdev=%02x:%02x",
- 				 n->ino,
- 				 MAJOR(n->dev),
- 				 MINOR(n->dev),
+-	if (!list_empty(&call->recvmsg_link))
+-		return;
+ 	if (test_bit(RXRPC_CALL_RELEASED, &call->flags)) {
+ 		rxrpc_see_call(call, rxrpc_call_see_notify_released);
+ 		return;
 
 
