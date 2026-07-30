@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C815407CEF;
-	Thu, 30 Jul 2026 16:09:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE37044683D;
+	Thu, 30 Jul 2026 16:09:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427765; cv=none; b=oYCctQYIljzCK70B9U0uurE7p3vRfDwoZeOKX3kwo4A9cfbOzLg80jb24I179bWT7UARRbBvdRjZJQJ5gH8hMsqozYFdMmZvL82Ikzf7hUDD5L+Tqjb/oxk2z5VLSqjeruRzpEtLBIQXV88VFW7qKYNIFj4yauO9l6wqk1QOmUs=
+	t=1785427767; cv=none; b=Lmz9i5M/p4vrAo/c1gXvmgI0OT9fRHVOkNn+uW6RnYR7v51Qf94g84h5nVtlRO6W8pBJmz83gWYVw4GjESfNXwynNGJcmflVo25x8gxiJq8Ms0Cy1Vq0GYnZ0f40dGotAvf+1b6Q6Df4fFTYQcWBgJRz38iwtEGQ5e1lpmbf0H0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427765; c=relaxed/simple;
-	bh=tF0AhEAlAqmg4W+Ik82dH7bg5VDPNdq57X0nLGkn7NU=;
+	s=arc-20240116; t=1785427767; c=relaxed/simple;
+	bh=lxoi5Rc6m258ETB7fvD00MoGkHcGPWqtGr2Us7jQn/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I83giNSlHs1kzFF5buLai7yA39+Rt4dBOSU7GhTl8PEs3jfwIPBkUQg1+wkNBKtC/Gj1C+GT7IBmIPdPtvX4y8cyS8ofM3VX9pwUw1SVPnW/Wr2ToTvZxjvJesCZXixU+BecICroCsDs7rtvnVN2HYz9vy+wDXzPcnIuFv00pdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4WGku01; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OtCpuTp56fZQUnB2fs4c8EbQfWPBirb6kyIld0/cU/pzy/cZkqNT1hcKbwlsuwcjRHUKrz9/R63mBMXviYlNBvuTS2wKpohhVfZxrrbtHHNdShT8a/gmnN4l0jPyztyWPtMJDGo7KkJ3f6fnLW2PhOJZvqp/VXqqvDfSfnok8nU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R81Shj1R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4WGku01"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 503501F000E9;
-	Thu, 30 Jul 2026 16:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R81Shj1R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258F21F000E9;
+	Thu, 30 Jul 2026 16:09:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427763;
-	bh=iQH6/mKH6sw5IPI5LTo17x44/J9WJjmAhThHcXEn/fw=;
+	s=korg; t=1785427766;
+	bh=coqBCFxi2mhSoWeuKEK/DhekC3HcSJN72MZGFKxbdLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m4WGku01UAFDcLMFD3Br2uCAH8mzMUSgbekuMkwdUCVXB5Rk93bUyyUqVUsFCAhA9
-	 E3cNEFa3oxWkJowejdNsOl3CrRH2sNRN7B0awzHZpA8HijUlXnqJkCb0LxgDsrlyD3
-	 9Pl0+vSalu2p1/Fq9toA02PWHdWpIS0N2CxvHyfU=
+	b=R81Shj1RBAM//Bp70xs9XKMDK3NgFHhn8xtjEYzuMf2CUf83x4HIWW4Q8Qmk0d2rq
+	 uSORJ2TYFSPxnWFKHLWCc3LX0H3bsLB76cuRCXbazYK14gwnU6ZyU6S86cUnRE+oCf
+	 QDYq71vRpC/3gUz373o/SrxEnnBjRQtWL0QxmHnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f24c3d5d316011bacc70@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.6 286/484] comedi: comedi_parport: deal with premature interrupt
-Date: Thu, 30 Jul 2026 16:13:03 +0200
-Message-ID: <20260730141429.705719139@linuxfoundation.org>
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.6 287/484] serial: sc16is7xx: implement gpio get_direction() callback
+Date: Thu, 30 Jul 2026 16:13:04 +0200
+Message-ID: <20260730141429.730709945@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,76 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit 17221216ae8ce6a24e8a4e787382e3ebc81b88a8 upstream.
+commit af071d9e07e57cfff239e8d09d2f3b05ebc9c667 upstream.
 
-Syzbot reported a general protection fault in
-`comedi_get_is_subdevice_running()`, which was called from the interrupt
-handler `parport_interrupt()` in the "comedi_parport" driver, but it
-does not currently have a C reproducer for the problem.  It's
-probably due to a premature interrupt for one of two reasons:
+It's strongly recommended for GPIO drivers to always implement the
+.get_direction() callback - even when the direction is tracked in
+software. The GPIO core emits a warning when the callback is missing
+and a user reads the direction of a line, e.g. via
+/sys/kernel/debug/gpio.
 
-1. The driver sets up the interrupt handler before the comedi subdevices
-   used by the interrupt handler have been allocated, but does not
-   disable the interrupt in the parallel port's CTRL register first.
-2. The driver uses a user-supplied I/O port base address which Syzbot
-   would have supplied, but it might not be backed by real parallel port
-   hardware.
-
-Change the initialization order in the driver's comedi "attach" handler
-(`parport_attach()`) so that the hardware registers are initialized
-before the interrupt handler is requested.  This should prevent
-premature interrupts occurring for real hardware.
-
-Also add a test to the interrupt handler to ensure the comedi device is
-fully attached and return early if it isn't.
-
-Fixes: 241ab6ad7108e ("Staging: comedi: add comedi_parport driver")
-Reported-by: syzbot+f24c3d5d316011bacc70@syzkaller.appspotmail.com
+Fixes: dfeae619d781 ("serial: sc16is7xx")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260527125104.96596-1-abbotti@mev.co.uk
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260716210813.2582826-1-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/comedi_parport.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/tty/serial/sc16is7xx.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/comedi/drivers/comedi_parport.c
-+++ b/drivers/comedi/drivers/comedi_parport.c
-@@ -211,6 +211,13 @@ static irqreturn_t parport_interrupt(int
- 	unsigned int ctrl;
- 	unsigned short val = 0;
- 
-+	/*
-+	 * Check device is fully attached.  Device interrupts should have
-+	 * been disabled, but do this in case of bad hardware.
-+	 */
-+	if (!dev->attached)
-+		return IRQ_NONE;
-+
- 	ctrl = inb(dev->iobase + PARPORT_CTRL_REG);
- 	if (!(ctrl & PARPORT_CTRL_IRQ_ENA))
- 		return IRQ_NONE;
-@@ -231,6 +238,9 @@ static int parport_attach(struct comedi_
- 	if (ret)
- 		return ret;
- 
-+	outb(0, dev->iobase + PARPORT_DATA_REG);
-+	outb(0, dev->iobase + PARPORT_CTRL_REG);
-+
- 	if (it->options[1]) {
- 		ret = request_irq(it->options[1], parport_interrupt, 0,
- 				  dev->board_name, dev);
-@@ -286,9 +296,6 @@ static int parport_attach(struct comedi_
- 		s->cancel	= parport_intr_cancel;
- 	}
- 
--	outb(0, dev->iobase + PARPORT_DATA_REG);
--	outb(0, dev->iobase + PARPORT_CTRL_REG);
--
- 	return 0;
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -1308,6 +1308,17 @@ static void sc16is7xx_gpio_set(struct gp
+ 			      val ? BIT(offset) : 0);
  }
  
++static int sc16is7xx_gpio_get_direction(struct gpio_chip *chip, unsigned int offset)
++{
++	struct sc16is7xx_port *s = gpiochip_get_data(chip);
++	struct uart_port *port = &s->p[0].port;
++	unsigned int val;
++
++	val = sc16is7xx_port_read(port, SC16IS7XX_IODIR_REG);
++
++	return val & BIT(offset) ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
++}
++
+ static int sc16is7xx_gpio_direction_input(struct gpio_chip *chip,
+ 					  unsigned offset)
+ {
+@@ -1385,6 +1396,7 @@ static int sc16is7xx_setup_gpio_chip(str
+ 	s->gpio.parent		 = dev;
+ 	s->gpio.label		 = dev_name(dev);
+ 	s->gpio.init_valid_mask	 = sc16is7xx_gpio_init_valid_mask;
++	s->gpio.get_direction	 = sc16is7xx_gpio_get_direction;
+ 	s->gpio.direction_input	 = sc16is7xx_gpio_direction_input;
+ 	s->gpio.get		 = sc16is7xx_gpio_get;
+ 	s->gpio.direction_output = sc16is7xx_gpio_direction_output;
 
 
