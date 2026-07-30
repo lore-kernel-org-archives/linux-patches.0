@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D6E442120;
-	Thu, 30 Jul 2026 14:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E41D43F8A7;
+	Thu, 30 Jul 2026 14:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422608; cv=none; b=rMIHO14+FIyatWQqS4WkcDDMp/W8pEJ9DjP//nN93Q5TNM1jzJStXtu7lyvI2SVpdrPZWDR2E43u62+xEJNhSd0W90mXofAa4vQyvZhb6+AzNn14BQqmOe8uRGC5/4zKYftMgB8Td/SH0f8ok5lKAmpKChp+KUrh8PYDLSRNfcY=
+	t=1785422610; cv=none; b=R8r8E17H38SsjnLi4jMms+OPtfvlDVeD/vZ/tuwdqiGP9MqxY3zX78cN37E+6uVgjDrNun03z4UTNQitTgcIzKYmm4h2vZXBXjUM4BTYLUXJrnMGzmk1lOYZl3HT7uSj7Q7l+NNqJDern04McQYXcfYja6WZdqhHUTGpvmxF5+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422608; c=relaxed/simple;
-	bh=DlOz0LQEaxjEsU6jhhNzpuatdka+gj5j/MtCHmvE0DY=;
+	s=arc-20240116; t=1785422610; c=relaxed/simple;
+	bh=bX6CnJUPJQ1WhhrcZqfubULTwwWY6aD4wh1eMC0iV2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kY7Zsj2CCC2wDaimOBz5dJyFfmoJ2ZIxuCBODN/WtsAIpUkkGVC8Lw7A4szK918JaarY+4I/nzA3adnFW4w6Fvl5jmM3uz6tDv811ti9CSFTHz+JYBEwWUuDiQMR+UBLX7xYtWegUE1whL0+tWR5RfbaZU/h2bc/K5a+n6wPu3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vttHenLv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uvDIALnU6dxqcLy6E1oIHPkNZUr6JL21BYp2HkMD9lgetTXNeL87aAvi8PaD1N58c5kVqOdomyrY6dHeGG2yHY/Ysk38AITtlpJcYfbycYsBRxLCG3ir5H4QmJ6GKfHXAa05b/ndJ9FrAJZdEIFz2/Yn/JjsdMIbNMFkTUbNJc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MADLSE62; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vttHenLv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2DE61F00A3A;
-	Thu, 30 Jul 2026 14:43:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MADLSE62"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0BC1F000E9;
+	Thu, 30 Jul 2026 14:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422606;
-	bh=kmQIud/dLhhitAW5StulwQmqPGJxNbDiJ6eEMdxzT6s=;
+	s=korg; t=1785422609;
+	bh=k519u8VGZGUDF5u7PF2tZ8iJT17C0dPdWDz1gFtCjIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vttHenLvSIAhGOZ4Jyyp0cYXjsW98+cf7e1rBhboAvvOkYALRF6vxLPj9rMxrN2P/
-	 D6ql6Em5EsAUjSGiPerP3nqfKhEqrlsIca47SKqmuZXahAZifhVGaKyXOvLKO27bnd
-	 BRCXwDjIX7Wj/FHJNYb5hilMg9Lk1q2wmjo6seAE=
+	b=MADLSE62zmH7SdMk0sI0LLNSCYY6VEPiA7l0Xo6ChRxMvbvpDlbAVzS0zjTXtNwUh
+	 RKpXj6gBLfdKDIas3fcOkfgWNrpVONjM7HrqRxWhUteCuaQkuD4gMrkr1Zdy1vn0rx
+	 /ZuUhVGhUsdgx78W+9p+0CrNtHzRNcYAbPk8eJWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valery Borovsky <vebohr@gmail.com>,
+	David Carlier <devnexen@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.1 495/744] media: msi2500: Return queued buffers on start_streaming() failure
-Date: Thu, 30 Jul 2026 16:12:48 +0200
-Message-ID: <20260730141454.810917917@linuxfoundation.org>
+Subject: [PATCH 7.1 496/744] media: nuvoton: npcm-video: fix error handling in npcm_video_init()
+Date: Thu, 30 Jul 2026 16:12:49 +0200
+Message-ID: <20260730141454.831535933@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,128 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valery Borovsky <vebohr@gmail.com>
+From: David Carlier <devnexen@gmail.com>
 
-commit 7201c17786a498497bca57752883b90914d405ac upstream.
+commit 60ca00792bce46ec170c7ed101f376186d4cf8a9 upstream.
 
-The vb2 framework hands buffers to the driver via buf_queue() before
-calling start_streaming().  If start_streaming() returns an error
-without first returning those buffers via vb2_buffer_done(),
-vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
-buffers leak.
+npcm_video_init() has two error handling issues after
+of_reserved_mem_device_init() is called:
 
-msi2500_start_streaming() had five error paths that all hit this trap
-and were further tangled by ret-overwriting between calls:
+When dma_set_mask_and_coherent() fails, the function releases the
+reserved memory but does not return, allowing execution to fall through
+into npcm_video_ece_init() with a failed DMA configuration.
 
-  - -ENODEV when the USB device was already disconnected
-  - -ERESTARTSYS when mutex_lock_interruptible() was interrupted
-  - msi2500_set_usb_adc() failure: ret was silently overwritten by
-    the next call (msi2500_isoc_init), so the error was lost entirely
-  - msi2500_isoc_init() failure: cleanup_queued_bufs was called, but
-    the function then fell through to msi2500_ctrl_msg() and again
-    masked the original error by overwriting ret
-  - msi2500_ctrl_msg(CMD_START_STREAMING) failure: no cleanup at all,
-    leaving isoc URBs submitted with no way for the driver to consume
-    them
+When npcm_video_ece_init() fails, the function returns an error without
+calling of_reserved_mem_device_release(), leaking the reserved memory
+association.
 
-Consolidate the error paths into a small goto chain.  Every failure
-now stops the function, drains the queued-buffer list, and returns
-the real error code.  The ctrl_msg failure path also rolls back the
-preceding msi2500_isoc_init() via msi2500_isoc_cleanup() before
-unlocking and draining.
+Fix both by adding the missing return after the DMA mask failure and
+adding the missing of_reserved_mem_device_release() call on the ECE init
+error path.
 
-The cleanup helper takes a vb2_buffer_state argument so that the
-start_streaming error paths can pass VB2_BUF_STATE_QUEUED (as
-expected by userspace on start_streaming failure) while stop_streaming
-keeps its existing VB2_BUF_STATE_ERROR semantics.
-
-This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
-Return queued buffers on start_streaming() failure").
-
-Fixes: 977e444f59ad ("[media] Mirics MSi3101 SDR Dongle driver")
+Fixes: 46c15a4ff1f4 ("media: nuvoton: Add driver for NPCM video capture and encoding engine")
 Cc: stable@vger.kernel.org
-Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Signed-off-by: David Carlier <devnexen@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/msi2500/msi2500.c |   32 ++++++++++++++++++++++++--------
- 1 file changed, 24 insertions(+), 8 deletions(-)
+ drivers/media/platform/nuvoton/npcm-video.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/usb/msi2500/msi2500.c
-+++ b/drivers/media/usb/msi2500/msi2500.c
-@@ -541,7 +541,8 @@ static int msi2500_isoc_init(struct msi2
- }
- 
- /* Must be called with vb_queue_lock hold */
--static void msi2500_cleanup_queued_bufs(struct msi2500_dev *dev)
-+static void msi2500_cleanup_queued_bufs(struct msi2500_dev *dev,
-+					enum vb2_buffer_state state)
- {
- 	unsigned long flags;
- 
-@@ -554,7 +555,7 @@ static void msi2500_cleanup_queued_bufs(
- 		buf = list_entry(dev->queued_bufs.next,
- 				 struct msi2500_frame_buf, list);
- 		list_del(&buf->list);
--		vb2_buffer_done(&buf->vb.vb2_buf, VB2_BUF_STATE_ERROR);
-+		vb2_buffer_done(&buf->vb.vb2_buf, state);
+--- a/drivers/media/platform/nuvoton/npcm-video.c
++++ b/drivers/media/platform/nuvoton/npcm-video.c
+@@ -1720,10 +1720,12 @@ static int npcm_video_init(struct npcm_v
+ 	if (rc) {
+ 		dev_err(dev, "Failed to set DMA mask\n");
+ 		of_reserved_mem_device_release(dev);
++		return rc;
  	}
- 	spin_unlock_irqrestore(&dev->queued_bufs_lock, flags);
- }
-@@ -830,25 +831,40 @@ static int msi2500_start_streaming(struc
  
- 	dev_dbg(dev->dev, "\n");
- 
--	if (!dev->udev)
--		return -ENODEV;
-+	if (!dev->udev) {
-+		ret = -ENODEV;
-+		goto err_cleanup;
-+	}
- 
--	if (mutex_lock_interruptible(&dev->v4l2_lock))
--		return -ERESTARTSYS;
-+	if (mutex_lock_interruptible(&dev->v4l2_lock)) {
-+		ret = -ERESTARTSYS;
-+		goto err_cleanup;
-+	}
- 
- 	/* wake-up tuner */
- 	v4l2_subdev_call(dev->v4l2_subdev, core, s_power, 1);
- 
- 	ret = msi2500_set_usb_adc(dev);
-+	if (ret)
-+		goto err_unlock_cleanup;
- 
- 	ret = msi2500_isoc_init(dev);
- 	if (ret)
--		msi2500_cleanup_queued_bufs(dev);
-+		goto err_unlock_cleanup;
- 
- 	ret = msi2500_ctrl_msg(dev, CMD_START_STREAMING, 0);
-+	if (ret)
-+		goto err_isoc_cleanup;
- 
- 	mutex_unlock(&dev->v4l2_lock);
-+	return 0;
- 
-+err_isoc_cleanup:
-+	msi2500_isoc_cleanup(dev);
-+err_unlock_cleanup:
-+	mutex_unlock(&dev->v4l2_lock);
-+err_cleanup:
-+	msi2500_cleanup_queued_bufs(dev, VB2_BUF_STATE_QUEUED);
- 	return ret;
- }
- 
-@@ -863,7 +879,7 @@ static void msi2500_stop_streaming(struc
- 	if (dev->udev)
- 		msi2500_isoc_cleanup(dev);
- 
--	msi2500_cleanup_queued_bufs(dev);
-+	msi2500_cleanup_queued_bufs(dev, VB2_BUF_STATE_ERROR);
- 
- 	/* according to tests, at least 700us delay is required  */
- 	msleep(20);
+ 	rc = npcm_video_ece_init(video);
+ 	if (rc) {
++		of_reserved_mem_device_release(dev);
+ 		dev_err(dev, "Failed to initialize ECE\n");
+ 		return rc;
+ 	}
 
 
