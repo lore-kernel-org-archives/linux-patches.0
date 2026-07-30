@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724FF5C613;
-	Thu, 30 Jul 2026 14:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07BF431488;
+	Thu, 30 Jul 2026 14:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422161; cv=none; b=LDWkqPiuO9TMj5tufLhZ6J+qRgtqGRS79ECn9QRNfB1FRYWQ4+uwLr0wmhzxNaxGDGGOADhphV5nBxn2HxJilZM4+Rp1oE0Ti2K47d4Qz0Lvfvzx+IwDLxTaKX76WImqNNqtxcTzgdHLFiudfaAwdETwFoi7DrkLXahmD3yDGyM=
+	t=1785422164; cv=none; b=dIYc10X95G12azdrd+FKX0oTq0hxSI61+Js/ktRk/vXO+rox6zxwaw7+wKxYTVixwVNqfDR8hObZd9asB7FzA4glw56oznTjamME6KB47c4+iKSmIjTvZ6xmvZk80f88rlpj7GhbT1NMwjUBziYxyf7+IH27k9KTyxOgFWmP2Zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422161; c=relaxed/simple;
-	bh=NFENKel0SYviKxXJIZFMsJTlkfGLTPlWz+pmDBH8h1M=;
+	s=arc-20240116; t=1785422164; c=relaxed/simple;
+	bh=95uXDGW0jXBWhIVUIv3wOZx+vPmucR7UxtQo7USthmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q2QLGpeYkrZaQqyo/+Tu9vJP1XJ4W1MXeFe7Xo8tX6oLM8kUu5MYDS+6QAQDnkvpP8VhBH0vAuGkft811Z6aNsdf7uWg5anP+JUIjo9oa5Eryk2dJaZns+whQkOO6BVw2XBzdhb3wwGJOH0Qk1DnDq14bq6rjV5eH0CsyIfEVj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXR4CgDZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KNQkLA0GEkPp6hmfhOTECGAujUZoKBuYvr+kg/cA7UlwrwkkWUfRYQAm86onyVdkWXv7U4zIdwTyTEw6CcL9YwvtUX0yEDbhAhH/qgL3L0/6TctAfHrz6q08vEoekfuVSfzidk+n+th2AWy/XeXw+JncyXYHI8kRBbFWb++raKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dPUJmjFZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXR4CgDZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9303B1F000E9;
-	Thu, 30 Jul 2026 14:35:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPUJmjFZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C1461F00A3A;
+	Thu, 30 Jul 2026 14:36:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422160;
-	bh=0TgwoZfu0Oj9z6GWXe0vetGc3SvKI3jmmlH9Vt5a6Lc=;
+	s=korg; t=1785422163;
+	bh=WIBJVUPAmjgS20KTpC6yJz7ONFyacIYb2GsbNvJU1Kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rXR4CgDZzN0RSpi7onYjt8rj1htg1rP2b2Prm6p2eKyGptNok/lpukP8QLOSmz8KI
-	 7jXxiN0DD/QE8YT3TBAlhXINi/AGtLSxdFSJBII/H4VdoHZ3sQc5J8JpZBhKF9M3YT
-	 YgpPj6s4KXp2p4lKVFEj3UDqaSBJ1guUg/SqQpEQ=
+	b=dPUJmjFZKvsOZEjkWpKXRjTXV6uanhhRJ02ondCtjZVwKKWzU7aP6QbNzF/xh3u91
+	 yVwrof/WSeq6kyvJJbGBfEJLDhfzYUb1yJmqanlVozPi/jquuCjk2NHo+DK2yAE059
+	 nqT6QvIW5lUk6wl0l5cjvFBvZV6GiRKR7+FkWdlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Madhu Chittim <madhu.chittim@intel.com>,
-	Emil Tantilov <emil.s.tantilov@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Samuel Salin <Samuel.salin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	syzbot+84d4a405ed798b40c96d@syzkaller.appspotmail.com,
+	"Nikola Z. Ivanov" <zlatistiv@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 344/744] idpf: fix max_vport related crash on allocation error during init
-Date: Thu, 30 Jul 2026 16:10:17 +0200
-Message-ID: <20260730141451.595065680@linuxfoundation.org>
+Subject: [PATCH 7.1 345/744] ipv6: Change allocation flags to match rcu_read_lock section requirements
+Date: Thu, 30 Jul 2026 16:10:18 +0200
+Message-ID: <20260730141451.618393512@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -56,89 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Tantilov <emil.s.tantilov@intel.com>
+From: Nikola Z. Ivanov <zlatistiv@gmail.com>
 
-[ Upstream commit 237f1f7653b8729169af11fae79f01b90d00b87e ]
+[ Upstream commit 313a123e1fca8827bb463db1f4bb211309764563 ]
 
-Set adapter->max_vports only after successful allocation of vports, netdevs
-and  vport_config buffers. This fixes possible crashes on reset or rmmod,
-following failed allocation on init
+Since the call to __ip6_del_rt_siblings has been converted under
+rcu read lock and it only has one call point
+we should no longer block or yield.
 
-[  305.981402] idpf 0000:83:00.0: enabling device (0100 -> 0102)
-[  305.994464] idpf 0000:83:00.0: Device HW Reset initiated
-[  320.416872] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[  320.416918] #PF: supervisor read access in kernel mode
-[  320.416942] #PF: error_code(0x0000) - not-present page
-[  320.416963] PGD 2099657067 P4D 0
-[  320.416983] Oops: Oops: 0000 [#1] SMP NOPTI
-...
-[  320.417093] RIP: 0010:idpf_remove+0x118/0x200 [idpf]
-[  320.417130] Code: 8b bb 98 09 00 00 e8 17 0f 5b e5 48 8b bb e8 08 00 00 e8 0b 0f 5b e5 66 83 bb 28 06 00 00 00 48 8b bb 20 06 00 00 74 49 31 ed <48> 8b 04 ef 48 85 c0 74 2f 48 8b 78 20 e8 66 58 91 e5 48 8b 83 20
-[  320.417183] RSP: 0018:ff7322212903fdb8 EFLAGS: 00010246
-[  320.417205] RAX: 0000000000000000 RBX: ff4463de40300000 RCX: ff7322212903fd4c
-[  320.417228] RDX: 0000000000000001 RSI: ffffffffa7f7d100 RDI: 0000000000000000
-[  320.417250] RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
-[  320.417272] R10: 0000000000000001 R11: ff4463de3a638f58 R12: ff4463be89ac7000
-[  320.417294] R13: ff4463be89ac7198 R14: ff4463be94fc7198 R15: ffffffffc0f10f20
-[  320.417317] FS:  00007f963c0e6740(0000) GS:ff4463fdd65d8000(0000) knlGS:0000000000000000
-[  320.417342] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  320.417362] CR2: 0000000000000000 CR3: 00000020ba674002 CR4: 0000000000773ef0
-[  320.417385] PKRU: 55555554
-[  320.417398] Call Trace:
-[  320.417412]  <TASK>
-[  320.417429]  pci_device_remove+0x42/0xb0
-[  320.417459]  device_release_driver_internal+0x1a9/0x210
-[  320.417492]  driver_detach+0x4b/0x90
-[  320.417516]  bus_remove_driver+0x70/0x100
-[  320.417539]  pci_unregister_driver+0x2e/0xb0
-[  320.417564]  __do_sys_delete_module.constprop.0+0x190/0x2f0
-[  320.417592]  ? kmem_cache_free+0x31e/0x550
-[  320.417619]  ? lockdep_hardirqs_on_prepare+0xde/0x190
-[  320.417644]  ? do_syscall_64+0x38/0x6b0
-[  320.417665]  do_syscall_64+0xc8/0x6b0
-[  320.417683]  ? clear_bhb_loop+0x30/0x80
-[  320.417706]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[  320.417727] RIP: 0033:0x7f963bb30beb
+Our stack trace from the syzbot reproducer looks as follows:
 
-Fixes: 0fe45467a104 ("idpf: add create vport and netdev configuration")
-Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
-Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260717185340.3595286-13-anthony.l.nguyen@intel.com
+__ip6_del_rt_siblings
+  rtnl_notify (Here we pass gfp_any() -> GFP_KERNEL)
+    nlmsg_notify
+      nlmsg_multicast
+        nlmsg_multicast_filtered
+          netlink_broadcast_filtered (GFP_KERNEL passed from earlier)
+
+netlink_broadcast_filtered can yield if GFP_KERNEL
+is passed, which we do not want to happen.
+
+Fix this by changing the allocation flag of rtnl_notify.
+
+Also change the flag passed to nlmsg_new. Even though it
+is not related to the syzbot generated bug it still falls
+under the same requirements.
+
+Reported-by: syzbot+84d4a405ed798b40c96d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=84d4a405ed798b40c96d
+Fixes: bd11ff421d36 ("ipv6: Get rid of RTNL for SIOCDELRT and RTM_DELROUTE.")
+Signed-off-by: Nikola Z. Ivanov <zlatistiv@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260719105759.558050-1-zlatistiv@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_virtchnl.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/ipv6/route.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
-index be66f9b2e101ca..dc5ad784f456f0 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
-@@ -3555,7 +3555,6 @@ int idpf_vc_core_init(struct idpf_adapter *adapter)
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 88b46967bb67dc..d4edc133c045c4 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -4020,7 +4020,7 @@ static int __ip6_del_rt_siblings(struct fib6_info *rt, struct fib6_config *cfg)
+ 		struct fib6_node *fn;
  
- 	pci_sriov_set_totalvfs(adapter->pdev, idpf_get_max_vfs(adapter));
- 	num_max_vports = idpf_get_max_vports(adapter);
--	adapter->max_vports = num_max_vports;
- 	adapter->vports = kzalloc_objs(*adapter->vports, num_max_vports);
- 	if (!adapter->vports)
- 		return -ENOMEM;
-@@ -3576,6 +3575,12 @@ int idpf_vc_core_init(struct idpf_adapter *adapter)
- 		goto err_netdev_alloc;
+ 		/* prefer to send a single notification with all hops */
+-		skb = nlmsg_new(rt6_nlmsg_size(rt), gfp_any());
++		skb = nlmsg_new(rt6_nlmsg_size(rt), GFP_ATOMIC);
+ 		if (skb) {
+ 			u32 seq = info->nlh ? info->nlh->nlmsg_seq : 0;
+ 
+@@ -4076,7 +4076,7 @@ static int __ip6_del_rt_siblings(struct fib6_info *rt, struct fib6_config *cfg)
+ 
+ 	if (skb) {
+ 		rtnl_notify(skb, net, info->portid, RTNLGRP_IPV6_ROUTE,
+-			    info->nlh, gfp_any());
++			    info->nlh, GFP_ATOMIC);
  	}
- 
-+	/* Set max_vports only after vports, netdevs and vport_config buffers
-+	 * are allocated to make sure max_vport bound loops don't end up
-+	 * crashing, following allocation errors on init.
-+	 */
-+	adapter->max_vports = num_max_vports;
-+
- 	/* Start the mailbox task before requesting vectors. This will ensure
- 	 * vector information response from mailbox is handled
- 	 */
+ 	return err;
+ }
 -- 
 2.53.0
 
