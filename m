@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1452C3A641D;
-	Thu, 30 Jul 2026 14:51:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DCF2429802;
+	Thu, 30 Jul 2026 14:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423098; cv=none; b=dP7o0d6TTgkm3LVP/sqeE1LldPIpnpkHc39B+z/Zbnn9cX5XnK0jxRkSb/g+42e+2W5Mr9CdXd8JtTd11TUGBuZjmEN418EsoQI1uXN3Kcgo50qkrpFU8DcWxIU0IQlJ9IYqXR57C+XeRbBb1JqNJ+oUgy8beVIe0fc8DEYtho8=
+	t=1785423100; cv=none; b=TP7pQ4IBgxJkh0uB1MX2bYWPMr6+mhEDlIh4PWGjxSuWCp+xnXlD25XFECSzOOZjq9zrorDWey+Jl7FONTo/sAYKZrgxmBxwbuk50tBi5GifjmXJb2jIKztNC3Gr48XFlxUaoTgU/FAdBwFpSPnxwm4L5aS7i8rshniIWE4Z7KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423098; c=relaxed/simple;
-	bh=I3GXY9D2MOSSMTsnP62JQmBpDD4M02FpC4JYdCVc+Ls=;
+	s=arc-20240116; t=1785423100; c=relaxed/simple;
+	bh=blEkXSzGOnHmOSWfcRcKrSwAkR3axmhNCTfz/14xAGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t0KS6VAsg1qcuTPQXNGj2r8EPoVwj77MtDnPn30uem2zYYxDzW8QuRSwq6fbxqYAAclaqB+z+qN8TTo85OrycVI3KlkZcTrXdtYOQKG1dT4R7rZy1D19vhxQVILyzQl83kye1jbZ0kSdK4Q903kolF6u99vc2UDv+Kzge+NTpkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0uLEBQNe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y9twGZc26Xol8iyItJcSwQ12XM3+lfcltH6bJ0mOq6FH38l8cmucKZlwvVWU7NFpwON954aP7LGhAq1tYoT+sIPdAIR2zZwUy/4Tq15r/jPjnUVKyUJwOYAbMoJgGmvaihMsC+FFfJ7wWFb7ttDvQJHeSkZqGpT+/FA9zNK/AU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FE5KjFf8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0uLEBQNe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 316871F000E9;
-	Thu, 30 Jul 2026 14:51:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FE5KjFf8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05E5D1F000E9;
+	Thu, 30 Jul 2026 14:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423096;
-	bh=GZ7OjkMWe5Z8Y2jNvKK6edLMAV2HTjnrwyNbvwZUnos=;
+	s=korg; t=1785423099;
+	bh=KhrAMSVFKj1UXX14EhJ9MkUUHhTK63vHlJjZVXguzbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0uLEBQNeG50rSBM7SIA5fTo2VHXiodn0Vwc0Te9ysxfnbvtAif4T7kxKHTfTyq0z3
-	 j5dqEqBcAlMPz1k/weQJYnCIZpnotO+Pv7UGVR4cPSGSBOnEQ1+U5HwS1zqobpY0Bs
-	 Oxb+CQIaCLr2SXo9IvttcdYgoIExHyKZjJsqz6WQ=
+	b=FE5KjFf8fiQ4CTkHSILzY1pTxmbMIps46MUsRGg03LQEWjtSdeVlVGPZb3pq3csX8
+	 y1P5sQW7LBzOFK40NN4rADjEtOynx/Vm26w+FRuvP6GjYUai05aK8XRxV+tHTa1exQ
+	 LfMEPdTdXUFvSxLPIM47hy7gIpmjpopdWcOaTkas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Magnus Lindholm <linmag7@gmail.com>,
+	Jann Horn <jannh@google.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.1 648/744] iomap: fix out-of-bounds bitmap_set() with zero-length range
-Date: Thu, 30 Jul 2026 16:15:21 +0200
-Message-ID: <20260730141458.043223352@linuxfoundation.org>
+Subject: [PATCH 7.1 666/744] proc: Fix broken error paths for namespace links
+Date: Thu, 30 Jul 2026 16:15:39 +0200
+Message-ID: <20260730141458.421789682@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,81 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Jann Horn <jannh@google.com>
 
-commit 9c7d8f7c8994c790fca501dc45ce66e7356cbe05 upstream.
+commit 425224c2d700391729be7fe6929a88ef4e2d7a4e upstream.
 
-ifs_set_range_dirty() and ifs_set_range_uptodate() compute last_blk
-as (off + len - 1) >> i_blkbits.  When off is 0 and len is 0, the
-unsigned subtraction underflows to SIZE_MAX, producing a huge
-last_blk and nr_blks value that causes bitmap_set() to write far
-beyond the ifs->state allocation.
+Don't return the return value of down_read_killable() (0) when a ptrace
+access check fails, return -EACCES as intended.
 
-Regarding ifs_set_range_uptodate(), it is temporarily safe because len
-cannot be passed in as 0. However, for ifs_set_range_dirty() this is
-reachable from __iomap_write_end(): when copy_folio_from_iter_atomic()
-returns 0 (e.g. user buffer fault) and the folio is already uptodate,
-the guard at the top of __iomap_write_end() does not trigger because
-!folio_test_uptodate() is false, and iomap_set_range_dirty() is called
-with copied == 0.
-
-Add a !len guard to both functions before the computation, so that a
-zero-length range is a no-op.
-
-Fixes: 4ce02c679722 ("iomap: Add per-block dirty state tracking to improve performance")
-Cc: stable@vger.kernel.org # v6.6
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20260714082325.325163-5-yi.zhang@huaweicloud.com
-Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reported-by: Magnus Lindholm <linmag7@gmail.com>
+Closes: https://lore.kernel.org/r/20260706170735.2941493-1-linmag7@gmail.com
+Fixes: 6650527444da ("proc: protect ptrace_may_access() with exec_update_lock (part 1)")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://patch.msgid.link/20260706-procfs-ns-eacces-fix-v1-1-a69ab14c02e6@google.com
+Tested-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/iomap/buffered-io.c |   22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ fs/proc/namespaces.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -67,11 +67,13 @@ static bool ifs_set_range_uptodate(struc
- 		struct iomap_folio_state *ifs, size_t off, size_t len)
- {
- 	struct inode *inode = folio->mapping->host;
--	unsigned int first_blk = off >> inode->i_blkbits;
--	unsigned int last_blk = (off + len - 1) >> inode->i_blkbits;
--	unsigned int nr_blks = last_blk - first_blk + 1;
-+	unsigned int first_blk, last_blk;
+--- a/fs/proc/namespaces.c
++++ b/fs/proc/namespaces.c
+@@ -46,7 +46,7 @@ static const char *proc_ns_get_link(stru
+ 	const struct proc_ns_operations *ns_ops = PROC_I(inode)->ns_ops;
+ 	struct task_struct *task;
+ 	struct path ns_path;
+-	int error = -EACCES;
++	int error;
  
--	bitmap_set(ifs->state, first_blk, nr_blks);
-+	if (len) {
-+		first_blk = off >> inode->i_blkbits;
-+		last_blk = (off + len - 1) >> inode->i_blkbits;
-+		bitmap_set(ifs->state, first_blk, last_blk - first_blk + 1);
-+	}
- 	return ifs_is_fully_uptodate(folio, ifs);
- }
+ 	if (!dentry)
+ 		return ERR_PTR(-ECHILD);
+@@ -59,6 +59,7 @@ static const char *proc_ns_get_link(stru
+ 	if (error)
+ 		goto out_put_task;
  
-@@ -203,13 +205,17 @@ static void ifs_set_range_dirty(struct f
- {
- 	struct inode *inode = folio->mapping->host;
- 	unsigned int blks_per_folio = i_blocks_per_folio(inode, folio);
--	unsigned int first_blk = (off >> inode->i_blkbits);
--	unsigned int last_blk = (off + len - 1) >> inode->i_blkbits;
--	unsigned int nr_blks = last_blk - first_blk + 1;
-+	unsigned int first_blk, last_blk;
- 	unsigned long flags;
++	error = -EACCES;
+ 	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS))
+ 		goto out;
  
-+	if (!len)
-+		return;
-+
-+	first_blk = off >> inode->i_blkbits;
-+	last_blk = (off + len - 1) >> inode->i_blkbits;
- 	spin_lock_irqsave(&ifs->state_lock, flags);
--	bitmap_set(ifs->state, first_blk + blks_per_folio, nr_blks);
-+	bitmap_set(ifs->state, first_blk + blks_per_folio,
-+		   last_blk - first_blk + 1);
- 	spin_unlock_irqrestore(&ifs->state_lock, flags);
- }
+@@ -90,6 +91,7 @@ static int proc_ns_readlink(struct dentr
+ 	if (res)
+ 		goto out_put_task;
  
++	res = -EACCES;
+ 	if (ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS)) {
+ 		res = ns_get_name(name, sizeof(name), task, ns_ops);
+ 		if (res >= 0)
 
 
