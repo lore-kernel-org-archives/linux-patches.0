@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E1843F8BF;
-	Thu, 30 Jul 2026 14:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126953644C9;
+	Thu, 30 Jul 2026 14:22:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421360; cv=none; b=ISu0EAaT5JPQr/UueuvCUAA+bcTYTPKjLYa64RAwxoupW+QR7qJlnpB0Jx7PxeQ2Bk40PeIsQzYGywAIGFf32EPV125NDcN9+sx+hD/LpKd+9km6pXEiaEkSIum+XOLXmqG1i0NUEPpu+tfloGFmEhBCukJRBAhOxtNO0X7iMuQ=
+	t=1785421363; cv=none; b=ba/ly/uxxtlU3EQMBbpq/xxr5TfceucXt8QebgI29NIEPo4dVypD84oPlyYyg+PDYJSgVqpZrnCmTyxsTBqqGDZRMeXO45lQvtPWbE8YutBJmymIRzTA3ouu0lW4drhW9UT7qJdAHb6wh9Pmo+tcOjjPRLjSu7WVnXihFwJ5EYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421360; c=relaxed/simple;
-	bh=HBlW7R2dDrKU+fPtItIeB9c3JcLUGlkQCBI0aoCi+gs=;
+	s=arc-20240116; t=1785421363; c=relaxed/simple;
+	bh=Y+RL1DMvAp0r8BtQMgCCgk0gqdhBhq9XBGR88n5Vd8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oX3CBI2dJ6feX/My0xpUo+/SSyWouPoedN3esE6QQAMrabeXgVDMc/RMbb0N7GI4xA0wE9klJ8kisnpe5NcXFsxSst1/VbGTIyBBtAqQqRUYMMWFk88c2PRQtNvyj+/fEo6DnE+AVFUDR7CFyIfiKXjXgCY5VUXPwhnzkhOFJdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=maR0FfFe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u8PXhpSbM4MwqDnArkDA4wSdvoXdacHzbEts5MHTQBh79cs0IR96zzJRxmpWcGubFDJi1C106iiGyl/oiR17Eil3o2WRyAxOsjHYURwJrASMTMcZdoi93FrUQUfiJYFNBhWRfgjzbnhdNYANWC9ZGNDisXcyetFD6amx211EIb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IcVYqC/2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maR0FfFe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 737FB1F00A3A;
-	Thu, 30 Jul 2026 14:22:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IcVYqC/2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0A21F000E9;
+	Thu, 30 Jul 2026 14:22:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421359;
-	bh=JjiuXtfls1IyEXs/s5TQ/l2XWYJAPwdoAiAQbdUjRpQ=;
+	s=korg; t=1785421361;
+	bh=SRkxJKfQfiknJXY9nXgCEv7+7sPIJ3WFqRmgxXtWXxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=maR0FfFeHQYojgFWEm9jOscENnucWACFAEn4LGG5MgaqV6cVz6nHwp/JyTxacuo6C
-	 VxFT3AdfIk6zLHu8WowEkHzQ50DEQzFcrmiwUiCGKf2T4CGowBt4p/3t0cgLs4htHb
-	 KnkF4iIQT693IZkdXcjW/1J5UX1QSBm/v1e2ZGFE=
+	b=IcVYqC/2PLOvMP/7AeU7xUNAXUgKe6FmXAXa91wlGq0yAy+TKoeb/2CNJ6qx05/z1
+	 x2Y14boi6qrmlhEWheuFHBYz9PKMrC7dThLTaPUXUzEEf/qito4zpvoIpOjxT7rXUj
+	 GrIaB00Kip5jVVexkWwSw19gIEp4PsmgS+JVuAZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	Mostafa Saleh <smostafa@google.com>,
-	Sebastian Ene <sebastianene@google.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Christian Hewitt <christianshewitt@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 075/744] firmware: arm_ffa: Fix Endpoint Memory Access Descriptor offset calculation
-Date: Thu, 30 Jul 2026 16:05:48 +0200
-Message-ID: <20260730141445.867959918@linuxfoundation.org>
+Subject: [PATCH 7.1 076/744] ASoC: meson: aiu: fifo-spdif: soft reset the S/PDIF datapath on start/stop
+Date: Thu, 30 Jul 2026 16:05:49 +0200
+Message-ID: <20260730141445.888785636@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,90 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Ene <sebastianene@google.com>
+From: Christian Hewitt <christianshewitt@gmail.com>
 
-[ Upstream commit b4d961351aa84fdf0148783fb1f3a1391b8a0adb ]
+[ Upstream commit 6b59c53c8adc2b522327407af5e1793a65b67e4b ]
 
-Use the descriptor's `ep_mem_offset` to calculate the start of the endpoint
-memory access array and to comply with the FF-A spec instead of defaulting
-to `sizeof(struct ffa_mem_region)`.
-This requires moving `ffa_mem_region_additional_setup()` earlier in the setup
-flow.
-Also, add sanity checks to ensure the calculated descriptor offsets do not
-exceed `max_fragsize`.
+The I2S FIFO soft-resets its fast domain on start (AIU_RST_SOFT bit 0 +
+AIU_I2S_SYNC read in aiu_fifo_i2s_trigger), mirroring the downstream
+vendor driver's audio_out_i2s_enable(). The S/PDIF FIFO has no equivalent:
+it only toggles the IEC958 DCU, so a stale datapath FIFO can be replayed,
+producing the "machine gun noise" buffer underrun - on start when switching
+outputs, and on stop when playback ends. The latter is audible on devices
+with an always-on S/PDIF-fed DAC (e.g. the ES7144 on the WeTek Play2).
 
-Fixes: 113580530ee7 ("firmware: arm_ffa: Update memory descriptor to support v1.1 format")
-Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
-Signed-off-by: Mostafa Saleh <smostafa@google.com>
-Signed-off-by: Sebastian Ene <sebastianene@google.com>
-Link: https://patch.msgid.link/20260702103848.1647249-3-sebastianene@google.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+The vendor driver resets the IEC958 fast domain (AIU_RST_SOFT bit 2) on
+both enable and disable (audio_hw_958_enable), and when reconfiguring
+(audio_hw_958_reset clears AIU_958_DCU_FF_CTRL then resets). Do the same:
+reset before enabling the DCU on start, and before disabling on stop.
+
+Fixes: 6ae9ca9ce986bf ("ASoC: meson: aiu: add i2s and spdif support")
+Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://patch.msgid.link/20260627131205.808800-1-christianshewitt@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 20 +++++++++++++++-----
- include/linux/arm_ffa.h           |  2 +-
- 2 files changed, 16 insertions(+), 6 deletions(-)
+ sound/soc/meson/aiu-fifo-spdif.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index c9e3d0f246913c..4cbf7537e6242d 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -711,19 +711,30 @@ ffa_setup_and_transmit(u32 func_id, void *buffer, u32 max_fragsize,
- 	struct ffa_composite_mem_region *composite;
- 	struct ffa_mem_region_addr_range *constituents;
- 	struct ffa_mem_region_attributes *ep_mem_access;
--	u32 idx, frag_len, length, buf_sz = 0, num_entries = sg_nents(args->sg);
-+	u32 idx, frag_len, length, buf_sz = 0, num_entries = sg_nents(args->sg), ep_offset;
-+	u32 emad_end, emad_size = ffa_emad_size_get(drv_info->version);
+diff --git a/sound/soc/meson/aiu-fifo-spdif.c b/sound/soc/meson/aiu-fifo-spdif.c
+index e0e00ec026dcc4..a9861c5d663745 100644
+--- a/sound/soc/meson/aiu-fifo-spdif.c
++++ b/sound/soc/meson/aiu-fifo-spdif.c
+@@ -24,6 +24,7 @@
+ #define AIU_MEM_IEC958_CONTROL_MODE_16BIT	BIT(7)
+ #define AIU_MEM_IEC958_CONTROL_MODE_LINEAR	BIT(8)
+ #define AIU_MEM_IEC958_BUF_CNTL_INIT		BIT(0)
++#define AIU_RST_SOFT_958_FAST			BIT(2)
  
- 	mem_region->tag = args->tag;
- 	mem_region->flags = args->flags;
- 	mem_region->sender_id = drv_info->vm_id;
- 	mem_region->attributes = ffa_memory_attributes_get(func_id);
-+
-+	ffa_mem_region_additional_setup(drv_info->version, mem_region);
- 	composite_offset = ffa_mem_desc_offset(buffer, args->nattrs,
- 					       drv_info->version);
-+	if (composite_offset + sizeof(*composite) > max_fragsize)
-+		return -ENXIO;
+ #define AIU_FIFO_SPDIF_BLOCK			8
  
- 	for (idx = 0; idx < args->nattrs; idx++) {
--		ep_mem_access = buffer +
--			ffa_mem_desc_offset(buffer, idx, drv_info->version);
--		memset(ep_mem_access, 0, ffa_emad_size_get(drv_info->version));
-+		ep_offset = ffa_mem_desc_offset(buffer, idx, drv_info->version);
-+		if (check_add_overflow(ep_offset, emad_size, &emad_end))
-+			return -ENXIO;
-+
-+		if (emad_end > max_fragsize)
-+			return -ENXIO;
-+
-+		ep_mem_access = buffer + ep_offset;
-+		memset(ep_mem_access, 0, emad_size);
- 		ep_mem_access->receiver = args->attrs[idx].receiver;
- 		ep_mem_access->attrs = args->attrs[idx].attrs;
- 		ep_mem_access->composite_off = composite_offset;
-@@ -733,7 +744,6 @@ ffa_setup_and_transmit(u32 func_id, void *buffer, u32 max_fragsize,
- 	}
- 	mem_region->handle = 0;
- 	mem_region->ep_count = args->nattrs;
--	ffa_mem_region_additional_setup(drv_info->version, mem_region);
- 
- 	composite = buffer + composite_offset;
- 	composite->total_pg_cnt = ffa_get_num_pages_sg(args->sg);
-diff --git a/include/linux/arm_ffa.h b/include/linux/arm_ffa.h
-index 81e603839c4a51..62d67dae8b7033 100644
---- a/include/linux/arm_ffa.h
-+++ b/include/linux/arm_ffa.h
-@@ -445,7 +445,7 @@ ffa_mem_desc_offset(struct ffa_mem_region *buf, int count, u32 ffa_version)
- 	if (!FFA_MEM_REGION_HAS_EP_MEM_OFFSET(ffa_version))
- 		offset += offsetof(struct ffa_mem_region, ep_mem_offset);
- 	else
--		offset += sizeof(struct ffa_mem_region);
-+		offset += buf->ep_mem_offset;
- 
- 	return offset;
- }
+@@ -68,11 +69,15 @@ static int fifo_spdif_trigger(struct snd_pcm_substream *substream, int cmd,
+ 	case SNDRV_PCM_TRIGGER_START:
+ 	case SNDRV_PCM_TRIGGER_RESUME:
+ 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
++		snd_soc_component_write(component, AIU_RST_SOFT,
++					AIU_RST_SOFT_958_FAST);
+ 		fifo_spdif_dcu_enable(component, true);
+ 		break;
+ 	case SNDRV_PCM_TRIGGER_SUSPEND:
+ 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+ 	case SNDRV_PCM_TRIGGER_STOP:
++		snd_soc_component_write(component, AIU_RST_SOFT,
++					AIU_RST_SOFT_958_FAST);
+ 		fifo_spdif_dcu_enable(component, false);
+ 		break;
+ 	default:
 -- 
 2.53.0
 
