@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2345D365A19;
-	Thu, 30 Jul 2026 14:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8CC41A4FF;
+	Thu, 30 Jul 2026 14:50:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423027; cv=none; b=N+/AbSOkcGWAgoiKnoap3cLr4gZBPneqDm0Df8hrcQfJ+hacKjgocCrJg5pud9+ifqPBjgyQtgSvGiV9pcBh9X+hzwGis/WH2dD2lk0IpC9ejYzGtdXQL9kRvRzSG/GS8NK7TW4yidJ+QXO4jeeGnu9Qn1xdH87r2JDhZ1Rd6/Y=
+	t=1785423030; cv=none; b=YnAtWM7wjV2JUYzRveKmGXOL2AmYdGDRYrUgKyjoM1PIxnk+rwvtsFL7n9BGC31BcDtJ+SXNLtWiKllYdIa51OTzLey9CjNrVxO37coZM85F8QDi0LyLGGml2r35P4hccdaNKgBySa94stIA5uQZHSkQsCKpKc36jHKtgOF+aE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423027; c=relaxed/simple;
-	bh=XO4Bnq3j5ZyRWaFBzRyYWu+nP2WiO2v+j1Nf+8jVWVc=;
+	s=arc-20240116; t=1785423030; c=relaxed/simple;
+	bh=ZHdgUGsPS8+TMyN/HdTFmDM6Rm+zvcnEUM4INB1++I4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hjhkNUl2qSI1N/YR19XuxjEOjjN/5/A1Da1MPnZRSm1ZmQrJ/3aFB5Dq0vHNf98nr5Sz3DzJIhByzro5FjADQXXR6SU2Kmp8GhL00DarYGWthjKh4/cKQhSotnI/28RrRgQUCArHNdeyADlSNDI33mpEOl8+q+fII92iyK7GsWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xfkF6aDd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mt0JaIeOP3bWHDHyVS4f4S7uRJYUevYcwGPzLu0V3tYZBY2e6/ywHDZTb75NCKXwAFoPaFO4AyA8J1tlClZhmEvsCt8Ku+8oMgi5hylxmn44lHgonV/j2bGgpetap6/1/4cHlzl/g3zv/IVveDHg56CMnLze5ap3aShkIinp+Ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLfeBjnc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xfkF6aDd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6BA1F000E9;
-	Thu, 30 Jul 2026 14:50:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLfeBjnc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5771E1F000E9;
+	Thu, 30 Jul 2026 14:50:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423026;
-	bh=Xjw7gQ3cnc/H/xzCLEXRBD9vcTmzTc/uCbZwUMi/Nyo=;
+	s=korg; t=1785423028;
+	bh=TPoAN/ket7LVYs7L/5B55xb5WN/1xSe0tEjLEVYuzN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xfkF6aDdYzSWWDQvTsDYj+ZhgYWFAYx5TsorQ8a5lqyClKfxSJpfJ6BBiDQsXCAL5
-	 Kv0CEvJYnWxQdWxbQhF1s3HZ0TGLs8oWNwqunn8yntcLfPEaXV7IhNiO6XUEdTDC5X
-	 GsAApCsxs346bhcaBfQGhIB3qSqWP+wjhUQAtHcc=
+	b=VLfeBjncgp1bx7J/Pn7Z4rbdyEMIKPcJpXN0KUz2W1EtO1MjJmSapKYvv0TuUM8wE
+	 IlFkfRE1t+d2Qh+kOp2uLjHAXqRU7y5IWVLlIpbu1uiFJUpZfc1/m6q4Gvmmu+tW9w
+	 xHr931/wHvk5Sf8jCjiaf+X0VPln53LF8gDfafdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 7.1 603/744] arm64: make huge_ptep_get handled unaligned addresses
-Date: Thu, 30 Jul 2026 16:14:36 +0200
-Message-ID: <20260730141457.093629826@linuxfoundation.org>
+	Chancel Liu <chancel.liu@nxp.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.1 639/744] ASoC: fsl: imx-card: Skip sysclk reset for active DAIs in shutdown
+Date: Thu, 30 Jul 2026 16:15:12 +0200
+Message-ID: <20260730141457.853780613@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,52 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dev Jain <dev.jain@arm.com>
+From: Chancel Liu <chancel.liu@nxp.com>
 
-commit f73a8edc2ccc6ec72c37d5c578e7592d2e1f9922 upstream.
+commit 9f86aea992568c2b4db78c80ff9508af9e050ff7 upstream.
 
-huge_ptep_get() can be handed a virtual address pointing to the middle
-of a contpmd/contpte mapped hugetlb folio (examples of callers are
-pagemap_hugetlb_range, page_mapped_in_vma).
+In a full-duplex setup, when one direction (playback or capture) is
+closed while the other is still running, imx_aif_shutdown() was
+unconditionally calling snd_soc_dai_set_sysclk() with rate=0 for all
+cpu/codec DAIs, which would disable the clock still needed by the
+active stream.
 
-The arm64 helper rewalks the pgtables in find_num_contig to answer
-whether the huge pte we have maps a contpmd or a contpte hugetlb folio,
-and returns CONT_PMDS or CONT_PTES, so that it can collect a/d bits over
-the contiguous ptes. We can falsely return CONT_PTES instead of
-CONT_PMDS if the addr is not aligned. On systems where CONT_PTES !=
-CONT_PMDS (meaning page size is 16K), we could collect excess A/D bit
-state, meaning extra work for the kernel. Even worse, we may iterate
-beyond the PTE table and dereference a garbage ptep pointer to access
-physical memory we don't own. Since the ptep pointer is a linear map
-address, we may run off the end of the linear map or into a hole,
-dereference a VA not mapped into the kernel pgtables and cause kernel
-panic.
+Add snd_soc_dai_active() checks before clearing sysclk so that only
+truly inactive DAIs have their clocks reset.
 
-Fix this by aligning the pmdp pointer down to a contpmd base before
-checking equality with the passed huge pte pointer, to correctly answer
-whether the huge pte is the base of a contpmd block.
-
-Fixes: 29cb80519689 ("arm64: hugetlb: Cleanup huge_pte size discovery mechanisms")
+Fixes: 2260bc6ea8bd ("ASoC: imx-card: Add WM8524 support")
 Cc: stable@vger.kernel.org
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Dev Jain <dev.jain@arm.com>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Chancel Liu <chancel.liu@nxp.com>
+Link: https://patch.msgid.link/20260710031333.3491445-1-chancel.liu@oss.nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/hugetlbpage.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/fsl/imx-card.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/arch/arm64/mm/hugetlbpage.c
-+++ b/arch/arm64/mm/hugetlbpage.c
-@@ -87,7 +87,7 @@ static int find_num_contig(struct mm_str
- 	p4dp = p4d_offset(pgdp, addr);
- 	pudp = pud_offset(p4dp, addr);
- 	pmdp = pmd_offset(pudp, addr);
--	if ((pte_t *)pmdp == ptep) {
-+	if ((pte_t *)PTR_ALIGN_DOWN(pmdp, sizeof(*pmdp) * CONT_PMDS) == ptep) {
- 		*pgsize = PMD_SIZE;
- 		return CONT_PMDS;
- 	}
+--- a/sound/soc/fsl/imx-card.c
++++ b/sound/soc/fsl/imx-card.c
+@@ -496,11 +496,15 @@ static void imx_aif_shutdown(struct snd_
+ 	struct snd_soc_dai *codec_dai;
+ 	int i;
+ 
+-	for_each_rtd_cpu_dais(rtd, i, cpu_dai)
+-		snd_soc_dai_set_sysclk(cpu_dai, 0, 0, SND_SOC_CLOCK_OUT);
++	for_each_rtd_cpu_dais(rtd, i, cpu_dai) {
++		if (!snd_soc_dai_active(cpu_dai))
++			snd_soc_dai_set_sysclk(cpu_dai, 0, 0, SND_SOC_CLOCK_OUT);
++	}
+ 
+-	for_each_rtd_codec_dais(rtd, i, codec_dai)
+-		snd_soc_dai_set_sysclk(codec_dai, 0, 0, SND_SOC_CLOCK_IN);
++	for_each_rtd_codec_dais(rtd, i, codec_dai) {
++		if (!snd_soc_dai_active(codec_dai))
++			snd_soc_dai_set_sysclk(codec_dai, 0, 0, SND_SOC_CLOCK_IN);
++	}
+ }
+ 
+ static const struct snd_soc_ops imx_aif_ops = {
 
 
