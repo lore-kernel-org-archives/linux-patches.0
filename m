@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93F33B0598;
-	Thu, 30 Jul 2026 15:14:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4708341F35E;
+	Thu, 30 Jul 2026 15:14:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424488; cv=none; b=rHULL+OolwaI1aa/UUIosqc0PjcCF+mgUG1WRkWPREsFV8aYAmCwsBdbomogQj1Qj8QoptbMWzhRQNTmWSuMMx++KWKHlE1lJj+oov9uv6bQnoyhH3N1PxV898HPxqxQG5wFOCn2qGiIqh+7pIDsfvdR0yJ59QFqHQKe0+apN64=
+	t=1785424490; cv=none; b=rd1n6qCGwOlupGWXsZZnGhdYXdPKRqZ47Aqhz9M/+RlW5/YI2Fc3Ks53Sgmt6FxlWsmrXwv+uHA6JLEZFHOXl9tIFUECHV+EbQt4ZcY4ktZnxha8dLGkrzLad6+7yPK2JbvYJFbuNLT/Dsl6UR6BORoEFkzl95JCPWrzB30/PmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424488; c=relaxed/simple;
-	bh=kXDMA7XoUv114mW7dtnbnPJRm7V0AKd96mw2vcabC0o=;
+	s=arc-20240116; t=1785424490; c=relaxed/simple;
+	bh=61HKwBDoWuP5TyqAyljBJr//CGE/z6SsxCubyMGSaRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CdtwIaVYOP4zuO/FOylthVSXCFrSLSxJSW9HMLDaFxwFeR21jo8RAaNtVX3MoTird3Pq38SMqZj12Y1bRyaVN7UUHzgg2oOj92SlthIHND5ZmC6GVNAS9uWLtrqDDqi+xfcUAQuXVVEblPN/x+zPdPIm0CQHltn9TQQ+K6OmVLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eR0C8+7F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=APH3hG+mhVW0xQhs6DLoSzsYox0hGKSQ3kgcPIW9XAxng7iu9Q3IUjiCzVsP46AHOryB17/7UNsiiMmp2WRmAmPYLKxp4zBS8sljiLCmrbcUjmfVIN1nPeiZY06zCWu778tZVPr2n7d4GU5Ksh8Oh8kSqxs6SD69jFhTZIrIEQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IynRle7p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eR0C8+7F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E271F000E9;
-	Thu, 30 Jul 2026 15:14:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IynRle7p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A391A1F000E9;
+	Thu, 30 Jul 2026 15:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424486;
-	bh=Pp68PFeQO9oACazSLGjhFjCYUT7lcY6sbo4KnI2LQ7k=;
+	s=korg; t=1785424489;
+	bh=tesPeXa+/J2co/ngvwapc+8f1DPdK3QxG1H+lWkV8iA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eR0C8+7FiO6w6QsYDvy4a045aaAEqYGHrcIr0Y/feJXbe94dMBLxxNQfR8GcG4Pti
-	 +bqkhHEs7IreuYN1X9O9+ComzGm5FjuqakmPCRp+tib6H+qqRW7DATtiZAMKNfd/kx
-	 kOoHeDfIDNrSDabSNMipY5uaH4M5jXskU+Dnm1SE=
+	b=IynRle7pXU8xoQo4B5FozkG1Gg7AO+lVQcMOV8wWtuQuSlU+on4MV0/dZpo/45glH
+	 Mwufa/Xz54QrkiKIv0A1xDJ72mWQyCPbgcrDVdQf+oNuLJ5Ko/0ZoteWPwBz8XMfc1
+	 eI3W9fiJTHZR2+0EK0JPzM/8JQyXOqeVgeiG1N38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Hodo <martin.hodo@intel.com>,
-	Animesh Manna <animesh.manna@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	=?UTF-8?q?Micha=C5=82=20Grzelak?= <michal.grzelak@intel.com>
-Subject: [PATCH 6.18 366/675] drm/i915/bios: range check LFP Data Block panel_type2
-Date: Thu, 30 Jul 2026 16:11:36 +0200
-Message-ID: <20260730141452.908102292@linuxfoundation.org>
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 367/675] drm/amd/amdgpu: disable ASPM on VI if pcie dpm is disabled
+Date: Thu, 30 Jul 2026 16:11:37 +0200
+Message-ID: <20260730141452.928877875@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -49,111 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Kenneth Feng <kenneth.feng@amd.com>
 
-commit 2084503f2d087bf956198e7f6eb25b03a7049cb2 upstream.
+commit 18a7826aea6fd09f2d371c02cec70c7234fc4879 upstream.
 
-While the panel_type from LFP Data Block is range checked, panel_type2
-is not. Add a few helpers for range checking, and use them to not only
-check panel_type2, but also improve clarity and correctness in the panel
-type selection.
+Disable ASPM on VI if PCIE dpm is disabled.
 
-Discovered using AI-assisted static analysis confirmed by Intel Product
-Security.
-
-v2:
-- Fix commit message typo (Michał)
-- Add is_panel_type_pnp() (Ville)
-
-Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: 6434cf630086 ("drm/i915/bios: calculate panel type as per child device index in VBT")
-Cc: stable@vger.kernel.org # v6.0+
-Cc: Animesh Manna <animesh.manna@intel.com>
-Cc: Ville Syrjälä <ville.syrjala@intel.com>
-Reviewed-by: Michał Grzelak <michal.grzelak@intel.com> # v1
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patch.msgid.link/20260626140155.1389655-1-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit c9ebe5d2f25729d6cfbbb1235d640bf67f9275df)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: bb00bf17328d ("drm/amd/amdgpu: decouple ASPM with pcie dpm")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5370
+Signed-off-by: Kenneth Feng <kenneth.feng@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 873a8d6b3c0a386408c891e4ff1c684fa11783e1)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_bios.c |   36 +++++++++++++++++++++++-------
- 1 file changed, 28 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/intel_bios.c
-+++ b/drivers/gpu/drm/i915/display/intel_bios.c
-@@ -624,6 +624,21 @@ get_lfp_data_tail(const struct bdb_lfp_d
- 		return NULL;
- }
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -1888,7 +1888,8 @@ static bool amdgpu_device_aspm_support_q
+ 	 * It's unclear if this is a platform-specific or GPU-specific issue.
+ 	 * Disable ASPM on SI for the time being.
+ 	 */
+-	if (adev->family == AMDGPU_FAMILY_SI)
++	if (adev->family == AMDGPU_FAMILY_SI ||
++		(!(adev->pm.pp_feature & PP_PCIE_DPM_MASK) && adev->family == AMDGPU_FAMILY_VI))
+ 		return true;
  
-+static bool is_panel_type_valid(int panel_type)
-+{
-+	return panel_type >= 0 && panel_type < 16;
-+}
-+
-+static bool is_panel_type_pnp(int panel_type)
-+{
-+	return panel_type == 0xff;
-+}
-+
-+static bool is_panel_type_valid_or_pnp(int panel_type)
-+{
-+	return is_panel_type_valid(panel_type) || is_panel_type_pnp(panel_type);
-+}
-+
- static int opregion_get_panel_type(struct intel_display *display,
- 				   const struct intel_bios_encoder_data *devdata,
- 				   const struct drm_edid *drm_edid, bool use_fallback)
-@@ -641,15 +656,21 @@ static int vbt_get_panel_type(struct int
- 	if (!lfp_options)
- 		return -1;
- 
--	if (lfp_options->panel_type > 0xf &&
--	    lfp_options->panel_type != 0xff) {
-+	if (!is_panel_type_valid_or_pnp(lfp_options->panel_type)) {
- 		drm_dbg_kms(display->drm, "Invalid VBT panel type 0x%x\n",
- 			    lfp_options->panel_type);
- 		return -1;
- 	}
- 
--	if (devdata && devdata->child.handle == DEVICE_HANDLE_LFP2)
-+	if (devdata && devdata->child.handle == DEVICE_HANDLE_LFP2) {
-+		if (!is_panel_type_valid_or_pnp(lfp_options->panel_type2)) {
-+			drm_dbg_kms(display->drm, "Invalid VBT panel type 2 0x%x\n",
-+				    lfp_options->panel_type2);
-+			return -1;
-+		}
-+
- 		return lfp_options->panel_type2;
-+	}
- 
- 	drm_WARN_ON(display->drm,
- 		    devdata && devdata->child.handle != DEVICE_HANDLE_LFP1);
-@@ -763,13 +784,12 @@ static int get_panel_type(struct intel_d
- 				    panel_types[i].name, panel_types[i].panel_type);
- 	}
- 
--	if (panel_types[PANEL_TYPE_OPREGION].panel_type >= 0)
-+	if (is_panel_type_valid(panel_types[PANEL_TYPE_OPREGION].panel_type))
- 		i = PANEL_TYPE_OPREGION;
--	else if (panel_types[PANEL_TYPE_VBT].panel_type == 0xff &&
--		 panel_types[PANEL_TYPE_PNPID].panel_type >= 0)
-+	else if (is_panel_type_pnp(panel_types[PANEL_TYPE_VBT].panel_type) &&
-+		 is_panel_type_valid(panel_types[PANEL_TYPE_PNPID].panel_type))
- 		i = PANEL_TYPE_PNPID;
--	else if (panel_types[PANEL_TYPE_VBT].panel_type != 0xff &&
--		 panel_types[PANEL_TYPE_VBT].panel_type >= 0)
-+	else if (is_panel_type_valid(panel_types[PANEL_TYPE_VBT].panel_type))
- 		i = PANEL_TYPE_VBT;
- 	else
- 		i = PANEL_TYPE_FALLBACK;
+ #if IS_ENABLED(CONFIG_X86)
 
 
