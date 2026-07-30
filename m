@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE04D34DCE4;
-	Thu, 30 Jul 2026 14:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74833C3F4C;
+	Thu, 30 Jul 2026 14:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423229; cv=none; b=AsbbDWgzh5eN+/ZHXLje2MmlD6xzj+kHQS7aKAlTUmQ3pOKg7NAgr9PkUzkplEQLb+CVTOLI8COir6OmwmObECfefvg9bCKbDXalLKq/78XYz9kh93AQbrEirowK5oxDBkSLf/bAvoriouCmkGedzSqSQJLWEppgat1m/SDvyAk=
+	t=1785423231; cv=none; b=CpgGj0DTugWTFvYs7m3Y9QDeag8L8jhxauh1CeqGsbZ8U3g7bi1Ermjo81IHAJ0HKeWqHsW2ooL1sQkbMkSXlK5JdFfYAwGEhSuZDUf4gdn8oz5VYoBEoxWLRy/nSj+VBK9gZtlVY2YeX1mTbk384g+ML+b6EXhwmO1D75WOOqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423229; c=relaxed/simple;
-	bh=q6pCKbMjHq2wuYM909D7nIMYRhZUpe+TjJXyN5sqGKE=;
+	s=arc-20240116; t=1785423231; c=relaxed/simple;
+	bh=iEWZ384J+cBqr8E7rINUi+99Q1Vm1R3hhkSE8AEEIOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gDetvD4B5E/4rb6DZC3VZ3X6Z+4GvSeJiHLllooGENh/2Ts+PASYkgLD2BFfuLYo196KwaAzeXcTBilBLGhg/VOz7V7H9IsOEarkbI1+xqHAiZF8LJmR+J+6pmje+epPrtR1UeQhwsjGlPu0KjmkMpDjiaRRWuMRZaiukKE1Od4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTkwXrQP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=txGMCitj6AT24nFUSJ1opqVw2bjxTXDYiGodvuPTzc4ZZ9pcRSxtvkx11fuBTsR1Q7pgmi8t8tYHeKKpidX517m7Tl6N6Af+TL+0jA8CuXf8YlL742FfaG64gM6DumjyRNZnv0OLvUMU4zMtKWgAKRWGsulOPrpqUYCWomzbwgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTX/Q5lF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTkwXrQP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E6F1F000E9;
-	Thu, 30 Jul 2026 14:53:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTX/Q5lF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F0051F000E9;
+	Thu, 30 Jul 2026 14:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423227;
-	bh=s+VqcHRJ1OX1MuC7cctu1pLiHlZWf+cpE5Cc2RvbVw4=;
+	s=korg; t=1785423230;
+	bh=8HlEcq7/ktHEgVq5WA8QrLHAnz+F9i2xGdBMpyf1vVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rTkwXrQP4Ar/L0aOk2Yp6R/EFS4tDFddMK8McL9difTNvreS0/WW30FG2+JM0bT95
-	 xuA9aqAEWvdxjCPQ2FaNMlfRqAk8m3TSx/JspTrAXaJt+TNATyw1DS+q3rk1nzAEBW
-	 LxlqWvTeWXI4vUMvjEi1iQimYKL/9wvrKBOdi3m4=
+	b=yTX/Q5lF3EfQoB2eSXt2zf1H1pkI5d6XpLeOuX103kxdmPim/vH7kS7Pb7zkBC9S9
+	 LQTMLOqBJiHbcm60joGtUj1S12zt0IpE+16GMBFL05kWKfpX7E7o28x2r+umWsA9DD
+	 yUkMyoT/2DofVUdaqD1hDw1BSwyBlAxLJadF00c4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
-	Kent Russell <kent.russell@amd.com>,
+	Ce Sun <cesun102@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 712/744] drm/amdgpu: Fix kernel panic during driver load failure
-Date: Thu, 30 Jul 2026 16:16:25 +0200
-Message-ID: <20260730141459.411698841@linuxfoundation.org>
+Subject: [PATCH 7.1 713/744] drm/amdgpu: fix resource leak on ACP reset timeout
+Date: Thu, 30 Jul 2026 16:16:26 +0200
+Message-ID: <20260730141459.433802816@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,102 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+From: Ce Sun <cesun102@amd.com>
 
-commit a279bd143b3c184358b658e43a057e31ee8c4de5 upstream.
+commit 020da7c5aac5b86bad8a1571f6eda6b8cff9331d upstream.
 
-Avoid kernel panic if MES init fails during driver load. The KIQ ring is
-falsely marked as ready as ASICs that use MES, KIQ is owned by MES.
+When ACP soft reset poll times out, original code returns early without cleanup,
+leaking MFD child devices, genpd links and all ACP heap allocations.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-RIP: 0010:gfx_v12_1_wait_reg_mem+0x5a/0x1f0 [amdgpu]
-Call Trace:
- gfx_v12_1_ring_emit_reg_write_reg_wait+0x1f/0x30 [amdgpu]
- amdgpu_gmc_fw_reg_write_reg_wait+0xb2/0x190 [amdgpu]
- amdgpu_gmc_flush_gpu_tlb+0x1cc/0x230 [amdgpu]
- amdgpu_gart_invalidate_tlb+0x81/0xa0 [amdgpu]
- amdgpu_gart_unbind+0x72/0x90 [amdgpu]
- amdgpu_ttm_backend_unbind+0xa4/0xb0 [amdgpu]
- amdgpu_ttm_tt_unpopulate+0x13/0xd0 [amdgpu]
- amdttm_tt_unpopulate+0x29/0x70 [amdttm]
- ttm_bo_put+0x1eb/0x360 [amdttm]
- amdgpu_bo_free_kernel+0xf9/0x1f0 [amdgpu]
- amdgpu_ih_ring_fini+0x5a/0x90 [amdgpu]
- amdgpu_irq_fini_hw+0x58/0x80 [amdgpu]
- amdgpu_device_fini_hw+0x4e0/0x5b0 [amdgpu]
- amdgpu_driver_load_kms+0x60/0xa0 [amdgpu]
- amdgpu_pci_probe+0x28e/0x6d0 [amdgpu]
- pci_device_probe+0x19f/0x220
- really_probe+0x1ed/0x340
- driver_probe_device+0x1e/0x80
- __driver_attach+0xd3/0x1a0
- bus_for_each_dev+0x68/0xa0
- bus_add_driver+0x19f/0x270
- driver_register+0x5d/0xf0
- do_one_initcall+0xac/0x200
- do_init_module+0x1ec/0x280
- __se_sys_finit_module+0x2de/0x310
- do_syscall_64+0x6a/0x250
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
+Replace direct early return with goto out to force run all cleanup logic
+regardless of reset success, preserve timeout error code for caller.
 
-Signed-off-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
-Reviewed-by: Kent Russell <kent.russell@amd.com>
+Signed-off-by: Ce Sun <cesun102@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4623b958dd6da0f4c3026afdf330626a09ecb0f0)
+(cherry picked from commit 98073e4328d7a8d75d03696ab27f6de70ef1aeda)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c |   13 +++++++++++--
- drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c |   13 +++++++++++--
- 2 files changed, 22 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_acp.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-@@ -3514,10 +3514,19 @@ static int gfx_v12_0_cp_resume(struct am
- 		gfx_v12_0_cp_gfx_enable(adev, true);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acp.c
+@@ -509,6 +509,7 @@ static int acp_hw_fini(struct amdgpu_ip_
+ 	u32 val = 0;
+ 	u32 count = 0;
+ 	struct amdgpu_device *adev = ip_block->adev;
++	int ret = 0;
+ 
+ 	/* return early if no ACP */
+ 	if (!adev->acp.acp_genpd) {
+@@ -530,7 +531,8 @@ static int acp_hw_fini(struct amdgpu_ip_
+ 			break;
+ 		if (--count == 0) {
+ 			dev_err(&adev->pdev->dev, "Failed to reset ACP\n");
+-			return -ETIMEDOUT;
++			ret = -ETIMEDOUT;
++			goto out;
+ 		}
+ 		udelay(100);
  	}
+@@ -547,11 +549,12 @@ static int acp_hw_fini(struct amdgpu_ip_
+ 			break;
+ 		if (--count == 0) {
+ 			dev_err(&adev->pdev->dev, "Failed to reset ACP\n");
+-			return -ETIMEDOUT;
++			ret = -ETIMEDOUT;
++			goto out;
+ 		}
+ 		udelay(100);
+ 	}
+-
++out:
+ 	device_for_each_child(adev->acp.parent, NULL,
+ 			      acp_genpd_remove_device);
  
--	if (adev->enable_mes_kiq && adev->mes.kiq_hw_init)
-+	if (adev->enable_mes_kiq && adev->mes.kiq_hw_init) {
- 		r = amdgpu_mes_kiq_hw_init(adev, 0);
--	else
-+		/*
-+		 * With MES, GFX KIQ ring is owned by the MES and is never
-+		 * initialized/used directly by the driver, so it must
-+		 * not be left flagged as ready. mes_v12_0_hw_init() clears
-+		 * but clear here if MES init fails
-+		*/
-+		if (r)
-+			adev->gfx.kiq[0].ring.sched.ready = false;
-+	} else {
- 		r = gfx_v12_0_kiq_resume(adev);
-+	}
- 	if (r)
- 		return r;
+@@ -560,7 +563,7 @@ static int acp_hw_fini(struct amdgpu_ip_
+ 	kfree(adev->acp.acp_genpd);
+ 	kfree(adev->acp.acp_cell);
  
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
-@@ -2502,10 +2502,19 @@ static int gfx_v12_1_xcc_cp_resume(struc
+-	return 0;
++	return ret;
+ }
  
- 		gfx_v12_1_xcc_cp_compute_enable(adev, true, xcc_id);
- 
--		if (adev->enable_mes_kiq && adev->mes.kiq_hw_init)
-+		if (adev->enable_mes_kiq && adev->mes.kiq_hw_init) {
- 			r = amdgpu_mes_kiq_hw_init(adev, xcc_id);
--		else
-+			/*
-+			 * With MES, GFX KIQ ring is owned by the MES and is never
-+			 * initialized/used directly by the driver, so it must
-+			 * not be left flagged as ready. mes_v12_0_hw_init() clears
-+			 * but clear here if MES init fails
-+			 */
-+			if (r)
-+				adev->gfx.kiq[xcc_id].ring.sched.ready = false;
-+		} else {
- 			r = gfx_v12_1_xcc_kiq_resume(adev, xcc_id);
-+		}
- 		if (r)
- 			return r;
- 
+ static int acp_suspend(struct amdgpu_ip_block *ip_block)
 
 
