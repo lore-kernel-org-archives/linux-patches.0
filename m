@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C566643FD0D;
-	Thu, 30 Jul 2026 14:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6115A36A342;
+	Thu, 30 Jul 2026 14:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421243; cv=none; b=PKed/XoWpYgL2rlmVIiOgvk4pYNXiN2/pyo8nYw24NiYhDGndKH/jg2gwvptp8uvuYv/zkfvmLENjozhWaswuXFz+l+PWEnZRZuNMPqaMk/43D26GQSixq7PHtoLOLWzFc7FInFHNkK8PA/k7tNxbvAN+GhFJ3rFZTR0UPFBGko=
+	t=1785421246; cv=none; b=QZR4Y0KMHfe0NpYa4vQdetpbhH6+c4JaHzJjZ7YfLtEKI2HBy+oEPajp6QPhA6Ky3DaFdNIwY7MK4Hv0SdpF0KZabal8fJpBVE5rc6qEO0uz8tcCikb3Z3wMZZqqU6/3A1YNXQJ/N0//VubqP0oqY82ZOKmUwauRv0y8JlG0RG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421243; c=relaxed/simple;
-	bh=JYPCcDxUZDaoz9J6uaag5qK5L5XN6dfYdiBDJGc3HzQ=;
+	s=arc-20240116; t=1785421246; c=relaxed/simple;
+	bh=wmRJ9t1jLmZw9TzqT/bsg75w6DL+g5R1Zd6SHtCpIs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QaEDWxuQWqoXoALF1irHsopyWzg3qRg0WHkC3CGDwPYXVF1alXN5BSZZ/Y+3qSnlOUTanKL26CWEWHKoxUDYQ7XdvWTxaUZNW29You57ycakDVzFLmLExOYgTG9Bwve88J2vrh1d0clFWu7s797Uw1phiAdbNhA/ZlOBlsLojqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RlGHw8of; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pEK27WaQISGOcqmSIlFZ2s2z7XQRMTzAOCDkV4z8KMHY/e/CPvp+0AEE9OLEpceZ09yiix9D6FOi//Vb6+Dz2Z6Vclil69ik2dZOe3kZ0w7BxAsfgwM8rpufaAxx/D6JGufo8ZQuFrQ/wsUp8ZIa1XcU88fzqUhC4BfFVY+YwTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FK8eCnWV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RlGHw8of"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D4391F000E9;
-	Thu, 30 Jul 2026 14:20:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FK8eCnWV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321671F000E9;
+	Thu, 30 Jul 2026 14:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421241;
-	bh=YLLzABof5KTSwNVgGNn5YOSESRaRv4pMjOou11WR6to=;
+	s=korg; t=1785421244;
+	bh=cG/eQJ87O68ameVyMhJdGcHysTrpnM7rImvXjP1i1Hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RlGHw8ofypDZs1tUQbLWvwTmto4+rkE4pOsHDABYHUAEIRiCqY/e9yEC4NUXt/TO/
-	 2pfMBAAtOCJ39p0h1a6pizRk7YM6zDBckcaG87TMBZnAHAnUlWDYEe1iUh7XJd0di4
-	 mXGNxCR0sT5FCSrcYNMwvpoXhU1gC/CFiblBffRQ=
+	b=FK8eCnWVcsNH0/qN3NVaO714pl7OA8NNRSDWnkN9R6jqknd4M9TtjnV1wbZoi8vPy
+	 WPMkSYNTjB8wizkKB8PL8J8ncZkMv+Z12jdma4a0CZB4vFjErpKwv0nHBbQjLK7wFY
+	 9jpPD99LQ11Un1lZuvg3Hkks8ALUuJybUZDK0+ZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0ac4d84afe1066a1f3e9@syzkaller.appspotmail.com,
-	Antony Antony <antony.antony@secunet.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 031/744] xfrm: reject optional IPTFS templates in outbound policies
-Date: Thu, 30 Jul 2026 16:05:04 +0200
-Message-ID: <20260730141444.945862766@linuxfoundation.org>
+Subject: [PATCH 7.1 040/744] RDMA/siw: publish QP after initialization
+Date: Thu, 30 Jul 2026 16:05:13 +0200
+Message-ID: <20260730141445.134578204@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,171 +52,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antony Antony <antony.antony@secunet.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit ea528f18231ec0f33317be57f8866913b19aba6e ]
+[ Upstream commit bb27fcc67c429d97f785c92c35a6c5adebb05d7f ]
 
-syzbot reported a stack-out-of-bounds read in xfrm_state_find()
-which flows from xfrm_tmpl_resolve_one().
+siw_create_qp() currently calls siw_qp_add() before the queues, CQ
+pointers, state, completion, and device list entry are ready. A QPN
+lookup can therefore reach a QP that is still being constructed.
 
-Commit 3d776e31c841 ("xfrm: Reject optional tunnel/BEET mode
-templates in outbound policies") disallowed optional tunnel and
-BEET in outbound policies to prevent this. Later when IPTFS
-added, it was not covered by that fix and can still trigger
-the out-of-bounds read;
+Move siw_qp_add() to the end of siw_create_qp(), after QP
+initialization and before adding the QP to the siw device list.
 
-Extend the check to disallow optional IPTFS in outbound policies
-as well. IPTFS should be identical to tunnel mode.
-IN and FWD policies are not affected: xfrm_tmpl_resolve_one()
-is only reachable via the outbound path.
-
-Reproducer, before:
-
-ip link add dummy0 type dummy
-ip link set dummy0 up
-ip addr add 10.1.1.1/24 dev dummy0
-ip xfrm policy add src 10.1.1.1/32 dst 10.1.1.2/32 dir out tmpl
-  src fc00::dead:1 dst fc00::dead:2 proto esp reqid 1 mode iptfs
-  level use tmpl src fc00::dead:1 dst fc00::dead:2 proto esp reqid
-  2 mode transport
-ping -W 1 -c 1 10.1.1.2
-PING 10.1.1.2 (10.1.1.2) 56(84) bytes of data.
-
-[   64.168420] ==================================================================
-[   64.169977] BUG: KASAN: stack-out-of-bounds in __xfrm6_addr_hash+0x11e/0x170
-[   64.169977] Read of size 4 at addr ffff88800e1ffd20 by task ping/2844
-
-[   64.169977] CPU: 2 UID: 0 PID: 2844 Comm: ping Not tainted 7.1.0-rc7-00180-geb23b588430a #98 PREEMPT(full)
-[   64.169977] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[   64.169977] Call Trace:
-[   64.169977]  <TASK>
-[   64.169977]  dump_stack_lvl+0x47/0x70
-[   64.169977]  ? __xfrm6_addr_hash+0x11e/0x170
-[   64.169977]  print_report+0x152/0x4b0
-[   64.169977]  ? ksys_mmap_pgoff+0x6d/0xa0
-[   64.169977]  ? entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[   64.169977]  ? rcu_read_unlock_sched+0xa/0x20
-[   64.169977]  ? __virt_addr_valid+0x21b/0x230
-[   64.169977]  ? __xfrm6_addr_hash+0x11e/0x170
-[   64.169977]  kasan_report+0xa8/0xd0
-[   64.169977]  ? __xfrm6_addr_hash+0x11e/0x170
-[   64.169977]  __xfrm6_addr_hash+0x11e/0x170
-[   64.169977]  __xfrm_dst_hash+0x24/0xc0
-[   64.169977]  xfrm_state_find+0xa2d/0x2f90
-[   64.169977]  ? __pfx_xfrm_state_find+0x10/0x10
-[   64.169977]  ? __pfx_ftrace_graph_ret_addr+0x10/0x10
-[   64.169977]  ? __pfx_ftrace_graph_ret_addr+0x10/0x10
-[   64.169977]  xfrm_tmpl_resolve_one+0x210/0x570
-[   64.169977]  ? __pfx_xfrm_tmpl_resolve_one+0x10/0x10
-[   64.169977]  ? __pfx_stack_trace_consume_entry+0x10/0x10
-[   64.169977]  ? kernel_text_address+0x5b/0x80
-[   64.169977]  ? __kernel_text_address+0xe/0x30
-[   64.169977]  ? unwind_get_return_address+0x5e/0x90
-[   64.169977]  ? arch_stack_walk+0x8c/0xe0
-[   64.169977]  xfrm_tmpl_resolve+0x130/0x200
-[   64.169977]  ? __pfx_xfrm_tmpl_resolve+0x10/0x10
-[   64.169977]  ? __pfx_xfrm_policy_inexact_lookup_rcu+0x10/0x10
-[   64.169977]  ? __refcount_add_not_zero.constprop.0+0xb2/0x110
-[   64.169977]  ? __pfx___refcount_add_not_zero.constprop.0+0x10/0x10
-[   64.169977]  xfrm_resolve_and_create_bundle+0xd5/0x310
-[   64.169977]  ? __pfx_xfrm_resolve_and_create_bundle+0x10/0x10
-[   64.169977]  ? __pfx_xfrm_policy_lookup_bytype+0x10/0x10
-[   64.169977]  ? __pfx_xfrm_policy_lookup_bytype+0x10/0x10
-[   64.169977]  xfrm_lookup_with_ifid+0x3d8/0xb80
-[   64.169977]  ? __pfx_xfrm_lookup_with_ifid+0x10/0x10
-[   64.169977]  ? ip_route_output_key_hash+0xc6/0x110
-[   64.169977]  ? kasan_save_track+0x10/0x30
-[   64.169977]  xfrm_lookup_route+0x18/0xe0
-[   64.169977]  ip4_datagram_release_cb+0x4c9/0x530
-[   64.169977]  ? __pfx_ip4_datagram_release_cb+0x10/0x10
-[   64.169977]  ? do_raw_spin_lock+0x71/0xc0
-[   64.169977]  ? __pfx_do_raw_spin_lock+0x10/0x10
-[   64.169977]  release_sock+0xb0/0x170
-[   64.169977]  udp_connect+0x43/0x50
-[   64.169977]  __sys_connect+0xa6/0x100
-[   64.169977]  ? alloc_fd+0x2e9/0x300
-[   64.169977]  ? __pfx___sys_connect+0x10/0x10
-[   64.169977]  ? preempt_latency_start+0x1f/0x70
-[   64.169977]  ? fd_install+0x7e/0x150
-[   64.169977]  ? rcu_read_unlock_sched+0xa/0x20
-[   64.169977]  ? __sys_socket+0xdf/0x130
-[   64.169977]  ? __pfx___sys_socket+0x10/0x10
-[   64.169977]  ? vma_refcount_put+0x43/0xa0
-[   64.169977]  __x64_sys_connect+0x7e/0x90
-[   64.169977]  do_syscall_64+0x11b/0x2b0
-[   64.169977]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[   64.169977] RIP: 0033:0x7f4851ecb570
-[   64.169977] Code: 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 80 3d f9 ca 0d 00 00 74 17 b8 2a 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 58 c3 0f 1f 80 00 00 00 00 48 83 ec 18 89 54
-[   64.169977] RSP: 002b:00007ffc830e3498 EFLAGS: 00000202 ORIG_RAX: 000000000000002a
-[   64.169977] RAX: ffffffffffffffda RBX: 00007ffc830e34d0 RCX: 00007f4851ecb570
-[   64.169977] RDX: 0000000000000010 RSI: 00007ffc830e34d0 RDI: 0000000000000005
-[   64.169977] RBP: 0000000000000000 R08: 0000000000000003 R09: 0000000000000000
-[   64.169977] R10: 0000000000000006 R11: 0000000000000202 R12: 0000000000000005
-[   64.169977] R13: 0000000000000000 R14: 00005619a863f340 R15: 0000000000000000
-[   64.169977]  </TASK>
-
-[   64.169977] The buggy address belongs to stack of task ping/2844
-[   64.169977]  and is located at offset 88 in frame:
-[   64.169977]  ip4_datagram_release_cb+0x0/0x530
-
-[   64.169977] This frame has 1 object:
-[   64.169977]  [32, 88) 'fl4'
-
-[   64.169977] The buggy address belongs to the physical page:
-[   64.169977] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0xe1ff
-[   64.169977] flags: 0x4000000000000000(zone=1)
-[   64.169977] raw: 4000000000000000 0000000000000000 ffffea0000387fc8 0000000000000000
-[   64.169977] raw: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
-[   64.169977] page dumped because: kasan: bad access detected
-
-[   64.169977] Memory state around the buggy address:
-[   64.169977]  ffff88800e1ffc00: f2 f2 00 00 f3 f3 00 00 00 00 00 00 00 00 00 00
-[   64.169977]  ffff88800e1ffc80: 00 00 00 00 00 00 00 00 00 f1 f1 f1 f1 00 00 00
-[   64.169977] >ffff88800e1ffd00: 00 00 00 00 f3 f3 f3 f3 f3 00 00 00 00 00 00 00
-[   64.169977]                                ^
-[   64.169977]  ffff88800e1ffd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 f1 f1
-[   64.169977]  ffff88800e1ffe00: f1 f1 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   64.169977] ==================================================================
-[   64.245153] Disabling lock debugging due to kernel taint
-
-After the fix:
-
-ip xfrm policy add src 10.1.1.1/32 dst 10.1.1.2/32 dir out tmpl \
- src fc00::dead:1 dst fc00::dead:2 proto esp reqid 1 mode iptfs \
- level use tmpl src fc00::dead:1 dst fc00::dead:2 proto esp reqid 2 \
- mode transport
-
-Error: Mode in optional template not allowed in outbound policy.
-
-Fixes: d1716d5a44c3 ("xfrm: add generic iptfs defines and functionality")
-Reported-by: syzbot+0ac4d84afe1066a1f3e9@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6a3ceb94.43b4ff68.30a095.0004.GAE@google.com/T/
-Signed-off-by: Antony Antony <antony.antony@secunet.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: f29dd55b0236 ("rdma/siw: queue pair methods")
+Link: https://patch.msgid.link/r/20260630060040.966461-1-ruoyuw560@gmail.com
+Suggested-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/infiniband/sw/siw/siw_verbs.c | 44 +++++++++++++++------------
+ 1 file changed, 24 insertions(+), 20 deletions(-)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 61eb5de33b87ee..b36741c4ea3de9 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -2077,13 +2077,12 @@ static int validate_tmpl(int nr, struct xfrm_user_tmpl *ut, u16 family,
- 		switch (ut[i].mode) {
- 		case XFRM_MODE_TUNNEL:
- 		case XFRM_MODE_BEET:
-+		case XFRM_MODE_IPTFS:
- 			if (ut[i].optional && dir == XFRM_POLICY_OUT) {
- 				NL_SET_ERR_MSG(extack, "Mode in optional template not allowed in outbound policy");
- 				return -EINVAL;
+diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
+index 1e1d262a4ae2db..a513ca96259fd2 100644
+--- a/drivers/infiniband/sw/siw/siw_verbs.c
++++ b/drivers/infiniband/sw/siw/siw_verbs.c
+@@ -316,6 +316,7 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	struct siw_ucontext *uctx =
+ 		rdma_udata_to_drv_context(udata, struct siw_ucontext,
+ 					  base_ucontext);
++	struct siw_uresp_create_qp uresp = {};
+ 	unsigned long flags;
+ 	int num_sqe, num_rqe, rv = 0;
+ 	size_t length;
+@@ -369,11 +370,6 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	spin_lock_init(&qp->rq_lock);
+ 	spin_lock_init(&qp->orq_lock);
+ 
+-	rv = siw_qp_add(sdev, qp);
+-	if (rv)
+-		goto err_atomic;
+-
+-
+ 	/* All queue indices are derived from modulo operations
+ 	 * on a free running 'get' (consumer) and 'put' (producer)
+ 	 * unsigned counter. Having queue sizes at power of two
+@@ -391,14 +387,14 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 
+ 	if (qp->sendq == NULL) {
+ 		rv = -ENOMEM;
+-		goto err_out_xa;
++		goto err_out;
+ 	}
+ 	if (attrs->sq_sig_type != IB_SIGNAL_REQ_WR) {
+ 		if (attrs->sq_sig_type == IB_SIGNAL_ALL_WR)
+ 			qp->attrs.flags |= SIW_SIGNAL_ALL_WR;
+ 		else {
+ 			rv = -EINVAL;
+-			goto err_out_xa;
++			goto err_out;
+ 		}
+ 	}
+ 	qp->pd = pd;
+@@ -424,7 +420,7 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 
+ 		if (qp->recvq == NULL) {
+ 			rv = -ENOMEM;
+-			goto err_out_xa;
++			goto err_out;
+ 		}
+ 		qp->attrs.rq_size = num_rqe;
+ 	}
+@@ -439,11 +435,8 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	qp->attrs.state = SIW_QP_STATE_IDLE;
+ 
+ 	if (udata) {
+-		struct siw_uresp_create_qp uresp = {};
+-
+ 		uresp.num_sqe = num_sqe;
+ 		uresp.num_rqe = num_rqe;
+-		uresp.qp_id = qp_id(qp);
+ 
+ 		if (qp->sendq) {
+ 			length = num_sqe * sizeof(struct siw_sqe);
+@@ -452,7 +445,7 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 						      length, &uresp.sq_key);
+ 			if (!qp->sq_entry) {
+ 				rv = -ENOMEM;
+-				goto err_out_xa;
++				goto err_out;
  			}
- 			break;
--		case XFRM_MODE_IPTFS:
--			break;
- 		default:
- 			if (ut[i].family != prev_family) {
- 				NL_SET_ERR_MSG(extack, "Mode in template doesn't support a family change");
+ 		}
+ 
+@@ -464,9 +457,23 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 			if (!qp->rq_entry) {
+ 				uresp.sq_key = SIW_INVAL_UOBJ_KEY;
+ 				rv = -ENOMEM;
+-				goto err_out_xa;
++				goto err_out;
+ 			}
+ 		}
++	}
++	qp->tx_cpu = siw_get_tx_cpu(sdev);
++	if (qp->tx_cpu < 0) {
++		rv = -EINVAL;
++		goto err_out;
++	}
++	init_completion(&qp->qp_free);
++
++	rv = siw_qp_add(sdev, qp);
++	if (rv)
++		goto err_out_tx;
++
++	if (udata) {
++		uresp.qp_id = qp_id(qp);
+ 
+ 		if (udata->outlen < sizeof(uresp)) {
+ 			rv = -EINVAL;
+@@ -476,22 +483,19 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 		if (rv)
+ 			goto err_out_xa;
+ 	}
+-	qp->tx_cpu = siw_get_tx_cpu(sdev);
+-	if (qp->tx_cpu < 0) {
+-		rv = -EINVAL;
+-		goto err_out_xa;
+-	}
++
+ 	INIT_LIST_HEAD(&qp->devq);
+ 	spin_lock_irqsave(&sdev->lock, flags);
+ 	list_add_tail(&qp->devq, &sdev->qp_list);
+ 	spin_unlock_irqrestore(&sdev->lock, flags);
+ 
+-	init_completion(&qp->qp_free);
+-
+ 	return 0;
+ 
+ err_out_xa:
+ 	xa_erase(&sdev->qp_xa, qp_id(qp));
++err_out_tx:
++	siw_put_tx_cpu(qp->tx_cpu);
++err_out:
+ 	if (uctx) {
+ 		rdma_user_mmap_entry_remove(qp->sq_entry);
+ 		rdma_user_mmap_entry_remove(qp->rq_entry);
 -- 
 2.53.0
 
