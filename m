@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B23B3769FD;
-	Thu, 30 Jul 2026 15:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7CB3451B3;
+	Thu, 30 Jul 2026 15:56:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426974; cv=none; b=uJ+wHSBAAKZGBklbROCDw5lgcEvw3q2FsvQlye2stMG5BsooRWo4OujlGEYhP4Hmq+xKkIrkcjp0tbPN80VPVVzlByJN/Sa3k/Nc3v9cn60KTmF1rLzkZN+z6p4Yq0c7e5DuTuOrswduAvnURlpj8h8qYQKUofm7fptFNXrmeos=
+	t=1785426977; cv=none; b=Q5ToIjVWvvmZ4gMKTJbnr+nZ1sW8UbA5SzVklKMYdhOxyCXPxBO6FKW6U4/Lu5E2EsWRoplkWUsQ0LPYTIMBl+I/E5JsQ4Qkxt6WALV+SdQ0uVo5wiUgPQetXXqOpfV3xfEx1azySyuuRbY52CzBHXNTgOlDl/AC7bbiA3bNp2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426974; c=relaxed/simple;
-	bh=8S117MICrZjIWSWtfXIIarOmCAt+E3hKLciakk7ADjA=;
+	s=arc-20240116; t=1785426977; c=relaxed/simple;
+	bh=hZpTqzFKk+FanVq0wMxG/Bkrypz9KkIo3hLHGpXZneM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o/qj0jO7t1onbr5t7B/G+mfxpndHPJSEP4sxtJcoNLMvSb5o6Ka2QyIM4TwjXkpn41j8BPJtG1bwFazgIHjmiTynxqFieKpNxC1oW/+Oi9s1UX0nVJE7pFIFru5kl78oWY9NuqbXL0T37PlEz9IsHZfxLpoK7s5jNSRc9CH/ELs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7xI8s0j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=q1WrnxOzbs8lZ5Nk1Xnoo7Qju1gUYcue2FYH50u6LywBO4LlqImxpbmlcrFlSv7tUvAIxb17MmSt5QiKId8AnT905aV12c/azxA6UuojailoX/w3OSNf85D1idJDAsASuRr5hIKomqN8xqhZosUjO3qhPLmE/3vwhGHiKtV9/rU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNXQvehV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7xI8s0j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755CD1F000E9;
-	Thu, 30 Jul 2026 15:56:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNXQvehV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F411F000E9;
+	Thu, 30 Jul 2026 15:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426973;
-	bh=jnYKP/iqI0vC3QgwRGJI5lYJDxqy1c6M5QM9OyE/O8g=;
+	s=korg; t=1785426975;
+	bh=L+yyyXRNECh5RLGBs3iNlI32BFRGl6q7kTLSyNaJA5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y7xI8s0jF09/4Gs3RxPssUxNuUfHSkUENOrO781N85T6dmfAC3vtmrXOGZJIdO14U
-	 OwRRpquvWrajAPCU8f0RrWntlV+G76riCQCnFSzWyowa+oQ8/dWKOzC4I0PXQtXqAK
-	 IdzAgWMa07yv88dHQptoVXXj9542PAY3wsI8ssK4=
+	b=nNXQvehV+LwFQnjUbpoA+Hf5owJ2gxso6HvKBHi43l9YVbBSDHvLFUEy06MBTOQRR
+	 cTRoBABzhd6aXUt8FyzEozNAE9aRF5AXlJ1/uaLcuJwKnToWmZu4h21kATUl1R3gKS
+	 /hZTqeGlwMySpk95lqH0ZHdglVobLmEnPGKvMZ5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 569/602] fs/resctrl: Fix double-add of pseudo-locked regions RMID to free list
-Date: Thu, 30 Jul 2026 16:16:01 +0200
-Message-ID: <20260730141448.004488837@linuxfoundation.org>
+Subject: [PATCH 6.12 570/602] net: macb: drop in-flight Tx SKBs on close
+Date: Thu, 30 Jul 2026 16:16:02 +0200
+Message-ID: <20260730141448.026786723@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -46,63 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Reinette Chatre <reinette.chatre@intel.com>
+From: Théo Lebrun <theo.lebrun@bootlin.com>
 
-[ Upstream commit b9f089723aee892efc77c349ae47a6b452b293c4 ]
+[ Upstream commit 27f575836cfebbf872dec020428742b10650a955 ]
 
-A pseudo-locked group's RMID is freed when it is created. On unmount
-rmdir_all_sub() unconditionally frees all RMID of all groups, resulting
-in a double-free of the pseudo-locked group's RMID. The consequence of this
-is that the original free results in the pseudo-locked group's RMID being
-added to the rmid_free_lru linked list and the second free then attempts
-to add the same RMID entry to the rmid_free_lru again.
+The MACB driver has since forever leaked the outgoing SKBs that
+have not yet been marked as completed. They live in queue->tx_skb
+which gets freed without remorse nor checking.
 
-Do not double-free a pseudo-locked group's RMID.
+macb_free_consistent() gets called in a few codepaths, but only close will
+trigger the added expressions. In macb_open() and macb_alloc_consistent()
+failure cases, queues' tx_skb just got allocated and are empty.
 
-Fixes: e0bdfe8e36f3 ("x86/intel_rdt: Support creation/removal of pseudo-locked region")
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/551432dd7e624a862b8e58314c38aaba0afff3e9.1783377598.git.reinette.chatre@intel.com
+Fixes: 89e5785fc8a6 ("[PATCH] Atmel MACB ethernet driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Signed-off-by: Théo Lebrun <theo.lebrun@bootlin.com>
+Link: https://patch.msgid.link/20260702-macb-drop-tx-v4-1-1c833eebdbc8@bootlin.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ adjusted context to free each queue's Tx/Rx rings individually since 6.12 lacks the single-dma_alloc_coherent refactor ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/resctrl/rdtgroup.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -2922,10 +2922,6 @@ static void rmdir_all_sub(void)
- 		if (rdtgrp == &rdtgroup_default)
- 			continue;
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -2582,8 +2582,26 @@ static void macb_free_consistent(struct
+ 	bp->macbgem_ops.mog_free_rx_buffers(bp);
  
--		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
--		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
--			rdtgroup_pseudo_lock_remove(rdtgrp);
--
- 		/*
- 		 * Give any CPUs back to the default group. We cannot copy
- 		 * cpu_online_mask because a CPU might have executed the
-@@ -2934,7 +2930,13 @@ static void rmdir_all_sub(void)
- 		cpumask_or(&rdtgroup_default.cpu_mask,
- 			   &rdtgroup_default.cpu_mask, &rdtgrp->cpu_mask);
- 
--		free_rmid(rdtgrp->closid, rdtgrp->mon.rmid);
-+		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
-+		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
-+			rdtgroup_pseudo_lock_remove(rdtgrp);
-+		} else {
-+			/* Pseudo-locked group's RMID is freed during setup. */
-+			free_rmid(rdtgrp->closid, rdtgrp->mon.rmid);
+ 	for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue) {
+-		kfree(queue->tx_skb);
+-		queue->tx_skb = NULL;
++		if (queue->tx_skb) {
++			unsigned int dropped = 0, tail;
++
++			for (tail = queue->tx_tail; tail != queue->tx_head;
++			     tail++) {
++				if (macb_tx_skb(queue, tail)->skb)
++					dropped++;
++				macb_tx_unmap(bp, macb_tx_skb(queue, tail), 0);
++			}
++
++			queue->stats.tx_dropped += dropped;
++			bp->dev->stats.tx_dropped += dropped;
++
++			kfree(queue->tx_skb);
++			queue->tx_skb = NULL;
 +		}
- 
- 		kernfs_remove(rdtgrp->kn);
- 		list_del(&rdtgrp->rdtgroup_list);
++
++		queue->tx_head = 0;
++		queue->tx_tail = 0;
++
+ 		if (queue->tx_ring) {
+ 			size = TX_RING_BYTES(bp) + bp->tx_bd_rd_prefetch;
+ 			dma_free_coherent(&bp->pdev->dev, size,
 
 
