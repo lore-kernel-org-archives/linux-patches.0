@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D485B43E09D;
-	Thu, 30 Jul 2026 14:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60D143D503;
+	Thu, 30 Jul 2026 14:43:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422630; cv=none; b=ippkVMXL2G0Zug2VayfUAeoXGGSwN/oeIuUO3k5pN6Uc3Vq0YFRP1OkVRjHqkt0mygUoZwnnnTqScVpwLLShh6Ybh5q677T6Z87K5ud1v3za9JAtFaIvUQ4zf0r2JFYVeSRmPIb6TZH6Ii57IQVZMNJ93EAVsl6nPJ+hW81FM0c=
+	t=1785422633; cv=none; b=ImgoJQkYZ4rGr/pDyj6AE1+4xVZM6b6e5lpC7cH+QQDdkCN/vAOaKuKQBTOyEp23P3jJxIWZeVdSWcovlnHBiGP7gkh+Dy5n1U2JIgYlVZHDMY12/H55nHbgxDT8zTHriU5zBBJMcxGto53RQgUleWpjmLTiOq7mm2CxtjOZ0BI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422630; c=relaxed/simple;
-	bh=9H5kcTICBQXhRjxJBSbO+tI5C708Twp8HciN1z6/vEo=;
+	s=arc-20240116; t=1785422633; c=relaxed/simple;
+	bh=Cevg/j063ZdmuCgRHjkWFkAHzvNuBJuN+PpXRZnItUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o1cXc/SHeoNYN44NGKYpzBA0Bt4Te/jia4IEhrQ2JroH3oM4JO7r6NAafE0BlaO5hvHu7s/1ExPU83lxOShuWORuLB3akefGEdnzz0gKw8dD6p97fIbqBVAQWvmAsJ7sG2l2ef4nK4kFJH/Ftml9VEfDHZcSVe28lYWRPA8wgkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0VmPTXpX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T8FXJce6g0iYYBjbAMLB/tcUaoD39z2vzt1KvofEi+zjCz88NBheuPI2WBRv+myUgDpB+iVbltoZ/W5cXrYI+tl99AGUkuvn/pqxTCzuMhwfqS2BY51Glh4EgEg0H1gn47+aUdoY+nX2lEaSVuYw19extAO1wOc/dimmXjsR8CI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yY1toZTq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0VmPTXpX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BBF61F000E9;
-	Thu, 30 Jul 2026 14:43:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yY1toZTq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CABB1F000E9;
+	Thu, 30 Jul 2026 14:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422629;
-	bh=2rQzXy7FhYzvAr3XpSm71DrHNaW6pqNnlroOzE2LMpE=;
+	s=korg; t=1785422632;
+	bh=8zK2KTtfhwthM5NpADPH1Ques8osDKqL+/raYDbA9ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0VmPTXpXGzmKA4VA+mYq48zQLv8qQQQ0GixVfd+E0ATROBjFj5Wx8iekPUSjTvZqh
-	 BzNMnEjHa2Z/zIEtfvmvXzbGa8aWz1PkQ8OoF61at8R71dY9RdWTbqMtPYb6/inNWi
-	 kZtYaG27Q6iaizG52v1XavV8O2czoRs49I+fPSH0=
+	b=yY1toZTqJYImQZderA3Pu9BfK4n7bQWmYDR40h6qxULUCOSKTBTg39tCOxyv6hZ4z
+	 OVJ+MssrqSL+pjQrtmExjhWQjVXZCTCoai3c8hvi+kEOa5dZIHYDN3ZkgsXjyTHGrb
+	 FlhVrDfmVwLwrGLsN5jK75lcOMM5A12CHLf13+PQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guoniu Zhou <guoniu.zhou@nxp.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.1 502/744] media: nxp: imx8-isi: Fix scale factor calculation for hardware rounding
-Date: Thu, 30 Jul 2026 16:12:55 +0200
-Message-ID: <20260730141454.954574878@linuxfoundation.org>
+Subject: [PATCH 7.1 503/744] media: pci: dm1105: Free allocated workqueue
+Date: Thu, 30 Jul 2026 16:12:56 +0200
+Message-ID: <20260730141454.975161378@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,44 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guoniu Zhou <guoniu.zhou@nxp.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-commit 5eb54da3f874b44149556542d949909898865e29 upstream.
+commit 1a65db225b25bb8c8febf16974c060e0cc242eb9 upstream.
 
-The ISI hardware rounds the actual output size up to an integer, as
-described in i.MX93 Reference Manual section 57.7.8 (Channel 0 Scale
-Factor). The scale factor must be calculated to ensure the theoretical
-output value rounds up to exactly the desired size.
+Destroy allocated workqueue in remove() callback to free its resources,
+thus fixing memory leak.
 
-Fixes: cf21f328fcaf ("media: nxp: Add i.MX8 ISI driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guoniu Zhou <guoniu.zhou@nxp.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://patch.msgid.link/20260323-isi-v3-2-8df53b24e622@oss.nxp.com
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Fixes: 519a4bdcf822 ("V4L/DVB (11984): Add support for yet another SDMC DM1105 based DVB-S card.")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/nxp/imx8-isi/imx8-isi-hw.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/media/pci/dm1105/dm1105.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-hw.c
-+++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-hw.c
-@@ -112,7 +112,14 @@ static u32 mxc_isi_channel_scaling_ratio
- 	else
- 		*dec = 8;
+--- a/drivers/media/pci/dm1105/dm1105.c
++++ b/drivers/media/pci/dm1105/dm1105.c
+@@ -1194,6 +1194,7 @@ static void dm1105_remove(struct pci_dev
  
--	return min_t(u32, from * 0x1000 / (to * *dec), ISI_DOWNSCALE_THRESHOLD);
-+	/*
-+	 * The ISI rounds output dimensions up to the next integer (i.MX93 RM
-+	 * section 57.7.8). Calculate the scale factor such that the theoretical
-+	 * output (input / scale_factor) rounds up to exactly the desired
-+	 * output.
-+	 */
-+	return min_t(u32, DIV_ROUND_UP(from * 0x1000, to * *dec),
-+		     ISI_DOWNSCALE_THRESHOLD);
- }
- 
- static void mxc_isi_channel_set_scaling(struct mxc_isi_pipe *pipe,
+ 	dm1105_hw_exit(dev);
+ 	free_irq(pdev->irq, dev);
++	destroy_workqueue(dev->wq);
+ 	pci_iounmap(pdev, dev->io_mem);
+ 	pci_release_regions(pdev);
+ 	pci_disable_device(pdev);
 
 
