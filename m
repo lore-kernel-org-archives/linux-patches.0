@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C47544D01F;
-	Thu, 30 Jul 2026 15:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D40435A9E;
+	Thu, 30 Jul 2026 15:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425504; cv=none; b=rXVEmGQil14Kf737pekluJeobjSLzIKde+tVk0b1g5D58dqmpKFZ9TCnSikznrstE3FEEzIpOVXFeGlBEKzJOmTiiXJmLmfCN38wBaWLEVligwyCJ/Lb78JK2KCEbHeZsd083Qz3ID7TqyAMUYZCVJGe9rgPxJxLjdagBOCytFQ=
+	t=1785425507; cv=none; b=DrjYcp1aXeFrzR417gcP9seaesyI9uRPnbM0YTPS1QhMCI2Dt8UhvrZiB/AH0NViuomHwGZ5QiSIt6sLq/tDb8gtGpUbMvp381qDrusB1QlUkl94ujZucusVHyBG2KnWGukEK7zac0d67gQ+LWhT970uT1pVClDoe0Nn224gVV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425504; c=relaxed/simple;
-	bh=1UGIDn+aHni12AdCXDlpdRyV1OsFZbsC4JXoH+2qmdQ=;
+	s=arc-20240116; t=1785425507; c=relaxed/simple;
+	bh=1c9x5V5ZqReLnldw95xnK1JcON/NUWo5UUFkUWMyB3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=poSy4C49S5lBk5dxgFJ4sgv08iqjMwq2D/yGQqi0xio6pB/joBH8IwxmNHAhJcM2gv6vu8nFXg9p5Jlh6ZfdR91l9tPDsBaE7osL9kQpH0rG7suGo8G3rNFAWGwn5XeGaZO21ugHN8AY02P4LTp6YePvz5hZVFd6Nok1asbjVyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=afo4u+Nk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bpb0wE/Ry+90Q1l5UeAy7K65aD8iSMbuZUJsQj5J39MPJyIShtmvkFb/OxVIh8ydL+s3gT3K6P2x+ouOTJC0fbSWHax6qDvoCV74hnK1Js+Yud4e/bscBdA1wWpeI8D8NQtW089S+nxkfNh0Q4ntVnZLq/l4eLe3kWAjBCCmQEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmgRWkwo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afo4u+Nk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFBFB1F000E9;
-	Thu, 30 Jul 2026 15:31:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmgRWkwo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F55F1F00A3A;
+	Thu, 30 Jul 2026 15:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425503;
-	bh=svsZH+wG5nY2+vJyRvFbGgkeKEFL0a73m/xoV7Foqwg=;
+	s=korg; t=1785425506;
+	bh=WG/GU0w2b3m2rIcu/rzN5MHljWJFluB63X+gq2ldrGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=afo4u+NkwGgb+grWvCCuxjcCEKECfkj/93CLRQEz1KZzs1w48aOopNakqWeq7iPsh
-	 8ztoj3oO6caNLSMW5NZEemSa+2E6hOAR3zUk+rAcSFnM3WND1k3kzzLNjBtp25ROb8
-	 0BX1xhli5bw1Dx5DXZHsitHBANTivuyLPpwCh1Ik=
+	b=cmgRWkwo9mCvZrrYi2qV8aEr10Z1adyEAbAVvm3LStQ/b6oYcwEadI6cG8frW7rsR
+	 6XH95vMkVOT/09a6q378i1YqXeVMNWlJduyyYi571GvelW2hpng3QOKVU2jkD/7BQj
+	 M8SHX6BKWmyY4D7IxtrUTvi8QTBk8uXOLC3N2UIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Cheng Xu <chengyou@linux.alibaba.com>,
+	Danila Chernetsov <listdansp@mail.ru>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 047/602] RDMA/erdma: initialize ret for empty receive WR lists
-Date: Thu, 30 Jul 2026 16:07:19 +0200
-Message-ID: <20260730141436.994626404@linuxfoundation.org>
+Subject: [PATCH 6.12 048/602] RDMA/hns: Fix potential integer overflow in mhop hem cleanup
+Date: Thu, 30 Jul 2026 16:07:20 +0200
+Message-ID: <20260730141437.015430329@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,40 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Danila Chernetsov <listdansp@mail.ru>
 
-[ Upstream commit 2815a277c53e9a84784d6410cd55a9da5b33068d ]
+[ Upstream commit 9f0f2d2121f16d420199a82ac5bbc242269133b3 ]
 
-erdma_post_recv() returns ret after walking the receive work request list.
-If the caller passes an empty list, the loop is skipped and ret is not
-assigned.
+In hns_roce_cleanup_mhop_hem_table(), the expression:
 
-Initialize ret to 0 so an empty receive work request list returns success
-instead of stack data.
+    obj = i * buf_chunk_size / table->obj_size;
 
-Fixes: 155055771704 ("RDMA/erdma: Add verbs implementation")
-Link: https://patch.msgid.link/r/20260618041752.481193-1-ruoyuw560@gmail.com
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Cheng Xu <chengyou@linux.alibaba.com>
+is evaluated using 32-bit unsigned arithmetic because
+'buf_chunk_size' is u32 and the usual arithmetic conversions convert
+'i' to unsigned int. The result is assigned to a u64 variable, but the
+multiplication may overflow before the assignment.
+
+For sufficiently large HEM tables, this produces an incorrect object
+index passed to hns_roce_table_mhop_put().
+
+Cast 'i' to u64 before the multiplication so that the intermediate
+calculation is performed with 64-bit arithmetic.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: a25d13cbe816 ("RDMA/hns: Add the interfaces to support multi hop addressing for the contexts in hip08")
+Link: https://patch.msgid.link/r/20260627095951.51378-1-listdansp@mail.ru
+Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
+Reviewed-by: Junxian Huang <huangjunxian6@hisilicon.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/erdma_qp.c | 2 +-
+ drivers/infiniband/hw/hns/hns_roce_hem.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/erdma/erdma_qp.c b/drivers/infiniband/hw/erdma/erdma_qp.c
-index 4d1f9114cd97c5..4dfab0c49e5192 100644
---- a/drivers/infiniband/hw/erdma/erdma_qp.c
-+++ b/drivers/infiniband/hw/erdma/erdma_qp.c
-@@ -573,7 +573,7 @@ int erdma_post_recv(struct ib_qp *ibqp, const struct ib_recv_wr *recv_wr,
- 	const struct ib_recv_wr *wr = recv_wr;
- 	struct erdma_qp *qp = to_eqp(ibqp);
- 	unsigned long flags;
--	int ret;
-+	int ret = 0;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
+index 1680d0ac071ed1..ae7a3939124f23 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hem.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
+@@ -842,7 +842,7 @@ static void hns_roce_cleanup_mhop_hem_table(struct hns_roce_dev *hr_dev,
+ 					mhop.bt_chunk_size;
  
- 	spin_lock_irqsave(&qp->lock, flags);
- 
+ 	for (i = 0; i < table->num_hem; ++i) {
+-		obj = i * buf_chunk_size / table->obj_size;
++		obj = (u64)i * buf_chunk_size / table->obj_size;
+ 		if (table->hem[i])
+ 			hns_roce_table_mhop_put(hr_dev, table, obj, 0);
+ 	}
 -- 
 2.53.0
 
