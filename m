@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65173B6366;
-	Thu, 30 Jul 2026 15:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6299367B67;
+	Thu, 30 Jul 2026 15:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423888; cv=none; b=S/PDOcIEwHSRlAEX4u/hMiNRFYk7v2PZosBzJqg4wbU7Av+a9sryLsYbaAfDpRASgAfZ97RYF0DN4xzXBIDq1zfWV8Y8UvtCnLH0dkPVkIcuIYhWzz9kronX3VENeYQulOSPD0HKI4zcidxjyRNLJVCydravfpMiS9KFvcYjpU8=
+	t=1785423891; cv=none; b=OqwTvA/y1bDN+KL6tL3SURibH5VSqJT7ho+AJLcOLgGevvi2N4tpp7t7eJ6d/ZYvcUDH+jxaZ6Lumi25i+2PRtnsBca+VjCGIv+oxeyskv+1uKXGQObAqfKsdmR2VsLO3qxW/J6ytVZ9qnzdmdVJFwHVN80m5SgTOchYAZj+9n0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423888; c=relaxed/simple;
-	bh=r4RHeDWEuPw+TSdpenxuFbrgX5cp6YgWa4HOXgPLErY=;
+	s=arc-20240116; t=1785423891; c=relaxed/simple;
+	bh=VHrzPuMIYeVeY7ZxHjnonIdAs7nwKhnq5OJJcDU9Gtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NKaEtpvSulZoK/c/5MMpD7ogvDEsWnIT0bQOwB/gvqkfGGSisVPMKad3rOEfOvW/z/gy68inepRt2kHEvpe9Pl84xfeBu6eSsbGlUVvJkxUVotLI9FOIMiS0F2b40h7AOaXQe00CCLbqmOZGvfNZ8vLdpO40EJ7rPCUryMzbWBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VKHdzgf/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Sgdb/2zc8bdw/L7A1Vff4SBSeyg1enVGvmqqvb/HuGEdx6gNgJayb5wrlZKKJQ1rTgZ9X94fBXExA13/Ge1GBaSUp6UUwObbPZ0ik1CA7xHajcIN1qrfIfQbdbfEoxCd/UKKryWx8uxr1ovcVL5EbEbqZ5QfCWTU7vFNQtTH5FU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0pk0Dp4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VKHdzgf/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 037D91F000E9;
-	Thu, 30 Jul 2026 15:04:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0pk0Dp4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C774F1F000E9;
+	Thu, 30 Jul 2026 15:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423887;
-	bh=eoDC59RM2n//QjAAUEBzTlLEcmIm/dLbtrob9NJxxM4=;
+	s=korg; t=1785423890;
+	bh=NV6fzdymMDeOytvA94TeD9z/LOHu4xGJouH0tjvvH4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VKHdzgf/jXJgWQ0YbMz73p880Vh8Ac4gPqfSwLu0TMeT4hUKrY+NPMjrrtYpPiG3s
-	 rkYzJTbPDX4jte9KjaI/KL7xWxA5ghrUStU7uCgc/+vFxM+oyIfUvpAxk7DapD6aBx
-	 l9w5XlozIbaVdV0Sa5EoYYV6YHCVWIrnsktx4dBI=
+	b=B0pk0Dp4wan4IlHtUv93pQjvXILxr6P7tZUMgNIcQph2GsPruBJhPJOe1Ij5Dmnbt
+	 JNKB2G74nEqZLrG2S0p8GoXYWiT8DgmVJ+5GGpaYFKODdnYTZ53NFrvQYBpbZx3Msm
+	 yD+o9etatFnwwcXvp+oqpipoomTWY9lIbj17CQS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mostafa Saleh <smostafa@google.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	"Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Eugene Shalygin <eugene.shalygin@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 200/675] drivers/virt: pkvm: Fix end calculation in mmio_guard_ioremap_hook()
-Date: Thu, 30 Jul 2026 16:08:50 +0200
-Message-ID: <20260730141449.394313749@linuxfoundation.org>
+Subject: [PATCH 6.18 201/675] hwmon: (asus-ec-sensors) fix looping over banks while reading from EC
+Date: Thu, 30 Jul 2026 16:08:51 +0200
+Message-ID: <20260730141449.415531755@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,40 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mostafa Saleh <smostafa@google.com>
+From: Eugene Shalygin <eugene.shalygin@gmail.com>
 
-[ Upstream commit 62c740f823a8e47ffe56e45a7472c27cf988e2f6 ]
+[ Upstream commit e741d13cc2abfc6fccebe2008057aa52e285223e ]
 
-Sashiko (locally) reports a logical issues in mmio_guard_ioremap_hook()
+Do not assume there are only bank 0 and bank 1 available, just use '!='
+for bank comparison.
 
-mmio_guard_ioremap_hook() attempts to handle unaligned addresses and
-sizes. However, aligning the start address before adding the size, might
-shift the end to the page before.
-
-Fixes: 0f1269495800 ("drivers/virt: pkvm: Intercept ioremap using pKVM MMIO_GUARD hypercall")
-Signed-off-by: Mostafa Saleh <smostafa@google.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Tested-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: d0ddfd241e57 ("hwmon: (asus-ec-sensors) add driver for ASUS EC")
+Signed-off-by: Eugene Shalygin <eugene.shalygin@gmail.com>
+Link: https://lore.kernel.org/r/20260711074217.554656-1-eugene.shalygin@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c | 2 +-
+ drivers/hwmon/asus-ec-sensors.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c b/drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c
-index 4230b817a80bd8..d66291def0f408 100644
---- a/drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c
-+++ b/drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c
-@@ -82,8 +82,8 @@ static int mmio_guard_ioremap_hook(phys_addr_t phys, size_t size,
- 	if (protval != PROT_DEVICE_nGnRE && protval != PROT_DEVICE_nGnRnE)
- 		return 0;
- 
-+	end = PAGE_ALIGN(phys + size);
- 	phys = PAGE_ALIGN_DOWN(phys);
--	end = phys + PAGE_ALIGN(size);
- 
- 	while (phys < end) {
- 		const int func_id = ARM_SMCCC_VENDOR_HYP_KVM_MMIO_GUARD_FUNC_ID;
+diff --git a/drivers/hwmon/asus-ec-sensors.c b/drivers/hwmon/asus-ec-sensors.c
+index 95c50d3a788ce7..aac4706cd437fe 100644
+--- a/drivers/hwmon/asus-ec-sensors.c
++++ b/drivers/hwmon/asus-ec-sensors.c
+@@ -1050,7 +1050,7 @@ static int asus_ec_block_read(const struct device *dev,
+ 		}
+ 		for (ireg = 0; ireg < ec->nr_registers; ireg++) {
+ 			reg_bank = register_bank(ec->registers[ireg]);
+-			if (reg_bank < bank) {
++			if (reg_bank != bank) {
+ 				continue;
+ 			}
+ 			ec_read(register_index(ec->registers[ireg]),
 -- 
 2.53.0
 
