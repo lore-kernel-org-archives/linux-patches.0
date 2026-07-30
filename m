@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B821449B04;
-	Thu, 30 Jul 2026 16:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31735449995;
+	Thu, 30 Jul 2026 16:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427861; cv=none; b=CiYhT2zxUj+zTA28ujPMB7ex/TW47dZReKzoD0Z4QAWfILohP5LAgOeREs5R70i7b/3/kdZfr2k341yfWXAIzBjeERXDA1A+SvFIIE/f8c1OnioLTqm0V/kdaYmHrQZXlKthVHJvYh2YuB6jT7zteLUbYONWB9gfkZlgCn3xTfo=
+	t=1785427864; cv=none; b=NUpf5WFL5g2ProJZqQ7wKwcZnPBtdc7TdmZsvgot2Qzjx6OjFZsCSaxusROZ1hRQ6fF7pCj7besmctKGM4hjH6p+++112Zz6S6AFVBSn3xYXDtblnyhF3+xp8jRvre+X04lal1z+n/2ywIA1DP+s/FvZKx2AaxYT/umZOadYIMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427861; c=relaxed/simple;
-	bh=dF9B6cu4GtUM7zq+z9XPYzhoXaY55r9fEafGJYw3mSk=;
+	s=arc-20240116; t=1785427864; c=relaxed/simple;
+	bh=ZTsjQJCyy4lyXbSSVxX88p3dKnqQ7CIX2/JQJM/aUWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2OXHUR7F4TaYiKD7I+xkLJoHDlyL5NUPZPylbICGXA9TD2vrBIv3+BXtBmJbN74Y3pUNwwFqNGrtE0Ngg3gyDFsHtlPRLnCFRnJiSMcu94mx4N2a0jYaaPJ59n+VXUOiGULBooFcAW91b5nM7yY8tRLu6KUYfxg1xp1oD2MC4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EWXiPJXb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SnalYkNK0Pl1PcTr9tb7oZ3sablXaUCjMwbDpxyBJqpbe0I2XbItSzC/0JMNlBfEi+xlgvpXZCvPG/EoHz0KXUTX1U4Gpl4upwv1oZ4QK6cMJJJoeeJw3vSfS3YCrdKtRIS8HG7WtXsmEBo2sKGnOgCg4guleWQ2SNML1Kds5C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdsrpBaW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EWXiPJXb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE2C11F000E9;
-	Thu, 30 Jul 2026 16:10:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdsrpBaW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FEC1F000E9;
+	Thu, 30 Jul 2026 16:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427860;
-	bh=O0hWW61mMk4BhdaZij+cRL3Uc0qh6oEgWl2xVvD/69g=;
+	s=korg; t=1785427863;
+	bh=5bxeki+JZKfPdCBsh6UrlxfA0QzfUhOvGDyl/Kl9P/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EWXiPJXbVFGOYx6tfVXEmDAU8a5+YBDZXDJ7X/VIxfSnfV/FMuq+2H3HiHeZ78MsE
-	 8FBN7Rk7vtebdh9HH5B2NJIUpukwnqZzeeovk+zj+eI8EnEblXKnAeDerKYoL4GbB5
-	 iOQDjU7ZEWG2gk+1BhG3DGXMQ3/VzDzfoOOUG9dk=
+	b=CdsrpBaW8DWHe12N9NCkH5+eIVYiqEIeqNbfuVNuY7WAMJhbF1LvcM1YLzNGhI7yQ
+	 9xZL9dBTKMViuKpNO7sNPobX2UWk6AEdwOqIDlNY+AHeNDuLOFiwgZa5J9USJb+MBy
+	 vJbbJjyHwUONv+bfafLcWmP8RozL0bYiEqXG10LQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Sungmin Kang <726ksm@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 317/484] vxlan: require CAP_NET_ADMIN in the device netns for changelink
-Date: Thu, 30 Jul 2026 16:13:34 +0200
-Message-ID: <20260730141430.373497960@linuxfoundation.org>
+Subject: [PATCH 6.6 318/484] net: slip: serialize receive against buffer reallocation
+Date: Thu, 30 Jul 2026 16:13:35 +0200
+Message-ID: <20260730141430.394883268@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,51 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Sungmin Kang <726ksm@gmail.com>
 
-commit 3a61bd9637f3d929aa846e4eb3d98b48c26fcb0e upstream.
+commit ee7f9bb9320add61f7b367d7e6cd55e3a3a4d65d upstream.
 
-A tunnel changelink() operates on at most two netns, dev_net(dev) and
-the sticky underlay netns vxlan->net. They differ once the device is
-created in or moved to a netns other than the one the request runs in.
-The rtnl changelink path checks CAP_NET_ADMIN only against dev_net(dev),
-so a caller privileged there but not in vxlan->net can rewrite a vxlan
-device whose underlay lives in vxlan->net.
+sl_realloc_bufs() replaces rbuff and updates buffsize while holding
+sl->lock. slip_receive_buf() reads those fields and writes through rbuff
+without holding the lock.
 
-vxlan_changelink() validates and applies the new configuration against
-vxlan->net (vxlan_config_validate(vxlan->net, ...)) and can reopen the
-underlay socket in that netns, so the same reasoning as the tunnel
-changelink series applies here.
+An MTU change can therefore race with receive processing. An MTU shrink
+can expose the new smaller rbuff with the old larger bound, causing an
+out-of-bounds write. A receive callback which already loaded the old
+rbuff can instead continue writing after that buffer has been freed.
 
-Gate vxlan_changelink() with rtnl_dev_link_net_capable(), at the top of
-the op before any attribute is parsed, matching ipgre_changelink() and
-the rest of the "require CAP_NET_ADMIN in the device netns for
-changelink" series.
+Serialize receive processing with sl_realloc_bufs() by holding sl->lock
+while consuming each receive batch.
 
-Found by 0sec automated security-research tooling (https://0sec.ai).
-
-Fixes: 8bcdc4f3a20b ("vxlan: add changelink support")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20260716203500.70573-2-doruk@0sec.ai
+Signed-off-by: Sungmin Kang <726ksm@gmail.com>
+Link: https://patch.msgid.link/20260718073631.1674-1-726ksm@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vxlan/vxlan_core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/slip/slip.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -4257,6 +4257,9 @@ static int vxlan_changelink(struct net_d
- 	struct vxlan_rdst *dst;
- 	int err;
+--- a/drivers/net/slip/slip.c
++++ b/drivers/net/slip/slip.c
+@@ -693,6 +693,8 @@ static void slip_receive_buf(struct tty_
+ 	if (!sl || sl->magic != SLIP_MAGIC || !netif_running(sl->dev))
+ 		return;
  
-+	if (!rtnl_dev_link_net_capable(dev, vxlan->net))
-+		return -EPERM;
++	spin_lock_bh(&sl->lock);
 +
- 	dst = &vxlan->default_dst;
- 	err = vxlan_nl2conf(tb, data, dev, &conf, true, extack);
- 	if (err)
+ 	/* Read the characters out of the buffer */
+ 	while (count--) {
+ 		if (fp && *fp++) {
+@@ -708,6 +710,8 @@ static void slip_receive_buf(struct tty_
+ #endif
+ 			slip_unesc(sl, *cp++);
+ 	}
++
++	spin_unlock_bh(&sl->lock);
+ }
+ 
+ /************************************
 
 
