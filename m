@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3233453A52;
-	Thu, 30 Jul 2026 16:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB606453A50;
+	Thu, 30 Jul 2026 16:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427588; cv=none; b=bdy2eIiXe3obZNoiAFT2IG0UsmWH283qyEbbk5LU51K7hlUiaeDcUomdA0kYz4chnEBXBs6dW2mybedwlsTql/1fwUdadbRLfKBepbSbnJaJKNWg4YSbb3GrEOv+6RKEXXTouuSNrwA+Uj8PPQvw/Om4C13xz4w53rDshwIKpS8=
+	t=1785427591; cv=none; b=r2AN+5+S+8QXX4Cpx67qm2ZzMU6oyBw6S6d2qXj5cQoELz31M1GfcNSldfn6+ipQuT63UZcKCYRxQq3GpQBe3P3DftqcDLDpTrfkELgb+EzqJcJkjeOt2+c/ocZ8VQHf4J3J/GEOkgG/qGSuRobEop5jDluDV/3Hb4HyE/MqzKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427588; c=relaxed/simple;
-	bh=xFOPtF01ErikZOUaFHiiG7q5kdBdywwen7MAZtWswhg=;
+	s=arc-20240116; t=1785427591; c=relaxed/simple;
+	bh=PlIPPsi7WRkqsXYXaLUhlndSM5KzPwKfMkzE8XautEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fIOigG0yu3EeNVdyOsLEb1KLr8XjxCj5O7freSKvNd7sa8PlAd61rrZ706OUmGu3Q63Br86IrtUUXSimodNYz5G3vcpXhAeypG41Lvj0h7Zcy876tEYg5PkECGIBgh+lsK4CJQ642UT33XvLy9dJ0FIBx7z9bjn8MwjyIJC4lJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p3Tl+IlO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g5YSQRCXsMpwkMlepg7jTtEK+fbBbdcNH5Y7rWo3uEr6T0cFNvFoPr+NMshS4xKZp2OQdVMpFxMkc48yrnuYBvC+mgg5JE6fBMEq7W+pUTJNnfgowGUysnDXEfvuF2VJnwEUhbsDaEa/2djEEjQz7CCtMA+v8JlOQGt2smW4F4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TcN3LFoE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p3Tl+IlO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A4C1F000E9;
-	Thu, 30 Jul 2026 16:06:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TcN3LFoE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 126FC1F000E9;
+	Thu, 30 Jul 2026 16:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427587;
-	bh=dULoxkZkYgTiGvUH2Y5cJtvwMOSBN4v1LHN+FhXXJwA=;
+	s=korg; t=1785427590;
+	bh=4GdfvH1AgC0twmza7q2QHdPIYcS43Goon2aicVS/RLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p3Tl+IlOvSWVsJKzS2SvL2xy+B3EEYB7uuyrgOWB8vGkq47VihIdmqBaATqZJHZ18
-	 G24NvlBSkSUxbVAEfhIxyCduRxzhQfTHo4UpQuxQiCibvokp6FQGY9nuCGEPvj9gBc
-	 wrjT0SXXaJ0KgqRvRAtc9KZ5YPkfGZ1kJjdhKOB0=
+	b=TcN3LFoEqsvq3KNeREfhfk5mWfMWKehdL7ZcUbcfxT3618kucFYPfpREn+ywrltMV
+	 vy2PuXfq/JwK7o57wuVEe5mRyQ9AQiIY2QgIfkUTy1QWjLybSLDUc3LpsS74g8D/a+
+	 42H9OTrpkXaX5+l7b4jBkXC8j4BnIF+AkGPvKKCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [PATCH 6.6 221/484] drm/virtio: bound EDID block reads to the response buffer
-Date: Thu, 30 Jul 2026 16:11:58 +0200
-Message-ID: <20260730141428.274121469@linuxfoundation.org>
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 222/484] drm/amdgpu/sdma6.0: replace BUG_ON() with WARN_ON()
+Date: Thu, 30 Jul 2026 16:11:59 +0200
+Message-ID: <20260730141428.294804573@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -50,42 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 4e1a53892ba7f8a3e1da6bfc53c83ae7c812dccd upstream.
+commit ec42c96c322e5cc48099ab5e67b5cbe236cb1949 upstream.
 
-virtio_get_edid_block() validates the read offset only against the
-device-supplied resp->size field, never against the fixed-size resp->edid
-array. The EDID block index is driven by the device-supplied extension
-count, so a malicious virtio-gpu backend can advertise a large size
-together with a high block count and read far past the array into adjacent
-kernel memory, which is then surfaced in the parsed EDID (an out-of-bounds
-read / info leak).
+There's no need to crash the kernel for these cases.
 
-Also reject any read whose end exceeds the size of the edid array.
-Conforming EDID responses stay within the array and are unaffected.
-
-Fixes: b4b01b4995fb ("drm/virtio: add edid support")
+Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c17a508a7d652da3728f8bbc481bfffe96d65a87)
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patch.msgid.link/20260620-b4-disp-22bba7bf-v1-1-b95924cee742@proton.me
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_vq.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/virtio/virtgpu_vq.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_vq.c
-@@ -723,7 +723,8 @@ static int virtio_get_edid_block(void *d
- 	struct virtio_gpu_resp_edid *resp = data;
- 	size_t start = block * EDID_LENGTH;
- 
--	if (start + len > le32_to_cpu(resp->size))
-+	if (start + len > le32_to_cpu(resp->size) ||
-+	    start + len > sizeof(resp->edid))
- 		return -EINVAL;
- 	memcpy(buf, resp->edid + start, len);
- 	return 0;
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c
+@@ -343,7 +343,7 @@ static void sdma_v6_0_ring_emit_fence(st
+ 	amdgpu_ring_write(ring, SDMA_PKT_COPY_LINEAR_HEADER_OP(SDMA_OP_FENCE) |
+ 			  SDMA_PKT_FENCE_HEADER_MTYPE(0x3)); /* Ucached(UC) */
+ 	/* zero in first two bits */
+-	BUG_ON(addr & 0x3);
++	WARN_ON(addr & 0x3);
+ 	amdgpu_ring_write(ring, lower_32_bits(addr));
+ 	amdgpu_ring_write(ring, upper_32_bits(addr));
+ 	amdgpu_ring_write(ring, lower_32_bits(seq));
+@@ -354,7 +354,7 @@ static void sdma_v6_0_ring_emit_fence(st
+ 		amdgpu_ring_write(ring, SDMA_PKT_COPY_LINEAR_HEADER_OP(SDMA_OP_FENCE) |
+ 				  SDMA_PKT_FENCE_HEADER_MTYPE(0x3));
+ 		/* zero in first two bits */
+-		BUG_ON(addr & 0x3);
++		WARN_ON(addr & 0x3);
+ 		amdgpu_ring_write(ring, lower_32_bits(addr));
+ 		amdgpu_ring_write(ring, upper_32_bits(addr));
+ 		amdgpu_ring_write(ring, upper_32_bits(seq));
 
 
