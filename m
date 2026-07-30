@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504C73B5DEE;
-	Thu, 30 Jul 2026 15:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED8C41D625;
+	Thu, 30 Jul 2026 15:02:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423749; cv=none; b=d8WCt5dSnkmjCl+trvp0/DrKc5cKGqvg3Zyf4DrffdueYyJBoFn1BGWFOonwhN7gkDFEwxBOoFDOLSCL6YcEzi+cbr6IXDjHoXtLOX4yEGlYom7OJHawS4ER1rZwhaTUP4Kx5lA76lhF8QRp/AKjzoV1ZHWP1g5lGy/1L2zZGao=
+	t=1785423752; cv=none; b=R1s9ltR3Va2gmgWBdgTt1K6Zpm/8OfomkIa5VCyeP/hEMRxMHAW1JrTQvoy51MvZTi/TAu1b70Hkf9z3N/NbeWPJBGO54YmYNKK3vXmKsTCMpMXs+Gj/Om27C7uM5S2z1h4ZYu2LeipB/OKnQcQ6bemec3GxVEkJf1DlReNsLN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423749; c=relaxed/simple;
-	bh=sxGnED0br7+k+6b+xtOLGjkhy7LQD3fqtz/n2LH+cc4=;
+	s=arc-20240116; t=1785423752; c=relaxed/simple;
+	bh=dVY4lEmDsa3AyQC7y4VCxk2QiMvF0oravamyxuRvIVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dMieL03Ct/bVUD6aTUio+64IAMMs/0uHUhyubOxRIzi9a4VDtCNu1Irq6SSatwBw/dwixZdbeo9EoZ46LyPDH49CGdiWObX7rbFPI+rHuvdymroLc2kjOsT+X21gxa4h4cYNfN2LZjranZWKhEAs+j/P9bFL4+AYiHoV9BXjQT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bTsQxWi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uIJ55W8bDg1xjJbI1V36nqdVPfV+4F//DdOTjHlHZDv73FoX6VwriRZHsDCawH4MViBkg5wKEIsu2Lt2WMIJ+IuJqNIgDAq1ZiV6TNbnBtmDdbQ7YfAC4AWP68bWNhh++GLWaEmLOlKadfp8h7J8mbRRgGx1v5JKup9e/P2JW9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbFtNnR1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bTsQxWi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E5A1F000E9;
-	Thu, 30 Jul 2026 15:02:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbFtNnR1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9041F00A3A;
+	Thu, 30 Jul 2026 15:02:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423747;
-	bh=CfnmDT7aG4T92n9xJ+Hixd8VEvv+6N24bynzJv5XXO4=;
+	s=korg; t=1785423750;
+	bh=07+ABckaMfR9hDC/JS40kOrIwtsHO9llbIqRJk8SlJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0bTsQxWi03D/s/kiqRZhJTaog0h5hp8pjLspBmEoVijIRjJQwjuc/BJS1bn0VjhYX
-	 N1AQJ0WEr95X8mdiqbjv3cpW63FN+oQ/is9CMIuPKqMGUHQinQEvKt8E1yq3NMh6dX
-	 ZR2CxpZgryiauJdcc3/yQKwQgxUkn9f6YQtk75HI=
+	b=TbFtNnR1lXG/P4AvZ1yBYYo+y8/Sgn4zNZfgI078FFDEV2GQNtK23J/Mom8+6nAC3
+	 MwwyG3Mz6aDkb2gh2j0s7LgAXeu2W/1FMa6Zrpgk2Yvltcbtb+HlDq+xT5+sUc1/Np
+	 L51aWp7TVVbyjbGATcAO6StBMf2GPLUAGS/OW5qA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Satyanarayana K V P <satyanarayana.k.v.p@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 125/675] drm/xe/sa: Shadow buffer support in the sub-allocator pool
-Date: Thu, 30 Jul 2026 16:07:35 +0200
-Message-ID: <20260730141447.801737595@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Fan Wu <fanwu01@zju.edu.cn>
+Subject: [PATCH 6.18 152/675] usb: gadget: udc: bdc: free IRQ and drain func_wake_notify before teardown
+Date: Thu, 30 Jul 2026 16:08:02 +0200
+Message-ID: <20260730141448.367949599@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,228 +50,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 1f2cf5295cdba71818288c9e495b4ef5097565ed ]
+commit 0583f2fbf8f86ae3a0ce054f96783dd83e65d9bb upstream.
 
-The existing sub-allocator is limited to managing a single buffer object.
-This enhancement introduces shadow buffer functionality to support
-scenarios requiring dual buffer management.
+The Broadcom BDC UDC driver registers its IRQ handler with
+devm_request_irq() in bdc_udc_init(), so the IRQ is released by devm
+only after bdc_remove() returns.  devm releases resources in reverse
+LIFO order, but bdc_remove() runs bdc_udc_exit() and bdc_hw_exit() ->
+bdc_mem_free() manually before returning: bdc_udc_exit() tears down
+individual endpoint objects via bdc_free_ep(), while bdc_hw_exit() ->
+bdc_mem_free() frees and NULLs the DMA-coherent status-report ring
+(bdc->srr.sr_bds) and kfree()s bdc->bdc_ep_array.  Both happen while
+the IRQ handler (bdc_udc_interrupt, requested with IRQF_SHARED)
+remains deliverable in the window up to the post-remove devm
+free_irq().
 
-The changes include added shadow buffer object creation capability,
-Management for both primary and shadow buffers, and appropriate locking
-mechanisms for thread-safe operations.
+On receipt of a shared interrupt in that window, bdc_udc_interrupt()
+dereferences bdc->srr.sr_bds[bdc->srr.dqp_index] (NULL or freed DMA)
+and dispatches sr_handler callbacks that index into bdc_ep_array,
+causing a NULL-deref or use-after-free.
 
-This enables more flexible buffer allocation strategies in scenarios where
-shadow buffering is required.
+The same window affects the delayed_work bdc->func_wake_notify, which is
+armed from the IRQ handler via bdc_sr_uspc() -> handle_link_state_change()
+-> schedule_delayed_work() and may self-rearm from its own callback
+bdc_func_wake_timer().  No cancel exists anywhere in the driver, so a
+queued work item that fires after bdc_remove() returns and the bdc
+structure is devm-freed dereferences freed memory.
 
-Signed-off-by: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
-Suggested-by: Matthew Brost <matthew.brost@intel.com>
-Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20251118120745.3460172-2-satyanarayana.k.v.p@intel.com
-Stable-dep-of: 56441f9e08ad ("drm/xe/vf: Fix VF CCS attach/detach race with in-flight BO moves")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Replace devm_request_irq() with request_irq() and add an explicit
+free_irq(bdc->irq, bdc) in bdc_remove().  Clear BDC_GIE before
+free_irq() to stop the device from asserting interrupts, then
+free_irq() drains any in-flight handler, then cancel_delayed_work_sync()
+drains the func_wake_notify delayed work.  This ordering ensures the
+IRQ handler and delayed work cannot interfere with the subsequent
+endpoint and DMA teardown in bdc_udc_exit() and bdc_hw_exit().  Wire the
+matching free_irq() into the bdc_udc_init() error path so the IRQ is
+released on probe failure, and route the bdc_init_ep() failure through
+err0 instead of returning directly.
+
+This issue was found by an in-house static analysis tool.
+
+Fixes: efed421a94e6 ("usb: gadget: Add UDC driver for Broadcom USB3.0 device controller IP BDC")
+Cc: stable <stable@kernel.org>
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260709020904.502611-1-fanwu01@zju.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_guc_buf.c      |  2 +-
- drivers/gpu/drm/xe/xe_sa.c           | 67 +++++++++++++++++++++++++++-
- drivers/gpu/drm/xe/xe_sa.h           | 20 ++++++++-
- drivers/gpu/drm/xe/xe_sa_types.h     |  3 ++
- drivers/gpu/drm/xe/xe_sriov_vf_ccs.c |  3 ++
- 5 files changed, 91 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/udc/bdc/bdc_core.c |   20 ++++++++++++++++++++
+ drivers/usb/gadget/udc/bdc/bdc_udc.c  |    7 ++++---
+ 2 files changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc_buf.c b/drivers/gpu/drm/xe/xe_guc_buf.c
-index 989c546d05689d..3de6377ae2d521 100644
---- a/drivers/gpu/drm/xe/xe_guc_buf.c
-+++ b/drivers/gpu/drm/xe/xe_guc_buf.c
-@@ -30,7 +30,7 @@ static int guc_buf_cache_init(struct xe_guc_buf_cache *cache, u32 size)
- 	struct xe_gt *gt = cache_to_gt(cache);
- 	struct xe_sa_manager *sam;
- 
--	sam = __xe_sa_bo_manager_init(gt_to_tile(gt), size, 0, sizeof(u32));
-+	sam = __xe_sa_bo_manager_init(gt_to_tile(gt), size, 0, sizeof(u32), 0);
- 	if (IS_ERR(sam))
- 		return PTR_ERR(sam);
- 	cache->sam = sam;
-diff --git a/drivers/gpu/drm/xe/xe_sa.c b/drivers/gpu/drm/xe/xe_sa.c
-index fedd017d6dd36a..d9e0d30f8135e9 100644
---- a/drivers/gpu/drm/xe/xe_sa.c
-+++ b/drivers/gpu/drm/xe/xe_sa.c
-@@ -29,6 +29,7 @@ static void xe_sa_bo_manager_fini(struct drm_device *drm, void *arg)
- 		kvfree(sa_manager->cpu_ptr);
- 
- 	sa_manager->bo = NULL;
-+	sa_manager->shadow = NULL;
- }
- 
- /**
-@@ -37,12 +38,14 @@ static void xe_sa_bo_manager_fini(struct drm_device *drm, void *arg)
-  * @size: number of bytes to allocate
-  * @guard: number of bytes to exclude from suballocations
-  * @align: alignment for each suballocated chunk
-+ * @flags: flags for suballocator
-  *
-  * Prepares the suballocation manager for suballocations.
-  *
-  * Return: a pointer to the &xe_sa_manager or an ERR_PTR on failure.
-  */
--struct xe_sa_manager *__xe_sa_bo_manager_init(struct xe_tile *tile, u32 size, u32 guard, u32 align)
-+struct xe_sa_manager *__xe_sa_bo_manager_init(struct xe_tile *tile, u32 size,
-+					      u32 guard, u32 align, u32 flags)
+--- a/drivers/usb/gadget/udc/bdc/bdc_core.c
++++ b/drivers/usb/gadget/udc/bdc/bdc_core.c
+@@ -586,9 +586,29 @@ disable_clk:
+ static void bdc_remove(struct platform_device *pdev)
  {
- 	struct xe_device *xe = tile_to_xe(tile);
- 	struct xe_sa_manager *sa_manager;
-@@ -79,6 +82,26 @@ struct xe_sa_manager *__xe_sa_bo_manager_init(struct xe_tile *tile, u32 size, u3
- 		memset(sa_manager->cpu_ptr, 0, bo->ttm.base.size);
+ 	struct bdc *bdc;
++	unsigned long flags;
++	u32 temp;
+ 
+ 	bdc  = platform_get_drvdata(pdev);
+ 	dev_dbg(bdc->dev, "%s ()\n", __func__);
++	/*
++	 * Disable the device interrupt source before freeing the IRQ:
++	 * clear BDC_GIE so the controller stops asserting interrupts,
++	 * then free_irq drains any in-flight handler.
++	 */
++	spin_lock_irqsave(&bdc->lock, flags);
++	temp = bdc_readl(bdc->regs, BDC_BDCSC);
++	temp &= ~BDC_GIE;
++	bdc_writel(bdc->regs, BDC_BDCSC, temp);
++	spin_unlock_irqrestore(&bdc->lock, flags);
++	free_irq(bdc->irq, bdc);
++	/*
++	 * Drain func_wake_notify after free_irq: the IRQ handler arms this
++	 * delayed_work via bdc_sr_uspc -> handle_link_state_change ->
++	 * schedule_delayed_work (self-rearmed in bdc_func_wake_timer), so
++	 * the IRQ must be released first to prevent re-arm after cancel.
++	 */
++	cancel_delayed_work_sync(&bdc->func_wake_notify);
+ 	bdc_udc_exit(bdc);
+ 	bdc_hw_exit(bdc);
+ 	bdc_phy_exit(bdc);
+--- a/drivers/usb/gadget/udc/bdc/bdc_udc.c
++++ b/drivers/usb/gadget/udc/bdc/bdc_udc.c
+@@ -530,8 +530,8 @@ int bdc_udc_init(struct bdc *bdc)
+ 
+ 
+ 	bdc->gadget.name = BRCM_BDC_NAME;
+-	ret = devm_request_irq(bdc->dev, bdc->irq, bdc_udc_interrupt,
+-				IRQF_SHARED, BRCM_BDC_NAME, bdc);
++	ret = request_irq(bdc->irq, bdc_udc_interrupt, IRQF_SHARED,
++			  BRCM_BDC_NAME, bdc);
+ 	if (ret) {
+ 		dev_err(bdc->dev,
+ 			"failed to request irq #%d %d\n",
+@@ -542,7 +542,7 @@ int bdc_udc_init(struct bdc *bdc)
+ 	ret = bdc_init_ep(bdc);
+ 	if (ret) {
+ 		dev_err(bdc->dev, "bdc init ep fail: %d\n", ret);
+-		return ret;
++		goto err0;
  	}
  
-+	if (flags & XE_SA_BO_MANAGER_FLAG_SHADOW) {
-+		struct xe_bo *shadow;
-+
-+		ret = drmm_mutex_init(&xe->drm, &sa_manager->swap_guard);
-+		if (ret)
-+			return ERR_PTR(ret);
-+
-+		shadow = xe_managed_bo_create_pin_map(xe, tile, size,
-+						      XE_BO_FLAG_VRAM_IF_DGFX(tile) |
-+						      XE_BO_FLAG_GGTT |
-+						      XE_BO_FLAG_GGTT_INVALIDATE |
-+						      XE_BO_FLAG_PINNED_NORESTORE);
-+		if (IS_ERR(shadow)) {
-+			drm_err(&xe->drm, "Failed to prepare %uKiB BO for SA manager (%pe)\n",
-+				size / SZ_1K, shadow);
-+			return ERR_CAST(shadow);
-+		}
-+		sa_manager->shadow = shadow;
-+	}
-+
- 	drm_suballoc_manager_init(&sa_manager->base, managed_size, align);
- 	ret = drmm_add_action_or_reset(&xe->drm, xe_sa_bo_manager_fini,
- 				       sa_manager);
-@@ -88,6 +111,48 @@ struct xe_sa_manager *__xe_sa_bo_manager_init(struct xe_tile *tile, u32 size, u3
- 	return sa_manager;
- }
+ 	ret = usb_add_gadget_udc(bdc->dev, &bdc->gadget);
+@@ -571,6 +571,7 @@ int bdc_udc_init(struct bdc *bdc)
+ err1:
+ 	usb_del_gadget_udc(&bdc->gadget);
+ err0:
++	free_irq(bdc->irq, bdc);
+ 	bdc_free_ep(bdc);
  
-+/**
-+ * xe_sa_bo_swap_shadow() - Swap the SA BO with shadow BO.
-+ * @sa_manager: the XE sub allocator manager
-+ *
-+ * Swaps the sub-allocator primary buffer object with shadow buffer object.
-+ *
-+ * Return: None.
-+ */
-+void xe_sa_bo_swap_shadow(struct xe_sa_manager *sa_manager)
-+{
-+	struct xe_device *xe = tile_to_xe(sa_manager->bo->tile);
-+
-+	xe_assert(xe, sa_manager->shadow);
-+	lockdep_assert_held(&sa_manager->swap_guard);
-+
-+	swap(sa_manager->bo, sa_manager->shadow);
-+	if (!sa_manager->bo->vmap.is_iomem)
-+		sa_manager->cpu_ptr = sa_manager->bo->vmap.vaddr;
-+}
-+
-+/**
-+ * xe_sa_bo_sync_shadow() - Sync the SA Shadow BO with primary BO.
-+ * @sa_bo: the sub-allocator buffer object.
-+ *
-+ * Synchronize sub-allocator shadow buffer object with primary buffer object.
-+ *
-+ * Return: None.
-+ */
-+void xe_sa_bo_sync_shadow(struct drm_suballoc *sa_bo)
-+{
-+	struct xe_sa_manager *sa_manager = to_xe_sa_manager(sa_bo->manager);
-+	struct xe_device *xe = tile_to_xe(sa_manager->bo->tile);
-+
-+	xe_assert(xe, sa_manager->shadow);
-+	lockdep_assert_held(&sa_manager->swap_guard);
-+
-+	xe_map_memcpy_to(xe, &sa_manager->shadow->vmap,
-+			 drm_suballoc_soffset(sa_bo),
-+			 xe_sa_bo_cpu_addr(sa_bo),
-+			 drm_suballoc_size(sa_bo));
-+}
-+
- /**
-  * __xe_sa_bo_new() - Make a suballocation but use custom gfp flags.
-  * @sa_manager: the &xe_sa_manager
-diff --git a/drivers/gpu/drm/xe/xe_sa.h b/drivers/gpu/drm/xe/xe_sa.h
-index 99dbf0eea54025..90ffa93a000ce4 100644
---- a/drivers/gpu/drm/xe/xe_sa.h
-+++ b/drivers/gpu/drm/xe/xe_sa.h
-@@ -14,12 +14,14 @@
- struct dma_fence;
- struct xe_tile;
- 
--struct xe_sa_manager *__xe_sa_bo_manager_init(struct xe_tile *tile, u32 size, u32 guard, u32 align);
-+#define XE_SA_BO_MANAGER_FLAG_SHADOW	BIT(0)
-+struct xe_sa_manager *__xe_sa_bo_manager_init(struct xe_tile *tile, u32 size,
-+					      u32 guard, u32 align, u32 flags);
- struct drm_suballoc *__xe_sa_bo_new(struct xe_sa_manager *sa_manager, u32 size, gfp_t gfp);
- 
- static inline struct xe_sa_manager *xe_sa_bo_manager_init(struct xe_tile *tile, u32 size, u32 align)
- {
--	return __xe_sa_bo_manager_init(tile, size, SZ_4K, align);
-+	return __xe_sa_bo_manager_init(tile, size, SZ_4K, align, 0);
- }
- 
- /**
-@@ -68,4 +70,18 @@ static inline void *xe_sa_bo_cpu_addr(struct drm_suballoc *sa)
- 		drm_suballoc_soffset(sa);
- }
- 
-+void xe_sa_bo_swap_shadow(struct xe_sa_manager *sa_manager);
-+void xe_sa_bo_sync_shadow(struct drm_suballoc *sa_bo);
-+
-+/**
-+ * xe_sa_bo_swap_guard() - Retrieve the SA BO swap guard within sub-allocator.
-+ * @sa_manager: the &xe_sa_manager
-+ *
-+ * Return: Sub alloctor swap guard mutex.
-+ */
-+static inline struct mutex *xe_sa_bo_swap_guard(struct xe_sa_manager *sa_manager)
-+{
-+	return &sa_manager->swap_guard;
-+}
-+
- #endif
-diff --git a/drivers/gpu/drm/xe/xe_sa_types.h b/drivers/gpu/drm/xe/xe_sa_types.h
-index cb7238799dcb20..1085c9c37d6b61 100644
---- a/drivers/gpu/drm/xe/xe_sa_types.h
-+++ b/drivers/gpu/drm/xe/xe_sa_types.h
-@@ -12,6 +12,9 @@ struct xe_bo;
- struct xe_sa_manager {
- 	struct drm_suballoc_manager base;
- 	struct xe_bo *bo;
-+	struct xe_bo *shadow;
-+	/** @swap_guard: Timeline guard updating @bo and @shadow */
-+	struct mutex swap_guard;
- 	void *cpu_ptr;
- 	bool is_iomem;
- };
-diff --git a/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c b/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c
-index 739a3eb180b53c..1a7d767632dadf 100644
---- a/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c
-+++ b/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c
-@@ -160,9 +160,12 @@ static int alloc_bb_pool(struct xe_tile *tile, struct xe_sriov_vf_ccs_ctx *ctx)
- 	offset = 0;
- 	xe_map_memset(xe, &sa_manager->bo->vmap, offset, MI_NOOP,
- 		      bb_pool_size);
-+	xe_map_memset(xe, &sa_manager->shadow->vmap, offset, MI_NOOP,
-+		      bb_pool_size);
- 
- 	offset = bb_pool_size - sizeof(u32);
- 	xe_map_wr(xe, &sa_manager->bo->vmap, offset, u32, MI_BATCH_BUFFER_END);
-+	xe_map_wr(xe, &sa_manager->shadow->vmap, offset, u32, MI_BATCH_BUFFER_END);
- 
- 	ctx->mem.ccs_bb_pool = sa_manager;
- 
--- 
-2.53.0
-
+ 	return ret;
 
 
