@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED82379988;
-	Thu, 30 Jul 2026 15:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3305237A85D;
+	Thu, 30 Jul 2026 15:09:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424197; cv=none; b=tUsiBalewrs7VxHGew+Sq+BUlbW10ZMd1KQmnX5DxHYVeHtwq7Tr02NRBNyIcKeySIP/w6MifPiWsFfBUubZymDIvy5RwCp9cWRAPhU5UU4v6Z1nKEaF8pA28HZ6mAFq2Tk2/3zYvSAE0hSAvplDYeufH1M7inP4yyZ5F6kpI+4=
+	t=1785424200; cv=none; b=cx7WTEEl+vC40te97VdzBEIbaXCIklhR0u4FoFFH6yhK7eK5moiXwvvoOLi79m2fVLkE6kGPClTtT86WaWhWcjDs640pu0269CCsF2JzpEMD2CHr4d9V8YoZ5X+l+tshoIahZGHSU0oJyq1W+pqjZeQnDOZkUUuy/TO8Hn7Q4Ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424197; c=relaxed/simple;
-	bh=Z9PvADvD707WPSmLDlkrLRCLPfF0TNNksOcvmre+JXY=;
+	s=arc-20240116; t=1785424200; c=relaxed/simple;
+	bh=54vEZ+UbTJ/8l6+wKQAzjk3MqiShYdAgWFIqHHBA/30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RRevRD5XFALsmY7IUeZKl9gX+RpJf4OpUe/0mhNKQFexOA94slffnVGyqntLyjs+h9CADLYC6v23aQO5fI9xZVRXMfOczd0vcQPCuQAVK3idLElXGqBaoJTc43/fGQL35wBDPTti1w1zPr9mvJpZYTRKG7OibIeRn9wWcukQX58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zWOi1kxz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gbYVK+Z0JyKyg3iNwvaBLafvejBKreExwVcGoIqwLVIeRTuunZYlAqlELIJBOZ7iwM7vnPEZbDUBLJiJ5J3MDirXQjU9hLq8CK9ba4/WqDHV/ED+PQawrQ7AW51LBMFohcEnDRF78yk0tULC345KgYHwf6ysguMzH3HrKBoSa6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oH+mkxCl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zWOi1kxz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C821F000E9;
-	Thu, 30 Jul 2026 15:09:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oH+mkxCl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4B21F000E9;
+	Thu, 30 Jul 2026 15:09:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424196;
-	bh=z/vK/HJJ4AkYaaNmIWMzb0dNdkirknneIFx+QMQCL2I=;
+	s=korg; t=1785424199;
+	bh=3Ylcq6eMKWjiZ1Ea+Ve6bJLDQ8BU1/wxLODwphzqcgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zWOi1kxz8C9yZ1UaLYQaUIp3zeofQLWCJboWT4pEdhBGOfPX/tiG1vTU1ra7pXy/B
-	 XfiKXj06rJINg6CGssOWUwnFYwDMq8ZEeHL49qzQQGPkq1X3GzIaq67C247u+/U3zL
-	 0FR5qpHDS2N/2qTusPEGINlfGMxHUf9gf6cumefE=
+	b=oH+mkxClXCArelf4F3oEhbEcbc0GFLdpxC5puc8i7B1UaxKLIFmBd1SpB+39GBxIm
+	 lNNYbsccn+tXFJop0Kq6Wtf8W/1D576AKxyiVtHi/RbQ1D6Uusn6ctoG7sZEmC7Ylo
+	 sx4aY0JFOyRRzRvmY+socjn1eCYw8xXKd6RSXry0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Nitin Shetty J <nshettyj@marvell.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	Joe Damato <joe@dama.to>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 307/675] octeontx2-pf: tc: fix egress ratelimiting
-Date: Thu, 30 Jul 2026 16:10:37 +0200
-Message-ID: <20260730141451.649426350@linuxfoundation.org>
+Subject: [PATCH 6.18 308/675] net: ipv6: fix dif and sdif mismatch in raw6_icmp_error
+Date: Thu, 30 Jul 2026 16:10:38 +0200
+Message-ID: <20260730141451.671003635@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,87 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit bb0d96ebe5f4d1acccf4dc36ca7f01f9a8fa1ba1 ]
+[ Upstream commit 440e274da4d1b93c7df2cb0ce893c3009dd4db55 ]
 
-The egress rate calculation computes an incorrect mantissa and exponent,
-causing up to ~50% deviation from the configured rate at lower speeds.
+In raw6_icmp_error(), raw_v6_match() is called with inet6_iif(skb) passed
+to both the 'dif' and 'sdif' arguments. This is a copy-paste or typo error,
+as the last argument should represent the secondary interface index (sdif).
 
-Rework the computation to follow the hardware rate formula:
+This mismatch breaks ICMPv6 error handling for IPv6 raw sockets in VRF
+(Virtual Routing and Forwarding) environments. When a raw socket is bound
+to a VRF master device, raw_v6_match() fails to find a match because it is
+not given the correct sdif value, causing the socket to miss relevant
+ICMPv6 error notifications.
 
-	rate = 2 * (1 + mantissa/256) * 2^exp / (1 << div_exp)
+Fix this by properly passing inet6_sdif(skb) as the last argument to
+raw_v6_match().
 
-Keep div_exp = 0 and derive exp and mantissa from half of the requested
-rate. Rates below 2 Mbps are floored to the smallest encodable step
-(exp = 0, mantissa = 0).
-
-Fixes: e638a83f167e ("octeontx2-pf: TC_MATCHALL egress ratelimiting offload")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Signed-off-by: Nitin Shetty J <nshettyj@marvell.com>
-Link: https://patch.msgid.link/20260717084349.2227796-1-nshettyj@marvell.com
+Fixes: 5108ab4bf446fa ("net: ipv6: add second dif to raw socket lookups")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Reviewed-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260717143230.1836-1-lirongqing@baidu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeontx2/nic/otx2_tc.c  | 29 ++++++++++---------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ net/ipv6/raw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-index 26a08d2cfbb1b6..f4906c67d5eee4 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-@@ -30,6 +30,7 @@
- #define OTX2_UNSUPP_LSE_DEPTH		GENMASK(6, 4)
+diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
+index c534848933ee64..6cb8e32a3061f2 100644
+--- a/net/ipv6/raw.c
++++ b/net/ipv6/raw.c
+@@ -348,7 +348,7 @@ void raw6_icmp_error(struct sk_buff *skb, int nexthdr,
+ 		const struct ipv6hdr *ip6h = (const struct ipv6hdr *)skb->data;
  
- #define MCAST_INVALID_GRP		(-1U)
-+#define RATE_MANTISSA_BITS		8
- 
- struct otx2_tc_flow_stats {
- 	u64 bytes;
-@@ -90,28 +91,30 @@ static void otx2_get_egress_burst_cfg(struct otx2_nic *nic, u32 burst,
- static void otx2_get_egress_rate_cfg(u64 maxrate, u32 *exp,
- 				     u32 *mantissa, u32 *div_exp)
- {
--	u64 tmp;
--
- 	/* Rate calculation by hardware
- 	 *
- 	 * PIR_ADD = ((256 + mantissa) << exp) / 256
- 	 * rate = (2 * PIR_ADD) / ( 1 << div_exp)
- 	 * The resultant rate is in Mbps.
-+	 *
-+	 * Use div_exp = 0 and compute exp/mantissa for maxrate / 2; the
-+	 * leading factor of two yields the full rate. Rates below 2 Mbps
-+	 * are floored to the smallest step (exp = 0, mantissa = 0).
- 	 */
- 
--	/* 2Mbps to 100Gbps can be expressed with div_exp = 0.
--	 * Setting this to '0' will ease the calculation of
--	 * exponent and mantissa.
--	 */
- 	*div_exp = 0;
--
- 	if (maxrate) {
--		*exp = ilog2(maxrate) ? ilog2(maxrate) - 1 : 0;
--		tmp = maxrate - rounddown_pow_of_two(maxrate);
--		if (maxrate < MAX_RATE_MANTISSA)
--			*mantissa = tmp * 2;
--		else
--			*mantissa = tmp / (1ULL << (*exp - 7));
-+		maxrate = maxrate / 2;
-+		if (!maxrate) {
-+			/* Rates below 2 Mbps map to the smallest step */
-+			*exp = 0;
-+			*mantissa = 0;
-+		} else {
-+			*exp = ilog2(maxrate);
-+			/* Clear MSB and derive fractional bits */
-+			maxrate &= ~BIT(*exp);
-+			*mantissa = (maxrate << RATE_MANTISSA_BITS) >> *exp;
-+		}
- 	} else {
- 		/* Instead of disabling rate limiting, set all values to max */
- 		*exp = MAX_RATE_EXPONENT;
+ 		if (!raw_v6_match(net, sk, nexthdr, &ip6h->saddr, &ip6h->daddr,
+-				  inet6_iif(skb), inet6_iif(skb)))
++				  inet6_iif(skb), inet6_sdif(skb)))
+ 			continue;
+ 		rawv6_err(sk, skb, type, code, inner_offset, info);
+ 	}
 -- 
 2.53.0
 
