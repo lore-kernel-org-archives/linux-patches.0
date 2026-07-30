@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72F537C92C;
-	Thu, 30 Jul 2026 15:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8D237F011;
+	Thu, 30 Jul 2026 15:35:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425724; cv=none; b=YmTssezMy9QdDIzIhk4rcGRB14yp/aZ/eZTAfNt3PddvLMOCfp+2SkmhrQViS8IHeMlJ/4Wb7ehWyAKC3GkqbHgLdY/+EsCGBspLE7wJilL+YpG5mwGkj5XJl4Uj4owzACVJHWDIYknq8BPpBgYj9HTP7ohjrgE3Oie4WX6H5JQ=
+	t=1785425727; cv=none; b=tQyjFXZGtVGzMwBt9gK9tEmXti3yLBsqbsgt4zg3Nau4YNLkHHN/RfzjxUGLMwQymY7VYRVM6u3EHEuhtbdmonSm3rwqubxBX7T0Mij6fpjiYZn0ggsWXGvlCYViFVQIKGQOQ34EzN19kkoRRXD6pV1GZ+jAtS0xOvlZoI4i2HQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425724; c=relaxed/simple;
-	bh=meFGs6zuBGuupQKSVcXC2TIKO12bpm0+8b08M3xOMqo=;
+	s=arc-20240116; t=1785425727; c=relaxed/simple;
+	bh=pbsfTz2B2ETWRiWeF+SSch4N7oWrvqW64+0LwnBQwak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MeBF3uxhAPBRdQtLReHGZ8WsyN4/jqDrj59eCMalGqU2N61BjphZXIEGvfnl4JNt8UhMTAzr0rI3AYLD2HT7kfpgF8tMhJY98nqfuP4S5qrePzlv8F9mdQ5HY0QVNFpWJcEPflt3G8WywowCeBUu7fSBtPRFx8Ubx8xrwQPYDfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/j4nZ0k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pUO+koVy0jLpOdivw/7XrOjnWbqcZtW16zrqYcONwMcA3AaAEtVlo1zbVJdaKu/njOvN0ha+z07UHCfafvh7FgCOV83lpf0AuO9sPv4bClIFuwpXKTvZS6dGxcH/i4wzMi2TXaSI+3JfPy9huNuYh84HfPwo89Yv8WIZsU0Eb0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bvQVY35K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/j4nZ0k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6E01F000E9;
-	Thu, 30 Jul 2026 15:35:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bvQVY35K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E926D1F000E9;
+	Thu, 30 Jul 2026 15:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425723;
-	bh=/3R91Y18cR1e5LqKdNULxo64vsuQTDzXblUbiHDFZSE=;
+	s=korg; t=1785425726;
+	bh=sReuwFVJHviqp2Qq9IdcNUYrNu5XwJGKi+rhjowhyCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y/j4nZ0kp6nTfbR1ayxD0Vx6SBiYUhpoXwZ4G2aTxGAK6CDRs4vxvaED3b3HEgMFC
-	 ka28ro80Uhc7uaRG6kCLqkZz7zDb7UBXlHfDbg8FBuAf6Z6Cn8KJzlO1gp3zXCwXXQ
-	 NXS0cWmshsrIv83wunb330DgxjN7K9eA2nteZwdA=
+	b=bvQVY35KYpInqxy8vZVEzQ6kSk7Auot0DJLWobkIsWg2HgDwtJjaiJPKSuk+/dMAe
+	 f+Xw9pDZ2Ye5GRgw4wgK745oKIvikCoTDjs2rkQZaI7sDZh59+7ie3vs91Jx/w0Wl+
+	 ulLD3jYeU2Bb0sb6n3tZeB0vqD+2A+yzjNDnQe3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Yichong Chen <chenyichong@uniontech.com>,
-	Steve French <stfrench@microsoft.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 168/602] smb: client: validate DFS referral PathConsumed
-Date: Thu, 30 Jul 2026 16:09:20 +0200
-Message-ID: <20260730141439.501236455@linuxfoundation.org>
+Subject: [PATCH 6.12 169/602] hwmon: occ: validate poll response sensor blocks
+Date: Thu, 30 Jul 2026 16:09:21 +0200
+Message-ID: <20260730141439.522071718@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,95 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit f6f5ee2aa33b350c671721b965251c42cebb962e ]
+[ Upstream commit 70e76e700fc6c46afb4e17aec099a1ea089b4a22 ]
 
-parse_dfs_referrals() validates that the response contains the fixed
-referral entry array and, on for-next, the per-referral string offsets.
-However, the response also contains a PathConsumed value that is later
-used for DFS path parsing.
+The OCC poll response parser walks a counted list of sensor data blocks.
+It used the static backing-array capacity as the parse boundary, but a
+transport response makes only data_length bytes current and valid. A
+truncated response can therefore make the parser consume a block header or
+block extent outside the current response.
 
-If a malformed response provides a PathConsumed value larger than the
-search name, later DFS parsing can advance beyond the end of the path.
+Use data_length as the parent boundary, prove the fixed poll header and
+each current block header before reading them, and prove the complete block
+before advancing. Keep parsed sensor metadata local until the complete
+response has passed validation, then publish it. Propagate
+malformed-response errors before publishing the OCC as active.
 
-Validate PathConsumed against the search name length before storing it in
-the parsed referral.
-
-Fixes: 4ecce920e13a ("CIFS: move DFS response parsing out of SMB1 code")
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: aa195fe49b03 ("hwmon (occ): Parse OCC poll response")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20260720115826.14813-1-pengpeng@iscas.ac.cn
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/misc.c | 34 +++++++++++++++++++++++++---------
- 1 file changed, 25 insertions(+), 9 deletions(-)
+ drivers/hwmon/occ/common.c | 38 ++++++++++++++++++++++++++++++--------
+ 1 file changed, 30 insertions(+), 8 deletions(-)
 
-diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
-index 713b95a2361145..ce8f3fdffc3bda 100644
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -954,6 +954,8 @@ parse_dfs_referrals(struct get_dfs_referral_rsp *rsp, u32 rsp_size,
- 	int i, rc = 0;
- 	char *data_end;
- 	struct dfs_referral_level_3 *ref;
-+	unsigned int path_consumed;
-+	size_t search_name_len;
+diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
+index e18e80e832fd3f..175208d712b06e 100644
+--- a/drivers/hwmon/occ/common.c
++++ b/drivers/hwmon/occ/common.c
+@@ -1052,32 +1052,49 @@ static int occ_setup_sensor_attrs(struct occ *occ)
+ }
  
- 	if (rsp_size < sizeof(*rsp)) {
- 		cifs_dbg(VFS | ONCE,
-@@ -1001,6 +1003,7 @@ parse_dfs_referrals(struct get_dfs_referral_rsp *rsp, u32 rsp_size,
- 		rc = -ENOMEM;
- 		goto parse_DFS_referrals_exit;
- 	}
-+	search_name_len = strlen(searchName);
+ /* only need to do this once at startup, as OCC won't change sensors on us */
+-static void occ_parse_poll_response(struct occ *occ)
++static int occ_parse_poll_response(struct occ *occ)
+ {
+ 	unsigned int i, old_offset, offset = 0, size = 0;
++	u16 data_length;
+ 	struct occ_sensor *sensor;
+-	struct occ_sensors *sensors = &occ->sensors;
++	struct occ_sensors parsed = {};
++	struct occ_sensors *sensors = &parsed;
+ 	struct occ_response *resp = &occ->resp;
+ 	struct occ_poll_response *poll =
+ 		(struct occ_poll_response *)&resp->data[0];
+ 	struct occ_poll_response_header *header = &poll->header;
+ 	struct occ_sensor_data_block *block = &poll->block;
  
- 	/* collect necessary data from referrals */
- 	for (i = 0; i < *num_of_nodes; i++) {
-@@ -1009,21 +1012,34 @@ parse_dfs_referrals(struct get_dfs_referral_rsp *rsp, u32 rsp_size,
- 		struct dfs_info3_param *node = (*target_nodes)+i;
++	data_length = get_unaligned_be16(&resp->data_length);
++	if (data_length < sizeof(*header) || data_length > OCC_RESP_DATA_BYTES) {
++		dev_err(occ->bus_dev, "invalid OCC poll response length %u\n",
++			data_length);
++		return -EMSGSIZE;
++	}
++
+ 	dev_info(occ->bus_dev, "OCC found, code level: %.16s\n",
+ 		 header->occ_code_level);
  
- 		node->flags = le32_to_cpu(rsp->DFSFlags);
-+		path_consumed = le16_to_cpu(rsp->PathConsumed);
- 		if (is_unicode) {
--			__le16 *tmp = kmalloc(strlen(searchName)*2 + 2,
--						GFP_KERNEL);
--			if (tmp == NULL) {
-+			size_t search_name_utf16_len = search_name_len * 2 + 2;
-+			__le16 *tmp;
-+
-+			if (path_consumed > search_name_utf16_len) {
-+				rc = -EINVAL;
-+				goto parse_DFS_referrals_exit;
-+			}
-+
-+			tmp = kmalloc(search_name_utf16_len, GFP_KERNEL);
-+			if (!tmp) {
- 				rc = -ENOMEM;
- 				goto parse_DFS_referrals_exit;
- 			}
--			cifsConvertToUTF16((__le16 *) tmp, searchName,
-+			cifsConvertToUTF16((__le16 *)tmp, searchName,
- 					   PATH_MAX, nls_codepage, remap);
--			node->path_consumed = cifs_utf16_bytes(tmp,
--					le16_to_cpu(rsp->PathConsumed),
--					nls_codepage);
-+			node->path_consumed = cifs_utf16_bytes(tmp, path_consumed,
-+							       nls_codepage);
- 			kfree(tmp);
--		} else
--			node->path_consumed = le16_to_cpu(rsp->PathConsumed);
-+		} else {
-+			if (path_consumed > search_name_len) {
-+				rc = -EINVAL;
-+				goto parse_DFS_referrals_exit;
-+			}
-+
-+			node->path_consumed = path_consumed;
+ 	for (i = 0; i < header->num_sensor_data_blocks; ++i) {
+ 		block = (struct occ_sensor_data_block *)((u8 *)block + offset);
++		if (size + sizeof(*header) + sizeof(block->header) >
++		    data_length) {
++			dev_err(occ->bus_dev,
++				"truncated OCC sensor block header\n");
++			return -EMSGSIZE;
 +		}
++
+ 		old_offset = offset;
+ 		offset = (block->header.num_sensors *
+ 			  block->header.sensor_length) + sizeof(block->header);
+-		size += offset;
  
- 		node->server_type = le16_to_cpu(ref->ServerType);
- 		node->ref_flag = le16_to_cpu(ref->ReferralEntryFlags);
+ 		/* validate all the length/size fields */
+-		if ((size + sizeof(*header)) >= OCC_RESP_DATA_BYTES) {
+-			dev_warn(occ->bus_dev, "exceeded response buffer\n");
+-			return;
++		if (size + sizeof(*header) + offset > data_length) {
++			dev_err(occ->bus_dev,
++				"exceeded OCC poll response length\n");
++			return -EMSGSIZE;
+ 		}
++		size += offset;
+ 
+ 		dev_dbg(occ->bus_dev, " %04x..%04x: %.4s (%d sensors)\n",
+ 			old_offset, offset - 1, block->header.eye_catcher,
+@@ -1107,6 +1124,9 @@ static void occ_parse_poll_response(struct occ *occ)
+ 
+ 	dev_dbg(occ->bus_dev, "Max resp size: %u+%zd=%zd\n", size,
+ 		sizeof(*header), size + sizeof(*header));
++	occ->sensors = parsed;
++
++	return 0;
+ }
+ 
+ int occ_active(struct occ *occ, bool active)
+@@ -1138,10 +1158,12 @@ int occ_active(struct occ *occ, bool active)
+ 			goto unlock;
+ 		}
+ 
+-		occ->active = true;
+ 		occ->next_update = jiffies + OCC_UPDATE_FREQUENCY;
+-		occ_parse_poll_response(occ);
++		rc = occ_parse_poll_response(occ);
++		if (rc)
++			goto unlock;
+ 
++		occ->active = true;
+ 		rc = occ_setup_sensor_attrs(occ);
+ 		if (rc) {
+ 			dev_err(occ->bus_dev,
 -- 
 2.53.0
 
