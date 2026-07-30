@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103D2419304;
-	Thu, 30 Jul 2026 14:59:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEEA432E94;
+	Thu, 30 Jul 2026 14:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423573; cv=none; b=k9Is/z7xDQbxOCHAuG04rxBaFhT+n3glhO1QhFZLCz5qqxdGD9ipzrMaY7jgh2dieyvb458+o8SWk+m6PQvH+QQSf5y4c3ovNomxtcp40bPrlAtY5omAGtF3bj0IcP1+DJneZ+LO5J+GMHJ5z28bLCNOX9QviKcon7k/PcL3498=
+	t=1785423576; cv=none; b=YkreIRrsbZXofEFUqhOJPno08KefGAoNCNBqcSbzbFWlvjEbe86cllECG/hOz8SfyjVsUV5yMT8MJ+6orIYyVPUc/CtJ7TQcKIw/HRYk3Qm5pq8JsTYsIFX+Q+qk1xmOUVQlhBgLk7a8uLhiY5REimJwP340aVUb2Nm+ovyTNHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423573; c=relaxed/simple;
-	bh=bRDFNKigVOlbS8cErcCccFySOC2SVEfK2NGIjiQZIjg=;
+	s=arc-20240116; t=1785423576; c=relaxed/simple;
+	bh=/XUyiUxqsbK3T0DVwm9R9KHHRQ62Yt5zN2UMCrlmLDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=evkxI1fbLRPyoo/PcfKXLSA2lb3Czst8bvokebO8Ty34AxhJx7gZOicou4ea9RsHktg5ktEFMUxG9Ihfk/ZPQh68efYq+cgzVs2J4WMxVwFQrbvylICR/fwYyTZImO7hkPedDResg0rvYQbN78CO8h4Oulqm9Xo/VJcLfxYCFnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHUK9x1D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jLeqE2yYGXh2IK9IdY5H6h58cYKgQLoJd9338gyp03XVINWIWdZUvA2y2FrA+Rft+KZgL36E8Gk+fQhJma6CmoRnixXrpsTuW8Sau+iO5/DDenJXJAkGG6bM/Yo++vYLwZOUyBhlOMV4PCLBfeS/5UYd66FTgHkQumcKDfbhNZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V8gR95Zm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHUK9x1D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65C8C1F000E9;
-	Thu, 30 Jul 2026 14:59:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8gR95Zm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FFE41F000E9;
+	Thu, 30 Jul 2026 14:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423572;
-	bh=Dlt8404JQBuv293z36IQ+p8woG7wYS6O9mZQZ6r0fHo=;
+	s=korg; t=1785423574;
+	bh=IRmHB4ywvQ/qUTeJ/v5PfrhiaieBooHRdNRe2fZNODE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xHUK9x1DTDKaPBaig7x921Xt8Sh3gaf4YiDtgM7ZFzpKC7t7/AkxeaGkkhxqjQ6WM
-	 C0Axj3oaBGZhxmpUSrm7jruuv0J0G+tsszWlZ8vK8wsnIyHbpui64w/Lq8J9vsgnU0
-	 k3WzQfNOvR4UZzBM3ZtBk9lXo6YGTwLHhKro1o4A=
+	b=V8gR95ZmkYRIvgk2pslIa+JVPAVKwzMuM/eQXkMJyrNLOIUWoP7Fjv169TYJ37ZQd
+	 7/mPh3XZThtng+l9NclukaX0JCSathL2XyIOWG+GgwSfEkLJvJhEVAD9c63+qE6XxR
+	 JRJpMk1VNR5FBduv5qtB3PHJYkt2ccKfU6qURVR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Uday Khare <udaykhare77@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 092/675] ASoC: cs42l43: Correct report for forced microphone jack
-Date: Thu, 30 Jul 2026 16:07:02 +0200
-Message-ID: <20260730141447.084404804@linuxfoundation.org>
+Subject: [PATCH 6.18 093/675] ASoC: tas2562: fix deprecated shut-down GPIO always cleared after lookup
+Date: Thu, 30 Jul 2026 16:07:03 +0200
+Message-ID: <20260730141447.105745214@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,43 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Uday Khare <udaykhare77@gmail.com>
 
-[ Upstream commit f74e6e15485b68b92b2807071e822db6309b7e38 ]
+[ Upstream commit 3238c634725afbb2a137fdda762208510828f71d ]
 
-Currently if the jack is forced to the microphone mode, it will report
-as line in. Correct the report to microphone.
+In tas2562_parse_dt(), the fallback lookup for the deprecated
+"shut-down" GPIO property is broken due to a missing pair of braces.
 
-Fixes: fc918cbe874e ("ASoC: cs42l43: Add support for the cs42l43")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260708103430.1395207-1-ckeepax@opensource.cirrus.com
+The code intends to reset sdz_gpio to NULL only when the lookup
+returns an error that is not -EPROBE_DEFER (so the driver gracefully
+continues without a GPIO). However, without braces the statement:
+
+    tas2562->sdz_gpio = NULL;
+
+falls outside the IS_ERR() check and is executed unconditionally
+for every path through the if block, including a successful GPIO
+lookup.
+
+This means any device using the deprecated 'shut-down' DT property
+will always have sdz_gpio == NULL after probe, making the GPIO
+completely non-functional.
+
+Fix this by adding the missing braces to scope the NULL assignment
+inside the IS_ERR() branch, matching the pattern already used for
+the primary 'shutdown' GPIO lookup above.
+
+Fixes: f78a97003b8b ("ASoC: tas2562: Update shutdown GPIO property")
+Signed-off-by: Uday Khare <udaykhare77@gmail.com>
+Link: https://patch.msgid.link/20260706153109.10953-1-udaykhare77@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs42l43-jack.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/tas2562.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/cs42l43-jack.c b/sound/soc/codecs/cs42l43-jack.c
-index ecba6c79523840..36fb67059e0652 100644
---- a/sound/soc/codecs/cs42l43-jack.c
-+++ b/sound/soc/codecs/cs42l43-jack.c
-@@ -310,6 +310,7 @@ irqreturn_t cs42l43_bias_detect_clamp(int irq, void *data)
- #define CS42L43_JACK_ABSENT 0x0
+diff --git a/sound/soc/codecs/tas2562.c b/sound/soc/codecs/tas2562.c
+index 8e00dcc09d0c28..795c66cb47134e 100644
+--- a/sound/soc/codecs/tas2562.c
++++ b/sound/soc/codecs/tas2562.c
+@@ -675,11 +675,12 @@ static int tas2562_parse_dt(struct tas2562_data *tas2562)
+ 	if (tas2562->sdz_gpio == NULL) {
+ 		tas2562->sdz_gpio = devm_gpiod_get_optional(dev, "shut-down",
+ 							      GPIOD_OUT_HIGH);
+-		if (IS_ERR(tas2562->sdz_gpio))
++		if (IS_ERR(tas2562->sdz_gpio)) {
+ 			if (PTR_ERR(tas2562->sdz_gpio) == -EPROBE_DEFER)
+ 				return -EPROBE_DEFER;
  
- #define CS42L43_JACK_OPTICAL (SND_JACK_MECHANICAL | SND_JACK_AVOUT)
-+#define CS42L43_JACK_MICROPHONE (SND_JACK_MECHANICAL | SND_JACK_MICROPHONE)
- #define CS42L43_JACK_HEADPHONE (SND_JACK_MECHANICAL | SND_JACK_HEADPHONE)
- #define CS42L43_JACK_HEADSET (SND_JACK_MECHANICAL | SND_JACK_HEADSET)
- #define CS42L43_JACK_LINEOUT (SND_JACK_MECHANICAL | SND_JACK_LINEOUT)
-@@ -871,7 +872,7 @@ static const struct cs42l43_jack_override_mode {
- 		.hsdet_mode = CS42L43_JACK_3_POLE_SWITCHES,
- 		.mic_ctrl = (0x3 << CS42L43_JACK_STEREO_CONFIG_SHIFT) |
- 			    CS42L43_HS1_BIAS_EN_MASK | CS42L43_HS2_BIAS_EN_MASK,
--		.report = CS42L43_JACK_LINEIN,
-+		.report = CS42L43_JACK_MICROPHONE,
- 	},
- 	[CS42L43_JACK_RAW_OPTICAL] = {
- 		.hsdet_mode = CS42L43_JACK_3_POLE_SWITCHES,
+-		tas2562->sdz_gpio = NULL;
++			tas2562->sdz_gpio = NULL;
++		}
+ 	}
+ 
+ 	if (tas2562->model_id == TAS2110)
 -- 
 2.53.0
 
