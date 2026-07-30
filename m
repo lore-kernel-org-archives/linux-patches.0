@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285CF372ECB;
-	Thu, 30 Jul 2026 15:04:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7FF3750CF;
+	Thu, 30 Jul 2026 15:04:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423860; cv=none; b=gK6DjoqkF4XJ+iIHlx1BU0zMTnDwCsYf2moRduzgCSSMHojQ6V+iaXo6/JGSnF513HP5X90UYsn/dGrfLQ3rEk3um6E9Vce4fDwv+hRtvCux6dhxG4kR3HjP8Mo3b0teWurSuXfoDmKb8svso8T2aXHcVpl9UE94Mm9GZyrR06k=
+	t=1785423863; cv=none; b=ub8ALjWwvtex04T02GMooLCNT12AWwS5qncR8qVdeuWY0vauaojgf2Nwm/5trp9TLm6bRLbpGkoIyNtcrbW+sCKmKl5w3A9ZbapbCuQHCeNH/j4NMOMKstt8ZA/odMQ4bDTIhrj0aDTy4XtVs85T8YPkbToY4+XRQbtv6eOACcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423860; c=relaxed/simple;
-	bh=mzB97QleiFnNrAZldpdDVABL0S4PRAUu5tVP1E/Guf0=;
+	s=arc-20240116; t=1785423863; c=relaxed/simple;
+	bh=UwcgvW7Swl2h4Gp87qmprbo4JFCCTxWrRq8XXKEhefQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jE3eYCRxfrSnnTzu3vD//ih1LycIgfB3tbvPgAiv9iFQvU/1hWFPDijLFnWNAvFFLRv9MAgjvoa49+uNy7zwr/dx8pbMFl+XQZBvpXpxuo/0AaIxAX8Sm/7PC0ob47mHCF5iznmNLPVWqTdBUiGGF1pSKOc7sczqw2wLcMPBcTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ohKdlVLe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VMm8YzWK8Ubq9yqKyN2oXoiVtTOrg9Jweh+jcgigL/iFl+xHcd75d6of0xONLXeuRxcqZ533KUg+dsTgB17RZsL+QBugOkGMB6tDLNg4oBeTYTgstlrfwrdDBst3198lhx5+qQ3uX9bI8WdJaJAUMxRqgeGVzh3v9yzw6srr2Cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lkFzF57B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ohKdlVLe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7893B1F000E9;
-	Thu, 30 Jul 2026 15:04:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lkFzF57B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514551F000E9;
+	Thu, 30 Jul 2026 15:04:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423859;
-	bh=dX1U9NIV+KRa8tQmGxZ0G9DHmNHqaW/CPniTODu00bI=;
+	s=korg; t=1785423861;
+	bh=HX4bnfJ99sMae+sFm0CxLvD23HWpDPsiwd/6khnqE/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ohKdlVLeEc45Eh04Xcqi2ZcKZcbC3lxfMvMTqs6Q9ZC+2jr/nIyPmXPKu2okj7lEB
-	 YPG6yo19SMLbBY562sofTHmQ4zYeW6ugG8X+ZkfO9lJmFpbwureVfmvFE+B7r8ZQm/
-	 /E7joOEE2xsNHqnKcCvfz/iF3PPRj00MPubnNCz0=
+	b=lkFzF57BLkoWUlTeaaPZBZ2AoKD9HE9dhXwmF8LUsmB1pccuFNn6vGVsOd4d/Y9ih
+	 9tAORvgC5vDFxRmjbg+Wumdth9AWrtaWG2Z7BfKmH9iJ1PXT0Tcn66tkJ7rZvxq7bg
+	 k9CVdD5X0cHfiDxIiZytAFZk3TKFkFkoKD1Lbbd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 191/675] ASoC: bt-sco: fix duplicate DAPM widget names for wideband DAI
-Date: Thu, 30 Jul 2026 16:08:41 +0200
-Message-ID: <20260730141449.203583648@linuxfoundation.org>
+Subject: [PATCH 6.18 192/675] ASoC: cs35l56: Dont use devres to unregister component
+Date: Thu, 30 Jul 2026 16:08:42 +0200
+Message-ID: <20260730141449.223904539@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,70 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 0b604e886ece11b71c4daaeccc512c784b89b014 ]
+[ Upstream commit bee87cf0f1248c0f20710d7a79df41fe892d9f88 ]
 
-The bt-sco-pcm-wb DAI uses the same stream_name strings as bt-sco-pcm
-("Playback" and "Capture"). This causes duplicate DAPM AIF widget
-names within the same component, leading to debugfs warnings:
+Manually call snd_soc_unregister_component() from cs35l56_remove()
+instead of using devres cleanup. This ensures that the component is
+destroyed before cs35l56_remove() starts cleanup of anything the
+component code could be using.
 
-  debugfs: 'Playback' already exists in 'dapm'
-  debugfs: 'Capture' already exists in 'dapm'
+Devres cleanup happens after the driver remove() callback, so if
+snd_soc_register_component() is used, it will not be destroyed until
+after cs35l56_remove() has returned. But there is some cleanup that
+must be done in cs35l56_remove(), or wrapped in a custom devres
+cleanup handler to ensure correct ordering. The simplest option is
+to call snd_soc_unregister_component() at the start of cs35l56_remove().
 
-Give the wideband DAI distinct stream names ("WB Playback" and
-"WB Capture") and add corresponding DAPM AIF widgets and routes for
-them.
-
-Fixes: 5947e1b4992e ("ASoC: bt-sco: extend rate and add a general compatible string")
-Assisted-by: VeroCoder:claude-sonnet-4-5
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20260715100620.1387159-1-shengjiu.wang@oss.nxp.com
+Fixes: e49611252900 ("ASoC: cs35l56: Add driver for Cirrus Logic CS35L56")
+Closes: https://sashiko.dev/#/patchset/20260501103002.2843735-1-rf%40opensource.cirrus.com
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260505161124.3621000-2-rf@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 93c2a8ea2454 ("ASoC: cs35l56: Fix potential probe() deadlock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/bt-sco.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ sound/soc/codecs/cs35l56.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/bt-sco.c b/sound/soc/codecs/bt-sco.c
-index 3afcef2dfa3529..c0bf45b76cb8c5 100644
---- a/sound/soc/codecs/bt-sco.c
-+++ b/sound/soc/codecs/bt-sco.c
-@@ -17,11 +17,17 @@ static const struct snd_soc_dapm_widget bt_sco_widgets[] = {
- 			    SND_SOC_NOPM, 0, 0),
- 	SND_SOC_DAPM_AIF_OUT("BT_SCO_TX", "Capture", 0,
- 			     SND_SOC_NOPM, 0, 0),
-+	SND_SOC_DAPM_AIF_IN("BT_SCO_RX_WB", "WB Playback", 0,
-+			    SND_SOC_NOPM, 0, 0),
-+	SND_SOC_DAPM_AIF_OUT("BT_SCO_TX_WB", "WB Capture", 0,
-+			     SND_SOC_NOPM, 0, 0),
- };
+diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
+index 7b57ef2336ea8d..0f40af6606a426 100644
+--- a/sound/soc/codecs/cs35l56.c
++++ b/sound/soc/codecs/cs35l56.c
+@@ -1437,9 +1437,9 @@ int cs35l56_common_probe(struct cs35l56_private *cs35l56)
+ 		goto err;
+ 	}
  
- static const struct snd_soc_dapm_route bt_sco_routes[] = {
- 	{ "BT_SCO_TX", NULL, "RX" },
- 	{ "TX", NULL, "BT_SCO_RX" },
-+	{ "BT_SCO_TX_WB", NULL, "RX" },
-+	{ "TX", NULL, "BT_SCO_RX_WB" },
- };
+-	ret = devm_snd_soc_register_component(cs35l56->base.dev,
+-					      &soc_component_dev_cs35l56,
+-					      cs35l56_dai, ARRAY_SIZE(cs35l56_dai));
++	ret = snd_soc_register_component(cs35l56->base.dev,
++					 &soc_component_dev_cs35l56,
++					 cs35l56_dai, ARRAY_SIZE(cs35l56_dai));
+ 	if (ret < 0) {
+ 		dev_err_probe(cs35l56->base.dev, ret, "Register codec failed\n");
+ 		goto err_remove_wm_adsp;
+@@ -1541,6 +1541,8 @@ EXPORT_SYMBOL_NS_GPL(cs35l56_init, "SND_SOC_CS35L56_CORE");
  
- static struct snd_soc_dai_driver bt_sco_dai[] = {
-@@ -45,14 +51,14 @@ static struct snd_soc_dai_driver bt_sco_dai[] = {
- 	{
- 		.name = "bt-sco-pcm-wb",
- 		.playback = {
--			.stream_name = "Playback",
-+			.stream_name = "WB Playback",
- 			.channels_min = 1,
- 			.channels_max = 1,
- 			.rates = SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_16000,
- 			.formats = SNDRV_PCM_FMTBIT_S16_LE,
- 		},
- 		.capture = {
--			 .stream_name = "Capture",
-+			 .stream_name = "WB Capture",
- 			.channels_min = 1,
- 			.channels_max = 1,
- 			.rates = SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_16000,
+ void cs35l56_remove(struct cs35l56_private *cs35l56)
+ {
++	snd_soc_unregister_component(cs35l56->base.dev);
++
+ 	cs35l56->base.init_done = false;
+ 
+ 	/*
 -- 
 2.53.0
 
