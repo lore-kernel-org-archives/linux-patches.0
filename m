@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1271D41F362;
-	Thu, 30 Jul 2026 14:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B8237756C;
+	Thu, 30 Jul 2026 14:47:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422846; cv=none; b=E2rvbWZDkHKtQolHwNNscKgLPKWSRQ/6Onn+qupgH/eqJ/LLzwRINXTwUR7dUuqAGQzWnWhh3ka81ZtX7rOSCl3IoSK0QUkt/Q9qAPYxuABoKyEAbVOH3JEq4AL7ptEGjAodOKsybAjKCYCA8VdwXWMKPneYiawfqVwPBnZA37s=
+	t=1785422848; cv=none; b=UmXhTogPSCiXOraEvU/akcuQwcv0yXHWtr27Yh1wlO1SZ1RNKfsxZPd+I8vcEMD1Z93yEbe+xJWxcUQ5WHGpp6V5OnMt4dA//TpApaAjiEpbDCIHJQBant9Nu5z0NrRHLfn1xoaxAt2wIFn9P1TUZG9Oix8zUZEdOJpD2TXf6kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422846; c=relaxed/simple;
-	bh=JSI8Lx5IkbnHfXiNsgn/55XliJH1SwN1hgCcahbLdwY=;
+	s=arc-20240116; t=1785422848; c=relaxed/simple;
+	bh=6t0J5o2NJBCRaSPElnACjF0vHIIn4eirvzx6zz1tXqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HxZF9EIQoQB7zl2Uqs1skOi+SSqD8KNkBpHktCsj/iSVZF7pTcqbZ0Bobr1ywqOYt0jiJTNBYyIHaPAEwb8iAgOHH12iQYC5cyzCub3EAOKOIRobKKPdeeWlu/hqUOHNdSvWWFHlUU07qYwYbdNtgryiNC7jui0vY5wY7n8DKG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzjtaePQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MSYWJ0e1SWaaq7kWFB3U6oZBuvjCHXu1e2me18RiPOHPJzLpic2JF+0Y/LST7nRWf0TK4xK1aXQDf+icjWbsmba0GntNEHUtu4iLv7amvyOJzKFHO/QgJPqMpXPxbkB9x9vMyrN5amtsTZBj9U7eX9E+DiVZoEK8vrqX4QCKsY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eaf+kkfJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzjtaePQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275B31F00A3A;
-	Thu, 30 Jul 2026 14:47:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eaf+kkfJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00091F00A3A;
+	Thu, 30 Jul 2026 14:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422844;
-	bh=JQwdc+uekTT/OoPTlwPxg4+onhAbY+Ae2pPcMzh3qcA=;
+	s=korg; t=1785422847;
+	bh=867R8zlXDLGlDvn4lfqOmxo3Dw0GnfW5XrO4vGJD+B8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uzjtaePQrgeNlngAcLGuj3PSuKEdogkaOldTXgdRMz2ncpX0YGZmXF9SIE7nHqPR8
-	 FS1MijLdJfy0BxMbwitB3MuDAZJusIX0aVJTGeo3M+nF0/Yn4UFKZ4xsGuzdVVrW18
-	 miIFQmgu+akLQLrpL3q4VDqdMH9zjp3XQYKS7eNo=
+	b=Eaf+kkfJpPTd631IfT3kcoWNfPAStYXiInZPEjMGJw9KjoPxU/EMvAriqH4CVGSpj
+	 rzDJzVF89xJ2hMl9jriYWDOC2GcpfOo2qKqEH9/OlXMp9ChfEbY0yuTWAGv7Q/Q3W5
+	 aoqGWzgnNcyk+FCDsZWIS89UnLfb7Bt4HpISpieU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	Yuan Tan <yuantan098@gmail.com>,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
-	NeilBrown <neil@brown.name>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 7.1 576/744] rhashtable: clear stale iter->p on table restart
-Date: Thu, 30 Jul 2026 16:14:09 +0200
-Message-ID: <20260730141456.526605524@linuxfoundation.org>
+	Tze Yee Ng <tze.yee.ng@altera.com>,
+	Dinh Nguyen <dinguyen@kernel.org>
+Subject: [PATCH 7.1 577/744] firmware: stratix10-svc: fix memory leaks and list corruption bugs
+Date: Thu, 30 Jul 2026 16:14:10 +0200
+Message-ID: <20260730141456.548759475@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,58 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Tze Yee Ng <tze.yee.ng@altera.com>
 
-commit 8173f7e2ce67e6ca1d4763f3da14e5b01ce77456 upstream.
+commit 9119ceb76e987c2ec2b549ea100e3268ce3a1c7c upstream.
 
-rhashtable_walk_start_check() has two restart paths when resuming a walk.
-When iter->walker.tbl is valid, it re-validates iter->p against the table
-and sets iter->p = NULL if the object is gone.  When iter->walker.tbl is
-NULL (table was freed during resize), it resets slot and skip but forgets
-to clear iter->p.
+Fix a memory leak when gen_pool_alloc() fails by freeing pmem on the error
+path. Switch pmem allocation from devm_kzalloc() to kzalloc() with
+explicit kfree() in the free path to match its list-managed lifetime.
+Remove the erroneous list_del(&svc_data_mem) which corrupted the list head
+on failed lookups.
 
-rhashtable_walk_next() then dereferences the stale iter->p, reading
-freed memory.  This is a use-after-free.
-
-Any caller that does multi-fragment rhashtable walks across
-walk_stop/walk_start boundaries is affected.  Concrete cases include
-netlink_diag (__netlink_diag_dump in net/netlink/diag.c) and TIPC
-(tipc_nl_sk_walk in net/tipc/socket.c).
-
-Crash stack (netlink_diag):
-  BUG: KASAN: slab-use-after-free in rhashtable_walk_next+0x365/0x3c0
-  Read of size 8 at addr ffff88801a9d2438 (freed kmalloc-2k, offset 1080)
-  Call Trace:
-   rhashtable_walk_next+0x365/0x3c0 (lib/rhashtable.c:1016)
-   __netlink_diag_dump+0x160/0x760 (net/netlink/diag.c:122)
-   netlink_diag_dump+0xc2/0x240
-   netlink_dump+0x5bc/0x1270
-   netlink_recvmsg+0x7a3/0x980
-   sock_recvmsg+0x1bc/0x200
-   __sys_recvfrom+0x1d4/0x2c0
-
-Fixes: 5d240a8936f6 ("rhashtable: improve rhashtable_walk stability when stop/start used.")
-Cc: <stable@vger.kernel.org>
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Closes: https://lore.kernel.org/linux-crypto/CAB8m9Wh559e+=n8z51gB8DrbEyCc2mc0MgGjrRR6_VXBmU=2AQ@mail.gmail.com
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Reviewed-by: NeilBrown <neil@brown.name>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 7ca5ce896524 ("firmware: add Intel Stratix10 service layer driver")
+Cc: stable@vger.kernel.org # 5.0+
+Signed-off-by: Tze Yee Ng <tze.yee.ng@altera.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/rhashtable.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/firmware/stratix10-svc.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/lib/rhashtable.c
-+++ b/lib/rhashtable.c
-@@ -776,6 +776,7 @@ int rhashtable_walk_start_check(struct r
- 		iter->walker.tbl = rht_dereference_rcu(ht->tbl, ht);
- 		iter->slot = 0;
- 		iter->skip = 0;
-+		iter->p = NULL;
- 		return -EAGAIN;
- 	}
+--- a/drivers/firmware/stratix10-svc.c
++++ b/drivers/firmware/stratix10-svc.c
+@@ -1845,14 +1845,16 @@ void *stratix10_svc_allocate_memory(stru
+ 	struct gen_pool *genpool = chan->ctrl->genpool;
+ 	size_t s = roundup(size, 1 << genpool->min_alloc_order);
+ 
+-	pmem = devm_kzalloc(chan->ctrl->dev, sizeof(*pmem), GFP_KERNEL);
++	pmem = kzalloc_obj(*pmem);
+ 	if (!pmem)
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	guard(mutex)(&svc_mem_lock);
+ 	va = gen_pool_alloc(genpool, s);
+-	if (!va)
++	if (!va) {
++		kfree(pmem);
+ 		return ERR_PTR(-ENOMEM);
++	}
+ 
+ 	memset((void *)va, 0, s);
+ 	pa = gen_pool_virt_to_phys(genpool, va);
+@@ -1878,6 +1880,7 @@ EXPORT_SYMBOL_GPL(stratix10_svc_allocate
+ void stratix10_svc_free_memory(struct stratix10_svc_chan *chan, void *kaddr)
+ {
+ 	struct stratix10_svc_data_mem *pmem;
++
+ 	guard(mutex)(&svc_mem_lock);
+ 
+ 	list_for_each_entry(pmem, &svc_data_mem, node)
+@@ -1886,10 +1889,9 @@ void stratix10_svc_free_memory(struct st
+ 				       (unsigned long)kaddr, pmem->size);
+ 			pmem->vaddr = NULL;
+ 			list_del(&pmem->node);
++			kfree(pmem);
+ 			return;
+ 		}
+-
+-	list_del(&svc_data_mem);
+ }
+ EXPORT_SYMBOL_GPL(stratix10_svc_free_memory);
  
 
 
