@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24FD442FC1;
-	Thu, 30 Jul 2026 14:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B20E43E079;
+	Thu, 30 Jul 2026 14:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421189; cv=none; b=b/hnXClOGrzw38kMkq11nkI4zyT2cdp6HQmTRTP7DQ0R+eVkPDc5NBxqGYgiLFuCHBK3lUO2485CQjfo9BmfznRF1wmetLxFHqIED3541555iiMz0p4rAXWvXp+iFq92BcICqGAdeHR2EqlUwI5sPaYKaocEKRihY1Y5eEiJ5oo=
+	t=1785421192; cv=none; b=NUNqbYloaVJtnLnYSAuR7EHU8TWULZKJSK+r3JDooD5PV6ywK5xWViXvkkJkZIQbGj0vYcgK0HOyoFbV9kkM9Rej4uOpy+Kh/Gmw5ycTvy06AX3w1X056fOg2ZPjZxeordLff4xrUskLRd9YsSnwZC7tw6Hw0Iyqzk8X5jIPaBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421189; c=relaxed/simple;
-	bh=IeQg0KaD4QVYD2schdhsxPML87zC0210PT67s24KA2w=;
+	s=arc-20240116; t=1785421192; c=relaxed/simple;
+	bh=eeh4mVrhU83/lpA6BYWREGE1hMpGZTXAseaTxxXH/yU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iYTgHxurGjCSHYwXsD5eqZd1bNONalX2m+91KlsJ1S3K+K9xX3/VUaYZzOIselL7YBvpAwwNU0ZGoRsUVlPjZB7dyk0mD5SfpyzjUuMQAOiRRswFTjrrmGKHkReddSEAeSSkmFdRs545hF334jHKM8sxHzdnm6QOexJvoo3quB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zDTkqx5f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J5ng5BSt/eYsPszZtxjaTMFRwE2uSEDQouGq69Qozag3jvgiyxOLRBdPHbumPbCtM0Ni7u5cXDCDsxqpPFij66NDRSouXAfZlTOO/8DN3ODQwq+uvNmKkZIKLlW/FthPTMj7dkGFalvN5v2CxO905AiNhCeQNAjObipP9nANMbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XinZVxs0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zDTkqx5f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B78B41F00A3D;
-	Thu, 30 Jul 2026 14:19:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XinZVxs0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95A181F000E9;
+	Thu, 30 Jul 2026 14:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421188;
-	bh=cAc1QIykoR3zuEX/z/RmlY+XVwvOfBm6f+tOaMqeDB4=;
+	s=korg; t=1785421191;
+	bh=9TuF6rAe9b9/shfuQMWKAsJ7TAzzJQERX3vRaIUKkZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zDTkqx5f8oUlzcvA73ZdshFE7aH4c33r9xrBMMA+tkSLMIluRPqVlC6J0h32M1Gti
-	 8tmcPb3LHzniQ3ZuUvLuyxlWDCFo2LuAQYdPqAioCuWy6D07u8HVaUGoaLMdq8g6Cr
-	 n4vsPTTVkzcfhBN8LV4KOi7ugeyyAfW/ci10awfQ=
+	b=XinZVxs0G/4yf9s5ONCoop8JunidD1nFfMCFlKEttsqc4Sf30N2DrMqSJXRiH8pIz
+	 0bf0hGw7axUhPYDkUqcO0x1Ee1FBRNrAbgTm44w5ygK7goB69Cj++fR8ffhBO8uVID
+	 oBoQEz1YI0GyLd07BliMMz7fsxy1tHnV9Nv9MafE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 021/744] mtd: virt_concat: fix use-after-free in mtd_virt_concat_destroy()
-Date: Thu, 30 Jul 2026 16:04:54 +0200
-Message-ID: <20260730141444.734199857@linuxfoundation.org>
+Subject: [PATCH 7.1 022/744] mtd: mtdswap: remove debugfs stats file on teardown
+Date: Thu, 30 Jul 2026 16:04:55 +0200
+Message-ID: <20260730141444.754772345@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,39 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 4b45d7836b9526b8776af5f29219615be9417230 ]
+[ Upstream commit 66fb31358108d10245b9e4ef0eef3e7d9747055e ]
 
-mtd_concat_destroy() frees item->concat so calling
-mtd_virt_concat_put_mtd_devices(item->concat) after that leads to a
-use-after-free.
+mtdswap_add_debugfs() creates an mtdswap_stats debugfs file under the
+per-MTD debugfs directory, but mtdswap_remove_dev() never removes it
+before freeing the mtdswap_dev.
 
-Fix it by moving mtd_virt_concat_put_mtd_devices() before
-mtd_concat_destroy().
+Store the returned dentry and remove it during device teardown before the
+driver-private state is freed.
 
-Fixes: 43db6366fc2d ("mtd: Add driver for concatenating devices")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Fixes: a32159024620 ("mtd: Add mtdswap block driver")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtd_virt_concat.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/mtdswap.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/mtd_virt_concat.c b/drivers/mtd/mtd_virt_concat.c
-index 5761816e7f4dca..da4277ced4d63b 100644
---- a/drivers/mtd/mtd_virt_concat.c
-+++ b/drivers/mtd/mtd_virt_concat.c
-@@ -126,8 +126,8 @@ int mtd_virt_concat_destroy(struct mtd_info *mtd)
- 		if (concat->mtd.name) {
- 			del_mtd_device(&concat->mtd);
- 			kfree(concat->mtd.name);
--			mtd_concat_destroy(&concat->mtd);
- 			mtd_virt_concat_put_mtd_devices(item->concat);
-+			mtd_concat_destroy(&concat->mtd);
- 		}
+diff --git a/drivers/mtd/mtdswap.c b/drivers/mtd/mtdswap.c
+index 866933fc84265d..f33f753f0a9fda 100644
+--- a/drivers/mtd/mtdswap.c
++++ b/drivers/mtd/mtdswap.c
+@@ -125,6 +125,7 @@ struct mtdswap_dev {
  
- 		for (idx = 0; idx < item->count; idx++)
+ 	char *page_buf;
+ 	char *oob_buf;
++	struct dentry *debugfs_stats;
+ };
+ 
+ struct mtdswap_oobdata {
+@@ -1262,7 +1263,8 @@ static int mtdswap_add_debugfs(struct mtdswap_dev *d)
+ 	if (IS_ERR_OR_NULL(root))
+ 		return -1;
+ 
+-	debugfs_create_file("mtdswap_stats", S_IRUSR, root, d, &mtdswap_fops);
++	d->debugfs_stats = debugfs_create_file("mtdswap_stats", 0400, root,
++					       d, &mtdswap_fops);
+ 
+ 	return 0;
+ }
+@@ -1463,6 +1465,7 @@ static void mtdswap_remove_dev(struct mtd_blktrans_dev *dev)
+ {
+ 	struct mtdswap_dev *d = MTDSWAP_MBD_TO_MTDSWAP(dev);
+ 
++	debugfs_remove(d->debugfs_stats);
+ 	del_mtd_blktrans_dev(dev);
+ 	mtdswap_cleanup(d);
+ 	kfree(d);
 -- 
 2.53.0
 
