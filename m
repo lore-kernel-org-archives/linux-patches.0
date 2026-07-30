@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0CD3E0091;
-	Thu, 30 Jul 2026 15:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978913839B8;
+	Thu, 30 Jul 2026 15:40:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426047; cv=none; b=AVN6J2odfrYAUYebh7TKcLJE2AHsRNcHFJ929fBMwL/RoiPLh78wbP3gAVf86CuPYEfacR2X+MAsD7ThPPi+t2iyOQ9lUUn1I0kb0qznc40gN+rl8aJigt74tMXhugiWV0mka4x37wEiXVEZ4Us/DVgk7NMJSbhzu8tB7NlwWbo=
+	t=1785426050; cv=none; b=NrndB1Am+yyOgYiZzo6/ekDWvoq29z77UmkWbrVAVKi5+KyEu/5ZVzgY+W0v0db4AKXEGm+xlzFLgZd2pbiUgVhXZvQDydxZu6vlUScRMczPLb8YwmgG1ETKIzH7BeXIMyRWpWPjl5ly8VrjW4Cio/fivILzMuFdl3xIbCNfMOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426047; c=relaxed/simple;
-	bh=NNIWRv+Qr5qgohQm8B6ySNDQ34MqFmICbrEnMzJuWSk=;
+	s=arc-20240116; t=1785426050; c=relaxed/simple;
+	bh=qgJSUzBqszkQKJ2ysSbGuRFNYIYr5fxd6o/ZSCBPFTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YZxlF1Cxq1n9J7XeCef31FA2CtClFkEtXHVvq5YW+gpXYna4QrUIfRehzw37QeqM0i58DZQzTzkr4MaaaCdOlvmvTiu96+y3Z4+x2juJOOvAIgIPHRySsglQrro8q1btwzcfRxsUjvnfByvzQPzmLb79GlrJyON23aDsC1wkWAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fmBJFnNk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZjsZfcX+TY85wNWfR3JMbQ7ApQjSSdwvpNji5Foklh2g4q8zyntEjp4u2V+9gpRJc5ujArf9xBiCvthkl8Wnt+ko3J4OwNE1CdbV5r7CdepFVhUzxi675vSNN7e+DrDhJs4RvcAdk/9M17YQyIzI4vtmYrFje0k6262/Ti8dDk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fM+p/g3X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fmBJFnNk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232821F000E9;
-	Thu, 30 Jul 2026 15:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fM+p/g3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0ECB1F000E9;
+	Thu, 30 Jul 2026 15:40:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426046;
-	bh=0JhHNC0Zf6FhYhle7FDag+qyH7bbpOg+dyUFFxyl9+E=;
+	s=korg; t=1785426049;
+	bh=mQicuoZQiZhblWpCwPKbYB3xttcId/lQJeHcePUOzX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fmBJFnNk4yH0kHaCd+/AI/uNtLkohk79PSvyJVWIFtduQ+6kGzff/XR5OCCCyFGv/
-	 IKvSqCPNnGx1076LLvGIaZ+H39TY402Yv2fw43j95kQ7PKPfcpamGw/XgwiLQPiuBo
-	 TJLvOGX10WDv1sqyFR8Sq0aXNwZJv5pzik6vIOgo=
+	b=fM+p/g3XltRR05ER4VW/uy6ojXw3zGvR1R2xO8alvKfpkJpgf9tqDCZj9wSFZBgAs
+	 /Oq8uU62Wc9lXgsAibTLI10OVE82WqTTgh+/dD2nFFMl/+nTWZETnHUrypFa6RJ07Y
+	 ZkvEQuD19GrPAP0H35ACJoY8p4ePQ9OnnH6BRO7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Matthew W Carlis <mattc@purestorage.com>,
 	Gal Pressman <gal@nvidia.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 238/602] net/mlx5: Remove newline at the end of a netlink error message
-Date: Thu, 30 Jul 2026 16:10:30 +0200
-Message-ID: <20260730141440.974841385@linuxfoundation.org>
+Subject: [PATCH 6.12 239/602] net/mlx5: Refactor EEPROM query error handling to return status separately
+Date: Thu, 30 Jul 2026 16:10:31 +0200
+Message-ID: <20260730141440.994921415@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -55,95 +56,230 @@ Content-Transfer-Encoding: 8bit
 
 From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit 3a2295ff3f00d44c97baec37c43b6ede3eea9df9 ]
+[ Upstream commit 2e4c44b12f4da60d3e8dcbc1ccf38bb28a878050 ]
 
-Netlink error messages should not have a newline at the end of the
-string.
+Matthew and Jakub reported [1] issues where inventory automation tools
+are calling EEPROM query repeatedly on a port that doesn't have an SFP
+connected, resulting in millions of error prints.
 
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Move MCIA register status extraction from the query functions to the
+callers, allowing use of extack reporting instead of a dmesg print when
+using the netlink API.
+
+[1] https://lore.kernel.org/netdev/20251028194011.39877-1-mattc@purestorage.com/
+
+Cc: Matthew W Carlis <mattc@purestorage.com>
 Signed-off-by: Gal Pressman <gal@nvidia.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/20250226093904.6632-3-gal@nvidia.com
+Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/1763415729-1238421-2-git-send-email-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 11c057d23465 ("net/mlx5: Fix MCIA register buffer overflow on 32 dword reads")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/dpll.c            | 2 +-
- drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c | 2 +-
- drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c      | 2 +-
- drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c      | 6 +++---
- 4 files changed, 6 insertions(+), 6 deletions(-)
+ .../ethernet/mellanox/mlx5/core/en_ethtool.c  | 19 +++++-----
+ .../ethernet/mellanox/mlx5/core/mlx5_core.h   |  4 +--
+ .../net/ethernet/mellanox/mlx5/core/port.c    | 35 +++++++++----------
+ 3 files changed, 30 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/dpll.c b/drivers/net/ethernet/mellanox/mlx5/core/dpll.c
-index 31142f6cc37293..1e5522a194839c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/dpll.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/dpll.c
-@@ -242,7 +242,7 @@ static int mlx5_dpll_clock_quality_level_get(const struct dpll_device *dpll,
- 		return 0;
- 	}
- errout:
--	NL_SET_ERR_MSG_MOD(extack, "Invalid clock quality level obtained from firmware\n");
-+	NL_SET_ERR_MSG_MOD(extack, "Invalid clock quality level obtained from firmware");
- 	return -EINVAL;
- }
- 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c
-index b9cf79e2712440..7a18a469961db8 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c
-@@ -140,7 +140,7 @@ static int mlx5e_tc_tun_parse_vxlan_gbp_option(struct mlx5e_priv *priv,
- 	gbp_mask = (u32 *)&enc_opts.mask->data[0];
- 
- 	if (*gbp_mask & ~VXLAN_GBP_MASK) {
--		NL_SET_ERR_MSG_FMT_MOD(extack, "Wrong VxLAN GBP mask(0x%08X)\n", *gbp_mask);
-+		NL_SET_ERR_MSG_FMT_MOD(extack, "Wrong VxLAN GBP mask(0x%08X)", *gbp_mask);
- 		return -EINVAL;
- 	}
- 
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-index 1f55c5a7edf31b..d278542677efb2 100644
+index d278542677efb2..026f2867b84900 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-@@ -2013,7 +2013,7 @@ static int mlx5e_get_module_eeprom_by_page(struct net_device *netdev,
+@@ -1912,7 +1912,7 @@ static int mlx5e_get_module_info(struct net_device *netdev,
+ 	int size_read = 0;
+ 	u8 data[4] = {0};
+ 
+-	size_read = mlx5_query_module_eeprom(dev, 0, 2, data);
++	size_read = mlx5_query_module_eeprom(dev, 0, 2, data, NULL);
+ 	if (size_read < 2)
+ 		return -EIO;
+ 
+@@ -1954,6 +1954,7 @@ static int mlx5e_get_module_eeprom(struct net_device *netdev,
+ 	struct mlx5_core_dev *mdev = priv->mdev;
+ 	int offset = ee->offset;
+ 	int size_read;
++	u8 status = 0;
+ 	int i = 0;
+ 
+ 	if (!ee->len)
+@@ -1963,15 +1964,15 @@ static int mlx5e_get_module_eeprom(struct net_device *netdev,
+ 
+ 	while (i < ee->len) {
+ 		size_read = mlx5_query_module_eeprom(mdev, offset, ee->len - i,
+-						     data + i);
+-
++						     data + i, &status);
+ 		if (!size_read)
+ 			/* Done reading */
+ 			return 0;
+ 
+ 		if (size_read < 0) {
+-			netdev_err(priv->netdev, "%s: mlx5_query_eeprom failed:0x%x\n",
+-				   __func__, size_read);
++			netdev_err(netdev,
++				   "%s: mlx5_query_eeprom failed:0x%x, status %u\n",
++				   __func__, size_read, status);
+ 			return size_read;
+ 		}
+ 
+@@ -1991,6 +1992,7 @@ static int mlx5e_get_module_eeprom_by_page(struct net_device *netdev,
+ 	struct mlx5_core_dev *mdev = priv->mdev;
+ 	u8 *data = page_data->data;
+ 	int size_read;
++	u8 status = 0;
+ 	int i = 0;
+ 
+ 	if (!page_data->length)
+@@ -2004,7 +2006,8 @@ static int mlx5e_get_module_eeprom_by_page(struct net_device *netdev,
+ 	query.page = page_data->page;
+ 	while (i < page_data->length) {
+ 		query.size = page_data->length - i;
+-		size_read = mlx5_query_module_eeprom_by_page(mdev, &query, data + i);
++		size_read = mlx5_query_module_eeprom_by_page(mdev, &query,
++							     data + i, &status);
+ 
+ 		/* Done reading, return how many bytes was read */
+ 		if (!size_read)
+@@ -2013,8 +2016,8 @@ static int mlx5e_get_module_eeprom_by_page(struct net_device *netdev,
  		if (size_read < 0) {
  			NL_SET_ERR_MSG_FMT_MOD(
  				extack,
--				"Query module eeprom by page failed, read %u bytes, err %d\n",
-+				"Query module eeprom by page failed, read %u bytes, err %d",
- 				i, size_read);
+-				"Query module eeprom by page failed, read %u bytes, err %d",
+-				i, size_read);
++				"Query module eeprom by page failed, read %u bytes, err %d, status %u",
++				i, size_read, status);
  			return size_read;
  		}
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
-index c5ea1d1d2b035c..282cef59e6173f 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
-@@ -1861,7 +1861,7 @@ int mlx5_esw_bridge_port_mdb_add(struct net_device *dev, u16 vport_num, u16 esw_
- 			 "Failed to lookup bridge port to add MDB (MAC=%pM,vport=%u)\n",
- 			 addr, vport_num);
- 		NL_SET_ERR_MSG_FMT_MOD(extack,
--				       "Failed to lookup bridge port to add MDB (MAC=%pM,vport=%u)\n",
-+				       "Failed to lookup bridge port to add MDB (MAC=%pM,vport=%u)",
- 				       addr, vport_num);
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+index 1ca75f1815ef64..2e152f8571c7df 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+@@ -342,11 +342,11 @@ int mlx5_set_port_fcs(struct mlx5_core_dev *mdev, u8 enable);
+ void mlx5_query_port_fcs(struct mlx5_core_dev *mdev, bool *supported,
+ 			 bool *enabled);
+ int mlx5_query_module_eeprom(struct mlx5_core_dev *dev,
+-			     u16 offset, u16 size, u8 *data);
++			     u16 offset, u16 size, u8 *data, u8 *status);
+ int
+ mlx5_query_module_eeprom_by_page(struct mlx5_core_dev *dev,
+ 				 struct mlx5_module_eeprom_query_params *params,
+-				 u8 *data);
++				 u8 *data, u8 *status);
+ 
+ int mlx5_query_port_dcbx_param(struct mlx5_core_dev *mdev, u32 *out);
+ int mlx5_set_port_dcbx_param(struct mlx5_core_dev *mdev, u32 *in);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/port.c b/drivers/net/ethernet/mellanox/mlx5/core/port.c
+index 79c477e05e46cf..c0f189b8cd1ad6 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/port.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/port.c
+@@ -289,11 +289,11 @@ int mlx5_query_module_num(struct mlx5_core_dev *dev, int *module_num)
+ }
+ 
+ static int mlx5_query_module_id(struct mlx5_core_dev *dev, int module_num,
+-				u8 *module_id)
++				u8 *module_id, u8 *status)
+ {
+ 	u32 in[MLX5_ST_SZ_DW(mcia_reg)] = {};
+ 	u32 out[MLX5_ST_SZ_DW(mcia_reg)];
+-	int err, status;
++	int err;
+ 	u8 *ptr;
+ 
+ 	MLX5_SET(mcia_reg, in, i2c_device_address, MLX5_I2C_ADDR_LOW);
+@@ -308,12 +308,12 @@ static int mlx5_query_module_id(struct mlx5_core_dev *dev, int module_num,
+ 	if (err)
+ 		return err;
+ 
+-	status = MLX5_GET(mcia_reg, out, status);
+-	if (status) {
+-		mlx5_core_err(dev, "query_mcia_reg failed: status: 0x%x\n",
+-			      status);
++	if (MLX5_GET(mcia_reg, out, status)) {
++		if (status)
++			*status = MLX5_GET(mcia_reg, out, status);
+ 		return -EIO;
+ 	}
++
+ 	ptr = MLX5_ADDR_OF(mcia_reg, out, dword_0);
+ 
+ 	*module_id = ptr[0];
+@@ -370,13 +370,14 @@ static int mlx5_mcia_max_bytes(struct mlx5_core_dev *dev)
+ }
+ 
+ static int mlx5_query_mcia(struct mlx5_core_dev *dev,
+-			   struct mlx5_module_eeprom_query_params *params, u8 *data)
++			   struct mlx5_module_eeprom_query_params *params,
++			   u8 *data, u8 *status)
+ {
+ 	u32 in[MLX5_ST_SZ_DW(mcia_reg)] = {};
+ 	u32 out[MLX5_ST_SZ_DW(mcia_reg)];
+-	int status, err;
+ 	void *ptr;
+ 	u16 size;
++	int err;
+ 
+ 	size = min_t(int, params->size, mlx5_mcia_max_bytes(dev));
+ 
+@@ -392,12 +393,9 @@ static int mlx5_query_mcia(struct mlx5_core_dev *dev,
+ 	if (err)
+ 		return err;
+ 
+-	status = MLX5_GET(mcia_reg, out, status);
+-	if (status) {
+-		mlx5_core_err(dev, "query_mcia_reg failed: status: 0x%x\n",
+-			      status);
++	*status = MLX5_GET(mcia_reg, out, status);
++	if (*status)
+ 		return -EIO;
+-	}
+ 
+ 	ptr = MLX5_ADDR_OF(mcia_reg, out, dword_0);
+ 	memcpy(data, ptr, size);
+@@ -406,7 +404,7 @@ static int mlx5_query_mcia(struct mlx5_core_dev *dev,
+ }
+ 
+ int mlx5_query_module_eeprom(struct mlx5_core_dev *dev,
+-			     u16 offset, u16 size, u8 *data)
++			     u16 offset, u16 size, u8 *data, u8 *status)
+ {
+ 	struct mlx5_module_eeprom_query_params query = {0};
+ 	u8 module_id;
+@@ -416,7 +414,8 @@ int mlx5_query_module_eeprom(struct mlx5_core_dev *dev,
+ 	if (err)
+ 		return err;
+ 
+-	err = mlx5_query_module_id(dev, query.module_number, &module_id);
++	err = mlx5_query_module_id(dev, query.module_number, &module_id,
++				   status);
+ 	if (err)
+ 		return err;
+ 
+@@ -442,12 +441,12 @@ int mlx5_query_module_eeprom(struct mlx5_core_dev *dev,
+ 	query.size = size;
+ 	query.offset = offset;
+ 
+-	return mlx5_query_mcia(dev, &query, data);
++	return mlx5_query_mcia(dev, &query, data, status);
+ }
+ 
+ int mlx5_query_module_eeprom_by_page(struct mlx5_core_dev *dev,
+ 				     struct mlx5_module_eeprom_query_params *params,
+-				     u8 *data)
++				     u8 *data, u8 *status)
+ {
+ 	int err;
+ 
+@@ -461,7 +460,7 @@ int mlx5_query_module_eeprom_by_page(struct mlx5_core_dev *dev,
  		return -EINVAL;
  	}
-@@ -1874,7 +1874,7 @@ int mlx5_esw_bridge_port_mdb_add(struct net_device *dev, u16 vport_num, u16 esw_
- 				 "Failed to lookup bridge port vlan metadata to create MDB (MAC=%pM,vid=%u,vport=%u)\n",
- 				 addr, vid, vport_num);
- 			NL_SET_ERR_MSG_FMT_MOD(extack,
--					       "Failed to lookup vlan metadata for MDB (MAC=%pM,vid=%u,vport=%u)\n",
-+					       "Failed to lookup vlan metadata for MDB (MAC=%pM,vid=%u,vport=%u)",
- 					       addr, vid, vport_num);
- 			return -EINVAL;
- 		}
-@@ -1882,7 +1882,7 @@ int mlx5_esw_bridge_port_mdb_add(struct net_device *dev, u16 vport_num, u16 esw_
  
- 	err = mlx5_esw_bridge_port_mdb_attach(dev, port, addr, vid);
- 	if (err) {
--		NL_SET_ERR_MSG_FMT_MOD(extack, "Failed to add MDB (MAC=%pM,vid=%u,vport=%u)\n",
-+		NL_SET_ERR_MSG_FMT_MOD(extack, "Failed to add MDB (MAC=%pM,vid=%u,vport=%u)",
- 				       addr, vid, vport_num);
- 		return err;
- 	}
+-	return mlx5_query_mcia(dev, params, data);
++	return mlx5_query_mcia(dev, params, data, status);
+ }
+ 
+ static int mlx5_query_port_pvlc(struct mlx5_core_dev *dev, u32 *pvlc,
 -- 
 2.53.0
 
