@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99AB23A6B7F;
-	Thu, 30 Jul 2026 14:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7818742E8FF;
+	Thu, 30 Jul 2026 14:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421431; cv=none; b=E8icduEPlhlMn/DG8R67nDvnLuZsiwtdGIwUvXy46bepTMMPpIjKMsTYPhqWXOuAGqQ9/rchfcUPpY/PbX/gn/NCnrcdxormZDfC2mrMbBE6Lo4mPVNL1a3xqPrHkJcG444FSiRG0A98jKMJQHTUYzkriM8v03BFpMRWLNR3Lhg=
+	t=1785421434; cv=none; b=A54QuDlg5PwfhzV+8gtn6eZAKmI4Hgag19yD0k0/FnQhoYmNBFv5KHxEoreTpN4Q/+dUU7tMwGKBZd+ii06u9VIvnCHSFW0D+Y0q6WqIVetQk7nQG2g04n3xo8yo9/bSj+HiCWh3ykZHkODOwgSQv3CE/VBxf5HjGEweGb3ZEyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421431; c=relaxed/simple;
-	bh=vqp2u7suODy4Q70krFICYXOJt1K5EWk3ZY9u75uG/po=;
+	s=arc-20240116; t=1785421434; c=relaxed/simple;
+	bh=kOgenngjBH6cUwIxPC1ooJ9BnWBrF9nA15uQ5tAT/d0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LzQDkQpG7Xsc8JkLino9dMRqSmjQidF3HyVxZfrfaiyzZ0Ds1TGf+uhqntPqoCay5xGsSkJx5OsurD06iN5Rn1WC6XwxopMYMtfya/UylMdjbkDDe2RsArL0AigbesgIXEalFQbbVHQZljikVpZmEq7MOKbS/b63DN+ljU9JnFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uSPVX4H5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rRy/fNEOPyUsEA74xPppfpQuw6xPCJo+2o17NIwvjmBXxlAGpZZsFolLkENWO7o20mNMNdt0K8CNhB+FEypsvld/BvtJ9gfeHqOkL8RufUx52esXf+TY5m3Q2aHqNpmKzea9irocEZKF+4IcSsACLc4q7WGkPuB/AOiCPx9GYW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Isg7Ph/m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uSPVX4H5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39EC1F000E9;
-	Thu, 30 Jul 2026 14:23:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Isg7Ph/m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98F31F000E9;
+	Thu, 30 Jul 2026 14:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421430;
-	bh=c/kW2m5luGbtEjH6wdFWJCfjNXXZisydbreO6+wKqw4=;
+	s=korg; t=1785421433;
+	bh=4w8x//q5ZIq/yW9fqrNnOSLom8UpWyHY1jztvMR5eIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uSPVX4H5dhlbo2aMDb1UFHnx4lV7mO0nN+dPzLpDXBosZYN5VLxtoVAQsvxZKGz/8
-	 m181v2AnH8V0qW2QqjfKpR5W82nTYf8vTKQXwBxFo7w7PurZgwol4SCjLgCEZgdkQO
-	 hAnvRfTTf9TXwVXaRt6Rpi2Lj0ru/QhSCPVySbmg=
+	b=Isg7Ph/mYLYgtOs8dUStXHmqINLqxIrenxlovGJySrr+F1/uTrAijQBCpm9S/1prU
+	 MRcZ7NiZcLHgBeFr31Uq7+LNUEMftvl2jtTiSgt/lPlSGR/EWLTp5hp2VOSN3UVy62
+	 AuSl7+vrI0LhHqyVy6ZU2fqM9yG6HfaXEQkyb5m8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 101/744] Bluetooth: hci_sync: extend conn_hash lookup critical sections
-Date: Thu, 30 Jul 2026 16:06:14 +0200
-Message-ID: <20260730141446.417934726@linuxfoundation.org>
+Subject: [PATCH 7.1 102/744] Bluetooth: mgmt: fix locking in unpair_device/disconnect_sync
+Date: Thu, 30 Jul 2026 16:06:15 +0200
+Message-ID: <20260730141446.438721275@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,189 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit d5efd6e4b8b0634af6843178fe1a7dd2b2178a3d ]
+[ Upstream commit 16cd66443957e4ad42155c6fec401012f600c6f8 ]
 
-Using RCU-protected pointers outside the critical sections without
-refcount is incorrect and may result to UAF.
+Dereferencing RCU-protected pointers outside critical sections is
+invalid and may lead to UAF.
 
-Extend critical section to cover both hci_conn_hash lookup and use of
-the returned conn.
+Take hdev->lock for hci_conn lookup and hci_abort_conn().  Don't use RCU
+to ensure the conn is fully initialized at this point.
 
-Add surrounding rcu_read_lock() also when return value is not used, in
-preparation for RCU lockdep requirement to hci_lookup_le_connect().
-
-This avoids concurrent deletion of the conn before we are done
-dereferencing it.
-
-Also, make sure to hold hdev->lock when accessing hdev->accept_list.
-
-Fixes: 6d0417e4e1cf ("Bluetooth: hci_conn: Fix not setting conn_timeout for Broadcast Receiver")
+Fixes: 227a0cdf4a028 ("Bluetooth: MGMT: Fix not generating command complete for MGMT_OP_DISCONNECT")
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 42 +++++++++++++++++++++++++++++++++++++---
- 1 file changed, 39 insertions(+), 3 deletions(-)
+ net/bluetooth/mgmt.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index a3df69bdec1e06..eb216d86a6ddf3 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -1054,14 +1054,19 @@ static int hci_set_random_addr_sync(struct hci_dev *hdev, bdaddr_t *rpa)
- 	 * In this kind of scenario skip the update and let the random
- 	 * address be updated at the next cycle.
- 	 */
-+	rcu_read_lock();
-+
- 	if (bacmp(&hdev->random_addr, BDADDR_ANY) &&
- 	    (hci_dev_test_flag(hdev, HCI_LE_ADV) ||
- 	    hci_lookup_le_connect(hdev))) {
- 		bt_dev_dbg(hdev, "Deferring random address update");
- 		hci_dev_set_flag(hdev, HCI_RPA_EXPIRED);
-+		rcu_read_unlock();
- 		return 0;
- 	}
- 
-+	rcu_read_unlock();
-+
- 	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_RANDOM_ADDR,
- 				     6, rpa, HCI_CMD_TIMEOUT);
- }
-@@ -2647,12 +2652,17 @@ static int hci_pause_addr_resolution(struct hci_dev *hdev)
- 	/* Cannot disable addr resolution if scanning is enabled or
- 	 * when initiating an LE connection.
- 	 */
-+	rcu_read_lock();
-+
- 	if (hci_dev_test_flag(hdev, HCI_LE_SCAN) ||
- 	    hci_lookup_le_connect(hdev)) {
-+		rcu_read_unlock();
- 		bt_dev_err(hdev, "Command not allowed when scan/LE connect");
- 		return -EPERM;
- 	}
- 
-+	rcu_read_unlock();
-+
- 	/* Cannot disable addr resolution if advertising is enabled. */
- 	err = hci_pause_advertising_sync(hdev);
- 	if (err) {
-@@ -2790,6 +2800,8 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
- 	if (hci_dev_test_flag(hdev, HCI_PA_SYNC)) {
- 		struct hci_conn *conn;
- 
-+		rcu_read_lock();
-+
- 		conn = hci_conn_hash_lookup_create_pa_sync(hdev);
- 		if (conn) {
- 			struct conn_params pa;
-@@ -2799,6 +2811,8 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
- 			bacpy(&pa.addr, &conn->dst);
- 			pa.addr_type = conn->dst_type;
- 
-+			rcu_read_unlock();
-+
- 			/* Clear first since there could be addresses left
- 			 * behind.
- 			 */
-@@ -2808,6 +2822,8 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
- 			err = hci_le_add_accept_list_sync(hdev, &pa,
- 							  &num_entries);
- 			goto done;
-+		} else {
-+			rcu_read_unlock();
- 		}
- 	}
- 
-@@ -2818,10 +2834,13 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
- 	 * the controller.
- 	 */
- 	list_for_each_entry_safe(b, t, &hdev->le_accept_list, list) {
--		if (hci_conn_hash_lookup_le(hdev, &b->bdaddr, b->bdaddr_type))
-+		rcu_read_lock();
-+
-+		if (hci_conn_hash_lookup_le(hdev, &b->bdaddr, b->bdaddr_type)) {
-+			rcu_read_unlock();
- 			continue;
-+		}
- 
--		/* Pointers not dereferenced, no locks needed */
- 		pend_conn = hci_pend_le_action_lookup(&hdev->pend_le_conns,
- 						      &b->bdaddr,
- 						      b->bdaddr_type);
-@@ -2829,6 +2848,8 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
- 							&b->bdaddr,
- 							b->bdaddr_type);
- 
-+		rcu_read_unlock();
-+
- 		/* If the device is not likely to connect or report,
- 		 * remove it from the acceptlist.
- 		 */
-@@ -2955,6 +2976,8 @@ static int hci_le_set_ext_scan_param_sync(struct hci_dev *hdev, u8 type,
- 		if (sent) {
- 			struct hci_conn *conn;
- 
-+			rcu_read_lock();
-+
- 			conn = hci_conn_hash_lookup_ba(hdev, PA_LINK,
- 						       &sent->bdaddr);
- 			if (conn) {
-@@ -2979,8 +3002,12 @@ static int hci_le_set_ext_scan_param_sync(struct hci_dev *hdev, u8 type,
- 					phy++;
- 				}
- 
-+				rcu_read_unlock();
-+
- 				if (num_phy)
- 					goto done;
-+			} else {
-+				rcu_read_unlock();
- 			}
- 		}
- 	}
-@@ -3231,12 +3258,16 @@ int hci_update_passive_scan_sync(struct hci_dev *hdev)
- 		/* If there is at least one pending LE connection, we should
- 		 * keep the background scan running.
- 		 */
-+		bool exists;
- 
- 		/* If controller is connecting, we should not start scanning
- 		 * since some controllers are not able to scan and connect at
- 		 * the same time.
- 		 */
--		if (hci_lookup_le_connect(hdev))
-+		rcu_read_lock();
-+		exists = hci_lookup_le_connect(hdev);
-+		rcu_read_unlock();
-+		if (exists)
- 			return 0;
- 
- 		bt_dev_dbg(hdev, "start background scanning");
-@@ -3454,6 +3485,7 @@ int hci_write_fast_connectable_sync(struct hci_dev *hdev, bool enable)
- }
- 
- static bool disconnected_accept_list_entries(struct hci_dev *hdev)
-+	__must_hold(&hdev->lock)
- {
- 	struct bdaddr_list *b;
- 
-@@ -3494,12 +3526,16 @@ int hci_update_scan_sync(struct hci_dev *hdev)
- 	if (hdev->scanning_paused)
- 		return 0;
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index f24b7bbfcb5b6f..186850538a8bb5 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -3094,6 +3094,8 @@ static int unpair_device_sync(struct hci_dev *hdev, void *data)
+ 	struct mgmt_cp_unpair_device *cp = cmd->param;
+ 	struct hci_conn *conn;
  
 +	hci_dev_lock(hdev);
 +
- 	if (hci_dev_test_flag(hdev, HCI_CONNECTABLE) ||
- 	    disconnected_accept_list_entries(hdev))
- 		scan = SCAN_PAGE;
- 	else
- 		scan = SCAN_DISABLED;
+ 	if (cp->addr.type == BDADDR_BREDR)
+ 		conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK,
+ 					       &cp->addr.bdaddr);
+@@ -3101,6 +3103,11 @@ static int unpair_device_sync(struct hci_dev *hdev, void *data)
+ 		conn = hci_conn_hash_lookup_le(hdev, &cp->addr.bdaddr,
+ 					       le_addr_type(cp->addr.type));
  
++	if (conn)
++		hci_conn_get(conn);
++
 +	hci_dev_unlock(hdev);
 +
- 	if (hci_dev_test_flag(hdev, HCI_DISCOVERABLE))
- 		scan |= SCAN_INQUIRY;
+ 	if (!conn)
+ 		return 0;
  
+@@ -3108,6 +3115,7 @@ static int unpair_device_sync(struct hci_dev *hdev, void *data)
+ 	 * will clean up the connection no matter the error.
+ 	 */
+ 	hci_abort_conn(conn, HCI_ERROR_REMOTE_USER_TERM);
++	hci_conn_put(conn);
+ 
+ 	return 0;
+ }
+@@ -3255,6 +3263,8 @@ static int disconnect_sync(struct hci_dev *hdev, void *data)
+ 	struct mgmt_cp_disconnect *cp = cmd->param;
+ 	struct hci_conn *conn;
+ 
++	hci_dev_lock(hdev);
++
+ 	if (cp->addr.type == BDADDR_BREDR)
+ 		conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK,
+ 					       &cp->addr.bdaddr);
+@@ -3262,6 +3272,11 @@ static int disconnect_sync(struct hci_dev *hdev, void *data)
+ 		conn = hci_conn_hash_lookup_le(hdev, &cp->addr.bdaddr,
+ 					       le_addr_type(cp->addr.type));
+ 
++	if (conn)
++		hci_conn_get(conn);
++
++	hci_dev_unlock(hdev);
++
+ 	if (!conn)
+ 		return -ENOTCONN;
+ 
+@@ -3269,6 +3284,7 @@ static int disconnect_sync(struct hci_dev *hdev, void *data)
+ 	 * will clean up the connection no matter the error.
+ 	 */
+ 	hci_abort_conn(conn, HCI_ERROR_REMOTE_USER_TERM);
++	hci_conn_put(conn);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
