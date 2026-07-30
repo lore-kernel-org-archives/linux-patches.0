@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE08375AC3;
-	Thu, 30 Jul 2026 14:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A4634D385;
+	Thu, 30 Jul 2026 14:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422718; cv=none; b=QovC48ITga/PbaIIulqCcF/fPviiBMy5+oV4JDu1wVUYESwrbDHrQZCWwXptibT5SqkJZMwtelnAMI8EhvUDCyxmWMDSW8hLJSugFxCoOZSQgnfIIvhVyg0vNSAms2cvdpCt9/MNBnHdBDIw3hHRYCIRpmDQ5ds3VvChXCWYetA=
+	t=1785422721; cv=none; b=O9hck+er1Sstmw4JgcurwcB+U8PdA9SkEJ+8R/cD6OuSrUdgvQF3g0VpAd0C4O5jJ4MhaC6BtnX8JbvXStlVYM3uEf57EstDMvcRP4WRsg3wqDq6BIGLRd1Q3Aeq4474XoFJdwy2vLWfRzS57f7fDJImrWR4vWTkd2et2w77YOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422718; c=relaxed/simple;
-	bh=04eKJ2MaXtEi51vfOr6KKqrca1WSLGOv1vEiqKQzRK4=;
+	s=arc-20240116; t=1785422721; c=relaxed/simple;
+	bh=VQFMJ2MaADL4PxWUw74R150lTcBGvqZ5uNcNI1cz2VQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AV79CtaYLS4+v9Rxahv0D2IPBk0hGmLdxPDYl0Dla3cgucZS+P+uRuP1u6xcqobDrv7o6pwnq2NvPmsCm/ZdNhl6cGYY0fH82IPC12QnWPK8mxU8wsob/ImXBDPDBPbsm0b3KSgC0tY17mQ3z/QYGZ2slKVn5YnqMr1U173pW2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dyCyy7o0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R0Y6bLMttyBybXif1bpHVT1UOeJ+1ba8YrgdO6lB5gw/AyTsMItsQNTiTRKzhseqZnK76tYhcESrzTScYV2DfmJMGwBgtR4fqAkWF4sbJlsk2xvTVd0xk65u3uWGq4kSgJMtFrkc2APf14IJs3v98H6JPROnvaej8AVYCRFsUOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fkw5IYFR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dyCyy7o0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58B01F000E9;
-	Thu, 30 Jul 2026 14:45:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fkw5IYFR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79401F000E9;
+	Thu, 30 Jul 2026 14:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422717;
-	bh=RgyQ7p6cEJfDNupGxgq/iQ0Cw9i4IUjV0lQVTVCWn8s=;
+	s=korg; t=1785422720;
+	bh=jq9DIoZ6gj1xjru5AQ4OgEuvq4ZDrmfX8rIfM1o+pq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dyCyy7o0NFlaxIyCoLoZBr6ght+memq2sk9vEBYXzriR/sMCg0k70YH6S3wfnhNV3
-	 L+uCZyG2eCic2ni+Qdw7jeUSWoh0KFK9j9Psi8lsrD/Z5WcYlaG3sq1scV+uy4wGrR
-	 KDOn96x3+EdSNH/HFgivLjKhjuux3ztIsbBRvM3s=
+	b=Fkw5IYFRRDlFaYLZ2uoiXzAH5mclFMXBOVCOSVIhDLooP0ophZR2VE0NBTkyC+FF3
+	 t/UfSgsBl6kVD/EfJI1DhmBpY/m38LoUz/tnaMNPXp5OFyWDp4D6LdAOt5Esbg2y0w
+	 d36scGp2hY+r8d+JgpLkhLI7s/tlmPckiezZiJug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.1 533/744] media: vimc: fix reference leak on failed device registration
-Date: Thu, 30 Jul 2026 16:13:26 +0200
-Message-ID: <20260730141455.600663986@linuxfoundation.org>
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Bryan ODonoghue <bod@kernel.org>
+Subject: [PATCH 7.1 507/744] media: qcom: camss: Fix RDI streaming for CSID GEN2
+Date: Thu, 30 Jul 2026 16:13:00 +0200
+Message-ID: <20260730141455.056877510@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,45 +52,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit 33e2b833c66b890a0d71c4fa82d4c97143f7f75f upstream.
+commit 618765634cefbdddafa84f07f82e9dd05b86cb9c upstream.
 
-When platform_device_register() fails in vimc_init(), the embedded
-struct device in vimc_pdev has already been initialized by
-device_initialize(), but the failure path returns the error without
-dropping the device reference for the current platform device:
+Fix streaming from CSIDn RDI1 and RDI2 to VFEn RDI1 and RDI2. A pattern we
+have replicated throughout CAMSS where we use the VC number to populate
+both the VC fields and port fields of the CSID means that in practice only
+VC = 0 on CSIDn:RDI0 to VFEn:RDI0 works.
 
-  vimc_init()
-    -> platform_device_register(&vimc_pdev)
-       -> device_initialize(&vimc_pdev.dev)
-       -> setup_pdev_dma_masks(&vimc_pdev)
-       -> platform_device_add(&vimc_pdev)
+Fix that for CSID gen2 by separating VC and port. Fix to VC zero as a
+bugfix we will look to properly populate the VC field with follow on
+patches later.
 
-This leads to a reference leak when platform_device_register() fails.
-Fix this by calling platform_device_put() before returning the error.
-
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
-
-Fixes: 4babf057c143f ("media: vimc: allocate vimc_device dynamically")
+Fixes: 729fc005c8e2 ("media: qcom: camss: Split testgen, RDI and RX for CSID 170")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vimc/vimc-core.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/qcom/camss/camss-csid-gen2.c |   47 ++++++++++----------
+ 1 file changed, 24 insertions(+), 23 deletions(-)
 
---- a/drivers/media/test-drivers/vimc/vimc-core.c
-+++ b/drivers/media/test-drivers/vimc/vimc-core.c
-@@ -421,6 +421,7 @@ static int __init vimc_init(void)
- 	if (ret) {
- 		dev_err(&vimc_pdev.dev,
- 			"platform device registration failed (err=%d)\n", ret);
-+		platform_device_put(&vimc_pdev);
- 		return ret;
- 	}
+--- a/drivers/media/platform/qcom/camss/camss-csid-gen2.c
++++ b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
+@@ -203,10 +203,10 @@ static void __csid_ctrl_rdi(struct csid_
+ 	writel_relaxed(val, csid->base + CSID_RDI_CTRL(rdi));
+ }
  
+-static void __csid_configure_testgen(struct csid_device *csid, u8 enable, u8 vc)
++static void __csid_configure_testgen(struct csid_device *csid, u8 enable, u8 port, u8 vc)
+ {
+ 	struct csid_testgen_config *tg = &csid->testgen;
+-	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + vc];
++	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + port];
+ 	const struct csid_format_info *format = csid_get_fmt_entry(csid->res->formats->formats,
+ 								   csid->res->formats->nformats,
+ 								   input_format->code);
+@@ -253,10 +253,10 @@ static void __csid_configure_testgen(str
+ 	writel_relaxed(val, csid->base + CSID_TPG_CTRL);
+ }
+ 
+-static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8 vc)
++static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8 port, u8 vc)
+ {
+ 	/* Source pads matching RDI channels on hardware. Pad 1 -> RDI0, Pad 2 -> RDI1, etc. */
+-	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + vc];
++	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + port];
+ 	const struct csid_format_info *format = csid_get_fmt_entry(csid->res->formats->formats,
+ 								   csid->res->formats->nformats,
+ 								   input_format->code);
+@@ -267,14 +267,14 @@ static void __csid_configure_rdi_stream(
+ 	 * the four least significant bits of the five bit VC
+ 	 * bitfield to generate an internal CID value.
+ 	 *
+-	 * CSID_RDI_CFG0(vc)
++	 * CSID_RDI_CFG0(port)
+ 	 * DT_ID : 28:27
+ 	 * VC    : 26:22
+ 	 * DT    : 21:16
+ 	 *
+ 	 * CID   : VC 3:0 << 2 | DT_ID 1:0
+ 	 */
+-	u8 dt_id = vc & 0x03;
++	u8 dt_id = port & 0x03;
+ 
+ 	val = 1 << RDI_CFG0_BYTE_CNTR_EN;
+ 	val |= 1 << RDI_CFG0_FORMAT_MEASURE_EN;
+@@ -284,56 +284,57 @@ static void __csid_configure_rdi_stream(
+ 	val |= format->data_type << RDI_CFG0_DATA_TYPE;
+ 	val |= vc << RDI_CFG0_VIRTUAL_CHANNEL;
+ 	val |= dt_id << RDI_CFG0_DT_ID;
+-	writel_relaxed(val, csid->base + CSID_RDI_CFG0(vc));
++	writel_relaxed(val, csid->base + CSID_RDI_CFG0(port));
+ 
+ 	/* CSID_TIMESTAMP_STB_POST_IRQ */
+ 	val = 2 << RDI_CFG1_TIMESTAMP_STB_SEL;
+-	writel_relaxed(val, csid->base + CSID_RDI_CFG1(vc));
++	writel_relaxed(val, csid->base + CSID_RDI_CFG1(port));
+ 
+ 	val = 1;
+-	writel_relaxed(val, csid->base + CSID_RDI_FRM_DROP_PERIOD(vc));
++	writel_relaxed(val, csid->base + CSID_RDI_FRM_DROP_PERIOD(port));
+ 
+ 	val = 0;
+-	writel_relaxed(val, csid->base + CSID_RDI_FRM_DROP_PATTERN(vc));
++	writel_relaxed(val, csid->base + CSID_RDI_FRM_DROP_PATTERN(port));
+ 
+ 	val = 1;
+-	writel_relaxed(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(vc));
++	writel_relaxed(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(port));
+ 
+ 	val = 0;
+-	writel_relaxed(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PATTERN(vc));
++	writel_relaxed(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PATTERN(port));
+ 
+ 	val = 1;
+-	writel_relaxed(val, csid->base + CSID_RDI_RPP_PIX_DROP_PERIOD(vc));
++	writel_relaxed(val, csid->base + CSID_RDI_RPP_PIX_DROP_PERIOD(port));
+ 
+ 	val = 0;
+-	writel_relaxed(val, csid->base + CSID_RDI_RPP_PIX_DROP_PATTERN(vc));
++	writel_relaxed(val, csid->base + CSID_RDI_RPP_PIX_DROP_PATTERN(port));
+ 
+ 	val = 1;
+-	writel_relaxed(val, csid->base + CSID_RDI_RPP_LINE_DROP_PERIOD(vc));
++	writel_relaxed(val, csid->base + CSID_RDI_RPP_LINE_DROP_PERIOD(port));
+ 
+ 	val = 0;
+-	writel_relaxed(val, csid->base + CSID_RDI_RPP_LINE_DROP_PATTERN(vc));
++	writel_relaxed(val, csid->base + CSID_RDI_RPP_LINE_DROP_PATTERN(port));
+ 
+ 	val = 0;
+-	writel_relaxed(val, csid->base + CSID_RDI_CTRL(vc));
++	writel_relaxed(val, csid->base + CSID_RDI_CTRL(port));
+ 
+-	val = readl_relaxed(csid->base + CSID_RDI_CFG0(vc));
++	val = readl_relaxed(csid->base + CSID_RDI_CFG0(port));
+ 	val |=  enable << RDI_CFG0_ENABLE;
+-	writel_relaxed(val, csid->base + CSID_RDI_CFG0(vc));
++	writel_relaxed(val, csid->base + CSID_RDI_CFG0(port));
+ }
+ 
+ static void csid_configure_stream(struct csid_device *csid, u8 enable)
+ {
+ 	struct csid_testgen_config *tg = &csid->testgen;
+ 	u8 i;
+-	/* Loop through all enabled VCs and configure stream for each */
++
++	/* Loop through all enabled ports and configure a stream for each */
+ 	for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS; i++)
+ 		if (csid->phy.en_vc & BIT(i)) {
+ 			if (tg->enabled)
+-				__csid_configure_testgen(csid, enable, i);
++				__csid_configure_testgen(csid, enable, i, 0);
+ 
+-			__csid_configure_rdi_stream(csid, enable, i);
+-			__csid_configure_rx(csid, &csid->phy, i);
++			__csid_configure_rdi_stream(csid, enable, i, 0);
++			__csid_configure_rx(csid, &csid->phy, 0);
+ 			__csid_ctrl_rdi(csid, enable, i);
+ 		}
+ }
 
 
