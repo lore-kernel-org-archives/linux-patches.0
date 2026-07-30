@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B88A443318;
-	Thu, 30 Jul 2026 15:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739DF372691;
+	Thu, 30 Jul 2026 15:33:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425625; cv=none; b=aULY5K/HaAXHTinnNpKBsEO5pbJiLPEk2b4BSlAUHE6hVij6dt8lVQ68xCs3hOqeGvmaZtdmnm4wo2lENObKOE/b4cVAkAesyZELKPHpTJfL8qXiup+qI0NdoW2LRTCt6pq/E9r9575ApHLvgEbh1NBqGC6fRNdamMSEeQcDO/E=
+	t=1785425627; cv=none; b=pnIPRrTcvfY55QYjOmfAdmMuItj2p9aliQmBfVhPXIFhmJkOw7qvXedxqYq0cPOQYlvHakkj1y/jPg4rXZ8TA2xoCXL8EwcNnT6nITfOMkQ7Te4FaULM9/Ywkis/WbJBZzVzabwEgMRsUUX+aFljqtjLC8vgJHATEaL7a3HZw7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425625; c=relaxed/simple;
-	bh=OO+byvlZ0AH+UJgivefYQMX/so1gzMfw0r6l9WHow8M=;
+	s=arc-20240116; t=1785425627; c=relaxed/simple;
+	bh=AsRkks4bFS49EeLg7dJyP4XPAqXFWEc4eHosJW86Wyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L8ojgTYPXvTr5mfxFopsRxm8sAFfch8SF7vluA5o9KHx9zqAGTTe2FHdIqKDcQWuitwhHNaQEVf3nzLe0WfYA0R2welqioNOgxRdwVYnvDyxVOFEV99WYn6El9ROhALsZcGIFPR/RNYHO/QaI9423M8EVl/ibXbOHIQiALTTAaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WlIOiYZ1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lSM7cFn6R6XTKi6BfS9tVl/i/iv07aLpldsrjw4dSHPZaFtT7U9h7JJ68uYke6u18wkKleaRoY9DIzlFRv5h6pMH0HOgEwrA2Cd7wXpvWuy6Ien+YCX25hGr+05naW9wis/UrHIhg9vcJiDuH7U/nYrbTMqEJMhY+29K9dt7Cbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQOasixj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WlIOiYZ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC071F000E9;
-	Thu, 30 Jul 2026 15:33:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQOasixj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDD821F000E9;
+	Thu, 30 Jul 2026 15:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425623;
-	bh=iOkqYqnW8f1ziw+hIA50YwmD9RRee7bR9EQodZZGlSM=;
+	s=korg; t=1785425626;
+	bh=Pf8xjo7FFZ4Xntettqs0BAbgsCmHlSg2DG0pGS/+Hj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WlIOiYZ1lmrTn86Iq8NSeT8vw6KuG+yOPFSh0oSMULk3Y618PqZNpMkjFWzN0CogF
-	 6S1UnzTe9KJuIRIHzBQklt/ZMQXcktL1YGaK6w6w6Y95ND60LRyObkf2Pwh2DKCNvs
-	 RFgvcOj5OJrSITePtjNHQZkqX/rrSuYkfe9VEitg=
+	b=NQOasixjFBwmB232/AEPyqTNN6GleTzMys2YzV61j+X26cZ35IHyZ1L4JHsNnxnjv
+	 6rMOu1CmbkTmXoZ16HWmxEz5NKv+7juaDoZ+mCzGW5g2CQTa3zRvhhcbTYFz/T9j1m
+	 HzJBs+Vd6QCH4d8xCyRuqrWDdq/BWStZK5ifn278=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xie Bo <xb@ultrarisc.com>,
-	Anup Patel <anup@brainfault.org>,
+	stable@kernel.org,
+	Xincheng Zhang <zhangxincheng@ultrarisc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 132/602] RISC-V: KVM: Serialize virtual interrupt pending state updates
-Date: Thu, 30 Jul 2026 16:08:44 +0200
-Message-ID: <20260730141438.758265878@linuxfoundation.org>
+Subject: [PATCH 6.12 133/602] usb: xhci-pci: Limit VIA VL805 DMA addressing to 36 bits
+Date: Thu, 30 Jul 2026 16:08:45 +0200
+Message-ID: <20260730141438.778029253@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,394 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xie Bo <xb@ultrarisc.com>
+From: Xincheng Zhang <zhangxincheng@ultrarisc.com>
 
-commit d024a0a7879e6f37c0152aacf6d8e37b214a1738 upstream.
+commit 1fc50f1ecde39feb4fccdaf4bc71aa6c0eb25c49 upstream.
 
-KVM RISC-V tracks guest local interrupt state with two bitmaps:
+The VIA VL805/806 xHCI controller advertises AC64, but fails to handle
+DMA addresses at or above 0x1000000000. On systems with large amounts of
+RAM, this can cause USB device failures when the controller is given DMA
+addresses beyond its usable address width.
 
-  - irqs_pending: interrupts that should be visible to the guest
-  - irqs_pending_mask: interrupts whose pending state changed
+Do not use XHCI_NO_64BIT_SUPPORT for this controller. That quirk clears
+the cached AC64 capability and limits DMA to 32 bits, causing unnecessary
+bouncing for addresses between 4GiB and 64GiB and hiding the controller's
+real AC64 capability from code that may need to distinguish register
+access width from usable DMA address width.
 
-The current code updates those bitmaps with independent atomic bitops
-and assumes a multiple-producer, single-consumer protocol. That model
-does not actually hold.
+Track the usable DMA address width separately from the AC64 capability.
+Initialize the generic xhci->dma_mask_bits field to 64 and let PCI quirks
+reduce it for controllers with narrower DMA support. Set VIA VL805/806 to
+36 bits so the DMA API only hands it addresses in the range it can handle
+while keeping HCCPARAMS1.AC64 visible.
 
-kvm_riscv_vcpu_sync_interrupts() is not a pure consumer. When the guest
-changes guest-visible HVIP state, sync_interrupts() writes both
-irqs_pending and irqs_pending_mask to reflect the new guest state back
-into KVM state. As a result, irqs_pending and irqs_pending_mask form a
-single logical state transition, but they are not updated atomically as
-a pair.
-
-This allows a race where a newly injected interrupt is lost. For
-example:
-
-  CPU0                              CPU1
-  ----                              ----
-  kvm_riscv_vcpu_set_interrupt(VS_SOFT)
-    set_bit(VS_SOFT, irqs_pending)
-                                    kvm_riscv_vcpu_sync_interrupts()
-                                      sees guest-cleared HVIP.VSSIP
-                                      sets irqs_pending_mask
-                                      clear_bit(IRQ_VS_SOFT, irqs_pending)
-    set_bit(VS_SOFT, irqs_pending_mask)
-    kvm_vcpu_kick()
-
-After that interleaving, a later flush can update HVIP without VSSIP
-even though a new virtual interrupt was injected. In practice, the
-guest can remain blocked in WFI with work pending.
-
-The same pending/mask protocol is shared by VS soft interrupts, PMU
-overflow delivery, and AIA high interrupt synchronization, so the race
-is not limited to one interrupt source.
-
-Fix this by serializing all updates to irqs_pending and irqs_pending_mask
-with a per-vCPU raw spinlock. This keeps the pending bit and the dirty
-mask as one state transition across:
-
-  - set/unset interrupt
-  - guest HVIP sync
-  - interrupt flush to guest CSR state
-  - vCPU reset
-  - AIA CSR writes that clear dirty state
-
-Use non-atomic bitmap operations while holding the lock. Hold the lock
-across the AIA sync, flush, and pending checks as well, so both bitmap
-words share the same serialization domain.
-
-This intentionally replaces the existing lockless protocol instead of
-trying to repair it with additional barriers. The problem is not memory
-ordering on a single field; it is that two separate bitmaps encode one
-shared state machine while both producers and sync paths can modify
-them. A per-vCPU raw spinlock keeps the fix small, local, and suitable
-for backporting.
-
-Fixes: cce69aff689e ("RISC-V: KVM: Implement VCPU interrupts and requests handling")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xie Bo <xb@ultrarisc.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260715020359.1521354-2-xb@ultrarisc.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
-
-[ bo: Adapt the reset and CSR helpers to their older signatures. ]
-
+Cc: stable@kernel.org
+Signed-off-by: Xincheng Zhang <zhangxincheng@ultrarisc.com>
+Link: https://patch.msgid.link/20260630-xhci-via-dma-fix-v3-1-690dcb8cf75a@ultrarisc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/kvm_host.h | 10 ++---
- arch/riscv/kvm/aia.c              | 34 +++++++++++----
- arch/riscv/kvm/vcpu.c             | 69 ++++++++++++++++++++++---------
- arch/riscv/kvm/vcpu_onereg.c      |  8 +++-
- 4 files changed, 87 insertions(+), 34 deletions(-)
+ drivers/usb/host/xhci-pci.c |  1 +
+ drivers/usb/host/xhci.c     | 15 ++++++++++-----
+ drivers/usb/host/xhci.h     |  1 +
+ 3 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/arch/riscv/include/asm/kvm_host.h b/arch/riscv/include/asm/kvm_host.h
-index 2e2254fd2a2aae..7beef600abad7c 100644
---- a/arch/riscv/include/asm/kvm_host.h
-+++ b/arch/riscv/include/asm/kvm_host.h
-@@ -232,13 +232,13 @@ struct kvm_vcpu_arch {
- 	/*
- 	 * VCPU interrupts
- 	 *
--	 * We have a lockless approach for tracking pending VCPU interrupts
--	 * implemented using atomic bitops. The irqs_pending bitmap represent
--	 * pending interrupts whereas irqs_pending_mask represent bits changed
--	 * in irqs_pending. Our approach is modeled around multiple producer
--	 * and single consumer problem where the consumer is the VCPU itself.
-+	 * The irqs_pending bitmap represents pending interrupts whereas
-+	 * irqs_pending_mask represents bits changed in irqs_pending. Updates
-+	 * to these bitmaps are serialized so vcpu interrupt sync/flush cannot
-+	 * drop a newly injected interrupt while syncing guest-visible HVIP.
- 	 */
- #define KVM_RISCV_VCPU_NR_IRQS	64
-+	raw_spinlock_t irqs_pending_lock;
- 	DECLARE_BITMAP(irqs_pending, KVM_RISCV_VCPU_NR_IRQS);
- 	DECLARE_BITMAP(irqs_pending_mask, KVM_RISCV_VCPU_NR_IRQS);
- 
-diff --git a/arch/riscv/kvm/aia.c b/arch/riscv/kvm/aia.c
-index 9f3b527596ded8..01319d8d75b0a4 100644
---- a/arch/riscv/kvm/aia.c
-+++ b/arch/riscv/kvm/aia.c
-@@ -71,12 +71,15 @@ void kvm_riscv_vcpu_aia_flush_interrupts(struct kvm_vcpu *vcpu)
- 	struct kvm_vcpu_aia_csr *csr = &vcpu->arch.aia_context.guest_csr;
- 	unsigned long mask, val;
- 
-+	lockdep_assert_held(&vcpu->arch.irqs_pending_lock);
-+
- 	if (!kvm_riscv_aia_available())
- 		return;
- 
--	if (READ_ONCE(vcpu->arch.irqs_pending_mask[1])) {
--		mask = xchg_acquire(&vcpu->arch.irqs_pending_mask[1], 0);
--		val = READ_ONCE(vcpu->arch.irqs_pending[1]) & mask;
-+	mask = vcpu->arch.irqs_pending_mask[1];
-+	if (mask) {
-+		vcpu->arch.irqs_pending_mask[1] = 0;
-+		val = vcpu->arch.irqs_pending[1] & mask;
- 
- 		csr->hviph &= ~mask;
- 		csr->hviph |= val;
-@@ -87,6 +90,8 @@ void kvm_riscv_vcpu_aia_sync_interrupts(struct kvm_vcpu *vcpu)
- {
- 	struct kvm_vcpu_aia_csr *csr = &vcpu->arch.aia_context.guest_csr;
- 
-+	lockdep_assert_held(&vcpu->arch.irqs_pending_lock);
-+
- 	if (kvm_riscv_aia_available())
- 		csr->vsieh = csr_read(CSR_VSIEH);
- }
-@@ -96,13 +101,21 @@ bool kvm_riscv_vcpu_aia_has_interrupts(struct kvm_vcpu *vcpu, u64 mask)
- {
- 	int hgei;
- 	unsigned long seip;
-+#ifdef CONFIG_32BIT
-+	unsigned long flags;
-+	bool pending;
-+#endif
- 
- 	if (!kvm_riscv_aia_available())
- 		return false;
- 
- #ifdef CONFIG_32BIT
--	if (READ_ONCE(vcpu->arch.irqs_pending[1]) &
--	    (vcpu->arch.aia_context.guest_csr.vsieh & upper_32_bits(mask)))
-+	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
-+	pending = vcpu->arch.irqs_pending[1] &
-+		  (vcpu->arch.aia_context.guest_csr.vsieh &
-+		   upper_32_bits(mask));
-+	raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
-+	if (pending)
- 		return true;
- #endif
- 
-@@ -190,6 +203,9 @@ int kvm_riscv_vcpu_aia_set_csr(struct kvm_vcpu *vcpu,
- 			       unsigned long val)
- {
- 	struct kvm_vcpu_aia_csr *csr = &vcpu->arch.aia_context.guest_csr;
-+#ifdef CONFIG_32BIT
-+	unsigned long flags;
-+#endif
- 
- 	if (reg_num >= sizeof(struct kvm_riscv_aia_csr) / sizeof(unsigned long))
- 		return -ENOENT;
-@@ -198,8 +214,12 @@ int kvm_riscv_vcpu_aia_set_csr(struct kvm_vcpu *vcpu,
- 		((unsigned long *)csr)[reg_num] = val;
- 
- #ifdef CONFIG_32BIT
--		if (reg_num == KVM_REG_RISCV_CSR_AIA_REG(siph))
--			WRITE_ONCE(vcpu->arch.irqs_pending_mask[1], 0);
-+		if (reg_num == KVM_REG_RISCV_CSR_AIA_REG(siph)) {
-+			raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
-+			vcpu->arch.irqs_pending_mask[1] = 0;
-+			raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock,
-+						   flags);
-+		}
- #endif
+diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
+index 5f60528453e917..bd33cf6769cf6d 100644
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -454,6 +454,7 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
+ 	if (pdev->vendor == PCI_VENDOR_ID_VIA && pdev->device == PCI_DEVICE_ID_VIA_VL805) {
+ 		xhci->quirks |= XHCI_LPM_SUPPORT;
+ 		xhci->quirks |= XHCI_TRB_OVERFETCH;
++		xhci->dma_mask_bits = 36;
  	}
  
-diff --git a/arch/riscv/kvm/vcpu.c b/arch/riscv/kvm/vcpu.c
-index da01c81bf41676..ad519c9c31d05a 100644
---- a/arch/riscv/kvm/vcpu.c
-+++ b/arch/riscv/kvm/vcpu.c
-@@ -52,6 +52,7 @@ static void kvm_riscv_reset_vcpu(struct kvm_vcpu *vcpu)
- 	struct kvm_vcpu_csr *reset_csr = &vcpu->arch.guest_reset_csr;
- 	struct kvm_cpu_context *cntx = &vcpu->arch.guest_context;
- 	struct kvm_cpu_context *reset_cntx = &vcpu->arch.guest_reset_context;
-+	unsigned long flags;
- 	bool loaded;
+ 	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA &&
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index aae3f1d1f11950..a50e813dda13a0 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -5259,6 +5259,7 @@ int xhci_gen_setup(struct usb_hcd *hcd, xhci_get_quirks_t get_quirks)
+ 	if (xhci->hci_version > 0x100)
+ 		xhci->hcc_params2 = readl(&xhci->cap_regs->hcc_params2);
  
- 	/**
-@@ -80,8 +81,10 @@ static void kvm_riscv_reset_vcpu(struct kvm_vcpu *vcpu)
++	xhci->dma_mask_bits = 64;
+ 	/* xhci-plat or xhci-pci might have set max_interrupters already */
+ 	if ((!xhci->max_interrupters) ||
+ 	    xhci->max_interrupters > HCS_MAX_INTRS(xhci->hcs_params1))
+@@ -5300,12 +5301,16 @@ int xhci_gen_setup(struct usb_hcd *hcd, xhci_get_quirks_t get_quirks)
+ 	if (xhci->quirks & XHCI_NO_64BIT_SUPPORT)
+ 		xhci->hcc_params &= ~BIT(0);
  
- 	kvm_riscv_vcpu_aia_reset(vcpu);
- 
-+	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
- 	bitmap_zero(vcpu->arch.irqs_pending, KVM_RISCV_VCPU_NR_IRQS);
- 	bitmap_zero(vcpu->arch.irqs_pending_mask, KVM_RISCV_VCPU_NR_IRQS);
-+	raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
- 
- 	kvm_riscv_vcpu_pmu_reset(vcpu);
- 
-@@ -126,6 +129,8 @@ int kvm_arch_vcpu_create(struct kvm_vcpu *vcpu)
- 	/* Setup VCPU hfence queue */
- 	spin_lock_init(&vcpu->arch.hfence_lock);
- 
-+	raw_spin_lock_init(&vcpu->arch.irqs_pending_lock);
-+
- 	/* Setup reset state of shadow SSTATUS and HSTATUS CSRs */
- 	spin_lock_init(&vcpu->arch.reset_cntx_lock);
- 
-@@ -341,10 +346,14 @@ void kvm_riscv_vcpu_flush_interrupts(struct kvm_vcpu *vcpu)
- {
- 	struct kvm_vcpu_csr *csr = &vcpu->arch.guest_csr;
- 	unsigned long mask, val;
-+	unsigned long flags;
-+
-+	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
- 
--	if (READ_ONCE(vcpu->arch.irqs_pending_mask[0])) {
--		mask = xchg_acquire(&vcpu->arch.irqs_pending_mask[0], 0);
--		val = READ_ONCE(vcpu->arch.irqs_pending[0]) & mask;
-+	mask = vcpu->arch.irqs_pending_mask[0];
-+	if (mask) {
-+		vcpu->arch.irqs_pending_mask[0] = 0;
-+		val = vcpu->arch.irqs_pending[0] & mask;
- 
- 		csr->hvip &= ~mask;
- 		csr->hvip |= val;
-@@ -352,11 +361,14 @@ void kvm_riscv_vcpu_flush_interrupts(struct kvm_vcpu *vcpu)
- 
- 	/* Flush AIA high interrupts */
- 	kvm_riscv_vcpu_aia_flush_interrupts(vcpu);
-+
-+	raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
- }
- 
- void kvm_riscv_vcpu_sync_interrupts(struct kvm_vcpu *vcpu)
- {
- 	unsigned long hvip;
-+	unsigned long flags;
- 	struct kvm_vcpu_arch *v = &vcpu->arch;
- 	struct kvm_vcpu_csr *csr = &vcpu->arch.guest_csr;
- 
-@@ -365,34 +377,41 @@ void kvm_riscv_vcpu_sync_interrupts(struct kvm_vcpu *vcpu)
- 
- 	/* Sync-up HVIP.VSSIP bit changes does by Guest */
- 	hvip = csr_read(CSR_HVIP);
-+
-+	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
-+
- 	if ((csr->hvip ^ hvip) & (1UL << IRQ_VS_SOFT)) {
- 		if (hvip & (1UL << IRQ_VS_SOFT)) {
--			if (!test_and_set_bit(IRQ_VS_SOFT,
--					      v->irqs_pending_mask))
--				set_bit(IRQ_VS_SOFT, v->irqs_pending);
-+			if (!__test_and_set_bit(IRQ_VS_SOFT,
-+						v->irqs_pending_mask))
-+				__set_bit(IRQ_VS_SOFT, v->irqs_pending);
- 		} else {
--			if (!test_and_set_bit(IRQ_VS_SOFT,
--					      v->irqs_pending_mask))
--				clear_bit(IRQ_VS_SOFT, v->irqs_pending);
-+			if (!__test_and_set_bit(IRQ_VS_SOFT,
-+						v->irqs_pending_mask))
-+				__clear_bit(IRQ_VS_SOFT, v->irqs_pending);
- 		}
- 	}
- 
- 	/* Sync up the HVIP.LCOFIP bit changes (only clear) by the guest */
- 	if ((csr->hvip ^ hvip) & (1UL << IRQ_PMU_OVF)) {
- 		if (!(hvip & (1UL << IRQ_PMU_OVF)) &&
--		    !test_and_set_bit(IRQ_PMU_OVF, v->irqs_pending_mask))
--			clear_bit(IRQ_PMU_OVF, v->irqs_pending);
-+		    !__test_and_set_bit(IRQ_PMU_OVF, v->irqs_pending_mask))
-+			__clear_bit(IRQ_PMU_OVF, v->irqs_pending);
- 	}
- 
- 	/* Sync-up AIA high interrupts */
- 	kvm_riscv_vcpu_aia_sync_interrupts(vcpu);
- 
-+	raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
-+
- 	/* Sync-up timer CSRs */
- 	kvm_riscv_vcpu_timer_sync(vcpu);
- }
- 
- int kvm_riscv_vcpu_set_interrupt(struct kvm_vcpu *vcpu, unsigned int irq)
- {
-+	unsigned long flags;
-+
- 	/*
- 	 * We only allow VS-mode software, timer, and external
- 	 * interrupts when irq is one of the local interrupts
-@@ -405,9 +424,10 @@ int kvm_riscv_vcpu_set_interrupt(struct kvm_vcpu *vcpu, unsigned int irq)
- 	    irq != IRQ_PMU_OVF)
- 		return -EINVAL;
- 
--	set_bit(irq, vcpu->arch.irqs_pending);
--	smp_mb__before_atomic();
--	set_bit(irq, vcpu->arch.irqs_pending_mask);
-+	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
-+	__set_bit(irq, vcpu->arch.irqs_pending);
-+	__set_bit(irq, vcpu->arch.irqs_pending_mask);
-+	raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
- 
- 	kvm_vcpu_kick(vcpu);
- 
-@@ -416,6 +436,8 @@ int kvm_riscv_vcpu_set_interrupt(struct kvm_vcpu *vcpu, unsigned int irq)
- 
- int kvm_riscv_vcpu_unset_interrupt(struct kvm_vcpu *vcpu, unsigned int irq)
- {
-+	unsigned long flags;
-+
- 	/*
- 	 * We only allow VS-mode software, timer, counter overflow and external
- 	 * interrupts when irq is one of the local interrupts
-@@ -428,26 +450,33 @@ int kvm_riscv_vcpu_unset_interrupt(struct kvm_vcpu *vcpu, unsigned int irq)
- 	    irq != IRQ_PMU_OVF)
- 		return -EINVAL;
- 
--	clear_bit(irq, vcpu->arch.irqs_pending);
--	smp_mb__before_atomic();
--	set_bit(irq, vcpu->arch.irqs_pending_mask);
-+	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
-+	__clear_bit(irq, vcpu->arch.irqs_pending);
-+	__set_bit(irq, vcpu->arch.irqs_pending_mask);
-+	raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
- 
- 	return 0;
- }
- 
- bool kvm_riscv_vcpu_has_interrupts(struct kvm_vcpu *vcpu, u64 mask)
- {
-+	unsigned long flags;
- 	unsigned long ie;
-+	bool ret;
- 
-+	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
- 	ie = ((vcpu->arch.guest_csr.vsie & VSIP_VALID_MASK)
- 		<< VSIP_TO_HVIP_SHIFT) & (unsigned long)mask;
- 	ie |= vcpu->arch.guest_csr.vsie & ~IRQ_LOCAL_MASK &
- 		(unsigned long)mask;
--	if (READ_ONCE(vcpu->arch.irqs_pending[0]) & ie)
--		return true;
-+	ret = vcpu->arch.irqs_pending[0] & ie;
-+	raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
- 
- 	/* Check AIA high interrupts */
--	return kvm_riscv_vcpu_aia_has_interrupts(vcpu, mask);
-+	if (!ret)
-+		ret = kvm_riscv_vcpu_aia_has_interrupts(vcpu, mask);
-+
-+	return ret;
- }
- 
- void __kvm_riscv_vcpu_power_off(struct kvm_vcpu *vcpu)
-diff --git a/arch/riscv/kvm/vcpu_onereg.c b/arch/riscv/kvm/vcpu_onereg.c
-index b319c4c13c54ce..6223806fcbc2ba 100644
---- a/arch/riscv/kvm/vcpu_onereg.c
-+++ b/arch/riscv/kvm/vcpu_onereg.c
-@@ -445,6 +445,7 @@ static int kvm_riscv_vcpu_general_set_csr(struct kvm_vcpu *vcpu,
- 					  unsigned long reg_val)
- {
- 	struct kvm_vcpu_csr *csr = &vcpu->arch.guest_csr;
-+	unsigned long flags;
- 
- 	if (reg_num >= sizeof(struct kvm_riscv_csr) / sizeof(unsigned long))
- 		return -ENOENT;
-@@ -456,8 +457,11 @@ static int kvm_riscv_vcpu_general_set_csr(struct kvm_vcpu *vcpu,
- 
- 	((unsigned long *)csr)[reg_num] = reg_val;
- 
--	if (reg_num == KVM_REG_RISCV_CSR_REG(sip))
--		WRITE_ONCE(vcpu->arch.irqs_pending_mask[0], 0);
-+	if (reg_num == KVM_REG_RISCV_CSR_REG(sip)) {
-+		raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
-+		vcpu->arch.irqs_pending_mask[0] = 0;
-+		raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
-+	}
- 
- 	return 0;
- }
+-	/* Set dma_mask and coherent_dma_mask to 64-bits,
+-	 * if xHC supports 64-bit addressing */
++	/*
++	 * Set dma_mask and coherent_dma_mask to 64-bits if xHC supports
++	 * 64-bit addressing, unless a controller-specific quirk callback
++	 * limits the usable address width.
++	 */
+ 	if (HCC_64BIT_ADDR(xhci->hcc_params) &&
+-			!dma_set_mask(dev, DMA_BIT_MASK(64))) {
+-		xhci_dbg(xhci, "Enabling 64-bit DMA addresses.\n");
+-		dma_set_coherent_mask(dev, DMA_BIT_MASK(64));
++	    !dma_set_mask(dev, DMA_BIT_MASK(xhci->dma_mask_bits))) {
++		xhci_dbg(xhci, "Enabling %u-bit DMA addresses.\n",
++			 xhci->dma_mask_bits);
++		dma_set_coherent_mask(dev, DMA_BIT_MASK(xhci->dma_mask_bits));
+ 	} else {
+ 		/*
+ 		 * This is to avoid error in cases where a 32-bit USB
+diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
+index b4fa8e7e437639..1a3f2dfd5a711d 100644
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1510,6 +1510,7 @@ struct xhci_hcd {
+ 	/* imod_interval in ns (I * 250ns) */
+ 	u32		imod_interval;
+ 	u32		page_size;
++	unsigned int	dma_mask_bits;
+ 	/* MSI-X/MSI vectors */
+ 	int		nvecs;
+ 	/* optional clocks */
 -- 
 2.53.0
 
