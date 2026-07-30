@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E7D2D73B5;
-	Thu, 30 Jul 2026 15:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7796D2C0F93;
+	Thu, 30 Jul 2026 15:02:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423743; cv=none; b=MleA8uTRkPIxHMUnckUdNqZ3lwY7IXMIBM4soVAAAtHhYDIkQNfTmQvC0jkcDRYwTBXa75fiThcqK3f1YrAJb0RLFZUWRMLT2M1v4Kej1UrN5FN8nHaiFeiTriajFbdJyTaYFl+1GeShV4uvdxhjXj8rtSRryylIo6a46SiGKEQ=
+	t=1785423745; cv=none; b=cSwy8mKG53Vjm8m+2rv77188UydMzRvzb2o8JAWKbTD6dXwJA/PlOjfv9eeMoG4bZMWyUaAFS0BWn5XANdGwbHEoJ507ydt3Jgprx6bDvAUf2y/T18kFt6uHJ2rE1zpsH4VgZYYD/ZwzY2fOBSdBhLFeO9TK8RVSBQs3hYAsi7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423743; c=relaxed/simple;
-	bh=+FTGa7vPsa4g0HiNkU5TGiUKxuGG3SZjotSSl9KrQ/M=;
+	s=arc-20240116; t=1785423745; c=relaxed/simple;
+	bh=f89uQlja+nvyAytAHRy4aDZIe0gxLPVC8OJSu2FK6L4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FEETNpsA/sRFmH5GoIYt+U2/DceQCsztK9zeQdgOrLR3bDjUaoG8kQgtV3jy8wnLkO9FdqN+ma064EqX6W8mggd6J+iXU6WmejXTT2OXmUe5RZ6qraGkaI/9+NoAARBq99eND6fOej1Db/WrISD3dkrk7v/5yrdcfXXqEtcdFoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAJS8RRJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cw8FskcjkGKmmKYcobUUO3sP2qa/mtpkYslha0DzSYooto5v2uTtLVS/sDgybfgCrKZYSYIB/BNHjVte/54+SntE7YA8JwZmJkxZmXHEUHZg6L72HBQ5blRhSOPXjmh14pKCA8Je4vhlUxr/NbxGzAKJ09WLAuZmTpmYAcqu6Gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rqGzYZ/H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAJS8RRJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3AED1F000E9;
-	Thu, 30 Jul 2026 15:02:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rqGzYZ/H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C90911F000E9;
+	Thu, 30 Jul 2026 15:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423741;
-	bh=eRQ57d1ZELf6Rlb7DPxzK1bnuNpS6aULW48sq+FFQg4=;
+	s=korg; t=1785423744;
+	bh=nlmSXp5HH4ephevNCfrXNj/qRD9jzDLIM+CwyeWLeoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fAJS8RRJ6qKc48qvPo4j4oPpoFpBoPWPYLmNTKTDTCY/5kOQEPW7iZqRtCKtTHPs/
-	 JfoU0XfSgJEgqS7OU9sA8qbc6ro2JXy7ClktcHWYxCIgYYWMyubxy9wOm1W2UBK509
-	 DeCk8bpNGDPGMRpV/eox+5yM+nhOTUkC0aGIQbnw=
+	b=rqGzYZ/HCGHJaN1TswqtpXsP5d47jkgZ3YSOfw/U/CYpQ2SO4Zj9nXw9GE3E9ys4F
+	 2ZU9a9v+d1rhMKfgVY+fOJ8X+rurOtPVBFqQx78wxy0cK33Ar32MBsoD49Swn0kApq
+	 RAY+3eO8j/53HhavQlT1WFqc3BKm/aEo5BT9BEhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 150/675] USB: gadget: fsl-udc: fix dev_printk() device
-Date: Thu, 30 Jul 2026 16:08:00 +0200
-Message-ID: <20260730141448.326427036@linuxfoundation.org>
+	Sonali Pradhan <sonalipradhan@google.com>
+Subject: [PATCH 6.18 151/675] usb: gadget: f_ncm: validate datagram bounds in ncm_unwrap_ntb()
+Date: Thu, 30 Jul 2026 16:08:01 +0200
+Message-ID: <20260730141448.347674066@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -45,424 +44,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Sonali Pradhan <sonalipradhan@google.com>
 
-commit c4dd150fceab281496acb3a643ae712aacb74864 upstream.
+commit 1febec7e47cdcd01f43fb0211094e3010474666e upstream.
 
-A change replacing custom printk() macros with dev_printk() incorrectly
-used the gadget struct device instead of the controller struct device
-(including for messages printed before the gadget device name has been
-initialised).
+When unpacking host-supplied NTBs, ncm_unwrap_ntb() checks datagram length
+against frame_max but does not verify that the datagram fits within the
+declared block length. Additionally, when decoding multiple NTBs from a
+single socket buffer, subsequent block lengths are not checked against the
+actual remaining buffer data.
 
-Switch to using the controller platform device with dev_printk() so that
-the controller device and driver names are included in log messages as
-expected.
+With these checks missing, a malicious USB host can specify datagram
+offsets and lengths that point beyond the block, or supply secondary NTB
+headers declaring lengths larger than the buffer. skb_put_data() then
+copies adjacent kernel memory from skb_shared_info into the network skb.
 
-Fixes: 6025f20f16c2 ("usb: gadget: fsl-udc: Replace custom log wrappers by dev_{err,warn,dbg,vdbg}")
+Fix this by verifying that sufficient buffer space remains for the NTB
+header before parsing, handling zero-length block declarations, ensuring
+that block lengths never exceed the remaining buffer space, and verifying
+that each datagram payload stays strictly within the block boundary.
+
+Fixes: 427694cfaafa ("usb: gadget: ncm: Handle decoding of multiple NTB's in unwrap call")
+Fixes: 2b74b0a04d3e ("USB: gadget: f_ncm: add bounds checks to ncm_unwrap_ntb()")
 Cc: stable <stable@kernel.org>
-Cc: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/20260702141536.90887-4-johan@kernel.org
+Assisted-by: Jetski:Gemini-2.5-Pro
+Signed-off-by: Sonali Pradhan <sonalipradhan@google.com>
+Link: https://patch.msgid.link/20260703083725.1903850-1-sonalipradhan@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/fsl_udc_core.c |   92 +++++++++++++++-------------------
- drivers/usb/gadget/udc/fsl_usb2_udc.h |    1 
- 2 files changed, 43 insertions(+), 50 deletions(-)
+ drivers/usb/gadget/function/f_ncm.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/gadget/udc/fsl_udc_core.c
-+++ b/drivers/usb/gadget/udc/fsl_udc_core.c
-@@ -184,7 +184,7 @@ __acquires(ep->udc->lock)
- 	usb_gadget_unmap_request(&ep->udc->gadget, &req->req, ep_is_in(ep));
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -1189,6 +1189,10 @@ static int ncm_unwrap_ntb(struct gether
+ 	frame_max = ncm_opts->max_segment_size;
  
- 	if (status && (status != -ESHUTDOWN))
--		dev_vdbg(&udc->gadget.dev, "complete %s req %p stat %d len %u/%u\n",
-+		dev_vdbg(udc->dev, "complete %s req %p stat %d len %u/%u\n",
- 			 ep->ep.name, &req->req, status,
- 			 req->req.actual, req->req.length);
+ parse_ntb:
++	if (to_process < (int)opts->nth_size) {
++		INFO(port->func.config->cdev, "Packet too small for headers\n");
++		goto err;
++	}
+ 	tmp = (__le16 *)ntb_ptr;
  
-@@ -286,7 +286,7 @@ static int dr_controller_setup(struct fs
- 	timeout = jiffies + FSL_UDC_RESET_TIMEOUT;
- 	while (fsl_readl(&dr_regs->usbcmd) & USB_CMD_CTRL_RESET) {
- 		if (time_after(jiffies, timeout)) {
--			dev_err(&udc->gadget.dev, "udc reset timeout!\n");
-+			dev_err(udc->dev, "udc reset timeout!\n");
- 			return -ETIMEDOUT;
- 		}
- 		cpu_relax();
-@@ -309,7 +309,7 @@ static int dr_controller_setup(struct fs
- 	tmp &= USB_EP_LIST_ADDRESS_MASK;
- 	fsl_writel(tmp, &dr_regs->endpointlistaddr);
+ 	/* dwSignature */
+@@ -1209,8 +1213,12 @@ parse_ntb:
+ 	tmp++; /* skip wSequence */
  
--	dev_vdbg(&udc->gadget.dev,
-+	dev_vdbg(udc->dev,
- 		 "vir[qh_base] is %p phy[qh_base] is 0x%8x reg is 0x%8x\n",
- 		 udc->ep_qh, (int)tmp,
- 		 fsl_readl(&dr_regs->endpointlistaddr));
-@@ -500,7 +500,7 @@ static void struct_ep_qh_setup(struct fs
- 		tmp = max_pkt_len << EP_QUEUE_HEAD_MAX_PKT_LEN_POS;
- 		break;
- 	default:
--		dev_vdbg(&udc->gadget.dev, "error ep type is %d\n", ep_type);
-+		dev_vdbg(udc->dev, "error ep type is %d\n", ep_type);
- 		return;
+ 	block_len = get_ncm(&tmp, opts->block_length);
++	if (block_len == 0)
++		block_len = to_process;
++
+ 	/* (d)wBlockLength */
+-	if ((block_len < opts->nth_size + opts->ndp_size) || (block_len > ntb_max)) {
++	if ((block_len < opts->nth_size + opts->ndp_size) || (block_len > ntb_max) ||
++			(block_len > to_process)) {
+ 		INFO(port->func.config->cdev, "Bad block length: %#X\n", block_len);
+ 		goto err;
  	}
- 	if (zlt)
-@@ -613,7 +613,7 @@ static int fsl_ep_enable(struct usb_ep *
- 	spin_unlock_irqrestore(&udc->lock, flags);
- 	retval = 0;
+@@ -1273,7 +1281,7 @@ parse_ntb:
+ 			index = index2;
+ 			/* wDatagramIndex[0] */
+ 			if ((index < opts->nth_size) ||
+-					(index > block_len - opts->dpe_size)) {
++					(index > block_len)) {
+ 				INFO(port->func.config->cdev,
+ 				     "Bad index: %#X\n", index);
+ 				goto err;
+@@ -1285,7 +1293,8 @@ parse_ntb:
+ 			 * ethernet hdr + crc or larger than max frame size
+ 			 */
+ 			if ((dg_len < 14 + crc_len) ||
+-					(dg_len > frame_max)) {
++					(dg_len > frame_max) ||
++					(dg_len > block_len - index)) {
+ 				INFO(port->func.config->cdev,
+ 				     "Bad dgram length: %#X\n", dg_len);
+ 				goto err;
+@@ -1310,7 +1319,7 @@ parse_ntb:
+ 			dg_len2 = get_ncm(&tmp, opts->dgram_item_len);
  
--	dev_vdbg(&udc->gadget.dev, "enabled %s (ep%d%s) maxpacket %d\n",
-+	dev_vdbg(udc->dev, "enabled %s (ep%d%s) maxpacket %d\n",
- 		 ep->ep.name, ep->ep.desc->bEndpointAddress & 0x0f,
- 		 (desc->bEndpointAddress & USB_DIR_IN) ? "in" : "out",
- 		 max);
-@@ -634,13 +634,8 @@ static int fsl_ep_disable(struct usb_ep
- 	int ep_num;
- 
- 	ep = container_of(_ep, struct fsl_ep, ep);
--	if (!_ep || !ep->ep.desc) {
--		/*
--		 * dev_vdbg(&udc->gadget.dev, "%s not enabled\n",
--		 *	 _ep ? ep->ep.name : NULL);
--		 */
-+	if (!_ep || !ep->ep.desc)
- 		return -EINVAL;
--	}
- 
- 	/* disable ep on controller */
- 	ep_num = ep_index(ep);
-@@ -664,7 +659,7 @@ static int fsl_ep_disable(struct usb_ep
- 	ep->stopped = 1;
- 	spin_unlock_irqrestore(&udc->lock, flags);
- 
--	dev_vdbg(&udc->gadget.dev, "disabled %s OK\n", _ep->name);
-+	dev_vdbg(udc->dev, "disabled %s OK\n", _ep->name);
- 	return 0;
- }
- 
-@@ -724,9 +719,6 @@ static void fsl_queue_td(struct fsl_ep *
- {
- 	u32 temp, bitmask, tmp_stat;
- 
--	/* dev_vdbg(&udc->gadget.dev, "QH addr Register 0x%8x\n", dr_regs->endpointlistaddr);
--	dev_vdbg(&udc->gadget.dev, "ep_qh[%d] addr is 0x%8x\n", i, (u32)&(ep->udc->ep_qh[i])); */
--
- 	bitmask = ep_is_in(ep)
- 		? (1 << (ep_index(ep) + 16))
- 		: (1 << (ep_index(ep)));
-@@ -813,7 +805,7 @@ static struct ep_td_struct *fsl_build_dt
- 		*is_last = 0;
- 
- 	if ((*is_last) == 0)
--		dev_vdbg(&udc_controller->gadget.dev, "multi-dtd request!\n");
-+		dev_vdbg(udc_controller->dev, "multi-dtd request!\n");
- 	/* Fill in the transfer size; set active bit */
- 	swap_temp = ((*length << DTD_LENGTH_BIT_POS) | DTD_STATUS_ACTIVE);
- 
-@@ -825,7 +817,7 @@ static struct ep_td_struct *fsl_build_dt
- 
- 	mb();
- 
--	dev_vdbg(&udc_controller->gadget.dev, "length = %d address= 0x%x\n", *length, (int)*dma);
-+	dev_vdbg(udc_controller->dev, "length = %d address= 0x%x\n", *length, (int)*dma);
- 
- 	return dtd;
- }
-@@ -876,11 +868,11 @@ fsl_ep_queue(struct usb_ep *_ep, struct
- 	/* catch various bogus parameters */
- 	if (!_req || !req->req.complete || !req->req.buf
- 			|| !list_empty(&req->queue)) {
--		dev_vdbg(&udc->gadget.dev, "%s, bad params\n", __func__);
-+		dev_vdbg(udc->dev, "%s, bad params\n", __func__);
- 		return -EINVAL;
- 	}
- 	if (unlikely(!ep->ep.desc)) {
--		dev_vdbg(&udc->gadget.dev, "%s, bad ep\n", __func__);
-+		dev_vdbg(udc->dev, "%s, bad ep\n", __func__);
- 		return -EINVAL;
- 	}
- 	if (usb_endpoint_xfer_isoc(ep->ep.desc)) {
-@@ -1040,7 +1032,7 @@ static int fsl_ep_set_halt(struct usb_ep
- 		udc->ep0_dir = 0;
- 	}
- out:
--	dev_vdbg(&udc->gadget.dev, "%s %s halt stat %d\n", ep->ep.name,
-+	dev_vdbg(udc->dev, "%s %s halt stat %d\n", ep->ep.name,
- 		 value ?  "set" : "clear", status);
- 
- 	return status;
-@@ -1109,7 +1101,7 @@ static void fsl_ep_fifo_flush(struct usb
- 		/* Wait until flush complete */
- 		while (fsl_readl(&dr_regs->endptflush)) {
- 			if (time_after(jiffies, timeout)) {
--				dev_err(&udc_controller->gadget.dev,
-+				dev_err(udc_controller->dev,
- 					"ep flush timeout\n");
- 				return;
- 			}
-@@ -1182,7 +1174,7 @@ static int fsl_vbus_session(struct usb_g
- 
- 	udc = container_of(gadget, struct fsl_udc, gadget);
- 	spin_lock_irqsave(&udc->lock, flags);
--	dev_vdbg(&gadget->dev, "VBUS %s\n", str_on_off(is_active));
-+	dev_vdbg(udc->dev, "VBUS %s\n", str_on_off(is_active));
- 	udc->vbus_active = (is_active != 0);
- 	if (can_pullup(udc))
- 		fsl_writel((fsl_readl(&dr_regs->usbcmd) | USB_CMD_RUN_STOP),
-@@ -1548,7 +1540,7 @@ static void ep0_req_complete(struct fsl_
- 		udc->ep0_state = WAIT_FOR_SETUP;
- 		break;
- 	case WAIT_FOR_SETUP:
--		dev_err(&udc->gadget.dev, "Unexpected ep0 packets\n");
-+		dev_err(udc->dev, "Unexpected ep0 packets\n");
- 		break;
- 	default:
- 		ep0stall(udc);
-@@ -1617,7 +1609,7 @@ static int process_ep_req(struct fsl_udc
- 		errors = hc32_to_cpu(curr_td->size_ioc_sts);
- 		if (errors & DTD_ERROR_MASK) {
- 			if (errors & DTD_STATUS_HALTED) {
--				dev_err(&udc->gadget.dev, "dTD error %08x QH=%d\n", errors, pipe);
-+				dev_err(udc->dev, "dTD error %08x QH=%d\n", errors, pipe);
- 				/* Clear the errors and Halt condition */
- 				tmp = hc32_to_cpu(curr_qh->size_ioc_int_sts);
- 				tmp &= ~errors;
-@@ -1628,26 +1620,26 @@ static int process_ep_req(struct fsl_udc
- 				break;
- 			}
- 			if (errors & DTD_STATUS_DATA_BUFF_ERR) {
--				dev_vdbg(&udc->gadget.dev, "Transfer overflow\n");
-+				dev_vdbg(udc->dev, "Transfer overflow\n");
- 				status = -EPROTO;
- 				break;
- 			} else if (errors & DTD_STATUS_TRANSACTION_ERR) {
--				dev_vdbg(&udc->gadget.dev, "ISO error\n");
-+				dev_vdbg(udc->dev, "ISO error\n");
- 				status = -EILSEQ;
- 				break;
- 			} else
--				dev_err(&udc->gadget.dev,
-+				dev_err(udc->dev,
- 					"Unknown error has occurred (0x%x)!\n",
- 					errors);
- 
- 		} else if (hc32_to_cpu(curr_td->size_ioc_sts)
- 				& DTD_STATUS_ACTIVE) {
--			dev_vdbg(&udc->gadget.dev, "Request not complete\n");
-+			dev_vdbg(udc->dev, "Request not complete\n");
- 			status = REQ_UNCOMPLETE;
- 			return status;
- 		} else if (remaining_length) {
- 			if (direction) {
--				dev_vdbg(&udc->gadget.dev,
-+				dev_vdbg(udc->dev,
- 					 "Transmit dTD remaining length not zero\n");
- 				status = -EPROTO;
- 				break;
-@@ -1655,8 +1647,7 @@ static int process_ep_req(struct fsl_udc
- 				break;
- 			}
- 		} else {
--			dev_vdbg(&udc->gadget.dev,
--				 "dTD transmitted successful\n");
-+			dev_vdbg(udc->dev, "dTD transmitted successful\n");
- 		}
- 
- 		if (j != curr_req->dtd_count - 1)
-@@ -1699,7 +1690,7 @@ static void dtd_complete_irq(struct fsl_
- 
- 		/* If the ep is configured */
- 		if (!curr_ep->ep.name) {
--			dev_warn(&udc->gadget.dev, "Invalid EP?\n");
-+			dev_warn(udc->dev, "Invalid EP?\n");
- 			continue;
- 		}
- 
-@@ -1708,7 +1699,7 @@ static void dtd_complete_irq(struct fsl_
- 				queue) {
- 			status = process_ep_req(udc, i, curr_req);
- 
--			dev_vdbg(&udc->gadget.dev,
-+			dev_vdbg(udc->dev,
- 				 "status of process_ep_req= %d, ep = %d\n",
- 				 status, ep_num);
- 			if (status == REQ_UNCOMPLETE)
-@@ -1829,7 +1820,7 @@ static void reset_irq(struct fsl_udc *ud
- 	while (fsl_readl(&dr_regs->endpointprime)) {
- 		/* Wait until all endptprime bits cleared */
- 		if (time_after(jiffies, timeout)) {
--			dev_err(&udc->gadget.dev, "Timeout for reset\n");
-+			dev_err(udc->dev, "Timeout for reset\n");
- 			break;
- 		}
- 		cpu_relax();
-@@ -1839,7 +1830,7 @@ static void reset_irq(struct fsl_udc *ud
- 	fsl_writel(0xffffffff, &dr_regs->endptflush);
- 
- 	if (fsl_readl(&dr_regs->portsc1) & PORTSCX_PORT_RESET) {
--		dev_vdbg(&udc->gadget.dev, "Bus reset\n");
-+		dev_vdbg(udc->dev, "Bus reset\n");
- 		/* Bus is reseting */
- 		udc->bus_reset = 1;
- 		/* Reset all the queues, include XD, dTD, EP queue
-@@ -1847,7 +1838,7 @@ static void reset_irq(struct fsl_udc *ud
- 		reset_queues(udc, true);
- 		udc->usb_state = USB_STATE_DEFAULT;
- 	} else {
--		dev_vdbg(&udc->gadget.dev, "Controller reset\n");
-+		dev_vdbg(udc->dev, "Controller reset\n");
- 		/* initialize usb hw reg except for regs for EP, not
- 		 * touch usbintr reg */
- 		dr_controller_setup(udc);
-@@ -1881,7 +1872,7 @@ static irqreturn_t fsl_udc_irq(int irq,
- 	/* Clear notification bits */
- 	fsl_writel(irq_src, &dr_regs->usbsts);
- 
--	/* dev_vdbg(&udc->gadget.dev, "irq_src [0x%8x]", irq_src); */
-+	/* dev_vdbg(udc->dev, "irq_src [0x%8x]", irq_src); */
- 
- 	/* Need to resume? */
- 	if (udc->usb_state == USB_STATE_SUSPENDED)
-@@ -1890,7 +1881,7 @@ static irqreturn_t fsl_udc_irq(int irq,
- 
- 	/* USB Interrupt */
- 	if (irq_src & USB_STS_INT) {
--		dev_vdbg(&udc->gadget.dev, "Packet int\n");
-+		dev_vdbg(udc->dev, "Packet int\n");
- 		/* Setup package, we only support ep0 as control ep */
- 		if (fsl_readl(&dr_regs->endptsetupstat) & EP_SETUP_STATUS_EP0) {
- 			tripwire_handler(udc, 0,
-@@ -1919,7 +1910,7 @@ static irqreturn_t fsl_udc_irq(int irq,
- 
- 	/* Reset Received */
- 	if (irq_src & USB_STS_RESET) {
--		dev_vdbg(&udc->gadget.dev, "reset int\n");
-+		dev_vdbg(udc->dev, "reset int\n");
- 		reset_irq(udc);
- 		status = IRQ_HANDLED;
- 	}
-@@ -1931,7 +1922,7 @@ static irqreturn_t fsl_udc_irq(int irq,
- 	}
- 
- 	if (irq_src & (USB_STS_ERR | USB_STS_SYS_ERR)) {
--		dev_vdbg(&udc->gadget.dev, "Error IRQ %x\n", irq_src);
-+		dev_vdbg(udc->dev, "Error IRQ %x\n", irq_src);
- 	}
- 
- 	spin_unlock_irqrestore(&udc->lock, flags);
-@@ -1967,7 +1958,7 @@ static int fsl_udc_start(struct usb_gadg
- 					udc_controller->transceiver->otg,
- 						    &udc_controller->gadget);
- 			if (retval < 0) {
--				dev_err(&udc_controller->gadget.dev, "can't bind to transceiver\n");
-+				dev_err(udc_controller->dev, "can't bind to transceiver\n");
- 				udc_controller->driver = NULL;
- 				return retval;
- 			}
-@@ -2252,7 +2243,7 @@ static int struct_udc_setup(struct fsl_u
- 
- 	udc->eps = kcalloc(udc->max_ep, sizeof(struct fsl_ep), GFP_KERNEL);
- 	if (!udc->eps) {
--		dev_err(&udc->gadget.dev, "kmalloc udc endpoint status failed\n");
-+		dev_err(udc->dev, "kmalloc udc endpoint status failed\n");
- 		goto eps_alloc_failed;
- 	}
- 
-@@ -2267,7 +2258,7 @@ static int struct_udc_setup(struct fsl_u
- 	udc->ep_qh = dma_alloc_coherent(&pdev->dev, size,
- 					&udc->ep_qh_dma, GFP_KERNEL);
- 	if (!udc->ep_qh) {
--		dev_err(&udc->gadget.dev, "malloc QHs for udc failed\n");
-+		dev_err(udc->dev, "malloc QHs for udc failed\n");
- 		goto ep_queue_alloc_failed;
- 	}
- 
-@@ -2278,14 +2269,14 @@ static int struct_udc_setup(struct fsl_u
- 	udc->status_req = container_of(fsl_alloc_request(NULL, GFP_KERNEL),
- 			struct fsl_req, req);
- 	if (!udc->status_req) {
--		dev_err(&udc->gadget.dev, "kzalloc for udc status request failed\n");
-+		dev_err(udc->dev, "kzalloc for udc status request failed\n");
- 		goto udc_status_alloc_failed;
- 	}
- 
- 	/* allocate a small amount of memory to get valid address */
- 	udc->status_req->req.buf = kmalloc(8, GFP_KERNEL);
- 	if (!udc->status_req->req.buf) {
--		dev_err(&udc->gadget.dev, "kzalloc for udc request buffer failed\n");
-+		dev_err(udc->dev, "kzalloc for udc request buffer failed\n");
- 		goto udc_req_buf_alloc_failed;
- 	}
- 
-@@ -2373,6 +2364,7 @@ static int fsl_udc_probe(struct platform
- 	if (udc_controller == NULL)
- 		return -ENOMEM;
- 
-+	udc_controller->dev = &pdev->dev;
- 	pdata = dev_get_platdata(&pdev->dev);
- 	udc_controller->pdata = pdata;
- 	spin_lock_init(&udc_controller->lock);
-@@ -2382,7 +2374,7 @@ static int fsl_udc_probe(struct platform
- 	if (pdata->operating_mode == FSL_USB2_DR_OTG) {
- 		udc_controller->transceiver = usb_get_phy(USB_PHY_TYPE_USB2);
- 		if (IS_ERR_OR_NULL(udc_controller->transceiver)) {
--			dev_err(&udc_controller->gadget.dev, "Can't find OTG driver!\n");
-+			dev_err(&pdev->dev, "Can't find OTG driver!\n");
- 			ret = -ENODEV;
- 			goto err_kfree;
- 		}
-@@ -2398,7 +2390,7 @@ static int fsl_udc_probe(struct platform
- 	if (pdata->operating_mode == FSL_USB2_DR_DEVICE) {
- 		if (!request_mem_region(res->start, resource_size(res),
- 					driver_name)) {
--			dev_err(&udc_controller->gadget.dev, "request mem region for %s failed\n", pdev->name);
-+			dev_err(&pdev->dev, "failed to request mem region\n");
- 			ret = -EBUSY;
- 			goto err_kfree;
- 		}
-@@ -2429,7 +2421,7 @@ static int fsl_udc_probe(struct platform
- 	/* Read Device Controller Capability Parameters register */
- 	dccparams = fsl_readl(&dr_regs->dccparams);
- 	if (!(dccparams & DCCPARAMS_DC)) {
--		dev_err(&udc_controller->gadget.dev, "This SOC doesn't support device role\n");
-+		dev_err(&pdev->dev, "This SOC doesn't support device role\n");
- 		ret = -ENODEV;
- 		goto err_exit;
- 	}
-@@ -2447,14 +2439,14 @@ static int fsl_udc_probe(struct platform
- 	ret = request_irq(udc_controller->irq, fsl_udc_irq, IRQF_SHARED,
- 			driver_name, udc_controller);
- 	if (ret != 0) {
--		dev_err(&udc_controller->gadget.dev, "cannot request irq %d err %d\n",
-+		dev_err(&pdev->dev, "cannot request irq %d err %d\n",
- 				udc_controller->irq, ret);
- 		goto err_exit;
- 	}
- 
- 	/* Initialize the udc structure including QH member and other member */
- 	if (struct_udc_setup(udc_controller, pdev)) {
--		dev_err(&udc_controller->gadget.dev, "Can't initialize udc data structure\n");
-+		dev_err(&pdev->dev, "Can't initialize udc data structure\n");
- 		ret = -ENOMEM;
- 		goto err_free_irq;
- 	}
---- a/drivers/usb/gadget/udc/fsl_usb2_udc.h
-+++ b/drivers/usb/gadget/udc/fsl_usb2_udc.h
-@@ -470,6 +470,7 @@ struct fsl_ep {
- #define EP_DIR_OUT	0
- 
- struct fsl_udc {
-+	struct device *dev;
- 	struct usb_gadget gadget;
- 	struct usb_gadget_driver *driver;
- 	struct fsl_usb2_platform_data *pdata;
+ 			/* wDatagramIndex[1] */
+-			if (index2 > block_len - opts->dpe_size) {
++			if (index2 > block_len) {
+ 				INFO(port->func.config->cdev,
+ 				     "Bad index: %#X\n", index2);
+ 				goto err;
 
 
