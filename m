@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A24383983;
-	Thu, 30 Jul 2026 15:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6801136607D;
+	Thu, 30 Jul 2026 15:52:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426762; cv=none; b=mlOAi3EAufA3QTaMFmO3OPBX4An5578h93hIa3vpaA2Q69+RcmcJitdlDtiYlfUuI5CAxLqah8ZRG3ZEQG/l1GWeKibPABhm+TxjnDBQlUBEuSKHVNSphNYgORs8f0SEPeAjZIY+C+MlMTaIf3Ii0yTtfjKwoayVM4kMThVFPvo=
+	t=1785426765; cv=none; b=DRMH59S8iihVOu57C1gKd72i57ye2vl5ibY7DJ4GgeKEc2zLmixzAnOFXj63D8FWeoexatL1TJ1CrPjdQLD3nIEELyyIWVMCwWLTJ99qsbfO1HsJVTcLu/QVa7PERqQDOFsVrBq6qmbxbHoICSYL/L0NXsH5tcHwmiG+y0QfoOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426762; c=relaxed/simple;
-	bh=uptNYTJevq1iMYA09PbPp/KFM9A0VDxb0ajGOBeRKaI=;
+	s=arc-20240116; t=1785426765; c=relaxed/simple;
+	bh=HPv3bUT0k+nl8/+qrxCJ+1ABuTvZGyuguLCR+kCmwJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SY0/NNOxHF992va5OeYCMBNGNdyHRhGEoDyFq243HTU4I+mbq1PzvGr4QPaF30H1TOCkpCppUlN/ubBeK5gE+d7nBgW2WJRW7P9YTqwJzizv8ovzaFVLN59VoBQvOquTdvVAz/GTwVoaze28aSGbdqd7tXWXsDBm+G71dT7vq0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIqFF8xv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hNAxslU0mlYGG7pDRqpytZ/m+AbMNlaebeZGP/UHuVBbEmWmQGXmg68aoyTzCf1E1the5kalem/WYnvYSIMjb+51tDD5fu6/G9t/kai2O/VTT2webKRgsmc747/e6iYk77xCdPMGaZuKEkalsCs10yvOS5lcePwYRhZBFX4g0I0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PaR/DGAW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIqFF8xv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF4461F000E9;
-	Thu, 30 Jul 2026 15:52:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaR/DGAW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8C71F000E9;
+	Thu, 30 Jul 2026 15:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426761;
-	bh=MjuQFfE+M0s2Dmkr3vpaN+qJfZyWV7AJhpZy/EdU1VI=;
+	s=korg; t=1785426764;
+	bh=QmV/4CyJb1xun/fYzkeW5OiAiXi4n7YN5SnO18OjuoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dIqFF8xvu3z9pDxenoH3LWt0RV9pHM0LiAiadQWo4tPtaEuiS1/a6WRNHM+1lXa6P
-	 +1h9H7wkxfo9jx9rFMnxND9hf7oX+2GWqTe5uxEvm/lCq7Bqgzxqao4alK13xfmAyS
-	 lB2cW2jJjyKGLcFdhQAPHKt/zy7HW3QqClbPKJQ8=
+	b=PaR/DGAWeD1TQt1tc6+ZL47WF5a+cxLwLnjQCOtdX9tGBkQJtVBcMiD51p2TLmZsY
+	 Z2hqOzNWCwBQiod0qFv4AJ6Rul+w34g3M+WNi+vbmZPpO5gCDGZSIwdbfLMSB1WiX6
+	 B3u0yGMIsrOYHXqyy7agRf2D1dM/5rX7s/vJ0Q+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot+226c1f947186f8fef796@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	David Hildenbrand <david@kernel.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	Mina Almasry <almasrymina@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 534/602] xfrm: Use nested-BH locking for nat_keepalive_sk_ipv[46]
-Date: Thu, 30 Jul 2026 16:15:26 +0200
-Message-ID: <20260730141447.241433804@linuxfoundation.org>
+Subject: [PATCH 6.12 517/602] mm/hugetlb: fix hugetlb cgroup rsvd charge/uncharge mismatch
+Date: Thu, 30 Jul 2026 16:15:09 +0200
+Message-ID: <20260730141446.868003918@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,119 +56,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit 9c607d4b6589d4d380a85784514bcf4cceee1e11 ]
+[ Upstream commit 15807d0ddde37407af72859426b654f3d1972b00 ]
 
-nat_keepalive_sk_ipv[46] is a per-CPU variable and relies on disabled BH
-for its locking. Without per-CPU locking in local_bh_disable() on
-PREEMPT_RT this data structure requires explicit locking.
+In alloc_hugetlb_folio(), a single h_cg pointer is used for both the rsvd
+and non-rsvd hugetlb cgroup charges.  When map_chg is set,
+hugetlb_cgroup_charge_cgroup_rsvd() stores the charged cgroup in h_cg, but
+the immediately following hugetlb_cgroup_charge_cgroup() overwrites h_cg
+with the non-rsvd cgroup pointer.
 
-Use sock_bh_locked which has a sock pointer and a local_lock_t. Use
-local_lock_nested_bh() for locking. This change adds only lockdep
-coverage and does not alter the functional behaviour for !PREEMPT_RT.
+As a result, hugetlb_cgroup_commit_charge_rsvd() stores the wrong
+(non-rsvd) cgroup pointer into the folio's rsvd slot.
 
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20250512092736.229935-7-bigeasy@linutronix.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 226f4a490d1a ("xfrm: nat_keepalive: avoid double free on send error")
+When the folio is later freed, free_huge_folio() unconditionally calls
+both hugetlb_cgroup_uncharge_folio() and
+hugetlb_cgroup_uncharge_folio_rsvd().  The rsvd uncharge reads back the
+wrong cgroup from the folio and decrements a counter that was never
+charged for that cgroup, causing a page_counter underflow:
+
+  page_counter underflow: -512 nr_pages=512
+  WARNING: mm/page_counter.c:61 at page_counter_cancel
+
+Fix this by introducing a separate h_cg_rsvd pointer exclusively for the
+rsvd charge path, keeping the rsvd and non-rsvd charges fully independent
+through their charge, commit, and error uncharge paths.
+
+Link: https://lore.kernel.org/20260328065534.346053-1-kartikey406@gmail.com
+Fixes: 08cf9faf7558 ("hugetlb_cgroup: support noreserve mappings")
+Reported-by: syzbot+226c1f947186f8fef796@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=226c1f947186f8fef796
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Mina Almasry <almasrymina@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_nat_keepalive.c |   30 ++++++++++++++++++++----------
- 1 file changed, 20 insertions(+), 10 deletions(-)
+ mm/hugetlb.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/net/xfrm/xfrm_nat_keepalive.c
-+++ b/net/xfrm/xfrm_nat_keepalive.c
-@@ -9,9 +9,13 @@
- #include <net/ip6_checksum.h>
- #include <net/xfrm.h>
- 
--static DEFINE_PER_CPU(struct sock *, nat_keepalive_sk_ipv4);
-+static DEFINE_PER_CPU(struct sock_bh_locked, nat_keepalive_sk_ipv4) = {
-+	.bh_lock = INIT_LOCAL_LOCK(bh_lock),
-+};
- #if IS_ENABLED(CONFIG_IPV6)
--static DEFINE_PER_CPU(struct sock *, nat_keepalive_sk_ipv6);
-+static DEFINE_PER_CPU(struct sock_bh_locked, nat_keepalive_sk_ipv6) = {
-+	.bh_lock = INIT_LOCAL_LOCK(bh_lock),
-+};
- #endif
- 
- struct nat_keepalive {
-@@ -56,10 +60,12 @@ static int nat_keepalive_send_ipv4(struc
- 
- 	skb_dst_set(skb, &rt->dst);
- 
--	sk = *this_cpu_ptr(&nat_keepalive_sk_ipv4);
-+	local_lock_nested_bh(&nat_keepalive_sk_ipv4.bh_lock);
-+	sk = this_cpu_read(nat_keepalive_sk_ipv4.sock);
- 	sock_net_set(sk, net);
- 	err = ip_build_and_send_pkt(skb, sk, fl4.saddr, fl4.daddr, NULL, tos);
- 	sock_net_set(sk, &init_net);
-+	local_unlock_nested_bh(&nat_keepalive_sk_ipv4.bh_lock);
- 	return err;
- }
- 
-@@ -89,15 +95,19 @@ static int nat_keepalive_send_ipv6(struc
- 	fl6.fl6_sport = ka->encap_sport;
- 	fl6.fl6_dport = ka->encap_dport;
- 
--	sk = *this_cpu_ptr(&nat_keepalive_sk_ipv6);
-+	local_lock_nested_bh(&nat_keepalive_sk_ipv6.bh_lock);
-+	sk = this_cpu_read(nat_keepalive_sk_ipv6.sock);
- 	sock_net_set(sk, net);
- 	dst = ipv6_stub->ipv6_dst_lookup_flow(net, sk, &fl6, NULL);
--	if (IS_ERR(dst))
-+	if (IS_ERR(dst)) {
-+		local_unlock_nested_bh(&nat_keepalive_sk_ipv6.bh_lock);
- 		return PTR_ERR(dst);
-+	}
- 
- 	skb_dst_set(skb, dst);
- 	err = ipv6_stub->ip6_xmit(sk, skb, &fl6, skb->mark, NULL, 0, 0);
- 	sock_net_set(sk, &init_net);
-+	local_unlock_nested_bh(&nat_keepalive_sk_ipv6.bh_lock);
- 	return err;
- }
- #endif
-@@ -202,7 +212,7 @@ static void nat_keepalive_work(struct wo
- 				      (ctx.next_run - ctx.now) * HZ);
- }
- 
--static int nat_keepalive_sk_init(struct sock * __percpu *socks,
-+static int nat_keepalive_sk_init(struct sock_bh_locked __percpu *socks,
- 				 unsigned short family)
- {
- 	struct sock *sk;
-@@ -214,22 +224,22 @@ static int nat_keepalive_sk_init(struct
- 		if (err < 0)
- 			goto err;
- 
--		*per_cpu_ptr(socks, i) = sk;
-+		per_cpu_ptr(socks, i)->sock = sk;
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -2976,6 +2976,7 @@ struct folio *alloc_hugetlb_folio(struct
+ 	long gbl_chg;
+ 	int memcg_charge_ret, ret, idx;
+ 	struct hugetlb_cgroup *h_cg = NULL;
++	struct hugetlb_cgroup *h_cg_rsvd = NULL;
+ 	struct mem_cgroup *memcg;
+ 	bool deferred_reserve;
+ 	gfp_t gfp = htlb_alloc_mask(h) | __GFP_RETRY_MAYFAIL;
+@@ -3019,7 +3020,7 @@ struct folio *alloc_hugetlb_folio(struct
+ 	deferred_reserve = map_chg || avoid_reserve;
+ 	if (deferred_reserve) {
+ 		ret = hugetlb_cgroup_charge_cgroup_rsvd(
+-			idx, pages_per_huge_page(h), &h_cg);
++			idx, pages_per_huge_page(h), &h_cg_rsvd);
+ 		if (ret)
+ 			goto out_subpool_put;
+ 	}
+@@ -3056,7 +3057,7 @@ struct folio *alloc_hugetlb_folio(struct
+ 	 */
+ 	if (deferred_reserve) {
+ 		hugetlb_cgroup_commit_charge_rsvd(idx, pages_per_huge_page(h),
+-						  h_cg, folio);
++						  h_cg_rsvd, folio);
  	}
  
- 	return 0;
- err:
- 	for_each_possible_cpu(i)
--		inet_ctl_sock_destroy(*per_cpu_ptr(socks, i));
-+		inet_ctl_sock_destroy(per_cpu_ptr(socks, i)->sock);
- 	return err;
- }
- 
--static void nat_keepalive_sk_fini(struct sock * __percpu *socks)
-+static void nat_keepalive_sk_fini(struct sock_bh_locked __percpu *socks)
- {
- 	int i;
- 
- 	for_each_possible_cpu(i)
--		inet_ctl_sock_destroy(*per_cpu_ptr(socks, i));
-+		inet_ctl_sock_destroy(per_cpu_ptr(socks, i)->sock);
- }
- 
- void xfrm_nat_keepalive_state_updated(struct xfrm_state *x)
+ 	spin_unlock_irq(&hugetlb_lock);
+@@ -3097,7 +3098,7 @@ out_uncharge_cgroup:
+ out_uncharge_cgroup_reservation:
+ 	if (deferred_reserve)
+ 		hugetlb_cgroup_uncharge_cgroup_rsvd(idx, pages_per_huge_page(h),
+-						    h_cg);
++						    h_cg_rsvd);
+ out_subpool_put:
+ 	if (map_chg || avoid_reserve)
+ 		hugepage_subpool_put_pages(spool, 1);
 
 
