@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8D643F08C;
-	Thu, 30 Jul 2026 14:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11488365A19;
+	Thu, 30 Jul 2026 14:21:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421299; cv=none; b=JyaIm89Q72/MQP+XMYt/xEdt2tSd+tMiohkZYpy5EiEn760qGMSy5F2PL3o4E3zuuj1DXUIYCxnhzqwORHMZatMNHESvHqfhFxM+Ub+gE/nVKATIMDhNQH5wD0FfePeOPmtK/NSTKWCsjrunX91knS2YY/YhUF0KBY/DhEfRu5g=
+	t=1785421301; cv=none; b=reb3Mojn9s176zml66KhMi8vUFdZbFg79EWCqDWwsEhHb2Afjr6bioC4tIHgfU3Vdi2Jjk+BVN/K2uRFi99Vt/dmUWrwVmmqMET/PtxvZzJQF5k4X/l1Vy2xP7l7cmyzsJCkMyBMa53Uh3E70FfihhHMGEYLHgmDis6DBoaFE4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421299; c=relaxed/simple;
-	bh=xm8Dh9OD/ha2W5IjiMJ+om3Pbt84Dva8DjvKB91DbN0=;
+	s=arc-20240116; t=1785421301; c=relaxed/simple;
+	bh=bw7m6YIfGeJbbgdzHQSbd2J62/BHgR1uFDiG9qwyjXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uIdh6TLwHTKoRXoxGbnzFJqMSaDlIb/XgPxC7MZjeHHdSS/wHxzPp7f7Hnc+p1Kib5BcwDRTlKirh2r7thYM/gqoR0AFNdqhmkbzGT/zj3tuxh91ZJMQECBHD9kk3Bcbbh2RMiLfiXbPUV2Y8C/nvaeZfFmo5FPR3arvkN6wQsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zcIPQnvE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AfORmaTOeq0bcSI9eFVWdYAjZeKFpSUoSRa2GHI4V8USBZIlLJZTz7u4u6ld+z/oiCqpBb1HObyIBD4tyUWPZVkbYRYj2iBqWq9p7FNYnTk960kmfuugBCiiIabJPEt1+Nhk6EDFhWGcoo/chXOshKtqQ8T2vlvsq9pGNT6/xOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBekwB9o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zcIPQnvE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E051F00A3D;
-	Thu, 30 Jul 2026 14:21:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBekwB9o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560051F000E9;
+	Thu, 30 Jul 2026 14:21:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421296;
-	bh=djnuTAn3Yz+k80yfDRXrLUtAKTnQ9n+JbPI/AkwSFu8=;
+	s=korg; t=1785421299;
+	bh=WftzWeCYTlYuchCPVOkMiC0WTIoqWf1Snz0MuEQXmSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zcIPQnvELOKo5JPW3Yqpd5r68/d0+Sf1OXJhIKF5dxZOC5v4JRhmB4U5ABw8tgSMQ
-	 7AffTwNukV+HufOzDtCj4CZlZIMtOcQm2KHCpWQHhynisjAKxdpaO6toVbenyMZVnZ
-	 GmVsm/jAtGDA1ftQ/Ro98iQDaKKAuk8uw3VZNC+w=
+	b=iBekwB9ofuZ+1L4tg1C7Pb0Ptm4QAbzM7XNcEB4+xR17OfWaUCl1X3y6stb4nm/zb
+	 kBG/7ea/pVEeCOBN182p4MXFImzupAIV5DnzZ9X09ZeoOY6BgKSqRyobJwCeOJvBik
+	 el20r/rbBWNI6JvKOYhZ0a8WlbdKyD2uSLPbUMfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Kaixuan Li <kaixuan.li@ntu.edu.sg>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 056/744] wifi: libertas: fix memory leak in helper_firmware_cb()
-Date: Thu, 30 Jul 2026 16:05:29 +0200
-Message-ID: <20260730141445.467306798@linuxfoundation.org>
+Subject: [PATCH 7.1 057/744] wifi: mac80211: defer link RX stats percpu free to RCU
+Date: Thu, 30 Jul 2026 16:05:30 +0200
+Message-ID: <20260730141445.487736372@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,48 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-[ Upstream commit 63c2391deefb31e1b801b7f32bd502ca4808639b ]
+[ Upstream commit aa2eb62525188269cdd402a583b9a8ed94657ff0 ]
 
-helper_firmware_cb() neglects to free the single-stage firmware image
-after a successful async load, leading to a memory leak in the USB
-firmware-download path.
+sta_remove_link() frees a removed MLO link's RX stats percpu buffer right
+away, but defers only the link container to RCU:
 
-Fix this memory leak by calling release_firmware() immediately after
-lbs_fw_loaded() returns.
+	sta_info_free_link(&alloc->info);
+	kfree_rcu(alloc, rcu_head);
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still present in
-the current wireless tree.
+The RX fast path reads link_sta under rcu_read_lock and writes the percpu
+stats. A reader that resolved link_sta before the removal keeps the
+pointer. The container stays alive from the kfree_rcu, so the read still
+works. But the percpu block it points to is already freed. This needs
+uses_rss. That is when pcpu_rx_stats exists.
 
-An x86_64 allyesconfig build showed no new warnings. As we do not have
-compatible Libertas USB hardware for exercising this firmware-download
-path, no runtime testing was able to be performed.
+The full STA teardown frees the deflink stats only after
+synchronize_net(). The link removal path had no such barrier. The race is
+hard to win in practice, but the free should still wait for RCU.
 
-Fixes: 1dfba3060fe7 ("libertas: move firmware lifetime handling to firmware.c")
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Link: https://patch.msgid.link/20260624085343.575508-1-dawei.feng@seu.edu.cn
+Free the link together with its data from a single RCU callback, so the
+percpu block is reclaimed only after readers drain.
+
+Fixes: c71420db653a ("wifi: mac80211: RCU-ify link STA pointers")
+Link: https://lore.kernel.org/r/20260626080158.3589711-1-maoyixie.tju@gmail.com
+Suggested-by: Johannes Berg <johannes@sipsolutions.net>
+Co-developed-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
+Signed-off-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Link: https://patch.msgid.link/20260627083028.3826810-1-maoyixie.tju@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/libertas/firmware.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/mac80211/sta_info.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/libertas/firmware.c b/drivers/net/wireless/marvell/libertas/firmware.c
-index f124110944b7e9..9bf7d4c207b9ed 100644
---- a/drivers/net/wireless/marvell/libertas/firmware.c
-+++ b/drivers/net/wireless/marvell/libertas/firmware.c
-@@ -78,6 +78,7 @@ static void helper_firmware_cb(const struct firmware *firmware, void *context)
- 	} else {
- 		/* No main firmware needed for this helper --> success! */
- 		lbs_fw_loaded(priv, 0, firmware, NULL);
-+		release_firmware(firmware);
- 	}
+diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
+index 4c31ef8817ce07..6d58571a364d14 100644
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -355,6 +355,15 @@ static void sta_info_free_link(struct link_sta_info *link_sta)
+ 	free_percpu(link_sta->pcpu_rx_stats);
  }
  
++static void sta_link_free_rcu(struct rcu_head *head)
++{
++	struct sta_link_alloc *alloc =
++		container_of(head, struct sta_link_alloc, rcu_head);
++
++	sta_info_free_link(&alloc->info);
++	kfree(alloc);
++}
++
+ static void sta_accumulate_removed_link_stats(struct sta_info *sta, int link_id)
+ {
+ 	struct link_sta_info *link_sta = wiphy_dereference(sta->local->hw.wiphy,
+@@ -439,10 +448,8 @@ static void sta_remove_link(struct sta_info *sta, unsigned int link_id,
+ 
+ 	RCU_INIT_POINTER(sta->link[link_id], NULL);
+ 	RCU_INIT_POINTER(sta->sta.link[link_id], NULL);
+-	if (alloc) {
+-		sta_info_free_link(&alloc->info);
+-		kfree_rcu(alloc, rcu_head);
+-	}
++	if (alloc)
++		call_rcu(&alloc->rcu_head, sta_link_free_rcu);
+ 
+ 	ieee80211_sta_recalc_aggregates(&sta->sta);
+ }
 -- 
 2.53.0
 
