@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781364446FA;
-	Thu, 30 Jul 2026 15:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521693B52EE;
+	Thu, 30 Jul 2026 15:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427062; cv=none; b=HGf2vpWBhwdB3TPs2Q0zIPErJ5SuJSNUpe2WLfhXq0JZkZdyzjtGYXAokSA7rBm3zszoPmYkHIZ4AqTwExOjMI+ppXO8n+w+UJfGYQDGpXAdhtoP0HhxFmFYx4iba5/DbwcIXPXqIOICTtLbZqf3gVbqGd9tbjWQbAFtkLV6/bE=
+	t=1785427065; cv=none; b=HvlSzvslCtSn017rndjWFlHgva6Z47V1ZnOImrJV0eP8X9Jdp+KQYE5BBaPyBjmzX3D3sm8ZVSywpaXSkSStII1MtMm5bzWxMGuIKHEva2dMrYa8g+ozlipARAVoEASX2TuZ3RM3Fw0oAg/uU3nUV6enxZtR2q/briF182oy0dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427062; c=relaxed/simple;
-	bh=Ew9ZJnLhxvivkmxINfnyYL+s+bj5DtCYJJEEGRBctRs=;
+	s=arc-20240116; t=1785427065; c=relaxed/simple;
+	bh=Us+Ta+NSl+LPBtyzry9PM6+lkI0X3Y4lUZVqZhW4G1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mCEcegwtAlXPKXViJl8mA2wCdTKdIo3hK6yB84JZeTFoyVQpr5dGmkLsfXbOQWTdsOeZHKkeq1OYmHv2TkRDJLZGqROZD89gL91vYYm0zyNyVX97W9rRaQbErRZ7I4OMRKise8YgFDGtN01dLjZSTGqPvuxoh9fNPPoWwSrwX0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4K+mZjl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D6auj/KwDMhK6dwUFUB9gbF7b62AVWrw0nYrY6+L6JSRoDquEFypVtllk4i5OfEgBTevU/2R32uGOeXOvpG7lEdGdP+LqvNc9kWdO7RtS/9i1q0vP9sWG4Gf1Vz1RNe1/3kl/BlNGqjB+dj5tcwDHOxXxxj6r7JZx1Lz7gHtspc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgJNhMK0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4K+mZjl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36281F000E9;
-	Thu, 30 Jul 2026 15:57:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgJNhMK0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA9B1F000E9;
+	Thu, 30 Jul 2026 15:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427061;
-	bh=PiS1QEnRVIUcIMb9c0Rty40rBqGvtH66rCoUs35s+eM=;
+	s=korg; t=1785427064;
+	bh=Jb2FXDD45C7dFeXLufDFwWPpex9+51D3eGf409YF+mI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d4K+mZjlYtnm1jkd8YprFJxtN+X0c+XlC4CILxTBmoKIweNQk6/p3gTL1DK7X45oj
-	 mXLOuUeEukyvK+xFPL2TPf6AWQ/BP9bjxSDHTm5Oc1Z5oGll4jNHkAuvmA4v/81i3N
-	 YHDcIJ/9IpyFLzP1SKZeGbGYv156SZXhyTojfS0g=
+	b=KgJNhMK0Gd33zT1V+oI0VTqLdNsUAJY8rRjBZy2VgyUeT8G+84wBzfY7rjH8UnfKE
+	 og0iYuRag1nUkKY/UsVx2TNmTGq0raeMk/PnN9Ymnpacx7MXLXz5S83/nxLxxOi4Dv
+	 xDdR5eqLPpN8tvgXcZoiHCXiHp2+1qcT2gFhKPKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.6 009/484] seqlock: Allow UBSAN_ALIGNMENT to fail optimizing
-Date: Thu, 30 Jul 2026 16:08:26 +0200
-Message-ID: <20260730141423.608915680@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.6 010/484] KVM: x86: Check for invalid/obsolete root *after* making MMU pages available
+Date: Thu, 30 Jul 2026 16:08:27 +0200
+Message-ID: <20260730141423.630830561@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,49 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 88331c4ec23a28c1006ec532fa64763d4c695e90 upstream.
+commit 2abd5287f08319fa35764566b15c6e22cb1068db upstream.
 
-With gcc-15 and gcc-16 with UBSAN_ALIGNMENT enabled the compiler fails to
-inline and optimize __scoped_seqlock_bug() away on s390:
+Check for a "stale" page fault, i.e. for an invalid and/or obsolete root,
+after making MMU pages available for the shadow MMU.  If reclaiming shadow
+pages zaps an in-use root, i.e. marks it invalid, then KVM will attempt to
+map memory into an invalid root.  On its own, populating an invalid root is
+"fine", but because child shadow pages inherit their parent's role, any
+children created during the map/fetch will be created as invalid pages,
+thus violating KVM's invariant that invalid pages are never on the list of
+active MMU pages.
 
-s390x-16.1.0-ld: kernel/sched/build_policy.o: in function `__scoped_seqlock_next':
-/.../seqlock.h:1286:(.text+0x22030): undefined reference to `__scoped_seqlock_bug'
+Note, the underlying flaw has existed since KVM first started tracking
+invalid roots in 2008 (commit 2e53d63acba7, "KVM: MMU: ignore zapped root
+pagetables"), but the true badness only came along in 2020 (Linux 5.9)
+with the invariant that invalid shadow pages can't be on the list of
+active pages.
 
-Fix this by adding UBSAN_ALIGNMENT to the list of config options where a
-not inlined empty __scoped_seqlock_bug() is allowed.
+Note #2, inheriting role.invalid when creating child shadow pages is also
+far from ideal; that flaw will be addressed separately.
 
-Closes: https://lore.kernel.org/r/20260515092057.810542-1-arnd@kernel.org/
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260519110315.1385307-1-hca@linux.ibm.com
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Fixes: f95eec9bed76 ("KVM: x86/mmu: Don't put invalid SPs back on the list of active pages")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/seqlock.h |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/x86/kvm/mmu/mmu.c         |    9 +++++----
+ arch/x86/kvm/mmu/paging_tmpl.h |   10 ++++++----
+ 2 files changed, 11 insertions(+), 8 deletions(-)
 
---- a/include/linux/seqlock.h
-+++ b/include/linux/seqlock.h
-@@ -1291,14 +1291,15 @@ static __always_inline void __scoped_seq
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -4384,16 +4384,17 @@ static int direct_page_fault(struct kvm_
  
- extern void __scoped_seqlock_invalid_target(void);
+ 	orig_pfn = fault->pfn;
  
--#if (defined(CONFIG_CC_IS_GCC) && CONFIG_GCC_VERSION < 90000) || defined(CONFIG_KASAN)
-+#if (defined(CONFIG_CC_IS_GCC) && CONFIG_GCC_VERSION < 90000) || \
-+	defined(CONFIG_KASAN) || defined(CONFIG_UBSAN_ALIGNMENT)
- /*
-  * For some reason some GCC-8 architectures (nios2, alpha) have trouble
-  * determining that the ss_done state is impossible in __scoped_seqlock_next()
-  * below.
-  *
-- * Similarly KASAN is known to confuse compilers enough to break this. But we
-- * don't care about code quality for KASAN builds anyway.
-+ * Similarly KASAN and UBSAN_ALIGNMENT are known to confuse compilers enough
-+ * to break this. But we don't care about code quality for such builds anyway.
-  */
- static inline void __scoped_seqlock_bug(void) { }
- #else
+-	r = RET_PF_RETRY;
+ 	write_lock(&vcpu->kvm->mmu_lock);
+ 
+-	if (is_page_fault_stale(vcpu, fault))
+-		goto out_unlock;
+-
+ 	r = make_mmu_pages_available(vcpu);
+ 	if (r)
+ 		goto out_unlock;
+ 
++	if (is_page_fault_stale(vcpu, fault)) {
++		r = RET_PF_RETRY;
++		goto out_unlock;
++	}
++
+ 	r = direct_map(vcpu, fault);
+ 
+ out_unlock:
+--- a/arch/x86/kvm/mmu/paging_tmpl.h
++++ b/arch/x86/kvm/mmu/paging_tmpl.h
+@@ -838,15 +838,17 @@ static int FNAME(page_fault)(struct kvm_
+ 
+ 	orig_pfn = fault->pfn;
+ 
+-	r = RET_PF_RETRY;
+ 	write_lock(&vcpu->kvm->mmu_lock);
+ 
+-	if (is_page_fault_stale(vcpu, fault))
+-		goto out_unlock;
+-
+ 	r = make_mmu_pages_available(vcpu);
+ 	if (r)
+ 		goto out_unlock;
++
++	if (is_page_fault_stale(vcpu, fault)) {
++		r = RET_PF_RETRY;
++		goto out_unlock;
++	}
++
+ 	r = FNAME(fetch)(vcpu, fault, &walker);
+ 
+ out_unlock:
 
 
