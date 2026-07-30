@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FFB39C00E;
-	Thu, 30 Jul 2026 15:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153AC30C618;
+	Thu, 30 Jul 2026 15:11:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424306; cv=none; b=JH7wNpXnnhGg/TFuyPd4ontDJxDXFqkuBksgklfabcwl2BnGQQcnxYJJQYeHFg1VlMrepTsltRH7F6wAP/rIKyfgj6HdKQEFH/bgt+T1bqBTwEzKTebmdTmPxxAYBgCvjDhgung11mz03EGakFiP1jLlgNpXy3BFBfXRF1aEGZA=
+	t=1785424309; cv=none; b=bT6qkHT0je0xRYNQZPhH/r8VmTcFu5c2LYyIW+qqsgVyXI5xHsbKqcdTjDC+qRqzs5OZJT3sylE/k3Jf0FQ68UcMZbfyhvUa6xCMSB6vHWCeozt6Q62T896fc68EFjmeHYAv3bE6xE8vmJoLjYiaC/1O7P7C+rEZ3jOvG3jRf7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424306; c=relaxed/simple;
-	bh=V7q+Hscs+t859vaG1fTEXStG3u6G75PIZLqyP8nxbhQ=;
+	s=arc-20240116; t=1785424309; c=relaxed/simple;
+	bh=usz08zZ0TVVV+RY42w1Zdv0DO5Z2DZrNYQI9GOaxV+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HCZAZVdYPcGi8P34+MicvkFCnHPRuzDmb7+piyxWh+CSB/xljvSyQF6ZwPy5YZM42xcNWo6NDEtIpb1EqrvgiPUpNxGbyVMevwFDhYP1O+Pj9u3J5384pxao7mzVEPHT2yjev4SHokXfbD6rqTemzMTWhnG1pvBJIo7hMyH1ZtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ha6m1VIW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Inux2nlUF6Z8tFuW7M+FV+x0g78JXCc47nvnrdisQB/WrwMjQgLYmw+mg7ZPDeAi/jgwKtRM1u7ZOtpyewyS+3W0IpiJK/wlsaVPwSvGVmsgZhndoky9Y4yQK2dC9LvTK4JFVsrmj6e/vBHpoBxUxZ+f19JXrV9VCYBNmr8FMOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTvFEicz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ha6m1VIW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A5151F000E9;
-	Thu, 30 Jul 2026 15:11:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTvFEicz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6901F000E9;
+	Thu, 30 Jul 2026 15:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424304;
-	bh=7uy2WADC4jIPgpLh9JDG3kyWE3SGyX/UyURpg6yhuQU=;
+	s=korg; t=1785424307;
+	bh=1o1Mh7LUhfF7oPedlMCMtBmREPTFZ8ALVbe6DNwMyPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ha6m1VIWmcY1koWle+btKjCaL0VP1by0UohlmJT0vISEWDEsoHocyYPSWlAeTc++G
-	 TYZhKTdnA8/s5frYHgzgkq3sbNgXq16G9Yn+ZN12bE5DdQYbm1BsyGPt3rk37Ug7QT
-	 W0ilEVNwY5QIE6z0R2qumlqNkq6kIjf3VV2sP170=
+	b=aTvFEiczeK6M6fqI1Sp12nv7428TN+HvAhbWa+CKASxpyA+AnZn/PJjvTU1kc3aVU
+	 HLxBGshXWrbzK/fnZD4EEdtihEHHo5Z7Sr0uJSX/ariozEQTkj4ppdKiRzE6+TuxMM
+	 hKZfIwtjNsMmfFocI5pS0vbvPZx4niLPzDc1UxS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
+	Thomas Hellstrom <thomas.hellstrom@linux.intel.com>,
+	Christian Konig <christian.koenig@amd.com>,
 	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
-Subject: [PATCH 6.18 346/675] drm/xe: Fix PTE index in xe_vm_populate_pgtable() for chunked binds
-Date: Thu, 30 Jul 2026 16:11:16 +0200
-Message-ID: <20260730141452.487918857@linuxfoundation.org>
+	Nitin Gote <nitin.r.gote@intel.com>
+Subject: [PATCH 6.18 347/675] drm/xe: Hold a dma-buf reference for imported BOs
+Date: Thu, 30 Jul 2026 16:11:17 +0200
+Message-ID: <20260730141452.508369633@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,73 +53,210 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Nitin Gote <nitin.r.gote@intel.com>
 
-commit 34a4dd45cf210c04fee773b0dbc350aec285f03c upstream.
+commit 62775525a27c3b0d56382e08ba81ee2d322058b6 upstream.
 
-xe_vm_populate_pgtable() indexed the source PTE array (update->pt_entries)
-by the per-call loop counter, assuming each call starts at the first entry
-of the update. That holds for the CPU bind path
-(xe_migrate_update_pgtables_cpu), which populates a whole update in a single
-call, but not for the GPU bind path: write_pgtable() splits an update into
-MAX_PTE_PER_SDI (510) sized MI_STORE_DATA_IMM chunks, invoking the populate
-callback once per chunk with an advancing qword_ofs but a fresh command-
-buffer destination pointer.
+An imported dma-buf BO is created as a ttm_bo_type_sg BO whose
+reservation object is the exporter's dma_buf->resv. The importer,
+however, only takes a dma-buf reference after a successful
+dma_buf_dynamic_attach(). Until then nothing keeps the exporter alive,
+so if the exporter is freed while the BO still references its resv, a
+later access to that resv is a use-after-free:
 
-As a result, every chunk after the first re-read pt_entries from index 0
-instead of from its true offset, so PTEs beyond the first 510 entries of a
-single update were programmed with the wrong physical pages, shifting the
-mapping by exactly MAX_PTE_PER_SDI pages.
+  Oops: general protection fault, probably for non-canonical address
+        0x6b6b6b6b6b6b6b9c
+  Workqueue: ttm ttm_bo_delayed_delete [ttm]
+  RIP: 0010:mutex_can_spin_on_owner+0x3f/0xc0
 
-This stayed latent because a single update only exceeds 510 qwords when a
-large (e.g. 2M) region is bound as individual 4K PTEs rather than a single
-huge-page entry, which happens when the backing store is sufficiently
-fragmented. It was surfaced by the BO defrag path, which deliberately
-rebinds such fragmented ranges via the GPU bind path, producing
-deterministic data corruption offset by 510 pages.
+This can be reached on two paths:
 
-Index pt_entries by the chunk's absolute offset relative to update->ofs so
-both the CPU and GPU paths pick the correct entries.
+ - dma_buf_dynamic_attach() fails, or
+ - ttm_bo_init_reserved() fails during BO creation.
 
+In both cases the BO already has bo->base.resv pointing at the exporter
+resv, and sg BOs are always torn down via ttm_bo_delayed_delete(), which
+locks bo->base.resv asynchronously - potentially after the exporter has
+been freed.
+
+Take the dma-buf reference in xe_bo_init_locked(), before
+ttm_bo_init_reserved(), so it also covers a creation failure there, and
+release it in xe_ttm_bo_destroy(). The reference is held for the whole
+BO lifetime, keeping the shared resv alive on every path.
+
+v2:
+  - Reworked the fix to avoid creating the imported sg BO before
+    dma_buf_dynamic_attach() succeeds.
+  - Attach with importer_priv == NULL and make invalidate_mappings ignore
+    incomplete imports.
+
+v3:
+  - Dropped the xe-side reordering approach since importer_priv must be
+    valid when dma_buf_dynamic_attach() publishes the attachment.
+  - Per Christian's suggestion on the v1 thread, keyed the check on
+    import_attach rather than removing the sg guard entirely.
+  - Fixes both xe and amdgpu in a single TTM patch.
+
+v4:
+  - Moved import_attach check to after dma_resv_copy_fences() so fences
+    are copied before returning for successful imports (Thomas).
+  - Removed exporter-alive claim from commit message (Thomas).
+
+v5:
+  - Add drm/xe patch to keep imported sg BOs off the LRU before attach
+    succeeds; the TTM fix alone is not sufficient for xe if the BO is
+    already LRU-visible. (Thomas)
+    v4 patch:
+    https://patchwork.freedesktop.org/patch/736663/?series=169129&rev=2
+  - Patch 1 (drm/ttm) carries Christian's Reviewed-by from v4.
+
+v6:
+  - Reworked the fix based on Thomas' suggestion. Instead of the TTM resv
+    individualization (v1-v5) plus the xe off-LRU/placement handling (v5),
+    just hold a dma-buf reference for the imported BO lifetime so the
+    shared resv can never be freed while the BO still references it.
+    Single xe patch, no TTM change. (Thomas)
+  - Take the reference in xe_bo_init_locked() before ttm_bo_init_reserved()
+    so a TTM creation failure is covered too (Thomas).
+  - Dropped the v5 series (drm/ttm + drm/xe off-LRU); the off-LRU approach
+    also regressed in CI BAT via ttm_bo_pipeline_gutting() creating a ghost
+    BO that outlived the exporter.
+    Link to v5: https://patchwork.freedesktop.org/series/169984/
+
+v7:
+  - Move changelog above --- so it stays in the commit message.
+  - Reorder changelog entries oldest-to-newest. (Thomas)
+
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/8023
 Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
 Cc: stable@vger.kernel.org
-Assisted-by: GitHub_Copilot:claude-opus-4.8
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patch.msgid.link/20260702012434.3861171-1-matthew.brost@intel.com
-(cherry picked from commit e6f2d0b757c4fb577a513c577140109d1d292a9a)
+Cc: Thomas Hellstrom <thomas.hellstrom@linux.intel.com>
+Cc: Christian Konig <christian.koenig@amd.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Suggested-by: Thomas Hellstrom <thomas.hellstrom@linux.intel.com>
+Assisted-by: GitHub_Copilot:claude-sonnet-4.6
+Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Signed-off-by: Nitin Gote <nitin.r.gote@intel.com>
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patch.msgid.link/20260710191027.260160-2-nitin.r.gote@intel.com
+(cherry picked from commit 3516f3fae6be35642f8f06f8a218da6425c0306a)
 Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_pt.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_bo.c       |   24 ++++++++++++++++++++----
+ drivers/gpu/drm/xe/xe_bo.h       |    3 ++-
+ drivers/gpu/drm/xe/xe_bo_types.h |    2 ++
+ drivers/gpu/drm/xe/xe_dma_buf.c  |    2 +-
+ 4 files changed, 25 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_pt.c
-+++ b/drivers/gpu/drm/xe/xe_pt.c
-@@ -999,12 +999,22 @@ xe_vm_populate_pgtable(struct xe_migrate
- 	u64 *ptr = data;
- 	u32 i;
+--- a/drivers/gpu/drm/xe/xe_bo.c
++++ b/drivers/gpu/drm/xe/xe_bo.c
+@@ -1186,7 +1186,7 @@ int xe_bo_notifier_prepare_pinned(struct
+ 		backup = xe_bo_init_locked(xe, NULL, NULL, bo->ttm.base.resv, NULL, xe_bo_size(bo),
+ 					   DRM_XE_GEM_CPU_CACHING_WB, ttm_bo_type_kernel,
+ 					   XE_BO_FLAG_SYSTEM | XE_BO_FLAG_NEEDS_CPU_ACCESS |
+-					   XE_BO_FLAG_PINNED, &exec);
++					   XE_BO_FLAG_PINNED, NULL, &exec);
+ 		if (IS_ERR(backup)) {
+ 			drm_exec_retry_on_contention(&exec);
+ 			ret = PTR_ERR(backup);
+@@ -1327,7 +1327,7 @@ int xe_bo_evict_pinned(struct xe_bo *bo)
+ 						   xe_bo_size(bo),
+ 						   DRM_XE_GEM_CPU_CACHING_WB, ttm_bo_type_kernel,
+ 						   XE_BO_FLAG_SYSTEM | XE_BO_FLAG_NEEDS_CPU_ACCESS |
+-						   XE_BO_FLAG_PINNED, &exec);
++						   XE_BO_FLAG_PINNED, NULL, &exec);
+ 			if (IS_ERR(backup)) {
+ 				drm_exec_retry_on_contention(&exec);
+ 				ret = PTR_ERR(backup);
+@@ -1675,6 +1675,8 @@ static void xe_ttm_bo_destroy(struct ttm
  
-+	/*
-+	 * @qword_ofs is the absolute entry offset within the page table, while
-+	 * @ptes is indexed relative to @update->ofs (its first entry). The GPU
-+	 * path (write_pgtable) splits a single update into MAX_PTE_PER_SDI-sized
-+	 * chunks, calling this with an advancing @qword_ofs but a fresh @data
-+	 * pointer per chunk, so translate back into a @ptes index rather than
-+	 * assuming the chunk starts at ptes[0].
-+	 */
- 	for (i = 0; i < num_qwords; i++) {
-+		u32 idx = qword_ofs - update->ofs + i;
+ 	if (bo->ttm.base.import_attach)
+ 		drm_prime_gem_destroy(&bo->ttm.base, NULL);
++	if (bo->dma_buf)
++		dma_buf_put(bo->dma_buf);
+ 	drm_gem_object_release(&bo->ttm.base);
+ 
+ 	xe_assert(xe, list_empty(&ttm_bo->base.gpuva.list));
+@@ -2092,6 +2094,8 @@ void xe_bo_free(struct xe_bo *bo)
+  * @cpu_caching: The cpu caching used for system memory backing store.
+  * @type: The TTM buffer object type.
+  * @flags: XE_BO_FLAG_ flags.
++ * @dma_buf: The dma-buf to reference for the BO lifetime (imported BOs),
++ * or NULL.
+  * @exec: The drm_exec transaction to use for exhaustive eviction.
+  *
+  * Initialize or create an xe buffer object. On failure, any allocated buffer
+@@ -2103,7 +2107,8 @@ struct xe_bo *xe_bo_init_locked(struct x
+ 				struct xe_tile *tile, struct dma_resv *resv,
+ 				struct ttm_lru_bulk_move *bulk, size_t size,
+ 				u16 cpu_caching, enum ttm_bo_type type,
+-				u32 flags, struct drm_exec *exec)
++				u32 flags, struct dma_buf *dma_buf,
++				struct drm_exec *exec)
+ {
+ 	struct ttm_operation_ctx ctx = {
+ 		.interruptible = true,
+@@ -2189,6 +2194,17 @@ struct xe_bo *xe_bo_init_locked(struct x
+ 	placement = (type == ttm_bo_type_sg ||
+ 		     bo->flags & XE_BO_FLAG_DEFER_BACKING) ? &sys_placement :
+ 		&bo->placement;
 +
- 		if (map)
- 			xe_map_wr(tile_to_xe(tile), map, (qword_ofs + i) *
--				  sizeof(u64), u64, ptes[i].pte);
-+				  sizeof(u64), u64, ptes[idx].pte);
- 		else
--			ptr[i] = ptes[i].pte;
-+			ptr[i] = ptes[idx].pte;
- 	}
- }
++	/*
++	 * For imported BOs, keep the exporter dma-buf alive for the BO
++	 * lifetime. Taken before ttm_bo_init_reserved() to also cover a
++	 * creation failure there. Released in xe_ttm_bo_destroy().
++	 */
++	if (dma_buf) {
++		get_dma_buf(dma_buf);
++		bo->dma_buf = dma_buf;
++	}
++
+ 	err = ttm_bo_init_reserved(&xe->ttm, &bo->ttm, type,
+ 				   placement, alignment,
+ 				   &ctx, NULL, resv, xe_ttm_bo_destroy);
+@@ -2303,7 +2319,7 @@ __xe_bo_create_locked(struct xe_device *
+ 			       vm && !xe_vm_in_fault_mode(vm) &&
+ 			       flags & XE_BO_FLAG_USER ?
+ 			       &vm->lru_bulk_move : NULL, size,
+-			       cpu_caching, type, flags, exec);
++			       cpu_caching, type, flags, NULL, exec);
+ 	if (IS_ERR(bo))
+ 		return bo;
  
+--- a/drivers/gpu/drm/xe/xe_bo.h
++++ b/drivers/gpu/drm/xe/xe_bo.h
+@@ -93,7 +93,8 @@ struct xe_bo *xe_bo_init_locked(struct x
+ 				struct xe_tile *tile, struct dma_resv *resv,
+ 				struct ttm_lru_bulk_move *bulk, size_t size,
+ 				u16 cpu_caching, enum ttm_bo_type type,
+-				u32 flags, struct drm_exec *exec);
++				u32 flags, struct dma_buf *dma_buf,
++				struct drm_exec *exec);
+ struct xe_bo *xe_bo_create_locked(struct xe_device *xe, struct xe_tile *tile,
+ 				  struct xe_vm *vm, size_t size,
+ 				  enum ttm_bo_type type, u32 flags,
+--- a/drivers/gpu/drm/xe/xe_bo_types.h
++++ b/drivers/gpu/drm/xe/xe_bo_types.h
+@@ -35,6 +35,8 @@ struct xe_bo {
+ 	struct xe_bo *backup_obj;
+ 	/** @parent_obj: Ref to parent bo if this a backup_obj */
+ 	struct xe_bo *parent_obj;
++	/** @dma_buf: Imported dma-buf ref to keep its resv alive. */
++	struct dma_buf *dma_buf;
+ 	/** @flags: flags for this buffer object */
+ 	u32 flags;
+ 	/** @vm: VM this BO is attached to, for extobj this will be NULL */
+--- a/drivers/gpu/drm/xe/xe_dma_buf.c
++++ b/drivers/gpu/drm/xe/xe_dma_buf.c
+@@ -251,7 +251,7 @@ xe_dma_buf_create_obj(struct drm_device
+ 
+ 		bo = xe_bo_init_locked(xe, NULL, NULL, resv, NULL, dma_buf->size,
+ 				       0, /* Will require 1way or 2way for vm_bind */
+-				       ttm_bo_type_sg, XE_BO_FLAG_SYSTEM, &exec);
++				       ttm_bo_type_sg, XE_BO_FLAG_SYSTEM, dma_buf, &exec);
+ 		drm_exec_retry_on_contention(&exec);
+ 		if (IS_ERR(bo)) {
+ 			ret = PTR_ERR(bo);
 
 
