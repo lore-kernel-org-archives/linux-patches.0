@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1E744AB84;
-	Thu, 30 Jul 2026 16:12:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D0E44C641;
+	Thu, 30 Jul 2026 16:12:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427947; cv=none; b=i74/X5+QxGI0uMuumsBPY0KEECWGdRJcq7gf7XGzmFpvPg1yCgB4NgDyyj6/7GP8ZZHSIOK9thadUWrK0XkRh4Pi8KYs2l5RRA+8LjkgpcZXJZCVY31BaOhh+75a0jk96PuypW8LgXL9+G2QCtr6Jm6jNSYQ7nSYiLGnNx7ObEw=
+	t=1785427949; cv=none; b=ar0JdQznJHxCn5lJBM9HUH++IFIgdAsnJZpfONMAIwGOmgKM9LzyWwLxOzbfJQlL1vDk6En8XgfcPqYG7DhI53s9f5Whn39LFOR4nYNxyMHoF+mSWmD30W7sBjDKvTDiesxfN0PQ9aKZqof9gUi8N0avOnnSz8JAauwAwRu0xWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427947; c=relaxed/simple;
-	bh=niLn5Y2a75EIpPoYWQFXg1mSL6EXY+20E1Dvr4bXzbw=;
+	s=arc-20240116; t=1785427949; c=relaxed/simple;
+	bh=4rxkiQeRQ63nROJrzz40j9B+Kwza+FxaY5cdGm4emtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GLfrIgK8moiCb7qdWnMvimMxCWleBTvWEwnNHv6EPasEG71/2xHIEE4Ln/xGG/6SEtm+SPJ6TqlAaepBwzJ5BWAD17UxpTUCJzEidt1Hagmz3PUEG4adeaMryPlEfux3mQbKuOOjIst6TDdVTUFdM/gK83dhWy+YxRaN2D8dHdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dy+2RT69; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JNb+VigWXf9TK+QfDRI/ax2DB4FStHwTRhYXhMonhrglyNnEeI66LxA2CYwNQeaRu3UUMzPjqiPyiKAc3zN+fcdwwHa0jd995gRCpw5bXF9xjWRa4X+FvXP8Siwk5kTu7wjAWxDSOHRngZjkreQPrhd6htV74CWkxL7NYvDoEX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjIt0YJE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dy+2RT69"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267411F000E9;
-	Thu, 30 Jul 2026 16:12:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjIt0YJE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3F21F000E9;
+	Thu, 30 Jul 2026 16:12:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427945;
-	bh=L2EgZ9ddf3VmZdHjm2zywl7M2l5L25L3dzngmH+4vfc=;
+	s=korg; t=1785427948;
+	bh=F7HtYlc20TSGzwGjHBwCsegOzkS2gQQE9M7RRQtTdww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dy+2RT695ljXLqFQKpuEjMGmFI89GouRX/tE44sMeY6rgvnug58IQn5HWwgEbt8dL
-	 861uG7doG34EdGJuXkyJZ06ZB59q9uJ8ffHMwF06rj3LY+I+aqkkz07IbUwNfcgGyo
-	 O37Cv2lHdKyU3whnbMPGaap/Vct0gu5MSN/o/+mg=
+	b=gjIt0YJEqL/KVWXRFY9K4kO+FRirXo5LFsaqH/zfb5EN8/Uq8gpmQPKzprZ6SVqC6
+	 Y4Gohp1btPe/vFhSZdERHi5GL840HqX0N3uUuOe7elMpmaBfWCK9185HaDlxHpgfw0
+	 IS0u5swCccFItRAh8jH8ogWocBgRBmjSSIcJQQPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Wang Haoran <haoranwangsec@gmail.com>,
-	Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Kunwu Chan <kunwu.chan@linux.dev>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jay Wang <wanjay@amazon.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.6 349/484] i40e: remove read access to debugfs files
-Date: Thu, 30 Jul 2026 16:14:06 +0200
-Message-ID: <20260730141431.060632985@linuxfoundation.org>
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Alexander Martyniuk <alexevgmart@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 350/484] ipv6: ndisc: fix NULL deref in accept_untracked_na()
+Date: Thu, 30 Jul 2026 16:14:07 +0200
+Message-ID: <20260730141431.081651152@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -60,286 +54,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 9fcdb1c3c4ba134434694c001dbff343f1ffa319 ]
+commit d186e942365acece7c56d39da05dd63bf95b280a upstream.
 
-The 'command' and 'netdev_ops' debugfs files are a legacy debugging
-interface supported by the i40e driver since its early days by commit
-02e9c290814c ("i40e: debugfs interface").
+accept_untracked_na() re-fetches the inet6_dev with __in6_dev_get(dev)
+and dereferences idev->cnf.accept_untracked_na without a NULL check,
+even though its only caller ndisc_recv_na() already fetched and
+NULL-checked idev for the same device.
 
-Both of these debugfs files provide a read handler which is mostly useless,
-and which is implemented with questionable logic. They both use a static
-256 byte buffer which is initialized to the empty string. In the case of
-the 'command' file this buffer is literally never used and simply wastes
-space. In the case of the 'netdev_ops' file, the last command written is
-saved here.
+Both reads of dev->ip6_ptr run in the same RCU read-side critical
+section, but a concurrent addrconf_ifdown() can clear dev->ip6_ptr
+between them: lowering the MTU below IPV6_MIN_MTU calls addrconf_ifdown()
+without the synchronize_net() that orders the unregister path, so the
+re-fetch returns NULL and oopses:
 
-On read, the files contents are presented as the name of the device
-followed by a colon and then the contents of their respective static
-buffer. For 'command' this will always be "<device>: ". For 'netdev_ops',
-this will be "<device>: <last command written>". But note the buffer is
-shared between all devices operated by this module. At best, it is mostly
-meaningless information, and at worse it could be accessed simultaneously
-as there doesn't appear to be any locking mechanism.
+ BUG: KASAN: null-ptr-deref in ndisc_recv_na (net/ipv6/ndisc.c:974)
+ Read of size 4 at addr 0000000000000364
+ Call Trace:
+  <IRQ>
+  ndisc_recv_na (net/ipv6/ndisc.c:974)
+  icmpv6_rcv (net/ipv6/icmp.c:1193)
+  ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:479)
+  ip6_input_finish (net/ipv6/ip6_input.c:534)
+  ip6_input (net/ipv6/ip6_input.c:545)
+  ip6_mc_input (net/ipv6/ip6_input.c:635)
+  ipv6_rcv (net/ipv6/ip6_input.c:351)
+  </IRQ>
 
-We have also recently received multiple reports for both read functions
-about their use of snprintf and potential overflow that could result in
-reading arbitrary kernel memory. For the 'command' file, this is
-definitely impossible, since the static buffer is always zero and never
-written to. For the 'netdev_ops' file, it does appear to be possible, if
-the user carefully crafts the command input, it will be copied into the
-buffer, which could be large enough to cause snprintf to truncate, which
-then causes the copy_to_user to read beyond the length of the buffer
-allocated by kzalloc.
+It is reachable by an unprivileged user via a network namespace.
 
-A minimal fix would be to replace snprintf() with scnprintf() which would
-cap the return to the number of bytes written, preventing an overflow. A
-more involved fix would be to drop the mostly useless static buffers,
-saving 512 bytes and modifying the read functions to stop needing those as
-input.
+Pass the caller's already validated idev instead of re-fetching it; the
+idev stays alive for the whole RCU critical section, so it is safe even
+after dev->ip6_ptr has been cleared.
 
-Instead, lets just completely drop the read access to these files. These
-are debug interfaces exposed as part of debugfs, and I don't believe that
-dropping read access will break any script, as the provided output is
-pretty useless. You can find the netdev name through other more standard
-interfaces, and the 'netdev_ops' interface can easily result in garbage if
-you issue simultaneous writes to multiple devices at once.
-
-In order to properly remove the i40e_dbg_netdev_ops_buf, we need to
-refactor its write function to avoid using the static buffer. Instead, use
-the same logic as the i40e_dbg_command_write, with an allocated buffer.
-Update the code to use this instead of the static buffer, and ensure we
-free the buffer on exit. This fixes simultaneous writes to 'netdev_ops' on
-multiple devices, and allows us to remove the now unused static buffer
-along with removing the read access.
-
-Fixes: 02e9c290814c ("i40e: debugfs interface")
-Reported-by: Kunwu Chan <chentao@kylinos.cn>
-Closes: https://lore.kernel.org/intel-wired-lan/20231208031950.47410-1-chentao@kylinos.cn/
-Reported-by: Wang Haoran <haoranwangsec@gmail.com>
-Closes: https://lore.kernel.org/all/CANZ3JQRRiOdtfQJoP9QM=6LS1Jto8PGBGw6y7-TL=BcnzHQn1Q@mail.gmail.com/
-Reported-by: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
-Closes: https://lore.kernel.org/all/20250722115017.206969-1-a.jahangirzad@gmail.com/
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Kunwu Chan <kunwu.chan@linux.dev>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-[Adapted to 6.6: context conflict due to 6.6 using pf->vsi[pf->lan_vsi]
- vs i40e_pf_get_main_vsi(pf) in the removed read functions; resolution
- is simply to delete the 6.6 version of those functions.]
-Signed-off-by: Jay Wang <wanjay@amazon.com>
+Fixes: aaa5f515b16b ("net: ipv6: new accept_untracked_na option to accept na only if in-network")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260617065512.2529757-2-bestswngs@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/intel/i40e/i40e_debugfs.c    | 121 +++---------------
- 1 file changed, 19 insertions(+), 102 deletions(-)
+ net/ipv6/ndisc.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_debugfs.c b/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
-index a2fca58a91c332..35ce578dd6f350 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
-@@ -58,47 +58,6 @@ static struct i40e_veb *i40e_dbg_find_veb(struct i40e_pf *pf, int seid)
-  * setup, adding or removing filters, or other things.  Many of
-  * these will be useful for some forms of unit testing.
-  **************************************************************/
--static char i40e_dbg_command_buf[256] = "";
--
--/**
-- * i40e_dbg_command_read - read for command datum
-- * @filp: the opened file
-- * @buffer: where to write the data for the user to read
-- * @count: the size of the user's buffer
-- * @ppos: file position offset
-- **/
--static ssize_t i40e_dbg_command_read(struct file *filp, char __user *buffer,
--				     size_t count, loff_t *ppos)
--{
--	struct i40e_pf *pf = filp->private_data;
--	int bytes_not_copied;
--	int buf_size = 256;
--	char *buf;
--	int len;
--
--	/* don't allow partial reads */
--	if (*ppos != 0)
--		return 0;
--	if (count < buf_size)
--		return -ENOSPC;
--
--	buf = kzalloc(buf_size, GFP_KERNEL);
--	if (!buf)
--		return -ENOSPC;
--
--	len = snprintf(buf, buf_size, "%s: %s\n",
--		       pf->vsi[pf->lan_vsi]->netdev->name,
--		       i40e_dbg_command_buf);
--
--	bytes_not_copied = copy_to_user(buffer, buf, len);
--	kfree(buf);
--
--	if (bytes_not_copied)
--		return -EFAULT;
--
--	*ppos = len;
--	return len;
--}
- 
- static char *i40e_filter_state_string[] = {
- 	"INVALID",
-@@ -1637,7 +1596,6 @@ static ssize_t i40e_dbg_command_write(struct file *filp,
- static const struct file_operations i40e_dbg_command_fops = {
- 	.owner = THIS_MODULE,
- 	.open =  simple_open,
--	.read =  i40e_dbg_command_read,
- 	.write = i40e_dbg_command_write,
- };
- 
-@@ -1646,47 +1604,6 @@ static const struct file_operations i40e_dbg_command_fops = {
-  * The netdev_ops entry in debugfs is for giving the driver commands
-  * to be executed from the netdev operations.
-  **************************************************************/
--static char i40e_dbg_netdev_ops_buf[256] = "";
--
--/**
-- * i40e_dbg_netdev_ops_read - read for netdev_ops datum
-- * @filp: the opened file
-- * @buffer: where to write the data for the user to read
-- * @count: the size of the user's buffer
-- * @ppos: file position offset
-- **/
--static ssize_t i40e_dbg_netdev_ops_read(struct file *filp, char __user *buffer,
--					size_t count, loff_t *ppos)
--{
--	struct i40e_pf *pf = filp->private_data;
--	int bytes_not_copied;
--	int buf_size = 256;
--	char *buf;
--	int len;
--
--	/* don't allow partal reads */
--	if (*ppos != 0)
--		return 0;
--	if (count < buf_size)
--		return -ENOSPC;
--
--	buf = kzalloc(buf_size, GFP_KERNEL);
--	if (!buf)
--		return -ENOSPC;
--
--	len = snprintf(buf, buf_size, "%s: %s\n",
--		       pf->vsi[pf->lan_vsi]->netdev->name,
--		       i40e_dbg_netdev_ops_buf);
--
--	bytes_not_copied = copy_to_user(buffer, buf, len);
--	kfree(buf);
--
--	if (bytes_not_copied)
--		return -EFAULT;
--
--	*ppos = len;
--	return len;
--}
- 
- /**
-  * i40e_dbg_netdev_ops_write - write into netdev_ops datum
-@@ -1700,35 +1617,36 @@ static ssize_t i40e_dbg_netdev_ops_write(struct file *filp,
- 					 size_t count, loff_t *ppos)
- {
- 	struct i40e_pf *pf = filp->private_data;
-+	char *cmd_buf, *buf_tmp;
- 	int bytes_not_copied;
- 	struct i40e_vsi *vsi;
--	char *buf_tmp;
- 	int vsi_seid;
- 	int i, cnt;
- 
- 	/* don't allow partial writes */
- 	if (*ppos != 0)
- 		return 0;
--	if (count >= sizeof(i40e_dbg_netdev_ops_buf))
--		return -ENOSPC;
- 
--	memset(i40e_dbg_netdev_ops_buf, 0, sizeof(i40e_dbg_netdev_ops_buf));
--	bytes_not_copied = copy_from_user(i40e_dbg_netdev_ops_buf,
--					  buffer, count);
--	if (bytes_not_copied)
-+	cmd_buf = kzalloc(count + 1, GFP_KERNEL);
-+	if (!cmd_buf)
-+		return count;
-+	bytes_not_copied = copy_from_user(cmd_buf, buffer, count);
-+	if (bytes_not_copied) {
-+		kfree(cmd_buf);
- 		return -EFAULT;
--	i40e_dbg_netdev_ops_buf[count] = '\0';
-+	}
-+	cmd_buf[count] = '\0';
- 
--	buf_tmp = strchr(i40e_dbg_netdev_ops_buf, '\n');
-+	buf_tmp = strchr(cmd_buf, '\n');
- 	if (buf_tmp) {
- 		*buf_tmp = '\0';
--		count = buf_tmp - i40e_dbg_netdev_ops_buf + 1;
-+		count = buf_tmp - cmd_buf + 1;
- 	}
- 
--	if (strncmp(i40e_dbg_netdev_ops_buf, "change_mtu", 10) == 0) {
-+	if (strncmp(cmd_buf, "change_mtu", 10) == 0) {
- 		int mtu;
- 
--		cnt = sscanf(&i40e_dbg_netdev_ops_buf[11], "%i %i",
-+		cnt = sscanf(&cmd_buf[11], "%i %i",
- 			     &vsi_seid, &mtu);
- 		if (cnt != 2) {
- 			dev_info(&pf->pdev->dev, "change_mtu <vsi_seid> <mtu>\n");
-@@ -1750,8 +1668,8 @@ static ssize_t i40e_dbg_netdev_ops_write(struct file *filp,
- 			dev_info(&pf->pdev->dev, "Could not acquire RTNL - please try again\n");
- 		}
- 
--	} else if (strncmp(i40e_dbg_netdev_ops_buf, "set_rx_mode", 11) == 0) {
--		cnt = sscanf(&i40e_dbg_netdev_ops_buf[11], "%i", &vsi_seid);
-+	} else if (strncmp(cmd_buf, "set_rx_mode", 11) == 0) {
-+		cnt = sscanf(&cmd_buf[11], "%i", &vsi_seid);
- 		if (cnt != 1) {
- 			dev_info(&pf->pdev->dev, "set_rx_mode <vsi_seid>\n");
- 			goto netdev_ops_write_done;
-@@ -1771,8 +1689,8 @@ static ssize_t i40e_dbg_netdev_ops_write(struct file *filp,
- 			dev_info(&pf->pdev->dev, "Could not acquire RTNL - please try again\n");
- 		}
- 
--	} else if (strncmp(i40e_dbg_netdev_ops_buf, "napi", 4) == 0) {
--		cnt = sscanf(&i40e_dbg_netdev_ops_buf[4], "%i", &vsi_seid);
-+	} else if (strncmp(cmd_buf, "napi", 4) == 0) {
-+		cnt = sscanf(&cmd_buf[4], "%i", &vsi_seid);
- 		if (cnt != 1) {
- 			dev_info(&pf->pdev->dev, "napi <vsi_seid>\n");
- 			goto netdev_ops_write_done;
-@@ -1790,21 +1708,20 @@ static ssize_t i40e_dbg_netdev_ops_write(struct file *filp,
- 			dev_info(&pf->pdev->dev, "napi called\n");
- 		}
- 	} else {
--		dev_info(&pf->pdev->dev, "unknown command '%s'\n",
--			 i40e_dbg_netdev_ops_buf);
-+		dev_info(&pf->pdev->dev, "unknown command '%s'\n", cmd_buf);
- 		dev_info(&pf->pdev->dev, "available commands\n");
- 		dev_info(&pf->pdev->dev, "  change_mtu <vsi_seid> <mtu>\n");
- 		dev_info(&pf->pdev->dev, "  set_rx_mode <vsi_seid>\n");
- 		dev_info(&pf->pdev->dev, "  napi <vsi_seid>\n");
- 	}
- netdev_ops_write_done:
-+	kfree(cmd_buf);
- 	return count;
+diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
+index ee34831f5621a8..342e7066f765f5 100644
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -973,10 +973,8 @@ static enum skb_drop_reason ndisc_recv_ns(struct sk_buff *skb)
+ 	return reason;
  }
  
- static const struct file_operations i40e_dbg_netdev_ops_fops = {
- 	.owner = THIS_MODULE,
- 	.open = simple_open,
--	.read = i40e_dbg_netdev_ops_read,
- 	.write = i40e_dbg_netdev_ops_write,
- };
- 
+-static int accept_untracked_na(struct net_device *dev, struct in6_addr *saddr)
++static int accept_untracked_na(struct inet6_dev *idev, struct in6_addr *saddr)
+ {
+-	struct inet6_dev *idev = __in6_dev_get(dev);
+-
+ 	switch (READ_ONCE(idev->cnf.accept_untracked_na)) {
+ 	case 0: /* Don't accept untracked na (absent in neighbor cache) */
+ 		return 0;
+@@ -986,7 +984,7 @@ static int accept_untracked_na(struct net_device *dev, struct in6_addr *saddr)
+ 		 * same subnet as an address configured on the interface that
+ 		 * received the na
+ 		 */
+-		return !!ipv6_chk_prefix(saddr, dev);
++		return !!ipv6_chk_prefix(saddr, idev->dev);
+ 	default:
+ 		return 0;
+ 	}
+@@ -1085,7 +1083,7 @@ static enum skb_drop_reason ndisc_recv_na(struct sk_buff *skb)
+ 	 */
+ 	new_state = msg->icmph.icmp6_solicited ? NUD_REACHABLE : NUD_STALE;
+ 	if (!neigh && lladdr && idev && idev->cnf.forwarding) {
+-		if (accept_untracked_na(dev, saddr)) {
++		if (accept_untracked_na(idev, saddr)) {
+ 			neigh = neigh_create(&nd_tbl, &msg->target, dev);
+ 			new_state = NUD_STALE;
+ 		}
 -- 
 2.53.0
 
