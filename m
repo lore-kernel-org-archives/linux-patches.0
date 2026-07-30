@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE57D409114;
-	Thu, 30 Jul 2026 16:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F042D0602;
+	Thu, 30 Jul 2026 16:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428298; cv=none; b=RVeLplHMmt2fPCd/BqbwlA++cekn3eKGtIF4RIRouBNhL6hBudl+ugQ+olkyHUJSOzfX6jamL7GiKW5XP26LVr7mn0vbvsxzQQggpw+82YcpGDMAznOvjAF5QQtr2okUkapOBPKo/bb6xbkcBV5HsSqow6RET89HE/dr9bO3AA0=
+	t=1785428300; cv=none; b=QN6qONDjAcfG1c3zkhZcqo9avhQWLDTlrD1hM35ZZ1TujjRlj00tOeto1RNurX5mgpW0/9dUpA7D9HmdCtnJVt5GVCUagNb76CIISCRDO4ilrgbio9JhonYlDUQhf09+FhUa+OQ6V7PBiJanGhAUW6P0FbBQdEFQH2hXIDznFj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428298; c=relaxed/simple;
-	bh=2/fOmVnBPP+QVtvOl1RLSk/xXrwgZrwy6HheYlpKy68=;
+	s=arc-20240116; t=1785428300; c=relaxed/simple;
+	bh=aAluKp9YMt27eKCL1/x6uk5z52F2AMXw7LKdgrSYua0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ue7pmANt3BKyfIw6Mi9kaXabvb0yVx2lrgozrYsVCaUrP6lJwnzXDbSJkX8POSTrTH5br9v9yeSZ/i7mYlwDTiX8R32U3sY2g9D+d8vQGt8Ff7Erx+yH8/jxAuPfWMPucm6WA6jCh1YRS04REnQeAG85ET5oPj4FWD4Ap0HE4LE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vkvw8HyF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mXsY/MD783galvCrK4IRswRJ8qaSPOYpzxD3tMMlhjUbRf1d1bDlT/KLSSGY+m41HBq9KS5W/PCLG3z1vVtcDMhFAHcZ9Q9+OTWVlq8gJJziBlyYQY1jqE1fKP1myrvw/xY4rE/aeeJ/HkcXpAzQ1Dt5j1UnCGXtXyleJvIcwDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bt4ACS+G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vkvw8HyF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0615F1F000E9;
-	Thu, 30 Jul 2026 16:18:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bt4ACS+G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4CFE1F000E9;
+	Thu, 30 Jul 2026 16:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428296;
-	bh=U87BnqbaoSUtwkHd8QivNv2YbWQ9dCzBN5zOjKwkPo4=;
+	s=korg; t=1785428299;
+	bh=39GM9TfRRVqg+vZ2uiB9/DvO6o/WZ4jwatCp/n7nG+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vkvw8HyFqcTgooByHUbC+OAo7nuQoLQHr9bvDTF1Fj9r7KBkkOmnqGrAbhcLGvrEQ
-	 RC1J2w+zdCQ517CWmEugFtrCg0HNZg+lTfDJCOhQ729hTmcLNAA/JK5dSuCZDWXWPG
-	 +V8WoBY3GnIV/7Oby6lODGj9/CNgNrkrCjQNMdr0=
+	b=Bt4ACS+G5NFhN21lqu2XF/KCXzscEwn16LvoDaFfudDFxSXU79xLdgcbz3+9e2jNA
+	 ZJ+gdZPAQLnpyJYLOXpcxj8EzfL9mlSorgER6dhtu1l0uku/NCMkg324fyCQIZZyPQ
+	 T1tK+MmO0fSKSkxyjjeI9XNqFSLLIhOygfl0VMyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Alex Elder <elder@riscstar.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 473/484] net: ipa: fix SMEM state handle leaks in SMP2P init
-Date: Thu, 30 Jul 2026 16:16:10 +0200
-Message-ID: <20260730141433.767977593@linuxfoundation.org>
+Subject: [PATCH 6.6 474/484] fs/resctrl: Fix double-add of pseudo-locked regions RMID to free list
+Date: Thu, 30 Jul 2026 16:16:11 +0200
+Message-ID: <20260730141433.790347147@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -53,88 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Reinette Chatre <reinette.chatre@intel.com>
 
-[ Upstream commit 96ca1e658ae459276292bd6d971ab5d8c7e0379a ]
+[ Upstream commit b9f089723aee892efc77c349ae47a6b452b293c4 ]
 
-ipa_smp2p_init() acquires two Qualcomm SMEM state handles with
-qcom_smem_state_get(). However, neither the init error paths
-nor ipa_smp2p_exit() release them.
+A pseudo-locked group's RMID is freed when it is created. On unmount
+rmdir_all_sub() unconditionally frees all RMID of all groups, resulting
+in a double-free of the pseudo-locked group's RMID. The consequence of this
+is that the original free results in the pseudo-locked group's RMID being
+added to the rmid_free_lru linked list and the second free then attempts
+to add the same RMID entry to the rmid_free_lru again.
 
-Release both handles with qcom_smem_state_put() in the init
-error paths and in ipa_smp2p_exit().
+Do not double-free a pseudo-locked group's RMID.
 
-Fixes: 530f9216a953 ("soc: qcom: ipa: AP/modem communications")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Reviewed-by: Alex Elder <elder@riscstar.com>
-Link: https://patch.msgid.link/20260624065955.2822765-1-haoxiang_li2024@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ kzalloc_obj() context line kept as kzalloc(sizeof(*smp2p), GFP_KERNEL) since ipa_smp2p.c was not yet converted in this tree ]
+Fixes: e0bdfe8e36f3 ("x86/intel_rdt: Support creation/removal of pseudo-locked region")
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/551432dd7e624a862b8e58314c38aaba0afff3e9.1783377598.git.reinette.chatre@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ipa/ipa_smp2p.c |   30 ++++++++++++++++++++++--------
- 1 file changed, 22 insertions(+), 8 deletions(-)
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ipa/ipa_smp2p.c
-+++ b/drivers/net/ipa/ipa_smp2p.c
-@@ -233,19 +233,27 @@ int ipa_smp2p_init(struct ipa *ipa, bool
- 					  &valid_bit);
- 	if (IS_ERR(valid_state))
- 		return PTR_ERR(valid_state);
--	if (valid_bit >= 32)		/* BITS_PER_U32 */
--		return -EINVAL;
-+	if (valid_bit >= 32) {		/* BITS_PER_U32 */
-+		ret = -EINVAL;
-+		goto err_valid_state_put;
-+	}
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -2744,10 +2744,6 @@ static void rmdir_all_sub(void)
+ 		if (rdtgrp == &rdtgroup_default)
+ 			continue;
  
- 	enabled_state = qcom_smem_state_get(dev, "ipa-clock-enabled",
- 					    &enabled_bit);
--	if (IS_ERR(enabled_state))
--		return PTR_ERR(enabled_state);
--	if (enabled_bit >= 32)		/* BITS_PER_U32 */
--		return -EINVAL;
-+	if (IS_ERR(enabled_state)) {
-+		ret = PTR_ERR(enabled_state);
-+		goto err_valid_state_put;
-+	}
-+	if (enabled_bit >= 32) {		/* BITS_PER_U32 */
-+		ret = -EINVAL;
-+		goto err_enabled_state_put;
-+	}
+-		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
+-		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
+-			rdtgroup_pseudo_lock_remove(rdtgrp);
+-
+ 		/*
+ 		 * Give any CPUs back to the default group. We cannot copy
+ 		 * cpu_online_mask because a CPU might have executed the
+@@ -2756,7 +2752,13 @@ static void rmdir_all_sub(void)
+ 		cpumask_or(&rdtgroup_default.cpu_mask,
+ 			   &rdtgroup_default.cpu_mask, &rdtgrp->cpu_mask);
  
- 	smp2p = kzalloc(sizeof(*smp2p), GFP_KERNEL);
--	if (!smp2p)
--		return -ENOMEM;
-+	if (!smp2p) {
-+		ret = -ENOMEM;
-+		goto err_enabled_state_put;
-+	}
+-		free_rmid(rdtgrp->mon.rmid);
++		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
++		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
++			rdtgroup_pseudo_lock_remove(rdtgrp);
++		} else {
++			/* Pseudo-locked group's RMID is freed during setup. */
++			free_rmid(rdtgrp->mon.rmid);
++		}
  
- 	smp2p->ipa = ipa;
- 
-@@ -290,6 +298,10 @@ err_null_smp2p:
- 	ipa->smp2p = NULL;
- 	mutex_destroy(&smp2p->mutex);
- 	kfree(smp2p);
-+err_enabled_state_put:
-+	qcom_smem_state_put(enabled_state);
-+err_valid_state_put:
-+	qcom_smem_state_put(valid_state);
- 
- 	return ret;
- }
-@@ -306,6 +318,8 @@ void ipa_smp2p_exit(struct ipa *ipa)
- 	ipa_smp2p_power_release(ipa);
- 	ipa->smp2p = NULL;
- 	mutex_destroy(&smp2p->mutex);
-+	qcom_smem_state_put(smp2p->enabled_state);
-+	qcom_smem_state_put(smp2p->valid_state);
- 	kfree(smp2p);
- }
- 
+ 		kernfs_remove(rdtgrp->kn);
+ 		list_del(&rdtgrp->rdtgroup_list);
 
 
