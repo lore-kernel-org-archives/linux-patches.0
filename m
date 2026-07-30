@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C394052DC;
-	Thu, 30 Jul 2026 15:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9258B337699;
+	Thu, 30 Jul 2026 15:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423675; cv=none; b=hmnw8rbZxRlsn8zrCKYCx5utC2awONvJMIu2ZfG3sSt4X1wP2bRMLNB5fLhEZuFRRyWPpL4ua3WSlyxFgR6kCryZ4p8TFONF+dGutb74WilhPCxf0iz9o+TSxjXiVkjDqW7l3v7ZmmQQV022HVjrxfDR5b9RpRpwqZDePevFcBg=
+	t=1785423678; cv=none; b=EMdYt9M5AgIFVLRPuG1ydda5to+fmqKhFzq+D7ICzw136IbtXjqZsMfwI9SzTXl9BRCCAt2Ow9xDKZ42gvTwFze0+uGL4WT6xJKXdV1CWQVeFLXMftOIx2iFYAG8NwAHhWj4j+p/RX7s13P5MHNoXkfFXiBstaDax/uh8n8GWgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423675; c=relaxed/simple;
-	bh=k3h6CsCDAQLDWJtUiYNP59LKyhuN1wDXvqIjMaHKYkM=;
+	s=arc-20240116; t=1785423678; c=relaxed/simple;
+	bh=E3V4pruoDhJldOk4pdZSCYfY8kfMwyNDqCNnSKiJWlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jRcvSwhak6mOIuTxRTpoE7qYvz1hfEgcGfmYVPpkst+hgz+f6RMohPpIDkX8uNYKo7nJgkhm82ZEbk3R5roD0Ytt7mpbBnrRvQe8EyDZxCrDCCpkOjdv8CriBBCLjMnvjDVVGGum4/ZnTqVxQGt6T+HJRt7eBjY+5OWQ22hRgTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CIIYvZoE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s8p8jnkMDzamt1sclatNqq3freL2DYpKbscogkjCrTrN7Nrebs2SwCxkM8TZGbKToseHYYu1bEioi7aBXLGKLEeL1vGZiH68xNCU6KnzJ6gq5aRukwE1/YZ7PThz1oi6aJUwR3WWDGwOi1AAJCFJ62GA5kCuMm4hz+k5QVBWDA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VZdJE9AP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CIIYvZoE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F23C1F000E9;
-	Thu, 30 Jul 2026 15:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VZdJE9AP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E793E1F000E9;
+	Thu, 30 Jul 2026 15:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423674;
-	bh=DeCboYudQeZavNu+rUkQXoQTrhv6TPfeT28LSrUbCKY=;
+	s=korg; t=1785423677;
+	bh=Fkz/MKnjyHQern9OCFk3slkLdfadXNpCDyjytM3I1EE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CIIYvZoEOWEmgWpnxfHz0nVo6i++CWrnlO1j7ek566IxpSo5bm1AKNoTtK4da3iYo
-	 8Yu8LHVZn6f9Hx34aMHWZD5+/2pwHfH2fwnfm+0ukuO6HROYqe7hPRmBVJTvgXcHKw
-	 vj9PfZodxZmNtZPDY7vA4roJDmVnDjRguqW7C0GM=
+	b=VZdJE9APPLFBODbzToANbWR6jWMNVrvoyAVXlkZoK7Kdy4MEKJGm3W9yA+3Dx/QVS
+	 ZOHZv4gZZjTxHiz6U3bz9ZeAv7/FKRAT6cpk6yb3bmp6x23oz+zvdJ7kIrf7nvxGkV
+	 mJNMakOFUtlzf4R8pj0SyocBKYhlXZXFWqhFq/Bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 082/675] wifi: mac80211: avoid non-S1G AID fallback for S1G assoc
-Date: Thu, 30 Jul 2026 16:06:52 +0200
-Message-ID: <20260730141446.875803317@linuxfoundation.org>
+Subject: [PATCH 6.18 083/675] wifi: mac80211: free AP_VLAN bc_buf SKBs outside IRQ lock
+Date: Thu, 30 Jul 2026 16:06:53 +0200
+Message-ID: <20260730141446.896343988@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,56 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 035ed430ce6a2c35b01e211844a9f0a7643e57a4 ]
+[ Upstream commit f3858d5b1432098c1936e03d6e03dd0e33facf60 ]
 
-When assoc_data->s1g is set and no AID Response element is present,
-falling back to mgmt->u.assoc_resp.aid reads the non-S1G
-association-response layout.
+ieee80211_do_stop() removes AP_VLAN packets from the parent AP
+ps->bc_buf while holding ps->bc_buf.lock with IRQs disabled. It then
+calls ieee80211_free_txskb() before dropping the lock.
 
-Keep the fallback for non-S1G only. If a successful S1G association
-response omits the AID Response element, abandon the association
-instead of proceeding with AID 0. Initialize aid to 0 for other S1G
-responses so the later mask and logging flow keeps a defined value
-without reading the non-S1G layout.
+ieee80211_free_txskb() is not just a passive SKB release. For SKBs with
+TX status state it can report a dropped frame through cfg80211/nl80211,
+and that path can reach netlink tap transmit. This is the same reason
+the pending queue cleanup in ieee80211_do_stop() already unlinks SKBs
+under the queue lock and frees them after IRQ state is restored.
 
-Fixes: 2a8a6b7c4cb0 ("wifi: mac80211: handle station association response with S1G")
+The buggy scenario involves two paths, with each column showing the
+order within that path:
+
+AP_VLAN management TX:             AP_VLAN stop:
+1. attach ACK-status state         1. clear the running state
+2. queue a multicast SKB on        2. take ps->bc_buf.lock with IRQs
+   parent ps->bc_buf                  disabled
+                                   3. unlink the AP_VLAN SKB
+                                   4. call ieee80211_free_txskb()
+
+Unlink matching AP_VLAN SKBs from ps->bc_buf under the existing lock,
+but move them to a local free queue. Drop the lock and restore IRQ state
+before calling ieee80211_free_txskb().
+
+WARNING: kernel/softirq.c:430 at __local_bh_enable_ip
+
+Fixes: 397a7a24ef8c ("mac80211: free ps->bc_buf skbs on vlan device stop")
 Assisted-by: Codex:gpt-5.5
-Assisted-by: Claude:claude-opus-4.8
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260612152440.25955-2-enderaoelyther@gmail.com
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/20260706140841.581566-1-zzzccc427@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mlme.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/mac80211/iface.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index 8854e47b056721..9ec4125c06d193 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -6476,7 +6476,7 @@ static void ieee80211_rx_mgmt_assoc_resp(struct ieee80211_sub_if_data *sdata,
- {
- 	struct ieee80211_if_managed *ifmgd = &sdata->u.mgd;
- 	struct ieee80211_mgd_assoc_data *assoc_data = ifmgd->assoc_data;
--	u16 capab_info, status_code, aid;
-+	u16 capab_info, status_code, aid = 0;
- 	struct ieee80211_elems_parse_params parse_params = {
- 		.bss = NULL,
- 		.link_id = -1,
-@@ -6553,8 +6553,10 @@ static void ieee80211_rx_mgmt_assoc_resp(struct ieee80211_sub_if_data *sdata,
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index 72c129478da088..499126317a914c 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -581,6 +581,7 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
+ 		WARN_ON(!list_empty(&sdata->u.ap.vlans));
+ 	} else if (sdata->vif.type == NL80211_IFTYPE_AP_VLAN) {
+ 		/* remove all packets in parent bc_buf pointing to this dev */
++		__skb_queue_head_init(&freeq);
+ 		ps = &sdata->bss->ps;
  
- 	if (elems->aid_resp)
- 		aid = le16_to_cpu(elems->aid_resp->aid);
--	else
-+	else if (!assoc_data->s1g)
- 		aid = le16_to_cpu(mgmt->u.assoc_resp.aid);
-+	else if (status_code == WLAN_STATUS_SUCCESS)
-+		goto abandon_assoc;
+ 		spin_lock_irqsave(&ps->bc_buf.lock, flags);
+@@ -588,10 +589,15 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
+ 			if (skb->dev == sdata->dev) {
+ 				__skb_unlink(skb, &ps->bc_buf);
+ 				local->total_ps_buffered--;
+-				ieee80211_free_txskb(&local->hw, skb);
++				__skb_queue_tail(&freeq, skb);
+ 			}
+ 		}
+ 		spin_unlock_irqrestore(&ps->bc_buf.lock, flags);
++
++		skb_queue_walk_safe(&freeq, skb, tmp) {
++			__skb_unlink(skb, &freeq);
++			ieee80211_free_txskb(&local->hw, skb);
++		}
+ 	}
  
- 	/*
- 	 * The 5 MSB of the AID field are reserved for a non-S1G STA. For
+ 	if (going_down)
 -- 
 2.53.0
 
