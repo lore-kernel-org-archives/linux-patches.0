@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68784442134;
-	Thu, 30 Jul 2026 15:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C97D2E4257;
+	Thu, 30 Jul 2026 15:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425670; cv=none; b=Ms+iRv2Qb19ESMIOTrScYKRGS0zR4KA0IHFlOheuVdPVmCqokELYMTovgDIIAbBR8u6/p1Kk51F5HF47JX6AsaquHs6Frix+PvJO1dFOiThp0S5DlWlg3FgGAFSXJe84hJjZtMyZZhYlJoiOdOULWaWeWKECWB9H3e06wDHIGHk=
+	t=1785425673; cv=none; b=CahK5W2ZxkLNKzedIwCSVv8yKFepGsUOVQFOpwDS3peNadPTQjVnlV/6rlE/i6Zywmq9+4/w2b7wTvHjXIdPRG66hk+evo6TfaJUNWvVeZrtXcFxBvT8r13MfcY9S9MgidB3wWa1x3NtfLqEvfhSlEPjccZd1TJ92E63hSkkvHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425670; c=relaxed/simple;
-	bh=x6+TNkT+mXkSSqLOSIOwgdf2KXeYTnnm9ImVQyrOYeE=;
+	s=arc-20240116; t=1785425673; c=relaxed/simple;
+	bh=udlaV8n06xHqy7ywH8aGfUJDLiVIbB0vbr86uobTNOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EVvV7gk9HN1+V31qfSjQUVYDyP6OJQEWOAYcVa+P3CWf2WYY+eIiJxHCLxyH+m5dhMm30r3FiuTxLgq69L7x0a8V4NqfZ7szZG0d84/Zg173koQs7c7X1b+OGa2DX3k9c3B9/nOF/rhEb0iDybuU5ThpxLJylAEy0EALKY1tOGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U67a+swv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NSNDiJsXOGtYmUGEk3aDuG2DRTje6FH6lSTGTqy6C7xiO6jAziqhzEGMEd2B5iTVPJp06wwTiJQU2VDoNLPx1rKqANwGDVq86LoILQO1sqx0q6uDzjHBMB3bSKHM9vxQORYy+Ae2TmElxogTTucMO9aOT3YcOCjdlZ0cD+BSZVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RiCFBZzE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U67a+swv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2FE51F000E9;
-	Thu, 30 Jul 2026 15:34:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RiCFBZzE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98ED51F000E9;
+	Thu, 30 Jul 2026 15:34:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425669;
-	bh=eXAeEyk9MCz0/YbGaISe4XxeEEOkLGDqCRqODFH++uw=;
+	s=korg; t=1785425672;
+	bh=0OV9MAGm5L/yxuEZxRJBvOtNnDnCs9gehCaDhVnS1RE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U67a+swv1bYJOIDaS9zjFXOtriwIVMgcU2flu1f7C5BdanjUT4z3dBBZ9/mZQdR9a
-	 0EQ9vtbClz4F2gUNr0s3AbXCybLDTJJj0iU2ucZiy0xsEYoF9mF1Sku6Q39TUo4OZl
-	 oWFFFF+sRP76Gn9R58LTCe9kB0xTxn9cQrjPdxB0=
+	b=RiCFBZzE0uJ6ruSE2hs75bQIgGxWISp6OLOMH+NGu/gFemWPSovOEZvZJ/QY2uG/g
+	 TnKv8ijseLqotXnfgtYcMMAlVMFUgRzNvbTjj8kd2G333jxLV02eZBWShw/n3PkBsv
+	 9Vp3yaJ/37/kE0atK53EWlo920ejvtpFo0M7mLG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	You-Kai Zheng <ykzheng@synology.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	Leo Martins <loemra.dev@gmail.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 151/602] btrfs: declare btrfs_ioctl_search_args_v2::buf as __u8
-Date: Thu, 30 Jul 2026 16:09:03 +0200
-Message-ID: <20260730141439.150784566@linuxfoundation.org>
+Subject: [PATCH 6.12 152/602] btrfs: dont propagate EXTENT_FLAG_LOGGING to split extent maps
+Date: Thu, 30 Jul 2026 16:09:04 +0200
+Message-ID: <20260730141439.171306298@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,53 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: You-Kai Zheng <ykzheng@synology.com>
+From: Leo Martins <loemra.dev@gmail.com>
 
-[ Upstream commit b95181f3929ff98949fa9460ca93eccebbf2d7fc ]
+[ Upstream commit 5eff4d5b17fa1950e80bfd1ba43dc0699e61a644 ]
 
-The variable-sized buffer buf in struct btrfs_ioctl_search_args_v2 is
-declared as __u64[], but it holds a packed byte stream of search results,
-where all offsets into the buffer are in bytes.
+When btrfs_drop_extent_map_range() splits an extent map, the new split
+maps inherit the original map's flags through a local 'flags' variable.
+Commit f86f7a75e2fb ("btrfs: use the flags of an extent map to identify
+the compression type") changed the EXTENT_FLAG_LOGGING clearing to
+operate on em->flags instead of that local 'flags' copy, so a split of
+an extent map that is currently being logged wrongly inherits
+EXTENT_FLAG_LOGGING.
 
-Declaring buf as __u64[] makes it easy for user space to write incorrect
-pointer arithmetic: adding a byte offset directly to a __u64 pointer
-scales the offset by 8, landing at byte position offset*8 instead of
-offset.
+The flag is then never cleared on the split, and when it is freed while
+still on the inode's modified_extents list (for example by the extent
+map shrinker) it trips the WARN_ON(!list_empty(&em->list)) in
+btrfs_free_extent_map() and leads to a use-after-free.
 
-This recently caused an infinite loop in btrfs-progs: the accessor read
-all-zero data from misaddressed items, which fed zeroed search keys back
-into the ioctl loop and spun forever. The issue was worked around at the
-time by disabling TREE_SEARCH_V2 entirely in btrfs-progs (d73e69824854:
-"btrfs-progs: temporarily disable usage of v2 of search tree ioctl").
+Clear EXTENT_FLAG_LOGGING from the local 'flags' copy used for the
+splits and only clear EXTENT_FLAG_PINNED from em->flags, restoring the
+behaviour prior to f86f7a75e2fb.
 
-The kernel side already treats buf as a byte buffer, so change the
-declaration to __u8[] to match the actual semantics and prevent similar
-misuse in user space. The change is ABI compatible: both the structure size
-and alignment are unchanged.
-
-Fixes: cc68a8a5a433 ("btrfs: new ioctl TREE_SEARCH_V2")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: You-Kai Zheng <ykzheng@synology.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
+CC: Jeff Layton <jlayton@kernel.org>
+Link: https://lore.kernel.org/all/20260629-btrfs-skip-logging-v1-1-4e3a28c1acaf@kernel.org/
+Fixes: f86f7a75e2fb ("btrfs: use the flags of an extent map to identify the compression type")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Leo Martins <loemra.dev@gmail.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/btrfs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/extent_map.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/uapi/linux/btrfs.h b/include/uapi/linux/btrfs.h
-index cdf6ad872149cd..8c5490c6ff99db 100644
---- a/include/uapi/linux/btrfs.h
-+++ b/include/uapi/linux/btrfs.h
-@@ -597,7 +597,7 @@ struct btrfs_ioctl_search_args_v2 {
- 	__u64 buf_size;		   /* in - size of buffer
- 					    * out - on EOVERFLOW: needed size
- 					    *       to store item */
--	__u64 buf[];                       /* out - found items */
-+	__u8 buf[];                        /* out - found items */
- };
+diff --git a/fs/btrfs/extent_map.c b/fs/btrfs/extent_map.c
+index 36af9aa9aab13f..044970109c7b58 100644
+--- a/fs/btrfs/extent_map.c
++++ b/fs/btrfs/extent_map.c
+@@ -859,13 +859,13 @@ void btrfs_drop_extent_map_range(struct btrfs_inode *inode, u64 start, u64 end,
+ 			goto next;
+ 		}
  
- /* With a @src_length of zero, the range from @src_offset->EOF is cloned! */
+-		flags = em->flags;
+ 		/*
+ 		 * In case we split the extent map, we want to preserve the
+ 		 * EXTENT_FLAG_LOGGING flag on our extent map, but we don't want
+ 		 * it on the new extent maps.
+ 		 */
+-		em->flags &= ~(EXTENT_FLAG_PINNED | EXTENT_FLAG_LOGGING);
++		flags = em->flags & ~EXTENT_FLAG_LOGGING;
++		em->flags &= ~EXTENT_FLAG_PINNED;
+ 		modified = !list_empty(&em->list);
+ 
+ 		/*
 -- 
 2.53.0
 
