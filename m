@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBF43839B2;
-	Thu, 30 Jul 2026 15:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFB930567C;
+	Thu, 30 Jul 2026 15:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425821; cv=none; b=Rvl3WIaMZ8laPf92a0+3/k97Pr86HueJMnK/frDoQ+gH2mLdhHTPZoR+EDBlmK1hE54aj5Jf1WfCMS+FsO3LnnmOmOa72J1+Gyt554sP16yaNrXz1cCm0VYpn4uXCBoLXyR73XHyUOz1avjKB37Et3NAxozQX/KcEzHNfzyrQes=
+	t=1785425824; cv=none; b=Ny2l/EnWa9JIbjI0KksBBcnZMSNmCRMt+hEeVqkexNI+PX3zYFk4D0VGQryoAp2E9gb3LKmOhslte6xlhHcntWzO3QzMAIj9O2pYLWRRo7lg0LM5qut+ugKYJIUphrQEhyYwFzsdRKaBDAG2CONV8pCLDFbU9boBteostxqEn94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425821; c=relaxed/simple;
-	bh=GjRTh+6Lg60mAJjPOqanuBCICf3l990RMpIlsQQQKF0=;
+	s=arc-20240116; t=1785425824; c=relaxed/simple;
+	bh=VXFINMyqcLRatsLJG2ejoyqCIwpAGfTL0wGo6NmV0Fs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gKwYLb8GYjIZG5v9r4poyejHhfnr80IArqnzUG8+N1T45Ru1kUv7gICFhlYB9+2/mwdzG6RP5+GBvPrQxBkFIy+MsihIVGpl6ozyGMFTsoPVgaNmbIT2gKrW+9iDK+rMSVwtPGpzsd1qWHBMkCjaS/vS46Cmk+45DdS4z9DNz3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e451zkgj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dy9oRqZ9g1KKPRozZjMH5pSOAGkQTYo6OQofl/JgsgCx6F/DZOvjRedv4SbX2Uv/JSMxMk+vRBv1zORjlGgusMaMPswo59jolaNEqy4qS2q9tSgcFTxOCG1gaKOC2t18t8uCV87vpEI5OaZlnqwFQ/VkCrC4VPWvffUxuk+4+Ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKQglbyy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e451zkgj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 149E41F000E9;
-	Thu, 30 Jul 2026 15:36:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKQglbyy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4DF81F000E9;
+	Thu, 30 Jul 2026 15:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425820;
-	bh=iYr3xgEYPxAz7unwyZjJ4U/LNcr1TB4zIX/HaUjfe90=;
+	s=korg; t=1785425823;
+	bh=vhRQIWx1Hu8hmHjEg5N7vPXnc5n4zQsiUD4de87rSg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e451zkgjSyFV+tP+uPE89CaNV7pJ0oqVclytFHnkrDVSB/rUz34Dr/hHLsOt524Ft
-	 p54vhJkuFBBZsls66pYSWquyMvuyc2NGOV9NgNlYnf8xjSd8sSN8zxH+K51Ow6Bkzt
-	 Y0ppcJLQUVbf32gg9SHDxCmg9G6E4kafyOsWFLt8=
+	b=yKQglbyyDm3pVOU+kmT+8acecwDXNSsMo3hfAMU4KbRQPAU8WFQ5Zb9ZqKo1atE+y
+	 f19adwmj9qWq17/uvtw0DTWHM0jI4FHNJWaANHkeoQfSRskrqnISYEbriw+Bcw3DsS
+	 gml+AkpR2cS8Q1ato66auSlSWpq0eyhz9kJcJVAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Pope <andrew.pope@morsemicro.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	syzbot+85d0bec020d805014a3a@syzkaller.appspotmail.com,
+	Helen Koike <koike@igalia.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 186/602] wifi: mac80211: recalculate TIM when a station enters power save
-Date: Thu, 30 Jul 2026 16:09:38 +0200
-Message-ID: <20260730141439.870313972@linuxfoundation.org>
+Subject: [PATCH 6.12 204/602] tipc: fix infinite loop in __tipc_nl_compat_dumpit
+Date: Thu, 30 Jul 2026 16:09:56 +0200
+Message-ID: <20260730141440.244241233@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,54 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Pope <andrew.pope@morsemicro.com>
+From: Helen Koike <koike@igalia.com>
 
-[ Upstream commit a007a384c9eb17610f53a53e2f59944c31f1565a ]
+[ Upstream commit 22f8aa35964e8f2ab026578f45befc9605fd1b28 ]
 
-When an AP buffers frames for a station on its per-station TXQs and the
-station subsequently enters power save, sta_ps_start() records the
-buffered TIDs in txq_buffered_tids but does not update the TIM. The
-station's TIM bit is only ever set when a further frame is buffered
-while the station is already asleep
-(ieee80211_tx_h_unicast_ps_buf() -> sta_info_recalc_tim()).
+cmd->dumpit callback can return a negative errno, causing an infinite
+loop due to the while(len) condition. As the loop never terminates,
+genl_mutex is never released, and other tasks waiting on it starve in D
+state.
 
-If no further downlink frame arrives for that station the beacon
-TIM never advertises the buffered traffic. A station relying on the
-TIM then remains in doze indefinitely on top of a non-empty queue. Its
-TXQs were removed from the scheduler's active list at PS entry, nothing
-pages it, and the flow deadlocks until an unrelated event wakes the
-station.
+Check dumpit's return value, propagate it and jump to err_out on error.
 
-Recalculate the TIM at the end of sta_ps_start(), so traffic
-already buffered at PS entry is advertised immediately.
-sta_info_recalc_tim() already consults txq_buffered_tids, which is
-updated above, and is safe in this context (it is already called
-from equivalent paths such as the tx handlers and
-ieee80211_handle_filtered_frame()).
-
-Fixes: ba8c3d6f16a1 ("mac80211: add an intermediate software queue implementation")
-Signed-off-by: Andrew Pope <andrew.pope@morsemicro.com>
-Link: https://patch.msgid.link/20260717011751.79524-1-andrew.pope@morsemicro.com
-[add wifi: subject prefix]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reported-by: syzbot+85d0bec020d805014a3a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=85d0bec020d805014a3a
+Fixes: d0796d1ef63d ("tipc: convert legacy nl bearer dump to nl compat")
+Signed-off-by: Helen Koike <koike@igalia.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260713204940.647668-1-koike@igalia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/rx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/tipc/netlink_compat.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index 59070283839277..7e3bcd709c579b 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -1595,6 +1595,8 @@ static void sta_ps_start(struct sta_info *sta)
- 		else
- 			clear_bit(tid, &sta->txq_buffered_tids);
- 	}
-+
-+	sta_info_recalc_tim(sta);
- }
+diff --git a/net/tipc/netlink_compat.c b/net/tipc/netlink_compat.c
+index 079aebb16ed8ff..30e37c05a3f334 100644
+--- a/net/tipc/netlink_compat.c
++++ b/net/tipc/netlink_compat.c
+@@ -222,6 +222,10 @@ static int __tipc_nl_compat_dumpit(struct tipc_nl_compat_cmd_dump *cmd,
+ 		int rem;
  
- static void sta_ps_end(struct sta_info *sta)
+ 		len = (*cmd->dumpit)(buf, &cb);
++		if (len < 0) {
++			err = len;
++			goto err_out;
++		}
+ 
+ 		nlmsg_for_each_msg(nlmsg, nlmsg_hdr(buf), len, rem) {
+ 			err = nlmsg_parse_deprecated(nlmsg, GENL_HDRLEN,
 -- 
 2.53.0
 
