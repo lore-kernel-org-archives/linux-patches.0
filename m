@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78E243F0B0;
-	Thu, 30 Jul 2026 14:44:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732B6431488;
+	Thu, 30 Jul 2026 14:44:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422654; cv=none; b=JoA+6byCSZcil2v89SO6m+PviPBWgJ/Y46n2HNXHlX7X99DbUVCf6iigWRX41MGjdqfUnJStCmPp2P5rfn27X1wH5IkCMcZHAg7E2EsG5yJvj8Rl8kl/tjNW8e3f+zsUN3mcz8t1QERkLv7ao2dsDK7gsg7aPFfDKo7fMq+Hmt4=
+	t=1785422656; cv=none; b=rNJ3pvY51OtbHDYFrhgCOidg/hHLYylKyqLS3s4y1RBW3yKe0OkTcdqXNwV8LqB9X6F9IsTlrsGbhJ+Dzwr5lt1XHrs0NTg23nTNlAO/08rld9JZxhM1yk3OMjjRaG1ESYYhV69PcwnrzfQ0F1dc4v0CAw5rYCWkUbt1bGw14To=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422654; c=relaxed/simple;
-	bh=PZx3ldH4CQEOCCso6LAdw7JthbGhKupigerKeow1t6s=;
+	s=arc-20240116; t=1785422656; c=relaxed/simple;
+	bh=iruu7euPmjD8ZzwRcOz4GWHwVPDZr8o8fOwo3BTTyxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XYst2RYvQy9cuGPTzyVFEAmUSlEYK1xzqu6F+NlLbZNsM91t4VRstFKWt6kO4k5/YdbrjWeHY5sOyfTdchJaFlw8PYK+gTHp9UglPBMVFqRzEMKlaXGf4uVvU1iQfsF8Povc9TqDBL57CUx4cLI4A523j3lY7t4tPRQJxHwecTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E4m2n8fK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BssThx+0C7vRHQ5eH1m1GegsxoS5oxgugQ5TNz7e2EoBOAuPa4prLuTTmcIjfr1ehUdFa/Cb6EKVXLT4bmdcLeA3fD3avMKYATPSekBB7Swmkr3wfcC/mIiIr1nK8ufux1Fm6DYOW50xc1phoJ2BPcDu9mxcjAsZHKD3OdPSggU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZphdheRK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E4m2n8fK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A2A1F000E9;
-	Thu, 30 Jul 2026 14:44:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZphdheRK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF63F1F00AC4;
+	Thu, 30 Jul 2026 14:44:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422652;
-	bh=fpuOhnbPPLqKbkac0nv+Q4aT4Ujxt+3+kFUyqtVBxw4=;
+	s=korg; t=1785422655;
+	bh=K02DoIT0iXR8PcVMxaOLDTVpfOhi9etCEWj0MM7j5uM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E4m2n8fKWC5fSza0ndtI5Mejn9VEhXSexO9psAkFSdmG78HfTwCB9+sEfs42BQFkW
-	 MUrKneZxJkl8VOqul1tyNrBZt/fAldLck1LSstEWGUf7YSLJSb4EkeQMLHxqleeDqJ
-	 f2qEtGUrlU5PsiokTZDK3ZSIlmthIEHftZL7X9LU=
+	b=ZphdheRKaUcqNsJHLkr1tAB/Lv64hj/mFma5t9oL6UY/z+EQdMoEqqaLigv5czZck
+	 HZXvdKroXQAlSc71zjsfpFF8mlw0cmlajkaEOgbo0LQEgGN9OrwvEY8VkyN83RiaBW
+	 gV0iz/AkofSTbCA/mU32ShLPDmG5apMid9aLs3jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valery Borovsky <vebohr@gmail.com>,
+	Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>,
+	Daniel Scally <dan.scally@ideasonboard.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.1 505/744] media: pwc: Return queued buffers on start_streaming() failure
-Date: Thu, 30 Jul 2026 16:12:58 +0200
-Message-ID: <20260730141455.015539975@linuxfoundation.org>
+Subject: [PATCH 7.1 514/744] media: rzv2h-ivc: Wait for frame end in stop_streaming
+Date: Thu, 30 Jul 2026 16:13:07 +0200
+Message-ID: <20260730141455.202869965@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,54 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valery Borovsky <vebohr@gmail.com>
+From: Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>
 
-commit 975b2ee20e569d47821e4f6c9761b4664d48a6a4 upstream.
+commit b4e6ddce16b8ae0ddbec7c96c675779260ad4697 upstream.
 
-The vb2 framework hands buffers to the driver via buf_queue() before
-calling start_streaming().  If start_streaming() returns an error
-without first returning those buffers via vb2_buffer_done(),
-vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
-buffers leak.
+The rzv2h-ivc driver fails to handle back-2-back streaming sessions that
+do not go through a peripheral reset. As the driver uses an autosuspend
+delay of 2 seconds, it is quite possible that two consecutive streaming
+sessions won't go through a suspend/resume sequence.
 
-pwc's start_streaming() had two early returns that hit this trap:
--ENODEV when the USB device was already disconnected, and -ERESTARTSYS
-when mutex_lock_interruptible() was interrupted by a signal.  Call the
-existing pwc_cleanup_queued_bufs() helper with VB2_BUF_STATE_QUEUED
-before returning (matching the state already used by the
-pwc_isoc_init() error path in the same function).
+If the peripheral is not reset the second streaming session hangs and no
+frames are delivered to the ISP.
 
-This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
-Return queued buffers on start_streaming() failure").
+This is because the stop_streaming() procedure implemented in the driver
+doesn't match what's prescribed by the chip datasheet:
 
-Fixes: ceede9fa8939 ("[media] pwc: Fix locking")
+1) The chip manual suggests to poll the RZV2H_IVC_FM_INT_STAT_STPEND bit
+   of RZV2H_IVC_REG_FM_INT_STA instead of polling on RZV2H_IVC_REG_FM_STOP
+   and prescribes to clear the bit after polling has completed
+
+2) More importantly: the RZV2H_IVC_REG_FM_STOP_FSTOP bit has to be set
+   on RZV2H_IVC_REG_FM_STOP -only- if a frame transfer to the ISP is in
+   progress. Setting the RZV2H_IVC_REG_FM_STOP_FSTOP bit when no frame is
+   being transferred causes the polling routine to timeout and the next
+   streaming session fails to start
+
+As a frame transfer of an image in 1920x1080@10bi takes 5 milliseconds
+at most, it is quite possible that the frame transfer completion interrupt
+races with the stop procedure.
+
+Instead of forcing a frame transfer abort, simply wait for the
+in-progress transfer to complete by polling the ivc->vvalid_ifp status
+variable in an hand-rolled loop that allows to inspect the variable
+while holding the spinlock, to allow the irq handler to complete the
+current buffer.
+
+With this change, streaming back-2-back without suspending the
+peripheral works successfully.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Fixes: f0b3984d821b ("media: platform: Add Renesas Input Video Control block driver")
+Signed-off-by: Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>
+Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/pwc/pwc-if.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ .../renesas/rzv2h-ivc/rzv2h-ivc-video.c       | 31 ++++++++++++++++---
+ 1 file changed, 26 insertions(+), 5 deletions(-)
 
---- a/drivers/media/usb/pwc/pwc-if.c
-+++ b/drivers/media/usb/pwc/pwc-if.c
-@@ -710,11 +710,15 @@ static int start_streaming(struct vb2_qu
- 	struct pwc_device *pdev = vb2_get_drv_priv(vq);
- 	int r;
+diff --git a/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-video.c b/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-video.c
+index b167f1bab7ef..932fed38cf3f 100644
+--- a/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-video.c
++++ b/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-video.c
+@@ -297,12 +297,33 @@ static int rzv2h_ivc_start_streaming(struct vb2_queue *q, unsigned int count)
+ static void rzv2h_ivc_stop_streaming(struct vb2_queue *q)
+ {
+ 	struct rzv2h_ivc *ivc = vb2_get_drv_priv(q);
+-	u32 val = 0;
++	unsigned int loop = 5;
  
--	if (!pdev->udev)
-+	if (!pdev->udev) {
-+		pwc_cleanup_queued_bufs(pdev, VB2_BUF_STATE_QUEUED);
- 		return -ENODEV;
+-	rzv2h_ivc_write(ivc, RZV2H_IVC_REG_FM_STOP, RZV2H_IVC_REG_FM_STOP_FSTOP);
+-	readl_poll_timeout(ivc->base + RZV2H_IVC_REG_FM_STOP,
+-			   val, !(val & RZV2H_IVC_REG_FM_STOP_FSTOP),
+-			   10 * USEC_PER_MSEC, 250 * USEC_PER_MSEC);
++	/*
++	 * If no frame transfer is in progress, we're done, otherwise, wait for
++	 * the transfer to complete.
++	 *
++	 * Transferring a 1920x1080@10bit frame to the ISP takes less than 5
++	 * msec so sleep for 2.5 msec (+- 25%) and give up after 5 attempts.
++	 */
++	for (; loop > 0; loop--) {
++		unsigned int vvalid_ifp;
++
++		/*
++		 * Inspect the ivc->vvalid_ifp variable holding the spinlock not
++		 * to the race with the rzv2h_ivc_buffer_done() call in the irq
++		 * handler.
++		 */
++		scoped_guard(spinlock_irq, &ivc->spinlock) {
++			vvalid_ifp = ivc->vvalid_ifp;
++		}
++		if (vvalid_ifp < 2)
++			break;
++
++		fsleep(2500);
 +	}
++	if (!loop)
++		dev_err(ivc->dev, "Failed to stop streaming\n");
  
--	if (mutex_lock_interruptible(&pdev->v4l2_lock))
-+	if (mutex_lock_interruptible(&pdev->v4l2_lock)) {
-+		pwc_cleanup_queued_bufs(pdev, VB2_BUF_STATE_QUEUED);
- 		return -ERESTARTSYS;
-+	}
- 	/* Turn on camera and set LEDS on */
- 	pwc_camera_power(pdev, 1);
- 	pwc_set_leds(pdev, leds[0], leds[1]);
+ 	rzv2h_ivc_return_buffers(ivc, VB2_BUF_STATE_ERROR);
+ 	video_device_pipeline_stop(&ivc->vdev.dev);
+-- 
+2.55.0
+
 
 
