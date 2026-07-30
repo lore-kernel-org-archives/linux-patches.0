@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2014243C04B;
-	Thu, 30 Jul 2026 16:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D979C43C04B;
+	Thu, 30 Jul 2026 16:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427302; cv=none; b=TjfNPPIxyursynyNMbprmgxgKETJeTfozNPImDWrjgt9NqEvOHaH6ycFbiyjxz5GCXnfxzfql6AyY2dd6EC0pB1LY+xu32gh7/opYLr018cqcXDhx9NdqcB0k37dWEqM64DfVam/o0C/l12U36XpLCU+cvI11EbFexpnlOHlaqc=
+	t=1785427305; cv=none; b=sNBFjiibZNOxXiDDXcdH6jZcUgMdLD2EkUsOFqzYV0GaJ3lPfvtsnJi/W5fo3+llxLZ6Lfld18dbnB96D/5Sm36hwlOiQq2DDIn5UrCh4ttxefu7zrOrgycOcwdZzHbvWeGCpI31jECke0H/VVV0NYS7OvKS4OU8DodBhsmV4Pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427302; c=relaxed/simple;
-	bh=YuQA8BvvhQNx5+so8r5QUsZbtVbNEMhfdco7OQoGmq0=;
+	s=arc-20240116; t=1785427305; c=relaxed/simple;
+	bh=11KK96qVy4478ULemsH5C0xtCRtQWLjQ7RlXU8im8iw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AingEiTzPSS1B1DKM80CmeD0jjxDJlbbHG/B8Iv8FYn0EMkUsyzkQ6S+vY2sUY53HftStsyCpGVpz0VCOqITC2+X2fwkkYWRE1gAF7XdwitM/fclqAspHgc1wPWF0OrVF65MU5PoZW6TLpsR4ohyC/++2aRV1M+xs3G89aHlo+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PSnc+sz2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MTXsQJFkr8xI6A1V1PWM+OpsSjEus47XtqaN0uTfSpE4lNQPjf8v/sQgLod1M0xyMaH5ty5tVDLxKReHaRAlLM7uu0prCdETpoak0is1zRg8UqULZNqwjYI2TZxL8PfOsWIa9PAgUR6eEN3a0U4bGtbaNfXGM9zt8FM2ZspysVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DYDPnePQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSnc+sz2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7FF1F000E9;
-	Thu, 30 Jul 2026 16:01:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DYDPnePQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39E01F00A3A;
+	Thu, 30 Jul 2026 16:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427300;
-	bh=jyr+sQbWh1Qe3iDw/N1e9WDQ2QXbYXvgdfUI1U5m4m0=;
+	s=korg; t=1785427303;
+	bh=EDwiXYKkGK738XskToK/cTnRZQvEV2njd5hAoKABr9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PSnc+sz2GaN3L3BJgIMo8O0kJX65rVgwjVVprlcrCq9y2Nckk603zRju1ZrPKoXSb
-	 mZaccA0p0gf7eEpS9E1RbfpKxGh1gmFRTXHCvz0DX+CIcXrC2mKQHxJm0AqkYkh7eb
-	 ofIT5DHpjeE1wcJO2LtoD794dYG6liqL0dcYvuN8=
+	b=DYDPnePQCuThRZz+YTA9DccguXJTnEuqU26G99fjHIGsOPS7nCJPmmUAOdu0hpJpM
+	 lWA8yTwNwSXSiDou2dq+vc1szisrm5SUvZ805sLhdmhSV01VtSAISO4Clnl3Yf34Gf
+	 9F4hDltIxlcPrtxpUJ/6VKYhxTTkI6gWleRfWtA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Morgun <d.morgun@ispras.ru>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Alex Williamson <alex@shazbot.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Raj Kumar Bhagat <raj.bhagat@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 121/484] wifi: ath11k: fix potential buffer underflow in ath11k_hal_rx_msdu_list_get()
-Date: Thu, 30 Jul 2026 16:10:18 +0200
-Message-ID: <20260730141426.089337940@linuxfoundation.org>
+Subject: [PATCH 6.6 122/484] wifi: ath11k: Flush the posted write after writing to PCIE_SOC_GLOBAL_RESET
+Date: Thu, 30 Jul 2026 16:10:19 +0200
+Message-ID: <20260730141426.110296026@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -53,45 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Morgun <d.morgun@ispras.ru>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 7f11e70629650ff6ea140984e5ce188b775b2683 ]
+[ Upstream commit 0fe8010fc5b147607fc19ba010ba469afc95f35f ]
 
-When the first entry in msdu_details has a zero buffer address,
-the code accesses msdu_details[i - 1] with i == 0, causing a
-buffer underflow.
+ath11k_pci_soc_global_reset() tries to reset the device by writing to the
+PCIE_SOC_GLOBAL_RESET register. But it doesn't do a read-back to ensure
+that the write gets flushed to the device before the delay.
 
-Fix similarly to ath12k_wifi7_hal_rx_msdu_list_get() by adding
-a separate check for i == 0 before the main condition to prevent
-the out-of-bounds access.
+This may lead to the delay on the host to be insufficient, if the posted
+write doesn't reach the device before the delay.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+So add a read-back after writing to the PCIE_SOC_GLOBAL_RESET register and
+before the delay.
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Dmitry Morgun <d.morgun@ispras.ru>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Compile tested only.
+
+Fixes: f3c603d412b3 ("ath11k: reset MHI during power down and power up")
+Reported-by: Alex Williamson <alex@shazbot.org>
+Closes: https://lore.kernel.org/linux-pci/20260622160822.09350246@shazbot.org
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260530114252.42615-1-d.morgun@ispras.ru
+Reviewed-by: Raj Kumar Bhagat <raj.bhagat@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260623141649.41087-1-manivannan.sadhasivam@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/ath/ath11k/pci.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index 31fd92bd9efe8f..23771abb3acec5 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -4619,6 +4619,9 @@ static void ath11k_hal_rx_msdu_list_get(struct ath11k *ar,
- 	msdu_details = &msdu_link->msdu_link[0];
+diff --git a/drivers/net/wireless/ath/ath11k/pci.c b/drivers/net/wireless/ath/ath11k/pci.c
+index 09e65c5e55c4a9..966ba712ff9094 100644
+--- a/drivers/net/wireless/ath/ath11k/pci.c
++++ b/drivers/net/wireless/ath/ath11k/pci.c
+@@ -181,6 +181,8 @@ static void ath11k_pci_soc_global_reset(struct ath11k_base *ab)
+ 	val |= PCIE_SOC_GLOBAL_RESET_V;
  
- 	for (i = 0; i < HAL_RX_NUM_MSDU_DESC; i++) {
-+		if (!i && FIELD_GET(BUFFER_ADDR_INFO0_ADDR,
-+				    msdu_details[i].buf_addr_info.info0) == 0)
-+			break;
- 		if (FIELD_GET(BUFFER_ADDR_INFO0_ADDR,
- 			      msdu_details[i].buf_addr_info.info0) == 0) {
- 			msdu_desc_info = &msdu_details[i - 1].rx_msdu_info;
+ 	ath11k_pcic_write32(ab, PCIE_SOC_GLOBAL_RESET, val);
++	/* Flush the posted write to the device */
++	ath11k_pcic_read32(ab, PCIE_SOC_GLOBAL_RESET);
+ 
+ 	/* TODO: exact time to sleep is uncertain */
+ 	delay = 10;
+@@ -190,6 +192,8 @@ static void ath11k_pci_soc_global_reset(struct ath11k_base *ab)
+ 	val &= ~PCIE_SOC_GLOBAL_RESET_V;
+ 
+ 	ath11k_pcic_write32(ab, PCIE_SOC_GLOBAL_RESET, val);
++	/* Flush the posted write to the device */
++	ath11k_pcic_read32(ab, PCIE_SOC_GLOBAL_RESET);
+ 
+ 	mdelay(delay);
+ 
 -- 
 2.53.0
 
