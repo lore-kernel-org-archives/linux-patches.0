@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6A93A641D;
-	Thu, 30 Jul 2026 15:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0848632B116;
+	Thu, 30 Jul 2026 15:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424536; cv=none; b=dL3+3GMT74WZVu2nzv+2I2gzRrwpOOBbWBG1krn0OvUrua9HI3bNpvrXnitc1QcKEbEPLZtaFwpersJsOtvsWzbBkFhXlITUErBcfIrWrbg/XhVTCAJtZj5amu9smLMI67DjJdp/dgXI12dVGT+2j2gTR5G4C6vRFHPAI58RkTs=
+	t=1785424539; cv=none; b=WzQPOhdts/ei4jjTGMCGm9nmCjXhi9pZG25IlXdzFFuPMchcOQBzP0OVpzb78vwgW/fH9ZuO4AXvfKxrWhtNg1TFWXuA9hofyexrat5GoD1Rh4dJtMH1PeK7k+G0c8MZrpuawq7n4APXPiUQ+vJv5/X93+YfHX/TCeRBG30FlgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424536; c=relaxed/simple;
-	bh=GUda3BZDiGJ64UOELNYPHl/4TfEgXtPWo7vGTj440ZE=;
+	s=arc-20240116; t=1785424539; c=relaxed/simple;
+	bh=AyOq/ncZeG2usRSmSryQOGDUHX2iwjilTR4rqkWtefI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K8oWPdsSKg/LxfK/dzFhTaQggy/5TVGkhZgm3XP2brCBdB09f7s6Q8s9wwom89SlhjCx6+Xoy5U8jBrAtxikoUk/UWiHy7QwWr+STbJnj1Q0s6GxLcbOs4YZyk5l7zH+vs4ySs0RReAXZZAXVryAiHZb+RwjgunApfIijvR4xqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGxkLf/E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uY6L54PpaRVQltysiaM7xJX75MYaERN4scsHWZ44speplMspSnhowuVnTnxykfqIjzhj83t/MVKU2WTJ9SVUpY1GbsOKpVYIUGvqCxWSnZWynPUpS+aN4XhbKdNzuXilxJPN/6n/xgN/t6ZJGwMRuGSBk5pu7u4wCzyBfhTsS4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=czKkJ4Ve; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGxkLf/E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2651F00A3D;
-	Thu, 30 Jul 2026 15:15:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="czKkJ4Ve"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61BF11F000E9;
+	Thu, 30 Jul 2026 15:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424535;
-	bh=bxmPLKfKY030tD6KYGM2oktohuM8v4Gfcup29ycvSkY=;
+	s=korg; t=1785424537;
+	bh=dWYnNdjTP5pK577oRTZyxJFn9ZniZl3d82N483Z8zk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hGxkLf/EphJItbuVzCyu0DGKLPRGlw7JPGxhoygk9jp3kzAODrXCaIb3FlClhwTk3
-	 r0QlL5jWrOwfEjWPul0PkgRW0cHX/CEkHPwB1IxMQf0BKx75AYRFN5ZxV5JVmyalsr
-	 ANmJkVaxwMz3pZPgYwIPDK1FwrG/1T37Ej52/15E=
+	b=czKkJ4VeGmRABDpIvZyQcSRobRr0b/A2kDNd3BkvNg3gPbZ4XxDONUhRPcISE7Kgs
+	 RnD5JPcdEDD/VgaVelsrJvDXga+l9h//P7Vl3Nx+oEOZZVToSbV3+/38vE7JKXf0Uz
+	 LuM845OJJTCNgWCGOhE/XXqQOwadxH/9RdlCdaRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
+	Valery Borovsky <vebohr@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 428/675] media: saa7134: Fix a possible memory leak in saa7134_video_init1
-Date: Thu, 30 Jul 2026 16:12:38 +0200
-Message-ID: <20260730141454.233377551@linuxfoundation.org>
+Subject: [PATCH 6.18 429/675] media: stm32-dcmipp: Return queued buffers on start_streaming() failure
+Date: Thu, 30 Jul 2026 16:12:39 +0200
+Message-ID: <20260730141454.254175838@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,79 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Valery Borovsky <vebohr@gmail.com>
 
-commit f86ed548386e3050e5f8f25b450d09dc009d9a88 upstream.
+commit ffc8eec06378a340d708c889184ab3e14b57d540 upstream.
 
-In saa7134_video_init1(), the return value of the first
-saa7134_pgtable_alloc() is not checked. If it fails, the function
-continues as if successful, leaving the driver with an invalid page
-table. Additionally, if vb2_queue_init() for the VBI queue fails after
-the video queue page table has been allocated, the allocated memory is
-not freed before returning. The second saa7134_pgtable_alloc() also
-lacks a return value check. Errors occur during device probing before
-the device is fully registered, the normal cleanup path in
-saa7134_finidev() is not executed, leading to memory leaks and
-potential use of uninitialized DMA resources.
+The vb2 framework hands buffers to the driver via buf_queue() before
+calling start_streaming().  If start_streaming() returns an error
+without first returning those buffers via vb2_buffer_done(),
+vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
+buffers leak.
 
-Check the return value of both saa7134_pgtable_alloc() calls and
-propagate errors. On failure of any later step, free allocated page
-tables to avoid memory leaks. Ensure control handlers are also
-released on error to prevent further resource leakage.
+dcmipp_bytecap_start_streaming() returned -EINVAL when the source
+subdevice could not be resolved from the media graph, before
+pm_runtime_resume_and_get() and media_pipeline_start() had been called.
+The remaining error paths already converge on the err_buffer_done
+label, which calls dcmipp_bytecap_all_buffers_done(...,
+VB2_BUF_STATE_QUEUED).  Jump to that label directly: the intermediate
+err_pm_put / err_media_pipeline_stop labels are skipped, which is
+correct because nothing they would undo has happened yet.
 
-Found by code review.
+This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
+Return queued buffers on start_streaming() failure").
 
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Fixes: 28e0f3772296 ("media: stm32-dcmipp: STM32 DCMIPP camera interface driver")
 Cc: stable@vger.kernel.org
-Fixes: a00e68888d5d ("[media] saa7134: move saa7134_pgtable to saa7134_dmaqueue")
+Signed-off-by: Valery Borovsky <vebohr@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/saa7134/saa7134-video.c |   25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-bytecap.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/media/pci/saa7134/saa7134-video.c
-+++ b/drivers/media/pci/saa7134/saa7134-video.c
-@@ -1714,8 +1714,10 @@ int saa7134_video_init1(struct saa7134_d
- 	q->dev = &dev->pci->dev;
- 	ret = vb2_queue_init(q);
- 	if (ret)
--		return ret;
--	saa7134_pgtable_alloc(dev->pci, &dev->video_q.pt);
-+		goto err_free_ctrl;
-+	ret = saa7134_pgtable_alloc(dev->pci, &dev->video_q.pt);
-+	if (ret)
-+		goto err_free_ctrl;
- 
- 	q = &dev->vbi_vbq;
- 	q->type = V4L2_BUF_TYPE_VBI_CAPTURE;
-@@ -1732,11 +1734,24 @@ int saa7134_video_init1(struct saa7134_d
- 	q->lock = &dev->lock;
- 	q->dev = &dev->pci->dev;
- 	ret = vb2_queue_init(q);
--	if (ret)
--		return ret;
--	saa7134_pgtable_alloc(dev->pci, &dev->vbi_q.pt);
-+	if (ret) {
-+		saa7134_pgtable_free(dev->pci, &dev->video_q.pt);
-+		goto err_free_ctrl;
-+	}
-+
-+	ret = saa7134_pgtable_alloc(dev->pci, &dev->vbi_q.pt);
-+	if (ret) {
-+		saa7134_pgtable_free(dev->pci, &dev->video_q.pt);
-+		goto err_free_ctrl;
-+	}
- 
- 	return 0;
-+
-+err_free_ctrl:
-+	v4l2_ctrl_handler_free(&dev->ctrl_handler);
-+	if (card_has_radio(dev))
-+		v4l2_ctrl_handler_free(&dev->radio_ctrl_handler);
-+	return ret;
- }
- 
- void saa7134_video_fini(struct saa7134_dev *dev)
+--- a/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-bytecap.c
++++ b/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-bytecap.c
+@@ -398,8 +398,10 @@ static int dcmipp_bytecap_start_streamin
+ 	 */
+ 	if (!vcap->s_subdev) {
+ 		pad = media_pad_remote_pad_first(&vcap->vdev.entity.pads[0]);
+-		if (!pad || !is_media_entity_v4l2_subdev(pad->entity))
+-			return -EINVAL;
++		if (!pad || !is_media_entity_v4l2_subdev(pad->entity)) {
++			ret = -EINVAL;
++			goto err_buffer_done;
++		}
+ 		vcap->s_subdev = media_entity_to_v4l2_subdev(pad->entity);
+ 		vcap->s_subdev_pad_nb = pad->index;
+ 	}
 
 
