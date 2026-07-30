@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB882D7DDB;
-	Thu, 30 Jul 2026 15:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5AB62D7DDB;
+	Thu, 30 Jul 2026 15:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424559; cv=none; b=PuINt5lg8NOoyFPR1pUb1Azr3B9951I2ohXwqpntLDoICDb+fRX+Z+iZFbsgA+6WdYtk93cOFxnlTmWuSO7uDeVCkrMWbPjJAoCTf+Owb6WZB7IrUcRSrpKMrLByrQwwP7t9XzU7hnDBc/pr//W4gnZ6fkdsdRCIZxbdwvAZJoM=
+	t=1785424562; cv=none; b=EF13Lo9gnhfUg3aNHTnuL/oeGdg1Usne02bLkwThEo8mG4OX2t4zIYep7vA4vtsX0ZGrvG++0t/IogmEbgtD5HwHgrxqcSG6XscssldO44RINOa3AqZZ/WvseaIvgjlPzd0+9jQjwxbRJSSodK9xHRUQtC1aMZ7/MlL15DM2q/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424559; c=relaxed/simple;
-	bh=2Nv+KZtTgOZFpVIJGZMvapHTAbYmiXuZ6Dber21AkOE=;
+	s=arc-20240116; t=1785424562; c=relaxed/simple;
+	bh=Mrmt1YECz+6XgoeL+xQwBEKwCC+Z+pqHQF4RCEBSAQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=roRqBmXd798CDeNlUyCxv8prQVn3RFBk/z1OO97sHiNErwIJReGDU3HnUrSINo8aK1X+EIbqjgLF1Tu3sTM4pqzvyWGVAU0Gd1Hk33gK3yZ3djSHkAW8Q0/PlM9Z8o4YNW/j7VSsSzTgB40rLhhpWBoJzcEtJ6k6Tn893aQiLqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ssU7XLxo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OlUl8oShQ+Hc57eZyaD3Bg8SlPVISJmjhjE+6gi3PWwJbBcrNnTT6A7xhbf00kvowV7b+TZbxxS2JP1Wq3SEYGJkkkDl385kkNOofFcNAzbQFvsWBzKAMxGFdvXmTiTJ3k+cviliMrTZqqNpFRewkGMY46fxN6Xpvoh/2FuP+C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfzhyZ6s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ssU7XLxo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788951F000E9;
-	Thu, 30 Jul 2026 15:15:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfzhyZ6s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CDA71F000E9;
+	Thu, 30 Jul 2026 15:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424558;
-	bh=PN+ap/7Eaz8sNanenYR1gPmw10oTJP7cCwD6xBqk1AM=;
+	s=korg; t=1785424560;
+	bh=dxXkaoMCGRuloYmAa8AsRMLEZsNA9EaOMPvs7tWt7XQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ssU7XLxozE46CICFmlwWq2GsBtZNmKP6DCtvP/Aa5I+rqHUDj0eSBsFCVXjIL/2xg
-	 ECFDbZj8EQH/lrzTDHvJDgyCMWqWnnP1TGGAm77VuI1hzx1leBSoAuFBOlF98e9SGg
-	 7igHbqPcKXG++8MXIZm9S4DYMU+Yx67AS1+TFSgM=
+	b=hfzhyZ6szai4+27d8vb2ESX712rBxLYqlC6ynaC0Lc8qAXDJznRhBalFVUMXJZcFr
+	 211od1rQAb6Rlket3AdMNLlhXxDyuscMzJzHmFwsGLdB5hXWoDzCLPBAdVGryaOMo1
+	 sy/huRvj5tYQPYhHu0VIjMQinriO6UmxuqrDTggE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Valery Borovsky <vebohr@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 436/675] media: v4l2-ctrls: validate HEVC active reference counts
-Date: Thu, 30 Jul 2026 16:12:46 +0200
-Message-ID: <20260730141454.408089564@linuxfoundation.org>
+Subject: [PATCH 6.18 410/675] media: msi2500: Return queued buffers on start_streaming() failure
+Date: Thu, 30 Jul 2026 16:12:20 +0200
+Message-ID: <20260730141453.846690791@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,63 +50,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Valery Borovsky <vebohr@gmail.com>
 
-commit afbe4bc252d90a6f8fad869b06d5430f615f22f9 upstream.
+commit 7201c17786a498497bca57752883b90914d405ac upstream.
 
-HEVC slice parameters are shared stateless V4L2 controls, but the common
-validation path does not verify the active L0/L1 reference counts before
-driver-specific code consumes them.
+The vb2 framework hands buffers to the driver via buf_queue() before
+calling start_streaming().  If start_streaming() returns an error
+without first returning those buffers via vb2_buffer_done(),
+vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
+buffers leak.
 
-The original report came from Cedrus, but the active count bounds are
-not Cedrus-specific. Validate them in the common HEVC slice control path
-so stateless HEVC drivers get the same basic guarantees as soon as the
-control is queued.
+msi2500_start_streaming() had five error paths that all hit this trap
+and were further tangled by ret-overwriting between calls:
 
-Do not reject ref_idx_l0/ref_idx_l1 entries here. Existing userspace may
-use out-of-range sentinel values such as 0xff for missing references, and
-some hardware can use that information for concealment. Keep this common
-check limited to the active reference counts.
+  - -ENODEV when the USB device was already disconnected
+  - -ERESTARTSYS when mutex_lock_interruptible() was interrupted
+  - msi2500_set_usb_adc() failure: ret was silently overwritten by
+    the next call (msi2500_isoc_init), so the error was lost entirely
+  - msi2500_isoc_init() failure: cleanup_queued_bufs was called, but
+    the function then fell through to msi2500_ctrl_msg() and again
+    masked the original error by overwriting ret
+  - msi2500_ctrl_msg(CMD_START_STREAMING) failure: no cleanup at all,
+    leaving isoc URBs submitted with no way for the driver to consume
+    them
 
-Fixes: d395a78db9eab ("media: hevc: Add decode params control")
+Consolidate the error paths into a small goto chain.  Every failure
+now stops the function, drains the queued-buffer list, and returns
+the real error code.  The ctrl_msg failure path also rolls back the
+preceding msi2500_isoc_init() via msi2500_isoc_cleanup() before
+unlocking and draining.
+
+The cleanup helper takes a vb2_buffer_state argument so that the
+start_streaming error paths can pass VB2_BUF_STATE_QUEUED (as
+expected by userspace on start_streaming failure) while stop_streaming
+keeps its existing VB2_BUF_STATE_ERROR semantics.
+
+This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
+Return queued buffers on start_streaming() failure").
+
+Fixes: 977e444f59ad ("[media] Mirics MSi3101 SDR Dongle driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Valery Borovsky <vebohr@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-ctrls-core.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/media/usb/msi2500/msi2500.c |   32 ++++++++++++++++++++++++--------
+ 1 file changed, 24 insertions(+), 8 deletions(-)
 
---- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
-@@ -882,6 +882,7 @@ static int std_validate_compound(const s
- 	struct v4l2_ctrl_h264_decode_params *p_h264_dec_params;
- 	struct v4l2_ctrl_hevc_sps *p_hevc_sps;
- 	struct v4l2_ctrl_hevc_pps *p_hevc_pps;
-+	struct v4l2_ctrl_hevc_slice_params *p_hevc_slice_params;
- 	struct v4l2_ctrl_hdr10_mastering_display *p_hdr10_mastering;
- 	struct v4l2_ctrl_hevc_decode_params *p_hevc_decode_params;
- 	struct v4l2_area *area;
-@@ -1171,6 +1172,18 @@ static int std_validate_compound(const s
- 		break;
+--- a/drivers/media/usb/msi2500/msi2500.c
++++ b/drivers/media/usb/msi2500/msi2500.c
+@@ -541,7 +541,8 @@ static int msi2500_isoc_init(struct msi2
+ }
  
- 	case V4L2_CTRL_TYPE_HEVC_SLICE_PARAMS:
-+		p_hevc_slice_params = p;
-+
-+		if (p_hevc_slice_params->num_ref_idx_l0_active_minus1 >=
-+		    V4L2_HEVC_DPB_ENTRIES_NUM_MAX)
-+			return -EINVAL;
-+
-+		if (p_hevc_slice_params->slice_type != V4L2_HEVC_SLICE_TYPE_B)
-+			break;
-+
-+		if (p_hevc_slice_params->num_ref_idx_l1_active_minus1 >=
-+		    V4L2_HEVC_DPB_ENTRIES_NUM_MAX)
-+			return -EINVAL;
- 		break;
+ /* Must be called with vb_queue_lock hold */
+-static void msi2500_cleanup_queued_bufs(struct msi2500_dev *dev)
++static void msi2500_cleanup_queued_bufs(struct msi2500_dev *dev,
++					enum vb2_buffer_state state)
+ {
+ 	unsigned long flags;
  
- 	case V4L2_CTRL_TYPE_HDR10_CLL_INFO:
+@@ -554,7 +555,7 @@ static void msi2500_cleanup_queued_bufs(
+ 		buf = list_entry(dev->queued_bufs.next,
+ 				 struct msi2500_frame_buf, list);
+ 		list_del(&buf->list);
+-		vb2_buffer_done(&buf->vb.vb2_buf, VB2_BUF_STATE_ERROR);
++		vb2_buffer_done(&buf->vb.vb2_buf, state);
+ 	}
+ 	spin_unlock_irqrestore(&dev->queued_bufs_lock, flags);
+ }
+@@ -830,25 +831,40 @@ static int msi2500_start_streaming(struc
+ 
+ 	dev_dbg(dev->dev, "\n");
+ 
+-	if (!dev->udev)
+-		return -ENODEV;
++	if (!dev->udev) {
++		ret = -ENODEV;
++		goto err_cleanup;
++	}
+ 
+-	if (mutex_lock_interruptible(&dev->v4l2_lock))
+-		return -ERESTARTSYS;
++	if (mutex_lock_interruptible(&dev->v4l2_lock)) {
++		ret = -ERESTARTSYS;
++		goto err_cleanup;
++	}
+ 
+ 	/* wake-up tuner */
+ 	v4l2_subdev_call(dev->v4l2_subdev, core, s_power, 1);
+ 
+ 	ret = msi2500_set_usb_adc(dev);
++	if (ret)
++		goto err_unlock_cleanup;
+ 
+ 	ret = msi2500_isoc_init(dev);
+ 	if (ret)
+-		msi2500_cleanup_queued_bufs(dev);
++		goto err_unlock_cleanup;
+ 
+ 	ret = msi2500_ctrl_msg(dev, CMD_START_STREAMING, 0);
++	if (ret)
++		goto err_isoc_cleanup;
+ 
+ 	mutex_unlock(&dev->v4l2_lock);
++	return 0;
+ 
++err_isoc_cleanup:
++	msi2500_isoc_cleanup(dev);
++err_unlock_cleanup:
++	mutex_unlock(&dev->v4l2_lock);
++err_cleanup:
++	msi2500_cleanup_queued_bufs(dev, VB2_BUF_STATE_QUEUED);
+ 	return ret;
+ }
+ 
+@@ -863,7 +879,7 @@ static void msi2500_stop_streaming(struc
+ 	if (dev->udev)
+ 		msi2500_isoc_cleanup(dev);
+ 
+-	msi2500_cleanup_queued_bufs(dev);
++	msi2500_cleanup_queued_bufs(dev, VB2_BUF_STATE_ERROR);
+ 
+ 	/* according to tests, at least 700us delay is required  */
+ 	msleep(20);
 
 
