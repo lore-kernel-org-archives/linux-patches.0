@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812F73451B3;
-	Thu, 30 Jul 2026 15:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54722374A0E;
+	Thu, 30 Jul 2026 15:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427136; cv=none; b=scycuNky635AsWiTcC6LM1jCQ1DIy7PNP6h5uwvIJHpsu9UUCuu/aIpeaokJYgkUYFS+O5ZmzMeSWkLu+d7ayZ2BQ+YrnsAlLTGPXFwh/6lP/E7c7lr7Xn/jN+fNJ2dCUlPIu3qoAkkpvnAdxChmu85yQJmZqU2o57XmtfN919M=
+	t=1785427139; cv=none; b=rvA3x+lmVwFpabQ7r/PwQtHYP5HjQjPvDsHyp1dg9tGR/Syt0w9+QP9BOp3/DLADMmopZyNqSztqZLG1bQezy0+I30q95prC+PmMC3WuYUgv0OotWZmHk6fr2TXpT/0QMJZ/NcinQMAJHG8mMklqszDQeDkfM36kZIGKIH986Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427136; c=relaxed/simple;
-	bh=43tDOyQkzYGBiMt9Na4GrLejOjqPTK+t9Z9cCPu3uqk=;
+	s=arc-20240116; t=1785427139; c=relaxed/simple;
+	bh=3bLBGCHcq5Ay4q25gph9sLJ30dniAsnirl3pnWAYr6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B2zpXEl+AJtAwnwpID9iTqUuk67E0M0pPYeIY7ZSE36UJ6z0EcUSZ3WjVtNSDgJss1KEiRzYYtc08MSMaoDPDoMDjRjHsmbvhHkJo1bwmFxgQd9b2lUCFt73W53ibYuHhTwCOaEic+m1KcoSx8pcc+zygvkPSrkkYWtk1lHEPvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zaSRlYTo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=li7LuBbOKP5AmlN7aCK91VQKoLHGxmU6jmza/kmxmLW8RMJu0/msttECo3KOLEVS+Vtffeg57IMdtyt29pnLBaw6NJT6r54QzvbZ6MjcYBugE6KobdaCCW38Fc92cqyV9RcRUb+MSrvwqquBGtTAbtKZRcQ3F3fvVahfWyzpeQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tjb3Au1x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zaSRlYTo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB041F000E9;
-	Thu, 30 Jul 2026 15:58:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tjb3Au1x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A711F000E9;
+	Thu, 30 Jul 2026 15:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427135;
-	bh=hsr6Nmst370gTtu3aT96nw73n0fui/HwgPxzvR2Tcgk=;
+	s=korg; t=1785427138;
+	bh=+4hFMxcz3daKg/rDLrLl1UQr9GPhhJNVFTUGksHRcVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zaSRlYToqOP0ahT8Qa1Niwy3MOcWZZhwkMLdnSYdqFCrT8C3/jWlG1LVB0MhyPJje
-	 MuTno4mXViDBz2GUepY5y1dDD63XvY4k3zewvcsRXHtW97Tf5cskGqKgV6mLDCU7/D
-	 QwmlqJC534rNJ7W4379PJf4YrFEItAqdJTybTgZI=
+	b=Tjb3Au1xlGjEUGrfd+JWNYFQ55lX1g7aQNjXYxKd3qgZ8aIRC8eqHAQvIXAU+5Gvv
+	 giAgsUSs9aEe5LaQs1BjD0rVHXEywtlhp34DSg5abIDq7YBCqXJ0lNBHAmDNuXChMz
+	 rEU4eTLeA2k7pqBBC0CAI4HRNEteCUChpOjgPJ9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 064/484] wifi: brcmfmac: initialize SDIO data work before cleanup
-Date: Thu, 30 Jul 2026 16:09:21 +0200
-Message-ID: <20260730141424.823373275@linuxfoundation.org>
+Subject: [PATCH 6.6 038/484] RDMA/umem: Introduce an option to revoke DMABUF umem
+Date: Thu, 30 Jul 2026 16:08:55 +0200
+Message-ID: <20260730141424.250270395@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,59 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Yishai Hadas <yishaih@nvidia.com>
 
-[ Upstream commit 2a665946e0407a05a3f81bd56a08553c446498e0 ]
+[ Upstream commit 253c61dc256b3e6be65657f78b4a8452163ce00f ]
 
-brcmf_sdio_probe() stores the newly allocated bus in sdiodev->bus before
-allocating the ordered workqueue. If that allocation fails, the function
-jumps to fail and calls brcmf_sdio_remove().
+Introduce an option to revoke DMABUF umem.
 
-brcmf_sdio_remove() unconditionally cancels bus->datawork. Initialize the
-work item before the first failure path that can reach brcmf_sdio_remove(),
-so the cleanup path always observes a valid work object.
+This option will retain the umem allocation while revoking its DMA
+mapping. Furthermore, any subsequent attempts to map the pages should
+fail once the umem has been revoked.
 
-This issue was found by our static analysis tool and then confirmed by
-manual review of the probe error path and the remove-time work drain. The
-problem pattern is an early setup failure that reaches a cleanup helper
-which cancels an embedded work item before its initializer has run.
+This functionality will be utilized in the upcoming patches in the
+series, where we aim to delay umem deallocation until the mkey
+deregistration. However, we must unmap its pages immediately.
 
-A QEMU PoC forced alloc_ordered_workqueue() to fail at the same point in
-brcmf_sdio_probe(), before INIT_WORK(&bus->datawork) is reached. The
-resulting fail path calls brcmf_sdio_remove(), and DEBUG_OBJECTS reports
-the invalid work drain with brcmf_sdio_probe() and brcmf_sdio_remove() in
-the stack.
-
-Fixes: 9982464379e8 ("brcmfmac: make sdio suspend wait for threads to freeze")
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260619064401.1048976-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
+Link: https://patch.msgid.link/a38270f2fe4a194868ca2312f4c1c760e51bcbff.1722512548.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: a846aecb931b ("RDMA/irdma: Prevent rereg_mr for non-mem regions")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/core/umem_dmabuf.c | 21 +++++++++++++++++++--
+ include/rdma/ib_umem.h                |  3 +++
+ 2 files changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-index a4d0db371c8976..1ab0f501017bcf 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -4458,6 +4458,7 @@ struct brcmf_sdio *brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
- 	bus->sdiodev = sdiodev;
- 	sdiodev->bus = bus;
- 	skb_queue_head_init(&bus->glom);
-+	INIT_WORK(&bus->datawork, brcmf_sdio_dataworker);
- 	bus->txbound = BRCMF_TXBOUND;
- 	bus->rxbound = BRCMF_RXBOUND;
- 	bus->txminmax = BRCMF_TXMINMAX;
-@@ -4471,7 +4472,6 @@ struct brcmf_sdio *brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
- 		goto fail;
- 	}
- 	brcmf_sdiod_freezer_count(sdiodev);
--	INIT_WORK(&bus->datawork, brcmf_sdio_dataworker);
- 	bus->brcmf_wq = wq;
+diff --git a/drivers/infiniband/core/umem_dmabuf.c b/drivers/infiniband/core/umem_dmabuf.c
+index 674a4b45e7bfe7..44bb7449738cf4 100644
+--- a/drivers/infiniband/core/umem_dmabuf.c
++++ b/drivers/infiniband/core/umem_dmabuf.c
+@@ -23,6 +23,9 @@ int ib_umem_dmabuf_map_pages(struct ib_umem_dmabuf *umem_dmabuf)
  
- 	/* attempt to attach to the dongle */
+ 	dma_resv_assert_held(umem_dmabuf->attach->dmabuf->resv);
+ 
++	if (umem_dmabuf->revoked)
++		return -EINVAL;
++
+ 	if (umem_dmabuf->sgt)
+ 		goto wait_fence;
+ 
+@@ -240,15 +243,29 @@ struct ib_umem_dmabuf *ib_umem_dmabuf_get_pinned(struct ib_device *device,
+ }
+ EXPORT_SYMBOL(ib_umem_dmabuf_get_pinned);
+ 
+-void ib_umem_dmabuf_release(struct ib_umem_dmabuf *umem_dmabuf)
++void ib_umem_dmabuf_revoke(struct ib_umem_dmabuf *umem_dmabuf)
+ {
+ 	struct dma_buf *dmabuf = umem_dmabuf->attach->dmabuf;
+ 
+ 	dma_resv_lock(dmabuf->resv, NULL);
++	if (umem_dmabuf->revoked)
++		goto end;
+ 	ib_umem_dmabuf_unmap_pages(umem_dmabuf);
+-	if (umem_dmabuf->pinned)
++	if (umem_dmabuf->pinned) {
+ 		dma_buf_unpin(umem_dmabuf->attach);
++		umem_dmabuf->pinned = 0;
++	}
++	umem_dmabuf->revoked = 1;
++end:
+ 	dma_resv_unlock(dmabuf->resv);
++}
++EXPORT_SYMBOL(ib_umem_dmabuf_revoke);
++
++void ib_umem_dmabuf_release(struct ib_umem_dmabuf *umem_dmabuf)
++{
++	struct dma_buf *dmabuf = umem_dmabuf->attach->dmabuf;
++
++	ib_umem_dmabuf_revoke(umem_dmabuf);
+ 
+ 	dma_buf_detach(dmabuf, umem_dmabuf->attach);
+ 	dma_buf_put(dmabuf);
+diff --git a/include/rdma/ib_umem.h b/include/rdma/ib_umem.h
+index 3441ba9f2a0daf..3ec9f1deca7db4 100644
+--- a/include/rdma/ib_umem.h
++++ b/include/rdma/ib_umem.h
+@@ -38,6 +38,7 @@ struct ib_umem_dmabuf {
+ 	unsigned long last_sg_trim;
+ 	void *private;
+ 	u8 pinned : 1;
++	u8 revoked : 1;
+ };
+ 
+ static inline struct ib_umem_dmabuf *to_ib_umem_dmabuf(struct ib_umem *umem)
+@@ -130,6 +131,7 @@ ib_umem_dmabuf_get_pinned_with_dma_device(struct ib_device *device,
+ int ib_umem_dmabuf_map_pages(struct ib_umem_dmabuf *umem_dmabuf);
+ void ib_umem_dmabuf_unmap_pages(struct ib_umem_dmabuf *umem_dmabuf);
+ void ib_umem_dmabuf_release(struct ib_umem_dmabuf *umem_dmabuf);
++void ib_umem_dmabuf_revoke(struct ib_umem_dmabuf *umem_dmabuf);
+ 
+ int ib_umem_check_rereg(struct ib_umem *umem, int flags, int new_access_flags);
+ 
+@@ -191,6 +193,7 @@ static inline int ib_umem_dmabuf_map_pages(struct ib_umem_dmabuf *umem_dmabuf)
+ }
+ static inline void ib_umem_dmabuf_unmap_pages(struct ib_umem_dmabuf *umem_dmabuf) { }
+ static inline void ib_umem_dmabuf_release(struct ib_umem_dmabuf *umem_dmabuf) { }
++static inline void ib_umem_dmabuf_revoke(struct ib_umem_dmabuf *umem_dmabuf) {}
+ 
+ static inline int ib_umem_check_rereg(struct ib_umem *umem, int flags,
+ 				      int new_access_flags)
 -- 
 2.53.0
 
