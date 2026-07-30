@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD42E3769FD;
-	Thu, 30 Jul 2026 15:34:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0803F3438B7;
+	Thu, 30 Jul 2026 15:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425685; cv=none; b=I3UPcK920qd1/oVKUALtk5IO49mzkXVfjcIksT4dm4j+YvtiKqMRuPrxMmTbjSCetJPRpk8Dumk1VVlpFo3Dd20H7Iakt1kSoaPiEfx0K9BngAVa4u3sIOm+TxPNxIM7vOr5YnZxGpy3yKD4ChI7NcklCL8iGjSacMKTNr/trxQ=
+	t=1785425688; cv=none; b=EjYOSrqcCFdqyiJa370RCXUkmg+kMo73KbQxfcpH63KnLjlITk200ftMB99vu9lDkYkqncr75HtCbmGmS/k5KPn+nWC43O0OzJzvgSvwZnauq5de+1qMxN8IkBtfCrHitPBqXlhXmm1tP/xgFCGf5WR94glB6WEA6l3BIed5DOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425685; c=relaxed/simple;
-	bh=XaUTV1jcVShHqupx7dCZuSBrEvL7kqVDvkasapvv3eQ=;
+	s=arc-20240116; t=1785425688; c=relaxed/simple;
+	bh=LkhtF3kyPIhh+uwzOtpOIu3f01ZmfDlWwM18gyV/0kc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hxQPT/Qn2OjRu4Q8DTn4nMuaatZm7W98gFoM6RpuchE79i93QFDmSAcctdESAnQBVRQIIgT/Xr2wjcyJi/C+IfPGQ314aeY/M9gFR/eOgZUqFi7SMTPxCqJRjZEMmI2A00oaZmNIWVe99sxD88cZ9HdA6fm0gHLt0W9xX+4oc5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTE/mfSv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d8A90gkGBQE6jx+vDAqysJxh5NtIaIiGGxlVIUIwEWAr+nZgF/2Bs4GFKchEDTfWKSrPYggOaj0wTMNUmWmjaOhrSTmrLZFElBbVJSZ8ilRWGi7OEUZIzNi8GpDZnoBqqKzlRLToLJET/So+Q+9lCVq/TeekRcWsKX5qOvi49A0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ueL13kj0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTE/mfSv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D37E1F000E9;
-	Thu, 30 Jul 2026 15:34:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ueL13kj0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D891F00A3A;
+	Thu, 30 Jul 2026 15:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425683;
-	bh=2Xjt3r8erDpCraW0jHYG428dHlZe/xx+heY9naa6rr0=;
+	s=korg; t=1785425686;
+	bh=N6YHvn3AoZkhBqPlpOR/fdpOj6y0gE4POqdF9G5Rdao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DTE/mfSvlDlMVzLwxMMBx/ZEgmm3nsbXlw/SjNUf208o6VlaBDn8ErgUsGIq2OVRC
-	 DWhc2/GuQTPNIQ7pAZjctS1TyL7/i5PHw46EHaHbio/LjAUInyXVuLo/XEzCdcM8EX
-	 FPAh1P/yG8ioOagxflEsCjyLMKz7ZzzmkPBlkJKM=
+	b=ueL13kj06mIlPiDNsNBKjOXCYRZLBjiEEMSsTclM5/w6BUGM7O8iNf/d7WVq4JiDi
+	 WKxTRLopZ6RszR+geNw1sVZvlErwZeCi3fqoP06NowKo2t2mBaX/BJ9HUOkeJezFPm
+	 p+KAopitCVLrOwBHvu8NzpalINdFWUXV91g88C6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 156/602] ALSA: hda: cs35l41: validate and free ACPI mute object
-Date: Thu, 30 Jul 2026 16:09:08 +0200
-Message-ID: <20260730141439.252741719@linuxfoundation.org>
+Subject: [PATCH 6.12 139/602] hwmon: (nzxt-smart2) Stop device IO before calling hid_hw_stop
+Date: Thu, 30 Jul 2026 16:08:51 +0200
+Message-ID: <20260730141438.900460717@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,58 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 3b597d24dc0455ae926f1053f97c2725038fc3cd ]
+[ Upstream commit 59d104b54b0b42e30fd2a68d24ee5c49dcc54d1e ]
 
-cs35l41_get_acpi_mute_state() evaluates a _DSM method to get the ACPI
-mute state and reads the first byte from the returned object.
+Calling hid_hw_stop() does not stop the device IO.
+This results in a race condition between hid_input_report() and the point
+immediately following the execution of hid_device_io_start() within
+the driver probe function. If the probe operation fails after "io start"
+has been initiated, this race condition will result in a UAF vulnerability.
 
-However, the returned ACPI object is owned by the caller and is never
-freed after use, so each successful query leaks the _DSM result object.
+Fix the problem by calling hid_device_io_stop() before calling
+hid_hw_stop().
 
-The code also assumes that the returned object is a buffer with at least
-one byte. A malformed firmware response can return a different object
-type or an empty buffer, and the direct ret->buffer.pointer dereference
-can then access an invalid pointer.
-
-Use the typed _DSM helper, validate that the returned buffer contains at
-least one byte, and free the ACPI object after reading it.
-
-Fixes: 447106e92a0c ("ALSA: hda: cs35l41: Support mute notifications for CS35L41 HDA")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260708113625.752913-1-lgs201920130244@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 53e68c20aeb1e ("hwmon: add driver for NZXT RGB&Fan Controller/Smart Device v2")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/cs35l41_hda.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/hwmon/nzxt-smart2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/cs35l41_hda.c b/sound/pci/hda/cs35l41_hda.c
-index bc84415416aae5..031978a62cb996 100644
---- a/sound/pci/hda/cs35l41_hda.c
-+++ b/sound/pci/hda/cs35l41_hda.c
-@@ -1402,10 +1402,19 @@ static int cs35l41_get_acpi_mute_state(struct cs35l41_hda *cs35l41, acpi_handle
- 	guid_parse(CS35L41_UUID, &guid);
+diff --git a/drivers/hwmon/nzxt-smart2.c b/drivers/hwmon/nzxt-smart2.c
+index c2d1173f42fefb..6f8febda4277c9 100644
+--- a/drivers/hwmon/nzxt-smart2.c
++++ b/drivers/hwmon/nzxt-smart2.c
+@@ -774,7 +774,7 @@ static int nzxt_smart2_hid_probe(struct hid_device *hdev,
  
- 	if (cs35l41_dsm_supported(handle, CS35L41_DSM_GET_MUTE)) {
--		ret = acpi_evaluate_dsm(handle, &guid, 0, CS35L41_DSM_GET_MUTE, NULL);
-+		ret = acpi_evaluate_dsm_typed(handle, &guid, 0,
-+			      CS35L41_DSM_GET_MUTE, NULL,
-+			      ACPI_TYPE_BUFFER);
-+
- 		if (!ret)
- 			return -EINVAL;
-+		if (!ret->buffer.length || !ret->buffer.pointer) {
-+			ACPI_FREE(ret);
-+			return -EINVAL;
-+		}
-+
- 		mute = *ret->buffer.pointer;
-+		ACPI_FREE(ret);
- 		dev_dbg(cs35l41->dev, "CS35L41_DSM_GET_MUTE: %d\n", mute);
- 	}
- 
+ out_hw_close:
+ 	hid_hw_close(hdev);
+-
++	hid_device_io_stop(hdev);
+ out_hw_stop:
+ 	hid_hw_stop(hdev);
+ 	return ret;
 -- 
 2.53.0
 
