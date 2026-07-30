@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C656F442FD3;
-	Thu, 30 Jul 2026 14:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD448421EF8;
+	Thu, 30 Jul 2026 14:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422878; cv=none; b=ZsDifCTuWRgPSd9tZfQmGqjPRr0HZ7aMeDODYq0zVWGIRrbjMfRkFTNdqhi6WoHgJpooQovfoS/xm7LSazMKOJZixNLFqd16IPqsaMUNQRk5jCT6vCTMANFpiZ/J8xNuxlqy2l8YhGeQYfOt3e7BB/KuDXpucjVu+iY/RsnMG74=
+	t=1785422880; cv=none; b=ELi1/r0bWcV3Bx9PZ4aacrGbrR3PvD6NkVnAVxFw+oTUxZSRABbcVDUMmQ2wkiPz+esbY+DI/k3S1Er1n3Sa2l8pG/TlIq/cgveDZjs1BA/9I4u8ks+UumRWyGfB7umkdsLO9uCZHIF+F1MmDParg6Be7WpMS3o85eyHT4ZQsj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422878; c=relaxed/simple;
-	bh=1cvqugoFogODCLoQo+2FtmYq3cZWz2vXcAbY30L2Tng=;
+	s=arc-20240116; t=1785422880; c=relaxed/simple;
+	bh=F/Tw0otRv4TybJ1Edrvg3U1c3GCYLEexj7EhyiQXxFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e4TIA5udqsqE99l2PYkPk3+D914c3bAJLCN72fy4mBmdQdAhkCkhq+y39Wvbz09/a052g/YxosHmy9smwy5vD7/k5PlevZtDS1Zv1cmy7hqDBjr6hxnfgFKrN+M2bbgykltxHd04pbBjZaqA61lmhBr3N4VLzVz3DLE4pS0EqF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLIaUH33; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vb2HPQxMRG9Ju/PFS3UC/091ANhm6kKd+xv5l7lR0oqChR1yU/oQYOrXHJ7/+3fC8kUe30lI44PopKA/BLDWg1bUNWwY/mGW0uR70yQ7i3Per38FL97GjzC9H1DS6qOum7boAEIr0hl0/Q1YtbpZtsPQDJdPLM13KujgfwVm9Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVU/0pxn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLIaUH33"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A431F00A3A;
-	Thu, 30 Jul 2026 14:47:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVU/0pxn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC4E1F000E9;
+	Thu, 30 Jul 2026 14:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422875;
-	bh=TKfLsKMt1iAnnTvLED+QXZPRgp29ruN9AvkXIRuMhHc=;
+	s=korg; t=1785422878;
+	bh=45U7JPm7cmUO78v6bn7cwBGZ80ZSGzA3ItILe2iq5BE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kLIaUH33O4ZncyfUY9+OMBSx7PcCpQI5zdXMpdo6bNbme5p5WkYM0kA8uhJb9JjJK
-	 LXelt0GdLGgqLtZRxBdDjef9ApkHkvkgoLAxLtMSVggn3rtyZdcuXY6ND1aNaj79wt
-	 LVOxOWH+3hrDshh3PQ6Mjs5zJmzFHweee2ZkChsQ=
+	b=uVU/0pxnKQzcBHOWXm5PhYHtZfl5PS+TkdvWxHsHCTOYOZxoOlyMZz/4xTaAGa3gZ
+	 QjgprTERt1d1ZSktcdntLobDeYup2gjtxcCagzEi/WBBi012/sloCGxTDw1r2p+In+
+	 gxX9haxcPrwiIgVZWrcP1niC+QxjJYdckrup+eFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Menachem Adin <menachem.adin@intel.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>
-Subject: [PATCH 7.1 586/744] mei: bus: access mei_device under device_lock on cleanup
-Date: Thu, 30 Jul 2026 16:14:19 +0200
-Message-ID: <20260730141456.738828724@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 7.1 587/744] intel_th: fix MSC output device reference leak
+Date: Thu, 30 Jul 2026 16:14:20 +0200
+Message-ID: <20260730141456.759988843@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,67 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit f112ea910e554d58b4b39a4492b7d302f0f4204f upstream.
+commit 761b785a0cfbce43761227bc42a7f984f31f8921 upstream.
 
-Fix couple of problems in mei_cl_bus_dev_release():
+intel_th_output_open() looks up the output device with
+bus_find_device_by_devt(), which returns the device with a reference that
+must be dropped after use.
 
-mei_cl_flush_queues() is running without lock.
-bus->file_list access after mei_dev_bus_put(bus) can become a
-use-after-free if this was the last reference to bus.
+commit 95fc36a234da ("intel_th: fix device leak on output open()")
+attempted to drop the reference from intel_th_output_release(). However,
+a successful open replaces file->f_op with the output driver file
+operations before returning, so close runs the output driver release
+callback instead.
 
-Protect queues cleanup and WARN traversal by device lock there
-to avoid the concurrent access problems.
-Move WARN traversal before mei_dev_bus_put(bus).
+For MSC outputs, close runs intel_th_msc_release(), which only removes
+the per-file iterator and does not drop the device reference taken by
+intel_th_output_open(). Consequently, every successful MSC output open
+leaks one device reference.
 
-This file uses bus variable name for mei_device, adjust
-code of mei_cl_bus_dev_release() to use bus variable too.
+Drop the device reference from intel_th_msc_release(), which is the
+release path actually used for MSC output files. Remove the now-unused
+intel_th_output_release() callback from intel_th_output_fops.
 
+Fixes: 95fc36a234da ("intel_th: fix device leak on output open()")
 Cc: stable <stable@kernel.org>
-Fixes: 35e8a426b16a ("mei: bus: Check for still connected devices in mei_cl_bus_dev_release()")
-Reviewed-by: Menachem Adin <menachem.adin@intel.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://patch.msgid.link/20260705151259.3054795-1-alexander.usyskin@intel.com
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260715070851.2077965-1-lgs201920130244@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/bus.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/hwtracing/intel_th/core.c |   10 ----------
+ drivers/hwtracing/intel_th/msu.c  |    2 ++
+ 2 files changed, 2 insertions(+), 10 deletions(-)
 
---- a/drivers/misc/mei/bus.c
-+++ b/drivers/misc/mei/bus.c
-@@ -4,6 +4,7 @@
-  * Intel Management Engine Interface (Intel MEI) Linux driver
-  */
+--- a/drivers/hwtracing/intel_th/core.c
++++ b/drivers/hwtracing/intel_th/core.c
+@@ -843,18 +843,8 @@ err_put_dev:
+ 	return err;
+ }
  
-+#include <linux/cleanup.h>
- #include <linux/module.h>
- #include <linux/device.h>
- #include <linux/kernel.h>
-@@ -1330,15 +1331,16 @@ static void mei_dev_bus_put(struct mei_d
- static void mei_cl_bus_dev_release(struct device *dev)
- {
- 	struct mei_cl_device *cldev = to_mei_cl_device(dev);
--	struct mei_device *mdev = cldev->cl->dev;
-+	struct mei_device *bus = cldev->bus;
- 	struct mei_cl *cl;
- 
--	mei_cl_flush_queues(cldev->cl, NULL);
--	mei_me_cl_put(cldev->me_cl);
--	mei_dev_bus_put(cldev->bus);
+-static int intel_th_output_release(struct inode *inode, struct file *file)
+-{
+-	struct intel_th_device *thdev = file->private_data;
 -
--	list_for_each_entry(cl, &mdev->file_list, link)
--		WARN_ON(cl == cldev->cl);
-+	scoped_guard(mutex, &bus->device_lock) {
-+		mei_cl_flush_queues(cldev->cl, NULL);
-+		mei_me_cl_put(cldev->me_cl);
-+		list_for_each_entry(cl, &bus->file_list, link)
-+			WARN_ON(cl == cldev->cl);
-+	}
-+	mei_dev_bus_put(bus);
+-	put_device(&thdev->dev);
+-
+-	return 0;
+-}
+-
+ static const struct file_operations intel_th_output_fops = {
+ 	.open	= intel_th_output_open,
+-	.release = intel_th_output_release,
+ 	.llseek	= noop_llseek,
+ };
  
- 	kfree(cldev->cl);
- 	kfree(cldev);
+--- a/drivers/hwtracing/intel_th/msu.c
++++ b/drivers/hwtracing/intel_th/msu.c
+@@ -1490,8 +1490,10 @@ static int intel_th_msc_release(struct i
+ {
+ 	struct msc_iter *iter = file->private_data;
+ 	struct msc *msc = iter->msc;
++	struct intel_th_device *thdev = msc->thdev;
+ 
+ 	msc_iter_remove(iter, msc);
++	put_device(&thdev->dev);
+ 
+ 	return 0;
+ }
 
 
