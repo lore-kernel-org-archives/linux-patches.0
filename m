@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA62930567C;
-	Thu, 30 Jul 2026 15:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F1B43BDCB;
+	Thu, 30 Jul 2026 15:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425251; cv=none; b=H+WidcHBKavOYdHISegbl1shLL4ajD8bU+whJFAsS8CISUkuWI6FVmw4XUqRgcTvFZ2AMMCPUw9sA3uR2hJnBcbEQPFQdCtHCF2s5/cdYPwN6hxrA2BAFu6IwIjmkXTIyWuTJNXF401sXtDL7HKy19RDHwfyIMfNT21n3qOxtC0=
+	t=1785425254; cv=none; b=ZvG3M7KWDuy7iEfSqKnxVZkqEe7S4/NqYtYtYNcvmXWjN/sPN+aH07jkRW9igzGwb7DCH0QjjqNqY87FJelaffoaimfesGnYM8ziSKpjCANkecae8ozAWNsRbjLSJzl4XUb7OAhoTEbmuAfbSidkgoomVP33Ylikhn/2FYim0m8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425251; c=relaxed/simple;
-	bh=UXDt8Iehw1M0dwosAO8WE/oNl7fjU56ibWcinkD4cQs=;
+	s=arc-20240116; t=1785425254; c=relaxed/simple;
+	bh=aAoQPAgdxjfFWtEmxNssVWNoeToBNa4bonHYpa5N7Rw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NcL8Zcq/4hceNXyMgfzOaPAeh/Bk5/qok1V+2rvrQQz8sW+bBD3mFJBRNmctwx3AhUYSIRGBrNtcQtzrSj2lDAeGOJgaN+rC0iu8zSc+DC9g16B+oQdmQxl3mQ4GG87PA0yu6/DiFPVqeHgi/hNjI31asfj5Kd03IXQahaEFADE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZW2YaTnx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oUDL1ejzl6zLaxj1wwQv6Wlrm8ejwilTmtewRfo9qu/O9HxSDyZlzriHyubypVQZLQLUoYvrgC5WXttcl47fNMiizKBLalmEt+n6lewuakuh16B2iByuGYzDhkCfxC9/PYBkotbGJxbopPgXPGqo97/LZGbfocCxBh+bFuL0Zt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JKHUh/e+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZW2YaTnx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A0CE1F000E9;
-	Thu, 30 Jul 2026 15:27:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JKHUh/e+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200521F000E9;
+	Thu, 30 Jul 2026 15:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425246;
-	bh=x4W5YfRbOFbTzwWJBFvIsJtjn+IVws/CtvrU7CpLCYE=;
+	s=korg; t=1785425252;
+	bh=Le1f95c+xoxU5Nol6cW/cLUj3HjjMfP5NjKdpYu9D3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZW2YaTnx74Dtls3VRM9xdESkWMzg/cstDru4WWYcz9vNvJVPXDTXNxXioIGLQ7RVq
-	 j0EJNSDfJZmX+sIfieFuCXZIhNmVZ3pHbHi6ynTZ6xPwXPDbSZpKMbeOkHK2z2/iXi
-	 OzMbYrVY4xUAZjG0bfLC0ur1d05/E+LO+RgETPMg=
+	b=JKHUh/e+subtaKnY8T+pibQb17HDoYs97pkd/ICrZ4fgyofMgNcLcr3CQOjgC62cZ
+	 c6lRa4kaYBsjVGgdppDCf1Kr/7f0jBX9XD+orsRYcf9xJs0Ct+H8GooOEzlPq96QP0
+	 akjsfhlAdijkdquDnadDWF8Vk2XlYG3SeGLiG5Lg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 673/675] net: stmmac: fix dwmac4 transmit performance regression
-Date: Thu, 30 Jul 2026 16:16:43 +0200
-Message-ID: <20260730141459.466339310@linuxfoundation.org>
+	Chandrakanth Silveru <Chandrakanth.Silveru@amd.com>,
+	Srikanth Aithal <Srikanth.Aithal@amd.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Nikunj A Dadhania <nikunj@amd.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.18 675/675] KVM: SVM: Bump asid_generation on CPU online to avoid ASID collision after hotplug
+Date: Thu, 30 Jul 2026 16:16:45 +0200
+Message-ID: <20260730141459.509377556@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -45,141 +48,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Nikunj A Dadhania <nikunj@amd.com>
 
-commit 5ccde4c81e843ab6b3a324c8e2aa96d9b1270a1a upstream.
+commit 25f744ffa0c8e799e06250ce2e618367b166b0d4 upstream.
 
-dwmac4's transmit performance dropped by a factor of four due to an
-incorrect assumption about which definitions are for what. This
-highlights the need for sane register macros.
+If a vCPU stays scheduled out (or blocked) while the last pCPU it ran
+on goes through a hotplug cycle (online->offline->online), and the vCPU
+then resumes execution on the same pCPU, then it is possible for it to
+run with an ASID that has now been assigned to a different vCPU,
+resulting in stale TLB translations being used.
 
-Commit 8409495bf6c9 ("net: stmmac: cores: remove many xxx_SHIFT
-definitions") changed the way the txpbl value is merged into the
-register:
+svm_enable_virtualization_cpu() resets asid_generation to 1 and sets
+next_asid to max_asid + 1 on every CPU online event, including hotplug
+cycles.  Because next_asid starts beyond the pool boundary, the first
+call to new_asid() after an online event always wraps the pool,
+incrementing asid_generation to 2 and assigning ASIDs starting from
+min_asid.
 
-        value = readl(ioaddr + DMA_CHAN_TX_CONTROL(dwmac4_addrs, chan));
--       value = value | (txpbl << DMA_BUS_MODE_PBL_SHIFT);
-+       value = value | FIELD_PREP(DMA_BUS_MODE_PBL, txpbl);
+Consider two vCPUs from different VMs, vCPU-A pinned to CPU-X holding
+asid_generation=2 and ASID=N from before the hotplug event:
 
-With the following in the header file:
+  1. CPU-X goes offline and back online: asid_generation resets to 1,
+     next_asid = max_asid + 1.
 
- #define DMA_BUS_MODE_PBL               BIT(16)
--#define DMA_BUS_MODE_PBL_SHIFT         16
+  2. One or more vCPUs migrate to CPU-X and call new_asid(), wrapping
+     the pool and consuming ASIDs starting from min_asid.  Eventually
+     vCPU-B from a different VM is assigned asid_generation=2, ASID=N
+     — the same ASID that vCPU-A held before the hotplug.
 
-The assumption here was that DMA_BUS_MODE_PBL was the mask for
-DMA_BUS_MODE_PBL_SHIFT, but this turns out not to be the case.
+  3. vCPU-A enters pre_svm_run() on CPU-X: current_vmcb->cpu is
+     unchanged so the migration branch is skipped.  Its saved
+     asid_generation=2 matches sd->asid_generation=2, so the generation
+     check silently passes and vCPU-A continues running with ASID=N —
+     the same ASID just freshly assigned to vCPU-B.
 
-The field is actually six bits wide, buts 21:16, and is called
-TXPBL.
+Both vCPUs from different VMs now run on CPU-X with the same ASID,
+causing them to share NPT TLB entries and producing stale translations.
 
-What's even more confusing is, there turns out to be a PBLX8
-single bit in the DMA_CHAN_CONTROL register (0x1100 for channel 0),
-and DMA_BUS_MODE_PBL seems to be used for that. However, this bit
-et.al. was listed under a comment "/* DMA SYS Bus Mode bitmap */"
-which is for register 0x1004.
+The collision manifests as a KVM internal error (Suberror: 1, emulation
+failure).  The NPT page fault reports a faulting GPA far outside the
+VM's physical memory range — a sign of stale TLB translations being
+used.  KVM falls back to instruction emulation, which fails on
+FPU/XSave instructions (XRSTOR, STMXCSR) that the emulator does not
+implement.
 
-Fix this up by adding an appropriately named field definition under
-the DMA_CHAN_TX_CONTROL() register address definition.
+Fix this by incrementing asid_generation instead of resetting it to 1
+in svm_enable_virtualization_cpu().  On module load, asid_generation
+starts at 0 (memset) and the increment produces 1, identical to the
+old behaviour.  On subsequent hotplug cycles the generation advances
+beyond any value a vCPU previously observed on this CPU, so the
+generation check in pre_svm_run() reliably forces new_asid() on every
+vCPU after every hotplug cycle.
 
-Move the RPBL mask definition under DMA_CHAN_RX_CONTROL(), correctly
-renaming it as well.
-
-Also move the PBL bit definition under DMA_CHAN_CONTROL(), correctly
-renaming it.
-
-This removes confusion over the PBL fields.
-
-Fixes: 8409495bf6c9 ("net: stmmac: cores: remove many xxx_SHIFT definitions")
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Bisected-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://lore.kernel.org/51859704-57fd-4913-b09d-9ac58a57f185@bootlin.com
-Tested-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/E1vgY1k-00000003vOC-0Z1H@rmk-PC.armlinux.org.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 774c47f1d78e ("[PATCH] KVM: cpu hotplug support")
+Reported-by: Chandrakanth Silveru <Chandrakanth.Silveru@amd.com>
+Tested-by: Srikanth Aithal <Srikanth.Aithal@amd.com>
+Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
+Message-ID: <20260715063506.672432-1-nikunj@amd.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac4_dma.c |    8 ++++----
- drivers/net/ethernet/stmicro/stmmac/dwmac4_dma.h |    7 ++++---
- 2 files changed, 8 insertions(+), 7 deletions(-)
+ arch/x86/kvm/svm/svm.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_dma.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_dma.c
-@@ -76,7 +76,7 @@ static void dwmac4_dma_init_rx_chan(stru
- 	u32 rxpbl = dma_cfg->rxpbl ?: dma_cfg->pbl;
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -523,7 +523,12 @@ static int svm_enable_virtualization_cpu
+ 		return -EBUSY;
  
- 	value = readl(ioaddr + DMA_CHAN_RX_CONTROL(dwmac4_addrs, chan));
--	value = value | FIELD_PREP(DMA_BUS_MODE_RPBL_MASK, rxpbl);
-+	value = value | FIELD_PREP(DMA_CHAN_RX_CTRL_RXPBL_MASK, rxpbl);
- 	writel(value, ioaddr + DMA_CHAN_RX_CONTROL(dwmac4_addrs, chan));
- 
- 	if (IS_ENABLED(CONFIG_ARCH_DMA_ADDR_T_64BIT) && likely(dma_cfg->eame))
-@@ -97,7 +97,7 @@ static void dwmac4_dma_init_tx_chan(stru
- 	u32 txpbl = dma_cfg->txpbl ?: dma_cfg->pbl;
- 
- 	value = readl(ioaddr + DMA_CHAN_TX_CONTROL(dwmac4_addrs, chan));
--	value = value | FIELD_PREP(DMA_BUS_MODE_PBL, txpbl);
-+	value = value | FIELD_PREP(DMA_CHAN_TX_CTRL_TXPBL_MASK, txpbl);
- 
- 	/* Enable OSP to get best performance */
- 	value |= DMA_CONTROL_OSP;
-@@ -122,7 +122,7 @@ static void dwmac4_dma_init_channel(stru
- 	/* common channel control register config */
- 	value = readl(ioaddr + DMA_CHAN_CONTROL(dwmac4_addrs, chan));
- 	if (dma_cfg->pblx8)
--		value = value | DMA_BUS_MODE_PBL;
-+		value = value | DMA_CHAN_CTRL_PBLX8;
- 	writel(value, ioaddr + DMA_CHAN_CONTROL(dwmac4_addrs, chan));
- 
- 	/* Mask interrupts by writing to CSR7 */
-@@ -140,7 +140,7 @@ static void dwmac410_dma_init_channel(st
- 	/* common channel control register config */
- 	value = readl(ioaddr + DMA_CHAN_CONTROL(dwmac4_addrs, chan));
- 	if (dma_cfg->pblx8)
--		value = value | DMA_BUS_MODE_PBL;
-+		value = value | DMA_CHAN_CTRL_PBLX8;
- 
- 	writel(value, ioaddr + DMA_CHAN_CONTROL(dwmac4_addrs, chan));
- 
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_dma.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_dma.h
-@@ -32,8 +32,6 @@
- 
- /* DMA SYS Bus Mode bitmap */
- #define DMA_BUS_MODE_SPH		BIT(24)
--#define DMA_BUS_MODE_PBL		BIT(16)
--#define DMA_BUS_MODE_RPBL_MASK		GENMASK(21, 16)
- #define DMA_BUS_MODE_MB			BIT(14)
- #define DMA_BUS_MODE_FB			BIT(0)
- 
-@@ -126,18 +124,21 @@ static inline u32 dma_chanx_base_addr(co
- #define DMA_CHAN_STATUS(addrs, x)	(dma_chanx_base_addr(addrs, x) + 0x60)
- 
- /* DMA Control X */
-+#define DMA_CHAN_CTRL_PBLX8		BIT(16)
- #define DMA_CONTROL_SPH			BIT(24)
- #define DMA_CONTROL_MSS_MASK		GENMASK(13, 0)
- 
- /* DMA Tx Channel X Control register defines */
- #define DMA_CONTROL_EDSE		BIT(28)
-+#define DMA_CHAN_TX_CTRL_TXPBL_MASK	GENMASK(21, 16)
- #define DMA_CONTROL_TSE			BIT(12)
- #define DMA_CONTROL_OSP			BIT(4)
- #define DMA_CONTROL_ST			BIT(0)
- 
- /* DMA Rx Channel X Control register defines */
--#define DMA_CONTROL_SR			BIT(0)
-+#define DMA_CHAN_RX_CTRL_RXPBL_MASK	GENMASK(21, 16)
- #define DMA_RBSZ_MASK			GENMASK(14, 1)
-+#define DMA_CONTROL_SR			BIT(0)
- 
- /* Interrupt status per channel */
- #define DMA_CHAN_STATUS_REB		GENMASK(21, 19)
+ 	sd = per_cpu_ptr(&svm_data, me);
+-	sd->asid_generation = 1;
++	/*
++	 * Bump the current asid_generation value to ensure any vCPU that
++	 * previously ran on this CPU sees a stale generation and is forced
++	 * to acquire a new ASID, preventing a latent ASID collision.
++	 */
++	sd->asid_generation++;
+ 	sd->max_asid = cpuid_ebx(SVM_CPUID_FUNC) - 1;
+ 	sd->next_asid = sd->max_asid + 1;
+ 	sd->min_asid = max_sev_asid + 1;
 
 
