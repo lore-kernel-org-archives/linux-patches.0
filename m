@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158BF274650;
-	Thu, 30 Jul 2026 15:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5757274650;
+	Thu, 30 Jul 2026 15:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425879; cv=none; b=o1pwDOin7L2J5OZ2QrHTxmqH1JSfw95zPUdga8YliUO7GjrYEYfLskiCyDSs0LbkRFnEqErNbSxrWqjG1/bwfSYFxAWA2sXfMiAJDP3+JgTXtUIwx0hd74brPp/YRHrdVP7ms6BXplwNFoqvE7NsocFxysFGMRZNaoE03DCkgVs=
+	t=1785425882; cv=none; b=XTMbrTRbsvrDiqPNEiiB5NNup03hUN5UPXMWyV+jTyc6BlYw/lIkfDVCT6SfTJo1f8tjBx9VWZ+KGeqVIiGwmcIBPVg5NMPwpUNWcAJ6l1Yp767MiJKIiR4ORWeqGucms8+RJiu80LqpwVyx4TsqSV+A3bxDCe4Cksivts2uLuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425879; c=relaxed/simple;
-	bh=bHfBEYbUDClrsFRoaRO2YJDUcLgh2yn9VHOJcqL/O7Q=;
+	s=arc-20240116; t=1785425882; c=relaxed/simple;
+	bh=zJnLSZejlmOn45DLmQGY1YPenv6V7VI9Z7hIQGHnKss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jS/F0jH5MgO+6Vu7W9mfpSCWXey+5dXaPzkNxEpDKOTfTug7rylmGx33+GJlO9jw4VYU5R4TsdJr233CulfOQh0aG39HwNyyEbOv4e101+6pe8+frJ4ZKv3fXgpR2uRMM7EvGLMLrgxUChqVmgHAUkji2M3wX3+evYfMtUADFjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A++7le99; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IqZX0GsMzvsEhodI/toilax2oE8kutzEksn25Uxf1M3o9Olw656aZN93NQSQ6Uy9A5Y7WiUGi+UBjOB52qUcBv/sgbtm0595p2UYzTq1gXTwNc1mfCQMbDTDlhewED0ssijzofuUw7nF8/zaEjf+0EPZBBIn1uD39V+mPaEO2UU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1V58iTq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A++7le99"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B311F000E9;
-	Thu, 30 Jul 2026 15:37:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1V58iTq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491FA1F00AC4;
+	Thu, 30 Jul 2026 15:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425878;
-	bh=NnYT9lDZYXjiefkS0jH9iFWbzBXISA8XhuNrWpOwBfQ=;
+	s=korg; t=1785425880;
+	bh=hpqniXzfjyjSkmYsCBob9ugPGukjMsfb3YL8SS0g59k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A++7le99gPEScMd8Sm9p1pOJ/z3pW17W3/qzogxbzSuai2Uy++5RzIEdKlS4hI3RB
-	 9n3YcIpMlMGVujqsVp5nfkSdKTq2hD7q7/VyWkMQU1gkKmWgUZUYNq2lRXvLZ/E5wF
-	 OwZVPKUf+5EYbT9zwY1g8iLoHwPkR8ZStFI/oQ2A=
+	b=z1V58iTq1U5SXT2yb8KVBTX6uUw7YQUnV5iJV5nWIULWnw8Gvs+m9Xp1FzLJ6sDHq
+	 FFFsKPKLoMuA9KrzVEdNoqTGBYJY1XwG5r0g7SuJD7TKuxnPN7CZHA109w+QsqVgmp
+	 UPp86d5c8/VCflMnbB0J5HUWaLkDbopGyaTuHTmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 222/602] tipc: fix u16 MTU truncation in media and bearer MTU validation
-Date: Thu, 30 Jul 2026 16:10:14 +0200
-Message-ID: <20260730141440.621936627@linuxfoundation.org>
+Subject: [PATCH 6.12 223/602] drm/tests: shmem: Set DMA mask to 64-bit in drm_gem_shmem
+Date: Thu, 30 Jul 2026 16:10:15 +0200
+Message-ID: <20260730141440.645182705@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -48,76 +45,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: José Expósito <jose.exposito@redhat.com>
 
-[ Upstream commit 9f29cd8a8e7901a2617c8064ce9f50fc67b97cb8 ]
+[ Upstream commit b04a248cfa6cfa1e7dc9ce91cb1eb88b1a70dd69 ]
 
-Both TIPC_NL_MEDIA_SET and TIPC_NL_BEARER_SET accept user-supplied
-MTU values but only enforce a minimum bound, not a maximum. When a user
-sets the MTU to a value exceeding U16_MAX (65535), it passes validation
-but is silently truncated when assigned to u16 fields l->mtu and
-l->advertised_mtu in tipc_link_create(). Values like 65536 (0x10000)
-truncate to 0, causing a division by zero in tipc_link_set_queue_limits()
-which computes TIPC_MAX_PUBL / (l->mtu / ITEM_SIZE). Other overflowing
-values (e.g. 65537-131071) produce small incorrect MTU values, resulting
-in link malfunction behaviors.
+drm_gem_shmem_test_purge [1] and drm_gem_shmem_test_get_pages_sgt [2]
+intermittently fail on ppc64le and s390x CI systems with a DMA address
+overflow:
 
-Crash stack (triggered as unprivileged user via user namespace):
+  DMA addr 0x0000000100307000+4096 overflow (mask ffffffff, bus limit 0)
+  WARNING: kernel/dma/direct.h:114 dma_direct_map_sg+0x778/0x920
 
-  tipc_link_set_queue_limits  net/tipc/link.c:2531
-  tipc_link_create            net/tipc/link.c:520
-  tipc_node_check_dest        net/tipc/node.c:1279
-  tipc_disc_rcv               net/tipc/discover.c:252
-  tipc_rcv                    net/tipc/node.c:2129
-  tipc_udp_recv               net/tipc/udp_media.c:392
+  drm_gem_shmem_test_purge: ASSERTION FAILED at
+    drivers/gpu/drm/tests/drm_gem_shmem_test.c:330
+    Expected sgt is not error, but is: -5
 
-Two independent paths lack the upper bound check:
-1. tipc_udp_mtu_bad() -- called from __tipc_nl_media_set() (MEDIA_SET)
-2. inline check in __tipc_nl_bearer_set() at bearer.c:1160 (BEARER_SET)
+The call chain leading to the failure is:
 
-Fix both by rejecting MTU values above U16_MAX.
+  drm_gem_shmem_test_purge() / drm_gem_shmem_test_get_pages_sgt()
+    drm_gem_shmem_get_pages_sgt()
+      drm_gem_shmem_get_pages_sgt_locked() [drm_gem_shmem_helper.c]
+        dma_map_sgtable()                  [mapping.c]
+          __dma_map_sg_attrs()
+            dma_direct_map_sg()            [direct.c]
+              dma_direct_map_phys()        [kernel/dma/direct.h]
+                dma_capable()              Checks addr against DMA mask
+                  -> FAILS: addr > 0xFFFFFFFF
 
-Fixes: 901271e0403a ("tipc: implement configuration of UDP media MTU")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Closes: https://lore.kernel.org/all/CAB8m9WgETt0AjmFwE=F-CKjGXsK6_WDv0=kbYRcC8-noo+amnA@mail.gmail.com
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260714041541.307702-1-blbllhy@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The root cause is that KUnit devices are initialized with a 32-bit DMA
+mask (DMA_BIT_MASK(32)) in lib/kunit/device.c. On ppc64le and s390x
+systems with physical memory above 4GB, page allocations can land at
+addresses that exceed this mask. When drm_gem_shmem_get_pages_sgt()
+attempts to DMA-map these pages via dma_map_sgtable(), the DMA layer
+rejects the mapping because the physical address overflows the 32-bit
+mask.
+
+The failure is intermittent because pages may or may not be allocated
+above 4GB on any given run depend on memory pressure.
+
+Fix by setting a 64-bit DMA mask on the device before calling
+drm_gem_shmem_get_pages_sgt() for all tests, following the same pattern
+already used in drm_gem_shmem_test_obj_create_private().
+
+[1] https://s3.amazonaws.com/arr-cki-prod-trusted-artifacts/trusted-artifacts/2643976103/test_s390x/15128551935/artifacts/jobwatch/logs/recipes/21561049/tasks/220716793/results/1014626315/logs/dmesg.log
+[2] https://s3.amazonaws.com/arr-cki-prod-trusted-artifacts/trusted-artifacts/2643976103/test_ppc64le/15128551933/artifacts/jobwatch/logs/recipes/21561041/tasks/220716705/results/1014628163/logs/dmesg.log
+
+Fixes: 93032ae634d4 ("drm/test: add a test suite for GEM objects backed by shmem")
+Closes: https://datawarehouse.cki-project.org/issue/5345
+Closes: https://datawarehouse.cki-project.org/issue/3184
+Assisted-by: Claude:claude-4.6-opus
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: José Expósito <jose.exposito@redhat.com>
+Link: https://patch.msgid.link/20260703150808.3832-1-jose.exposito89@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/netlink.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/tests/drm_gem_shmem_test.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/net/tipc/netlink.c b/net/tipc/netlink.c
-index 8336a9664703fe..1307dd1a961341 100644
---- a/net/tipc/netlink.c
-+++ b/net/tipc/netlink.c
-@@ -113,12 +113,16 @@ const struct nla_policy tipc_nl_node_policy[TIPC_NLA_NODE_MAX + 1] = {
- };
+diff --git a/drivers/gpu/drm/tests/drm_gem_shmem_test.c b/drivers/gpu/drm/tests/drm_gem_shmem_test.c
+index 0c8c46ca158c06..cc40d63ab809e7 100644
+--- a/drivers/gpu/drm/tests/drm_gem_shmem_test.c
++++ b/drivers/gpu/drm/tests/drm_gem_shmem_test.c
+@@ -90,13 +90,9 @@ static void drm_gem_shmem_test_obj_create_private(struct kunit *test)
+ 	sg_init_one(sgt->sgl, buf, TEST_SIZE);
  
- /* Properties valid for media, bearer and link */
-+static const struct netlink_range_validation tipc_nl_mtu_range = {
-+	.max = U16_MAX,
-+};
+ 	/*
+-	 * Set the DMA mask to 64-bits and map the sgtables
+-	 * otherwise drm_gem_shmem_free will cause a warning
+-	 * on debug kernels.
++	 * Map the sgtables otherwise drm_gem_shmem_free will cause a warning on
++	 * debug kernels.
+ 	 */
+-	ret = dma_set_mask(drm_dev->dev, DMA_BIT_MASK(64));
+-	KUNIT_ASSERT_EQ(test, ret, 0);
+-
+ 	ret = dma_map_sgtable(drm_dev->dev, sgt, DMA_BIDIRECTIONAL, 0);
+ 	KUNIT_ASSERT_EQ(test, ret, 0);
+ 
+@@ -342,11 +338,19 @@ static int drm_gem_shmem_test_init(struct kunit *test)
+ {
+ 	struct device *dev;
+ 	struct drm_device *drm_dev;
++	int ret;
+ 
+ 	/* Allocate a parent device */
+ 	dev = drm_kunit_helper_alloc_device(test);
+ 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, dev);
+ 
++	/*
++	 * Set the DMA mask to 64-bits to avoid intermittent failures calling
++	 * drm_gem_shmem_get_pages_sgt().
++	 */
++	ret = dma_set_mask(dev, DMA_BIT_MASK(64));
++	KUNIT_ASSERT_EQ(test, ret, 0);
 +
- const struct nla_policy tipc_nl_prop_policy[TIPC_NLA_PROP_MAX + 1] = {
- 	[TIPC_NLA_PROP_UNSPEC]		= { .type = NLA_UNSPEC },
- 	[TIPC_NLA_PROP_PRIO]		= { .type = NLA_U32 },
- 	[TIPC_NLA_PROP_TOL]		= { .type = NLA_U32 },
- 	[TIPC_NLA_PROP_WIN]		= { .type = NLA_U32 },
--	[TIPC_NLA_PROP_MTU]		= { .type = NLA_U32 },
-+	[TIPC_NLA_PROP_MTU]		= NLA_POLICY_FULL_RANGE(NLA_U32, &tipc_nl_mtu_range),
- 	[TIPC_NLA_PROP_BROADCAST]	= { .type = NLA_U32 },
- 	[TIPC_NLA_PROP_BROADCAST_RATIO]	= { .type = NLA_U32 }
- };
+ 	/*
+ 	 * The DRM core will automatically initialize the GEM core and create
+ 	 * a DRM Memory Manager object which provides an address space pool
 -- 
 2.53.0
 
