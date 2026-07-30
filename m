@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A8D43E48D;
-	Thu, 30 Jul 2026 14:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9CD43F09F;
+	Thu, 30 Jul 2026 14:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421390; cv=none; b=KmnwwnUxNQgnOfhvUDBAiOpvVhQVjUREV7NaWc79bCzG7ze2t8Loc4JYG7ig41WZqZbDbhLwNzPYYIOTe6I/HkhF3vND7Fi8Zs/ks4L5VtflZx0FFmws34RUuonU1ca6I7LE6jdiBeKgDg1DqJriJOsRnr9M0eyC+e9JG0yC8iE=
+	t=1785421393; cv=none; b=SE9gPgaZppLRRolS1zm4EOV2SlLIBMTr21KbTME4C4WrRMBVTJhY3uDhtHGf1JRONFeCX9h140YW81CmP1J4cTNw2ysUiwbu4yQ59/KPNESKRlFvjENXiCYpGBNpC/99dnOich4Yu2Ea3ABOafTCaEHhvBHHTP0DcJyrF74yioA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421390; c=relaxed/simple;
-	bh=XNAgbf1ZChE3BJ2dOEYvXzjI8LSe7Q3J9Mx0KY2QK2Q=;
+	s=arc-20240116; t=1785421393; c=relaxed/simple;
+	bh=u8VljooktZLOeONtwbhsQoW+DVioflqlwaajgjl09xQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YtuiB320RIa5ud/Zwa2Rh77hyMRM0T8otGB3u9UTqu+6luBZWCOr17eDjejGy+Pr/6zHsMgkIajJi9ldP7vY1NVOfF72YhCGtNWNPqTvPrjFCohCD/iIfYpqmnyccgd7TneF4gtX9nWDt2c051VOcSsgCX0TzavuhlD6Iye8Nuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBmX+KEM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aaq8EoECAgYJ2BRhHqfy4k6ARdWZaoxJBKbSB/qdR0G1bR+5+E7PhKUrnmg5HddbOzxNT9NBZEHh+9fTW5DolsLT4dK8H+faUXaXNUNwm56yLY1jlstNfmhW+TcW2qjwyamaYYSL0cX1c84hzQkH7URsuGABWRvo9PEdcObH/wI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEa9opeS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBmX+KEM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869301F000E9;
-	Thu, 30 Jul 2026 14:23:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEa9opeS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62CA81F000E9;
+	Thu, 30 Jul 2026 14:23:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421389;
-	bh=/4di7GIwqtPBwX5XG6Y7FuHMnnALwIx5Kx/n2bL9mro=;
+	s=korg; t=1785421391;
+	bh=rrLsExZ7fV3JKu9Bwg2ycxklDP2B3ix/wIqAcQs61NM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UBmX+KEMrxTJ+ZdAPJhsIc65Zw/vbDW/KsZc11T7hGT3EvWIXuUg6I21WIFlcn13B
-	 Xm6X88upQD9JLpZPOBdOtU4TzwvvTo3hgcxRV7zTE7kVCLDVQJB96KCdI1d2f8DMEv
-	 vqGhSLJeKyLGJTc7ggf0YkV+s9iscg+aafaKnxOk=
+	b=WEa9opeScv+qMVBSBZXJB6OQj71y9YY8E8IbhKNpjejDbRNGTJmDXVD21BsmIWq6H
+	 yPnwOrgHwmaOn13QqZ8xLoMgDVcn8kCykbirVX063gt4MC+PRXDBgYxMNGD8uiNgZt
+	 cy1YuN9ZjlCBkMpRO35ZvxfRRUIvAOC6rdbefFYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Qingfang Deng <qingfang.deng@linux.dev>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 088/744] ppp: defer channel free to an RCU grace period to fix pppol2tp RX UAF
-Date: Thu, 30 Jul 2026 16:06:01 +0200
-Message-ID: <20260730141446.137879691@linuxfoundation.org>
+Subject: [PATCH 7.1 089/744] ipv4: fib: free fib_alias with kfree_rcu() on insert error path
+Date: Thu, 30 Jul 2026 16:06:02 +0200
+Message-ID: <20260730141446.158089094@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,102 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit ec4215683e47424c9c4762fd3c60f552a3119142 ]
+[ Upstream commit f2f152e94a67bc746afaf05a1b2702c195553112 ]
 
-pppol2tp_recv() runs in the L2TP UDP-encap softirq RX path:
+fib_table_insert() publishes new_fa into the leaf's fa_list with
+fib_insert_alias() before calling the fib entry notifiers. When a
+notifier fails, the error path removes new_fa with fib_remove_alias()
+(hlist_del_rcu) and frees it right away with kmem_cache_free().
 
- l2tp_udp_encap_recv() -> l2tp_recv_common() -> pppol2tp_recv()
-   -> ppp_input(&po->chan)
+fib_table_lookup() walks that list under rcu_read_lock() only, so a
+concurrent lookup that already reached new_fa keeps reading it after the
+free:
 
-It runs under rcu_read_lock() holding only an l2tp_session reference and
-takes NO reference on the internal PPP channel (struct channel,
-chan->ppp) that ppp_input() dereferences.
+ BUG: KASAN: slab-use-after-free in fib_table_lookup (net/ipv4/fib_trie.c:1601)
+ Read of size 1 at addr ffff88810676d4eb by task exploit/297
+ Call Trace:
+  fib_table_lookup (net/ipv4/fib_trie.c:1601)
+  ip_route_output_key_hash_rcu (net/ipv4/route.c:2814)
+  ip_route_output_key_hash (net/ipv4/route.c:2705)
+  __ip4_datagram_connect (net/ipv4/datagram.c:49)
+  udp_connect (net/ipv4/udp.c:2144)
+  __sys_connect (net/socket.c:2167)
+  __x64_sys_connect (net/socket.c:2173)
+  do_syscall_64
+  entry_SYSCALL_64_after_hwframe
+ which belongs to the cache ip_fib_alias of size 56
 
-The pppox socket is SOCK_RCU_FREE, so 'po' and the embedded ppp_channel
-are RCU-safe.  But the internal struct channel is a separate allocation
-that ppp_release_channel() frees with a plain kfree():
+Triggering the error path needs CAP_NET_ADMIN and a registered fib
+notifier that can reject a route; a netdevsim device whose IPv4 FIB
+resource is exhausted is enough.
 
- close(data socket) -> pppol2tp_release() -> pppox_unbind_sock()
-   -> ppp_unregister_channel() -> ppp_release_channel() -> kfree(pch)
+Free new_fa with alias_free_mem_rcu(), as fib_table_delete() already
+does for a fib_alias removed from the trie.
 
-For a channel that is bound (PPPIOCGCHAN) but not attached to a ppp unit
-(no PPPIOCCONNECT, pch->ppp == NULL) and not bridged, teardown skips
-both ppp_disconnect_channel()'s synchronize_net() and
-ppp_unbridge_channels()'s synchronize_rcu(), so the kfree() has no grace
-period.  rcu_read_lock() in pppol2tp_recv() does not protect against a
-plain kfree(), so an in-flight ppp_input() on one CPU can dereference
-the channel just freed by close() on another CPU.
-
-The bug is reachable by an unprivileged user.
-
-Defer the channel free to an RCU callback via call_rcu() so the grace
-period fences any in-flight ppp_input(). The disconnect and unbridge
-teardown paths already fence with synchronize_net()/synchronize_rcu();
-call_rcu() does the same here without stalling the close() path.
-
-Fixes: ee40fb2e1eb5 ("l2tp: protect sock pointer of struct pppol2tp_session with RCU")
+Fixes: a6c76c17df02 ("ipv4: Notify route after insertion to the routing table")
+Reported-by: Xiang Mei <xmei5@asu.edu>
 Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Reviewed-by: Qingfang Deng <qingfang.deng@linux.dev>
-Link: https://patch.msgid.link/E793FCF2-58DE-4387-A983-C7B4BC3158BD@doyensec.com
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260704171421.1786806-1-bestswngs@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_generic.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ net/ipv4/fib_trie.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index 57c68efa5ff81d..717c1d3aa95380 100644
---- a/drivers/net/ppp/ppp_generic.c
-+++ b/drivers/net/ppp/ppp_generic.c
-@@ -184,6 +184,7 @@ struct channel {
- 	struct list_head clist;		/* link in list of channels per unit */
- 	spinlock_t	upl;		/* protects `ppp' and 'bridge' */
- 	struct channel __rcu *bridge;	/* "bridged" ppp channel */
-+	struct rcu_head rcu;		/* for RCU-deferred free of the channel */
- #ifdef CONFIG_PPP_MULTILINK
- 	u8		avail;		/* flag used in multilink stuff */
- 	u8		had_frag;	/* >= 1 fragments have been sent */
-@@ -3562,6 +3563,18 @@ ppp_disconnect_channel(struct channel *pch)
- 	return err;
- }
- 
-+/* Purge after the grace period: a late ppp_input() may still queue an
-+ * skb on pch->file.rq before the last RCU reader drains.
-+ */
-+static void ppp_release_channel_free(struct rcu_head *rcu)
-+{
-+	struct channel *pch = container_of(rcu, struct channel, rcu);
-+
-+	skb_queue_purge(&pch->file.xq);
-+	skb_queue_purge(&pch->file.rq);
-+	kfree(pch);
-+}
-+
- /*
-  * Drop a reference to a ppp channel and free its memory if the refcount reaches
-  * zero.
-@@ -3581,9 +3594,7 @@ static void ppp_release_channel(struct channel *pch)
- 		pr_err("ppp: destroying undead channel %p !\n", pch);
- 		return;
- 	}
--	skb_queue_purge(&pch->file.xq);
--	skb_queue_purge(&pch->file.rq);
--	kfree(pch);
-+	call_rcu(&pch->rcu, ppp_release_channel_free);
- }
- 
- static void __exit ppp_cleanup(void)
-@@ -3596,6 +3607,7 @@ static void __exit ppp_cleanup(void)
- 	device_destroy(&ppp_class, MKDEV(PPP_MAJOR, 0));
- 	class_unregister(&ppp_class);
- 	unregister_pernet_device(&ppp_net_ops);
-+	rcu_barrier(); /* wait for RCU callbacks before module unload */
- }
- 
- /*
+diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
+index dac543c1d6867a..9bf5550e2fb734 100644
+--- a/net/ipv4/fib_trie.c
++++ b/net/ipv4/fib_trie.c
+@@ -1385,7 +1385,7 @@ int fib_table_insert(struct net *net, struct fib_table *tb,
+ out_remove_new_fa:
+ 	fib_remove_alias(t, tp, l, new_fa);
+ out_free_new_fa:
+-	kmem_cache_free(fn_alias_kmem, new_fa);
++	alias_free_mem_rcu(new_fa);
+ out:
+ 	fib_release_info(fi);
+ err:
 -- 
 2.53.0
 
