@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D432411A07;
-	Thu, 30 Jul 2026 14:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E2B36493F;
+	Thu, 30 Jul 2026 14:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422953; cv=none; b=ov+7ZtMO3aYskZtHHDB6FgYaQBTUPviBBLoDFXw+n03akG81R8QGvuRYANqqgOxMQl76vFYRvgOd1o+Ig9RFXPKVDbRf+lcRasuugKLmZM5uVCP1nRw7hTPKpdltJepiSc9jpMeS85KcOVld1UGTV0APirRI7DBpPex/r6NzyBs=
+	t=1785422956; cv=none; b=sNYFL4kfgL9kRzRORMyixDwsjoPujWi0oauB4x5MRP1DuS3NmkzDJu+bqfXxrOzSkvlbjJIt5WPeQso8JnD1foqWRZ/S/dsaPYx2a7k/+ZwJihgbsbGih1jvFsKVINfXc5ntILNwmnQ5VNFpuJ8q4edTMUPc/APNTOj/SFX4kqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422953; c=relaxed/simple;
-	bh=8vifSbiRa4wuSl1r1c92YvPBZFJDm5E9V/Qe+P2j9FM=;
+	s=arc-20240116; t=1785422956; c=relaxed/simple;
+	bh=VqxnwdHpiRtido35EsnNUEi0wbDjW5F3FKyvOOHUA3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YERetbVd69tWZ9rXK9j8uBSszva3pfNKMXUoaPb/z2soJrBtfHY/qe5uPa/N4e7Luu1ksOICTArs0fFSklR6H6hz7j4Fe5s7J/u5T4CppHBTDRBSDi1XelUo3JXXGS7yMceMiqT4BI47q0WKLf7i0O32s0z4aMLJlV2fLPPgQSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvJrTiCZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QhCjpR0+7vAk4YtkRVeThxLY/8DNBGbL8VwzUkN+PAsrECcaUbsWfl+ibqnkelWD9/Z2eKm6/ttTaR0In1iPavGSxjBjzpc+UiE3/HtetMjUAxmsBUDDp3CIEraoFp4TX8hsoML5R90RgY2t0U1oKSkcV3xPl+v9E+ksWlTBiT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNGL91lD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvJrTiCZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01A01F000E9;
-	Thu, 30 Jul 2026 14:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNGL91lD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CA81F000E9;
+	Thu, 30 Jul 2026 14:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422952;
-	bh=/qeAtSWqINSoCdoWiMjaZd1o9EMo+lA/wRYeoXn09qM=;
+	s=korg; t=1785422955;
+	bh=5akkgauxPwKzUPhUv4gXKTQz0qrHkCcZlwF+PnuIkgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dvJrTiCZsYpyGtOABnNOsK74/MZG2PZI3iIL+ZT2dydz6oefIARUhh7n0E3A5VJnT
-	 tDTmIBEKhM1TLFnTLpbNmG/aQvbcUuWSnJjbsxFSRrrGYUKYCpaFX8yvfOLkGXHoeo
-	 h7iiVCTtjVE6NLyY1O5+Xy/WYcn1Q06enIjpZDiE=
+	b=HNGL91lD8JQhVaGfLhP6mG0+TQV6YoTVIki56m3N1DcoF+yS53Wbq6BjCFRFzeUS7
+	 CbvSNRMi33JCZkcuA67+G+gPgxKaMGdZ2ZLO3ZqLPhgKJ4MykaBuGskN2b26YWZBcC
+	 u50WsZJzb4yxp8RuJwGelOaP1vkGBmhfdVpQrHi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Yang yingliang <yangyingliang@huawei.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Ankur Arora <ankur.a.arora@oracle.com>,
+	David Hildenbrand <david@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 615/744] mm/damon/core: validate ranges in damon_set_regions()
-Date: Thu, 30 Jul 2026 16:14:48 +0200
-Message-ID: <20260730141457.345065093@linuxfoundation.org>
+Subject: [PATCH 7.1 616/744] m68k: avoid -Wunused-but-set-parameter in clear_user_page()
+Date: Thu, 30 Jul 2026 16:14:49 +0200
+Message-ID: <20260730141457.367452213@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -45,66 +48,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-commit 1292c0ecb1caefb8ca064a3639d5673991e8810c upstream.
+commit 955b67c3ddf9912a670ed80eae7769745b4f405e upstream.
 
-DAMON core logic assumes zero length regions don't exist.  However, a few
-DAMON API callers including DAMON_SYSFS, DAMON_RECLAIM and DAMON_LRU_SORT
-allow users to set empty monitoring target regions.  This could result in
-WARN_ONCE() on CONFIG_DAMON_DEBUG_SANITY enabled kernel, and
-divide-by-zero from damon_merge_two_regions().
+The loop in clear_user_pages() iterates over all pages and calls
+clear_user_page() for each of them.  During the loop "vaddr" is modified.
+However on m68k clear_user() is a macro which does not use "vaddr".  The
+compiler sees a variable which is modified but never used and emits a
+warning for that:
 
-For example, the WANR_ONCE() can be triggered like below.
+include/linux/highmem.h: In function 'clear_user_pages':
+include/linux/highmem.h:234:63: warning: parameter 'vaddr' set but not used [-Wunused-but-set-parameter=]
+    static inline void clear_user_pages(void *addr, unsigned long vaddr,
 
-    # grep DAMON_DEBUG_SANITY /boot/config-$(uname -r)
-    # CONFIG_DAMON_DEBUG_SANITY=y
-    # damo start
-    # cd /sys/kernel/mm/damon/admin/kdamonds/0
-    # echo 0 > contexts/0/targets/0/regions/0/start
-    # echo 0 > contexts/0/targets/0/regions/0/end
-    # echo commit > state
-    # dmesg
-    [....]
-    [   73.705780] ------------[ cut here ]------------
-    [   73.707552] start 0 >= end 0
-    [   73.708452] WARNING: mm/damon/core.c:359 at damon_new_region+0x6e/0x80, CPU#1: kdamond.0/758
-    [...]
+Other architectures use an inline function for clear_user_page() which
+avoids the warning.  This is not possible on m68k, as dlush_dcache_page()
+is another macro which is not yet defined where clear_user_page() is
+defined.  Including cacheflush_mm.h will trigger recursive and lots of
+other issues.
 
-All DAMON API callers eventually use damon_set_regions() to setup the
-regions.  Add the validation logic in the function.
+So hide the warning with a cast to (void) instead.
 
-Link: https://lore.kernel.org/20260630035221.146458-1-sj@kernel.org
-Fixes: 43b0536cb471 ("mm/damon: introduce DAMON-based Reclamation (DAMON_RECLAIM)")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: Yang yingliang <yangyingliang@huawei.com>
-Cc: <stable@vger.kernel.org> # 5.16.x
+While we are here, do the same for copy_user_page().
+
+Link: https://lore.kernel.org/20260525-m68k-clear_user_page-v2-1-0c8981c6eca1@weissschuh.net
+Fixes: 62a9f5a85b98 ("mm: introduce clear_pages() and clear_user_pages()")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Acked-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Andreas Schwab <schwab@linux-m68k.org>
+Cc: Ankur Arora <ankur.a.arora@oracle.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/m68k/include/asm/page_mm.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -242,6 +242,12 @@ int damon_set_regions(struct damon_targe
- 	unsigned int i;
- 	int err;
+--- a/arch/m68k/include/asm/page_mm.h
++++ b/arch/m68k/include/asm/page_mm.h
+@@ -55,10 +55,12 @@ static inline void clear_page(void *page
+ #define clear_user_page(addr, vaddr, page)	\
+ 	do {	clear_page(addr);		\
+ 		flush_dcache_page(page);	\
++		(void)(vaddr);			\
+ 	} while (0)
+ #define copy_user_page(to, from, vaddr, page)	\
+ 	do {	copy_page(to, from);		\
+ 		flush_dcache_page(page);	\
++		(void)(vaddr);			\
+ 	} while (0)
  
-+	for (i = 0; i < nr_ranges; i++) {
-+		if (ALIGN_DOWN(ranges[i].start, min_region_sz) >=
-+				ALIGN(ranges[i].end, min_region_sz))
-+			return -EINVAL;
-+	}
-+
- 	/* Remove regions which are not in the new ranges */
- 	damon_for_each_region_safe(r, next, t) {
- 		for (i = 0; i < nr_ranges; i++) {
+ extern unsigned long m68k_memoffset;
 
 
