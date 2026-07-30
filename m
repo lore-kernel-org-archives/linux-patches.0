@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31D7358373;
-	Thu, 30 Jul 2026 15:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D2B380FD6;
+	Thu, 30 Jul 2026 15:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426525; cv=none; b=cUHoI3CSLBseKuRGCXv2oj/wGO7CBhrqh4C532mbQ6TZ2xYyFDMlYPBbqKQ42G9DzsyexKVKIUdyCdkK30XU0rmdTN22f+EzobTpVNcO/FU0Ngz06+ijS4qBBDHROkw+IeZl5ZlTvN8xAJmt+0c4qW5FQ2Q9prTU9/1pg8AzYPY=
+	t=1785426528; cv=none; b=brpeP8vbu5tUWOB+Hs0J0s+deQ+b/PIa5ywnJBDUFpAhDY3zheVlv7I3cke7XGXcB3srKa5HZDIfmVGQ0k4PqUDegb9MCrv5e3dVW0A1zW0rOg/tq4d+LJ7s+IWntu1jdWaC2VYJoFsrmT6OzCpAcxmBtmd53+ZqxrcWolsQWRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426525; c=relaxed/simple;
-	bh=R8c2DTklYIzTedQUxYV9rqKV1VVD2XZkHqgSpTKxFOQ=;
+	s=arc-20240116; t=1785426528; c=relaxed/simple;
+	bh=pWKVNXF3QygkC/EMpVGsMqc+MBMEq22Zina8NF3h810=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=THnhfbZazc3A0ewCY/CYTzOOqr1h7G/A+TAyHdTfwlR5j3rKaU2cMwtPISTqUF15BjToGcGowYFNlM9htONXwodqjZ9+PeB7jjE8pBmWXmdfUWe0Kwl/Uct96zU4FSO+NRQq6AFC79eDUhVfIh5/PYE7iTqmEhUfIFHrn8zC4Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzyGlnGw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uO3nzDEytqd6DebO5f07ytfmfhw/yKkScnFwufYcpkMYpcTQN7ExaQmB3ulSc1d42hlr6ooz5BZSW+L9l7bWYm+Vv4QpnUnu+5QK9Uh4Vi0lJVJBqIzMc7B/s631rnYeYi6RwjhozE9idjrNJGWB4nm2wWmljDBrHnMzuemBjIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KpQTuZQa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzyGlnGw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 286C21F000E9;
-	Thu, 30 Jul 2026 15:48:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KpQTuZQa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17901F000E9;
+	Thu, 30 Jul 2026 15:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426524;
-	bh=T1L419KHEk7RrcQRrKsAqCqKapa8NIg2nN59TXumH4o=;
+	s=korg; t=1785426527;
+	bh=wybnFPbOv/UnBb7r24bwNX36xzdw9159KnzZ/sW1A0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WzyGlnGwDdZ1ZOHQegZL+PbUbtZoSmNryCOvK9kL8t9jOgCo/8x1IY8KAyNaqtNDf
-	 Ep/gP7ciknPl3s2vUbHYFfKEgVR7wk9c5aBhENQX5S1/4LxEAICbYBzbYTcjgKQURz
-	 LjAROE3MKwlAexav9LoBwS4riBuW+s5Ra07/4w8E=
+	b=KpQTuZQaLzNnx8DxIAyWsJWrCXQYxfsUsMy4/6C62Uotf+AOxqwzVm/iFryKjlOpC
+	 0RBSIDZ7YSdUWhQHKO5+vetHhmQ5IbmQbeuiy3HzOjFOsoJSGSXquaJP6FUz8pjC7F
+	 1iYCwGMmzv4zpWRVw/ibrQG3NJKS5dWRxG1U7WA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Temerkhanov <sergey.temerkhanov@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.12 423/602] ice: use READ_ONCE() to access cached PHC time
-Date: Thu, 30 Jul 2026 16:13:35 +0200
-Message-ID: <20260730141444.854040705@linuxfoundation.org>
+	Yang Wang <kevinyang.wang@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 450/602] drm/amd/pm: fix smu13 power limit range calculation
+Date: Thu, 30 Jul 2026 16:14:02 +0200
+Message-ID: <20260730141445.416362163@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -54,39 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Temerkhanov <sergey.temerkhanov@intel.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-commit 2915681b89f817677ab9f1166d95b595bc144f5f upstream.
+commit 220f22e1d66c1cfb63387eb1c4210f92a357c2d9 upstream.
 
-ptp.cached_phc_time is a 64-bit value updated by a periodic work item
-on one CPU and read locklessly on another.  On 32-bit or non-atomic
-architectures this can result in a torn read.  Use READ_ONCE() to
-enforce a single atomic load.
+SMU13 reports SocketPowerLimitAc/Dc as the default power limit, but
+MsgLimits.Power may carry a different firmware bound for the same PPT
+throttler. Using only the socket limit for both min and max can therefore
+expose an incorrect power range.
 
-Fixes: 77a781155a65 ("ice: enable receive hardware timestamping")
+Keep the socket limit as the default, but derive the range from both values:
+use the lower value for the min base and the higher value for the max base
+before applying OD percentages. Keep the current limit query independent
+from the cap calculation.
+
+Fixes: 1eaf26db9590 ("drm/amd/pm: fix smu13 power limit default/cap calculation")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5419
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit f45bbf0f62f266ed8422d84f347d75d5fca846a7)
 Cc: stable@vger.kernel.org
-Signed-off-by: Sergey Temerkhanov <sergey.temerkhanov@intel.com>
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260717185340.3595286-9-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |   11 +++++++----
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c |   15 ++++++++-------
+ 2 files changed, 15 insertions(+), 11 deletions(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_ptp.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
-@@ -514,7 +514,7 @@ static u64 ice_ptp_extend_40b_ts(struct
- 		return 0;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -2396,11 +2396,14 @@ static int smu_v13_0_0_get_power_limit(s
+ 	uint32_t pp_limit = smu->adev->pm.ac_power ?
+ 			      skutable->SocketPowerLimitAc[PPT_THROTTLER_PPT0] :
+ 			      skutable->SocketPowerLimitDc[PPT_THROTTLER_PPT0];
+-	uint32_t power_limit = 0, od_percent_upper = 0, od_percent_lower = 0;
++	uint32_t msg_limit = skutable->MsgLimits.Power[PPT_THROTTLER_PPT0][POWER_SOURCE_AC];
++	uint32_t min_limit = min_t(uint32_t, pp_limit, msg_limit);
++	uint32_t max_limit = max_t(uint32_t, pp_limit, msg_limit);
++	uint32_t od_percent_upper = 0, od_percent_lower = 0;
+ 	int ret;
+ 
+ 	if (current_power_limit) {
+-		ret = smu_v13_0_get_current_power_limit(smu, &power_limit);
++		ret = smu_v13_0_get_current_power_limit(smu, current_power_limit);
+ 		if (ret)
+ 			*current_power_limit = pp_limit;
+ 	}
+@@ -2423,12 +2426,12 @@ static int smu_v13_0_0_get_power_limit(s
+ 		od_percent_upper, od_percent_lower, pp_limit);
+ 
+ 	if (max_power_limit) {
+-		*max_power_limit = pp_limit * (100 + od_percent_upper);
++		*max_power_limit = max_limit * (100 + od_percent_upper);
+ 		*max_power_limit /= 100;
  	}
  
--	return ice_ptp_extend_32b_ts(pf->ptp.cached_phc_time,
-+	return ice_ptp_extend_32b_ts(READ_ONCE(pf->ptp.cached_phc_time),
- 				     (in_tstamp >> 8) & mask);
- }
+ 	if (min_power_limit) {
+-		*min_power_limit = pp_limit * (100 - od_percent_lower);
++		*min_power_limit = min_limit * (100 - od_percent_lower);
+ 		*min_power_limit /= 100;
+ 	}
+ 
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+@@ -2357,15 +2357,16 @@ static int smu_v13_0_7_get_power_limit(s
+ 	uint32_t pp_limit = smu->adev->pm.ac_power ?
+ 			      skutable->SocketPowerLimitAc[PPT_THROTTLER_PPT0] :
+ 			      skutable->SocketPowerLimitDc[PPT_THROTTLER_PPT0];
+-	uint32_t power_limit = 0, od_percent_upper = 0, od_percent_lower = 0;
++	uint32_t msg_limit = skutable->MsgLimits.Power[PPT_THROTTLER_PPT0][POWER_SOURCE_AC];
++	uint32_t min_limit = min_t(uint32_t, pp_limit, msg_limit);
++	uint32_t max_limit = max_t(uint32_t, pp_limit, msg_limit);
++	uint32_t od_percent_upper = 0, od_percent_lower = 0;
+ 	int ret;
+ 
+ 	if (current_power_limit) {
+-		ret = smu_v13_0_get_current_power_limit(smu, &power_limit);
++		ret = smu_v13_0_get_current_power_limit(smu, current_power_limit);
+ 		if (ret)
+-			power_limit = pp_limit;
+-
+-		*current_power_limit = power_limit;
++			*current_power_limit = pp_limit;
+ 	}
+ 
+ 	if (default_power_limit)
+@@ -2386,12 +2387,12 @@ static int smu_v13_0_7_get_power_limit(s
+ 		od_percent_upper, od_percent_lower, pp_limit);
+ 
+ 	if (max_power_limit) {
+-		*max_power_limit = pp_limit * (100 + od_percent_upper);
++		*max_power_limit = max_limit * (100 + od_percent_upper);
+ 		*max_power_limit /= 100;
+ 	}
+ 
+ 	if (min_power_limit) {
+-		*min_power_limit = pp_limit * (100 - od_percent_lower);
++		*min_power_limit = min_limit * (100 - od_percent_lower);
+ 		*min_power_limit /= 100;
+ 	}
  
 
 
