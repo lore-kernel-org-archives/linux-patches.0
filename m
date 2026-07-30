@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B5437883C;
-	Thu, 30 Jul 2026 14:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F32D416139;
+	Thu, 30 Jul 2026 14:47:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422871; cv=none; b=o6K7QpirOYoDFzMyXkw2pu6IMu7gzJobLuGVuuZtIudp8b1JJquhdHgQiYH4J4wKJ7zyNityD8OxgEZIaEHdLnN0xUZ19rsbSVaDSJhi9s7xW9d9kPUr8V2QwHF7PpaLDv+95MpuDaCqPOj00OVYM07OFKifTgDIlWbOJ+PhXSk=
+	t=1785422875; cv=none; b=SrcKFaU5exu2VWG7NkHOb1PiUyLX02kbGoX5qlWpmAvVcahOGOAO15kNrMPITaPJBeu1Qs0tDU1+Dwib84I1sh4yVx5yrVrBiOd66K1jSf+gsbI62Fbzj44ExaC5rACn6iuUIfzN3z8k/ws9XJtKD0twX7EnOLHNhLOSjuJz0Bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422871; c=relaxed/simple;
-	bh=hhbfyUNU8bcBPZXMAe6udD1SveFYrmxemvU5spCsvkA=;
+	s=arc-20240116; t=1785422875; c=relaxed/simple;
+	bh=xyDrJWAroaJe0pwBvPEdRRmkAsDQAhCVOwtntCtp7Ic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kAfRmxdVDNrWvNt43wX9flibqkligzzVGEfrGPws45oEYjIqfoZKbi4l3kzoHuBfQ9v1EIYgibHtFU7CmcHWt7G1Nv6k08zf0vw0GjfZ1oOThvYR4b0Nl7xRYy8DOmkcZnnkVyNk3ZFOyKnBBjrOX02zghRTFJU3G6eqQ9uxTik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NLvvW3LH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f+EvBvNbi26CVIVicMkfxVtsQaiQV1th2nNbI4UfiwFjY95UB+clbYqY2nSKYovLqZPAKb7SWuCKNAM7hN/8Q+GslQOjCymUZ8+n0dGq4pz0xVFi3r6RKEnlH3TjKHR2dC9Vp7LltHQ8vloTwh0JuFyYmzATJZ3T1+HZRJ9o+0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSa24lSJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLvvW3LH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14C31F000E9;
-	Thu, 30 Jul 2026 14:47:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSa24lSJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB521F000E9;
+	Thu, 30 Jul 2026 14:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422870;
-	bh=YohnJTwGCIsBYy57t46pYLob3xEWaEMKK7V6wbJS8VA=;
+	s=korg; t=1785422873;
+	bh=fJyfMZ2IJuBRpmAzZcXkHLY4JrHJZGA2HJSGm8FBeXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NLvvW3LHTZiqiHoKM/4KUtFFdylsOgaE+8Ahmv8yXVZnJYcYbjdOmGQyGKSu7n7iY
-	 9ku7oFGOYZFQvB8n/k19reqgpgqzYvLfu92sUPOTvm8WjLHYyVYJzYlZ27YTVi8sXF
-	 cT+G8dIrNoHWiJgkuL6EFIXc/5G/wThADlIlKljw=
+	b=VSa24lSJSzXqeft/WYPEUt132F1tvRlqtXgiATgh2CbsA/8HPLsFJqmBurOw5nnNO
+	 gWU6vIfZ0qOP4r2gQpeuN7kg5BCpB9UFmFFLSlHW+fwUDhUY5UFFX/Kx20CLMuZRb7
+	 nOS0ElhpfU0XwTliQC1GHkAsgSw9aGEOvTGH5WF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jiangshan Yi <yijiangshan@kylinos.cn>
-Subject: [PATCH 7.1 584/744] serial: 8250_mid: Fix NULL function pointer dereference on DNV/ICX-D/SNR platforms
-Date: Thu, 30 Jul 2026 16:14:17 +0200
-Message-ID: <20260730141456.697404709@linuxfoundation.org>
+	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
+	Elizabeth Figura <zfigura@codeweavers.com>
+Subject: [PATCH 7.1 585/744] selftests: ntsync: correct CONFIG_NTSYNC name
+Date: Thu, 30 Jul 2026 16:14:18 +0200
+Message-ID: <20260730141456.717990056@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,68 +51,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
 
-commit 7fb13fd7e9a59a37cd911efff83abe19e3ee029d upstream.
+commit f97752cfe511c1ed9933057455c73aaac07d6517 upstream.
 
-Commit b1b4efea05a5 ("serial: 8250_mid: Disable DMA for selected
-platforms") replaced the dnv_board setup and exit callbacks with
-PTR_IF(false, ...), which evaluates to NULL. However, the three call
-sites in mid8250_probe() and mid8250_remove() unconditionally
-dereference these function pointers without NULL checks, causing a NULL
-pointer dereference (kernel oops) on any Denverton (DNV), Ice Lake Xeon
-D (ICX-D/CDF), or Snowridge (SNR) platform.
+The config fragment for these tests defines CONFIG_WINESYNC, which
+refers to an earlier name for the ntsync driver before it was merged
+[1]. Correct it to define CONFIG_NTSYNC instead.
 
-Fix this by adding the missing NULL checks before calling the setup and
-exit callbacks.
+[1] https://lore.kernel.org/all/f4cc1a38-1441-62f8-47e4-0c67f5ad1d43@codeweavers.com/
 
-Fixes: b1b4efea05a5 ("serial: 8250_mid: Disable DMA for selected platforms")
+Fixes: 7f853a252cde ("selftests: ntsync: Add some tests for semaphore state.")
 Cc: stable <stable@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Link: https://patch.msgid.link/20260715073546.1875083-1-yijiangshan@kylinos.cn
+Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+Reviewed-by: Elizabeth Figura <zfigura@codeweavers.com>
+Link: https://patch.msgid.link/20260609175505.19632-1-enelsonmoore@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_mid.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ tools/testing/selftests/drivers/ntsync/config |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/8250/8250_mid.c
-+++ b/drivers/tty/serial/8250/8250_mid.c
-@@ -318,9 +318,11 @@ static int mid8250_probe(struct pci_dev
- 	if (!uart.port.membase)
- 		return -ENOMEM;
- 
--	ret = mid->board->setup(mid, &uart.port);
--	if (ret)
--		return ret;
-+	if (mid->board->setup) {
-+		ret = mid->board->setup(mid, &uart.port);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	ret = mid8250_dma_setup(mid, &uart);
- 	if (ret)
-@@ -336,7 +338,8 @@ static int mid8250_probe(struct pci_dev
- 	return 0;
- 
- err:
--	mid->board->exit(mid);
-+	if (mid->board->exit)
-+		mid->board->exit(mid);
- 	return ret;
- }
- 
-@@ -346,7 +349,8 @@ static void mid8250_remove(struct pci_de
- 
- 	serial8250_unregister_port(mid->line);
- 
--	mid->board->exit(mid);
-+	if (mid->board->exit)
-+		mid->board->exit(mid);
- }
- 
- static const struct mid8250_board pnw_board = {
+--- a/tools/testing/selftests/drivers/ntsync/config
++++ b/tools/testing/selftests/drivers/ntsync/config
+@@ -1 +1 @@
+-CONFIG_WINESYNC=y
++CONFIG_NTSYNC=y
 
 
