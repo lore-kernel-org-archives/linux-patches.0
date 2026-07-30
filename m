@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B54D32B116;
-	Thu, 30 Jul 2026 14:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A0E32B116;
+	Thu, 30 Jul 2026 14:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423280; cv=none; b=jSmMmuAfAhnxZuM3HJ18HCHHkYHa4LmzfzAE2CY3kv/jDyrEJRRnCsRPNCyWMs2hY2PaRoVoHIE9/RkcrYjePOM58vWNhqVqgJmWgDD+ntbIo0Tdpg78BHYbdmqPUtTlQCa6lbvt4dYOvAseczVPlY7WDVAmJtcRYHYFvV+9zXs=
+	t=1785423283; cv=none; b=sF1IbYHK3gTmRVfrS/za3DSEPxT0Ice1AMo/sE4spC/OdarlhzV4bCEodtxxxHCAy954FpLE3w28XPX4WB7QhEAXzH2+f8xSzw1W0HxK86k8cy+tzDooTYkARaV3gkbTyObkIGREZYzXwPSTQc2o1d3JDMQdtXdUvjw0TSnzjVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423280; c=relaxed/simple;
-	bh=qlim5hAXkSBF6d8WjZ1z5bd0ZBhxzZQpcn9CTT6eBOc=;
+	s=arc-20240116; t=1785423283; c=relaxed/simple;
+	bh=qGnSh7+qqBNAzc7yIDlQcjxTZpffVlSuOSH045pI+Ck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QIDYAQIGhSKyX344Ve0TEp3ZzjrDxsD9YgsNAAvSwnpRusKfuafrn2AbkzArOWijgyTxqz+2XfbCYQDQFpF1XND1p6pr7mbeYxCx/AAUOCRLSsSSRzir9xWnGwLmxx4CXXgF3q+HOlYL7ooJ3XFs6fgrN9tegWYBF6OyOBrF9hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvw3671x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U9WFPqG/DPMBrO0jJOzUmTyS7Dbl+afi2iTQ2Pb5m3dGMFPcqntfGFQF4SxuM3Pl88DiAV1CI0erQAtzstLOZSSpLte2SHBldJprdlQ/LATseNeLa2ocW3JdXUt2iD4xmAPDJSC5j5Zm+1g9Dffv8Cfour0ZLvzmC14VZMF3OFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2KDcBed; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvw3671x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B8D1F000E9;
-	Thu, 30 Jul 2026 14:54:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2KDcBed"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82EDE1F000E9;
+	Thu, 30 Jul 2026 14:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423279;
-	bh=wVNDLazWUqea+J1HywSWZ7TIZD5OWbnMaum8sR0/Jso=;
+	s=korg; t=1785423282;
+	bh=RESCKxKPx38i934X3cnWSapBNRb+HowIJfefySQf2fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cvw3671x6BPuQBV3f3ed4y2gEiruMAtdSjKQwr9SL0+XKvADK0ohTURmDKJ7gglzN
-	 dMQYNGEWnfbhbM1gsRkxVcvGciRI1C6QjGevJynTpa348bRODEu4yqwx//+PrHmGl3
-	 iC74aanD3o32AVbCGnBIZk7M3K+kLGyp4umw8N/0=
+	b=C2KDcBedTktU2cobDNXyzKWgFCJhKr1AyT9Mya8yRmj8fKnqAqwfi0ImhwMH+y33J
+	 EjlpDtx/6XN62b7znvOcFS3a3rq2QYissSniVRuORC4ZTpQmcw88tjr39QoMJqvPgh
+	 K8dsvt1zK8Gj8xG5Qv7rqoJ3MZlOedWYheL8J9Q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 728/744] xfs: dont replace the wrong part of the cow fork
-Date: Thu, 30 Jul 2026 16:16:41 +0200
-Message-ID: <20260730141459.767772793@linuxfoundation.org>
+Subject: [PATCH 7.1 729/744] SUNRPC: Add helpers to convert xdr_buf byte ranges to scatterlists
+Date: Thu, 30 Jul 2026 16:16:42 +0200
+Message-ID: <20260730141459.792881465@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,426 +52,276 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit a1caeeadbf57ff86dfc3454398c46de86056a74e ]
+[ Upstream commit e9be933959b581effd426f93b86654f5fbf0c574 ]
 
-LOLLM points out that xfs_iext_lookup_extent can return a @got where
-got->br_startoff < startoff.  In this case, xrep_cow_replace_range
-replaces the entire mapping instead of just the part that had been
-marked bad in the bitmap, but advances the bitmap cursor in
-xrep_cow_replace by the amount replaced.  As a result, we fail to
-replace the end of the bad range, and replace part of the good range.
+The crypto/krb5 library accepts data in scatterlist form, but
+the GSS-API layer presents RPC payloads as struct xdr_buf.
+Bridge that gap with a pair of helper functions:
 
-Fix this by rewriting the replace method to handle replacing the middle
-of a cow fork mapping.  This we do by returning both the current mapping
-as @got, and the subset of the mapping that we want to replace as @rep,
-using @rep to store the results of the new allocation, and comparing
-@rep to @got to figure out the exact transformations needed.
+  xdr_buf_to_sg()        - populate a caller-supplied scatterlist
+                           array from a byte range
+  xdr_buf_to_sg_alloc()  - populate a caller-supplied inline
+                           scatterlist, chaining to a heap-
+                           allocated overflow for large payloads
 
-Cc: stable@vger.kernel.org # v6.8
-Fixes: dbbdbd0086320a ("xfs: repair problems in CoW forks")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+The inline array (typically stack-allocated at eight entries)
+covers the common case of small RPCs with no heap allocation
+on the encrypt/decrypt path. Only buffers spanning many pages
+incur a kmalloc for the chained extension.
+
+The segment-walking logic follows the same head, page array,
+tail traversal as xdr_process_buf(), but populates a
+scatterlist directly rather than invoking a per-segment
+callback. sg_next() traversal makes the walker safe for
+chained scatterlists. Once subsequent patches reroute all
+per-message crypto operations through crypto/krb5,
+xdr_process_buf() loses its last callers and is removed.
+
+Assisted-by: Claude:claude-opus-4-6
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Acked-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: 18c1cc698861 ("SUNRPC: Return an error from xdr_buf_to_bvec() on overflow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/cow_repair.c |  203 +++++++++++++++++++++++++++++-----------------
- fs/xfs/scrub/trace.h      |   28 +++---
- 2 files changed, 148 insertions(+), 83 deletions(-)
+ include/linux/sunrpc/xdr.h |   15 +++
+ net/sunrpc/xdr.c           |  199 +++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 214 insertions(+)
 
---- a/fs/xfs/scrub/cow_repair.c
-+++ b/fs/xfs/scrub/cow_repair.c
-@@ -80,12 +80,6 @@ struct xrep_cow {
- 	unsigned int		next_bno;
- };
- 
--/* CoW staging extent. */
--struct xrep_cow_extent {
--	xfs_fsblock_t		fsbno;
--	xfs_extlen_t		len;
--};
--
- /*
-  * Mark the part of the file range that corresponds to the given physical
-  * space.  Caller must ensure that the physical range is within xc->irec.
-@@ -401,22 +395,21 @@ out_rtg:
- STATIC int
- xrep_cow_alloc(
- 	struct xfs_scrub	*sc,
--	xfs_extlen_t		maxlen,
--	struct xrep_cow_extent	*repl)
-+	struct xfs_bmbt_irec	*del)
- {
- 	struct xfs_alloc_arg	args = {
- 		.tp		= sc->tp,
- 		.mp		= sc->mp,
- 		.oinfo		= XFS_RMAP_OINFO_SKIP_UPDATE,
- 		.minlen		= 1,
--		.maxlen		= maxlen,
-+		.maxlen		= del->br_blockcount,
- 		.prod		= 1,
- 		.resv		= XFS_AG_RESV_NONE,
- 		.datatype	= XFS_ALLOC_USERDATA,
- 	};
- 	int			error;
- 
--	error = xfs_trans_reserve_more(sc->tp, maxlen, 0);
-+	error = xfs_trans_reserve_more(sc->tp, del->br_blockcount, 0);
- 	if (error)
- 		return error;
- 
-@@ -429,8 +422,8 @@ xrep_cow_alloc(
- 
- 	xfs_refcount_alloc_cow_extent(sc->tp, false, args.fsbno, args.len);
- 
--	repl->fsbno = args.fsbno;
--	repl->len = args.len;
-+	del->br_startblock = args.fsbno;
-+	del->br_blockcount = args.len;
- 	return 0;
- }
- 
-@@ -441,10 +434,12 @@ xrep_cow_alloc(
- STATIC int
- xrep_cow_alloc_rt(
- 	struct xfs_scrub	*sc,
--	xfs_extlen_t		maxlen,
--	struct xrep_cow_extent	*repl)
-+	struct xfs_bmbt_irec	*del)
- {
--	xfs_rtxlen_t		maxrtx = xfs_rtb_to_rtx(sc->mp, maxlen);
-+	xfs_fsblock_t		fsbno;
-+	xfs_rtxlen_t		maxrtx =
-+		min(U32_MAX, xfs_blen_to_rtbxlen(sc->mp, del->br_blockcount));
-+	xfs_extlen_t		len;
- 	int			error;
- 
- 	error = xfs_trans_reserve_more(sc->tp, 0, maxrtx);
-@@ -452,11 +447,14 @@ xrep_cow_alloc_rt(
- 		return error;
- 
- 	error = xfs_rtallocate_rtgs(sc->tp, NULLRTBLOCK, 1, maxrtx, 1, false,
--			false, &repl->fsbno, &repl->len);
-+			false, &fsbno, &len);
- 	if (error)
- 		return error;
- 
--	xfs_refcount_alloc_cow_extent(sc->tp, true, repl->fsbno, repl->len);
-+	xfs_refcount_alloc_cow_extent(sc->tp, true, fsbno, len);
+--- a/include/linux/sunrpc/xdr.h
++++ b/include/linux/sunrpc/xdr.h
+@@ -140,6 +140,21 @@ int	xdr_alloc_bvec(struct xdr_buf *buf,
+ void	xdr_free_bvec(struct xdr_buf *buf);
+ unsigned int xdr_buf_to_bvec(struct bio_vec *bvec, unsigned int bvec_size,
+ 			     const struct xdr_buf *xdr);
++int xdr_buf_to_sg(const struct xdr_buf *buf, unsigned int offset,
++		  unsigned int len, struct scatterlist *sg, unsigned int nsg);
++int xdr_buf_to_sg_alloc(const struct xdr_buf *buf, unsigned int offset,
++			unsigned int len, struct scatterlist *sg_head,
++			unsigned int sg_head_nents,
++			struct scatterlist **sg_overflow, gfp_t gfp);
 +
-+	del->br_startblock = fsbno;
-+	del->br_blockcount = len;
- 	return 0;
- }
- 
-@@ -470,19 +468,19 @@ static inline int
- xrep_cow_find_mapping(
- 	struct xrep_cow		*xc,
- 	struct xfs_iext_cursor	*icur,
--	xfs_fileoff_t		startoff,
--	struct xfs_bmbt_irec	*got)
-+	xfs_fileoff_t		badoff,
-+	xfs_extlen_t		badlen,
-+	struct xfs_bmbt_irec	*got,
-+	struct xfs_bmbt_irec	*rep)
- {
- 	struct xfs_inode	*ip = xc->sc->ip;
- 	struct xfs_ifork	*ifp = xfs_ifork_ptr(ip, XFS_COW_FORK);
- 
--	if (!xfs_iext_lookup_extent(ip, ifp, startoff, icur, got))
-+	if (!xfs_iext_lookup_extent(ip, ifp, badoff, icur, got))
- 		goto bad;
-+	memcpy(rep, got, sizeof(*rep));
- 
--	if (got->br_startoff > startoff)
--		goto bad;
--
--	if (got->br_blockcount == 0)
-+	if (got->br_startoff > badoff)
- 		goto bad;
- 
- 	if (isnullstartblock(got->br_startblock))
-@@ -491,6 +489,24 @@ xrep_cow_find_mapping(
- 	if (xfs_bmap_is_written_extent(got))
- 		goto bad;
- 
-+	if (got->br_startoff < badoff) {
-+		const int64_t	delta = badoff - got->br_startoff;
++/*
++ * Inline scatterlist entries for xdr_buf_to_sg_alloc().  Sized to cover the
++ * head kvec, tail kvec, and a few page fragments without any heap allocation.
++ */
++enum {
++	XDR_BUF_TO_SG_NENTS	= 8,
++};
 +
-+		rep->br_blockcount -= delta;
-+		rep->br_startoff += delta;
-+		rep->br_startblock += delta;
+ 
+ static inline __be32 *xdr_encode_array(__be32 *p, const void *s, unsigned int len)
+ {
+--- a/net/sunrpc/xdr.c
++++ b/net/sunrpc/xdr.c
+@@ -192,6 +192,205 @@ bvec_overflow:
+ EXPORT_SYMBOL_GPL(xdr_buf_to_bvec);
+ 
+ /**
++ * xdr_buf_to_sg - Populate a scatterlist from an xdr_buf range
++ * @buf: xdr_buf to map
++ * @offset: starting byte offset within @buf
++ * @len: number of bytes to cover
++ * @sg: scatterlist array initialized with sg_init_table()
++ * @nsg: number of entries available in @sg
++ *
++ * @sg is traversed with sg_next(), so callers may pass a list
++ * assembled with sg_chain().
++ *
++ * Return: on success, the number of scatterlist entries used; the
++ * last used entry is marked with sg_mark_end().  On failure, a
++ * negative errno.
++ */
++int xdr_buf_to_sg(const struct xdr_buf *buf, unsigned int offset,
++		  unsigned int len, struct scatterlist *sg, unsigned int nsg)
++{
++	unsigned int page_len, thislen, page_offset;
++	struct scatterlist *cur = sg, *prev = NULL;
++	int nents = 0;
++	int i;
++
++	if (len == 0)
++		return 0;
++
++	if (offset >= buf->head[0].iov_len) {
++		offset -= buf->head[0].iov_len;
++	} else {
++		thislen = min_t(unsigned int,
++				buf->head[0].iov_len - offset, len);
++		if (nents >= nsg)
++			return -ENOSPC;
++		sg_set_buf(cur, buf->head[0].iov_base + offset,
++			   thislen);
++		prev = cur;
++		cur = sg_next(cur);
++		nents++;
++		len -= thislen;
++		offset = 0;
++	}
++	if (len == 0)
++		goto done;
++
++	if (offset >= buf->page_len) {
++		offset -= buf->page_len;
++	} else {
++		page_len = min(buf->page_len - offset, len);
++		len -= page_len;
++		page_offset = (offset + buf->page_base) & (PAGE_SIZE - 1);
++		i = (offset + buf->page_base) >> PAGE_SHIFT;
++		thislen = PAGE_SIZE - page_offset;
++		do {
++			if (thislen > page_len)
++				thislen = page_len;
++			if (nents >= nsg)
++				return -ENOSPC;
++			sg_set_page(cur, buf->pages[i],
++				    thislen, page_offset);
++			prev = cur;
++			cur = sg_next(cur);
++			nents++;
++			page_len -= thislen;
++			i++;
++			page_offset = 0;
++			thislen = PAGE_SIZE;
++		} while (page_len != 0);
++		offset = 0;
++	}
++	if (len == 0)
++		goto done;
++
++	if (offset < buf->tail[0].iov_len) {
++		thislen = min_t(unsigned int,
++				buf->tail[0].iov_len - offset, len);
++		if (nents >= nsg)
++			return -ENOSPC;
++		sg_set_buf(cur, buf->tail[0].iov_base + offset,
++			   thislen);
++		prev = cur;
++		nents++;
++		len -= thislen;
++	}
++	if (len != 0)
++		return -EINVAL;
++
++done:
++	if (prev)
++		sg_mark_end(prev);
++	return nents;
++}
++EXPORT_SYMBOL_GPL(xdr_buf_to_sg);
++
++/*
++ * Count the scatterlist entries needed to cover [offset, offset + len)
++ * within @buf.  Mirrors the walk in xdr_buf_to_sg() so the caller can
++ * size an allocation that matches the requested sub-range rather than
++ * the full xdr_buf.
++ */
++static unsigned int xdr_buf_sg_nents(const struct xdr_buf *buf,
++				     unsigned int offset, unsigned int len)
++{
++	unsigned int nsg = 0, thislen, page_offset;
++
++	if (len == 0)
++		return 0;
++
++	if (offset < buf->head[0].iov_len) {
++		thislen = min_t(unsigned int,
++				buf->head[0].iov_len - offset, len);
++		nsg++;
++		len -= thislen;
++		offset = 0;
++	} else {
++		offset -= buf->head[0].iov_len;
++	}
++	if (len == 0)
++		return nsg;
++
++	if (offset < buf->page_len) {
++		thislen = min(buf->page_len - offset, len);
++		page_offset = (offset + buf->page_base) & (PAGE_SIZE - 1);
++		nsg += DIV_ROUND_UP(page_offset + thislen, PAGE_SIZE);
++		len -= thislen;
++		offset = 0;
++	} else {
++		offset -= buf->page_len;
++	}
++	if (len == 0)
++		return nsg;
++
++	if (offset < buf->tail[0].iov_len)
++		nsg++;
++	return nsg;
++}
++
++/**
++ * xdr_buf_to_sg_alloc - Populate a scatterlist for an xdr_buf range
++ * @buf: xdr_buf to map
++ * @offset: starting byte offset within @buf
++ * @len: number of bytes to cover
++ * @sg_head: caller-provided scatterlist array (typically stack-allocated)
++ * @sg_head_nents: number of entries in @sg_head
++ * @sg_overflow: OUT: chained extension, or NULL when @sg_head sufficed
++ * @gfp: memory allocation flags for overflow
++ *
++ * Populates @sg_head directly when the xdr_buf fits.  When more
++ * entries are needed, an overflow scatterlist is allocated and
++ * chained from @sg_head so that the result is traversable with
++ * sg_next().
++ *
++ * Return: on success, the number of populated scatterlist entries
++ * (counting only data entries, not chain entries).  @sg_head is
++ * the head of the resulting list.  Caller must kfree @sg_overflow
++ * when done.  On failure, a negative errno.
++ */
++int xdr_buf_to_sg_alloc(const struct xdr_buf *buf, unsigned int offset,
++			unsigned int len, struct scatterlist *sg_head,
++			unsigned int sg_head_nents,
++			struct scatterlist **sg_overflow, gfp_t gfp)
++{
++	unsigned int nsg;
++	int ret;
++
++	*sg_overflow = NULL;
++	if (len == 0)
++		return 0;
++
++	nsg = xdr_buf_sg_nents(buf, offset, len);
++	if (nsg == 0)
++		return -EINVAL;
++
++	if (nsg <= sg_head_nents) {
++		sg_init_table(sg_head, nsg);
++	} else {
++		/* +1 replaces the slot sg_chain() consumes as the link. */
++		unsigned int overflow_nents = nsg - sg_head_nents + 1;
++		struct scatterlist *overflow;
++
++		overflow = kmalloc_array(overflow_nents, sizeof(*overflow),
++					 gfp);
++		if (!overflow)
++			return -ENOMEM;
++
++		sg_init_table(sg_head, sg_head_nents);
++		sg_init_table(overflow, overflow_nents);
++		sg_chain(sg_head, sg_head_nents, overflow);
++		*sg_overflow = overflow;
 +	}
 +
-+	if (got->br_startoff + got->br_blockcount > badoff + badlen) {
-+		const int64_t	delta = (got->br_startoff + got->br_blockcount) -
-+					(badoff + badlen);
-+
-+		rep->br_blockcount -= delta;
++	ret = xdr_buf_to_sg(buf, offset, len, sg_head, nsg);
++	if (ret < 0) {
++		kfree(*sg_overflow);
++		*sg_overflow = NULL;
 +	}
++	return ret;
++}
++EXPORT_SYMBOL_GPL(xdr_buf_to_sg_alloc);
 +
-+	if (got->br_blockcount == 0)
-+		goto bad;
-+
- 	return 0;
- bad:
- 	ASSERT(0);
-@@ -501,46 +517,92 @@ bad:
- #define REPLACE_RIGHT_SIDE	(1U << 1)
- 
- /*
-- * Given a CoW fork mapping @got and a replacement mapping @repl, remap the
-- * beginning of @got with the space described by @rep.
-+ * Given a CoW fork mapping @got and a replacement mapping @rep, map the space
-+ * described by @rep into the cow fork, pushing aside @got as necessary.  @icur
-+ * must point to iext tree leaf containing @got.
-  */
- static inline void
- xrep_cow_replace_mapping(
--	struct xfs_inode		*ip,
--	struct xfs_iext_cursor		*icur,
--	const struct xfs_bmbt_irec	*got,
--	const struct xrep_cow_extent	*repl)
-+	struct xfs_inode	*ip,
-+	struct xfs_iext_cursor	*icur,
-+	struct xfs_bmbt_irec	*got,
-+	struct xfs_bmbt_irec	*rep)
- {
--	struct xfs_bmbt_irec		new = *got; /* struct copy */
-+	struct xfs_ifork	*ifp = xfs_ifork_ptr(ip, XFS_COW_FORK);
-+	xfs_fileoff_t		rep_endoff =
-+			rep->br_startoff + rep->br_blockcount;
-+	xfs_fileoff_t		got_endoff =
-+			got->br_startoff + got->br_blockcount;
-+	uint32_t		state = BMAP_COWFORK;
- 
--	ASSERT(repl->len > 0);
-+	ASSERT(rep->br_blockcount > 0);
- 	ASSERT(!isnullstartblock(got->br_startblock));
-+	ASSERT(got->br_startoff <= rep->br_startoff);
-+	ASSERT(got_endoff >= rep_endoff);
- 
--	trace_xrep_cow_replace_mapping(ip, got, repl->fsbno, repl->len);
-+	trace_xrep_cow_replace_mapping(ip, got, rep);
- 
--	if (got->br_blockcount == repl->len) {
-+	if (got->br_startoff == rep->br_startoff)
-+		state |= BMAP_LEFT_FILLING;
-+	if (got_endoff == rep_endoff)
-+		state |= BMAP_RIGHT_FILLING;
-+
-+	switch (state & (BMAP_LEFT_FILLING | BMAP_RIGHT_FILLING)) {
-+	case BMAP_LEFT_FILLING | BMAP_RIGHT_FILLING:
- 		/*
--		 * The new extent is a complete replacement for the existing
--		 * extent.  Update the COW fork record.
-+		 * Replacement matches the whole mapping, update the record.
- 		 */
--		new.br_startblock = repl->fsbno;
--		xfs_iext_update_extent(ip, BMAP_COWFORK, icur, &new);
--		return;
--	}
-+		xfs_iext_update_extent(ip, state, icur, rep);
-+		break;
-+	case BMAP_LEFT_FILLING:
-+		/*
-+		 * Replace the first part of the mapping: Update the cursor
-+		 * position with the new mapping, then add a record with the
-+		 * tail of the old mapping.
-+		 */
-+		got->br_startoff = rep_endoff;
-+		got->br_blockcount -= rep->br_blockcount;
-+		got->br_startblock += rep->br_blockcount;
-+
-+		xfs_iext_update_extent(ip, state, icur, rep);
-+		xfs_iext_next(ifp, icur);
-+		xfs_iext_insert(ip, icur, got, state);
-+		break;
-+	case BMAP_RIGHT_FILLING:
-+		/*
-+		 * Replacing the last part of the mapping.  Shorten the current
-+		 * mapping then add a record with the new mapping.
-+		 */
-+		got->br_blockcount -= rep->br_blockcount;
- 
--	/*
--	 * The new extent can replace the beginning of the COW fork record.
--	 * Move the left side of @got upwards, then insert the new record.
--	 */
--	new.br_startoff += repl->len;
--	new.br_startblock += repl->len;
--	new.br_blockcount -= repl->len;
--	xfs_iext_update_extent(ip, BMAP_COWFORK, icur, &new);
--
--	new.br_startoff = got->br_startoff;
--	new.br_startblock = repl->fsbno;
--	new.br_blockcount = repl->len;
--	xfs_iext_insert(ip, icur, &new, BMAP_COWFORK);
-+		xfs_iext_update_extent(ip, state, icur, got);
-+		xfs_iext_next(ifp, icur);
-+		xfs_iext_insert(ip, icur, rep, state);
-+		break;
-+	case 0:
-+		/*
-+		 * Replacing the middle of the extent.  Shorten the current
-+		 * mapping, add a new record with the new mapping, and add a
-+		 * second new record with the tail of the old mapping.
-+		 */
-+		got->br_blockcount = rep->br_startoff - got->br_startoff;
-+
-+		struct xfs_bmbt_irec	new = {
-+			.br_startoff	= rep_endoff,
-+			.br_blockcount	= got_endoff - rep_endoff,
-+			.br_state	= got->br_state,
-+			.br_startblock	= got->br_startblock +
-+						rep->br_blockcount +
-+						got->br_blockcount,
-+		};
-+
-+		xfs_iext_update_extent(ip, state, icur, got);
-+		xfs_iext_next(ifp, icur);
-+		xfs_iext_insert(ip, icur, rep, state);
-+		xfs_iext_next(ifp, icur);
-+		xfs_iext_insert(ip, icur, &new, state);
-+		break;
-+	}
- }
- 
- /*
-@@ -554,33 +616,30 @@ xrep_cow_replace_range(
- 	xfs_extlen_t		*blockcount)
- {
- 	struct xfs_iext_cursor	icur;
--	struct xrep_cow_extent	repl;
--	struct xfs_bmbt_irec	got;
-+	struct xfs_bmbt_irec	got, rep;
- 	struct xfs_scrub	*sc = xc->sc;
--	xfs_fileoff_t		nextoff;
--	xfs_extlen_t		alloc_len;
-+	xfs_fsblock_t		old_fsbno;
- 	int			error;
- 
- 	/*
--	 * Put the existing CoW fork mapping in @got.  If @got ends before
--	 * @rep, truncate @rep so we only replace one extent mapping at a time.
-+	 * Put the existing CoW fork mapping in @got, and put in @rep the
-+	 * contents of @got trimmed to @startoff/@blockcount.  We only want
-+	 * to replace the bad region, and only one mapping at a time.
- 	 */
--	error = xrep_cow_find_mapping(xc, &icur, startoff, &got);
-+	error = xrep_cow_find_mapping(xc, &icur, startoff, *blockcount, &got,
-+			&rep);
- 	if (error)
- 		return error;
--	nextoff = min(startoff + *blockcount,
--		      got.br_startoff + got.br_blockcount);
-+	old_fsbno = rep.br_startblock;
- 
- 	/*
- 	 * Allocate a replacement extent.  If we don't fill all the blocks,
- 	 * shorten the quantity that will be deleted in this step.
- 	 */
--	alloc_len = min_t(xfs_fileoff_t, XFS_MAX_BMBT_EXTLEN,
--			  nextoff - startoff);
- 	if (XFS_IS_REALTIME_INODE(sc->ip))
--		error = xrep_cow_alloc_rt(sc, alloc_len, &repl);
-+		error = xrep_cow_alloc_rt(sc, &rep);
- 	else
--		error = xrep_cow_alloc(sc, alloc_len, &repl);
-+		error = xrep_cow_alloc(sc, &rep);
- 	if (error)
- 		return error;
- 
-@@ -588,7 +647,7 @@ xrep_cow_replace_range(
- 	 * Replace the old mapping with the new one, and commit the metadata
- 	 * changes made so far.
- 	 */
--	xrep_cow_replace_mapping(sc->ip, &icur, &got, &repl);
-+	xrep_cow_replace_mapping(sc->ip, &icur, &got, &rep);
- 
- 	xfs_inode_set_cowblocks_tag(sc->ip);
- 	error = xfs_defer_finish(&sc->tp);
-@@ -597,15 +656,15 @@ xrep_cow_replace_range(
- 
- 	/* Note the old CoW staging extents; we'll reap them all later. */
- 	if (XFS_IS_REALTIME_INODE(sc->ip))
--		error = xrtb_bitmap_set(&xc->old_cowfork_rtblocks,
--				got.br_startblock, repl.len);
-+		error = xrtb_bitmap_set(&xc->old_cowfork_rtblocks, old_fsbno,
-+				rep.br_blockcount);
- 	else
--		error = xfsb_bitmap_set(&xc->old_cowfork_fsblocks,
--				got.br_startblock, repl.len);
-+		error = xfsb_bitmap_set(&xc->old_cowfork_fsblocks, old_fsbno,
-+				rep.br_blockcount);
- 	if (error)
- 		return error;
- 
--	*blockcount = repl.len;
-+	*blockcount = rep.br_blockcount;
- 	return 0;
- }
- 
---- a/fs/xfs/scrub/trace.h
-+++ b/fs/xfs/scrub/trace.h
-@@ -2672,9 +2672,9 @@ TRACE_EVENT(xrep_cow_mark_file_range,
- );
- 
- TRACE_EVENT(xrep_cow_replace_mapping,
--	TP_PROTO(struct xfs_inode *ip, const struct xfs_bmbt_irec *irec,
--		 xfs_fsblock_t new_startblock, xfs_extlen_t new_blockcount),
--	TP_ARGS(ip, irec, new_startblock, new_blockcount),
-+	TP_PROTO(struct xfs_inode *ip, const struct xfs_bmbt_irec *got,
-+		 const struct xfs_bmbt_irec *rep),
-+	TP_ARGS(ip, got, rep),
- 	TP_STRUCT__entry(
- 		__field(dev_t, dev)
- 		__field(xfs_ino_t, ino)
-@@ -2682,28 +2682,34 @@ TRACE_EVENT(xrep_cow_replace_mapping,
- 		__field(xfs_fileoff_t, startoff)
- 		__field(xfs_filblks_t, blockcount)
- 		__field(xfs_exntst_t, state)
-+		__field(xfs_fileoff_t, new_startoff)
- 		__field(xfs_fsblock_t, new_startblock)
- 		__field(xfs_extlen_t, new_blockcount)
-+		__field(xfs_exntst_t, new_state)
- 	),
- 	TP_fast_assign(
- 		__entry->dev = ip->i_mount->m_super->s_dev;
- 		__entry->ino = ip->i_ino;
--		__entry->startoff = irec->br_startoff;
--		__entry->startblock = irec->br_startblock;
--		__entry->blockcount = irec->br_blockcount;
--		__entry->state = irec->br_state;
--		__entry->new_startblock = new_startblock;
--		__entry->new_blockcount = new_blockcount;
-+		__entry->startoff = got->br_startoff;
-+		__entry->startblock = got->br_startblock;
-+		__entry->blockcount = got->br_blockcount;
-+		__entry->state = got->br_state;
-+		__entry->new_startoff = rep->br_startoff;
-+		__entry->new_startblock = rep->br_startblock;
-+		__entry->new_blockcount = rep->br_blockcount;
-+		__entry->new_state = rep->br_state;
- 	),
--	TP_printk("dev %d:%d ino 0x%llx startoff 0x%llx startblock 0x%llx fsbcount 0x%llx state 0x%x new_startblock 0x%llx new_fsbcount 0x%x",
-+	TP_printk("dev %d:%d ino 0x%llx startoff 0x%llx startblock 0x%llx fsbcount 0x%llx state 0x%x new_startoff 0x%llx new_startblock 0x%llx new_fsbcount 0x%x new_state 0x%x",
- 		  MAJOR(__entry->dev), MINOR(__entry->dev),
- 		  __entry->ino,
- 		  __entry->startoff,
- 		  __entry->startblock,
- 		  __entry->blockcount,
- 		  __entry->state,
-+		  __entry->new_startoff,
- 		  __entry->new_startblock,
--		  __entry->new_blockcount)
-+		  __entry->new_blockcount,
-+		  __entry->new_state)
- );
- 
- TRACE_EVENT(xrep_cow_free_staging,
++/**
+  * xdr_inline_pages - Prepare receive buffer for a large reply
+  * @xdr: xdr_buf into which reply will be placed
+  * @offset: expected offset where data payload will start, in bytes
 
 
