@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102F9430CDD;
-	Thu, 30 Jul 2026 14:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B93243CEE7;
+	Thu, 30 Jul 2026 14:28:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421722; cv=none; b=PrSxtjyIv4IPUSxKhgfu2giZNBNNkFH3IMwMcYwMLuZw1SbPl6foHQgLNcAC0wxVUVea28+fsb2SXeKWlW8CjzMMP4XNMlJfwACxvv5IDUMvsuUN713yudapm68xEsFVOWamfNfozmBNtJNhdiRjLWBCtWPcgkFyOcloRocNQ4A=
+	t=1785421725; cv=none; b=LVGkmE9RF1smJP+8P35GuhOhi8c/lOhh0ObZJjkitsda8Qg1srIKefFfLcjossXvPY6Iu+AxU574sIsK7J4hvV70T577I9fEkcgVGCRPkFxJZHxxA/+6RKFymvvNf5SpNjtZ+3aN5UpbnmgRiOGrF24BrfM98lQ500FKmTlpEz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421722; c=relaxed/simple;
-	bh=+B6U9WmcDSZV4tztH8amfJUoy2+750K8xMF+YuepQH8=;
+	s=arc-20240116; t=1785421725; c=relaxed/simple;
+	bh=nBusDMeotju5SZ/8eEVm8JuNsOC/RNyoB4IOck8oFsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=biC4t/BBoCEYci5mlX44aBsm1qwmw1gEEms93CLQfT2vOfiiycm7/oul+RZjiyUCuNNvPHBi+iOdBdKtiwMjgwH2Tk6Y4cECDq5VWtnqGkBUNvgqBSR9O9K957PH4DChJIlF2kvZMgAtIWSAbL5o53iQLcrINvEcT0p1CQIV7d8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMr8k7Qy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D2CvDZVEr3tp5NkRgERu8VQROZbmKRnKTk7eq9ENRFYwjutZtn7GYgvlug3R2u+bKTSABW9JpbyRsIORW8/9X7oLZejTvC9StiPERZrXEvJ99F4Az07M+AMPU7pqnpeRttFlAFFeywR7g4odd/fnmBIB5Csxa0TmYBpRZiPJuSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gh38j/Nu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMr8k7Qy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59DBB1F000E9;
-	Thu, 30 Jul 2026 14:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gh38j/Nu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 596D31F00A3E;
+	Thu, 30 Jul 2026 14:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421721;
-	bh=WxpO5ZC7CPBl3LzeOvrKLwnWOmeeFZxowFJuRPOiKuw=;
+	s=korg; t=1785421723;
+	bh=lK3Ey00ht3SZ+Q6DrUFJpph749/d5QLtKGorvveHf+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jMr8k7QynzKfWyldep+FKS6b+moA/g6jXlfFX++B3lkyt3JlFhnMaVGPdZa0dk5tz
-	 1P6j0gZ7npRZO9nAcoO1R39NJ1X7w+wUFGs6rJpRKJEK4/Gytzzb65PmVJGdCBWSaz
-	 vCrmNWc9udv2sIb8jxxDGA5CikMbTQ92mxzCab6Y=
+	b=gh38j/NuWYlV4p/l5BEnGdStxxpsyA66SNxtENOlJAIi2fc8JyFlS/XUWlPX0xQ9p
+	 avri7aOoo6k/DTpJutKOgFuNO9XiS+v4NeTyIYnwBnOH1Fwu4RkiHYwCfWcP5QzZqQ
+	 krVOEpL4igXdTGCmO2Ivc6V1t8PG2krIjKTOqsgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Tycho Andersen (AMD)" <tycho@kernel.org>,
-	Ankit Soni <Ankit.Soni@amd.com>,
-	Will Deacon <will@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 199/744] iommu/amd: Fix nested domain leak
-Date: Thu, 30 Jul 2026 16:07:52 +0200
-Message-ID: <20260730141448.509876325@linuxfoundation.org>
+Subject: [PATCH 7.1 200/744] ALSA: hda: cs35l41: validate and free ACPI mute object
+Date: Thu, 30 Jul 2026 16:07:53 +0200
+Message-ID: <20260730141448.531111067@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,60 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tycho Andersen (AMD) <tycho@kernel.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 283c5c4c34b4c8d1ebd038d8f360c5ba7fcc767b ]
+[ Upstream commit 3b597d24dc0455ae926f1053f97c2725038fc3cd ]
 
-A couple of runs of different AI tools have generated something like the
-following bug report:
+cs35l41_get_acpi_mute_state() evaluates a _DSM method to get the ACPI
+mute state and reads the first byte from the returned object.
 
-    In nested_domain_free(), when refcount_dec_and_test() returns false
-    (other nested domains still reference the same gdom_info), the function
-    returns without calling kfree(ndom), leaking the nested_domain
-    structure. This problem wasn't introduced by this patch, but exists in
-    the code from commit 757d2b1fdf5b that the patch modifies. Each
-    nested_domain (ndom) is allocated individually in
-    amd_iommu_alloc_domain_nested() via kzalloc_obj(*ndom). The .free
-    callback is the sole point responsible for freeing this domain. When
-    the refcount is > 0, only the xa_unlock_irqrestore is performed and the
-    function returns, leaving ndom permanently allocated. This leak occurs
-    every time a nested domain sharing a gDomID is destroyed while other
-    domains still use that gDomID.
+However, the returned ACPI object is owned by the caller and is never
+freed after use, so each successful query leaks the _DSM result object.
 
-There is a similar leak later in this function in the WARN_ON() test when
-the mapping is already NULL. Switch to a RAII-based cleanup for ndom, since
-it should always be freed in this function.
+The code also assumes that the returned object is a buffer with at least
+one byte. A malformed firmware response can return a different object
+type or an empty buffer, and the direct ret->buffer.pointer dereference
+can then access an invalid pointer.
 
-Fixes: 757d2b1fdf5b ("iommu/amd: Introduce gDomID-to-hDomID Mapping and handle parent domain invalidation")
-Signed-off-by: Tycho Andersen (AMD) <tycho@kernel.org>
-Reviewed-by: Ankit Soni <Ankit.Soni@amd.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Use the typed _DSM helper, validate that the returned buffer contains at
+least one byte, and free the ACPI object after reading it.
+
+Fixes: 447106e92a0c ("ALSA: hda: cs35l41: Support mute notifications for CS35L41 HDA")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260708113625.752913-1-lgs201920130244@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/nested.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/hda/codecs/side-codecs/cs35l41_hda.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd/nested.c b/drivers/iommu/amd/nested.c
-index 5c9405223f9115..63b53b29e02989 100644
---- a/drivers/iommu/amd/nested.c
-+++ b/drivers/iommu/amd/nested.c
-@@ -263,7 +263,7 @@ static void nested_domain_free(struct iommu_domain *dom)
- {
- 	unsigned long irqflags;
- 	struct guest_domain_mapping_info *curr;
--	struct nested_domain *ndom = to_ndomain(dom);
-+	struct nested_domain *ndom __free(kfree) = to_ndomain(dom);
- 	struct amd_iommu_viommu *aviommu = ndom->viommu;
+diff --git a/sound/hda/codecs/side-codecs/cs35l41_hda.c b/sound/hda/codecs/side-codecs/cs35l41_hda.c
+index 64a5bd895fd1e6..237059ef22f5c7 100644
+--- a/sound/hda/codecs/side-codecs/cs35l41_hda.c
++++ b/sound/hda/codecs/side-codecs/cs35l41_hda.c
+@@ -1434,10 +1434,19 @@ static int cs35l41_get_acpi_mute_state(struct cs35l41_hda *cs35l41, acpi_handle
+ 	guid_parse(CS35L41_UUID, &guid);
  
- 	xa_lock_irqsave(&aviommu->gdomid_array, irqflags);
-@@ -290,7 +290,6 @@ static void nested_domain_free(struct iommu_domain *dom)
+ 	if (cs35l41_dsm_supported(handle, CS35L41_DSM_GET_MUTE)) {
+-		ret = acpi_evaluate_dsm(handle, &guid, 0, CS35L41_DSM_GET_MUTE, NULL);
++		ret = acpi_evaluate_dsm_typed(handle, &guid, 0,
++			      CS35L41_DSM_GET_MUTE, NULL,
++			      ACPI_TYPE_BUFFER);
++
+ 		if (!ret)
+ 			return -EINVAL;
++		if (!ret->buffer.length || !ret->buffer.pointer) {
++			ACPI_FREE(ret);
++			return -EINVAL;
++		}
++
+ 		mute = *ret->buffer.pointer;
++		ACPI_FREE(ret);
+ 		dev_dbg(cs35l41->dev, "CS35L41_DSM_GET_MUTE: %d\n", mute);
+ 	}
  
- 	amd_iommu_pdom_id_free(ndom->gdom_info->hdom_id);
- 	kfree(curr);
--	kfree(ndom);
- }
- 
- static const struct iommu_domain_ops nested_domain_ops = {
 -- 
 2.53.0
 
