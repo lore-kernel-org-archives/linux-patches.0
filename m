@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C04333D4E2;
-	Thu, 30 Jul 2026 14:28:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A576643E08D;
+	Thu, 30 Jul 2026 14:28:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421690; cv=none; b=Bd4Pb9jW+jQe3H/Y47dyhHEkkCJiElgNZcFpwwYeSpkARwDBiStRdwI4jDTbhXSf7rYmW0Plzat5+FAkmGeFwGFgaPxgjquTpzGhSQu73E6sa14dl+Pvn9Wy6O3IVAsrvmntHSb5Bx9h1n1pCGPxlxN5G+5Yatmp6QsadWkQeps=
+	t=1785421692; cv=none; b=TSWozgbdbfYXym1kYJT3Mo32AKMFLqKThZt0cYEnrzrYOEY9NQM0E+o+h35G0ssINmCk+TxfhRID7GLGfZapDDKLV8MUuLf+20eUWweE6xULsY/CMhpCsWZ/9kvEpWkGPRBSG73IYlvZ0BinaVWmfYZMRX2/D/4X0HUmvMdN2U8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421690; c=relaxed/simple;
-	bh=YDHRD+z33kZolV6mR+4CrqS5G8MBpNFyyxz3AM/RA6Y=;
+	s=arc-20240116; t=1785421692; c=relaxed/simple;
+	bh=qazMgzhcvGIA222QzGYC5GtVrt3xLHPtxaWAapaNSPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rKi65APNU4WGqOCDeP+08u4OTsf/17p8+uO5Zc2SMmgHoc6de/vUB0so9iBCJqfUA4iXRj1uQ3pf+aTIq6FKCWv1MW6WT98+vCVzExXYXXNgGRulu5qx0WTQcJ7fM8Bi2Nzid+dQX+QNSkFcdukPgNrxcQ74tcb6gRKnpomdw00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjFBdhCW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mWESQYTkPlB+WNEz6xIXA05khx77el33D+eejaaxgOXYp+VztVQATLPI/PeUDrDED+jKhnwYAlSY5bx2S8dGWqqnE9UFKzPb+Nx/q+Pn4hsAr+o3ZvESyiaoVKVVx+SiUJYd4pfX9MFYl4EuqGbs8Y6xi4R/FFfIfjnU8qwO3/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0G8dVNqA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjFBdhCW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285521F00A3A;
-	Thu, 30 Jul 2026 14:28:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0G8dVNqA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F371A1F000E9;
+	Thu, 30 Jul 2026 14:28:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421688;
-	bh=FhNeMNyJlDiP180yCMQXQuHlgallBSmqrbFWrPsgi2s=;
+	s=korg; t=1785421691;
+	bh=oF5L2RyvxP/3BOjrYdFvJNeY8QrDxmi+YibIKqIfkNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DjFBdhCWFRqodBofviL32T/FHZomf5Dd7G+bvypVDZnia4TFioyfi8OwPplSSxnej
-	 BKc40wrt7YOyGo8hXJve09T4DPvznrcUuKNoyREVoq2EPzNxV4sJ6Mg+Ng07c+vSxx
-	 E5uIrDZl2brR2N0hZDxgSAdUQin9VtHNDCJ3/IE8=
+	b=0G8dVNqAxhcw6pRuDMV8wzPOnk2k78Nt1dLJU9sSG/ZBNXWMm9Eg09BcbvszWst6n
+	 zF0o5PRDtsA25xtmNqMSjPTpDYizhr53ceKE25ZroDajKKQ5NKxkgFgKFQmtJz5Nal
+	 Lqbmr1tgchx79FZETJfqjb2ClK4N1eTNn2Xu9NEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christian Lamparter <chunkeey@gmail.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 189/744] wifi: carl9170: bound memcpy length in cmd callback to prevent OOB read
-Date: Thu, 30 Jul 2026 16:07:42 +0200
-Message-ID: <20260730141448.301821839@linuxfoundation.org>
+Subject: [PATCH 7.1 190/744] wifi: carl9170: fix OOB read from off-by-two in TX status handler
+Date: Thu, 30 Jul 2026 16:07:43 +0200
+Message-ID: <20260730141448.321882669@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -54,43 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 4cde55b2feff9504d1f993ab80e84e7ccb62791c ]
+[ Upstream commit a3f42f1049ad80c65560d2b078ad426c3134f78d ]
 
-When the firmware sends a command response with a length mismatch,
-carl9170_cmd_callback() logs the mismatch and calls carl9170_restart()
-but then falls through to memcpy(ar->readbuf, buffer + 4, len - 4).
-Since len comes from the firmware and can exceed ar->readlen, this
-copies more data than the readbuf was allocated for.
-
-Bound the memcpy to min(len - 4, ar->readlen) so that the response
-is still completed -- avoiding repeated restarts from queued garbage --
-while preventing an overread past the response buffer.
+The bounds check in carl9170_tx_process_status() uses
+`i > ((cmd->hdr.len / 2) + 1)` which is off by two, allowing
+2 extra iterations past valid _tx_status entries when the firmware-
+controlled hdr.ext exceeds hdr.len/2. Fix by using the correct
+comparison `i >= (cmd->hdr.len / 2)`.
 
 Fixes: a84fab3cbfdc ("carl9170: 802.11 rx/tx processing and usb backend")
 Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
 Acked-by: Christian Lamparter <chunkeey@gmail.com>
 Closes: https://syzkaller.appspot.com/bug?extid=5c1ca6ccaa1215781cac
-Link: https://patch.msgid.link/20260421134929.325662-2-tristmd@gmail.com
+Link: https://patch.msgid.link/20260421134929.325662-3-tristmd@gmail.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/carl9170/rx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/carl9170/tx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/carl9170/rx.c b/drivers/net/wireless/ath/carl9170/rx.c
-index 6833430130f4ca..f6855efc05c0f1 100644
---- a/drivers/net/wireless/ath/carl9170/rx.c
-+++ b/drivers/net/wireless/ath/carl9170/rx.c
-@@ -150,7 +150,8 @@ static void carl9170_cmd_callback(struct ar9170 *ar, u32 len, void *buffer)
- 	spin_lock(&ar->cmd_lock);
- 	if (ar->readbuf) {
- 		if (len >= 4)
--			memcpy(ar->readbuf, buffer + 4, len - 4);
-+			memcpy(ar->readbuf, buffer + 4,
-+			       min_t(u32, len - 4, ar->readlen));
+diff --git a/drivers/net/wireless/ath/carl9170/tx.c b/drivers/net/wireless/ath/carl9170/tx.c
+index 59caf1e4b15893..06aaf281655b1e 100644
+--- a/drivers/net/wireless/ath/carl9170/tx.c
++++ b/drivers/net/wireless/ath/carl9170/tx.c
+@@ -692,7 +692,7 @@ void carl9170_tx_process_status(struct ar9170 *ar,
+ 	unsigned int i;
  
- 		ar->readbuf = NULL;
- 	}
+ 	for (i = 0;  i < cmd->hdr.ext; i++) {
+-		if (WARN_ON(i > ((cmd->hdr.len / 2) + 1))) {
++		if (WARN_ON(i >= (cmd->hdr.len / 2))) {
+ 			print_hex_dump_bytes("UU:", DUMP_PREFIX_NONE,
+ 					     (void *) cmd, cmd->hdr.len + 4);
+ 			break;
 -- 
 2.53.0
 
