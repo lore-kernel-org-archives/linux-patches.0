@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335C242F712;
-	Thu, 30 Jul 2026 15:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122AD33438F;
+	Thu, 30 Jul 2026 15:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425235; cv=none; b=dR0yjeNWhB4wKIoojIZ84Gh02V9Wg9XNbrGRTS2q/iExOD8ieKs18G+u5hRJSEAnaUNQD1CugSRlrsTe8YpWtTwdjFHviYTXJ7XqsJnZN8Bvlb5R3x8WSEjqKgsjDVvgizmys9e4oisGyP5wrc17kEXTwOfOvHvogWNmUQbZvUY=
+	t=1785425238; cv=none; b=oRKusKZUceYkWqh8bI1EgsPvHuB2SFTh3tyk9U29Hkl8xp8fvfMMjc1Nj6i+SXLZO/Rc8NLrCdLx4BhhBOsr5Nbe1iuV4Euz68lrZWLwDtv8js5A74Ua9Oc0ukJx4PxyaoC5Zk0uXxpJbAhFwVQQ+FmJJHm8fks1iujlMm1PeuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425235; c=relaxed/simple;
-	bh=gxjOWlOvI8GTKLf6eWOh7ZbVrpyWaSFdlJcQ6U4YZMg=;
+	s=arc-20240116; t=1785425238; c=relaxed/simple;
+	bh=dzaf9C02O4myXM+6qqNYlV3bsirzA3nraoKlP7aYLtw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ibQTCnygPVbumLJGQFOA2gQ8PWxnlsmTWF7jd7Ir/oBXocfLNVv8tDYVBF+QZJGL6v/UMSM65UCz6pH/azaToYoquD8ZxvMuoD/SRnnZv6HPLITyvfnPwMaaSzvQlZClmFe80eWmZi/nZYBof4m91/jl4UBzw8CCQ28d/hdRibk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+maSbhp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kO9Mm7U/8drB0CIy0syM3umlHyfP8iwV86B959xPDWgqu7RheHTvQV+lSGaqLEnTUx4Jb3zZMmxJPMc6bUex3ndMZoBlx8XICZyFFENd3eG9WKnUCrbZKZvPwFicaftCkyUdN5jEAVOJfIy5LXTducpy/Rbd2v0BH7czpg82fjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rnNjni9M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+maSbhp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830FF1F000E9;
-	Thu, 30 Jul 2026 15:27:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rnNjni9M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B7711F000E9;
+	Thu, 30 Jul 2026 15:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425234;
-	bh=kqjWevw0CHpGpjWe+ff+J8sLI0G7SuX8VfYkUZ5b+14=;
+	s=korg; t=1785425237;
+	bh=rvmQNOnwPqvEsz6z6z6umSwlZztX9OPB5OIy3n78oDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u+maSbhpicFsHhL+M5hp5D6L4NGoSVsnmd7IA17iWH5mUTvleW01v7OqBcP4nXRGN
-	 /DGrPGNV8nPYvGfl+KNi6QFzDg061xKkcVi9zV6zOJC3STe6tiqV0DfsKoaDPCP3ik
-	 ZjMynEY3MOR2lQ9ks9uQ/hx0TrvKVBDca9mDLndk=
+	b=rnNjni9MMQzykt1RAWI341YuRZ5dtxrSkpyaPTMDqKhg5E892I2Uhl/dk/bqYX/Qh
+	 /5V4be7N9NXJXMSIB5jVAY5rrnui4tMyfYdjX3vaOVkFgCGppBywkeXACkoiTIcxMv
+	 8c5/wBKZt9oqKHKQBRogIssrWdnz0m6MzCUN/D6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Gary Guo <gary@garyguo.net>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.18 670/675] rust: device: avoid trailing ; in printing macros
-Date: Thu, 30 Jul 2026 16:16:40 +0200
-Message-ID: <20260730141459.402367394@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 671/675] usb: gadget: f_tcm: synchronize delayed set_alt with teardown
+Date: Thu, 30 Jul 2026 16:16:41 +0200
+Message-ID: <20260730141459.423088675@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,138 +51,383 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-commit a19bda861b3a79e25417462539df8b0d77c6b322 upstream.
+commit 79e2d75725c85607f8a9d87ae9cace62a19f767d upstream.
 
-These macros are used like expressions, so they should not emit a
-semicolon. This is being turned into a hard error in a future release of
-Rust.
+The f_tcm set_alt() path defers endpoint setup to a work item and
+completes the delayed status response from process context. The delayed
+work uses f_tcm private state and may complete the setup request after
+disconnect or function teardown has already moved on.
 
-    error: trailing semicolon in macro used in expression position
-      --> drivers/gpu/nova-core/firmware/fsp.rs:79:34
-       |
-    79 |                 .inspect_err(|_| dev_err!(dev, "FMC firmware missing '{}' section\n", name))
-       |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-       |
-       = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
-       = note: for more information, see issue #79813 <https://github.com/rust-lang/rust/issues/79813>
-       = note: this error originates in the macro `dev_err` (in Nightly builds, run with -Z macro-backtrace for more info)
+Cancel and drain the delayed set_alt work when the function is unbound or
+freed. For disable paths, which are reached under the composite device
+lock, use a small state machine and a non-sleeping cancellation path
+instead of cancel_work_sync(). If the work is already running, mark it
+cancelled and let the worker own the cleanup; otherwise tcm_disable() can
+cancel the queued work and clean up immediately.
 
-[ I was doubly surprised since upstream made it a deny-by-default lint
-  a year ago for Rust 1.91.0, and yet we didn't see it; plus I hadn't
-  seen this in my CI even yesterday.
+Also serialize the final delayed-status completion with the cancellation
+check while holding the composite device lock. This prevents a disconnect
+from clearing delayed_status while the worker is about to complete the
+control request.
 
-  It turns out this just landed into today's nightly (nightly-2026-07-16,
-  using upstream commit d0babd8b6):
+Validation reproduced this kernel report:
+BUG: KASAN: slab-use-after-free in tcm_delayed_set_alt+0x6c/0xef0
 
-    Link: https://github.com/rust-lang/rust/pull/159222
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x66/0xa0
+ print_report+0xce/0x630
+ ? tcm_delayed_set_alt+0x6c/0xef0
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __virt_addr_valid+0x188/0x320
+ ? tcm_delayed_set_alt+0x6c/0xef0
+ kasan_report+0xe0/0x110
+ ? tcm_delayed_set_alt+0x6c/0xef0
+ tcm_delayed_set_alt+0x6c/0xef0
+ ? __pfx_tcm_delayed_set_alt+0x10/0x10
+ ? process_one_work+0x4cb/0xb90
+ ? rcu_is_watching+0x20/0x50
+ ? tcm_delayed_set_alt+0x9/0xef0
+ process_one_work+0x4d7/0xb90
+ ? __pfx_process_one_work+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __list_add_valid_or_report+0x37/0xf0
+ ? __pfx_tcm_delayed_set_alt+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ worker_thread+0x2d8/0x570
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0x1ad/0x1f0
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x3c9/0x540
+ ? __pfx_ret_from_fork+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __switch_to+0x2e9/0x730
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-  which says:
+Allocated by task 544:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ __kasan_kmalloc+0x8f/0xa0
+ tcm_alloc+0x68/0x180
+ usb_get_function+0x36/0x60
+ config_usb_cfg_link+0x125/0x1b0
+ configfs_symlink+0x322/0x890
+ vfs_symlink+0xc2/0x270
+ filename_symlinkat+0x295/0x2f0
+ __x64_sys_symlinkat+0x62/0x90
+ do_syscall_64+0x115/0x6a0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-    "The `semicolon_in_expressions_from_macros` lint previously
-     suppressed warnings about non-local macros. This masks
-     a lint that will subsequently become a hard error."
+Freed by task 661:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ kasan_save_free_info+0x3b/0x60
+ __kasan_slab_free+0x43/0x70
+ kfree+0x2f9/0x530
+ config_usb_cfg_unlink+0x173/0x1e0
+ configfs_unlink+0x1fa/0x340
+ vfs_unlink+0x15c/0x510
+ filename_unlinkat+0x2ba/0x450
+ __x64_sys_unlinkat+0x63/0x90
+ do_syscall_64+0x115/0x6a0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-  So that explains it. And this is the PR that will make it a hard error
-  at some point in the future:
-
-    Link: https://github.com/rust-lang/rust/pull/159218
-
-  Thus starting with Rust 1.99.0 (expected 2026-10-01), we will be
-  seeing the deny-by-default lint above, so clean it up already.
-
-    - Miguel ]
-
-Cc: stable@vger.kernel.org # Needed in 6.18.y and later.
-Link: https://github.com/rust-lang/rust/issues/79813
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Acked-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://github.com/rust-lang/rust/pull/159218
-Link: https://github.com/rust-lang/rust/pull/159222
-Link: https://patch.msgid.link/20260716-device-trail-semicolon-v1-1-f48e9dcfae15@google.com
-[ Fixed typo. ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-[ Resolved conflict on `dev_printk` by not performing a similar cleanup
-  since it is not strictly needed. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
+Cc: stable <stable@kernel.org>
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/20260627104153.3822495-1-zzzccc427@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/device.rs |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/usb/gadget/function/f_tcm.c |  192 ++++++++++++++++++++++++++++++------
+ drivers/usb/gadget/function/tcm.h   |   13 ++
+ 2 files changed, 177 insertions(+), 28 deletions(-)
 
---- a/rust/kernel/device.rs
-+++ b/rust/kernel/device.rs
-@@ -625,7 +625,7 @@ macro_rules! dev_printk {
- /// ```
- #[macro_export]
- macro_rules! dev_emerg {
--    ($($f:tt)*) => { $crate::dev_printk!(pr_emerg, $($f)*); }
-+    ($($f:tt)*) => { $crate::dev_printk!(pr_emerg, $($f)*) }
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -2361,31 +2361,158 @@ ep_fail:
+ 	return -ENOTSUPP;
  }
  
- /// Prints an alert-level message (level 1) prefixed with device information.
-@@ -651,7 +651,7 @@ macro_rules! dev_emerg {
- /// ```
- #[macro_export]
- macro_rules! dev_alert {
--    ($($f:tt)*) => { $crate::dev_printk!(pr_alert, $($f)*); }
-+    ($($f:tt)*) => { $crate::dev_printk!(pr_alert, $($f)*) }
+-struct guas_setup_wq {
+-	struct work_struct work;
+-	struct f_uas *fu;
+-	unsigned int alt;
+-};
++static void tcm_cleanup_old_alt(struct f_uas *fu)
++{
++	if (fu->flags & USBG_IS_UAS)
++		uasp_cleanup_old_alt(fu);
++	else if (fu->flags & USBG_IS_BOT)
++		bot_cleanup_old_alt(fu);
++	fu->flags = 0;
++}
++
++static void tcm_delayed_set_alt_done(struct f_uas *fu)
++{
++	unsigned long flags;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
++	fu->delayed_set_alt_cancel = false;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++}
++
++static bool tcm_delayed_set_alt_cancelled(struct f_uas *fu)
++{
++	bool cancelled;
++	unsigned long flags;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	cancelled = fu->delayed_set_alt_cancel;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++
++	return cancelled;
++}
++
++static bool tcm_complete_delayed_status(struct f_uas *fu)
++{
++	struct usb_composite_dev *cdev = fu->function.config->cdev;
++	struct usb_request *req = cdev->req;
++	unsigned long cdev_flags;
++	bool cancelled;
++	int ret;
++
++	spin_lock_irqsave(&cdev->lock, cdev_flags);
++	spin_lock(&fu->delayed_set_alt_lock);
++	cancelled = fu->delayed_set_alt_cancel;
++	if (!cancelled) {
++		fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
++		fu->delayed_set_alt_cancel = false;
++	}
++	spin_unlock(&fu->delayed_set_alt_lock);
++
++	if (cancelled) {
++		spin_unlock_irqrestore(&cdev->lock, cdev_flags);
++		return false;
++	}
++
++	if (cdev->delayed_status == 0) {
++		WARN(cdev, "%s: Unexpected call\n", __func__);
++	} else if (--cdev->delayed_status == 0) {
++		req->length = 0;
++		req->context = cdev;
++		ret = usb_ep_queue(cdev->gadget->ep0, req, GFP_ATOMIC);
++		if (ret == 0) {
++			cdev->setup_pending = true;
++		} else {
++			req->status = 0;
++			req->complete(cdev->gadget->ep0, req);
++		}
++	}
++
++	spin_unlock_irqrestore(&cdev->lock, cdev_flags);
++
++	return true;
++}
++
++static bool tcm_cancel_delayed_set_alt(struct f_uas *fu)
++{
++	bool cleanup = false;
++	bool cancel = false;
++	unsigned long flags;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	switch (fu->delayed_set_alt_state) {
++	case USBG_DELAYED_SET_ALT_IDLE:
++		cleanup = true;
++		break;
++	case USBG_DELAYED_SET_ALT_QUEUED:
++	case USBG_DELAYED_SET_ALT_RUNNING:
++		fu->delayed_set_alt_cancel = true;
++		cancel = true;
++		break;
++	}
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++
++	if (cancel && cancel_work(&fu->delayed_set_alt)) {
++		spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++		if (fu->delayed_set_alt_state == USBG_DELAYED_SET_ALT_QUEUED) {
++			fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
++			fu->delayed_set_alt_cancel = false;
++			cleanup = true;
++		}
++		spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++	}
++
++	return cleanup;
++}
++
++static void tcm_cancel_delayed_set_alt_sync(struct f_uas *fu)
++{
++	unsigned long flags;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	if (fu->delayed_set_alt_state != USBG_DELAYED_SET_ALT_IDLE)
++		fu->delayed_set_alt_cancel = true;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++
++	cancel_work_sync(&fu->delayed_set_alt);
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
++	fu->delayed_set_alt_cancel = false;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++}
+ 
+ static void tcm_delayed_set_alt(struct work_struct *wq)
+ {
+-	struct guas_setup_wq *work = container_of(wq, struct guas_setup_wq,
+-			work);
+-	struct f_uas *fu = work->fu;
+-	int alt = work->alt;
++	struct f_uas *fu = container_of(wq, struct f_uas, delayed_set_alt);
++	unsigned long flags;
++	unsigned int alt;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	if (fu->delayed_set_alt_state != USBG_DELAYED_SET_ALT_QUEUED) {
++		spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++		return;
++	}
++	fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_RUNNING;
++	alt = fu->delayed_alt;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
+ 
+-	kfree(work);
++	tcm_cleanup_old_alt(fu);
+ 
+-	if (fu->flags & USBG_IS_BOT)
+-		bot_cleanup_old_alt(fu);
+-	if (fu->flags & USBG_IS_UAS)
+-		uasp_cleanup_old_alt(fu);
++	if (tcm_delayed_set_alt_cancelled(fu))
++		goto out_done;
+ 
+ 	if (alt == USB_G_ALT_INT_BBB)
+ 		bot_set_alt(fu);
+ 	else if (alt == USB_G_ALT_INT_UAS)
+ 		uasp_set_alt(fu);
+-	usb_composite_setup_continue(fu->function.config->cdev);
++
++	if (tcm_complete_delayed_status(fu))
++		return;
++
++	tcm_cleanup_old_alt(fu);
++out_done:
++	tcm_delayed_set_alt_done(fu);
  }
  
- /// Prints a critical-level message (level 2) prefixed with device information.
-@@ -677,7 +677,7 @@ macro_rules! dev_alert {
- /// ```
- #[macro_export]
- macro_rules! dev_crit {
--    ($($f:tt)*) => { $crate::dev_printk!(pr_crit, $($f)*); }
-+    ($($f:tt)*) => { $crate::dev_printk!(pr_crit, $($f)*) }
+ static int tcm_get_alt(struct usb_function *f, unsigned intf)
+@@ -2411,15 +2538,20 @@ static int tcm_set_alt(struct usb_functi
+ 		return -EOPNOTSUPP;
+ 
+ 	if ((alt == USB_G_ALT_INT_BBB) || (alt == USB_G_ALT_INT_UAS)) {
+-		struct guas_setup_wq *work;
++		unsigned long flags;
++
++		spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++		if (fu->delayed_set_alt_state != USBG_DELAYED_SET_ALT_IDLE) {
++			spin_unlock_irqrestore(&fu->delayed_set_alt_lock,
++					       flags);
++			return -EBUSY;
++		}
++		fu->delayed_alt = alt;
++		fu->delayed_set_alt_cancel = false;
++		fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_QUEUED;
++		spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
+ 
+-		work = kmalloc(sizeof(*work), GFP_ATOMIC);
+-		if (!work)
+-			return -ENOMEM;
+-		INIT_WORK(&work->work, tcm_delayed_set_alt);
+-		work->fu = fu;
+-		work->alt = alt;
+-		schedule_work(&work->work);
++		schedule_work(&fu->delayed_set_alt);
+ 		return USB_GADGET_DELAYED_STATUS;
+ 	}
+ 	return -EOPNOTSUPP;
+@@ -2429,11 +2561,8 @@ static void tcm_disable(struct usb_funct
+ {
+ 	struct f_uas *fu = to_f_uas(f);
+ 
+-	if (fu->flags & USBG_IS_UAS)
+-		uasp_cleanup_old_alt(fu);
+-	else if (fu->flags & USBG_IS_BOT)
+-		bot_cleanup_old_alt(fu);
+-	fu->flags = 0;
++	if (tcm_cancel_delayed_set_alt(fu))
++		tcm_cleanup_old_alt(fu);
  }
  
- /// Prints an error-level message (level 3) prefixed with device information.
-@@ -703,7 +703,7 @@ macro_rules! dev_crit {
- /// ```
- #[macro_export]
- macro_rules! dev_err {
--    ($($f:tt)*) => { $crate::dev_printk!(pr_err, $($f)*); }
-+    ($($f:tt)*) => { $crate::dev_printk!(pr_err, $($f)*) }
+ static int tcm_setup(struct usb_function *f,
+@@ -2581,11 +2710,16 @@ static void tcm_free(struct usb_function
+ {
+ 	struct f_uas *tcm = to_f_uas(f);
+ 
++	tcm_cancel_delayed_set_alt_sync(tcm);
+ 	kfree(tcm);
  }
  
- /// Prints a warning-level message (level 4) prefixed with device information.
-@@ -729,7 +729,7 @@ macro_rules! dev_err {
- /// ```
- #[macro_export]
- macro_rules! dev_warn {
--    ($($f:tt)*) => { $crate::dev_printk!(pr_warn, $($f)*); }
-+    ($($f:tt)*) => { $crate::dev_printk!(pr_warn, $($f)*) }
+ static void tcm_unbind(struct usb_configuration *c, struct usb_function *f)
+ {
++	struct f_uas *fu = to_f_uas(f);
++
++	tcm_cancel_delayed_set_alt_sync(fu);
++	tcm_cleanup_old_alt(fu);
+ 	usb_free_all_descriptors(f);
  }
  
- /// Prints a notice-level message (level 5) prefixed with device information.
-@@ -755,7 +755,7 @@ macro_rules! dev_warn {
- /// ```
- #[macro_export]
- macro_rules! dev_notice {
--    ($($f:tt)*) => { $crate::dev_printk!(pr_notice, $($f)*); }
-+    ($($f:tt)*) => { $crate::dev_printk!(pr_notice, $($f)*) }
- }
+@@ -2618,6 +2752,8 @@ static struct usb_function *tcm_alloc(st
+ 	fu->function.disable = tcm_disable;
+ 	fu->function.free_func = tcm_free;
+ 	fu->tpg = tpg_instances[i].tpg;
++	INIT_WORK(&fu->delayed_set_alt, tcm_delayed_set_alt);
++	spin_lock_init(&fu->delayed_set_alt_lock);
  
- /// Prints an info-level message (level 6) prefixed with device information.
-@@ -781,7 +781,7 @@ macro_rules! dev_notice {
- /// ```
- #[macro_export]
- macro_rules! dev_info {
--    ($($f:tt)*) => { $crate::dev_printk!(pr_info, $($f)*); }
-+    ($($f:tt)*) => { $crate::dev_printk!(pr_info, $($f)*) }
- }
+ 	hash_init(fu->stream_hash);
+ 	mutex_unlock(&tpg_instances_lock);
+--- a/drivers/usb/gadget/function/tcm.h
++++ b/drivers/usb/gadget/function/tcm.h
+@@ -3,6 +3,7 @@
+ #define __TARGET_USB_GADGET_H__
  
- /// Prints a debug-level message (level 7) prefixed with device information.
-@@ -807,5 +807,5 @@ macro_rules! dev_info {
- /// ```
- #[macro_export]
- macro_rules! dev_dbg {
--    ($($f:tt)*) => { $crate::dev_printk!(pr_dbg, $($f)*); }
-+    ($($f:tt)*) => { $crate::dev_printk!(pr_dbg, $($f)*) }
- }
+ #include <linux/kref.h>
++#include <linux/spinlock.h>
+ /* #include <linux/usb/uas.h> */
+ #include <linux/hashtable.h>
+ #include <linux/usb/composite.h>
+@@ -29,6 +30,12 @@ enum {
+ 
+ #define USB_G_DEFAULT_SESSION_TAGS	USBG_NUM_CMDS
+ 
++enum {
++	USBG_DELAYED_SET_ALT_IDLE = 0,
++	USBG_DELAYED_SET_ALT_QUEUED,
++	USBG_DELAYED_SET_ALT_RUNNING,
++};
++
+ struct tcm_usbg_nexus {
+ 	struct se_session *tvn_se_sess;
+ };
+@@ -132,6 +139,12 @@ struct f_uas {
+ #define USBG_BOT_CMD_PEND	(1 << 4)
+ #define USBG_BOT_WEDGED		(1 << 5)
+ 
++	struct work_struct	delayed_set_alt;
++	spinlock_t		delayed_set_alt_lock; /* protects delayed_set_alt_* */
++	unsigned int		delayed_alt;
++	unsigned int		delayed_set_alt_state;
++	bool			delayed_set_alt_cancel;
++
+ 	struct usbg_cdb		cmd[USBG_NUM_CMDS];
+ 	struct usb_ep		*ep_in;
+ 	struct usb_ep		*ep_out;
 
 
