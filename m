@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F99449B3E;
-	Thu, 30 Jul 2026 16:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC728449B22;
+	Thu, 30 Jul 2026 16:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427415; cv=none; b=V4TkV/TLpqvPxzzCjFPrf3tAsN3suk8JCOmb5ELKe1PUriqMZJ/eHzy+LVtnqKZmX10V4wQGS/vqvMT9pIwguh/Ww8iHFGlDCXAnOOtZo8Kc09WDC85R9Tl8wWCjnsiSu4TAGXgqXrjtE03iVT5YzR49l82LZojPjBn+JVaq2Uk=
+	t=1785427418; cv=none; b=dVvkJ5f56frwrhLcmZAUyPLmcKH49hoGvF4VDagvWDmn6tW1MAD7o526Yp/gqr/64AWf36ryt9ql3rZcBgoDxvNs/wFxynB/Dnis47YjeaiChYjMCV5NgFrReyh6A+oM+4ypeGGNmcXYcYfwOQJuLj7c6E4Kx2LZI4l2O+U33cY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427415; c=relaxed/simple;
-	bh=s2VPI4ZL6fWkYMQrQKjvsAezjPbpego+/OVK7vqroU4=;
+	s=arc-20240116; t=1785427418; c=relaxed/simple;
+	bh=CbNcEzpXzE56F8IHtupQwVWZD/hy+hD/pkfQb2cM1zQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lgh3gfXJ8/336eLFmpjkE1urfkjD6cygfk8gi74tKt3HzZa2HTTRVSR2OB144nvjPMBI4KZswPcI7q29QECjCT4GpazfOBmXEAA66w5kMgMIYPCceFtH6adY4AE96O9Hk2Izkx02VAIz303+WZsTxDGXa8G8RnTLqCTm5ldaIZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BAFKRi9N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n7svX3HSD57Nm6TnD1XMux5bmdTFZG70vCQPouy3xWOipiq/fuv2VRPmyVTrqtFqE0dEXCqnvUyrWOJZLh/9lXglvRKiq1phUf+iciYDV9JSCWVv53UWVlm1QFfofKbmuW/KDnOrHnNIVyQZYXlQX2b0LbX+m8PMmlb8mlrXdeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qVZHvrWw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BAFKRi9N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B171F00A3E;
-	Thu, 30 Jul 2026 16:03:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qVZHvrWw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 480DE1F000E9;
+	Thu, 30 Jul 2026 16:03:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427414;
-	bh=LA+9C2qchqa8JjC0ExLZ7YuiNyKdQ/kcRlnXasAtbJU=;
+	s=korg; t=1785427416;
+	bh=KOFqstFnC2zUrB1Ewn4SnupyhswEdqHX/LCbU4BMcwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BAFKRi9N5jg9fSmrt6ytoPVqTeynAeVM1qtsi36Q0S3eOjIg4D0lfuv4W4DI4zbIZ
-	 BYO+C9oYGvvkwpM2L2CGiDGeTiobiQsURM8LU6F3hgK0FcZcNm/+PEg0B2S/rhMN9A
-	 Hi2XqjwOl1e2a4AO1w3kL5bJNVs9nFSpSPbiRkng=
+	b=qVZHvrWwU7CPJOvOhsWT5QTgEIRvXrkSM5kXrodj374LQGtzs2jvDg0mVmkpIkBQi
+	 S5SPuedn4D9vzJTMVgog4DUeWVbx4fhcRaDFOi9cARo33pCN2ELizRE9W8CzwI0Mj9
+	 Dwt+Rh9Cz+iFYI/JRpK3ghpl0vRViWfYAsI0VFHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HanQuan <eilaimemedsnaimel@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	"Nikhil P. Rao" <nikhil.rao@amd.com>,
+	Eric Joyner <eric.joyner@amd.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 161/484] sctp: fix auth_chunk_list capacity check in sctp_auth_ep_add_chunkid
-Date: Thu, 30 Jul 2026 16:10:58 +0200
-Message-ID: <20260730141426.964797076@linuxfoundation.org>
+Subject: [PATCH 6.6 162/484] pds_core: yield the CPU while waiting for the adminq to drain
+Date: Thu, 30 Jul 2026 16:10:59 +0200
+Message-ID: <20260730141426.986455703@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,44 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HanQuan <eilaimemedsnaimel@gmail.com>
+From: Nikhil P. Rao <nikhil.rao@amd.com>
 
-[ Upstream commit ff04b26794a16a8a879eb4fd2c02c2d6b03850e9 ]
+[ Upstream commit a11f0b8a204296fe7db9eaec53441012222cb004 ]
 
-sctp_auth_ep_add_chunkid() uses SCTP_NUM_CHUNK_TYPES (20) as the
-capacity limit for ep->auth_chunk_list, allowing it to hold up to
-20 chunk entries (param_hdr.length up to 24). However, the copy
-destination asoc->c.auth_chunks in struct sctp_cookie is only
-SCTP_AUTH_MAX_CHUNKS (16) entries (20 bytes). When more than 16
-chunks are added, sctp_association_init() memcpy overflows the
-destination by up to 4 bytes.
+pdsc_adminq_wait_and_dec_once_unused() busy-waits for adminq_refcnt to
+drop to one:
 
-Fix by using SCTP_AUTH_MAX_CHUNKS as the capacity limit, matching
-the destination capacity.
+	while (!refcount_dec_if_one(&pdsc->adminq_refcnt))
+		cpu_relax();
 
-Fixes: 1f485649f529 ("[SCTP]: Implement SCTP-AUTH internals")
-Signed-off-by: HanQuan <eilaimemedsnaimel@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260713032021.3491702-1-zhoujian.zja@antgroup.com
+The refcount is held by pdsc_adminq_post() for the duration of an
+in-flight command, which can wait up to devcmd_timeout seconds
+(PDS_CORE_DEVCMD_TIMEOUT is 5) for the hardware to complete. cpu_relax()
+is not a reschedule point, so on a non-preemptible kernel this loop can
+spin on the CPU for several seconds, starving other tasks on that core.
+
+Add cond_resched() to the loop so the waiter yields to other runnable
+tasks while it polls, keeping cpu_relax() as the busy-wait hint between
+checks.
+
+Fixes: 7e82a8745b95 ("pds_core: Prevent race issues involving the adminq")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260629200358.2626129-1-nikhil.rao%40amd.com?part=2
+Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
+Reviewed-by: Eric Joyner <eric.joyner@amd.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Link: https://patch.msgid.link/20260714201456.1776153-1-nikhil.rao@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/auth.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/amd/pds_core/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sctp/auth.c b/net/sctp/auth.c
-index c58fffc86a0c2d..8320764b16b928 100644
---- a/net/sctp/auth.c
-+++ b/net/sctp/auth.c
-@@ -766,7 +766,7 @@ int sctp_auth_ep_add_chunkid(struct sctp_endpoint *ep, __u8 chunk_id)
- 	/* Check if we can add this chunk to the array */
- 	param_len = ntohs(p->param_hdr.length);
- 	nchunks = param_len - sizeof(struct sctp_paramhdr);
--	if (nchunks == SCTP_NUM_CHUNK_TYPES)
-+	if (nchunks == SCTP_AUTH_MAX_CHUNKS)
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/amd/pds_core/core.c b/drivers/net/ethernet/amd/pds_core/core.c
+index c2ef55cff6b3ec..cd0c698983debe 100644
+--- a/drivers/net/ethernet/amd/pds_core/core.c
++++ b/drivers/net/ethernet/amd/pds_core/core.c
+@@ -526,6 +526,7 @@ static void pdsc_adminq_wait_and_dec_once_unused(struct pdsc *pdsc)
+ 		dev_dbg_ratelimited(pdsc->dev, "%s: adminq in use\n",
+ 				    __func__);
+ 		cpu_relax();
++		cond_resched();
+ 	}
+ }
  
- 	p->chunks[nchunks] = chunk_id;
 -- 
 2.53.0
 
