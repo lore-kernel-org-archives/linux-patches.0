@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6318023A99F;
-	Thu, 30 Jul 2026 15:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1EBE40DFC6;
+	Thu, 30 Jul 2026 15:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424519; cv=none; b=cDCGFdpMpRWPGsIv3rGEWt6GU+PDCYB/S/FQdlOjQ0XqtpxFLrpZfkDc0gx82um6N7PmCObd+G7O6Khzts6gtu9m1oZB63fKu8ffaxRu5u/EXtMdRHAf77ld2Si/cw+5aDwTDHNbMA5Jy1Nqu2HEEXBxy8m6uHBAPoB1gc4+9W4=
+	t=1785424521; cv=none; b=U4uq0tShhSirrgupgVyUlC/Hhr71ZXs2MNMvNWZ4J4F7ZwDTE4FjZaTqxTDt86V8ktuQEmTVWoW1NqqPsxrwtnUGgGDwhivaVbcJixdMHshE+NQ9tSjjMc2B9ZunXUFXPWYcywcwokgDqau2F+/ggJkmZVo+3SZ80/V3iHVPEf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424519; c=relaxed/simple;
-	bh=h7cv3AflkkDgos/VJwTxJE6ydA4fLpv9r/fGfL6WJuk=;
+	s=arc-20240116; t=1785424521; c=relaxed/simple;
+	bh=zazX5j48N8D9yXfZZ8ASUhoHfvv4CRfpvBBhGvoscc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IodYZr6YAkJ1dcQBwzAL5EaCL/cgoryg1sdMUWqxgvNcHx2AVNmGUmfkuzKcQj5250r+rl+WsGF8OUgAMmx84WvsCmjHKJvO87ZpU6dZELBNWA8mZWvmD3IDQEKdf3Mz3fwhidkWsCkiu5nqk/k7tafBkLZPb9yxqRT3wAVbBYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fjQNZz4u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RQJHMBlDml1aqoDLdeIkX6h5Xabi+cR4YRng/7C3yKAcYdPOPXZYg7Uxf1Bjg/0u8+SyRbQsMvwNuZMrMW8BPtsXi4TngS7XPA71oeQGBNw144COb3hyLDDUbF/d8OPsTWJTkdU8STIftt9YgrErtYte4BI2/FbfRmok26M0/PQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GRBoCx+z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjQNZz4u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A7E1F000E9;
-	Thu, 30 Jul 2026 15:15:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRBoCx+z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E031F000E9;
+	Thu, 30 Jul 2026 15:15:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424518;
-	bh=hVdgerIsgmx94Riao+ex/AcxHVTtXEZ85LVmvkxkcR4=;
+	s=korg; t=1785424520;
+	bh=XTp9bLb9gRXgjApBjWFIwijIQvGCWSa9Yq/QR4pf+FI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fjQNZz4upZHbxuqPZFRfDhy2q+mE9azLX+ueUda+ydbRmCiWs1OToPUxiIgys4S2/
-	 lOdVYH+LL2dkkeK4GYT+5LMsTiFFXoPqBDqnMcMrXwowkEuJ9GPBV8+AULMKq3Z2C2
-	 ak+Ry55Q0ec37il8aBzOmg+dz6ARvH0nw1W4POG4=
+	b=GRBoCx+z9AtzvaP2bFA5+FtlXkUIT3sWtT8jzbBI3XeX6So2CjHBtPhQbkMr1ID7i
+	 OPejIlcwzhYhPfxFoy1ZtLbtXRC6HuFTxZoxypm2eGRWXUnRMNDerWUM9HpEbv+k2A
+	 E1sBnEcYpUqPTvyo5nJQPOZDgbZn8Gim6YDWIUC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>
-Subject: [PATCH 6.18 423/675] media: qcom: camss: Fix RDI streaming for CSID GEN3
-Date: Thu, 30 Jul 2026 16:12:33 +0200
-Message-ID: <20260730141454.123750984@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 424/675] media: radio-si476x: Unregister v4l2_device on probe failure
+Date: Thu, 30 Jul 2026 16:12:34 +0200
+Message-ID: <20260730141454.145041159@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,116 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit ad136e52634d5a393a9dc93383f8ea1e898faf37 upstream.
+commit 436a693af04ffb889aaf87cb69ec1f2b21d3569c upstream.
 
-Fix streaming from CSIDn RDI1 and RDI2 to VFEn RDI1 and RDI2. A pattern we
-have replicated throughout CAMSS where we use the VC number to populate
-both the VC fields and port fields of the CSID means that in practice only
-VC = 0 on CSIDn:RDI0 to VFEn:RDI0 works.
+si476x_radio_probe() registers radio->v4l2dev before allocating the V4L2
+controls and before registering the video device. If any of those later
+steps fails, probe returns through the exit label after freeing only the
+control handler.
 
-Fix that for CSID gen3 by separating VC and port. Fix to VC zero as a
-bugfix we will look to properly populate the VC field with follow on
-patches later.
+A failed probe does not call si476x_radio_remove(), so the
+v4l2_device_unregister() there is not reached. This leaves the parent
+device reference taken by v4l2_device_register() behind on the error path.
 
-Fixes: d96fe1808dcc ("media: qcom: camss: Add CSID 780 support")
+Unregister the V4L2 device in the probe error path after freeing the
+controls.
+
+Fixes: b879a9c2a755 ("[media] v4l2: Add a V4L2 driver for SI476X MFD")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/camss/camss-csid-gen3.c |   28 ++++++++++----------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ drivers/media/radio/radio-si476x.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/platform/qcom/camss/camss-csid-gen3.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid-gen3.c
-@@ -145,12 +145,12 @@ static void __csid_configure_wrapper(str
- 	writel(val, csid->camss->csid_wrapper_base + CSID_IO_PATH_CFG0(csid->id));
+--- a/drivers/media/radio/radio-si476x.c
++++ b/drivers/media/radio/radio-si476x.c
+@@ -1493,6 +1493,7 @@ static int si476x_radio_probe(struct pla
+ 	return 0;
+ exit:
+ 	v4l2_ctrl_handler_free(radio->videodev.ctrl_handler);
++	v4l2_device_unregister(&radio->v4l2dev);
+ 	return rval;
  }
  
--static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8 vc)
-+static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8 port, u8 vc)
- {
- 	u32 val;
- 	u8 lane_cnt = csid->phy.lane_cnt;
- 	/* Source pads matching RDI channels on hardware. Pad 1 -> RDI0, Pad 2 -> RDI1, etc. */
--	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + vc];
-+	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + port];
- 	const struct csid_format_info *format = csid_get_fmt_entry(csid->res->formats->formats,
- 								   csid->res->formats->nformats,
- 								   input_format->code);
-@@ -163,14 +163,14 @@ static void __csid_configure_rdi_stream(
- 	 * the four least significant bits of the five bit VC
- 	 * bitfield to generate an internal CID value.
- 	 *
--	 * CSID_RDI_CFG0(vc)
-+	 * CSID_RDI_CFG0(port)
- 	 * DT_ID : 28:27
- 	 * VC    : 26:22
- 	 * DT    : 21:16
- 	 *
- 	 * CID   : VC 3:0 << 2 | DT_ID 1:0
- 	 */
--	u8 dt_id = vc & 0x03;
-+	u8 dt_id = port & 0x03;
- 
- 	val = RDI_CFG0_TIMESTAMP_EN;
- 	val |= RDI_CFG0_TIMESTAMP_STB_SEL;
-@@ -180,7 +180,7 @@ static void __csid_configure_rdi_stream(
- 	val |= format->data_type << RDI_CFG0_DT;
- 	val |= dt_id << RDI_CFG0_DT_ID;
- 
--	writel(val, csid->base + CSID_RDI_CFG0(vc));
-+	writel(val, csid->base + CSID_RDI_CFG0(port));
- 
- 	val = RDI_CFG1_PACKING_FORMAT_MIPI;
- 	val |= RDI_CFG1_PIX_STORE;
-@@ -189,22 +189,22 @@ static void __csid_configure_rdi_stream(
- 	val |= RDI_CFG1_CROP_H_EN;
- 	val |= RDI_CFG1_CROP_V_EN;
- 
--	writel(val, csid->base + CSID_RDI_CFG1(vc));
-+	writel(val, csid->base + CSID_RDI_CFG1(port));
- 
- 	val = 0;
--	writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(vc));
-+	writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(port));
- 
- 	val = 1;
--	writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PATTERN(vc));
-+	writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PATTERN(port));
- 
- 	val = 0;
--	writel(val, csid->base + CSID_RDI_CTRL(vc));
-+	writel(val, csid->base + CSID_RDI_CTRL(port));
- 
--	val = readl(csid->base + CSID_RDI_CFG0(vc));
-+	val = readl(csid->base + CSID_RDI_CFG0(port));
- 
- 	if (enable)
- 		val |= RDI_CFG0_EN;
--	writel(val, csid->base + CSID_RDI_CFG0(vc));
-+	writel(val, csid->base + CSID_RDI_CFG0(port));
- }
- 
- static void csid_configure_stream(struct csid_device *csid, u8 enable)
-@@ -213,11 +213,11 @@ static void csid_configure_stream(struct
- 
- 	__csid_configure_wrapper(csid);
- 
--	/* Loop through all enabled VCs and configure stream for each */
-+	/* Loop through all enabled ports and configure a stream for each */
- 	for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS; i++)
- 		if (csid->phy.en_vc & BIT(i)) {
--			__csid_configure_rdi_stream(csid, enable, i);
--			__csid_configure_rx(csid, &csid->phy, i);
-+			__csid_configure_rdi_stream(csid, enable, i, 0);
-+			__csid_configure_rx(csid, &csid->phy, 0);
- 			__csid_ctrl_rdi(csid, enable, i);
- 		}
- }
 
 
