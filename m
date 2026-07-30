@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF7CE37B012;
-	Thu, 30 Jul 2026 15:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4613438B7;
+	Thu, 30 Jul 2026 15:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425990; cv=none; b=TOLrgMUbWd8ZqN7XU2U6+PtXn96rBd/XiqNVppY9kL259uEWu6rJMzQVlCx2MI3+jwNdMFcCjEMTq/emzNqHxK6+aK7PF6PkupMDy+HCzCaVjPKvv8Kiifwgk2CqCkP0rNYismlq89Vt5gTsvWVCFa7lxtv30JdlXqnklRBlcEQ=
+	t=1785425993; cv=none; b=kUab7q/nEfMz/UAUV6qKXJt4pNKq4Xa8hjfAgZewrC0Cx9qTsqcNvXnNyaEvApHYwfmwA+HKZ7Kz6kwf1b2TlPw32jhTr0zJAf4jAwOk6WaIzdmKrmu7JWCDMz0R8AbR95k6ZK1xAt+ng65hXBUgWoWOToC93algg7cR2YHWVRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425990; c=relaxed/simple;
-	bh=+HuCR1cwE0BOBuOHHk3fMUSTSx2L7cx2fCW2XwQ6t5c=;
+	s=arc-20240116; t=1785425993; c=relaxed/simple;
+	bh=H9oj828AaniS7CpBp457ZYrqTzxdax7+MFyUWUs+x8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NqqRVwqntItuO6GNbXc0w68h6EI9e8YHK5tVQ97pjis3xFpdBYeGj5kGCeL/qnzc6cnbOBZCEgUEE0M6tjrLr35c/ztiOLt5gD1taliF6/WFoJN+MMnjH0Az6Drtu/+8FwzJ+Fzl/6rHfg3/+z+ae2Io1t5tNZeimu1AAsVmiVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ktMrUG+k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LqjJkof8LcLlZblZhK1NzjQYac3th11hbCCew8gXvOaNXYfwqsf/WVPusbj3vado/8cqRk2h8gYzwvM5NNpuSBH7uS5zvY+/0xOtxqZ8dafa2Eln/uND4Qq0IwgLHrzwkhjrcfjhVG/1drkTHqi9QpsmRDqBYtQas5TS+aZMjcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vweYY7n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ktMrUG+k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D881F1F000E9;
-	Thu, 30 Jul 2026 15:39:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vweYY7n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FDD1F00A3A;
+	Thu, 30 Jul 2026 15:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425989;
-	bh=zbDKDgCn1YgjuShuPPOjlRL8q2/Dkgk758vfbaUCQsI=;
+	s=korg; t=1785425992;
+	bh=jC6bd1+jGa2aKOLlWKyYnThsRU0QKwpXvsnxb5Yn7Us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ktMrUG+kSNr0RxjzBAepgXwGB9bEPPH36iMyrujAI2sQSxe4hS5wuSmB95d1/4ob0
-	 5fx7R6y6wGIvbLb3aMu5LIFa+27SVJ0cW61L9qVliuLrYaVm8mpFqV6JoalwL20PwU
-	 dBzuAAfcnnYM4dh4WHMweNqddC6rcikoYbDdVR14=
+	b=1vweYY7nJYmxyBf1ajrdjfdWd9cySHxvkSuteiT6/c+mnRS1M8KSfuGTikCwpTXue
+	 NPCYJKnUAYub+8Rv4CZrNH2fUzmpqRxYiSFrKji9dWQHpC5hblyLNDMD8HdjT+vWQB
+	 v88FkOJSrDgRXasGSb+s2ah+qTVGCk0BBimEajDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 261/602] drm/amdgpu: Fix amdgpu_bo_move() when old_mem and new_mem are both GTT
-Date: Thu, 30 Jul 2026 16:10:53 +0200
-Message-ID: <20260730141441.456986000@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.12 262/602] drm/amdgpu: validate CP_GFX_SHADOW chunk size in CS pass1
+Date: Thu, 30 Jul 2026 16:10:54 +0200
+Message-ID: <20260730141441.477098648@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -45,64 +44,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit ee94a65f192c05c543b4d3ad7137cd696b5c18fc upstream.
+commit 84c4c36acd5c4b2558b5069f869a165b2c655c84 upstream.
 
-The UVD code relies on GTT to GTT moves in order to ensure
-that its BOs don't cross 256M segments.
+Add a minimum-length check for the AMDGPU_CHUNK_ID_CP_GFX_SHADOW chunk in
+amdgpu_cs_pass1(), matching the gate already present for the IB, FENCE and
+BO_HANDLES chunk types.
 
-Fixes: bfe5e585b44f ("drm/ttm: move last binding into the drivers.")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+The CP_GFX_SHADOW case previously shared a bare break with the dependency
+and syncobj chunk types, which do not dereference a fixed-size struct. When
+userspace submits this chunk with length_dw == 0, vmemdup_array_user() is
+called with size 0 and returns ZERO_SIZE_PTR, which passes the IS_ERR()
+check. amdgpu_cs_p2_shadow() then dereferences chunk->kdata as a struct
+drm_amdgpu_cs_chunk_cp_gfx_shadow (reading shadow->flags), faulting on the
+ZERO_SIZE_PTR and causing a NULL-pointer dereference.
+
+This is reachable by an unprivileged process in the render group. Reject
+undersized chunks with -EINVAL during pass1 so the bad submission is
+rejected before pass2 ever dereferences the data.
+
+Fixes: ac9287055ff1 ("drm/amdgpu: add gfx shadow CS IOCTL support")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 21fd45e5e2628d00b478590bcc3d14d3de5d45b6)
+(cherry picked from commit 7f61b2eef7415eccdb40850aca0de94211948657)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -501,6 +501,15 @@ static int amdgpu_bo_move(struct ttm_buf
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -272,13 +272,17 @@ static int amdgpu_cs_pass1(struct amdgpu
+ 				goto free_partial_kdata;
+ 			break;
  
- 	if (new_mem->mem_type == TTM_PL_TT ||
- 	    new_mem->mem_type == AMDGPU_PL_PREEMPT) {
-+		if (old_mem && (old_mem->mem_type == TTM_PL_TT ||
-+				old_mem->mem_type == AMDGPU_PL_PREEMPT)) {
-+			r = ttm_bo_wait_ctx(bo, ctx);
-+			if (r)
-+				return r;
++		case AMDGPU_CHUNK_ID_CP_GFX_SHADOW:
++			if (size < sizeof(struct drm_amdgpu_cs_chunk_cp_gfx_shadow))
++				goto free_partial_kdata;
++			break;
 +
-+			amdgpu_ttm_backend_unbind(bo->bdev, bo->ttm);
-+		}
-+
- 		r = amdgpu_ttm_backend_bind(bo->bdev, bo->ttm, new_mem);
- 		if (r)
- 			return r;
-@@ -533,6 +542,15 @@ static int amdgpu_bo_move(struct ttm_buf
- 		amdgpu_bo_move_notify(bo, evict, new_mem);
- 		ttm_resource_free(bo, &bo->resource);
- 		ttm_bo_assign_mem(bo, new_mem);
-+		return 0;
-+	}
-+	if ((old_mem->mem_type == TTM_PL_TT ||
-+	     old_mem->mem_type == AMDGPU_PL_PREEMPT) &&
-+	    (new_mem->mem_type == TTM_PL_TT ||
-+	     new_mem->mem_type == AMDGPU_PL_PREEMPT)) {
-+		amdgpu_bo_move_notify(bo, evict, new_mem);
-+		ttm_resource_free(bo, &bo->resource);
-+		ttm_bo_assign_mem(bo, new_mem);
- 		return 0;
- 	}
+ 		case AMDGPU_CHUNK_ID_DEPENDENCIES:
+ 		case AMDGPU_CHUNK_ID_SYNCOBJ_IN:
+ 		case AMDGPU_CHUNK_ID_SYNCOBJ_OUT:
+ 		case AMDGPU_CHUNK_ID_SCHEDULED_DEPENDENCIES:
+ 		case AMDGPU_CHUNK_ID_SYNCOBJ_TIMELINE_WAIT:
+ 		case AMDGPU_CHUNK_ID_SYNCOBJ_TIMELINE_SIGNAL:
+-		case AMDGPU_CHUNK_ID_CP_GFX_SHADOW:
+ 			break;
  
+ 		default:
 
 
