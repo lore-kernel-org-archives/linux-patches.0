@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE00037A85D;
-	Thu, 30 Jul 2026 15:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22EA37A85D;
+	Thu, 30 Jul 2026 15:31:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425513; cv=none; b=dGJshFHQvQHy1ghgyyqIYi4T5CExCAeEK9PpLkywrYNFJrygdmUk2/YtlIdgCUB9jxWdd8cwIFMHiwRraUgmfWfUsJ7UpXt3CLGlnXmlrSWMj/EpfIW+U4I/fVVW7Xq2fV6PSvexUUUa+Mo+5Z6M3QUg85V6WEuTbvFTkhQ3pi4=
+	t=1785425516; cv=none; b=lk1KLTmtSMqkJeauUfmpDt1xoeupWOmDxGlSBAJSlIAhPh6GfJrKr+aFEQc9RidK6M5i3PTYU+7hfNeLWaXNP7YS5zrAWBSBb7owlgLItEZNxQaCHkVT8VhnEDQWIgVxWlepQh2NeNtahvNEGv3FfnhAlG+3vQgn1sfx99n1sUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425513; c=relaxed/simple;
-	bh=buSVuCLFkqlwgqIvbZ99TF4aP6WgDjZcsyKdIS8XcLU=;
+	s=arc-20240116; t=1785425516; c=relaxed/simple;
+	bh=g3r7WA4ykg6W4/Iy9vgQuUha94/BW0Gb60/+bOxtxT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XKGZOvcZwy5p5e8XkkaY+x4M+vuKdqdrChLej9+lhvPwRXoYPCl/CdTSKv7o6Dk6331jcMqFDUKdRL4/rOSc/euUnn0BUWT96JJKGsUmEy6FA2+nJYWZ4UCz27c5kmcVKJ6++DZKeeExdnOu5NtFUZWm4rhdeFDaewxoCcu3pIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5cHbhoa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q6ZtZx+VH29zBI0AsAXiSCB7g531BmjI1tyEyBDommPVHf/P0Id8eINfHTN1MTq3vOpE+ukTrpyoYPt3oqLjdDoARo0ofbQJRLongCMq/DHJs2vtS69/5ZCVJzKHu5OP30YzSvts0m1xf0xUsoengFn7GCWEdXgV1/HI7O9nF0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHX+4RWg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5cHbhoa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44BD81F000E9;
-	Thu, 30 Jul 2026 15:31:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHX+4RWg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B0CB1F000E9;
+	Thu, 30 Jul 2026 15:31:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425511;
-	bh=K7xt8Tf3lYbG21xiz++4nIS0pTn5L6yGxQEz9dA5HMQ=;
+	s=korg; t=1785425514;
+	bh=9YUkxMKbGRx8XolTG8uknPa16bchJp4STupJN60h+wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f5cHbhoaCtc1XMQv8mZhV6LITvY0lczt57SqJqukRYPMgoSKb60l5IAL/+nNLxtGV
-	 xlFo8/56xGB4oQRqr+KYp4NxMOWcN8W9LPB1lqRdSgGgAVAAXmJeHVKqbB0QnZXCCV
-	 qXKkzuRkEqBgHSXbXVGYhsvnhaAqrgJcsta12770=
+	b=VHX+4RWgGLRTggCYdU+x1Xro85US2n6h83fBAkSU7i4q3cCYXTMCzKhP7ajfaww9J
+	 F6LEubDOy2RLnGIlao8OIWC+FAac9dr51W6BVnOAw2WkyLx5u5JNSoUQ8YD3uAtvzQ
+	 koe0Wg7JFgvOWZVK30RGqk8m0OM0UV77kQBOWHO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e9c76b56dc05023b8117@syzkaller.appspotmail.com,
-	Xue Lei <Xue.Lei@windriver.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 050/602] mtd: fix double free and WARN_ON in add_mtd_device() error paths
-Date: Thu, 30 Jul 2026 16:07:22 +0200
-Message-ID: <20260730141437.056256317@linuxfoundation.org>
+Subject: [PATCH 6.12 041/602] btrfs: reject free space cache with more entries than pages
+Date: Thu, 30 Jul 2026 16:07:13 +0200
+Message-ID: <20260730141436.870601260@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,100 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xue Lei <Xue.Lei@windriver.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 9d4af746af8ce27eefc2338b2feaa1e01f28b6c3 ]
+[ Upstream commit a2d8d5647ed854e38f941741aea45b9eb15a6350 ]
 
-When device_register() or mtd_nvmem_add() fails inside
-add_mtd_device() for a partition, the error handling triggers
-mtd_release() via put_device() or device_unregister(). mtd_release()
-calls release_mtd_partition() which frees the mtd_info structure.
-However, callers such as mtd_add_partition() and add_mtd_partitions()
-also call free_partition() in their error paths, resulting in a double
-free.
+When loading a v1 free space cache, __load_free_space_cache() takes
+num_entries and num_bitmaps straight from the on-disk
+btrfs_free_space_header. That header is stored in the tree_root under a key
+with type 0, which the tree-checker has no case for, so neither count is
+validated before the load trusts it.
 
-Additionally, release_mtd_partition() hits WARN_ON(!list_empty(
-&mtd->part.node)) because the partition node is still linked in the
-parent's partitions list when the release callback fires from the
-add_mtd_device() error path.
+The load loops num_entries times and maps the next page whenever the current
+one runs out, going through io_ctl_check_crc() -> io_ctl_map_page(), which
+does io_ctl->pages[io_ctl->index++]. But pages[] is allocated in
+io_ctl_init() from the cache inode's i_size, not from num_entries:
 
-Fix this by overriding dev->type and dev->release before put_device()
-in the error paths, so that device_release() invokes a no-op function
-instead of mtd_release(). For the mtd_nvmem_add() failure case,
-device_unregister() is replaced with device_del() to separate the
-device removal from the final kobject reference drop, allowing the
-override to take effect before put_device() is called.
+	num_pages = DIV_ROUND_UP(i_size_read(inode), PAGE_SIZE);
+	io_ctl->pages = kcalloc(num_pages, sizeof(struct page *), GFP_NOFS);
 
-The callers' error paths (list_del + free_partition) remain the sole
-owners of mtd_info lifetime on add_mtd_device() failure, which is the
-expected contract.
+So if num_entries claims more records than the pages can hold, io_ctl->index
+runs off the end of pages[]. The write side never hits this because
+io_ctl_add_entry() and io_ctl_add_bitmap() both stop once
+io_ctl->index >= io_ctl->num_pages; the read side just never had the same
+check.
 
-The normal partition teardown path is not affected: del_mtd_device()
-goes through kref_put() -> mtd_device_release() -> device_unregister()
-with dev->type still set to &mtd_devtype, so mtd_release() ->
-release_mtd_partition() continues to work correctly for the regular
-removal case.
+To trigger it, take a clean cache (num_entries = <N> here), set num_entries
+in the header to 0x10000, and fix up the leaf checksum so it still passes
+the tree-checker. The cache inode has i_size = 65536, so num_pages is 16 and
+pages[] is a 16-pointer (kmalloc-128) array. The load now tries to read
+65536 entries, io_ctl->index walks up to 16, and pages[16] is read past the
+array:
 
-Reported-by: syzbot+e9c76b56dc05023b8117@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e9c76b56dc05023b8117
-Fixes: 19bfa9ebebb5 ("mtd: use refcount to prevent corruption")
-Signed-off-by: Xue Lei <Xue.Lei@windriver.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+  BUG: KASAN: slab-out-of-bounds in io_ctl_check_crc (fs/btrfs/free-space-cache.c:420 fs/btrfs/free-space-cache.c:565)
+  Read of size 8 at addr ffff88800c833a80 by task kworker/u8:3/58
+   io_ctl_check_crc (fs/btrfs/free-space-cache.c:420 fs/btrfs/free-space-cache.c:565)
+   __load_free_space_cache (fs/btrfs/free-space-cache.c:655 fs/btrfs/free-space-cache.c:820)
+   load_free_space_cache (fs/btrfs/free-space-cache.c:1017)
+   caching_thread (fs/btrfs/block-group.c:880)
+   btrfs_work_helper (fs/btrfs/async-thread.c:312)
+   process_one_work
+   worker_thread
+   kthread
+   ret_from_fork
+
+free-space-cache.c:420 is io_ctl_map_page(), inlined into io_ctl_check_crc()
+at line 565, which is why that is the frame KASAN names. The out-of-bounds
+slot is then treated as a struct page and handed to crc32c(), so the bad
+read turns into a GP fault.
+
+Add the missing check to io_ctl_check_crc(), which is where both the entry
+loop and the bitmap loop end up. When num_entries is too large the load now
+fails like any corrupt cache: __load_free_space_cache() drops it and rebuilds
+the free space from the extent tree, so a valid cache is never rejected.
+
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Fixes: 5b0e95bf607d ("Btrfs: inline checksums into the disk free space cache")
+Link: https://lore.kernel.org/linux-btrfs/CAPpSM+RMPByMCKXvM5QFKToxsyNccfuFLWMdD0mfd0wh2Ja62w@mail.gmail.com/
+Assisted-by: Claude:claude-opus-4-8
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdcore.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ fs/btrfs/free-space-cache.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
-index 724f917f91bac0..0c8e8eb5f0f3d8 100644
---- a/drivers/mtd/mtdcore.c
-+++ b/drivers/mtd/mtdcore.c
-@@ -104,6 +104,15 @@ static void mtd_release(struct device *dev)
- 	device_destroy(&mtd_class, index + 1);
- }
+diff --git a/fs/btrfs/free-space-cache.c b/fs/btrfs/free-space-cache.c
+index f4bcb25306606a..01588dd3c7028f 100644
+--- a/fs/btrfs/free-space-cache.c
++++ b/fs/btrfs/free-space-cache.c
+@@ -556,6 +556,9 @@ static int io_ctl_check_crc(struct btrfs_io_ctl *io_ctl, int index)
+ 	u32 crc = ~(u32)0;
+ 	unsigned offset = 0;
  
-+/*
-+ * No-op device release used in add_mtd_device() error paths.
-+ * Prevents mtd_release() from being called via device_release(),
-+ * which would free the mtd_info that the caller still manages.
-+ */
-+static void mtd_dev_release_nop(struct device *dev)
-+{
-+}
++	if (index >= io_ctl->num_pages)
++		return -EIO;
 +
- static void mtd_device_release(struct kref *kref)
- {
- 	struct mtd_info *mtd = container_of(kref, struct mtd_info, refcnt);
-@@ -746,10 +755,8 @@ int add_mtd_device(struct mtd_info *mtd)
- 	mtd_check_of_node(mtd);
- 	of_node_get(mtd_get_of_node(mtd));
- 	error = device_register(&mtd->dev);
--	if (error) {
--		put_device(&mtd->dev);
-+	if (error)
- 		goto fail_added;
--	}
+ 	if (index == 0)
+ 		offset = sizeof(u32) * io_ctl->num_pages;
  
- 	/* Add the nvmem provider */
- 	error = mtd_nvmem_add(mtd);
-@@ -787,8 +794,16 @@ int add_mtd_device(struct mtd_info *mtd)
- 	return 0;
- 
- fail_nvmem_add:
--	device_unregister(&mtd->dev);
-+	device_del(&mtd->dev);
- fail_added:
-+	/*
-+	 * Clear type and set nop release to prevent mtd_release() ->
-+	 * release_mtd_partition() -> free_partition() from freeing mtd.
-+	 * The caller handles cleanup on failure.
-+	 */
-+	mtd->dev.type = NULL;
-+	mtd->dev.release = mtd_dev_release_nop;
-+	put_device(&mtd->dev);
- 	of_node_put(mtd_get_of_node(mtd));
- 	idr_remove(&mtd_idr, i);
- fail_locked:
 -- 
 2.53.0
 
