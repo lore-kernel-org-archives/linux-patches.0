@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB7B39A801;
-	Thu, 30 Jul 2026 15:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12943B6352;
+	Thu, 30 Jul 2026 15:17:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424639; cv=none; b=GIuEhSToU3dRkjsRaK5sIiskD5inqSvub3UF5H+aA1ARSi5jir6okJRH7H+IPMoLoz+ofahvnPFdB6SvVsr0bYe4+FmxFeklY6pdwpqKH7PRi1nkSle8VyF9aDzoeHoW/7o8jbJX3i+NKM7PkQkurUejVdJPZE6Ppdz84/AkTtA=
+	t=1785424642; cv=none; b=iKeLkdLQSlDC8CVnVhnV7G22BhfjHI2QFbxTwCIRFcNa8scNNtxbQ1M2J5N2Di2bLJfcVwOOFpaajQ0uuxu6TrceqR8G+g7v4cAKvBScHDGT+WSo1BhoutyMB9jyO2rBBYehqeLgqrKzri5md6VPEBt/J2IprIAqGuf09BUxDh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424639; c=relaxed/simple;
-	bh=d6mBGWyp0o3SUpy0g5WyljvzDN9ZbrEsU4Dv34xRfVo=;
+	s=arc-20240116; t=1785424642; c=relaxed/simple;
+	bh=HI2DkUmEuI4hoYafyH1mkzkLZc2pnWgTg+A7oghVLlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A/NX0MBDHuLcUtAnwjiHU2C1Ey2yQnhPWosK0nczCJo1zLtcbs1WjJendVMFRlMgD+hrf4cmKe7Qlkpnak45o7TpqxOqxBkBEQfsdZev6CY7tsw67T5BtXNMD/7jUvAGy3Zt56UMRuLOF59VG9C0f3qYbyaGlzrv0pY8mHhkoFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VhquQwR/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XfM+zgoTU/iioCnD+5RNLn+QUd9O43kxEt8SiSMlDsFM5EZUZ2vbxXKq+m8xIaDaj0K2Fr/2D2fGs3sWtOAt37Tmu7509b0450cOhFWWWl2Kq2PneFsRI4EHq3VBo2FJnb6EiM/nEUSWXxVqI52WI5FGAkX229BbAdvz8gNu2Pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aSyOUU5w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VhquQwR/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 662FF1F000E9;
-	Thu, 30 Jul 2026 15:17:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aSyOUU5w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B951F000E9;
+	Thu, 30 Jul 2026 15:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424637;
-	bh=1gzsJ7I8sJjZWFnn0NVWFawDPQ+x5cFHHSzkqYGczmk=;
+	s=korg; t=1785424640;
+	bh=Do0Ut93fkRp5bEp72N/en32xbJKolocW0CwuuOBPLMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VhquQwR/wY2TKIUbINfObVwLge2X0ltS9eRVYAe7XDno2LedUTwsgXjC+IsIClh6Q
-	 utBgy4g9dn48L0WNna8rbk/8XBSIVYJ5pdQLDWXaNCatQR8myFWxIapQVuv3hukXdJ
-	 1f/OIuqBoSkzALa4EGJgoniYiFdUbboRJCB/SB5k=
+	b=aSyOUU5wf5Ox2Y7pjrj+e6pse6HM7UH1dOvs1IUsZ8tFnAaA4iqK93+3iOQPxyz+5
+	 vGL+ROZi5F725zvEQuBT2rrfbvgnkHQ2t0PqfkkdDU/jhTnvQbQ091+/O4yK3hfR22
+	 QG2WpWcnOnC9AniherrwKlBl2G1JPA49MwkyH+B4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 465/675] Bluetooth: RFCOMM: Fix session UAF in set_termios
-Date: Thu, 30 Jul 2026 16:13:15 +0200
-Message-ID: <20260730141455.013971181@linuxfoundation.org>
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.18 466/675] exec: fix unsigned loop counter wrap in transfer_args_to_stack()
+Date: Thu, 30 Jul 2026 16:13:16 +0200
+Message-ID: <20260730141455.035352092@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,128 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit c783399efc22d035443f1dfbf2a09bf9562aaa5e upstream.
+commit 16cc4f5c1c4b9e45eca7f7deefa5410a292db599 upstream.
 
-rfcomm_tty_set_termios() tests dlc->session without rfcomm_mutex and
-later passes the pointer to rfcomm_send_rpn(). The latter dereferences
-both session->initiator and session->sock. Meanwhile, krfcommd can
-unlink the DLC and free the session while holding rfcomm_mutex.
+The stop value is derived from bprm->p >> PAGE_SHIFT. The index variable
+is an unsigned long. If bprm->p drops below PAGE_SIZE and stop becomes
+zero the loop condition index >= stop is always true.
 
-The race can proceed as follows:
+After the index == 0 iteration the decrement wraps to ULONG_MAX and
+bprm->page[ULONG_MAX] reads sizeof(void *) bytes in front of the array.
+The pointer has wrapped to -1. That garbage pointer is then passed to
+kmap_local_page() and PAGE_SIZE bytes are copied from wherever that
+lands into the stack of the process being created. And the loop doesn't
+terminate either...
 
-  TTY ioctl task                 krfcommd
-  --------------                 --------
-  load dlc->session
-  enter rfcomm_send_rpn()
-                                 lock rfcomm_mutex
-                                 clear dlc->session
-                                 free session
-                                 unlock rfcomm_mutex
-  read session->initiator
+Getting there only requires bprm->p < PAGE_SIZE. On !MMU
+bprm_set_stack_limit() and bprm_hit_stack_limit() are empty. So the only
+constraint on how far bprm->p is pushed down is valid_arg_len(), i.e.
+that each individual string still fits in what is left.
 
-KASAN reported:
+bprm->p starts at PAGE_SIZE * MAX_ARG_PAGES - sizeof(void *) so a
+single argument or environment string of a little over 31 pages leaves
+it in the first page:
 
-  BUG: KASAN: slab-use-after-free in rfcomm_send_rpn+0x297/0x2a0
-  Read of size 4 at addr ffff88810012a850 by task poc/92
+  Oops - load access fault [#1]
+  CPU: 0 UID: 0 PID: 1 Comm: victim Not tainted 7.2.0-rc4 #1
+  epc : __memcpy+0xd4/0xf8
+   ra : transfer_args_to_stack+0xaa/0xae
+   s4 : ffffffffffffffff   s2 : 0000000000000000
+   a1 : ffffffdc98000000   a2 : 0000000000001000
+  status: 0000000a00001880 badaddr: ffffffdc98000000 cause: 0000000000000005
+  [<801a5324>] __memcpy+0xd4/0xf8
+  [<800d5f6a>] load_flat_binary+0x43a/0x65e
+  [<800a2de4>] bprm_execve+0x1d4/0x316
+  [<800a351a>] do_execveat_common+0x12e/0x138
+  [<800a3d44>] __riscv_sys_execve+0x38/0x4e
+  Kernel panic - not syncing: Fatal exception in interrupt
 
-  Call Trace:
-   rfcomm_send_rpn+0x297/0x2a0
-   rfcomm_tty_set_termios+0x50d/0x850
-   tty_set_termios+0x596/0x950
-   set_termios+0x46a/0x6e0
-   tty_mode_ioctl+0x152/0xbd0
-   tty_ioctl+0x915/0x1240
-   __x64_sys_ioctl+0x134/0x1c0
+This is an arcane bug but we should still fix it.
 
-  Allocated by task 92:
-   rfcomm_session_add+0x9e/0x2e0
-   rfcomm_dlc_open+0x8b1/0xe00
-   rfcomm_dev_activate+0x85/0x1a0
-   rfcomm_tty_open+0x90/0x280
+Count down from MAX_ARG_PAGES so the loop ends when index reaches stop,
+stop == 0 included. The iterations performed are unchanged for every
+other value of stop.
 
-  Freed by task 68:
-   kfree+0x131/0x3c0
-   rfcomm_session_del+0x119/0x180
-   rfcomm_run+0x737/0x4710
+Only CONFIG_MMU=n builds are affected, transfer_args_to_stack() is used
+by binfmt_flat and binfmt_elf_fdpic on nommu only.
 
-Add rfcomm_dlc_send_rpn(), which holds rfcomm_mutex while it verifies
-that the DLC is still attached and sends the RPN frame. Have the TTY
-path use the helper and drop its unlocked session check. This keeps the
-session valid through both the frame construction and socket send.
+The loop predates git history. commit 7e7ec6a93434
+("elf_fdpic_transfer_args_to_stack(): make it generic") only moved it
+from binfmt_elf_fdpic.c into fs/exec.c and narrowed the copy to the used
+part of the first page. The condition and the decrement are unchanged
+from 2.6.12-rc2.
 
-Fixes: 3a5e903c09ae ("[Bluetooth]: Implement RFCOMM remote port negotiation")
+Link: https://patch.msgid.link/20260721-hochachtung-staumauer-pigmente-15d71f7d7d04@brauner
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/rfcomm.h |    3 +++
- net/bluetooth/rfcomm/core.c    |   17 +++++++++++++++++
- net/bluetooth/rfcomm/tty.c     |    7 +++----
- 3 files changed, 23 insertions(+), 4 deletions(-)
+ fs/exec.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/net/bluetooth/rfcomm.h
-+++ b/include/net/bluetooth/rfcomm.h
-@@ -229,6 +229,9 @@ int rfcomm_send_rpn(struct rfcomm_sessio
- 			u8 bit_rate, u8 data_bits, u8 stop_bits,
- 			u8 parity, u8 flow_ctrl_settings,
- 			u8 xon_char, u8 xoff_char, u16 param_mask);
-+int rfcomm_dlc_send_rpn(struct rfcomm_dlc *d, u8 bit_rate, u8 data_bits,
-+			u8 stop_bits, u8 parity, u8 flow_ctrl_settings,
-+			u8 xon_char, u8 xoff_char, u16 param_mask);
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -736,7 +736,7 @@ int transfer_args_to_stack(struct linux_
+ 	stop = bprm->p >> PAGE_SHIFT;
+ 	sp = *sp_location;
  
- /* ---- RFCOMM DLCs (channels) ---- */
- struct rfcomm_dlc *rfcomm_dlc_alloc(gfp_t prio);
---- a/net/bluetooth/rfcomm/core.c
-+++ b/net/bluetooth/rfcomm/core.c
-@@ -1031,6 +1031,23 @@ int rfcomm_send_rpn(struct rfcomm_sessio
- 	return rfcomm_send_frame(s, buf, ptr - buf);
- }
- 
-+int rfcomm_dlc_send_rpn(struct rfcomm_dlc *d, u8 bit_rate, u8 data_bits,
-+			u8 stop_bits, u8 parity, u8 flow_ctrl_settings,
-+			u8 xon_char, u8 xoff_char, u16 param_mask)
-+{
-+	int err = -ENOTCONN;
-+
-+	rfcomm_lock();
-+	if (d->session)
-+		err = rfcomm_send_rpn(d->session, 1, d->dlci, bit_rate,
-+				      data_bits, stop_bits, parity,
-+				      flow_ctrl_settings, xon_char, xoff_char,
-+				      param_mask);
-+	rfcomm_unlock();
-+
-+	return err;
-+}
-+
- static int rfcomm_send_rls(struct rfcomm_session *s, int cr, u8 dlci, u8 status)
- {
- 	struct rfcomm_hdr *hdr;
---- a/net/bluetooth/rfcomm/tty.c
-+++ b/net/bluetooth/rfcomm/tty.c
-@@ -861,7 +861,7 @@ static void rfcomm_tty_set_termios(struc
- 
- 	BT_DBG("tty %p termios %p", tty, old);
- 
--	if (!dev || !dev->dlc || !dev->dlc->session)
-+	if (!dev || !dev->dlc)
- 		return;
- 
- 	/* Handle turning off CRTSCTS */
-@@ -982,9 +982,8 @@ static void rfcomm_tty_set_termios(struc
- 	}
- 
- 	if (changes)
--		rfcomm_send_rpn(dev->dlc->session, 1, dev->dlc->dlci, baud,
--				data_bits, stop_bits, parity,
--				RFCOMM_RPN_FLOW_NONE, x_on, x_off, changes);
-+		rfcomm_dlc_send_rpn(dev->dlc, baud, data_bits, stop_bits, parity,
-+				    RFCOMM_RPN_FLOW_NONE, x_on, x_off, changes);
- }
- 
- static void rfcomm_tty_throttle(struct tty_struct *tty)
+-	for (index = MAX_ARG_PAGES - 1; index >= stop; index--) {
++	for (index = MAX_ARG_PAGES; index-- > stop; ) {
+ 		unsigned int offset = index == stop ? bprm->p & ~PAGE_MASK : 0;
+ 		char *src = kmap_local_page(bprm->page[index]) + offset;
+ 		sp -= PAGE_SIZE - offset;
 
 
