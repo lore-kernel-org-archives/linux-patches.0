@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33FE217723;
-	Thu, 30 Jul 2026 15:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A285D32B116;
+	Thu, 30 Jul 2026 15:15:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424544; cv=none; b=o5wUGelbY02l1TaXqEPh+nRL5FrcBode7oDu9BkzJMu/9yKLLUtBoX6EH9xOrJKWrmLT1udzZQqnpY/+UJe5PXFXjesi7upsWCI/lmScilGhVkU/qtMNHZ3nPFW+gA78lztF6gIvIpJphbGkDHKyobEZIKiNGqdK8dxtr3kJGZo=
+	t=1785424547; cv=none; b=l8pW1aHTXsUT8CekPytxDmVFHMhBCmvVv1vXEkvXML1zhZVzox/1Fr+Br40cUONVLsBxHX0SiDUlrBmP1K0Z4efhW6HVw20+7Vee7+Zoflju7+CMZOMmjDo/utLx2NqFvuKyQ5url3AibhGOsAApCZh9qpPwhjYAdtpETPCxDq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424544; c=relaxed/simple;
-	bh=cFhpfbbtEycP1E8q4XCWJ6BCar4haQTnKV/GCivizEE=;
+	s=arc-20240116; t=1785424547; c=relaxed/simple;
+	bh=8l5rG4z5o/QuO+ehRIahBFoLptR+b1aSdq8DGXOmgzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JMZUXLSWKlRF9pweikx6I8Sb/RNCHlHeK7UwJRTBuSnkAn9sUQ195o8UaiTEs9dkALzXHEuSJnEke1c+ahYV1GNzg10bsoiSlwCIMXL58YvRXkGYsbSh25gSBPgY5dNAg/xPYfX4ktrKQhUdrbDiWS7kOwUFjk4ftqk9QcquKvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQPagv6K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XABl1bfYf+zwriHhJfBqP5LCuy2csASHM8zBP1ASzVYoDXJYuvdc1r/1+O4rZ7GLlsSLpC0dkSeUdf46GKcJvXJDcpIMM7C2eJr2kMcSnzXEV7wa3znT30EbrJmUd4m3qWHiXMKpDu5S74ME3vciWaA+F96tC6Jpo+btp8M8LOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AblZ0jBl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQPagv6K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194E11F000E9;
-	Thu, 30 Jul 2026 15:15:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AblZ0jBl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 027901F000E9;
+	Thu, 30 Jul 2026 15:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424543;
-	bh=Z1/QFYoeL5/cBWrcI44L8o+Nq8KPEVbJe8uTOfiJDzo=;
+	s=korg; t=1785424546;
+	bh=0ZzMJTKVPmFPl0FKTnwKc7v25q06t7Typ+4ARx7YCrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QQPagv6K+4YdCAMYSaHaai4CqAl9PJZDh/if5FPXr/2iYT22wLW1riR3vY4+H0E9o
-	 YFwVi8ed9EQoM6CGxXDzJZhO2Tw28EcXhtd4VRWS1jW/qeAdBch0J8Hv48Tud7J6Wl
-	 aExq96TFfoe6XHjLqRZP7/kDbMfuFQGyxCFC3hko=
+	b=AblZ0jBlHIC1JQrxyiEtw/UVEwF2t5exfmrtqtzcmNn8dLY0YSnnPNWFtXvQNVz8E
+	 f2UgsTnNtHPezgvTHQ2A9ySUl1fpP2QTGBZ6OB+0gKhJe+7OKZoZ4dPDXRpmjHpw8E
+	 I26roxysUP55XUPMcHzwt/v9RPOn31tKPjzhA1Ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valery Borovsky <vebohr@gmail.com>,
+	Ross Cawston <ross@r-sc.ca>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 431/675] media: sun4i-csi: Return queued buffers on start_streaming() failure
-Date: Thu, 30 Jul 2026 16:12:41 +0200
-Message-ID: <20260730141454.299618681@linuxfoundation.org>
+Subject: [PATCH 6.18 432/675] media: synopsys: hdmirx: Fix HPD lane hold time
+Date: Thu, 30 Jul 2026 16:12:42 +0200
+Message-ID: <20260730141454.321674574@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,51 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valery Borovsky <vebohr@gmail.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-commit bbba3e260a62810a717b4442a3bb96d0ec0f6309 upstream.
+commit d1162a5adbb5e95953d460b5bde3a04cd4473fe9 upstream.
 
-The vb2 framework hands buffers to the driver via buf_queue() before
-calling start_streaming().  If start_streaming() returns an error
-without first returning those buffers via vb2_buffer_done(),
-vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
-buffers leak.
+Increase time of holding HPD lane low by 50ms. This fixes EDID change not
+detected by source/display side.
 
-sun4i_csi_start_streaming() returned -EINVAL when no matching CSI
-format could be found, before any setup (scratch buffer allocation,
-pipeline start) had been performed.  The remaining error paths already
-converge on the err_clear_dma_queue label, which calls
-return_all_buffers(..., VB2_BUF_STATE_QUEUED) under csi->qlock.  Jump
-to that label directly: the intermediate err_disable_device /
-err_disable_pipeline / err_free_scratch_buffer labels are skipped,
-which is correct because nothing they would undo has happened yet.
-
-This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
-Return queued buffers on start_streaming() failure").
-
-Fixes: 577bbf23b758 ("media: sunxi: Add A10 CSI driver")
+Fixes: 7b59b132ad43 ("media: platform: synopsys: Add support for HDMI input driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Reported-by: Ross Cawston <ross@r-sc.ca>
+Closes: https://lore.kernel.org/linux-rockchip/20260209061654.54757-1-ross@r-sc.ca/
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/sunxi/sun4i-csi/sun4i_dma.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/sunxi/sun4i-csi/sun4i_dma.c
-+++ b/drivers/media/platform/sunxi/sun4i-csi/sun4i_dma.c
-@@ -234,8 +234,10 @@ static int sun4i_csi_start_streaming(str
- 	int ret;
+--- a/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
++++ b/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
+@@ -504,9 +504,9 @@ static void hdmirx_hpd_ctrl(struct snps_
+ 	hdmirx_writel(hdmirx_dev, CORE_CONFIG,
+ 		      hdmirx_dev->hpd_trigger_level_high ? en : !en);
  
- 	csi_fmt = sun4i_csi_find_format(&csi->fmt.pixelformat, NULL);
--	if (!csi_fmt)
--		return -EINVAL;
-+	if (!csi_fmt) {
-+		ret = -EINVAL;
-+		goto err_clear_dma_queue;
-+	}
+-	/* 100ms delay as per HDMI spec */
++	/* 100ms delay as per HDMI spec + extra 50ms to cover internal delay */
+ 	if (!en)
+-		msleep(100);
++		msleep(100 + 50);
+ }
  
- 	dev_dbg(csi->dev, "Starting capture\n");
- 
+ static void hdmirx_write_edid_data(struct snps_hdmirx_dev *hdmirx_dev,
 
 
