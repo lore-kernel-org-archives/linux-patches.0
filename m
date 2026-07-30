@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D4E43C7D7;
-	Thu, 30 Jul 2026 14:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1853431488;
+	Thu, 30 Jul 2026 14:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422331; cv=none; b=DZToicsBaA37VyA7RUJ4GnePB+3EF8ZeTcyAtNaduVXw1ntUKoADc5ZLjbD27EjdjBOcEelCpgAWPpDTmsFzdY6PH6eMJtZSilbIwAW433uWvrUOS6dorrXIdXwJ2umsy9D5d1Oh0wVIwY7cjTeINlh519djaa146psRhEU4AdE=
+	t=1785422334; cv=none; b=Dh34/zuuFliR3cFRs7Ih2xUTJ9CNFj6VvC6ph7HHmg9c06/Vs9v//w2D+RekwlS86On8fQxA5iamG4pPNXQQ8Glg97IIk8BGWTo3NBHDQfJO5NHqgynmIk0kLAGXFa8NjX6Nk0dWBuF6qAvAtAlYXjrWuy6G+aqcM3FiTWlRfR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422331; c=relaxed/simple;
-	bh=j5tseR3VkArdjxcZYFYuZ1tkpShF3bezfAWh01FrOqw=;
+	s=arc-20240116; t=1785422334; c=relaxed/simple;
+	bh=HPzBsE1PO+gpD7WM8k2ZkE9/tPX3ScUbVYqthi96Fgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jK6KmGcj3QldGzxpz3tAYUXw7rdarKKBZmvTHX82pjoPkSM6dARQaXIJ02giV/72hQXKuYE9a4fDZa1tOh3HAGV+6ZkOKcSGikH4MpGHp7WIu7pmQNJhdBeVHZ78eA6pV5xXtBTkRm8AbyjKc+gyUs0LQbSukp/rQ2U1eDURpKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6kZMonq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=kshR4otP9FXgdX7/fIlFGC1YV7VUCNbv1wDlQYFZ1fOMn26ksN2DI+R//oxYy9Qu7W2YSs/6iD0Y1n8N95RG9quuMC50MDMJpx7rtUe8GwQqTbbgH7s6fg37jGdBfxpPUAFZvXp0y128s0CBmYt4ealbHLXQ1LarxZYmuK5Ecko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9YRQHIh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6kZMonq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408AD1F000E9;
-	Thu, 30 Jul 2026 14:38:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9YRQHIh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC821F000E9;
+	Thu, 30 Jul 2026 14:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422329;
-	bh=PtlTo3dcI0qHYnBXn+5/SaY9KAZIsQPVCSsrrL+fqoM=;
+	s=korg; t=1785422332;
+	bh=VJLkqQJh7dYOXona05xcefxj8WHQkzMb8xCdfefMGi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O6kZMonqhWdmXSBh1ut3entKMUW8JanGT/TXsLiMjT5x3B6zhvDwcSpoiXTY+Dg4Y
-	 39TIMu6VqTX93Xc0ySn3hXOPUSCf+ZqTk24pugrA9rMR48q/5B5Eu5eWJkS2p3FeJU
-	 RTjZ/q6BOcb0FQENUbpNyNj4Ic1bevphtFvchYAk=
+	b=o9YRQHIhukWB9d8UrkNhxMzAnoON8wbnsCqFoRhgAzym4M/UnxI20Beon4V4crtVw
+	 e5nLMe57yvvNE71f8S22vyuhAai0MWnFIYUpjU9noyfjyOgg8Loa9Tbn1zt2N3xDYX
+	 B+vEufJuZF7gDlSpTX9jw+JSw58zLD26uurZl3ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
 	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
-Subject: [PATCH 7.1 400/744] drm/xe/rtp: Add RING_FORCE_TO_NONPRIV_DENY to OA whitelists
-Date: Thu, 30 Jul 2026 16:11:13 +0200
-Message-ID: <20260730141452.793952570@linuxfoundation.org>
+Subject: [PATCH 7.1 401/744] drm/xe: Fix PTE index in xe_vm_populate_pgtable() for chunked binds
+Date: Thu, 30 Jul 2026 16:11:14 +0200
+Message-ID: <20260730141452.814467392@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,45 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashutosh Dixit <ashutosh.dixit@intel.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-commit e70086a3a06d276b4a5d9a2c51c9330c6cf72780 upstream.
+commit 34a4dd45cf210c04fee773b0dbc350aec285f03c upstream.
 
-Unconditionally whitelisting OA registers is a security violation. Set
-RING_FORCE_TO_NONPRIV_DENY bit in OA nonpriv slots, so that OA registers
-don't get whitelisted by default after probe, gt reset, resume and engine
-reset.
+xe_vm_populate_pgtable() indexed the source PTE array (update->pt_entries)
+by the per-call loop counter, assuming each call starts at the first entry
+of the update. That holds for the CPU bind path
+(xe_migrate_update_pgtables_cpu), which populates a whole update in a single
+call, but not for the GPU bind path: write_pgtable() splits an update into
+MAX_PTE_PER_SDI (510) sized MI_STORE_DATA_IMM chunks, invoking the populate
+callback once per chunk with an advancing qword_ofs but a fresh command-
+buffer destination pointer.
 
-Fixes: 828a8eaf37c3 ("drm/xe/oa: Add MMIO trigger support")
-Cc: stable@vger.kernel.org # v6.12+
-Suggested-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Link: https://patch.msgid.link/20260615224227.34880-2-ashutosh.dixit@intel.com
-(cherry picked from commit 90511bdcfda97211c01f1d945d4ea616578d8fca)
+As a result, every chunk after the first re-read pt_entries from index 0
+instead of from its true offset, so PTEs beyond the first 510 entries of a
+single update were programmed with the wrong physical pages, shifting the
+mapping by exactly MAX_PTE_PER_SDI pages.
+
+This stayed latent because a single update only exceeds 510 qwords when a
+large (e.g. 2M) region is bound as individual 4K PTEs rather than a single
+huge-page entry, which happens when the backing store is sufficiently
+fragmented. It was surfaced by the BO defrag path, which deliberately
+rebinds such fragmented ranges via the GPU bind path, producing
+deterministic data corruption offset by 510 pages.
+
+Index pt_entries by the chunk's absolute offset relative to update->ofs so
+both the CPU and GPU paths pick the correct entries.
+
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Cc: stable@vger.kernel.org
+Assisted-by: GitHub_Copilot:claude-opus-4.8
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patch.msgid.link/20260702012434.3861171-1-matthew.brost@intel.com
+(cherry picked from commit e6f2d0b757c4fb577a513c577140109d1d292a9a)
 Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_reg_whitelist.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/xe/xe_pt.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_reg_whitelist.c
-+++ b/drivers/gpu/drm/xe/xe_reg_whitelist.c
-@@ -90,10 +90,12 @@ static const struct xe_rtp_entry_sr regi
- 				   RING_FORCE_TO_NONPRIV_ACCESS_RW))
- 	},
+--- a/drivers/gpu/drm/xe/xe_pt.c
++++ b/drivers/gpu/drm/xe/xe_pt.c
+@@ -1025,12 +1025,22 @@ xe_vm_populate_pgtable(struct xe_migrate
+ 	u64 *ptr = data;
+ 	u32 i;
  
-+#define WHITELIST_DENY(r, f) WHITELIST(r, (f) | RING_FORCE_TO_NONPRIV_DENY)
++	/*
++	 * @qword_ofs is the absolute entry offset within the page table, while
++	 * @ptes is indexed relative to @update->ofs (its first entry). The GPU
++	 * path (write_pgtable) splits a single update into MAX_PTE_PER_SDI-sized
++	 * chunks, calling this with an advancing @qword_ofs but a fresh @data
++	 * pointer per chunk, so translate back into a @ptes index rather than
++	 * assuming the chunk starts at ptes[0].
++	 */
+ 	for (i = 0; i < num_qwords; i++) {
++		u32 idx = qword_ofs - update->ofs + i;
 +
- #define WHITELIST_OA_MMIO_TRG(trg, status, head) \
--	WHITELIST(trg, RING_FORCE_TO_NONPRIV_ACCESS_RW), \
--	WHITELIST(status, RING_FORCE_TO_NONPRIV_ACCESS_RD), \
--	WHITELIST(head, RING_FORCE_TO_NONPRIV_ACCESS_RD | RING_FORCE_TO_NONPRIV_RANGE_4)
-+	WHITELIST_DENY(trg, RING_FORCE_TO_NONPRIV_ACCESS_RW), \
-+	WHITELIST_DENY(status, RING_FORCE_TO_NONPRIV_ACCESS_RD), \
-+	WHITELIST_DENY(head, RING_FORCE_TO_NONPRIV_ACCESS_RD | RING_FORCE_TO_NONPRIV_RANGE_4)
+ 		if (map)
+ 			xe_map_wr(tile_to_xe(tile), map, (qword_ofs + i) *
+-				  sizeof(u64), u64, ptes[i].pte);
++				  sizeof(u64), u64, ptes[idx].pte);
+ 		else
+-			ptr[i] = ptes[i].pte;
++			ptr[i] = ptes[idx].pte;
+ 	}
+ }
  
- #define WHITELIST_OAG_MMIO_TRG \
- 	WHITELIST_OA_MMIO_TRG(OAG_MMIOTRIGGER, OAG_OASTATUS, OAG_OAHEADPTR)
 
 
