@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5153B38B8;
-	Thu, 30 Jul 2026 15:58:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDD12D0602;
+	Thu, 30 Jul 2026 15:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427108; cv=none; b=V+8QrnpQkw7uKRc4d2hUa1LLhGPNFrv6muvlVr7jsEmTKTYJy7MdhPVofIfDD9krFh3gnEtp+5FdrROCvfmQLcqEVNKqkOi2uRSng9trpQwpB3OcrtoNkJhLWcTwUu5WRqNvsSMFJeBbzETSpDQp9YOM2nFrheVjo7OLQuBD3NI=
+	t=1785427111; cv=none; b=bB7n63NGZ/r9TegZI7GqVnUvEHKvNZzXqKjLe4vCjhnmYzkF/1xpQOIoL4s0RkyWtObYzR1mnr8oQX8RvFtYsRhk3dzgNG9dSKCf42csYiPnj6LdTn486lisgen63cfQUP0IT5oNVBCr1m/gawfvA/V3jg39ODZaY97H4eRiLZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427108; c=relaxed/simple;
-	bh=e1G2bM5JEQjRfRw3fzBe7WtBhvCzhjYdS7W0KPZhIM0=;
+	s=arc-20240116; t=1785427111; c=relaxed/simple;
+	bh=jJsLnl/mIDB8crOSMppB06lhiVaCPe+8XnhYYoeyaWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KNvwXfuld5zYz/FL/mx/g6EsBisZUcgB/4zCL9HUBJhLDTvgE/dAbgn39fZhwv3IjRWiorx4S1iIUlqQWl1YjETkPGGK/8E8DVkpb9vFJPhFLsHRXbAKozKse2A0bKRXhxXkUz1PmGNJT7LkFxGgsf6ty7KvR3HNeMDwoMpz110=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ddgx5DG5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HUD/DywDa13V74Pp60dJbWM3H2QQvutsWLQd3G73yHXsJEupbhOhYxezEoljVOakZ7fFxYi98EdONlAjOmBf51/SfnbQf9Fbs2JAmr4Q4imCcL4t6Y2hJm7Kxcs97Kcguve+qWbVtc6RZl7nF0OlMTAZAEx7gP4ov59CKwqlB+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Y6HAcCX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddgx5DG5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9842C1F000E9;
-	Thu, 30 Jul 2026 15:58:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Y6HAcCX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE391F000E9;
+	Thu, 30 Jul 2026 15:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427107;
-	bh=acX2VM7UUJ9R/LrlLtK0Mssq1sjDPYKp2ahqaPMlcK0=;
+	s=korg; t=1785427110;
+	bh=w7832UCCNaK8kHqCrJto5d5WfPqsDSEAfEKCVZVPIYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ddgx5DG5mPEwij+cRdFSmk508tNeA+FV6j/4U37Bqg8Z7BpLkGLr3NdH9Nk+P/Slz
-	 lqqwRq/tdtRRRNj7RebHmFpsX66QkiTbemOd1AGrmuYfvN2cJsXFWTVloOnon8QxnE
-	 j2m9oZGBlNlddmV9qAa9zGMwcCJY7Vm9qoFMXX/0=
+	b=0Y6HAcCXSZxuzt4u4+QaYUmeJXfPnc72ywuu3QU2mKgnrkLyh4Xta3jUWNBW88SXF
+	 MsN+5YFZXeCS4Cj+IGq+TuglmQKohx+9Ict1A5Ys0UHEQLZPqde6H8/Fdq+j7j2cjh
+	 Pket3i6WE/8EcwJTyYWN1QJUT5eBYhh5B7xuUNB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 037/484] RDMA/umem: Add support for creating pinned DMABUF umem with a given dma device
-Date: Thu, 30 Jul 2026 16:08:54 +0200
-Message-ID: <20260730141424.229634933@linuxfoundation.org>
+Subject: [PATCH 6.6 055/484] wifi: mac80211_hwsim: clamp virtio RX length before skb_put
+Date: Thu, 30 Jul 2026 16:09:12 +0200
+Message-ID: <20260730141424.623346790@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,147 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yishai Hadas <yishaih@nvidia.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 682358fd35dece838e6ae2d9d6a69fc0b9a9d411 ]
+[ Upstream commit 10a2b430f8f06ae14b9590b6f6faa6b588ef0654 ]
 
-Add support for creating pinned DMABUF umem with a specified DMA device
-instead of the DMA device of the given IB device.
+hwsim_virtio_rx_work() passes the virtqueue used-ring length reported by
+the device straight to skb_put() on a fixed-size receive skb. A backend
+reporting a length larger than the skb tailroom drives skb_put() past the
+buffer end and hits skb_over_panic() -- a host-triggerable guest panic
+(denial of service).
 
-This API will be utilized in the upcoming patches of the series when
-multiple path DMAs are implemented.
+Clamp the length to the skb's available room before skb_put(). A
+conforming device never reports more than the posted buffer size, so valid
+frames are unaffected; a truncated over-report then fails the
+length/header checks in hwsim_virtio_handle_cmd() and is dropped, so
+truncating rather than dropping here cannot be turned into a parsing
+problem.
 
-Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
-Link: https://patch.msgid.link/038aad36a43797e5591b20ba81051fc5758124f9.1722512548.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: a846aecb931b ("RDMA/irdma: Prevent rereg_mr for non-mem regions")
+Fixes: 5d44fe7c9808 ("mac80211_hwsim: add frame transmission support over virtio")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260620-b4-disp-474bee37-v1-1-1a4d37f3e2d4@proton.me
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/umem_dmabuf.c | 45 ++++++++++++++++++++-------
- include/rdma/ib_umem.h                | 15 +++++++++
- 2 files changed, 49 insertions(+), 11 deletions(-)
+ drivers/net/wireless/virtual/mac80211_hwsim.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/core/umem_dmabuf.c b/drivers/infiniband/core/umem_dmabuf.c
-index 66f5760197479d..674a4b45e7bfe7 100644
---- a/drivers/infiniband/core/umem_dmabuf.c
-+++ b/drivers/infiniband/core/umem_dmabuf.c
-@@ -110,10 +110,12 @@ void ib_umem_dmabuf_unmap_pages(struct ib_umem_dmabuf *umem_dmabuf)
- }
- EXPORT_SYMBOL(ib_umem_dmabuf_unmap_pages);
+diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
+index bf12ff0ab06ab3..c9bfea77d0ecae 100644
+--- a/drivers/net/wireless/virtual/mac80211_hwsim.c
++++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
+@@ -6383,6 +6383,7 @@ static void hwsim_virtio_rx_work(struct work_struct *work)
  
--struct ib_umem_dmabuf *ib_umem_dmabuf_get(struct ib_device *device,
--					  unsigned long offset, size_t size,
--					  int fd, int access,
--					  const struct dma_buf_attach_ops *ops)
-+static struct ib_umem_dmabuf *
-+ib_umem_dmabuf_get_with_dma_device(struct ib_device *device,
-+				   struct device *dma_device,
-+				   unsigned long offset, size_t size,
-+				   int fd, int access,
-+				   const struct dma_buf_attach_ops *ops)
- {
- 	struct dma_buf *dmabuf;
- 	struct ib_umem_dmabuf *umem_dmabuf;
-@@ -152,7 +154,7 @@ struct ib_umem_dmabuf *ib_umem_dmabuf_get(struct ib_device *device,
+ 	skb->data = skb->head;
+ 	skb_reset_tail_pointer(skb);
++	len = min(len, skb_end_offset(skb));
+ 	skb_put(skb, len);
+ 	hwsim_virtio_handle_cmd(skb);
  
- 	umem_dmabuf->attach = dma_buf_dynamic_attach(
- 					dmabuf,
--					device->dma_device,
-+					dma_device,
- 					ops,
- 					umem_dmabuf);
- 	if (IS_ERR(umem_dmabuf->attach)) {
-@@ -168,6 +170,15 @@ struct ib_umem_dmabuf *ib_umem_dmabuf_get(struct ib_device *device,
- 	dma_buf_put(dmabuf);
- 	return ret;
- }
-+
-+struct ib_umem_dmabuf *ib_umem_dmabuf_get(struct ib_device *device,
-+					  unsigned long offset, size_t size,
-+					  int fd, int access,
-+					  const struct dma_buf_attach_ops *ops)
-+{
-+	return ib_umem_dmabuf_get_with_dma_device(device, device->dma_device,
-+						  offset, size, fd, access, ops);
-+}
- EXPORT_SYMBOL(ib_umem_dmabuf_get);
- 
- static void
-@@ -184,16 +195,18 @@ static struct dma_buf_attach_ops ib_umem_dmabuf_attach_pinned_ops = {
- 	.move_notify = ib_umem_dmabuf_unsupported_move_notify,
- };
- 
--struct ib_umem_dmabuf *ib_umem_dmabuf_get_pinned(struct ib_device *device,
--						 unsigned long offset,
--						 size_t size, int fd,
--						 int access)
-+struct ib_umem_dmabuf *
-+ib_umem_dmabuf_get_pinned_with_dma_device(struct ib_device *device,
-+					  struct device *dma_device,
-+					  unsigned long offset, size_t size,
-+					  int fd, int access)
- {
- 	struct ib_umem_dmabuf *umem_dmabuf;
- 	int err;
- 
--	umem_dmabuf = ib_umem_dmabuf_get(device, offset, size, fd, access,
--					 &ib_umem_dmabuf_attach_pinned_ops);
-+	umem_dmabuf = ib_umem_dmabuf_get_with_dma_device(device, dma_device, offset,
-+							 size, fd, access,
-+							 &ib_umem_dmabuf_attach_pinned_ops);
- 	if (IS_ERR(umem_dmabuf))
- 		return umem_dmabuf;
- 
-@@ -215,6 +228,16 @@ struct ib_umem_dmabuf *ib_umem_dmabuf_get_pinned(struct ib_device *device,
- 	ib_umem_release(&umem_dmabuf->umem);
- 	return ERR_PTR(err);
- }
-+EXPORT_SYMBOL(ib_umem_dmabuf_get_pinned_with_dma_device);
-+
-+struct ib_umem_dmabuf *ib_umem_dmabuf_get_pinned(struct ib_device *device,
-+						 unsigned long offset,
-+						 size_t size, int fd,
-+						 int access)
-+{
-+	return ib_umem_dmabuf_get_pinned_with_dma_device(device, device->dma_device,
-+							 offset, size, fd, access);
-+}
- EXPORT_SYMBOL(ib_umem_dmabuf_get_pinned);
- 
- void ib_umem_dmabuf_release(struct ib_umem_dmabuf *umem_dmabuf)
-diff --git a/include/rdma/ib_umem.h b/include/rdma/ib_umem.h
-index eac3c05278c153..3441ba9f2a0daf 100644
---- a/include/rdma/ib_umem.h
-+++ b/include/rdma/ib_umem.h
-@@ -122,6 +122,11 @@ struct ib_umem_dmabuf *ib_umem_dmabuf_get_pinned(struct ib_device *device,
- 						 unsigned long offset,
- 						 size_t size, int fd,
- 						 int access);
-+struct ib_umem_dmabuf *
-+ib_umem_dmabuf_get_pinned_with_dma_device(struct ib_device *device,
-+					  struct device *dma_device,
-+					  unsigned long offset, size_t size,
-+					  int fd, int access);
- int ib_umem_dmabuf_map_pages(struct ib_umem_dmabuf *umem_dmabuf);
- void ib_umem_dmabuf_unmap_pages(struct ib_umem_dmabuf *umem_dmabuf);
- void ib_umem_dmabuf_release(struct ib_umem_dmabuf *umem_dmabuf);
-@@ -170,6 +175,16 @@ ib_umem_dmabuf_get_pinned(struct ib_device *device, unsigned long offset,
- {
- 	return ERR_PTR(-EOPNOTSUPP);
- }
-+
-+static inline struct ib_umem_dmabuf *
-+ib_umem_dmabuf_get_pinned_with_dma_device(struct ib_device *device,
-+					  struct device *dma_device,
-+					  unsigned long offset, size_t size,
-+					  int fd, int access)
-+{
-+	return ERR_PTR(-EOPNOTSUPP);
-+}
-+
- static inline int ib_umem_dmabuf_map_pages(struct ib_umem_dmabuf *umem_dmabuf)
- {
- 	return -EOPNOTSUPP;
 -- 
 2.53.0
 
