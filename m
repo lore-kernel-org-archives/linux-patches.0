@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E66E441638;
-	Thu, 30 Jul 2026 14:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDAA442139;
+	Thu, 30 Jul 2026 14:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421228; cv=none; b=XmL0wsEKmi3zOLcMN9JtDC4DrJ3hW/laHr/j9JDTr+zRj5OoBsTJ3sYKIBzMYuKXZMO5eUUHWDG6ICZFLoQUYGV9oX9bumlM0mW2FnCif/lRRkO7Os9tgHnBzQCDaEMd4OfPYF39HyVd6N86T00sj3hVzrQ/5pYjFx2+WFJ+mFI=
+	t=1785421232; cv=none; b=uAA2SBrVId+MJcRuC+HMEjnWiqccB5ogw4SRSjUTL8HmB3BcNTBUwO/9+uw6YEmLvoZ6ne7XFkDGlq8R9nFjjL5JrvLj6Be7FVQaBj9Gkx198wfwqDJ6O0g8FORkfkiorI8v9R8mg0JFpY28RMZGnTYR87L2tP+mu3eQtVSV7M0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421228; c=relaxed/simple;
-	bh=1gZxpWpcX2uIHKdZeVKDod9zGkWYx1eORWtk3defqMA=;
+	s=arc-20240116; t=1785421232; c=relaxed/simple;
+	bh=z5UOBzjxXXe9U5ibQXUyZdMDBLWQcE7YXhBP5WX5Tdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tygreCax0A/wGlkuXT0ORlMMLkNdW9q+hLhFVCmsZY/Ip2S1CMvzLXWjcJ92pRHSFQqWCupl+FJLLhgRXYWrHeLO89AW8p15JKBBuy/j5IcLu1Zor2OYcpozVuMdIfAe2Z9WZonZoz0RSKepHgaTnQQ8KSDmkXSZhtp3NzSWaZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qA+1e7MS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aWBEYOrMyQJCqa16qT226MteU9LqucxgdcIoMl3mRMaiMuFTjxoM9fB5YkaCIzs38hcHg+jfE1BkB2f1ZBmauPmk0TWTTTxzqpnlR8Sk8KL9s+sb+wtEUCuMxSme2OtxMHtD1rE5lFdjOC8ycKwsC2/xn/R3Jsh7e2+Wwqq+c0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpfn1JBZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qA+1e7MS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1E2A1F000E9;
-	Thu, 30 Jul 2026 14:20:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpfn1JBZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973D91F000E9;
+	Thu, 30 Jul 2026 14:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421227;
-	bh=wnJzqxk2aTgvvi+cQUXqELuZ3VknBnTLWkTDabAeKL8=;
+	s=korg; t=1785421230;
+	bh=s8ML0OnEKRlRndiGmiygkA+mqytms6LRqiBXhE7Q/wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qA+1e7MSkz3LBENKjBgzPrvNEUy3GzxPuxyxWS9BeSXKxWS3CMQe87wOlPPlN12ix
-	 OimWWjceRV9TjEyjxwQjckBTMn8Lj4/OG736TtXzbmF3VhrjdOCcZr/fuxU2pJeXhX
-	 2/uOA8VFpeSnjkOsuQOF3b+a037bgOywhpjuXGDU=
+	b=xpfn1JBZKW56bCKlYkiAAzD5U3CzU3593Fi9XnqfIXQIhNzOZjasRGGAvQEf1FJHO
+	 wAX/+Cnji9SWevymBkUG+nri57dlO+hiBkna3cTTTEllVAvjEST7X1vKPK2dcIUSwa
+	 RbW3aQKn9IHVis9gckAXSaUsHgng/CMJKwuERNl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
 	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 009/744] gpu: host1x: Fix use-after-free in host1x_bo_clear_cached_mappings
-Date: Thu, 30 Jul 2026 16:04:42 +0200
-Message-ID: <20260730141444.479573434@linuxfoundation.org>
+Subject: [PATCH 7.1 010/744] crypto: tegra - Dont touch bo refcount in host1x bo pin/unpin
+Date: Thu, 30 Jul 2026 16:04:43 +0200
+Message-ID: <20260730141444.500724840@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -54,39 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikko Perttunen <mperttunen@nvidia.com>
 
-[ Upstream commit 266cddf7bd0f6c79b6c0633aef742a22bf70265b ]
+[ Upstream commit f8c9c57d750346abd213ffed2ae3cacb0268e9f1 ]
 
-__host1x_bo_unpin() drops the last reference to the mapping and frees
-it, so we can't dereference mapping afterwards. The cache itself
-outlives the mapping, so use the cache local variable instead.
+Since commit "gpu: host1x: Allow entries in BO caches to be freed",
+host1x_bo_pin() and host1x_bo_unpin() handle the bo's refcount
+themselves. .pin/.unpin callbacks should not adjust it.
 
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/linux-tegra/ah6ErK6f4kVudVIA@stanley.mountain/T/#u
 Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260603-host1x-bocache-leak-fix-v1-1-494101dbfd30@nvidia.com
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/bus.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/tegra/tegra-se-main.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/host1x/bus.c b/drivers/gpu/host1x/bus.c
-index c273a4476f2370..a8cddb3425b428 100644
---- a/drivers/gpu/host1x/bus.c
-+++ b/drivers/gpu/host1x/bus.c
-@@ -1012,10 +1012,10 @@ void host1x_bo_clear_cached_mappings(struct host1x_bo *bo)
- 		if (WARN_ON(!cache))
- 			continue;
+diff --git a/drivers/crypto/tegra/tegra-se-main.c b/drivers/crypto/tegra/tegra-se-main.c
+index e8d8c3a23d7adb..d2f518ef9a103f 100644
+--- a/drivers/crypto/tegra/tegra-se-main.c
++++ b/drivers/crypto/tegra/tegra-se-main.c
+@@ -52,7 +52,7 @@ tegra_se_cmdbuf_pin(struct device *dev, struct host1x_bo *bo, enum dma_data_dire
+ 		return ERR_PTR(-ENOMEM);
  
--		mutex_lock(&mapping->cache->lock);
-+		mutex_lock(&cache->lock);
- 		WARN_ON(kref_read(&mapping->ref) != 1);
- 		__host1x_bo_unpin(&mapping->ref);
--		mutex_unlock(&mapping->cache->lock);
-+		mutex_unlock(&cache->lock);
- 	}
+ 	kref_init(&map->ref);
+-	map->bo = host1x_bo_get(bo);
++	map->bo = bo;
+ 	map->direction = direction;
+ 	map->dev = dev;
+ 
+@@ -93,7 +93,6 @@ static void tegra_se_cmdbuf_unpin(struct host1x_bo_mapping *map)
+ 	dma_unmap_sgtable(map->dev, map->sgt, map->direction, 0);
+ 	sg_free_table(map->sgt);
+ 	kfree(map->sgt);
+-	host1x_bo_put(map->bo);
+ 
+ 	kfree(map);
  }
- EXPORT_SYMBOL(host1x_bo_clear_cached_mappings);
 -- 
 2.53.0
 
