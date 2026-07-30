@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FA63769F5;
-	Thu, 30 Jul 2026 15:20:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C804E3769F5;
+	Thu, 30 Jul 2026 15:20:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424853; cv=none; b=ekLe3Fq4pq1MXW4Ex96RG/Bf3/3fBnxwrufnunSTxFuXbOp5WXXKXQdmjjC4Yyc8Kwod1b2ZBFqfmmsvumCkzMj7CitQzUvCjEYZMzDylWR5TNZO9nvIsPX8IxocyQ0tpNKJ3X+z6WFD6Yzis0XvSbB5fmWEM1mkcfdi3rMiND4=
+	t=1785424855; cv=none; b=rva25knu0VI2+i3VqbRKTAsNlbiAe7b/xuRCEGQjA1nRC6hvarebDt79mFw5wzVvnSZPuQudOFXoQsBqHZNsajFcVxbLq9ko94GDitDeRyupEru5b/OTYJUlupXp6il1DZSKjSENJFHVsV1vdaRt0Xw3B+XzNw6yqhh09LVGiic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424853; c=relaxed/simple;
-	bh=2fEsvxMlnpenUbz1bA1k0VFpknBRalyo8TjbxBd08jc=;
+	s=arc-20240116; t=1785424855; c=relaxed/simple;
+	bh=yosHHMr2Av/Ehdkbqkg2Z8uGIrpxRub7i7Xr4TUJZBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G82a0qnW1u5a2X4V4ZIfbLPa/CN9nxrGNezBlKoyDLysau+U+iToJP1qjcj5/diridDUuF8tp1+bWqsaKcilldt4JXDQmiFlIptl/oUAkg+IAKY9tlB01uqU4cioZYKG3LpZJLG5jfQJXsLFpJBkv4f17UMEnImUZtOaCbmwCZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Le9fMmOr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fOxPUifaYbY0gEpVjNXQH2Bs/Jvpu2umiIxH9hPGZOlbG0TOrGeDoJGhXyzqYbcG+CuESafjnfi923SHG7xipHYQL39WQhQeLjmV8xStxMcUpL12f6N6tFcr9kWc7KbsTCLPJg2ZvcZk4vWq36PKyyFboJXCDHxrA5Dok5Os1FY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjgnujHb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Le9fMmOr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1E61F000E9;
-	Thu, 30 Jul 2026 15:20:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjgnujHb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D691F000E9;
+	Thu, 30 Jul 2026 15:20:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424851;
-	bh=y725PXA2sxUkWRW9kEwLn3AlWpC7b8QhVw5Z6CkAeT8=;
+	s=korg; t=1785424854;
+	bh=SR98Bwn3rhzs9WMcRpJoKOS8RqkuKLfpyOY3gLn41bk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Le9fMmOrLfu+G27vmqlDnMfPUqFqKuZWeTMRr9ORSVgJYkboDYN6nhfSiqr6L5MRO
-	 yF2i2HA6fLP3KxMO2U/DUsL0hcg+moGT+ANk0E46QE67wCsmcil671m3C8SGznT+Nq
-	 r/IxZefr7D8kQggINt8qevAUm0ieDzvX3wtF4/hE=
+	b=GjgnujHbP4XIj5KUtsgqWJ2u+CiiM36B/ZGR4s9oW6HdisYhtDFQu14KqPm4FXvZa
+	 KsnHWSb4MNMefb0ZwhXBC+nwv9fB6okpiv/5MIZ2ZcpyxCO+X0POppyT1xwviHXMhR
+	 E88uTwBUAptZZ27mtcGn1oLBjqHNLFbUndDjJpdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
+	Manjunath Patil <manjunath.b.patil@oracle.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 538/675] net/iucv: fix use-after-free of a severed iucv_path
-Date: Thu, 30 Jul 2026 16:14:28 +0200
-Message-ID: <20260730141456.578788027@linuxfoundation.org>
+Subject: [PATCH 6.18 539/675] net/mlx5e: Use sender devcom for MPV master-up
+Date: Thu, 30 Jul 2026 16:14:29 +0200
+Message-ID: <20260730141456.600319734@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,61 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Manjunath Patil <manjunath.b.patil@oracle.com>
 
-commit be7cc4656eb1f54029610e82d1f0fdd3f9b5ec0a upstream.
+commit e32649b4bad90a6216d8e93cd7dd050af8ac9740 upstream.
 
-af_iucv queues not-yet-received message notifications on iucv->message_q,
-each holding a raw pointer to the connection's iucv_path.  When the peer
-severs the connection, iucv_sever_path() frees that path with
-iucv_path_free() but leaves the notifications queued.  A later recvmsg()
-drains message_q via iucv_process_message_q() and hands the stale path to
-message_receive() -- a use-after-free of the freed iucv_path.
+After PCIe DPC recovery, mlx5 reloads the affected functions and
+replays multiport affiliation events. In the reported failure, the
+first relevant device error was:
 
-Drop the queued notifications when the path is severed; once the path is
-gone they can no longer be received.  This also frees the notifications
-leaked when a socket is closed with messages still queued.
+  pcieport 0000:10:01.1: DPC: containment event
+  pcieport 0000:10:01.1: PCIe Bus Error: severity=Uncorrected (Fatal)
+  pcieport 0000:10:01.1:    [ 5] SDES                   (First)
 
-Fixes: f0703c80e515 ("[AF_IUCV]: postpone receival of iucv-packets")
-Closes: https://sashiko.dev/#/patchset/20260705-b4-disp-fc79c0dc-v1-1-d2cdcb57afa9@proton.me?part=1
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260707-b4-disp-783fedbb-v1-1-463b9dbda2ea@proton.me
+mlx5 recovered the PCI functions and resumed 0000:11:00.1. During
+that resume, RDMA multiport binding replayed
+MLX5_DRIVER_EVENT_AFFILIATION_DONE and mlx5e sent
+MPV_DEVCOM_MASTER_UP. The host then panicked with:
+
+  BUG: kernel NULL pointer dereference, address: 0000000000000010
+  RIP: mlx5_devcom_comp_set_ready+0x5/0x40 [mlx5_core]
+  RDI: 0000000000000000
+
+Call trace included:
+
+  mlx5_devcom_comp_set_ready
+  mlx5e_devcom_event_mpv
+  mlx5_devcom_send_event
+  mlx5_ib_bind_slave_port
+  mlx5r_mp_probe
+  mlx5_pci_resume
+
+MPV devcom registration publishes mlx5e private data to the component
+peer list before mlx5e_devcom_init_mpv() stores the returned component
+device in priv->devcom. A concurrent master-up event can therefore
+reach a peer whose private data is visible but whose priv->devcom
+backpointer is still NULL.
+
+MPV_DEVCOM_MASTER_UP already carries the sender/master mlx5e private
+data as event_data. The ready bit is stored on the shared devcom
+component, not on an individual peer. Use the sender devcom when
+marking the MPV component ready.
+
+This preserves the readiness transition while avoiding a NULL
+dereference of the peer devcom pointer during affiliation replay after
+PCI error recovery.
+
+Fixes: bf11485f8419 ("net/mlx5: Register mlx5e priv to devcom in MPV mode")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Manjunath Patil <manjunath.b.patil@oracle.com>
+Cc: stable@vger.kernel.org # 6.7+
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260707233911.3651139-1-manjunath.b.patil@oracle.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/iucv/af_iucv.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/iucv/af_iucv.c
-+++ b/net/iucv/af_iucv.c
-@@ -335,6 +335,7 @@ static void iucv_sever_path(struct sock
- 	unsigned char user_data[16];
- 	struct iucv_sock *iucv = iucv_sk(sk);
- 	struct iucv_path *path = iucv->path;
-+	struct sock_msg_q *p, *n;
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -211,11 +211,11 @@ static void mlx5e_disable_async_events(s
  
- 	/* Whoever resets the path pointer, must sever and free it. */
- 	if (xchg(&iucv->path, NULL)) {
-@@ -346,6 +347,19 @@ static void iucv_sever_path(struct sock
- 		} else
- 			pr_iucv->path_sever(path, NULL);
- 		iucv_path_free(path);
-+
-+		/*
-+		 * Message notifications queued on message_q still reference
-+		 * the now freed path; drop them, otherwise a later recvmsg()
-+		 * would pass the freed iucv_path to message_receive() via
-+		 * iucv_process_message_q().
-+		 */
-+		spin_lock_bh(&iucv->message_q.lock);
-+		list_for_each_entry_safe(p, n, &iucv->message_q.list, list) {
-+			list_del(&p->list);
-+			kfree(p);
-+		}
-+		spin_unlock_bh(&iucv->message_q.lock);
- 	}
- }
+ static int mlx5e_devcom_event_mpv(int event, void *my_data, void *event_data)
+ {
+-	struct mlx5e_priv *slave_priv = my_data;
++	struct mlx5e_priv *master_priv = event_data;
  
+ 	switch (event) {
+ 	case MPV_DEVCOM_MASTER_UP:
+-		mlx5_devcom_comp_set_ready(slave_priv->devcom, true);
++		mlx5_devcom_comp_set_ready(master_priv->devcom, true);
+ 		break;
+ 	case MPV_DEVCOM_MASTER_DOWN:
+ 		/* no need for comp set ready false since we unregister after
 
 
