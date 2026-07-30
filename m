@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9522C446BFB;
-	Thu, 30 Jul 2026 15:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2E4418A44;
+	Thu, 30 Jul 2026 15:34:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425644; cv=none; b=MIu7N4GWs6I1QUfAs4Su99R5ZjeaKNkQa1Ss11l63UQPGpEObbSZICiJHsTn9RMtAN4xxb0XmaioqUflDUXZK6iTPUOLdRY/LWZNEsCkFhrejdu2YUj692Ju+EUWvHIcvFSdzQl0QvqF7zBYyyoa+SWcGGgJjDOy7Y8s9MkNozA=
+	t=1785425647; cv=none; b=shtIKyi17MVCsPb7FAOeptzfecP0NbmV2NR52M5YIRpXTRyfi9WwSMty/pr/+QU2VgCr30DvRQQuzMJEl59lzcEP7o3MAyjrIg1CvkzaqYOxNLbPV+Lg0CuTdl3sbjMOCAYQg5qqQiJmDmzwvG7St/xRoeMj5hUHl6FMkL2uqv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425644; c=relaxed/simple;
-	bh=+u/yMO9qEV6i/twJ1jG54x+Ff+hfyK8Df8CNOTp/zwQ=;
+	s=arc-20240116; t=1785425647; c=relaxed/simple;
+	bh=pyV8Pk3740mOQn7l+xbdyBkPH7wZ2J/MrnnN5YB9lA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a7RtrL/Hd+8cl5aeEcIbqkeMYj3a7/XQCZ/Z4abJtrvnX+pwIc5GgaB0Fpm/ZmH35t5cgwI82PYNHkONy0tLbWIbg++Y3dekTYmeIAo0FkxvemQ0gKUWlAX24crk+R+3KXzRr/G0tXEyOhBgcA0FCpth0rl1XzafB2XFfbxdiqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=msVhLeUz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ovT+sNAkojj1znxyNhL99SWNZkao3w3nWkQZcQXfftqK60Nb4/VmLJQlsR4clYlei6U9Z2TS9sl/jSXmLUWngnm/LodWkFBpYI9B6GKMRr7rHzLU76LaxS6uhCJ7O+tx1yP9vcQJ2+/qSBRoFWu3WnVf5jQy5BncXT30sfTA994=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKpF7lut; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="msVhLeUz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F01371F00A3A;
-	Thu, 30 Jul 2026 15:34:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKpF7lut"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93571F000E9;
+	Thu, 30 Jul 2026 15:34:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425643;
-	bh=P2K34y6XeLo1n1RZD+WIozFYQUBh42nvAQ3ftmDHM/E=;
+	s=korg; t=1785425646;
+	bh=w+t/z3+h3pJ1eNi4IMo7d/1HFcVLxxZjH5XWyq3dV4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=msVhLeUzqFm1nvoaP/MOAWgWea6euqLKWvGuKJ9MSxQo/2A7b63qfdCV6fm4OE3qU
-	 iqlaBIyFTkLm/8gxyWglZqO0rqbNxf02norxOziMyVyT35p2OpbHPxDYKzz9hc7i9h
-	 gn10YIDD7gKxpsR+wg9kzTJjFfuAiYY7Jr01nJ9Y=
+	b=ZKpF7lutwtcw+6QePqlq2E6jxPxuqqsSTNtFeCFFoCXdIzTTT0xrBTBGGOXnHyoco
+	 AJuo7be6c2j06nhImdA5EEMKshJzlsdA6fsypUwZYWLfPMB3qzqVIUtF3ZxNHKA444
+	 S2CwdTC2YeIErzDRPMcgPS5BrAMcO2OGzlYNkTrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huiwen He <hehuiwen@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 096/602] smb/client: handle overlapping allocated ranges in fallocate
-Date: Thu, 30 Jul 2026 16:08:08 +0200
-Message-ID: <20260730141438.012314040@linuxfoundation.org>
+Subject: [PATCH 6.12 097/602] drm/i915/gt: use correct selftest config symbol
+Date: Thu, 30 Jul 2026 16:08:09 +0200
+Message-ID: <20260730141438.033044645@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,108 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huiwen He <hehuiwen@kylinos.cn>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit b09ae45d85dc816987a71db9eebc54b0ae288e94 ]
+[ Upstream commit a82f1bb8191aec98a971a2196136016ef70c0880 ]
 
-smb3_simple_fallocate_range() can skip holes when an allocated range
-returned by the server starts before the current fallocate offset. The
-skipped hole is not zero-filled, but fallocate still returns success. A
-later write to that hole may therefore fail with ENOSPC.
+intel_engine_user.c checks CONFIG_DRM_I915_SELFTESTS before running
+the engine UABI isolation check. Kconfig defines DRM_I915_SELFTEST,
+without the trailing "S", and the rest of i915 uses
+CONFIG_DRM_I915_SELFTEST.
 
-The function queries allocated ranges so that it can preserve existing
-contents and write zeroes only into holes. However, the server may return
-a range that starts before the current fallocate offset.
+Because CONFIG_DRM_I915_SELFTESTS is not backed by any Kconfig symbol,
+the IS_ENABLED() test is always false. Use the existing selftest symbol
+so the debug/selftest guarded path can be reached when selftests are
+enabled.
 
-For example, assume the fallocate request is [100, 400) and the only
-allocated range returned by the server is [0, 200):
+This is a source-level fix. It does not claim dynamic hardware
+reproduction; the evidence is the Kconfig definition and the inconsistent
+guard in intel_engine_user.c.
 
-        Request:      [100, 400)
-        Server range: [  0, 200)  allocated
-
-        Correct:
-        [100, 200)    allocated data, skip
-        [200, 400)    hole, zero-fill
-
-        Current:
-        [100, 300)    skipped
-        [300, 400)    zero-filled afterwards
-
-The current code adds the full server range length, 200, to the current
-offset 100 and moves to 300. As a result, the hole in [200, 300) is
-skipped without being zero-filled.
-
-Fix this by advancing only over the part of the allocated range that
-overlaps the current fallocate offset.  Ignore ranges that end before the
-current offset and reject ranges whose end offset overflows.
-
-This also prevents a malformed range length from causing an out-of-bounds
-zero-buffer read.
-
-Fixes: 966a3cb7c7db ("cifs: improve fallocate emulation")
-Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 750e76b4f9f6 ("drm/i915/gt: Move the [class][inst] lookup for engines onto the GT")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Link: https://lore.kernel.org/r/20260705080225.436-1-pengpeng@iscas.ac.cn
+(cherry picked from commit 14a2012a490258f3f93857bc4f1b203405964be7)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_engine_user.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index f63361bc1641d5..61309fead04e57 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3482,6 +3482,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 	struct file_allocated_range_buffer in_data, *out_data = NULL, *tmp_data;
- 	u32 out_data_len;
- 	char *buf = NULL;
-+	u64 range_start, range_len, range_end;
- 	loff_t l;
- 	int rc;
+diff --git a/drivers/gpu/drm/i915/gt/intel_engine_user.c b/drivers/gpu/drm/i915/gt/intel_engine_user.c
+index 833987015b8bbc..ed42b9d05a07d5 100644
+--- a/drivers/gpu/drm/i915/gt/intel_engine_user.c
++++ b/drivers/gpu/drm/i915/gt/intel_engine_user.c
+@@ -257,7 +257,7 @@ void intel_engines_driver_register(struct drm_i915_private *i915)
+ 		p = &prev->rb_right;
+ 	}
  
-@@ -3518,13 +3519,21 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 			goto out;
- 		}
- 
--		if (off < le64_to_cpu(tmp_data->file_offset)) {
-+		range_start = le64_to_cpu(tmp_data->file_offset);
-+		range_len = le64_to_cpu(tmp_data->length);
-+		if (check_add_overflow(range_start, range_len, &range_end) ||
-+		    range_end > S64_MAX) {
-+			rc = -EINVAL;
-+			goto out;
-+		}
-+
-+		if (off < range_start) {
- 			/*
- 			 * We are at a hole. Write until the end of the region
- 			 * or until the next allocated data,
- 			 * whichever comes next.
- 			 */
--			l = le64_to_cpu(tmp_data->file_offset) - off;
-+			l = range_start - off;
- 			if (len < l)
- 				l = len;
- 			rc = smb3_simple_fallocate_write_range(xid, tcon,
-@@ -3541,11 +3550,13 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 		 * until the end of the data or the end of the region
- 		 * we are supposed to fallocate, whichever comes first.
- 		 */
--		l = le64_to_cpu(tmp_data->length);
--		if (len < l)
--			l = len;
--		off += l;
--		len -= l;
-+		if (off < range_end) {
-+			l = range_end - off;
-+			if (len < l)
-+				l = len;
-+			off += l;
-+			len -= l;
-+		}
- 
- 		tmp_data = &tmp_data[1];
- 		out_data_len -= sizeof(struct file_allocated_range_buffer);
+-	if (IS_ENABLED(CONFIG_DRM_I915_SELFTESTS) &&
++	if (IS_ENABLED(CONFIG_DRM_I915_SELFTEST) &&
+ 	    IS_ENABLED(CONFIG_DRM_I915_DEBUG_GEM)) {
+ 		struct intel_engine_cs *engine;
+ 		unsigned int isolation;
 -- 
 2.53.0
 
