@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A10440FDB9;
-	Thu, 30 Jul 2026 15:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22FE36D50D;
+	Thu, 30 Jul 2026 15:11:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424294; cv=none; b=Xh3rhWcYiT9V4uZWAJjzT4OrNs8qs7n0BO1tgE1uOZYhtChCwV/mKkTd0nen68V2vmhJ1S5l1j2SlO8MEVlvRNIW+ux6TGTKiMrikdGPH2s2imZf4vUTeRa0x2eUvOoU9Y6ssUpisaXSL02dvg7mnzCK5zFerJCz8eA4KFz5zBw=
+	t=1785424298; cv=none; b=nvxPjHuc5+TywW47jWupbwe0YZ65S9DvltRbJ0I2ZU3CO7hvKmi6szQ9NW6qp3ke6Q6k4MKAXvG3GFSYCOr9jRFXnlArYY2nMN7CrFAuXpli8BQIId4vMnZksFxKtunupILSFB/FmBPGhnwktZJ574ZBgNHAZoU3blahdlyPZyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424294; c=relaxed/simple;
-	bh=fnT09k4/p6Y97UGTonGFlWSroDo/5AKK05w3oLD4fRo=;
+	s=arc-20240116; t=1785424298; c=relaxed/simple;
+	bh=V+xR+TBRyrYKKA3BAo0iwLNv1mMgfgS5y2eo6/Sml0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NXpbYM7pbWtc90i7P54w67ufIq5edNg6K/mGJy3bQZflY6QxBqLktTcZrDweW+aXIAQtC5lUVWPIBS027aGkQKXQ+2gzQ3NtQMUh5z5d9xYQg/eTEGq4V2uwDq3+447lI8HTUHMTjykYqlPnlsa1pynzN2vsEAmXwipgYt4rLZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bqvj71ob; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sfDSpMeudBcuoIR4XWCPiarVFqpr3Xuo45mzeAwJV5rg8tf6qHb+hnzSoI+8EfaAaTp1ARddZMH0IPhWXvfAC1RQ1PUjbyxEX0kEDzx2jyj7Zn/nnFz7m5Xp+x8Gl+vEo92yJKp+eB/Fxglv4NqAcx5Y0psZwWLD+bhhSQsJQWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aw9F0GU8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bqvj71ob"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A321F000E9;
-	Thu, 30 Jul 2026 15:11:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aw9F0GU8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3D81F000E9;
+	Thu, 30 Jul 2026 15:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424293;
-	bh=F8FvGu+/sVIE4F0fSbvk3h3igQM3Zt1rdFzTe+83Tag=;
+	s=korg; t=1785424296;
+	bh=uiCAljra8o/bqxedeXtt6ne0jWZufrTfcr3XL+pbvfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bqvj71obj4hBc+pG5twIoKnQ2aC864vDe0DZrLq6y8E+6wIz8YQ1NKrub8E/TV+wC
-	 e+SSUormCtwB0O+zo1/fU90ss2lWNLV8fFGw3SW5YsnAuF7K0wArZ+eNB1SjNgZ+aZ
-	 6TQU3nGhf1yA9VG/8Ev6QF4NWrP7lT5Y7biXHA+4=
+	b=Aw9F0GU8QsnnEqQFNDsIMDB4cRsV1V1ONq/XJ30s091v6/CYtKT8Rf4M3VspEE3OF
+	 3N1KAcrFcXytV1n+QfkuCb8Evm7A+zsGasp2ISPGISygedal+k6cremu0oq95Sweqr
+	 oR65fByXtkHvbjr10qqtDCECHURfs0LkNvYXHgWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Hodo <martin.hodo@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Subject: [PATCH 6.18 342/675] drm/i915/gem: Add missing nospec on parallel submit slot
-Date: Thu, 30 Jul 2026 16:11:12 +0200
-Message-ID: <20260730141452.399694914@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.18 343/675] drm/nouveau/acr: fix missing nvkm_done() in error path of nvkm_acr_oneinit()
+Date: Thu, 30 Jul 2026 16:11:13 +0200
+Message-ID: <20260730141452.420895103@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,41 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 914a76a9f08366434bf595700f62026b7a19a9cc upstream.
+commit c3027973f692077a1b66a9fb26d6a7c46c0dc72c upstream.
 
-Add missing Spectre mitigation for userspace controlled parallel
-submission slot.
+In nvkm_acr_oneinit(), nvkm_kmap(acr->wpr) is invoked unconditionally
+at line 309 to obtain a mapping reference. Additionally, when both
+acr->wpr_fw and acr->wpr_comp are present, a second nvkm_kmap() is
+called inside the conditional block. Both mappings are expected to be
+released by nvkm_done(acr->wpr) at line 320 before the function returns
+successfully.
 
-Discovered using AI-assisted static analysis confirmed by Intel
-Product Security.
+However, when a mismatch is detected during the loop within the
+conditional block, the function returns -EINVAL at line 318 without
+calling nvkm_done(). This results in a leak of the kmap reference(s)
+acquired earlier.
 
-Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: e5e32171a2cf ("drm/i915/guc: Connect UAPI to GuC multi-lrc interface")
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Tvrtko Ursulin <tursulin@ursulin.net>
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Cc: <stable@vger.kernel.org> # v5.16+
-Link: https://patch.msgid.link/20260622132539.165558-1-joonas.lahtinen@linux.intel.com
-(cherry picked from commit 15b9353deff3cf72331c387780de3cf9c316b643)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fix the issue by invoking nvkm_done(acr->wpr) prior to the early return
+to ensure proper release of the mapping references.
+
+Fixes: 22dcda45a3d1 ("drm/nouveau/acr: implement new subdev to replace "secure boot"")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260606155606.77593-1-vulab@iscas.ac.cn
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_context.c |    1 +
+ drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_context.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_context.c
-@@ -612,6 +612,7 @@ set_proto_ctx_engines_parallel_submit(st
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c
+@@ -315,6 +315,7 @@ nvkm_acr_oneinit(struct nvkm_subdev *sub
+ 					  i, us, fw);
+ 			}
+ 		}
++		nvkm_done(acr->wpr);
  		return -EINVAL;
  	}
- 
-+	slot = array_index_nospec(slot, set->num_engines);
- 	if (set->engines[slot].type != I915_GEM_ENGINE_TYPE_INVALID) {
- 		drm_dbg(&i915->drm,
- 			"Invalid placement[%d], already occupied\n", slot);
+ 	nvkm_done(acr->wpr);
 
 
