@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F6B432E94;
-	Thu, 30 Jul 2026 14:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069D9436BF8;
+	Thu, 30 Jul 2026 14:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421262; cv=none; b=fq79d2RX91J2AsEKrcke4ny5e95WeoKlBZemUFzNW4EkPH/AYle5fGjY2vwtUA6RVeUVWJw971gm88deZtE20MgxTc1ZpYSJlRERvWxtKR2RG0iJj3G9jO/xQ91PYlGNFJC6IvGEmxw25lHGJ9uzyT13HhrB0FvmN7vILpkfvPA=
+	t=1785421265; cv=none; b=OJjnqtWuXu5GK25GWMjmfZB8k7gtwzTGiZU8HfsNUlApoDnrpeJysVIL8SPY2L6giH6o9hPTJdp3Spa/TWHtl3m7qcagYTY4c3/NY+TouUczwAUsbswx3eaMeZHQZQ7MZ68KLumOYal5O8A/r53pLRQBOivcFDu+yT4bVjqDT1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421262; c=relaxed/simple;
-	bh=8sLZHIlBjgGhw5GCybNRXq3XLWs+akkzH2FcK3iwxaU=;
+	s=arc-20240116; t=1785421265; c=relaxed/simple;
+	bh=6SNe6QDS2KoAAjVWCtUkgMMWHZAR8iUjNd95szwe+sQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TH3JWapGAF7X5ec6dqXoMMJDp08CHzWzQcK04quA0Bz9roj1uYJnJc8THmGbfiwHCez3Fd3B1AUYWS7Uaw8n6HjbDZ6LIgXR0rligxC1+X2GCjZQlvbONiM8BmUPPKIbxp7sB2i9VyrNz7Q9YEO4n7aMImTOEdMAQFcLjE6x12I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0+LkOIO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hAXINghdC4gJNz1LlshoVkM0SYCqYxQYrKmeRWgCYYwVv9RvB9/bUhgoTP8djZhkze6L+gDQTnKj4arWsz+8fpNcZaCLwpQUWLjiHiMFdMXHGZ9uy59HkYp1S/+m1qxAX+cKDgSJ7XlmkaWM6yeVHmpaM8K3bsnBZXMhLwphyWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qmYdAwzl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0+LkOIO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155D11F000E9;
-	Thu, 30 Jul 2026 14:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qmYdAwzl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3FB1F000E9;
+	Thu, 30 Jul 2026 14:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421260;
-	bh=wmFDJtOjH4RUQA0epwUXHL6tjri/LZ0DEPq1F4vNeIQ=;
+	s=korg; t=1785421263;
+	bh=4XKSidwUtZ9gu0PjKLBiLcCCSX/jVeM0+LtjDJTXDDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B0+LkOIO7jxC5cbkzPlJNW9zIBtI/VFQcPRyioLcSjW9imSfMNuJYmsPMS/y1+Az1
-	 Jm4i82pVn7S/zJrVB2P+I5C1fxDWTgJ/V7HAmICC4C5f8CDGP8wofHXj+rcQKPQE88
-	 a5DLdjUOV7HKFe5lGxAfB97z26UgPx7NqhPBo/IQ=
+	b=qmYdAwzlu/5ftntqP2vXhRRbQMP1F569awCgK1iqdtPKGr5Tz1ix2v3oNsFihuy8x
+	 kFjYGOwyt56o+sAgNK7+D6gIReOvhz3yZzP3OYOJtajwgYUTchEsU/WgkQd3kfsKss
+	 hI84kGxbg1Gp4DdSPnmVByqaBLuy8G4QVbTSEteI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen YanJun <moomichen@tencent.com>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 045/744] xfrm: iptfs: propagate SKBFL_SHARED_FRAG in iptfs_skb_add_frags()
-Date: Thu, 30 Jul 2026 16:05:18 +0200
-Message-ID: <20260730141445.238182278@linuxfoundation.org>
+Subject: [PATCH 7.1 046/744] xfrm6: clear dst.dev on error to avoid double netdev_put in xfrm6_fill_dst()
+Date: Thu, 30 Jul 2026 16:05:19 +0200
+Message-ID: <20260730141445.258505051@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,49 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen YanJun <moomichen@tencent.com>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-[ Upstream commit 430ea57d6daf765e88f90046afbfd1e071cb7200 ]
+[ Upstream commit 136992de9bb91871084ae52d172610541c76e4d2 ]
 
-When iptfs_skb_add_frags() copies frag references from the source
-frag walk into a new SKB, it increments the page reference count via
-__skb_frag_ref() but does not propagate SKBFL_SHARED_FRAG to the
-destination SKB's skb_shinfo->flags.
+On the error path where in6_dev_get(dev) returns NULL, xfrm6_fill_dst()
+releases the device reference with netdev_put() but leaves
+xdst->u.dst.dev set. dst_destroy() later calls netdev_put(dst->dev)
+again, so the same net_device reference is released twice, underflowing
+its refcount (ref_tracker WARNING + "unregister_netdevice: waiting for
+<dev> to become free").
 
-If the source SKB carries shared frags (e.g. from a page-pool backed
-receive path), the new inner SKB will appear to ESP as having privately
-owned frags.  A subsequent esp_input() call for a nested transport-mode
-SA then takes the no-COW fast path and decrypts in place, writing over
-pages that are still referenced by the outer IPTFS SKB.  This causes
-kernel-visible memory corruption and can trigger a panic.
+Clear xdst->u.dst.dev after the netdev_put(), the same way the XFRM
+device-offload paths xfrm_dev_state_add() and xfrm_dev_policy_add() in
+net/xfrm/xfrm_device.c NULL ->dev when releasing the reference on error.
 
-All other frag-transfer helpers in the kernel (skb_try_coalesce,
-skb_gro_receive, __pskb_copy_fclone, skb_shift, skb_segment) correctly
-propagate SKBFL_SHARED_FRAG; align iptfs_skb_add_frags() with this
-convention by setting the flag inside the loop immediately after
-__skb_frag_ref() and nr_frags++, so every exit path that attaches a frag
-unconditionally propagates SKBFL_SHARED_FRAG.
+  ref_tracker: reference already released.
+  ref_tracker: allocated in:
+   xfrm6_fill_dst (net/ipv6/xfrm6_policy.c:86)
+   ...
+   udpv6_sendmsg (net/ipv6/udp.c:1696)
+   ...
+  ref_tracker: freed in:
+   xfrm6_fill_dst (net/ipv6/xfrm6_policy.c:90)
+   ...
+  WARNING: lib/ref_tracker.c:322 at ref_tracker_free+0x58b/0x780
+   dst_destroy (net/core/dst.c:115)
+   rcu_core
+   handle_softirqs
+   ...
 
-Fixes: 5f2b6a909574 ("xfrm: iptfs: add skb-fragment sharing code")
-Signed-off-by: Chen YanJun <moomichen@tencent.com>
+Fixes: 84c4a9dfbf43 ("xfrm6: release dev before returning error")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_iptfs.c | 1 +
+ net/ipv6/xfrm6_policy.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/net/xfrm/xfrm_iptfs.c b/net/xfrm/xfrm_iptfs.c
-index ad810d1f97c067..597aedeac26eba 100644
---- a/net/xfrm/xfrm_iptfs.c
-+++ b/net/xfrm/xfrm_iptfs.c
-@@ -480,6 +480,7 @@ static int iptfs_skb_add_frags(struct sk_buff *skb,
- 		}
- 		__skb_frag_ref(tofrag);
- 		shinfo->nr_frags++;
-+		shinfo->flags |= SKBFL_SHARED_FRAG;
+diff --git a/net/ipv6/xfrm6_policy.c b/net/ipv6/xfrm6_policy.c
+index 125ea9a5b8a082..3b749475f6ed65 100644
+--- a/net/ipv6/xfrm6_policy.c
++++ b/net/ipv6/xfrm6_policy.c
+@@ -88,6 +88,7 @@ static int xfrm6_fill_dst(struct xfrm_dst *xdst, struct net_device *dev,
+ 	xdst->u.rt6.rt6i_idev = in6_dev_get(dev);
+ 	if (!xdst->u.rt6.rt6i_idev) {
+ 		netdev_put(dev, &xdst->u.dst.dev_tracker);
++		xdst->u.dst.dev = NULL;
+ 		return -ENODEV;
+ 	}
  
- 		/* see if we are done */
- 		fraglen = tofrag->len;
 -- 
 2.53.0
 
