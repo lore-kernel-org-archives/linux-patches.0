@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76114503FA;
-	Thu, 30 Jul 2026 15:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6975443E5E;
+	Thu, 30 Jul 2026 15:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425175; cv=none; b=k9ssFYujuGzz5m9taFgXKT6ZuLHJPUzQ2Qdg7zweJrO60jwWIgCDAAkiY8Cz+lYj/bTKKqrkzyqxUsGVP1BTnLJxN3KtOzwDJQFMnXT3UqReY6nWUygrN78M+IlarNVVmn5/h8y7jXgOecn50cN2TU5n++NFwkPlJMaAgipo7/E=
+	t=1785425178; cv=none; b=MJd4jJ4DGEnWBNAqz4WaHpkHEjs6QVt/8EczSfNwIP+2qpIeHLUqypho6zT2W+lqDQYECAZ8N4yDZ9PyNfgoCoTk1859/B+BAPAfEeL+y9+cyL+sd3oRlDahH2P3blv/H6rMzjQYhagvem0asyajsextxyZShCWJRSoi6KqdMeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425175; c=relaxed/simple;
-	bh=Vi3PNeqHJyqanJvSMGzAMQXWbI5Ggt2Rmnub34lV+7Y=;
+	s=arc-20240116; t=1785425178; c=relaxed/simple;
+	bh=tMU+YejCj8W37n1c1zqU7I6u68hl5WtAiqcv3zfduvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P9w2zSmZ9IJoEj4AIwo2RPHAeYBMoA+r0zDwAYRdfmybOKyCFZK5zJ4Q8Qkc8GEYX0xJBwesoLMzWW/+wo6gCBPiY0yR9rkqFfoZ8K6qXrePGnz+GrEZbHmiAApAk8X8c4taMKvwQF1wEb80cjKUb8pl6Fw8ggdK/zIuvjAwljA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sXJoYi4h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GVcwI/wSBg4kRV/KDbE3R6CNmXrbAl/Srw5EmWpyIMKKkROs8kbPlh0lHymmfzzjkplpELvjo1mvoNUJ7M9H88Qzfs7UWTSS/BDQ9NbDn78l/FsFRnVvuOOO4rZxXZIVz1TZoO0MVSB+PxzihZUL7vnooRO4slIO0T8BNKYX6Zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pjGYHMj5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sXJoYi4h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094781F00A3D;
-	Thu, 30 Jul 2026 15:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pjGYHMj5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04FB01F00AC4;
+	Thu, 30 Jul 2026 15:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425174;
-	bh=SRx4w/vxhA0jE1iQwQNq02gLIWgELh10GGdWrIPOLmY=;
+	s=korg; t=1785425177;
+	bh=PP58VzWkOH+LEzly1qlMNWXcphy6biQPk56+ebBBa3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sXJoYi4hMl/pMMnd3NHecP+l+SyIrAvOJWpx/d3BHo8JNY+X3RKyOXMwe/DX0uhXJ
-	 G30c3PrYEQJQCwfPYmPYR9Ph34QI5sl+2eONc5bU+q2Oidwd0St3q9aWkVGfT0kTYS
-	 ZKTrPta2rbwE9WMTj9Z9um//ArHnSyyLoyjeKh2g=
+	b=pjGYHMj5sTwG8ij1sYg+siXlfkRu9XPvLYs2kp9rVGefTcXkSaG/lnu6G55eFe0CL
+	 v2sBM6Cuqu5e/lHouJjSLX9KtbWU3saepbAaeESgpcwoQSjEHyg/XwX9HhsyHQR3Yt
+	 +V+20nqAh44EmHdpacmmbKik+dt6SH0IMgd5oEcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Mathew Alwin <alwin.mathew@intel.com>,
-	Michal Mrozek <michal.mrozek@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Jia Yao <jia.yao@intel.com>,
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 596/675] drm/xe/uapi: Reject coh_none PAT index for CPU_ADDR_MIRROR
-Date: Thu, 30 Jul 2026 16:15:26 +0200
-Message-ID: <20260730141457.787102087@linuxfoundation.org>
+Subject: [PATCH 6.18 644/675] accel/amdxdna: reject command submission on devices without a submit op
+Date: Thu, 30 Jul 2026 16:16:14 +0200
+Message-ID: <20260730141458.822650814@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -55,75 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Yao <jia.yao@intel.com>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit 4d58d7535e826a3175527b6174502f0db319d7f6 upstream.
+[ Upstream commit 38953513d7313992676d4136cd425cdb70c6278e ]
 
-Add validation in xe_vm_bind_ioctl() to reject PAT indices
-with XE_COH_NONE coherency mode when used with
-DRM_XE_VM_BIND_FLAG_CPU_ADDR_MIRROR.
+amdxdna_cmd_submit() calls xdna->dev_info->ops->cmd_submit()
+unconditionally, but only aie2_dev_ops defines that callback.
+aie4_vf_ops (the AIE4 SR-IOV virtual function) does not, so a user
+AMDXDNA_EXEC_CMD ioctl on an AIE4 device reaches a NULL function-pointer
+call and oopses the kernel. AIE4 submits work through a mapped user queue
+and doorbell, not this ioctl path.
 
-CPU address mirror mappings use system memory that is CPU
-cached, which makes them incompatible with COH_NONE PAT
-indices. Allowing COH_NONE with CPU cached buffers is a
-security risk, as the GPU may bypass CPU caches and read
-stale sensitive data from DRAM.
+Reject the submission early with -EOPNOTSUPP when the device provides no
+cmd_submit op, so the shared EXEC ioctl is a clean no-op on such devices.
 
-Although CPU_ADDR_MIRROR does not create an immediate
-mapping, the backing system memory is still CPU cached.
-Apply the same PAT coherency restrictions as
-DRM_XE_VM_BIND_OP_MAP_USERPTR.
-
-v2:
-- Correct fix tag
-
-v6:
-- No change
-
-v7:
-- Correct fix tag
-
-v8:
-- Rebase
-
-v9:
-- Limit the restrictions to iGPU
-
-v10:
-- Just add the iGPU logic but keep dGPU logic
-
-Fixes: b43e864af0d4 ("drm/xe/uapi: Add DRM_XE_VM_BIND_FLAG_CPU_ADDR_MIRROR")
-Cc: <stable@vger.kernel.org> # v6.15+
-Cc: Shuicheng Lin <shuicheng.lin@intel.com>
-Cc: Mathew Alwin <alwin.mathew@intel.com>
-Cc: Michal Mrozek <michal.mrozek@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Signed-off-by: Jia Yao <jia.yao@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Acked-by: Michal Mrozek <michal.mrozek@intel.com>
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patch.msgid.link/20260417055917.2027459-3-jia.yao@intel.com
+Fixes: aac243092b70 ("accel/amdxdna: Add command execution")
+Cc: stable@vger.kernel.org
+Found by 0sec automated security-research tooling (https://0sec.ai).
+Assisted-by: 0sec:claude-opus-4-8
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260713173030.87541-3-doruk@0sec.ai
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_vm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/accel/amdxdna/amdxdna_ctx.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
-index b00da90e399135..ed0c8acd0fe27c 100644
---- a/drivers/gpu/drm/xe/xe_vm.c
-+++ b/drivers/gpu/drm/xe/xe_vm.c
-@@ -3393,6 +3393,8 @@ static int vm_bind_ioctl_check_args(struct xe_device *xe, struct xe_vm *vm,
- 				 op == DRM_XE_VM_BIND_OP_MAP_USERPTR) ||
- 		    XE_IOCTL_DBG(xe, coh_mode == XE_COH_NONE &&
- 				 op == DRM_XE_VM_BIND_OP_MAP_USERPTR) ||
-+		    XE_IOCTL_DBG(xe, !IS_DGFX(xe) && coh_mode == XE_COH_NONE &&
-+				 is_cpu_addr_mirror) ||
- 		    XE_IOCTL_DBG(xe, op == DRM_XE_VM_BIND_OP_MAP_USERPTR &&
- 				 !IS_ENABLED(CONFIG_DRM_GPUSVM)) ||
- 		    XE_IOCTL_DBG(xe, obj &&
--- 
-2.53.0
-
+--- a/drivers/accel/amdxdna/amdxdna_ctx.c
++++ b/drivers/accel/amdxdna/amdxdna_ctx.c
+@@ -406,6 +406,10 @@ int amdxdna_cmd_submit(struct amdxdna_cl
+ 	int ret, idx;
+ 
+ 	XDNA_DBG(xdna, "Command BO hdl %d, Arg BO count %d", cmd_bo_hdl, arg_bo_cnt);
++
++	if (!xdna->dev_info->ops->cmd_submit)
++		return -EOPNOTSUPP;
++
+ 	job = kzalloc(struct_size(job, bos, arg_bo_cnt), GFP_KERNEL);
+ 	if (!job)
+ 		return -ENOMEM;
 
 
