@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E090135BDAA;
-	Thu, 30 Jul 2026 15:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4ED383983;
+	Thu, 30 Jul 2026 15:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426720; cv=none; b=ehGOG0SHu1jHXB/iaC6KseF9HsyWAGYVynzvvd0N0tFPRk6S39rI68Tf/ZflVV/YlZFSNo+Expt+K/2W09HG1HJcZGyy96evb1pEAjthcWYQhLyi+HB6OaeOTsL+yMCxGyYcu/2tbq5jG4tSzP/e819kRVpNQAuIukCOfiu1Mkk=
+	t=1785426722; cv=none; b=kYWOxrKWcENIfX/DYXkAOLYC6hsGehgjan5n8W3OzXJ/oOs6XfWOry0di6xgPu/VkJ0E4FQRNf3KklpijNEiwtzR51WsAPT+RD0s+7fCQi5aH6zLzOvGG9toll28h4zQSacJOTVlEGDlLrJal3VPUc4YEBCW8uqRh5I2bByK2hA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426720; c=relaxed/simple;
-	bh=kWuqpO4Xlxa0iCF4jFbUBuZ2ODEDOUQIUDp49IEyDuU=;
+	s=arc-20240116; t=1785426722; c=relaxed/simple;
+	bh=5WN07/uK3nJjTlhDHSfYPJlBW7tIZsZvQ3Czj7NLIXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MQAS5nu7z3TGzPfd3iqrRKA6oLkrksWGvrzVkHvg8e8R1MpRTwPnFx1+vWSAKfNlAOeeIFBSZ0dox2JmDTeW3h83MpUgBtGY778B1EGrsC3A9pxVyIVCyH2yGSpIVpZY7lg2DhUMgLBGoqH4IWcbKb5J+LJHKDFFWj7S/70oUcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJblPllo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mwM7aIZeislvgR6xnbuS5w8whtPErLul8hTjrqucnuO73P7itO8xPBTS3m5UNKT+TiHZZPGwREliDb+vsDAYJDN8LfbTjATPZkBpj8D+8DAauOR/A8/8peqGlDPGOXbViUTz9QuU+sZRgbwy7UNPxbah+Elva2GdBmGU9nbD2bU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0JniCfP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJblPllo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462381F000E9;
-	Thu, 30 Jul 2026 15:51:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0JniCfP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131B01F000E9;
+	Thu, 30 Jul 2026 15:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426718;
-	bh=+QgWX+OnrWgXO3TZ6gaM/w9UEiMCnb0ehI6KNYMHmz4=;
+	s=korg; t=1785426721;
+	bh=slDGq+hWqNAeNChvPV9joSC32o6GkQpCOQBbh4ysfiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iJblPlloS8MRMXhuq65Jt0SFsBYUjSs9HIROOaQM7gOJBl+F6N0lqke2gzhpeZejO
-	 xxQ06Lw7g09vKtA2LCr9OZPCpI0fgEDxQO5dhEw2WsjdOf3NRH5JR4FMji6jEXEeGO
-	 Z3sP6Mk04IJmscnjZKKbEmXL2LTXZgMNl18Im+C4=
+	b=K0JniCfPONzkXZ19W7aVRPD5i/32CIbz+i3DV1DX468mKR+YFRh0E22EeW+eetthr
+	 NucFwVMShUBzhCzbbCipPJvdnkdISjSrwbHAxmNgHPMdT23BotzokyziJCkkc3QAYV
+	 M3Zx7ShodDdYH/Utw55C1FQjYbmLNaERio0M/wsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 474/602] i2c: i801: fix hardware state machine corruption in error path
-Date: Thu, 30 Jul 2026 16:14:26 +0200
-Message-ID: <20260730141445.924352946@linuxfoundation.org>
+Subject: [PATCH 6.12 475/602] ALSA: hda: conexant: Remove mic bias threshold override
+Date: Thu, 30 Jul 2026 16:14:27 +0200
+Message-ID: <20260730141445.945963421@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,65 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit 10dd1a736d557e310a77117832874729a0175d57 ]
+[ Upstream commit f52524da7084c1a54683ae9fbc73e93fff19dd64 ]
 
-A severe livelock and subsequent Hung Task panic were observed in the
-i2c-i801 driver during concurrent Fuzzing. The crash is caused by an
-unconditional hardware register cleanup in the error handling path of
-i801_access().
+Remove the mic bias current comparator threshold override (NID 0x1c,
+verb 0x320, value 0x010) from Conexant codec driver.
 
-When i801_check_pre() fails (e.g., returning -EBUSY because the SMBus
-controller is actively used by BIOS/ACPI), the kernel does not actually
-acquire the hardware ownership. However, the code jumps to the 'out'
-label and executes:
+This override was originally intended to support volume up/down controls on
+headsets with inline remote controls, but it causes microphone detection
+failures on some headsets with impedance less than 1k ohm.
 
-    iowrite8(SMBHSTSTS_INUSE_STS | STATUS_FLAGS, SMBHSTSTS(priv));
+After consulting with the vendor's engineers, it was confirmed that this
+setting is board-specific and should be handled by BIOS/firmware rather
+than the generic codec driver, especially since inline remote support
+is not currently implemented.
 
-This forcefully clears the INUSE_STS lock and resets the hardware status
-flags without owning the controller. Doing so interrupts ongoing BIOS/ACPI
-transactions and totally corrupts the SMBus hardware state machine.
-
-Consequently, all subsequent i801_access() calls fail at the pre-check
-stage, triggering an endless stream of "SMBus is busy, can't use it!"
-error logs. Over a slow serial console, this printk flood monopolizes
-the CPU (Console Livelock), starving other processes trying to acquire
-the mmap_lock down_read semaphore, ultimately triggering the hung task
-watchdog.
-
-Fix this by moving the 'out' label below the hardware register cleanup.
-If i801_check_pre() fails, we safely bypass the iowrite8() and only
-release the software locks (pm_runtime and mutex), strictly adhering to
-the rule of not releasing resources that were never acquired.
-
-Fixes: 1f760b87e54c ("i2c: i801: Call i801_check_pre() from i801_access()")
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Cc: <stable@vger.kernel.org> # v6.3+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260512093534.348655-1-w15303746062@163.com
+Fixes: 7aeb25908648 ("ALSA: hda/conexant: Fix headset auto detect fail in cx8070 and SN6140")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260713100329.306892-1-zhangheng@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-i801.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_conexant.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -930,13 +930,13 @@ static s32 i801_access(struct i2c_adapte
- 	 */
- 	if (hwpec)
- 		outb_p(inb_p(SMBAUXCTL(priv)) & ~SMBAUXCTL_CRC, SMBAUXCTL(priv));
--out:
- 	/*
- 	 * Unlock the SMBus device for use by BIOS/ACPI,
- 	 * and clear status flags if not done already.
- 	 */
- 	outb_p(SMBHSTSTS_INUSE_STS | STATUS_FLAGS, SMBHSTSTS(priv));
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -168,9 +168,6 @@ static void cx_fixup_headset_recog(struc
+ {
+ 	unsigned int mic_present;
  
-+out:
- 	pm_runtime_mark_last_busy(&priv->pci_dev->dev);
- 	pm_runtime_put_autosuspend(&priv->pci_dev->dev);
- 	mutex_unlock(&priv->acpi_lock);
+-	/* fix some headset type recognize fail issue, such as EDIFIER headset */
+-	/* set micbias output current comparator threshold from 66% to 55%. */
+-	snd_hda_codec_write(codec, 0x1c, 0, 0x320, 0x010);
+ 	/* set OFF voltage for DFET from -1.2V to -0.8V, set headset micbias register
+ 	 * value adjustment trim from 2.2K ohms to 2.0K ohms.
+ 	 */
 
 
