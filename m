@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC5E42F712;
-	Thu, 30 Jul 2026 15:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF2C37B012;
+	Thu, 30 Jul 2026 15:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425999; cv=none; b=TDIV4qX4jBDRopudAdNyFCJuN3Un84QAQAxIGDP8RwheVg7kM3HEcooJpYXYDxYko+ZxwzLaRtQ2KhGgQ9+vSflpk97rYQ34odgDZma0vbix8r9xdGFRBjzOKGIs0kFl5ESyx+jp3TXHerfgWAtsVhs3ok2WPT94NWtuqK0LZpc=
+	t=1785426002; cv=none; b=JhCCKO6Va6ygV0mYDeH9rm0nEn7Vty4j43PZAzZeL41Qu+rDaxyEqqCghYX1jNFBydNzD3xJH52aiT1l8t7tzBj40g9UXcIQPz8eIfVO4uTOwVx5unML6UHAkjqjYzgdpEfDsD55rWFKYGEeHquwQ3rl/9u4aikkmUPBhYRxEuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425999; c=relaxed/simple;
-	bh=/n2fNFnPRr05yAF3MM0G6xS3ZeD6Z0YchfuZlCyllJQ=;
+	s=arc-20240116; t=1785426002; c=relaxed/simple;
+	bh=E3iDQsTFUdMKIgjBkmjfGoTNyHaDdvSNJ1vDW0tJki0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xh4jofvf1QuW6idkzL38PU54zfb0PiHMleS/2u7bKfaufAg9Xi+os7JO2HZ4BdPCddJRT1xOepnblM7SUZD8JtQuUOtMRZPfMP4Cvz/P/CUUE2uqWcuaJYf4PC8aFSHROv0wlB2yJopxz9v71gQD99CsquQo3LwLNVWvHuc/Nlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8/k5Mib; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oergMexvXQLTs5RajPtZr/9HC5eKvxQOHOnRXco63rz187gxVfhbXnblaiE6r8Keo1R3J5IUjksnF4fEdm7d65J0bkDL1AnYu6tOThrug+S4SQXDKT56DuAIET6RxEFdZDuq4Z3U+HxCewJWN7MvWc3HkhBv8razU3p79ePEYro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e43jWRXk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8/k5Mib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC031F00A3A;
-	Thu, 30 Jul 2026 15:39:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e43jWRXk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496411F000E9;
+	Thu, 30 Jul 2026 15:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425998;
-	bh=E+8o3rIp90GO93nhrkhwObs6Nr6xnmh7aPOLQJ498pA=;
+	s=korg; t=1785426000;
+	bh=8jSPKLQCelY1jqTbc1RTx9w+d89UGen3mrSU4XXWqc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J8/k5MibwSDf3yxUGsp4HeF2A8OBAe2wMNoD9PlDQudXpck60afgpmLHbtfeSitjx
-	 3Vinm1tuXFrh5WztmG5ZZgd95sRWcPDeNXPGnPxRL1AZ8xD6qbQfINqcaNDEk7CgGE
-	 EiahkUv5iZiIOboLpVH4zK2TmaaPsnXikbdohpUE=
+	b=e43jWRXk3EnB3Grdez31Pf0L0T+nVWXRau7IojT0PdItyqUpZm4nNQ6b+VZCRHpIm
+	 aLykk1CQl9nf40or5xTiP3wSAdL9hCfAqdCArdzfUc50Is/PZlvqV6VMHp+rL4HjL/
+	 wP0MPh71FiDeD+wRJA1A9T3oa+zgaviAaHB2v5E8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.12 264/602] drm/displayid: fix Tiled Display Topology ID size
-Date: Thu, 30 Jul 2026 16:10:56 +0200
-Message-ID: <20260730141441.518754220@linuxfoundation.org>
+	Martin Hodo <martin.hodo@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Subject: [PATCH 6.12 265/602] drm/i915/gem: Add missing nospec on parallel submit slot
+Date: Thu, 30 Jul 2026 16:10:57 +0200
+Message-ID: <20260730141441.539871005@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,129 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 
-commit 90c0486a82e27393f9eaf3bb350f51a0bd38cb6b upstream.
+commit 914a76a9f08366434bf595700f62026b7a19a9cc upstream.
 
-The Tiled Display Topology ID of a DisplayID Tiled Display Topology Data
-Block consists of three fields:
+Add missing Spectre mitigation for userspace controlled parallel
+submission slot.
 
-- Tiled Display Manufacturer/Vendor ID Field (3 bytes)
-- Tiled Display Product ID Code Field (2 bytes)
-- Tiled Display Serial Number Field (4 bytes)
+Discovered using AI-assisted static analysis confirmed by Intel
+Product Security.
 
-i.e. a total of 9 bytes, not 8.
-
-The DisplayID Tiled Display Topology ID is used as the tile group
-identifier.
-
-Update both struct displayid_tiled_block topology_id member and struct
-drm_tile_group group_data member to full 9 bytes.
-
-The group data was missing the last byte of the serial number. I don't
-know whether there are known bug reports that might be linked to this,
-but it's plausible the last byte could be the differentiating part for
-the tile groups, and fewer tile groups might have been created than
-intended.
-
-Fixes: b49b55bd4fba ("drm/displayid: add displayid defines and edid extension (v2)")
-Fixes: 138f9ebb9755 ("drm: add tile_group support. (v3)")
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: stable@vger.kernel.org # v3.19+
-Reviewed-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20260610141549.555605-1-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Reported-by: Martin Hodo <martin.hodo@intel.com>
+Fixes: e5e32171a2cf ("drm/i915/guc: Connect UAPI to GuC multi-lrc interface")
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Tvrtko Ursulin <tursulin@ursulin.net>
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Cc: <stable@vger.kernel.org> # v5.16+
+Link: https://patch.msgid.link/20260622132539.165558-1-joonas.lahtinen@linux.intel.com
+(cherry picked from commit 15b9353deff3cf72331c387780de3cf9c316b643)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_connector.c          |   12 ++++++------
- drivers/gpu/drm/drm_displayid_internal.h |    2 +-
- include/drm/drm_connector.h              |    6 +++---
- 3 files changed, 10 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_context.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/drm_connector.c
-+++ b/drivers/gpu/drm/drm_connector.c
-@@ -3393,7 +3393,7 @@ EXPORT_SYMBOL(drm_mode_put_tile_group);
- /**
-  * drm_mode_get_tile_group - get a reference to an existing tile group
-  * @dev: DRM device
-- * @topology: 8-bytes unique per monitor.
-+ * @topology_id: 9-byte unique ID per monitor.
-  *
-  * Use the unique bytes to get a reference to an existing tile group.
-  *
-@@ -3401,14 +3401,14 @@ EXPORT_SYMBOL(drm_mode_put_tile_group);
-  * tile group or NULL if not found.
-  */
- struct drm_tile_group *drm_mode_get_tile_group(struct drm_device *dev,
--					       const char topology[8])
-+					       const char topology_id[9])
- {
- 	struct drm_tile_group *tg;
- 	int id;
+--- a/drivers/gpu/drm/i915/gem/i915_gem_context.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_context.c
+@@ -613,6 +613,7 @@ set_proto_ctx_engines_parallel_submit(st
+ 		return -EINVAL;
+ 	}
  
- 	mutex_lock(&dev->mode_config.idr_mutex);
- 	idr_for_each_entry(&dev->mode_config.tile_idr, tg, id) {
--		if (!memcmp(tg->group_data, topology, 8)) {
-+		if (!memcmp(tg->group_data, topology_id, sizeof(tg->group_data))) {
- 			if (!kref_get_unless_zero(&tg->refcount))
- 				tg = NULL;
- 			mutex_unlock(&dev->mode_config.idr_mutex);
-@@ -3423,7 +3423,7 @@ EXPORT_SYMBOL(drm_mode_get_tile_group);
- /**
-  * drm_mode_create_tile_group - create a tile group from a displayid description
-  * @dev: DRM device
-- * @topology: 8-bytes unique per monitor.
-+ * @topology_id: 9-byte unique ID per monitor.
-  *
-  * Create a tile group for the unique monitor, and get a unique
-  * identifier for the tile group.
-@@ -3432,7 +3432,7 @@ EXPORT_SYMBOL(drm_mode_get_tile_group);
-  * new tile group or NULL.
-  */
- struct drm_tile_group *drm_mode_create_tile_group(struct drm_device *dev,
--						  const char topology[8])
-+						  const char topology_id[9])
- {
- 	struct drm_tile_group *tg;
- 	int ret;
-@@ -3442,7 +3442,7 @@ struct drm_tile_group *drm_mode_create_t
- 		return NULL;
- 
- 	kref_init(&tg->refcount);
--	memcpy(tg->group_data, topology, 8);
-+	memcpy(tg->group_data, topology_id, sizeof(tg->group_data));
- 	tg->dev = dev;
- 
- 	mutex_lock(&dev->mode_config.idr_mutex);
---- a/drivers/gpu/drm/drm_displayid_internal.h
-+++ b/drivers/gpu/drm/drm_displayid_internal.h
-@@ -108,7 +108,7 @@ struct displayid_tiled_block {
- 	u8 topo[3];
- 	u8 tile_size[4];
- 	u8 tile_pixel_bezel[5];
--	u8 topology_id[8];
-+	u8 topology_id[9];
- } __packed;
- 
- struct displayid_detailed_timings_1 {
---- a/include/drm/drm_connector.h
-+++ b/include/drm/drm_connector.h
-@@ -2312,13 +2312,13 @@ struct drm_tile_group {
- 	struct kref refcount;
- 	struct drm_device *dev;
- 	int id;
--	u8 group_data[8];
-+	u8 group_data[9];
- };
- 
- struct drm_tile_group *drm_mode_create_tile_group(struct drm_device *dev,
--						  const char topology[8]);
-+						  const char topology_id[9]);
- struct drm_tile_group *drm_mode_get_tile_group(struct drm_device *dev,
--					       const char topology[8]);
-+					       const char topology_id[9]);
- void drm_mode_put_tile_group(struct drm_device *dev,
- 			     struct drm_tile_group *tg);
- 
++	slot = array_index_nospec(slot, set->num_engines);
+ 	if (set->engines[slot].type != I915_GEM_ENGINE_TYPE_INVALID) {
+ 		drm_dbg(&i915->drm,
+ 			"Invalid placement[%d], already occupied\n", slot);
 
 
