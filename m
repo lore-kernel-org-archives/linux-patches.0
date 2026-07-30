@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0CD38656D;
-	Thu, 30 Jul 2026 16:14:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8183C217723;
+	Thu, 30 Jul 2026 16:14:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428083; cv=none; b=WKYUUfDu8XBL7rYSMJ/Yh2y5YmIs/7ohVq68f2jQvD2fz5rb7xCGX3Gc2UkoVgO9uAW9cWh2w1rMGfYIHTTpKRukX2mSDQP5OQkGWztgKimIYXymNPfexG5ff8Pa7cxEmNIb9yGfi1s3aZ50dmzHBHiUhF/CcO6GHYHaQ2NjU7c=
+	t=1785428088; cv=none; b=TfsQEdpABhTDHZZ36CkU5kAoy1vZJ7IvGjHmjgfw/rmq8yq7sM0e8rICO6t40yneQ0hHQvY0aAxLnadQyRSkehqFd81JF7JTUy8oEQrOo1D0S5jwnn9O1fsIVA5HPdHyBllvP3xbDKNwAYY0Tp4Vjkkx5UCEDzHA5zHJuGyk+po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428083; c=relaxed/simple;
-	bh=RTdkZbUg2Nmkt4sbuC7nVTpdZeP4DaehlBEDNtjnbRo=;
+	s=arc-20240116; t=1785428088; c=relaxed/simple;
+	bh=+YMAUHG1VwlRVb9mfgjL0wvtsTmmYWyk2luivZvCfVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tIRVpwf39XM3EBAx30reWo3ZYx6Kln6bqfyoSKgLtQ4l3I8xQwgOoAra5LIVJ+PsE/dZR+zvHd/wHqXXv+CZlTN1if4b+DkGJ8ZmD29L2MQnM7nj8M9MUXJ0h3dpPeoAcBtf3VCjGFGqKyoVxl7CELXyoeJqAiFEgbft3WbNMXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C9asoxBT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QsQvWJ2aCVHwBeWuZDKxishg+95roXvGYOTpMogHnqVFsVp4piO/QepqSROwq0vUjPjS3FTLrdMoVHuuiO7dWn1cYODP8BvtEDCCqjf6i1VMcLpuNw3wicfRd1jA083FPmtfwvR87KGSpqz3H+3QinAo0RkyBu5X9wHmQdDfNbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b4pbB6kL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9asoxBT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F00F1F000E9;
-	Thu, 30 Jul 2026 16:14:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b4pbB6kL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6DC1F000E9;
+	Thu, 30 Jul 2026 16:14:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428082;
-	bh=R7F3oqzJvAOyAVDcZeIhyMF2MZbGkBPO0/+6HrN4e0c=;
+	s=korg; t=1785428085;
+	bh=BSV+g/X1BNmKwEhK5xXj5L37IRKwRRIwnDnT5R5MGis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C9asoxBTI3DIsmjiSB7dzu8XtyzQqbGsYAdwgq2mkRUuahm0lxNPaivv8c7V2lFMH
-	 /YCtLe3I2ZMrsom+XGBLxuQm8na93ByiVgZwhmpPcMTnEaQFvuCYGO6uDSczfEfO7b
-	 jfsYMh8+suRvYPZiTsLekgH6LCsIGj9AttTUTXtQ=
+	b=b4pbB6kLln1dWHBWEAjusdFJuyWLAO6+qgc0Qo0VIZ2rvK61zqf+9LN06AUSsAVou
+	 A7/et4tt8d4Zcgp0trpOkYsaOP2jOY2SlfY4j6pSDZouzpTkGig2pRMKlRofKq/HJA
+	 DlZ6VDumct8uvmrHJp9jHqh3IkdLHrMk/BMpy5DE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Helge Deller <deller@gmx.de>,
+	Ricardo Robaina <rrobaina@redhat.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 397/484] fbdev: efifb: fix memory leak in efifb_probe()
-Date: Thu, 30 Jul 2026 16:14:54 +0200
-Message-ID: <20260730141432.099966119@linuxfoundation.org>
+Subject: [PATCH 6.6 371/484] audit: use unsigned int instead of unsigned
+Date: Thu, 30 Jul 2026 16:14:28 +0200
+Message-ID: <20260730141431.534986774@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,35 +51,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Ricardo Robaina <rrobaina@redhat.com>
 
-[ Upstream commit 9b6eaf101656958397a6012bf43f6e2e42c9e5cb ]
+[ Upstream commit 8b226771014beab1292081151a99530886ce54b4 ]
 
-Since commit 73ce73c30ba9 ("fbdev: Transfer video= option strings to
-caller; clarify ownership") the string returned from fb_get_options()
-is expected to be freed by the caller, but the string is not freed in
-efifb_probe(). Fix that by freeing the option string after setup.
+Address checkpatch.pl warning below, across the audit subsystem:
 
-Fixes: 73ce73c30ba9 ("fbdev: Transfer video= option strings to caller; clarify ownership")
-Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
+  WARNING: Prefer 'unsigned int' to bare use of 'unsigned'
+
+Minor cleanup, no functional changes.
+
+Signed-off-by: Ricardo Robaina <rrobaina@redhat.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Stable-dep-of: 81905b5acbe7 ("audit: fix recursive locking deadlock in audit_dupe_exe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/efifb.c |    1 +
- 1 file changed, 1 insertion(+)
+ include/linux/audit.h      |    4 ++--
+ include/linux/audit_arch.h |   12 ++++++------
+ kernel/audit.c             |    2 +-
+ kernel/audit.h             |    2 +-
+ kernel/audit_tree.c        |    2 +-
+ kernel/auditfilter.c       |    8 ++++----
+ kernel/auditsc.c           |    2 +-
+ lib/compat_audit.c         |   12 ++++++------
+ 8 files changed, 22 insertions(+), 22 deletions(-)
 
---- a/drivers/video/fbdev/efifb.c
-+++ b/drivers/video/fbdev/efifb.c
-@@ -375,6 +375,7 @@ static int efifb_probe(struct platform_d
- 	if (fb_get_options("efifb", &option))
- 		return -ENODEV;
- 	efifb_setup(si, option);
-+	kfree(option);
+--- a/include/linux/audit.h
++++ b/include/linux/audit.h
+@@ -122,8 +122,8 @@ enum audit_nfcfgop {
+ 	AUDIT_NFT_OP_INVALID,
+ };
  
- 	/* We don't get linelength from UGA Draw Protocol, only from
- 	 * EFI Graphics Protocol.  So if it's not in DMI, and it's not
+-extern int __init audit_register_class(int class, unsigned *list);
+-extern int audit_classify_syscall(int abi, unsigned syscall);
++extern int __init audit_register_class(int class, unsigned int *list);
++extern int audit_classify_syscall(int abi, unsigned int syscall);
+ extern int audit_classify_arch(int arch);
+ 
+ /* audit_names->type values */
+--- a/include/linux/audit_arch.h
++++ b/include/linux/audit_arch.h
+@@ -21,13 +21,13 @@ enum auditsc_class_t {
+ 	AUDITSC_NVALS /* count */
+ };
+ 
+-extern int audit_classify_compat_syscall(int abi, unsigned syscall);
++extern int audit_classify_compat_syscall(int abi, unsigned int syscall);
+ 
+ /* only for compat system calls */
+-extern unsigned compat_write_class[];
+-extern unsigned compat_read_class[];
+-extern unsigned compat_dir_class[];
+-extern unsigned compat_chattr_class[];
+-extern unsigned compat_signal_class[];
++extern unsigned int compat_write_class[];
++extern unsigned int compat_read_class[];
++extern unsigned int compat_dir_class[];
++extern unsigned int compat_chattr_class[];
++extern unsigned int compat_signal_class[];
+ 
+ #endif
+--- a/kernel/audit.c
++++ b/kernel/audit.c
+@@ -1989,7 +1989,7 @@ static void audit_log_vformat(struct aud
+ 		 * here and AUDIT_BUFSIZ is at least 1024, then we can
+ 		 * log everything that printk could have logged. */
+ 		avail = audit_expand(ab,
+-			max_t(unsigned, AUDIT_BUFSIZ, 1+len-avail));
++			max_t(unsigned int, AUDIT_BUFSIZ, 1+len-avail));
+ 		if (!avail)
+ 			goto out_va_end;
+ 		len = vsnprintf(skb_tail_pointer(skb), avail, fmt, args2);
+--- a/kernel/audit.h
++++ b/kernel/audit.h
+@@ -227,7 +227,7 @@ static inline int audit_hash_ino(u64 ino
+ /* Indicates that audit should log the full pathname. */
+ #define AUDIT_NAME_FULL -1
+ 
+-extern int audit_match_class(int class, unsigned syscall);
++extern int audit_match_class(int class, unsigned int syscall);
+ extern int audit_comparator(const u32 left, const u32 op, const u32 right);
+ extern int audit_uid_comparator(kuid_t left, u32 op, kuid_t right);
+ extern int audit_gid_comparator(kgid_t left, u32 op, kgid_t right);
+--- a/kernel/audit_tree.c
++++ b/kernel/audit_tree.c
+@@ -33,7 +33,7 @@ struct audit_chunk {
+ 	struct audit_node {
+ 		struct list_head list;
+ 		struct audit_tree *owner;
+-		unsigned index;		/* index; upper bit indicates 'will prune' */
++		unsigned int index;	/* index; upper bit indicates 'will prune' */
+ 	} owners[];
+ };
+ 
+--- a/kernel/auditfilter.c
++++ b/kernel/auditfilter.c
+@@ -165,13 +165,13 @@ static inline int audit_to_inode(struct
+ 
+ static __u32 *classes[AUDIT_SYSCALL_CLASSES];
+ 
+-int __init audit_register_class(int class, unsigned *list)
++int __init audit_register_class(int class, unsigned int *list)
+ {
+ 	__u32 *p = kcalloc(AUDIT_BITMASK_SIZE, sizeof(__u32), GFP_KERNEL);
+ 	if (!p)
+ 		return -ENOMEM;
+ 	while (*list != ~0U) {
+-		unsigned n = *list++;
++		unsigned int n = *list++;
+ 		if (n >= AUDIT_BITMASK_SIZE * 32 - AUDIT_SYSCALL_CLASSES) {
+ 			kfree(p);
+ 			return -EINVAL;
+@@ -186,7 +186,7 @@ int __init audit_register_class(int clas
+ 	return 0;
+ }
+ 
+-int audit_match_class(int class, unsigned syscall)
++int audit_match_class(int class, unsigned int syscall)
+ {
+ 	if (unlikely(syscall >= AUDIT_BITMASK_SIZE * 32))
+ 		return 0;
+@@ -237,7 +237,7 @@ static int audit_match_signal(struct aud
+ /* Common user-space to kernel rule translation. */
+ static inline struct audit_entry *audit_to_entry_common(struct audit_rule_data *rule)
+ {
+-	unsigned listnr;
++	unsigned int listnr;
+ 	struct audit_entry *entry;
+ 	int i, err;
+ 
+--- a/kernel/auditsc.c
++++ b/kernel/auditsc.c
+@@ -150,7 +150,7 @@ static const struct audit_nfcfgop_tab au
+ 
+ static int audit_match_perm(struct audit_context *ctx, int mask)
+ {
+-	unsigned n;
++	unsigned int n;
+ 
+ 	if (unlikely(!ctx))
+ 		return 0;
+--- a/lib/compat_audit.c
++++ b/lib/compat_audit.c
+@@ -4,32 +4,32 @@
+ #include <linux/audit_arch.h>
+ #include <asm/unistd32.h>
+ 
+-unsigned compat_dir_class[] = {
++unsigned int compat_dir_class[] = {
+ #include <asm-generic/audit_dir_write.h>
+ ~0U
+ };
+ 
+-unsigned compat_read_class[] = {
++unsigned int compat_read_class[] = {
+ #include <asm-generic/audit_read.h>
+ ~0U
+ };
+ 
+-unsigned compat_write_class[] = {
++unsigned int compat_write_class[] = {
+ #include <asm-generic/audit_write.h>
+ ~0U
+ };
+ 
+-unsigned compat_chattr_class[] = {
++unsigned int compat_chattr_class[] = {
+ #include <asm-generic/audit_change_attr.h>
+ ~0U
+ };
+ 
+-unsigned compat_signal_class[] = {
++unsigned int compat_signal_class[] = {
+ #include <asm-generic/audit_signal.h>
+ ~0U
+ };
+ 
+-int audit_classify_compat_syscall(int abi, unsigned syscall)
++int audit_classify_compat_syscall(int abi, unsigned int syscall)
+ {
+ 	switch (syscall) {
+ #ifdef __NR_open
 
 
