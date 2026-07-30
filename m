@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECBF435536;
-	Thu, 30 Jul 2026 15:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FA830567C;
+	Thu, 30 Jul 2026 15:27:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425229; cv=none; b=QFPwKqYVmAgW2dPCv/KMvQhEAgxLEW50R4tTkooTXh7ZTK0mCFYcNItpAJjc6Uir/OSQvKjQ7jzRwbcKD1Lf09kgFsRoqwgZXn673IIBESyFWixJB1s1xAj8TXBLBIKbXf10mvth3l91JVZH25fZOamPLeQAZ21h5vobB2G+0/c=
+	t=1785425232; cv=none; b=hazzoMLziYdQXNoVrREW7agzILIAaAHGiHKHKzExZj31/7Eir158hhmLTLr00QbY0Ct7e+sT4lTB9M8Uc6SH3CphvnPJwtvdGux92RVQgYvgUolai27k89wIZCYLhqwxpz6S7fc0RDE9RC83x2vkh2By3hiwEe5DYDidyx/ghG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425229; c=relaxed/simple;
-	bh=+7kpYTP31j+lUh6KFTDRAtjA7WmAKIDbGEWMXzQW/oM=;
+	s=arc-20240116; t=1785425232; c=relaxed/simple;
+	bh=CL0KWBwS5auXiN7WtjVTeKHzZvDwDHtmoBzi7T+ntzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dd7RusDPxmpzLu/wXgHZ/1XnYsorZW5Om1/BxHKWkyZmjB/s9+W1Wgk2Hu4c2DEGSul6Gyt7JEJyHsUD1p0itAyW2vuaIKchCXhx0hZQs6YhjEvXIpW/uGmBH7WvkFoGq53ZCuEcFR+PMFwWNIP3vNHjtBV0ufcvV2qD71qSxfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YOXTk0I3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sCo+GIf919PVDc1Kc8qzMRxTmjx7PAKeVYOp+iZSMgMlKQ/ks18IZMSP2EOeKeq2amqecoKPHDLh2mFkuf1874rUgRFFp/sYvSJD/N7dLKDNsHgCBQkquKUHrcGr3VwwgHmtH1wVkPLUNC9DXFA9nIdTgrjwErDD6AbXUmbEiMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjMGzGXt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YOXTk0I3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A2F91F000E9;
-	Thu, 30 Jul 2026 15:27:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjMGzGXt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7531F000E9;
+	Thu, 30 Jul 2026 15:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425228;
-	bh=0qpj6/RIk9gURuhi1PfpNPEasPhUWluiC1S8i+zBT44=;
+	s=korg; t=1785425231;
+	bh=QrWKdOZ+Yf8PQ1Vje/on7HY7yMcmRY3/JfkJJ0K1g3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YOXTk0I3j4v4jBRnnxRbYwLuVDdNiiTKSnPfGmZzQu1WoA/6hc4aXgwjKx/T9SkQb
-	 VrrYPeNfItmQCGNfc6A0a06Cd7D/EVT2ME9ZcDXCgjA7JMIig9K04zHdns0k6CdJq1
-	 Lt8Jv4SH3RdWgp++Ag+IVLrPYzWe6Y9g9/NAHUHg=
+	b=KjMGzGXtXreI5FVIuUWXP1xwzFVvIDwPdfDFqht4YoEhc9/EpSG5jEPn+nlZXcr5v
+	 L9wyC946HY0fCk4+Sw3I89Vu9N8mmy5X7l94o8m/DRmPd4ZftKfmxy6Uu3jYGvfusN
+	 tmvItACj01mWsA/tHmnWhlkWf4A11certXud7+ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 668/675] mm/damon/core: disallow overlapping input ranges for damon_set_regions()
-Date: Thu, 30 Jul 2026 16:16:38 +0200
-Message-ID: <20260730141459.357219503@linuxfoundation.org>
+	Urgau <urgau@numericable.fr>,
+	Gary Guo <gary@garyguo.net>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Tamir Duberstein <tamird@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.18 669/675] rust: allow `suspicious_runtime_symbol_definitions` lint for Rust >= 1.98
+Date: Thu, 30 Jul 2026 16:16:39 +0200
+Message-ID: <20260730141459.380539262@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,71 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 954157679ec34661c2e87e7eb796104a797c32db upstream.
+commit 608045a91d9176d66b2114d0006bc8b57dff2ca9 upstream.
 
-damon_set_regions() assumes the input ranges are sorted by the address and
-don't overlap each other.  Hence the assumption was initially to be
-explicitly validated.  But commit 97d482f4592f ("mm/damon/sysfs: reuse
-damon_set_regions() for regions setting") has mistakenly removed the
-validation.
+Starting with Rust 1.98.0 (expected 2026-08-20), Rust is introducing a
+couple new lints, `invalid_runtime_symbol_definitions` (deny-by-default)
+and `suspicious_runtime_symbol_definitions` (warn-by-default), which check
+the signature of items whose symbol name is a runtime symbol expected by
+`core`.
 
-This can make DAMON behave in unexpected ways.  At the best, the
-monitoring results snapshot will just look weird since there will be
-overlapping regions.  DAMOS will also work weirdly, applying the same
-action multiple times for overlapping regions, and make DAMOS quota weird.
-More seriously, depending on the setup and regions updates sequence,
-negative size regions can be made.  It will trigger WARN_ONCE() if the
-kernel is built with CONFIG_DAMON_DEBUG_SANITY=y.  Depending on the
-monitoring results, the negative size region can further trigger division
-by zero in damon_merge_two_regions().
+Our build hits the second one, i.e. the warning:
 
-Note that some of the consequences including the WARN_ONCE() and the
-divide by zero depend on commits that were introduced after the root cause
-commit 97d482f4592f ("mm/damon/sysfs: reuse damon_set_regions() for
-regions setting").
+    error: suspicious definition of the runtime `strlen` symbol used by the standard library
+         --> rust/bindings/bindings_generated.rs:20018:5
+          |
+    20018 |     pub fn strlen(s: *const ffi::c_char) -> usize;
+          |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          |
+          = note: expected `unsafe extern "C" fn(*const i8) -> usize`
+                  found    `unsafe extern "C" fn(*const u8) -> usize`
+          = help: either fix the signature or remove any attributes like `#[unsafe(no_mangle)]`, `#[unsafe(export_name = "strlen")]`, or `#[link_name = "strlen"]`
+          = help: allow this lint if the signature is compatible
+          = note: `-D suspicious-runtime-symbol-definitions` implied by `-D warnings`
+          = help: to override `-D warnings` add `#[allow(suspicious_runtime_symbol_definitions)]`
 
-Fix the problems by checking the assumption and returning an error if
-the input ranges don't meet the assumption.
+    error: suspicious definition of the runtime `strlen` symbol used by the standard library
+         --> rust/uapi/uapi_generated.rs:14236:5
+          |
+    14236 |     pub fn strlen(s: *const ffi::c_char) -> usize;
+          |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          |
+          = note: expected `unsafe extern "C" fn(*const i8) -> usize`
+                  found    `unsafe extern "C" fn(*const u8) -> usize`
+          = help: either fix the signature or remove any attributes like `#[unsafe(no_mangle)]`, `#[unsafe(export_name = "strlen")]`, or `#[link_name = "strlen"]`
+          = help: allow this lint if the signature is compatible
+          = note: `-D suspicious-runtime-symbol-definitions` implied by `-D warnings`
+          = help: to override `-D warnings` add `#[allow(suspicious_runtime_symbol_definitions)]`
 
-The issue was discovered [1] by Sashiko.
+Thus `allow` the lint in `bindings` and `uapi`.
 
-Link: https://lore.kernel.org/20260703165610.92894-1-sj@kernel.org
-Link: https://lore.kernel.org/20260630041806.151124-1-sj@kernel.org [1]
-Fixes: 97d482f4592f ("mm/damon/sysfs: reuse damon_set_regions() for regions setting")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.19.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: SJ Park <sj@kernel.org>
+A more targeted alternative to avoid `allow`ing it would be to pass
+`--blocklist-function strlen` to `bindgen`, but we would perhaps need
+to adjust if other C headers end up adding more (or Rust checking more).
+Since it is just the less critical one that we hit, and since eventually
+this should be properly fixed by getting upstream Rust to provide a flag
+like GCC/Clang's `-funsigned-char` [2][3], just `allow` it for now.
+
+Cc: Urgau <urgau@numericable.fr>
+Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
+Link: https://github.com/rust-lang/rust/pull/155521 [1]
+Link: https://github.com/rust-lang/rust/issues/138446 [2]
+Link: https://github.com/Rust-for-Linux/linux/issues/355 [3]
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Tamir Duberstein <tamird@kernel.org>
+Link: https://patch.msgid.link/20260615143225.471756-1-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ init/Kconfig         |    3 +++
+ rust/bindings/lib.rs |    4 ++++
+ rust/uapi/lib.rs     |    4 ++++
+ 3 files changed, 11 insertions(+)
 
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -213,12 +213,19 @@ int damon_set_regions(struct damon_targe
- {
- 	struct damon_region *r, *next;
- 	unsigned int i;
-+	unsigned long last_end;
- 	int err;
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -162,6 +162,9 @@ config RUSTC_HAS_FILE_WITH_NUL
+ config RUSTC_HAS_FILE_AS_C_STR
+ 	def_bool RUSTC_VERSION >= 109100
  
- 	for (i = 0; i < nr_ranges; i++) {
--		if (ALIGN_DOWN(ranges[i].start, min_sz_region) >=
--				ALIGN(ranges[i].end, min_sz_region))
-+		unsigned long start, end;
++config RUSTC_HAS_SUSPICIOUS_RUNTIME_SYMBOL_DEFINITIONS
++	def_bool RUSTC_VERSION >= 109800
 +
-+		start = ALIGN_DOWN(ranges[i].start, min_sz_region);
-+		end = ALIGN(ranges[i].end, min_sz_region);
-+		if (start >= end)
-+			return -EINVAL;
-+		if (i > 0 && last_end > start)
- 			return -EINVAL;
-+		last_end = end;
- 	}
+ config PAHOLE_VERSION
+ 	int
+ 	default $(shell,$(srctree)/scripts/pahole-version.sh $(PAHOLE))
+--- a/rust/bindings/lib.rs
++++ b/rust/bindings/lib.rs
+@@ -30,6 +30,10 @@
+ #[allow(clippy::ref_as_ptr)]
+ #[allow(clippy::undocumented_unsafe_blocks)]
+ #[cfg_attr(CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES, allow(unnecessary_transmutes))]
++#[cfg_attr(
++    CONFIG_RUSTC_HAS_SUSPICIOUS_RUNTIME_SYMBOL_DEFINITIONS,
++    allow(suspicious_runtime_symbol_definitions)
++)]
+ mod bindings_raw {
+     use pin_init::{MaybeZeroable, Zeroable};
  
- 	/* Remove regions which are not in the new ranges */
+--- a/rust/uapi/lib.rs
++++ b/rust/uapi/lib.rs
+@@ -28,6 +28,10 @@
+     unsafe_op_in_unsafe_fn
+ )]
+ #![cfg_attr(CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES, allow(unnecessary_transmutes))]
++#![cfg_attr(
++    CONFIG_RUSTC_HAS_SUSPICIOUS_RUNTIME_SYMBOL_DEFINITIONS,
++    allow(suspicious_runtime_symbol_definitions)
++)]
+ 
+ // Manual definition of blocklisted types.
+ type __kernel_size_t = usize;
 
 
