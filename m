@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601F62E9EC7;
-	Thu, 30 Jul 2026 16:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0063443AAB;
+	Thu, 30 Jul 2026 16:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427247; cv=none; b=T/J9FVMt1dojzYQBP7BGvP5kBBESJimyKltxzVPmLXIdfc5xs/Q5wgCj5Ok0Tc+EdKP/HbH7kr9TxueH1cXHg4d0ZFNoR0xWevxsX4eWK+nI55TpD7nqOM1ra0EdtwYLKuXrsm8S5Zzd0XXr8X7LhT7QtsYZets81WYMjWXV2b0=
+	t=1785427251; cv=none; b=MiOcK5pbTGYD/LoAyjhhLk/87xPFZrOwFbl1bXVb6oUsM98xBoIxU9xemkjLCmdzddGu8CYnCxIq7L/OGcUHxHDNiUVoZvB+QeNfnY0tC5iMKEUO/QUmBQm4DIwalY33IJgDnBuaK0/JbqUfvtncvElwfXtbZzA4sqZ5QiksxqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427247; c=relaxed/simple;
-	bh=dr0A8ZxNDNGLknKpoMLR1779//ODNnDIb8tDxtWnqfQ=;
+	s=arc-20240116; t=1785427251; c=relaxed/simple;
+	bh=S0kAtaYgT0Pno9MgfEoZ/TDWiy0hRoylu+z7oi/Lw8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E5lbyiodSGLFWcJ5FjpxNgqXZe6th+yKP512mvdTVg8aD4XxoMKJu6pS4nsPlogzTwK5rP7667AmX8JtI3U/60KMcsdD8FLxa3JTiKw4W3y5OHdsg9JZ7FpfRGzYAuHYoS7Y8Mb+z9o5/whjWpBzenHv8VyzFpbXP5lAowCZFhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tkw41uS4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EmKzNGCuUG/YTtHhPmCRFsVKJ5oTiZz+x4KFGxmCekcpgpoOhtRtYSxEZrxeb+tVSFQBoHMjDdz26HZckE76dugsbUTfn/dQAjc60FvrjrAzmoWdznOK5wzJsxJhXOG99I/6fXPTaF1Y6NDjoewO7IglqP/y6UAjQzDgVso5puY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJzDD7Zs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tkw41uS4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CF71F00ACF;
-	Thu, 30 Jul 2026 16:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJzDD7Zs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0C21F00ADB;
+	Thu, 30 Jul 2026 16:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427246;
-	bh=b5ROt/hEVBNN5kqGNo6uMK8mpxuvjoHlaOUzGS6cuKw=;
+	s=korg; t=1785427249;
+	bh=FUDsRMhmLY1aEGbqbUipNOZ0tDV9qM+TUniiLta6TC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tkw41uS4EqNWtc4dHgfQsfXYdWGqQZbsAIubRDsL+bcIPeoeIBzAQ1LIJ9OjqW4u2
-	 6treArVnVsQ4MIB4TF1dF+3P2s588VAxGMf2Ofxqn4QL+xC/37hP2uwk0JhkjuRnZM
-	 zAlNOhFSvgFxY0cJyIL1hEMlXrEuAJTC8BSnzNxE=
+	b=BJzDD7Zsi9gUXclfq2QYTAjeAQwQiuwY3pn759Rcu3U7TposOs/AJd1OaDn1A8fft
+	 qG5LB9RdrtvHPVIYlVh9gtlCAaS8/4a6pADfUTDoSiFkWOUmv6hg4tB8GFLo3l+6hm
+	 dj24iNyeR0yRh5H0qvsFHyWX6G9B8UtwDGjBbHC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 103/484] USB: gadget: fsl-udc: fix device name leak on probe failure
-Date: Thu, 30 Jul 2026 16:10:00 +0200
-Message-ID: <20260730141425.696039672@linuxfoundation.org>
+	Sonali Pradhan <sonalipradhan@google.com>
+Subject: [PATCH 6.6 104/484] usb: gadget: f_ncm: validate datagram bounds in ncm_unwrap_ntb()
+Date: Thu, 30 Jul 2026 16:10:01 +0200
+Message-ID: <20260730141425.717938991@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -50,32 +50,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Sonali Pradhan <sonalipradhan@google.com>
 
-commit 6b874d00c466e73c6448a89856407fe46b2f50e4 upstream.
+commit 1febec7e47cdcd01f43fb0211094e3010474666e upstream.
 
-The gadget device name is set by UDC core when registering the gadget
-and must not be set before to avoid leaking the name in intermediate
-error paths (e.g. on dma pool creation failure).
+When unpacking host-supplied NTBs, ncm_unwrap_ntb() checks datagram length
+against frame_max but does not verify that the datagram fits within the
+declared block length. Additionally, when decoding multiple NTBs from a
+single socket buffer, subsequent block lengths are not checked against the
+actual remaining buffer data.
 
-Fixes: eab35c4e6d95 ("usb: gadget: fsl_udc_core: let udc-core manage gadget->dev")
+With these checks missing, a malicious USB host can specify datagram
+offsets and lengths that point beyond the block, or supply secondary NTB
+headers declaring lengths larger than the buffer. skb_put_data() then
+copies adjacent kernel memory from skb_shared_info into the network skb.
+
+Fix this by verifying that sufficient buffer space remains for the NTB
+header before parsing, handling zero-length block declarations, ensuring
+that block lengths never exceed the remaining buffer space, and verifying
+that each datagram payload stays strictly within the block boundary.
+
+Fixes: 427694cfaafa ("usb: gadget: ncm: Handle decoding of multiple NTB's in unwrap call")
+Fixes: 2b74b0a04d3e ("USB: gadget: f_ncm: add bounds checks to ncm_unwrap_ntb()")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260702141536.90887-2-johan@kernel.org
+Assisted-by: Jetski:Gemini-2.5-Pro
+Signed-off-by: Sonali Pradhan <sonalipradhan@google.com>
+Link: https://patch.msgid.link/20260703083725.1903850-1-sonalipradhan@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/fsl_udc_core.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/usb/gadget/function/f_ncm.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/gadget/udc/fsl_udc_core.c
-+++ b/drivers/usb/gadget/udc/fsl_udc_core.c
-@@ -2465,7 +2465,6 @@ static int fsl_udc_probe(struct platform
- 	udc_controller->gadget.name = driver_name;
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -1175,6 +1175,10 @@ static int ncm_unwrap_ntb(struct gether
+ 	int		to_process = skb->len;
  
- 	/* Setup gadget.dev and register with kernel */
--	dev_set_name(&udc_controller->gadget.dev, "gadget");
- 	udc_controller->gadget.dev.of_node = pdev->dev.of_node;
+ parse_ntb:
++	if (to_process < (int)opts->nth_size) {
++		INFO(port->func.config->cdev, "Packet too small for headers\n");
++		goto err;
++	}
+ 	tmp = (__le16 *)ntb_ptr;
  
- 	if (!IS_ERR_OR_NULL(udc_controller->transceiver))
+ 	/* dwSignature */
+@@ -1195,8 +1199,12 @@ parse_ntb:
+ 	tmp++; /* skip wSequence */
+ 
+ 	block_len = get_ncm(&tmp, opts->block_length);
++	if (block_len == 0)
++		block_len = to_process;
++
+ 	/* (d)wBlockLength */
+-	if ((block_len < opts->nth_size + opts->ndp_size) || (block_len > ntb_max)) {
++	if ((block_len < opts->nth_size + opts->ndp_size) || (block_len > ntb_max) ||
++			(block_len > to_process)) {
+ 		INFO(port->func.config->cdev, "Bad block length: %#X\n", block_len);
+ 		goto err;
+ 	}
+@@ -1259,7 +1267,7 @@ parse_ntb:
+ 			index = index2;
+ 			/* wDatagramIndex[0] */
+ 			if ((index < opts->nth_size) ||
+-					(index > block_len - opts->dpe_size)) {
++					(index > block_len)) {
+ 				INFO(port->func.config->cdev,
+ 				     "Bad index: %#X\n", index);
+ 				goto err;
+@@ -1271,7 +1279,8 @@ parse_ntb:
+ 			 * ethernet hdr + crc or larger than max frame size
+ 			 */
+ 			if ((dg_len < 14 + crc_len) ||
+-					(dg_len > frame_max)) {
++					(dg_len > frame_max) ||
++					(dg_len > block_len - index)) {
+ 				INFO(port->func.config->cdev,
+ 				     "Bad dgram length: %#X\n", dg_len);
+ 				goto err;
+@@ -1296,7 +1305,7 @@ parse_ntb:
+ 			dg_len2 = get_ncm(&tmp, opts->dgram_item_len);
+ 
+ 			/* wDatagramIndex[1] */
+-			if (index2 > block_len - opts->dpe_size) {
++			if (index2 > block_len) {
+ 				INFO(port->func.config->cdev,
+ 				     "Bad index: %#X\n", index2);
+ 				goto err;
 
 
