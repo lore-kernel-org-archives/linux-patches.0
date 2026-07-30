@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392EE3815D5;
-	Thu, 30 Jul 2026 16:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65AE1383983;
+	Thu, 30 Jul 2026 16:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427330; cv=none; b=TYjY5fEOZLpiM06osLA2eBgQHVfWwF4zLYLCLrOWa1xJ4jsieb8RTFmUSa+2jLVSQjyrPq5vjOHGprXnwjHQQj2GP0peCVJ/4+s/TIE00cRCUuvDvWDEP42UJsrf1IPVPHyEMrVVM/LGoEoDNcE04/qWZTOWov6SvsckyWjC0FU=
+	t=1785427333; cv=none; b=WP2eKdxDvSj+kYZENv5RXW36MFVL2wfF8zc2TYB1Hti/rYPvElJwCN5/vNIKdWC3P2F6KO1AfqM84fiIZiclsFsPtfQXhqsPiz62Q7f+CvCSAKnB6ZBAx4cKHIGlAzFwT2N/4/yzXIT7o6/VzYcbh/8yHfahYDnwQtZug61OUZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427330; c=relaxed/simple;
-	bh=gf3ZxfznkqKiB4rKaZiMm3Q5DAeyr3eu/N4yDcxg0Is=;
+	s=arc-20240116; t=1785427333; c=relaxed/simple;
+	bh=brh6GWiOEPWt4JSRIoKO4H4ArLgBANp5Qf+wdYUkiPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XYlUxuGrg+aYYn6wFLigdyoQeG0T9EFWAV7MwwIFLQ7mxGJhu7XlXDW4L3DUWVeFyKP490ZxfhTzrLlyrhM7J60zViNz15xyYNkmNehocVJYqmQxn8ataHfmzHQR5yVDe5pRUn/mtA7D5Kl0o83VyZjW9V2TiRWzc/lY8MBi3yQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMn1EYpd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i2KaraFPmihGulNnykK6VB16jufpITvO0+PGovJ15mvzjZOYq+UjTjzQo8iIQ//oTk6GVprhMPLirC9JaqB+sr6XnMLb64CIRJ7wU1V1rwFZ+FWHI8vhTh/XJcv0mPGdYGq1ymamfevwp4z8oIKoVuryfFtvGaEo643q7rQ9xDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4bmcXWK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMn1EYpd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BDE31F000E9;
-	Thu, 30 Jul 2026 16:02:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4bmcXWK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B83F1F000E9;
+	Thu, 30 Jul 2026 16:02:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427329;
-	bh=sHa0o8Ge89Dp4QkAeEVuEZDyh3/tr7Y5pM//WsAxTsg=;
+	s=korg; t=1785427332;
+	bh=H4cVW6pYnFtNVJKcq+FQj7uSX9URkB+b7KEWMgDZMLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QMn1EYpd1nIvP4Q8tyzDwZxiA9i9lBX49yo9cnTijc8s8j+hXRC8ugBVwcIMxkD1p
-	 h0ATzU/JGep95YU8cVX/f5ZpstfcktWsVqfyQVkqjd297R9s21KIGBjayzzDoQk5oK
-	 /a+cPgeC+eyRQrCkcfiO/AA7OoFm2XM5tdB1Cebw=
+	b=l4bmcXWKw9t+2cOnA5N3QYdM0e9b5/8P2p+kCIH7bzMjRY0gn5wXLSBnqjxPh4lr9
+	 qlqud0eQ16kUdA+i37tXFZXb5lDrjiQ5N7m8Bt9K33MSPF9ycU38Sgb0sP4UZk23OB
+	 PExgeqiGKMPBWTv6uHqbdxs6j9CIf8M+CqxXQbGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Michal Luczaj <mhal@rbox.co>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Shuhao Fu <sfual@cse.ust.hk>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 088/484] bpf, sockmap: Reject unhashed UDP sockets on sockmap update
-Date: Thu, 30 Jul 2026 16:09:45 +0200
-Message-ID: <20260730141425.360431579@linuxfoundation.org>
+Subject: [PATCH 6.6 089/484] can: j1939: fix lockless local-destination check
+Date: Thu, 30 Jul 2026 16:09:46 +0200
+Message-ID: <20260730141425.382223286@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -54,72 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Shuhao Fu <sfual@cse.ust.hk>
 
-[ Upstream commit 66efd3368ae10d05e08fbe6425b50fdec7186ac7 ]
+[ Upstream commit e4e8af62adab2fdcca230006f829407a953070cd ]
 
-UDP sockets get SOCK_RCU_FREE set when (auto-)bound. This means
-sk_is_refcounted(unbound) = true, while sk_is_refcounted(bound) = false.
+j1939_priv.ents[].nusers is documented as protected by priv->lock, and
+its updates already happen under that lock. j1939_can_recv() also reads
+it under read_lock_bh(). However, j1939_session_skb_queue() and
+j1939_tp_send() still read priv->ents[da].nusers without taking the
+lock.
 
-Because sockmap accepts unbound UDP sockets, a BPF program can increment a
-socket's refcount via lookup. If the socket is subsequently bound, the
-transition from unbound to bound causes bpf_sk_release() to skip the
-decrement of the refcount, causing a memory leak.
+Those transport-side checks decide whether to set J1939_ECU_LOCAL_DST, so
+they can race with j1939_local_ecu_get() and j1939_local_ecu_put() while
+userspace is binding or releasing sockets concurrently with TP traffic.
+This can misclassify TP/ETP sessions as local or remote and take the wrong
+transport path.
 
-unreferenced object 0xffff88810bc2eb40 (size 1984):
-  comm "test_progs", pid 2451, jiffies 4295320596
-  hex dump (first 32 bytes):
-    7f 00 00 01 7f 00 00 01 d2 04 1b b7 04 d2 00 00  ................
-    02 00 01 40 00 00 00 00 00 00 00 00 00 00 00 00  ...@............
-  backtrace (crc bdee079d):
-    kmem_cache_alloc_noprof+0x557/0x660
-    sk_prot_alloc+0x69/0x240
-    sk_alloc+0x30/0x460
-    inet_create+0x2ce/0xf80
-    __sock_create+0x25b/0x5c0
-    __sys_socket+0x119/0x1d0
-    __x64_sys_socket+0x72/0xd0
-    do_syscall_64+0xa1/0x5f0
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Fix both transport paths by routing the destination-locality check through
+a helper that reads ents[].nusers under read_lock_bh(&priv->lock).
 
-Instead of special-casing for refcounted sockets, reject unhashed UDP
-sockets during sockmap updates, as there is no benefit to supporting those.
-This effectively reverts the commit under Fixes, with two exceptions:
-
-1. sock_map_sk_state_allowed() maintains a fall-through `return true`.
-2. In the spirit of commit b8b8315e39ff ("bpf, sockmap: Remove unhash
-   handler for BPF sockmap usage"), the proto::unhash BPF handler is not
-   reintroduced.
-
-Historical note: this issue is related to commit 67312adc96b5 ("bpf: reject
-unhashed sockets in bpf_sk_assign").
-
-Fixes: 0c48eefae712 ("sock_map: Lift socket state restriction for datagram sockets")
-Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20260707-sockmap-lookup-udp-leak-v4-2-f878346f27ab@rbox.co
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Signed-off-by: Shuhao Fu <sfual@cse.ust.hk>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20260419140614.GA4041240@chcpu16
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_map.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/can/j1939/transport.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index 3a53b6a0e76e2b..052057303cff11 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -539,6 +539,8 @@ static bool sock_map_sk_state_allowed(const struct sock *sk)
+diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c
+index 6c37562a50f72e..d8dada03b3cd12 100644
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -350,6 +350,18 @@ static void j1939_session_skb_drop_old(struct j1939_session *session)
+ 	}
+ }
+ 
++static bool j1939_address_is_local(struct j1939_priv *priv, u8 addr)
++{
++	bool local = false;
++
++	read_lock_bh(&priv->lock);
++	if (j1939_address_is_unicast(addr) && priv->ents[addr].nusers)
++		local = true;
++	read_unlock_bh(&priv->lock);
++
++	return local;
++}
++
+ void j1939_session_skb_queue(struct j1939_session *session,
+ 			     struct sk_buff *skb)
  {
- 	if (sk_is_tcp(sk))
- 		return (1 << sk->sk_state) & (TCPF_ESTABLISHED | TCPF_LISTEN);
-+	if (sk_is_udp(sk))
-+		return sk_hashed(sk);
- 	if (sk_is_stream_unix(sk))
- 		return (1 << sk->sk_state) & TCPF_ESTABLISHED;
- 	if (sk_is_vsock(sk) &&
+@@ -358,8 +370,7 @@ void j1939_session_skb_queue(struct j1939_session *session,
+ 
+ 	j1939_ac_fixup(priv, skb);
+ 
+-	if (j1939_address_is_unicast(skcb->addr.da) &&
+-	    priv->ents[skcb->addr.da].nusers)
++	if (j1939_address_is_local(priv, skcb->addr.da))
+ 		skcb->flags |= J1939_ECU_LOCAL_DST;
+ 
+ 	skcb->flags |= J1939_ECU_LOCAL_SRC;
+@@ -2021,8 +2032,7 @@ struct j1939_session *j1939_tp_send(struct j1939_priv *priv,
+ 		return ERR_PTR(ret);
+ 
+ 	/* fix DST flags, it may be used there soon */
+-	if (j1939_address_is_unicast(skcb->addr.da) &&
+-	    priv->ents[skcb->addr.da].nusers)
++	if (j1939_address_is_local(priv, skcb->addr.da))
+ 		skcb->flags |= J1939_ECU_LOCAL_DST;
+ 
+ 	/* src is always local, I'm sending ... */
 -- 
 2.53.0
 
