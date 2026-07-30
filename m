@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312FA43E097;
-	Thu, 30 Jul 2026 14:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7162E43E083;
+	Thu, 30 Jul 2026 14:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421185; cv=none; b=LIzvb02fi2Go6kFxeXVbKdYeLBBCpq9GadlJBJhbVn93mW6VhVmKdt6jKT9OdcF22st1KvXv9l5dPgBanlRtJnW3E6iKJXprIJxUtHfCTmAkrr7T3QBRXtj0fBHqHrEMZ984CXqulw1QJ8T7ld9fnp71F0phUb8vtWy6ijQ00CA=
+	t=1785421186; cv=none; b=ViZaS2cG+1Knr8Dp7NZ5i2xId5tH6+4c3JmOmSqt4PffjeX6cjb9jYukfwoC4XN2DO9vJEN/6y/FP7BkiX6PIwboy0EDOzrZVlyY+9qt7aP1at9jviqJxKlG57AP/qmHv+fEK8KiUAbebhOux/yd9K7IbA+TMv+XX/VxaKSRmlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421185; c=relaxed/simple;
-	bh=qL6M6R5kBA/rzB6BoVkpGT2CgDVx3Kg2+1ikDxTz5SQ=;
+	s=arc-20240116; t=1785421186; c=relaxed/simple;
+	bh=xAMHdrhLfvKiwVdMMMAz6gAp33ZpCM3L6IPHM9pto4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OkbUWCC5PeMtlZ3T2Es1/BQo5Rs5R1r/xFrWEROUVrAkHTW7IOLl9YSuvkiIu2RcvGuOmkpEpdU1LoenXykgs//NNU8S7awsRVmdBho9V3a2PDAxRe3/aMi3Q/xXvFvWidN/rvENS2UyaSWyXEoqI4jl/WiqvES4XAlYmDACIPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ausVh7Qt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sYzQ5W765vorq2A6Rbggq4+5e8TVtpzqZIDkR7ok+MIXRmN14CDldJdcruVMKbAKn79REkDdSksE+8FL4hlOs+yFM+Ca6Ytnh7m8JhUY3Uf5FZcyWHykacTig/b2/beE8ZSf9hD7ZPTw2efFs/YmBoF89QomFXQoNyVUUd1esds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QSIXbe8s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ausVh7Qt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040061F00ACF;
-	Thu, 30 Jul 2026 14:19:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QSIXbe8s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE76B1F000E9;
+	Thu, 30 Jul 2026 14:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421182;
-	bh=23MVhUXD7eDgODv/BSNbqh5cDg9zbjQvCcxT5bz+vUY=;
+	s=korg; t=1785421185;
+	bh=aWaLUQzLyG+/xTgo/+ZVbdu3fTdMdNy0rIl7WmPvIB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ausVh7QtyCUNUiv7wABLp0+7KrY3Ck8cHnvOaBIgEFYWdy6QOrafD8LR2k5aNoqXj
-	 e91ZAAeTJD9A1JFRXbD7RuP1hpAoNzsakaqaKXwj6WJnUAeY9id6p2Ew+d6JK0TD/g
-	 6tZCFxKKpwIdevAAAad+VHioA15GJfONAiLvU1fM=
+	b=QSIXbe8sad65icfFvlvZpLEYlNSFR22zalOVMjTFdLTjT8zFVLRAwrynEob211gzo
+	 gL8FU3pRiwD49aOQyiENXkwZI//jBduVCaDj94hb1gkkLlomK1FakTkNhdiJECxI9z
+	 77C6U8K254oODmBwW6+BsJ1BUKxLsAqA97eTiwn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 019/744] IB/mad: Drop unmatched RMPP responses before reassembly
-Date: Thu, 30 Jul 2026 16:04:52 +0200
-Message-ID: <20260730141444.692843213@linuxfoundation.org>
+Subject: [PATCH 7.1 020/744] mtd: virt_concat: fix use-after-free in mtd_virt_concat_destroy_joins()
+Date: Thu, 30 Jul 2026 16:04:53 +0200
+Message-ID: <20260730141444.714420028@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,88 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit d2e52d610b9b09694261632340b801a421e0b0c5 ]
+[ Upstream commit 75c0c09541b49daa08fddbc2c18c2232f4eab7d8 ]
 
-Kernel-handled RMPP receive processing starts reassembly for active
-DATA responses before the response is matched to an outstanding send.
-The normal match happens later, after ib_process_rmpp_recv_wc() has
-either assembled a complete message or consumed the segment.
+mtd_concat_destroy() frees item->concat so calling
+mtd_virt_concat_put_mtd_devices(item->concat) leads to a use after free.
 
-That ordering lets an unsolicited response that routes to a kernel
-RMPP agent by the high TID bits allocate or extend RMPP receive state
-before the full TID and source address are checked against a real
-request. A reordered burst can therefore reach the receive-side
-insertion path even though the response would not match any send.
+Fix this by moving mtd_virt_concat_put_mtd_devices() before
+mtd_concat_destroy()
 
-For kernel-handled RMPP DATA responses, require the existing
-ib_find_send_mad() match before entering RMPP reassembly. The matcher
-already checks the full TID, management class and source address/GID
-against the agent wait, backlog and in-flight send lists. If there is
-no match, drop the response without creating RMPP state.
-
-This leaves the RMPP window behavior unchanged and only rejects
-responses that have no corresponding request.
-
-Fixes: fa619a77046b ("[PATCH] IB: Add RMPP implementation")
-Assisted-by: Codex:gpt-5-5-xhigh
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/3170ff3bc389a930bb1641f2caa394a0b2241579.1780774907.git.michael.bommarito@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 43db6366fc2d ("mtd: Add driver for concatenating devices")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/mad.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ drivers/mtd/mtd_virt_concat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
-index 8d19613179e3ee..e0b3b36b8b1496 100644
---- a/drivers/infiniband/core/mad.c
-+++ b/drivers/infiniband/core/mad.c
-@@ -2031,6 +2031,24 @@ void ib_mark_mad_done(struct ib_mad_send_wr_private *mad_send_wr)
- 		change_mad_state(mad_send_wr, IB_MAD_STATE_EARLY_RESP);
- }
- 
-+static bool is_kernel_rmpp_data_response(struct ib_mad_agent_private *agent,
-+					 struct ib_mad_recv_wc *mad_recv_wc)
-+{
-+	const struct ib_mad_hdr *mad_hdr = &mad_recv_wc->recv_buf.mad->mad_hdr;
-+	struct ib_rmpp_mad *rmpp_mad;
-+
-+	if (!ib_mad_kernel_rmpp_agent(&agent->agent) ||
-+	    !ib_response_mad(mad_hdr) ||
-+	    !ib_is_mad_class_rmpp(mad_hdr->mgmt_class))
-+		return false;
-+
-+	rmpp_mad = (struct ib_rmpp_mad *)mad_recv_wc->recv_buf.mad;
-+
-+	return (ib_get_rmpp_flags(&rmpp_mad->rmpp_hdr) &
-+		IB_MGMT_RMPP_FLAG_ACTIVE) &&
-+	       rmpp_mad->rmpp_hdr.rmpp_type == IB_MGMT_RMPP_TYPE_DATA;
-+}
-+
- static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
- 				 struct ib_mad_recv_wc *mad_recv_wc)
- {
-@@ -2050,6 +2068,18 @@ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
+diff --git a/drivers/mtd/mtd_virt_concat.c b/drivers/mtd/mtd_virt_concat.c
+index 5db6e648927e29..5761816e7f4dca 100644
+--- a/drivers/mtd/mtd_virt_concat.c
++++ b/drivers/mtd/mtd_virt_concat.c
+@@ -75,8 +75,8 @@ void mtd_virt_concat_destroy_joins(void)
+ 		if (item->concat) {
+ 			mtd_device_unregister(mtd);
+ 			kfree(mtd->name);
+-			mtd_concat_destroy(mtd);
+ 			mtd_virt_concat_put_mtd_devices(item->concat);
++			mtd_concat_destroy(mtd);
+ 		}
  	}
- 
- 	list_add(&mad_recv_wc->recv_buf.list, &mad_recv_wc->rmpp_list);
-+	if (is_kernel_rmpp_data_response(mad_agent_priv, mad_recv_wc)) {
-+		spin_lock_irqsave(&mad_agent_priv->lock, flags);
-+		mad_send_wr = ib_find_send_mad(mad_agent_priv, mad_recv_wc);
-+		spin_unlock_irqrestore(&mad_agent_priv->lock, flags);
-+
-+		if (!mad_send_wr) {
-+			ib_free_recv_mad(mad_recv_wc);
-+			deref_mad_agent(mad_agent_priv);
-+			return;
-+		}
-+	}
-+
- 	if (ib_mad_kernel_rmpp_agent(&mad_agent_priv->agent)) {
- 		mad_recv_wc = ib_process_rmpp_recv_wc(mad_agent_priv,
- 						      mad_recv_wc);
+ }
 -- 
 2.53.0
 
