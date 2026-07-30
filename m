@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4525737883C;
-	Thu, 30 Jul 2026 14:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495DB34DCE4;
+	Thu, 30 Jul 2026 14:45:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422734; cv=none; b=qGxPtEOTJjwYd3BeWsGHu8bzpC0s/iUjpvAomFrSo7tuVsEASj1R6lv+tCv1kI06/PnzRqgbs0TH9RG9lZAyXNED1QLtM0OhcqMwm4K8htTfFyAjrozWQ3FJEMBQj87+VAhGbgTjUxomGPyqkpgQmrtKCjQoD0b9vmh5f9sWB8E=
+	t=1785422737; cv=none; b=t0mDQbKhyD+XxORXpbc1wNhr1StU6zmNVr5gUxOZ/GV8DWk3FL1KGy58cGK4mg0svVDAUDPfb4rx+hO2ZlcFuXx9bEcd+tPCdBVyaG4xIgrQg2hDJk9rUOXqpo72AbIbVxX/w/lBKEjswyZ9Qq99IWgHafFLU3sWMwyMynfKLhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422734; c=relaxed/simple;
-	bh=WtHu4l459Ufsz/3hrZ+bemTd9ch/hIBqeg9BAwxcEv4=;
+	s=arc-20240116; t=1785422737; c=relaxed/simple;
+	bh=j6vWoHy6DykNWX5UqPK8pKPM3r0GFs2urF13eVoluvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mAv8O6gg/xL1WnzDeFr/mW+nfdsbcJhTCRyq7emTY1Pqoenl7OBOpZvUM/ISuIiRanyv5z/+xGyCj1ThKBcgpyoZQmjRF0tZyoQZqazKqRDqLTHrT8sWyyM9HRMMLq4B9ferGRgPHC1yPEollkCs5dvHkiMQ33wVUNO/mEA52PQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MipyFrkO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WsRt6sf1TK6nSngvpvotXPcq+RbCziMgvG+0VhkVjYUeVvfopbdCp2cIGdQLZgJwkq2knYeTAmy3kD07w73eAITVY/BMJcZxuPgKke3AR+z3zTdkOuB0zIOLXdj/wQrADZiQz0bonEY/cx69Nia4eapnu9qaF1ndGGdBmsQZeDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DT7EtSpr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MipyFrkO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913F81F00A3A;
-	Thu, 30 Jul 2026 14:45:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DT7EtSpr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831691F000E9;
+	Thu, 30 Jul 2026 14:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422733;
-	bh=CpfnJFVcEtG8WhC45kfjCLIFBauc4xHVxx0olLhEhsY=;
+	s=korg; t=1785422736;
+	bh=/F6LwMk7Lof93wE9aVd9G3SD36IvF3ceBSjHfQe0ddM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MipyFrkO+brtgaZ7liL0EOvh3OJzx3z2HZKnD1Vc1rpBsyP2m3YZxGdbscUegvCBo
-	 q6D6PHGKmYUizZZy+wMPtpT6uLSTFseHSMQ5vlW9ZCejMaN7nYjyGSo4tjy4LIsbku
-	 DvwZnlRk6aTywLn73FPk21fetAFyvX0Z/YWUbS+M=
+	b=DT7EtSprrnMY5Y/JN9Aq93gxzeNtjbYTrK/stYybhIGNv14tofm2I20d+pKSMqHzb
+	 ulj6YPzJzMogVLwGe/iCdkQtd38Is36GNkXr8D9QIqi2vqnDedNW0sd2rI8ok6XD4R
+	 6ZjDZlaBAwUx8fyaoE3Tj/a5CjzGsJD4k7TeX/7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Hilman <khilman@baylibre.com>,
-	Johan Hovold <johan@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.1 537/744] media: vpif_capture: fix OF node reference imbalance
-Date: Thu, 30 Jul 2026 16:13:30 +0200
-Message-ID: <20260730141455.690348821@linuxfoundation.org>
+	Nikita Maksimov <nickstogramm@yandex.ru>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.1 538/744] ALSA: hda/realtek: Fix speakers on Lunnen Ground 14
+Date: Thu, 30 Jul 2026 16:13:31 +0200
+Message-ID: <20260730141455.712024323@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,36 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Nikita Maksimov <nickstogramm@yandex.ru>
 
-commit 2282f979560af6bbc8ee2c1ee8663197312cee5b upstream.
+commit 5c3f8dac531b454bf67b6ee3c2aac89f0aaaef74 upstream.
 
-The driver reuses the OF node of the parent device but fails to take
-another reference to balance the one dropped by the platform bus code
-when unbinding the parent and releasing the child devices.
+The firmware on the Lunnen Ground 14 marks pin 0x1b as unused even
+though the internal speakers are connected to it. As a result, the
+speakers are not detected.
 
-Fix this by using the intended helper for reusing OF nodes.
+Add a pin configuration quirk for PCI subsystem ID 2782:a212 to configure
+pin 0x1b as an internal speaker.
 
-Fixes: 4a5f8ae50b66 ("[media] davinci: vpif_capture: get subdevs from DT when available")
-Cc: stable@vger.kernel.org	# 4.13
-Cc: Kevin Hilman <khilman@baylibre.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+The pin configuration was tested on a Lunnen Ground 14 (DMI product LL4FA)
+with an ALC269VC codec. The internal speakers and microphone work as
+expected.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Nikita Maksimov <nickstogramm@yandex.ru>
+Link: https://patch.msgid.link/20260720180214.73770-1-nickstogramm@yandex.ru
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/ti/davinci/vpif_capture.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/media/platform/ti/davinci/vpif_capture.c
-+++ b/drivers/media/platform/ti/davinci/vpif_capture.c
-@@ -1498,7 +1498,7 @@ vpif_capture_get_pdata(struct platform_d
- 	 * video ports & endpoints data.
- 	 */
- 	if (pdev->dev.parent && pdev->dev.parent->of_node)
--		pdev->dev.of_node = pdev->dev.parent->of_node;
-+		device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
- 	if (!IS_ENABLED(CONFIG_OF) || !pdev->dev.of_node)
- 		return pdev->dev.platform_data;
- 
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -3891,6 +3891,7 @@ enum {
+ 	ALC269_FIXUP_DMIC_THINKPAD_ACPI,
+ 	ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13,
+ 	ALC269VC_FIXUP_INFINIX_Y4_MAX,
++	ALC269VC_FIXUP_LUNNEN_GROUND_14,
+ 	ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO,
+ 	ALC255_FIXUP_ACER_MIC_NO_PRESENCE,
+ 	ALC255_FIXUP_ASUS_MIC_NO_PRESENCE,
+@@ -4345,6 +4346,13 @@ static const struct hda_fixup alc269_fix
+ 		.chained = true,
+ 		.chain_id = ALC269_FIXUP_LIMIT_INT_MIC_BOOST
+ 	},
++	[ALC269VC_FIXUP_LUNNEN_GROUND_14] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x1b, 0x90170150 }, /* internal speaker */
++			{ }
++		},
++	},
+ 	[ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = (const struct hda_pintbl[]) {
+@@ -7875,6 +7883,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x2782, 0x1705, "MEDION E15433", ALC269VC_FIXUP_INFINIX_Y4_MAX),
+ 	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
+ 	SND_PCI_QUIRK(0x2782, 0x4900, "MEDION E15443", ALC233_FIXUP_MEDION_MTL_SPK),
++	SND_PCI_QUIRK(0x2782, 0xa212, "Lunnen Ground 14", ALC269VC_FIXUP_LUNNEN_GROUND_14),
+ 	SND_PCI_QUIRK(0x7017, 0x2014, "Star Labs StarFighter", ALC233_FIXUP_STARLABS_STARFIGHTER),
+ 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
+ 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
 
 
