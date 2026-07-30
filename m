@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5A2374E41;
-	Thu, 30 Jul 2026 14:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7AC5C613;
+	Thu, 30 Jul 2026 14:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422781; cv=none; b=gto7XHzR4B2R393mmP/ng5KfFtQIoEhvp/NPvjn8sHeqbtqzRW5AABh+/l7IyH34w1vt/YBSoyCikUlLTIVORZxWllDyq/yGROGWaN/46yXQA36vTiVhSNHl6GXrNwnn1jZrgZvhwOP/qdBKHRlOUPlpXC7SQ5+mh6U7iVWcYb8=
+	t=1785422784; cv=none; b=jCQFfe2p9msSfCn5VHKqlE/q35teUAilx1tROfRXj7lIf7MZoG2uJGBeuBikVdSsc3XxCHqG1DjPH4Si+DSSDKj2De5HJNlJrB4k0zX0xI32ALCVKDv20BA+CvxiB2u2TKYRfmXIlQtBNrFyWWY9jZu3Jz4aPzzr0VVEw9bRe2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422781; c=relaxed/simple;
-	bh=4KBajwJeadJ6mOk0O2jxXkxHbc5wWV/hIfQv9dNqU9s=;
+	s=arc-20240116; t=1785422784; c=relaxed/simple;
+	bh=niNxYo7jCHP0KE8rThSQwBniqioQlsYpTyOYnNBRT50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LS/aJok98Ik7D6aZ6LSPdT25IbEhJ/v8EBqo+0Rs7gWoIGp/Zo/StLuWJpw8N6Z1O+9Hntma4h19NxWt7n47p5F9R6gMm2HTW4zQeMCdkqmsZjRn1NFWr2pBQg8iDaa8thpuFjZwBi/08mxVNnUy6e9/vGA715mIFB/AuNyiPUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+iKNtEL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T3ELNbpq8Az6KisdxYaPvwp/9SudGPHQyWeADIpfwA5Wrr2hgmn+Keya2ubgAQXfkwGj7umiaudTgNi7UTYjP4QZJwi5zvEegFiqEFJyGVPPbkDZV7I23+9MtmVi29ubab5Gw4bP8nqwCV8tmcF9jHCT0gbUE+MF37m8A5n5/Ts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTLUHUkt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+iKNtEL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029021F00A3A;
-	Thu, 30 Jul 2026 14:46:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTLUHUkt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C77C1F000E9;
+	Thu, 30 Jul 2026 14:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422780;
-	bh=YIKGwk/Ikf4quGz3Qjhl65BguDQK6A5eLGIKS7+dL4I=;
+	s=korg; t=1785422783;
+	bh=wdMH0Z9qzpi60f/LXIRMzLQOC/4PwToV4sytVemQelA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p+iKNtELYjvduReGLqxx4OMwJC0DVrbBSPhB8yumpJMuTiqZzd3Haw/huQ3giCkrI
-	 YSb+++cN32pxSvmc4TWVGgQXIBPFq6yu4E/+4lJ/hH52JqMRGII8lq6QH14MTxth9g
-	 LPqhFE6gs4BD0me7+8y2Ja65/A1O5Kpm5PpjL+JM=
+	b=NTLUHUkt77lTbhRkmAicLRAEGoxUNrWDPPjEane+EAJEMpRN6z27gLJAPpvGC6zNJ
+	 pe5Q+gn9somKd/48dtOjwiYOXDBKR6qtbCXP3ddMT8jGohKSW2hmQkkiQvRfEt9Crk
+	 vRddzv0SgTL7VcQ2MsvKlM+/zZfQUzCtNcG5DZcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
+	syzbot+019ced393ab913002b75@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.1 510/744] media: radio-si476x: Unregister v4l2_device on probe failure
-Date: Thu, 30 Jul 2026 16:13:03 +0200
-Message-ID: <20260730141455.120412501@linuxfoundation.org>
+Subject: [PATCH 7.1 511/744] media: rtl2832: fix use-after-free in rtl2832_remove()
+Date: Thu, 30 Jul 2026 16:13:04 +0200
+Message-ID: <20260730141455.140765009@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,42 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit 436a693af04ffb889aaf87cb69ec1f2b21d3569c upstream.
+commit 680daf40a82d483949f87f0d8f98639dc47e610c upstream.
 
-si476x_radio_probe() registers radio->v4l2dev before allocating the V4L2
-controls and before registering the video device. If any of those later
-steps fails, probe returns through the exit label after freeing only the
-control handler.
+cancel_delayed_work_sync() is called before i2c_mux_del_adapters()
+in rtl2832_remove(). While the cancel waits for any running instance
+of i2c_gate_work to finish, it does not prevent the timer from being
+rescheduled by a concurrent thread.
 
-A failed probe does not call si476x_radio_remove(), so the
-v4l2_device_unregister() there is not reached. This leaves the parent
-device reference taken by v4l2_device_register() behind on the error path.
+During probe, the r820t_attach() call attempts I2C transfers through
+the mux adapter. These transfers go through i2c_mux_master_xfer(),
+which calls rtl2832_deselect() after the transfer completes,
+rescheduling i2c_gate_work via schedule_delayed_work(). If this
+transfer is still in flight when rtl2832_remove() runs,
+rtl2832_deselect() can reschedule i2c_gate_work after it has been
+cancelled, causing a use-after-free when kfree(dev) is called.
 
-Unregister the V4L2 device in the probe error path after freeing the
-controls.
+Fix this by calling i2c_mux_del_adapters() before
+cancel_delayed_work_sync(). Once the mux adapter is unregistered, no
+new I2C transfers can go through it, so rtl2832_deselect() can no
+longer reschedule i2c_gate_work. The subsequent
+cancel_delayed_work_sync() is then guaranteed to be final.
 
-Fixes: b879a9c2a755 ("[media] v4l2: Add a V4L2 driver for SI476X MFD")
+Fixes: cddcc40b1b15 ("[media] rtl2832: convert to use an explicit i2c mux core")
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reported-by: syzbot+019ced393ab913002b75@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=019ced393ab913002b75
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/radio/radio-si476x.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/dvb-frontends/rtl2832.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/radio/radio-si476x.c
-+++ b/drivers/media/radio/radio-si476x.c
-@@ -1493,6 +1493,7 @@ static int si476x_radio_probe(struct pla
- 	return 0;
- exit:
- 	v4l2_ctrl_handler_free(radio->videodev.ctrl_handler);
-+	v4l2_device_unregister(&radio->v4l2dev);
- 	return rval;
- }
+--- a/drivers/media/dvb-frontends/rtl2832.c
++++ b/drivers/media/dvb-frontends/rtl2832.c
+@@ -1115,10 +1115,10 @@ static void rtl2832_remove(struct i2c_cl
  
+ 	dev_dbg(&client->dev, "\n");
+ 
+-	cancel_delayed_work_sync(&dev->i2c_gate_work);
+-
+ 	i2c_mux_del_adapters(dev->muxc);
+ 
++	cancel_delayed_work_sync(&dev->i2c_gate_work);
++
+ 	regmap_exit(dev->regmap);
+ 
+ 	kfree(dev);
 
 
