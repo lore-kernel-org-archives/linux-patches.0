@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4D6270545;
-	Thu, 30 Jul 2026 15:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6016533438F;
+	Thu, 30 Jul 2026 15:41:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426096; cv=none; b=slBppdR/YVsB8EShc72EPTDKzeLJydoweAXEmH5cSZ1mbhIntiwbA3zrk1zVOjZ5Jn5cycg4XKFAPJT2kHsNdCP3BYavuBcVX7tPNly4R0oS1KiG6kej5MItP2+R5sSv0KuRaAcBpkrxMPiS+xj+pHJbn/AmJ1G5YIRUiCx2CU0=
+	t=1785426099; cv=none; b=sQUV8a4TUT+vJ0CtRgW9itDY0kldr0xRCAX+PSC2QcPNzYsKw/c7gbZLtN/YAAPnA1qCn127kHzY2auOIPEEDC4IKo0jtf/19HaigjQxocVl4kJ2vwBb54cgmnWOjKVhm4K2kxnMBYMDwhy0dDy5dz/0MSbM7cH0yJ0fr8caA8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426096; c=relaxed/simple;
-	bh=w0PrTGcLbTb5Ls2eqr7Oy/G+QZkTWbOUyCigBHPyKI8=;
+	s=arc-20240116; t=1785426099; c=relaxed/simple;
+	bh=xPWU667i+nWxIOUBbPOxDN9hkOkjIJf6ZZLPJQK4Vxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uesWenw5AkASlPT/hJuCui9rKY3CY6OvtOidvlZ0GIsMeEE5Q+H49dQg7LnuSWCKqjV5znsnayyeSct+vGniGxXaqyVpwaWrLy/+RYKBzu0rFXi6OR4QXbiCDDiuPDZbX0GPC6ipOpbOF0eUSyPiRniEpUgY8XsYfeqW3lkgmcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sKCsACvB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fb2U1Lb1IBqr9/GCz4gHFgnxKQP+++7h+PXIa0QkmtF3NmBNnmxhMWiZQfD1daNwSdxSjiEFtAqLiPm2L3Ndic8slz0SrsfoB4ivueHG9tcI+6wbKj4sW7qF57+wpRKIehuF4d544A+ZRiPfqt4ippvDGoADlVn30H59OjiRSXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMqGzTFe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sKCsACvB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D211F000E9;
-	Thu, 30 Jul 2026 15:41:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMqGzTFe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B556B1F000E9;
+	Thu, 30 Jul 2026 15:41:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426095;
-	bh=FPGj/KnT8PpWE1CG1MlMssOavjFNTYq0G/PJDRceIxs=;
+	s=korg; t=1785426098;
+	bh=3xN0c4WCjbgEPeRJq57hjKiCDlblnjwaNwLhWxQEz6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sKCsACvBX/s+NtRDIX/sUct2BhegPO73c93o+yJkEAc8JLwfGjOH5vqxhRjmPmfMU
-	 Lc2m3RytqsGs8X7Jemw8BYD/KRDhmOVrCXNHGm7GlRIXMjWLOSTkZBkyd68MSoj1pY
-	 KywzAqRt6OoLLUObJN2K2aPNKHK2xjGx1DtF4LwY=
+	b=hMqGzTFe6zaYl7faOq0Iyywb9pFBDqSLZKR6nb5DXt5HU/bDazVQbtXTSgJcCfNH4
+	 P7Q/RrMTNT5Mc0nto3AY0Y9VzkeHqrZpQ3O4/9IYayCjLrEeNbhWOVpNo4OOhZIIVa
+	 okv1GemxPdHmOmsVv1K8/dZFsTKZdGPLo4uGdVsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valery Borovsky <vebohr@gmail.com>,
+	David Carlier <devnexen@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 299/602] media: airspy: Return queued buffers on start_streaming() failure
-Date: Thu, 30 Jul 2026 16:11:31 +0200
-Message-ID: <20260730141442.253368082@linuxfoundation.org>
+Subject: [PATCH 6.12 300/602] media: aspeed: fix missing of_reserved_mem_device_release() on probe failure
+Date: Thu, 30 Jul 2026 16:11:32 +0200
+Message-ID: <20260730141442.273631948@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,52 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valery Borovsky <vebohr@gmail.com>
+From: David Carlier <devnexen@gmail.com>
 
-commit 04344d0b4929caa94c0df72f767752aa0935ef5d upstream.
+commit 253c8ef7d57da0c74db251f385324faaa5ae2257 upstream.
 
-The vb2 framework hands buffers to the driver via buf_queue() before
-calling start_streaming().  If start_streaming() returns an error
-without first returning those buffers via vb2_buffer_done(),
-vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
-buffers leak.
+aspeed_video_init() calls of_reserved_mem_device_init() to associate
+reserved memory regions with the device. When aspeed_video_setup_video()
+subsequently fails in aspeed_video_probe(), the error path frees the
+JPEG buffer and unprepares the clocks but does not release the reserved
+memory association, leaking the rmem_assigned_device entry on the global
+list.
 
-airspy_start_streaming() returned -ENODEV early when the USB device had
-been disconnected (s->udev == NULL) without returning any buffers that
-buf_queue() had already accepted.  Take v4l2_lock first and jump to the
-existing err_clear_bit label, which already drains s->queued_bufs via
-vb2_buffer_done(..., VB2_BUF_STATE_QUEUED) before unlocking.
+The normal remove path already calls of_reserved_mem_device_release()
+correctly; only the probe error path was missing it.
 
-This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
-Return queued buffers on start_streaming() failure").
+Add the missing of_reserved_mem_device_release() call to the
+aspeed_video_setup_video() failure cleanup.
 
-Fixes: 634fe5033951 ("[media] airspy: AirSpy SDR driver")
+Fixes: d2b4387f3bdf ("media: platform: Add Aspeed Video Engine driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Signed-off-by: David Carlier <devnexen@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/airspy/airspy.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/media/platform/aspeed/aspeed-video.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/usb/airspy/airspy.c
-+++ b/drivers/media/usb/airspy/airspy.c
-@@ -522,11 +522,13 @@ static int airspy_start_streaming(struct
- 
- 	dev_dbg(s->dev, "\n");
- 
--	if (!s->udev)
--		return -ENODEV;
--
- 	mutex_lock(&s->v4l2_lock);
- 
-+	if (!s->udev) {
-+		ret = -ENODEV;
-+		goto err_clear_bit;
-+	}
-+
- 	s->sequence = 0;
- 
- 	set_bit(POWER_ON, &s->flags);
+--- a/drivers/media/platform/aspeed/aspeed-video.c
++++ b/drivers/media/platform/aspeed/aspeed-video.c
+@@ -2186,6 +2186,7 @@ static int aspeed_video_probe(struct pla
+ 	rc = aspeed_video_setup_video(video);
+ 	if (rc) {
+ 		aspeed_video_free_buf(video, &video->jpeg);
++		of_reserved_mem_device_release(&pdev->dev);
+ 		clk_unprepare(video->vclk);
+ 		clk_unprepare(video->eclk);
+ 		return rc;
 
 
