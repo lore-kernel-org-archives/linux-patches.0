@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5934E274650;
-	Thu, 30 Jul 2026 15:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BEC2D73B5;
+	Thu, 30 Jul 2026 15:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423616; cv=none; b=OhGe92UrmFXB71kOgGKobQ3LSy+ZFFatPyxAMqcFTMt32jvlEBXjXwdkfH05ky+U9aeWMqzNTuVE4Ym2Fx4EoAv2gtRxjnVZ+hmtGu/2ZxLjrRIWfu6WYtW9jV97+bvql95q4AuBj7myAIkjSYsmp0ON7VhoILmlaZmQX8dQKMw=
+	t=1785423619; cv=none; b=jyAYD+Dzoc1GJt35d3eohCrY08VziXjDJmFL2d3fb+15y9BvtdrzEhF6efLVMKG0IF6x0JJ3/BYSY4VJN+lIIGl4CCfzYhnV/rjQlZ4oDs6hnawWmmWuKwj6qPwAE38g4JaVpjewpH7sUx7VZ7IKTe4N7PBlh/SbL74xdAflaZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423616; c=relaxed/simple;
-	bh=SAcW3GqBzCg4Dm+0DhF1z62HaZerbjvAMs9mojmuwRc=;
+	s=arc-20240116; t=1785423619; c=relaxed/simple;
+	bh=TR9mCQyRmCzYGjV3B0nwvF0FqND3qilpP5MPJ5CwTys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VSla7tsYCI508+sZzfR9ZO/tCctw8Oromew3lWkxAfqxt64LQ7kMRu23LlDyq9fzT0tR9LBs/v/8MbrQiwM5/rQxo2RoIqKPyCk3wnfxKhQaT+PNYqHidKbE+TaoU9M/dAmJ3i2fOokRq/O515Zn+dbn65aS128CPQbbUjEtl4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/y7Eosa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AMMCDmLvMLR0j/cLP3XKEkV1R/xcnAG9UIbVvL+aXe3H8FS97Z/Mh9DpofA9afVsgxOfqctsF+3sV3UxjKK8pCxcLBFfofEgLD/Y+ctVTPtK6nJ1ycJUknP3CLAxTtsBSGvtinajvouu7chJ4DuvNI7eacCzOdKoK9FKrxb9egM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QjOytsr7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/y7Eosa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9791F000E9;
-	Thu, 30 Jul 2026 15:00:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QjOytsr7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709BB1F000E9;
+	Thu, 30 Jul 2026 15:00:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423615;
-	bh=cNva+gt0OTG5K5n0eBAPKQimTQbDXIuUjoefJaYUgyA=;
+	s=korg; t=1785423618;
+	bh=+8c7iWwjBZFVd7mf6phunYYVRqV2Y/WU0gZzq3Ip+FA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N/y7Eosa7oN+8hTyN6ty9gaONR1Ok36E9glm9wTrvY1uIr75iN6V0b75FWmvdceLM
-	 HN+4igu0Wf19dr492dPyhzHAsowSc5jJjBZ7D3FYrxiN1kXhzTw86hKsLmt9vAy0hw
-	 ISpGDTC5n9+D4gbGFu+TM/YglGEbU2dB4cJ14Q7I=
+	b=QjOytsr7nKk7o3QfuFXlWU1I7l12hHhubPwl9lDagyJgVEnM/TS++gC1VsiQ958L5
+	 OM3KgPX3PZU0kkJXjc1z65g9myeZMhjALfAHRjqyM2hexmikoiKgZ7mrRL0M31hLVK
+	 FgGRimtL6oU1bOWDbaHi/KdqlTcoGApqbGZf1z/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>,
-	Karol Wachowski <karol.wachowski@linux.intel.com>,
+	Salvador Blaya <tiniebla6@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 105/675] accel/ivpu: Fix wrong register read in LNL failure diagnostics
-Date: Thu, 30 Jul 2026 16:07:15 +0200
-Message-ID: <20260730141447.368389394@linuxfoundation.org>
+Subject: [PATCH 6.18 106/675] ALSA: usb-audio: Skip DSD quirk for Musical Fidelity M6s DAC
+Date: Thu, 30 Jul 2026 16:07:16 +0200
+Message-ID: <20260730141447.390424256@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,38 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karol Wachowski <karol.wachowski@linux.intel.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit e4159045c2704dfe146f0ccb0445d9d074cd6882 ]
+[ Upstream commit 93b47e66cc6d6c6382d44b44f5e7f6fc3a7b38c3 ]
 
-diagnose_failure_lnl() read VPU_HW_BTRS_MTL_INTERRUPT_STAT instead of
-VPU_HW_BTRS_LNL_INTERRUPT_STAT, which on LNL and newer parts is a
-different register with a different bit layout, so failure diagnostics
-decoded the wrong register and reported a bogus error cause.
-Read the LNL interrupt status register instead.
+Salvador reported that the recent fix for applying the DSD quirk to
+Musical Fidelity devices broke for his M6s DAC model (2772:0502).
 
-Fixes: 8a27ad81f7d3 ("accel/ivpu: Split IP and buttress code")
-Reviewed-by: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
-Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Link: https://patch.msgid.link/20260710101331.1899505-1-karol.wachowski@linux.intel.com
+Although this is basically a firmware bug, the model in question is
+fairly old, and no further firmware update can be expected, so it'd be
+better to address in the driver side.
+
+As an ad hoc workaround, skip the DSD quirk for this device by adding
+an empty quirk entry of 2772:0502; this essentially skips the later
+DSD quirk entry by the match with the vendor 2772.
+
+Fixes: da3a7efff64e ("ALSA: usb-audio: Update for native DSD support quirks")
+Reported-by: Salvador Blaya <tiniebla6@gmail.com>
+Closes: https://lore.kernel.org/CAOdyq+qFaqCh=tK_wNnA64hv5pQuA1Y09ANxQ=xK8yR-t4mf9Q@mail.gmail.com
+Tested-by: Salvador Blaya <tiniebla6@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260709095614.1418838-1-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_hw_btrs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/accel/ivpu/ivpu_hw_btrs.c b/drivers/accel/ivpu/ivpu_hw_btrs.c
-index aa33f562d29c12..e9786204feca43 100644
---- a/drivers/accel/ivpu/ivpu_hw_btrs.c
-+++ b/drivers/accel/ivpu/ivpu_hw_btrs.c
-@@ -845,7 +845,7 @@ static void diagnose_failure_mtl(struct ivpu_device *vdev)
- 
- static void diagnose_failure_lnl(struct ivpu_device *vdev)
- {
--	u32 reg = REGB_RD32(VPU_HW_BTRS_MTL_INTERRUPT_STAT) & BTRS_LNL_IRQ_MASK;
-+	u32 reg = REGB_RD32(VPU_HW_BTRS_LNL_INTERRUPT_STAT) & BTRS_LNL_IRQ_MASK;
- 
- 	if (REG_TEST_FLD(VPU_HW_BTRS_LNL_INTERRUPT_STAT, ATS_ERR, reg)) {
- 		ivpu_err(vdev, "ATS_ERR_LOG1 0x%08x ATS_ERR_LOG2 0x%08x\n",
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 1b4cfc2b68f9dc..3d81b003a5109b 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2380,6 +2380,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	DEVICE_FLG(0x2708, 0x0002, /* Audient iD14 */
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
++	DEVICE_FLG(0x2772, 0x0502, /* Musical Fidelity M6s DAC */
++		   0), /* for avoiding QUIRK_FLAG_DSD_RAW with vendor match */
+ 	DEVICE_FLG(0x2912, 0x30c8, /* Audioengine D1 */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x2a70, 0x1881, /* OnePlus Technology (Shenzhen) Co., Ltd. BE02T */
 -- 
 2.53.0
 
