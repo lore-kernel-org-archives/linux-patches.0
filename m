@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADD9399350;
-	Thu, 30 Jul 2026 15:11:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9EBC3B6366;
+	Thu, 30 Jul 2026 15:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424271; cv=none; b=T9MkjaF/ilugzlQsRSvScdpf0GKkRzpfmyuM0qbZuroDEDk3JUfAtq6TsASVe++shpgb1A+a3qB6JYEL1z5/Uy6Yi4aXnqLKyO30OxcDR/i32H0SUrGMD7IlBCy1R59cUG3V3qP8O3LP9csSOgDvyISuQTPYsgWHcAwho0MTAIQ=
+	t=1785424274; cv=none; b=XXepA3IIpPnkZmysHvBCPC3q0BDuFVXwhu9mZ/2WsdIiBi/I/9jUn/yfvyNOZas8x5Uwf91eifN9pPhc/+vqk6l3pDw5h5tjvKTMMivyafS5ic88vUGltlcRKj4VV9HfdMBH8RTTot+SlSJylSDKXcDd++QVoJTkPQ/2dl+jc+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424271; c=relaxed/simple;
-	bh=j3Bwi7r3xbxQGDHfa/afd4ZaFdA4FRo6zqoXT6OtFII=;
+	s=arc-20240116; t=1785424274; c=relaxed/simple;
+	bh=qZWIjnmGgjMiTF5Wt/23MMfkSMZzPqSJJFl2vXT4GHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J2DzSwDJplPXtvIex2b3mqaZi6amdHODqnmwJV0H/aDDPgH3pYBInxdfwhZMrLdQ2rebjVrWli8zTz7lKANC/MVExp7mEXuSxodwFq+lgexlCsr4GQCth2M8lt8Hs1LVj4DX0r++kmt9AM9oUfBFet5sGn3BEClCpzFkPcbb5Ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JMK/JNpw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Gl66eMZsrRzemzqBcstZheD3B46TrfSlbUMNgFuuwYrz/rnu/LN5ahOWxRMsNWIZnXh5wdtC+8BYlCuzEHAvH6qHCF5sN92ynVYIcrldVmhxYYcaCxnGZsAm3CtHSgszLWRMwYZKXxlPLOf3cYeIhe1O95Wn6Ut3JFclF61v9H8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvSOuSp+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JMK/JNpw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB60A1F00A3A;
-	Thu, 30 Jul 2026 15:11:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvSOuSp+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD3EF1F000E9;
+	Thu, 30 Jul 2026 15:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424270;
-	bh=4TDgzMqFVJmRO/iTJAYh/ow9L+qTR6H6lMQrVX32GxE=;
+	s=korg; t=1785424273;
+	bh=90KvHaw3kHOSs0DrTVBi2JZKiAbog78WTc+3xlmEbfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JMK/JNpwwk2Igkq39CQPfdQIitxXs6viXt6v/3u1DfY0/czPU/quh3W4JUXinPqMn
-	 P8AkywG1Vca5JQLHpC5zYhOMJgJBDqg1OPx0ATWw6E9jAdqmHtR+nAcp4SqzMfc71N
-	 qE+TmGWCiozffzjDXNpkCcNgEMP1MS4oA8/GWYuU=
+	b=cvSOuSp+NnJIMtWvWmxSuviKjFTptjLNAsOCVK764A0c+ILTJ9DS4N3DzYsb4A4pC
+	 o0jrYXDf06iGOze7aXFJ/ZoThqZzYCTj5KkIaA9WdvA+NyxsW9nXHMsw6wdDBPGG9k
+	 uwEcR4rh4ihvK7oLXQUhewuE6nXIGcxqwaMDxcxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiqian Chen <Jiqian.Chen@amd.com>,
-	Huang Rui <ray.huang@amd.com>,
 	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 335/675] drm/amdgpu/gfx9: Fix Ring and IB test fail after mode2
-Date: Thu, 30 Jul 2026 16:11:05 +0200
-Message-ID: <20260730141452.249786805@linuxfoundation.org>
+Subject: [PATCH 6.18 336/675] drm/amdgpu: Fix amdgpu_bo_move() when old_mem and new_mem are both GTT
+Date: Thu, 30 Jul 2026 16:11:06 +0200
+Message-ID: <20260730141452.270755818@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,94 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiqian Chen <Jiqian.Chen@amd.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 85ed06d990ff73212b5a91a406671cabd962e521 upstream.
+commit ee94a65f192c05c543b4d3ad7137cd696b5c18fc upstream.
 
-For Renior APU with gfx9, in some test scenarios with disabling
-ring_reset, like accessing an unmapped invalid address, it can
-trigger a gpu job timeout event, then driver uses Mode2 reset
-to reset GPU, but after Mode2 compute Ring test and IB test fail
-randomly. It because the HQDs of MECs are always active before or
-after Mode2, that causes MECs use stale HQDs when MECs are unhalted
-before driver restore MQDs, and causes CPC and CPF are still stuck
-after Mode2, then causes compute Ring and IB tests fail.
+The UVD code relies on GTT to GTT moves in order to ensure
+that its BOs don't cross 256M segments.
 
-So, add sequences to deactivate HQDs of MECs in suspend IP function
-of the resetting process.
-
-v2: Move all sequences into a new function gfx_v9_0_cp_mode2_clear_state (Ray Huang)
-    To check reset Mode2 method in the if condition (Ray Huang)
-v3: Move all sequences before Mode2 instead of after Mode2 (Timur Kristóf)
-v4: Call amdgpu_gfx_rlc_enter/exit_safe_mode int the begin and end of
-    gfx_v9_0_deactivate_kcq_hqd (Alex Deucher)
-
-Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
-Reviewed-by: Huang Rui <ray.huang@amd.com>
-Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: bfe5e585b44f ("drm/ttm: move last binding into the drivers.")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c3988a7ad4799514447294f04f063b422e0551df)
+(cherry picked from commit 21fd45e5e2628d00b478590bcc3d14d3de5d45b6)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |   39 ++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |   18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -4045,6 +4045,41 @@ static int gfx_v9_0_hw_init(struct amdgp
- 	return r;
- }
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -505,6 +505,15 @@ static int amdgpu_bo_move(struct ttm_buf
  
-+static void gfx_v9_0_deactivate_kcq_hqd(struct amdgpu_device *adev)
-+{
-+	amdgpu_gfx_rlc_enter_safe_mode(adev, 0);
-+	for (int i = 0; i < adev->gfx.num_compute_rings; i++) {
-+		u32 tmp;
-+		struct amdgpu_ring *ring = &adev->gfx.compute_ring[i];
+ 	if (new_mem->mem_type == TTM_PL_TT ||
+ 	    new_mem->mem_type == AMDGPU_PL_PREEMPT) {
++		if (old_mem && (old_mem->mem_type == TTM_PL_TT ||
++				old_mem->mem_type == AMDGPU_PL_PREEMPT)) {
++			r = ttm_bo_wait_ctx(bo, ctx);
++			if (r)
++				return r;
 +
-+		mutex_lock(&adev->srbm_mutex);
-+		soc15_grbm_select(adev, ring->me, ring->pipe, ring->queue, 0, 0);
-+		tmp = RREG32_SOC15(GC, 0, mmCP_HQD_ACTIVE);
-+		/* disable the queue if it's active */
-+		if (tmp & CP_HQD_ACTIVE__ACTIVE_MASK) {
-+			int j;
-+
-+			WREG32_SOC15(GC, 0, mmCP_HQD_DEQUEUE_REQUEST, 1);
-+			for (j = 0; j < adev->usec_timeout; j++) {
-+				tmp = RREG32_SOC15(GC, 0, mmCP_HQD_ACTIVE);
-+				if (!(tmp & CP_HQD_ACTIVE__ACTIVE_MASK))
-+					break;
-+				udelay(1);
-+			}
-+			if (j == AMDGPU_MAX_USEC_TIMEOUT) {
-+				DRM_DEBUG("comp_%u_%u_%u dequeue request failed.\n",
-+							ring->me, ring->pipe, ring->queue);
-+				/* Manual disable if dequeue request times out */
-+				WREG32_SOC15(GC, 0, mmCP_HQD_ACTIVE, 0);
-+			}
-+			WREG32_SOC15(GC, 0, mmCP_HQD_DEQUEUE_REQUEST, 0);
++			amdgpu_ttm_backend_unbind(bo->bdev, bo->ttm);
 +		}
-+		soc15_grbm_select(adev, 0, 0, 0, 0, 0);
-+		mutex_unlock(&adev->srbm_mutex);
-+	}
-+	amdgpu_gfx_rlc_exit_safe_mode(adev, 0);
-+}
 +
- static int gfx_v9_0_hw_fini(struct amdgpu_ip_block *ip_block)
- {
- 	struct amdgpu_device *adev = ip_block->adev;
-@@ -4071,6 +4106,10 @@ static int gfx_v9_0_hw_fini(struct amdgp
+ 		r = amdgpu_ttm_backend_bind(bo->bdev, bo->ttm, new_mem);
+ 		if (r)
+ 			return r;
+@@ -537,6 +546,15 @@ static int amdgpu_bo_move(struct ttm_buf
+ 		amdgpu_bo_move_notify(bo, evict, new_mem);
+ 		ttm_resource_free(bo, &bo->resource);
+ 		ttm_bo_assign_mem(bo, new_mem);
++		return 0;
++	}
++	if ((old_mem->mem_type == TTM_PL_TT ||
++	     old_mem->mem_type == AMDGPU_PL_PREEMPT) &&
++	    (new_mem->mem_type == TTM_PL_TT ||
++	     new_mem->mem_type == AMDGPU_PL_PREEMPT)) {
++		amdgpu_bo_move_notify(bo, evict, new_mem);
++		ttm_resource_free(bo, &bo->resource);
++		ttm_bo_assign_mem(bo, new_mem);
  		return 0;
  	}
  
-+	if ((adev->flags & AMD_IS_APU) && amdgpu_in_reset(adev) &&
-+		amdgpu_asic_reset_method(adev) == AMD_RESET_METHOD_MODE2)
-+		gfx_v9_0_deactivate_kcq_hqd(adev);
-+
- 	/* Use deinitialize sequence from CAIL when unbinding device from driver,
- 	 * otherwise KIQ is hanging when binding back
- 	 */
 
 
