@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914E5446070;
-	Thu, 30 Jul 2026 16:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66EEE3955D7;
+	Thu, 30 Jul 2026 16:13:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428017; cv=none; b=qTSLLSIgikx/WpYUOJIyBE+1kEPnXu4Uc09ny3PWUyb8mTT63a8SmEWizaJvaPu6sxOuduHxxLOS/Z9MjgKRHWPiwes3Rhx2clt7nKgTeQ+g+veXrEqb+vh6SiXveojBoefIO5ccvSUAs4rWdyQriERbq73Zsu8vo4yT0s4kxzM=
+	t=1785428020; cv=none; b=VccmmUTtWryl8dJl/VyzQUUQci/RS/d80ze++B1uUqPPnkJ4+HrX4ovHL+85JnVGymaOWgDortxMmNp/Z1mwzIdv1GmPUzCQmNU9odM5Hc3IGg5TJItYl9nkd1IMFdgq8qqZVi34qHlwgD+gOUVz5FYg/nX53/0ryPro9a9nb44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428017; c=relaxed/simple;
-	bh=KM2hmP2ATcHUsAx/KtUv5cSxasq//SCmHMNvKh70iX4=;
+	s=arc-20240116; t=1785428020; c=relaxed/simple;
+	bh=ETaXGPOvDiPHV6Ho4F8xHvgK1kcDnCQk3iF/jQcELto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tCSkyXEMFmXlRnD8nUaEqlUuJGO0jPv+FwZlavdAxbA1BDyvqx4cPPk5UcC1pucMEBAikJuaHd4mcLit+rOULIj8paKSQqKb1rNpUegs5bK88x+yl0X5pvYgqXeHtQRutYZyr1DoLemqO7BMj1Phh1UtIdewHEGvKUUhC20Pm4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fh7+F2he; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ujlSZxSlatXPIJHyJDzsTPvIVyH21/hu7IvL4jU9I2OcRXsv91deAK++lvWoXrSh8ObYZoTW12ApOai5hWre2SLRDE8A9iP8soskLbtEhYjqR556CJ9HF91dOx1O3z42MniihLDdXhvyAmUHC9b9Na/VZJm9/2y1mO8FB0ExNJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZADWo54s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fh7+F2he"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2A41F000E9;
-	Thu, 30 Jul 2026 16:13:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZADWo54s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A521F000E9;
+	Thu, 30 Jul 2026 16:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428016;
-	bh=+37RkWGZRiMXp2tguI6P9mfUvcgJu2yvcVbIsXcvDus=;
+	s=korg; t=1785428019;
+	bh=Y2cQSMSgopcaw8AwetPcbFIYTBLfr8FmHYqD7PLvGS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fh7+F2heDZ/SWgd7bf+zMwVOguiCg918uHopToBTDUmZhGyfx/AZMLIGwUqGXzZyM
-	 b/st5TGgE3MW/AOn7JHui7vQa98pHj40Myr4YfY8OPOj7ox0EzKHhkgsz1wC+Ia5pG
-	 qajjAc/UC8QFBRU5NxSmpItGfCykOLVmtctL+Pyg=
+	b=ZADWo54sMI51EwakUBc1hAUSe4t+PlTyveBdG64p28FPl64lVFNSbr8Jnmf0NzzJ4
+	 8banB8DDFa0+tHKpyZhTr/QINHSSCSIy8/GJe1+cPZD2QNV86EhX5hufpQ4jp9g87P
+	 jduh5g2+eRCjJxSVVo6BG7bqe2eWxYwwt0OmSjFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Hashimov <security@auditcode.ai>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 330/484] mac802154: hold an interface reference across the scan worker
-Date: Thu, 30 Jul 2026 16:13:47 +0200
-Message-ID: <20260730141430.655621208@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 321/484] net/iucv: fix use-after-free of a severed iucv_path
+Date: Thu, 30 Jul 2026 16:13:38 +0200
+Message-ID: <20260730141430.459810076@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -50,78 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 234e5e898b713bc0b3a631b6f002897f43d046c8 upstream.
+commit be7cc4656eb1f54029610e82d1f0fdd3f9b5ec0a upstream.
 
-mac802154_scan_worker() captures the scanning sub-interface under RCU
-and then keeps dereferencing sdata->dev after rcu_read_unlock() and
-outside the rtnl -- in the failure traces, in
-mac802154_transmit_beacon_req() (skb->dev = sdata->dev), and in the
-end_scan cleanup. Nothing keeps that netdev alive across the worker
-iteration.
+af_iucv queues not-yet-received message notifications on iucv->message_q,
+each holding a raw pointer to the connection's iucv_path.  When the peer
+severs the connection, iucv_sever_path() frees that path with
+iucv_path_free() but leaves the notifications queued.  A later recvmsg()
+drains message_q via iucv_process_message_q() and hands the stale path to
+message_receive() -- a use-after-free of the freed iucv_path.
 
-A concurrent DEL_INTERFACE or PHY removal can unregister the interface
-once the worker drops the rtnl between its two drv_set_channel()
-sections. unregister_netdevice() frees the netdev asynchronously from
-netdev_run_todo() with the rtnl already dropped, so neither holding the
-rtnl nor the per-PHY IEEE802154_IS_SCANNING flag prevents a stale worker
-iteration from dereferencing the freed netdev -- a KASAN
-slab-use-after-free, reachable by racing TRIGGER_SCAN against
-DEL_INTERFACE (both CAP_NET_ADMIN).
+Drop the queued notifications when the path is severed; once the path is
+gone they can no longer be received.  This also frees the notifications
+leaked when a socket is closed with messages still queued.
 
-Pin the netdev with netdev_hold() while the RCU read lock is still held,
-and release it at every worker exit.
-
-Fixes: 57588c71177f ("mac802154: Handle passive scanning")
+Fixes: f0703c80e515 ("[AF_IUCV]: postpone receival of iucv-packets")
+Closes: https://sashiko.dev/#/patchset/20260705-b4-disp-fc79c0dc-v1-1-d2cdcb57afa9@proton.me?part=1
 Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Link: https://patch.msgid.link/20260721211228.34578-1-security@auditcode.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260707-b4-disp-783fedbb-v1-1-463b9dbda2ea@proton.me
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac802154/scan.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/iucv/af_iucv.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/net/mac802154/scan.c
-+++ b/net/mac802154/scan.c
-@@ -179,6 +179,7 @@ void mac802154_scan_worker(struct work_s
- 	enum nl802154_scan_types scan_req_type;
- 	struct ieee802154_sub_if_data *sdata;
- 	unsigned int scan_duration = 0;
-+	netdevice_tracker dev_tracker;
- 	struct wpan_phy *wpan_phy;
- 	u8 scan_req_duration;
- 	u8 page, channel;
-@@ -209,6 +210,14 @@ void mac802154_scan_worker(struct work_s
- 		return;
- 	}
+--- a/net/iucv/af_iucv.c
++++ b/net/iucv/af_iucv.c
+@@ -334,6 +334,7 @@ static void iucv_sever_path(struct sock
+ 	unsigned char user_data[16];
+ 	struct iucv_sock *iucv = iucv_sk(sk);
+ 	struct iucv_path *path = iucv->path;
++	struct sock_msg_q *p, *n;
  
-+	/*
-+	 * sdata->dev is dereferenced below after rcu_read_unlock() and outside
-+	 * the rtnl, and a concurrent DEL_INTERFACE / PHY teardown can free it
-+	 * asynchronously from netdev_run_todo(). Pin it with a reference taken
-+	 * while the RCU read lock is still held, and drop it at every exit.
-+	 */
-+	netdev_hold(sdata->dev, &dev_tracker, GFP_ATOMIC);
+ 	/* Whoever resets the path pointer, must sever and free it. */
+ 	if (xchg(&iucv->path, NULL)) {
+@@ -345,6 +346,19 @@ static void iucv_sever_path(struct sock
+ 		} else
+ 			pr_iucv->path_sever(path, NULL);
+ 		iucv_path_free(path);
 +
- 	wpan_phy = scan_req->wpan_phy;
- 	scan_req_type = scan_req->type;
- 	scan_req_duration = scan_req->duration;
-@@ -262,12 +271,14 @@ void mac802154_scan_worker(struct work_s
- 		"Scan page %u channel %u for %ums\n",
- 		page, channel, jiffies_to_msecs(scan_duration));
- 	queue_delayed_work(local->mac_wq, &local->scan_work, scan_duration);
-+	netdev_put(sdata->dev, &dev_tracker);
- 	return;
- 
- end_scan:
- 	rtnl_lock();
- 	mac802154_scan_cleanup_locked(local, sdata, false);
- 	rtnl_unlock();
-+	netdev_put(sdata->dev, &dev_tracker);
++		/*
++		 * Message notifications queued on message_q still reference
++		 * the now freed path; drop them, otherwise a later recvmsg()
++		 * would pass the freed iucv_path to message_receive() via
++		 * iucv_process_message_q().
++		 */
++		spin_lock_bh(&iucv->message_q.lock);
++		list_for_each_entry_safe(p, n, &iucv->message_q.list, list) {
++			list_del(&p->list);
++			kfree(p);
++		}
++		spin_unlock_bh(&iucv->message_q.lock);
+ 	}
  }
  
- int mac802154_trigger_scan_locked(struct ieee802154_sub_if_data *sdata,
 
 
