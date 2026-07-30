@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2C7383983;
-	Thu, 30 Jul 2026 15:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1B23769FD;
+	Thu, 30 Jul 2026 15:47:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426475; cv=none; b=eyNIIl6PL9LPeWhNruc70F+QaX1PttGNZJprTAHCObdSB8yreeJjMsQzFGdY9fOZfyqmjEw8oGoN9J2sjEuMtj1m+L2cmQcBq4gyRCc2q6PEoMrA4mL7yB8nf4vgMYq6p7qPZLtKv0mKDz238QmOB6GEWkcc1vMSr5HVg2IeKsg=
+	t=1785426478; cv=none; b=YU8RydPyVRloi6S+O98eOG4mua3vV7cFF/4fRdm5B17/TYlsb+tyciuAm4mkYC8nRbF4/P+RXNTT6UEhnp5OZxLCr0Gvn+lSW7waxTJWUDN5LD3XYMAuXQ13AqWkSMO57htyB8texWkfQcD+ZeGgaQu+v3A1uxZbSL3DdYHL5FQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426475; c=relaxed/simple;
-	bh=esB0A5coz/9hlOKt5VkdLHhw8sSI4BNOJChuby1a6ZE=;
+	s=arc-20240116; t=1785426478; c=relaxed/simple;
+	bh=gNq88ONT7p4I8FzBQtmn2gkvtxbcK8IMU3f4oaABUs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AdHEYS3/YWf6jd87h6By3dflA1ifa38ROovplZY9v4Rroh7oonNgkXPB98ZtS4C7N8eyB8GjF1aapBswYJe1CCDvYiuRLiJ6LJi4I7Ewl+EWfYjDldoZJX7hxH3zpOf3owJ3pTqS7j7hv6LhQshbf1ZkLUeN8fEFeGjtlygox7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUMwYQ5C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bjBrPFsT55c5zkwgn6wCv477A0SRRmnXwk1j5ByQabBbPZ/hgVSDKhA6xcwgunwhQ6ZA53CftHkPoetXnJsP/ZC2zrWvedoqL9G1Un1G5JIT0blep+w5Op6xaWOPPqHk5fFqQQPONTKn+6NCgJn3aPAMsSMx94EDdedA4/8RGQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIb05jwI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUMwYQ5C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 130B71F000E9;
-	Thu, 30 Jul 2026 15:47:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIb05jwI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88111F000E9;
+	Thu, 30 Jul 2026 15:47:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426473;
-	bh=8ujd69vGGa2+idHIlcSjVFvDxnMpPMMHl4sM87J95mw=;
+	s=korg; t=1785426476;
+	bh=bKETUbwvCmqMCNlOZdqnI0an6XCBen/cEdFfIIztCtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BUMwYQ5CY0qLY5/zWbKDhSkHdb5Nsm0XpTDCDpDkAsSKHH8h4NuDTGmTJjthDXzG5
-	 AZyd6NC5Dzd/QxFdiPupAlCRbA/BR+o64cbk6f3FbYwDedrTA2FtqNBQOJe4Dkib/x
-	 UljUUegxkXdiUYcrfpjUWiindk5lLUxT/16Y33f4=
+	b=qIb05jwI+zdBXWannIvMS0CDYG25YphSB1CLgRqPg7fiTQedA0TlIt8v/g58i9lZN
+	 0jah6WcpmrwyCtUpjJ9FxVeRQess7eHZEN6oTBpUzJ9Gg/FSiFc4cwS743nIn5xeyg
+	 00x28mREK22BQbe7+1JCUL8wqskaZiI6myZ/k2eI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brien Oberstein <brienpub@gmail.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Bobby Eshleman <bobbyeshleman@meta.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 433/602] vsock/virtio: collapse receive queue under memory pressure
-Date: Thu, 30 Jul 2026 16:13:45 +0200
-Message-ID: <20260730141445.064260209@linuxfoundation.org>
+	James Raphael Tiovalen <jamestiotio@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Antoine Tenart <atenart@kernel.org>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 434/602] vxlan: mdb: Fix source list corruption on a failed replace
+Date: Thu, 30 Jul 2026 16:13:46 +0200
+Message-ID: <20260730141445.086150394@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,250 +53,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: James Raphael Tiovalen <jamestiotio@gmail.com>
 
-commit 2a12c05aef213ff304ecc9e2f351de20731946b8 upstream.
+commit dcd9b465965422b9654f6026e8a2fa8984f74c3c upstream.
 
-When many small packets accumulate in the receive queue, the skb overhead
-can exceed buf_alloc even while the payload is within bounds. This causes
-virtio_transport_inc_rx_pkt() to reject packets, leading to connection
-resets during large transfers under backpressure.
+When replacing the source list of an MDB remote entry, all existing
+sources are first marked for deletion and vxlan_mdb_remote_srcs_add()
+is then called to add the new source list. Sources present in the new
+list have their deletion mark cleared, and any sources left marked
+afterwards are removed.
 
-The issue was reported by Brien, who has a reproducer, but it is also
-easily reproducible with iperf-vsock [1] using a small packet size:
+If vxlan_mdb_remote_srcs_add() fails partway through, its error path
+deletes all entries on the remote's source list. That rollback is only
+correct for its other caller, vxlan_mdb_remote_add(), where the remote
+was just allocated and the list contains solely entries added during
+the call. On the replace path the list also holds pre-existing sources,
+so a failed replace tears them down together with their (S, G)
+forwarding entries instead of leaving the entry unchanged.
 
-  iperf3 --vsock -c $CID -l 129
+This is reachable from an existing (*, G) remote. An EXCLUDE filter
+that loses sources starts forwarding traffic that should be blocked,
+while an INCLUDE filter that loses sources drops traffic that should be
+forwarded.
 
-which fails immediately without this patch but with commit 059b7dbd20a6
-("vsock/virtio: fix potential unbounded skb queue").
+Mark entries created during the current pass with a new
+VXLAN_SGRP_F_NEW flag. On failure, delete only those entries and clear
+the deletion mark on the pre-existing ones, so a failed replace leaves
+the source list untouched. Retain the flag until the whole operation
+succeeds and then clear it. Also stop vxlan_mdb_remote_src_add() from
+deleting a pre-existing entry it only looked up when adding that
+entry's forwarding entry fails.
 
-Inspired by TCP's tcp_collapse() which solves a similar problem, add
-virtio_transport_collapse_rx_queue() that walks the receive queue and
-re-copies data into compact linear skbs to reduce the overhead.
-
-The collapse is triggered proactively from when the number of skb queued
-is close to exceeding the overhead budget.
-
-A pre-scan counts the eligible bytes to size each allocation precisely,
-avoiding waste for isolated small packets. Partially consumed skbs are
-kept as-is to preserve buf_used/fwd_cnt accounting, EOM-marked skbs to
-maintain SEQPACKET message boundaries, and skbs already larger than the
-collapse target because they already have a good data-to-overhead ratio.
-
-Walking a large queue may take a significant amount of time and cache
-misses, causing traffic burstiness. To limit this, the collapse stops
-once enough room is freed for this packet and the next one, but may
-opportunistically free more to fill each collapsed skb to capacity.
-
-[1] https://github.com/stefano-garzarella/iperf-vsock
-
-Fixes: 059b7dbd20a6 ("vsock/virtio: fix potential unbounded skb queue")
+Fixes: a3a48de5eade ("vxlan: mdb: Add MDB control path support")
 Cc: stable@vger.kernel.org
-Reported-by: Brien Oberstein <brienpub@gmail.com>
-Closes: https://lore.kernel.org/netdev/618701dd023e$063de350$12b9a9f0$@gmail.com/
-Tested-by: Brien Oberstein <brienpub@gmail.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Link: https://patch.msgid.link/20260708102904.50732-2-sgarzare@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: James Raphael Tiovalen <jamestiotio@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Antoine Tenart <atenart@kernel.org>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260720160428.249356-1-jamestiotio@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport_common.c |  165 +++++++++++++++++++++++++++++++-
- 1 file changed, 164 insertions(+), 1 deletion(-)
+ drivers/net/vxlan/vxlan_mdb.c |   30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -26,6 +26,13 @@
- /* Threshold for detecting small packets to copy */
- #define GOOD_COPY_LEN  128
+--- a/drivers/net/vxlan/vxlan_mdb.c
++++ b/drivers/net/vxlan/vxlan_mdb.c
+@@ -42,6 +42,7 @@ struct vxlan_mdb_remote {
+ };
  
-+/* Max payload that can be collapsed into a single linear skb, using the same
-+ * allocation threshold as virtio_vsock_alloc_skb() to avoid adding pressure
-+ * on the page allocator.
-+ */
-+#define MAX_COLLAPSE_LEN \
-+	SKB_MAX_ORDER(VIRTIO_VSOCK_SKB_HEADROOM, PAGE_ALLOC_COSTLY_ORDER)
-+
- static void virtio_transport_cancel_close_work(struct vsock_sock *vsk,
- 					       bool cancel_timeout);
- static s64 virtio_transport_has_space(struct virtio_vsock_sock *vvs);
-@@ -423,6 +430,145 @@ static int virtio_transport_send_pkt_inf
- 	return ret;
+ #define VXLAN_SGRP_F_DELETE	BIT(0)
++#define VXLAN_SGRP_F_NEW	BIT(1)
+ 
+ struct vxlan_mdb_src_entry {
+ 	struct hlist_node node;
+@@ -844,6 +845,7 @@ vxlan_mdb_remote_src_add(const struct vx
+ 		ent = vxlan_mdb_remote_src_entry_add(remote, &src->addr);
+ 		if (!ent)
+ 			return -ENOMEM;
++		ent->flags |= VXLAN_SGRP_F_NEW;
+ 	} else if (!(cfg->nlflags & NLM_F_REPLACE)) {
+ 		NL_SET_ERR_MSG_MOD(extack, "Source entry already exists");
+ 		return -EEXIST;
+@@ -853,15 +855,16 @@ vxlan_mdb_remote_src_add(const struct vx
+ 	if (err)
+ 		goto err_src_del;
+ 
+-	/* Clear flags in case source entry was marked for deletion as part of
+-	 * replace flow.
++	/* Clear the deletion mark so the entry survives the replace sweep.
++	 * The new mark is retained until the whole operation succeeds.
+ 	 */
+-	ent->flags = 0;
++	ent->flags &= ~VXLAN_SGRP_F_DELETE;
+ 
+ 	return 0;
+ 
+ err_src_del:
+-	vxlan_mdb_remote_src_entry_del(ent);
++	if (ent->flags & VXLAN_SGRP_F_NEW)
++		vxlan_mdb_remote_src_entry_del(ent);
+ 	return err;
  }
  
-+static bool virtio_transport_can_collapse(struct sk_buff *skb)
-+{
-+	/* skbs that are partially consumed, mark a SEQPACKET message boundary,
-+	 * or are already large enough should not be collapsed: they either
-+	 * need special accounting, carry protocol state, or already have a
-+	 * good data-to-overhead ratio.
-+	 */
-+	if (VIRTIO_VSOCK_SKB_CB(skb)->offset)
-+		return false;
-+	if (le32_to_cpu(virtio_vsock_hdr(skb)->flags) & VIRTIO_VSOCK_SEQ_EOM)
-+		return false;
-+	if (skb->len >= MAX_COLLAPSE_LEN)
-+		return false;
-+	return true;
-+}
-+
-+/* Iterate through the packets in the queue starting from the current skb to
-+ * count the number of bytes we can collapse.
-+ */
-+static unsigned int
-+virtio_transport_collapse_size(struct sk_buff *skb, struct sk_buff_head *queue)
-+{
-+	unsigned int target = skb->len - VIRTIO_VSOCK_SKB_CB(skb)->offset;
-+
-+	while ((skb = skb_peek_next(skb, queue)) &&
-+	       virtio_transport_can_collapse(skb)) {
-+		unsigned int len = skb->len - VIRTIO_VSOCK_SKB_CB(skb)->offset;
-+
-+		if (len > MAX_COLLAPSE_LEN - target)
-+			return target;
-+
-+		target += len;
-+	}
-+
-+	return target;
-+}
-+
-+/* Called under lock_sock to compact the receive queue by merging small skbs.
-+ * @min_to_free: minimum number of skbs to eliminate from the queue. May free
-+ *               more to fill each collapsed skb to capacity.
-+ */
-+static void
-+virtio_transport_collapse_rx_queue(struct virtio_vsock_sock *vvs,
-+				   u32 min_to_free)
-+{
-+	struct sk_buff *skb, *next_skb, *new_skb = NULL;
-+	struct sk_buff_head new_queue;
-+	u32 saved = 0;
-+
-+	__skb_queue_head_init(&new_queue);
-+
-+	skb_queue_walk_safe(&vvs->rx_queue, skb, next_skb) {
-+		struct virtio_vsock_hdr *hdr = virtio_vsock_hdr(skb);
-+		u32 src_off = VIRTIO_VSOCK_SKB_CB(skb)->offset;
-+		u32 src_len = skb->len - src_off;
-+		bool keep;
-+
-+		keep = !virtio_transport_can_collapse(skb);
-+		if (keep) {
-+			/* Finalize pending collapsed skb to preserve packet
-+			 * ordering.
-+			 */
-+			if (new_skb) {
-+				__skb_queue_tail(&new_queue, new_skb);
-+				new_skb = NULL;
-+				saved--;
-+			}
-+			goto next;
-+		}
-+
-+		/* Finalize if this packet won't fit in the remaining tailroom,
-+		 * so we can allocate a right-sized new_skb.
-+		 */
-+		if (new_skb && src_len > skb_tailroom(new_skb)) {
-+			__skb_queue_tail(&new_queue, new_skb);
-+			new_skb = NULL;
-+			saved--;
-+		}
-+
-+		if (!new_skb) {
-+			unsigned int alloc_size;
-+
-+			/* Check after finalizing to opportunistically fill
-+			 * each collapsed skb to capacity, merging more skbs
-+			 * than strictly required.
-+			 */
-+			if (saved >= min_to_free)
-+				break;
-+
-+			alloc_size = virtio_transport_collapse_size(skb, &vvs->rx_queue);
-+
-+			/* Only this skb's data is eligible, nothing to merge
-+			 * with. Keep as-is.
-+			 */
-+			if (alloc_size <= src_len) {
-+				keep = true;
-+				goto next;
-+			}
-+
-+			new_skb = virtio_vsock_alloc_linear_skb(alloc_size +
-+					VIRTIO_VSOCK_SKB_HEADROOM, GFP_KERNEL);
-+			if (!new_skb)
-+				break;
-+
-+			memcpy(virtio_vsock_hdr(new_skb), hdr,
-+			       sizeof(struct virtio_vsock_hdr));
-+			virtio_vsock_hdr(new_skb)->len = 0;
-+		}
-+
-+		/* Cannot fail since src_off/src_len are within bounds, but if
-+		 * it does, discard new_skb to avoid queuing corrupted data.
-+		 */
-+		if (WARN_ON_ONCE(skb_copy_bits(skb, src_off,
-+					       skb_put(new_skb, src_len),
-+					       src_len))) {
-+			kfree_skb(new_skb);
-+			new_skb = NULL;
-+			break;
-+		}
-+
-+		le32_add_cpu(&virtio_vsock_hdr(new_skb)->len, src_len);
-+		virtio_vsock_hdr(new_skb)->flags |= hdr->flags;
-+
-+next:
-+		__skb_unlink(skb, &vvs->rx_queue);
-+		if (keep) {
-+			__skb_queue_tail(&new_queue, skb);
-+		} else {
-+			consume_skb(skb);
-+			saved++;
-+		}
-+	}
-+
-+	if (new_skb)
-+		__skb_queue_tail(&new_queue, new_skb);
-+
-+	skb_queue_splice(&new_queue, &vvs->rx_queue);
-+}
-+
- static bool virtio_transport_inc_rx_pkt(struct virtio_vsock_sock *vvs,
- 					u32 len)
- {
-@@ -1359,12 +1505,29 @@ virtio_transport_recv_enqueue(struct vso
- {
- 	struct virtio_vsock_sock *vvs = vsk->trans;
- 	bool can_enqueue, free_pkt = false;
-+	u32 len, queue_max, queue_len;
- 	struct virtio_vsock_hdr *hdr;
--	u32 len;
+@@ -889,11 +892,19 @@ static int vxlan_mdb_remote_srcs_add(con
+ 			goto err_src_del;
+ 	}
  
- 	hdr = virtio_vsock_hdr(skb);
- 	len = le32_to_cpu(hdr->len);
- 
-+	/* virtio_transport_inc_rx_pkt() rejects packets when the per-skb
-+	 * overhead (skb_queue_len * SKB_TRUESIZE(0)) exceeds buf_alloc.
-+	 * Proactively collapse the queue before that happens.
-+	 * No rx_lock needed: lock_sock is held by caller, preventing
-+	 * concurrent enqueue or dequeue.
-+	 */
-+	queue_max = vvs->buf_alloc / SKB_TRUESIZE(0);
-+	queue_len = skb_queue_len(&vvs->rx_queue);
-+	if (queue_len >= queue_max) {
-+		/* Walking a large queue may take a significant amount of time
-+		 * and cache misses, causing traffic burstiness. Limit the
-+		 * collapse to freeing room for this packet and the next one.
-+		 * It may free more to fill each collapsed skb to capacity.
-+		 */
-+		virtio_transport_collapse_rx_queue(vvs, queue_len + 2 - queue_max);
-+	}
++	hlist_for_each_entry(ent, &remote->src_list, node)
++		ent->flags &= ~VXLAN_SGRP_F_NEW;
 +
- 	spin_lock_bh(&vvs->rx_lock);
+ 	return 0;
  
- 	can_enqueue = virtio_transport_inc_rx_pkt(vvs, len);
+ err_src_del:
+-	hlist_for_each_entry_safe(ent, tmp, &remote->src_list, node)
+-		vxlan_mdb_remote_src_del(cfg->vxlan, &cfg->group, remote, ent);
++	hlist_for_each_entry_safe(ent, tmp, &remote->src_list, node) {
++		if (ent->flags & VXLAN_SGRP_F_NEW)
++			vxlan_mdb_remote_src_del(cfg->vxlan, &cfg->group, remote,
++						 ent);
++		else
++			ent->flags &= ~VXLAN_SGRP_F_DELETE;
++	}
+ 	return err;
+ }
+ 
+@@ -1069,7 +1080,7 @@ vxlan_mdb_remote_srcs_replace(const stru
+ 
+ 	err = vxlan_mdb_remote_srcs_add(cfg, remote, extack);
+ 	if (err)
+-		goto err_clear_delete;
++		return err;
+ 
+ 	hlist_for_each_entry_safe(ent, tmp, &remote->src_list, node) {
+ 		if (ent->flags & VXLAN_SGRP_F_DELETE)
+@@ -1078,11 +1089,6 @@ vxlan_mdb_remote_srcs_replace(const stru
+ 	}
+ 
+ 	return 0;
+-
+-err_clear_delete:
+-	hlist_for_each_entry(ent, &remote->src_list, node)
+-		ent->flags &= ~VXLAN_SGRP_F_DELETE;
+-	return err;
+ }
+ 
+ static int vxlan_mdb_remote_replace(const struct vxlan_mdb_config *cfg,
 
 
