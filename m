@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D2333D4E2;
-	Thu, 30 Jul 2026 14:34:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAF143C7D7;
+	Thu, 30 Jul 2026 14:34:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422088; cv=none; b=pnXkJDO/4u28w93z/8jE5Mc5jSsIFbLk4c6yKTJ9mVD6CDsFgGCB3V3FOIdmhEiHeH8aA8JFjhJQ28dma6vQMDdS46qwTYyfoKdel9wy1EQX+oH/brEGXpDemoS6uivReOsuQBDRLliYpijkugmhvN2x+WUB9Fl6bLjq1NF2P/A=
+	t=1785422091; cv=none; b=FcyT8I4trcB3zfjoaOSqK8I05b/l/CX0DZghnNvgqv5YlUPJBOeGHmiSpShwqrhzMLdow+B18znUAClBC/KSn+FBTfYXHPqjbK0tXoetBzHmbabgdcHsVoW/TVSnanMNYCYYSKMOhEEvxH/o5P2FMd1G66Cl8RNWLcu+jUiZaOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422088; c=relaxed/simple;
-	bh=T2Pg3wZ05edabOy4sjKfd/sSmdPxQ5uwwmOGcpzNTFE=;
+	s=arc-20240116; t=1785422091; c=relaxed/simple;
+	bh=yWQeO6mvBDTivl0FgXo2cHhf5fIU4RisOeWi8HpcYzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BqDRdMI3XzmgF+6kZ60XqnOGhbXYIAsPYhZ54vioDZJyDv4Ymsh63e4uyLMWhcgQcFxO/3qJD9qV8y4Fe2N7xA7E4TqC0pG5ie4A5g4L9LhalKHn/tjp3CjW5NvucWGfOibpmql/2NbIWkzVkTQP+amvjm6rb+1rO7IEM7ZFLaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bpnc2TFI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CRnBlG8Kcimg1aylOeF0/iOfL8b3qAWPUwvrUKB3dqs5KL+eJ4lx8E4DC8BuMWZkokMD9jXI8CHb8M6Z2t/V3A54fn+uh+4JC8ucK/TU04yBe7xtPYeF5di1YD+diioN9LkMolP5Hhg/cwV8H/lpi7fXRWFBpvgBqay5RFyDVKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPQGaxQq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bpnc2TFI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 763211F00A3A;
-	Thu, 30 Jul 2026 14:34:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPQGaxQq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5971F000E9;
+	Thu, 30 Jul 2026 14:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422087;
-	bh=E2R+mBlVVAbSYdSonnHN/QgaHjaZcSDWhGqU5vMgCww=;
+	s=korg; t=1785422089;
+	bh=7tYzxr4Yx4KEuxj8Eu0kALPWgqJmGZqqCgFHxsrd/0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bpnc2TFI2xxxuf0TW2Qh2kp7OjkexFGDkdnKFKVH5HN7hcz575lPlmO4zGn101W2w
-	 eXvssEjWAtDpx3/BTeBPHGGOP7zPPgS4FZav5yoUSZDnDAbkguISrL8TyUEHxgNc4g
-	 jNVqfwp31zJcTID1kWpKbyHcXIx4EWYaZ5wFjLzQ=
+	b=xPQGaxQqroMJ4OJXeiZ8IYMToE02NjBvc+gbYJXbySS7RM2Cv5rf84h6HX3UFx6m7
+	 emxRiIJ1Kekjzcx1QWXOnvhb05/KS5w0zat05l3l5OiVHHgq6J8Mxdrgbvh2uXRDiF
+	 F1BRUndgbJ5mNNhv+APjfNjvYK0MPkjS+LgZL4Dk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nils Juenemann <nils.juenemann@gmail.com>,
-	Rishikesh Jethwani <rjethwani@purestorage.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	"Nikhil P. Rao" <nikhil.rao@amd.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 276/744] tls: device: push pending open record on splice EOF
-Date: Thu, 30 Jul 2026 16:09:09 +0200
-Message-ID: <20260730141450.156064255@linuxfoundation.org>
+Subject: [PATCH 7.1 267/744] pds_core: fix use-after-free on workqueue during remove
+Date: Thu, 30 Jul 2026 16:09:00 +0200
+Message-ID: <20260730141449.969105432@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,54 +52,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rishikesh Jethwani <rjethwani@purestorage.com>
+From: Nikhil P. Rao <nikhil.rao@amd.com>
 
-[ Upstream commit eaa39f9f8ac8c1d032cd26b9cd572804e9d7683f ]
+[ Upstream commit 0ad134881508c36b65c1a8864f8bec53adbd3327 ]
 
-On kTLS device-offload sockets, sendfile() with count > EOF can reach
-->splice_eof() with a fully assembled but still-open TLS record left
-pending. tls_device_splice_eof() only flushes partially sent records,
-so an abrupt close() can drop the final record and the peer receives
-a short file.
+In pdsc_remove(), the workqueue is destroyed before pdsc_teardown()
+is called. This ordering allows two paths to queue work on the
+destroyed workqueue:
 
-Fix tls_device_splice_eof() to also push pending open records.
-This matches the software path, where splice EOF already flushes
-pending open records.
+1. If pdsc_teardown() -> pdsc_devcmd_reset() times out, the error
+   path in pdsc_devcmd_locked() queues health_work.
 
-Fixes: d4c1e80b0d1b ("tls/device: Use splice_eof() to flush")
-Link: https://lore.kernel.org/netdev/CAMPsyauZ+jzG9AysO0FWv6ZY0kvCUpjX_U7o=oOjCuOQ87BCgg@mail.gmail.com/
-Reported-by: Nils Juenemann <nils.juenemann@gmail.com>
-Signed-off-by: Rishikesh Jethwani <rjethwani@purestorage.com>
-Tested-by: Nils Juenemann <nils.juenemann@gmail.com>
-Link: https://patch.msgid.link/20260709224436.1608993-2-rjethwani@purestorage.com
+2. A NotifyQ event can trigger the ISR and queue work before free_irq()
+   is called in pdsc_teardown().
+
+Fix by moving destroy_workqueue() after pdsc_teardown() so the
+workqueue outlives every queuer; destroy_workqueue() then flushes any
+work still pending.
+
+Draining the queued work also requires ordering the teardown so the
+resources that work touches are freed last:
+
+  - In pdsc_qcq_free(), after freeing the interrupt, cancel_work_sync()
+    the queue's work and only then clear qcq->intx, so
+    pdsc_process_adminq()'s read of qcq->intx for interrupt-credit
+    return cannot race with the clear.
+
+  - Free adminqcq before notifyqcq: the shared adminq ISR is released
+    when adminqcq is freed, and the adminq work accesses notifyqcq, so
+    both must be stopped before notifyqcq is freed.
+
+Fixes: 01ba61b55b20 ("pds_core: Add adminq processing and commands")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://patchwork.kernel.org/comment/27002369/
+Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
+Link: https://patch.msgid.link/20260714180223.1642792-3-nikhil.rao@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_device.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/amd/pds_core/core.c | 14 ++++++++++----
+ drivers/net/ethernet/amd/pds_core/main.c |  5 +++--
+ 2 files changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
-index 99c8eff9783e68..33c42f65364a22 100644
---- a/net/tls/tls_device.c
-+++ b/net/tls/tls_device.c
-@@ -595,13 +595,15 @@ void tls_device_splice_eof(struct socket *sock)
- 	struct tls_context *tls_ctx = tls_get_ctx(sk);
- 	struct iov_iter iter = {};
- 
--	if (!tls_is_partially_sent_record(tls_ctx))
-+	if (!tls_is_partially_sent_record(tls_ctx) &&
-+	    !tls_is_pending_open_record(tls_ctx))
+diff --git a/drivers/net/ethernet/amd/pds_core/core.c b/drivers/net/ethernet/amd/pds_core/core.c
+index b6d4b30147232a..a73a2ab9060e62 100644
+--- a/drivers/net/ethernet/amd/pds_core/core.c
++++ b/drivers/net/ethernet/amd/pds_core/core.c
+@@ -110,7 +110,6 @@ static void pdsc_qcq_intr_free(struct pdsc *pdsc, struct pdsc_qcq *qcq)
  		return;
  
- 	mutex_lock(&tls_ctx->tx_lock);
- 	lock_sock(sk);
+ 	pdsc_intr_free(pdsc, qcq->intx);
+-	qcq->intx = PDS_CORE_INTR_INDEX_NOT_ASSIGNED;
+ }
  
--	if (tls_is_partially_sent_record(tls_ctx)) {
-+	if (tls_is_partially_sent_record(tls_ctx) ||
-+	    tls_is_pending_open_record(tls_ctx)) {
- 		iov_iter_bvec(&iter, ITER_SOURCE, NULL, 0, 0);
- 		tls_push_data(sk, &iter, 0, 0, TLS_RECORD_TYPE_DATA);
- 	}
+ static int pdsc_qcq_intr_alloc(struct pdsc *pdsc, struct pdsc_qcq *qcq)
+@@ -145,6 +144,12 @@ void pdsc_qcq_free(struct pdsc *pdsc, struct pdsc_qcq *qcq)
+ 
+ 	pdsc_qcq_intr_free(pdsc, qcq);
+ 
++	/* Drain any work queued by ISR before it was freed above */
++	if (qcq->work.func)
++		cancel_work_sync(&qcq->work);
++
++	qcq->intx = PDS_CORE_INTR_INDEX_NOT_ASSIGNED;
++
+ 	if (qcq->q_base)
+ 		dma_free_coherent(dev, qcq->q_size,
+ 				  qcq->q_base, qcq->q_base_pa);
+@@ -304,8 +309,11 @@ int pdsc_qcq_alloc(struct pdsc *pdsc, unsigned int type, unsigned int index,
+ 
+ static void pdsc_core_uninit(struct pdsc *pdsc)
+ {
+-	pdsc_qcq_free(pdsc, &pdsc->notifyqcq);
++	/* Free adminqcq first: its work accesses notifyqcq, so we must
++	 * disable its IRQ and drain its work before freeing notifyqcq.
++	 */
+ 	pdsc_qcq_free(pdsc, &pdsc->adminqcq);
++	pdsc_qcq_free(pdsc, &pdsc->notifyqcq);
+ 
+ 	if (pdsc->kern_dbpage) {
+ 		iounmap(pdsc->kern_dbpage);
+@@ -477,8 +485,6 @@ void pdsc_teardown(struct pdsc *pdsc, bool removing)
+ {
+ 	if (!pdsc->pdev->is_virtfn)
+ 		pdsc_devcmd_reset(pdsc);
+-	if (pdsc->adminqcq.work.func)
+-		cancel_work_sync(&pdsc->adminqcq.work);
+ 
+ 	pdsc_core_uninit(pdsc);
+ 
+diff --git a/drivers/net/ethernet/amd/pds_core/main.c b/drivers/net/ethernet/amd/pds_core/main.c
+index 22db78343eb075..638b9c7a509d9d 100644
+--- a/drivers/net/ethernet/amd/pds_core/main.c
++++ b/drivers/net/ethernet/amd/pds_core/main.c
+@@ -435,8 +435,6 @@ static void pdsc_remove(struct pci_dev *pdev)
+ 		pdsc_auxbus_dev_del(pdsc, pdsc, &pdsc->padev);
+ 
+ 		timer_shutdown_sync(&pdsc->wdtimer);
+-		if (pdsc->wq)
+-			destroy_workqueue(pdsc->wq);
+ 
+ 		mutex_lock(&pdsc->config_lock);
+ 		set_bit(PDSC_S_STOPPING_DRIVER, &pdsc->state);
+@@ -444,6 +442,9 @@ static void pdsc_remove(struct pci_dev *pdev)
+ 		pdsc_stop(pdsc);
+ 		pdsc_teardown(pdsc, PDSC_TEARDOWN_REMOVING);
+ 		mutex_unlock(&pdsc->config_lock);
++
++		if (pdsc->wq)
++			destroy_workqueue(pdsc->wq);
+ 		mutex_destroy(&pdsc->config_lock);
+ 		mutex_destroy(&pdsc->devcmd_lock);
+ 
 -- 
 2.53.0
 
