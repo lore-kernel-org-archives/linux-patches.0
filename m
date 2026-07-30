@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCCC4446F0;
-	Thu, 30 Jul 2026 15:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C01143E4AC;
+	Thu, 30 Jul 2026 15:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424940; cv=none; b=MptADyYNX+w2DsvVxkrd/KzMCMpzeMKx/4DcLU2mV//6Ws8Hbp9bAhnxHlzzGUkP34YzbnsFgk/2bF9V9bAxlJRiCdANJdxyQgYqe/atkUk5WJA2j2O3u6k5CcA0U0kRaVq9CHuDkB1HK/aplY5C0pZB5lA1F8h5iU/doDqCuGQ=
+	t=1785424941; cv=none; b=ikgFgBmjf6CfZN12qFpqinsw557/onZdEK3yNMKGrJYQxrWR46O585xaLEV97TyaW7qWsGFT8H+wJJ1FNMr/noM8CL29WZhXii1J4LIHZtuS+TDMvjGI3RnjzS6O8XyrbO6s8wir7ULA25FRvIWCAkrZcYJGKy4VZq41JiKaOJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424940; c=relaxed/simple;
-	bh=1cgq7HIPDWncOcb4Hy0rF9Zfo1aZ6CVA4OwXq85PK54=;
+	s=arc-20240116; t=1785424941; c=relaxed/simple;
+	bh=7JEVALRW1UrRNHh9Y58aOlIqoyulx0BeJq3wjDhQzD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RdH5/BmN6rmJ6TMk1z+zzL/kkZIjuFWhOHvSBhicheYkg8hfYV/t1ajczLgshz8CTGxnVR5hS/elUYH6FUXW85u+ZN7WpvStngBenyEH4xqc1FzQJF24/53yrL7qk43P8+95ppuXDqtyUF+N/Ow+4yHE0TUt3NFvo6/K/3cW+mA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T1hwksDP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qOOb/Szade8GA/sI+H3bz52cWX2jVc8Vw7HcGjAFlVEVAavqRRynll7JQpoBtM6sKpyRqZV7vVq6G8P2Id3RZYBiQ+rWcp4a92Rzh7gH7OkdBu0+c5Pe6Esh0s/fYA9QE5o+fFaOpullhrZZifCzpfROfOddKxJsL6cN/BRVZIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0A7htUgA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T1hwksDP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF8331F00AC4;
-	Thu, 30 Jul 2026 15:22:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0A7htUgA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95EC01F000E9;
+	Thu, 30 Jul 2026 15:22:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424937;
-	bh=YBBBfwNSd3kSyW0oW8jfrJ/hpMQRDrWOtuo3SO8h6dY=;
+	s=korg; t=1785424940;
+	bh=4doexS2BpN5XzMYxFN8btFp0FymMy4EKGbzIEJN+Fsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T1hwksDPny5uP4VjhydkfE2OI7Fz/3fNwTOPdy1qwZWkXJxYJ+4G94gvGWDLdzJbd
-	 iB73QDaJjG8N6OJq4Z5q08q0ok0C32v6wByFH2ApeTUA6Nzm78IqOlS8Sa8wybatQY
-	 ITFfDcALXQoit/gDFv2sTs+w4zFta0A2gcAYBceA=
+	b=0A7htUgASkXgIGrVFhsjfcd9xZV3J+qL0G4MFQBpbU6w34jlIKT+ZHHvZ+jaJIzuw
+	 jOKQT/Uv1NpIYBMWOz/kAOrxsxDb7OmHwEHRzQHiaBKJ08RA2yfK/ADVbPLavk5+c3
+	 WECTYwbI4TI8mggIxIcjvO8eabFsHAUDeIquKrR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 569/675] watchdog: s32g_wdt: remove incorrect options in watchdog_info struct
-Date: Thu, 30 Jul 2026 16:14:59 +0200
-Message-ID: <20260730141457.226719227@linuxfoundation.org>
+	Yang Wang <kevinyang.wang@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 570/675] drm/amd/pm: fix amdgpu_pm_info power display units
+Date: Thu, 30 Jul 2026 16:15:00 +0200
+Message-ID: <20260730141457.246933197@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,45 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-commit 2b37415618bfc6a83d4aceb00fd8d6491096f2ed upstream.
+commit 238baca26a6279e688d1a156bd031390b82eb578 upstream.
 
-The s32g_wdt driver uses two incorrect constants in the options field
-of its watchdog_info struct. This bit mask should contain WDIOF_*
-constants, but the driver uses two WDIOC_* ioctl constants (in addition
-to correct WDIOF_* constants). This causes many incorrect bits to be
-set in the bit mask. The functionality indicated by these ioctl
-constants is supported by all drivers using the watchdog framework, so
-this patch simply removes them.
+amdgpu_pm_info displayed power sensor readings with the wrong fractional unit.
+It treated the low byte of the raw sensor value as the decimal part of watts,
+while that field represents milliwatts in the decoded value. As a result,
+debugfs could report misleading SoC power when the remainder was not already
+a two-digit centiwatt value.
 
-Fixes: bd3f54ec559b ("watchdog: Add the Watchdog Timer for the NXP S32 platform")
-Cc: stable@vger.kernel.org # 6.18+
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Acked-by: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260505024409.60301-1-enelsonmoore@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Example with query = 0x00000354:
+
+  raw field        value
+  ---------------------
+  query >> 8       3 W
+  query & 0xff     84 mW
+  decoded power    3084 mW
+
+  output           value
+  ---------------------
+  before           3.84 W
+  after            3.08 W
+
+Fixes: f0b8f65b4825 ("drm/amd/amdgpu: fix the GPU power print error in pm info")
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 01992b121fb652c753d37e0c1427a2d1a557d2b1)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/s32g_wdt.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/amdgpu_pm.c |   21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/watchdog/s32g_wdt.c b/drivers/watchdog/s32g_wdt.c
-index ad55063060af..6422a694fc65 100644
---- a/drivers/watchdog/s32g_wdt.c
-+++ b/drivers/watchdog/s32g_wdt.c
-@@ -56,8 +56,7 @@ MODULE_PARM_DESC(early_enable,
+--- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+@@ -40,6 +40,8 @@
  
- static const struct watchdog_info s32g_wdt_info = {
- 	.identity = "s32g watchdog",
--	.options = WDIOF_KEEPALIVEPING | WDIOF_SETTIMEOUT | WDIOF_MAGICCLOSE |
--	WDIOC_GETTIMEOUT | WDIOC_GETTIMELEFT,
-+	.options = WDIOF_KEEPALIVEPING | WDIOF_SETTIMEOUT | WDIOF_MAGICCLOSE,
- };
+ #define DEVICE_ATTR_IS(_name)		(attr_id == device_attr_id__##_name)
  
- static struct s32g_wdt_device *wdd_to_s32g_wdt(struct watchdog_device *wdd)
--- 
-2.55.0
-
++#define power_2_mwatt(power)	(((power) >> 8) * 1000 + ((power) & 0xff))
++
+ struct od_attribute {
+ 	struct kobj_attribute	attribute;
+ 	struct list_head	entry;
+@@ -3261,7 +3263,6 @@ static int amdgpu_hwmon_get_power(struct
+ 				  enum amd_pp_sensors sensor)
+ {
+ 	struct amdgpu_device *adev = dev_get_drvdata(dev);
+-	unsigned int uw;
+ 	u32 query = 0;
+ 	int r;
+ 
+@@ -3270,9 +3271,7 @@ static int amdgpu_hwmon_get_power(struct
+ 		return r;
+ 
+ 	/* convert to microwatts */
+-	uw = (query >> 8) * 1000000 + (query & 0xff) * 1000;
+-
+-	return uw;
++	return power_2_mwatt(query) * 1000;
+ }
+ 
+ static ssize_t amdgpu_hwmon_show_power_avg(struct device *dev,
+@@ -4804,7 +4803,7 @@ static int amdgpu_debugfs_pm_info_pp(str
+ {
+ 	uint32_t mp1_ver = amdgpu_ip_version(adev, MP1_HWIP, 0);
+ 	uint32_t gc_ver = amdgpu_ip_version(adev, GC_HWIP, 0);
+-	uint32_t value;
++	uint32_t value, mwatt, centiwatt;
+ 	uint64_t value64 = 0;
+ 	uint32_t query = 0;
+ 	int size;
+@@ -4829,17 +4828,21 @@ static int amdgpu_debugfs_pm_info_pp(str
+ 		seq_printf(m, "\t%u mV (VDDNB)\n", value);
+ 	size = sizeof(uint32_t);
+ 	if (!amdgpu_dpm_read_sensor(adev, AMDGPU_PP_SENSOR_GPU_AVG_POWER, (void *)&query, &size)) {
++		mwatt = power_2_mwatt(query);
++		centiwatt = DIV_ROUND_CLOSEST(mwatt, 10);
+ 		if (adev->flags & AMD_IS_APU)
+-			seq_printf(m, "\t%u.%02u W (average SoC including CPU)\n", query >> 8, query & 0xff);
++			seq_printf(m, "\t%u.%02u W (average SoC including CPU)\n", centiwatt / 100, centiwatt % 100);
+ 		else
+-			seq_printf(m, "\t%u.%02u W (average SoC)\n", query >> 8, query & 0xff);
++			seq_printf(m, "\t%u.%02u W (average SoC)\n", centiwatt / 100, centiwatt % 100);
+ 	}
+ 	size = sizeof(uint32_t);
+ 	if (!amdgpu_dpm_read_sensor(adev, AMDGPU_PP_SENSOR_GPU_INPUT_POWER, (void *)&query, &size)) {
++		mwatt = power_2_mwatt(query);
++		centiwatt = DIV_ROUND_CLOSEST(mwatt, 10);
+ 		if (adev->flags & AMD_IS_APU)
+-			seq_printf(m, "\t%u.%02u W (current SoC including CPU)\n", query >> 8, query & 0xff);
++			seq_printf(m, "\t%u.%02u W (current SoC including CPU)\n", centiwatt / 100, centiwatt % 100);
+ 		else
+-			seq_printf(m, "\t%u.%02u W (current SoC)\n", query >> 8, query & 0xff);
++			seq_printf(m, "\t%u.%02u W (current SoC)\n", centiwatt / 100, centiwatt % 100);
+ 	}
+ 	size = sizeof(value);
+ 	seq_printf(m, "\n");
 
 
