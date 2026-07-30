@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7656E3B6366;
-	Thu, 30 Jul 2026 16:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EC832ED40;
+	Thu, 30 Jul 2026 16:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428154; cv=none; b=HPwYTvRQ64op0hRstljFle+IUWLlAA6Jn3FC0BT0NQjveWWj1b+TEiQcni/emzXzdLRCLYztg4vlKRUnB/F3dkNwtUfLNEShVWGyi2N0mcBpgzA04WJ+eh5QtFRhUei87B9DWDZazigG8oDV0+W+hAr5n6G06dRz0QafQVhCRsY=
+	t=1785428160; cv=none; b=jVG9tGEE9K364Gex6f1NWEzWgU/P2I9eQH91Hp7TNnKmJH7nIMbYvdRyehcn8fpZnBFOng6WhDjiXtAvnl3An/aPoslUvdjC98erDZ2uwaHnEQdTW1Ft9JSWWWp5nnJjflIibaUsccDMUUXCxt6XuhnozV3/hSoQKv17pek6RcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428154; c=relaxed/simple;
-	bh=1J7XsPNIciRdhOt7AI+dddjyKjaAi6WYuqfQx6FT+1w=;
+	s=arc-20240116; t=1785428160; c=relaxed/simple;
+	bh=hp5SHORdEFlHHYEa5l5vq/+rcR2nvm0IDAMuYX4KiA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SLFX8Y53+aOafcUvCkMRqxanRfWWzNe8AsjPukMyGwLKWftZSPTqO5/QL7qPYEM0irWe1RlN4KGrGNn+gijxVp9Fls5B2qtNhWnZT/QFoqt5QfjBF0fke7KEMf9cbAmhsxnVp0hj2jKWEwyOThO8fDlQIwPzCRC+8CN6SWWJ7xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HeM/8Sx9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aW77TpxvZDu+95wunuisqkVJk/OJ9JyRiUR6HYYuPWTEgaJMFvdz2zarmK2txdE6XzEkNXrunQdeHJB5dld92LLKVTjrtQNXv+GAFh27uJaIxDKerVFf3VvBsqj3h1B5ZG2HXngm3COzSlqPo2tkVlXkFfSXDdDxVsnJk2hUeNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMMBv6IP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HeM/8Sx9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FF01F00A3A;
-	Thu, 30 Jul 2026 16:15:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMMBv6IP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D201F00A3F;
+	Thu, 30 Jul 2026 16:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428139;
-	bh=tY5D+sPVtc77plXsYpIPVbRB/NK9nvTuuIQqZthORjM=;
+	s=korg; t=1785428153;
+	bh=vQ1byTAcuKGcO5peYt82K35vwyNdes8rJKao9p5mo7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HeM/8Sx9zrmH2lGD6/1MZ6L4xK2ryizUNIX5xA4gMp+VfdbGijpakT7iH0gLjuvF5
-	 1YT2bYlcj1K9JtT07PKDE1/0wU3/R9ZOLNwDPKDui3LbhflOgynl23kwyUnYmRv1tf
-	 eB9105sZ08H60DKeCZj1JESn4/2+kWHFDB+b9FRo=
+	b=XMMBv6IPG+gDoblJg3slfxRbfEGu9QhKDK+CikODmF0C0BQ/8ZHqEzGxAOz0O5KhN
+	 LvqzusPo5ZnQyqilqP9zOUm7SyQs6StY9NAWoi/mP24/eaATHACT6v+Y3S+8l3JOHt
+	 Ar1RBOvfn7wCSmAOgXmr5rUJb+RLO1Flr3kL/w3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 373/484] i2c: i801: fix hardware state machine corruption in error path
-Date: Thu, 30 Jul 2026 16:14:30 +0200
-Message-ID: <20260730141431.578141785@linuxfoundation.org>
+Subject: [PATCH 6.6 368/484] i2c: davinci: Unregister cpufreq notifier on probe failure
+Date: Thu, 30 Jul 2026 16:14:25 +0200
+Message-ID: <20260730141431.469405253@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,65 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit 10dd1a736d557e310a77117832874729a0175d57 ]
+[ Upstream commit e43f32816a1b1fe5a86279411626fe3a9be56d45 ]
 
-A severe livelock and subsequent Hung Task panic were observed in the
-i2c-i801 driver during concurrent Fuzzing. The crash is caused by an
-unconditional hardware register cleanup in the error handling path of
-i801_access().
+davinci_i2c_probe() registers a cpufreq transition notifier before adding
+the I2C adapter.  If i2c_add_numbered_adapter() fails, the probe error path
+releases the device resources without unregistering the notifier.
 
-When i801_check_pre() fails (e.g., returning -EBUSY because the SMBus
-controller is actively used by BIOS/ACPI), the kernel does not actually
-acquire the hardware ownership. However, the code jumps to the 'out'
-label and executes:
+Add a dedicated error path to unregister the cpufreq notifier after
+i2c_add_numbered_adapter() fails.
 
-    iowrite8(SMBHSTSTS_INUSE_STS | STATUS_FLAGS, SMBHSTSTS(priv));
-
-This forcefully clears the INUSE_STS lock and resets the hardware status
-flags without owning the controller. Doing so interrupts ongoing BIOS/ACPI
-transactions and totally corrupts the SMBus hardware state machine.
-
-Consequently, all subsequent i801_access() calls fail at the pre-check
-stage, triggering an endless stream of "SMBus is busy, can't use it!"
-error logs. Over a slow serial console, this printk flood monopolizes
-the CPU (Console Livelock), starving other processes trying to acquire
-the mmap_lock down_read semaphore, ultimately triggering the hung task
-watchdog.
-
-Fix this by moving the 'out' label below the hardware register cleanup.
-If i801_check_pre() fails, we safely bypass the iowrite8() and only
-release the software locks (pm_runtime and mutex), strictly adhering to
-the rule of not releasing resources that were never acquired.
-
-Fixes: 1f760b87e54c ("i2c: i801: Call i801_check_pre() from i801_access()")
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Cc: <stable@vger.kernel.org> # v6.3+
+Fixes: 82c0de11b734 ("i2c: davinci: Add cpufreq support")
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Cc: <stable@vger.kernel.org> # v2.6.36+
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260512093534.348655-1-w15303746062@163.com
+Link: https://lore.kernel.org/r/20260610030513.2651018-1-haoxiang_li2024@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-i801.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-davinci.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -918,13 +918,13 @@ static s32 i801_access(struct i2c_adapte
- 	 */
- 	if (hwpec)
- 		outb_p(inb_p(SMBAUXCTL(priv)) & ~SMBAUXCTL_CRC, SMBAUXCTL(priv));
--out:
- 	/*
- 	 * Unlock the SMBus device for use by BIOS/ACPI,
- 	 * and clear status flags if not done already.
- 	 */
- 	outb_p(SMBHSTSTS_INUSE_STS | STATUS_FLAGS, SMBHSTSTS(priv));
+--- a/drivers/i2c/busses/i2c-davinci.c
++++ b/drivers/i2c/busses/i2c-davinci.c
+@@ -866,13 +866,15 @@ static int davinci_i2c_probe(struct plat
+ 	adap->nr = pdev->id;
+ 	r = i2c_add_numbered_adapter(adap);
+ 	if (r)
+-		goto err_unuse_clocks;
++		goto err_cpufreq;
  
-+out:
- 	pm_runtime_mark_last_busy(&priv->pci_dev->dev);
- 	pm_runtime_put_autosuspend(&priv->pci_dev->dev);
- 	mutex_unlock(&priv->acpi_lock);
+ 	pm_runtime_mark_last_busy(dev->dev);
+ 	pm_runtime_put_autosuspend(dev->dev);
+ 
+ 	return 0;
+ 
++err_cpufreq:
++	i2c_davinci_cpufreq_deregister(dev);
+ err_unuse_clocks:
+ 	pm_runtime_dont_use_autosuspend(dev->dev);
+ 	pm_runtime_put_sync(dev->dev);
 
 
