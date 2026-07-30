@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C133C1D70;
-	Thu, 30 Jul 2026 15:32:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5F043A7FF;
+	Thu, 30 Jul 2026 15:32:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425550; cv=none; b=gOg5g+lbQLJe6ZAWtT7YuG1cxZ1Yfre4s0i/OTzHhXPoxOWqMYJs1/8xwnwdMDq+BBzgC1E8iZok0nCppO4L5VWGzF5IOU1qgtYwu2Bl1k3zAZpLQao6z1YWTVDBRjG5ZgLZZlr5ygpupmGtx00hrTNaWNh/4jhpy/jLSlGfQd8=
+	t=1785425552; cv=none; b=X9ZRAl7WLoNWtjDOijDAqEY1kxwjdTmYJFU3euanrUXPpTQcTLUU2CKYuRo094uxuQJSEpttOZWAWFFobZU4t+/eSv+fD7tOKWcZCbhPFFe+Dwf9F+iJgPsRpNQffRQHdG3efekYNiQVxSq3aAzLV7toGyiHc5BBHpnu0PWLWiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425550; c=relaxed/simple;
-	bh=xviLINx7YBF7I2IzS3IyRI10F3rQtPpwhu6HluJR18s=;
+	s=arc-20240116; t=1785425552; c=relaxed/simple;
+	bh=VbLEN+36pgVX1lP36mGya1hE43hYd45FNa12+8QLTTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/0h21jVRg/WNpiB2nB4ZcewAnLi/x+BZlz70FdQemJ2lW2n+xN54hXqx7djb4koKWaS2M0y8VY6fzjlhmg4lYVGakpyx6wTtRBTGTIgzw/TVDwGUIE+XFiClPHw/LA9J2EKXwvVITiKY+xF003rvaInTW//M3WO0jN097GeK2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fIRzw4ci; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jKQao78YTMOPvx+yiBaxZlnTSfEzB36LyclnIX7RJOsHG7UvaKPzhooNjpJwlKqkzT0UGLbrvnivvtn8aY2YyaFOoeuhivgSFX+PTToarH0MjalVqoUSHY+RONOBo1z8m9IYhesyanb9G1oXX4ob1CrLTMKtxJm650x8QJXtgpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0MGwjxHj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fIRzw4ci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C6B1F000E9;
-	Thu, 30 Jul 2026 15:32:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MGwjxHj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3739F1F00A3D;
+	Thu, 30 Jul 2026 15:32:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425548;
-	bh=CXgRR+rKJxKMpE5YB4Wecjpf9AILuX2t7AMekjYbCL4=;
+	s=korg; t=1785425551;
+	bh=SsvKj96Zyus4E/nPINF4MBaqh57QDSkorsAXiDJYB7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fIRzw4cimEep7XxI3QNGcVjURsGLe144rsV6TwlOZGp/H8E49b5L7bgPPJ8FZ8n/v
-	 UscwP3AKzsC1vG8bZarFCVfFvS0knCBwHoJgBNQKWh14LJt/izKcupC6+El22z0BHv
-	 dNLVvYXDmg6P/rlhGb0uBfX7VyFIsQGS7Zt6g/hc=
+	b=0MGwjxHjlS10bfhiK8DKoj4SnPLsiKFwOYuuQASg3rscNjdg+ZVPgR5w9Cbx0tFiT
+	 k3s/+ZKKTJ1fRg33ZbmZCSMGFDJFBL9iFJAUMM6NkqBBl8tVQkC2QD4gHgYXgdchNC
+	 gpjlqxCKIiJCl+RRnq1nhhWrjQFKG5yqhxCBGVCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Johan Hovold <johan@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Emre Cecanpunar <emreleno@gmail.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 091/602] Bluetooth: qca: fix NVM tag length underflow in TLV parser
-Date: Thu, 30 Jul 2026 16:08:03 +0200
-Message-ID: <20260730141437.907925069@linuxfoundation.org>
+Subject: [PATCH 6.12 109/602] drm/i915/selftests: Fix GT PM sort comparators
+Date: Thu, 30 Jul 2026 16:08:21 +0200
+Message-ID: <20260730141438.282600713@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -54,66 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Emre Cecanpunar <emreleno@gmail.com>
 
-[ Upstream commit c90164ca0f7036942ba088eb7ea8d3f6c2352020 ]
+[ Upstream commit 612978b83f45bf7018815209db5395d759db6f26 ]
 
-In the TLV_TYPE_NVM branch of qca_tlv_check_data() the tag loop bound is
-"while (idx < length - sizeof(struct tlv_type_nvm))". "length" is a signed
-int from the firmware TLV header and sizeof(struct tlv_type_nvm) is a
-size_t (12), so "length" is converted to size_t and any firmware-supplied
-"length" < 12 makes the subtraction wrap to a huge value. The loop body
-then reads a 12-byte struct tlv_type_nvm past the end of the short
-vmalloc'd firmware buffer (and the EDL_TAG_ID_* handlers can write past it).
+Compare the sampled clock values instead of their addresses. Comparing
+addresses leaves the samples unsorted, preventing the code from discarding
+the minimum and maximum samples.
 
-Rewrite the bound as "idx + sizeof(struct tlv_type_nvm) <= length"; both
-operands are non-negative, so it no longer underflows and a "length" too
-small for one record correctly skips the loop.
-
-  BUG: KASAN: vmalloc-out-of-bounds in qca_download_firmware.isra.0 (drivers/bluetooth/btqca.c:421)
-  Read of size 2 at addr ffffc900000e5004 by task kworker/u9:0/52
-  Workqueue: hci0 hci_power_on
-  Call Trace:
-   ...
-   kasan_report (mm/kasan/report.c:595)
-   qca_download_firmware.isra.0 (drivers/bluetooth/btqca.c:421 drivers/bluetooth/btqca.c:617)
-   qca_uart_setup (drivers/bluetooth/btqca.c:948)
-   qca_setup (drivers/bluetooth/hci_qca.c:2029)
-   hci_uart_setup (drivers/bluetooth/hci_ldisc.c:438)
-   hci_dev_open_sync (net/bluetooth/hci_sync.c:5227)
-   hci_power_on (net/bluetooth/hci_core.c:920)
-   process_one_work (kernel/workqueue.c:3322)
-   worker_thread (kernel/workqueue.c:3486)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-
-Fixes: 2e4edfa1e2bd ("Bluetooth: qca: add missing firmware sanity checks")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 1a5392479207 ("drm/i915/selftests: Measure CS_TIMESTAMP")
+Signed-off-by: Emre Cecanpunar <emreleno@gmail.com>
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Link: https://lore.kernel.org/r/20260714220430.238433-1-emreleno@gmail.com
+(cherry picked from commit 682ea2d28d18bb06f9fc663cb5ab7e80dc0e606a)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gt/selftest_gt_pm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 372427747cd649..083a599eec74db 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -413,7 +413,7 @@ static int qca_tlv_check_data(struct hci_dev *hdev,
+diff --git a/drivers/gpu/drm/i915/gt/selftest_gt_pm.c b/drivers/gpu/drm/i915/gt/selftest_gt_pm.c
+index 33351deeea4f0b..07eaf71955c447 100644
+--- a/drivers/gpu/drm/i915/gt/selftest_gt_pm.c
++++ b/drivers/gpu/drm/i915/gt/selftest_gt_pm.c
+@@ -16,9 +16,9 @@ static int cmp_u64(const void *A, const void *B)
+ {
+ 	const u64 *a = A, *b = B;
  
- 		idx = 0;
- 		data = tlv->data;
--		while (idx < length - sizeof(struct tlv_type_nvm)) {
-+		while (idx + sizeof(struct tlv_type_nvm) <= length) {
- 			tlv_nvm = (struct tlv_type_nvm *)(data + idx);
+-	if (a < b)
++	if (*a < *b)
+ 		return -1;
+-	else if (a > b)
++	else if (*a > *b)
+ 		return 1;
+ 	else
+ 		return 0;
+@@ -28,9 +28,9 @@ static int cmp_u32(const void *A, const void *B)
+ {
+ 	const u32 *a = A, *b = B;
  
- 			tag_id = le16_to_cpu(tlv_nvm->tag_id);
+-	if (a < b)
++	if (*a < *b)
+ 		return -1;
+-	else if (a > b)
++	else if (*a > *b)
+ 		return 1;
+ 	else
+ 		return 0;
 -- 
 2.53.0
 
