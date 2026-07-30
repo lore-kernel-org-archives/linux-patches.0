@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD25143F8AD;
-	Thu, 30 Jul 2026 14:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7388143B6D1;
+	Thu, 30 Jul 2026 14:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421990; cv=none; b=ExMYaRJIgbAPol2L3YW6pqi1th8uWG+UbwQVLBl9i6lRZmECUqp3YsmtrAdV8hauNUStXOQnZl6n2r1rdM0bkPgUHMIX04TLw239Rf/GzaSUhRXvUrH4thHG1Ik9bX6eqlJRVElMnQSNPtzB2fJSv/RW++BXIeGYRnh/Ca7kVKA=
+	t=1785421992; cv=none; b=euXhoaJ/YwF9sCrD/LjAVdcR/eymuKpQfvJf87ReN53KX2PJceU9ep7LOx+DDDZz3XLeBXLcM9oH4pdjG4b4VjQpAChzZ/wE7pCxWrgHC2nFkCdXvBNUA0T3JIA9sE4758ZyFUvT281Tm5hHfW0NjHsLJC+RYOmcvHJv8Q/5Sc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421990; c=relaxed/simple;
-	bh=nOgkhZQNvXcxjTq75aizYu+xfNGZj3dB59RWjEV/8GM=;
+	s=arc-20240116; t=1785421992; c=relaxed/simple;
+	bh=gNnEOTgf7bHtriS6usUZleYETDNe/FkOLMXq3OGmSw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PxHs+TLxMbjNFhdJJ95IHcKJCfCXkMCCAvZTYN/DQ6cUuvRpvxEvNnvg+Z1VTZVEjVBxTWekhxG3HAsFtpoEwrRldRAVNGLKvCrs8VdheRu5IjsVMOYVMD5FNs1MSnlZGDaE/xFtt8fRk+0j/6s03v01kQe14fGFSHFk8z1nq9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xa5KCbD3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=edP0FtXGvgRvVzCYI6wdGoh6cJrrWPVf4fXYXisKdAzEkI6d2qU2IlMCHy0fNSSbd810+nHz2W5Leuvq6cd66X+AJLYa+UkYFCzklRlinn7rDzDvnrkngfsGx8NcxEb4hifAYmKUUSjsaRJ6ih0QNFE0U/YE5ImyF8QQa08Y8ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pIimOqWG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xa5KCbD3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91F5F1F00A3A;
-	Thu, 30 Jul 2026 14:33:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIimOqWG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791281F000E9;
+	Thu, 30 Jul 2026 14:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421988;
-	bh=Jdz2jw8ZJ7m1qkZEgf9ApIWoGsEPLfvb6tRW6zOwH4U=;
+	s=korg; t=1785421991;
+	bh=lnRWg6unqyld4l5AMYbRiy9PuLecRWnnGqH8ODdQZ0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xa5KCbD34wRBY7il91auYePfdITl+EtiIoIVt6qOXo1ImG1KbwyUK1MbPTXJSkPgN
-	 j5x1LyPcEc/nd+ztfRjt0p2LMdPzh6WV4HnqCfXYaXmzZkbunzM7lRsBngaNcg4bWk
-	 NNEfIHWs56SLo64ObYCkpYzRW1E+WaKEB7nOwfx0=
+	b=pIimOqWGFM6Qv7aRuC80aid2+hLyiatHlx7vdklvbOyHLAj76rAbwFhHAD4h5uueW
+	 XCgdoiN+BD1J80cDuGwkJJfh9JaDTQE0hfVlvV7PQ72PvSDZclMCdeNsdeDFvQ9m8i
+	 qQvHViVHk32YWnJBd9nI4La+Kzp3FzNALxXgC+II=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	Steve French <stfrench@microsoft.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 287/744] cifs: fix cifsFileInfo leak on kmalloc failure in deferred close drain paths
-Date: Thu, 30 Jul 2026 16:09:20 +0200
-Message-ID: <20260730141450.390000654@linuxfoundation.org>
+Subject: [PATCH 7.1 288/744] ppp: annotate concurrent dev->stats accesses
+Date: Thu, 30 Jul 2026 16:09:21 +0200
+Message-ID: <20260730141450.411957368@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,146 +52,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c2f2e83e3bbc5483730fd4ee903182761f1ae50f ]
+[ Upstream commit ba712ecfd942b68b21a4b0a5daaf72f6616cc66d ]
 
-In cifs_close_deferred_file(), cifs_close_all_deferred_files(), and
-cifs_close_deferred_file_under_dentry(), when a pending deferred close
-is cancelled via cancel_delayed_work(), the subsequent kmalloc_obj() to
-add the file to the local processing list may fail under memory pressure.
-The loop breaks immediately, but the cancelled work is no longer pending
-(it would have called _cifsFileInfo_put()), and the cfile is never added
-to file_head for processing.  The cifsFileInfo reference and the open
-server handle both leak.
+dev->stats fields can be updated concurrently from multiple CPUs
+without synchronization.
 
-Fix by saving the cfile that failed allocation in a local variable,
-breaking as before, and calling _cifsFileInfo_put() on it after
-releasing the lock.  Any files later in the iteration are unaffected
-since their deferred work is still pending and will fire normally.
+Use DEV_STATS_INC() for stats increments and DEV_STATS_READ()
+when reading dev->stats in ppp_get_stats64() and ppp_get_stats()
+to avoid data races.
 
-Fixes: e3fc065682eb ("cifs: Deferred close performance improvements")
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Qingfang Deng <qingfang.deng@linux.dev>
+Link: https://patch.msgid.link/20260715055541.1147542-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/misc.c | 45 ++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 39 insertions(+), 6 deletions(-)
+ drivers/net/ppp/ppp_generic.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
-index 8afa746ee19e0d..ce9927b666af7a 100644
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -493,7 +493,7 @@ cifs_del_deferred_close(struct cifsFileInfo *cfile)
- void
- cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index 717c1d3aa95380..ef54e0a0462a17 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -1482,7 +1482,7 @@ ppp_start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 
+  outf:
+ 	kfree_skb(skb);
+-	++dev->stats.tx_dropped;
++	DEV_STATS_INC(dev, tx_dropped);
+ 	return NETDEV_TX_OK;
+ }
+ 
+@@ -1532,11 +1532,11 @@ ppp_net_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
+ static void
+ ppp_get_stats64(struct net_device *dev, struct rtnl_link_stats64 *stats64)
  {
--	struct cifsFileInfo *cfile = NULL;
-+	struct cifsFileInfo *cfile = NULL, *failed_cfile = NULL;
- 	struct file_list *tmp_list, *tmp_next_list;
- 	LIST_HEAD(file_head);
+-	stats64->rx_errors        = dev->stats.rx_errors;
+-	stats64->tx_errors        = dev->stats.tx_errors;
+-	stats64->rx_dropped       = dev->stats.rx_dropped;
+-	stats64->tx_dropped       = dev->stats.tx_dropped;
+-	stats64->rx_length_errors = dev->stats.rx_length_errors;
++	stats64->rx_errors        = DEV_STATS_READ(dev, rx_errors);
++	stats64->tx_errors        = DEV_STATS_READ(dev, tx_errors);
++	stats64->rx_dropped       = DEV_STATS_READ(dev, rx_dropped);
++	stats64->tx_dropped       = DEV_STATS_READ(dev, tx_dropped);
++	stats64->rx_length_errors = DEV_STATS_READ(dev, rx_length_errors);
+ 	dev_fetch_sw_netstats(stats64, dev->tstats);
+ }
  
-@@ -510,8 +510,10 @@ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
+@@ -1889,7 +1889,7 @@ ppp_prepare_tx_skb(struct ppp *ppp, struct sk_buff **pskb)
  
- 				tmp_list = kmalloc_obj(struct file_list,
- 						       GFP_ATOMIC);
--				if (tmp_list == NULL)
-+				if (tmp_list == NULL) {
-+					failed_cfile = cfile;
- 					break;
-+				}
- 				tmp_list->cfile = cfile;
- 				list_add_tail(&tmp_list->list, &file_head);
- 			}
-@@ -519,6 +521,15 @@ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
- 	}
- 	spin_unlock(&cifs_inode->open_file_lock);
+  drop:
+ 	kfree_skb(skb);
+-	++ppp->dev->stats.tx_errors;
++	DEV_STATS_INC(ppp->dev, tx_errors);
+ 	return 1;
+ }
  
-+	if (failed_cfile) {
-+		if (OPEN_FMODE(failed_cfile->f_flags) & FMODE_WRITE) {
-+			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+			smp_store_release(&CIFS_I(d_inode(failed_cfile->dentry))->time_last_write,
-+					  jiffies);
-+		}
-+		_cifsFileInfo_put(failed_cfile, false, false);
-+	}
-+
- 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
- 		struct cifsFileInfo *cfile = tmp_list->cfile;
- 
-@@ -536,7 +547,7 @@ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
- void
- cifs_close_all_deferred_files(struct cifs_tcon *tcon)
- {
--	struct cifsFileInfo *cfile;
-+	struct cifsFileInfo *cfile, *failed_cfile = NULL;
- 	struct file_list *tmp_list, *tmp_next_list;
- 	LIST_HEAD(file_head);
- 
-@@ -550,8 +561,10 @@ cifs_close_all_deferred_files(struct cifs_tcon *tcon)
- 
- 				tmp_list = kmalloc_obj(struct file_list,
- 						       GFP_ATOMIC);
--				if (tmp_list == NULL)
-+				if (tmp_list == NULL) {
-+					failed_cfile = cfile;
- 					break;
-+				}
- 				tmp_list->cfile = cfile;
- 				list_add_tail(&tmp_list->list, &file_head);
- 			}
-@@ -559,6 +572,15 @@ cifs_close_all_deferred_files(struct cifs_tcon *tcon)
- 	}
- 	spin_unlock(&tcon->open_file_lock);
- 
-+	if (failed_cfile) {
-+		if (OPEN_FMODE(failed_cfile->f_flags) & FMODE_WRITE) {
-+			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+			smp_store_release(&CIFS_I(d_inode(failed_cfile->dentry))->time_last_write,
-+					  jiffies);
-+		}
-+		_cifsFileInfo_put(failed_cfile, true, false);
-+	}
-+
- 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
- 		struct cifsFileInfo *cfile = tmp_list->cfile;
- 
-@@ -614,7 +636,7 @@ void cifs_close_deferred_file_under_dentry(struct cifs_tcon *tcon,
- 					   struct dentry *dentry)
- {
- 	struct file_list *tmp_list, *tmp_next_list;
--	struct cifsFileInfo *cfile;
-+	struct cifsFileInfo *cfile, *failed_cfile = NULL;
- 	LIST_HEAD(file_head);
- 
- 	spin_lock(&tcon->open_file_lock);
-@@ -627,14 +649,25 @@ void cifs_close_deferred_file_under_dentry(struct cifs_tcon *tcon,
- 			spin_unlock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
- 
- 			tmp_list = kmalloc_obj(struct file_list, GFP_ATOMIC);
--			if (tmp_list == NULL)
-+			if (tmp_list == NULL) {
-+				failed_cfile = cfile;
- 				break;
-+			}
- 			tmp_list->cfile = cfile;
- 			list_add_tail(&tmp_list->list, &file_head);
+@@ -2156,7 +2156,7 @@ static int ppp_mp_explode(struct ppp *ppp, struct sk_buff *skb)
+  err_linearize:
+ 	if (ppp->debug & 1)
+ 		netdev_err(ppp->dev, "PPP: no memory (fragment)\n");
+-	++ppp->dev->stats.tx_errors;
++	DEV_STATS_INC(ppp->dev, tx_errors);
+ 	++ppp->nxseq;
+ 	return 1;	/* abandon the frame */
+ }
+@@ -2329,7 +2329,7 @@ ppp_input(struct ppp_channel *chan, struct sk_buff *skb)
+ 	if (!ppp_decompress_proto(skb)) {
+ 		kfree_skb(skb);
+ 		if (ppp) {
+-			++ppp->dev->stats.rx_length_errors;
++			DEV_STATS_INC(ppp->dev, rx_length_errors);
+ 			ppp_receive_error(ppp);
  		}
+ 		goto done;
+@@ -2391,7 +2391,7 @@ ppp_receive_frame(struct ppp *ppp, struct sk_buff *skb, struct channel *pch)
+ static void
+ ppp_receive_error(struct ppp *ppp)
+ {
+-	++ppp->dev->stats.rx_errors;
++	DEV_STATS_INC(ppp->dev, rx_errors);
+ 	if (ppp->vj)
+ 		slhc_toss(ppp->vj);
+ }
+@@ -2658,7 +2658,7 @@ ppp_receive_mp_frame(struct ppp *ppp, struct sk_buff *skb, struct channel *pch)
+ 	 */
+ 	if (seq_before(seq, ppp->nextseq)) {
+ 		kfree_skb(skb);
+-		++ppp->dev->stats.rx_dropped;
++		DEV_STATS_INC(ppp->dev, rx_dropped);
+ 		ppp_receive_error(ppp);
+ 		return;
  	}
- 	spin_unlock(&tcon->open_file_lock);
+@@ -2694,7 +2694,7 @@ ppp_receive_mp_frame(struct ppp *ppp, struct sk_buff *skb, struct channel *pch)
+ 		if (pskb_may_pull(skb, 2))
+ 			ppp_receive_nonmp_frame(ppp, skb);
+ 		else {
+-			++ppp->dev->stats.rx_length_errors;
++			DEV_STATS_INC(ppp->dev, rx_length_errors);
+ 			kfree_skb(skb);
+ 			ppp_receive_error(ppp);
+ 		}
+@@ -2800,7 +2800,7 @@ ppp_mp_reconstruct(struct ppp *ppp)
+ 		if (lost == 0 && (PPP_MP_CB(p)->BEbits & E) &&
+ 		    (PPP_MP_CB(head)->BEbits & B)) {
+ 			if (len > ppp->mrru + 2) {
+-				++ppp->dev->stats.rx_length_errors;
++				DEV_STATS_INC(ppp->dev, rx_length_errors);
+ 				netdev_printk(KERN_DEBUG, ppp->dev,
+ 					      "PPP: reconstructed packet"
+ 					      " is too long (%d)\n", len);
+@@ -2855,7 +2855,7 @@ ppp_mp_reconstruct(struct ppp *ppp)
+ 					      "  missed pkts %u..%u\n",
+ 					      ppp->nextseq,
+ 					      PPP_MP_CB(head)->sequence-1);
+-			++ppp->dev->stats.rx_dropped;
++			DEV_STATS_INC(ppp->dev, rx_dropped);
+ 			ppp_receive_error(ppp);
+ 		}
  
-+	if (failed_cfile) {
-+		if (OPEN_FMODE(failed_cfile->f_flags) & FMODE_WRITE) {
-+			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
-+			smp_store_release(&CIFS_I(d_inode(failed_cfile->dentry))->time_last_write,
-+					  jiffies);
-+		}
-+		_cifsFileInfo_put(failed_cfile, true, false);
-+	}
-+
- 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
- 		struct cifsFileInfo *cfile = tmp_list->cfile;
- 
+@@ -3322,8 +3322,8 @@ ppp_get_stats(struct ppp *ppp, struct ppp_stats *st)
+ 		st->p.ppp_opackets += tx_packets;
+ 		st->p.ppp_obytes += tx_bytes;
+ 	}
+-	st->p.ppp_ierrors = ppp->dev->stats.rx_errors;
+-	st->p.ppp_oerrors = ppp->dev->stats.tx_errors;
++	st->p.ppp_ierrors = DEV_STATS_READ(ppp->dev, rx_errors);
++	st->p.ppp_oerrors = DEV_STATS_READ(ppp->dev, tx_errors);
+ 	if (!vj)
+ 		return;
+ 	st->vj.vjs_packets = vj->sls_o_compressed + vj->sls_o_uncompressed;
 -- 
 2.53.0
 
