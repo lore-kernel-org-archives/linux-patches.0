@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27EF5446070;
-	Thu, 30 Jul 2026 16:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A0B395266;
+	Thu, 30 Jul 2026 16:06:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427583; cv=none; b=aSysvbD6UNsVr2ZVMa0pV0v8v2NFJttK2a7JCEo4joEiq2srHuwJDOX6D0uyy4OWDynfa63RAhZNNIJT8llPU61Zi8dj1bm/xVJsNgQ4ilT/o6w04Qpqg7w5Lz16xRJoMx3z0qqGR/LBLs42pZvkvy/l3/eetwIMlTm5+byc3Cw=
+	t=1785427586; cv=none; b=bK6Aiyo01LXQNdJ5iBUbwi0V4lXI/GDM2VzWkBFbhJ+0XJOpH3qRF3NP5zD1GJEqltbYTQj5Nt4fs5/LBlUt936jkDkSN/0LCRjYse8gMXygLQ6kCnDoZcC4ZNKUVLpQaceKze5UJCVV+YOh2cSgnFeYir77YUxyUrQSPdOhLQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427583; c=relaxed/simple;
-	bh=fXYON/iu8E1KK7zekaewlo/wJJ1i/LQ4to5DM61OOjQ=;
+	s=arc-20240116; t=1785427586; c=relaxed/simple;
+	bh=10IQgBfhco+92bcH4B+rq1uHglJUNsD5dYsVFHFTqA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QFiDs8YLCoeNczEyc5Xfa7fjWAcU1Z4tG3BM2FZueESaGsVbeqRhOLsjXkwdTf+Ok0RtjOTSylNk9+wFu96Va7SantcbKrn6m4Dtric0vNynoK+s3IBCSc07CH3K9neefh9ymKv5Mredw+rnbqSRd/6ffPGJXQVisu4kPfmu7uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBb7b1lm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZKJ8rjpMy16deLnoWGSliiO6y7yGY8SgrjrfVg/nKue/abEDKO2Qu0yRwyvsW8Mj8uLNwClZRJcLyv9/7xtwFbmezjYFye67QpzZVXJD9/+KlI03DgyIxfZHarIb03hZjIT4l8GbBX7APzjQLtfmmxS1GKVY91hsq7LPBSf+oWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdW1p2Bx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBb7b1lm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DDD11F000E9;
-	Thu, 30 Jul 2026 16:06:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdW1p2Bx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C8DA1F000E9;
+	Thu, 30 Jul 2026 16:06:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427581;
-	bh=BO0yjRlSYq6X/n1YuPnObJR/q3F6/ZmJgkHOmqeynwo=;
+	s=korg; t=1785427584;
+	bh=Kt0y98W0fMHsILYYtJ12SYJ5m4Bel8gYOWlOAc2nceY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QBb7b1lmLR7u7G/MXlyEnJzKB1jhkJWw6p2a739bnizQ2TUd6PdUpBqb8x1TooSyE
-	 6EGa1/KYdmWZlS7mZvHcQgfUOx1eB8UD06CpZsMl4F+GSvgYThOvXRa2WfNsNI/Lle
-	 cmVv0oow4yj7qmBBfDSr7cSsDkowkkUecLlqPlnc=
+	b=jdW1p2Bx52EtuuyZ1sZiyj9D/i7accxoo8BcEZPbKDAfoJrSU0Qe2DJE0fJeXWF2N
+	 bnVUjLvJnbqg6XigwDp5pA1Px+peEvo5cza8i8noLJgccMVJE103KaFez6YtAwYuWb
+	 GLC2jS2/lLqbRIGE15V81t3MT//49Q97kkOejJ8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Zack Rusin <zackr@vmware.com>,
-	dri-devel@lists.freedesktop.org,
-	Harry Wentland <harry.wentland@amd.com>,
+	WenTao Liang <vulab@iscas.ac.cn>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 219/484] drm/amd/display: Handle struct drm_plane_state.ignore_damage_clips
-Date: Thu, 30 Jul 2026 16:11:56 +0200
-Message-ID: <20260730141428.230421951@linuxfoundation.org>
+Subject: [PATCH 6.6 220/484] drm/amd/display: detect_link_and_local_sink: DP alt mode timeout path leaks prev_sink reference
+Date: Thu, 30 Jul 2026 16:11:57 +0200
+Message-ID: <20260730141428.252938065@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -54,64 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: WenTao Liang <vulab@iscas.ac.cn>
 
-commit ac11060c6d4959e2d4ceada037d2e1e1bfcf6645 upstream.
+commit a6e14b976be48eebd8769cb5b883a6af7fc5ade1 upstream.
 
-The mode-setting pipeline can disabled damage clippings for a commit
-by setting ignore_damage_clips in struct drm_plane_state. The commit
-will then do a full display update.
+prev_sink is unconditionally retained via dc_sink_retain at function
+  entry, but the DP alt mode timeout path inside SIGNAL_TYPE_DISPLAY_PORT
+  returns false without releasing prev_sink. All other return paths in the
+  function correctly call dc_sink_release(prev_sink), making this the only
+  missing cleanup.
 
-Test the flag in DCN code and do a full update in DCN code if it has
-been set.
-
-Commit 35ed38d58257 ("drm: Allow drivers to indicate the damage helpers
-to ignore damage clips") introduced ignore_damage_clips to selectively
-ignore damage clipping in certain framebuffer changes. This driver does
-not do that, but DRM's damage iterator will soon rely on the flag.
-Therefore supporting it here as well make sense for consistency.
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 35ed38d58257 ("drm: Allow drivers to indicate the damage helpers to ignore damage clips")
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Zack Rusin <zackr@vmware.com>
-Cc: dri-devel@lists.freedesktop.org
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Fixes: 54618888d1ea ("drm/amd/display: break down dc_link.c")
+Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://patch.msgid.link/20260626124555.36910-1-vulab@iscas.ac.cn
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a24019f6480fad5c077b5956eed942c8960323d6)
-Cc: <stable@vger.kernel.org> # v6.8+
+(cherry picked from commit 45510cf662dcf46b5d8926d454f338809f107b9d)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/link/link_detection.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -5180,8 +5180,8 @@ static void fill_dc_dirty_rects(struct d
- {
- 	struct dm_crtc_state *dm_crtc_state = to_dm_crtc_state(crtc_state);
- 	struct rect *dirty_rects = flip_addrs->dirty_rects;
--	u32 num_clips;
--	struct drm_mode_rect *clips;
-+	u32 num_clips = 0;
-+	struct drm_mode_rect *clips = NULL;
- 	bool bb_changed;
- 	bool fb_changed;
- 	u32 i = 0;
-@@ -5197,8 +5197,10 @@ static void fill_dc_dirty_rects(struct d
- 	if (new_plane_state->rotation != DRM_MODE_ROTATE_0)
- 		goto ffu;
+--- a/drivers/gpu/drm/amd/display/dc/link/link_detection.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_detection.c
+@@ -958,8 +958,11 @@ static bool detect_link_and_local_sink(s
+ 			    link->link_enc->features.flags.bits.DP_IS_USB_C == 1) {
  
--	num_clips = drm_plane_get_damage_clips_count(new_plane_state);
--	clips = drm_plane_get_damage_clips(new_plane_state);
-+	if (!new_plane_state->ignore_damage_clips) {
-+		num_clips = drm_plane_get_damage_clips_count(new_plane_state);
-+		clips = drm_plane_get_damage_clips(new_plane_state);
-+	}
+ 				/* if alt mode times out, return false */
+-				if (!wait_for_entering_dp_alt_mode(link))
++				if (!wait_for_entering_dp_alt_mode(link)) {
++					if (prev_sink)
++						dc_sink_release(prev_sink);
+ 					return false;
++				}
+ 			}
  
- 	if (!dm_crtc_state->mpo_requested) {
- 		if (!num_clips || num_clips > DC_MAX_DIRTY_RECTS)
+ 			if (!detect_dp(link, &sink_caps, reason)) {
 
 
