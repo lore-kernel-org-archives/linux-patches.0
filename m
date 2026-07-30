@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED9A43B6D1;
-	Thu, 30 Jul 2026 14:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147BD43DA3C;
+	Thu, 30 Jul 2026 14:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422404; cv=none; b=DutH07iqL7pgjk2eAnQrhIe0xnwdd8Vg8dts/1MEK+v+0XQJDknymxKty+6I/V09mL5aQkjgwHiNc6HWPANmlJPSdtAQou0aObe4h2OrwUf9BuiPiFvNF0wxtwx7hLFqmbH6FvaZ6lAFeDf2MPTIn6leiEXK6nTYpcaM2Y9xWlM=
+	t=1785422407; cv=none; b=edkHpJKOka2YXx7kU+S1IUvjWF9Yqr1OA3lZnONquw0e/pV++4N/xFLHm8Chq67cM2RHKIG4gJSeChtO7OcscFihpk1uI9/vfzzMwkMiWte7KB8loq/YZo+E4iar/2s1xGdJw80TTNww+HP6WCS0gjkiqWlZL4YvTyQda3uG3EA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422404; c=relaxed/simple;
-	bh=C8FjrQdG46jedidf4SH9IPVOyYYOzYrLX/i8gK0ulng=;
+	s=arc-20240116; t=1785422407; c=relaxed/simple;
+	bh=P3xLY72mozS0YJzSOeQLwcNLJ5XgnsJC9bFuoOr+l40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LoAqfO0qk78yDoL4fHClZZIFsY1OYrYMjz3s5p+nLwoNq9TpWJF8fBig8Ugq33+8EJuUzoWZ2a4HX5u2zbd8jNhFO9cYwlkChKng8/L/ft7F6Y1j+7v7Xk6zv7CA60OatNSWCsB7uw8rh8X+54dI9BJHKQLbOCRO5SiVt02uBs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpum04Tf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dC1RFyJmqfhbj0fRCJeClDsXP0b4g8NAlnFBhAgQrJJ/QAJ7ChfhK+0MXjNmmatMwo/sdUccHKejoT7CJM7Ml5XGLDskj1Pi2WHNbAdJgCEEU/EiXkafQS1mmLTArUlsVumYsQvVtv4TSzoREXdB+szeubkK9qbYQ+1YOcK75W4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gwAM5H2s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpum04Tf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C14471F000E9;
-	Thu, 30 Jul 2026 14:40:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gwAM5H2s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF8A1F000E9;
+	Thu, 30 Jul 2026 14:40:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422403;
-	bh=nqHnyx9kePjldhTQqo5t22WrKCYHjvzht9uyz1NpHjU=;
+	s=korg; t=1785422406;
+	bh=/9/6MLXEr2Hk0rXcqF0cUFaXLpxlRmexyxCyBp6gEac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mpum04TfUSlJbOz+b9UZ8NsHkUcACEJb5rFehwNcdbK8k/SV/XFMHtQrBypYqk5Y3
-	 WplAnW7n51EZXVCf7Xv+z9AVwIIFbP4WL6yOlpvBWSzElyeo9fsplhL2TqfWhZ8qii
-	 ECD+Tz8ocynaB7W7kd+x9GdtSgmQ4yDTZ2zH7GRw=
+	b=gwAM5H2sOPTVg8PDpDXxv14lB0TlXHYMndj01OHQTa/cGwUzWDebaDUHpeppq9+Cq
+	 UgzFtPgt+g9yqP3oKUrDNgbdNNiEcNYH3dkLP2D1JJGAMd+XddjY1ldctq1C5VkBxz
+	 KwUuDV6X1vYY75Ksen8YZzBxsg1rmzSGzoEpHves=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 427/744] drm/amdgpu: add the doorbell index input for suspending userq
-Date: Thu, 30 Jul 2026 16:11:40 +0200
-Message-ID: <20260730141453.373742360@linuxfoundation.org>
+Subject: [PATCH 7.1 428/744] drm/amdgpu/sdma7.0: replace BUG_ON() with WARN_ON()
+Date: Thu, 30 Jul 2026 16:11:41 +0200
+Message-ID: <20260730141453.394712044@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -45,47 +44,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit b181bf68d11f034efe27ae1377a0f659605f040f upstream.
+commit e80e28f398f5d9f6e361ffb56382d2e74fc87556 upstream.
 
-It requires inputing the doorbell offset for MES firmware preempts the
-userq, and adding the doorbell offset also keep aliging with the
-union MESAPI__SUSPEND in MES firmware.
+There's no need to crash the kernel for these cases.
 
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Acked-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit bc434335ab3c096a33a9e88c7951b4ac574db458)
+(cherry picked from commit 9723a8bed3aa251a26bee4583bac9d8fb064dd44)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/sdma_v7_0.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h
-@@ -288,12 +288,14 @@ struct mes_suspend_gang_input {
- 	uint64_t	gang_context_addr;
- 	uint64_t	suspend_fence_addr;
- 	uint32_t	suspend_fence_value;
-+	uint32_t	doorbell_offset;
- };
- 
- struct mes_resume_gang_input {
- 	uint32_t	xcc_id;
- 	bool		resume_all_gangs;
- 	uint64_t	gang_context_addr;
-+	uint32_t	doorbell_offset;
- };
- 
- struct mes_reset_queue_input {
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v7_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v7_0.c
+@@ -363,7 +363,7 @@ static void sdma_v7_0_ring_emit_fence(st
+ 	amdgpu_ring_write(ring, SDMA_PKT_COPY_LINEAR_HEADER_OP(SDMA_OP_FENCE) |
+ 			  SDMA_PKT_FENCE_HEADER_MTYPE(0x3)); /* Ucached(UC) */
+ 	/* zero in first two bits */
+-	BUG_ON(addr & 0x3);
++	WARN_ON(addr & 0x3);
+ 	amdgpu_ring_write(ring, lower_32_bits(addr));
+ 	amdgpu_ring_write(ring, upper_32_bits(addr));
+ 	amdgpu_ring_write(ring, lower_32_bits(seq));
+@@ -374,7 +374,7 @@ static void sdma_v7_0_ring_emit_fence(st
+ 		amdgpu_ring_write(ring, SDMA_PKT_COPY_LINEAR_HEADER_OP(SDMA_OP_FENCE) |
+ 				  SDMA_PKT_FENCE_HEADER_MTYPE(0x3));
+ 		/* zero in first two bits */
+-		BUG_ON(addr & 0x3);
++		WARN_ON(addr & 0x3);
+ 		amdgpu_ring_write(ring, lower_32_bits(addr));
+ 		amdgpu_ring_write(ring, upper_32_bits(addr));
+ 		amdgpu_ring_write(ring, upper_32_bits(seq));
 
 
