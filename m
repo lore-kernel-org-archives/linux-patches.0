@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6AB13839B2;
-	Thu, 30 Jul 2026 15:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB173839B2;
+	Thu, 30 Jul 2026 15:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426287; cv=none; b=OhzTFTqQjakRibRx6sQpimn1Qy6hO4EYCA1dukxO7vCe/NmVDoALzaTmtgF/zCT07oOBp9DDv1+e6FHJoonRdcrnmcMSG4NlvfdzEYaNp2F0i7xpux6iOnIm6CzVDOdHd6OTcq49a+vt7nGWZUP7bmuV/KWMWZxt0DdvnSLTjYc=
+	t=1785426290; cv=none; b=KmJ6jRMO/kY8Pw0KrLx3OFClOuuCqfQw2S+NL7Rl+EguBV7gdzGaMYE2V+Km4Vp2zjKvV6cfsmlAxO29oiyzr3jhEJJld8u4GesMZjqxMHWw95UzUPxL6UyLD4y7Ja72ALcR+L7Vgw5+tvZAD5Lwf0DgCthrrlFR4aDdbMZ55vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426287; c=relaxed/simple;
-	bh=ubt9+lbo2XIRN3+U60XzUBg7e37e+9nxh3+NDuf1VXA=;
+	s=arc-20240116; t=1785426290; c=relaxed/simple;
+	bh=f692GFl1xdUDZsiAhbSFtdVjkG5l/PYGB42WlxdcJcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fw1cWV44VOyDAt8KS8xmkC4+FIvLrmXB9XD0ephiTR2AufFQUzJGsO9+KUR5xWZeRZfcqVCvCNW9/sEeWEtGPd+Tkz9aLYJ+YEhhDYJ5A3spvieWMBcLhjaS9NYHb1rfLqWIcZ1P9GjKiFJP6odR4XMqVfnnlJrJK8/+rNRTqlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UVtCTPwo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aolqY+Ai1k10nGyHKATUPgXIr/vyXtRnQfhnQkzufVSOaZ+mW+RYx9e7LzP+kR/HeGZkIFv8xUGZ0gJwmpmUrv7+bqPDkvNJ/0CuO1Y4YVkwDKZKoFyrYSfbEGb3h4BFTy9DPW86+MU3yfvW4Fv5AFUw9daRWShki5N5PW2DU9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/Cpml+x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UVtCTPwo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DEEE1F000E9;
-	Thu, 30 Jul 2026 15:44:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/Cpml+x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73F81F000E9;
+	Thu, 30 Jul 2026 15:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426286;
-	bh=KmvhVhVL0ShUyNY+5xsX0v0fVlFa1m8mmze7vZyBUJc=;
+	s=korg; t=1785426289;
+	bh=R6P3+5i5blFlpbdoIi8gm2AUls1IhxHsAS9syNN4ViY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UVtCTPwoCPK1heOpcgPRLvUP2uhzEXj7yn1YYCpuigvtd+JQ/COjj9i3NsaFHQ4X5
-	 dldle8tmXYRkJT4ezIl0S/O59MTdkO6MmWwwZyYSM3QF9FjcaqILL3t99oCnJ3bRe8
-	 sLqosMfcudgetrUUkQtxfWuc9ioXrmMidmvRYEJg=
+	b=O/Cpml+xIzpBbB5ZWiSDx8fbgW+ZCNAOpQAJiptjMNih9bnvI7uLz6ey6EYIMFEeo
+	 vnjfcwXVnAUxp7YzmbirZioG3/Iz7+9vm8swgGxijBb6rdLbeI+m0IOP4xkBKOtDuu
+	 2gYlGx0Yui9B4/j8vLYiUwg1h8VRrKtIvG1KZBzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valery Borovsky <vebohr@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 329/602] media: sun4i-csi: Return queued buffers on start_streaming() failure
-Date: Thu, 30 Jul 2026 16:12:01 +0200
-Message-ID: <20260730141442.877559323@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>,
+	Phillip Potter <phil@philpotter.co.uk>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 365/602] cdrom: fix stack out-of-bounds read in CDROMVOLCTRL
+Date: Thu, 30 Jul 2026 16:12:37 +0200
+Message-ID: <20260730141443.629382880@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,51 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valery Borovsky <vebohr@gmail.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit bbba3e260a62810a717b4442a3bb96d0ec0f6309 upstream.
+commit b27e195d4db8dea263050bdbeb11881b2999c9c6 upstream.
 
-The vb2 framework hands buffers to the driver via buf_queue() before
-calling start_streaming().  If start_streaming() returns an error
-without first returning those buffers via vb2_buffer_done(),
-vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
-buffers leak.
+mmc_ioctl_cdrom_volume() first reads the audio control mode page into a
+32-byte stack buffer with cgc->buflen set to 24.  If the device reports a
+block descriptor, the function increases cgc->buflen to include that
+descriptor and reads the page again.
 
-sun4i_csi_start_streaming() returned -EINVAL when no matching CSI
-format could be found, before any setup (scratch buffer allocation,
-pipeline start) had been performed.  The remaining error paths already
-converge on the err_clear_dma_queue label, which calls
-return_all_buffers(..., VB2_BUF_STATE_QUEUED) under csi->qlock.  Jump
-to that label directly: the intermediate err_disable_device /
-err_disable_pipeline / err_free_scratch_buffer labels are skipped,
-which is correct because nothing they would undo has happened yet.
+For CDROMVOLCTRL, the function then builds a MODE SELECT parameter list
+by moving cgc->buffer forward by offset - 8 bytes.  This drops the block
+descriptor from the outgoing payload and leaves a new 8-byte mode
+parameter header in front of the audio control page.  However, cgc->buflen
+is left unchanged.
 
-This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
-Return queued buffers on start_streaming() failure").
+With a standard 8-byte block descriptor, cgc->buffer points at buffer + 8
+but cgc->buflen remains 32.  cdrom_mode_select() therefore asks the low
+level packet path to write 32 bytes from that adjusted pointer, reading 8
+bytes past the end of the 32-byte stack buffer.
 
-Fixes: 577bbf23b758 ("media: sunxi: Add A10 CSI driver")
+This is not hit by CDROMVOLREAD, and CDROMVOLCTRL only triggers it on
+drives that return a non-zero block descriptor length, which helps explain
+why it has gone unnoticed.  The overread is also sent to the device as
+extra MODE SELECT payload, so it may not produce an obvious local failure.
+
+Reduce cgc->buflen by the same amount as the buffer pointer adjustment so
+the MODE SELECT transfer covers only the intended parameter list.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Valery Borovsky <vebohr@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Phillip Potter <phil@philpotter.co.uk>
+Link: https://patch.msgid.link/20260720194421.1497-2-phil@philpotter.co.uk
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/sunxi/sun4i-csi/sun4i_dma.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/cdrom/cdrom.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/platform/sunxi/sun4i-csi/sun4i_dma.c
-+++ b/drivers/media/platform/sunxi/sun4i-csi/sun4i_dma.c
-@@ -234,8 +234,10 @@ static int sun4i_csi_start_streaming(str
- 	int ret;
+--- a/drivers/cdrom/cdrom.c
++++ b/drivers/cdrom/cdrom.c
+@@ -3191,6 +3191,7 @@ static noinline int mmc_ioctl_cdrom_volu
  
- 	csi_fmt = sun4i_csi_find_format(&csi->fmt.pixelformat, NULL);
--	if (!csi_fmt)
--		return -EINVAL;
-+	if (!csi_fmt) {
-+		ret = -EINVAL;
-+		goto err_clear_dma_queue;
-+	}
- 
- 	dev_dbg(csi->dev, "Starting capture\n");
- 
+ 	/* set volume */
+ 	cgc->buffer = buffer + offset - 8;
++	cgc->buflen -= offset - 8;
+ 	memset(cgc->buffer, 0, 8);
+ 	return cdrom_mode_select(cdi, cgc);
+ }
 
 
