@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F833453498;
-	Thu, 30 Jul 2026 16:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3FA4519BC;
+	Thu, 30 Jul 2026 16:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428338; cv=none; b=auMogePb5JzPzfO1b1H06HiyfchiY/qhCR8ZwJtC8NIOq0XvT8+dEhC/ShJ4gQfYcS8MoRrF7/hgBtuDLUpFGhlPR4wNWomMN5DUvd1PMcaiyq6QgXaL9CuCjY+yACHOOZ4PzX0NQsRKEpWfjAPk8vFGaSq4261LSbjTNIqXQN4=
+	t=1785428340; cv=none; b=QcjzGWyeQHqbETvgfH5+rKhaovP1GkOLs/8N5FiAljs6e8tvZTKiCBIeXnJynLiaVwDaVQ+thVKIwqozEl01cPOMovI6SZ35k7Rk3OyGhrUslRvMc0wImxlq3z0K7/E24+PZjRZ1tA/C7P7ZH8ezXIB3A+NoWVOf+P2VusBhuNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428338; c=relaxed/simple;
-	bh=mp3cuPJvM1z/01JYncAYBzS9d5Pdc5NBMA3DM/Hq+ss=;
+	s=arc-20240116; t=1785428340; c=relaxed/simple;
+	bh=QVDCg3EZ1dzRTIlV19L//TCSGQoPxuVqrbcH11hCbV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZR4tU7XXyx45XO+2G0giIKV7Pr7aXbsLyjVsK5Ghi2noAA/lgQOQtZWcaA3yHHNW+R87+FrkK3ObiipZUAF4Q84JvsEOy6Q3+fmtxI10LeogrbVKFUL74q4KKoOxvitv+Iy/synPUNH6/mBP3HWRP+KKjr/ptG3r+Auwsir8a7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E20jWROi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OBbR+sAY7O3S89k03x4Q1En93KXMMFoxpVkLBHtl2ZuGwoW9p7csSTH4z5XJ/Llzxw/5aVmsw4g0EDl79PS5UT5yNy0sD4JiLaCLQsUgavx6DMVHFSHbfQStEa0qJ1NOxLDOes3VWz7C9Pl8fy3qPo/NRBgp6koO1l9cRENRqXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hiRxtvii; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E20jWROi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF631F000E9;
-	Thu, 30 Jul 2026 16:18:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hiRxtvii"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A361F000E9;
+	Thu, 30 Jul 2026 16:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428336;
-	bh=1wMeqeX9QNSNjZsZheMR36g4mBOPPqCjpkbAY/6KOGE=;
+	s=korg; t=1785428339;
+	bh=zCRwu3q6gHnGQXTPmL5pBYktoMPOCRJHpyBcKYWCriY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E20jWROin3oeLDNt+i95Xxrgx/7OfigLDN72VNt52JB8o42L5t78B9KfxWBvfw5UU
-	 HSV2VvYu1djhLKgTzrcgK4XqpwUdV1lc0ErOjFTFD7+J1xEF3RcV3vmydwDKh3skrF
-	 wJT2gDUFosKFzz7jjwZyMk3elNLlQej+Yq/gcdwI=
+	b=hiRxtviir8agasCBeIzlim0od+DQTbP7CCWrYq6khK+Ltao/l9bLvfhHuPkbLevr6
+	 4dg+J0KunWgEFHx/36z+sXpQNSt/8YyorNyBu+oIuC29osl57kypvLLxJf1C6QQctL
+	 Cqrx3hPoxcUNOn3Ctzf+uU1pmCa8xga2zm70nIuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Breno Leitao <leitao@debian.org>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 467/484] bootconfig: move xbc_snprint_cmdline() to lib/bootconfig.c
-Date: Thu, 30 Jul 2026 16:16:04 +0200
-Message-ID: <20260730141433.630582564@linuxfoundation.org>
+Subject: [PATCH 6.6 468/484] bootconfig: fix NULL-pointer arithmetic in xbc_snprint_cmdline()
+Date: Thu, 30 Jul 2026 16:16:05 +0200
+Message-ID: <20260730141433.651902494@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -53,160 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 5a643e4623238e14b03d75ca0d4eda0645720cee ]
+[ Upstream commit dec4d8118c179b3d12bca7e609054c6011c4f2ce ]
 
-Move xbc_snprint_cmdline() from init/main.c to lib/bootconfig.c so the
-function (and its xbc_namebuf scratch buffer) becomes part of the shared
-parser library. tools/bootconfig already compiles lib/bootconfig.c
-directly, which lets a follow-up patch reuse the same renderer in the
-userspace tool to convert a bootconfig file into a flat cmdline string
-at build time.
+xbc_snprint_cmdline() is meant to be called twice: first with
+buf=NULL, size=0 to probe the rendered length, then with a real
+buffer to fill it (the standard snprintf() two-pass pattern). The
+probe call makes the function compute "buf + size" (NULL + 0) and,
+on every iteration, advance "buf += ret" from that NULL base and
+pass the result back into snprintf().
 
-No functional change.
+Pointer arithmetic on a NULL pointer is undefined behavior. It is
+harmless in the in-kernel callers today, but the follow-up patches
+run this same code in the userspace tools/bootconfig parser at kernel
+build time, where host UBSan / FORTIFY_SOURCE abort the build.
 
-Link: https://lore.kernel.org/all/20260508-bootconfig_using_tools-v1-1-1132219aa773@debian.org/
+Track a running written length (size_t) instead of mutating @buf, and
+only form "buf + len" when @buf is non-NULL. snprintf(NULL, 0, ...)
+is itself well defined and returns the would-be length, so the
+two-pass "probe then fill" usage returns identical byte counts.
 
+Link: https://lore.kernel.org/all/20260626-bootconfig_using_tools-v7-1-24ab72139c29@debian.org/
+
+Fixes: 51887d03aca1 ("bootconfig: init: Allow admin to use bootconfig for kernel command line")
+Cc: stable@vger.kernel.org
 Signed-off-by: Breno Leitao <leitao@debian.org>
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Stable-dep-of: dec4d8118c17 ("bootconfig: fix NULL-pointer arithmetic in xbc_snprint_cmdline()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bootconfig.h |    3 ++
- init/main.c                |   45 ------------------------------------
- lib/bootconfig.c           |   56 +++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 59 insertions(+), 45 deletions(-)
+ lib/bootconfig.c |   23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
---- a/include/linux/bootconfig.h
-+++ b/include/linux/bootconfig.h
-@@ -264,6 +264,9 @@ static inline struct xbc_node * __init x
- int __init xbc_node_compose_key_after(struct xbc_node *root,
- 			struct xbc_node *node, char *buf, size_t size);
- 
-+/* Render key/value pairs under @root as a flat cmdline string */
-+int __init xbc_snprint_cmdline(char *buf, size_t size, struct xbc_node *root);
-+
- /**
-  * xbc_node_compose_key() - Compose full key string of the XBC node
-  * @node: An XBC node.
---- a/init/main.c
-+++ b/init/main.c
-@@ -316,51 +316,6 @@ static void * __init get_boot_config_fro
- 
- #ifdef CONFIG_BOOT_CONFIG
- 
--static char xbc_namebuf[XBC_KEYLEN_MAX] __initdata;
--
--#define rest(dst, end) ((end) > (dst) ? (end) - (dst) : 0)
--
--static int __init xbc_snprint_cmdline(char *buf, size_t size,
--				      struct xbc_node *root)
--{
--	struct xbc_node *knode, *vnode;
--	char *end = buf + size;
--	const char *val, *q;
--	int ret;
--
--	xbc_node_for_each_key_value(root, knode, val) {
--		ret = xbc_node_compose_key_after(root, knode,
--					xbc_namebuf, XBC_KEYLEN_MAX);
--		if (ret < 0)
--			return ret;
--
--		vnode = xbc_node_get_child(knode);
--		if (!vnode) {
--			ret = snprintf(buf, rest(buf, end), "%s ", xbc_namebuf);
--			if (ret < 0)
--				return ret;
--			buf += ret;
--			continue;
--		}
--		xbc_array_for_each_value(vnode, val) {
--			/*
--			 * For prettier and more readable /proc/cmdline, only
--			 * quote the value when necessary, i.e. when it contains
--			 * whitespace.
--			 */
--			q = strpbrk(val, " \t\r\n") ? "\"" : "";
--			ret = snprintf(buf, rest(buf, end), "%s=%s%s%s ",
--				       xbc_namebuf, q, val, q);
--			if (ret < 0)
--				return ret;
--			buf += ret;
--		}
--	}
--
--	return buf - (end - size);
--}
--#undef rest
--
- /* Make an extra command line under given key word */
- static char * __init xbc_make_cmdline(const char *key)
- {
 --- a/lib/bootconfig.c
 +++ b/lib/bootconfig.c
-@@ -407,6 +407,62 @@ const char * __init xbc_node_find_next_k
- 		return "";	/* No value key */
+@@ -426,10 +426,18 @@ static char xbc_namebuf[XBC_KEYLEN_MAX]
+ int __init xbc_snprint_cmdline(char *buf, size_t size, struct xbc_node *root)
+ {
+ 	struct xbc_node *knode, *vnode;
+-	char *end = buf + size;
+ 	const char *val, *q;
++	size_t len = 0;
+ 	int ret;
+ 
++	/*
++	 * Track the running written length rather than advancing @buf, so we
++	 * never form "buf + size" or "buf += ret" while @buf is NULL (the
++	 * size-probe call passes buf=NULL, size=0). NULL pointer arithmetic
++	 * is undefined behavior and trips host UBSan / FORTIFY_SOURCE when
++	 * this renderer runs at kernel build time. snprintf(NULL, 0, ...)
++	 * itself is well defined and returns the would-be length.
++	 */
+ 	xbc_node_for_each_key_value(root, knode, val) {
+ 		ret = xbc_node_compose_key_after(root, knode,
+ 					xbc_namebuf, XBC_KEYLEN_MAX);
+@@ -438,10 +446,11 @@ int __init xbc_snprint_cmdline(char *buf
+ 
+ 		vnode = xbc_node_get_child(knode);
+ 		if (!vnode) {
+-			ret = snprintf(buf, rest(buf, end), "%s ", xbc_namebuf);
++			ret = snprintf(buf ? buf + len : NULL, rest(len, size),
++				       "%s ", xbc_namebuf);
+ 			if (ret < 0)
+ 				return ret;
+-			buf += ret;
++			len += ret;
+ 			continue;
+ 		}
+ 		xbc_array_for_each_value(vnode, val) {
+@@ -451,15 +460,15 @@ int __init xbc_snprint_cmdline(char *buf
+ 			 * whitespace.
+ 			 */
+ 			q = strpbrk(val, " \t\r\n") ? "\"" : "";
+-			ret = snprintf(buf, rest(buf, end), "%s=%s%s%s ",
+-				       xbc_namebuf, q, val, q);
++			ret = snprintf(buf ? buf + len : NULL, rest(len, size),
++				       "%s=%s%s%s ", xbc_namebuf, q, val, q);
+ 			if (ret < 0)
+ 				return ret;
+-			buf += ret;
++			len += ret;
+ 		}
+ 	}
+ 
+-	return buf - (end - size);
++	return len;
  }
+ #undef rest
  
-+static char xbc_namebuf[XBC_KEYLEN_MAX] __initdata;
-+
-+#define rest(dst, end) ((end) > (dst) ? (end) - (dst) : 0)
-+
-+/**
-+ * xbc_snprint_cmdline() - Render bootconfig keys under @root as a cmdline string
-+ * @buf: Destination buffer (may be NULL when @size is 0 to query the length)
-+ * @size: Size of @buf in bytes
-+ * @root: Subtree root whose key=value pairs should be rendered
-+ *
-+ * Walk all key/value pairs under @root and emit them as a space-separated
-+ * cmdline string into @buf. Values containing whitespace are quoted with
-+ * double quotes. Returns the number of bytes that would be written if @buf
-+ * were large enough (matching snprintf semantics), or a negative errno on
-+ * failure.
-+ */
-+int __init xbc_snprint_cmdline(char *buf, size_t size, struct xbc_node *root)
-+{
-+	struct xbc_node *knode, *vnode;
-+	char *end = buf + size;
-+	const char *val, *q;
-+	int ret;
-+
-+	xbc_node_for_each_key_value(root, knode, val) {
-+		ret = xbc_node_compose_key_after(root, knode,
-+					xbc_namebuf, XBC_KEYLEN_MAX);
-+		if (ret < 0)
-+			return ret;
-+
-+		vnode = xbc_node_get_child(knode);
-+		if (!vnode) {
-+			ret = snprintf(buf, rest(buf, end), "%s ", xbc_namebuf);
-+			if (ret < 0)
-+				return ret;
-+			buf += ret;
-+			continue;
-+		}
-+		xbc_array_for_each_value(vnode, val) {
-+			/*
-+			 * For prettier and more readable /proc/cmdline, only
-+			 * quote the value when necessary, i.e. when it contains
-+			 * whitespace.
-+			 */
-+			q = strpbrk(val, " \t\r\n") ? "\"" : "";
-+			ret = snprintf(buf, rest(buf, end), "%s=%s%s%s ",
-+				       xbc_namebuf, q, val, q);
-+			if (ret < 0)
-+				return ret;
-+			buf += ret;
-+		}
-+	}
-+
-+	return buf - (end - size);
-+}
-+#undef rest
-+
- /* XBC parse and tree build */
- 
- static int __init xbc_init_node(struct xbc_node *node, char *data, uint32_t flag)
 
 
