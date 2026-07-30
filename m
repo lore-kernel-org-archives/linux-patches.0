@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5235C43E9F9;
-	Thu, 30 Jul 2026 15:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0FA43F8A7;
+	Thu, 30 Jul 2026 15:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424237; cv=none; b=OLQhoGa2OmZFHljClcivOIWNYick20jaesA16voc26V9jH+OlFbmG3DaOYRnBE4XU8KY+LPD8JYZPi682tW1nOL8nixGERmaK0GzDvnrmhyI121OstASuqIQ3Sjjs8t2piAWK/ga11mnk+bwpidZXi6mPA4YISwZLMpraJPgsX4=
+	t=1785424242; cv=none; b=ujAbvLjgOKQRZkWblSmGyCqaJMVZb1sFBOWJsgtWfvPyrT3NKL8/4Nl3NSGAY0VeRZU7mBElYyjnhW+fSXFgm2yeOjkAnrzpIr/sNFnBdZTqAfb9Hz4qel7DD3a2hlrYvbks50ZvTFo0Arp5bpN7xEayEvq2aXRaBFafPgt+qU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424237; c=relaxed/simple;
-	bh=15OiwwliHBwS7MzLZ6m4x+nt7NKfrOTnF/IuZH1n/2M=;
+	s=arc-20240116; t=1785424242; c=relaxed/simple;
+	bh=cS2jHClKupaBKVqw7nS7CTSKFIb5H8+bzC3lh57bit8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=glFZUDcoKUOoBwo7SDyeazdAd66AsEDpwsSycIPPtqVJS5189zJ4Wl/NVmYUMWqMnjr4MFPRiha1i0ZB3Z9ikvXN3WLUWkFvkP++BW4aT1r1e2xdcGsoTk1f5HYaltA+hqQqPrrOXVvsGbwGovI/7CD7+rulRX1B82dW8LxAXl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BK/XQVOw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r1rhvixkj8VU6ul4CFk9TiIpL7gqucsC2RUZsqikh5lRJLxkOma6NfXE74VcnxDDLUom1nxayof/RdwjVwwIcz6awN2LGXnG8iJ0K9czY6PlzJs8iQL+8ZQ5iLqWMoxQSFiAtfXubywzqY5Ax+qWj0s72l1ucN4DOCHZnfA5Wu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tDTjZQo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BK/XQVOw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A529F1F000E9;
-	Thu, 30 Jul 2026 15:10:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tDTjZQo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E241F000E9;
+	Thu, 30 Jul 2026 15:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424236;
-	bh=//wNIhCVET6fjU5w5mp4atkiinGEHTTvvo4H7Ili7GI=;
+	s=korg; t=1785424239;
+	bh=mCmOe8+/rVxbRgFoBK/3mbydjigfAN2y0X097EyZqhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BK/XQVOw+pIC2HpstkkoLHegygEV7CS4qQSknGfahGYXi8RO6Jg5drZJ/tBGVkwkq
-	 kRke/ZcKRkAgCPTx93KZ7u9CY22HdOw7jzxlr+9UzueSMDXPvolzEQmKhoXVZnalV/
-	 zA0D7L3GwS9Xmfpu506ezeGQhH4Oef2m1Ur+5qDU=
+	b=2tDTjZQoiv8YKnU4GKoLcRE+zJ2LodjF9vl89WUErifYTsyG6Kslw5S5l32YtRuxG
+	 pAmkdh2CoCnP7Iu2U6EDCcCAZn5eo/oxAFqDKvnK6mve6nA6X4yvAIHUW7lJU7Kj6Z
+	 P6lWcu4/XN8iXRh6oVGY2f1ixvPhykfeXbqZDGX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Vitor Soares <vitor.soares@toradex.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 6.18 324/675] drm/bridge: cdns-dsi: Replace deprecated UNIVERSAL_DEV_PM_OPS()
-Date: Thu, 30 Jul 2026 16:10:54 +0200
-Message-ID: <20260730141452.011685079@linuxfoundation.org>
+	Ashutosh Desai <ashutoshdesai993@gmail.com>,
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 6.18 325/675] drm/dp/mst: fix OOB reads in remote DPCD/I2C sideband reply parsers
+Date: Thu, 30 Jul 2026 16:10:55 +0200
+Message-ID: <20260730141452.032718138@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,90 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitor Soares <vitor.soares@toradex.com>
+From: Ashutosh Desai <ashutoshdesai993@gmail.com>
 
-commit 2d8b08844c0ecc6f2002fa68711e779aa18c8585 upstream.
+commit 1a8f537f5a1eeac941f262fe73078d6b08ba83c0 upstream.
 
-The deprecated UNIVERSAL_DEV_PM_OPS() macro uses the provided callbacks
-for both runtime PM and system sleep. This causes the DSI clocks to be
-disabled twice: once during runtime suspend and again during system
-suspend, resulting in a WARN message from the clock framework when
-attempting to disable already-disabled clocks.
+drm_dp_sideband_parse_remote_dpcd_read() reads num_bytes from the raw
+message and then unconditionally does:
 
-[   84.384540] clk:231:5 already disabled
-[   84.388314] WARNING: CPU: 2 PID: 531 at /drivers/clk/clk.c:1181 clk_core_disable+0xa4/0xac
-...
-[   84.579183] Call trace:
-[   84.581624]  clk_core_disable+0xa4/0xac
-[   84.585457]  clk_disable+0x30/0x4c
-[   84.588857]  cdns_dsi_suspend+0x20/0x58 [cdns_dsi]
-[   84.593651]  pm_generic_suspend+0x2c/0x44
-[   84.597661]  ti_sci_pd_suspend+0xbc/0x15c
-[   84.601670]  dpm_run_callback+0x8c/0x14c
-[   84.605588]  __device_suspend+0x1a0/0x56c
-[   84.609594]  dpm_suspend+0x17c/0x21c
-[   84.613165]  dpm_suspend_start+0xa0/0xa8
-[   84.617083]  suspend_devices_and_enter+0x12c/0x634
-[   84.621872]  pm_suspend+0x1fc/0x368
+  memcpy(bytes, &raw->msg[idx], num_bytes);
 
-To address this issue, replace UNIVERSAL_DEV_PM_OPS() with
-RUNTIME_PM_OPS(). Bridge and panel drivers should only deal with runtime
-PM, as the DRM framework manages system-wide power transitions through
-the bridge enable() and disable() hooks.
+without checking that idx + num_bytes <= raw->curlen. raw->msg[] is
+256 bytes; if a malicious or misbehaving MST hub sets num_bytes larger
+than the remaining payload, the memcpy reads past the received data
+into whatever follows in raw->msg[].
 
-Link: https://lore.kernel.org/all/fbde0659-78f3-46e4-98cf-d832f765a18b@ideasonboard.com/
-Cc: stable@vger.kernel.org # 6.1.x
-Fixes: e19233955d9e ("drm/bridge: Add Cadence DSI driver")
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Vitor Soares <vitor.soares@toradex.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260505134705.188661-2-ivitro@gmail.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+drm_dp_sideband_parse_remote_i2c_read_ack() has the same flaw (noted
+with a /* TODO check */ comment since the code was introduced).
+
+Fix both functions by using a single combined check
+(idx + num_bytes > curlen) before each memcpy. Since num_bytes is u8,
+it is always >= 0, so this strictly subsumes the simpler idx > curlen
+form and no separate step is needed.
+
+Fixes: ad7f8a1f9ced ("drm/helper: add Displayport multi-stream helper (v0.6)")
+Cc: <stable@vger.kernel.org> # v3.17+
+Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+[added missing fixes tag]
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20260510201733.2882224-1-ashutoshdesai993@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/display/drm_dp_mst_topology.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
-+++ b/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
-@@ -1230,7 +1230,7 @@ static const struct mipi_dsi_host_ops cd
- 	.transfer = cdns_dsi_transfer,
- };
+--- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+@@ -871,7 +871,7 @@ static bool drm_dp_sideband_parse_remote
+ 		goto fail_len;
+ 	repmsg->u.remote_dpcd_read_ack.num_bytes = raw->msg[idx];
+ 	idx++;
+-	if (idx > raw->curlen)
++	if (idx + repmsg->u.remote_dpcd_read_ack.num_bytes > raw->curlen)
+ 		goto fail_len;
  
--static int __maybe_unused cdns_dsi_resume(struct device *dev)
-+static int cdns_dsi_resume(struct device *dev)
- {
- 	struct cdns_dsi *dsi = dev_get_drvdata(dev);
- 
-@@ -1241,7 +1241,7 @@ static int __maybe_unused cdns_dsi_resum
- 	return 0;
- }
- 
--static int __maybe_unused cdns_dsi_suspend(struct device *dev)
-+static int cdns_dsi_suspend(struct device *dev)
- {
- 	struct cdns_dsi *dsi = dev_get_drvdata(dev);
- 
-@@ -1251,8 +1251,9 @@ static int __maybe_unused cdns_dsi_suspe
- 	return 0;
- }
- 
--static UNIVERSAL_DEV_PM_OPS(cdns_dsi_pm_ops, cdns_dsi_suspend, cdns_dsi_resume,
--			    NULL);
-+static const struct dev_pm_ops cdns_dsi_pm_ops = {
-+	RUNTIME_PM_OPS(cdns_dsi_suspend, cdns_dsi_resume, NULL)
-+};
- 
- static int cdns_dsi_drm_probe(struct platform_device *pdev)
- {
-@@ -1399,7 +1400,7 @@ static struct platform_driver cdns_dsi_p
- 	.driver = {
- 		.name   = "cdns-dsi",
- 		.of_match_table = cdns_dsi_of_match,
--		.pm = &cdns_dsi_pm_ops,
-+		.pm = pm_ptr(&cdns_dsi_pm_ops),
- 	},
- };
- module_platform_driver(cdns_dsi_platform_driver);
+ 	memcpy(repmsg->u.remote_dpcd_read_ack.bytes, &raw->msg[idx], repmsg->u.remote_dpcd_read_ack.num_bytes);
+@@ -907,7 +907,9 @@ static bool drm_dp_sideband_parse_remote
+ 		goto fail_len;
+ 	repmsg->u.remote_i2c_read_ack.num_bytes = raw->msg[idx];
+ 	idx++;
+-	/* TODO check */
++	if (idx + repmsg->u.remote_i2c_read_ack.num_bytes > raw->curlen)
++		goto fail_len;
++
+ 	memcpy(repmsg->u.remote_i2c_read_ack.bytes, &raw->msg[idx], repmsg->u.remote_i2c_read_ack.num_bytes);
+ 	return true;
+ fail_len:
 
 
