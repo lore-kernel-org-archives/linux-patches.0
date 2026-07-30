@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFDB3769FD;
-	Thu, 30 Jul 2026 15:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92838384223;
+	Thu, 30 Jul 2026 15:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426777; cv=none; b=OuRqHL4KRD/UTnp3/AuWboFFSLJ3564EhDzSyTlV3zCx9aJqt3e1X6HFLHh/rGkc7NyiML7jC/Kx4gy10xNjhcvNk7gbXLe0eSjXe8j6NzyV12BLQQgGZkyWrEWkLUXMalv6ogPX7XDEQyK7GdWAzEkyUEtIK6ifoiMkHe3QBK8=
+	t=1785426779; cv=none; b=R57zYhjPNpRpOj8SOvcpKoq8hRxOsV7UgSSF3m4WJoxfrYowNADjZrAm936/erTiZXGkWittpYEPGk4E+CTc7hX4jurPnUfAocGTgp66YFzI+YGV5OQoaLJc/YBnfhISbNbM37TxU1W0GWOxz0i8CeFLU9MnKYEiI/VniyETChk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426777; c=relaxed/simple;
-	bh=bOx+tLCx89Dt/q1lOkFzsHdKnYCrt9trY2U7620uRck=;
+	s=arc-20240116; t=1785426779; c=relaxed/simple;
+	bh=U+Yddm23v15Y+z8Y001VfkPq9obtQsnjItGht1AIOE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I8Vtst8H8Fz2D/dCiMArVAMulXOUhP2kTq2EAxxRg0ZS5ceZY5ScCSkPyZNp3uwlQYIzqMnaUpcA4+Ce/DNGyWO8BSgQ1U4soOfl8bHy1UZaD1lQnMlRnPGMsclhAY4CVr27y5Ch6I9F3YNUfbvg/mQ1D3w2N+bOsH4oBOOID+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M28tSLtY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HpAKmRt3ZWaQ/EX5My/9uQBh9Vh0BYeKhv1Enfj7KO3thuQwmGOq+Qj45htfySyg6PScn6ZVO6qMeWsjTNuwkaroKnO7fEBjL6ene788zA3bMXNMv2MsUriyJROQ54ZU9ppyq+87YjfZ0/O7MF3IelsLylIPk1Ud9WChaexnpqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oytBXYO7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M28tSLtY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 261C51F000E9;
-	Thu, 30 Jul 2026 15:52:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oytBXYO7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF1C1F000E9;
+	Thu, 30 Jul 2026 15:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426775;
-	bh=QZ55slZZDAb62+09yW2dU97y7cy+wQVOYqNtTC66MyE=;
+	s=korg; t=1785426778;
+	bh=avpeRXmkFi09chvWHlKFWEZ5fZPaq8Ob93GDc6qq+5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M28tSLtY6HeKyw26knax28FfzURMbIi90JUe8sOaIuCtUZyc/qoxuBbkW6dJcU7SA
-	 oCKaiEsjRSApKxQSnSgudJC+IZq3+RJlYaD2C3UhqBDwEr8Y2HHBXVQsqnNc/qj7dD
-	 r80k+0rjGtb5eUeg1WTi/4A+I30WQyAJkMzOKZyA=
+	b=oytBXYO74iBQp02sOjKURfrfD8QeBDqm051bEA32tjD3/+cmrINSrEUy08++Gklpm
+	 8QmssFPFdL4pG94L0rDqXzbiDtPHOz3A8IbM7EMhqiQTcNejuP+wr/CIyg0Fc1BtV+
+	 n7S9AUxvgAyqpywa13P7yYLOELrPbOspyR3t5oKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Rick Wertenbroek <rick.wertenbroek@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Hannes Reinecke <hare@kernel.org>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 538/602] nvmet: Introduce nvmet_req_transfer_len()
-Date: Thu, 30 Jul 2026 16:15:30 +0200
-Message-ID: <20260730141447.326965810@linuxfoundation.org>
+Subject: [PATCH 6.12 539/602] nvmet-auth: reject short AUTH_RECEIVE buffers
+Date: Thu, 30 Jul 2026 16:15:31 +0200
+Message-ID: <20260730141447.351113320@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -54,286 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 43043c9b97258a008b3402cfbbf1c5d82151c77f ]
+[ Upstream commit 779575bc35c687697ba69e904f2cd22e60112534 ]
 
-Add the new function nvmet_req_transfer_len() to parse a request command
-to extract the transfer length of the command. This function
-implementation relies on multiple helper functions for parsing I/O
-commands (nvmet_io_cmd_transfer_len()), admin commands
-(nvmet_admin_cmd_data_len()) and fabrics connect commands
-(nvmet_connect_cmd_data_len).
+nvmet_execute_auth_receive() trusts the AUTH_RECEIVE allocation length
+after checking only that it is nonzero and matches the transfer length.
+In the SUCCESS1 and FAILURE1/default states, that lets a remote NVMe-oF
+initiator reach the fixed-size DH-HMAC-CHAP response builders with a
+kmalloc() buffer shorter than the response, so nvmet_auth_success1() and
+nvmet_auth_failure1() write past the allocation; both only WARN_ON the
+short length and then format the message anyway.
 
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Tested-by: Rick Wertenbroek <rick.wertenbroek@gmail.com>
-Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Impact: A remote NVMe-oF initiator with access to an auth-enabled target
+can trigger a 16-byte heap out-of-bounds write via a one-byte
+AUTH_RECEIVE allocation length.
+
+Compute the minimum response length for the current DH-HMAC-CHAP step in
+nvmet_auth_receive_data_len() and report a zero data length when the
+host-supplied allocation length is shorter, so the existing zero-length
+check in nvmet_execute_auth_receive() rejects the command before any
+builder runs. The SUCCESS1 minimum is sizeof(struct
+nvmf_auth_dhchap_success1_data) plus the HMAC hash length, because the
+response hash is written into the rval[] flexible-array tail, so the
+minimum is state dependent rather than a flat sizeof. CHALLENGE keeps its
+existing variable-length guard in nvmet_auth_challenge().
+
+This is reachable only when in-band DH-HMAC-CHAP authentication is
+configured on the target.
+
+Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5-5-xhigh
+Assisted-by: Claude:claude-opus-4-8
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
-Stable-dep-of: 779575bc35c6 ("nvmet-auth: reject short AUTH_RECEIVE buffers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/admin-cmd.c        |   21 ++++++++++++++++
- drivers/nvme/target/core.c             |   37 ++++++++++++++++++++++++++++
- drivers/nvme/target/discovery.c        |   14 ++++++++++
- drivers/nvme/target/fabrics-cmd-auth.c |   14 +++++++++-
- drivers/nvme/target/fabrics-cmd.c      |   43 +++++++++++++++++++++++++++++++++
- drivers/nvme/target/nvmet.h            |    8 ++++++
- 6 files changed, 135 insertions(+), 2 deletions(-)
+ drivers/nvme/target/fabrics-cmd-auth.c |   26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/target/admin-cmd.c
-+++ b/drivers/nvme/target/admin-cmd.c
-@@ -1008,6 +1008,27 @@ out:
- 	nvmet_req_complete(req, status);
- }
- 
-+u32 nvmet_admin_cmd_data_len(struct nvmet_req *req)
-+{
-+	struct nvme_command *cmd = req->cmd;
-+
-+	if (nvme_is_fabrics(cmd))
-+		return nvmet_fabrics_admin_cmd_data_len(req);
-+	if (nvmet_is_disc_subsys(nvmet_req_subsys(req)))
-+		return nvmet_discovery_cmd_data_len(req);
-+
-+	switch (cmd->common.opcode) {
-+	case nvme_admin_get_log_page:
-+		return nvmet_get_log_page_len(cmd);
-+	case nvme_admin_identify:
-+		return NVME_IDENTIFY_DATA_SIZE;
-+	case nvme_admin_get_features:
-+		return nvmet_feat_data_len(req, le32_to_cpu(cmd->common.cdw10));
-+	default:
-+		return 0;
-+	}
-+}
-+
- u16 nvmet_parse_admin_cmd(struct nvmet_req *req)
- {
- 	struct nvme_command *cmd = req->cmd;
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -891,6 +891,33 @@ static inline u16 nvmet_io_cmd_check_acc
- 	return 0;
- }
- 
-+static u32 nvmet_io_cmd_transfer_len(struct nvmet_req *req)
-+{
-+	struct nvme_command *cmd = req->cmd;
-+	u32 metadata_len = 0;
-+
-+	if (nvme_is_fabrics(cmd))
-+		return nvmet_fabrics_io_cmd_data_len(req);
-+
-+	if (!req->ns)
-+		return 0;
-+
-+	switch (req->cmd->common.opcode) {
-+	case nvme_cmd_read:
-+	case nvme_cmd_write:
-+	case nvme_cmd_zone_append:
-+		if (req->sq->ctrl->pi_support && nvmet_ns_has_pi(req->ns))
-+			metadata_len = nvmet_rw_metadata_len(req);
-+		return nvmet_rw_data_len(req) + metadata_len;
-+	case nvme_cmd_dsm:
-+		return nvmet_dsm_len(req);
-+	case nvme_cmd_zone_mgmt_recv:
-+		return (le32_to_cpu(req->cmd->zmr.numd) + 1) << 2;
-+	default:
-+		return 0;
-+	}
-+}
-+
- static u16 nvmet_parse_io_cmd(struct nvmet_req *req)
- {
- 	struct nvme_command *cmd = req->cmd;
-@@ -1015,6 +1042,16 @@ void nvmet_req_uninit(struct nvmet_req *
- }
- EXPORT_SYMBOL_GPL(nvmet_req_uninit);
- 
-+size_t nvmet_req_transfer_len(struct nvmet_req *req)
-+{
-+	if (likely(req->sq->qid != 0))
-+		return nvmet_io_cmd_transfer_len(req);
-+	if (unlikely(!req->sq->ctrl))
-+		return nvmet_connect_cmd_data_len(req);
-+	return nvmet_admin_cmd_data_len(req);
-+}
-+EXPORT_SYMBOL_GPL(nvmet_req_transfer_len);
-+
- bool nvmet_check_transfer_len(struct nvmet_req *req, size_t len)
- {
- 	if (unlikely(len != req->transfer_len)) {
---- a/drivers/nvme/target/discovery.c
-+++ b/drivers/nvme/target/discovery.c
-@@ -373,6 +373,20 @@ static void nvmet_execute_disc_get_featu
- 	nvmet_req_complete(req, stat);
- }
- 
-+u32 nvmet_discovery_cmd_data_len(struct nvmet_req *req)
-+{
-+	struct nvme_command *cmd = req->cmd;
-+
-+	switch (cmd->common.opcode) {
-+	case nvme_admin_get_log_page:
-+		return nvmet_get_log_page_len(req->cmd);
-+	case nvme_admin_identify:
-+		return NVME_IDENTIFY_DATA_SIZE;
-+	default:
-+		return 0;
-+	}
-+}
-+
- u16 nvmet_parse_discovery_cmd(struct nvmet_req *req)
- {
- 	struct nvme_command *cmd = req->cmd;
 --- a/drivers/nvme/target/fabrics-cmd-auth.c
 +++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -188,6 +188,11 @@ static u8 nvmet_auth_failure2(void *d)
- 	return data->rescode_exp;
- }
+@@ -445,7 +445,31 @@ static void nvmet_auth_failure1(struct n
  
-+u32 nvmet_auth_send_data_len(struct nvmet_req *req)
-+{
-+	return le32_to_cpu(req->cmd->auth_send.tl);
-+}
-+
- void nvmet_execute_auth_send(struct nvmet_req *req)
+ u32 nvmet_auth_receive_data_len(struct nvmet_req *req)
  {
- 	struct nvmet_ctrl *ctrl = req->sq->ctrl;
-@@ -215,7 +220,7 @@ void nvmet_execute_auth_send(struct nvme
- 			offsetof(struct nvmf_auth_send_command, spsp1);
- 		goto done;
- 	}
--	tl = le32_to_cpu(req->cmd->auth_send.tl);
-+	tl = nvmet_auth_send_data_len(req);
- 	if (!tl) {
- 		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
- 		req->error_loc =
-@@ -438,6 +443,11 @@ static void nvmet_auth_failure1(struct n
- 	data->rescode_exp = req->sq->dhchap_status;
+-	return le32_to_cpu(req->cmd->auth_receive.al);
++	struct nvmet_ctrl *ctrl = req->sq->ctrl;
++	u32 al = le32_to_cpu(req->cmd->auth_receive.al);
++	u32 min_len;
++
++	/*
++	 * Reject too-short al before kmalloc(al), since the SUCCESS1 and
++	 * FAILURE1/default builders write fixed response headers into it.
++	 */
++	switch (req->sq->dhchap_step) {
++	case NVME_AUTH_DHCHAP_MESSAGE_CHALLENGE:
++		return al;
++	case NVME_AUTH_DHCHAP_MESSAGE_SUCCESS1:
++		min_len = sizeof(struct nvmf_auth_dhchap_success1_data);
++		if (req->sq->dhchap_c2)
++			min_len += nvme_auth_hmac_hash_len(ctrl->shash_id);
++		break;
++	default:
++		min_len = sizeof(struct nvmf_auth_dhchap_failure_data);
++		break;
++	}
++
++	if (al < min_len)
++		return 0;
++
++	return al;
  }
  
-+u32 nvmet_auth_receive_data_len(struct nvmet_req *req)
-+{
-+	return le32_to_cpu(req->cmd->auth_receive.al);
-+}
-+
  void nvmet_execute_auth_receive(struct nvmet_req *req)
- {
- 	struct nvmet_ctrl *ctrl = req->sq->ctrl;
-@@ -463,7 +473,7 @@ void nvmet_execute_auth_receive(struct n
- 			offsetof(struct nvmf_auth_receive_command, spsp1);
- 		goto done;
- 	}
--	al = le32_to_cpu(req->cmd->auth_receive.al);
-+	al = nvmet_auth_receive_data_len(req);
- 	if (!al) {
- 		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
- 		req->error_loc =
---- a/drivers/nvme/target/fabrics-cmd.c
-+++ b/drivers/nvme/target/fabrics-cmd.c
-@@ -82,6 +82,22 @@ static void nvmet_execute_prop_get(struc
- 	nvmet_req_complete(req, status);
- }
- 
-+u32 nvmet_fabrics_admin_cmd_data_len(struct nvmet_req *req)
-+{
-+	struct nvme_command *cmd = req->cmd;
-+
-+	switch (cmd->fabrics.fctype) {
-+#ifdef CONFIG_NVME_TARGET_AUTH
-+	case nvme_fabrics_type_auth_send:
-+		return nvmet_auth_send_data_len(req);
-+	case nvme_fabrics_type_auth_receive:
-+		return nvmet_auth_receive_data_len(req);
-+#endif
-+	default:
-+		return 0;
-+	}
-+}
-+
- u16 nvmet_parse_fabrics_admin_cmd(struct nvmet_req *req)
- {
- 	struct nvme_command *cmd = req->cmd;
-@@ -111,6 +127,22 @@ u16 nvmet_parse_fabrics_admin_cmd(struct
- 	return 0;
- }
- 
-+u32 nvmet_fabrics_io_cmd_data_len(struct nvmet_req *req)
-+{
-+	struct nvme_command *cmd = req->cmd;
-+
-+	switch (cmd->fabrics.fctype) {
-+#ifdef CONFIG_NVME_TARGET_AUTH
-+	case nvme_fabrics_type_auth_send:
-+		return nvmet_auth_send_data_len(req);
-+	case nvme_fabrics_type_auth_receive:
-+		return nvmet_auth_receive_data_len(req);
-+#endif
-+	default:
-+		return 0;
-+	}
-+}
-+
- u16 nvmet_parse_fabrics_io_cmd(struct nvmet_req *req)
- {
- 	struct nvme_command *cmd = req->cmd;
-@@ -342,6 +374,17 @@ out_ctrl_put:
- 	goto out;
- }
- 
-+u32 nvmet_connect_cmd_data_len(struct nvmet_req *req)
-+{
-+	struct nvme_command *cmd = req->cmd;
-+
-+	if (!nvme_is_fabrics(cmd) ||
-+	    cmd->fabrics.fctype != nvme_fabrics_type_connect)
-+		return 0;
-+
-+	return sizeof(struct nvmf_connect_data);
-+}
-+
- u16 nvmet_parse_connect_cmd(struct nvmet_req *req)
- {
- 	struct nvme_command *cmd = req->cmd;
---- a/drivers/nvme/target/nvmet.h
-+++ b/drivers/nvme/target/nvmet.h
-@@ -466,18 +466,24 @@ void nvmet_start_keep_alive_timer(struct
- void nvmet_stop_keep_alive_timer(struct nvmet_ctrl *ctrl);
- 
- u16 nvmet_parse_connect_cmd(struct nvmet_req *req);
-+u32 nvmet_connect_cmd_data_len(struct nvmet_req *req);
- void nvmet_bdev_set_limits(struct block_device *bdev, struct nvme_id_ns *id);
- u16 nvmet_bdev_parse_io_cmd(struct nvmet_req *req);
- u16 nvmet_file_parse_io_cmd(struct nvmet_req *req);
- u16 nvmet_bdev_zns_parse_io_cmd(struct nvmet_req *req);
-+u32 nvmet_admin_cmd_data_len(struct nvmet_req *req);
- u16 nvmet_parse_admin_cmd(struct nvmet_req *req);
-+u32 nvmet_discovery_cmd_data_len(struct nvmet_req *req);
- u16 nvmet_parse_discovery_cmd(struct nvmet_req *req);
- u16 nvmet_parse_fabrics_admin_cmd(struct nvmet_req *req);
-+u32 nvmet_fabrics_admin_cmd_data_len(struct nvmet_req *req);
- u16 nvmet_parse_fabrics_io_cmd(struct nvmet_req *req);
-+u32 nvmet_fabrics_io_cmd_data_len(struct nvmet_req *req);
- 
- bool nvmet_req_init(struct nvmet_req *req, struct nvmet_cq *cq,
- 		struct nvmet_sq *sq, const struct nvmet_fabrics_ops *ops);
- void nvmet_req_uninit(struct nvmet_req *req);
-+size_t nvmet_req_transfer_len(struct nvmet_req *req);
- bool nvmet_check_transfer_len(struct nvmet_req *req, size_t len);
- bool nvmet_check_data_len_lte(struct nvmet_req *req, size_t data_len);
- void nvmet_req_complete(struct nvmet_req *req, u16 status);
-@@ -720,7 +726,9 @@ static inline void nvmet_req_bio_put(str
- }
- 
- #ifdef CONFIG_NVME_TARGET_AUTH
-+u32 nvmet_auth_send_data_len(struct nvmet_req *req);
- void nvmet_execute_auth_send(struct nvmet_req *req);
-+u32 nvmet_auth_receive_data_len(struct nvmet_req *req);
- void nvmet_execute_auth_receive(struct nvmet_req *req);
- int nvmet_auth_set_key(struct nvmet_host *host, const char *secret,
- 		       bool set_ctrl);
 
 
