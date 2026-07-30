@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C41F13806D9;
-	Thu, 30 Jul 2026 15:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753DC381B1A;
+	Thu, 30 Jul 2026 15:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426008; cv=none; b=Wl5S7AHUBiMrgOfQeNi5oR33cZUXK8iy+UrX325gWFjmllagtlJ3PMiTbDBp8EL7XrrULOo6/xJDkhYKvkSC0l2OnVnBdlSUD7kHIOcdZWD7XGpMpK5xyNxIy0ROPTlfiszTHrzf/7raUaxP8ac/naCGXOFieaqj8Li04CJMEIc=
+	t=1785426010; cv=none; b=CefkEXhlpLzMAnnptOU/4abbRnRxxjDcCkZW+a102EuGUPC+Abg97b0GsKXGoI0CLc51LLka9LSnNXVqt6gme7xx9nf76w1gHPHHe9CWGyidlBQ7tNQveLFl0/XT5+qTpZ+LFwx8uPEPjqTd+z6Zs/ueayHv/oPr1aOZ6Ya089o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426008; c=relaxed/simple;
-	bh=j56ArIR4HhXtKIidvD0+VHye4GLOz60Y6UyHdF/dXbQ=;
+	s=arc-20240116; t=1785426010; c=relaxed/simple;
+	bh=HKyRlySMC4rr4ZHp7A74S68Qq9ZO+g3fYkeZyODWYWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KwtDhi1lnUWHBJVTy3MWUB822KJZ55v74nZLxYZDQTJ/LdmZCaQEtIz8LlaHmMwNKHVkFRFB2/oh6weDU+4e7dE/7nv3sTx4Y/RdtWx7zoG+rQvIj4IKBcwD5r6+khr69Vb1V2otPkYjGUdERh+q4MpS+uR++jibexfNz4RFfes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ny8tBr2h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Bm6zkFEj+cXeNM7D17PfRKiaE5dhTQnFiTNR2Njk0YbZvgt7zgdmmZ7wkBoSu+zXoUgvKa1oJrC+21NmBkBBUdDQ5bGQyhWMY6iwghWqRcda+Fstj6UJZnWyKr7WzzCZSkLa2qfesDEGXsVNDiMuqPTU9epLV9/BWbK0fggAysc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vafFbnCn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ny8tBr2h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40281F000E9;
-	Thu, 30 Jul 2026 15:40:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vafFbnCn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA471F000E9;
+	Thu, 30 Jul 2026 15:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426006;
-	bh=Cko3bpWfwQI87lcRAKz6EvyhhCpj9NE/ehLtHafJ4H0=;
+	s=korg; t=1785426009;
+	bh=DbglZnzkNnVTEaXSIPCgu0nFVGx2BeSUa/BDc1zgrLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ny8tBr2hLJVnoToHVpxK1pCFaL28O50bsGB3u5fA0uyyLpI5j+9pzDAZnnTXaL8As
-	 vFRQPtqSs6LQ4UqP4JhBEqUgCUKke+gPyy5or/Swli5IRcrh/0kyA1G+z8aX66Et41
-	 +knoKbbO4w/1wrc366DTsyDdJA4Oy8upIipaHXo0=
+	b=vafFbnCnoFkncWETRowcS6S6QomhaeyxYXNFQ2gjVYreA4Mt/rxR+pAELNvS18dil
+	 HLggZs54ENkcJRM1JIo1lY4zxzQBKeIZL21h6KHtWTYjUbna0VZijBdN0nGY2A2jZe
+	 MYGzE3KPwia/m3ImMHtS+hNPkWSJmGqrc5IVb3M8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	=?UTF-8?q?Pavel=20Ondra=C4=8Dka?= <pavel.ondracka@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 267/602] drm/radeon: fix r100_copy_blit for large BOs
-Date: Thu, 30 Jul 2026 16:10:59 +0200
-Message-ID: <20260730141441.582047078@linuxfoundation.org>
+	Matthew Brost <matthew.brost@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
+Subject: [PATCH 6.12 268/602] drm/xe: Fix PTE index in xe_vm_populate_pgtable() for chunked binds
+Date: Thu, 30 Jul 2026 16:11:00 +0200
+Message-ID: <20260730141441.603225766@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,79 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Ondračka <pavel.ondracka@gmail.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-commit f896e86273dbbebb5eac966b4a201b5c62a02e9a upstream.
+commit 34a4dd45cf210c04fee773b0dbc350aec285f03c upstream.
 
-r100_copy_blit() copies BOs as 1024-pixel-wide ARGB8888 blits, so one
-GPU page becomes one blit row. Large copies are split into chunks of at
-most 8191 rows.
+xe_vm_populate_pgtable() indexed the source PTE array (update->pt_entries)
+by the per-call loop counter, assuming each call starts at the first entry
+of the update. That holds for the CPU bind path
+(xe_migrate_update_pgtables_cpu), which populates a whole update in a single
+call, but not for the GPU bind path: write_pgtable() splits an update into
+MAX_PTE_PER_SDI (510) sized MI_STORE_DATA_IMM chunks, invoking the populate
+callback once per chunk with an advancing qword_ofs but a fresh command-
+buffer destination pointer.
 
-The kernel register header names the packet coordinate dwords SRC_Y_X
-and DST_Y_X. In the BITBLT_MULTI description in
-R5xx_Acceleration_v1.5.pdf docs, these correspond to [SRC_X1 | SRC_Y1]
-and [DST_X1 | DST_Y1], which are signed 13-bit coordinates in the
--8192..8191 range. The old code kept SRC/DST_PITCH_OFFSET at the BO base
-and used SRC_Y_X/DST_Y_X as the chunk address, so large BO moves could
-exceed that coordinate range.
+As a result, every chunk after the first re-read pt_entries from index 0
+instead of from its true offset, so PTEs beyond the first 510 entries of a
+single update were programmed with the wrong physical pages, shifting the
+mapping by exactly MAX_PTE_PER_SDI pages.
 
-Compute per-chunk SRC/DST_PITCH_OFFSET bases and emit zero source and
-destination coordinates. r100_copy_blit() already packs
-SRC/DST_PITCH_OFFSET as pitch plus base offset, so large chunk addresses
-belong there rather than in the coordinate fields.
+This stayed latent because a single update only exceeds 510 qwords when a
+large (e.g. 2M) region is bound as individual 4K PTEs rather than a single
+huge-page entry, which happens when the backing store is sufficiently
+fragmented. It was surfaced by the BO defrag path, which deliberately
+rebinds such fragmented ranges via the GPU bind path, producing
+deterministic data corruption offset by 510 pages.
 
-This fixes Prison Architect corruption with 4096x4096 mipped textures
-after they are evicted to GTT under memory pressure on RV530.
+Index pt_entries by the chunk's absolute offset relative to update->ofs so
+both the CPU and GPU paths pick the correct entries.
 
-Closes: https://gitlab.freedesktop.org/mesa/mesa/-/work_items/6716
-Acked-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Pavel Ondračka <pavel.ondracka@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 87be26aee76239c6da03e599f238a426897f78ad)
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
 Cc: stable@vger.kernel.org
+Assisted-by: GitHub_Copilot:claude-opus-4.8
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patch.msgid.link/20260702012434.3861171-1-matthew.brost@intel.com
+(cherry picked from commit e6f2d0b757c4fb577a513c577140109d1d292a9a)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/r100.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/xe/xe_pt.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/radeon/r100.c
-+++ b/drivers/gpu/drm/radeon/r100.c
-@@ -906,6 +906,7 @@ struct radeon_fence *r100_copy_blit(stru
- {
- 	struct radeon_ring *ring = &rdev->ring[RADEON_RING_TYPE_GFX_INDEX];
- 	struct radeon_fence *fence;
-+	uint64_t cur_src_offset, cur_dst_offset;
- 	uint32_t cur_pages;
- 	uint32_t stride_bytes = RADEON_GPU_PAGE_SIZE;
- 	uint32_t pitch;
-@@ -934,6 +935,10 @@ struct radeon_fence *r100_copy_blit(stru
- 			cur_pages = 8191;
- 		}
- 		num_gpu_pages -= cur_pages;
-+		cur_src_offset = src_offset +
-+			(uint64_t)num_gpu_pages * RADEON_GPU_PAGE_SIZE;
-+		cur_dst_offset = dst_offset +
-+			(uint64_t)num_gpu_pages * RADEON_GPU_PAGE_SIZE;
+--- a/drivers/gpu/drm/xe/xe_pt.c
++++ b/drivers/gpu/drm/xe/xe_pt.c
+@@ -868,12 +868,22 @@ xe_vm_populate_pgtable(struct xe_migrate
+ 	u64 *ptr = data;
+ 	u32 i;
  
- 		/* pages are in Y direction - height
- 		   page width in X direction - width */
-@@ -950,13 +955,13 @@ struct radeon_fence *r100_copy_blit(stru
- 				  RADEON_DP_SRC_SOURCE_MEMORY |
- 				  RADEON_GMC_CLR_CMP_CNTL_DIS |
- 				  RADEON_GMC_WR_MSK_DIS);
--		radeon_ring_write(ring, (pitch << 22) | (src_offset >> 10));
--		radeon_ring_write(ring, (pitch << 22) | (dst_offset >> 10));
-+		radeon_ring_write(ring, (pitch << 22) | (cur_src_offset >> 10));
-+		radeon_ring_write(ring, (pitch << 22) | (cur_dst_offset >> 10));
- 		radeon_ring_write(ring, (0x1fff) | (0x1fff << 16));
- 		radeon_ring_write(ring, 0);
- 		radeon_ring_write(ring, (0x1fff) | (0x1fff << 16));
--		radeon_ring_write(ring, num_gpu_pages);
--		radeon_ring_write(ring, num_gpu_pages);
-+		radeon_ring_write(ring, 0);
-+		radeon_ring_write(ring, 0);
- 		radeon_ring_write(ring, cur_pages | (stride_pixels << 16));
++	/*
++	 * @qword_ofs is the absolute entry offset within the page table, while
++	 * @ptes is indexed relative to @update->ofs (its first entry). The GPU
++	 * path (write_pgtable) splits a single update into MAX_PTE_PER_SDI-sized
++	 * chunks, calling this with an advancing @qword_ofs but a fresh @data
++	 * pointer per chunk, so translate back into a @ptes index rather than
++	 * assuming the chunk starts at ptes[0].
++	 */
+ 	for (i = 0; i < num_qwords; i++) {
++		u32 idx = qword_ofs - update->ofs + i;
++
+ 		if (map)
+ 			xe_map_wr(tile_to_xe(tile), map, (qword_ofs + i) *
+-				  sizeof(u64), u64, ptes[i].pte);
++				  sizeof(u64), u64, ptes[idx].pte);
+ 		else
+-			ptr[i] = ptes[i].pte;
++			ptr[i] = ptes[idx].pte;
  	}
- 	radeon_ring_write(ring, PACKET0(RADEON_DSTCACHE_CTLSTAT, 0));
+ }
+ 
 
 
