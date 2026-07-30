@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568D537C92C;
-	Thu, 30 Jul 2026 15:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D5241DED0;
+	Thu, 30 Jul 2026 15:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425850; cv=none; b=EbS2D9GNUTEhi4XAw16K6Ylc0Sy+BBy1v+76S+vUE4luwEj/R3ooCFCZew1jeisqSveNa4jZJRZJR5eV4SvUuuNfXVzSo9hETUA7zzD2rGLeOu+NxE91Ck9qZdFv3vV+Xr85kSs1LKqVwtFRWSx5x7nEcANhlg9GuA94TAdTZpA=
+	t=1785425853; cv=none; b=mKUukmTwrWD9Yb0mr65BdtUNSbX4iFfOkBvfXMLaxUCu+TesqoIHBG8NvjX/x/L85gQa+78qpUCV8ib9RLf4mCunkdnOgCEQsw1GdueA1flRu+gueIbvZfdGk4MbwGohLld1xAFyHF9w4dMz30JxEzzTaE//jzUzq9S5cRUth3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425850; c=relaxed/simple;
-	bh=zga4imTGSmXVfsVBqo77EdNDj/1RFMMUUYXWpAauafk=;
+	s=arc-20240116; t=1785425853; c=relaxed/simple;
+	bh=ViHKDrQlg894O9PqcV0PdH2ANHXZ5Ut8my4cTVo9mvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PFL3uwCqvz0Ry/ErJTJd8wR+yh0ZjdOI2IpSyaiQgHf6pzQjH/Y3ljRCxqeSTQ1RHRzGogpiLdT2RGmsoVcU5TURGfAs+QQhAycKC9tcqyV+dMUF04Hiq9KhxQCv8JxPedYOMDeZe9ULDsHGglcFiaG3Gc4iiVwMvFP3hyclxUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=maAGa62T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MQwXjKfMtwCapQjHTDrtLeV0aEqy/sQeFgOzrm4ywwHvSBOhNgc/sjLys0WMacPIt1dOSNtot3G8aCY7SXIWAmd4P5c645mJf5vV4RR46LmtPyye3Hcj0V1VNn7/HojWNQAGLTw60bjlXlHc9u8Goc/EHGalhmGCulI5B5vIzEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SXh+5WpB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maAGa62T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1ADA1F000E9;
-	Thu, 30 Jul 2026 15:37:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SXh+5WpB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD751F000E9;
+	Thu, 30 Jul 2026 15:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425849;
-	bh=K+Zs1XKvR6x9C8UI9N5crftPYtfe+ui+zfPi/1zvEU4=;
+	s=korg; t=1785425852;
+	bh=s2F4fy6EP6H8wBXCkXiJscjxFTpNN/Yh/2S+28M7VB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=maAGa62TOaGpccRZZYyGJjQuSEGoQh2MKeyErYHAGkaVCuuL4NDvUzc1nY8tZQKSN
-	 3O7LtdRENKuoDPhTrnxLkEmB/fKtQ2ZtjOyGSlZ4pz71M3tsB0+N4CYnc6HNn0poqd
-	 IYtxJl44c9c8aEl9ZUPP06cdhxncosTRNYfFGVuI=
+	b=SXh+5WpBVvuhf0ahGbqwPI552G1x4K1ocvD8ymvvS3Ls03k0cCbjrA+F00liWYPkJ
+	 ZqL5W/vYkW9aBK4BRtiXQGL2FJYNwyFDTZt1WLQyU2UqwX8NySQ2XI011TKaaKsWfH
+	 1H8vI1qj91mlmBfiFkF8dVVpS2ZKm8eeESCNsXiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yichong Chen <chenyichong@uniontech.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	"Nikhil P. Rao" <nikhil.rao@amd.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 213/602] ovl: fix trusted xattr escape prefix matching
-Date: Thu, 30 Jul 2026 16:10:05 +0200
-Message-ID: <20260730141440.430555450@linuxfoundation.org>
+Subject: [PATCH 6.12 187/602] pds_core: reject component parameter in legacy firmware update
+Date: Thu, 30 Jul 2026 16:09:39 +0200
+Message-ID: <20260730141439.891193681@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,47 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: Nikhil P. Rao <nikhil.rao@amd.com>
 
-[ Upstream commit a8e72879cd0d8422c0b47d6d3c1802274fe73b98 ]
+[ Upstream commit 7be2552e601c247a328a5aba6fc06ac844b94a16 ]
 
-In the trusted.* xattr namespace, ovl_is_escaped_xattr() compares
-one byte less than the escaped overlay xattr prefix length. This makes
-it match "trusted.overlay.overlay" without requiring the trailing dot.
+The legacy firmware update path does not support per-component updates.
+If a user specifies a component parameter with devlink flash, reject
+the request with -EOPNOTSUPP rather than silently ignoring the component
+parameter and flashing the entire firmware image.
 
-As a result, an xattr such as "trusted.overlay.overlayfoo" is
-incorrectly treated as an escaped overlay xattr. This can be reproduced
-by setting "trusted.overlay.overlayfoo" on a lower file and listing xattrs
-through an overlay mount. listxattr() then exposes it as
-"trusted.overlay.oo", and a following getxattr() on that listed name fails
-with ENODATA.
-
-Compare the full escaped prefix, including the trailing dot, so
-similarly-prefixed private xattrs are not misclassified.
-
-Fixes: dad02fad84cbc ("ovl: Support escaped overlay.* xattrs")
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Link: https://patch.msgid.link/20260708082221.633602-1-chenyichong@uniontech.com
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 49ce92fbee0b ("pds_core: add FW update feature to devlink")
+Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260708163649.128620-1-nikhil.rao@amd.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/xattrs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/amd/pds_core/devlink.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/overlayfs/xattrs.c b/fs/overlayfs/xattrs.c
-index 383978e4663c2a..6ba79ee00f7370 100644
---- a/fs/overlayfs/xattrs.c
-+++ b/fs/overlayfs/xattrs.c
-@@ -13,7 +13,7 @@ static bool ovl_is_escaped_xattr(struct super_block *sb, const char *name)
- 			       OVL_XATTR_ESCAPE_USER_PREFIX_LEN) == 0;
- 	else
- 		return strncmp(name, OVL_XATTR_ESCAPE_TRUSTED_PREFIX,
--			       OVL_XATTR_ESCAPE_TRUSTED_PREFIX_LEN - 1) == 0;
-+			       OVL_XATTR_ESCAPE_TRUSTED_PREFIX_LEN) == 0;
+diff --git a/drivers/net/ethernet/amd/pds_core/devlink.c b/drivers/net/ethernet/amd/pds_core/devlink.c
+index 621791a3c543be..e35572f099c884 100644
+--- a/drivers/net/ethernet/amd/pds_core/devlink.c
++++ b/drivers/net/ethernet/amd/pds_core/devlink.c
+@@ -89,6 +89,12 @@ int pdsc_dl_flash_update(struct devlink *dl,
+ {
+ 	struct pdsc *pdsc = devlink_priv(dl);
+ 
++	if (params->component) {
++		NL_SET_ERR_MSG_MOD(extack,
++				   "Component update not supported by this device");
++		return -EOPNOTSUPP;
++	}
++
+ 	return pdsc_firmware_update(pdsc, params->fw, extack);
  }
  
- static bool ovl_is_own_xattr(struct super_block *sb, const char *name)
 -- 
 2.53.0
 
