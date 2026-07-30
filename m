@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94144432F8;
-	Thu, 30 Jul 2026 16:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7863443AAB;
+	Thu, 30 Jul 2026 16:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427702; cv=none; b=rsOWhiW1DSql53qu4u+bxxF8STEofPBk3uGbi8+dq4DuX+3fKKRlu2Zh27s1bEeNRhT0WdjNJXIsgvjTr8WvpupY0leAeR3HDZUXDnR39ZKKPNgzTvZkK0i8WFS4qDWQqC6yepxaqGl+Uhey5wRk/0s+XpQTe++fhBk5r0P23OI=
+	t=1785427705; cv=none; b=am25OUuvjm+wt7ZXS9MeDy1MVosAO8CKEKyg6b3AQnmMBowXPlAwwum4vwbgeT68c8BJdbLwmRvP2dQjy6W3+Pk+OEEik2+lTxz90XrNcLMHnkEbLg3FvIriulxxCPUuKaQZSOmrZt1fUQ88kbzsILjcOey1/lxxepr5GPtzObM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427702; c=relaxed/simple;
-	bh=TlXiftpG1Ni/Ur79szWaPjz2DMbpbpDapfjKgM7X8F0=;
+	s=arc-20240116; t=1785427705; c=relaxed/simple;
+	bh=fZP18GAIMWU8M5eqkX+7x222QJfIPnYM8/ev1oJdM7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NXVVjSRkCqE/WY6ghxFBummIKJfif9ByCuTONyPMKh3O9+XiMMwh0MBUmtftccqZTu1qUal7BfmsB9JMdZ3WK5mTgNGXShSnTHXt0R+QTxS454ShFUQ/NQkZ0Hv5pl5toVJ0GYRL9G2KX2ogiLskX0fPYhafwpsIZ2mPZHRGpis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+edmX7U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=reCcn8I+BrqqLzR+h1YwcOQHlU8NTCl2pg1i9vQB90B9LdTwO+fmO3GWCThdTYQgjB3FIyBogLqFOrx6zv5ZNzTNTyvQ9n5ZDF1y6Gh1ZycEFOd1XoiVNPfr21V90MUshiSsY+yFmU+5u1zmCEuX5xlhgGMg8iovwjBA0ZkSVXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zP7gJqj0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+edmX7U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE24D1F000E9;
-	Thu, 30 Jul 2026 16:08:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zP7gJqj0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A7F1F000E9;
+	Thu, 30 Jul 2026 16:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427701;
-	bh=M+IzjzBzzijSbeIfqwGa1G6gGJ9unM4Qert1OmF4/ds=;
+	s=korg; t=1785427704;
+	bh=+hVT2DOCeJhMtrLG3zs6RcK+UykwjIUmVcVAEB1p9XE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u+edmX7UcAvtVYbLAxRc6SC8RzAhYgx8fbBlnk1yd1cf5h0upWHMrPDn3/FSiLU/v
-	 xb9LWAlMXLx6qzHhntT2Y9FuG3iwc8yNCAuxv8aYCks+BrNPs6qPfhAviG8RuYTz0y
-	 1ljOaEbKxdfdKYG3BRmiRjjrF0s0InKr7LEBAt3A=
+	b=zP7gJqj027SdM3MlgfN5Dq9T+XZFk8LQxcC6x3KkRWKwXVegkjOI66k9bR0RVp+T2
+	 ar7IQrXa4nTh7hVYgMPB1JQui+0uIk9b01KiCktiEWKylJ9fQTDPveTbO3/1USj0Ou
+	 G74nXOVmtwWiQZQbBITrg+tPdtcWPIeo6FvZ1URo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Zile Xiong <xiongzile99@gmail.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 262/484] media: v4l2-ctrls: validate HEVC active reference counts
-Date: Thu, 30 Jul 2026 16:12:39 +0200
-Message-ID: <20260730141429.182925232@linuxfoundation.org>
+Subject: [PATCH 6.6 263/484] media: vb2: use ssize_t for vb2_read/vb2_write
+Date: Thu, 30 Jul 2026 16:12:40 +0200
+Message-ID: <20260730141429.205456138@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,63 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Zile Xiong <xiongzile99@gmail.com>
 
-commit afbe4bc252d90a6f8fad869b06d5430f615f22f9 upstream.
+commit a562d6dc86bdfdd299e1b4734977a8d63e803583 upstream.
 
-HEVC slice parameters are shared stateless V4L2 controls, but the common
-validation path does not verify the active L0/L1 reference counts before
-driver-specific code consumes them.
+vb2_read() and vb2_write() return size_t, but propagate
+negative errno values from __vb2_perform_fileio().
 
-The original report came from Cedrus, but the active count bounds are
-not Cedrus-specific. Validate them in the common HEVC slice control path
-so stateless HEVC drivers get the same basic guarantees as soon as the
-control is queued.
+This relies on implicit signed/unsigned conversions in callers
+(e.g. vb2_fop_read()) to recover error codes:
 
-Do not reject ref_idx_l0/ref_idx_l1 entries here. Existing userspace may
-use out-of-range sentinel values such as 0xff for missing references, and
-some hardware can use that information for concealment. Keep this common
-check limited to the active reference counts.
+    __vb2_perform_fileio() -> -EINVAL
+    vb2_read()             -> (size_t)-EINVAL
+    vb2_fop_read()         -> -EINVAL
 
-Fixes: d395a78db9eab ("media: hevc: Add decode params control")
+This relies on implicit conversions that are not obvious.
+
+These helpers are exported (EXPORT_SYMBOL_GPL) and part of the
+vb2 API, so changing their return type may affect existing users.
+
+However, they conceptually follow read/write semantics, where
+ssize_t is typically used to return either a byte count or a
+negative error code.
+
+Switch vb2_read() and vb2_write() to ssize_t, and update
+__vb2_perform_fileio() accordingly.
+
+Signed-off-by: Zile Xiong <xiongzile99@gmail.com>
+Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Fixes: b25748fe6126 ("[media] v4l: videobuf2: add read() and write() emulator")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-ctrls-core.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/media/common/videobuf2/videobuf2-core.c |   12 ++++++------
+ include/media/videobuf2-core.h                  |    8 ++++----
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
---- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
-@@ -809,6 +809,7 @@ static int std_validate_compound(const s
- 	struct v4l2_ctrl_h264_decode_params *p_h264_dec_params;
- 	struct v4l2_ctrl_hevc_sps *p_hevc_sps;
- 	struct v4l2_ctrl_hevc_pps *p_hevc_pps;
-+	struct v4l2_ctrl_hevc_slice_params *p_hevc_slice_params;
- 	struct v4l2_ctrl_hdr10_mastering_display *p_hdr10_mastering;
- 	struct v4l2_ctrl_hevc_decode_params *p_hevc_decode_params;
- 	struct v4l2_area *area;
-@@ -1097,6 +1098,18 @@ static int std_validate_compound(const s
- 		break;
+--- a/drivers/media/common/videobuf2/videobuf2-core.c
++++ b/drivers/media/common/videobuf2/videobuf2-core.c
+@@ -2769,8 +2769,8 @@ static int __vb2_cleanup_fileio(struct v
+  * @nonblock:	mode selector (1 means blocking calls, 0 means nonblocking)
+  * @read:	access mode selector (1 means read, 0 means write)
+  */
+-static size_t __vb2_perform_fileio(struct vb2_queue *q, char __user *data, size_t count,
+-		loff_t *ppos, int nonblock, int read)
++static ssize_t __vb2_perform_fileio(struct vb2_queue *q, char __user *data, size_t count,
++				    loff_t *ppos, int nonblock, int read)
+ {
+ 	struct vb2_fileio_data *fileio;
+ 	struct vb2_fileio_buf *buf;
+@@ -2930,15 +2930,15 @@ static size_t __vb2_perform_fileio(struc
+ 	return ret;
+ }
  
- 	case V4L2_CTRL_TYPE_HEVC_SLICE_PARAMS:
-+		p_hevc_slice_params = p;
-+
-+		if (p_hevc_slice_params->num_ref_idx_l0_active_minus1 >=
-+		    V4L2_HEVC_DPB_ENTRIES_NUM_MAX)
-+			return -EINVAL;
-+
-+		if (p_hevc_slice_params->slice_type != V4L2_HEVC_SLICE_TYPE_B)
-+			break;
-+
-+		if (p_hevc_slice_params->num_ref_idx_l1_active_minus1 >=
-+		    V4L2_HEVC_DPB_ENTRIES_NUM_MAX)
-+			return -EINVAL;
- 		break;
+-size_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
+-		loff_t *ppos, int nonblocking)
++ssize_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
++		 loff_t *ppos, int nonblocking)
+ {
+ 	return __vb2_perform_fileio(q, data, count, ppos, nonblocking, 1);
+ }
+ EXPORT_SYMBOL_GPL(vb2_read);
  
- 	case V4L2_CTRL_TYPE_HDR10_CLL_INFO:
+-size_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
+-		loff_t *ppos, int nonblocking)
++ssize_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
++		  loff_t *ppos, int nonblocking)
+ {
+ 	return __vb2_perform_fileio(q, (char __user *) data, count,
+ 							ppos, nonblocking, 0);
+--- a/include/media/videobuf2-core.h
++++ b/include/media/videobuf2-core.h
+@@ -1064,8 +1064,8 @@ __poll_t vb2_core_poll(struct vb2_queue
+  * @ppos:	file handle position tracking pointer
+  * @nonblock:	mode selector (1 means blocking calls, 0 means nonblocking)
+  */
+-size_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
+-		loff_t *ppos, int nonblock);
++ssize_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
++		 loff_t *ppos, int nonblock);
+ /**
+  * vb2_write() - implements write() syscall logic.
+  * @q:		pointer to &struct vb2_queue with videobuf2 queue.
+@@ -1074,8 +1074,8 @@ size_t vb2_read(struct vb2_queue *q, cha
+  * @ppos:	file handle position tracking pointer
+  * @nonblock:	mode selector (1 means blocking calls, 0 means nonblocking)
+  */
+-size_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
+-		loff_t *ppos, int nonblock);
++ssize_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
++		  loff_t *ppos, int nonblock);
+ 
+ /**
+  * typedef vb2_thread_fnc - callback function for use with vb2_thread.
 
 
