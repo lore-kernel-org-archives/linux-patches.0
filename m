@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07BF431488;
-	Thu, 30 Jul 2026 14:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2A143E48C;
+	Thu, 30 Jul 2026 14:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422164; cv=none; b=dIYc10X95G12azdrd+FKX0oTq0hxSI61+Js/ktRk/vXO+rox6zxwaw7+wKxYTVixwVNqfDR8hObZd9asB7FzA4glw56oznTjamME6KB47c4+iKSmIjTvZ6xmvZk80f88rlpj7GhbT1NMwjUBziYxyf7+IH27k9KTyxOgFWmP2Zg=
+	t=1785422167; cv=none; b=njO978i/Xmqn+jIzVoL2lrqcQUMxmPZ1Eqdc9CwPDjWYKqixh7JtspE9dXPp5QYCvqpFQ4rcqwZKowfSroZYVgSg0RbEZ28cq6A9AVGPS36tkfuPjJOPSxkIi5jr82c1f884QWa1xgNqJsP8SjI5JznS4da7n7lWRPDTxZn91M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422164; c=relaxed/simple;
-	bh=95uXDGW0jXBWhIVUIv3wOZx+vPmucR7UxtQo7USthmQ=;
+	s=arc-20240116; t=1785422167; c=relaxed/simple;
+	bh=9S3JepozFM35o1q/EknWcuziliEH2SdSMtgys3dKU4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KNQkLA0GEkPp6hmfhOTECGAujUZoKBuYvr+kg/cA7UlwrwkkWUfRYQAm86onyVdkWXv7U4zIdwTyTEw6CcL9YwvtUX0yEDbhAhH/qgL3L0/6TctAfHrz6q08vEoekfuVSfzidk+n+th2AWy/XeXw+JncyXYHI8kRBbFWb++raKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dPUJmjFZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sTpOzrxNamGjaQVYnqQcUqxSmexX6eu5bc1nQZS9eisdmzxto+MOYxYdjyrxDrifeuxKSMzh7ME1qt+oG8eqr9UljUjqXccc8Erhe7oVKI5o0jl9fHKaunOBV40MQ2LbjWMe3Cy4Iu4EdkVgZ7xtnhn/UvElYSQ3o03DwKqIUWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=06T9WXke; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPUJmjFZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C1461F00A3A;
-	Thu, 30 Jul 2026 14:36:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="06T9WXke"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D457C1F000E9;
+	Thu, 30 Jul 2026 14:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422163;
-	bh=WIBJVUPAmjgS20KTpC6yJz7ONFyacIYb2GsbNvJU1Kc=;
+	s=korg; t=1785422166;
+	bh=hgO3agm/WlRwhSSuEJ2bJiqiCz3Of3VITPnreGgNwY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dPUJmjFZKvsOZEjkWpKXRjTXV6uanhhRJ02ondCtjZVwKKWzU7aP6QbNzF/xh3u91
-	 yVwrof/WSeq6kyvJJbGBfEJLDhfzYUb1yJmqanlVozPi/jquuCjk2NHo+DK2yAE059
-	 nqT6QvIW5lUk6wl0l5cjvFBvZV6GiRKR7+FkWdlk=
+	b=06T9WXkerD4MiDc0tagVBtclhTFcXAqXE1/0maI7yZHBFwxeA+bQwG6BfoHOLXoqm
+	 niWUCo2LvMhC2oo3huGHfn/ElP5Q/4qPiY2kXRFqGVi/V/5hLXyyXrfYi0vEl+s8M7
+	 2mDh7kWopsSRZb0mD+v9HrgkaumaplFf0/Usinrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+84d4a405ed798b40c96d@syzkaller.appspotmail.com,
-	"Nikola Z. Ivanov" <zlatistiv@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	AutonomousCodeSecurity@microsoft.com,
+	Allison Henderson <achender@kernel.org>,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 345/744] ipv6: Change allocation flags to match rcu_read_lock section requirements
-Date: Thu, 30 Jul 2026 16:10:18 +0200
-Message-ID: <20260730141451.618393512@linuxfoundation.org>
+Subject: [PATCH 7.1 346/744] rds: tcp: unregister sysctl before tearing down listen socket
+Date: Thu, 30 Jul 2026 16:10:19 +0200
+Message-ID: <20260730141451.639662204@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,66 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikola Z. Ivanov <zlatistiv@gmail.com>
+From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 
-[ Upstream commit 313a123e1fca8827bb463db1f4bb211309764563 ]
+[ Upstream commit 167e54c703ccd4fa028feb568b0d1002020cff86 ]
 
-Since the call to __ip6_del_rt_siblings has been converted under
-rcu read lock and it only has one call point
-we should no longer block or yield.
+rds_tcp_exit_net() frees the per-netns RDS TCP listen socket via
+rds_tcp_kill_sock() before unregistering the per-netns sysctl table.  Since
+rds_tcp_skbuf_handler() derives the netns from
+rtn->rds_tcp_listen_sock->sk, a concurrent sysctl write can race with
+netns teardown and dereference the freed socket/sk.
 
-Our stack trace from the syzbot reproducer looks as follows:
+KASAN reports the race as:
 
-__ip6_del_rt_siblings
-  rtnl_notify (Here we pass gfp_any() -> GFP_KERNEL)
-    nlmsg_notify
-      nlmsg_multicast
-        nlmsg_multicast_filtered
-          netlink_broadcast_filtered (GFP_KERNEL passed from earlier)
+  BUG: KASAN: slab-use-after-free in rds_tcp_skbuf_handler+0x2aa/0x2e0
+  rds_tcp_skbuf_handler              net/rds/tcp.c:721
+  proc_sys_call_handler              fs/proc/proc_sysctl.c
+  vfs_write                          fs/read_write.c
+  __x64_sys_pwrite64                 fs/read_write.c
 
-netlink_broadcast_filtered can yield if GFP_KERNEL
-is passed, which we do not want to happen.
+Fix this by unregistering the RDS TCP sysctl table before calling
+rds_tcp_kill_sock().  unregister_net_sysctl_table() prevents new sysctl
+handlers from starting and waits for in-flight handlers to finish, so
+the listen socket can then be released safely. The fix was tested
+against the linked reproducer.
 
-Fix this by changing the allocation flag of rtnl_notify.
-
-Also change the flag passed to nlmsg_new. Even though it
-is not related to the syzbot generated bug it still falls
-under the same requirements.
-
-Reported-by: syzbot+84d4a405ed798b40c96d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=84d4a405ed798b40c96d
-Fixes: bd11ff421d36 ("ipv6: Get rid of RTNL for SIOCDELRT and RTM_DELROUTE.")
-Signed-off-by: Nikola Z. Ivanov <zlatistiv@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260719105759.558050-1-zlatistiv@gmail.com
+Fixes: 7f5611cbc487 ("rds: sysctl: rds_tcp_{rcv,snd}buf: avoid using current->nsproxy")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Link: https://lore.kernel.org/all/20260719203718.9680-1-blbllhy@gmail.com
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Link: https://patch.msgid.link/20260719210357.10179-1-blbllhy@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 4 ++--
+ net/rds/tcp.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 88b46967bb67dc..d4edc133c045c4 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -4020,7 +4020,7 @@ static int __ip6_del_rt_siblings(struct fib6_info *rt, struct fib6_config *cfg)
- 		struct fib6_node *fn;
+diff --git a/net/rds/tcp.c b/net/rds/tcp.c
+index d3acad60315ab0..76f441cbf50e64 100644
+--- a/net/rds/tcp.c
++++ b/net/rds/tcp.c
+@@ -638,13 +638,13 @@ static void __net_exit rds_tcp_exit_net(struct net *net)
+ {
+ 	struct rds_tcp_net *rtn = net_generic(net, rds_tcp_netid);
  
- 		/* prefer to send a single notification with all hops */
--		skb = nlmsg_new(rt6_nlmsg_size(rt), gfp_any());
-+		skb = nlmsg_new(rt6_nlmsg_size(rt), GFP_ATOMIC);
- 		if (skb) {
- 			u32 seq = info->nlh ? info->nlh->nlmsg_seq : 0;
+-	rds_tcp_kill_sock(net);
+-
+ 	if (rtn->rds_tcp_sysctl)
+ 		unregister_net_sysctl_table(rtn->rds_tcp_sysctl);
  
-@@ -4076,7 +4076,7 @@ static int __ip6_del_rt_siblings(struct fib6_info *rt, struct fib6_config *cfg)
- 
- 	if (skb) {
- 		rtnl_notify(skb, net, info->portid, RTNLGRP_IPV6_ROUTE,
--			    info->nlh, gfp_any());
-+			    info->nlh, GFP_ATOMIC);
- 	}
- 	return err;
+ 	if (net != &init_net)
+ 		kfree(rtn->ctl_table);
++
++	rds_tcp_kill_sock(net);
  }
+ 
+ static struct pernet_operations rds_tcp_net_ops = {
 -- 
 2.53.0
 
