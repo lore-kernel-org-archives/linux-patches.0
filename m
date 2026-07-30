@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56434399FF;
-	Thu, 30 Jul 2026 15:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8F2391836;
+	Thu, 30 Jul 2026 15:17:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424658; cv=none; b=Pe69a+StiMrScCW9/Q8YVamffNDvJQW5h+dUVsmerC3xi0NTyIr13FYXAeKqPzFu8RHQFpF7BrO7wSGIPgO2CecEyE3L2Mx5KsbgvJjNOvZWdZBntMi1mlhaAglly+lWdqfRdLLqUo0x3w5yCYFuhNcwfelDLW2xg9X7WRho9VA=
+	t=1785424661; cv=none; b=cOFLAxwsmksjmYnUG5Dbk3iE+L9AvmuNXGxKtWzNkaX8eNkdvwVmTwPnnnm0i2jHFsyvxqVUUnl9fHdySN+QwXfCaYaLMLSMVqUTVrbvoM8E052kQ0vspSlJQnpVrDd299l8Qr0NF5XYGNWzvXRTJo45eoQgMfKxQNRQotlSY50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424658; c=relaxed/simple;
-	bh=r51nVxiMvIg0v+VUAgBvGPp4HR5LX2TBvwFDvLGaYq4=;
+	s=arc-20240116; t=1785424661; c=relaxed/simple;
+	bh=UE8Igc/FYfGfJ+UKC1OL+2SIY3EhZ4PCL8fJ2uVTGCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nJb54Tq/ToW4LhD0OJ8ryIZB8POi1JJVDtfMp4CSyght8aI7O+kw5vzZlSIj4QbcAKZiJcGlKu8+BlqzGanXI4r2mtVUh1xrBXomHZLX1QUpZsxYFs3nOryvdfjRhdrBYr/2CEZyAh+iREFQ54j+iOolyLWpzeyD2U8rfKRWqzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v50IM4OP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UFZlFDgKrDF5R/aBysYg8vj+31TqhzflxHyQinSwcCI4r/ieuMqLYqTECUze6Ak++hF4NHn2fFpcRHcXfk60BtbH6B5cwNa8qhT0dgMH31euRCgiKHSBJtWfHS1ekqw6OS3ztHQoQAMfufy67lYaJafIE4n4vrvZ5IxvgNJYz3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtPAfUD0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v50IM4OP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC471F000E9;
-	Thu, 30 Jul 2026 15:17:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtPAfUD0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 037001F000E9;
+	Thu, 30 Jul 2026 15:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424657;
-	bh=Jqg8WgDGupimKWf3mgMv47VEk9kP7FqqyuK86a42MqE=;
+	s=korg; t=1785424660;
+	bh=b86MOsojk3MeiIocwDBAdlyVa1VV0C/c7b5rqMo89Jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v50IM4OPQrtTvrwdiUHaHv7pwlKy1t24rzTTdOyIKsAjFjzcdBLHOYcGr3GnlqNCx
-	 T4S7pXSekftjf7f6I+ksh67SzuvO5kQG4KJSD/9DrqaZVvh0sh9ZZ+nuLTkMJptYkE
-	 in3NdNYf9M11bQauRpsim5t/VU2uw/r/fdBCZvzw=
+	b=LtPAfUD0CgZ25x0deTm7BuCm8G+p2N4xCIxLwO+hpWVZ027ZAw8s2oVUNDgjLCOJh
+	 YxRb+dzsGu0o/YVhvWk3VgsZDJYK5FC0OnyerIthBu8cUpFOSZXMnliWsWe7no15zZ
+	 3y9MwZ2Dy4+VFMe15NLgHTsdCWQxM/Z6jGgypfGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.18 472/675] objtool/rust: add one more `noreturn` Rust function for Rust 1.99.0
-Date: Thu, 30 Jul 2026 16:13:22 +0200
-Message-ID: <20260730141455.160302505@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Kexin Liu <liukexin@kylinos.cn>,
+	George Guo <guodongtai@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.18 473/675] LoongArch: Fix address space mismatch in kexec command line lookup
+Date: Thu, 30 Jul 2026 16:13:23 +0200
+Message-ID: <20260730141455.181656565@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,51 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: George Guo <guodongtai@kylinos.cn>
 
-commit 5a81c35c3b18cd59ded56171a6a9f643b92a6759 upstream.
+commit 485ed44db5694d8d2e5027f63ad608e705286f30 upstream.
 
-Starting with Rust 1.99.0 (expected 2026-10-01), under
-`CONFIG_RUST_DEBUG_ASSERTIONS=y`, `objtool` may report:
+When searching the loaded segments for the "kexec" command line marker,
+the kexec_load(2) path (file_mode == 0) passes the user-space segment
+buffer straight to strncmp() through a bogus (char __user *) cast. This
+dereferences a user pointer in kernel context, which is wrong and is
+flagged by sparse:
 
-    rust/kernel.o: warning: objtool: _R..._6kernel12module_param9set_paramaEB4_()
-    falls through to next function _R..._6kernel12module_param9set_paramhEB4_()
+  arch/loongarch/kernel/machine_kexec.c:84:51: sparse: incorrect type in
+  argument 2 (different address spaces) @@ expected char const * @@ got
+  char [noderef] __user *
 
-(and many others) due to calls to the `noreturn` symbol [1]:
+Here copy the marker-sized prefix of each segment into a small on-stack
+buffer with copy_from_user() before comparing, and skip segments that
+fault. The subsequent copy_from_user() that stages the full command line
+into the safe area is left unchanged.
 
-    core::panicking::panic_null_reference_constructed
-
-Thus add the mangled one to the list so that `objtool` knows it is
-actually `noreturn`.
-
-See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
-for more details.
-
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Petr Pavlu <petr.pavlu@suse.com>
-Link: https://github.com/rust-lang/rust/pull/158796 [1]
-Reported-by: Alice Ryhl <aliceryhl@google.com>
-Closes: https://lore.kernel.org/rust-for-linux/alEBInX9gD1M5NAr@google.com/
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Tested-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260710173252.191781-1-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 4a03b2ac06a5 ("LoongArch: Add kexec support")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202605051639.aEPioXdD-lkp@intel.com/
+Co-developed-by: Kexin Liu <liukexin@kylinos.cn>
+Signed-off-by: Kexin Liu <liukexin@kylinos.cn>
+Signed-off-by: George Guo <guodongtai@kylinos.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/objtool/check.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/loongarch/kernel/machine_kexec.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -228,6 +228,7 @@ static bool is_rust_noreturn(const struc
- 	       str_ends_with(func->name, "_4core9panicking18panic_nounwind_fmt")			||
- 	       str_ends_with(func->name, "_4core9panicking19assert_failed_inner")			||
- 	       str_ends_with(func->name, "_4core9panicking30panic_null_pointer_dereference")		||
-+	       str_ends_with(func->name, "_4core9panicking32panic_null_reference_constructed")		||
- 	       str_ends_with(func->name, "_4core9panicking36panic_misaligned_pointer_dereference")	||
- 	       str_ends_with(func->name, "_7___rustc17rust_begin_unwind")				||
- 	       strstr(func->name, "_4core9panicking13assert_failed")					||
+--- a/arch/loongarch/kernel/machine_kexec.c
++++ b/arch/loongarch/kernel/machine_kexec.c
+@@ -42,6 +42,7 @@ static unsigned long first_ind_entry;
+ int machine_kexec_prepare(struct kimage *kimage)
+ {
+ 	int i;
++	char head[8];
+ 	char *bootloader = "kexec";
+ 	void *cmdline_ptr = (void *)KEXEC_CMDLINE_ADDR;
+ 
+@@ -59,7 +60,9 @@ int machine_kexec_prepare(struct kimage
+ 	} else {
+ 		/* Find the command line */
+ 		for (i = 0; i < kimage->nr_segments; i++) {
+-			if (!strncmp(bootloader, (char __user *)kimage->segment[i].buf, strlen(bootloader))) {
++			if (copy_from_user(head, kimage->segment[i].buf, strlen(bootloader)))
++				continue;
++			if (!strncmp(bootloader, head, strlen(bootloader))) {
+ 				if (!copy_from_user(cmdline_ptr, kimage->segment[i].buf, COMMAND_LINE_SIZE))
+ 					kimage->arch.cmdline_ptr = (unsigned long)cmdline_ptr;
+ 				break;
 
 
