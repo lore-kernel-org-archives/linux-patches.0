@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D242143F094;
-	Thu, 30 Jul 2026 14:23:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E4143F0AA;
+	Thu, 30 Jul 2026 14:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421402; cv=none; b=gsP3MxE1QxjcdZ3Cx9/9476KRXhTwHHVfMT9TbdvKkCHQVq+U3br4gH54jZzGRKc6RSHBSBDZ2FaZr803uPAl1tLdxfsT3l84bts0/ZmU5FtKLsSKrnFq1gtU5Nz3H1Y9C4DMxg3KdWWATXBT/Syq7jHLxWf4ibUtpanS4d5SJA=
+	t=1785421405; cv=none; b=YyrvnFRQM9opPj1+dIZK7oBz+v51ANXMwgza2t75mhQdKpNXjQxcHKXrz1go6ER2wJ0B1XDigSDt+LC81MT5wvCK0SrJNMTzAbt/mE1KAvSKF22CSIHHk2Uay08GryCH5NR9ndKSJV9wKCrbHqqKoFLmQ+TWX3Qvp+ZkDxU4Kus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421402; c=relaxed/simple;
-	bh=9m47hbFpYL46CX4G34Dd1Zt+o7mL4BnxWcLo6EzOKcU=;
+	s=arc-20240116; t=1785421405; c=relaxed/simple;
+	bh=rVmZc6N/ijIY8iNrcxivmnRubzXAoBXKehdk3u6b++c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SPkeHh+lVUTWzoT7Udz9l/VG7m40XbBmgxcN9Vx/v50MD7NHVqs7cYSgQs7Elp7Oq2MqGapmV4hBTGYbbNGb83tmD/Z6ASMaAvmjRx309ZMrIf2nzyFfrsVs3OnNATDQredE6PrwgKwfFCgHM7qGoXNIT4ZdSR8U2EzAl0q7jkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oux970FQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iW/VlRFhREYXpqvrNCU/kFwwRv33+H4v/WRd51zF9q+SMjx9FZyH4y/OdVgD356SBHGbII2/6rBkuTnBWAesnE85K8ivxqySn9ywRKG7kAnJncU0GLKCohMjFRSFVEjWdVUhF6XZuqe1oAZGFzPop0K6fsR/ib/P0Sta/4R5yRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nMFrUHAl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oux970FQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D8F1F000E9;
-	Thu, 30 Jul 2026 14:23:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nMFrUHAl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43B8B1F00ACA;
+	Thu, 30 Jul 2026 14:23:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421400;
-	bh=QfFv+sF92bUPAzJZQ/kEgskUQwFxW1+j+MqPH+gsZbM=;
+	s=korg; t=1785421403;
+	bh=frwHPmUgrm7aDQEOrhxaifi+aZVPWahNsUTA5hAe/Bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Oux970FQfI+blTOesNnc7X06y3vrvG+pS8Ucx9D+2ti2ZKwruPmwdNU+4z/R/6AeD
-	 LCmWG2JaRIJkhCVHe8fg3RWt0QuLHGk3/oqsHBmK/C2FErrKSUeTQ4qNaBt1zehBYF
-	 tKqfnjmwKi8JZSI2b6Fwt+Jb2+v0v5uTJooYq85M=
+	b=nMFrUHAl9NlLZxNPbo7v21wQJZJJnXZZaJZDjt7njKbZXeuXHSHU0ByLjOwjSKzF2
+	 tU1wLQGkRKR26y/YfgoeAZZdGvlgulErDJPoTAK7p/8BcocALS56jwSZbmQcM6Mpxc
+	 Dbp5o0J/qNr9gbDxVTuFPHL4VSnm8EsVzfwVRzQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Jeffery <djeffery@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 092/744] scsi: core: wake eh reliably when using scsi_schedule_eh
-Date: Thu, 30 Jul 2026 16:06:05 +0200
-Message-ID: <20260730141446.224171066@linuxfoundation.org>
+Subject: [PATCH 7.1 093/744] ata: sata_dwc_460ex: enable SATA interrupts only after IRQ handler is registered
+Date: Thu, 30 Jul 2026 16:06:06 +0200
+Message-ID: <20260730141446.244959768@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,121 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Jeffery <djeffery@redhat.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit dccf3b1798b70f94e958b3d00b83010399e6fb05 ]
+[ Upstream commit 4bbc16a353a98023e5ddfca7c1fc0e49971cf4d0 ]
 
-Drivers which use the scsi_schedule_eh function to run the error handler
-currently risk the error handler thread never waking once all commands are
-timed out or inactive. There is no enforced memory order between setting
-the host into error recovery state and counting busy commands. This can
-result in a race with scsi_dec_host_busy where neither CPU sees both
-conditions of all commands inactive and the host error state to request
-waking the error handler.
+sata_dwc_enable_interrupts() is called before platform_get_irq() and
+ata_host_activate(), leaving the SATA controller's interrupt mask
+enabled without a registered handler.  If a later step fails (irq
+request, phy init, etc.) or if the controller asserts an interrupt
+during probe, the irq line may fire with no handler, causing a
+spurious interrupt storm.
 
-To fix this, run the scsi_schedule_eh's scsi_eh_wakeup from a new work item
-which will use rcu to ensure scsi_schedule_eh's call to scsi_host_busy will
-occur after the error state is globally visible and will be seen by any
-current scsi_dec_host_busy callers.
+Move sata_dwc_enable_interrupts() after ata_host_activate() so that
+interrupts are only unmasked once the handler is registered and the
+core is fully initialized.
 
-Fixes: 6eb045e092ef ("scsi: core: avoid host-wide host_busy counter for scsi_mq")
-Signed-off-by: David Jeffery <djeffery@redhat.com>
-Link: https://patch.msgid.link/20260615174630.11492-1-djeffery@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 62936009f35a ("[libata] Add 460EX on-chip SATA driver, sata_dwc_460ex")
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hosts.c      |  2 ++
- drivers/scsi/scsi_error.c | 22 +++++++++++++++++++++-
- drivers/scsi/scsi_priv.h  |  1 +
- include/scsi/scsi_host.h  |  3 +++
- 4 files changed, 27 insertions(+), 1 deletion(-)
+ drivers/ata/sata_dwc_460ex.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/hosts.c b/drivers/scsi/hosts.c
-index e047747d4ecf81..46cc8e3c79a26e 100644
---- a/drivers/scsi/hosts.c
-+++ b/drivers/scsi/hosts.c
-@@ -357,6 +357,7 @@ static void scsi_host_dev_release(struct device *dev)
- 	/* Wait for functions invoked through call_rcu(&scmd->rcu, ...) */
- 	rcu_barrier();
+diff --git a/drivers/ata/sata_dwc_460ex.c b/drivers/ata/sata_dwc_460ex.c
+index 64cb544903d888..47313dd4757859 100644
+--- a/drivers/ata/sata_dwc_460ex.c
++++ b/drivers/ata/sata_dwc_460ex.c
+@@ -1168,9 +1168,6 @@ static int sata_dwc_probe(struct platform_device *ofdev)
+ 	/* Save dev for later use in dev_xxx() routines */
+ 	hsdev->dev = dev;
  
-+	cancel_work_sync(&shost->eh_work);
- 	if (shost->tmf_work_q)
- 		destroy_workqueue(shost->tmf_work_q);
- 	if (shost->ehandler)
-@@ -422,6 +423,7 @@ struct Scsi_Host *scsi_host_alloc(const struct scsi_host_template *sht, int priv
- 	INIT_LIST_HEAD(&shost->starved_list);
- 	init_waitqueue_head(&shost->host_wait);
- 	mutex_init(&shost->scan_mutex);
-+	INIT_WORK(&shost->eh_work, scsi_rcu_eh_wakeup);
+-	/* Enable SATA Interrupts */
+-	sata_dwc_enable_interrupts(hsdev);
+-
+ 	/* Get SATA interrupt number */
+ 	irq = irq_of_parse_and_map(np, 0);
+ 	if (!irq) {
+@@ -1203,6 +1200,8 @@ static int sata_dwc_probe(struct platform_device *ofdev)
+ 	if (err)
+ 		dev_err(dev, "failed to activate host");
  
- 	index = ida_alloc(&host_index_ida, GFP_KERNEL);
- 	if (index < 0) {
-diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
-index 147127fb4db9cc..453a2232452dba 100644
---- a/drivers/scsi/scsi_error.c
-+++ b/drivers/scsi/scsi_error.c
-@@ -73,6 +73,26 @@ void scsi_eh_wakeup(struct Scsi_Host *shost, unsigned int busy)
- 	}
- }
++	/* Enable SATA Interrupts */
++	sata_dwc_enable_interrupts(hsdev);
+ 	return 0;
  
-+void scsi_rcu_eh_wakeup(struct work_struct *work)
-+{
-+	struct Scsi_Host *shost = container_of(work, struct Scsi_Host, eh_work);
-+	unsigned long flags;
-+	unsigned int busy;
-+
-+	/*
-+	 * Ensure any running scsi_dec_host_busy has completed its rcu section
-+	 * so changes to host state and host_eh_scheduled are visible to all
-+	 * future calls of scsi_dec_host_busy
-+	 */
-+	synchronize_rcu();
-+
-+	busy = scsi_host_busy(shost);
-+
-+	spin_lock_irqsave(shost->host_lock, flags);
-+	scsi_eh_wakeup(shost, busy);
-+	spin_unlock_irqrestore(shost->host_lock, flags);
-+}
-+
- /**
-  * scsi_schedule_eh - schedule EH for SCSI host
-  * @shost:	SCSI host to invoke error handling on.
-@@ -88,7 +108,7 @@ void scsi_schedule_eh(struct Scsi_Host *shost)
- 	if (scsi_host_set_state(shost, SHOST_RECOVERY) == 0 ||
- 	    scsi_host_set_state(shost, SHOST_CANCEL_RECOVERY) == 0) {
- 		shost->host_eh_scheduled++;
--		scsi_eh_wakeup(shost, scsi_host_busy(shost));
-+		queue_work(shost->tmf_work_q, &shost->eh_work);
- 	}
- 
- 	spin_unlock_irqrestore(shost->host_lock, flags);
-diff --git a/drivers/scsi/scsi_priv.h b/drivers/scsi/scsi_priv.h
-index 7a193cc04e5b6f..304e8e79bd91a9 100644
---- a/drivers/scsi/scsi_priv.h
-+++ b/drivers/scsi/scsi_priv.h
-@@ -91,6 +91,7 @@ extern enum blk_eh_timer_return scsi_timeout(struct request *req);
- extern int scsi_error_handler(void *host);
- extern enum scsi_disposition scsi_decide_disposition(struct scsi_cmnd *cmd);
- extern void scsi_eh_wakeup(struct Scsi_Host *shost, unsigned int busy);
-+extern void scsi_rcu_eh_wakeup(struct work_struct *work);
- extern void scsi_eh_scmd_add(struct scsi_cmnd *);
- void scsi_eh_ready_devs(struct Scsi_Host *shost,
- 			struct list_head *work_q,
-diff --git a/include/scsi/scsi_host.h b/include/scsi/scsi_host.h
-index 7e2011830ba4bd..f6b286fa59f214 100644
---- a/include/scsi/scsi_host.h
-+++ b/include/scsi/scsi_host.h
-@@ -750,6 +750,9 @@ struct Scsi_Host {
- 	 */
- 	struct device *dma_dev;
- 
-+	/* Used for an rcu-synchronizing eh wakeup */
-+	struct work_struct eh_work;
-+
- 	/* Delay for runtime autosuspend */
- 	int rpm_autosuspend_delay;
- 
+ error_out:
 -- 
 2.53.0
 
