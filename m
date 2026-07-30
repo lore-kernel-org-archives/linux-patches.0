@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F73407CCF;
-	Thu, 30 Jul 2026 15:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C276029DB6C;
+	Thu, 30 Jul 2026 15:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423639; cv=none; b=YPeG7muvYPwrIGcZST5KYnGvrMhiJVoiQ3xcCHl43e1NsTRCTxiP6LIKMHkHAtA9bogBDeOVhdZUyBvIHRhEkXL7ydoykIv925Ts3glTIPED+lXT0L74v6GtzJ9E3yFBmFMID+sJcnaLZLzmfccTHQ1sTCVwYdIHy32Qr47A4g8=
+	t=1785423641; cv=none; b=FL72WxGRgmfSilzDKKZscwsoIzC0S3Em9eKic2mBwYDXbpSOEXs2lu6KaaE4L1svvVc5DCit3K+wTA0mgAcWOPGqsrjfonqmXEXbGZ7r+K+WLJNCJoKVZrGuelJGGqV4UV3AEcHrLEvYfieqBr56xc6vXpxnHj3K6tD+Wq6kTPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423639; c=relaxed/simple;
-	bh=ZOQD96efGYEuWnCgaMX/dv9m8YOaNlWTYsw8glN9uQI=;
+	s=arc-20240116; t=1785423641; c=relaxed/simple;
+	bh=ASMy+lJn0zJ7PNNr5iPBOLrRg/SK43RD1M7y0jOjvMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JI7gsOQy7rb5HcJaCU6B2ZKhf34PwtREFMSB4K3G44iSoAjKg0bz9kng2nxdEdBVmOlmB8ObsUNN/QZJ8AgyM9jElL7xzp6QdxNkzoFJEYXmyGZD+6YvzgMLZqoSIRSLdKazE7t6WTX6YJ0Iue05gVzNuiZPSjIy4L1SY/Zqqq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEILJNV7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rbI5MVGaU1Jy1BCEkyu5n5u2QKhzHYEAScYTrEVNGlWh/h0uWgVB9OZDe8KGcZGgNcSvHeFEmh4lyZSWNrHdCqlg0JYTSLs5feTNExvKwAQRWn8N4TRuc7k3RsgzuCvdNncJ6ZWAn/07OK+d1zNTDCQ2AlQUonwpgvaNn4fGvCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=byWCCYGD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEILJNV7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 527881F00A3A;
-	Thu, 30 Jul 2026 15:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="byWCCYGD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D5B1F00A3A;
+	Thu, 30 Jul 2026 15:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423637;
-	bh=iVLQ9x4OEemyg14scHPc4YBw+7xeM+CqYNZ7wFotbq0=;
+	s=korg; t=1785423640;
+	bh=eNyMu5Ca//YU54AzRtEiN99Ip6cSRIS+HB5fWqKt9Nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LEILJNV7clYl9uQ4KyMxgZTbx88PzqoFeMJug/zv36tbrmwT5A0QVKffX+DiKDZG+
-	 Kuh4AixHNL+2RcEp0bzl2oJDyxK5H0iU5LrTTcjNf3j4Cq9ENj7tWfCveJKGPf5HVG
-	 mEA0Wh1NTSKiGQc9ZPQ9PkUvQ0r4t5Z1RwhKpTtc=
+	b=byWCCYGDuCdlrjxopNYljdRMTmny6Lk6zLX7YOG3Fnj9dCok1oCiIyXSDG80QzGB2
+	 lYq/crB6UlCWQSbjIDrJwd9wfK17oImFQXkaS3FcGhVyPWYnFMEQn5DlGwQzqwRyvU
+	 0lXcK/05qi7cLOXdrbJWfDkB5qx0sk2L6l2oHJGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huiwen He <hehuiwen@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 113/675] smb/client: handle overlapping allocated ranges in fallocate
-Date: Thu, 30 Jul 2026 16:07:23 +0200
-Message-ID: <20260730141447.543800456@linuxfoundation.org>
+Subject: [PATCH 6.18 078/675] wifi: nl80211: constrain MBSSID TX link ID range
+Date: Thu, 30 Jul 2026 16:06:48 +0200
+Message-ID: <20260730141446.787876910@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,108 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huiwen He <hehuiwen@kylinos.cn>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit b09ae45d85dc816987a71db9eebc54b0ae288e94 ]
+[ Upstream commit 172f06023669f0a96d32511669ff45c600731380 ]
 
-smb3_simple_fallocate_range() can skip holes when an allocated range
-returned by the server starts before the current fallocate offset. The
-skipped hole is not zero-filled, but fallocate still returns success. A
-later write to that hole may therefore fail with ENOSPC.
+MBSSID transmitted-profile link IDs are valid only in the range
+0..IEEE80211_MLD_MAX_NUM_LINKS - 1. Constrain the nl80211 policy to
+reject out-of-range values during attribute validation.
 
-The function queries allocated ranges so that it can preserve existing
-contents and write zeroes only into holes. However, the server may return
-a range that starts before the current fallocate offset.
-
-For example, assume the fallocate request is [100, 400) and the only
-allocated range returned by the server is [0, 200):
-
-        Request:      [100, 400)
-        Server range: [  0, 200)  allocated
-
-        Correct:
-        [100, 200)    allocated data, skip
-        [200, 400)    hole, zero-fill
-
-        Current:
-        [100, 300)    skipped
-        [300, 400)    zero-filled afterwards
-
-The current code adds the full server range length, 200, to the current
-offset 100 and moves to 300. As a result, the hole in [200, 300) is
-skipped without being zero-filled.
-
-Fix this by advancing only over the part of the allocated range that
-overlaps the current fallocate offset.  Ignore ranges that end before the
-current offset and reject ranges whose end offset overflows.
-
-This also prevents a malformed range length from causing an out-of-bounds
-zero-buffer read.
-
-Fixes: 966a3cb7c7db ("cifs: improve fallocate emulation")
-Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 37523c3c47b3 ("wifi: nl80211: add link id of transmitted profile for MLO MBSSID")
+Assisted-by: Codex:gpt-5.5
+Assisted-by: Claude:claude-opus-4.8
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260612131854.43575-4-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ net/wireless/nl80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 786a7e963f1ff4..5bbe98dc0529b9 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3546,6 +3546,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 	struct file_allocated_range_buffer in_data, *out_data = NULL, *tmp_data;
- 	u32 out_data_len;
- 	char *buf = NULL;
-+	u64 range_start, range_len, range_end;
- 	loff_t l;
- 	int rc;
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 5583edf4852775..237e5d7eeb47c3 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -501,7 +501,7 @@ nl80211_mbssid_config_policy[NL80211_MBSSID_CONFIG_ATTR_MAX + 1] = {
+ 	[NL80211_MBSSID_CONFIG_ATTR_TX_IFINDEX] = { .type = NLA_U32 },
+ 	[NL80211_MBSSID_CONFIG_ATTR_EMA] = { .type = NLA_FLAG },
+ 	[NL80211_MBSSID_CONFIG_ATTR_TX_LINK_ID] =
+-		NLA_POLICY_MAX(NLA_U8, IEEE80211_MLD_MAX_NUM_LINKS),
++		NLA_POLICY_RANGE(NLA_U8, 0, IEEE80211_MLD_MAX_NUM_LINKS - 1),
+ };
  
-@@ -3582,13 +3583,21 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 			goto out;
- 		}
- 
--		if (off < le64_to_cpu(tmp_data->file_offset)) {
-+		range_start = le64_to_cpu(tmp_data->file_offset);
-+		range_len = le64_to_cpu(tmp_data->length);
-+		if (check_add_overflow(range_start, range_len, &range_end) ||
-+		    range_end > S64_MAX) {
-+			rc = -EINVAL;
-+			goto out;
-+		}
-+
-+		if (off < range_start) {
- 			/*
- 			 * We are at a hole. Write until the end of the region
- 			 * or until the next allocated data,
- 			 * whichever comes next.
- 			 */
--			l = le64_to_cpu(tmp_data->file_offset) - off;
-+			l = range_start - off;
- 			if (len < l)
- 				l = len;
- 			rc = smb3_simple_fallocate_write_range(xid, tcon,
-@@ -3605,11 +3614,13 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 		 * until the end of the data or the end of the region
- 		 * we are supposed to fallocate, whichever comes first.
- 		 */
--		l = le64_to_cpu(tmp_data->length);
--		if (len < l)
--			l = len;
--		off += l;
--		len -= l;
-+		if (off < range_end) {
-+			l = range_end - off;
-+			if (len < l)
-+				l = len;
-+			off += l;
-+			len -= l;
-+		}
- 
- 		tmp_data = &tmp_data[1];
- 		out_data_len -= sizeof(struct file_allocated_range_buffer);
+ static const struct nla_policy
 -- 
 2.53.0
 
