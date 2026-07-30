@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5E633D4E2;
-	Thu, 30 Jul 2026 14:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37D03C3F4C;
+	Thu, 30 Jul 2026 14:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421710; cv=none; b=XcR5vX4aJVLLnDbEWwtoWO0aN97xaicqF2+2B5wRReyz5Qa9MPMJPFjFlc469X8t1LHaQAaX09T7Eo7IRk9Hm/Ksrt9W7zul6zu6qANjnXSJvci8XD0pO534EJq0p9yXtxv3PPil8soOSmMWh4pYUAEngNN6v7GsIR8bLDNCcNY=
+	t=1785421713; cv=none; b=lt/Z0wM8N4mZ6zOsdTxQ8Egp81ZcZ1lSPq8dFHrWAMu5ezBHqT80eaCxN1PytDRb1bDGVfPmy/4+cMCi168M815tVAmBYhQbfkuIfMugJ96FArkZafVwpJBjsYiX4hAXOQpn2GrBLuNX2XFOSPb4b6xXQ6rr909mK7TH8yIYOCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421710; c=relaxed/simple;
-	bh=ipWRleEaGhi+T/K/zcvktTemg0uurV7yB3CCvg1UW6A=;
+	s=arc-20240116; t=1785421713; c=relaxed/simple;
+	bh=61NVZfJmx05aOt+mHCPdXd41kYKBbrUcdJ3Q4OvmyBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VIJBbYo8Nlmo3Pslb6hiRq5M+h6HjvJXzTv9AahbHz5udw1bvCgACwxAR0946LO270gPgx6JjXXFMVLgftbI4qNlDSuQcb2+sfoCp1xYcEUaVrNYjgZI2p4XK0Iq/Ybkx/MK2RfLwFls0el2JslzWD0hoZ016fiQ/Vm7ZbW5ZIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YELxibEM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZQWBxRlD42mHL4IZE4WwNJFiTmJMIcE14hmp+0n8dnsBD/38wCmV8l4cHZec2GEdHh9gHVUd5NNfPaI1TAYiaocK3JeWOIdpTD2d3o1cmIj/+fhNNZ0bMjBGJS9SmhcPTfpzhLO7u9dKl03awur5kj/g2pJd5OfLAke6BNAiEHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhKR7Cia; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YELxibEM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B05B1F000E9;
-	Thu, 30 Jul 2026 14:28:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhKR7Cia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397AA1F000E9;
+	Thu, 30 Jul 2026 14:28:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421708;
-	bh=kJB5HNLgBa8OBCwN2/lt/bw4o+mgpPcLlGwzZUzg5AM=;
+	s=korg; t=1785421711;
+	bh=ZDhhPoGhfhbdw4lMPy8UVpmPGhSkx/fUvc7EAnxfJHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YELxibEMuYiJG5ChBNEQZg5oI6dHn09fj4r/8AnKtbt7yc2H2yszBA7JNHagw17yw
-	 MEuPq9UB1Fo6oho7HwvVORU5RRKD3bNiRCIZRaD4c7m9LVI00mY5oZ2i3jakVjzn9l
-	 2QXFPjW7iYPXrMRPTIEa6amNrC8cMz83vHrQ/MV0=
+	b=bhKR7Cia3rB5dv/aNTiOTla9yiERIVO3Y6Y5dP084dd7d2RymrCdGwzXTKpu0LV98
+	 FlMtbcKqh/nd7FuIdaBcEVTe9q3GqVTh/X45LXskBGfs8vg3dSz2apVOK8QcWXxsS5
+	 WXwwgklZDqZSguJxxlJW/Ys/XP0l0Q7s0OAvAzMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Guanghui Yang <3497809730@qq.com>,
-	David Sterba <dsterba@suse.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 195/744] btrfs: free mapping node on duplicate reloc root insert
-Date: Thu, 30 Jul 2026 16:07:48 +0200
-Message-ID: <20260730141448.426040333@linuxfoundation.org>
+Subject: [PATCH 7.1 196/744] ASoC: tas2781: bound firmware description string parsing
+Date: Thu, 30 Jul 2026 16:07:49 +0200
+Message-ID: <20260730141448.447694654@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,45 +51,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Yang <3497809730@qq.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 6a8269b6459ed870a8156c106a0f597383907872 ]
+[ Upstream commit bc889dfcea9294a1eae7f8e2f3573a90764ae4d0 ]
 
-__add_reloc_root() allocates a mapping_node before inserting it into
-rc->reloc_root_tree.  If rb_simple_insert() finds an existing entry, it
-returns the existing rb_node and leaves the newly allocated node unlinked.
+The TAS2781 firmware parser reads several variable-length description
+strings with strlen() before checking that the string terminator is
+present inside the firmware blob. A malformed firmware image without a
+NUL terminator can therefore make the parser walk past the end of the
+firmware buffer before the later size checks run.
 
-The error path then returns -EEXIST without freeing the new node.  Since
-the node was never inserted into reloc_root_tree, the later cleanup in
-put_reloc_control() cannot find it either.
+Add a small bounded string-length helper and use it for all description
+fields that are parsed from the firmware buffer. Keep the existing size
+checks for the fixed bytes that follow each string.
 
-Free the newly allocated node before returning -EEXIST.
-
-The callers currently assert that -EEXIST should not happen, so this is a
-defensive cleanup for an unexpected duplicate insert path.  If the path is
-ever reached, the local allocation should still be released.
-
-Fixes: 57a304cfd43b ("btrfs: do not panic in __add_reloc_root")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Guanghui Yang <3497809730@qq.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 915f5eadebd2 ("ASoC: tas2781: firmware lib")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260706144540.93929-1-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/relocation.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/tas2781-fmwlib.c | 63 ++++++++++++++++++++++++++++---
+ 1 file changed, 57 insertions(+), 6 deletions(-)
 
-diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
-index 6c826be4174934..37dd9c8b352fbc 100644
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -497,6 +497,7 @@ static int __add_reloc_root(struct btrfs_root *root)
- 		btrfs_err(fs_info,
- 			    "Duplicate root found for start=%llu while inserting into relocation tree",
- 			    node->bytenr);
-+		kfree(node);
- 		return -EEXIST;
- 	}
+diff --git a/sound/soc/codecs/tas2781-fmwlib.c b/sound/soc/codecs/tas2781-fmwlib.c
+index 885e0b6fed003a..583cda1f77fa24 100644
+--- a/sound/soc/codecs/tas2781-fmwlib.c
++++ b/sound/soc/codecs/tas2781-fmwlib.c
+@@ -12,6 +12,7 @@
+ #include <linux/i2c.h>
+ #include <linux/init.h>
+ #include <linux/interrupt.h>
++#include <linux/limits.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/of_irq.h>
+@@ -1099,13 +1100,42 @@ static int tasdevice_load_block_kernel(
+ 	return 0;
+ }
  
++static int tasdevice_fw_strnlen(const struct firmware *fmw, int offset)
++{
++	const u8 *start;
++	const u8 *nul;
++	size_t remaining;
++	size_t len;
++
++	if (offset < 0 || offset >= fmw->size)
++		return -EINVAL;
++
++	start = fmw->data + offset;
++	remaining = fmw->size - offset;
++	nul = memchr(start, '\0', remaining);
++	if (!nul)
++		return -EINVAL;
++
++	len = nul - start;
++	if (len > INT_MAX)
++		return -EOVERFLOW;
++
++	return len;
++}
++
+ static int fw_parse_variable_hdr(struct tasdevice_priv
+ 	*tas_priv, struct tasdevice_dspfw_hdr *fw_hdr,
+ 	const struct firmware *fmw, int offset)
+ {
+ 	const unsigned char *buf = fmw->data;
+-	int len = strlen((char *)&buf[offset]);
++	int len;
+ 
++	len = tasdevice_fw_strnlen(fmw, offset);
++	if (len < 0) {
++		dev_err(tas_priv->dev, "%s: Description error\n", __func__);
++		offset = len;
++		goto out;
++	}
+ 	len++;
+ 
+ 	if (offset + len + 8 > fmw->size) {
+@@ -1237,7 +1267,12 @@ static int fw_parse_data(struct tasdevice_fw *tas_fmw,
+ 	memcpy(img_data->name, &data[offset], 64);
+ 	offset += 64;
+ 
+-	n = strlen((char *)&data[offset]);
++	n = tasdevice_fw_strnlen(fmw, offset);
++	if (n < 0) {
++		dev_err(tas_fmw->dev, "%s: Description error\n", __func__);
++		offset = n;
++		goto out;
++	}
+ 	n++;
+ 	if (offset + n + 2 > fmw->size) {
+ 		dev_err(tas_fmw->dev, "%s: Description error\n", __func__);
+@@ -1308,7 +1343,12 @@ static int fw_parse_program_data(struct tasdevice_priv *tas_priv,
+ 		}
+ 		offset += 64;
+ 
+-		n = strlen((char *)&buf[offset]);
++		n = tasdevice_fw_strnlen(fmw, offset);
++		if (n < 0) {
++			dev_err(tas_priv->dev, "Description err\n");
++			offset = n;
++			goto out;
++		}
+ 		/* skip '\0' and 5 unused bytes */
+ 		n += 6;
+ 		if (offset + n > fmw->size) {
+@@ -1371,7 +1411,12 @@ static int fw_parse_configuration_data(
+ 		memcpy(config->name, &data[offset], 64);
+ 		offset += 64;
+ 
+-		n = strlen((char *)&data[offset]);
++		n = tasdevice_fw_strnlen(fmw, offset);
++		if (n < 0) {
++			dev_err(tas_priv->dev, "Description err\n");
++			offset = n;
++			goto out;
++		}
+ 		n += 15;
+ 		if (offset + n > fmw->size) {
+ 			dev_err(tas_priv->dev, "Description err\n");
+@@ -2133,7 +2178,8 @@ static int fw_parse_calibration_data(struct tasdevice_priv *tas_priv,
+ {
+ 	struct tasdevice_calibration *calibration;
+ 	unsigned char *data = (unsigned char *)fmw->data;
+-	unsigned int i, n;
++	unsigned int i;
++	int n;
+ 
+ 	if (offset + 2 > fmw->size) {
+ 		dev_err(tas_priv->dev, "%s: Calibrations error\n", __func__);
+@@ -2165,7 +2211,12 @@ static int fw_parse_calibration_data(struct tasdevice_priv *tas_priv,
+ 		calibration = &(tas_fmw->calibrations[i]);
+ 		offset += 64;
+ 
+-		n = strlen((char *)&data[offset]);
++		n = tasdevice_fw_strnlen(fmw, offset);
++		if (n < 0) {
++			dev_err(tas_priv->dev, "Description err\n");
++			offset = n;
++			goto out;
++		}
+ 		/* skip '\0' and 2 unused bytes */
+ 		n += 3;
+ 		if (offset + n > fmw->size) {
 -- 
 2.53.0
 
