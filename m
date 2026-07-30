@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA023B5DEE;
-	Thu, 30 Jul 2026 15:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381462236F2;
+	Thu, 30 Jul 2026 15:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424750; cv=none; b=fHrfjkb8pqI0kkJMG38DEsDg4mgL/4boAJujftXCY1tVHCTtNNCcfopseF8UA2sEodDyuD/MAJuiBRHAckROyFwLG2unGNXuqi1k9L0qEMJIyR2z6xLUgHwcwQDnQOrdJJ5XMRwXvYuAILRT9UmDSXB3FOLzCx4sM4zL4MtGB/k=
+	t=1785424754; cv=none; b=du0Zl89z5h7VQZuEKw/vO0Q2tzRA0+jL1Z7Lz2S4ES3HgE2nElIsipdFDr5ScSN+wgbHtiu5qPHNxSBBr8P7uvkqwJJaIzwr4/krqr4a1d5kJy2bI50Rz5nre9UtRjr0AZwGgR0+KBiBkk3c4hf3cH00lqUmyHb2tyVyEBu/eNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424750; c=relaxed/simple;
-	bh=pvbAVG1Thnlx0fay+ZXPTd2yILK6FZ1t0SHJmbQPreE=;
+	s=arc-20240116; t=1785424754; c=relaxed/simple;
+	bh=UkOdhqVox4i3LqUCThwUR+q9mTUdB2fgJGEYIQnIEWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=li5epsBL5KiD73Rm/SQWyMVi+qN2QgnF/8v2zmY/aaXHzV/AYbCHBmXtqW2rmHHYLpf0wyz2Vfj8QgqEUJvgalv3Me68k5a62J9tmPcp2T3HAXySpNaXeaN/WVKe7yyYhqAkZrgnIfetuItlko4YtAABknKKkmQDNlp7+wKzTQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QLNzLJPV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qINkfhLqIVFfClBOr3NjUrnZNfdEp84T/MZAI5rA9lpX3vKOCyoGJ5Kxmm0Pfd1T7j5oU3wnn4uvS9SsCIIwu6vUDVF8ubCDZhQhV2DpGlAej8js3wUOdPB7eTSyE0H4r/su93Plepeml2toHdCJaKIRaI3NUtwkEFhzM1Xz3ZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VyM5mCHT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QLNzLJPV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D4B1F00A3A;
-	Thu, 30 Jul 2026 15:19:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VyM5mCHT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9016E1F00A3A;
+	Thu, 30 Jul 2026 15:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424749;
-	bh=Bbouk1p4iOXfbT1mUwJNQTIiI4L8bXAfrOuZqlZjPVs=;
+	s=korg; t=1785424752;
+	bh=yFKiIHfWTuYZ1+ztRb7GJ8/gCsYC4oNTKKoQ9QKG+lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QLNzLJPVeBzz7MQxX31+8MRKs/aO2HjHvUIRiuWyc9N6QcjO3mnBwAsUaN1WO0XrE
-	 diVubER9bTLDZurzMagPauj5TCw5RO/qT6v0LAqwxKW1tOqUuMDEop4JOb9i5I+uYO
-	 SHXM5g+TmjUFO0K8y6wPWBvDvkvJdu8APSDWyQyU=
+	b=VyM5mCHT71y2L0AWz57L4CoECO4ufFpW0/AjkguGQKHUr5WEEsqT9jzfxvDOudQox
+	 fBpClw73YOSUIlqDSOMyaFMszH26jWiliT5zmvd8tSGa6ZHR7d1aGGIgop5l8iJMiI
+	 G78KFo2hKItGT0Yu/J2UGp9NsdicTCKtsD9lhvkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 501/675] mptcp: decrement subflows counter on failed passive join
-Date: Thu, 30 Jul 2026 16:13:51 +0200
-Message-ID: <20260730141455.775567126@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.18 459/675] wifi: brcmfmac: make release_scratchbuffers idempotent
+Date: Thu, 30 Jul 2026 16:13:09 +0200
+Message-ID: <20260730141454.885462862@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,40 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit f3ca0ee2cc308e33896536789cbc5f3a12ca7b30 upstream.
+commit 538c51e9d124cf656f2dd0c0394a8545efc7102d upstream.
 
-mptcp_pm_allow_new_subflow() increments extra_subflows before
-__mptcp_finish_join() on the passive MP_JOIN path.
+brcmf_pcie_release_scratchbuffers() frees the shared.scratch and
+shared.ringupd DMA buffers with dma_free_coherent() but does not clear
+the pointers afterwards, unlike the sibling release_ringbuffers() which
+NULLs commonrings/flowrings/idxbuf on release.
 
-In case of race conditions, the subflow is dropped without calling
-mptcp_close_ssk(), so the counter is not rolled back.
+Both the bus_reset .reset callback (brcmf_pcie_reset) and
+brcmf_pcie_remove() call release_scratchbuffers.  When reset teardown
+has run before removal, remove's own teardown would call
+dma_free_coherent() a second time on the already-freed DMA allocation.
 
-Call mptcp_pm_close_subflow() when the join completion fails to
-decrement the subflows counter.
+NULL the pointers after free, matching release_ringbuffers(), so a later
+release observes that the allocation has already been released.  This
+patch makes repeated sequential release safe; the reset-work lifetime is
+handled separately by the following patch.
 
-Fixes: 10f6d46c943d ("mptcp: fix race between MP_JOIN and close")
+This issue was found by an in-house static analysis tool.
+
+Fixes: 4684997d9eea ("brcmfmac: reset PCIe bus on a firmware crash")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260722-net-mptcp-misc-fixes-7-2-rc5-v1-1-6fb595bc86ef@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Assisted-by: Codex:gpt-5.6
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260718024353.3147201-2-fanwu01@zju.edu.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3758,6 +3758,7 @@ bool mptcp_finish_join(struct sock *ssk)
- 	mptcp_data_unlock(parent);
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -1383,16 +1383,20 @@ fail:
+ static void
+ brcmf_pcie_release_scratchbuffers(struct brcmf_pciedev_info *devinfo)
+ {
+-	if (devinfo->shared.scratch)
++	if (devinfo->shared.scratch) {
+ 		dma_free_coherent(&devinfo->pdev->dev,
+ 				  BRCMF_DMA_D2H_SCRATCH_BUF_LEN,
+ 				  devinfo->shared.scratch,
+ 				  devinfo->shared.scratch_dmahandle);
+-	if (devinfo->shared.ringupd)
++		devinfo->shared.scratch = NULL;
++	}
++	if (devinfo->shared.ringupd) {
+ 		dma_free_coherent(&devinfo->pdev->dev,
+ 				  BRCMF_DMA_D2H_RINGUPD_BUF_LEN,
+ 				  devinfo->shared.ringupd,
+ 				  devinfo->shared.ringupd_dmahandle);
++		devinfo->shared.ringupd = NULL;
++	}
+ }
  
- 	if (!ret) {
-+		mptcp_pm_close_subflow(msk);
- err_prohibited:
- 		subflow->reset_reason = MPTCP_RST_EPROHIBIT;
- 		return false;
+ static int brcmf_pcie_init_scratchbuffers(struct brcmf_pciedev_info *devinfo)
 
 
