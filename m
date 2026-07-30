@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79E143E08D;
-	Thu, 30 Jul 2026 14:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A7403FADF1;
+	Thu, 30 Jul 2026 14:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423419; cv=none; b=mvQ9JDOdfgSv9RMWYcsjf81Nvo6HiqWCL/nop/IFWRh7awtFERyNV4RXoVKj+zY0FB5aObJ4Nwm5SxwK19pHiNzmM0VGA6+by7UFiFxxc+hy8wG6I3O0do78Y1kbNBWsInLx6Id8Jdw+c38F8IqSk+9U98SndYi9A09lLEeugrk=
+	t=1785423422; cv=none; b=PCw62tfHtrbzorKHE+EnbMvtkUbRuh82fDB6Y52T0xFuyFHWPL8LmmOz0N7ver57SsxLSuLOpGzqAoqHVfx6pgHZmJOtD3oLPe/X4UEomo9ekW02nq6jk7XykMLv8P68pRR0osGTF+Ou7FxkrU7NBpp6QWVGNg2jLcBFQmNcmMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423419; c=relaxed/simple;
-	bh=NjodDx5HyyMzXKIpZ/jDs4x2DFueykB90Co6ApAlz7I=;
+	s=arc-20240116; t=1785423422; c=relaxed/simple;
+	bh=qz69b/88JpA0fAdzWp8RCq6nDm2GB2B7fkYINScm4Jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qRQeIvxdKsfO17YNCZ37QKTjgJXtj9NH7LPiy+34WXnHjSrHc74+bCZqPY1SQ0qtgCVrlH53JDLIZsbT56U1fZXDsEfnDDD4ir4IY0QeZ2yP2iQ4Q2VEHGqX5tFxgBlUQEQMmEVnAgczpKeocPx1oiGNxw8QGyXBJyo7oC5tsd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dG+0YpXx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xos1FY7raVTk+/knCR9TiGq7Jiavc0phdKPcBwxMVaUaR0raNRtIo0vWjGNVEdDAJykEWxVJKc/dIQOkN9rhnPPCMi86U8WebkaVis+SFwUYNEbgnqVUytdbAS6Anm9jUt9nR0KsaSfMcN5jwYOE6bCwMUJHgNQVALpEmqEviEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJYETHMn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dG+0YpXx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F0DB1F000E9;
-	Thu, 30 Jul 2026 14:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJYETHMn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61F31F000E9;
+	Thu, 30 Jul 2026 14:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423418;
-	bh=8DtV6s97hdsuopXH6orGs5sLgnQjbAkSBbxKgeJoWic=;
+	s=korg; t=1785423421;
+	bh=ZskH8yywm+X6gtpUHTyki+PGXbn2mM1pXCeteOhabuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dG+0YpXxtHyri8FgTusdc79u4aQShm72jbdaY+v/8JlwW41DRiVmojiGa36walMPE
-	 IpHhWUgAv/o1fJ8M8RAdSAFuhdttU+ofTkkD3dZyQ9YAz96ZEAO92CasfCCNp2L6+o
-	 IhC7oMum+uPOaZCnGvFOwTANyNaJiM9Df4qYppjg=
+	b=JJYETHMn8Rwu4P+8Q7Ekoj2t00IhIBxZJQB23UsW33SZP4DQdUVgqkLaMMKHakqJO
+	 +4GgvIDPTRBMNQGE/B0C5F6ZLuctDlnPL1ylC78sVHoA/koYTuUdEVmb0IS63Z2bB5
+	 N1uU+K4oBFxNif4feVtByVBk2O8gAaMIP06VqwXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 038/675] IB/mad: Drop unmatched RMPP responses before reassembly
-Date: Thu, 30 Jul 2026 16:06:08 +0200
-Message-ID: <20260730141445.927802831@linuxfoundation.org>
+Subject: [PATCH 6.18 039/675] mtd: mtdswap: remove debugfs stats file on teardown
+Date: Thu, 30 Jul 2026 16:06:09 +0200
+Message-ID: <20260730141445.950094988@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,88 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit d2e52d610b9b09694261632340b801a421e0b0c5 ]
+[ Upstream commit 66fb31358108d10245b9e4ef0eef3e7d9747055e ]
 
-Kernel-handled RMPP receive processing starts reassembly for active
-DATA responses before the response is matched to an outstanding send.
-The normal match happens later, after ib_process_rmpp_recv_wc() has
-either assembled a complete message or consumed the segment.
+mtdswap_add_debugfs() creates an mtdswap_stats debugfs file under the
+per-MTD debugfs directory, but mtdswap_remove_dev() never removes it
+before freeing the mtdswap_dev.
 
-That ordering lets an unsolicited response that routes to a kernel
-RMPP agent by the high TID bits allocate or extend RMPP receive state
-before the full TID and source address are checked against a real
-request. A reordered burst can therefore reach the receive-side
-insertion path even though the response would not match any send.
+Store the returned dentry and remove it during device teardown before the
+driver-private state is freed.
 
-For kernel-handled RMPP DATA responses, require the existing
-ib_find_send_mad() match before entering RMPP reassembly. The matcher
-already checks the full TID, management class and source address/GID
-against the agent wait, backlog and in-flight send lists. If there is
-no match, drop the response without creating RMPP state.
-
-This leaves the RMPP window behavior unchanged and only rejects
-responses that have no corresponding request.
-
-Fixes: fa619a77046b ("[PATCH] IB: Add RMPP implementation")
-Assisted-by: Codex:gpt-5-5-xhigh
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/3170ff3bc389a930bb1641f2caa394a0b2241579.1780774907.git.michael.bommarito@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: a32159024620 ("mtd: Add mtdswap block driver")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/mad.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ drivers/mtd/mtdswap.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
-index 8f26bfb695861f..5150cd53d4435a 100644
---- a/drivers/infiniband/core/mad.c
-+++ b/drivers/infiniband/core/mad.c
-@@ -2031,6 +2031,24 @@ void ib_mark_mad_done(struct ib_mad_send_wr_private *mad_send_wr)
- 		change_mad_state(mad_send_wr, IB_MAD_STATE_EARLY_RESP);
+diff --git a/drivers/mtd/mtdswap.c b/drivers/mtd/mtdswap.c
+index d8f2e5be2d315e..42ff7deace80c5 100644
+--- a/drivers/mtd/mtdswap.c
++++ b/drivers/mtd/mtdswap.c
+@@ -125,6 +125,7 @@ struct mtdswap_dev {
+ 
+ 	char *page_buf;
+ 	char *oob_buf;
++	struct dentry *debugfs_stats;
+ };
+ 
+ struct mtdswap_oobdata {
+@@ -1262,7 +1263,8 @@ static int mtdswap_add_debugfs(struct mtdswap_dev *d)
+ 	if (IS_ERR_OR_NULL(root))
+ 		return -1;
+ 
+-	debugfs_create_file("mtdswap_stats", S_IRUSR, root, d, &mtdswap_fops);
++	d->debugfs_stats = debugfs_create_file("mtdswap_stats", 0400, root,
++					       d, &mtdswap_fops);
+ 
+ 	return 0;
  }
- 
-+static bool is_kernel_rmpp_data_response(struct ib_mad_agent_private *agent,
-+					 struct ib_mad_recv_wc *mad_recv_wc)
-+{
-+	const struct ib_mad_hdr *mad_hdr = &mad_recv_wc->recv_buf.mad->mad_hdr;
-+	struct ib_rmpp_mad *rmpp_mad;
-+
-+	if (!ib_mad_kernel_rmpp_agent(&agent->agent) ||
-+	    !ib_response_mad(mad_hdr) ||
-+	    !ib_is_mad_class_rmpp(mad_hdr->mgmt_class))
-+		return false;
-+
-+	rmpp_mad = (struct ib_rmpp_mad *)mad_recv_wc->recv_buf.mad;
-+
-+	return (ib_get_rmpp_flags(&rmpp_mad->rmpp_hdr) &
-+		IB_MGMT_RMPP_FLAG_ACTIVE) &&
-+	       rmpp_mad->rmpp_hdr.rmpp_type == IB_MGMT_RMPP_TYPE_DATA;
-+}
-+
- static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
- 				 struct ib_mad_recv_wc *mad_recv_wc)
+@@ -1463,6 +1465,7 @@ static void mtdswap_remove_dev(struct mtd_blktrans_dev *dev)
  {
-@@ -2050,6 +2068,18 @@ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
- 	}
+ 	struct mtdswap_dev *d = MTDSWAP_MBD_TO_MTDSWAP(dev);
  
- 	list_add(&mad_recv_wc->recv_buf.list, &mad_recv_wc->rmpp_list);
-+	if (is_kernel_rmpp_data_response(mad_agent_priv, mad_recv_wc)) {
-+		spin_lock_irqsave(&mad_agent_priv->lock, flags);
-+		mad_send_wr = ib_find_send_mad(mad_agent_priv, mad_recv_wc);
-+		spin_unlock_irqrestore(&mad_agent_priv->lock, flags);
-+
-+		if (!mad_send_wr) {
-+			ib_free_recv_mad(mad_recv_wc);
-+			deref_mad_agent(mad_agent_priv);
-+			return;
-+		}
-+	}
-+
- 	if (ib_mad_kernel_rmpp_agent(&mad_agent_priv->agent)) {
- 		mad_recv_wc = ib_process_rmpp_recv_wc(mad_agent_priv,
- 						      mad_recv_wc);
++	debugfs_remove(d->debugfs_stats);
+ 	del_mtd_blktrans_dev(dev);
+ 	mtdswap_cleanup(d);
+ 	kfree(d);
 -- 
 2.53.0
 
