@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C926402444;
-	Thu, 30 Jul 2026 14:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB01402444;
+	Thu, 30 Jul 2026 14:31:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421908; cv=none; b=hvpgdftHEL9zr1W6LHJnMuZERdA+mCo6VJiuf/ujt4BP/Gp/AM3OkjK88wN/fEflHD9tX1Hr1ZmmhEXNjkf0kwkIQK9b6Ak3sjJ/wh0MBXFit6ljbN+xvqn1gCwRvuAmd29ckLuvpZwwOzxbw+yx/jVqfjIdF8rQq4Wyr9tJMzo=
+	t=1785421911; cv=none; b=uvT+JbR7Ct+4nz0auFU25pJCSIvpCHd1kxBz0OrrdytEQ1SvbugqT4ScUw0x5EkJ5CKaR2lkkCTwx4bbgJx/9Il+iMytDDpQnIMDUTwaKwXHkcpcbpL7qL0gAVX45OzWcV23dEP58faPtU5mx2L8MCVguq3XMB/5TjbEl6mqudA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421908; c=relaxed/simple;
-	bh=5yaJ2e5XpyG9fxsqU1TcD/gXldELvxgwtptjQGjFvUs=;
+	s=arc-20240116; t=1785421911; c=relaxed/simple;
+	bh=yLzAxX7w36aawgo+i5NGk13h+v7YqUC3it0ckcSYX5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VbWBlta4vzPfZu/AKS9HfvsqS1WM3iqiJk+RCw/IBhGslSt6ZE5WEC3iI/S48tuQ8Ooml+kzMl5/ZQbI0SXb3+lQoRl8tMOBN8KjoDI5Xk3L03zlCHNxNe0DgdYR8frokipP9qW2+U6V0mzgu1b1kJ9GRQiFy0JnYe3hpsDzj0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lq79AfPY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uEHmNgI06vXfiXh/uE3bBZpb8S0mNJ5dHGPSJdjUX/rGjVnB6M2GID6UtpHuh0HC8GxPFcEQU5pSWkj3oKfNKG4Nf+VJsZzB3SbBxtxLHTYWGXLlF52U/CvyycdORsor0bJTZzKQeAYyEMU0nEp6IefQalmFXeokYvFq5D6n5KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwqLfgrN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lq79AfPY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A738B1F000E9;
-	Thu, 30 Jul 2026 14:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwqLfgrN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5FB1F000E9;
+	Thu, 30 Jul 2026 14:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421907;
-	bh=M7NBlHOb9B3ye8HwJHmYs5GIJlb3oZXFJNH3SIPS5mQ=;
+	s=korg; t=1785421910;
+	bh=jg+UGc+1d+TvcIPh29T6QJEjqdmNLgeewcQgCUFY+Lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lq79AfPY2MZTgufPOW2v5ixQMSP8pYGZzjU5DoUNXBXyrXzQR52aWE64+YpX7Lpv8
-	 dJqjfwBv6/JeJGTa37Utz8APUA6Baqd3eLGFzh+ZLsvVsVmErG+m6pEyQtDxotJXrY
-	 3vWN0V534PPQfm4hKpDfnHOp7h+IlAZ2KRIUGTCs=
+	b=CwqLfgrNRrIvOAMQzvWUKgTxn4FzLf9S/jah8f+4Dov44Sm6J3VN62lszWgfDkV0U
+	 ac/4JGf2mkGL0oPm0AJuwrRfj/LVqqqopVk+R9QrhVVI9anmU9O4nS9vlq4JZ6wjGb
+	 j9qSF/YUm44pwAZs21Q0U6YkJxW7Jcbxua0UKikQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Antoine Tenart <atenart@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Marco Baffo <marco@mandelbit.com>,
+	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 259/744] geneve: fix hint header definition wrt endianness
-Date: Thu, 30 Jul 2026 16:08:52 +0200
-Message-ID: <20260730141449.799400168@linuxfoundation.org>
+Subject: [PATCH 7.1 224/744] ovpn: fix use after free in unlock_ovpn()
+Date: Thu, 30 Jul 2026 16:08:17 +0200
+Message-ID: <20260730141449.046714689@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,48 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Marco Baffo <marco@mandelbit.com>
 
-[ Upstream commit 751bfa982b4a6de8275a552804f6971adcf08473 ]
+[ Upstream commit e1ad6fe5db719874efa45b2caf9934552e09fc43 ]
 
-Bitfields are packed differently depending on the endianness, take it into
-account in the GRO hint header definition.
+unlock_ovpn() iterates over the release_list using llist_for_each_entry()
+and drops the peer reference inside the loop body via ovpn_peer_put().
 
-Fixes: e0a12cbf262b ("geneve: add GRO hint output path")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260529144713.780938-1-atenart%40kernel.org
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260709124801.140632-1-atenart@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+If this drops the last reference, the peer is eventually freed. However,
+llist_for_each_entry() reads peer->release_entry.next in the loop advance
+expression, which runs after the body. By that time the peer may have
+already been freed, resulting in a use after free when advancing to the
+next list entry.
+
+Fix this by using llist_for_each_entry_safe(), which caches the next
+pointer before executing the loop body.
+
+Fixes: 80747caef33d ("ovpn: introduce the ovpn_peer object")
+Signed-off-by: Marco Baffo <marco@mandelbit.com>
+Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/geneve.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/net/ovpn/peer.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
-index c55bdb805a644f..e9102548ac438d 100644
---- a/drivers/net/geneve.c
-+++ b/drivers/net/geneve.c
-@@ -43,8 +43,17 @@ MODULE_PARM_DESC(log_ecn_error, "Log packets received with corrupted ECN");
- #define GENEVE_OPT_GRO_HINT_LEN		1
+diff --git a/drivers/net/ovpn/peer.c b/drivers/net/ovpn/peer.c
+index 1844d97154cea7..7dedbe54a37cfb 100644
+--- a/drivers/net/ovpn/peer.c
++++ b/drivers/net/ovpn/peer.c
+@@ -26,11 +26,12 @@ static void unlock_ovpn(struct ovpn_priv *ovpn,
+ 			 struct llist_head *release_list)
+ 	__releases(&ovpn->lock)
+ {
+-	struct ovpn_peer *peer;
++	struct ovpn_peer *peer, *next;
  
- struct geneve_opt_gro_hint {
-+#if defined(__LITTLE_ENDIAN_BITFIELD)
- 	u8	inner_proto_id:2,
--		nested_is_v6:1;
-+		nested_is_v6:1,
-+		rsvd:5;
-+#elif defined(__BIG_ENDIAN_BITFIELD)
-+	u8	rsvd:5,
-+		nested_is_v6:1,
-+		inner_proto_id:2;
-+#else
-+#error "Please fix <asm/byteorder.h>"
-+#endif
- 	u8	nested_nh_offset;
- 	u8	nested_tp_offset;
- 	u8	nested_hdr_len;
+ 	spin_unlock_bh(&ovpn->lock);
+ 
+-	llist_for_each_entry(peer, release_list->first, release_entry) {
++	llist_for_each_entry_safe(peer, next, release_list->first,
++				  release_entry) {
+ 		ovpn_socket_release(peer);
+ 		ovpn_peer_put(peer);
+ 	}
 -- 
 2.53.0
 
