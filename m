@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFF6431488;
-	Thu, 30 Jul 2026 14:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8736D439343;
+	Thu, 30 Jul 2026 14:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422312; cv=none; b=JeoZkys7CZgA+Jo1tNgfyTfGWqRtLmKSMt05UprGWMyTg2Kgo5GTq/QWOUDAJLVPbIJZ7y37Xu8uxmcFes0A4OAG09zUl3uWu/ZBFgbMbOTphtbBKQyQp8zuJFbg2vf/xtF1rbzosAdtcjfoCGqZF6mu4xa4gVpLZWxjb3wISwY=
+	t=1785422315; cv=none; b=ZKt3n3Xp4+e+Y4rOieXAAApwsGZeYG+BIIV5JjzXa3uTbSufnEht1ujBoL8qrF8aNNoO0+oAVpVIC2l8g1LjaJKcIgdT17ZYR6LMpwqouxgno7csdpH+RL6Y1v6T4SGdmyzpTpSgieXSYe620HDsG90PxnMV7/NQaFZrwSY/fxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422312; c=relaxed/simple;
-	bh=YeL711Retqa9lXuFzZdR8KEDxGyg5AB0gI+KYRTp0vw=;
+	s=arc-20240116; t=1785422315; c=relaxed/simple;
+	bh=q0xJlyj9xMfURJzdW2Sv1mJUKB27cuKlbfugAYiA0eU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VrXawWEYBusclx6TdVfdYZSXMb1V1it5Bb9vRkHvBqAWpxAvku0+LcpflXB9NW+/YgcuX3FoMOaaJskgS1LMbVh7YqLsbwojQcOrpQYMpU6XLG1+g/vo3u27tgFTJ6FM2B2mQPLjhjfRtJq4VWQM7O34ZNcg06MFwKFyZqKbpCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvalWYJv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gm9iUAnBedyB1LzCQzJfcCdpfuDS6DJEUlr30Qtwi6LCVIixlc/v4V0GIjw1OcKOvLLqukT18M9XKNE6Et8aGE+UNIsDbX8Ig4MQtw1AV/ZUC0W5vwu6kvr3R1UCzwlZSJa7dPZG6OYQKQoK2Q0i/J+aT3tCrZbBzMeo53x57f4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tG6jRV2q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvalWYJv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4291F000E9;
-	Thu, 30 Jul 2026 14:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tG6jRV2q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B6D1F000E9;
+	Thu, 30 Jul 2026 14:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422311;
-	bh=6ecE/5c1N3xaeKmhbkd+BoBORbCpku1W3Ecyy/+bIqQ=;
+	s=korg; t=1785422314;
+	bh=aTocAzyUDzzLbk2XCTqlRTAfHuMygoyQdbxAkj9Pzx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jvalWYJvqHrK3ZVwTAZ3+3jve6HqZ2yI6vJfOBBhvxrq7cUbf2rO7shZ1/aiMFuWZ
-	 Q8MjhrrhXCfw5FWyeyEfpRRqP8u9noL/HF0RC0ft/O5KLUWJ+ASpWZ0iyetntx+2iX
-	 RUk4F/LZvMjrGAHCY08GW6dcqG4Ohc1YNsur9xxs=
+	b=tG6jRV2q+mXggsLb0MsR7oEqAJCIOG6c9ljAuUWkAmJk/spXnELRlzfQ46vveBuBW
+	 UBaJKk2v8DN5g66oqGYl7JkY/0TU3gioovfTHPeV34Phb0WPlU6SSTctoYcTJn5eiX
+	 aHYu7PM4X+OIaPfA1er0I37Sz7jGxTuXnrg2R0Wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Kahola <mika.kahola@intel.com>,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Marco Nenciarini <mnencia@kcore.it>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 7.1 394/744] drm/i915/mtl+: Enable PPS before PLL
-Date: Thu, 30 Jul 2026 16:11:07 +0200
-Message-ID: <20260730141452.664248387@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 7.1 395/744] drm/nouveau/acr: fix missing nvkm_done() in error path of nvkm_acr_oneinit()
+Date: Thu, 30 Jul 2026 16:11:08 +0200
+Message-ID: <20260730141452.685862818@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -48,75 +44,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Imre Deak <imre.deak@intel.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 062499cc4813b5a3cbed5dd4fbe0177265858450 upstream.
+commit c3027973f692077a1b66a9fb26d6a7c46c0dc72c upstream.
 
-Enabling PPS after a display port's PLL is enabled leads to PLL / DDI
-BUF timeouts during system resuming after a long (> 45 mins) suspended
-state, at least on some ARL and MTL laptops, either all or some of them
-also containing an Nvidia GPU. Enabling PPS first and then the PLL fixes
-the problem for all the reporters.
+In nvkm_acr_oneinit(), nvkm_kmap(acr->wpr) is invoked unconditionally
+at line 309 to obtain a mapping reference. Additionally, when both
+acr->wpr_fw and acr->wpr_comp are present, a second nvkm_kmap() is
+called inside the conditional block. Both mappings are expected to be
+released by nvkm_done(acr->wpr) at line 320 before the function returns
+successfully.
 
-A similar issue is seen when enabling an external DP output on PHY B
-(vs. PHY A in the above eDP cases), where this change will not have any
-effect (since no PPS is used in that case). There isn't any direct
-connection between PPS and PLL, so the fix for eDP works by some
-side-effect only. However Bspec does seem to require enabling PPS first,
-so let's do that. Further investigation continues on the actual root
-cause and a cure for external panels.
+However, when a mismatch is detected during the loop within the
+conditional block, the function returns -EINVAL at line 318 without
+calling nvkm_done(). This results in a leak of the kmap reference(s)
+acquired earlier.
 
-Fixes: 1a7fad2aea74 ("drm/i915/cx0: Enable dpll framework for MTL+")
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/16098
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/16064
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/16042
-Cc: Mika Kahola <mika.kahola@intel.com>
-Cc: stable@vger.kernel.org # v7.0+
-Tested-by: Jouni Högander <jouni.hogander@intel.com>
-Tested-by: Marco Nenciarini <mnencia@kcore.it>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patch.msgid.link/20260612172617.3427027-1-imre.deak@intel.com
-(cherry picked from commit 28783a274e886dd6da61419be6020bd9d0384e9f)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fix the issue by invoking nvkm_done(acr->wpr) prior to the early return
+to ensure proper release of the mapping references.
+
+Fixes: 22dcda45a3d1 ("drm/nouveau/acr: implement new subdev to replace "secure boot"")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260606155606.77593-1-vulab@iscas.ac.cn
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_ddi.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/i915/display/intel_ddi.c
-+++ b/drivers/gpu/drm/i915/display/intel_ddi.c
-@@ -2652,9 +2652,6 @@ static void mtl_ddi_pre_enable_dp(struct
- 	/* 3. Select Thunderbolt */
- 	mtl_port_buf_ctl_io_selection(encoder);
- 
--	/* 4. Enable Panel Power if PPS is required */
--	intel_pps_on(intel_dp);
--
- 	/* 5. Enable the port PLL */
- 	intel_ddi_enable_clock(encoder, crtc_state);
- 
-@@ -3710,6 +3707,14 @@ intel_ddi_pre_pll_enable(struct intel_at
- 	else if (display->platform.geminilake || display->platform.broxton)
- 		bxt_dpio_phy_set_lane_optim_mask(encoder,
- 						 crtc_state->lane_lat_optim_mask);
-+
-+	/*
-+	 * There is no direct connection between the PLL and PPS, however
-+	 * enabling PPS before PLL is required to avoid PLL/DDI BUF timeouts
-+	 * during system resume. Do that matching the Bspec order as well.
-+	 */
-+	if (DISPLAY_VER(display) >= 14)
-+		intel_pps_on(&dig_port->dp);
- }
- 
- static void adlp_tbt_to_dp_alt_switch_wa(struct intel_encoder *encoder)
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c
+@@ -315,6 +315,7 @@ nvkm_acr_oneinit(struct nvkm_subdev *sub
+ 					  i, us, fw);
+ 			}
+ 		}
++		nvkm_done(acr->wpr);
+ 		return -EINVAL;
+ 	}
+ 	nvkm_done(acr->wpr);
 
 
