@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A50346FD2;
-	Thu, 30 Jul 2026 14:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7CE42E8FF;
+	Thu, 30 Jul 2026 14:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421449; cv=none; b=e8IZKOSNf9Z07YkCSfzFKbWKNdSL09Ed33R9u4fnnePQWs1SNLDet0VtRnudCQoyt98WHmkpRLW6GRDHmZ4SizWzv6Cqunbndchm47HgJlyU96XhO3rHqon/4SiuYtpwSvRdFR1y0y71mndwjjGLsdyTvCMckdaEhTwmC0VXb/8=
+	t=1785421452; cv=none; b=uPQDq7XuDVfcr99oq9IC+g9u7omqkhIzleeVNOeqjMQh6yH0E/uUO3HyBRRjjOoH+3l4/2rQAII5Vc4ItzjPmEfLR7gxutsSHw4dGhXR83AQ62042KMd1G8gAm/RJKgkTUqudoiJlbOuZ4ZPp0xHWXHPCB2Fw7CqLLCnR6B8KdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421449; c=relaxed/simple;
-	bh=APWdGz3K2YAIBvGGvTGvkvSTH3gfvlhIyEuQ9qKGwfU=;
+	s=arc-20240116; t=1785421452; c=relaxed/simple;
+	bh=jA2JC9sjLidB6UeIEsctzivvIolggMJ5ee8ZXYyD6SU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mh1M7RTzObFHVhGaU7fEZk0GVp/xaCFCvaZ1WJ8WQTuuA7C/gXSygtOjB1FqEMN4IFiFCd8FtzHHiHlhlY4mfyH9HosHJM+GyNb2JkkO3RUEzGpOu3k1XJR48PtqyWzYLk/M47gaXg38z6c/QM1GtBxNilsF71OlwBeDuPcgJdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SYxVSPOE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GMBPW8tYCsag7qnDRYPOnqKn3WU/7LfvDYN8qNoHlWrP9Uy97sMUwV530drmvSZZ6wLN9TZ8aseCsb50/8JNYYvENSVxbK6SVd+BeoPdfJeGiPRj83rHiNyKfAkFj2vKdMIOR4f3sH+0iM/7y62e9kMTJ2oKcNw4AMzyPzncT6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MRbiYhwJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SYxVSPOE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701F91F000E9;
-	Thu, 30 Jul 2026 14:24:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRbiYhwJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0A71F000E9;
+	Thu, 30 Jul 2026 14:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421448;
-	bh=hOusZO2mZF12XdTe2ygVaLbXNk3m9Xbr1w4GBQCORwk=;
+	s=korg; t=1785421451;
+	bh=W6jKLcTiuYWCfy61+b5i+yjwpJt4anu4XsWGUEddf3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SYxVSPOEb6oOVwzLb5pTtFI+e4Uu/8yYtKfB1IvnNXq/9sHcR/SGvpN048uoVZG4b
-	 0Hdv+6c9VKU02e+3T0B+ZRjbTjWQ2aTi27L8saSh2m33NHmhlpX0k2Ad0cKWpyzVWR
-	 d6nzC8oOtsWH4i8B29DLAfsulPFI7WLnkvWz6Wjo=
+	b=MRbiYhwJt35j15rYUzaCWtIpWkyZMkjuwDkKIPrvF2Ciy1yq4UTB+Ohzgt9gJ49ZJ
+	 ZBRJzWkbcdE4YJmsWsD8R4ANA9Fb9jMrDhnUNeTzw15GTzyXno7KKbld9g8OkrjwXW
+	 BszgG0B9ZCmVG+mdaLeGkpnbW9idaUlkwrQ1vWUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alberto Salvia Novella <es20490446e@gmail.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Yifan Zhao <zhaoyifan28@huawei.com>
-Subject: [PATCH 7.1 080/744] erofs: relax sanity check for tail pclusters due to ztailpacking
-Date: Thu, 30 Jul 2026 16:05:53 +0200
-Message-ID: <20260730141445.972169359@linuxfoundation.org>
+	Huiwen He <hehuiwen@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 107/744] smb/client: handle overlapping allocated ranges in fallocate
+Date: Thu, 30 Jul 2026 16:06:20 +0200
+Message-ID: <20260730141446.552247512@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,43 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit d3386e17393bec1341cfeedb9d08d6846ccd6fb2 ]
+[ Upstream commit b09ae45d85dc816987a71db9eebc54b0ae288e94 ]
 
-If the tail data can be inlined into the inode meta block, it should
-be converted into a regular tail pcluster.
+smb3_simple_fallocate_range() can skip holes when an allocated range
+returned by the server starts before the current fallocate offset. The
+skipped hole is not zero-filled, but fallocate still returns success. A
+later write to that hole may therefore fail with ENOSPC.
 
-In principle, it should be converted into an uncompressed pcluster if
-there is not enough gain to use compression (map->m_llen < map->m_plen);
-but since there are various shipped images, relax the condition for
-ztailpacking tail pcluster fallback instead of reporting corruption
-incorrectly.
+The function queries allocated ranges so that it can preserve existing
+contents and write zeroes only into holes. However, the server may return
+a range that starts before the current fallocate offset.
 
-Reported-and-tested-by: Yifan Zhao <zhaoyifan28@huawei.com>
-Reported-by: Alberto Salvia Novella <es20490446e@gmail.com>
-Closes: https://github.com/erofs/erofs-utils/issues/51
-Fixes: a5242d37c83a ("erofs: error out obviously illegal extents in advance")
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+For example, assume the fallocate request is [100, 400) and the only
+allocated range returned by the server is [0, 200):
+
+        Request:      [100, 400)
+        Server range: [  0, 200)  allocated
+
+        Correct:
+        [100, 200)    allocated data, skip
+        [200, 400)    hole, zero-fill
+
+        Current:
+        [100, 300)    skipped
+        [300, 400)    zero-filled afterwards
+
+The current code adds the full server range length, 200, to the current
+offset 100 and moves to 300. As a result, the hole in [200, 300) is
+skipped without being zero-filled.
+
+Fix this by advancing only over the part of the allocated range that
+overlaps the current fallocate offset.  Ignore ranges that end before the
+current offset and reject ranges whose end offset overflows.
+
+This also prevents a malformed range length from causing an out-of-bounds
+zero-buffer read.
+
+Fixes: 966a3cb7c7db ("cifs: improve fallocate emulation")
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zmap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/smb/client/smb2ops.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
-index e1a02a2c8406bf..53e8a9f2fb9109 100644
---- a/fs/erofs/zmap.c
-+++ b/fs/erofs/zmap.c
-@@ -721,7 +721,8 @@ static int z_erofs_map_sanity_check(struct inode *inode,
- 				  map->m_algorithmformat, EROFS_I(inode)->nid);
- 			return -EFSCORRUPTED;
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 02c2f83353e27a..6f843c8b83f3a8 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3581,6 +3581,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 	struct file_allocated_range_buffer in_data, *out_data = NULL, *tmp_data;
+ 	u32 out_data_len;
+ 	char *buf = NULL;
++	u64 range_start, range_len, range_end;
+ 	loff_t l;
+ 	int rc;
+ 
+@@ -3617,13 +3618,21 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 			goto out;
  		}
--		if (EROFS_MAP_FULL(map->m_flags) && map->m_llen < map->m_plen) {
-+		if (EROFS_MAP_FULL(map->m_flags) && map->m_llen < map->m_plen &&
-+		    map->m_la + map->m_llen < inode->i_size) {
- 			erofs_err(inode->i_sb, "too much compressed data @ la %llu of nid %llu",
- 				  map->m_la, EROFS_I(inode)->nid);
- 			return -EFSCORRUPTED;
+ 
+-		if (off < le64_to_cpu(tmp_data->file_offset)) {
++		range_start = le64_to_cpu(tmp_data->file_offset);
++		range_len = le64_to_cpu(tmp_data->length);
++		if (check_add_overflow(range_start, range_len, &range_end) ||
++		    range_end > S64_MAX) {
++			rc = -EINVAL;
++			goto out;
++		}
++
++		if (off < range_start) {
+ 			/*
+ 			 * We are at a hole. Write until the end of the region
+ 			 * or until the next allocated data,
+ 			 * whichever comes next.
+ 			 */
+-			l = le64_to_cpu(tmp_data->file_offset) - off;
++			l = range_start - off;
+ 			if (len < l)
+ 				l = len;
+ 			rc = smb3_simple_fallocate_write_range(xid, tcon,
+@@ -3640,11 +3649,13 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 		 * until the end of the data or the end of the region
+ 		 * we are supposed to fallocate, whichever comes first.
+ 		 */
+-		l = le64_to_cpu(tmp_data->length);
+-		if (len < l)
+-			l = len;
+-		off += l;
+-		len -= l;
++		if (off < range_end) {
++			l = range_end - off;
++			if (len < l)
++				l = len;
++			off += l;
++			len -= l;
++		}
+ 
+ 		tmp_data = &tmp_data[1];
+ 		out_data_len -= sizeof(struct file_allocated_range_buffer);
 -- 
 2.53.0
 
