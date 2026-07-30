@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8BC12E9EC7;
-	Thu, 30 Jul 2026 16:08:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C093D2E9EC7;
+	Thu, 30 Jul 2026 16:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427698; cv=none; b=cHY4ZI3QPXR3FRCb2TUh6cH7ywskIjfTPVrglJ4IV8s8+PKrIzbzp5VkZ6NE4hf94MfQ3xsnB7wt9uTjAR1ErFpskGOQ5EmuJR4hzlq5ixc+/2WXBNZV3Q5MIc6raOO+rVB64tzaMcOiP1crNgv/qKJxz0V/cxE1KLY4ohZZc8Q=
+	t=1785427700; cv=none; b=dJQX3i7frRHMOV/7ZWOcRXNG2srVgyU1DbRPMGtSCnwmJcSs5NigDrHFT/lg9z3tB39e7HsWGez+ecQjTvzgNDyyge52ePH7Ux5jAZ5AghJApVQObJf+8bL33zl1ZxFFudGq08AOAB9EnHb8w/hhzTYXB+3vh/gEEWqxJM6sKvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427698; c=relaxed/simple;
-	bh=nFQhuyN0GBhWNxI9q9FBgIjLA1w8wmMElQcxWgPKG0A=;
+	s=arc-20240116; t=1785427700; c=relaxed/simple;
+	bh=Rv/UcqFS9oYyK5Y+EMVJIhFeRKrZofQYjPWcsnXWwH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kyigPdVfJKaB9kBuUG3N5suSdpVrwuYIYaX8uFfQ7r/kiZKWTSptZMJcK/h6eMmrvJ/evpYxiQ0a9n3vIagMPRUNjjZXFnUMltFuOXBhoZpqPzhPjq91X+SJtyXv/xkA81Y32VyL44vKmUbQLBt0LA4DlnSNZ//chFXNkMtdTaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k5yUDkRX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lF4gYQsb8P7NQjmms4A32htNnrawUBYDo0QrKw8iq+Mveh+g9w6vGXtzhSSscebo3T37FzDm/s3G4+jUoyMFdITOfPu2qK2nnE9G4lvtwFrS4+80+uyxeiKXykmjEB0g/Q2doKtqYiPT4oz+WFBs2uqcvxx0+FHSM4/T12GdwwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rd4F/WGd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k5yUDkRX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595F51F00A3A;
-	Thu, 30 Jul 2026 16:08:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rd4F/WGd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292EA1F000E9;
+	Thu, 30 Jul 2026 16:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427695;
-	bh=6aEVzsq7VEB05ZMWUP8Fk02hDIV3e0aCYz6VwKnIOWU=;
+	s=korg; t=1785427698;
+	bh=5qanoXFBWo26pfccQR1k7Owuic/RmUsBFnFHYNnMs5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k5yUDkRX5fdQN3v1lfqO/TmdRRfA39PM2st1VPOHLkVinR+94Tj1pwV/5IMDsbd10
-	 qD9DVuEf4hVEp++8JR9Yod2G2MIoOpm9mwTxYJDPHTLWVGYDxeVgkymvS0c/ZScBn8
-	 iQXKxnfUmOfutO6fNf2E8jgUiCdZUgWN3utbYwtg=
+	b=Rd4F/WGdJu17S2c1oHBlIJ7+Ae4qBhLCe7B7WUcFzvx0ag0NZBzim677SXnBDl8hW
+	 t6/U2yRaIOSL1lqqRfpbk7NjcAMWnZQTBYuOdXBfWYPiaDe0wFoEEhp3SccHZa+S4A
+	 AqF3cY3bF1NTiN2mGaLWuY7QJkxUD8Td/zwSQZZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Yemike Abhilash Chandra <y-abhilashchandra@ti.com>,
+	Sergey Shtylyov <s.shtylyov@auroraos.dev>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 260/484] media: ti: vpe: unwind v4l2 device registration on probe error
-Date: Thu, 30 Jul 2026 16:12:37 +0200
-Message-ID: <20260730141429.138646895@linuxfoundation.org>
+Subject: [PATCH 6.6 261/484] media: v4l2-ctrls-request: add NULL check in v4l2_ctrl_request_complete()
+Date: Thu, 30 Jul 2026 16:12:38 +0200
+Message-ID: <20260730141429.161008707@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,41 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Sergey Shtylyov <s.shtylyov@auroraos.dev>
 
-commit e0f1c9a90ef665f2587c274a8fed59f2dfc575a6 upstream.
+commit caced3578bf9f104a4aaad8f46c4c719e705d9a6 upstream.
 
-If the vpe_top resource is missing, vpe_probe() returns -ENODEV after
-v4l2_device_register() has succeeded. Probe failures do not call the
-driver's remove callback, so the v4l2 device remains registered on that
-error path.
+If CONFIG_MEDIA_CONTROLLER is undefined, media_request_object_find() will
+always return NULL, so its 2nd call in v4l2_ctrl_request_complete() would
+fail as well as the 1st one and thus cause hdl to have a wrong value (at
+the top of memory) and list_for_each_entry() to iterate over the garbage
+data located there. Add NULL check for the 2nd call and place the error
+cleanup at the end of v4l2_ctrl_request_complete()...
 
-Route that failure through the existing v4l2_device_unregister() unwind
-label, matching the other errors after v4l2_device_register().
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
 
-Fixes: 4d59c7d45585 ("media: ti-vpe: vpe: Add missing null pointer checks")
+Fixes: c3bf5129f339 ("media: v4l2-ctrls: always copy the controls on completion")
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
+Signed-off-by: Sergey Shtylyov <s.shtylyov@auroraos.dev>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/ti/vpe/vpe.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/v4l2-core/v4l2-ctrls-request.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/drivers/media/platform/ti/vpe/vpe.c
-+++ b/drivers/media/platform/ti/vpe/vpe.c
-@@ -2545,7 +2545,8 @@ static int vpe_probe(struct platform_dev
- 						"vpe_top");
- 	if (!dev->res) {
- 		dev_err(&pdev->dev, "missing 'vpe_top' resources data\n");
--		return -ENODEV;
-+		ret = -ENODEV;
-+		goto v4l2_dev_unreg;
+--- a/drivers/media/v4l2-core/v4l2-ctrls-request.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls-request.c
+@@ -348,13 +348,12 @@ void v4l2_ctrl_request_complete(struct m
+ 		ret = v4l2_ctrl_handler_init(hdl, (main_hdl->nr_of_buckets - 1) * 8);
+ 		if (!ret)
+ 			ret = v4l2_ctrl_request_bind(req, hdl, main_hdl);
+-		if (ret) {
+-			v4l2_ctrl_handler_free(hdl);
+-			kfree(hdl);
+-			return;
+-		}
++		if (ret)
++			goto error;
+ 		hdl->request_is_queued = true;
+ 		obj = media_request_object_find(req, &req_ops, main_hdl);
++		if (!obj)
++			goto error;
  	}
+ 	hdl = container_of(obj, struct v4l2_ctrl_handler, req_obj);
  
- 	/*
+@@ -389,6 +388,11 @@ void v4l2_ctrl_request_complete(struct m
+ 	mutex_unlock(main_hdl->lock);
+ 	media_request_object_complete(obj);
+ 	media_request_object_put(obj);
++	return;
++
++error:
++	v4l2_ctrl_handler_free(hdl);
++	kfree(hdl);
+ }
+ EXPORT_SYMBOL(v4l2_ctrl_request_complete);
+ 
 
 
