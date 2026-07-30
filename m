@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2B9299929;
-	Thu, 30 Jul 2026 15:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7A8382F23;
+	Thu, 30 Jul 2026 15:30:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425421; cv=none; b=f+DJizTK40PfRqhzTjzsR2vVKCTCYZk32fg4jWfcShGmeFjXd9xDCGLW1N7F097pwzDcjTS5yaaqcXS3OGHI9KDUoK/abVKK+2OqWXzi39TAAibdWUm+25t96L6/ZbXPf8wH5t00wQuBV0AcdH2WFgaeOCrXJyaL8IyjNCam2m0=
+	t=1785425423; cv=none; b=SgNuaU4iDegj1yYm/WYPQm77harCn38eqKqzZGiJRbsABpm/UV1Uf2d1RFWinCsSnKbHkXSBHQYg3mTlEyZzIsJf2AXUNn4Y5X+gNwufVUZKW5GuKIzTuAICglwVmyPmby/2VWtit8x4lxY0xB2fhFQmzFT1wpEJVdmMz7km4IE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425421; c=relaxed/simple;
-	bh=WLFKnw5+gL0/aT8ST+1UD/Ody8oJBn/YTijJkt6NO8A=;
+	s=arc-20240116; t=1785425423; c=relaxed/simple;
+	bh=POt/gqZly9gyuGpy5HstKiiPO4w0TX+QfgAk4R7WCKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fDTqN142eOMXM41Ozn+/kZo7ZD/sj6uiW5Wf3ooeAnAjMggIINa9pRPeH/nsolCaNGGPbowdNtlXy7D4AKoq4aE0NiKIGGQBS3brN/wj0nl+l2EpoRX8LzuiIg2eGgnBoAbKrX4HpYAlKNald45GND2hoEmq8bYQpNYstLEzyC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w4Pc/IGa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qyNLnC+zLk26zcY/jTBd1PaegcKTYW3NiEeCJR8Z6yi6U6m0yc8p9lVpagHoPPKsdUui7FevKp31yc1GVXunOCGHcSSVi6wo/g377EsI9nDR7isHASLNVPP9tlHKdGdrr2b50VZkCFUAq3J23f9im/SL92tuWiacFO4kP88m5ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T9uFewic; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w4Pc/IGa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4141F000E9;
-	Thu, 30 Jul 2026 15:30:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T9uFewic"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 501801F00A3A;
+	Thu, 30 Jul 2026 15:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425415;
-	bh=1jCYDy54X91xwt/PSp7EPea1mAY7LI7dAC231VHeGMs=;
+	s=korg; t=1785425417;
+	bh=mX9X6w4RFH4luPoDnGpmbUm2wPRRUQnrsKntXVYmVTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w4Pc/IGamF6cTlQ4D145guyo1SnCUrjmhnl7AnAbbywtFbqcLqqnH4nrF06rmhZyP
-	 uViJc3iHECyxfvjDLpuaabNGEQYNU2R7xgfqZwxHRFLTG3bNU8xEaoQdPakaOEp+Nd
-	 ww0rOaa1jHOorn/zl32GyBAQYJxL7KUubgK475YQ=
+	b=T9uFewickyf2kFRtqHH7pZykCkgpQGv35GQOO/3mxEf76oyXON+ywF1TKS1tH/FUj
+	 ReCEuM6SMEgkejg6GecLj5qPmy326u7MGV3iMb9w/2th+/ja75nIqg8ERwlQb79huv
+	 iMFG/q+Rgl/lIJj4vxANjba92En2psFQWM1old30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Christian Lamparter <chunkeey@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 061/602] wifi: p54: validate RX frame length in p54_rx_eeprom_readback()
-Date: Thu, 30 Jul 2026 16:07:33 +0200
-Message-ID: <20260730141437.285063312@linuxfoundation.org>
+Subject: [PATCH 6.12 062/602] wifi: cfg80211: pass net_device to .set_monitor_channel
+Date: Thu, 30 Jul 2026 16:07:34 +0200
+Message-ID: <20260730141437.305946697@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,78 +51,209 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit ebd6d37fa94bee929e0b4c9ca19fdf9b1dcf6cea ]
+[ Upstream commit 9c4f830927750a2bf9fd9426a5257f0fdce3b662 ]
 
-p54_rx_eeprom_readback() copies the requested EEPROM slice out of a
-device-supplied readback frame without checking that the skb actually holds
-that many bytes. Commit da1b9a55ff11 ("wifi: p54: prevent buffer-overflow in
-p54_rx_eeprom_readback()") closed the destination overflow by copying a
-fixed priv->eeprom_slice_size (and rejecting a mismatched advertised len),
-but the source side is still unbounded: nothing verifies the frame is long
-enough to supply that many bytes.
+Preparation for allowing multiple monitor interfaces with different channels
+on a multi-radio wiphy.
 
-A malicious USB device can send a short frame whose advertised len matches
-priv->eeprom_slice_size while the payload is truncated. The equality check
-passes and memcpy() reads past the end of the skb, leaking adjacent heap:
-
-  BUG: KASAN: slab-out-of-bounds in p54_rx (drivers/net/wireless/intersil/p54/txrx.c:507)
-  Read of size 1016 at addr ffff88800f077114 by task swapper/0/0
-  Call Trace:
-   <IRQ>
-   ...
-   __asan_memcpy (mm/kasan/shadow.c:105)
-   p54_rx (drivers/net/wireless/intersil/p54/txrx.c:507)
-   p54u_rx_cb (drivers/net/wireless/intersil/p54/p54usb.c:163)
-   __usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1657)
-   dummy_timer (drivers/usb/gadget/udc/dummy_hcd.c:2005)
-   ...
-   </IRQ>
-
-  The buggy address belongs to the object at ffff88800f0770c0
-   which belongs to the cache skbuff_small_head of size 704
-  The buggy address is located 84 bytes inside of
-   allocated 704-byte region [ffff88800f0770c0, ffff88800f077380)
-
-Check that the slice fits in the skb before copying.
-
-Fixes: 7cb770729ba8 ("p54: move eeprom code into common library")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Acked-by: Christian Lamparter <chunkeey@gmail.com>
-Link: https://patch.msgid.link/20260628000510.4152481-1-xmei5@asu.edu
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://patch.msgid.link/35fa652dbfebf93343f8b9a08fdef0467a2a02dc.1728462320.git-series.nbd@nbd.name
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: 2b0eab425e1f ("wifi: cfg80211: convert pmsr_free_wk to wiphy_work to fix deadlock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intersil/p54/txrx.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/wireless/ath/wil6210/cfg80211.c        |  1 +
+ drivers/net/wireless/marvell/libertas/cfg.c        |  1 +
+ drivers/net/wireless/microchip/wilc1000/cfg80211.c |  3 ++-
+ include/net/cfg80211.h                             |  1 +
+ net/mac80211/cfg.c                                 |  1 +
+ net/wireless/chan.c                                |  3 ++-
+ net/wireless/core.h                                |  1 +
+ net/wireless/nl80211.c                             |  2 +-
+ net/wireless/rdev-ops.h                            |  5 +++--
+ net/wireless/trace.h                               | 10 ++++++----
+ net/wireless/wext-compat.c                         |  2 +-
+ 11 files changed, 20 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/intersil/p54/txrx.c b/drivers/net/wireless/intersil/p54/txrx.c
-index 2deb1bb54f24bd..dc7bf54e30bba1 100644
---- a/drivers/net/wireless/intersil/p54/txrx.c
-+++ b/drivers/net/wireless/intersil/p54/txrx.c
-@@ -499,11 +499,19 @@ static void p54_rx_eeprom_readback(struct p54_common *priv,
- 		if (le16_to_cpu(eeprom->v2.len) != priv->eeprom_slice_size)
- 			return;
+diff --git a/drivers/net/wireless/ath/wil6210/cfg80211.c b/drivers/net/wireless/ath/wil6210/cfg80211.c
+index e8f1d30a8d73c5..a1a0a9223e74ac 100644
+--- a/drivers/net/wireless/ath/wil6210/cfg80211.c
++++ b/drivers/net/wireless/ath/wil6210/cfg80211.c
+@@ -1493,6 +1493,7 @@ int wil_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ }
  
-+		if (eeprom->v2.data + priv->eeprom_slice_size >
-+		    skb_tail_pointer(skb))
-+			return;
-+
- 		memcpy(priv->eeprom, eeprom->v2.data, priv->eeprom_slice_size);
- 	} else {
- 		if (le16_to_cpu(eeprom->v1.len) != priv->eeprom_slice_size)
- 			return;
+ static int wil_cfg80211_set_channel(struct wiphy *wiphy,
++				    struct net_device *dev,
+ 				    struct cfg80211_chan_def *chandef)
+ {
+ 	struct wil6210_priv *wil = wiphy_to_wil(wiphy);
+diff --git a/drivers/net/wireless/marvell/libertas/cfg.c b/drivers/net/wireless/marvell/libertas/cfg.c
+index 37bb788f83e36e..309556541a83ed 100644
+--- a/drivers/net/wireless/marvell/libertas/cfg.c
++++ b/drivers/net/wireless/marvell/libertas/cfg.c
+@@ -486,6 +486,7 @@ static int lbs_add_wps_enrollee_tlv(u8 *tlv, const u8 *ie, size_t ie_len)
+  */
  
-+		if (eeprom->v1.data + priv->eeprom_slice_size >
-+		    skb_tail_pointer(skb))
-+			return;
-+
- 		memcpy(priv->eeprom, eeprom->v1.data, priv->eeprom_slice_size);
+ static int lbs_cfg_set_monitor_channel(struct wiphy *wiphy,
++				       struct net_device *dev,
+ 				       struct cfg80211_chan_def *chandef)
+ {
+ 	struct lbs_private *priv = wiphy_priv(wiphy);
+diff --git a/drivers/net/wireless/microchip/wilc1000/cfg80211.c b/drivers/net/wireless/microchip/wilc1000/cfg80211.c
+index eb37b228d54ea0..9977be0020fe76 100644
+--- a/drivers/net/wireless/microchip/wilc1000/cfg80211.c
++++ b/drivers/net/wireless/microchip/wilc1000/cfg80211.c
+@@ -231,6 +231,7 @@ struct wilc_vif *wilc_get_wl_to_vif(struct wilc *wl)
+ }
+ 
+ static int set_channel(struct wiphy *wiphy,
++		       struct net_device *dev,
+ 		       struct cfg80211_chan_def *chandef)
+ {
+ 	struct wilc *wl = wiphy_priv(wiphy);
+@@ -1424,7 +1425,7 @@ static int start_ap(struct wiphy *wiphy, struct net_device *dev,
+ 	struct wilc_vif *vif = netdev_priv(dev);
+ 	int ret;
+ 
+-	ret = set_channel(wiphy, &settings->chandef);
++	ret = set_channel(wiphy, dev, &settings->chandef);
+ 	if (ret != 0)
+ 		netdev_err(dev, "Error in setting channel\n");
+ 
+diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
+index 96121dc14e8263..f1710d7af6656b 100644
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -4699,6 +4699,7 @@ struct cfg80211_ops {
+ 					     struct ieee80211_channel *chan);
+ 
+ 	int	(*set_monitor_channel)(struct wiphy *wiphy,
++				       struct net_device *dev,
+ 				       struct cfg80211_chan_def *chandef);
+ 
+ 	int	(*scan)(struct wiphy *wiphy,
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index b9ed82b8321a6a..cfd02f48935450 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -893,6 +893,7 @@ static int ieee80211_get_station(struct wiphy *wiphy, struct net_device *dev,
+ }
+ 
+ static int ieee80211_set_monitor_channel(struct wiphy *wiphy,
++					 struct net_device *dev,
+ 					 struct cfg80211_chan_def *chandef)
+ {
+ 	struct ieee80211_local *local = wiphy_priv(wiphy);
+diff --git a/net/wireless/chan.c b/net/wireless/chan.c
+index c4f3fefeb35444..eb8826e33d1757 100644
+--- a/net/wireless/chan.c
++++ b/net/wireless/chan.c
+@@ -1634,6 +1634,7 @@ bool cfg80211_reg_check_beaconing(struct wiphy *wiphy,
+ EXPORT_SYMBOL(cfg80211_reg_check_beaconing);
+ 
+ int cfg80211_set_monitor_channel(struct cfg80211_registered_device *rdev,
++				 struct net_device *dev,
+ 				 struct cfg80211_chan_def *chandef)
+ {
+ 	if (!rdev->ops->set_monitor_channel)
+@@ -1641,7 +1642,7 @@ int cfg80211_set_monitor_channel(struct cfg80211_registered_device *rdev,
+ 	if (!cfg80211_has_monitors_only(rdev))
+ 		return -EBUSY;
+ 
+-	return rdev_set_monitor_channel(rdev, chandef);
++	return rdev_set_monitor_channel(rdev, dev, chandef);
+ }
+ 
+ bool cfg80211_any_usable_channels(struct wiphy *wiphy,
+diff --git a/net/wireless/core.h b/net/wireless/core.h
+index d4b26cbe3342d0..a60883b6e43105 100644
+--- a/net/wireless/core.h
++++ b/net/wireless/core.h
+@@ -517,6 +517,7 @@ static inline unsigned int elapsed_jiffies_msecs(unsigned long start)
+ }
+ 
+ int cfg80211_set_monitor_channel(struct cfg80211_registered_device *rdev,
++				 struct net_device *dev,
+ 				 struct cfg80211_chan_def *chandef);
+ 
+ int ieee80211_get_ratemask(struct ieee80211_supported_band *sband,
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 15a8237f79bffa..90ff3ee8df6122 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -3568,7 +3568,7 @@ static int __nl80211_set_channel(struct cfg80211_registered_device *rdev,
+ 	case NL80211_IFTYPE_MESH_POINT:
+ 		return cfg80211_set_mesh_channel(rdev, wdev, &chandef);
+ 	case NL80211_IFTYPE_MONITOR:
+-		return cfg80211_set_monitor_channel(rdev, &chandef);
++		return cfg80211_set_monitor_channel(rdev, dev, &chandef);
+ 	default:
+ 		break;
  	}
+diff --git a/net/wireless/rdev-ops.h b/net/wireless/rdev-ops.h
+index f5adbf6b5c846c..adb6105bbb7d1d 100644
+--- a/net/wireless/rdev-ops.h
++++ b/net/wireless/rdev-ops.h
+@@ -445,11 +445,12 @@ rdev_libertas_set_mesh_channel(struct cfg80211_registered_device *rdev,
  
+ static inline int
+ rdev_set_monitor_channel(struct cfg80211_registered_device *rdev,
++			 struct net_device *dev,
+ 			 struct cfg80211_chan_def *chandef)
+ {
+ 	int ret;
+-	trace_rdev_set_monitor_channel(&rdev->wiphy, chandef);
+-	ret = rdev->ops->set_monitor_channel(&rdev->wiphy, chandef);
++	trace_rdev_set_monitor_channel(&rdev->wiphy, dev, chandef);
++	ret = rdev->ops->set_monitor_channel(&rdev->wiphy, dev, chandef);
+ 	trace_rdev_return_int(&rdev->wiphy, ret);
+ 	return ret;
+ }
+diff --git a/net/wireless/trace.h b/net/wireless/trace.h
+index 945013185c9860..68bbf3a778ce1f 100644
+--- a/net/wireless/trace.h
++++ b/net/wireless/trace.h
+@@ -1339,19 +1339,21 @@ TRACE_EVENT(rdev_libertas_set_mesh_channel,
+ );
+ 
+ TRACE_EVENT(rdev_set_monitor_channel,
+-	TP_PROTO(struct wiphy *wiphy,
++	TP_PROTO(struct wiphy *wiphy, struct net_device *netdev,
+ 		 struct cfg80211_chan_def *chandef),
+-	TP_ARGS(wiphy, chandef),
++	TP_ARGS(wiphy, netdev, chandef),
+ 	TP_STRUCT__entry(
+ 		WIPHY_ENTRY
++		NETDEV_ENTRY
+ 		CHAN_DEF_ENTRY
+ 	),
+ 	TP_fast_assign(
+ 		WIPHY_ASSIGN;
++		NETDEV_ASSIGN;
+ 		CHAN_DEF_ASSIGN(chandef);
+ 	),
+-	TP_printk(WIPHY_PR_FMT ", " CHAN_DEF_PR_FMT,
+-		  WIPHY_PR_ARG, CHAN_DEF_PR_ARG)
++	TP_printk(WIPHY_PR_FMT ", " NETDEV_PR_FMT ", " CHAN_DEF_PR_FMT,
++		  WIPHY_PR_ARG, NETDEV_PR_ARG, CHAN_DEF_PR_ARG)
+ );
+ 
+ TRACE_EVENT(rdev_auth,
+diff --git a/net/wireless/wext-compat.c b/net/wireless/wext-compat.c
+index 3af11dae0942ae..32a695c8a4d2af 100644
+--- a/net/wireless/wext-compat.c
++++ b/net/wireless/wext-compat.c
+@@ -830,7 +830,7 @@ static int cfg80211_wext_siwfreq(struct net_device *dev,
+ 			ret = -EINVAL;
+ 			break;
+ 		}
+-		ret = cfg80211_set_monitor_channel(rdev, &chandef);
++		ret = cfg80211_set_monitor_channel(rdev, dev, &chandef);
+ 		break;
+ 	case NL80211_IFTYPE_MESH_POINT:
+ 		freq = cfg80211_wext_freq(wextfreq);
 -- 
 2.53.0
 
