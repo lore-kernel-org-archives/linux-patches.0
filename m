@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC29D29BD87;
-	Thu, 30 Jul 2026 15:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C4230C618;
+	Thu, 30 Jul 2026 15:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423659; cv=none; b=PUIdwvPWt3ty5rsUxnnY0MhFRB51q34kH6CuuTZJAVFs9NbjWHrSExrIsS+7V1ANlrZoBsg09QlO6mSB+rOPSOruV6I0AyeRB9PqFLXn1gOfDXUESthtEJDG7IzUsa5IOIFTqyLVM70lT5aDmUBk5D9A2LWq0VLV8r6s+VgHOzE=
+	t=1785423661; cv=none; b=dcDHvB4n0DLG323JGjqEc9+04P0YgDZmpG6G9UBsCTLOvUYcxdAca1v22pw1QOGytNbQHDuZGNQyHZ/OaanbMFSxT0TgguIZXkddVhDaCDX6megDoja425WMruV1cBQOVPpYiizZHGF1sR91Vm8rL6R21DwRjBMxL9ZMp5pfs/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423659; c=relaxed/simple;
-	bh=ZWty/qbBNd4GxFCLOSTGXfjM9xwg5kRtUsB/y2vhcXE=;
+	s=arc-20240116; t=1785423661; c=relaxed/simple;
+	bh=BEWxCLLXlbCrhKaksknoIjxnbfuVsKLwwtqHYt9CLwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VWSa7rXewLocfG1gOkL8Diqe9A5UFr8vfHXVcKqdHhFh9l9qz/xoHH/5Dn9SykVj1eeFMI9OycN/mBmSq1jn9oYgkhKWrFtU3L8n/PlfV3QSd7iqLvJ4esW7WX91bwHtPFJj9fM2/Fl/gJi9OTPqnVobh145qaUbI8nGcfakwy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T1jcGclt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qcgReiHai69S4Mo5i02/ZZKt1Y9RdDCXJaRP0VQBcwibk8LyGz+CS4MUQgPxLB4Vezs+M+xpyPek8gAkPIZR9aMCIMGzVxb0SKY6IiKomrCp+EkztMN7+Cs9/NTRqcP3ubb21kFOsyRiLeA/F2LRiKmbQy+o1I9XYVzKfFuDZ/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLqJ+OTS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T1jcGclt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 112001F000E9;
-	Thu, 30 Jul 2026 15:00:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLqJ+OTS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C651F000E9;
+	Thu, 30 Jul 2026 15:00:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423657;
-	bh=Nj5UDoFs5KTjoYDhhLfGlqZDvVmxKCUrJhtm+hwEOQU=;
+	s=korg; t=1785423660;
+	bh=0TzFkus9GCM0JHLPxBfLA/u21Z1FoIf1AjkLJLG4Udc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T1jcGcltVheE5OND84lLUgWv2GTBiM13W4pdpbs+8yHA3VhEQXFdVJP4jeoD9cjs4
-	 zgJ1IKlBdNx43KL/0dP4xaOppjGIl1lCG+O8RIMjyWU1NaqNCItE1fo6YyHUHBnOMb
-	 B1T4eIoEfDKmsvtvk8YopM38n+KHkmZgNaopP3Rw=
+	b=xLqJ+OTSU5Z1pSF8WzQEuW5LrDScz5iD8hpdvHnyuOzdp/yl5IGXDUCCIemN/Oz7A
+	 STbcdDtKrHHTfhYTPFOwdEJAXQnm1n3VVmc/ODDFDWvRtFujOTbupHTARD6Id7QZSI
+	 C53pYP7z0F28cudgVE7cfWLdQVpkba/fQq631kIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Michal Luczaj <mhal@rbox.co>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 119/675] bpf, sockmap: Reject unhashed UDP sockets on sockmap update
-Date: Thu, 30 Jul 2026 16:07:29 +0200
-Message-ID: <20260730141447.673309166@linuxfoundation.org>
+Subject: [PATCH 6.18 120/675] drm/panthor: Check debugfs GEM lock initialization
+Date: Thu, 30 Jul 2026 16:07:30 +0200
+Message-ID: <20260730141447.696510177@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -54,72 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit 66efd3368ae10d05e08fbe6425b50fdec7186ac7 ]
+[ Upstream commit 022e901333c3054656a640794e842bab7af5a75c ]
 
-UDP sockets get SOCK_RCU_FREE set when (auto-)bound. This means
-sk_is_refcounted(unbound) = true, while sk_is_refcounted(bound) = false.
+drmm_mutex_init() can fail while registering the managed cleanup action.
+When that happens, drmm_add_action_or_reset() destroys the mutex before
+returning the error. Continuing initialization would therefore leave the
+debugfs GEM object list with an unusable lock.
 
-Because sockmap accepts unbound UDP sockets, a BPF program can increment a
-socket's refcount via lookup. If the socket is subsequently bound, the
-transition from unbound to bound causes bpf_sk_release() to skip the
-decrement of the refcount, causing a memory leak.
+Propagate the error as is already done for the other managed mutexes in
+panthor_device_init().
 
-unreferenced object 0xffff88810bc2eb40 (size 1984):
-  comm "test_progs", pid 2451, jiffies 4295320596
-  hex dump (first 32 bytes):
-    7f 00 00 01 7f 00 00 01 d2 04 1b b7 04 d2 00 00  ................
-    02 00 01 40 00 00 00 00 00 00 00 00 00 00 00 00  ...@............
-  backtrace (crc bdee079d):
-    kmem_cache_alloc_noprof+0x557/0x660
-    sk_prot_alloc+0x69/0x240
-    sk_alloc+0x30/0x460
-    inet_create+0x2ce/0xf80
-    __sock_create+0x25b/0x5c0
-    __sys_socket+0x119/0x1d0
-    __x64_sys_socket+0x72/0xd0
-    do_syscall_64+0xa1/0x5f0
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Instead of special-casing for refcounted sockets, reject unhashed UDP
-sockets during sockmap updates, as there is no benefit to supporting those.
-This effectively reverts the commit under Fixes, with two exceptions:
-
-1. sock_map_sk_state_allowed() maintains a fall-through `return true`.
-2. In the spirit of commit b8b8315e39ff ("bpf, sockmap: Remove unhash
-   handler for BPF sockmap usage"), the proto::unhash BPF handler is not
-   reintroduced.
-
-Historical note: this issue is related to commit 67312adc96b5 ("bpf: reject
-unhashed sockets in bpf_sk_assign").
-
-Fixes: 0c48eefae712 ("sock_map: Lift socket state restriction for datagram sockets")
-Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20260707-sockmap-lookup-udp-leak-v4-2-f878346f27ab@rbox.co
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: a3707f53eb3f ("drm/panthor: show device-wide list of DRM GEM objects over DebugFS")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260713082912.321021-1-lilinmao@kylinos.cn
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_map.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/panthor/panthor_device.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index 5947b38e4f8b6f..70bbc78fb079f7 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -542,6 +542,8 @@ static bool sock_map_sk_state_allowed(const struct sock *sk)
- {
- 	if (sk_is_tcp(sk))
- 		return (1 << sk->sk_state) & (TCPF_ESTABLISHED | TCPF_LISTEN);
-+	if (sk_is_udp(sk))
-+		return sk_hashed(sk);
- 	if (sk_is_stream_unix(sk))
- 		return (1 << sk->sk_state) & TCPF_ESTABLISHED;
- 	if (sk_is_vsock(sk) &&
+diff --git a/drivers/gpu/drm/panthor/panthor_device.c b/drivers/gpu/drm/panthor/panthor_device.c
+index 962a10e00848ef..cdf82d83de7abe 100644
+--- a/drivers/gpu/drm/panthor/panthor_device.c
++++ b/drivers/gpu/drm/panthor/panthor_device.c
+@@ -182,7 +182,10 @@ int panthor_device_init(struct panthor_device *ptdev)
+ 		return ret;
+ 
+ #ifdef CONFIG_DEBUG_FS
+-	drmm_mutex_init(&ptdev->base, &ptdev->gems.lock);
++	ret = drmm_mutex_init(&ptdev->base, &ptdev->gems.lock);
++	if (ret)
++		return ret;
++
+ 	INIT_LIST_HEAD(&ptdev->gems.node);
+ #endif
+ 
 -- 
 2.53.0
 
