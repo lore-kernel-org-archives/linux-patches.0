@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB523B05A2;
-	Thu, 30 Jul 2026 15:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82659443AA7;
+	Thu, 30 Jul 2026 15:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425784; cv=none; b=fyx8pujM8AhhVXm3ogvqA9E6/d00XmAEqyOfoFg6KxsykIWquipDO7KfJRcAkKUZldhxiqht606NkFgz1ylNDkP+SqCEXIc+bNHgXZ+YE4MRY8A+KSQaZAac/+3Z3M0Dr34P5g1TRTlIUxMf29usXNZ82+KntchvXZjW9seVcFc=
+	t=1785425787; cv=none; b=M4v6sbfUnohNIHSNGBsW7ZY0xEzOaXaoTxx2fJx7g/U2CMRPNwKgNvN27hp2hA2SvQxV3dXXixVpJtdDOQC5JmzSfL5nzI+wX6gJfCjO/S8zCIrnFR0zQmkIzCTPvO9IJ/+4mX177YpuF6ZkhCk8rE5CIBVJ0Z7PtBMcBMxCO10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425784; c=relaxed/simple;
-	bh=z91vHCxGeuGAFc98Q3taT8bVbwkhl3nKOSvLFrSg6pA=;
+	s=arc-20240116; t=1785425787; c=relaxed/simple;
+	bh=CdRDSuVHFmTKP5lqd7WZNvUxHudyY3YhDIBTx8Pyil8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O4cw6J3ae3PFDQftKp1UVH3YjgpKTwwvM0JAwGJOALE05n5vQKAU5AekiBkszZnM/E8mwBWD7PbwerM2E8ozZiis2oUyFNkzparQF37tdrM1hNsF+4z8DEm2V95rO+cdiiuH9K5y5LgqNRW4e8h1+JrgQoCPy8UDQsPDFnwNaCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9zGGmDr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k5wOGG//LM2764gow9X7Thrp4OLY3u9pkqO2SqRmV8xGtiLXtX6nqA9B+LookOuavJ/r/4zK8Caf2oR1LS02cB1yTi0IkL4fKiEBAzkzInItsTTnx5nj7Ft/l+sKgIcaJTFt5UHgVjBbYnReuKsW5fXTPN+d/0lJEIqf3jp+4DI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zuUgttKr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9zGGmDr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A881F00A3E;
-	Thu, 30 Jul 2026 15:36:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zuUgttKr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3621F000E9;
+	Thu, 30 Jul 2026 15:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425783;
-	bh=s3Trt21PZsCms6/+IyGMOK9XjHLEb1fTlS6DoFcmP68=;
+	s=korg; t=1785425786;
+	bh=RHVkz0mNvcUvw+dQEkVmZ9r7jv+eNRzHOjP7fEb6wvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R9zGGmDr6VIGg9qitPjMDfb+Qtfzo9TL/tm0eu87KK1LCFUrfl/JJu1XpOa3FTHDR
-	 N9rHHPdAyyYrlUN0Bne9tLFeSnmaBP8Ukpo+zeSZQimyvxk1rjiB4aHum3jMgrtC/+
-	 AEqzxOg6ZVdQw6P5xz60xBDJc0yOn5OAjJhe4ta4=
+	b=zuUgttKrQGvlbr+ICxTF0jS5pQVKf157udr0diAtxBbF6krZ24EV1PAsHj8rs2nIX
+	 p/2pPdCXAs+J59jUKJXD24X2gSQrFm1mfDwuaYhr6pggdQc0JaSPP1lBdmBAak3PFX
+	 aKUbPg3zG5rxs5Pvd0rOEqhlG7Oz426L/w2QELj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 146/602] wifi: ath6kl: fix OOB read from firmware num_msg in TX complete handler
-Date: Thu, 30 Jul 2026 16:08:58 +0200
-Message-ID: <20260730141439.048491389@linuxfoundation.org>
+Subject: [PATCH 6.12 137/602] hwmon: (corsair-cpro) Stop device IO before calling hid_hw_stop
+Date: Thu, 30 Jul 2026 16:08:49 +0200
+Message-ID: <20260730141438.859941589@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,50 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 3a21c89215cc18f1a97c5e5bfd1da6d4f3d44495 ]
+[ Upstream commit 94c87871b051d7ad758828a805215a2ec194512a ]
 
-The firmware-controlled num_msg field (u8, 0-255) drives the loop in
-ath6kl_wmi_tx_complete_event_rx() without validation against the buffer
-length. This allows out-of-bounds reads of up to 1020 bytes past the
-WMI event buffer when the firmware sends an inflated num_msg.
+Calling hid_hw_stop() does not stop the device IO.
+This results in a race condition between hid_input_report() and the point
+immediately following the execution of hid_device_io_start() within
+the driver probe function. If the probe operation fails after "io start"
+has been initiated, this race condition will result in a UAF vulnerability.
 
-Add a check that the buffer is large enough to hold the fixed struct
-and the num_msg variable-length entries.
+Fix the problem by calling hid_device_io_stop() before calling
+hid_hw_stop().
 
-Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Link: https://patch.msgid.link/20260625232907.3620746-1-tristmd@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 40c3a44542257 ("hwmon: add Corsair Commander Pro driver")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath6kl/wmi.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/hwmon/corsair-cpro.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath6kl/wmi.c b/drivers/net/wireless/ath/ath6kl/wmi.c
-index 3787b9fb007559..a572952dd4b903 100644
---- a/drivers/net/wireless/ath/ath6kl/wmi.c
-+++ b/drivers/net/wireless/ath/ath6kl/wmi.c
-@@ -484,6 +484,18 @@ static int ath6kl_wmi_tx_complete_event_rx(u8 *datap, int len)
+diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
+index b7b911f8359c7f..71e48b3bba60f0 100644
+--- a/drivers/hwmon/corsair-cpro.c
++++ b/drivers/hwmon/corsair-cpro.c
+@@ -645,6 +645,7 @@ static int ccp_probe(struct hid_device *hdev, const struct hid_device_id *id)
  
- 	evt = (struct wmi_tx_complete_event *) datap;
- 
-+	if (len < sizeof(*evt)) {
-+		ath6kl_dbg(ATH6KL_DBG_WMI, "tx complete: invalid len %d\n",
-+			   len);
-+		return -EINVAL;
-+	}
-+
-+	if (len < sizeof(*evt) + evt->num_msg * sizeof(struct tx_complete_msg_v1)) {
-+		ath6kl_dbg(ATH6KL_DBG_WMI, "tx complete: invalid len %d for %u msgs\n",
-+			   len, evt->num_msg);
-+		return -EINVAL;
-+	}
-+
- 	ath6kl_dbg(ATH6KL_DBG_WMI, "comp: %d %d %d\n",
- 		   evt->num_msg, evt->msg_len, evt->msg_type);
- 
+ out_hw_close:
+ 	hid_hw_close(hdev);
++	hid_device_io_stop(hdev);
+ out_hw_stop:
+ 	hid_hw_stop(hdev);
+ 	return ret;
 -- 
 2.53.0
 
