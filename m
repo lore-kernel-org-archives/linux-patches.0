@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04EAB217723;
-	Thu, 30 Jul 2026 15:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7EB30567C;
+	Thu, 30 Jul 2026 15:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424776; cv=none; b=VdmnfCnV+yicEH6O/LCJ/1QuTxVKH3noONWaGJRXNZvJsL+JxMaQX9P/pY2dwYR58UAzLFBlCa1lF64WFyMl6c4DmoyyS6J0OcvsIVNEz8tqWkiqajyEXUJZdTU8Hwn6oNTNNhziOcZRFyCfcFZi3Ac1QNVmu52C1Wof5HWs4zM=
+	t=1785424779; cv=none; b=Jh4BG08GqbsiXyz8Fh9BtsLyz5wJ6Yw8rxof6gNro2oeKWK8JowI10R2CmCdg37EEGXJV5NjIH8VFyvKLjbwYogzJG84E/6RgEsqDJ+HZajJxzWw2AwAQrTQeZ6YvronfWRG9m13F351s+2mUq2NM++4ePztPZ9VTacj+3Wg/d8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424776; c=relaxed/simple;
-	bh=EnTUNUFWtId09YNMT5A+eeaif4xH9reKGy9Wr0AHeb8=;
+	s=arc-20240116; t=1785424779; c=relaxed/simple;
+	bh=kvB2sfB6tS4wdHzpilccup41Vt/TbeHLmoFhhAUL9LE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bzt+FDPpUVdLQcknfhB/qwGOhSJZREOxqHA3gEBe2WK8cehXUW1q8mTJjJJQbJy876XCJoMTboDU0aEJTKYj8v4JzAsLEStP0QHMKRnnyixmf3SxJdpiJ7ztLqsbYR6GQ5GBpaIKhcCeTzjAVmZZi96VrDAmvduUftU1AE5PPWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=knc7t4Oo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rfBq8Kq/r6Mbke3uW6cD2NL2SORx9JgR5azxxUIFNmQyhknft6a/odtdjBz7+znrsGjTRE1trn8QHyt7/OD/aikexoHcjlU6d4tLQTwdjfNQVXZFMVaynSH4jlkOEtA3ecWXyH/BEgUSzNq0GGr7LKgwudamcKt8XYUghCx7NcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tiuya6Z8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="knc7t4Oo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 589281F000E9;
-	Thu, 30 Jul 2026 15:19:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tiuya6Z8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9E41F000E9;
+	Thu, 30 Jul 2026 15:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424774;
-	bh=4dwi7GAGSzlk6YdS2x9iLFP9M3wgCwisDjB23kxdZSM=;
+	s=korg; t=1785424777;
+	bh=Tg4cHPw6E4dtV1GjHhOAK5Mu8oyRoLxfgCrchFX/Awg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=knc7t4Ooirdm1nCTovPVyZKpbl/cR1ZkQ8uRd6zmsmNPKIjYjXZHx0QpNvCMbmkHZ
-	 hbruwYKWDm2K+GzEn9A5DQzzT5vcGh8BdrZ3yL48uP6YXwIN5Z/eQ7V0DBS7lp0U83
-	 UbJ132ssMe2e1r+lf0I13zW61Ecrf2ZjHLCO7rOw=
+	b=Tiuya6Z8S+pyFO1jIt5clVSq2pQWwnuBSmnX7qx8ucBgHIoGhWNeKLS3BuYc8gj/s
+	 Gc3fak6xl7irAUnBf12ucy9UZ8y4jFWz7nMMvdViqkJqLJAHi7fUpOa53+cO118Od0
+	 CPMJmpc0VlsOls8QrM5zIOg0C+rYn6maYhDhk0eg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Douya Le <ldy3087146292@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.18 513/675] ceph: fix writeback_count leak in write_folio_nounlock()
-Date: Thu, 30 Jul 2026 16:14:03 +0200
-Message-ID: <20260730141456.033643534@linuxfoundation.org>
+Subject: [PATCH 6.18 514/675] libceph: bound get_version reply decode to front len
+Date: Thu, 30 Jul 2026 16:14:04 +0200
+Message-ID: <20260730141456.055370774@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,64 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Douya Le <ldy3087146292@gmail.com>
 
-commit cbf59617cd715219e84c50d106a3d0e1e8ba054e upstream.
+commit d3c32939fa0e3ee9b883b9a0fd1972c5c444e3d0 upstream.
 
-write_folio_nounlock() increments fsc->writeback_count to track
-in-flight writeback operations. On several error paths where the
-function returns early (folio lookup failure, snapshot context
-allocation failure, and writepages submission failure), the function
-returns without calling atomic_long_dec_return() to decrement the
-counter.
+handle_get_version_reply() uses msg->front_alloc_len as the decode
+boundary for MON_GET_VERSION_REPLY.  That is the size of the reused
+reply buffer, not the number of bytes actually received.
 
-Each leaked increment keeps the counter above zero, which can prevent
-the filesystem from cleanly unmounting or suspending writes.
+A truncated reply can therefore pass ceph_decode_need() and decode the
+second u64 from stale tail bytes left in the buffer by an earlier
+message, causing an uninitialized memory read.
 
-Add atomic_long_dec_return() calls on all error paths that currently
-return without decrementing the counter.
+Use msg->front.iov_len as the receive-side decode boundary, matching
+other libceph reply handlers and limiting decoding to the bytes that
+were actually read from the wire.
 
 Cc: stable@vger.kernel.org
-Fixes: d55207717ded ("ceph: add encryption support to writepage and writepages")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Fixes: 513a8243d67f ("libceph: mon_get_version request infrastructure")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Douya Le <ldy3087146292@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/addr.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/ceph/mon_client.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -785,6 +785,9 @@ static int write_folio_nounlock(struct f
- 				    ceph_wbc.truncate_size, true);
- 	if (IS_ERR(req)) {
- 		folio_redirty_for_writepage(wbc, folio);
-+		if (atomic_long_dec_return(&fsc->writeback_count) <
-+				CONGESTION_OFF_THRESH(fsc->mount_options->congestion_kb))
-+			fsc->write_congested = false;
- 		return PTR_ERR(req);
- 	}
+--- a/net/ceph/mon_client.c
++++ b/net/ceph/mon_client.c
+@@ -821,7 +821,7 @@ static void handle_get_version_reply(str
+ 	struct ceph_mon_generic_request *req;
+ 	u64 tid = le64_to_cpu(msg->hdr.tid);
+ 	void *p = msg->front.iov_base;
+-	void *end = p + msg->front_alloc_len;
++	void *const end = p + msg->front.iov_len;
+ 	u64 handle;
  
-@@ -804,6 +807,9 @@ static int write_folio_nounlock(struct f
- 			folio_redirty_for_writepage(wbc, folio);
- 			folio_end_writeback(folio);
- 			ceph_osdc_put_request(req);
-+			if (atomic_long_dec_return(&fsc->writeback_count) <
-+					CONGESTION_OFF_THRESH(fsc->mount_options->congestion_kb))
-+				fsc->write_congested = false;
- 			return PTR_ERR(bounce_page);
- 		}
- 	}
-@@ -838,6 +844,9 @@ static int write_folio_nounlock(struct f
- 			      ceph_vinop(inode), folio);
- 			folio_redirty_for_writepage(wbc, folio);
- 			folio_end_writeback(folio);
-+			if (atomic_long_dec_return(&fsc->writeback_count) <
-+					CONGESTION_OFF_THRESH(fsc->mount_options->congestion_kb))
-+				fsc->write_congested = false;
- 			return err;
- 		}
- 		if (err == -EBLOCKLISTED)
+ 	dout("%s msg %p tid %llu\n", __func__, msg, tid);
 
 
