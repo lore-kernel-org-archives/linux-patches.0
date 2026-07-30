@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE6235DA67;
-	Thu, 30 Jul 2026 15:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B7335DA67;
+	Thu, 30 Jul 2026 15:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426437; cv=none; b=Gc1A0MxXuHIJLYCiniRCd7rFzJVB/+kvuoDHefB8nxOJZ5O24qv9dxi4/cSAn93KqSrS33+3U9KNJRZQsVPl7U6PzQfvLVSMl7F8pqKKP5fHCOuv2rUOl+0ctZSPown7mTeWunGVwCmwP9jz5E7rXPQD7+Rk1awGZ2hy37FuvTk=
+	t=1785426440; cv=none; b=WtqwitMneFbbInvxtueh2sV1LDmBi7JXcKxA/XhZQElKV55VwRURH7GlcX1vIUyDVrli097J2W/1BCuU46BZxd3b9BKsgCpboEnYZGOTaNgPjuEY5Bwqc6KwLyhz7xLmzh+iA3+0o3TkQjMKHtkoM9hIKeu7KtmalIwzifrjB1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426437; c=relaxed/simple;
-	bh=p3IoLMlP8M0hKrOKkaN7iQMvY0CRJOvnu6EV2g5c72A=;
+	s=arc-20240116; t=1785426440; c=relaxed/simple;
+	bh=DKHlWpe0wj4ywpZOUZoEtcmtUPJpusyUSeIqvExUp1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eKqC7usvBZjufIxDuC6WdoF+FlW3oWBm4ASMotVWizl/b6B9gVQZOypdRnZEeIyNNuQesdxU9lVZM6BmcB5hr5EqClaJmHAjrIvIbIgLQELgUkfrDirwl2P/ZJRxfjUk/X8AVLW6PZWZa2xw59Z7Nu4FBSXgRFGiBmpTvb7/3Fk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yY7F4tU9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=COJd66UhcVTgfM1MI2faA9ZVGYHFDaYeP/+RSI0z8N8SjYvYDg/UP4Iod5t2QcIhLZ9OY2y7kN6JJtAKSimva78GOMed4wV8aXGhBkiyL9H6jIJRy8WLx+zE1Kx687TkwoY4aWKMMeQenB1esJbCrjxzG9bnUECz6sstNajqnVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fl9Nrg1E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yY7F4tU9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0551F000E9;
-	Thu, 30 Jul 2026 15:47:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fl9Nrg1E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C8A1F00A3A;
+	Thu, 30 Jul 2026 15:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426436;
-	bh=MSDied+lEHd+uQfGmMpimYFmLkpRmAdmjN3ZbMInCm4=;
+	s=korg; t=1785426439;
+	bh=oPOG5pueTGukgGtHMbKH1fLD3g609sMNJ16IUU3H+R4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yY7F4tU9mZ0IQ7M43XR52D/gkV9Unh2QuvreCotDpz5TAFyYnIG3QBEKauV+0N9B6
-	 Ges6nvRDkfwbltMVvH/CmC0MLihuQ7UAXy3XdI3OMT0ISos7giQBcOkOMN3vQ6GHdd
-	 TlLSVRVWQhbYyb9fej+VtWK3hy58cVepMg8tFmDg=
+	b=fl9Nrg1EVODnrOAvH/npkXQl9MixkGXlNbIy7T8fK3pEtftUffmO3UUbt+9BUP4SW
+	 ntZbBvjQC+fAWAis63yjLgSL6b0YAmb6IccaKArLOEFrmCVOZgGQY2pJCvkFyK0Vru
+	 h6OwBI6Zm5psyWE1MfMQnz7Tk0JplhWLFcfYRecQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Magnus Lindholm <linmag7@gmail.com>,
-	Jann Horn <jannh@google.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.12 417/602] proc: Fix broken error paths for namespace links
-Date: Thu, 30 Jul 2026 16:13:29 +0200
-Message-ID: <20260730141444.727729962@linuxfoundation.org>
+	Paul Greenwalt <paul.greenwalt@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.12 418/602] ice: fix PTP Call Trace during PTP release
+Date: Thu, 30 Jul 2026 16:13:30 +0200
+Message-ID: <20260730141444.748777803@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,52 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Paul Greenwalt <paul.greenwalt@intel.com>
 
-commit 425224c2d700391729be7fe6929a88ef4e2d7a4e upstream.
+commit f6a7e00b81e35ef1325234925f2fe1e53b466f92 upstream.
 
-Don't return the return value of down_read_killable() (0) when a ptrace
-access check fails, return -EACCES as intended.
+If a PF reset occurs when the PTP state is ICE_PTP_UNINIT, then
+ice_ptp_rebuild() will update the state to ICE_PTP_ERROR. This will
+result in the following PTP release call trace during driver unload:
 
-Reported-by: Magnus Lindholm <linmag7@gmail.com>
-Closes: https://lore.kernel.org/r/20260706170735.2941493-1-linmag7@gmail.com
-Fixes: 6650527444da ("proc: protect ptrace_may_access() with exec_update_lock (part 1)")
+    kernel BUG at lib/list_debug.c:52!
+    ice_ptp_release+0x332/0x3c0 [ice]
+    ice_deinit_features.part.0+0x10e/0x120 [ice]
+    ice_remove+0x100/0x220 [ice]
+
+This was observed when passing PF1 through to a VM. ice_ptp_init()
+fails because ctrl_pf is NULL and sets the state to ICE_PTP_UNINIT.
+
+Fix by detecting the ICE_PTP_UNINIT state in ice_ptp_rebuild() and
+returning without error, preventing the invalid state transition to
+ICE_PTP_ERROR. The only valid path to ICE_PTP_ERROR is from
+ICE_PTP_RESETTING after a failed rebuild.
+
+Fixes: 8293e4cb2ff5 ("ice: introduce PTP state machine")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://patch.msgid.link/20260706-procfs-ns-eacces-fix-v1-1-a69ab14c02e6@google.com
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Paul Greenwalt <paul.greenwalt@intel.com>
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260717185340.3595286-10-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/namespaces.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_ptp.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/proc/namespaces.c
-+++ b/fs/proc/namespaces.c
-@@ -46,7 +46,7 @@ static const char *proc_ns_get_link(stru
- 	const struct proc_ns_operations *ns_ops = PROC_I(inode)->ns_ops;
- 	struct task_struct *task;
- 	struct path ns_path;
--	int error = -EACCES;
-+	int error;
+--- a/drivers/net/ethernet/intel/ice/ice_ptp.c
++++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
+@@ -2886,6 +2886,11 @@ void ice_ptp_rebuild(struct ice_pf *pf,
+ 	struct ice_ptp *ptp = &pf->ptp;
+ 	int err;
  
- 	if (!dentry)
- 		return ERR_PTR(-ECHILD);
-@@ -59,6 +59,7 @@ static const char *proc_ns_get_link(stru
- 	if (error)
- 		goto out_put_task;
- 
-+	error = -EACCES;
- 	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS))
- 		goto out;
- 
-@@ -90,6 +91,7 @@ static int proc_ns_readlink(struct dentr
- 	if (res)
- 		goto out_put_task;
- 
-+	res = -EACCES;
- 	if (ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS)) {
- 		res = ns_get_name(name, sizeof(name), task, ns_ops);
- 		if (res >= 0)
++	if (ptp->state == ICE_PTP_UNINIT) {
++		dev_dbg(ice_pf_to_dev(pf), "PTP was not initialized, skipping rebuild\n");
++		return;
++	}
++
+ 	if (ptp->state == ICE_PTP_READY) {
+ 		ice_ptp_prepare_for_reset(pf, reset_type);
+ 	} else if (ptp->state != ICE_PTP_RESETTING) {
 
 
