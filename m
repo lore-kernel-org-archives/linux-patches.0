@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFC042E8C9;
-	Thu, 30 Jul 2026 14:23:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3984A3A6B7F;
+	Thu, 30 Jul 2026 14:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421437; cv=none; b=rKBXN47seMpdsz7o8sPII/8nn34wfSwgb5MdWGKcfNuKZpbpiZlIMbGWieP4PpTfDVjX2FWkvsLueRuzIymKaXW30K3DsXb7K2fcfsUcW8OkAI2U4xOjfa0XitwukncrP5tMThEFzTJQ6sbAhj6kYXddFe6V5o5GnJBBbPmoOas=
+	t=1785421440; cv=none; b=a8fUxlOp4rvArdrEHFyjyZ/kNcH6r/nUjJv+50Y0qdWktmvQfLfDgevKMkrkmGynjhbXpFa6a3KIVhRWBqFAa2zrU38c3RActk5PTgpQx0Y+ZDukxiechF+U3iYMifhhbNfK8BqyiOKacBfPy3kDPia4Lk1s3hgbIj71RcRDu8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421437; c=relaxed/simple;
-	bh=MKJAK8JawavZjr1h/bY1rM1N8A5wNzREwPFVliXqUyw=;
+	s=arc-20240116; t=1785421440; c=relaxed/simple;
+	bh=a8VZb43BWxNwzzxgQmMlrxj83sIYkX7Ksc6/Db7G7GQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G1u0ZJ/SA6MbJ3s76MvVb/byasLyojSvNbpHHeE2w3cHPR6FxYgXdrVpaljHCh+o4WFtIm8XqyatMx7dOe51NoJF/rc9F23obq9DINan8ZJnrBjrwUQoFNCqAmfoRw0lRqwYEydwnISuQtK7/GmJXtREZPLENZ5jeridMEwhQbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXKLfi0O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oM0gK+XtkqE/BEY1RSyE+I7Y/zYC9eRMqPn2t1xGNGbO/8AuEj9c1i5ERdTJVX6zJ0UXMYKJI1g17eR/J/f72b8RsZgeDzmwAwgXGYmw0XgWVl8NBURHlTKNXHVspyx0QwzwUPQnuBDnhMGEBNWncWebHP6qvt8pXZwxsKalAFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DhMaOwb7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXKLfi0O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C551F000E9;
-	Thu, 30 Jul 2026 14:23:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DhMaOwb7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944D81F000E9;
+	Thu, 30 Jul 2026 14:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421436;
-	bh=ymgL4ifOc/H6gITpmD/pg31pPYVAB96vggj5eWMIJgg=;
+	s=korg; t=1785421439;
+	bh=FucX9WiAwWVvQe51a5sURXkAxMlDPuGUpiaxYak1BWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qXKLfi0OLHZ6gKPSSmpyw/9Tni3ySG+sqodaVF2pErnaOE9fAejjeH5X/IAcNnt/8
-	 320gIBvmo1bfHKSo7nANDYYxic8uwQEJ0x/2byQSa7QYnk/NxkeuviiKs4JRepbXac
-	 Jfm8f3hTsJ91W+VSvi6PKawHwMH7QS4JzEE1jAk4=
+	b=DhMaOwb7tH7ls7445vG4hURnGcCHTZRPQp+DzXWdOGXkTx6t8NTfBTAWnLjCg1rCY
+	 1minARUdsMYjwaGDc/cbDGLUcKiwKRPtDAYRw+d9TgjuViU+Yn18OS37xPstpoA8Xi
+	 2cxFnjGeVKWBQMidoPu1j6dm1C3Vty9ugkdKYeJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 103/744] Bluetooth: mgmt: hold reference for hci_conn in mgmt_pending_cmds
-Date: Thu, 30 Jul 2026 16:06:16 +0200
-Message-ID: <20260730141446.464154164@linuxfoundation.org>
+Subject: [PATCH 7.1 104/744] Bluetooth: hci_sync: hold hdev->lock for hci_conn_params lookups
+Date: Thu, 30 Jul 2026 16:06:17 +0200
+Message-ID: <20260730141446.485870889@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,103 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit da55f570191d5d72f10c607a7043b947eb05ea46 ]
+[ Upstream commit c363202ec841df36421ec280eea3d5f94f556143 ]
 
-Dereferencing RCU-protected pointers outside critical sections is
-invalid and may lead to UAF.  Use of hci_conn in hci_sync callbacks also
-needs to hold refcount to avoid UAF.
+hci_conn_params_lookup requires hdev->lock be held, otherwise the list
+iteration or param access is not safe.
 
-Take appropriate locks for hci_conn lookups, and take refcount for
-hci_conn pointers stored in mgmt_pending_cmd so that the pointer stays
-valid.
+Hold hdev->lock for params lookups in hci_sync.
 
-When accessing conn->state, ensure hdev->lock is held to avoid data
-race.
-
-Fixes: 7b445e220db9 ("Bluetooth: MGMT: Fix holding hci_conn reference while command is queued")
+Fixes: c530569adc19 ("Bluetooth: hci_core: Introduce HCI_CONN_FLAG_PAST")
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ net/bluetooth/hci_sync.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 186850538a8bb5..9604c3025f7b7c 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -7407,6 +7407,9 @@ static void get_conn_info_complete(struct hci_dev *hdev, void *data, int err)
- 		rp.max_tx_power = HCI_TX_POWER_INVALID;
- 	}
- 
-+	if (conn)
-+		hci_conn_put(conn);
-+
- 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, MGMT_OP_GET_CONN_INFO, status,
- 			  &rp, sizeof(rp));
- 
-@@ -7421,6 +7424,8 @@ static int get_conn_info_sync(struct hci_dev *hdev, void *data)
- 	int err;
- 	__le16   handle;
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index eb216d86a6ddf3..d20f69858d22d6 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -6679,6 +6679,8 @@ static int hci_le_create_conn_sync(struct hci_dev *hdev, void *data)
+ 	if (!hci_dev_test_flag(hdev, HCI_LE_SIMULTANEOUS_ROLES))
+ 		hci_pause_advertising_sync(hdev);
  
 +	hci_dev_lock(hdev);
 +
- 	/* Make sure we are still connected */
- 	if (cp->addr.type == BDADDR_BREDR)
- 		conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK,
-@@ -7428,12 +7433,16 @@ static int get_conn_info_sync(struct hci_dev *hdev, void *data)
- 	else
- 		conn = hci_conn_hash_lookup_ba(hdev, LE_LINK, &cp->addr.bdaddr);
- 
--	if (!conn || conn->state != BT_CONNECTED)
-+	if (!conn || conn->state != BT_CONNECTED) {
-+		hci_dev_unlock(hdev);
- 		return MGMT_STATUS_NOT_CONNECTED;
-+	}
- 
--	cmd->user_data = conn;
-+	cmd->user_data = hci_conn_get(conn);
- 	handle = cpu_to_le16(conn->handle);
- 
-+	hci_dev_unlock(hdev);
-+
- 	/* Refresh RSSI each time */
- 	err = hci_read_rssi_sync(hdev, handle);
- 
-@@ -7567,6 +7576,9 @@ static void get_clock_info_complete(struct hci_dev *hdev, void *data, int err)
+ 	params = hci_conn_params_lookup(hdev, &conn->dst, conn->dst_type);
+ 	if (params) {
+ 		conn->le_conn_min_interval = params->conn_min_interval;
+@@ -6692,6 +6694,8 @@ static int hci_le_create_conn_sync(struct hci_dev *hdev, void *data)
+ 		conn->le_supv_timeout = hdev->le_supv_timeout;
  	}
  
- complete:
-+	if (conn)
-+		hci_conn_put(conn);
-+
- 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode, status, &rp,
- 			  sizeof(rp));
- 
-@@ -7583,15 +7595,21 @@ static int get_clock_info_sync(struct hci_dev *hdev, void *data)
- 	memset(&hci_cp, 0, sizeof(hci_cp));
- 	hci_read_clock_sync(hdev, &hci_cp);
- 
-+	hci_dev_lock(hdev);
-+
- 	/* Make sure connection still exists */
- 	conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK, &cp->addr.bdaddr);
--	if (!conn || conn->state != BT_CONNECTED)
-+	if (!conn || conn->state != BT_CONNECTED) {
-+		hci_dev_unlock(hdev);
- 		return MGMT_STATUS_NOT_CONNECTED;
-+	}
- 
--	cmd->user_data = conn;
-+	cmd->user_data = hci_conn_get(conn);
- 	hci_cp.handle = cpu_to_le16(conn->handle);
- 	hci_cp.which = 0x01; /* Piconet clock */
- 
 +	hci_dev_unlock(hdev);
 +
- 	return hci_read_clock_sync(hdev, &hci_cp);
+ 	/* If controller is scanning, we stop it since some controllers are
+ 	 * not able to scan and connect at the same time. Also set the
+ 	 * HCI_LE_SCAN_INTERRUPTED flag so that the command complete
+@@ -7249,13 +7253,13 @@ static void create_pa_complete(struct hci_dev *hdev, void *data, int err)
  }
  
+ static int hci_le_past_params_sync(struct hci_dev *hdev, struct hci_conn *conn,
+-				   struct hci_conn *acl, struct bt_iso_qos *qos)
++				   u16 acl_handle, struct bt_iso_qos *qos)
+ {
+ 	struct hci_cp_le_past_params cp;
+ 	int err;
+ 
+ 	memset(&cp, 0, sizeof(cp));
+-	cp.handle = cpu_to_le16(acl->handle);
++	cp.handle = cpu_to_le16(acl_handle);
+ 	/* An HCI_LE_Periodic_Advertising_Sync_Transfer_Received event is sent
+ 	 * to the Host. HCI_LE_Periodic_Advertising_Report events will be
+ 	 * enabled with duplicate filtering enabled.
+@@ -7320,16 +7324,28 @@ static int hci_le_pa_create_sync(struct hci_dev *hdev, void *data)
+ 	 * 2. Check if that HCI_CONN_FLAG_PAST has been set which indicates that
+ 	 *    user really intended to use PAST.
+ 	 */
++	hci_dev_lock(hdev);
++
+ 	le = hci_conn_hash_lookup_le(hdev, &conn->dst, conn->dst_type);
+ 	if (le) {
+ 		struct hci_conn_params *params;
++		hci_conn_flags_t flags = 0;
++		u16 le_handle = le->handle;
+ 
+ 		params = hci_conn_params_lookup(hdev, &le->dst, le->dst_type);
+-		if (params && params->flags & HCI_CONN_FLAG_PAST) {
+-			err = hci_le_past_params_sync(hdev, conn, le, qos);
++		if (params)
++			flags = params->flags;
++
++		hci_dev_unlock(hdev);
++
++		if (flags & HCI_CONN_FLAG_PAST) {
++			err = hci_le_past_params_sync(hdev, conn, le_handle,
++						      qos);
+ 			if (!err)
+ 				goto done;
+ 		}
++	} else {
++		hci_dev_unlock(hdev);
+ 	}
+ 
+ 	/* SID has not been set listen for HCI_EV_LE_EXT_ADV_REPORT to update
 -- 
 2.53.0
 
