@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F5F35C68A;
-	Thu, 30 Jul 2026 14:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EFA175A6D;
+	Thu, 30 Jul 2026 14:31:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421875; cv=none; b=SwcoImHyaZmhNd+D5jbzn4uZkROUjBY/bWVTd4wTitN0hCf8L7OuH8wlVIyhWyQMFw/qUQbG0BMPUM5IQHkuHK1TyxikrMGU9mmjVu0t0omX192Ruo4esR1FgKC6FLLGcjxOW/GzzzG9nlYlNE4Zl21LmRXIVgw1imfHMvoBsfY=
+	t=1785421878; cv=none; b=bYtgenPvX//rzGZJiZiG+7zGzOIhbV4yx26XHAh5Y6VvkRIZ08puKDp6yqTV216UCZ/U6h47xpw15Qe7A1IYTKsNT/dQHAY1sac7mRinNqswI5/y8wh7FoAl9AuvT9onk4EGGX3wRY8mUSf/2kg9guNMupHOW6FGMsMxT/Tw+Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421875; c=relaxed/simple;
-	bh=WeqJDn30gl7ol8NUmiSBkswQZJgRp/BUBm4ec2IHinI=;
+	s=arc-20240116; t=1785421878; c=relaxed/simple;
+	bh=pi4PIspqJol21yBdCKKzSxkJBWyGg1Y39HmnOf1cgAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U6H5kYmaZFZ5/bK8g5aNDqQx3wakmrgEKWcRsdsodPOGhKYz4ID6IwL7EtIPYp4jyUtZh0Gt4ZXftBsU0OD1+Rf4IUjIe6p8khU4jWII+xCm5sIVzC9bZZOl6Ow7wBG/wPLaeja97sXJYnoKIzR4GtrKusICTuw5V8Rsly2Lim4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SYKH4RW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SfG5J/jBioKfsrwfarrpwfhlujkrE/ywn1O8RvKg3pRVWMr1l8R2x2gmAgHxbwp7SGryrxZ2GiB+LovUb70mLIaDUuKMd3Ly3vKvl2nR5VpMwVm4KNV5RD8T8PpyGJVA5vZl3Junpz2KON7pKVnUPOocHPLODgIFxBHwbHbER7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JGkYAu3n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SYKH4RW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E9E1F000E9;
-	Thu, 30 Jul 2026 14:31:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JGkYAu3n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 363581F00A3A;
+	Thu, 30 Jul 2026 14:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421873;
-	bh=uCrnWGLHSCY9LxicljlA+TwUDM3W2zfO1SF6Az+7tEY=;
+	s=korg; t=1785421876;
+	bh=1NywQcVOGmMbL7k5t8xhFxFyAHN2iK/7RHfX3oZKnsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2SYKH4RW2XAQoNtCwGoyg4F7RS6Z2AAwW2GbzWX+ZrfKnERsd9pXFSIATHYD+P+wE
-	 MASanCtKWpfza70rm5iigwAcotYMW3XiZH1bsq/BABOk9gDDi13D36oTiGmwIaEsnK
-	 rXBl6maOAnHvA4HKw+OFKZjDl/8PCOEcCb2QUiNo=
+	b=JGkYAu3npSzovfgLPdfIVBeFLjSZA5uh25d+TJIScr9wne0Fcn//xvIVUE85xwcUt
+	 ZPRwZG2JgEVRRgWEjfj9ZlhsSlSaXfL458e62OhcO/RscR2tWqDhYAoTOIkViflQM+
+	 Em2ikiMb7E+558lK9+GS+jZbdPlSnDV6fgrDQJeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?HE=20WEI=20 ?= <skyexpoc@gmail.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	longlong yan <yanlonglong@kylinos.cn>,
+	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 249/744] wifi: mwifiex: bound uAP association event IEs to the event buffer
-Date: Thu, 30 Jul 2026 16:08:42 +0200
-Message-ID: <20260730141449.584907785@linuxfoundation.org>
+Subject: [PATCH 7.1 223/744] selftests/net: ovpn: fix getaddrinfo memory leak in ovpn_parse_remote()
+Date: Thu, 30 Jul 2026 16:08:16 +0200
+Message-ID: <20260730141449.026079246@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -46,106 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: HE WEI (ギカク) <skyexpoc@gmail.com>
+From: longlong yan <yanlonglong@kylinos.cn>
 
-[ Upstream commit f0858bfc7d3cab411a447b88e3ef970e575032c9 ]
+[ Upstream commit 0bd9cfebc1c91e1066e56d6261b99691b9df6008 ]
 
-mwifiex_process_uap_event() handles EVENT_UAP_STA_ASSOC by exposing the
-(re)association request IEs that the firmware copies into the event:
+The ovpn_parse_remote() function has two memory management issues:
 
-	sinfo->assoc_req_ies = &event->data[len];
-	len = (u8 *)sinfo->assoc_req_ies - (u8 *)&event->frame_control;
-	sinfo->assoc_req_ies_len = le16_to_cpu(event->len) - (u16)len;
+1. When both 'host' and 'vpnip' are non-NULL, the first getaddrinfo()
+   allocation is leaked because 'result' is overwritten by the second
+   getaddrinfo() call without freeing the first allocation.
 
-event->len is supplied by the device firmware and is never validated,
-and the subtraction is unchecked.  assoc_req_ies points into
-adapter->event_body[MAX_EVENT_SIZE], a fixed-size array embedded in the
-kmalloc()'d struct mwifiex_adapter.
+2. When both 'host' and 'vpnip' are NULL, 'result' is an uninitialized
+   stack variable passed to freeaddrinfo(), which is undefined behavior.
 
-On the ap_11n_enabled path mwifiex_set_sta_ht_cap() walks these IEs with
-cfg80211_find_ie(), whose for_each_element() loop dereferences each
-element header.  A firmware-reported event->len larger than the bytes
-actually received makes assoc_req_ies_len describe IEs that extend past
-event_body, so the walk reads out of the adapter slab object, a
-slab-out-of-bounds read (KASAN: slab-out-of-bounds in cfg80211_find_ie).
-An event->len smaller than the header instead makes the int subtraction
-negative, which wraps to a huge size_t when stored in assoc_req_ies_len.
-The same length is handed to cfg80211_new_sta(), so a more modest
-over-claim can also copy stale event_body bytes into the
-NL80211_CMD_NEW_STATION notification.
+Fix by initializing 'result' to NULL and calling freeaddrinfo() after
+the first getaddrinfo() result is consumed.
 
-A malicious or malfunctioning mwifiex device (USB/SDIO/PCIe) can deliver
-such an event while the interface is in AP/uAP mode.
-
-Validate event->len before use: reject a length that underflows the
-header or that would place the IEs outside the event_body[] buffer the
-event was copied into.  event->len here is struct mwifiex_assoc_event.len,
-a payload field internal to this event, not the transport frame length,
-so it is validated in this handler rather than at the generic
-MWIFIEX_TYPE_EVENT receive path, which only sees the event cause and the
-transport frame length.  The bound is against event_body[MAX_EVENT_SIZE]
-rather than the actually-received length because the transports store the
-event differently (USB and SDIO leave the 4-byte event header in
-event_skb, PCIe strips it via skb_pull), whereas event_body is the single
-fixed buffer all of them copy the event into.  This is the event-path
-analogue of the receive-path bounds checks added in commit 119585281617
-("wifi: mwifiex: Fix OOB and integer underflow when rx packets").
-
-Fixes: e568634ae7ac ("mwifiex: add AP event handling framework")
-Signed-off-by: HE WEI (ギカク) <skyexpoc@gmail.com>
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://patch.msgid.link/20260715135711.34688-1-skyexpoc@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 959bc330a439 ("testing/selftests: add test tool and scripts for ovpn module")
+Signed-off-by: longlong yan <yanlonglong@kylinos.cn>
+Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/marvell/mwifiex/uap_event.c  | 24 +++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/ovpn/ovpn-cli.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/uap_event.c b/drivers/net/wireless/marvell/mwifiex/uap_event.c
-index 679fdae0f001a1..ba1bdbbff687be 100644
---- a/drivers/net/wireless/marvell/mwifiex/uap_event.c
-+++ b/drivers/net/wireless/marvell/mwifiex/uap_event.c
-@@ -123,11 +123,31 @@ int mwifiex_process_uap_event(struct mwifiex_private *priv)
- 				len = ETH_ALEN;
- 
- 			if (len != -1) {
-+				u16 evt_len = le16_to_cpu(event->len);
-+
- 				sinfo->assoc_req_ies = &event->data[len];
- 				len = (u8 *)sinfo->assoc_req_ies -
- 				      (u8 *)&event->frame_control;
--				sinfo->assoc_req_ies_len =
--					le16_to_cpu(event->len) - (u16)len;
-+
-+				/*
-+				 * event->len is reported by the device firmware
-+				 * and is not otherwise validated.  Reject a
-+				 * length that underflows the header, or that
-+				 * would place the association request IEs
-+				 * outside the fixed-size event_body[] buffer the
-+				 * event was copied into; otherwise the IE walk
-+				 * in mwifiex_set_sta_ht_cap() reads past
-+				 * event_body and out of the adapter slab object.
-+				 */
-+				if (evt_len < len ||
-+				    (u8 *)&event->frame_control + evt_len >
-+				    adapter->event_body + MAX_EVENT_SIZE) {
-+					mwifiex_dbg(adapter, ERROR,
-+						    "invalid STA assoc event length\n");
-+					kfree(sinfo);
-+					return -1;
-+				}
-+				sinfo->assoc_req_ies_len = evt_len - (u16)len;
- 			}
+diff --git a/tools/testing/selftests/net/ovpn/ovpn-cli.c b/tools/testing/selftests/net/ovpn/ovpn-cli.c
+index d40953375c86fa..f4effa7580c0f9 100644
+--- a/tools/testing/selftests/net/ovpn/ovpn-cli.c
++++ b/tools/testing/selftests/net/ovpn/ovpn-cli.c
+@@ -1785,7 +1785,7 @@ static int ovpn_parse_remote(struct ovpn_ctx *ovpn, const char *host,
+ 			     const char *service, const char *vpnip)
+ {
+ 	int ret;
+-	struct addrinfo *result;
++	struct addrinfo *result = NULL;
+ 	struct addrinfo hints = {
+ 		.ai_family = ovpn->sa_family,
+ 		.ai_socktype = SOCK_DGRAM,
+@@ -1809,6 +1809,8 @@ static int ovpn_parse_remote(struct ovpn_ctx *ovpn, const char *host,
  		}
- 		cfg80211_new_sta(priv->netdev->ieee80211_ptr, event->sta_addr,
+ 
+ 		memcpy(&ovpn->remote, result->ai_addr, result->ai_addrlen);
++		freeaddrinfo(result);
++		result = NULL;
+ 	}
+ 
+ 	if (vpnip) {
 -- 
 2.53.0
 
