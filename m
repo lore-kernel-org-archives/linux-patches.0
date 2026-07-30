@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D744446E4;
-	Thu, 30 Jul 2026 15:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51995433E63;
+	Thu, 30 Jul 2026 15:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424011; cv=none; b=aoxOOPMgch4aBrBGNchvSwy//GTCC18qAtb1P3xuUwhBo8IWSt4ZQjZ+z/STspnwwmD5dWTxj0TwCMUU6Paq89OjxMHKvvtCrZA/Ql90vUT9faVmPjfOHmRFXK1yr25Ndc2o/JFh8LI2HxQQQiQF1LD5YdFTAJaiCCTaF/N3nBw=
+	t=1785424014; cv=none; b=LPJygVrxexqjLJR5n8gG4v8ZYb4nRzE36BDwFgVslIx1ShBtCL5mSnaR0SlBYS6+OS8/zy8LlUiP5RA5mojxEuXuSQt4uWEY0OQq0UxjTt7uona/3jbHng48d73CYzg14FjOUaXYOquEs3FJpfpoRJGfJ0qhAF+V1f2dHjYwkeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424011; c=relaxed/simple;
-	bh=x5mAcehrSMKl/W0XJ8bYXXH+GmfbzEOf9+/GFkQuHi8=;
+	s=arc-20240116; t=1785424014; c=relaxed/simple;
+	bh=A6TYszqKOLVjpNJo2JvY3I16gOSmLBpwMeVkXD8TsY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hbcwFGey2d3qtX0C852NHsipOp10UKiwwb61u2Ma4IrFXaNCWh4CfFcVpsF1ZlS57D9vzJ7xI9uMMLi97F4Jr1rTFOLFJSurAvRDOY6LEjvDlMOeNOroA2Njz5dWxrzrejemhXhqlLLst6TVR83nACqi9BCtTsEj0KCy67u2uho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCCKipWa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RgfQOkZxiPrt0IgK5zYny3br4GBA1GV1BOvdSXbacbBWZqEWaUwj0qX5AfsZX6/fy7gJYSZgDsUPh5xx9iKGKpE2ZLg+0Zhxye0e4JSZehBkPPav9oOmULaIwmHruCFmOflQPjWll7i7ZXbzDocgaLs1ThFqz5X2YLLruPPugz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSFTQK8l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCCKipWa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C9C1F000E9;
-	Thu, 30 Jul 2026 15:06:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSFTQK8l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9DC01F000E9;
+	Thu, 30 Jul 2026 15:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424010;
-	bh=Av5UmssyAVKkTYfXjwF5IObFKgY7YRteRR1xvAJz4io=;
+	s=korg; t=1785424013;
+	bh=L5Zc5l0iQZkEEBMXKnkda+yKu7og+uNXON6j8MflZSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RCCKipWaqRkxgXG0lsKuka8dgLgjPqBU2BkMGQ8aF/NfXkzBveNlLoMT4O/4BR052
-	 Hti4+ThnqX2n6szUw5UeqjEtA2ASjgSBs+KQzP9+srZaKoyxRKwmExEEwFwbsUIQgS
-	 tZW4tqGdtYkHBdwxhU5w1o/2uSWM9/u4m2glLXro=
+	b=qSFTQK8lAJe5UAlO3Y2JU+Yz8cy0V584ESN7blN8lUg+u4uyllWvTbM46PkwWGxej
+	 SRbKGpL9Tb17ImQpzUi6N0ZAGuEqYOTUj0Y4dm7n07uNaC14fVDDwDqnnj5sL14nH9
+	 BfqFdrjLiInUnEF/J8JodwPZd8MywoBeciK8qG04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	"Nikhil P. Rao" <nikhil.rao@amd.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	AutonomousCodeSecurity@microsoft.com,
+	Xin Long <lucien.xin@gmail.com>,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 244/675] pds_core: check for workqueue allocation failure
-Date: Thu, 30 Jul 2026 16:09:34 +0200
-Message-ID: <20260730141450.321701206@linuxfoundation.org>
+Subject: [PATCH 6.18 245/675] sctp: validate stream count in sctp_process_strreset_inreq()
+Date: Thu, 30 Jul 2026 16:09:35 +0200
+Message-ID: <20260730141450.342946944@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -54,69 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil P. Rao <nikhil.rao@amd.com>
+From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 
-[ Upstream commit 3a660ca49e2c3807bffe0519db3cff677a5906e0 ]
+[ Upstream commit 18ae07691d43183d270de8be9dc8e027906015d9 ]
 
-pdsc_init_pf() does not check whether create_singlethread_workqueue()
-succeeded.
+When processing a RESET_IN_REQUEST from a peer,
+sctp_process_strreset_inreq() derives the stream count from the
+parameter length but does not check whether the resulting
+RESET_OUT_REQUEST would exceed SCTP_MAX_CHUNK_LEN.
 
-Fail probe on failure. The workqueue is set up before the timer and
-mutexes, so its failure path must unwind only the earlier setup.
+The OUT request header (sctp_strreset_outreq, 16 bytes) is 8 bytes
+larger than the IN request header (sctp_strreset_inreq, 8 bytes).
+Generally, the IP payload is bounded to 65535 bytes, so the stream
+list cannot be large enough to trigger the overflow. However, on
+interfaces with MTU > 65535 (e.g., loopback with IPv6 jumbograms), a
+stream list that fits within the incoming IN parameter can cause a
+__u16 overflow in sctp_make_strreset_req() when computing the OUT
+request size, leading to an undersized skb allocation and a kernel
+BUG:
 
-Fixes: c2dbb0904310 ("pds_core: health timer and workqueue")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260629200358.2626129-1-nikhil.rao%40amd.com?part=2
-Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://patch.msgid.link/20260714212713.1788438-1-nikhil.rao@amd.com
+  net/core/skbuff.c:207         skb_panic
+  net/core/skbuff.c:2625        skb_put
+  net/sctp/sm_make_chunk.c:1535 sctp_addto_chunk
+  net/sctp/sm_make_chunk.c:3695 sctp_make_strreset_req
+  net/sctp/stream.c:655         sctp_process_strreset_inreq
+
+The local setsockopt path validates the generated reset request size.
+However, for an incoming-only reset, it accounts for the smaller IN
+request even though the peer must generate an OUT request with the same
+stream list. Such a request cannot be completed successfully by the
+peer.
+
+Reject peer IN requests whose corresponding OUT request would exceed
+SCTP_MAX_CHUNK_LEN. Also tighten the local check so it does not send an
+IN request that would require an oversized OUT request from the peer.
+
+Fixes: 7f9d68ac944e ("sctp: implement sender-side procedures for SSN Reset Request Parameter")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Closes: https://lore.kernel.org/all/20260707203215.2752-1-blbllhy@gmail.com/
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260710010718.20318-1-blbllhy@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/main.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/sctp/stream.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/main.c b/drivers/net/ethernet/amd/pds_core/main.c
-index accf3a3fe94457..a4962dba3140b8 100644
---- a/drivers/net/ethernet/amd/pds_core/main.c
-+++ b/drivers/net/ethernet/amd/pds_core/main.c
-@@ -239,6 +239,10 @@ static int pdsc_init_pf(struct pdsc *pdsc)
- 	/* General workqueue and timer, but don't start timer yet */
- 	snprintf(wq_name, sizeof(wq_name), "%s.%d", PDS_CORE_DRV_NAME, pdsc->uid);
- 	pdsc->wq = create_singlethread_workqueue(wq_name);
-+	if (!pdsc->wq) {
-+		err = -ENOMEM;
-+		goto err_out_unmap_bars;
-+	}
- 	INIT_WORK(&pdsc->health_work, pdsc_health_thread);
- 	INIT_WORK(&pdsc->pci_reset_work, pdsc_pci_reset_thread);
- 	timer_setup(&pdsc->wdtimer, pdsc_wdtimer_cb, 0);
-@@ -254,7 +258,7 @@ static int pdsc_init_pf(struct pdsc *pdsc)
- 	err = pdsc_setup(pdsc, PDSC_SETUP_INIT);
- 	if (err) {
- 		mutex_unlock(&pdsc->config_lock);
--		goto err_out_unmap_bars;
-+		goto err_out_shutdown_timer;
- 	}
+diff --git a/net/sctp/stream.c b/net/sctp/stream.c
+index 39b8f5e8ce3534..9addcfad467f97 100644
+--- a/net/sctp/stream.c
++++ b/net/sctp/stream.c
+@@ -308,7 +308,8 @@ int sctp_send_reset_streams(struct sctp_association *asoc,
+ 					goto out;
  
- 	err = pdsc_start(pdsc);
-@@ -306,13 +310,14 @@ static int pdsc_init_pf(struct pdsc *pdsc)
- 	pdsc_stop(pdsc);
- err_out_teardown:
- 	pdsc_teardown(pdsc, PDSC_TEARDOWN_REMOVING);
--err_out_unmap_bars:
-+err_out_shutdown_timer:
- 	timer_shutdown_sync(&pdsc->wdtimer);
- 	if (pdsc->wq)
- 		destroy_workqueue(pdsc->wq);
- 	mutex_destroy(&pdsc->config_lock);
- 	mutex_destroy(&pdsc->devcmd_lock);
- 	pci_free_irq_vectors(pdsc->pdev);
-+err_out_unmap_bars:
- 	pdsc_unmap_bars(pdsc);
- err_out_release_regions:
- 	pci_release_regions(pdsc->pdev);
+ 			param_len += str_nums * sizeof(__u16) +
+-				     sizeof(struct sctp_strreset_inreq);
++				     (out ? sizeof(struct sctp_strreset_inreq)
++					  : sizeof(struct sctp_strreset_outreq));
+ 		}
+ 
+ 		if (param_len > SCTP_MAX_CHUNK_LEN -
+@@ -639,6 +640,9 @@ struct sctp_chunk *sctp_process_strreset_inreq(
+ 
+ 	nums = (ntohs(param.p->length) - sizeof(*inreq)) / sizeof(__u16);
+ 	str_p = inreq->list_of_streams;
++	if (nums * sizeof(__u16) + sizeof(struct sctp_strreset_outreq) >
++	    SCTP_MAX_CHUNK_LEN - sizeof(struct sctp_reconf_chunk))
++		goto out;
+ 	for (i = 0; i < nums; i++) {
+ 		if (ntohs(str_p[i]) >= stream->outcnt) {
+ 			result = SCTP_STRRESET_ERR_WRONG_SSN;
 -- 
 2.53.0
 
