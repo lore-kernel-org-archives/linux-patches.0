@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D07B43B6D1;
-	Thu, 30 Jul 2026 14:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC2243F097;
+	Thu, 30 Jul 2026 14:33:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422024; cv=none; b=MbwAYMcHLKqcAMcD02CcRcLuHg4vtjQcMTTTo6PZFv0jQaLKSxJvOu/NjXq7mr8dUXvH5NOD5zzuSfYwnNNNe2uYcM3j2b1zdlYO9TLSpePXrz7QiNUHRj0xlH3Y+/m/ocGjtpSJGZMtuFpofwxIKDrbLXc753ThOqOXSA1VuGc=
+	t=1785422028; cv=none; b=PzF1nvbji3LUCI/F0x5HkVF1N4K4o30d4ezvjURVMlaIimJvbvyU5nHOEjf+PXoSZjiKERi79Im5Np8XfXbIt/ogXWywazpRuuXZ4N1wbwXC3MLsCX+5FDWkqXtL2UTkMrQQsCz5hM+5DadQVY1IbMj0FkkFyuLpbhSqBo9CcwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422024; c=relaxed/simple;
-	bh=3XVnEcKiLLqAvOboAX6H3/g4IJxTSeBgWfjflErJ7NY=;
+	s=arc-20240116; t=1785422028; c=relaxed/simple;
+	bh=KhlHx27T0tjYKGRf1njXbun79qtsPaC5YhTchTQlWjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ef/WJze/3KjYPoWZoyDCGb24vMtDaOZSbFl3dzdFumGwBVWfgI+SFBvIGEzvGUZ86QyBQ16JpcMivPwtcoWSsofuFoygq1KxfJTwfx6uP2HS7k+ad6uM/TsCb9aut7k5SLxDf2Mvfkt1GFWo4vR2/R9FlrYqTXO51xM0AAztn5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C9pvI1iX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TJDZ19/Qy2icqFWoxxHqmuPoCyHD1qaqgxvEk0IME7TkF3QFhsw3/VwV1qDH1JgsmuQVPFssUzfffkCjU7DrEWyd5F4LctyJpYdoTAZ0Scf8cwJJgsg16f2avPYooTOqyXukIFWSFHro9svbJ6MEnpnoj4mmEEqlhlBkX05HMU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGNW2ef4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9pvI1iX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 028921F000E9;
-	Thu, 30 Jul 2026 14:33:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGNW2ef4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E761F000E9;
+	Thu, 30 Jul 2026 14:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422023;
-	bh=xhiQm42ZFKymgtLT72qEZ+wjHPHamLDhU82TskGoc9I=;
+	s=korg; t=1785422026;
+	bh=jLE+ViAHGVeJTySqFqtzbYRFtsiyBcTJRHeo6jNMqaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C9pvI1iXOd9EcO6TaBB8r/qXO2ZKckPWu6deO/zKMHkyi3Aoq89jDBLZO8Pwl33bK
-	 /Qpit2cgTTLZgVack/KhbjS75+YzVsOViJ/4Wm/WXdIbb4ImZqpjZUk/RnZyGrQv5H
-	 oRKRSsKH8ZA435TJrBq5O582XmtmpZdUhWziTyFc=
+	b=TGNW2ef4ZG4S50MoOe9Nwz+lYMMxs7Aw8H3zH/9NXP6lLup4gOTmA6WjejDs51D+4
+	 nsXGKZt81mr9w574y25A+idxYigDGqNlrEEITH6f2OWdn9JnMyQEE79LJ4o8g5c0lM
+	 Mh67FHwGCCXdOFKzfYwRFYLngkQvGJ3SutmI4Id8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shelley Yang <shelley.yang@infineon.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Yichong Chen <chenyichong@uniontech.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 298/744] wifi: brcmfmac: fix 802.1X-SHA256 call trace warning
-Date: Thu, 30 Jul 2026 16:09:31 +0200
-Message-ID: <20260730141450.628200557@linuxfoundation.org>
+Subject: [PATCH 7.1 299/744] ovl: fix trusted xattr escape prefix matching
+Date: Thu, 30 Jul 2026 16:09:32 +0200
+Message-ID: <20260730141450.647992905@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -46,71 +46,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shelley Yang <shelley.yang@infineon.com>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-[ Upstream commit 7cb34f6c4fe8a68af621d870abe63bfca2275dd6 ]
+[ Upstream commit a8e72879cd0d8422c0b47d6d3c1802274fe73b98 ]
 
-Based on wpa_auth as 1x_256 mode, need to set up
-"use_fwsup" with BRCMF_PROFILE_FWSUP_1X.
-Or it will happen trace warning when call brcmf_cfg80211_set_pmk().
+In the trusted.* xattr namespace, ovl_is_escaped_xattr() compares
+one byte less than the escaped overlay xattr prefix length. This makes
+it match "trusted.overlay.overlay" without requiring the trailing dot.
 
-[ 4481.831101] ------------[ cut here ]------------
-[ 4481.831102] WARNING: CPU: 1 PID: 2997 at
-drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c:7242 brcmf_cfg80211_set_pmk+0x77/0xd0 [brcmfmac]
-[...]
-[ 4481.831202] Call Trace:
-[ 4481.831204]  <TASK>
-[ 4481.831205]  nl80211_set_pmk+0x183/0x250 [cfg80211]
-[ 4481.831233]  genl_family_rcv_msg_doit+0xea/0x150
-[ 4481.831237]  genl_rcv_msg+0x104/0x240
-[ 4481.831239]  ? cfg80211_probe_status+0x2c0/0x2c0 [cfg80211]
-[ 4481.831257]  ? genl_family_rcv_msg_doit+0x150/0x150
-[ 4481.831259]  netlink_rcv_skb+0x4e/0x100
-[ 4481.831261]  genl_rcv+0x24/0x40
-[ 4481.831262]  netlink_unicast+0x236/0x380
-[ 4481.831264]  netlink_sendmsg+0x250/0x4b0
-[ 4481.831266]  sock_sendmsg+0x5c/0x70
-[ 4481.831269]  ____sys_sendmsg+0x236/0x2b0
-[ 4481.831271]  ? copy_msghdr_from_user+0x6d/0xa0
-[ 4481.831272]  ___sys_sendmsg+0x86/0xd0
-[ 4481.831274]  ? avc_has_perm+0x8c/0x1a0
-[ 4481.831276]  ? preempt_count_add+0x6a/0xa0
-[ 4481.831279]  ? sock_has_perm+0x82/0xa0
-[ 4481.831280]  __sys_sendmsg+0x57/0xa0
-[ 4481.831282]  do_syscall_64+0x38/0x90
-[ 4481.831284]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-[ 4481.831286] RIP: 0033:0x7fd270d369b4
+As a result, an xattr such as "trusted.overlay.overlayfoo" is
+incorrectly treated as an escaped overlay xattr. This can be reproduced
+by setting "trusted.overlay.overlayfoo" on a lower file and listing xattrs
+through an overlay mount. listxattr() then exposes it as
+"trusted.overlay.oo", and a following getxattr() on that listed name fails
+with ENODATA.
 
-Fixes: 2526ff21aa77 ("brcmfmac: support 4-way handshake offloading for 802.1X")
-Signed-off-by: Shelley Yang <shelley.yang@infineon.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260525083859.581246-1-shelley.yang@infineon.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Compare the full escaped prefix, including the trailing dot, so
+similarly-prefixed private xattrs are not misclassified.
+
+Fixes: dad02fad84cbc ("ovl: Support escaped overlay.* xattrs")
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Link: https://patch.msgid.link/20260708082221.633602-1-chenyichong@uniontech.com
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 2 +-
+ fs/overlayfs/xattrs.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 0b55d445895f20..89f61710a21045 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -2146,7 +2146,7 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
- 				 sme->crypto.akm_suites[0]);
- 			return -EINVAL;
- 		}
--	} else if (val & (WPA2_AUTH_PSK | WPA2_AUTH_UNSPECIFIED)) {
-+	} else if (val & (WPA2_AUTH_PSK | WPA2_AUTH_UNSPECIFIED | WPA2_AUTH_1X_SHA256)) {
- 		switch (sme->crypto.akm_suites[0]) {
- 		case WLAN_AKM_SUITE_8021X:
- 			val = WPA2_AUTH_UNSPECIFIED;
+diff --git a/fs/overlayfs/xattrs.c b/fs/overlayfs/xattrs.c
+index aa95855c70237b..859e80ae6f4057 100644
+--- a/fs/overlayfs/xattrs.c
++++ b/fs/overlayfs/xattrs.c
+@@ -13,7 +13,7 @@ static bool ovl_is_escaped_xattr(struct super_block *sb, const char *name)
+ 			       OVL_XATTR_ESCAPE_USER_PREFIX_LEN) == 0;
+ 	else
+ 		return strncmp(name, OVL_XATTR_ESCAPE_TRUSTED_PREFIX,
+-			       OVL_XATTR_ESCAPE_TRUSTED_PREFIX_LEN - 1) == 0;
++			       OVL_XATTR_ESCAPE_TRUSTED_PREFIX_LEN) == 0;
+ }
+ 
+ static bool ovl_is_own_xattr(struct super_block *sb, const char *name)
 -- 
 2.53.0
 
