@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D3136493F;
-	Thu, 30 Jul 2026 14:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F1D40FD86;
+	Thu, 30 Jul 2026 14:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423078; cv=none; b=gJHLhMfz6iJnIvYyRq4UdOBqptlzZhyhZvsyRYcDanXM5EazL5qw4DoG7vKCTxQRy/78T/foDcCdPULCXjPF9CEWr4TUK+RyoniItiQjyifErmGc+/C+odbfePNgmquVp5J4rN1HlLrpSiHtvm2FG6Lhu70gcc2i9qVeuySUves=
+	t=1785423081; cv=none; b=m3/9nOAxT/QGbbtoQceSJA5sFv2lvRnpd6ocBXcy4fsbQJ+Lq8IgPHDnMZ62vWzlnJyd1RGSTgVcrW+1Pa2IXbUpr1xgWnzuSM8dHZsofHlZfx17nVfUPlDFR3HW4vEYNFsML8Jy6+a5ap9GWHfhwNMFkC4x99N4bEgoioEMPNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423078; c=relaxed/simple;
-	bh=8XgxgBOUoUIToM5xHD4n9+4uC7283qem554+CiIEFSQ=;
+	s=arc-20240116; t=1785423081; c=relaxed/simple;
+	bh=1yEkRjeS6Yz2r0NbllhPaxj8LjIdEwlMQS1JzqJoqIA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fBBXQQmf+VKyRcclFQRvHW9HiRoZTLzSzhH2Xy+Z82jo1yB7Z1MDmNTAU42ITPJTy5s04UgDTX5bb3uOMzKRM2Bm3tsBBzECT9eOnjpuD6HXvUOelK4Thxg0XjnplhzWqf71QSMqZ1e/QoSMRyRGyoz3Tu4E0/Toh2hyYj/s0Qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VzhRI3A5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ULAXItTW6IAcXr5pjC22D2I40QYtQenkf0U5CaEmOz1hC5cpYpnOTYKfsI1zvYCX7t9Yso7p+sOkzI43qwGb7NJHTnXWLhmCAvlmGFulOUNoVCV4PacJcWdZ6r/P/PXGpyTN7uC38g9qmFh5GCkbPsAqu6zFx5BrpFRGPvrx2/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rk2+xTzt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VzhRI3A5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DFA01F000E9;
-	Thu, 30 Jul 2026 14:51:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rk2+xTzt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02C901F000E9;
+	Thu, 30 Jul 2026 14:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423076;
-	bh=TI8oOolecTFTliXeT6oZ5pokNs21CVcpC1j1FLdDGRE=;
+	s=korg; t=1785423079;
+	bh=aTyDdnkGxY51+1HymD3bBhJe0vA0tTp0FQChPpWW2bY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VzhRI3A5576xKfwE7KBvVstsTrecGE0jyfyyHXZ437IpbOhi1uPwtlVAEAt55RwbS
-	 K/4RojToa0EmX8FokJhc7kjg3A5uPmsD3H3xg1aLa7jNUarBftk8Gt0MiFGE3x7W/K
-	 C4/Aii/6dA2NX3u+1qub1x3Kh5CMZekbqzY6UqeU=
+	b=Rk2+xTztxD9DKOxXc29YditSVwwzwqpXJhtgRyjrRo/Y5+HPzdhRK0H//Qrsu3c6v
+	 YHH29yZejOH5nQQOKY8jBAj4n8QFuwGH2q3Dzo1N3HwJVcBAbgEs9wr7UDIolgn4Pb
+	 a+QoyqLveIKD/bVtGArePEDj6vysWRt9F7SK7VSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manjunath Patil <manjunath.b.patil@oracle.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.1 659/744] net/mlx5e: Use sender devcom for MPV master-up
-Date: Thu, 30 Jul 2026 16:15:32 +0200
-Message-ID: <20260730141458.273742265@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 660/744] net/sched: serialize qdisc_rtab_list against concurrent get/put
+Date: Thu, 30 Jul 2026 16:15:33 +0200
+Message-ID: <20260730141458.294497788@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,78 +52,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manjunath Patil <manjunath.b.patil@oracle.com>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit e32649b4bad90a6216d8e93cd7dd050af8ac9740 upstream.
+commit f43ee0c0730d6191629b5ee1ceae27b1ebfdc047 upstream.
 
-After PCIe DPC recovery, mlx5 reloads the affected functions and
-replays multiport affiliation events. In the reported failure, the
-first relevant device error was:
+qdisc_get_rtab() and qdisc_put_rtab() mutate the process-global singly
+linked list qdisc_rtab_list and a plain non-atomic 'int refcnt' with no
+lock. This was only safe because every caller historically held the RTNL
+mutex, which serialized all rate-table lookups, inserts and frees.
 
-  pcieport 0000:10:01.1: DPC: containment event
-  pcieport 0000:10:01.1: PCIe Bus Error: severity=Uncorrected (Fatal)
-  pcieport 0000:10:01.1:    [ 5] SDES                   (First)
+That invariant no longer holds. cls_flower sets
+TCF_PROTO_OPS_DOIT_UNLOCKED, so tc_new_tfilter() keeps rtnl_held == false
+for it and sets TCA_ACT_FLAGS_NO_RTNL. That flag propagates through
+tcf_exts_validate_ex() -> tcf_action_init() -> tcf_action_init_1() ->
+tcf_police_init(), which calls qdisc_get_rtab()/qdisc_put_rtab() with the
+RTNL mutex NOT held. Two RTM_NEWTFILTER requests on different CPUs, each
+adding a flower filter with a police action carrying the same rate, then
+race on qdisc_rtab_list and on the non-atomic refcnt, leading to a
+use-after-free / double-free of the kmalloc-2k struct qdisc_rate_table.
+qdisc_rtab_list is a single global (not per-netns), so the corrupted
+object is shared system-wide.
 
-mlx5 recovered the PCI functions and resumed 0000:11:00.1. During
-that resume, RDMA multiport binding replayed
-MLX5_DRIVER_EVENT_AFFILIATION_DONE and mlx5e sent
-MPV_DEVCOM_MASTER_UP. The host then panicked with:
+  BUG: KASAN: slab-use-after-free in qdisc_put_rtab+0x12f/0x160
+   qdisc_put_rtab+0x12f/0x160
+   tcf_police_init+0xda9/0x1590
+   tcf_action_init_1+0x460/0x6b0
+   tcf_action_init+0x439/0xa40
+   tcf_exts_validate_ex+0x42d/0x550
+   fl_change+0xddd/0x7da0
+   tc_new_tfilter+0xaa7/0x2420
+   rtnetlink_rcv_msg+0x95e/0xe90
+  which belongs to the cache kmalloc-2k of size 2048
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000010
-  RIP: mlx5_devcom_comp_set_ready+0x5/0x40 [mlx5_core]
-  RDI: 0000000000000000
+Protect qdisc_rtab_list and the refcount with a dedicated spinlock. The
+(sleeping, GFP_KERNEL) allocation in qdisc_get_rtab() is performed before
+taking the lock; if a concurrent inserter added an identical table in the
+meantime the freshly allocated one is freed under the lock, so no
+duplicate is leaked. qdisc_put_rtab() now decrements the refcount and
+unlinks under the same lock.
 
-Call trace included:
-
-  mlx5_devcom_comp_set_ready
-  mlx5e_devcom_event_mpv
-  mlx5_devcom_send_event
-  mlx5_ib_bind_slave_port
-  mlx5r_mp_probe
-  mlx5_pci_resume
-
-MPV devcom registration publishes mlx5e private data to the component
-peer list before mlx5e_devcom_init_mpv() stores the returned component
-device in priv->devcom. A concurrent master-up event can therefore
-reach a peer whose private data is visible but whose priv->devcom
-backpointer is still NULL.
-
-MPV_DEVCOM_MASTER_UP already carries the sender/master mlx5e private
-data as event_data. The ready bit is stored on the shared devcom
-component, not on an individual peer. Use the sender devcom when
-marking the MPV component ready.
-
-This preserves the readiness transition while avoiding a NULL
-dereference of the peer devcom pointer during affiliation replay after
-PCI error recovery.
-
-Fixes: bf11485f8419 ("net/mlx5: Register mlx5e priv to devcom in MPV mode")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Manjunath Patil <manjunath.b.patil@oracle.com>
-Cc: stable@vger.kernel.org # 6.7+
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260707233911.3651139-1-manjunath.b.patil@oracle.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 470502de5bdb ("net: sched: unlock rules update API")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Cc: stable@vger.kernel.org
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260715114114.446841-1-qwe.aldo@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sched/sch_api.c |   24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -211,11 +211,11 @@ static void mlx5e_disable_async_events(s
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -415,12 +415,13 @@ static __u8 __detect_linklayer(struct tc
+ }
  
- static int mlx5e_devcom_event_mpv(int event, void *my_data, void *event_data)
+ static struct qdisc_rate_table *qdisc_rtab_list;
++static DEFINE_SPINLOCK(qdisc_rtab_lock);
+ 
+ struct qdisc_rate_table *qdisc_get_rtab(struct tc_ratespec *r,
+ 					struct nlattr *tab,
+ 					struct netlink_ext_ack *extack)
  {
--	struct mlx5e_priv *slave_priv = my_data;
-+	struct mlx5e_priv *master_priv = event_data;
+-	struct qdisc_rate_table *rtab;
++	struct qdisc_rate_table *rtab, *new_rtab;
  
- 	switch (event) {
- 	case MPV_DEVCOM_MASTER_UP:
--		mlx5_devcom_comp_set_ready(slave_priv->devcom, true);
-+		mlx5_devcom_comp_set_ready(master_priv->devcom, true);
- 		break;
- 	case MPV_DEVCOM_MASTER_DOWN:
- 		/* no need for comp set ready false since we unregister after
+ 	if (tab == NULL || r->rate == 0 ||
+ 	    r->cell_log == 0 || r->cell_log >= 32 ||
+@@ -429,15 +430,20 @@ struct qdisc_rate_table *qdisc_get_rtab(
+ 		return NULL;
+ 	}
+ 
++	new_rtab = kmalloc_obj(*new_rtab);
++
++	spin_lock(&qdisc_rtab_lock);
+ 	for (rtab = qdisc_rtab_list; rtab; rtab = rtab->next) {
+ 		if (!memcmp(&rtab->rate, r, sizeof(struct tc_ratespec)) &&
+ 		    !memcmp(&rtab->data, nla_data(tab), TC_RTAB_SIZE)) {
+ 			rtab->refcnt++;
++			spin_unlock(&qdisc_rtab_lock);
++			kfree(new_rtab);
+ 			return rtab;
+ 		}
+ 	}
+ 
+-	rtab = kmalloc_obj(*rtab);
++	rtab = new_rtab;
+ 	if (rtab) {
+ 		rtab->rate = *r;
+ 		rtab->refcnt = 1;
+@@ -449,6 +455,7 @@ struct qdisc_rate_table *qdisc_get_rtab(
+ 	} else {
+ 		NL_SET_ERR_MSG(extack, "Failed to allocate new qdisc rate table");
+ 	}
++	spin_unlock(&qdisc_rtab_lock);
+ 	return rtab;
+ }
+ EXPORT_SYMBOL(qdisc_get_rtab);
+@@ -457,18 +464,25 @@ void qdisc_put_rtab(struct qdisc_rate_ta
+ {
+ 	struct qdisc_rate_table *rtab, **rtabp;
+ 
+-	if (!tab || --tab->refcnt)
++	if (!tab)
++		return;
++
++	spin_lock(&qdisc_rtab_lock);
++	if (--tab->refcnt) {
++		spin_unlock(&qdisc_rtab_lock);
+ 		return;
++	}
+ 
+ 	for (rtabp = &qdisc_rtab_list;
+ 	     (rtab = *rtabp) != NULL;
+ 	     rtabp = &rtab->next) {
+ 		if (rtab == tab) {
+ 			*rtabp = rtab->next;
+-			kfree(rtab);
+-			return;
++			break;
+ 		}
+ 	}
++	spin_unlock(&qdisc_rtab_lock);
++	kfree(tab);
+ }
+ EXPORT_SYMBOL(qdisc_put_rtab);
+ 
 
 
