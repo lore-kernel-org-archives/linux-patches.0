@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7A8382F23;
-	Thu, 30 Jul 2026 15:30:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B9B7331A48;
+	Thu, 30 Jul 2026 15:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425423; cv=none; b=SgNuaU4iDegj1yYm/WYPQm77harCn38eqKqzZGiJRbsABpm/UV1Uf2d1RFWinCsSnKbHkXSBHQYg3mTlEyZzIsJf2AXUNn4Y5X+gNwufVUZKW5GuKIzTuAICglwVmyPmby/2VWtit8x4lxY0xB2fhFQmzFT1wpEJVdmMz7km4IE=
+	t=1785425429; cv=none; b=WQUkdIoZHJ9TwGmefCqGYhP65qLb2rqGH68LZkJSrVG2mjQZWYWSiL+in3JnWXBJrbR8I0ReGaCpFXM7xHc6vqAF4Kobm3q0ZX07LbF4Lthgyl6ZrhvKZWo2xE2Ho6kHTZWNxtW68MorrTqLGAFbDUucfriiwhoZZ09e8UblUuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425423; c=relaxed/simple;
-	bh=POt/gqZly9gyuGpy5HstKiiPO4w0TX+QfgAk4R7WCKw=;
+	s=arc-20240116; t=1785425429; c=relaxed/simple;
+	bh=WE/Zie8NoxjoR/vOlHjEpasSCUQoePhXR+rf2Z8Hbd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qyNLnC+zLk26zcY/jTBd1PaegcKTYW3NiEeCJR8Z6yi6U6m0yc8p9lVpagHoPPKsdUui7FevKp31yc1GVXunOCGHcSSVi6wo/g377EsI9nDR7isHASLNVPP9tlHKdGdrr2b50VZkCFUAq3J23f9im/SL92tuWiacFO4kP88m5ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T9uFewic; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OgaE9GIC4IhfRTchPrqCXv19yUJP4NErOeqFYljMlmwhS+Uw9etm41aTgyNwtgYdfIpY/16inyYveKFn/cudPtxwHfy3zq9ZiJQm4xnCIPUCTBU/iE6FfEJw5IspeHB2Yfw+4FSYXUKT0EaCb91gIL3HaTYnsmPY+zOlWjhuc/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XsnR5jNo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T9uFewic"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 501801F00A3A;
-	Thu, 30 Jul 2026 15:30:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XsnR5jNo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2731F000E9;
+	Thu, 30 Jul 2026 15:30:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425417;
-	bh=mX9X6w4RFH4luPoDnGpmbUm2wPRRUQnrsKntXVYmVTs=;
+	s=korg; t=1785425423;
+	bh=JYdTKe2zn2ZtyeD7UqJUqTmZKnnbrMC7f4Y0+M+6ZgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T9uFewickyf2kFRtqHH7pZykCkgpQGv35GQOO/3mxEf76oyXON+ywF1TKS1tH/FUj
-	 ReCEuM6SMEgkejg6GecLj5qPmy326u7MGV3iMb9w/2th+/ja75nIqg8ERwlQb79huv
-	 iMFG/q+Rgl/lIJj4vxANjba92En2psFQWM1old30=
+	b=XsnR5jNov1p8ZdTXwJXj/rfYdysZAKhIBDfzTxoEqIRDHo1LgzWAslcud1XeBXl99
+	 c921Evq3Jr7cs8BNKlGemSWZ6Tc8rstdcHvDe8GoAVF9A00ul/OHR3Yqrcb+gaVlpD
+	 cNz7mFoP0HmPIiyQK0q/YwA73oPc8LgmrvR9dKrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 062/602] wifi: cfg80211: pass net_device to .set_monitor_channel
-Date: Thu, 30 Jul 2026 16:07:34 +0200
-Message-ID: <20260730141437.305946697@linuxfoundation.org>
+Subject: [PATCH 6.12 064/602] wifi: cfg80211: convert pmsr_free_wk to wiphy_work to fix deadlock
+Date: Thu, 30 Jul 2026 16:07:36 +0200
+Message-ID: <20260730141437.348692674@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,209 +51,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>
 
-[ Upstream commit 9c4f830927750a2bf9fd9426a5257f0fdce3b662 ]
+[ Upstream commit 2b0eab425e1f658d8fe1df7590e3b9af5959505e ]
 
-Preparation for allowing multiple monitor interfaces with different channels
-on a multi-radio wiphy.
+When a netlink socket that owns a PMSR session is closed,
+cfg80211_release_pmsr() clears the request's nl_portid and queues
+pmsr_free_wk to call cfg80211_pmsr_process_abort() asynchronously.
 
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://patch.msgid.link/35fa652dbfebf93343f8b9a08fdef0467a2a02dc.1728462320.git-series.nbd@nbd.name
+If the interface tears down concurrently, cfg80211_pmsr_wdev_down()
+is called under wiphy_lock and calls cancel_work_sync(&pmsr_free_wk)
+to wait for any running work. The work function acquires wiphy_lock
+via guard(wiphy) before calling process_abort.
+
+This is a deadlock: wdev_down holds wiphy_lock and blocks inside
+cancel_work_sync(); pmsr_free_wk blocks trying to acquire that same
+wiphy_lock. Neither thread can proceed.
+
+The same deadlock is reachable from cfg80211_leave_locked(), which
+calls cfg80211_pmsr_wdev_down() for all interface types under
+wiphy_lock.
+
+Fix this by converting pmsr_free_wk from a plain work_struct to a
+wiphy_work. The wiphy_work dispatcher holds wiphy_lock when running
+work items, so the explicit guard(wiphy) in the work function is no
+longer needed. wiphy_work_cancel() can be called safely while holding
+wiphy_lock - since wiphy_lock prevents the work from running
+concurrently, wiphy_work_cancel() never blocks, eliminating the
+deadlock.
+
+Remove the cancel_work_sync() for pmsr_free_wk from the
+NETDEV_GOING_DOWN handler. cfg80211_leave(), called unconditionally
+just before it, already cancels any pending work under wiphy_lock
+via wiphy_work_cancel() inside cfg80211_pmsr_wdev_down().
+
+Fixes: 6dccbc9f3e1d ("wifi: cfg80211: cancel pmsr_free_wk in cfg80211_pmsr_wdev_down")
+Signed-off-by: Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260703082523.2629324-1-peddolla.reddy@oss.qualcomm.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: 2b0eab425e1f ("wifi: cfg80211: convert pmsr_free_wk to wiphy_work to fix deadlock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/wil6210/cfg80211.c        |  1 +
- drivers/net/wireless/marvell/libertas/cfg.c        |  1 +
- drivers/net/wireless/microchip/wilc1000/cfg80211.c |  3 ++-
- include/net/cfg80211.h                             |  1 +
- net/mac80211/cfg.c                                 |  1 +
- net/wireless/chan.c                                |  3 ++-
- net/wireless/core.h                                |  1 +
- net/wireless/nl80211.c                             |  2 +-
- net/wireless/rdev-ops.h                            |  5 +++--
- net/wireless/trace.h                               | 10 ++++++----
- net/wireless/wext-compat.c                         |  2 +-
- 11 files changed, 20 insertions(+), 10 deletions(-)
+ include/net/cfg80211.h | 2 +-
+ net/wireless/core.c    | 3 +--
+ net/wireless/core.h    | 2 +-
+ net/wireless/pmsr.c    | 8 +++-----
+ 4 files changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/wil6210/cfg80211.c b/drivers/net/wireless/ath/wil6210/cfg80211.c
-index e8f1d30a8d73c5..a1a0a9223e74ac 100644
---- a/drivers/net/wireless/ath/wil6210/cfg80211.c
-+++ b/drivers/net/wireless/ath/wil6210/cfg80211.c
-@@ -1493,6 +1493,7 @@ int wil_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
- }
- 
- static int wil_cfg80211_set_channel(struct wiphy *wiphy,
-+				    struct net_device *dev,
- 				    struct cfg80211_chan_def *chandef)
- {
- 	struct wil6210_priv *wil = wiphy_to_wil(wiphy);
-diff --git a/drivers/net/wireless/marvell/libertas/cfg.c b/drivers/net/wireless/marvell/libertas/cfg.c
-index 37bb788f83e36e..309556541a83ed 100644
---- a/drivers/net/wireless/marvell/libertas/cfg.c
-+++ b/drivers/net/wireless/marvell/libertas/cfg.c
-@@ -486,6 +486,7 @@ static int lbs_add_wps_enrollee_tlv(u8 *tlv, const u8 *ie, size_t ie_len)
-  */
- 
- static int lbs_cfg_set_monitor_channel(struct wiphy *wiphy,
-+				       struct net_device *dev,
- 				       struct cfg80211_chan_def *chandef)
- {
- 	struct lbs_private *priv = wiphy_priv(wiphy);
-diff --git a/drivers/net/wireless/microchip/wilc1000/cfg80211.c b/drivers/net/wireless/microchip/wilc1000/cfg80211.c
-index eb37b228d54ea0..9977be0020fe76 100644
---- a/drivers/net/wireless/microchip/wilc1000/cfg80211.c
-+++ b/drivers/net/wireless/microchip/wilc1000/cfg80211.c
-@@ -231,6 +231,7 @@ struct wilc_vif *wilc_get_wl_to_vif(struct wilc *wl)
- }
- 
- static int set_channel(struct wiphy *wiphy,
-+		       struct net_device *dev,
- 		       struct cfg80211_chan_def *chandef)
- {
- 	struct wilc *wl = wiphy_priv(wiphy);
-@@ -1424,7 +1425,7 @@ static int start_ap(struct wiphy *wiphy, struct net_device *dev,
- 	struct wilc_vif *vif = netdev_priv(dev);
- 	int ret;
- 
--	ret = set_channel(wiphy, &settings->chandef);
-+	ret = set_channel(wiphy, dev, &settings->chandef);
- 	if (ret != 0)
- 		netdev_err(dev, "Error in setting channel\n");
- 
 diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index 96121dc14e8263..f1710d7af6656b 100644
+index a76e0459a8e63b..8dcb218e08047b 100644
 --- a/include/net/cfg80211.h
 +++ b/include/net/cfg80211.h
-@@ -4699,6 +4699,7 @@ struct cfg80211_ops {
- 					     struct ieee80211_channel *chan);
+@@ -6414,7 +6414,7 @@ struct wireless_dev {
  
- 	int	(*set_monitor_channel)(struct wiphy *wiphy,
-+				       struct net_device *dev,
- 				       struct cfg80211_chan_def *chandef);
+ 	struct list_head pmsr_list;
+ 	spinlock_t pmsr_lock;
+-	struct work_struct pmsr_free_wk;
++	struct wiphy_work pmsr_free_wk;
  
- 	int	(*scan)(struct wiphy *wiphy,
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index b9ed82b8321a6a..cfd02f48935450 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -893,6 +893,7 @@ static int ieee80211_get_station(struct wiphy *wiphy, struct net_device *dev,
- }
+ 	unsigned long unprot_beacon_reported;
  
- static int ieee80211_set_monitor_channel(struct wiphy *wiphy,
-+					 struct net_device *dev,
- 					 struct cfg80211_chan_def *chandef)
- {
- 	struct ieee80211_local *local = wiphy_priv(wiphy);
-diff --git a/net/wireless/chan.c b/net/wireless/chan.c
-index c4f3fefeb35444..eb8826e33d1757 100644
---- a/net/wireless/chan.c
-+++ b/net/wireless/chan.c
-@@ -1634,6 +1634,7 @@ bool cfg80211_reg_check_beaconing(struct wiphy *wiphy,
- EXPORT_SYMBOL(cfg80211_reg_check_beaconing);
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index 7799cec95a9d99..5bc3e12e7b2de0 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -1418,7 +1418,7 @@ void cfg80211_init_wdev(struct wireless_dev *wdev)
+ 	INIT_LIST_HEAD(&wdev->mgmt_registrations);
+ 	INIT_LIST_HEAD(&wdev->pmsr_list);
+ 	spin_lock_init(&wdev->pmsr_lock);
+-	INIT_WORK(&wdev->pmsr_free_wk, cfg80211_pmsr_free_wk);
++	wiphy_work_init(&wdev->pmsr_free_wk, cfg80211_pmsr_free_wk);
  
- int cfg80211_set_monitor_channel(struct cfg80211_registered_device *rdev,
-+				 struct net_device *dev,
- 				 struct cfg80211_chan_def *chandef)
- {
- 	if (!rdev->ops->set_monitor_channel)
-@@ -1641,7 +1642,7 @@ int cfg80211_set_monitor_channel(struct cfg80211_registered_device *rdev,
- 	if (!cfg80211_has_monitors_only(rdev))
- 		return -EBUSY;
- 
--	return rdev_set_monitor_channel(rdev, chandef);
-+	return rdev_set_monitor_channel(rdev, dev, chandef);
- }
- 
- bool cfg80211_any_usable_channels(struct wiphy *wiphy,
+ #ifdef CONFIG_CFG80211_WEXT
+ 	wdev->wext.default_key = -1;
+@@ -1551,7 +1551,6 @@ static int cfg80211_netdev_notifier_call(struct notifier_block *nb,
+ 		}
+ 		/* since we just did cfg80211_leave() nothing to do there */
+ 		cancel_work_sync(&wdev->disconnect_wk);
+-		cancel_work_sync(&wdev->pmsr_free_wk);
+ 		break;
+ 	case NETDEV_DOWN:
+ 		wiphy_lock(&rdev->wiphy);
 diff --git a/net/wireless/core.h b/net/wireless/core.h
-index d4b26cbe3342d0..a60883b6e43105 100644
+index a60883b6e43105..b02b456cfca379 100644
 --- a/net/wireless/core.h
 +++ b/net/wireless/core.h
-@@ -517,6 +517,7 @@ static inline unsigned int elapsed_jiffies_msecs(unsigned long start)
- }
+@@ -560,7 +560,7 @@ cfg80211_get_6ghz_power_type(const u8 *elems, size_t elems_len);
  
- int cfg80211_set_monitor_channel(struct cfg80211_registered_device *rdev,
-+				 struct net_device *dev,
- 				 struct cfg80211_chan_def *chandef);
+ void cfg80211_release_pmsr(struct wireless_dev *wdev, u32 portid);
+ void cfg80211_pmsr_wdev_down(struct wireless_dev *wdev);
+-void cfg80211_pmsr_free_wk(struct work_struct *work);
++void cfg80211_pmsr_free_wk(struct wiphy *wiphy, struct wiphy_work *work);
  
- int ieee80211_get_ratemask(struct ieee80211_supported_band *sband,
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 15a8237f79bffa..90ff3ee8df6122 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -3568,7 +3568,7 @@ static int __nl80211_set_channel(struct cfg80211_registered_device *rdev,
- 	case NL80211_IFTYPE_MESH_POINT:
- 		return cfg80211_set_mesh_channel(rdev, wdev, &chandef);
- 	case NL80211_IFTYPE_MONITOR:
--		return cfg80211_set_monitor_channel(rdev, &chandef);
-+		return cfg80211_set_monitor_channel(rdev, dev, &chandef);
- 	default:
- 		break;
+ void cfg80211_remove_link(struct wireless_dev *wdev, unsigned int link_id);
+ void cfg80211_remove_links(struct wireless_dev *wdev);
+diff --git a/net/wireless/pmsr.c b/net/wireless/pmsr.c
+index 13801cf35e9fca..d2546c27879fa4 100644
+--- a/net/wireless/pmsr.c
++++ b/net/wireless/pmsr.c
+@@ -625,13 +625,11 @@ static void cfg80211_pmsr_process_abort(struct wireless_dev *wdev)
  	}
-diff --git a/net/wireless/rdev-ops.h b/net/wireless/rdev-ops.h
-index f5adbf6b5c846c..adb6105bbb7d1d 100644
---- a/net/wireless/rdev-ops.h
-+++ b/net/wireless/rdev-ops.h
-@@ -445,11 +445,12 @@ rdev_libertas_set_mesh_channel(struct cfg80211_registered_device *rdev,
- 
- static inline int
- rdev_set_monitor_channel(struct cfg80211_registered_device *rdev,
-+			 struct net_device *dev,
- 			 struct cfg80211_chan_def *chandef)
- {
- 	int ret;
--	trace_rdev_set_monitor_channel(&rdev->wiphy, chandef);
--	ret = rdev->ops->set_monitor_channel(&rdev->wiphy, chandef);
-+	trace_rdev_set_monitor_channel(&rdev->wiphy, dev, chandef);
-+	ret = rdev->ops->set_monitor_channel(&rdev->wiphy, dev, chandef);
- 	trace_rdev_return_int(&rdev->wiphy, ret);
- 	return ret;
  }
-diff --git a/net/wireless/trace.h b/net/wireless/trace.h
-index 945013185c9860..68bbf3a778ce1f 100644
---- a/net/wireless/trace.h
-+++ b/net/wireless/trace.h
-@@ -1339,19 +1339,21 @@ TRACE_EVENT(rdev_libertas_set_mesh_channel,
- );
  
- TRACE_EVENT(rdev_set_monitor_channel,
--	TP_PROTO(struct wiphy *wiphy,
-+	TP_PROTO(struct wiphy *wiphy, struct net_device *netdev,
- 		 struct cfg80211_chan_def *chandef),
--	TP_ARGS(wiphy, chandef),
-+	TP_ARGS(wiphy, netdev, chandef),
- 	TP_STRUCT__entry(
- 		WIPHY_ENTRY
-+		NETDEV_ENTRY
- 		CHAN_DEF_ENTRY
- 	),
- 	TP_fast_assign(
- 		WIPHY_ASSIGN;
-+		NETDEV_ASSIGN;
- 		CHAN_DEF_ASSIGN(chandef);
- 	),
--	TP_printk(WIPHY_PR_FMT ", " CHAN_DEF_PR_FMT,
--		  WIPHY_PR_ARG, CHAN_DEF_PR_ARG)
-+	TP_printk(WIPHY_PR_FMT ", " NETDEV_PR_FMT ", " CHAN_DEF_PR_FMT,
-+		  WIPHY_PR_ARG, NETDEV_PR_ARG, CHAN_DEF_PR_ARG)
- );
+-void cfg80211_pmsr_free_wk(struct work_struct *work)
++void cfg80211_pmsr_free_wk(struct wiphy *wiphy, struct wiphy_work *work)
+ {
+ 	struct wireless_dev *wdev = container_of(work, struct wireless_dev,
+ 						 pmsr_free_wk);
  
- TRACE_EVENT(rdev_auth,
-diff --git a/net/wireless/wext-compat.c b/net/wireless/wext-compat.c
-index 3af11dae0942ae..32a695c8a4d2af 100644
---- a/net/wireless/wext-compat.c
-+++ b/net/wireless/wext-compat.c
-@@ -830,7 +830,7 @@ static int cfg80211_wext_siwfreq(struct net_device *dev,
- 			ret = -EINVAL;
- 			break;
+-	guard(wiphy)(wdev->wiphy);
+-
+ 	cfg80211_pmsr_process_abort(wdev);
+ }
+ 
+@@ -647,7 +645,7 @@ void cfg80211_pmsr_wdev_down(struct wireless_dev *wdev)
+ 	}
+ 	spin_unlock_bh(&wdev->pmsr_lock);
+ 
+-	cancel_work_sync(&wdev->pmsr_free_wk);
++	wiphy_work_cancel(wdev->wiphy, &wdev->pmsr_free_wk);
+ 	if (found)
+ 		cfg80211_pmsr_process_abort(wdev);
+ 
+@@ -662,7 +660,7 @@ void cfg80211_release_pmsr(struct wireless_dev *wdev, u32 portid)
+ 	list_for_each_entry(req, &wdev->pmsr_list, list) {
+ 		if (req->nl_portid == portid) {
+ 			req->nl_portid = 0;
+-			schedule_work(&wdev->pmsr_free_wk);
++			wiphy_work_queue(wdev->wiphy, &wdev->pmsr_free_wk);
  		}
--		ret = cfg80211_set_monitor_channel(rdev, &chandef);
-+		ret = cfg80211_set_monitor_channel(rdev, dev, &chandef);
- 		break;
- 	case NL80211_IFTYPE_MESH_POINT:
- 		freq = cfg80211_wext_freq(wextfreq);
+ 	}
+ 	spin_unlock_bh(&wdev->pmsr_lock);
 -- 
 2.53.0
 
